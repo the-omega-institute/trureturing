@@ -17,7 +17,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v2"
+VERSION = "probe-cache-v3"
 
 
 def canonical(value):
@@ -130,7 +130,8 @@ def input_identity(request, root, key):
                    "SEARCH_REDUCTION_TELEMETRY", "SEARCH_REDUCTION_WORKERS",
                    "SEARCH_REDUCTION_RESUME", "SEARCH_REDUCTION_QUERY_CACHE",
                    "SEARCH_REDUCTION_PROBE_CACHE", "SEARCH_REDUCTION_PROBE_READ",
-                   "SEARCH_REDUCTION_PROBE_WRITE", "SEARCH_REDUCTION_PROBE_ID"}
+                   "SEARCH_REDUCTION_PROBE_WRITE", "SEARCH_REDUCTION_PROBE_ID",
+                   "SEARCH_REDUCTION_PROBE_PLANNED"}
     environment = {k: v for k, v in os.environ.items()
                    if k.startswith("SEARCH_REDUCTION_") and k not in operational}
     return hashlib.sha256(canonical([VERSION, fingerprint, environment,
@@ -159,6 +160,24 @@ def emit(message):
     print(message, flush=True)
 
 
+def replay_command(command, directory):
+    """Replay a complete single-probe request through its authenticated Lean entry.
+
+    The original request must have completed successfully before the runner
+    signs the directory. Multi-probe or incomplete records keep the original
+    wrapper, so a partial cache cannot omit a probe. The entry invokes the same
+    live Lean kernel, leakage audit and GraphReading publication path.
+    """
+    entries = sorted(directory.glob("entry-*.lean"))
+    plan = directory / "entry-plan"
+    if (not plan.is_file() or plan.read_bytes() != b"probe\n"
+            or len(entries) != 1 or len(list(directory.glob("*.pickle"))) != 1
+            or not entries[0].with_suffix(".olean").is_file()
+            or not command or command[-1] != os.environ.get("SEARCH_REDUCTION_REQUESTS")):
+        return command
+    return command[:-1] + [str(entries[0].absolute())]
+
+
 def run(command):
     request = os.environ["SEARCH_REDUCTION_REQUESTS"]
     if os.environ.get("SEARCH_REDUCTION_PROBE_CACHE") == "0":
@@ -174,6 +193,7 @@ def run(command):
     env = dict(os.environ)
     env.pop("SEARCH_REDUCTION_PROBE_READ", None)
     env.pop("SEARCH_REDUCTION_PROBE_WRITE", None)
+    env.pop("SEARCH_REDUCTION_PROBE_PLANNED", None)
     env["SEARCH_REDUCTION_PROBE_ID"] = identity
     # Candidate checkpoints and local query answers also inherit the full
     # semantic identity when the whole probe has to follow the cold path.
@@ -185,7 +205,10 @@ def run(command):
             emit(f"PROBE_CACHE_REJECTED reason={error}")
         else:
             env["SEARCH_REDUCTION_PROBE_READ"] = str(directory.absolute())
-            result = subprocess.call(command, env=env)
+            hot_command = replay_command(command, directory)
+            if hot_command != command:
+                emit("PROBE_CACHE_ENTRY selected=authenticated request_elaboration=reused")
+            result = subprocess.call(hot_command, env=env)
             if result == 0:
                 return 0
             if result == 75:

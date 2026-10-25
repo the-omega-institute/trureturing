@@ -652,8 +652,17 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   logInfo (observationJson record.result request.baselineCommit).compress
   return true
 
+/-- Count every requested probe, including wrappers that fail before dispatch.
+A hot entry may replace the wrapper only for a complete single-probe plan. -/
+private def recordProbePlan : IO Unit := do
+  if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
+    IO.FS.createDirAll directory
+    IO.FS.withFile (System.FilePath.mk directory / "entry-plan") .append fun handle =>
+      handle.putStrLn "probe"
+
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool := false) : CommandElabM Unit := do
+  unless (← IO.getEnv "SEARCH_REDUCTION_PROBE_PLANNED") == some "1" do recordProbePlan
   let cacheBase ← getEnv
   let identity ← probeIdentity request owners name fixture
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_READ" then
@@ -718,7 +727,22 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     ("negative_semantics", toJson "meta-computed full R; not an object-level unprovability proof")] |>.compress}"
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
     profilePhase "probe/cache-save-start"
-    try saveProbeCache directory identity source request result (some cacheBase)
+    try
+      saveProbeCache directory identity source request result (some cacheBase)
+      -- The runner authenticates this entry only after the entire original
+      -- request succeeds. Hot execution retains executeProbe's source audit,
+      -- certificate kernel checks and fresh GraphReading publication, while
+      -- reusing the successful request wrapper's imports and diagnostics.
+      let entry := s!"entry-{hash identity}"
+      let payloadName := entry ++ ".olean"
+      writeRequest (directory / payloadName) request owners name fixture
+      IO.FS.writeFile (directory / (entry ++ ".lean"))
+        ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
+          "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
+          "run_cmd do\n" ++
+          "  let some directory ← IO.getEnv \"SEARCH_REDUCTION_PROBE_READ\"\n" ++
+          "    | throwError \"search.cache_entry_without_authenticated_record\"\n" ++
+          s!"  LeanInformationAudit.SearchReduction.executeProbeFile (System.FilePath.mk directory / {repr payloadName})\n")
     catch ex => emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
     profilePhase "probe/cache-save-end"
   logInfo (observationJson result request.baselineCommit).compress
@@ -822,6 +846,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
   | `(#search_reduction $target:ident at $sha:str baseline [$bs:ident,*] using [$ss:ident,*]
       $[information $app:ident]? as $name:ident) =>
     profilePhase "request/command-start"
+    recordProbePlan
     let source ← getEnv
     let fixture := source.header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction."
     for module in bs.getElems do
@@ -874,7 +899,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     profilePhase "request/child-start"
     let child ← IO.Process.output {
       cmd := "lean", args := #[s!"-j{workers}", "--root=" ++ directory.toString,
-        "-o", output.toString, input.toString]}
+        "-o", output.toString, input.toString],
+      env := #[("SEARCH_REDUCTION_PROBE_PLANNED", some "1")]}
     profilePhase "request/child-end"
     if child.exitCode == 75 then IO.Process.exit 75
     if child.exitCode != 0 then

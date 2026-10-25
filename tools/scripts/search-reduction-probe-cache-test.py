@@ -64,6 +64,60 @@ class ProbeCacheTests(unittest.TestCase):
         cache.valid_record(path, "input", self.key)
         return path
 
+    def test_authenticated_entry_skips_wrapper_and_kernel_failure_replays_original(self):
+        path = self.make_record()
+        (path / "entry-plan").write_bytes(b"probe\n")
+        (path / "entry-probe.lean").write_text("live Lean replay entry")
+        (path / "entry-probe.olean").write_bytes(b"typed request")
+        cache.write_signed(path / "manifest.json",
+                           {"identity": "input", "files": cache.record_files(path)}, self.key)
+        path.rename(self.directory / "input")
+        path = self.directory / "input"
+        commands, environments = [], []
+
+        def compile_request(command, env):
+            commands.append(command)
+            environments.append(dict(env))
+            return 1 if len(commands) == 1 else 23
+
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                patch.object(cache, "auth_key", return_value=self.key), \
+                patch.object(cache, "input_identity", return_value="input"), \
+                patch.object(cache.subprocess, "call", side_effect=compile_request):
+            self.assertEqual(cache.run(["lean", "request.lean"]), 23)
+        self.assertEqual(commands, [["lean", str(path / "entry-probe.lean")],
+                                    ["lean", "request.lean"]])
+        self.assertIn("SEARCH_REDUCTION_PROBE_READ", environments[0])
+        self.assertNotIn("SEARCH_REDUCTION_PROBE_READ", environments[1])
+        self.assertIn("SEARCH_REDUCTION_PROBE_WRITE", environments[1])
+
+    def test_partial_or_multiple_probe_entries_keep_original_wrapper(self):
+        path = self.make_record()
+        entry = path / "entry-probe.lean"
+        entry.write_text("entry")
+        (path / "entry-plan").write_bytes(b"probe\n")
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean"}):
+            command = ["lean", "request.lean"]
+            self.assertEqual(cache.replay_command(command, path), command)
+            entry.with_suffix(".olean").write_bytes(b"request")
+            self.assertNotEqual(cache.replay_command(command, path), command)
+            (path / "entry-plan").write_bytes(b"probe\nprobe\n")
+            self.assertEqual(cache.replay_command(command, path), command)
+            (path / "entry-plan").write_bytes(b"probe\n")
+            (path / "second.pickle").write_bytes(b"second probe")
+            self.assertEqual(cache.replay_command(command, path), command)
+
+    def test_corrupt_replay_entry_is_rejected(self):
+        path = self.make_record()
+        entry = path / "entry-probe.lean"
+        entry.write_text("entry")
+        cache.write_signed(path / "manifest.json",
+                           {"identity": "input", "files": cache.record_files(path)}, self.key)
+        entry.write_text("tampered")
+        with self.assertRaises(ValueError):
+            cache.valid_record(path, "input", self.key)
+
     def test_corrupt_typed_record_is_rejected(self):
         path = self.make_record()
         (path / "probe.pickle").write_bytes(b"different!!")
