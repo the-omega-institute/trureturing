@@ -31,6 +31,7 @@ internal static partial class CleanLanesCommand
         if (log.Error is not null)
             return new("update_unknown", "update_unknown", log.Error);
         var allocated = log.Allocated!.Value;
+        var ambiguityAgeBound = allocated;
         var branches = AllocationBranches(log, item.Branch);
         foreach (var branch in branches)
         {
@@ -43,7 +44,7 @@ internal static partial class CleanLanesCommand
                 {
                     // Deleted or renamed branches can share a spelling with a surviving revision.
                     // Bound this historical ambiguity by the checkout's own allocation grace.
-                    allocated = Math.Max(allocated, log.Checkouts![branch].Max(static entry => entry.Updated));
+                    ambiguityAgeBound = Math.Max(ambiguityAgeBound, log.Checkouts![branch].Max(static entry => entry.Updated));
                     continue;
                 }
                 var tip = branch == item.Branch ? item.Head
@@ -68,7 +69,7 @@ internal static partial class CleanLanesCommand
             else if (creation.Updated > allocated)
                 return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
         }
-        var ageAnchor = Math.Max(updated.Value, allocated);
+        var ageAnchor = Math.Max(updated.Value, Math.Max(allocated, ambiguityAgeBound));
 
         if (merged.Value)
         {
