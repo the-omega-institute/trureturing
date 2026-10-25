@@ -404,8 +404,8 @@ def reuse(options, allow_recovered_base=False):
             expected = git(options.source, "show", pin_revision + ":" + pin).stdout
             if (path / pin).read_bytes() != expected:
                 raise Refused("incompatible_pin:" + pin)
-        print(json.dumps(dict(event="worktree_init", status="reused", path=str(path),
-                              branch=options.branch, base_revision=base)), flush=True)
+        return dict(event="worktree_init", status="reused", path=str(path),
+                    branch=options.branch, base_revision=base)
 
 
 def main(argv=None):
@@ -425,6 +425,18 @@ def main(argv=None):
     joined.add_argument("--path", type=Path, required=True)
     joined.add_argument("--branch", required=True)
     joined.add_argument("--base", required=True)
+    returned = commands.add_parser("return")
+    returned.add_argument("--path", type=Path, default=Path.cwd())
+    returned.add_argument("--pr", type=int, required=True)
+    returned.add_argument("--writers-joined", action="store_true")
+    claimed = commands.add_parser("claim")
+    claimed.add_argument("--path", type=Path)
+    claimed.add_argument("--branch", required=True)
+    claimed.add_argument("--base", required=True)
+    claimed.add_argument("--skip-restore", action="store_true")
+    pool = commands.add_parser("pool")
+    pool.add_argument("--dev", required=True)
+    pool.add_argument("--force", action="store_true")
     recovery = commands.add_parser("recover-init")
     recovery.add_argument("--path", type=Path, required=True)
     recovery.add_argument("--branch", required=True)
@@ -468,7 +480,13 @@ def main(argv=None):
                 options.argv.pop(0)
             with_command(options)
         elif options.action == "reuse":
-            reuse(options)
+            print(json.dumps(reuse(options)), flush=True)
+        elif options.action in ("return", "claim", "pool"):
+            from worktree_pool import return_tree, claim, sweep
+            result = (return_tree(options) if options.action == "return" else claim(options)
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+            print(json.dumps(result), flush=True)
+            return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
             from worktree_publication import recover_initialization
             print(json.dumps(recover_initialization(options)), flush=True)

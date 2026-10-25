@@ -17,6 +17,7 @@ import unittest
 from unittest.mock import patch
 
 from native_fixture import NativeFixture
+from idle_pool_cases import IdlePoolCases
 from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
@@ -29,7 +30,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
