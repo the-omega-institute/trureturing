@@ -33,8 +33,8 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "and applies the scalar function to each real diagonal entry. No continuity "
                     + "assumption on f is needed because the matrix spectrum is finite. Its internal "
                     + "kronecker_rpow consumer lies on the xor_sandwiches proof path. The "
-                    + "dependent-family escape audit remains unfinished under issue #19914; "
-                    + "the result audit remains unfinished under issue #15282."))),
+                    + "dependent-family escape audit remains unfinished; "
+                    + "the result audit remains unfinished."))),
                 DescribeRole.Theorem),
             Node("conditional-entropy", "condRenyiDown", "Sandwiched conditional Renyi entropy",
                 CondFormula(),
