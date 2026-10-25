@@ -2816,3 +2816,386 @@ available or whether lawful CPTP perturbations require square-root
 behavior. Neither alternative is resolved here.
 
 ## 追加锚（本行以下为增补区）
+## 17. The optimal uniform local Hölder exponent for the actual full-H tests
+
+**Theorem 17.1 (A first-order invisible family and the sharp exponent;
+repo-derived).** Keep exactly Definitions 1.1–1.2 and 11.1. All spaces
+and matrix algebras are over $\mathbb C$. In the fixed physical
+orthonormal basis $(e_0,\ldots,e_4)$ of $H=\mathbb C^5$, put
+
+$$
+\begin{gathered}
+r=\sqrt2,\qquad
+u=(e_0+e_3)/r,\qquad v_H=(e_1+e_4)/r,\qquad z=e_2,
+\qquad B=(u,v_H,z),\\
+c_0=(e_0-e_3)/r,\qquad c_1=(e_1-e_4)/r,
+\qquad C_\perp=(c_0,c_1),\qquad J=I_5-BB^\dagger,\\
+a=\frac{r+1}{\sqrt{12}},\qquad b=\frac{r-2}{\sqrt{12}},
+\qquad q=v_e=(a,a,b)^{\mathsf T},\qquad E=qq^\dagger,\\
+p=Bq=a u+a v_H+bz,\qquad P=pp^\dagger,
+\qquad P_1=P,\qquad P_0=I_5-P.
+\end{gathered}
+\tag{17.1}
+$$
+
+Here $u,v_H,z$ are precisely the vectors of (1.1), and $q$ is the
+vector of (1.5). For each real, fixed, known calibration angle
+$\theta$, use the actual operators $A_j(\theta)$ of (11.1) on all
+of $H$. For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$ define
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\|T^\dagger(A_j(\theta)^\dagger P_yA_j(\theta))
+-B^\dagger A_j(\theta)^\dagger P_yA_j(\theta)B\|_{\mathrm{op}}
+\Bigr\}.
+\end{aligned}
+\tag{17.2}
+$$
+
+Thus this is exactly (13.23), including both outcomes $y$ for each
+actual label $j$. The channel error uses the full unhalved diamond
+norm, with arbitrary finite untouched inaccessible references:
+
+$$
+\|\Lambda\|_\diamond
+=\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+\frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1},
+\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{17.3}
+$$
+
+Define explicitly
+
+$$
+\begin{gathered}
+S=\begin{pmatrix}
+-(1+2r)/3&-(5+2r)/9&(1+r)/9\\
+-(5+2r)/9&-(1+2r)/3&(1+r)/9\\
+(1+r)/9&(1+r)/9&0
+\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0&0\\0&1&0\end{pmatrix},\\
+G=BSB^\dagger+C_\perp ZB^\dagger+BZ^\dagger C_\perp^\dagger,
+\qquad K=GB=BS+C_\perp Z,\\
+U_t=\exp(itG),\qquad W_t=U_tB,\qquad
+T_t(X)=W_tXW_t^\dagger\quad(t\in\mathbb R).
+\end{gathered}
+\tag{17.4}
+$$
+
+Each $T_t$ is a complex-linear CPTP map on the full stipulated
+rectangular domain. At the permitted fixed calibration $\theta=0$,
+for every $0<t\le1/25$ it satisfies
+
+$$
+\begin{gathered}
+0< t^2\left(\sqrt2 a-\frac12\right)^2
+\le\delta_0(T_t)\le50t^2,\\
+\|T_t-\operatorname{Ad}_B\|_\diamond\ge t.
+\end{gathered}
+\tag{17.5}
+$$
+
+In particular, with $t_n=1/(25n)$ and $T_n=T_{t_n}$, for every
+integer $n\ge1$,
+
+$$
+0<\delta_0(T_n)\le\frac{2}{25n^2},\qquad
+\|T_n-\operatorname{Ad}_B\|_\diamond\ge\frac1{25n},\qquad
+\frac{\|T_n-\operatorname{Ad}_B\|_\diamond}{\delta_0(T_n)}
+\ge\frac n2.
+\tag{17.6}
+$$
+
+Consequently there are no finite constants $C>0$ and $\eta>0$
+such that, simultaneously for all real $\theta$ and all these
+complex CPTP maps,
+
+$$
+\delta_\theta(T)\le\eta
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond\le C\delta_\theta(T).
+\tag{17.7}
+$$
+
+More generally no exponent $\alpha>1/2$ admits a local bound with
+a finite constant, even at $\theta=0$. Together with Theorem 13.3,
+this makes $1/2$ the optimal worst-case uniform local Hölder exponent
+on exactly this domain. This does not determine a best constant,
+an exact optimal modulus function, or the optimal exponent
+separately at each nonzero angle.
+
+No output restriction to $R=B\mathbb C^3$, conditional branch
+correctness, full-$H$ fairness, or known input state is assumed.
+The effects in (17.2) retain the actual joint label probabilities;
+they are not conditioned or renormalized. When $T$ is an average
+corrected channel, the channel error here is the error of that
+average, without a uniform approximation assertion on every
+history/record branch of arbitrarily small weight. Calibration is
+held fixed and known when each defect is evaluated.
+
+Proof. The coordinates (17.1) give
+
+$$
+\begin{gathered}
+B^\dagger B=I_3,\qquad
+C_\perp^\dagger C_\perp=I_2,\qquad
+B^\dagger C_\perp=0,\\
+BB^\dagger+C_\perp C_\perp^\dagger=I_5,
+\qquad \|q\|=\|p\|=1.
+\end{gathered}
+\tag{17.8}
+$$
+
+At $\theta=0$, (11.1) gives $A_0=K_0$ and $A_1=K_1$.
+Their full five-dimensional effects and the tested rank-one vectors
+are exactly
+
+$$
+\begin{aligned}
+D_0:=A_0^\dagger A_0&=\operatorname{diag}(1,0,1/2,0,1),
+& D_1:=A_1^\dagger A_1&=I_5-D_0,\\
+t_0:=A_0^\dagger p&=a e_0+(a/r)e_2+b e_4,
+& t_1:=A_1^\dagger p&=a e_1+(a/r)e_2+b e_3.
+\end{aligned}
+\tag{17.9}
+$$
+
+It follows that the entire collection of five effects tested in
+(17.2), at this angle, is
+
+$$
+\mathcal M={P,\ t_0t_0^\dagger,\ t_1t_1^\dagger,
+\ D_0-t_0t_0^\dagger,\ D_1-t_1t_1^\dagger\}.
+\tag{17.10}
+$$
+
+Indeed $A_j^\dagger P_1A_j=t_jt_j^\dagger$ and
+$A_j^\dagger P_0A_j=D_j-t_jt_j^\dagger$. Each $M\in\mathcal M$
+is a positive contraction: $0\le P\le I_5$ and
+$0\le A_j^\dagger P_yA_j\le D_j\le I_5$. These are actual
+full-$H$ effects, and $D_j$ has not been replaced by $I_5/2$.
+
+The matrix $S$ is real symmetric, so (17.4) gives $G=G^\dagger$.
+Hence $U_t$ is unitary and $W_t^\dagger W_t=I_3$ for real $t$.
+For every finite reference, conjugation by $W_t\otimes I$ preserves
+positivity, and the last identity gives trace preservation.
+Thus the single rectangular Kraus operator $W_t$ defines a
+complex-linear CPTP map, including all complex input coherences.
+This is the usual finite-dimensional Kraus criterion; see John
+Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapter 2. No postselection is involved. A useful explicit bound is
+
+$$
+\begin{gathered}
+\|Z\|_{\mathrm{op}}=1,\qquad
+\|S\|_{\mathrm{HS}}^2=\frac{80+40r}{27}<6,\\
+h:=\|G\|_{\mathrm{op}}
+\le\|S\|_{\mathrm{op}}+2\|Z\|_{\mathrm{op}}
+\le\|S\|_{\mathrm{HS}}+2<\sqrt6+2<5.
+\end{gathered}
+\tag{17.11}
+$$
+
+The displayed Hilbert–Schmidt identity is obtained by squaring the
+nine entries of $S$ and using $r^2=2$; its strict inequality follows
+from $r<3/2$.
+
+The exact cancellation certificate consists of the following finite
+matrix identities, all in the coordinates (17.1) and (17.4):
+
+$$
+\begin{gathered}
+\lambda=-\frac{10+7r}{9},\qquad
+\mu=\frac{2r-1}{9},\\
+p^\dagger K=\lambda p^\dagger B,\qquad
+t_j^\dagger K=\mu t_j^\dagger B\quad(j=0,1),
+\qquad B^\dagger K=S,\\
+B^\dagger D_0K=
+\begin{pmatrix}
+(1-r)/3&-(5+2r)/18&(1+r)/18\\
+-(5+2r)/18&-(2+r)/3&(1+r)/18\\
+(1+r)/18&(1+r)/18&0
+\end{pmatrix}.
+\end{gathered}
+\tag{17.12}
+$$
+
+These equalities follow by substituting (17.1), (17.4) and (17.9)
+and multiplying, with $r^2=2$. They give, in particular,
+
+$$
+\begin{aligned}
+B^\dagger PK&=\lambda B^\dagger PB,\\
+B^\dagger(t_jt_j^\dagger)K&=
+\mu B^\dagger(t_jt_j^\dagger)B\quad(j=0,1),\\
+B^\dagger D_1K&=S-B^\dagger D_0K.
+\end{aligned}
+\tag{17.13}
+$$
+
+The first two lines are Hermitian because $\lambda,\mu$ are real.
+The displayed matrix $B^\dagger D_0K$ is real symmetric, as are
+$S$ and therefore $B^\dagger D_1K$. Subtracting the corresponding
+rank-one terms proves that $B^\dagger MK$ is Hermitian for every
+one of the five effects in (17.10), including both $y=0$ effects.
+For each such $M$ define $F_M(t)=B^\dagger U_t^\dagger MU_tB$.
+Differentiation now gives the whole matrix identity
+
+$$
+F_M'(0)=i(B^\dagger MK-K^\dagger MB)=0
+\qquad(M\in\mathcal M).
+\tag{17.14}
+$$
+
+Thus the certificate cancels all entries of the complex $3\times3$
+effect matrices, not just expectations on particular real inputs.
+
+For every real $s$, differentiating once more yields
+
+$$
+\begin{aligned}
+F_M''(s)&=-B^\dagger U_s^\dagger[G,[G,M]]U_sB,\\
+\|F_M''(s)\|_{\mathrm{op}}
+&\le4h^2\|M\|_{\mathrm{op}}\le100,\\
+\|F_M(t)-F_M(0)\|_{\mathrm{op}}&\le50t^2
+\quad(t\in\mathbb R).
+\end{aligned}
+\tag{17.15}
+$$
+
+The last line follows by integrating twice and using (17.14).
+Since $T_t^\dagger(M)=F_M(t)$ and $F_M(0)=B^\dagger MB$,
+these are exactly the five differences in (17.2). Consequently
+$\delta_0(T_t)\le50t^2$, without a fairness assumption or an
+output restriction.
+
+For the lower bound on channel error, use the legitimate pure
+qutrit input $x=(1,0,0)^{\mathsf T}$, with ideal output $u=Bx$.
+By (17.4) and (17.8), $JGu=C_\perp Zx=c_0$ and $\|c_0\|=1$.
+The integral remainder for the finite matrix exponential gives
+
+$$
+\|U_t-I_5-itG\|_{\mathrm{op}}
+\le\frac{h^2t^2}{2}\le\frac{25t^2}{2},\qquad
+\|JU_tu\|\ge t-\frac{25t^2}{2}\ge\frac t2
+\quad(0<t\le1/25).
+\tag{17.16}
+$$
+
+Indeed the second derivative of $U_s$ is $-G^2U_s$, whose norm
+is at most $h^2$, and $Ju=0$.
+For two unit vectors $u,w$, the unhalved trace distance of their
+rank-one projections is
+
+$$
+\|ww^\dagger-uu^\dagger\|_1
+=2\sqrt{1-|\langle u,w\rangle|^2}.
+\tag{17.17}
+$$
+
+This standard pure-state trace-distance identity is also immediate
+on their at most two-dimensional span: the difference has trace
+zero and eigenvalues
+$\pm\sqrt{1-|\langle u,w\rangle|^2}$, with zeros on the
+orthogonal complement. See also Watrous, Chapters 2–3, for
+trace-distance and channel-distinguishability conventions.
+The range of $J$ is orthogonal to $u$, so taking $w=U_tu$ gives
+
+$$
+\begin{aligned}
+\|(T_t-\operatorname{Ad}_B)(xx^\dagger)\|_1
+&=2\sqrt{1-|\langle u,U_tu\rangle|^2}\\
+&\ge2\|JU_tu\|\ge t,\\
+\|T_t-\operatorname{Ad}_B\|_\diamond&\ge t
+\qquad(0<t\le1/25).
+\end{aligned}
+\tag{17.18}
+$$
+
+The last line uses $d=1$ and $X=xx^\dagger$ in (17.3), where
+$\|X\|_1=1$. Allowing any further finite untouched reference can
+only increase the supremum. In particular no factor of two is
+removed from this lower bound.
+
+The defect on this interval is strictly positive as well.
+Since $JGp=C_\perp Zq=a(c_0+c_1)$, (17.16)'s remainder estimate
+applied to $p$ yields
+
+$$
+\begin{aligned}
+\|JU_tp\|&\ge t\sqrt2 a-\frac{25t^2}{2}
+\ge t\left(\sqrt2 a-\frac12\right)>0,\\
+\sqrt2 a&=\frac{1+\sqrt2}{\sqrt6}>\frac12
+\qquad(0<t\le1/25).
+\end{aligned}
+\tag{17.19}
+$$
+
+On input $q$, the immediate ideal effect has expectation one,
+whereas the actual expectation is $|\langle p,U_tp\rangle|^2$.
+As $\operatorname{ran}J\subseteq p^\perp$, this gives
+
+$$
+\begin{aligned}
+\delta_0(T_t)
+&\ge|\langle q,(T_t^\dagger(P)-E)q\rangle|\\
+&=1-|\langle p,U_tp\rangle|^2
+\ge\|JU_tp\|^2
+\ge t^2\left(\sqrt2 a-\frac12\right)^2>0.
+\end{aligned}
+\tag{17.20}
+$$
+
+Equations (17.15), (17.18) and (17.20) prove (17.5).
+Substitution of $t_n=1/(25n)$ gives
+$50t_n^2=2/(25n^2)$ and hence all of (17.6). In particular the
+defects tend to zero while the displayed error-to-defect ratios
+diverge. Given any proposed finite $C>0$ and $\eta>0$ in (17.7),
+choose an integer $n$ large enough that
+
+$$
+n>2C,\qquad \frac{2}{25n^2}\le\eta.
+\tag{17.21}
+$$
+
+Then $\delta_0(T_n)\le\eta$ but the ratio in (17.6) exceeds
+$C$, a contradiction. The permitted single calibration
+$\theta=0$ suffices to refute constants quantified over all real
+calibration angles.
+
+For any fixed $\alpha>1/2$, (17.5) also gives
+
+$$
+\frac{\|T_t-\operatorname{Ad}_B\|_\diamond}
+{\delta_0(T_t)^\alpha}
+\ge 50^{-\alpha}t^{1-2\alpha}\longrightarrow+\infty
+\qquad(t\downarrow0).
+\tag{17.22}
+$$
+
+Thus no finite coefficient and positive local defect threshold
+can give that exponent, even at zero angle. For the complementary
+upper bound, directly reuse Theorem 13.3: on precisely this full
+complex CPTP domain, uniformly over all real $\theta$,
+
+$$
+\delta_\theta(T)\le\varepsilon\le\frac12,\quad\varepsilon>0
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond\le800\sqrt\varepsilon.
+\tag{17.23}
+$$
+
+For positive defect take $\varepsilon=\delta_\theta(T)$; at zero
+defect let $\varepsilon\downarrow0$ in the same inequality.
+This supplies the exponent $1/2$, while (17.22) excludes every
+larger exponent. The upper estimate is the existing Theorem 13.3,
+and the present construction adds its matching exponent obstruction.
+It does not yield an optimal coefficient, an exact modulus, a
+classification at every nonzero angle, or a calibration-error model.
+It makes no physical-realization or resource-minimum assertion.
+$\square$
+
+## 追加锚（本行以下为增补区）

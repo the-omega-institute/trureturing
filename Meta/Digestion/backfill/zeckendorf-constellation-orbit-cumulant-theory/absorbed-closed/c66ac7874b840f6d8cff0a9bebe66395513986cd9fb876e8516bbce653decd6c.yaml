@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c66ac7874b840f6d8cff0a9bebe66395513986cd9fb876e8516bbce653decd6c
+  normalized_sha256: sha256:c66ac7874b840f6d8cff0a9bebe66395513986cd9fb876e8516bbce653decd6c
+cas_ref: sha256:c66ac7874b840f6d8cff0a9bebe66395513986cd9fb876e8516bbce653decd6c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
+    target_statement_id: sha256:51902b111223cfeba92b996bd17b15ed9ea8f9eede96eceb6d8826e46ec69d7b
+receipts:
+  unresolved_subitems: []

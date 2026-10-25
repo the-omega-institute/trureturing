@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f175db7524c8440ad6b0e6d1f3c9291dbaa549dedaec86c07f87be3cea8df575
+  normalized_sha256: sha256:f175db7524c8440ad6b0e6d1f3c9291dbaa549dedaec86c07f87be3cea8df575
+cas_ref: sha256:f175db7524c8440ad6b0e6d1f3c9291dbaa549dedaec86c07f87be3cea8df575
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有界性或闭性仅列为全局算子升级时待验证的条件。
+    previous_atom_id: cfbccedeb1cea4ac9e0218eb825d4da4e66f6c1a07347035445bd300edbd979c
+    next_atom_id: 2ed358a1c00c984032fb8df8ec61f475859739ca562add4083a0ff31888c2b8a
