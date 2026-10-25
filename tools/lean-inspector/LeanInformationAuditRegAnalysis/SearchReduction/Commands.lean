@@ -701,6 +701,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
       | .ok value => pure value
       | .error message => throwError "{message}"
     unless actual == expected do throwError "search.probe_cache_source_inputs_mismatch"
+    emitLookupRecord s!"PROBE_CACHE_CURRENT_SOURCE_DATA checked=true declarations={actual.2.size} modules={actual.1.size}"
     profilePhase "probe/cache-source-inputs-end"
   if let some module := record.dependencyModule? then
     let imported ← getEnv
@@ -721,6 +722,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   auditProbeCertificates source request record.result
   profilePhase "probe/publication-start"
   liftTermElabM <| publish name record.result (some source) (some record.targetHeader)
+  emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true"
   profilePhase "probe/publication-end"
   let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
   let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule

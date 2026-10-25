@@ -64,8 +64,6 @@ def outputs(directory, basis):
 def ensure_snapshot(directory, basis, roots, producer, produce, hashes):
     directory = pathlib.Path(directory)
     configuration = {"version": VERSION, "basis": basis, "roots": roots}
-    if not pathlib.Path(producer).is_file():
-        raise ValueError("snapshot producer is not built")
     cache_path = directory / "cache-sha256.json"
     try:
         old = read_json(cache_path)
@@ -76,6 +74,8 @@ def ensure_snapshot(directory, basis, roots, producer, produce, hashes):
             return "reused"
     except (OSError, ValueError, KeyError, TypeError):
         pass
+    if not pathlib.Path(producer).is_file():
+        raise ValueError("snapshot producer is not built")
     produce()
     checked_outputs = outputs(directory, basis)
     record = {"configuration": configuration,

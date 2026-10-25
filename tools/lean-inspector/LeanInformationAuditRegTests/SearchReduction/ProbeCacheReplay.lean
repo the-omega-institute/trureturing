@@ -5,6 +5,34 @@ import LeanInformationAuditRegTests.SearchReduction.ProbeCacheFixture
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 open LeanInformationAudit.Tests.SearchReduction
 
+run_cmd do
+  let original ← getEnv
+  let helper := `cacheInputHelper
+  let target := `cacheInputRoot
+  let request : Request := {target, «baseline» := #[`Mathlib], baselineCommit := "input-regression"}
+  let build := fun (proof : Expr) => do
+    modifyEnv fun _ => original
+    liftTermElabM do
+      discard <| checkProof helper [] (mkConst ``True) proof
+      discard <| checkProof target [] (mkConst ``True) (mkConst helper)
+    getEnv
+  let inputs := fun source => match probeSourceInputs source request with
+    | .ok value => pure value
+    | .error message => throwError "{message}"
+  try
+    let first ← inputs (← build (mkConst ``True.intro))
+    unless first == (← inputs (← getEnv)) do throwError "unchanged source data did not match"
+    liftTermElabM do
+      discard <| checkProof `unrelatedCurrentImplementation [] (mkConst ``True) (mkConst ``True.intro)
+    unless first == (← inputs (← getEnv)) do
+      throwError "unrelated current implementation entered source data identity"
+    let different := mkApp
+      (mkLambda `h .default (mkConst ``True) (mkBVar 0)) (mkConst ``True.intro)
+    let changed ← inputs (← build different)
+    if first == changed then throwError "changed transitive mathematical input was reused"
+    logInfo "probe cache: exact transitive data changes invalidate; unrelated implementation does not"
+  finally modifyEnv fun _ => original
+
 run_cmd withCacheFixture fun f => do
   unless ← replayProbeCache f.directory f.identity f.request #[] `cacheReplayValid do
     throwError "live cache replay did not read a saved record"

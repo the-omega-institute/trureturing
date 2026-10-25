@@ -48,6 +48,9 @@ class FixtureCacheTests(unittest.TestCase):
             self.assertEqual(ensure(), "generated")
             self.assertEqual(ensure(), "reused")
             self.assertEqual(len(calls), 1)
+            self.assertEqual(cache.ensure_snapshot(
+                directory, "basis", ["Fixture"], root / "not-built",
+                produce, cache.ContentHashes()), "reused")
             # Equal-size replacement still invalidates the content fingerprint.
             source.write_bytes(b"compiled other")
             self.assertEqual(ensure(), "generated")
