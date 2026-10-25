@@ -40,8 +40,7 @@ private theorem sparse_det_shift (u z : ℂ) (hu : u * star u = 1) :
     (z • (1 : Matrix (Fin 3) (Fin 3) ℂ) - sparseMatrix u).det =
       (z - 1/3) * ((z - 1/3)^2 - 2/144) := by
   simp only [sparseMatrix, Matrix.det_fin_three, Matrix.sub_apply, Matrix.smul_apply,
-    Matrix.one_apply, smul_eq_mul, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Matrix.head_cons, Matrix.head_fin_const]
+    Matrix.one_apply, smul_eq_mul]
   norm_num
   simp only [Complex.star_def] at hu
   linear_combination (-(z-1/3)/144) * hu
@@ -133,7 +132,12 @@ private theorem supported_kernel_iff (m k₁ k₂ : ℤ) :
       let A : Matrix (Fin 1) (Fin 2) ℤ := !![m-1, m]
       let v : Fin 2 → ℤ := ![m, -(m-1)]
       have hdet : (augment A).det ≠ 0 := by
-        simp [Matrix.det_fin_two, augment, A]
+        have he : augment A = !![1, 1; m-1, m] := by
+          ext i j
+          fin_cases i <;> fin_cases j <;> rfl
+        rw [he, Matrix.det_fin_two]
+        change 1*m - 1*(m-1) ≠ 0
+        omega
       have hv : A *ᵥ v = 0 := by
         ext i
         fin_cases i
@@ -195,6 +199,64 @@ theorem sparse_pair_data (m : ℕ) (hm : 2 ≤ m) :
     congr 2
     omega
 
+/-- Integer energy labels in the fixed basis. -/
+def energy (m : ℕ) : Fin 3 → ℤ := ![0, 1, m]
+
+/-- Labelled ordered-coordinate exponents. Equal numerical gaps keep their labels. -/
+abbrev Exponent := Fin 3 → Fin 3 → ℕ
+
+/-- Total polynomial degree. -/
+def degree (alpha : Exponent) : ℕ := ∑ i, ∑ j, alpha i j
+
+/-- The actual integer weight of a labelled monomial. -/
+def weight (m : ℕ) (alpha : Exponent) : ℤ :=
+  ∑ i, ∑ j, (alpha i j : ℤ) * (energy m i - energy m j)
+
+/-- A polynomial monomial in all nine actual matrix entries. -/
+def monomial (X : Matrix (Fin 3) (Fin 3) ℂ) (alpha : Exponent) : ℂ :=
+  ∏ i, ∏ j, X i j ^ alpha i j
+
+/-- Every supported low-degree zero-weight monomial is independent of the unit
+phase. Monomials containing one of the actual zero coordinates vanish on both
+matrices; their zero powers remain one. -/
+theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
+    (hd : degree alpha < 2*m-1) (hw : weight m alpha = 0)
+    (u : ℂ) (hu : u * star u = 1) :
+    monomial (sparseMatrix 1) alpha = monomial (sparseMatrix u) alpha := by
+  by_cases hz : alpha 0 1 = 0 ∧ alpha 1 0 = 0
+  · obtain ⟨hz₀,hz₁⟩ := hz
+    let k₁ : ℤ := (alpha 2 1 : ℤ) - alpha 1 2
+    let k₂ : ℤ := (alpha 2 0 : ℤ) - alpha 0 2
+    have hk : ((m : ℤ)-1)*k₁ + (m : ℤ)*k₂ = 0 := by
+      simp [weight, energy, Fin.sum_univ_succ, hz₀, hz₁] at hw
+      dsimp [k₁, k₂]
+      linear_combination hw
+    obtain ⟨ell, he₁, he₂⟩ := (supported_kernel_iff (m : ℤ) k₁ k₂).mp hk
+    have hnorm : |k₁| + |k₂| ≤ (degree alpha : ℤ) := by
+      dsimp [k₁, k₂]
+      simp [degree, Fin.sum_univ_succ]
+      omega
+    have hlt : (degree alpha : ℤ) < 2*(m : ℤ)-1 := by
+      exact_mod_cast hd
+    have hell : ell = 0 := by
+      by_contra hne
+      have hlen := supported_kernel_length (m : ℤ) ell (by exact_mod_cast hm) hne
+      rw [← he₁, ← he₂] at hlen
+      omega
+    have ha : alpha 2 1 = alpha 1 2 := by simp [hell, k₁] at he₁; omega
+    have hb : alpha 2 0 = alpha 0 2 := by simp [hell, k₂] at he₂; omega
+    have hp : star u ^ alpha 0 2 * u ^ alpha 0 2 = 1 := by
+      rw [← mul_pow, mul_comm, hu, one_pow]
+    simp [monomial, sparseMatrix, Fin.prod_univ_succ, hz₀, hz₁, ha, hb, mul_pow]
+    linear_combination -((1/3 : ℂ)^(alpha 0 0) * (1/3 : ℂ)^(alpha 1 1) *
+      (1/3 : ℂ)^(alpha 2 2) * ((1/12 : ℂ)^(alpha 0 2))^2 *
+      ((1/12 : ℂ)^(alpha 1 2))^2) * hp
+  · push_neg at hz
+    rcases hz with hz | hz
+    · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz]
+    · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz]
+
+#print axioms sparse_low_monomials
 #print axioms sparse_density_spectrum
 #print axioms sparse_pair_data
 
