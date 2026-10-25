@@ -112,3 +112,31 @@ class QualificationCases:
         self.assertIn("deadline", rows[1]["reason"])
         self.assertIn("deadline", rows[2]["reason"])
         self.assertEqual("failed", rows[-1]["status"])
+
+    def pool_removal_qualification_preserves_refusal_and_operational_failure(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        import worktree_pool as pool
+        self.pool_return()
+        original = preservation.qualify
+        for force in (False, True):
+            for stage in ((1, 2) if force else (1,)):
+                for refused in (False, True):
+                    with self.subTest(force=force, stage=stage, refused=refused):
+                        calls = []
+                        def injected(*args, **kwargs):
+                            calls.append(True)
+                            if len(calls) == stage:
+                                raise (protocol.Refused("initialization_in_progress") if refused
+                                       else protocol.GitFailure("fatal: pool qualification broke"))
+                            return original(*args, **kwargs)
+                        with patch.object(pool, "available_fraction", return_value=0.04), patch.object(preservation, "qualify", side_effect=injected):
+                            result = pool.sweep(self.main, self.base, force=force)
+                        self.assertTrue(self.tree.is_dir())
+                        row = result["items"][0]
+                        self.assertEqual("succeeded" if refused else "failed", result["status"])
+                        if refused:
+                            self.assertEqual("retained", row["outcome"])
+                            self.assertEqual("initialization_in_progress", row["reason"])
+                        else:
+                            self.assertIn("pool qualification broke", json.dumps(row))

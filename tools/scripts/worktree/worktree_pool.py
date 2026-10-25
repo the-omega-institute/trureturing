@@ -132,9 +132,15 @@ def sweep_locked(source, dev, force=False):
                     raise Refused("idle_identity_changed")
                 # Common removal owns the index/ref scopes and snapshot rules.
                 stage = "remove"
-                result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
-                    preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
-                                                               branch=observed["branch"]))]))
+                try:
+                    result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
+                        preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
+                                                                   branch=observed["branch"]))]))
+                except GitFailure:
+                    raise
+                except Refused as error:
+                    outcomes.append(dict(observed, outcome="retained", reason=str(error)))
+                    continue
                 for removal in result["items"]:
                     outcomes.append(dict(observed, **dict(removal,
                         outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],

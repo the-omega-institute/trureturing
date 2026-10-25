@@ -61,6 +61,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(injected);
         var failed = outcome is not ("eligible" or "refused");
         Assert.Equal(!failed, result.Success);
+        Assert.Equal(failed, result.ExitCode != 0);
         Assert.Equal(failed ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         if (outcome == "eligible")
         {
@@ -86,7 +87,7 @@ public sealed partial class CleanLanesCommandTests
     {
         foreach (var (stage, force) in new[] { ("batch", false), ("batch", true),
             ("preview", false), ("remove", true) })
-            foreach (var failure in new[] { "outer_timeout", "traceback", "malformed", "missing" })
+            foreach (var failure in new[] { "outer_timeout", "unavailable", "traceback", "malformed", "missing" })
                 yield return [stage, force, failure];
     }
 
@@ -102,6 +103,7 @@ public sealed partial class CleanLanesCommandTests
             if (file != "python3" || !(stage == "batch" ? IsProtocol(args, "qualify")
                 : IsProtocol(args, "remove") && args.Contains("--preview") == (stage == "preview"))) return null;
             if (failure == "outer_timeout") throw new TimeoutException("outer qualification deadline");
+            if (failure == "unavailable") throw new System.ComponentModel.Win32Exception("python unavailable at qualification boundary");
             return failure == "traceback"
                 ? new ProcessOutput(17, [], Encoding.UTF8.GetBytes("Traceback (most recent call last):\n" + new string('x', 6000) + "\nOSError: causal qualification diagnostic\n"))
                 : new ProcessOutput(0, Encoding.UTF8.GetBytes(failure == "missing"
@@ -109,6 +111,7 @@ public sealed partial class CleanLanesCommandTests
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
         Assert.False(result.Success);
+        Assert.NotEqual(0, result.ExitCode);
         Assert.True(Directory.Exists(lane));
         var reason = ReasonFor(result.Output, lane);
         Assert.StartsWith("qualification_failed:", reason);
