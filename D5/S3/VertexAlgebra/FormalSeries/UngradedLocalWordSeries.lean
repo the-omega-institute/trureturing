@@ -6,20 +6,23 @@
    utility: none
    digest: Locality and statewise truncation give common infinite vector word series. -/
 
-import D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
+import D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 import Mathlib.RingTheory.MvPowerSeries.Basic
 
 /-!
-Classical formal-variable locality, with the Matsuo--Nagatomo and Carnahan
-attributions retained in the imported suppliers. The contextual-exchange
-proof is generalized from the imported public pair lift and intertwining laws.
-The frozen graded supplier remains unchanged.
-proof_shape: content
+Classical finite-word locality is supplied by common_cleared_fields. The native
+series below is constructed from that common lower-bounded array, and all
+signed coefficients are recovered after a statewise monomial shift.
+The Matsuo--Nagatomo and Carnahan attributions are retained in the imports.
+proof_shape: ungraded_local_word_common_series: content
+proof_shape: polynomialAction_map: bind-only
+proof_shape: signedExtend_map: bind-only
 admission_basis: escape-witness
-escape_witness: after clearing, each label can be moved rightmost. Its actual
-truncation on the original input bounds that coordinate independently of all
-other signed exponents. Intersecting those bounds yields a rectangle, without
-energy, finite support, homogeneous states, or a common-product premise.
+escape_witness: choose one common locality order before the input and construct
+a native module-valued MvPowerSeries from the common signed distribution, with
+exact recovery including the region outside the shifted nonnegative orthant.
+The convolution and extension readout helpers are consumed by
+actual_three_field_common_series.
 -/
 
 set_option autoImplicit false
@@ -28,6 +31,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.UngradedLocalWordSeries
 
 open UniformGradedLocalCorrelator
+open LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 open FieldNormalProductLocality (deltaEnd commutator)
 open scoped BigOperators VertexOperator
 noncomputable section
@@ -41,152 +45,15 @@ theorem polynomialAction_map {W : Type*} [AddCommGroup W] [Module ℂ W]
     f (polynomialAction q F e) =
       polynomialAction q (fun d => f (F d)) e := by
   classical
-  induction q using Finsupp.induction_linear with
+  induction q using AddMonoidAlgebra.induction_linear with
   | zero => simp
   | add q r hq hr =>
-    simpa only [map_add, LinearMap.add_apply, Pi.add_apply, hq, hr]
+    simp only [map_add, LinearMap.add_apply, Pi.add_apply, hq, hr]
   | single b c =>
+    simp only [polynomialAction, AddMonoidAlgebra.lift_single,
+      LinearMap.smul_apply, Pi.smul_apply]
     change f (c • F (e - b)) = c • f (F (e - b))
     exact f.map_smul c _
-
-/-- Strict lower support in one labelled coordinate; other exponents are arbitrary. -/
-private def BelowIn (F : Distribution N V) (i : Fin N) (b : ℤ) : Prop :=
-  ∀ e, e i < b → F e = 0
-
-private theorem word_append (A : Fin N → VertexOperator ℂ V)
-    (l r : List (Fin N)) (e : Exponent N) : word A (l ++ r) e = word A l e * word A r e := by
-  induction l with
-  | nil => simp [word]
-  | cons i l ih => simp [word, ih, mul_assoc]
-
-private theorem clearing_kills (i j : Fin N) (k : ℕ) (hij : i < j)
-    (F : Distribution N V) (hF : (difference i j ^ k) F = 0) :
-    polynomialAction (clearingPolynomial N k) F = 0 := by
-  have hm : (i, j) ∈ labelledPairs N := by simp [labelledPairs, hij]
-  have factor := Finset.prod_erase_mul (labelledPairs N)
-    (fun p => pairPolynomial p.1 p.2 ^ k) hm
-  change polynomialAction (∏ p ∈ labelledPairs N, pairPolynomial p.1 p.2 ^ k) F = 0
-  rw [← factor, map_mul, map_pow, action_pair, Module.End.mul_apply, hF, map_zero]
-
-private theorem clear_adjacent_lt (A : Fin N → VertexOperator ℂ V) (Ω : V)
-    (P : Module.End ℂ V) (k : ℕ)
-    (locality : ∀ i j : Fin N, i < j →
-      (deltaEnd ^ k) (commutator (A i) (A j)) = 0)
-    (pre post : List (Fin N)) (i j : Fin N) (hij : i < j)
-    (hip : i ∉ pre) (hjp : j ∉ pre) (his : i ∉ post) (hjs : j ∉ post) :
-    polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ i :: j :: post)) =
-      polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ j :: i :: post)) := by
-  apply sub_eq_zero.mp
-  rw [← map_sub, ← liftPair_commutator]
-  apply clearing_kills i j k hij
-  rw [intertwine_power deltaEnd (difference i j) (liftPair A Ω P pre post i j)
-    (liftPair_difference A Ω P pre post i j (ne_of_lt hij) hip hjp his hjs),
-    locality i j hij, map_zero]
-
-private theorem clear_adjacent (A : Fin N → VertexOperator ℂ V) (Ω : V)
-    (P : Module.End ℂ V) (k : ℕ)
-    (locality : ∀ i j : Fin N, i < j →
-      (deltaEnd ^ k) (commutator (A i) (A j)) = 0)
-    (pre post : List (Fin N)) (i j : Fin N)
-    (hn : (pre ++ i :: j :: post).Nodup) :
-    polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ i :: j :: post)) =
-      polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ j :: i :: post)) := by
-  have hs := (List.nodup_append.mp hn).2.1
-  have hcross := (List.nodup_append.mp hn).2.2
-  have hip : i ∉ pre := by intro hi; exact hcross i hi i (by simp) rfl
-  have hjp : j ∉ pre := by intro hj; exact hcross j hj j (by simp) rfl
-  have his : i ∉ post := fun hi => (List.nodup_cons.mp hs).1 (by simp [hi])
-  have hjs : j ∉ post := (List.nodup_cons.mp (List.nodup_cons.mp hs).2).1
-  have hne : i ≠ j := by intro he; exact (List.nodup_cons.mp hs).1 (by simp [he])
-  rcases lt_or_gt_of_ne hne with hij | hji
-  · exact clear_adjacent_lt A Ω P k locality pre post i j hij hip hjp his hjs
-  · exact (clear_adjacent_lt A Ω P k locality pre post j i hji hjp hip hjs his).symm
-
-/-- Contextual exchange requires only actual operator locality. Labels, rather
-than field values, are distinct. No vacuum, grading or creation law is used. -/
-private theorem clear_permutation_context (A : Fin N → VertexOperator ℂ V) (Ω : V)
-    (P : Module.End ℂ V) (k : ℕ)
-    (locality : ∀ i j : Fin N, i < j →
-      (deltaEnd ^ k) (commutator (A i) (A j)) = 0)
-    {l r : List (Fin N)} (hp : l.Perm r)
-    (pre post : List (Fin N)) (hn : (pre ++ l ++ post).Nodup) :
-    polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ l ++ post)) =
-      polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A Ω P (pre ++ r ++ post)) := by
-  induction hp generalizing pre post with
-  | nil => rfl
-  | cons i hp ih =>
-    simpa only [List.append_assoc, List.singleton_append] using
-      ih (pre ++ [i]) post (by simpa [List.append_assoc] using hn)
-  | swap i j tail =>
-    simpa only [List.cons_append, List.append_assoc] using
-      clear_adjacent A Ω P k locality pre (tail ++ post) j i
-        (by simpa [List.append_assoc] using hn)
-  | trans hp hq ihp ihq =>
-    exact (ihp pre post hn).trans (ihq pre post
-      (((hp.append_left pre).append_right post).nodup_iff.mp hn))
-
-private theorem difference_below (F : Distribution N V) (i j l : Fin N)
-    (b : ℤ) (hF : BelowIn F i b) : BelowIn (difference j l F) i b := by
-  intro e he
-  have hj : (e - Pi.single j 1 : Exponent N) i < b := by
-    simp only [Pi.sub_apply, Pi.single_apply]
-    split_ifs <;> omega
-  have hl : (e - Pi.single l 1 : Exponent N) i < b := by
-    simp only [Pi.sub_apply, Pi.single_apply]
-    split_ifs <;> omega
-  change F (e - Pi.single j 1) - F (e - Pi.single l 1) = 0
-  rw [hF _ hj, hF _ hl, sub_self]
-
-private theorem difference_power_below (F : Distribution N V) (i j l : Fin N)
-    (b : ℤ) (n : ℕ) (hF : BelowIn F i b) :
-    BelowIn ((difference j l ^ n) F) i b := by
-  induction n with
-  | zero => simpa using hF
-  | succ n ih =>
-    rw [pow_succ', Module.End.mul_apply]
-    exact difference_below _ i j l b ih
-
-private theorem clearing_below (k : ℕ) (F : Distribution N V) (i : Fin N)
-    (b : ℤ) (hF : BelowIn F i b) :
-    BelowIn (polynomialAction (clearingPolynomial N k) F) i b := by
-  have general (s : Finset (Fin N × Fin N)) :
-      BelowIn (polynomialAction (∏ p ∈ s, pairPolynomial p.1 p.2 ^ k) F) i b := by
-    induction s using Finset.induction_on with
-    | empty => simpa using hF
-    | @insert p s hp ih =>
-      rw [Finset.prod_insert hp, map_mul, map_pow, action_pair, Module.End.mul_apply]
-      exact difference_power_below _ i p.1 p.2 b k ih
-  exact general (labelledPairs N)
-
-/-- Move each label rightmost, use its truncation on the original input Ω,
-and preserve that bound under the clearing polynomial's nonnegative shifts.
-The bound on one coordinate is uniform in every other signed exponent. -/
-private theorem clear_all_below (A : Fin N → VertexOperator ℂ V) (Ω : V)
-    (P : Module.End ℂ V) (k : ℕ)
-    (locality : ∀ i j : Fin N, i < j →
-      (deltaEnd ^ k) (commutator (A i) (A j)) = 0)
-    (l : List (Fin N)) (hn : l.Nodup) (hall : ∀ i, i ∈ l)
-    (b : Exponent N)
-    (truncation : ∀ (i : Fin N) (n : ℤ), -b i ≤ n → (A i [[n]]) Ω = 0)
-    (i : Fin N) :
-    BelowIn (polynomialAction (clearingPolynomial N k)
-      (coefficientDistribution A Ω P l)) i (b i) := by
-  have hp : l.Perm (l.erase i ++ [i]) :=
-    (List.perm_cons_erase (hall i)).trans (by
-      simpa using (List.perm_append_comm (l₁ := [i]) (l₂ := l.erase i)))
-  have eq := clear_permutation_context A Ω P k locality hp [] [] (by simpa using hn)
-  simp only [List.nil_append, List.append_nil] at eq
-  rw [eq]
-  apply clearing_below
-  intro e he
-  have zero : (A i [[-e i - 1]]) Ω = 0 := truncation i _ (by omega)
-  simp [coefficientDistribution, word_append, word, Module.End.mul_apply, zero]
 
 /-- The native finitely supported multi-index on a finite label type.
 This is an index, not a finite-support assertion about the power series. -/
@@ -229,7 +96,7 @@ private theorem uniform_locality_order (A : Fin N → VertexOperator ℂ V)
   have bound : r (i, j) ≤ k :=
     Finset.single_le_sum (fun p _ => Nat.zero_le (r p)) member
   have killed : (deltaEnd ^ r (i, j)) (commutator (A i) (A j)) = 0 := by
-    simpa only [r, dif_pos hij] using Classical.choose_spec (locality i j hij)
+    simpa only [r, dite_eq_left hij] using Classical.choose_spec (locality i j hij)
   exact power_kills_of_le deltaEnd _ bound killed
 
 /-- An arbitrary finite complete labelled word of mutually local actual fields
@@ -273,16 +140,16 @@ theorem ungraded_local_word_common_series
     omega
   let F : Distribution N V := polynomialAction (clearingPolynomial N k)
     (coefficientDistribution A w 1 order)
-  have below (i : Fin N) : BelowIn F i (-(a i : ℤ)) := by
-    apply clear_all_below A w 1 k hk order nodup all_labels
-      (fun j => -(a j : ℤ))
-    intro j n hn
-    exact truncation j n (by simpa using hn)
+  obtain ⟨permutations, lower, _⟩ :=
+    common_cleared_fields A w 1 (fun _ => k) hk order nodup all_labels
+  have below (i : Fin N) (e : Exponent N) (he : e i < -(a i : ℤ)) : F e = 0 := by
+    apply lower i e
+    dsimp only [a] at he
+    omega
   have equal (other : List (Fin N)) (hp : order.Perm other) :
       F = polynomialAction (clearingPolynomial N k)
-        (coefficientDistribution A w 1 other) := by
-    simpa only [List.nil_append, List.append_nil] using
-      clear_permutation_context A w 1 k hk hp [] [] (by simpa using nodup)
+        (coefficientDistribution A w 1 other) :=
+    permutations other hp
   let P : MvPowerSeries (Fin N) V := fun d => F (fun i => (d i : ℤ) - a i)
   refine ⟨a, P, truncation, ?_, ?_⟩
   · intro other hp e low
@@ -292,15 +159,15 @@ theorem ungraded_local_word_common_series
   · intro other hp e
     rw [← equal other hp]
     by_cases h : ∀ i, 0 ≤ e i
-    · rw [signedExtend, if_pos h]
+    · rw [signedExtend, ite_eq_left h]
       change F (fun i => e i - a i) =
         F (fun i => ((signedIndex e) i : ℤ) - a i)
       congr 1
       funext i
       simp [signedIndex, Int.toNat_of_nonneg (h i)]
-    · rw [signedExtend, if_neg h]
+    · rw [signedExtend, ite_eq_right h]
       obtain ⟨i, hi⟩ := not_forall.mp h
-      exact below i _ (by dsimp; omega)
+      exact below i _ (by change e i - (a i : ℤ) < -(a i : ℤ); omega)
 
 #print axioms ungraded_local_word_common_series
 
