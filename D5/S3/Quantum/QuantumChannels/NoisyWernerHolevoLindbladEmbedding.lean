@@ -6,9 +6,9 @@
    utility: none
    digest: The noisy qutrit Werner–Holevo channel has a GKSL logarithm only at zero noise. -/
 
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+import D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation
+import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 
 /-! The noisy qutrit Werner–Holevo channel is a GKSL exponential exactly at zero noise
 on the interval `[0, 2 / 3]`. -/
@@ -18,6 +18,10 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 open scoped BigOperators Matrix Matrix.Norms.Operator
+
+attribute [local instance] LieRing.ofAssociativeRing
+
+open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (trace_standard)
 
 namespace D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 
@@ -85,47 +89,25 @@ private theorem generatorExp_injective
   have hunit : IsUnit (generatorExp G) :=
     (Matrix.isUnit_exp _).map
       (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3))).symm.toMonoidHom
-  intro X Y hXY
-  have := congrArg (fun Z => hunit.unit.inv Z) hXY
-  simpa only [Module.End.isUnit_inv_apply_apply_of_isUnit] using this
+  exact ((Module.End.isUnit_iff _).mp hunit).1
 
-private theorem generatorExp_continuous
-    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) :
-    LinearMap.toContinuousLinearMap (generatorExp G) =
-      NormedSpace.exp (LinearMap.toContinuousLinearMap G) := by
-  let e := (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3))).symm.trans
-    (Module.End.toContinuousLinearMap (Matrix (Fin 3) (Fin 3) ℂ))
-  have h := NormedSpace.map_exp e e.toLinearMap.continuous_of_finiteDimensional
-    (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3)) G)
-  dsimp only [e, AlgEquiv.trans_apply] at h
-  rw [AlgEquiv.symm_apply_apply] at h
-  unfold Module.End.toContinuousLinearMap at h
-  unfold generatorExp
-  exact h
-
-private theorem exponential_eigenvector {E : Type*} [NormedAddCommGroup E]
-    [NormedSpace ℂ E] [CompleteSpace E] (F : E →L[ℂ] E) (v : E) (μ : ℂ)
-    (hv : F v = μ • v) : (NormedSpace.exp F) v = Complex.exp μ • v := by
-  have hp (n : ℕ) : (F ^ n) v = μ ^ n • v := by
-    by_cases hzero : v = 0
-    · subst v
-      simp
-    have heig : Module.End.HasEigenvector F.toLinearMap μ v :=
-      ⟨Module.End.mem_eigenspace_iff.mpr hv, hzero⟩
-    change ((F ^ n : E →L[ℂ] E) : E →ₗ[ℂ] E) v = _
-    rw [ContinuousLinearMap.toLinearMap_pow]
-    exact heig.pow_apply n
-  have hF := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) F).mapL
-    (ContinuousLinearMap.apply ℂ E v)
-  have hμ := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) μ).smul_const v
-  have heq : (fun n : ℕ => (ContinuousLinearMap.apply ℂ E v)
-      ((n.factorial⁻¹ : ℂ) • F ^ n)) =
-      (fun n : ℕ => ((n.factorial⁻¹ : ℂ) • μ ^ n) • v) := by
-    funext n
-    simp only [map_smul, ContinuousLinearMap.apply_apply, hp, smul_smul, smul_eq_mul]
-  rw [heq] at hF
-  rw [← Complex.exp_eq_exp_ℂ] at hμ
-  exact hF.unique hμ
+private theorem exponential_eigenvector (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
+    (v : Matrix (Fin 3) (Fin 3) ℂ) (μ : ℂ) (hv : G v = μ • v) :
+    generatorExp G v = Complex.exp μ • v := by
+  let b := Matrix.stdBasis ℂ (Fin 3) (Fin 3)
+  have heig : LinearMap.toMatrix b b G *ᵥ b.repr v = μ • b.repr v := by
+    rw [LinearMap.toMatrix_mulVec_repr, hv, map_smul]
+    rfl
+  have he := D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity.exp_mulVec_of_eigenvector
+    (LinearMap.toMatrix b b G) (b.repr v) μ heig
+  apply b.equivFun.injective
+  change ⇑(b.repr (generatorExp G v)) = ⇑(b.repr (Complex.exp μ • v))
+  rw [← LinearMap.toMatrix_mulVec_repr b b, map_smul]
+  have hmatrix : LinearMap.toMatrix b b (generatorExp G) =
+      NormedSpace.exp (LinearMap.toMatrix b b G) :=
+    (LinearMap.toMatrixAlgEquiv b).apply_symm_apply _
+  rw [hmatrix]
+  exact he
 
 private theorem projected_log_trace
     (G P : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
@@ -153,9 +135,7 @@ private theorem projected_log_trace
     have hGeig : G (v : Matrix (Fin 3) (Fin 3) ℂ) = μ • (v : Matrix (Fin 3) (Fin 3) ℂ) := by
       rw [hGi]
       exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp hv.1)
-    have he := exponential_eigenvector (LinearMap.toContinuousLinearMap G)
-      (v : Matrix (Fin 3) (Fin 3) ℂ) μ hGeig
-    rw [← generatorExp_continuous] at he
+    have he := exponential_eigenvector G (v : Matrix (Fin 3) (Fin 3) ℂ) μ hGeig
     have hbv := congrArg (fun T : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => T v) hexp
     change generatorExp G (P v) = (b : ℂ) • P v at hbv
     rw [hPi] at hbv
@@ -208,27 +188,26 @@ private theorem endpoint_not_exp
 
 private def hamiltonianMap (H : Matrix (Fin 3) (Fin 3) ℂ) :
     Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) :=
-  -Complex.I • (LinearMap.mulLeft ℂ H - LinearMap.mulRight ℂ H)
+  -Complex.I • LieAlgebra.ad ℂ (Matrix (Fin 3) (Fin 3) ℂ) H
 
 private def dissipatorMap (V : Matrix (Fin 3) (Fin 3) ℂ) :
-    Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) :=
-  LinearMap.mulLeftRight ℂ (V, Vᴴ) - (1 / 2 : ℂ) •
-    (LinearMap.mulLeft ℂ (Vᴴ * V) + LinearMap.mulRight ℂ (Vᴴ * V))
-
-private theorem matrix_supertrace
-    (F : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) :
-    LinearMap.trace ℂ _ F = ∑ i, ∑ j, F (Matrix.single i j 1) i j := by
-  rw [LinearMap.trace_eq_matrix_trace ℂ (Matrix.stdBasis ℂ (Fin 3) (Fin 3))]
-  simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_prod_type,
-    Matrix.stdBasis, ← Matrix.single_eq_of_single_single]
+    Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) where
+  toFun := D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation.dissipator V
+  map_add' X Y := by
+    simp only [D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation.dissipator,
+      Matrix.mul_add, Matrix.add_mul, smul_add]
+    abel
+  map_smul' c X := by
+    simp [D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation.dissipator,
+      smul_smul, mul_comm, smul_sub]
 
 private theorem sector_trace_hamiltonian (H : Matrix (Fin 3) (Fin 3) ℂ) :
     symmetricTrace (hamiltonianMap H) - 5 * antisymmetricTrace (hamiltonianMap H) = 0 := by
   unfold symmetricTrace antisymmetricTrace
-  rw [matrix_supertrace, matrix_supertrace]
+  rw [trace_standard, trace_standard]
   unfold symmetricProjection antisymmetricProjection hamiltonianMap Matrix.transposeLinearEquiv
-  simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
-    Matrix.one_apply, Complex.mul_re, Complex.mul_im]
+  simp [LieAlgebra.ad_apply, Ring.lie_def, Matrix.trace, Matrix.mul_apply,
+    Fin.sum_univ_succ, Matrix.single, Matrix.one_apply, Complex.mul_re, Complex.mul_im]
   ring
 
 private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
@@ -238,8 +217,9 @@ private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
       3 * (Complex.normSq (V 0 1 + V 1 0) + Complex.normSq (V 0 2 + V 2 0) +
         Complex.normSq (V 1 2 + V 2 1)) := by
   unfold symmetricTrace antisymmetricTrace
-  rw [matrix_supertrace, matrix_supertrace]
-  unfold symmetricProjection antisymmetricProjection dissipatorMap Matrix.transposeLinearEquiv
+  rw [trace_standard, trace_standard]
+  unfold symmetricProjection antisymmetricProjection dissipatorMap
+    D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation.dissipator Matrix.transposeLinearEquiv
   simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
     Matrix.one_apply, Complex.mul_re, Complex.mul_im,
     Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
@@ -254,7 +234,9 @@ private theorem gksl_trace_inequality
   have hG : G = hamiltonianMap H + ∑ k, dissipatorMap (V k) := by
     ext X i j
     unfold hamiltonianMap dissipatorMap
-    simpa [Matrix.mul_assoc] using congrArg (fun Y => Y i j) (hform X)
+    simpa [LieAlgebra.ad_apply, Ring.lie_def,
+      D5.S3.Quantum.Dynamics.DissipatorSpectralDiskRefutation.dissipator,
+      Matrix.mul_assoc] using congrArg (fun Y => Y i j) (hform X)
   rw [hG]
   have hS : symmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
       symmetricTrace (hamiltonianMap H) + ∑ k, symmetricTrace (dissipatorMap (V k)) := by
@@ -380,7 +362,7 @@ private theorem antisymmetricProjection_idempotent : IsIdempotentElem antisymmet
   fin_cases i <;> fin_cases j <;> norm_num <;> ring
 
 private theorem symmetricProjection_trace : LinearMap.trace ℂ _ symmetricProjection = 5 := by
-  rw [matrix_supertrace]
+  rw [trace_standard]
   unfold symmetricProjection Matrix.transposeLinearEquiv
   norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.single, Matrix.one_apply]
   norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
@@ -388,7 +370,7 @@ private theorem symmetricProjection_trace : LinearMap.trace ℂ _ symmetricProje
 
 private theorem antisymmetricProjection_trace :
     LinearMap.trace ℂ _ antisymmetricProjection = 3 := by
-  rw [matrix_supertrace]
+  rw [trace_standard]
   unfold antisymmetricProjection Matrix.transposeLinearEquiv
   norm_num [Fin.sum_univ_succ, Matrix.single]
 
@@ -439,11 +421,13 @@ private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
 private theorem strict_log_inequality (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3) :
     5 * Real.log (1 - 3 * x / 2) < 15 * Real.log (1 - x / 2) := by
   have hb : 0 < 1 - 3 * x / 2 := by linarith
-  have hpoly : (1 - x / 2) ^ 3 - (1 - 3 * x / 2) = x ^ 2 * (6 - x) / 8 := by ring
-  have hgap : 0 < (1 - x / 2) ^ 3 - (1 - 3 * x / 2) := by
-    rw [hpoly]
-    exact div_pos (mul_pos (sq_pos_of_pos hx) (by linarith)) (by norm_num)
-  have hlog := Real.log_lt_log hb (show 1 - 3 * x / 2 < (1 - x / 2) ^ 3 by linarith)
+  have hpow : 1 - 3 * x / 2 < (1 - x / 2) ^ 3 := by
+    have h := one_add_mul_self_lt_rpow_one_add
+      (s := -(x / 2)) (p := (3 : ℕ)) (by linarith) (by linarith) (by norm_num)
+    rw [Real.rpow_natCast] at h
+    simpa only [Nat.cast_ofNat, mul_neg,
+      ← mul_div_assoc, ← sub_eq_add_neg] using h
+  have hlog := Real.log_lt_log hb hpow
   rw [Real.log_pow] at hlog
   linarith
 
