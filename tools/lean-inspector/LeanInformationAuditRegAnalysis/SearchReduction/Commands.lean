@@ -525,7 +525,7 @@ private def auditProbeCertificates (source : Environment) (request : Request)
 
 /-- Complete typed probe data; the runner authenticates the bytes before Lean
 deserializes them. JSON projections are never accepted as probe evidence. -/
-private structure ProbeCacheRecord where
+structure ProbeCacheRecord where
   identity : String
   targetHeader : List Name × Expr
   result : Observation
@@ -556,7 +556,7 @@ def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPubl
 
 /-- A small ordinary Lean module holds only proof dependencies. Its consumers
 recheck every certificate and recompute the published classifier at trust zero. -/
-private unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
+unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (source : Environment) (request : Request) (result : Observation) : CommandElabM Unit := do
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
@@ -585,7 +585,7 @@ private unsafe def saveProbeCache (directory : System.FilePath) (identity : Stri
     pickle path ({identity, targetHeader := (info.levelParams, info.type), result} : ProbeCacheRecord)
   finally modifyEnv fun _ => before
 
-private unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
+unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
     (request : Request) (owners : Array Name) (name : Name) : CommandElabM Bool := do
   let path := directory / s!"probe-{hash identity}.pickle"
   unless ← path.pathExists do return false
