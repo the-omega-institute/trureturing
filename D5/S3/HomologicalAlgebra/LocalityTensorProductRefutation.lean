@@ -113,62 +113,47 @@ private theorem line_unique {v : Fin 3 → ℝ} (hv : v ≠ 0) {i j : Fin 6}
     norm_num [direction.eq_1, Pi.smul_apply, smul_eq_mul] at h0 h1 h2 ⊢ <;>
     (exfalso; apply hn; linarith)
 
-private def projectedPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) where
-  carrier := {t | project v = 0 ∨ project t = 0 ∨
-    ∃ i, project v ∈ line i ∧ project t ∈ line i}
-  zero_mem' := Or.inr (Or.inl (map_zero project))
-  add_mem' := by
-    intro t u ht hu
-    change project v = 0 ∨ project (t + u) = 0 ∨
-      ∃ i, project v ∈ line i ∧ project (t + u) ∈ line i
-    change project v = 0 ∨ project u = 0 ∨
-      ∃ i, project v ∈ line i ∧ project u ∈ line i at hu
-    by_cases hv : project v = 0
-    · exact Or.inl hv
-    rcases ht with ht | ht | ⟨i, hi, hit⟩
-    · exact (hv ht).elim
-    · simpa only [map_add, ht, zero_add] using hu
-    rcases hu with hu | hu | ⟨j, hj, hju⟩
-    · exact (hv hu).elim
-    · exact Or.inr (Or.inr ⟨i, hi, by rw [map_add, hu, add_zero]; exact hit⟩)
-    have hij := line_unique hv hi hj
-    subst j
-    exact Or.inr (Or.inr ⟨i, hi, by simpa using (line i).add_mem hit hju⟩)
-  smul_mem' := by
-    intro c t ht
-    rcases ht with ht | ht | ⟨i, hi, hit⟩
-    · exact Or.inl ht
-    · exact Or.inr (Or.inl (by rw [map_smul, ht, smul_zero]))
-    · exact Or.inr (Or.inr ⟨i, hi, by simpa using (line i).smul_mem c hit⟩)
+private def projectedPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) := by
+  classical
+  exact if project v = 0 then ⊤ else
+    if h : ∃ i, project v ∈ line i then (line h.choose).comap project
+    else LinearMap.ker project
 
-private def singletonPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) where
-  carrier := {t | rel v t}
-  zero_mem' := by
-    change rel v 0
-    rw [rel.eq_1]
-    simp only [map_zero, Pi.zero_apply, mul_zero, zero_mul]
-    tauto
-  add_mem' := by
-    intro t u ht hu
-    refine ⟨(projectedPolar v).add_mem ht.1 hu.1, ?_⟩
-    rcases ht with ⟨_, h1, h2, h3, h4⟩
-    rcases hu with ⟨_, g1, g2, g3, g4⟩
-    simp only [Pi.add_apply, mul_add, add_mul, h1, h2, h3, h4, g1, g2, g3, g4,
-      zero_add, and_self]
-  smul_mem' := by
-    intro c t ht
-    refine ⟨(projectedPolar v).smul_mem c ht.1, ?_⟩
-    rcases ht with ⟨_, h1, h2, h3, h4⟩
-    simp only [Pi.smul_apply, smul_eq_mul]
+private theorem mem_projectedPolar {v t : Fin 5 → ℝ} :
+    t ∈ projectedPolar v ↔ project v = 0 ∨ project t = 0 ∨
+      ∃ i, project v ∈ line i ∧ project t ∈ line i := by
+  classical
+  rw [projectedPolar.eq_1]
+  split_ifs with hv hi
+  · simp only [Submodule.mem_top, hv, true_or]
+  · rw [Submodule.mem_comap]
     constructor
-    · calc v 3 * (c * t 2) = c * (v 3 * t 2) := by ring
-           _ = 0 := by rw [h1, mul_zero]
+    · intro ht
+      exact Or.inr (Or.inr ⟨hi.choose, hi.choose_spec, ht⟩)
+    · rintro (h | h | ⟨i, hit, ht⟩)
+      · exact (hv h).elim
+      · rw [h]; exact (line hi.choose).zero_mem
+      · simpa only [line_unique hv hit hi.choose_spec] using ht
+  · rw [LinearMap.mem_ker]
     constructor
-    · rw [mul_assoc, h2, mul_zero]
-    constructor
-    · calc v 4 * (c * t 1) = c * (v 4 * t 1) := by ring
-           _ = 0 := by rw [h3, mul_zero]
-    · rw [mul_assoc, h4, mul_zero]
+    · intro ht
+      exact Or.inr (Or.inl ht)
+    · rintro (h | h | ⟨i, hit, _⟩)
+      · exact (hv h).elim
+      · exact h
+      · exact (hi ⟨i, hit⟩).elim
+
+private def singletonPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) :=
+  projectedPolar v ⊓
+    (LinearMap.ker ((v 3) • (LinearMap.proj 2 : (Fin 5 → ℝ) →ₗ[ℝ] ℝ)) ⊓
+    (LinearMap.ker ((v 2) • (LinearMap.proj 3 : (Fin 5 → ℝ) →ₗ[ℝ] ℝ)) ⊓
+    (LinearMap.ker ((v 4) • (LinearMap.proj 1 : (Fin 5 → ℝ) →ₗ[ℝ] ℝ)) ⊓
+      LinearMap.ker ((v 1) • (LinearMap.proj 4 : (Fin 5 → ℝ) →ₗ[ℝ] ℝ)))))
+
+private theorem mem_singletonPolar {v t : Fin 5 → ℝ} : t ∈ singletonPolar v ↔ rel v t := by
+  simp only [singletonPolar.eq_1, Submodule.mem_inf, mem_projectedPolar, LinearMap.mem_ker,
+    LinearMap.smul_apply, LinearMap.proj_apply, smul_eq_mul, rel.eq_1,
+    mul_comm (v 2) (t 3), mul_comm (v 1) (t 4)]
 
 private theorem rel_locality : IsLocalityVectorSpace ℝ rel := by
   refine ⟨?_, ?_, ?_⟩
@@ -179,13 +164,12 @@ private theorem rel_locality : IsLocalityVectorSpace ℝ rel := by
     · exact Or.inr (Or.inl hp)
     · exact Or.inl hp
     · exact Or.inr (Or.inr ⟨i, hj, hi⟩)
-  · exact (singletonPolar 0).zero_mem
+  · exact mem_singletonPolar.mp (singletonPolar 0).zero_mem
   · intro U
     refine ⟨sInf (singletonPolar '' U), ?_⟩
     ext t
-    simp only [SetLike.mem_coe, Submodule.mem_sInf, Set.mem_image,
-      forall_exists_index, and_imp, forall_apply_eq_imp_iff₂]
-    rfl
+    simp only [SetLike.mem_coe, Set.mem_setOf_eq, Submodule.mem_sInf, Set.mem_image,
+      forall_exists_index, and_imp, forall_apply_eq_imp_iff₂, mem_singletonPolar]
 
 private theorem diagonal_supported (v : Fin 5 → ℝ) (i : Fin 6)
     (hp : project v = direction i) (h3 : v 3 = 0) (h4 : v 4 = 0) :
