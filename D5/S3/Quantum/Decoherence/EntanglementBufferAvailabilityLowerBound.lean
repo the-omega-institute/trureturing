@@ -6,7 +6,8 @@
    utility: none
    digest: The always-failing purification policy minimizes buffer availability. -/
 
-import Mathlib.Analysis.Complex.Exponential
+import D5.S3.AnalyticClosure.BinomialLocalGaussian
+import D5.S3.Combinatorics.YoungFibonacci.PetrovScottAltQCharlierPositivity
 
 /-! Availability bound for the discrete-time entanglement-buffer formula. -/
 
@@ -14,12 +15,8 @@ noncomputable section
 open scoped BigOperators
 namespace D5.S3.Quantum.Decoherence.EntanglementBufferAvailabilityLowerBound
 
-/-- Index `k` denotes `k+1` generated links. -/
-def weight (n : ℕ) (pg : ℝ) (k : Fin n) : ℝ :=
-  (n.choose (k.val + 1) : ℝ) * pg ^ (k.val + 1) * (1 - pg) ^ (n - (k.val + 1))
-
-def aggregate {n : ℕ} (pg : ℝ) (a : Fin n → ℝ) : ℝ :=
-  ∑ k, a k * weight n pg k
+open D5.S3.AnalyticClosure.BinomialLocalGaussian (binomialMass)
+open D5.S3.Combinatorics.YoungFibonacci.PetrovScottAltQCharlierPositivity (det_pos_of_dominant)
 
 /-- Success probability and unnormalized output fidelity satisfy Appendix C. -/
 def admissible {n : ℕ} (a b c d : Fin n → ℝ) : Prop :=
@@ -32,10 +29,10 @@ def admissible {n : ℕ} (a b c d : Fin n → ℝ) : Prop :=
 def availability (n : ℕ) (pg pc q gam fnew : ℝ) (a b c d : Fin n → ℝ) : ℝ :=
   let p := pc + q * (1 - (1 - pg) ^ n) * (1 - pc)
   let x := Real.exp gam - (1 - q + q * (1 - pg) ^ n) * (1 - pc)
-  let ta := q * (1 - pc) * aggregate pg a / x
-  let tb := q * (1 - pc) * aggregate pg b / p
-  let tc := q * (1 - pc) * aggregate pg c / x
-  let td := q * (1 - pc) * aggregate pg d / p
+  let ta := q * (1 - pc) * (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) / x
+  let tb := q * (1 - pc) * (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) / p
+  let tc := q * (1 - pc) * (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) / x
+  let td := q * (1 - pc) * (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) / p
   let tgen := 1 / (1 - (1 - pg) ^ n)
   let tocc := (1 - ta + tc * (fnew - 1 / 4)) /
     (((1 - ta) * (1 - td) - tb * tc) * p)
@@ -50,56 +47,60 @@ def claim : Prop :=
 
 private lemma generation_mass (n : ℕ) (pg : ℝ) (hn : 1 ≤ n)
     (hp : 0 < pg) (hp1 : pg ≤ 1) :
-    (∑ k : Fin n, weight n pg k) = 1 - (1 - pg) ^ n ∧
+    (∑ k : Fin n, binomialMass pg n (k.val + 1)) = 1 - (1 - pg) ^ n ∧
       0 < 1 - (1 - pg) ^ n ∧ 1 - (1 - pg) ^ n ≤ 1 := by
   have hb := add_pow pg (1 - pg) n
   rw [show pg + (1 - pg) = 1 by ring, one_pow, Finset.sum_range_succ'] at hb
   simp only [pow_zero, Nat.sub_zero, Nat.choose_zero_right, Nat.cast_one, mul_one,
     one_mul] at hb
-  have hs : (∑ k : Fin n, weight n pg k) =
+  have hs : (∑ k : Fin n, binomialMass pg n (k.val + 1)) =
       ∑ k ∈ Finset.range n, pg ^ (k + 1) * (1 - pg) ^ (n - (k + 1)) *
         (n.choose (k + 1) : ℝ) := by
-    unfold weight
+    unfold binomialMass
     rw [← Fin.sum_univ_eq_sum_range]
     apply Finset.sum_congr rfl
     intro k hk
     ring
   refine ⟨by linarith, ?_, ?_⟩
   · have := pow_lt_one₀ (by linarith : 0 ≤ 1 - pg)
-      (by linarith : 1 - pg < 1) (by omega : n ≠ 0)
+      (by linarith : 1 - pg < 1) (Nat.ne_zero_of_lt hn)
     linarith
   · have := pow_nonneg (by linarith : 0 ≤ 1 - pg) n
     linarith
 
 private lemma aggregate_endpoints {n : ℕ} (pg : ℝ) (hp : 0 ≤ pg) (hp1 : pg ≤ 1)
     (a b c d : Fin n → ℝ) (ha : admissible a b c d)
-    (hs : (∑ k : Fin n, weight n pg k) = 1 - (1 - pg) ^ n) :
+    (hs : (∑ k : Fin n, binomialMass pg n (k.val + 1)) = 1 - (1 - pg) ^ n) :
     let g := 1 - (1 - pg) ^ n
-    let aa := aggregate pg a
-    let bb := aggregate pg b
-    let cc := aggregate pg c
-    let dd := aggregate pg d
+    let aa := (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    let bb := (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    let cc := (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    let dd := (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
     (0 ≤ dd ∧ dd ≤ g) ∧ (0 ≤ (3 / 4) * cc + dd ∧ (3 / 4) * cc + dd ≤ g) ∧
     (0 ≤ bb ∧ bb ≤ (3 / 4) * dd) ∧
     (0 ≤ (3 / 4) * aa + bb ∧ (3 / 4) * aa + bb ≤ (3 / 4) * ((3 / 4) * cc + dd)) := by
-  have hw (k : Fin n) : 0 ≤ weight n pg k := by
-    unfold weight
-    exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hp _))
-      (pow_nonneg (sub_nonneg.mpr hp1) _)
+  have hw (k : Fin n) : 0 ≤ binomialMass pg n (k.val + 1) := by
+    exact ProbabilityTheory.binomial_nonneg (n := n) (k := k.val + 1)
+      (p := ⟨pg, hp, hp1⟩)
   have lin (u v : Fin n → ℝ) (r : ℝ) :
-      (∑ k, (u k * r + v k) * weight n pg k) =
-        aggregate pg u * r + aggregate pg v := by
-    unfold aggregate
-    rw [Finset.sum_mul, ← Finset.sum_add_distrib]
-    apply Finset.sum_congr rfl
-    intro k hk
-    ring
+      (∑ k, (u k * r + v k) * binomialMass pg n (k.val + 1)) =
+        (u ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * r +
+          (v ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) := by
+    simpa only [dotProduct, Pi.add_apply, Pi.smul_apply, smul_eq_mul, mul_comm r] using
+      (add_dotProduct (r • u) v (fun k => binomialMass pg n (k.val + 1))).trans
+        (congrArg (· + (v ⬝ᵥ fun k => binomialMass pg n (k.val + 1)))
+          (smul_dotProduct r u (fun k => binomialMass pg n (k.val + 1))))
   have h (f : ℝ) (hf : 1 / 4 ≤ f) (hf1 : f ≤ 1) :
-      (0 ≤ aggregate pg c * (f - 1 / 4) + aggregate pg d ∧
-        aggregate pg c * (f - 1 / 4) + aggregate pg d ≤ 1 - (1 - pg) ^ n) ∧
-      (0 ≤ aggregate pg a * (f - 1 / 4) + aggregate pg b ∧
-        aggregate pg a * (f - 1 / 4) + aggregate pg b ≤
-          (3 / 4) * (aggregate pg c * (f - 1 / 4) + aggregate pg d)) := by
+      (0 ≤ (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+          (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) ∧
+        (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+          (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) ≤ 1 - (1 - pg) ^ n) ∧
+      (0 ≤ (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+          (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) ∧
+        (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+          (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) ≤
+          (3 / 4) * ((c ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+            (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1)))) := by
     have h0 := Finset.sum_nonneg (s := Finset.univ)
       (fun k _ => mul_nonneg (ha k f hf hf1).1.1 (hw k))
     have h1 := Finset.sum_le_sum (s := Finset.univ)
@@ -109,12 +110,11 @@ private lemma aggregate_endpoints {n : ℕ} (pg : ℝ) (hp : 0 ≤ pg) (hp1 : pg
     have h3 := Finset.sum_le_sum (s := Finset.univ)
       (fun k _ => mul_le_mul_of_nonneg_right (ha k f hf hf1).2.2 (hw k))
     simp only [one_mul, lin, hs] at h0 h1 h2
-    have hi : (∑ k, 3 / 4 * (c k * (f - 1 / 4) + d k) * weight n pg k) =
-        3 / 4 * (aggregate pg c * (f - 1 / 4) + aggregate pg d) := by
+    have hi : (∑ k, 3 / 4 * (c k * (f - 1 / 4) + d k) * binomialMass pg n (k.val + 1)) =
+        3 / 4 * ((c ⬝ᵥ fun k => binomialMass pg n (k.val + 1)) * (f - 1 / 4) +
+          (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1))) := by
       rw [← lin, Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro k hk
-      ring
+      simp only [mul_assoc]
     rw [lin, hi] at h3
     exact ⟨⟨h0, h1⟩, h2, h3⟩
   have h0 := h (1 / 4) (by norm_num) (by norm_num)
@@ -136,9 +136,12 @@ private lemma two_state_mass (u v w z ell mu h : ℝ)
   have hz1 : 0 < 1 - z := by linarith
   have hu1 : 0 < 1 - u := by linarith
   have hd : 0 < (1 - u) * (1 - z) - v * w := by
-    have hp := mul_pos (by linarith : 0 < 1 - u - w) hz1
-    have hn := mul_nonneg hw (by linarith : 0 ≤ 1 - z - v)
-    nlinarith only [hp, hn]
+    have hd := det_pos_of_dominant !![1 - u, -w; -v, 1 - z]
+        (by intro i; fin_cases i <;> simp <;> linarith)
+        (by intro i; fin_cases i <;>
+            simp [Fin.sum_univ_two, Real.norm_eq_abs, abs_of_nonneg hv, abs_of_nonneg hw] <;>
+            linarith)
+    simpa [Matrix.det_fin_two, mul_comm] using hd
   have hy0 : 0 ≤ (1 - z) * h + v * (1 - h) :=
     add_nonneg (mul_nonneg hz1.le hh) (mul_nonneg hv (sub_nonneg.mpr hh1))
   have hy1 : 0 ≤ w * h + (1 - u) * (1 - h) :=
@@ -240,17 +243,20 @@ private lemma policy_bound (n : ℕ) (pg pc q gam fnew : ℝ)
   have hab := aggregate_endpoints pg hp.le hp1 a b c d ha hg.1
   have hexp : 1 ≤ Real.exp gam := Real.one_le_exp he
   have hs := scalar_mass (1 - (1 - pg) ^ n) pc q (Real.exp gam) (fnew - 1 / 4)
-    (aggregate pg a) (aggregate pg b) (aggregate pg c) (aggregate pg d)
+    (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+    (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
     hg.2.1 hg.2.2 hm hm1 hq hq1 hexp (by linarith) (by linarith)
     hab.1 hab.2.1 hab.2.2.1 hab.2.2.2
   let g := 1 - (1 - pg) ^ n
   let t := q * (1 - pc)
   let p := pc + q * g * (1 - pc)
   let x := Real.exp gam - (1 - q + q * (1 - pg) ^ n) * (1 - pc)
-  let aa := aggregate pg a
-  let bb := aggregate pg b
-  let cc := aggregate pg c
-  let dd := aggregate pg d
+  let aa := (a ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+  let bb := (b ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+  let cc := (c ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
+  let dd := (d ⬝ᵥ fun k => binomialMass pg n (k.val + 1))
   let det := (x - t * aa) * (p - t * dd) - t ^ 2 * bb * cc
   let num := x - t * aa + t * cc * (fnew - 1 / 4)
   let s := num / det
@@ -304,7 +310,7 @@ private lemma failing_value (n : ℕ) (pg pc gam fnew : ℝ)
   let p := pc + g * (1 - pc)
   have hp : 0 < p := add_pos_of_pos_of_nonneg hm
     (mul_nonneg hg.le (sub_nonneg.mpr hm1))
-  unfold availability aggregate
+  unfold availability dotProduct
   simp only [Pi.zero_apply, zero_mul, Finset.sum_const_zero, mul_zero, zero_div,
     sub_zero, one_mul, mul_one, add_zero]
   change (1 / p) / (1 / g + 1 / p) = g / (pc + (2 - pc) * g)
