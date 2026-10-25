@@ -145,9 +145,11 @@ internal sealed class ChannelAssemblageLOSRRefutationDocument : IScribeDocumentD
     {
         Formula c = At(Qualified("Complex", "ofReal"), At(Qualified("Real", "cos"), Div(X("θ"), D(2))));
         Formula s = At(Qualified("Complex", "ofReal"), At(Qualified("Real", "sin"), Div(X("θ"), D(2))));
+        Formula projected = Call("val", At(Qualified("Matrix", "planeConformalMatrix"), c, s));
         Formula matrix = Seq(Begin, Grp(F.Id("pmatrix")), c, Amp, new Formula.Negate(s), RowBreak,
             s, Amp, c, End, Grp(F.Id("pmatrix")));
-        return All("θ", Reals(), Equal(Typed(LocalCall("rotationY", X("θ")), Mat(Qubit(), Qubit())), matrix));
+        return All("θ", Reals(), And(Equal(Typed(LocalCall("rotationY", X("θ")), Mat(Qubit(), Qubit())), projected),
+            Equal(projected, matrix)));
     }
 
     private static Formula AssemblageFormula()

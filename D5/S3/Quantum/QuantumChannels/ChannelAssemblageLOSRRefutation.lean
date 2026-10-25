@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/QuantumChannels/ChannelAssemblageLOSRRefutation.claim; result=D5/S3/Quantum/QuantumChannels/ChannelAssemblageLOSRRefutation.result; claim=D5/S3/Quantum/QuantumChannels/ChannelAssemblageLOSRRefutation.claim
-   digest: Tracing the control makes the rotation assemblages free and refutes their angle ordering. -/
+   digest: Tracing the control makes the assemblages free and refutes their angle ordering. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.QuantumBounds.CHSHWitness
