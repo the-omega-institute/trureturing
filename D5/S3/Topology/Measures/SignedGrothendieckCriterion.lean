@@ -60,9 +60,6 @@ private lemma commonMeasure_vector_ac (s : ℕ → SignedMeasure X) (n : ℕ) :
   apply (SignedMeasure.absolutelyContinuous_ennreal_iff _ _).mpr
   simpa using commonMeasure_ac s n
 
-private lemma commonMeasure_zero : commonMeasure (fun _ => (0 : SignedMeasure X)) = 0 := by
-  simp [commonMeasure, SignedMeasure.totalVariation_zero]
-
 private def rnL1 (s : SignedMeasure X) (μ : Measure X) : Lp ℝ 1 μ :=
   (s.integrable_rnDeriv μ).toL1 (s.rnDeriv μ)
 
@@ -119,25 +116,12 @@ private lemma signed_restrict_add_compl (s : SignedMeasure X)
     VectorMeasure.variation_restrict hE.compl, measureReal_restrict_apply_univ]
   exact measureReal_add_measureReal_compl hE
 
-private lemma common_rn_data (s : ℕ → SignedMeasure X) :
-    (∀ n, (commonMeasure s).withDensityᵥ ((s n).rnDeriv (commonMeasure s)) = s n) ∧
-    (∀ n, rnL1 (s n) (commonMeasure s) =ᵐ[commonMeasure s]
-      (s n).rnDeriv (commonMeasure s)) ∧
-    (∀ n, ‖rnL1 (s n) (commonMeasure s)‖ = (s n).totalVariation.real univ) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro n
-    exact rnL1_reconstruct _ _ (commonMeasure_vector_ac s n)
-  · intro n
-    exact ((s n).integrable_rnDeriv _).coeFn_toL1
-  · intro n
-    exact rnL1_norm _ _ (commonMeasure_vector_ac s n)
-
 private lemma common_rn_bounded (s : ℕ → SignedMeasure X)
     (hb : ∃ B : ℝ, ∀ n, (s n).totalVariation.real univ ≤ B) :
     ∃ B : ℝ, ∀ n, ‖rnL1 (s n) (commonMeasure s)‖ ≤ B := by
   obtain ⟨B, hB⟩ := hb
   refine ⟨B, fun n => ?_⟩
-  rw [(common_rn_data s).2.2 n]
+  rw [rnL1_norm _ _ (commonMeasure_vector_ac s n)]
   exact hB n
 
 end Density
@@ -155,9 +139,30 @@ private lemma restriction_regular (s : SignedMeasure K) (hs : s.totalVariation.R
 
 private def densityToDual (μ : Measure K) [IsFiniteMeasure μ] :
     Lp ℝ 1 μ →L[ℝ] StrongDual ℝ C(K, ℝ) :=
-  ((ContinuousLinearMap.compL ℝ C(K, ℝ) (Lp ℝ ∞ μ) ℝ).flip
+  ((((ContinuousLinearMap.compL ℝ C(K, ℝ) (Lp ℝ ∞ μ) ℝ).flip
     (ContinuousMap.toLp ∞ μ ℝ)).comp
-      ((ContinuousLinearMap.lsmul ℝ ℝ).lpPairing μ 1 ∞)
+      ((ContinuousLinearMap.lsmul ℝ ℝ).lpPairing μ 1 ∞)).toLinearMap).mkContinuous 1 (by
+    intro f
+    rw [one_mul]
+    apply ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg f)
+    intro g
+    let A := ContinuousMap.toLp ∞ μ ℝ (E := ℝ)
+    have hA : ‖A g‖ ≤ ‖g‖ := by
+      have hAn : ‖A‖ ≤ 1 := by
+        simpa [A] using (ContinuousMap.toLp_norm_le (p := ∞) (μ := μ) (𝕜 := ℝ) (E := ℝ))
+      exact (A.le_opNorm g).trans (by simpa using mul_le_mul_of_nonneg_right hAn (norm_nonneg g))
+    let B := ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)
+    change ‖B.lpPairing μ 1 ∞ f (A g)‖ ≤ _
+    calc
+      _ = ‖L1.integral (B.holder 1 f (A g))‖ := by
+        rw [L1.integral_eq]
+        rfl
+      _ ≤ ‖B.holder 1 f (A g)‖ := L1.norm_integral_le _
+      _ ≤ ‖B‖ * ‖f‖ * ‖A g‖ := B.norm_holder_apply_apply_le _ _
+      _ ≤ 1 * ‖f‖ * ‖g‖ := by
+        gcongr
+        exact ContinuousLinearMap.opNorm_lsmul_le
+      _ = ‖f‖ * ‖g‖ := by rw [one_mul])
 
 private lemma densityToDual_apply (μ : Measure K) [IsFiniteMeasure μ]
     (f : Lp ℝ 1 μ) (g : C(K, ℝ)) :
@@ -216,36 +221,6 @@ private lemma densityToDual_toL1 (μ : Measure K) [IsFiniteMeasure μ]
   apply integral_congr_ae
   filter_upwards [hq.coeFn_toL1] with x hx
   rw [hx]
-
-private lemma densityToDual_norm_le (μ : Measure K) [IsFiniteMeasure μ] :
-    ‖densityToDual μ‖ ≤ 1 := by
-  apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
-  intro f
-  rw [one_mul]
-  apply ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg f)
-  intro g
-  let A := ContinuousMap.toLp ∞ μ ℝ (E := ℝ)
-  have hA : ‖A g‖ ≤ ‖g‖ := by
-    have hAn : ‖A‖ ≤ 1 := by
-      simpa [A] using (ContinuousMap.toLp_norm_le (p := ∞) (μ := μ) (𝕜 := ℝ) (E := ℝ))
-    exact (A.le_opNorm g).trans (by simpa using mul_le_mul_of_nonneg_right hAn (norm_nonneg g))
-  let B := ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)
-  change ‖B.lpPairing μ 1 ∞ f (A g)‖ ≤ _
-  calc
-    _ = ‖L1.integral (B.holder 1 f (A g))‖ := by
-      rw [L1.integral_eq]
-      rfl
-    _ ≤ ‖B.holder 1 f (A g)‖ := L1.norm_integral_le _
-    _ ≤ ‖B‖ * ‖f‖ * ‖A g‖ := B.norm_holder_apply_apply_le _ _
-    _ ≤ 1 * ‖f‖ * ‖g‖ := by
-      gcongr
-      exact ContinuousLinearMap.opNorm_lsmul_le
-    _ = ‖f‖ * ‖g‖ := by rw [one_mul]
-
-private lemma densityToDual_rnL1 (s : SignedMeasure K) (μ : Measure K)
-    [IsFiniteMeasure μ] (h : s ≪ᵥ μ.toENNRealVectorMeasure) :
-    densityToDual μ (rnL1 s μ) = NormPreservingLifts.signedFunctional s := by
-  rw [rnL1, densityToDual_toL1, rnL1_reconstruct s μ h]
 
 private lemma densityToDual_indicator (s : SignedMeasure K) (μ : Measure K)
     [IsFiniteMeasure μ] (h : s ≪ᵥ μ.toENNRealVectorMeasure)
@@ -438,13 +413,16 @@ theorem weak_of_disjoint_diagonal_variation
     have heq (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) =
         NormPreservingLifts.signedFunctional (a n) +
           NormPreservingLifts.signedFunctional (b n) := by
-      conv_lhs => rw [hdec n]
+      have hd : s (ns (j n)) = a n + b n := hdec n
+      rw [hd]
       exact signedFunctional_add _ _
     have hbzero (g : C(K, ℝ)) : Tendsto
         (fun n => NormPreservingLifts.signedFunctional (b n) g) atTop (𝓝 0) := by
       have hsa : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n) g)
           atTop (𝓝 0) := by
-        simpa using (NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g).continuous.continuousAt.tendsto.comp hsmall
+        have ht := ((NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g).continuous.tendsto
+          (0 : StrongDual ℝ C(K, ℝ))).comp hsmall
+        convert ht using 1 <;> rfl
       have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
           NormPreservingLifts.signedFunctional (a n) g =
           NormPreservingLifts.signedFunctional (b n) g := by
@@ -456,14 +434,15 @@ theorem weak_of_disjoint_diagonal_variation
         (NormPreservingLifts.signedFunctional sInf) hweak hbzero
     have hpa : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (a n)))
         atTop (𝓝 0) := by
-      simpa using Φ.continuous.continuousAt.tendsto.comp hsmall
+      have ht := (Φ.continuous.tendsto (0 : StrongDual ℝ C(K, ℝ))).comp hsmall
+      convert ht using 1 <;> first | rfl | simp only [map_zero]
     have hpb : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (b n)))
-        atTop (𝓝 0) := by simpa only [hlimzero, map_zero] using hweak Φ
+        atTop (𝓝 0) := by simpa only [Function.comp_apply, b, hlimzero, map_zero] using hweak Φ
     have hp (n : ℕ) : Φ (NormPreservingLifts.signedFunctional (a n)) +
         Φ (NormPreservingLifts.signedFunctional (b n)) = Φ (F (ns (j n)) - FInf) := by
       rw [← map_add, ← heq, hrep]
     exact ⟨j, by simpa only [hp, add_zero] using hpa.add hpb⟩
-  simpa only [map_sub, sub_add_cancel] using hc.add_const (Φ FInf)
+  simpa only [map_sub, sub_add_cancel, zero_add] using hc.add_const (Φ FInf)
 
 #print axioms exists_signed_raw_restriction_splitting
 #print axioms weak_of_disjoint_diagonal_variation
