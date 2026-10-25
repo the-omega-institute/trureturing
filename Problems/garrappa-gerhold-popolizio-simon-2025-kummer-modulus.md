@@ -52,7 +52,8 @@ while $M(1/2,-3/2,\Re z_0)=(2/3)e^{1/2}>0$.
 
 ## Route
 
-The rising-factorial recurrence gives
+The rising-factorial multiplication identity with lengths $(n,2)$ and
+$(2,n)$, evaluated at $-3/2$, gives
 
 $$\frac{(1/2)_n}{(-3/2)_n}
 =1-\frac43 n+\frac43 n(n-1).$$
@@ -110,16 +111,36 @@ read. This is a bounded search, not a priority or completeness assertion.
   of the quadratic factor and a positive value at its real part give the
   obstruction. This does not contradict Remark 6's range
   $\alpha>1\ge\beta>0$.
-- **COMPUTED.** Witness C has $\alpha=3/2$, $\beta=3$ and polynomial form
-  $e^z(1-2z+4z^2+8z^3/3)$. Its nonreal zero and positive real-axis value
-  are the C readings in Evidence. Thus the numerical failure also occurs
-  with $\alpha>1$. Comparing this witness with the paper's reciprocal
-  complete-monotonicity result requires the function and interval
-  qualifications in ASSUMED-UNVERIFIED.
+- **PROVED.** Witness A's global closed form
+  $M(1/2,-3/2,z)=e^z(1-4z/3+4z^2/3)$ is
+  `D5.S3.Analytic.KummerModulusLowerBound.Result.complex_closed`
+  (private); its real restriction is `real_closed`. The selected-point
+  residuals in Evidence are only numerical checks of this proved identity.
+- **PROVED (in prose).** Witness C has $\alpha=3/2$, $\beta=3$.
+  Kummer's transformation $M(a,b,z)=e^zM(b-a,b,-z)$ applies since
+  $b=-3/2$ is not a pole. Here $b-a=-3$, so the series terminates:
+  its constant term is $1$, and its three nonconstant terms are
+
+  $$\frac{-3}{-3/2}(-z)=-2z,\qquad
+  \frac{(-3)(-2)}{(-3/2)(-1/2)}\frac{(-z)^2}{2!}=4z^2,\qquad
+  \frac{(-3)(-2)(-1)}{(-3/2)(-1/2)(1/2)}\frac{(-z)^3}{3!}
+  =\frac83z^3.$$
+
+  Every higher term vanishes because $(-3)_n=0$ for $n\ge4$.
+  Thus $M(3/2,-3/2,z)=e^z(1-2z+4z^2+8z^3/3)$ for every complex $z$.
+  This identity is proved in prose, not formalized in Lean here.
+- **COMPUTED.** Witness C's nonreal root, modulus residual, positive
+  real-axis value and numerical failure are the C readings in Evidence,
+  with the pinned script, command, exit code, hash and precision there.
+  Thus the numerical failure also occurs with $\alpha>1$.
+  Comparing this witness with the paper's reciprocal complete-monotonicity
+  result requires the function and interval qualifications in ASSUMED-UNVERIFIED.
 - **COMPUTED.** Witness B has $\alpha=2$, $\beta=3/2$, so its second
   parameter is $1/2>0$. At $z=-10+5i$, the B readings in Evidence give
-  $|M(2,1/2,z)|<M(2,1/2,-10)$. Both computed claims use the same pinned
-  script, command, exit code, hash and precision in Evidence.
+  $|M(2,1/2,z)|<M(2,1/2,-10)$. These are direct numerical evaluations
+  of the Kummer series; no global closed form for B is claimed here.
+  The computation uses the pinned script, command, exit code, hash and
+  precision in Evidence.
 - **PROVED (in prose).** Wherever a real entire function $f$ is positive,
   the global inequality $|f(x+iy)|\ge f(x)$ requires log-concavity.
   Taylor expansion at real $x$ gives
@@ -140,13 +161,16 @@ read. This is a bounded search, not a priority or completeness assertion.
 Exhaustive literature coverage, citation-index completeness and priority
 are unverified. No new network search is asserted. B and C are numerical
 observations at fixed parameters, not Lean proofs or uniform parameter
-regions. The log-concavity consequence is proved in prose only. A complete
+regions. C's global closed form is proved in prose in Triage; A's is proved
+by `complex_closed` in Lean. No global closed form for B is asserted.
+The log-concavity consequence is proved in prose only. A complete
 classification beyond the paper's proved range is not supplied.
 
 The precise function, parameter restrictions and interval of the paper's
 reciprocal complete-monotonicity result have not been checked against the
 article. That result cannot be applied to witness C on $[0,\infty)$:
-the displayed closed form gives $f(0)=1$ and $f'(0)=-1$, hence
+the closed form proved in prose in Triage gives $f(0)=1$ and
+$f'(0)=-1$, hence
 $(1/f)'(0)=1$, whereas a completely monotone function is nonincreasing.
 This derivative check is in prose; the numerical failure at C does not
 establish a counterexample within a completely monotone reciprocal class.

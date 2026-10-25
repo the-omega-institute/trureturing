@@ -25,7 +25,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "The number 3/2 lies strictly between the natural numbers 1 and 2. Thus −3/2 is never a nonpositive integer; result uses this for alpha=1/2 and beta=2."),
             Helper("coeff_eq", "The exact polynomial coefficient", All("n", N,
                 Eqn(Coeff(Qn(1,2), Qn(-3,2), V("n")), Fr(Weight(Cast(V("n"), R)), Fac(V("n"))))),
-                "The rising-factorial recurrence gives (1/2)n=(1−4n/3+4n(n−1)/3)(−3/2)n by induction. The denominator is nonzero because its only possible roots are nonpositive integers. Dividing by the factorial gives the coefficient used by complex_closed."),
+                "Write P_n(x)=(x)_n. Evaluate Mathlib ascPochhammer_mul at −3/2 with lengths (n, 2) and (2, n). The common value P_{n+2}(−3/2) gives P_n(−3/2)(n−3/2)(n−1/2)=(3/4)P_n(1/2). Rational normalization gives (1/2)n=(1−4n/3+4n(n−1)/3)(−3/2)n. The denominator is nonzero because its only possible roots are nonpositive integers. Dividing by the factorial gives the coefficient used by complex_closed."),
             Helper("second_exp_hasSum", "The second factorial moment of the exponential series", All("z", C,
                 Call("HasSum", Lam("n", N, Fr(Mul(Mul(Cast(V("n"), C), Sub(Cast(V("n"), C), D(1))), Pow(V("z"), V("n"))), Fac(V("n")))),
                     Mul(Pow(V("z"), D(2)), Call("Complex.exp", V("z"))))),

@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#21791; Refuted).
 All theorem rows are bind-only; escape_witness: none for every declaration.
-Coefficient multiplication is the two-step rising-factorial shift identity;
-its recurrence induction is an algebraic presentation of that identity.
+Coefficient multiplication evaluates Mathlib ascPochhammer_mul at −3/2
+with lengths (n, 2) and (2, n), then normalizes the resulting identity.
 The remaining steps instantiate exponential summation, index shifting,
 complex embedding, square-root evaluation and ordered-field normalization.
 No row is claimed to supply an escape witness.
@@ -31,7 +31,6 @@ baseline private declaration in D5/S3/Quantum/ResolvedCountWeakValue:
     sha256:41eadbf06f11130f333cc4e9eb283cdb9fcb8288f8ce91d8cff74cf1b8b2894e
   shared type_sha256:
     sha256:280a228f8ab62456d9610d4041062e12a4e6870afa0de9eb984968b5c2ee0564
-W requires its owner re-pin; the public name is not yet a frozen member.
 Per declaration: name | proof_shape | consumers | frozen deps / W exposure.
   kummerC | bind-only (definition) | claim, complex_closed, witness_zero, result | C
   claim | bind-only (definition) | result | R, C
@@ -74,12 +73,16 @@ private lemma coeff_eq (n : ℕ) :
       (1 - (4/3:ℝ)*n + (4/3:ℝ)*n*(n-1)) / (n.factorial : ℝ) := by
   have hp : (ascPochhammer ℝ n).eval (1/2) =
       (1 - (4/3:ℝ)*n + (4/3:ℝ)*n*(n-1)) * (ascPochhammer ℝ n).eval (-3/2) := by
-    induction n with
-    | zero => norm_num
-    | succ n ih =>
-      rw [ascPochhammer_succ_eval, ascPochhammer_succ_eval, ih]
-      push_cast
-      ring
+    have h₁ := congrArg (fun p : Polynomial ℝ => p.eval (-3/2)) (ascPochhammer_mul ℝ n 2)
+    have h₂ := congrArg (fun p : Polynomial ℝ => p.eval (-3/2)) (ascPochhammer_mul ℝ 2 n)
+    simp only [Polynomial.eval_mul, Polynomial.eval_comp, Polynomial.eval_add,
+      Polynomial.eval_X, Polynomial.eval_natCast] at h₁ h₂
+    have htwo (x : ℝ) : (ascPochhammer ℝ 2).eval x = x * (x + 1) := by
+      norm_num [ascPochhammer_succ_eval]
+    rw [htwo] at h₁ h₂
+    norm_num at h₁ h₂ ⊢
+    rw [Nat.add_comm 2 n] at h₂
+    linear_combination (4/3:ℝ) * (h₂ - h₁)
   have hd : (ascPochhammer ℝ n).eval (-3/2) ≠ 0 := by
     rw [ne_eq, ascPochhammer_eval_eq_zero_iff n (-3/2:ℝ)]
     rintro ⟨k, _, hk⟩

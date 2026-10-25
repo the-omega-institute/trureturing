@@ -50,7 +50,7 @@ $$\forall n \in \mathbb {N},\; \operatorname {D5.S3.Analytic.KummerRatio.Defs.ku
 
 *Commentary.*
 
-The rising-factorial recurrence gives (1/2)n=(1−4n/3+4n(n−1)/3)(−3/2)n by induction. The denominator is nonzero because its only possible roots are nonpositive integers. Dividing by the factorial gives the coefficient used by complex_closed.
+Write P_n(x)=(x)_n. Evaluate Mathlib ascPochhammer_mul at −3/2 with lengths (n, 2) and (2, n). The common value P_{n+2}(−3/2) gives P_n(−3/2)(n−3/2)(n−1/2)=(3/4)P_n(1/2). Rational normalization gives (1/2)n=(1−4n/3+4n(n−1)/3)(−3/2)n. The denominator is nonzero because its only possible roots are nonpositive integers. Dividing by the factorial gives the coefficient used by complex_closed.
 
 **Theorem 1.5 (The second factorial moment of the exponential series).**
 
