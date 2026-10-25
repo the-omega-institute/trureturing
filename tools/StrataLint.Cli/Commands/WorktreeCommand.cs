@@ -34,7 +34,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree checkpoint --message-file FILE | "
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
-        + "StrataLint worktree return --pr N --writers-joined | "
+        + "StrataLint worktree return [--pr N] --writers-joined | "
         + "StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "

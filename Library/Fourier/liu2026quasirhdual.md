@@ -2969,3 +2969,11 @@ The [joint mixed-Mobius and residue companion](liu2026quasirhresidue.md)
 proves a source-conditional improvement of the fifteen radial mixed terms,
 with the original profiles and punctures, and records the actual finite
 residue interface. Its scope and remaining J40 obligations are explicit.
+
+## A small reduced-frequency sector of the actual C68 columns
+
+The [small reduced-frequency companion](liu2026quasirhreduced.md#a-small-reduced-frequency-sector-of-the-actual-c68-columns)
+retains the conditional application C77–C86 to the actual bare-J4
+columns. It states the additional uniform finite-order source premises,
+the original and exact redesigned cutoff cases, and the unpaid
+complement. C51–C76 remain in this note.

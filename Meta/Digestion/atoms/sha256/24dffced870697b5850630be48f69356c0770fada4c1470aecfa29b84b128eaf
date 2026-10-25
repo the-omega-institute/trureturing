@@ -1,0 +1,10 @@
+**Proposition 22.4 (finite order does not bound widths or preparation inputs).** Positive-history initialization gives no $N$-only bound on receiver scalar widths, required signed preparation amplitudes or all later literal memory.
+
+Proof. With $N=1$, $T=(1/2)$, let the producer use Add$(M)$ from zero for an arbitrary nonnegative integer $M$. The first receiver Read after Add$(1)$ is $M+1$. Theorem 19.1's stopped field and the one-pair preparation input are respectively
+
+$$
+x_*=(M+5)/8,\qquad u_0=1-\tfrac12x_*=(11-M)/16.
+$$
+
+Their widths, and the absolute preparation input, are unbounded as $M$ grows. The initial nonnegative producer restriction does not remove the receiver's need for its supplied signed Add right. After actual unit preparation, the passive root $2^{-k}$ has denominator width $k+1$; materializing the paid Time list also grows with $k$. All such finite continuations remain correctly predicted, with their actual width and backing costs. $\square$
+
