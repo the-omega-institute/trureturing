@@ -4186,9 +4186,9 @@ all-depth persistence consequence. $\square$
 
 ## 追加锚（本行以下为增补区）
 
-## 20. Global linear stability after erasing only the first acquisition label
+## 24. Global linear stability after erasing only the first acquisition label
 
-**Theorem 20.1 (All-angle linear stability from the actual first-label-erased depth-two effects; repo-derived).**
+**Theorem 24.1 (All-angle linear stability from the actual first-label-erased depth-two effects; repo-derived).**
 Keep exactly Definitions 1.1, 1.2 and 11.1 and the model of
 Theorem 19.1, as in revision
 `18a1747aed2fed3feeec42c090ed9bd2f299bbde`, inherited from
@@ -4208,7 +4208,7 @@ $$
 \max_{j,y\in\{0,1\}}
 \|T^\dagger(A_j^\dagger P_yA_j)-B^\dagger A_j^\dagger P_yA_jB\|_{\mathrm{op}}
 \Bigr\}.
-\tag{20.1}
+\tag{24.1}
 $$
 
 Erase only the first acquisition label $j$, retaining the second
@@ -4222,7 +4222,7 @@ D_{k,y}&=\sum_{j=0}^1(A_kA_j)^\dagger P_y(A_kA_j),\\
 \max_{k,y\in\{0,1\}}
 \|T^\dagger(D_{k,y})-B^\dagger D_{k,y}B\|_{\mathrm{op}}\Bigr\}.
 \end{aligned}
-\tag{20.2}
+\tag{24.2}
 $$
 
 Then, uniformly over all stipulated $\theta$ and $T$,
@@ -4231,7 +4231,7 @@ $$
 \|T-\operatorname{Ad}_B\|_\diamond
  \le6000000000000\,\delta_{\mathrm{erased},\theta}(T),
 \qquad \operatorname{Ad}_B(X)=BXB^\dagger.
-\tag{20.3}
+\tag{24.3}
 $$
 
 In particular the local implication holds with constants
@@ -4258,7 +4258,7 @@ hypothesis, and gives
 $$
 \mathcal R=\sum_\ell\|N_\ell\|_{\mathrm{HS}}^2
  \le135000\,\delta_{1,\theta}(T)\le135000\delta.
-\tag{20.4}
+\tag{24.4}
 $$
 
 Use $M,D,Z,K$ from (19.24) and write $H=H_c$, so that
@@ -4272,7 +4272,7 @@ $$
 \qquad
 \|(\mathcal V\otimes\operatorname{id}_{M_d})(Y)\|_1
  \le2\mathcal R\|Y\|_1.
-\tag{20.5}
+\tag{24.5}
 $$
 
 Each tested effect is a positive contraction because the actual
@@ -4292,7 +4292,7 @@ Direct multiplication of the full physical matrices gives
 $$
 A_j=2^{-1/2}BV_j(B^\dagger+\sigma_jFC_\perp^\dagger),
 \qquad \sigma_0=1,\quad\sigma_1=-1,\qquad F^\dagger F=I_2.
-\tag{20.6}
+\tag{24.6}
 $$
 
 In particular $X=FZ$ has image in
@@ -4302,7 +4302,7 @@ and the immediate effect imply
 
 $$
 \|X+X^\dagger\|\le4b,\qquad \|[E,H]\|\le b.
-\tag{20.7}
+\tag{24.7}
 $$
 
 Indeed the derivative of $A_j^\dagger A_j$ is
@@ -4313,7 +4313,7 @@ $$
 J=\frac{L(X-X^\dagger)L}{2i},\qquad
 H'=EHE+(I_3-E)H(I_3-E),\qquad
 h=q^\dagger Hq,\qquad H_0=H'-hI_3.
-\tag{20.8}
+\tag{24.8}
 $$
 
 Then $J$ is Hermitian, supported on $L$, and
@@ -4321,7 +4321,7 @@ Then $J$ is Hermitian, supported on $L$, and
 $$
 \|X-iJ\|\le6b,\qquad \|H-H'\|\le b,\qquad
 \|Q_j-i(H'+\sigma_jJ)\|\le7b.
-\tag{20.9}
+\tag{24.9}
 $$
 
 For the first bound the Hermitian part of $LXL$ has norm at most
@@ -4332,24 +4332,24 @@ $H$ equals the norm of $[E,H]$.
 Write $\Pi_0=E$, $\Pi_{j+1}=w_jw_j^\dagger$, and define
 $\Gamma_{ji}=V_j^\dagger\Pi_iV_j$ and
 $N_{ji}=A_j^\dagger B\Pi_iB^\dagger A_j$.
-Identity (20.6) gives
+Identity (24.6) gives
 
 $$
 \mathcal L_K^\dagger(N_{ji})
  =\tfrac12(\Gamma_{ji}Q_j+Q_j^\dagger\Gamma_{ji}),\qquad
 D_{k,1}=\tfrac12\sum_jN_{j,k+1}.
-\tag{20.10}
+\tag{24.10}
 $$
 
-The original success effects and (20.9) give
+The original success effects and (24.9) give
 
 $$
 \|[\Pi_{j+1},H_0+\sigma_jJ]\|\le16b.
-\tag{20.11}
+\tag{24.11}
 $$
 
 To use only available erased effects, set $S_2=D_{0,1}+D_{1,1}$.
-Its derivative has norm at most $2b$. In (20.10), replacing $Q_j$
+Its derivative has norm at most $2b$. In (24.10), replacing $Q_j$
 by $i(H'+\sigma_jJ)$ changes this derivative by at most $14b$:
 there are four terms, each with coefficient $1/4$ and error at most
 $2\cdot7b$. The scalar $h$ cancels in all commutators.
@@ -4361,7 +4361,7 @@ $$
 \Pi_{1,2}=a_\pm a_\pm^\dagger,\qquad
  a_\pm=(1,3,\pm\sqrt6)^{\mathsf T}/4,\qquad
 W=\operatorname{diag}(1,1,-1).
-\tag{20.12}
+\tag{24.12}
 $$
 
 Define the explicit matrices
@@ -4373,7 +4373,7 @@ $$
 G=\frac1{32}\begin{pmatrix}
 17&3&-\sqrt6\\3&9&-3\sqrt6\\-\sqrt6&-3\sqrt6&6
 \end{pmatrix}.
-\tag{20.13}
+\tag{24.13}
 $$
 
 The matrix of $V_0$ is
@@ -4384,19 +4384,19 @@ complement, these matrices give
 $$
 \Gamma_{01}+\Gamma_{02}=2G,\qquad
 \Gamma_{11}+\Gamma_{12}=2WGW.
-\tag{20.14}
+\tag{24.14}
 $$
 
-Formula (20.10) for $S_2$ and the preceding error bound yield
+Formula (24.10) for $S_2$ and the preceding error bound yield
 
 $$
 \|[G,H_0+J]+[WGW,H_0-J]\|\le32b.
-\tag{20.15}
+\tag{24.15}
 $$
 
 No separately retained first label is reconstructed from a sum.
 
-Here is a complete real-coordinate certificate for (20.11) and (20.15).
+Here is a complete real-coordinate certificate for (24.11) and (24.15).
 Put $d=(\sqrt2+1)/\sqrt6$ and $e_*=(\sqrt2-1)/\sqrt6$.
 Since $(1,1,0)^{\mathsf T}/\sqrt2=dq+e_*r$, the general matrices
 $H_0$ and $J$ in the moving basis have the forms
@@ -4409,7 +4409,7 @@ de_*A&e_*^2A&e_*(R+iI)\\
 d(R-iI)&e_*(R-iI)&D
 \end{pmatrix},\qquad
 v=(x,y,z,w,A,D,R,I)\in\mathbb R^8.
-\tag{20.16}
+\tag{24.16}
 $$
 
 Here $D$ in the coordinate matrix denotes a real coordinate, distinct
@@ -4421,7 +4421,7 @@ $$
 [a_+a_+^\dagger,H_0+J],\qquad
 [a_-a_-^\dagger,H_0-J],\qquad
 [G,H_0+J]+[WGW,H_0-J].
-\tag{20.17}
+\tag{24.17}
 $$
 
 The Euclidean norm of $\mathsf Mv$ is exactly the square root of the
@@ -4435,7 +4435,7 @@ $$
  &=\frac{91264725\sqrt2}{268435456}
    +\frac{262163385}{536870912}>\frac12.
 \end{aligned}
-\tag{20.18}
+\tag{24.18}
 $$
 
 These are polynomial matrix identities over the real algebraic numbers.
@@ -4447,10 +4447,10 @@ $$
 \frac{45\sqrt2}{512}+\frac{165}{1024},\qquad
 \frac{249}{64},\qquad
 \frac{69}{16}-\frac{25\sqrt2}{24}.
-\tag{20.19}
+\tag{24.19}
 $$
 
-Their product is the determinant in (20.18).
+Their product is the determinant in (24.18).
 The Gram matrix is positive semidefinite, and its positive determinant
 makes it positive definite. Each eigenvalue is below $16$, so its
 least eigenvalue exceeds $(1/2)16^{-7}=2^{-29}$. Consequently
@@ -4458,12 +4458,12 @@ least eigenvalue exceeds $(1/2)16^{-7}=2^{-29}$. Consequently
 $$
 \|v\|_2\le32768\|\mathsf Mv\|_2
  \le32768\cdot96b=3145728b.
-\tag{20.20}
+\tag{24.20}
 $$
 
-The bound $\|\mathsf Mv\|_2\le96b$ follows from (20.11), (20.15)
+The bound $\|\mathsf Mv\|_2\le96b$ follows from (24.11), (24.15)
 and $\|Q\|_{\mathrm{HS}}\le\sqrt3\|Q\|$ for $3\times3$ matrices.
-Formula (20.16) also gives
+Formula (24.16) also gives
 
 $$
 \begin{aligned}
@@ -4471,37 +4471,37 @@ $$
 \|J\|_{\mathrm{HS}}^2&=A^2+D^2+2R^2+2I^2,\\
 \|H_0\|+\|J\|&\le2\sqrt2\|v\|_2\le9437184b.
 \end{aligned}
-\tag{20.21}
+\tag{24.21}
 $$
 
-Since $F$ is an isometry, $\|Z\|=\|X\|$. Combining with (20.9),
+Since $F$ is an isometry, $\|Z\|=\|X\|$. Combining with (24.9),
 
 $$
 \|K-ihB\|\le\|H-hI_3\|+\|Z\|
  \le(9437184+7)b<10000000b.
-\tag{20.22}
+\tag{24.22}
 $$
 
 The scalar term $ihB$ contributes zero to $\mathcal L_K$.
 For every finite reference dimension $d$ and every complex amplified
 matrix $Y$, the trace-norm ideal inequality, (19.26)–(19.28) and
-(20.22) therefore give
+(24.22) therefore give
 
 $$
 \|((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(Y)\|_1
  \le(20000000b+2\mathcal R)\|Y\|_1.
-\tag{20.23}
+\tag{24.23}
 $$
 
-By (20.4), $b\le270001\delta$, and the coefficient is at most
+By (24.4), $b\le270001\delta$, and the coefficient is at most
 
 $$
 (20000000\cdot270001+270000)\delta
  =5400020270000\delta<6000000000000\delta.
-\tag{20.24}
+\tag{24.24}
 $$
 
-Taking both defining diamond suprema proves (20.3), including at zero
+Taking both defining diamond suprema proves (24.3), including at zero
 defect. There is no division by an angle, a branch probability or a
 defect. Every effect used is either an original effect or an actual
 sum of the stipulated raw erased depth-two success effects. The
