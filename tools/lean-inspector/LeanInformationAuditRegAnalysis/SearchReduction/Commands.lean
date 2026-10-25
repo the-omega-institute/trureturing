@@ -602,21 +602,13 @@ def writeCacheDependencyModule (directory : System.FilePath) (identity : String)
 module or replayed through the kernel before current certificate checks. -/
 unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (source : Environment) (request : Request) (result : Observation)
-    (base? : Option Environment := none) (importDependencies : Bool := false) : CommandElabM Unit := do
+    (base? : Option Environment := none) (importDependencies : Bool := false)
+    (moduleMinDependencies : Nat := 0) : CommandElabM Unit := do
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
-  -- Source imports may register new environment extensions. A fresh minimal
-  -- import allocates states for the current registry. Dependency kernel checks
-  -- and export need declarations only; normal hot imports initialize the judge's
-  -- elaboration extensions independently.
-  let base ← if importDependencies then do
-    enableInitializersExecution
-    withImporting <| importModules
-      #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
-      options 0 (leakEnv := false) (loadExts := false)
-    else pure (base?.getD (← getEnv))
-  let dependencies ← liftTermElabM <| withPublicationContext do
+  let mut base := base?.getD (← getEnv)
+  let roots ← liftTermElabM <| withPublicationContext do
     let mut roots := #[]
     if result.presentationEvidence?.isSome ||
         (result.attempts ++ result.pairAttempts).any (·.proof?.isSome) then
@@ -626,10 +618,23 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
       roots := roots ++ type.getUsedConstants ++ proof.getUsedConstants
     if let some evidence := result.presentationEvidence? then
       roots := roots ++ evidence.conversionType.getUsedConstants
-    match captureCacheDependencies source base request.target roots with
+    pure roots
+  let mut dependencies ← match captureCacheDependencies source base request.target roots with
     | .ok declarations => pure declarations
     | .error error => throwError "{error}"
-  let dependencyModule? ← if importDependencies then
+  let useModule := importDependencies && dependencies.size >= moduleMinDependencies
+  if useModule then
+    -- Allocate current extension states after source registration. Only large
+    -- closures pay for a second import; small closures keep live kernel replay.
+    -- This cutoff selects cache work, independently of every search parameter.
+    enableInitializersExecution
+    base ← withImporting <| importModules
+      #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
+      options 0 (leakEnv := false) (loadExts := false)
+    dependencies ← match captureCacheDependencies source base request.target roots with
+      | .ok declarations => pure declarations
+      | .error error => throwError "{error}"
+  let dependencyModule? ← if useModule then
     pure (some (← liftTermElabM <| writeCacheDependencyModule directory identity base dependencies))
     else pure none
   IO.FS.createDirAll directory
@@ -764,7 +769,8 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
     profilePhase "probe/cache-save-start"
     try
-      saveProbeCache directory identity source request result (some cacheBase) (importDependencies := true)
+      saveProbeCache directory identity source request result (some cacheBase)
+        (importDependencies := true) (moduleMinDependencies := 4096)
       -- The runner authenticates this entry only after the entire original
       -- request succeeds. Hot execution retains executeProbe's source audit,
       -- certificate kernel checks and fresh GraphReading publication, while
@@ -775,8 +781,11 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
       -- Its small environment predates any newly initialized source extensions.
       IO.FS.writeBinFile (directory / payloadName) (← IO.FS.readBinFile auditPayload)
       let dependencyModule := s!"SearchReductionDependencies_{hash identity}"
+      let moduleExists ← (System.FilePath.mk directory / (dependencyModule ++ ".olean")).pathExists
+      let entryImport := if moduleExists then dependencyModule
+        else "LeanInformationAuditRegAnalysis.SearchReduction.Commands"
       IO.FS.writeFile (directory / (entry ++ ".lean"))
-        (s!"import {dependencyModule}\n" ++
+        (s!"import {entryImport}\n" ++
           "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
           "run_cmd do\n" ++
           "  let some directory ← IO.getEnv \"SEARCH_REDUCTION_PROBE_READ\"\n" ++

@@ -20,6 +20,19 @@ run_cmd do
       discard <| checkProof f.request.target [] (mkConst ``True) (mkConst ``True.intro)
     let source ← getEnv
     saveProbeCache f.directory f.identity source f.request f.result
+      (some original) (importDependencies := true) (moduleMinDependencies := 4096)
+    modifyEnv fun _ => original
+    profilePhase "regression/small-dependency-replay-start"
+    unless ← replayProbeCache f.directory f.identity f.request #[] `cacheSmallDependencies do
+      throwError "small dependencies did not use the live kernel replay path"
+    if let some path ← IO.getEnv "SEARCH_REDUCTION_PROFILE" then
+      let trace ← IO.FS.readFile path
+      let trace := (trace.splitOn "regression/small-dependency-replay-start").getLast!
+      unless (trace.splitOn "PROBE_CACHE_KERNEL_DEPENDENCIES count=1").length == 2 &&
+          (trace.splitOn "PROBE_CACHE_IMPORTED_DEPENDENCIES").length == 1 do
+        throwError "small dependency replay unnecessarily imported an export environment"
+    modifyEnv fun _ => original
+    saveProbeCache f.directory f.identity source f.request f.result
       (some original) (importDependencies := true)
     modifyEnv fun _ => original
     let module := s!"SearchReductionDependencies_{hash f.identity}" |>.toName
