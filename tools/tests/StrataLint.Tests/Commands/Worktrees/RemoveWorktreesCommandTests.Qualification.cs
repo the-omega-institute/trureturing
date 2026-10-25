@@ -8,6 +8,18 @@ namespace StrataLint.Tests;
 
 public sealed partial class RemoveWorktreesCommandTests
 {
+    [Theory]
+    [InlineData(68, "not a canonical refusal")]
+    [InlineData(73, "")]
+    [InlineData(73, "WORKTREE_RETAINED reason\nextra")]
+    public void NamedRemovalRejectsMalformedEmptyRefusalEnvelope(int exit, string error)
+    {
+        var runner = new ScriptedWorktreeProcessRunner(new InventoryRunner(), (file, _, _) => file == "python3"
+            ? new ProcessOutput(exit, [], Encoding.UTF8.GetBytes(error)) : null);
+        var result = RemoveWorktreesCommand.Run("/fixture/main", ["--names", "linked"], runner);
+        AssertResult(result, 74, 0, 1, 0);
+    }
+
     [Fact]
     public void NamedRemovalAbnormalExitCannotBecomeSuccessfulFromCompletedReceipt()
     {

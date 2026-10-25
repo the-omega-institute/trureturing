@@ -115,13 +115,50 @@ def interrupted_removal(target, metadata, stack, source, branch):
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
-def qualify(source, path, stack=None, snapshot=None):
+def qualification_identity(source, path, snapshot, deadline=None):
+    """Preserve native failures unless a fresh observation confirms identity drift."""
+    marker = path / ".git"
+    pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
+    try:
+        return identity(source, path, snapshot=snapshot)
+    except (GitFailure, OSError, subprocess.TimeoutExpired):
+        if path.is_symlink() or not path.is_dir():
+            raise Refused("missing_or_linked_tree")
+        if marker.is_symlink() or not marker.exists():
+            raise Refused("git_pointer")
+        try:
+            changed = pointer is not None and (not marker.is_file() or marker.read_bytes() != pointer)
+        except OSError:
+            changed = False
+        if changed:
+            raise Refused("git_pointer_identity")
+        # The batch alarm still bounds native rechecks. An exhausted alarm must
+        # not start another native read after its execution budget has expired.
+        if deadline is None or time.monotonic() < deadline:
+            try:
+                rows = inventory(source)
+                previous = [row for row in snapshot[0] if Path(row["worktree"]).resolve() == path]
+                current = [row for row in rows if Path(row["worktree"]).resolve() == path]
+            except Exception:
+                pass
+            else:
+                if not current:
+                    raise Refused("repository_identity")
+                if current != previous:
+                    raise Refused("observed_identity_changed")
+        raise
+
+
+def qualify(source, path, stack=None, snapshot=None, deadline=None):
     """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
     path = Path(path).resolve()
-    item, metadata = identity(source, path, snapshot=snapshot)
-    rows = snapshot[0] if snapshot is not None else inventory(source)
+    if not path.is_dir():
+        raise Refused("missing_or_linked_tree")
+    snapshot = snapshot if snapshot is not None else (inventory(source), common(source))
+    item, metadata = qualification_identity(source, path, snapshot, deadline)
+    rows = snapshot[0]
     if path == Path(rows[0]["worktree"]).resolve():
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
@@ -210,7 +247,7 @@ def qualify_batch(options, emit=None, emit_started=None):
                 if emit_started:
                     emit_started(path)
                 with qualification_deadline(remaining):
-                    qualify(options.source, path, snapshot=snapshot)
+                    qualify(options.source, path, snapshot=snapshot, deadline=deadline)
                 report(path, "qualified", None)
             except GitFailure as error:
                 report(path, "failed", qualification_failure(error))

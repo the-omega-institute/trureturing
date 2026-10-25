@@ -54,7 +54,8 @@ internal static class WorktreeProtocolCommand
                         }
                     }
                 }
-                if (line.Length != 0) consume(line.ToString());
+                if (line.Length != 0) throw new InvalidOperationException("incomplete qualification row:"
+                    + CleanLanesCommand.BoundedDiagnostic(line.ToString()));
                 return 0;
             });
         return new CommandResult(result.ExitCode == 0, string.Empty,

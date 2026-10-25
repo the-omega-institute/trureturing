@@ -9,6 +9,46 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void IdleInitialIdentityFailureMustRemainFailed(bool inject, bool force)
+    {
+        using var fixture = new CleanLanesFixture();
+        var token = new string('a', 32);
+        var branch = "lane/governance/idle-" + token;
+        var path = fixture.AddMergedLane(branch);
+        var log = Path.Combine(fixture.RepositoryRoot, ".git/logs/refs/heads", branch);
+        var rows = File.ReadAllLines(log);
+        rows[0] = rows[0].Split('\t')[0] + "\tworktree-idle:" + token;
+        File.WriteAllLines(log, rows);
+        var calls = 0;
+        var poolObserved = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (inject && IsLaneGit(file, args, directory, path, "rev-parse", "--absolute-git-dir") && ++calls == 1)
+                return GitFailure("initial idle native identity cause");
+            if (file == "python3" && IsProtocol(args, "pool"))
+            {
+                poolObserved = true;
+                if (inject) Assert.DoesNotContain("--force", args);
+            }
+            return null;
+        });
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+        Assert.True(poolObserved);
+        Assert.Equal(!inject, result.Success);
+        AssertQualificationPublicExit(result, force, inject ? 2 : 0);
+        Assert.Equal(inject ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal(inject ? "deferred" : "completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        if (inject) Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+            && row.GetProperty("action").GetString() == "failed"
+            && row.GetProperty("reason").GetString()!.Contains("initial idle native identity cause", StringComparison.Ordinal));
+        else Assert.Contains(ReadItems(result.Output), row => ItemMatches(row, path, "skipped", "idle_pool"));
+        Assert.True(Directory.Exists(path));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void BusyPoolBeforeEntryReportsOnlyPoolFailure(bool force)

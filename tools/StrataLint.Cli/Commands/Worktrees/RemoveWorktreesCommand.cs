@@ -96,7 +96,7 @@ internal static class RemoveWorktreesCommand
                 Outcome = "failed", Error = BoundedDiagnostic(exception.Message), ExitCode = 74,
             }).ToArray());
         }
-        if (removal.ExitCode is 68 or 73 && removal.Output.Length == 0)
+        if (removal.ExitCode is 68 or 73 && CleanLanesCommand.CanonicalRefusal(removal) is not null)
             return Complete(removal.ExitCode.Value, items.Select(item => item with
             {
                 Outcome = removal.ExitCode == 68 ? "locked" : "identity_refused", Error = removal.Error, ExitCode = removal.ExitCode.Value,

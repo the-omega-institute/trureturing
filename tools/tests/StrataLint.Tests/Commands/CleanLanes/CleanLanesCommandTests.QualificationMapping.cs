@@ -19,6 +19,8 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("deadline")]
     [InlineData("active_deadline")]
     [InlineData("completed_deadline")]
+    [InlineData("no_start")]
+    [InlineData("cross_path")]
     public void QualificationMappingUsesPathsAndPreservesCompletedResults(string mode)
     {
         var paths = new[] { "/fixture/a space\nnewline", "/fixture/b", "/fixture/c" };
@@ -27,12 +29,13 @@ public sealed partial class CleanLanesCommandTests
             reason = index == 0 ? "locked_recent" : index == 1 && mode is "mixed" or "failed_protocol" ? "qualification_failed:GitFailure:native cause" : null }).Reverse().ToList();
         if (mode == "duplicate") rows.Add(rows[0]);
         if (mode == "missing") rows.RemoveAt(0);
-        var output = string.Join("\n", rows.Select(row => JsonSerializer.Serialize(new
-            { @event = "worktree_qualification_item", row.path, row.outcome, row.reason }))) + "\n";
+        string Start(string path) => JsonSerializer.Serialize(new { @event = "worktree_qualification_started", path }) + "\n";
+        var output = string.Concat(rows.Select(row => (mode == "no_start" ? "" : Start(mode == "cross_path" ? paths[0] : row.path))
+            + JsonSerializer.Serialize(new { @event = "worktree_qualification_item", row.path, row.outcome, row.reason }) + "\n"));
         output += JsonSerializer.Serialize(new { @event = "worktree_qualification",
             status = mode is "mixed" or "failed_protocol" ? "failed" : "succeeded", item_count = rows.Count }) + "\n";
         if (mode == "failed_protocol") output += "{invalid row\n";
-        var partial = JsonSerializer.Serialize(new
+        var partial = Start(paths[0]) + JsonSerializer.Serialize(new
             { @event = "worktree_qualification_item", path = paths[0], outcome = "refused", reason = "locked_recent" }) + "\n";
         if (mode == "active_deadline") partial += JsonSerializer.Serialize(new
             { @event = "worktree_qualification_started", path = paths[1] }) + "\n";
@@ -53,7 +56,7 @@ public sealed partial class CleanLanesCommandTests
             Assert.Contains("batch_protocol_error", Reason(paths[0]));
             return;
         }
-        if (mode is "duplicate" or "missing")
+        if (mode is "duplicate" or "missing" or "no_start" or "cross_path")
         {
             foreach (var path in paths)
             {

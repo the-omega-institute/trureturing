@@ -78,7 +78,9 @@ internal static class BoundedProcessRunner
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cancellation.CancelAfter(timeout);
         using var drain = new CancellationTokenSource();
-        var ioCancellation = interruptBeforeKill is null ? cancellation.Token : drain.Token;
+        // Execution cancellation settles the child first. Its complete pipe
+        // observations remain readable until EOF or the bounded drain expires.
+        var ioCancellation = drain.Token;
         Task? stdout = null;
         Task? stderr = null;
         Task? stdin = null;
@@ -143,8 +145,7 @@ internal static class BoundedProcessRunner
         {
             // Destinations cannot outlive their consumer. In particular, the
             // fixture's settlement output must be drained before its sinks close.
-            if (interruptBeforeKill is not null) drain.CancelAfter(TimeSpan.FromSeconds(5));
-            else drain.Cancel();
+            drain.CancelAfter(TimeSpan.FromSeconds(5));
             foreach (var task in new[] { stdout, stderr, stdin })
             {
                 try { task?.GetAwaiter().GetResult(); }

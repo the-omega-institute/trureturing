@@ -252,10 +252,22 @@ internal static partial class CleanLanesCommand
             else incomplete = true;
         }
 
-        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, force, inventory, events, runner,
+        // Initial observations belong to the invocation, including idle paths.
+        // Pool observations may supplement them but cannot authorize mutation
+        // after this invocation failed to establish an idle tree's identity.
+        var failedPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in inventory.Where(item => item.IdentityFailure is not null))
+        {
+            incomplete = true;
+            failedPaths.Add(item.Path);
+            events.Add(QualificationEvent(item, new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
+        }
+        var poolForce = force && !inventory.Any(item => item.IdentityFailure is not null
+            && WorktreePoolCommand.IsIdleBranch(item.Branch));
+        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, poolForce, inventory, events, runner,
             CompleteRemoval, Observe);
         var qualifications = QualifyLockedLanes(repositoryRoot, inventory.Where(item => item.Locked
-            && !poolPaths.Contains(item.Path) && item.Path != inventory[0].Path
+            && !poolPaths.Contains(item.Path) && !failedPaths.Contains(item.Path) && item.Path != inventory[0].Path
             && item.GitDirectory is not null && item.GitDirectory != commonGitDirectory
             && Directory.Exists(item.Path) && HasGitMarker(item.Path)).ToArray(), runner);
         if (qualifications.TryGetValue(string.Empty, out var batchFailure))
@@ -264,15 +276,13 @@ internal static partial class CleanLanesCommand
             events.Add(new CleanLaneEvent("worktree_qualification", null, null, null, "failed", batchFailure.Reason!));
         }
         // Account for every obtained failure before any later eligibility guard.
-        var failedPaths = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var item in inventory.Where(item => !poolPaths.Contains(item.Path)))
+        foreach (var item in inventory)
         {
             var failure = qualifications.GetValueOrDefault(item.Path);
-            if (failure?.Failed != true && item.IdentityFailure is null) continue;
+            if (failure?.Failed != true) continue;
             incomplete = true;
             failedPaths.Add(item.Path);
-            events.Add(QualificationEvent(item, failure?.Failed == true ? failure
-                : new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
+            events.Add(QualificationEvent(item, failure));
         }
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {

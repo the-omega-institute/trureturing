@@ -20,6 +20,8 @@ internal static partial class CleanLanesCommand
         var paths = candidates.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
         var results = new Dictionary<string, QualificationResult>(StringComparer.Ordinal);
         var started = new HashSet<string>(StringComparer.Ordinal);
+        var anyStarted = false;
+        var snapshotFailed = false;
         var summarySeen = false;
         Exception? receiptError = null;
         CommandResult? result = null;
@@ -47,9 +49,10 @@ internal static partial class CleanLanesCommand
                     if (row.GetProperty("event").GetString() == "worktree_qualification_started")
                     {
                         var activePath = row.GetProperty("path").GetString()!;
-                        if (!paths.Contains(activePath) || results.ContainsKey(activePath) || started.Count != 0)
+                        if (!paths.Contains(activePath) || results.ContainsKey(activePath) || started.Count != 0 || snapshotFailed)
                             throw new InvalidOperationException("invalid qualification start");
                         started.Add(activePath);
+                        anyStarted = true;
                         return;
                     }
                     if (row.GetProperty("event").GetString() == "worktree_qualification")
@@ -72,8 +75,11 @@ internal static partial class CleanLanesCommand
                         || outcome is "failed" or "deferred" && !reason!.StartsWith("qualification_failed:", StringComparison.Ordinal)
                         || outcome is not ("qualified" or "refused" or "failed" or "deferred"))
                         throw new InvalidOperationException("invalid or duplicate qualification item");
-                    if (outcome == "deferred" && started.Contains(path))
-                        throw new InvalidOperationException("started qualification cannot be deferred");
+                    var snapshotFailure = outcome == "failed" && !anyStarted;
+                    if (outcome == "deferred" ? started.Count != 0
+                        : snapshotFailure ? started.Count != 0 : !started.Contains(path))
+                        throw new InvalidOperationException("unpaired qualification item");
+                    snapshotFailed |= snapshotFailure;
                     started.Remove(path);
                     results.Add(path, new QualificationResult(reason, outcome switch
                     {
@@ -142,7 +148,7 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static string? CanonicalRefusal(CommandResult result)
+    internal static string? CanonicalRefusal(CommandResult result)
     {
         const string prefix = "WORKTREE_RETAINED ";
         var error = result.Error.TrimEnd('\r', '\n');

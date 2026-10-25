@@ -8,6 +8,54 @@ from unittest.mock import patch
 
 
 class QualificationCases:
+    def qualification_native_identity_races_are_refused(self):
+        import worktree_protocol as protocol
+        from contextlib import redirect_stderr
+        from pathlib import Path
+        for action in ("qualify", "preview", "preflight", "scoped"):
+            for native in ("--git-common-dir", "--show-toplevel", "--absolute-git-dir"):
+                for change in ("tree", "marker", "identity", "present"):
+                    with self.subTest(action=action, native=native, change=change):
+                        marker = self.tree / ".git"
+                        original_marker = marker.read_bytes()
+                        backup = self.root / "disappeared"
+                        original_value, calls = protocol.value, []
+                        def injected(root, *args):
+                            if Path(root).resolve() == self.tree.resolve() and native in args:
+                                calls.append(True)
+                                if len(calls) == (2 if action == "scoped" else 1):
+                                    if change == "tree":
+                                        self.tree.rename(backup)
+                                    elif change == "marker":
+                                        marker.unlink()
+                                    elif change == "identity":
+                                        marker.write_text("gitdir: " + str(self.main / ".git") + "\n")
+                                    raise protocol.GitFailure("fatal: native identity race cause")
+                            return original_value(root, *args)
+                        args = ["--source", str(self.main), "qualify" if action == "qualify" else "remove",
+                                "--path", str(self.tree)]
+                        if action == "preview":
+                            args.append("--preview")
+                        output, errors = io.StringIO(), io.StringIO()
+                        try:
+                            with patch.object(protocol, "value", side_effect=injected), redirect_stdout(output), redirect_stderr(errors):
+                                code = protocol.main(args)
+                            self.assertTrue(calls)
+                            text = output.getvalue() + errors.getvalue()
+                            if change == "present":
+                                self.assertEqual(74, code)
+                                self.assertIn("qualification_failed:", text)
+                                self.assertIn("native identity race cause", text)
+                            else:
+                                self.assertEqual(0 if action == "qualify" else 73, code)
+                                self.assertNotIn("qualification_failed:", text)
+                                self.assertIn(dict(tree="missing_or_linked_tree", marker="git_pointer",
+                                                   identity="git_pointer_identity")[change], text)
+                        finally:
+                            if backup.exists():
+                                backup.rename(self.tree)
+                            marker.write_bytes(original_marker)
+
     def pool_scope_operational_failure_is_failed(self):
         import worktree_protocol as protocol
         import worktree_pool as pool
