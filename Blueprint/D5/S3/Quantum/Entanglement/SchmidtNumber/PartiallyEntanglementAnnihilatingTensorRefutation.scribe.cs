@@ -127,7 +127,10 @@ internal sealed class PartiallyEntanglementAnnihilatingTensorRefutationDocument 
                         + "that same pure output. The pure-state rank bound would then imply "
                         + "4 ≤ 2, a contradiction. Applying the closure assertion to d = 3, "
                         + "r = 2 and e = f = R would give precisely this impossible conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mallick-ganguly-majumdar-2026-pea-tensor-nonclosure"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula NonLocalFormula() => All("d", Naturals(), All("e", BipartiteMaps(),
         IffOf(LocalCall("NonLocal", X("e")), new Formula.Not(Parenthesized(
