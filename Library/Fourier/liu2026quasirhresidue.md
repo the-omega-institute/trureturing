@@ -666,8 +666,9 @@ four independent one-variable residue constants.
 **Nonzero simple corners, including norm-7 resonance.** Suppose
 $\varrho=\sigma+i\gamma$ is a simple nonreal zero of $\zeta_K$,
 $3/4\le\sigma<1$, and the actual $\widehat W(a)\ne0$ at
-$a=\varrho-1$. Since $W$ is real, the conjugate values agree under
-conjugation. Set $u=7^{-a}=x+iy$, $k_7=12/73$,
+$a=\varrho-1$. Such corners enter R18 when $1-h<\sigma$ and
+$|\gamma|<T$; the boundary is still required to avoid all zeros.
+Since $W$ is real, the conjugate values agree under conjugation. Set $u=7^{-a}=x+iy$, $k_7=12/73$,
 $c_7=k_7\log7$, and $B_\varrho=\widehat W(a)/\zeta_K'(\varrho)^2$.
 For the ordered balanced corner
 $\mathbf a=(a,a,\bar a,\bar a)$ write
@@ -737,9 +738,10 @@ $$
 
 Thus the original-product factorization reaches a depth that would
 be sufficient if the entire R18 expression admitted the corresponding
-power bound. This is domain applicability only. The zero-free
-$-1/5$ tube alone gives only the formal exponent $4/5$, and no
-left-line, mixed-residue or horizontal estimate at the deeper
+power bound. This is domain applicability only. The $\bar H$
+nonvanishing tube of depth $1/5$ reaches only the formal all-line
+exponent $4/5$; it gives no reciprocal-zeta strip or contour bound.
+No left-line, mixed-residue or horizontal estimate at the deeper
 rectangle is supplied. In particular no such bound is deduced from
 $R_{7/8}$, and no limit $T\to\infty$ is taken here.
 
@@ -762,7 +764,8 @@ settled Riesz normalization or replace the original profiles.
   In Granville–Koukoulopoulos–Maynard, [v4, Theorems 1.3–1.4 and
   (8.5)–(8.6)](https://arxiv.org/html/1606.06781v4), the moment
   exponent at $2k=4$ is $\max\{2-4m,-1\}$ for integer smoothing
-  index $m\ge0$. For a fixed bounded $C^m$ profile, $m>3/2$ and
+  index $m\ge0$. For a fixed real $C^m$ profile supported in
+  $(-\infty,1]$, with bounded derivatives through $m>3/2$ and
   $f(0)\ne0$, Theorem 1.4(a) gives
   $c_{2,f}/\log R+O((\log R)^{-2+\varepsilon})$ when
   $x\ge R^4\log^2R$. Its local factor
