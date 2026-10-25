@@ -613,3 +613,584 @@ Neither finite gluing nor attraction alone proves uniform infinite
 refinement or selects a universal physical spatial dimension.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Coupling derivatives for a moving original pole
+
+**Definition 6.1 (native parameters and five response coefficients).**
+In §§6–8 fix $0<Z<1$, $r=1-Z$, $0<l<u<r/2$, $h=u-l$ and
+$\sigma>0$. Retain the preparation rotations, the two actual $2\pi$
+periods, raw measures, vector fields and covariance-$2$ clock of
+Definition 1.1. The suppliers C and V in these sections, and the
+quotient supplier
+[F](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md), are their texts at
+revision `48709befec1fa9346ef6ef7d4c62091f7d849e26`.
+Let
+
+$$
+\begin{aligned}
+p&=(y,\alpha_o,\beta_o,a,v)
+ \in(0,h)\times\mathbb T^2\times(0,\infty)\times[0,\infty),\\
+o&=(l+y,\alpha_o,\beta_o),\qquad \epsilon=\sqrt v,\qquad g=\kappa a.
+\end{aligned}
+\tag{6.1}
+$$
+
+Here $a$ is an attractive gain and $\kappa\ge0$ a known coupling
+multiplier. The field $\Gamma_{\sqrt v,o}$ remains the complete
+both-face killed FREE unit-source Green field; $a$ does not change its
+source normalization. On the free mixed domain $\mathcal V_{\sqrt v}$
+of C, (31.1), write
+
+$$
+\begin{aligned}
+t_{v,s}(w,z)&=T_{\sqrt v}(w,z)+s\langle w,z\rangle,\\
+W_p(w,z)&=a\int_\Omega\Gamma_{\sqrt v,o}w\overline z\,d\mu,\\
+b_{p,\kappa,s}[f]
+ &=\min_{\substack{w\in\mathcal V_{\sqrt v}\\\gamma_lw=f}}
+           \{t_{v,s}[w]-\kappa W_p[w]\}.
+\end{aligned}
+\tag{6.2}
+$$
+
+Only sufficiently small $\kappa$ is used. The trace domain is the
+free trace-energy domain $\mathcal T_{\sqrt v,s}$, and the upper trace
+is zero. Polarization is linear in its first argument. Put
+$e_d=(2\pi)^{-1}\exp(i(d_1\alpha+d_2\beta))$, $e_0=e_{(0,0)}$, and
+
+$$
+\begin{aligned}
+B_d(s)&=-\left.\partial_\kappa b_{p,\kappa,s}(e_d,e_0)
+                                                    \right|_{0+},\\
+c(v)&=\lambda_{0,1}^{\sqrt v}(0),\\
+\Phi(p)&=(c(v),B_0(0),B_0(\sigma),B_{(1,0)}(0),B_{(0,1)}(0))
+                       \in\mathbb R^3\times\mathbb C^2.
+\end{aligned}
+\tag{6.3}
+$$
+
+For modal formulas set $x=k-l$ and, for $d\in\mathbb Z^2$, define
+
+$$
+\begin{aligned}
+q_d(x)&=d_1/2+(1/2-(l+x)/r)d_2,\\
+H_d^v&=-\partial_x^2+q_d(x)^2+vd_2^2/r^2,\\
+G_d^v(x,y)&=(H_d^v)^{-1}(x,y)\quad\hbox{with two Dirichlet endpoints},\\
+(H_d^v+s)\psi_{d,s}^v&=0,\qquad
+       \psi_{d,s}^v(0)=1,\quad\psi_{d,s}^v(h)=0,\\
+F_{d,s}(y,v)&=\int_0^hG_d^v(x,y)\psi_{d,s}^v(x)\psi_{0,s}(x)\,dx,\\
+H_s(y)&=F_{0,s}(y,v),\qquad
+\psi_{0,s}(x)=
+\begin{cases}
+\sinh(\sqrt s(h-x))/\sinh(\sqrt s h),&s>0,\\
+1-x/h,&s=0.
+\end{cases}
+\end{aligned}
+\tag{6.4}
+$$
+
+Write $\lambda_d^{\sqrt v}(s)=-(\psi_{d,s}^v)'(0)$ for the free
+one-face energy of C, (31.2). The Green kernel in $F_{d,s}$ is
+unshifted; only the two Poisson profiles use $s$. Thus $H_s$ is
+independent of $v$. These are the
+original modes of C, Definitions 31.1–31.2 and Theorem 34.1, without
+an altered clock or a regenerated mixed Green potential.
+
+**Theorem 6.2 (uniform small-coupling derivative and its raw phase).**
+Fix $0<\delta<h/2$, $0<a_{\min}\le a_{\max}<\infty$ and
+$0\le v_{\max}<\infty$, and put
+
+$$
+K=[\delta,h-\delta]\times\mathbb T^2
+                   \times[a_{\min},a_{\max}]\times[0,v_{\max}].
+\tag{6.5}
+$$
+
+There is $M<\infty$ such that, for all $p\in K$, $s\ge0$ and
+$w\in\mathcal V_{\sqrt v}$,
+
+$$
+0\le W_p[w]\le M T_{\sqrt v}[w]\le M t_{v,s}[w].
+\tag{6.6}
+$$
+
+Consequently for $0\le\kappa\le\kappa_0$, with some common
+$\kappa_0>0$, the minimum (6.2) is coercive and uniquely attained,
+on exactly that free mixed domain, also for $s=0$ and $v=0$.
+For every fixed $d$ and $s\ge0$ its derivative exists and is
+
+$$
+B_d(s)=\frac{a}{4\pi^2}
+       e^{i(d_1\alpha_o+d_2\beta_o)}F_{d,s}(y,v).
+\tag{6.7}
+$$
+
+In particular $B_0(s)=aH_s(y)/(4\pi^2)>0$, and both selected
+nonzero-mode coefficients are nonzero. For each fixed parameter $p$
+these conclusions hold on a neighbourhood of $\kappa=0$ without a
+compact-parameter restriction.
+
+Proof. First verify the uniform mixed-domain bound, rather than
+deducing it from a positive shift or from positive-noise ellipticity.
+Use the exact source chart C, (15.1), with raw Jacobian
+$m_0=(2r)^{-1}$. The local remainder C, (3.2), and exterior bound
+C, (15.4), can be chosen uniformly for the poles in (6.5) and
+$0\le\epsilon\le\sqrt{v_{\max}}$. To see the uniformity in the pole,
+choose the chart height radius below $\delta/4$. In C, Theorem 3.1's
+proof, wall errors then have one positive height separation; nontrivial
+deck images in C, (2.3), have one positive separation because their
+horizontal displacement is $4\pi n$, and for $n=0$ their central
+displacement is $2\pi r m$. The remaining shear $c(k_o)$ ranges over
+a compact interval. Thus the polynomial image counts and the integrable
+$Ct^{-2}e^{-b/t}$ errors have common constants. Off a smaller chart
+the minimum image distance is bounded below, so the same small-time
+Gaussian upper bound is integrable there. The positive-time tail in
+C, Theorem 1.3 is uniform in both kernel variables. These are exactly
+the bounds used to prove (3.2) and (15.4), so the same constants
+work on this compact pole set, including the zero-noise limit. If
+$v_{\max}=0$, choose any auxiliary positive upper noise bound.
+Torus translations remove dependence on $\alpha_o,\beta_o$.
+
+Here is the needed local form control. By C, Definition 16.2,
+$\int\mathcal G_1|u|^2\le\Lambda_*^{-1}\mathcal T_1[u]$.
+The exact dilation C, (16.6), gives, for every $\epsilon>0$,
+
+$$
+\int\mathcal G_\epsilon|u|^2\,d\xi
+ \le\Lambda_*^{-1}\mathcal T_\epsilon[u].
+\tag{6.8}
+$$
+
+At $\epsilon=0$ this same inequality follows from
+$\mathcal G_0=(2\pi)^{-1}R^{-2}$ and C, (16.11)–(16.12), since
+$\Lambda_*\le2\pi\lambda_0$. These existing inequalities extend
+from compact smooth tests to their form closures. For the zero-noise
+punctured core one can remove the puncture: a cutoff at radius $t$
+has horizontal energy $O(t^2)$ against a bounded smooth function,
+because the homogeneous dimension is four. Thus it imposes no point
+condition on a smooth test or on the horizontal closure.
+
+Choose real smooth cutoffs $\chi_o,\zeta_o$ with
+$\chi_o^2+\zeta_o^2=1$, $\chi_o=1$ on a smaller source chart,
+$\operatorname{supp}\chi_o$ compact in the original chart, and
+$\zeta_o=0$ near $o$. Their three field derivatives have common bounds
+over this compact family. Pulling $\chi_ow$ to the group, (6.8) and
+the raw Jacobian show
+
+$$
+\int\Gamma_{\sqrt v,o}|\chi_ow|^2d\mu
+ \le g_*^{-1}T_{\sqrt v}[\chi_ow]+B\|\chi_ow\|_2^2,
+ \qquad g_*=m_0\Lambda_*>0.
+\tag{6.9}
+$$
+
+The exterior part is at most $B'\|\zeta_ow\|_2^2$. The product rule
+and uniform cutoff bounds therefore give
+$\int\Gamma_{\sqrt v,o}|w|^2\le C(T_{\sqrt v}[w]+\|w\|_2^2)$
+on the mixed smooth core. No lower trace condition was used: only
+$\chi_ow$ has to be an interior test. C, (31.1)'s height inequality
+$\|w\|_2^2\le h^2T_{\sqrt v}[w]/2$ absorbs the norm term.
+Multiplication by $a\le a_{\max}$ proves (6.6). For a free mixed
+approximating sequence, (6.6) makes it Cauchy in the potential-weighted
+$L^2$ norm. An almost-everywhere convergent subsequence identifies that
+weighted limit with the original function, since the Green field is
+finite off its measure-zero pole. Hence the integral and bound extend
+to the entire mixed domain, including its horizontal closure at zero.
+This proves (6.6) without assuming $g_*=g_{\mathrm c}$.
+
+Take $M>0$ larger if necessary and
+$\kappa_0\le\min\{(2M)^{-1},g_*/(2a_{\max})\}$.
+The form $t_{v,s}-\kappa W_p$ lies between
+$(1-\kappa M)t_{v,s}$ and $t_{v,s}$. Since $t_{v,s}$ is a Hilbert
+norm on the free mixed domain, and its trace kernel is the free
+both-zero-trace domain $\mathcal F_{\sqrt v}$, orthogonal projection
+onto each affine trace class proves the minimum assertion and leaves
+the trace domain unchanged. This is a subcritical unshifted assertion;
+it invokes no completed critical-coupling domain.
+
+For completeness, the derivative follows by a bounded form calculation.
+Let $w_f^0=\mathcal P_{\sqrt v,s}f$ be the free lift and write the
+attractive lift as $w_f^\kappa=w_f^0+z_f^\kappa$, where
+$z_f^\kappa\in\mathcal F_{\sqrt v}$. Free orthogonality gives
+
+$$
+\begin{aligned}
+(t_{v,s}-\kappa W_p)(z_f^\kappa,q)
+ &=\kappa W_p(w_f^0,q)\quad(q\in\mathcal F_{\sqrt v}),\\
+\|z_f^\kappa\|_{t_{v,s}}
+ &\le\frac{\kappa M}{1-\kappa M}\|w_f^0\|_{t_{v,s}},\\
+\frac{b_{p,0,s}(f,z)-b_{p,\kappa,s}(f,z)}{\kappa}
+ &=W_p(w_f^\kappa,w_z^0).
+\end{aligned}
+\tag{6.10}
+$$
+
+The last equality uses attractive orthogonality to replace the second
+attractive lift by $w_z^0$, and then free orthogonality to remove
+$z_f^\kappa$ from the free term. Potential Cauchy–Schwarz and (6.6)
+justify all pairings. Letting $\kappa\downarrow0$ yields
+$B_d(s)=W_p(\psi_{d,s}^ve_d,\psi_{0,s}e_0)$.
+This is the classical product-of-solutions linearization of a boundary
+form, with its singular-potential and mixed-domain justification supplied
+by (6.6)–(6.10). Compare the bounded-potential harmonic-products problem
+in Dos Santos Ferreira–Kurylev–Lassas–Liimatainen–Salo,
+[*The linearized Calderón problem in transversally anisotropic geometries*,
+arXiv:1712.04716v1](https://arxiv.org/html/1712.04716v1), Question 1.1
+and Theorem 1.1; its Riemannian hypotheses are not imposed here.
+The trace-form construction itself is the classical boundary-pair method
+in Post, [arXiv:1210.4707v2](https://arxiv.org/html/1210.4707v2), §§2.2–2.5.
+
+Finally the original Green expansion of C, Theorem 34.1 has modes
+$G_j^v(x,y)e_j(\theta)\overline{e_j(\theta_o)}$.
+The product of the two free lifts is
+$(4\pi^2)^{-1}\psi_{d,s}^v\psi_{0,s}\exp(id\cdot\theta)$.
+Its torus integral against the Green field selects $j=-d$.
+Since $H_{-d}^v=H_d^v$, the result is exactly (6.7), with positive
+phase sign and raw factor $(4\pi^2)^{-1}$. This pairing may be taken
+distributionally against the smooth finite-mode product; equivalently
+it follows by integrating its Fourier coefficient. The Green field is
+integrable by C, (1.6), so this step needs no pointwise sum at the pole.
+Positive Dirichlet Green kernels and positive interior Poisson profiles
+give $F_{d,s}>0$. Each fixed $p$ belongs to a compact set of the form
+(6.5), which proves the final assertion. $\square$
+
+## 7. A stable five-coefficient inverse with its native consumer
+
+**Theorem 7.1 (joint recovery of the original pole, gain and variance).**
+The map $\Phi$ of (6.3) is injective on its full parameter domain.
+For every compact set $K$ in (6.5), there are constants
+$0<C_1\le C_2<\infty$ such that
+
+$$
+\begin{aligned}
+C_1d_K(p,p')&\le\|\Phi(p)-\Phi(p')\|\le C_2d_K(p,p'),\\
+d_K(p,p')&=|y-y'|+|a-a'|+|v-v'|
+ +d_{\mathbb T}(\alpha_o,\alpha'_o)
+ +d_{\mathbb T}(\beta_o,\beta'_o),
+\end{aligned}
+\tag{7.1}
+$$
+
+where the data norm is Euclidean on $\mathbb R^3\times\mathbb C^2$
+and each circle distance is the shortest arc length. In particular the
+variance endpoint $v=0$ is included. The recovered point is the
+original native point $o$, so, after removing the fixed preparation
+rotations, it determines the supplied coherences
+
+$$
+z_o=\sqrt{k_o(r/2-k_o)}e^{i\alpha_o},\qquad
+w_o=\sqrt{Zk_o}e^{i\beta_o},\qquad k_o=l+y.
+\tag{7.2}
+$$
+
+For a specified original finite command with total increments $(A,B)$,
+chronological integral $J$, and prefix height extrema $(m,M)$, it also
+determines its cylinder guard and, when that guard holds, its endpoint:
+
+$$
+\begin{aligned}
+&l<k_o+m,\qquad k_o+M<u,\\
+&\left(k_o+A,\ [\alpha_o+B/2],\
+ [\beta_o+(1/2-k_o/r)B-J/r]\right).
+\end{aligned}
+\tag{7.3}
+$$
+
+This is recovery from the supplied analytic boundary coefficients, with
+no additional command, re-preparation or acquisition right.
+
+Proof. All scalar ODEs in (6.4) have nonnegative smooth potentials.
+Their two-endpoint homogeneous Dirichlet operators are strictly
+positive. Their Green kernels and their Poisson profiles are positive
+in the interval. For the finitely many modes used here, ordinary
+parameter-dependent ODE theory gives smooth dependence on $v$ down to
+zero: the coefficients are affine in $v$, and the invertible Dirichlet
+problem persists in a small open parameter neighbourhood of each
+$v\ge0$. This statement concerns individual one-dimensional problems,
+not an identification of the full positive-noise and zero-noise bulk
+domains. It also shows that $F_{d,s}$ is smooth in $(y,v)$, since
+
+$$
+H_d^v F_{d,s}(\cdot,v)=\psi_{d,s}^v\psi_{0,s},\qquad
+F_{d,s}(0,v)=F_{d,s}(h,v)=0.
+\tag{7.4}
+$$
+
+First recover $v$. Differentiating the one-face minimum for $d=(0,1)$
+and using its stationary equation, whose variation has zero endpoint
+values, gives
+
+$$
+c'(v)=r^{-2}\int_0^h(\psi_{(0,1),0}^v(x))^2dx>0.
+\tag{7.5}
+$$
+
+This is the usual variational derivative of a simple scalar boundary
+problem. Positivity and continuous parameter dependence make
+$\min_{[0,v_{\max}]}c'(v)>0$ and $\max c'(v)<\infty$.
+When $v_{\max}=0$ only the single variance value is in $K$.
+Thus $c$ is globally strictly increasing and has a Lipschitz inverse
+on every such compact interval, with a right derivative at zero.
+
+Next put $R(y)=H_\sigma(y)/H_0(y)$. In the original zero mode,
+
+$$
+\begin{aligned}
+G_0(x,y)&=\frac{\min(x,y)(h-\max(x,y))}{h},\\
+H_s(y)&=\int_0^hG_0(x,y)\psi_{0,s}(x)^2dx,\\
+H_0(y)&=hy/4-y^2/2+y^3/(3h)-y^4/(12h^2)>0.
+\end{aligned}
+\tag{7.6}
+$$
+
+The polynomial follows by solving $-H_0''=(1-y/h)^2$ with two zero
+endpoints. To establish strictness of the inverse height dependence,
+define, for $0<x<h$,
+
+$$
+f(x)=\psi_{0,0}(x)^2,\qquad
+q(x)=\frac{\psi_{0,\sigma}(x)^2}{\psi_{0,0}(x)^2},\qquad
+d\mu_y(x)=\frac{G_0(x,y)f(x)}{H_0(y)}dx.
+\tag{7.7}
+$$
+
+Then $\mu_y$ is a probability measure and $R(y)=\int q\,d\mu_y$.
+The ratio before squaring in $q$ is
+$h\sinh(t(h-x))/((h-x)\sinh(th))$, $t=\sqrt\sigma>0$.
+It is strictly decreasing in $x$, because
+$z\cosh z-\sinh z>0$ for $z>0$, as follows by differentiating this
+last expression and using its value zero at zero. Hence $q$ is
+strictly decreasing. The likelihood score of the Green kernel is
+
+$$
+\partial_y\log G_0(x,y)=
+\begin{cases}
+-(h-y)^{-1},&x<y,\\
+y^{-1},&x>y.
+\end{cases}
+\tag{7.8}
+$$
+
+Let $L_y=\mu_y((0,y))$, $U_y=\mu_y((y,h))$, and let
+$q_L(y),q_U(y)$ be the corresponding conditional means of $q$.
+Both masses are positive, sum to one, and $q_L(y)>q_U(y)$.
+Differentiating the normalized integral in (7.7) gives the exact
+covariance identity
+
+$$
+R'(y)=\frac{hL_yU_y}{y(h-y)}(q_U(y)-q_L(y))<0.
+\tag{7.9}
+$$
+
+The two integrals split at $x=y$ have matching integrands there, so
+the differentiation introduces no unaccounted boundary term. All
+functions in (7.9) are continuous for $0<y<h$. Consequently
+$\rho_K=\min_{[\delta,h-\delta]}(-R')>0$.
+This is the elementary monotone-likelihood/covariance argument applied
+to this specific unshifted Green weight, not an inference from
+non-strict positivity or merely from injectivity.
+
+Equations (6.7) now give the exact inverse in a triangular order:
+
+$$
+\begin{aligned}
+v&=c^{-1}(\Phi_1),&
+y&=R^{-1}(B_0(\sigma)/B_0(0)),&
+a&=4\pi^2B_0(0)/H_0(y),\\
+e^{i\alpha_o}&=B_{(1,0)}(0)/|B_{(1,0)}(0)|,&
+e^{i\beta_o}&=B_{(0,1)}(0)/|B_{(0,1)}(0)|.
+\end{aligned}
+\tag{7.10}
+$$
+
+The inverses are only evaluated on the actual data image. Their
+denominators are positive; the phase amplitudes are positive by
+Theorem 6.2. These formulas prove global injectivity on the actual
+torus, rather than recovery modulo an extra phase quotient.
+
+Here are quantitative bounds for the inverse on $K$. Write
+$D=B_0(0)$ and $N=B_0(\sigma)$. There is $b_K>0$ with
+$D\ge b_K$, since $a\ge a_{\min}$ and $H_0$ is positive on the
+compact height interval. Also $0<N/D\le1$ because
+$0<\psi_{0,\sigma}\le\psi_{0,0}$ in the interior. For two image
+points,
+
+$$
+\left|\frac ND-\frac{N'}{D'}\right|
+ \le\frac{|N-N'|+|D-D'|}{b_K},\qquad
+|y-y'|\le\frac{|N-N'|+|D-D'|}{b_K\rho_K}.
+\tag{7.11}
+$$
+
+The lower derivative bound in (7.5) controls $|v-v'|$ by
+$|c(v)-c(v')|$. Put $H_{\min}=\min H_0>0$ and
+$L_H=\max|H_0'|$ on the compact height interval. Then
+
+$$
+|a-a'|\le\frac{4\pi^2}{H_{\min}}|D-D'|
+             +\frac{a_{\max}L_H}{H_{\min}}|y-y'|.
+\tag{7.12}
+$$
+
+For each selected nonzero mode, (6.7), positivity and compactness give
+a common lower bound $m_K>0$ for its modulus. For complex numbers
+$z,z'$ of modulus at least $m_K$,
+
+$$
+\left|\frac z{|z|}-\frac{z'}{|z'|}\right|
+ \le\frac{2|z-z'|}{m_K},\qquad
+d_{\mathbb T}(\arg z,\arg z')
+ \le\frac\pi2\left|\frac z{|z|}-\frac{z'}{|z'|}\right|.
+\tag{7.13}
+$$
+
+The second inequality is the shortest-arc versus chord inequality on
+the full circle, so it does not introduce a branch-cut discontinuity.
+Summing (7.11)–(7.13) and the variance bound, and comparing the finite
+coordinate norm with the Euclidean data norm, proves the lower bound
+in (7.1). Smoothness of $c,H_s,F_{d,s}$ on the compact parameter
+rectangle and $|e^{it}-e^{it'}|\le d_{\mathbb T}(t,t')$ prove the
+upper bound. Thus the lower bound does not rely on a bare compact
+injectivity argument.
+
+Finally F, (1.2)–(1.4), identifies (7.2) with the original bottom
+and middle-reference coherences. The original finite chronology,
+used in V, (29.2), and in
+[Guarded lift limits](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md),
+Proposition 2.3, gives (7.3) at every prefix; imposing the two cylinder
+walls yields exactly its displayed guard. This is a consumer of the
+recovered native $o$, not a new chronological law. Exact guards may
+be evaluated from exact parameters. A noisy parameter estimate alone
+does not certify a guard with no promised distance from refusal.
+
+Finite-measurement uniqueness and Lipschitz stability are classical
+inverse-problem goals. Alberti–Santacesaria,
+[*Calderón's inverse problem with a finite number of measurements*,
+Forum of Mathematics, Sigma 7](https://doi.org/10.1017/fms.2019.31),
+Theorems 1–2, treat bounded potentials in a known finite-dimensional
+linear subspace for a Euclidean Schrödinger problem, with full boundary
+outputs for finitely many Dirichlet inputs. That result does not
+apply directly to this moving singular Green multiplier or to the
+zero-noise horizontal operator. Likewise,
+[*Recovering point sources for the inhomogeneous Helmholtz equation*,
+arXiv:2104.14991v3](https://arxiv.org/html/2104.14991v3), Theorem 1.1,
+concerns point masses on the right-hand side, radiating solutions and
+boundary Cauchy data. The new composition here is (6.7)–(7.10) for
+the original native attractive boundary family, including the compact
+quantitative inverse (7.1). C, Theorem 34.1's supplied free exit
+density is a different interface and is not substituted for these
+attractive-response coefficients. No global literature-priority
+assertion is part of this theorem. $\square$
+
+## 8. Finite coupling, coefficient error and the acquisition boundary
+
+**Theorem 8.1 (attained compact decoding from supplied secants).**
+For every $K$ in (6.5) there are $\kappa_0>0$ and $C<\infty$ such
+that, for all $p\in K$, $0<\kappa\le\kappa_0$ and the four pairs
+
+$$
+\mathcal I=\{((0,0),0),((0,0),\sigma),((1,0),0),((0,1),0)\},
+\tag{8.1}
+$$
+
+the supplied secant coefficients satisfy
+
+$$
+D_{d,\kappa}(s):=
+ \frac{b_{p,0,s}(e_d,e_0)-b_{p,\kappa,s}(e_d,e_0)}{\kappa},
+\qquad |D_{d,\kappa}(s)-B_d(s)|\le C\kappa.
+\tag{8.2}
+$$
+
+Suppose that each supplied value of $c(v)$ and each boundary form
+coefficient in these quotients has absolute error at most $\eta\ge0$.
+Let $\widetilde\Phi_\kappa$ consist of that supplied free coefficient
+and the four supplied quotients, taking real parts in the three real
+data coordinates. Then
+
+$$
+\|\widetilde\Phi_\kappa-\Phi(p)\|
+ \le C(\kappa+\eta/\kappa+\eta).
+\tag{8.3}
+$$
+
+There is a nearest-image decoder $\widehat p\in K$ minimizing
+$\|\Phi(q)-\widetilde\Phi_\kappa\|$ over $q\in K$. Every such
+minimizer satisfies
+
+$$
+d_K(\widehat p,p)\le C(\kappa+\eta/\kappa+\eta).
+\tag{8.4}
+$$
+
+These are conditional bounds for finitely many supplied coefficients;
+existence of the minimizer does not assert an executable native
+acquisition or an optimal resource bound.
+
+Proof. Use the same $M,\kappa_0$ as in Theorem 6.2. Equation (6.10)
+and potential Cauchy–Schwarz give, with $f=e_d$, $z=e_0$,
+
+$$
+\begin{aligned}
+|D_{d,\kappa}(s)-B_d(s)|
+ &\le M\|z_{e_d}^\kappa\|_{t_{v,s}}
+                          \|w_{e_0}^0\|_{t_{v,s}}\\
+ &\le\frac{\kappa M^2}{1-\kappa M}
+       \sqrt{\lambda_d^{\sqrt v}(s)\lambda_{(0,0)}^{\sqrt v}(s)}.
+\end{aligned}
+\tag{8.5}
+$$
+
+The finitely many free one-dimensional modal energies on the right
+are bounded on $0\le v\le v_{\max}$, $s\in\{0,\sigma\}$, by
+their ODE continuity or by inserting the linear profile as competitor.
+Also $1-\kappa M\ge1/2$. This proves (8.2), uniformly including
+$v=0$, without differentiating a singular Green field in $v$ or in
+its pole.
+
+An error $\eta$ in each of the two coefficients forming a secant
+produces error at most $2\eta/\kappa$ in that secant. The separate
+free coefficient has error at most $\eta$. Combining this with four
+applications of (8.2) in the finite Euclidean norm proves (8.3);
+taking real parts cannot increase these errors. By Theorem 7.1,
+$\Phi(K)$ is compact. The continuous distance to supplied data attains
+its minimum there, and injectivity identifies each image minimizer
+with one parameter. Since $p$ is an admissible competitor,
+
+$$
+\|\Phi(\widehat p)-\Phi(p)\|
+ \le\|\Phi(\widehat p)-\widetilde\Phi_\kappa\|
+          +\|\widetilde\Phi_\kappa-\Phi(p)\|
+ \le2\|\widetilde\Phi_\kappa-\Phi(p)\|.
+\tag{8.6}
+$$
+
+The lower inequality in (7.1) proves (8.4). The asserted attainment is
+the attainment of this conditional compact minimization, not a claim
+that exact coupling derivatives are finitely acquired reads. $\square$
+
+**Definition 8.2 (scope of the inverse and its undischarged realization).**
+The data in Theorems 7.1–8.1 are entries of the original analytic
+attractive boundary family, supplied with their declared phases,
+normalizations, coupling multiplier and error tolerance. At
+$\kappa=0$ alone that boundary family is independent of $o,a$;
+the derivatives or nonzero-coupling secants are essential additional
+data. The compact constants require an interior pole promise, positive
+gain bounded away from zero, and bounded variance. No uniform inverse
+as a pole approaches a wall or as $a\downarrow0$ is specified.
+The recovered noise parameter is $v=\epsilon^2$; the inverse square
+root is not Lipschitz at zero. No unshifted critical-coupling response
+or equality $g_*=g_{\mathrm c}$ is required.
+
+A native sensing realization would additionally have to supply the
+specified boundary inputs, outputs and coupling changes for the same
+unknown source, with one joint law and clock and a finite error and
+resource contract. None is an operation granted by (6.2), by an
+ordinary command, or by the sampling capabilities of V, Definition
+29.1. A physical spatial interpretation would additionally have to
+identify lawful spatial observables and their transport and metric
+relations. Theorems 6.2–8.1 identify the same-source analytic family
+with its own native point and its existing guarded consumers; they
+do not discharge either additional realization premise or select a
+universal physical spatial dimension.
+
+## 追加锚（本行以下为增补区）
