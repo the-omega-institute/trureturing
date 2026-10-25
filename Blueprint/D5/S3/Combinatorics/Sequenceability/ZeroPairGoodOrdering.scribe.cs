@@ -11,7 +11,7 @@ internal sealed class ZeroPairGoodOrderingDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("good-order"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroPairGoodOrdering.exists_good_order_of_zero_pair"),
-                H("A full Good order from a zero pair"), StatementSource.FromLean(),
+                H("A full Good order from a zero pair"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "The index type is arbitrary, X is finite, and a is injective with nonzero original labels. "
                     + "For distinct s,t in X with a(s)+a(t)=0, assume only that the complement C has no nonempty zero subset. "
@@ -26,7 +26,7 @@ internal sealed class ZeroPairGoodOrderingDocument : IScribeDocumentDefinition
                 + "and use (t,D,s,c). Swap s,t for the other exceptional total. Empty and singleton complements remain in the theorem's scope.")),
             Describe.Lean(DescribeId.Create("integral-extraction"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroPairGoodOrdering.full_blocker_pair_extract"),
-                H("Exact integer extraction from full coverage"), StatementSource.FromLean(),
+                H("Exact integer extraction from full coverage"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "H covers every permutation of the finite original index type by a nonempty proper interval. "
                     + "Its span is exactly the integer span of its original Boolean rows. If the row of a distinct pair belongs to that span, "
