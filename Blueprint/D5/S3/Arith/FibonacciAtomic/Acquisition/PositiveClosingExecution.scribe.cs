@@ -158,7 +158,7 @@ internal sealed class PositiveClosingExecutionDocument : IScribeDocumentDefiniti
     private static Formula EqOf(Formula x,Formula y) => Seq(x,Sp,Eq,Sp,y);
     private static Formula LeOf(Formula x,Formula y) => Seq(x,Sp,Le,Sp,y);
     private static Formula Add(Formula x,Formula y) => Seq(x,Plus,y);
-    private static Formula Mul(Formula x,Formula y) => Seq(x,Cdot,y);
+    private static Formula Mul(Formula x,Formula y) => Seq(x,Sp,Cdot,Sp,y);
     private static Formula Imp(Formula x,Formula y) => Seq(Par(x),Sp,Implies,Sp,Par(y));
     private static Formula All(string x,Formula t,Formula b) => Seq(Forall,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b);
     private static Formula Ex(string x,Formula t,Formula b) => Seq(Exists,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b);
