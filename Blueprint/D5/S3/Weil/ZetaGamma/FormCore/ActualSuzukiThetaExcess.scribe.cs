@@ -1,8 +1,3 @@
-// SOURCE_ONLY.UNCOMPILED, 2026-10-25.
-// Describes the unchanged immutable D5 candidate with SHA256
-// 2e171122e4e8fb7c9489d339d1b0af3c6934eab69ce0336d95ea5abf264e5ddd.
-// Neither this Scribe source nor its matching Reg source has been compiled,
-// emitted, bound, admitted or accepted. No native report was generated.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
@@ -11,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaGamma.FormCore;
 internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinition
 {
     private const string Owner =
-        "D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.";
+        "D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Source-only candidate: the original physical H6 condition supplies almost "
