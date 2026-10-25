@@ -220,7 +220,7 @@ private lemma witness_relations :
     measurement 0 + measurement 1 = (1 / 2 : ℂ) • 1 ∧
     measurement 2 + measurement 3 = (1 / 2 : ℂ) • 1 := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp only [rho, measurement, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+    simp only [rho.eq_1, measurement.eq_1, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
       Matrix.cons_val_zero, Pi.star_apply] <;> norm_num [Complex.real_smul]
 
 private lemma born_sum (j : Fin 4) :
