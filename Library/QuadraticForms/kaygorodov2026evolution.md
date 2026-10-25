@@ -67,3 +67,19 @@ The two-dimensional algebra and its finite full group are prior ingredients
 from arXiv:1807.02362v1 and arXiv:2303.00862v1. The Q14 endpoint combines
 these with a separated infinite family in the exact basis quotient. It
 does not answer the first two interrogatives or assert global priority.
+
+## Ordinary nilpotency spectrum
+
+Section 1.1 defines ordinary lower powers by A^1=A and
+A^m=sum_{i=1}^{m-1} A^i A^{m-i}. The products are bilinear and need not
+be associative or power-associative. Section 2.3, Conjecture 9 states that
+over each infinite field an n-dimensional nilpotent evolution algebra of
+index k+1 exists exactly when k=2^a for 0<=a<=n-1, or k has at least two
+nonzero binary digits and floor(log_2 k)+s_2(k)<=n-1. A natural basis
+requires zero mixed products; zero natural squares are allowed.
+
+The fifteen-dimensional rational algebra in
+`D5/S3/QuadraticForms/EvolutionAlgebras/NilpotencySpectrumRefutation`
+has ordinary index 256. At k=255, the logarithm and binary digit count
+are 7 and 8, whose sum exceeds 15-1. The construction and its proof
+are project results, while the question and definitions are from this survey.
