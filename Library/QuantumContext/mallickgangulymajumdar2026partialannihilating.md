@@ -26,7 +26,7 @@ The remark on partially entanglement breaking channels (Section III):
 
 > the set of \(r\)-partially entanglement breaking channels is, in general, not closed under tensor products for \(r>1\).
 
-Local and non-local channels (Section V):
+Local and non-local channels (Section IV):
 
 > A channel $\mathcal{E}$ is said to be local if it can be expressed as a tensor product of individual channels, i.e. $\mathcal{E} = {\mathcal{E}}_1 \otimes {\mathcal{E}}_2$. If a quantum channel can not be written in the above form, then it is said to be a non-local channel.
 
@@ -36,7 +36,7 @@ The open question (Conclusion):
 
 > We have also shown that $r$-partially entanglement breaking channels are not closed under tensor products, motivating the investigation of whether a similar property holds for $r$-partially entanglement annihilating channels.
 
-The source also contains a commented-out draft of this statement ("their parallel combination $( \mathcal{E}_1 \otimes \mathcal{E}_2 )$ may not be non-local r-PEAT"). The draft has no proof and is not part of the published text.
+The source also contains, commented out, a draft proposal that the tensor product "may not be non-local r-PEAT", followed by an informal proof sketch through the Schmidt number of a tensor product of pure states and the remark "[doubt in writing]". Neither is part of the published article.
 
 ## Verified locator
 
@@ -46,6 +46,6 @@ Source: https://arxiv.org/abs/2411.19315v2
   - the remark on partially entanglement breaking channels, l. 545;
   - local and non-local channels, l. 630;
   - non-local $r$-partially entanglement annihilating channels, l. 632;
-  - the commented-out draft, l. 679–690;
+  - the commented-out draft and proof sketch, l. 679–706;
   - the open question, l. 1167.
 - DOI: 10.1063/5.0274921 (https://doi.org/10.1063/5.0274921; Crossref lists Journal of Mathematical Physics, volume 67, issue 8, article 082201, published 1 August 2026).
