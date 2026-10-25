@@ -127,7 +127,7 @@ internal sealed class SelfConjugateEvenPolynomialRefutationDocument : IScribeDoc
                     + "covers the six explicit conventional domains in the published unrestricted polynomial "
                     + "context; an added authoritative restriction excluding this family would require a "
                     + "different statement. The optional-constant result is separately identified robustness. "
-                    + "Neither a unique semantic repair nor a new invariant-algebra mechanism is asserted.")))));
+                    + "Neither a unique semantic repair nor a new invariant-algebra mechanism is asserted."))))));
 
     private static DocumentBlock Node(string name, string title, Formula? formula,
         AssessedProvenance provenance, DescribeRole role, params DocumentBlock[] exposition) =>
