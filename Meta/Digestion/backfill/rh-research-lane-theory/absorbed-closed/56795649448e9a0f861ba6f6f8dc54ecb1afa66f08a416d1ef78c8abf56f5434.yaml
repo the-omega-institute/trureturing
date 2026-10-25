@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:56795649448e9a0f861ba6f6f8dc54ecb1afa66f08a416d1ef78c8abf56f5434
-  normalized_sha256: sha256:56795649448e9a0f861ba6f6f8dc54ecb1afa66f08a416d1ef78c8abf56f5434
-cas_ref: sha256:56795649448e9a0f861ba6f6f8dc54ecb1afa66f08a416d1ef78c8abf56f5434
-coverage_gids:
-  - gid: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.reflected_growth_pair_even_odd_decomposition
-    target_statement_id: sha256:53c7df88330fa1044aecf36c08bdebeff58234bd28d485a80b8e45aa42c060ae
-receipts:
-  unresolved_subitems: []

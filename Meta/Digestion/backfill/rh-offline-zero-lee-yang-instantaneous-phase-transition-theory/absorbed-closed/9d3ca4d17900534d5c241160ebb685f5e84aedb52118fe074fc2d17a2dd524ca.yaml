@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9d3ca4d17900534d5c241160ebb685f5e84aedb52118fe074fc2d17a2dd524ca
-  normalized_sha256: sha256:9d3ca4d17900534d5c241160ebb685f5e84aedb52118fe074fc2d17a2dd524ca
-cas_ref: sha256:9d3ca4d17900534d5c241160ebb685f5e84aedb52118fe074fc2d17a2dd524ca
-coverage_gids:
-  - gid: D5/S1/Solenoid/RealFlowInjectivity.realFlow_injective
-    target_statement_id: sha256:96400654328b3d36ebf9b2a5d3a68f59e6da612b29a2716f94f8469c37f684b9
-receipts:
-  unresolved_subitems: []

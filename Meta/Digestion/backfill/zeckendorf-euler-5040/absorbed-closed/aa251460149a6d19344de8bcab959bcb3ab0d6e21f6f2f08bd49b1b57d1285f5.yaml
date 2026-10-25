@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aa251460149a6d19344de8bcab959bcb3ab0d6e21f6f2f08bd49b1b57d1285f5
-  normalized_sha256: sha256:aa251460149a6d19344de8bcab959bcb3ab0d6e21f6f2f08bd49b1b57d1285f5
-cas_ref: sha256:aa251460149a6d19344de8bcab959bcb3ab0d6e21f6f2f08bd49b1b57d1285f5
-coverage_gids:
-  - gid: D5/S0/Conventions/WDigits.wValue_zero
-    target_statement_id: sha256:e19ad2d942bd85e9fd27c6cb0dfa867d7b540d653578f33058b6834986a6198a
-receipts:
-  unresolved_subitems: []

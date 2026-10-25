@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dbee291cb4ea2de2f006a966215d499a99c6298fed23704cf562bc92468fe5fe
-  normalized_sha256: sha256:dbee291cb4ea2de2f006a966215d499a99c6298fed23704cf562bc92468fe5fe
-cas_ref: sha256:dbee291cb4ea2de2f006a966215d499a99c6298fed23704cf562bc92468fe5fe
-coverage_gids:
-  - gid: D5/S3/Zeros/MirrorPairIdentity.mirror_pair_involution
-    target_statement_id: sha256:e0dea7f7578cbfef2ebc4270f0a85a3d3952ce581057aa65d2792a3f188e28ca
-receipts:
-  unresolved_subitems: []

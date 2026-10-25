@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c85f6d3c263457f70e9103e97dd01e09822c06a058c42157aa920b9882f71e82
-  normalized_sha256: sha256:c85f6d3c263457f70e9103e97dd01e09822c06a058c42157aa920b9882f71e82
-cas_ref: sha256:c85f6d3c263457f70e9103e97dd01e09822c06a058c42157aa920b9882f71e82
-coverage_gids:
-  - gid: D5/S3/Analytic/Isolation/GoldenGermThirdOrderStructuralZeros.golden_germ_third_order_structural_zeros
-    target_statement_id: sha256:8ae45ccfcfc79b6a91d1bbb92fd2a78ec54d5c91bd15ec8fc27e42fea9f3c906
-receipts:
-  unresolved_subitems: []

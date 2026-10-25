@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3ab5c186c5480e2d42150f7fe824833de241624a6e3beaaf3858de08b7d37000
-  normalized_sha256: sha256:3ab5c186c5480e2d42150f7fe824833de241624a6e3beaaf3858de08b7d37000
-cas_ref: sha256:3ab5c186c5480e2d42150f7fe824833de241624a6e3beaaf3858de08b7d37000
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.common_time_residual_swap_recovers_phase_twisted_curvature
-    target_statement_id: sha256:53cacead445b7162cb503af735dd1e6809b6a003f9097fdf0d69ef3c2d43e211
-receipts:
-  unresolved_subitems: []

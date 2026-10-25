@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c07bd855875769965591a51209435fea666d9e73955fd9926cc4bea172fbd52c
-  normalized_sha256: sha256:c07bd855875769965591a51209435fea666d9e73955fd9926cc4bea172fbd52c
-cas_ref: sha256:c07bd855875769965591a51209435fea666d9e73955fd9926cc4bea172fbd52c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.primitive_bundle_joint_kernel
-    target_statement_id: sha256:b4269fa2c62c7425ca45cfee3f4c9b4281ea281d3ba18e7b68a464ebe0341f00
-receipts:
-  unresolved_subitems: []

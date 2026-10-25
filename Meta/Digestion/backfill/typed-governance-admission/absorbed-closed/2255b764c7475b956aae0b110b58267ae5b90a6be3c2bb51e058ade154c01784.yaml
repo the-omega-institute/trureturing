@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
-  normalized_sha256: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
-cas_ref: sha256:2255b764c7475b956aae0b110b58267ae5b90a6be3c2bb51e058ade154c01784
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Governance/TypedProducerResolution.typed_producer_resolution_fail_closed
-    target_statement_id: sha256:38d4e8fe192ee4a486b495ad35cf6c9d0a685bf61b1bb0621987add19b19e9cf
-receipts:
-  unresolved_subitems: []

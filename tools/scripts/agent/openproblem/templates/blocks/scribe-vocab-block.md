@@ -1,3 +1,0 @@
-
-## Scribe prose vocabulary (binding; mirror checks reject these words)
-Scribe prose states mathematics only: what a declaration says and what uses it. Before reporting `mirror-ready`, run `grep -n -i -E "live (proof )?path|consumed step|live consumer|admission|preregist|binding|convention|designated|exempt|basis=|escape (witness|registration)|coverage|audit|bind-only|proof_shape|CLAUDE\.md|literally the" <every delivered .scribe.cs>`. Rewrite every match as mathematics, for example "the largest eigenvalue of the Hermitian Hamiltonian" rather than "the binding convention for the maximum eigenvalue". Report the command and its remaining matches, each with the reason it is mathematical.

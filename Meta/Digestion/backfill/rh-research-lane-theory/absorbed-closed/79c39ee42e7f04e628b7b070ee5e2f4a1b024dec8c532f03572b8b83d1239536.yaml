@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:79c39ee42e7f04e628b7b070ee5e2f4a1b024dec8c532f03572b8b83d1239536
-  normalized_sha256: sha256:79c39ee42e7f04e628b7b070ee5e2f4a1b024dec8c532f03572b8b83d1239536
-cas_ref: sha256:79c39ee42e7f04e628b7b070ee5e2f4a1b024dec8c532f03572b8b83d1239536
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum.positive_rate_branch_iterated_derivative
-    target_statement_id: sha256:dc540bea59662e257fdb402f89c2dd12815d4f51a3ae22ebe5a27da859c1441b
-receipts:
-  unresolved_subitems: []
