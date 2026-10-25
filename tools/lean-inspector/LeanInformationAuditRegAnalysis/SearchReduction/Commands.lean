@@ -609,7 +609,8 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   -- Source imports may register new environment extensions. Re-import the
   -- small compiled judge after those registrations so exported extension
   -- states use the current registry, independent of the original wrapper.
-  let base ← if importDependencies then
+  let base ← if importDependencies then do
+    enableInitializersExecution
     withImporting <| importModules
       #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
       options 0 (leakEnv := false) (loadExts := true)

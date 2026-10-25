@@ -15,12 +15,14 @@ leaving certificate checks and fresh classifier publication on the live path. -/
 run_cmd do
   withCacheFixture fun f => do
     let original ← getEnv
-    let module ← liftTermElabM <|
-      writeCacheDependencyModule f.directory f.identity original f.dependencies
-    pickle (f.directory / s!"probe-{hash f.identity}.pickle")
-      ({identity := f.identity, targetHeader := ([], mkConst ``True),
-        result := f.result, dependencies := f.dependencies,
-        dependencyModule? := some module} : ProbeCacheRecord)
+    liftTermElabM do
+      replayCacheDependencies f.dependencies
+      discard <| checkProof f.request.target [] (mkConst ``True) (mkConst ``True.intro)
+    let source ← getEnv
+    saveProbeCache f.directory f.identity source f.request f.result
+      (some original) (importDependencies := true)
+    modifyEnv fun _ => original
+    let module := s!"SearchReductionDependencies_{hash f.identity}" |>.toName
     let rejected ← try
       discard <| replayProbeCache f.directory f.identity f.request #[] `cacheModuleMissing
       pure false
