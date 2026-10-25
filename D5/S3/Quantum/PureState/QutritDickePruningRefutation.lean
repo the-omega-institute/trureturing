@@ -7,8 +7,8 @@
    digest: The pruned qutrit Dicke circuit loses a required amplitude at occupation (1,3,1). -/
 
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
+
+/-! The pruned qutrit circuit can omit an amplitude required by its occupation sector. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -123,29 +123,26 @@ private def project {n : ℕ} (r : ℕ) (a : Fin 3) (f : State n) : State n :=
 
 private theorem wire_put_ne {n : ℕ} (t : Word n) (r q : ℕ) (a : Fin 3)
     (h : r ≠ q) : wire (put t q a) r = wire t r := by
-  by_cases hr : r < n <;> by_cases hq : q < n
-  · simp [wire, put, hr, hq, Function.update_apply, Fin.ext_iff, h]
-  · simp [wire, put, hr, hq]
-  · simp [wire, hr]
-  · simp [wire, hr]
+  by_cases hr : r < n <;> by_cases hq : q < n <;>
+    unfold wire put <;> simp [hr, hq, Fin.ext_iff, h]
 
-private theorem project_X {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
+private theorem project_x {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (f : State n) (h : r ≠ target) :
     project r a (controlledX target cs i j f) =
       controlledX target cs i j (project r a f) := by
   funext t
-  by_cases ht : wire t r = a <;>
-    simp [project, controlledX, wire_put_ne t r target _ h, ht]
+  unfold project controlledX
+  by_cases ht : wire t r = a <;> simp [wire_put_ne t r target _ h, ht]
 
-private theorem project_R {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
+private theorem project_r {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) (h : r ≠ target) :
     project r a (controlledR target cs i j c s f) =
       controlledR target cs i j c s (project r a f) := by
   funext t
-  by_cases ht : wire t r = a <;>
-    simp [project, controlledR, wire_put_ne t r target _ h, ht]
+  unfold project controlledR
+  by_cases ht : wire t r = a <;> simp [wire_put_ne t r target _ h, ht]
 
-private theorem scale_X {n : ℕ} (a : ℝ) (target : ℕ)
+private theorem scale_x {n : ℕ} (a : ℝ) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (f : State n) :
     controlledX target cs i j (fun t => a * f t) =
       fun t => a * controlledX target cs i j f t := by
@@ -153,7 +150,7 @@ private theorem scale_X {n : ℕ} (a : ℝ) (target : ℕ)
   unfold controlledX
   split_ifs <;> rfl
 
-private theorem scale_R {n : ℕ} (a : ℝ) (target : ℕ)
+private theorem scale_r {n : ℕ} (a : ℝ) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) :
     controlledR target cs i j c s (fun t => a * f t) =
       fun t => a * controlledR target cs i j c s f t := by
@@ -161,67 +158,104 @@ private theorem scale_R {n : ℕ} (a : ℝ) (target : ℕ)
   unfold controlledR
   split_ifs <;> ring
 
-private theorem project_V (n m l r : ℕ) (a i j : Fin 3) (f : State n)
+private theorem project_v (n m l r : ℕ) (a i j : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
     project r a (V n m l i j f) = V n m l i j (project r a f) := by
-  simp only [V, project_X r a _ _ _ _ _ hl, project_R r a _ _ _ _ _ _ _ h0]
+  unfold V
+  simp only [project_x r a _ _ _ _ _ hl, project_r r a _ _ _ _ _ _ _ h0]
 
-private theorem project_I (n m l r : ℕ) (a : Fin 3) (f : State n)
+private theorem project_i (n m l r : ℕ) (a : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
     project r a (I n m l f) = I n m l (project r a f) := by
-  simp only [I, project_V n m l r a _ _ _ h0 hl]
+  unfold I
+  simp only [project_v n m l r a _ _ _ h0 hl]
 
-private theorem project_II (n m l₁ l₂ r : ℕ) (a : Fin 3) (f : State n)
+private theorem project_ii (n m l₁ l₂ r : ℕ) (a : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (h1 : r ≠ n - m + l₁) (h2 : r ≠ n - m + l₂) :
     project r a (II n m l₁ l₂ f) = II n m l₁ l₂ (project r a f) := by
-  simp only [II, project_X r a _ _ _ _ _ h1, project_X r a _ _ _ _ _ h2,
-    project_R r a _ _ _ _ _ _ _ h0]
+  unfold II
+  simp only [project_x r a _ _ _ _ _ h1, project_x r a _ _ _ _ _ h2,
+    project_r r a _ _ _ _ _ _ _ h0]
 
-private theorem scale_V (n m l : ℕ) (a : ℝ) (i j : Fin 3) (f : State n) :
+private theorem scale_v (n m l : ℕ) (a : ℝ) (i j : Fin 3) (f : State n) :
     V n m l i j (fun t => a * f t) = fun t => a * V n m l i j f t := by
-  simp only [V, scale_X, scale_R]
+  unfold V
+  simp only [scale_x, scale_r]
 
-private theorem scale_I (n m l : ℕ) (a : ℝ) (f : State n) :
+private theorem scale_i (n m l : ℕ) (a : ℝ) (f : State n) :
     I n m l (fun t => a * f t) = fun t => a * I n m l f t := by
-  simp only [I, scale_V]
+  unfold I
+  simp only [scale_v]
 
-private theorem scale_II (n m l₁ l₂ : ℕ) (a : ℝ) (f : State n) :
+private theorem scale_ii (n m l₁ l₂ : ℕ) (a : ℝ) (f : State n) :
     II n m l₁ l₂ (fun t => a * f t) = fun t => a * II n m l₁ l₂ f t := by
-  simp only [II, scale_X, scale_R]
+  unfold II
+  simp only [scale_x, scale_r]
+
+private theorem wire_apply {n : ℕ} (t : Word n) (r : ℕ) :
+    wire t r = if h : r < n then t ⟨r, h⟩ else 0 := rfl
+
+private theorem put_apply {n : ℕ} (t : Word n) (r : ℕ) (a : Fin 3) :
+    put t r a = if h : r < n then Function.update t ⟨r, h⟩ a else t := rfl
+
+private theorem controls_apply {n : ℕ} (cs : List (ℕ × Fin 3)) (t : Word n) :
+    controlsHold cs t = cs.all (fun p => decide (p.1 < n) && decide (wire t p.1 = p.2)) := rfl
+
+private theorem x_apply {n : ℕ} (target : ℕ) (cs : List (ℕ × Fin 3))
+    (i j : Fin 3) (f : State n) (t : Word n) :
+    controlledX target cs i j f t = if controlsHold cs t then
+      f (put t target (Equiv.swap i j (wire t target))) else f t := rfl
+
+private theorem r_apply {n : ℕ} (target : ℕ) (cs : List (ℕ × Fin 3))
+    (i j : Fin 3) (c s : ℝ) (f : State n) (t : Word n) :
+    controlledR target cs i j c s f t = if controlsHold cs t then
+      if wire t target = i then c * f t - s * f (put t target j)
+      else if wire t target = j then s * f (put t target i) + c * f t
+      else f t
+    else f t := rfl
+
+private theorem basis_apply {n : ℕ} (t u : Word n) :
+    basisState t u = if u = t then 1 else 0 := rfl
 
 set_option maxHeartbeats 800000 in
-private theorem I53_input : I 5 5 3 (basisState inputWord) = basisState inputWord := by
+-- The pointwise calculation checks all 3^5 register words.
+private theorem i53_input : I 5 5 3 (basisState inputWord) = basisState inputWord := by
   funext t
   have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
     ext i
     fin_cases i <;> rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
-    norm_num [I, V, controlledX, controlledR, controlsHold, wire, put,
-      basisState, inputWord, Equiv.swap_apply_def, Function.update_apply,
-      funext_iff, Fin.forall_fin_succ]
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
+  all_goals
+    unfold I V inputWord
+    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
-private theorem project_W5 :
+-- The pointwise calculation checks all 3^5 register words.
+private theorem project_w5 :
     project 0 0 (prunedW 5 5 witnessOccupation (basisState inputWord)) =
       fun t => (1 / Real.sqrt 5) * basisState branchWord t := by
   change project 0 0 (II 5 5 4 1 (I 5 5 3 (basisState inputWord))) = _
-  rw [I53_input]
+  rw [i53_input]
   funext t
   have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
     ext i
     fin_cases i <;> rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
-    norm_num [project, II, controlledX, controlledR, controlsHold, wire, put,
-      basisState, inputWord, branchWord, Equiv.swap_apply_def, Function.update_apply,
-      funext_iff, Fin.forall_fin_succ, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)] <;>
-    ring
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
+  all_goals
+    unfold project II inputWord branchWord
+    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      Equiv.swap_apply_def, Function.update_apply, funext_iff,
+      Fin.forall_fin_succ, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)]
+  all_goals ring
 
 set_option maxHeartbeats 800000 in
-private theorem I42_branch :
+-- The pointwise calculation checks all 3^5 register words.
+private theorem i42_branch :
     I 5 4 2 (basisState branchWord) = basisState branchWord := by
   funext t
   have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
@@ -229,13 +263,15 @@ private theorem I42_branch :
     fin_cases i <;> rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
-    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
-      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
-      funext_iff, Fin.forall_fin_succ]
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
+  all_goals
+    unfold I V branchWord
+    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
-private theorem I43_branch :
+-- The pointwise calculation checks all 3^5 register words.
+private theorem i43_branch :
     I 5 4 3 (basisState branchWord) = basisState branchWord := by
   funext t
   have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
@@ -243,13 +279,15 @@ private theorem I43_branch :
     fin_cases i <;> rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
-    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
-      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
-      funext_iff, Fin.forall_fin_succ]
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
+  all_goals
+    unfold I V branchWord
+    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
-private theorem II431_branch :
+-- The pointwise calculation checks all 3^5 register words.
+private theorem ii431_branch :
     II 5 4 3 1 (basisState branchWord) = basisState branchWord := by
   funext t
   have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
@@ -257,59 +295,61 @@ private theorem II431_branch :
     fin_cases i <;> rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
-    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
-      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
-      funext_iff, Fin.forall_fin_succ]
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
+  all_goals
+    unfold II branchWord
+    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
-private theorem W4_branch :
+private theorem w4_branch :
     prunedW 5 4 witnessOccupation (basisState branchWord) = basisState branchWord := by
   change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (basisState branchWord))) = basisState branchWord
-  rw [I42_branch, I43_branch, II431_branch]
+  rw [i42_branch, i43_branch, ii431_branch]
 
-private theorem project_W4 (f : State 5) :
+private theorem project_w4 (f : State 5) :
     project 0 0 (prunedW 5 4 witnessOccupation f) =
       prunedW 5 4 witnessOccupation (project 0 0 f) := by
   change project 0 0 (II 5 4 3 1 (I 5 4 3 (I 5 4 2 f))) =
     II 5 4 3 1 (I 5 4 3 (I 5 4 2 (project 0 0 f)))
-  rw [project_II 5 4 3 1 0 0 _ (by decide) (by decide) (by decide),
-    project_I 5 4 3 0 0 _ (by decide) (by decide),
-    project_I 5 4 2 0 0 _ (by decide) (by decide)]
+  rw [project_ii 5 4 3 1 0 0 _ (by decide) (by decide) (by decide),
+    project_i 5 4 3 0 0 _ (by decide) (by decide),
+    project_i 5 4 2 0 0 _ (by decide) (by decide)]
 
-private theorem W4_scale (a : ℝ) (f : State 5) :
+private theorem w4_scale (a : ℝ) (f : State 5) :
     prunedW 5 4 witnessOccupation (fun t => a * f t) =
       fun t => a * prunedW 5 4 witnessOccupation f t := by
   change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (fun t => a * f t))) =
     fun t => a * II 5 4 3 1 (I 5 4 3 (I 5 4 2 f)) t
-  rw [scale_I, scale_I, scale_II]
+  rw [scale_i, scale_i, scale_ii]
 
 private theorem project_tail (r : ℕ) (hr : r ≤ 1) (a : Fin 3) (f : State 5) :
     project r a (prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f)) =
       prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation (project r a f)) := by
   change project r a (I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 f)))) =
     I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 (project r a f))))
-  rw [project_I 5 2 1 r a _ (by omega) (by omega),
-    project_II 5 3 2 1 r a _ (by omega) (by omega) (by omega),
-    project_I 5 3 2 r a _ (by omega) (by omega),
-    project_I 5 3 1 r a _ (by omega) (by omega)]
+  rw [project_i 5 2 1 r a _ (by omega) (by omega),
+    project_ii 5 3 2 1 r a _ (by omega) (by omega) (by omega),
+    project_i 5 3 2 r a _ (by omega) (by omega),
+    project_i 5 3 1 r a _ (by omega) (by omega)]
 
 private theorem tail_zero (f : State 5)
     (h : ∀ t, wire t 0 = 0 → wire t 1 ≠ 2 → f t = 0) :
     prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f) targetWord = 0 := by
   have hf : project 0 0 f = project 1 2 (project 0 0 f) := by
     funext t
+    unfold project
     by_cases h0 : wire t 0 = 0 <;> by_cases h1 : wire t 1 = 2 <;>
-      simp [project, h0, h1, h t]
+      simp [h0, h1, h t]
   have h0 := congrFun (project_tail 0 (by decide) 0 f) targetWord
   rw [hf, ← project_tail 1 (by decide)] at h0
-  simpa [project, targetWord, wire] using h0
-
+  unfold project at h0
+  exact h0
 
 private theorem output_zero :
     prunedU 5 witnessOccupation (basisState (initialWord 5 witnessOccupation)) targetWord = 0 := by
-  have hw5 := project_W5
-  have hw4 := project_W4 (prunedW 5 5 witnessOccupation (basisState inputWord))
-  rw [hw5, W4_scale, W4_branch] at hw4
+  have hw5 := project_w5
+  have hw4 := project_w4 (prunedW 5 5 witnessOccupation (basisState inputWord))
+  rw [hw5, w4_scale, w4_branch] at hw4
   have h : ∀ t, wire t 0 = 0 → wire t 1 ≠ 2 →
       prunedW 5 4 witnessOccupation
         (prunedW 5 5 witnessOccupation (basisState inputWord)) t = 0 := by
@@ -319,24 +359,32 @@ private theorem output_zero :
       intro he
       subst t
       exact h1 rfl
-    simpa [project, h0, basisState, hb] using ht
+    have hb0 : basisState branchWord t = 0 := by
+      exact ite_eq_right hb
+    unfold project at ht
+    simpa only [h0, hb0, ite_true, mul_zero] using ht
   have ht := tail_zero _ h
   have hi : initialWord 5 witnessOccupation = inputWord := by
     funext w
     fin_cases w <;> rfl
   rw [hi]
-  simpa [prunedU, increasingRange, List.range', List.range'TR] using ht
+  exact ht
 
-private theorem target_nonzero : dicke 5 witnessOccupation targetWord ≠ 0 := by
+private theorem target_value :
+    dicke 5 witnessOccupation targetWord = 1 / Real.sqrt 20 := by
   have hc : ∀ s, (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
       targetWord).count s = witnessOccupation s := by
     intro s
     fin_cases s <;> decide
-  rw [dicke, if_pos hc]
-  norm_num [witnessOccupation, Nat.factorial, Real.sqrt_ne_zero']
+  unfold dicke
+  rw [ite_eq_left hc]
+  rfl
 
+private theorem target_nonzero : dicke 5 witnessOccupation targetWord ≠ 0 := by
+  rw [target_value]
+  exact one_div_ne_zero (ne_of_gt (Real.sqrt_pos.2 (by norm_num)))
 
- theorem result : ¬ claim := by
+theorem result : ¬ claim := by
   intro hc
   have he := congrFun (hc 5 (by decide) 1 3 1 (by decide)) targetWord
   change prunedU 5 witnessOccupation (basisState (initialWord 5 witnessOccupation)) targetWord =
