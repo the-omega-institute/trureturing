@@ -7,7 +7,7 @@
 $$
 \mathcal F_t=\{T:M_3(\mathbb C)\longrightarrow M_5(\mathbb C)\text{ CPTP}:
 T^\dagger(J_j)=Y_j\ (j\ge0)\},\qquad
-r(d)=\inf_{R\ {m CPTP}}\sup_{T\in\mathcal F_{\sqrt d}}
+r(d)=\inf_{R\ \mathrm{CPTP}}\sup_{T\in\mathcal F_{\sqrt d}}
 \|R-\mathcal GT\|_\diamond.
 \tag{III.1.1}
 $$
@@ -94,8 +94,8 @@ $$
 x_\epsilon=-\frac{u}{2\sqrt d}
  +\epsilon\,\mathrm i\sqrt{u-\frac{u^2}{4d}},\qquad
 b_\epsilon=\sqrt d+3x_\epsilon,\\
-y_{\epsilon,\delta}=\delta\,\mathrm i\sqrt{1-d-u},
-\frac{b_\epsilon}{|b_\epsilon|},\qquad
+y_{\epsilon,\delta}=\delta\,\mathrm i\sqrt{1-d-u}
+\cdot\frac{b_\epsilon}{|b_\epsilon|},\qquad
 \psi_{\epsilon,\delta}=\sqrt d\,a+x_\epsilon h+y_{\epsilon,\delta}g,
 \qquad \rho_{\epsilon,\delta}=\psi_{\epsilon,\delta}\psi_{\epsilon,\delta}^\dagger,\\
 M_d(u)=\begin{pmatrix}d&-u/2&0\\-u/2&u&0\\0&0&1-d-u\end{pmatrix}.
