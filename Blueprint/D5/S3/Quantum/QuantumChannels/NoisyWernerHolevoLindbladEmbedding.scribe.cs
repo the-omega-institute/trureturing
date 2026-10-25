@@ -115,7 +115,10 @@ internal sealed class NoisyWernerHolevoLindbladEmbeddingDocument : IScribeDocume
                         + "This contradicts s(G) − 5a(G) being nonnegative. "
                         + "For an x in the closed interval, any nonzero x is positive and lies either in this interior or at the excluded endpoint. "
                         + "Both alternatives are impossible, and the zero generator supplies the converse."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("roofeh-karimipour-2024-werner-holevo-lindblad-embedding"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ChannelDefinition()
     {
