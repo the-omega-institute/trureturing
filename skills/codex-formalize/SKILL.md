@@ -230,7 +230,7 @@ Missing or invalid compiled evidence still causes rejection; unrelated reverse d
 If the implementation seat delegates report production or emission to the caller, its handoff is
 explicitly **source-only, not publication-ready**: name the intended source paths, pending producers
 and expected committed projections, and report only the checks actually run. The caller must complete
-the producer work and the publication boundary in Step 7 before committing or pushing that logical
+the producer work and the publication boundary in Step 7 before publishing that logical
 unit, including an early review draft. A source-only handoff does not satisfy rendered fidelity.
 
 Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger, so catch defects before depositing rather than creating a conflicting frozen state.
@@ -247,7 +247,9 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit and cover, then commit the complete publication unit
+### 7. Deposit and cover, then identify the complete publication unit
+
+Checkpoint with `make worktree-checkpoint MESSAGE=FILE` after every recoverable unit of work, before long checks, before hand-off and before normal end. Label unfinished snapshots WIP in the message. A checkpoint certifies saved bytes only; it does not certify tests passed, publication or merge. Use no heartbeat or empty commits. Local WIP checkpoints may precede producer completion; the complete publication boundary below applies before publishing the unit.
 
 Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
 pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
@@ -272,7 +274,8 @@ make deposit-uncovered GID=<D5/Path/Module.theorem_name>
 ```
 
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
-command creates an intermediate commit.
+command commits automatically. Checkpoint their recoverable changes locally under the WIP rule above,
+including before long checks and hand-off.
 
 `make deposit`, `make deposit-uncovered` and `make cover` must exit 0. Judge commands by their raw exit code, never elapsed time
 or quiet output. Do not pipe a judgment command through formatting that hides its exit; run it bare,
@@ -280,11 +283,15 @@ or capture `$?` immediately before formatting.
 
 If `make deposit`, `make deposit-uncovered` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
-**Publication boundary, including early review drafts.** Before committing or pushing a logical
-formalization unit, finish every intended source and its canonical committed projections. Complete
+**Publication boundary, including early review drafts.** Before publishing a logical
+formalization unit, finish every intended source and its canonical committed projections. Identify the
+publication base (the commit preceding this unit's first checkpoint) and the publication tip (the
+final checkpoint containing the complete unit). Local WIP checkpoints may span several commits;
+the cumulative diff from that base to that tip is the one identifiable unit for review. Complete
 pending report production and `make emit` as in Step 5; rerun the affected producers if their inputs
-changed. Inspect the complete intended delta, including new untracked paths, then stage the sources
-and generated files together. Run the existing inventory check with a build of the current inputs:
+changed. Inspect the cumulative diff and all remaining changes, including new untracked paths, then
+stage the remaining sources and generated files. Run the existing inventory check with a build of
+the current inputs:
 
 ```sh
 git status --short
@@ -302,13 +309,19 @@ Run these commands separately and honor each raw exit. Do not use `--no-build` o
 binary: generated inventory is derived from compiled document definitions, so an exit 0 from a
 binary lacking the new document does not assess the current sources. A failed build or inventory
 check leaves the unit unpublished; fix the cause and rerun, or hand off the actual failure. A generated
-file merely present on disk is not enough: inspect the index to confirm every intended source and
-committed projection is staged, with no intended changes left unstaged or untracked. Only then create
-the builder-owned commit:
+file merely present on disk is not enough: inspect the earlier checkpoints and the index to confirm
+every intended source and committed projection belongs to the unit, with no intended changes left
+unstaged or untracked. Checkpoint any remaining delta through the builder's ordinary entrance:
 
 ```sh
-git commit -F <commit-message-file>
+make worktree-checkpoint MESSAGE=<commit-message-file>
 ```
+
+If the unit is already committed and clean, its existing HEAD is the publication tip; create no
+empty commit. Inspect `git diff <publication-base> <publication-tip>` for the complete committed unit
+and name both commits in the review hand-off or pull-request description. Keep the WIP checkpoints
+in its history. Do not rewrite published history or consolidate checkpoints to satisfy this boundary.
+If inputs change after the checks, rerun the affected producers and checks before publication.
 
 This focused publication-completeness boundary reuses `filemap-conform`; it adds no required CI
 status and does not require a full local validation before publication. Full local local validation remains
@@ -332,7 +345,8 @@ frozen theorem discharges, expose the composed unconditional theorem and cover t
 
 Postcondition: deposit and cover exited 0 after review (or are explicitly pending for an early review
 draft); current-input `filemap-conform` exited 0; the complete intended source-and-projection delta
-was inspected in the index and is in one explicit builder commit; and the worktree is clean. An
+was inspected across the checkpoints and index and in the cumulative diff between the identified
+publication base and publication tip; and the worktree is clean. An
 incomplete producer or failed publication check is reported with diagnostics, without publishing the
 incomplete unit.
 
@@ -443,7 +457,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 
 - **Merge `origin/dev` and verify before changing the working tree**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent validation onto a stale base.
 - **A capacity or baseline red may be the baseline's fault, not yours**: a candidate diffed against an older base once made another driver's new file look like this lane's twelfth — the remedy was merging newer `dev` and re-pushing, not restructuring. Before treating a structural red as yours, re-sync and re-run.
-- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Deposit and cover remain uncommitted working-tree changes until the builder creates the single explicit commit from Step 7.
+- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Checkpoint recoverable deposit and cover changes locally, including before long checks and hand-off; publish only after Step 7's complete publication boundary, identified by its base, tip and cumulative diff.
 
 ### Process honesty
 

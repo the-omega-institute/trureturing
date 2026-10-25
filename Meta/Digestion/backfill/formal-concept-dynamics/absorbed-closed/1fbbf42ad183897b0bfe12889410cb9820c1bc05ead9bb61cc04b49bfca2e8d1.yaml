@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1fbbf42ad183897b0bfe12889410cb9820c1bc05ead9bb61cc04b49bfca2e8d1
+  normalized_sha256: sha256:1fbbf42ad183897b0bfe12889410cb9820c1bc05ead9bb61cc04b49bfca2e8d1
+cas_ref: sha256:1fbbf42ad183897b0bfe12889410cb9820c1bc05ead9bb61cc04b49bfca2e8d1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound
+    target_statement_id: sha256:ccc876eda8a81804060eac093dee28d225c839eec843cf56650e868d8b794d4c
+  - gid: D5/S3/ConceptDynamics/Refinement/RefinementTransitivity.refinement_transitive
+    target_statement_id: sha256:a851c4cbdc52e06c14902a5202a50cd9519ba53465dedd9fec2c093dfbf6a050
+receipts:
+  unresolved_subitems: []

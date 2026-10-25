@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95eca9b1605435fd0a7033de350bdd1ecce51dfe74cae9c6ab31e829fee81feb
+  normalized_sha256: sha256:95eca9b1605435fd0a7033de350bdd1ecce51dfe74cae9c6ab31e829fee81feb
+cas_ref: sha256:95eca9b1605435fd0a7033de350bdd1ecce51dfe74cae9c6ab31e829fee81feb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only the section heading distinguishing Riesz curvature and transverse moments and an introductory colon; the distributional identity and charge claims belong to the next atom.
+    previous_atom_id: e88c2c43c36163f352856e0d34f6b538da5f64934d7411f6ccb89b06bf034580
+    next_atom_id: 228f2b0663b25a280e57fcb2461d0ced4a4954700ffc07c8f8b6d9aeda1741e7

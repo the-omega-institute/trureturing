@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60143afacf9c5b794f37021e98eb5be1ee60e519c1253b33f633c0980de857d1
+  normalized_sha256: sha256:60143afacf9c5b794f37021e98eb5be1ee60e519c1253b33f633c0980de857d1
+cas_ref: sha256:60143afacf9c5b794f37021e98eb5be1ee60e519c1253b33f633c0980de857d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 只引出两项后续研究目标，没有给出已成立的数学命题。'
+    previous_atom_id: ab93fb88f2a4ec05aaac29d51fb733c0c457da374af5a2300db0b0ff9cefa015
+    next_atom_id: c911279ca85ea30a73495e8380113823e8577b8e71590a9c8f6432b02d54486c

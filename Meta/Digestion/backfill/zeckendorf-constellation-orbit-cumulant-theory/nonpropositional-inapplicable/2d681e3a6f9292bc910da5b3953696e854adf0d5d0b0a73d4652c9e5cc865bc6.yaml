@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d681e3a6f9292bc910da5b3953696e854adf0d5d0b0a73d4652c9e5cc865bc6
+  normalized_sha256: sha256:2d681e3a6f9292bc910da5b3953696e854adf0d5d0b0a73d4652c9e5cc865bc6
+cas_ref: sha256:2d681e3a6f9292bc910da5b3953696e854adf0d5d0b0a73d4652c9e5cc865bc6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: N 仅是 jet 深度的参数标签。
+    previous_atom_id: df6131ae308ebe378639f70d869f62c1f82959a4e086f9ecadfd030ecfa1480e
+    next_atom_id: d6270b1e45fb114f70f7b9120853558a006f43c3d8f923db9acc89f1089c611e

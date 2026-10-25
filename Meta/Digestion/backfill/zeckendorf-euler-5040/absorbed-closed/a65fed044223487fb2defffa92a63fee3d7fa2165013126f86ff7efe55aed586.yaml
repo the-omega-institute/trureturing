@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a65fed044223487fb2defffa92a63fee3d7fa2165013126f86ff7efe55aed586
+  normalized_sha256: sha256:a65fed044223487fb2defffa92a63fee3d7fa2165013126f86ff7efe55aed586
+cas_ref: sha256:a65fed044223487fb2defffa92a63fee3d7fa2165013126f86ff7efe55aed586
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/CoarseGrainShiftInjective.b_shift_injective
+    target_statement_id: sha256:902f2ac66d7d6f49a38913833eb1a3daa4e4cfb12c30b7381641743cf9bc16c5
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_factorization
+    target_statement_id: sha256:1dc1b37558d0febfd76df234d31a84f9d1103a7424230e618761f963bf489284
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.golden_fiber_5040
+    target_statement_id: sha256:83f3aafe965b44d60e14345256744785d36cf08d3783626670fbedb9e91102b7
+receipts:
+  unresolved_subitems: []

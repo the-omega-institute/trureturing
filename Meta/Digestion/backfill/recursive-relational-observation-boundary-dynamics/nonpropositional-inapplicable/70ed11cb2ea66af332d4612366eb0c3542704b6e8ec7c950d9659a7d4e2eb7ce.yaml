@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70ed11cb2ea66af332d4612366eb0c3542704b6e8ec7c950d9659a7d4e2eb7ce
+  normalized_sha256: sha256:70ed11cb2ea66af332d4612366eb0c3542704b6e8ec7c950d9659a7d4e2eb7ce
+cas_ref: sha256:70ed11cb2ea66af332d4612366eb0c3542704b6e8ec7c950d9659a7d4e2eb7ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条是第2节导言，规定何时使用状态这一名称并要求后续闭合性证明；本条没有给出该证明或新的闭合结论。
+    previous_atom_id: 8b08acd80fea4627f01939fa257558e70353e95aa57e4e54806a2311f81cd4f4
+    next_atom_id: a59b773eb694c7f067ee55c0042ccdacd6f11302b4f82c76d19487a85c684ff6

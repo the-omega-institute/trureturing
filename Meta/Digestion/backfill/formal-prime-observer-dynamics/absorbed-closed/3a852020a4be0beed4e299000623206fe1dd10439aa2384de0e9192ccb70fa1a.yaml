@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3a852020a4be0beed4e299000623206fe1dd10439aa2384de0e9192ccb70fa1a
+  normalized_sha256: sha256:3a852020a4be0beed4e299000623206fe1dd10439aa2384de0e9192ccb70fa1a
+cas_ref: sha256:3a852020a4be0beed4e299000623206fe1dd10439aa2384de0e9192ccb70fa1a
+coverage_gids:
+  - gid: D5/S0/Observation/PowerTraceSimilarityCountermodel.power_traces_do_not_determine_similarity
+    target_statement_id: sha256:06016607fa64ca9ed4fb1de9ecacee98edbd1c23e397709104753ee3cf29db60
+receipts:
+  unresolved_subitems: []

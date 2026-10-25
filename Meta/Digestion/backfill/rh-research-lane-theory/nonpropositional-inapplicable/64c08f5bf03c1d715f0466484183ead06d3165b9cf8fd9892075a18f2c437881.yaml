@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64c08f5bf03c1d715f0466484183ead06d3165b9cf8fd9892075a18f2c437881
+  normalized_sha256: sha256:64c08f5bf03c1d715f0466484183ead06d3165b9cf8fd9892075a18f2c437881
+cas_ref: sha256:64c08f5bf03c1d715f0466484183ead06d3165b9cf8fd9892075a18f2c437881
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出反射增长对的既有源码地址并引出后续定义，本条未附带反射恒等式。
+    previous_atom_id: 115079ce6fd0e4d22bb5aff3a4210de62fe1a3ce23dfceae531574e9acfe8bd4
+    next_atom_id: e4e90976dc79f85a8561cbad209ad8e0491380f54764cebb0372cee9127ac81f

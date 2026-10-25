@@ -1695,3 +1695,150 @@ signed estimate, or prove RH or strict Robin for every integer above
 5040. The Laplace integration and Landau principle are classical,
 not new project theorems. This paper application has no Lean/kernel
 certification or claim of literature priority.
+
+
+## A published small source certifies every future comparison
+
+The primary's proof of Theorem 5(i), printed pp.14--15, supplies a
+small actual source for (FR1), including its all-integer quantifier.
+This uses the proof, not an inference from GA2 comparisons with multiples.
+Equation (24), obtained there from Robin's finite verification, gives
+
+$$
+5040<m<e^{19747}\quad\Longrightarrow\quad G(m)<e^\gamma.
+$$
+
+For $\log m\ge19747$, Case 2 uses Robin's unconditional bound (2) to give
+
+$$
+G(m)<e^\gamma+\frac{0.6483}{(\log19747)^2}
+       <G(5040)<G(2520).
+$$
+
+Although that case writes $m=ar$, both estimates use only the displayed
+size range of $m$; neither uses divisibility by $r$. The exact set $R$
+on printed p.14, also tabulated in Table 1, has only $2520$ and $5040$
+in $[2520,5040]$. All remaining integers in that interval have
+$G(m)<e^\gamma$. Consequently these published inputs give
+
+$$
+G(m)<G(2520)\qquad\text{for every integer }m>2520.
+\tag{FR9}
+$$
+
+The ordinary prime-layer test at $A=\log2520$ is strict:
+$N=2520=2^3 3^2 5\cdot7=C_A$, with $B(A)=A$. Thus this is an
+event-free own-price source and the complete future conditions
+(FR1)--(FR2) apply. No RH premise, new global record classification,
+rerun of Robin's finite verification, or Lean certification is supplied
+or required by this reuse of the published estimates. The source lies
+below $5040$; it cannot by itself test a claim restricted to larger sources.
+
+
+## Future minimality does not force normalized-cap monotonicity
+
+For a regular own-price source satisfying (FR1), retain its same
+complete pressure and inventory. Define, for $t>A$,
+
+$$
+\begin{aligned}
+q_A(t)&=P(t)-P(A),\\
+c_A(t)&=\log\log t-\log\log A+\lambda(t)(A-t),\\
+\mathcal D_A(t)&=M(\lambda(t))-\log Z(N)+\lambda(t)A
+                 =c_A(t)-q_A(t),\\
+\mathscr R_A(t)&=q_A(t)/c_A(t).
+\end{aligned}
+\tag{FR10}
+$$
+
+The existing competitor and future-comparison bounds give
+$0\le q_A\le c_A$, hence $0\le\mathscr R_A\le1$. These bounds do
+not imply that $\mathscr R_A$ is nonincreasing. Indeed, on any
+activation-free cell, $c_A'(t)=k(t)(t-A)$ and the existing pressure
+derivative give
+
+$$
+\mathscr R_A'(t)=\frac{k(t)}{c_A(t)^2}
+ \bigl[(t-A)\mathcal D_A(t)-(B(t)-A)c_A(t)\bigr].
+\tag{FR11}
+$$
+
+Take the actual (FR9) source $N=2520$, $A=\log2520$. At both
+$t=11$ and $t=113/10$, the complete strict optimum is $C_t=5040$;
+only the fourth $2$-layer has been added to this original source.
+All intermediate clocks have this same inventory. Thus
+
+$$
+B(t)-A=\log2,\qquad
+\mathcal D_A(t)=\log(31/30)-\lambda(t)\log2.
+\tag{FR12}
+$$
+
+The strict layer tests check each last occupied and first absent
+layer for $p=2,3,5,7,11$. The bound
+$r_{p,1}<1/(p\log p)\le1/(13\log13)$ excludes every remaining
+prime at both endpoint clocks and at $A$; later layers have still
+smaller activation prices. Monotonicity of $\lambda$ then certifies
+the entire displayed cell, without a search over finite future integers.
+Outward rational logarithm enclosures in (FR11)--(FR12) give
+
+$$
+\begin{aligned}
+-0.009168&<\mathscr R_A'(11)<-0.009167,\\
+0.0003328&<\mathscr R_A'(113/10)<0.0003329.
+\end{aligned}
+\tag{FR13}
+$$
+
+This is a counterexample to monotonicity even with the complete
+future-record premise (FR1)--(FR2), rather than merely a CA source
+with a locally positive rise. In this cell the stronger gap is
+
+$$
+\begin{aligned}
+q_A(t)-H(t,B(t))
+&=\Delta(5040)-\Delta(2520)\\
+&=\log\frac{\log\log5040}{\log\log2520}-\log(31/30)\\
+&\in(0.007585743194634567140012,\,
+       0.007585743194634567140013).
+\end{aligned}
+\tag{FR14}
+$$
+
+The cellwise sign has an exact secant test. For a fixed later inventory
+$C>N$, put $h=\log(C/N)>0$, $f=\log(Z(C)/Z(N))>0$ and $r_C=f/h$.
+Cancelling the price terms in (FR11) gives
+
+$$
+\begin{aligned}
+\operatorname{sgn}\mathscr R_A'(t)
+ &=\operatorname{sgn}\bigl(r_C-s_A(t)\bigr),\\
+s_A(t)&=\frac{\log\log t-\log\log A}{t-A},\qquad
+s_A'(t)=-\frac{c_A(t)}{(t-A)^2}<0.
+\end{aligned}
+\tag{FR15}
+$$
+
+Thus on a fixed inventory cell the ratio can turn only from decreasing
+to increasing, and at most once. Its initial $C=N$ cell instead has
+$\mathscr R_A\equiv1$. At a future-record source, comparison with this
+same integer $C$ gives $r_C\le s_A(\log C)$, so any turn occurs at
+$t\ge\log C$. It does not prevent a turn before the next activation.
+Consequently the positive derivative in (FR13) is compatible with full
+future minimality. The secant monotonicity is the ordinary strict
+concavity of $\log\log t$, applied to the actual Euler reward and clock;
+it is not a new general concavity theorem. A monotonicity proof on a
+restricted source class must control this cellwise arithmetic comparison.
+
+This excludes the auxiliary monotonicity claim **without a lower
+restriction on the source size**. The example has $N<5040$, so it
+does not refute a version restricted to $N>5040$ or to sufficiently
+large sources. Such a version still requires a separate proof, as does
+the signed root-scale Robin estimate. The global comparison is reused
+from the published inputs in (FR9); the local calculation is a project
+application, with no claim of mathematical priority or Lean certification.
+
+The [rational interval certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/c131e6e8a4183397db52334ad6a2a914cb9753cc/experiments/robin-future-record-shape)
+reuses the existing logarithm enclosure, checks the complete strict
+inventories and both derivative signs, and retains the positive (FR14)
+gap. It does not rerun or certify the external global inputs in (FR9).

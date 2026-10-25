@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4075969597ef9691a16634d54cc1f7b783cd09f3fa9b814eb28acb0ad2b266fa
+  normalized_sha256: sha256:4075969597ef9691a16634d54cc1f7b783cd09f3fa9b814eb28acb0ad2b266fa
+cas_ref: sha256:4075969597ef9691a16634d54cc1f7b783cd09f3fa9b814eb28acb0ad2b266fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连读 governing-list 为“本轮不主张”；这里只排除对无限素数 holonomy 能量定义或控制的完成声明，不是一个要求证明的正命题。
+    previous_atom_id: 3cc60360a09166b81f93b47c1d2ae82a47d2af5c14f04946647ed58b581e3552
+    next_atom_id: c4f7690902820e5a537357b34fad2fb3da6539f7d1e590d5a056c2de970f3a4d

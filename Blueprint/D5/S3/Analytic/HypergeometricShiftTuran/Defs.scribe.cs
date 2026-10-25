@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.HypergeometricShiftTuran;
 
@@ -16,6 +18,13 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
                 "For natural m, delta(m) is the sum over k from zero through m of [c(mu+alpha+k)c(mu+beta+m-k)-c(mu+k)c(mu+alpha+beta+m-k)] divided by k! times (m-k)!. Subtraction in the index m-k is natural subtraction; throughout this sum k is at most m. This is the coefficient in f(mu+alpha;x)f(mu+beta;x)-f(mu;x)f(mu+alpha+beta;x), where f(mu;x) has coefficient c(mu+n)/n! at degree n."),
             Entry("parameter-elementary-symmetric", "esymm", "Elementary symmetric functions",
                 "The degree k elementary symmetric function is the sum of the products over all k-element selections of parameter positions. Repeated parameter values retain their multiplicities, and the degree zero value is one."),
+            Describe.Lean(DescribeId.Create("constant-vector-elementary-symmetric"),
+                DeclarationHandle.Create("D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm_const"),
+                H("Elementary symmetric functions of a constant vector"),
+                StatementSource.FromAuthor(Disp(EsymmConstFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For all natural n and k and every real x, the degree k elementary symmetric function of n copies of x is the real cast of n choose k times x to the power k. Every k-element subset contributes x to the power k, and there are n choose k such subsets. The identity includes k greater than n, when both sides vanish, and k zero, when both sides equal one. It supplies condition (13) for the repeated half parameters in both the coefficient and function counterexamples."))),
+                DescribeRole.Theorem),
             Entry("symmetric-ratio-chain", "cond13", "The ratio chain",
                 "For every natural j less than p, require e(q-j,b)/e(p-j,a) to be at most e(q-j-1,b)/e(p-j-1,a). With p at most q these are exactly the consecutive inequalities in the descending symmetric ratio chain. If p is zero there are no inequalities."),
             Entry("hypergeometric-coefficient-claim", "claim", "Universal coefficient nonnegativity",
@@ -42,6 +51,26 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
                 "For every natural q, (32/(9 pi))^q times (1/2)^q equals (16/(9 pi))^q."),
             Lemma("pi-exponential-base-bound", "pi_base_bound", "A rational lower bound for the base",
                 "The inequality 640/567 < 32/(9 pi) follows from pi < 3.15 and positivity of pi. It supplies the common base estimate for the two negative coefficient families."))));
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula EsymmConstFormula()
+    {
+        var natural = Seq(Mathbb, Grp(V("N")));
+        var real = Seq(Mathbb, Grp(V("R")));
+        var constant = Seq(V("fun"), Sp,
+            Parenthesized(Seq(V("i"), Colon, Sp, Call("Fin", V("n")))), Sp, Mapsto, Sp, V("x"));
+        var choose = Parenthesized(Seq(new Formula.Apply(
+            Seq(Operatorname, Grp(V("Nat"), Dot, V("choose"))), [V("n"), V("k")]), Colon, Sp, real));
+        return All("n", natural, All("k", natural, All("x", real,
+            new Formula.Relation(Call("esymm", Parenthesized(constant), V("k")), FormulaRelationOperator.Equal,
+                new Formula.Binary(choose, FormulaBinaryOperator.Multiply,
+                    new Formula.Power(V("x"), V("k")))))));
+    }
 
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),

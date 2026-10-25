@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de574fa9c92648c09d2d8439fabcd3db8575043deab2620ed069e2e5f810414f
+  normalized_sha256: sha256:de574fa9c92648c09d2d8439fabcd3db8575043deab2620ed069e2e5f810414f
+cas_ref: sha256:de574fa9c92648c09d2d8439fabcd3db8575043deab2620ed069e2e5f810414f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the hyperbolic defect D_T by a finite weighted cosh sum; the final word expansion introduces a separate assertion in the next atom.
+    previous_atom_id: 8d344faedf8e6d86801449b768e8b1e85856ac9afc7bb1e474eff3328b1d1732
+    next_atom_id: bbf68176d59e9dbdad981ab7866ec50b58e2c662f56d19539267bf5bbb35bd2b

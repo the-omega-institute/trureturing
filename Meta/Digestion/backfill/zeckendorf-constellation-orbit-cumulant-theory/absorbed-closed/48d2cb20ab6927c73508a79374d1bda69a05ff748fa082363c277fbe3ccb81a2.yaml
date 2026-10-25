@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:48d2cb20ab6927c73508a79374d1bda69a05ff748fa082363c277fbe3ccb81a2
+  normalized_sha256: sha256:48d2cb20ab6927c73508a79374d1bda69a05ff748fa082363c277fbe3ccb81a2
+cas_ref: sha256:48d2cb20ab6927c73508a79374d1bda69a05ff748fa082363c277fbe3ccb81a2
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.multiplicity_pos
+    target_statement_id: sha256:6cf7b349caee02d13c4906c00c7a370e1b2a24ccf3d26de5d32f1f0bd90df517
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits.off_line_zero_orbit_sum_eq_four_mul_re
+    target_statement_id: sha256:14eba28892b04fae46b38d79e77209030bc857647b37342acb9807477fc7dae8
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareOrbitBounds.fourierLaplace_convolutionSquare_complex
+    target_statement_id: sha256:d5a117ed5b5e088e86fb78a366cfc867a6b124e03d4f02e835997e04d675c904
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ece7750ff00ca2b7c23447ad2af7279c715b6e57593c5661b016fda2e3af6f5f
+    - c858c910b88c215fb19316dfbaeb3178a9adc403480c8088e5f468ad1f820ce6

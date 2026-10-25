@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f38a1b891907a4f50cd170f3b0ddbfd6dc67eb0925aeef9bf58db7f692c4d804
+  normalized_sha256: sha256:f38a1b891907a4f50cd170f3b0ddbfd6dc67eb0925aeef9bf58db7f692c4d804
+cas_ref: sha256:f38a1b891907a4f50cd170f3b0ddbfd6dc67eb0925aeef9bf58db7f692c4d804
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只是安全验证这一应用的列表项，没有独立数学断言。
+    previous_atom_id: 65340072c409bafc85cfc37351aa373d2c1784631f5ee34cfe8b427a2152b1bc
+    next_atom_id: c2f973994d6493418fab601780318ba9ae448039b90bee1f1490710448238be9

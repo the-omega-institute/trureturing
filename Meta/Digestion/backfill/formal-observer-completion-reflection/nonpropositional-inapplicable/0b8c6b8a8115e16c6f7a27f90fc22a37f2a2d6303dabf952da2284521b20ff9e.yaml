@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b8c6b8a8115e16c6f7a27f90fc22a37f2a2d6303dabf952da2284521b20ff9e
+  normalized_sha256: sha256:0b8c6b8a8115e16c6f7a27f90fc22a37f2a2d6303dabf952da2284521b20ff9e
+cas_ref: sha256:0b8c6b8a8115e16c6f7a27f90fc22a37f2a2d6303dabf952da2284521b20ff9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 为科学修复方法设定当前模型 Xn 和观察者的符号，是方法段落的导语，不含定理结论。'
+    previous_atom_id: 72f33f104358538731a9c1d5de135536d7c9f5b9174919aeecebc5a762763870
+    next_atom_id: 2b004fb71836df14bd6f450d29e4cfc3ad9148214134cd0566b71f506a78d61d

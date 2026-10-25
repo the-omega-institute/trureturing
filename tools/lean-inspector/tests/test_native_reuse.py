@@ -4,6 +4,14 @@ from test_reuse import EXECUTION
 
 
 class NativeLocalReportConsumerTests:
+    def test_canonical_reader_runs_executable_git_adapter(self):
+        result = self.guarded_command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
+            'bash', '-c', 'command -v git && git --version'],
+            env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(str((self.root / 'tools/scripts/worktree/lean-git/git').resolve()), result.stdout)
+        self.assertIn('git version ', result.stdout)
+
     def test_local_restored_format_keeps_native_incremental_extraction(self):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION

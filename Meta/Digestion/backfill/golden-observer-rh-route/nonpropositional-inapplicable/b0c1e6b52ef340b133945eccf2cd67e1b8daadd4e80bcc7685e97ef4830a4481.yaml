@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0c1e6b52ef340b133945eccf2cd67e1b8daadd4e80bcc7685e97ef4830a4481
+  normalized_sha256: sha256:b0c1e6b52ef340b133945eccf2cd67e1b8daadd4e80bcc7685e97ef4830a4481
+cas_ref: sha256:b0c1e6b52ef340b133945eccf2cd67e1b8daadd4e80bcc7685e97ef4830a4481
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录预登记来源与实施机制的叙述；未提出需要证明的数学断言。文本定位：# 增订十五 黄金 germ 线 G-g:窗口零点除子与 RH 的修正等价(G-g-1 / G-g-2 / G-g-3 预登记) > 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,27
+    previous_atom_id: af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f
+    next_atom_id: f1fdcfec6b0b5fd48c7e8b4d5de7ce9357ce302bf5d4abee07f55695a002a2d6

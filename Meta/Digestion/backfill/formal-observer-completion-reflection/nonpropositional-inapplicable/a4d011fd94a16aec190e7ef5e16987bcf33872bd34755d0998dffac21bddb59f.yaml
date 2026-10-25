@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4d011fd94a16aec190e7ef5e16987bcf33872bd34755d0998dffac21bddb59f
+  normalized_sha256: sha256:a4d011fd94a16aec190e7ef5e16987bcf33872bd34755d0998dffac21bddb59f
+cas_ref: sha256:a4d011fd94a16aec190e7ef5e16987bcf33872bd34755d0998dffac21bddb59f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本段是拟议模块目录和待闭合声明名的路线图；列表没有带量词的已成立命题。'
+    previous_atom_id: 97ac851f90754900c4290ab3e1bfe3563beb06890e597ed7b0915a562e37598d
+    next_atom_id: ba6cad149f5888155083181a624258933bd8564290179cb5a20f19d66d9958c5

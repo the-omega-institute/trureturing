@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1ec3a3d95a4fed47818b7c3525b5c2a0351e6b3813ec643d1582f86410f17e0e
+  normalized_sha256: sha256:1ec3a3d95a4fed47818b7c3525b5c2a0351e6b3813ec643d1582f86410f17e0e
+cas_ref: sha256:1ec3a3d95a4fed47818b7c3525b5c2a0351e6b3813ec643d1582f86410f17e0e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InformationEscape/ExactRate.escapeDenominator_eq
+    target_statement_id: sha256:2dcbfe38b33d43934fbe62e7eee29ff42972591240b64c35f5f6dbc073c56dcd
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a3e8ce7c59ca4879f1f82a712948889fd1c3c8112af802b3fb5eb8a6c326e8b
+  normalized_sha256: sha256:2a3e8ce7c59ca4879f1f82a712948889fd1c3c8112af802b3fb5eb8a6c326e8b
+cas_ref: sha256:2a3e8ce7c59ca4879f1f82a712948889fd1c3c8112af802b3fb5eb8a6c326e8b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'sound 定义为实际可能集合包含于抽象可能集合，exact 在 sound 前提下再无额外可能即双向包含；用 Set.subset_def 和 Set.Subset.antisymm 规范化，现实见证性不由抽象成员资格推出。 Upstream: Set.subset_def; Set.Subset.antisymm. mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. D5/*.lean including private searched for sound/exact, gamma/concretization, abstraction/set inclusion; BestSafeAbstraction supplies a Galois-derived sound transformer, not this arbitrary-transformer definitional equivalence.'
+    previous_atom_id: d2f1d1a9b5dbf031c5c0a39086c9c75b37c92fa2e67af0f698bd27d5d748bc54
+    next_atom_id: 4dcd1c99b733a0774342561aa5de931b0d0512a2f3280f7acc94751367c84530

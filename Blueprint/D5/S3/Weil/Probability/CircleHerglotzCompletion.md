@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.circle_herglotz
 
 Normalization is explicit. The existence conclusion includes uniqueness of the actual Borel probability measure.
 
-**Theorem 1.6 (All moments characterize weak continuity).**
+**Theorem 1.6 (The complete moment profile is a topological embedding).**
+
+Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.moment_profile_isEmbedding`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Probability/CircleHerglotzCompletion.moment_profile_isEmbedding` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original probability measure is embedded into its complete integer Fourier profile, with the actual weak topology.
+
+**Theorem 1.7 (All moments characterize weak continuity).**
 
 Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.continuous_iff_circleMoments`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.continuous_iff_
 
 Compactness and existing measure uniqueness make the complete moment profile a topological embedding. Finite-mode reconstruction is not asserted.
 
-**Theorem 1.7 (All moments characterize weak convergence).**
+**Theorem 1.8 (All moments characterize weak convergence).**
 
 Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.tendsto_iff_circleMoments`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.tendsto_iff_cir
 
 The original complete moment profile identifies weak convergence along arbitrary filters, reusing the same compact embedding.
 
-**Theorem 1.8 (Every finite-order witness sequence has the same weak limit).**
+**Theorem 1.9 (Every finite-order witness sequence has the same weak limit).**
 
 Lean statement: `D5/S3/Weil/Probability/CircleHerglotzCompletion.finite_moment_witnesses_tendsto`
 
@@ -109,6 +121,7 @@ Any probability witnesses matching all modes up to their respective orders conve
 - Truth anchor: `D5/S3/Weil/Probability/CircleHerglotzCompletion.continuous_iff_circleMoments`
 - Truth anchor: `D5/S3/Weil/Probability/CircleHerglotzCompletion.finite_moment_witnesses_tendsto`
 - Truth anchor: `D5/S3/Weil/Probability/CircleHerglotzCompletion.hermitian_of_all_toeplitz`
+- Truth anchor: `D5/S3/Weil/Probability/CircleHerglotzCompletion.moment_profile_isEmbedding`
 - Truth anchor: `D5/S3/Weil/Probability/CircleHerglotzCompletion.tendsto_iff_circleMoments`
 - Dependency: [D5/S3/Observer/MeasureSeparation/FourierModeDetermination](../../Observer/MeasureSeparation/FourierModeDetermination.md)
 - Dependency: [D5/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge](../CayleyLaguerre/TruncatedCircleMomentBridge.md)

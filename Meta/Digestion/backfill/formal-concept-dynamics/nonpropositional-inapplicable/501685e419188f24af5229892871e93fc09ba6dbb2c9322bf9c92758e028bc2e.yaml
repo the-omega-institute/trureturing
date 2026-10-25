@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:501685e419188f24af5229892871e93fc09ba6dbb2c9322bf9c92758e028bc2e
+  normalized_sha256: sha256:501685e419188f24af5229892871e93fc09ba6dbb2c9322bf9c92758e028bc2e
+cas_ref: sha256:501685e419188f24af5229892871e93fc09ba6dbb2c9322bf9c92758e028bc2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只引入判例规则与其定义域的索引族 (Ji,Ai)，未在此片断言冲突已存在或给出最小冲突核存在性；后续定义 445.2 的复合条目保持单独处理。
+    previous_atom_id: 83c341d3429f4a66f666957c875cc66ebbac4e709025cbcf38128574ec7ebd88
+    next_atom_id: 5b5f0bf6a1cbfc731a32eb1af8182789fcde375919bd9d127a44ced821aa4f2f

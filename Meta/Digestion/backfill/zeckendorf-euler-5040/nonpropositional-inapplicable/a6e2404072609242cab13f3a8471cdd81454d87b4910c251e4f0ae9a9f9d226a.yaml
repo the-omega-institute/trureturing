@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6e2404072609242cab13f3a8471cdd81454d87b4910c251e4f0ae9a9f9d226a
+  normalized_sha256: sha256:a6e2404072609242cab13f3a8471cdd81454d87b4910c251e4f0ae9a9f9d226a
+cas_ref: sha256:a6e2404072609242cab13f3a8471cdd81454d87b4910c251e4f0ae9a9f9d226a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An interrogative asking whether an integer can be recovered uniquely; it asserts no existence or uniqueness theorem.
+    previous_atom_id: c5164f9674b28e9752b41c14db939ad2e39ae9436485744a13359f4b2dbe3d8f
+    next_atom_id: ca43575f2ebd3fb50d0d4b6bb4340cbda25597b236a2c87bdf3bed680bf72570

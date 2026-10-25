@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8864cab46e0b359a3c0075e8e86c5a29ff3965574d9abc740fd1238d8c73659a
+  normalized_sha256: sha256:8864cab46e0b359a3c0075e8e86c5a29ff3965574d9abc740fd1238d8c73659a
+cas_ref: sha256:8864cab46e0b359a3c0075e8e86c5a29ff3965574d9abc740fd1238d8c73659a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and introductory colon announcing subsequent failure categories; their mathematical criteria occur in separate atoms.
+    previous_atom_id: 63c4188e10a79d5f614ed4dd2f0746c0e6ac1d84b300e25322a3c352068da405
+    next_atom_id: 97ff0f594368ce117a5827049442e60139816ca92265acfe9468c51af102f287

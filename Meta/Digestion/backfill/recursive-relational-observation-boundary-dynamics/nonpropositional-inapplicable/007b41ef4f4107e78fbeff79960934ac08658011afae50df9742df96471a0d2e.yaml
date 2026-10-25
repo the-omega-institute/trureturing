@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:007b41ef4f4107e78fbeff79960934ac08658011afae50df9742df96471a0d2e
+  normalized_sha256: sha256:007b41ef4f4107e78fbeff79960934ac08658011afae50df9742df96471a0d2e
+cas_ref: sha256:007b41ef4f4107e78fbeff79960934ac08658011afae50df9742df96471a0d2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条声明第3节所采用的组合运算记号和可选解释；没有断言这些运算已经满足后文拼接公式。
+    previous_atom_id: ae8381f9bfbd99e3bcc2c2c22a3401659dce684c3e35618b9f680e27701a1047
+    next_atom_id: a36c5f3f1ef95c3409284864423c86ba9759ce73f34fe8e35103e924c5c33ebc
