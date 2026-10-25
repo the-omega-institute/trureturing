@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of controlled unitarity and structure-state positivity. -/
+
 namespace Reg.D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 
 open _root_.D5.S3.Quantum.Dynamics.PositivePauliClockOrder
@@ -121,7 +123,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 private theorem zero_not_posDef : ¬ (0 : QubitMatrix).PosDef := by
   intro h
   have hzero := h.diag_pos (i := 0)
-  simpa using hzero
+  simp at hzero
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
