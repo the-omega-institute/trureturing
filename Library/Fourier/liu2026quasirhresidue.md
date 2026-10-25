@@ -5,7 +5,7 @@ year: 2026
 title: Joint mixed-Mobius estimates and the actual exceptional residue interface
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived conditional joint Mellin bounds put the original fifteen constant-ray radial mixed-Mobius terms below the local comparison exponent; the actual all-K residue scalar and the full signed J40 contraction remain unresolved.
+claim: Repo-derived conditional joint Mellin bounds pay the fifteen radial mixed-Mobius terms; fixed-cutoff polygonal localization pays the all-left and outer-face remainders of the original all-K scalar, retaining its fifteen coupled residue terms and the unresolved full signed J40 contraction.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -20,7 +20,7 @@ Xu–Sang. They reuse C37, C48 and C51–C76, without certifying the
 upstream main proof. In particular, $R_{7/8}$ is an explicit
 source-conditional premise, not a newly proved zero-free strip.
 The statements are paper mathematics, without Lean or CI certification.
-Labels R1–R12 belong only to this companion; C1–C76 retain their scope.
+Labels R1–R31 belong only to this companion; C1–C76 retain their scope.
 
 Keep $K=\mathbb Q(\sqrt{-3})$, its original finite bad set $S$, ideals
 counted once, $D=U^{1/2}$, $A=U^\alpha$, $0<\alpha<1/4$, and the
@@ -738,12 +738,308 @@ $$
 
 Thus the original-product factorization reaches a depth that would
 be sufficient if the entire R18 expression admitted the corresponding
-power bound. This is domain applicability only. The $\bar H$
+power bound. R23 alone is domain applicability only. The $\bar H$
 nonvanishing tube of depth $1/5$ reaches only the formal all-line
 exponent $4/5$; it gives no reciprocal-zeta strip or contour bound.
-No left-line, mixed-residue or horizontal estimate at the deeper
-rectangle is supplied. In particular no such bound is deduced from
-$R_{7/8}$, and no limit $T\to\infty$ is taken here.
+The polygonal application below pays the regular boundaries while
+retaining the complete finite residue aggregate. It does not deduce
+a deeper zero-free strip from $R_{7/8}$ or take an infinite-height
+residue limit.
+
+## Fixed-cutoff polygonal localization of the original scalar
+
+This is a source-specific `repo-derived` paper application of the
+published Buck/Jensen supplier already recorded at
+[LC168–LC182](../Analytic/romik2021orthogonal.md#exact-finite-jensen-error-and-the-published-exceptional-disc-floor):
+Matthew Buck, *Integer points of meromorphic functions*,
+[DOI 10.1017/S0013091513000436](https://doi.org/10.1017/S0013091513000436),
+Lemma 2.4, equation (2.2), Remark 2.3, and the Jensen inequality
+used there. No new exceptional-disc theorem is proposed. Keep every
+coefficient and the ideal mask of C73, the same $K,S$, and **any
+fixed original admissible smooth $W$**. Constants may use finitely
+many of its seminorms for each requested error power. No Gevrey
+condition, zero simplicity, zero spacing, derivative floor, RH or
+ordinary-zeta reciprocal-height supplier is used.
+
+**Dedekind normalization and the local supplier.** Write
+$g(s)=(s-1)\zeta_K(s)$, an entire function, and for every integer $n$
+put $\tau_n=n+1/2$, $Q_n=3+|\tau_n|$ and
+
+$$
+p_n(w)=\frac{g(2+i\tau_n+w)}{g(2+i\tau_n)},\qquad
+p_n(0)=1,\qquad
+\max_{|w|\le16}|p_n(w)|\le V_n=CQ_n^{B_0},\quad V_n\ge2.
+\tag{R24}
+$$
+
+Here $C,B_0$ are fixed, independent of $n,A,W$. The upper-growth
+input is precisely the unconditional fixed-field strip growth used
+in R6–R8 and C74, now on $-14\le\Re s\le18$ for the regularized
+$g$. For this degree-two field the completed function is
+$(\sqrt3/(2\pi))^s\Gamma(s)\zeta_K(s)$ with functional equation
+$s\leftrightarrow1-s$; its strip upper bounds and the absolutely
+convergent right-half-plane Euler product supply a finite polynomial
+degree on that fixed strip. The pole at $1$ has been removed before
+taking the maximum, including the bounded-height windows. On the
+normalizing line the same Dedekind Euler product gives
+$\zeta_K(2)^{-1}\le|\zeta_K(2+i\tau_n)|\le\zeta_K(2)$,
+so $|g(2+i\tau_n)|\asymp Q_n$. Thus this is a Dedekind-specific
+normalization; it imports no lower bound inside the zero strip.
+
+In Buck's notation take $u=1/p_n$, scale $s=2$, zero-count parameter
+$m=0$, and $\epsilon=r/48$, where $r=10^{-6}$ is fixed. Jensen's
+identity, with zero additive constant because $p_n(0)=1$, gives
+$T(16,1/p_n)=T(16,p_n)\le\log V_n$. Lemma 2.4 consequently supplies
+a finite union $U_n$ of open discs in the $w$ plane, of total radius
+at most $48\epsilon=r$, such that
+
+$$
+|p_n(w)|\ge V_n^{-k},\qquad |w|\le4,\quad w\notin U_n,
+\qquad k=6+\frac{\log(48/r)}{\log2}.
+\tag{R25}
+$$
+
+The accompanying Jensen count is
+$n(4,1/p_n)\le\log V_n/\log4$, with multiplicities; poles of
+$1/p_n$ count zeros of $g$, not the removed zeta pole. In particular
+every such zero in $|w|\le4$ belongs to $U_n$. Translate these discs
+to the $z$ plane by $z=1+i\tau_n+w$, and call their union $E_n$.
+Its real and imaginary projections each have total interval length
+at most $2r$. For $-249/1000\le\Re z\le1$ and
+$|\Im z-\tau_n|\le1$, the corresponding $|w|<2<4$. Outside $E_n$,
+R24–R25 and
+$\zeta_K(1+z)^{-1}=z/g(1+z)$ therefore give, for one fixed $B$,
+
+$$
+|\zeta_K(1+z)^{-1}|\le C Q_n^B
+ \le C'(3+|\Im z|)^B.
+\tag{R26}
+$$
+
+The formula at $z=0$ is interpreted by continuation and equals zero.
+Indeed $|z|\ll Q_n$ and $|g(2+i\tau_n)|\gg Q_n$, so one may take
+$B=B_0k$ after adjusting the fixed constant.
+This polynomial bound holds on the chosen complement, including
+low heights. It is not a polynomial bound on a complete zero-bearing
+vertical line. The arbitrarily close zeros and their full
+multiplicities remain inside the exceptional discs.
+
+**An actual finite polygon, with bounded local length.** Set
+
+$$
+h_0=\frac{497}{2000},\qquad h_1=\frac{249}{1000},\qquad
+I=(-h_1,-h_0),\qquad H=\lceil A\rceil+4\quad(A\ge2).
+$$
+
+Use the finite collection $E_n$, $-H-1\le n\le H$.
+For each $-H\le n<H$ choose
+$x_n\in I\setminus\pi_{\Re}(E_n)$; this is possible since
+$|I|=1/2000>2r$. For $-H<n<H$ choose
+$y_n\in(n-1/8,n+1/8)$ outside the imaginary projections of
+$E_{n-1}\cup E_n$. Their total length is at most $4r<1/4$.
+Choose a **single** $T\in(H-1/8,H+1/8)$ outside the imaginary
+projections of $E_{H-1}\cup E_H$ and the negatives of the imaginary
+projections of $E_{-H-1}\cup E_{-H}$. The excluded length is at
+most $8r<1/4$. Put $y_{-H}=-T$, $y_H=T$. All choices can be made
+outside the closed projection intervals as well, since their finite
+total lengths have these strict margins.
+
+Define $\Gamma_A$ upwards: in slab $n$ take the vertical segment
+$[x_n+iy_n,x_n+iy_{n+1}]$; at each internal $y_n$ join
+$x_{n-1}+iy_n$ to $x_n+iy_n$ horizontally. Each vertical segment
+avoids $E_n$ by its real coordinate, and each join avoids both
+adjacent unions by its height. All these segments have
+$|\Im z-\tau_n|\le5/8$ in at least one of their stated windows.
+R26 therefore holds on the entire path. The two outer horizontal
+segments from its endpoints to $1\pm iT$ also avoid the relevant
+unions, so R26 holds on them as well. The right side is
+$[1-iT,1+iT]$, where the Euler-product reciprocal bound already
+holds without disc deletion.
+
+The heights $y_n$ strictly increase, by at least $3/4$. Distinct
+vertical interiors occupy disjoint height intervals; horizontal
+joins meet only their adjacent vertical endpoints. Removing a
+zero-length join if necessary, $\Gamma_A$ is thus simple and meets
+neither outer segment except at its own endpoint. Together with the
+right side and outer segments it bounds a simple polygon
+$\Omega_A$, oriented positively by going up the right side. There
+are no holes or additional boundary components. Every boundary point
+has $-h_1<\Re z\le1$; the entire closed polygon is in
+$\Re z>-1/2$. In any height interval of length one there are at
+most three vertical pieces, with total vertical length at most one,
+and at most three joins, each of length less than $1/2000$.
+In particular its local arclength is bounded by $2$, uniformly in
+$A,H$, the discs and the choices. Its total length is $O(T+1)$,
+and $T\asymp A$ is finite for every $A\ge2$.
+
+Let $\mathcal Z_A$ be the distinct positions $a=\varrho-1$ with
+$a\in\Omega_A$ and $\zeta_K(\varrho)=0$, retaining each
+multiplicity $m_\varrho$. This is a finite set: $g$ is nonzero as
+an entire function, the closed polygon is compact, and R26 excludes
+boundary zeros. Membership is **in this polygon's actual interior**,
+equivalently winding number one for its boundary, not the conditions
+$\Re\varrho>1-h_0$ or $>1-h_1$ in a replacement rectangle.
+Zeros in the narrow intervening band are selected by the actual
+vertical segments and joins. All four coordinates use this same
+polygon, zero set and top/bottom heights.
+
+**Finite identity, with all fifteen terms.** For coordinate $i$ let
+$J_i=(2\pi i)^{-1}\int_{\Gamma_A}dz_i$, let
+$Z_i=\sum_{a\in\mathcal Z_A}\operatorname{Res}_{z_i=a}$, and let
+$\ell_{\pm,A}$ be the segment from the corresponding endpoint of
+$\Gamma_A$ to $1\pm iT$, left to right. Let $H_{\pm,i}$ integrate
+over that segment with factor $(2\pi i)^{-1}$.
+Let $I_{1,i}$ be the truncated upward right integral. The polygonal
+residue theorem gives exactly
+$I_{1,i}=J_i+Z_i+H_{+,i}-H_{-,i}$. Define
+
+$$
+\begin{aligned}
+P_A&=\sum_{\varnothing\ne E\subseteq[4]}
+       \left(\prod_{i\in E}Z_i\right)
+       \left(\prod_{j\notin E}J_j\right)G_A,\\
+L_A&=\left(\prod_{i=1}^4J_i\right)G_A,\\
+C_A&=\sum_{\substack{E\sqcup B\sqcup C_+\sqcup C_-=[4]\\
+                         C_+\cup C_-\ne\varnothing}}
+ (-1)^{|C_-|}
+ \left(\prod_{i\in E}Z_i\right)
+ \left(\prod_{i\in B}J_i\right)
+ \left(\prod_{i\in C_+}H_{+,i}\right)
+ \left(\prod_{i\in C_-}H_{-,i}\right)G_A,\\
+\bar Q_A&=P_A+L_A+C_A+E_T.
+\end{aligned}
+\tag{R27}
+$$
+
+Here $E_T$ is exactly R18's original right-line tail with $c=1$.
+The fifteen $P_A$ terms have sizes $4,6,4,1$ for residue-subset
+cardinalities $1,2,3,4$, all with positive operator sign. A term of
+cardinality $k$ has exactly $(2\pi i)^{-(4-k)}$ on its remaining
+paths. Each coordinate residue operator includes **every** zero
+position in $\mathcal Z_A$. Formula R20 applies without alteration,
+with arbitrary multiplicities and derivatives of the full coupled
+$\bar H$. It allows vanishing cutoff values and Euler numerators;
+no individual residue or inverse derivative is estimated here.
+
+The cancelled product at $z_i=0$ remains holomorphic, as in R17–R18.
+C73 puts $\bar H$ holomorphic on a neighborhood of the entire
+closed polygon product, with no mixed polar divisors. Successive
+one-coordinate Cauchy deformations on compact paths consequently
+prove R27, and the finite residues commute. There is no omitted
+cutoff residue, no change of mask, and no infinite zero sum.
+
+**Payment of the all-left term and every outer face.** On
+$\Gamma_A$, both outer segments and the right side put
+$v_A(z)=|\widehat W(z)A^z\zeta_K(1+z)^{-2}|$.
+R7 and R26, the local-length bound, and the fixed distance of the
+left band from zero give
+
+$$
+\begin{aligned}
+\int_{\Gamma_A}v_A(z)|dz|&\ll A^{-h_0},\\
+\int_{[1-iT,1+iT]}v_A(z)|dz|&\ll A,\\
+\int_{\ell_{\pm,A}}v_A(z)|dz|&\ll_M A(1+T)^{-M}
+                       \quad\text{for every fixed }M>0.
+\end{aligned}
+\tag{R28}
+$$
+
+For example on the left choose a Mellin decay order larger than
+$2B+2$ and sum the weights over unit-height intervals. On an outer
+segment use the same uniform strip decay at height $T$ with order
+larger than $2B+M$; its length is at most $1+h_1$ and $A^{\Re z}\le A$.
+The original right side uses its Euler-product bound and R7. These
+arguments use the fixed smooth cutoff's arbitrary polynomial decay,
+without an exponential-decay or varying-cutoff assertion. C73 gives
+a uniform bound for $\bar H$ throughout the fixed real polytube
+$[-h_1,1]^4$, independently of all heights. It follows at once that
+$|L_A|\ll A^{-4h_0}=A^{-497/500}$.
+
+To pay a face containing residues, keep each $Z_i$ as its **whole**
+finite operator and replace it by
+$I_{1,i}-J_i-H_{+,i}+H_{-,i}$ on the closed boundary.
+Its weighted contour mass is $O(A)$ by R28, uniformly in the
+number, closeness and multiplicities of the enclosed zeros. After
+this replacement in any term of $C_A$, at least one outer segment
+remains and all other factors have weighted mass $O(A)$.
+The uniform bound for the coupled $\bar H$ then proves
+
+$$
+|C_A|+|E_T|\ll_M A^4(1+T)^{-M},\qquad
+\bar Q_A=P_A+O_{K,S,W}(A^{-497/500}),
+\quad A\ge2.
+\tag{R29}
+$$
+
+More precisely R27 retains $L_A$ exactly, and for every prescribed
+$D>0$ the combined outer-face and original right-tail error is
+$O_{D,K,S,W}(A^{-D})$: use $T\asymp A$ and $M>D+4$.
+The contour and $P_A$ need not change with $D$; only the fixed
+cutoff seminorms used in the estimate increase. This bounds the
+complete finite faces, including those with several residue
+coordinates, without summing absolute values of individual residues
+or assuming a lower bound on any $\zeta_K^{(m)}(\varrho)$.
+
+**The exact signed physical consumer.** R29 is unconditional for the
+scalar C73 with fixed $K,S,W$. For R12 retain its source-conditional
+$R_{7/8}$, original profiles, coefficient tables and common absolute
+component/height envelope; those are premises of its existing
+evaluation and other errors. With the same $A=U^{1/12}$, R27 gives
+the exact substitution of $P_A+L_A+C_A+E_T$ for $\bar Q_A$ in R12.
+In particular
+
+$$
+\begin{aligned}
+\mathcal E_{\rm rad}
+ &=\frac{\bar C}{6}U^{13/6}P_A S_{\rm actual}\\
+ &\quad+O_{K,S,W}\!\left(
+       \left|\frac{\bar C}{6}\right|
+       U^{13/6}|S_{\rm actual}|A^{-497/500}\right)\\
+ &\quad+O_\varepsilon\!\left(\mathcal N_J
+ [U^{199/96+\varepsilon}+U^{47/24+\varepsilon}
+                              +U^{95/48+\varepsilon}]\right).
+\end{aligned}
+\tag{R30}
+$$
+
+The multiplier is exactly R12's $(\bar C/6)U^{13/6}S_{\rm actual}$,
+with the signed common-height aggregate still defined there, including
+its individual $C_{w_c},M_{i,c},\eta_{\epsilon,\mathbf r,c}$ and
+$d_{\mathbf r}^{-1/6}$. There is no extra field residue, unit factor,
+absolute-mass replacement in the leading term or diagonal
+substitution. An original additional physical prefactor multiplies
+its own complete identity and errors; different local branches keep
+their own constants and scalars. For a sharper outer-face account
+the new error in R30 is the modulus of that exact multiplier times
+$O(A^{-497/500})+O_D(A^{-D})$, with $L_A$ itself available in R27.
+
+The absolute envelope already required by R12 bounds
+$|S_{\rm actual}|\ll\mathcal N_J$ through R11's profile moments.
+Under that same budget the new remainder has power
+$U^{13/6-497/6000}=U^{12503/6000}$, times the original prefactors.
+For the specific margin $\nu=1/3000$ of R23 it is below C76's local
+target, since
+
+$$
+\frac{497}{500}-12(\Delta+\nu)
+ =\frac{4899}{100}-20\sqrt6>0,
+\qquad 4899^2-6\cdot2000^2=201>0.
+\tag{R31}
+$$
+
+Any polylogarithmic envelope or stated $\varepsilon$ loss must be
+allocated inside this positive margin, divided by $12$ on the
+$U$ scale, and the existing R12 errors keep their stated losses.
+This pays the regular remainder, not the principal scalar: there
+is **no bound here on $P_A S_{\rm actual}$**, no evaluation of the
+full signed aggregate, and no improvement of the principal exponent.
+The finite polygon-dependent $P_A$ contains all fifteen coupled
+zero/remaining-path terms, including every complete four-zero
+corner. They cannot be discarded or replaced by an isolated balanced
+corner. A sufficient next input is a bound for this full aggregate
+at the C76 scale, with its actual signed physical multiplier, or a
+proved cancellation of the original $S_{\rm actual}$. The paid
+remainder does not imply either input, signed Robin restoration or RH.
 
 **Primary comparison and remaining consumer.** The following mappings
 concern this zero-sensitive interface; they do not repeat R11's
@@ -800,10 +1096,12 @@ settled Riesz normalization or replace the original profiles.
   in R18–R22.
 
 The finite identity and its nonzero conditional corners specify what
-a deeper contour argument must retain. A direct theta improvement
-still needs estimates for their joint sum and all finite faces;
-merely choosing a deeper line adds no saving. The alternative with
-direct payoff is evaluation or cancellation of the actual R12 scalar.
+a deeper contour argument must retain. R27–R29 pay its regular
+all-left, outer-face and original right-tail contributions at the
+stated polygonal depth. A direct theta improvement still needs an
+estimate for the full retained $P_A$ or its actual signed physical
+consumer. The alternative with direct payoff is evaluation or
+cancellation of the actual R12 scalar.
 The pinned definitions provide a functional, not that instantiated
 full-J40 value. The missing operands are the complete actual
 $a(d_1,d_2)$ and $\Omega_{\epsilon,\mathbf r}$ of C57–C59 and
@@ -818,17 +1116,15 @@ corefree/common-$e=1$ branch and R11's documented J4 diagonal do
 not supply that full aggregate. No arbitrary profile, $h^{-2}$
 diagonal substitution or redesigned cutoff evaluates it.
 
-A smallest next mathematical consumer is a bound or actual signed
-cancellation of R18's retained zero/face contributions at this depth,
-or an instantiated cancellation of $S_{\rm actual}$. The first is
-accepted only with its original cutoff, multiplicities and all
-boundaries paid; the second only from the original full signed
-operands and common envelope. An omitted face, an assumed cutoff
+A next mathematical consumer is a sufficient bound or actual signed
+cancellation of the complete $P_A S_{\rm actual}$ in R30, or an
+instantiated cancellation of $S_{\rm actual}$. The first retains the
+original cutoff, polygon-dependent zero membership, multiplicities
+and all fifteen terms; the second uses the original full signed
+operands and common envelope. An omitted term, an assumed cutoff
 value or substitution of a different overlap law invalidates the
-corresponding claim. Until one such estimate or cancellation is
-proved, doing nothing and the present finite representation share
-the same unresolved principal exponent; the representation adds
-explicit polar data rather than a new bound. No principal lower
+corresponding claim. R29 pays a remainder without changing the
+unresolved principal exponent. No principal lower
 bound, global asymptotic, isolated-pair spectral corollary, full-$b$
 cancellation, upstream-proof certification, signed Robin restoration
 or RH conclusion is asserted. These are repo-derived paper deductions,
