@@ -1,0 +1,44 @@
+**Theorem 3.2 (origin-conditioned expected loss on the complete source).**
+Every $\Gamma_p$ is lawful under Definition 1.2. For every fixed
+complete world, it has
+
+$$
+\mathbb E_{\Gamma_p}|T-\tau|\le
+\begin{cases}
+\bigl(pH+(1-p)F\bigr)/2,&\tau<z,\\[2pt]
+H/2,&\tau=z,\\[2pt]
+\bigl(pF+(1-p)H\bigr)/2,&\tau>z.
+\end{cases}
+\tag{3.2}
+$$
+
+Consequently, throughout $c>0$, $0\le E<\infty$,
+
+$$
+\mathcal R(\Gamma_p)\le
+\frac{H+(F-H)\max(p,1-p)}2,
+\qquad
+\mathcal R(\Gamma_{1/2})\le\frac{F+H}{4}.
+\tag{3.3}
+$$
+
+**Proof.** Each seed executes exactly one of $0,1,3$ and $0,2,3$,
+strictly in chronological order. All history functions, including
+unused histories, are total by (3.1), Theorem 2.1 and the compact
+interval supplier for $012$. Every answer is a finite real number.
+For each fixed $W$, actual indices and answer are functions on a
+finite power-set probability space, and hence are seed-measurable,
+also when $p=0$ or $p=1$. This establishes all acquisition,
+totality and measurability requirements.
+
+The true $\tau(W)$ belongs to each of the two compatible intervals
+formed from that world's corresponding triple. Applying (2.4) to
+this same $W$ gives loss at most $H/2$ on $013$ and $F/2$ on
+$023$ when $\tau<z$, and the reverse bounds when $\tau>z$.
+At $\tau=z$, both bounds are $H/2$. Averaging these pointwise
+bounds gives (3.2) and then (3.3). No execution has access to the
+other seed's missing reading. The two losses in this proof are
+analytical evaluations on one preselected four-coordinate source,
+not a simultaneous acquisition or a seed-dependent choice of
+different worst worlds. $\square$
+
