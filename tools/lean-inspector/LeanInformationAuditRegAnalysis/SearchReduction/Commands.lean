@@ -735,7 +735,9 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
       -- reusing the successful request wrapper's imports and diagnostics.
       let entry := s!"entry-{hash identity}"
       let payloadName := entry ++ ".olean"
-      writeRequest (directory / payloadName) request owners name fixture
+      -- Reuse the checked payload emitted before importing the source.
+      -- Its small environment predates any newly initialized source extensions.
+      IO.FS.writeBinFile (directory / payloadName) (← IO.FS.readBinFile auditPayload)
       IO.FS.writeFile (directory / (entry ++ ".lean"))
         ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
           "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
