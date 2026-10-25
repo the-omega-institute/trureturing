@@ -64,7 +64,9 @@ def mu : (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) :=
 private theorem annihilator_zero (x : ℂ × ℂ) (h : ∀ y, mu x y = 0) : x = 0 := by
   have h₀ := congrArg Prod.fst (h (1, 0))
   have h₁ := congrArg Prod.fst (h (0, 1))
-  ext <;> simpa [mu] using_assumption
+  apply Prod.ext
+  · simpa [mu] using h₀
+  · simpa [mu] using h₁
 
 /- proof_shape: bind-only; consumer: finite_full_aut. This is a formal check of
 an already published classification, not a new algebra or group classification. -/
@@ -81,7 +83,7 @@ private theorem aut_classify (f : Aut mu) :
   have hane : a.1 ≠ 0 := by
     intro h
     have hz : a = 0 := Prod.ext h ha₂
-    have : (1, 0 : ℂ × ℂ) = 0 := f.val.injective (by simpa [a] using hz)
+    have : ((1, 0) : ℂ × ℂ) = 0 := f.val.injective (by simpa [a] using hz)
     have := congrArg Prod.fst this
     norm_num at this
   have ha₁ : a.1 = 1 := by
@@ -97,7 +99,7 @@ private theorem aut_classify (f : Aut mu) :
     simpa [mu, hb₁, ha₁] using congrArg Prod.fst hbb
   refine ⟨?_, mul_self_eq_one_iff.mp hd⟩
   intro x
-  have hx : x = x.1 • (1, 0 : ℂ × ℂ) + x.2 • (0, 1 : ℂ × ℂ) := by
+  have hx : x = x.1 • ((1, 0) : ℂ × ℂ) + x.2 • ((0, 1) : ℂ × ℂ) := by
     ext <;> simp
   calc
     f.val x = x.1 • a + x.2 • b := by
@@ -114,8 +116,14 @@ private theorem finite_full_aut : Finite (Aut mu) := by
   obtain ⟨hf, hdf⟩ := aut_classify f
   obtain ⟨hg, hdg⟩ := aut_classify g
   have hd : (f.val (0, 1)).2 = (g.val (0, 1)).2 := by
-    rcases hdf with hdf | hdf <;> rcases hdg with hdg | hdg <;>
-      simp_all [code]
+    change decide ((f.val (0, 1)).2 = 1) = decide ((g.val (0, 1)).2 = 1) at h
+    have hi := decide_eq_decide.mp h
+    rcases hdf with hf₁ | hf₋
+    · exact hf₁.trans (hi.mp hf₁).symm
+    · rcases hdg with hg₁ | hg₋
+      · have hc : (1 : ℂ) = -1 := (hi.mpr hg₁).symm.trans hf₋
+        norm_num at hc
+      · exact hf₋.trans hg₋.symm
   apply Subtype.ext
   apply LinearEquiv.ext
   intro x
@@ -125,28 +133,31 @@ private theorem finite_full_aut : Finite (Aut mu) := by
 private theorem denominator_ne (n : ℕ) : (1 + ((n + 1 : ℕ) : ℂ) ^ 2) ≠ 0 := by
   exact_mod_cast (show 1 + (n + 1) ^ 2 ≠ 0 by positivity)
 
-private def rotation (n : ℕ) : (ℂ × ℂ) ≃ₗ[ℂ] (ℂ × ℂ) where
-  toFun x := (x.1 - (n + 1 : ℕ) * x.2, (n + 1 : ℕ) * x.1 + x.2)
-  invFun x := ((x.1 + (n + 1 : ℕ) * x.2) / (1 + ((n + 1 : ℕ) : ℂ)^2),
-    (-(n + 1 : ℕ) * x.1 + x.2) / (1 + ((n + 1 : ℕ) : ℂ)^2))
-  map_add' := by intros; ext <;> simp <;> ring
-  map_smul' := by intros; ext <;> simp [smul_eq_mul] <;> ring
-  left_inv := by
-    intro x
-    ext <;> dsimp <;> field_simp [denominator_ne n] <;> ring
-  right_inv := by
-    intro x
-    ext <;> dsimp <;> field_simp [denominator_ne n] <;> ring
+private def rotation (n : ℕ) : (ℂ × ℂ) ≃ₗ[ℂ] (ℂ × ℂ) := by
+  let t : ℂ := (n + 1 : ℕ)
+  have hd : 1 + t ^ 2 ≠ 0 := denominator_ne n
+  exact {
+    toFun := fun x => (x.1 - t * x.2, t * x.1 + x.2)
+    invFun := fun x => ((x.1 + t * x.2) / (1 + t ^ 2),
+      (-t * x.1 + x.2) / (1 + t ^ 2))
+    map_add' := by intros; ext <;> simp <;> ring
+    map_smul' := by intros; ext <;> simp [smul_eq_mul] <;> ring
+    left_inv := by
+      intro x
+      ext <;> dsimp <;> field_simp <;> ring
+    right_inv := by
+      intro x
+      ext <;> dsimp <;> field_simp <;> ring }
 
 private def familyBasis (n : ℕ) : Module.Basis (Fin 2) ℂ (ℂ × ℂ) :=
   (Module.Basis.finTwoProd ℂ).map (rotation n)
 
 /- proof_shape: bind-only; consumers: family, family_separation. -/
-private theorem family_zero (n : ℕ) : familyBasis n 0 = (1, (n + 1 : ℕ)) := by
+private theorem family_zero (n : ℕ) : familyBasis n 0 = (1, ((n + 1 : ℕ) : ℂ)) := by
   simp [familyBasis, rotation]
 
 /- proof_shape: bind-only; consumers: family, family_separation. -/
-private theorem family_one (n : ℕ) : familyBasis n 1 = (-(n + 1 : ℕ), 1) := by
+private theorem family_one (n : ℕ) : familyBasis n 1 = (-((n + 1 : ℕ) : ℂ), 1) := by
   simp [familyBasis, rotation]
 
 private def family (n : ℕ) : NaturalBasis mu := ⟨familyBasis n, by
@@ -157,7 +168,7 @@ private def family (n : ℕ) : NaturalBasis mu := ⟨familyBasis n, by
 /- proof_shape: bind-only; consumer: infinite_classes.
 This separates arbitrary complex rescalings, including the swapped case. -/
 private theorem family_separation {n m : ℕ}
-    (h : (basisSetoid mu).Rel (family n) (family m)) : n = m := by
+    (h : (basisSetoid mu).r (family n) (family m)) : n = m := by
   obtain ⟨σ, u, h⟩ := h
   have hh := h 0
   change familyBasis n 0 = (u 0 : ℂ) • familyBasis m (σ 0) at hh
@@ -173,7 +184,7 @@ private theorem family_separation {n m : ℕ}
   · rw [hs, family_zero, family_one] at hh
     have h₀ := congrArg Prod.fst hh
     have h₁ := congrArg Prod.snd hh
-    have hu : (u 0 : ℂ) = (n + 1 : ℕ) := by simpa using h₁.symm
+    have hu : (u 0 : ℂ) = ((n + 1 : ℕ) : ℂ) := by simpa using h₁.symm
     have hz : (((n + 1) * (m + 1) + 1 : ℕ) : ℂ) = 0 := by
       simp only [Prod.smul_fst, smul_eq_mul, hu] at h₀
       push_cast
