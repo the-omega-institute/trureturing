@@ -135,7 +135,32 @@ private lemma amplitude_formula (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) (n : ℕ) :
     ((U ^ (n + 3)).mulVec (Pi.single 5 1)) 0 =
       (((M s ^ n).mulVec v) 0 : ℂ) / (3 : ℂ) ^ (n + 1) := by
-  sorry
+  let f := Int.castRingHom ℂ
+  have hcol : (M s).map f *ᵥ (Pi.single 1 1) = f ∘ v := by
+    ext i
+    simpa only [Matrix.mulVec_single_one, Matrix.col_apply, Matrix.map_apply,
+      Function.comp_apply] using
+      congrArg f (congrFun (integer_first_column s) i)
+  have he1 : U *ᵥ Pi.single 1 1 = (1/3 : ℂ) • (f ∘ v) := by
+    rw [scaled_matrix s U h, Matrix.smul_mulVec, hcol]
+  have hbase : (U ^ 3) *ᵥ Pi.single 5 1 = (1/3 : ℂ) • (f ∘ v) := by
+    rw [pow_succ', pow_succ', pow_one, ← Matrix.mulVec_mulVec,
+      ← Matrix.mulVec_mulVec, (first_steps s U h).1, (first_steps s U h).2, he1]
+  have hpower : (U ^ n) *ᵥ (f ∘ v) =
+      (1/3 : ℂ) ^ n • (f ∘ ((M s ^ n).mulVec v)) := by
+    rw [scaled_matrix s U h, smul_pow, Matrix.smul_mulVec, ← Matrix.map_pow]
+    congr 1
+    ext i
+    exact (RingHom.map_mulVec f (M s ^ n) v i).symm
+  have hvec : (U ^ (n + 3)) *ᵥ Pi.single 5 1 =
+      (1/3 : ℂ) ^ (n + 1) • (f ∘ ((M s ^ n).mulVec v)) := by
+    rw [pow_add, ← Matrix.mulVec_mulVec, hbase, Matrix.mulVec_smul,
+      hpower, smul_smul, ← pow_succ']
+  have hentry := congrFun hvec 0
+  change ((U ^ (n + 3)).mulVec (Pi.single 5 1)) 0 =
+    (1/3 : ℂ) ^ (n + 1) * (((M s ^ n).mulVec v) 0 : ℂ) at hentry
+  rw [one_div, inv_pow, mul_comm] at hentry
+  simpa only [div_eq_mul_inv] using hentry
 
 private lemma amplitude_ne_one (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) (k : ℕ) :
