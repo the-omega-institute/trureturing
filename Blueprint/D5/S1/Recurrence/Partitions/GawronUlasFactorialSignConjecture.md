@@ -6,7 +6,7 @@ Factorial partition signs fail on an unbounded even progression.
 
 **Definition 1.1 (A partition with prescribed multiplicities).**
 
-$$\forall n \in \mathrm{Nat},\; \forall y \in \mathrm{Nat},\; \forall z \in \mathrm{Nat},\; \forall h \in 2 \cdot y + 6 \cdot z \le n,\; \operatorname{partition126}\left(n, y, z, h\right) = \operatorname{Nat}.\operatorname{Partition}.\operatorname{ofSums}\left(n, \operatorname{Multiset}.\operatorname{replicate}\left(n - 2 \cdot y - 6 \cdot z, 1\right) + \operatorname{Multiset}.\operatorname{replicate}\left(y, 2\right) + \operatorname{Multiset}.\operatorname{replicate}\left(z, 6\right)\right)$$
+$$\forall n \in \mathrm{Nat},\; \forall y \in \mathrm{Nat},\; \forall z \in \mathrm{Nat},\; \forall (h: 2 \cdot y + 6 \cdot z \le n), (\operatorname{partition126}\left(n, y, z, h\right) = \operatorname{Nat}.\operatorname{Partition}.\operatorname{ofSums}\left(n, \operatorname{Multiset}.\operatorname{replicate}\left(n - 2 \cdot y - 6 \cdot z, 1\right) + \operatorname{Multiset}.\operatorname{replicate}\left(y, 2\right) + \operatorname{Multiset}.\operatorname{replicate}\left(z, 6\right)\right))$$
 
 *Formalization.* `D5/S1/Recurrence/Partitions/GawronUlasFactorialSignConjecture.partition126` (`✓ std3`).
 
