@@ -7,21 +7,11 @@
    digest: The noisy qutrit Werner–Holevo channel has a GKSL logarithm only at zero noise. -/
 
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.Normed.Operator.NormedSpace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+
+/-! The noisy qutrit Werner–Holevo channel is a GKSL exponential exactly at zero noise
+on the interval `[0, 2 / 3]`. -/
 
 set_option backward.isDefEq.respectTransparency false
 
@@ -252,7 +242,8 @@ private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
     Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
     Matrix.one_apply, Matrix.transposeLinearEquiv, Complex.mul_re, Complex.mul_im,
     Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
-  norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide, Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
+  norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
+    Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
   ring
 
 private theorem gksl_trace_inequality
@@ -261,7 +252,8 @@ private theorem gksl_trace_inequality
   obtain ⟨m, H, V, _, hform⟩ := hG
   have hG : G = hamiltonianMap H + ∑ k, dissipatorMap (V k) := by
     ext X i j
-    simpa [hamiltonianMap, dissipatorMap, Matrix.mul_assoc] using congrArg (fun Y => Y i j) (hform X)
+    simpa [hamiltonianMap, dissipatorMap, Matrix.mul_assoc] using
+      congrArg (fun Y => Y i j) (hform X)
   rw [hG]
   have hS : symmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
       symmetricTrace (hamiltonianMap H) + ∑ k, symmetricTrace (dissipatorMap (V k)) := by
@@ -325,7 +317,13 @@ private theorem generator_unital (x : ℝ) (hx : x ≠ 0)
   ext i j
   have hij := congrArg (fun X : Matrix (Fin 3) (Fin 3) ℂ => X i j) hfixed
   have hji := congrArg (fun X : Matrix (Fin 3) (Fin 3) ℂ => X j i) hfixed
-  simp [wernerHolevo, ht, Matrix.transposeLinearEquiv] at hij hji
+  change (1 - (x : ℂ)) * G 1 i j - ((x : ℂ) / 2) * G 1 j i +
+    ((x : ℂ) / 2) * (Matrix.trace (G 1) * (1 : Matrix (Fin 3) (Fin 3) ℂ) i j) =
+      G 1 i j at hij
+  change (1 - (x : ℂ)) * G 1 j i - ((x : ℂ) / 2) * G 1 i j +
+    ((x : ℂ) / 2) * (Matrix.trace (G 1) * (1 : Matrix (Fin 3) (Fin 3) ℂ) j i) =
+      G 1 j i at hji
+  rw [ht, zero_mul, mul_zero, add_zero] at hij hji
   have hz : (x : ℂ) * G 1 i j = 0 := by
     linear_combination (-4 / 3 : ℂ) * hij + (2 / 3 : ℂ) * hji
   exact (mul_eq_zero.mp hz).resolve_left hxC
@@ -339,7 +337,6 @@ private theorem generator_transpose (x : ℝ) (hx : x ≠ 0)
   have hh := congrArg (fun F : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => F X) hc.eq
   have h1 := generator_unital x hx G hG hexp
   have ht := gksl_trace_zero G hG X
-  have hxC : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hx
   ext i j
   have hij := congrArg (fun Y : Matrix (Fin 3) (Fin 3) ℂ => Y i j) hh
   simp [wernerHolevo, ht, h1, Matrix.transposeLinearEquiv] at hij
@@ -376,7 +373,8 @@ private theorem symmetricProjection_trace : LinearMap.trace ℂ _ symmetricProje
   norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
     Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
 
-private theorem antisymmetricProjection_trace : LinearMap.trace ℂ _ antisymmetricProjection = 3 := by
+private theorem antisymmetricProjection_trace :
+    LinearMap.trace ℂ _ antisymmetricProjection = 3 := by
   rw [matrix_supertrace]
   norm_num [antisymmetricProjection, Fin.sum_univ_succ,
     Matrix.transposeLinearEquiv, Matrix.single]
@@ -426,7 +424,6 @@ private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
 private theorem strict_log_inequality (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3) :
     5 * Real.log (1 - 3 * x / 2) < 15 * Real.log (1 - x / 2) := by
   have hb : 0 < 1 - 3 * x / 2 := by linarith
-  have hc : 0 < 1 - x / 2 := by linarith
   have hpoly : (1 - x / 2) ^ 3 - (1 - 3 * x / 2) = x ^ 2 * (6 - x) / 8 := by ring
   have hgap : 0 < (1 - x / 2) ^ 3 - (1 - 3 * x / 2) := by
     rw [hpoly]
