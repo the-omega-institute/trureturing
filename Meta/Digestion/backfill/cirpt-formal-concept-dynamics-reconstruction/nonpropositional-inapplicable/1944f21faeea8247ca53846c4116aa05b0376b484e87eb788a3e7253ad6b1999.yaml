@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1944f21faeea8247ca53846c4116aa05b0376b484e87eb788a3e7253ad6b1999
+  normalized_sha256: sha256:1944f21faeea8247ca53846c4116aa05b0376b484e87eb788a3e7253ad6b1999
+cas_ref: sha256:1944f21faeea8247ca53846c4116aa05b0376b484e87eb788a3e7253ad6b1999
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将 Realizable 命名为 ADMIT 的角色约定。
+    previous_atom_id: 0e6015a0c295c5d28137b1c4f642e80c12429cd02d3e671156c73e9b2a3b83b9
+    next_atom_id: b38719559e80dba381160bb7334ae68cc00395dd8751d37dadbc1eea616b0bdd
