@@ -21,7 +21,7 @@ namespace Reg.D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiMeanZeroTrace
 private theorem zero_source_h6 :
     originalPhysicalH6 (fun _ : ℝ => (0 : ℂ)) := by
   constructor
-  · exact memLp_zero
+  · exact MemLp.zero'
   · simp
 
 private theorem zero_actual_profile :
