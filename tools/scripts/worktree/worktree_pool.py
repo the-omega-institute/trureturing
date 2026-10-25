@@ -1,4 +1,4 @@
-"""Native idle branches, bounded retention, merged-task return and atomic claim."""
+"""Native idle branches, bounded retention, task return and atomic claim."""
 
 from contextlib import ExitStack
 import json
@@ -192,6 +192,31 @@ def pr_evidence(path, number):
     return evidence
 
 
+def unused_base(source, branch, head):
+    """Creation and claim both create the task ref at the allocated base."""
+    if not branch.startswith("refs/heads/"):
+        raise Refused("return_current_branch_required")
+    log = common(source) / "logs" / branch
+    try:
+        if log.is_symlink():
+            raise ValueError("linked branch log")
+        rows = log.read_bytes().splitlines()
+        records = [re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
+                                rb".+ -?[0-9]+ [+-][0-9]{4}\t.*", row) for row in rows]
+        if not records or not all(records):
+            raise ValueError("missing or malformed branch log")
+        base = records[0][2]
+        if records[0][1] != b"0" * len(base):
+            raise ValueError("missing branch creation")
+    except (OSError, ValueError) as error:
+        raise Refused("unused_allocation_unknown") from error
+    # Checking every retained transition also refuses commit-then-reset histories.
+    if (base.decode("ascii") != head or any(record[2] != base for record in records)
+            or any(record[1] != base for record in records[1:])):
+        raise Refused("unused_task_commits_require_pr")
+    return base.decode("ascii")
+
+
 def return_tree(options):
     if not options.writers_joined:
         raise Refused("host_must_join_task_writers")
@@ -220,9 +245,14 @@ def returned_snapshot(options):
             raise Refused("intentional_or_initialization_lock")
         _, metadata = identity(options.source, path)
         branch = git_scope(stack, options.source, path)
-        evidence = pr_evidence(path, options.pr)
+        evidence = pr_evidence(path, options.pr) if options.pr is not None else None
+        allocation_base = None
+        if evidence is None:
+            clean(path, metadata)
+            allocation_base = unused_base(options.source, branch, value(path, "rev-parse", "HEAD"))
         endpoint = remote_endpoint(path, "origin", push=True)
-        remote = confirm(path, "origin", "dev", evidence["mergeCommit"]["oid"], endpoint)
+        remote = confirm(path, "origin", "dev",
+                         evidence["mergeCommit"]["oid"] if evidence else allocation_base, endpoint)
         dev = remote["observed_tip"]
         already = False
         if idle_reference(branch):
@@ -232,7 +262,7 @@ def returned_snapshot(options):
             except Refused as error:
                 if str(error) != "not_idle":
                     raise
-        task = "refs/heads/" + evidence["headRefName"]
+        task = "refs/heads/" + evidence["headRefName"] if evidence else branch
         if already:
             idle_state(options.source, path, dev)
             acquire(stack, options.source, "ref:" + task, True)
@@ -241,7 +271,7 @@ def returned_snapshot(options):
             if branch != task:
                 raise Refused("pr_head_mismatch")
             tip = value(path, "rev-parse", "HEAD")
-        if git(path, "merge-base", "--is-ancestor", evidence["headRefOid"], tip, check=False).returncode:
+        if evidence and git(path, "merge-base", "--is-ancestor", evidence["headRefOid"], tip, check=False).returncode:
             raise Refused("pr_head_outside_tree")
         if already and value(path, "rev-parse", "HEAD") == dev:
             return dict(event="worktree_return", status="already_idle", path=str(path), dev_commit=dev,
@@ -261,9 +291,12 @@ def returned_snapshot(options):
         idle_state(options.source, path, dev)
         if already:
             git(path, "update-ref", "-d", branch, checkpoint["commit"])
-        return dict(event="worktree_return", status="returned", path=str(path), dev_commit=dev,
-                    task_branch=task, idle_branch=idle, checkpoint=checkpoint,
-                    commits_not_in_dev=outstanding, remote=remote)
+        result = dict(event="worktree_return", status="returned", path=str(path), dev_commit=dev,
+                      task_branch=task, idle_branch=idle, checkpoint=checkpoint,
+                      commits_not_in_dev=outstanding, remote=remote)
+        if allocation_base is not None:
+            result["allocation_base"] = allocation_base
+        return result
 
 
 def allocation_record(path, metadata, commit):

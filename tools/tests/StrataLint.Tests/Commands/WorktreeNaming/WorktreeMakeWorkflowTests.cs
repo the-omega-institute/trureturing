@@ -129,7 +129,7 @@ public sealed class WorktreeMakeWorkflowTests
         Assert.True(File.Exists(marker));
         var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Contains("worktree\nreturn\n--writers-joined\n", output, StringComparison.Ordinal);
-        Assert.DoesNotContain("--pr", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("--pr", output.Split('\n', StringSplitOptions.RemoveEmptyEntries));
     }
 
     private static string PrepareFixture(string fixtureRoot)

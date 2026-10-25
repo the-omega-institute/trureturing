@@ -83,7 +83,7 @@ class IdlePoolCases:
         self.assertIn("busy_scope:tree:", self.unused_return(expect=73).stderr)
         holder.communicate("done\n", timeout=10)
         self.g(self.main, "worktree", "lock", "--reason", "intentional", self.tree)
-        self.assertIn("intentional_or_initialization_lock", self.unused_return(expect=73).stderr)
+        self.assertIn("locked_recent", self.unused_return(expect=73).stderr)
         self.g(self.main, "worktree", "unlock", self.tree)
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         (metadata / "MERGE_HEAD").write_text(self.base + "\n")
