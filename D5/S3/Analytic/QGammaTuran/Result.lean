@@ -463,7 +463,7 @@ theorem result : ¬ claim := by
     let d : ℕ := 100000000000000000000
     let b : ℕ := 90438207500880449001
     let q : ℝ := (b:ℝ)/d
-    have hd : 0 < d := by norm_num [d]
+    have hd : 0 < d := Nat.zero_lt_succ 99999999999999999999
     have hq0 : 0 ≤ q := by norm_num [q,b,d]
     have hq1 : q < 1 := by norm_num [q,b,d]
     have hqeq : q = (99/100:ℝ)^10 := by norm_num [q,b,d]
