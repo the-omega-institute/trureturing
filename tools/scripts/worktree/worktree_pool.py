@@ -132,33 +132,34 @@ def sweep_locked(source, dev, force=False):
                     raise Refused("idle_identity_changed")
                 # Common removal owns the index/ref scopes and snapshot rules.
                 stage = "remove"
-                try:
-                    result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
-                        preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
-                                                                   branch=observed["branch"]))]))
-                except GitFailure:
-                    raise
-                except Refused as error:
-                    outcomes.append(dict(observed, outcome="retained", reason=str(error)))
-                    continue
+                result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
+                    preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
+                                                               branch=observed["branch"]))]))
                 for removal in result["items"]:
-                    outcomes.append(dict(observed, **dict(removal,
+                    row = dict(observed, **dict(removal,
                         outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
-                        reason=removal.get("reason", reason))))
+                        reason=removal.get("reason", reason)))
+                    if removal["outcome"] == "refused":
+                        row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+                        receipt["status"] = "failed"
+                    outcomes.append(row)
                     if removal["outcome"] in ("removed", "would_remove"):
                         remaining -= 1
                 if result["status"] == "failed":
                     receipt["status"] = "failed"
+                if result["status"] == "refused":
+                    break
                 stage = "release"
     except Exception as error:
         # This is the batch receipt boundary, including pressure reads and scope
         # release. The common remover retains its own checkpoint/recovery fields.
-        if stage == "revalidate" and isinstance(error, Refused) and not isinstance(error, GitFailure):
+        if stage in ("revalidate", "remove") and isinstance(error, Refused) and not isinstance(error, GitFailure):
             outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
                                  error=str(error), error_type=type(error).__name__))
             receipt["status"] = "failed"
         else:
             sweep_failure(receipt, observed, stage, error)
+    if receipt["status"] == "failed":
         reported = {row["path"] for row in outcomes}
         outcomes.extend(dict(row, outcome="retained", reason="idle_sweep_deferred")
                         for row in rows if row["path"] not in reported)

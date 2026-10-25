@@ -369,13 +369,42 @@ class QualificationCases:
                                 raise (protocol.Refused("initialization_in_progress") if refused
                                        else protocol.GitFailure("fatal: pool qualification broke"))
                             return original(*args, **kwargs)
-                        with patch.object(pool, "available_fraction", return_value=0.04), patch.object(preservation, "qualify", side_effect=injected):
-                            result = pool.sweep(self.main, self.base, force=force)
+                        output = io.StringIO()
+                        with patch.object(pool, "available_fraction", return_value=0.04), \
+                                patch.object(preservation, "qualify", side_effect=injected), redirect_stdout(output):
+                            code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base,
+                                                  *(["--force"] if force else [])])
+                        result = json.loads(output.getvalue())
                         self.assertTrue(self.tree.is_dir())
                         row = result["items"][0]
-                        self.assertEqual("succeeded" if refused else "failed", result["status"])
+                        self.assertEqual(74, code)
+                        self.assertEqual("failed", result["status"])
                         if refused:
                             self.assertEqual("retained", row["outcome"])
                             self.assertEqual("initialization_in_progress", row["reason"])
+                            self.assertEqual(str(self.tree), row["path"])
+                            self.assertEqual("remove", row["stage"])
+                            self.assertEqual("initialization_in_progress", row["error"])
                         else:
                             self.assertIn("pool qualification broke", json.dumps(row))
+
+    def pool_return_selected_eviction_refusal_fails_public_exit(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        import worktree_pool as pool
+        output = io.StringIO()
+        with patch.object(pool, "available_fraction", return_value=0.04), \
+                patch.object(preservation, "qualify", side_effect=protocol.Refused("locked_recent")), \
+                redirect_stdout(output):
+            code = protocol.main(["--source", str(self.main), "return", "--path", str(self.tree),
+                                  "--writers-joined"])
+        result = json.loads(output.getvalue())
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(74, code)
+        self.assertEqual("failed", result["pool"]["status"])
+        row = next(row for row in result["pool"]["items"] if row["path"] == str(self.tree))
+        self.assertEqual("retained", row["outcome"])
+        self.assertEqual("locked_recent", row["reason"])
+        self.assertEqual("remove", row["stage"])
+        self.assertEqual("locked_recent", row["error"])
+        self.assertTrue(self.tree.is_dir())

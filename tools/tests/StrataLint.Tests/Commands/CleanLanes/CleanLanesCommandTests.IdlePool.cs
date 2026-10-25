@@ -9,6 +9,41 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false, "revalidate", "idle_identity_changed")]
+    [InlineData(true, "remove", "locked_recent")]
+    public void IdlePoolSelectedRefusalPreservesCauseAndFailsPublicExit(bool force, string stage, string reason)
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "lane/governance/idle-selected";
+        const string orphan = "harness/retained-after-selected-refusal";
+        var path = fixture.AddMergedLane(branch);
+        fixture.AddOrphan(orphan, merged: true);
+        var payload = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = "failed", capacity = 4,
+            items = new[] { new { path, branch = "refs/heads/" + branch, head = fixture.Head(path),
+                outcome = "retained", reason, stage, error = reason, error_type = "Refused" } },
+        });
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && IsProtocol(args, "pool")
+            ? new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), []) : null);
+
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+
+        Assert.False(result.Success);
+        AssertQualificationPublicExit(result, force, 2);
+        var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
+        Assert.Equal("skipped", item.GetProperty("action").GetString());
+        Assert.Equal(reason, item.GetProperty("reason").GetString());
+        Assert.Contains(stage, item.GetProperty("diagnostic").GetString());
+        Assert.Contains(reason, item.GetProperty("diagnostic").GetString());
+        Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("reason").GetString() == "idle_pool_failed:");
+        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(path));
+        Assert.True(fixture.BranchExists(orphan));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void IdlePoolRetainsFailedTaskReturnedBeforeFreshInventory(bool inject)

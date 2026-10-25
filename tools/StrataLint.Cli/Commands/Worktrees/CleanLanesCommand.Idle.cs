@@ -43,6 +43,7 @@ internal static partial class CleanLanesCommand
             using var document = JsonDocument.Parse(result.Output);
             var failed = !result.Success || document.RootElement.GetProperty("status").GetString() == "failed";
             var reportedFailure = false;
+            string? failureDiagnostic = null;
             foreach (var row in document.RootElement.GetProperty("items").EnumerateArray())
             {
                 var outcome = row.GetProperty("outcome").GetString()!;
@@ -60,6 +61,9 @@ internal static partial class CleanLanesCommand
                 protectObservedWorktree(item);
                 var reason = row.GetProperty("reason").GetString()!;
                 string? ReadOptional(string name) => row.TryGetProperty(name, out var field) ? field.GetString() : null;
+                var diagnostic = string.Join(":", new[] { ReadOptional("stage"), ReadOptional("error") }
+                    .Where(value => !string.IsNullOrWhiteSpace(value)));
+                if (diagnostic.Length != 0) failureDiagnostic = diagnostic;
                 var recovery = ReadOptional("recovery_branch");
                 JsonElement? nativeLocks = null;
                 if (row.TryGetProperty("checkpoint", out var checkpoint) && checkpoint.ValueKind == JsonValueKind.Object
@@ -84,7 +88,8 @@ internal static partial class CleanLanesCommand
                 }, outcome == "sweep_failed" ? outcome + ":" + ReadOptional("stage") + ":" + ReadOptional("error")
                     : outcome is "checkpoint_failed" or "partial_or_indeterminate"
                     ? outcome + ":" + ReadOptional("error") : reason,
-                    recovery, ReadOptional("recovery_branch_candidate"), NativeLocks: nativeLocks);
+                    recovery, ReadOptional("recovery_branch_candidate"), NativeLocks: nativeLocks,
+                    Diagnostic: diagnostic.Length == 0 ? null : diagnostic);
                 reportedFailure |= removal.Outcome is LaneRemovalOutcome.QualificationFailed or LaneRemovalOutcome.CheckpointFailed
                     or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed;
                 var removalEvent = RemovalEvent(item, removal);
@@ -101,7 +106,11 @@ internal static partial class CleanLanesCommand
                     + poolFailure.GetProperty("error").GetString());
             }
             else if (failed && !reportedFailure)
-                PoolFailure("idle_pool_failed:" + result.Error.Trim());
+            {
+                var diagnostic = result.Error.Trim();
+                if (diagnostic.Length == 0) diagnostic = failureDiagnostic ?? string.Empty;
+                PoolFailure("idle_pool_failed" + (diagnostic.Length == 0 ? string.Empty : ":" + diagnostic));
+            }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

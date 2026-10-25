@@ -229,6 +229,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("qualification_intentional_lock_metadata_races")]
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
+    [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
