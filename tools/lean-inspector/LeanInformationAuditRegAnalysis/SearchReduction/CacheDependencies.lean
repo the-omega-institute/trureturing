@@ -1,8 +1,9 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Lookup
 import Batteries.Tactic.OpenPrivate
 
-/-! A cache carries ordinary declarations, replayed through the Lean kernel.
-No source environment or its extension state is imported on the hot path. -/
+/-! A cache carries ordinary declarations checked by the Lean kernel.
+They can be replayed directly or exported as an ordinary compiled dependency
+module, without copying the source environment or its extension states. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 open private Lean.Environment.setCheckedSync from Lean.Environment

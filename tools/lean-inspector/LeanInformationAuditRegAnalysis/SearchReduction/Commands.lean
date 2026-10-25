@@ -606,7 +606,14 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
-  let base := base?.getD (← getEnv)
+  -- Source imports may register new environment extensions. Re-import the
+  -- small compiled judge after those registrations so exported extension
+  -- states use the current registry, independent of the original wrapper.
+  let base ← if importDependencies then
+    withImporting <| importModules
+      #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
+      options 0 (leakEnv := false) (loadExts := true)
+    else pure (base?.getD (← getEnv))
   let dependencies ← liftTermElabM <| withPublicationContext do
     let mut roots := #[]
     if result.presentationEvidence?.isSome ||
