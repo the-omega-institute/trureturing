@@ -3649,3 +3649,273 @@ The logarithmic cylinder and weighted inverse method have classical conic preced
 The rank bound permits both $\mathcal N_0=\{0\}$ and a one-dimensional space. It proves neither existence of a global original $L^2$ zero mode nor nonzero attainment by an actual critical-state subsequence. It does not select $m_e$, establish source tightness of the actual probabilities, identify a surviving scale or a varying-scale actual profile, or turn the fixed-vector expansion (109.4) into a joint estimate for $v_n$ and shrinking radii. No assertion of positivity, uniqueness of actual states, a selected phase, equality of maximal and Friedrichs domains, native realization or physical spatial dimension is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 110. A global original maximal zero mode with unit logarithmic coefficient
+
+**Definition 110.1 (unchanged operator and the two domains).** Retain precisely Definitions 103.1, 107.1 and 109.1: the original product on $G=H^1\times\mathbb R$, raw Lebesgue Haar measure, $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$, $L=-\sum_iX_i^2$, the clock $e^{-tL}$, and its positive degree-$-3$ unit-source Green field $\Gamma$, with $L\Gamma=\delta_e$. Fix the original $a,\eta>0$ and central coordinate and spectral units. Set
+
+$$
+A_0=aL+\eta D_w^2,\qquad g_c=16\sqrt{a\eta},\qquad
+S=(A_0-g_c\Gamma)|_{\mathcal D_0},\qquad
+\mathcal D_0=C_c^\infty(G\setminus\{e\};\mathbb C).
+\tag{110.1}
+$$
+
+Here $A_0$ is the original free joint spectral sum. Write $H_F$ for the Friedrichs operator of $S$, with form $(\overline q_c,\mathcal Q_c)$, and retain $\mathcal N_0=\ker S^*$ and the complex-linear coefficient $B_\mathrm{src}$ of Theorem 109.2. In particular $\ker H_F=\{0\}$ and $\mathcal N_0\cap\mathcal Q_c=\{0\}$. The coordinate map $v\mapsto f_v$, cylinder function $H_v$, angular vector $e_0$, angular operator $B$ and spaces $\mathscr H^1_\delta,\mathscr H^{-1}_\delta$ below are exactly (109.1)--(109.15). No identification of $\mathcal Q_c$ with $D(S^*)$ is made.
+
+**Theorem 110.2 (global existence on the original maximal class).** For every fixed original $a,\eta>0$ there is a vector $w_*\in L^2(G,d\mu;\mathbb C)$ such that
+
+$$
+w_*\in D(S^*),\qquad S^*w_*=0,\qquad B_\mathrm{src}(w_*)=1.
+\tag{110.2}
+$$
+
+Consequently $0<\|w_*\|_2<\infty$, $w_*\notin\mathcal Q_c$, and, by the existing injectivity theorem,
+
+$$
+\mathcal N_0=\mathbb C w_*,\qquad \dim_{\mathbb C}\mathcal N_0=1.
+\tag{110.3}
+$$
+
+The vector with coefficient one is unique. This normalization fixes the diagnostic coefficient, without changing $\Gamma$, its unit source, the original operator or the phase of any actual critical state.
+
+**Proof.** We construct an exact local logarithmic solution, correct its compactly supported error in the original Friedrichs domain, and verify that the correction has no logarithmic term. Two domain estimates needed for this construction are proved first.
+
+For a compactly supported cylinder function $J\in H^1(\mathbb R\times S^3)$, put
+
+$$
+\mathcal E_0[J]=\int_{\mathbb R}
+ \bigl(\|\partial_\tau J\|_2^2+\|B^{1/2}J\|_2^2\bigr)d\tau.
+\tag{110.4}
+$$
+
+Suppose $J=0$ for $\tau\le T$. Decompose $J=h e_0+J_\perp$. The already established $B|_{e_0^\perp}\ge2$ controls the $L^2$ norm of $J_\perp$ by its angular energy, while $h(T)=0$ and
+
+$$
+|h(\tau)|^2\le(\tau-T)\int_T^\infty|h'(s)|^2ds
+\quad(\tau\ge T).
+\tag{110.5}
+$$
+
+The equivalence of the $(B+1)^{1/2}$ and ordinary angular $H^1$ norms from §109 then gives
+
+$$
+\int_T^\infty e^{-\tau/4}
+ \bigl(\|\partial_\tau J\|_2^2+\|J\|_{H^1(S^3)}^2\bigr)d\tau
+ \le C e^{-T/4}\mathcal E_0[J].
+\tag{110.6}
+$$
+
+Indeed the perpendicular and derivative terms use $e^{-\tau/4}\le e^{-T/4}$; the scalar term uses
+$\int_T^\infty e^{-\tau/4}(\tau-T)d\tau=16e^{-T/4}$.
+Finite overlap of the slabs in (109.13) converts this bound into
+$|\mathfrak e(J,J)|\le Ce^{-T/4}\mathcal E_0[J]$.
+For all sufficiently large fixed $T$, the original form comparison therefore gives
+
+$$
+\frac12\mathcal E_0[J]
+ \le a^{-1}q_c[u_J]\le\frac32\mathcal E_0[J],
+\qquad f_{u_J}(R\omega)=R^{-1}J(-\log R,\omega).
+\tag{110.7}
+$$
+
+These inequalities initially concern compact punctured $H^1$ vectors, which belong to $\mathcal E_2$; no separate infinite kinetic or potential integral is used.
+
+We deduce a necessary source-domain property for every $y\in\mathcal Q_c$. Choose a smooth real angle $\theta(\tau)$ equal to zero for $\tau\le T$ and $\pi/2$ for $\tau\ge T+1$. The corresponding original multipliers $\alpha=\sin\theta$ and $\beta=\cos\theta$ extend smoothly across $e$ by their constant values. They satisfy $\alpha^2+\beta^2=1$ and have differentials supported on a fixed compact punctured annulus. On the punctured core the product rule gives
+
+$$
+q_c[\alpha u]+q_c[\beta u]
+ =q_c[u]+\int_G\bigl(\mathcal C[\alpha]+\mathcal C[\beta]\bigr)|u|^2d\mu,
+\quad
+\mathcal C[\gamma]=a\sum_i|X_i\gamma|^2+\eta|\partial_w\gamma|^2.
+\tag{110.8}
+$$
+
+Nonnegativity of both localized forms bounds each multiplier in the $\mathcal Q_c$ norm; applying the same inequality to differences extends both multipliers to all of $\mathcal Q_c$ by core closure. If $u_j\to y$ in that norm, (110.7)--(110.8) bound $\mathcal E_0[H_{\alpha u_j}]$ uniformly. On every finite cylinder interval the physical $L^2$ convergence is ordinary cylinder $L^2$ convergence, since its density is $e^{-2\tau}$. Weak compactness of the bounded derivative and angular-energy terms on increasing finite intervals, followed by lower semicontinuity, consequently gives
+
+$$
+\partial_\tau H_y\in L^2((T+1,\infty)\times S^3),\qquad
+B^{1/2}H_y\in L^2((T+1,\infty)\times S^3)
+\quad(y\in\mathcal Q_c).
+\tag{110.9}
+$$
+
+In this passage (110.5) controls the scalar component on each finite interval; the angular gap controls the perpendicular component. Thus the weak limits are the distributional derivatives and angular form components of the actual $H_y$. In particular an expansion
+$H_y=(A+\tau C)e_0+Z$ with $e^{\tau/8}Z\in H^1$ can have $y\in\mathcal Q_c$ only if $C=0$.
+
+The same localization also supplies the exterior-domain fact used below. If $\psi$ is a fixed smooth real exterior cutoff, zero near $e$ and one outside a compact set, it can be chosen as the cosine of a smooth angle, with its sine giving the complementary partition. Equation (110.8) makes multiplication by $\psi$ bounded on $\mathcal Q_c$. Since $\Gamma$ is bounded on $\operatorname{supp}\psi$, core differences satisfy
+
+$$
+aT[\psi u]+\eta D_2[\psi u]
+ =q_c[\psi u]+g_cV[\psi u]
+ \le C_\psi\bigl(q_c[u]+\|u\|_2^2\bigr).
+\tag{110.10}
+$$
+
+The completeness of the original free space $\mathcal E_2$ therefore proves $\psi y\in\mathcal E_2$ for every $y\in\mathcal Q_c$. This assertion uses the exterior cutoff, not equality of the original domains.
+
+We now construct the local solution. Let $P_0=-\partial_\tau^2+B$ and fix $\delta=-1/8$. Extend the error form of (109.13) to the whole cylinder by multiplying both slots by a smooth cutoff zero below $T$ and one above $T+1$; denote its distributional operator by $E_T$. Weighted Cauchy--Schwarz in that same slab estimate gives
+
+$$
+\|E_T\|_{\mathscr H^1_\delta\to\mathscr H^{-1}_\delta}
+ \le C_\delta e^{-T/4}.
+\tag{110.11}
+$$
+
+The cutoff derivatives have uniformly bounded size, and the weights in the two dual slots cancel on each slab, so the constant is independent of sufficiently large $T$. The already proved inverse (109.15), and a Neumann series for sufficiently large $T$, make $P_0+E_T$ an isomorphism between these two weighted spaces.
+
+Let $J_0(\tau,\omega)=\tau e_0(\omega)$. Although $J_0$ is not in $\mathscr H^1_{-1/8}$ on the positive end, $E_TJ_0$ is well defined and belongs to $\mathscr H^{-1}_{-1/8}$. To check this directly, its slab pairing is bounded by a constant times
+$e^{-j/4}(1+|j|)$ times the $H^1$ norm of the test on that slab. A dual test has weight $e^{-\tau/8}$; the remaining coefficients are bounded by $C(1+j)e^{-j/8}$ on the positive end and are square summable. The extension vanishes below a fixed cylinder level. Thus
+
+$$
+Z=-(P_0+E_T)^{-1}E_TJ_0\in\mathscr H^1_{-1/8},
+\qquad H=J_0+Z
+\tag{110.12}
+$$
+
+is well defined. Since $P_0J_0=0$ distributionally, $(P_0+E_T)H=0$. Above $T+1$ this is exactly the original weak equation after (109.2), with the actual error form, not its interface approximation. The associated local original vector $v_{\mathrm{loc}}$ obeys
+
+$$
+H_{v_{\mathrm{loc}}}=\tau e_0+Z,\qquad
+ e^{\tau/8}Z\in H^1((T+1,\infty)\times S^3).
+\tag{110.13}
+$$
+
+It is in original $L^2$ near $e$, since $\int_{T+1}^\infty e^{-2\tau}(1+\tau^2)d\tau<\infty$. On every compact punctured annulus it is $H^1$ and satisfies the original uniformly elliptic equation with smooth coefficients and potential. The local elliptic regularity used in §108 upgrades it there to a smooth solution, including across the coordinate hypersurface $t=0$.
+
+Multiply this vector by a smooth source cutoff, one for $\tau\ge T+3$ and zero for $\tau\le T+2$, and extend by zero to obtain $g\in L^2(G)$ with compact support. Its equation is exact near the puncture, and its cutoff error is a smooth function $F$ supported on a compact punctured annulus. Thus, directly on every test in $\mathcal D_0$,
+
+$$
+g\in D(S^*),\qquad S^*g=F\in C_c^\infty(G\setminus\{e\}),
+\qquad H_g=\tau e_0+Z\quad(\tau\ge T+3).
+\tag{110.14}
+$$
+
+A distribution at the excluded point need not be assigned to $S^*g$; its adjoint action here is defined by the original punctured tests.
+
+For completeness we prove the global zero-energy range assertion needed to remove $F$. For every compactly supported $f\in L^2(G)$,
+
+$$
+\sup_{0<r\le1}\|(H_F+r)^{-1}f\|_2<\infty,
+\qquad f\in\operatorname{ran}H_F.
+\tag{110.15}
+$$
+
+The free estimate (105.5), by its duality argument, supplies
+
+$$
+\|(A_0+r)^{-1}h\|_2\le\frac{h_2}{a}\|\rho^2h\|_2
+\quad(r>0,\ h,\rho^2h\in L^2),
+\qquad \rho=(|\xi|^4+s^2)^{1/4}.
+\tag{110.16}
+$$
+
+This is the existing original order-two Hardy--Rellich supply; it is uniform in $r$ and does not assert a bounded inverse on all $L^2$ at zero.
+
+If the first assertion in (110.15) failed for a fixed $f$, choose $r_j\in(0,1]$ with
+$t_j=\|(H_F+r_j)^{-1}f\|_2\to\infty$, and set
+$z_j=(H_F+r_j)^{-1}f/t_j$. Then
+
+$$
+\|z_j\|_2=1,\qquad
+(H_F+r_j)z_j=f/t_j,\qquad
+0\le\overline q_c[z_j]+r_j
+ =\operatorname{Re}\langle z_j,f/t_j\rangle
+ \le\|f\|_2/t_j\longrightarrow0.
+\tag{110.17}
+$$
+
+The actual whole-closure cylinder estimate (107.5) now gives, for every fixed $b>0$,
+
+$$
+\int_{\{|\xi|<b\}}|z_j|^2d\mu
+ \le\frac{\pi^2b}{\sqrt a}\sqrt{\overline q_c[z_j]}
+ \longrightarrow0.
+\tag{110.18}
+$$
+
+In particular $z_j\to0$ in $L^2$ on every compact subset of the original space, including the source. On compact subsets off $e$ the equation in (110.17) gives also $z_j\to0$ locally in ordinary $H^1$. Here is the needed uniform regularity estimate: for nested compact coordinate sets $K\subset\operatorname{int}K'\subset G\setminus\{e\}$, test the equation by a real cutoff squared times $z_j$. The potential is bounded on $K'$, $0<r_j\le1$, and the actual free symbol is uniformly elliptic there by (108.4). Cauchy--Schwarz and absorption of the cutoff cross terms give
+
+$$
+\|z_j\|_{H^1(K)}
+ \le C_{K,K'}\bigl(\|z_j\|_{L^2(K')}+t_j^{-1}\|f\|_{L^2(K')}\bigr)
+ \longrightarrow0.
+\tag{110.19}
+$$
+
+Local $H^2$ regularity for the $L^2$ forcing justifies these tests; alternatively smooth approximation gives the same weak cutoff identity. No estimate across $e$ is used in (110.19).
+
+Fix an exterior cutoff $\psi$ as in (110.10), and put $p_j=\psi z_j\in\mathcal E_2$. The exact original localized equation is
+
+$$
+(A_0+r_j)p_j=g_c\Gamma p_j+b_j+\psi f/t_j,
+\qquad b_j=[A_0,\psi]z_j.
+\tag{110.20}
+$$
+
+The commutator has order one with smooth coefficients on the fixed compact punctured support of $d\psi$, so (110.19) gives $b_j\to0$ in $L^2$ there. All terms on the right of (110.20) belong to $L^2$, and their products by $\rho^2$ also belong to $L^2$: for the potential term this follows from $\psi=0$ near $e$ and $\rho^2\Gamma\le B_\Gamma/\rho$ at infinity. The distributional equation extends to the free form domain by the original free-core density. Since $p_j\in\mathcal E_2$, free form representation therefore puts $p_j\in D(A_0)$ and makes application of $(A_0+r_j)^{-1}$ legitimate.
+
+Applying (110.16) and separating a large fixed $\rho$ ball gives
+
+$$
+\begin{aligned}
+\|p_j\|_2
+ &\le\frac{g_ch_2}{a}\|\rho^2\Gamma p_j\|_2+o(1)\\
+ &\le\frac{g_ch_2}{a}
+       \|\mathbf1_{\{\rho\le R\}}\rho^2\Gamma\psi z_j\|_2
+       +\frac{g_ch_2B_\Gamma}{aR}\|p_j\|_2+o(1).
+\end{aligned}
+\tag{110.21}
+$$
+
+For fixed $R$ the first norm tends to zero by (110.18), because its multiplier is bounded and compactly supported away from $e$. The other two forcing terms in (110.20) give $o(1)$ in (110.21) by their compact supports and $t_j\to\infty$. Choose $R$ so that $g_ch_2B_\Gamma/(aR)<1/2$. Absorption shows $p_j\to0$ globally in $L^2$. Also $(1-\psi)z_j\to0$ in $L^2$ by (110.18), since $1-\psi$ has compact support. This contradicts $\|z_j\|_2=1$, proving the resolvent bound.
+
+Let $d\nu_f(\lambda)$ be the spectral measure of $f$ for $H_F\ge0$. The bound just proved and monotone convergence give
+$\int_{(0,\infty)}\lambda^{-2}d\nu_f(\lambda)<\infty$.
+The zero atom is absent because $\ker H_F=\{0\}$. Hence the spectral vector $y=H_F^{-1}f$ belongs to $L^2$ and to $D(H_F)$, satisfies $H_Fy=f$, and is the strong $L^2$ limit of $(H_F+r)^{-1}f$ as $r\downarrow0$. This proves (110.15) on exactly its asserted compact-source class. The spectral inverse remains an unbounded operator on its full domain; no positive spectral gap has been introduced.
+
+Apply this range assertion to the actual $F$ in (110.14), and let $y\in D(H_F)$ satisfy $H_Fy=F$. Since $H_F$ extends $S$ and is self-adjoint, $D(H_F)\subset D(S^*)$ and the two actions agree there. Therefore
+
+$$
+w_*=g-y\in D(S^*),\qquad S^*w_*=0,\qquad w_*\in L^2(G,d\mu).
+\tag{110.22}
+$$
+
+It remains to check its coefficient. Theorem 109.2 applies to this global vector and gives
+$H_{w_*}=(A(w_*)+\tau B_\mathrm{src}(w_*))e_0+Z_{w_*}$,
+with $e^{\tau/8}Z_{w_*}\in H^1$ on the positive end. Subtracting from (110.14) yields
+
+$$
+H_y=\bigl(-A(w_*)+\tau(1-B_\mathrm{src}(w_*))\bigr)e_0
+                 +Z-Z_{w_*}.
+\tag{110.23}
+$$
+
+Both remainder derivatives are square integrable on that end. Since $y\in D(H_F)\subset\mathcal Q_c$, (110.9) makes $\partial_\tau H_y$ square integrable as well. A nonzero constant multiple of $e_0$ on an infinite cylinder cannot have this property, even after adding an $L^2$ derivative. Thus $B_\mathrm{src}(w_*)=1$. This proves (110.2), in particular nonvanishing, for the same vector that satisfies the global original equation and global original $L^2$ condition. Injectivity of $B_\mathrm{src}$ and the maximal/Friedrichs intersection, already proved in §§104 and 109, give all the remaining assertions. $\square$
+
+**Corollary 110.3 (the existing actual-family statement with a proved generator).** Fix the original data and put $w=w_*/\|w_*\|_2$. For every sequence $\sigma_n>2$ tending to $2$, without monotonicity, and every choice of nonzero actual attained complex critical zero states in the full spaces
+$\mathcal E_{\sigma_n}=D(L^{1/2})\cap D(|D_w|^{\sigma_n/2})$, normalize amplitudes by
+$V[u_n]=1$, $M_n=\|u_n\|_2^2$ and $v_n=u_n/\sqrt{M_n}$ in the common original complex $L^2(G,d\mu)$. Every subsequence has a further common state-and-measure subsequence on which, for some $c\in\mathbb C$ with $|c|\le1$,
+
+$$
+\begin{gathered}
+v_n\rightharpoonup cw\quad\text{in }L^2(G,d\mu),\qquad
+v_n\to cw\quad\text{in }L^2_{\mathrm{loc}}(G\setminus\{e\}),\\
+\zeta v_n\longrightarrow c\zeta w\quad\text{strongly in }L^2(G,d\mu),\\
+|v_n|^2d\mu\longrightarrow
+ |c|^2|w|^2d\mu+(1-|c|^2)\delta_e,\qquad m_\infty=0.
+\end{gathered}
+\tag{110.24}
+$$
+
+Here $\zeta$ is every fixed bounded measurable cutoff vanishing near $e$, and probability convergence is against continuous functions on the one-point compactification of the original space. The same common subsequence serves these conclusions. Its source atom is $m_e=1-|c|^2$; along it global strong $L^2$ convergence holds exactly when $m_e=0$.
+
+**Proof.** Apply Corollary 109.3, with its topology and probability decomposition from §§104--105, to the nonzero generator supplied by Theorem 110.2. This is a reuse of that actual-family restriction, with its previously unresolved nonzero-space alternative now established; it is not a second existence or compactness theorem for actual states. $\square$
+
+**Definition 110.4 (attribution and remaining mathematical boundaries).** The source, Green bound, exact Haar marginal, free domains, Hardy--Rellich constant $h_2$ and weighted free resolvent estimate are the existing supplies of §§82--87, 102 and 105. The whole-closure source-cylinder estimate is (107.5); the original punctured elliptic regularity is §108; the angular gap, bilinear original thin-layer estimate, weighted cylinder inverse and injective logarithmic coefficient are §109. The profile underlying $e_0$ retains the Alvino--Ferone--Volpicelli correspondence at $n=4$, $\beta=2$, in [arXiv:1105.0335v1, Theorem 1.1 and (12)](https://arxiv.org/html/1105.0335v1). These results are reused, without replacing the source by the auxiliary interface.
+
+Neumann inversion, the cutoff form identity and nonnegative self-adjoint spectral calculus are mature methods. Pinchover--Tintarev, [*A ground state alternative for singular Schrödinger operators*, arXiv:math/0411658v1, Theorem 1.4 and Corollary 2.3](https://arxiv.org/html/math/0411658v1), distinguish a weighted spectral gap from a null state for locally uniformly elliptic real divergence-form operators on an open domain with locally $L^p$, $p>d/2$, potential. On the punctured original coordinate domain those local coefficient and potential hypotheses hold, and the real core form is nonnegative. Their dichotomy does not give (110.15) or an original global $L^2$ logarithmic mode; no choice between its alternatives is substituted for the range proof above. Likewise the domain decompositions in [*A Survey on the Krein--von Neumann Extension*, arXiv:1203.5713v1, Theorem 2.1, (2.9)--(2.11)](https://arxiv.org/html/1203.5713v1), are stated there under a strictly positive lower bound $S\ge\varepsilon I$, $\varepsilon>0$. That hypothesis is unavailable here by §87.4, so those inverse and decomposition formulas are not applied. The local exact construction, source-domain derivative restriction, compact-source interacting range argument and their gluing into (110.2) are repository-derived deductions for the fixed original family; no worldwide novelty claim is made.
+
+Existence of $w_*$ is an assertion about the abstract original maximal zero space. It does not imply that an actual critical-state selection has $c\ne0$ in (110.24), fix $m_e$, prove source tightness, choose a phase or coefficient for actual states, identify a surviving shrinking scale, or supply a joint limit in $n$ and the source radius. The physical source remains unit normalized regardless of $B_\mathrm{src}(w_*)=1$. The maximal and Friedrichs domains remain distinct, no positivity or symmetry of actual states is assumed, and no native realization or physical spatial-dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）
