@@ -107,7 +107,10 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source),
                 Proof(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("clavier-foissy-lopez-paycha-2022-locality-tensor-product-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) =>
