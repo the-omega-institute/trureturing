@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the entries of the powers of the cyclic shift. -/
+
 namespace Reg.D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
 open _root_.D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

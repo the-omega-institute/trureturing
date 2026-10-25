@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of functional calculus on affine combinations of a projection. -/
+
 namespace Reg.D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
 open _root_.D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
