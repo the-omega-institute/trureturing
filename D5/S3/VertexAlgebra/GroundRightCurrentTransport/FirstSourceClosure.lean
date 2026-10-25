@@ -103,8 +103,14 @@ private theorem original_current_iterate
         Ring.choose_zero_pos ℤ (Nat.pos_of_ne_zero different)]
   have firstFinite := original.2.1
   have secondFinite := original.2.2.1
-  simp only [jacobiRightFirstTerm, jacobiRightSecondTerm, zero_add,
-    h, LatticeHalfFockCurrentBorcherds.source_current] at firstFinite secondFinite
+  change Function.HasFiniteSupport (fun j : ℕ => jacobiRightFirstTerm D 0 r d h a b j)
+    at firstFinite
+  change Function.HasFiniteSupport (fun j : ℕ => jacobiRightSecondTerm D 0 r d h a b j)
+    at secondFinite
+  simp only [jacobiRightFirstTerm, zero_add,
+    h, LatticeHalfFockCurrentBorcherds.source_current] at firstFinite
+  simp only [jacobiRightSecondTerm, zero_add,
+    h, LatticeHalfFockCurrentBorcherds.source_current] at secondFinite
   have firstSum :
       (∑ᶠ j : ℕ, BinomialKernelDelta.chooseSign d j •
         neutralMode D i (d-j) (mu D a (r+j) b)) =
@@ -114,8 +120,10 @@ private theorem original_current_iterate
     apply finsum_eq_sum_of_support_subset
     intro j hj
     by_contra outside
-    have zero := tail (r+j) (by simp only [Finset.mem_range, not_lt] at outside; omega)
-    exact hj (by rw [zero, map_zero, smul_zero])
+    have zero := tail (r+j) (by
+      simp only [Finset.mem_coe, Finset.mem_range, not_lt] at outside
+      omega)
+    exact hj (by dsimp only; rw [zero, map_zero, smul_zero])
   have secondSum :
       (∑ᶠ j : ℕ, BinomialKernelDelta.chooseSign d j •
         (StateFieldResidueReconstruction.epsilon d •
@@ -124,7 +132,7 @@ private theorem original_current_iterate
         ∑ j ∈ Finset.range (vectorFrequencyBound D b+1),
           BinomialKernelDelta.chooseSign d j •
             mu D a (d+r-j) (neutralMode D i j b) := by
-    rw [finsum_eq_sum_of_support_subset (s := Finset.range (vectorFrequencyBound D b+1)) ?_]
+    rw [finsum_eq_sum_of_support_subset (s := Finset.range (vectorFrequencyBound D b+1)) _ ?_]
     · rw [Finset.smul_sum]
       apply Finset.sum_congr rfl
       intro j hj
@@ -132,18 +140,19 @@ private theorem original_current_iterate
     · intro j hj
       by_contra outside
       have zero := neutralMode_vanish D i b j (by
-        simp only [Finset.mem_range, not_lt] at outside; omega)
+        simp only [Finset.mem_coe, Finset.mem_range, not_lt] at outside
+        omega)
       exact hj (by simp [zero, mu])
   have law := original.2.2.2
   rw [left] at law
   simp only [zero_add, h, LatticeHalfFockCurrentBorcherds.source_current,
     smul_sub] at law
   change mu D (neutralMode D i d a) r b =
-    ∑ᶠ j : ℕ, BinomialKernelDelta.chooseSign d j •
+    (∑ᶠ j : ℕ, (BinomialKernelDelta.chooseSign d j •
       neutralMode D i (d-j) (mu D a (r+j) b) -
       BinomialKernelDelta.chooseSign d j •
         (StateFieldResidueReconstruction.epsilon d •
-          mu D a (r+d-j) (neutralMode D i j b)) at law
+          mu D a (r+d-j) (neutralMode D i j b)))) at law
   rw [finsum_sub_distrib firstFinite secondFinite, firstSum, secondSum] at law
   exact law
 
@@ -212,7 +221,11 @@ theorem first_current_step
       (smaller (neutralMode D i j b) (delta+1))).symm
   simp_rw [inverse, third] at nested
   simp only [H₂] at nested
-  simp_rw [← native_current_inverse] at nested
+  have inverseCurrent (v : Carrier D) (s t : ℤ) :
+      qField 1 t (vectorFrequencyBound D v+1) (targetCurrent D hu i)
+        (targetSlice D hu v s) = targetSlice D hu (neutralMode D i t v) (s+1) :=
+    (native_current_inverse D hu i v s t).symm
+  simp_rw [inverseCurrent] at nested
   rw [show gamma+delta+1 = (gamma+1)+delta by omega,
     show gamma+(delta+1) = (gamma+1)+delta by omega] at nested
   have source := congrArg (sourceSliceLinear D hu ((gamma+1)+delta))
@@ -268,7 +281,17 @@ private theorem compatible_add_left
     simp only [secondTerm, fields, map_add, Pi.add_apply, LinearMap.add_apply, smul_add]
   change Function.HasFiniteSupport
       (leftTerm (fun t => targetSlice D hu (mu D (a+c) t b) (gamma+delta))
-        gamma p q r x) ∧ _
+        gamma p q r x) ∧
+    Function.HasFiniteSupport
+      (firstTerm (targetSlice D hu (a+c) gamma) (targetSlice D hu b delta) p q r x) ∧
+    Function.HasFiniteSupport
+      (secondTerm (targetSlice D hu (a+c) gamma) (targetSlice D hu b delta) p q r x) ∧
+    (∑ᶠ j : ℕ, leftTerm
+      (fun t => targetSlice D hu (mu D (a+c) t b) (gamma+delta)) gamma p q r x j) =
+      (∑ᶠ j : ℕ, firstTerm (targetSlice D hu (a+c) gamma)
+        (targetSlice D hu b delta) p q r x j) -
+      (∑ᶠ j : ℕ, secondTerm (targetSlice D hu (a+c) gamma)
+        (targetSlice D hu b delta) p q r x j)
   rw [funext left, funext first, funext second]
   obtain ⟨hlA, hfA, hsA, eqA⟩ := ha p q r x
   obtain ⟨hlC, hfC, hsC, eqC⟩ := hc p q r x
