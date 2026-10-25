@@ -165,7 +165,13 @@ private theorem not_q1 : ¬ Q1 := by
   norm_num at hbad
 
 private theorem not_q2 : ¬ Q2 := by
-  sorry
+  rintro ⟨f, hf, hbound⟩
+  have hrange := hf (1 / 2) 1 (by norm_num) (by norm_num)
+  have hbad : (5 / 4 : ℝ) ≤ f (1 / 2) 1 :=
+    (ENNReal.ofReal_le_ofReal_iff hrange.1.le).mp
+      (asynchronous_radius.trans
+        (hbound 2 sizes 1 baseMatrix delays (1 / 2) witness_admissible))
+  linarith [hrange.2]
 
 /-- A matrix of radius one half with unit remote delays refutes both proposed bounds. -/
 theorem result : ¬ claim := by
