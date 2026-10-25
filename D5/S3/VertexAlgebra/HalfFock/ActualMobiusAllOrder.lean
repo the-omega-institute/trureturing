@@ -366,5 +366,119 @@ private theorem halfUnit_power (d : ℤ) :
   congr 1
   ring
 
+private def sourceCutoff (D : LatticeData) (a : Carrier D) : ℕ :=
+  a.support.sup (fun q => MvPolynomial.weightedTotalDegree
+    (LatticeHalfFockFiniteCorrection.sourceWeight D) (a q)) + 1
+
+private theorem source_after_cutoff (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Carrier D) (k : ℕ) (hk : sourceCutoff D a ≤ k) : (S D 1 ^ k) a = 0 := by
+  have h : (S D 1 ^ sourceCutoff D a) a = 0 := SourceMobius.actual_sugawara_one_bound D hu a
+  rw [show k = (k-sourceCutoff D a)+sourceCutoff D a by omega,
+    pow_add, Module.End.mul_apply, h, map_zero]
+
+/-- Coefficient extraction from the independent normalized coordinate product.
+The power-series variable tracks u. For a raw monomial t^d the complementary
+power contributes t^(2(n-k)), so d=e-2(n-k). The source sum is truncated at
+the actual oscillator cutoff, rather than assuming a target exponential. -/
+def rawHalfCoordinateReadout (D : LatticeData) (hu : IsUnit D.G.det)
+    (n : ℕ) (e : ℤ) (a : Carrier D) : Module.End ℂ (ActualTensor D hu) :=
+  ∑ h ∈ stateEnergies D a,
+    ∑ k ∈ Finset.range (sourceCutoff D (gradeProjection D h a)),
+      (PowerSeries.coeff n (PowerSeries.X ^ k *
+        (unitPower ((k:ℂ)-2*(h:ℂ)) *
+          (normalizedRawHalfUnit.val ^ (e-2*((n-k:ℕ):ℤ))).val)) / (k.factorial:ℂ)) •
+        (LatticeHalfFockCorrectedField.correctedField D hu
+          ((sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1 ^ k)
+            (gradeProjection D h a))).coeff (e-2*((n-k:ℕ):ℤ))
+
+private theorem binomial_reflection (r : ℂ) (m : ℕ) :
+    (-1:ℂ)^m * Ring.choose r m = Ring.choose (-r+(m:ℂ)-1) m := by
+  have h := Ring.choose_neg (-r) m
+  rw [neg_neg] at h
+  rw [h]
+  simp only [Units.smul_def, zsmul_eq_mul, Int.cast_negOnePow_natCast]
+  rw [← mul_assoc, ← mul_pow]
+  norm_num
+
+private theorem raw_scalar (h e : ℤ) (n k : ℕ) :
+    PowerSeries.coeff n (PowerSeries.X ^ k *
+      (unitPower ((k:ℂ)-2*(h:ℂ)) *
+        (normalizedRawHalfUnit.val ^ (e-2*((n-k:ℕ):ℤ))).val)) / (k.factorial:ℂ) =
+      c (2*(h:ℂ)+(e:ℂ)/2-1) n k := by
+  rw [PowerSeries.coeff_X_pow_mul']
+  by_cases hk : k ≤ n
+  · rw [if_pos hk, halfUnit_power, ← unitPower_add]
+    simp only [unitPower, PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff,
+      smul_eq_mul, mul_one]
+    rw [binomial_reflection]
+    have hp : -((k:ℂ)-2*(h:ℂ) + -((e-2*((n-k:ℕ):ℤ):ℤ):ℂ)/2) +
+        ((n-k:ℕ):ℂ)-1 = (2*(h:ℂ)+(e:ℂ)/2-1)-(k:ℂ) := by
+      push_cast
+      rw [Nat.cast_sub hk]
+      ring
+    rw [hp, c, if_pos hk]
+  · simp [hk,c]
+
+private theorem raw_readout_closed (D : LatticeData) (hu : IsUnit D.G.det)
+    (n : ℕ) (e : ℤ) (a : Carrier D) :
+    rawHalfCoordinateReadout D hu n e a =
+      ∑ h ∈ stateEnergies D a, ∑ k ∈ Finset.range (n+1),
+        c (2*(h:ℂ)+(e:ℂ)/2-1) n k •
+          A D hu (e-2*(n:ℤ)+2*(k:ℤ)) ((S D 1 ^ k) (gradeProjection D h a)) := by
+  classical
+  unfold rawHalfCoordinateReadout
+  apply Finset.sum_congr rfl
+  intro h hh
+  let b := gradeProjection D h a
+  let α : ℂ := 2*(h:ℂ)+(e:ℂ)/2-1
+  let f := fun k : ℕ => c α n k • A D hu (e-2*((n-k:ℕ):ℤ)) ((S D 1 ^ k) b)
+  have cutoff (k : ℕ) (hk : sourceCutoff D b ≤ k) : f k = 0 := by
+    dsimp only [f]
+    rw [source_after_cutoff D hu b k hk, map_zero, smul_zero]
+  have degree (k : ℕ) (hk : n < k) : f k = 0 := by simp [f,c,show ¬ k ≤ n by omega]
+  have left : (∑ k ∈ Finset.range (sourceCutoff D b), f k) =
+      ∑ k ∈ Finset.range (max (sourceCutoff D b) (n+1)), f k := by
+    apply Finset.sum_subset (Finset.range_mono (le_max_left _ _))
+    intro k hk hn
+    exact cutoff k (by simpa only [Finset.mem_range, not_lt] using hn)
+  have right : (∑ k ∈ Finset.range (n+1), f k) =
+      ∑ k ∈ Finset.range (max (sourceCutoff D b) (n+1)), f k := by
+    apply Finset.sum_subset (Finset.range_mono (le_max_right _ _))
+    intro k hk hn
+    exact degree k (by simp only [Finset.mem_range] at hn; omega)
+  calc
+    _ = ∑ k ∈ Finset.range (sourceCutoff D b), f k := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      rw [raw_scalar]
+      rfl
+    _ = ∑ k ∈ Finset.range (n+1), f k := left.trans right.symm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      dsimp only [f]
+      have hkn : k ≤ n := by have := Finset.mem_range.mp hk; omega
+      have hd : e-2*((n-k:ℕ):ℤ) = e-2*(n:ℤ)+2*(k:ℤ) := by omega
+      rw [hd]
+
+/-- The fixed-order ORIGINAL field has exactly the coefficient readout of
+the normalized raw half-coordinate product and the finite original source
+exponential. Both sides are independently defined. -/
+theorem formal_mobius_raw_coordinate (D : LatticeData) (hu : IsUnit D.G.det)
+    (n : ℕ) (e : ℤ) (a : Carrier D) :
+    (formalMobiusOrder D hu n a).coeff e = rawHalfCoordinateReadout D hu n e a := by
+  rw [raw_readout_closed]
+  have hc := corrected_field_mobius_coefficient D hu n e a
+  change conjugationCoefficient D hu n a e = _
+  rw [show conjugationCoefficient D hu n a e = _ from hc]
+  apply Finset.sum_congr rfl
+  intro h hh
+  apply Finset.sum_congr rfl
+  intro k hk
+  rw [c, if_pos (by have := Finset.mem_range.mp hk; omega)]
+  have hs : 2*(h:ℂ)+(e:ℂ)/2-1-(k:ℂ) = 2*(h:ℂ)+(e:ℂ)/2-(k:ℂ)-1 := by ring
+  simp only [hs]
+  rfl
+
 end
 end D5.S3.VertexAlgebra.HalfFock.ActualMobiusAllOrder
