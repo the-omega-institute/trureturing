@@ -274,6 +274,65 @@ capture, or the Theorem A closed-copy prohibition. Problem 8.2 and
 the complete CH/Talagrand endpoint remain unresolved here, and no
 official acceptance is asserted.
 
+## Delayed whole-fibre signed splitting
+
+The construction-specific local source
+`D5.S3.Topology.Measures.SignedDelayedSplit` concerns the delayed
+common-row step of the proposed CH construction. It is derived from the
+supplied ordinary candidate and the repository's ordered signed-column
+and signed reference-convergence suppliers. The ordinary candidate is
+fallible input, and this note makes no attribution or novelty claim for
+the assembled proof.
+
+`exists_delayed_fibre_pools` starts with the actual onto predecessor
+projection, original supports V(n), target points y(n) in V(n) and a
+clopen Q, and both infinite original intersections J with N(e). It
+chooses points f(n) over y(n) and infinite S(e) inside those intersections
+such that f converges to z(e) along S(e). Eventual coordinate E on the
+whole original supports transfers that convergence to every point of
+the actual fibre: each clopen neighborhood of z(e) eventually contains
+the entire fibre over y(n). This uses finite-coordinate determination
+of a clopen, without assuming that an old fibre is a singleton.
+
+`exists_parity_ordered_split` takes two infinite pools with a common
+positive-variation reference on fixed clopens, the actual Dirac-labelled
+target sequence, and signed reference data for the auxiliary rows.
+Column q selects its target index from pool q modulo two. The target
+slice is clipped to V(n) intersect Q, and finite auxiliary tests are
+fixed before their indices. One resulting closed Boolean split has
+onto old projection, target whole-support fibre constancy even outside
+Q, whole-fibre separation of the target points by column parity, the
+original signed G bounds, and one common represented regular signed
+limit for every auxiliary lift choice along each increasing fixed-label
+column subsequence. Positive target variation is separate from every
+auxiliary signed limit.
+
+The true sheet lies over Q. If P is a disjoint source clopen and the
+original source signed measures are carried by P, every successor
+source choice projects to an old norm-preserving choice. Old signed F
+then transfers to the selected target-index range, which is an infinite
+refinement of the original source J and meets each original N(e)
+infinitely through its parity range. The proof uses the same split as
+the target and auxiliary conclusions.
+
+These are local suppliers. The two pool cluster points are not proved
+to coincide, and the split still requires their common positive
+reference convergence as input. The distinct-cluster delayed branch,
+final enlarged I and its residual births, literal ordinal successor
+integration, raw-entry recursion and final omega-one construction remain
+outside these statements. They do not establish the anti-homeomorphism,
+Grothendieck or full signed dual-ball endpoints. Problem 8.2 and official
+acceptance remain open.
+
+The owning Reg mirror preserves the original theorem telescopes and
+their actual proof applications. Its four-slot information registration
+is unfinished. Issue
+https://github.com/the-omega-institute/trureturing/issues/21750 records
+the missing full source reconstruction and realization equivalence,
+lawful enrolled readout, whole-family variation and sensitivity, and
+observational dependence. Those source bindings are not
+`declared_validated` registrations.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
