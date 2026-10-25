@@ -131,7 +131,10 @@ internal sealed class QutritDickePruningRefutationDocument : IScribeDocumentDefi
                         "The word v contains one zero, three ones and one two. Its Dicke amplitude is therefore 1/√(5!/(1!3!1!)) = 1/√20. "
                             + "This number is nonzero because 20 is positive. Applying the asserted universal identity at n = 5, k₀ = 1, k₁ = 3 and k₂ = 1, "
                             + "and evaluating both functions at v, would equate this nonzero amplitude with zero. Thus claim is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nepomechie-raveh-2024-qutrit-dicke-pruning-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
