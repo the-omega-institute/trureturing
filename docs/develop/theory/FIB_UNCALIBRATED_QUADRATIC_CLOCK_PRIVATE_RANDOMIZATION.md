@@ -1515,7 +1515,7 @@ the taper are closed in (6.8), so no additional endpoint convention
 is needed. At $E=c/3$, the reused endpoint rule has risk $E/2$
 by Theorem 4.1. $\square$
 
-**Corollary 7.5 (unrestricted improvement and a matching region).**
+**Theorem 7.5 (unrestricted improvement and a matching region).**
 On exactly the source and arbitrary-seed class of Definitions
 1.1--1.2, for every $m>0$, $c>0$ and
 $c/3<E\le(1+c)/2$,
