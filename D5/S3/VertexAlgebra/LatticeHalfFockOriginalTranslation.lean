@@ -114,7 +114,7 @@ private abbrev insert (D : LatticeData) (hu : IsUnit D.G.det)
     (index : Index D) (field : NativeField D hu) : NativeField D hu :=
   wordField D hu field [index]
 
-private theorem jet_successor (order : ℕ) (mode : ℤ) :
+theorem jet_successor (order : ℕ) (mode : ℤ) :
     (order + 1 : ℂ) * jetScalar (order + 1) mode =
       (-(mode : ℂ) - 3 / 2 - (order : ℂ)) * jetScalar order mode := by
   have factorial : (order.factorial : ℂ) ≠ 0 := by

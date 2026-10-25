@@ -9,7 +9,7 @@
 import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentWard
-import D5.S3.VertexAlgebra.SourceMobius.OriginalCarrier
+import D5.S3.VertexAlgebra.SourceMobius.PositiveMode
 
 /- Classical twisted lattice construction; original conventions and notices
 are inherited from the imported owners. No replacement field is introduced.
@@ -159,12 +159,19 @@ private theorem charged_normal_sum_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   rw [map_finsum _ (pairfinite x),
     ← finsum_sub_distrib (pairfinite (chargedCoefficient D hu a e x))
       ((pairfinite x).fun_comp (map_zero (chargedCoefficient D hu a e))),
-    finsum_congr pair,
-    finsum_add_distrib ((hfi.fun_comp (smul_zero ql)).add
-      (hflneg.fun_comp (smul_zero qi))) hboundary,
-    finsum_add_distrib (hfi.fun_comp (smul_zero ql))
-      (hflneg.fun_comp (smul_zero qi)),
-    ← smul_finsum' ql hfi, ← smul_finsum' qi hflneg]
+    finsum_congr pair]
+  have sumsplit : (∑ᶠ j : ℤ, ql • fi j + qi • fl (-j) + boundary j) =
+      (∑ᶠ j : ℤ, ql • fi j) + (∑ᶠ j : ℤ, qi • fl (-j)) +
+        ∑ᶠ j : ℤ, boundary j := by
+    calc
+      _ = (∑ᶠ j : ℤ, ql • fi j + qi • fl (-j)) + ∑ᶠ j : ℤ, boundary j := by
+        exact finsum_add_distrib ((hfi.fun_comp (smul_zero ql)).add
+          (hflneg.fun_comp (smul_zero qi))) hboundary
+      _ = _ := by
+        congr 1
+        exact finsum_add_distrib (hfi.fun_comp (smul_zero ql))
+          (hflneg.fun_comp (smul_zero qi))
+  rw [sumsplit, ← smul_finsum' ql hfi, ← smul_finsum' qi hflneg]
   have reindex : (∑ᶠ j : ℤ, fl (-j)) = ∑ᶠ j : ℤ, fl j :=
     finsum_eq_of_bijective (fun j : ℤ => -j) neg_bijective (fun _ => rfl)
   rw [reindex]
@@ -251,7 +258,7 @@ theorem charged_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     rw [← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
     intro l hl
-    rw [← smul_sub]
+    rw [map_smul, ← smul_sub]
     congr 1
     exact charged_normal_sum_l1 D hu a i l e x
   change tensorL D (ActualGround D hu) H 1 (chargedCoefficient D hu a e x) -
@@ -261,6 +268,66 @@ theorem charged_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
   simp_rw [smul_add, Finset.sum_add_distrib]
   rw [rows, cols, quad, sub_eq_iff_eq_add.mp seed]
   module
+
+
+/-- The scalar Pascal step for the original normalized jets. -/
+private theorem jet_shift (r : ℕ) (j : ℤ) :
+    jetScalar (r + 1) (j - 1) = jetScalar (r + 1) j + jetScalar r j := by
+  induction r with
+  | zero => simp [jetScalar, Finset.prod_range_succ]; ring
+  | succ r ih =>
+    have hleft := LatticeHalfFockOriginalTranslation.jet_successor (r + 1) (j - 1)
+    have hright := LatticeHalfFockOriginalTranslation.jet_successor (r + 1) j
+    have hlower := LatticeHalfFockOriginalTranslation.jet_successor r j
+    rw [ih] at hleft
+    have hn : (r + 2 : ℂ) ≠ 0 := by exact_mod_cast (by omega : r + 2 ≠ 0)
+    apply (mul_left_cancel₀ hn)
+    push_cast at hleft hright hlower ⊢
+    linear_combination hleft - hright - hlower
+
+/-- The only scalar product rule needed for the L1 singleton commutator. -/
+private theorem jet_l1_scalar (r : ℕ) (j : ℤ) :
+    ((j : ℂ) - (r : ℂ) - 1/2) * jetScalar r j -
+        ((j : ℂ) - 1/2) * jetScalar r (j - 1) =
+      if r = 0 then 0 else (r + 1 : ℂ) * jetScalar (r - 1) j := by
+  cases r with
+  | zero => simp [jetScalar]
+  | succ r =>
+    simp only [Nat.succ_eq_add_one, Nat.add_sub_cancel, Nat.cast_add,
+      Nat.cast_one, Nat.add_eq_zero_iff, Nat.one_ne_zero, and_false, ite_false]
+    rw [jet_shift]
+    have h := LatticeHalfFockOriginalTranslation.jet_successor r j
+    linear_combination -h
+
+private theorem jet_boundary (r : ℕ) : jetScalar r (-1) = halfBinomial r := by
+  unfold jetScalar halfBinomial
+  congr 1
+  apply Finset.prod_congr rfl
+  intro k hk
+  push_cast
+  ring
+
+private theorem actual_current_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (i : Fin D.rank) (j : ℤ) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+        tensorCurrent D (ActualGround D hu) i j -
+      tensorCurrent D (ActualGround D hu) i j *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      (-((j : ℂ) + 1/2)) • tensorCurrent D (ActualGround D hu) i (j + 1) := by
+  apply TensorProduct.ext'
+  intro p t
+  have h := congrArg (fun U : Module.End ℂ (Oscillator D) => U p ⊗ₜ[ℂ] t)
+    (L_current_commutator D (HalfFockSpectralFiberSource.actualInverse D)
+      (HalfFockSpectralFiberSource.actualInverse_left D hu)
+      (HalfFockSpectralFiberSource.actualInverse_right D hu) i 1 j)
+  simpa only [tensorL, tensorCurrent, tensorEnd, Module.End.mul_apply,
+    LinearMap.sub_apply, LinearMap.smul_apply, TensorProduct.map_tmul,
+    LinearMap.id_apply, TensorProduct.sub_tmul, TensorProduct.smul_tmul',
+    frequency, add_comm 1 j] using h
+
+#print axioms jet_shift
+#print axioms jet_l1_scalar
+#print axioms actual_current_l1
 
 #print axioms charged_pair_l1
 #print axioms charged_normal_sum_l1
