@@ -68,7 +68,7 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData("origin/dev")]
     [InlineData("refs/heads/dev")]
-    public void NonBranchCheckoutIgnoresLocalBranchNamespaceDirectories(string destination)
+    public void AmbiguousCheckoutIgnoresLocalBranchNamespaceDirectories(string destination)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/branch-namespace");
@@ -81,7 +81,7 @@ public sealed partial class CleanLanesCommandTests
 
         foreach (var force in new[] { false, true })
         {
-            var result = fixture.RunAt(checkout.AddHours(1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+            var result = fixture.RunAt(checkout.AddHours(3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(result.Success, result.Error);
             Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
@@ -98,7 +98,9 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("refs/tags/allocation-tag")]
     [InlineData("full-oid")]
     [InlineData("short-oid")]
-    public void NonBranchCheckoutDestinationDoesNotAllocateTree(string revision)
+    [InlineData("HEAD^0")]
+    [InlineData("dev^{commit}")]
+    public void NonBranchCheckoutDestinationHasBoundedAllocationAmbiguity(string revision)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/nonbranch-checkout");
@@ -111,9 +113,19 @@ public sealed partial class CleanLanesCommandTests
         var headLog = File.ReadAllLines(Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD"));
         Assert.EndsWith(" to " + destination, headLog[^1], StringComparison.Ordinal);
 
+        if (revision is not ("HEAD^0" or "dev^{commit}"))
+            foreach (var force in new[] { false, true })
+            {
+                var recent = fixture.RunAt(checkout.AddSeconds(10799), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+
+                Assert.True(recent.Success, recent.Error);
+                Assert.Equal("recently_updated", ReasonFor(recent.Output, lane));
+                Assert.True(Directory.Exists(lane));
+            }
+
         foreach (var force in new[] { false, true })
         {
-            var result = fixture.RunAt(checkout.AddHours(1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+            var result = fixture.RunAt(checkout.AddHours(revision is "HEAD^0" or "dev^{commit}" ? 1 : 3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(result.Success, result.Error);
             Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
@@ -151,38 +163,22 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void LostLocalBranchEvidenceRetainsTree(bool nonLocalAlsoResolves, bool orphanedLog)
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LostSurvivingLocalBranchEvidenceRetainsTree(bool orphanedLog)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/lost-local-evidence");
         var allocated = fixture.LastUpdate(lane).AddDays(2);
-        var branch = nonLocalAlsoResolves ? "origin/dev" : "harness/lost-allocation";
+        var branch = "origin/dev";
         CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", branch);
         var log = fixture.BranchLogPath(lane);
         CleanLanesFixture.GitAt(lane, allocated.AddMinutes(1), "checkout", "--detach", "HEAD");
-        if (nonLocalAlsoResolves)
-        {
-            CleanLanesFixture.Git(lane, "update-ref", "refs/remotes/origin/dev", fixture.Head(lane));
-            if (orphanedLog)
-            {
-                var bytes = File.ReadAllBytes(log);
-                CleanLanesFixture.Git(lane, "branch", "-D", branch);
-                Directory.CreateDirectory(Path.GetDirectoryName(log)!);
-                File.WriteAllBytes(log, bytes);
-            }
-            else
-                File.Delete(log);
-        }
+        CleanLanesFixture.Git(lane, "update-ref", "refs/remotes/origin/dev", fixture.Head(lane));
+        if (orphanedLog)
+            File.Delete(Path.Combine(fixture.RepositoryRoot, ".git", "refs", "heads", branch));
         else
-        {
-            CleanLanesFixture.Git(lane, "branch", "-D", branch);
-            var resolution = fixture.CreateRunner().Run("git", ["rev-parse", "-q", "--verify", branch + "^{commit}"],
-                lane, TimeSpan.FromSeconds(120));
-            Assert.Equal(1, resolution.ExitCode);
-        }
+            File.Delete(log);
 
         foreach (var force in new[] { false, true })
         {
@@ -191,7 +187,7 @@ public sealed partial class CleanLanesCommandTests
             Assert.True(result.Success, result.Error);
             Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
             AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail",
-                nonLocalAlsoResolves && !orphanedLog ? "branch_reflog_missing" : "branch_reflog_unreadable");
+                !orphanedLog ? "branch_reflog_missing" : "branch_reflog_unreadable");
             Assert.True(Directory.Exists(lane));
             Assert.True(fixture.WorktreeRegistered(lane));
         }
