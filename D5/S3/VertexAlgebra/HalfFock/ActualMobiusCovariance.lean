@@ -454,8 +454,14 @@ private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   have fv : Function.HasFiniteSupport v := finite F 0 (e+2*(r:ℤ)-2) x
   have fg : Function.HasFiniteSupport g := finite G r e x
   have fh : Function.HasFiniteSupport h := finite H r (e-2) x
-  have fb : Function.HasFiniteSupport b := Function.HasFiniteSupport.smul_right _ fu
-  have fk : Function.HasFiniteSupport k := Function.HasFiniteSupport.smul_right _ fv
+  have fb : Function.HasFiniteSupport b := by
+    apply fu.subset
+    intro j hj hz
+    exact hj (by simp [b, hz])
+  have fk : Function.HasFiniteSupport k := by
+    apply fv.subset
+    intro j hj hz
+    exact hj (by simp [k, hz])
   have fkshift : Function.HasFiniteSupport (fun j : ℤ => k (j+1)) :=
     fk.fun_comp_of_injective (fun a b h => by omega)
   have fl : Function.HasFiniteSupport l := by
@@ -479,14 +485,20 @@ private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       g j + b j + (2 : ℂ) • h j + k (j+1) + w j := by
     have ht := congrArg (fun U : Module.End ℂ (ActualTensor D hu) => U x)
       (singleton_term_l1 D hu F G H hF i r j e)
-    simpa only [T, g, b, u, h, k, v, w, B, show j+1-1=j by omega,
-      Module.End.mul_apply, LinearMap.sub_apply, LinearMap.add_apply,
-      LinearMap.smul_apply, ite_apply, LinearMap.zero_apply] using ht
+    by_cases hj : j = -1
+    · simpa only [T, g, b, u, h, k, v, w, B, show j+1-1=j by omega,
+        if_pos hj, Module.End.mul_apply, LinearMap.sub_apply, LinearMap.add_apply,
+        LinearMap.smul_apply, LinearMap.zero_apply] using ht
+    · simpa only [T, g, b, u, h, k, v, w, B, show j+1-1=j by omega,
+        if_neg hj, Module.End.mul_apply, LinearMap.sub_apply, LinearMap.add_apply,
+        LinearMap.smul_apply, LinearMap.zero_apply] using ht
   have summed : T ((singletonLinear D hu (i,r) F).coeff e x) -
       (singletonLinear D hu (i,r) F).coeff e (T x) =
       ∑ᶠ j : ℤ, (g j + b j + (2 : ℂ) • h j + k (j+1) + w j) := by
-    rw [singletonLinear_coefficient, singletonLinear_coefficient,
-      map_finsum _ (finite F r e x),
+    rw [singletonLinear_coefficient, singletonLinear_coefficient]
+    change T (∑ᶠ j : ℤ, flatCoefficient D hu F [(i,r)] (j,()) e x) -
+      (∑ᶠ j : ℤ, flatCoefficient D hu F [(i,r)] (j,()) e (T x)) = _
+    rw [map_finsum T (finite F r e x),
       ← finsum_sub_distrib ((finite F r e x).fun_comp (map_zero T)) (finite F r e (T x))]
     exact finsum_congr term
   have split : (∑ᶠ j : ℤ, (g j+b j+(2 : ℂ) • h j+k (j+1)+w j)) =
@@ -507,7 +519,8 @@ private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
         exact finsum_add_distrib fg fb
   have reindex : (∑ᶠ j : ℤ, k (j+1)) = ∑ᶠ j : ℤ, k j :=
     finsum_eq_of_bijective (fun j : ℤ => j+1)
-      ⟨fun a b h => by omega, fun b => ⟨b-1, by omega⟩⟩ (fun _ => rfl)
+      ⟨fun a b h => by dsimp only at h; omega,
+        fun b => ⟨b-1, by dsimp only; omega⟩⟩ (fun _ => rfl)
   have boundary : (∑ᶠ j : ℤ, w j) = B := by
     rw [finsum_eq_single _ (-1) (fun j hj => by simp [w, hj])]
     simp [w]
@@ -564,7 +577,9 @@ private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       rw [contract, lower]
       simp only [singletonLinear_coefficient]
       change (∑ᶠ j : ℤ, g j) + (c • (∑ᶠ j : ℤ, u j) + _) +
-        (2 : ℂ) • (∑ᶠ j : ℤ, h j) + B = _
+        (2 : ℂ) • (∑ᶠ j : ℤ, h j) + B =
+        (∑ᶠ j : ℤ, g j) + c • (∑ᶠ j : ℤ, u j) +
+          (2 : ℂ) • (∑ᶠ j : ℤ, h j) + _ + B
       abel
 
 #print axioms singleton_l1
