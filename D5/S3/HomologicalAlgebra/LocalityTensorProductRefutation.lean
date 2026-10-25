@@ -7,8 +7,9 @@
    digest: Six projected lines give counterexamples to both locality tensor conjectures. -/
 
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Quotient.Basic
+import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.Basic.Real.Basic
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.Module
 import Mathlib.Tactic.Linarith
 
@@ -316,7 +317,7 @@ private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i 
     spanRel (pairRel rel) (X k) (Y i) := by
   classical
   intro p hp q hq
-  have hq : q = (e i, e i) := (Finsupp.mem_support_single _ _ _).mp hq |>.1
+  have hq : q = (e i, e i) := ((Finsupp.mem_support_single _ _ _).mp hq).1
   subst q
   rcases X_support_cases k hp with rfl | rfl | rfl <;>
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
@@ -344,14 +345,12 @@ private theorem phi_values : phi 0 (X 1) = 1 ∧ phi 3 (Y 3 + Y 4) = 1 ∧
 private theorem phi_support (i : Fin 5) {a} (ha : phi i a ≠ 0) :
     ∃ p ∈ a.support, p.1 i * p.2 i ≠ 0 := by
   classical
-  by_contra h
-  push Not at h
-  apply ha
-  unfold phi
-  rw [Finsupp.linearCombination_apply, Finsupp.sum]
-  apply Finset.sum_eq_zero
-  intro p hp
-  rw [h p hp, smul_zero]
+  unfold phi at ha
+  rw [Finsupp.linearCombination_apply, Finsupp.sum] at ha
+  obtain ⟨p, hp, hterm⟩ := Finset.exists_ne_zero_of_sum_ne_zero ha
+  refine ⟨p, hp, ?_⟩
+  intro hz
+  exact hterm (by rw [hz, smul_zero])
 
 private theorem key_obstruction {v t : Fin 5 → ℝ} (h : rel v t)
     (h0 : v 0 * t 0 ≠ 0) : v 1 ≠ 0 ∨ v 2 ≠ 0 := by
