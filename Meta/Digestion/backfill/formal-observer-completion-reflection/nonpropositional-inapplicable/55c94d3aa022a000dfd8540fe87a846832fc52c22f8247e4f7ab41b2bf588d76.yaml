@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+  normalized_sha256: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+cas_ref: sha256:55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: S_sep 冒号后的kernel等式是分离完备字段的定义，不断言某观察者已分离完备。'
+    previous_atom_id: 3d267285b5b84901a612919e7c40fd15e282d6d79be9a66dd1ec9911954e474d
+    next_atom_id: efe77196175359a466f27db8813d7f58ebe42d4ba5f1d064895f946d0d876de2
