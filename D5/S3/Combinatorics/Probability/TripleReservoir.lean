@@ -58,17 +58,21 @@ theorem triple_reservoir_lower_tail {V C A : Type*}
   let E : A → Set (R → Bool) := fun i => tripleEvent (vertex i) (left i) (right i)
   let B : R → Set (R → Bool) := fun r => {ω | ω r = true}
   have hP : IsProbabilityMeasure P := by dsimp [P, reservoirLaw]; infer_instance
-  letI := hP
-  have hB (r : R) : MeasurableSet (B r) :=
-    (measurable_pi_apply r) (measurableSet_singleton true)
+  let := hP
+  have hB (r : R) : MeasurableSet (B r) := by
+    exact measurableSet_eq_fun (measurable_pi_apply r) measurable_const
   have hE (i : A) : MeasurableSet (E i) := by
     exact (hB (Sum.inl (vertex i))).inter
       ((hB (Sum.inr (left i))).inter (hB (Sum.inr (right i))))
   have hS (i : A) : (S i).card = 3 := by
-    simp [S, tripleSupport, hcol i, Ne.symm (hcol i)]
+    have hn : (Sum.inr (left i) : V ⊕ C) ≠ Sum.inr (right i) :=
+      fun h => hcol i (Sum.inr.inj h)
+    dsimp [S, tripleSupport]
+    rw [card_insert_of_notMem (by simp), card_pair hn]
   have heq (i : A) : E i = ⋂ r ∈ S i, B r := by
     ext ω
-    simp [E, S, B, tripleEvent, tripleSupport, and_assoc, and_left_comm, and_comm]
+    simp [E, S, B, tripleEvent, tripleSupport]
+    rfl
   have hind : iIndepFun (fun (r : R) (ω : R → Bool) => ω r) P := by
     exact iIndepFun_pi (X := fun (_ : R) (b : Bool) => b)
       (fun _ => measurable_id.aemeasurable)
@@ -85,19 +89,20 @@ theorem triple_reservoir_lower_tail {V C A : Type*}
     rw [h]
     rw [bernoulliMeasure_apply_of_mem_of_notMem p (measurableSet_singleton true)
       (by simp) (by simp)]
-    exact (ENNReal.ofReal_coe_nnreal _).symm
+    exact ENNReal.ofReal_coe_nnreal.symm
   have hprob (T : Finset R) : P (⋂ r ∈ T, B r) = ENNReal.ofReal (p : ℝ) ^ T.card := by
     rw [hbind.meas_biInter]
     simp_rw [hbp]
     exact prod_const _
   have hmean (i : A) : ∫ ω, (E i).indicator (fun _ => (1 : ℝ)) ω ∂P = (p : ℝ) ^ 3 := by
+    change (∫ ω, (E i).indicator (1 : (R → Bool) → ℝ) ω ∂P) = _
     rw [integral_indicator_one (hE i), measureReal_def, heq, hprob, hS,
       ENNReal.toReal_pow, ENNReal.toReal_ofReal p.property.1]
   have hwithin (j : Fin 3) :
       iIndepFun (fun i : {i : A // colour i = j} =>
         (E i.val).indicator (fun _ => (1 : ℝ))) P := by
     apply iIndepSet.iIndepFun_indicator
-    apply (iIndepSet_iff_meas_biInter (fun i => hE i.val)).2
+    apply (iIndepSet_iff_meas_biInter (fun i : {i : A // colour i = j} => hE i.val)).2
     intro T
     have hd : Set.PairwiseDisjoint (↑T)
         (fun i : {i : A // colour i = j} => S i.val) := by
