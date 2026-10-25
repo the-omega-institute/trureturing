@@ -56,7 +56,19 @@ Phase(H) has four constructors: stage(s,j,a,y), forward(todo,w,s,j,a,y), reading
 
 At a nonzero stage counter the code computes c=shift(H,a) and w=compile(H,k,c), then enters forward. Each nonempty forward list emits its next original action. Its empty list enters reading. Reading makes exactly one current gcd call, retains that full reply g in the event tape, and enters close(close(H,w),s,j,advanceAll(H,a,g),y). Every closing action is completed before the empty closing list commits the next stage cut. A completed first stage computes its recover value and starts the second stage. A completed second stage halts with decode(H,(y,recover(H,a))). For H>1 initialization is stage(false,B(H),initialAxis,0). For H=1 it is stage(true,0,initialAxis,0), so no source call is made. The fallback is the zero residue pair.
 
-**Definition 1.5 (The action word of this same run).**
+**Theorem 1.5 (Whole-word residue transport).**
+
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall w \in \operatorname{ListBool}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{res}\left(H, \operatorname{Run}\left(w, v\right)\right) = \operatorname{graftRun}\left(\operatorname{alpha}\left(\right), \operatorname{mapNot}\left(w\right), \operatorname{res}\left(H, v\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.residue_run` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+graftRun is GraftAffineClosure.run with alpha=(1,0). Its Boolean convention is false for replacement and true for graft, so mapNot complements the original chronological word. The equality holds for every natural H and every natural pair, without a positive-modulus premise. It transports the actual original word to its residue action; the installed scratch predictor uses this same transport at every synchronized current cut.
+
+**Definition 1.6 (The action word of this same run).**
 
 $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{A}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{append}\left(\operatorname{actions}\left(H, \operatorname{K}\left(H\right), \operatorname{tape}\left(H, v, \operatorname{false}\left(\right)\right)\right), \operatorname{actions}\left(H, (\operatorname{K}\left(H\right)+1), \operatorname{tape}\left(H, v, \operatorname{true}\left(\right)\right)\right)\right)\right)))$$
 
@@ -68,7 +80,7 @@ $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{N
 
 stageData(H,v,s) is the existing rounds(H,compiledReply(H,v,k),B(H),initialAxis), with k the public stage direction; tape(H,v,s) is its second component. These are mathematical descriptions of a run, not inputs of code. actions(H,k,tape) concatenates compile(H,k,c) followed by its positive closing list for each tape record (c,g), in order. A(H,v)=executionWord(H,v).
 
-**Definition 1.6 (The actual full-reply tape).**
+**Definition 1.7 (The actual full-reply tape).**
 
 $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{E}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{stageEventJoin}\left(H, v\right)\right)))$$
 
@@ -80,7 +92,7 @@ $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{N
 
 E(H,v)=executionEvents(H,v) concatenates the two stage tapes with the one intervening compute event. Each test contributes: one compute, all forward action events, one compute, one full reply g, every closing action event, and one compute. stageEventJoin denotes exactly this concatenation of events(H,K,tape(H,v,false)), the intervening compute, and events(H,K+1,tape(H,v,true)). Thus no closing call is omitted and no cached answer is moved across an action.
 
-**Definition 1.7 (Per-stage actual read counts).**
+**Definition 1.8 (Per-stage actual read counts).**
 
 $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), (\forall s \in \operatorname{Bool}\left(\right), \operatorname{T}\left(H, v, s\right) = \operatorname{ite}\left(H = 1, 0, \operatorname{length}\left(\operatorname{tape}\left(H, v, s\right)\right)\right))))$$
 
@@ -92,7 +104,7 @@ $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{N
 
 T(H,v,s) is zero for H=1 and the length of that actual stage's tape otherwise. Write T0=T(H,v,false), T1=T(H,v,true). Each equals B(H) for H>1.
 
-**Definition 1.8 (Forward graft counts, one per paid test).**
+**Definition 1.9 (Forward graft counts, one per paid test).**
 
 $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{J}\left(H, v\right) = \operatorname{sumForwardGrafts}\left(H, v\right)))$$
 
@@ -104,7 +116,7 @@ $$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{N
 
 J(H,v)=graftSum(H,v) sums countG(compile(H,k,c)) over the actual triples (k,c,g) of schedule(H,compiledReply(H,v)). It is the sum of the individual g_j in the source statement; it does not include closing grafts, which multiply this total by H.
 
-**Definition 1.9 (Suffix replacement indices).**
+**Definition 1.10 (Suffix replacement indices).**
 
 $$((\operatorname{suffixes}\left(\operatorname{nil}\left(\right)\right) = \operatorname{nil}\left(\right)) \land ((\forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consR}\left(w\right)\right) = \operatorname{suffixes}\left(w\right))) \land ((\forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consG}\left(w\right)\right) = \operatorname{cons}\left(\operatorname{countR}\left(w\right), \operatorname{suffixes}\left(w\right)\right))))$$
 
@@ -116,7 +128,7 @@ $$((\operatorname{suffixes}\left(\operatorname{nil}\left(\right)\right) = \opera
 
 suffixes(w)=graftSuffixes(w) lists, in graft occurrence order, the number of R letters strictly after that graft in w. R at the front adds no graft index; G at the front contributes countR of its tail. suffixAffineSum(w) is the sum, for r in suffixes(w) with multiplicity, of iterateR(r,(1,0)); iterateR(r,x) is R iterated r times on x. The affine sum therefore follows each actual graft through precisely its later replacements, including those in positive closing lists.
 
-**Theorem 1.10 (Operational execution, exact counts and every-prefix growth).**
+**Theorem 1.11 (Operational execution, exact counts and every-prefix growth).**
 
 $$(\forall H \in \operatorname{Nat}\left(\right), ((1 \le H) \implies ((\forall v \in \operatorname{NatPair}\left(\right), (((\exists t \in \operatorname{Phase}\left(H\right), \operatorname{OperationalRun}\left(\operatorname{P}\left(H\right), H, \operatorname{initial}\left(H\right), v, \operatorname{E}\left(H, v\right), t, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right), \operatorname{res}\left(H, v\right)\right))) \land (\operatorname{finalWord}\left(\operatorname{nil}\left(\right), \operatorname{E}\left(H, v\right)\right) = \operatorname{A}\left(H, v\right)) \land (\operatorname{res}\left(H, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) = \operatorname{res}\left(H, v\right)) \land (1 \le \operatorname{L}\left(H\right)) \land (\operatorname{L}\left(H\right) \le \operatorname{power}\left(H, 4\right)) \land (\operatorname{matrixPower}\left(H, \operatorname{L}\left(H\right)\right) = \operatorname{identity}\left(\right)) \land ((\forall k \in \operatorname{Nat}\left(\right), ((((1 \le k) \land (\operatorname{matrixPower}\left(H, k\right) = \operatorname{identity}\left(\right)))) \implies (\operatorname{L}\left(H\right) \le k)))) \land (\operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = (\operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right)+\operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right))) \land (\operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = \operatorname{ite}\left(H = 1, 0, (2 \cdot \operatorname{B}\left(H\right))\right)) \land (\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) = (\operatorname{L}\left(H\right) \cdot ((\operatorname{K}\left(H\right) \cdot \operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right))+((\operatorname{K}\left(H\right)+1) \cdot \operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right))))) \land (\operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) = (H \cdot \operatorname{J}\left(H, v\right))) \land (\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) \le ((\operatorname{L}\left(H\right) \cdot ((2 \cdot \operatorname{K}\left(H\right))+1)) \cdot \operatorname{B}\left(H\right))) \land (\operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) \le (((2 \cdot H) \cdot \operatorname{Gamma}\left(H\right)) \cdot \operatorname{B}\left(H\right))) \land (\operatorname{length}\left(\operatorname{suffixes}\left(\operatorname{A}\left(H, v\right)\right)\right) = \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right)) \land (\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right) = (\operatorname{iterateR}\left(\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right), v\right)+\operatorname{suffixAffineSum}\left(\operatorname{A}\left(H, v\right)\right))) \land ((\forall p \in \operatorname{ListBool}\left(\right), (\forall z \in \operatorname{ListBool}\left(\right), ((\operatorname{A}\left(H, v\right) = \operatorname{append}\left(p, z\right)) \implies (\operatorname{q}\left(\operatorname{Run}\left(p, v\right)\right) \le \operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right)))))) \land (\operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) \le (\operatorname{power}\left(2, \operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right)\right) \cdot (\operatorname{q}\left(v\right)+(2 \cdot \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right))))) \land (((H = 1) \implies (((\operatorname{A}\left(H, v\right) = \operatorname{nil}\left(\right)) \land (\operatorname{E}\left(H, v\right) = \operatorname{nil}\left(\right)))))))))))$$
 
@@ -145,6 +157,7 @@ Read optimality against all continuous competitors, immutable entry storage, a s
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.matrix`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.period`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.positive_execution`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.residue_run`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.tests`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Acquisition/ContinuousAcquisitionTransport](ContinuousAcquisitionTransport.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceCoordinates/CommonDirectionScheduler](../SourceCoordinates/CommonDirectionScheduler.md)
