@@ -108,8 +108,8 @@ private theorem base_radius : radius baseMatrix = ENNReal.ofReal (1 / 2) := by
   unfold radius
   rw [spectralRadius_eq_of_unital, base_spectrum]
   simp only [Set.mem_singleton_iff, iSup_iSup_eq_left]
-  convert (ENNReal.ofReal_coe_nnreal (p := ‖(1 / 2 : ℂ)‖₊)).symm using 1 <;>
-    norm_num [coe_nnnorm, norm_div]
+  convert (ENNReal.ofReal_coe_nnreal (p := ‖(1 / 2 : ℂ)‖₊)).symm using 1
+  norm_num [coe_nnnorm, norm_div]
 
 private theorem witness_admissible : Admissible 2 sizes 1 baseMatrix delays (1 / 2) := by
   refine ⟨?_, ?_, ?_, by norm_num, by norm_num, base_radius⟩
@@ -138,7 +138,19 @@ private theorem unstable_eigenvector :
 
 private theorem asynchronous_radius :
     ENNReal.ofReal (5 / 4) ≤ radius (asyncMatrix baseMatrix delays 1) := by
-  sorry
+  obtain ⟨hv, he⟩ := unstable_eigenvector
+  have hmem :=
+    D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree.eigenpair_mem_spectrum
+      _ (5 / 4) unstableVector hv he
+  unfold radius
+  rw [spectralRadius_eq_of_unital]
+  have hnorm : (‖(5 / 4 : ℂ)‖₊ : ℝ≥0∞) = ENNReal.ofReal (5 / 4) := by
+    convert (ENNReal.ofReal_coe_nnreal (p := ‖(5 / 4 : ℂ)‖₊)).symm using 1
+    norm_num [coe_nnnorm, norm_div]
+  rw [← hnorm]
+  exact le_iSup₂ (f := fun z (_ : z ∈ spectrum ℂ
+    ((asyncMatrix baseMatrix delays 1).map (algebraMap ℝ ℂ))) => (‖z‖₊ : ℝ≥0∞))
+    (5 / 4 : ℂ) hmem
 
 private theorem not_q1 : ¬ Q1 := by
   sorry
