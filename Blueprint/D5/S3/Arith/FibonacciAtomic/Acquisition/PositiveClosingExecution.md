@@ -8,7 +8,7 @@ The source is any v=(a,b) in Nat squared, including zero. Its original operation
 
 **Definition 1.1 (The public matrix).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \operatorname{M}\left(H\right) = \operatorname{matrixTwo}\left(0, 1, 1, 1\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), \operatorname{M}\left(H\right) = \operatorname{matrixTwo}\left(0, 1, 1, 1\right))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.matrix` (`✓ std3`).
 
@@ -20,7 +20,7 @@ M(H) is the matrix with rows (0,1) and (1,1) over ZMod H. Its inverse has rows (
 
 **Definition 1.2 (An effective least matrix period).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \operatorname{L}\left(H\right) = \operatorname{ite}\left(H = 0, 1, \operatorname{min}\left(\operatorname{positiveMatrixPeriods}\left(H\right)\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), \operatorname{L}\left(H\right) = \operatorname{ite}\left(H = 0, 1, \operatorname{min}\left(\operatorname{positiveMatrixPeriods}\left(H\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.period` (`✓ std3`).
 
@@ -32,7 +32,7 @@ L(H)=period(H) is the least positive k with M(H)^k=I for H>0; L(0)=1 is an unuse
 
 **Definition 1.3 (Chronological positive closing).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall w \in \operatorname{ListBool}\left(\right), \operatorname{close}\left(H, w\right) = \operatorname{flatMap}\left(\operatorname{closeLetter}\left(H\right), \operatorname{reverse}\left(w\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall w \in \operatorname{ListBool}\left(\right), \operatorname{close}\left(H, w\right) = \operatorname{flatMap}\left(\operatorname{closeLetter}\left(H\right), \operatorname{reverse}\left(w\right)\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.closing` (`✓ std3`).
 
@@ -44,7 +44,7 @@ closeLetter(H,true) is L(H)-1 individual R calls; closeLetter(H,false) is H-1 in
 
 **Definition 1.4 (A source-blind public controller).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \operatorname{P}\left(H\right) = \operatorname{Controller}\left(\operatorname{code}\left(H\right), \operatorname{initial}\left(H\right), \operatorname{zeroPair}\left(\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), \operatorname{P}\left(H\right) = \operatorname{Controller}\left(\operatorname{code}\left(H\right), \operatorname{initial}\left(H\right), \operatorname{zeroPair}\left(\right)\right))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.controller` (`✓ std3`).
 
@@ -58,7 +58,7 @@ At a nonzero stage counter the code computes c=shift(H,a) and w=compile(H,k,c), 
 
 **Definition 1.5 (The action word of this same run).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall v \in \operatorname{NatPair}\left(\right), \operatorname{A}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{append}\left(\operatorname{actions}\left(H, \operatorname{K}\left(H\right), \operatorname{tape}\left(H, v, \operatorname{false}\left(\right)\right)\right), \operatorname{actions}\left(H, \operatorname{K}\left(H\right)+1, \operatorname{tape}\left(H, v, \operatorname{true}\left(\right)\right)\right)\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{A}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{append}\left(\operatorname{actions}\left(H, \operatorname{K}\left(H\right), \operatorname{tape}\left(H, v, \operatorname{false}\left(\right)\right)\right), \operatorname{actions}\left(H, (\operatorname{K}\left(H\right)+1), \operatorname{tape}\left(H, v, \operatorname{true}\left(\right)\right)\right)\right)\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.executionWord` (`✓ std3`).
 
@@ -70,7 +70,7 @@ stageData(H,v,s) is the existing rounds(H,compiledReply(H,v,k),B(H),initialAxis)
 
 **Definition 1.6 (The actual full-reply tape).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall v \in \operatorname{NatPair}\left(\right), \operatorname{E}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{stageEventJoin}\left(H, v\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{E}\left(H, v\right) = \operatorname{ite}\left(H = 1, \operatorname{nil}\left(\right), \operatorname{stageEventJoin}\left(H, v\right)\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.executionEvents` (`✓ std3`).
 
@@ -82,7 +82,7 @@ E(H,v)=executionEvents(H,v) concatenates the two stage tapes with the one interv
 
 **Definition 1.7 (Per-stage actual read counts).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall v \in \operatorname{NatPair}\left(\right), \forall s \in \operatorname{Bool}\left(\right), \operatorname{T}\left(H, v, s\right) = \operatorname{ite}\left(H = 1, 0, \operatorname{length}\left(\operatorname{tape}\left(H, v, s\right)\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), (\forall s \in \operatorname{Bool}\left(\right), \operatorname{T}\left(H, v, s\right) = \operatorname{ite}\left(H = 1, 0, \operatorname{length}\left(\operatorname{tape}\left(H, v, s\right)\right)\right))))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.tests` (`✓ std3`).
 
@@ -94,7 +94,7 @@ T(H,v,s) is zero for H=1 and the length of that actual stage's tape otherwise. W
 
 **Definition 1.8 (Forward graft counts, one per paid test).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall v \in \operatorname{NatPair}\left(\right), \operatorname{J}\left(H, v\right) = \operatorname{sumForwardGrafts}\left(H, v\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall v \in \operatorname{NatPair}\left(\right), \operatorname{J}\left(H, v\right) = \operatorname{sumForwardGrafts}\left(H, v\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.graftSum` (`✓ std3`).
 
@@ -106,7 +106,7 @@ J(H,v)=graftSum(H,v) sums countG(compile(H,k,c)) over the actual triples (k,c,g)
 
 **Definition 1.9 (Suffix replacement indices).**
 
-$$(\operatorname{suffixes}\left(\operatorname{nil}\left(\right)\right) = \operatorname{nil}\left(\right) \land \forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consR}\left(w\right)\right) = \operatorname{suffixes}\left(w\right) \land \forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consG}\left(w\right)\right) = \operatorname{cons}\left(\operatorname{countR}\left(w\right), \operatorname{suffixes}\left(w\right)\right))$$
+$$((\operatorname{suffixes}\left(\operatorname{nil}\left(\right)\right) = \operatorname{nil}\left(\right)) \land ((\forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consR}\left(w\right)\right) = \operatorname{suffixes}\left(w\right))) \land ((\forall w \in \operatorname{ListBool}\left(\right), \operatorname{suffixes}\left(\operatorname{consG}\left(w\right)\right) = \operatorname{cons}\left(\operatorname{countR}\left(w\right), \operatorname{suffixes}\left(w\right)\right))))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.graftSuffixes` (`✓ std3`).
 
@@ -118,7 +118,7 @@ suffixes(w)=graftSuffixes(w) lists, in graft occurrence order, the number of R l
 
 **Theorem 1.10 (Operational execution, exact counts and every-prefix growth).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), (1 \le H) \implies (\forall v \in \operatorname{NatPair}\left(\right), (\exists t \in \operatorname{Phase}\left(H\right), \operatorname{OperationalRun}\left(\operatorname{P}\left(H\right), H, \operatorname{initial}\left(H\right), v, \operatorname{E}\left(H, v\right), t, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right), \operatorname{res}\left(H, v\right)\right) \land \operatorname{finalWord}\left(\operatorname{nil}\left(\right), \operatorname{E}\left(H, v\right)\right) = \operatorname{A}\left(H, v\right) \land \operatorname{res}\left(H, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) = \operatorname{res}\left(H, v\right) \land 1 \le \operatorname{L}\left(H\right) \land \operatorname{L}\left(H\right) \le \operatorname{power}\left(H, 4\right) \land \operatorname{matrixPower}\left(H, \operatorname{L}\left(H\right)\right) = \operatorname{identity}\left(\right) \land \forall k \in \operatorname{Nat}\left(\right), ((1 \le k \land \operatorname{matrixPower}\left(H, k\right) = \operatorname{identity}\left(\right))) \implies (\operatorname{L}\left(H\right) \le k) \land \operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = \operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right)+\operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right) \land \operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = \operatorname{ite}\left(H = 1, 0, 2 \cdot \operatorname{B}\left(H\right)\right) \land \operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) = \operatorname{L}\left(H\right) \cdot \operatorname{K}\left(H\right) \cdot \operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right)+\operatorname{K}\left(H\right)+1 \cdot \operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right) \land \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) = H \cdot \operatorname{J}\left(H, v\right) \land \operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) \le \operatorname{L}\left(H\right) \cdot 2 \cdot \operatorname{K}\left(H\right)+1 \cdot \operatorname{B}\left(H\right) \land \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) \le 2 \cdot H \cdot \operatorname{Gamma}\left(H\right) \cdot \operatorname{B}\left(H\right) \land \operatorname{length}\left(\operatorname{suffixes}\left(\operatorname{A}\left(H, v\right)\right)\right) = \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) \land \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right) = \operatorname{iterateR}\left(\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right), v\right)+\operatorname{suffixAffineSum}\left(\operatorname{A}\left(H, v\right)\right) \land \forall p \in \operatorname{ListBool}\left(\right), \forall z \in \operatorname{ListBool}\left(\right), (\operatorname{A}\left(H, v\right) = \operatorname{append}\left(p, z\right)) \implies (\operatorname{q}\left(\operatorname{Run}\left(p, v\right)\right) \le \operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right)) \land \operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) \le \operatorname{power}\left(2, \operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right)\right) \cdot \operatorname{q}\left(v\right)+2 \cdot \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) \land (H = 1) \implies ((\operatorname{A}\left(H, v\right) = \operatorname{nil}\left(\right) \land \operatorname{E}\left(H, v\right) = \operatorname{nil}\left(\right)))))$$
+$$(\forall H \in \operatorname{Nat}\left(\right), ((1 \le H) \implies ((\forall v \in \operatorname{NatPair}\left(\right), (((\exists t \in \operatorname{Phase}\left(H\right), \operatorname{OperationalRun}\left(\operatorname{P}\left(H\right), H, \operatorname{initial}\left(H\right), v, \operatorname{E}\left(H, v\right), t, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right), \operatorname{res}\left(H, v\right)\right))) \land (\operatorname{finalWord}\left(\operatorname{nil}\left(\right), \operatorname{E}\left(H, v\right)\right) = \operatorname{A}\left(H, v\right)) \land (\operatorname{res}\left(H, \operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) = \operatorname{res}\left(H, v\right)) \land (1 \le \operatorname{L}\left(H\right)) \land (\operatorname{L}\left(H\right) \le \operatorname{power}\left(H, 4\right)) \land (\operatorname{matrixPower}\left(H, \operatorname{L}\left(H\right)\right) = \operatorname{identity}\left(\right)) \land ((\forall k \in \operatorname{Nat}\left(\right), ((((1 \le k) \land (\operatorname{matrixPower}\left(H, k\right) = \operatorname{identity}\left(\right)))) \implies (\operatorname{L}\left(H\right) \le k)))) \land (\operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = (\operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right)+\operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right))) \land (\operatorname{paidReads}\left(\operatorname{E}\left(H, v\right)\right) = \operatorname{ite}\left(H = 1, 0, (2 \cdot \operatorname{B}\left(H\right))\right)) \land (\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) = (\operatorname{L}\left(H\right) \cdot ((\operatorname{K}\left(H\right) \cdot \operatorname{T}\left(H, v, \operatorname{false}\left(\right)\right))+((\operatorname{K}\left(H\right)+1) \cdot \operatorname{T}\left(H, v, \operatorname{true}\left(\right)\right))))) \land (\operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) = (H \cdot \operatorname{J}\left(H, v\right))) \land (\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right) \le ((\operatorname{L}\left(H\right) \cdot ((2 \cdot \operatorname{K}\left(H\right))+1)) \cdot \operatorname{B}\left(H\right))) \land (\operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right) \le (((2 \cdot H) \cdot \operatorname{Gamma}\left(H\right)) \cdot \operatorname{B}\left(H\right))) \land (\operatorname{length}\left(\operatorname{suffixes}\left(\operatorname{A}\left(H, v\right)\right)\right) = \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right)) \land (\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right) = (\operatorname{iterateR}\left(\operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right), v\right)+\operatorname{suffixAffineSum}\left(\operatorname{A}\left(H, v\right)\right))) \land ((\forall p \in \operatorname{ListBool}\left(\right), (\forall z \in \operatorname{ListBool}\left(\right), ((\operatorname{A}\left(H, v\right) = \operatorname{append}\left(p, z\right)) \implies (\operatorname{q}\left(\operatorname{Run}\left(p, v\right)\right) \le \operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right)))))) \land (\operatorname{q}\left(\operatorname{Run}\left(\operatorname{A}\left(H, v\right), v\right)\right) \le (\operatorname{power}\left(2, \operatorname{countR}\left(\operatorname{A}\left(H, v\right)\right)\right) \cdot (\operatorname{q}\left(v\right)+(2 \cdot \operatorname{countG}\left(\operatorname{A}\left(H, v\right)\right))))) \land (((H = 1) \implies (((\operatorname{A}\left(H, v\right) = \operatorname{nil}\left(\right)) \land (\operatorname{E}\left(H, v\right) = \operatorname{nil}\left(\right)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.positive_execution` (`✓ std3`). ∎
 
