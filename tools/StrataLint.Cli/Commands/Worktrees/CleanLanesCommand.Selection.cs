@@ -86,7 +86,7 @@ internal static partial class CleanLanesCommand
     private static bool HasLocalAllocationEvidence(
         string root, string branch, string logPath, IWorktreeProcessRunner runner)
     {
-        if (Path.Exists(logPath) || new FileInfo(logPath).LinkTarget is not null) return true;
+        if (File.Exists(logPath) || new FileInfo(logPath).LinkTarget is not null) return true;
         var reference = "refs/heads/" + branch;
         var references = Decode(RunGit(root, ["for-each-ref", "--format=%(refname)", reference],
             runner, "could not inspect allocation branch identity").StandardOutput);
