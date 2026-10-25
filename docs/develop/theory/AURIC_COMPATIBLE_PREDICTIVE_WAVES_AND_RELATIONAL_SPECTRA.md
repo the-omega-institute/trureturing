@@ -3716,3 +3716,700 @@ $$
 深度界依赖已指定的 $\alpha>0$，当 $\alpha\downarrow0$ 时增大，因而该界不提供固定深度、有限精度的精确半正定判定。证明从一个负谱方向选取 $E$，只给出见证的存在及资源规模，不给寻找该方向、选择并实现 $F_E$ 的多项式时间算法。实际独立且共同校准的参考副本，以及集合内标签的联合相干投影，均须按定义 27.1 供应；仅有边缘态相同的相关副本不满足张量独立条件。若只有基测量的粗粒化 $\sum_{(j,a)\in E}|j,a\rangle\langle j,a|$，式 (27.10) 的交叉项不在该操作中，故上述见证不随之取得。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 递归记录下的相容通道与关系分辨率
+
+**定义 28.1（共同来源、历史和查询）。** 令非空模型类 $\Omega$ 同时编码环境、观察者内部状态、许可操作和历史生成规则。固定一个按已得历史选择动作的协议；同一模型在整个执行中保持同一个来源。对实际有限记录 $h_n$，令
+
+$$
+\mathcal K_n=\{\omega\in\Omega:\omega\text{ 与 }h_n\text{ 及已声明的约束共同相容}\}.
+$$
+
+查询是函数 $f:\Omega\to Y$，其中 $(Y,d_Y)$ 为度量空间。定义预测集合与直径分辨率
+
+$$
+\mathcal P_n(f)=f(\mathcal K_n),\qquad
+w_n(f)=\sup_{x,y\in\mathcal K_n}d_Y(f(x),f(y)).
+\tag{28.1}
+$$
+
+以下紧表示条件指：$\Omega$ 是非空紧度量空间，$\mathcal K_0=\Omega$，新增条件 $C_n$ 闭，$\mathcal K_{n+1}=\mathcal K_n\cap C_{n+1}$ 且每层非空。记 $\mathcal K_\infty=\bigcap_n\mathcal K_n$。模型修订若扩展 $\Omega$，须重新定义这些集合；空相容集不作为确定预测的证据。
+
+五标签仍取 $\Sigma=(0,1,2,3,13)=(000,100,010,001,101)$。两个可用的紧载体分别为
+
+$$
+\mathcal E_5=\{G\in M_5(\mathbb C):G=G^\dagger,\ G\succeq0,\ G_{aa}=1\},\qquad
+\mathcal C_{3\to5}=\{C\succeq0:\operatorname{Tr}_{\rm out}C=I_3\}.
+\tag{28.2}
+$$
+
+前者的二阶主子式给 $|G_{ab}|\le1$；后者满足 $\operatorname{Tr}C=3$。故二者在有限维实坐标空间中闭且有界，因而紧。第二个集合采用未归一化 Choi 约定，与全部 $T:M_3\to M_5$ 的 CPTP 通道一一对应。闭的矩阵条目区间和效果误差条件给出闭相容集。Gram 内积、Hamiltonian 耦合与通道效果各按自身类型作查询，不作相互替换。
+
+**命题 28.2（关系分辨率与相容通道的后继盲区）。** 对定义 28.1 在 (28.2) 上的紧表示及连续查询 $f$，以下紧性中间结论给出关系分辨率：
+
+$$
+\mathcal K_\infty\ne\varnothing,\qquad
+w_n(f)\downarrow\operatorname{diam}f(\mathcal K_\infty).
+\tag{28.3}
+$$
+
+所以任意正分辨率最终可达，当且仅当 $f$ 在极限相容纤维上常值；不要求整个模型唯一。对非空紧菜单 $Q$ 和联合连续的 $F:Q\times\Omega\to Y$，$f_q=F(q,\cdot)$ 还满足
+
+$$
+\sup_{q\in Q}w_n(f_q)\downarrow
+\sup_{q\in Q}\operatorname{diam}f_q(\mathcal K_\infty).
+\tag{28.4}
+$$
+
+若开集 $O$ 包含 $\mathcal K_\infty$，则某个有限 $N$ 有 $\mathcal K_N\subset O$。尤其连续实查询 $g$ 若 $\min_{\mathcal K_\infty}g>0$，则某层已有 $\min_{\mathcal K_N}g>0$。这些是语义存在结论；有效停止另需可取得的界。对 §29 的实际相容通道对 $\mathcal K_n=\{T_{t,+},T_{t,-}\}$，所有原效果查询的宽度为零，但后继查询 $T\mapsto\mathcal G T$ 的宽度恒为 $4t\sqrt{1-t^2}>0$，所以原菜单分辨率不能代替后继重建分辨率。
+
+证明。这里在通道与关系载体上消费 Cantor 嵌套紧集原理及连续函数达到极值的成熟机制。取 $x_n\in\mathcal K_n$ 的收敛子列；对固定 $m$，子列最终属于闭集 $\mathcal K_m$，所以极限属于每个 $\mathcal K_m$。交集也闭，故紧且非空。
+
+直径在 $\mathcal K_n^2$ 上达到，且递减。取达到点对 $(x_n,y_n)$ 的收敛子列，其极限 $(x,y)$ 属于 $\mathcal K_\infty^2$。连续性给 $\lim_nw_n=d_Y(f(x),f(y))\le\operatorname{diam}f(\mathcal K_\infty)$；反向不等式由包含关系给出。对 (28.4)，改在紧集 $Q\times\mathcal K_n^2$ 上取达到三元组，相同子列论证给出等式。
+
+若每个 $\mathcal K_n\setminus O$ 非空，它们构成嵌套紧集，交集非空，与假设矛盾。取 $O=\{g>0\}$，再用紧集上正连续函数的正最小值，得到裕量结论。最后，定理 29.2 的完整效果相等及非零后继距离，分别就是该双点相容集上这两种查询的直径。∎
+
+此命题用于 (28.2) 的具体查询，如 $G\mapsto G_{0,13}$、$T\mapsto T^\dagger(J_s)$ 及 $T\mapsto\mathcal G T$。最后一项取定义 18.1 的 diamond 范数度量；有限维线性映射在该范数下连续。固定 $s$ 的效果查询连续；所有深度组成的无限菜单是否满足 (28.4) 的假设须另证。§29 给出即使全部原深度都已知，后继查询仍不确定的实际纤维。
+
+对连续实查询，令 $a_n=\min_{\mathcal K_n}f$、$b_n=\max_{\mathcal K_n}f$，则
+
+$$
+\min_{z\in\mathbb R}\max_{\omega\in\mathcal K_n}|z-f(\omega)|
+=\frac{b_n-a_n}{2},\qquad z_n=\frac{a_n+b_n}{2}.
+\tag{28.5}
+$$
+
+因为任意 $z$ 到两个达到端点的最大距离至少为半宽，中点到整个 $[a_n,b_n]$ 的距离至多为半宽。无需假设 $f(\mathcal K_n)$ 是区间。这与 §29 的通道中点重建是不同目标上的同一三角不等式机制。
+
+**支撑推导 28.3（无限细节与支持约束的剩余自由）。** 以下标准反例用于命题 28.2 的条件边界：相容预测不能仅凭逐层相容升级为统一、概率或算法结论。
+
+证明。首先撤去紧性，在 $\Omega=\mathbb R$ 中取 $\mathcal K_n=[n,\infty)$，每层闭且非空，交集为空。保留紧性但问精确临界等式时，$\mathcal K_n=[0,1/n]$ 的极限只有零，每个有限层仍含非零点。
+
+对无限细节，取
+
+$$
+\Omega=\{0,1\}^{\mathbb N_{\ge1}},\quad
+d(x,y)=\sum_{k\ge1}2^{-k}|x_k-y_k|,\quad
+\mathcal K_n=\{x:x_1=\cdots=x_n=0\}.
+\tag{28.6}
+$$
+
+逐坐标抽取子列再取对角子列，尾和一致小，证明此度量空间紧。$\mathcal K_\infty=\{0^\infty\}$，$\operatorname{diam}\mathcal K_n=2^{-n}$。坐标查询 $f_k(x)=x_k$ 在 $n\ge k$ 时宽度为零，但每个有限 $n$ 都有 $\sup_kw_n(f_k)=1$。全称查询 $g(x)=\mathbf1\{\forall k,x_k=0\}$ 在每个有限层仍取零与一；它在 $0^\infty$ 不连续，因为只改变第 $n+1$ 位便使世界距离趋零而输出跳变。连续二值查询恰好只依赖有限前缀：由紧性得一致连续，取输出容差 $1/2$，再取 $2^{-N}$ 小于所得输入容差，相同前 $N$ 位便强迫输出相同；反向由有限前缀柱集开闭得到。坐标菜单不具有 (28.4) 的联合连续紧参数表示，故没有矛盾。
+
+再设相容类含两个对全部许可记录响应相同的模型 $\omega_0,\omega_1$，事件在两者中分别为零、一。每个
+
+$$
+\mu_\lambda=(1-\lambda)\delta_{\omega_0}+\lambda\delta_{\omega_1},\qquad0\le\lambda\le1
+\tag{28.7}
+$$
+
+都满足同样的支持约束，却给事件概率 $\lambda$。共同确定成立的记录事件的条件化不改变权重。故相容性本身不选择概率。§29 的相位符号正给出两个不可由原菜单排除的模型；给它们加先验是额外输入。矩阵强正性要求任意复系数的二次型非负，也不由逐条记录非负推出。
+
+最后，确定递归也不必收敛。关于夹角 $\theta$ 的两条过原点直线的反射复合为旋转 $2\theta$；取 $\theta=\pi/2$，非零初值按 $x,-x,x,-x,\ldots$ 振荡。预测集合收缩不等于实际状态静止。∎
+
+对已知收缩的摘要更新，可直接消费《AURIC 递归预测与边界几何》支撑推导 10.4 的 Banach 机制，而无需把它当作新原理：在非空完备度量空间上，若 $d(Tx,Ty)\le qd(x,y)$、$0\le q<1$，则唯一不动点 $x_*$ 满足
+
+$$
+d(T^nx_0,x_*)\le\frac{q^n}{1-q}d(Tx_0,x_0),\qquad
+d(x,x_*)\le\frac{d(x,Tx)}{1-q}.
+\tag{28.8}
+$$
+
+相邻距离的几何尾和使轨道 Cauchy，连续性给不动点，不动点间的 $q$ 倍距离界给唯一性；$d(x,x_*)\le d(x,Tx)+qd(x,x_*)$ 给残差界。若供应可计算的有理上界 $q\le\bar q<1$、$d(Tx_0,x_0)\le D$ 和正有理容差 $\epsilon$，搜索 $\bar q^nD/(1-\bar q)<\epsilon$ 即给可计算停止层。只有抽象紧性或“最终稳定”的承诺不供应这些数据，见 §31。
+
+## 29. 原五维仪器的符号相位纤维与精确重建半径
+
+**定义 29.1（固定仪器和双世界）。** 完整保留 §17.1 的物理基、$B,K_0,K_1,U,W,P_+,f,q,p,P$ 和擦除标签通道 $\mathcal G$。令 $r=(\xi-e)/\sqrt2$，$J_s=(\mathcal G^\dagger)^s(P)$，$s$ 为非负整数。$M_d=M_d(\mathbb C)$，内积对第二变量线性，所有通道为复线性 CPTP。置
+
+$$
+\begin{gathered}
+c=(e_0+e_1-e_3-e_4)/2,\qquad a=Uq,\qquad g=Uf,\\
+\alpha_t=\sqrt{1-t^2},\qquad w_{t,\pm}=\alpha_tc\pm\mathrm i t p,\qquad0<t<1,\\
+T_{t,\pm}(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)w_{t,\pm}w_{t,\pm}^\dagger,\\
+S_\pm=\mathcal G T_{t,\pm},\qquad S_B=\mathcal G\operatorname{Ad}_B.
+\end{gathered}
+\tag{29.1}
+$$
+
+原菜单仅为 $\{J_s:s\ge0\}$ 的完整效果数据，不含分支标签、新相位控制、任意后选择联合历史或所有量子效果。范数统一采用定义 18.1，即
+
+$$
+\|\Lambda\|_\diamond=\sup_{k\ge1}\sup_{0\ne Z\in M_k\otimes M_3}
+\frac{\|(\operatorname{id}_{M_k}\otimes\Lambda)(Z)\|_1}{\|Z\|_1},
+\qquad\|Z\|_1=\operatorname{Tr}\sqrt{Z^\dagger Z}.
+\tag{29.2}
+$$
+
+任意复矩阵、任意有限且未触动的参考都包含在上确界内。效果误差 $\delta(T)$ 仍按定义 18.1；它是全部输入上的算子误差，不是三次随机试验的读数。
+
+**定理 29.2（全深度实效果盲区与完整参考距离）。** (29.1) 的两个通道满足
+
+$$
+\begin{gathered}
+T_{t,+}^\dagger(J)=T_{t,-}^\dagger(J)
+\quad\text{对固定物理基下每个实对称 }J,\\
+T_{t,+}^\dagger(J_s)=T_{t,-}^\dagger(J_s)\quad(s\ge0),\\
+\delta(T_{t,\pm})=t^2,\qquad
+\|S_\pm-S_B\|_\diamond=2t,\qquad
+\|S_+-S_-\|_\diamond=4t\sqrt{1-t^2}.
+\end{gathered}
+\tag{29.3}
+$$
+
+正号族及其 $\delta=t^2,d=2t$ 已由《尖锐任务与保留环境记忆 II》定理 28.2 供应。本条的内容是把该族接成同一全深度实菜单的符号双世界，连同后继距离、风险和新增相位效果的接口；不把已供应的锐性包装为新发现。
+
+证明。原矩阵直接给
+
+$$
+\begin{gathered}
+\|c\|=1,\quad B^\dagger c=0,\quad \|a\|=\|g\|=1,\quad a^\dagger g=0,\\
+K_0B=BU/\sqrt2,\quad K_1B=BUW/\sqrt2,\\
+K_0c=K_1c=Bg/\sqrt2,\quad K_0p=K_1p=Ba/\sqrt2.
+\end{gathered}
+\tag{29.4}
+$$
+
+$c\perp p$ 使 $w_{t,\pm}$ 单位化。两个 Kraus 算子 $BP_+$、$w_{t,\pm}f^\dagger$ 满足伴随平方和 $P_++ff^\dagger=I_3$。因此完全正、保迹，且公式在任意复矩阵上复线性。这里消费的是 Watrous《量子信息理论》定理 2.22、2.26 及推论 2.27 的表示准则。
+
+$P,K_0,K_1$ 在物理基下实，归纳可知 $J_s$ 实对称。对任意实对称 $J$，$c^\dagger Jp=p^\dagger Jc\in\mathbb R$，故
+
+$$
+w_{t,\pm}^\dagger Jw_{t,\pm}
+=\alpha_t^2c^\dagger Jc+t^2p^\dagger Jp.
+\tag{29.5}
+$$
+
+两个伴随都等于 $P_+B^\dagger JBP_++(w_{t,\pm}^\dagger Jw_{t,\pm})ff^\dagger$，得到完整算子相等，而非仅对一个输入的标量相等。此处不需要对深度取极限。
+
+为同时核对误差尺度，记 $H_s=B^\dagger J_sB$。由 (17.3) 及 $H_0=qq^\dagger$，在 $(q,r,f)$ 基下
+
+$$
+\begin{gathered}
+H_0=\operatorname{diag}(1,0,0),\qquad
+H_1=\begin{pmatrix}1/16&3/16&0\\3/16&9/16&0\\0&0&3/8\end{pmatrix},\\
+H_2=\begin{pmatrix}17/32&3/32&0\\3/32&9/32&0\\0&0&3/16\end{pmatrix},\\
+\begin{array}{c|ccc}
+s&0&1&2\\ \hline
+c^\dagger J_sc&0&3/8&3/16\\
+p^\dagger J_sp&1&1/16&17/32\\
+f^\dagger H_sf&0&3/8&3/16
+\end{array}.
+\end{gathered}
+\tag{29.6}
+$$
+
+这些标量也由 $q=(x,x,y)^{\mathsf T}$，$x=(\sqrt2+1)/\sqrt{12}$、$y=(\sqrt2-2)/\sqrt{12}$，$q^\dagger Uq=1/4$、$q^\dagger Uf=\sqrt6/4$ 与 (29.4) 得到。$H_s$ 对 $P_+\oplus ff^\dagger$ 分块对角，(29.5) 因而给
+
+$$
+T_{t,\pm}^\dagger(J_s)-H_s
+=t^2\kappa_sff^\dagger,\qquad
+(\kappa_0,\kappa_1,\kappa_2)=(1,-5/16,11/32).
+\tag{29.7}
+$$
+
+取最大算子范数得到 $\delta=t^2$。
+
+令 $v_\pm=\alpha_tg\pm\mathrm it a$。由 (29.4) 及 $\mathcal G\operatorname{Ad}_B=\operatorname{Ad}_{BU}\Delta_W$，对每个 $X\in M_3$ 都有
+
+$$
+\begin{aligned}
+(S_\pm-S_B)(X)&=(f^\dagger Xf)BD_\pm B^\dagger,
+&D_\pm&=v_\pm v_\pm^\dagger-gg^\dagger,\\
+(S_+-S_-)(X)&=(f^\dagger Xf)BD_{+-}B^\dagger,
+&D_{+-}&=v_+v_+^\dagger-v_-v_-^\dagger.
+\end{aligned}
+\tag{29.8}
+$$
+
+在 $(g,a)$ 基下非零块是
+
+$$
+D_+=\begin{pmatrix}-t^2&-\mathrm it\alpha_t\\\mathrm it\alpha_t&t^2\end{pmatrix},\quad
+D_-=\overline{D_+},\quad
+D_{+-}=\begin{pmatrix}0&-2\mathrm it\alpha_t\\2\mathrm it\alpha_t&0\end{pmatrix}.
+\tag{29.9}
+$$
+
+$D_+$ 迹零、行列式 $-t^2$，故特征值为 $\pm t$；$D_{+-}$ 特征值为 $\pm2t\alpha_t$。相应迹范数为 $2t$、$4t\alpha_t$，等距 $B$ 保持它们。
+
+完整放大范数也恰等于上述迹范数。事实上，对 $\Lambda_D(X)=(f^\dagger Xf)BDB^\dagger$ 和任意参考及任意复输入 $Z$，令
+
+$$
+Z_{ff}=(I_k\otimes f^\dagger)Z(I_k\otimes f).
+$$
+
+放大输出为 $Z_{ff}\otimes BDB^\dagger$。迹范数理想性质给 $\|Z_{ff}\|_1\le\|Z\|_1$，张量迹范数相乘给输出至多 $\|Z\|_1\|D\|_1$。输入 $ff^\dagger$ 的迹范数为一并达到 $\|D\|_1$，所以 $\|\Lambda_D\|_\diamond=\|D\|_1$。该论证不把一般复输入约化为未证的“只需状态”断言，且常数与参考维数无关。代入三个 $D$ 即得 (29.3)。∎
+
+**定理 29.3（同数据两世界的精确风险和相位读口）。** 固定 $t$，重建规则仅获得定理 29.2 的共同效果数据，须对两个世界输出同一个 $R:M_3\to M_5$。则
+
+$$
+\boxed{
+\inf_{\substack{R:M_3\to M_5\\R\ {\rm CPTP}}}
+\max\{\|R-S_+\|_\diamond,\|R-S_-\|_\diamond\}
+=2t\sqrt{1-t^2}=2\sqrt{\delta(1-\delta)},\qquad\delta=t^2.}
+\tag{29.10}
+$$
+
+相同条件下的后继查询宽度为 $4t\sqrt{1-t^2}$；仅继续读取原菜单不能减小此双世界宽度。新增合法效果
+
+$$
+h=(g+\mathrm ia)/\sqrt2,\qquad E_y=Bhh^\dagger B^\dagger
+\tag{29.11}
+$$
+
+则对输入 $ff^\dagger$ 给出精确响应
+
+$$
+\operatorname{Tr}\bigl(E_yS_\pm(ff^\dagger)\bigr)
+=\frac12\pm t\sqrt{1-t^2}.
+\tag{29.12}
+$$
+
+证明。三角不等式给任意 $R$ 的最大误差至少为 $\|S_+-S_-\|_\diamond/2$。中点 $R_0=(S_++S_-)/2$ 是同域同陪域的 CPTP 通道，到两端点均为该半距离，故下确界达到。共同数据的任何确定后处理仍相同，不能改变相容端点。$Bh$ 单位化，故 $E_y$ 是效果；两输出为 $Bv_\pm v_\pm^\dagger B^\dagger$，而 $h^\dagger v_\pm=(\alpha_t\pm t)/\sqrt2$，取模平方即得。∎
+
+该风险无先验，是双世界子类的精确值；对完整相容通道纤维只给下界。它与到固定基准 $S_B$ 的 $2\sqrt\delta$ 距离不同，在 $\delta\uparrow1$ 时双世界半径趋零，不能将二者混同。$E_y$ 的虚交叉项超出原实菜单。一般 $t$ 下，响应概率不同不等于有限随机样本必然判对；$t=1/\sqrt2$ 时的两个输出恰正交，响应分别为一、零。数学效果的合法性也不供应实际制备和控制资源。
+
+作为这一接口的误差尺度供应，本卷定理 18.3 及 §25 给所有原域通道
+
+$$
+\|\mathcal G T-S_B\|_\diamond\le\min\{2,185\sqrt{\delta(T)}\}
+\quad(\delta(T)\le1).
+\tag{29.13}
+$$
+
+其九单位常数矩阵为 $\left(\begin{smallmatrix}4&31&31\\31&123&31\\31&31&84\end{smallmatrix}\right)$，最大行列和均为 $185$；引理 18.2 的秩一分块和 SVD 论证供应任意复输入上的放大。原 $1200$ 常数来自 Sharp II 定理 27.1，$185$ 来自本卷既有上界。Sharp II 定理 28.2 的正号族给 $d/\delta^\gamma=2t^{1-2\gamma}$，故任何统一有限常数的指数必有 $\gamma\le1/2$；结合 (29.13)，一致最优指数为 $1/2$，最优平方根系数仍只有 $2\le C_*\le185$。这些供应结论既不求出 $C_*$，也不求出完整纤维的精确风险。
+
+## 30. 相容纤维上的决策与有限误差证书
+
+**定义 30.1（固定菜单的最坏后悔）。** 在定义 28.1 的紧表示下，令行动空间 $A$ 为非空紧度量空间，损失 $L:\Omega\times A\to\mathbb R$ 连续。定义
+
+$$
+\begin{aligned}
+v(\omega)&=\min_{a\in A}L(\omega,a),\\
+R_n(a)&=\max_{\omega\in\mathcal K_n}\bigl(L(\omega,a)-v(\omega)\bigr),
+&r_n&=\min_{a\in A}R_n(a).
+\end{aligned}
+\tag{30.1}
+$$
+
+$v$ 使用已知世界时的同一行动菜单；$R_n$ 使用记录约束下的同一个未知世界。比较过程中不扩展菜单、不改变损失，也不对每个动作重选一套互不相容的历史。
+
+**定理 30.2（决策收敛与相位纤维的残余代价）。** 每个 $R_n$ 连续，且一致递减收敛到
+
+$$
+R_\infty(a)=\max_{\omega\in\mathcal K_\infty}\bigl(L(\omega,a)-v(\omega)\bigr).
+$$
+
+$r_n\downarrow r_\infty=\min_A R_\infty$，达到 $r_n$ 的行动序列的每个聚点达到 $r_\infty$，并且
+
+$$
+r_\infty=0\quad\Longleftrightarrow\quad
+\bigcap_{\omega\in\mathcal K_\infty}\operatorname*{argmin}_{a\in A}L(\omega,a)\ne\varnothing.
+\tag{30.2}
+$$
+
+对 §29 的双世界，取 $A$ 为全部 CPTP $M_3\to M_5$、$L(\pm,R)=\|R-S_\pm\|_\diamond$，原菜单任意深度下均有
+
+$$
+r_n=r_\infty=2t\sqrt{1-t^2}>0.
+\tag{30.3}
+$$
+
+证明。此处消费紧集参数最小值的连续性及单调连续函数的一致收敛机制，并给出所需推导。紧乘积上的一致连续性给
+
+$$
+|v(\omega)-v(\omega')|\le\sup_{a\in A}|L(\omega,a)-L(\omega',a)|,
+$$
+
+故 $v$ 连续。同样的最大值差估计使 $R_n,R_\infty$ 连续。固定 $a$，取每层达到最大值的世界的收敛子列，按命题 28.2 的嵌套紧集论证得 $R_n(a)\downarrow R_\infty(a)$。
+
+给定 $\epsilon>0$，开集 $U_n=\{a:R_n(a)-R_\infty(a)<\epsilon\}$ 递增且覆盖紧集 $A$；有限子覆盖被其中最大的一个包含，故某个 $U_N=A$，证明一致收敛。于是 $|r_n-r_\infty|\le\|R_n-R_\infty\|_\infty\to0$。若 $a_{n_j}\to a_*$，一致收敛与连续性给 $R_\infty(a_*)=\lim_jR_{n_j}(a_{n_j})=r_\infty$。后悔项非负，故最小最大值为零恰好意味着某达到点对每个极限世界都最优，证明 (30.2)。
+
+对双世界，Choi 载体 (28.2) 使 $A$ 紧，损失连续，每个世界的 $v(\pm)=0$ 由行动 $R=S_\pm$ 达到。原菜单不排除任一端点，故定理 29.3 给 (30.3)。即使查询记录已在自身菜单中完全确定，也没有两世界共同的零损失行动。∎
+
+残余世界歧义本身不强迫正后悔；(30.2) 才是判据。例如 $\Omega=\{0,1\}$、$A=[0,1]$、$L(\omega,a)=(a-\omega)^2$，两世界都保留时 $R(a)=\max\{a^2,(1-a)^2\}$，最优值 $1/4$ 由 $a=1/2$ 达到；排除世界一后最优值零由 $a=0$ 达到。若两个世界本来共享一个最优动作，世界无需唯一，后悔也可为零。这些都是集合风险，不预设均匀先验。
+
+**支撑推导 30.3（有限分辨率目标的证书接口）。** 对上述固定行动问题，使用统一扰动的标准证书：若连续真实目标 $S$ 与连续近似目标 $\widetilde S$ 在 $A$ 上满足 $\|S-\widetilde S\|_\infty\le\epsilon$，并有
+
+$$
+\widetilde S(\widehat a)\le\min_A\widetilde S+\eta,\qquad\epsilon,\eta\ge0,
+$$
+
+则 $S(\widehat a)-\min_A S\le2\epsilon+\eta$。若目标区域 $U$ 外的真实目标至少高出最小值 $b>2\epsilon+\eta$，则 $\widehat a\in U$。若另有 $S(a)-S(a_*)\ge\mu\|a-a_*\|^2/2$、$\mu>0$，则 $\|\widehat a-a_*\|\le\sqrt{(4\epsilon+2\eta)/\mu}$。
+
+证明。取真实达到点 $a_*$，使用成熟的统一扰动估计
+
+$$
+S(\widehat a)\le\widetilde S(\widehat a)+\epsilon
+\le\widetilde S(a_*)+\eta+\epsilon
+\le S(a_*)+2\epsilon+\eta.
+\tag{30.4}
+$$
+
+间隙结论由反证立即得到；代入二次增长界得到位置界。此处可令 $S=R_n$，把相容风险求解误差转为真实风险证书；没有增长条件时，代价近优不推出位置接近。
+
+另一种可取得的证书来自已知 Lipschitz 常数 $L_0$：若有限采样集是 $A$ 的 $\Delta$-网，各采样误差至多 $\epsilon$，选出的网点观测值至多高于网内最小观测值 $\eta$，则真实代价至多高于最优值 $L_0\Delta+2\epsilon+\eta$。取距 $a_*$ 至多 $\Delta$ 的网点，依次使用一次 Lipschitz 界、两次观测误差及一次网内近优性即得。该证书要求网覆盖全部许可行动及有效常数，不能只检查已搜索的少数候选。∎
+
+模型内精确最优性已有独立供应实例。固定版本 `194597016233d92b0d42fe93e8cda55f2f6ea471` 的《未标定二次时钟统一报告设计》定义 33.1、定理 33.4、命题 33.6 使用完整世界
+
+$$
+W=(\tau,A,B,\eta),\quad
+\tau\in[-3/2-E,-3/2+E],\quad A\ge m>0,\quad B\in\mathbb R,\quad
+\eta\in[-mc/2,mc/2]^4,
+$$
+
+报告 $y_i=A(i+\tau)^2+B+\eta_i$，$i=0,1,2,3$。$\eta$ 在执行前完整固定；恰读三个递增整数位置，首读 $0$，依历史选 $u\in\{1,2\}$，再选 $u<v\le3$，输出 $\tau$ 的估计。全部规则确定且全定义；没有重置、随机化、额外位置或中途换世界。该供应不要求紧的完整世界空间，故不是从定理 30.2 自动推出，而是原文的专门上下界证明。
+
+取 $c=1/10,E=21/50$，供应式 (33.32) 给
+
+$$
+R_{\mathrm{ad},3}=\frac{533}{18600}<\frac{23}{800}
+=\min_{u,v}R^*_{u,v},\qquad
+\frac{23}{800}-\frac{533}{18600}=\frac7{74400}>0.
+\tag{30.5}
+$$
+
+这里参数 $A$ 是时钟增益而非本节行动空间；风险单位为原始 $\tau$ 的绝对误差。该精确菜单结果和 §29 的指数供应共同表明：一般认证障碍与具体模型的精确最优证书可以同时成立。
+
+## 31. 可计算来源、公布反馈与认证的边界
+
+**定义 31.1（程序来源与有效保证）。** 对一个含程序描述的模型类，只有从描述可统一计算且在声明承诺域内总终止的过程才称通用认证算法。语义存在、有限黑箱查询、程序运行时间及语言的最优复杂度是不同对象。对公布后可影响世界的协议，目标响应必须写作 $F_x(p)$：同一记录纤维 $X_h$ 上记录选择器只能公布同一个 $p$，其合法且共同正确的集合为
+
+$$
+\mathcal P_h=\bigcap_{x\in X_h}\{p\in\Lambda_x:F_x(p)=p\}.
+\tag{31.1}
+$$
+
+这直接消费《静态相容纤维理论》定义 33.2、命题 33.3；该原文已经供应本控制合同内的合法反响应实例，不将可计算构造自动当成所有物理菜单可执行的动作。
+
+**命题 31.2（相位纤维的可计算风险与程序类边界）。** 对已给有理 $0<t<1$，§29 双世界的精确风险是可计算实数，但原菜单仍不识别其符号。若扩展模型类允许任意下述总可计算序列、预测器反响应或程序目标，则分别不存在通用最终稳定时刻算法、对所有反响应世界永远正确的总预测器，以及任意程序目标的全局最优性判定器。若只允许有限点值查询而不给共同正则性数据，即使目标解析，也不存在总能有限终止并输出全局最小点的确定算法。这些不同接口的障碍不能相互替代。
+
+证明。给定有理 $t$，对正有理数 $1-t^2$ 作有理二分平方根夹逼，可按任意有理误差计算 $2t\sqrt{1-t^2}$；不需要判定符号世界。特别在 $t=3/5$，风险为 $24/25$，新增 $E_y$ 的精确响应为 $49/50$ 和 $1/50$，而全部原效果仍相同。因此此信息盲区既不是风险数值不可计算，也不需要一个停机归约来成立。
+
+对扩展程序类，以下停机归约与对角法只作为成熟中间机制，给出完整归约以限定量词。
+
+若有总停机判定器 $H(p,x)$，程序 $D(x)$ 在 $H(x,x)$ 回答停机时循环，否则停机。对 $D$ 的编码 $d$，两种 $H(d,d)$ 答案均与实际行为矛盾。因此停机不可判定。
+
+给任意机器 $M$ 及固定输入，构造总可计算二进制序列
+
+$$
+x_M(n)=\mathbf1\{M\text{ 在前 }n\text{ 步内停机}\},\qquad n\in\mathbb N.
+\tag{31.2}
+$$
+
+它总是最终常值。若算法在这一承诺域内总能输出 $N$，保证所有 $n\ge N$ 的值相同，则计算 $x_M(N)$ 即判定停机：一表示已停机，零和保证共同意味着永不停机。矛盾。这也排除对这一程序类统一计算此后离最终值小于 $1/2$ 的时刻；不排除 (28.8) 的有效收缩界。
+
+给任意总可计算预测器 $P:\{0,1\}^*\to\{0,1\}$，递归定义
+
+$$
+x_n=1-P(x_0\cdots x_{n-1}),\qquad n\ge0.
+\tag{31.3}
+$$
+
+每个有限前缀可计算，逐项算法总停机，且每步预测皆错。此世界确定且可计算，但要求世界能够取得或计算同一个 $P$ 并合法实施反响应；缺少此权限不能把它放入许可类。公布反预测的相容形式正是 (31.1) 的共同不动点为空，而不是任何给定自然系统都随机。
+
+对一般目标，给机器 $M$ 定义 $L_M(0)=1$，$n\ge1$ 时令 $L_M(n)=0$ 当且仅当 $M$ 在前 $n$ 步停机，否则为一。这是总可计算 $\mathbb N\to\{0,1\}$ 函数；候选零为全局最小点恰好当 $M$ 不停机。任何在全部这类程序上总终止的最优性判定器都会判定停机，故不存在。此可行域无限离散，不适用有限穷举或紧连续证书。
+
+最后，对声称以有限精确点值查询解决所有连续目标 $S:[0,1]\to\mathbb R$ 的确定算法，在零函数上运行至终止，记查询集合为 $E$、输出为 $\widehat a$。有限非空集合 $F=E\cup\{\widehat a\}$ 定义解析目标
+
+$$
+\widetilde S(x)=-\prod_{z\in F}(x-z)^2.
+\tag{31.4}
+$$
+
+它在所有查询点与输出点为零，在 $[0,1]\setminus F$ 为负。逐步同记录使算法作出相同查询及输出，故该输出不是全局最小点，矛盾。给出函数的符号公式、已知导数界或 Lipschitz 常数是更强接口，不受这一点值结论直接限制。∎
+
+**支撑推导 31.3（有限 SAT 记录的准确逻辑范围）。** 有限正确 SAT 测试及有限运行时间记录，不认证一个算法的全域正确性或渐近多项式时间；这一标准有限测试反例不推出 $P\ne NP$、$P=NP$ 或其集合论独立性。
+
+证明。将有限测试的正确答案硬编码，未测试公式均回答不可满足。未测试的可满足公式无限多，故此总算法通过所有既有测试而在别处出错。若已测最大长度为 $N$，让两算法在 $|x|\le N$ 时运行同一程序，超过 $N$ 后一个立即输出固定答案，另一个先执行至少 $2^{|x|}$ 次空转再给相同答案；有限记录相同，渐近时间不同。故意减慢一个算法只改变该算法，不能证明某语言的所有正确算法都慢。有限数学证明也可以概括无限输入，不等同于有限测试。∎
+
+这里采用 Cook 官方问题说明 §1、PDF 第 1–2 页的标准统一计算定义：$P$ 为确定性多项式时间可判定的语言，$NP$ 为存在多项式长度证书且可在多项式时间核验的语言。Clay 的 [P vs NP 官方问题页](https://www.claymath.org/millennium/p-vs-np/) 将其列为未解决问题；[Cook 原文](https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf) 及 [Library 条目](../../../Library/ConceptDynamics/cook2006pversusnp.md) 供应定义，不供应本稿的复杂度分离。关于该命题的个人信念可以是预测，命题的数学含义不依赖预测者。上述停机归约、有限实验局限与黑箱最优性障碍都没有证明 $P$ 与 $NP$ 的关系，也没有证明其独立于 ZFC。
+
+## 32. 相位纤维、路径递归与作用量的三种极限
+
+**定义 32.1（带权路径与相位坐标）。** 对有限 DAG、交换半环 $(\mathbb S,\oplus,\otimes,0_{\mathbb S},1_{\mathbb S})$ 和边权 $w_e$，令
+
+$$
+w(\gamma)=\bigotimes_{e\in\gamma}w_e,\qquad
+Z(s,t)=\bigoplus_{\gamma:s\to t}w(\gamma).
+\tag{32.1}
+$$
+
+空路径权重为 $1_{\mathbb S}$，无路径的和为 $0_{\mathbb S}$。半环假设包括合并结合交换、串联结合、双侧分配、单位元及零吸收。这里消费 Mohri，*Semiring Frameworks and Algorithms for Shortest-Distance Problems*，[原文](https://cs.nyu.edu/~mohri/pub/jalc.pdf) §1.1–1.2 的半环定义及 §2 的路径距离框架；有限 DAG 的末边递推在下面直接展开，而非另行发明路径代数。对已经供应的边相位 $u_e\in U(1)$，选实提升 $\theta_e$ 及尺度 $\hbar>0$，定义
+
+$$
+u_e=e^{\mathrm i\theta_e},\qquad
+S(\gamma)=\hbar\sum_{e\in\gamma}\theta_e.
+\tag{32.2}
+$$
+
+此 $S$ 是乘性相位的加性坐标，尚不是选定的物理 Lagrangian。
+
+**命题 32.2（原相位双世界与路径合并的对应）。** §29 的两个世界可具有相同相位不敏感递归数据而具有不同的相对作用量坐标；路径重组相容性不选择相位符号、复数系数、全局最小值或 Gibbs 概率。非驻定相消、驻定变分和正权重零温极限分别使用不同条件。
+
+证明。先把半环框架接到五标签菱形上。对 $t\ne s$，每条非空 $s\to t$ 路径有唯一末边，按末边分类及分配律得
+
+$$
+Z(s,t)=\bigoplus_{u\to t}Z(s,u)\otimes w_{ut},\qquad
+Z(0,13)=(w_{01}\otimes w_{1,13})\oplus(w_{03}\otimes w_{3,13}).
+\tag{32.3}
+$$
+
+结合、交换和分配保证同一个有限表达式的合法括号及拓扑求值次序不改变值。但 Boolean $(\lor,\land)$、min-plus $(\min,+)$、非负实数 $(+,\times)$、复数 $(+,\times)$ 均满足同一递归，含义依次为可达性、最小代价、正权重和振幅。min-plus 的 $0_{\mathbb S}=+\infty$、$1_{\mathbb S}=0$，约定 $+\infty$ 串联吸收。若点 $2$ 只有叶边 $0$--$2$，它不在这两条路径中，不能单凭标签使 $F[2]$ 决定 $F[1,3]$；须另供含 $2$ 的边或关系因子。非对易算子串联必须保持顺序，重括号不授权交换物理操作。
+
+对 (32.2)，指数乘法给 $u(\gamma)=e^{\mathrm iS(\gamma)/\hbar}$ 及拼接加性。$\theta_e\mapsto\theta_e+2\pi k_e$ 不改变相位。顶点规范变换 $u'_{uv}=e^{\mathrm i\chi_v}u_{uv}e^{-\mathrm i\chi_u}$ 沿路径消去内部因子，只余 $e^{\mathrm i(\chi_t-\chi_s)}$，故同端点两路径的相对相位不变。这里没有推出物理 $\hbar$ 或具体 $L=T-V$。
+
+在原仪器的输出坐标上，这个相位坐标有直接消费者。考虑
+
+$$
+v_\varphi=\alpha_tg+t e^{\mathrm i\varphi}a.
+\tag{32.4}
+$$
+
+对实对称输出算子 $J$，令 $A=B^\dagger JB$，则
+
+$$
+v_\varphi^\dagger Av_\varphi
+=\alpha_t^2g^\dagger Ag+t^2a^\dagger Aa
++2\alpha_tt\cos\varphi\,g^\dagger Aa.
+\tag{32.5}
+$$
+
+$\varphi=\pm\pi/2$ 时两响应相同，但 $E_y$ 的响应差是 (29.12) 的 $2t\alpha_t$。两分量可取相对作用量 $S_a-S_g=\pm\pi\hbar/2$，模 $2\pi\hbar$；(32.5) 是实菜单只留余弦、相位效果能读出正弦的具体接口。$g,a$ 是已指定输出坐标而非自动存在的两条时空轨道；这一坐标表示不增加可实施干涉操作。
+
+若合并两条单位相位支路，归一化振幅为
+
+$$
+A=\frac{e^{\mathrm iS_1/\hbar}+e^{\mathrm iS_2/\hbar}}2
+=e^{\mathrm i(S_1+S_2)/(2\hbar)}
+\cos\frac{S_1-S_2}{2\hbar}.
+\tag{32.6}
+$$
+
+当 $S_1-S_2=(2k+1)\pi\hbar$ 时振幅为零，因有限复指数非零，不存在有限 $S_{\rm eff}=-\mathrm i\hbar\log A$。非零时对数仍有分支，且模不为一要求复的 $S_{\rm eff}$。若 $|A'-A|\le\epsilon<|A|$，则 $A'\ne0$，并由
+
+$$
+\frac{A'}{|A'|}-\frac A{|A|}
+=\frac{A'-A}{|A|}+A'\left(\frac1{|A'|}-\frac1{|A|}\right)
+$$
+
+及反三角不等式得相位距离至多 $2\epsilon/|A|$。因此绝对振幅连续不能保证零点附近的相位查询稳定；应用命题 28.2 于归一化相位，必须先在相容类上有离零裕量。这是相位作用量与查询分辨率间的额外条件。
+
+为区分最小代价，取有限非空 $X_j$、实相邻代价 $L_j$、实终端代价 $b$，$0\le j\le N$，并定义
+
+$$
+V_j(x)=\min_{x_{j+1},\ldots,x_N}
+\left[\sum_{k=j}^{N-1}L_k(x_k,x_{k+1})+b(x_N)\right],\qquad x_j=x.
+$$
+
+按下一状态分类路径，先最小化尾部，得 Bellman 中间步骤
+
+$$
+V_N=b,\qquad V_j(x)=\min_{y\in X_{j+1}}\{L_j(x,y)+V_{j+1}(y)\}.
+\tag{32.7}
+$$
+
+有限性保证达到，倒推选取各达到点即成全局最优路径。这正是 (32.3) 的 min-plus 选择；《计算行为表示理论》§18.4 供应带参考核的软 Bellman，取温度趋零时须保留其支持和误差条件。复相位不是这一最小化：$|(1+e^{\mathrm i/\hbar})/2|^2=(1+\cos(1/\hbar))/2$ 在 $\hbar\downarrow0$ 没有极限，沿 $1/\hbar=2\pi n$ 和 $(2n+1)\pi$ 分别为一、零。
+
+驻相解释另外输入连续积分。以下只消费有限维振荡积分的成熟工具，参见 Tao，[Lecture Notes 8](https://www.math.ucla.edu/~tao/247b.1.07w/notes8.pdf) §2–3 的非驻相与驻相分析，特别是引理 2.6–2.8 的一维机制。对 $a\in C_c^1(\mathbb R)$、实 $S\in C^2(\mathbb R)$，若在 $\operatorname{supp}a$ 的邻域上 $|S'|\ge c>0$，则分部积分给
+
+$$
+\begin{aligned}
+I_\hbar&=\int a(x)e^{\mathrm iS(x)/\hbar}\,dx
+=-\frac\hbar{\mathrm i}\int\left(\frac a{S'}\right)'e^{\mathrm iS(x)/\hbar}\,dx,\\
+|I_\hbar|&\le\hbar\int\left|\left(\frac a{S'}\right)'\right|dx.
+\end{aligned}
+\tag{32.8}
+$$
+
+$a/S'$ 在支撑邻域外延拓为零，紧支撑使边项消失。若 $a,S$ 光滑，反复对紧支撑振幅使用同一操作，得每个固定整数 $k\ge1$ 的 $|I_\hbar|\le C_k\hbar^k$，常数依赖固定振幅与相位。
+
+对实对称可逆 $d\times d$ 矩阵 $A_0$，二次相位的 Abel 正则化还给精确公式
+
+$$
+\begin{aligned}
+&\lim_{\zeta\downarrow0}\int_{\mathbb R^d}
+ e^{-\zeta|x|^2/2}e^{\mathrm i(S_0+x^{\mathsf T}A_0x/2)/\hbar}\,dx\\
+&\qquad=\frac{(2\pi\hbar)^{d/2}}{\sqrt{|\det A_0|}}
+ e^{\mathrm iS_0/\hbar+\mathrm i\pi\operatorname{sgn}(A_0)/4}.
+\end{aligned}
+\tag{32.9}
+$$
+
+实正交对角化后各积分为 $\sqrt{2\pi}(\zeta-\mathrm i\lambda/\hbar)^{-1/2}$。复高斯公式在正实轴由实高斯积分得到，再在右半平面解析延拓，平方根取该半平面的连续分支。对非零特征值 $\lambda$ 令 $\zeta\downarrow0$，因子趋于 $\sqrt{2\pi\hbar}|\lambda|^{-1/2}e^{\mathrm i\pi\operatorname{sign}\lambda/4}$；有限乘积即 (32.9)。正、负或混合 Hessian 都有非零贡献；多个驻点的贡献仍可相消。一般光滑相位的展开需局部化和余项，不从二次公式直接推出无限维路径积分。
+
+Hamilton 变分使用另一组条件。对 $C^2$ 的 $L(q,\dot q,t)$ 和 $C^2$ 路径，固定端点，定义 $S[q]=\int_{t_0}^{t_1}L(q,\dot q,t)dt$。对光滑且端点为零的变分 $\eta$，求导与分部积分给
+
+$$
+\delta S[q](\eta)=\int_{t_0}^{t_1}
+\left(\partial_qL-\frac d{dt}\partial_{\dot q}L\right)\cdot\eta\,dt.
+\tag{32.10}
+$$
+
+若连续括号项某处非零，在该处选同方向且局部非负的光滑测试函数便使积分非零。因此对全部变分驻定恰为 Euler--Lagrange 方程，不是全局最小。Tong，[Classical Dynamics §2.1](https://www.damtp.cam.ac.uk/user/tong/dynamics/dynhtml/S2.html) 供应这一成熟变分解释。具体地，在 $H_0^1(0,T)$ 上令
+
+$$
+S[x]=\frac m2\int_0^T(\dot x^2-\omega^2x^2)dt,\qquad
+x_k(t)=b\sin(k\pi t/T),\qquad m,\omega,T>0.
+$$
+
+零路径驻定，直接积分却给
+
+$$
+S[x_k]=\frac{mb^2T}{4}\left[(k\pi/T)^2-\omega^2\right].
+\tag{32.11}
+$$
+
+当 $T>\pi/\omega$，第一模负、高模正，任意小 $b$ 即有两种方向，故零路径为鞍点；沿第一模 $|b|\to\infty$ 还无下界。这是明确指定作用量内的结论，不由相容递归选出自然界的 $L$。∎
+
+**支撑推导 32.3（细分计数与相位粗化的不同稳定条件）。** 为命题 32.2 的正权重分支消费标准 Gibbs 估计：给定 $N$ 个真实不同的有限路径候选、实代价 $S_\gamma$ 和 $\beta>0$，以计数测度定义
+
+$$
+m=\min_\gamma S_\gamma,\qquad
+Z_\beta=\sum_\gamma e^{-\beta S_\gamma},\qquad F_\beta=-\beta^{-1}\log Z_\beta.
+$$
+
+若额外将正权重归一化为概率 $P_\beta(\gamma)=e^{-\beta S_\gamma}/Z_\beta$，则
+
+$$
+m-\frac{\log N}{\beta}\le F_\beta\le m,\qquad
+P_\beta\{S_\gamma\ge m+\Delta\}\le\min\{1,Ne^{-\beta\Delta}\},\quad\Delta>0.
+\tag{32.12}
+$$
+
+对细分层数 $n$，充分条件为 $\beta_n\Delta-\log N_n\to+\infty$；只令 $\beta_n\to\infty$ 不足。与 (32.6) 的相位零点相比，正权重粗化的额外条件来自参考测度及候选数量。
+
+证明。此处消费《计算行为表示理论》§18.2–18.3 的 Gibbs 分解与条件自由能，并显式给参数对应：温度 $\tau=1/\beta$，费用 $C=S$，均匀参考 $R=1/N$。该原文的归一化配分函数为本式 $Z_\beta/N$，所以其自由能为 $F_\beta+(\log N)/\beta$，两者的常数项不可漏掉。直接地，$e^{-\beta m}\le Z_\beta\le Ne^{-\beta m}$，取对数即给第一界；坏候选总分子至多 $Ne^{-\beta(m+\Delta)}$，分母至少 $e^{-\beta m}$，给第二界及充分条件。
+
+一条零代价路径加 $2^n$ 条代价 $\Delta$ 的路径给
+
+$$
+P_n(0)=\frac1{1+2^ne^{-\beta_n\Delta}}.
+\tag{32.13}
+$$
+
+若 $\beta_n=cn$，$c\Delta>\log2$ 时趋一，$c\Delta<\log2$ 时趋零，等号时恒为 $1/2$。先固定 $n$ 取 $\beta\to\infty$ 再取 $n\to\infty$，与相反次序的迭代极限分别为一、零。
+
+若把 $2^n$ 个同代价微状态合为一个计数权重为一的粗状态，并要求未归一化配分函数不变，必须有 $e^{-\beta S_{\rm eff}}=2^ne^{-\beta\Delta}$，即
+
+$$
+S_{\rm eff}=\Delta-\frac{n\log2}{\beta}.
+\tag{32.14}
+$$
+
+若改用归一化参考，则该重数由粗参考质量 $q_\#R$ 承担，条件自由能按供应 §18.3 定义，不能再重复加入计数因子。层间分布是否满足推前相容须另核对；不能重复标签来改变概率。这些正权重结论不把实时间复振幅变为概率，也不从路径递归推出 Born 标定。∎
+
+## 33. 变分阈值查询不等于状态的紧恢复
+
+**定义 33.1（原场能量查询）。** 消费固定供应版本 `194597016233d92b0d42fe93e8cda55f2f6ea471` 的《递归全息边界几何续篇 III 附录》定义 101.1、定理 102.2–102.3、命题 102.4。载体仍为 $G=\mathbb H^1\times\mathbb R$，群律 $pp'=(x+x',y+y',z+z',w+w'+xy')$，Haar 测度 $dx\,dy\,dz\,dw$，原水平场 $X_i$ 及原时钟下的 $L=-\sum_{i=1}^3X_i^2$。$\Gamma$ 仍是原 $L$ 的正 degree-$-3$ Green 场，不改成新增动能的 Green 场。参数 $a,\eta>0$、$\sigma>2$，复分布形式域及各量为
+
+$$
+\begin{gathered}
+\mathcal E_\sigma=\{u\in L^2(G):X_i u\in L^2\ (i=1,2,3),\ |D_w|^{\sigma/2}u\in L^2\},\\
+T[u]=\sum_i\|X_i u\|_2^2,\quad
+D_\sigma[u]=\||D_w|^{\sigma/2}u\|_2^2,\quad
+V[u]=\int_G\Gamma|u|^2d\mu,\\
+S_{a,\eta}[u]=aT[u]+\eta D_\sigma[u],\qquad
+Q[u]=S_{a,\eta}[u]/V[u],\qquad
+ g_*=\inf_{0\ne u\in\mathcal E_\sigma}Q[u].
+\end{gathered}
+\tag{33.1}
+$$
+
+$V$ 在全部此域有限且对非零态为正，是供应 §87、§101 的实际场结论。这里 $S$ 是非负变分能量，不与 (32.10) 的 Hamilton 时间作用量互换；“查询 $Q$ 趋于确定”也不表示模型向量已经确定。
+
+**命题 33.2（近阈值相容类不能给状态恢复证书）。** 在定义 33.1 的固定来源下，对每个 $\epsilon>0$，约束类 $\{w:V[w]=1,\ Q[w]\le g_*+\epsilon\}$ 在 $L^2$ 中无界；相对于任何固定达到态 $u$，其中的 $\|w-u\|_2$ 也无上界。因此即使供应已证明 $V[u]=1$、$S_{a,\eta}[u]=g_*$ 及实际非零零本征态，阈值查询的趋优性仍不能给出状态空间的紧恢复或位置误差证书。这里也不由取得性推断任意趋优序列收敛或统一有效收敛模。
+
+证明。达到态及反例均由原供应 §102 证明；以下明确消耗的条件和对应，不另行认领其数学结果。完整 Hilbert 形式范数等价于 $\|u\|_2^2+S_{a,\eta}[u]$，供应定理 87.5 给 $\mathcal E_\sigma\hookrightarrow L^2(G,\Gamma d\mu)$ 的紧嵌入及负能本征态。一般直接法的具体机制如下：若 $V[u_n]=1$、$g_*\le S[u_n]\le g_n\downarrow g_*$ 且 $\sup_n\|u_n\|_2<\infty$，则在 $\mathcal E_\sigma$ 中有界。弱子列及加权强收敛给 $V[u]=1$；弱下半连续给 $S[u]\le g_*$，商下确界给 $S[u]\ge g_*V[u]=g_*$，故达到。若稠定非负闭 Hermitian 形式 $q=S-g_*V$ 满足 $q[u]=0$，形式 Cauchy--Schwarz 给 $|q(\phi,u)|^2\le q[\phi]q[u]=0$。表示算子的域刻画遂把 $u$ 放入算子域并给 $H_qu=0$。这一步不拆成分别存在的 $Au$ 与 $\Gamma u$。
+
+所需质量界不由形式能量有界自动得到。供应定理 102.2 只对满足实际弱方程
+
+$$
+a\,t(\phi,u)+\eta\,d_\sigma(\phi,u)-g\,v(\phi,u)
+=-\varepsilon\langle\phi,u\rangle\quad(\phi\in\mathcal E_\sigma),\qquad\varepsilon\ge0
+\tag{33.2}
+$$
+
+的态证明
+
+$$
+\|u\|_2\le\frac{gK_\Gamma}{a}\sqrt{T[u]},\qquad
+V[u]=1\ \Longrightarrow\ \|u\|_2^2\le\frac{K_\Gamma^2g^3}{a^3}.
+\tag{33.3}
+$$
+
+这里 $t,d_\sigma,v$ 分别是 $T,D_\sigma,V$ 的极化形式。有限配对常数 $K_\Gamma=B_\Gamma h_1h_2$ 的来源是 Ciatti–Cowling–Ricci，*Hardy and uncertainty inequalities on stratified Lie groups*，[原文](https://arxiv.org/html/1308.2373v1) Theorem A、Theorem 3.1、Corollary 3.2。参数对应为齐次维数 $Q=5$、$p=2$、阶数 $1$ 和 $2$，均严格满足 $0<\alpha<Q/p=5/2$。取齐次范数
+
+$$
+\rho=(|(x,y,z)|^4+(w-xy/2)^2)^{1/4},\qquad
+B_\Gamma=\sup_{p\ne e}\rho(p)^3\Gamma(p)<\infty.
+$$
+
+供应中的 Hardy/Rellich 中间估计为 $\|\rho^{-1}u\|_2\le h_1\sqrt{T[u]}$、$\|\rho^{-2}\phi\|_2\le h_2\|L\phi\|_2$，在原自由形式域和算子域的延拓由该供应 §102 的核心逼近承担，给
+
+$$
+|v(\phi,u)|\le K_\Gamma\|L\phi\|_2\sqrt{T[u]}.
+\tag{33.4}
+$$
+
+再取原强交换谱和 $A_{\rm free}=aL+\eta|D_w|^\sigma$，弱测试 $\phi=(A_{\rm free}+\varepsilon+\delta)^{-1}f$，$\delta>0$。联合谱乘子给 $\|L(A_{\rm free}+r)^{-1}\|\le a^{-1}$，故
+
+$$
+\left|\left\langle[I-\delta(A_{\rm free}+\varepsilon+\delta)^{-1}]f,u\right\rangle\right|
+\le\frac{gK_\Gamma}{a}\sqrt{T[u]}\,\|f\|_2.
+\tag{33.5}
+$$
+
+该自由算子无零谱原子：零能强迫中央 Fourier 变换支撑于 Haar 零测的 $\lambda=0$，故 $L^2$ 向量为零。于是括号中正则项强趋零，先令 $\delta\downarrow0$ 再取单位 $f$ 上确界即给 (33.3)。这一供应并不要求 $\Gamma u\in L^2$，也不使用无界零能逆作为处处定义的算子。
+
+取 $g_n=g_*+1/n$，供应定理 101.3 的实际负能本征态按 $V=1$ 归一化后，满足 (33.2)，且 $g_*\le S[u_n]<g_n$。(33.3) 补齐质量有界，故上述直接法适用。供应定理 102.3 再在实际达到态上应用逐态严格界，得到 $0<\mathcal C_\sigma<1/8$；只知道每态严格小于 $1/8$ 本来不够推出上确界严格小于它。阈值及该常数的精确数值和有效收敛模不由这些存在性步骤算出。
+
+最后，令 $u$ 为此达到态，$h$ 为固定归一化非零穿孔核心态，沿供应 (101.9) 的 Carnot 膨胀
+
+$$
+\delta_R(x,y,z,w)=(Rx,Ry,Rz,R^2w),\quad
+(U_Rh)(p)=R^{-5/2}h(\delta_{1/R}p),\quad b_R=R^{1/2}U_Rh.
+$$
+
+同一测度和 degree-$-3$ 场给
+
+$$
+\|b_R\|_2^2=R,\quad T[b_R]=R^{-1}T[h],\quad
+D_\sigma[b_R]=R^{1-2\sigma}D_\sigma[h],\quad V[b_R]=R^{-2}V[h].
+\tag{33.6}
+$$
+
+各非负形式 Cauchy--Schwarz 分别控制交叉项，故 $S[u+b_R]\to g_*$、$V[u+b_R]\to1$。对大 $R$ 定义 $w_R=(u+b_R)/\sqrt{V[u+b_R]}$，便有 $V[w_R]=1$、$Q[w_R]\to g_*$，但
+
+$$
+\|w_R\|_2\ge\frac{\sqrt R-\|u\|_2}{\sqrt{V[u+b_R]}}\longrightarrow\infty.
+\tag{33.7}
+$$
+
+所以对任意 $\epsilon>0$，近阈值约束类 $\{w:V[w]=1,\ Q[w]\le g_*+\epsilon\}$ 已含一条 $L^2$ 无界尾部。又 $\|w_R-u\|_2\ge\|w_R\|_2-\|u\|_2\to\infty$，证明任何有限位置误差上界都不能仅由该阈值约束供应。这不能当作命题 28.2 所需的紧世界空间；实际方程而非仅目标值才供应质量界。上述失效也不反驳已证明的最优态存在。∎
+
+## 34. 相容纤维的剩余数学问题与供应范围
+
+**定义 34.1（完整纤维、接口扩充与证书问题）。** 固定 §17 的 $J_s$ 和一组精确效果数据 $y=(Y_s)_{s\in I}$，$I\subseteq\mathbb N$ 为指定索引集，定义
+
+$$
+\mathcal F_y=\{T:M_3\to M_5\text{ CPTP}:T^\dagger(J_s)=Y_s\ (s\in I)\},\qquad
+r(\mathcal F_y)=\inf_{R\ {\rm CPTP}}
+\sup_{T\in\mathcal F_y}\|R-\mathcal G T\|_\diamond,
+\tag{34.1}
+$$
+
+其中 $R$ 的域、陪域同为 $M_3\to M_5$，且假定 $\mathcal F_y$ 非空。定理 29.3 只求出其中双世界子类的半径；一般完整纤维的半径尚未求出。另一个问题是：给定操作成本和合法控制，哪些新增效果使完整相容后继可识别？$E_y$ 只解决这一符号对的精确响应区分，不证明全局最小的相位接口。第三个问题是：对指定有限维、有理半正定约束与有理误差预算，哪些宽度和后悔值能取得可核验上下界，以及在递归扩维时可保持何种有效界？命题 31.2 不替这些具体类作不可计算性判决。
+
+相容支持、复通道可行性、效果的数学合法性及变分达到性分别是不同前提下的数学陈述。从它们到自然系统，仍需指定实际模型类、可制备来源、实验菜单、概率或频率标定以及算子误差如何由观测取得；这些桥梁不由本定义供应。
+
+**定义 34.2（所消费的数学来源）。** 定理 29.2–29.3 的符号相位纤维、全深度实效果不可辨识及其两世界决策接口是相对于下列供应文本的推导；不作穷尽文献的新颖性断言。紧性、直接法、Banach、对角法、半环、Bellman、Gibbs 及驻相在相应推导中仅作成熟中间工具。本卷 §27 的独立参考与联合相干权限不由 §29 的菜单自动取得。
+
+- [Sharp II 固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY_II.md)：定义 28.1、定理 28.2，原正号族、原域最优指数；§27 供应原稳定估计。本卷 §18、§25 供应 $185$ 上界及任意复矩阵放大。
+- [PDE 附录固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)：§87、§101 的全域与加权紧性，定理 102.2–102.3 的方程质量界及实际临界态，命题 102.4 的发散序列；§33 按这些确切来源消费，未将它们作为新达到性发现。
+- [时钟固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)：定义 33.1、定理 33.4、命题 33.6，原始联合误差和完整世界菜单的精确风险。
+- [递归预测与边界几何](AURIC_RECURSIVE_PREDICTION_AND_BOUNDARY_GEOMETRY.md)：支撑推导 10.4 及 Banach 文献条目，已知收缩率的停止界。[静态相容纤维](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)：定义 33.2、命题 33.3，公布后的合法反响应条件。
+- [计算行为表示理论](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)：定理 18.2–18.4 的参考分布、条件自由能及软 Bellman；§19 的观察商优化条件。§32 保留参考质量与微状态计数的区别，不把粗化当作免费的最优策略取得。
+- [Watrous 作者版第三章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)：§3.3 完全有界迹范数，命题 3.44 的通道范数；[既有 Library 条目](../../../Library/Quantum/watrous2018theory.md) 及其定理 2.22、2.26、推论 2.27 的完整 Kraus 表示。特殊相位差的完整范数等式由 (29.8)–(29.9) 后的压缩证明承担。
+
+## 追加锚（本行以下为增补区）
