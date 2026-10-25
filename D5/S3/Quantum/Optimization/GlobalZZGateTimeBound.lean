@@ -28,11 +28,8 @@ def IsFeasible {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) (lam : SignVec n → �
   (∀ m, 0 ≤ lam m) ∧ ∀ i j, i < j →
     M i j = ∑ m, lam m * ((-1 : ℝ) ^ (m.val i).toNat * (-1 : ℝ) ^ (m.val j).toNat)
 
-private theorem options_nonempty (n : ℕ) :
-    (Finset.univ : Finset (Option (Fin n × Fin n))).Nonempty := Finset.univ_nonempty
-
 def offDiagSup {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : ℝ :=
-  Finset.univ.sup' (options_nonempty n) (fun p : Option (Fin n × Fin n) =>
+  Finset.univ.sup' Finset.univ_nonempty (fun p : Option (Fin n × Fin n) =>
     p.elim 0 (fun e => if e.1 < e.2 then |M e.1 e.2| else 0))
 
 def gateBound (n : ℕ) : ℝ := ((if Even n then n - 1 else n : ℕ) : ℝ)
@@ -44,8 +41,7 @@ def claim : Prop :=
 
 private def IsMatching {n : ℕ} (R : Finset (Fin n × Fin n)) : Prop :=
   (∀ e ∈ R, e.1 < e.2) ∧
-    ∀ e ∈ R, ∀ f ∈ R, e ≠ f →
-      Disjoint ({e.1, e.2} : Finset (Fin n)) {f.1, f.2}
+    (R : Set (Fin n × Fin n)).PairwiseDisjoint (fun e => ({e.1, e.2} : Finset (Fin n)))
 
 private theorem partition_from_color (n k : ℕ) (color : Fin n → Fin n → Fin k)
     (hsymm : ∀ i j, color i j = color j i)
@@ -174,36 +170,32 @@ private theorem round_robin_partition (n : ℕ) (hn : 2 ≤ n) :
 
 private theorem matching_subset {n : ℕ} {R S : Finset (Fin n × Fin n)}
     (hR : IsMatching R) (hSR : S ⊆ R) : IsMatching S :=
-  ⟨fun e he => hR.1 e (hSR he),
-    fun e he f hf hef => hR.2 e (hSR he) f (hSR hf) hef⟩
+  ⟨fun e he => hR.1 e (hSR he), hR.2.subset hSR⟩
 
 private def spin {n : ℕ} (s : Fin n → Bool) (i : Fin n) : ℝ :=
   bitSign (s i)
 
-private def flip {n : ℕ} (A : Finset (Fin n)) (s : Fin n → Bool) (i : Fin n) : Bool :=
-  if i ∈ A then !(s i) else s i
-
 private theorem flip_involutive {n : ℕ} (A : Finset (Fin n)) :
-    Function.Involutive (flip A) := by
+    Function.Involutive (fun s => A.piecewise (fun i => !(s i)) s) := by
   intro s
   funext i
-  unfold flip
+  unfold Finset.piecewise
   by_cases hi : i ∈ A <;> simp only [hi, ite_true, ite_false, Bool.not_not]
 
 private theorem spin_flip {n : ℕ} (A : Finset (Fin n)) (s : Fin n → Bool) (i : Fin n) :
-    spin (flip A s) i = if i ∈ A then -spin s i else spin s i := by
-  unfold spin bitSign flip
+    spin (A.piecewise (fun i => !(s i)) s) i = if i ∈ A then -spin s i else spin s i := by
+  unfold spin bitSign Finset.piecewise
   by_cases hi : i ∈ A <;> cases h : s i <;> simp only [hi, h, ite_true, ite_false,
     Bool.not_false, Bool.not_true, Bool.toNat_false, Bool.toNat_true, pow_zero, pow_one,
     neg_one_mul, neg_neg]
 
 private theorem sum_flip_zero {n : ℕ} (A : Finset (Fin n)) (F : (Fin n → Bool) → ℝ)
-    (hF : ∀ s, F (flip A s) = -F s) : ∑ s, F s = 0 := by
-  have h := Fintype.sum_bijective (flip A) (flip_involutive A).bijective
-    (fun s => F (flip A s)) F (fun _ => rfl)
-  simp_rw [hF] at h
-  rw [Finset.sum_neg_distrib] at h
-  linarith
+    (hF : ∀ s, F (A.piecewise (fun i => !(s i)) s) = -F s) : ∑ s, F s = 0 := by
+  exact Finset.sum_ninvolution (fun s => A.piecewise (fun i => !(s i)) s)
+    (fun s => by rw [hF, add_neg_cancel])
+    (fun s hne hfix => hne ((CharZero.eq_neg_self_iff (R := ℝ)).mp
+      ((congrArg F hfix).symm.trans (hF s))))
+    (fun _ => Finset.mem_univ _) (flip_involutive A)
 
 private def matchingWeight {n : ℕ} (R : Finset (Fin n × Fin n))
     (c : Fin n → Fin n → ℝ) (s : Fin n → Bool) : ℝ :=
@@ -212,7 +204,7 @@ private def matchingWeight {n : ℕ} (R : Finset (Fin n × Fin n))
 private theorem matchingWeight_flip {n : ℕ} (R : Finset (Fin n × Fin n))
     (c : Fin n → Fin n → ℝ) (A : Finset (Fin n))
     (hA : ∀ e ∈ R, e.1 ∈ A ↔ e.2 ∈ A) (s : Fin n → Bool) :
-    matchingWeight R c (flip A s) = matchingWeight R c s := by
+    matchingWeight R c (A.piecewise (fun i => !(s i)) s) = matchingWeight R c s := by
   unfold matchingWeight
   apply Finset.prod_congr rfl
   intro e he
@@ -242,7 +234,7 @@ private theorem matching_separating_block {n : ℕ} (R : Finset (Fin n × Fin n)
       by_cases hfe : f = e
       · subst f
         simp
-      · have hdis := hR.2 e he f hf (Ne.symm hfe)
+      · have hdis := hR.2.disjoint_of_ne he hf (Ne.symm hfe)
         have hf1 : f.1 ∉ ({e.1, e.2} : Finset (Fin n)) := fun h =>
           Finset.disjoint_left.mp hdis h (by simp)
         have hf2 : f.2 ∉ ({e.1, e.2} : Finset (Fin n)) := fun h =>
