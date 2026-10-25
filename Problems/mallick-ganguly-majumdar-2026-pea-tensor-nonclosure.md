@@ -108,6 +108,4 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
 
 The bounded literature search and citation screening in #21802 do not establish exhaustive worldwide novelty or priority. The individual citing works and a separately hosted publisher full text have not been independently checked here; the source reading is the arXiv v2 TeX and PDF. Crossref metadata confirms the title, authors, DOI and journal reference.
 
-The preregistration body of #21802 says that the commented draft has no proof and places the definitions in Section V. In fact `main.tex` lines 691–699 contain an informal commented proof sketch, and the definitions are in rendered Section IV.A; an issue comment corrects both. Neither changes the active question or the registered closure assertion.
-
 The coefficient-matrix computations are finite checks. The family extension, restricted tensor-budget criterion and interpretations in “Argued, not formalized” are not additional compiled theorems. General non-local PEA tensor closure at $r=1$, and an $r^2$ output bound for general PEA channels on arbitrary correlated joint inputs, are not decided by this settlement.
