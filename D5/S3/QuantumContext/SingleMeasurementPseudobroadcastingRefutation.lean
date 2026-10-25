@@ -9,11 +9,12 @@
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Analysis.Convex.Hull
+import D5.S3.Quantum.Measurements.VisibleStateSpaceDimension
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 1000000
+set_option linter.style.header false
+set_option linter.style.longLine false
 noncomputable section
 open scoped BigOperators ComplexOrder
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
@@ -82,20 +83,118 @@ private def effects : Set (Matrix (Fin 2) (Fin 2) ℂ) :=
   convexHull ℝ (postprocessings measurement)
 
 private lemma rho_density (j : Fin 4) : IsDensity (rho j) := by
-  sorry
+  refine ⟨(Matrix.posSemidef_vecMulVec_self_star _).smul (by norm_num : (0 : ℝ) ≤ 1 / 10), ?_⟩
+  fin_cases j <;>
+    simp only [rho, Matrix.trace_fin_two, Matrix.smul_apply, Matrix.vecMulVec_apply,
+      Matrix.cons_val_zero, Matrix.cons_val_succ, Pi.star_apply] <;>
+    norm_num [Complex.real_smul]
 
 private lemma measurement_povm : IsPOVM measurement := by
-  sorry
+  constructor
+  · intro o
+    apply (Matrix.posSemidef_vecMulVec_self_star _).smul
+    fin_cases o <;> norm_num
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [measurement, Fin.sum_univ_succ, Matrix.vecMulVec_apply, Matrix.smul_apply,
+        Matrix.sum_apply, Complex.real_smul]
+
+private lemma postprocessings_convex {d m : ℕ}
+    (p : Fin m → Matrix (Fin d) (Fin d) ℂ) : Convex ℝ (postprocessings p) := by
+  rintro e ⟨c, hc, rfl⟩ f ⟨b, hb, rfl⟩ x y hx hy hxy
+  refine ⟨fun o => x * c o + y * b o, fun o => ?_, ?_⟩
+  · constructor
+    · exact add_nonneg (mul_nonneg hx (hc o).1) (mul_nonneg hy (hb o).1)
+    · nlinarith [(hc o).2, (hb o).2]
+  · rw [Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro o _
+    ext i j
+    simp [Matrix.smul_apply, Complex.real_smul, add_mul, mul_assoc]
+
+private lemma postprocessings_complement {d m : ℕ}
+    {p : Fin m → Matrix (Fin d) (Fin d) ℂ} (hp : IsPOVM p)
+    {e : Matrix (Fin d) (Fin d) ℂ} (he : e ∈ postprocessings p) :
+    1 - e ∈ postprocessings p := by
+  rcases he with ⟨c, hc, rfl⟩
+  refine ⟨fun o => 1 - c o, fun o => ⟨by linarith [(hc o).2], by linarith [(hc o).1]⟩, ?_⟩
+  rw [← hp.2, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro o _
+  simp only [Complex.ofReal_sub, Complex.ofReal_one, sub_smul, one_smul]
+
+private lemma postprocessings_positive {d m : ℕ}
+    {p : Fin m → Matrix (Fin d) (Fin d) ℂ} (hp : IsPOVM p)
+    {e : Matrix (Fin d) (Fin d) ℂ} (he : e ∈ postprocessings p) : e.PosSemidef := by
+  rcases he with ⟨c, hc, rfl⟩
+  exact Matrix.posSemidef_sum _ (fun o _ => (hp.1 o).smul
+    (Complex.real_le_real.mpr (hc o).1))
+
+private lemma measurement_member (o : Fin 4) : measurement o ∈ effects := by
+  apply subset_convexHull ℝ _
+  refine ⟨fun j => if j = o then 1 else 0, fun j => ?_, ?_⟩
+  · by_cases h : j = o <;> simp [h]
+  · simp
 
 private lemma witness_subtheory : Subtheory preparations effects := by
-  sorry
+  have ha : effects = postprocessings measurement := (postprocessings_convex _).convexHull_eq
+  refine ⟨convex_convexHull _ _, ?_, convex_convexHull _ _, ?_, ?_, ?_⟩
+  · exact convexHull_min (by rintro _ ⟨j, rfl⟩; exact rho_density j)
+      (D5.S3.Quantum.Measurements.VisibleStateSpaceDimension.density_matrix_set_compact_convex 2).2
+  · intro e he
+    rw [ha] at he
+    exact ⟨postprocessings_positive measurement_povm he,
+      postprocessings_positive measurement_povm
+        (postprocessings_complement measurement_povm he)⟩
+  · rw [ha]
+    exact ⟨fun _ => 1, fun _ => ⟨by norm_num, by norm_num⟩, by simpa using measurement_povm.2.symm⟩
+  · intro e he
+    rw [ha] at he ⊢
+    exact postprocessings_complement measurement_povm he
 
 private lemma witness_generated : GeneratedBy effects 1 := by
-  sorry
+  refine ⟨fun _ => 4, fun _ => measurement, fun _ => measurement_povm, ?_⟩
+  change convexHull ℝ (postprocessings measurement) = _
+  congr 1
+  ext e
+  simp only [Set.mem_iUnion]
+  exact ⟨fun h => ⟨0, h⟩, fun ⟨_, h⟩ => h⟩
 
 private lemma one_copy {d : ℕ} {t a : Set (Matrix (Fin d) (Fin d) ℂ)}
     (h : Subtheory t a) : PseudoBroadcastable t a 1 := by
-  sorry
+  let e : (Fin 1 → Fin d) ≃ Fin d := Equiv.funUnique _ _
+  let ξ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ]
+      Matrix (Fin 1 → Fin d) (Fin 1 → Fin d) ℂ :=
+    { toFun := fun x => x.submatrix e e
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  have tr (x : Matrix (Fin d) (Fin d) ℂ) : (ξ x).trace = x.trace :=
+    e.sum_comp (fun j => x j j)
+  have marginal (x : Matrix (Fin d) (Fin d) ℂ) (i : Fin 1) :
+      partialTraceKeep i (ξ x) = x := by
+    have : IsEmpty {j : Fin 1 // j ≠ i} :=
+      ⟨fun j => j.2 (Subsingleton.elim _ _)⟩
+    ext a b
+    change (∑ z : ({j : Fin 1 // j ≠ i} → Fin d),
+      x (if h : (0 : Fin 1) = i then a else z ⟨0, h⟩)
+        (if h : (0 : Fin 1) = i then b else z ⟨0, h⟩)) = x a b
+    simp only [show (0 : Fin 1) = i from Subsingleton.elim _ _, dite_true,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_ofIsEmpty,
+      pow_zero, one_smul]
+  refine ⟨ξ, tr, ?_, ?_⟩
+  · intro i ρ hρ f hf
+    rw [marginal]
+  · intro ρ hρ f hf
+    have hp : productMap (fun _ : Fin 1 => Fin d) f = (f 0).submatrix e e := by
+      ext x y
+      change (∏ i : Fin 1, f i (x i) (y i)) = f 0 (x 0) (y 0)
+      exact Fin.prod_univ_one _
+    rw [hp]
+    change 0 ≤ (ρ.submatrix e e * (f 0).submatrix e e).trace
+    rw [Matrix.submatrix_mul_equiv ρ (f 0) e e e]
+    change 0 ≤ (ξ (ρ * f 0)).trace
+    rw [tr]
+    exact (h.2.1 ρ hρ).1.trace_mul_nonneg (h.2.2.2.1 _ (hf 0)).1
 
 private lemma corner_bound (u v w z x y : ℝ)
     (hu : 0 ≤ u) (hv : 0 ≤ v) (hw : 0 ≤ w) (hz : 0 ≤ z)
@@ -104,10 +203,100 @@ private lemma corner_bound (u v w z x y : ℝ)
     (u * (x + y) + v * (x + (1 / 2 - y)) +
       w * ((1 / 2 - x) + y) + z * ((1 / 2 - x) + (1 / 2 - y))) / 4 ≤
       3 / 8 * (u + z) := by
-  sorry
+  by_cases hc : 0 ≤ u + v - w - z
+  · by_cases hd : 0 ≤ u + w - v - z
+    · nlinarith [mul_nonneg (sub_nonneg.mpr hx') hc,
+        mul_nonneg (sub_nonneg.mpr hy') hd]
+    · nlinarith [mul_nonneg (sub_nonneg.mpr hx') hc,
+        mul_nonpos_of_nonneg_of_nonpos hy (le_of_not_ge hd)]
+  · by_cases hd : 0 ≤ u + w - v - z
+    · nlinarith [mul_nonpos_of_nonneg_of_nonpos hx (le_of_not_ge hc),
+        mul_nonneg (sub_nonneg.mpr hy') hd]
+    · nlinarith [mul_nonpos_of_nonneg_of_nonpos hx (le_of_not_ge hc),
+        mul_nonpos_of_nonneg_of_nonpos hy (le_of_not_ge hd)]
+
+private lemma witness_relations :
+    rho 0 + rho 3 = 1 ∧ rho 1 + rho 2 = 1 ∧
+    measurement 0 + measurement 1 = (1 / 2 : ℂ) • 1 ∧
+    measurement 2 + measurement 3 = (1 / 2 : ℂ) • 1 := by
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp only [rho, measurement, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+      Matrix.cons_val_zero, Matrix.cons_val_succ, Pi.star_apply] <;>
+    norm_num [Complex.real_smul]
+
+private lemma born_sum (j : Fin 4) :
+    (rho j * measurement (![0, 0, 1, 1] j)).trace +
+      (rho j * measurement (![2, 3, 2, 3] j)).trace = 17 / 20 := by
+  fin_cases j <;>
+    simp only [rho, measurement, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.smul_apply, Matrix.vecMulVec_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Pi.star_apply] <;> norm_num [Complex.real_smul]
 
 private lemma witness_contextual : ¬ Noncontextual preparations effects := by
-  sorry
+  rintro ⟨ι, g, s, hn, hm, hr, ht, hb⟩
+  let μ (j : Fin 4) (l : ι) := (rho j * g l).trace
+  let r (o : Fin 4) (l : ι) := (s l * measurement o).trace
+  let ix : Fin 4 → Fin 4 := ![0, 0, 1, 1]
+  let iz : Fin 4 → Fin 4 := ![2, 3, 2, 3]
+  have mem (j : Fin 4) : rho j ∈ preparations := subset_convexHull ℝ _ ⟨j, rfl⟩
+  have nonneg (j : Fin 4) (l : ι) : 0 ≤ μ j l := hn l _ (mem j)
+  have response (o : Fin 4) (l : ι) : 0 ≤ r o l := hr l _ (measurement_member o)
+  have sums (j : Fin 4) : HasSum (μ j) 1 := hm _ (mem j)
+  have reproduce (j o : Fin 4) :
+      HasSum (fun l => μ j l * r o l) (rho j * measurement o).trace :=
+    hb _ (mem j) _ (measurement_member o)
+  have relations (l : ι) : μ 0 l + μ 3 l = μ 1 l + μ 2 l := by
+    change (rho 0 * g l).trace + (rho 3 * g l).trace =
+      (rho 1 * g l).trace + (rho 2 * g l).trace
+    rw [← Matrix.trace_add, ← Matrix.add_mul, ← Matrix.trace_add, ← Matrix.add_mul,
+      witness_relations.1, witness_relations.2.1]
+  have responses (l : ι) :
+      r 0 l + r 1 l = 1 / 2 ∧ r 2 l + r 3 l = 1 / 2 := by
+    constructor
+    · change (s l * measurement 0).trace + (s l * measurement 1).trace = _
+      rw [← Matrix.trace_add, ← Matrix.mul_add, witness_relations.2.2.1,
+        Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul, ht l]
+      simp
+    · change (s l * measurement 2).trace + (s l * measurement 3).trace = _
+      rw [← Matrix.trace_add, ← Matrix.mul_add, witness_relations.2.2.2,
+        Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul, ht l]
+      simp
+  have bound (l : ι) :
+      (1 / 4 : ℝ) * ∑ j, (μ j l * (r (ix j) l + r (iz j) l)).re ≤
+        (3 / 8 : ℝ) * ((μ 0 l).re + (μ 3 l).re) := by
+    have hn' (j) := (Complex.nonneg_iff.mp (nonneg j l)).1
+    have hr' (o) := (Complex.nonneg_iff.mp (response o l)).1
+    have hi (j) : (μ j l).im = 0 := (Complex.nonneg_iff.mp (nonneg j l)).2.symm
+    have hrel := congrArg Complex.re (relations l)
+    have hx := congrArg Complex.re (responses l).1
+    have hy := congrArg Complex.re (responses l).2
+    norm_num only [Complex.add_re, Complex.div_ofNat_re, Complex.one_re] at hrel hx hy
+    have hx1 : (r 1 l).re = 1 / 2 - (r 0 l).re := by linarith
+    have hy1 : (r 3 l).re = 1 / 2 - (r 2 l).re := by linarith
+    have h := corner_bound (μ 0 l).re (μ 1 l).re (μ 2 l).re (μ 3 l).re
+      (r 0 l).re (r 2 l).re (hn' 0) (hn' 1) (hn' 2) (hn' 3) hrel (hr' 0) (hr' 2)
+      (by linarith [hr' 1]) (by linarith [hr' 3])
+    convert h using 1 <;>
+      simp [Fin.sum_univ_succ, ix, iz, Complex.mul_re, Complex.add_re, hi, hx1, hy1] <;> ring
+  have total : HasSum (fun l => (μ 0 l).re + (μ 3 l).re) 2 := by
+    convert (Complex.hasSum_re (sums 0)).add (Complex.hasSum_re (sums 3)) using 1 <;> norm_num
+  have score (j : Fin 4) :
+      HasSum (fun l => (μ j l * (r (ix j) l + r (iz j) l)).re) (17 / 20 : ℝ) := by
+    have h := (reproduce j (ix j)).add (reproduce j (iz j))
+    change HasSum _ ((rho j * measurement (![0, 0, 1, 1] j)).trace +
+      (rho j * measurement (![2, 3, 2, 3] j)).trace) at h
+    rw [born_sum] at h
+    convert Complex.hasSum_re h using 1
+    · funext l
+      rw [mul_add]
+    · norm_num
+  have score_total : HasSum
+      (fun l => (1 / 4 : ℝ) * ∑ j, (μ j l * (r (ix j) l + r (iz j) l)).re)
+      (17 / 20 : ℝ) := by
+    convert (hasSum_sum (s := Finset.univ) (fun j _ => score j)).mul_left (1 / 4 : ℝ) using 1
+    norm_num [Fin.sum_univ_succ]
+  have h := hasSum_le bound score_total (total.mul_left (3 / 8 : ℝ))
+  norm_num at h
 
 theorem result : ¬ claim := by
   intro h
