@@ -2972,3 +2972,135 @@ duals and their joint profile costs still require estimates on the
 same original $\beta$ rows. No moving-$U$ replacement of $b_U$ is used.
 The complete J29/J40 contraction, signed Robin restoration and RH
 remain open; there is no Lean certification or priority claim here.
+
+## Four inverse factors on the same coprime realization
+
+Retain $K=\mathbb Q(\sqrt{-3})$, $q_d=Nd$, the fixed $S$, and the
+ideal-counting convention of (C41). Let $D=U^{1/2}$ and $A=U^\alpha$,
+where $0<\alpha<1/4$ is fixed. On the original inverse annulus use exactly
+$b_A=\mu+K_A$ of (C37), with its original smooth $W$ and collision zeros.
+The support condition $2A<z\asymp U^{1/4}$ then holds eventually in
+(C25). All statements below are paper-level `repo-derived` deductions;
+$R_\beta$ always means the explicit principal reciprocal hypothesis
+(C48), including polynomial vertical growth on smaller closed strips.
+In particular $R_{7/8}$ is source-conditional on the
+[pinned manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`thm:main` and `lem:logarithmic-control`, and is not certified here.
+
+For a smooth complex $\Psi$ supported on a fixed compact rectangle in
+$(0,\infty)^4$, and squarefree $P$ outside $S$, put
+
+$$
+\begin{aligned}
+Q_4(P;\Psi)&=\sum_{\substack{d_1d_2d_3d_4\ {\rm sf}\\
+ (d_1d_2d_3d_4,SP)=1}}
+ \prod_{i=1}^4b_A(d_i)\,
+ \Psi(q_{d_1}/D,\ldots,q_{d_4}/D),\qquad I_\Psi=\int\Psi(\mathbf x)\,d\mathbf x,\\
+C_4(P)&=\kappa^4\prod_{p\in S}(1-q_p^{-1})^4
+ \prod_{p\notin S}(1+4q_p^{-1})(1-q_p^{-1})^4
+ \prod_{p\mid P}(1+4q_p^{-1})^{-1},\\
+\Theta_{4,A}(P)&=\sum_{\substack{e_1e_2e_3e_4\ {\rm sf}\\
+ (e_1e_2e_3e_4,SP)=1}}
+ \frac{\prod_{i=1}^4\mu(e_i)2^{\omega(e_i)}W(q_{e_i}/A)}
+ {\prod_{p\mid e_1e_2e_3e_4}(q_p+4)},
+ \qquad \kappa=\mathop{\rm Res}_{s=1}\zeta_K(s).
+\end{aligned}
+\tag{C51}
+$$
+
+The squarefree product forces all four factors to be pairwise coprime.
+This is the actual relation obtained from squarefree columns
+$s=d_1d_2$, $t=d_3d_4$ and common-column gcd $(s,t)=1$.
+Squaring (C41) would allow primes shared across the two columns; even
+its unforced local factor would be $(1+2/q_p)^2$, instead of
+$1+4/q_p$. Thus neither $\Theta_A(P)^2$ nor independent copies of the
+two-variable mean describe this realization. The old two-variable
+result remains applicable in its original scope.
+
+**Four-factor absolute-error theorem.** Suppose $1/2\le\beta<1$ and
+$R_\beta$. For every fixed polynomial range $q_P\le U^C$ and
+$\varepsilon>0$, a finite derivative order $J$ gives
+
+$$
+\begin{aligned}
+Q_4(P;\Psi)&=D^4C_4(P)I_\Psi\Theta_{4,A}(P)
+ +O_\varepsilon\!\left(\mathcal N_J(Uq_P)^\varepsilon
+ [D^{3+\beta}+D^{7/2}A^{1/2}]\right),\\
+|\Theta_{4,A}(P)|&\ll_\varepsilon
+ A^{-4(1-\beta)+\varepsilon}q_P^\varepsilon,
+\qquad 0<C_4(P)\ll_{K,S}1.
+\end{aligned}
+\tag{C52}
+$$
+
+Here $\mathcal N_J$ is the maximum of the partial derivatives of
+$\Psi$ up to order $J$ in each variable on that rectangle. Constants
+depend on $C,\alpha,K,S,W$, supports, strip margins and the reciprocal
+growth constants. The displayed $q_P^\varepsilon$ version is retained
+when summing frequency shells; no condition $q_P\le A^2$ is imposed.
+
+**Proof.** Reuse the divisor identity (C37), the literal Euler-factor
+method (C44), the deleted-factor estimate (C45) under (C48), and the
+normal-convergence argument (C47). Expand first the $K_A^4$ term and
+fix the four $e_i$. Its series is $\prod_i\zeta_K(s_i)G_{\mathbf e,P}(\mathbf s)$.
+Writing $x_i=q_p^{-s_i}$, the local factors of $G$ are
+
+$$
+\begin{array}{c|c}
+p\nmid SPe_1e_2e_3e_4&(1+x_1+x_2+x_3+x_4)\prod_i(1-x_i)\\
+p\mid e_j&x_j\prod_i(1-x_i)\\
+p\mid SP&\prod_i(1-x_i).
+\end{array}
+\tag{C53}
+$$
+
+The first factor has no linear term. The literal product therefore
+converges normally whenever every $\Re s_i>1/2$; one never divides
+by its potentially vanishing numerator. On smaller closed strips its
+bound is $\ll_\eta(q_P\prod_iq_{e_i})^\eta
+\prod_iq_{e_i}^{-\Re s_i}$. At $\mathbf s=\mathbf1$, forcing a prime
+into any one variable gives $q_p^{-1}/(1+4q_p^{-1})=(q_p+4)^{-1}$.
+Four smooth Mellin inversions and successive contour shifts to
+$1/2+\delta$ give the residue in (C52). For a subset of $j\ge1$
+shifted variables, summing the forced divisors costs
+
+$$
+\mathcal N_J(Uq_P)^\varepsilon D^{4-j/2}A^{j/2},
+\qquad j=1,2,3,4.
+\tag{C54}
+$$
+
+This follows from the same sums $\sum_{q_e\le2A}\tau(e)q_e^{-1/2-\delta}$
+and $\sum_{q_e\le2A}\tau(e)/q_e$ as (C44). Since $A<D$, the $j=1$
+term dominates. Choose $J$ once to pay four Mellin integrals, their
+horizontal joins and the ordinary zeta growth.
+
+There are fifteen other terms in $(\mu+K_A)^4$. In each choose one
+$\mu$ variable, fix the other three, and use (C45)/(C48) with
+$r=\operatorname{rad}(SP\prod_{i\ne j}d_i)$, so $q_r\ll q_PD^3$.
+That inner sum is $O(\mathcal N_JD^{\beta+\varepsilon}q_P^\varepsilon)$;
+each remaining absolute mass is $O(D\log^2(2A))$, or $O(D)$ for a
+$\mu$ factor, by (C46). This proves the $D^{3+\beta}$ error for their
+entire sum. Only the principal reciprocal is used: there is no
+application to nontrivial ray or angular Hecke inverses.
+
+Finally the four-variable Mellin series of $\Theta_{4,A}$ is
+
+$$
+\prod_{p\notin SP}\left(1-\frac{2\sum_iq_p^{-z_i}}{q_p+4}\right)
+ =\prod_i\zeta_K(1+z_i)^{-2}H_{4,P}(\mathbf z).
+\tag{C55}
+$$
+
+After dividing by $\prod_i(1-q_p^{-1-z_i})^2$, the local correction
+minus one has only terms $O(\sum_iq_p^{-2-\Re z_i}
++\sum_{i,j}q_p^{-2-\Re z_i-\Re z_j})$ on smaller strips. Thus $H_{4,P}$
+is holomorphic for every $\Re z_i>-1/2$, normally convergent and
+$\ll_\eta q_P^\eta$ uniformly in the heights there. Excluded primes
+have factor $\prod_i(1-q_p^{-1-z_i})^{-2}$, costing $q_P^\eta$.
+Move all four lines to $\beta-1+\delta$. The simple pole of each
+$\widehat W$ at zero is canceled by its corresponding double
+reciprocal-zeta zero. Rapid Mellin decay and (C48) prove the second
+line of (C52), with no residue or mixed polar divisor. This completes
+the proof. Fixed polynomial ranges allow $\delta,\eta$ to be allocated
+within any final $U^\varepsilon$ loss.
