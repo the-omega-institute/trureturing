@@ -169,7 +169,8 @@ directory `experiments/kalmykov-karp-pfq-function`.
 ### What the settlement shows
 
 - **PROVED (Lean, `FunctionResult.result`):** the universal function clause
-  with $1\le p$ is false, so both source-scope readings are refuted. For
+  with $1\le p$ is false, so both source-scope readings are refuted.
+- **PROVED (Lean, `FunctionResult.witness_negative`):** for
   $a=(1)$ and repeated half denominator parameters, the midpoint square
   is strictly smaller than the outer product. The geometric tail estimate
   establishes this for the full series at $q=12,x=2000$, independently of
