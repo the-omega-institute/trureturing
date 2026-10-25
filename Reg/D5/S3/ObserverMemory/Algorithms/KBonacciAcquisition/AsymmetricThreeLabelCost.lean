@@ -64,7 +64,7 @@ private def sampleTarget : Option (LiveRecord 7) → ULift.{z} (Fin 3) := fun q 
 private theorem negative : ¬ arena.{z}.Law rejected := by
   intro law
   have target : ∀ (j : Fin 4) (s : ℕ), s<7 →
-      sampleTarget (some ⟨0,-((j.val*2 : ℕ) : ZMod 8),s⟩) =
+      sampleTarget.{z} (some ⟨0,-((j.val*2 : ℕ) : ZMod 8),s⟩) =
         if j.val ∈ ({1} : Finset ℕ) then ULift.up 1
         else if j.val ∈ ({2} : Finset ℕ) then ULift.up 2 else ULift.up 0 := by
     intro j s hs
