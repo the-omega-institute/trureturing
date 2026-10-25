@@ -9,7 +9,6 @@
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Basic
 import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Module
 import Mathlib.Tactic.Linarith
