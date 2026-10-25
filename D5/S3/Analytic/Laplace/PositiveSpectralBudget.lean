@@ -113,30 +113,38 @@ theorem boundary_conjugate {μ : Measure ℝ} {L : ℝ → ℂ}
     (t : ℝ) : L (-t) = conj (L t) :=
   tendsto_nhds_unique (hL (-t)) (boundary_limit_conjugate (hL t))
 
+private lemma boundary_zero_nonnegative_of_limit {μ : Measure ℝ}
+    (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
+    {z : ℂ} (hL : Tendsto (fun σ : ℝ => (σ : ℂ) *
+      complexMGF id μ (-(σ : ℂ))) (𝓝[>] 0) (𝓝 z)) :
+    (0 : ℂ) ≤ z := by
+  simpa using boundary_positive_definite hc (fun _ : Unit => (0 : ℝ))
+    (L := fun _ => z) (fun _ => (1 : ℂ)) (fun _ _ => by simpa using hL)
+
 /-- The boundary value at zero is a nonnegative real number. -/
 theorem boundary_zero_nonnegative {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
     {L : ℝ → ℂ}
     (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
       complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t))) :
-    (0 : ℂ) ≤ L 0 := by
-  simpa using boundary_positive_definite hc (fun _ : Unit => (0 : ℝ))
-    (fun _ => (1 : ℂ)) (fun _ _ => by simpa using hL 0)
-
+    (0 : ℂ) ≤ L 0 :=
+  boundary_zero_nonnegative_of_limit hc (by simpa using hL 0)
 
 private lemma augmented_nonnegative {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
-    {L : ℝ → ℂ}
-    (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
-      complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t)))
-    {ι : Type*} [Fintype ι] (s : ℝ) (t : ι → ℝ) (b : ι → ℂ) :
+    {L : ℝ → ℂ} {ι : Type*} [Fintype ι] (t : ι → ℝ)
+    (hL : ∀ j k : Option ι, Tendsto (fun σ : ℝ => (σ : ℂ) *
+      complexMGF id μ (-((σ : ℂ) +
+        ((Option.elim j 0 t - Option.elim k 0 t : ℝ) : ℂ) * Complex.I)))
+      (𝓝[>] 0) (𝓝 (L (Option.elim j 0 t - Option.elim k 0 t))))
+    (s : ℝ) (b : ι → ℂ) :
     (0 : ℂ) ≤ (s : ℂ)^2 * L 0 +
       (s : ℂ) * (∑ j : ι, (conj (b j) * L (-t j) + b j * L (t j))) +
       ∑ j, ∑ k, b j * conj (b k) * L (t j - t k) := by
   classical
   have H := boundary_positive_definite hc
     (fun j : Option ι => Option.elim j (0 : ℝ) t)
-    (fun j : Option ι => Option.elim j (s : ℂ) b) (fun j k => hL _)
+    (fun j : Option ι => Option.elim j (s : ℂ) b) hL
   convert H using 1
   simp only [Fintype.sum_option, Option.elim_none, Option.elim_some, sub_self,
     zero_sub, sub_zero, Complex.conj_ofReal, Finset.sum_add_distrib,
@@ -152,28 +160,34 @@ private lemma augmented_nonnegative {μ : Measure ℝ}
   ring
 
 /-- Distinct nonzero frequencies with real boundary values at most `-c`
-have cardinality at most `4*L(0)^2/c^2`. -/
+have cardinality at most `4*L(0)^2/c^2`, assuming limits and nonpositive real
+parts only at the pairwise differences of the family augmented by zero. -/
 theorem same_sign_budget {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
-    {L : ℝ → ℂ}
-    (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
-      complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t)))
-    (hneg : ∀ t : ℝ, t ≠ 0 → (L t).re ≤ 0)
-    {ι : Type*} [Fintype ι] (t : ι → ℝ) (hinj : Function.Injective t)
+    {L : ℝ → ℂ} {ι : Type*} [Fintype ι] (t : ι → ℝ)
+    (hL : ∀ j k : Option ι, Tendsto (fun σ : ℝ => (σ : ℂ) *
+      complexMGF id μ (-((σ : ℂ) +
+        ((Option.elim j 0 t - Option.elim k 0 t : ℝ) : ℂ) * Complex.I)))
+      (𝓝[>] 0) (𝓝 (L (Option.elim j 0 t - Option.elim k 0 t))))
+    (hneg : ∀ j k : Option ι, Option.elim j 0 t - Option.elim k 0 t ≠ 0 →
+      (L (Option.elim j 0 t - Option.elim k 0 t)).re ≤ 0)
+    (hinj : Function.Injective t)
     (hne : ∀ j, t j ≠ 0) {c : ℝ} (hcpos : 0 < c)
     (hvalues : ∀ j, (L (t j)).re ≤ -c) :
     (Fintype.card ι : ℝ) * c ^ 2 ≤ 4 * (L 0).re ^ 2 := by
   classical
   let k := (L 0).re
   let n : ℝ := Fintype.card ι
-  have hk : 0 ≤ k := (boundary_zero_nonnegative hc hL).1
+  have hk : 0 ≤ k := (boundary_zero_nonnegative_of_limit hc
+    (by simpa using hL none none)).1
   have hn : 0 ≤ n := by dsimp [n]; positivity
   have hcross : (∑ j, ((L (-t j)).re + (L (t j)).re)) ≤ -n * c := by
     calc
       _ ≤ ∑ _j : ι, -c := by
         apply Finset.sum_le_sum
         intro j _
-        have h1 := hneg (-t j) (neg_ne_zero.mpr (hne j))
+        have h1 : (L (-t j)).re ≤ 0 := by
+          simpa using hneg none (some j) (by simpa using neg_ne_zero.mpr (hne j))
         have h2 := hvalues j
         linarith
       _ = _ := by simp [n]
@@ -185,14 +199,14 @@ theorem same_sign_budget {μ : Measure ℝ}
         by_cases h : u = j
         · subst u; simp [k]
         · rw [ite_eq_right h]
-          exact hneg _ (sub_ne_zero.mpr (fun he => h (hinj he).symm))
+          exact hneg (some j) (some u) (sub_ne_zero.mpr (fun he => h (hinj he).symm))
       _ = _ := by simp
   have hdiag : (∑ j, ∑ u, (L (t j - t u)).re) ≤ n * k := by
     calc
       _ ≤ ∑ _j : ι, k := Finset.sum_le_sum (fun j _ => hinner j)
       _ = _ := by simp [n]
   have hpoly (s : ℝ) (hs : 0 ≤ s) : 0 ≤ s ^ 2 * k - s * n * c + n * k := by
-    have H := (augmented_nonnegative hc hL s t (fun _ => (1 : ℂ))).1
+    have H := (augmented_nonnegative hc t hL s (fun _ => (1 : ℂ))).1
     simp only [map_one, one_mul, mul_one, Complex.add_re, Complex.mul_re,
       Complex.ofReal_re, Complex.ofReal_im, ← Complex.ofReal_pow,
       Complex.re_sum, zero_mul, mul_zero, sub_zero] at H
@@ -215,31 +229,41 @@ theorem same_sign_budget {μ : Measure ℝ}
     nlinarith
 
 /-- A gap about zero bounds the sum of squared boundary values in every
-finite family whose pairwise distances are smaller than the gap. -/
+finite family whose pairwise distances are smaller than the gap, assuming
+limits and gap vanishing only at differences of the family augmented by zero. -/
 theorem gap_budget {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
-    {L : ℝ → ℂ}
-    (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
-      complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t)))
-    {δ : ℝ} (_hδ : 0 < δ)
-    (hgap : ∀ t : ℝ, 0 < |t| → |t| < δ → L t = 0)
-    {ι : Type*} [Fintype ι] (t : ι → ℝ) (hinj : Function.Injective t)
+    {L : ℝ → ℂ} {ι : Type*} [Fintype ι] (t : ι → ℝ)
+    (hL : ∀ j k : Option ι, Tendsto (fun σ : ℝ => (σ : ℂ) *
+      complexMGF id μ (-((σ : ℂ) +
+        ((Option.elim j 0 t - Option.elim k 0 t : ℝ) : ℂ) * Complex.I)))
+      (𝓝[>] 0) (𝓝 (L (Option.elim j 0 t - Option.elim k 0 t))))
+    {δ : ℝ}
+    (hgap : ∀ j k : Option ι, 0 < |Option.elim j 0 t - Option.elim k 0 t| →
+      |Option.elim j 0 t - Option.elim k 0 t| < δ →
+      L (Option.elim j 0 t - Option.elim k 0 t) = 0)
+    (hinj : Function.Injective t)
     (hdiam : ∀ j k, |t j - t k| < δ) :
     (∑ j, ‖L (t j)‖ ^ 2) ≤ (L 0).re ^ 2 := by
   classical
   let k := (L 0).re
   let S : ℝ := ∑ j, ‖L (t j)‖ ^ 2
+  have hzero : (0 : ℂ) ≤ L 0 :=
+    boundary_zero_nonnegative_of_limit hc (by simpa using hL none none)
   have hkreal : (k : ℂ) = L 0 := by
     apply Complex.ext
     · rfl
-    · exact (boundary_zero_nonnegative hc hL).2
-  have hk : 0 ≤ k := (boundary_zero_nonnegative hc hL).1
+    · exact hzero.2
+  have hk : 0 ≤ k := hzero.1
   have hS : 0 ≤ S := Finset.sum_nonneg (fun j _ => sq_nonneg _)
+  have hconj (j : ι) : L (-t j) = conj (L (t j)) :=
+    tendsto_nhds_unique (by simpa using hL none (some j))
+      (boundary_limit_conjugate (by simpa using hL (some j) none))
   have hnorm (j : ι) : conj (L (t j)) * L (t j) = (‖L (t j)‖ ^ 2 : ℝ) := by
     simpa only [Complex.ofReal_pow] using Complex.conj_mul' (L (t j))
   have hterm (j : ι) : conj (-conj (L (t j))) * L (-t j) +
       (-conj (L (t j))) * L (t j) = (-2 : ℂ) * (‖L (t j)‖ ^ 2 : ℝ) := by
-    rw [boundary_conjugate hL, map_neg, Complex.conj_conj]
+    rw [hconj j, map_neg, Complex.conj_conj]
     calc
       _ = (-2 : ℂ) * (conj (L (t j)) * L (t j)) := by ring
       _ = _ := by rw [hnorm]
@@ -255,12 +279,13 @@ theorem gap_budget {μ : Measure ℝ}
       rw [hnorm, ← hkreal]
       ring
     · intro u _ hne
-      rw [hgap _ (abs_pos.mpr (sub_ne_zero.mpr
-        (fun he => hne (hinj he).symm))) (hdiam j u)]
-      simp
+      have hgap' : L (t j - t u) = 0 :=
+        hgap (some j) (some u) (abs_pos.mpr (sub_ne_zero.mpr
+          (fun he => hne (hinj he).symm))) (hdiam j u)
+      simp [hgap']
     · simp
   have hpoly (s : ℝ) : 0 ≤ s ^ 2 * k - 2 * s * S + k * S := by
-    have H := (augmented_nonnegative hc hL s t (fun j => -conj (L (t j)))).1
+    have H := (augmented_nonnegative hc t hL s (fun j => -conj (L (t j)))).1
     rw [hcross] at H
     simp_rw [hinner] at H
     rw [← Finset.mul_sum, ← Complex.ofReal_sum] at H

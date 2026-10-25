@@ -20,6 +20,8 @@ namespace D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction
 open Set Filter MeasureTheory ProbabilityTheory ZetaAsymptotics
 open D5.S3.Analytic.Zeta.ZetaLogDerivativeRegularity
 open D5.S3.Weil.ZeroSum (IsNontrivialZero)
+open D5.S3.Weil.ZetaBridge.ZeroDataNonemptyIffInfinite
+  (hasZetaZeroMultiplicity_iff_analyticOrderAt_eq)
 open scoped Topology
 
 noncomputable section
@@ -326,16 +328,8 @@ private theorem critical_zero_limit {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0
     rw [heq]
     congr 1
     ring
-  have hρ1 : rho ≠ 1 := by
-    intro h
-    have := hρ.2.2
-    simp [h] at this
-  obtain ⟨_, u, hu, hu0, hfac⟩ := hmult
   have hord : analyticOrderAt riemannZeta rho = m :=
-    (analyticOn_riemannZeta rho hρ1).analyticOrderAt_eq_natCast.mpr
-      ⟨u, hu, hu0, by
-        filter_upwards [hfac] with z hz
-        simpa [D5.S3.Weil.Convention.classicalZeta, smul_eq_mul] using hz⟩
+    (hasZetaZeroMultiplicity_iff_analyticOrderAt_eq hρ).mp hmult
   have hmEq : m = Zeta23.zeroMult rho := by simp [Zeta23.zeroMult, hord]
   exact ⟨m, hm, hmEq, hactual⟩
 
@@ -518,6 +512,31 @@ theorem critical_pole_budget {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ y)
   have hm1 : (1 : ℝ) ≤ m := by exact_mod_cast (Nat.succ_le_of_lt hm)
   linarith
 
+private lemma critical_zero_reconstruct {rho : ℂ} (hcrit : rho.re = 1 / 2) :
+    (1 / 2 : ℂ) + (rho.im : ℂ) * Complex.I = rho := by
+  apply Complex.ext <;> simp [hcrit]
+
+private lemma critical_ordinate_injective {Z : Finset ℂ}
+    (hcrit : ∀ rho ∈ Z, rho.re = 1 / 2) :
+    Function.Injective (fun rho : Z => rho.val.im) := by
+  intro rho tau h
+  change rho.val.im = tau.val.im at h
+  apply Subtype.ext
+  rw [← critical_zero_reconstruct (hcrit rho.val rho.property),
+    ← critical_zero_reconstruct (hcrit tau.val tau.property), h]
+
+private lemma positive_ray_integrable {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ y)
+    {a B e k x0 : ℝ} (hx0 : 1 < x0) {R : ℂ → ℂ}
+    (hR : DifferentiableOn ℂ R {s : ℂ | a < s.re})
+    (hc : ∀ σ : ℝ, B < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
+    (hi : ∀ s : ℂ, max B (max a (1 / 2)) < s.re →
+      complexMGF id μ (-s) = (e : ℂ) * regularizedPrincipal s + R s +
+        (k : ℂ) * (x0 : ℂ) ^ (-s) / s)
+    (ha : a < 0) :
+    ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ := by
+  intro σ hσ
+  exact laplace_integrable hpos hx0 hR hc hi σ (by simpa [max_eq_right ha.le] using hσ)
+
 /-- Every finite set of critical zeros is quadratically bounded by a
 positive lower Laplace budget. -/
 theorem critical_zeros_budget {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ y)
@@ -532,22 +551,14 @@ theorem critical_zeros_budget {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ y
     (Z.card : ℝ) ≤ 16 * k ^ 2 := by
   classical
   obtain ⟨L, hL, hL0, hzero, hregular⟩ := imaginary_axis_limits (e := 1) hpos hx0 hR hc hi ha
-  have heq (rho : Z) : (1 / 2 : ℂ) + (rho.val.im : ℂ) * Complex.I = rho.val := by
-    apply Complex.ext <;> simp [(hZ rho.val rho.property).2]
-  have hinj : Function.Injective (fun rho : Z => rho.val.im) := by
-    intro rho tau h
-    apply Subtype.ext
-    apply Complex.ext
-    · rw [(hZ rho.val rho.property).2, (hZ tau.val tau.property).2]
-    · exact h
+  have heq (rho : Z) := critical_zero_reconstruct (hZ rho.val rho.property).2
+  have hinj := critical_ordinate_injective (fun rho hρ => (hZ rho hρ).2)
   have hne (rho : Z) : rho.val.im ≠ 0 := by
     intro h
     have hn := critical_zero_ne_half (hZ rho.val rho.property).1
     apply hn
     apply Complex.ext <;> simp [(hZ rho.val rho.property).2, h]
-  have hconv : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ := by
-    intro σ hσ
-    exact laplace_integrable hpos hx0 hR hc hi σ (by simpa [max_eq_right ha.le] using hσ)
+  have hconv := positive_ray_integrable hpos hx0 hR hc hi ha
   have hneg (t : ℝ) (ht : t ≠ 0) : (L t).re ≤ 0 := by
     by_cases hz : IsNontrivialZero (1 / 2 + (t : ℂ) * Complex.I)
     · rw [(hzero t hz).2]
@@ -568,7 +579,8 @@ theorem critical_zeros_budget {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ y
       Complex.neg_re, Complex.natCast_re]
     linarith
   have hb := D5.S3.Analytic.Laplace.PositiveSpectralBudget.same_sign_budget
-    hconv hL hneg (fun rho : Z => rho.val.im) hinj hne (by norm_num : (0 : ℝ) < 1 / 2)
+    hconv (fun rho : Z => rho.val.im) (fun _ _ => hL _) (fun _ _ => hneg _)
+      hinj hne (by norm_num : (0 : ℝ) < 1 / 2)
       hvalues
   rw [hL0, Complex.ofReal_re] at hb
   simp only [Fintype.card_coe] at hb
@@ -613,19 +625,11 @@ theorem critical_window_budget {μ : Measure ℝ} (hpos : ∀ᵐ y ∂μ, 0 ≤ 
     apply hregular t (abs_pos.mp ht)
     intro hz
     exact hgap (by simpa [Real.dist_eq] using htδ) hz.1
-  have heq (rho : Z) : (1 / 2 : ℂ) + (rho.val.im : ℂ) * Complex.I = rho.val := by
-    apply Complex.ext <;> simp [(hZ rho.val rho.property).2]
-  have hinj : Function.Injective (fun rho : Z => rho.val.im) := by
-    intro rho tau h
-    apply Subtype.ext
-    apply Complex.ext
-    · rw [(hZ rho.val rho.property).2, (hZ tau.val tau.property).2]
-    · exact h
-  have hconv : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ := by
-    intro σ hσ
-    exact laplace_integrable hpos hx0 hR hc hi' σ (by simpa [max_eq_right ha.le] using hσ)
+  have heq (rho : Z) := critical_zero_reconstruct (hZ rho.val rho.property).2
+  have hinj := critical_ordinate_injective (fun rho hρ => (hZ rho hρ).2)
+  have hconv := positive_ray_integrable hpos hx0 hR hc hi' ha
   have hb := D5.S3.Analytic.Laplace.PositiveSpectralBudget.gap_budget
-    hconv hL hδ hgapL (fun rho : Z => rho.val.im) hinj
+    hconv (fun rho : Z => rho.val.im) (fun _ _ => hL _) (fun _ _ => hgapL _) hinj
       (fun rho tau => hdiam rho.val rho.property tau.val tau.property)
   rw [hL0, Complex.ofReal_re] at hb
   have hpoint (rho : Z) : (Zeta23.zeroMult rho.val : ℝ) ≤ 4 * ‖L rho.val.im‖ ^ 2 := by

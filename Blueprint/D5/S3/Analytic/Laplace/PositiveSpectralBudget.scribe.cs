@@ -25,7 +25,7 @@ internal sealed class PositiveSpectralBudgetDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("boundary-positive-definite"),
                 DeclarationHandle.Create(Prefix + "boundary_positive_definite"),
-                H("Positive definiteness of boundary limits"),
+                H("Finite Gram positivity at the boundary"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
@@ -35,8 +35,10 @@ internal sealed class PositiveSpectralBudgetDocument : IScribeDocumentDefinition
                     + "transform at sigma+i*(t(j)-t(k)) exists at each pairwise difference. "
                     + "For complex coefficients a(j), the double sum "
                     + "a(j)*conjugate(a(k))*L(t(j)-t(k)) is a nonnegative real number. "
-                    + "Characters give rank-one Gram matrices, integration preserves positivity, "
-                    + "and the boundary limit preserves each finite matrix inequality."))),
+                    + "This is the finite Gram positivity of the positive measure carried to "
+                    + "boundary limits, as in step (a) of Proposition 486.1: characters give "
+                    + "rank-one Gram matrices, integration preserves positivity, and the boundary "
+                    + "limit preserves each finite matrix inequality."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("boundary-conjugate"),
@@ -61,8 +63,9 @@ internal sealed class PositiveSpectralBudgetDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Suppose every nonzero boundary frequency has nonpositive real part. "
-                    + "At n distinct nonzero frequencies suppose Re(L(t(j)))<=-c with c>0. "
+                    "Let t(1),...,t(n) be distinct nonzero frequencies. Suppose boundary limits "
+                    + "exist at all pairwise differences of 0,t(1),...,t(n), and Re(L(u))<=0 "
+                    + "at each nonzero such difference u. Suppose Re(L(t(j)))<=-c with c>0. "
                     + "Then n*c^2<=4*L(0)^2. Apply the finite Gram inequality to the augmented "
                     + "family 0,t(1),...,t(n), with a real nonnegative coefficient s at zero "
                     + "and coefficient one elsewhere, and optimize the resulting quadratic inequality."))),
@@ -74,8 +77,10 @@ internal sealed class PositiveSpectralBudgetDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Suppose delta>0 and L(t)=0 for 0<abs(t)<delta. For any distinct finite "
-                    + "family with abs(t(j)-t(k))<delta, the sum of abs(L(t(j)))^2 is at most "
+                    "Let t(1),...,t(n) be a distinct finite family with abs(t(j)-t(k))<delta. "
+                    + "Suppose boundary limits exist at all pairwise differences of "
+                    + "0,t(1),...,t(n), and L(u)=0 at each such difference with 0<abs(u)<delta. "
+                    + "Then the sum of abs(L(t(j)))^2 is at most "
                     + "L(0)^2. In particular the conclusion applies in every interval of length "
                     + "less than delta. The off-diagonal entries vanish. Test the augmented "
                     + "matrix with the coefficient L(0) at zero and -conjugate(L(t(j))) at "
