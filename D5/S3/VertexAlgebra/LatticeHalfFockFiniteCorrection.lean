@@ -718,7 +718,7 @@ theorem insertion_l1_scalar (r n : ℕ) :
       norm_num [hzero, hone]
     · have rc : (r : ℂ) ≠ 0 := by exact_mod_cast hr
       simp only [Nat.cast_zero, add_zero, Ring.choose_zero_right, mul_one,
-        if_pos rfl, if_neg hr, hzero, zero_add]
+        ite_true, if_neg hr, hzero, zero_add]
       rw [half_successor r]
       field_simp
       <;> ring
@@ -737,9 +737,11 @@ theorem insertion_l1_scalar (r n : ℕ) :
       and_false, if_false]
     by_cases hr : r = 0
     · subst r
-      simp only [if_pos rfl, Nat.cast_zero, zero_add, hone, hzero]
+      simp only [ite_true, Nat.cast_zero, zero_add, hone, hzero]
       rw [half_successor n]
-      field_simp
+      have n1 : (1 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 1 + n ≠ 0)
+      have n2 : (2 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 2 + n ≠ 0)
+      field_simp [n1, n2, ns]
       <;> ring
     · rw [if_neg hr, half_successor r, half_successor n]
       have lower : (r : ℂ) + (n + 1 : ℂ) ≠ 0 := by

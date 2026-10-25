@@ -179,5 +179,88 @@ private theorem charged_normal_sum_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   rw [← left, ← right]
   rfl
 
+
+/-- Charged base on every original actual target input. This is a dependency,
+not a replacement for the all-source corrected-field endpoint. -/
+theorem charged_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Charge D) (e : ℤ) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+        chargedCoefficient D hu a e - chargedCoefficient D hu a e *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      (((e : ℂ) - 2) / 2 + (bilinear D a a : ℂ)) •
+        chargedCoefficient D hu a (e - 2) := by
+  classical
+  let H := HalfFockSpectralFiberSource.actualInverse D
+  have hHG := HalfFockSpectralFiberSource.actualInverse_left D hu
+  have hGH := HalfFockSpectralFiberSource.actualInverse_right D hu
+  have inv := LatticeSugawaraConformal.inverse_charge_contractions D H hHG hGH a
+  apply LinearMap.ext
+  intro x
+  let chi : Fin D.rank → ℂ := fun i => (bilinear D (unitCharge D i) a : ℂ)
+  let W : Fin D.rank → ActualTensor D hu := fun i =>
+    (wordField D hu (chargedField D hu a) [(i, 0)]).coeff (e - 4) x
+  let C : ActualTensor D hu := chargedCoefficient D hu a (e - 2) x
+  let Q : ℂ := (bilinear D a a : ℂ)
+  have rows : (∑ i : Fin D.rank, ∑ l : Fin D.rank,
+      H i l • (chi l • W i)) = ∑ i : Fin D.rank, (a i : ℂ) • W i := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    calc
+      _ = (∑ l : Fin D.rank, H i l * chi l) • W i := by
+        simp only [Finset.sum_smul, smul_smul]
+      _ = _ := by rw [inv.1 i]
+  have cols : (∑ i : Fin D.rank, ∑ l : Fin D.rank,
+      H i l • (chi i • W l)) = ∑ l : Fin D.rank, (a l : ℂ) • W l := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro l hl
+    calc
+      _ = (∑ i : Fin D.rank, H i l * chi i) • W l := by
+        simp only [Finset.sum_smul, smul_smul]
+      _ = _ := by rw [inv.2 l]
+  have quadratic : (∑ i : Fin D.rank, ∑ l : Fin D.rank,
+      H i l * chi i * chi l) = Q := by
+    have h := LatticeSugawaraConformal.chargeQuadratic_eq D H hHG hGH a
+    change (2 : ℂ)⁻¹ * (∑ i : Fin D.rank, ∑ l : Fin D.rank,
+      H i l * chi i * chi l) = Q / 2 at h
+    linear_combination (2 : ℂ) * h
+  have quad : (∑ i : Fin D.rank, ∑ l : Fin D.rank,
+      H i l • ((chi i * chi l) • C)) = Q • C := by
+    calc
+      _ = (∑ i : Fin D.rank, ∑ l : Fin D.rank, H i l * chi i * chi l) • C := by
+        simp only [Finset.sum_smul, smul_smul, mul_assoc]
+      _ = _ := by rw [quadratic]
+  have seed : (∑ i : Fin D.rank, (a i : ℂ) • W i) - (Q / 2) • C =
+      (((e : ℂ) - 2) / 2) • C := by
+    have h := LatticeHalfFockChargedSeedPhysical.charged_seed_physical_coefficient
+      D hu a (e - 4) x
+    rw [show e - 4 + 2 = e - 2 by omega] at h
+    simpa only [W, C, Q, chargeNorm, Int.cast_sub, Int.cast_ofNat] using h
+  have l1 : tensorL D (ActualGround D hu) H 1 = tensorRawL D (ActualGround D hu) H 1 := by
+    simp [tensorL, tensorRawL, L]
+  have expansion : tensorL D (ActualGround D hu) H 1 (chargedCoefficient D hu a e x) -
+      chargedCoefficient D hu a e (tensorL D (ActualGround D hu) H 1 x) =
+      (2 : ℂ)⁻¹ • ∑ i : Fin D.rank, ∑ l : Fin D.rank,
+        H i l • (chi l • W i + chi i • W l + (chi i * chi l) • C) := by
+    rw [l1, tensor_rawL_finsum, tensor_rawL_finsum]
+    simp_rw [map_smul, map_sum]
+    rw [← smul_sub, ← Finset.sum_sub_distrib]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro l hl
+    rw [← smul_sub]
+    congr 1
+    exact charged_normal_sum_l1 D hu a i l e x
+  change tensorL D (ActualGround D hu) H 1 (chargedCoefficient D hu a e x) -
+      chargedCoefficient D hu a e (tensorL D (ActualGround D hu) H 1 x) =
+      (((e : ℂ) - 2) / 2 + Q) • C
+  rw [expansion]
+  simp_rw [smul_add, Finset.sum_add_distrib]
+  rw [rows, cols, quad, sub_eq_iff_eq_add.mp seed]
+  module
+
 end
 end D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance
