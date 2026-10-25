@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import signal
+import stat
 import subprocess
 import time
 import uuid
@@ -143,9 +144,32 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
                 raise Refused("initialization_in_progress") from error
             return item
         lock = metadata / "locked"
-        if lock.is_symlink() or not lock.is_file():
+        if lock.is_symlink():
             raise Refused("locked_age_unknown")
-        age = time.time() - lock.stat().st_mtime
+        observed = None
+        def lock_changed(current):
+            return observed is not None and any(
+                getattr(current, field) != getattr(observed, field)
+                for field in ("st_dev", "st_ino", "st_mode", "st_size", "st_mtime_ns", "st_ctime_ns"))
+        try:
+            observed = lock.stat()
+            if not stat.S_ISREG(observed.st_mode):
+                raise Refused("locked_age_unknown")
+            current = lock.stat()
+            if lock.is_symlink() or lock_changed(current):
+                raise Refused("observed_identity_changed")
+        except OSError as error:
+            try:
+                current = lock.lstat()
+                changed = stat.S_ISLNK(current.st_mode) or lock_changed(current)
+            except FileNotFoundError:
+                changed = True
+            except OSError:
+                changed = False
+            if changed:
+                raise Refused("observed_identity_changed") from error
+            raise
+        age = time.time() - current.st_mtime
         if age < LOCK_AGE_SECONDS:
             raise Refused("locked_recent")
     return item

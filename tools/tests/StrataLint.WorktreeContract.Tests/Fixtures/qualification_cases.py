@@ -8,6 +8,70 @@ from unittest.mock import patch
 
 
 class QualificationCases:
+    def qualification_intentional_lock_metadata_races(self):
+        import os
+        import worktree_protocol as protocol
+        import worktree_publication as publication
+        from contextlib import redirect_stderr
+        from pathlib import Path
+        self.g(self.main, "worktree", "lock", "--reason", "intentional", self.tree)
+        lock = protocol.identity(self.main, self.tree)[1] / "locked"
+        original_bytes = lock.read_bytes()
+        old = 1000000000
+        original_stat = os.stat
+        for action in ("qualify", "preview", "preflight", "scoped"):
+            for change in ("unlock", "replace", "timestamp", "replace_error", "present_error", "present_missing_error"):
+                with self.subTest(action=action, change=change):
+                    os.utime(lock, (old, old))
+                    backup = lock.with_name("prior-lock")
+                    calls = []
+                    threshold = 4 if action == "scoped" else 2
+                    def injected(path, *args, **kwargs):
+                        if (path == lock or path == str(lock)) and kwargs.get("follow_symlinks", True):
+                            calls.append(True)
+                            if len(calls) == threshold:
+                                if change == "unlock":
+                                    lock.unlink()
+                                    raise FileNotFoundError("intentional lock metadata cause")
+                                if change.startswith("replace"):
+                                    lock.rename(backup)
+                                    lock.write_bytes(original_bytes)
+                                    os.utime(lock, (old, old))
+                                if change == "timestamp":
+                                    os.utime(lock, (old + 1, old + 1))
+                                if change in ("replace_error", "present_error"):
+                                    raise PermissionError("intentional lock metadata cause")
+                                if change == "present_missing_error":
+                                    raise FileNotFoundError("intentional lock metadata cause")
+                        return original_stat(path, *args, **kwargs)
+                    args = ["--source", str(self.main), "qualify" if action == "qualify" else "remove",
+                            "--path", str(self.tree)]
+                    if action == "preview":
+                        args.append("--preview")
+                    output, errors = io.StringIO(), io.StringIO()
+                    try:
+                        with patch.object(os, "stat", new=injected), \
+                                patch.object(publication, "commit_snapshot", side_effect=AssertionError("unexpected checkpoint")) as checkpoint, \
+                                redirect_stdout(output), redirect_stderr(errors):
+                            code = protocol.main(args)
+                        self.assertGreaterEqual(len(calls), threshold)
+                        self.assertTrue(self.tree.is_dir())
+                        refused = not change.startswith("present")
+                        self.assertEqual((0 if action == "qualify" else 73) if refused else 74, code)
+                        text = output.getvalue() + errors.getvalue()
+                        if refused:
+                            self.assertIn("observed_identity_changed", text)
+                            self.assertNotIn("qualification_failed:", text)
+                        else:
+                            self.assertIn("qualification_failed:", text)
+                            self.assertIn("intentional lock metadata cause", text)
+                        checkpoint.assert_not_called()
+                    finally:
+                        if backup.exists():
+                            backup.replace(lock)
+                        else:
+                            lock.write_bytes(original_bytes)
+
     def pool_revalidation_keeps_refusal_and_prior_eviction(self):
         import worktree_protocol as protocol
         import worktree_pool as pool
