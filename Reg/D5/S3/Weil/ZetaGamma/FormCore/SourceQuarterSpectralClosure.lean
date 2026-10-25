@@ -8,6 +8,10 @@ graph paid by ActualGammaResidualL1(a=2), never by the later Gamma owner.
 No native/report job has run. Source reconstruction, all four slots and
 sourceSelection AST paths below are uncompiled preparation candidates. -/
 
+import Mathlib.Analysis.Real.Cardinality
+import Mathlib.MeasureTheory.MeasurableSpace.Card
+import Mathlib.MeasureTheory.MeasurableSpace.CountablyGenerated
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 import D5.S3.Weil.ZetaGamma.FormCore.ActualGammaResidualL1
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
@@ -558,6 +562,118 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end Even
+
+/- SOURCE_ONLY / UNCOMPILED. Insert after `end Even` and before the
+closing BareQuarterWeightReadout namespace in the existing Reg owner.
+This reuses that owner's signature, actual, and private actual_dependence. -/
+namespace Measurability
+
+open scoped Cardinal
+
+private theorem exists_nonmeasurable_real_set :
+    ∃ s : Set ℝ, ¬ MeasurableSet s := by
+  classical
+  by_contra! hall
+  have hcount : #(MeasurableSpace.countableGeneratingSet ℝ) ≤ ℵ₀ :=
+    (MeasurableSpace.countable_countableGeneratingSet (α := ℝ)).le_aleph0
+  have hbound : #{s : Set ℝ // MeasurableSet s} ≤ 𝔠 := by
+    simpa only [MeasurableSpace.generateFrom_countableGeneratingSet] using
+      (MeasurableSpace.cardinal_measurableSet_le_continuum
+        (s := MeasurableSpace.countableGeneratingSet ℝ)
+        (hcount.trans Cardinal.aleph0_le_continuum))
+  let f : Set ℝ → {s : Set ℝ // MeasurableSet s} := fun s => ⟨s, hall s⟩
+  have hf : Function.Injective f := by
+    intro s t hst
+    exact congrArg Subtype.val hst
+  have hlarge : #(Set ℝ) ≤ 𝔠 :=
+    (Cardinal.mk_le_of_injective hf).trans hbound
+  have hpower : (2 : Cardinal) ^ 𝔠 ≤ 𝔠 := by
+    simpa only [Cardinal.mk_set, Cardinal.mk_real] using hlarge
+  exact (not_le_of_gt (Cardinal.cantor 𝔠)) hpower
+
+private theorem exists_nonmeasurable_real_function :
+    ∃ f : ℝ → ℝ, ¬ Measurable f := by
+  classical
+  obtain ⟨s, hs⟩ := exists_nonmeasurable_real_set
+  refine ⟨s.indicator (fun _ => (1 : ℝ)), ?_⟩
+  intro hf
+  exact hs ((measurable_indicator_const_iff (1 : ℝ)).1 hf)
+
+private def badFunction : ℝ → ℝ :=
+  Classical.choose exists_nonmeasurable_real_function
+
+private theorem badFunction_not_measurable : ¬ Measurable badFunction :=
+  Classical.choose_spec exists_nonmeasurable_real_function
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ => badFunction) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := Measurable (r.readout () ())
+
+private theorem source_reconstruction :
+    (type_of% (@actual_bare_quarter_measurable)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  change ¬ Measurable badFunction
+  exact badFunction_not_measurable
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_bare_quarter_measurable)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_bare_quarter_measurable, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNCOMPILED AST candidate: the final argument of the unchanged closed
+Measurable W is W itself. The selector introduces state only to its
+observation model; it adds no binder or premise to the source theorem. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_bare_quarter_measurable) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_bare_quarter_measurable.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout.Measurability.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ ξ => actualBareQuarterWeight ξ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end Measurability
 
 end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout
 
