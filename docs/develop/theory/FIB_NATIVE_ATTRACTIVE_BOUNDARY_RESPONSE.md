@@ -86,7 +86,6 @@ The bound also holds on the zero-noise smooth core. Indeed the kinetic
 energies converge there, and the potential integrals converge by C,
 Theorem 3.1, its local homogeneous bound and the uniform integrability
 of $R^{-2}$ against a bounded smooth test and raw volume $O(R^3dR)$.
-Equivalently C, (17.4), supplies the required uniform small-ball mass.
 Thus this limiting argument uses the entire field, not only its tangent.
 
 Choose real smooth height cutoffs $\chi,\zeta$ with
