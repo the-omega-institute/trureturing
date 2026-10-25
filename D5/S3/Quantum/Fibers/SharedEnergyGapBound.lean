@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: All labelled indecomposable zero-weight exponents have degree at most twice m minus one. -/
+   digest: Labelled indecomposable zero-weight exponents have bounded degree. -/
 
 import D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
 
@@ -22,7 +22,7 @@ open D5.S3.Quantum.Fibers.RealCopyConjugation
 private def gaps (a A b B c C : ℕ) : Exponent := !![0,A,C; a,0,B; c,b,0]
 
 private theorem gaps_degree (a A b B c C : ℕ) :
-    degree (gaps a A b B c C) = a+A+b+B+c+C := by
+    degree (gaps a A b B c C) = a + A + b + B + c + C := by
   simp [degree, gaps, Fin.sum_univ_succ]
   omega
 
@@ -34,12 +34,12 @@ private theorem gaps_weight (m a A b B c C : ℕ) :
 
 private theorem force_degree (m : ℕ) (alpha beta : Exponent)
     (h : Indecomposable m alpha) (hne : beta ≠ 0) (hle : beta ≤ alpha)
-    (hw : weight m beta = 0) (hd : degree beta ≤ 2*m-1) : degree alpha ≤ 2*m-1 := by
+    (hw : weight m beta = 0) (hd : degree beta ≤ 2 * m - 1) : degree alpha ≤ 2 * m - 1 := by
   rcases h.2.2 beta hle hw with hz | he
   · exact (hne hz).elim
   · simpa only [he] using hd
 
-private theorem gaps_nonzero (a A b B c C : ℕ) (hp : 0 < a+A+b+B+c+C) :
+private theorem gaps_nonzero (a A b B c C : ℕ) (hp : 0 < a + A + b + B + c + C) :
     gaps a A b B c C ≠ 0 := by
   intro h
   have hd := congrArg degree h
@@ -50,7 +50,7 @@ private theorem gaps_nonzero (a A b B c C : ℕ) (hp : 0 < a+A+b+B+c+C) :
 private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
     (h : Indecomposable m (gaps a A b B 0 C))
     (ha : a = 0 ∨ A = 0) (hb : b = 0 ∨ B = 0) :
-    degree (gaps a A b B 0 C) ≤ 2*m-1 := by
+    degree (gaps a A b B 0 C) ≤ 2 * m - 1 := by
   have hm₁ : 1 ≤ m := by omega
   have hm₂ : 1 ≤ m-1 := by omega
   have hsucc : m-1+1 = m := by omega
@@ -178,7 +178,7 @@ private theorem indecomposable_transpose (m : ℕ) (alpha : Exponent)
     simpa using congrArg Matrix.transpose he
   · rw [weight_transpose, h.2.1, neg_zero]
   · intro beta hle hw
-    have hle' : (Matrix.transpose beta : Exponent) ≤ alpha := fun i j => hle j i
+    have hle' : ∀ i j, beta j i ≤ alpha i j := fun i j => hle j i
     have hw' : weight m (Matrix.transpose beta) = 0 := by rw [weight_transpose, hw, neg_zero]
     rcases h.2.2 _ hle' hw' with hz | he
     · left; simpa using congrArg Matrix.transpose hz
@@ -188,7 +188,7 @@ private theorem indecomposable_transpose (m : ℕ) (alpha : Exponent)
 2m minus one. Zero-weight units and distinct coordinates with coincident
 numerical gaps are included, in particular at m equal to two. -/
 theorem indecomposable_degree_bound (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
-    (h : Indecomposable m alpha) : degree alpha ≤ 2*m-1 := by
+    (h : Indecomposable m alpha) : degree alpha ≤ 2 * m - 1 := by
   classical
   by_cases hd : ∃ i, alpha i i ≠ 0
   · obtain ⟨i, hi⟩ := hd
@@ -233,7 +233,7 @@ theorem indecomposable_degree_bound (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       have oriented (a : Exponent) (ha : Indecomposable m a)
           (hz : ∀ i, a i i = 0) (h₁ : a 1 0 = 0 ∨ a 0 1 = 0)
           (h₂ : a 2 1 = 0 ∨ a 1 2 = 0) (h₃ : a 2 0 = 0) :
-          degree a ≤ 2*m-1 := by
+          degree a ≤ 2 * m - 1 := by
         have he : a = gaps (a 1 0) (a 0 1) (a 2 1) (a 1 2) 0 (a 0 2) := by
           ext i j
           fin_cases i <;> fin_cases j <;> simp [gaps, hz, h₃]
