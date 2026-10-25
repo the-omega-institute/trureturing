@@ -20,19 +20,19 @@ noncomputable section
 
 open D5.S3.Combinatorics.Graph.LegalWords.SignedBoundary (vertexDelta)
 
-local notation "Word" => D5.S3.Quantum.Entanglement.OccupancyWordSectors.Word (Fin 3)
-abbrev State (n : ℕ) := Word n → ℝ
+open D5.S3.Quantum.Entanglement
+abbrev State (n : ℕ) := OccupancyWordSectors.Word (Fin 3) n → ℝ
 abbrev Occupation := Fin 3 → ℕ
 
 /-- Wire numbers increase from right to left. Out-of-register reads are zero. -/
-def wire {n : ℕ} (t : Word n) (r : ℕ) : Fin 3 :=
+def wire {n : ℕ} (t : OccupancyWordSectors.Word (Fin 3) n) (r : ℕ) : Fin 3 :=
   if h : r < n then t ⟨r, h⟩ else 0
 
 /-- An out-of-register update acts as the identity. -/
-def put {n : ℕ} (t : Word n) (r : ℕ) (a : Fin 3) : Word n :=
+def put {n : ℕ} (t : OccupancyWordSectors.Word (Fin 3) n) (r : ℕ) (a : Fin 3) : OccupancyWordSectors.Word (Fin 3) n :=
   if h : r < n then Function.update t ⟨r, h⟩ a else t
 
-def controlsHold {n : ℕ} (controls : List (ℕ × Fin 3)) (t : Word n) : Bool :=
+def controlsHold {n : ℕ} (controls : List (ℕ × Fin 3)) (t : OccupancyWordSectors.Word (Fin 3) n) : Bool :=
   controls.all (fun p => decide (p.1 < n) && decide (wire t p.1 = p.2))
 
 /-- Controlled exchange, acting by the inverse basis permutation. -/
@@ -97,7 +97,7 @@ def prunedW (n m : ℕ) (k : Occupation) (f : State n) : State n :=
 def prunedU (n : ℕ) (k : Occupation) (f : State n) : State n :=
   (List.Ico 2 (n + 1)).reverse.foldl (fun g m => prunedW n m k g) f
 
-def initialWord (n : ℕ) (k : Occupation) : Word n :=
+def initialWord (n : ℕ) (k : Occupation) : OccupancyWordSectors.Word (Fin 3) n :=
   fun w => if w.val < k 2 then 2 else if w.val < k 1 + k 2 then 1 else 0
 
 /-- The occupation counts use the existing multiset-of-letters representation. -/
@@ -112,11 +112,11 @@ def claim : Prop :=
       dicke n ![k₀, k₁, k₂]
 
 private def witnessOccupation : Occupation := ![1, 3, 1]
-private def inputWord : Word 5 := ![2, 1, 1, 1, 0]
-private def branchWord : Word 5 := ![0, 2, 1, 1, 1]
-private def targetWord : Word 5 := ![0, 1, 1, 1, 2]
+private def inputWord : OccupancyWordSectors.Word (Fin 3) 5 := ![2, 1, 1, 1, 0]
+private def branchWord : OccupancyWordSectors.Word (Fin 3) 5 := ![0, 2, 1, 1, 1]
+private def targetWord : OccupancyWordSectors.Word (Fin 3) 5 := ![0, 1, 1, 1, 2]
 
-private theorem wire_put_ne {n : ℕ} (t : Word n) (r q : ℕ) (a : Fin 3)
+private theorem wire_put_ne {n : ℕ} (t : OccupancyWordSectors.Word (Fin 3) n) (r q : ℕ) (a : Fin 3)
     (h : r ≠ q) : wire (put t q a) r = wire t r := by
   by_cases hr : r < n <;> by_cases hq : q < n <;>
     unfold wire put <;> simp [hr, hq, Fin.ext_iff, h]
@@ -191,22 +191,22 @@ private theorem scale_ii (n m l₁ l₂ : ℕ) (a : ℝ) (f : State n) :
   unfold II
   simp only [scale_x, scale_r]
 
-private theorem wire_apply {n : ℕ} (t : Word n) (r : ℕ) :
+private theorem wire_apply {n : ℕ} (t : OccupancyWordSectors.Word (Fin 3) n) (r : ℕ) :
     wire t r = if h : r < n then t ⟨r, h⟩ else 0 := rfl
 
-private theorem put_apply {n : ℕ} (t : Word n) (r : ℕ) (a : Fin 3) :
+private theorem put_apply {n : ℕ} (t : OccupancyWordSectors.Word (Fin 3) n) (r : ℕ) (a : Fin 3) :
     put t r a = if h : r < n then Function.update t ⟨r, h⟩ a else t := rfl
 
-private theorem controls_apply {n : ℕ} (cs : List (ℕ × Fin 3)) (t : Word n) :
+private theorem controls_apply {n : ℕ} (cs : List (ℕ × Fin 3)) (t : OccupancyWordSectors.Word (Fin 3) n) :
     controlsHold cs t = cs.all (fun p => decide (p.1 < n) && decide (wire t p.1 = p.2)) := rfl
 
 private theorem x_apply {n : ℕ} (target : ℕ) (cs : List (ℕ × Fin 3))
-    (i j : Fin 3) (f : State n) (t : Word n) :
+    (i j : Fin 3) (f : State n) (t : OccupancyWordSectors.Word (Fin 3) n) :
     controlledX target cs i j f t = if controlsHold cs t then
       f (put t target (Equiv.swap i j (wire t target))) else f t := rfl
 
 private theorem r_apply {n : ℕ} (target : ℕ) (cs : List (ℕ × Fin 3))
-    (i j : Fin 3) (c s : ℝ) (f : State n) (t : Word n) :
+    (i j : Fin 3) (c s : ℝ) (f : State n) (t : OccupancyWordSectors.Word (Fin 3) n) :
     controlledR target cs i j c s f t = if controlsHold cs t then
       if wire t target = i then c * f t - s * f (put t target j)
       else if wire t target = j then s * f (put t target i) + c * f t
