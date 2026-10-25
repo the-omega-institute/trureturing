@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
 import Reg.Support.DependentFamily
 
+/-! The audit reads the original state value on the full native solution domain. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -67,10 +69,11 @@ def evidence : Registration arena (type_of% (@finite_cycle_is_silent)) where
     intro i
     refine ⟨⟨1, (fun _ => none), 0⟩, (fun _ => leaf true), (fun _ => leaf false), ?_⟩
     intro h
-    have root := congrArg (fun X => (PFunctor.M.dest X).1) h
-    have hb : (Sum.inl true : Bool ⊕ Unit) = Sum.inl false := by
-      simpa only [actual, realize, leaf, PFunctor.M.dest_mk] using root
-    cases Sum.inl.inj hb
+    change leaf true = leaf false at h
+    have hs : (FreeMagma.of true :
+        _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport.Source) = .of false :=
+      _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionSupportClosure.embed_injective h
+    cases hs
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@finite_cycle_is_silent) (Realization signature) Unit Unit where
