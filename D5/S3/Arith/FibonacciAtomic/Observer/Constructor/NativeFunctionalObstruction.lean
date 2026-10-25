@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Native finite-cycle descent and whole-system extension of closed boundaries. -/
+   digest: Native finite descent, whole-system extension and finite-coordinate perturbation. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
 
@@ -632,5 +632,123 @@ theorem whole_system_boundary_extension {m : Nat} (S : System m) (B : Fin m → 
     exact value_boundary_congr (fun j hj => (same j hj).symm) E (closed i E hi eq)
   · rw [fixed i]
     simp only [extensionStep, ite_eq_right hi, eq]
+
+
+private inductive AliasPath {m : Nat} (S : System m) : Fin m → Fin m → Prop where
+  | refl (i : Fin m) : AliasPath S i i
+  | cons {i j k : Fin m} : S i = some (.var 0 j) → AliasPath S j k → AliasPath S i k
+
+private theorem alias_value {m : Nat} {S : System m} {v : Fin m → CompletionTree}
+    (sat : Satisfies S v) {i j : Fin m} (path : AliasPath S i j) : v i = v j := by
+  induction path with
+  | refl => rfl
+  | cons eq _ ih => exact (sat _ _ eq).trans ih
+
+/-- The region whose root-link paths encounter only zero-power aliases or
+undefined states. Every original equation in this region is an alias. -/
+private def FreeRegion {m : Nat} (S : System m) (i : Fin m) : Prop :=
+  ∀ j, AliasPath S i j → ∀ E, S j = some E → ∃ k, E = .var 0 k
+
+private theorem freeRegion_closed {m : Nat} (S : System m) :
+    BoundaryClosed S (FreeRegion S) := by
+  intro i E hi eq p a j occ
+  obtain ⟨k, rfl⟩ := hi i (.refl i) E eq
+  cases occ
+  intro l path F ef
+  exact hi l (.cons eq path) F ef
+
+private theorem freeRegion_valid {m : Nat} (S : System m) (X : CompletionTree) :
+    BoundaryValid S (FreeRegion S) (fun _ => X) := by
+  intro i E hi eq
+  obtain ⟨j, rfl⟩ := hi i (.refl i) E eq
+  rfl
+
+private theorem nonalias_occurrence_strict {m : Nat} {E : Expr m}
+    (nonalias : ∀ j, E ≠ .var 0 j) {p : Address} {a : Nat} {j : Fin m}
+    (occ : CompletionPositiveDriftRegion.Occurs E p a j) : p ≠ [] ∨ 0 < a := by
+  cases occ with
+  | var a j =>
+    right
+    by_contra h
+    have ha : a = 0 := by omega
+    exact nonalias j (ha ▸ rfl)
+  | left h => exact Or.inl (List.cons_ne_nil _ _)
+  | right h => exact Or.inl (List.cons_ne_nil _ _)
+
+private theorem finite_expression_compare {m : Nat}
+    (u v w : Fin m → CompletionTree) (E : Expr m)
+    (args : ∀ p a j, CompletionPositiveDriftRegion.Occurs E p a j →
+      ∃ t : Source, embed t = w j ∧ (u j ≠ v j → 0 < NativePrefixIdentityReflection.gamma t)) :
+    ∃ t : Source, embed t = value w E ∧
+      (value u E ≠ value v E → 0 < NativePrefixIdentityReflection.gamma t) := by
+  induction E with
+  | ground t => exact ⟨t, rfl, fun h => (h rfl).elim⟩
+  | token i c => exact Fin.elim0 i
+  | var a j =>
+    obtain ⟨t, ht, pos⟩ := args [] a j (.var a j)
+    refine ⟨substitution^[a] t, ?_, ?_⟩
+    · change embed (substitution^[a] t) = rho^[a] (w j)
+      rw [← iterate_embed, ht]
+    · intro h
+      rw [NativePrefixIdentityReflection.gamma_iterate]
+      exact pos (fun eq => h (congrArg (rho^[a]) eq))
+  | pair A B ihA ihB =>
+    obtain ⟨s, hs, ps⟩ := ihA (fun p a j h => args (false :: p) a j (.left h))
+    obtain ⟨t, ht, pt⟩ := ihB (fun p a j h => args (true :: p) a j (.right h))
+    refine ⟨.mul s t, ?_, ?_⟩
+    · change node (embed s) (embed t) = node (value w A) (value w B)
+      rw [hs, ht]
+    · intro neq
+      by_cases hA : value u A = value v A
+      · have hB : value u B ≠ value v B := fun hB => neq (congrArg₂ node hA hB)
+        exact (pt hB).trans_le (NativePrefixIdentityReflection.gamma_parent s t).2
+      · exact (ps hA).trans_le (NativePrefixIdentityReflection.gamma_parent s t).1
+
+/-- Any finite coordinate that can vary between two whole-system solutions
+can be made finite with positive native mass in a solution of that same system.
+All other original equations, including infinite auxiliaries, remain imposed. -/
+theorem finite_coordinate_perturbation {m : Nat} {S : System m}
+    {u v : Fin m → CompletionTree} (satU : Satisfies S u) (satV : Satisfies S v)
+    {i : Fin m} (finite : IsFinite (v i)) :
+    ∃ w : Fin m → CompletionTree, Satisfies S w ∧
+      ∃ t : Source, embed t = w i ∧
+        (u i ≠ v i → 0 < NativePrefixIdentityReflection.gamma t) := by
+  classical
+  let seed : Source := .mul (.of true) (.of true)
+  have seed_pos : 0 < NativePrefixIdentityReflection.gamma seed := by decide
+  obtain ⟨w, satW, same⟩ := whole_system_boundary_extension S (FreeRegion S)
+    (fun _ => embed seed) (freeRegion_closed S) (freeRegion_valid S (embed seed))
+  have reconstruct : ∀ n (j : Fin m) (s : Source), leafWeight s = n → embed s = v j →
+      ∃ t : Source, embed t = w j ∧ (u j ≠ v j → 0 < NativePrefixIdentityReflection.gamma t) := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro j s weight finiteJ
+      by_cases free : FreeRegion S j
+      · exact ⟨seed, (same j free).symm, fun _ => seed_pos⟩
+      · unfold FreeRegion at free
+        push_neg at free
+        obtain ⟨k, path, E, eq, nonalias⟩ := free
+        have vjk := alias_value satV path
+        have ujk := alias_value satU path
+        have wjk := alias_value satW path
+        have args : ∀ p a l, CompletionPositiveDriftRegion.Occurs E p a l →
+            ∃ t : Source, embed t = w l ∧
+              (u l ≠ v l → 0 < NativePrefixIdentityReflection.gamma t) := by
+          intro p a l occ
+          let edge : Dependency S k l := ⟨E, eq, p, a, occ⟩
+          obtain ⟨t, ht, _, strict⟩ := finite_dependency_descent satV edge s (finiteJ.trans vjk)
+          have less : leafWeight t < n := by
+            rw [← weight]
+            exact strict (nonalias_occurrence_strict nonalias occ)
+          exact ih (leafWeight t) less l t rfl ht
+        obtain ⟨t, ht, pos⟩ := finite_expression_compare u v w E args
+        refine ⟨t, ht.trans ((satW k E eq).symm.trans wjk.symm), ?_⟩
+        intro neq
+        apply pos
+        intro heq
+        exact neq (ujk.trans ((satU k E eq).trans (heq.trans ((satV k E eq).symm.trans vjk.symm))))
+  obtain ⟨s, hs⟩ := finite
+  exact ⟨w, satW, reconstruct (leafWeight s) i s rfl hs⟩
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction
