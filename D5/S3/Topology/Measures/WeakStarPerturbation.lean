@@ -10,6 +10,8 @@ import D5.S3.Topology.ExtremallyDisconnected.WeakStarNormSeparation
 import Mathlib.Topology.Compactification.StoneCech
 import Mathlib.Analysis.Normed.Module.WeakDual
 
+/-! # Full-domain weak-star norm estimates and normalization -/
+
 open Set Filter Topology Function
 
 noncomputable section
@@ -28,7 +30,8 @@ theorem norm_sub_le_of_denseRange {A : Type v} {T : Type w}
     (ε : ℝ) (hε : ∀ a, ‖WeakDual.toStrongDual (f (i a) - g (i a))‖ ≤ ε) :
     ∀ p, ‖WeakDual.toStrongDual (f p - g p)‖ ≤ ε := by
   have hc : IsClosed {p | ‖WeakDual.toStrongDual (f p - g p)‖ ≤ ε} := by
-    simpa only [Set.preimage, Metric.mem_closedBall, dist_zero_right] using
+    simpa only [Set.preimage, Metric.mem_closedBall, dist_zero_right, Pi.sub_apply,
+      Set.mem_setOf_eq] using
       (WeakDual.isClosed_closedBall (0 : StrongDual ℝ X) ε).preimage (hf.sub hg)
   intro p
   exact (closure_minimal (Set.range_subset_iff.mpr hε) hc) (hi p)
@@ -67,12 +70,13 @@ theorem exists_bounded_extension (a : ℕ → StrongDual ℝ X) (R : ℝ)
   have hB : IsCompact B := WeakDual.isCompact_closedBall 0 R
   letI : CompactSpace B := isCompact_iff_compactSpace.mp hB
   let b : ℕ → B := fun n => ⟨StrongDual.toWeakDual (a n), by
-    change ‖a n - 0‖ ≤ R
-    simpa using ha n⟩
+    simpa only [B, mem_preimage, Metric.mem_closedBall, dist_zero_right,
+      StrongDual.toStrongDual_toWeakDual] using ha n⟩
   refine ⟨fun p => (Ultrafilter.extend b p).val,
     continuous_subtype_val.comp (continuous_ultrafilter_extend b), ?_, ?_⟩
   · intro n
     simp only [ultrafilter_extend_pure]
+    rfl
   · intro p
     have h := (Ultrafilter.extend b p).property
     simpa only [B, mem_preimage, Metric.mem_closedBall, dist_zero_right] using h

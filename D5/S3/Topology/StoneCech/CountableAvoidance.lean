@@ -10,6 +10,8 @@ import D5.S3.Topology.ExtremallyDisconnected.PointPairSeparation
 import Mathlib.Topology.Compactification.StoneCech
 import Mathlib.Order.Filter.Ultrafilter.Basic
 
+/-! # Countable free-ultrafilter avoidance and full-domain thinning -/
+
 open Set Filter Topology Function
 
 noncomputable section
@@ -35,8 +37,13 @@ def ultrafilterHomeomorph {α : Type*} [TopologicalSpace α] [DiscreteTopology �
     ext a
     simp only [comp_apply, g, stoneCechExtend_stoneCechUnit, f, ultrafilter_extend_pure,
       id_eq])
-  exact { toFun := f, invFun := g, left_inv := congrFun hgf,
-    right_inv := congrFun hfg, continuous_toFun := hf, continuous_invFun := hg }
+  exact {
+    toFun := f
+    invFun := g
+    left_inv := congrFun hgf
+    right_inv := congrFun hfg
+    continuous_toFun := hf
+    continuous_invFun := hg }
 
 /-- A countable family of free ultrafilters misses one infinite subset of ℕ. -/
 theorem exists_infinite_notMem (p : ℕ → Ultrafilter ℕ)
@@ -50,8 +57,8 @@ theorem exists_infinite_notMem (p : ℕ → Ultrafilter ℕ)
     · refine ⟨V, hVA, hV, ?_⟩
       intro hVp
       have := inter_mem hTp hVp
-      rw [hTV.eq_bot] at this
-      exact empty_notMem this
+      rw [Set.disjoint_iff_inter_eq_empty.mp hTV] at this
+      exact (Filter.empty_notMem (p n : Filter ℕ)) this
     · exact ⟨T, hTA, hT, hTp⟩
   choose next hsub hinf hnot using step
   let pools : ℕ → {A : Set ℕ // A.Infinite} :=
@@ -72,7 +79,7 @@ theorem exists_infinite_notMem (p : ℕ → Ultrafilter ℕ)
 /-- Mapping ultrafilters along a function is continuous in the Stone topology. -/
 theorem continuous_map {α β : Type*} (j : α → β) :
     Continuous (Ultrafilter.map j) := by
-  apply continuous_generateFrom
+  apply continuous_generateFrom_iff.mpr
   rintro _ ⟨A, rfl⟩
   exact ultrafilter_isOpen_basic (j ⁻¹' A)
 
@@ -98,7 +105,7 @@ theorem exists_strictMono_injective_reindex {Y : Type*}
       (hAq : A ∈ q) : h q ≠ h (pure n) := by
     intro heq
     have hn : bad n := ⟨q, hq, heq⟩
-    have hpn : p n = hn.choose := dif_pos hn
+    have hpn : p n = hn.choose := dite_eq_left hn
     have he : q = p n := hfree hq (hp n) (by
       rw [hpn]
       exact heq.trans hn.choose_spec.2.symm)

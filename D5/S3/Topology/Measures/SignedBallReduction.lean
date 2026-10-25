@@ -11,6 +11,8 @@ import D5.S3.Topology.Measures.WeakStarPerturbation
 import D5.S3.Topology.Measures.ClopenDisjointization
 import D5.S3.Topology.StoneCech.CountableAvoidance
 
+/-! # The full signed dual-ball analytic reduction -/
+
 open Set Filter Topology Function MeasureTheory
 open scoped ENNReal
 
@@ -43,8 +45,13 @@ private lemma functional_add (s t : SignedMeasure K) :
 
 private lemma functional_sub (s t : SignedMeasure K) :
     signedFunctional (s - t) = signedFunctional s - signedFunctional t := by
-  simpa only [sub_eq_add_neg, ← neg_one_smul ℝ t, functional_add, functional_smul,
-    neg_one_smul] using (functional_add s ((-1 : ℝ) • t))
+  calc
+    signedFunctional (s - t) = signedFunctional (s + (-1 : ℝ) • t) := by
+      rw [neg_one_smul, sub_eq_add_neg]
+    _ = signedFunctional s + (-1 : ℝ) • signedFunctional t := by
+      rw [functional_add, functional_smul]
+    _ = signedFunctional s - signedFunctional t := by
+      rw [neg_one_smul, sub_eq_add_neg]
 
 private lemma map_injective (j : ℕ → ℕ) (hj : Injective j) :
     Injective (Ultrafilter.map j) := by
@@ -70,9 +77,10 @@ private lemma two_free :
   obtain ⟨j, hj, hjA⟩ :=
     D5.S3.Topology.ExtremallyDisconnected.PointPairSeparation.enumerate_pool hA
   let q := Ultrafilter.map j p
-  have hAq : A ∈ q := mem_of_superset univ_mem (fun n _ => hjA n)
+  have hAq : A ∈ q := Ultrafilter.mem_map.mpr
+    (mem_of_superset univ_mem (fun n _ => hjA n))
   exact ⟨p, q, hyperfilter_le_cofinite,
-    map_free j hj.injective p hyperfilter_le_cofinite, fun h => hnot 0 (h ▸ hAq)⟩
+    map_free j hj.injective p hyperfilter_le_cofinite, fun h => hnot 0 (h.symm ▸ hAq)⟩
 
 /-- An embedding in the entire real signed dual unit ball produces actual
 regular norm-one signed measures with disjoint Borel carriers and an
@@ -103,8 +111,8 @@ theorem exists_normalized_disjoint_embedding
   obtain ⟨j, E, r, vInf, hj, hE, hdis, hdec, hreg, hmass,
     hr, hlim, hvreg, hv⟩ :=
     SignedGrothendieckCriterion.exists_signed_raw_restriction_splitting s hs hb
-  let u (n : ℕ) := (s (j n)).restrict (E n)
-  let v (n : ℕ) := (s (j n)).restrict (E n)ᶜ
+  let u (n : ℕ) : SignedMeasure K := (s (j n)).restrict (E n)
+  let v (n : ℕ) : SignedMeasure K := (s (j n)).restrict (E n)ᶜ
   let U (n : ℕ) := signedFunctional (u n)
   let V := signedFunctional vInf
   let xj : Ultrafilter ℕ → WeakDual ℝ C(K, ℝ) := x ∘ Ultrafilter.map j
@@ -135,6 +143,7 @@ theorem exists_normalized_disjoint_embedding
     ext g
     have hu := principal_limit uhat huhat p g
     simp only [huext] at hu
+    change Tendsto (fun n => U n g) (p : Filter ℕ) (𝓝 (uhat p g)) at hu
     have hvp := (hvscalar g).mono_left (hp.trans_eq Nat.cofinite_eq_atTop)
     have hxp := principal_limit xj hxj p g
     have he : ∀ n, U n g + signedFunctional (v n) g = xj (pure n) g := by
@@ -156,13 +165,14 @@ theorem exists_normalized_disjoint_embedding
         have ht' := ht.mono_left (hp.trans_eq Nat.cofinite_eq_atTop)
         have hu := principal_limit uhat huhat p g
         simp only [huext] at hu
-        exact tendsto_nhds_unique hu (by simpa using ht')
+        apply tendsto_nhds_unique hu
+        convert ht' using 1 <;> rfl
       have he := hfree p hp
       rw [hu0] at he
       exact sub_eq_zero.mp he.symm
     obtain ⟨p, q, hp, hq, hpq⟩ := two_free
     exact hpq (hxji (WeakDual.toStrongDual.injective ((hconst p hp).trans (hconst q hq).symm)))
-  obtain ⟨N, hN⟩ := eventually_atTop.mp (hUlim.eventually (gt_mem_nhds hrpos))
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (hUlim.eventually_const_lt hrpos)
   let k : ℕ → ℕ := fun n => n + N
   have hk : StrictMono k := fun a b hab => Nat.add_lt_add_right hab N
   let b (n : ℕ) : SignedMeasure K := ‖U (k n)‖⁻¹ • u (k n)
@@ -217,7 +227,10 @@ theorem exists_normalized_disjoint_embedding
         simp
       have ht' : Tendsto (fun n => signedFunctional (b n) g) (p : Filter ℕ)
           (𝓝 (r⁻¹ * uk p g)) := by
-        simpa only [Function.comp_apply, he, map_zero, zero_add, smul_eq_mul] using ht
+        convert ht using 1
+        · funext n
+          exact (he n).symm
+        · simp
       have hb := principal_limit bhat hbhat p g
       simp only [hbext] at hb
       exact tendsto_nhds_unique hb ht'
@@ -230,7 +243,7 @@ theorem exists_normalized_disjoint_embedding
     have he := congrArg (fun z => r • WeakDual.toStrongDual z) heq
     rw [hbfree p hp, hbfree q hq, smul_smul, smul_smul,
       mul_inv_cancel₀ hrpos.ne', one_smul, one_smul] at he
-    exact sub_right_cancel he
+    simpa only [sub_add_cancel] using congrArg (fun z => z + V) he
   have hprincipal : Injective (bhat ∘ (pure : ℕ → Ultrafilter ℕ)) := by
     intro n m heq
     by_contra hnm
@@ -244,7 +257,7 @@ theorem exists_normalized_disjoint_embedding
       · exact Or.inr (fun hm => Set.disjoint_left.mp hd hn hm)
       · exact Or.inl hn
     have ht : (b n).totalVariation univ = 0 := by
-      apply le_antisymm ?_ (zero_le _)
+      apply le_antisymm ?_ bot_le
       calc
         _ ≤ (b n).totalVariation ((E (k n))ᶜ ∪ (E (k m))ᶜ) := measure_mono hcover
         _ ≤ (b n).totalVariation (E (k n))ᶜ + (b n).totalVariation (E (k m))ᶜ :=
@@ -335,14 +348,14 @@ theorem not_injective_signed_ball_of_collision [ZeroDimensionalSpace K]
   have hsmall (k : ℕ) :
       ‖WeakDual.toStrongDual (f₀ (pure k) - zhat (pure k))‖ ≤ 2 * η := by
     have herror : (z k - s • b (l k)).totalVariation.real univ < 2 * η := by
+      dsimp only [z, l, comp_apply]
       rw [(hsign k).2.2.2]
       have hq := (ht (j k)).2.2.1
-      dsimp [l]
       linarith
     have hident : WeakDual.toStrongDual (f₀ (pure k) - zhat (pure k)) =
         -signedFunctional (z k - s • b (l k)) := by
       simp only [f₀, Ultrafilter.map_pure, hext, hzext, map_sub, map_smul,
-        WeakDual.toStrongDual_toWeakDual, functional_sub, functional_smul]
+        StrongDual.toStrongDual_toWeakDual, functional_sub, functional_smul]
       abel
     rw [hident, norm_neg]
     exact (signedFunctional_norm_le _).trans herror.le
