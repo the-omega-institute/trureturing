@@ -393,16 +393,16 @@ private theorem infinite_region_values {E : System k m} {mode : Fin k → Bool}
   obtain ⟨p⟩ := (region_iff c).mp hx
   exact walk_omega sat p (cycle_infinite_omega sat c inf)
 
-private theorem atomic_injective : Function.Injective atomic := by
+theorem atomic_injective : Function.Injective atomic := by
   intro a b h
   apply NativeRankedEqualityCompiler.atomic_injective
   apply embed_injective
   simpa only [atomic, show leaf true = embed (.of true) from rfl, iterate_embed] using h
 
-private theorem atomic_finite (q : Nat) : IsFinite (atomic q) :=
+theorem atomic_finite (q : Nat) : IsFinite (atomic q) :=
   ⟨substitution^[q] (.of true), (iterate_embed q (.of true)).symm⟩
 
-private theorem omega_not_finite : ¬ IsFinite Omega := by
+theorem omega_not_finite : ¬ IsFinite Omega := by
   rintro ⟨t, ht⟩
   have eq : substitution t = t := embed_injective (by rw [← rho_embed, ht, rho_omega])
   have clock := congrArg kappa eq

@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.Const
 internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "NativeFunctionalObstruction", H("Finite dependencies and completed extensions of native functional systems"), Blocks(
+        "NativeFunctionalObstruction", H("Rank-free obstruction for native functional systems"), Blocks(
             Describe.Lean(DescribeId.Create("finite-native-dependency-cycles"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFunctionalObstruction.finite_cycle_is_silent"),
                 H("A finite coordinate has no strict dependency cycle"),
@@ -26,6 +26,26 @@ internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefin
                     Paragraph(Text("The construction records a tree by all its labelled leaf occurrences. The leafless tree is below every tree in the inclusion order on these facts. An increasing sequence has a native completed limit: at each reached position the limit has the unique eventual leaf label if one appears, and branches otherwise. Native substitution preserves this limit because each output leaf descends from a single input leaf through the actual finite replacement of that label. In particular, substitution remains interpreted native evolution, with all atomic sibling collisions retained.")),
                     Paragraph(Text("Keep the supplied boundary values fixed, use the original right side at every other defined state, and use the leafless tree at the remaining undefined states. Iterating this operation from the constant leafless assignment yields increasing leaf facts. Their limits commute with every finite expression and therefore satisfy the fixed equations outside B. Closure of B transfers the already satisfied boundary equations to the same limiting assignment. This proves simultaneous satisfaction even when finite designated values coexist with infinite auxiliaries.")),
                     Paragraph(Text("In the formula, NativePredicates(m) means predicates on Fin(m), NativeValues(m) means functions from Fin(m) to CompletionTree, holds(B,i) means B applied to i, and valueAt(v,i) means v applied to i. The theorem establishes extension of a specified closed boundary. Finite reconstruction from free boundary values and the finite-union conversion obstruction require further mathematical arguments. No external novelty is asserted."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-finite-coordinate-perturbation"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFunctionalObstruction.finite_coordinate_perturbation"),
+                H("A varying finite coordinate admits positive native mass"),
+                PerturbationStatement(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Let u and v be two simultaneous solutions of the same original functional system S, and suppose only v(i) is finite. There is a simultaneous solution w and a finite native tree t with embed(t)=w(i). If u(i) and v(i) differ, t has strictly positive native mass gamma. The other values of u, v and w may be infinite, including unrestricted nonregular trees. No equation, auxiliary coordinate or repeated dependency is removed.")),
+                    Paragraph(Text("A zero-power root-link path follows equations of the form X_j=X_k. Define the free region as the states for which every such path encounters only another zero-power root link or an undefined state. This region is closed under every original variable occurrence, and assigning one common tree to the entire region satisfies all of its original equations. Choose the finite ordered pair (alpha,alpha), which has positive native mass, and extend this boundary by the whole-system boundary extension theorem.")),
+                    Paragraph(Text("For a state outside that region, some finite root-link path ends at an original defining expression which is not a zero-power root link. Every variable occurrence of this expression is below a pair or has a positive fixed power. If the original coordinate is finite, finite dependency descent therefore gives strictly smaller positive leaf weight at every such dependency. Strong induction on that weight proves that the extended coordinate is finite.")),
+                    Paragraph(Text("The same induction compares u and v. A difference at an expression value requires a difference at some variable occurrence. The inductive positive mass at that occurrence survives each native power and cannot decrease through a containing ordered pair. Grounds cannot produce a difference. Equality along every original root-link path transfers the result back to the designated coordinate. This is an unbounded native construction and descent proof; no finite enumeration or external novelty is claimed.")),
+                    Paragraph(Text("In the formula, NativeValues(m) abbreviates Fin(m) to CompletionTree, valueAt(v,i) means v(i), and gamma is native finite-tree mass. The existence of w is unconditional under the two original solution premises and the one coordinate finiteness premise. Positive mass is conditional only on those two designated values differing. This bridge does not itself conclude the finite-union obstruction."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-rank-free-conversion-obstruction"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFunctionalObstruction.rank_free_obstruction"),
+                H("The whole homogeneous solution set has no finite functional representation"),
+                ObstructionStatement(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every natural a and finite homogeneous ordered pair expression H, suppose H has a pair at its root, its frontier consists of fixed nonnegative powers of one residual, and H(alpha)=T_a. The entire completed solution set of rho^a X=H(X) differs from the union represented by every finite list of original functional components. H has no ground and no second residual. The only anchor hypothesis is the stated alpha equality.")),
+                    Paragraph(Text("A component consists of an arbitrary finite number of states, at most one original defining expression per state, and its actual designated state. Its projection existentially quantifies one joint assignment satisfying every original equation, and reads that same designated native value. The component syntax allows finite native grounds, all fixed nonnegative powers, ordered pairs, repeated states and undefined states. The finite list can be empty; components are independent. Zero-power alias cycles, positive-shift cycles, guarded cycles and unused or disconnected auxiliaries are all included. A finite designated output can coexist with infinite auxiliary values.")),
+                    Paragraph(Text("The completed homogeneous split identifies the target as all distinct finite atomic iterates together with the leafless tree. If one component contained in that target produced two different atomic iterates, finite-coordinate perturbation would give a solution of the same whole component with finite positive native mass at the designated state. The leafless tree is not finite, while every atomic iterate has zero native mass. The new output contradicts containment in the target. Hence each such component contains at most one atomic iterate.")),
+                    Paragraph(Text("Induction over the actual finite list makes the set of represented atomic ranks finite: each component contributes a subsingleton set of ranks, and adjoining a component takes a union. Equality with the entire target would represent every natural atomic rank, contradicting infinitude of the naturals. The argument uses the perturbation construction on its live inference path and preserves all original equations throughout.")),
+                    Paragraph(Text("The displayed formula unfolds the proposition Obstruction. SolutionSet(a,H) means the set of all completed native values X satisfying rho^a X=eval(H,X); represented(F) is the actual finite union of designated projections. FiniteComponents is List(Component). There is no normalization, extension, rigidity, canonical-solution or decoder premise, and no rank, depth, size, regularity or finite-value restriction on the completed domain. The result addresses exact representation of that coordinate set. It makes no claim about control, service, acquisition, erasure, stopping, productive contact or effective prefix computation. The proof is repository-derived, with no external novelty claim."))
                 ), DescribeRole.Theorem)
         )));
 
@@ -57,6 +77,33 @@ internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefin
                             AndAlso(Call("Satisfies", s, w),
                                 All("i", Call("Fin", m), Imp(Call("holds", b, i),
                                     Seq(Call("valueAt", w, i), Sp, Eq, Sp, Call("valueAt", v, i))))))))))))));
+    }
+
+    private static StatementSource PerturbationStatement()
+    {
+        var m = V("m"); var s = V("S"); var u = V("u");
+        var v = V("v"); var w = V("w"); var i = V("i"); var t = V("t");
+        return StatementSource.FromAuthor(Disp(
+            All("m", V("Nat"), All("S", Call("System", m),
+                All("u", Call("NativeValues", m), All("v", Call("NativeValues", m),
+                    Imp(Call("Satisfies", s, u), Imp(Call("Satisfies", s, v),
+                        All("i", Call("Fin", m), Imp(Call("IsFinite", Call("valueAt", v, i)),
+                            ExistsTyped("w", Call("NativeValues", m),
+                                AndAlso(Call("Satisfies", s, w), ExistsTyped("t", V("Source"),
+                                    AndAlso(Seq(Call("embed", t), Sp, Eq, Sp, Call("valueAt", w, i)),
+                                        Imp(Seq(Call("valueAt", u, i), Sp, Neq, Sp, Call("valueAt", v, i)),
+                                            Seq(V("0"), Sp, Lt, Sp, Call("gamma", t)))))))))))))))));
+    }
+
+    private static StatementSource ObstructionStatement()
+    {
+        var a = V("a"); var h = V("H"); var family = V("F");
+        return StatementSource.FromAuthor(Disp(
+            All("a", V("Nat"), All("H", V("Homogeneous"),
+                Imp(Call("PairRoot", h),
+                    Imp(Seq(Call("eval", h, Call("leaf", V("true"))), Sp, Eq, Sp, Call("atomic", a)),
+                        All("F", V("FiniteComponents"),
+                            Seq(Call("SolutionSet", a, h), Sp, Neq, Sp, Call("represented", family)))))))));
     }
 
     private static Formula ExistsTyped(string name, Formula type, Formula body) =>

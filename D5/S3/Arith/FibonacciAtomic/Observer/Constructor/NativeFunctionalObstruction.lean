@@ -671,7 +671,8 @@ private theorem nonalias_occurrence_strict {m : Nat} {E : Expr m}
     right
     by_contra h
     have ha : a = 0 := by omega
-    exact nonalias j (ha ▸ rfl)
+    subst a
+    exact nonalias j rfl
   | left h => exact Or.inl (List.cons_ne_nil _ _)
   | right h => exact Or.inl (List.cons_ne_nil _ _)
 
@@ -727,7 +728,7 @@ theorem finite_coordinate_perturbation {m : Nat} {S : System m}
       by_cases free : FreeRegion S j
       · exact ⟨seed, (same j free).symm, fun _ => seed_pos⟩
       · unfold FreeRegion at free
-        push_neg at free
+        push Not at free
         obtain ⟨k, path, E, eq, nonalias⟩ := free
         have vjk := alias_value satV path
         have ujk := alias_value satU path
@@ -750,5 +751,83 @@ theorem finite_coordinate_perturbation {m : Nat} {S : System m}
         exact neq (ujk.trans ((satU k E eq).trans (heq.trans ((satV k E eq).symm.trans vjk.symm))))
   obtain ⟨s, hs⟩ := finite
   exact ⟨w, satW, reconstruct (leafWeight s) i s rfl hs⟩
+
+
+private theorem component_atomic_unique (a : Nat) (H : Homogeneous) (root : PairRoot H)
+    (C : Component)
+    (contained : projected C ⊆ {X : CompletionTree | rho^[a] X = eval H X})
+    {c d : Nat} (hc : atomic c ∈ projected C) (hd : atomic d ∈ projected C) : c = d := by
+  classical
+  obtain ⟨u, satU, hu⟩ := hc
+  obtain ⟨v, satV, hv⟩ := hd
+  by_contra different
+  have unequal : u C.designated ≠ v C.designated := by
+    intro eq
+    exact different (CompletionPositiveDriftRegion.atomic_injective (hu.symm.trans (eq.trans hv)))
+  have finiteV : IsFinite (v C.designated) := by
+    rw [hv]
+    exact CompletionPositiveDriftRegion.atomic_finite d
+  obtain ⟨w, satW, t, ht, pos⟩ := finite_coordinate_perturbation satU satV finiteV
+  have feedback : rho^[a] (embed t) = eval H (embed t) :=
+    contained ⟨w, satW, ht.symm⟩
+  rcases (completed_homogeneous_split a H root (embed t)).mp feedback with omega | ⟨_, n, atom⟩
+  · exact CompletionPositiveDriftRegion.omega_not_finite ⟨t, omega⟩
+  · have eq : t = substitution^[n] (.of true) :=
+      NativeCompletionSupportClosure.embed_injective (atom.trans (iterate_embed n (.of true)))
+    have mass : NativePrefixIdentityReflection.gamma t = 0 := by
+      rw [eq, NativePrefixIdentityReflection.gamma_iterate]
+      rfl
+    have positive := pos unequal
+    omega
+
+/-- Under only the original alpha anchor, no finite union of arbitrary
+rank-free functional-system projections is the full homogeneous solution set. -/
+theorem rank_free_obstruction : Obstruction := by
+  classical
+  intro a H root anchor family equal
+  let target : Set CompletionTree := {X | rho^[a] X = eval H X}
+  have contained : ∀ C ∈ family, projected C ⊆ target := by
+    intro C mem X hx
+    have representedX : X ∈ represented family := ⟨C, mem, hx⟩
+    rw [← equal] at representedX
+    exact representedX
+  have finite_orbit : ∀ L : List Component, (∀ C ∈ L, projected C ⊆ target) →
+      Set.Finite {n : Nat | atomic n ∈ represented L} := by
+    intro L
+    induction L with
+    | nil =>
+      intro _
+      have empty : {n : Nat | atomic n ∈ represented []} = ∅ := by
+        ext n
+        simp [represented]
+      rw [empty]
+      exact Set.finite_empty
+    | cons C L ih =>
+      intro subsets
+      have singleton : Set.Subsingleton {n : Nat | atomic n ∈ projected C} := by
+        intro c hc d hd
+        exact component_atomic_unique a H root C (subsets C (by simp)) hc hd
+      have tail := ih (fun D mem => subsets D (by simp [mem]))
+      have union : {n : Nat | atomic n ∈ represented (C :: L)} =
+          {n : Nat | atomic n ∈ projected C} ∪ {n : Nat | atomic n ∈ represented L} := by
+        ext n
+        simp only [Set.mem_setOf_eq, Set.mem_union, represented, List.mem_cons]
+        constructor
+        · rintro ⟨D, rfl | mem, h⟩
+          · exact Or.inl h
+          · exact Or.inr ⟨D, mem, h⟩
+        · rintro (h | ⟨D, mem, h⟩)
+          · exact ⟨C, Or.inl rfl, h⟩
+          · exact ⟨D, Or.inr mem, h⟩
+      rw [union]
+      exact singleton.finite.union tail
+  have all : {n : Nat | atomic n ∈ represented family} = Set.univ := by
+    ext n
+    simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+    rw [← equal]
+    exact (completed_homogeneous_split a H root (atomic n)).mpr (Or.inr ⟨anchor, n, rfl⟩)
+  have finite := finite_orbit family contained
+  rw [all] at finite
+  exact Set.infinite_univ finite
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction
