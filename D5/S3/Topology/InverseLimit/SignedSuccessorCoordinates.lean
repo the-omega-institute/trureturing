@@ -237,11 +237,13 @@ theorem exists_successor_coordinates (hY : IsClosed Y) (hZ : IsClosed Z)
       obtain ⟨x, rfl⟩ := hu
       exact ⟨x, rfl⟩⟩
   · intro x i
-    by_cases h : i.1 < a
-    · simpa only [dite_eq_left h] using congrFun (hrestrict x) ⟨i.1, h⟩
+    rw [he x]
+    split_ifs with h
+    · exact congrFun (hrestrict x) ⟨i.1, h⟩
     · have ht : i = last a := Subtype.ext
         (le_antisymm (Order.le_of_lt_succ i.2) (le_of_not_gt h))
-      simpa only [dite_eq_right h, ht] using hsheet x
+      rw [ht]
+      exact hsheet x
   · intro x i
     exact congrFun (hrestrict x) i
   · intro z
