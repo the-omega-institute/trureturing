@@ -13,6 +13,8 @@ import Mathlib.Analysis.Polynomial.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Topology.Order.Compact
 
+/-! Derivative-sign nesting for polynomial log-functions on the positive half-line. -/
+
 namespace D5.S3.Analytic.LogFunctionMonotoneChain
 
 open Polynomial Set Filter
@@ -47,7 +49,16 @@ private lemma signed_derivative_formula (p : Polynomial ℝ) (j : ℕ) {x : ℝ}
 private lemma sign_transfer (p : Polynomial ℝ) (n j : ℕ) :
     p ∈ derivativeRegion n j ↔
       p.natDegree ≤ n ∧ ∀ y : ℝ, 0 ≤ (derivativePolynomial p j).eval y := by
-  sorry
+  constructor
+  · rintro ⟨hp, h⟩
+    refine ⟨hp, fun y => ?_⟩
+    have hy := h (Real.exp y) (Real.exp_pos y)
+    rw [signed_derivative_formula p j (Real.exp_pos y), Real.log_exp] at hy
+    exact nonneg_of_mul_nonneg_right hy (by positivity)
+  · rintro ⟨hp, h⟩
+    refine ⟨hp, fun x hx => ?_⟩
+    rw [signed_derivative_formula p j hx]
+    exact mul_nonneg (by positivity) (h _)
 
 private lemma nonneg_of_sub_derivative (q : Polynomial ℝ) {a : ℝ} (ha : 0 < a)
     (h : ∀ y : ℝ, 0 ≤ (a • q - q.derivative).eval y) : ∀ y : ℝ, 0 ≤ q.eval y := by
@@ -56,7 +67,8 @@ private lemma nonneg_of_sub_derivative (q : Polynomial ℝ) {a : ℝ} (ha : 0 < 
 private lemma descending (n k : ℕ) : derivativeRegion n (k + 1) ⊆ derivativeRegion n k := by
   intro p hp
   rw [sign_transfer] at hp ⊢
-  refine ⟨hp.1, nonneg_of_sub_derivative (derivativePolynomial p k) (by positivity) ?_⟩
+  refine ⟨hp.1, nonneg_of_sub_derivative (derivativePolynomial p k)
+    (a := k + 1) (by positivity) ?_⟩
   simpa only [derivativePolynomial, Nat.rec_add_one] using hp.2
 
 private lemma intersection (n : ℕ) (p : Polynomial ℝ) (hp : p.natDegree ≤ n) :
