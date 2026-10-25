@@ -2009,3 +2009,207 @@ a source-conditional application of the cited suppliers, with no new
 sieve, literature-priority or Lean-certification claim. It proves no
 large-parity complement estimate, full (J24), inverse-fourth saving,
 signed Robin restoration or RH conclusion.
+
+### An every-split support obstruction for the actual Type-II convolution
+
+The standard well-factorable import has a support obstruction for both
+the actual $b=\lambda_{\mathrm{II},b}$ on its original inverse annulus
+and the genuine joint coefficient $h_b$ in (J4). This is a
+`repo-derived` applicability result, using the existing coefficient
+identities and fixed-ray prime-ideal supply below. It supplies no
+strict inverse-fourth improvement and does not settle (J24) or (J40).
+
+**The source definition and its domain.** The existing owner is the
+[Maynard well-factorable section](../Analytic/shortuniformity2026robininterfaces.md#well-factorable-distribution-preserves-the-total-prime-baseline).
+In the pinned primary, [Definition 1](https://arxiv.org/html/2006.07088v1#Thmdfntn1)
+requires, for **every real** $Q=Q_1Q_2$, $Q_i\ge1$, a convolution of
+two 1-bounded sequences, the $i$th supported on $1\le n\le Q_i$.
+[Definition 2](https://arxiv.org/html/2006.07088v1#Thmdfntn2)
+requires the same for every real $Q=Q_1Q_2Q_3$, with three separately
+prescribed supports. One convenient internal factorization or fixed
+prime block is insufficient. Theorem A and Theorem 1.1 estimate the
+integer prime-AP discrepancy
+$\pi(x;q,a)-\pi(x)/\varphi(q)$, at levels respectively
+$Q\le x^{4/7-\varepsilon}$ and $Q\le x^{3/5-\varepsilon}$, with fixed
+$a$ and arbitrary fixed logarithmic saving. They supply no Hecke
+ideal-coefficient or common-$\beta$ signed-contraction theorem here;
+even satisfying their weight definition would leave that transport
+unproved.
+
+For the support calculation only, **define** the following ideal-norm
+analogue, without importing an analytic theorem. For $j=2$ or $3$ and
+$Q\ge1$, write $\mathsf S_j(a;Q)$ when every real factorization
+$Q=\prod_{i=1}^jQ_i$, $Q_i\ge1$, permits
+
+$$
+a(\mathfrak n)=
+\sum_{\mathfrak d_1\cdots\mathfrak d_j=\mathfrak n}
+ \prod_{i=1}^j\gamma_i(\mathfrak d_i),
+\qquad
+\gamma_i(\mathfrak d)=0\quad\text{if }N\mathfrak d>Q_i.
+\tag{J41}
+$$
+
+The convolution is over good integral ideals, each counted once, and
+the complex $\gamma_i$ may depend on the split. There is **no amplitude
+bound** in this definition. Thus failure of $\mathsf S_j$ also rules
+out the literal ideal-norm version with 1-bounded or divisor-bounded
+factors. This definition does not aggregate different ideals of equal
+norm into an integer-modulus weight.
+
+**A nonzero semiprime forces a larger level.** If
+$a(\mathfrak n)\ne0$, $\mathfrak n=\mathfrak p\mathfrak q$ for
+distinct prime ideals, and $p_0=\min(N\mathfrak p,N\mathfrak q)$, then
+
+$$
+\mathsf S_j(a;Q)\quad\Longrightarrow\quad
+Q\ge N\mathfrak n\,p_0^{\,j-1},\qquad j=2,3.
+\tag{J42}
+$$
+
+Indeed, any supported convolution first forces $Q\ge N\mathfrak n$.
+For $1\le r<p_0$, prescribe $Q_1=\cdots=Q_{j-1}=r$ and
+$Q_j=Q/r^{j-1}$. All prescribed lengths are at least one: for these
+two values of $j$, $Q\ge N\mathfrak n\ge p_0^{j-1}$.
+Every divisor of $\mathfrak n$ other than the unit has norm at least
+$p_0$, so the first $j-1$ factors must all be units. The last must
+be $\mathfrak n$, forcing $Q\ge N\mathfrak n\,r^{j-1}$.
+Let $r\uparrow p_0$ to obtain (J42).
+
+Apply this to $b$ restricted to the original annulus
+$q_d\asymp D=\sqrt U$, with the original $A=A_{\rm b}=U^{1/12}$.
+The balanced nonzero semiprimes in
+[C33/C36](../Analytic/liu2026quasirh.md#the-new-remainder-also-excludes-a-norm-only-payment)
+already have $b(\mathfrak p\mathfrak q)=2$ and
+$N\mathfrak p,N\mathfrak q\asymp U^{1/4}$. Their identity is reused,
+not rederived. The fixed-ray prime-ideal supply chooses their product
+inside a fixed interval where the original $V$ is nonzero. Hence the
+obstruction also holds with the actual $V(q_d/D)$ and unit-modulus
+ray twist included. Formula (J42) requires levels at least
+$U^{3/4+o(1)}$ for binary and $U^{1+o(1)}$ for triple factorability;
+neither is available at the original $Q=U^{1/2+o(1)}$.
+These are necessary levels, not existence results at larger levels.
+
+This failure is a common zero of all convolution terms at an offending
+split. Changing amplitude bounds cannot fill it. A finite signed sum
+of convolutions with those same prescribed support bounds, or smaller
+ones, also vanishes there, regardless of its coefficients. A fixed
+block decomposition that does not admit the offending split is a
+different hypothesis and is not ruled out by this observation.
+
+**The joint $h_b$ has its own obstruction.** Fix the original nonzero
+smooth **complex** annular $V$ of one (J4) component, and choose $t_0>0$
+with $v_0=V(t_0)\ne0$. Fix $c>2$. Choose a sufficiently small fixed
+$\delta>0$ such that $c(1-\delta)>2$ and
+
+$$
+|V(t)-v_0|\le |v_0|/10
+\quad\text{for }t_0(1-\delta)^2\le t\le t_0(1+\delta)^2.
+$$
+
+Using the
+[existing fixed-ray prime-pair supply](../Analytic/liu2026quasirh.md#the-original-convolution-norm-before-sixth-power-compression),
+choose four distinct good prime ideals with
+
+$$
+N\mathfrak q_j\in cU^{1/12}[1-\delta,1+\delta],\qquad
+N\mathfrak p_i\in(t_0/c)U^{5/12}[1-\delta,1+\delta],
+\qquad i,j=1,2.
+$$
+
+The cited fixed-ray prime-ideal theorem applies in each of these
+fixed relative intervals as its length tends to infinity. Delete $S$
+and the finitely many coincidences. For the displayed (J4), the inner
+ideal conditions are goodness and squarefree support, and $\xi$ has
+modulus one there. If a further original ray selector is retained,
+qualify the construction to an allowed component as follows: take
+$t(\mathfrak q_1)=t(\mathfrak q_2)=r$ and
+$t(\mathfrak p_1)=t(\mathfrak p_2)=s$, with $sr=\kappa$ an allowed
+factor class on which the original multiplier is nonzero. A retained
+column class must then allow $\tau=\kappa^2$. The same supply provides
+these primes in the fixed classes. No assertion is made for an
+incompatible selector, a zero component, or an arbitrary varying
+profile. The fixed unit representatives and finite ray multipliers
+are retained; four independent ray phases are not substituted for
+the multiplicative $\xi$ of (J4).
+
+The formula below is for (J4). A compatible further selector keeps
+all four terms; any additional nonzero multiplier constant on these
+fixed classes is retained as their common scalar.
+
+Put $w=\mathfrak p_1\mathfrak p_2\mathfrak q_1\mathfrak q_2$ and
+$t_{ij}=N(\mathfrak p_i\mathfrak q_j)/D$. All $t_{ij}$ lie in the
+displayed nonzero neighborhood of $t_0$. Since both primes in each
+mixed pair exceed $2A$, the existing
+[C40 with $b_0=1$](../Analytic/liu2026quasirh.md#cofactor-recursion-and-the-actual-prime-slot-capacity)
+gives $b(\mathfrak p_i\mathfrak q_j)=2$ on this original annulus.
+The only divisors of $w$ in the $D$ annulus are the four mixed pairs:
+single primes and $\mathfrak q_1\mathfrak q_2$ are below it,
+$\mathfrak p_1\mathfrak p_2$ and every triple are above it.
+Thus exactly four **ordered** factorizations contribute to (J4),
+each with $b(d_1)b(d_2)=4$, and multiplicativity gives
+
+$$
+h_b(w)=8D^{-1}\xi(w)
+ \left[V(t_{11})V(t_{22})+V(t_{12})V(t_{21})\right]\ne0.
+\tag{J43}
+$$
+
+For completeness, each product in brackets differs from $v_0^2$ by
+at most $(21/100)|v_0|^2$, so the bracket differs from $2v_0^2$ by
+at most $(21/50)|v_0|^2<2|v_0|^2$. This continuity estimate is valid
+for complex $V$ and retains interference between both pairings; it
+uses neither positivity nor an absolute-value replacement of the sum.
+
+Here $Nw\asymp U$. A divisor of $w$ without a $\mathfrak p_i$ has
+norm $O(U^{1/6})$; one containing a $\mathfrak p_i$ has norm
+$\gg U^{5/12}$. At the natural level $L=U^{1+o(1)}$, prescribe the
+binary split $Q_1=U^{1/3}$, $Q_2=L/U^{1/3}=U^{2/3+o(1)}$.
+Both lengths are at least one for large $U$. The first divisor can
+contain no $\mathfrak p_i$, so its complement contains both and has
+norm at least $N\mathfrak p_1N\mathfrak p_2\asymp U^{5/6}>Q_2$.
+Every supported convolution is zero at $w$, contradicting (J43).
+Thus genuine joint $h_b$, not merely $b$, fails binary factorability
+at its natural level.
+
+There are also the following stronger necessary levels for this
+witness. Write $p_*=\min_iN\mathfrak p_i$. If
+$\mathsf S_2(h_b;L)$ holds, nonvanishing first gives $L\ge Nw$.
+Prescribe $Q_1=r$, $1\le r<p_*$, approaching $p_*$ from below, and
+$Q_2=L/r$.
+These lengths are at least one. Again the second divisor must contain
+both large primes, so $L\ge rN\mathfrak p_1N\mathfrak p_2$.
+For triple factorability the equal split requires that some factor
+can contain each large prime. Consequently
+
+$$
+\begin{aligned}
+\mathsf S_2(h_b;L)&\Longrightarrow
+ L\ge p_*N\mathfrak p_1N\mathfrak p_2\gg_{V,c,\delta}U^{5/4},\\
+\mathsf S_3(h_b;L)&\Longrightarrow
+ L\ge\left(\max_iN\mathfrak p_i\right)^3
+ \gg_{V,c,\delta}U^{5/4}.
+\end{aligned}
+\tag{J44}
+$$
+
+The equal triple split has all lengths $L^{1/3}\ge1$; below its stated
+threshold no factor can carry the largest prime. These are necessary
+bounds only, with no sufficiency or optimality assertion. The same
+common-zero argument covers arbitrary amplitudes and finite signed
+sums with the offending support bounds.
+
+**Limit of the obstruction.** Opening $b$ into its actual prime or
+cofactor blocks remains legitimate, but cannot certify standard
+every-split well-factorability at these original levels. General
+fixed-block multilinear estimates and signed cancellation are not
+excluded. Nothing here is an energy lower bound, a lower bound or
+obstruction for the signed (J40) complement, or a joint estimate at
+the sufficient local $13/6$ benchmark. The original Hecke domain,
+raw sextic collision zeros, common $\beta$, signs and common-$e$
+detector, fixed/polylog profile seminorms, and all unit/ray/core/bad-dual
+aggregation costs remain in the original contract. In particular,
+(J40) and its unpaid aggregate real complementary bound are unchanged.
+No new analytic estimate, literature-originality claim, Lean
+certification, inverse-fourth saving, signed Robin restoration or RH
+completion follows.
