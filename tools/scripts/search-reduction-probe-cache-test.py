@@ -85,6 +85,28 @@ class ProbeCacheTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             cache.valid_record(path, "input", self.key)
 
+    def test_kernel_rejection_recomputes_cold_and_preserves_failure(self):
+        path = self.make_record()
+        path.rename(self.directory / "input")
+        environments = []
+
+        def compile_request(command, env):
+            environments.append(dict(env))
+            return 1 if len(environments) == 1 else 23
+
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_REQUESTS": "request.lean",
+                                    "SEARCH_REDUCTION_PROBE_CACHE": str(self.directory)}), \
+                patch.object(cache, "auth_key", return_value=self.key), \
+                patch.object(cache, "input_identity", return_value="input"), \
+                patch.object(cache.subprocess, "call", side_effect=compile_request) as compiler:
+            self.assertEqual(cache.run(["lean", "request.lean"]), 23)
+            self.assertEqual(compiler.call_count, 2)
+            hot, cold = environments
+            self.assertIn("SEARCH_REDUCTION_PROBE_READ", hot)
+            self.assertNotIn("SEARCH_REDUCTION_PROBE_WRITE", hot)
+            self.assertNotIn("SEARCH_REDUCTION_PROBE_READ", cold)
+            self.assertIn("SEARCH_REDUCTION_PROBE_WRITE", cold)
+
     def test_corruption_recomputes_cold_and_preserves_failure(self):
         path = self.make_record()
         (path / "probe.pickle").write_bytes(b"broken")

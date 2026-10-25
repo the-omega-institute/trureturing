@@ -553,7 +553,35 @@ private def probeProofs (result : Observation) : Array Expr := Id.run do
 
 def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPublicationContext do
   let proofs := probeProofs result
-  for proof in proofs do checkLocalProof (← inferType proof) proof
+  let before ← getEnv
+  try
+    -- Every certificate crosses the kernel separately. A temporary root then
+    -- collects their union of axioms in one shared Lean traversal, so common
+    -- dependency bodies are visited once. A standard union certifies each arm.
+    let mut bundle := mkConst ``True.intro
+    for proof in proofs do
+      let type ← instantiateMVars (← inferType proof)
+      let proof ← instantiateMVars proof
+      unless !type.hasMVar && !type.hasFVar && !proof.hasMVar &&
+          !proof.hasFVar && !proof.hasSorry do
+        throwError "graph.unclosed_local_certificate"
+      let name ← mkFreshUserName `_cachedCertificate
+      let levels := (collectLevelParams {} type).params.toList
+      timeLookup "certificate/kernel" do
+        if ← isProp type then
+          addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
+        else
+          addDecl (.defnDecl {
+            name, levelParams := levels, type, value := proof,
+            hints := .abbrev, safety := .safe})
+      bundle := .letE name type (mkConst name (levels.map mkLevelParam)) bundle false
+    let name ← mkFreshUserName `_cachedCertificateClosure
+    let levels := (collectLevelParams {} bundle).params.toList
+    addDecl (.thmDecl {
+      name, levelParams := levels, type := mkConst ``True, value := bundle})
+    let axioms ← timeLookup "certificate/axioms-batch" <| collectAxioms name
+    unless standardAxioms axioms do throwError "graph.nonstandard_axioms: {axioms}"
+  finally setEnv before
   emitLookupRecord s!"PROBE_CACHE_KERNEL_CERTIFICATES count={proofs.size} standard_axioms=true"
 
 /-- Typed dependency declarations are replayed through the kernel before
