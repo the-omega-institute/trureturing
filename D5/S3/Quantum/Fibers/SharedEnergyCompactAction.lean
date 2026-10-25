@@ -11,6 +11,8 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Group.Integral
 
+/-! Native tensor moments for the actual compact energy group. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Matrix MatrixOrder ComplexOrder Kronecker
@@ -309,7 +311,8 @@ private theorem pinching_lower (m : ℕ) (r s : DensityState (Fin 3)) :
   | zero =>
     intro n hn he
     have hn0 : n = 0 := by omega
-    simpa only [hn0] using he
+    subst n
+    exact he
   | succ N ih =>
     intro n hn he
     by_cases hn0 : n = 0
@@ -317,7 +320,8 @@ private theorem pinching_lower (m : ℕ) (r s : DensityState (Fin 3)) :
       ext I J
       simp [native_pinch_entry, totalEnergy, copies, stateMatrix]
     · by_cases htop : n = N+1
-      · simpa only [htop] using he
+      · subst n
+        exact he
       · have hN : 1 ≤ N := by omega
         have hp : pinchedCopies m N r = pinchedCopies m N s := by
           obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : N ≠ 0)

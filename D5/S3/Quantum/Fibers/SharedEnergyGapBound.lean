@@ -180,9 +180,13 @@ private theorem indecomposable_transpose (m : ℕ) (alpha : Exponent)
   · intro beta hle hw
     have hle' : ∀ i j, beta j i ≤ alpha i j := fun i j => hle j i
     have hw' : weight m (Matrix.transpose beta) = 0 := by rw [weight_transpose, hw, neg_zero]
-    rcases h.2.2 _ hle' hw' with hz | he
-    · left; simpa using congrArg Matrix.transpose hz
-    · right; simpa using congrArg Matrix.transpose he
+    rcases h.2.2 (fun i j => beta j i) hle' hw' with hz | he
+    · left
+      ext i j
+      exact congrFun (congrFun hz j) i
+    · right
+      ext i j
+      exact congrFun (congrFun he j) i
 
 /-- Every indecomposable labelled zero-weight exponent has degree at most
 2m minus one. Zero-weight units and distinct coordinates with coincident
