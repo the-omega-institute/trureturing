@@ -134,4 +134,91 @@ def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
 
 #print axioms sourceRegistration
 
+namespace ResidueTransport
+
+abbrev signature : Signature where
+  Params := ℕ × List Bool
+  State _ := ℕ × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ZMod p.1 × ZMod p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p v =>
+    _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.run (1, 0)
+      (p.2.map Bool.not) (residueSource p.1 v)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (0, 0)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (H : ℕ) (w : List Bool) (v : ℕ × ℕ),
+    residueSource H (runWord w v) = R.readout () (H, w) v
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro bad
+  have h := congrArg Prod.fst (bad 2 [] (1, 0))
+  change (1 : ZMod 2) = 0 at h
+  exact one_ne_zero h
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(2, []), (0, 0), (1, 0), ?_⟩
+  intro h
+  have he := congrArg Prod.fst h
+  change (0 : ZMod 2) = 1 at he
+  exact zero_ne_one he
+
+def sourceRegistration : Registration arena (type_of% residue_run) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨residue_run, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+def registration : Contract.Registration (@residue_run) (Realization signature) Type Unit where
+  unitName := `wholeWordResidueTransport
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution.ResidueTransport.sourceRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨sourceRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p v =>
+    _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.run (1, 0)
+      (p.2.map Bool.not) (residueSource p.1 v)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false },
+    { name := `relaxedAutoImplicit, value := .bool false }]
+
+#print axioms sourceRegistration
+
+end ResidueTransport
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution
