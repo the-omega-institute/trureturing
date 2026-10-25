@@ -95,11 +95,12 @@ without additional hypotheses. Its private helpers prove absolute
 convergence and the strict bound below 2/3 for the exact witness.
 
 The experiments are in the immutable
-[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/d4b2e60d02191b39b3c5ce1b8d782339d83906f7/experiments/karp-sitnik-luke-lower-bound).
+[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/6cf2b3329008f300a09c9a4f07eb94ee343b8786/experiments/karp-sitnik-luke-lower-bound).
 
 - **COMPUTED.** `python3 ks-cert.py`, exit code 0; script `ks-cert.py`,
-  SHA-256 `1c9f54fb936aab0b3afffe812acd612b587fb2a12a638d26b038bdf4ca48e900`.
-  The exact rational partial-sum comparisons give an enclosure with both
+  SHA-256 `3de8121aa81b37dc242160722e20088439fbc2172d090ca5325a79b958203d70`.
+  Using the uniform ratio bound |t_{n+1}/t_n| ≤ 1/2 and the alternating-series
+  bracket, the exact rational partial-sum comparisons give an enclosure with both
   endpoints printed as 0.554720974172, below 2/3. The printed decimals are
   approximations; the certificate's comparisons use exact fractions.
 - **COMPUTED.** `python3 ks-scan.py`, exit code 0; script `ks-scan.py`,
