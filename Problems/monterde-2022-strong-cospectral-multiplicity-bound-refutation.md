@@ -68,7 +68,7 @@ The canonical source is `D5/S3/Quantum/Dynamics/StrongCospectralMultiplicityBoun
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registrations.** `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Dynamics/StrongCospectralMultiplicityBoundRefutation.lean.json`, statement `sha256:db5c4b80fa927278adcc90d5ac9b83af0ee8320aa4beb686b8305909a2e8dab8`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Dynamics/StrongCospectralMultiplicityBoundRefutation.lean.json`, statement `sha256:28f575f8ba2e1970cbe3e401f9e6bbdb5991b13221f37df973accffc6e7ceaa0`.
 
 Declaration statements:
 
