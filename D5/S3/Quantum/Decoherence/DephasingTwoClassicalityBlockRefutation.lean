@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.claim; result=D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.result; claim=D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.claim
-   digest: A block Hadamard measurement gives time-dependent two-classical dephasing without MUBs. -/
+   digest: A block measurement refutes MUB necessity for time-dependent two-classical dephasing. -/
 
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
@@ -111,7 +111,7 @@ private theorem measurement_unitary : measurementRaw ∈ Matrix.unitaryGroup (Fi
   rw [Unitary.mem_iff]
   constructor <;> ext i j
   all_goals
-    simp only [Matrix.mul_apply, Matrix.star_apply, starRingEnd_apply]
+    simp only [Matrix.mul_apply, Matrix.star_apply]
     fin_cases i <;> fin_cases j <;>
       norm_num [measurementRaw, Fin.sum_univ_succ, hc, amplitude_star, star_neg,
         Matrix.one_apply] <;> linear_combination 2 * amplitude_sq
@@ -143,12 +143,14 @@ private theorem states_valid :
     apply Matrix.PosSemidef.diagonal
     intro i
     norm_num [Complex.le_def]
-  · norm_num [bathState, Matrix.trace, Fin.sum_univ_succ]
+  · unfold bathState Matrix.trace
+    norm_num [Fin.sum_univ_succ]
   · unfold systemState
     apply Matrix.PosSemidef.diagonal
     intro i
     fin_cases i <;> norm_num [Complex.le_def]
-  · norm_num [systemState, Matrix.trace, Fin.sum_univ_succ]
+  · unfold systemState Matrix.trace
+    norm_num [Fin.sum_univ_succ]
   · intro i j hij
     exact Matrix.diagonal_apply_ne _ hij
   · intro h
@@ -157,8 +159,9 @@ private theorem states_valid :
 
 private theorem blocks_hermitian : ∀ j, (blocks j).IsHermitian := by
   intro j
+  unfold Matrix.IsHermitian
   fin_cases j <;>
-    norm_num [blocks, bathZ, Matrix.IsHermitian, Matrix.diagonal_conjTranspose,
+    norm_num [blocks, bathZ, Matrix.diagonal_conjTranspose,
       Matrix.conjTranspose_smul]
 
 private def energies (k : Fin 3 × Fin 2) : ℂ := (k.1 : ℂ) * ![1, -1] k.2
@@ -171,7 +174,8 @@ private theorem hamiltonian_diagonal : hamiltonian blocks = Matrix.diagonal ener
       Matrix.kronecker_apply, Matrix.single_apply, Matrix.diagonal_apply]
 
 private theorem propagator_diagonal (t : ℝ) :
-    propagator blocks t = Matrix.diagonal (fun k => Complex.exp (-(t : ℂ) * Complex.I * energies k)) := by
+    propagator blocks t =
+      Matrix.diagonal (fun k => Complex.exp (-(t : ℂ) * Complex.I * energies k)) := by
   unfold propagator
   rw [hamiltonian_diagonal, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
   congr 1
@@ -222,16 +226,17 @@ private theorem post_measurement (x : Fin 3) :
     one_mul, mul_one, ← Matrix.smul_kronecker]
   congr 1
   ext i j
+  change (∑ k : Fin 3, (∑ l : Fin 3, projectors x i l * systemState l k) *
+    projectors x k j) = ![(5/12 : ℂ), 5/12, 1/6] x * projectors x i j
   fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    norm_num [projectors, systemState, Matrix.mul_apply, Matrix.vecMul, dotProduct,
-      Fin.sum_univ_succ, Matrix.diagonal_apply]
-
+    norm_num [projectors, systemState, Fin.sum_univ_succ, Matrix.diagonal_apply]
 
 private theorem one_time (t : ℝ) (y : Fin 3) :
     prob1 blocks bathState systemState measurement 0 y t = ![(5/12 : ℂ), 5/12, 1/6] y := by
   unfold prob1
   rw [initial_stationary, post_measurement, Matrix.trace_smul, Matrix.trace_kronecker]
-  fin_cases y <;> norm_num [projectors, bathState, Matrix.trace, Fin.sum_univ_succ]
+  unfold Matrix.trace
+  fin_cases y <;> norm_num [projectors, bathState, Fin.sum_univ_succ]
 
 private def jointLaw (u : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
   let a := 5 * (2 + Complex.exp (Complex.I * (u : ℂ)) +
@@ -247,8 +252,8 @@ private theorem luders_trace (y : Fin 3)
   have hv : star (fun i => measurement.val i y) ⬝ᵥ (fun i => measurement.val i y) = 1 := by
     have hh := congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => A y y)
       (Matrix.UnitaryGroup.star_mul_self measurement)
-    simpa only [Matrix.mul_apply, Matrix.star_apply, Matrix.one_apply_eq, dotProduct,
-      Pi.star_apply] using hh
+    unfold dotProduct
+    simpa only [Matrix.mul_apply, Matrix.star_apply, Matrix.one_apply_eq, Pi.star_apply] using hh
   have hp := (pure_state_handshake (fun i => measurement.val i y) hv 0).1
   change measurementProjector measurement y * measurementProjector measurement y =
     measurementProjector measurement y at hp
@@ -275,7 +280,6 @@ private theorem two_time (t₁ t₂ : ℝ) (x y : Fin 3) :
     norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, Matrix.kroneckerMap_apply,
       energies, projectors, bathState, jointLaw,
       neg_mul, mul_comm ((t₂ - t₁ : ℝ) : ℂ) Complex.I] <;> ring
-
 
 private theorem consistency : twoClassical blocks bathState systemState measurement 0 := by
   intro t₁ t₂ _ _
