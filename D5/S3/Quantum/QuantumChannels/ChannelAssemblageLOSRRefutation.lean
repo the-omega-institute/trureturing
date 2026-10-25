@@ -114,7 +114,8 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
       D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled 1 (rotationY θ) := by
     ext ⟨b, i⟩ ⟨c, j⟩
     fin_cases b <;> fin_cases c <;>
-      simp [controlledRotation, D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
+      simp [controlledRotation.eq_1,
+        D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
         Matrix.blockDiagonal_apply]
   ext i j
   unfold assemblage
@@ -125,9 +126,9 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
   simp only [Matrix.submatrix_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
   simp only [hcontrolled]
   fin_cases a <;> fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    with_unfolding_all simp [measurement,
+    with_unfolding_all simp [measurement.eq_1,
       D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
-      Matrix.blockDiagonal_apply, rotationY, Matrix.mul_apply, Matrix.one_apply,
+      Matrix.blockDiagonal_apply, rotationY.eq_1, Matrix.mul_apply, Matrix.one_apply,
       Matrix.reindex_apply, Matrix.submatrix_apply,
       Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
       D5.S3.QuantumBounds.CHSHWitness.bellDensity,
@@ -160,7 +161,7 @@ private lemma pre_cptp : IsCPTP preMap := by
   have hK : (∑ k : Unit, (preKraus k).conjTranspose * preKraus k) = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [preKraus, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+      simp [preKraus.eq_1, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
         Matrix.conjTranspose_apply, Matrix.one_apply]
   refine ⟨MatrixMap.of_kraus_isCompletelyPositive preKraus, ?_⟩
   obtain ⟨channel, hchannel⟩ := finite_kraus_quantum_channel preKraus hK
@@ -177,10 +178,10 @@ private lemma post_cptp (b : Fin 2) : IsCPTP (postMap b) := by
     exact_mod_cast Real.cos_sq_add_sin_sq (Real.pi * (1 / 4))
   have hU : (targetUnitary b).conjTranspose * targetUnitary b = 1 := by
     fin_cases b
-    · simp [targetUnitary]
+    · simp [targetUnitary.eq_1]
     · ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [targetUnitary, rotationY, Matrix.mul_apply, Fin.sum_univ_two,
+        simp [targetUnitary.eq_1, rotationY.eq_1, Matrix.mul_apply, Fin.sum_univ_two,
           Matrix.conjTranspose_apply, Complex.conj_ofReal,
           -Complex.ofReal_cos, -Complex.ofReal_sin] <;>
         (try ring) <;> linear_combination hcircle
@@ -190,7 +191,7 @@ private lemma post_cptp (b : Fin 2) : IsCPTP (postMap b) := by
     rcases j with ⟨j, s⟩
     have h := congrFun (congrFun hU r) s
     fin_cases i <;> fin_cases j <;>
-      simpa [postKraus, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
+      simpa [postKraus.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
         Matrix.one_apply] using h
   refine ⟨MatrixMap.of_kraus_isCompletelyPositive (postKraus b), ?_⟩
   obtain ⟨channel, hchannel⟩ := finite_kraus_quantum_channel (postKraus b) hK
@@ -212,7 +213,7 @@ private lemma memory_action (Φ : MatrixMap (Fin 2) (Fin 2) ℂ) (b : Fin 2)
   simp only [Matrix.mul_apply, Matrix.sum_apply, Fintype.sum_prod_type]
   simp_rw [MatrixMap.kron_def]
   unfold Matrix.single Matrix.trace
-  simp [preKraus, postKraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  simp [preKraus.eq_1, postKraus.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fintype.sum_prod_type, Fin.sum_univ_two]
   ring
 
@@ -224,7 +225,7 @@ private lemma source_branch_trace (θ : ℝ) (a : Fin 2) :
   rw [free_form]
   unfold Matrix.trace Matrix.single
   fin_cases a <;>
-    simp [rotationY, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
+    simp [rotationY.eq_1, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
       -Matrix.cons_mul, Matrix.vecHead, Matrix.vecTail, div_eq_mul_inv,
       -Complex.ofReal_cos, -Complex.ofReal_sin] <;>
     simp only [one_div] at hcircle <;>
@@ -238,11 +239,11 @@ private lemma conversion_identity (a' x' : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
             (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) (preMap ρ)) := by
   rw [free_form]
   fin_cases a' <;> fin_cases x'
-  all_goals norm_num only [Fintype.sum_prod_type, Fin.sum_univ_two, alice]
+  all_goals norm_num only [Fintype.sum_prod_type, Fin.sum_univ_two, alice.eq_1]
   all_goals simp only [memory_action, source_branch_trace]
   all_goals
     ext i j
-    simp [targetUnitary, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply]
+    simp [targetUnitary.eq_1, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply]
     ring
 
 private lemma conversion :
@@ -252,12 +253,12 @@ private lemma conversion :
   refine ⟨by intro l; norm_num, by norm_num [Fintype.sum_prod_type, Fin.sum_univ_two],
     ?_, ?_, ?_, fun _ => pre_cptp, fun l => post_cptp l.1, conversion_identity⟩
   · intro l a' x a x'
-    unfold alice
+    rw [alice.eq_1]
     split_ifs <;> norm_num
   · intro l a x'
     rcases l with ⟨b, r⟩
     fin_cases b <;> fin_cases r <;> fin_cases x' <;>
-      simp only [alice, Fin.sum_univ_two, Fin.isValue, ↓reduceIte, and_true, and_false,
+      simp only [alice.eq_1, Fin.sum_univ_two, Fin.isValue, ↓reduceIte, and_true, and_false,
         zero_add, add_zero]
       <;> norm_num
   · intro l x x' a₁ a₂
