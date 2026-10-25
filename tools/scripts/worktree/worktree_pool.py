@@ -281,7 +281,12 @@ def allocation_record(path, metadata, commit):
 
 def claim(options):
     with ExitStack() as pool_scope:
-        acquire(pool_scope, options.source, "operation:idle-pool", True)
+        try:
+            acquire(pool_scope, options.source, "operation:idle-pool", True)
+        except Refused as error:
+            if options.path is not None or str(error) != "busy_scope:operation:idle-pool":
+                raise
+            return dict(event="worktree_init", status="no_idle", reason=str(error))
         rows = inventory(options.source)
         candidates = ([options.path] if options.path else
                       [Path(row["worktree"]) for row in rows if idle_reference(row.get("branch", ""))])

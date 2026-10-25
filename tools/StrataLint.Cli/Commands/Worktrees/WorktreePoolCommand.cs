@@ -19,8 +19,10 @@ internal static class WorktreePoolCommand
                 .SingleOrDefault(item => item.Branch == options.Branch)?.Path
             : null;
 
-    internal static CommandResult? TryClaim(WorktreeOptions options, IWorktreeProcessRunner runner)
+    internal static CommandResult? TryClaim(WorktreeOptions options, IWorktreeProcessRunner runner,
+        out string? fallbackReason)
     {
+        fallbackReason = null;
         if (!options.PreferIdle)
         {
             if (!Directory.Exists(options.Path)) return null;
@@ -37,6 +39,8 @@ internal static class WorktreePoolCommand
         var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
         if (!result.Success) return result;
         using var receipt = JsonDocument.Parse(result.Output);
-        return receipt.RootElement.GetProperty("status").GetString() == "no_idle" ? null : result;
+        if (receipt.RootElement.GetProperty("status").GetString() != "no_idle") return result;
+        if (receipt.RootElement.TryGetProperty("reason", out var reason)) fallbackReason = reason.GetString();
+        return null;
     }
 }
