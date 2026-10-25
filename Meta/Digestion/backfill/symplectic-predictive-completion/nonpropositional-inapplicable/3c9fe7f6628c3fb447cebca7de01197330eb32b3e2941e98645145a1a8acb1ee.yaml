@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c9fe7f6628c3fb447cebca7de01197330eb32b3e2941e98645145a1a8acb1ee
+  normalized_sha256: sha256:3c9fe7f6628c3fb447cebca7de01197330eb32b3e2941e98645145a1a8acb1ee
+cas_ref: sha256:3c9fe7f6628c3fb447cebca7de01197330eb32b3e2941e98645145a1a8acb1ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第8章信息、风险与磁耦合的综合问题索引，没有写出关系结论。
+    previous_atom_id: d50bbbbd20d3ef9d8f865cd7fca55910c2a7ad40fdb72083556435b20b85dabd
+    next_atom_id: 92f71113385feef304e311ed5f4d3f736ef9dffc7b4807a98d91547c9c4e1efd
