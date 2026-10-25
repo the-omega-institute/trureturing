@@ -1,9 +1,9 @@
-/- GID: D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation
+/- GID: D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation
+   mirror-B: D5/B/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.claim; result=D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.result; claim=D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.claim; result=D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.result; claim=D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.claim
    digest: Non-local Schmidt-number annihilating channels need not remain so under tensor products. -/
 
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
@@ -24,7 +24,7 @@ open D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation (IsCPTP)
 open D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
   (BipartiteOp coeff proj SchmidtNumberLE)
 
-namespace D5.S3.Quantum.Entanglement.PartiallyEntanglementAnnihilatingTensorRefutation
+namespace D5.S3.Quantum.Entanglement.SchmidtNumber.PartiallyEntanglementAnnihilatingTensorRefutation
 
 def NonLocal {d : ℕ} (e : MatrixMap (Fin d × Fin d) (Fin d × Fin d) ℂ) : Prop :=
   ¬ ∃ e₁ e₂ : MatrixMap (Fin d) (Fin d) ℂ,
@@ -250,4 +250,4 @@ theorem result : ¬ claim := by
   intro h
   exact tensor_not_pea (h 3 2 replacement replacement replacement_pea replacement_pea)
 
-end D5.S3.Quantum.Entanglement.PartiallyEntanglementAnnihilatingTensorRefutation
+end D5.S3.Quantum.Entanglement.SchmidtNumber.PartiallyEntanglementAnnihilatingTensorRefutation
