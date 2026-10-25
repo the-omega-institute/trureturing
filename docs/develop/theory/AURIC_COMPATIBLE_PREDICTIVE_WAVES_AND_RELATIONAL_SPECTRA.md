@@ -3753,7 +3753,7 @@ w_n(f)\downarrow\operatorname{diam}f(\mathcal K_\infty).
 \tag{28.3}
 $$
 
-所以任意正分辨率最终可达，当且仅当 $f$ 在极限相容纤维上常值；不要求整个模型唯一。对非空紧菜单 $Q$ 和联合连续的 $F:Q\times\Omega\to Y$，$f_q=F(q,\cdot)$ 还满足
+所以任意正分辨率最终可达，当且仅当 $f$ 在极限相容纤维上常值；不要求整个模型唯一。对作为非空紧度量空间的查询菜单 $Q$ 和联合连续的 $F:Q\times\Omega\to Y$，$f_q=F(q,\cdot)$ 还满足
 
 $$
 \sup_{q\in Q}w_n(f_q)\downarrow
@@ -3765,7 +3765,7 @@ $$
 
 证明。这里在通道与关系载体上消费 Cantor 嵌套紧集原理及连续函数达到极值的成熟机制。取 $x_n\in\mathcal K_n$ 的收敛子列；对固定 $m$，子列最终属于闭集 $\mathcal K_m$，所以极限属于每个 $\mathcal K_m$。交集也闭，故紧且非空。
 
-直径在 $\mathcal K_n^2$ 上达到，且递减。取达到点对 $(x_n,y_n)$ 的收敛子列，其极限 $(x,y)$ 属于 $\mathcal K_\infty^2$。连续性给 $\lim_nw_n=d_Y(f(x),f(y))\le\operatorname{diam}f(\mathcal K_\infty)$；反向不等式由包含关系给出。对 (28.4)，改在紧集 $Q\times\mathcal K_n^2$ 上取达到三元组，相同子列论证给出等式。
+直径在 $\mathcal K_n^2$ 上达到，且递减。取达到点对 $(x_n,y_n)$ 的收敛子列，其极限 $(x,y)$ 属于 $\mathcal K_\infty^2$。连续性给 $\lim_nw_n=d_Y(f(x),f(y))\le\operatorname{diam}f(\mathcal K_\infty)$；反向不等式由包含关系给出。对 (28.4)，在各紧集 $Q\times\mathcal K_n^2$ 上取达到三元组；因 $Q\times\mathcal K_0^2$ 为紧度量空间，可取收敛子列，相同极限论证给出等式。
 
 若每个 $\mathcal K_n\setminus O$ 非空，它们构成嵌套紧集，交集非空，与假设矛盾。取 $O=\{g>0\}$，再用紧集上正连续函数的正最小值，得到裕量结论。最后，定理 29.2 的完整效果相等及非零后继距离，分别就是该双点相容集上这两种查询的直径。∎
 
@@ -4406,7 +4406,8 @@ $$
 **定义 34.2（所消费的数学来源）。** 定理 29.2–29.3 的符号相位纤维、全深度实效果不可辨识及其两世界决策接口是相对于下列供应文本的推导；不作穷尽文献的新颖性断言。紧性、直接法、Banach、对角法、半环、Bellman、Gibbs 及驻相在相应推导中仅作成熟中间工具。本卷 §27 的独立参考与联合相干权限不由 §29 的菜单自动取得。
 
 - [Sharp II 固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY_II.md)：定义 28.1、定理 28.2，原正号族、原域最优指数；§27 供应原稳定估计。本卷 §18、§25 供应 $185$ 上界及任意复矩阵放大。
-- [PDE 附录固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)：§87、§101 的全域与加权紧性，定理 102.2–102.3 的方程质量界及实际临界态，命题 102.4 的发散序列；§33 按这些确切来源消费，未将它们作为新达到性发现。
+- [PDE 原卷固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md#L3081)：§87 的全域形式，定理 87.5 的加权紧嵌入与负能取得性。
+- [PDE 附录固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)：§101 的全域阈值，定理 102.2–102.3 的方程质量界及实际临界态，命题 102.4 的发散序列；§33 按原卷与附录的这些确切来源消费，未将它们作为新达到性发现。
 - [时钟固定供应](https://github.com/the-omega-institute/trureturing/blob/194597016233d92b0d42fe93e8cda55f2f6ea471/docs/develop/theory/FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)：定义 33.1、定理 33.4、命题 33.6，原始联合误差和完整世界菜单的精确风险。
 - [递归预测与边界几何](AURIC_RECURSIVE_PREDICTION_AND_BOUNDARY_GEOMETRY.md)：支撑推导 10.4 及 Banach 文献条目，已知收缩率的停止界。[静态相容纤维](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)：定义 33.2、命题 33.3，公布后的合法反响应条件。
 - [计算行为表示理论](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)：定理 18.2–18.4 的参考分布、条件自由能及软 Bellman；§19 的观察商优化条件。§32 保留参考质量与微状态计数的区别，不把粗化当作免费的最优策略取得。
