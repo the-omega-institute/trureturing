@@ -48,6 +48,10 @@ $$\neg \left(\operatorname{D5.S3.Combinatorics.Partitions.EntanglementDepthGener
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/szalay-toth-2025-entanglement-depth-generator-injectivity` (refuted) by `D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"szalay-toth-2025-entanglement-depth-generator-injectivity","declaration_gid":"D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Szilárd Szalay; Géza Tóth (2025). *Alternatives of entanglement depth and metrological entanglement criteria*. DOI: [10.22331/q-2025-04-18-1718](https://doi.org/10.22331/q-2025-04-18-1718). URL: <https://arxiv.org/abs/2408.15350v3>.

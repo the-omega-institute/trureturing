@@ -98,7 +98,10 @@ internal sealed class EntanglementDepthGeneratorInjectivityRefutationDocument : 
                             + "The base satisfies 2 ≤ 5/2 and is unequal to every natural cast. "
                             + "Injectivity would make the equal entanglementDimension values force equality "
                             + "of the second pair, again contradicting distinctness. Thus neither alternative holds."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("szalay-toth-2025-entanglement-depth-generator-injectivity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula PowerSumFormula() =>
         All("n", Naturals(), All("q", Reals(), All("ξ", PartitionOf(X("n")),
