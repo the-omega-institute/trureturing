@@ -6,13 +6,11 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim; result=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.result; claim=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim
    digest: Six projected lines give counterexamples to both locality tensor conjectures. -/
 
-import D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
+import Mathlib.Tactic
 
 noncomputable section
 
 namespace D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation
-
-open D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex (coordinate)
 
 def IsLocalityVectorSpace (K : Type) {E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) : Prop :=
@@ -89,12 +87,12 @@ private def rel (v t : Fin 5 → ℝ) : Prop :=
     v 3 * t 2 = 0 ∧ t 3 * v 2 = 0 ∧ v 4 * t 1 = 0 ∧ t 4 * v 1 = 0
 
 private def X (k : Fin 5) : (Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ :=
-  (1 / 2 : ℝ) • Finsupp.single (coordinate 0 + coordinate k, coordinate 0 + coordinate k) 1 +
-    (1 / 2 : ℝ) • Finsupp.single (coordinate 0 - coordinate k, coordinate 0 - coordinate k) 1 -
-    Finsupp.single (coordinate k, coordinate k) 1
+  (1 / 2 : ℝ) • Finsupp.single (Pi.single 0 1 + Pi.single k 1, Pi.single 0 1 + Pi.single k 1) 1 +
+    (1 / 2 : ℝ) • Finsupp.single (Pi.single 0 1 - Pi.single k 1, Pi.single 0 1 - Pi.single k 1) 1 -
+    Finsupp.single (Pi.single k 1, Pi.single k 1) 1
 
 private def Y (i : Fin 5) : (Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ :=
-  Finsupp.single (coordinate i, coordinate i) 1
+  Finsupp.single (Pi.single i 1, Pi.single i 1) 1
 
 private def phi (i : Fin 5) :
     ((Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ) →ₗ[ℝ] ℝ :=
@@ -208,37 +206,37 @@ private theorem X_supported (k : Fin 5) (hk : k = 1 ∨ k = 2) :
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 1 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 2 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
     · apply diagonal_supported _ 0 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
   · unfold X
     apply Submodule.sub_mem
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 4 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 5 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
     · apply diagonal_supported _ 3 <;>
         solve
-        | norm_num [coordinate, Pi.single_apply]
+        | norm_num [Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, Pi.single_apply]
 
 private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
     Y i ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
@@ -246,13 +244,13 @@ private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
   apply Finsupp.single_mem_supported
   refine ⟨Submodule.mem_top, Submodule.mem_top, ?_⟩
   rcases hi with rfl | rfl <;>
-    norm_num [rel.eq_1, project.eq_1, coordinate, Pi.single_apply,
+    norm_num [rel.eq_1, project.eq_1, Pi.single_apply,
       funext_iff, Fin.forall_fin_succ]
 
 private theorem X_support_cases (k : Fin 5) {p} (hp : p ∈ (X k).support) :
-    p = (coordinate 0 + coordinate k, coordinate 0 + coordinate k) ∨
-      p = (coordinate 0 - coordinate k, coordinate 0 - coordinate k) ∨
-      p = (coordinate k, coordinate k) := by
+    p = (Pi.single 0 1 + Pi.single k 1, Pi.single 0 1 + Pi.single k 1) ∨
+      p = (Pi.single 0 1 - Pi.single k 1, Pi.single 0 1 - Pi.single k 1) ∨
+      p = (Pi.single k 1, Pi.single k 1) := by
   classical
   unfold X at hp
   rcases Finset.mem_union.mp (Finsupp.support_sub hp) with hp | hp
@@ -287,8 +285,8 @@ private theorem X_polarization (k : Fin 5) :
       Submodule.subset_span (Or.inr (Or.inr (Or.inr ⟨a, Submodule.mem_top,
         x, Submodule.mem_top, -1, rfl⟩)))
     simpa only [neg_one_smul, sub_neg_eq_add] using h
-  let a := coordinate 0
-  let b := coordinate k
+  let a := (Pi.single 0 1 : Fin 5 → ℝ)
+  let b := (Pi.single k 1 : Fin 5 → ℝ)
   have hp := S.add_mem (S.add_mem (hL a b (a + b)) (hR a a b)) (hR b a b)
   have hm := S.add_mem (S.add_mem (hL a (-b) (a - b)) (hR a a (-b)))
     (hR (-b) a (-b))
@@ -309,12 +307,12 @@ private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i 
     spanRel (Prod.RProd rel rel) (X k) (Y i) := by
   classical
   intro p hp q hq
-  have hq : q = (coordinate i, coordinate i) := ((Finsupp.mem_support_single _ _ _).mp hq).1
+  have hq : q = (Pi.single i 1, Pi.single i 1) := ((Finsupp.mem_support_single _ _ _).mp hq).1
   subst q
   rcases X_support_cases k hp with rfl | rfl | rfl <;>
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
     apply Prod.RProd.intro <;>
-    norm_num [rel.eq_1, project.eq_1, coordinate, Pi.single_apply,
+    norm_num [rel.eq_1, project.eq_1, Pi.single_apply,
       funext_iff, Fin.forall_fin_succ]
 
 private theorem phi_vanishes (i : Fin 5) {a} (ha :
@@ -332,7 +330,7 @@ private theorem phi_vanishes (i : Fin 5) {a} (ha :
 
 private theorem phi_values : phi 0 (X 1) = 1 ∧ phi 3 (Y 3 + Y 4) = 1 ∧
     phi 4 (Y 3 + Y 4) = 1 := by
-  norm_num [phi.eq_1, X.eq_1, Y.eq_1, coordinate, Pi.single_apply]
+  norm_num [phi.eq_1, X.eq_1, Y.eq_1, Pi.single_apply]
 
 private theorem phi_support (i : Fin 5) {a} (ha : phi i a ≠ 0) :
     ∃ p ∈ a.support, p.1 i * p.2 i ≠ 0 := by
@@ -412,8 +410,8 @@ private theorem pair_refuted : ¬ PairConjecture := by
     rw [map_add, phi_values.1, hw0, add_zero]
   apply no_joint_related (x + w) y z _ _ _ hwy hwz
   · rw [ha]; norm_num
-  · norm_num [y, Y.eq_1, phi.eq_1, coordinate, Pi.single_apply]
-  · norm_num [z, Y.eq_1, phi.eq_1, coordinate, Pi.single_apply]
+  · norm_num [y, Y.eq_1, phi.eq_1, Pi.single_apply]
+  · norm_num [z, Y.eq_1, phi.eq_1, Pi.single_apply]
 
 private theorem tensor_refuted : ¬ TensorConjecture := by
   intro H
