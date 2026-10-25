@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a224a9be60bffc621434ea020a6ae7f58898e8bd88e751751d82aa32f3932584
+  normalized_sha256: sha256:a224a9be60bffc621434ea020a6ae7f58898e8bd88e751751d82aa32f3932584
+cas_ref: sha256:a224a9be60bffc621434ea020a6ae7f58898e8bd88e751751d82aa32f3932584
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: §372 的章节过渡回顾前文并宣布统一叙述，未陈述带对象、量词或数值关系的新数学结论。'
+    previous_atom_id: cf61252065eb87050d53b8ac8a4aa1378505b00cc3a300d16d138b77a3ef87a1
+    next_atom_id: 78564144f42f39beb64ab8b2477fa38c18b1d91879cbfd3b3137ebd27bce85e8

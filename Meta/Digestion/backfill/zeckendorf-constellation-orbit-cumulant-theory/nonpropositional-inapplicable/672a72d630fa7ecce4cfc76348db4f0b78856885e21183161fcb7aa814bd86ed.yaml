@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:672a72d630fa7ecce4cfc76348db4f0b78856885e21183161fcb7aa814bd86ed
+  normalized_sha256: sha256:672a72d630fa7ecce4cfc76348db4f0b78856885e21183161fcb7aa814bd86ed
+cas_ref: sha256:672a72d630fa7ecce4cfc76348db4f0b78856885e21183161fcb7aa814bd86ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求核查 determinant 的 trace-norm 收敛的问题，没有断言收敛成立。
+    previous_atom_id: 62fa7469562fdf4eb24cf85e75a23b4e561c86e74c515cff793c7e9ad5628e15
+    next_atom_id: 9d32c8bcdd4baa700473a306c3d918b484659133b42e74ad2802abb73878cd9c

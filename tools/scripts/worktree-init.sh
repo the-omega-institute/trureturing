@@ -20,6 +20,9 @@ disk_arguments=(check-disk --path "$ROOT" --path "$TARGET")
 if [[ "$ALLOW_LOW_DISK" == 1 ]]; then disk_arguments+=(--allow-low-disk); fi
 python3 -B "$ROOT/tools/scripts/host-cleanup.py" "${disk_arguments[@]}"
 
+creation_arguments=()
+if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 ]]; then creation_arguments+=(--prefer-idle); fi
+
 exec dotnet run \
   --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
   --configuration Release \
@@ -28,4 +31,5 @@ exec dotnet run \
   --kind "$KIND" \
   --name "$NAME" \
   --path "$TARGET" \
-  --base "$BASE"
+  --base "$BASE" \
+  ${creation_arguments[@]+"${creation_arguments[@]}"}

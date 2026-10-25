@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fcf598eb7708374a11f6ae12ca8a59880e9d220760bb2b50d62e2511ca3f38a5
+  normalized_sha256: sha256:fcf598eb7708374a11f6ae12ca8a59880e9d220760bb2b50d62e2511ca3f38a5
+cas_ref: sha256:fcf598eb7708374a11f6ae12ca8a59880e9d220760bb2b50d62e2511ca3f38a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释范围表的当前预测充分性条目，列提问范围和不能外推的任务。
+    previous_atom_id: 200cf0cb109a087a027969371d47e9eb30bb9782f88fd9cbdc66562bbd190b04
+    next_atom_id: 1c398f5633786aede3a67e0fc8516c99d6fcc2386f9b7a379f17fa13b39fed51

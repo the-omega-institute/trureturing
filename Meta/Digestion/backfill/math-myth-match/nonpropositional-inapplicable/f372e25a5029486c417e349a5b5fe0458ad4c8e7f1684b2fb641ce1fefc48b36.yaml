@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f372e25a5029486c417e349a5b5fe0458ad4c8e7f1684b2fb641ce1fefc48b36
+  normalized_sha256: sha256:f372e25a5029486c417e349a5b5fe0458ad4c8e7f1684b2fb641ce1fefc48b36
+cas_ref: sha256:f372e25a5029486c417e349a5b5fe0458ad4c8e7f1684b2fb641ce1fefc48b36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 会通容纳不同规范判断的比较假设。
+    previous_atom_id: b1f1f87483fee0ff5434062e1c274d22db33268c7c36866ba12ed2db51f50897
+    next_atom_id: 237767b147fa580595fba20821fa83a8da47329a0bf985d0fd0faf51882cd898

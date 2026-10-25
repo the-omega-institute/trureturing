@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c208ba6262785213e2879d97577fd5a4021718d81134fbb3ac162c29987b645
+  normalized_sha256: sha256:7c208ba6262785213e2879d97577fd5a4021718d81134fbb3ac162c29987b645
+cas_ref: sha256:7c208ba6262785213e2879d97577fd5a4021718d81134fbb3ac162c29987b645
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: DependencyTopology 的文件路由列表，没有数学断言。
+    previous_atom_id: 1b71eedfc6dbc931d7af7fef48163c18d6e0ee767102f61ce79169577756e3cb
+    next_atom_id: 9d3a4f6a826c8f381fde98437c5514fd70b11af0fbfa23735c845499417b0a65

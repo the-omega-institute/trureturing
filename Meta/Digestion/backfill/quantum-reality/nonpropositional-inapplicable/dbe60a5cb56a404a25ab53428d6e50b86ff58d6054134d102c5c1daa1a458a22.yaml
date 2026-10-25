@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dbe60a5cb56a404a25ab53428d6e50b86ff58d6054134d102c5c1daa1a458a22
+  normalized_sha256: sha256:dbe60a5cb56a404a25ab53428d6e50b86ff58d6054134d102c5c1daa1a458a22
+cas_ref: sha256:dbe60a5cb56a404a25ab53428d6e50b86ff58d6054134d102c5c1daa1a458a22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出按已知均值最大化 Shannon 熵作为推断规则，并区分它与自然动力学；未断言最优解的存在、唯一性或具体形式。
+    previous_atom_id: 6e2520ee62f525e445842fa2c1d941deb57194f19ff0078e48bca1d9ee3093ab
+    next_atom_id: 53f906b535d6f87d2677c84cdb5474bd06f696275841c522a12d48a6d83edf91

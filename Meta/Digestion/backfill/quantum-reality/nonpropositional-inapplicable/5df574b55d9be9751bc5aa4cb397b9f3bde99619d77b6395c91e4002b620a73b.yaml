@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5df574b55d9be9751bc5aa4cb397b9f3bde99619d77b6395c91e4002b620a73b
+  normalized_sha256: sha256:5df574b55d9be9751bc5aa4cb397b9f3bde99619d77b6395c91e4002b620a73b
+cas_ref: sha256:5df574b55d9be9751bc5aa4cb397b9f3bde99619d77b6395c91e4002b620a73b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Residual 行列条件互信息、相干与离开候选族等研究对象，不独立宣告它们的数值或恒等式。
+    previous_atom_id: 21c7203dd52fed936cb0d2205d657ca861ee840f5b4e851494f3e7298ed4a6d3
+    next_atom_id: 0359a325e67221df2b8451db15c7a66d4f57ce190d0e915bff2f214b88c488f6

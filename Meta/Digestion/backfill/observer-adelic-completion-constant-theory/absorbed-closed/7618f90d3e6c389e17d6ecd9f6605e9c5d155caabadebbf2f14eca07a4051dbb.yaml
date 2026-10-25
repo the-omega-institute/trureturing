@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7618f90d3e6c389e17d6ecd9f6605e9c5d155caabadebbf2f14eca07a4051dbb
+  normalized_sha256: sha256:7618f90d3e6c389e17d6ecd9f6605e9c5d155caabadebbf2f14eca07a4051dbb
+cas_ref: sha256:7618f90d3e6c389e17d6ecd9f6605e9c5d155caabadebbf2f14eca07a4051dbb
+coverage_gids:
+  - gid: D5/S3/Observer/Separation/CongruenceClosureDuality.dual_congruence_repair_laws
+    target_statement_id: sha256:7ab4cdc3d00d0da4859adafbea12f3eac81bee8776c11ec6faf667a0c1a3605e
+receipts:
+  unresolved_subitems: []

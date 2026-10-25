@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20146557414b9ed27e408054f73037ac3d1823e632ba179c7e631da24c6c1700
+  normalized_sha256: sha256:20146557414b9ed27e408054f73037ac3d1823e632ba179c7e631da24c6c1700
+cas_ref: sha256:20146557414b9ed27e408054f73037ac3d1823e632ba179c7e631da24c6c1700
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出MMM从磋商文本取得的研究启发，未将其抽象提升为最终裁决。
+    previous_atom_id: a29d8a203203d03a70131d4a571e3a1b01ed41d6fb4c28c58333894210496e4c
+    next_atom_id: 24ebf668676a3fda3e8f38738cd78287e61ab34548b4c7fe94328d37c4d717d6

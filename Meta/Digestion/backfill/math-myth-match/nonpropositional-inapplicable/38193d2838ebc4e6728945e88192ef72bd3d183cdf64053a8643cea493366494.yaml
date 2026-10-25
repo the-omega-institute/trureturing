@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38193d2838ebc4e6728945e88192ef72bd3d183cdf64053a8643cea493366494
+  normalized_sha256: sha256:38193d2838ebc4e6728945e88192ef72bd3d183cdf64053a8643cea493366494
+cas_ref: sha256:38193d2838ebc4e6728945e88192ef72bd3d183cdf64053a8643cea493366494
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列出宗教原文、综述和释读范围，说明未进行的校勘与核验；属于文献范围说明。
+    previous_atom_id: 744d54af8b56150bc840fe01fcc235775af23f486656b0a8e37c347ef73dd1ed
+    next_atom_id: 4e043ef646d8fdf508f991cdacc2fda72a3fc1e72e95540d01e0ed1816979e91

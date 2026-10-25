@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da8aac883a31867a5cf35120a701b8936f3bcfb71010ca8bbf394e20bc8e3659
+  normalized_sha256: sha256:da8aac883a31867a5cf35120a701b8936f3bcfb71010ca8bbf394e20bc8e3659
+cas_ref: sha256:da8aac883a31867a5cf35120a701b8936f3bcfb71010ca8bbf394e20bc8e3659
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出互动模型允许选择的参数，不断言某个核的关系式。
+    previous_atom_id: f9b12f9c808cd4ca5a48dc459f4f6dea9266281333c279fe9039d3670ed85070
+    next_atom_id: fdbcc5715eda90dd15f13f3a067e1a785039d7899a4f59b4b3dcadc002779169

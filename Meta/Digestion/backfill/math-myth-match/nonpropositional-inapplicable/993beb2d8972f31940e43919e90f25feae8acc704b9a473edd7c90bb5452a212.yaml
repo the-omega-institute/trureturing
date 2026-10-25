@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:993beb2d8972f31940e43919e90f25feae8acc704b9a473edd7c90bb5452a212
+  normalized_sha256: sha256:993beb2d8972f31940e43919e90f25feae8acc704b9a473edd7c90bb5452a212
+cas_ref: sha256:993beb2d8972f31940e43919e90f25feae8acc704b9a473edd7c90bb5452a212
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列公式适用前提、扰动充分条件和经验解释边界，不独立断言公式成立。
+    previous_atom_id: b52f2eef276137426f71b37cc474fd3da96a1394977c54bc40a332194d71f28e
+    next_atom_id: 06a1c38bf51336133c0726eab3082a8336405cedc3208530daf2c3d163d56785

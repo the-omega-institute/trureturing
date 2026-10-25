@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d225aabb903ef9bf5253b9bc1a5ce25432f9e5a00a837220e01cf2d74067769f
+  normalized_sha256: sha256:d225aabb903ef9bf5253b9bc1a5ce25432f9e5a00a837220e01cf2d74067769f
+cas_ref: sha256:d225aabb903ef9bf5253b9bc1a5ce25432f9e5a00a837220e01cf2d74067769f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句只说明 Q_n 表示第 n 层的可见名字，是符号角色说明。
+    previous_atom_id: dfbfa1537ae5aa7546a84a0811ce2994563bee171ea5e78848154851af78955b
+    next_atom_id: 2966e513245836b4a4c98190a5c8328d504b0238703d67955d53587646c72277

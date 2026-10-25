@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6cf4b65a6b5f824375535b880d31c082073a99acdc33aa3bcae002ac7b8c6e2
+  normalized_sha256: sha256:a6cf4b65a6b5f824375535b880d31c082073a99acdc33aa3bcae002ac7b8c6e2
+cas_ref: sha256:a6cf4b65a6b5f824375535b880d31c082073a99acdc33aa3bcae002ac7b8c6e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 只提出研究完整历史时保留标签和重数的建模要求，没有断言具体计数或定理。'
+    previous_atom_id: 0ed16b4a26ea128ec0afc20d5c61cfad98e6dd7e76895198e6a18209f81ad7f8
+    next_atom_id: 50fe89b465ab9de8a1c634b6172b3c8d10ed909d4a5d1e2d6832f782a370c807

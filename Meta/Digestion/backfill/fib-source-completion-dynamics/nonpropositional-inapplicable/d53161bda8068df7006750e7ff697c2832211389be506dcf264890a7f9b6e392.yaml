@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d53161bda8068df7006750e7ff697c2832211389be506dcf264890a7f9b6e392
+  normalized_sha256: sha256:d53161bda8068df7006750e7ff697c2832211389be506dcf264890a7f9b6e392
+cas_ref: sha256:d53161bda8068df7006750e7ff697c2832211389be506dcf264890a7f9b6e392
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional definitions only: names the finite response map Z_h, its image R_h, a lawful prefix and terminal state, and the affine parametrization Psi_w. Image decomposition, disjointness and component counts are not asserted in this atom.'
+    previous_atom_id: 5d13ff0a0a5155186aee51c54b2ef6a179547a908e0d0bc5c419e9483ea28413
+    next_atom_id: 24e04a9b67a073adeab0b69bfce13050f114d5af8e962d9fa7a0027bb915e213

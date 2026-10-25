@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a56f646eb36e3d5964ab2b2f3a47eb286281a26ae3940596fb23fde0ad6cb99e
+  normalized_sha256: sha256:a56f646eb36e3d5964ab2b2f3a47eb286281a26ae3940596fb23fde0ad6cb99e
+cas_ref: sha256:a56f646eb36e3d5964ab2b2f3a47eb286281a26ae3940596fb23fde0ad6cb99e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明几何描述不足以替代动力学选择，并列共同钟、传播、标定与反作用的后续物理对应要求。
+    previous_atom_id: af9e48b7ae7e91d56e0768411b66408724cf7271b86d39cabc21227431d417d0
+    next_atom_id: da96401be362c53c06c4b7102679379516cc2af3b1e53da0e7240b286e3e40e6

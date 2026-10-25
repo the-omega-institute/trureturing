@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:458cf9a5db2aaf77788196566a5bb55d3c415cbf278795f3c6021509e9587d79
+  normalized_sha256: sha256:458cf9a5db2aaf77788196566a5bb55d3c415cbf278795f3c6021509e9587d79
+cas_ref: sha256:458cf9a5db2aaf77788196566a5bb55d3c415cbf278795f3c6021509e9587d79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An audit-list item naming data bias as a question outside preregistration. No probability distribution, unbiasedness equation or mathematical claim is asserted.
+    previous_atom_id: b59af2ef265a962f8f0156bf493a1e0f483114dbae5ef165f24ed8471934c675
+    next_atom_id: cdb724261e4181a2b2349717f8b821edffe3d83ddd50b07beafba8eafca22836

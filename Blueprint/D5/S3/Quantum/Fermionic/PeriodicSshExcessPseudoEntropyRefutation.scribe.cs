@@ -32,6 +32,15 @@ internal sealed class PeriodicSshExcessPseudoEntropyRefutationDocument : IScribe
                     + "JordanWigner.fullC uses the stated ordering of the modes, so the annihilator at j has the parity string from all earlier modes. "
                     + "The periodic bond is included in the same operator sum, with these fermionic signs.",
                 AssessedProvenance.FromRepo(Source)),
+            Describe.Lean(
+                DescribeId.Create("periodic-ssh-excess-fullc-mixed"),
+                DeclarationHandle.Create(Prefix + "fullC_mixed"),
+                H("The mixed canonical anticommutation relation"),
+                StatementSource.FromAuthor(Disp(MixedCarFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The anticommutator of an annihilator and a creator is the identity for equal modes and zero for distinct modes."))),
+                DescribeRole.Theorem),
             Node("IsHalfFilledGroundState", "Half filling and ground-state minimality", GroundStateFormula(),
                 "Half filling means exactly N particles among the 2N modes. The vector is nonzero and is an eigenvector "
                     + "of FockMajoranaCarrier.numberOperator with eigenvalue N. Its energy is minimal among all nonzero "
@@ -202,6 +211,15 @@ internal sealed class PeriodicSshExcessPseudoEntropyRefutationDocument : IScribe
                 Typed(Typed(Call("sshHopping", N("N"), N("v"), N("i"), N("j")), N("Real")), N("Complex")),
                 Mul(Call("Matrix.conjTranspose", Call("JordanWigner.fullC", N("i"))),
                     Call("JordanWigner.fullC", N("j")))))))));
+
+    private static Formula MixedCarFormula()
+    {
+        var ci = Call("JordanWigner.fullC", N("i"));
+        var cj = Call("Matrix.conjTranspose", Call("JordanWigner.fullC", N("j")));
+        return All("M", N("Nat"), All("i", FinOf(N("M")), All("j", FinOf(N("M")),
+            Eq(Add(Mul(ci, cj), Mul(cj, ci)),
+                If(Eq(N("i"), N("j")), Typed(D(1), Operator(N("M"))), D(0))))));
+    }
 
     private static Formula GroundStateFormula() => All("N", N("Nat"), All("v", N("Real"),
         All("psi", Vector(TwoN()), IffFormula(Call("IsHalfFilledGroundState", N("N"), N("v"), N("psi")),

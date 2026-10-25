@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3cc60360a09166b81f93b47c1d2ae82a47d2af5c14f04946647ed58b581e3552
+  normalized_sha256: sha256:3cc60360a09166b81f93b47c1d2ae82a47d2af5c14f04946647ed58b581e3552
+cas_ref: sha256:3cc60360a09166b81f93b47c1d2ae82a47d2af5c14f04946647ed58b581e3552
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连读 governing-list 为“本轮不主张”；这里只排除对residual envelope 随深度趋零的完成声明，不是一个要求证明的正命题。
+    previous_atom_id: d3fb2d093bc09b04f27fe79c489102bc2ef64d5755df387ff86a4d7cafd711fe
+    next_atom_id: 4075969597ef9691a16634d54cc1f7b783cd09f3fa9b814eb28acb0ad2b266fa

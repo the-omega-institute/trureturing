@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e64d5f459481321205146523411bdbbf804cba532eb2c6563c0381975b5c6296
+  normalized_sha256: sha256:e64d5f459481321205146523411bdbbf804cba532eb2c6563c0381975b5c6296
+cas_ref: sha256:e64d5f459481321205146523411bdbbf804cba532eb2c6563c0381975b5c6296
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅导航到第101、102节并声明正整数源、精确输出与禁免费重读的任务范围，不在此陈述具体定理。
+    previous_atom_id: 8227553a0e29a30a304fe97896c29614c8efc735f08aaed1fe3a8366fe4368a5
+    next_atom_id: f4a77ef1e54fcc951243e7601b768936adb82a1d85402888b24ecbe2bb1c3df3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:423b9c7147d63b3a5030368addd594b0222c703038d1e565c630696f3d9619b9
+  normalized_sha256: sha256:423b9c7147d63b3a5030368addd594b0222c703038d1e565c630696f3d9619b9
+cas_ref: sha256:423b9c7147d63b3a5030368addd594b0222c703038d1e565c630696f3d9619b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确未执行 Lean 检查并限定数值交叉核验的证据强度，属于状态说明。
+    previous_atom_id: 3ccdaba293cf41861f1bffd8f1c0c390f09872e718e81030b9b5336212475900
+    next_atom_id: 4ac37bead687486652d932cf17c2d91e5ef15d729668d4da369f932ffb7ef0a6

@@ -18,7 +18,7 @@ namespace D5.S3.Geometry.Hyperideal.LengthGramMetricSegments
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-private theorem lorentz_null_orthogonal (X W : Fin 4 → ℝ)
+theorem lorentz_null_orthogonal (X W : Fin 4 → ℝ)
     (hX : lorentz X X = -1) (hW : lorentz W W = 0)
     (horth : lorentz X W = 0) : W = 0 := by
   simp [lorentz, Fin.sum_univ_succ] at hX hW horth

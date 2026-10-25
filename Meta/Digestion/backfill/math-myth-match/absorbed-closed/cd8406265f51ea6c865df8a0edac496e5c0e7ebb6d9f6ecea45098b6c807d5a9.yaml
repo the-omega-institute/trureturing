@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cd8406265f51ea6c865df8a0edac496e5c0e7ebb6d9f6ecea45098b6c807d5a9
+  normalized_sha256: sha256:cd8406265f51ea6c865df8a0edac496e5c0e7ebb6d9f6ecea45098b6c807d5a9
+cas_ref: sha256:cd8406265f51ea6c865df8a0edac496e5c0e7ebb6d9f6ecea45098b6c807d5a9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lossless_iff_injective_on_image
+    target_statement_id: sha256:98ff6b7e40ae1c4235adb6c3953efc7de3dd2f035d4cdc78e7ca15ffde1222d1
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:14d870617904fce9f9c953daa6a5c3dd2ff0a889f5b097d6c7d2a05822e78989
+  normalized_sha256: sha256:14d870617904fce9f9c953daa6a5c3dd2ff0a889f5b097d6c7d2a05822e78989
+cas_ref: sha256:14d870617904fce9f9c953daa6a5c3dd2ff0a889f5b097d6c7d2a05822e78989
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenPrimeCircle/SharedChargeDifferentShells.CarriesCharge
+    target_statement_id: sha256:b78859a0aa015c4449533df19a9d34f532f03cf55a35f04057ff9703cf105caf
+  - gid: D5/S3/Observer/GoldenPrimeCircle/SharedChargeDifferentShells.common_charge_agreement
+    target_statement_id: sha256:22a49a68e678c4ba61109c2bdb7e4bf7792eff6cb9d025a19aeb523c3245b5c1
+  - gid: D5/S3/Observer/GoldenPrimeCircle/SharedChargeDifferentShells.concrete_shells_carry_same_charge
+    target_statement_id: sha256:5868ee88e411146b1e727e26d3674e4b7991099ebd25d84fdf8e10a8334db377
+  - gid: D5/S3/Observer/GoldenPrimeCircle/SharedChargeDifferentShells.same_charge_different_observer_witness
+    target_statement_id: sha256:5bf97cf2925f7aff6397bc09f597bc81dc673d3ab0629a3a9ac594adec900748
+  - gid: D5/S3/Observer/GoldenPrimeCircle/SharedChargeDifferentShells.shared_charge_does_not_force_same_resolution
+    target_statement_id: sha256:d5250bb3713e271e77205673e919cb5dea1decc9db6f047622d7e0ad71bc3e27
+receipts:
+  unresolved_subitems: []

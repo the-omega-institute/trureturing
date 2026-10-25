@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f13164c3d339749b5ea5700b18ff82e23346693a51d1092b314e6242589bcbeb
+  normalized_sha256: sha256:f13164c3d339749b5ea5700b18ff82e23346693a51d1092b314e6242589bcbeb
+cas_ref: sha256:f13164c3d339749b5ea5700b18ff82e23346693a51d1092b314e6242589bcbeb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述教育、预防与犯罪条件的文本方向，明确不冒称已测得普遍社会规律。
+    previous_atom_id: ef0ebd18780c3f00ef6957a344758c07cc07d7627c658bee8c3465df866f0917
+    next_atom_id: 6e893b38d2294ae8353441b4d582424719e65dc66d831b1e0d87b167c86bcac6

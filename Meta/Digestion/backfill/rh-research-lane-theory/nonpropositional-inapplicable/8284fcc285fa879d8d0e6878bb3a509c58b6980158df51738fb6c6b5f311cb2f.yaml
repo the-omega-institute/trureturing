@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8284fcc285fa879d8d0e6878bb3a509c58b6980158df51738fb6c6b5f311cb2f
+  normalized_sha256: sha256:8284fcc285fa879d8d0e6878bb3a509c58b6980158df51738fb6c6b5f311cb2f
+cas_ref: sha256:8284fcc285fa879d8d0e6878bb3a509c58b6980158df51738fb6c6b5f311cb2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该 Fourier 时间不可逆方向条目处于非主张清单，不断言不可逆性或可逆性的定理。
+    previous_atom_id: 0b2830e6897669127db84d83d5072b2830e96defc8c56746e0f8df3bfdc7863a
+    next_atom_id: 5f6fe2dc468e55365c4ed37af962eb3e339746634fe80fc6eb314f42c4611806

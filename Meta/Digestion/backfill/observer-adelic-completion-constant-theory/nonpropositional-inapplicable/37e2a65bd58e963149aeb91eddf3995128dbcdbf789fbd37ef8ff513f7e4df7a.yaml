@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37e2a65bd58e963149aeb91eddf3995128dbcdbf789fbd37ef8ff513f7e4df7a
+  normalized_sha256: sha256:37e2a65bd58e963149aeb91eddf3995128dbcdbf789fbd37ef8ff513f7e4df7a
+cas_ref: sha256:37e2a65bd58e963149aeb91eddf3995128dbcdbf789fbd37ef8ff513f7e4df7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节题头、中心逆平方节点的既有记号与表示对照表头；具体各表示的数学对应均在后续独立 atom 中。
+    previous_atom_id: d0ef3790406769935d2511b5c5c37962feb718d2a10694a6d0099657fc395dba
+    next_atom_id: 9c0615b36e1dd791f71e208f7b456f76c94eb2539cd3f63919780d61c337bf01

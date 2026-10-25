@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f6490a45ece5541a095cc451dcc3ca57f9d986fca8fbba2e1e5ddb0112be114
+  normalized_sha256: sha256:0f6490a45ece5541a095cc451dcc3ca57f9d986fca8fbba2e1e5ddb0112be114
+cas_ref: sha256:0f6490a45ece5541a095cc451dcc3ca57f9d986fca8fbba2e1e5ddb0112be114
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明与超赋值文献的有限类比及不能外推的传统范围，不含新的集合恒等式或模型定理。
+    previous_atom_id: 66b79ae112f71afb4b9d0e11ea7849934a56532483393ed9fd24c465a088ce65
+    next_atom_id: 9a92c327ccc54d279ac2064978e2e5d97e20db8102017bd6e90157c227b2cd38

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47cbe759216cd7a25a4c5302a642d004129eda8ff6ad02b7285fccd66cf22094
+  normalized_sha256: sha256:47cbe759216cd7a25a4c5302a642d004129eda8ff6ad02b7285fccd66cf22094
+cas_ref: sha256:47cbe759216cd7a25a4c5302a642d004129eda8ff6ad02b7285fccd66cf22094
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section introduction inheriting the actual integer family and reciprocal-complement setup, and fixing prime-index asymptotics. No new identity, bound, or existence assertion is made.
+    previous_atom_id: 06fc219ceafe691f2285614fcef7bff92186d4ab53c10804bca9c19b25e0281e
+    next_atom_id: 44e7de82b6494af17bfa01d3f72bd5342f147b0de12d9cb1a30a601d8b58ba49

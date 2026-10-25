@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cfbccedeb1cea4ac9e0218eb825d4da4e66f6c1a07347035445bd300edbd979c
+  normalized_sha256: sha256:cfbccedeb1cea4ac9e0218eb825d4da4e66f6c1a07347035445bd300edbd979c
+cas_ref: sha256:cfbccedeb1cea4ac9e0218eb825d4da4e66f6c1a07347035445bd300edbd979c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 完备化仅列为升级 completed operator 时尚需提供的结构。
+    previous_atom_id: 4146c0a37b466ff704fefe8ef0b56d8490cd0572a0a4e5e71f9d761d1bed36a2
+    next_atom_id: f175db7524c8440ad6b0e6d1f3c9291dbaa549dedaec86c07f87be3cea8df575

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20135b9f1ac0a785f2c2470ba59f1e0c50e797c22d5b563dfd227fa504aff5f3
+  normalized_sha256: sha256:20135b9f1ac0a785f2c2470ba59f1e0c50e797c22d5b563dfd227fa504aff5f3
+cas_ref: sha256:20135b9f1ac0a785f2c2470ba59f1e0c50e797c22d5b563dfd227fa504aff5f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究目标分层的引言，没有给出各层命题。
+    previous_atom_id: 61c14a33e286ea2559338af90460442ac73110e0ec16801630a12c21f75ded9a
+    next_atom_id: 2944127861d08100db042ded1d41e92691c49eb214c91e7470ebd3a9ccf1f1a3

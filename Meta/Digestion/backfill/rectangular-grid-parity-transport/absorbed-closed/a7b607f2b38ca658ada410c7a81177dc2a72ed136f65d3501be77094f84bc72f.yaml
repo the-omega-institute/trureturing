@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a7b607f2b38ca658ada410c7a81177dc2a72ed136f65d3501be77094f84bc72f
+  normalized_sha256: sha256:a7b607f2b38ca658ada410c7a81177dc2a72ed136f65d3501be77094f84bc72f
+cas_ref: sha256:a7b607f2b38ca658ada410c7a81177dc2a72ed136f65d3501be77094f84bc72f
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/WeightedVertexProducts.alpha_of_vertex_products
+    target_statement_id: sha256:0dfd3f685cc88ec4db38ac3a82f20ce508266c3d4a25fbda5cec44e14f3e60b5
+receipts:
+  unresolved_subitems: []

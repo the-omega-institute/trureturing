@@ -205,7 +205,7 @@ private lemma spectral_entries {n : ℕ} {A Y : Matrix (Fin n) (Fin n) ℂ}
   push_cast
   linear_combination hij
 
-private lemma affine_three (g : ℝ → ℝ)
+lemma affine_three (g : ℝ → ℝ)
     (hg : StrictConvexOn ℝ (Set.Ioi 0) g ∨ StrictConcaveOn ℝ (Set.Ioi 0) g)
     (a b x y z : ℝ) (hx : 0 < x) (hy : 0 < y) (hz : 0 < z)
     (hxy : x ≠ y) (hxz : x ≠ z) (hyz : y ≠ z)

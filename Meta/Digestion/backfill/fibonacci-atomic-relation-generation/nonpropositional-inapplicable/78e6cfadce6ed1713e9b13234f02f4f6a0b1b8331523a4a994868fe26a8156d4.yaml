@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78e6cfadce6ed1713e9b13234f02f4f6a0b1b8331523a4a994868fe26a8156d4
+  normalized_sha256: sha256:78e6cfadce6ed1713e9b13234f02f4f6a0b1b8331523a4a994868fe26a8156d4
+cas_ref: sha256:78e6cfadce6ed1713e9b13234f02f4f6a0b1b8331523a4a994868fe26a8156d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明三种守恒的讨论范围和RH全称估计仍缺，非这些守恒的陈述。
+    previous_atom_id: 44262c11eb58dd215c753349f59c3e9a1e486a8ac4bbe68422bda6ff4905241d
+    next_atom_id: 1c8b2c8eecb1b8ec2ac6ad4646ea6541f8e58b7bbeb664116e46fd28c244c11e
