@@ -188,7 +188,9 @@ theorem shifted_actual_gamma_graph_equivalence {f : ℝ → ℂ}
       (25 / gammaScale)).mono' hQuarterM
     exact Eventually.of_forall fun ξ => by
       have hq : 0 ≤ ‖unitarySourceFourier f ξ‖ ^ 2 := sq_nonneg _
-      dsimp only
+      change ‖actualBareQuarterWeight ξ * ‖unitarySourceFourier f ξ‖ ^ 2‖ ≤
+        (25 / gammaScale) * (‖(gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2‖ +
+          gammaRemainderBound c * ‖unitarySourceFourier f ξ‖ ^ 2)
       rw [Real.norm_eq_abs, abs_of_nonneg
         (mul_nonneg (actual_bare_quarter_nonneg ξ) hq)]
       have h := mul_le_mul_of_nonneg_right (quarter_le_shifted_gamma_absolute c ξ) hq
@@ -203,7 +205,9 @@ theorem shifted_actual_gamma_graph_equivalence {f : ℝ → ℂ}
       (hmass.const_mul (gammaRemainderBound c))).mono' hGammaM
     exact Eventually.of_forall fun ξ => by
       have hq : 0 ≤ ‖unitarySourceFourier f ξ‖ ^ 2 := sq_nonneg _
-      dsimp only
+      change ‖(gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2‖ ≤
+        gammaScale * (actualBareQuarterWeight ξ * ‖unitarySourceFourier f ξ‖ ^ 2) +
+          gammaRemainderBound c * ‖unitarySourceFourier f ξ‖ ^ 2
       rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hq]
       have h := mul_le_mul_of_nonneg_right (shifted_gamma_quarter_absolute_upper c ξ) hq
       calc
@@ -287,7 +291,8 @@ private theorem actual_gamma_reflected_cross_complete_series
         exact Eventually.of_forall fun ξ => (mul_assoc _ _ _).symm
       · rfl
     have h := congrArg Complex.re hPi
-    norm_num [Complex.div_ofReal_re] at h
+    rw [Complex.div_ofReal_re, Complex.ofReal_re] at h
+    norm_num at h
     exact h
   have hCRe : (∫ ξ, C ξ).re = 0 := actual_constant_reflected_cross_re_zero hu₁ hu₂
   have hPoint (ξ : ℝ) :
@@ -395,9 +400,14 @@ private theorem actual_gamma_literal_even_energy_difference_complete_series
         exact Eventually.of_forall fun ξ => by
           dsimp only
           rw [actual_even_zero_fourier hu₁, hPoint]
-          dsimp [A, B, R, actualSourceSpectralCross]
+          let z := unitarySourceFourier (zeroExtension u) ξ
+          let w := unitarySourceFourier (zeroExtension u) (-ξ)
+          change (gammaWeight ξ + c) * (‖z‖ ^ 2 + ‖w‖ ^ 2 +
+              2 * ((starRingEnd ℂ) z * w).re) =
+            (gammaWeight ξ + c) * ‖z‖ ^ 2 + (gammaWeight ξ + c) * ‖w‖ ^ 2 +
+              2 * (((gammaWeight ξ + c : ℝ) : ℂ) * ((starRingEnd ℂ) z * w)).re
           simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-            zero_mul, zero_add, sub_zero]
+            zero_mul, sub_zero]
           ring
       _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
         have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
@@ -599,7 +609,7 @@ private theorem actual_gamma_actual_series_compression
     norm_num only [show (1 : ℝ) + 1 / 4 = 5 / 4 by norm_num]
     have hShift : (n : ℝ) + 2 + 1 / 4 = (n : ℝ) + 9 / 4 := by ring
     simp_rw [hShift]
-    have hfactor : ((n : ℝ) + 9 / 4) ^ 2 - (5 / 4 : ℝ) ^ 2 =
+    have hfactor : ((n : ℝ) + 9 / 4) ^ 2 - (25 / 16 : ℝ) =
         ((n : ℝ) + 1) * ((n : ℝ) + 7 / 2) := by ring
     rw [hfactor]
     field_simp (disch := positivity)
@@ -613,6 +623,7 @@ private theorem actual_gamma_actual_series_compression
         (3 / 2 : ℝ) * (∑' n : ℕ, gammaTailScalar n) * L 1 := by
     rw [tsum_congr hTailRow, (hLt.add h3V).tsum_add h3T, hLt.tsum_add h3V]
     simp_rw [tsum_mul_left, tsum_mul_right]
+    rw [tsum_mul_left]
   have hLsplit := (hL.sum_add_tsum_nat_add 2).symm
   have hVsplit := (hV.sum_add_tsum_nat_add 2).symm
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add] at hLsplit hVsplit
