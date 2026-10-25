@@ -122,6 +122,10 @@ $$\neg (\operatorname{D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/delascuevas-klingler-netzer-2024-nonfactorizable-doubled-triangle` (refuted) by `D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"delascuevas-klingler-netzer-2024-nonfactorizable-doubled-triangle","declaration_gid":"D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gemma De las Cuevas; Andreas Klingler; Tim Netzer (2024). *Polynomial decompositions with invariance and positivity inspired by tensors*. DOI: [10.1016/j.laa.2024.05.025](https://doi.org/10.1016/j.laa.2024.05.025). URL: <https://arxiv.org/abs/2109.06680v2>.

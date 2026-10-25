@@ -103,7 +103,10 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
                             + "a contradiction. Thus even the product equations have no solution; positivity and equivariance "
                             + "cannot restore one. Finally, applying universal factorizability to n = 2, these weights, this finite "
                             + "group and these compatible actions would give the impossible factorization. Hence claim is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("delascuevas-klingler-netzer-2024-nonfactorizable-doubled-triangle"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
