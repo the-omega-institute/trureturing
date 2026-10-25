@@ -301,4 +301,77 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 end Monomials
 
 #print axioms Monomials.registration
+namespace LeastOrder
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → Unit → ℕ → ℕ := fun _ _ m => 2*m-1
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def shifted : Realization signature := realize signature (fun _ _ m => 2*m-1+1)
+  (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, 2 ≤ m →
+    IsLeast {N : ℕ | 0 < N ∧ ∀ r s : DensityState (Fin 3),
+      sharedMoment m N r = sharedMoment m N s ↔ SameEnergyOrbit m r s} (R.readout () () m)
+private theorem bridge : (type_of% least_uniform_order) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law shifted := by
+  intro h
+  have he := (least_uniform_order 2 (by omega)).unique (h 2 (by omega))
+  change 2*2-1 = 2*2-1+1 at he
+  omega
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 2, 3, ?_⟩
+  norm_num [actual, realize, readoutFunction]
+
+def family : Registration arena (type_of% least_uniform_order) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp least_uniform_order, shifted, rejected⟩
+  sensitivity := ⟨fun i => ⟨shifted,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    least_uniform_order (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction.LeastOrder.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction.LeastOrder.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCompactAction
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end LeastOrder
+#print axioms LeastOrder.registration
 end Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction

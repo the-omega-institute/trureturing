@@ -520,13 +520,15 @@ private theorem recover_phase (m : ℕ) (hm : 2 ≤ m)
         have hz' : (c/b)^m = c := by
           conv_lhs => rw [← Nat.sub_add_cancel hm1]
           rw [pow_succ, hz]
-          group
+          rw [div_eq_mul_inv, ← mul_assoc, mul_comm b c, mul_inv_cancel_right]
         refine ⟨c/b, ?_, ?_, ?_⟩
         · simp [ha, hx]
-        · exact hb.trans (by simpa only [Circle.coe_pow] using
-            congrArg (fun w : Circle => (w : ℂ)*X 2 1) hz.symm)
-        · exact hc.trans (by simpa only [Circle.coe_pow] using
-            congrArg (fun w : Circle => (w : ℂ)*X 2 0) hz'.symm)
+        · apply hb.trans
+          simpa only [Circle.coe_pow] using
+            (congrArg (fun w : Circle => (w : ℂ)*X 2 1) hz.symm)
+        · apply hc.trans
+          simpa only [Circle.coe_pow] using
+            (congrArg (fun w : Circle => (w : ℂ)*X 2 0) hz'.symm)
   · refine ⟨a, ha, ?_, ?_⟩
     · by_cases hy : X 2 1 = 0
       · simp [hb, hy]
@@ -557,9 +559,10 @@ private theorem orbit_of_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState 
   have hC : C.IsHermitian := Matrix.isHermitian_mul_mul_conjTranspose U hX
   have diag (i : Fin 3) : Y i i = C i i := by
     have hd := two_coordinate_relation m X Y h i i 0 0 1 0 (by simp)
+    have hd' : Y i i = X i i := by simpa only [pow_one, pow_zero, mul_one] using hd.symm
     have hc := orbit_tensor_entry m 1 z X i i
-    simpa only [matrixCopies, totalEnergy, sub_self, zpow_zero, one_mul,
-      pow_one, pow_zero, mul_one] using hd.symm.trans hc.symm
+    simp only [matrixCopies, totalEnergy, sub_self, zpow_zero, one_mul] at hc
+    exact hd'.trans hc.symm
   have entry (i j : Fin 3) : C i j = (z : ℂ)^(energy m i-energy m j)*X i j :=
     orbit_tensor_entry m 1 z X i j
   have hc10 : Y 1 0 = C 1 0 := by simpa [entry, energy] using h10
@@ -571,11 +574,11 @@ private theorem orbit_of_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState 
   ext i j
   fin_cases i <;> fin_cases j
   · exact diag 0
-  · rw [← hY.apply 0 1, ← hC.apply 0 1, hc10]
-  · rw [← hY.apply 0 2, ← hC.apply 0 2, hc20]
+  · exact (hY.apply 0 1).symm.trans ((congrArg star hc10).trans (hC.apply 0 1))
+  · exact (hY.apply 0 2).symm.trans ((congrArg star hc20).trans (hC.apply 0 2))
   · exact hc10
   · exact diag 1
-  · rw [← hY.apply 1 2, ← hC.apply 1 2, hc21]
+  · exact (hY.apply 1 2).symm.trans ((congrArg star hc21).trans (hC.apply 1 2))
   · exact hc20
   · exact hc21
   · exact diag 2
