@@ -392,7 +392,9 @@ theorem actual_digamma_quarter_resolvent_l1_domain_and_series (a : ℝ) (ha : 0 
         apply lintegral_congr_ae
         exact Eventually.of_forall fun x => by
           have hs := gamma_residual_actual_pointwise_series a ha x
-          change ENNReal.ofReal (q x) = _
+          change ENNReal.ofReal
+            (gammaResidualQuarterWeight x / (x ^ 2 + a ^ 2)) =
+              ∑' n : ℕ, ENNReal.ofReal (P n x)
           rw [← hs.tsum_eq]
           exact ENNReal.ofReal_tsum_of_nonneg (fun n => hPpos n x) hs.summable
       _ = ∑' n : ℕ, ∫⁻ x : ℝ, ENNReal.ofReal (P n x) :=
@@ -426,7 +428,7 @@ theorem actual_digamma_quarter_resolvent_l1_domain_and_series (a : ℝ) (ha : 0 
         (Eventually.of_forall fun x => Real.norm_of_nonneg (hqpos x))
       _ = _ := hRealInt
   · intro x
-    simpa only [gammaResidualIncrement, gammaResidualQuarterWeight] using
-      gamma_residual_quarter_hasSum x
+    change HasSum (gammaResidualIncrement x) (gammaResidualQuarterWeight x)
+    exact gamma_residual_quarter_hasSum x
 
 end D5.S3.Weil.ZetaGamma.FormCore.ActualGammaResidualL1
