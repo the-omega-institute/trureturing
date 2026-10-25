@@ -194,7 +194,7 @@ def binarySourceRegistration : Registration binaryArena
       decodeJoint 2 (encodeJoint 2 (fun _ => (⟨1, 0, 0⟩ : Axis))) at hd
     rw [(finite_binary_execution 2 (fun _ => 0) 0 _).2.1,
       (finite_binary_execution 2 (fun _ => 0) 0 _).2.1] at hd
-    have hx := congrArg (fun a => (a ⟨2, by decide⟩).level) hd
+    have hx := congrArg (fun a => (a ⟨2, Nat.prime_two.mem_primeFactors_self⟩).level) hd
     change 0 = 1 at hx
     omega
 
