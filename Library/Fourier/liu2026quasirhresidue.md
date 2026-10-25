@@ -583,7 +583,7 @@ $$
 E_T&=\frac1{(2\pi)^4}
  \int_{\mathbb R^4\setminus[-T,T]^4}
  G_A(c+it_1,\ldots,c+it_4)\,d\mathbf t,\\
-|E_T|&\ll_{N,c,K,S,W} A^{4c}(1+T)^{-N}qquad(A\ge1)
+|E_T|&\ll_{N,c,K,S,W} A^{4c}(1+T)^{-N}\qquad(A\ge1)
  \quad\text{for each fixed }N.
 \end{aligned}
 \tag{R18}
