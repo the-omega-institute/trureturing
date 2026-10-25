@@ -159,7 +159,10 @@ def sweep(source, dev, force=False):
             acquire(stack, source, "operation:idle-pool", True)
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
-        sweep_failure(receipt, dict(path=str(source), branch=None, head=dev), "pool_scope", error)
+        receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
+                                  outcome="refused" if isinstance(error, Refused) else "failed",
+                                  error=str(error), error_type=type(error).__name__)
+        receipt["status"] = "failed"
     return receipt
 
 

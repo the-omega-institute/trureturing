@@ -59,7 +59,7 @@ def exercise(source, cli, root, mode, ambient):
     git("config", "user.email", "scopes@example.invalid")
     shutil.copyfile(source / "global.json", main / "global.json")
     (main / "lean-toolchain").write_text("leanprover/lean4:v4.34.1\n")
-    (main / "lake-manifest.json").write_text('{"packages":[]}\n')
+    shutil.copyfile(source / "lake-manifest.json", main / "lake-manifest.json")
     (main / ".gitignore").write_text("**/obj/\n**/bin/\n*.policy\n")
     (main / "NuGet.Config").write_text("<configuration><packageSources><clear /></packageSources></configuration>")
     tools = main / "tools"
@@ -85,7 +85,7 @@ def exercise(source, cli, root, mode, ambient):
                   for _, identifier in projects for suffix in ("ActiveCfg", "Build.0"))
         + "EndGlobalSection\nEndGlobal\n")
     (main / "Directory.Build.targets").write_text(
-        '<Project><Target Name="ObserveScopedProcess" AfterTargets="Restore;CoreCompile">'
+        '<Project><Target Name="ObserveScopedProcess" AfterTargets="Restore;_GenerateRestoreGraphProjectEntry;CoreCompile">'
         '<WriteLinesToFile File="$(MSBuildProjectDirectory)/$(MSBuildProjectName).policy" Overwrite="true" '
         'Lines="$(MSBUILDDISABLENODEREUSE);$(DOTNET_CLI_USE_MSBUILD_SERVER);$(UseSharedCompilation)" />'
         '</Target></Project>')

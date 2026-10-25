@@ -27,18 +27,23 @@ internal static class WorktreeProtocolCommand
 
     internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root)
     {
-        // Use the protocol's inherited-environment policy without exporting environment values.
+        // Export ambient names and generated policy values only; ambient values stay local.
         var result = new ProductionWorktreeProcessRunner().Run("python3",
             ["-IB", "-c", Program.Value
-                + "import json\nprint(json.dumps(list(sys.modules['worktree_protocol'].inherited_environment())))\n"],
+                + "import json\np = sys.modules['worktree_protocol']\n"
+                + "print(json.dumps(dict(Inherited=list(p.inherited_environment()), Scoped=p.scoped_process_environment())))\n"],
             root, BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode != 0)
             throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
-        var names = JsonSerializer.Deserialize<string[]>(result.StandardOutput)
-            ?? throw new InvalidOperationException("worktree environment policy returned no names");
-        return names.Where(name => Environment.GetEnvironmentVariable(name) is not null)
+        var policy = JsonSerializer.Deserialize<InitializationPolicy>(result.StandardOutput)
+            ?? throw new InvalidOperationException("worktree environment policy is absent");
+        var environment = policy.Inherited.Where(name => Environment.GetEnvironmentVariable(name) is not null)
             .ToDictionary(name => name, name => Environment.GetEnvironmentVariable(name)!);
+        foreach (var (name, value) in policy.Scoped) environment[name] = value;
+        return environment;
     }
+
+    private sealed record InitializationPolicy(string[] Inherited, Dictionary<string, string> Scoped);
 
     private static string LoadProgram()
     {

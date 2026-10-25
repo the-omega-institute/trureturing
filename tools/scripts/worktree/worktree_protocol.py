@@ -28,6 +28,9 @@ GIT_TERMINATION_GRACE_SECONDS = 30
 # An empty core.fsmonitor disables it both where Git reads a boolean and where
 # older Git reads a hook path; "false" would name a hook program there.
 SCOPED_GIT_CONFIG = (("core.fsmonitor", ""), ("maintenance.auto", "false"), ("gc.auto", "0"))
+SCOPED_PROCESS_ENVIRONMENT = {"MSBUILDDISABLENODEREUSE": "1",
+                              "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
+                              "UseSharedCompilation": "false"}
 
 
 def scope_fds():
@@ -65,16 +68,21 @@ def inherited_environment():
             if not key.startswith("GIT_") or key in permitted}
 
 
-def git_environment(overrides=None):
-    environment = inherited_environment()
-    # A builtin fsmonitor daemon or detached automatic maintenance outlives the
-    # command that starts it and inherits open scope descriptors, so it would
-    # hold the scope after the job ends.
+def scoped_process_environment():
+    # Background Git and .NET servers would retain inherited scope descriptors
+    # after the foreground command returns. Active descendants keep inheriting.
+    environment = dict(SCOPED_PROCESS_ENVIRONMENT)
     for index, (key, setting) in enumerate(SCOPED_GIT_CONFIG):
         environment[f"GIT_CONFIG_KEY_{index}"] = key
         environment[f"GIT_CONFIG_VALUE_{index}"] = setting
     environment["GIT_CONFIG_COUNT"] = str(len(SCOPED_GIT_CONFIG))
+    return environment
+
+
+def git_environment(overrides=None):
+    environment = inherited_environment()
     environment.update(overrides or {})
+    environment.update(scoped_process_environment())
     return environment
 
 
