@@ -43,13 +43,15 @@ At $a=1$, the lower-right power is $x^0=1$, so the block is positive semidefinit
 
 ## Route
 
-The proof uses a finite singular-value decomposition $A=VDW^*$ with nonnegative diagonal $D$. It transports the block by unitary coordinates to diagonal powers and a unitary conjugate. The Schur-complement calculation gives a positive-semidefinite difference whose trace is zero, hence the difference vanishes. Injectivity of the positive real power forces the conjugating unitary to commute with $D$, which is equivalent to normality. The converse writes the balanced diagonal block as a Gram matrix. The endpoint uses the Gram identity for $[A,I]$ and a fixed nonnormal matrix.
+The proof uses a finite singular-value decomposition $A=VDW^*$ with nonnegative diagonal $D$. It transports the block by unitary coordinates to diagonal powers and a unitary conjugate. A block congruence, without an invertible Schur-complement assumption, gives a positive-semidefinite difference whose trace is zero, hence the difference vanishes. Injectivity of the positive real power forces the conjugating unitary to commute with $D$, which is equivalent to normality. The converse writes the balanced diagonal block as a Gram matrix. The endpoint uses the Gram identity for $[A,I]$ and a fixed nonnormal matrix.
 
 ## Falsifier
 
 The refutation would fail if result did not prove the negation of the full closed-interval claim, or if the strict-interval application failed to establish both directions with singular matrices, the half endpoint and dimension zero included. The exact temporary application must compile from canonical suppliers and local calculations without importing any removed positive helper; until then its bridge is unverified/open. Checkpoints do not certify mathematics.
 
 ## Evidence
+
+Current verification boundary: the revised endpoint imports and complete positive application require a successful current scoped check. The existing state pins and a local checkpoint do not certify this revision. The full Renyi equality remains in scope and also requires the current report; no interrupted or mismatched prior report is evidence for it.
 
 The retained Lean refutation and the distinct application are:
 
@@ -58,7 +60,7 @@ The retained Lean refutation and the distinct application are:
 
 The public result is the designated refutation result (basis=refutes) and is exempt from four-slot escape registration (CLAUDE.md §3.9). The public canonical CFC supplier's dependent/pointwise arena, exact source reconstruction, whole-family intervention and sensitivity audit remains unfinished under issue #19914; removing a positive application declaration does not settle that historical audit. No declared_validated registration is claimed.
 
-Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6ab79d8383aa17c8910f07, https://github.com/the-omega-institute/trureturing-experiments/tree/03fcc97da76c2b464b6ab79d8383aa17c8910f07/docs/reports/zhang-jing-2025-theorem-2-3-power-case. Command: python3 check.py; exit 0; script SHA-256 fd68b9499f5e398726827824c3abee5776b1ce07c86a7f7eaae01ed59b8a0b3d. The checked scope is $a\in\{0.5,0.55,0.6,0.75,0.9,0.99\}$, $n\in\{2,3,4\}$, ranks $n,n-1,1$, 1350 random normal/nonnormal pairs, the singular $a=3/4$ example, and the endpoint Gram witness. These computations support the formal result; they do not establish a uniform theorem.
+Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6ab79d8383aa17c8910f07, https://github.com/the-omega-institute/trureturing-experiments/tree/03fcc97da76c2b464b6ab79d8383aa17c8910f07/docs/reports/zhang-jing-2025-theorem-2-3-power-case. Command: python3 check.py; exit 0; script SHA-256 fd68b9499f5e398726827824c3abee5776b1ce07c86a7f7eaae01ed59b8a0b3d. The checked scope is $a\in\{0.5,0.55,0.6,0.75,0.9,0.99\}$, $n\in\{2,3,4\}$, ranks $n,n-1,1$, 1350 random normal/nonnormal pairs, the singular $a=3/4$ example, and the endpoint Gram witness. These recorded computations support the application and endpoint witness; they do not establish a uniform theorem and were not rerun here.
 
 ## Triage
 
@@ -79,7 +81,7 @@ Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6
 
 | Target item | Dossier evidence | Status | Evidence kind |
 | --- | --- | --- | --- |
-| Refuted at $a=1$; proved for $1/2\le a<1$, singular matrices included | What the settlement shows, first two rows | proved | retained result plus complete supplier application; exact application compilation unverified/open |
+| Refuted at $a=1$; derived application for $1/2\le a<1$, singular matrices included | What the settlement shows, first two rows | retained refutation; application unverified/open | retained result plus complete supplier application; exact application compilation unverified/open |
 | Together with published Theorem 2.3 for $0\le a\le1/2$, equivalence throughout $0\le a<1$ | What the settlement shows, whole-source row | derived upper-half application, exact compilation unverified/open; literature reading for the lower half | canonical-supplier application plus source reading |
 | $g(x)=x^{2(1-a)}$ injective for $a<1$ and constant at $a=1$ | What the settlement shows, correction row | proved | proof mechanism in the delivered argument and source correction |
 | Infinite-dimensional operators | What the settlement shows, open row | open | scope boundary |
