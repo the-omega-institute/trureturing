@@ -63,7 +63,16 @@ private lemma witness_bounds : ∀ᵐ x ∂witness, (1 : ℝ) ≤ x ∧ x ≤ 3 
 
 private lemma integral_witness (f : ℝ → ℝ) :
     (∫ x, f x ∂witness) = f 1 / 4 + f 2 / 2 + f 3 / 4 := by
-  sorry
+  have h1 : Integrable f ((1 / 4 : ℝ≥0∞) • Measure.dirac (1 : ℝ)) :=
+    (integrable_dirac (by simp)).smul_measure (by finiteness)
+  have h2 : Integrable f ((1 / 2 : ℝ≥0∞) • Measure.dirac (2 : ℝ)) :=
+    (integrable_dirac (by simp)).smul_measure (by finiteness)
+  have h3 : Integrable f ((1 / 4 : ℝ≥0∞) • Measure.dirac (3 : ℝ)) :=
+    (integrable_dirac (by simp)).smul_measure (by finiteness)
+  rw [witness, integral_add_measure (h1.add_measure h2) h3,
+    integral_add_measure h1 h2]
+  norm_num [integral_smul_measure, integral_dirac, smul_eq_mul]
+  ring
 
 private lemma mean_witness : mean witness = 2 := by
   sorry
