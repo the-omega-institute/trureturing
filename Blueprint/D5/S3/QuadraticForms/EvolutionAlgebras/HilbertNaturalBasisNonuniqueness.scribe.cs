@@ -45,7 +45,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
     private static Formula PositiveBound => All("v", A, Some("M", R,
         And(Rel(D(0), FormulaRelationOperator.LessThan, X("M")), All("w", A,
             Rel(Norm(App(M, X("v"), X("w"))), FormulaRelationOperator.LessThanOrEqual,
-                Mul(X("M"), Norm(X("w")))))));
+                Mul(X("M"), Norm(X("w"))))))));
     private static Formula Natural(Formula basis) => All("i", P, All("j", P,
         Imp(Rel(X("i"), FormulaRelationOperator.NotEqual, X("j")),
             Equal(App(M, App(basis, X("i")), App(basis, X("j"))), D(0)))));
@@ -64,7 +64,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
         Imp(Call("CompleteSpace", A), Imp(Call("SeparableSpace", A),
             All("m", Bilinear(k, A), All("a", Basis(k, A), All("b", Basis(k, A),
                 Imp(PositiveBound, Imp(Natural(X("a")), Imp(Natural(X("b")),
-                    Imp(DenseSquare(k), Identification(k))))))))))));
+                    Imp(DenseSquare(k), Identification(k)))))))))))));
     private static Formula WholeClaim => And(Full(R), Full(C));
     private static DocumentBlock.Describe Desc(string name, string title, Formula formula, string text,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
