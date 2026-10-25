@@ -43,6 +43,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                     ResolutionKind.Refuted)))));
 
     private static Formula V(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula R => Seq(Mathbb, Sp, Grp(V("R")));
     private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
     private static Formula All(string name, Formula type, Formula body) =>
@@ -74,7 +75,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         var k = V("k");
         var exponent = Add(Mul(D(2), k), V("nu"));
         var summand = new Formula.Fraction(
-            new Formula.Power(new Formula.Fraction(V("z"), D(2)), exponent),
+            new Formula.Power(Parenthesized(new Formula.Fraction(V("z"), D(2))), exponent),
             Mul(Call("Nat.factorial", k), Call("Real.Gamma", Add(Add(k, V("nu")), D(1)))));
         var sum = Seq(new Formula.Subscript(Seq(Sum, Sp, Apos), Seq(k, Colon, Sp, N)), Sp, summand);
         return All("nu", R, All("z", R, Eqn(Call("besselI", V("nu"), V("z")), sum)));
