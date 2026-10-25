@@ -266,7 +266,7 @@ def oscillationLaw (R : DependentFamily.Realization oscillationSignature) : Prop
     (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
     (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
     ∃ Z : Set K, IsClopen Z ∧
-      {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite),
+      {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite)
     (F : ℕ → StrongDual ℝ C(K, ℝ)) (FInf : StrongDual ℝ C(K, ℝ))
     (hF : ∀ g : C(K, ℝ), Tendsto (fun n => F n g) atTop (𝓝 (FInf g))) ,
     ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
