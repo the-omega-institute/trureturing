@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae8f6da8c4f47fc2ac231977055afee7dce6c891282e04b268a1a097de7c5864
+  normalized_sha256: sha256:ae8f6da8c4f47fc2ac231977055afee7dce6c891282e04b268a1a097de7c5864
+cas_ref: sha256:ae8f6da8c4f47fc2ac231977055afee7dce6c891282e04b268a1a097de7c5864
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 主体角色清单将 FLOW 对应于可执行行动，没有断言某行动的可达性或可执行性。
+    previous_atom_id: 5d960afb7c77d1b5216549295871d0cac22b9afe1fc9d5d36fab3cdffd4bda05
+    next_atom_id: 8f29df3024df799e6b9637b998e8a9eebe189c53243fce5ec0f25ac513282421
