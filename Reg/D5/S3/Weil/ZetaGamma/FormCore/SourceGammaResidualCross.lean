@@ -213,7 +213,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceGammaResidualCross
     definition := none
@@ -326,7 +326,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceGammaResidualCross
     definition := none
