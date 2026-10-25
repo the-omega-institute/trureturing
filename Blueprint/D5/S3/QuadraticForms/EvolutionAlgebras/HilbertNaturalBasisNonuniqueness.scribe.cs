@@ -55,7 +55,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
     private static Formula DenseSquare(Formula k) =>
         Equal(App(Q("Submodule", "topologicalClosure"), Square(k)), Q("Top", "top"));
     private static Formula Identification(Formula k) =>
-        Some("sigma", App(Q("Equiv", "Perm"), P), Some("c", Seq(P, To, k),
+        Some("sigma", App(Q("Equiv", "Perm"), P), Some("c", Seq(P, Sp, To, Sp, k),
             And(All("i", P, Equal(Norm(App(X("c"), X("i"))), D(1))),
                 All("i", P, Equal(App(X("b"), X("i")),
                     Smul(App(X("c"), X("i")), App(X("a"), App(X("sigma"), X("i")))))))));
@@ -69,11 +69,11 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
         body = All("b", Basis(k, A), body);
         body = All("a", Basis(k, A), body);
         body = All("m", Bilinear(k, A), body);
-        body = All("separable", Call("SeparableSpace", A), body);
-        body = All("complete", Call("CompleteSpace", A), body);
-        body = All("inner", Call("InnerProductSpace", k, A), body);
-        body = All("normed", Call("NormedAddCommGroup", A), body);
-        return All("A", X("Type"), body);
+        return All("A", X("Type"), Seq(
+            OpenBracket, Call("NormedAddCommGroup", A), CloseBracket, Sp,
+            OpenBracket, Call("InnerProductSpace", k, A), CloseBracket, Sp,
+            OpenBracket, Call("CompleteSpace", A), CloseBracket, Sp,
+            OpenBracket, Call("SeparableSpace", A), CloseBracket, Comma, Sp, body));
     }
     private static Formula WholeClaim => And(Full(R), Full(C));
     private static DocumentBlock.Describe Desc(string name, string title, Formula formula, string text,
@@ -121,14 +121,15 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                     + "Since e(1)^2=e(2)^2, the two mixed terms cancel and f is natural for the same multiplication. The equal-square rotation method occurs in Examples 3.6-3.7 of Hilbert evolution algebras, weighted digraphs, and nilpotency.",
                     AssessedProvenance.FromRepo(Rotation)),
                 Desc("uniqueness", "The scalar-specific universal assertion",
-                    All("k", X("Type"), All("scalar", Call("RCLike", X("k")),
-                        Iff(Call("uniqueness", X("k")), Full(X("k"))))),
+                    All("k", X("Type"), Seq(OpenBracket, Call("RCLike", X("k")), CloseBracket,
+                        Comma, Sp, Iff(Call("uniqueness", X("k")), Full(X("k"))))),
                     "All complete separable Hilbert spaces over k, all bilinear products with the stated positive left bounds, and both complete natural orthonormal bases are quantified. A dense square is the only extra premise. "
-                    + "The conclusion allows every permutation of the positive integers and every scalar family of norm one. The bound variables normed, inner, complete and separable denote the corresponding chosen Lean structures or instances. RCLike supplies the real and complex specializations used in claim.",
+                    + "The conclusion allows every permutation of the positive integers and every scalar family of norm one. The bracketed assumptions denote the corresponding chosen Lean structures or instances. RCLike supplies the real and complex specializations used in claim.",
                     AssessedProvenance.FromLiterature(Survey)),
                 Desc("claim", "The entire real-or-complex source assertion",
                     Iff(X("claim"), WholeClaim),
-                    "The real universal assertion and the complex universal assertion are both required. Their conjunction faithfully states the first interrogative under the complete Hilbert-space convention. The complex assertion alone is a consequence of this conjunction; they are not asserted equivalent.",
+                    "Question 46, page 26: If the square of a Hilbert evolution algebra is dense, is its natural orthonormal basis unique up to permutation and unimodular scalars? "
+                    + "The real universal assertion and the complex universal assertion are both required. Their conjunction faithfully states the first interrogative under the complete Hilbert-space convention. The complex assertion alone is a consequence of this conjunction; they are not asserted equivalent.",
                     AssessedProvenance.FromLiterature(Survey)),
                 Desc("result", "Refutation by the complex Hilbert example", new Formula.Not(WholeClaim),
                     "Apply the complex universal assertion to H, mu, e and f. Every standard vector e(i) is the product mu(e(i+1),e(i+1)), so the algebraic product span contains the standard span and its norm closure is H. "

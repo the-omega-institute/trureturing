@@ -39,7 +39,7 @@ and the actual block-action kernel.
 
 ## Hilbert natural-basis uniqueness
 
-Section 2.2.8, Question 46 asks: "If the square of a Hilbert evolution algebra
+Section 2.2.8, Question 46, page 26 asks: "If the square of a Hilbert evolution algebra
 is dense, is its natural orthonormal basis unique up to permutation and
 unimodular scalars?" Section 1.8 and the cited Hilbert evolution algebra
 framework allow real or complex scalars, complete orthonormal natural bases,
