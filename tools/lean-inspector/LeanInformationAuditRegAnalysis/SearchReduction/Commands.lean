@@ -793,6 +793,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
   match stx with
   | `(#search_reduction $target:ident at $sha:str baseline [$bs:ident,*] using [$ss:ident,*]
       $[information $app:ident]? as $name:ident) =>
+    profilePhase "request/command-start"
     let source ← getEnv
     let fixture := source.header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction."
     for module in bs.getElems do
@@ -829,6 +830,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let output := directory / (moduleName ++ ".olean")
     let imports := "import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n"
     let payload := directory / "request.olean"
+    profilePhase "request/payload-start"
     writeRequest payload {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
       additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
@@ -836,13 +838,16 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       certificates := ← submittedCertificates.get,
       edgeCertificates := ← submittedEdgeCertificates.get} modules name.getId
       fixture
+    profilePhase "request/payload-end"
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|
       ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 8
+    profilePhase "request/child-start"
     let child ← IO.Process.output {
       cmd := "lean", args := #[s!"-j{workers}", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}
+    profilePhase "request/child-end"
     if child.exitCode == 75 then IO.Process.exit 75
     if child.exitCode != 0 then
       unless fixture do
@@ -861,7 +866,9 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     unless child.stderr.isEmpty do logInfo child.stderr
     let (projected, region) ← readModuleData output
     probeRegions.modify (·.push region)
+    profilePhase "request/replay-publication-start"
     liftTermElabM <| replayPublication projected.constants target.getId name.getId
+    profilePhase "request/replay-publication-end"
   | _ => throwUnsupportedSyntax
 
 syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : command

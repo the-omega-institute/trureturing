@@ -1,9 +1,11 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
+import Batteries.Tactic.OpenPrivate
 
 /-! A cache carries ordinary declarations, replayed through the Lean kernel.
 No source environment or its extension state is imported on the hot path. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
+open private Lean.Environment.setCheckedSync from Lean.Environment
 
 private structure DependencyState where
   seen : NameSet := {}
@@ -13,7 +15,7 @@ private structure DependencyState where
 private partial def captureDependency (source base : Environment) (target n : Name) :
     StateT DependencyState (Except String) Unit := do
   if n == target then throw s!"search.target_in_cache_dependency:{n}"
-  if base.contains n || (← get).seen.contains n then return
+  if (base.toKernelEnv.find? n).isSome || (← get).seen.contains n then return
   if (← get).visiting.contains n then throw s!"search.cache_dependency_cycle:{n}"
   let some info := (source.setExporting false).find? n
     | throw s!"search.missing_cache_dependency:{n}"
@@ -65,10 +67,17 @@ def captureCacheDependencies (source base : Environment) (target : Name)
 /-- Cached dependency bodies have the same status as certificates: every
 declaration crosses the kernel in this run, with no added axioms. -/
 def replayCacheDependencies (declarations : Array Declaration) : MetaM Unit := do
+  -- Imported private auxiliaries can share a user name with a public
+  -- declaration. The elaborator's async name trie rejects that pair, although
+  -- the kernel distinguishes their full names. Replay synchronously in the
+  -- kernel map, then expose that checked map to certificate publication.
+  let mut checked := (← getEnv).toKernelEnv
   for declaration in declarations do
-    if declaration.getNames.all (← getEnv).contains then continue
+    if declaration.getNames.all (fun n => (checked.find? n).isSome) then continue
     if let .axiomDecl _ := declaration then throwError "search.cache_new_axiom_forbidden"
-    addDecl declaration
+    checked ← ofExceptKernelException <|
+      checked.addDeclCore 0 0 declaration (cancelTk? := none)
+  modifyEnv (·.setCheckedSync checked)
   emitLookupRecord s!"PROBE_CACHE_KERNEL_DEPENDENCIES count={declarations.size}"
 
 end LeanInformationAudit.SearchReduction
