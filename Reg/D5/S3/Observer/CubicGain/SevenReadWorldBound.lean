@@ -80,7 +80,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(),(false,probeWorld 0),(false,probeWorld 1),?_⟩
   intro h
   have h0 := congrFun h 0
-  norm_num [actual,realize,sevenRead,probeWorld] at h0
+  norm_num [actual,realize,sevenRead,probeWorld,sevenProduct,originalPolynomial,
+    Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,sourceMatrix,Matrix.trace,
+    Fin.sum_univ_two] at h0
 
 def bound_source_registration : Registration arenaBound (type_of% @seven_read_world_bound) where
   actual := actual
