@@ -164,10 +164,7 @@ private lemma upper_bound (μ : Measure ℝ) [IsProbabilityMeasure μ]
       hneg.aemeasurable).mpr
     simpa only [Function.comp_def, abs_neg] using h
   have hm : mean ν = -mean μ := by
-    unfold mean
-    change (∫ x : ℝ, x ∂μ.map (fun x : ℝ => -x)) = -∫ x : ℝ, x ∂μ
-    rw [integral_map (f := fun x : ℝ => x) hneg.aemeasurable (by fun_prop)]
-    exact integral_neg (fun x : ℝ => x)
+    exact (ContinuousLinearEquiv.neg ℝ).integral_id_map
   have hc (k : ℕ) : centralMoment id k ν = (-1 : ℝ) ^ k * centralMoment id k μ := by
     unfold centralMoment
     change (∫ x : ℝ, (x - mean ν) ^ k ∂μ.map (fun x : ℝ => -x)) =
