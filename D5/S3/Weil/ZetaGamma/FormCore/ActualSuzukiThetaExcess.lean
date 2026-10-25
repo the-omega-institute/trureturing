@@ -11,6 +11,7 @@ import Mathlib.MeasureTheory.Function.LpSpace.InfiniteSum
 import Mathlib.MeasureTheory.Function.LpSpace.Complete
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -89,7 +90,10 @@ private theorem h6_thetaExcess_memLp (b : ℝ) (hb : b ≤ 1)
   have hsq := (memLp_two_iff_integrable_sq_norm hF.1.aestronglyMeasurable).1 hF.1
   have hd : Integrable (fun x : ℝ => thetaExcessDensity b x * ‖F x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := by
-    simpa only [thetaExcessDensity, sub_mul] using hF.2.sub (hsq.const_mul b)
+    convert hF.2.sub (hsq.const_mul b) using 1
+    funext x
+    dsimp [thetaExcessDensity]
+    ring
   apply (memLp_two_iff_integrable_sq_norm
     (hF.1.aestronglyMeasurable.mono_ac
       (withDensity_absolutelyContinuous _ _))).2
@@ -107,16 +111,17 @@ private theorem physicalTerm_aestronglyMeasurable
   have hc : AEStronglyMeasurable (fun x : ℝ => G (a ^ 2 * x)) volume := by
     simpa only [smul_eq_mul, Function.comp_def] using
       hG.aestronglyMeasurable.comp_quasiMeasurePreserving
-        (quasiMeasurePreserving_smul volume (pow_ne_zero 2 ha0.ne'))
+        (Measure.quasiMeasurePreserving_smul volume (pow_ne_zero 2 ha0.ne'))
   have heq : (fun x : ℝ => G (a ^ 2 * x)) =ᵐ[volume.restrict (Ioi Real.pi)]
       (fun x : ℝ => F (a ^ 2 * x)) := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
     have hx0 : 0 < x := Real.pi_pos.trans hx
     have ha2 : 1 ≤ a ^ 2 := one_le_pow₀ ha
-    have hax : Real.pi < a ^ 2 * x := by nlinarith
+    have hax : Real.pi < a ^ 2 * x :=
+      hx.trans_le (le_mul_of_one_le_left hx0.le ha2)
     exact Set.indicator_of_mem hax F
   have hfc := hc.restrict.congr heq
-  simpa only [physicalTerm, a] using hfc.const_mul (((j + 1 : ℕ) : ℂ) ^ (4 : ℕ))
+  convert hfc.const_mul (((j + 1 : ℕ) : ℂ) ^ (4 : ℕ)) using 1
 
 private theorem physicalTerm_norm_sq (F : ℝ → ℂ) (j : ℕ) (x : ℝ) :
     ‖physicalTerm F j x‖ ^ 2 =
@@ -136,7 +141,7 @@ private theorem physicalTerm_h6
     nlinarith [one_le_pow₀ (n := 2) ha, Real.pi_pos]
   let h : ℝ → ℝ := fun x => (x / Real.pi) ^ (6 : ℕ) * ‖F x‖ ^ 2
   have htail : IntegrableOn h (Ioi (a ^ 2 * Real.pi)) :=
-    hF.2.mono_set (Ioi_subset_Ioi hpi)
+    IntegrableOn.mono_set hF.2 (Ioi_subset_Ioi hpi)
   have hcomp : IntegrableOn (fun x : ℝ => h (a ^ 2 * x)) (Ioi Real.pi) :=
     (integrableOn_Ioi_comp_mul_left_iff h Real.pi ha2).2 htail
   have hmoment : Integrable
@@ -155,7 +160,7 @@ private theorem physicalTerm_h6
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
     rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
     have hxp : 1 ≤ x / Real.pi :=
-      (le_div_iff₀ Real.pi_pos).2 (by linarith [hx])
+      (le_div_iff₀ Real.pi_pos).2 (by simpa only [one_mul] using hx.le)
     exact le_mul_of_one_le_left (sq_nonneg _) (one_le_pow₀ hxp)
   exact ⟨(memLp_two_iff_integrable_sq_norm hmeas).2 hsq, hmoment⟩
 
@@ -177,7 +182,7 @@ private theorem physicalTerm_excess_mass_le
         (h6_thetaExcess_memLp b hb1 F hF).aestronglyMeasurable).1
           (h6_thetaExcess_memLp b hb1 F hF))
   have htail : IntegrableOn h (Ioi (a ^ 2 * Real.pi)) :=
-    hi.mono_set (Ioi_subset_Ioi hpi)
+    IntegrableOn.mono_set hi (Ioi_subset_Ioi hpi)
   have hcomp : IntegrableOn (fun x : ℝ => h (a ^ 2 * x)) (Ioi Real.pi) :=
     (integrableOn_Ioi_comp_mul_left_iff h Real.pi ha2).2 htail
   have himode : Integrable
@@ -229,8 +234,7 @@ private theorem physicalTerm_excess_mass_le
 private theorem thetaModeCoefficient_summable : Summable thetaModeCoefficient := by
   have h : Summable (fun n : ℕ => ((n : ℝ) ^ (3 : ℕ))⁻¹) :=
     (Real.summable_nat_pow_inv (p := 3)).2 (by norm_num)
-  simpa only [thetaModeCoefficient] using
-    (summable_nat_add_iff (f := fun n : ℕ => ((n : ℝ) ^ (3 : ℕ))⁻¹) 1).2 h
+  exact (summable_nat_add_iff (f := fun n : ℕ => ((n : ℝ) ^ (3 : ℕ))⁻¹) 1).2 h
 
 private theorem actual_fullTheta_excess_memLp_norm
     (b : ℝ) (hb0 : 0 ≤ b) (hb1 : b ≤ 1)
@@ -248,7 +252,8 @@ private theorem actual_fullTheta_excess_memLp_norm
       thetaExcess_mass_eq_sq_norm b hb1 F (h6_thetaExcess_memLp b hb1 F hF)] at hm
     have hc : 0 ≤ thetaModeCoefficient j := by unfold thetaModeCoefficient; positivity
     change ‖fj j‖ ^ 2 ≤ thetaModeCoefficient j ^ 2 * ‖f0‖ ^ 2 at hm
-    nlinarith [norm_nonneg (fj j), norm_nonneg f0]
+    rw [← mul_pow] at hm
+    exact (sq_le_sq₀ (norm_nonneg _) (mul_nonneg hc (norm_nonneg _))).1 hm
   have hnormsum : Summable (fun j : ℕ => ‖fj j‖) :=
     Summable.of_nonneg_of_le (fun _ => norm_nonneg _) hnorm
       (thetaModeCoefficient_summable.mul_right ‖f0‖)
@@ -298,11 +303,11 @@ theorem actual_h6_fullTheta_excess_bound
         (fun x => ENNReal.ofReal (thetaExcessDensity 0 x)) := by
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
       have hxpi : 1 ≤ x / Real.pi :=
-        (le_div_iff₀ Real.pi_pos).2 (by linarith [hx])
+        (le_div_iff₀ Real.pi_pos).2 (by simpa only [one_mul] using hx.le)
       have hxpow : 1 ≤ (x / Real.pi) ^ (6 : ℕ) := one_le_pow₀ hxpi
       simpa only [thetaExcessDensity, sub_zero, ENNReal.ofReal_one] using
         ENNReal.ofReal_le_ofReal hxpow
-    simpa only [thetaExcessMeasure, withDensity_one] using withDensity_mono hden
+    exact withDensity_one.symm.trans_le (withDensity_mono hden)
   have hUoriginal : originalPhysicalH6 (fullTheta F) := by
     refine ⟨hU0.mono_measure hmeasure, ?_⟩
     simpa only [thetaExcessDensity, sub_zero] using
@@ -335,7 +340,8 @@ theorem actual_h6_physicalTerm_summable_ae
         (h6_thetaExcess_memLp 0 (by norm_num) F hF)] at hm
     have hc : 0 ≤ thetaModeCoefficient j := by unfold thetaModeCoefficient; positivity
     change ‖fj j‖ ^ 2 ≤ thetaModeCoefficient j ^ 2 * ‖f0‖ ^ 2 at hm
-    nlinarith [norm_nonneg (fj j), norm_nonneg f0]
+    rw [← mul_pow] at hm
+    exact (sq_le_sq₀ (norm_nonneg _) (mul_nonneg hc (norm_nonneg _))).1 hm
   have hnormsum : Summable (fun j : ℕ => ‖fj j‖) :=
     Summable.of_nonneg_of_le (fun _ => norm_nonneg _) hnorm
       (thetaModeCoefficient_summable.mul_right ‖f0‖)
@@ -354,7 +360,9 @@ theorem actual_h6_physicalTerm_summable_ae
       ENNReal.ofReal (thetaExcessDensity 0 x) ≠ 0 := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
     have hx0 : 0 < x := Real.pi_pos.trans hx
-    exact (ENNReal.ofReal_pos.mpr (by dsimp [thetaExcessDensity]; positivity)).ne'
+    exact (ENNReal.ofReal_pos.mpr (by
+      dsimp [thetaExcessDensity]
+      exact sub_pos.mpr (pow_pos (div_pos hx0 Real.pi_pos) 6))).ne'
   have hac : volume.restrict (Ioi Real.pi) ≪ thetaExcessMeasure 0 :=
     withDensity_absolutelyContinuous'
       (thetaExcessDensity_continuous 0).measurable.ennreal_ofReal.aemeasurable hden
