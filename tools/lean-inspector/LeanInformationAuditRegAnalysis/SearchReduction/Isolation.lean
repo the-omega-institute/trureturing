@@ -518,17 +518,19 @@ unsafe def run (source : Environment) (request : Request)
       pure (base, state)
     profilePhase "query/base-import-end"
     let catalog ← baselineCatalog request.baselineCommit delivery base
-    let disk? ← try
-      if fixture then
+    let disk? ← if fixture then
+      try
         pure (some (← DiskLookup.openFixtureIndex
           s!"build/lean-inspector/search-reduction-test-index/{request.baselineCommit}"
           request.baselineCommit mathlibRevision catalog.excluded))
-      else
+      catch _ => pure none
+      else do
         let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
           s!"build/lean-inspector/lookup-index/{request.baselineCommit}"
-        pure (some (← DiskLookup.openIndex directory
-          request.baselineCommit mathlibRevision catalog.excluded))
-      catch _ => pure none
+        try
+          pure (some (← DiskLookup.openIndex directory
+            request.baselineCommit mathlibRevision catalog.excluded))
+        catch ex => throw <| IO.userError s!"search.production_index_open_failed:{directory}:{ex}"
     let result ← runCore source base request disk?.isSome disk? (some baseImports) (some ancestors)
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
@@ -539,6 +541,7 @@ unsafe def run (source : Environment) (request : Request)
       catalogExcluded := catalog.excluded, scope := "B_T",
       catalogVerified := true, pairedStructureUse := used}
   catch ex =>
+    unless fixture do throw ex
     return {
       target := request.target, verdict := .insufficient, base := .incomplete .isolation,
       paired := .incomplete .isolation, presentation := .incomplete .isolation,

@@ -212,6 +212,10 @@ search-reduction-test: search-reduction-index-fixtures
 	@env -u SEARCH_REDUCTION_INDEX /bin/bash tools/scripts/search-reduction-runner.sh test
 search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 
+.PHONY: search-reduction-index-failure-test
+search-reduction-index-failure-test:
+	@/bin/bash tools/scripts/search-reduction-runner.sh index-failure-test
+
 # Reexecute every probe and guard even when the compiled fixtures are current.
 search-reduction-replay-test:
 	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.Candidates LeanInformationAuditRegTests.SearchReduction.VocabularyCandidates LeanInformationAuditRegTests.SearchReduction.GraphCandidates D5.S0.Tower.NonPisotVerdict.SubstitutionTowerClause D5.S3.ConceptDynamics.Epistemic.RobustKnowledgeFactivity" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/GraphCalibration.lean && $(MAKE) -j1 search-reduction-replay-calibration search-reduction-replay-faults search-reduction-replay-real-negative search-reduction-replay-vocabulary

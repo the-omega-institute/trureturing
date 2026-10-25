@@ -88,7 +88,25 @@ structure Header where
   declarations : Nat
   indexed : Nat
   missing : Array String
-  deriving ToJson, FromJson, Inhabited
+  deriving ToJson, Inhabited
+
+instance : FromJson Header where
+  fromJson? json := do
+    let scope ← if (← json.getObj?).contains "scope" then json.getObjValAs? String "scope"
+      else pure ""
+    return {
+      format := ← json.getObjValAs? String "format", scope,
+      basis := ← json.getObjValAs? String "basis",
+      mathlib := ← json.getObjValAs? String "mathlib",
+      inputs := ← json.getObjValAs? UInt64 "inputs",
+      storage := ← json.getObjValAs? String "storage",
+      root := ← json.getObjValAs? String "root",
+      digest := ← json.getObjValAs? UInt64 "digest",
+      complete := ← json.getObjValAs? Bool "complete",
+      modules := ← json.getObjValAs? Nat "modules",
+      declarations := ← json.getObjValAs? Nat "declarations",
+      indexed := ← json.getObjValAs? Nat "indexed",
+      missing := ← json.getObjValAs? (Array String) "missing"}
 
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}

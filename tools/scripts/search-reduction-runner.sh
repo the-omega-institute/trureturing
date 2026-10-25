@@ -28,8 +28,31 @@ case "${1:-}" in
         "$module" "$search_test_seconds" "$search_test_exit"
       test "$search_test_exit" -eq 0 || exit "$search_test_exit"
     done
+    make search-reduction-index-failure-test
     SEARCH_REDUCTION_TELEMETRY=1 make search-reduction-run \
       REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/LookupTelemetry.lean
+    ;;
+  index-failure-test)
+    lookup_test_dir=$(mktemp -d build/lean-inspector/index-open-failure.XXXXXX)
+    cat > "$lookup_test_dir/request.lean" <<'LEAN'
+import LeanInformationAuditRegAnalysis.SearchReduction.Commands
+import LeanInformationAuditRegTests.SearchReduction.GraphCandidates
+set_option maxHeartbeats 0
+#search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia at "b02b98342945a1a724a227db4fa38e376640e573" baseline [] using [] as indexFailureRegression
+LEAN
+    lookup_exit=0
+    SEARCH_REDUCTION_INDEX="$lookup_test_dir/missing" make search-reduction-run \
+      REQUESTS="$lookup_test_dir/request.lean" > "$lookup_test_dir/output.log" 2>&1 || lookup_exit=$?
+    test "$lookup_exit" -ne 0 || {
+      cat "$lookup_test_dir/output.log" >&2
+      echo 'missing production index silently published an ordinary verdict' >&2; exit 1;
+    }
+    rg -q 'search.production_index_open_failed:.*missing' "$lookup_test_dir/output.log"
+    if rg -q '"verdict"[[:space:]]*:' "$lookup_test_dir/output.log"; then
+      cat "$lookup_test_dir/output.log" >&2
+      echo 'index-open failure published an ordinary verdict' >&2; exit 1
+    fi
+    echo "LOOKUP_INDEX_FAILURE missing=nonzero reason=reported ordinary_verdict=absent log=$lookup_test_dir/output.log"
     ;;
   native)
     shift

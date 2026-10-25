@@ -678,6 +678,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
   | `(#search_reduction $target:ident at $sha:str baseline [$bs:ident,*] using [$ss:ident,*]
       $[information $app:ident]? as $name:ident) =>
     let source ← getEnv
+    let fixture := source.header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction."
     for module in bs.getElems do
       unless source.header.moduleNames.contains module.getId do
         let failed : Observation := {
@@ -718,7 +719,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       informationApplication := app.map (·.getId),
       certificates := ← submittedCertificates.get,
       edgeCertificates := ← submittedEdgeCertificates.get} modules name.getId
-      (source.header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction.")
+      fixture
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|
@@ -728,6 +729,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
         "-o", output.toString, input.toString]}
     if child.exitCode == 75 then IO.Process.exit 75
     if child.exitCode != 0 then
+      unless fixture do
+        throwError "search.probe_compile_failed: exit {child.exitCode}\n{child.stdout}\n{child.stderr}"
       if (← IO.getEnv "SEARCH_REDUCTION_VERIFY_INDEX") == some "1" then
         IO.eprintln s!"{child.stdout}\n{child.stderr}"
         IO.Process.exit 1

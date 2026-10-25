@@ -9,6 +9,34 @@ set_option maxHeartbeats 0
 
 run_cmd do
   let directory : System.FilePath :=
+    "build/lean-inspector/search-reduction-test-index/legacy-production-header"
+  IO.FS.createDirAll directory
+  let basis := "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  let frozen ← IO.Process.output {cmd := "git", args :=
+    #["ls-tree", "-r", "--name-only", basis, "--", "Golden/Frozen/state/D5"]}
+  unless frozen.exitCode == 0 do throwError "legacy header fixture: {frozen.stderr}"
+  let mut modules := #["Mathlib"]
+  for path in frozen.stdout.trimAscii.toString.splitOn "\n" do
+    if path.endsWith ".lean.json" then
+      modules := modules.push (((path.drop "Golden/Frozen/state/".length).toString.dropEnd
+        ".lean.json".length).toString.replace "/" ".")
+  let text := (toJson ({} : DiskLookup.Manifest)).compress
+  IO.FS.writeFile (directory / "manifest.json") text
+  let header : DiskLookup.Header := {
+    basis, mathlib := mathlibRevision, inputs := 0, storage := ".", root := "manifest.json",
+    digest := hash text, complete := true, modules := modules.size,
+    declarations := 0, indexed := 0, missing := #[]}
+  let fields ← IO.ofExcept (toJson header).getObj?
+  IO.FS.writeFile (directory / "header.json")
+    (Json.mkObj (fields.toArray.toList.filter (fun field => field.1 != "scope"))).compress
+  IO.FS.writeFile (directory / "import-partitions.json") (toJson #[modules]).compress
+  let index ← DiskLookup.openIndex directory basis mathlibRevision
+  unless index.header.scope == "" && index.header.modules == modules.size do
+    throwError "legacy production header lost its original population"
+  logInfo "LOOKUP_LEGACY_PRODUCTION missing_scope=accepted population=checked"
+
+run_cmd do
+  let directory : System.FilePath :=
     "build/lean-inspector/search-reduction-test-index/legacy-scoped-rejection"
   IO.FS.createDirAll directory
   let manifest : DiskLookup.Manifest := {}
