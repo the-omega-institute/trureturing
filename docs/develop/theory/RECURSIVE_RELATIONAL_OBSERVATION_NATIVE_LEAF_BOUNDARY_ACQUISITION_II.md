@@ -624,3 +624,305 @@ Attribution of these specific operational deductions is relative to these suppli
 The separately paid entry archive is not silently included in every current view. Old total successful serialization, erased field-control records, private raw permutations in canonical views, arbitrary busy-state inversion, noisy calibration, bounded lifetime memory, physical realization and a universal minimal common relation structure remain outside the conclusions. Original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization and final-no-Ready obligations retain their exact scopes. These acquisitions do not settle them by changing an endpoint, port or initialization.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. A binary word in the native branching field
+
+**Definition 30.1 (the binary origin and its actual image).** Fix one actually earned current original term $u\in\mathcal D$, its unit material tree $C(u)$, its complete canonical terminal order, and its complete actual raw correspondence. Write $N=|V(u)|$, let $b\ge4$ be its number of material leaves, and put $I=N-b$. The law is exactly the native symmetric zero-diagonal unit adjacency matrix $A$, not a rescaled contraction. Retain the authentic bound reference, current rights, serialization and sufficient finite backing of §17. Whole-field zero must have been established by actual operations on this specimen. Actually Add one at the first canonical terminal $e$, using its earned raw label, and Hold. This is the new origin, with actual field $x_\varnothing=e$.
+
+For $d\in\{0,1\}$, the binary operation $\operatorname{Next}(d)$ performs, in order, actual Tick, Add$(e,d)$, Hold, Read$(e)$. Add$(e,0)$ is an actual call. Its output is the complete ordered tuple of the three acknowledgements and the literal Read reply. A malformed complete wrapper packet returns BadFrame without an inner call; a proper incomplete packet remains pending without a completed operation. Valid wrapper calls are serialized through their completed retained updates. Define, for the actual successive binary inputs $w=d_0\cdots d_{m-1}$,
+
+$$
+x_w=A^m e+\sum_{i=0}^{m-1}d_iA^{m-1-i}e,
+\qquad x_{wd}=Ax_w+de.
+\tag{NLBAII.33}
+$$
+
+The inverse image in this section consists of these fields, on this fixed earned graph and new origin. Between the origin and such a cut there is no growth, Reset, other rational Add or unrequested Tick. Reads and Holds preserve the field. The old source generation and old erased field history are not part of $w$.
+
+**Theorem 30.2 (native full-field binary inverse, including length).** For every source and origin of Definition 30.1, the map
+
+$$
+\{0,1\}^{*}\longrightarrow\mathbb Z^{V(u)},\qquad w\longmapsto x_w
+\tag{NLBAII.34}
+$$
+
+is injective. Given the earned finite graph and the full present field promised to lie in this image, a finite procedure recovers the unique word and its length. It needs no retained copy of the old binary word or its length. This is an inverse on the promised image, with no asserted efficient or total off-image recognizer.
+
+Proof. The material tree has maximum degree three and exactly $b$ graph leaves. If $n_j$ counts degree-$j$ vertices, the tree identity gives $n_3=b-2\ge2$. Choose distinct degree-three vertices and their joining path. Give every path vertex weight two, each of the four off-path neighbours at its endpoints weight one, and every other vertex weight zero; call this integral vector $g$. The four neighbours are distinct and outside the path: a failure of either property gives a cycle. At each path vertex the sum of neighbouring weights is at least four, and at each chosen off-path neighbour it is at least two. Thus $Ag\ge2g$ coordinatewise, including the zero coordinates.
+
+Set $h=(\operatorname{Id}+A)^{N-1}g$. Every vertex has a path of length at most $N-1$ to a positive coordinate of $g$; the identity terms pad that path. Consequently $h$ is integral and strictly positive. Commutation and nonnegative coefficients give $Ah\ge2h$. For $s_j=h^{\mathsf T}A^je$, symmetry and positivity imply
+
+$$
+s_0>0,\qquad s_{j+1}\ge2s_j,\qquad
+s_D>\sum_{j=0}^{D-1}s_j\quad(D\ge1).
+\tag{NLBAII.35}
+$$
+
+For the last inequality, $s_j\le2^{-(D-j)}s_D$, whose finite geometric sum is strictly smaller than $s_D$. Hence if $P(z)=\sum_{j=0}^D a_jz^j$ is nonzero with all $a_j\in\{-1,0,1\}$ and $a_D\ne0$, the absolute value of the leading contribution to $h^{\mathsf T}P(A)e$ exceeds the sum of the absolute values of all the others. For $D=0$ positivity gives the same nonvanishing. Therefore $P(A)e\ne0$.
+
+The field of a word is the value at $A$ and $e$ of the monic polynomial $z^m+\sum_{i<m}d_i z^{m-1-i}$. Distinct words, including words of different lengths and the empty word, give distinct such polynomials; their difference has coefficients in $\{-1,0,1\}$. Nonvanishing proves (NLBAII.34). Enumerate finite binary words by increasing length and then lexicographically, calculate each finite field exactly, and compare coordinates. On the promised image the unique match is reached after finitely many comparisons and gives both outputs. This procedure uses neither a scalar port for $h^{\mathsf T}x$ nor knowledge of the previous word. The weights are a proof and computation device on the earned graph. $\square$
+
+The source-specific content is the applicability of leading-term separation to this actual native material adjacency, for every $b\ge4$, without changing its edge weights or Tick. Positional leading-term separation itself is not a new general numeration principle. Four leaves are a sufficient condition here, not a necessity or a minimality claim.
+
+## 31. Literal boundary sampling with a genuinely advanced endpoint
+
+**Definition 31.1 (the earned leaf reconstruction coefficients).** Enumerate the $b$ material leaves in canonical order and let $J:\mathbb Q^b\to\mathbb Q^N$ be their coordinate injection. Use the all-leaf forcing of [NLBA, Lemma 3.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md): mark all leaves; a marked vertex with exactly one unmarked neighbour forces that neighbour. This colours the whole tree in precisely $I$ individual forces. Indeed, if a nonempty unmarked set $U$ remained at a stalled cut, the forest consisting of $U$, its marked neighbours, and the edges with at least one endpoint in $U$ would have minimum degree at least two. An unmarked vertex was not an initial leaf and has degree at least two; a marked neighbour has at least two neighbours in $U$ by stalling. A nonempty finite forest cannot have that minimum degree.
+
+Attach to the initial leaf $\ell_j$ the constant vector polynomial $p_{\ell_j}(z)=e_j$ in $\mathbb Z[z]^b$. At a force $v\to w$, all other neighbours of $v$ are marked; define
+
+$$
+p_w(z)=z p_v(z)-\sum_{v'\sim v,\ v'\ne w}p_{v'}(z).
+\tag{NLBAII.36}
+$$
+
+For every vertex, write $p_v(z)=\sum_{r=0}^I z^rp_{v,r}$, filling unused degrees with zeros. Induction on the force order, using $Ae_v=\sum_{v'\sim v}e_{v'}$, proves
+
+$$
+\sum_{r=0}^I A^rJp_{v,r}=e_v.
+\tag{NLBAII.37}
+$$
+
+Degree is at most the number of forces so far, hence at most $I$. With block ordering by $r$, let $C$ be the $b(I+1)$ by $N$ matrix whose $v$th column is the stack of $p_{v,r}$, and put
+
+$$
+K=[J,AJ,\ldots,A^IJ].\qquad KC=\operatorname{Id}_N.
+\tag{NLBAII.38}
+$$
+
+This is the known leaf-forcing argument specialized to the already earned unit graph; it is not an additional identification theorem for unknown edge laws. The infection mechanism also occurs in Burgarth and Maruyama, *Indirect Hamiltonian identification through a small gateway*, New J. Phys. 11 (2009) 103019, [arXiv:0903.0612v1, §II](https://arxiv.org/abs/0903.0612v1), where a known graph and a gateway infecting its vertices supply different quantum-identification hypotheses. Only the combinatorial forcing mechanism is used here; no quantum experiment or its permissions are imported.
+
+**Definition 31.2 (actual Sample).** At a binary-image cut with actual field $x_w$, Hold and Read every canonical leaf in order, obtaining $y_0$. For $r=1,\ldots,I$, actually Tick, Add$(e,0)$, Hold, and Read every canonical leaf, obtaining $y_r$. Return the literal ordered window, every complete inner reply, and the decoded pre-sampling word and length. Inner replies may be streamed; any retained or returned copies are paid storage. The decoding calculation uses (NLBAII.38) and Theorem 30.2. It does not replace any of these actual calls. The procedure is admitted under the binary-origin promise; it is not a total inverse for arbitrary fields.
+
+**Theorem 31.3 (observation, inverse and actual successor).** Sample terminates on every promised binary-image cut and has the following simultaneous properties:
+
+$$
+y_r=J^{\mathsf T}A^rx_w\quad(0\le r\le I),\qquad
+x_w=C^{\mathsf T}\begin{pmatrix}y_0\\ \vdots\\y_I\end{pmatrix},
+\qquad x_{\rm end}=A^Ix_w=x_{w0^I}.
+\tag{NLBAII.39}
+$$
+
+It installs $x_{w0^I}$, rather than $x_w$, as the retained current predictive vector. Its exact inner counts are $I$ Ticks, $I$ Adds, $I+1$ Holds and $b(I+1)$ Reads. All Add operands are zero. It recovers the pre-sampling binary word even when a previous predictive vector and binary word have been discarded, provided the earned graph, raw map, callable reference, rights and origin promise persist.
+
+Proof. Induct on the actual Tick calls: the zero Adds, Holds and Reads do not change the field, so the $r$th sampled field is exactly $A^rx_w$. Symmetry of $A$ gives $K^{\mathsf T}x_w=(y_0,\ldots,y_I)^{\mathsf T}$. Transposing $KC=\operatorname{Id}$ proves the reconstruction formula. Theorem 30.2 then recovers precisely $w$. Each intervening Tick followed by an actual zero Add is a binary zero step, so the final field is $x_{w0^I}$. Multiplying the reconstructed vector by $A$ exactly $I$ times installs this actual endpoint. Counting the specified finite calls gives the bill. No inverse of $A$ is used: $A$ may be singular. On this special word image, $A^Ix_w=A^Ix_{w'}$ would imply $w0^I=w'0^I$ by Theorem 30.2, and therefore $w=w'$, but this restricted injectivity is not an inverse on arbitrary fields. $\square$
+
+## 32. Independently defined sampled Space, Time, Boundary and Memory
+
+**Definition 32.1 (sampled domain and common callable context).** Fix the origin and retained earned context of Definition 30.1. Consider completed Sample cuts, with all retained updates finished and no pending frame. Write $v=w0^I$ for the actual binary chain at such a cut, including the zero steps actually executed inside that last Sample. Define four numerical expressions by their different source meanings:
+
+| Expression | Content at this sampled cut |
+| --- | --- |
+| Space | The unrooted unit material tree, complete canonical linear leaf order, and actual present field $x_v$, modulo order-preserving graph isomorphism |
+| Time | The actual labelled successful original-$P/S$ causal birth/lifecycle order $E(u)$ and the actual binary input chain $v$ since the new origin |
+| Boundary | The canonical terminal impulse-onset table of the actual unit law, with diagonal zero, and the literal trailing window $(y_0,\ldots,y_I)$ received by the last Sample |
+| Memory | The retained current recursive original term, full current predictive vector $x_v$, and canonical ordinal-to-material-terminal table |
+
+The onset table has its independent counterfactual response-law meaning from NLBA §§2 and 13: a unit impulse is first nonzero at graph distance. It is computable from the earned graph and is not represented as a literally performed impulse experiment. The appended window, in contrast, consists of actual replies on this very specimen. Computing, exporting or storing either part is paid. Space carries the actual present field, not a pre-sampling copy. Time includes sampling zeros but excludes Reads, Holds, refusals, elapsed duration, old total serializations and erased old field-control records. Its generation component is the actual causal order with AA's original event labels, not a selected replay. Memory contains neither a binary journal nor private raw labels.
+
+The actual reference, rights, complete private raw map, parser, backing and optional entry archive are separately retained common context. The inverse statements below do not reconstruct their bytes or create authority. They concern the joint image of these four specified expressions at the same sampled cuts, not every possible nonzero field or every operation log.
+
+**Theorem 32.2 (four actual-image inverses and agreement).** On this sampled domain each expression effectively recovers the other three. Every route agrees. Each expression determines the complete current native canonical predictor and its entire settled successors under every finite common adaptive continuation. These recoveries remain valid after any admitted binary operation followed by an actual Sample, using its advanced endpoint.
+
+Proof. Space first recovers $u$ by [NLBA, Theorem 11.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md), whose hypotheses are precisely this reachable birth-typed material tree, at least three leaves and its complete canonical linear leaf order. Thus its original root and ordered syntax are recovered; an arbitrary untyped tree or unordered boundary would not meet those hypotheses. Its present vector then gives $v$ by Theorem 30.2.
+
+Time recovers $u$ by [AA, Theorem 17.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md): this is the actual original labelled causal birth/lifecycle order on $\mathcal D$. The same supplier computes that canonical causal order from $u$. Time already contains $v$, so (NLBAII.33) calculates the actual present vector. Memory has $u$ and the present vector, hence also recovers $v$ by Theorem 30.2.
+
+Boundary's onset table is the complete leaf metric by NLBA Lemma 2.1. Its full unit subdivision tree, including degree-two vertices, is recovered by NLBA Lemma 2.3, and its original root and syntax by Theorem 11.1. The recovered graph supplies the same $I,J,C$. Equation (NLBAII.39), applied to the literal window, recovers $x_w$ and then $w$. Appending its $I$ actual sampling zeros gives $v$ and the actual present vector. This uses no fictitious simultaneous readings from several cuts.
+
+Conversely, from any recovered pair $(u,v)$ in this sampled image, compute $I$ from $u$ and remove its known final $I$ zeros to obtain $w$. Equation (NLBAII.33) gives $x_w$ and $x_v$, and hence the entire literal numerical window, onset table and canonical Memory. AA's causal reconstruction gives exactly $E(u)$. This reconstructs each original expression, rather than choosing an arbitrary representative history. All routes therefore factor through the same pair $(u,v)$ and return the same values.
+
+The complete graph, present vector and earned context establish invariant (NLBAII.8). The proof of Theorems 19.2–19.4 consequently predicts every full canonical reply and updates its graph, vector and bindings after actual calls. For binary Next the pair changes to $(u,vd)$; for Sample it changes to $(u,v0^I)$. A Next followed by Sample ends at $(u,vd0^I)$ with the actual new trailing window, so the proved recoveries apply again there. No claim that an unsampled intermediate cut already contains the last-Sample observation of a different cut is needed. $\square$
+
+Different vectors at the same $u$ are distinguishable by a finite actual all-leaf window: (NLBAII.38) annihilates no nonzero difference. Different ordered terms are distinguishable even in the six-operation menu used below: at the first logical address where their constructors differ, $P$ has different branch/wrong-type/success meanings. If their exposed roster lengths differ, a range test already distinguishes them. Thus removal of Reset does not destroy these separating continuations. These statements do not make the canonical data sufficient for a task exposing the private raw map or archive; Proposition 20.4's distinction persists.
+
+## 33. Complete binary continuation, the original entrance and its bill
+
+**Definition 33.1 (retained binary use and exit from its image).** At synchronized binary cuts, Recall and Length actually Hold and compute the word or length from the retained full vector by Theorem 30.2, returning the Hold acknowledgement and the requested answer. Neither stores the old input word as a premise. The separately available full raw and canonical menus retain all §17 semantics. An actual arbitrary rational Add, growth or Reset updates the full predictive invariant but need not stay in the binary image. No binary inverse is promised after such an exit unless a fresh qualifying origin is actually prepared. Prediction on a paid copy does not execute any source operation.
+
+**Theorem 33.2 (complete current use).** Starting at any synchronized binary or sampled cut, the retained graph, original code, current vector and earned raw map predict each complete native reply and its whole successor and remain correct after every finite actual common adaptive continuation of the installed menu. This includes addressed success and all distinct original refusals, scalar replies, acknowledgements, out-of-range labels, malformed complete frames and proper incomplete frames. Under its binary-phase restriction, Next returns the literal scalar $e^{\mathsf T}x_{vd}$, Sample returns (NLBAII.39), and Recall/Length leave the field unchanged.
+
+Proof. Initialize (NLBAII.8) by the actually established origin or the reconstructed Sample endpoint. At $P_p$, the old $p$ value persists, the fresh $pL$ value is zero, the acted raw label moves to $pL$, and every other raw binding persists. At $S_p$, $p,pL$ persist, fresh $pLL,pR$ are zero, the acted label moves to $pLL$, and the appended label binds $pR$. Update the actual graph and original constructor code accordingly. The original guards, including absent, branch and wrong-type distinctions, are read from that code. A refusal has the identity successor.
+
+Read and Add use the earned actual raw table; Tick is the neighbour sum on the full current vector; Hold is identity; Reset, when installed, zeros every current coordinate. Labels outside the current length and complete malformed frames have their stated identity successors. Incomplete frames retain their actual pending bytes with no completed reply or source edit. Missing rights disable the call and are outside the successful-use promise. These are exactly §19's one-step correspondences, independent of the way the initial invariant was established. Forward each actual call, consume its entire reply and finish its retained update before another settled cut. Induction on complete common adaptive requests proves the full claim; after fixing a common random tape the same induction applies to each finite randomized realization. Canonical forwarding uses the actual inverse raw table, never a numerical inverse promoted to a reference. The binary formulas follow from the actual calls already proved. $\square$
+
+**Proposition 33.3 (the credited integer-age/Reset entrance).** The original seven-operation installation of §17 and the actual schedule of Theorem 27.2 give a complete independent entrance to Theorems 30.2–33.2. For an entry with $L_0\ge3$ logical leaves, execute that all-$P$ normalization and integer-age binding schedule, including both actual Resets and its final Hold. Its actual endpoint has
+
+$$
+b=2L_0-1\ge5,\qquad N=5L_0-3,\qquad I=3L_0-2,
+\tag{NLBAII.40}
+$$
+
+whole-field zero, earned syntax, complete entry and current raw maps, and the retained same-source callable service. Add one at its first earned canonical terminal and Hold to establish Definition 30.1. This entrance is retained as an alternative in its own right; the arbitrary-field six-operation entrance below is a different actual installation.
+
+Proof. Theorem 27.2 supplies the displayed actual graph and maps and proves global zero by its last Reset, including internal cells. Its complete-call and retention correspondence is Theorem 28.1. The terminal count is at least four and the final extra Add and Hold give exactly $e$. All other hypotheses of Definition 30.1 are those supplied and retained by §§17 and 27. No no-Reset experiment or later scalar-origin construction is used in this implication. $\square$
+
+**Theorem 33.4 (one binary run's resource vector).** After any qualifying origin let $K_1$ be the number of Next calls, $R_1$ the number of Sample calls, and $Q_1$ the total number of Recall and Length calls in one finite binary continuation. Set $m=K_1+R_1I$, its actual binary length. Excluding the entrance and origin, the exact primitive counts are
+
+$$
+\begin{aligned}
+\mathrm{Tick}&=m,&\mathrm{Add}&=m,\\
+\mathrm{Read}&=K_1+R_1b(I+1),&
+\mathrm{Hold}&=K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.41}
+$$
+
+For the actual entrance in Proposition 33.3, including the origin, the same specimen's totals are
+
+$$
+\begin{aligned}
+P&=2L_0-1,&S&=L_0-1,&\mathrm{Reset}&=2,\\
+\mathrm{Add}&=L_0^2+1+m,&\mathrm{Tick}&=m,\\
+\mathrm{Read}&=L_0+K_1+R_1b(I+1),\\
+\mathrm{Hold}&=L_0+2+K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.42}
+$$
+
+Every primitive request, entire response, framing, return and retained update, both sides of the dispatcher, is paid at its actual finite bit width. These counts do not include unrelated additional raw calls; such calls incur their actual counts and work and can leave the binary image.
+
+Proof and size bounds. Count the definitions, including every zero Add inside Sample and its initial Hold and all-leaf read. Add the already attained Theorem 27.2 counts and the actual origin. No coordinate of this vector is chosen from another run.
+
+For explicit finite representations, the maximum field entry after $j$ binary steps satisfies $M_0=1$ and $M_{j+1}\le3M_j+1$, hence $M_j<3^{j+1}$. Thus each integer field entry has $O(j+1)$ bits. The actual source vector and retained predictive vector are separate simultaneous stores, each with $O(N(m+1))$ field bits, in addition to addresses, graph and code. Exact repeated neighbour summation uses a separate $N$-entry result buffer, at most $2(N-1)$ directed additions and $N$ initializations per actual Tick; source and predictor work are both charged. A literal window has $b(I+1)$ entries at their actual widths. Returned words, windows and complete replies also occupy actual output backing; caller-retained copies are not free.
+
+One may compute $h$ using $N-1$ applications of $\operatorname{Id}+A$, with entries at most $2\cdot4^{N-1}$. In (NLBAII.36), a force uses a shift and at most two subtractions. Induction bounds the sum of the absolute coefficient values of each $p_v$ by $3^I$. Storing $C$ as a dense array takes at most $Nb(I+1)$ integer slots of $O(I+1)$ bits; computation, copies, reconstruction and their scratch are paid. Exhaustive decoding a length-$m$ word examines at most $2^{m+1}-1$ candidates. Constructing their fields by sparse steps costs $O(N(m+1)2^m)$ scalar arithmetic operations with actual operand widths, besides comparisons and output; this is an attained finite bound, not an efficiency optimum. A sequential implementation can discard each failed candidate but must pay for the current candidate, reconstructed vector and live scratch alongside all retained source state.
+
+The separate entry archive, complete private raw table, canonical table, parser and partial packets, instruction code, traversal/address records, actual reference and grants, live decoded outputs, allocation and clearing costs all coexist when used and are charged. Old preparation of the specimen also remains charged; (NLBAII.42) does not erase it. The $2^m$ different length-$m$ words require at least $m$ bits of distinguishing capacity in any exact finite representation of their distinct fields. There is no bounded-lifetime-memory, constant-precision or inexpensive-decoder conclusion. $\square$
+
+## 34. Arbitrary-field acquisition in the six-operation installation
+
+**Assumption 34.1 (different attachment, same original growth).** The installed source has all §17's original term, raw roster, exact rational field, actual binding, persistent growth, fresh-zero, reference, authority, finite completion and held-serialization hypotheses, with these explicit differences. At attachment its entire field is arbitrary and unknown in $\mathbb Q^{V(t)}$, including internal cells. There is no Reset operation. The exact installed menu is $P,S,\mathrm{Add},\mathrm{Tick},\mathrm{Read},\mathrm{Hold}$. A complete former Reset tag is BadFrame with identity successor. The other full framing, success, refusal, range and incomplete-frame semantics are unchanged. Fresh allocation still initializes just its new cells to zero. The unknown entry is $t\in\mathcal D$ with $a$ alpha leaves, $c$ beta leaves, $L=a+c\ge3$ and arbitrary initial raw bijection $\lambda_0$. Its complete finite raw roster length is exposed as in §17; neither $t$, an old field, a history, a size bound nor an address decoder is input advice.
+
+**Definition 34.2 (arming without clearing).** Initially Hold. For each initial raw label $j=1,\ldots,L$, Read its actual value $z_j$ and actually Add$(j,1-z_j)$. Then Hold. There is no Tick, so the different label calls address different unchanged terminals; every terminal is now one. No conclusion about any internal field follows.
+
+Perform Definition 18.3's actual preorder traversal and Definition 18.1's single-edit assay, omitting both Resets: a branch refusal schedules its entry children; a promotion success records entry alpha; a wrong-type refusal is followed by an actual split and records entry beta. After each success Hold and read every old raw label, excluding an appended split label, identify its unique zero, and rearm the inherited and any appended zero by Add one. Neither leaf case schedules its newly created children. Retain the exact entry code and acquired entry map separately from the current code and map. When the stack empties, Hold. Call the actual resulting whole field $x_{\rm mark}$; it is not declared zero.
+
+**Theorem 34.3 (earned correspondence at an arbitrary nonzero endpoint).** Under Assumption 34.1, the one procedure of Definition 34.2 terminates for every finite promised attachment. It earns the exact $(t,\lambda_0)$ and exact current $(u,\lambda)$ on the original callable source, where
+
+$$
+u=\rho(t),\qquad b=L+c,\qquad N=3L+2c-1,\qquad I=N-b=2L+c-1.
+\tag{NLBAII.43}
+$$
+
+The map $\lambda$ exhausts the actual current terminals, not merely those scanned. The full current graph is known. The field $x_{\rm mark}$ can still have arbitrary internal values, so the theorem has not yet established a synchronized full-field predictor or a zero entrance.
+
+Proof. Initial Read/Add arming sets every terminal to one, independently of its old rational value. Because no Tick occurs throughout marking, arbitrary internal values cannot propagate to the scanned terminals. Under the actual persistent fresh-zero growth rule, a promotion moves its one acted old raw label to a fresh zero marker; a split moves its one acted old label to a fresh zero marker and appends a separate fresh zero right terminal. Every other scanned old label remains at a one-valued terminal. Hence the literal old-label scan has exactly the single zero (NLBAII.5), even with arbitrary internal values. The actual rearming restores all current terminals to one.
+
+For termination and entry reconstruction, use structural induction on the finite entry subtree at each scheduled address, with an arbitrary pending continuation outside that subtree. Earlier edited entry leaves are in disjoint cones and preserve every unvisited entry constructor and binding. A branch refusal schedules exactly its two actual entry subtrees. At alpha the actual promotion finishes that leaf; at beta the actual wrong-type refusal and split finish that leaf. No new child is visited, no scheduled address is absent, and every recursive visit is to a proper entry subtree. Thus the finite stack empties with the exact entry code, without advice about its height or size.
+
+The unvisited entry labels have not moved. Each unique scanned zero is therefore the actual initial label of this addressed entry leaf. Across all leaves these distinct labels exhaust $1,\ldots,L$. At alpha, record $j\mapsto p$ for the entry and $j\mapsto pL$ currently. At beta, record $j\mapsto pL$ for the entry, and $j\mapsto pLL$, $n+1\mapsto pR$ currently. Disjoint cones and distinct append indices show that these assignments exhaust the final roster. The actual successful edits are precisely one old-frontier replacement at every entry leaf, giving $u=\rho(t)$, as in Theorem 18.4; its proof of code and map did not use internal zero. Counting that same actual material gives (NLBAII.43). All original values persist when their vertices become internal, and their old values were not measured there. This proves precisely why the endpoint is $x_{\rm mark}$, without inferring full zero from arming. $\square$
+
+## 35. Actual leaf observation and executed whole-field nulling
+
+**Definition 35.1 (observing the marked specimen).** On the actual earned $u$, construct $J,K,C$ by Definition 31.1. Here $J$ may be in raw order using the earned bijection, or in canonical order through its actual forwarding; use the same order consistently in $K,C$ and the calls. Starting from the final held cut of Definition 34.2, Read all $b$ terminals. For $r=1,\ldots,I$, actually Tick, Hold and Read all $b$ terminals. There is no Add during this observation. Stack the literal replies as $y$ and calculate
+
+$$
+x_{\rm mark}=C^{\mathsf T}y,\qquad x_d=A^Ix_{\rm mark}.
+\tag{NLBAII.44}
+$$
+
+Install $x_d$, the actually advanced field, as the synchronized predictive vector. This recovers the field at the start of this observation, not the arbitrary field at attachment before marking and growth.
+
+**Definition 35.2 (the reversed boundary control).** Put $r_*=I+1$ and compute, using exact rational arithmetic on the earned graph and recovered vector,
+
+$$
+g=-C A^{r_*}x_d=\begin{pmatrix}g_0\\\vdots\\g_I\end{pmatrix},
+\qquad g_j\in\mathbb Q^b.
+\tag{NLBAII.45}
+$$
+
+For $s=0,\ldots,I$ actually Tick, Add at each terminal $j$ the operand $(g_{I-s})_j$, in increasing label order, and Hold. All $b(I+1)$ Adds are executed, including zero operands. A control block is not applied before its preceding Tick. The field stays held while a block is calculated or transmitted, and retained updates follow actual operations. This is a finite use of the six installed operations, with no Reset tag, internal actuator or inverse Tick.
+
+**Theorem 35.3 (whole-field zero earned by these actual operations).** The observation in Definition 35.1 returns the exact stated $x_{\rm mark}$ and synchronizes at the actual endpoint $x_d$. The control in Definition 35.2 ends with zero on every actual material vertex, for every unknown rational field allowed by Assumption 34.1. The graph, full raw correspondence, reference and current rights are retained on the same specimen throughout.
+
+Proof. During the observation, the $r$th literal terminal block is $J^{\mathsf T}A^rx_{\rm mark}$. Thus $y=K^{\mathsf T}x_{\rm mark}$, and symmetry together with $KC=\operatorname{Id}$ proves (NLBAII.44), including the actual advanced endpoint. No known initialization is required for this linear identity.
+
+The actual field after the $I+1$ control rounds is, by induction on the rounds,
+
+$$
+A^{I+1}x_d+\sum_{s=0}^I A^{I-s}Jg_{I-s}
+=A^{I+1}x_d+Kg
+=A^{I+1}x_d-KCA^{I+1}x_d=0.
+\tag{NLBAII.46}
+$$
+
+Indeed each block is added after its Tick and then undergoes exactly the remaining $I-s$ Ticks. Adds at distinct terminals commute within a block and affect exactly those actual terminals by the earned map. Holds introduce no extra dynamics. Formula (NLBAII.46) therefore describes the actual plant, not just a controllability matrix with unexecuted inputs. It proves zero at all coordinates, including internal cells which arming did not clear. Neither invertibility of $A$, positivity of its spectrum, a scalar clock, nor any known old initial field occurs in the calculation. The actual map and authority were retained, and no growth occurs during these two finite phases. $\square$
+
+## 36. No-Reset continuation and a single attained acquisition account
+
+**Theorem 36.1 (complete native use from the acquired zero).** The final cut of Theorem 35.3 establishes (NLBAII.8), with $u=\rho(t)$, its exhaustive earned raw map and its actual full zero vector, on the six-operation installation. Without another correspondence-learning assay, the retained procedures predict the full next output and full successor for every finite common adaptive raw or canonical continuation of this entire installed menu, including arbitrary rational fields after further use. They execute callable canonical Add/Read by the retained actual reference and earned permutation. At settled whole-zero cuts the four zero-cut expressions of Definition 20.1 again recover each other on their stated canonical task.
+
+Proof. Theorem 34.3 establishes the original syntax, material graph and exact current binding, while Theorem 35.3 establishes equality of every actual coordinate to the retained zero. These are precisely the invariant's premises. Repeat Theorem 33.2's full one-step correspondence for the six installed operations. Its Reset case is replaced by the installed BadFrame identity successor for the former tag. The P/S fresh-coordinate and raw-binding updates are unchanged, as are Add, Read, Tick, Hold, all distinct guarded refusals, range replies, proper incomplete waits and malformed complete replies. Induction on actual completed common adaptive requests proves the claim on every finite continuation. Forwarding retains actual completion, output and current authority, rather than using the finite record as a new source reference.
+
+At whole-zero cuts, Space and Boundary recover the original term by the same complete-leaf metric and original-root correspondence as in Theorem 32.2; Time is AA's actual labelled causal order and Memory is the original code with zero vector. Each factors through that same term. Equal terms give equal entire canonical futures. Unequal terms are separated by exposed range or the first differing addressed constructor's P reply, as proved after Theorem 32.2, without Reset. Thus the six-operation restriction preserves the zero-cut canonical task-kernel statement, and composites whose endpoints return to whole zero commute with those data recoveries. The full predictor is still needed at intermediate nonzero fields. No inverse of structural Time to an arbitrary nonzero field is inferred. $\square$
+
+**Theorem 36.2 (same-run six-operation costs).** Let the entry beta leaves have preorder assay positions $B\subseteq\{1,\ldots,L\}$ and define the actual old-roster scan length sum
+
+$$
+R_{\rm mark}=\sum_{s=0}^{L-1}\bigl(L+|B\cap\{1,\ldots,s\}|\bigr)
+=L^2+\sum_{q\in B}(L-q)\le L(L+c).
+\tag{NLBAII.47}
+$$
+
+For exactly Definitions 34.2, 35.1 and 35.2 on this one actual run, including its final whole-zero Hold, the primitive counts are
+
+$$
+\begin{aligned}
+P&=2L-1,&S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1),\\
+\mathrm{Add}&=2L+c+b(I+1),\\
+\mathrm{Tick}&=2I+1,&\mathrm{Hold}&=L+2I+4.
+\end{aligned}
+\tag{NLBAII.48}
+$$
+
+There are $a+2c$ fresh material cells, $4a+8c$ structural assignments under §21's convention, and $a+2c$ binding assignments. Fixed field acknowledgements number $3L+c+b(I+1)+4I+5$; scalar Read replies are counted separately. There are also all $2L-1+c$ complete addressed replies and their frames, and every request, return and dispatch cost.
+
+Proof. The traversal calls P once at all $2L-1$ entry logical positions and S once at each of the $c$ beta leaves. Initial arming uses $L$ Reads and $L$ Adds. The $L$ assays read the old roster, giving (NLBAII.47), and rearm by $L+c$ Adds. Their Holds number $L$, besides the initial and post-arming Holds and final marking Hold, giving $L+3$. Observation adds $b(I+1)$ Reads, $I$ Ticks and $I$ Holds. Reversed control adds $I+1$ Ticks, $b(I+1)$ Adds and $I+1$ Holds. Summing gives (NLBAII.48); Adds, Ticks and Holds have the displayed number of fixed acknowledgements. Successful growth and binding writes have exactly the persistent local templates of §§17 and 21. The mathematical reconstruction and control do not call Reset indirectly. $\square$
+
+**Definition 36.3 (actual precision and simultaneous backing).** The rational values in initial arming, observation and control have their actual finite numerator and denominator lengths. Let $W_{\rm run}$ be the maximum such encoded width among all source fields, control operands, intermediate rational computations, replies and simultaneous retained predictor/scratch entries in this finite implementation. It is finite for each admitted finite run; no bound depending only on $N$ is asserted, since the attachment field itself is arbitrary. Each request and reply uses §17's actual finite label, address and rational encoding. Tree traversal also pays the actual visited address lengths, stack operations, parsing, code construction and map scans.
+
+One implementation retains the integer forcing matrix $C$, the literal $b(I+1)$-entry window, reconstructed vectors, the $b(I+1)$-entry control stack and local rational scratch. Source field, current predictive field and separate result buffers are simultaneous allocations, each charged, not interchangeable uses of one cost coordinate. Constructing $C$ has Definition 33.4's coefficient bound. Matrix products in (NLBAII.44)–(NLBAII.45), including $I+1$ sparse applications for $A^{I+1}x_d$, are exact finite rational operations at their actual widths. Each actual Tick uses a new $N$-entry source result buffer and $2(N-1)$ directed neighbour additions; the retained predictor has its own corresponding computation. The $2I+1$ actual Ticks therefore pay both computations, their zero-initializations and all copied bits. Initial $1-z_j$ operands, possibly negative or large, and every signed control operand are paid. Control blocks and observation outputs can be discarded only after their last use, with their actual clearing costs.
+
+The current graph/code, complete raw and canonical maps, separate entry report, addresses, parser and pending packets, actual reference and grants, input/output backing and any caller-retained outputs are charged alongside these arrays. The original source preparation and the arbitrary attachment field's actual storage remain part of the same run's total resources. These are an attained finite account conditional on exact rational operations and adequate backing, not a uniform size-only precision estimate, a minimum-resource theorem, a physical realization theorem or an arbitrary erased-history recovery theorem.
+
+## 37. A separate same-specimen implication from no-Reset acquisition to the binary domain
+
+**Theorem 37.1 (complete hypothesis mapping and actual composition).** For every attachment of Assumption 34.1, execute Definitions 34.2, 35.1 and 35.2. Then actually Add one at the first earned canonical terminal and Hold. On this same six-operation specimen, Theorems 30.2–33.2 apply to every finite subsequent binary continuation, with $u=\rho(t)$ and the $b,N,I$ of (NLBAII.43). This implication leaves Proposition 33.3's original integer-age/Reset entrance intact.
+
+Proof. Since $L\ge3$, the reachable original entry is a branch. Follow left children to its leftmost logical leaf. Its address is nonempty and ends in L; the defining birth-typing of $\mathcal D$ forbids alpha at such a leaf. Hence this leaf is beta, so $c\ge1$. Therefore the actual acquired material tree has $b=L+c\ge4$ and meets Theorem 30.2's branching hypothesis; this is not extra advice to the acquisition.
+
+Theorem 34.3 supplies the actual original $u=\rho(t)$, complete ordered material graph and exhaustive raw bijection, including every appended label. Theorem 35.3 supplies whole-field zero by executed controls. Theorem 36.1 supplies the synchronized full predictor and actual canonical forwarding. The unchanged installed original P/S semantics, fresh zeros, exact unit-adjacency Tick, rational terminal Adds and Reads, held serialization, authentic same reference, current grants and sufficient finite backing are exactly Assumption 34.1's retained premises. The actual extra Add and Hold consequently establish the $e$ origin of Definition 30.1.
+
+Every primitive inside Next, Sample, Recall and Length belongs to this six-operation menu; no Reset or seventh operation is invoked. All literal sample observations and advanced endpoints are therefore those of this very plant. Its full six-operation continuation is covered by Theorem 36.1; Theorem 33.2's optional Reset clause is simply absent. This verifies each hypothesis of the binary theorem on the same specimen and with its actual initialization, rather than taking a zero field, a map or authority from another run. $\square$
+
+**Corollary 37.2 (joint bill, rather than coordinatewise independent optima).** With $K_1,R_1,Q_1$ and $m=K_1+R_1I$ defined after this new origin, the exact combined counts are
+
+$$
+\begin{aligned}
+P&=2L-1,&S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1)+K_1+R_1b(I+1),\\
+\mathrm{Add}&=2L+c+b(I+1)+1+m,\\
+\mathrm{Tick}&=2I+1+m,\\
+\mathrm{Hold}&=L+2I+5+K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.49}
+$$
+
+Proof. Concatenate the actual schedule of Theorem 36.2, one actual origin Add and Hold, and the actual binary schedule of Theorem 33.4. They act on the same unchanged graph after acquisition, so their $b,N,I$ agree. Resource bytes and work concatenate at their actual widths and overlap only through actually retained objects. During binary use the source field has the new integer bound of Theorem 33.4; arbitrary-width acquisition data still retained as output or scratch must be added to simultaneous memory until actually released. No component of this joint vector is borrowed from the integer-age/Reset entrance or a separately optimized scalar experiment. $\square$
+
+## 38. Supplier correspondences and the exact remaining scope
+
+**Definition 38.1 (attribution and uncovered native content).** The structural source results used above are [AA §17](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), [AAII §§53–54](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md), [NLBA §§2–3, 5, 10–13, 19–24](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md), and this volume §§17–29. In particular the old-frontier endpoint, causal reconstruction, ordered-root inverse, all-leaf forcing, arbitrary-field leaf-window reconstruction, full-menu invariant and integer-age entrance are credited suppliers. The new conjunction proved in §§30–37 is the binary field separation on the actual branching native adjacency, literal advancing sampling with four independently interpreted sampled expressions and a complete continued-use record; and, separately, an arbitrary-field no-Reset experiment which earns its syntax/raw correspondence and then observes and nulls the actual whole field. The same-specimen implication in §37 follows from the explicit hypothesis mapping, not from an assertion that independently available conclusions automatically compose.
+
+The existing mathematical declarations and their owning Scribes have narrower roles. [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) and [NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean) supply finite constructor navigation and literal source-read procedures under their stated access, rather than an arbitrary raw binding. [NativeMaterialRootRecognition](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.lean) has the reachable original material tree, at least three leaves and complete ordered-graph premises used for the root inverse. [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) supplies the finite real stacked-observation rank/kernel relation; that relation alone neither binds a source nor executes a nulling control. The explicit rational coefficient identity and actual calls above supply the needed operational correspondence. For walk interpretation the mature finite-graph identity is `SimpleGraph.adjMatrix_pow_apply_eq_card_walk` in mathlib's [AdjMatrix.lean at the pinned revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean): finite vertices, decidable equality and a semiring give the adjacency-power count of length-$n$ walks. No new claim about a general walk-count identity is made.
+
+[Recovery Geometry II §§59–68](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md) already give scalar-origin signed-length conditions, bounded-digit inverses, lattice/history consumers, actual advanced prediction and resource limits. Their symmetric positive-link operator satisfies $0<T<\operatorname{Id}$ and uses its stated authentic initialized impulse orbit; their scalar or annihilator-lattice conclusions are not hypotheses about this native $A$ with degree-three branching. Here (NLBAII.35) is proved for this $A$; raw correspondence is earned by actual growth assays; whole zero is proved by (NLBAII.46). No scalar numerical inverse is used to obtain a raw map or authority. General bounded-digit inversion and lattice enumeration are therefore supplier-level phenomena, not claimed new by the binary construction.
+
+The newer [same-handle arithmetic continuation](../../../D5/S3/Arith/FibonacciAtomic/Acquisition/SameHandleContinuation.lean), with its owning Scribe, assumes a bound arithmetic `SourceService`, lawful replacement/graft and gcd Read meanings, retained authority and a completion premise on that handle. The current native menu is not that arithmetic service. [Relational Spectra §§35–38](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md) and [its continuation §§39–43](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_II.md) concern fixed complex CPTP instruments, exact joint effect/probability records, specified terminal tasks and their compatible successor fibres. Their finite record inverses do not supply the native unit-tree field, raw roster or boundary actuators. The [Green-tail continuation §20](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md) retains the original continuous Heisenberg source, full off-pole and form-domain hypotheses, and complete exterior integration; the [geometry continuation III §§108–109](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md) likewise has its stated continuous differential source and maximal-domain zero-space. The [private-clock continuation](FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md) has its independent-seed real-report and resource/minimax hypotheses. None of these correspondences identifies their laws or task domains with Assumptions 30.1 or 34.1. Shared terminology about histories, clocks or boundaries is insufficient to transfer a conclusion. The native deductions above are source-specific applications and constructions, with no worldwide priority assertion.
+
+**Proposition 38.2 (retained limits of the conclusions).** The two entrances and the binary image do not recover arbitrary erased histories, establish an efficient off-image recognizer, create reference or grant authority, prove bounded lifetime memory or imply a universal physical foundation. They do not remove the original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization or final-no-Ready obligations.
+
+Proof. The only binary inverse has the new origin and the specific polynomial image (NLBAII.33) as premises. Its Time records the new binary inputs and original causal order, not an old total serialization. Distinct old field-control histories can end at the same origin and hence have identical later binary fields. In the arbitrary-field entrance, initial terminal arming changes the old field, and only the later $x_{\rm mark}$ is reconstructed; that procedure cannot invert an unrecorded earlier alteration. Structural Time and terminal zeros also omit internal field distinctions by Proposition 20.3. Raw-map and authority distinctions are explicitly retained outside the four numerical expressions, as in Proposition 20.4. The attained exact procedures pay their actual growing field widths, enumeration, all simultaneous stores and legal source work; they supply no uniform efficient recognizer or bounded memory. Finally neither theorem has a hypothesis correspondence identifying its new origin, enlarged active experiment or acquired callable dispatcher with an unchanged original initialization, fixed observation task or the named parked/final endpoints. Those bridges would require their own constructions preserving those exact hypotheses and endpoints. No such bridge is asserted here. $\square$
+
+## 追加锚（本行以下为增补区）
