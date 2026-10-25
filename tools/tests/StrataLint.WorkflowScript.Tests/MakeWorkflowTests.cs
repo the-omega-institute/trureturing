@@ -88,6 +88,7 @@ public sealed partial class MakeWorkflowTests
         "search-reduction",
         "search-reduction-run",
         "search-reduction-test",
+        "search-reduction-index-failure-test",
         "search-reduction-replay-test",
         "search-reduction-replay-calibration",
         "search-reduction-replay-faults",
