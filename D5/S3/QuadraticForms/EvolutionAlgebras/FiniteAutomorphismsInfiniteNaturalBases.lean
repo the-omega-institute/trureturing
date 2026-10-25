@@ -144,10 +144,10 @@ private def rotation (n : ℕ) : (ℂ × ℂ) ≃ₗ[ℂ] (ℂ × ℂ) := by
     map_smul' := by intros; ext <;> simp [smul_eq_mul] <;> ring
     left_inv := by
       intro x
-      ext <;> dsimp <;> field_simp <;> ring
+      ext <;> dsimp only <;> field_simp [hd] <;> ring
     right_inv := by
       intro x
-      ext <;> dsimp <;> field_simp <;> ring }
+      ext <;> dsimp only <;> field_simp [hd] <;> ring }
 
 private def familyBasis (n : ℕ) : Module.Basis (Fin 2) ℂ (ℂ × ℂ) :=
   (Module.Basis.finTwoProd ℂ).map (rotation n)
