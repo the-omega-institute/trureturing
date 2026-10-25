@@ -1967,3 +1967,400 @@ The source-specific additional deductions are the limits of the true thresholds 
 At fixed $\sigma>2$, §102 furnishes an actual critical zero state. At $\sigma=2$, §87.4 excludes such a nonzero state even in $\mathcal Q_c$. Equations (103.6), (103.13) and (103.17) give a precise way those statements coexist: under $V=1$, ordinary mass disappears and the state tends strongly to zero in the closed critical form norm, whereas nonzero potential and endpoint kinetic resources concentrate at the same original source and leave every fixed central band. This is not loss or concentration of a normalized probability mass. After $L^2=1$ normalization only the exact totals, ratios and relative resource conclusions above are asserted; its unweighted probability location, tightness, weak or strong limit, spatial/central profile and sharp scale remain unproved here. No positivity, simplicity, uniqueness, resonance classification, native source-to-state realization or physical dimension conclusion is obtained. All proofs are ordinary mathematics on the full complex actual domains; no Lean verification or completion of the continuing why-three research goal is claimed.
 
 ## 追加锚（本行以下为增补区）
+
+## 104. Actual endpoint probability: domain defects, excluded scales and singular reweighting
+
+**Definition 104.1 (actual selections and probability conventions).** Retain all data, full complex domains and arbitrary critical-state selections of Definition 103.1. In particular the source is $e$, $G=H^1\times\mathbb R$, $d\mu$ is Lebesgue Haar measure, $\Gamma$ is the original unit-source degree-$-3$ Green field, and $a,\eta$, the horizontal operator $L$, its clock and the central spectral units are fixed. For every sequence $\sigma_n>2$ tending to $2$, take any of those actual states, with the two amplitude normalizations
+
+$$
+\begin{gathered}
+V[u_n]=1,\qquad M_n=\|u_n\|_2^2,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\\
+\ell_n=\sqrt{M_n},\qquad \epsilon_n=\sigma_n-2,\qquad
+d_n=D_2[u_n],\\
+\mu_n=|v_n|^2d\mu,\qquad
+\nu_n=M_n\Gamma\,\mu_n=\Gamma|u_n|^2d\mu.
+\end{gathered}
+\tag{104.1}
+$$
+
+Both $\mu_n$ and $\nu_n$ are probability measures. The supplies used below, without a new existence or endpoint-limit claim, are (103.3), (103.6) and (103.24):
+
+$$
+\begin{gathered}
+g_n\to g_c,\quad T[u_n]\to t_c,\quad
+D_{\sigma_n}[u_n]\to d_c,\quad d_n\to d_c>0,\\
+M_n\to0,\qquad \epsilon_n\log(1/M_n)\to0,\qquad
+at_c+\eta d_c=g_c.
+\end{gathered}
+\tag{104.2}
+$$
+
+Write $\xi=(x,y,z)$, $s=w-xy/2$ and $\rho=(|\xi|^4+s^2)^{1/4}$, as in (102.1). Set $B_\rho(p,r)=\{q:\rho(p^{-1}q)<r\}$ and retain $B_\Gamma=\sup_{q\ne e}\rho(q)^3\Gamma(q)<\infty$. A central section of a measurable set is its section at fixed $\xi$, measured in $dw$ or, equivalently, $ds$. Let $\widehat v_n(\xi,\lambda)$ denote the unitary central transform in shear coordinates. The actual spectral probability $\vartheta_n$ on $[0,\infty)$ is defined, for bounded Borel $f$, by
+
+$$
+\int f(x)\,d\vartheta_n(x)
+ =\int f(\ell_n|\lambda|)|\widehat v_n(\xi,\lambda)|^2\,d\xi d\lambda.
+\tag{104.3}
+$$
+
+Analytic changes of variables used to study these measures do not change the original law or spectral units. Weak state limits below are in the common $L^2(G,d\mu)$; local strong convergence is on compact subsets of $G\setminus\{e\}$. Measure convergence on $G\cup\{\infty\}$ means weak convergence against continuous functions on its one-point compactification, whereas convergence of $\vartheta_n$ is narrow convergence on $[0,\infty)$.
+
+**Theorem 104.2 (local probability compactness and the maximal-domain defect).** For every $\chi\in C_c^\infty(G\setminus\{e\};\mathbb C)$ there is a constant $C_\chi$ such that, eventually,
+
+$$
+T[\chi v_n]+D_{\sigma_n}[\chi v_n]+D_2[\chi v_n]
+ +\|\chi v_n\|_{H^1(\mathbb R^4)}^2+\|\chi v_n\|_4^2\le C_\chi.
+\tag{104.4}
+$$
+
+Here the Euclidean norm uses the original coordinate chart. Constants and the sufficiently small interval of $\sigma-2$ can be chosen independently of the actual critical-state selection. Every sequence has a subsequence converging weakly globally in $L^2$ and strongly locally in $L^2$ off $e$ to the same $v$. Define the densely defined symmetric operator and its maximal zero space by
+
+$$
+S\phi=(aL+\eta D_w^2-g_c\Gamma)\phi,\qquad
+D(S)=\mathcal D_0,\qquad \mathcal N_0=\ker S^*.
+\tag{104.5}
+$$
+
+Every such $v$ belongs to $\mathcal N_0$, and
+
+$$
+\mathcal N_0\cap\mathcal Q_c=\{0\}.
+\tag{104.6}
+$$
+
+After further subselection the probability measures have exactly the decomposition
+
+$$
+\mu_n\longrightarrow |v|^2d\mu+m_e\delta_e+m_\infty\delta_\infty,
+\qquad m_e,m_\infty\ge0,\qquad
+\|v\|_2^2+m_e+m_\infty=1.
+\tag{104.7}
+$$
+
+This describes every subsequential limit, by taking a common subsequence for states and measures; it is not a claim that every proposed triple is realizable. The decomposition retains both possible defects simultaneously, without asserting that either is nonzero. Neither coefficient nor the triviality of $\mathcal N_0$ is specified.
+
+**Proof.** The actual equation is (103.3), also for $v_n$ by homogeneity. Its localization requires control uniform in the varying central order. Spectral Hölder and (104.2) give, eventually with $0<\epsilon_n\le1/2$,
+
+$$
+D_{\epsilon_n}[v_n]
+ \le D_{\sigma_n}[v_n]^{\epsilon_n/\sigma_n}
+ =\left(\frac{D_{\sigma_n}[u_n]}{M_n}\right)^{\epsilon_n/\sigma_n}
+ \longrightarrow1.
+\tag{104.8}
+$$
+
+Only boundedness of the left side is inferred; equality or convergence of that moment is not asserted.
+
+For a real $\chi$ as above, the central Fourier calculation needed in this proof is
+
+$$
+\left|D_\sigma[\chi f]-\operatorname{Re}d_\sigma(\chi^2f,f)\right|
+ \le C_\chi\bigl(\|f\|_2^2+D_{\sigma-2}[f]\bigr),
+\qquad 2<\sigma\le5/2.
+\tag{104.9}
+$$
+
+To verify both its order and its uniform constant, first use smooth $f$ and take the Fourier transform in $w$ at each $\xi$. For $p_\sigma(\lambda)=|\lambda|^\sigma$ the left-side difference is the quadratic pairing of $\frac12[\chi,[p_\sigma(D_w),\chi]]$. Symmetrizing the two cutoff Fourier variables $h,k$ gives, up to sign and the fixed Fourier constants, the symbol
+
+$$
+p_\sigma(\lambda+h+k)-p_\sigma(\lambda+h)
+ -p_\sigma(\lambda+k)+p_\sigma(\lambda).
+$$
+
+The fundamental theorem of calculus applied twice bounds its absolute value by
+
+$$
+C|hk|(1+|\lambda|+|h|+|k|)^{\sigma-2},
+\tag{104.10}
+$$
+
+with one $C$ on $[2,5/2]$, since $p_\sigma''(t)=\sigma(\sigma-1)|t|^{\sigma-2}$. Put $\langle\lambda\rangle=(1+\lambda^2)^{1/2}$. For $0\le\epsilon\le1/2$, the weight in (104.10) is bounded by
+$C\langle\lambda\rangle^{\epsilon/2}\langle\lambda+h+k\rangle^{\epsilon/2}\langle h\rangle^2\langle k\rangle^2$.
+The Fourier transforms of $\chi(\xi,\cdot)$ have uniformly bounded Schwartz seminorms. Thus Cauchy–Schwarz in $\lambda$ and integration in $h,k$ bound the pairing by
+$C_\chi\int\langle\lambda\rangle^\epsilon|\widehat f(\xi,\lambda)|^2d\xi d\lambda$,
+which is at most the right side of (104.9). This proves (104.9) with no constant singular at $\sigma=2$. Smooth approximation extends it to the central form domain. The same Fourier convolution bounds show that multiplication by $\chi$ or $\chi^2$ preserves that domain. The horizontal product rule, with bounded $X_i\chi$, shows preservation of $\mathcal E_\sigma$.
+
+Consequently $\chi^2v_n$ is a legal test. Taking real parts of its actual equation, using the horizontal product rule and (104.9), yields
+
+$$
+\begin{aligned}
+aT[\chi v_n]+\eta D_{\sigma_n}[\chi v_n]
+ &=g_nV[\chi v_n]
+   +a\int\sum_i|X_i\chi|^2|v_n|^2d\mu+\eta R_n,\\
+|R_n|&\le C_\chi(1+D_{\epsilon_n}[v_n]).
+\end{aligned}
+\tag{104.11}
+$$
+
+The original $\Gamma$ is bounded on the compact support of $\chi$, and $g_n$ is bounded. Equations (104.8)–(104.11) give the uniform kinetic bound. The scalar inequality $|\lambda|^2\le1+|\lambda|^{\sigma_n}$ bounds $D_2[\chi v_n]$. On this support $x$ is bounded and $\partial_y=X_2-x\partial_w$, so all four ordinary first derivatives are controlled. The ordinary four-dimensional Sobolev embedding $H^1\to L^4$ gives the last term in (104.4). Applying the real-cutoff argument to the real and imaginary parts of $\chi$ gives the complex-cutoff assertion. These are consumed product, Fourier and Sobolev estimates, not separate new inequalities.
+
+The estimates hold uniformly near $2$ over all actual selections: if the needed bound in (104.8) failed uniformly, one could choose $\sigma_j\to2$ and violating actual states, contradicting the universal sequential assertion (104.2). The other constants in (104.11) depend only on the fixed data and $\chi$.
+
+Weak compactness of the unit ball of global $L^2$, local Rellich compactness from (104.4), and a countable exhaustion off $e$ give the state subsequence. For $\phi\in\mathcal D_0$, move all free derivatives onto this smooth test in the actual weak equation:
+
+$$
+a\langle L\phi,v_n\rangle+
+\eta\langle|D_w|^{\sigma_n}\phi,v_n\rangle
+ =g_n\langle\Gamma\phi,v_n\rangle.
+\tag{104.12}
+$$
+
+Here $|D_w|^{\sigma_n}\phi\to D_w^2\phi$ strongly in $L^2$, by Fourier dominated convergence, and $\Gamma\phi\in L^2$ because the support avoids $e$. Global weak convergence therefore gives $\langle S\phi,v\rangle=0$ for every $\phi\in D(S)$. By the definition of the adjoint this is precisely $`v\in D(S^*)`$ and $`S^*v=0`$; no global vector $\Gamma v$ is required.
+
+If also $v\in\mathcal Q_c$, approximate it in that closed form norm by $\phi_j\in\mathcal D_0$. For each fixed $\phi\in\mathcal D_0$, approximation in the second slot gives $\overline q_c(\phi,v)=\langle S\phi,v\rangle=0$. Density then gives $\overline q_c[v]=0$, and (87.19) gives $v=0$. This proves (104.6) without equating maximal and Friedrichs domains.
+
+Finally $G\cup\{\infty\}$ is compact metrizable, so the probability measures have a weakly convergent subsequence. On every compact subset off $e$, strong $L^2$ convergence gives $|v_n|^2\to|v|^2$ in $L^1$. Hence the limiting measure agrees with $|v|^2d\mu$ on $G\setminus\{e\}$; its remaining support is contained in $\{e,\infty\}$. Positivity and total mass one give (104.7). Conversely any measure limit can first be retained and then refined by the state compactness just proved, so every measure limit has this representation. This converse concerns subsequence refinement, not realizability of arbitrary coefficients. $\square$
+
+**Theorem 104.3 (actual probability excludes both inverse-kinetic scales).** For every fixed $0<C<\infty$,
+
+$$
+\sup_{b\in\mathbb R^3}
+ \mu_n\{(\xi,w):|\xi-b|<C\ell_n\}\longrightarrow0.
+\tag{104.13}
+$$
+
+The actual central spectral laws satisfy
+
+$$
+\vartheta_n\longrightarrow\delta_0,\qquad
+\int x^2d\vartheta_n(x)=d_n\longrightarrow d_c>0.
+\tag{104.14}
+$$
+
+In physical central coordinates there is the uniform conclusion
+
+$$
+\sup_{\substack{E\subset G\ \mathrm{measurable}\\
+ \operatorname*{ess\,sup}_\xi |E_\xi|\le C\ell_n}}
+ \mu_n(E)\longrightarrow0.
+\tag{104.15}
+$$
+
+The sections can have arbitrary moving centres, shapes and dependence on $\xi$, and may be specified in $w$ or in $s$. Thus (104.14) is weak concentration of the rescaled spectral probability at zero with a nonvanishing second moment; it is not convergence of second moments to the moment of $\delta_0$.
+
+**Proof.** Use the nonlinear comparison (87.10)–(87.11) with its two exact probability preservations. Define
+
+$$
+U_n(\xi,t)=\mathcal F_s^{-1}|\widehat v_n|(\xi,t),\qquad
+f_n(\xi,t)=\ell_n^2U_n(\ell_n\xi,\ell_n t).
+\tag{104.16}
+$$
+
+The dilation here is Euclidean in the four auxiliary variables, not a Carnot dilation of the original law. Put $A[f]=\|\nabla_\xi f\|_2^2$, $C[f]=\|\partial_t f\|_2^2$ and $J[f]=\int|\xi|^{-1}|f(\xi,0)|^2d\xi$. The existing comparison and its marginal and spectral equalities give, for bounded Borel $F$ in the last line,
+
+$$
+\begin{gathered}
+\|f_n\|_2=1,\qquad A[f_n]\le T[u_n],\qquad C[f_n]=d_n,\qquad
+J[f_n]=M_nJ[U_n]\ge4\pi,\\
+\int|f_n(\xi,t)|^2dt
+ =\ell_n^3\int|v_n(\ell_n\xi,w)|^2dw,\\
+\int F(|\lambda|)|\widehat f_n(\xi,\lambda)|^2d\xi d\lambda
+ =\int F(\ell_n|\lambda|)|\widehat v_n(\xi,\lambda)|^2d\xi d\lambda.
+\end{gathered}
+\tag{104.17}
+$$
+
+In the marginal equality the shear is only a translation on each central fibre. No pointwise central spatial probability equality is used.
+
+The nonnegative auxiliary trace form
+
+$$
+\mathfrak h[f]=aA[f]+\eta C[f]-\frac{4\sqrt{a\eta}}{\pi}J[f]
+\tag{104.18}
+$$
+
+has the closed extension with zero kernel furnished by (87.8)–(87.9), after the fixed central change of variable $\kappa=\sqrt{\eta/a}$. More explicitly $F(\xi,t)=\kappa^{1/2}f(\xi,\kappa t)$ gives $\mathfrak h[f]=a\mathfrak t[F]$. It is not asserted closed on $H^1$. Equations (104.2) and (104.17) imply
+
+$$
+0\le\mathfrak h[f_n]
+ \le aT[u_n]+\eta d_n-g_c\longrightarrow0.
+\tag{104.19}
+$$
+
+The sequence is bounded in ordinary $H^1(\mathbb R^4)$. The bounded inclusion of $H^1$ into the closed trace form domain, followed by weak lower semicontinuity and its zero kernel, shows that every weak $H^1$ limit is zero. Thus $f_n\rightharpoonup0$ in $H^1$ and $f_n\to0$ in $L^2$ on every compact set, for the full sequence.
+
+The following localization is needed to transfer probability information. Fix $r>0$. Choose real smooth $\chi,\zeta$ with $\chi^2+\zeta^2=1$, $\chi=0$ on the Euclidean ball of radius $r$ in $(\xi,t)$ and $\chi=1$ outside its radius-$2r$ ball. The ordinary gradient IMS identity gives
+
+$$
+\mathfrak h[\chi f_n]+\mathfrak h[\zeta f_n]
+ =\mathfrak h[f_n]+\int
+ \left(a(|\nabla_\xi\chi|^2+|\nabla_\xi\zeta|^2)
+ +\eta(|\partial_t\chi|^2+|\partial_t\zeta|^2)\right)|f_n|^2.
+\tag{104.20}
+$$
+
+The error tends to zero by local strong $L^2$ convergence. Both forms on the left are nonnegative. Also $J[\chi f_n]\to0$: on $t=0$ it vanishes for $|\xi|\le r$; on each fixed annulus $r<|\xi|<R$ the traces converge strongly to zero in $L^2$; and on $|\xi|>R$ its contribution is bounded by $R^{-1}\|f_n(\cdot,0)\|_2^2\le C/R$. For completeness, the annular trace convergence follows by applying the one-dimensional trace estimate to a compactly supported cutoff of $f_n$: its $L^2$ norm tends to zero and its first derivative remains bounded. The same estimate without a cutoff gives the uniform global trace bound used for the tail. Hence (104.18)–(104.20) imply
+
+$$
+aA[\chi f_n]+\eta C[\chi f_n]\longrightarrow0,\qquad
+\|f_n-\chi f_n\|_2\longrightarrow0.
+\tag{104.21}
+$$
+
+Only the second assertion concerns probability; the first controls the exterior derivatives.
+
+For each fixed $c>0$, Plancherel now gives
+
+$$
+\|\mathbf1_{(c,\infty)}(|D_t|)f_n\|_2
+ \le\|f_n-\chi f_n\|_2+c^{-1}\|\partial_t(\chi f_n)\|_2
+ \longrightarrow0.
+\tag{104.22}
+$$
+
+By the last equality in (104.17), this is $\vartheta_n((c,\infty))\to0$, proving its narrow limit. Its second moment is exactly $M_nD_2[v_n]=d_n$.
+
+For horizontal probability, the ordinary three-dimensional Sobolev inequality and Hölder, applied at almost every $t$ and integrated, give
+$\int_{|\xi-b|<C}|h(\xi,t)|^2d\xi dt\le C' C^2 A[h]$
+for $h\in H^1(\mathbb R^4)$, uniformly in $b$. Apply this consumed estimate to $h=\chi f_n$, and use (104.21) to replace $h$ by $f_n$ with an $L^2$ error tending to zero. The marginal identity (104.17) proves (104.13), including arbitrary moving horizontal centres.
+
+To pass to actual central spatial probability, fix $c>0$ and set $P_n=\mathbf1_{[0,c/\ell_n]}(|D_w|)$ and $Q_n=I-P_n$. Equation (104.22) gives $\|Q_nv_n\|_2\to0$. Fourier Cauchy–Schwarz in each actual central fibre gives
+
+$$
+\operatorname*{ess\,sup}_w|P_nv_n(\xi,w)|^2
+ \le\frac{c}{\pi\ell_n}\int|v_n(\xi,w)|^2dw.
+$$
+
+Therefore every $E$ in (104.15) satisfies
+
+$$
+\|\mathbf1_Ev_n\|_2
+ \le\sqrt{Cc/\pi}+\|Q_nv_n\|_2.
+\tag{104.23}
+$$
+
+First let $n\to\infty$, then $c\downarrow0$. The estimate is uniform in $E$. A shear translates each section without changing its length, proving the stated coordinate and moving-centre quantifiers. All transfers from $f_n$ use only the two equalities in (104.17) and the actual central Fourier projection; the nonlinear comparison is never inverted. $\square$
+
+**Theorem 104.4 (moving-band probability/resource separation and absence of small Carnot profiles).** For every fixed $c>0$, use the actual $P_n,Q_n$ of the preceding proof. Then
+
+$$
+\|P_nv_n\|_2^2\to1,\qquad \|Q_nv_n\|_2^2\to0,\qquad
+\frac{F[P_nv_n]}{F[v_n]}\to0,\qquad
+\frac{F[Q_nv_n]}{F[v_n]}\to1
+\quad(F=V,T,D_2,D_{\sigma_n}).
+\tag{104.24}
+$$
+
+Each $F$ is evaluated on the projected state. In particular no additive or commuting decomposition of $V$ is asserted. For every fixed $0<C<\infty$,
+
+$$
+\sup_{p\in G}\mu_n(B_\rho(p,C M_n^{1/4}))\longrightarrow0.
+\tag{104.25}
+$$
+
+The same conclusion holds for balls of any fixed Carnot–Carathéodory distance of the original horizontal geometry. More precisely, for arbitrary $p_n\in G$ and $0<r_n\le C M_n^{1/4}$, the norm-one states
+
+$$
+w_n(q)=r_n^{5/2}v_n(p_n\delta_{r_n}q)
+ =\frac{r_n^{5/2}}{\sqrt{M_n}}u_n(p_n\delta_{r_n}q)
+\tag{104.26}
+$$
+
+converge strongly to zero in $L^2$ on every compact subset of $G$, and weakly to zero in global $L^2$. They have no globally strongly convergent subsequence. This excludes any nonzero local $L^2$ profile at these radii even after arbitrary moving translations and the required probability normalization.
+
+**Proof.** The probability assertions in (104.24) are (104.14). For the resources, the same actual law gives
+
+$$
+\begin{aligned}
+D_2[P_nu_n]&=\int_{[0,c]}x^2d\vartheta_n(x)\longrightarrow0,\\
+D_{\sigma_n}[P_nu_n]
+ &=\ell_n^{-\epsilon_n}\int_{[0,c]}x^{2+\epsilon_n}d\vartheta_n(x)
+ \longrightarrow0.
+\end{aligned}
+\tag{104.27}
+$$
+
+Indeed $\ell_n^{-\epsilon_n}\to1$ by (104.2). For either integral, its part on $[0,\delta]$ is uniformly $O(\delta^2)$ and its part on $[\delta,c]$ tends to zero by (104.14); then let $\delta\downarrow0$. This handles the sharp cutoff without a continuity assumption at $c$.
+
+The genuine free reduction of Proposition 85.2 gives $T[P_nu_n]\le T[u_n]$ and preserves $\mathcal E_{\sigma_n}$ for each $n$. The whole-domain endpoint inequality gives
+$V[P_nu_n]\le\frac18\sqrt{T[P_nu_n]D_2[P_nu_n]}\to0$.
+Use the legitimate test $P_nu_n$ in the actual equation:
+
+$$
+0\le aT[P_nu_n]+\eta D_{\sigma_n}[P_nu_n]
+ =g_n v(P_nu_n,u_n)
+ \le g_n\sqrt{V[P_nu_n]V[u_n]}\longrightarrow0.
+\tag{104.28}
+$$
+
+The equality makes the pairing real and nonnegative. Orthogonal kinetic splitting gives the complementary limits $t_c,d_c,d_c$. For the potential, the weighted triangle inequality gives
+$|\sqrt{V[Q_nu_n]}-1|\le\sqrt{V[P_nu_n]}\to0$.
+Divide by the positive full-state resource totals, using (104.2). Amplitude homogeneity identifies the resulting fractions with those for $v_n$. This proves (104.24), without ever applying a central projector to $\Gamma|v_n|^2$.
+
+Every left-translated $\rho$ ball of radius $r$ has central sections of length at most $2r^2$: in symmetric shear coordinates the group product translates the central coordinate by an affine function of $\xi$, while the defining inequality bounds its remaining displacement by $r^2$. At $r=C M_n^{1/4}$ these lengths are at most $2C^2\ell_n$, so (104.15) proves (104.25) uniformly in the centre. Fixed Carnot–Carathéodory balls are contained in fixed multiples of these balls, by homogeneity and boundedness of their unit ball in $\rho$.
+
+Left translation preserves Haar measure and $\delta_r$ has Jacobian $r^5$. Thus (104.26) has norm one. Every compact $K\subset G$ is contained in some $B_\rho(e,R)$, and
+
+$$
+\int_K|w_n|^2d\mu
+ =\int_{p_n\delta_{r_n}K}|v_n|^2d\mu
+ \le\mu_n(B_\rho(p_n,Rr_n))\longrightarrow0.
+\tag{104.29}
+$$
+
+Compactly supported $L^2$ tests are dense in global $L^2$, proving weak convergence to zero. A global strong limit would then be zero, contradicting the conserved norm one. $\square$
+
+**Theorem 104.5 (quantitative separation of probability and the same-state potential probability).** For every $n$, $p\in G$ and $r>0$,
+
+$$
+\begin{aligned}
+\mu_n(B_\rho(p,r))
+ &\le\min\left\{1,\ 2r^2\sqrt{d_n/M_n}\right\},\\
+\nu_n(G\setminus B_\rho(e,r))
+ &\le\min\left\{1,\ \frac{6B_\Gamma\sqrt{M_nd_n}}r\right\}.
+\end{aligned}
+\tag{104.30}
+$$
+
+In particular, for every fixed $1/4<\alpha<1/2$,
+
+$$
+\mu_n(B_\rho(e,M_n^\alpha))\longrightarrow0,\qquad
+\nu_n(G\setminus B_\rho(e,M_n^\alpha))\longrightarrow0,
+\qquad d_{\rm TV}(\mu_n,\nu_n)\longrightarrow1,
+\tag{104.31}
+$$
+
+where $d_{\rm TV}(\mu,\nu)=\sup_E|\mu(E)-\nu(E)|$ for probability measures. Thus the normalized potential resource is asymptotically supported on sets carrying vanishing unweighted probability of the very same actual state.
+
+**Proof.** The one-dimensional Sobolev estimate
+$\|h\|_\infty^2\le\|h\|_2\|h'\|_2$
+for $h\in H^1(\mathbb R)$ follows by integrating the derivative of $|h|^2$ towards both infinities, adding the two bounds and applying Cauchy–Schwarz. Apply it to almost every central fibre of the actual $v_n$, which belongs to $\mathcal E_2$. Integrating the fibre suprema and using Cauchy–Schwarz in $\xi$ gives
+
+$$
+\int\operatorname*{ess\,sup}_w|v_n(\xi,w)|^2d\xi
+ \le\|v_n\|_2\|\partial_wv_n\|_2
+ =\sqrt{d_n/M_n}.
+\tag{104.32}
+$$
+
+The central section length bound $2r^2$ used in the proof of (104.25) now gives the first estimate of (104.30), uniformly in $p$. This estimate uses actual central derivatives and probability, with no substitution of a marginal field.
+
+Put $A_n=\sqrt{d_n/M_n}$. Tonelli's theorem and the first estimate, with centre $e$, give
+
+$$
+\begin{aligned}
+\int_{\rho\ge r}\rho^{-3}d\mu_n
+ &=3\int_r^\infty t^{-4}\mu_n\{r\le\rho<t\}\,dt\\
+ &\le3\int_r^\infty t^{-4}\mu_n(B_\rho(e,t))\,dt
+ \le6A_n/r.
+\end{aligned}
+\tag{104.33}
+$$
+
+Multiplication by $M_nB_\Gamma$ and the actual bound $\Gamma\le B_\Gamma\rho^{-3}$ prove the second estimate in (104.30). Both measures have mass one, giving the stated minima. Substituting $r=M_n^\alpha$ gives upper bounds $2\sqrt{d_n}M_n^{2\alpha-1/2}$ and $6B_\Gamma\sqrt{d_n}M_n^{1/2-\alpha}$, respectively, and both vanish in the prescribed open interval. On the same moving ball $\nu_n$ tends to one while $\mu_n$ tends to zero; hence $1\ge d_{\rm TV}(\mu_n,\nu_n)\to1$. With the alternative convention $\|\mu-\nu\|_{\rm variation}$ the limit is $2$. These elementary inequalities are proof intermediates for the actual-state conclusion, not additional stand-alone novelty claims. $\square$
+
+**Definition 104.6 (mathematical attribution and unresolved boundaries).** The fixed source and its genuine central projections are supplied by §§82–85. The precise Fourier-modulus comparison, its preserved horizontal marginal and central spectral probability, the sharp trace intermediate, and the actual critical Friedrichs zero kernel are those of §§87.2–87.4. The actual full-domain equation and critical states are supplied by §§101.5 and 102.3; all endpoint resource and mass inputs are exactly (104.2) from §103. No trial family replaces an actual state in the assertions above.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, Theorem 1.1 and (8)](https://arxiv.org/html/1105.0335v1), at $n=4$, $\beta=2$, supply the existing $2/\pi$ halfspace trace constant, hence $4/\pi$ on both halfspaces. Its extension to complex $H^1$ functions and its closed auxiliary zero-kernel passage are the supplies proved in §87. The use here is precisely the scaled form (104.18), not a replacement of $\Gamma$ by its marginal and not an inverse of the nonlinear comparison.
+
+Lundholm–Nam–Portmann, [*Fractional Hardy–Lieb–Thirring and related inequalities for interacting systems*, Lemma 14 and Remark 13](https://arxiv.org/html/1501.04570v3), give a fractional IMS localization formula for fixed order $s>0$ on bounded Euclidean domains, with a lower-order error. That is mature localization context. Its constants and the order of its error do not by themselves give the uniform estimate required here as $s=\sigma/2\downarrow1$. The whole-central-line double-commutator bound (104.9)–(104.10), its uniform $D_{\sigma-2}$ error and its consumption of (103.24) provide that passage explicitly.
+
+Ciatti–Cowling–Ricci, [*Hardy and uncertainty inequalities on stratified Lie groups*, Theorem A, Theorem 3.1 and Corollary 3.2](https://arxiv.org/html/1308.2373v1), enter only through the already proved §102–§103 mass supplies: their $p=2$ orders $1,2$ are below $Q/p=5/2$ for this $Q=5$ group, the original $L$ and the homogeneous norm $\rho$. Teschl, [*Mathematical Methods in Quantum Mechanics*, §2.2, (2.19)–(2.20), and §2.3, Theorems 2.12–2.13](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), supplies the mature adjoint and closed-form representation principles. Here the ambient Hilbert space is exactly $L^2(G,d\mu)$, the symmetric initial operator is (104.5), and its Friedrichs form domain is the existing $\mathcal Q_c$. The adjoint test in (104.12) supplies maximal-domain membership, while form-core density and (87.19) supply (104.6); no literature theorem identifies those domains for this singular field. Ordinary Sobolev, Rellich, Plancherel, trace, probability compactness and layer-cake estimates are consumed only inside these deductions.
+
+The repository-derived content is the actual normalized-state local bounds and simultaneous defect representation, the excluded moving probability scales and spectral probability/resource split, and the quantitative singular reweighting of those same actual states. These are fixed-source deductions with the stated supplier correspondence, not a claim of exhaustive literature priority. Equations (104.13)–(104.15) exclude concentration on the inverse-kinetic horizontal and central scales, and (104.25) excludes even translated Carnot profiles of radius $O(M_n^{1/4})$. They select no larger spatial scale or limiting shape. Equation (104.30) also controls potential-probability tails whenever $r_n/\sqrt{M_n}\to\infty$, but does not identify a rescaled potential-probability distribution at $r_n\asymp\sqrt{M_n}$.
+
+The values of $m_e,m_\infty$, existence or nonexistence of nonzero elements of $\mathcal N_0$, attainability of the defect triples, and normalized-probability tightness on the original $G$ remain unresolved. Any nonzero weak profile lies outside $\mathcal Q_c$ by (104.6); no alternate self-adjoint extension is selected. No positivity, simplicity, uniqueness, resonance classification, source-to-state physical realization or physical space-dimension conclusion is implied.
+
+## 追加锚（本行以下为增补区）
