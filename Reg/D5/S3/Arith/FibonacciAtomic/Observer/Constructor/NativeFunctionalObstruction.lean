@@ -225,13 +225,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have satV : Satisfies S v := by intro i E eq; cases eq
   have finite : IsFinite (rejected.readout () ⟨1, S, 0⟩ v) := by
     change IsFinite (if leaf false = leaf true then leaf true else leaf false)
-    rw [if_neg alpha_ne_beta.symm]
+    rw [ite_eq_right alpha_ne_beta.symm]
     exact ⟨.of false, rfl⟩
   obtain ⟨w, _, t, ht, pos⟩ := law satU satV (i := 0) finite
   have diff : rejected.readout () ⟨1, S, 0⟩ u ≠ rejected.readout () ⟨1, S, 0⟩ v := by
     change (if leaf true = leaf true then leaf true else leaf false) ≠
       (if leaf false = leaf true then leaf true else leaf false)
-    simpa only [if_pos rfl, if_neg alpha_ne_beta.symm] using alpha_ne_beta
+    rw [ite_eq_left rfl, ite_eq_right alpha_ne_beta.symm]
+    exact alpha_ne_beta
   have positive := pos diff
   change embed t = (if w 0 = leaf true then leaf true else leaf false) at ht
   split_ifs at ht with h
@@ -335,17 +336,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       simp only [ite_self]
     · refine ⟨C, by simp, (fun _ => atomic n), sat _, ?_⟩
       change (if ∃ k, atomic n = atomic k then atomic n else Omega) = atomic n
-      exact if_pos ⟨n, rfl⟩
+      exact ite_eq_left ⟨n, rfl⟩
   · rintro ⟨D, mem, v, _, hx⟩
     have eqD : D = C := by simpa only [List.mem_singleton] using mem
     subst D
     change (if ∃ n, v 0 = atomic n then v 0 else Omega) = X at hx
     apply (completed_homogeneous_split 2 H root X).mpr
     by_cases h : ∃ n, v 0 = atomic n
-    · rw [if_pos h] at hx
+    · rw [ite_eq_left h] at hx
       obtain ⟨n, hn⟩ := h
       exact Or.inr ⟨anchor, n, hx.symm.trans hn⟩
-    · rw [if_neg h] at hx
+    · rw [ite_eq_right h] at hx
       exact Or.inl hx.symm
 
 def evidence : Registration arena (type_of% (@rank_free_obstruction)) where
