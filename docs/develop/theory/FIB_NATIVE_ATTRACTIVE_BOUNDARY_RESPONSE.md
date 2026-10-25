@@ -4894,3 +4894,18 @@ count. No replacement of its fixed positive noise, whole
 marginal or natural full-domain realization is part of (18.3).
 
 ## 追加锚（本行以下为增补区）
+
+
+## 19. The complete-source error on the full gauge sphere
+
+**Definition 19.1 (the complete marginal error).**
+Retain Definition 18.1's analytic assumptions and Definition 10.1's
+complete unweighted marginal $M_{n,\epsilon}$. For every integer
+$n\ge2$ and $\epsilon\ge0$ define
+$e_n(\epsilon)=\sup_{\omega\in\Sigma}|M_{n,\epsilon}(\omega)-M_{n,0}(\omega)|$,
+where $\Sigma=\{\rho^4+16z^2=1\}$ includes both axis points.
+The uniform small-noise estimate for this quantity, its exterior and
+form consequences, and the remaining comparison in (18.22) are given in
+[the same-theme continuation, Theorem 20.2 and §§20--21](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md).
+
+## 追加锚（本行以下为增补区）
