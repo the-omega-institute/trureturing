@@ -8,117 +8,231 @@
 
 /-
 admission_basis: open-problem-resolution (Conjecture 1, function clause; Refuted).
-All declarations have proof_shape: bind-only after expansion of same-delivery
-helpers; escape_witness: none. The product bounds apply frozen finite-product
-loss and Mathlib convergence inequalities. Series estimates use geometric
-domination, sum/tsum comparison and finite-prefix splitting. The radius estimate
-applies le_radius_of_summable to an absolute geometric majorant. Rational
-certificates use norm_num; the final comparison uses linarith.
-The settling result supplies the external-open-problem-resolution basis.
-Per-declaration consumers (compiled types and values, auxiliary constants expanded):
-* claim: result.
-* hbounds: numH10, numH3, numH6.
-* hshift: negative_bounds.
-* hsum: hbounds, hshift, negative_bounds, numH10, numH3, numH6, series_eq, series_product, witness_negative.
-* hsummable: hbounds, hshift, hsummable_any.
-* hsummable_any: series_summable.
-* negative_bounds: witness_negative.
-* normalizedTerm: series_eq, series_summable.
-* numH10: negative_bounds.
-* numH3: negative_bounds, witness_negative.
-* numH6: negative_bounds.
-* numP3: negative_bounds.
-* numP6: negative_bounds.
-* plower: hbounds, numH10, numH3, numH6.
-* pupper: hbounds, numH10, numH3, numH6.
-* q: negative_bounds, numH10, numH3, numH6, numP3, numP6, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos.
-* qlt: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius.
-* qpos: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius.
-* qpower: witness_negative.
-* qprod_bounds: hbounds, numP3, numP6.
-* qprod_le_one: hbounds, hsummable, qprod_bounds.
-* qprod_lower: qprod_bounds.
-* qprod_multipliable: qprod_le_one, qprod_lower, qprod_split, qprod_step.
-* qprod_ne_zero: qprod_pos.
-* qprod_nonneg: hbounds, hsummable, qprod_pos.
-* qprod_pos: witness_negative.
-* qprod_split: qprod_bounds.
-* qprod_step: negative_bounds.
-* qseries: claim, result, series_eq, series_product, witness_negative.
-* r: negative_bounds, numH10, numH3, numH6, numP3, numP6, q, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos.
-* radius: claim, witness_radius.
-* result: settlement of the function clause.
-* rqgamma_eq: normalizedTerm.
-* series_eq: series_product.
-* series_product: witness_negative.
-* series_summable: witness_radius.
-* witness_negative: result.
-* witness_radius: result.
-* y: negative_bounds, numH10, numH3, numH6, witness_negative, ylt, ypos.
-* ylt: negative_bounds, numH10, numH3, numH6.
-* ypos: negative_bounds, numH10, numH3, numH6.
-Direct frozen D5 dependencies after same-delivery expansion:
-Addresses below are declaration GIDs with DECLARATION statement_id values
-from .lake/build/stratalint/scoped-lean-report.json. Result.qprod is the
-newly public owner definition; its public identity below is to be re-pinned
-at landing. The owner proof and statements retain their original source.
-* plower, pupper, q, qlt, qpos, qpower, qprod_multipliable, r, y, ylt, ypos:
-  none.
-* hshift, hsum, hsummable, hsummable_any, qprod_le_one, qprod_ne_zero, qprod_nonneg, qprod_pos, qprod_split, qprod_step:
-  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+Frozen D5 dependency identity table (declaration identities):
+* F1: GID D5/S3/Analytic/QGammaTuran/Result.qprod;
   declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
   DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
-* normalizedTerm, rqgamma_eq, series_eq, series_product, series_summable, witness_radius:
-  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
-  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
-  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
-  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+* F2: GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
   declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
   DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
-* result:
-  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
-  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
-  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
-  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
-  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
-  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
-  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq;
+* F3: GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq;
   declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq;
   DECLARATION statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
-  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one;
+* F4: GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one;
   declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.admissible_one;
   DECLARATION statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
-  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+* F5: GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
   declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
   DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
-* witness_negative:
-  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
-  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
-  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
-  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
-  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
-  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
-  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
-  declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
-  DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
-* hbounds, negative_bounds, numH10, numH3, numH6, numP3, numP6, qprod_bounds, qprod_lower:
-  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
-  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
-  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
-  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
-  declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
-  DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
-* qseries, radius:
-  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
-  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
-  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+Per-declaration judgments:
+Frozen_D5_dependencies references only the identity table above; none means
+no frozen D5 dependency after expansion of same-delivery helpers. Consumers
+are declarations in this module unless a mathematical conclusion is named.
+* qprod_multipliable:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: qprod_le_one, qprod_lower, qprod_split, qprod_step;
+  frozen_D5_dependencies: none.
+* qprod_step:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1.
+* qprod_nonneg:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: hbounds, hsummable, qprod_pos;
+  frozen_D5_dependencies: F1.
+* qprod_ne_zero:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: qprod_pos;
+  frozen_D5_dependencies: F1.
+* qprod_pos:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: witness_negative;
+  frozen_D5_dependencies: F1.
+* qprod_le_one:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: hbounds, hsummable, qprod_bounds;
+  frozen_D5_dependencies: F1.
+* qprod_lower:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: qprod_bounds;
+  frozen_D5_dependencies: F1, F5.
+* qprod_split:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: qprod_bounds;
+  frozen_D5_dependencies: F1.
+* qprod_bounds:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: hbounds, numP3, numP6;
+  frozen_D5_dependencies: F1, F5.
+* rqgamma_eq:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: normalizedTerm;
+  frozen_D5_dependencies: F1, F2.
+* hsum:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: hbounds, hshift, negative_bounds, numH10, numH3, numH6, series_eq, series_product, witness_negative;
+  frozen_D5_dependencies: F1.
+* hsummable:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: hbounds, hshift, hsummable_any;
+  frozen_D5_dependencies: F1.
+* hshift:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1.
+* plower:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: hbounds, numH10, numH3, numH6;
+  frozen_D5_dependencies: none.
+* pupper:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: hbounds, numH10, numH3, numH6;
+  frozen_D5_dependencies: none.
+* hbounds:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: numH10, numH3, numH6;
+  frozen_D5_dependencies: F1, F5.
+* qseries:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: claim, result, series_eq, series_product, witness_negative;
+  frozen_D5_dependencies: F2.
+* radius:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: claim, witness_radius;
+  frozen_D5_dependencies: F2.
 * claim:
-  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
-  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
-  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
-  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq;
-  declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq;
-  DECLARATION statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: result;
+  frozen_D5_dependencies: F2, F3.
+* normalizedTerm:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: series_eq, series_summable;
+  frozen_D5_dependencies: F1, F2.
+* series_eq:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: series_product;
+  frozen_D5_dependencies: F1, F2.
+* hsummable_any:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: series_summable;
+  frozen_D5_dependencies: F1.
+* series_summable:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: witness_radius;
+  frozen_D5_dependencies: F1, F2.
+* r:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6, numP3, numP6, q, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos;
+  frozen_D5_dependencies: none.
+* q:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6, numP3, numP6, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos;
+  frozen_D5_dependencies: none.
+* y:
+  proof_shape: bind-only (definition);
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6, witness_negative, ylt, ypos;
+  frozen_D5_dependencies: none.
+* qpos:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius;
+  frozen_D5_dependencies: none.
+* qlt:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius;
+  frozen_D5_dependencies: none.
+* ypos:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6;
+  frozen_D5_dependencies: none.
+* ylt:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds, numH10, numH3, numH6;
+  frozen_D5_dependencies: none.
+* numH3:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds, witness_negative;
+  frozen_D5_dependencies: F1, F5.
+* numH6:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1, F5.
+* numH10:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1, F5.
+* numP3:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1, F5.
+* numP6:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: negative_bounds;
+  frozen_D5_dependencies: F1, F5.
+* qpower:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: witness_negative;
+  frozen_D5_dependencies: none.
+* series_product:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: witness_negative;
+  frozen_D5_dependencies: F1, F2.
+* negative_bounds:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: witness_negative;
+  frozen_D5_dependencies: F1, F5.
+* witness_negative:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: result;
+  frozen_D5_dependencies: F1, F2, F5.
+* witness_radius:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: result;
+  frozen_D5_dependencies: F1, F2.
+* result:
+  proof_shape: bind-only;
+  escape_witness: none;
+  consumers: settlement of the function clause;
+  frozen_D5_dependencies: F1, F2, F3, F4, F5.
 -/
 
 import D5.S3.Analytic.QGammaTuran.Result

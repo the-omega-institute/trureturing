@@ -72,7 +72,7 @@ codomain $\mathbb R_+$.
 `Result.claim` states the coefficient clause for real $\alpha,\beta>0$,
 $\mu\ge\max(-\beta,-1)$ and $\alpha\le\beta+1$.
 `Result.result` refutes that clause. The function clause is separately refuted by `FunctionResult.result`;
-the log-concavity clause remains open.
+log-concavity restricted to nonnegative parameters $\mu$ remains **OPEN**.
 The bounded literature scope and computational evidence are stated in
 `Problems/kalmykov-karp-2018-qgamma-turanian-coefficients.md`.
 
@@ -101,3 +101,15 @@ is false at $q=(93/100)^{10}$, $g_n=1$, $\mu=-7/10$,
 $\alpha=3/10$, $\beta=7/10$ and $x=93/100$.
 The corresponding dossier is
 `Problems/kalmykov-karp-2018-qgamma-turanian-function.md`.
+
+As a consequence in prose of `FunctionResult.witness_negative`, at the
+same $q,x$ and $g_n=1$ the function cannot be log-concave on an interval
+containing $[-7/10,3/10]$. The two convex combinations
+$-2/5=(7/10)(-7/10)+(3/10)(3/10)$ and
+$0=(3/10)(-7/10)+(7/10)(3/10)$ have respective right-endpoint weights
+$3/10$ and $7/10$. Log-concavity at both points would imply, after
+multiplication, $g(-2/5;x)g(0;x)\ge g(-7/10;x)g(3/10;x)$,
+contradicting the proved strict reverse inequality. The endpoint values
+are strictly positive by the normalized lower bounds and positive
+denominators. This consequence is not a separate Lean theorem.
+Log-concavity restricted to nonnegative parameters $\mu$ remains **OPEN**.

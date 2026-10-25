@@ -85,7 +85,7 @@ function value. This assertion concerns the convergent function itself.
 function clause is false. The example is $g_n=1$, $q=(93/100)^{10}$,
 $\mu=-7/10$, $\alpha=3/10$, $\beta=7/10$, $x=93/100$.
 The boundary equality $\mu=\max(-\beta,-1)$ is permitted, and
-$\alpha$ is positive and nonintegral. Parameter log-concavity is **OPEN**.
+$\alpha$ is positive and nonintegral. Log-concavity restricted to nonnegative parameters $\mu$ remains **OPEN**.
 
 ## Route
 
@@ -129,22 +129,30 @@ invalidate this refutation without proving the source assertion.
 ## Evidence
 
 **PROVED**: `D5.S3.Analytic.QGammaTuran.FunctionResult.result` has the
-closed type `¬ claim`. Its proof uses the existing
-`D5.S3.Analytic.ReciprocalGammaTuran.Defs.admissible_one`.
-The shared product bounds and q-gamma identities are reused from
-`D5.S3.Analytic.QGammaTuran.Result`.
+closed type `¬ claim`. The proof reuses `Result.qprod` and
+`Result.rqgamma` (definitions),
+`D5.S3.Analytic.ReciprocalGammaTuran.Defs.admissible_one`, and
+`D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum`.
+Here `Result` denotes `D5.S3.Analytic.QGammaTuran.Result`.
+`FunctionResult`'s private helpers derive the product estimates and the
+reciprocal-product identity from these declarations and pinned Mathlib.
 
 **COMPUTED**: the immutable
-[q-gamma experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/97058d640542b04336f3608e84f24473d7974503/experiments/kalmykov-karp-qgamma-turanian)
+[q-gamma experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/159884137a4ec45e1f49000bc46b2cac5958eae7/experiments/kalmykov-karp-qgamma-turanian)
 contains both scripts below.
 
 - `python3 kk-qgamma-fcert.py 93`, exit code 0; SHA-256
-  `dfdf1005fcc5afe6ba57db71dfe1dc4db07ac586bab8de1f465107e05c4f7b3b`.
-  The outward rational calculation gives normalized products in
-  intervals printed as approximately $0.14931109775395746$ and
-  $0.15295271453615697$, and its exact rational comparison is strict.
-  These printed decimals are approximations, separate from the Lean
-  bounds above.
+  `45cddfed518e203d4996d02d1741ba41477a092cd94094cf7fb6b9cddb11c2c1`.
+  Rational intervals are rounded outward to multiples of $2^{-160}$;
+  interval products use all four endpoint products. The script bounds
+  each infinite product with 120 factors and a geometric tail loss,
+  propagates term intervals through 160 recurrence steps, and bounds
+  the remaining series by a geometric tail using its eventual sign.
+  At $x=93/100$, the two normalized product enclosures print as
+  $[0.149311098,0.149311098]$ and $[0.152952715,0.152952715]$.
+  The exact rational endpoint comparison prints
+  `certified Delta < 0: True`. The printed decimals are rounded
+  displays of intervals of positive width, separate from the Lean bounds above.
 - `python3 kk-qgamma-function-scan.py 0.5 0.9`, exit code 0; SHA-256
   `3d2381f0242f497f18515986fd86626b5a8731ba0d1bd36a916576da18a25937`.
   The scan uses 25 decimal digits, the six parameter triples in the
@@ -155,13 +163,6 @@ contains both scripts below.
   $-0.0022595$ at $x\approx1.667$.
   For the four tested triples with $\alpha=\beta$, the $q=0.5$
   grid contains no negative value. These are finite numerical readings.
-- Evaluation of `rgvals` from the same scan script at exact decimal
-  parameters $q=0.5$, $\mu=-0.7$, $\alpha=0.3$, $\beta=0.7$,
-  with two coefficients and 320 product factors, gives the degree-one
-  Turanian coefficient approximately $-0.08754470774888089188819432$.
-  Command: `python3 -` using the script's `rgvals` and the degree-one
-  Cauchy coefficient formula; exit code 0, the same scan-script SHA-256.
-  This is a 25-digit floating calculation, not a Lean certificate.
 
 The supplied literature scope comprises the cited-by works recorded for
 OpenAlex W2603745271: arXiv:1808.05105 and its 2019 journal version
@@ -184,14 +185,24 @@ not establish exhaustive coverage or priority.
   preserve the conjectured order.
 - **COMPUTED**: the function clause already fails at $q=1/2$ for
   $(\mu,\alpha,\beta)=(-7/10,3/10,7/10)$, according to the function
-  scan in Evidence. The first coefficient at this triple is negative
-  as well; this numerical observation concerns unequal shifts.
+  scan in Evidence.
 - **COMPUTED**: with $\alpha=\beta$, the function scan finds failures
   at $q=0.9$, whereas its $q=1/2$ grid has no negative value. The
   tested range and computation details are those in Evidence.
-- **OPEN**: parameter log-concavity in $\mu$, including the source's
-  final sentence of Conjecture 1, is not settled by this unequal-shift
-  counterexample or by these finite scans.
+- Consequence in prose of
+  `D5.S3.Analytic.QGammaTuran.FunctionResult.witness_negative`:
+  at the displayed $q,x$ and $g_n=1$, log-concavity on any interval
+  containing $[-7/10,3/10]$ is impossible. Indeed,
+  $-2/5=(7/10)(-7/10)+(3/10)(3/10)$ and
+  $0=(3/10)(-7/10)+(7/10)(3/10)$.
+  Log-concavity at these convex combinations, with respective weights
+  $3/10$ and $7/10$ on the right endpoint, would give
+  $g(-2/5;x)g(0;x)\ge g(-7/10;x)g(3/10;x)$ after multiplication.
+  The endpoint values are strictly positive by the normalized lower
+  bounds and positive denominators. This contradicts the proved strict
+  reverse inequality. This consequence is not a separate Lean theorem.
+- **OPEN**: log-concavity restricted to nonnegative parameters $\mu$
+  is not decided by this witness or by the finite scans.
 - **OPEN**: uniform intervals in q, positivity on a whole continuum
   when $q=1/2$ and $\alpha=\beta$, and the remaining conjectural
   extensions receive no conclusion from these observations.
