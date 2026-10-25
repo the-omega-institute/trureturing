@@ -11,11 +11,11 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u
+universe u_1
 
 /-- Evaluate the left multiplication operand at the element being squared. -/
 abbrev signature : Signature where
-  Params := Σ R : Type u, R
+  Params := Σ R : Type u_1, R
   State p := p.1 → p.1
   Role := Unit
   finiteRole := inferInstance
@@ -24,21 +24,21 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ p op => op p.2) (fun e => Empty.elim e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ p _ => p.2) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law r := ∀ {R : Type u} [Ring R] [Algebra ℂ R] [StarRing R] [StarModule ℂ R]
+  signature := signature.{u_1}
+  Law r := ∀ {R : Type u_1} [Ring R] [Algebra ℂ R] [StarRing R] [StarModule ℂ R]
     (b : R) (_hbb : b * b + b * b = 0),
     r.readout () ⟨R, b⟩ (fun x => b * x) = 0
 
-theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+theorem rejected_law : ¬ arena.{u_1}.Law rejected.{u_1} := by
   intro h
-  let n := ULift.{u} (Fin 2)
+  let n := ULift.{u_1} (Fin 2)
   let b : Matrix n n ℂ := Matrix.single ⟨0⟩ ⟨1⟩ 1
   have hbb : b * b = 0 := by
     apply Matrix.single_mul_single_of_ne
@@ -49,15 +49,15 @@ theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   change (1 : ℂ) = 0 at hc
   exact one_ne_zero hc
 
-theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
+theorem dependence : ObservationalDependence signature.{u_1} actual.{u_1} := by
   intro i
-  refine ⟨⟨ULift.{u} Bool, ⟨false⟩⟩, (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
+  refine ⟨⟨ULift.{u_1} Bool, ⟨false⟩⟩, (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
   intro h
   have hc := congrArg ULift.down h
   change false = true at hc
   cases hc
 
-def source_registration : Registration arena.{u} (type_of% @CAR_nilpotent.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @CAR_nilpotent.{u_1}) where
   actual := realize signature (fun _ p op => op p.2) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨CAR_nilpotent, rejected, rejected_law⟩
@@ -71,7 +71,7 @@ def source_registration : Registration arena.{u} (type_of% @CAR_nilpotent.{u}) w
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@CAR_nilpotent.{u}) (Realization signature.{u}) Unit Unit := {
+      (@CAR_nilpotent.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum.unit
   realizationName :=
