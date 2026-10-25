@@ -16,6 +16,8 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
+/-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -95,45 +97,148 @@ def claim : Prop :=
     ∀ j x, Complex.normSq (V.val j x) = 1 / (d : ℝ)
 
 private def bathZ : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1, -1]
-private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, bathZ, 2 • bathZ]
+private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, bathZ, (2 : ℂ) • bathZ]
 private def bathState : Matrix (Fin 2) (Fin 2) ℂ := (1 / 2 : ℂ) • 1
 private def systemState : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1/2, 1/3, 1/6]
 private def amplitude : ℂ := (Real.sqrt 2 : ℂ) / 2
 private def measurementRaw : Matrix (Fin 3) (Fin 3) ℂ :=
   !![amplitude, amplitude, 0; amplitude, -amplitude, 0; 0, 0, 1]
 
+private theorem amplitude_star : star amplitude = amplitude := by
+  simp [amplitude]
+
+private theorem amplitude_sq : amplitude ^ 2 = (1 / 2 : ℂ) := by
+  have h := D5.S3.Observer.Existence.EmpiricalReflexiveSeparation.complex_sqrt_two_sq
+  unfold amplitude
+  rw [div_pow, h]
+  norm_num
+
 private theorem measurement_unitary : measurementRaw ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
-  sorry
+  have hc : (starRingEnd ℂ) amplitude = amplitude := amplitude_star
+  rw [Unitary.mem_iff]
+  constructor <;> ext i j
+  all_goals
+    simp only [Matrix.mul_apply, Matrix.star_apply, starRingEnd_apply]
+    fin_cases i <;> fin_cases j <;>
+      norm_num [measurementRaw, Fin.sum_univ_succ, hc, amplitude_star, star_neg,
+        Matrix.one_apply] <;> linear_combination 2 * amplitude_sq
 
 private def measurement : Matrix.unitaryGroup (Fin 3) ℂ :=
   ⟨measurementRaw, measurement_unitary⟩
+
+private def projectors (x : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
+  ![!![1/2, 1/2, 0; 1/2, 1/2, 0; 0, 0, 0],
+    !![1/2, -1/2, 0; -1/2, 1/2, 0; 0, 0, 0],
+    !![0, 0, 0; 0, 0, 0; 0, 0, 1]] x
+
+private theorem projector_formula (x : Fin 3) :
+    measurementProjector measurement x = projectors x := by
+  unfold measurementProjector rankOneDensity
+  ext i j
+  change measurementRaw i x * star (measurementRaw j x) = projectors x i j
+  fin_cases x <;> fin_cases i <;> fin_cases j <;>
+    norm_num [measurementRaw, projectors, amplitude_star, star_neg] <;>
+    linear_combination amplitude_sq
 
 private theorem states_valid :
     bathState.PosSemidef ∧ Matrix.trace bathState = 1 ∧
     systemState.PosSemidef ∧ Matrix.trace systemState = 1 ∧
     (∀ i j, i ≠ j → systemState i j = 0) ∧ systemState ≠ (1 / (3 : ℂ)) • 1 := by
-  sorry
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · unfold bathState
+    rw [← Matrix.diagonal_one, ← Matrix.diagonal_smul]
+    apply Matrix.PosSemidef.diagonal
+    intro i
+    norm_num [Complex.le_def]
+  · norm_num [bathState, Matrix.trace, Fin.sum_univ_succ]
+  · unfold systemState
+    apply Matrix.PosSemidef.diagonal
+    intro i
+    fin_cases i <;> norm_num [Complex.le_def]
+  · norm_num [systemState, Matrix.trace, Fin.sum_univ_succ]
+  · intro i j hij
+    exact Matrix.diagonal_apply_ne _ hij
+  · intro h
+    have hh := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) h
+    norm_num [systemState] at hh
 
 private theorem blocks_hermitian : ∀ j, (blocks j).IsHermitian := by
-  sorry
+  intro j
+  fin_cases j <;>
+    norm_num [blocks, bathZ, Matrix.IsHermitian, Matrix.diagonal_conjTranspose,
+      Matrix.conjTranspose_smul]
 
 private def energies (k : Fin 3 × Fin 2) : ℂ := (k.1 : ℂ) * ![1, -1] k.2
 
 private theorem hamiltonian_diagonal : hamiltonian blocks = Matrix.diagonal energies := by
-  sorry
+  ext ⟨i, b⟩ ⟨j, c⟩
+  unfold hamiltonian basisProjector
+  fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
+    norm_num [blocks, bathZ, energies, Fin.sum_univ_succ, Matrix.sum_apply,
+      Matrix.kronecker_apply, Matrix.single_apply, Matrix.diagonal_apply]
 
 private theorem propagator_diagonal (t : ℝ) :
     propagator blocks t = Matrix.diagonal (fun k => Complex.exp (-(t : ℂ) * Complex.I * energies k)) := by
-  sorry
+  unfold propagator
+  rw [hamiltonian_diagonal, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
+  congr 1
+  ext k
+  simp only [Pi.coe_exp, Pi.smul_apply, smul_eq_mul, ← Complex.exp_eq_exp_ℂ]
+
+private theorem evolution_entries (t : ℝ)
+    (X : Matrix (Fin 3 × Fin 2) (Fin 3 × Fin 2) ℂ) (i j : Fin 3 × Fin 2) :
+    unitaryEvolution (propagator blocks t) X i j =
+      Complex.exp (-(t : ℂ) * Complex.I * (energies i - energies j)) * X i j := by
+  have hj : star (energies j) = energies j := by
+    rcases j with ⟨j, b⟩
+    fin_cases j <;> fin_cases b <;> norm_num [energies]
+  unfold unitaryEvolution
+  rw [propagator_diagonal, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
+    Matrix.mul_diagonal, Matrix.diagonal_mul]
+  simp only [Pi.star_apply]
+  have hc : star (Complex.exp (-(t : ℂ) * Complex.I * energies j)) =
+      Complex.exp ((t : ℂ) * Complex.I * energies j) := by
+    change (starRingEnd ℂ) (Complex.exp (-(t : ℂ) * Complex.I * energies j)) = _
+    rw [← Complex.exp_conj]
+    congr 1
+    have hj' : (starRingEnd ℂ) (energies j) = energies j := hj
+    simp only [map_mul, map_neg, Complex.conj_ofReal, Complex.conj_I, hj']
+    ring
+  rw [hc]
+  calc
+    _ = (Complex.exp (-(t : ℂ) * Complex.I * energies i) *
+        Complex.exp ((t : ℂ) * Complex.I * energies j)) * X i j := by ring
+    _ = _ := by
+      rw [← Complex.exp_add]
+      congr 2
+      ring
 
 private theorem initial_stationary (t : ℝ) :
     unitaryEvolution (propagator blocks t) (systemState ⊗ₖ bathState) =
       systemState ⊗ₖ bathState := by
-  sorry
+  ext ⟨i, b⟩ ⟨j, c⟩
+  rw [evolution_entries]
+  fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
+    norm_num [systemState, bathState, Matrix.kronecker_apply, Matrix.diagonal_apply]
+
+private theorem post_measurement (x : Fin 3) :
+    luders measurement x (systemState ⊗ₖ bathState) =
+      ![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState) := by
+  unfold luders
+  rw [projector_formula, ← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul,
+    one_mul, mul_one, ← Matrix.smul_kronecker]
+  congr 1
+  ext i j
+  fin_cases x <;> fin_cases i <;> fin_cases j <;>
+    norm_num [projectors, systemState, Matrix.mul_apply, Matrix.vecMul, dotProduct,
+      Fin.sum_univ_succ, Matrix.diagonal_apply]
+
 
 private theorem one_time (t : ℝ) (y : Fin 3) :
     prob1 blocks bathState systemState measurement 0 y t = ![(5/12 : ℂ), 5/12, 1/6] y := by
-  sorry
+  unfold prob1
+  rw [initial_stationary, post_measurement, Matrix.trace_smul, Matrix.trace_kronecker]
+  fin_cases y <;> norm_num [projectors, bathState, Matrix.trace, Fin.sum_univ_succ]
 
 private def jointLaw (u : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
   let a := 5 * (2 + Complex.exp (Complex.I * (u : ℂ)) +
@@ -142,21 +247,71 @@ private def jointLaw (u : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
     Complex.exp (-(Complex.I * (u : ℂ)))) / 48
   !![a, b, 0; b, a, 0; 0, 0, 1/6]
 
+private theorem luders_trace (y : Fin 3)
+    (X : Matrix (Fin 3 × Fin 2) (Fin 3 × Fin 2) ℂ) :
+    Matrix.trace (luders measurement y X) =
+      Matrix.trace ((projectors y ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) * X) := by
+  have hv : star (fun i => measurement.val i y) ⬝ᵥ (fun i => measurement.val i y) = 1 := by
+    have hh := congrArg (fun A : Matrix (Fin 3) (Fin 3) ℂ => A y y)
+      (Matrix.UnitaryGroup.star_mul_self measurement)
+    simpa only [Matrix.mul_apply, Matrix.star_apply, Matrix.one_apply_eq, dotProduct,
+      Pi.star_apply] using hh
+  have hp := (pure_state_handshake (fun i => measurement.val i y) hv 0).1
+  change measurementProjector measurement y * measurementProjector measurement y =
+    measurementProjector measurement y at hp
+  rw [projector_formula] at hp
+  unfold luders
+  rw [projector_formula, Matrix.trace_mul_cycle, ← Matrix.mul_kronecker_mul, hp, one_mul]
+
 private theorem two_time (t₁ t₂ : ℝ) (x y : Fin 3) :
     prob2 blocks bathState systemState measurement 0 y t₂ x t₁ = jointLaw (t₂ - t₁) y x := by
-  sorry
+  unfold prob2
+  rw [initial_stationary, post_measurement, luders_trace]
+  have he : unitaryEvolution (propagator blocks (t₂ - t₁))
+      (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState)) =
+      fun i j => Complex.exp (-((t₂ - t₁ : ℝ) : ℂ) * Complex.I * (energies i - energies j)) *
+        (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState)) i j := by
+    ext i j
+    exact evolution_entries _ _ i j
+  rw [he]
+  change (∑ i : Fin 3 × Fin 2, ∑ j : Fin 3 × Fin 2,
+    (projectors y i.1 j.1 * (1 : Matrix (Fin 2) (Fin 2) ℂ) i.2 j.2) *
+      (Complex.exp (-((t₂ - t₁ : ℝ) : ℂ) * Complex.I * (energies j - energies i)) *
+        (![(5/12 : ℂ), 5/12, 1/6] x * (projectors x j.1 i.1 * bathState j.2 i.2)))) = _
+  fin_cases x <;> fin_cases y <;>
+    norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, Matrix.kroneckerMap_apply,
+      energies, projectors, bathState, jointLaw,
+      neg_mul, mul_comm ((t₂ - t₁ : ℝ) : ℂ) Complex.I] <;> ring
+
 
 private theorem consistency : twoClassical blocks bathState systemState measurement 0 := by
-  sorry
+  intro t₁ t₂ _ _
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [one_time]
+    norm_num [Fin.sum_univ_succ]
+  · intro y
+    simp only [two_time, one_time]
+    fin_cases y <;> norm_num [jointLaw, Fin.sum_univ_succ] <;> ring
+  · intro x
+    simp only [two_time, one_time]
+    fin_cases x <;> norm_num [jointLaw, Fin.sum_univ_succ] <;> ring
 
 private theorem dependence : timeDependent blocks bathState systemState measurement 0 := by
-  sorry
+  refine ⟨0, 0, 0, Real.pi, le_refl _, le_refl _, le_refl _, Real.pi_pos.le, 0, 0, ?_⟩
+  rw [two_time, two_time]
+  norm_num [jointLaw, Complex.exp_neg, mul_comm Complex.I (Real.pi : ℂ),
+    Complex.exp_pi_mul_I]
 
 private theorem incompatible : notFullyCompatible measurement := by
-  sorry
+  refine ⟨0, 0, ?_⟩
+  rw [projector_formula]
+  intro h
+  have hh := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) h
+  unfold basisProjector at hh
+  norm_num [projectors, Matrix.mul_apply, Matrix.single_apply, Fin.sum_univ_succ] at hh
 
 private theorem biased : Complex.normSq (measurement.val 2 0) ≠ 1 / (3 : ℝ) := by
-  sorry
+  norm_num [measurement, measurementRaw]
 
 /-- The block measurement refutes the proposed necessity of mutual unbiasedness. -/
 theorem result : ¬ claim := by
