@@ -312,12 +312,12 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
     definition := none
-    coordinates := #[]
+    coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg", "fn", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -487,7 +487,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       path := #["body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "fn", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -578,7 +578,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       path := #["body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg", "fn", "arg", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -655,12 +655,12 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
