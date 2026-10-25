@@ -23,12 +23,12 @@ open D5.S3.Geometry.HyperbolicUpperHalfSpace
 
 namespace D5.S3.Geometry.HyperbolicHausdorffComparison
 
-private local instance : MeasurableSpace (UpperHalfSpace ℂ) := borel _
-private local instance : BorelSpace (UpperHalfSpace ℂ) := ⟨rfl⟩
-private local instance : MeasurableSpace HyperbolicThreeSpace := borel _
-private local instance : BorelSpace HyperbolicThreeSpace := ⟨rfl⟩
+local instance : MeasurableSpace (UpperHalfSpace ℂ) := borel _
+local instance : BorelSpace (UpperHalfSpace ℂ) := ⟨rfl⟩
+local instance : MeasurableSpace HyperbolicThreeSpace := borel _
+local instance : BorelSpace HyperbolicThreeSpace := ⟨rfl⟩
 
-private theorem arsinh_bounds (x : ℝ) (hx : 0 ≤ x) :
+theorem arsinh_bounds (x : ℝ) (hx : 0 ≤ x) :
     x / (1 + x) ≤ Real.arsinh x ∧ Real.arsinh x ≤ x := by
   have hpos : 0 < 1 + x := by positivity
   have hs : 1 ≤ Real.sqrt (1 + x ^ 2) := by
@@ -42,7 +42,7 @@ private theorem arsinh_bounds (x : ℝ) (hx : 0 ≤ x) :
   · have ha : 0 ≤ Real.arsinh x := Real.arsinh_nonneg_iff.mpr hx
     simpa only [Real.sinh_arsinh] using Real.self_le_sinh_iff.mpr ha
 
-private theorem ball_distortion (p : UpperHalfSpace ℂ) (r : ℝ)
+theorem ball_distortion (p : UpperHalfSpace ℂ) (r : ℝ)
     (hr : 0 < r) (hrh : r < height p) (u v : UpperHalfSpace ℂ)
     (hu : dist u p < r) (hv : dist v p < r) :
     dist u v ≤ (height p + 2 * r) *

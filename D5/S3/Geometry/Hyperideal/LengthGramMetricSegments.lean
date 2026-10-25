@@ -18,7 +18,7 @@ namespace D5.S3.Geometry.Hyperideal.LengthGramMetricSegments
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-private theorem lorentz_null_orthogonal (X W : Fin 4 → ℝ)
+theorem lorentz_null_orthogonal (X W : Fin 4 → ℝ)
     (hX : lorentz X X = -1) (hW : lorentz W W = 0)
     (horth : lorentz X W = 0) : W = 0 := by
   simp [lorentz, Fin.sum_univ_succ] at hX hW horth
@@ -125,7 +125,7 @@ theorem lorentz_symm (X Y : Fin 4 → ℝ) : lorentz X Y = lorentz Y X := by
   simp [lorentz, Fin.sum_univ_succ]
   ring
 
-private theorem interpolation_pair (X Y : Fin 4 → ℝ) (D s t : ℝ)
+theorem interpolation_pair (X Y : Fin 4 → ℝ) (D s t : ℝ)
     (hD : Real.sinh D ≠ 0) (hX : lorentz X X = -1) (hY : lorentz Y Y = -1)
     (hXY : lorentz X Y = -Real.cosh D) :
     lorentz ((Real.sinh (D-s)/Real.sinh D) • X + (Real.sinh s/Real.sinh D) • Y)
@@ -137,20 +137,20 @@ private theorem interpolation_pair (X Y : Fin 4 → ℝ) (D s t : ℝ)
   linear_combination (Real.sinh s * Real.sinh t) * (Real.cosh_sq_sub_sinh_sq D)
 
 
-private def interpolate (X Y : Fin 4 → ℝ) (D t : ℝ) : Fin 4 → ℝ :=
+def interpolate (X Y : Fin 4 → ℝ) (D t : ℝ) : Fin 4 → ℝ :=
   (Real.sinh (D-t)/Real.sinh D) • X + (Real.sinh t/Real.sinh D) • Y
 
-private theorem interpolate_zero (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
+theorem interpolate_zero (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
     interpolate X Y D 0 = X := by simp [interpolate, hD]
 
-private theorem interpolate_end (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
+theorem interpolate_end (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
     interpolate X Y D D = Y := by simp [interpolate, hD]
 
 theorem lorentz_right (X Y Z : Fin 4 → ℝ) (a b : ℝ) :
     lorentz X (a • Y + b • Z) = a * lorentz X Y + b * lorentz X Z := by
   simpa using lorentz_linear X X Y Z 1 0 a b
 
-private theorem between_lift (p q z : HyperbolicThreeSpace) (hpq : p ≠ q)
+theorem between_lift (p q z : HyperbolicThreeSpace) (hpq : p ≠ q)
     (hb : dist p z + dist z q = dist p q) :
     lift z = interpolate (lift p) (lift q) (dist p q) (dist p z) := by
   let D := dist p q
@@ -208,7 +208,7 @@ theorem lift_time (p : HyperbolicThreeSpace) : 0 < lift p 3 := by
   simp only [lift, Matrix.cons_val_three]
   exact div_pos (by positivity) (mul_pos (by norm_num) p.coordinates.property)
 
-private theorem interpolate_future (X Y : Fin 4 → ℝ) (D t : ℝ)
+theorem interpolate_future (X Y : Fin 4 → ℝ) (D t : ℝ)
     (hD : 0 < D) (ht : t ∈ Icc 0 D) (hX : 0 < X 3) (hY : 0 < Y 3) :
     0 < interpolate X Y D t 3 := by
   have hsD := Real.sinh_pos_iff.mpr hD
@@ -224,7 +224,7 @@ private theorem interpolate_future (X Y : Fin 4 → ℝ) (D t : ℝ)
   · subst t
     simpa [hsD.ne'] using hY
 
-private theorem hyperbolic_segment (p q : HyperbolicThreeSpace) (hpq : p ≠ q) :
+theorem hyperbolic_segment (p q : HyperbolicThreeSpace) (hpq : p ≠ q) :
     ∃ gamma : Icc (0 : ℝ) (dist p q) → HyperbolicThreeSpace,
       Isometry gamma ∧
       gamma ⟨0, by exact ⟨le_rfl, dist_nonneg⟩⟩ = p ∧
