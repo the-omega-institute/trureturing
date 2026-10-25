@@ -107,7 +107,10 @@ internal sealed class ConditionallyRandomUniformAttenuationDocument : IScribeDoc
                             + "Exchange A and B and use the second conditional-randomness equality with c = 1 / (m : ℂ) "
                             + "to obtain luders (B y) (A x) = (1 / (m : ℂ)) • B y. "
                             + "These are the two required identities for every x and y."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gudder-2021-conditionally-random-uniform-attenuation"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ConditionedFormula() => Families(All("y", FinOf(X("n")),
         Equal(Typed(LocalCall("conditioned", X("A"), X("B"), X("y")), MatrixType()),
