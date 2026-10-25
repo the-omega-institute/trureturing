@@ -105,6 +105,7 @@ def family : Registration arena.{u} (type_of% (@near_invariant_localization.{u})
     · intro e
       exact nomatch e
   dependence := by
+    classical
     intro i
     let p : Params.{u} := ⟨Bit, inferInstance, inferInstance, Finset.univ⟩
     refine ⟨p, ⊥, ⊤, ?_⟩
