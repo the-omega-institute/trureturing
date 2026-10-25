@@ -13,9 +13,9 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
         H("Sparse Shared Energy Relations"), Blocks(
             Def("matrix", "sparseMatrix", "Literal sparse Hermitian matrices",
                 "The diagonal entries are one third. The entries between the first and "
-                    + "second basis vectors vanish. The two entries into the third basis "
-                    + "vector have modulus one twelfth, with a unit phase on the first edge. "
-                    + "The reverse entries are the complex conjugates in this same basis."),
+                    + "second basis vectors vanish. Entries (2,0) and (0,2) are u divided "
+                    + "by twelve and its conjugate; entries (2,1) and (1,2) are one twelfth. "
+                    + "Both edge moduli are one twelfth when u has unit modulus."),
             Thm("spectrum", "sparse_density_spectrum", "Positive density spectrum", Spectrum(),
                 "For every complex phase of unit modulus, the literal matrix is positive "
                     + "definite and has trace one. Its spectrum is exactly the stated three "
