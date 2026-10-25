@@ -291,8 +291,14 @@ def withPublicationContext {α : Type} (action : MetaM α) : MetaM α :=
     withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) action
 
 /-- The typed result is computed by the same compiled classifier as A1. -/
-def publish (name : Name) (r : Observation) (source? : Option Environment := none) : MetaM Unit :=
+def publish (name : Name) (r : Observation) (source? : Option Environment := none)
+    (targetHeader? : Option (List Name × Expr) := none) : MetaM Unit :=
     withPublicationContext do
+  let targetHeader := do
+    if let some info := ((source?.getD (← getEnv)).setExporting false).find? r.target then
+      return (info.levelParams, info.type)
+    if let some header := targetHeader? then return header
+    throwError "search.missing_export_target"
   unless (r.presentation == .found) == r.presentationEvidence?.isSome do
     throwError "search.presentation_witness_mismatch"
   let baseName := name ++ `baseline
@@ -324,14 +330,13 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
       name := name ++ `presentationSource, levelParams := [], type := mkConst ``Name,
       value := toExpr evidence.source, hints := .abbrev, safety := .safe })
     let source := source?.getD (← getEnv)
-    let some info := (source.setExporting false).find? r.target
-      | throwError "search.missing_presentation_target"
-    for dep in info.type.getUsedConstants ++ evidence.conversionType.getUsedConstants ++
+    let (levels, type) ← targetHeader
+    for dep in type.getUsedConstants ++ evidence.conversionType.getUsedConstants ++
         evidence.conversion.getUsedConstants ++ evidence.proof.getUsedConstants do
       exportConstant source r.target dep
-    discard <| checkProof (name ++ `presentationConversion) info.levelParams
+    discard <| checkProof (name ++ `presentationConversion) levels
       evidence.conversionType evidence.conversion
-    discard <| checkProof (name ++ `presentationProof) info.levelParams info.type evidence.proof
+    discard <| checkProof (name ++ `presentationProof) levels type evidence.proof
   let reading := kernelGraphReading (r.graph?.getD {})
   let graphName := name ++ `graphReading
   let graphValue := toExpr reading
@@ -406,11 +411,10 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
     if let some row := rows.find? (fun row => row.proof?.isSome) then
       if let some proof := row.proof? then
         let source := source?.getD (← getEnv)
-        let some info := (source.setExporting false).find? r.target
-          | throwError "search.missing_export_target"
-        for dep in info.type.getUsedConstants ++ proof.getUsedConstants do
+        let (levels, type) ← targetHeader
+        for dep in type.getUsedConstants ++ proof.getUsedConstants do
           exportConstant source r.target dep
-        discard <| checkProof (name ++ label) info.levelParams info.type proof
+        discard <| checkProof (name ++ label) levels type proof
 
 syntax (name := referenceBaselineProbeTac) "reference_baseline " ident " at " str
   " baseline " "[" ident,* "]" " from " "[" ident,* "]" : tactic
@@ -518,8 +522,114 @@ private def auditProbeCertificates (source : Environment) (request : Request)
       ("assembled_zero", toJson (if arm == "baseline" then reading.baselineProof?.isSome
         else reading.pairedProof?.isSome))] |>.compress}"
 
+/-- Complete typed probe data; the runner authenticates the bytes before Lean
+deserializes them. JSON projections are never accepted as probe evidence. -/
+private structure ProbeCacheRecord where
+  identity : String
+  targetHeader : List Name × Expr
+  result : Observation
+
+private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
+    (fixture : Bool) : IO String := do
+  return reprStr (← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    request.baseline, request.additions, request.baselineCommit, request.informationApplication,
+    request.certificates.map CertificateNomination.encode,
+    request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)
+
+private def probeProofs (result : Observation) : Array Expr := Id.run do
+  let mut proofs := (result.attempts ++ result.pairAttempts).filterMap (·.proof?)
+  if let some evidence := result.presentationEvidence? then
+    proofs := proofs ++ #[evidence.conversion, evidence.proof]
+  if let some reading := result.graph? then
+    proofs := proofs ++ reading.graph.vertices.toArray.filterMap (·.structureProof?) ++
+      reading.graph.edges.toArray.filterMap (·.zeroProof) ++
+      reading.graph.edges.toArray.filterMap (·.pairedZeroProof) ++
+      reading.baselineProbe.proof?.toArray ++ reading.pairedProbe.proof?.toArray ++
+      reading.baselineProof?.toArray ++ reading.pairedProof?.toArray
+  return proofs
+
+private def recheckProbeProofs (result : Observation) : MetaM Unit := do
+  let proofs := probeProofs result
+  for proof in proofs do checkLocalProof (← inferType proof) proof
+  emitLookupRecord s!"PROBE_CACHE_KERNEL_CERTIFICATES count={proofs.size} standard_axioms=true"
+
+/-- A small ordinary Lean module holds only proof dependencies. Its consumers
+recheck every certificate and recompute the published classifier at trust zero. -/
+private unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
+    (source publicationBase : Environment) (request : Request) (result : Observation) : CommandElabM Unit := do
+  let some info := (source.setExporting false).find? request.target
+    | throwError "search.cache_missing_target"
+  let module := s!"SearchReductionEvidence_{hash identity}"
+  let path := directory / s!"probe-{hash identity}.pickle"
+  let before ← getEnv
+  try
+    modifyEnv fun _ => publicationBase.setMainModule module.toName
+    liftTermElabM <| withPublicationContext do
+      let mut roots := info.type.getUsedConstants
+      for proof in probeProofs result do
+        let type ← withEnv source (inferType proof)
+        roots := roots ++ type.getUsedConstants ++ proof.getUsedConstants
+      if let some evidence := result.presentationEvidence? then
+        roots := roots ++ evidence.conversionType.getUsedConstants
+      for dep in roots do exportConstant source request.target dep
+    IO.FS.createDirAll directory
+    writeModule (← getEnv) (directory / (module ++ ".olean")) (writeIR := false)
+    pickle path ({identity, targetHeader := (info.levelParams, info.type), result} : ProbeCacheRecord)
+  finally modifyEnv fun _ => before
+
+private unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
+    (request : Request) (owners : Array Name) (name : Name) : CommandElabM Bool := do
+  let path := directory / s!"probe-{hash identity}.pickle"
+  unless ← path.pathExists do return false
+  profilePhase "probe/cache-load-start"
+  let (record, region) ← unpickle ProbeCacheRecord path
+  probeRegions.modify (·.push region)
+  unless record.identity == identity && record.result.target == request.target do
+    throwError "search.probe_cache_identity_mismatch"
+  let module := s!"SearchReductionEvidence_{hash identity}"
+  let paths ← searchPathRef.get
+  let source ← try
+    searchPathRef.modify (directory :: ·)
+    importModules #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands},
+      {module := module.toName}] options 0 (leakEnv := false) (loadExts := true)
+    finally searchPathRef.set paths
+  probeRegions.modify (· ++ source.header.regions)
+  profilePhase "probe/cache-load-end"
+  let mainModule := (← getEnv).header.mainModule
+  modifyEnv fun _ => source.setMainModule mainModule
+  profilePhase "probe/cache-kernel-start"
+  liftTermElabM <| withPublicationContext <| recheckProbeProofs record.result
+  profilePhase "probe/cache-kernel-end"
+  auditProbeCertificates source request record.result
+  profilePhase "probe/publication-start"
+  liftTermElabM <| publish name record.result (some source) (some record.targetHeader)
+  profilePhase "probe/publication-end"
+  let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
+  let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule
+  IO.FS.createDirAll auditDirectory
+  let auditDirectory ← IO.FS.realPath auditDirectory
+  let payload := auditDirectory / "request.olean"
+  writeRequest payload request owners name
+  let auditSource := auditDirectory / (auditModule ++ ".lean")
+  IO.FS.writeFile auditSource ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
+    s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n")
+  let output := auditDirectory / (auditModule ++ ".olean")
+  writeModule ((← getEnv).setMainModule auditModule.toName) output (writeIR := false)
+  emitLookupRecord s!"PROBE_CACHE hit=authenticated kernel_recomputed=true"
+  emitLookupRecord s!"SEARCH_REDUCTION_AUDIT {Json.mkObj [
+    ("target", toJson request.target.toString), ("source", toJson auditSource.toString),
+    ("module", toJson output.toString), ("payload", toJson payload.toString),
+    ("negative_semantics", toJson "authenticated cached meta-computed full R; not an object-level unprovability proof")] |>.compress}"
+  logInfo (observationJson record.result request.baselineCommit).compress
+  return true
+
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool := false) : CommandElabM Unit := do
+  let publicationBase ← getEnv
+  let identity ← probeIdentity request owners name fixture
+  if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_READ" then
+    if ← replayProbeCache directory identity request owners name then return
+  emitLookupRecord "PROBE_CACHE miss"
   let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
   let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule
   IO.FS.createDirAll auditDirectory
@@ -577,6 +687,11 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     ("target", toJson request.target.toString), ("source", toJson auditSource.toString),
     ("module", toJson auditOutput.toString), ("payload", toJson auditPayload.toString),
     ("negative_semantics", toJson "meta-computed full R; not an object-level unprovability proof")] |>.compress}"
+  if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
+    profilePhase "probe/cache-save-start"
+    try saveProbeCache directory identity source publicationBase request result
+    catch ex => emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
+    profilePhase "probe/cache-save-end"
   logInfo (observationJson result request.baselineCommit).compress
 
 /-- Only closed, kernel-checked Name/array/string expression values are read.
