@@ -38,6 +38,7 @@ internal static partial class CleanLanesCommand
             AllocationLog? branchLog = null;
             try
             {
+                if (branch != item.Branch && !IsAllocationBranchName(item.Path, branch, runner)) continue;
                 var common = ResolveCommonGitDirectory(item.Path, runner);
                 var path = Path.Combine(common, "logs", "refs", "heads", branch);
                 if (branch == item.Branch || HasLocalAllocationEvidence(item.Path, branch, path, runner))
@@ -46,8 +47,6 @@ internal static partial class CleanLanesCommand
                         : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
                     branchLog = ReadAllocationLog(path, tip);
                 }
-                else if (branch.StartsWith("refs/", StringComparison.Ordinal) || IsObjectOid(branch))
-                    continue;
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
@@ -195,11 +194,8 @@ internal static partial class CleanLanesCommand
                     && separator >= prefix.Length)
                 {
                     var branch = record.Message[(separator + 4)..];
-                    if (IsAllocationBranchName(branch))
-                    {
-                        if (!checkouts.TryGetValue(branch, out var entries)) checkouts.Add(branch, entries = []);
-                        entries.Add(record);
-                    }
+                    if (!checkouts.TryGetValue(branch, out var entries)) checkouts.Add(branch, entries = []);
+                    entries.Add(record);
                 }
             }
             if (allocated is null) return new(Error: "reflog_empty");
@@ -220,14 +216,18 @@ internal static partial class CleanLanesCommand
         return branches;
     }
 
-    private static bool IsAllocationBranchName(string value) =>
-        value.Length != 0 && value != "HEAD"
-        && value[0] is not ('/' or '-') && value[^1] is not ('/' or '.')
-        && !value.Contains("..", StringComparison.Ordinal)
-        && !value.Contains("@{", StringComparison.Ordinal)
-        && !value.Any(static c => c <= ' ' || c is '~' or '^' or ':' or '?' or '*' or '[' or '\\' or '\u007f')
-        && value.Split('/').All(static part => part.Length != 0 && part[0] != '.'
-            && !part.EndsWith(".lock", StringComparison.Ordinal));
+    private static bool IsAllocationBranchName(
+        string root, string value, IWorktreeProcessRunner runner)
+    {
+        if (value == "HEAD") return false;
+        var result = runner.Run("git", ["check-ref-format", "--branch", value], root,
+            TimeSpan.FromSeconds(120));
+        if (result.ExitCode == 128) return false;
+        if (result.ExitCode != 0)
+            throw new InvalidOperationException("could not validate allocation branch name");
+        // Previous-checkout expressions can expand to a valid branch name.
+        return Decode(result.StandardOutput).TrimEnd('\r', '\n') == value;
+    }
 
     private sealed record AllocationLog(long? Allocated = null, string? Error = null,
         Dictionary<string, List<HeadLogRecord>>? Checkouts = null, bool ExplicitAllocation = false,
