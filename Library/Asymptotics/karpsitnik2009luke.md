@@ -4,7 +4,6 @@ authors: D. Karp and S. M. Sitnik
 year: 2009
 title: Inequalities and monotonicity of ratios for generalized hypergeometric function
 doi: 10.1016/j.jat.2008.10.002
-arxiv: math/0703084
 url: https://arxiv.org/abs/math/0703084
 claim: "Conjecture 1 extends the Luke lower bound of Theorem 3 to all positive sigma with positive sum of denominator-minus-numerator parameters."
 strata_touched:
@@ -19,7 +18,7 @@ triage: anchor
 
 https://arxiv.org/abs/math/0703084
 
-Version: https://arxiv.org/abs/math/0703084v2.
+arXiv: math/0703084. Version: https://arxiv.org/abs/math/0703084v2.
 DOI: 10.1016/j.jat.2008.10.002.
 Journal of Approximation Theory 161 (2009), 337–352.
 Page numbers below are printed pages of the arXiv version.

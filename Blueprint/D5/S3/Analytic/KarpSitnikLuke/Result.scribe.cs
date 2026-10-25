@@ -48,7 +48,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "The rising factorial at 1/10 and the factorial are positive, and the power is nonnegative."),
             Helper("u_step", "The exact successive-term ratio", All("n", N,
                 Eqn(U(Add(V("n"), D(1))), Mul(Fr(Pow(Add(V("n"), D(1)), D(2)),
-                    Mul(Mul(D(10), Add(V("n"), Qn(1,10))), Add(V("n"), D(2)))), U(V("n"))))),
+                    Mul(Mul(D(1,0), Add(V("n"), Qn(1,10))), Add(V("n"), D(2)))), U(V("n"))))),
                 "The factorial and rising-factorial recurrences give u(n+1)/u(n)=(n+1)^2/(10(n+1/10)(n+2))."),
             Helper("u_half", "A uniform geometric comparison", All("n", N,
                 Leq(U(Add(V("n"), D(1))), Mul(Qn(1,2), U(V("n"))))),
@@ -78,6 +78,20 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula R => Seq(Mathbb, Sp, Grp(V("R")));
+    private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var parts = new List<Formula>();
+        foreach (var word in name.Split('.'))
+        {
+            if (parts.Count > 0) parts.Add(Dot);
+            parts.Add(V(word));
+        }
+        return new Formula.Apply(Seq(Operatorname, Sp, Grp([.. parts])), [.. args]);
+    }
     private static Formula Qn(long a, long b) => Fr(new Formula.Number(a), new Formula.Number(b));
     private static Formula Fr(Formula a, Formula b) => new Formula.Fraction(a,b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a),b);
@@ -106,7 +120,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         Call("hyperTerm",sigma,a,b,z,n);
     private static Formula Hyper(Formula sigma, Formula a, Formula b, Formula z) => Call("hyper",sigma,a,b,z);
     private static Formula U(Formula n) => Call("u",n);
-    private static Formula A => Lam("i",Call("Fin",D(2)),D(1));
+    private static Formula A => Call("Function.const",Call("Fin",D(2)),D(1));
     private static Formula B => Seq(Bang, OpenBracket, Qn(1,10), Comma, Sp, D(2), CloseBracket);
     private static Formula WitnessTerm(Formula n) => Term(D(1),A,B,new Formula.Negate(Qn(1,10)),n);
     private static Formula WitnessHyper() => Hyper(D(1),A,B,new Formula.Negate(Qn(1,10)));
@@ -116,7 +130,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         var a = new Formula.Apply(V("a"), [i]);
         var b = new Formula.Apply(V("b"), [i]);
         var product = Finite("i", Prod, Fr(a,b));
-        var sum = Finite("i", Sum, Sub(b,a));
+        var sum = Finite("i", Sum, Parenthesized(Sub(b,a)));
         var basis = Add(D(1),Mul(V("x"), Parenthesized(product)));
         var summable = Call("Summable", Lam("n",N,
             Term(V("sigma"),V("a"),V("b"),new Formula.Negate(V("x")),V("n"))));
