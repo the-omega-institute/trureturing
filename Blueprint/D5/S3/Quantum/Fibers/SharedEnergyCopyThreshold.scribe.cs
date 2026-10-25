@@ -35,9 +35,6 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
             Def("second", "sigma", "Second sparse density state",
                 "The second native state has the same diagonal and zero entries and "
                     + "uses the resonant phase on the edge between the first and third levels."),
-            Def("energy", "hamiltonian", "Fixed energy basis",
-                "The Hamiltonian is the literal diagonal matrix with energies zero, one "
-                    + "and m in the basis used by both density matrices."),
             Def("relation", "starMonomial", "The primitive supported monomial",
                 "The monomial is the entry from level two to level one to the power m, "
                     + "times the entry from level zero to level two to the power m minus one. "

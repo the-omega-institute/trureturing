@@ -113,9 +113,6 @@ def rho : DensityState (Fin 3) := sparseState 1 (by simp)
 /-- The second literal matrix in the sparse pair. -/
 def sigma (m : ℕ) : DensityState (Fin 3) := sparseState (phase m) (unit_phase _)
 
-/-- The actual Hamiltonian in the same basis. -/
-def hamiltonian (m : ℕ) : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![0, 1, (m : ℂ)]
-
 private theorem phase_pow (m : ℕ) (hm : 2 ≤ m) : (phase m : ℂ) ^ (m-1) = -1 := by
   rw [phase, ← Circle.coe_pow, ← Circle.exp_natCast_mul]
   have h : ((m-1 : ℕ) : ℝ) * (Real.pi / ((m : ℝ)-1)) = Real.pi := by
@@ -260,8 +257,8 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       ((1/3 : ℂ)^(alpha 0 0) * (1/3 : ℂ)^(alpha 1 1) *
         (1/3 : ℂ)^(alpha 2 2) * ((1/12 : ℂ)^(alpha 0 2))^2 *
         ((1/12 : ℂ)^(alpha 1 2))^2) * z) hp
-    simp only [one_div, mul_one] at hc
-    convert hc.symm using 1 <;> ring
+    simp only [one_div, mul_one, pow_two] at hc
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using hc.symm
   · by_cases hz₀ : alpha 0 1 = 0
     · have hz₁ : alpha 1 0 ≠ 0 := fun h => hz ⟨hz₀,h⟩
       simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₁]
