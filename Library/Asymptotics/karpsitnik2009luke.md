@@ -69,7 +69,7 @@ Conjecture 2, printed p. 14, equation (38):
 
 > For 0 < σ ≤ min(a₁, a₂, . . . , a_q), ∑ᵢ₌₁ᵠ (bᵢ − aᵢ) > 0 and x > 0:
 >
-> $\displaystyle {}_{q+1}F_q(\sigma,(a_q);(b_q);-x)<\frac{1}{(1+x K^{1/\sigma})^\sigma},\qquad K=\prod_{i=1}^q\frac{\Gamma(a_i)\Gamma(b_i-\sigma)}{\Gamma(b_i)\Gamma(a_i-\sigma)}.$
+> $\displaystyle {}_{q+1}F_q(\sigma,(a_q);(b_q);-x)<\frac{1}{\left[1+x\prod_{i=1}^q\frac{\Gamma(a_i)\Gamma(b_i-\sigma)}{\Gamma(b_i)\Gamma(a_i-\sigma)}\right]^\sigma}.\qquad (38)$
 
 The preceding sentence reads:
 
@@ -84,10 +84,13 @@ $$ {}_{q+1}F_q(\sigma,(a_q);(b_q);-z)
 {\prod_i\Gamma(a_i)\Gamma(b_i-\sigma)}z^{-\sigma}
 +o(z^{-\sigma}),\qquad z\to\infty. $$
 
-The exponent $1/\sigma$ on $K$ in (38) makes its leading asymptotic
-coefficient agree with (16). The extracted display does not preserve
-superscript placement; the counterexample has $\sigma=1$, where the
-reading with or without that inner exponent coincides.
+The quotation transcribes the extracted display, which places a $\sigma$
+next to the Gamma product. Write
+$K=\prod_{i=1}^q\Gamma(a_i)\Gamma(b_i-\sigma)/(\Gamma(b_i)\Gamma(a_i-\sigma))$.
+Separately, the asymptotically precise reading via (16) is
+$1/(1+xK^{1/\sigma})^\sigma$: the inner exponent $1/\sigma$
+makes its leading asymptotic coefficient agree with (16).
+The counterexample has $\sigma=1$, where both readings coincide.
 
 `UpperResult.claim` uses the existing `Result.hyperTerm` and `Result.hyper`,
 restricts to $0<x<1$, and assumes summability and $K>0$.

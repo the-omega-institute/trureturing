@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/KarpSitnikLuke/UpperResult.claim; result=D5/S3/Analytic/KarpSitnikLuke/UpperResult.result; claim=D5/S3/Analytic/KarpSitnikLuke/UpperResult.claim
-   digest: A Gamma evaluation and alternating lower bracket refute the sum-condition upper bound. -/
+   digest: Gamma evaluation and an alternating bracket refute the sum-condition upper bound. -/
 
 /-
 admission_basis: open-problem-resolution (Karp-Sitnik Conjecture 2; Refuted).

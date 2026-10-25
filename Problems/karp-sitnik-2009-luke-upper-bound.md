@@ -19,7 +19,7 @@ Conjecture 2, printed p. 14, equation (38):
 
 > For 0 < σ ≤ min(a₁, a₂, . . . , a_q), ∑ᵢ₌₁ᵠ (bᵢ − aᵢ) > 0 and x > 0:
 >
-> $\displaystyle {}_{q+1}F_q(\sigma,(a_q);(b_q);-x)<\frac{1}{(1+x K^{1/\sigma})^\sigma},\qquad K=\prod_{i=1}^q\frac{\Gamma(a_i)\Gamma(b_i-\sigma)}{\Gamma(b_i)\Gamma(a_i-\sigma)}.$
+> $\displaystyle {}_{q+1}F_q(\sigma,(a_q);(b_q);-x)<\frac{1}{\left[1+x\prod_{i=1}^q\frac{\Gamma(a_i)\Gamma(b_i-\sigma)}{\Gamma(b_i)\Gamma(a_i-\sigma)}\right]^\sigma}.\qquad (38)$
 
 The preceding sentence reads:
 
@@ -34,10 +34,13 @@ $$ {}_{q+1}F_q(\sigma,(a_q);(b_q);-z)
 {\prod_i\Gamma(a_i)\Gamma(b_i-\sigma)}z^{-\sigma}
 +o(z^{-\sigma}),\qquad z\to\infty. $$
 
-The exponent $1/\sigma$ on $K$ makes the proposed expression's leading
-asymptotic coefficient agree with (16). Superscript placement is lost in
-the extracted source display; the witness has $\sigma=1$, so the reading
-with or without this inner exponent gives the same counterexample.
+The quotation transcribes the extracted display, which places a $\sigma$
+next to the Gamma product. Write
+$K=\prod_{i=1}^q\Gamma(a_i)\Gamma(b_i-\sigma)/(\Gamma(b_i)\Gamma(a_i-\sigma))$.
+Separately, the asymptotically precise reading via (16) is
+$1/(1+xK^{1/\sigma})^\sigma$: the inner exponent $1/\sigma$
+makes its leading asymptotic coefficient agree with (16).
+The counterexample has $\sigma=1$, where both readings coincide.
 
 ### Formal reading
 
@@ -49,7 +52,7 @@ except where their frozen owner is specified.
 | Rising-factorial ratio | `D5.S3.Analytic.HypergeometricShiftTuran.TwoBlockResult.pochRatio` | Quotient of the products for a and b. |
 | Summand of (1) | `D5.S3.Analytic.KarpSitnikLuke.Result.hyperTerm` | Extra upper parameter σ, factorial denominator and zⁿ. |
 | Series value | `D5.S3.Analytic.KarpSitnikLuke.Result.hyper` | Real infinite sum of these summands. |
-| Gamma product in (38) | `gammaProduct` | Exactly K above, with finite index type Fin q. |
+| Gamma product in (38) | `gammaProduct` | Exactly K defined above, with finite index type Fin q. |
 | Restricted Conjecture 2 | `claim` | Positive parameters, positive sum(b−a), 0<σ≤aᵢ, 0<x<1, summability, K>0 and the strict upper bound. |
 | Refutation | `result` | Exactly ¬ claim. |
 
@@ -118,7 +121,7 @@ without additional hypotheses. The private helpers `witness_gamma`,
 strict comparison with 2/3 at the exact witness.
 
 **COMPUTED.** The immutable
-[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/2266205b17a3840cbe48825280aaef90d6091f70/experiments/karp-sitnik-luke-lower-bound)
+[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/ba0a5ed33f26b244ab9ec9d6775617cbef8b0a96/experiments/karp-sitnik-luke-lower-bound)
 contains `ks2-upper-cert.py`. Command `python3 ks2-upper-cert.py`, exit
 code 0; SHA-256
 `c5126bff3504c30dc22f27626d62e430135922a7c04f3cfd9b40c98523c063d2`.
@@ -134,16 +137,17 @@ a settlement of Conjecture 2 in that bounded check. No settlement was
 found in the supplied Formal Conjectures and conjectures.io scope.
 These supplied readings do not establish exhaustive coverage or priority.
 
-**COMPUTED.** Supplement `ks2-upper-sigma-scan.py`, command
-`python3 ks2-upper-sigma-scan.py`, exit code 0; SHA-256
-`cfbb6090f64234b21ab1635bae233e615b9cd2d5af1009717570db78afb682d7`.
-At 60 decimal digits, for $a=(1,1)$, $b=(1/10,2)$ and each
-$\sigma\in\{0.01,0.05,0.09\}$, all 16 samples in
-$x\in\{0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10,20,50,100,200,500,1000\}$
-have function above the upper expression. The minimum differences for
-these three sigma values are approximately 0.000796979, 0.00372468
-and 0.00630704, respectively. This supplementary program is not in the
-immutable experiment revision linked above; its publication is unverified.
+**COMPUTED.** The immutable
+[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/ba0a5ed33f26b244ab9ec9d6775617cbef8b0a96/experiments/karp-sitnik-luke-lower-bound)
+contains `ks2-upper-scan.py`. Command `python3 ks2-upper-scan.py`, exit
+code 0; SHA-256
+`014a74b262865cd087356a336ea9d9c143f53df1c8db534fee0acc39a0d876f6`.
+With mpmath `mp.dps = 30`, $a=(1,1)$, $b=(1/10,2)$,
+$\sigma\in\{0.01,0.05,0.09\}$ and
+$x\in\{0.01,0.1,0.5,2,10,1000\}$, all 18 output lines report
+`F<bound False`. These are finite numerical observations of the
+hypergeometric function and the proposed upper expression, not a
+continuous-interval inequality or a Lean result.
 
 ## Triage
 
@@ -170,11 +174,15 @@ the Lean theorem proves the exact $\sigma=1$, $x=1/2$ counterexample.
   $0<\sigma\le\min a_i$ and has positive Gamma product.
 - **COMPUTED.** The exact certificate above refines the strict formal
   lower bound to approximately 0.692994117069.
-- **COMPUTED.** The supplementary numerical samples in Evidence for $a=(1,1)$,
-  $b=(1/10,2)$ and $\sigma\in\{0.01,0.05,0.09\}$ give function above
-  the upper expression at sampled $x$ spanning $0.01\le x\le1000$.
-  These are finite numerical observations, not an inequality over the
-  whole continuous interval or a Lean result.
+- **COMPUTED.** The numerical scan
+  [`ks2-upper-scan.py`](https://github.com/the-omega-institute/trureturing-experiments/blob/ba0a5ed33f26b244ab9ec9d6775617cbef8b0a96/experiments/karp-sitnik-luke-lower-bound/ks2-upper-scan.py),
+  command `python3 ks2-upper-scan.py`, exit code 0, SHA-256
+  `014a74b262865cd087356a336ea9d9c143f53df1c8db534fee0acc39a0d876f6`,
+  uses mpmath `mp.dps = 30`, $a=(1,1)$, $b=(1/10,2)$,
+  $\sigma\in\{0.01,0.05,0.09\}$ and
+  $x\in\{0.01,0.1,0.5,2,10,1000\}$.
+  All 18 lines report `F<bound False`. This is numerical evidence only;
+  it proves neither an inequality over a continuous interval nor a Lean result.
 - **OPEN.** The componentwise case $b_k>a_k>0$ with
   $0<\sigma\le\min a_i$ is not settled. Avoiding the first-order
   obstruction does not prove the upper inequality.

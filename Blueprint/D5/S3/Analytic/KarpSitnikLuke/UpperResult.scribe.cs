@@ -9,7 +9,7 @@ internal sealed class UpperResultDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Asymptotics/karpsitnik2009luke");
     private const string Prefix = "D5/S3/Analytic/KarpSitnikLuke/UpperResult.";
-    private const string ConjectureTwo = "For 0 < σ ≤ min(a₁, a₂, . . . , a_q), ∑ᵢ₌₁ᵠ (bᵢ − aᵢ) > 0 and x > 0:";
+    private const string ConjectureTwo = "For 0 < σ ≤ min(a₁, a₂, . . . , a_q), ∑ᵢ₌₁ᵠ (bᵢ − aᵢ) > 0 and x > 0: _{q+1}F_q(σ, (a_q); (b_q); −x) < 1/[1 + x ∏ᵢ₌₁ᵠ Γ(aᵢ)Γ(bᵢ−σ)/(Γ(bᵢ)Γ(aᵢ−σ))]^σ. (38)";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An alternating lower bracket contradicts the sum-condition Luke upper bound.",
@@ -24,10 +24,10 @@ internal sealed class UpperResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "claim"), H("The conjectured upper bound inside the disk"),
                 StatementSource.FromAuthor(Disp(Eqn(V("claim"), ClaimBody()))),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("Conjecture 2, printed page 14, reads: “" + ConjectureTwo + "” The displayed inequality (38) is the hypergeometric value less than 1/(1+x K^(1/sigma))^sigma, with K the Gamma product above.")),
+                Blocks(Paragraph(Text("Conjecture 2, printed page 14, in linear notation: “" + ConjectureTwo + "”")),
                     Paragraph(Text("The preceding sentence reads verbatim: “The asymptotic formula (16) and numerical experiments suggest the following”. Formula (16), printed page 5, with its preceding condition: “It follows that for σ < min(a₁, a₂, . . . , a_q) we will have”")),
                     Paragraph(Text("Formula (16): “_{q+1}F_q(σ, (a_q); (b_q); −z) = Γ[(a_q)−σ, (b_q) / (a_q), (b_q)−σ] z^{−σ} + o(z^{−σ}), z → ∞.”")),
-                    Paragraph(Text("Here Gamma of parameter lists denotes the product quotient: the asymptotic coefficient is the reciprocal of gammaProduct. This explains the exponent 1/sigma on K in the upper expression. The counterexample has sigma=1, where this reading and the product without that exponent agree.")),
+                    Paragraph(Text("The extracted layout places a sigma next to the Gamma product. Separately, Gamma of parameter lists in (16) denotes the product quotient, so the asymptotic coefficient is the reciprocal of gammaProduct. The asymptotically precise reading is 1/(1+x K^(1/sigma))^sigma, with K=gammaProduct: the inner exponent 1/sigma makes its leading coefficient agree with (16). The counterexample has sigma=1, where this reading and the quoted display without that inner exponent coincide.")),
                     Paragraph(Text("The existing Result.hyperTerm and Result.hyper encode equation (1): (sigma)n times the product of (a_i)n/(b_i)n, divided by n!, times z^n, and its real infinite sum. They use the existing TwoBlockResult.pochRatio and Mathlib's rising factorial, so the upper-bound assertion refers to the same function as the lower-bound assertion.")),
                     Paragraph(Text("All a and b entries are positive, their denominator-minus-numerator sum is positive, and 0<sigma≤a_i for every i. Each additional hypothesis weakens the paper's universal assertion: x<1 restricts the domain to the power-series disk, summability restricts to convergent defining series, and gammaProduct>0 restricts the parameter set. With x>0 and gammaProduct>0 the base of the outer real power is positive. Refuting this weaker assertion refutes Conjecture 2. For q=0 the positive-sum assumption is impossible. Powers are Real.rpow."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("luke-upper-witness-magnitudes"),
