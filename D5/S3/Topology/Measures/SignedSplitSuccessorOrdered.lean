@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/Measures/SignedSplitSuccessorOrdered
+   generality: G
+   mirror-B: D5/B/S3/Topology/Measures/SignedSplitSuccessorOrdered
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Adaptive signed columns and inherited or birth reference reservoirs -/
+
 import D5.S3.Topology.Measures.SignedSplitSuccessorSupport
 
 set_option autoImplicit false
@@ -15,7 +23,7 @@ variable {K : Type u} [TopologicalSpace K] [CompactSpace K]
 variable {L : Type v} [TopologicalSpace L] [T2Space L]
   [MeasurableSpace L] [BorelSpace L]
 
-lemma apply_error_of_finite_marginal {C : Type*} [Fintype C]
+private lemma apply_error_of_finite_marginal {C : Type*} [Fintype C]
     (f : K → (C → Bool)) (hf : Continuous f) (s t : SignedMeasure K)
     (eps : ℝ)
     (hsmall : (SignedMeasure.totalVariation (s.map f - t.map f)).real univ < eps)

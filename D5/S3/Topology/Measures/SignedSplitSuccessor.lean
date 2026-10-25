@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/Measures/SignedSplitSuccessor
+   generality: G
+   mirror-B: D5/B/S3/Topology/Measures/SignedSplitSuccessor
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Dynamic signed split geometry, scheduled mass separation and every-choice convergence -/
+
 import D5.S3.Topology.Measures.SignedSplitSuccessorOrdered
 
 set_option autoImplicit false

@@ -1,10 +1,10 @@
-/- GID: D5/S3/Topology/Measures/SignedSplitSuccessor
+/- GID: D5/S3/Topology/Measures/SignedSplitSuccessorSupport
    generality: G
-   mirror-B: D5/B/S3/Topology/Measures/SignedSplitSuccessor
+   mirror-B: D5/B/S3/Topology/Measures/SignedSplitSuccessorSupport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Dynamic signed split geometry, scheduled mass separation and every-choice convergence -/
+   digest: Finite signed marginals, target slices and ordered closed-split traces -/
 
 import D5.S3.Topology.Measures.NormPreservingLifts
 import D5.S3.Topology.Measures.NormPreservingLiftExistence
@@ -20,7 +20,7 @@ import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Order.OrderIsoNat
 
 /-!
-# Ordered signed split successors
+# Signed split support and geometry
 
 Finite tests are fixed before the index threshold is chosen. Equality of
 signed base projections and exact preservation of total variation mass are
