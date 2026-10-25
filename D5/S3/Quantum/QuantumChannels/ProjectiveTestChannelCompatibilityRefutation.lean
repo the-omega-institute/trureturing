@@ -219,7 +219,33 @@ private theorem parent_marginals (U V : unitaryGroup (Fin 2) ℂ) :
     (∑ a, ∑ b, parent U V a b) = 1 ∧
       (∀ a, ∑ b, parent U V a b = basisPOVM depol U a) ∧
       (∀ b, ∑ a, parent U V a b = basisPOVM depol V b) := by
-  sorry
+  have rows (U V : unitaryGroup (Fin 2) ℂ) (a : Fin 2) :
+      ∑ b, parent U V a b = basisPOVM depol U a := by
+    have hv : centered V 1 = -centered V 0 := by
+      linear_combination (norm := module) (centered_facts V 0).2.2.2
+    rw [Fin.sum_univ_two]
+    change parent U V a 0 + parent U V a 1 = depol.dual (effect U a)
+    rw [depol_dual]
+    unfold parent
+    rw [hv]
+    simp only [Matrix.mul_neg, Matrix.trace_neg]
+    simp only [depol, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply,
+      LinearMap.smulRight_apply, Matrix.traceLinearMap_apply, (effect_facts U a).2.1]
+    unfold centered
+    module
+  have cols (b : Fin 2) : ∑ a, parent U V a b = basisPOVM depol V b := by
+    rw [← rows V U b]
+    apply Finset.sum_congr rfl
+    intro a _
+    unfold parent
+    rw [Matrix.trace_mul_comm (centered U a), add_comm (centered U a)]
+  refine ⟨?_, rows U V, cols⟩
+  simp_rw [rows]
+  rw [Fin.sum_univ_two]
+  change depol.dual (effect U 0) + depol.dual (effect U 1) = 1
+  rw [depol_dual, ← map_add, (effect_facts U 0).2.2.2]
+  norm_num [depol, Matrix.trace_one]
+  module
 
 private theorem all_projective_tests (U V : unitaryGroup (Fin 2) ℂ) :
     POVMCompatible (basisPOVM depol U) (basisPOVM depol V) := by
