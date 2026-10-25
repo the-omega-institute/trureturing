@@ -876,7 +876,7 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       have shift (n : ℕ) : e+2*(r:ℤ)+1-1+2*(n:ℤ) = e+2*((r+n:ℕ):ℤ) := by push_cast; ring
       simp only [shift]
       simpa only [E,k,f,A,J,F,LinearMap.comp_apply,LinearMap.proj_apply,
-        LinearMap.add_apply,LinearMap.smul_apply,Finset.sum_apply,DFunLike.ite_apply,
+        LinearMap.add_apply,LinearMap.smul_apply,LinearMap.sum_apply,Finset.sum_apply,DFunLike.ite_apply,
         LinearMap.zero_apply] using hc
     rw [cancel]
     by_cases hr : r=0
@@ -948,6 +948,8 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
 /-- Oscillator-length induction on the original charge sector. Positive
 currents differentiate and strictly lower length; mode zero remains the
 original charge scalar. -/
+set_option backward.isDefEq.respectTransparency true in
+set_option maxHeartbeats 1200000 in
 private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     (q : Charge D) (p : Oscillator D) : L1Law D hu (Finsupp.single q p) := by
   classical
@@ -962,16 +964,20 @@ private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
           L1Law D hu (Finsupp.single q (MvPolynomial.monomial m c)) := by
         by_cases hz : m=0
         · subst m
-          rw [MvPolynomial.monomial_zero,MvPolynomial.C_eq_smul_one,← Finsupp.smul_single]
-          exact l1_law_smul D hu c _ ground
+          have hc : (MvPolynomial.monomial (0 : Index D →₀ ℕ) c : Oscillator D) =
+              c • (1 : Oscillator D) := MvPolynomial.C_eq_smul_one
+          have state : Finsupp.single q (MvPolynomial.monomial (0 : Index D →₀ ℕ) c) =
+              c • Finsupp.single q (1 : Oscillator D) :=
+            (congrArg (Finsupp.single q) hc).trans (Finsupp.smul_single c q (1 : Oscillator D)).symm
+          exact Eq.mpr (congrArg (L1Law D hu) state) (l1_law_smul D hu c _ ground)
         · obtain ⟨v,hv⟩ := Finsupp.support_nonempty_iff.mpr hz
           have vle : Finsupp.single v 1 ≤ m :=
             Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hv))
           let t := m-Finsupp.single v 1
           have teq : t+Finsupp.single v 1=m := tsub_add_cancel_of_le vle
           have length : t.sum (fun _ e => e)+1=m.sum (fun _ e => e) := by
-            rw [← teq]
-            simp only [Finsupp.sum_add_index',Finsupp.sum_single_index,add_zero]
+            simpa [Finsupp.sum_add_index'] using
+              congrArg (fun z : Index D →₀ ℕ => z.sum (fun _ e => e)) teq
           have ht : t.sum (fun _ e => e)<n := by omega
           let b : Carrier D := Finsupp.single q (MvPolynomial.monomial t c)
           have deg : (MvPolynomial.monomial t c : Oscillator D).totalDegree ≤ t.sum (fun _ e => e) :=
@@ -1003,22 +1009,23 @@ private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
                   (fun j : Fin D.rank => (D.G v.1 j : ℂ) •
                     Finsupp.single q (MvPolynomial.pderiv (j,k) (MvPolynomial.monomial t c)))
                   (fun j hj => l1_law_smul D hu _ _ (derivatives j)))
-              simpa only [b,LatticeSugawaraCurrents.neutralMode_single,
-                LatticeFiniteNegativeGeneration.neutralPolynomialMode,
-                Nat.cast_add,Nat.cast_one,show ¬ (k:ℤ)+1<0 by omega,
-                show ¬ (k:ℤ)+1=0 by omega,if_false,
-                add_sub_cancel_right,Int.toNat_natCast,LinearMap.smul_apply,
-                LinearMap.sum_apply,Derivation.coeFn_coe,Finsupp.smul_single,
-                Finsupp.single_finsetSum] using hs
+              have action : LatticeFiniteNegativeGeneration.neutralMode D v.1 ((k+1:ℕ):ℤ) b =
+                  (k+1:ℂ) • ∑ j : Fin D.rank, (D.G v.1 j : ℂ) •
+                    Finsupp.single q (MvPolynomial.pderiv (j,k) (MvPolynomial.monomial t c)) := by
+                dsimp only [b]
+                rw [Nat.cast_add,Nat.cast_one,LatticeSugawaraCurrents.neutralMode_single,
+                  LatticeSugawaraCurrents.neutralPolynomialMode_positive]
+                simp only [LinearMap.smul_apply,LatticeSugawaraCurrents.weightedPartial,
+                  LinearMap.sum_apply,LinearMap.smul_apply,Derivation.coeFn_coe,
+                  Finsupp.single_finsetSum,← Finsupp.smul_single]
+              exact Eq.mpr (congrArg (L1Law D hu) action) hs
           have step := insertion_l1 D hu b v.1 v.2 hb positive
           have creation : LatticeFiniteNegativeGeneration.neutralMode D v.1 (-((v.2+1:ℕ):ℤ)) b =
               Finsupp.single q (MvPolynomial.monomial m c) := by
             dsimp only [b]
-            rw [LatticeSugawaraCurrents.neutralMode_single]
-            simp only [LatticeFiniteNegativeGeneration.neutralPolynomialMode,
-              show -((v.2+1:ℕ):ℤ)<0 by omega,if_true,LinearMap.mulLeft_apply]
-            have index : ((-(-((v.2+1:ℕ):ℤ))-1).toNat)=v.2 := by omega
-            rw [index]
+            have index : -((v.2+1:ℕ):ℤ)=-(v.2:ℤ)-1 := by omega
+            rw [index,LatticeSugawaraCurrents.neutralMode_single,
+              LatticeSugawaraCurrents.neutralPolynomialMode_negative,LinearMap.mulLeft_apply]
             congr 1
             rw [MvPolynomial.X,MvPolynomial.monomial_mul_monomial]
             rw [add_comm,teq,one_mul]
