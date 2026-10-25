@@ -25,7 +25,7 @@ open scoped BigOperators
 
 noncomputable section
 
-private def reducedCoordinates (D : LatticeData) :
+def reducedCoordinates (D : LatticeData) :
     ReducedExtension D ≃ F₂ × ModTwoCharge D where
   toFun x := (x.sign, x.charge)
   invFun x := ⟨x.1, x.2⟩
@@ -42,11 +42,11 @@ local instance cardInvertible (D : LatticeData) :
     Invertible (Fintype.card (Extension D ⧸ K D) : ℂ) :=
   invertibleOfNonzero (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
 
-private def formRepresentation (D : LatticeData) (hu : IsUnit D.G.det) :
+def formRepresentation (D : LatticeData) (hu : IsUnit D.G.det) :
     Representation ℂ (Extension D ⧸ K D) (LinearMap.BilinForm ℂ (ActualGround D hu)) :=
   Representation.linHom (groundRepresentation D hu) (groundRepresentation D hu).dual
 
-private def formAverage (D : LatticeData) (hu : IsUnit D.G.det) :
+def formAverage (D : LatticeData) (hu : IsUnit D.G.det) :
     Module.End ℂ (LinearMap.BilinForm ℂ (ActualGround D hu)) :=
   (formRepresentation D hu).averageMap
 
@@ -68,7 +68,7 @@ private theorem selected_central (D : LatticeData) (hu : IsUnit D.G.det) (s : F�
     simp [complexSign]
   · simpa [complexSign, F₂, groundRepresentation, ActualGround, groundRank] using selected.2.2.1
 
-private theorem central_character (D : LatticeData) (hu : IsUnit D.G.det) (s : F₂) :
+theorem central_character (D : LatticeData) (hu : IsUnit D.G.det) (s : F₂) :
     (groundRepresentation D hu).character
       ((quotientEquiv D).symm (⟨s, 0⟩ : ReducedExtension D)) =
         complexSign s * (Module.finrank ℂ (ActualGround D hu) : ℂ) := by
@@ -103,7 +103,7 @@ private theorem character_square_sum (D : LatticeData) (hu : IsUnit D.G.det) :
   simp_rw [terms]
   simp [F₂]
 
-private theorem average_trace (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem average_trace (D : LatticeData) (hu : IsUnit D.G.det) :
     LinearMap.trace ℂ (LinearMap.BilinForm ℂ (ActualGround D hu))
       (formAverage D hu) = 1 := by
   classical
@@ -145,7 +145,7 @@ private theorem average_nonzero (D : LatticeData) (hu : IsUnit D.G.det) :
   rw [vanished, map_zero] at trace
   exact zero_ne_one trace
 
-private theorem averaged_invariant (D : LatticeData) (hu : IsUnit D.G.det)
+theorem averaged_invariant (D : LatticeData) (hu : IsUnit D.G.det)
     (B : LinearMap.BilinForm ℂ (ActualGround D hu))
     (g : Extension D ⧸ K D) (u v : ActualGround D hu) :
     formAverage D hu B (groundRepresentation D hu g u) (groundRepresentation D hu g v) =
@@ -173,7 +173,7 @@ private def radical (D : LatticeData) (hu : IsUnit D.G.det)
     rw [← inverse, invariant]
     exact hx _
 
-private theorem invariant_nondegenerate (D : LatticeData) (hu : IsUnit D.G.det)
+theorem invariant_nondegenerate (D : LatticeData) (hu : IsUnit D.G.det)
     (B : LinearMap.BilinForm ℂ (ActualGround D hu)) (nonzero : B ≠ 0)
     (invariant : ∀ (g : Extension D ⧸ K D) (u v : ActualGround D hu),
       B (groundRepresentation D hu g u) (groundRepresentation D hu g v) = B u v) :
@@ -196,7 +196,7 @@ private theorem invariant_nondegenerate (D : LatticeData) (hu : IsUnit D.G.det)
     have member : u ∈ radical D hu B invariant := by rw [top]; trivial
     exact member v
 
-private theorem ground_signed_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
+theorem ground_signed_adjoint (D : LatticeData) (hu : IsUnit D.G.det)
     (B : LinearMap.BilinForm ℂ (ActualGround D hu))
     (invariant : ∀ (g : Extension D ⧸ K D) (u v : ActualGround D hu),
       B (groundRepresentation D hu g u) (groundRepresentation D hu g v) = B u v)
