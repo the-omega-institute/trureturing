@@ -226,6 +226,13 @@ asserted by this background formalization.
 
 ## Classical subsequence splitting and weak extraction
 
+`D5.S3.Topology.Measures.L1RawSplitting.exists_raw_restriction_splitting`
+is the complete real L1 supplier. Its literal restriction operation is
+`L1Restriction.restrict`; `L1TailSelection`, `L1TailConcentration`,
+`L1Biting` and `L1Disjointization` construct the disjoint carriers.
+`L1WeakExtraction` and `L1UniformIntegrableWeak` supply genuine weak
+subsequence extraction, with every helper consumed by the full splitting.
+
 The real L1 subsequence splitting used in the signed-measure construction is
 classical Kadec–Pełczyński–Rosenthal mathematics. The required form uses literal
 restrictions to measurable, pairwise disjoint sets, a complementary remainder
