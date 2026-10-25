@@ -19,7 +19,6 @@ import Mathlib.Tactic.IntervalCases
 the proposed binary spectrum in Conjecture 9 of arXiv:2610.22248v1. -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 2000000
 
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.NilpotencySpectrumRefutation
 open scoped BigOperators
@@ -84,7 +83,7 @@ def product : (Fin 15 → ℚ) →ₗ[ℚ] (Fin 15 → ℚ) →ₗ[ℚ] (Fin 15 
     (by intro x y z; simp [add_mul, add_smul, Finset.sum_add_distrib])
     (by intro c x y; simp [mul_assoc, smul_smul, Finset.smul_sum])
     (by intro x y z; simp [mul_add, add_smul, Finset.sum_add_distrib])
-    (by intro c x y; simp [mul_left_comm, mul_assoc, smul_smul, Finset.smul_sum])
+    (by intro c x y; simp [mul_left_comm, smul_smul, Finset.smul_sum])
 
 
 private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
@@ -97,7 +96,7 @@ private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Mo
   | h m ih =>
     rcases m with _ | (_ | n)
     · simp [ordinaryPower]
-    · simpa only [ordinaryPower] using hfirst
+    · simpa [ordinaryPower] using hfirst
     · rw [ordinaryPower]
       apply iSup_le
       intro i
@@ -106,7 +105,7 @@ private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Mo
       have hh := hmul (i.val + 1) (n + 1 - i.val) x y
         (ih _ (by omega) hx) (ih _ (by omega) hy)
       have hi := i.isLt
-      have hs : (i.val + 1) + (n + 1 - i.val) = n + 2 := by omega
+      have hs : (i.val + 1) + (n + 1 - i.val) = n + 1 + 1 := by omega
       simpa only [hs] using hh
 
 private theorem mul_mem_power {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
@@ -120,8 +119,8 @@ private theorem mul_mem_power {K V : Type*} [Field K] [AddCommGroup V] [Module K
     (ordinaryPower μ (j.val + 1)) (ordinaryPower μ (a + b - 2 + 1 - j.val))) i)
   apply Submodule.subset_span
   refine ⟨x, ?_, y, ?_, rfl⟩
-  · convert hx using 1 <;> congr 1 <;> dsimp [i] <;> omega
-  · convert hy using 1 <;> congr 1 <;> dsimp [i] <;> omega
+  · simpa only [show i.val + 1 = a by dsimp [i]; omega] using hx
+  · simpa only [show a + b - 2 + 1 - i.val = b by dsimp [i]; omega] using hy
 
 private theorem product_evolution : IsEvolutionAlgebra product := by
   classical
@@ -139,7 +138,7 @@ private theorem product_evolution : IsEvolutionAlgebra product := by
     intro l _
     have h : (Pi.basisFun ℚ (Fin 15) i) l * (Pi.basisFun ℚ (Fin 15) j) l = 0 := by
       by_cases hi : i = l
-      · subst l; simp [Pi.basisFun_apply, Pi.single_apply, Ne.symm hij]
+      · subst l; simp [Pi.basisFun_apply, Ne.symm hij]
       · simp [Pi.basisFun_apply, Pi.single_apply, hi]
     rw [h, zero_smul]
 
@@ -162,8 +161,12 @@ private def v : Fin 15 → A := ![
 
 private def weight : Fin 15 → ℕ := ![1,2,1,3,1,5,10,1,15,30,60,120,240,1,255]
 
-private def coordinates (x : A) : Fin 15 → ℚ := ![x 0, x 1, -x 1 +x 2, x 3, -x 1 -x 3 +x 4, x 5, x 6, -x 5 -x 6 +x 7, -x 6 +x 8, x 9, x 10, x 11, x 12, -x 8 -x 12 +x 13, -x 9 +x 14]
+private def coordinates (x : A) : Fin 15 → ℚ :=
+  ![x 0, x 1, -x 1 + x 2, x 3, -x 1 - x 3 + x 4, x 5, x 6,
+    -x 5 - x 6 + x 7, -x 6 + x 8, x 9, x 10, x 11, x 12,
+    -x 8 - x 12 + x 13, -x 9 + x 14]
 
+set_option maxHeartbeats 2000000 in
 private theorem reconstruction (x : A) : (∑ i : Fin 15, coordinates x i • v i) = x := by
   ext j
   fin_cases j <;> norm_num [coordinates, v, Fin.sum_univ_succ] <;> ring
@@ -198,6 +201,7 @@ private def output : Fin 15 → Fin 15 → Option (Fin 15) := ![
   ![none,none,none,none,none,none,some 14,none,some 14,none,none,none,some 14,some 14,none],
   ![none,none,none,none,none,none,none,none,none,none,none,none,none,none,none]]
 
+set_option maxHeartbeats 2000000 in
 private theorem product_coordinates (x y : A) : product x y =
     ![0,
       x 0 * y 0,
@@ -217,12 +221,15 @@ private theorem product_coordinates (x y : A) : product x y =
   ext l
   fin_cases l <;> norm_num [product, rows, Fin.sum_univ_succ] <;> ring
 
+set_option maxHeartbeats 2000000 in
 private theorem product_table : ∀ i j : Fin 15,
     product (v i) (v j) = match output i j with | none => 0 | some k => v k := by
   intro i j
   rw [product_coordinates]
   fin_cases i <;> fin_cases j <;> norm_num [v, output]
+  all_goals exact Subsingleton.elim _ _
 
+set_option maxHeartbeats 2000000 in
 private theorem weight_table : ∀ i j k : Fin 15,
     output i j = some k → weight i + weight j ≤ weight k := by decide
 
@@ -238,10 +245,10 @@ private theorem filtration_mul (r s : ℕ) (x y : A)
       cases h : output i j with
       | none => exact Submodule.zero_mem _
       | some k => exact v_mem k (by have := weight_table i j k h; omega)
-    | zero => simpa using (Submodule.zero_mem (filtration (r + s)))
+    | zero => simp
     | add a b _ _ ha hb => simpa using (Submodule.add_mem _ ha hb)
     | smul a b _ hb => simpa using (Submodule.smul_mem _ a hb)
-  | zero => simpa using (Submodule.zero_mem (filtration (r + s)))
+  | zero => simp
   | add a b _ _ ha hb => simpa using (Submodule.add_mem _ ha hb)
   | smul a b _ hb => simpa using (Submodule.smul_mem _ a hb)
 
@@ -269,8 +276,8 @@ private theorem witness_step (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
   rwa [product_table, h] at hh
 
 private theorem witness_255 : v 14 ∈ ordinaryPower product 255 := by
-  have h1 : v 0 ∈ ordinaryPower product 1 := by trivial
-  have he3 : v 2 ∈ ordinaryPower product 1 := by trivial
+  have h1 : v 0 ∈ ordinaryPower product 1 := by simp [ordinaryPower]
+  have he3 : v 2 ∈ ordinaryPower product 1 := by simp [ordinaryPower]
   have h2 := witness_step 1 1 (by decide) (by decide) 0 0 1 (by decide) h1 h1
   have h3 := witness_step 2 1 (by decide) (by decide) 1 2 3 (by decide) h2 he3
   have h5 := witness_step 3 2 (by decide) (by decide) 3 1 5 (by decide) h3 h2
@@ -292,7 +299,7 @@ private theorem power_255_ne : ordinaryPower product 255 ≠ ⊥ := by
 private theorem rational_instance : indexExists ℚ 15 255 := by
   refine ⟨A, inferInstance, inferInstance, inferInstance, product, ?_,
     product_evolution, power_256, power_255_ne⟩
-  simp [A, Module.finrank_pi]
+  simp [A]
 
 private theorem arithmetic_failure : ¬ predicted 15 255 := by
   rintro (⟨a, hk, ha⟩ | h)
@@ -307,5 +314,12 @@ private theorem arithmetic_failure : ¬ predicted 15 255 := by
 theorem result : ¬ claim := by
   intro h
   exact arithmetic_failure ((h ℚ 15 255 (by decide)).mp rational_instance)
+
+example : ∀ m : ℕ, ordinaryPower (0 : ℚ →ₗ[ℚ] ℚ →ₗ[ℚ] ℚ) m ≤
+    (if m ≤ 1 then ⊤ else ⊥ : Submodule ℚ ℚ) := by
+  apply power_le_filtration
+  · simp
+  · intro r s x y hx hy
+    simp
 
 end D5.S3.QuadraticForms.EvolutionAlgebras.NilpotencySpectrumRefutation
