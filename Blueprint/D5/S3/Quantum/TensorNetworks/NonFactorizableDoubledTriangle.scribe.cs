@@ -25,7 +25,7 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
             Node("multifacet", "Multifacet", "Distinct copies of each facet",
                 MultifacetFormula(), AssessedProvenance.FromLiterature(Source),
                 "A facet is a vertex subset maximal among those of nonzero weight. A multifacet consists of a facet F "
-                    + "and an index in Fin (Ω F), giving exactly Ω F distinct copies. This is the multifacet multiset "
+                    + "and an index in Fin (ω F), giving exactly ω F distinct copies. This is the multifacet multiset "
                     + "of Definition def:wsc, TeX lines 327–332, expressed as a dependent sum."),
             Node("collapse", "collapse", "Forgetting the copy index",
                 CollapseFormula(), AssessedProvenance.FromLiterature(Source),
@@ -77,7 +77,8 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
                             + "in Fin 3 × Fin 2, where the underlying edge omits e. This indexing is bijective, and a copy "
                             + "is incident to i exactly when i differs from e.")),
                     Paragraph(Text(
-                        "Let Multiplicative (ZMod 2) fix every vertex. Its identity fixes every copy, and its other element "
+                        "Use MulAction.ofEndHom with the constant identity endomorphism homomorphism to let Multiplicative (ZMod 2) fix every vertex. "
+                            + "Its identity fixes every copy, and its other element "
                             + "reverses the Fin 2 index on each edge simultaneously. Reversal is an involution, so these maps "
                             + "define a group action. They preserve each underlying edge, while the vertex action preserves every weight; "
                             + "the two actions are therefore compatible.")),
@@ -115,19 +116,19 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
     {
         Formula divisibility = All("S", VertexSets(), All("T", VertexSets(),
             Imp(Rel(X("S"), FormulaRelationOperator.SubsetOf, X("T")),
-                Rel(At(X("Ω"), X("S")), FormulaRelationOperator.Divides, At(X("Ω"), X("T"))))));
+                Rel(At(X("ω"), X("S")), FormulaRelationOperator.Divides, At(X("ω"), X("T"))))));
         Formula singletons = All("i", Vertices(), NotEqual(
-            At(X("Ω"), Seq(OpenBrace, X("i"), CloseBrace)), Typed(D(0), Naturals())));
-        return WeightBinders(Iff(LocalCall("WeightedSimplicialComplex", X("Ω")), And(divisibility, singletons)));
+            At(X("ω"), Seq(OpenBrace, X("i"), CloseBrace)), Typed(D(0), Naturals())));
+        return WeightBinders(Iff(LocalCall("WeightedSimplicialComplex", X("ω")), And(divisibility, singletons)));
     }
 
     private static Formula MultifacetFormula()
     {
         Formula facets = SubtypeOf("S", VertexSets(), At(Qualified("Maximal"),
-            LambdaOf("T", VertexSets(), NotEqual(At(X("Ω"), X("T")), Typed(D(0), Naturals()))), X("S")));
+            LambdaOf("T", VertexSets(), NotEqual(At(X("ω"), X("T")), Typed(D(0), Naturals()))), X("S")));
         Formula copies = At(Qualified("Sigma"), LambdaOf("F", facets,
-            FinOf(At(X("Ω"), At(Qualified("Subtype", "val"), X("F"))))));
-        return WeightBinders(Equal(Typed(LocalCall("Multifacet", X("Ω")), Type()), copies));
+            FinOf(At(X("ω"), At(Qualified("Subtype", "val"), X("F"))))));
+        return WeightBinders(Equal(Typed(LocalCall("Multifacet", X("ω")), Type()), copies));
     }
 
     private static Formula CollapseFormula() => WeightBinders(All("x", Multifacets(),
@@ -142,7 +143,7 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
     {
         Formula image = LambdaOf("x", Vertices(), Act("A", X("g"), X("x")));
         Formula weights = All("g", X("G"), All("S", VertexSets(), Equal(
-            At(X("Ω"), At(Qualified("Finset", "image"), image, X("S"))), At(X("Ω"), X("S")))));
+            At(X("ω"), At(Qualified("Finset", "image"), image, X("S"))), At(X("ω"), X("S")))));
         Formula collapse = All("g", X("G"), All("x", Multifacets(), Equal(
             LocalCall("collapse", Act("B", X("g"), X("x"))),
             At(Qualified("Finset", "image"), image, LocalCall("collapse", X("x"))))));
@@ -184,16 +185,16 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
         Formula realCount = Typed(At(Qualified("Nat", "cast"), LocalCall("K", X("G"), X("A"), X("B"), X("α"))), Reals());
         Formula equations = All("α", Arrow(Multifacets(), FinOf(X("m"))), Equal(factors, Inverse(realCount)));
         Formula solution = All("m", Naturals(), Some("C", factorType, And(positive, And(invariant, equations))));
-        return ActionBinders(Imp(Compatibility(), Iff(LocalCall("Factorizable", X("Ω"), X("G"), X("A"), X("B")), solution)),
+        return ActionBinders(Imp(Compatibility(), Iff(LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B")), solution)),
             finite: true);
     }
 
     private static Formula ClaimFormula() => Iff(Local("claim"), WeightBinders(
-        Imp(LocalCall("WeightedSimplicialComplex", X("Ω")), GroupBinders(
-            Imp(Compatibility(), LocalCall("Factorizable", X("Ω"), X("G"), X("A"), X("B"))), finite: true))));
+        Imp(LocalCall("WeightedSimplicialComplex", X("ω")), GroupBinders(
+            Imp(Compatibility(), LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B"))), finite: true))));
 
     private static Formula WeightBinders(Formula body) =>
-        All("n", Naturals(), All("Ω", Arrow(VertexSets(), Naturals()), body));
+        All("n", Naturals(), All("ω", Arrow(VertexSets(), Naturals()), body));
     private static Formula ActionBinders(Formula body, bool finite) => WeightBinders(GroupBinders(body, finite));
     private static Formula GroupBinders(Formula body, bool finite)
     {
@@ -203,11 +204,11 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
         return All("G", Type(), InstanceOf(At(Qualified("Group"), X("G")), actions));
     }
 
-    private static Formula Compatibility() => LocalCall("Compatible", X("Ω"), X("G"), X("A"), X("B"));
+    private static Formula Compatibility() => LocalCall("Compatible", X("ω"), X("G"), X("A"), X("B"));
     private static Formula Vertices() => FinOf(new Formula.Binary(X("n"), FormulaBinaryOperator.Add, D(1)));
     private static Formula VertexSets() => At(Qualified("Finset"), Vertices());
-    private static Formula Multifacets() => LocalCall("Multifacet", X("Ω"));
-    private static Formula Incident(Formula i) => LocalCall("Incident", X("Ω"), i);
+    private static Formula Multifacets() => LocalCall("Multifacet", X("ω"));
+    private static Formula Incident(Formula i) => LocalCall("Incident", X("ω"), i);
     private static Formula Restrict(Formula i, Formula labels) => At(Qualified("Subtype", "restrict"),
         LambdaOf("x", Multifacets(), Rel(i, FormulaRelationOperator.MemberOf, LocalCall("collapse", X("x")))), labels);
     private static Formula Act(string action, Formula g, Formula x) => At(Seq(X(action), Dot, Qualified("smul")), g, x);
@@ -221,7 +222,7 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
     private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula X(string name) => name switch
     {
-        "Ω" => Omega,
+        "ω" => Omega,
         "ι" => Iota,
         "α" => Alpha,
         "β" => Beta,

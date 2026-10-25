@@ -8,38 +8,39 @@
 
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.Basic.Real.Basic
+import Mathlib.Algebra.Group.Action.End
 
 namespace D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangle
 
 /-- The divisibility condition and the source's standing singleton assumption. -/
-def WeightedSimplicialComplex {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) : Prop :=
-  (∀ S T, S ⊆ T → Ω S ∣ Ω T) ∧ ∀ i, Ω {i} ≠ 0
+def WeightedSimplicialComplex {n : ℕ} (ω : Finset (Fin (n + 1)) → ℕ) : Prop :=
+  (∀ S T, S ⊆ T → ω S ∣ ω T) ∧ ∀ i, ω {i} ≠ 0
 
 /-- Each facet has exactly its weight many distinct copies. -/
-def Multifacet {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) :=
-  Σ F : {S // Maximal (fun T => Ω T ≠ 0) S}, Fin (Ω F.val)
+def Multifacet {n : ℕ} (ω : Finset (Fin (n + 1)) → ℕ) :=
+  Σ F : {S // Maximal (fun T => ω T ≠ 0) S}, Fin (ω F.val)
 
 /-- The collapse map forgets the copy index. -/
-def collapse {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ}
-    (x : Multifacet Ω) : Finset (Fin (n + 1)) := x.1.val
+def collapse {n : ℕ} {ω : Finset (Fin (n + 1)) → ℕ}
+    (x : Multifacet ω) : Finset (Fin (n + 1)) := x.1.val
 
 /-- The local multifacets at a vertex. -/
-def Incident {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (i : Fin (n + 1)) :=
-  {x : Multifacet Ω // i ∈ collapse x}
+def Incident {n : ℕ} (ω : Finset (Fin (n + 1)) → ℕ) (i : Fin (n + 1)) :=
+  {x : Multifacet ω // i ∈ collapse x}
 
 /-- Both invariance of weights and linearity of collapse are required. -/
-def Compatible {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
-    (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω)) : Prop :=
+def Compatible {n : ℕ} (ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
+    (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet ω)) : Prop :=
   letI := A
   letI := B
-  (∀ (g : G) (S : Finset (Fin (n + 1))), Ω (S.image (g • ·)) = Ω S) ∧
-    ∀ (g : G) (x : Multifacet Ω), collapse (g • x) = (collapse x).image (g • ·)
+  (∀ (g : G) (S : Finset (Fin (n + 1))), ω (S.image (g • ·)) = ω S) ∧
+    ∀ (g : G) (x : Multifacet ω), collapse (g • x) = (collapse x).image (g • ·)
 
 /-- Collapse linearity makes inverse pullback well defined on local labelings. -/
-def transport {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} {G : Type} [Group G]
-    {A : MulAction G (Fin (n + 1))} {B : MulAction G (Multifacet Ω)}
-    (h : Compatible Ω G A B) {ι : Type} (g : G) (i : Fin (n + 1))
-    (β : Incident Ω i → ι) : Incident Ω (A.smul g i) → ι :=
+def transport {n : ℕ} {ω : Finset (Fin (n + 1)) → ℕ} {G : Type} [Group G]
+    {A : MulAction G (Fin (n + 1))} {B : MulAction G (Multifacet ω)}
+    (h : Compatible ω G A B) {ι : Type} (g : G) (i : Fin (n + 1))
+    (β : Incident ω i → ι) : Incident ω (A.smul g i) → ι :=
   letI := A
   letI := B
   fun x => β ⟨g⁻¹ • x.val, by
@@ -47,29 +48,29 @@ def transport {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} {G : Type} [Group G]
     exact Finset.mem_image.mpr ⟨g • i, x.property, inv_smul_smul g i⟩⟩
 
 /-- The source's cardinality, with an independently chosen stabilizer at each vertex. -/
-noncomputable def K {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} (G : Type) [Group G]
-    (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω))
-    {ι : Type} (α : Multifacet Ω → ι) : ℕ :=
-  Nat.card {γ : Multifacet Ω → ι //
+noncomputable def K {n : ℕ} {ω : Finset (Fin (n + 1)) → ℕ} (G : Type) [Group G]
+    (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet ω))
+    {ι : Type} (α : Multifacet ω → ι) : ℕ :=
+  Nat.card {γ : Multifacet ω → ι //
     ∀ i, ∃ g : G, A.smul g i = i ∧
       Subtype.restrict (fun x => i ∈ collapse x) ((@arrowAction _ _ _ _ B).smul g γ) =
       Subtype.restrict (fun x => i ∈ collapse x) α}
 
 /-- Finite index sets are represented by `Fin m`, including the empty index set. -/
-def Factorizable {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
-    [Fintype G] (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω))
-    (h : Compatible Ω G A B) : Prop :=
-  ∀ m : ℕ, ∃ C : (i : Fin (n + 1)) → (Incident Ω i → Fin m) → ℝ,
+def Factorizable {n : ℕ} (ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
+    [Fintype G] (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet ω))
+    (h : Compatible ω G A B) : Prop :=
+  ∀ m : ℕ, ∃ C : (i : Fin (n + 1)) → (Incident ω i → Fin m) → ℝ,
     (∀ i β, 0 < C i β) ∧
     (∀ g i β, C (A.smul g i) (transport h g i β) = C i β) ∧
     ∀ α, ∏ i, C i (Subtype.restrict (fun x => i ∈ collapse x) α) = (K G A B α : ℝ)⁻¹
 
 /-- The universal assertion whose negation answers the source's question. -/
 def claim : Prop :=
-  ∀ (n : ℕ) (Ω : Finset (Fin (n + 1)) → ℕ), WeightedSimplicialComplex Ω →
+  ∀ (n : ℕ) (ω : Finset (Fin (n + 1)) → ℕ), WeightedSimplicialComplex ω →
     ∀ (G : Type) [Group G] [Fintype G]
-      (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω))
-      (h : Compatible Ω G A B), Factorizable Ω G A B h
+      (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet ω))
+      (h : Compatible ω G A B), Factorizable ω G A B h
 
 private def triangle (S : Finset (Fin 3)) : ℕ :=
   if S.card ≤ 1 then 1 else if S.card = 2 then 2 else 0
@@ -109,11 +110,6 @@ private theorem copy_incident (i : Fin 3) (x : Fin 3 × Fin 2) :
   rw [collapse, copy]
   simp only [Finset.mem_erase, Finset.mem_univ, and_true]
 
-private def vertexAction : MulAction (Multiplicative (ZMod 2)) (Fin 3) where
-  smul _ i := i
-  one_smul _ := rfl
-  mul_smul _ _ _ := rfl
-
 private def facetAction : MulAction (Multiplicative (ZMod 2)) (Multifacet triangle) where
   smul g x := ⟨x.1, if g = 1 then x.2 else x.2.rev⟩
   one_smul := by
@@ -151,7 +147,8 @@ private theorem copy_smul (g : Multiplicative (ZMod 2)) (x : Fin 3 × Fin 2) :
     exact (Fin.cast_rev _ _).symm
 
 private theorem triangle_compatible :
-    Compatible triangle (Multiplicative (ZMod 2)) vertexAction facetAction := by
+    Compatible triangle (Multiplicative (ZMod 2))
+      (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))) facetAction := by
   unfold Compatible
   constructor
   · intro g S
@@ -197,14 +194,15 @@ private def Qualifies (a b c : Fin 2) (γ : (Fin 3 × Fin 2) → Fin 2) : Prop :
     (∀ x, i ≠ x.1 → γ (x.1, x.2.rev) = rawLabel a b c x)
 
 private theorem count_transfer (a b c : Fin 2) :
-    K (Multiplicative (ZMod 2)) vertexAction facetAction (alpha a b c) =
+    K (Multiplicative (ZMod 2))
+      (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))) facetAction (alpha a b c) =
       Nat.card {γ : (Fin 3 × Fin 2) → Fin 2 // Qualifies a b c γ} := by
   unfold K
   apply Nat.card_congr
   refine (Equiv.arrowCongr copyEquiv.symm (Equiv.refl (Fin 2))).subtypeEquiv ?_
   intro γ
   change (∀ i, ∃ g : Multiplicative (ZMod 2),
-    vertexAction.smul g i = i ∧
+    (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))).smul g i = i ∧
       Subtype.restrict (fun x => i ∈ collapse x) ((@arrowAction _ _ _ _ facetAction).smul g γ) =
       Subtype.restrict (fun x => i ∈ collapse x) (alpha a b c)) ↔
         Qualifies a b c (γ ∘ copy)
@@ -236,7 +234,8 @@ private theorem raw_counts (a b c : Fin 2) :
   fin_cases a <;> fin_cases b <;> fin_cases c <;> decide
 
 private theorem counts (a b c : Fin 2) :
-    K (Multiplicative (ZMod 2)) vertexAction facetAction (alpha a b c) =
+    K (Multiplicative (ZMod 2))
+      (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))) facetAction (alpha a b c) =
       if a = 0 ∧ b = 0 ∧ c = 0 then 1 else 2 := by
   rw [count_transfer, raw_counts]
 
@@ -280,7 +279,8 @@ private theorem parity_identity
   ring
 
 private theorem triangle_not_factorizable :
-    ¬ Factorizable triangle (Multiplicative (ZMod 2)) vertexAction facetAction
+    ¬ Factorizable triangle (Multiplicative (ZMod 2))
+      (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))) facetAction
       triangle_compatible := by
   intro h
   obtain ⟨C, _, _, hC⟩ := h 2
@@ -294,7 +294,8 @@ private theorem triangle_not_factorizable :
 theorem result : ¬ claim := by
   intro h
   exact triangle_not_factorizable
-    (h 2 triangle triangle_valid (Multiplicative (ZMod 2)) vertexAction facetAction
+    (h 2 triangle triangle_valid (Multiplicative (ZMod 2))
+      (MulAction.ofEndHom (1 : Multiplicative (ZMod 2) →* Function.End (Fin 3))) facetAction
       triangle_compatible)
 
 end D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangle
