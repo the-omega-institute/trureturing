@@ -338,7 +338,7 @@ $$
 $$
 
 In particular the same assertion holds with $(1+\ell)^p$ replaced
-by any polynomial with nonnegative coefficients. In exterior radial
+by any real polynomial $P(\ell)$ nonnegative on $[\ell_0,\infty)$. In exterior radial
 coordinates this is precisely
 
 $$
@@ -351,8 +351,9 @@ $$
 **Proof.** Apply (20.19). For fixed real $p\ge0$,
 $A_p=\sup_{\ell\ge0}(1+\ell)^pe^{-\ell}<\infty$ by elementary
 calculus, so the right side of (20.21) is at most
-$C_nA_pe^{-\ell_0}$. A polynomial with nonnegative coefficients
-is a finite nonnegative sum of these weights. Finally put
+$C_nA_pe^{-\ell_0}$. For $P(\ell)=\sum_{j=0}^d a_j\ell^j$ and $\ell\ge0$,
+$|P(\ell)|\le(\sum_{j=0}^d|a_j|)(1+\ell)^d$. This proves the
+assertion for every stated nonnegative polynomial. Finally put
 $r=e^\ell$, so $dr/r=d\ell$, and apply (20.18).
 
 **Corollary 20.5 (the full complex exterior form consequence).**
@@ -433,7 +434,7 @@ $Q_n[b]=\int_Jq_n|b|^2da$, and the natural domains are
 
 $$
 \begin{aligned}
-\mathcal H_c&=\{b\in L^2(J;\mathbb C):b\in AC_{\rm loc}(J),\
+\mathcal H_c&=\{b\in L^2(J;\mathbb C):b\in AC_{\rm loc}(J),
                                   \sqrt c\,b'\in L^2(J)\},\\
 A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,\\
 D_0&=\mathcal H_c,\qquad
