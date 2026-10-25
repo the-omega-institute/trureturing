@@ -14,7 +14,7 @@ The four even rows fix the entire polynomial g by interpolation at 0,2,4,6. They
 
 **Theorem 1.1 (Drift multiplicity pays for every complete world).**
 
-$$\forall E \in \{J,M\}, \forall b,A,C,z,Y,p,v \in \mathbb{R}, b>0, z\neq A \implies \forall S \in \operatorname{Finset}\left(\operatorname{OriginalWorld}\left(\right)\right), S\subseteq\operatorname{F}\left(E, b,A,C,z,Y,p,v\right) \implies \operatorname{D}\left(S\right)\leq\operatorname{R}\left(\operatorname{H}\left(E, b,A,C,z,Y,p,v\right)\right)$$
+$$\forall E \in \{J,M\}, \forall b,A,C,z,Y,p,v \in \mathbb{R}, b>0 \land z\neq A \implies \forall S \in \operatorname{Finset}\left(\operatorname{OriginalWorld}\right), S\subseteq\operatorname{F}\left(E, b,A,C,z,Y,p,v\right) \implies \operatorname{D}\left(S\right)\leq\operatorname{R}\left(\operatorname{H}\left(E, b,A,C,z,Y,p,v\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/SevenReadWorldBound.native_drift_multiset_le_roots` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ If only G₁ is active, j is fixed and the source equation is r²-r+b(j-b)=0. If
 
 **Theorem 1.2 (Finite complete-world fiber of size at most three).**
 
-$$\forall E \in \{J,M\}, \forall b,A,C,z,Y,p,v \in \mathbb{R}, b>0, z\neq A \implies \operatorname{Finite}\left(\operatorname{F}\left(E, b,A,C,z,Y,p,v\right)\right) \land \lvert\operatorname{F}\left(E, b,A,C,z,Y,p,v\right)\rvert \leq3$$
+$$\forall E \in \{J,M\}, \forall b,A,C,z,Y,p,v \in \mathbb{R}, b>0 \land z\neq A \implies \operatorname{Finite}\left(\operatorname{F}\left(E, b,A,C,z,Y,p,v\right)\right) \land \lvert\operatorname{F}\left(E, b,A,C,z,Y,p,v\right)\rvert \leq3$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/SevenReadWorldBound.seven_read_world_bound` (`✓ std3`). ∎
 
