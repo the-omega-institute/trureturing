@@ -40,13 +40,13 @@ internal sealed class SevenReadWorldBoundDocument : IScribeDocumentDefinition
     private static Formula Parms => Seq(F.Id("b"), Comma, F.Id("A"), Comma,
         F.Id("C"), Comma, F.Id("z"), Comma, F.Id("Y"), Comma, F.Id("p"), Comma, F.Id("v"));
     private static Formula Fiber => Call("F", F.Id("E"), Parms);
-    private static Formula Guard => Seq(F.Id("b"), Gt, D(0), Comma, Sp,
+    private static Formula Guard => Seq(F.Id("b"), Gt, D(0), Sp, Land, Sp,
         F.Id("z"), Neq, Sp, F.Id("A"));
     private static Formula Prefix(Formula body) => Disp(Seq(Forall, Sp, F.Id("E"), Sp,
         InMacro, Sp, OpenBrace, F.Id("J"), Comma, F.Id("M"), CloseBrace, Comma, Sp,
         Forall, Sp, Parms, Sp, InMacro, Sp, Real, Comma, Sp, Guard, Sp, Implies, Sp, body));
     private static Formula MultisetStatement() => Prefix(Seq(Forall, Sp, F.Id("S"),
-        Sp, InMacro, Sp, Call("Finset", Call("OriginalWorld")), Comma, Sp,
+        Sp, InMacro, Sp, Call("Finset", Seq(Operatorname, Grp(F.Id("OriginalWorld")))), Comma, Sp,
         F.Id("S"), Subseteq, Fiber, Sp, Implies, Sp,
         Call("D", F.Id("S")), Leq, Call("R", Call("H", F.Id("E"), Parms))));
     private static Formula BoundStatement() => Prefix(Seq(Call("Finite", Fiber),
