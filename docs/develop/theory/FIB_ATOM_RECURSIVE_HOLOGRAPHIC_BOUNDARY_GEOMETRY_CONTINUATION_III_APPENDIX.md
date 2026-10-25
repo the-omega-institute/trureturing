@@ -3011,7 +3011,7 @@ v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\qquad
 \ell_n=\sqrt{M_n},\\
 \delta_n=q_c[u_n],\qquad
 E_n=q_c[v_n]=\delta_n/M_n,\qquad
-\epsilon_n=\sigma_n-2.
+\epsilon_n=\sigma_n-2,\qquad g_n=g_{\sigma_n}.
 \end{gathered}
 \tag{107.2}
 $$
@@ -3101,7 +3101,7 @@ $$
 \tag{107.8}
 $$
 
-Core approximation and the inverse $\mathscr D_{1/\lambda}$ extend the domain invariance and form identity to $\mathcal Q_\delta$; the weighted integral identity follows directly by change of variables. Thus (107.4) has the asserted degree-one dependence on $b\sqrt{\mathfrak t[f]}$ for fixed norm. These auxiliary Euclidean dilations are not asserted to dilate the original source law.
+Core approximation and the inverse $\mathscr D_{1/\lambda}$ extend the domain invariance and form identity to $\mathcal Q_\delta$; the weighted integral identity follows directly by change of variables. Both sides of the first inequality in (107.4) scale by $\lambda$; its cylinder bound at radius $b$ for $\mathscr D_\lambda f$ is the bound at radius $\lambda b$ for $f$. These auxiliary Euclidean dilations are not asserted to dilate the original source law.
 
 To pass to the actual original space, use only the established forward map (87.26). In shear coordinates set $\Psi(\xi,s)=\psi(\xi,s+xy/2)$ and let $b_\psi=\mathcal F_s\Psi$ be the unitary central transform. Define on every $L^2$ state
 
@@ -3123,7 +3123,7 @@ $$
 
 This is a marginal identity for all complex $L^2$ states; it makes no pointwise density identification in the central variable. It also holds with any nonnegative measurable function of $\xi$ as multiplier, by simple-function approximation.
 
-The norm-preserving map $\mathcal M$ is $L^2$-Lipschitz because the modulus is a contraction before inverse Fourier transformation. On the original punctured core (87.27) gives $\mathfrak t[\mathcal M\psi]\le q_c[\psi]/a$. For a $\mathcal Q_c$ core approximating sequence, its images therefore converge in $L^2$ with bounded $\mathfrak t$ values. Lower semicontinuity of the nonnegative closed form, extended by $+\infty$ outside $\mathcal Q_\delta$, gives exactly the whole-closure comparison (87.28):
+The norm-preserving map $\mathcal M$ is $L^2$-Lipschitz because the modulus is a contraction before inverse Fourier transformation. On the original punctured core (87.27) gives $\mathfrak t[\mathcal M\psi]\le q_c[\psi]/a$. Its constants are unchanged: if $U=\mathcal F_s^{-1}|b_\psi|$, then $A[\mathcal M\psi]=A[U]\le T[\psi]$, $C[\mathcal M\psi]=\kappa^2D_2[\psi]$, $J[\mathcal M\psi]=\kappa J[U]$, and the actual source bound is $V[\psi]\le J[U]/(4\pi)$. Here $A$, $C$ and $J$ are precisely (87.5), while $a\kappa^2=\eta$ and $g_c/(4\pi)=4a\kappa/\pi$. For a $\mathcal Q_c$ core approximating sequence, its images therefore converge in $L^2$ with bounded $\mathfrak t$ values. Lower semicontinuity of the nonnegative closed form, extended by $+\infty$ outside $\mathcal Q_\delta$, gives exactly the whole-closure comparison (87.28):
 $\mathcal M\psi\in\mathcal Q_\delta$ and
 $\mathfrak t[\mathcal M\psi]\le\overline q_c[\psi]/a$.
 This uses no estimate on differences of the images in the form norm. Apply (107.4) to this image, then (107.9) with multiplier $1/r$ and with $A=\{r<b\}$. Norm preservation proves (107.5), without an inverse map or an original-domain identification. $\square$
