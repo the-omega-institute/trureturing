@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:c1328b7624a6b01e0a2d1024c34c40c3787d65c859c1164aaa5afa399bbfcc63
+  normalized_sha256: sha256:c1328b7624a6b01e0a2d1024c34c40c3787d65c859c1164aaa5afa399bbfcc63
+cas_ref: sha256:c1328b7624a6b01e0a2d1024c34c40c3787d65c859c1164aaa5afa399bbfcc63
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ConceptFiberDecomposition.Concept
+    target_statement_id: sha256:73f3573f4b0138d6e8786194315f7e20aa2eb063ec47655c194ce94392ce669b
+  - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.PassiveProtocol
+    target_statement_id: sha256:25ca41c54fdbbc19ec460aabb22e2880c55034ddc3d247adc21eb1930871f08a
+  - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
+    target_statement_id: sha256:4acf13c0dd840138fd7c746c6dcfb4173e3c776971f9cdc8c8533ac255b4deaf
+  - gid: D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.treePolicy
+    target_statement_id: sha256:dae4b5e546cf866023ca732e810153353c33f13ad484607f286544466e7b5240
+  - gid: D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.tree_execution
+    target_statement_id: sha256:0168868ad499e2f3d9bec86c7e8f8dd008d6ce852777f8c680092f77969f5ecc
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 565b7c0b61050f7a7de4e11848f94d4b41bd0fac71407afa44a5a1c2278d4815
+    - 019c85cfd3d3b6851a4e960c0f3101353a62e398191677152dc57ca5b8665135
+    - 09566d621b5773382f0e236391f474b3717637924d16190adde28955e5271d05
+    - 413aa626c09d204897ad6106cdcdef018283eb86ef6f9cbee2a3a250ccc93ffe

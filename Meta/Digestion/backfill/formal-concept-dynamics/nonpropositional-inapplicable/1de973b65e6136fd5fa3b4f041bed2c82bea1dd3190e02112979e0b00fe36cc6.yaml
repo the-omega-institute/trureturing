@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1de973b65e6136fd5fa3b4f041bed2c82bea1dd3190e02112979e0b00fe36cc6
+  normalized_sha256: sha256:1de973b65e6136fd5fa3b4f041bed2c82bea1dd3190e02112979e0b00fe36cc6
+cas_ref: sha256:1de973b65e6136fd5fa3b4f041bed2c82bea1dd3190e02112979e0b00fe36cc6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 最终申诉事项、制度四分量的操作类型签名和主权术语释义均属模型约定；箭头不是某操作可实现性的存在断言。'
+    previous_atom_id: 6b19e4c08d582a72d67e1f3ef3dadce52825ce30b5ccf816f436004c3895b198
+    next_atom_id: 32f985da92ef0db845f309705c1bdfc99caa03aa83eb3987f6d8919f7b57b7b2

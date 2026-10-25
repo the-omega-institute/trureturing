@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fcd3f3f1864ad351a274f225d5bca074b8d626929405e19d98fd9a773bb2948a
+  normalized_sha256: sha256:fcd3f3f1864ad351a274f225d5bca074b8d626929405e19d98fd9a773bb2948a
+cas_ref: sha256:fcd3f3f1864ad351a274f225d5bca074b8d626929405e19d98fd9a773bb2948a
+coverage_gids:
+  - gid: D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
+    target_statement_id: sha256:46d8700097c38bc32e50277f5002965a145a1e8fa707509356c20188baf5fd42
+  - gid: D5/S3/PrimeForms/Splitting/GoldenLocalBranchClassification.golden_local_branch_classification
+    target_statement_id: sha256:5988f5b16cb3da5418dfa17ad86739c35262e7cd6073f920f10d63a3b8031ea3
+receipts:
+  unresolved_subitems: []

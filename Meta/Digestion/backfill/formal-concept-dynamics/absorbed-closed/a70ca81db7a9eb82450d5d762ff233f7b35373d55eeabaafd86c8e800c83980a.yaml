@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a70ca81db7a9eb82450d5d762ff233f7b35373d55eeabaafd86c8e800c83980a
+  normalized_sha256: sha256:a70ca81db7a9eb82450d5d762ff233f7b35373d55eeabaafd86c8e800c83980a
+cas_ref: sha256:a70ca81db7a9eb82450d5d762ff233f7b35373d55eeabaafd86c8e800c83980a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimentTrace
+    target_statement_id: sha256:76f844c3f8d56a5dab98d9d3e35f8d7fa06d4ae48e3c7314159d69fe6bca96a0
+receipts:
+  unresolved_subitems: []
