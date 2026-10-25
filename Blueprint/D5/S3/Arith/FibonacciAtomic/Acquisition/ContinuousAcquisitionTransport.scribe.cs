@@ -19,7 +19,8 @@ internal sealed class ContinuousAcquisitionTransportDocument : IScribeDocumentDe
                 Blocks(
                     Paragraph(Text(
                         "A controller has an arbitrary configuration space S, an initial configuration, "
-                        + "a default output and one source-independent instruction function. An instruction "
+                        + "a default output and one source-independent instruction function. The type "
+                        + "binders S and L range over arbitrary, independently chosen universes. An instruction "
                         + "takes a local step, completes one original action with its fixed acknowledgement, "
                         + "requests a paid gcd reply, or halts with an output. A read continuation receives "
                         + "the complete natural-number reply. Source coordinates never enter the instruction "
@@ -113,8 +114,10 @@ internal sealed class ContinuousAcquisitionTransportDocument : IScribeDocumentDe
 
     private static Formula V(string s) => F.Id(s);
     private static Formula C(string name, params Formula[] args) => Call(name, args);
-    private static Formula Vars(params string[] names) => Seq([.. names.SelectMany((name, index) =>
-        index == 0 ? new[] { V(name) } : new[] { Comma, Sp, V(name) })]);
+    private static Formula Typed(string name, Formula type) =>
+        Seq(Open, V(name), Sp, Colon, Sp, type, Close);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula NatPair => Seq(Nat, Sp, Times, Sp, Nat);
     private static Formula Pair(Formula x, Formula y) => Seq(Open, x, Comma, Sp, y, Close);
     private static Formula Empty => Seq(OpenBracket, CloseBracket);
     private static Formula Eqn(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
@@ -124,7 +127,10 @@ internal sealed class ContinuousAcquisitionTransportDocument : IScribeDocumentDe
     {
         var rec = C("records", Empty, V("E"));
         var word = C("finalWord", Empty, V("E"));
-        return Seq(Forall, Sp, Vars("S", "L", "P", "H", "E", "v", "t", "y", "l"), Comma, Sp,
+        return Seq(Forall, Sp, Typed("S", C("Type")), Sp, Typed("L", C("Type")), Sp,
+            Typed("P", C("Controller", V("S"), V("L"))), Sp, Typed("H", Nat), Sp,
+            Typed("E", C("List", C("Event"))), Sp, Typed("v", NatPair), Sp,
+            Typed("t", V("S")), Sp, Typed("y", NatPair), Sp, Typed("l", V("L")), Comma, Sp,
             C("Run", V("P"), V("H"), C("initial", V("P")), V("v"), V("E"), V("t"), V("y"), V("l")),
             Sp, Implies, Sp, And(
                 Eqn(C("execute", C("terminalGcd", V("H")), C("selector", V("P")),
@@ -137,9 +143,18 @@ internal sealed class ContinuousAcquisitionTransportDocument : IScribeDocumentDe
                     V("E"), Pair(V("t"), word), V("l"))));
     }
     private static Formula LowerStatement() => Seq(
-        Forall, Sp, Vars("S", "H", "P", "J"), Comma, Sp,
+        Forall, Sp, Typed("S", C("Type")), Sp, Typed("H", Nat), Sp,
+        Typed("P", C("Controller", V("S"),
+            Seq(C("ZMod", V("H")), Sp, Times, Sp, C("ZMod", V("H"))))), Sp,
+        Typed("J", Nat), Comma, Sp,
         Seq(Open, D(1), Sp, Le, Sp, V("H"), Sp, Land, Sp,
-            C("Successful", V("P"), V("H"), V("J")), Close), Sp, Implies, Sp,
+            Open, Forall, Sp, Typed("v", NatPair), Comma, Sp,
+            Exists, Sp, Typed("E", C("List", C("Event"))), Sp,
+            Typed("t", V("S")), Sp, Typed("y", NatPair), Comma, Sp,
+            And(C("Run", V("P"), V("H"), C("initial", V("P")), V("v"),
+                    V("E"), V("t"), V("y"), C("residueSource", V("H"), V("v"))),
+                Seq(C("paidReads", V("E")), Sp, Le, Sp, V("J"))),
+            Close, Close), Sp, Implies, Sp,
         C("ite", Seq(V("H"), Eq, D(1)), D(0), Seq(D(2), C("costBound", V("H")))),
         Sp, Le, Sp, V("J"));
 }
