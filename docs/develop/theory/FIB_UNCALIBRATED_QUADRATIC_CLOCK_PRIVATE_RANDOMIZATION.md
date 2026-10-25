@@ -1665,6 +1665,15 @@ $$
 
 The center uses the first case for both designs.
 
+The feasible strip intersection in (1.6)--(1.7) has the mathematical
+correspondence in Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+with known regressors and componentwise bounded additive errors.
+Here the regressor is $(i^2,i,1)$, the coefficient vector is
+$(A,2A\tau,A\tau^2+B)$ and the error bound is $\varepsilon$.
+Coordinate bounding orthotopes do not supply the nonlinear target
+$\tau=\theta_1/(2\theta_2)$ or the estimate (8.10).
+
 **Theorem 8.2 (joint compatibility across both separation branches).**
 For every parameter in (8.1), the budgets (8.3) are positive and
 bounded. Every nonempty exact compatible set $C=C_j(r)$, for
@@ -1701,6 +1710,11 @@ Q\ge\frac c2>\frac c3,\qquad P<E,\qquad Q<E.
 \end{gathered}
 \tag{8.6}
 $$
+
+The separation and finite-attainment formulas are those of
+[Three-Index Design, Theorems 2.1, 3.1 and 18.2](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md).
+The scalar feasibility and compact-interval correspondences are in
+[Self-Calibrating Relation Mathematics II, Sections 80--81](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
 
 Consequently the fixed-design and full-grid formulas in (1.8)
 give $F=P$, $H=Q$, without prior truncation. The exact
@@ -1858,6 +1872,10 @@ the midpoint of $C_{12}$ if nonempty, and $z$ otherwise.
 The rules include every legal real history, including unreachable
 ones. All constants depend only on the public $m,c,E$.
 
+The chronological acquisition order is that of
+[Three-Index Design, Definition 23.1](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md),
+with the complete worlds and parameters of Definitions 1.1--1.2.
+
 **Theorem 8.4 (outside-band unrestricted quantitative bound).**
 For every $m>0$, $c>0$ and $(1+c)/2\le E<1+c$, on exactly
 Definitions 1.1--1.2,
@@ -1876,6 +1894,14 @@ $$
 The upper strategy $\Gamma^o$ bounds its two analytical branch
 losses in each one complete world; the lower bound holds against
 every permitted arbitrary seed space.
+
+The worst-input expected-error order agrees with Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2).
+Their comparisons assume a continuous linear target and a randomized
+class with product-measurable loss. Augmenting this clock's input by
+its errors makes the reports linear, while the target remains a ratio
+and only per-complete-world seed measurability is imposed here.
+Those comparison theorems do not directly apply to this strategy class.
 
 **Proof.** Each seed of $\Gamma^o$ actually reads exactly $013$
 or $023$, in increasing integer order. Continuation $3$ is legal
@@ -1958,7 +1984,7 @@ upper strategy this proves (8.16), without a minimax exchange,
 world probability law, compactness reduction of strategies or
 normal-form assumption. $\square$
 
-**Corollary 8.5 (matching region and all finite priors for $c\ge3$).**
+**Theorem 8.5 (matching region and all finite priors for $c\ge3$).**
 On (8.1), $\beta\ge1$ is sufficient for
 $R_{\mathrm{private}}=Q/2$. Its exact parameter description is
 
@@ -2031,7 +2057,7 @@ high-noise domain of Section 34 is extended by assumption.
 In particular $c\ge3$ now includes the entire formerly unresolved
 outside interval $(1+c)/2<E<E_\star(c)$. $\square$
 
-**Example 8.6 (rational interior improvement over the previous minimum).**
+**Theorem 8.6 (rational interior improvement over the previous minimum).**
 For every $m>0$, take
 
 $$
@@ -2147,7 +2173,7 @@ $(P+Q)/4>Q/2$. Thus the previous minimum of these two upper
 bounds strictly exceeds the new exact value throughout $\mathcal O$.
 $\square$
 
-**Corollary 8.7 (remaining intervals).** The sufficient criterion
+**Theorem 8.7 (remaining intervals).** The sufficient criterion
 $\beta\ge1$ makes no necessity assertion. On the remaining
 outside domain
 
@@ -2188,36 +2214,5 @@ For $E\ge E_\star$, (5.2) remains available even if $\beta<1$;
 those points are excluded from (8.33). Neither constructing one
 two-point-seed upper strategy nor integrating (8.19) restricts
 the competitor class to finite seeds. $\square$
-
-The separation and finite-attainment ingredients in this section
-are supplied by Three-Index Design, Theorems 2.1, 3.1 and 18.2,
-and its chronological contract in Definition 23.1. The source
-helpers `right_lower`, `lower`, `value_reflected`, `reflected_norm`
-and `attain_*` in `QuadraticThreeIndexSeparation.lean` concern
-that fixed-pair geometry. The scalar feasibility and compact
-interval ingredients have the correspondence in Self-Calibrating
-Relation Mathematics II, Sections 80--81; the complete full-history
-lower certificate here is explicitly (8.18)--(8.19).
-The affine estimate (8.10) joins the near and far branches and is
-the additional input permitting the outside-band budgets.
-These are repo-derived deductions, without a literature-priority
-claim or a claim of new Lean certification.
-
-For the attached literature correspondence, Casini--Garulli--Vicino,
-[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
-uses known regressors and componentwise bounded additive errors.
-Here the regressor is $(i^2,i,1)$, the coefficient vector is
-$(A,2A\tau,A\tau^2+B)$ and the error bound is $\varepsilon$.
-The feasible strip intersection corresponds to (1.6)--(1.7);
-coordinate bounding orthotopes do not supply the nonlinear target
-$\tau=\theta_1/(2\theta_2)$ or (8.10).
-Krieg--Novak--Ullrich,
-[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2),
-uses the same worst-input expected-error order, but its comparisons
-assume a continuous linear target and a randomized class with
-product-measurable loss. Augmenting this clock's input by its errors
-makes the reports linear, while the target remains a ratio and
-only per-complete-world seed measurability is imposed here.
-Neither external comparison theorem is invoked for (8.16)--(8.35).
 
 ## 追加锚（本行以下为增补区）
