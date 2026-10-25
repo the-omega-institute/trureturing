@@ -8,7 +8,6 @@
 
 import D5.S3.Analytic.MomentMinors.Defs
 import Mathlib.Probability.Moments.Basic
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
