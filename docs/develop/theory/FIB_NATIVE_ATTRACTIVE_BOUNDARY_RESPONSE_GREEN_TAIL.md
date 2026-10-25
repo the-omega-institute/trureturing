@@ -2112,3 +2112,589 @@ These are ordinary conditional analytic results, without a claim of
 kernel verification, physical realization or literature priority.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 25. Complete-source differentiation and the normalized exterior outgoing solution
+
+**Definition 25.1 (unchanged source and exterior coordinates).**
+Retain exactly the analytic hypotheses and original realization of
+Definition 18.1 of
+[Same-source native attractive boundary response](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+as used in Definitions 20.1 and 24.1. In particular, retain the
+original-field formulas and locally uniform off-pole convergence of
+Theorem 10.2, the full complex polar identity (12.12)--(12.13), the
+closed natural angular form and compact embedding supplied by V,
+Theorem 10.2, the natural-core approximation (13.6)--(13.8), the
+complete-field scaling (14.9), and the original closed form, compact
+smooth core and local estimates (15.9)--(15.12), with precisely the
+suppliers fixed in those definitions. All conclusions in this section
+are conditional on these hypotheses.
+
+Thus the source is the identity unit source for the original fields
+$U_j=\partial_{x_j}-y_j\partial_z/2$,
+$V_j=\partial_{y_j}+x_j\partial_z/2$ and $Z=\partial_z$ on $H^n$,
+with generator $L_{n,\epsilon}$ and heat column in (20.1)--(20.2).
+Its clock has horizontal covariance $2$ and central covariance
+$2\epsilon^2$, its measure is raw Lebesgue measure, and
+$M_{n,\epsilon}$ integrates the entire unweighted omitted fibre
+$\mathbb R^{2n-2}$ and the full time interval $(0,\infty)$.
+The retained equation has $\epsilon=1$ and the original form
+$q_{\rm orig}=T_1-gW_{n,1}$, associated with $A_{n,1,g}$.
+Here $\mathcal H_1$ denotes the complex compact-smooth closure in
+$\|f\|_2^2+\|Uf\|_2^2+\|Vf\|_2^2+\|Zf\|_2^2$, with retained
+fields $U=\partial_x-y\partial_z/2$,
+$V=\partial_y+x\partial_z/2$.
+
+To distinguish the two radii, write
+$r_h=(x^2+y^2)^{1/2}$ and $R_g=(r_h^4+16z^2)^{1/4}$.
+Thus $R_g$ is the gauge denoted by $R$ in (20.2), rather than the
+horizontal radius $\rho$ there. Use $\ell=\log R_g$,
+$r_h^2=R_g^2\cos a$, $4z=R_g^2\sin a$, and $\omega(a,\theta)$
+of (20.4). The dilation is $\delta_r(x,y,z)=(rx,ry,r^2z)$ and
+$d\xi=\tfrac14e^{4\ell}\,d\ell\,da\,d\theta$.
+Use $J=(-\pi/2,\pi/2)$, $c=\cos a$, $q_n$ of (20.3), and the
+natural angular space and forms of (24.2):
+
+$$
+\begin{aligned}
+\mathcal H_c
+ &=\{b\in L^2(J,da):b\in AC_{\rm loc}(J),\ \sqrt c\,b'\in L^2(J,da)\},\\
+A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,
+& C[b]&=\int_Jc|b|^2\,da,
+& Q[b]&=\int_Jq_n|b|^2\,da,\\
+\|b\|_{\mathcal H_c}^2&=A[b]+\|b\|_2^2,
+& h&=A-\frac{g}{2\pi}Q.
+\end{aligned}
+\tag{25.1}
+$$
+
+Forms and inner products are linear in their first argument; their
+polarizations have the same letters. The unweighted angular norm is
+$L^2(J,da)$, while $\|\cdot\|_C$ means $L^2(J,c\,da)$.
+There are no prescribed angular endpoint values. The complete-source
+error is exactly
+
+$$
+B_n(\ell,a)=M_{n,e^{-\ell}}(\omega(a,\theta))
+                     -\frac{q_n(a)}{2\pi}.
+\tag{25.2}
+$$
+
+It is independent of $\theta$, real and even in $a$ by the original
+complete heat formula. Equations (20.19) and (23.18) identify it as
+the original exterior error, not a replacement potential.
+
+**Proposition 25.2 (longitudinal derivative of the complete-source error).**
+For each integer $n\ge2$, with exactly $C_n,\epsilon_n$ from (20.7)
+and $\ell_n=\log(1/\epsilon_n)$, the map
+$\ell\mapsto B_n(\ell,\cdot)$ is continuously differentiable into
+$L^\infty(J,da)$ on $(\ell_n,\infty)$ and
+
+$$
+\|\partial_\ell B_n(\ell,\cdot)\|_\infty
+                 \le 2C_ne^{-2\ell}.
+\tag{25.3}
+$$
+
+The same bound holds uniformly on the entire gauge sphere, including
+both axis points and the $z=0$ circle.
+
+Proof. Denote heat time by $\tau$. In the exact fixed-time difference
+(20.9), put $\epsilon=e^{-\ell}$. Differentiation of its only
+$\ell$-dependent factor gives
+
+$$
+\partial_\ell e^{-\epsilon^2u^2/\tau}
+       =\frac{2\epsilon^2u^2}{\tau}e^{-\epsilon^2u^2/\tau}.
+\tag{25.4}
+$$
+
+Use exactly the pole-free contour
+$u=v+i\alpha\operatorname{sgn}z$, $0<\alpha<\pi/2$, of
+(20.10)--(20.15); either sign is allowed at $z=0$.
+The modulus of (25.4) is at most
+$2\epsilon^2|u|^2\tau^{-1}e^{\alpha^2\epsilon^2/\tau}$.
+The additional polynomial factor does not change the vanishing of
+the vertical-end integrals: $F_n$ has the exponential decay in
+(20.10), and for fixed $\tau$ the central Gaussian has nonpositive
+quadratic real exponent at sufficiently large $|\operatorname{Re}u|$.
+The geometric exponential on the whole sphere is bounded by
+$e^{-D_\alpha/\tau}$, exactly by (20.14). Therefore, for
+$0<\epsilon\le\epsilon_n$,
+
+$$
+\sup_{\omega\in\Sigma}
+\left|\partial_\ell
+ \{m_{n,e^{-\ell}}(\tau,\omega)-m_{n,0}(\tau,\omega)\}\right|
+\le\frac{K_{n,\alpha}}{4\pi^2}\epsilon^2\tau^{-3}
+                  e^{-D_\alpha/(2\tau)}.
+\tag{25.5}
+$$
+
+Here $F_n,K_{n,\alpha},D_\alpha$ are the unchanged quantities in
+(20.7). In particular no omitted-fibre or heat-time truncation has
+been made. Since
+$\int_0^\infty\tau^{-3}e^{-D_\alpha/(2\tau)}\,d\tau
+=4/D_\alpha^2$, integration gives
+$K_{n,\alpha}\epsilon^2/(\pi^2D_\alpha^2)=2C_n\epsilon^2$.
+
+Differentiation under both integrals is justified locally uniformly
+in $\ell>\ell_n$: on a sufficiently small compact neighborhood use
+the largest $\epsilon$ there in the integrable bound (25.5).
+The shifted Fourier integrals have a common integrable exponential
+majorant in $v$. Their differentiated integrands depend continuously
+on $\ell$, uniformly over the compact gauge sphere after domination.
+Dominated convergence first in $v$ and then in $\tau$ proves
+continuity of the derivative in the supremum norm and identifies it
+with the derivative of (25.2). Thus (25.3) is derived from the
+complete heat source; it is not an additional tail hypothesis.
+$\square$
+
+**Theorem 25.3 (normalized outgoing solution in the original exterior).**
+Under Definition 25.1's unchanged hypotheses, for every integer
+$n\ge2$ one may take $g_n^{\rm ext}=g_n^{\rm iso}$ from Lemma 24.2.
+For every fixed real $g\in(\lambda_n,g_n^{\rm ext})$ there exist a
+finite $R>0$ and a complex axisymmetric, $z$-even function $f_+$ on
+$\Omega_R=\{\xi:R_g(\xi)>R\}$ such that
+$\chi f_+\in\mathcal H_1$ for every smooth compactly supported
+multiplier $\chi$ in $\Omega_R$ and
+$q_{\rm orig}(f_+,\phi)=0$ for every original compact smooth
+exterior test $\phi$. Thus it solves the original equation
+$A_{n,1,g}f_+=0$ in the local form sense.
+
+Let $s=s_{n,g}=2\pi L_{n,g}>0$ and let $\psi=\psi_{n,g}$ be the
+real positive even natural vector of Proposition 24.3, normalized by
+$C[\psi]=1$. Set
+$w_+(\ell,a)=\sqrt{2\pi}e^\ell
+ f_+(\delta_{e^\ell}\omega(a,\theta))$. There are continuous slice
+representatives for which
+
+$$
+\|w_+(\ell)-e^{is\ell}\psi\|_{\mathcal H_c}
+ +\|\partial_\ell w_+(\ell)-is e^{is\ell}\psi\|_C
+                  \longrightarrow0\qquad(\ell\to\infty).
+\tag{25.6}
+$$
+
+The outgoing coefficient is exactly $1$, so $f_+$ is nonzero.
+The radius and estimates may depend on $n,g$; no uniformity or
+effective radius is asserted. This theorem concerns only the
+exterior, with the original complete tails, natural endpoints,
+physical mass and free closure.
+
+Proof. Fix arbitrary $n\ge2$ and
+$g\in(\lambda_n,g_n^{\rm iso})$ throughout the construction.
+We use the isolation and natural realization already proved in
+Lemma 24.2 and Proposition 24.3, and the symmetry correspondence of
+Proposition 24.4; none of these results is reproved here.
+In particular $A\ge\lambda_0\|\cdot\|_2^2$ with $\lambda_0>0$,
+and $\|\cdot\|_{\mathcal H_c}$ is equivalent to $A^{1/2}$.
+
+For an axisymmetric function $f=e^{-\ell}w/\sqrt{2\pi}$, the
+polarization of (23.18) at energy zero is exactly
+
+$$
+\begin{aligned}
+4q_{\rm orig}(f,f_z)=p(w,z)
+ &=\int\{C(w_\ell,z_\ell)+h(w,z)
+       +e^{-2\ell}\langle Dw,Dz\rangle
+       -g\langle B_n(\ell)w,z\rangle\}\,d\ell,\\
+D&=\nu(\partial_\ell-1)+4c\partial_a,
+\qquad \nu(a)=2\sin a,\qquad f_z=e^{-\ell}z/\sqrt{2\pi},\\
+4\|f\|_2^2&=\int e^{2\ell}\|w(\ell)\|_2^2\,d\ell.
+\end{aligned}
+\tag{25.7}
+$$
+
+Initially the longitudinal support is compact in the exterior;
+the natural-domain extensions use the correspondences
+(23.18)--(23.20). Both brackets in the central and source terms of
+(25.7) are unweighted $L^2(J,da)$ brackets. In particular, the
+auxiliary $C$ inner product does not replace the physical mass.
+
+Consider the full even natural complement
+$V=\{b\in\mathcal H_c:b(-a)=b(a),\ C(b,\psi)=0\}$.
+Proposition 24.3 gives $h[b]\ge\gamma C[b]$ on $V$ for a
+$\gamma>0$, and constants $\alpha>0$, $\beta\ge0$ with
+$h[b]+\beta C[b]\ge\alpha A[b]$ on $\mathcal H_c$.
+Consequently
+
+$$
+h[b]\ge\kappa A[b]\quad(b\in V),\qquad
+\kappa=\frac{\alpha}{1+\beta/\gamma}>0.
+\tag{25.8}
+$$
+
+Also $h(\psi,b)=-s^2C(\psi,b)=0$ on $V$.
+Thus $w=a(\ell)\psi+v(\ell)$ has no homogeneous cross terms,
+but all central and complete-source couplings remain.
+No higher even angular component is removed.
+
+Choose a smooth real function $\eta_L(\ell)=L+\chi(\ell-L)$,
+where $\chi(x)=0$ for $x\le0$, $\chi(x)=x$ for $x\ge1$,
+$\chi\ge0$, and $|\chi'|\le H$ for a fixed finite $H$.
+Take $L>\ell_n+1$ and set
+
+$$
+t(\ell)=e^{-2\eta_L(\ell)},\qquad
+\widetilde B(\ell,a)=B_n(\eta_L(\ell),a),\qquad S=e^{-2L}.
+\tag{25.9}
+$$
+
+These are auxiliary coefficients on the whole line, equal to the
+original ones for $\ell\ge L+1$. They satisfy
+$0<t\le S$, $|t'|\le2Ht$,
+$\|\widetilde B\|_\infty\le C_nt$ and
+$\|\partial_\ell\widetilde B\|_\infty\le2HC_nt$ by
+Proposition 25.2. Their continuation on the left is not a boundary
+condition or an additional source assumption on the exterior.
+
+Choose $0<\delta<1$ with $\delta^2/\lambda_0<\kappa/4$.
+Let $X_V$ be the completion of finite sums
+$\sum_j\varphi_j(\ell)b_j(a)$, with
+$\varphi_j\in C_c^\infty(\mathbb R)$ and $b_j\in V$, for
+
+$$
+\|v\|_{X_V}^2
+ =\int_{\mathbb R}\{C[v_\ell]+A[v]+t\|Dv\|_2^2\}\,d\ell.
+\tag{25.10}
+$$
+
+This completion has an injective distributional realization:
+a Cauchy sequence converges in $L^2(\mathbb R;\mathcal H_c)$,
+its longitudinal derivative converges in $L^2(\mathbb R;L^2(c\,da))$,
+and its $D$ derivative converges in $L^2(t\,d\ell\,da)$.
+Testing on compact subsets of $\mathbb R\times J$ identifies these
+limits as the corresponding distributional derivatives. The last
+term is therefore the actual closed central graph norm.
+Tensor density is part of this definition, with the full natural
+angular domain. On each compact longitudinal interval $t$ has a
+positive minimum. The norm also controls unweighted $v_\ell$
+locally: away from the endpoints use $C[v_\ell]$, while near them
+$\nu$ is bounded away from zero and
+$\nu v_\ell=Dv-4cv_a+\nu v$, with
+$\|cv_a\|_2^2\le\int c|v_a|^2$. These are the genuine local
+original derivatives.
+
+Use the Hilbert space
+$X=H^1(\mathbb R;\mathbb C)\oplus X_V$, identified with
+$W=a\psi+v$, with the direct-sum norm. For conjugate weights
+$W=e^{\delta\ell}w$, $Z=e^{-\delta\ell}z$, define
+
+$$
+\begin{aligned}
+b_\delta(W,Z)=\int_{\mathbb R}\{&
+ C(W_\ell-\delta W,Z_\ell+\delta Z)+h(W,Z)\\
+ &+t\langle DW-\delta\nu W,DZ+\delta\nu Z\rangle
+       -g\langle\widetilde B W,Z\rangle\}\,d\ell.
+\end{aligned}
+\tag{25.11}
+$$
+
+This is the exponentially conjugated auxiliary form, bounded on
+$X\times X$. Indeed, writing
+$p=\nu\psi$ and $r_{\rm ang}=4c\psi'-\nu\psi$, we have
+$D(a\psi)=pa'+r_{\rm ang}a$. Both angular coefficients are in
+unweighted $L^2$ by $\psi\in\mathcal H_c$ and $c^2\le c$,
+as in (24.15)--(24.17). The $X_V$ norm controls all other central
+terms; $A$ controls the unweighted source pairings.
+
+On $X_V$ the real diagonal of (25.11) is exactly
+
+$$
+\int\{C[v_\ell]+h[v]-\delta^2C[v]
+ +t\|Dv\|_2^2-\delta^2t\|\nu v\|_2^2
+ -g\langle\widetilde Bv,v\rangle\}\,d\ell.
+\tag{25.12}
+$$
+
+The mixed $\delta$ terms have zero real part.
+Using (25.8), $|\nu|\le2$ and (25.9), its lower bound is
+
+$$
+\int\left\{C[v_\ell]
+ +\left(\kappa-\frac{\delta^2+4\delta^2S+gC_nS}{\lambda_0}\right)A[v]
+ +t\|Dv\|_2^2\right\}\,d\ell.
+\tag{25.13}
+$$
+
+For sufficiently large $L$ this is at least
+$\int(C[v_\ell]+\tfrac\kappa2 A[v]+t\|Dv\|_2^2)$.
+The resulting $V$ block is invertible $X_V\to X_V^*$, with a
+bound independent of sufficiently large $L$. Here the coercive-form
+argument is the usual Hilbert-space argument: Riesz representation
+gives a bounded operator $T$, and
+$\operatorname{Re}\langle Tv,v\rangle\ge m\|v\|^2$ implies
+$\|Tv\|\ge m\|v\|$ and closed range. The adjoint has the same
+coercive real diagonal, hence zero kernel, so that range is dense
+and therefore the entire space; the inverse norm is at most $1/m$.
+This is the classical Riesz/adjoint framework of G. B. Folland,
+*Real Analysis*, second edition, Chapter 5, applied to the specified
+completed space, not an endpoint elliptic assertion.
+
+The scalar homogeneous block is
+$\int((a'-\delta a)\overline{(b'+\delta b)}-s^2a\overline b)$.
+On the whole line its Fourier multiplier is
+
+$$
+m(\xi)=\xi^2+2i\delta\xi-\delta^2-s^2,
+\qquad \inf_{\xi\in\mathbb R}\frac{|m(\xi)|}{1+\xi^2}>0.
+\tag{25.14}
+$$
+
+The imaginary part can vanish only at $\xi=0$, where the real
+part is negative. The stated lower bound follows by continuity
+and $m(\xi)/\xi^2\to1$. Plancherel, in the classical whole-line
+Fourier setting of Folland, Chapter 8, now gives the inverse
+$\widehat a=\widehat F/m$, bounded from $H^{-1}(\mathbb R)$ to
+$H^1(\mathbb R)$; it gives both surjectivity and injectivity.
+
+Take the block diagonal operator consisting of this scalar block
+and the full coercive $V$ block, including its entire central
+term. The remaining scalar central/source terms and cross blocks
+form an operator $E:X\to X^*$ satisfying
+
+$$
+\|E\|\le K(\sqrt S+S),
+\tag{25.15}
+$$
+
+where $K$ depends on the fixed $n,g,s,\delta,\psi$, not on large
+$L$. For example, for $a\in H^1$, $z\in X_V$,
+
+$$
+\begin{aligned}
+\left|\int t\langle D(a\psi)-\delta\nu a\psi,
+                         Dz+\delta\nu z\rangle\right|
+ &\le K\sqrt S\,\|a\|_{H^1}\|z\|_{X_V},\\
+\left|g\int\langle\widetilde B a\psi,z\rangle\right|
+ &\le KS\|a\|_{H^1}\|z\|_{X_V}.
+\end{aligned}
+\tag{25.16}
+$$
+
+The reversed cross block has the same bounds, and the scalar
+diagonal perturbations are $O(S)$. Both diagonal inverse bounds
+are independent of large $L$. Enlarge $L$ until their product
+with the bound in (25.15) is below $1/2$. The operator-norm
+Neumann series then inverts the full $b_\delta:X\to X^*$.
+In particular no unbounded central derivative has been declared
+a bounded perturbation of the limiting homogeneous energy:
+its entire $V$ block was retained in (25.10)--(25.13).
+
+Let $w_0=e^{is\ell}\psi$. Its homogeneous equation vanishes
+distributionally, since $h(\psi,b)=-s^2C(\psi,b)$ for every
+$b\in\mathcal H_c$. Although $e^{\delta\ell}w_0$ is not in
+$X$ at positive infinity, its full perturbation residual is the
+following bounded functional on $X$:
+
+$$
+\begin{aligned}
+F_\delta(Z)
+ &=\int t e^{(\delta+is)\ell}
+       \langle is p+r_{\rm ang},DZ+\delta\nu Z\rangle\,d\ell\\
+ &\quad-g\int e^{(\delta+is)\ell}
+                   \langle\widetilde B\psi,Z\rangle\,d\ell.
+\end{aligned}
+\tag{25.17}
+$$
+
+This identity first follows on compact tests by exact polarization;
+there is no integration of growing homogeneous terms. Its central
+part is bounded by Cauchy--Schwarz in the central norm because
+$\int_{\mathbb R}t e^{2\delta\ell}\,d\ell<\infty$.
+Its source part uses $A$ control of unweighted $L^2$ and
+$\int_{\mathbb R}t^2 e^{2\delta\ell}\,d\ell<\infty$.
+Both integrals converge at the negative end, where $t$ is constant,
+and at the positive end, where $t=e^{-2\ell}$ and $0<\delta<1$.
+All angular components of these residuals are retained.
+
+Solve $b_\delta(Y,Z)=-F_\delta(Z)$ for every $Z\in X$ by the
+full inverse, and set
+$r=e^{-\delta\ell}Y$, $w=w_0+r$ and $X_\delta=e^{-\delta\ell}X$.
+For compact longitudinal tests, (25.11) and (25.17) give the exact
+auxiliary weak equation $p_{\rm aux}(w,z)=0$. Thus $w$ is an
+actual coupled form solution, rather than a scalar ansatz.
+The coefficient of $w_0$ was prescribed to be $1$ before inversion.
+
+We next prove the strong slice regularity; weighted integrated
+energy alone would not suffice. Let $P$ be the distributional
+operator of $p_{\rm aux}$, and $P_h$ the same operator with
+coefficients $t(\ell+h)$, $\widetilde B(\ell+h,a)$.
+The homogeneous part and $D$ commute with longitudinal translation
+$T_hu(\ell)=u(\ell+h)$. From (25.9) and (25.3), for small $|h|$,
+
+$$
+\frac{|t(\ell+h)-t(\ell)|}{|h|}\le Kt(\ell),\qquad
+\frac{\|\widetilde B(\ell+h)-\widetilde B(\ell)\|_\infty}{|h|}
+                                                  \le Kt(\ell).
+\tag{25.18}
+$$
+
+Translation is uniformly bounded and strongly continuous on
+$X_\delta$. On tensors this follows by changing $\ell$,
+$t(\ell-h)/t(\ell)\le e^{2H|h|}$, and
+$e^{\delta\ell}T_h=e^{-\delta h}T_he^{\delta\ell}$;
+tensor density extends it to the completions. It preserves $V$.
+For each nonzero small $h$ set
+
+$$
+z_h=\frac{T_hw-e^{ish}w}{h}
+    =\frac{T_hr-e^{ish}r}{h}\in X_\delta.
+\tag{25.19}
+$$
+
+Since $P_hT_hw=0$ and $Pw=0$, the exact distributional equation is
+$Pz_h=(P-P_h)T_hw/h$.
+After exponential conjugation this right side is uniformly bounded
+in $X^*$. For its central part use (25.18) and Cauchy--Schwarz
+with $\sqrt t e^{\delta\ell}DT_hw$ and
+$\sqrt t(DZ+\delta\nu Z)$. The $w_0$ contribution is integrable
+by (25.17); that of $r$ is bounded by translation on $X_\delta$.
+For the source part use $t e^{\delta\ell}T_hw$ in unweighted
+$L^2$ and $A$ control of $Z$, with the second integral following
+(25.17). These distributional equalities extend to $X$ tests by
+the defining density and the displayed bounds.
+
+The full inverse therefore bounds $z_h$ uniformly in $X_\delta$.
+Weak compactness in that Hilbert space and the injective local
+distributional realization identify a weak subsequential limit as
+$\partial_\ell r-isr$. Hence both $r$ and $\partial_\ell r$
+belong to $X_\delta$. This is a difference-quotient argument;
+no energy differentiability of the solution was assumed.
+
+It follows from (25.10), its scalar summand, and equivalence of
+$A^{1/2}$ with the natural norm that
+
+$$
+\begin{aligned}
+y=e^{\delta\ell}r&\in H^1(\mathbb R;\mathcal H_c),\\
+z=e^{\delta\ell}\partial_\ell r
+          &\in H^1(\mathbb R;L^2(J,c\,da)).
+\end{aligned}
+\tag{25.20}
+$$
+
+For the first assertion use $r,\partial_\ell r\in
+L^2(e^{2\delta\ell}d\ell;\mathcal H_c)$; for the second use
+$\partial_\ell r\in X_\delta$, which also controls its next
+longitudinal derivative in the $C$ norm. A Hilbert-valued $H^1$
+function has a continuous, locally absolutely continuous
+representative tending to zero at positive infinity: its $L^2$
+norm supplies a sequence $t_j\to\infty$ of vanishing slice norms,
+and the norm-square identity gives
+
+$$
+\|u(t)\|^2\le
+ 2\int_t^\infty\|u(\tau)\|\,\|u'(\tau)\|\,d\tau\longrightarrow0
+\tag{25.21}
+$$
+
+by Cauchy--Schwarz. Apply this to both functions in (25.20).
+Consequently $\|r(\ell)\|_{\mathcal H_c}
++\|\partial_\ell r(\ell)\|_C\to0$, with continuous representatives.
+This proves both strong limits, without promoting an averaged or
+almost-everywhere estimate to a trace assertion. Only the derived
+longitudinal derivative of $B_n$ was used; no angular derivative,
+graph regularity or external scattering theorem enters.
+
+Return to the original exterior by taking $R=e^{L+1}$ and
+$f_+=e^{-\ell}w/\sqrt{2\pi}$ for $\ell>L+1$.
+There the auxiliary coefficients are exactly the original ones
+in (25.7). All spaces and coefficients preserve evenness in $a$;
+$w$ is independent of $\theta$, so $f_+$ is axisymmetric and even
+in $z$.
+
+For the original free closure, take a compact smooth longitudinal
+cutoff $\chi_0$ in $(L+1,\infty)$. Its multiplication is bounded
+in the local $X$ norm: differentiating adds $\chi_0'r$ to the
+homogeneous longitudinal term and $\nu\chi_0'r$ to $D$,
+both controlled by $A$. By (25.10), $\chi_0r$ is a limit of
+finite natural angular tensors; $\chi_0w_0$ is such a tensor as
+well. On this fixed compact interval, both physical weights are
+bounded above and below, and the original free norm is controlled by
+
+$$
+\int\{C[\partial_\ell(\chi_0w)]+A[\chi_0w]
+  +e^{-2\ell}\|D(\chi_0w)\|_2^2
+  +e^{2\ell}\|\chi_0w\|_2^2\}\,d\ell.
+\tag{25.22}
+$$
+
+For each finite tensor use the natural angular core approximation
+and (23.20), including $\|cb'\|_2^2\le\int c|b'|^2$.
+Undoing coordinates gives compact smooth Cartesian approximants
+away from the axes and pole, converging in the original free norm,
+exactly the correspondence used in (24.14). Thus
+$\chi_0 f_+\in\mathcal H_1$.
+For an arbitrary compact smooth exterior multiplier $\chi$, choose
+$\chi_0=1$ on its radial support. The original $U,V,Z$ product
+rules, with bounded derivatives of $\chi$ on that compact support,
+show that $\chi f_+=\chi(\chi_0 f_+)\in\mathcal H_1$.
+No angular endpoint data have been imposed.
+
+For axisymmetric even compact smooth Cartesian tests, the polarized
+identity (25.7) now agrees with the original local form pairing.
+Their cylinder images are in the local test completion: a smooth
+axisymmetric Cartesian function is smooth in $(r_h^2,z)$ up to
+the axis, hence smooth in $(\ell,a)$ up to the two angular
+endpoints on compact longitudinal intervals. The supplied natural
+angular cutoffs approximate these images in $A$; the extra central
+cutoff derivative is $4c\chi_a'w$ and is controlled by the same
+weighted cutoff energy using $c^2\le c$. On compact angular
+subintervals ordinary smooth tensor approximation converges in the
+central norm as well. Projection onto $\psi$ and its $C$-orthogonal
+complement preserves this local completion: the scalar coefficient
+and its derivative are controlled by the $C$ norm, while
+$D(a\psi)=pa'+r_{\rm ang}a$ controls its central term. Thus these
+tests are admissible in the auxiliary equation by density, and
+free-norm continuity gives $q_{\rm orig}(f_+,\phi)=0$.
+
+Finally take any original compact smooth exterior test. Average it
+first over horizontal rotations, which preserve the full original
+form and leave $f_+$ invariant. Within this axisymmetric sector
+average over $z$ reflection, using precisely Proposition 24.4's
+$m=0$ reflection invariance. Both averages preserve compact smooth
+exterior support, because $R_g$ is invariant, and preserve its
+pairing with $f_+$. The resulting test is even and axisymmetric,
+so its pairing is zero by the preceding paragraph. This proves the
+weak equation against all original tests; it does not use
+$z$ reflection as a symmetry of the nonaxisymmetric form.
+
+The construction yields exactly
+$w_+=e^{is\ell}\psi+r$ and
+$\partial_\ell w_+=is e^{is\ell}\psi+\partial_\ell r$.
+Equations (25.20)--(25.21) give (25.6). Since $C[\psi]=1$,
+$\|w_+(\ell)\|_C\to1$, proving nonzero amplitude with precisely
+normalized outgoing coefficient. A nonzero constant incoming
+coefficient cannot belong to the decaying correction. Reality of
+the equation also gives the real and imaginary exterior standing
+waves.
+
+For every fixed pair $n,g$ in the stated interval, (25.8) first
+permits a positive $\delta<1$, and then a finite $L$ satisfies
+(25.13) and the Neumann bound. Lemma 24.2 supplies a finite
+$g_n^{\rm iso}>\lambda_n$ for every integer $n\ge2$.
+Thus $g_n^{\rm ext}=g_n^{\rm iso}$ works for every fixed coupling
+in its entire open interval. No uniform gap, radius, closed-interval
+endpoint, genericity condition or resonance exclusion is needed.
+
+The source-specific derivative estimate and coupled exterior
+construction are deductions under the inherited analytic premises;
+the Hilbert, Fourier, Neumann-series and $H^1$ tools used inside
+the proof are classical. The construction supplies freely determined
+data at a finite inner radius. It gives no extension through the
+original core, no global $L^2$ or operator-domain membership, no
+low-energy decaying solution or coupled mass-wall matching, and no
+graph-domain residual of the kind required by (24.18).
+Those obligations, and the full eigenvalue phase limit discussed in
+24.7, remain separate and unresolved. In particular the exterior
+normalization does not identify a global-core coefficient or resolve
+an allowed original zero-energy resonance. The physical mass remains
+$e^{2\ell}da$, the full central derivative remains present, and the
+original complete source and all natural endpoints are unchanged.
+These are conditional analytic conclusions, without a claim of
+kernel verification, physical realization or literature priority.
+$\square$
+
+## 追加锚（本行以下为增补区）
