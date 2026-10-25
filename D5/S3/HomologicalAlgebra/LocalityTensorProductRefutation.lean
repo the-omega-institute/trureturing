@@ -350,11 +350,105 @@ private theorem key_obstruction {v t : Fin 5 → ℝ} (h : rel v t)
   fin_cases i <;> norm_num [direction, project, Pi.smul_apply, smul_eq_mul] at h0 h1 h2
   all_goals apply hv; linarith [hn.1, hn.2]
 
+private theorem no_joint_related
+    (a b c : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤)
+    (ha : phi 0 a.1 ≠ 0) (hb : phi 3 b.1 ≠ 0) (hc : phi 4 c.1 ≠ 0)
+    (hab : spanRel (pairRel rel) a.1 b.1) (hac : spanRel (pairRel rel) a.1 c.1) :
+    False := by
+  obtain ⟨p, hp, hp0⟩ := phi_support 0 ha
+  obtain ⟨q, hq, hq3⟩ := phi_support 3 hb
+  obtain ⟨t, ht, ht4⟩ := phi_support 4 hc
+  have h2 : p.1 2 = 0 := (mul_eq_zero.mp (hab p hp q hq).1.2.2.1).resolve_left
+    (mul_ne_zero_iff.mp hq3).1
+  have h1 : p.1 1 = 0 := (mul_eq_zero.mp (hac p hp t ht).1.2.2.2.2).resolve_left
+    (mul_ne_zero_iff.mp ht4).1
+  have hl : p ∈ localityProduct rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    a.2 hp
+  exact (key_obstruction hl.2.2 hp0).elim (fun h => h h1) (fun h => h h2)
+
+private theorem phi_quotient (i : Fin 5)
+    {a b : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤}
+    (h : (Submodule.Quotient.mk a : localityTensor rel ⊤ ⊤) =
+      Submodule.Quotient.mk b) : phi i a.1 = phi i b.1 := by
+  have hm : a - b ∈ (bilIdeal (K := ℝ) rel ⊤ ⊤).comap
+      (freeSpan (K := ℝ) rel ⊤ ⊤).subtype := (Submodule.Quotient.eq _).mp h
+  have hz : phi i (a.1 - b.1) = 0 := phi_vanishes i hm.1
+  rw [map_sub] at hz
+  exact sub_eq_zero.mp hz
+
 private theorem pair_refuted : ¬ PairConjecture := by
-  sorry
+  intro H
+  let x : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨X 1, X_supported 1 (Or.inl rfl)⟩
+  let x' : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨X 2, X_supported 2 (Or.inr rfl)⟩
+  let y : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨Y 3, Y_supported 3 (Or.inl rfl)⟩
+  let z : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨Y 4, Y_supported 4 (Or.inr rfl)⟩
+  have hw : x' - x ∈ (bilIdeal rel ⊤ ⊤).comap (freeSpan rel ⊤ ⊤).subtype :=
+    ⟨X_difference, (x' - x).2⟩
+  have hxy : spanRel (pairRel rel) x.1 y.1 := X_related 1 3 (Or.inl ⟨rfl, rfl⟩)
+  have hxz : spanRel (pairRel rel) (x + (x' - x)).1 z.1 := by
+    rw [show x + (x' - x) = x' by module]
+    exact X_related 2 4 (Or.inr ⟨rfl, rfl⟩)
+  obtain ⟨w, hw, hwy, hwz⟩ := H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality
+    x y z (x' - x) hw hxy hxz
+  have ha : phi 0 (x + w).1 = 1 := by
+    change phi 0 (X 1 + w.1) = 1
+    have hw0 : phi 0 w.1 = 0 := phi_vanishes 0 hw.1
+    rw [map_add, phi_values.1, hw0, add_zero]
+  apply no_joint_related (x + w) y z _ _ _ hwy hwz
+  · rw [ha]; norm_num
+  · norm_num [y, Y, phi, e, Pi.single_apply]
+  · norm_num [z, Y, phi, e, Pi.single_apply]
 
 private theorem tensor_refuted : ¬ TensorConjecture := by
-  sorry
+  intro H
+  let x : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨X 1, X_supported 1 (Or.inl rfl)⟩
+  let x' : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨X 2, X_supported 2 (Or.inr rfl)⟩
+  let y : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨Y 3, Y_supported 3 (Or.inl rfl)⟩
+  let z : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
+    ⟨Y 4, Y_supported 4 (Or.inr rfl)⟩
+  let I : Submodule ℝ (freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤) :=
+    (bilIdeal rel ⊤ ⊤).comap (freeSpan rel ⊤ ⊤).subtype
+  let q := I.mkQ
+  have heq : q x' = q x := (Submodule.Quotient.eq I).mpr
+    ⟨X_difference, (x' - x).2⟩
+  have hxy : quotientRel rel ⊤ ⊤ (q x) (q y) :=
+    ⟨x, y, rfl, rfl, X_related 1 3 (Or.inl ⟨rfl, rfl⟩)⟩
+  have hxz : quotientRel rel ⊤ ⊤ (q x) (q z) :=
+    ⟨x', z, heq, rfl, X_related 2 4 (Or.inr ⟨rfl, rfl⟩)⟩
+  obtain ⟨S, hS⟩ := (H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality).2.2 {q x}
+  have hy : q y ∈ S := by
+    change q y ∈ (S : Set (localityTensor rel ⊤ ⊤))
+    rw [hS]
+    intro u hu
+    obtain rfl := Set.mem_singleton_iff.mp hu
+    exact hxy
+  have hz : q z ∈ S := by
+    change q z ∈ (S : Set (localityTensor rel ⊤ ⊤))
+    rw [hS]
+    intro u hu
+    obtain rfl := Set.mem_singleton_iff.mp hu
+    exact hxz
+  have hyz : quotientRel rel ⊤ ⊤ (q x) (q (y + z)) := by
+    have h := S.add_mem hy hz
+    change q y + q z ∈ (S : Set (localityTensor rel ⊤ ⊤)) at h
+    rw [hS] at h
+    rw [map_add]
+    exact h (q x) (Set.mem_singleton _)
+  obtain ⟨a, b, ha, hb, hab⟩ := hyz
+  have ha0 : phi 0 a.1 = 1 := (phi_quotient 0 ha).trans phi_values.1
+  have hb3 : phi 3 b.1 = 1 := (phi_quotient 3 hb).trans phi_values.2.1
+  have hb4 : phi 4 b.1 = 1 := (phi_quotient 4 hb).trans phi_values.2.2
+  apply no_joint_related a b b _ _ _ hab hab
+  · rw [ha0]; norm_num
+  · rw [hb3]; norm_num
+  · rw [hb4]; norm_num
 
 theorem result : ¬ claim := by
   intro h
