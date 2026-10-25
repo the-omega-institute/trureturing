@@ -606,14 +606,15 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
-  -- Source imports may register new environment extensions. Re-import the
-  -- small compiled judge after those registrations so exported extension
-  -- states use the current registry, independent of the original wrapper.
+  -- Source imports may register new environment extensions. A fresh minimal
+  -- import allocates states for the current registry. Dependency kernel checks
+  -- and export need declarations only; normal hot imports initialize the judge's
+  -- elaboration extensions independently.
   let base ← if importDependencies then do
     enableInitializersExecution
     withImporting <| importModules
       #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
-      options 0 (leakEnv := false) (loadExts := true)
+      options 0 (leakEnv := false) (loadExts := false)
     else pure (base?.getD (← getEnv))
   let dependencies ← liftTermElabM <| withPublicationContext do
     let mut roots := #[]
