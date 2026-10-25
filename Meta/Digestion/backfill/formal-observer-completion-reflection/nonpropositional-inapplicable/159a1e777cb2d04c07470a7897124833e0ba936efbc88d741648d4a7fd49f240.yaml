@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:159a1e777cb2d04c07470a7897124833e0ba936efbc88d741648d4a7fd49f240
+  normalized_sha256: sha256:159a1e777cb2d04c07470a7897124833e0ba936efbc88d741648d4a7fd49f240
+cas_ref: sha256:159a1e777cb2d04c07470a7897124833e0ba936efbc88d741648d4a7fd49f240
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅是建议的 Lean 文件树和待形式化名称清单；文件名和建议优先级不声称所列定理已成立或已存在。
+    previous_atom_id: a93dd1407e7587d0613291aace85c78f88529e92c36913899dea92a5b116a0b5
+    next_atom_id: 2748094719ab3fc91c854ec2034978cb3d537a6d2967b5f8625c2babda71f934

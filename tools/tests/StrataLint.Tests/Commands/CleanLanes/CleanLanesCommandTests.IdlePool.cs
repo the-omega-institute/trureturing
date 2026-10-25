@@ -8,6 +8,42 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void BusyPoolBeforeEntryReportsOnlyPoolFailure(bool force)
+    {
+        using var fixture = new CleanLanesFixture();
+        var path = fixture.AddMergedLane("lane/governance/idle-busy");
+        fixture.AddOrphan("harness/retained-after-pool-contention", merged: true);
+        var payload = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = "failed", capacity = 4,
+            items = Array.Empty<object>(),
+            failure = new { scope = "operation:idle-pool", stage = "pool_scope", outcome = "refused",
+                error = "busy_scope:operation:idle-pool", error_type = "Refused" },
+        });
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")
+            ? new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), []) : null);
+
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+
+        Assert.False(result.Success);
+        var items = ReadItems(result.Output);
+        var failed = Assert.Single(items, row => row.GetProperty("action").GetString() == "failed");
+        Assert.Equal("idle_pool", failed.GetProperty("kind").GetString());
+        Assert.Equal(JsonValueKind.Null, failed.GetProperty("path").ValueKind);
+        Assert.Equal(JsonValueKind.Null, failed.GetProperty("branch").ValueKind);
+        Assert.Equal("pool_scope:busy_scope:operation:idle-pool", failed.GetProperty("reason").GetString());
+        Assert.DoesNotContain(items, row => row.GetProperty("kind").GetString() == "idle_worktree");
+        var summary = ReadSummary(result.Output);
+        Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
+        Assert.Equal(0, summary.GetProperty("removed_count").GetInt32());
+        Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(path));
+        Assert.True(fixture.BranchExists("harness/retained-after-pool-contention"));
+    }
+
     [Fact]
     public void IdlePoolSweepFailureKeepsCompletedEvictionsAndDefersExtraSweeps()
     {

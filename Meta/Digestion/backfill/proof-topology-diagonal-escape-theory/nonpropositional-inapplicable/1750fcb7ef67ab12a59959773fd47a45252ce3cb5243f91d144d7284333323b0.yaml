@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1750fcb7ef67ab12a59959773fd47a45252ce3cb5243f91d144d7284333323b0
+  normalized_sha256: sha256:1750fcb7ef67ab12a59959773fd47a45252ce3cb5243f91d144d7284333323b0
+cas_ref: sha256:1750fcb7ef67ab12a59959773fd47a45252ce3cb5243f91d144d7284333323b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 AT.5 章节标题，没有隐藏空间目标核界。
+    previous_atom_id: d849e89c0dc95d25649bd71c8d677a074a67a988dda15021b22e426872370dc5
+    next_atom_id: 8b96b18234bf735e5cd7e6632ac11c951d9307c7488ed7871eede1cd83b2fc15

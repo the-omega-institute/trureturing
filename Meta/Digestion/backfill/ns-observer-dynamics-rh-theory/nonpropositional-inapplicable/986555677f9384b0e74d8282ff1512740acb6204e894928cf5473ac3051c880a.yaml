@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:986555677f9384b0e74d8282ff1512740acb6204e894928cf5473ac3051c880a
+  normalized_sha256: sha256:986555677f9384b0e74d8282ff1512740acb6204e894928cf5473ac3051c880a
+cas_ref: sha256:986555677f9384b0e74d8282ff1512740acb6204e894928cf5473ac3051c880a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 把gamma、rho、耗散内积界与残差界列作前提，未推导这些前提必然成立。
+    previous_atom_id: a291d58665201022a92badb454ded9a97b4eb76ff8cd78f74aa65fd513e45840
+    next_atom_id: e354326e3f2073e8149f8333787e72fec7b2505e3ecd86501be67dc2c94cf92d

@@ -32,6 +32,17 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
                 "Feasible weights are strictly positive on edges and have the same total resistance as the unweighted graph. Values on nonedges are unrestricted; edgewise equality suffices to preserve both lambda2 and totalRes."),
             Node("invariant", "Automorphism invariance", "AutInvariant", InvariantFormula(),
                 "An automorphism-invariant weight function has the same value on each edge and its image under every graph automorphism. This condition constrains edges only."),
+            Node("complete-bipartite", "The labelled complete bipartite graph", "K23", K23Formula(),
+                "The inverse of finSumFinEquiv labels the two hubs by 0 and 1 and the three leaves by 2, 3 and 4.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("complete-bipartite-decidable", "Decidable adjacency", "K23_dec",
+                Call("DecidableRel", QCall("SimpleGraph", "Adj", Call("K23"))),
+                "Adjacency in the labelled complete bipartite graph is decidable.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("complete-bipartite-connected", "Connectivity of the complete bipartite graph", "K23_connected",
+                QCall("SimpleGraph", "Connected", Call("K23")),
+                "Every vertex is reachable from vertex 2 by a path of length at most two.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("claim", "The Section 5 conjecture", "claim", ClaimFormula(),
                 "Section 5, page 7, states verbatim: “We conjecture that – in the same fashion of what happens with the absolute algebraic connectivity – the maximal value of (3) is attained always for weight distributions that are invariant under automorphisms of the graph.” Equation (3) defines ă(G) = max {λ2(G;ω) | R(G;ω)=R(G)}. The encoding quantifies over connected finite simple graphs of order at least three and asserts an invariant feasible assignment dominating every feasible assignment; it does not assume existence of a maximum separately."),
             Node("result", "Refutation on K23", "result", new Formula.Not(Call("claim")),
@@ -94,6 +105,11 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
                 CloseBracket, Sp, body) : body));
     private static Formula WeightedBinders(Formula body) => GraphBinders(All("w", Weights(), body));
     private static Formula Endpoints(Formula body) => All("i", FinN(), All("j", FinN(), body));
+
+    private static Formula K23Formula() => Eqn(Call("K23"),
+        QCall("SimpleGraph", "comap",
+            QCall("Equiv", "symm", Call("finSumFinEquiv", D(2), D(3))),
+            Call("completeBipartiteGraph", Call("Fin", D(2)), Call("Fin", D(3)))));
 
     private static Formula LapFormula()
     {

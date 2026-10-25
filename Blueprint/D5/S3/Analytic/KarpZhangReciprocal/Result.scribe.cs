@@ -16,6 +16,27 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k ≥ 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.", DescribeRole.Definition),
             Entry("karp-zhang-reciprocal-turanian-coefficient", "delta", "Finite Cauchy coefficient",
                 "For a real sequence y, real mu, alpha, beta and natural m, delta(y,mu,alpha,beta,m) is the sum over k=0,...,m of y(k)y(m-k) times [c(k,mu+alpha)c(m-k,mu+beta)-c(k,mu)c(m-k,mu+alpha+beta)]. It is exactly the degree-m coefficient of the difference of the two formal Cauchy products of the reciprocal series. No analytic convergence hypothesis is imposed.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("karp-zhang-reciprocal-increment"),
+                DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/Result.increment"),
+                H("Initial value and successive increments"),
+                StatementSource.FromAuthor(IncrementFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("At q=0 the increment is W(0); at a positive natural index it is W(q)-W(q-1). Telescoping these increments recovers W at the last index."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("karp-zhang-reciprocal-tail-sum"),
+                DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum"),
+                H("Reindexing a symmetric tail"),
+                StatementSource.FromAuthor(TailSumFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("When 2q ≤ m, the indices satisfying q ≤ k and q ≤ m-k are exactly q+i with 0 ≤ i < m-q-q+1. Natural subtraction is used with these bounds."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("karp-zhang-reciprocal-abel-layers"),
+                DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers"),
+                H("Abel decomposition into symmetric layers"),
+                StatementSource.FromAuthor(AbelLayersFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For arbitrary real sequences y and K, telescoping the balanced products y(i)y(m-i) and interchanging the finite sums expresses their weighted sum as increments times symmetric tails. No positivity hypothesis is needed; the even middle index is counted once."))),
+                DescribeRole.Theorem),
             Entry("karp-zhang-reciprocal-balanced-step", "balanced_step", "Balancing one pair of indices",
                 "For every real sequence y satisfying IsLogConcave, natural m and natural k strictly less than floor(m/2), y(k)y(m-k) <= y(k+1)y(m-(k+1)). The interval-support condition justifies the distant ratio comparison when the endpoint product is positive; a zero endpoint product is handled by nonnegativity.", DescribeRole.Theorem),
             Entry("karp-zhang-reciprocal-abel-reduction", "abel_reduction", "Abel summation identity",
@@ -24,6 +45,60 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "For every sequence y satisfying IsLogConcave, positive real mu, nonnegative real alpha and beta, and every natural m, 0 <= delta(y,mu,alpha,beta,m). This proves the reciprocal-Pochhammer assertion of Conjecture 5.2 on page 12 under exactly the sequence convention of Definition 1.1. It does not assert the corresponding gamma-series half.", DescribeRole.Theorem),
             Paragraph(Text(
                 "The interval-support condition forces every entry between two positive entries to be positive. Divide the adjacent log-concavity inequalities only on such positive intervals and induct to compare distant successive ratios. Consequently W(q+1) >= W(q) below the middle; if W(q)=0, nonnegativity gives the same conclusion directly. Telescoping the increments of W expresses W(min(k,m-k)) as a sum of layers. Interchanging two finite sums turns each layer into a symmetric tail and proves the Abel identity. The interval-convolution balancing theorem makes each tail nonnegative, and every Abel weight is nonnegative. Thus each formal coefficient is nonnegative independently of growth or convergence of the infinite series.")))));
+
+    private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
+        Parenthesized(Seq(Operatorname, Grp(F.Id("if")), Sp, condition,
+            Sp, Operatorname, Grp(F.Id("then")), Sp, yes,
+            Sp, Operatorname, Grp(F.Id("else")), Sp, no));
+
+    private static Formula IncrementFormula()
+    {
+        Formula w = F.Id("W");
+        Formula q = F.Id("q");
+        return Disp(All("W", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")),
+            All("q", F.Id("Nat"), Equal(Call("increment", w, q),
+                Conditional(Equal(q, Num(0)), App(w, Num(0)),
+                    Subtract(App(w, q), App(w, Subtract(q, Num(1)))))))));
+    }
+
+    private static Formula TailSumFormula()
+    {
+        Formula kernel = F.Id("K");
+        Formula m = F.Id("m");
+        Formula q = F.Id("q");
+        Formula k = F.Id("k");
+        Formula i = F.Id("i");
+        Formula condition = new Formula.Logic(Le(q, k), FormulaLogicOperator.And,
+            Le(q, Subtract(m, k)));
+        Formula left = SumRange("k", Add(m, Num(1)),
+            Conditional(condition, App(kernel, k), Num(0)));
+        Formula right = SumRange("i", Add(Subtract(Subtract(m, q), q), Num(1)),
+            App(kernel, Add(q, i)));
+        return Disp(All("K", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")),
+            All("m", F.Id("Nat"), All("q", F.Id("Nat"),
+                Implies(Le(Multiply(Num(2), q), m), Equal(left, right))))));
+    }
+
+    private static Formula AbelLayersFormula()
+    {
+        Formula y = F.Id("y");
+        Formula kernel = F.Id("K");
+        Formula m = F.Id("m");
+        Formula q = F.Id("q");
+        Formula k = F.Id("k");
+        Formula i = F.Id("i");
+        Formula weight = Parenthesized(Seq(i, Colon, Sp, F.Id("Nat"), Sp, Mapsto, Sp,
+            Multiply(App(y, i), App(y, Subtract(m, i)))));
+        Formula left = SumRange("k", Add(m, Num(1)),
+            Multiply(Multiply(App(y, k), App(y, Subtract(m, k))), App(kernel, k)));
+        Formula tail = SumRange("i", Add(Subtract(Subtract(m, q), q), Num(1)),
+            App(kernel, Add(q, i)));
+        Formula right = SumRange("q", Add(App(Qualified("Nat", "div"), m, Num(2)), Num(1)),
+            Multiply(Call("increment", weight, q), Parenthesized(tail)));
+        return Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")),
+            All("K", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")),
+                All("m", F.Id("Nat"), Equal(left, right)))));
+    }
 
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),

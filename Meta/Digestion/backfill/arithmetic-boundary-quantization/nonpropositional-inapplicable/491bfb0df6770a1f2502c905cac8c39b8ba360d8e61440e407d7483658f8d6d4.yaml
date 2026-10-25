@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:491bfb0df6770a1f2502c905cac8c39b8ba360d8e61440e407d7483658f8d6d4
+  normalized_sha256: sha256:491bfb0df6770a1f2502c905cac8c39b8ba360d8e61440e407d7483658f8d6d4
+cas_ref: sha256:491bfb0df6770a1f2502c905cac8c39b8ba360d8e61440e407d7483658f8d6d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pinned repository-source locator [Z]: commit URL and numbered definition, theorem and commentary sections used in ZECKENDORF_EULER_5040.md. It is a source index, with no encoding theorem or floor-gap assertion stated in the row.'
+    previous_atom_id: a2b92c777cf577acde394cbcef63f57bd8918b62b36c6dbbae969126b1ba1314
+    next_atom_id: 0b98cce19d726347d1d04c024e4e6bffd3908ef631101f368bf5a5e41f70c0a5

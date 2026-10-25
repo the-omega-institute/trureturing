@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96e29ba615f163389139e5386769aac37fb67064d63b84000790db82d040676a
+  normalized_sha256: sha256:96e29ba615f163389139e5386769aac37fb67064d63b84000790db82d040676a
+cas_ref: sha256:96e29ba615f163389139e5386769aac37fb67064d63b84000790db82d040676a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义可见/隐藏二变量ODE模型12.8；未断言其解存在、衰减或可恢复。
+    previous_atom_id: be6d8601aaa572ca345ee020aa6487b7e8db2bc6c2b35ee1d5d7d9541bde86a2
+    next_atom_id: 536e70fb8d36c22ce70f2c9ad3c1acda8d9aaa211d39ff4168d2602d540fa877

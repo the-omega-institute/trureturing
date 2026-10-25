@@ -1636,3 +1636,2728 @@ physical spatial dimension. Such a realization still requires the
 separate correspondence specified in Definitions 5.2 and 8.2.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Higher-contact self-fields and their actual three-coordinate marginal
+
+**Definition 10.1 (one source before and after retention).** Let
+$n\ge1$ be an integer. On $H^n=\mathbb R^{2n}\times\mathbb R$ use
+the group law
+$(X,z)(X',z')=(X+X',z+z'+\tfrac12\sum_j(x_jy'_j-y_jx'_j))$,
+raw Lebesgue measure $dp=dX\,dz$, identity pole $0$, and
+
+$$
+\begin{aligned}
+ U_j&=\partial_{x_j}-\tfrac{y_j}{2}\partial_z,&
+ V_j&=\partial_{y_j}+\tfrac{x_j}{2}\partial_z,&Z&=\partial_z,\\
+ L_{n,\epsilon}&=-\sum_{j=1}^n(U_j^2+V_j^2)-\epsilon^2Z^2,&
+ T_{n,\epsilon}[u]&=\sum_j(\|U_ju\|_2^2+\|V_ju\|_2^2)
+                         +\epsilon^2\|Zu\|_2^2,\\
+ h_{n,\epsilon}(t,p)&=e^{-tL_{n,\epsilon}}\delta_0(p),&
+ G_{n,\epsilon}(p)&=\int_0^\infty h_{n,\epsilon}(t,p)\,dt .
+\end{aligned}
+\tag{10.1}
+$$
+
+The free operator is the Friedrichs operator of the compact smooth
+complex core. Its clock has horizontal covariance $2$ and central
+independent covariance $2\epsilon^2$. Write $X=(X_1,W)$, where
+$X_1=(x_1,y_1)$, $W\in\mathbb R^{2n-2}$, and put
+$\xi=(X_1,z)$, $\rho=|X_1|$, $\pi(X,z)=\xi$. Define the actual
+pole-started marginal densities and their complete occupation field by
+
+$$
+ m_{n,\epsilon}(t,\xi)=\int h_{n,\epsilon}(t,X_1,W,z)\,dW,
+ \qquad M_{n,\epsilon}(\xi)=\int G_{n,\epsilon}(X_1,W,z)\,dW.
+\tag{10.2}
+$$
+
+When $n=1$ the empty fibre integral is the identity, so
+$h_{1,\epsilon}=h_\epsilon$ and $G_{1,\epsilon}=\mathcal G_\epsilon$
+in (9.2), with the evident extension to every $\epsilon\ge0$.
+The retained reference kinetic energy is $\mathcal E_H$ of (9.1).
+Its full complex horizontal free domain is $\mathcal H_0$ of
+Definition 9.1; the unit-central-noise free domain
+$\mathcal H_1$ is a subspace of it. For positive $\epsilon$, the
+free closure of $\mathcal E_H+\epsilon^2\|Zf\|_2^2$ has the same
+set of members as $\mathcal H_1$, with equivalent norms for each
+fixed positive $\epsilon$. None of these domains is identified with
+an isotropic Euclidean Sobolev space or with a critical attractive
+completion.
+
+For a parent-domain comparison fix, once and for all, a connected
+smooth relatively compact open set $D\subset H^n$ containing $0$.
+Let $h^D_{n,\epsilon}(t,0,p)$ be the Dirichlet free heat kernel of
+the same operator, density and clock, and set
+$G^D_{n,\epsilon}(p)=\int_0^\infty h^D_{n,\epsilon}(t,0,p)dt$.
+Every shrinking test below uses this one original field on $D$.
+
+**Theorem 10.2 (stable retained field, nonautonomous retention and full
+self-field collapse).** With the source of Definition 10.1, the
+following assertions hold jointly.
+
+For every $n\ge1$, $\epsilon\ge0$ and $t>0$, the central Fourier
+transform, in convention (9.4), is
+
+$$
+ \widehat m_{n,\epsilon}(t,\rho,k)
+   =q_\epsilon(t,\rho,k)\operatorname{sech}(|k|t)^{n-1},
+ \qquad \widehat m_{n,\epsilon}(t,\rho,0)
+   =(4\pi t)^{-1}e^{-\rho^2/(4t)}.
+\tag{10.3}
+$$
+
+Here $q_\epsilon$ is exactly (9.7), with its displayed scalar
+$e^{-\epsilon^2tk^2}$. These are probability densities. Set
+$a_t(z)=(2t)^{-1}\operatorname{sech}(\pi z/(2t))$, and let
+$\varphi_{\epsilon,t}$ be the central Gaussian of variance
+$2\epsilon^2t$, interpreted as $\delta_0$ at $\epsilon=0$.
+The exact complete-time marginal is
+
+$$
+\begin{aligned}
+ M_{n,\epsilon}(\rho,z)
+  &=\int_0^\infty
+       [h_{1,\epsilon}(t,\rho,\cdot)*a_t^{*(n-1)}](z)\,dt\\
+  &=\int_0^\infty
+       [\varphi_{\epsilon,t}*m_{n,0}(t,\rho,\cdot)](z)\,dt.
+\end{aligned}
+\tag{10.4}
+$$
+
+All convolutions in (10.4) are in the central real variable; a zeroth
+convolution power is $\delta_0$. The field is positive and finite
+off $\xi=0$, belongs to $L^1_{\rm loc}(\mathbb R^3)$, and has
+infinite total Lebesgue integral. At zero noise, for $n\ge2$, it has
+the explicit absolutely convergent fibre formula
+
+$$
+\begin{aligned}
+ c_n&=\frac{2^{n-2}\Gamma(n/2)^2}{\pi^{n+1}},\\
+ M_{n,0}(\rho,z)
+  &=\frac{c_n\pi^{n-1}}{\Gamma(n-1)}
+       \int_0^\infty
+       \frac{s^{n-2}\,ds}{((\rho^2+s)^2+16z^2)^{n/2}},\\
+ M_{n,0}(aX_1,a^2z)&=a^{-2}M_{n,0}(X_1,z)\qquad(a>0).
+\end{aligned}
+\tag{10.5}
+$$
+
+For every $n\ge1$, every fixed $\epsilon\ge0$, and every complex
+$f\in\mathcal H_0$, in particular every $f\in\mathcal H_1$,
+
+$$
+ \mathcal E_H[f]\ \ge\ K\int M_{n,\epsilon}|f|^2\,d\xi,
+ \qquad K=2\pi\lambda_0>0.
+\tag{10.6}
+$$
+
+Thus $\mathcal E_H-g\int M_{n,\epsilon}|f|^2\ge0$ for
+$0\le g\le K$. The constant is a sufficient bound; no sharpness
+for $n>1$ is asserted.
+
+For $n\ge2$, $\pi$ is not an all-start same-clock Markov factor.
+The densities $m_{n,\epsilon}(t)$ do not form a convolution
+semigroup on the retained $H^1$, and $M_{n,\epsilon}$ is not a
+constant multiple of $G_{1,\epsilon}$, even for a fixed positive
+$\epsilon$. Nevertheless, for every fixed $\epsilon\ge0$ and $g>0$,
+
+$$
+\begin{aligned}
+ \inf_{\substack{u\in C_c^\infty(H^n\setminus\{0\};\mathbb C)\\
+                         \|u\|_{L^2(dp)}=1}}
+       \left(T_{n,\epsilon}[u]-g\int G_{n,\epsilon}|u|^2dp\right)
+       &=-\infty,\\
+ \inf_{\substack{u\in C_c^\infty(D\setminus\{0\};\mathbb C)\\
+                         \|u\|_{L^2(dp)}=1}}
+       \left(T_{n,\epsilon}[u]-g\int G^D_{n,\epsilon}|u|^2dp\right)
+       &=-\infty .
+\end{aligned}
+\tag{10.7}
+$$
+
+Consequently no finite shift makes the original parent attractive
+energy a positive minimizing response on any domain containing this
+zero-trace core. In particular its unnormalized zero-trace infimum
+is $-\infty$ after every finite shift. These are fixed-noise
+assertions, without constants uniform as $\epsilon\downarrow0$.
+
+Proof. The classical $2n$-dimensional magnetic source column is the
+product of the $n$ oscillator columns used in (9.7)–(9.10):
+
+$$
+ \widehat h_{n,\epsilon}(t,X,k)
+ =e^{-\epsilon^2tk^2}
+   \left(\frac{\kappa}{4\pi\sinh(\kappa t)}\right)^n
+       e^{-\kappa|X|^2\coth(\kappa t)/4},\qquad \kappa=|k|.
+\tag{10.8}
+$$
+
+The limit at $k=0$ is the ordinary $2n$-dimensional Gaussian.
+The radial pole column removes the magnetic angular terms, rather
+than removing them on arbitrary tests. The direct-integral closure
+and source approximation are precisely the product version of the
+argument for (9.8)–(9.10). Integration of each omitted pair gives
+$\int_{\mathbb R^2}(\kappa/(4\pi\sinh\kappa t))
+e^{-\kappa|w|^2\coth(\kappa t)/4}dw
+=1/\cosh(\kappa t)$. This proves (10.3), including its zero mode.
+The full horizontal projection is the ordinary $2n$-dimensional
+Gaussian; its fixed-$X$ central rows are integrable. This and
+nonnegativity justify the fibre Fubini passage.
+The characteristic function of $a_t$ is $\operatorname{sech}(tk)$;
+Fourier uniqueness proves (10.4) at each fixed time, and Tonelli
+then proves the complete Green marginal.
+These oscillator factors are the classical ones in Krötz–Thangavelu–Xu,
+[*The heat kernel transform for the Heisenberg group*, §2.2,
+(2.2.1)](https://arxiv.org/html/math/0401243v2). Their Laplace element
+includes $Z^2$. Here the central coefficient is $\epsilon^2$ and
+the inverse Fourier factor is $1/(2\pi)$ as in (9.4); the Gaussian
+zero mode fixes the Lebesgue unit source, independently of a printed
+inverse-transform prefactor.
+
+Here are bounds justifying the time endpoints and fibre integrals.
+Inverting (10.3) at $\epsilon=0$ and shifting the rescaled contour
+$tk$ to $v+i\alpha\operatorname{sgn}z$, $0<\alpha<\pi/2$, gives
+
+$$
+ 0\le m_{n,0}(t,\rho,z)
+       \le C_n t^{-2}e^{-c_n'(\rho^2+|z|)/t}.
+\tag{10.9}
+$$
+
+Indeed $v/\sinh v$ and $\operatorname{sech}(v)^{n-1}$ are analytic
+in the shifted strip, their product decays exponentially on its
+horizontal lines, and
+$\operatorname{Re}[(v+i\alpha)\coth(v+i\alpha)]$
+is bounded below by a positive number. The latter follows directly
+from $(v\sinh(2v)+\alpha\sin(2\alpha))
+/(\cosh(2v)-\cos(2\alpha))$, which is positive and tends to
+$|v|$ at infinity. The vertical contour ends vanish. The same contour
+in (10.8) bounds $h_{n,0}$ by
+$Ct^{-n-1}e^{-c(|X|^2+|z|)/t}$; central Gaussian convolution gives
+$h_{n,\epsilon}$. Thus the full Green integrals are also finite off
+their pole. At positive noise convolve (10.9) with
+$\varphi_{\epsilon,t}$. For $z\ne0$
+split its integral at $|s|=|z|/2$ to bound its central factor by
+
+$$
+ e^{-c_n'|z|/(2t)}
+       +C\frac{\sqrt t}{\epsilon}e^{-z^2/(16\epsilon^2t)}.
+\tag{10.10}
+$$
+
+For $\rho\ne0$ the factor $e^{-c_n'\rho^2/t}$ alone suffices.
+These estimates give an integrable small-time bound on off-pole
+compact sets. They also give such a bound uniformly for
+$0\le\epsilon\le E$ on each fixed off-pole compact set: on a
+$z$-separated set the supremum of
+$\epsilon^{-1}e^{-z^2/(16\epsilon^2t)}$ is bounded, for small $t$,
+by $C_E e^{-z^2/(32E^2t)}$. The zero-noise case is (10.9).
+For large times $m_{n,\epsilon}\le C_nt^{-2}$, also after central
+convolution. Thus (10.4) is finite and continuous off the pole, and
+$M_{n,\epsilon}\to M_{n,0}$ locally uniformly there as
+$\epsilon\downarrow0$. Positivity follows from the positive heat
+kernel. For local spatial integrability, integrate the mass-one
+density over $0<t<1$ and the $t^{-2}$ bound over $t\ge1$ on a
+compact set. For total mass, Tonelli gives $\int_0^\infty1\,dt=\infty$.
+No central Fourier transform of the full Green field at the zero
+mode is asserted; its time integral at that mode diverges.
+
+The classical horizontal fundamental solution in these fields is
+$G_{n,0}(X,z)=c_n(|X|^4+16z^2)^{-n/2}$. Its gauge shape is the
+Folland solution recalled in Kombe,
+[*Sharp Hardy type inequalities on the Carnot Group*, §3](https://arxiv.org/html/math/0501522v1),
+under the central-coordinate change $t_{\rm Kombe}=-4z$.
+The coefficient used here is fixed directly by unit flux in $dp$:
+for $R_n=(|X|^4+16z^2)^{1/4}$,
+$|\nabla_HR_n|^2=|X|^2/R_n^2$, and the outward flux of
+$-\nabla_H(cR_n^{-2n})$ through $R_n=1$ equals
+$c\,n\pi^n\Gamma(n)^{-1}\int_{-\pi/2}^{\pi/2}\cos^n a\,da$.
+Setting this equal to one gives exactly $c=c_n$ in (10.5).
+Integrating the heat equation gives the same unit-source relation
+for the heat integral. The preceding heat bound gives its decay at
+infinity. The difference from the gauge solution is globally smooth
+by hypoellipticity, harmonic and decaying, hence zero by the maximum
+principle. This identifies the actual heat integral with that
+fundamental solution. Polar integration in $W$, with
+$s=|W|^2$ and $dW=\pi^{n-1}s^{n-2}ds/\Gamma(n-1)$, proves
+(10.5). Its integrand is $O(s^{-2})$ at infinity and is integrable
+at zero whenever $\xi\ne0$. Changing $s$ to $a^2s$ proves its
+degree $-2$ for the retained $H^1$ dilation. In particular this
+degree differs from the full field's degree $-2n$.
+
+There is a concrete obstruction to rescaling the retained field to
+the native one. Beta integration in (10.5) gives, for $n\ge2$,
+
+$$
+\begin{aligned}
+ M_{n,0}(\rho,0)&=A_n\rho^{-2},&
+ A_n&=\frac{2^{n-2}\Gamma(n/2)^2}{\pi^2\Gamma(n)},\\
+ M_{n,0}(0,z)&=\frac1{8\pi|z|},&
+ 2\pi A_n&=\frac{\Gamma(n/2)}{\sqrt\pi\Gamma((n+1)/2)}<1.
+\end{aligned}
+\tag{10.11}
+$$
+
+The strict inequality follows from
+$B(n/2,1/2)<B(1/2,1/2)=\pi$. But
+$G_{1,0}(\rho,0)=(2\pi\rho^2)^{-1}$ and
+$G_{1,0}(0,z)=(8\pi|z|)^{-1}$. The two axis ratios disagree.
+In particular the first higher-contact case has
+
+$$
+ M_{2,0}(\rho,z)=\frac{\arctan(4|z|/\rho^2)}{4\pi^2|z|},
+ \qquad M_{2,0}(\rho,0)=\frac1{\pi^2\rho^2},
+\tag{10.12}
+$$
+
+with continuous off-pole axis values: its ratios are $1$ and
+$2/\pi$. For positive noise the exact heat scaling gives
+$M_{n,\epsilon}(aX_1,a^2z)=a^{-2}M_{n,\epsilon/a}(X_1,z)$;
+the same formula holds for $G_{1,\epsilon}$. If the two fixed-noise
+fields were proportional, letting $a\to\infty$ and using the
+locally uniform zero-noise limit just proved would contradict
+(10.11). This uses actual axis values, not homogeneity alone.
+
+The dynamics obstruction also preserves the original source map.
+Put $A_{n,\epsilon}=-L_{n,\epsilon}$. For a smooth bounded retained
+function $F$ one has locally
+
+$$
+ A_{n,\epsilon}(F\circ\pi)(X_1,W,z)
+   =A_{1,\epsilon}F(X_1,z)+\frac{|W|^2}{4}F_{zz}(X_1,z).
+\tag{10.13}
+$$
+
+Take $F=z^2$ near $\xi=0$, with a compact retained cutoff.
+The two starts $p=0$ and $p'=(X_1=0,x_2=1,
+y_2=0,\text{other }W=0,z=0)$ have identical $\pi$ values, but
+the derivatives at time zero of their expectations of $F\circ\pi$
+differ by $1/2$. This contradicts any all-start factor identity.
+For the pole-started kernels themselves, central convolution commutes
+with $H^1$ convolution, so (10.4) at fixed time gives
+
+$$
+ m_{n,\epsilon}(s)*_{H^1}m_{n,\epsilon}(t)
+  =h_{1,\epsilon}(s+t)*_z a_s^{*(n-1)}*_z a_t^{*(n-1)}.
+\tag{10.14}
+$$
+
+Its Fourier column has scalar factor
+$[\operatorname{sech}(|k|s)\operatorname{sech}(|k|t)]^{n-1}$,
+whereas $m_{n,\epsilon}(s+t)$ has
+$\operatorname{sech}(|k|(s+t))^{n-1}$. They are unequal for
+$s,t>0$, $k\ne0$. Thus the retained family is neither the native
+semigroup nor another $H^1$ convolution semigroup. It is not an
+additive $\mathbb R^3$ convolution semigroup either: its central
+characteristic function is
+$e^{-\epsilon^2tk^2}\operatorname{sech}(|k|t)^n$, which fails
+the multiplicative time law.
+
+To prove the positive form bound, start with arbitrary complex
+$f\in C_c^\infty(\mathbb R^3)$. Use exactly the two auxiliary
+functions $w,v$ of (9.11)–(9.16). Rotation invariance of $M$ gives
+$\int M|f|^2=\int M|w|^2$, and
+$\mathcal E_H[v]\le\mathcal E_H[w]\le\mathcal E_H[f]$.
+Both auxiliaries belong to $\mathcal H_1$, as proved there.
+For almost every $\rho>0$, (9.17) makes the fixed-time double
+Fourier integrals absolutely convergent. In (9.18) replace
+$q_\epsilon$ by the column (10.3). Since
+
+$$
+ 0\le q_\epsilon(t,\rho,k-\ell)
+          \operatorname{sech}(|k-\ell|t)^{n-1}
+       \le q_0(t,\rho,k-\ell),
+\tag{10.15}
+$$
+
+taking the modulus of the transformed test coefficients bounds
+$\int m_{n,\epsilon}(t,\rho,z)|w(\rho,z)|^2dz$ by
+$\int h_{1,0}(t,\rho,z)|v(\rho,z)|^2dz$.
+Integrate this nonnegative inequality first in $2\pi\rho\,d\rho$
+and then in all $t>0$. Tonelli and (9.6) give
+
+$$
+ \int M_{n,\epsilon}|f|^2d\xi
+  \le\int G_{1,0}|v|^2d\xi
+  \le K^{-1}\mathcal E_H[v]
+  \le K^{-1}\mathcal E_H[f].
+\tag{10.16}
+$$
+
+For arbitrary $f\in\mathcal H_0$ use its defining smooth core
+sequence, convergence of the horizontal derivative norms, an
+almost-everywhere convergent subsequence and Fatou. This proves
+(10.6), including finiteness of the weighted integral and $f=0$.
+There is no symmetry restriction on the original complex test,
+no signed infinite-time Fourier exchange, and no inference of a
+pointwise Green ordering from (10.15).
+
+It remains to compare this retained bound with the full own-field
+energies. At zero noise let $Q_n=2n+2$ and
+$\delta_a(X,z)=(aX,a^2z)$. For a fixed normalized nonzero complex
+$u\in C_c^\infty(H^n\setminus\{0\})$, homogeneous scaling gives
+
+$$
+ u_a=a^{-Q_n/2}u\circ\delta_{1/a},\qquad
+ T_{n,0}[u_a]=a^{-2}T_{n,0}[u],\qquad
+ \int G_{n,0}|u_a|^2dp=a^{-2n}\int G_{n,0}|u|^2dp>0.
+\tag{10.17}
+$$
+
+The final integral before multiplication by $a^{-2n}$ is positive
+and finite. For $n\ge2$ the negative term dominates as $a\downarrow0$.
+This is the familiar $Q>4$ concentration intermediate, also used in
+[Recursive holographic boundary geometry, continuation III,
+Proposition 82.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+It alone does not establish the projection comparison or the
+fixed-positive-noise assertion.
+
+For the latter fix $\epsilon>0$, put $d_n=2n+1$, and use the
+different maps $F_a(\eta)=(a\eta_X,\epsilon a\eta_z)$.
+Their Jacobian is $\epsilon a^{d_n}$. The rescaled horizontal
+fields and central field are
+
+$$
+ aF_a^*U_j=\partial_{\eta_{x_j}}
+        -\frac{a\eta_{y_j}}{2\epsilon}\partial_{\eta_z},\qquad
+ aF_a^*V_j=\partial_{\eta_{y_j}}
+        +\frac{a\eta_{x_j}}{2\epsilon}\partial_{\eta_z},\qquad
+ aF_a^*(\epsilon Z)=\partial_{\eta_z}.
+\tag{10.18}
+$$
+
+Thus the fixed-noise tangent is the covariance-$2$ Euclidean heat
+kernel in $d_n$ coordinates, with the stated density:
+
+$$
+ \epsilon a^{d_n}h_{n,\epsilon}(a^2t,F_a\eta)
+   \longrightarrow (4\pi t)^{-d_n/2}e^{-|\eta|^2/(4t)}
+\tag{10.19}
+$$
+
+uniformly on compact subsets of $(0,\infty)\times\mathbb R^{d_n}$.
+This is the classical fixed-source heat tangent theorem, in the
+full-rank case, of Colin de Verdière–Hillairet–Trélat,
+[*Small-time asymptotics of hypoelliptic heat kernels near the
+diagonal, nilpotentization and related results*, Theorem B,
+(2.8)](https://doi.org/10.5802/ahl.93).
+In coordinates $(X,z/\epsilon)$ the density is exactly
+$\epsilon\,d\eta$, all weights are one, the drift is zero, and
+the frame (10.18) converges to the coordinate frame. These facts
+give the factor $\epsilon$ and the Gaussian in (10.19).
+
+Choose a normalized compact smooth complex $u(\eta)$ supported
+in a fixed compact annulus $A$ avoiding $0$, and define
+$v_a(F_a\eta)=(\epsilon a^{d_n})^{-1/2}u(\eta)$.
+The convergence (10.18) and the positive minimum in (10.19) on
+$[1,2]\times A$ give, for small $a$,
+
+$$
+ \|v_a\|_2=1,\qquad T_{n,\epsilon}[v_a]\le C_\epsilon a^{-2},
+ \qquad G_{n,\epsilon}(F_a\eta)
+       \ge c\epsilon^{-1}a^{2-d_n}\quad(\eta\in A).
+\tag{10.20}
+$$
+
+The last bound integrates only the times $[a^2,2a^2]$ as a lower
+bound on the full positive Green field. Since $d_n-2=2n-1>2$
+for $n\ge2$, (10.20) proves fixed-positive-noise full collapse.
+For $n=2$ its negative scale is $a^{-3}$, whereas (10.17) has
+negative scale $a^{-4}$; the kinetic scale is $a^{-2}$ in both cases.
+The factor $a/\epsilon$ explains why this proof is not uniform
+down to zero noise.
+
+Finally keep $D$ fixed. Its Dirichlet operator has a positive
+spectral gap: in the coordinates $(x_1,y_1,z+x_1y_1/2,\ldots)$,
+$U_1=\partial_{x_1}$, the Jacobian is one, and zero extension to a
+containing bounded $x_1$ interval gives the one-dimensional
+Dirichlet Poincaré inequality. The sub-Markov bound for $0<t<1$
+and the spectral-gap semigroup bound for $t\ge1$ give
+$G^D_{n,\epsilon}\in L^1(D)$, finite and smooth off $0$.
+Interior heat localization, Theorem 3.2 of the same primary source,
+gives $h^D_{n,\epsilon}(t,0,p)-h_{n,\epsilon}(t,p)=O(t^N)$
+on a fixed compact source neighbourhood for every $N$.
+Its hypotheses hold here: the free realizations are selfadjoint
+contractions, the density and fields coincide in the interior,
+and the fields are smooth and bracket generating, also at zero
+noise. At zero noise combine localization with exact contact heat
+scaling; at positive fixed noise combine it with (10.19).
+The same positive finite-time minima yield respectively
+$G^D_{n,0}(\delta_a\eta)\ge ca^{-2n}$ and
+$G^D_{n,\epsilon}(F_a\eta)\ge c\epsilon^{-1}a^{2-d_n}$
+on $A$. The normalized tests in (10.17) or (10.20) eventually lie
+in $C_c^\infty(D\setminus\{0\})$. They prove the second line of
+(10.7) using the original field, without regenerating it on their
+supports. Adding $s\|u\|_2^2$ for any finite $s$ cannot bound
+these normalized values below. A negative shifted zero-trace
+direction can also be multiplied by arbitrary real scalars, giving
+the unnormalized response obstruction. $\square$
+
+**Definition 10.3 (source correspondence and conditional scope).**
+The joint relation in Theorem 10.2 uses the very same higher-contact
+pole and heat law to define $G_{n,\epsilon}$, its actual retained
+marginal $M_{n,\epsilon}$, and the failure of autonomy of $\pi$.
+The retained reference form (10.6) is an analytic comparison on
+$H^1$, not an asserted generator of the projected process.
+For a full normalized state $u$, its interaction instead uses
+$\int G_{n,\epsilon}(\xi,W)|u(\xi,W)|^2dW\,d\xi$;
+disintegration weights the field by the state's conditional fibre
+law, whereas (10.2) integrates against unweighted $dW$.
+That infinite fibre measure is not a probability law. Consequently
+the positive retained form does not determine the full interaction
+or contradict (10.7).
+
+The $n=1$ case recovers exactly the whole-group unit-source fields
+and constants of §9. The actual native cylinder is still Definition
+1.1's different global domain and raw source: in its local chart
+$d\mu=m_0d\xi$, $m_0=(2r)^{-1}$, so its local unit-source
+Green coefficient is $m_0^{-1}$ times the Lebesgue coefficient.
+Its original killed field and traces remain those of §§1–5, and
+Theorem 9.3 supplies the exact native positive interval
+$0\le g\le m_0K$, with its finite shift and zero-noise critical
+completion. A fixed positive-noise native form is semibounded
+even above that interval; Theorem 5.1 excludes a common shift
+down to arbitrarily small noise. Neither conclusion is replaced
+by the higher-contact all-coupling collapse.
+
+The oscillator columns, Folland gauge kernel, Hardy ingredients,
+heat tangents and localization are literature-attested intermediate
+results. Kombe's Hardy multiplier is
+$|\nabla_HR_n|^2/R_n^2$, not the own-Green multiplier
+$c_nR_n^{-2n}$. Bonnefont–Juillet,
+[*Couplings in $L^p$ distance of two Brownian motions and their
+Lévy area*, §§2.1,6](https://arxiv.org/html/1801.04109v2),
+uses these contact fields with generator one half of the horizontal
+sum of squares; its Brownian clock must be evaluated at $2t$ for
+(10.1). Bureš–Siegl,
+[*Hydrogen atom in space with a compactified extra dimension and
+potential defined by Gauss' law*, §2](https://arxiv.org/html/1409.8530v1),
+treats an elliptic four-dimensional inverse-square boundary, rather
+than the fixed-positive-noise dimensions $2n+1\ge5$ here.
+The prior rank-three carrier in continuation III, §§82–83, is
+$H^1\times\mathbb R$ with a Brownian three-coordinate factor;
+the hidden-circle quotient in
+[Native observation quotient Green escape, §§2–3](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+also has its own factor and measure. Neither supplies (10.3),
+(10.11) or (10.13) for this retained contact coordinate.
+The repository-derived content is their joint source-relative
+comparison with (10.6) and (10.7), with no global priority claim.
+
+Horizontal rank $2n$, topological dimension $2n+1$, contact
+homogeneous dimension $2n+2$, the three retained coordinates and
+the fixed-noise elliptic tangent dimension are distinct quantities.
+This conditional analytic comparison supplies no native realization
+of $H^n$ for $n>1$, no permission to discard hidden coordinates,
+and no source-to-physical-space correspondence. It therefore
+does not identify any of those dimensions with physical space,
+linear state rank, response rank or a number of bits.
+
+## 追加锚（本行以下为增补区）
+
+## 11. Sharp central remainder and nonattainment
+
+**Definition 11.1 (the fixed full-Green quotient).** Retain exactly
+Definition 9.1's complex closure $\mathcal H_1$, fields $U,V,Z_H$,
+Lebesgue measure and natural angular constant $K=2\pi\lambda_0$.
+Write
+
+$$
+W[u]=\int_{\mathbb R^3}\mathcal G_1(\xi)|u(\xi)|^2\,d\xi,
+\qquad Q[u]=\frac{\mathcal T_1[u]}{W[u]}\quad(0\ne u\in\mathcal H_1).
+\tag{11.1}
+$$
+
+Here $\mathcal G_1=\int_0^\infty h_1(t,\cdot)\,dt$ is the
+original-clock Lebesgue unit-source Green field of (9.2), with both
+time endpoints retained. C, Definition 16.2, gives $0<W[u]<\infty$
+for every nonzero $u\in\mathcal H_1$.
+
+**Corollary 11.2 (optimal central coefficient and no extremizer).**
+For every complex $u\in\mathcal H_1$, including zero and with no
+angular symmetry assumption,
+
+$$
+\mathcal T_1[u]-K W[u]\ge\|Z_Hu\|_2^2.
+\tag{11.2}
+$$
+
+The central coefficient one is optimal even on the compact smooth
+core: for every real $c>1$ there is a nonzero
+$u\in C_c^\infty(\mathbb R^3;\mathbb C)$ such that
+
+$$
+\mathcal T_1[u]-K W[u]<c\|Z_Hu\|_2^2.
+\tag{11.3}
+$$
+
+Moreover,
+
+$$
+\mathcal T_1[u]>K W[u]\quad(0\ne u\in\mathcal H_1),
+\qquad \inf_{0\ne u\in\mathcal H_1}Q[u]=K.
+\tag{11.4}
+$$
+
+Thus the sharp quotient has no nonzero $\mathcal H_1$ extremizer.
+Every normalized minimizing sequence $W[u_n]=1$,
+$\mathcal T_1[u_n]\to K$ necessarily satisfies
+
+$$
+\|Z_Hu_n\|_2^2\le\mathcal T_1[u_n]-K\longrightarrow0.
+\tag{11.5}
+$$
+
+Proof. For arbitrary complex compact smooth $u$, the chain (9.21),
+starting at $\mathcal E_H[u]$, already gives
+$\mathcal E_H[u]\ge K W[u]$. Its auxiliary rotation norm and Fourier
+modulus impose no restriction on the original $u$. For any
+$u\in\mathcal H_1$, choose its defining compact smooth approximation
+$u_j$. Then $u_j\to u$ in $L^2$, all three closed derivatives
+converge in $L^2$, and $\mathcal E_H[u_j]\to\mathcal E_H[u]$.
+Along an almost-everywhere convergent subsequence, the nonnegativity
+of $\mathcal G_1$ and Fatou's lemma give
+
+$$
+K W[u]\le\liminf_j K W[u_j]\le\mathcal E_H[u].
+\tag{11.6}
+$$
+
+This proves weighted finiteness on the entire closure independently
+of C, (15.8). Adding the closed central energy proves (11.2), also
+for $u=0$.
+
+To identify that central derivative, let $g$ be the $L^2$ limit of
+$\partial_z u_j$. Integration by parts against any
+$\eta\in C_c^\infty(\mathbb R^3;\mathbb C)$ yields
+
+$$
+\int g\,\overline\eta\,d\xi
+ =\lim_j\int\partial_z u_j\,\overline\eta\,d\xi
+ =-\lim_j\int u_j\,\overline{\partial_z\eta}\,d\xi
+ =-\int u\,\overline{\partial_z\eta}\,d\xi.
+\tag{11.7}
+$$
+
+Hence the closed $Z_Hu$ is exactly the distributional derivative
+$\partial_z u$. If $Z_Hu=0$, convolve $u$ in Euclidean coordinates
+with any compact smooth approximate identity $\varphi_\delta$.
+The function $u\ast\varphi_\delta$ is smooth, lies in $L^2$ by Young's
+inequality, and has zero $z$ derivative, so it is independent of $z$.
+Fubini on the infinite-measure central line forces this $L^2$
+function to vanish. Since $u\ast\varphi_\delta\to u$ in $L^2$, we
+obtain $u=0$. In particular $\|Z_Hu\|_2^2>0$ for every nonzero
+member of the actual closure. This argument makes no identification
+of $\mathcal H_1$ with Euclidean $H^1$.
+
+For sharpness choose nonzero $a\in C_c^\infty(\mathbb R^2;\mathbb C)$
+and $b\in C_c^\infty(\mathbb R;\mathbb C)$ with $b'\not\equiv0$.
+Put $\phi(X,z)=a(X)b(z)$,
+$A=\mathcal E_H[\phi]\ge0$ and
+$B=\|Z_H\phi\|_2^2=\|a\|_2^2\|b'\|_2^2>0$.
+For $s>0$ set $\delta_s(X,z)=(sX,s^2z)$ and
+$u_s=\phi\circ\delta_{1/s}$. Every $u_s$ is a nonzero compact
+smooth test. The exact fields in (9.1) give
+
+$$
+\begin{aligned}
+Uu_s&=s^{-1}(U\phi)\circ\delta_{1/s},&
+Vu_s&=s^{-1}(V\phi)\circ\delta_{1/s},\\
+Z_Hu_s&=s^{-2}(Z_H\phi)\circ\delta_{1/s},&
+\det D\delta_s&=s^4,\\
+\mathcal E_H[u_s]&=s^2 A,&\|Z_Hu_s\|_2^2&=B.
+\end{aligned}
+\tag{11.8}
+$$
+
+Given $c>1$, choose $s^2=(c-1)B/[2(A+B)]>0$.
+By (11.6), $W[u_s]$ is finite, and its nonnegativity implies
+
+$$
+\mathcal T_1[u_s]-K W[u_s]\le B+s^2 A
+ \le B+\tfrac12(c-1)B<cB.
+\tag{11.9}
+$$
+
+This proves (11.3). No homogeneity, pole regularity or asymptotic
+formula for $\mathcal G_1$ is used; its clock, source and full-time
+integral are unchanged.
+
+For nonzero $u$, (11.2) and the zero-kernel argument give the strict
+inequality in (11.4). The positive denominator supplied by C,
+Definition 16.2, permits division. Theorem 9.3, using C, Theorem
+16.3's annular upper bound, already supplies the infimum $K$.
+Consequently it is attained by no nonzero member of $\mathcal H_1$.
+Finally (11.2) gives (11.5) directly. $\square$
+
+The Fatou passage, distributional integration by parts, Young's
+inequality and approximate-identity convergence used in this proof
+are classical measure and convolution arguments; see G. B. Folland,
+*Real Analysis*, second edition, Chapters 2 and 8. The dilation
+identities (11.8) use only the fields of Definition 9.1. The
+source-specific optimal-coefficient and nonattainment conclusions
+are repo-derived consequences of (9.21), Theorem 9.3 and the positive
+Green denominator in C, Definition 16.2; they assert no historical
+priority. The vanishing in (11.5) is only a necessary central-energy
+condition, with no profile convergence or compactness conclusion.
+All statements concern the whole-group $\mathcal H_1$ closure;
+they give no slab extremizer statement, zero-noise completed-domain
+identification, physical realization or additional response rank law.
+
+## 追加锚（本行以下为增补区）
+
+## 12. Strict retained zero-noise gap for every higher-contact rank
+
+**Definition 12.1 (the unchanged retained quotient and angular weight).**
+Fix an arbitrary integer $n\ge2$ and retain Definition 10.1's parent
+$H^n=\mathbb R^{2n}\times\mathbb R$, raw Lebesgue density, identity
+unit pole and horizontal covariance-$2$ clock. In particular,
+
+$$
+\begin{aligned}
+U_j&=\partial_{x_j}-\tfrac{y_j}{2}\partial_z,&
+V_j&=\partial_{y_j}+\tfrac{x_j}{2}\partial_z,\\
+L_{n,0}&=-\sum_{j=1}^n(U_j^2+V_j^2),&
+G_{n,0}&=\int_0^\infty e^{-tL_{n,0}}\delta_0\,dt,\\
+M_{n,0}(X_1,z)&=\int_{\mathbb R^{2n-2}}
+                    G_{n,0}(X_1,W,z)\,dW,&X_1&=(x,y).
+\end{aligned}
+\tag{12.1}
+$$
+
+Both time endpoints and the entire unweighted fibre are retained.
+Thus $M_{n,0}$ is exactly (10.2), with coefficient (10.5), rather
+than a projected semigroup kernel or a state-conditioned interaction.
+On retained $\mathbb R^3$ put $\rho=|X_1|$, $d\xi=dx\,dy\,dz$,
+$U=\partial_x-(y/2)\partial_z$, $V=\partial_y+(x/2)\partial_z$ and
+$\mathcal E_H[f]=\|Uf\|_2^2+\|Vf\|_2^2$. The domain remains
+
+$$
+\begin{aligned}
+\mathcal H_0
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,
+                  (\|f\|_2^2+\mathcal E_H[f])^{1/2}},\\
+W_n[f]&=\int_{\mathbb R^3}M_{n,0}|f|^2\,d\xi,&
+\Lambda_n&=\inf_{0\ne f\in\mathcal H_0}
+                         \frac{\mathcal E_H[f]}{W_n[f]}.
+\end{aligned}
+\tag{12.2}
+$$
+
+The positivity and bound in Theorem 10.2 give $0<W_n[f]<\infty$
+for nonzero $f\in\mathcal H_0$. This is the horizontal free closure,
+with no central-derivative, angular-symmetry or trace requirement.
+Use the polar coordinates of V, (10.9), in the retained variables:
+
+$$
+\begin{aligned}
+R&=(\rho^4+16z^2)^{1/4},&
+\rho^2&=R^2\cos a,&4z&=R^2\sin a,\\
+J&=(-\pi/2,\pi/2),&c(a)&=\cos a,&
+I_n&=\int_0^{\pi/2}\sin(t)^{n-2}\,dt,\\
+q_n(a)&=\frac1{I_n}\int_0^1
+          \frac{v^{n-2}}{\sqrt{1-v^2\sin^2a}}\,dv.
+\end{aligned}
+\tag{12.3}
+$$
+
+The natural complex angular domain and form are precisely those of
+V, Definition 10.1 and Theorem 10.2:
+
+$$
+\begin{aligned}
+\mathcal H_c&=\{b\in L^2(J;\mathbb C):b\in AC_{\rm loc}(J),\quad
+                                  \sqrt c\,b'\in L^2(J)\},\\
+A[b]&=\int_J\big(4c|b'|^2+c|b|^2\big)\,da,\\
+\lambda_0&=\inf_{0\ne b\in\mathcal H_c}
+                    \frac{A[b]}{\|b\|_2^2}>0,
+\qquad K=2\pi\lambda_0,\\
+\mu_n&=\inf_{0\ne b\in\mathcal H_c}
+               \frac{A[b]}{\int_Jq_n|b|^2\,da}.
+\end{aligned}
+\tag{12.4}
+$$
+
+There are no imposed Dirichlet values at either endpoint. All
+references to V here use the revision fixed in Definition 1.1.
+
+**Theorem 12.2 (an attained angular bound and strict retained gap).**
+For every integer $n\ge2$, the actual marginal has the exact angular
+multiplier
+
+$$
+M_{n,0}(\rho,z)=\frac1{2\pi}R^{-2}q_n(a)\qquad(R>0).
+\tag{12.5}
+$$
+
+Here $q_n$ extends continuously to $\overline J$ and satisfies
+
+$$
+q_n(\pm\pi/2)=1,\qquad
+0<q_n(0)=\frac1{(n-1)I_n}\le q_n(a)<1\quad(a\in J).
+\tag{12.6}
+$$
+
+The infimum $\mu_n$ is finite and is attained by some
+$b_n\in\mathcal H_c$ with $\int_Jq_n|b_n|^2\,da=1$.
+It satisfies $\mu_n>\lambda_0$. On the entire original complex
+retained domain,
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&\ge2\pi\mu_n W_n[f]
+                       &&(f\in\mathcal H_0),\\
+K&<2\pi\mu_n\le\Lambda_n<\infty.
+\end{aligned}
+\tag{12.7}
+$$
+
+Proof. Set $D_n=c_n\pi^{n-1}/\Gamma(n-1)$, where $c_n$ is
+exactly (10.5). The classical beta integral and gamma duplication
+formula give
+
+$$
+\begin{aligned}
+I_n&=\frac{\sqrt\pi\,\Gamma((n-1)/2)}{2\Gamma(n/2)},\\
+\Gamma(n-1)&=\frac{2^{n-2}}{\sqrt\pi}
+                 \Gamma((n-1)/2)\Gamma(n/2),\\
+2\pi D_n&=\frac{2^{n-1}\Gamma(n/2)^2}{\pi\Gamma(n-1)}
+             =\frac1{I_n}.
+\end{aligned}
+\tag{12.8}
+$$
+
+In the actual fibre integral (10.5), put $s=R^2u$. Its numerator
+and denominator scale respectively as $R^{2n-2}$ and $R^{2n}$,
+so the remaining integral is
+
+$$
+M_{n,0}=D_nR^{-2}\int_0^\infty
+        \frac{u^{n-2}}{((u+\cos a)^2+\sin^2a)^{n/2}}\,du.
+\tag{12.9}
+$$
+
+For $\alpha=|a|>0$, substitute
+$u=\sin\alpha\cot\theta-\cos\alpha
+=\sin(\alpha-\theta)/\sin\theta$.
+As $u$ increases from $0$ to infinity, $\theta$ decreases from
+$\alpha$ to $0$; also
+$|du|=\sin\alpha\,\sin^{-2}\theta\,d\theta$ and
+$(u+\cos\alpha)^2+\sin^2\alpha
+=\sin^2\alpha/\sin^2\theta$.
+The powers of $\sin\theta$ cancel, giving
+
+$$
+\begin{aligned}
+q_n(a)
+ &=\frac{\int_0^\alpha\sin(t)^{n-2}\,dt}
+          {I_n\sin(\alpha)^{n-1}}\\
+ &=\frac1{I_n}\int_0^1
+         \frac{v^{n-2}}{\sqrt{1-v^2\sin^2\alpha}}\,dv.
+\end{aligned}
+\tag{12.10}
+$$
+
+The last equality uses $t=\arcsin(v\sin\alpha)$. At $a=0$,
+the integral in (12.9) is
+$\int_0^\infty u^{n-2}(1+u)^{-n}\,du=B(n-1,1)=1/(n-1)$,
+which agrees with (12.3). Equations (12.8)–(12.10) prove (12.5)
+with the original unit-source coefficient, density and clock.
+
+For all $a\in\overline J$, the integrand in (12.3) is dominated by
+$v^{n-2}/\sqrt{1-v^2}$, whose integral is $I_n$.
+Dominated convergence proves continuity and the endpoint values.
+For $a\in J$ and $0<v<1$,
+$\sqrt{1-v^2\sin^2a}>\sqrt{1-v^2}$, proving $q_n(a)<1$.
+The denominator in (12.3) is at most one, proving the positive
+lower bound in (12.6). In particular $1-q_n>0$ almost everywhere
+on $J$, although there is no uniform pointwise loss up to its
+endpoints. Pointwise strictness alone does not establish a strict
+gap between infima.
+
+To obtain that gap, use the closedness and compact embedding
+$\mathcal H_c\hookrightarrow L^2(J)$ supplied by V, Theorem 10.2.
+These properties and $A\ge\lambda_0\|\cdot\|_2^2$ extend to
+complex functions by splitting real and imaginary parts.
+A nonzero constant trial gives $\mu_n<\infty$. Normalize a
+minimizing sequence $b_j$ by $\int_Jq_n|b_j|^2\,da=1$.
+Its bounded $A[b_j]$ and $\lambda_0>0$ bound its closed-form
+Hilbert norm. The classical direct method gives a subsequence
+converging weakly in that form norm and, by compactness, strongly
+in $L^2(J)$ to $b_n\in\mathcal H_c$.
+Boundedness of $q_n$ preserves the weighted normalization.
+Weak lower semicontinuity of $A$ and the definition of the infimum
+then imply $A[b_n]=\mu_n$. Since $b_n\ne0$,
+
+$$
+\begin{aligned}
+\mu_n=A[b_n]
+ &\ge\lambda_0\|b_n\|_2^2\\
+ &=\lambda_0\left(1+\int_J(1-q_n)|b_n|^2\,da\right)
+ >\lambda_0.
+\end{aligned}
+\tag{12.11}
+$$
+
+This compact angular minimization is on the natural finite-energy
+domain, without changing its endpoint conditions.
+
+For the transfer, let $f\in C_c^\infty(\mathbb R^3\setminus\{0\};
+\mathbb C)$ be arbitrary, put $\ell=\log R$, and write
+$f=R^{-1}v(\ell,a,\theta)$, with
+$X_1=R\sqrt{\cos a}(\cos\theta,\sin\theta)$.
+The raw volume is $R^3dR\,da\,d\theta/4$.
+V, (10.9)–(10.11), give the full complex identity
+
+$$
+\mathcal E_H[f]=\frac14\int_{\mathbb R\times J\times\mathbb T}
+ \left\{c|v_\ell-v+\tan a\,v_\theta|^2
+        +4c|v_a+\tfrac12v_\theta|^2\right\}
+          \,d\ell\,da\,d\theta.
+\tag{12.12}
+$$
+
+Use the unitary Fourier transform in $\ell$ and the unitary Fourier
+series in $\theta$. For each $\sigma\in\mathbb R$ and
+$m\in\mathbb Z$, write the transformed coefficient as
+$e^{-ima/2}b_{\sigma,m}(a)$. The same identity, together with
+(12.5) and Plancherel, yields
+
+$$
+\begin{aligned}
+\mathcal E_H[f]
+ &=\frac14\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+ \left\{4c|b'_{\sigma,m}|^2
+   +c\big(1+(\sigma+m\tan a)^2\big)|b_{\sigma,m}|^2\right\}
+      \,da\,d\sigma,\\
+W_n[f]
+ &=\frac1{8\pi}\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+                         q_n|b_{\sigma,m}|^2\,da\,d\sigma.
+\end{aligned}
+\tag{12.13}
+$$
+
+Every finite-energy admissible fibre lies in the original
+$\mathcal H_c$, as in V. Dropping only the nonnegative extra
+square bounds its angular energy below by
+$A[b_{\sigma,m}]\ge\mu_n\int_Jq_n|b_{\sigma,m}|^2\,da$.
+The factors $1/4$ and $1/(8\pi)$ in (12.13) give precisely
+$\mathcal E_H[f]\ge2\pi\mu_nW_n[f]$.
+Every integer angular mode and almost every real radial frequency
+are included; no radial or real-valued restriction is imposed.
+The polar chart omits only measure-zero axes. The supplied identity
+is obtained by integration and form approximation there, with the
+natural $\mathcal H_c$ endpoints, not extra boundary values.
+
+To remove the puncture, for a fixed complex compact smooth $f$
+choose a smooth cutoff $\chi_\delta$ that is zero on the Euclidean
+ball of radius $\delta$ and one outside the ball of radius
+$2\delta$, with gradient bounded by $C/\delta$.
+On the compact support of $f$, the coefficients of $U,V$ are
+bounded. The added squared horizontal derivative error in
+$\chi_\delta f$ is therefore
+$O(\delta^3\delta^{-2})=O(\delta)$.
+The removed original derivative terms and the $L^2$ error tend
+to zero. This is the pole-cutoff argument of §9, so
+$\chi_\delta f\to f$ in the horizontal form norm.
+Nonnegativity of $M_{n,0}$ and Fatou's lemma extend the inequality
+to every $f\in C_c^\infty(\mathbb R^3;\mathbb C)$.
+For arbitrary $f\in\mathcal H_0$, take its defining smooth core
+sequence. Horizontal derivative convergence gives convergence of
+$\mathcal E_H$; $L^2$ convergence supplies an almost-everywhere
+convergent subsequence. Fatou once more gives (12.7) on the whole
+closure, including zero, and also weighted finiteness there.
+Positivity of the actual marginal off the pole gives $W_n[f]>0$
+for nonzero $f$. Division and infimum prove
+$\Lambda_n\ge2\pi\mu_n>K$. A nonzero compact smooth test supported
+in an annulus has finite energy and finite positive denominator,
+so $\Lambda_n<\infty$. The integer $n\ge2$ was arbitrary. $\square$
+
+**Corollary 12.3 (the strengthened sufficient zero-noise interval).**
+For every integer $n\ge2$, with precisely the source, density,
+clock and full complex domain of Definition 12.1, put
+$\delta_n=2\pi(\mu_n-\lambda_0)>0$. Then
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&\ge(K+\delta_n)W_n[f]
+                                      &&(f\in\mathcal H_0),\\
+\mathcal E_H[f]-gW_n[f]
+ &\ge\left(1-\frac{g}{2\pi\mu_n}\right)\mathcal E_H[f]\ge0
+                       &&(0\le g\le2\pi\mu_n).
+\end{aligned}
+\tag{12.14}
+$$
+
+Proof. Substitute $K+\delta_n=2\pi\mu_n$ in (12.7), then multiply
+$W_n[f]\le\mathcal E_H[f]/(2\pi\mu_n)$ by $g\ge0$.
+Thus the sufficient interval for the retained reference form in
+(10.6), at zero noise and this fixed $n$, contains
+$[0,2\pi\mu_n]$, which strictly extends $[0,K]$. $\square$
+
+The source-specific angular multiplier, its weighted minimization
+and the resulting sufficient retained interval are repo-derived
+consequences of (10.5) and V's natural angular form and all-mode
+identity. The gauge-kernel ingredients keep their Folland/Kombe
+attribution from §10. The beta/gamma identities, Rellich compactness
+used in V, Hilbert-space direct method, weak lower semicontinuity,
+dominated convergence, Plancherel and Fatou are classical
+intermediate inputs, not additional new theorems. For these
+variational and integration principles see L. C. Evans,
+*Partial Differential Equations*, second edition, Chapters 5 and 8,
+and G. B. Folland, *Real Analysis*, second edition, Chapters 2, 6
+and 8. No historical priority claim accompanies this derivation.
+
+The bound (12.7) does not identify the exact value of $\Lambda_n$
+or assert $\Lambda_n=2\pi\mu_n$. Angular attainment in (12.11)
+is not a whole-space optimizer assertion. The positive margin is
+$n$-dependent; no uniform gap in $n$, positive-noise improvement,
+slab or trace conclusion, or critical completed-domain
+identification follows here. Section 11's different full-Green
+quotient has individual-test strictness and infimum $K$; it supplies
+no strict-infimum premise for (12.7). The retained comparison
+remains Definition 10.3's analytic reference form. It creates no
+autonomous retained generator, probability law on the whole fibre,
+state-conditioned interaction, native higher-contact realization
+or physical-space or response-rank interpretation.
+
+## 追加锚（本行以下为增补区）
+
+## 13. The exact retained zero-noise constant and full-domain nonattainment
+
+**Definition 13.1 (the original quotient and its transformed remainder).**
+Fix an integer $n\ge2$ and retain exactly Definition 12.1: the same
+$H^n$ identity unit pole, raw Lebesgue density, covariance-$2$
+horizontal clock, complete unweighted same-source marginal $M_{n,0}$,
+and original full complex horizontal closure $\mathcal H_0$.
+Use its $J$, $c$, $q_n$, $\mathcal H_c$, $A$, $\mu_n$, $W_n$ and
+$\Lambda_n$, and write
+
+$$
+\begin{aligned}
+q_*&=\frac1{(n-1)I_n}>0,&
+Q_n[b]&=\int_Jq_n|b|^2\,da,&
+C[b]&=\int_Jc|b|^2\,da,&
+\lambda_n&=2\pi\mu_n.
+\end{aligned}
+\tag{13.1}
+$$
+
+Theorem 12.2 supplies $q_*\le q_n\le1$, the attained natural
+angular infimum, and $\mathcal E_H\ge\lambda_nW_n$ on
+$\mathcal H_0$. For a measurable $f$ use the same polar coordinates
+as (12.12), set $\ell=\log R$, and put $v_f=Rf$. The raw
+nonnegative-integral change of variables gives
+
+$$
+W_n[f]=\frac1{8\pi}
+ \int_{\mathbb R\times J\times\mathbb T}q_n(a)|v_f|^2
+                  \,d\ell\,da\,d\theta.
+\tag{13.2}
+$$
+
+For $f\in\mathcal H_0$, finiteness of $W_n[f]$ and $q_*>0$
+therefore give $v_f\in L^2(d\ell\,da\,d\theta)$.
+Take the unitary Fourier transform in $\ell$ and unitary Fourier
+series in $\theta$, and write the transformed coefficient as
+$e^{-ima/2}b_{f,\sigma,m}(a)$, for $m\in\mathbb Z$ and
+$\sigma\in\mathbb R$. Define the initially extended nonnegative
+quantity
+
+$$
+B_n[f]=\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+ c(a)\bigl(\sigma+m\tan a\bigr)^2
+              |b_{f,\sigma,m}(a)|^2\,da\,d\sigma.
+\tag{13.3}
+$$
+
+These transforms concern all angular modes of the original state;
+no symmetry condition is imposed on $\mathcal H_0$.
+
+**Theorem 13.2 (sharp constant, full-domain remainder and nonattainment).**
+For every integer $n\ge2$, with precisely Definition 13.1's source
+and domains,
+
+$$
+\begin{aligned}
+\Lambda_n&=2\pi\mu_n,\\
+\mathcal E_H[f]-2\pi\mu_nW_n[f]&\ge\frac14B_n[f]\ge0
+                                  &&(f\in\mathcal H_0),\\
+B_n[f]=0&\quad\Longleftrightarrow\quad f=0
+                                  &&(f\in\mathcal H_0).
+\end{aligned}
+\tag{13.4}
+$$
+
+In particular $B_n[f]$ is finite on the original domain, and every
+nonzero complex $f\in\mathcal H_0$ satisfies
+
+$$
+\mathcal E_H[f]>2\pi\mu_nW_n[f].
+\tag{13.5}
+$$
+
+Thus the exact quotient has no nonzero original-domain extremizer,
+although the natural angular infimum is attained.
+
+**Proof.** Fix $n$. The lower bound
+$\Lambda_n\ge2\pi\mu_n$ is already Theorem 12.2. To construct
+legal upper trials, first approximate its angular minimizer in the
+natural form norm, rather than impose boundary values on it.
+Normalize a minimizer by $Q_n[b]=1$. The Sobolev modulus chain
+rule on compact subintervals, with the weighted derivative integral,
+gives $|b|\in\mathcal H_c$ and $A[|b|]\le A[b]$. The variational
+infimum makes $|b|$ another minimizer, so take $b\ge0$ real.
+The bounded value truncations $b_N=\min(b,N)$ converge to $b$
+in $L^2(J)$ and in the seminorm $\|\sqrt c\,b'\|_2$, by
+dominated convergence for the function and derivative tails.
+
+For each fixed bounded truncation cut off its two endpoints
+logarithmically. If $d$ denotes distance to either endpoint and
+$0<\varepsilon<1/4$, use
+
+$$
+\eta_\varepsilon(d)=
+\begin{cases}
+0,&d\le\varepsilon^2,\\
+\displaystyle\frac{\log(d/\varepsilon^2)}{\log(1/\varepsilon)},
+                    &\varepsilon^2<d<\varepsilon,\\
+1,&d\ge\varepsilon,
+\end{cases}
+\tag{13.6}
+$$
+
+and take the product of the two endpoint cutoffs. Near either
+endpoint $c=\sin d\le d$, so its derivative cost satisfies
+
+$$
+\int c\,|\eta_\varepsilon'|^2\,da
+ \le\frac1{\log(1/\varepsilon)^2}
+                 \int_{\varepsilon^2}^{\varepsilon}\frac{dd}{d}
+ =\frac1{\log(1/\varepsilon)}\longrightarrow0.
+\tag{13.7}
+$$
+
+The bound on $b_N$ controls the added term $b_N\eta_\varepsilon'$.
+Integrability of $c|b_N'|^2$ controls the removed derivative tail,
+and dominated convergence controls the $L^2$ error. The product
+therefore converges to $b_N$ in the natural form norm. On its
+remaining compact support, $c$ is bounded below by a positive
+number, so ordinary interior $H^1$ mollification gives real
+compact smooth approximations. A diagonal choice yields nonzero
+$b_j\in C_c^\infty(J;\mathbb R)$ with
+
+$$
+Q_n[b_j]\longrightarrow1,\qquad A[b_j]\longrightarrow\mu_n.
+\tag{13.8}
+$$
+
+Boundedness of $q_n$ ensures the first convergence. This argument
+uses the original natural finite-energy endpoints; it introduces
+no Dirichlet trace requirement.
+
+Choose a nonzero real $\chi\in C_c^\infty(\mathbb R)$ and, for
+$L>0$, define the actual Cartesian trial
+
+$$
+f_{j,L}(x,y,z)=R^{-1}b_j(a)\chi(\log R/L).
+\tag{13.9}
+$$
+
+Each trial has compact annular radial support away from the pole.
+Its angular support is separated from the two central axes, so
+extension by zero there is smooth. Thus
+$f_{j,L}\in C_c^\infty(\mathbb R^3\setminus\{0\})
+\subset\mathcal H_0$. In particular its original $L^2$ condition
+holds: the raw Jacobian gives
+
+$$
+\|f_{j,L}\|_2^2=\frac\pi2\|b_j\|_2^2
+              \int_{\mathbb R}e^{2\ell}|\chi(\ell/L)|^2\,d\ell
+ <\infty.
+\tag{13.10}
+$$
+
+No uniform bound on these $L^2$ norms is needed for the quotient.
+Using (12.12), the exact multiplier (12.5), and
+$\int\chi\chi'=0$, one obtains
+
+$$
+\begin{aligned}
+\mathcal E_H[f_{j,L}]
+ &=\frac\pi2\left(L\|\chi\|_2^2A[b_j]
+                  +L^{-1}\|\chi'\|_2^2C[b_j]\right),\\
+W_n[f_{j,L}]&=\frac14L\|\chi\|_2^2Q_n[b_j],\\
+\frac{\mathcal E_H[f_{j,L}]}{W_n[f_{j,L}]}
+ &=2\pi\left(\frac{A[b_j]}{Q_n[b_j]}
+       +\frac{C[b_j]}{Q_n[b_j]}
+                   \frac{\|\chi'\|_2^2}{L^2\|\chi\|_2^2}\right).
+\end{aligned}
+\tag{13.11}
+$$
+
+Since $C[b_j]/Q_n[b_j]\le1/q_*$, take $L=j$ and use (13.8).
+The quotient tends to $2\pi\mu_n$, proving the matching upper
+bound and hence the first line of (13.4). The symmetric functions
+here are only upper trials, not a restriction on the lower-bound
+domain.
+
+For the remainder, take an arbitrary complex punctured compact
+smooth $f$. The full all-mode identity (12.13) gives
+
+$$
+\begin{aligned}
+\mathcal E_H[f]-\lambda_nW_n[f]
+ &=\frac14\sum_{m\in\mathbb Z}\int_{\mathbb R}
+       \left(A[b_{f,\sigma,m}]-\mu_nQ_n[b_{f,\sigma,m}]\right)
+                      \,d\sigma+\frac14B_n[f]\\
+ &\ge\frac14B_n[f].
+\end{aligned}
+\tag{13.12}
+$$
+
+Every admissible fibre lies in the supplied natural $\mathcal H_c$,
+so each angular difference is nonnegative. This uses all integer
+angular modes and almost every real radial frequency.
+
+Now let $f\in\mathcal H_0$ be arbitrary. The pole cutoff in the
+proof of Theorem 12.2 makes the punctured smooth core form dense:
+for a fixed compact smooth function its added squared horizontal
+derivative cost is $O(\delta^3\delta^{-2})=O(\delta)$, and the
+removed original derivative and $L^2$ tails tend to zero.
+A diagonal choice therefore supplies punctured smooth $f_k\to f$
+in the original horizontal form norm. Apply Theorem 12.2 to the
+actual difference $f_k-f\in\mathcal H_0$:
+
+$$
+W_n[f_k-f]\le\lambda_n^{-1}\mathcal E_H[f_k-f]
+                         \longrightarrow0.
+\tag{13.13}
+$$
+
+Thus $W_n[f_k]\to W_n[f]$, and the form convergence also gives
+$\mathcal E_H[f_k]\to\mathcal E_H[f]$. Equation (13.2), with
+$q_n\ge q_*$, gives
+
+$$
+\|v_{f_k}-v_f\|_2^2\le\frac{8\pi}{q_*}W_n[f_k-f]
+                         \longrightarrow0.
+\tag{13.14}
+$$
+
+The unitary Fourier maps and the unit-modulus angular gauge
+therefore give strong $L^2$ convergence of $b_{f_k,\sigma,m}$
+to $b_{f,\sigma,m}$ in counting measure on $\mathbb Z$ times
+Lebesgue measure on $\mathbb R\times J$. Choose an almost-everywhere
+convergent subsequence and relabel it. Fatou and (13.12) imply
+
+$$
+\begin{aligned}
+B_n[f]&\le\liminf_k B_n[f_k]
+       \le\limsup_k B_n[f_k]\\
+ &\le4\lim_k\left(\mathcal E_H[f_k]-\lambda_nW_n[f_k]\right)
+  =4\left(\mathcal E_H[f]-\lambda_nW_n[f]\right).
+\end{aligned}
+\tag{13.15}
+$$
+
+This proves the remainder and its finiteness on every original
+complex $\mathcal H_0$ state. It requires no unproved equality
+between closed direct-integral domains.
+
+Finally, for every fixed $m\in\mathbb Z$ and $a\in J$, $c(a)>0$
+and the multiplier in (13.3) vanishes only at the singleton
+$\sigma=-m\tan a$. Tonelli makes its zero set null in the
+$(a,\sigma)$ product measure; the countable union over $m$
+is still null in the stated counting-product measure.
+Consequently $B_n[f]=0$ forces every transformed coefficient
+to vanish almost everywhere. Plancherel gives $v_f=0$, and the
+coordinate change gives $f=0$ off the null axes and pole, hence
+$f=0$ in the original $L^2$ space. The converse is immediate.
+Equation (13.15) proves (13.5), completing the proof. $\square$
+
+**Corollary 13.3 (the exact nonnegative retained coupling interval).**
+For each integer $n\ge2$ define, on exactly $\mathcal H_0$,
+
+$$
+\mathfrak q_{n,g}[f]=\mathcal E_H[f]-gW_n[f],\qquad g\ge0.
+\tag{13.16}
+$$
+
+Then $\mathfrak q_{n,g}\ge0$ on its entire original domain if and
+only if $0\le g\le2\pi\mu_n$. At $g=2\pi\mu_n$ it is strictly
+positive on every nonzero original-domain state. For every
+$g>2\pi\mu_n$ there is a nonzero compact smooth state with
+$\mathfrak q_{n,g}[f]<0$.
+
+**Proof.** Nonnegativity throughout the stated interval follows
+from (12.14), and endpoint strictness is (13.5). For larger $g$,
+the actual trials $f_{j,j}$ in (13.9) have positive denominator
+and quotient tending to $2\pi\mu_n<g$. A sufficiently large
+$j$ is therefore a compact smooth negative direction. $\square$
+
+**Definition 13.4 (mathematical attribution and scope).**
+The exact multiplier, natural angular minimization, lower bound
+and all-mode core identity are the supplies of §12, with V's
+pinned natural angular form and polar identities. The passage
+from these supplies to actual sharp trials, full-domain strictness
+and the exact retained coupling interval is repo-derived.
+Value truncation, the modulus chain rule, logarithmic endpoint
+cutoffs, interior mollification, unitary Fourier theory and Fatou
+are classical intermediate principles; see L. C. Evans,
+*Partial Differential Equations*, second edition, Chapters 5 and 8,
+and G. B. Folland, *Real Analysis*, second edition, Chapters 2, 6
+and 8. These general principles are not new standalone results.
+The Folland fundamental solution and the Hardy literature retain
+the limited attribution in §10. In particular Kombe,
+[*Sharp Hardy type inequalities on the Carnot Group*, Theorem 3.1](https://arxiv.org/html/math/0501522v1),
+uses the gradient-weighted multiplier rather than this actual
+unweighted marginal. D'Arca–Fanelli–Franceschi–Prandi,
+[Theorem 1.2](https://arxiv.org/html/2603.04086v1), supplies the
+lower-bound comparison identified in V, rather than the present
+exact $q_n$ quotient. No exhaustive literature priority is asserted.
+
+The coupling form here remains Definition 10.3's retained analytic
+reference form, not an autonomous projected generator or a
+state-conditioned interaction. Angular attainment and actual
+annular sharpness do not yield a whole-space optimizer; (13.5)
+excludes one in the original domain. No uniform-in-$n$ margin,
+positive-noise sharpness, attractive completed-domain identification,
+native source-to-state realization or physical dimension conclusion
+is supplied. The parent self-field collapse and nonautonomous
+retention statements of §10 are unchanged.
+
+## 追加锚（本行以下为增补区）
+
+## 14. The exact retained constant at every positive central noise
+
+**Definition 14.1 (the original positive-noise retained quotient).**
+Fix an integer $n\ge2$ and a real $\epsilon>0$. Retain exactly
+Definition 10.1's $H^n$ identity unit source, raw Lebesgue density,
+covariance-$2$ horizontal clock, independent central covariance
+$2\epsilon^2$, and complete unweighted marginal $M_{n,\epsilon}$.
+On the retained $\mathbb R^3$ use the same fields $U,V,Z$ and set
+
+$$
+\begin{aligned}
+T_\epsilon[f]&=\mathcal E_H[f]+\epsilon^2\|Zf\|_2^2,\\
+\mathcal H_\epsilon
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+                   {(\|f\|_2^2+T_\epsilon[f])^{1/2}},\\
+W_{n,\epsilon}[f]&=\int_{\mathbb R^3}M_{n,\epsilon}|f|^2\,d\xi,\\
+\Lambda_{n,\epsilon}
+ &=\inf_{0\ne f\in\mathcal H_\epsilon}
+                         \frac{T_\epsilon[f]}{W_{n,\epsilon}[f]},\\
+\lambda_n&=2\pi\mu_n.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $\mu_n$ is precisely Definition 12.1's natural angular
+infimum, with the same $q_n$ and no imposed endpoint trace.
+Theorem 10.2 supplies positive finite denominators for nonzero
+states in this original free domain, which is contained in
+$\mathcal H_0$. No symmetry condition is imposed.
+
+**Theorem 14.2 (positive-noise sharpness and strictness on the full domain).**
+For every integer $n\ge2$ and every real $\epsilon>0$, with
+exactly Definition 14.1's objects,
+
+$$
+\begin{aligned}
+\Lambda_{n,\epsilon}&=2\pi\mu_n,\\
+T_\epsilon[f]-2\pi\mu_nW_{n,\epsilon}[f]
+ &\ge\epsilon^2\|Zf\|_2^2
+ &&(f\in\mathcal H_\epsilon),\\
+T_\epsilon[f]&>2\pi\mu_nW_{n,\epsilon}[f]
+ &&(0\ne f\in\mathcal H_\epsilon).
+\end{aligned}
+\tag{14.2}
+$$
+
+In particular the sharp quotient has no nonzero extremizer in
+the original full complex free domain.
+
+**Proof.** Fix $n$ and $\epsilon$. First let
+$f\in C_c^\infty(\mathbb R^3;\mathbb C)$ be arbitrary.
+Use the rotation norm and central Fourier modulus from
+(9.11)–(9.17):
+
+$$
+\begin{aligned}
+w(\rho,z)&=\left(\frac1{2\pi}\int_0^{2\pi}
+                         |f(\rho,\theta,z)|^2\,d\theta\right)^{1/2},\\
+F(\rho,k)&=\int_{\mathbb R}e^{-ikz}w(\rho,z)\,dz,
+&\psi(\rho,k)&=|F(\rho,k)|,\\
+v(\rho,z)&=\frac1{2\pi}\int_{\mathbb R}e^{ikz}\psi(\rho,k)\,dk.
+\end{aligned}
+\tag{14.3}
+$$
+
+The inverse is initially in $L^2$. Those supplied norm-chain-rule
+and Plancherel arguments give
+
+$$
+\begin{aligned}
+W_{n,\epsilon}[w]&=W_{n,\epsilon}[f],\\
+v\in\mathcal H_1\subset\mathcal H_0,
+\qquad \mathcal E_H[v]&\le\mathcal E_H[w]
+                                  \le\mathcal E_H[f].
+\end{aligned}
+\tag{14.4}
+$$
+
+The first equality uses rotation invariance of the actual marginal.
+The construction is an auxiliary transformation of an unrestricted
+complex input. In particular the rotation norm does not discard
+the input's magnetic angular energy: with
+$D=\rho^{-1}\partial_\theta+(\rho/2)\partial_z$,
+periodicity gives
+$(\rho/2)ww_z=\operatorname{Re}(2\pi)^{-1}
+\int\overline f\,Df\,d\theta$, and Cauchy–Schwarz bounds this
+part by the original $|Df|^2$ energy. The norm chain rule controls
+the radial derivative. The Fourier modulus contracts the radial
+derivative and preserves the $\rho^2k^2/4$ term. Membership of $v$
+in the original closure follows by cutting off its central tails
+and mollifying in Euclidean $H^1$ on a fixed bounded horizontal
+support, where the field coefficients are bounded independently
+of $z$, exactly as in (9.16).
+
+Write $P_{n,\eta}(t,\rho,k)=\widehat m_{n,\eta}(t,\rho,k)$.
+Keep the higher-contact factor in (10.3), rather than compare
+to the native rank-one field. For every $t>0$,
+
+$$
+\begin{aligned}
+P_{n,\epsilon}(t,\rho,k)
+ &=e^{-\epsilon^2tk^2}P_{n,0}(t,\rho,k),\\
+P_{n,0}(t,\rho,k)
+ &=\frac{|k|}{4\pi\sinh(|k|t)}
+       e^{-|k|\rho^2\coth(|k|t)/4}
+                           \operatorname{sech}(|k|t)^{n-1},\\
+0&\le P_{n,\epsilon}(t,\rho,k)\le P_{n,0}(t,\rho,k).
+\end{aligned}
+\tag{14.5}
+$$
+
+At $k=0$ the second line denotes its continuous value
+$B(t,\rho)=(4\pi t)^{-1}e^{-\rho^2/(4t)}$. Each column is real
+and even, and its modulus is at most $B(t,\rho)$, the central
+mass of the corresponding fixed-time density.
+
+For almost every $\rho>0$, (9.17) gives $F(\rho,\cdot)\in L^1$.
+The bound by $B(t,\rho)$ therefore makes all the following double
+integrals absolutely convergent, with absolute value bounded by
+$B(t,\rho)\|F(\rho,\cdot)\|_1^2/(2\pi)^2$. The same fixed-time
+Fourier inversion as (9.18)–(9.19) gives
+
+$$
+\begin{aligned}
+\int_{\mathbb R}m_{n,\epsilon}(t,\rho,z)|w|^2\,dz
+ &=\frac1{(2\pi)^2}\iint
+       P_{n,\epsilon}(t,\rho,k-\ell)
+           F(\rho,k)\overline{F(\rho,\ell)}\,dk\,d\ell\\
+ &\le\frac1{(2\pi)^2}\iint
+       P_{n,0}(t,\rho,k-\ell)
+                   \psi(\rho,k)\psi(\rho,\ell)\,dk\,d\ell\\
+ &=\int_{\mathbb R}m_{n,0}(t,\rho,z)|v|^2\,dz.
+\end{aligned}
+\tag{14.6}
+$$
+
+The inequality takes the modulus of the first, real nonnegative
+pairing and then uses (14.5). Integrate the physical nonnegative
+pairings first in $2\pi\rho\,d\rho$ and then over all
+$0<t<\infty$. Tonelli and the complete-time identity (10.4) give
+
+$$
+\lambda_nW_{n,\epsilon}[f]
+ \le\lambda_nW_{n,0}[v]
+ \le\mathcal E_H[v]\le\mathcal E_H[f].
+\tag{14.7}
+$$
+
+The middle inequality is the supplied zero-noise inequality of
+Theorems 12.2 and 13.2. Its finite right side also controls the
+entire time integral. No signed infinite-time Fourier integral,
+pointwise Green ordering, or removal of a time endpoint is used.
+
+For arbitrary $f\in\mathcal H_\epsilon$ take its defining compact
+smooth core sequence. It converges in $L^2$ and in horizontal
+derivative norms, and a subsequence converges almost everywhere.
+Fatou applied to the nonnegative actual marginal extends (14.7)
+to $f$. Adding $\epsilon^2\|Zf\|_2^2$ proves the second line of
+(14.2), and hence $\Lambda_{n,\epsilon}\ge\lambda_n$.
+
+For the opposite inequality reuse the actual nonzero compact smooth
+annular tests $g_j=f_{j,j}$ of (13.9)–(13.11). They satisfy
+
+$$
+\frac{\mathcal E_H[g_j]}{W_{n,0}[g_j]}\longrightarrow\lambda_n,
+\qquad \|Zg_j\|_2<\infty.
+\tag{14.8}
+$$
+
+In particular these are Cartesian functions supported away from
+the pole, with the original natural angular endpoints handled by
+the approximations (13.6)–(13.8).
+
+For any fixed such test $g$ and any $a>0$ put
+$D_ag(X_1,z)=a^{-1}g(X_1/a,z/a^2)$. The retained Jacobian is
+$a^4$. The exact complete-field scaling following (10.12) and the
+original field identities give
+
+$$
+\begin{aligned}
+M_{n,\epsilon}(aX_1,a^2z)&=a^{-2}M_{n,\epsilon/a}(X_1,z),\\
+\|D_ag\|_2^2&=a^2\|g\|_2^2,
+&\mathcal E_H[D_ag]&=\mathcal E_H[g],\\
+\|ZD_ag\|_2^2&=a^{-2}\|Zg\|_2^2,
+&W_{n,\epsilon}[D_ag]&=W_{n,\epsilon/a}[g].
+\end{aligned}
+\tag{14.9}
+$$
+
+The field scaling retains the complete parent time integral and
+the whole omitted fibre: their scaling factors are respectively
+$a^2$ and $a^{2n-2}$, against the parent heat-density factor
+$a^{-(2n+2)}$. Every finite-$a$ test remains in the original
+compact smooth core for the fixed original $\epsilon$.
+
+The off-pole locally uniform limit supplied by (10.9)–(10.10)
+and the large-time bound in Theorem 10.2 gives, on the fixed
+compact support of $g$,
+$W_{n,\epsilon/a}[g]\to W_{n,0}[g]>0$. Thus
+
+$$
+\frac{T_\epsilon[D_ag]}{W_{n,\epsilon}[D_ag]}
+ =\frac{\mathcal E_H[g]+\epsilon^2a^{-2}\|Zg\|_2^2}
+              {W_{n,\epsilon/a}[g]}
+ \longrightarrow\frac{\mathcal E_H[g]}{W_{n,0}[g]}
+ \qquad(a\to\infty).
+\tag{14.10}
+$$
+
+Apply this limit separately to each $g_j$. It gives
+$\Lambda_{n,\epsilon}\le\mathcal E_H[g_j]/W_{n,0}[g_j]$
+for every $j$, and then (14.8) proves the matching upper bound.
+Equivalently, choose a finite $a_j$ for each $j\ge2$ such that
+
+$$
+\left|\frac{W_{n,\epsilon/a_j}[g_j]}{W_{n,0}[g_j]}-1\right|
+ \le\frac1j,
+\qquad
+\frac{\epsilon^2a_j^{-2}\|Zg_j\|_2^2}{W_{n,0}[g_j]}
+ \le\frac1j.
+\tag{14.11}
+$$
+
+The actual tests $D_{a_j}g_j$ then have quotient at most
+$(\mathcal E_H[g_j]/W_{n,0}[g_j]+1/j)/(1-1/j)$, which tends
+to $\lambda_n$. No estimate uniform in $j$, $n$ or $\epsilon$
+is required, and the original tested Green field always has the
+fixed noise $\epsilon$.
+
+Finally $Zf=0$ in distributions for an $L^2(\mathbb R^3)$ state
+forces $f=0$: its partial Fourier transform is supported on the
+null set $k=0$, so vanishes in $L^2$. The positive central
+remainder in (14.2) is therefore strictly positive for every
+nonzero $f\in\mathcal H_\epsilon$. This proves the final line
+and nonattainment. $\square$
+
+**Corollary 14.3 (the exact positive-noise nonnegative coupling range).**
+For every fixed $n\ge2$, $\epsilon>0$ and $g\ge0$, on exactly
+$\mathcal H_\epsilon$ define
+
+$$
+\mathfrak q_{n,\epsilon,g}[f]
+        =T_\epsilon[f]-gW_{n,\epsilon}[f].
+\tag{14.12}
+$$
+
+This form is nonnegative on its entire original domain if and
+only if $0\le g\le2\pi\mu_n$. Throughout this interval,
+
+$$
+\mathfrak q_{n,\epsilon,g}[f]
+ \ge\left(1-\frac{g}{2\pi\mu_n}\right)T_\epsilon[f],
+\tag{14.13}
+$$
+
+and at the endpoint it is strictly positive on every nonzero
+original-domain state. For each $g>2\pi\mu_n$ there is a nonzero
+compact smooth state making (14.12) negative.
+
+**Proof.** Theorem 14.2 gives
+$W_{n,\epsilon}[f]\le T_\epsilon[f]/\lambda_n$ and endpoint
+strictness. For $g>\lambda_n$, one of the actual trials in
+(14.11) has quotient below $g$, so its form value is negative.
+$\square$
+
+**Definition 14.4 (correspondence, attribution and scope).**
+The same higher-contact source generates both the original full
+field and its unweighted retained marginal. Theorem 10.2 supplies
+their fixed-time columns, complete-time estimates and exact scaling;
+Theorem 13.2 supplies the natural angular constant and actual
+annular sharp tests. The rotation-norm and Fourier-modulus
+constructions, their original-domain membership, and the
+absolutely convergent fixed-time pairing are reused from §9.
+The source-relative additional composition keeps the rank-$n$
+factor in the noise comparison and applies the supplied sharp tests
+to the fixed positive-noise marginal by outward dilation.
+
+The oscillator formula, Plancherel, Sobolev norm and modulus chain
+rules, cutoff approximation, Fubini, Tonelli and Fatou are classical
+intermediate principles, with the attributions in §§9–10 and 13.
+In particular Krötz–Thangavelu–Xu,
+[*The heat kernel transform for the Heisenberg group*, §2.2,
+(2.2.1) and §4.1, (4.1.2)](https://arxiv.org/html/math/0401243v2),
+supplies classical heat columns rather than this exact retained
+quotient. The different multipliers and lower-bound comparisons
+of Kombe and D'Arca–Fanelli–Franceschi–Prandi retain the limited
+attribution in Definitions 9.4 and 13.4. The composition here is
+repo-derived; no exhaustive literature priority is asserted.
+
+The coupling form remains Definition 10.3's retained analytic
+reference form. Its exact nonnegative interval does not identify
+a critical attractive completion, classify shifted semiboundedness
+outside the interval, or turn the nonautonomous retained densities
+into a projected semigroup. The result supplies no estimate uniform
+in rank or noise, native source-to-state realization, physical
+forcing or physical dimension conclusion. The parent self-field
+collapse and source-retention obstructions of §10 are unchanged.
+
+## 追加锚（本行以下为增补区）
+
+## 15. The supercritical retained operator and its infinite negative spectrum
+
+**Definition 15.1 (the original retained form and its realization).**
+Fix an integer $n\ge2$, $\epsilon>0$, and
+$g>\lambda_n=2\pi\mu_n$, with exactly the source and fields of
+Definition 10.1 and the angular constant of Definition 13.1. Write
+$M=M_{n,\epsilon}$ for the actual complete unweighted marginal,
+$W=W_{n,\epsilon}$ and $T=T_\epsilon$ as in Definition 14.1.
+All norms and scalar products use complex $L^2(\mathbb R^3,d\xi)$
+with raw $d\xi=dx\,dy\,dz$. The form in question is
+
+$$
+ q[f]=T[f]-gW[f],\qquad D(q)=\mathcal H_\epsilon .
+ \tag{15.1}
+$$
+
+Thus its domain is the original full complex free closure. A
+Friedrichs realization below means the self-adjoint operator
+associated with this form after closedness and lower
+semiboundedness have been established. It does not mean the
+higher-contact parent attractive operator of (10.7).
+
+**Theorem 15.2 (closed supercritical form and complete negative spectrum).**
+For every set of parameters in Definition 15.1, the form (15.1)
+is densely defined, closed and lower semibounded on exactly
+$\mathcal H_\epsilon$, and its compact smooth core remains a form
+core. Its associated Friedrichs operator $A_{n,\epsilon,g}$ satisfies
+
+$$
+ \sigma_{\mathrm{ess}}(A_{n,\epsilon,g})=[0,\infty).
+ \tag{15.2}
+$$
+
+The negative spectrum consists of infinitely many isolated
+eigenvalues of finite multiplicity. Listed with multiplicity, they
+can be arranged as
+
+$$
+ -\infty<E_1\le E_2\le\cdots<0,\qquad E_j\longrightarrow0.
+ \tag{15.3}
+$$
+
+There is no other accumulation point of the negative spectrum.
+The constants needed for lower boundedness are allowed to depend
+on $n,\epsilon,g$.
+
+**Proof.** We first check the singularity and tail of the actual
+potential. The nonnegative central convolution (10.4), the Gaussian
+supremum and the zero Fourier mode (10.3) give, for $t>0$,
+
+$$
+\begin{aligned}
+ m_{n,\epsilon}(t,\rho,z)
+ &\le \|\varphi_{\epsilon,t}\|_\infty
+                \int_{\mathbb R}m_{n,0}(t,\rho,s)\,ds\\
+ &=(4\pi)^{-3/2}\epsilon^{-1}t^{-3/2}
+                 e^{-\rho^2/(4t)}.
+\end{aligned}
+\tag{15.4}
+$$
+
+Integrate this nonnegative estimate over the whole time interval.
+For $\rho>0$,
+
+$$
+ \int_0^\infty t^{-3/2}e^{-\rho^2/(4t)}dt
+       =\frac{2\sqrt\pi}{\rho},
+ \qquad
+ 0<M(\rho,z)\le\frac1{4\pi\epsilon\rho}.
+ \tag{15.5}
+$$
+
+This estimate does not infer pointwise order from Fourier-column
+order. On every bounded set, cylindrical integration of
+$\rho^{-p}$ shows that $M\in L^p_{\mathrm{loc}}$ for
+$1\le p<2$. In particular we can fix $p=7/4>3/2$.
+
+For the tail set
+$R(\xi)=(\rho^4+16z^2)^{1/4}$,
+$\delta_a(x,y,z)=(ax,ay,a^2z)$ and $\Sigma=\{R=1\}$.
+The uniform off-pole small-time bounds (10.9)--(10.10) and their
+large-time $C_nt^{-2}$ bound imply
+
+$$
+ C_{n,\epsilon}:=
+ \sup_{\substack{0\le\eta\le\epsilon\\\omega\in\Sigma}}
+          M_{n,\eta}(\omega)<\infty .
+ \tag{15.6}
+$$
+
+Here $\Sigma$ is compact and avoids the pole, and the cited
+bounds dominate the complete time integral uniformly on the
+displayed parameter interval. The exact scaling (14.9), with
+$a=R(\xi)\ge1$, now gives
+
+$$
+ M(\xi)=a^{-2}M_{n,\epsilon/a}(\delta_{1/a}\xi)
+       \le C_{n,\epsilon}R(\xi)^{-2}.
+ \tag{15.7}
+$$
+
+Together with off-pole continuity, this proves boundedness outside
+any fixed source neighbourhood and uniform decay to zero at
+spatial infinity.
+
+We next verify the form-domain hypotheses. Positive $\epsilon$
+gives local Euclidean regularity through the original derivatives:
+
+$$
+ \partial_x f=Uf+\frac y2 Zf,\qquad
+ \partial_y f=Vf-\frac x2 Zf,\qquad
+ \partial_z f=Zf.
+ \tag{15.8}
+$$
+
+For each compact smooth cutoff $\chi$, the product rule on the
+defining core, followed by its $\mathcal H_\epsilon$ closure, gives
+
+$$
+ \|\chi f\|_{H^1(\mathbb R^3)}^2
+       \le C_{\chi,\epsilon}\bigl(T[f]+\|f\|_2^2\bigr),
+ \qquad f\in\mathcal H_\epsilon .
+ \tag{15.9}
+$$
+
+Only local regularity is asserted here. In particular (15.9)
+makes no global identification of the free domain with an
+isotropic Euclidean Sobolev space.
+
+Choose a bounded source neighbourhood $K$ and a cutoff equal to
+one on $K$. Since $M\in L^{7/4}(K)$, its truncated high part
+satisfies
+
+$$
+ \|M\mathbf1_{K\cap\{M>B\}}\|_{3/2}\longrightarrow0
+          \qquad(B\longrightarrow\infty).
+ \tag{15.10}
+$$
+
+Hölder and the classical three-dimensional Sobolev inequality bound
+its potential integral by the left side of (15.10) times
+$\|\chi f\|_6^2$. The part of $M$ at most $B$ on $K$ contributes
+at most $B\|f\|_2^2$, and $M$ is bounded on the complement of $K$.
+Using (15.9) and choosing $B$ sufficiently large proves
+
+$$
+ \text{for every }d>0\text{ there is }C_d<\infty
+ \text{ such that }\quad
+ W[f]\le dT[f]+C_d\|f\|_2^2
+ \quad(f\in\mathcal H_\epsilon).
+ \tag{15.11}
+$$
+
+Take $d<1/g$. The classical KLMN theorem applies to the densely
+defined closed nonnegative form $T$ and the Hermitian perturbation
+$-gW$. It yields closedness on exactly the same domain and
+
+$$
+ q[f]\ge(1-gd)T[f]-gC_d\|f\|_2^2.
+ \tag{15.12}
+$$
+
+Its shifted form norm is equivalent to the original free form
+norm, so the original compact smooth core stays a form core.
+The closed-form representation theorem therefore defines the
+self-adjoint Friedrichs operator in (15.2).
+
+For the essential spectrum we check compactness in this same
+realization. The map
+
+$$
+ J:\mathcal H_\epsilon\longrightarrow L^2(d\xi),
+       \qquad Jf=\sqrt M\,f
+ \tag{15.13}
+$$
+
+is compact when the source has norm
+$(T[f]+\|f\|_2^2)^{1/2}$. Indeed, a sequence bounded in that norm
+is locally bounded in Euclidean $H^1$ by (15.9). The classical
+Rellich compactness theorem gives, after a diagonal subsequence,
+local convergence in $L^{14/3}$, since $14/3<6$.
+Hölder with $M\in L^{7/4}$ gives convergence of $Jf$ in $L^2$
+on each bounded set. On its complement, (15.7) makes the
+weighted tails uniformly small, because the unweighted $L^2$
+norms are bounded. Thus the subsequence is Cauchy in the whole
+target space of (15.13).
+
+Let $L$ be the free self-adjoint operator of $T$. For sufficiently
+large $s>0$ define
+
+$$
+ S_s=(L+s)^{-1/2},\qquad B_s=JS_s,\qquad K_s=B_s^*B_s.
+ \tag{15.14}
+$$
+
+The map $S_s$ is bounded into the free form domain, so $B_s$
+and $K_s$ are compact. Estimate (15.11) gives
+$\|K_s\|\le d+C_d/s$. Choose first $gd<1$ and then $s$ large
+enough that $g\|K_s\|<1$. The variational representation of
+$q+s$ gives
+
+$$
+\begin{aligned}
+ (A_{n,\epsilon,g}+s)^{-1}
+     &=S_s(I-gK_s)^{-1}S_s,\\
+ (A_{n,\epsilon,g}+s)^{-1}-(L+s)^{-1}
+     &=gS_s(I-gK_s)^{-1}K_sS_s.
+\end{aligned}
+\tag{15.15}
+$$
+
+The second line is compact. This argument uses relative form
+compactness; it does not require multiplication by $M$ to be
+bounded on unweighted $L^2$ or to have the free operator domain.
+
+For completeness the whole free essential spectrum has an
+explicit singular Weyl family. Fix $\lambda\ge0$,
+$k=\sqrt\lambda$, and $\phi\in C_c^\infty(\mathbb R^3;\mathbb C)$
+with $\|\phi\|_2=1$. Put
+
+$$
+ \phi_a=a^{-2}\phi\circ\delta_{1/a},
+       \qquad u_a=e^{ikx}\phi_a .
+ \tag{15.16}
+$$
+
+The retained Jacobian is $a^4$, so $\|u_a\|_2=1$. Their norms on
+each fixed compact set tend to zero, and hence $u_a\rightharpoonup0$
+in $L^2$. Compact smooth tests belong to $D(L)$ by integration by
+parts and the defining form-core approximation. With
+$L_H=-U^2-V^2$, direct differentiation gives
+
+$$
+\begin{aligned}
+ (L-\lambda)u_a
+    &=e^{ikx}(L_H\phi_a-\epsilon^2Z^2\phi_a-2ikU\phi_a),\\
+ \|(L-\lambda)u_a\|_2
+    &\le a^{-2}\|L_H\phi\|_2
+       +\epsilon^2a^{-4}\|Z^2\phi\|_2
+       +2k a^{-1}\|U\phi\|_2
+       \longrightarrow0 .
+\end{aligned}
+\tag{15.17}
+$$
+
+The singular Weyl criterion puts every $\lambda\ge0$ in
+$\sigma_{\mathrm{ess}}(L)$. Nonnegativity of $L$ gives the reverse
+containment. The compact resolvent difference (15.15) and the
+classical Weyl theorem now prove (15.2), in both directions.
+
+Finally use one of the actual zero-noise annular trials supplied
+by (13.9)--(13.11). Since $g>\lambda_n$, choose one fixed
+nonzero compact smooth $h$, supported away from the pole, with
+
+$$
+ \|h\|_2=1,\qquad
+ \mathcal E_H[h]-gW_{n,0}[h]<0.
+ \tag{15.18}
+$$
+
+Its support lies between gauge radii $r_->0$ and $r_+<\infty$.
+Set $h_a=a^{-2}h\circ\delta_{1/a}$. Each $h_a$ is a normalized
+test in the original fixed-$\epsilon$ core. Exact scaling gives
+
+$$
+ q[h_a]=a^{-2}
+ \left(\mathcal E_H[h]+\epsilon^2a^{-2}\|Zh\|_2^2
+                          -gW_{n,\epsilon/a}[h]\right).
+ \tag{15.19}
+$$
+
+The locally uniform off-pole limit from Theorem 10.2 makes the
+parenthesis tend to the strictly negative number in (15.18).
+Thus $q[h_a]<0$ for every sufficiently large $a$. Choose such
+scales with $a_{j+1}>(r_+/r_-)a_j$. The corresponding supports
+are separated annuli. Locality of the original derivatives and
+the multiplication form gives
+
+$$
+ q\left[\sum_{j=1}^N c_jh_{a_j}\right]
+       =\sum_{j=1}^N|c_j|^2q[h_{a_j}]<0
+          \quad\text{whenever }(c_1,\ldots,c_N)\ne0 .
+ \tag{15.20}
+$$
+
+The form-domain variational principle makes the negative spectral
+projection have dimension at least $N$ for every $N$.
+By (15.2), each negative spectral point is an isolated eigenvalue
+of finite multiplicity. Estimate (15.12) bounds their lower end;
+an accumulation at a finite negative point would belong to the
+essential spectrum. There are therefore infinitely many
+eigenvalues, their only accumulation point is zero, and (15.3)
+follows.
+
+**Definition 15.3 (correspondence, attribution and spectral scope).**
+The marginal in (15.4)--(15.7) is the original field of (10.2),
+with both time endpoints retained. The sharp zero-noise annular
+trials and their original-domain approximation are supplied by
+§13; (15.19) uses the same complete scaling as §14.
+The new model-specific bridges are the local integrability and
+tail checks for this actual marginal, its relative form
+compactness on the original positive-noise domain, the explicit
+free Weyl family, and the separated actual-field negative
+subspaces. The spectral consequence is repo-derived from these
+checks and the stated suppliers, without a global-priority claim.
+
+The generic closed-form, perturbation and variational results are
+classical. In Gerald Teschl,
+[*Mathematical Methods in Quantum Mechanics*, authorized online
+first edition](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+Theorem 6.24, printed p.150, gives KLMN; Theorem 6.19,
+printed p.146, gives essential-spectrum invariance under compact
+resolvent difference; Lemma 6.26, printed pp.151--152, gives the
+form-compact version. The singular Weyl criterion is Lemma 6.17,
+printed pp.145--146, and the form-domain min-max statements are
+Theorems 4.10 and 4.12(i), printed p.119. The Sobolev and Rellich
+inputs in (15.9)--(15.13) are the classical three-dimensional
+local embeddings, used with compact cutoffs and exponent
+$14/3<6$. None of these generic statements alone verifies the
+actual retained potential or the annular subspaces.
+
+These conclusions concern the retained analytic reference form
+at each fixed positive noise. They preserve the nonautonomous
+retention statement and the separate parent collapse of
+Theorem 10.2. They give no parameter-uniform lower bound, no
+identification of an attractive zero-noise completion with the
+positive-noise free domain, and no negative-eigenvalue counting
+asymptotic.
+
+## 追加锚（本行以下为增补区）
+
+## 16. Quantitative lower counts for the original retained operator
+
+**Definition 16.1 (fixed source, strict count and angular gap).**
+Fix an integer $n\ge2$ and a real $g>\lambda_n=2\pi\mu_n$.
+Retain Definition 10.1's identity unit source $\delta_0$ on
+$H^n=\mathbb R^{2n}\times\mathbb R$, raw Lebesgue measure,
+horizontal covariance-$2$ clock and independent central covariance
+$2\epsilon^2$. In particular, for $\epsilon\ge0$ the potential is
+exactly the complete same-source marginal
+
+$$
+M_{n,\epsilon}(X_1,z)
+ =\int_0^\infty\int_{\mathbb R^{2n-2}}
+ (e^{-tL_{n,\epsilon}}\delta_0)(X_1,W,z)\,dW\,dt,
+\qquad
+L_{n,\epsilon}=-\sum_{j=1}^n(U_j^2+V_j^2)-\epsilon^2Z^2.
+\tag{16.1}
+$$
+
+The fields in this parent expression are those of (10.1).
+Both time endpoints and the whole unweighted omitted fibre are
+retained. Fix $\epsilon=1$ for the retained operator. On complex
+$L^2(\mathbb R^3,dx\,dy\,dz)$ put
+$U=\partial_x-(y/2)\partial_z$,
+$V=\partial_y+(x/2)\partial_z$, $Z=\partial_z$ and
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&=\|Uf\|_2^2+\|Vf\|_2^2,\\
+\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+ {\left(\|f\|_2^2+\mathcal E_H[f]+\|Zf\|_2^2\right)^{1/2}},\\
+W_{n,\epsilon}[f]&=\int_{\mathbb R^3}M_{n,\epsilon}|f|^2\,dx\,dy\,dz,\\
+q_1[f]&=\mathcal E_H[f]+\|Zf\|_2^2-gW_{n,1}[f],
+\qquad D(q_1)=\mathcal H_1,\\
+N_{n,g}(E)&=\dim_{\mathbb C}\operatorname{Ran}
+ \mathbf1_{(-\infty,-E)}(A_{n,1,g}),\qquad E>0.
+\end{aligned}
+\tag{16.2}
+$$
+
+Here $A_{n,1,g}$ is exactly the Friedrichs operator associated
+with (15.1). Its domain has no angular, radial or real-valued
+restriction. Theorem 15.2 supplies lower semiboundedness and
+negative discreteness with finite complex multiplicity and no
+negative accumulation point. These imply $N_{n,g}(E)<\infty$
+for each $E>0$.
+
+Use $R$, $J=(-\pi/2,\pi/2)$, $c=\cos a$, $q_n$ and the natural
+angular domain $\mathcal H_c$ of (12.3)--(12.4). For a nonzero
+real $b\in C_c^\infty(J)$ define
+
+$$
+\begin{aligned}
+A_b&=\int_J(4c|b'|^2+c|b|^2)\,da,&
+Q_b&=\int_Jq_n|b|^2\,da,\\
+C_b&=\int_Jc|b|^2\,da>0,&
+D_b&=\frac{g}{2\pi}Q_b-A_b.
+\end{aligned}
+\tag{16.3}
+$$
+
+When $D_b>0$, write $\kappa_b=\sqrt{D_b/C_b}$.
+The natural angular variational problem still has no imposed
+endpoint traces. Compact angular functions here are only trials.
+The analytic premises used below are the original marginal and
+off-pole convergence of Theorem 10.2, the polar identities of
+§12, the natural-endpoint approximations of §13, the complete
+scaling of §14 and the form and spectral conclusions of §15.
+
+**Theorem 16.2 (finite-energy geometric count and angular lower coefficient).**
+With exactly Definition 16.1's source, parameters and full complex
+operator, let
+$h\in C_c^\infty(\mathbb R^3\setminus\{0\};\mathbb C)$ satisfy
+$\|h\|_2=1$ and
+$\gamma=gW_{n,0}[h]-\mathcal E_H[h]>0$.
+Choose $0<r_-<r_+<\infty$ with
+$\operatorname{supp}h\subset\{r_-\le R\le r_+\}$.
+There exists $a_*\ge1$ such that, for every $a\ge a_*$,
+
+$$
+a^{-2}\|Zh\|_2^2\le\frac\gamma4,
+\qquad
+g\left|W_{n,1/a}[h]-W_{n,0}[h]\right|\le\frac\gamma4.
+\tag{16.4}
+$$
+
+For any such $a_*$, any fixed $B>r_+/r_-$ and every $E>0$,
+
+$$
+\begin{aligned}
+N_{n,g}(E)&\ge
+ \max\left\{0,\left\lfloor
+ \frac{\log\bigl(\gamma/(2a_*^2E)\bigr)}{2\log B}
+ \right\rfloor\right\},\\
+\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ &\ge\frac1{2\log B}>0.
+\end{aligned}
+\tag{16.5}
+$$
+
+Such an $h$ exists for every fixed $n\ge2$ and $g>\lambda_n$.
+More precisely, every nonzero real $b\in C_c^\infty(J)$ with
+$D_b>0$ gives the bound
+
+$$
+\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \ge\frac1{2\pi}\sqrt{\frac{D_b}{C_b}}>0.
+\tag{16.6}
+$$
+
+The set of these $b$ is nonempty for every such $n,g$.
+Consequently the supremum of the right side of (16.6) over this
+set is also an extended lower bound; no finiteness of that
+supremum is asserted.
+
+**Proof.** First fix any $h$ in the statement. Its compact support
+avoids the pole, so the locally uniform off-pole convergence in
+Theorem 10.2 implies $W_{n,1/a}[h]\to W_{n,0}[h]$.
+Also $\|Zh\|_2<\infty$. These facts give (16.4) simultaneously
+for every $a$ beyond a single $a_*$ depending on the fixed trial,
+$n$ and $g$.
+
+For $\delta_a(x,y,z)=(ax,ay,a^2z)$ set
+$h_a=a^{-2}h\circ\delta_{1/a}$. The raw Jacobian is $a^4$,
+and the original derivative and complete-field scaling (14.9)
+gives
+
+$$
+\begin{aligned}
+\|h_a\|_2^2&=1,&
+\mathcal E_H[h_a]&=a^{-2}\mathcal E_H[h],\\
+\|Zh_a\|_2^2&=a^{-4}\|Zh\|_2^2,&
+W_{n,1}[h_a]&=a^{-2}W_{n,1/a}[h],\\
+q_1[h_a]
+ &=a^{-2}\left(-\gamma+a^{-2}\|Zh\|_2^2
+              +g\bigl(W_{n,0}[h]-W_{n,1/a}[h]\bigr)\right)
+ \le-\frac\gamma{2a^2}\qquad(a\ge a_*).
+\end{aligned}
+\tag{16.7}
+$$
+
+Each $h_a$ is in the original fixed-noise compact smooth core.
+Take $a_j=a_*B^j$ for integers $j\ge0$.
+Their closed supports lie in
+$\{a_jr_-\le R\le a_jr_+\}$ and are separated because
+$B r_->r_+$. Locality of $U,V,Z$ and of the multiplication
+potential therefore makes both the form and the $L^2$ norm
+diagonal: for every finite complex coefficient family,
+
+$$
+\begin{aligned}
+\left\|\sum_jc_jh_{a_j}\right\|_2^2&=\sum_j|c_j|^2,\\
+(q_1+E\|\cdot\|_2^2)\left[\sum_jc_jh_{a_j}\right]
+ &\le\sum_j|c_j|^2
+       \left(E-\frac\gamma{2a_*^2B^{2j}}\right).
+\end{aligned}
+\tag{16.8}
+$$
+
+For a fixed $E>0$ put
+$X=\log(\gamma/(2a_*^2E))/(2\log B)$ and
+$k=\max\{0,\lfloor X\rfloor\}$.
+If $k>0$, every integer $0\le j<k$ satisfies $j<X$,
+including when $X$ is an integer. Thus each corresponding
+parenthesis in (16.8) is strictly negative. The $k$ orthonormal
+trials span a $k$-dimensional complex subspace on which
+$q_1+E\|\cdot\|_2^2$ is strictly negative away from zero.
+The classical form-domain min-max principle, as cited in
+Definition 15.3, gives at least $k$ eigenvalues in the strict
+interval $(-\infty,-E)$. For $k=0$ the inequality is automatic.
+This proves the finite-$E$ assertion without counting an
+eigenvalue at $-E$.
+
+For fixed $h,a_*,B$, as $E\downarrow0$ the quantity $X$ is
+$\log(1/E)/(2\log B)$ plus a constant. Taking a floor changes
+it by less than one, and eventually $X>0$. Division by
+$\log(1/E)$ proves the second line of (16.5).
+Existence of at least one normalized compact annular $h$ with
+positive $\gamma$ is supplied by (15.18). We next construct the
+trials which give the sharper coefficient.
+
+Since $g/(2\pi)>\mu_n$, the real compact angular approximations
+(13.6)--(13.8), with $Q_n[b_j]\to1$ and $A[b_j]\to\mu_n$,
+give a nonzero real $b$ for which $D_b>0$.
+This uses the natural-endpoint cutoff argument, not Dirichlet
+conditions on an angular minimizer. Now fix any such $b$ and
+any $L>\pi/\kappa_b$.
+The interval function $\sin(\pi\ell/L)$ belongs to
+$H_0^1(0,L)$ and has derivative-to-function squared-norm ratio
+$\pi^2/L^2<\kappa_b^2$.
+Classical $H_0^1$ density by real compact smooth functions,
+and continuity of both norms under this approximation, supply
+$0\ne\psi\in C_c^\infty(0,L;\mathbb R)$ with
+
+$$
+\frac{\|\psi'\|_{L^2(0,L)}^2}{\|\psi\|_{L^2(0,L)}^2}
+ <\frac{D_b}{C_b}.
+\tag{16.9}
+$$
+
+This interval Dirichlet sine only constructs a trial; it imposes
+no boundary condition on $A_{n,1,g}$.
+Extend $\psi$ by zero and form the actual Cartesian function
+$f=R^{-1}b(a)\psi(\log R)$.
+Its radial support is compact in $1<R<e^L$ and its angular
+support avoids both axes $\rho=0$. Extension by zero across
+those axes is smooth, and the pole is avoided. Consequently
+$f\in C_c^\infty(\mathbb R^3\setminus\{0\})$,
+$\|Zf\|_2<\infty$, and $f$ belongs to the original
+fixed-noise core.
+
+Set $\ell=\log R$. The raw measure is
+$R^4d\ell\,da\,d\theta/4$. In (12.12), the trial has
+$v=b(a)\psi(\ell)$ and $v_\theta=0$.
+Integration in $\theta$ contributes $2\pi$; the cross term
+vanishes because $\int\psi\psi'=0$.
+Using also $M_{n,0}=R^{-2}q_n/(2\pi)$ from (12.5) gives
+
+$$
+\begin{aligned}
+\|f\|_2^2
+ &=\frac\pi2\|b\|_{L^2(J)}^2
+                 \int_0^Le^{2\ell}|\psi(\ell)|^2\,d\ell
+ \in(0,\infty),\\
+\mathcal E_H[f]
+ &=\frac\pi2\left(C_b\|\psi'\|_2^2+A_b\|\psi\|_2^2\right),\\
+W_{n,0}[f]&=\frac14 Q_b\|\psi\|_2^2,\\
+\mathcal E_H[f]-gW_{n,0}[f]
+ &=\frac\pi2\left(C_b\|\psi'\|_2^2-D_b\|\psi\|_2^2\right)<0.
+\end{aligned}
+\tag{16.10}
+$$
+
+Thus $h=f/\|f\|_2$ is admitted in (16.5), with $r_-=1$,
+$r_+=e^L$ and positive gap
+$\gamma=(\pi/2)(D_b\|\psi\|_2^2-C_b\|\psi'\|_2^2)/\|f\|_2^2$.
+For this fixed $L$ and trial, every fixed $B>e^L$ gives
+$\liminf N_{n,g}(E)/\log(1/E)\ge1/(2\log B)$ by first taking
+$E\downarrow0$. Taking the supremum of these separate lower
+bounds as $B\downarrow e^L$ gives $1/(2L)$.
+For every $L>\pi/\kappa_b$ a trial can be chosen as above;
+then letting $L\downarrow\pi/\kappa_b$ proves (16.6).
+The constants $h,\gamma,a_*$ may change with $L$.
+No uniform estimate for them is needed, since the $E$ limit
+was taken separately for each fixed trial and $B$.
+Finally the left side of (16.6) is the same extended real number
+for all admitted $b$, so it bounds their supremum as stated.
+
+**Definition 16.3 (attribution and the unresolved counting boundary).**
+Theorem 16.2 is a repo-derived quantitative deduction for the exact
+retained-source form, conditional on the analytic premises listed
+in Definition 16.1. Its model-specific steps are the normalized
+complete-field dilation, the uniform-in-$a\ge a_*$ error bounds
+for each fixed annular trial, the disjoint complex trial spaces
+and the angular trial's raw normalization. The min-max principle
+is the classical result cited in Definition 15.3, and compact
+smooth density in $H_0^1(0,L)$ and the sine quotient are classical
+interval facts consumed in constructing (16.9). The natural
+angular endpoint approximation is the one already proved in §13.
+These suppliers are intermediate steps in the retained-source
+deduction, not separate new counting theorems.
+
+Hassell--Marshall,
+[*Eigenvalues of Schrödinger operators with potential asymptotically
+homogeneous of degree minus two*, Theorems 1--2](https://arxiv.org/abs/math/0510617v1),
+concerns Euclidean Laplacians, scalar inverse-square tails and a
+sphere angular operator under its stated remainder and threshold
+hypotheses. No correspondence of its form and domain to the
+present $U,V,Z$ form or of its sphere operator to the coupled
+$(\sigma,m)$ expressions of (12.13) is established here.
+Its counting coefficient and conclusions are not transferred.
+No literature originality claim is attached to (16.5)--(16.6).
+
+The count in (16.2) always concerns the original full complex
+operator, although the lower bounds use a single family of
+angular trials. Neither exhaustion of its angular modes nor an
+all-mode counting density follows. A finite logarithmic upper
+bound, finiteness of the variational supremum, an exact
+coefficient and existence of a finite positive limit of
+$N_{n,g}(E)/\log(1/E)$ remain unresolved. Pointwise finiteness
+of $N_{n,g}(E)$ does not supply any of those assertions.
+
+## 追加锚（本行以下为增补区）
+
+## 17. A finite logarithmic upper count for the original retained operator
+
+**Definition 17.1 (fixed source, full operator and gauge balls).**
+Fix an integer $n\ge2$ and a real $g>\lambda_n=2\pi\mu_n$,
+with the natural angular threshold of Definitions 12.1 and 13.1.
+Retain the identity unit source $\delta_0$ on
+$H^n=\mathbb R^{2n}\times\mathbb R$, the raw Lebesgue measure,
+and the horizontal covariance-$2$ clock of Definition 10.1.
+For $X=(X_1,W)$, $X_1=(x,y)$ and
+$W\in\mathbb R^{2n-2}$, the potential is exactly
+
+$$
+\begin{aligned}
+L_{n,\epsilon}
+ &=-\sum_{j=1}^n(U_j^2+V_j^2)-\epsilon^2Z^2,\\
+U_j&=\partial_{x_j}-\frac{y_j}{2}\partial_z,
+\qquad V_j=\partial_{y_j}+\frac{x_j}{2}\partial_z,
+\qquad Z=\partial_z,\\
+M_{n,\epsilon}(x,y,z)
+ &=\int_0^\infty\int_{\mathbb R^{2n-2}}
+       (e^{-tL_{n,\epsilon}}\delta_0)(X_1,W,z)\,dW\,dt.
+\end{aligned}
+\tag{17.1}
+$$
+
+The parent free operator is the complex compact-smooth Friedrichs
+closure. Both time endpoints and the whole unweighted omitted
+fibre are retained. The independent central covariance is
+$2\epsilon^2$. Set $\epsilon=1$ and $M=M_{n,1}$ throughout the
+counting assertion. On complex $L^2(\mathbb R^3,d\xi)$ with
+raw $d\xi=dx\,dy\,dz$, put
+
+$$
+\begin{aligned}
+U&=\partial_x-\frac y2\partial_z,
+&V&=\partial_y+\frac x2\partial_z,\\
+\mathcal E_H[f]&=\|Uf\|_2^2+\|Vf\|_2^2,
+&T_1[f]&=\mathcal E_H[f]+\|Zf\|_2^2,\\
+\mathcal H_0
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+                 {(\|f\|_2^2+\mathcal E_H[f])^{1/2}},
+&\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+                 {(\|f\|_2^2+T_1[f])^{1/2}},\\
+q_1[f]&=T_1[f]-g\int M|f|^2\,d\xi,
+&D(q_1)&=\mathcal H_1,\\
+N_{n,g}(E)&=\dim_{\mathbb C}\operatorname{Ran}
+   \mathbf1_{(-\infty,-E)}(A_{n,1,g}),
+&E&>0.
+\end{aligned}
+\tag{17.2}
+$$
+
+Here $A_{n,1,g}$ is precisely Theorem 15.2's self-adjoint
+operator of $q_1$, also used in (16.2). No symmetry or real-valued
+restriction is imposed. Write
+
+$$
+\rho=(x^2+y^2)^{1/2},\qquad
+R=(\rho^4+16z^2)^{1/4},\qquad B_r=\{\xi:R(\xi)<r\}.
+\tag{17.3}
+$$
+
+The angular domain remains $\mathcal H_c$ of (12.4), with no
+imposed endpoint traces. The ordinary analytic premises are the
+original-field estimates and free realization in §§9--10, the
+natural threshold in §§12--13, the complete-field scaling in §14,
+and the closed original form in §15.
+
+**Theorem 17.2 (supported comparison and finite upper rate).**
+For every fixed $n,g$ of Definition 17.1 there are finite positive
+constants $B,D$, independent of $E$, such that, on setting
+
+$$
+\begin{aligned}
+H&=gB+\tfrac12+D,\\
+c_0&=2\pi^2H^2+\frac{\pi^2D^2}{4}\log_+(D/4),
+&c_1&=\frac{\pi^2D^2}{4},
+\qquad \log_+(s)=\max\{0,\log s\}\quad(s>0),
+\end{aligned}
+\tag{17.4}
+$$
+
+the original full complex count satisfies
+
+$$
+\begin{aligned}
+N_{n,g}(E)&\le e^2\bigl(c_0+c_1\log(1/E)\bigr)
+                      &&(0<E<1),\\
+N_{n,g}(E)&\le C_{n,g}\log(1/E)
+                      &&(0<E<e^{-1}),\\
+C_{n,g}&=e^2(c_0+c_1)\in(0,\infty).
+\end{aligned}
+\tag{17.5}
+$$
+
+**Proof.** We first retain the support of the singular-core
+absorption remainder. Equations (15.4)--(15.5), for this same
+complete marginal at $\epsilon=1$, give
+
+$$
+0<M(\rho,z)\le\frac1{4\pi\rho}\quad(\rho>0),
+\qquad M\in L^{7/4}(B_1).
+\tag{17.6}
+$$
+
+Indeed $B_1\subset\{0\le\rho<1,\ |z|<1/4\}$, and cylindrical
+integration of the bound to the power $7/4$ has radial factor
+$\rho^{-3/4}d\rho$, which is integrable at zero. The axis has
+Lebesgue measure zero and is not removed from the form domain.
+The original uniform off-pole estimate (15.6) at $\epsilon=1$
+and its scaling consequence (15.7) give a finite positive
+$C_n=C_{n,1}$ with
+
+$$
+M(\xi)\le C_nR(\xi)^{-2}\qquad(R\ge1).
+\tag{17.7}
+$$
+
+In particular these are estimates of (17.1), with no change of
+source or marginal.
+
+Choose a real $\chi\in C_c^\infty(B_2)$ with
+$0\le\chi\le1$ and $\chi=1$ on $\overline{B_1}$; a smooth
+function of $R^4=\rho^4+16z^2$ gives such a choice. For
+$f\in\mathcal H_1$, the distributional identities (15.8) imply,
+on $B_2$, where $\rho\le2$,
+
+$$
+\begin{aligned}
+\partial_xf&=Uf+\tfrac y2Zf,
+&\partial_yf&=Vf-\tfrac x2Zf,
+&\partial_zf&=Zf,\\
+|\nabla f|^2&\le2(|Uf|^2+|Vf|^2)+3|Zf|^2.
+\end{aligned}
+\tag{17.8}
+$$
+
+The product rule first on the defining core and then by
+$\mathcal H_1$ approximation gives $\chi f\in H^1(\mathbb R^3)$
+and the supported estimate
+
+$$
+\|\nabla(\chi f)\|_2^2
+ \le6T_1[f]+2\|\nabla\chi\|_\infty^2
+                         \int_{B_2}|f|^2\,d\xi.
+\tag{17.9}
+$$
+
+Consume here the classical complex three-dimensional Sobolev
+inequality, the same local supply used in (15.9)--(15.11):
+$\|u\|_6^2\le S_3\|\nabla u\|_2^2$ for compactly supported
+$H^1$ functions. For example the finite constant
+$C_0=S_3(6+2\|\nabla\chi\|_\infty^2)$ yields
+
+$$
+\|\chi f\|_6^2
+ \le C_0\left(T_1[f]+\int_{B_2}|f|^2\,d\xi\right).
+\tag{17.10}
+$$
+
+This is only a cutoff estimate. No global equality between
+$\mathcal H_1$ and Euclidean $H^1$ is used.
+
+For $B>0$ let $M_B=M\mathbf1_{B_1\cap\{M>B\}}$.
+By (17.6), $\|M_B\|_{3/2}\to0$ as $B\to\infty$.
+The fixed threshold is positive, so $g>\lambda_n$ implies $g>0$.
+Choose one finite $B>0$ such that
+$gC_0\|M_B\|_{3/2}\le1/2$. Hölder, $\chi=1$ on $B_1$,
+and (17.10) give, for every $f\in\mathcal H_1$,
+
+$$
+g\int M_B|f|^2\,d\xi
+ \le\tfrac12T_1[f]+\tfrac12\int_{B_2}|f|^2\,d\xi.
+\tag{17.11}
+$$
+
+The remaining part of $M$ on $B_1$ is bounded by $B$;
+use (17.7) on its complement. Put $D=gC_n>0$ and define the
+bounded, nonnegative comparison potential
+
+$$
+V_{\mathrm{eff}}=(gB+\tfrac12)\mathbf1_{B_2}
+             +DR^{-2}\mathbf1_{\{R\ge1\}}.
+\tag{17.12}
+$$
+
+The second summand is defined as zero for $R<1$. Combining the
+three pieces gives, on the original domain,
+
+$$
+\begin{aligned}
+g\int M|f|^2\,d\xi
+ &\le\tfrac12T_1[f]+\int V_{\mathrm{eff}}|f|^2\,d\xi,\\
+q_1[f]&\ge\tfrac12T_1[f]-\int V_{\mathrm{eff}}|f|^2\,d\xi
+ \ge\tfrac12\mathcal E_H[f]-\int V_{\mathrm{eff}}|f|^2\,d\xi.
+\end{aligned}
+\tag{17.13}
+$$
+
+Thus the mass remainder from absorption is supported in $B_2$.
+There is no negative global constant in (17.13).
+Moreover $V_{\mathrm{eff}}\le H$ and
+$V_{\mathrm{eff}}=DR^{-2}$ for $R\ge2$.
+
+We next obtain the horizontal counting supply on its full complex
+free domain. Let $L_H$ be the nonnegative self-adjoint Friedrichs
+operator of $\mathcal E_H$ on $\mathcal H_0$ and put $T=L_H/2$.
+It has zero kernel. In fact if $L_Hf=0$, nonnegativity gives
+$Uf=Vf=0$ in distributions. The identity $[U,V]=Z$ then gives
+$Zf=0$. The coordinate identities in (17.8) show that every
+coordinate derivative is zero. Such a distribution is constant,
+and a constant in $L^2(\mathbb R^3)$ is zero. Hence
+$\ker T=\{0\}$ as well.
+
+For precisely this horizontal kinetic operator, the partial
+central Fourier heat column is the one in (9.7), with the full
+Friedrichs direct-integral/core correspondence of (9.8)--(9.10).
+Its classical supplier is Krötz--Thangavelu--Xu,
+[*The heat kernel transform for the Heisenberg group*, §4.1,
+equation (4.1.2)](https://arxiv.org/abs/math/0401243v2).
+With $\widehat f(X,k)=\int e^{-ikz}f(X,z)\,dz$ and inverse
+factor $1/(2\pi)$, it reads
+
+$$
+\widehat h_H(t,\rho,k)
+ =\frac{|k|}{4\pi\sinh(|k|t)}
+      \exp\left(-\frac{|k|\rho^2}{4}\coth(|k|t)\right),
+\qquad
+\widehat h_H(t,\rho,0)=\frac{e^{-\rho^2/(4t)}}{4\pi t}.
+\tag{17.14}
+$$
+
+The column is even in $k$, so the opposite Fourier sign in that
+supplier has the same result. The Gaussian zero mode and the
+factor $|k|t$ fix the covariance-$2$ clock and raw unit source.
+Only the horizontal column is consumed; no inverse prefactor
+from the supplier's full Laplace heat formula is transplanted.
+Its radial pole column computes the heat kernel of the full
+operator, rather than restricting its form domain to radial
+functions. This is the same retained horizontal kinetic operator
+in (17.2); its heat kernel does not replace $M_{n,1}$ by an
+$n=1$ Green potential.
+
+At the identity, inversion of (17.14) gives
+
+$$
+\begin{aligned}
+h_H(t,0)
+ &=\frac1{4\pi^2t^2}\int_0^\infty\frac{s}{\sinh s}\,ds,
+&\int_0^\infty\frac{s}{\sinh s}\,ds
+ &=2\sum_{j=0}^\infty\frac1{(2j+1)^2}=\frac{\pi^2}{4},\\
+h_H(t,0)&=\frac1{16t^2}.
+\end{aligned}
+\tag{17.15}
+$$
+
+The integral follows by the nonnegative expansion
+$1/\sinh s=2\sum_{j\ge0}e^{-(2j+1)s}$ and termwise
+integration. Left translations preserve the compact smooth core
+and its closure, so the kernel diagonal is constant in space.
+Consequently the heat kernel of $T=L_H/2$ has diagonal
+$h_H(t/2,0)=1/(4t^2)$. For every measurable
+$\Omega\subset\mathbb R^3$ of finite measure and every
+$\phi\in\mathbb C$,
+
+$$
+\operatorname{Tr}_{L^2}\left[
+ \mathbf1_\Omega\bigl(\phi,e^{-tT}\phi\bigr)_{\mathbb C}
+                      \mathbf1_\Omega\right]
+ =\frac{|\phi|^2|\Omega|}{4t^2}.
+\tag{17.16}
+$$
+
+This local trace identity also follows without a pointwise trace
+assumption: factor the localized operator through
+$e^{-tT/2}\mathbf1_\Omega$ and use its squared Hilbert--Schmidt
+norm; the convolution semigroup identity integrates the squared
+kernel to the displayed diagonal. This works for every such
+measurable $\Omega$, not only smooth bounded sets.
+
+Consume now Rupert L. Frank,
+[*Cwikel's theorem and the CLR inequality*, Theorem 3.2 and
+Lemma 3.4](https://arxiv.org/abs/1206.3325v1), with the
+sigma-finite space $X=(\mathbb R^3,d\xi)$, separable fibre
+$\mathbb C$ and exponent $\nu=4$. In Lemma 3.4 the localized
+heat constant in (17.16) is
+$C'=|\Omega||\phi|^2/4$. Its heat-to-spectral and
+spectral-to-inverse constants are, respectively,
+
+$$
+B'=C'(2e/\nu)^{\nu/2}
+   =\frac{e^2}{16}|\Omega||\phi|^2,
+\qquad
+A'=B'\frac{\nu}{\nu-2}
+   =\frac{e^2}{8}|\Omega||\phi|^2.
+\tag{17.17}
+$$
+
+Thus, for every $s>0$, all finite-measure $\Omega$ and all
+$\phi\in\mathbb C$, Theorem 3.2's condition (3.4) is verified:
+
+$$
+\operatorname{Tr}_{L^2}\left[
+ \mathbf1_\Omega
+ \bigl(\phi,T^{-1}\mathbf1_{(0,s]}(T)\phi\bigr)_{\mathbb C}
+ \mathbf1_\Omega\right]
+ \le\frac{e^2}{8}s|\Omega||\phi|^2.
+\tag{17.18}
+$$
+
+Together with $\ker T=\{0\}$, this supplies that theorem's
+$A=e^2/8$. Use its general constant
+$C_\nu=(\nu/2)(\nu/(\nu-2))^{\nu-2}$, so $C_4=8$.
+For any bounded nonnegative compactly supported measurable $F$,
+the potential $-F$ is self-adjoint and compact on the
+one-dimensional fibre, and $\int F^2\,d\xi<\infty$.
+Bounded multiplication gives a closed lower semibounded form on
+$\mathcal H_0$. The consumed CLR estimate therefore yields
+
+$$
+\dim_{\mathbb C}\operatorname{Ran}
+ \mathbf1_{(-\infty,0)}(T-F)
+ \le C_4A\int F^2\,d\xi
+ =e^2\int F^2\,d\xi.
+\tag{17.19}
+$$
+
+This is an intermediate specialization of Frank's theorem. Its
+count is strict and uses complex multiplicities throughout.
+
+For each $E>0$ set $F_E=(V_{\mathrm{eff}}-E)_+$.
+This function is bounded, nonnegative and measurable. Outside
+$B_2$ it vanishes whenever $R\ge\sqrt{D/E}$, so its support is
+contained in the compact set
+$\{R\le\max\{2,\sqrt{D/E}\}\}$; hence $F_E\in L^2$ for each
+$E>0$. From (17.13) and
+$E-V_{\mathrm{eff}}\ge-(V_{\mathrm{eff}}-E)_+$,
+
+$$
+q_1[f]+E\|f\|_2^2
+ \ge\tfrac12\mathcal E_H[f]-\int F_E|f|^2\,d\xi
+ \qquad(f\in\mathcal H_1).
+\tag{17.20}
+$$
+
+The defining core norm of $\mathcal H_0$ is bounded by that of
+$\mathcal H_1$. Core approximation, with the same $L^2$ limit
+and distributional derivatives, gives the continuous inclusion
+$\mathcal H_1\subset\mathcal H_0$.
+Every finite-dimensional complex subspace strictly negative for
+the left side of (17.20) is therefore a subspace of
+$\mathcal H_0$ strictly negative for its right side.
+
+Here the strict form index equals the rank of the strict
+negative spectral projection. Indeed for any lower semibounded
+self-adjoint operator its negative spectral range lies in its
+form domain, since its negative spectral interval is bounded.
+Every nonzero vector in that range has strictly negative form.
+Conversely, a subspace whose dimension exceeds that rank
+contains a nonzero vector orthogonal to the negative spectral
+range; its form is nonnegative by the spectral theorem.
+The same reasoning with arbitrarily large finite subspaces
+covers infinite rank. This is the classical form-domain
+min-max principle cited in Definition 15.3 (Teschl,
+Theorems 4.10 and 4.12(i)), applied to these two forms.
+It proves the required comparison direction and then (17.19)
+gives
+
+$$
+N_{n,g}(E)
+ \le\dim_{\mathbb C}\operatorname{Ran}
+       \mathbf1_{(-\infty,0)}(T-F_E)
+ \le e^2\int F_E^2\,d\xi.
+\tag{17.21}
+$$
+
+An original eigenvalue equal to $-E$ has zero shifted form and
+is excluded. The comparison uses the larger horizontal domain
+only for this index bound; every angular mode of the original
+complex operator is counted.
+
+It remains to evaluate the integral with the raw gauge volume.
+In (12.3)'s coordinates,
+$\rho^2=R^2\cos a$, $4z=R^2\sin a$,
+$-\pi/2<a<\pi/2$ and $0\le\theta<2\pi$.
+Writing $u=\rho^2$ gives
+$\rho\,d\rho\,dz=\tfrac12du\,dz
+=(R^3/4)dR\,da$. Thus
+
+$$
+d\xi=\frac{R^3}{4}\,dR\,da\,d\theta,
+\qquad
+\int G(R)\,d\xi=\frac{\pi^2}{2}\int_0^\infty G(R)R^3\,dR,
+\qquad |B_2|=2\pi^2
+\tag{17.22}
+$$
+
+for nonnegative radial $G$. On $B_2$ we have $F_E\le H$.
+On $R\ge2$, $F_E\le DR^{-2}$ and it is zero beyond
+$\sqrt{D/E}$. Therefore, for every $E>0$,
+
+$$
+\begin{aligned}
+\int F_E^2\,d\xi
+ &\le2\pi^2H^2+
+ \begin{cases}
+ \displaystyle\frac{\pi^2D^2}{2}
+       \int_2^{\sqrt{D/E}}\frac{dR}{R},&\sqrt{D/E}>2,\\
+ 0,&\sqrt{D/E}\le2
+ \end{cases}\\
+ &=2\pi^2H^2+\frac{\pi^2D^2}{4}\log_+\left(\frac D{4E}\right).
+\end{aligned}
+\tag{17.23}
+$$
+
+The positive logarithm includes the empty-tail case $E\ge D/4$.
+For $0<E<1$,
+$\log_+(D/(4E))\le\log(1/E)+\log_+(D/4)$.
+Equations (17.21)--(17.23) yield the first line of (17.5)
+with (17.4). If $0<E<e^{-1}$, then $\log(1/E)>1$, and
+$c_0+c_1\log(1/E)\le(c_0+c_1)\log(1/E)$.
+This proves all of (17.5). Every constant was fixed after
+$n,g$ and before $E$. The CLR bound was applied only to each
+compactly supported $F_E$, never to the untruncated tail at
+$E=0$.
+
+**Corollary 17.3 (two-sided logarithmic order and a finite variational supremum).**
+For every integer $n\ge2$ and every fixed $g>\lambda_n$, with
+exactly the operator and count of Definition 17.1,
+
+$$
+0<\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le\limsup_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ <\infty.
+\tag{17.24}
+$$
+
+For $J=(-\pi/2,\pi/2)$, $c=\cos a$ and $q_n$ of (12.3), put,
+for each nonzero real $b\in C_c^\infty(J)$,
+
+$$
+C_b=\int_Jc|b|^2\,da>0,\qquad
+D_b=\frac{g}{2\pi}\int_Jq_n|b|^2\,da
+       -\int_J(4c|b'|^2+c|b|^2)\,da,
+\qquad
+\mathcal B_{n,g}=\{0\ne b\in C_c^\infty(J;\mathbb R):D_b>0\}.
+\tag{17.25}
+$$
+
+This class is nonempty and its angular variational supremum
+satisfies
+
+$$
+0<S_{n,g}:=\sup_{b\in\mathcal B_{n,g}}
+               \frac1{2\pi}\sqrt{\frac{D_b}{C_b}}
+ \le\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le\limsup_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le e^2c_1<\infty.
+\tag{17.26}
+$$
+
+**Proof.** Theorem 16.2 gives nonemptiness of $\mathcal B_{n,g}$
+and, for every individual $b$ in that class, precisely (16.6)
+for this same full count. Theorem 17.2, divided by $\log(1/E)$
+and followed by $E\downarrow0$, gives the common finite upper
+bound $e^2c_1$ on the limsup. Write $L_-$ and $L_+$ for these
+liminf and limsup. They are now finite and satisfy
+$L_-\le L_+\le e^2c_1$. For every
+$b\in\mathcal B_{n,g}$, (16.6) gives
+$0<(2\pi)^{-1}\sqrt{D_b/C_b}\le L_-$.
+Taking the supremum over this nonempty class proves (17.26),
+including its strict positivity and finiteness, and hence (17.24).
+The $E$ limits here belong to the common original count; no
+uniform estimate on the lower theorem's individual trials is
+required.
+
+**Definition 17.4 (attribution and the remaining counting boundary).**
+Theorem 17.2 is a source-specific ordinary deduction conditional
+on Definition 17.1's analytic premises. Its application consists
+of the supported core absorption for the actual whole marginal,
+the full-domain strict-index comparison and the raw gauge-tail
+integral. The classical heat column of Krötz--Thangavelu--Xu,
+Frank's heat-trace/CLR results, the cutoff Sobolev inequality and
+the form-domain min-max principle are consumed at their stated
+places inside that deduction; they are not new general theorems
+here. Corollary 17.3 combines that upper bound with the exact
+every-$b$ lower inequality of Theorem 16.2. These applications
+carry no literature-priority claim.
+
+In particular the finite upper rate and finiteness of the
+variational supremum left unresolved in Definition 16.3 follow
+under these premises. The full complex multiplicities, all
+angular modes and the natural angular endpoints are retained.
+The constants depend on each fixed $n,g$; no uniformity in either
+parameter is asserted.
+
+The following fully quantified counting-limit statement remains
+unresolved: for every integer $n\ge2$ and every real
+$g>\lambda_n$, does there exist $L_{n,g}\in(0,\infty)$ such that,
+for the original source, clock, whole marginal, $\epsilon=1$,
+full complex $\mathcal H_1$ operator and strict count in
+(17.1)--(17.2),
+
+$$
+\lim_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}=L_{n,g}\ ?
+\tag{17.27}
+$$
+
+Neither an exact all-mode coefficient nor convergence follows
+from (17.24)--(17.26). In particular those inequalities do not
+identify $S_{n,g}$ with a counting limit. Such a conclusion would
+require an asymptotic density for the full coupled modes and a
+justified error comparison transferring it to the original
+positive-noise potential.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74d5c2b263972f2fd9b74235b2a3c5d59489f57045c3aba5ca98a0e83ee9903a
+  normalized_sha256: sha256:74d5c2b263972f2fd9b74235b2a3c5d59489f57045c3aba5ca98a0e83ee9903a
+cas_ref: sha256:74d5c2b263972f2fd9b74235b2a3c5d59489f57045c3aba5ca98a0e83ee9903a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: causal carry 章节标题及定义引言。
+    previous_atom_id: b630d82ecad55651faa6d462f2984b282c08132c6a0843fac1bab7c1eaec231f
+    next_atom_id: 10a8a320bc33a08d809af19662107de25fabb41138709d4545bbf8de2f505c49
