@@ -2112,4 +2112,3 @@ These are ordinary conditional analytic results, without a claim of
 kernel verification, physical realization or literature priority.
 
 ## 追加锚（本行以下为增补区）
-
