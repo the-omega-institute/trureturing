@@ -326,6 +326,15 @@ private theorem actual_current_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     frequency, add_comm 1 j] using h
 
 
+private theorem flat_singleton_jet (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Fin D.rank) (r : ℕ) (j e : ℤ) :
+    flatCoefficient D hu F [(i,r)] (j,()) e =
+      jetScalar r j • flatCoefficient D hu F [(i,0)] (j,()) (e+2*(r:ℤ)) := by
+  have scalar0 (k : ℤ) : jetScalar 0 k = 1 := by simp [jetScalar]
+  have shift : e+2*(r:ℤ)+2*j+3 = e+2*j+2*(r:ℤ)+3 := by omega
+  simp only [flatCoefficient, jetCurrent, scalar0, Nat.cast_zero, mul_zero, add_zero, one_smul, shift]
+  split_ifs <;> simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm]
+
 /-- A single original normal-order term. The hypothesis is local induction
 information on the shorter source, not an assumption of the final theorem.
 The only exceptional reindexing is j=-1 to the nonnegative mode 0. -/
@@ -385,7 +394,8 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
     rw [left]
     simp only [jet_boundary]
-    simp only [frequency, Int.cast_neg, Int.cast_one]
+    simp only [frequency, Int.cast_neg, Int.cast_one, neg_add_cancel,
+      lt_self_iff_false, ite_false]
     module
   · have signs : (j+1 < 0) ↔ j < 0 := by omega
     simp only [if_neg cross, signs, add_zero]
