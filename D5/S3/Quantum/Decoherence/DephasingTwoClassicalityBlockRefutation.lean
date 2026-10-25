@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
 import D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
@@ -23,6 +24,7 @@ open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.Quantum.FiniteDimensional (qubitZ qubit_weyl_star)
 open D5.S3.Quantum.Foundation
+open D5.S3.Quantum.RandomCircuits
 open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (sigma sigma_posDef mixedState)
 open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence (s2)
 
@@ -99,6 +101,14 @@ private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, qubitZ, (2 : �
 private def measurementRaw : Matrix (Fin 3) (Fin 3) ℂ :=
   !![s2, s2, 0; s2, -s2, 0; 0, 0, 1]
 
+private theorem measurementRaw_eq_hadamard :
+    measurementRaw = HaarTwoCopyTwirl.Hadamard.hadamard (0 : Fin 3) 1 s2 := by
+  rw [measurementRaw.eq_1]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [HaarTwoCopyTwirl.Hadamard.hadamard,
+      Matrix.single_apply, Matrix.one_apply] <;> ring
+
 private theorem amplitude_star : star s2 = s2 := by
   unfold s2
   simp
@@ -110,15 +120,9 @@ private theorem amplitude_sq : s2 ^ 2 = (1 / 2 : ℂ) := by
   norm_num
 
 private theorem measurement_unitary : measurementRaw ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
-  have hc : (starRingEnd ℂ) s2 = s2 := amplitude_star
-  rw [Unitary.mem_iff]
-  constructor <;> ext i j
-  all_goals
-    unfold measurementRaw
-    simp only [Matrix.mul_apply, Matrix.star_apply]
-    fin_cases i <;> fin_cases j <;>
-      norm_num [Fin.sum_univ_succ, hc, amplitude_star, star_neg,
-        Matrix.one_apply] <;> linear_combination 2 * amplitude_sq
+  rw [measurementRaw_eq_hadamard]
+  apply HaarTwoCopyTwirl.Hadamard.hadamard_unitary (0 : Fin 3) 1 (by decide) s2 amplitude_star
+  linear_combination 2 * amplitude_sq
 
 private def measurement : Matrix.unitaryGroup (Fin 3) ℂ :=
   ⟨measurementRaw, measurement_unitary⟩
