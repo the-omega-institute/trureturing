@@ -9,6 +9,8 @@
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 
+/-! Column tails of tree adjacency matrices under reverse level order labelings. -/
+
 namespace D5.S3.Combinatorics.SpectralGraph.ReverseLevelOrderTreeLabeling
 
 /-- Labels `0, …, n - 1` represent the source's labels `1, …, n`. -/
@@ -31,19 +33,56 @@ private lemma larger_label_iff_parent {n : ℕ} {g : SimpleGraph (Fin n)}
     (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
     (hl : IsReverseLevelOrder g r l) {v w : Fin n} (ha : g.Adj v w) :
     l v < l w ↔ g.dist r w + 1 = g.dist r v := by
-  sorry
+  constructor
+  · intro h
+    rcases ht.dist_eq_dist_add_one_of_adj r ha with hp | hc
+    · exact hp.symm
+    · exact (lt_asymm h (hl v w (by omega))).elim
+  · intro hp
+    exact hl w v (by omega)
 
 private lemma column_vertex_ne_root {n : ℕ} {g : SimpleGraph (Fin n)}
     (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
     (hl : IsReverseLevelOrder g r l) (i : Fin n) (hi : i.val + 1 < n) :
     l.symm i ≠ r := by
-  sorry
+  intro h
+  let j : Fin n := ⟨i.val + 1, hi⟩
+  have hj : l.symm j ≠ r := by
+    intro hj
+    have he : j = i := l.symm.injective (hj.trans h.symm)
+    have heval := congrArg Fin.val he
+    dsimp [j] at heval
+    omega
+  have hd : g.dist r r < g.dist r (l.symm j) := by
+    rw [SimpleGraph.dist_self]
+    exact ht.connected.pos_dist_of_ne hj.symm
+  have hlt := hl r (l.symm j) hd
+  rw [l.apply_symm_apply, ← h, l.apply_symm_apply] at hlt
+  have hval : j.val < i.val := hlt
+  dsimp [j] at hval
+  omega
 
 private lemma column_tail_unique {n : ℕ} {g : SimpleGraph (Fin n)}
     [DecidableRel g.Adj] (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
     (hl : IsReverseLevelOrder g r l) (i : Fin n) (hv : l.symm i ≠ r) :
     ∃! j : Fin n, i < j ∧ g.adjMatrix ℕ (l.symm j) (l.symm i) ≠ 0 := by
-  sorry
+  obtain ⟨w, hw, hu⟩ := unique_parent ht r (l.symm i) hv
+  have hlabel : i < l w := by
+    have h := (larger_label_iff_parent ht hl hw.1).mpr hw.2
+    rwa [l.apply_symm_apply] at h
+  refine ⟨l w, ⟨hlabel, ?_⟩, ?_⟩
+  · rw [l.symm_apply_apply, SimpleGraph.adjMatrix_apply, if_pos hw.1.symm]
+    exact Nat.one_ne_zero
+  · intro j hj
+    have ha : g.Adj (l.symm i) (l.symm j) := by
+      by_contra hn
+      have hn' : ¬ g.Adj (l.symm j) (l.symm i) := fun h => hn h.symm
+      rw [SimpleGraph.adjMatrix_apply, if_neg hn'] at hj
+      exact hj.2 rfl
+    have hp := (larger_label_iff_parent ht hl ha).mp (by
+      simpa only [l.apply_symm_apply] using hj.1)
+    have he := hu (l.symm j) ⟨ha, hp⟩
+    simpa only [l.apply_symm_apply] using congrArg l he
 
 theorem result : claim := by
   intro n g _ ht r l hl i hi
