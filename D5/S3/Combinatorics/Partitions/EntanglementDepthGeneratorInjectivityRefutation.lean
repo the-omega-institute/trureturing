@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.claim; result=D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.result; claim=D5/S3/Combinatorics/Partitions/EntanglementDepthGeneratorInjectivityRefutation.claim
-   digest: Noninteger power sums and entanglement dimensions each identify distinct integer partitions. -/
+   digest: Noninteger power sums and entanglement dimensions are not injective on partitions. -/
 
 import D5.S1.Recurrence.Partitions.GawronUlasFactorialSignConjecture
 import D5.S3.Analytic.BesselProductOrderLogConvexity.Result
