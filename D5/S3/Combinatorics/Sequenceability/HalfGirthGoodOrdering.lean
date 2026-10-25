@@ -343,11 +343,11 @@ private theorem swapped_good (a : X → G) (ha : Function.Injective a) {K : ℕ}
   have hh := hsole i j hij (by simpa using hjw) he'
   exact (hi hh.1).elim
 
+omit [DecidableEq X] in
 /-- Every half-girth instance has a literal enumeration of all original indices
 whose mapped word has no nonempty proper zero interval. -/
-omit [DecidableEq X] in
 theorem exists_good_order (a : X → G) (ha : Function.Injective a)
-    (ha0 : ∀ x, a x ≠ 0) (k : ℕ) (hk : 2 ≤ k) (hkm : k ≤ Fintype.card X)
+    (_ha0 : ∀ x, a x ≠ 0) (k : ℕ) (_hk : 2 ≤ k) (_hkm : k ≤ Fintype.card X)
     (hhalf : Fintype.card X < 2 * k)
     (hgirth : ∀ T : Finset X, T.Nonempty → T ≠ univ →
       (∑ x ∈ T, a x) = 0 → k ≤ T.card) :
@@ -432,7 +432,8 @@ theorem exists_good_order (a : X → G) (ha : Function.Injective a)
     by_contra hp
     have hlen : ((univ : Finset X).toList.map a).length = Fintype.card X := by simp
     have hd : j - i < Fintype.card X := by omega
-    apply prefix_ne_of_short a hshort (Finset.nodup_toList _) hij (by simpa only [List.length_map] using hj) hd
+    apply prefix_ne_of_short a hshort (Finset.nodup_toList _) hij
+      (by simpa only [List.length_map] using hj) hd
     simpa only [D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref,
       ps, total, ← List.map_take] using he
 

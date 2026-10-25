@@ -58,7 +58,7 @@ internal sealed class HalfGirthGoodOrderingDocument : IScribeDocumentDefinition
                 + "If M contained no nonempty Boolean row of size at most floor(m/2), the complete "
                 + "quotient zero family would satisfy the theorem with k=floor(m/2)+1. Its Good "
                 + "enumeration contradicts coverage by H. Thus an actual short Boolean row lies in M, "
-                + "with integer coefficients on the original H rows. This is an application of exact "
+                + "with integer coefficients on the original H rows, as expressed by Submodule.mem_span_image_iff_exists_fun. This is an application of exact "
                 + "quotient suppliers, with no rational saturation. The short row need not be a row "
                 + "of H or a unit or difference. The unrestricted Good and primitive-blocker problems "
                 + "remain open when the complete zero family has minimum size at most m/2. "
