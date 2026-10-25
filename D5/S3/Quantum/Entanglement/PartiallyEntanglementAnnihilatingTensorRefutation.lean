@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 
+/-! Two replacements onto a Schmidt-rank-two qutrit state yield Schmidt rank four. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
@@ -49,7 +51,7 @@ private def phi : Ket (Fin 3 × Fin 3) :=
     by
       norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, norm_div,
         Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg 2),
-        ← div_pow, Real.sq_sqrt]⟩
+        Real.sq_sqrt]⟩
 
 private def replacement : MatrixMap (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (Matrix.traceLinearMap (Fin 3 × Fin 3) ℂ ℂ).smulRight (proj phi)
@@ -58,8 +60,9 @@ private theorem phi_rank : (coeff phi).rank = 2 := by
   classical
   have hn : (1 : ℂ) / (Real.sqrt 2 : ℂ) ≠ 0 := by positivity
   have he : coeff phi = diagonal ![1 / (Real.sqrt 2 : ℂ), 1 / (Real.sqrt 2 : ℂ), 0] := by
+    rw [phi.eq_1]
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [coeff, phi, Matrix.diagonal]
+    fin_cases i <;> fin_cases j <;> norm_num [coeff, phi, Matrix.diagonal_apply]
   rw [he, Matrix.rank_diagonal, Fintype.card_subtype]
   norm_num [Fin.card_filter_univ_succ, hn, one_div]
 
@@ -67,15 +70,18 @@ private theorem replacement_cptp : IsCPTP replacement := by
   let k : (Fin 3 × Fin 3) → Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
     fun j => vecMulVec phi.vec (Pi.single j 1)
   have he : replacement = MatrixMap.of_kraus k k := by
+    rw [replacement.eq_1]
     ext x a b
     change x.trace * ((MState.pure phi).m a b) = _
     rw [MState.pure_apply]
-    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+    rw [MatrixMap.of_kraus]
+    simp only [LinearMap.sum_apply, LinearMap.coe_mk,
       AddHom.coe_mk, Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      k, Matrix.vecMulVec_apply, Pi.single_apply, mul_ite, mul_one, mul_zero,
-      apply_ite, star_one, star_zero, ite_mul, zero_mul, Finset.sum_ite_eq',
+      k, Matrix.vecMulVec_apply, Pi.single_apply, mul_one, mul_zero,
+      apply_ite, star_zero, ite_mul, zero_mul, Finset.sum_ite_eq',
       Finset.mem_univ, ite_true]
-    simp only [Matrix.trace, Matrix.diag, Finset.sum_mul, Finset.mul_sum]
+    unfold Matrix.trace
+    simp only [Matrix.diag, Finset.sum_mul]
     apply Finset.sum_congr rfl
     intro j _
     change x j j * (phi.vec a * star (phi.vec b)) =
@@ -99,8 +105,7 @@ private theorem replacement_nonlocal : NonLocal replacement := by
     rcases j with ⟨b, d⟩
     have h := congrArg (fun x : BipartiteOp 3 => x (a, c) (b, d)) hh
     rw [MatrixMap.kron_def] at h
-    simpa [replacement, LinearMap.smulRight_apply, Matrix.trace,
-      Matrix.single, ite_and] using h
+    simpa [replacement, LinearMap.smulRight_apply, Matrix.single_apply, ite_and] using h
   have ha := hp (0, 0) (0, 0)
   have hb := hp (1, 1) (1, 1)
   have hz := hp (0, 1) (0, 1)
@@ -133,7 +138,7 @@ private def psi : Ket (Fin 9 × Fin 9) :=
     phi.vec (a.1, b.1) * phi.vec (a.2, b.2), by
       norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, finProdFinEquiv,
         Fin.divNat, Fin.modNat, phi, norm_mul, norm_div, Complex.norm_real, Real.norm_eq_abs,
-        abs_of_nonneg (Real.sqrt_nonneg 2), ← div_pow, ← pow_two, inv_pow, Real.sq_sqrt]⟩
+        abs_of_nonneg (Real.sqrt_nonneg 2), ← pow_two, inv_pow, Real.sq_sqrt]⟩
 
 private theorem psi_rank : (coeff psi).rank = 4 := by
   classical
@@ -142,10 +147,11 @@ private theorem psi_rank : (coeff psi).rank = 4 := by
     exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
   have he : coeff psi = diagonal (fun i : Fin 9 =>
       if i = 0 ∨ i = 1 ∨ i = 3 ∨ i = 4 then (1 / 2 : ℂ) else 0) := by
+    rw [psi.eq_1]
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [coeff, psi, phi, finProdFinEquiv, Fin.divNat, Fin.modNat,
-        Matrix.diagonal, ← mul_inv, ← pow_two, hs2]
+        Matrix.diagonal_apply, ← pow_two, hs2]
   rw [he, Matrix.rank_diagonal, Fintype.card_subtype]
   norm_num [Fin.card_filter_univ_succ]
 
@@ -165,9 +171,9 @@ private theorem replacement_kron
       if i = j then 1 else 0 := by
     by_cases h : i = j
     · subst j; simp
-    · simp [Matrix.trace_single_eq_of_ne i j 1 h, h]
+    · simp [h]
   simp only [ht, ite_mul, one_mul, zero_mul, mul_ite, mul_zero,
-    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   simp only [Finset.sum_ite_irrel, Finset.sum_const_zero, Finset.sum_ite_eq,
     Finset.mem_univ, ite_true]
   change (∑ i, ∑ j, proj phi a b * proj phi c d * x (i, j) (i, j)) =
@@ -199,7 +205,7 @@ private theorem tensor_output :
   change phi.vec (a.symm i).1 * star (phi.vec (a.symm j).1) *
     (phi.vec (a.symm i).2 * star (phi.vec (a.symm j).2)) = psi.vec i * star (psi.vec j)
   simp only [a, psi, Equiv.symm_trans_apply, Equiv.prodCongr_symm, Equiv.prodProdProdComm_symm,
-    Equiv.trans_apply, Equiv.prodCongr_apply, Equiv.prodProdProdComm_apply,
+    Equiv.prodCongr_apply, Equiv.prodProdProdComm_apply,
     Prod.map_fst, Prod.map_snd]
   rw [star_mul]
   ring
