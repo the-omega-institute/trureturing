@@ -3104,3 +3104,182 @@ reciprocal-zeta zero. Rapid Mellin decay and (C48) prove the second
 line of (C52), with no residue or mixed polar divisor. This completes
 the proof. Fixed polynomial ranges allow $\delta,\eta$ to be allocated
 within any final $U^\varepsilon$ loss.
+
+## The constant-ray exceptional component with actual columns
+
+Use [Xu–Sang v2, §3.1 (3.3)–(3.4), §3.2 (3.8), and §3.3
+(3.11)](https://arxiv.org/html/2610.17675v2#S3), only as finite Gauss,
+Poisson and exceptional-frequency identities. Their field is this same
+$K$; columns use the literal raw sextic symbol and its zero extension.
+Fix the corefree branch, original common-$e=1$, and source common-column
+gcd $C=1$. This $C$ is not a repeated-column core. The source moving
+twist ideal is the unit ideal. No arbitrary-arithmetic-weight version
+of its Proposition 3.1 or Lemma 5.1 is assumed.
+
+**Normalization and the multiplier.** In the source conventions set
+
+$$
+\begin{aligned}
+e_K(z)&=\exp(4\pi i\operatorname{Im}z/\sqrt3),\qquad
+ d\mu(z)=(2/\sqrt3)\,d\operatorname{Re}z\,d\operatorname{Im}z,\\
+\widehat w(y)&=\int_{\mathbb C}w(z)e_K(-zy)\,d\mu(z)
+ =\widehat w_{\rm rad}(|y|^2),\\
+G(s,k)&=q_s^{-1/2}\sum_{x\bmod s}\chi_s(x)e_K(kx/s)
+ =\gamma_1(s)\overline{\chi_s(k)}\quad(s\ {\rm good\ sf}).
+\end{aligned}
+\tag{C56}
+$$
+
+The lattice is self-dual for this measure. The last equality includes
+collision zeros, since the raw character is primitive at every prime
+of a good squarefree $s$. It is the same Gauss convention as the
+pinned manuscript's `eq:sextic-sieve-pair-gauss` and (J5).
+Consequently an original side scalar $\gamma_1(s)\overline{\chi_s(m)}$
+is $\chi_s(-1)G(s,-m)$. The true change-of-form multiplier is
+$\chi_s(-1)$, together with the original $\xi(s)$ and finite
+ray/angular factors; it is not an extra inverse Gauss sum and is not
+a replacement of $b_A$ by $1$. The original (J5) CRT factors are
+already inside $\gamma_1(s)$ and must not be inserted a second time.
+
+For one original component write its arithmetic column as
+
+$$
+c_s=\mathbf1_{s\ {\rm good\ sf}}
+ \sum_{d_1d_2=s}b_A(d_1)b_A(d_2)
+ V_1(q_{d_1}/D)V_2(q_{d_2}/D)\,a(d_1,d_2),
+\tag{C57}
+$$
+
+where $a$ retains the original factor-class selectors, $\xi(s)$,
+$\chi_s(-1)$ and original angular factors in this orientation.
+Separated norm heights belong to the $V_i$, with their actual
+polynomial seminorm costs. Distinct side profiles are allowed by
+polarization. Consider the unnormalized element-row Gauss pairing
+$\mathcal E=\sum_m w(m/\sqrt U)
+ (\sum_s c_sG(s,-m))\overline{(\sum_t c'_tG(t,-m))}$.
+This specifies a local Gauss object with actual columns, not the full
+physical-row moment or a selected positive part of J40. The source
+normalization is $U^{-1}$ on each column; taking its column profile to
+be $t^{1/2}c_s$ shows that $\mathcal E$ is $U^2$ times that normalized
+pairing. This use is an identity before any smooth-column estimate.
+Equivalently, direct opening gives Poisson multiplier
+$U/\sqrt{q_sq_t}=(t_st_t)^{-1/2}$, $t_s=q_s/U$.
+The original $D^{-1}$ side normalizations of (J4), and all physical
+row/core prefactors, still have to be restored in their own contraction.
+
+On the $C=1$ branch the finite correlation is exactly
+$\chi_s(k)\overline{\chi_t(-k)}\mathfrak r(s,t)$.
+The source's refined equal-total-ray condition gives
+$\mathfrak r(s,t)\overline{\chi_t(-1)}=1$.
+Its exceptional frequencies have the unique form
+
+$$
+k=\epsilon e_S(\mathbf r)a^6,\qquad
+\epsilon\in\mathcal O^\times,\quad
+0\le r_p\le5\ (p\in S),\quad
+ e_S(\mathbf r)=\prod_{p\in S}\pi_p^{r_p},\qquad
+P_a=\operatorname{rad}(a)\big|_{p\notin S}.
+\tag{C58}
+$$
+
+Here $a$ ranges once over integral ideals, including its possible
+$S$ factors, with fixed generators; all six units occur. $P_a$ is a
+frequency puncture, not the original product-squarepart $P$ of J40.
+The characters of $\epsilon e_S(\mathbf r)$ are constant on a refined
+total ray fiber, so they cancel between its two columns. Sixth powers
+leave precisely the original mask $\mathbf1_{(st,a)=1}$. There is no
+coprimality replacement on a different row family.
+
+After that cancellation, let $\Omega_{\epsilon,\mathbf r}(\mathbf d)$
+be the remaining actual four-factor finite-ray/angular weight, including
+both total-class selectors and the original component coefficient.
+Expand only this given weight under its original presentation contract.
+Let $\eta_{\epsilon,\mathbf r}$ be the coefficient with four trivial
+ray characters and zero angular modes, with normalized counting measure
+on each ray group and normalized Haar measure on each angular circle.
+This defines a linear component even when it is zero. For four specified
+factor classes in a ray group of order $h$, with no further multiplier,
+the coefficient is $h^{-4}$; a total-class relation or any additional
+weight must instead be averaged as its actual table. In particular,
+one must not assign $h^{-4}$ to a general total-class selector.
+All nontrivial characters and angular modes remain in
+$\Omega-\eta$. This is a coefficient expansion, not independence of
+the four actual ideal classes or angles.
+
+Write $z=q_{e_S(\mathbf r)}q_a^6/U$ and
+
+$$
+\begin{aligned}
+\Psi_z(\mathbf x)&=V_1(x_1)V_2(x_2)
+ \overline{V_3(x_3)V_4(x_4)}
+ (x_1x_2x_3x_4)^{-1/2}
+ \widehat w_{\rm rad}\!\left(\frac z{x_1x_2x_3x_4}\right),\\
+I_4(z)&=\int\Psi_z(\mathbf x)\,d\mathbf x,\\
+\mathcal E_{\rm exc}&=\mathcal E_{\rm rad}+\mathcal R_{\rm tw},\qquad
+\mathcal E_{\rm rad}=\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+ \sum_a Q_4(P_a;\Psi_{q_{e_S(\mathbf r)}q_a^6/U}).
+\end{aligned}
+\tag{C59}
+$$
+
+Precisely, $\mathcal R_{\rm tw}$ is the very same sum over
+$\epsilon,\mathbf r,a,d_1,d_2,d_3,d_4$, with the squarefree product,
+$(\prod d_i,SP_a)=1$, the same $\prod b_A(d_i)\Psi_z$, and weight
+$\Omega_{\epsilon,\mathbf r}(\mathbf d)-\eta_{\epsilon,\mathbf r}$.
+This is an exact signed residual. No absolute value, new beta row,
+positivity of the selected frequencies, or monotonicity under selection
+of physical rows is asserted. The $k=0$ diagonal is outside (C59).
+
+The proof of (C59) is finite opening of the two Gauss sums, row Poisson
+with (C56), the $C=1$ correlation above, and (C58). Squarefreeness of
+each column and their gcd $1$ give exactly (C51)'s four-way mask.
+The correlation phases cancel on each original total-class fiber before
+taking the stated linear coefficient. Thus no unproved arithmetic
+column-mean theorem is used to identify this component.
+
+**Summing the proved component.** Assume $R_\beta$ and the same fixed
+or polylogarithmic aggregate profile/height contract. Applying (C52)
+to (C59) gives
+
+$$
+\begin{aligned}
+\mathcal E_{\rm rad}
+ &=U^2\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+   \sum_a C_4(P_a)\Theta_{4,A}(P_a)
+       I_4(q_{e_S(\mathbf r)}q_a^6/U)
+   +\mathcal R_{KK}+\mathcal R_\mu,\\
+|\mathcal R_{KK}|&\ll_\varepsilon\mathcal N_J
+ U^{23/12+\varepsilon}A^{1/2},\qquad
+|\mathcal R_\mu|\ll_\varepsilon\mathcal N_J
+ U^{(10+3\beta)/6+\varepsilon},\\
+|\mathcal E_{\rm rad}|&\ll_\varepsilon\mathcal N_JU^\varepsilon
+ [U^{13/6}A^{-4(1-\beta)}
+   +U^{(10+3\beta)/6}+U^{23/12}A^{1/2}].
+\end{aligned}
+\tag{C60}
+$$
+
+Here $\mathcal R_\mu$ is exactly the aggregate of the fifteen
+$\mu$-containing terms in (C59); $\mathcal R_{KK}$ is the remainder of
+the all-$K_A$ term after its displayed residue. The finite sum over
+units and $S$ exponents remains visible in the main term.
+There is no additional planar area multiplier: $\kappa^4$ already
+accounts for counting ideals once, and (C56) fixes the Fourier measure.
+
+To justify the full frequency sum, on each shell $z\asymp R\ge1$
+all the required derivatives of $\Psi_z$ are
+$O_B(\mathcal N_{J,B}R^{-B})$. Ideal counting gives
+$O((RU)^{1/6})$ possible $a$; the ball $z\le1$ has $O(U^{1/6})$.
+First retain any fixed polynomial shell range. Its $q_{P_a}^\varepsilon$
+factor in (C52) is paid by choosing its internal loss smaller; one
+cannot discard frequencies merely because $q_{P_a}>A^2$.
+For the remaining shells the original divisor envelope bounds the four
+columns absolutely, and arbitrary Fourier decay makes their sum smaller
+than any prescribed power by enlarging the fixed shell cutoff and $B$.
+The same argument bounds the residue tail using the absolute divisor
+mass of $\Theta_{4,A}$. It proves (C60) without truncating the actual
+frequency identity. One derivative order is chosen for all shells,
+finite components and separated heights. If their growth has degree $h$,
+log-Fourier decay of order greater than $h+5$ is integrable in four
+variables. Derivatives act only on the external profiles, never on
+$b_A$, and no budget is restarted per $a$ or ray class.
