@@ -5,14 +5,15 @@ year: 2009
 title: Inequalities and monotonicity of ratios for generalized hypergeometric function
 doi: 10.1016/j.jat.2008.10.002
 url: https://arxiv.org/abs/math/0703084
-claim: "Conjecture 1 extends the Luke lower bound of Theorem 3 to all positive sigma with positive sum of denominator-minus-numerator parameters."
+claim: "Conjectures 1 and 2 propose Luke lower and upper bounds under a positive sum of denominator-minus-numerator parameters."
 strata_touched:
   - D5/S3/Analytic/KarpSitnikLuke/Result
+  - D5/S3/Analytic/KarpSitnikLuke/UpperResult
 license: citation-only
 triage: anchor
 ---
 
-# The conjectured sum-condition Luke lower bound
+# The conjectured sum-condition Luke bounds
 
 ## Verified locator
 
@@ -61,3 +62,38 @@ lower bound 2/3. It fails the componentwise hypothesis of Theorem 3.
 The remaining componentwise case 0<σ<1 and Conjecture 2 are not settled
 by this fixed-parameter result. The bounded literature scope is given in
 `Problems/karp-sitnik-2009-luke-lower-bound.md`.
+
+## Conjectured upper bound
+
+Conjecture 2, printed p. 14, equation (38):
+
+> For 0 < σ ≤ min(a₁, a₂, . . . , a_q), ∑ᵢ₌₁ᵠ (bᵢ − aᵢ) > 0 and x > 0:
+>
+> $\displaystyle {}_{q+1}F_q(\sigma,(a_q);(b_q);-x)<\frac{1}{(1+x K^{1/\sigma})^\sigma},\qquad K=\prod_{i=1}^q\frac{\Gamma(a_i)\Gamma(b_i-\sigma)}{\Gamma(b_i)\Gamma(a_i-\sigma)}.$
+
+The preceding sentence reads:
+
+> The asymptotic formula (16) and numerical experiments suggest the following
+
+Formula (16), printed p. 5, is preceded by:
+
+> It follows that for σ < min(a₁, a₂, . . . , a_q) we will have
+
+$$ {}_{q+1}F_q(\sigma,(a_q);(b_q);-z)
+=\frac{\prod_i\Gamma(a_i-\sigma)\Gamma(b_i)}
+{\prod_i\Gamma(a_i)\Gamma(b_i-\sigma)}z^{-\sigma}
++o(z^{-\sigma}),\qquad z\to\infty. $$
+
+The exponent $1/\sigma$ on $K$ in (38) makes its leading asymptotic
+coefficient agree with (16). The extracted display does not preserve
+superscript placement; the counterexample has $\sigma=1$, where the
+reading with or without that inner exponent coincides.
+
+`UpperResult.claim` uses the existing `Result.hyperTerm` and `Result.hyper`,
+restricts to $0<x<1$, and assumes summability and $K>0$.
+Each restriction weakens the universal assertion. At
+$q=2$, $\sigma=1$, $a=(2,2)$, $b=(3/2,3)$, $x=1/2$,
+the Gamma recurrence gives $K=1$. The six-term alternating lower bracket
+is $249826/363825>2/3$, refuting the proposed upper bound.
+The componentwise upper-bound case $b_k>a_k$ is open here;
+`Problems/karp-sitnik-2009-luke-upper-bound.md` specifies the scope.
