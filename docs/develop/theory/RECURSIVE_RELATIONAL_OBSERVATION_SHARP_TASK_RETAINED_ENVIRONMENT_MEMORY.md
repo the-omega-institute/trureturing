@@ -3582,794 +3582,606 @@ $\square$
 
 ## 追加锚（本行以下为增补区）
 
-## 19. Nine known preparations controlling joint retained use
+## 19. Global linear stability from two actual labelled acquisitions
 
-The source, horizon and unknown-input domain remain Definitions
-1.1–1.2 and 11.1. In particular $H=\mathbb C^5$, the input is the
-whole complex qutrit, $B$ is the original isometry, $n\ge0$, and
-$r(a\mid h)$ is the original complete input-independent finite or
-countable kernel. Write $v=(\xi+e)/\sqrt2$, $E=vv^\dagger$,
-$p=Bv$, $P=pp^\dagger=\widehat E_e$ and $P_0=I_5-P$.
-Every $A_j$ below is the actual full-$H$ operator (11.1). The
-decoder $\mathcal D_a:M_5\to M_5$ is common before the late task
-choice and can have arbitrary full-$H$ output. No fairness law is
-imposed on that output.
-
-The per-Kraus estimate (13.35)–(13.38), including the complementary
-full-$H$ events, is used as a supplier here. Theorem 13.3 already
-proves average reference stability, and Theorem 17.1 already supplies
-the optimal worst-case uniform local exponent $1/2$. The application
-below specifies actual known preparations for that positive residual
-and controls the joint channel that keeps the old record. It asserts
-no new rigidity, exponent, exact modulus or optimal test count.
-
-Theorem 18.1 already supplies the global all-angle bound
-$\|T-\operatorname{Ad}_B\|_\diamond\le216578\delta_\theta(T)$
-under its exact output-support hypothesis
-$T(X)=P_RT(X)P_R$ for every $X$, where $P_R=BB^\dagger$.
-Its input domain is still the whole complex qutrit, with every finite
-untouched reference; its extra restriction is on the output. That
-hypothesis permits the CPTP compression $X\mapsto B^\dagger T(X)B$
-and the square-channel argument of (18.7)–(18.23). It is not imposed
-here on $T$ or on any $\Phi_{h,a}$. In particular the allowed
-$n=0$, one-record decoder $\operatorname{Ad}_{U_t}$ of Theorem
-17.1 realizes $T_t=\operatorname{Ad}_{U_tB}$, and (18.24) proves
-that this allowed output is outside $R$ for $0<t\le1/25$.
-The supported-output theorem therefore does not replace the full-$H$
-residual supplier used below. Its defect is the uniform effect norm
-(18.4); the following application instead provides a finite set of
-known preparation/event probabilities and controls the complete
-weighted record/quantum endpoint from their positive sum. The task
-complement $P_0$ here is distinct from the support projection $P_R$
-(denoted $Q$ in §18).
-
-**Definition 19.1 (the nine preparation/event configurations).**
-For every real $\theta$ set $\sigma_j=(-1)^j$ and define
+**Theorem 19.1 (All-angle linear effect-to-diamond bound with unrestricted output; repo-derived).**
+Keep precisely Definitions 1.1–1.2 and 11.1. All spaces and matrices
+are over $\mathbb C$, and every angle $\theta\in\mathbb R$ is fixed
+and known. In the physical orthonormal basis $(e_0,\ldots,e_4)$ put
 
 $$
-\begin{aligned}
-d_j&=-e/2+\sigma_j(\sqrt3/2)e^{2i\theta}f,&
-w_j&=(\xi+d_j)/\sqrt2,\\
-x_1&=(\xi-e)/\sqrt2,&x_2&=f,\\
-z_{j1}&=(\xi-d_j)/\sqrt2,&
-z_{j2}&=(\sqrt3/2)e+\sigma_j e^{2i\theta}f/2.
-\end{aligned}
+\begin{gathered}
+u=(e_0+e_3)/\sqrt2,\qquad v_H=(e_1+e_4)/\sqrt2,\qquad z=e_2,
+\qquad B=(u,v_H,z):\mathbb C^3\longrightarrow\mathbb C^5,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\qquad
+ e=(1,1,-2)^{\mathsf T}/\sqrt6,\qquad
+ f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+q_0=(\xi+e)/\sqrt2,\qquad E=q_0q_0^\dagger,\qquad
+p=Bq_0,\qquad P=pp^\dagger,\qquad P_1=P,\quad P_0=I_5-P.
+\end{gathered}
 \tag{19.1}
 $$
 
-Here $w_j$ is exactly (13.26), not a different probe. Each
-configuration prepares $B\chi\chi^\dagger B^\dagger$ **before**
-the original $n$ acquisitions, processes their actual labels with
-$r$, and invokes the installed $\mathcal D_a$. Only then does it
-perform the indicated terminal experiment. Its designated bad event
-is as follows:
-
-| Configuration | Initial qutrit vector $\chi$ | Terminal experiment and designated event |
-| --- | --- | --- |
-| $1$ | $v$ | Immediate binary test $(P,P_0)$; event $y=0$, effect $P_0$ |
-| $2,3$ | $x_1,x_2$, respectively | Immediate binary test; event $y=1$, effect $P$ |
-| $4+2j,5+2j$, $j=0,1$ | $z_{j1},z_{j2}$, respectively | One actual acquisition, then the binary test; joint event $(j,1)$ |
-| $8+j$, $j=0,1$ | $w_j$ | One actual acquisition, then the binary test; joint event $(j,0)$ |
-
-All outcomes of each experiment occur in its complete instrument.
-A different acquisition label is an ordinary outcome with bad-event
-indicator zero; it is not discarded or used to renormalize the
-trial. The last six configurations use six actual additional
-acquisitions, one per configuration, rather than six postselected
-branches of a single acquisition.
-
-For a corrected channel $T:M_3\to M_5$, define its nine event
-probabilities and their sum by
+Use the actual full-$H$ acquisition, including its action outside
+$\operatorname{ran}B$:
 
 $$
 \begin{aligned}
-f_1(T)&=\operatorname{Tr}(P_0\,T(vv^\dagger)),\\
-f_{1+r}(T)&=\operatorname{Tr}(P\,T(x_rx_r^\dagger)),
-                       &&r=1,2,\\
-f_{3+2j+r}(T)&=\operatorname{Tr}
- (A_j^\dagger PA_j\,T(z_{jr}z_{jr}^\dagger)),
-                       &&j=0,1,\quad r=1,2,\\
-f_{8+j}(T)&=\operatorname{Tr}
- (A_j^\dagger P_0A_j\,T(w_jw_j^\dagger)),&&j=0,1,\\
-\mathcal R(T)&=\sum_{i=1}^9 f_i(T).
+K_0&=|u\rangle\langle e_0|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_3|,\\
+A_0&=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1=i\sin\theta K_0+\cos\theta K_1.
 \end{aligned}
 \tag{19.2}
 $$
 
-All $f_i$ are probabilities in $[0,1]$. They need not add to one,
-since they refer to different preparations. The analytical definitions
-do not themselves grant the ability to prepare those states.
-
-**Proposition 19.2 (operational correspondence to the supplied residual).**
-The vectors $(x_1,x_2)$ form an orthonormal basis of $v^\perp$,
-and $(z_{j1},z_{j2})$ one of $w_j^\perp$. Every event (19.2)
-has probability zero for $T=\operatorname{Ad}_B$. For any finite
-Kraus family $T(X)=\sum_\nu L_\nu XL_\nu^\dagger$, let
-$q_\nu$ be precisely the residual (13.33), with
-$t_j=A_j^\dagger p$ and $F_j=w_jw_j^\dagger$. Then
+For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$, with unrestricted output,
+let $T^\dagger$ be its trace adjoint and define exactly
 
 $$
 \begin{aligned}
-\mathcal R(T)&=\sum_\nu q_\nu,\\
-\max_i f_i(T)&\le\mathcal R(T)\le9\max_i f_i(T),\\
-\max_i f_i(T)&\le\delta_\theta(T),
-\qquad \mathcal R(T)\le9\delta_\theta(T).
+\delta_{2,\theta}(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+ \|T^\dagger(A_j^\dagger P_yA_j)
+       -B^\dagger A_j^\dagger P_yA_jB\|_{\mathrm{op}},\\
+&\max_{j,k,y\in\{0,1\}}
+ \|T^\dagger((A_kA_j)^\dagger P_y(A_kA_j))
+       -B^\dagger(A_kA_j)^\dagger P_y(A_kA_j)B\|_{\mathrm{op}}
+\Bigr\}.
 \end{aligned}
 \tag{19.3}
 $$
 
-Proof. The frame $(\xi,e,f)$ is orthonormal. The vector $d_j$
-has norm one, is perpendicular to $\xi$, and is perpendicular to
-$z_{j2}$ because
-$-\sqrt3/4+\sqrt3/4=0$. Thus (19.1) gives the claimed two
-orthogonal-complement bases, also when $\sin\theta$ or
-$\cos\theta$ vanishes. For the ideal channel use exactly
-(13.27): the immediate effect compresses to $E$, the joint
-$(j,1)$ effect to $F_j/2$, and the joint $(j,0)$ effect to
-$(I_3-F_j)/2$. These annihilate the stated inputs. Inserting
-the Kraus expansion in (19.2) gives, in order, the sums of
-$\|P_0L_\nu v\|^2$, the two basis terms of
-$\|p^\dagger L_\nu(I_3-E)\|_{\rm HS}^2$, the two basis
-terms of each $\|t_j^\dagger L_\nu(I_3-F_j)\|_{\rm HS}^2$,
-and each $\|P_0A_jL_\nu w_j\|^2$. Their sum is (13.33).
-The middle line of (19.3) is positivity. Each event expectation
-is a zero-ideal expectation of one of (13.23)'s Hermitian effect
-differences; the immediate $P_0$ difference is the negative of the
-$P$ difference by trace preservation. Its absolute expectation is
-bounded by that difference's operator norm. This proves the last
-line without replacing any full-$H$ effect by its input-corner
-compression on a leaked state. $\square$
-
-**Definition 19.3 (joint comparison with the original chronological law).**
-For the actual scheme put, with $h_1$ still acting first,
+Thus the immediate test, all four original one-step joint effects,
+and all eight actual depth-two joint effects are retained. The first
+acquisition has label $j$, the next has label $k$, so the product is
+$A_kA_j$. With $U_0,W,V_0,V_1$ exactly as in (1.4), and
+$E_1=E$, $E_0=I_3-E$, the ideal compressions are
 
 $$
 \begin{aligned}
-p_{h,a}&=2^{-n}r(a\mid h),&
-\Phi_{h,a}&=\mathcal D_a\circ\operatorname{Ad}_{BQ_h},\\
-T&=\sum_{h,a}p_{h,a}\Phi_{h,a},&
-\Gamma_{ha}(X)&=\bigoplus_{h,a}p_{h,a}\Phi_{h,a}(X),\\
-\Gamma^0_{ha}(X)&=\bigoplus_{h,a}p_{h,a}BXB^\dagger,&
-\Gamma_a(X)&=\bigoplus_a\sum_h p_{h,a}\Phi_{h,a}(X),\\
-\Gamma^0_a(X)&=\bigoplus_a\left(\sum_h p_{h,a}\right)BXB^\dagger.
+B^\dagger A_j^\dagger P_yA_jB
+ &=\tfrac12 V_j^\dagger E_yV_j,\\
+B^\dagger(A_kA_j)^\dagger P_y(A_kA_j)B
+ &=\tfrac14 V_j^\dagger V_k^\dagger E_yV_kV_j.
 \end{aligned}
 \tag{19.4}
 $$
 
-The actual retained endpoint is $a$ together with decoded $H$;
-$\Gamma_a$ is its channel. The index $h$ in $\Gamma_{ha}$
-resolves actual events for comparison and supplies no installed
-history port. A kept subrecord of $h$ must already be in the complete
-$a$, with its acquired backing. At $n=0$ the only history is the
-empty word, of weight one before the kernel. The countable direct
-sums are trace-class $\ell^1$ sums: for $Y=\bigoplus_bY_b$,
-$\|Y\|_1=\sum_b\|Y_b\|_1$. Every channel in (19.4) is
-normalized, since $\sum_{h,a}p_{h,a}=1$ and each unweighted
-$\Phi_{h,a}$ is CPTP.
-
-For all these maps the diamond norm is **unhalved**, with the same
-convention as (13.25):
+The factors $1/2$ and $1/4$ are the actual ideal joint weights;
+they are not removed by conditional normalization. Then the global
+estimate, uniformly in every real $\theta$ and every such $T$, is
 
 $$
-\|\Lambda\|_\diamond=
-\sup_{d\ge1}\ \sup_{0\ne X\in M_3\otimes M_d}
-\frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
+\|T-\operatorname{Ad}_B\|_\diamond
+ \le C\,\delta_{2,\theta}(T),\qquad
+ C=418231548,\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
 \tag{19.5}
 $$
 
-The supremum includes arbitrary complex matrices, not just densities.
-Vector norms are Euclidean; $\|L\|_{\rm HS}^2=
-\operatorname{Tr}(L^\dagger L)$; $\|L\|_{\rm op}$ is the
-largest singular value. A finite inaccessible reference is untouched
-throughout the actual implementation.
-
-**Theorem 19.4 (finite-event control of the complete weighted endpoint).**
-For every $\theta\in\mathbb R$, $n\ge0$, complete kernel of
-Definition 1.2, and common full-$H$ decoder family of Definition
-11.1, set $\mathcal R=\mathcal R(T)$ using (19.2) and (19.4).
-Then
+In particular, the uniform local consequence has the explicit
+constants $C=418231548$ and $\eta=1/2$:
 
 $$
-\begin{aligned}
-\|\Gamma_{ha}-\Gamma^0_{ha}\|_\diamond
-&\le\min\{2,250\sqrt{\mathcal R}\},\\
-\|\Gamma_a-\Gamma^0_a\|_\diamond
-&\le\min\{2,250\sqrt{\mathcal R}\}
- \le\min\{2,750\sqrt{\max_i f_i(T)}\}.
-\end{aligned}
+\delta_{2,\theta}(T)\le\eta=\tfrac12
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond\le418231548\,\delta_{2,\theta}(T).
 \tag{19.6}
 $$
 
-The first inequality also controls any actually retained subrecord,
-and all the inequalities hold with every finite untouched reference.
-No branch is reweighted; no lower bound on a positive $p_{h,a}$
-is required. The numerical constants are conservative evaluated
-constants, with no optimality assertion.
-
-Proof. First fix any CPTP $\Phi:M_3\to M_5$ and a finite Kraus
-family $L_\nu$. Put $c_\nu=p^\dagger L_\nu v$ and
-$\mathbf c=\sum_\nu c_\nu|\nu\rangle$. The **single-Kraus**
-inequality already proved in (13.35)–(13.38), before its summation
-against $\delta$, says
+Here the norm is the full unhalved diamond norm
 
 $$
-\sum_\nu\|L_\nu-c_\nu B\|_{\rm HS}^2
- \le15000\sum_\nu q_\nu=15000\mathcal R(\Phi).
+\|\Lambda\|_\diamond
+ =\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+ \frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
 \tag{19.7}
 $$
 
-This directly reuses that proof's full-$H$ coercivity; it does not
-infer a per-branch estimate from an averaged defect. Define the
-isometric dilation $Wx=\sum_\nu L_\nu x\otimes|\nu\rangle$.
-Trace preservation at $v$ gives, exactly,
+It includes arbitrary finite untouched inaccessible references and
+every complex amplified input matrix. The tests in (19.3) are uniform
+over all complex qutrit density inputs: each operator norm equals
+the supremum of the absolute expectation of its Hermitian difference
+over those inputs. No known-input, output-support, conditional-branch,
+full-$H$ fairness, or extra correction hypothesis is imposed. When
+$T$ is a corrected average channel, the conclusion is for that average;
+it asserts no uniform guarantee on arbitrarily rare branches.
+
+There is also a global persistence consequence within this statement.
+For every integer $m\ge2$, let $A_h=A_{h_r}\cdots A_{h_1}$ for
+$h\in\{0,1\}^r$, in chronological order, and set
 
 $$
-r^2:=\|\mathbf c\|^2=1-f_1(\Phi),\qquad0\le r\le1.
+\begin{aligned}
+\delta_{m,\theta}(T)=\max\Bigl\{&
+ \|T^\dagger(P)-E\|_{\mathrm{op}},\\
+ &\max_{\substack{1\le r\le m,\ h\in\{0,1\}^r\\y\in\{0,1\}}}
+ \|T^\dagger(A_h^\dagger P_yA_h)-B^\dagger A_h^\dagger P_yA_hB\|_{\mathrm{op}}
+ \Bigr\}.
+\end{aligned}
 \tag{19.8}
 $$
 
-For $r>0$ take $\eta=\mathbf c/r$; for $r=0$ choose any unit
-vector in that environment. Let $Ux=Bx\otimes\eta$. Both
-$U,W$ are isometries. Applying (19.7) to $W-B\otimes\mathbf c$
-and using $1-r\le\sqrt{1-r^2}$ gives
+These are again actual joint effects, whose ideal compressions have
+weights $2^{-r}$. Then
+$\|T-\operatorname{Ad}_B\|_\diamond\le418231548\,\delta_{m,\theta}(T)$
+for all the same $\theta,T$, without a small-defect restriction.
+Theorem 17.1 concerns the older five-effect defect only; its
+obstruction is not asserted for (19.3). The support promise (18.3)
+of Theorem 18.1 is not assumed here. The coefficient in (19.5) is
+an upper bound, with no assertion of optimality, minimum continuation
+depth at individual angles, uncertain-calibration stability, or
+physical realization.
+
+The quantitative bridge from these augmented actual effects to
+unrestricted-output linear control is `repo-derived`, relative to
+the source geometry of this volume; no global novelty is claimed.
+Its residual ingredient is (13.38), and its scalar frame ingredient
+is (18.13), both recalled in the proof on their required domains.
+Finite rectangular Kraus representation is the standard supplier
+[FiniteKrausRepresentation][KRAUS]; finite-dimensional norm duality
+and the trace-norm ideal property are as in John Watrous,
+[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapters 2–3. The exact observable-correction framework of
+[Bény–Kempf–Kribs, Definition 8, equation (7), and Theorem 9][BKK]
+is a source for that framework, not for the quantitative coefficient
+or the augmented-effect estimate (19.5).
+
+Proof. Fix $\theta,T$ as stated and write $\delta=\delta_{2,\theta}(T)$.
+Use Euclidean vector norms, operator matrix norms unless otherwise
+indicated, and $\|M\|_{\mathrm{HS}}^2=\operatorname{Tr}(M^\dagger M)$.
+No smallness assumption on $\delta$ will be used. Complete $B$ by
 
 $$
-\begin{aligned}
-\|W-U\|_{\rm op}
-&\le\sqrt{15000\mathcal R(\Phi)}+1-r\\
-&\le(\sqrt{15000}+1)\sqrt{\mathcal R(\Phi)}.
-\end{aligned}
+c_0=(e_0-e_3)/\sqrt2,\qquad c_1=(e_1-e_4)/\sqrt2,\qquad
+C_\perp=(c_0,c_1).
 \tag{19.9}
 $$
 
-The zero-$r$ case obeys the same inequality since then $f_1=1$.
-The dilation trace-norm estimate used in (13.40)–(13.42) applies
-to every complex $X$ and every finite reference: expand
-$W_ZXW_Z^\dagger-U_ZXU_Z^\dagger$ as
-$(W_Z-U_Z)XW_Z^\dagger+U_ZX(W_Z-U_Z)^\dagger$, use
-$\|AXB\|_1\le\|A\|_{\rm op}\|X\|_1\|B\|_{\rm op}$,
-and discard only the dilation environment by the completely
-trace-norm contractive partial trace. Hence
+Then $B^\dagger B=I_3$, $C_\perp^\dagger C_\perp=I_2$,
+$B^\dagger C_\perp=0$, and
+$BB^\dagger+C_\perp C_\perp^\dagger=I_5$.
+The actual three probes of (5.6)–(5.7) are
 
 $$
-\|\Phi-\operatorname{Ad}_B\|_\diamond
- \le2(\sqrt{15000}+1)\sqrt{\mathcal R(\Phi)}
- \le250\sqrt{\mathcal R(\Phi)}.
+\begin{gathered}
+q_1=(\xi-e/2+(\sqrt3/2)e^{2i\theta}f)/\sqrt2,\qquad
+q_2=(\xi-e/2-(\sqrt3/2)e^{2i\theta}f)/\sqrt2,\qquad
+\Pi_i=q_iq_i^\dagger,\\
+\|q_i\|=1,\qquad q_i^\dagger q_k=\tfrac14\quad(i\ne k),\qquad
+S=\sum_{i=0}^2\Pi_i
+ =\tfrac32\xi\xi^\dagger+\tfrac34ee^\dagger+\tfrac34ff^\dagger
+ \succeq\tfrac34I_3.
+\end{gathered}
 \tag{19.10}
 $$
 
-Here $\sqrt{15000}<124$, so the displayed coefficient is
-strictly smaller than $250$. This is the supplied stability mechanism
-applied to the measured residual, rather than a new exponent result.
-
-Apply (19.10) separately to each actual $\Phi_{h,a}$. Linearity
-and positivity of (19.2) give
+The last identities follow by expanding the displayed vectors in
+the orthonormal basis $(\xi,e,f)$. In particular their constants
+are independent of $\theta$. The source acquisition gives
 
 $$
-\mathcal R(T)=\sum_{h,a}p_{h,a}\mathcal R(\Phi_{h,a}).
+A_jB=BV_j/\sqrt2,\qquad
+V_k^\dagger EV_k=\Pi_{k+1},\qquad
+\operatorname{ran}A_j\subseteq\operatorname{ran}B.
 \tag{19.11}
 $$
 
-Triangle inequality in the direct-sum norm and Cauchy–Schwarz for
-these **original** probability weights now yield
+Each $A_j$ has norm one, so all actual effects in (19.3) are positive
+contractions. Define, for $j=0,1$ and $i=0,1,2$,
 
 $$
-\begin{aligned}
-\|\Gamma_{ha}-\Gamma^0_{ha}\|_\diamond
-&\le\sum_{h,a}p_{h,a}
-      \|\Phi_{h,a}-\operatorname{Ad}_B\|_\diamond\\
-&\le250\sum_{h,a}p_{h,a}\sqrt{\mathcal R(\Phi_{h,a})}
- \le250\sqrt{\mathcal R(T)}.
-\end{aligned}
+N_{ji}=A_j^\dagger B\Pi_iB^\dagger A_j.
 \tag{19.12}
 $$
 
-For a countable kernel the sums converge absolutely; the last
-inequality follows first on finite subsets and then by their increasing
-union. Every channel has diamond norm one, giving the independent
-cap two for their difference. Summing over $h$, or applying the actual
-classical subrecord map, is CPTP and cannot increase the norm.
-Finally use (19.3). This proves (19.6). $\square$
-
-The weighted statement includes correlations of the old record with
-the decoded specimen and the inaccessible reference. It does not give
-a uniform normalized guarantee on each rare record. For example the
-direct-sum bound gives for an individual positive fine block only
-$p_{h,a}\|\Phi_{h,a}-\operatorname{Ad}_B\|_\diamond\le
-250\sqrt{\mathcal R}$, which loses its force as that weight tends
-to zero. Conditioning on a later success event has the same
-normalization problem. Exact equality at $\mathcal R=0$ follows
-from the estimate and agrees with the already supplied Theorem 13.1;
-finite experimental acceptance will not establish that equality.
-
-## 20. Common legal successors and a credited low-port floor
-
-**Definition 20.1 (admitted common finite continuation).** A continuation
-has a fixed finite maximum number of stages. At each stage its next
-CP instrument can depend on its actually retained old record, selector
-and earlier continuation outcomes. The very same maps and physical
-call rights must be available on the actual and comparison routes.
-They act on accessible systems only and leave the inaccessible reference
-untouched. Each instrument is complete: its sum is trace preserving,
-with every success, failure, stop and other relevant outcome and its
-remaining quantum successor included in the output. Finite or
-countable outcome instruments must define normal trace-class maps.
-Terminated branches can be padded by identity steps.
-
-Legality includes the supplied control domains on all states that the
-two routes can reach, readable record backing, addresses, clocks and
-permissions through every use. It cannot be inferred from small trace
-distance. An operation defined only on $R$ is not automatically a
-legal operation on a leaked actual state; its full-$H$ implementation
-or appropriate admitted interface must be supplied. A selector chosen
-after decoding does not select a different recovery decoder. The
-comparison index $h$ grants no continuation access to an unavailable
-history. Consumed storage flags are not added to the old record.
-The original decoder's declared output is $H$; its discarded local
-environment is unavailable for later calls. An additional retained
-quantum output or a retained specimen-dependent flag requires its
-own specified joint comparison and is not silently appended to (19.4).
-
-**Proposition 20.2 (preservation of the joint guarantee).** Every
-continuation of Definition 20.1, including zero stages, defines a CPTP
-map $\mathcal C$ on the actual retained interface. For every such
-$\mathcal C$ and every finite inaccessible reference,
-
-$$
-\|\mathcal C\Gamma_a-\mathcal C\Gamma^0_a\|_\diamond
- \le\min\{2,250\sqrt{\mathcal R(T)}\}.
-\tag{20.1}
-$$
-
-An accessible external finite selector or ancilla supplied in the same
-state on the two routes is allowed as well, with arbitrary input
-correlations covered by (19.5). No action on the inaccessible reference
-is needed. Every specified final event therefore differs in probability
-by at most $\min\{1,125\sqrt{\mathcal R(T)}\}$ on any joint
-input density. This last assertion concerns unnormalized event laws,
-not states normalized on that event.
-
-Proof. A complete instrument, with its outcome label and quantum
-successor, is CPTP into its direct sum. Controlling its next stage by
-an already present classical outcome preserves that property.
-Induction over the finite number of stages gives $\mathcal C$;
-normality handles the countable direct sums. Complete trace-norm
-contraction and (19.6) give (20.1), also after adjoining an accessible
-selector to the input reference space and then acting on that selector.
-For a joint density the final difference is Hermitian of trace zero.
-The supremum of its expectation against an effect in $[0,I]$ is
-half its trace norm, giving the event bound. Completeness is essential:
-normalizing a selected successful block is nonlinear and is not the
-map just proved contractive. $\square$
-
-For example, if the terminal binary readout is installed as its
-Lüders instrument, the immediate implementation retains
-$\bigoplus_yP_yYP_y$, with $P_1=P$ and $P_0=I_5-P$. The one-step
-implementation with the actual acquisition operators then retains
-
-$$
-Y\longmapsto\bigoplus_{j,y}P_yA_jYA_j^\dagger P_y,
-\qquad\sum_{j,y}(P_yA_j)^\dagger(P_yA_j)=I_5.
-\tag{20.2}
-$$
-
-Thus (20.1) keeps $a,j,y$ and the residual specimen as well as its
-reference. It does not substitute a fair coin for $j$ on leaked states.
-The readout's effects alone do not prescribe its quantum successor;
-another installed complete readout uses its own common CP blocks
-instead and obeys the same (20.1).
-Repeating common legal stages preserves the same bound, rather than
-adding a new error allowance at every stage; the comparison is the
-composition of the same channels with the two initial endpoints.
-Different implementations at later stages would require additional
-error hypotheses and are not covered by that statement.
-
-**Corollary 20.3 (an explicit full-H low-port error floor).** Impose
-exactly the storage restriction of Definition 14.1: each old record
-selects a finite specimen-dependent classical flag alphabet, encoding
-through $M_q$, and a complete whole-block decoder to $M_5$; the
-same actual flag is used on both sides and is consumed by decoding.
-All input-dependent quantum information crosses that bottleneck, with
-no specimen, environment, reference or entanglement bypass. The old
-record remains the original complete $a$, with no bound on its finite
-or countable alphabet. For $q=1$ or $q=2$, every such scheme obeys
+Since $P=B\Pi_0B^\dagger$, (19.11) gives the exact physical identities
 
 $$
 \begin{aligned}
-\mathcal R(T)&\ge\frac{3-q}{15000+3-q},\\
-\max_i f_i(T),\ \delta_\theta(T)
- &\ge\frac{3-q}{9(15000+3-q)}.
+N_{j0}&=A_j^\dagger PA_j,\\
+N_{j,k+1}&=2(A_kA_j)^\dagger P(A_kA_j)\quad(k=0,1),\\
+A_j^\dagger A_j&=A_j^\dagger P_0A_j+A_j^\dagger P_1A_j.
 \end{aligned}
-\tag{20.3}
+\tag{19.13}
 $$
 
-For $q=2$ these lower bounds are $1/15001$ and $1/135009$;
-for $q=1$ they are $1/7501$ and $1/67509$, respectively.
-They hold at every real angle and at $n=0$. They are not optimal
-coefficients or new coherent-dimension classifications.
+For the second line insert $BB^\dagger$ on both sides of
+$A_k^\dagger PA_k$ between $A_j^\dagger$ and $A_j$ and use
+$B^\dagger A_k^\dagger PA_kB=\Pi_{k+1}/2$. This uses the actual
+range of $A_j$, not a restriction on $T$.
 
-Proof. Reuse the same-flag product (14.3), supplied by
-[CoherentFlagPort][CFP] (including its `flagged_kraus_product`
-step) and [FiniteKrausRepresentation][KRAUS]. For each actual
-branch its Kraus matrices have the form
-$L=D_{a\ell\beta}E_{a\ell\alpha}BQ_h$ and rank at most $q$.
-For $c=p^\dagger Lv$, choose $3-q$ orthonormal vectors in
-$\ker L$. On each such vector $x$, $(L-cB)x=-cBx$, whence
+First recall (13.38), including a derivation valid at $\delta=0$.
+Take a finite rectangular Kraus family
 
 $$
-(3-q)|c|^2\le\|L-cB\|_{\rm HS}^2\le15000q_L.
-\tag{20.4}
+T(X)=\sum_\ell L_\ell XL_\ell^\dagger,\qquad
+\sum_\ell L_\ell^\dagger L_\ell=I_3,\qquad
+c_\ell=p^\dagger L_\ell q_0,\quad N_\ell=L_\ell-c_\ell B,\quad
+\mathcal R=\sum_\ell\|N_\ell\|_{\mathrm{HS}}^2.
+\tag{19.14}
 $$
 
-The second inequality is the already supplied per-Kraus estimate,
-not a new compression-rigidity argument. Sum first over this actual
-Kraus family and then over the unchanged $p_{h,a}$. Equation
-(19.8) and linearity give
-$(3-q)(1-f_1(T))\le15000\mathcal R(T)$.
-Since $f_1(T)\le\mathcal R(T)$, rearrangement gives the first
-line of (20.3); (19.3) gives the second. $\square$
-
-Bluhm–Rauber–Wolf [arXiv:1708.04898v4][BRW], Definition 4.1
-and Lemma 5.2, supply the classical-quantum port model and composite
-Kraus rank bound; their Theorem 5.1 already proves a qualitative
-positive approximate-compression floor by compactness. Corollary
-20.3 is a short evaluated consequence for this source's rectangular
-corner and actual labelled tests. It does not claim a new qualitative
-incompressibility principle. A holding channel can be absorbed in
-the codecs only if the whole holding interval satisfies the same
-complete bottleneck and flag conditions. Merely naming a nominal
-$q$-level subsystem while another quantum carrier survives does
-not satisfy the hypothesis.
-
-## 21. A paid finite campaign and subsequent unknown-input calls
-
-**Definition 21.1 (calibrated repeatable fixed installation).** The
-following are additional operational premises, not conclusions from
-the event data. A model instance supplies a known $n$, a specified
-real $\theta$, the actual original preparation/interaction/environment
-measurement of Definition 1.1, the binary terminal instrument, a
-complete input-independent $r$, and one installed full-$H$ recovery
-service $a\mapsto\mathcal D_a$. The actual recovery service may be
-imperfect. If it includes encoding, storage and decoding, their chosen
-holding duration and whole interface are fixed and included in this
-service. Its map is the same CPTP map on each invocation and on later
-unknown-input use. It receives no configuration tag or terminal-choice
-input. The source instrument, preparation and terminal measurement are
-calibrated as specified, including their action outside $R$ where
-required. The calibration and the fixed-device premise are supplied,
-not tested by this campaign.
-
-There are trusted callable preparations of all nine initial states in
-Definition 19.1 on expendable campaign specimens, and reset services
-for the apparatus and its control/environment workspaces. Fresh ready
-environments, preparations, private randomness and resets make the
-completed trial laws independent, with no retained hidden campaign
-memory, drift, or campaign/later-use switch. These requirements concern
-the entire same installed acquisition/record/recovery apparatus, not
-only its visible $H$ register. The event experiment is chosen after
-the common recovery and cannot alter that recovery. Preparing an
-input state remains an allowed quantum input to the same channel;
-no classical label identifying it is passed to the channel.
-
-The installation also supplies actual call rights and backing: source
-and reset access, a terminating callable record processor, full-$H$
-decoder/codec controls, readable addresses and record capacity, control
-code, clock, holding service and continuation permissions for their
-required lifetimes. Countable records have specified finite encodings
-on each returned call; the ideal untruncated service must realize the
-given complete kernel and terminate with finite charged resources
-almost surely. No uniform cost bound for it is inferred from its
-finite description. A campaign controller has a supplied interruptible
-finite resource cap, using integer metered operation units, finite
-record capacity and finite elapsed-time limits, and rejects if any
-limit would be exceeded. The cap includes its own schedule/event
-bookkeeping and all trial services. This supplies a finite campaign
-even for a countable service without a uniform completion bound.
-The cap is a rejection rule, not a truncated replacement for $r$ or
-$\mathcal D_a$ in (19.4).
-Metering and any reported service-failure status refer to this faithful
-untruncated implementation: they can interrupt and reject its run,
-but do not substitute a different map on accepted transcripts. This
-permits coupling the capped campaign to independent untruncated trials.
-
-All setup, calibration, code, known-state preparation, source calls,
-record work, resetting, storage and later use are charged on this
-same installation. The known preparation/reset rights concern only
-the expendable campaign specimens. A later unknown specimen, and its
-inaccessible reference, have no supplied clone, reset, state-read or
-reference-access operation. They arrive with the original embedded
-input contract and are used once through the installed process.
-
-For arbitrary real $\theta$, an exact calibrated control service in
-this model is an analytical supplied-control premise. It is not an
-algorithm for learning a real calibration, comparing exact-real
-words or synthesizing these controls. An effective specialization
-must specify its finite control library and encodings separately.
-
-**Theorem 21.2 (exact finite decision rule and uniform false acceptance).**
-Input a model instance of Definition 21.1, a rational
-$0<\eta<2$, a positive integer $k$, and a finite resource cap.
-Compute the integer
+Put $Q_p=I_5-P$, $t_j=A_j^\dagger p$, $w_j=q_{j+1}$, and
+$F_j=w_jw_j^\dagger$. Directly from the actual probes and (19.2),
 
 $$
-m=\left\lceil\frac{62500k}{\eta^2}\right\rceil.
-\tag{21.1}
+B^\dagger t_j=e^{-i\theta}w_j/\sqrt2,\qquad
+w_j^\dagger q_0=\tfrac14,\qquad
+A_jBw_j=e^{i\theta}p/\sqrt2.
+\tag{19.15}
 $$
 
-In the fixed order $1,\ldots,9$, execute exactly $m$ trials of
-each configuration, with fresh known specimens and the required
-resets, at the fixed holding duration when storage is tested. Keep
-the complete actual outcome/record during each trial. Reset after
-each trial, including the last trial before subsequent use. The
-controller accepts if and only if all $9m$ trials complete within
-the cap and no designated bad event occurs. A missing outcome,
-service failure, cap exhaustion or failed reset rejects. Its event
-decision uses only the exact discrete outcomes and an accumulated
-Boolean conjunction; it makes no real-valued frequency comparison.
-
-For every fixed installed device satisfying the model, write
-$\mathcal E=\|\Gamma_{ha}-\Gamma^0_{ha}\|_\diamond$ for its
-untruncated service. If $\mathcal E>\eta$, then
+For each $\ell$ define the nonnegative defects
 
 $$
-\Pr(\mathrm{accept})\le e^{-k}\le2^{-k}.
-\tag{21.2}
+\begin{aligned}
+a_\ell&=\|Q_pL_\ell q_0\|^2,&
+b_\ell&=\|p^\dagger L_\ell(I_3-E)\|_{\mathrm{HS}}^2,\\
+g_{\ell j}&=\|t_j^\dagger L_\ell(I_3-F_j)\|_{\mathrm{HS}}^2,&
+h_{\ell j}&=\|Q_pA_jL_\ell w_j\|^2,\\
+q_\ell&=a_\ell+b_\ell+g_{\ell0}+g_{\ell1}+h_{\ell0}+h_{\ell1}.
+\end{aligned}
+\tag{19.16}
 $$
 
-The bound is uniform over all such full-complex devices, record
-kernels, finite references, real angles and horizons, with the model's
-fixed supplied apparatus and controls. In particular it bounds false
-acceptance of the claim that the actual retained endpoint and every
-admitted common finite legal continuation have diamond error at most
-$\eta$. It is a frequentist false-acceptance bound, not a conditional
-probability that an accepted device is good.
-
-Proof. For the untruncated independent trials the all-pass probability
-is exactly
+For orthonormal bases $(x_1,x_2)$ of $q_0^\perp$ and
+$(z_{j1},z_{j2})$ of $w_j^\perp$, positivity, trace preservation,
+and the original five effects contained in (19.3) give
 
 $$
-\prod_{i=1}^9(1-f_i(T))^m
- \le\exp\left(-m\sum_{i=1}^9f_i(T)\right)
- =e^{-m\mathcal R(T)}.
-\tag{21.3}
+\begin{aligned}
+\sum_\ell a_\ell
+ &=1-\langle q_0,T^\dagger(P)q_0\rangle\le\delta,\\
+\sum_\ell b_\ell
+ &=\sum_{a=1}^2\langle x_a,T^\dagger(P)x_a\rangle\le2\delta,\\
+\sum_\ell g_{\ell j}
+ &=\sum_{a=1}^2\langle z_{ja},T^\dagger(t_jt_j^\dagger)z_{ja}\rangle
+ \le2\delta,\\
+\sum_\ell h_{\ell j}
+ &=\langle w_j,T^\dagger(A_j^\dagger Q_pA_j)w_j\rangle\le\delta,\\
+\sum_\ell q_\ell&\le9\delta.
+\end{aligned}
+\tag{19.17}
 $$
 
-This uses the elementary $1-x\le e^{-x}$ for $0\le x\le1$.
-The cap/reset/failure rule can only remove accepting transcripts.
-Equivalently couple it to the full independent sequence and reject
-on the first interrupted prefix; every accepted transcript is still
-an all-pass transcript. Theorem 19.4 implies that
-$\mathcal E>\eta$ requires
-$\mathcal R(T)>\eta^2/62500$. Equation (21.1) then makes
-(21.3) at most $e^{-k}$. Since $e>2$, this is at most $2^{-k}$.
-If a retained endpoint or an admitted continuation violates its
-$\eta$ claim, (19.6) or (20.1) implies $\mathcal E>\eta$,
-so the same bound covers the entire asserted family at once.
-There is no union over reference dimensions or continuation choices.
-$\square$
+Indeed the ideal expectations in the second and third lines vanish
+on the indicated orthogonal complements. For the fourth line,
+$B^\dagger A_j^\dagger Q_pA_jB=(I_3-F_j)/2$, whose expectation
+at $w_j$ is zero. Thus both original $y=0$ effects, as well as both
+$y=1$ effects, are used; no cancellation or conditional test is substituted.
 
-The trusted-preparation/testing and independent all-pass mechanism
-are mature gate-verification ingredients: Zhu–Zhang,
-[arXiv:1910.14032v2](https://arxiv.org/abs/1910.14032v2),
-§III.A–B, equations (6)–(20). Here (21.3) is its elementary
-balanced deterministic-schedule version. Their square unitary target,
-process-fidelity and balanced/local-measurement optimality results
-are not applied to this rectangular retained-record channel. Neither
-the sample count (21.1), nine configurations nor the resource cap is
-claimed optimal. An ideal zero-residual device passes all event tests;
-a cap may still reject it for resources. For positive residual even
-a device within the desired tolerance need not accept often.
-
-For the low-port models of Corollary 20.3, the same campaign gives
-the separate direct consequence
+The rectangular coercivity behind this residual estimate is
 
 $$
-\Pr(\mathrm{accept})
- \le\exp\left(-\frac{m(3-q)}{15000+3-q}\right),
-\qquad q=1,2.
-\tag{21.4}
+\|k\|\le10\|A_jk\|+3|p^\dagger k|+3|t_{1-j}^\dagger k|
+\qquad(k\in\mathbb C^5,\ j=0,1).
+\tag{19.18}
 $$
 
-This rejects those bottlenecks through the measured residual; it is
-not an assertion that (20.3) is a lower bound on every chosen
-continuation's diamond error. A continuation can erase all outputs.
+To see its uniformity explicitly, the three nonzero singular values
+of $A_j$ are $1,1,1/\sqrt2$. Orthonormal bases of its kernel are
 
-**Proposition 21.3 (what an accepted campaign permits one to call).**
-Keep the same installation, holding duration, channel, record
-processor, backing and rights after the campaign. Supply a new
-arbitrary density $\rho$ on $\mathbb C^3\otimes Z$, with
-finite inaccessible $Z$, initialized as
-$(B\otimes I_Z)\rho(B^\dagger\otimes I_Z)$. Run the original
-$n$ actual acquisitions, retain their actual complete record $a$,
-invoke the same common recovery once, then select and execute any
-admitted common finite legal continuation. The resulting joint law
-is exactly $((\mathcal C\Gamma_a)\otimes\operatorname{id}_Z)
-(\rho)$. If this device's $\mathcal E\le\eta$, its trace-norm
-distance to the corresponding ideal joint law is at most $\eta$.
-The evidence rule's chance of accepting a device for which this
-uniform certificate fails is at most $2^{-k}$ under Definition 21.1.
+$$
+\begin{aligned}
+j=0:&\quad -i\sin\theta e_0+\cos\theta e_1,\quad
+                 \cos\theta e_3-i\sin\theta e_4,\\
+j=1:&\quad \cos\theta e_0-i\sin\theta e_1,\quad
+                 -i\sin\theta e_3+\cos\theta e_4.
+\end{aligned}
+\tag{19.19}
+$$
 
-Proof. The original restricted branch is
-$2^{-n/2}BQ_h$ also on one tensor factor of an entangled input.
-Thus the original chronological weights are exactly $p_{h,a}$,
-and the physical composition is (19.4) followed by $\mathcal C$.
-The norm assertion is (20.1) and (19.5). With a fixed memoryless
-installation, conditioning on earlier campaign acceptance does not
-change its later map. Theorem 21.2 supplies the stated error-control
-interpretation of the decision rule. No campaign state or reference
-is substituted for the newly arriving unknown input. $\square$
+For $h=x$ times the first kernel vector plus $y$ times the second,
+let $\alpha=(\sqrt2+1)/\sqrt{12}$ and
+$\beta_0=(\sqrt2-2)/\sqrt{12}$. Substitution gives
 
-Acceptance does not logically prove $\mathcal E\le\eta$, exact
-equality, stationarity or calibration. It does not give
-$\Pr(\mathcal E>\eta\mid\mathrm{accept})\le2^{-k}$ without
-additional prior and acceptance-probability assumptions. It also
-does not certify normalized rare branches or permit access to $Z$.
-Reuse after changing the device, holding duration, kernel, decoder,
-calibration or its repeatability conditions falls outside the certificate.
-Actual call rights are premises with lifetimes, not consequences of a
-norm estimate or of retaining the word “accept”.
+$$
+p^\dagger h=\alpha e^{-i\theta}(x+y)/\sqrt2,\qquad
+ t_{1-j}^\dagger h=\alpha x+\beta_0y,\qquad
+ \alpha-\beta_0=\alpha+|\beta_0|=\sqrt3/2.
+\tag{19.20}
+$$
 
-## 22. Same-installation resources and the remaining source boundary
+Writing $m=x+y$, $n=\alpha x+\beta_0y$, solve
+$x=(n-\beta_0m)/(\alpha-\beta_0)$ and
+$y=(\alpha m-n)/(\alpha-\beta_0)$. Since
+$\sqrt2/\alpha<3$ and $2/(\alpha-\beta_0)<3$, this gives
+$\|h\|\le3(|p^\dagger h|+|t_{1-j}^\dagger h|)$.
+For the orthogonal decomposition $k=h+r$, the singular values imply
+$\|r\|\le\sqrt2\|A_jk\|$. Since $\|p\|=1$ and $\|t_{1-j}\|\le1$,
+the triangle inequality gives (19.18), using $7\sqrt2<10$.
 
-**Definition 22.1 (costs of this campaign and its retained use).**
-Setup is a paid finite resource vector: apparatus preparation and
-calibration, source/terminal controls, the known-state library,
-decoder and any encoder/holding service, record memory and addresses,
-reset facility, controller/code, clocks, workspace and service rights.
-These are installed once for this particular campaign and later call;
-their physical capacities and lifetimes remain charged while retained.
-No evidence trial creates or synthesizes them for free.
+Suppress $\ell$ temporarily in (19.14)–(19.16). Then
+$\|Nq_0\|=\sqrt a$ and $\|p^\dagger N\|=\sqrt b$.
+Decompose
+$t_j^\dagger L=\lambda_jw_j^\dagger+\rho_j$, where
+$\rho_j=t_j^\dagger L(I_3-F_j)$ and $\|\rho_j\|=\sqrt{g_j}$.
+Consequently $t_j^\dagger N=d_jw_j^\dagger+\rho_j$, where
+$d_j=\lambda_j-ce^{i\theta}/\sqrt2$. Evaluating at $q_0$ yields
 
-On a complete $9m$-trial campaign, before any later unknown use,
-the exact operation counts in this interface are
+$$
+|d_j|\le4(\sqrt a+\sqrt{g_j}),\qquad
+\|t_j^\dagger N\|\le4\sqrt a+5\sqrt{g_j}.
+\tag{19.21}
+$$
 
-| Paid operation | Count |
-| --- | --- |
-| Known initial $H$ preparations from (19.1) | $9m$ |
-| Original acquisitions before recovery | $9mn$ |
-| Common recovery invocations | $9m$ |
-| Additional actual acquisitions for configurations $4$ through $9$ | $6m$ |
-| Terminal binary task measurements | $9m$ |
-| Completed post-trial resets, including the last | $9m$ |
+Because $Q_pA_jBw_j=0$,
+$\|Q_pA_jNw_j\|=\sqrt{h_j}$. Adding the $p$ component and then
+applying (19.18) proves
 
-Each of the $9mn+6m$ acquisitions pays one fresh environment
-preparation, interaction, environment measurement and actual label
-acquisition. Complete old-record processing, writes, reads, buffers,
-random seeds, table selection and any archive are charged at their
-actual sizes and lifetimes. The additional $j$ and $y$ outcomes and
-the controller's trial counters and conjunction bit are charged too.
-One may release a trial's records after its event has been evaluated
-and its reset completed; retaining them longer incurs that retention.
-An online conjunction does not erase the old-record resources needed
-by that trial's actual decoder.
+$$
+\begin{aligned}
+\|A_jNw_j\|&\le\sqrt{h_j}+4\sqrt a+5\sqrt{g_j},\\
+\|Nw_j\|&\le52\sqrt a+3\sqrt b+50\sqrt{g_j}
+                  +15\sqrt{g_{1-j}}+10\sqrt{h_j},\\
+\|Nw_j\|^2&\le5538q,\qquad
+52^2+3^2+50^2+15^2+10^2=5538.
+\end{aligned}
+\tag{19.22}
+$$
 
-If the recovery service includes a codec, there are $9m$ encoder
-and $9m$ decoder calls and $9m$ tested holding intervals of the
-specified duration. The coherent $q$-port capacity, physical carrier,
-consumed flag capacity and flag lifetime are separate from the old
-record's memory. The consumed flags are not retained as a free extra
-output or side channel. The campaign's cap bounds the charged trial
-resources and gives rejection on overflow; an early rejection pays
-its incurred setup and prefix costs even if fewer operations complete.
+The last inequality is Cauchy–Schwarz. Taking the trace against the
+frame bound in (19.10), and then summing (19.17), gives
 
-After acceptance the one later unknown-input use pays a further $n$
-original acquisitions, actual record work, one invocation of the same
-recovery and, if present, its encoder, holding interval and decoder.
-It then pays every stage, outcome, control and retained successor of
-the chosen continuation. The immediate task adds one binary test;
-the original labelled one-step task adds one actual acquisition and
-one binary test. Unknown input arrival supplies no known-state
-preparation right for that input. Its inaccessible reference is not
-an installed memory or a usable bypass. Setup resources that remain
-available for these calls retain their actual capacity, service fees
-and lifetime costs. The sum of setup, campaign and later-use resource
-vectors is the cost of this construction; no scalar optimum or
-combination of separately optimal resources is asserted.
+$$
+\begin{aligned}
+\|N_\ell\|_{\mathrm{HS}}^2
+ &\le\tfrac43\bigl(\|N_\ell q_0\|^2+
+             \|N_\ell w_0\|^2+\|N_\ell w_1\|^2\bigr)\\
+ &\le\tfrac43(1+2\cdot5538)q_\ell
+   =\tfrac{44308}{3}q_\ell\le15000q_\ell,\\
+\mathcal R&\le135000\delta.
+\end{aligned}
+\tag{19.23}
+$$
 
-**Proposition 22.2 (a finite effective supplied-control specialization).**
-At $\theta=0$ or $\theta=\pi/6$, fix any finite known $n$.
-Supply exact callable algebraic preparations (19.1), the calibrated
-original instrument and terminal test, a reset library, and the
-inverse-letter/full-$H$ extensions of the acquired controls in
-ERM Theorem 16.1 and §15. With the full chronological record
-$r(a\mid h)=\mathbf1_{a=h}$ and finite backing for its $n$
-bits, the campaign controller and later unknown-input call have a
-finite explicit interface. If these primitive services have supplied
-finite per-call bounds, a finite cap can accommodate every trial.
-An exact recovery instance exists with zero residual; testing arbitrary
-fixed imperfect instances uses Theorem 21.2 rather than an assumed
-ideal decoder.
+This is the residual supplier (13.38), now with
+$\delta_\theta(T)\le\delta_{2,\theta}(T)$. The non-strict endpoint
+includes $q_\ell=0$ and $\delta=0$, with no division by a defect,
+$\sin\theta$, or $\cos\theta$.
 
-Proof. The full-history service records the $n$ labels actually
-obtained. It selects the existing inverse $Q_h^\dagger$ on $R$,
-with the complete full-$H$ extension already used in §§14–15.
-Execution uses $n$ inverse-letter invocations in reverse chronological
-order and then the supplied common output interface; $n=0$ uses
-no inverse or history bits. The existing acquired upper restores
-$B\rho B^\dagger$ with every finite inaccessible reference, so
-(19.2) has zero residual. All preparations (19.1) have algebraic
-coordinates at these two angles. The finite **supplied** library
-includes their physical preparation maps and the inverse letters;
-this is not a claim to synthesize arbitrary algebraic unitaries from
-an unspecified gate set. Integer counters for $m$, the finite record
-and discrete event rule complete the controller. Summing the supplied
-finite bounds for the counts of Definition 22.1 gives a finite cap.
-$\square$
+Next retain the coherent first-order term rather than bounding it
+by $\sqrt{\mathcal R}$. Set
 
-This specialization uses one actual record/control scheme on every
-trial and on later use. It does not combine the smaller single-task
-effect record with a full-word inverse after that record has lost
-information. The six-state full-word permutation accumulator at zero
-angle and the $n$-label implementation at $\pi/6$ are the existing
-ERM/§15 suppliers, not new acquisitions. For other real angles the
-analytical theorem still covers **all** original kernels. Operational
-use requires an actually callable implementation of the chosen one;
-the existence of a finite table at a fixed horizon does not implement
-an arbitrary exact-real table or make an arbitrary countable kernel
-computable. A campaign cap does not give the untruncated later
-service a uniform time or memory bound. Faithful later calls and
-adequate backing remain additional obligations in that case.
+$$
+\begin{gathered}
+s=\sum_\ell|c_\ell|^2,\quad
+M=\sum_\ell\overline{c_\ell}N_\ell,\quad
+D=\sum_\ell N_\ell^\dagger N_\ell,\\
+H_c=(B^\dagger M-M^\dagger B)/(2i),\qquad
+Z=C_\perp^\dagger M,\qquad K=iBH_c+C_\perp Z.
+\end{gathered}
+\tag{19.24}
+$$
 
-Mayer–Knill [arXiv:1805.04491v1](https://arxiv.org/abs/1805.04491v1),
-Theorems 1–3, concerns square channel survival of spanning connected
-pure states and its process-fidelity estimates. Its exact result and
-the private `dual_fixed`, `kraus_commutes_projection` and
-`overlap_scalar` steps of [ProbeComponentRigidity][PCR] are existing
-square suppliers; neither is silently applied to leaked rectangular
-outputs. The rectangular coercivity used here is precisely §13.3.
-The exact full-word/port classification and attained reference law
-are already §§11, 13–15. Theorem 17.1 supplies the optimal uniform
-local exponent on unrestricted full-$H$ outputs, including its lawful
-zero-angle examples; Theorem 18.1 supplies the global linear estimate
-under exact output support in $R$. Neither is left as an open
-obligation. Sections 19–22 retain the former unrestricted output
-domain. Their source-relative increment is the positive residual's
-finite laboratory interface, its complete weighted retained-record use
-and common legal successors, and the paid independent fixed-device
-campaign with later calls. These are `repo-derived` conditional theory
-synthesis from those suppliers, not a replacement proof of their claims
-or a worldwide novelty claim.
+Here $H_c=H_c^\dagger\in M_3(\mathbb C)$ and
+$Z:\mathbb C^3\to\mathbb C^2$. Trace preservation gives
 
-The distinct published source [FIB native paid-point observation
-tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md),
-§§60–65, keeps its native $\lambda=0$, fixed signed $\nu\ne0$
-diffusion, finite fixed Borel report, independent seed and positive-gap
-history. Its live-volume/face-mass certificates and original-law
-occupation-loss boundary do not supply quantum preparations, resets
-or fixed-device stationarity for Definition 21.1. Conversely this
-campaign proves none of those native-source acquisition questions.
-Its known preparations are explicitly added rights on expendable
-specimens, rather than an inverse inferred from documentary agreement.
-The analytic seam and one-face results of
-[FIB native central-noise Green stability](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md),
-§§26–35, already give their uniform modal energy/rank estimates,
-raw unit-pole Green and exit-flux correspondences, and original-clock
-resolvent/semigroup recovery on the declared cylinder. Their boundary
-input is a complex $L^2$ forcing family, with bounded complex-linear
-operator-norm approximation; it is not this finite collection of
-quantum preparation/event trials. The original killed realization and
-the one-face mixed realization also retain their stated distinction.
-Those analytic identities install no forcing, sensing or reset service
-and supply neither the fixed repeatable quantum channel nor the paid
-calibrated controls of Definition 21.1.
+$$
+sI_3+B^\dagger M+M^\dagger B+D=I_3,
+\qquad B^\dagger K+K^\dagger B=0.
+\tag{19.25}
+$$
 
-The contribution relates finite actual observations to the usability
-of one acquired memory interface of the original source. Chronology
-is still its actual acquisition word; the boundary is its complete
-late instrument; retained memory is the old record and the decoded
-quantum specimen with its preserved reference correlations. These
-objects come from one process with the original weights, not separate
-marginal optima. No hidden full-history copy is supplied by the
-comparison index in (19.4). There is no new independent spatial metric
-or incidence view, duration recovery, unknown-calibration acquisition,
-general physical installation or universal alpha/beta reduction here.
-The fixed-apparatus/original-Q, parked-consumer, unchanged-initialization,
-atomic/quantum common-source and unbounded-horizon obligations retain
-their original scopes, as does the original critical causal-memory
-estimate. Their resolution, calibration/retention
-robustness beyond the stipulated model, and practical or total-resource
-parsimony remain outside this finite application. These are analytical
-theory statements; no Lean certification or completion of the continuing
-four-expression programme is asserted.
+For completeness, the Hermitian part of $B^\dagger M$ is
+$((1-s)I_3-D)/2$, so
+$M=B((1-s)I_3-D)/2+K$. Expanding (19.14) therefore gives,
+on every complex $X\in M_3(\mathbb C)$, the exact decomposition
+
+$$
+\begin{aligned}
+T(X)-BXB^\dagger&=\mathcal L_K(X)+\mathcal V(X),\\
+\mathcal L_K(X)&=KXB^\dagger+BXK^\dagger,\\
+\mathcal V(X)&=\sum_\ell N_\ell XN_\ell^\dagger
+                   -\tfrac12B(DX+XD)B^\dagger.
+\end{aligned}
+\tag{19.26}
+$$
+
+Since $\|D\|\le\operatorname{Tr}D=\mathcal R$ and
+$\sum_\ell\|N_\ell\|^2\le\mathcal R$, the trace-norm ideal
+inequality at every finite amplification gives
+
+$$
+\|(\mathcal V\otimes\operatorname{id}_{M_d})(X)\|_1
+ \le2\mathcal R\|X\|_1
+\quad(d\ge1,\ X\in M_3(\mathbb C)\otimes M_d(\mathbb C)).
+\tag{19.27}
+$$
+
+In detail the Kraus sum contributes at most $\mathcal R\|X\|_1$,
+and the two terms involving $D/2$ together contribute at most
+$\mathcal R\|X\|_1$. The explicit adjoint is
+
+$$
+\mathcal V^\dagger(J)=\sum_\ell N_\ell^\dagger JN_\ell
+ -\tfrac12\bigl(DB^\dagger JB+B^\dagger JBD\bigr),\qquad
+\|\mathcal V^\dagger(J)\|\le2\mathcal R\|J\|.
+\tag{19.28}
+$$
+
+Let $b=\delta+2\mathcal R$. For every actual tested positive
+contraction $J$ in (19.3), (19.26)–(19.28) imply
+$\|\mathcal L_K^\dagger(J)\|\le b$.
+
+The additional tests now control $K$ using the full-$H$ geometry.
+Define the isometry $D_0:\mathbb C^2\to\mathbb C^3$ and $F$ by
+
+$$
+D_0(y_0,y_1)=(y_0,-y_1,0),\qquad
+F=e^{-2i\theta W}D_0,\qquad F^\dagger F=I_2.
+\tag{19.29}
+$$
+
+Direct substitution in the full operators (19.2) gives
+
+$$
+K_0C_\perp=BU_0D_0/\sqrt2,\qquad
+K_1C_\perp=-BU_0WD_0/\sqrt2.
+\tag{19.30}
+$$
+
+Thus $A_0C_\perp=BU_0e^{-i\theta W}D_0/\sqrt2
+=BV_0F/\sqrt2$, while
+$A_1C_\perp=-BU_0e^{-i\theta W}WD_0/\sqrt2
+=-BV_1F/\sqrt2$. Together with (19.11) and the orthogonal
+resolution in (19.9), these are the all-five-dimensional identities
+
+$$
+A_j=\tfrac1{\sqrt2}BV_j(B^\dagger+\sigma_jFC_\perp^\dagger),
+\qquad \sigma_0=1,\quad\sigma_1=-1.
+\tag{19.31}
+$$
+
+In particular set
+
+$$
+Q_j=iH_c+\sigma_jFZ,\qquad
+A_jK=BV_jQ_j/\sqrt2,\qquad
+\Gamma_{ji}=V_j^\dagger\Pi_iV_j.
+\tag{19.32}
+$$
+
+Using (19.12) and
+$\mathcal L_K^\dagger(J)=B^\dagger JK+K^\dagger JB$, we obtain
+
+$$
+\mathcal L_K^\dagger(N_{ji})
+ =\tfrac12(\Gamma_{ji}Q_j+Q_j^\dagger\Gamma_{ji}).
+\tag{19.33}
+$$
+
+The first line of (19.13) is an original $y=1$ effect, whereas its
+second line is twice an actual depth-two $y=1$ effect. Therefore
+
+$$
+\begin{aligned}
+\|\Gamma_{j0}Q_j+Q_j^\dagger\Gamma_{j0}\|&\le2b,\\
+\|\Gamma_{ji}Q_j+Q_j^\dagger\Gamma_{ji}\|&\le4b\quad(i=1,2).
+\end{aligned}
+\tag{19.34}
+$$
+
+Both original outcomes also give
+$\|\mathcal L_K^\dagger(A_j^\dagger A_j)\|\le2b$.
+Since this derivative is $(Q_j+Q_j^\dagger)/2$, it follows that
+
+$$
+\|Q_j+Q_j^\dagger\|\le4b.
+\tag{19.35}
+$$
+
+We use the scalar frame estimate (18.13), with its numerical constant
+made explicit. For unit vectors $a_0,a_1,a_2$ satisfying
+$a_i^\dagger a_k=1/4$ for $i\ne k$ and
+$\sum_i a_ia_i^\dagger\succeq3I_3/4$, put
+$\Pi'_i=a_ia_i^\dagger$, and for any complex matrix $J$ define
+
+$$
+\begin{gathered}
+d_i=\|[\Pi'_i,J]\|_{\mathrm{HS}},\quad
+\lambda_i=a_i^\dagger Ja_i,\quad c=\lambda_0,\\
+e_i=(I_3-\Pi'_i)Ja_i,\qquad f_0=a_0^\dagger J(I_3-\Pi'_0).
+\end{gathered}
+\tag{19.36}
+$$
+
+The commutators give $\|e_i\|\le d_i$ and $\|f_0\|\le d_0$.
+The row and column decompositions of $a_0^\dagger Ja_i$ give
+$(\lambda_i-c)/4=f_0a_i-a_0^\dagger e_i$ for $i=1,2$.
+Hence $\|(J-cI_3)a_0\|\le d_0$ and
+$\|(J-cI_3)a_i\|\le4d_0+5d_i$ for $i=1,2$.
+The frame inequality and $(4a+5b)^2\le41(a^2+b^2)$ yield
+
+$$
+\begin{aligned}
+\|J-cI_3\|_{\mathrm{HS}}^2
+ &\le\tfrac43\bigl[d_0^2+(4d_0+5d_1)^2+(4d_0+5d_2)^2\bigr]\\
+ &\le\tfrac43(83d_0^2+41d_1^2+41d_2^2)
+ \le111\sum_{i=0}^2d_i^2.
+\end{aligned}
+\tag{19.37}
+$$
+
+This holds for every $J$, and after any common unitary conjugation
+of the three frame vectors.
+
+Write $Q_j=X_j+iY_j$, where $X_j=X_j^\dagger$ and
+$Y_j=Y_j^\dagger$. Equation (19.35) gives $\|X_j\|\le2b$.
+In (19.34), subtract $\Gamma_{ji}X_j+X_j\Gamma_{ji}$, whose norm
+is at most $4b$. The remaining term is $i[\Gamma_{ji},Y_j]$, so
+
+$$
+\|[\Gamma_{ji},Y_j]\|\le8b\qquad(i=0,1,2).
+\tag{19.38}
+$$
+
+Apply (19.37) to $Y_j$ and $a_i=V_j^\dagger q_i$.
+Since $\|J\|_{\mathrm{HS}}\le\sqrt3\|J\|$ for $3\times3$
+matrices, the real scalar $h_j=a_0^\dagger Y_ja_0$ satisfies
+
+$$
+\begin{aligned}
+\|Y_j-h_jI_3\|
+ &\le\|Y_j-h_jI_3\|_{\mathrm{HS}}
+ \le8\sqrt{999}\,b\le256b,\\
+\|Q_j-ih_jI_3\|&\le258b.
+\end{aligned}
+\tag{19.39}
+$$
+
+Now put $h=(h_0+h_1)/2$ and $a=(h_0-h_1)/2$, both real.
+Adding and subtracting the two estimates in (19.39), and using
+$Q_0=iH_c+FZ$, $Q_1=iH_c-FZ$, gives
+
+$$
+\|H_c-hI_3\|\le258b,\qquad
+\|FZ-iaI_3\|\le258b.
+\tag{19.40}
+$$
+
+The map $Z:\mathbb C^3\to\mathbb C^2$ has rank at most two,
+so it has a unit kernel vector $x$. Applying the second inequality
+to that vector gives $|a|\le258b$. Since $F$ is an isometry,
+
+$$
+\|Z\|=\|FZ\|\le516b,\qquad
+\|K-ihB\|\le\|H_c-hI_3\|+\|Z\|\le774b.
+\tag{19.41}
+$$
+
+The scalar term $ihB$ contributes zero to $\mathcal L_K$, because
+$h$ is real. At every finite amplification and on every complex
+input matrix, the trace-norm ideal inequality therefore gives
+
+$$
+\|(\mathcal L_K\otimes\operatorname{id}_{M_d})(X)\|_1
+ \le2\|K-ihB\|\|X\|_1\le1548b\|X\|_1.
+\tag{19.42}
+$$
+
+Combining (19.23), (19.26), (19.27), and (19.42) proves
+
+$$
+\begin{aligned}
+\|((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(X)\|_1
+ &\le\bigl(1548(\delta+2\mathcal R)+2\mathcal R\bigr)\|X\|_1\\
+ &=\bigl(1548\delta+3098\mathcal R\bigr)\|X\|_1\\
+ &\le(1548+3098\cdot135000)\delta\|X\|_1\\
+ &=418231548\,\delta\|X\|_1.
+\end{aligned}
+\tag{19.43}
+$$
+
+Taking both suprema in (19.7) proves (19.5). All inequalities hold
+at $\delta=0$ and require no smallness, so (19.6) follows with
+$\eta=1/2$. Finally (19.8) retains every effect in (19.3), whence
+$\delta_{m,\theta}(T)\ge\delta_{2,\theta}(T)$ for $m\ge2$;
+substitution in the already global bound proves the stated
+all-depth persistence consequence. $\square$
 
 ## 追加锚（本行以下为增补区）

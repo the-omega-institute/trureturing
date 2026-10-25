@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3233d4abcebb790cb390e720ac32d88f9b6ac265565bfc5c242882556ce1f662
+  normalized_sha256: sha256:3233d4abcebb790cb390e720ac32d88f9b6ac265565bfc5c242882556ce1f662
+cas_ref: sha256:3233d4abcebb790cb390e720ac32d88f9b6ac265565bfc5c242882556ce1f662
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引介时间箭头的候选额外机制清单，并列“只有正时间的半群”这一结构类别，没有断言特定半群存在。
+    previous_atom_id: 0d48346728ea1344526ff534d4a71d482329e02ca84f8e2c37a714b27aa5ddb6
+    next_atom_id: afb644c6465c21cb60d98af37e70ad089c6d6c41cb664601e9bb44167973609e
