@@ -965,3 +965,626 @@ $$
 **定义 6.3（量子结构与取得性边界）。** 本卷保留母卷定义 38.3 的模型假设：复 Hilbert 空间、密度矩阵、CPTP 动力学与组合、Born 效果配对，以及已给的原全深度算子数据。半径分支刻画这些假设下相容预测的最坏风险，不给额外原生操作、效果、标签历史、返回环境、副本或参考控制的取得程序。与中央最小最大关系并存的物理问题仍是：哪些实际取得的关系数据能够控制隐藏的 $\rho_{aa}$ 及母卷 (37.14) 的实相干，同时保持原擦除标签菜单及共同来源条件？本卷的条件数学不把量子结构或该数据取得性作为结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 中央域的实际混合态与严格优化间隙
+
+**定义 7.1（参数、原模型与复数范围）。** 以下沿用定义 1.1–1.2 的原仪器、固定平面 $N$、完整复纤维 $\mathcal K_d$ 及不除以二的风险 $r(d)$。母卷定理 35.4–35.5 的忠实原域提升、任意共同 CPTP 重建的压缩下界及全部有限未触动参考的等号直接适用。§§2–5 和 (III.6.1) 的既有分支直接引用，不重新推导。中央区间仍为 (III.6.2)。本节固定
+
+$$
+d=\frac5{61},\qquad \beta=\frac{56}{61},\qquad
+\lambda=\frac1{1000},\qquad t=\sqrt d,\qquad \chi=\sqrt2.
+\tag{III.7.1}
+$$
+
+$t$ 是原前驱参数，$\lambda$ 是混合权重；后继的正超额另记为 $s=\rho_{aa}-d$。三者不作同一坐标使用。仍令 $\alpha=(2+\chi)/\sqrt{12}$、$\gamma=(2-\chi)/\sqrt{12}$，所以
+
+$$
+k=\alpha a+\gamma h,\qquad \ell=-\gamma a+\alpha h,
+\qquad N=\ell^\perp=\operatorname{span}_{\mathbb C}\{k,g\}.
+$$
+
+定义下列实数和向量：
+
+$$
+\begin{gathered}
+Z_2=\frac{2640+1440\chi}{32269},\qquad
+N_2=Z_2+\beta=\frac{32264+1440\chi}{32269},\qquad
+\zeta=\sqrt{Z_2}=\frac{6\sqrt d(5\alpha+\gamma)}{23},\\
+\nu=\frac{\zeta k+\mathrm i\sqrt\beta\,g}{\sqrt{N_2}},\qquad
+\mu=\frac{4Z_2}{3N_2},\qquad S=\frac{244+16\chi}{253},\\
+x=\sqrt{d-\lambda\mu}-\sqrt d,\qquad b_\lambda=\sqrt d+3x,\\
+u=\frac{\lambda(3+2\chi)\mu}{2\sqrt6\,b_\lambda},\qquad
+v=\sqrt{\beta-\lambda-x^2-u^2},\\
+\psi=\sqrt d\,a+xh+(u+\mathrm iv)g,\qquad
+A=\psi\psi^\dagger,\quad D=\lambda\nu\nu^\dagger,\quad \rho_\lambda=A+D.
+\end{gathered}
+\tag{III.7.2}
+$$
+
+这里 $u$ 为标量，$\nu$ 为单位向量；所有平方根取非负根。此式是母卷 (37.5) 在混合权重 $\lambda$ 的取值，不改变其原平面。正性及分母非零由下面的有理界给出。
+
+**命题 7.2（显式实际 $\mathsf R_+$ 态及原前驱）。** (III.7.2) 定义了原完整 $\mathcal K_{5/61}$ 内的秩二极端态，且
+
+$$
+s=\frac{\lambda\alpha^2 Z_2}{N_2}>0,\qquad
+\det(\rho_{\lambda,\{a,h\}})
+=\frac{\lambda Z_2}{N_2}(\gamma\sqrt d-\alpha x)^2>0,
+\qquad \det\rho_\lambda=\det B_d(\rho_\lambda)=0.
+\tag{III.7.3}
+$$
+
+它有原域 $M_3(\mathbb C)\to M_5(\mathbb C)$ 的 CPTP 前驱，保持全部原深度效果算子数据。这里没有断言它是未知最优中心的接触态。
+
+证明。先给出足够的精确有理界：
+
+$$
+\begin{gathered}
+\frac{1414213}{10^6}<\chi<\frac{1414214}{10^6},\qquad
+\sqrt d>\frac{286299}{10^6},\qquad \sqrt6>\frac{2449489}{10^6},\\
+0<\mu<\frac{181785}{10^6},\qquad
+-\frac{318}{10^6}<x<0,\qquad b_\lambda>\frac{285345}{10^6},\\
+0<u<\frac{758}{10^6},\qquad v>\frac{9576179}{10^7}.
+\end{gathered}
+\tag{III.7.4}
+$$
+
+首行来自正有理数的平方比较。为固定严格裕量，四个平方差分别为
+
+$$
+\begin{gathered}
+2-\left(\frac{1414213}{10^6}\right)^2=\frac{1590631}{10^{12}},\qquad
+\left(\frac{1414214}{10^6}\right)^2-2=\frac{309449}{250000000000},\\
+d-\left(\frac{286299}{10^6}\right)^2=\frac{5838539}{61000000000000},\qquad
+6-\left(\frac{2449489}{10^6}\right)^2=\frac{3638879}{10^{12}}.
+\end{gathered}
+$$
+
+函数 $4(2640+1440z)/(3(32264+1440z))$ 在本区间严格递增；代入 $z=1414214/10^6$，其值与 $181785/10^6$ 的差为 $1761113/3062541800000>0$。特别地 $d-\lambda\mu>0$。置 $a_0=286299/10^6$、$\delta_0=318/10^6$，则
+
+$$
+2a_0\delta_0-\delta_0^2-\frac1{1000}\frac{181785}{10^6}
+=\frac{5001}{25000000000}>0.
+$$
+
+因 $\sqrt d>\delta_0$，这说明 $d-\lambda\mu>(\sqrt d-\delta_0)^2$，给出 $x>-\delta_0$ 及 $b_\lambda>285345/10^6$。代入 $u$ 的正表达式得到
+
+$$
+u<\frac{17658679733}{23298314623500}<\frac{758}{10^6},\qquad
+\frac{758}{10^6}-\frac{17658679733}{23298314623500}
+=\frac{1442751613}{23298314623500000}>0.
+$$
+
+最后
+
+$$
+\beta-\frac1{1000}-\left(\frac{318}{10^6}\right)^2
+-\left(\frac{758}{10^6}\right)^2-\left(\frac{9576179}{10^7}\right)^2
+=\frac{419660699}{6100000000000000}>0,
+$$
+
+所以 $v$ 存在且满足 (III.7.4)。这些比较也排除所有零分母。
+
+由构造 $A,D\succeq0$、$\operatorname{ran}D\subseteq N$，并有
+
+$$
+\|\nu\|^2=1,\qquad \|\psi\|^2=1-\lambda,\qquad
+\operatorname{Tr}\rho_\lambda=1,\qquad a^\dagger Aa=d.
+$$
+
+$\nu^\dagger C\nu=\mu$，故
+
+$$
+\operatorname{Tr}(C\rho_\lambda)=(\sqrt d+x)^2+\lambda\mu=d.
+$$
+
+用定义 1.2 的原 $E$，直接展开给
+
+$$
+16\nu^\dagger E\nu=6-2\chi\mu,\qquad
+b_\lambda^2+6(\beta-\lambda-x^2)=6-5d-\lambda(6+3\mu).
+$$
+
+因此
+
+$$
+\begin{aligned}
+16\operatorname{Tr}(E\rho_\lambda)
+&=b_\lambda^2+6(\beta-\lambda-x^2)
+ +2\sqrt6\,b_\lambda u+\lambda(6-2\chi\mu)\\
+&=6-5d.
+\end{aligned}
+$$
+
+原恒等式 $E+2F=3I/4+3C/8$ 再给 $\operatorname{Tr}(F\rho_\lambda)=(6+11d)/32$，所以没有遗漏原 $F$ 矩。$\ell^\dagger\psi=-\gamma\sqrt d+\alpha x<0$，而 $\nu\in N$，故 $\psi,\nu$ 线性独立，$\rho_\lambda$ 秩二。其 $aa$ 条目和 $ah$ 主行列式展开为 (III.7.3)。因 $D\ell=0$，$B_d(\rho_\lambda)$ 恰为秩一 $A$ 在 $(a,\ell)$ 上的 Gram 矩阵，其 $00$ 条目为 $d$，所以行列式为零。母卷定理 36.2 的原极端层判据于是给 $\rho_\lambda\in\mathsf R_+$。
+
+为写明原五维前驱，记母卷的物理向量为 $p=Bq,c_{\rm ph},b_{\rm ph},k_-$；它们的固定扇区识别满足
+
+$$
+Vp=(a,0),\quad VBr=(h,0),\quad Vc_{\rm ph}=(g,0),\quad
+Vk_-=(0,k),\quad Vb_{\rm ph}=(0,g).
+$$
+
+取
+
+$$
+\eta_+=\sqrt d\,p+xBr+(u+\mathrm iv)c_{\rm ph},\qquad
+\eta_-=\frac{\zeta k_-+\mathrm i\sqrt\beta\,b_{\rm ph}}{\sqrt{N_2}}.
+\tag{III.7.5}
+$$
+
+三个 Kraus 算子 $BP_+$、$\eta_+f^\dagger$、$\sqrt\lambda\,\eta_-f^\dagger$ 的伴随平方和为
+
+$$
+P_++(\|\eta_+\|^2+\lambda\|\eta_-\|^2)ff^\dagger
+=P_++ff^\dagger=I_3.
+$$
+
+故它们定义原域 CPTP 通道 $T_\lambda$。$V\eta_+=(\psi,0)$、$V\eta_-=(0,\nu)$，所以其后继为 $S_{\rho_\lambda}$。这正是母卷 (35.6) 的分扇区提升：$\omega=V^\dagger(A\oplus D)V$，$T_\lambda(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega$。已给的迹、$A_{aa}$、$E,F$ 矩使母卷 (35.3) 的三个完整输入效果算子逐块相等；母卷定理 35.2 的递推给出所有后续深度，故 $T_\lambda\in\mathcal F_{\sqrt d}$。这不是只在某个输入态上相等的提升。∎
+
+**定理 7.3（完整复原风险的定量严格下界）。** 对原擦除标签菜单、原全深度数据、任意共同 CPTP 重建和全部有限未触动参考，
+
+$$
+r\left(\frac5{61}\right)>
+\frac{60}{61}+\frac3{968000000}.
+\tag{III.7.6}
+$$
+
+中心允许为任意复密度矩阵，包括 $\mathcal K_d$ 外的中心。
+
+证明。先在母卷定理 37.2 的纯截面中心 $\bar\sigma$ 取得严格距离，再量化移动中心的代价。令
+
+$$
+\begin{gathered}
+w_0=(a-2h)/\sqrt5,\qquad
+\bar\sigma=\frac{25}{61}w_0w_0^\dagger+\frac{36}{61}gg^\dagger,\qquad
+r_0=\frac{60}{61},\quad c_0=\frac{30}{61},\quad H=\bar\sigma+c_0I,\\
+f_*=\frac{61\sqrt d}{165}(5a+h)+\mathrm i\frac{61\sqrt\beta}{66}g,\qquad
+L=\|f_*\|^2=\frac{1952}{1815},\\
+K=\sqrt{\frac{61}{5445}},\qquad D_0=\sqrt{\frac{854}{1089}},\qquad B_0=\frac{S^2}{N_2}.
+\end{gathered}
+\tag{III.7.7}
+$$
+
+直接代入 $Hf_*=\sqrt d\,a+\mathrm i\sqrt\beta\,g$，所以 $f_*^\dagger Hf_*=1$。由 (III.7.2)，
+
+$$
+|f_*^\dagger\nu|^2=B_0,\qquad
+F_*:=f_*^\dagger\rho_\lambda f_*
+=\left(\frac5{33}+Kx+D_0v\right)^2+D_0^2u^2+\lambda B_0.
+\tag{III.7.8}
+$$
+
+所需另三个严格界为
+
+$$
+0<K<\frac{106}{1000},\qquad
+D_0>\frac{8855538}{10^7},\qquad B_0>\frac{104485}{100000}.
+$$
+
+前两界的平方裕量为 $9001/272250000$、$4372393871/27225000000000000$。第三界由 $\chi$ 的上下界分别代入分子、分母得到
+
+$$
+B_0>\frac{16939455689471509}{16212330653750000},\qquad
+\frac{16939455689471509}{16212330653750000}-\frac{104485}{100000}
+=\frac{4011801643}{32424661307500000}>0.
+$$
+
+由 $x<0$，(III.7.8) 中的实部严格大于正有理数
+
+$$
+W=\frac5{33}-\frac{106}{1000}\frac{318}{10^6}
++\frac{8855538}{10^7}\frac{9576179}{10^7}
+=\frac{1649180962783483}{1650000000000000}>0.
+$$
+
+从而
+
+$$
+\begin{aligned}
+F_*&>W^2+\frac{104485}{100000000}>\frac{20001}{20000},\\
+W^2+\frac{104485}{100000000}-\frac{20001}{20000}
+&=\frac{6327132455939915137611289}{2722500000000000000000000000000}>0.
+\end{aligned}
+\tag{III.7.9}
+$$
+
+Rayleigh 商及迹零 qutrit 恒等式 $\|X\|_1=2\|X\|_{\rm op}$ 给
+
+$$
+\|\rho_\lambda-\bar\sigma\|_1
+>r_0+\frac1{10000L}
+=r_0+\frac{363}{3904000}>r_0+e,\qquad e=\frac1{11000}.
+\tag{III.7.10}
+$$
+
+最后一步的有理差为 $89/42944000>0$。这一步只涉及固定中心，尚不是 (III.7.6)。
+
+现在使用实际纯态对
+
+$$
+P_\pm=\varphi_\pm\varphi_\pm^\dagger,\qquad
+\varphi_\pm=\sqrt{\frac{25}{61}}w_0\pm\mathrm i\sqrt{\frac{36}{61}}g.
+\tag{III.7.11}
+$$
+
+母卷定理 37.2 已给它们的原域提升和可行性。它们的中点是 $\bar\sigma$，$Q=(P_+-P_-)/2$ 满足 $\|Q\|_F^2=r_0^2/2$。对任意迹零复 Hermitian 三阶矩阵 $X$，把谱写为 $p,-u_0,-v_0$、$p=u_0+v_0$、$u_0,v_0\ge0$，或整体反号，得到成熟谱比较
+
+$$
+2\|X\|_F^2\le\|X\|_1^2\le\frac83\|X\|_F^2.
+\tag{III.7.12}
+$$
+
+零特征值也包括在内。若任意复密度 $\sigma$ 到两个 $P_\pm$ 的迹距离都至多为 $R$，Hilbert–Schmidt 平行四边形恒等式给
+
+$$
+\begin{aligned}
+2\|\sigma-\bar\sigma\|_F^2+r_0^2
+&=\|P_+-\sigma\|_F^2+\|P_--\sigma\|_F^2\le R^2,\\
+\|\sigma-\bar\sigma\|_1^2&\le\frac43(R^2-r_0^2).
+\end{aligned}
+\tag{III.7.13}
+$$
+
+该估计没有使用实性、满秩或 $\sigma\in\mathcal K_d$。
+
+取 $R=\max_{\rho\in\mathcal K_d}\|\rho-\sigma\|_1$、$\eta=R-r_0\ge0$。由 (III.7.10)、三角不等式及 (III.7.13)，
+
+$$
+e<\eta+\sqrt{\frac43(2r_0\eta+\eta^2)}.
+$$
+
+右侧在 $\eta\ge0$ 严格递增。解相应的等式，或在 $\eta<e$ 时平方并解二次不等式，得到
+
+$$
+\eta>g(e):=
+\frac{3e^2}{\sqrt{(4r_0+3e)^2+3e^2}+4r_0+3e}.
+\tag{III.7.14}
+$$
+
+若 $\eta\ge e$，同一结论也直接成立。这里
+
+$$
+16-\bigl[(4r_0+3e)^2+3e^2\bigr]=\frac{58322428837}{112560250000}>0,
+\qquad 4-(4r_0+3e)=\frac{43817}{671000}>0.
+$$
+
+所以 (III.7.14) 分母小于 $8$，$g(e)>3e^2/8=3/968000000$。母卷定理 35.5 保证最小密度中心达到；将上述严格估计用于该达到中心即得 (III.7.6)。
+
+对任何原共同 CPTP 重建 $\mathcal R$，不预设其输出支持或 Kraus 秩，母卷定理 35.5 的压缩
+
+$$
+\mathcal C_B(Y)=B^\dagger YB+
+\operatorname{Tr}((I_5-BB^\dagger)Y)gg^\dagger,\qquad
+\sigma=\mathcal C_B(\mathcal R(ff^\dagger))
+$$
+
+产生一个任意许可的复密度中心，并给
+
+$$
+\sup_{T\in\mathcal F_{\sqrt d}}\|\mathcal R-\mathcal GT\|_\diamond
+\ge\max_{\rho\in\mathcal K_d}\|\rho-\sigma\|_1.
+$$
+
+全部有限未触动参考已包含在同一定理的原 diamond 等号和下界内。因此本结论覆盖原通道问题的全部量词，不是纯态、实态或受限重建子问题的优化。∎
+
+## 8. 原完整源上的两个三次包含多项式
+
+**定义 8.1（六实坐标的九个原不等式）。** 对任意 $0<d<1$，令 $\tau=3-2\sqrt2$、$J=\operatorname{diag}(1,1,\sqrt6)$、$G=J^2=\operatorname{diag}(1,1,6)$。对 $\mathbf x=(s,y,w,v,m,n)\in\mathbb R^6$ 置 $z=1-d-s-y$ 以及
+
+$$
+\mathscr R(\mathbf x)=J\rho(\mathbf x)J=
+\begin{pmatrix}
+d+s&-(s+y)/2+\mathrm iv&4s-3w+\mathrm im\\
+-(s+y)/2-\mathrm iv&y&w+\mathrm in\\
+4s-3w-\mathrm im&w-\mathrm in&6z
+\end{pmatrix}.
+\tag{III.8.1}
+$$
+
+令 $U_0=-(s+y)/2+\mathrm iv$、$V_0=4s-3w+\mathrm im$、$W_0=w+\mathrm in$。七个非空主子式和另外两个约束完整写为
+
+$$
+\begin{aligned}
+g_1&=d+s,&g_2&=y,&g_3&=6z,\\
+g_4&=(d+s)y-(s+y)^2/4-v^2,\\
+g_5&=6(d+s)z-(4s-3w)^2-m^2,\\
+g_6&=6yz-w^2-n^2,\\
+g_7&=6(d+s)yz+2\Re(U_0W_0\overline{V_0})
+ -(d+s)(w^2+n^2)-y((4s-3w)^2+m^2)
+ -6z((s+y)^2/4+v^2),\\
+g_8&=s,\\
+g_9&=d(y-\tau^2s)-v^2-\frac{[y+(1+2\tau)s]^2}{4}.
+\end{aligned}
+\tag{III.8.2}
+$$
+
+所有 $g_i$ 都是 $\mathbb Q(\sqrt2,d)$ 上的实多项式，源变量总次数至多三。记 $X_d=\{\mathbf x:g_i(\mathbf x)\ge0, 1\le i\le9\}$。这里 $v,m,n$ 保留全部三个虚相干坐标，不要求为零。
+
+**命题 8.2（源与中心的忠实坐标）。** $\mathbf x\mapsto J^{-1}\mathscr R(\mathbf x)J^{-1}$ 是 $X_d$ 到全部复 $\mathcal K_d$ 的仿射双射，包括低秩边界。可以在优化中选实对称中心，但其全部五个实坐标必须保留：
+
+$$
+\Sigma=J\sigma J=
+\begin{pmatrix}
+a_c&b_c&p_c\\b_c&h_c&q_c\\p_c&q_c&6(1-a_c-h_c)
+\end{pmatrix}\succeq0,\qquad
+\operatorname{Tr}(G^{-1}\Sigma)=1.
+\tag{III.8.3}
+$$
+
+$p_c,q_c$ 分别包含 $ag,hg$ 相干；中心没有源的 $E,C,F$ 矩或 $s\ge0$ 约束。合同变换后的密度条件是加权迹一，不能换成 $\operatorname{Tr}\Sigma=1$。
+
+证明。母卷定理 35.6 已从原矩给出
+
+$$
+\Re\rho_{ah}=-(s+y)/2,\qquad
+\Re\rho_{ag}+3\Re\rho_{hg}=4s/\sqrt6.
+$$
+
+逆坐标为
+
+$$
+(s,y,w,v,m,n)=
+(\rho_{aa}-d,\rho_{hh},\sqrt6\Re\rho_{hg},\Im\rho_{ah},
+\sqrt6\Im\rho_{ag},\sqrt6\Im\rho_{hg}).
+$$
+
+Hermitian 矩阵半正定等价于所有非空主子式非负，故 $g_1,\ldots,g_7$ 正好给 $\rho\succeq0$。$g_8$ 给原超额，且
+
+$$
+B_d(\rho)=
+\begin{pmatrix}d&a^\dagger\rho\ell\\\ell^\dagger\rho a&\ell^\dagger\rho\ell\end{pmatrix},
+\qquad \ell=\alpha(h-\tau a),\qquad \det B_d(\rho)=\alpha^2g_9.
+\tag{III.8.4}
+$$
+
+因 $d>0$，$g_9\ge0$ 等价于该 $B_d$ 半正定，包含其行列式为零的面。于是母卷定理 35.4–35.6 给所述双射及原域提升。$\operatorname{Tr}(G^{-1}\mathscr R)=1$ 自动成立。
+
+$\mathcal K_d$ 对复共轭封闭。对任意复密度 $\sigma$，令 $\sigma_{\mathbb R}=(\sigma+\overline\sigma)/2$；它仍是密度，迹范数凸性及源的共轭对称性给 $\max_\rho\|\rho-\sigma_{\mathbb R}\|_1\le\max_\rho\|\rho-\sigma\|_1$。实对称迹一三阶矩阵有五个自由坐标，经过 $J$ 合同正好得到 (III.8.3)。这只平均中心，并未平均或删减对手。∎
+
+**命题 8.3（正半径的两个三次式恰为全域包含）。** 对 (III.8.3) 的任意候选中心和 $c>0$，置
+
+$$
+q_+(\mathbf x)=\det(\Sigma+cG-\mathscr R(\mathbf x)),\qquad
+q_-(\mathbf x)=\det(\mathscr R(\mathbf x)-\Sigma+cG).
+\tag{III.8.5}
+$$
+
+则在 $X_d$ 上 $q_+\ge0,q_-\ge0$ 恰等价于
+
+$$
+\sigma-cI\preceq\rho\preceq\sigma+cI\quad(\rho\in\mathcal K_d),
+\tag{III.8.6}
+$$
+
+因而恰等价于该中心的原完整风险至多 $2c$。源为任意复态，允许源与包含矩阵的秩退化及相切。
+
+证明。两个行列式分别是 (III.8.6) 上、下侧差矩阵的合同行列式，故必要性立即成立。为证充分性，固定任一源，置 $\Delta=\rho-\sigma$、$T_2=\operatorname{Tr}(\Delta^2)$。$\Delta$ Hermitian 且迹零，所以成熟三阶特征多项式恒等式给
+
+$$
+\frac{q_+}{6}=c^3-\frac c2T_2-\det\Delta,
+\qquad \frac{q_-}{6}=c^3-\frac c2T_2+\det\Delta.
+\tag{III.8.7}
+$$
+
+因 $c>0$，两式非负蕴含 $T_2\le2c^2$。$M_\pm=cI\pm\Delta$ 的三个基本对称系数于是满足
+
+$$
+e_1(M_\pm)=3c>0,\qquad
+e_2(M_\pm)=3c^2-T_2/2\ge2c^2>0,\qquad e_3(M_\pm)\ge0.
+$$
+
+对任何 $z_0>0$，$\det(z_0I+M_\pm)=z_0^3+e_1z_0^2+e_2z_0+e_3>0$。若 $M_\pm$ 有负特征值，取其绝对值作为 $z_0$ 就与此矛盾。因此 $M_\pm\succeq0$，即所需包含。即使 $e_3=0$ 论证仍有效，没有假定行列式严格正。母卷定理 35.5 给原风险等价。
+
+$c=0$ 时这个一般的逐点行列式推序蕴含不成立：取两个密度 $\rho=\operatorname{diag}(1,0,0)$、$\sigma=\operatorname{diag}(0,1,0)$，则 $\Delta=\operatorname{diag}(1,-1,0)$ 的两侧行列式都为零，包含却不成立。此例只说明一般谱蕴含的边界，不声称它属于本源。对实际 $0<d<1$，母卷 (38.2) 的原两世界下界 $r(d)\ge2\sqrt{d(1-d)}>0$ 保证每个最优 $c=r(d)/2$ 严格正，所以 (III.8.5) 适用于全部实际最优值。∎
+
+## 9. 相切全域上证书与有限极端下证书
+
+**定义 9.1（完整输入域与九生成元预序）。** 固定 $d$、五个中心坐标和 $c>0$，令
+
+$$
+K_{\rm in}=\mathbb Q(\sqrt2,d,a_c,b_c,h_c,p_c,q_c,c)
+\subseteq\mathbb R
+$$
+
+带实际实数序。取实数内与该序相容的实闭包 $K_{\rm rc}\subseteq\mathbb R$。系数条件涉及全部这些输入，不只涉及 $d$。在 $K_{\rm rc}[\mathbf x]$ 内定义
+
+$$
+\mathcal P(g)=\left\{
+\sum_{\epsilon\in\{0,1\}^9}\sigma_\epsilon(\mathbf x)
+\prod_{i=1}^9g_i(\mathbf x)^{\epsilon_i}:
+\sigma_\epsilon\text{ 为有限平方和}\right\}.
+\tag{III.9.1}
+$$
+
+共 $2^9=512$ 种平方自由乘积；每个元素在原 $X_d$ 上非负。
+
+**命题 9.2（原两个三次式的相切有限存在接口）。** 对每个固定 $q\in\{q_+,q_-\}$，$q\ge0$ 在 $X_d$ 全域成立，当且仅当存在整数 $m\ge0$ 和 $S_q,T_q\in\mathcal P(g)$，使精确多项式恒等式
+
+$$
+qT_q=q^{2m}+S_q
+\tag{III.9.2}
+$$
+
+成立。可以对源变量的各组成项次数取统一有限上限
+
+$$
+\mathcal B=
+2^{\,2^{\left(2^{\,3^{\,4^6}}+11^{\,2^6}3^{\,2\cdot16^6}\right)}}.
+\tag{III.9.3}
+$$
+
+这是每个固定候选中心、半径和参数的证书存在与恒等式验证接口，不是实际达到中心或实际最优半径的数据。
+
+证明。若存在 (III.9.2)，却有原可行 $\mathbf x$ 满足 $q(\mathbf x)<0$，则左边非正而右边严格正，矛盾。这也包含 $m=0$，其右边含常数一。没有在 $q=0$ 处分母相除，也没有要求 $q$ 严格正。
+
+反向使用 Lombardi–Perrucci–Roy，[*An elementary recursive bound for effective Positivstellensatz and Hilbert 17-th problem*, arXiv:1404.2338v3](https://arxiv.org/html/1404.2338v3) 的定理 1.2.9。其有序系数域取 $K_{\rm in}$，实闭扩张可取 $\mathbb R$；符号条件三元组准确取为
+
+$$
+\mathcal F_{\ne}=\{q\},\qquad
+\mathcal F_{\ge}=\{g_1,\ldots,g_9,-q\},\qquad
+\mathcal F_{=}=\varnothing.
+\tag{III.9.4}
+$$
+
+其实点恰为原源内 $q<0$ 的点。若该集合为空，定理 1.2.9 给不可相容恒等式 $q^{2m}+N_q=0$；无等式理想项。将 $N_q$ 中 $-q$ 的偶次幂吸收进平方项，奇次幂写成 $-q$ 乘偶次幂；同样把各 $g_i$ 的偶次幂吸收进平方项，即得 $N_q=S_q-qT_q$。原定理允许正的 $K_{\rm in}$ 权重乘平方；在 $K_{\rm rc}$ 中吸收其正平方根，得到 (III.9.1)。若 $q$ 恒等为零，可直接取 $m=1,S_q=T_q=0$。
+
+为固定次数及括号，原文定义 1.2.7–1.2.8 将不可相容式的次数定义为单项式乘积部分以及锥、理想中每个组成项的最大总次数，而非仅化简后相消多项式的次数。定理 1.4.2 对 $k$ 个变量、每式次数至多 $D$、按记号 1.3.1 模正负号计数 $s_{\rm pol}$ 的界为
+
+$$
+2^{\,2^{\left(
+2^{\max\{2,D\}^{\,4^k}}
++s_{\rm pol}^{\,2^k}\max\{2,D\}^{\,16^k\operatorname{bit}(D)}
+\right)}}.
+\tag{III.9.5}
+$$
+
+本源 $k=6,D=3,\operatorname{bit}(3)=2$，且 (III.9.4) 的多项式模正负号至多十类，因为 $q,-q$ 属同一类。以十一代入这个单调界是保守上限，恰得 (III.9.3)。分组及把偶次幂吸收进平方不增加组成项次数；因此该界适用于 $q^{2m}$、$S_q$ 及 $qT_q$ 的组成项，也可保守地用于 $T_q$ 的组成项。这里没有 Archimedean 假设、Putinar 层级有限收敛假设、一般位置或严格互补假设。源或目标的相切及秩边界均由同一符号条件包含。
+
+只有全部输入代数时，才可把这里的系数取为实代数数，即代数于 $\mathbb Q$；一般输入对应的是完整有序输入域的实闭包。对代数输入，给出的有限平方和与恒等式可在实代数数的精确运算中验证。对任意没有有效表示的超越输入，存在性不构成有效的精确算术算法。(III.9.3) 虽有限却极大，不给低阶证书、可行计算代价或最优中心。∎
+
+**命题 9.3（至多六个共轭配对极端接触的下界）。** 假设给出 $n\le6$ 个代表
+
+$$
+(\rho_j,\varepsilon_j,v_j,p_j),\qquad
+\rho_j\in\mathcal K_d,\quad\varepsilon_j\in\{+1,-1\},\quad
+v_j\in\mathbb C^3,\quad\|v_j\|=1,\quad p_j\ge0,\quad\sum_jp_j=1.
+$$
+
+每个代表表示 $(\rho_j,v_j)$ 与 $(\overline\rho_j,\overline v_j)$ 的等权配对。定义
+
+$$
+Q_j=\Re(v_jv_j^\dagger),\qquad
+M=\sum_jp_j\varepsilon_jQ_j,\qquad
+A_*=\sum_jp_j\varepsilon_jv_j^\dagger\rho_jv_j.
+\tag{III.9.6}
+$$
+
+若存在实数 $\kappa$ 使
+
+$$
+M\preceq\kappa I,\qquad A_*-\kappa=c,
+\tag{III.9.7}
+$$
+
+则对所有复密度中心 $\theta$ 都有 $\max_{\rho\in\mathcal K_d}\|\rho-\theta\|_1\ge2c$。若同一中心和 $c>0$ 还满足命题 9.2 的两个上证书，则原完整最小最大半径恰为 $2c$。
+
+反之，在每个原实际最优值 $c=r(d)/2>0$，可选实对称最优中心 $\sigma$ 和这样至多六个配对代表，并可令每个 $\rho_j$ 属于母卷的极端层 $\mathsf P\cup\mathsf R_0\cup\mathsf R_+$，满足活动条件
+
+$$
+(\rho_j-\sigma)v_j=\varepsilon_jc\,v_j\quad(p_j>0),\qquad
+(\kappa I-M)\sigma=0.
+\tag{III.9.8}
+$$
+
+允许 $\sigma$ 位于密度正锥的边界，允许重特征值和零接触权重。
+
+证明。对任意复密度 $\theta$，原迹零 qutrit 恒等式及 Rayleigh 原理给
+
+$$
+\frac12\max_{\rho\in\mathcal K_d}\|\rho-\theta\|_1
+\ge\varepsilon_jv_j^\dagger(\rho_j-\theta)v_j.
+$$
+
+对它的共轭代表也成立，配对平均右边为 $\varepsilon_jv_j^\dagger\rho_jv_j-\varepsilon_j\operatorname{Tr}(Q_j\theta)$。再按 $p_j$ 平均，得到
+
+$$
+\frac12\max_{\rho\in\mathcal K_d}\|\rho-\theta\|_1
+\ge A_*-\operatorname{Tr}(M\theta)\ge A_*-\kappa=c.
+\tag{III.9.9}
+$$
+
+实对称 $M\preceq\kappa I$ 同时是复 Hermitian 序，所以最后一步覆盖所有复中心。没有要求 $\theta\in\mathcal K_d$。母卷定理 35.5 将其传至所有原共同 CPTP 重建。
+
+证明存在性时，在五维实仿射空间 $\mathcal A=\{\sigma=\sigma^{\mathsf T}\in M_3(\mathbb R):\operatorname{Tr}\sigma=1\}$ 上考虑
+
+$$
+f(\sigma)=\max_{\rho\in\mathcal K_d,\ \varepsilon=\pm1,\ \|v\|=1}
+\varepsilon v^\dagger(\rho-\sigma)v.
+\tag{III.9.10}
+$$
+
+该函数在整个 $\mathcal A$ 有限、凸且 Lipschitz；只有在密度子集上才将它解释为半迹风险。指标集 $\mathcal K_d\times\{+1,-1\}\times\{v\in\mathbb C^3:\|v\|=1\}$ 紧，指标和仿射函数连续。Boyd–Duchi–Pilanci–Vandenberghe 的作者版 [*Subgradients*](https://web.stanford.edu/class/ee364b/lectures/subgradients_notes.pdf)，§3.5 的紧指标最大值次梯度规则给 $\partial f(\sigma)$ 为活动仿射梯度的凸包。§2.5 的约束最小规则适用，因为 $\operatorname{dom}f=\mathcal A$，最优点在该定义域内部；它可以在密度集边界。于是存在活动梯度的凸组合 $-M$，使
+
+$$
+-\operatorname{Tr}(M(\theta-\sigma))\ge0
+\quad\text{对每个实对称密度 }\theta.
+\tag{III.9.11}
+$$
+
+这里仿射空间的切空间是五维迹零实对称空间，$-M$ 表示梯度在该空间的投影。取 $\kappa=\lambda_{\max}(M)$；实特征向量已达到 $M$ 在全部实密度上的最大期望，所以 (III.9.11) 意味 $\operatorname{Tr}(M\sigma)=\kappa$，并给 $M\preceq\kappa I$。两个正半定矩阵 $\kappa I-M$ 与 $\sigma$ 的乘积迹为零，故乘积为零，得到 (III.9.8) 的第二式。正锥边界的法锥由这个条件承担，不能在边界强加 $M=\kappa I$。
+
+在五维切空间对活动梯度作 Caratheodory 的仿射依赖消去，可保留至多六项：若更多项有正权重，其梯度仿射相关，沿一个保持总权重及梯度的非零权重方向移动至某权重为零，迭代即可。该操作保持投影梯度。重新形成的完整矩阵 $M$ 与原矩阵至多相差一个 $I$ 的倍数，对应地调整 $\kappa$ 即可。每项仍活动，故 $A_*-\operatorname{Tr}(M\sigma)=c$；不需要为 $A_*$ 再增加一个维数。于是 (III.9.7) 成立。
+
+最后对各活动 $(\varepsilon_j,v_j)$，在实际紧凸 $\mathcal K_d$ 上最大化线性泛函 $\rho\mapsto\varepsilon_jv_j^\dagger\rho v_j$。它的暴露面非空，可取该面的极端点；暴露面的极端点也是 $\mathcal K_d$ 的极端点。替换为此点不改变梯度和活动值。母卷定理 36.2 给原三个极端层，且共轭仍保持极端性及活动性。最优全域包含使 $cI-\varepsilon_j(\rho_j-\sigma)\succeq0$；其在 $v_j$ 上期望为零就给第一条 (III.9.8)。全证明不假定中心满秩、接触特征值单重、严格互补或唯一性。∎
+
+**推论 9.4（有理参数的正权 $\mathsf R_+$ 接触义务）。** 在 $d=5/61$，若命题 9.3 的匹配最优下证书选自原三个极端层，则至少一个正权代表属于 $\mathsf R_+$。若不要求极端支持，只能由此推出至少一个正权可行代表满足 $s>0$。
+
+证明。若所有正权代表均在 $\mathcal K_d^0$，母卷定理 37.2 在 $\bar\sigma$ 的完整截面上界给
+
+$$
+A_*-\operatorname{Tr}(M\bar\sigma)
+=\sum_jp_j\varepsilon_jv_j^\dagger(\rho_j-\bar\sigma)v_j\le\frac{30}{61}.
+$$
+
+又 $M\preceq\kappa I$，所以 $A_*-\kappa\le A_*-\operatorname{Tr}(M\bar\sigma)\le30/61$，与定理 7.3 的 $c=r(d)/2>30/61$ 矛盾。因此有正权代表的 $s>0$。在极端层中 $\mathsf P,\mathsf R_0$ 都有 $s=0$，其余恰为 $\mathsf R_+$；未作极端选择时，正超额本身不能推出极端性。命题 7.2 的显式态给出实际 $\mathsf R_+$ 世界，却未被本推论指定为未知最优证书中的某一接触。∎
+
+**命题 9.5（代数输入的存在范围）。** 对代数于 $\mathbb Q$ 的 $0<d<1$，可以在实代数数中选择最优中心、半径、命题 9.2 的两个有限证书及命题 9.3 的匹配接触数据；这个存在性不选出它们的数值或分支。
+
+证明。先在实数内用紧达到性、命题 8.3、9.2–9.3 得到一组匹配数据。固定这组有限证书的幂次、组成项次数、平方项数及接触数。把所有复变量拆成实部和虚部，将恒等式逐系数相等、源的九不等式、中心和 $\kappa I-M$ 的主子式、单位向量、权重、活动等式及 $A_*-\kappa=c>0$ 写成有限多项式符号条件。其系数都在实代数数中，该实闭域存在实数扩张解。若它在实代数数中无解，LPR 定理 1.2.9 的有序扩张等价性将排除实数扩张解，矛盾。故存在实代数数解；两侧匹配证书保证其达到原最优值。该论证并不对任意超越参数给有效表示，也不提供一个已展开的代数中心。∎
+
+## 10. 充分延拓方法的边界与中央缺口
+
+**命题 10.1（原源上的 CP 加余正充分上证书）。** 对任一方向 $\epsilon\in\{+1,-1\}$，若存在完全正映射 $\Phi_3,\Psi_3:M_3\to M_3$、$\Phi_2,\Psi_2:M_2\to M_3$ 及 $T_0\succeq0$，使六实变量上的仿射恒等式
+
+$$
+cI+\epsilon(\sigma-\rho(\mathbf x))
+=\Phi_3(\rho(\mathbf x))+\Psi_3(\rho(\mathbf x)^{\mathsf T})
++sT_0+\Phi_2(B_d(\rho(\mathbf x)))
++\Psi_2(B_d(\rho(\mathbf x))^{\mathsf T})
+\tag{III.10.1}
+$$
+
+成立，则该方向的全复源包含成立。两个方向都成立时给原完整风险上界 $2c$。此为充分证书，不主张每个正确的标量包含都有这种延拓。
+
+证明。原可行源的 $\rho,B_d$ 及其转置都半正定，$s\ge0$；完全正映射尤其正，故右侧半正定。逐仿射系数相等只需常数和六个方向的七个矩阵等式。四个映射的 Choi 矩阵大小依次为 $9\times9,9\times9,6\times6,6\times6$，加上 $3\times3$ 的 $T_0$；这些有限正约束本身只给充分方向。
+
+为说明不能从标量正性跳到完全正性，置
+
+$$
+L(\mathbf x)=\rho(\mathbf x)\oplus s\oplus B_d(\rho(\mathbf x))
+=L_0+\sum_{i=1}^6x_iL_i.
+$$
+
+七个系数线性独立。其任意非零半正定齐次组合 $u_0L_0+\sum x_iL_i$ 的第一块迹为 $u_0$，故 $u_0\ge0$。若 $u_0=0$，第一块半正定且迹零，必须为零；由 (III.8.1) 的独立坐标，所有 $x_i$ 为零，其他块也为零，矛盾。因此 $u_0>0$，除以它就是一个实际可行源。由此原标量包含等价于系数线性映射在该系数张成空间上的正性；延拓到整个 $M_3\oplus\mathbb C\oplus M_2$ 的完全正或可分解映射则是更强要求，没有在此建立其必要性。
+
+Helton–Klep–McCullough，[arXiv:1003.0908v2](https://arxiv.org/html/1003.0908v2)，定理 3.5 针对实对称 monic 线性矩阵束及有界的矩阵层级源域：$n$-正性对应第 $n$ 层包含，完全正性对应全部矩阵层级包含。这里的源坐标是六个经典实数；原物理参考量词已由母卷定理 35.5 的态/diamond 约化处理，不供应将这些坐标替换为任意矩阵的权限。Kellner–Theobald–Trabandt，[arXiv:1308.5076v3](https://arxiv.org/html/1308.5076v3)，命题 4.4、4.7、定理 4.8 同样区分正性、完全正充分条件及标量包含，不能将其充分条件反读为本源的等价条件。
+
+其例 5.1 的一般差别可由精确矩阵直接看出。取标量矩阵束
+
+$$
+A^\nu(x)=\begin{pmatrix}1&0&x_1/\nu\\0&1&x_2/\nu\\x_1/\nu&x_2/\nu&1\end{pmatrix},\qquad
+B(x)=\begin{pmatrix}1+x_1&x_2\\x_2&1-x_1\end{pmatrix}.
+$$
+
+标量域分别为半径 $\nu$ 和一的圆盘，故 $\nu=1$ 时相同。用 Pauli 矩阵 $Z=\operatorname{diag}(1,-1)$、$X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，在第二矩阵层级置 $X_1=\nu Z/\sqrt2,X_2=\nu X/\sqrt2$。源矩阵的 Schur 补为 $I_2-(X_1^2+X_2^2)/\nu^2=0$，所以源仍半正定；目标有特征值 $1-\sqrt2\nu$，在 $\nu=1$ 严格负。因此这个一般标量包含不能有完全正系数匹配。它是方法量词的反例，不是本 $\mathcal K_d$ 的不可延拓证明。
+
+Horodecki–Horodecki–Horodecki，[quant-ph/9605038v2](https://arxiv.org/html/quant-ph/9605038v2)，定理 3 及证明式 (17) 所用的正映射分解只覆盖完整矩阵代数的 $2\to2$、$2\to3$、$3\to2$ 低维情形。源中有一个 $M_2$ 块不意味着受约束的整个直和或 $M_3\to M_3$ 块都有这种正或可分解延拓。故不能由这些定理将 (III.10.1) 与原标量包含认作等价；本节只使用其充分方向。∎
+
+**命题 10.2（逆迹上证书只排除混合上接触）。** 若 $c>0$、$H=\sigma+cI\succ0$，且某密度 $\rho$ 满足 $\rho\preceq H$、$H-\rho$ 奇异、$\operatorname{rank}\rho\ge2$，则
+
+$$
+\operatorname{Tr}(H^{-1}\rho)>1.
+\tag{III.10.2}
+$$
+
+因此要求对全部源有 $\operatorname{Tr}(H^{-1}\rho)\le1$ 的上证书不能同时容纳这样的秩至少二的上接触。该结论不排除混合下接触，也不是所有逆度量证书的不可能性定理。
+
+证明。$W=H^{-1/2}\rho H^{-1/2}$ 满足 $0\preceq W\preceq I$；$H-\rho$ 奇异使 $W$ 有特征值一，秩至少二使另有严格正特征值，故 $\operatorname{Tr}W>1$，即 (III.10.2)。下接触没有前述奇异上差的假设。例如一般密度 $\sigma=\operatorname{diag}(1,0,0)$、$c=1$、$\rho=\operatorname{diag}(0,1/2,1/2)$ 给下接触，$H-\rho\succ0$，而 $\operatorname{Tr}(H^{-1}\rho)=1$。这个方向性例子不声称属于原 $\mathcal K_d$ 或描述其最优中心。∎
+
+**定义 10.3（保留的实际构造问题与物理前提）。** (III.7.6) 是中央域内原完整复问题的定量优化下界，独立于是否已给出实际最优中心。§§8–9 给正确的全域上、下证书接口及有限存在性；它们没有给出 $d=5/61$ 的实际五坐标达到中心、精确半径、两份展开的预序恒等式或匹配接触向量和权重。全中央区间 $d_s<d<2/7$ 的原精确值和全部分支仍待确定；有限存在性不能替代这些具体构造。
+
+数学来源的范围如下：原源、三极端层、原域提升、纯截面及既有分支分别直接消费母卷 §§35–38 与本卷 §§1–6；定理 7.3 的定量原模型推导和 §§8–9 的原源应用为 `repo-derived`。三阶谱代数、平行四边形恒等式、有限维凸几何、上述 LPR 定理、次梯度规则及正映射文献只作为这些应用的成熟中间工具，不单列为新的通用理论，也不作全域文献优先权主张。
+
+复 Hilbert 空间、密度矩阵、Born 效果配对、CPTP 动力学和组合、完整原算子数据与原生取得权限仍是定义 1.1 和 6.3 的供应前提。所有态和原提升保持同一原擦除标签菜单，没有新增标签历史、返回环境、相位控制、制备参考或相关副本权限。母卷 $Q_a$ 的数学存在仍不同于其原生取得。隐藏超额 $s$ 与 $\Re(\rho_{ag}+3\rho_{hg})=4s/\sqrt6$ 的关系刻画一个条件盲区；这些风险与证书结果不推出量子原则的物理起源、经验有效性或信息守恒。
+
+## 追加锚（本行以下为增补区）
