@@ -133,7 +133,10 @@ internal sealed class EntanglementBufferAvailabilityLowerBoundDocument : IScribe
                         + "Replacing the left side of the desired policy comparison by this value "
                         + "and applying the numerical lower bound proves the claim. "
                         + "The zero families are admissible, so they attain the bound."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("inesta-davies-kar-wehner-2026-entanglement-buffer-availability-lower-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula AdmissibleFormula()
     {

@@ -48,6 +48,10 @@ $$\forall \left(n: \mathbb{N}\right), \left(\left(1 \le n\right) \to \left(\fora
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Decoherence/EntanglementBufferAvailabilityLowerBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/inesta-davies-kar-wehner-2026-entanglement-buffer-availability-lower-bound` (proved) by `D5/S3/Quantum/Decoherence/EntanglementBufferAvailabilityLowerBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"inesta-davies-kar-wehner-2026-entanglement-buffer-availability-lower-bound","declaration_gid":"D5/S3/Quantum/Decoherence/EntanglementBufferAvailabilityLowerBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Álvaro G. Iñesta; Bethany Davies; Sounak Kar; Stephanie Wehner (2026). *Entanglement buffering with multiple quantum memories*. DOI: [10.1038/s41534-025-01161-3](https://doi.org/10.1038/s41534-025-01161-3). URL: <https://arxiv.org/abs/2502.20240v1>.
