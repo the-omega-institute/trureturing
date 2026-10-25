@@ -225,7 +225,8 @@ not assigned to the present arbitrary-diagonal law.
 $S\supseteq B$ of marked vertices. Whenever a marked vertex $v$ has
 exactly one unmarked neighbor $w$, mark $w$. Unless $S=V$, such a pair
 exists. Therefore selecting the lexicographically first eligible
-$(\delta(v),\delta(w))$ marks every vertex in exactly $I$ additions.
+$(\delta(v),\delta(w))$ marks every vertex in exactly $I$ additions
+when initially $S=B$.
 
 Proof. Suppose there is no eligible pair and put $U=V\setminus S$.
 If $U\ne\varnothing$, retain the vertices of $U$, all marked vertices
