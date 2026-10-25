@@ -69,10 +69,11 @@ internal sealed class BaumelerTselentisWolfSourceDigraphPolytopeDocument : IScri
             Call("kefalopodaPolytope", n), Eq, Call("sourcePolytope", n)));
     }
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Module + "." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolutionClaim);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Trivial and kefalopoda inequalities describe every source-digraph polytope.",
@@ -86,5 +87,8 @@ internal sealed class BaumelerTselentisWolfSourceDigraphPolytopeDocument : IScri
             Node("claim", "The identity in every dimension", Seq(Named("claim"), Iff, Sp, Parenthesized(ClaimBody())), AssessedProvenance.FromLiterature(Source),
                 "Page 24, after Definition 13: “We know that Q̃_n^src = Q_n^src for n ≤ 4. In general, this identity is unsolved.” The proposition asserts the identity for every natural n ≥ 2, with the three inequality families displayed above.", DescribeRole.Definition),
             Node("result", "The source-digraph polytope identity", ClaimBody(), AssessedProvenance.FromRepo(Source),
-                "The kefalopoda sums bound the sum of the largest incoming coordinates by n − 1. Their complementary slacks give probabilities for the source vertex. Zeroing that source column and rescaling the others expresses each point as a convex mixture of fixed-source unit boxes. Each box is the convex hull of its zero-one source digraphs. For n = 2 the kefalopoda inequality and nonnegativity already imply the coordinate upper bounds.", DescribeRole.Theorem))));
+                "The kefalopoda sums bound the sum of the largest incoming coordinates by n − 1. Their complementary slacks give probabilities for the source vertex. Zeroing that source column and rescaling the others expresses each point as a convex mixture of fixed-source unit boxes. Each box is the convex hull of its zero-one source digraphs. For n = 2 the kefalopoda inequality and nonnegativity already imply the coordinate upper bounds.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baumeler-tselentis-wolf-2025-source-digraph-polytope"),
+                    ResolutionKind.Proved)))));
 }

@@ -58,6 +58,10 @@ $$\forall n: \mathbb{N}, 2\leq n\implies\operatorname{kefalopodaPolytope}\left(n
 
 *Proof.* Machine-checked in Lean as `D5/S0/FiniteGeometry/Polytopes/BaumelerTselentisWolfSourceDigraphPolytope.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/baumeler-tselentis-wolf-2025-source-digraph-polytope` (proved) by `D5/S0/FiniteGeometry/Polytopes/BaumelerTselentisWolfSourceDigraphPolytope.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"baumeler-tselentis-wolf-2025-source-digraph-polytope","declaration_gid":"D5/S0/FiniteGeometry/Polytopes/BaumelerTselentisWolfSourceDigraphPolytope.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ämin Baumeler; Eleftherios-Ermis Tselentis; Stefan Wolf (2025). *Graphical Tests of Causality*. DOI: [10.1016/j.jlamp.2026.101133](https://doi.org/10.1016/j.jlamp.2026.101133). URL: <https://arxiv.org/abs/2511.22552v1>.
