@@ -24,11 +24,11 @@ $$\forall m : \mathbb{N}, (\forall n : \mathbb{N}, (\forall alpha : \mathbb{C}, 
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.wignerFockUpper` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Zacharie Van Herstraeten; Jack Davis; Nuno C. Dias; João N. Prata; Nicolas J. Cerf; Ulysse Chabaud (2025). *Extreme non-negative Wigner functions*. URL: <https://arxiv.org/abs/2512.14831v3>.
 
 *Commentary.*
 
-The upper-branch Fock expression has natural indices m and n and a complex phase-space coordinate. Its natural subtraction is truncated. The function wignerFock uses this expression when m is at most n and conjugates the reversed expression otherwise.
+Appendix A.1, Eq. (48), gives the upper-branch Fock expression for natural indices m and n and a complex phase-space coordinate. Its natural subtraction is truncated. The function wignerFock uses this expression when m is at most n and conjugates the reversed expression otherwise.
 
 **Definition 1.3 (wignerFock).**
 

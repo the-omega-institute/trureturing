@@ -23,7 +23,7 @@ internal sealed class FiniteFockBeamSplitterNonExtremalityDocument : IScribeDocu
             Node("wignerFockUpper", All("m", Nat(), All("n", Nat(), All("alpha", Complex(),
                 Eqn(Call("wignerFockUpper", Id("m"), Id("n"), Id("alpha")),
                     FockUpper(Id("m"), Id("n"), Id("alpha")))))),
-                "The upper-branch Fock expression has natural indices m and n and a complex phase-space coordinate. Its natural subtraction is truncated. The function wignerFock uses this expression when m is at most n and conjugates the reversed expression otherwise.", AssessedProvenance.FromRepo()),
+                "Appendix A.1, Eq. (48), gives the upper-branch Fock expression for natural indices m and n and a complex phase-space coordinate. Its natural subtraction is truncated. The function wignerFock uses this expression when m is at most n and conjugates the reversed expression otherwise.", AssessedProvenance.FromLiterature(Source)),
             Node("wignerFock", All("m", Nat(), All("n", Nat(), All("alpha", Complex(),
                 Eqn(Call("wignerFock", Id("m"), Id("n"), Id("alpha")),
                     Call("ite", Leqn(Id("m"), Id("n")),

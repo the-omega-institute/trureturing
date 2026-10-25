@@ -10,8 +10,10 @@ internal sealed class VacuumOnePhotonWignerMajorizationDocument : IScribeDocumen
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Vacuum and one-photon mixtures form two oppositely ordered chains meeting at one half.", H("Vacuum and one-photon Wigner-majorization chains"), Blocks(
-            Node("mixtureWigner", All("u", Real(), All("x", Real(), All("p", Real(), Eqn(Call("mixtureWigner", Id("u"), Id("x"), Id("p")), Div(Call("Complex.re", Call("D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality.wigner", Call("Matrix.diagonal", Call("Matrix.vecCons", Call("Complex.ofReal", Sub(D(1), Id("u"))), Call("Matrix.vecCons", Call("Complex.ofReal", Id("u")), Qualified("Matrix.vecEmpty")))), PhasePoint())), D(2)))))),
-                "Page 16, Eq. (100): “W̃_u(r) = (1 − u) W_{|0⟩}(r) + u W_{|1⟩}(r)”, with “u ∈ [0, 1]”. The expression is defined for real u; the two chain statements restrict the physical interval. The matrix wigner function evaluates the diagonal state with entries 1−u and u at the complex coordinate (x+i*p)/sqrt(2); its real part divided by two has the oscillator normalization displayed in the source. Matrix.vecCons and Matrix.vecEmpty display the two diagonal entries explicitly.", false, AssessedProvenance.FromLiterature(Source)),
+            Node("fockWigner", All("n", Nat(), All("x", Real(), All("p", Real(), Eqn(Call("fockWigner", Id("n"), Id("x"), Id("p")), SourceFock(Id("n")))))),
+                "Page 16, Eq. (99): “W_{|n⟩}(x,p) = ((−1)ⁿ/π) e^{−(x²+p²)} Lₙ(2(x²+p²))”. The ordinary Laguerre polynomial is genLaguerre 0 n. The variables x and p are real oscillator coordinates.", false, AssessedProvenance.FromLiterature(Source)),
+            Node("mixtureWigner", All("u", Real(), All("x", Real(), All("p", Real(), Eqn(Call("mixtureWigner", Id("u"), Id("x"), Id("p")), Add(Mul(Sub(D(1), Id("u")), Call("fockWigner", D(0), Id("x"), Id("p"))), Mul(Id("u"), Call("fockWigner", D(1), Id("x"), Id("p")))))))),
+                "Page 16, Eq. (100): “W̃_u(r) = (1 − u) W_{|0⟩}(r) + u W_{|1⟩}(r)”, with “u ∈ [0, 1]”. The expression is defined for real u; the two chain statements restrict the physical interval.", false, AssessedProvenance.FromLiterature(Source)),
             Node("levelFunctional", All("W", Arrow(Real(), Arrow(Real(), Real())), All("t", Real(), Eqn(Call("levelFunctional", Id("W"), Id("t")), Integral("r", Seq(Real(), Times, Real()), null, Call("max", Sub(Call("abs", At(Id("W"), Call("Prod.fst", Id("r")), Call("Prod.snd", Id("r")))), Id("t")), D(0)))))),
                 "Page 16, Eq. (97): “I_t[|W_ρ̂|] ≡ ∫ [|W_ρ̂(r)| − t]₊ dr”. The positive part is max with zero and the integral uses product Lebesgue measure on the actual plane.", false, AssessedProvenance.FromLiterature(Source)),
             Node("WignerMajorizes", All("W1", Arrow(Real(), Arrow(Real(), Real())), All("W2", Arrow(Real(), Arrow(Real(), Real())), Eqn(Call("WignerMajorizes", Id("W1"), Id("W2")), All("t", Real(), Imp(Leqn(D(0), Id("t")), Leqn(Call("levelFunctional", Id("W2"), Id("t")), Call("levelFunctional", Id("W1"), Id("t")))))))),
@@ -30,9 +32,8 @@ internal sealed class VacuumOnePhotonWignerMajorizationDocument : IScribeDocumen
 
     private static Formula ClaimBody() => And(All("u", Real(), All("v", Real(), Imp(Leqn(Div(D(1), D(2)), Id("u")), Imp(Leqn(Id("u"), Id("v")), Imp(Leqn(Id("v"), D(1)), Call("WignerMajorizes", SourceMixture(Id("v")), SourceMixture(Id("u")))))))), All("u", Real(), All("v", Real(), Imp(Leqn(D(0), Id("u")), Imp(Leqn(Id("u"), Id("v")), Imp(Leqn(Id("v"), Div(D(1), D(2))), Call("WignerMajorizes", SourceMixture(Id("u")), SourceMixture(Id("v")))))))));
 
-    private static Formula PhasePoint() => Div(Call("Complex.mk", Id("x"), Id("p")), Call("Complex.ofReal", Call("Real.sqrt", D(2))));
     private static Formula SourceFock(Formula n) => Mul(Mul(Div(Pow(Negate(D(1)), n), Qualified("Real.pi")), Call("Real.exp", Negate(Add(Pow(Id("x"), D(2)), Pow(Id("p"), D(2)))))), Call("D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality.genLaguerre", D(0), n, Mul(D(2), Add(Pow(Id("x"), D(2)), Pow(Id("p"), D(2))))));
-    private static Formula SourceMixture(Formula u) => Parenthesized(Seq(LambdaLower, Sp, Id("x"), Sp, Id("p"), Sp, Colon, Sp, Real(), Sp, Mapsto, Sp, Add(Mul(Sub(D(1), u), SourceFock(D(0))), Mul(u, SourceFock(D(1))))));
+    private static Formula SourceMixture(Formula u) => Call("mixtureWigner", u);
 
     private static Formula Id(string name) => FormulaDsl.Id(name);
     private static Formula Qualified(string name)
@@ -62,6 +63,7 @@ internal sealed class VacuumOnePhotonWignerMajorizationDocument : IScribeDocumen
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Negate(Formula a) => new Formula.Negate(Parenthesized(a));
     private static Formula Real() => Seq(Mathbb, Grp(Id("R")));
+    private static Formula Nat() => Seq(Mathbb, Grp(Id("N")));
     private static Formula Integral(string name, Formula type, Formula? domain, Formula body) =>
         Seq(Int, Underscore, Grp(Seq(Id(name), Colon, type,
             domain is null ? Seq() : Seq(Sp, InMacro, Sp, domain))), Sp, Parenthesized(body));

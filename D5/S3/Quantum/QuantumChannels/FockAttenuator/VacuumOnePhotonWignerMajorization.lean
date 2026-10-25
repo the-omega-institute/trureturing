@@ -9,7 +9,7 @@
 admission_basis: open-problem-resolution (#18571; Proved)
 result: proof_shape: content;
   escape_witness: D5.S3.Analytic.Convexity.DerivativeHingeMajorization.boundary_cancellation; consumers: settling result.
-Definitions mixtureWigner, levelFunctional, WignerMajorizes and claim:
+Definitions fockWigner, mixtureWigner, levelFunctional, WignerMajorizes and claim:
   proof_shape: bind-only; escape_witness: none; consumers: result.
 Private definition k: proof_shape: bind-only; escape_witness: none;
   consumers: k_cont, h_deriv, k_integrable, concrete_cancel, concrete_rays, mixture_closed.
@@ -27,7 +27,8 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 Reused generalized-Laguerre owner: genLaguerre in
   D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality;
   declaration statement_id: sha256:36d2ffef3a187d3a6769cb89e6d335dbe51d43c43d11a375c91235c9ecf9b30f.
-The claim states the source Wigner expressions literally; the proof uses the normalized
+The public Fock and mixture definitions use the oscillator formulas, and the claim uses
+  mixtureWigner; the proof uses the normalized
   matrix wigner owner on the diagonal state through the consumed fock_correspondence and
   mixture_correspondence equalities.
 fock_correspondence: proof_shape: bind-only; escape_witness: none;
@@ -46,10 +47,14 @@ open MeasureTheory Set Filter
 open scoped Topology
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality (genLaguerre wignerFock wignerFockUpper wigner)
 
+/-- Page 16, Eq. (99): the Fock Wigner function in oscillator coordinates. -/
+noncomputable def fockWigner (n : ℕ) (x p : ℝ) : ℝ :=
+  (-1 : ℝ) ^ n / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) *
+    genLaguerre 0 n (2 * (x ^ 2 + p ^ 2))
+
 /-- Page 16, Eq. (100): `W̃_u = (1 - u) W_{|0⟩} + u W_{|1⟩}`. -/
 noncomputable def mixtureWigner (u : ℝ) (x p : ℝ) : ℝ :=
-  (wigner (K := 1) (Matrix.diagonal ![((1 - u : ℝ) : ℂ), (u : ℂ)])
-    ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2
+  (1 - u) * fockWigner 0 x p + u * fockWigner 1 x p
 
 /-- Page 16, Eq. (97): `I_t[|W|] = ∫ [|W(r)| - t]₊ dr` over the phase space `ℝ²`. -/
 noncomputable def levelFunctional (W : ℝ → ℝ → ℝ) (t : ℝ) : ℝ :=
@@ -62,12 +67,15 @@ def WignerMajorizes (W₁ W₂ : ℝ → ℝ → ℝ) : Prop :=
 /-- Section V.A.1: the members of the family `W̃_u` with `1/2 ≤ u ≤ 1` form a Wigner-majorization
 chain increasing in `u`, and those with `0 ≤ u ≤ 1/2` form a chain decreasing in `u`. -/
 def claim : Prop :=
-  (∀ u v : ℝ, 1 / 2 ≤ u → u ≤ v → v ≤ 1 → WignerMajorizes (fun x p : ℝ => ((1 - v) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + v * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2))))) (fun x p : ℝ => ((1 - u) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + u * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2)))))) ∧
-  (∀ u v : ℝ, 0 ≤ u → u ≤ v → v ≤ 1 / 2 → WignerMajorizes (fun x p : ℝ => ((1 - u) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + u * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2))))) (fun x p : ℝ => ((1 - v) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + v * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2))))))
+  (∀ u v : ℝ, 1 / 2 ≤ u → u ≤ v → v ≤ 1 →
+    WignerMajorizes (mixtureWigner v) (mixtureWigner u)) ∧
+  (∀ u v : ℝ, 0 ≤ u → u ≤ v → v ≤ 1 / 2 →
+    WignerMajorizes (mixtureWigner u) (mixtureWigner v))
 
 private lemma fock_correspondence (n : ℕ) (x p : ℝ) :
-    ((-1 : ℝ) ^ n / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 n (2 * (x ^ 2 + p ^ 2))) =
+    fockWigner n x p =
       (wignerFock n n ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2 := by
+  unfold fockWigner
   have hn : ‖((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))‖ ^ 2 = (x ^ 2 + p ^ 2) / 2 := by
     rw [Complex.sq_norm, Complex.normSq_div, Complex.normSq_ofReal, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
     simp only [Complex.normSq_mk, sq]
@@ -83,9 +91,11 @@ private lemma fock_correspondence (n : ℕ) (x p : ℝ) :
   ring
 
 private lemma mixture_correspondence (u x p : ℝ) :
-    ((1 - u) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + u * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2)))) = mixtureWigner u x p := by
+    (wigner (K := 1) (Matrix.diagonal ![((1 - u : ℝ) : ℂ), (u : ℂ)])
+    ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2 = mixtureWigner u x p := by
+  unfold mixtureWigner
   rw [fock_correspondence 0 x p, fock_correspondence 1 x p]
-  simp [mixtureWigner, wigner, Fin.sum_univ_two, Matrix.diagonal, Complex.mul_re]
+  simp [wigner, Fin.sum_univ_two, Matrix.diagonal, Complex.mul_re]
   ring
 
 private noncomputable def k (s : ℝ) : ℝ := (1 - s) * Real.exp (-s)
@@ -123,14 +133,16 @@ private lemma concrete_rays (T : ℝ) (hT : 0 ≤ T) :
     (fun s hs => mul_nonneg hs.le (Real.exp_pos _).le) T c hT (concrete_cancel T)
 
 private lemma mixture_closed (u x p : ℝ) :
-    mixtureWigner u x p =
+    (wigner (K := 1) (Matrix.diagonal ![((1 - u : ℝ) : ℂ), (u : ℂ)])
+    ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2 =
       ((x ^ 2 + p ^ 2) * Real.exp (-(x ^ 2 + p ^ 2)) + (1 - 2 * u) * k (x ^ 2 + p ^ 2)) / Real.pi := by
-  rw [← mixture_correspondence u x p]
-  simp [genLaguerre, Finset.sum_range_succ, k]
+  rw [mixture_correspondence u x p]
+  simp [mixtureWigner, fockWigner, genLaguerre, Finset.sum_range_succ, k]
   ring
 
 private lemma level_reduction (u t : ℝ) :
-    levelFunctional (mixtureWigner u) t = D5.S3.Analytic.Convexity.DerivativeHingeMajorization.hingeIntegral (fun s : ℝ => s * Real.exp (-s)) k (Real.pi * t) (1 - 2 * u) := by
+    levelFunctional (fun x p : ℝ => (wigner (K := 1) (Matrix.diagonal ![((1 - u : ℝ) : ℂ), (u : ℂ)])
+    ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2) t = D5.S3.Analytic.Convexity.DerivativeHingeMajorization.hingeIntegral (fun s : ℝ => s * Real.exp (-s)) k (Real.pi * t) (1 - 2 * u) := by
   unfold levelFunctional
   simp_rw [mixture_closed, abs_div, abs_of_pos Real.pi_pos]
   have alg (A : ℝ) : max (|A| / Real.pi - t) 0 =
@@ -143,9 +155,10 @@ private lemma level_reduction (u t : ℝ) :
   field_simp
 
 theorem result : claim := by
-  have hm (u : ℝ) : (fun x p : ℝ => ((1 - u) * ((-1 : ℝ) ^ 0 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 0 (2 * (x ^ 2 + p ^ 2))) + u * ((-1 : ℝ) ^ 1 / Real.pi * Real.exp (-(x ^ 2 + p ^ 2)) * genLaguerre 0 1 (2 * (x ^ 2 + p ^ 2))))) = mixtureWigner u := by
+  have hm (u : ℝ) : mixtureWigner u = (fun x p : ℝ => (wigner (K := 1) (Matrix.diagonal ![((1 - u : ℝ) : ℂ), (u : ℂ)])
+    ((⟨x, p⟩ : ℂ) / (Real.sqrt 2 : ℂ))).re / 2) := by
     funext x p
-    exact mixture_correspondence u x p
+    exact (mixture_correspondence u x p).symm
   unfold claim
   simp_rw [hm]
   constructor
