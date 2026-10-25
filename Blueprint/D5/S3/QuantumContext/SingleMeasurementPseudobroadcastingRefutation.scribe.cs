@@ -112,7 +112,10 @@ internal sealed class SingleMeasurementPseudobroadcastingRefutationDocument : IS
                         "Finally, apply the asserted equivalence with d = 2, k = 1, t = T and a = A. "
                             + "The subtheory and single-generator properties supply its hypotheses, and the one-copy map supplies its pseudo-broadcasting side. "
                             + "Its noncontextual side contradicts the bound just proved. Thus the equivalence fails already for one finite qubit POVM."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jokinen-et-al-2024-k-measurement-pseudobroadcasting"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock DefinitionNode(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(
