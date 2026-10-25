@@ -565,6 +565,7 @@ private unsafe def saveProbeCache (directory : System.FilePath) (identity : Stri
   let before ← getEnv
   -- Owner initializers may register new extensions. A fresh import initializes
   -- their default state before the small dependency module is serialized.
+  enableInitializersExecution
   let publicationBase ← importModules
     #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
     options 0 (leakEnv := false) (loadExts := true)
@@ -595,6 +596,7 @@ private unsafe def replayProbeCache (directory : System.FilePath) (identity : St
     throwError "search.probe_cache_identity_mismatch"
   let module := s!"SearchReductionEvidence_{hash identity}"
   let paths ← searchPathRef.get
+  enableInitializersExecution
   let source ← try
     searchPathRef.modify (directory :: ·)
     importModules #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands},
