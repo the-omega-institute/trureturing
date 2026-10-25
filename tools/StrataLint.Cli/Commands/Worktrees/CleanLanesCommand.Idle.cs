@@ -13,6 +13,11 @@ internal static partial class CleanLanesCommand
         var idle = inventory.Where(item => WorktreePoolCommand.IsIdleBranch(item.Branch)).ToArray();
         var handled = idle.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
         if (idle.Length == 0) return handled;
+        void PoolFailure(string reason)
+        {
+            events.Add(new CleanLaneEvent("idle_pool", null, null, null, "failed", reason));
+            completeRemoval(inventory[0], new LaneRemovalResult(LaneRemovalOutcome.PoolSweepFailed, reason));
+        }
         if (dev is null)
         {
             foreach (var item in idle)
@@ -30,13 +35,7 @@ internal static partial class CleanLanesCommand
         {
             var reason = result.Error.Trim().Replace("WORKTREE_RETAINED ", string.Empty, StringComparison.Ordinal);
             if (reason.Length == 0) reason = "idle_pool_unavailable";
-            foreach (var item in idle)
-            {
-                handled.Add(item.Path);
-                var failure = new LaneRemovalResult(LaneRemovalOutcome.PoolSweepFailed, reason);
-                events.Add(RemovalEvent(item, failure) with { Kind = "idle_worktree" });
-                completeRemoval(item, failure);
-            }
+            PoolFailure(reason);
             return handled;
         }
         using var document = JsonDocument.Parse(result.Output);
@@ -93,13 +92,13 @@ internal static partial class CleanLanesCommand
             });
             if (outcome != "retained" || reason != "idle_pool") completeRemoval(item, removal);
         }
-        if (failed && !reportedFailure)
+        if (document.RootElement.TryGetProperty("failure", out var poolFailure))
         {
-            var failure = new LaneRemovalResult(LaneRemovalOutcome.PoolSweepFailed,
-                "idle_pool_failed:" + result.Error.Trim());
-            events.Add(RemovalEvent(inventory[0], failure) with { Kind = "idle_pool" });
-            completeRemoval(inventory[0], failure);
+            PoolFailure(poolFailure.GetProperty("stage").GetString() + ":"
+                + poolFailure.GetProperty("error").GetString());
         }
+        else if (failed && !reportedFailure)
+            PoolFailure("idle_pool_failed:" + result.Error.Trim());
         return handled;
     }
 }

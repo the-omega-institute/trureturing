@@ -5,6 +5,7 @@ from io import StringIO
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 from unittest.mock import patch
@@ -12,6 +13,92 @@ import uuid
 
 
 class IdlePoolCases:
+    def implicit_requests_allocate_distinct_trees(self):
+        for name in ("lake-manifest.json", "Reg/lakefile.toml", "Reg/lake-manifest.json",
+                     "tools/lean-inspector-reg/lakefile.toml", "tools/lean-inspector-reg/lake-manifest.json"):
+            target = self.main / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(self.source_root / name, target)
+        self.g(self.main, "add", ".")
+        self.g(self.main, "commit", "-m", "Creation pins")
+        self.base = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "push", "origin", "dev")
+        self.g(self.tree, "reset", "--hard", self.base)
+        self.pool_return()
+        idle = self.g(self.tree, "branch", "--show-current").strip()
+        holder = self.hold("--operation", "idle-pool") if self.implicit_pool_busy else None
+
+        def command(name, exact=None):
+            args = ["dotnet", self.implicit_cli, "worktree", "--source", str(self.main),
+                    "--kind", "math", "--name", name, "--base", self.base,
+                    "--path", str(exact or self.root / ("trureturing-" + name)), "--skip-restore"]
+            return args if exact else args + ["--prefer-idle"]
+
+        jobs = [subprocess.Popen(command("implicit-" + str(i)), cwd=self.main,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for i in range(2)]
+        self.jobs.extend(jobs)
+        self.jobs_settled = False
+        results = [(job.communicate(timeout=30), job.returncode) for job in jobs]
+        self.assertEqual([0, 0], [code for _, code in results], results)
+        receipts = [json.loads(output) for (output, _), _ in results]
+        self.assertEqual(2, len({row["path"] for row in receipts}), receipts)
+        self.assertEqual(0 if holder else 1, sum(row["status"] == "claimed" for row in receipts), receipts)
+        for i, receipt in enumerate(receipts):
+            self.assertEqual("lane/math/implicit-" + str(i), receipt["branch"])
+            self.assertEqual(receipt["branch"], self.g(receipt["path"], "branch", "--show-current").strip())
+            self.assertEqual(self.base, self.g(receipt["path"], "rev-parse", "HEAD").strip())
+            if receipt["status"] != "claimed":
+                self.assertEqual("succeeded", receipt["status"])
+                self.assertEqual(str(self.root / ("trureturing-implicit-" + str(i))), receipt["path"])
+                if holder:
+                    self.assertEqual("busy_scope:operation:idle-pool", receipt["idle_claim_fallback"])
+        if holder:
+            exact = self.run_owned_command(command("exact-busy", self.tree), self.main,
+                                           phase="exact-claim", timeout=30, check=False)
+            self.assertEqual(73, exact.returncode, exact.stdout + exact.stderr)
+            self.assertIn("WORKTREE_RETAINED busy_scope:operation:idle-pool", exact.stderr)
+            self.assertEqual(idle, self.g(self.tree, "branch", "--show-current").strip())
+            self.assertEqual("", self.g(self.main, "for-each-ref", "--format=%(refname)",
+                                        "refs/heads/lane/math/exact-busy"))
+            holder.communicate("done\n", timeout=10)
+            claimed = json.loads(self.run_owned_command(command("after-busy"), self.main,
+                                  phase="implicit-claim", timeout=30).stdout)
+            self.assertEqual("claimed", claimed["status"])
+            self.assertEqual(str(self.tree), claimed["path"])
+        inventory = self.g(self.main, "worktree", "list", "--porcelain")
+        for i in range(2):
+            self.assertEqual(1, inventory.count("branch refs/heads/lane/math/implicit-" + str(i) + "\n"))
+
+    def pool_implicit_claim_busy_has_no_allocation(self):
+        self.pool_return()
+        idle = self.g(self.tree, "branch", "--show-current").strip()
+        holder = self.hold("--operation", "idle-pool")
+        result = json.loads(self.pool_claim().stdout)
+        self.assertEqual("no_idle", result["status"])
+        self.assertEqual("busy_scope:operation:idle-pool", result["reason"])
+        self.assertEqual(idle, self.g(self.tree, "branch", "--show-current").strip())
+        self.assertEqual("", self.g(self.main, "for-each-ref", "--format=%(refname)", "refs/heads/lane/math/next"))
+        self.assertIn("busy_scope:operation:idle-pool", self.pool_claim(path=self.tree, expect=73).stderr)
+        holder.communicate("done\n", timeout=10)
+        self.assertEqual("claimed", json.loads(self.pool_claim().stdout)["status"])
+
+    def pool_scope_contention_has_no_tree_effect(self):
+        self.pool_return()
+        holder = self.hold("--operation", "idle-pool")
+        for force in (False, True):
+            result = json.loads(self.run_protocol("pool", "--dev", self.base,
+                *(["--force"] if force else []), expect=74).stdout)
+            self.assertEqual("failed", result["status"])
+            self.assertEqual([], result["items"])
+            self.assertEqual("operation:idle-pool", result["failure"]["scope"])
+            self.assertEqual("pool_scope", result["failure"]["stage"])
+            self.assertEqual("busy_scope:operation:idle-pool", result["failure"]["error"])
+            self.assertEqual("refused", result["failure"]["outcome"])
+            self.assertTrue(self.tree.exists())
+        holder.communicate("done\n", timeout=10)
+        result = json.loads(self.run_protocol("pool", "--dev", self.base).stdout)
+        self.assertEqual("succeeded", result["status"])
+
     def pool_github(self, **changes):
         payload = dict(state="MERGED", baseRefName="dev", headRefName=self.branch,
                        headRefOid=self.base, mergeCommit=dict(oid=self.base), autoMergeRequest=None)
