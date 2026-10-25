@@ -721,8 +721,10 @@ class NativeColdPublicationTests:
         self.assertEqual({str(path.relative_to(library)) for path in library.rglob('*.olean')}, {
             'Inspector.olean', 'LeanInformationAudit/RawArtifacts.olean',
             'LeanInformationAudit/CompiledMetadata.olean', 'LeanInformationAudit/CompiledAxioms.olean',
-            'LeanInformationAudit/Contract/SourceAudit.olean', 'LeanInformationAudit/Contract/Literal.olean',
-            'LeanInformationAudit/Sha256.olean', 'LeanInformationAudit/Contract/InputDiscovery.olean'})
+            'LeanInformationAudit/Contract/SourceAudit.olean', 'LeanInformationAudit/Contract/InputDiscovery.olean'})
+        self.assertEqual({path.name for path in library.parent.iterdir()}, {'lean'})
+        self.assertFalse((self.root / '.lake/build/ir').exists())
+        self.assertEqual({path.name for path in (self.root / '.lake/build/lean-inspector').iterdir()}, {'producer'})
         self.assertFalse((self.root / '.lake/build/reg').exists())
         self.assertFalse((self.root / 'Reg/.lake/build').exists())
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
