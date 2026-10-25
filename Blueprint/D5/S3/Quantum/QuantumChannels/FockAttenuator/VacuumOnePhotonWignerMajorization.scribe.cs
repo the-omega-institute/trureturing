@@ -28,7 +28,9 @@ internal sealed class VacuumOnePhotonWignerMajorizationDocument : IScribeDocumen
         Describe.Lean(DescribeId.Create("vacuumonephotonwignermajorization-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition,
-            null);
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("de-boer-di-giulio-keski-vakkuri-tonni-2024-wigner-majorization-chains"),
+                ResolutionKind.Proved) : null);
 
     private static Formula ClaimBody() => And(All("u", Real(), All("v", Real(), Imp(Leqn(Div(D(1), D(2)), Id("u")), Imp(Leqn(Id("u"), Id("v")), Imp(Leqn(Id("v"), D(1)), Call("WignerMajorizes", SourceMixture(Id("v")), SourceMixture(Id("u")))))))), All("u", Real(), All("v", Real(), Imp(Leqn(D(0), Id("u")), Imp(Leqn(Id("u"), Id("v")), Imp(Leqn(Id("v"), Div(D(1), D(2))), Call("WignerMajorizes", SourceMixture(Id("u")), SourceMixture(Id("v")))))))));
 
