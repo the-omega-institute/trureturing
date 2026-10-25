@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
+import D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
@@ -21,6 +22,7 @@ open scoped BigOperators ComplexOrder Kronecker _root_.Matrix
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.Quantum.FiniteDimensional (qubitZ qubit_weyl_star)
+open D5.S3.Quantum.Foundation
 open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (sigma sigma_posDef mixedState)
 open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence (s2)
 
@@ -94,7 +96,6 @@ def claim : Prop :=
     ∀ j x, Complex.normSq (V.val j x) = 1 / (d : ℝ)
 
 private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, qubitZ, (2 : ℂ) • qubitZ]
-private def systemState : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1/2, 1/3, 1/6]
 private def measurementRaw : Matrix (Fin 3) (Fin 3) ℂ :=
   !![s2, s2, 0; s2, -s2, 0; 0, 0, 1]
 
@@ -139,23 +140,20 @@ private theorem projector_formula (x : Fin 3) :
 
 private theorem states_valid :
     sigma.PosSemidef ∧ Matrix.trace sigma = 1 ∧
-    systemState.PosSemidef ∧ Matrix.trace systemState = 1 ∧
-    (∀ i j, i ≠ j → systemState i j = 0) ∧ systemState ≠ (1 / (3 : ℂ)) • 1 := by
+    FuchsLogarithmBasisRefutation.rho0.PosSemidef ∧
+    Matrix.trace FuchsLogarithmBasisRefutation.rho0 = 1 ∧
+    (∀ i j, i ≠ j → FuchsLogarithmBasisRefutation.rho0 i j = 0) ∧
+    FuchsLogarithmBasisRefutation.rho0 ≠ (1 / (3 : ℂ)) • 1 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact sigma_posDef.posSemidef
   · exact mixedState.property.2
-  · unfold systemState
-    apply Matrix.PosSemidef.diagonal
-    intro i
-    fin_cases i <;> norm_num [Complex.le_def]
-  · unfold systemState
-    rw [Matrix.trace_diagonal]
-    norm_num [Fin.sum_univ_succ]
+  · exact FuchsLogarithmBasisRefutation.rho0_posDef.posSemidef
+  · exact FuchsLogarithmBasisRefutation.rho0_trace
   · intro i j hij
     exact Matrix.diagonal_apply_ne _ hij
   · intro h
     have hh := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) h
-    unfold systemState at hh
+    unfold FuchsLogarithmBasisRefutation.rho0 at hh
     norm_num at hh
 
 private theorem blocks_hermitian : ∀ j, (blocks j).IsHermitian := by
@@ -214,30 +212,31 @@ private theorem evolution_entries (t : ℝ)
       ring
 
 private theorem initial_stationary (t : ℝ) :
-    unitaryEvolution (propagator blocks t) (systemState ⊗ₖ sigma) =
-      systemState ⊗ₖ sigma := by
+    unitaryEvolution (propagator blocks t) (FuchsLogarithmBasisRefutation.rho0 ⊗ₖ sigma) =
+      FuchsLogarithmBasisRefutation.rho0 ⊗ₖ sigma := by
   ext ⟨i, b⟩ ⟨j, c⟩
   rw [evolution_entries]
-  unfold systemState sigma
+  unfold FuchsLogarithmBasisRefutation.rho0 sigma
   fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
     norm_num [Matrix.kronecker_apply, Matrix.diagonal_apply]
 
 private theorem post_measurement (x : Fin 3) :
-    luders measurement x (systemState ⊗ₖ sigma) =
+    luders measurement x (FuchsLogarithmBasisRefutation.rho0 ⊗ₖ sigma) =
       ![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ sigma) := by
   unfold luders
   rw [projector_formula, ← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul,
     one_mul, mul_one, ← Matrix.smul_kronecker]
   congr 1
   ext i j
-  change (∑ k : Fin 3, (∑ l : Fin 3, projectors x i l * systemState l k) *
+  change (∑ k : Fin 3, (∑ l : Fin 3, projectors x i l * FuchsLogarithmBasisRefutation.rho0 l k) *
     projectors x k j) = ![(5/12 : ℂ), 5/12, 1/6] x * projectors x i j
-  unfold projectors systemState
+  unfold projectors FuchsLogarithmBasisRefutation.rho0
   fin_cases x <;> fin_cases i <;> fin_cases j <;>
     norm_num [Fin.sum_univ_succ, Matrix.diagonal_apply]
 
 private theorem one_time (t : ℝ) (y : Fin 3) :
-    prob1 blocks sigma systemState measurement 0 y t = ![(5/12 : ℂ), 5/12, 1/6] y := by
+    prob1 blocks sigma FuchsLogarithmBasisRefutation.rho0 measurement 0 y t =
+      ![(5/12 : ℂ), 5/12, 1/6] y := by
   unfold prob1
   rw [initial_stationary, post_measurement, Matrix.trace_smul, Matrix.trace_kronecker]
   unfold Matrix.trace projectors sigma
@@ -267,7 +266,8 @@ private theorem luders_trace (y : Fin 3)
   rw [projector_formula, Matrix.trace_mul_cycle, ← Matrix.mul_kronecker_mul, hp, one_mul]
 
 private theorem two_time (t₁ t₂ : ℝ) (x y : Fin 3) :
-    prob2 blocks sigma systemState measurement 0 y t₂ x t₁ = jointLaw (t₂ - t₁) y x := by
+    prob2 blocks sigma FuchsLogarithmBasisRefutation.rho0 measurement 0 y t₂ x t₁ =
+      jointLaw (t₂ - t₁) y x := by
   unfold prob2
   rw [initial_stationary, post_measurement, luders_trace]
   have he : unitaryEvolution (propagator blocks (t₂ - t₁))
@@ -286,7 +286,8 @@ private theorem two_time (t₁ t₂ : ℝ) (x y : Fin 3) :
     norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, Matrix.kroneckerMap_apply,
       neg_mul, mul_comm ((t₂ - t₁ : ℝ) : ℂ) Complex.I] <;> ring
 
-private theorem consistency : twoClassical blocks sigma systemState measurement 0 := by
+private theorem consistency :
+    twoClassical blocks sigma FuchsLogarithmBasisRefutation.rho0 measurement 0 := by
   intro t₁ t₂ _ _
   refine ⟨?_, ?_, ?_⟩
   · simp only [one_time]
@@ -300,7 +301,8 @@ private theorem consistency : twoClassical blocks sigma systemState measurement 
     unfold jointLaw
     fin_cases x <;> norm_num [Fin.sum_univ_succ] <;> ring
 
-private theorem dependence : timeDependent blocks sigma systemState measurement 0 := by
+private theorem dependence :
+    timeDependent blocks sigma FuchsLogarithmBasisRefutation.rho0 measurement 0 := by
   refine ⟨0, 0, 0, Real.pi, le_refl _, le_refl _, le_refl _, Real.pi_pos.le, 0, 0, ?_⟩
   rw [two_time, two_time]
   unfold jointLaw
@@ -323,7 +325,7 @@ private theorem biased : Complex.normSq (measurement.val 2 0) ≠ 1 / (3 : ℝ) 
 theorem result : ¬ claim := by
   intro h
   obtain ⟨hσ, htσ, hρ, htρ, hd, hn⟩ := states_valid
-  exact biased (h 3 2 blocks sigma systemState measurement 0 blocks_hermitian
+  exact biased (h 3 2 blocks sigma FuchsLogarithmBasisRefutation.rho0 measurement 0 blocks_hermitian
     hσ htσ hρ htρ hd hn incompatible consistency dependence 2 0)
 
 end
