@@ -8,7 +8,6 @@
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Positivity
 
 /-! Ordinary product overlaps and the q-symmetric span for three qubits. -/
