@@ -14,6 +14,15 @@ triage: anchor
 
 # Self-conjugate even polynomials
 
+## Verified locator
+
+Source: https://arxiv.org/html/2610.31475v1#Thmconj2
+
+The verified scope is arXiv:2610.31475v1, Section 2, Conjecture 2,
+on PDF page 4 immediately after Theorem 9. The definition of self-conjugacy
+and the literal iff are quoted below; the even/constant ambiguity and bounded
+known-answer limits below remain part of this source reading.
+
 ## Source statement
 
 The versioned source is https://arxiv.org/html/2610.31475v1#Thmconj2.

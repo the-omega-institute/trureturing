@@ -14,6 +14,17 @@ triage: anchor
 
 # Translation-invariant polynomial algebra
 
+## Verified locator
+
+DOI: https://doi.org/10.1016/j.ffa.2017.08.004
+
+Source: https://arxiv.org/abs/1609.07677v2
+
+The verified mathematical scope is Section 5 of arXiv:1609.07677v2:
+in characteristic p, translation-invariant polynomials have the form
+f(X^p-X). This is the existing invariant-algebra result credited below,
+not a prior settlement of the named sparse-power iff.
+
 The source is https://arxiv.org/abs/1609.07677v2, Section 5, also published
 in Finite Fields and Their Applications 48, 271–288,
 DOI https://doi.org/10.1016/j.ffa.2017.08.004.
