@@ -115,8 +115,8 @@ private lemma attenuation_of_conditioned
 theorem result : claim := by
   intro d m n A B _hm _hn hA hB h x y
   exact ⟨attenuation_of_conditioned A hA (B y) (hB.1 y).isHermitian
-      (1 / n) (by simp [IsSelfAdjoint]) (h.1 y) x,
+      (1 / n) (by unfold IsSelfAdjoint; simp) (h.1 y) x,
     attenuation_of_conditioned B hB (A x) (hA.1 x).isHermitian
-      (1 / m) (by simp [IsSelfAdjoint]) (h.2 x) y⟩
+      (1 / m) (by unfold IsSelfAdjoint; simp) (h.2 x) y⟩
 
 end D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation
