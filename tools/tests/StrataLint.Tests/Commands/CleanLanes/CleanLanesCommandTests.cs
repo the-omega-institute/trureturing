@@ -195,15 +195,15 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(removed));
         Assert.True(fixture.BranchExists(removedBranch));
         var retainedItem = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == retained);
-        Assert.Equal("failed", retainedItem.GetProperty("action").GetString());
-        Assert.StartsWith("qualification_failed:", retainedItem.GetProperty("reason").GetString());
-        Assert.Contains("synthetic worktree removal failure", retainedItem.GetProperty("reason").GetString());
+        Assert.Equal("partially_removed", retainedItem.GetProperty("action").GetString());
+        Assert.Equal("worktree_remove_failed_state_indeterminate", retainedItem.GetProperty("reason").GetString());
+        Assert.Contains("synthetic worktree removal failure", retainedItem.GetProperty("diagnostic").GetString());
         Assert.Contains(ReadItems(result.Output), item =>
             ItemMatches(item, removed, "removed", "merged_to_dev"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
         var summary = ReadSummary(result.Output);
-        Assert.Equal(0, summary.GetProperty("partial_count").GetInt32());
-        Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
+        Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
+        Assert.Equal(0, summary.GetProperty("failed_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
     }

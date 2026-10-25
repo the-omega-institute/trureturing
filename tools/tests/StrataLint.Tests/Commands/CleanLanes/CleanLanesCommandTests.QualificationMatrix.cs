@@ -114,11 +114,15 @@ public sealed partial class CleanLanesCommandTests
         AssertQualificationPublicExit(result, force, 2);
         Assert.True(Directory.Exists(lane));
         var reason = ReasonFor(result.Output, lane);
-        Assert.StartsWith("qualification_failed:", reason);
-        if (failure == "traceback") Assert.Contains("OSError: causal qualification diagnostic", reason);
+        var indeterminate = stage == "remove" && failure != "unavailable";
+        Assert.StartsWith(indeterminate ? "worktree_remove_failed_state_indeterminate" : "qualification_failed:", reason);
+        var item = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == lane);
+        if (failure == "traceback") Assert.Contains("OSError: causal qualification diagnostic",
+            indeterminate ? item.GetProperty("diagnostic").GetString() : reason);
         Assert.True(reason.Length < 10000);
-        Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, "failed", reason));
-        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal(indeterminate ? "partially_removed" : "failed", item.GetProperty("action").GetString());
+        Assert.Equal(indeterminate ? 0 : 1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal(indeterminate ? 1 : 0, ReadSummary(result.Output).GetProperty("partial_count").GetInt32());
         Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
     private static void AssertQualificationPublicExit(CommandResult result, bool force, int expected)
