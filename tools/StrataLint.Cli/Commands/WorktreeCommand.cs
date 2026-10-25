@@ -10,7 +10,8 @@ internal sealed record WorktreeOptions(
     string Path,
     string Base,
     string Source,
-    bool SkipRestore);
+    bool SkipRestore,
+    bool PreferIdle = false);
 
 internal static class WorktreeCommand
 {
@@ -33,6 +34,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree checkpoint --message-file FILE | "
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
+        + "StrataLint worktree return --pr N --writers-joined | "
         + "StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
@@ -70,7 +72,7 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize")
+        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return")
             return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
@@ -111,11 +113,20 @@ internal static class WorktreeCommand
         var stage = "preflight";
         int? failureExitCode = null;
         IDisposable? initializationScope = null;
+        string? idleClaimFallback = null;
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
+            var attachedPath = WorktreePoolCommand.FindAttachedTaskPath(options, runner);
+            if (attachedPath is not null)
+                options = options with { Path = attachedPath };
+            else
+            {
+                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback);
+                if (claimed is not null) return claimed;
+            }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
                 BoundedProcessRunner.HangDetectionBudget).ExitCode == 0)
@@ -197,6 +208,7 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                idle_claim_fallback = idleClaimFallback,
             }) + "\n";
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
@@ -385,11 +397,15 @@ internal static class WorktreeCommand
         var baseRevision = "origin/dev";
         var source = repositoryRoot;
         var skipRestore = false;
+        var preferIdle = false;
 
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
+                case "--prefer-idle" when !preferIdle:
+                    preferIdle = true;
+                    break;
                 case "--skip-restore" when !skipRestore:
                     skipRestore = true;
                     break;
@@ -425,7 +441,8 @@ internal static class WorktreeCommand
             System.IO.Path.GetFullPath(path),
             baseRevision,
             System.IO.Path.GetFullPath(source),
-            skipRestore);
+            skipRestore,
+            preferIdle);
     }
 
     private static string ReadValue(
@@ -584,7 +601,7 @@ internal static class WorktreeCommand
         return "initialization material retained for same-DEST recovery or reclaim";
     }
 
-    private static CommandResult RecoverInitialization(WorktreeOptions options,
+    internal static CommandResult RecoverInitialization(WorktreeOptions options,
         IWorktreeProcessRunner runner, string? token = null)
     {
         var arguments = new List<string> { "recover-init", "--path", options.Path,

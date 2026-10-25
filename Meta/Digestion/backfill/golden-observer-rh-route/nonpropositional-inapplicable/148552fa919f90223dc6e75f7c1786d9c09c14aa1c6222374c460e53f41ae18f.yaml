@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:148552fa919f90223dc6e75f7c1786d9c09c14aa1c6222374c460e53f41ae18f
+  normalized_sha256: sha256:148552fa919f90223dc6e75f7c1786d9c09c14aa1c6222374c460e53f41ae18f
+cas_ref: sha256:148552fa919f90223dc6e75f7c1786d9c09c14aa1c6222374c460e53f41ae18f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Γ_Li 是有限 Li 系数和 Weil–Li 字典路线的标签，未宣告字典成立。
+    previous_atom_id: 71a05d846724624fc2509a0d0ee0788d1a8c7e6e8ea74d4962068f729bbed9d5
+    next_atom_id: 9ca783c29fdedb533395f5db9a893f392ef8873ea637b840d015f7a1dc6c492b

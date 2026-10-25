@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:023f66fd9571c60e95888575cf20a182da527fa1fe26227e358368844a805ce5
+  normalized_sha256: sha256:023f66fd9571c60e95888575cf20a182da527fa1fe26227e358368844a805ce5
+cas_ref: sha256:023f66fd9571c60e95888575cf20a182da527fa1fe26227e358368844a805ce5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 五类无限是术语分类，未断言任何指定类型、覆盖族或阶段序满足相应无限性质。
+    previous_atom_id: 8943e7e3079b1faf9bfd1666998f1f6d2d42fd10c0598d5c776bf71902a65081
+    next_atom_id: 33893faa72bd7b7968e9d23724a055ebe757b088eedf1adc97f0e7ac84233eb5

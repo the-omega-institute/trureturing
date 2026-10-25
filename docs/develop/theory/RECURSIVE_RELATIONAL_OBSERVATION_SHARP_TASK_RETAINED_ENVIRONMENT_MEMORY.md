@@ -4185,3 +4185,793 @@ substitution in the already global bound proves the stated
 all-depth persistence consequence. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Global linear stability after erasing only the first acquisition label
+
+**Theorem 24.1 (All-angle linear stability from the actual first-label-erased depth-two effects; repo-derived).**
+Keep exactly Definitions 1.1, 1.2 and 11.1 and the model of
+Theorem 19.1, as in revision
+`18a1747aed2fed3feeec42c090ed9bd2f299bbde`, inherited from
+`34fd39ed3a39104806b0ec0f202750f3f552689f`.
+In particular $B:\mathbb C^3\to\mathbb C^5$ is the specified isometry,
+$E=q_0q_0^\dagger$, $P=BEB^\dagger$, $P_1=P$ and $P_0=I_5-P$
+are exactly (19.1). For every fixed known real $\theta$, use exactly
+the actual full-$H$ acquisition operators $A_j(\theta)$ in (19.2),
+including their action outside $\operatorname{ran}B$.
+For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$ with unrestricted output, retain
+the original five-effect defect
+
+$$
+\delta_{1,\theta}(T)=\max\Bigl\{
+\|T^\dagger(P)-E\|_{\mathrm{op}},
+\max_{j,y\in\{0,1\}}
+\|T^\dagger(A_j^\dagger P_yA_j)-B^\dagger A_j^\dagger P_yA_jB\|_{\mathrm{op}}
+\Bigr\}.
+\tag{24.1}
+$$
+
+Erase only the first acquisition label $j$, retaining the second
+label $k$ and the final outcome $y$, by defining
+
+$$
+\begin{aligned}
+D_{k,y}&=\sum_{j=0}^1(A_kA_j)^\dagger P_y(A_kA_j),\\
+\delta_{\mathrm{erased},\theta}(T)
+&=\max\Bigl\{\delta_{1,\theta}(T),
+\max_{k,y\in\{0,1\}}
+\|T^\dagger(D_{k,y})-B^\dagger D_{k,y}B\|_{\mathrm{op}}\Bigr\}.
+\end{aligned}
+\tag{24.2}
+$$
+
+Then, uniformly over all stipulated $\theta$ and $T$,
+
+$$
+\|T-\operatorname{Ad}_B\|_\diamond
+ \le6000000000000\,\delta_{\mathrm{erased},\theta}(T),
+\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{24.3}
+$$
+
+In particular the local implication holds with constants
+$C=6000000000000$ and $\eta=1/2$, independent of $\theta,T$.
+The diamond norm is full and unhalved: it takes the supremum over
+all finite untouched, inaccessible reference spaces and every nonzero
+complex amplified input matrix, as in (19.7). The effect errors are
+uniform over all qutrit input density matrices and concern the actual
+raw joint weights. No output-support, normalized conditional-branch,
+new-detector, quantum-feedback or unknown-calibration hypothesis is
+introduced; no resource-minimum or physical-realization conclusion is
+part of the statement.
+
+Proof. Write $\delta=\delta_{\mathrm{erased},\theta}(T)$ and $q=q_0$.
+All spaces are complex; vector norms are Euclidean and unlabelled
+matrix norms are operator norms. Use $C_\perp$ from (19.9),
+$w_0=q_1,w_1=q_2$ from (19.10), and the finite rectangular Kraus
+family and residuals $c_\ell,N_\ell,\mathcal R$ of (19.14).
+The five-effect residual argument (19.14)–(19.23) uses only the
+original immediate and one-step effects. It therefore applies directly
+with $\delta_{1,\theta}(T)$, without any separately labelled depth-two
+hypothesis, and gives
+
+$$
+\mathcal R=\sum_\ell\|N_\ell\|_{\mathrm{HS}}^2
+ \le135000\,\delta_{1,\theta}(T)\le135000\delta.
+\tag{24.4}
+$$
+
+Use $M,D,Z,K$ from (19.24) and write $H=H_c$, so that
+$K=iBH+C_\perp Z$. Trace preservation gives exactly the decomposition
+(19.26), on every complex input matrix, with the amplified and adjoint
+bounds (19.27)–(19.28). Thus, setting $b=\delta+2\mathcal R$, for
+each of the nine actual tested effects $J_{\mathrm{test}}$,
+
+$$
+\|\mathcal L_K^\dagger(J_{\mathrm{test}})\|\le b,
+\qquad
+\|(\mathcal V\otimes\operatorname{id}_{M_d})(Y)\|_1
+ \le2\mathcal R\|Y\|_1.
+\tag{24.5}
+$$
+
+Each tested effect is a positive contraction because the actual
+acquisition is trace preserving; this includes each $D_{k,y}$.
+The second inequality holds for every finite $d$ and every complex
+$Y\in M_3(\mathbb C)\otimes M_d(\mathbb C)$.
+The finite Kraus representation is the standard finite-dimensional
+CP-map representation; the quantitative residual supplier is precisely
+(19.14)–(19.28), rather than the separately labelled conclusion (19.5).
+
+Let $U=U_0$ and $W$ be the permutation matrices of (1.4): $U$ swaps
+qutrit coordinates $1,2$ and $W$ swaps coordinates $0,1$.
+Put $V_0=Ue^{i\theta W}$, $V_1=V_0W$,
+$D_0(y_0,y_1)=(y_0,-y_1,0)$ and $F=e^{-2i\theta W}D_0$.
+Direct multiplication of the full physical matrices gives
+
+$$
+A_j=2^{-1/2}BV_j(B^\dagger+\sigma_jFC_\perp^\dagger),
+\qquad \sigma_0=1,\quad\sigma_1=-1,\qquad F^\dagger F=I_2.
+\tag{24.6}
+$$
+
+In particular $X=FZ$ has image in
+$L=\operatorname{span}\{(1,0,0),(0,1,0)\}$.
+Put $Q_j=iH+\sigma_jX$. The two original outcomes for each $j$
+and the immediate effect imply
+
+$$
+\|X+X^\dagger\|\le4b,\qquad \|[E,H]\|\le b.
+\tag{24.7}
+$$
+
+Indeed the derivative of $A_j^\dagger A_j$ is
+$(Q_j+Q_j^\dagger)/2$, and the immediate effect is $P$.
+Let $L$ also denote the orthogonal projection onto that subspace and set
+
+$$
+J=\frac{L(X-X^\dagger)L}{2i},\qquad
+H'=EHE+(I_3-E)H(I_3-E),\qquad
+h=q^\dagger Hq,\qquad H_0=H'-hI_3.
+\tag{24.8}
+$$
+
+Then $J$ is Hermitian, supported on $L$, and
+
+$$
+\|X-iJ\|\le6b,\qquad \|H-H'\|\le b,\qquad
+\|Q_j-i(H'+\sigma_jJ)\|\le7b.
+\tag{24.9}
+$$
+
+For the first bound the Hermitian part of $LXL$ has norm at most
+$2b$, and $XL^\perp=L(X+X^\dagger)L^\perp$ has norm at most $4b$.
+For the second the norm of the off-diagonal $E$ block of Hermitian
+$H$ equals the norm of $[E,H]$.
+
+Write $\Pi_0=E$, $\Pi_{j+1}=w_jw_j^\dagger$, and define
+$\Gamma_{ji}=V_j^\dagger\Pi_iV_j$ and
+$N_{ji}=A_j^\dagger B\Pi_iB^\dagger A_j$.
+Identity (24.6) gives
+
+$$
+\mathcal L_K^\dagger(N_{ji})
+ =\tfrac12(\Gamma_{ji}Q_j+Q_j^\dagger\Gamma_{ji}),\qquad
+D_{k,1}=\tfrac12\sum_jN_{j,k+1}.
+\tag{24.10}
+$$
+
+The original success effects and (24.9) give
+
+$$
+\|[\Pi_{j+1},H_0+\sigma_jJ]\|\le16b.
+\tag{24.11}
+$$
+
+To use only available erased effects, set $S_2=D_{0,1}+D_{1,1}$.
+Its derivative has norm at most $2b$. In (24.10), replacing $Q_j$
+by $i(H'+\sigma_jJ)$ changes this derivative by at most $14b$:
+there are four terms, each with coefficient $1/4$ and error at most
+$2\cdot7b$. The scalar $h$ cancels in all commutators.
+
+Put $r=(\xi-e)/\sqrt2$, $\phi=2\theta$, and use the orthonormal
+moving qutrit basis $(q,r,e^{i\phi}f)$. In this basis
+
+$$
+\Pi_{1,2}=a_\pm a_\pm^\dagger,\qquad
+ a_\pm=(1,3,\pm\sqrt6)^{\mathsf T}/4,\qquad
+W=\operatorname{diag}(1,1,-1).
+\tag{24.12}
+$$
+
+Define the explicit matrices
+
+$$
+\bar U=\frac14\begin{pmatrix}
+1&3&\sqrt6\\3&1&-\sqrt6\\\sqrt6&-\sqrt6&2
+\end{pmatrix},\qquad
+G=\frac1{32}\begin{pmatrix}
+17&3&-\sqrt6\\3&9&-3\sqrt6\\-\sqrt6&-3\sqrt6&6
+\end{pmatrix}.
+\tag{24.13}
+$$
+
+The matrix of $V_0$ is
+$e^{i\theta}\operatorname{diag}(1,1,e^{-i\phi})\bar U$.
+Since $\Pi_1+\Pi_2$ has no coupling between $f$ and its orthogonal
+complement, these matrices give
+
+$$
+\Gamma_{01}+\Gamma_{02}=2G,\qquad
+\Gamma_{11}+\Gamma_{12}=2WGW.
+\tag{24.14}
+$$
+
+Formula (24.10) for $S_2$ and the preceding error bound yield
+
+$$
+\|[G,H_0+J]+[WGW,H_0-J]\|\le32b.
+\tag{24.15}
+$$
+
+No separately retained first label is reconstructed from a sum.
+
+Here is a complete real-coordinate certificate for (24.11) and (24.15).
+Put $d=(\sqrt2+1)/\sqrt6$ and $e_*=(\sqrt2-1)/\sqrt6$.
+Since $(1,1,0)^{\mathsf T}/\sqrt2=dq+e_*r$, the general matrices
+$H_0$ and $J$ in the moving basis have the forms
+
+$$
+H_0=\begin{pmatrix}0&0&0\\0&x&z+iw\\0&z-iw&y\end{pmatrix},\qquad
+J=\begin{pmatrix}
+d^2A&de_*A&d(R+iI)\\
+de_*A&e_*^2A&e_*(R+iI)\\
+d(R-iI)&e_*(R-iI)&D
+\end{pmatrix},\qquad
+v=(x,y,z,w,A,D,R,I)\in\mathbb R^8.
+\tag{24.16}
+$$
+
+Here $D$ in the coordinate matrix denotes a real coordinate, distinct
+from the residual matrix $D$ of (19.24).
+Define the real linear map $\mathsf M$ by listing the real and imaginary
+parts of all entries of the three matrices
+
+$$
+[a_+a_+^\dagger,H_0+J],\qquad
+[a_-a_-^\dagger,H_0-J],\qquad
+[G,H_0+J]+[WGW,H_0-J].
+\tag{24.17}
+$$
+
+The Euclidean norm of $\mathsf Mv$ is exactly the square root of the
+sum of their three squared Hilbert–Schmidt norms. Expansion gives
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\mathsf M^{\mathsf T}\mathsf M)
+ &=\frac{16187}{1152}-\frac{7\sqrt2}{8}<16,\\
+\det(\mathsf M^{\mathsf T}\mathsf M)
+ &=\frac{91264725\sqrt2}{268435456}
+   +\frac{262163385}{536870912}>\frac12.
+\end{aligned}
+\tag{24.18}
+$$
+
+These are polynomial matrix identities over the real algebraic numbers.
+The Gram matrix splits into coordinate blocks $(x,y,R)$, $(z,A,D)$,
+$(w)$ and $(I)$, with respective determinants
+
+$$
+\frac{27\sqrt2}{256}+\frac{81}{512},\qquad
+\frac{45\sqrt2}{512}+\frac{165}{1024},\qquad
+\frac{249}{64},\qquad
+\frac{69}{16}-\frac{25\sqrt2}{24}.
+\tag{24.19}
+$$
+
+Their product is the determinant in (24.18).
+The Gram matrix is positive semidefinite, and its positive determinant
+makes it positive definite. Each eigenvalue is below $16$, so its
+least eigenvalue exceeds $(1/2)16^{-7}=2^{-29}$. Consequently
+
+$$
+\|v\|_2\le32768\|\mathsf Mv\|_2
+ \le32768\cdot96b=3145728b.
+\tag{24.20}
+$$
+
+The bound $\|\mathsf Mv\|_2\le96b$ follows from (24.11), (24.15)
+and $\|Q\|_{\mathrm{HS}}\le\sqrt3\|Q\|$ for $3\times3$ matrices.
+Formula (24.16) also gives
+
+$$
+\begin{aligned}
+\|H_0\|_{\mathrm{HS}}^2&=x^2+y^2+2z^2+2w^2,\\
+\|J\|_{\mathrm{HS}}^2&=A^2+D^2+2R^2+2I^2,\\
+\|H_0\|+\|J\|&\le2\sqrt2\|v\|_2\le9437184b.
+\end{aligned}
+\tag{24.21}
+$$
+
+Since $F$ is an isometry, $\|Z\|=\|X\|$. Combining with (24.9),
+
+$$
+\|K-ihB\|\le\|H-hI_3\|+\|Z\|
+ \le(9437184+7)b\le10000000b.
+\tag{24.22}
+$$
+
+The scalar term $ihB$ contributes zero to $\mathcal L_K$.
+For every finite reference dimension $d$ and every complex amplified
+matrix $Y$, the trace-norm ideal inequality, (19.26)–(19.28) and
+(24.22) therefore give
+
+$$
+\|((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(Y)\|_1
+ \le(20000000b+2\mathcal R)\|Y\|_1.
+\tag{24.23}
+$$
+
+By (24.4), $b\le270001\delta$, and the coefficient is at most
+
+$$
+(20000000\cdot270001+270000)\delta
+ =5400020270000\delta\le6000000000000\delta.
+\tag{24.24}
+$$
+
+Taking both defining diamond suprema proves (24.3), including at zero
+defect. There is no division by an angle, a branch probability or a
+defect. Every effect used is either an original effect or an actual
+sum of the stipulated raw erased depth-two success effects. The
+argument uses no output-support restriction and no identification of
+a density-state supremum with the full complex-matrix diamond norm.
+$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 25. Full-H leakage invisible to completely erased acquisitions
+
+**Theorem 25.1 (Zero erased defect outside the embedded dephasing family; repo-derived).**
+Keep exactly $B,E,P,P_0,P_1$ of (19.1), Definitions 1.1–1.2
+and 11.1, and the actual full-$H$ operators $A_j(\theta)$ of
+(19.2). Write $z_H=e_2$ for the physical vector denoted by $z$ there,
+to distinguish it from the complex parameter in $\mathcal D_z$ of
+(8.3). For every fixed known real $\theta$, erase all acquisition
+labels at depths one and two and retain only the raw final-success
+effects
+
+$$
+\begin{aligned}
+J_0&=P,\\
+J_1&=\sum_{j=0}^1 A_j^\dagger P A_j,\\
+J_2&=\sum_{j,k=0}^1(A_kA_j)^\dagger P(A_kA_j),\\
+\delta_{\mathrm{unlabelled},\theta}(T)
+ &=\max_{r=0,1,2}
+ \|T^\dagger(J_r)-B^\dagger J_rB\|_{\mathrm{op}}.
+\end{aligned}
+\tag{25.1}
+$$
+
+There is a single complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$, independent of $\theta$,
+with unrestricted output, such that for every real $\theta$
+
+$$
+\delta_{\mathrm{unlabelled},\theta}(T)=0,\qquad
+\inf_{z\in\mathbb C,\ |z|\le1}
+ \|T-\operatorname{Ad}_B\circ\mathcal D_z\|_\diamond\ge2.
+\tag{25.2}
+$$
+
+Here the diamond norm is unhalved and takes both suprema over all
+finite untouched reference spaces and all nonzero complex amplified
+input matrices. Thus no finite constants $C,\eta>0$, independent of
+$\theta,T$, can make
+$\delta_{\mathrm{unlabelled},\theta}(T)\le\eta$ imply a diamond
+distance at most $C\sqrt{\delta_{\mathrm{unlabelled},\theta}(T)}$
+to this family. The defect uses raw probabilities uniformly over all
+qutrit density inputs, without conditional normalization.
+
+Proof. With $f$ of (1.5), set
+
+$$
+\begin{gathered}
+c=(e_0+e_1-e_3-e_4)/2,\qquad b=Bf,\\
+c^\dagger c=1,\qquad B^\dagger c=0,\qquad P_-=ff^\dagger,\\
+L_0=BP_+,\qquad L_1=cf^\dagger,\qquad
+T(X)=L_0XL_0^\dagger+L_1XL_1^\dagger.
+\end{gathered}
+\tag{25.3}
+$$
+
+The two rectangular Kraus matrices satisfy
+$L_0^\dagger L_0+L_1^\dagger L_1=P_++ff^\dagger=I_3$.
+The standard Kraus criterion therefore makes $T$ a complex-linear
+CPTP map on the full stated domain. In particular its minus-sector
+output is allowed to lie outside $\operatorname{ran}B$.
+
+Define the actual erased acquisition on $M_5(\mathbb C)$ by
+
+$$
+\mathcal G(Y)=K_0YK_0^\dagger+K_1YK_1^\dagger
+ =\sum_{j=0}^1A_j(\theta)YA_j(\theta)^\dagger,\qquad
+J_r=(\mathcal G^\dagger)^r(P)\quad(r=0,1,2).
+\tag{25.4}
+$$
+
+The equality follows because the coefficient matrix
+$\left(\begin{smallmatrix}\cos\theta&i\sin\theta\\
+i\sin\theta&\cos\theta\end{smallmatrix}\right)$ taking
+$(K_0,K_1)$ to $(A_0,A_1)$ is unitary for every real $\theta$.
+Thus (25.4) is angle independent on every full-$H$ matrix, including
+leaked states. Directly from the original operators (11.1), (19.2),
+
+$$
+\begin{aligned}
+K_0B&=BU_0/\sqrt2,& K_1B&=BU_0W/\sqrt2,\\
+K_0c&=(u-z_H)/2,& K_1c&=(u-z_H)/2,\\
+K_0b&=(u-z_H)/2,& K_1b&=-(u-z_H)/2.
+\end{aligned}
+\tag{25.5}
+$$
+
+Consequently the erased identity (8.1) and these full-$H$ actions give
+
+$$
+\begin{aligned}
+\mathcal G\circ\operatorname{Ad}_B
+ &=\operatorname{Ad}_{BU_0}\circ\Delta_W,\\
+\mathcal G(cc^\dagger)&=\mathcal G(bb^\dagger).
+\end{aligned}
+\tag{25.6}
+$$
+
+For every complex $X\in M_3(\mathbb C)$,
+$P_-XP_-=(f^\dagger Xf)ff^\dagger$. Substitution into (25.3)
+and (25.6), using $\Delta_W^2=\Delta_W$, proves the exact identity
+of complex-linear maps
+
+$$
+\mathcal G\circ T
+ =\mathcal G\circ\operatorname{Ad}_B\circ\Delta_W
+ =\mathcal G\circ\operatorname{Ad}_B.
+\tag{25.7}
+$$
+
+For the immediate effect, put $q=q_0$ of (19.1). Since $Wq=q$,
+$E=P_+EP_+$; and $c\perp\operatorname{ran}B$ gives
+$c^\dagger Pc=0$. Hence, directly from the Kraus formula,
+
+$$
+T^\dagger(J_0)=T^\dagger(P)=E=B^\dagger PB.
+\tag{25.8}
+$$
+
+For $r=1,2$, compose (25.7) with $\mathcal G^{r-1}$ and take
+trace adjoints at $P$. This yields the actual raw effect equalities
+
+$$
+T^\dagger(J_1)=B^\dagger J_1B,\qquad
+T^\dagger(J_2)=B^\dagger J_2B.
+\tag{25.9}
+$$
+
+No individually labelled effect has been substituted for a sum.
+Equations (25.8)–(25.9) imply zero defect and equality of the three
+raw success probabilities for every qutrit density input. Moreover
+(25.7) tensor-extends to every finite untouched reference: any common
+channel applied after that erased acquisition has the same output
+on the two routes. This concerns the successor, rather than the
+state before the acquisition.
+
+For every complex $z$ with $|z|\le1$, (8.3) fixes $ff^\dagger$.
+The same trace-one input therefore separates $T$ from every member
+of the comparison family:
+
+$$
+\begin{aligned}
+T(ff^\dagger)&=cc^\dagger,\\
+(\operatorname{Ad}_B\circ\mathcal D_z)(ff^\dagger)&=bb^\dagger,\\
+\|cc^\dagger-bb^\dagger\|_1&=2,\\
+\inf_{|z|\le1}\|T-\operatorname{Ad}_B\circ\mathcal D_z\|_\diamond
+ &\ge2.
+\end{aligned}
+\tag{25.10}
+$$
+
+Indeed $b,c$ are orthogonal unit vectors, so their projection
+difference has eigenvalues $1,-1$ and zeros. The reference of
+dimension one and input $ff^\dagger$ are included in the full
+complex-matrix diamond supremum; allowing arbitrary finite references
+preserves this lower bound. At this channel every proposed modulus
+in the statement has right side zero, whereas (25.10) has left side
+at least two, proving the asserted failure for every $C,\eta>0$.
+No equality value of the diamond norm or optimal resource claim is
+needed.
+
+The source-relative construction is the replacement of the minus
+output by $cc^\dagger$ in (25.3), together with (25.7) and (25.10).
+It reuses the erased identity and dephasing family (8.1)–(8.3), and
+the full-$H$ operators (11.1), (19.2). The Kraus criterion and
+trace-norm principles are standard; see John Watrous,
+[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapters 2–3. Theorem 8.2 retains its supported qutrit-output domain;
+Theorems 19.1 and 24.1 retain their richer labelled tests. None is
+altered by (25.2), which neither classifies all full-$H$ solutions
+nor asserts global priority, physical realization or native
+availability of the stipulated observables. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 26. Three completely erased raw effects determine the full-H successor
+
+**Theorem 26.1 (Unrestricted erased-successor rigidity; repo-derived).**
+Keep exactly $B,E,P$ of Definitions 1.1–1.2 and (19.1), and the
+actual full-$H$ operators $A_j(\theta)$ of Definition 11.1 and
+(19.2), including their action outside $\operatorname{ran}B$.
+For every fixed known $\theta\in\mathbb R$, set
+
+$$
+\begin{aligned}
+\Phi_\theta(Y)&=\sum_{j=0}^1A_j(\theta)YA_j(\theta)^\dagger,\\
+J_0&=P,\qquad J_1=\sum_{j=0}^1A_j^\dagger PA_j,\\
+J_2&=\sum_{j,k=0}^1(A_kA_j)^\dagger P(A_kA_j).
+\end{aligned}
+\tag{26.1}
+$$
+
+These are precisely the three completely unlabelled raw success
+effects of (25.1), with chronological products $A_kA_j$ and their
+original joint weights. For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$ with unrestricted output,
+
+$$
+\left[T^\dagger(J_t)=B^\dagger J_tB\quad(t=0,1,2)\right]
+\quad\Longrightarrow\quad
+\Phi_\theta\circ T=\Phi_\theta\circ\operatorname{Ad}_B
+\quad\text{on }M_3(\mathbb C).
+\tag{26.2}
+$$
+
+The hypotheses mean equality of the three raw success probabilities
+for every qutrit density input. The conclusion extends to every
+complex amplified input and every finite untouched reference. No
+output-support restriction on $T$, label access, control, conditional
+normalization or additional observation is assumed.
+
+Proof. Use qutrit coordinates throughout and abbreviate $U=U_0$.
+Put $P_\pm=(I_3\pm W)/2$ and
+$\Delta_W(X)=P_+XP_++P_-XP_-$. Define the orthonormal input basis
+and the orthonormal output basis by
+
+$$
+\begin{gathered}
+q=(\xi+e)/\sqrt2,\qquad r=(\xi-e)/\sqrt2,\qquad
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+a=Uq,\qquad h=Ur,\qquad g=Uf=(1,0,-1)^{\mathsf T}/\sqrt2,\\
+k=(1,0,1)^{\mathsf T}/\sqrt2,\qquad
+N=\operatorname{span}\{(1,0,0)^{\mathsf T},(0,0,1)^{\mathsf T}\},\\
+F=\Delta_W(U^\dagger EU),\qquad Q=E+2F.
+\end{gathered}
+\tag{26.3}
+$$
+
+Here $q,r\in\operatorname{ran}P_+$ and
+$f\in\operatorname{ran}P_-$. The coefficient matrix relating
+$(A_0,A_1)$ to $(K_0,K_1)$ is
+$\bigl(\begin{smallmatrix}\cos\theta&i\sin\theta\\
+i\sin\theta&\cos\theta\end{smallmatrix}\bigr)$, which is unitary
+for every real $\theta$. Thus, on every $Y\in M_5(\mathbb C)$,
+
+$$
+\Phi_\theta(Y)=\mathcal G(Y)
+ :=K_0YK_0^\dagger+K_1YK_1^\dagger.
+\tag{26.4}
+$$
+
+This cancellation precedes any input restriction. Introduce the
+rectangular matrices
+$D_+=B^\dagger(K_0+K_1)/\sqrt2$ and
+$D_-=B^\dagger(K_0-K_1)/\sqrt2$. Their actual matrices in the
+physical basis $(e_0,\ldots,e_4)$ are
+
+$$
+D_+=\frac1{\sqrt2}
+\begin{pmatrix}1&1&0&0&0\\0&0&\sqrt2&0&0\\0&0&0&1&1\end{pmatrix},
+\qquad
+D_-=\frac1{\sqrt2}
+\begin{pmatrix}1&-1&0&0&0\\0&0&0&0&0\\0&0&0&-1&1\end{pmatrix}.
+\tag{26.5}
+$$
+
+Direct substitution gives
+
+$$
+\begin{gathered}
+D_+^\dagger D_++D_-^\dagger D_-=I_5,\qquad
+D_+B=UP_+,\qquad D_-B=UP_-,\qquad\operatorname{ran}D_-\subset N,\\
+\mathcal G(Y)=B\bigl(D_+YD_+^\dagger+D_-YD_-^\dagger\bigr)B^\dagger.
+\end{gathered}
+\tag{26.6}
+$$
+
+In particular $Zx=(D_+x,D_-x)$ is an isometry into
+$\mathbb C^3\oplus\mathbb C^3$ and $Z(Bq)=(a,0)$. Since
+$B^\dagger PB=E$ and $\mathcal G$ has output in
+$\operatorname{ran}B$, the chronological raw effects satisfy
+
+$$
+\begin{aligned}
+J_1&=D_+^\dagger ED_++D_-^\dagger ED_-,\\
+B^\dagger J_1B&=F,\\
+J_2&=D_+^\dagger FD_++D_-^\dagger FD_-.
+\end{aligned}
+\tag{26.7}
+$$
+
+Indeed these are $\mathcal G^\dagger(P)$ and
+$(\mathcal G^\dagger)^2(P)$, so no conditioning or branch label has
+replaced the sums. In the output basis $(a,h,g)$, the matrices are
+
+$$
+E=\frac1{16}\begin{pmatrix}
+1&3&\sqrt6\\3&9&3\sqrt6\\\sqrt6&3\sqrt6&6
+\end{pmatrix},\qquad
+F=\frac1{32}\begin{pmatrix}
+17&3&-\sqrt6\\3&9&-3\sqrt6\\-\sqrt6&-3\sqrt6&6
+\end{pmatrix}.
+\tag{26.8}
+$$
+
+The two target compressions in the input basis $(q,r,f)$ are
+
+$$
+B^\dagger J_1B=\begin{pmatrix}
+1/16&3/16&0\\3/16&9/16&0\\0&0&3/8
+\end{pmatrix},\qquad
+B^\dagger J_2B=\begin{pmatrix}
+17/32&3/32&0\\3/32&9/32&0\\0&0&3/16
+\end{pmatrix}.
+\tag{26.9}
+$$
+
+Take any finite rectangular Kraus representation
+$T(X)=\sum_\ell L_\ell XL_\ell^\dagger$, with
+$\sum_\ell L_\ell^\dagger L_\ell=I_3$. Its existence for every
+channel between these finite complex spaces is the standard Kraus
+criterion; see John Watrous, [The Theory of Quantum Information,
+Chapter 2, Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf).
+The immediate equality $T^\dagger(P)=qq^\dagger$ forces
+
+$$
+L_\ell q=\alpha_\ell Bq,\qquad
+\sum_\ell|\alpha_\ell|^2=1,\qquad
+(Bq)^\dagger L_\ell z=0\quad(z\perp q).
+\tag{26.10}
+$$
+
+To see this, the $q$ expectation of $P$ is one, as is the total
+squared norm supplied by trace preservation. Thus the sum of the
+nonnegative squared norms $\|(I_5-P)L_\ell q\|^2$ is zero.
+Every $L_\ell q$ lies in the line $Bq$. For $z\perp q$, the zero
+$P$ expectation is $\sum_\ell\|PL_\ell z\|^2=0$, annihilating
+that component for each $\ell$ separately.
+
+Set $X_\ell=D_+L_\ell$, $Y_\ell=D_-L_\ell$ and
+$M=\sum_\ell\overline{\alpha_\ell}X_\ell$. The isometry $Z$
+transfers (26.10) and trace preservation to
+
+$$
+\begin{gathered}
+X_\ell q=\alpha_\ell a,\qquad Y_\ell q=0,\qquad
+a^\dagger X_\ell z=0\quad(z\perp q),\\
+\sum_\ell(X_\ell^\dagger X_\ell+Y_\ell^\dagger Y_\ell)=I_3.
+\end{gathered}
+\tag{26.11}
+$$
+
+The $(q,r)$ entries of the two remaining effect equalities are
+$a^\dagger EMr=3/16$ and $a^\dagger FMr=3/32$, while
+$a^\dagger Mr=0$. Write $Mr=yh+tg$, with $y,t\in\mathbb C$.
+Equation (26.8) gives the complex equations
+
+$$
+3y+\sqrt6\,t=3,\qquad 3y-\sqrt6\,t=3.
+\tag{26.12}
+$$
+
+Their coefficient determinant is $-6\sqrt6\ne0$, so $Mr=h$.
+The $(q,f)$ entries give the same equations with both right sides
+zero, together with $a^\dagger Mf=0$; hence $Mf=0$. These
+functionals separate complex vectors, without a reality restriction.
+Trace preservation and $Mr=h$ now yield
+
+$$
+\sum_\ell\bigl(\|X_\ell r-\alpha_\ell h\|^2+
+\|Y_\ell r\|^2\bigr)
+=1-2\operatorname{Re}(h^\dagger Mr)+1=0.
+\tag{26.13}
+$$
+
+Every summand is nonnegative. Therefore
+$X_\ell r=\alpha_\ell h$ and $Y_\ell r=0$ for every $\ell$.
+Together with (26.11), this fixes the entire plus input block after
+erasure.
+
+For the remaining input $f$, put $x_\ell=X_\ell f$ and
+$y_\ell=Y_\ell f$. Then $x_\ell\perp a$ by (26.11), and
+$y_\ell\in N$ by the actual range of $D_-$. The two relevant
+compressions of $Q=E+2F$ are
+
+$$
+\begin{aligned}
+Q\big|_{a^\perp=\operatorname{span}\{h,g\}}
+ &=\begin{pmatrix}9/8&0\\0&3/4\end{pmatrix}_{(h,g)},\\
+Q\big|_N&=\begin{pmatrix}1&1/4\\1/4&1\end{pmatrix}_{((1,0,0)^{\mathsf T},(0,0,1)^{\mathsf T})}.
+\end{aligned}
+\tag{26.14}
+$$
+
+The latter has orthonormal eigenvectors $k,g$ with eigenvalues
+$5/4,3/4$. Both compressions have minimum $3/4$, attained only
+on the line $g$. Explicitly,
+
+$$
+\begin{aligned}
+&x_\ell^\dagger Qx_\ell+y_\ell^\dagger Qy_\ell
+ -\tfrac34(\|x_\ell\|^2+\|y_\ell\|^2)\\
+&\hspace{1cm}=\tfrac38|h^\dagger x_\ell|^2
+ +\tfrac12|k^\dagger y_\ell|^2\ge0.
+\end{aligned}
+\tag{26.15}
+$$
+
+By (26.7) and the two effect equalities, the sum of the first two
+terms on the left is the $f$ expectation of
+$T^\dagger(J_1+2J_2)$, equal by (26.9) to
+$3/8+2(3/16)=3/4$. Equation (26.11) makes the summed squared
+norms one. The sum of the nonnegative right sides is consequently
+zero, forcing
+
+$$
+x_\ell=\beta_\ell g,\qquad y_\ell=\gamma_\ell g,\qquad
+\sum_\ell(|\beta_\ell|^2+|\gamma_\ell|^2)=1.
+\tag{26.16}
+$$
+
+Define $\mathcal R(X)=\sum_\ell(X_\ell XX_\ell^\dagger+
+Y_\ell XY_\ell^\dagger)=B^\dagger\mathcal G(T(X))B$.
+Thus $\mathcal R(ff^\dagger)=gg^\dagger$.
+Moreover $Mf=0$ says $\sum_\ell\overline{\alpha_\ell}\beta_\ell=0$.
+It annihilates both cross units from the plus sector to $f$:
+
+$$
+\mathcal R(qf^\dagger)=ag^\dagger\sum_\ell\alpha_\ell\overline{\beta_\ell}=0,
+\qquad
+\mathcal R(rf^\dagger)=hg^\dagger\sum_\ell\alpha_\ell\overline{\beta_\ell}=0.
+\tag{26.17}
+$$
+
+Their adjoints also vanish. The four plus-sector units
+$qq^\dagger,qr^\dagger,rq^\dagger,rr^\dagger$ map respectively
+to $aa^\dagger,ah^\dagger,ha^\dagger,hh^\dagger$ by
+(26.10)–(26.13). Together with $ff^\dagger$ and the four cross
+units, these are all nine complex matrix units. Hence, on every
+$X\in M_3(\mathbb C)$,
+
+$$
+B^\dagger\mathcal G(T(X))B
+ =U\Delta_W(X)U^\dagger
+ =B^\dagger\mathcal G(BXB^\dagger)B.
+\tag{26.18}
+$$
+
+Both full outputs are supported in $\operatorname{ran}B$ by
+(26.6), as a consequence of the acquisition, not a promise about
+$T$. Thus $\mathcal G\circ T=\mathcal G\circ\operatorname{Ad}_B$.
+Equation (26.4) proves (26.2) for every real $\theta$.
+For any finite reference dimension $d$, expand an arbitrary complex
+input as $\sum_{i,j=1}^d|i\rangle\langle j|\otimes X_{ij}$.
+Complex-linearity extends (26.2) term by term, establishing equality
+of $\operatorname{id}_{M_d}\otimes(\Phi_\theta\circ T)$ and
+$\operatorname{id}_{M_d}\otimes(\Phi_\theta\circ\operatorname{Ad}_B)$
+without accessing the reference.
+
+The source-relative deduction combines the two complex cross moments
+with saturation of the original $Q=E+2F$ compression bounds for
+arbitrary rectangular Kraus families. It reuses (8.1), (8.4),
+(25.4)–(25.6) and the standard Kraus, trace and positivity facts.
+Theorem 8.2 retains its supported qutrit-output scope; Theorems 19.1
+and 24.1 retain their richer labelled data. Theorem 25.1 remains a
+counterexample to identifying $T$ with the embedded dephasing family;
+its successor identity (25.7) is consistent with (26.2).
+This theorem identifies only the erased successor, without a complete
+classification of the pre-acquisition channels, a quantitative
+stability bound, an optimal constant or resource minimum, a physical
+realization or a global priority claim. The symbols $D_\pm,Z,Q$
+are mathematical intermediates, not extra detectors, observations,
+controls or acquisition hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）

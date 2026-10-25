@@ -1,0 +1,30 @@
+fingerprints:
+  raw_sha256: sha256:582f10bf2224aab8385af9492823653e29ef1ddbb3d579e78248ea5793c2df91
+  normalized_sha256: sha256:582f10bf2224aab8385af9492823653e29ef1ddbb3d579e78248ea5793c2df91
+cas_ref: sha256:582f10bf2224aab8385af9492823653e29ef1ddbb3d579e78248ea5793c2df91
+coverage_gids:
+  - gid: D5/S1/Solenoid/ComplexPowerSolenoidDecomposition.complexPowerThreadEquiv
+    target_statement_id: sha256:608d234dc3450da9407cd2177a73f47ce175c7f7788801480c610ef584b6461f
+  - gid: D5/S1/Solenoid/ComplexPowerSolenoidDecomposition.logarithmicCharge_eq_zero_iff
+    target_statement_id: sha256:bfb538af2d7f683bd8fba6e13fee9e4b3dad51c930446a2c3a82417246dc0423
+  - gid: D5/S1/Solenoid/ComplexPowerSolenoidDecomposition.logarithmic_charge_conservation
+    target_statement_id: sha256:ef4c460b430feb28768514f36ee9cc2870490afdbb5054d3f8f4d2077d78a064
+  - gid: D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lowersEscape_iff_strict_kernel_novelty
+    target_statement_id: sha256:23ba11b1106407c098fa40e7c3f9c47373f23567e1ca6fe870db4aaf29805293
+  - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
+    target_statement_id: sha256:3bf3edc7cffca5a26dc0503062be36d21686e914f87c447a80102f9ae902af68
+  - gid: D5/S3/Observer/Hankel/HankelRankMinimality.hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+    target_statement_id: sha256:23e81ebed4979a12da467ef27ccc49268d069e89fbc33d1a7de2d16780467152
+  - gid: D5/S3/Weil/ZetaAnalytic/RoucheZeroCount.rectangle_zero_count_eq_of_norm_sub_lt
+    target_statement_id: sha256:4836e4fa1bba1475544554361b2e0ab59d5b21d6166da8c8efca95bf4a5ee442
+  - gid: D5/S3/Zeros/RationalNegativeCountCertificate.rational_negative_count_certificate
+    target_statement_id: sha256:229c4681f8fe1b5ff5ea4f192254573ceec7e1c21bb193a91c9675b114cb4b26
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b3ae6ce9e4fdbc86a629d2ba962636c96de3d34988e027d1d9235e8bcbadb3a8
+    - e6ba9ba8f8d8a8816d9719ca0d543dff0037c1b61ca8bc91f17e748b40e094be
+    - 4261caf5c265c308ef79534bf858bd804e7f466998ebc19e4f7be9f1a2dc3c2f
+    - 829525c12cbc575d8b54b5aee76eee379b67739626741f82c1db94600bf02ea0
+    - b34af1df56c569d2986fb22f4b153b9ddd8e99c0533b647161103dc1213f1977
+    - 47c3d6343751492dcf06a38891bad0f4660d19365048af4574fdab9b27a70e26

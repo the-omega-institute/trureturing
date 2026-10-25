@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ac2b1ed27b0a7d16d5054893636d9e3b971d9cca7e6710847f3483e4b007051
+  normalized_sha256: sha256:2ac2b1ed27b0a7d16d5054893636d9e3b971d9cca7e6710847f3483e4b007051
+cas_ref: sha256:2ac2b1ed27b0a7d16d5054893636d9e3b971d9cca7e6710847f3483e4b007051
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: W-F 的预期证明方式、公理验收和需调整措辞的反证判据；不声称额外黄金 twist 非零。
+    previous_atom_id: 0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
+    next_atom_id: 59f8b606660a2ac644c376dd285acee4cd9731050c3887ee7308f908100327f2

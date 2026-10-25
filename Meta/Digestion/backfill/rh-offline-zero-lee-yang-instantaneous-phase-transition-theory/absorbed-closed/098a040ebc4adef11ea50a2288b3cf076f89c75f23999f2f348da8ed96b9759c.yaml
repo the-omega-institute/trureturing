@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:098a040ebc4adef11ea50a2288b3cf076f89c75f23999f2f348da8ed96b9759c
+  normalized_sha256: sha256:098a040ebc4adef11ea50a2288b3cf076f89c75f23999f2f348da8ed96b9759c
+cas_ref: sha256:098a040ebc4adef11ea50a2288b3cf076f89c75f23999f2f348da8ed96b9759c
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/CriticalDampingPartition.centered_cosh_trace_eq_sum
+    target_statement_id: sha256:0d88c837fa12862de2ebd9431dee58c70497e88772889cc6058b95bf404dd710
+  - gid: D5/S3/Weil/ZetaLinear/CriticalDampingPartition.matrix_cosh_diagonal
+    target_statement_id: sha256:7f5d9343036b7ed0c2a307fa8064dac9891b1af5edb8ae19a65ca49ef6920117
+receipts:
+  unresolved_subitems: []

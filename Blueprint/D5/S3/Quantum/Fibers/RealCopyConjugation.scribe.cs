@@ -24,6 +24,11 @@ internal sealed class RealCopyConjugationDocument : IScribeDocumentDefinition
                     + "imaginary part. Positivity supplies Hermitian symmetry, so these are "
                     + "exactly the real symmetric operators between zero and the identity "
                     + "in the specified basis.", DescribeRole.Definition),
+            Entry("pair-effect", "pairEffect", "A projection onto two basis vectors",
+                "For distinct basis indices, take one half of the outer product of their "
+                    + "sum with its conjugate. This is a real effect: the matrix and its "
+                    + "complement are positive semidefinite, and its entries are real.",
+                DescribeRole.Definition),
             Entry("probability", "probability", "Physical trace probabilities",
                 "The probability is the real part of the trace of the effect times the state, "
                     + "with its membership in the closed unit interval proved from positivity "

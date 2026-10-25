@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee1299118963ad1c2d3432f2329b8e7738f751a7b2a8111755b1b9225bf3b297
+  normalized_sha256: sha256:ee1299118963ad1c2d3432f2329b8e7738f751a7b2a8111755b1b9225bf3b297
+cas_ref: sha256:ee1299118963ad1c2d3432f2329b8e7738f751a7b2a8111755b1b9225bf3b297
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义同一系数的受预算约束噪声优化值并约定空可行集取正无穷；不声称最优值达到或单调性。
+    previous_atom_id: e012efc5f2c3e4dd90b611d9e81879103e841e99ca44e525dc31caf09b580250
+    next_atom_id: d0a2d4039386d040fe4e4e74ce2120f930d7eb2e49835b92a47dcc0a462dc296

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7abbe344b3cd24dfeb9ca9acf469e0a56334237fe7b0a9284e84671786157bdd
+  normalized_sha256: sha256:7abbe344b3cd24dfeb9ca9acf469e0a56334237fe7b0a9284e84671786157bdd
+cas_ref: sha256:7abbe344b3cd24dfeb9ca9acf469e0a56334237fe7b0a9284e84671786157bdd
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairTimeGroup.reflected_growth_pair_time_group
+    target_statement_id: sha256:2cfe37d946e6af8f90410590d5138355b05f7cd6833c7bf467e77ea198e95931
+receipts:
+  unresolved_subitems: []

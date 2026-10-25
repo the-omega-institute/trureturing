@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7bcf65d37b21ff27c51c1650d536c2d44ca23008da2fc710277b58fcbbf61722
+  normalized_sha256: sha256:7bcf65d37b21ff27c51c1650d536c2d44ca23008da2fc710277b58fcbbf61722
+cas_ref: sha256:7bcf65d37b21ff27c51c1650d536c2d44ca23008da2fc710277b58fcbbf61722
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Type annotation of the quantified variable g, without a property of g.
+    previous_atom_id: 7773fc1bf265c4850957429c3c4c4fbb5d2b5253b0808b496eaa4d095a6d2883
+    next_atom_id: 1d4a16a8d5d971a8f7a5d11b4746591e5706b3af2db786fd1f521084c44e3eda

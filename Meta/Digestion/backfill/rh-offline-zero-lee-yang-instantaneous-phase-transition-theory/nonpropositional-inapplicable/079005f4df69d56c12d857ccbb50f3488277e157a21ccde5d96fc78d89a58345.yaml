@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:079005f4df69d56c12d857ccbb50f3488277e157a21ccde5d96fc78d89a58345
+  normalized_sha256: sha256:079005f4df69d56c12d857ccbb50f3488277e157a21ccde5d96fc78d89a58345
+cas_ref: sha256:079005f4df69d56c12d857ccbb50f3488277e157a21ccde5d96fc78d89a58345
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以 N 命名约束链或 cocycle 的因子数，列表只说明 N 是两通道振幅中指数的记号；没有给出估计、等式定理或存在性断言。
+    previous_atom_id: 73c347c02efac4f8c507751f73ee0ae61f7aa38103f3394cdee737cd94299090
+    next_atom_id: 79b1e256a4b9c81d8ac27d9521f8580a43707144a48d6b911969fe25102603a5

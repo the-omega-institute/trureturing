@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57eb1eeadae7e67901d5baa0971d20a55270d608b8fe1c2b373e53b5826e2639
+  normalized_sha256: sha256:57eb1eeadae7e67901d5baa0971d20a55270d608b8fe1c2b373e53b5826e2639
+cas_ref: sha256:57eb1eeadae7e67901d5baa0971d20a55270d608b8fe1c2b373e53b5826e2639
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分数学困难与原则不可证明，是认识论用语说明，未提供某命题的可证/不可证定理。
+    previous_atom_id: fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+    next_atom_id: 09c6590e1aa3357117d13ba0e4434a5afaeec9a5e01983e8ffb80440f34cd694
