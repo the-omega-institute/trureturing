@@ -14,7 +14,7 @@ class QualificationCases:
         from pathlib import Path
         for action in ("qualify", "preview", "preflight", "scoped"):
             for native in ("--git-common-dir", "--show-toplevel", "--absolute-git-dir"):
-                for change in ("tree", "marker", "identity", "present"):
+                for change in ("tree", "marker", "identity", "pointer_format", "present"):
                     with self.subTest(action=action, native=native, change=change):
                         marker = self.tree / ".git"
                         original_marker = marker.read_bytes()
@@ -30,6 +30,8 @@ class QualificationCases:
                                         marker.unlink()
                                     elif change == "identity":
                                         marker.write_text("gitdir: " + str(self.main / ".git") + "\n")
+                                    elif change == "pointer_format":
+                                        marker.write_bytes(original_marker.rstrip(b"\n"))
                                     raise protocol.GitFailure("fatal: native identity race cause")
                             return original_value(root, *args)
                         args = ["--source", str(self.main), "qualify" if action == "qualify" else "remove",
@@ -42,7 +44,7 @@ class QualificationCases:
                                 code = protocol.main(args)
                             self.assertTrue(calls)
                             text = output.getvalue() + errors.getvalue()
-                            if change == "present":
+                            if change in ("present", "pointer_format"):
                                 self.assertEqual(74, code)
                                 self.assertIn("qualification_failed:", text)
                                 self.assertIn("native identity race cause", text)

@@ -118,6 +118,9 @@ LOCK_AGE_SECONDS = 24 * 60 * 60
 def qualification_identity(source, path, snapshot, deadline=None):
     """Preserve native failures unless a fresh observation confirms identity drift."""
     marker = path / ".git"
+    def pointer_target(data):
+        lines = os.fsdecode(data).splitlines()
+        return (path / lines[0][8:]).resolve() if len(lines) == 1 and lines[0].startswith("gitdir: ") else None
     pointer = None
     try:
         pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
@@ -128,7 +131,9 @@ def qualification_identity(source, path, snapshot, deadline=None):
         if marker.is_symlink() or not marker.exists():
             raise Refused("git_pointer")
         try:
-            changed = pointer is not None and (not marker.is_file() or marker.read_bytes() != pointer)
+            previous_target = pointer_target(pointer) if pointer is not None else None
+            current = marker.read_bytes() if marker.is_file() else b""
+            changed = previous_target is not None and pointer_target(current) != previous_target
         except OSError:
             changed = False
         if changed:
