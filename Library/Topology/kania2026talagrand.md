@@ -223,3 +223,36 @@ Same-day bounded arXiv metadata searches found no CH answer within
 their stated Talagrand/Grothendieck scopes; this is not a global
 uniqueness or novelty certificate. No official solved receipt is
 asserted by this background formalization.
+
+## Classical subsequence splitting and weak extraction
+
+The real L1 subsequence splitting used in the signed-measure construction is
+classical Kadec–Pełczyński–Rosenthal mathematics. The required form uses literal
+restrictions to measurable, pairwise disjoint sets, a complementary remainder
+converging against every continuous real linear functional, and convergence
+of the disjoint-part norms. Uniform integrability alone is an intermediate
+property, not that weak convergence conclusion.
+
+A concrete disjointization construction appears in Dacunha-Castelle and
+Schreiber, Annales de l'Institut Henri Poincaré B 10 (1974), pp. 229–277,
+Definition 3.3.2 and Lemmas 3.3.3–3.3.4, pp. 263–266:
+https://www.numdam.org/item/AIHPB_1974__10_2_229_0/ . The inspected argument
+uses a nonatomic Lebesgue setting and additional Orlicz hypotheses. Those
+hypotheses cannot be silently transferred to arbitrary finite measure spaces.
+The classical subsequence splitting is also discussed in Peralta–Pfitzner,
+Studia Mathematica 227 (2015), pp. 77–95, DOI 10.4064/sm227-1-5,
+whose introduction cites Bourgain–Rosenthal, Israel Journal of Mathematics
+37 (1980), pp. 54–75, p. 68, DOI 10.1007/BF02762868. The latter page and
+Albiac–Kalton, Topics in Banach Space Theory, second edition, Lemma 5.2.7,
+are source leads; their proofs have not been acquired by the recorded access.
+
+The Hilbert approximation argument separates the weak-extraction obligation
+from the disjoint-carrier selection. All countably many hard truncations
+lie in a single closed separable Hilbert span, even when the original L2 is
+nonseparable. Compactness of the product of its weak dual balls supplies one
+common selector. A genuine bounded linear map from this span into L1 carries
+each weak limit to L1. Uniform norm errors then make these limits norm Cauchy
+by a Hahn–Banach norming functional of norm at most one; completeness and a
+three-term estimate give convergence against every L1 functional. This
+argument includes the zero space and requires no positive measure premise.
+It neither assumes nor proves the CH induction or the full signed endpoint.

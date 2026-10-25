@@ -55,9 +55,13 @@ private theorem common_weak_subsequence_separable
     rw [InnerProductSpace.toDual_apply_apply, real_inner_comm]
     exact InnerProductSpace.toDual_symm_apply
   have hq : (p m).val a = φ (q m) := by
-    rw [← ht, InnerProductSpace.toDual_apply_apply, real_inner_comm]
-    exact (InnerProductSpace.toDual_symm_apply).symm
-  simpa only [z, topDualPairing, ht, hq] using he
+    calc
+      (p m).val a = ⟪q m, a⟫_ℝ := (InnerProductSpace.toDual_symm_apply).symm
+      _ = ⟪a, q m⟫_ℝ := real_inner_comm _ _
+      _ = φ (q m) := InnerProductSpace.toDual_symm_apply
+  change Tendsto (fun n => InnerProductSpace.toDual ℝ H (t m (j n)) a)
+    atTop (𝓝 ((p m).val a)) at he
+  simpa only [ht, hq] using he
 
 /-- Countably many bounded Hilbert sequences have one common weak subsequence.
 The ambient Hilbert space need not be separable. -/
@@ -85,7 +89,7 @@ theorem exists_weak_subsequence_of_hilbert_approximation
     {X : Type u} [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X]
     {H : Type v} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
     (T : H →L[ℝ] X) (f : ℕ → X) (t : ℕ → ℕ → H) (R δ : ℕ → ℝ)
-    (hb : ∀ m n, ‖t m n‖ ≤ R m) (hδ : ∀ m, 0 ≤ δ m)
+    (hb : ∀ m n, ‖t m n‖ ≤ R m)
     (hδlim : Tendsto δ atTop (𝓝 0))
     (herr : ∀ m n, ‖f n - T (t m n)‖ ≤ δ m) :
     ∃ (j : ℕ → ℕ) (v : X), StrictMono j ∧
