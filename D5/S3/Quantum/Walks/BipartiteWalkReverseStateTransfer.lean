@@ -9,7 +9,6 @@
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.Data.Matrix.Basic
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FinCases
