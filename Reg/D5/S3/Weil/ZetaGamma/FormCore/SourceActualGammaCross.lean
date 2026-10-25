@@ -197,7 +197,11 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     norm_num [Complex.normSq_apply]
   have hle : actualGammaPositiveTailTerm decayingInput 0 ≤
       ∑' n : ℕ, actualGammaPositiveTailTerm decayingInput n :=
-    hTail.le_tsum 0 (fun n _ => actual_gamma_positive_tail_term_nonnegative decayingInput n)
+    hTail.le_tsum 0 (fun n _ => by
+      unfold actualGammaPositiveTailTerm
+      apply mul_nonneg _ (Complex.normSq_nonneg _)
+      have hd : 0 < ((n : ℝ) + 1) * ((n : ℝ) + 7 / 2) := by positivity
+      exact add_nonneg (by norm_num) (div_nonneg (by norm_num) hd.le))
   have hPositive : 0 < ∑' n : ℕ, actualGammaPositiveTailTerm decayingInput n := h0.trans_le hle
   refine ⟨(0 : ℝ), (fun _ : ℝ => (0 : ℂ)), decayingInput, ?_⟩
   change (∑' n : ℕ, actualGammaPositiveTailTerm (fun _ : ℝ => (0 : ℂ)) n) ≠
@@ -410,145 +414,5 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 
 end ShiftedGraph
-
-/- Source-private halfline is reconstructed with its identical body only.
-The tail source theorem itself has NO L1 or L2 hypothesis. L1 certificates
-below solely establish that the separating witnesses are lawful sources. -/
-private abbrev halfline : Measure ℝ := volume.restrict (Ioi (0 : ℝ))
-private def decayingInput (t : ℝ) : ℂ := (Real.exp ((-2 : ℝ) * t) : ℂ)
-
-private theorem decayingInput_l1 : Integrable decayingInput halfline := by
-  exact (integrableOn_exp_mul_Ioi (by norm_num : (-2 : ℝ) < 0) 0).ofReal
-
-private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
-    literalSourceLaplace a decayingInput = ((1 / (a + 2) : ℝ) : ℂ) := by
-  calc
-    _ = ((∫ t : ℝ, Real.exp (-(a + 2) * t) ∂halfline : ℝ) : ℂ) := by
-      unfold literalSourceLaplace
-      rw [← integral_complex_ofReal]
-      apply integral_congr_ae
-      exact Filter.Eventually.of_forall fun t => by
-        simp only [decayingInput, ← Complex.ofReal_mul]
-        congr 1
-        rw [← Real.exp_add]
-        congr 1
-        ring
-    _ = _ := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t) : ℝ) : ℂ) = _
-      rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
-      simp only [mul_zero, Real.exp_zero, neg_div_neg_eq]
-
-private theorem tail_zero (n : ℕ) :
-    actualGammaPositiveTailTerm (fun _ : ℝ => (0 : ℂ)) n = 0 := by
-  simp [actualGammaPositiveTailTerm, literalSourceLaplace]
-
-private theorem tail_decaying_zero :
-    actualGammaPositiveTailTerm decayingInput 0 = (160 / 2023 : ℝ) := by
-  unfold actualGammaPositiveTailTerm
-  norm_num only [Nat.cast_zero, zero_add]
-  rw [laplace_decayingInput (a := (9 / 4 : ℝ)) (by norm_num)]
-  norm_num [Complex.normSq_apply]
-
-private theorem tail_admissible_separation :
-    ∃ (u₀ u₁ : ℝ → ℂ),
-      Integrable u₀ halfline ∧ Integrable u₁ halfline ∧
-        actualGammaPositiveTailTerm u₀ 0 ≠ actualGammaPositiveTailTerm u₁ 0 := by
-  refine ⟨(fun _ : ℝ => (0 : ℂ)), decayingInput, by simp,
-    decayingInput_l1, ?_⟩
-  rw [tail_zero, tail_decaying_zero]
-  norm_num
-
-namespace PositiveTailNonnegative
-
-abbrev signature : Signature where
-  Params := ℕ
-  State _ := ℝ → ℂ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ n u => actualGammaPositiveTailTerm u n)
-    (fun e => nomatch e)
-
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
-
-/- Exact original u,n telescope; no L1, L2 or Gamma graph is added. -/
-abbrev arena : Arena where
-  signature := signature
-  Law r := ∀ (u : ℝ → ℂ) (n : ℕ), 0 ≤ r.readout () n u
-
-private theorem source_reconstruction :
-    (type_of% (@actual_gamma_positive_tail_term_nonnegative)) ↔
-      arena.Law actual := Iff.rfl
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro hall
-  have hbad := hall (fun _ : ℝ => (0 : ℂ)) 0
-  norm_num [rejected, realize] at hbad
-
-private theorem actual_dependence : ObservationalDependence signature actual := by
-  intro i
-  obtain ⟨u₀, u₁, _hu₀, _hu₁, hsep⟩ := tail_admissible_separation
-  exact ⟨(0 : ℕ), u₀, u₁, hsep⟩
-
-def familyRegistration : Registration arena
-    (type_of% (@actual_gamma_positive_tail_term_nonnegative)) where
-  actual := actual
-  bridge := source_reconstruction
-  variation := ⟨@actual_gamma_positive_tail_term_nonnegative, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
-    · intro e
-      exact nomatch e
-  dependence := actual_dependence
-
-/- SOURCE_ONLY raw selector proposal: u=0,n=1; select the whole RHS
-of the original nonnegativity relation. Neither binder is restricted. -/
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@actual_gamma_positive_tail_term_nonnegative) (Realization signature) Type Unit where
-  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross.actual_gamma_positive_tail_term_nonnegative.__information_unit
-  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross.RemainingCandidates.PositiveTailNonnegative.familyRegistration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨familyRegistration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ n u => actualGammaPositiveTailTerm u n)
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross
-    definition := none
-    coordinates := #[1]
-    readouts := #[{
-      path := #["body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-#print axioms familyRegistration
-#print axioms registration
-
-end PositiveTailNonnegative
 
 end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross.RemainingCandidates

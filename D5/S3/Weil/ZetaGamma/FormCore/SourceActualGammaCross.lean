@@ -540,12 +540,6 @@ def actualGammaPositiveTailTerm (u : ℝ → ℂ) (n : ℕ) : ℝ :=
   (1 + (3 / 2 : ℝ) / (((n : ℝ) + 1) * ((n : ℝ) + 7 / 2))) *
     Complex.normSq (literalSourceLaplace ((n : ℝ) + 9 / 4) u)
 
-theorem actual_gamma_positive_tail_term_nonnegative (u : ℝ → ℂ) (n : ℕ) :
-    0 ≤ actualGammaPositiveTailTerm u n := by
-  apply mul_nonneg _ (Complex.normSq_nonneg _)
-  have hd : 0 < ((n : ℝ) + 1) * ((n : ℝ) + 7 / 2) := by positivity
-  exact add_nonneg (by norm_num) (div_nonneg (by norm_num) hd.le)
-
 private theorem actual_gamma_actual_series_compression
     {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline) :
     Summable (actualGammaPositiveTailTerm u) ∧
