@@ -14,7 +14,7 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
                 + "BirthStage contains only the stages at or above omega. RawHistory stores the original onto support enumerations U, support families V and onto whole-sequence signed enumerations nu on those stages. "
                 + "No support enumeration is required at an earlier finite stage. The launch law identifies an original V(theta) with the literal pullback of an enumerated U(b,i) at a later proper theta.")),
             Paragraph(Text(
-                "Fix a regular signed sequence of variation mass one. Suppose one proper b at or above omega reflects its supports and preserves its variation masses. "
+                "Fix a regular signed sequence of variation mass one with disjoint nonempty clopen supports and positive Jordan mass at least one half. CountableSignedMeasureReflection.exists_common_stage supplies one proper b at or above omega that reflects those same supports and preserves the variation and Jordan whole masses. "
                 + "Surjectivity of U(b) selects one support-family index i. The launch law supplies theta greater than b. "
                 + "Cone naturality identifies the final b projection with the composite through theta. Two variation contractions force every theta pushforward to have mass exactly one. "
                 + "Preservation of signed whole mass and the sum and difference identities for the Jordan masses preserve the positive-half bound. "
@@ -30,7 +30,7 @@ internal sealed class SignedBallHistoryCaptureDocument : IScribeDocumentDefiniti
                 + "Each final continuous real test factors exactly through its own eligible proper stage by CountableContinuousReflection.exists_stage. "
                 + "Pushforward integration transfers proper-stage convergence to that final test. The fixed ultrafilters then agree under every weak-dual evaluation of every continuous extension of the signed sequence.")),
             Paragraph(Text(
-                "This calculation isolates the use of a simultaneous signed-measure reflection stage. Its existence must be supplied by a proved norm and Jordan reflection theorem, with the same reflected supports. "
+                "The resulting implication is exactly SignedBallReduction.SignedClopenCollision for the actual cone point. Simultaneous signed-measure reflection is a proved supplier, with the same reflected supports. "
                 + "An arbitrary signed pushforward need not preserve its variation mass. RawHistory does not assume such an isometry or final-test convergence. "
                 + "The historical calculation is an application of the cited suppliers. It does not construct a CH history, establish AH, or settle Problem 8.2.")))));
 }
