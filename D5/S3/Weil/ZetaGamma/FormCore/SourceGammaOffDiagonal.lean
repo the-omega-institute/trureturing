@@ -6,11 +6,9 @@
    utility: none
    digest: Actual L1 reflected Fourier cross and signed resolvent resonance kernels. -/
 
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Minimal same-owner closure for actual L1 cross, exponential-absolute-value
-resolvent, self-convolution double pole, and resonance kernel consumers.
-These are consumed suppliers for the actual Gamma kernel; no separate
-KPI/Reg/admission packaging. No Lean/Lake/native process was run.
+/- Actual L1 cross, exponential-absolute-value resolvent, self-convolution
+double pole, and signed resonance kernel suppliers for the same actual Gamma
+source. Standalone admission is not claimed for organizational helpers.
 Only the original literal source Fourier owner is imported. The private
 halfline and zeroExtension below use the same definition bodies as the
 retained quarter source. The entire quarter graph background is not
@@ -160,8 +158,8 @@ private theorem inner_cross_integral (p u : ℝ → ℂ) (z : ℝ × ℝ) :
 /-- Actual spectral/physical reflected-cross identity for every literal
 L1 multiplier and half-line L1 source. Absolute product integrability is
 proved before Fubini; no desired energy or kernel identity is a premise.
-For the physical reflected source, use the existing
-unitarySourceFourier_reflect to replace FU(-xi) by FV(xi). -/
+The conclusion retains the literal negative-frequency Fourier value
+of the same zero-extended source. -/
 theorem actual_l1_reflected_unitary_cross_kernel
     {p u : ℝ → ℂ} (hp : Integrable p volume) (hu : Integrable u halfline) :
     Integrable (fun ξ : ℝ =>
@@ -327,15 +325,31 @@ private theorem actualResolventKernel_fourier {a : ℝ} (ha : 0 < a) (ξ : ℝ) 
       simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
       ring
     _ = actualResolventSymbol a (2 * Real.pi * ξ) := by
-      have ha0 : (a : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr ha.ne'
-      have hd : (((2 * Real.pi * ξ) ^ 2 + a ^ 2 : ℝ) : ℂ) ≠ 0 :=
+      let D : ℂ := (((2 * Real.pi * ξ) ^ 2 + a ^ 2 : ℝ) : ℂ)
+      have hD : D ≠ 0 := Complex.ofReal_ne_zero.mpr (by positivity)
+      have hC : ((2 * a : ℝ) : ℂ) ≠ 0 :=
         Complex.ofReal_ne_zero.mpr (by positivity)
+      have hmn : m * n = -D := by
+        calc
+          m * n = -(a : ℂ) ^ 2 +
+              Complex.I ^ 2 * (((2 * Real.pi * ξ : ℝ) : ℂ) ^ 2) := by
+            dsimp only [m, n]
+            push_cast
+            ring
+          _ = -D := by
+            rw [Complex.I_sq]
+            dsimp only [D]
+            push_cast
+            ring
+      have hsub : n - m = -((2 * a : ℝ) : ℂ) := by
+        dsimp only [m, n]
+        push_cast
+        ring
       unfold actualResolventSymbol
-      dsimp only [m, n] at hm0 hn0 ⊢
-      push_cast at hm0 hn0 hd ⊢
-      field_simp [hm0, hn0, ha0, hd]
-      <;> ring_nf
-      <;> norm_num [Complex.I_sq]
+      rw [Complex.ofReal_inv]
+      change (1 / m - 1 / n) / ((2 * a : ℝ) : ℂ) = D⁻¹
+      rw [div_sub_div 1 1 hm0 hn0, one_mul, mul_one, hmn, hsub]
+      field_simp [hD, hC]
       <;> ring
 
 /-- Exact inverse operator kernel with the normalization used by the
@@ -442,11 +456,9 @@ theorem actual_resolvent_reflected_cross_laplace_square
         (fun t : ℝ => (Real.exp (-a * t) : ℂ) * u t),
         integral_conj, ← Complex.normSq_eq_conj_mul_self]
 
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Same-owner APPEND after actual resolvent source, before namespace end.
-The actual self-convolution is computed by three absolutely integrable
-regions. This pays the resonant double pole without differentiating a
-parameter under an integral. No new admission or KPI is asserted. -/
+/- The actual self-convolution is computed on three absolutely integrable
+regions. This supplies the resonant double pole without differentiation of
+a parameter under an integral. -/
 
 private theorem exp_abs_self_convolution_nonnegative
     {a z : ℝ} (ha : 0 < a) (hz : 0 ≤ z) :
