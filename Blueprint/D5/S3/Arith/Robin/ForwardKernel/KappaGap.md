@@ -1,10 +1,10 @@
-# One-half gaps for the complete forward response
+# Two-sided unboundedness of the complete forward response
 
 ## Abstract
 
-Positive logarithmic transforms give one-sided oscillation bounds for the complete forward response.
+Positive logarithmic transforms give two-sided divergence of the complete forward response.
 
-The response T is the complete real-center forward response with window H=x^(4/5). Theta is the supremum of Re(rho) over zeros in the open critical strip. The only unproved analytic number-theory input is the explicitly stated Theta error estimate. The positive logarithmic budget measure is the pushforward under y=log(x) of the nonnegative density (e*T(x)+k)/x on x>x0. Nonnegative Laplace-transform boundary singularities and the exact zeta residues supply the oscillation constraints.
+The response T is the complete real-center forward response with window H=x^(4/5). Theta is the supremum of Re(rho) over zeros in the open critical strip. The lower conclusion assumes the explicitly stated Theta error estimate. The upper conclusion additionally assumes Riemann-von Mangoldt for the canonical zeta zero configuration, including its multiplicities. The positive logarithmic budget measure is the pushforward under y=log(x) of the nonnegative density (e*T(x)+k)/x on x>x0. Positive-definite Laplace boundary limits and the exact zeta residues supply the oscillation constraints.
 
 **Theorem 1.1 (Nonnegative logarithmic support).**
 
@@ -54,7 +54,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbou
 
 Let Theta be the supremum of the real parts of the nontrivial zeta zeros. Assume that for every epsilon>0 there is C with |psi(t)-t|<=C*t^(Theta+epsilon) for t>=2. If some nontrivial zero has real part greater than one half, then for all real L and X there exists x>=X with T(x)<L. A zero can be selected with beta>max(1/2,Theta-1/5); a sufficiently small positive epsilon places its shifted pole strictly inside the positive-transform convergence region.
 
-**Theorem 1.5 (The unconditional one-half lower obstruction).**
+**Theorem 1.5 (Arbitrarily large negative excursions).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_below`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_below` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume that for every epsilon>0 there is C such that |psi(t)-t|<=C*t^(Theta+epsilon) for t>=2. For every real L and X there is x>=X with T(x)<L. Under RH, the exponent 3/5 gives a holomorphic remainder across the imaginary axis. An eventual lower bound T(x)>=L defines a nonnegative logarithmic measure whose boundary value at zero is -L. The same-sign budget gives card(Z)<=16*L^2 for every finite set Z of nontrivial zeros. Infinitely many nontrivial zeros contradict this fixed bound. If RH fails, a zero strictly right of the critical line forces negative divergence.
+
+**Theorem 1.6 (The unconditional one-half lower obstruction).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_lower_kappa_gap`
 
@@ -64,9 +76,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_lower
 
 *Commentary.*
 
-Under the displayed Theta error estimate, for every kappa<1/2 and every real X there exists x>=X with T(x)<-kappa. In the RH case, any nontrivial zero lies on the critical line and its Mellin residue has absolute value at least one half. Positivity bounds this residue by the assumed eventual lower budget. Outside RH the stronger negative-divergence theorem applies.
+Under the displayed Theta error estimate, for every kappa<1/2 and every real X there exists x>=X with T(x)<-kappa. This follows by taking L=-kappa in the negative-divergence theorem, which also removes the restriction kappa<1/2 from the resulting conclusion.
 
-**Theorem 1.6 (The one-half upper obstruction under RH).**
+**Theorem 1.7 (The one-half upper obstruction under RH).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_upper_kappa_gap_of_rh`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_upper
 
 Under RH and the Theta error estimate, for every K<1/2 and every real X there exists x>=X with T(x)>K. Apply the nonnegative transform to K-T(x); its critical-line residue has the opposite sign and the same absolute value.
 
-**Theorem 1.7 (Failure of RH forces positive divergence).**
+**Theorem 1.8 (Failure of RH forces positive divergence).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_above_of_not_rh`
 
@@ -90,16 +102,32 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbou
 
 Under the Theta error estimate, failure of RH implies that for all real L and X there exists x>=X with T(x)>L. The functional equation supplies a zero to the right of the critical line. The transform of L-T has a nonzero shifted pole strictly inside its convergence region, which contradicts holomorphy there.
 
+**Theorem 1.9 (Arbitrarily large positive excursions).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_above`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_above` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume the Theta error estimate and Riemann-von Mangoldt for the canonical zeta zero configuration. For every real L and X there exists x>=X with T(x)>L. Under RH, an eventual bound T(x)<=L makes L-T a positive logarithmic density. Continuity and the nonzero zeta value at one half give a gap around ordinate zero. The quadratic boundary budget bounds the sum of canonical zero multiplicities in every interval shorter than this gap by 4*L^2. Dividing (T,2T] into intervals of half the gap length bounds N(T,2T) by a constant times T+1, contradicting the logarithmic factor in the Riemann-von Mangoldt lower bound. If RH fails, the existing right-hand-zero obstruction gives the conclusion without zero counting.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.budgetMeasure_nonnegative`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.budget_exponential_integrable`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.budget_transform`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_lower_kappa_gap`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_above`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_above_of_not_rh`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_below`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_unbounded_below_of_right_zero`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/KappaGap.forward_response_upper_kappa_gap_of_rh`
 - Dependency: [D5/S3/Analytic/Zeta/PositiveLaplacePoleObstruction](../../../Analytic/Zeta/PositiveLaplacePoleObstruction.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MellinResidue](MellinResidue.md)
+- Dependency: [D5/S3/Weil/ZeroData/RiemannVonMangoldtCountGrowth](../../../Weil/ZeroData/RiemannVonMangoldtCountGrowth.md)
 - Dependency: [D5/S3/Weil/ZeroInfinitude/ExplicitFormulaObstruction](../../../Weil/ZeroInfinitude/ExplicitFormulaObstruction.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction](../../../Weil/ZetaBridge/RightHalfStripRiemannReduction.md)
+- Dependency: [D5/S3/Weil/ZetaRvm/NcountWindow](../../../Weil/ZetaRvm/NcountWindow.md)
