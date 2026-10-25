@@ -66,7 +66,6 @@ internal sealed class CayleyNumericalConcentrationDocument : IScribeDocumentDefi
                     + "labels. The kernel-checked family proofs do not supply an accepted source "
                     + "binding. The theorem-specific disclosure is "
                     + "https://github.com/the-omega-institute/trureturing/issues/21393. "
-                    + "The separate localization audit issue 21342 remains unresolved. "
                     + "Neither registration is claimed to be declared_validated.")),
                 Paragraph(Text("This is literature-adapted structural mathematics from "
                     + "Section 4 of Bedert, Bucic, Kravitz, Montgomery and Muyesser, "
