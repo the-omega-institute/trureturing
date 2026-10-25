@@ -27,7 +27,7 @@ The conjecture, after Proposition `prop:2classicality_mubs`:
 ## Verified locator
 
 Source: https://arxiv.org/abs/2211.02014v2
-- URL: https://arxiv.org/abs/2211.02014v2 (source `main.tex`, md5 `e2904085775dc9d0af3b2dba4d50c065`):
+- URL: https://arxiv.org/abs/2211.02014v2 (source `dephasing-v2.tex`, md5 `e2904085775dc9d0af3b2dba4d50c065`):
   - the multitime statistics and the consistency condition, l. 72–84;
   - $N$-classicality, l. 88–90;
   - dephasing Hamiltonians and their multitime statistics, l. 128–146;

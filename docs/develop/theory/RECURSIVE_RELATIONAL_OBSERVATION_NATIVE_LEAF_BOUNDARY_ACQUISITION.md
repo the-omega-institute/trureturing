@@ -1991,3 +1991,1078 @@ or the proved noninjectivities above, not claims that those larger
 problems are impossible. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 17. A sparse terminal assay on the unchanged ordered installation
+
+**Definition 17.1 (stationary source and selected onsets).** Keep exactly
+Definition 10.1 and Assumption 10.2, including their actual preparation,
+complete ordered roster, original addressed growth semantics, field lift,
+rights, serialization and complete replies. During the assay issue no
+growth. Write $A=A_t$, $N=|V(C(t))|$, and let
+$\ell_1,\ldots,\ell_L$ be its actual terminals, $L\ge3$. Define the
+following boundary quantities by their travel-time meaning:
+
+$$
+\begin{aligned}
+a_j&=d(\ell_1,\ell_j) &&(2\le j\le L),\\
+c_i&=d(\ell_i,\ell_{i+1}) &&(2\le i<L),\\
+\sigma(t)&=((a_j)_{j=2}^L,(c_i)_{i=2}^{L-1}).
+\end{aligned}
+\tag{17.1}
+$$
+
+Each distance means the first nonzero terminal response to a unit input
+after an actual full Reset. There are $2L-3$ selected onsets. This is a
+selection of localized propagation observations; it contains no internal
+address, original root, constructor tag, coefficient table or field vector.
+The known unit-adjacency rule, rather than an unknown weighted law, is
+essential to the construction below.
+
+**Definition 17.2 (the actual sparse assay).** First perform Reset and
+Add$(1,1)$, then Hold. Maintain a list of pending terminals
+$2,\ldots,L$. At every positive epoch issue Tick, Hold, and one Read
+for each still-pending terminal. Delete a terminal from this list when
+its reply first becomes nonzero, retaining that epoch. End the trial
+when the list is empty. Next, for each $i=2,\ldots,L-1$ in that order,
+perform Reset, Add$(i,1)$ and Hold, then repeat Tick, Hold, Read$(i+1)$
+until its first nonzero reply. Finally perform Reset and Hold.
+
+All these calls act on the one unchanged specimen. There is no epoch-zero
+Read: each sampled terminal differs from its trial's input terminal, so
+the actual Reset and Add already specify that zero. The pending list,
+trial index, epoch counter, received words and deletion work have retained
+finite backing. The next operation depends only on these records and
+received replies; no unknown size or distance is a stopping input.
+
+**Theorem 17.3 (earned sparse geometry and direct native reconstruction).**
+For every source of Definition 17.1, Definition 17.2 terminates and
+physically acquires $\sigma(t)$. Each scalar it reads is either zero or
+the first-arrival value one. From these acquired data one can construct
+the entire unit material tree, including every degree-two vertex, and
+then its original rooted ordered logical term. The final actual field
+is zero. The full-menu predictor of Theorem 12.2 can therefore be
+installed at that actual cut without a coefficient-learning trial.
+
+Proof. Lemma 2.1, with all edges one and diagonal zero, says precisely
+that the first response from one distinct terminal to another is at its
+distance and equals one. Each target in Definition 17.2 is read at
+every positive epoch up to that first response and never afterwards in
+that trial. Finiteness of the actual connected tree proves termination.
+This also proves the assertion about every returned scalar, including
+the zero replies used to decide when to continue.
+
+Here is an explicit inverse to the acquired geometry. Temporarily root
+the actual unrooted tree at $\ell_1$. For every oriented edge, its
+component away from $\ell_1$ contains an interval of the terminal list
+$\ell_2,\ldots,\ell_L$. To see this, in the original ordered presentation
+one side of every edge is a descendant subtree and hence a terminal
+interval. If that interval contains the first terminal, it is a prefix
+of the full list and its complement is a suffix. Otherwise the interval
+itself is the component away from $\ell_1$.
+
+For $2\le i<L$ put
+
+$$
+h_i=\frac{a_i+a_{i+1}-c_i}{2}.
+\tag{17.2}
+$$
+
+The unique-path identity makes $h_i$ the integer depth, from $\ell_1$,
+of the intersection endpoint of the paths to $\ell_i,\ell_{i+1}$.
+For any $2\le i<j\le L$, their corresponding depth is
+
+$$
+g(i,j)=\min_{i\le r<j}h_r,\qquad
+d(\ell_i,\ell_j)=a_i+a_j-2g(i,j).
+\tag{17.3}
+$$
+
+Indeed, if the endpoint paths have common prefix to depth $q$, the
+interval property says that every intervening terminal has that prefix.
+Thus all their adjacent intersection depths are at least $q$. At their
+last common vertex the paths to the two endpoints enter different child
+components. The ordered intervening list must cross between such
+components at some adjacent pair, whose intersection depth is exactly
+$q$. This proves both inequalities in (17.3); no equal leaf-depth or
+ultrametric premise has been used.
+
+One need not materialize the complete distance table in (17.3). Make a
+unit path of length $a_2$ from a vertex labelled $\ell_1$ to one labelled
+$\ell_2$. For each $j=3,\ldots,L$, climb from the preceding terminal
+$\ell_{j-1}$ toward $\ell_1$ to depth $h_{j-1}$, and attach a new unit
+path of length $a_j-h_{j-1}$ ending at $\ell_j$. Inductively the existing
+tree is the union of the actual paths from $\ell_1$ to the first $j-1$
+terminals. The deepest meeting of the new actual path with this union
+has depth
+
+$$
+\max_{2\le i<j}g(i,j)=h_{j-1},
+\tag{17.4}
+$$
+
+because each minimum in (17.3) is at most its last entry $h_{j-1}$,
+with equality for $i=j-1$. Intersections of paths in a tree are
+prefixes, so this is the whole overlap, not just one shared vertex.
+The construction therefore extends the actual path union exactly.
+Every edge separates two nonempty terminal sets and lies on a path
+between leaves. Complete terminal coverage makes the final union the
+whole actual tree. Creating unit edges, rather than a single weighted
+edge per attachment, retains every subdivision.
+
+Apply the existing original-root and syntax inverse of Theorem 11.1.
+For an economical implementation of that supplied inverse, every
+nonroot degree-two vertex is a $\beta$ root adjacent to its terminal
+marker. A degree-two vertex with no terminal neighbor, if present, is
+therefore the original root. If none is present, the actual root has
+a terminal child. Birth typing forbids a left $\alpha$ child; this is
+its right $\alpha$ child and hence the last terminal. Its neighbor is
+the root. Orient the tree there, order the two child components by
+their smallest terminal ordinal, and parse unary markers and branches.
+These are consequences of the same birth-typed rigidity, not a new
+root assumption.
+
+The adjacency matrix is now the unit-adjacency matrix of the earned graph.
+The last actual Reset made every field coordinate zero; Hold protects
+the decoding interval. The recovered term, zero vector, terminal table
+and retained original binding establish (12.1). Theorem 12.2 applies to
+the entire original menu, including growth, refusals, arbitrary rational
+inputs and malformed complete frames, with its existing persistent
+coordinates and actual rights. $\square$
+
+The interval principle used inside this proof is classical ordered-tree
+mathematics. For example Lambert and Popovic,
+[*The coalescent point process of branching trees*,
+arXiv:1101.2241v3, §§1 and 2.1](https://arxiv.org/html/1101.2241v3),
+DOI 10.1214/11-AAP820, encode the common ancestry of a planar current
+generation by consecutive coalescence times, taking the maximum between
+the endpoints. Here the depths are measured forward from $\ell_1$,
+giving the minimum in (17.3), and leaf depths need not agree. This is
+credited intermediate interval geometry. The additional assertion of
+Theorem 17.3 is its physically acquired sparse realization on the
+declared LAB service and its original-action entrance, rather than a
+claim of a new general genealogy encoding.
+
+**Theorem 17.4 (sparse zero-field expressions and their task).** Replace
+only the onset-table component of Boundary in Definition 13.1 by
+$\sigma(t)$ and the present terminal zeros. On the actual zero-field
+image of the assay, Space, causal Time, this sparse Boundary and
+retained Memory determine one another as data. They have exactly the
+continuation kernel of the complete menu in Assumption 10.2, with
+binding and rights fixed. Every recovery route agrees.
+
+Proof. Their independent meanings remain respectively the actual
+ordered-terminal material geometry with zero field, the actual labelled
+causal order $E(t)$, the selected propagation onsets with zero terminal
+field, and the retained constructor/vector/roster record with callable
+entry. The domain promises the actual global zero field; terminal zeros
+alone do not establish it. Theorem 17.3 recovers the same $t$ from sparse
+Boundary that Theorem 13.2 recovers from its full Boundary. Space
+computes the selected path lengths. AA Theorem 17.2 and Theorem 13.2
+already supply the causal-Time and Memory routes. All these maps
+therefore factor through that one $t$ and zero field.
+
+Equal terms give the full continuation correspondence by Theorem 12.2.
+Different roster sizes expose different current ranges. For different
+terms with the same $L$, Theorem 17.3 implies that some selected onset
+differs. The corresponding Reset/Add/Tick/Read experiment, with a
+sufficient finite common horizon, distinguishes the two sources.
+This proves the reverse implication for the task kernel.
+
+At stationary zero cuts, Tick, Read, Hold, Reset, Add$(j,0)$ and the
+declared refusals preserve the acquired onset meanings, and the
+existing predictor gives their complete replies and successors.
+For zero-preserving growth, the source-semantic value $\sigma(u')$
+is computed from the correctly updated term $u'$; the inverse still
+commutes with that same successor, by Theorem 13.2. Such computed
+values are predictions of a new assay, not a new set of literal
+measurements. If Boundary is required to retain physically sampled
+current onsets after a topology change, execute Definition 17.2 on
+the new source and pay its calls. The original samples remain current
+without reacquisition only while the topology is unchanged.
+Excursions with nonzero fields use the full predictor; this zero-field
+inverse applies again only at an actual zero cut. $\square$
+
+## 18. Attained sparse acquisition resources and a separating family
+
+**Definition 18.1 (charges on one assay).** For the actual tree put
+
+$$
+\begin{aligned}
+D_1&=\max_{2\le j\le L}a_j,&
+C_\Sigma&=\sum_{i=2}^{L-1}c_i,\\
+K_\sigma&=D_1+C_\Sigma,&
+R_\sigma&=\sum_{j=2}^L a_j+C_\Sigma.
+\end{aligned}
+\tag{18.1}
+$$
+
+These are posterior analysis parameters, not supplied advice. Use
+Definition 15.1's literal finite encodings and simultaneous charges:
+source material, source and observer fields, pending frames, roster
+dispatch, counters, rights, reference words, grants and actual return
+all count. An integer operation is charged at its actual operand
+width. Outputting a recovered full table or making another copy has
+its own work and backing.
+
+**Theorem 18.2 (one simultaneous resource bound and strict schedule
+saving).** Including its final actual Reset/Hold, the assay has exactly
+the following calls:
+
+$$
+\begin{array}{c|ccccc}
+ &\mathrm{Reset}&\mathrm{Add}&\mathrm{Tick}&\mathrm{Read}&\mathrm{Hold}\\ \hline
+\text{sparse assay}&L&L-1&K_\sigma&R_\sigma&K_\sigma+L .
+\end{array}
+\tag{18.2}
+$$
+
+There are $2K_\sigma+3L-1$ fixed acknowledgements and $R_\sigma$
+literal scalar replies. Moreover
+
+$$
+a_2+C_\Sigma+a_L=2(N-1),\qquad
+K_\sigma\le3(N-1),\qquad
+R_\sigma\le(L+1)(N-1).
+\tag{18.3}
+$$
+
+Let $D_j$ be the actual terminal eccentricities of Theorem 11.2, and
+$K_{\rm full}=\sum_jD_j$. On this same source,
+
+$$
+K_\sigma\le K_{\rm full}-D_L<K_{\rm full}.
+\tag{18.4}
+$$
+
+Against Proposition 15.2's full assay through zeroing, the sparse
+schedule also uses fewer Reads, Resets, Adds and Holds. These are
+comparisons of the specified schedules, not a lower bound on all
+admitted acquisition procedures or a comparison of every cost coordinate.
+
+Proof. The anchor trial lasts $D_1$ Ticks. Its pending terminal $j$ is
+read exactly $a_j$ times. Each later trial lasts $c_i$ Ticks and has
+exactly $c_i$ Reads. There are $L-1$ trials, each with one entrance
+Hold and one Hold after each Tick, plus the final Reset/Hold.
+This gives (18.2). All calls except Read return acknowledgements;
+summing their counts gives the displayed acknowledgement number.
+
+In the cyclic terminal sequence $\ell_1,\ell_2,\ldots,\ell_L,\ell_1$,
+each edge cut is crossed exactly twice: the component not containing
+$\ell_1$ is one nonempty terminal interval. Summing path lengths counts
+each of the $N-1$ edges twice. This proves the equality in (18.3).
+Also $D_1\le N-1$, $C_\Sigma\le2(N-1)$, and
+$\sum_{j=2}^L a_j\le(L-1)(N-1)$, proving the bounds.
+
+For $2\le i<L$, $c_i\le D_i$. Thus
+$D_1+\sum_{i=2}^{L-1}c_i\le\sum_{i=1}^{L-1}D_i$.
+Since $D_L>0$, (18.4) follows. Finally
+$R_\sigma\le(L-1)D_1+C_\Sigma\le L K_\sigma$, whereas the published
+full schedule has $R_{\rm full}=L(K_{\rm full}+L)$ Reads.
+Its zero entrance has $L+1$ Resets, $L$ Adds and
+$K_{\rm full}+L+1$ Holds. Each comparison is therefore strict.
+$\square$
+
+**Theorem 18.3 (source work, direct decoding and coexisting records).**
+One attained field realization of this same assay uses
+
+$$
+2K_\sigma(N-1)+(L-1)
+\quad\text{source additions},\qquad
+LN\quad\text{Reset zero writes},\qquad
+K_\sigma N\quad\text{Tick-buffer zero writes}.
+\tag{18.5}
+$$
+
+After receipt of the onsets, the direct decoder in Theorem 17.3 uses
+$O(N+L)$ indexed edge and tree-record operations, in addition to
+framing, allocation, integer arithmetic at actual widths and source
+dispatch. It needs no $L$ by $L$ distance table. A simultaneous attained
+layout retains $O(L\log(N+1))$ onset bits and $O(N\log(N+1))$ numerical
+tree/index bits, with the following additional coexisting stores:
+the actual source links and their reference words; two source field
+buffers; pending terminals and counters; the decoding path and tree
+records; the retained predictor and its current zero vector; actual
+input/output and work backing; and the program, authentic callable
+entry, authority and service installation.
+
+During acquisition each source field coordinate can require
+$O(N+1)$ bits, despite every sampled scalar being zero or one.
+Thus two source buffers have an attained $O(N(N+1))$ numerical-bit
+bound. This does not price references or installation backing by
+numerical index length.
+
+Proof. Use Proposition 15.2's direct adjacency update, clearing $N$
+output cells and adding $2(N-1)$ directed-edge contributions per Tick.
+Each actual Add contributes one further source addition and each
+Reset writes every current cell. Formula (18.2) gives (18.5).
+
+In direct path gluing, exactly $N-1$ new unit edges are made.
+The initial descent and subsequent climbs and descents have total
+length $a_2+C_\Sigma=2(N-1)-a_L$, by (18.3).
+A stack of the current root path supplies the attachment point by
+popping to the specified depth. Each retained vertex and edge is
+created once. A scan finds the root by the recognizer in Theorem 17.3;
+one traversal orients the tree and computes minimum descendant
+terminal ordinals, and another parses its constructors. All have
+the claimed indexed-operation count. Parent links let the code retain
+original addresses structurally; explicitly copying all address words
+instead has its additional total address length. Pending-list scans
+and deletions can use $O(R_\sigma+L)$ indexed operations, because a
+removed terminal is never scanned again in that trial.
+
+Every trial stops by $N-1$ Ticks, and the maximum material degree is
+three. Its nonnegative integer fields obey
+$\|A^r e_{\ell_i}\|_\infty\le3^r$, so their widths are $O(N+1)$.
+Distances, vertex indices and counters have $O(\log(N+1))$ bits.
+The retained onset list and an indexed tree therefore have the stated
+numerical sizes. A separate raw sequence of all zero/one samples,
+if retained, costs $R_\sigma$ payload bits plus its actual frames;
+it is not required by this layout. Discarding a consumed raw word
+does not remove the work and traffic of its actual receipt. Likewise
+the final predictor's zero vector does not remove the simultaneous
+source buffers or its retained code, bindings and workspace.
+Proposition 15.4 continues to charge arbitrary later operands and
+growth. $\square$
+
+**Theorem 18.4 (an admissible family with an asymptotic attained saving).**
+Define $u_0=\beta$ and $u_{m+1}=\langle u_m,\beta\rangle$.
+For every integer $m\ge2$, $u_m$ is a reachable LAB term with
+
+$$
+L=m+1,\qquad N=3m+2,\qquad
+a_j=j+2\ (2\le j\le L),\qquad c_i=5\ (2\le i<L).
+\tag{18.6}
+$$
+
+The sparse assay on this very source uses
+
+$$
+K_\sigma=6m-2,\qquad
+R_\sigma=\frac{m^2+17m-10}{2}.
+\tag{18.7}
+$$
+
+The published full schedule uses $\Theta(m^2)$ Ticks and
+$\Theta(m^3)$ Reads, whereas this assay uses $\Theta(m)$ Ticks
+and $\Theta(m^2)$ Reads. With the same direct field update, source
+adjacency additions decrease from $\Theta(m^3)$ to $\Theta(m^2)$.
+
+Proof. All logical leaves are $\beta$, so the birth condition holds;
+AA Theorem 17.2 makes these actual admissible preparations. There
+are $m$ branches and $m+1$ marker-bearing leaves, giving the displayed
+orders. The two deepest logical leaves form the bottom pair; their
+markers are the first two terminals.
+The first terminal is at depth $m+1$ from the original root; terminal
+$j\ge2$ is at depth $m-j+3$. Their common-path lengths give
+$d(\ell_1,\ell_j)=j+2$. Consecutive terminals after the first have
+distance five. Hence $D_1=m+3$ and $C_\Sigma=5(m-1)$.
+Summing $j+2$ for $2\le j\le m+1$ proves (18.7).
+
+The diameter is $m+3$. Every vertex has eccentricity at least half
+the diameter, by the triangle inequality at two diameter endpoints.
+Consequently
+
+$$
+\frac{(m+1)(m+3)}2\le K_{\rm full}\le(m+1)(m+3).
+\tag{18.8}
+$$
+
+The exact full Read formula then gives its cubic order. Multiplying
+the Tick orders by $2(N-1)$ proves the adjacency-addition comparison.
+All trials, source sizes and field updates in these comparisons
+belong to the same $u_m$. Merely deleting post-arrival Reads from
+every published trial still pays its full $K_{\rm full}$ propagation;
+that modification does not attain (18.7)'s Tick count. $\square$
+
+## 19. An actually prepared nonzero passive phase
+
+**Assumption 19.1 (the new origin on the acquired source).** Keep the
+same installed tree and acquired law, roster and actual binding.
+Execute a real Reset followed by Add$(1,1)$, or use the actual final
+Reset of Definition 17.2 followed by that Add. Name the completed
+Add the origin $o$. From $o$ to the cuts under consideration there
+is no growth, Reset or nonzero Add, and the only field evolution is
+the actually requested Tick. Reads and Holds may occur without
+changing the field. The source remains the same $C(t)$.
+
+The actual preparation and passive-phase assurance are conditions,
+not conclusions of the scalar samples. In particular the late
+observer need not have an accessible Tick count or synchronized
+vector after an intervening passive prefix. That prefix consists
+of finitely many ordinary paid Tick calls with their acknowledgements,
+finite input/control backing and actual work. It is not a new
+clock port, supplied age, arbitrary unknown initial field or
+unreceived sequence of replies. Every choice of a finite prefix
+is within the quantifier.
+
+**Definition 19.2 (age, literal samples and the prepared image).**
+Put $e=e_{\ell_1}$ and, for integers $r,k\ge0$, write
+
+$$
+x_k=A^k e,\qquad m_r=e^{\mathsf T}A^r e,\qquad
+s_n=m_{2n},\qquad
+p_k=(m_{k-1},m_k)\quad(k\ge1).
+\tag{19.1}
+$$
+
+Age $k$ is the length of the actual Tick chain since $o$; it
+does not count old growth events, Reads, Holds, input/output work
+or physical duration. A sampled cut of age $k$ additionally has
+two actually received Read$(1)$ values at consecutive passive
+epochs $k-1,k$, with no Tick after the second. They have the
+numerical content $p_k$. Arbitrary repeated Reads at one epoch
+do not supply this pair. The sampled recovery domain in §§19–22
+has $k\ge2$.
+
+**Theorem 19.3 (native passive age from two consecutive samples or the
+full present field).** On every source of Assumption 19.1,
+
+$$
+m_{2n+1}=0,\qquad s_0=s_1=1,\qquad
+s_{n+1}>s_n\quad(n\ge1).
+\tag{19.2}
+$$
+
+The map $k\mapsto p_k$ is injective for all integer ages $k\ge2$.
+With the earned $A$, its inverse terminates on its promised actual
+image. The full current field $x_k$ also effectively determines
+$k$ on this domain. No invertibility of $A$ and no cyclicity of
+the single terminal $e$ is required. The trailing-pair threshold
+cannot be extended to all positive ages, since $p_1=p_3=(1,0)$.
+
+Proof. A power entry of unit adjacency counts ordinary walks.
+The tree is bipartite, so a closed walk has even length, proving
+the first assertion. The terminal $e$ has one neighbor $v$,
+so the sole closed length-two walk is $e,v,e$. As $L\ge3$,
+$v$ has a neighbor $w\ne e$.
+
+Append the backtrack $e,v,e$ to every closed length-$2n$ walk
+at $e$. Deleting its final two edges recovers the old walk, so
+this is an injection into the closed walks of length $2n+2$.
+For every $n\ge1$ there is the additional walk consisting of
+$n-1$ backtracks $e,v,e$, followed by $e,v,w,v,e$.
+Its last three vertices are $w,v,e$, so it is outside that
+injection, whose walks end $e,v,e$. This proves strict increase
+in (19.2), including the initial comparison $s_2>s_1$.
+
+For $n\ge1$ the pair at age $2n$ is $(0,s_n)$ and the pair at
+age $2n+1$ is $(s_n,0)$. The location of the positive entry fixes
+the parity, and strict increase of $(s_n)_{n\ge1}$ fixes $n$.
+Enumerating integer powers of the already acquired $A$ therefore
+finds the unique pair on the declared image after finitely many
+steps. There is no termination claim for arbitrary off-image
+input pairs, and no bound in $N$ alone.
+
+From the full present field compute locally
+
+$$
+(e^{\mathsf T}x_k,e^{\mathsf T}A x_k)
+=(m_k,m_{k+1})=p_{k+1}.
+\tag{19.3}
+$$
+
+The same inverse yields $k+1$ and hence $k$. The second entry
+is computed from the current field at $v$; this is not a source
+Tick or a claimed future measurement. Finally $m_0=m_2=1$ and
+$m_1=m_3=0$, giving the stated early collision. $\square$
+
+The walk interpretation used in this proof is the standard one.
+At the pinned mathlib revision
+56a005855ea17e0b0958f73ec801ae140b0a1679,
+[SimpleGraph.adjMatrix_pow_apply_eq_card_walk](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean)
+states it for finite vertex sets over a semiring. Here use the actual
+finite material graph and rational or natural unit adjacency.
+[IsTree.existsUnique_path](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/Acyclic.lean)
+supplies the corresponding unique-path substrate. These are
+intermediate suppliers, not installed sampling or age-acquisition
+procedures.
+
+## 20. The exact condition for instantaneous terminal recovery
+
+**Definition 20.1 (instantaneous terminal frame).** At passive age $k$
+let
+
+$$
+y_k=\bigl((A^k e)_{\ell_j}\bigr)_{j=1}^L.
+\tag{20.1}
+$$
+
+It exposes only the simultaneous present terminal field and the
+already earned $\sigma(t)$. A literal acquisition of the frame
+means Hold and $L$ individual Reads before the next Tick.
+The finite tuple is not a newly installed vector-Read primitive.
+Its comparison with a two-epoch record concerns the present
+field observation, with the prepared-phase premise held fixed.
+
+**Theorem 20.2 (terminal-parity criterion on the whole tail).** For
+each acquired tree, with $D_1$ as in (18.1), the map
+
+$$
+k\longmapsto y_k,\qquad k\in\mathbb Z,\quad k\ge D_1,
+\tag{20.2}
+$$
+
+is injective if and only if the terminal set meets both
+bipartition classes of $C(t)$, equivalently some terminal
+has odd distance from $\ell_1$. Under this condition its
+inverse is effective on its actual image. If the condition
+fails, infinitely many distinct ages on this tail have the
+identical zero terminal frame although their full fields
+are distinct. This is an instantaneous-frame obstruction,
+not an obstruction to the two-read protocol or to future
+boundary experiments.
+
+Proof. Since $\ell_1$ is itself a terminal, failure of the
+condition says that every terminal is at even distance from
+$e$. At every odd age all terminal entries then vanish by
+bipartiteness. There are infinitely many such ages beyond
+$D_1$, and their full fields are distinct by (19.3) and
+Theorem 19.3.
+
+For sufficiency choose a terminal $f$ at odd distance $d$
+from $e$. Distinct leaves cannot be adjacent in this tree,
+so $d\ge3$. Let $v_f$ be the neighbor of $f$ on their path,
+and $w_f$ its preceding vertex toward $e$. For $r\ge0$ put
+
+$$
+b_r=(A^{d+2r})_{f,e}.
+\tag{20.3}
+$$
+
+There is one shortest path, so $b_0=1$. Appending
+$f,v_f,f$ injects the length-$d+2r$ walks from $e$ to $f$
+into those of length $d+2r+2$. A further walk consists of
+$r$ initial backtracks $e,v,e$, then the shortest path
+from $e$ to $v_f$, then $v_f,w_f,v_f,f$.
+Its total length is $2r+(d-1)+3=d+2r+2$.
+Its final three vertices are $w_f,v_f,f$, not $f,v_f,f$;
+thus it is outside the injection. Consequently
+$b_{r+1}>b_r$ for every $r\ge0$.
+
+The anchor coordinate of $y_k$ is positive at even ages
+and zero at odd ages. At even $k\ge D_1\ge2$ it is
+$s_{k/2}$ and distinguishes even ages by (19.2).
+At odd $k\ge D_1\ge d$ the $f$ coordinate is the positive
+strictly increasing value $b_{(k-d)/2}$ and distinguishes
+odd ages. The anchor separates the two parities.
+These facts prove injectivity. Enumerating $A^k e$
+from $e$ and comparing the terminal frames for
+$k\ge D_1$ gives the asserted inverse. The true finite
+age is reached; off-image recognition is not asserted.
+$\square$
+
+**Theorem 20.3 (both terminal-parity cases occur on actual LAB).**
+There are reachable ordered LAB sources with $L=3$ satisfying
+each alternative in Theorem 20.2. The trees
+
+$$
+t_-=\langle\langle\beta,\beta\rangle,\alpha\rangle,
+\qquad
+t_+=\langle\beta,\langle\beta,\alpha\rangle\rangle
+\tag{20.4}
+$$
+
+have, respectively, material terminal depths $(3,3,1)$
+and $(2,3,2)$ from their original roots.
+
+Proof. Both terms obey the condition that no logical
+$L$-ending leaf is $\alpha$, so AA Theorem 17.2 supplies
+actual legal preparations from the original seed.
+A $\beta$ contributes its terminal marker one edge
+beyond its logical depth; an $\alpha$ is already terminal.
+This gives the displayed depths. The parity of the distance
+between two vertices in a rooted tree is the parity of
+the sum of their depths. Thus all terminals of $t_-$
+lie in one bipartition class, while those of $t_+$
+meet both. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 21. Independent expressions on the sampled nonzero image
+
+**Definition 21.1 (four prepared-phase observations).** Fix the actual
+installation, source binding, current rights and authentic origin of
+Assumption 19.1. Let $\mathcal P_2$ be its settled sampled cuts of
+Definition 19.2 with $k\ge2$, unchanged topology, valid acquired
+$\sigma(t)$ and a synchronized retained predictor. Define the
+following observations by what they expose:
+
+| Expression | Independent exposed content on $\mathcal P_2$ |
+| --- | --- |
+| Space $\mathsf S$ | The actual unrooted unit material tree with its linearly ordered terminals, and the full present field, modulo terminal-order-preserving isomorphism |
+| Time $\mathsf T$ | The actual labelled LAB birth/lifecycle order $E(t)$, followed by the order type of the actual $k$-Tick chain from the named origin |
+| Boundary $\mathsf B$ | The earned selected terminal onsets $\sigma(t)$ and the two literal consecutive terminal-$1$ samples ending at the present cut |
+| Memory $\mathsf M$ | The actually retained recursive term, current full predictive vector and current ordinal terminal table, on the bound callable entry with its rights |
+
+The Tick chain in Time consists of the field updates since $o$, not
+an old successful-growth word or a list of all controller events.
+It may be represented by its finite chain order type; a fully
+materialized event list has separate backing. Boundary has no age
+label or full vector. Space has a present spatial distribution,
+and Memory has a local transition representation rather than an
+old command archive or a table of all possible future answers.
+The sampled domain promises genuine consecutive measurements:
+the two scalars are not defined by a chosen inverse.
+
+The binding, installed law, authentic phase assurance and rights
+are common conditions of these observations. They are not
+recovered permissions or source references hidden in numerical
+data. Mathematical conversion preserves these already fixed
+conditions; it does not grant another service entry.
+
+**Theorem 21.2 (mutual recovery and agreement on the actual sampled
+domain).** Each observation in Definition 21.1 determines precisely
+the same $(t,k,x_k)$ as data. Each determines the other three
+observations on their joint image, and every route agrees.
+These assertions include every admitted $t$, every authentic
+old LAB preparation ending at it, and every finite passive
+prefix with $k\ge2$ satisfying the sampling conditions.
+
+Proof. From Space, Theorem 11.1 gives the original term and its
+terminal coordinates; the full field supplies (19.3). Theorem 19.3
+then gives the unique age. From Time, AA Theorem 17.2 recovers
+the same term from $E(t)$, and the length of its actual Tick chain
+gives $k$. Its field is computed as $A_t^k e$ by the authentic
+preparation and passivity. This does not reconstruct a linear
+extension of $E(t)$.
+
+Boundary recovers $t$ by Theorem 17.3. Its literal trailing
+pair is $p_k$, so Theorem 19.3 gives $k$ and then $A_t^k e$.
+Memory already has $t$ and the actual present vector under
+(12.1). Computing its forward pair (19.3) yields the same $k$,
+without requiring any retained counter. Thus no view obtains
+age from an unrestricted copy of a journal.
+
+The recovered triple computes its present geometry and vector,
+its causal order and finite Tick-chain order type, its selected
+distances and pair of scalar values, and its finite predictive
+record. On the specified joint image these are the original
+data of each view, since preparation, passivity and actual
+sampling are conditions of that image. If $V_i$ denotes one
+of these observations and $D_i$ its recovery of the triple,
+then $D_iV_i$ is the identity there. Every conversion has the
+form $V_jD_i$, so composing it through another view gives
+the same $V_lD_i$. This proves agreement for all routes.
+
+Regenerating a pair of equal numbers is data recovery. It
+does not execute two new Reads or restore lost raw measurement
+provenance, and computing a chain of length $k$ does not
+construct the old physical events again. The paid sampling
+and synchronization that make this image nonempty are given
+by §22 and the same-source concatenation in §23. $\square$
+
+**Theorem 21.3 (continuation kernel and actual sampled dynamics).**
+With the common binding and rights fixed, equality of any one
+of the four observations on $\mathcal P_2$ has exactly the
+continuation kernel of Assumption 10.2. At a sampled passive
+cut, the actual macro
+
+$$
+\mathrm{Tick};\ \mathrm{Read}(1);\ \mathrm{Hold}
+\tag{21.1}
+$$
+
+advances all four expressions compatibly. Its complete replies
+are the Tick acknowledgement, the literal $m_{k+1}$, and the
+Hold acknowledgement. It retains the trailing pair
+$(m_k,m_{k+1})$ at the actual successor of age $k+1$.
+The inherited full predictor remains correct for arbitrary
+finite adaptive continuations outside this passive domain.
+
+Proof. Equal recovered triples yield equal complete replies
+and corresponding successors for every such continuation by
+Theorem 12.2. Conversely, differing terms are distinguished
+after a Reset by a finite selected-onset experiment, as in
+Theorem 17.4. If the term is the same and $k\ne l$ with
+$k,l\ge2$, the forward pairs
+$(m_k,m_{k+1})$ and $(m_l,m_{l+1})$ differ by Theorem 19.3.
+Read$(1)$, Tick, Read$(1)$ therefore distinguish the sources
+within this complete menu: either the first replies differ,
+or the second ones do. Thus task-equivalent cuts have the
+same term and age. This proves the kernel statement without
+equating a semantic field with an exposed direct internal
+read port.
+
+In (21.1), Tick sends the actual field to $Ax_k=x_{k+1}$.
+Time gains one actual Tick in its post-origin chain and its
+birth/lifecycle order stays fixed. The new Read is made at
+that actual next epoch, so Boundary shifts its existing last
+sample into the first slot and uses this new scalar in its
+second slot. Memory performs the adjacency update of
+Theorem 12.1 before exposing the settled matching cut.
+All four successors consequently recover
+$(t,k+1,A^{k+1}e)$ by Theorem 21.2. Hold protects the
+subsequent finite local work.
+
+Read, Hold and Add$(j,0)$ alone preserve the age and field.
+Refusals with identity effect also preserve them. A nonzero
+Add, Reset or successful growth breaks Assumption 19.1's
+declared phase since $o$; the sampled inverse is not asserted
+after it. The complete field and original-action invariant
+of Theorem 12.2 still holds and continues to predict those
+operations, including the persistent old values and fresh
+zeros under growth. A forecast scalar alone does not perform
+the Read in (21.1); without that Read the numerical state may
+be predicted, but a new literal Boundary sample has not
+been acquired. $\square$
+
+## 22. Paid late synchronization at the true advanced cut
+
+**Theorem 22.1 (two actual Reads, one actual Tick and synchronized
+retained use).** Suppose the tree, law and valid selected onsets
+have been acquired, and the actual source is at an unknown
+authentic passive age $k\ge2$ of Assumption 19.1. No accessible
+age counter, old passive transcript or current vector is an
+input. The serial protocol
+
+$$
+\mathrm{Read}(1);\ \mathrm{Tick};\ \mathrm{Read}(1);\
+\mathrm{Hold}
+\tag{22.1}
+$$
+
+uses exactly two scalar Reads, one Tick and one Hold. It
+recovers the actual advanced age $h=k+1$ and installs the
+full predictor with the true field $A^h e$ at that advanced
+cut. It also acquires the literal trailing pair $p_h$.
+The entire finite future-menu conclusion of Theorem 12.2
+then holds from this synchronized cut.
+
+Proof. The complete received word consists of $m_k$, the
+Tick acknowledgement, $m_{k+1}$ and the Hold acknowledgement.
+Tick is acknowledgement-only in this installation; its
+unreturned scalar cannot substitute for the second Read.
+The pair of received scalars is
+$(m_k,m_{k+1})=p_h$. Theorem 19.3 identifies $h$ uniquely
+on $h\ge2$, and the actual $h=k+1\ge3$ belongs to that image.
+
+For a direct decoder, start a local vector at $e$ and
+successively apply the earned sparse unit adjacency.
+At local candidate age $r\ge2$, compare the terminal-$1$
+coordinates of the preceding and current candidates
+with the actual received pair. The true finite candidate
+$r=h$ is reached, and uniqueness makes it the sole match.
+The current candidate vector at that match is already
+$A^h e$, so no inverse of $A$, hypothetical source reset,
+second source or response-table oracle is used.
+
+Hold protects the actual source while this finite calculation
+completes. Store the vector in the earned persistent
+coordinates and retain the same current ordinal table,
+service reference and original authority. This establishes
+(12.1) at the actual final cut. Theorems 12.1–12.2 supply
+all complete replies, guards, lawful source calls, field
+updates and successors thereafter. In particular installing
+$A^k e$ instead would describe the earlier cut and would
+not be the synchronized installation claimed here.
+$\square$
+
+**Theorem 22.2 (instantaneous-frame alternative and its exact
+domain).** If the earned tree meets both terminal bipartition
+classes and the actual unknown passive age satisfies
+$k\ge D_1$, then Hold followed by all $L$ terminal Reads
+synchronizes at that same age, with no source Tick.
+On the actual frame-sampled domain, replacing Boundary
+in Definition 21.1 by $(\sigma(t),y_k)$ gives the same
+mutual recovery, route agreement and continuation kernel.
+Its sampled successor is Tick, Hold and all $L$ Reads.
+Without the bipartition condition the instantaneous
+frame alone has no age inverse on the whole tail.
+
+Proof. Hold and the $L$ nonchanging Reads acquire exactly
+(20.1) at one actual epoch. Theorem 20.2 recovers the unique
+age by enumeration of the acquired law, with current vector
+$A^k e$. Store it under the same correspondence to obtain
+the full predictor invariant. The other three view inverses
+in Theorem 21.2 do not depend on how Boundary samples were
+chosen. The new Boundary inverse instead uses Theorem 20.2;
+all still factor through the same triple. The kernel proof
+in Theorem 21.3 applies unchanged to that triple. The
+displayed successor actually samples the complete new
+frame at age $k+1\ge D_1$, so the same argument proves
+dynamics compatibility. The infinite zero-frame fibre
+of Theorem 20.2 proves necessity on the entire tail.
+It does not prevent advancing to acquire another epoch
+or using the two-sample construction. $\square$
+
+**Theorem 22.3 (a smaller phase-only procedure does not acquire a
+missing pair).** Under Theorem 22.1's premises, if only the
+current passive age and synchronized vector are requested,
+one can stop after Read$(1)$ and Hold whenever the first
+scalar is positive. If it is zero, one Tick, another
+Read$(1)$ and Hold suffice. This does not assert that one
+scalar uniformly determines the whole phase image or
+provides a literal past/current Boundary record.
+
+Proof. A positive first scalar occurs precisely at even
+ages $k=2n$ on this domain. It equals $s_n$ with $n\ge1$,
+which strictly increases by Theorem 19.3. Enumeration
+therefore recovers $k$ without source advance. A zero
+first scalar occurs at odd ages; one Tick reaches the
+even age $k+1$, and its actual next Read is positive
+and identifies that advanced age by the same argument.
+There are infinitely many odd ages with scalar zero,
+so one scalar has no uniform inverse. In the positive
+branch no sample at the preceding epoch has been
+received. Computing its numerical value from the
+recovered phase does not make it a literal sampled
+pair. $\square$
+
+## 23. One realized sparse-entrance and passive-recovery run
+
+**Definition 23.1 (the concatenation and its resources).** On one
+actual source execute the sparse assay of Definition 17.2
+through its final Reset/Hold. Apply one Add$(1,1)$ to make
+the actual origin $o$. Execute any actual finite prefix of
+$k\ge2$ Tick calls, with no intervening evolution or growth,
+and then execute (22.1). The late record retains the
+acquired tree, onsets, reference and rights; it has no
+accessible count or synchronized vector for that prefix
+until (22.1) finishes. The former zero-field predictor
+can be suspended while the prefix runs and resynchronized
+by Theorem 22.1.
+
+The finite prefix is a real producer/input execution with
+paid Tick acknowledgements and finite control, dispatch
+and request backing. Its count is an analysis variable,
+not an age supplied to the late decoder. An archive
+retained by any chosen producer is charged separately
+and is not a premise of this decoder. This describes
+one possible execution, rather than requiring every
+continuation to discard an already available counter.
+
+**Theorem 23.2 (simultaneous lifetime calls and source work).**
+The exact calls of Definition 23.1, from the beginning of
+the sparse assay to the final advanced synchronized cut,
+are
+
+$$
+\begin{array}{c|ccccc}
+ &\mathrm{Reset}&\mathrm{Add}&\mathrm{Tick}&\mathrm{Read}&\mathrm{Hold}\\ \hline
+\text{concatenation}&L&L&K_\sigma+k+1&R_\sigma+2&K_\sigma+L+1.
+\end{array}
+\tag{23.1}
+$$
+
+They produce $2K_\sigma+3L+k+2$ fixed acknowledgements
+and $R_\sigma+2$ scalar replies. For the direct field
+realization in §18 their source costs are
+
+$$
+\begin{aligned}
+&2(K_\sigma+k+1)(N-1)+L
+&&\text{field additions},\\
+&LN&&\text{Reset zero writes},\\
+&(K_\sigma+k+1)N&&\text{Tick-buffer zero writes}.
+\end{aligned}
+\tag{23.2}
+$$
+
+These counts precede any further continued use. They
+add neither a second zeroing nor a preparation from
+another separately optimized run.
+
+Proof. Formula (18.2) already includes the actual
+zero-producing Reset and Hold. The new origin adds
+one Add. The passive prefix adds $k$ actual Ticks,
+and (22.1) adds one Tick, two Reads and one Hold.
+This gives (23.1). Summing its non-Read columns gives
+the acknowledgement count. Apply the same per-Tick,
+per-Add and per-Reset implementation as in (18.5)
+to these actual totals to obtain (23.2).
+No growth occurs between these phases, so their
+common $N$, tree, roster and original binding are
+unchanged throughout. $\square$
+
+**Theorem 23.3 (actual preparation, local decoding and unbounded
+exact widths).** Include in this same run the actual old LAB
+preparation of Definition 10.1. If $c$ is its final number
+of logical $\beta$ leaves, it has the source counts
+$c$ promotions, $L-1$ splits and $N=2L+c-1$ of
+Proposition 15.2, with its actual address traversals,
+allocation, replies, field initialization and grants.
+The sparse and passive phases do not erase these costs.
+
+Writing $h=k+1$ for the final synchronized age, the late
+decoder of Theorem 22.1 can use at most $h$ sparse
+adjacency iterations, hence $2h(N-1)$ integer additions
+and $hN$ local output-buffer zero writes, besides
+counter operations, at most $h-1$ pair comparisons,
+framing, assignment and work-backing costs.
+One attained simultaneous numerical width bound
+through the whole concatenation is
+
+$$
+W=O(N+h+1)
+\tag{23.3}
+$$
+
+bits per field or sample integer. Source buffers,
+the local candidate buffers and retained predictive
+vector, onsets, tree and roster indices, received pair,
+counters and pending words coexist with their actual
+bindings, authority and communication backing.
+There is no uniform finite bound on exact field width
+even at a fixed admitted tree.
+
+Proof. The old preparation statement is precisely
+Proposition 15.2 applied to this actual source, not
+an inferred old serialization. Its initially zero
+field and zero insertion at growth remain the same
+installed law. Old input/output work, address lengths,
+fresh material and backing are actual charges even
+when their chronology is unavailable to the entrant.
+
+The late enumeration starts at $e$, retains two
+successive candidate vectors and stops at $h$.
+Each local iteration is the same unit-adjacency
+calculation as a source Tick, with no source call.
+Only candidates $r=2,\ldots,h$ need comparison.
+The current candidate at the match becomes the
+retained predictive vector; separate copies cost
+their actual lengths. Since
+$\|A^r e\|_\infty\le3^r$, its entries through $h$
+have $O(h+1)$ bits. The source fields during the
+earlier acquisition have $O(N+1)$ bits by
+Theorem 18.3. This proves (23.3). Integer comparison
+and addition are charged at these widths, rather
+than priced as unit-time arbitrary arithmetic.
+
+The source's two numerical buffers, the two local
+candidate buffers and any separately retained
+predictor copy have total $O(NW)$ numerical bits.
+Sparse onsets use $O(L\log(N+1))$ bits; indexed
+tree and roster data use $O(N\log(N+1))$ bits,
+plus actual link/reference words; the age counter
+uses $O(\log(h+1))$ bits. Pending request/reply
+buffers, actual frames, copies, programs and
+authority/backing are additional simultaneous
+stores. Exporting Time as a list pays for all its
+event entries and labels; it is not an obligatory
+archive in each other view.
+
+For a fixed-tree witness to growing width, retain
+$v,w$ from Theorem 19.3. There are two distinct
+four-edge closed walks at $e$:
+$e,v,e,v,e$ and $e,v,w,v,e$.
+Concatenating any sequence of $r$ such walks gives
+$2^r$ distinct closed walks of length $4r$.
+Hence $m_{4r}\ge2^r$ and the exact anchor scalar
+alone has at least $r+1$ bits along this subsequence.
+Finite source order and a finite program therefore
+give no fixed lifetime numerical-memory bound.
+
+After synchronization, each further sampled passive
+step (21.1) pays one Tick, one Read and one Hold,
+the literal scalar and two acknowledgements, and
+the retained adjacency update. General future
+rational controls or growth have the complete
+actual-width and material costs of Proposition
+15.4. No uniform later-input, reference-size or
+exact-lifetime storage bound follows from (23.3).
+$\square$
+
+## 24. Supplier subtraction and the remaining recovery domain
+
+**Definition 24.1 (precise mathematical correspondence).** The
+additional conclusions in §§17–23 are repo-derived
+source-relative inferences with the following suppliers.
+The listed ingredients are used at their original
+hypotheses and are not asserted as new generic results.
+
+| Supplier | Correspondence and excluded substitution |
+| --- | --- |
+| This volume, Lemma 2.1 and §§10–16 | $T=A_t$ has unit positive edges and zero diagonal. First arrival equals unit distance; the original-root/birth-type inverse, persistent field lift, full predictor, zero-domain views and old-history noninjectivity are reused. The additional stationary entrance acquires only the selected $2L-3$ onsets and pays the attained schedule of §18. |
+| AA Definitions 17.1 and 17.3, Theorem 17.2 and §§20–23 | The actual source is the same $C(t)$ and its actual old causal order is $E(t)$. The original guarded $P/S$ and their material templates, source counts and serial-word limitations keep their meanings. The new Tick chain is only the authentically prepared field phase, not a replacement chronology for those old events. |
+| Lambert–Popovic, arXiv:1101.2241v3, §§1 and 2.1 | Literature-attested adjacent-ancestor information for planar genealogy is an intermediate supplier. The proof in Theorem 17.3 spells out the forward-depth minimum identity and unit subdivisions for these unequal-depth terminals. No stochastic branching or equal-generation premise is imported as an unearned source fact. |
+| Ilmavirta et al., arXiv:2306.05253v2, Theorem 1 and §5.1, as delimited in Definition 16.1 | Classical complete-leaf tree-metric recovery is credited. Fixed-order comparison with arbitrary connected graphs is not changed into unknown-order graph rigidity. The sparse assay still assumes the actual source is the declared tree. |
+| NativeFullSourceProducer and NativeUniformTree, with the owning Scribes cited in Definition 16.1 | Their stationary literal-address traversal, including private traversal/stationarity helpers, and finite code navigation are supplied results. A scalar terminal onset is not such a literal constructor reply. The bridge here earns the actual code before using original guards or native finite prediction. |
+| [NativeAncestorUniqueness](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestorUniqueness.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestorUniqueness.scribe.cs) | The complete ordered labelled leaf word and inorder ancestor-area products determine a native full binary tree. Its actual coordinates are products of child leaf counts; they are not the measured travel times or depths in (17.1)–(17.3). Its uniqueness and internal interval arguments do not pay the sparse wave assay or supply its one-run call counts. |
+| [Signed Passive Clock, Theorems 2.1, 4.2 and 5.1](RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_PASSIVE_CLOCK.md) | The two-consecutive-output idea, actual-image enumeration and advanced-cut discipline are supplied there for a selfadjoint contraction. That contraction premise fails for the present unit adjacency. Theorems 19.3 and 20.2 supply the walk-growth and exact terminal-parity replacement on this actual law. Its returning Tick also differs from the acknowledgement-only Tick here. |
+| [Recovery Geometry II, §§36–41 and 52–58](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md) | Native positive-contraction Jacobi acquisition, actual unit preparation, all-field prediction and the no-retained-length integer pulse-history theorem remain supplied results. The present field has bipartite zero-diagonal unit evolution on LAB; its recovered age is a passive Tick count, not an integer pulse word. |
+| Pinned mathlib, SimpleGraph/AdjMatrix and SimpleGraph/Acyclic | The finite walk-count and unique-path identities cited after Theorem 19.3 apply to the actual finite graph. Their elementary algebra does not constitute an operational installation or an acquisition of a missing age record. |
+
+The contraction distinction can be checked without a spectral
+inference. At the first terminal and its neighbor $v$,
+$Ae=e_v$, and $A^2e=Ae_v$ has one unit entry per neighbor
+of $v$. Thus
+
+$$
+\|Ae\|^2=1,\qquad \|A^2e\|^2=\deg(v)\ge2,\qquad
+\|A\|>1.
+\tag{24.1}
+$$
+
+Accordingly the strict-contraction phase arguments of P,
+or the closed-contraction premise of Signed Passive Clock,
+cannot simply be instantiated by $A$. No renormalization
+of the actual installed Tick is made here.
+
+The full source/action disciplines of NCR, PVC, PR57,
+the callable Atlas and PG retain the correspondence
+and limitations described in §§9 and 16. The sparse
+entrance improves this volume's own stationary wave
+acquisition rather than reauthoring their supplied
+acquisition/conversion theorems. The nonzero addition
+is recovery of a genuinely prepared passive phase on
+this same process, with the exact instantaneous-frame
+condition; it does not identify those distinct
+installations or their historical tasks.
+
+**Theorem 24.2 (the bounded gain and exact unclaimed extensions).**
+On the unchanged ordered LAB field installation, a physically
+acquired sparse boundary suffices for native source recovery,
+an installed full predictor and the inherited zero-field
+four-expression data, with the strict attained schedule
+savings of §18. On that same source, an actual unit preparation
+admits passive nonzero four-expression recovery at the sampled
+ages $k\ge2$. Instantaneous terminal-frame recovery on
+$k\ge D_1$ is available exactly under mixed terminal parity.
+The sparse-entrance and late-synchronization construction
+has the one actual run and costs of §23.
+
+The claimed phase is not an arbitrary field or controlled
+history. It supplies neither the old LAB serialization,
+unrecorded Read/Hold chronology, an absolute duration,
+physical authentication, nor recovery after violating the
+phase premise. Complete roster/order, birth typing, exact
+unit evolution, Reset/Hold calibration, authentic origin,
+source binding, rights and backing remain conditions.
+The unchanged original fixed-$G_{\rm gc}$, original-$Q$,
+parked-consumer, original-initialization, terminal and
+final-no-Ready obligations remain in their original scopes.
+There is no global resource optimum, general-graph
+rigidity, universal $\alpha/\beta$ reduction or full
+common-process four-expression theorem here.
+
+Proof. Theorem 17.3 earns the source from literal sparse
+measurements and synchronizes its zero field; Theorem
+17.4 identifies its four-view and task domain.
+Theorems 18.2–18.4 give the same-source strict saving
+and its family witness. Theorems 19.3 and 20.2 prove
+the nonzero phase inverse and its exact frame condition,
+with actual LAB instances in Theorem 20.3.
+Theorems 21.2–21.3 prove agreement and complete
+continuation semantics. Theorem 22.1 installs the
+predictor at its actual advanced cut; Theorem 22.2
+gives the frame alternative. The concatenation and
+simultaneous counts in §23 use that very preparation,
+source and endpoint.
+
+The early pair collision, infinite zero-frame fibre
+and existing §§13–14 field/history noninjectivities
+exclude the indicated extensions at their exact
+domains. The difference between retained timekeeping
+and age recovery is also explicit: an accessible
+counter or synchronized vector can be updated
+directly, whereas the late theorem recovers age
+when that record is not an input. The simpler
+phase-only alternative in Theorem 22.3 and the
+classical intermediate suppliers are not denied.
+Changing a phase, source law, actuator, initialization
+or task cannot resolve an older assertion with
+different fixed hypotheses. The remaining general
+programme is therefore not concluded by these
+conditional source-relative results. $\square$
+
+## 追加锚（本行以下为增补区）
