@@ -555,3 +555,408 @@ originality, of optimality of the rates, of parameter uniformity in
 $n$ or $g$, or of the truth or falsity of (21.3).
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Bounded Dirichlet loss from energy-weighted seam cancellation
+
+**Definition 22.1 (unchanged fibres and their energy spaces).** Retain
+exactly Definition 18.1's analytic hypotheses, the complex cylinder
+form (18.8), its periodic and longitudinal Dirichlet positive-form
+closures, and the normalizations in (21.2). Fix an integer $n\ge2$
+and a real $g>\lambda_n$, and put $k=g/(2\pi)$. Write
+$H_m(s)=H_{n,g}(s,m)$ and $h_m(s)=h_{n,g}(s,m)$. On the original
+natural angular domain define the Hilbert norm
+
+$$
+\begin{aligned}
+\mathcal V_m&=D_m,\\
+\|b\|_{\mathcal V_m}^2
+ &=A[b]+m^2\int_J\frac{\sin^2a}{c(a)}|b|^2\,da+\|b\|_2^2,
+\end{aligned}
+\tag{22.1}
+$$
+
+where the middle term is omitted for $m=0$. Thus
+$\mathcal V_0=\mathcal H_c$, and for every nonzero integer $m$,
+$\mathcal V_m=\mathcal H_c\cap L^2(J,\sin^2a/c(a)\,da)$.
+There is no angular endpoint condition beyond this finite energy.
+By (18.6)--(18.7), choose an integer $M\ge0$ and a real $S>0$ such
+that all nonpositive fibres have $|m|\le M$, $|s|\le S$. These
+constants restrict the support of the negative spectral spaces;
+they do not replace any angular space by a finite-dimensional one.
+
+**Theorem 22.2 (a finite common range relative to negative energy).**
+For every $\varepsilon>0$ and every integer $m$ with $|m|\le M$,
+there are a finite-dimensional complex subspace
+$R_m\subset\mathcal V_m$ and complex-linear maps
+$K_m(s):L^2(J;\mathbb C)\to R_m$, $|s|\le S$, such that
+
+$$
+\|(I-K_m(s))u\|_{\mathcal V_m}
+ \le\varepsilon\sqrt{-h_m(s)[u]}
+\quad
+\left(u\in\operatorname{Ran}\mathbf1_{(-\infty,0)}(H_m(s))\right).
+\tag{22.2}
+$$
+
+The range $R_m$ is independent of $s$. The estimate includes every
+real singular frequency and every multiplicity of a zero channel.
+
+**Proof.** Fix $m$. Since $0\le q_n\le1$, the form norm of
+$H_m(0)+k+1$ is equivalent to (22.1). Its fixed operator graph
+domain $\mathcal G_m=D(H_m(0))$ embeds continuously in
+$\mathcal V_m$: for $u\in\mathcal G_m$ the shifted form value is
+bounded by
+$(\|H_m(0)u\|_2+(k+1)\|u\|_2)\|u\|_2$.
+The bounded polynomial perturbation
+
+$$
+H_m(z)=H_m(0)+2mz\sin a+z^2c(a),\qquad z\in\mathbb C,
+\tag{22.3}
+$$
+
+has exactly this operator domain. Around each real $s_0$ choose
+a fixed resolvent contour enclosing all negative eigenvalues of
+$H_m(s_0)$ and its kernel, with its left real crossing below
+$-k-1$ and its right real crossing positive and outside the
+spectrum. Compact resolvent makes this a finite cluster. A
+Neumann series on the contour, and the eigenvalue bound for a
+bounded self-adjoint perturbation, show that for nearby real $s$
+the same contour still encloses every negative eigenvalue.
+The associated Riesz projection $E(z)$ is holomorphic. It is
+holomorphic also from $L^2$ to $\mathcal G_m$, because, with
+$B_m(z)=2mz\sin a+z^2c(a)$,
+
+$$
+H_m(0)(\zeta-H_m(z))^{-1}
+ =\zeta(\zeta-H_m(z))^{-1}-I
+       -B_m(z)(\zeta-H_m(z))^{-1}.
+\tag{22.4}
+$$
+
+Consequently it is holomorphic into $\mathcal V_m$. On the real
+interval it is the identity on the full strict negative space.
+
+Expand $E(z)=\sum_{p\ge0}E_p(z-s_0)^p$ in the operator norm from
+$L^2$ into $\mathcal G_m$. Each coefficient has finite rank.
+Indeed $E_0$ has finite rank, and comparison of coefficients in
+$E(z)^2=E(z)$ gives, for $p\ge1$,
+
+$$
+E_p=E_0E_p+E_pE_0+\sum_{1\le i<p}E_iE_{p-i}.
+\tag{22.5}
+$$
+
+Induction proves the assertion, with all ranges in
+$\mathcal G_m\subset\mathcal V_m$.
+
+There are only finitely many real singular frequencies in
+$[-S,S]$. At any such $s_0$, analytic Fredholm meromorphy applied
+to (18.7) gives a finite-order pole bound
+
+$$
+\|H_m(s)^{-1}\|_{L^2\to L^2}
+ \le C|s-s_0|^{-r}
+\quad(0<|s-s_0|<\rho),
+\tag{22.6}
+$$
+
+for some integer $r\ge1$ and finite $C,\rho>0$. Here $\rho$ is
+small enough to exclude every other singular point. This is the
+classical meromorphic-inverse conclusion of Dyatlov--Zworski,
+[Theorem C.8, pp.521--522](https://math.mit.edu/~dyatlov/res/res_final.pdf),
+already applied to this exact compact analytic pencil in (18.7).
+For example, projecting onto $\ker H_m(s_0)$ reduces its possible
+pole to the inverse of a finite analytic Schur matrix; its
+determinant is not identically zero because nearby invertible
+points exist. Thus no simple-crossing or genericity assumption
+is involved. The self-adjoint spectral expansion in (22.6) gives
+
+$$
+-h_m(s)[u]\ge C^{-1}|s-s_0|^r\|u\|_2^2
+\quad
+\left(u\in\operatorname{Ran}\mathbf1_{(-\infty,0)}(H_m(s))\right).
+\tag{22.7}
+$$
+
+Choose an integer $p$ with $p+1>r/2$. On a sufficiently small
+fixed neighborhood of $s_0$ put
+$K_m(s)=\sum_{i=0}^p E_i(s-s_0)^i$. Since $E(s)u=u$, its Taylor
+remainder into $\mathcal V_m$ and (22.7) give
+
+$$
+\begin{aligned}
+\|(I-K_m(s))u\|_{\mathcal V_m}
+ &\le C_1|s-s_0|^{p+1}\|u\|_2\\
+ &\le C_2|s-s_0|^{p+1-r/2}\sqrt{-h_m(s)[u]}.
+\end{aligned}
+\tag{22.8}
+$$
+
+Shrinking that neighborhood makes the last coefficient at most
+$\varepsilon$. At $s=s_0$ itself, $K_m(s_0)=E(s_0)$ is exactly
+the identity on the strict negative space. The left side of
+(22.2) is then zero; no inverse at a singular point is used.
+
+Remove these neighborhoods from $[-S,S]$. On the compact
+remainder the inverse is uniformly bounded, so for some
+$\gamma>0$ every strict negative vector satisfies
+$-h_m(s)[u]\ge\gamma\|u\|_2^2$. The local projections above are
+continuous from $L^2$ into $\mathcal V_m$. A finite cover by
+sufficiently small intervals permits a piecewise choice
+$K_m(s)=E(s_i)$ with
+$\|E(s)-E(s_i)\|_{L^2\to\mathcal V_m}
+\le\varepsilon\sqrt\gamma$ on each assigned piece. This proves
+(22.2) on the remainder. If that remainder is empty this step is
+unnecessary. At overlaps choose one of the finitely many available
+formulas. No continuity of $K_m$ between pieces is required.
+
+Let $R_m$ be the sum of the ranges of all the finitely many Taylor
+coefficients and constant projections so used. It is a fixed
+finite-dimensional subspace of $\mathcal V_m$, and all the maps
+have range in it. Every choice depends only on
+$n,g,m,\varepsilon$ and the fixed frequency interval, not on a
+cylinder length. This proves (22.2). $\square$
+
+**Theorem 22.3 (uniform bounded interface loss).** Under precisely
+Definition 22.1's premises, there is a finite integer
+$r_{n,g}\ge0$ such that, for every real $T\ge3$,
+
+$$
+0\le P_g(T)-D_g(T)\le r_{n,g}.
+\tag{22.9}
+$$
+
+Consequently the subsidiary assertion (21.4) holds:
+
+$$
+D_g(T)=d_{n,g}T+O_{n,g}(1)\qquad(T\to\infty).
+\tag{22.10}
+$$
+
+These statements use the strict negative complex index, every
+integer angular mode, both natural angular endpoints, and every
+fixed supercritical coupling, including those with zero channels.
+
+**Proof.** Let $\mathcal N_T$ be the negative spectral space of
+the exact periodic realization. Its dimension is $P_g(T)$, and
+its vectors have finite Fourier expansions
+
+$$
+w_m(\ell)=T^{-1/2}\sum_j e^{is_j\ell}u_{m,j},
+\qquad s_j=\frac{2\pi j}{T},\qquad
+u_{m,j}\in\operatorname{Ran}
+                 \mathbf1_{(-\infty,0)}(H_m(s_j)).
+\tag{22.11}
+$$
+
+Only pairs with $|m|\le M$, $|s_j|\le S$ occur. For fixed $T$
+there are finitely many such pairs, each with finite angular
+rank, and every $u_{m,j}$ belongs to $\mathcal G_m$. In
+particular these vectors have an actual
+$\mathcal V=\bigoplus_{|m|\le M}\mathcal V_m$ valued seam trace
+$\tau_Tw=(w_m(0))_m=(w_m(T))_m$. This assertion concerns only
+$\mathcal N_T$ and does not assume a trace theorem on the entire
+cylinder form domain.
+
+Define the positive definite energy on this finite-dimensional
+negative space by
+
+$$
+a_T(w)=-\mathcal Q_g[w]
+       =\sum_{m,j}-h_m(s_j)[u_{m,j}].
+\tag{22.12}
+$$
+
+Apply Theorem 22.2 with an $\varepsilon>0$ to be fixed below, and
+put
+
+$$
+\begin{aligned}
+F_Tw&=\left(T^{-1/2}\sum_j K_m(s_j)u_{m,j}\right)_m,\\
+R&=\bigoplus_{|m|\le M}R_m,\qquad r=\dim_{\mathbb C}R,\\
+X_T&=\ker(F_T|_{\mathcal N_T}).
+\end{aligned}
+\tag{22.13}
+$$
+
+Thus $\dim_{\mathbb C}X_T\ge P_g(T)-r$. The number $J_T$ of
+available pairs in (22.11) satisfies
+$J_T/T\le C_0=(2M+1)(S/\pi+1)$ for $T\ge1$. Triangle and
+Cauchy--Schwarz inequalities give, using (22.2),
+
+$$
+\begin{aligned}
+\|\tau_Tw-F_Tw\|_{\mathcal V}
+ &\le\frac{\varepsilon}{\sqrt T}
+             \sum_{m,j}\sqrt{-h_m(s_j)[u_{m,j}]}\\
+ &\le\varepsilon\sqrt{C_0a_T(w)}.
+\end{aligned}
+\tag{22.14}
+$$
+
+For $w\in X_T$ its actual seam value $b=\tau_Tw$ therefore has
+$\|b\|_{\mathcal V}\le\varepsilon\sqrt{C_0a_T(w)}$. The finite
+codimension belongs to $X_T$ inside the periodic negative space;
+the full angular trace space remains infinite-dimensional.
+
+Choose a real smooth function $\eta$ on $[0,\infty)$ equal to one
+near zero and supported in $[0,1)$. For $T\ge3$ set
+
+$$
+\chi_T(\ell)=\eta(\ell)+\eta(T-\ell),\qquad
+(L_Tb)_m(\ell,a)=\chi_T(\ell)b_m(a).
+\tag{22.15}
+$$
+
+This lift has the same value $b$ at the two log interfaces. It is
+in the exact periodic positive-form closure by natural angular
+core density and smooth longitudinal approximation. Since
+$\chi_T$ is real, the magnetic cross term in its positive form
+vanishes. That positive form is precisely the sum over $m$ of
+
+$$
+\begin{aligned}
+&\left(\int_0^T\chi_T^2\,d\ell\right)
+  \left(A[b_m]+m^2\int_J\frac{\sin^2a}{c(a)}|b_m|^2\,da\right)\\
+&\hspace{12mm}+
+ \left(\int_0^T|\chi_T'|^2\,d\ell\right)
+                  \int_Jc(a)|b_m|^2\,da.
+\end{aligned}
+\tag{22.16}
+$$
+
+The two supports in (22.15) are disjoint and the two displayed
+longitudinal integrals are fixed, independent of $T\ge3$.
+Since $c\le1$ and the attractive potential only lowers the form,
+there are finite positive constants $\alpha,\beta$, independent
+of $T$, such that
+
+$$
+\|L_Tb\|_2\le\alpha\|b\|_{\mathcal V},\qquad
+\mathcal Q_g[L_Tb]\le\beta\|b\|_{\mathcal V}^2.
+\tag{22.17}
+$$
+
+The periodic operator $H_g^{\rm per}(T)$ is bounded below by
+$-k$. Its spectral expansion on $\mathcal N_T$ gives
+$\|H_g^{\rm per}(T)w\|_2^2\le k a_T(w)$. For $w\in X_T$, put
+$b=\tau_Tw$ and $z=w-L_Tb$. The form representation identity
+applies because $w$ is in the operator domain and $L_Tb$ is in
+the form domain. Equations (22.14) and (22.17) imply
+
+$$
+\begin{aligned}
+\mathcal Q_g[z]
+ &=-a_T(w)-2\operatorname{Re}
+       \langle H_g^{\rm per}(T)w,L_Tb\rangle
+                           +\mathcal Q_g[L_Tb]\\
+ &\le\left(-1+2\alpha\sqrt{kC_0}\,\varepsilon
+                         +\beta C_0\varepsilon^2\right)a_T(w).
+\end{aligned}
+\tag{22.18}
+$$
+
+Choose $\varepsilon>0$ once so that this bracket is at most
+$-1/2$, and take the spaces in Theorem 22.2 for that choice.
+Thus $w\mapsto z$ is complex-linear, strictly negative on every
+nonzero $w\in X_T$, and injective. No negative spectral gap has
+been assumed, and no margin depends on $T$.
+
+It remains to check the exact Dirichlet closure. The transformed
+vector has the finite expansion
+
+$$
+z_m(\ell)=T^{-1/2}\sum_j
+                (e^{is_j\ell}-\chi_T(\ell))u_{m,j}.
+\tag{22.19}
+$$
+
+Every scalar factor is smooth and vanishes at both endpoints,
+since $e^{is_jT}=1$. It is therefore approximable in
+$H^1(0,T)$ by $C_c^\infty(0,T)$. Each angular coefficient is
+approximable in $\mathcal V_m$ by $C_c^\infty(J)$, by (18.5)
+and its $m=0$ counterpart. The tensor map is continuous into the
+positive cylinder form norm: for its magnetic term,
+
+$$
+\int_0^T\int_Jc|f'u+im\tan(a)fu|^2
+ \le2\|f'\|_2^2\|u\|_2^2
+       +2m^2\|f\|_2^2
+                    \int_J\frac{\sin^2a}{c(a)}|u|^2\,da,
+\tag{22.20}
+$$
+
+and its angular term is $\|f\|_2^2A[u]$. Thus finite tensor
+approximation places every $z$ in precisely the original
+longitudinal Dirichlet positive-form closure, without an added
+condition at either angular endpoint.
+
+The image of $X_T$ is consequently a complex strictly negative
+Dirichlet subspace of dimension at least $P_g(T)-r$. The classical
+strict form-index principle, Teschl,
+[Theorems 4.10 and 4.12(i), p.119](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+gives $D_g(T)\ge P_g(T)-r$. Together with the supplied
+$D_g(T)\le P_g(T)$, this proves (22.9) with $r_{n,g}=r$.
+If the existing periodic estimate is
+$|P_g(T)-d_{n,g}T|\le C_P$ for $T\ge T_P$, then
+
+$$
+|D_g(T)-d_{n,g}T|\le C_P+r_{n,g}
+\qquad(T\ge\max\{3,T_P\}),
+\tag{22.21}
+$$
+
+which proves (22.10) with all its stated quantifiers.
+
+For a direct application let
+$\tau_j=\inf\{T>0:D_g(T)\ge j\}$, for positive integers $j$.
+Zero extension preserves the compact Dirichlet core, its
+positive form and its $L^2$ norm, and hence extends to its
+defining closure. It follows that $D_g(T)$ is nondecreasing.
+Write $d=d_{n,g}>0$ and let $C,T_0$ be constants in (22.21).
+For every $j$ with $(j-C-1)/d\ge T_0$, the lower bracket has
+$D_g((j-C-1)/d)\le j-1$, and the upper bracket has
+$D_g((j+C+1)/d)\ge j+1$. Monotonicity therefore gives
+
+$$
+\frac{j-C-1}{d}\le\tau_j\le\frac{j+C+1}{d},\qquad
+\left|\tau_j-\frac jd\right|\le\frac{C+1}{d}.
+\tag{22.22}
+$$
+
+This consequence assumes no attainment of the infimum. It uses
+the new bounded remainder, rather than merely its existing
+density limit. $\square$
+
+**Definition 22.4 (the separate original-count comparison).**
+The analytic Fredholm meromorphy, contour calculus and strict
+form-index principle used above are classical intermediates in
+the stated realizations. The energy-weighted common-range
+construction and its seam cancellation are deductions for the
+unchanged forms (18.8). Their constants need not be uniform in
+$n$ or $g$, and no optimality or literature-priority assertion is
+made.
+
+For the original operator (21.1), the independent comparison
+problem remains: for each integer $n\ge2$ and each fixed
+$g>\lambda_n$, do there exist finite $B_{n,g}\ge0$ and
+$E_{n,g}\in(0,1)$ such that
+
+$$
+\left|N_{n,g}(E)
+       -D_g\left(\tfrac12\log(1/E)\right)\right|
+ \le B_{n,g}
+\qquad(0<E<E_{n,g})?
+\tag{22.23}
+$$
+
+This comparison retains the full original Friedrichs domain,
+central derivatives, complete-source potential, interfaces and
+soft spectral wall in (21.5), every integer mode, both natural
+angular endpoints and all zero-channel couplings. It is not a
+consequence of (22.9). If (22.23) is established independently,
+(22.21) and $L_{n,g}=d_{n,g}/2$ give (21.3) with error at most
+$B_{n,g}+C$ for sufficiently small $E$. The potential-tail
+estimates alone do not supply (22.23).
+
+## 追加锚（本行以下为增补区）
