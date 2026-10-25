@@ -399,9 +399,9 @@ def claim(options):
             except (Refused, OSError, ValueError) as error:
                 # A failure after attaching a task branch has allocated material;
                 # never try another candidate or create another tree afterward.
+                if isinstance(error, GitFailure) or not isinstance(error, Refused):
+                    raise
                 attached = git(candidate, "symbolic-ref", "--quiet", "HEAD", check=False)
                 if options.path or allocated_branch or attached.stdout.strip() == reference.encode():
-                    raise
-                if isinstance(error, GitFailure) or not isinstance(error, Refused):
                     raise
         return dict(event="worktree_init", status="no_idle")
