@@ -500,7 +500,7 @@ theorem pairedKernel_sign (a α β : ℝ) (ha : 0 < a) (hα : 0 ≤ α) (hβ : 0
   have h := hprop (j - i) (by omega) (by simpa only [show i + (j - i) = j by omega] using hBj)
   exact (not_le_of_gt hBi) h
 
-private theorem pair_sum (f : ℕ → ℝ) (m : ℕ) :
+theorem pair_sum (f : ℕ → ℝ) (m : ℕ) :
     (∑ k ∈ range (m + 1), f k) = ∑ k ∈ range (m / 2 + 1),
       if 2 * k < m then f k + f (m - k) else f k := by
   classical

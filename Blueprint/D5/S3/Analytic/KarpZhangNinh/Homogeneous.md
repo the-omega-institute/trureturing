@@ -148,7 +148,7 @@ $$\forall (n: \mathbb{N}), (1 \le n) \Rightarrow (0 \le \operatorname{A}\left(n\
 
 *Commentary.*
 
-Small degrees are immediate. For n at least five, induction gives 2 to the power n-1 at least 3n-2, which dominates every negative correction.
+Small degrees are immediate. For n at least five, the Bernoulli estimate one_add_mul_le_pow at n-5 gives 2 to the power n-1 at least 3n-2, which dominates every negative correction.
 
 **Theorem 1.13 (Nonnegativity of every homogeneous coefficient).**
 
@@ -160,7 +160,7 @@ $$\forall (n: \mathbb{N}), \forall (N: \mathbb{N}), (1 \le n) \Rightarrow ((\ope
 
 *Commentary.*
 
-The six residue cases reduce to the nonnegative slope and two exponential bounds against quadratics. These bounds are proved by induction from n=7 and n=8, respectively.
+The six residue cases reduce to the nonnegative slope and two exponential bounds against quadratics. For the offsets q=n-7 and q=n-8, respectively, the proof squares the Bernoulli estimate one_add_mul_le_pow at q/2, splits q into twice its natural quotient by two plus its remainder, and normalizes the two parity cases.
 
 **Definition 1.14 (Homogeneous binomial coefficients).**
 

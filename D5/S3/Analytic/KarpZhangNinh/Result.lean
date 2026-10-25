@@ -84,29 +84,28 @@ private theorem strict_four_product (n : ℕ) {a b c : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hn : 0 < n) :
     (ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c) <
       (ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c) := by
-  have hp (n : ℕ) (t : ℝ) :
-      (ascPochhammer ℝ n).eval t = ∏ j ∈ range n, (t + j) := by
+  induction n with
+  | zero => omega
+  | succ n ih =>
+    rw [ascPochhammer_succ_eval, ascPochhammer_succ_eval,
+      ascPochhammer_succ_eval, ascPochhammer_succ_eval]
+    have hfactor : (a + n) * (a + b + c + n) < (a + b + n) * (a + c + n) := by
+      nlinarith [mul_pos hb hc]
+    have hleft := ascPochhammer_pos n a ha
+    have hright := ascPochhammer_pos n (a+b+c) (by linarith)
+    have hle : (ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c) ≤
+        (ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c) := by
+      by_cases hzero : n = 0
+      · subst n; simp
+      · exact (ih (by omega)).le
     calc
-      _ = (-1 : ℝ) ^ n * (descPochhammer ℝ n).eval (-t) := by
-        simpa only [neg_neg] using ascPochhammer_eval_neg_eq_descPochhammer ℝ (-t) n
-      _ = (-1 : ℝ) ^ n * ∏ j ∈ range n, (-t - j) := by
-        rw [descPochhammer_eval_eq_prod_range]
-      _ = (-1 : ℝ) ^ n * ((-1 : ℝ) ^ n * ∏ j ∈ range n, (t + j)) := by
-        congr 1
-        calc
-          _ = ∏ j ∈ range n, (-1 : ℝ) * (t + j) := by
-            apply prod_congr rfl
-            intro j hj
-            ring
-          _ = _ := by rw [prod_mul_distrib]; simp
-      _ = _ := by rw [← mul_assoc, ← mul_pow]; norm_num
-  simp only [hp, ← prod_mul_distrib]
-  apply prod_lt_prod_of_nonempty₀
-  · intro j hj
-    positivity
-  · intro j hj
-    nlinarith [mul_pos hb hc]
-  · exact ⟨0, mem_range.mpr hn⟩
+      _ = ((ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c)) *
+          ((a+n) * (a+b+c+n)) := by ring
+      _ < ((ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c)) *
+          ((a+b+n) * (a+c+n)) :=
+        mul_lt_mul_of_le_of_lt_of_pos_of_nonneg hle hfactor
+          (mul_pos hleft hright) (by positivity)
+      _ = _ := by ring
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Kernel.pair_step_lengths;
@@ -116,22 +115,6 @@ private theorem ordered_lengths {a d : ℝ} (ha : 0 < a) (hd : 0 ≤ d)
     {k l : ℕ} (hkl : k ≤ l) :
     (ascPochhammer ℝ k).eval (a+d) * (ascPochhammer ℝ l).eval a ≤
       (ascPochhammer ℝ k).eval a * (ascPochhammer ℝ l).eval (a+d) := by
-  have hp (n : ℕ) (t : ℝ) :
-      (ascPochhammer ℝ n).eval t = ∏ j ∈ range n, (t + j) := by
-    calc
-      _ = (-1 : ℝ) ^ n * (descPochhammer ℝ n).eval (-t) := by
-        simpa only [neg_neg] using ascPochhammer_eval_neg_eq_descPochhammer ℝ (-t) n
-      _ = (-1 : ℝ) ^ n * ∏ j ∈ range n, (-t - j) := by
-        rw [descPochhammer_eval_eq_prod_range]
-      _ = (-1 : ℝ) ^ n * ((-1 : ℝ) ^ n * ∏ j ∈ range n, (t + j)) := by
-        congr 1
-        calc
-          _ = ∏ j ∈ range n, (-1 : ℝ) * (t + j) := by
-            apply prod_congr rfl
-            intro j hj
-            ring
-          _ = _ := by rw [prod_mul_distrib]; simp
-      _ = _ := by rw [← mul_assoc, ← mul_pow]; norm_num
   have hsplit (t : ℝ) : (ascPochhammer ℝ l).eval t =
       (ascPochhammer ℝ k).eval t * (ascPochhammer ℝ (l-k)).eval (t+k) := by
     have h := congrArg (fun p : ℝ[X] => p.eval t) (ascPochhammer_mul ℝ k (l-k))
@@ -140,10 +123,13 @@ private theorem ordered_lengths {a d : ℝ} (ha : 0 < a) (hd : 0 ≤ d)
   rw [hsplit a, hsplit (a+d)]
   have ht : (ascPochhammer ℝ (l-k)).eval (a+k) ≤
       (ascPochhammer ℝ (l-k)).eval (a+d+k) := by
-    rw [hp, hp]
-    apply prod_le_prod₀
-    · intro j hj; positivity
-    · intro j hj; linarith
+    have h := monotoneOn_descPochhammer_eval (S := ℝ) (l-k)
+      (a := a+k+((l-k : ℕ) : ℝ)-1) (b := a+d+k+((l-k : ℕ) : ℝ)-1)
+      (by simp only [Set.mem_Ici]; have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k; linarith)
+      (by simp only [Set.mem_Ici]; have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k; linarith) (by linarith)
+    simpa only [descPochhammer_eval_eq_ascPochhammer,
+      show a + k + ((l-k : ℕ) : ℝ) - 1 - ((l-k : ℕ) : ℝ) + 1 = a+k by ring,
+      show a + d + k + ((l-k : ℕ) : ℝ) - 1 - ((l-k : ℕ) : ℝ) + 1 = a+d+k by ring] using h
   have hp0 := mul_nonneg (ascPochhammer_pos k (a+d) (by linarith)).le
     (ascPochhammer_pos k a ha).le
   convert mul_le_mul_of_nonneg_left ht hp0 using 1 <;> ring
@@ -369,26 +355,14 @@ private def pair (K : ℕ → ℝ) (m k : ℕ) : ℝ :=
   if 2*k<m then K k + K (m-k) else K k
 
 /- proof_shape: bind-only; escape_witness: none;
-consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.central_tail_of_sign; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_pair;
-direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum). -/
-private theorem pair_sum : ∀ (f : ℕ → ℝ) (m : ℕ),
-    (∑ k ∈ range (m + 1), f k) = ∑ k ∈ range (m / 2 + 1),
-      if 2 * k < m then f k + f (m - k) else f k := by
-  run_tac do
-    Lean.Elab.Tactic.closeMainGoal `ownerPairing
-      (Lean.mkConst (Lean.mkPrivateNameCore `D5.S3.Analytic.KarpZhangGamma.Result
-        `D5.S3.Analytic.KarpZhangGamma.Result.pair_sum))
-
-/- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.central_tail_of_sign;
 direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
 private theorem tail_pair (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m) :
     (∑ i ∈ range (m-q-q+1), K (q+i)) =
       ∑ k ∈ range (m/2+1), pair K m k * (if q≤k then 1 else 0) := by
   rw [← KarpZhangReciprocal.Result.tail_sum K m q hq,
-    pair_sum]
+    KarpZhangGamma.Result.pair_sum]
   apply sum_congr rfl
   intro k hk
   have hkm : 2*k≤m := by have := mem_range.mp hk; omega
@@ -402,7 +376,7 @@ private theorem tail_pair (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m) :
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg_pos;
 direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
 private theorem central_tail_of_sign (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m)
     (hsign : ∀ i≤m/2, ∀ j≤m/2, i<j → 0<pair K m i → 0≤pair K m j)
     (htotal : 0≤∑ k ∈ range (m+1), K k) :
@@ -410,7 +384,7 @@ private theorem central_tail_of_sign (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m
   rw [tail_pair K m q hq]
   apply KarpZhangGamma.Weighting.weighted_sum_nonneg (pair K m)
     (fun k => if q≤k then 1 else 0) (m/2) hsign
-  · simpa only [pair] using (pair_sum K m) ▸ htotal
+  · simpa only [pair] using (KarpZhangGamma.Result.pair_sum K m) ▸ htotal
   · intro i hi; split_ifs <;> norm_num
   · intro i hi j hj hij
     split_ifs <;> norm_num <;> omega
@@ -569,7 +543,7 @@ private theorem full_tail_nonneg (m : ℕ) {μ α β : ℝ}
 /- proof_shape: content; escape_witness: full_tail_nonneg;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg;
 direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
 private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     (hμ : 0<μ) (hα : 0<α) (hβ : 0<β) :
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
@@ -587,7 +561,7 @@ private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
 /- proof_shape: content; escape_witness: tail_nonneg_pos and the polynomial limit;
 consumers: D5.S3.Analytic.KarpZhangNinh.Result.result;
 direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
 private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     (hμ : 0≤μ) (hα : 0≤α) (hβ : 0≤β) :
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
@@ -623,7 +597,7 @@ def claim : Prop :=
 /- proof_shape: content; escape_witness: full_tail_nonneg;
 consumers: external Conjecture 3.8 settlement;
 direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (_private.D5.S3.Analytic.KarpZhangGamma.Result.0.D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave); D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers (D5.S3.Analytic.KarpZhangReciprocal.Result.abel_layers); D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step (D5.S3.Analytic.KarpZhangReciprocal.Result.balanced_step); D5/S3/Analytic/KarpZhangReciprocal/Result.increment (D5.S3.Analytic.KarpZhangReciprocal.Result.increment); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave); D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers (D5.S3.Analytic.KarpZhangReciprocal.Result.abel_layers); D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step (D5.S3.Analytic.KarpZhangReciprocal.Result.balanced_step); D5/S3/Analytic/KarpZhangReciprocal/Result.increment (D5.S3.Analytic.KarpZhangReciprocal.Result.increment); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
 theorem result : claim := by
   intro f μ α β m hf hμ hα hβ
   rw [delta, KarpZhangReciprocal.Result.abel_layers]
