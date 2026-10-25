@@ -80,7 +80,10 @@ private lemma mean_witness : mean witness = 2 := by
   norm_num
 
 private lemma moment_two_witness : centralMoment id 2 witness = 1 / 2 := by
-  sorry
+  unfold centralMoment
+  change (∫ x : ℝ, (x - mean witness) ^ 2 ∂witness) = 1 / 2
+  rw [mean_witness, integral_witness]
+  norm_num
 
 private lemma moment_four_witness : centralMoment id 4 witness = 1 / 2 := by
   sorry
