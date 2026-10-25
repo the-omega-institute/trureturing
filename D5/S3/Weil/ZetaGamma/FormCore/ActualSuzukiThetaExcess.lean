@@ -1,9 +1,10 @@
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Actual originalPhysicalH6 / fullTheta excess supplier. No new worktree or
-compiler was started. This candidate reuses the existing physicalTerm,
-fullTheta and originalPhysicalH6 definitions. Every helper is consumed by
-the public suppliers. No theta-convergence or D-bound premise is added.
--/
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess
+   mirror-E: none(waiver:analytic-theta-excess-estimate)
+   anchors: []
+   utility: none
+   digest: Original physical H6 preserves the complete theta transform and bounds its sixth-moment excess. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 import Mathlib.Analysis.PSeries
@@ -366,20 +367,5 @@ theorem actual_h6_physicalTerm_summable_ae
       (thetaExcessDensity_continuous 0).measurable.ennreal_ofReal.aemeasurable hden
   exact hac.ae_le hpoint
 
-/-- Literal fullTheta respects H6 source subtraction and complex scaling
-almost everywhere. No convergence or linearity premise is assumed. -/
-theorem actual_h6_fullTheta_sub_smul_ae
-    (F N : ℝ → ℂ) (hF : originalPhysicalH6 F) (hN : originalPhysicalH6 N) (c : ℂ) :
-    fullTheta (fun x => F x - c * N x) =ᵐ[volume.restrict (Ioi Real.pi)]
-      (fun x => fullTheta F x - c * fullTheta N x) := by
-  filter_upwards [actual_h6_physicalTerm_summable_ae F hF,
-    actual_h6_physicalTerm_summable_ae N hN] with x hFs hNs
-  calc
-    _ = ∑' j : ℕ, (physicalTerm F j x - c * physicalTerm N j x) := by
-      apply tsum_congr
-      intro j
-      dsimp [physicalTerm]
-      ring
-    _ = _ := (hFs.hasSum.sub (hNs.hasSum.mul_left c)).tsum_eq
 
 end D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
