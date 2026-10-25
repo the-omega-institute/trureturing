@@ -1068,3 +1068,294 @@ $$
 局部不变量与联合支持约束如何闭合；它没有证明 FIB 原生来源已经产生了
 物理三维空间，也没有消除 §95--§99 所列的运输、测度、时钟、边界和无限
 细化义务。
+## 101. A positive full-domain binding threshold for the higher-order added law
+
+**Definition 101.1 (fixed field and variational threshold).** Retain precisely the source of Continuation III, §§82–87: $G=H^1\times\mathbb R$, its unit source $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, the original horizontal fields $X_i$, the original free generator $L$ and its clock, and its positive degree-$-3$ Green field $\Gamma$. In the shear coordinates $\xi=(x,y,z)$, $s=w-xy/2$, write $\mathcal G(\xi,s)=\Gamma(x,y,z,s+xy/2)$. For $\sigma>2$ use the complex distributional form domain $\mathcal E_\sigma$ of (87.1), with no central band or common central budget, and put
+
+$$
+\begin{gathered}
+T[\psi]=\sum_{i=1}^3\|X_i\psi\|_2^2,\qquad
+D_\nu[\psi]=\big\||D_w|^{\nu/2}\psi\big\|_2^2,\qquad
+V[\psi]=\int_G\Gamma|\psi|^2d\mu,\\
+S_{a,\eta}[\psi]=aT[\psi]+\eta D_\sigma[\psi],\qquad
+q_{a,\eta,g}[\psi]=S_{a,\eta}[\psi]-gV[\psi],\\
+I_\sigma(a,\eta,g)=\inf_{\substack{\psi\in\mathcal E_\sigma\\\|\psi\|_2=1}}
+ q_{a,\eta,g}[\psi],\qquad
+ g_\sigma^*(a,\eta)=\inf_{0\ne\psi\in\mathcal E_\sigma}
+ \frac{S_{a,\eta}[\psi]}{V[\psi]},\\
+\alpha=\frac{2\sigma-3}{2\sigma-2},\qquad
+\beta=\frac1{2\sigma-2},\qquad \alpha+\beta=1,\qquad a,\eta>0,\quad g\ge0.
+\end{gathered}
+\tag{101.1}
+$$
+
+Theorem 87.2 gives $\mathcal E_\sigma\subset\mathcal E_2\subset D(M_{\sqrt\Gamma})$, and $T,D_\sigma,V$ are finite and strictly positive at every nonzero state of this domain. Amplitude normalization therefore leaves the threshold quotient unchanged. This is the added kinetic law; the field in $V$ remains the Green field of the original $L$, rather than a Green field regenerated from the added operator.
+
+**Proposition 101.2 (norm-free estimate for the actual full field).** On the entire $\mathcal E_\sigma$, for every nonzero complex state,
+
+$$
+D_1[\psi]\le T[\psi],\qquad
+0<V[\psi]<\frac18\,T[\psi]^\alpha D_\sigma[\psi]^\beta.
+\tag{101.2}
+$$
+
+In particular the bound involves no power of $\|\psi\|_2$ and no projection of the potential. Its constant $1/8$ is a sufficient constant here; its optimality for $\sigma>2$ is not asserted.
+
+**Proof.** Use the actual unitary central transform $b(\xi,\lambda)$ of (87.2). In the magnetic fibre (85.7) put
+
+$$
+A_\lambda=\partial_x-i\lambda y/2,\qquad
+B_\lambda=\partial_y+i\lambda x/2.
+$$
+
+They are skew symmetric on compact smooth functions, and $[A_\lambda,B_\lambda]=i\lambda$. Integration by parts gives, for $\lambda\ne0$,
+
+$$
+\begin{aligned}
+t_\lambda[f]
+ &=\|(A_\lambda-i\operatorname{sgn}(\lambda)B_\lambda)f\|_2^2
+   +|\lambda|\|f\|_2^2+\|\partial_zf\|_2^2\\
+ &\ge |\lambda|\|f\|_2^2.
+\end{aligned}
+\tag{101.3}
+$$
+
+Closure extends the inequality to the fibre form domain; at $\lambda=0$ its asserted lower bound is zero. Integration over all central frequencies, using the closed free direct integral of Proposition 85.2, proves $D_1\le T$ on $D(L^{1/2})$. In particular this controls the actual central first moment, without replacing magnetic derivatives by ordinary derivatives.
+
+With $\theta=(\sigma-2)/(\sigma-1)$, the identity $2=\theta+(1-\theta)\sigma$ and Hölder applied to $|b|^2d\xi d\lambda$ give
+
+$$
+D_2\le D_1^{(\sigma-2)/(\sigma-1)}D_\sigma^{1/(\sigma-1)}.
+\tag{101.4}
+$$
+
+The strict actual-field endpoint (87.3), followed by (101.4) and $D_1\le T$, yields
+
+$$
+V<\frac18\sqrt{TD_2}
+ \le\frac18 T^{1/2}D_1^{(\sigma-2)/(2\sigma-2)}D_\sigma^{1/(2\sigma-2)}
+ \le\frac18 T^\alpha D_\sigma^\beta.
+$$
+
+All quantities are those of the same state. The zero vector satisfies the non-strict continuous version with both sides zero. $\square$
+
+**Theorem 101.3 (finite positive threshold and the binding alternatives).** Define the explicit sufficient coupling
+
+$$
+g_{\rm suf}(a,\eta)=\frac{8a^\alpha\eta^\beta}{\alpha^\alpha\beta^\beta}.
+\tag{101.5}
+$$
+
+Then
+
+$$
+0<g_{\rm suf}(a,\eta)\le g_\sigma^*(a,\eta)<\infty,
+\qquad
+\begin{cases}
+I_\sigma(a,\eta,g)=0,&0\le g\le g_\sigma^*(a,\eta),\\
+-\infty<I_\sigma(a,\eta,g)<0,&g>g_\sigma^*(a,\eta).
+\end{cases}
+\tag{101.6}
+$$
+
+For every $0\le g<g_\sigma^*(a,\eta)$ the zero infimum is not attained, and more precisely
+
+$$
+q_{a,\eta,g}[\psi]\ge
+ \left(1-\frac{g}{g_\sigma^*(a,\eta)}\right)S_{a,\eta}[\psi]>0
+ \quad(0\ne\psi\in\mathcal E_\sigma).
+\tag{101.7}
+$$
+
+The explicit range $0\le g\le g_{\rm suf}$ also has strictly positive energy at every nonzero state and no normalized minimizer, including its endpoint. For $g>g_\sigma^*$ the negative infimum is attained by a normalized state in exactly $\mathcal E_\sigma$, and this state is an eigenvector of the represented self-adjoint operator. No positivity or simplicity of that eigenvector is part of this assertion.
+
+**Proof.** Weighted arithmetic–geometric mean gives
+
+$$
+T^\alpha D_\sigma^\beta
+ \le\frac{\alpha^\alpha\beta^\beta}{a^\alpha\eta^\beta}
+      (aT+\eta D_\sigma).
+\tag{101.8}
+$$
+
+Thus (101.2) gives $V<S_{a,\eta}/g_{\rm suf}$ at every nonzero state, proving the positive lower bound for the threshold and the claimed strict positivity throughout the sufficient range. Any fixed nonzero punctured core state has $0<V<\infty$ and finite $S_{a,\eta}$, so its quotient proves that the threshold is finite. The infimum may equivalently be taken over that core: its density in $\mathcal E_\sigma$ is (87.1), and (87.4), applied to differences, gives convergence in $L^2(G,\Gamma d\mu)$ under form-norm approximation. Consequently the quotient converges at every nonzero limit state.
+
+The defining infimum implies $S_{a,\eta}\ge g_\sigma^*V$ on the whole domain, giving (101.7) and nonnegativity also at $g=g_\sigma^*$. For the matching zero upper bound take a normalized core state and the outward Carnot dilation
+
+$$
+\delta_R(x,y,z,w)=(Rx,Ry,Rz,R^2w),\qquad
+(U_R\psi)(p)=R^{-5/2}\psi(\delta_{1/R}p).
+$$
+
+The same Haar measure, horizontal fields and original degree-$-3$ field give the exact identities
+
+$$
+\|U_R\psi\|_2=\|\psi\|_2,\qquad
+T[U_R\psi]=R^{-2}T[\psi],\qquad
+D_\sigma[U_R\psi]=R^{-2\sigma}D_\sigma[\psi],\qquad
+V[U_R\psi]=R^{-3}V[\psi].
+\tag{101.9}
+$$
+
+Each $U_R$ is a bijection of $\mathcal E_\sigma$. Letting $R\to\infty$ proves $I_\sigma\le0$ for every finite $g$. Strict per-state positivity excludes attainment in the stated ranges; it does not furnish a uniform gap on the normalized sphere.
+
+If $g>g_\sigma^*$, the definition of infimum supplies a genuine state whose quotient is less than $g$. Its normalization has negative energy. The semiboundedness, exact closed form domain, full weighted compactness and negative-infimum attainment are precisely Theorem 87.5, applied to this $a,\eta,\sigma,g$ and this unchanged $V$. They give finiteness and the normalized eigenvector. This use requires an already established negative trial; weighted compactness alone is not a zero-energy attainment assertion. $\square$
+
+**Theorem 101.4 (exact coefficient scaling and an actual-field trial bound).** Put
+
+$$
+\mathcal C_\sigma=\sup_{0\ne\psi\in\mathcal E_\sigma}
+ \frac{V[\psi]}{T[\psi]^\alpha D_\sigma[\psi]^\beta},\qquad
+\kappa_\sigma=g_\sigma^*(1,1).
+\tag{101.10}
+$$
+
+These constants refer to the full actual-field domain, and
+
+$$
+0<\mathcal C_\sigma\le\frac18,\qquad
+\kappa_\sigma=\frac1{\alpha^\alpha\beta^\beta\mathcal C_\sigma},\qquad
+g_\sigma^*(a,\eta)=a^\alpha\eta^\beta\kappa_\sigma.
+\tag{101.11}
+$$
+
+For all $g\ge0$ the energy scaling is exactly
+
+$$
+I_\sigma(a,\eta,g)
+ =a^{\sigma/(\sigma-1)}\eta^{-1/(\sigma-1)}
+ I_\sigma\!\left(1,1,\frac{g}{a^\alpha\eta^\beta}\right).
+\tag{101.12}
+$$
+
+For any normalized nonzero actual form trial $v$, writing $T_v=T[v]$, $d_v=D_\sigma[v]$ and $V_v=V[v]$, its optimally dilated quotient supplies
+
+$$
+\begin{gathered}
+R_v=\left(\frac{(2\sigma-3)\eta d_v}{aT_v}\right)^{1/(2\sigma-2)},\\
+g_\sigma^*(a,\eta)\le
+ \frac{(aT_v)^\alpha(\eta d_v)^\beta}{\alpha^\alpha\beta^\beta V_v}.
+\end{gathered}
+\tag{101.13}
+$$
+
+In particular a fixed trial, with no change of field or carrier, is
+
+$$
+v_0(x,y,z,w)=\pi^{-1}
+ \exp\!\left[-\frac{x^2+y^2+z^2+(w-xy/2)^2}{2}\right],\qquad
+M_\sigma=\frac{\Gamma_{\!E}((\sigma+1)/2)}{\sqrt\pi},
+\tag{101.14}
+$$
+
+where $\Gamma_{\!E}$ denotes Euler's gamma function. It has norm one, belongs to $\mathcal E_\sigma$ for every finite $\sigma>0$, and satisfies
+
+$$
+\begin{gathered}
+T[v_0]=\frac{13}{8},\qquad D_\sigma[v_0]=M_\sigma,\\
+\mathcal V_0:=V[v_0]
+ =\frac1{\pi^2}\int\mathcal G(\xi,s)e^{-|\xi|^2-s^2}d\xi ds\\
+ =\frac1{\pi^{5/2}}\int_0^\infty\!\int_0^\infty
+ \frac{e^{-\lambda^2/4}\lambda}
+ {\sqrt{1+4t}\,\sinh(\lambda t)\,[4+\lambda\coth(\lambda t)]}
+ \,dt\,d\lambda\ \in(0,\infty),\\
+g_\sigma^*(a,\eta)\le
+ \frac{(13a/8)^\alpha(\eta M_\sigma)^\beta}
+ {\alpha^\alpha\beta^\beta\mathcal V_0}.
+\end{gathered}
+\tag{101.15}
+$$
+
+This is an actual-field trial upper bound, not an asserted value of the exact threshold. A completely elementary, less precise upper bound follows by replacing $\mathcal V_0$ in its denominator by
+
+$$
+\mathcal V_{\rm low}
+ =\frac{e^{-1/4}}{3\pi^{5/2}\sinh(2)[4+\coth(1)]}
+ \le\mathcal V_0.
+\tag{101.16}
+$$
+
+**Proof.** From (101.9), the quotient along the orbit of $v$ is
+
+$$
+\frac{S_{a,\eta}[U_Rv]}{V[U_Rv]}
+ =\frac{aT_vR+\eta d_vR^{3-2\sigma}}{V_v}.
+\tag{101.17}
+$$
+
+Its derivative vanishes at exactly $R_v$; it diverges at both ends because $2\sigma-3>0$. Its minimum is the right side of (101.13). Taking the infimum over all nonzero $v$ is the same as taking the infimum over all states and all $R>0$, since each $U_R$ is a domain bijection and $R=1$ is allowed. The infimum of $T^\alpha D_\sigma^\beta/V$ is $1/\mathcal C_\sigma$. Positivity and finiteness of this supremum follow from (101.2) and any nonzero trial, proving (101.11).
+
+For energy scaling choose $\rho=(\eta/a)^\beta$. Then
+
+$$
+\begin{aligned}
+q_{a,\eta,g}[U_\rho\psi]
+ &=a\rho^{-2}\left(T[\psi]+D_\sigma[\psi]
+       -\frac{g}{a\rho}V[\psi]\right),\\
+a\rho&=a^\alpha\eta^\beta,\qquad
+a\rho^{-2}=a^{\sigma/(\sigma-1)}\eta^{-1/(\sigma-1)}.
+\end{aligned}
+\tag{101.18}
+$$
+
+The unitary domain bijection makes the normalized infima equal, proving (101.12), including where they vanish.
+
+For the Gaussian, the shear has Jacobian one. In $(\xi,s)$ coordinates the three derivatives are $(-x+ys/2)v_0$, $(-y-xs/2)v_0$, and $-zv_0$. Their mixed terms cancel. Each coordinate has variance $1/2$ under $|v_0|^2$, giving $T=3/2+1/8$. The unitary central Fourier transform of the normalized one-dimensional Gaussian is itself, so its $|\lambda|^\sigma$ moment is $M_\sigma$. These facts also check membership in the actual distributional domain, rather than only an ordinary Sobolev domain.
+
+For the potential use the original central Green transform $K_\xi(\lambda)$ of (85.12). Pairing its inverse with $e^{-s^2}$ supplies $\sqrt\pi e^{-\lambda^2/4}/(2\pi)$. The $z$ Gaussian integral of its heat integrand supplies $(1+4t)^{-1/2}$, and the $(x,y)$ integral supplies
+
+$$
+\frac{|\lambda|}
+ {\sinh(|\lambda|t)\,[4+|\lambda|\coth(|\lambda|t)]}.
+$$
+
+Together with $\pi^{-2}$ and the two frequency signs this is exactly (101.15). The pointwise inverse is valid for $\xi\ne0$ by Proposition 85.4. The bound $0<K_\xi(\lambda)\le(4\pi|\xi|)^{-1}$ makes its Gaussian Fourier pairing integrable in $(\xi,\lambda)$; the nonnegative heat integrand then permits Tonelli. Alternatively finiteness already follows from (87.4). The Gaussian never replaces $\mathcal G$ by its marginal.
+
+To obtain (101.16), restrict the positive double integral to $0<\lambda<1$, $1<t<2$. There $e^{-\lambda^2/4}\ge e^{-1/4}$, $\sqrt{1+4t}\le3$, $\lambda/\sinh(\lambda t)\ge1/\sinh(2)$, and $\lambda\coth(\lambda t)\le\coth(1)$. The last two bounds follow from the decrease of $u/\sinh u$ and the increase of $u\coth u$ on $(0,\infty)$. This rectangle has area one. Substitution into (101.13) gives both trial bounds without a numerical sharpness assertion. $\square$
+
+**Theorem 101.5 (critical extremizers and the necessary virial balance).** Let $g=g_\sigma^*(a,\eta)$ and let $H_{a,\eta,g}$ be the operator represented by the closed form on $\mathcal E_\sigma$. The following existence statements are equivalent:
+
+- the normalized infimum $I_\sigma(a,\eta,g)=0$ is attained;
+- the quotient $S_{a,\eta}/V$ attains $g_\sigma^*(a,\eta)$ at a nonzero $L^2$ form state;
+- $\ker H_{a,\eta,g}\ne\{0\}$;
+- the supremum $\mathcal C_\sigma$ in (101.10) is attained by a nonzero state in $\mathcal E_\sigma$.
+
+Every critical zero state $\psi$ satisfies both the weak equation
+
+$$
+a\,t(\phi,\psi)+\eta\,d_\sigma(\phi,\psi)
+ =g_\sigma^*(a,\eta)\,v(\phi,\psi)
+ \qquad(\phi\in\mathcal E_\sigma),
+\tag{101.19}
+$$
+
+and the balances
+
+$$
+\begin{gathered}
+g_\sigma^*V[\psi]=aT[\psi]+\eta D_\sigma[\psi],\\
+2aT[\psi]+2\sigma\eta D_\sigma[\psi]=3g_\sigma^*V[\psi],\\
+aT[\psi]=(2\sigma-3)\eta D_\sigma[\psi],\qquad
+ aT[\psi]=\alpha g_\sigma^*V[\psi],\quad
+ \eta D_\sigma[\psi]=\beta g_\sigma^*V[\psi].
+\end{gathered}
+\tag{101.20}
+$$
+
+Here $t,d_\sigma,v$ are the sesquilinear forms polarized from $T,D_\sigma,V$, with $v(\phi,\psi)=\int\Gamma\overline\phi\psi\,d\mu$. The converse extremizer correspondence is precise: if $v$ attains $\mathcal C_\sigma$, then $U_{R_v}v$, after amplitude normalization, is a critical zero state; any critical zero state already attains $\mathcal C_\sigma$ and has $R_\psi=1$.
+
+**Proof.** At critical coupling the closed form is nonnegative on exactly $\mathcal E_\sigma$ by Theorems 87.5 and 101.3. Thus zero energy is equivalent to quotient equality, and homogeneity permits normalization. Cauchy–Schwarz for the nonnegative form shows that $q[\psi]=0$ implies $q(\phi,\psi)=0$ for all form tests. Form representation then puts $\psi$ in $D(H_{a,\eta,g})$ with $H_{a,\eta,g}\psi=0$; the converse follows from the same representation. This proves (101.19), without requiring the separate multiplier vector $\Gamma\psi$ to lie in $L^2$.
+
+For a critical zero state, the real scalar function $q[U_R\psi]$ is nonnegative for every $R>0$ and vanishes at $R=1$. Its exact expression (101.9) is differentiable even when the state has no dilation-generator derivative in $L^2$. Differentiation of that scalar expression gives the second line of (101.20); combining it with $q[\psi]=0$ gives the remaining balances. Equivalently the state minimizes its dilation-orbit quotient at $R=1$. Its equality in the global quotient and in (101.17)'s orbit minimum, together with (101.11), forces $V/(T^\alpha D_\sigma^\beta)=\mathcal C_\sigma$. Conversely an extremizer of this last ratio reaches the global quotient at its explicit $R_v$, giving zero energy there. $\square$
+
+**Definition 101.6 (supplier correspondence and the unresolved critical alternative).** The source-specific inference is repository-derived: the actual magnetic first-moment bound (101.3), spectral interpolation and the actual-field endpoint combine to make a positive threshold on the full domain, followed by dilation optimization and the binding classification. Its mature intermediate supplies have the following limited roles.
+
+The [Krötz–Thangavelu–Xu primary text](https://arxiv.org/abs/math/0401243v2), §4.1, equation (4.1.2), uses $n=1$, Lebesgue Haar measure and the symmetric Heisenberg product used in (85.1). Its partial central transform uses $e^{+i\lambda s}$, whereas (87.2) uses $e^{-i\lambda s}$; changing $\lambda$ to $-\lambda$ leaves the radial heat coefficient even. Multiplication by the independent $z$ heat factor $(4\pi t)^{-1/2}e^{-z^2/(4t)}$ gives exactly the original $H^1\times\mathbb R$ integrand in (85.12), hence the field used in (101.15). Its §2 full Laplacian, containing an additional central second derivative, is a different generator. The commutator calculation (101.3) uses the actual fibre derivatives and does not transfer a heat estimate from that different generator.
+
+The [Alvino–Ferone–Volpicelli primary text](https://arxiv.org/abs/1105.0335v1), Theorem 1.1 and equation (8), has $n=4$, $\beta_{\rm AFV}=2$ in the supplier of (87.5): its constant is $H(4,2)=2/\pi$ on each halfspace, and hence $4/\pi$ on both. The parameter $\beta_{\rm AFV}$ is unrelated to the exponent $\beta$ in (101.1). The passage from that trace inequality to the strict actual-field endpoint is Theorem 87.2; the halfspace trace weight is not the original potential. [Teschl's primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 6.24 and 2.13, supplies KLMN and closed-form representation on the Hilbert space $L^2(G,d\mu)$. Their client hypotheses and the full weighted compactness required for negative attainment are those proved in Theorem 87.5, not a new assertion that form compactness preserves mass at zero energy.
+
+Whether any of the equivalent critical existence statements in Theorem 101.5 holds for this actual $\mathcal E_\sigma$ and $\Gamma$ remains unresolved here. In particular boundedness of a quotient-minimizing sequence in the homogeneous kinetic quantity does not itself bound its $L^2$ mass, and inhomogeneous weighted compactness from §87.5 does not supply that missing bound. The virial balance is necessary and is not asserted sufficient without the extremizer condition. Neither $\mathcal C_\sigma$ nor $\kappa_\sigma$ is evaluated sharply; $g_{\rm suf}$ and the trial bounds are only certified bounds. The correspondence asserts no exhaustive literature novelty.
+
+The mathematical carrier, original field, Haar measure, horizontal kinetic form and clock in these statements are fixed throughout. There is no finite-band restriction, marginal-field substitution or modification of the original-law fixed-budget problem. No positive heat or Markov law for the $\sigma>2$ added kinetic operator is assumed. A native source-to-state realization and a physical dimension conclusion require additional bridges not contained in these variational statements.
+
+## 追加锚（本行以下为增补区）
