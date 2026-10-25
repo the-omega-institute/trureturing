@@ -4,9 +4,21 @@
 
 Every resolved coherent-state weak value differs from the no-click value by the count times the single-photon weak value.
 
-**Definition 1.1 (The all-count proposition).**
+**Theorem 1.1 (The first factorial moment of the exponential series).**
 
-$$\operatorname{claim} = \forall (k : \mathbb{N}), (\forall (A : \operatorname{LinearIsometryEquiv}\left(\mathbb{C}, \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right)\right)), (\forall (B : \operatorname{LinearIsometryEquiv}\left(\mathbb{C}, \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right)\right)), (\forall (alpha : \mathbb{C}), ((alpha \ne 0) \Rightarrow (\forall (m : \mathbb{N}), (\forall (hM : \operatorname{coherentProbability}\left(A, B, alpha, m\right) \ne 0), (\exists (hZero : \operatorname{coherentProbability}\left(A, B, alpha, 0\right) \ne 0), (\operatorname{ite}\left(m = 0, \operatorname{coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname{coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = 0, \exists (hOne : \operatorname{singleProbability}\left(A, B, (1 : \operatorname{Fin}\left(2\right))\right) \ne 0), (\operatorname{coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname{coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = ((m : \mathbb{C})) \cdot (\operatorname{singleWeakValue}\left(A, B, (1 : \operatorname{Fin}\left(2\right)), hOne\right)))\right)))))))))$$
+$$\forall (t : \mathbb {C}), (\operatorname {HasSum}\left(n: \mathbb {N}\mapsto \frac{((n : \mathbb {C})) \cdot ((t)^{n})}{\operatorname {Nat.factorial}\left(n\right)}, (t) \cdot (\operatorname {Complex.exp}\left(t\right))\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/ResolvedCountWeakValue.weighted_exp_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex t, the sum of n t^n/n! is t exp(t). A shift by one in the exponential series and the factorial recurrence give the identity. Number insertion in a coherent state uses this weighted series; the second factorial moment of an exponential series also follows by a shift.
+
+**Definition 1.2 (The all-count proposition).**
+
+$$\operatorname {claim} = \forall (k : \mathbb {N}), (\forall (A : \operatorname {LinearIsometryEquiv}\left(\mathbb {C}, \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right), \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right)\right)), (\forall (B : \operatorname {LinearIsometryEquiv}\left(\mathbb {C}, \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right), \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right)\right)), (\forall (alpha : \mathbb {C}), ((alpha \ne 0) \Rightarrow (\forall (m : \mathbb {N}), (\forall (hM : \operatorname {coherentProbability}\left(A, B, alpha, m\right) \ne 0), (\exists (hZero : \operatorname {coherentProbability}\left(A, B, alpha, 0\right) \ne 0), (\operatorname {ite}\left(m = 0, \operatorname {coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname {coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = 0, \exists (hOne : \operatorname {singleProbability}\left(A, B, (1 : \operatorname {Fin}\left(2\right))\right) \ne 0), (\operatorname {coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname {coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = ((m : \mathbb {C})) \cdot (\operatorname {singleWeakValue}\left(A, B, (1 : \operatorname {Fin}\left(2\right)), hOne\right)))\right)))))))))$$
 
 *Formalization.* `D5/S3/Quantum/ResolvedCountWeakValue.claim` (`✓ std3`).
 
@@ -16,9 +28,9 @@ $$\operatorname{claim} = \forall (k : \mathbb{N}), (\forall (A : \operatorname{L
 
 Section V, page 6: "This supports earlier approximate results which suggested that if a photon-number resolving detector were used, the weak value post-selected on detecting m photons would exceed the no-click weak value by precisely m times the single-photon number. We leave a rigorous proof of this conjecture for future work." The encoding has k+1 modes, with mode 0 probed and detected; A and B are arbitrary passive evolutions. Alpha is nonzero, m is a natural count, and all conditional values require nonzero probabilities. For m=0 the difference is zero without a single-photon denominator.
 
-**Theorem 1.2 (The resolved-count identity).**
+**Theorem 1.3 (The resolved-count identity).**
 
-$$\forall (k : \mathbb{N}), (\forall (A : \operatorname{LinearIsometryEquiv}\left(\mathbb{C}, \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right)\right)), (\forall (B : \operatorname{LinearIsometryEquiv}\left(\mathbb{C}, \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(k + 1\right)\right)\right)), (\forall (alpha : \mathbb{C}), ((alpha \ne 0) \Rightarrow (\forall (m : \mathbb{N}), (\forall (hM : \operatorname{coherentProbability}\left(A, B, alpha, m\right) \ne 0), (\exists (hZero : \operatorname{coherentProbability}\left(A, B, alpha, 0\right) \ne 0), (\operatorname{ite}\left(m = 0, \operatorname{coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname{coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = 0, \exists (hOne : \operatorname{singleProbability}\left(A, B, (1 : \operatorname{Fin}\left(2\right))\right) \ne 0), (\operatorname{coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname{coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = ((m : \mathbb{C})) \cdot (\operatorname{singleWeakValue}\left(A, B, (1 : \operatorname{Fin}\left(2\right)), hOne\right)))\right)))))))))$$
+$$\forall (k : \mathbb {N}), (\forall (A : \operatorname {LinearIsometryEquiv}\left(\mathbb {C}, \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right), \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right)\right)), (\forall (B : \operatorname {LinearIsometryEquiv}\left(\mathbb {C}, \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right), \operatorname {EuclideanSpace}\left(\mathbb {C}, \operatorname {Fin}\left(k + 1\right)\right)\right)), (\forall (alpha : \mathbb {C}), ((alpha \ne 0) \Rightarrow (\forall (m : \mathbb {N}), (\forall (hM : \operatorname {coherentProbability}\left(A, B, alpha, m\right) \ne 0), (\exists (hZero : \operatorname {coherentProbability}\left(A, B, alpha, 0\right) \ne 0), (\operatorname {ite}\left(m = 0, \operatorname {coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname {coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = 0, \exists (hOne : \operatorname {singleProbability}\left(A, B, (1 : \operatorname {Fin}\left(2\right))\right) \ne 0), (\operatorname {coherentWeakValue}\left(A, B, alpha, m, hM\right) - \operatorname {coherentWeakValue}\left(A, B, alpha, 0, hZero\right) = ((m : \mathbb {C})) \cdot (\operatorname {singleWeakValue}\left(A, B, (1 : \operatorname {Fin}\left(2\right)), hOne\right)))\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/ResolvedCountWeakValue.result` (`✓ std3`). ∎
 
@@ -38,4 +50,5 @@ Number insertion creates one excitation in the coherent field. Its detected-mode
 
 - Truth anchor: `D5/S3/Quantum/ResolvedCountWeakValue.claim`
 - Truth anchor: `D5/S3/Quantum/ResolvedCountWeakValue.result`
+- Truth anchor: `D5/S3/Quantum/ResolvedCountWeakValue.weighted_exp_hasSum`
 - Dependency: [D5/S3/Quantum/PassiveFockModel](PassiveFockModel.md)
