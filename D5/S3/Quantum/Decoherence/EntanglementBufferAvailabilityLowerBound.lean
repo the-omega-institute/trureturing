@@ -262,7 +262,7 @@ private lemma policy_bound (n : ℕ) (pg pc q gam fnew : ℝ)
   have hdeltaeq : (1 - t * aa / x) * (1 - t * dd / p) -
       (t * bb / p) * (t * cc / x) = det / (x * p) := by
     dsimp only [det]
-    field_simp [hs.1.ne', hs.2.1.ne']
+    field_simp (disch := first | exact hs.1.ne' | exact hs.2.1.ne' | norm_num)
   have hdelta : 0 < (1 - t * aa / x) * (1 - t * dd / p) -
       (t * bb / p) * (t * cc / x) := by
     rw [hdeltaeq]
@@ -272,7 +272,7 @@ private lemma policy_bound (n : ℕ) (pg pc q gam fnew : ℝ)
     apply (div_eq_iff (mul_pos hdelta hs.2.1).ne').mpr
     rw [hdeltaeq]
     dsimp only [s, num]
-    field_simp [hs.1.ne', hs.2.1.ne', hs.2.2.1.ne']
+    field_simp (disch := first | exact hs.1.ne' | exact hs.2.1.ne' | exact hs.2.2.1.ne' | norm_num)
   have hform : availability n pg pc q gam fnew a b c d = s / (1 / g + s) := by
     unfold availability
     change ((1 - t * aa / x + t * cc / x * (fnew - 1 / 4)) /
@@ -312,7 +312,7 @@ private lemma failing_value (n : ℕ) (pg pc gam fnew : ℝ)
   rw [hid]
   have hg0 : g ≠ 0 := hg.ne'
   have hgp : g + p ≠ 0 := (add_pos (show 0 < g from hg) hp).ne'
-  field_simp [hg0, hp.ne', hgp]
+  field_simp (disch := first | exact hg0 | exact hp.ne' | exact hgp | norm_num)
   rw [add_comm p g, div_self hgp]
 
 theorem result : claim := by
