@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c1a3fe7177081d5c0827ea4bf5caebe696c066d47c3c80c479e54da0a21eb6e
+  normalized_sha256: sha256:4c1a3fe7177081d5c0827ea4bf5caebe696c066d47c3c80c479e54da0a21eb6e
+cas_ref: sha256:4c1a3fe7177081d5c0827ea4bf5caebe696c066d47c3c80c479e54da0a21eb6e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 为 abduction-action-prediction 三步引入事实证据和反事实查询的名称，没有给出概率恒等式。'
+    previous_atom_id: cee475fc9dda9223351bf9140e42671d1b4dac320d950b551da15f38cdf7578c
+    next_atom_id: 050ee60f51f62a7e218b3f0609998dfaf417740cb70d7d8fffee9c7152048987
