@@ -41,6 +41,7 @@ The bounded literature check recorded in #21288 comprises:
 - the orchestrator's reading of the v2 source, which retains the conjecture and proves an extremal-family result separately;
 - the search seat's check of OpenAlex W4392775620, reporting three citations, and the Quantum citation list, with no settlement of the uniform $\ell_\infty$ bound found;
 - the search seat's report of no MathDB or google-deepmind/formal-conjectures entry, and the orchestrator's report of no existing repository issue, module or dossier at preregistration.
+- the orchestrator's reading of the citing work arXiv:2512.11619v2 (TeX `main.tex`, md5 `154e3475b61b2328a9a061ba3d09dcc0`). Line 104 states that the conjectured bound "is actually not optimal", that the paper provides "a counter-example", and that it proves $\lVert t_\text{opt}\rVert_1\le T\sqrt3\,\lVert h_\text{P}\oslash h_\text{S}\rVert_2$ (Theorem `thm:Thm1`, l. 113–119); l. 170 calls this an answer to the open question. The text (240 lines) exhibits no coupling matrix whose LP optimum exceeds $K\,d$. The two bounds are incomparable. When every $|M_{ij}|=d$, the $2$-norm bound is $\sqrt{3n(n-1)/2}\,d$, which equals $K\,d$ at $n=3$ and exceeds it for every other $n\ge2$. For a matrix supported on one triangle it is $3d$, which is below $K\,d$ for $n\ge5$. Within the conjecture's model, `result` rules out any matrix whose optimum exceeds $K\,d$.
 
 `not-found-in-searched-scope`. These attributed search findings are not an exhaustive literature census.
 
