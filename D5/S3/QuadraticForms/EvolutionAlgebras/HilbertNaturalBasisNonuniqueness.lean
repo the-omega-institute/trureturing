@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.claim; result=D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.result; claim=D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.claim
-   digest: A complex infinite Hilbert evolution algebra with dense square has two complete natural orthonormal bases unrelated by permutation and unimodular scalars. -/
+   digest: Dense-square Hilbert basis uniqueness fails over the complex scalars. -/
 
 import Mathlib.Analysis.Normed.Lp.lpHolder
 import Mathlib.Analysis.InnerProductSpace.l2Space
@@ -145,7 +145,8 @@ private theorem f_natural (i j : ℕ+) (hij : i ≠ j) : mu (f i) (f j) = 0 := b
 
 /- proof_shape: bind-only; consumers: complex_refutation. -/
 private theorem dense_square :
-    (span ℂ {z : (lp (fun _ : ℕ+ => ℂ) 2) | ∃ x y : (lp (fun _ : ℕ+ => ℂ) 2), mu x y = z}).topologicalClosure = ⊤ := by
+    (span ℂ {z : (lp (fun _ : ℕ+ => ℂ) 2) |
+      ∃ x y : (lp (fun _ : ℕ+ => ℂ) 2), mu x y = z}).topologicalClosure = ⊤ := by
   apply top_unique
   rw [← e.dense_span]
   apply Submodule.topologicalClosure_mono
