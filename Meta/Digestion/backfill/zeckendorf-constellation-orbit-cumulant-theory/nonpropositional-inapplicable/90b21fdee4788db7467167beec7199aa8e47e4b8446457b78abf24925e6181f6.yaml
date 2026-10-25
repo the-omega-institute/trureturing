@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:90b21fdee4788db7467167beec7199aa8e47e4b8446457b78abf24925e6181f6
+  normalized_sha256: sha256:90b21fdee4788db7467167beec7199aa8e47e4b8446457b78abf24925e6181f6
+cas_ref: sha256:90b21fdee4788db7467167beec7199aa8e47e4b8446457b78abf24925e6181f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本节提出寻找全局压缩结构的研究目标；显示的等式是所求接口，列出的结构均为候选，未宣称实现或 RH 成立。
+    previous_atom_id: 980223d329ba9d54bc1b0062649574d6e8759f01eed700bd66b1d987dcf44aa3
+    next_atom_id: ec0bf3b3cfe2a58d8cf4008248b2a2158624ab45665b9d84b00bfe8683b37193
+  chain_atoms:
+    - fdd1d327663c3540499217abe37e0858b48ed36cff3622af6cad36a0e955d3fc
+    - 0dc448ec3889650dbf04774e9baa3947c9323e5addc84a4854916222154b525f
+    - 7bb4591cdc8b11bfc127702717bab79d140444b6ce6462ca3909df9fe0682220
+    - 1c07ec1ed453e588507b857709fe38de4bad73390ddf0ef80807bb0af42d9655
+    - 148ad309f1ee39739e1f8399b96617d37e5e071f41ad1f0123ff2689d9933880
+    - c98c5d55447a5d22fae75866553dbae95a2edb3b99c2cedb2ef9379c6fee9d81

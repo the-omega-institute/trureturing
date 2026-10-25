@@ -968,3 +968,348 @@ martingale couplings*, arXiv:1404.0999v3, Theorems 1.2–1.4.
 theory*, arXiv:2003.05338v1, §3.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Critical upper-tail concentration on the entire descriptor space
+
+**Definition 9.1 (the same flows and auxiliary finite measures).** Let
+$(\Gamma_B,\Gamma_A)\in\mathfrak C$ have both complete endpoint
+coordinate boxes
+
+$$
+ P_{s,a}(\omega)\wedge P_{s,b}(\omega)
+ \le D(\omega)\le
+ P_{s,a}(\omega)\vee P_{s,b}(\omega)
+ \quad(\nu_s\text{-almost every }D,\ \omega\in\Omega_s).
+ \tag{9.1}
+$$
+
+No support-size, reversibility or deterministic-successor hypothesis is
+imposed. Disintegrate the original flows as
+$\nu_p(dQ)B(Q,dW)$ and $\nu_\beta(dW)A(W,dQ)$, and put
+
+$$
+ \begin{aligned}
+ Cf(Q)&=\int\!\int f(Q')A(W,dQ')B(Q,dW),\\
+ Lf(Q)&=U(Q)\int v(W)\int f(Q')A(W,dQ')B(Q,dW),\\
+ g(Q)&=Q(w_{0,1})=U(Q)\int(1-v(W))B(Q,dW),\\
+ z&=b(1-b)=\frac6{25},\qquad c=(1-b)^2=\frac9{25},\\
+ \xi_N&=\frac1N\sum_{n=0}^{N-1}z^{-n}\nu_pL^n,\qquad N\ge3,\\
+ q_N&=\xi_N\mathbf1,\qquad
+ d_n=\int Q(w_{n,1})d\nu_p(Q),\qquad
+ r_N=\frac1N\sum_{n=0}^{N-1}\frac{d_n}{z^n}.
+ \end{aligned}
+ \tag{9.2}
+$$
+
+Here $\nu_pL^n$ is a finite measure, defined by integration against the
+positive kernel $L^n$. The $\xi_N$ are auxiliary finite measures for
+synthetic return weights; they are not substituted for either acquired
+marginal in (1.5), in either conditional equation, or in any configuration
+loss. In particular, the original acquired return kernel remains $C=BA$
+and $\nu_pC=\nu_p$. Both original edges and their branching remain fixed.
+The definition is independent of versions of the kernels at null inputs:
+$L\le\lambda C$ gives $\nu_pL^n\le\lambda^n\nu_p$.
+
+**Theorem 9.2 (quantitative concentration at the native upper endpoint).**
+Every pair in Definition 9.1 satisfies
+
+$$
+ 0\le r_N-cq_N\le\frac4{3N},\qquad
+ \int\operatorname{TV}(Q,P_{p,b})d\xi_N(Q)
+       \le\frac{554}{171N}\quad(N\ge3).
+ \tag{9.3}
+$$
+
+Consequently, for every $\varepsilon>0$,
+
+$$
+ \xi_N\{Q:\operatorname{TV}(Q,P_{p,b})\ge\varepsilon\}
+ \le\frac{554}{171N\varepsilon}.
+ \tag{9.4}
+$$
+
+These conclusions hold for arbitrary Borel marginals and unrestricted
+branching. They do not require a recurrence for $d_n$ or any hypothesis
+on the supported interior target losses.
+
+**Proof.** All identities below hold modulo the original marginal null
+sets. Both unweighted balances ensure that the kernels do not enter
+those null sets from almost every input. Absolute continuity of
+$\nu_pL^n$ then allows all the same identities to be integrated against
+$\xi_N$.
+
+The complete conditional recursions in (1.6) give, by iteration,
+
+$$
+ L^ng(Q)=Q(w_{n,1}),\qquad
+ L^n\mathbf1(Q)=Q(T_p(n)).
+ \tag{9.5}
+$$
+
+The second identity follows by summing the first-step recursion over the
+whole continuation carrier and then deleting successive beta-alpha
+pairs. It retains the infinite coordinate. Its zero mass is supplied by
+(1.3), rather than by conditioning on completion.
+
+For marker zero the $b$ endpoint is the larger one at every depth. For
+marker one the ratio of its $b$ mass to its $a$ mass is
+
+$$
+ \frac{81}{100}\left(\frac{27}{25}\right)^n,
+$$
+
+which exceeds one for $n\ge3$. Summing the upper coordinate boxes over
+$T_p(n)$ therefore gives
+
+$$
+ L^n\mathbf1\le z^n\mathbf1\quad(n\ge3),\qquad
+ L^3g\le cz^3\mathbf1.
+ \tag{9.6}
+$$
+
+For $n=0,1,2$ the marker-one upper endpoint is instead the $a$ mass.
+Since $z_a=a(1-a)=2/9<z$ and $c_a=(1-a)^2=4/9$,
+
+$$
+ K:=\sum_{n=0}^2\frac{d_n}{z^n}
+ \le c_a\sum_{n=0}^2(z_a/z)^n\le\frac43.
+ \tag{9.7}
+$$
+
+The emission intervals and the first-step formula for $g$ give $g\ge c$.
+The finite sum in (9.2) has the exact shift identity
+
+$$
+ \xi_N(z^{-3}L^3g)
+ =\xi_Ng+\frac1N\left(
+       \sum_{n=N}^{N+2}\frac{d_n}{z^n}-K\right).
+ \tag{9.8}
+$$
+
+Its left side is at most $c\xi_N\mathbf1$ by (9.6), and the terminal
+sum is nonnegative. Thus
+$0\le\xi_N(g-c)\le K/N\le4/(3N)$. Since $\xi_Ng=r_N$, this is the
+first inequality of (9.3).
+
+Write
+
+$$
+ \delta(Q)=\operatorname{TV}(Q,P_{p,b}),\qquad
+ \epsilon(W)=\operatorname{TV}(W,P_{\beta,b}).
+$$
+
+Compare each full recursion with the native $b$ recursion and use TV
+convexity, keeping the conditional successor averages:
+
+$$
+ \delta\le(b-u)+U B\epsilon,\qquad
+ \epsilon\le(b-v)+v A\delta.
+ \tag{9.9}
+$$
+
+These are inequalities of complete normalized laws; $0\le\delta,\epsilon
+\le1$. Combining them gives
+
+$$
+ \delta\le h+L\delta,\qquad
+ h=(b-u)+UB(b-v).
+$$
+
+The immediate marker-one defect has the exact decomposition
+
+$$
+ g-c=(1-b)(b-u)+UB(b-v).
+$$
+
+Both summands are nonnegative. Hence
+$h\le(g-c)/(1-b)=(5/3)(g-c)$.
+For any bounded Borel $f$, the one-step shift identity is
+
+$$
+ \xi_NLf=z\xi_Nf+
+ \frac zN\left(z^{-N}\nu_pL^Nf-\nu_pf\right).
+ \tag{9.10}
+$$
+
+Use $f=\delta$. The parenthesized expression is at most one, because
+$\delta\le1$, (9.6) bounds $z^{-N}\nu_pL^N\mathbf1$ by one, and
+$\nu_p\delta\ge0$. Integrating (9.9) after its combination therefore
+shows
+
+$$
+ (1-z)\xi_N\delta
+ \le\frac53\xi_N(g-c)+\frac zN
+ \le\frac1N\left(\frac{20}{9}+\frac6{25}\right).
+$$
+
+Since $1-z=19/25$, division gives $\xi_N\delta\le554/(171N)$.
+The nonnegative integral bound implies (9.4). No spectral decomposition,
+finite component classification or suppression of conditional variance
+has been used. $\square$
+
+**Theorem 9.3 (tail coefficient and concentration on small acquired sets).**
+In Definition 9.1 suppose the finite limit
+
+$$
+ \lim_{N\to\infty}r_N=\mathcal B
+ \tag{9.11}
+$$
+
+exists, and write $m_b=\nu_p\{P_{p,b}\}$. Then
+$\mathcal B/c\ge m_b$, and, for every $\varepsilon>0$,
+
+$$
+ \lim_{N\to\infty}
+ \xi_N\{Q:0<\operatorname{TV}(Q,P_{p,b})<\varepsilon\}
+ =\frac{\mathcal B}{c}-m_b.
+ \tag{9.12}
+$$
+
+The original acquired masses of these punctured neighborhoods tend to
+zero as $\varepsilon\downarrow0$. In particular, the following are
+equivalent:
+
+$$
+ \begin{aligned}
+ &\mathcal B=cm_b;\\
+ &\text{the family }(\xi_N)_{N\ge3}\text{ is uniformly absolutely
+ continuous with respect to }\nu_p.
+ \end{aligned}
+ \tag{9.13}
+$$
+
+Uniform absolute continuity here means that for every $e>0$ there is a
+$t>0$ such that $\nu_p(E)<t$ implies $\sup_{N\ge3}\xi_N(E)<e$ for
+every Borel $E$. When the conditions in (9.13) hold,
+$\xi_N-m_b\delta_{P_{p,b}}$ is a nonnegative measure whose total mass
+tends to zero.
+
+**Proof.** The native-fiber isolation argument of [PAIR, Theorem 19.1]
+uses only the full endpoint boxes, the two residual equations and the
+shared marginals. These are the present hypotheses. Explicitly, at
+$Q=P_{p,b}$ the B-successor barycentre is $P_{\beta,b}$; every one of
+its coordinates is an endpoint of the appropriate box interval.
+Nonnegativity at each endpoint, then countability of the complete
+carrier, forces the entire successor to be $P_{\beta,b}$ almost surely.
+At $W=P_{\beta,b}$ the A equation similarly forces $P_{p,b}$.
+The shared unweighted marginals give equal native masses, and these
+forced outgoing masses exhaust each native singleton's incoming mass.
+Thus there is no incoming nonnative flow. Consequently
+
+$$
+ \nu_pL^n\{P_{p,b}\}=m_bz^n,\qquad
+ \xi_N\{P_{p,b}\}=m_b.
+ \tag{9.14}
+$$
+
+This includes $m_b=0$. By (9.3) and (9.11), $q_N\to\mathcal B/c$.
+Subtract the singleton mass (9.14) and the mass outside the open
+$\varepsilon$ ball, which tends to zero by (9.4). This proves (9.12),
+including its nonnegative right side. The punctured neighborhoods
+decrease to the empty set, so their $\nu_p$ masses tend to zero.
+
+If the right side of (9.12) is positive, these neighborhoods contradict
+uniform absolute continuity. If it is zero, (9.14) shows that
+$\xi_N-m_b\delta_{P_{p,b}}$ is nonnegative with total mass
+$q_N-m_b\to0$. This tail of the sequence is uniformly absolutely
+continuous: its mass is small apart from the fixed measure
+$m_b\delta_{P_{p,b}}\ll\nu_p$. Each of the finitely many remaining
+$\xi_N$ is absolutely continuous with respect to $\nu_p$ by
+Definition 9.1. A finite family of finite absolutely continuous measures
+is uniformly absolutely continuous. This proves the converse in (9.13).
+$\square$
+
+**Corollary 9.4 (an unrestricted necessary concentration alternative at
+zero excess).** Fix $\mu(k)=2^{-k}$ for all positive integers $k$, with
+exactly the carriers, edges and losses of Definitions 1.1--1.3 and 4.1.
+Let a pair in this entire domain satisfy $J=0$. If its coefficient
+$\mathcal B$ in (9.11) exists and $\mathcal B>9/50$, then
+$(\xi_N)$ is not uniformly absolutely continuous with respect to its
+original acquired marginal. More precisely, every punctured neighborhood
+in (9.12) has limiting auxiliary mass at least
+
+$$
+ \frac{25\mathcal B}{9}-\frac12>0.
+ \tag{9.15}
+$$
+
+For a concrete consumer, suppose such a zero-level pair preserves the
+averaged marker-one tail of the complete PAIR Chapter 15 law from some
+finite depth onward. Then its limiting punctured-neighborhood mass is
+at least
+
+$$
+ \frac{78975}{2857232}>0.
+ \tag{9.16}
+$$
+
+Thus that tail-preserving repair is impossible whenever its auxiliary
+family is uniformly absolutely continuous; in particular it is
+impossible for a finite p marginal. No finite-support hypothesis is
+imposed on the concentration alternative itself.
+
+**Proof.** Zero excess supplies (9.1) and the original midpoint identity
+$\int Q(E_p)d\nu_p=C$ [PAIR, Section 11.8]. The complete boxes imply
+
+$$
+ C-\rho_p\le Q(E_p)\le C+\rho_p.
+$$
+
+At $P_{p,b}$ the lower value is attained. Therefore
+
+$$
+ C\le m_b(C-\rho_p)+(1-m_b)(C+\rho_p),
+$$
+
+which gives $m_b\le1/2$. Apply Theorem 9.3 and $c=9/25$ to obtain
+(9.15).
+
+For the stated preserved tail, PAIR Section 15.2 supplies, for all
+sufficiently large $n$,
+
+$$
+ d_n=s_ac_a z_a^n+s_bc z^n,\qquad
+ s_b=\frac{1507591}{2857232}
+     =\frac12+\frac{78975}{2857232},\qquad s_a=1-s_b.
+$$
+
+Since $z_a/z<1$, its normalized Cesaro coefficient is
+$\mathcal B=s_bc$. Equations (9.12) and $m_b\le1/2$ give (9.16).
+For a finite p marginal there are only finitely many nonnative atoms,
+so a sufficiently small punctured neighborhood has zero original
+measure and hence zero $\xi_N$ measure. This contradicts (9.16).
+The contradiction uses the full original compatibility and zero-level
+conditions, not a replacement risk or a restriction of the original
+domain. $\square$
+
+**Mathematical citation 9.5 (suppliers and remaining scope).** The full
+zero face and its midpoint identities are supplied by [PAIR, Section
+11.8]; native-fiber isolation is supplied by its Theorem 19.1. Its
+Theorems 18.2 and 20.3 give finite-p-support recurrence restrictions.
+The additional inference here is the bound (9.3) for arbitrary Borel
+marginals and the quantified concentration alternative (9.12)--(9.16),
+which does not use finite positive matrix components. The elementary
+positive-kernel shift identities, TV convexity and measure continuity
+are reused mathematical tools.
+
+For comparison, N. Champagnat and D. Villemonais, *Exponential convergence
+to quasi-stationary distribution and Q-process*,
+[arXiv:1404.1349v1, Assumption (A) and Theorem 2.1](https://arxiv.org/html/1404.1349v1),
+relate uniform exponential convergence of conditional probability laws to
+a common conditional minorization and a comparison of survival
+probabilities. Neither hypothesis is imposed here. The finite measures
+$\xi_N$ are normalized by the fixed endpoint rate, not individually
+conditioned to have mass one. That theorem is a comparison reference,
+not a premise for (9.3). This is a bounded source-relative and primary
+literature comparison, with no global priority claim.
+
+The original unrestricted problem (8.1) remains unresolved for the
+geometric prior. A zero-level pair need not preserve the PAIR Chapter 15
+tail, need not have a coefficient exceeding $9/50$, and is not required
+to satisfy uniform absolute continuity of the auxiliary measures.
+Equations (9.3)--(9.16) neither produce a pair at zero nor exclude all
+entire marginals satisfying both full flows and all supported losses.
+All acquired marginals, all depths, complete atoms, infinite outcomes
+and configuration-before-TV losses remain those of the original domain.
+
+## 追加锚（本行以下为后续增补区）

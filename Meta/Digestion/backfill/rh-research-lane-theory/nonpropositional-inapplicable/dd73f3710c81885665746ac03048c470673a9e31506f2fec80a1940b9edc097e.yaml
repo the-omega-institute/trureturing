@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd73f3710c81885665746ac03048c470673a9e31506f2fec80a1940b9edc097e
+  normalized_sha256: sha256:dd73f3710c81885665746ac03048c470673a9e31506f2fec80a1940b9edc097e
+cas_ref: sha256:dd73f3710c81885665746ac03048c470673a9e31506f2fec80a1940b9edc097e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: P0-P5 的实施规范与表头，规定后续端点表达和禁止把未知等价式作为参数，不是一个数学端点。'
+    previous_atom_id: 22b11d719ea36aeb59283cf06f2a725db75dacb48fedc0b5c0f50ad34f0b9185
+    next_atom_id: 912260bcb1f8126f2231be4efae60750def4645daab354b60f02028326f47494

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2218570263616833895decf0eeeea899afb4b3c26fb6ced2bc0b738167c9c7da
+  normalized_sha256: sha256:2218570263616833895decf0eeeea899afb4b3c26fb6ced2bc0b738167c9c7da
+cas_ref: sha256:2218570263616833895decf0eeeea899afb4b3c26fb6ced2bc0b738167c9c7da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列“不同残差和通道向量的组合”这一可能的能量变化来源，没有给定对象的数学断言。
+    previous_atom_id: 7d89c4e499a5bce97e4adc15f80ebbca1e87897d116a0a6b5234cae60afa330d
+    next_atom_id: b8598a96facc9db42d5495dabb0ab1a70318521c6210c6ebb913dfe749df032a

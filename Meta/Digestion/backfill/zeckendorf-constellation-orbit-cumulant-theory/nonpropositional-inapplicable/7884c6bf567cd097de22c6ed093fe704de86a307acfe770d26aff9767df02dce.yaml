@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7884c6bf567cd097de22c6ed093fe704de86a307acfe770d26aff9767df02dce
+  normalized_sha256: sha256:7884c6bf567cd097de22c6ed093fe704de86a307acfe770d26aff9767df02dce
+cas_ref: sha256:7884c6bf567cd097de22c6ed093fe704de86a307acfe770d26aff9767df02dce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the Casimir moment Hankel component of a desired congruence diagram.
+    previous_atom_id: 9411ade75755ded31958140cd8f4f216797efd2c072e94b6a358adeab205779d
+    next_atom_id: f75a894b2cfa0d95857b9128959b263d75b578017bf8ea619bfe450206050d85

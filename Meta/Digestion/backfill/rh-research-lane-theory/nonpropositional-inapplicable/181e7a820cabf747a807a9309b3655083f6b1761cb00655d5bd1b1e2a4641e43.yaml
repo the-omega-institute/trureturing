@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:181e7a820cabf747a807a9309b3655083f6b1761cb00655d5bd1b1e2a4641e43
+  normalized_sha256: sha256:181e7a820cabf747a807a9309b3655083f6b1761cb00655d5bd1b1e2a4641e43
+cas_ref: sha256:181e7a820cabf747a807a9309b3655083f6b1761cb00655d5bd1b1e2a4641e43
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上位 governing-list 明确为“本轮不主张”；本片只排除对Fourier 反演或 Plancherel的完成声称，不断言对应数学命题。
+    previous_atom_id: 4f317960b0c3fd38c2736dcbabada0e62f37360dfa9f3b79d6e17d580270e9d4
+    next_atom_id: 64faea81e39afaa06565db249e4f918ff03a149cba1cb82cc9dd4e4924d4c6b0

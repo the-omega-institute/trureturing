@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:402b2327bcc58477accdf757bf1b823868c547de899dc7cba794c704a080f34f
+  normalized_sha256: sha256:402b2327bcc58477accdf757bf1b823868c547de899dc7cba794c704a080f34f
+cas_ref: sha256:402b2327bcc58477accdf757bf1b823868c547de899dc7cba794c704a080f34f
+coverage_gids:
+  - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+    target_statement_id: sha256:c8292c52963f1ae54dcfbc9c3ca4a31de24bf18bd7f06ad9839b898e60028afa
+  - gid: D5/S3/Zeros/ZetaIdentities.riemann_zeta_euler_product
+    target_statement_id: sha256:8a6cfa904ccee3ca7d79986be035825fefe99cb8ec32e0fabea4f2da7266295d
+receipts:
+  unresolved_subitems: []

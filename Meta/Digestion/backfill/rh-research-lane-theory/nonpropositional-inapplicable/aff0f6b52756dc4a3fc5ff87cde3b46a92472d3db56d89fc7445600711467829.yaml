@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aff0f6b52756dc4a3fc5ff87cde3b46a92472d3db56d89fc7445600711467829
+  normalized_sha256: sha256:aff0f6b52756dc4a3fc5ff87cde3b46a92472d3db56d89fc7445600711467829
+cas_ref: sha256:aff0f6b52756dc4a3fc5ff87cde3b46a92472d3db56d89fc7445600711467829
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此条仅列出 phase-twisted curvature 的源码 GID 作为来源目录项，没有陈述该节点的量词、假设或数学结论。
+    previous_atom_id: a8d3afbc17b3ec4257ecff5c3103439b2475ccdcf840a06b877543303cb55134
+    next_atom_id: 2af5cb109f841af729b0776e161dc989f8f65381cf1c26a923a53d0c211cdefb
