@@ -106,7 +106,7 @@ def tensorRawL (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (m : ℤ) := tensorEnd
 
 def tensorPair (i l : Fin D.rank) (j k : ℤ) := tensorEnd D T (normalPair D i l j k)
 
-private theorem tensorPair_eq (i l : Fin D.rank) (j k : ℤ) :
+theorem tensorPair_eq (i l : Fin D.rank) (j k : ℤ) :
     tensorPair D T i l j k =
       if j < 0 then tensorCurrent D T i j*tensorCurrent D T l k
       else tensorCurrent D T l k*tensorCurrent D T i j := by
