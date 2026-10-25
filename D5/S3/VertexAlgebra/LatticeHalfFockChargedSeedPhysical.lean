@@ -48,7 +48,7 @@ private def modeSummand (D : LatticeData) (hu : IsUnit D.G.det)
   ∑ colour, h colour •
     flatTerm D hu (chargedField D hu a) [(colour, 0)] exponent vector (mode, ())
 
-private theorem singleton_finite (D : LatticeData) (hu : IsUnit D.G.det)
+theorem singleton_finite (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (colour : Fin D.rank) (exponent : ℤ) (vector : ActualTensor D hu) :
     Function.HasFiniteSupport (fun mode : ℤ =>
       flatTerm D hu (chargedField D hu a) [(colour, 0)] exponent vector (mode, ())) :=

@@ -130,7 +130,7 @@ theorem tensorPair_support_of_bound (i l : Fin D.rank) (m : ℤ)
   · exact hj (by simp [tensorPair_eq, show ¬ j < 0 by omega,
       Module.End.mul_apply, hR i _ hhi])
 
-private theorem tensorPair_finite (i l : Fin D.rank) (m : ℤ) (v : Oscillator D ⊗[ℂ] T) :
+theorem tensorPair_finite (i l : Fin D.rank) (m : ℤ) (v : Oscillator D ⊗[ℂ] T) :
     Function.HasFiniteSupport (fun j : ℤ => tensorPair D T i l j (m-j-1) v) := by
   obtain ⟨R,hR⟩ := tensor_current_truncation D T v
   exact (Set.finite_Icc _ _).subset (tensorPair_support_of_bound D T i l m v R hR)

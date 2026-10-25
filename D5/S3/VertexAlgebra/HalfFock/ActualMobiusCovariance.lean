@@ -105,5 +105,79 @@ private theorem charged_pair_l1 (D : LatticeData) (hu : IsUnit D.G.det)
             show e - (2*j + 1) = e + 2*(-j) - 1 by omega]
           abel
 
+
+/-- The quadratic-to-singleton transport is pointwise in the original actual
+module. Finite support is used only after application at x and C_e x. -/
+private theorem charged_normal_sum_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Charge D) (i l : Fin D.rank) (e : ℤ) (x : ActualTensor D hu) :
+    tensorNormalSum D (ActualGround D hu) i l 1 (chargedCoefficient D hu a e x) -
+      chargedCoefficient D hu a e (tensorNormalSum D (ActualGround D hu) i l 1 x) =
+      (bilinear D (unitCharge D l) a : ℂ) •
+        (wordField D hu (chargedField D hu a) [(i, 0)]).coeff (e - 4) x +
+      (bilinear D (unitCharge D i) a : ℂ) •
+        (wordField D hu (chargedField D hu a) [(l, 0)]).coeff (e - 4) x +
+      ((bilinear D (unitCharge D i) a : ℂ) *
+        (bilinear D (unitCharge D l) a : ℂ)) • chargedCoefficient D hu a (e - 2) x := by
+  classical
+  let qi : ℂ := (bilinear D (unitCharge D i) a : ℂ)
+  let ql : ℂ := (bilinear D (unitCharge D l) a : ℂ)
+  let fi : ℤ → ActualTensor D hu := fun j =>
+    flatTerm D hu (chargedField D hu a) [(i, 0)] (e - 4) x (j, ())
+  let fl : ℤ → ActualTensor D hu := fun j =>
+    flatTerm D hu (chargedField D hu a) [(l, 0)] (e - 4) x (j, ())
+  let boundary : ℤ → ActualTensor D hu := fun j =>
+    (if j = 0 then qi * ql else 0) • chargedCoefficient D hu a (e - 2) x
+  have hfi : Function.HasFiniteSupport fi :=
+    LatticeHalfFockChargedSeedPhysical.singleton_finite D hu a i (e - 4) x
+  have hfl : Function.HasFiniteSupport fl :=
+    LatticeHalfFockChargedSeedPhysical.singleton_finite D hu a l (e - 4) x
+  have hflneg : Function.HasFiniteSupport (fun j : ℤ => fl (-j)) :=
+    hfl.fun_comp_of_injective neg_injective
+  have hboundary : Function.HasFiniteSupport boundary := by
+    apply (Set.finite_singleton (0 : ℤ)).subset
+    intro j hj
+    by_contra h
+    apply hj
+    simp only [Set.mem_singleton_iff] at h
+    simp [boundary, h]
+  have pairfinite (v : ActualTensor D hu) : Function.HasFiniteSupport
+      (fun j : ℤ => tensorPair D (ActualGround D hu) i l j (-j) v) := by
+    have shift (j : ℤ) : (1 : ℤ) - j - 1 = -j := by omega
+    simpa only [shift] using tensorPair_finite D (ActualGround D hu) i l 1 v
+  have pair (j : ℤ) :
+      tensorPair D (ActualGround D hu) i l j (-j) (chargedCoefficient D hu a e x) -
+        chargedCoefficient D hu a e (tensorPair D (ActualGround D hu) i l j (-j) x) =
+        ql • fi j + qi • fl (-j) + boundary j := by
+    exact congrArg (fun U : Module.End ℂ (ActualTensor D hu) => U x)
+      (charged_pair_l1 D hu a i l j e)
+  change (∑ᶠ j : ℤ, tensorPair D (ActualGround D hu) i l j (1-j-1)
+      (chargedCoefficient D hu a e x)) -
+    chargedCoefficient D hu a e
+      (∑ᶠ j : ℤ, tensorPair D (ActualGround D hu) i l j (1-j-1) x) = _
+  have shift (j : ℤ) : (1 : ℤ) - j - 1 = -j := by omega
+  simp only [shift]
+  rw [map_finsum _ (pairfinite x),
+    ← finsum_sub_distrib (pairfinite (chargedCoefficient D hu a e x))
+      ((pairfinite x).fun_comp (map_zero (chargedCoefficient D hu a e))),
+    finsum_congr pair,
+    finsum_add_distrib ((hfi.fun_comp (smul_zero ql)).add
+      (hflneg.fun_comp (smul_zero qi))) hboundary,
+    finsum_add_distrib (hfi.fun_comp (smul_zero ql))
+      (hflneg.fun_comp (smul_zero qi)),
+    ← smul_finsum' ql hfi, ← smul_finsum' qi hflneg]
+  have reindex : (∑ᶠ j : ℤ, fl (-j)) = ∑ᶠ j : ℤ, fl j :=
+    finsum_eq_of_bijective (fun j : ℤ => -j) neg_bijective (fun _ => rfl)
+  rw [reindex]
+  have sumBoundary : (∑ᶠ j : ℤ, boundary j) =
+      (qi * ql) • chargedCoefficient D hu a (e - 2) x := by
+    rw [finsum_eq_single _ 0 (fun j hj => by simp [boundary, hj])]
+    simp [boundary]
+  rw [sumBoundary]
+  change ql • (∑ᶠ j : ℤ, fi j) + qi • (∑ᶠ j : ℤ, fl j) + _ = _
+  have left := singletonLinear_coefficient D hu (chargedField D hu a) (i, 0) (e - 4) x
+  have right := singletonLinear_coefficient D hu (chargedField D hu a) (l, 0) (e - 4) x
+  rw [← left, ← right]
+  rfl
+
 end
 end D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance
