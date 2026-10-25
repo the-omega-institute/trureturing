@@ -20,7 +20,7 @@ internal sealed class SharedEnergyGapBoundDocument : IScribeDocumentDefinition
                     + "Otherwise transpose if necessary to remove the positive m coordinate. The remaining sign patterns admit "
                     + "explicit zero-weight subexponents with degree at most twice m minus one. Minimality forces equality with "
                     + "one of those subexponents. Every step retains coordinate identity, so the coincident numerical gaps at m equal "
-                    + "to two remain included. This proves the integer degree bound; the all-state compact-orbit upper bridge is a separate obligation."))),
+                    + "to two remain included. The degree bound combines with shared-moment extraction and support-wise phase reconstruction to give the all-state compact-orbit bound."))),
                 DescribeRole.Theorem))));
     private static Formula C(string name, params Formula[] args)
     {

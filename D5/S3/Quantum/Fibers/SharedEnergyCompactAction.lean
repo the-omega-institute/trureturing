@@ -6,6 +6,7 @@
    utility: none
    digest: Actual compact energy orbits, shared Haar moments and total-energy pinching. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
 import D5.S3.Quantum.Fibers.SharedEnergyGapBound
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
@@ -345,20 +346,14 @@ theorem moment_determines_monomials (m N : ℕ) (r s : DensityState (Fin 3))
   rw [(ht.2.2 r).2, (ht.2.2 s).2] at hc
   simpa only [hw, ite_true] using hc
 
+open private degree_zero degree_add weight_add monomial_add
+  from D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+
 private theorem all_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 3))
     (he : sharedMoment m (2*m-1) r = sharedMoment m (2*m-1) s) :
     ∀ alpha : Exponent, weight m alpha = 0 →
       monomial (stateMatrix r) alpha = monomial (stateMatrix s) alpha := by
   classical
-  have hz (a : Exponent) : degree a = 0 ↔ a = 0 := by
-    simp [degree, Finset.sum_eq_zero_iff, funext_iff]
-  have hd (a b : Exponent) : degree (a+b) = degree a + degree b := by
-    simp [degree, Finset.sum_add_distrib]
-  have hw (a b : Exponent) : weight m (a+b) = weight m a + weight m b := by
-    simp [weight, Nat.cast_add, add_mul, Finset.sum_add_distrib]
-  have hp (X : Matrix (Fin 3) (Fin 3) ℂ) (a b : Exponent) :
-      monomial X (a+b) = monomial X a * monomial X b := by
-    simp [monomial, pow_add, Finset.prod_mul_distrib]
   suffices hall : ∀ n (alpha : Exponent), degree alpha = n → weight m alpha = 0 →
       monomial (stateMatrix r) alpha = monomial (stateMatrix s) alpha by
     exact fun a ha => hall (degree a) a rfl ha
@@ -374,7 +369,7 @@ private theorem all_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 
     have hproper : ∃ b : Exponent, b ≤ a ∧ weight m b = 0 ∧ b ≠ 0 ∧ b ≠ a := by
       have hn : ¬ ∀ b : Exponent, b ≤ a → weight m b = 0 → b = 0 ∨ b = a :=
         fun h => hind ⟨ha0, hwa, h⟩
-      push_neg at hn
+      push Not at hn
       exact hn
     obtain ⟨b, hba, hwb, hb0, hbn⟩ := hproper
     let c : Exponent := a-b
@@ -383,18 +378,18 @@ private theorem all_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 
       intro hc
       apply hbn
       simpa [hc] using hsum
-    have hdg : degree b + degree c = n := by rw [← hd, hsum, ha]
+    have hdg : degree b + degree c = n := by rw [← degree_add, hsum, ha]
     have hbd : degree b < n := by
-      have := (hz c).not.mpr hc0
+      have := (degree_zero c).not.mpr hc0
       omega
     have hcd : degree c < n := by
-      have := (hz b).not.mpr hb0
+      have := (degree_zero b).not.mpr hb0
       omega
     have hwc : weight m c = 0 := by
       have heq := congrArg (weight m) hsum
-      rw [hw, hwb, hwa] at heq
+      rw [weight_add, hwb, hwa] at heq
       simpa using heq
-    rw [← hsum, hp, hp, ih (degree b) hbd b rfl hwb, ih (degree c) hcd c rfl hwc]
+    rw [← hsum, monomial_add, monomial_add, ih (degree b) hbd b rfl hwb, ih (degree c) hcd c rfl hwc]
 
 private theorem two_coordinate_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) ℂ)
     (h : ∀ a : Exponent, weight m a = 0 → monomial X a = monomial Y a)
