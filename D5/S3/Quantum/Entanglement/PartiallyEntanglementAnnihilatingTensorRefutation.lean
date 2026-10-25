@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.claim; result=D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.result; claim=D5/S3/Quantum/Entanglement/PartiallyEntanglementAnnihilatingTensorRefutation.claim
    digest: Non-local Schmidt-number annihilating channels need not remain so under tensor products. -/
 
-import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 import D5.S3.Quantum.Entanglement.GraphDensity.UniqueBasisFormationRefutation
 
@@ -144,15 +143,14 @@ private def psi : Ket (Fin 9 × Fin 9) :=
 private theorem psi_rank : (coeff psi).rank = 4 := by
   classical
   have hs : (Real.sqrt 2 : ℂ) ≠ 0 := by positivity
-  have hs2 : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
-    exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
   have he : coeff psi = diagonal (fun i : Fin 9 =>
       if i = 0 ∨ i = 1 ∨ i = 3 ∨ i = 4 then (1 / 2 : ℂ) else 0) := by
     rw [psi.eq_1]
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [coeff, psi, phi, finProdFinEquiv, Fin.divNat, Fin.modNat,
-        Matrix.diagonal_apply, ← pow_two, hs2]
+        Matrix.diagonal_apply, ← pow_two,
+        D5.S3.Observer.Existence.EmpiricalReflexiveSeparation.complex_sqrt_two_sq]
   rw [he, Matrix.rank_diagonal, Fintype.card_subtype]
   norm_num [Fin.card_filter_univ_succ]
 
@@ -175,11 +173,8 @@ private theorem pure_rank_le {d r : ℕ} (u : Ket (Fin d × Fin d))
     average := by
       change ∑ i, (p i : ℂ) • proj (w i) = proj u
       exact havg.symm }
-  obtain ⟨i, hi⟩ : ∃ i, 0 < p i := by
-    by_contra hn
-    push_neg at hn
-    have hz : ∑ i, p i = 0 := Finset.sum_eq_zero fun i _ => le_antisymm (hn i) (hp i)
-    linarith
+  obtain ⟨i, _, hi⟩ := (Finset.sum_pos_iff_of_nonneg (fun j _ => hp j)).mp
+    (show 0 < ∑ j, p j by rw [ht]; norm_num)
   obtain ⟨z, hz, heq⟩ :=
     D5.S3.Quantum.Entanglement.GraphDensity.UniqueBasisFormationRefutation.positive_phase
       u.vec u.normalized' e i hi
