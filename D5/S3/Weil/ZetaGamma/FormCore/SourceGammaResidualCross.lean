@@ -141,9 +141,11 @@ theorem actual_residual_layer_cross_value
       congr 1
       ring
     simp_rw [hPoint]
-    have h := (actual_resonant_reflected_cross_laplace_moment ha hu).2
-    simp only [mul_assoc] at h
-    exact h
+    convert (actual_resonant_reflected_cross_laplace_moment ha hu).2 using 1
+    · apply congrArg Complex.re
+      apply integral_congr_ae
+      exact Eventually.of_forall fun ξ => (mul_assoc _ _ _).symm
+    · rfl
   · simp only [actualResidualLayerCrossValue, if_neg hca]
     obtain ⟨_, hA₀, hAi₀⟩ := actual_resolvent_reflected_cross_laplace_square ha hu
     obtain ⟨_, hC₀, hCi₀⟩ := actual_resolvent_reflected_cross_laplace_square hc hu
