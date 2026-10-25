@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:029b2ce936da5b3d743ba92219a01f2194e1f4ea81526b80f515a8a13987b4b7
+  normalized_sha256: sha256:029b2ce936da5b3d743ba92219a01f2194e1f4ea81526b80f515a8a13987b4b7
+cas_ref: sha256:029b2ce936da5b3d743ba92219a01f2194e1f4ea81526b80f515a8a13987b4b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “熵或缺陷能量的单调性”是待加入机制的名称，不断言当前能量单调。
+    previous_atom_id: afb644c6465c21cb60d98af37e70ad089c6d6c41cb664601e9bb44167973609e
+    next_atom_id: 98d58da63f57454fb1e35c2b96a9d358102c3a60859949676b26c9a11e1e77a6

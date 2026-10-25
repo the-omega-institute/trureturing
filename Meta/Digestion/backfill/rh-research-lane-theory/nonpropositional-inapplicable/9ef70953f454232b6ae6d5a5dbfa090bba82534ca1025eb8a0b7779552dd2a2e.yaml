@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ef70953f454232b6ae6d5a5dbfa090bba82534ca1025eb8a0b7779552dd2a2e
+  normalized_sha256: sha256:9ef70953f454232b6ae6d5a5dbfa090bba82534ca1025eb8a0b7779552dd2a2e
+cas_ref: sha256:9ef70953f454232b6ae6d5a5dbfa090bba82534ca1025eb8a0b7779552dd2a2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上位 governing-list 明确为“本轮不主张”；本片只排除对定位 zeta 零点的完成声称，不断言对应数学命题。
+    previous_atom_id: d0416cd58f903c57cfcf42ee339d944e268eff684cf204f475b12ab88f7f880d
+    next_atom_id: 5aba5a4ca2eab0e90a9c8a6c813994846ddeadd9763779d948788c0b68f03961
