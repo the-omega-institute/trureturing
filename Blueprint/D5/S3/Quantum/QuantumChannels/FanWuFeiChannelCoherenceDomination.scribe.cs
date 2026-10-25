@@ -60,7 +60,10 @@ internal sealed class FanWuFeiChannelCoherenceDominationDocument : IScribeDocume
                     + "matrix gives commutator divergence at most 1/4, and the input diagonal(1,0) "
                     + "attains 1/4. Thus commutativityCoherence(2,φ) ≥ 1/4. Finally "
                     + "sqrt(45/32) − 1 < 1/4, contradicting the displayed universal statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fan-wu-fei-2024-channel-coherence-domination"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(DescribeId.Create("fan-wu-fei-" + name.ToLowerInvariant()),

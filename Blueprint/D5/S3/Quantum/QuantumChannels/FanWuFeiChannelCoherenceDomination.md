@@ -60,6 +60,10 @@ $$\neg (\forall (a : Type), (\forall (b : Type), ([\operatorname{Fintype}\left(a
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FanWuFeiChannelCoherenceDomination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fan-wu-fei-2024-channel-coherence-domination` (refuted) by `D5/S3/Quantum/QuantumChannels/FanWuFeiChannelCoherenceDomination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fan-wu-fei-2024-channel-coherence-domination","declaration_gid":"D5/S3/Quantum/QuantumChannels/FanWuFeiChannelCoherenceDomination.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jiaorui Fan; Zhaoqi Wu; Shao-Ming Fei (2024). *Quantifying coherence of quantum channels based on the generalized α-z-relative Rényi entropy*. DOI: [10.1007/s11128-024-04309-w](https://doi.org/10.1007/s11128-024-04309-w). URL: <https://arxiv.org/abs/2506.10796v1>.
