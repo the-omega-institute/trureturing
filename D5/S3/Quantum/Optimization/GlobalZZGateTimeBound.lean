@@ -102,7 +102,11 @@ private def cyclicColor {q : ℕ} : Option (ZMod q) → Option (ZMod q) → ZMod
 
 private theorem cyclicColor_symm {q : ℕ} (u v : Option (ZMod q)) :
     cyclicColor u v = cyclicColor v u := by
-  cases u <;> cases v <;> simp only [cyclicColor, add_comm]
+  cases u <;> cases v
+  · rfl
+  · rfl
+  · rfl
+  · exact add_comm _ _
 
 private theorem cyclicColor_proper {q : ℕ} (hq : Odd q) (u v w : Option (ZMod q))
     (huv : u ≠ v) (huw : u ≠ w) (h : cyclicColor u v = cyclicColor u w) : v = w := by
@@ -182,11 +186,15 @@ private theorem flip_involutive {n : ℕ} (A : Finset (Fin n)) :
     Function.Involutive (flip A) := by
   intro s
   funext i
-  by_cases hi : i ∈ A <;> simp [flip, hi]
+  unfold flip
+  by_cases hi : i ∈ A <;> simp only [hi, ite_true, ite_false, Bool.not_not]
 
 private theorem spin_flip {n : ℕ} (A : Finset (Fin n)) (s : Fin n → Bool) (i : Fin n) :
     spin (flip A s) i = if i ∈ A then -spin s i else spin s i := by
-  by_cases hi : i ∈ A <;> cases h : s i <;> simp [spin, bitSign, flip, hi, h]
+  unfold spin bitSign flip
+  by_cases hi : i ∈ A <;> cases h : s i <;> simp only [hi, h, ite_true, ite_false,
+    Bool.not_false, Bool.not_true, Bool.toNat_false, Bool.toNat_true, pow_zero, pow_one,
+    neg_one_mul, neg_neg]
 
 private theorem sum_flip_zero {n : ℕ} (A : Finset (Fin n)) (F : (Fin n → Bool) → ℝ)
     (hF : ∀ s, F (flip A s) = -F s) : ∑ s, F s = 0 := by
@@ -264,7 +272,8 @@ private theorem matchingWeight_sum {n : ℕ} (R : Finset (Fin n × Fin n))
   induction R using Finset.induction_on with
   | empty =>
     intro _
-    simp [matchingWeight]
+    unfold matchingWeight
+    simp
   | @insert e R he ih =>
     intro hR
     have hrest := matching_subset hR (Finset.subset_insert e R)
@@ -304,7 +313,8 @@ private theorem matchingWeight_pair_mem {n : ℕ} (R : Finset (Fin n × Fin n))
         unfold matchingWeight
         exact (Finset.mul_prod_erase R _ hijR).symm
       rw [hfactor]
-      cases hi : s i <;> cases hj : s j <;> simp only [spin, bitSign, hi, hj, Bool.toNat_false,
+      unfold spin bitSign
+      cases hi : s i <;> cases hj : s j <;> simp only [hi, hj, Bool.toNat_false,
         Bool.toNat_true, pow_zero, pow_one] <;> ring
     _ = c i j * (2 : ℝ) ^ n := by
       rw [Finset.sum_add_distrib, ← Finset.mul_sum, hz, hmass, zero_add]
@@ -327,8 +337,9 @@ private theorem matching_law {n : ℕ} (R : Finset (Fin n × Fin n))
     apply Finset.prod_nonneg
     intro e he
     have hb := abs_le.mp (hc e.1 e.2 (hR.1 e he))
+    unfold spin bitSign
     cases hi : s e.1 <;> cases hj : s e.2 <;>
-      simp only [spin, bitSign, hi, hj, Bool.toNat_false, Bool.toNat_true, pow_zero, pow_one] <;>
+      simp only [hi, hj, Bool.toNat_false, Bool.toNat_true, pow_zero, pow_one] <;>
       nlinarith
   · dsimp only [p]
     rw [← Finset.sum_div, matchingWeight_sum R hR c]
@@ -386,13 +397,14 @@ private theorem offDiagSup_nonneg {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
 private theorem entry_le_offDiagSup {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ)
     (i j : Fin n) (hij : i < j) : |M i j| ≤ offDiagSup M := by
   unfold offDiagSup
-  simpa only [ite_eq_left hij] using
-    (Finset.le_sup' (fun p : Option (Fin n × Fin n) =>
+  have h := Finset.le_sup' (fun p : Option (Fin n × Fin n) =>
       match p with
       | none => (0 : ℝ)
       | some (i, j) => if i < j then |M i j| else 0)
-      (Finset.mem_univ (some (i, j))) :
-      (if i < j then |M i j| else 0) ≤ _)
+      (Finset.mem_univ (some (i, j)))
+  change (if i < j then |M i j| else 0) ≤ _ at h
+  rw [ite_eq_left hij] at h
+  exact h
 
 private theorem assemble_schedule (n : ℕ) (hn : 2 ≤ n)
     (M : Matrix (Fin n) (Fin n) ℝ)
@@ -445,7 +457,9 @@ private theorem assemble_schedule (n : ℕ) (hn : 2 ≤ n)
     simp_rw [Finset.mul_sum]
     rw [Finset.sum_comm]
     simp_rw [← Finset.mul_sum, hmass]
-    simp [gateBound, mul_comm]
+    unfold gateBound
+    simp only [mul_one, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      nsmul_eq_mul, mul_comm, le_refl]
 
 theorem result : claim := by
   intro n hn M _ _
