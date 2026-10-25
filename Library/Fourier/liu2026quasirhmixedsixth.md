@@ -229,8 +229,8 @@ this interference has not independently been paid below $T_*$.
 The fixed-order owner's lower-order-block proof uses only divisor bounds,
 the owned family/profile transport and row/column scales at least one.
 It therefore applies to $c_0$ at column scale $L$, including its original
-finite corrections $\omega_j(h)$. In its notation the normalized
-$H_{2,j},H_{3,j},H_{6,j}$ are each $\ll Q^{1+\varepsilon}$ with the
+finite corrections $\omega_j(h)$. In its notation each of
+$H_{2,j}/L,H_{3,j}/L,H_{6,j}/L$ is $\ll Q^{1+\varepsilon}$ with the
 same costs. The exact identity is still
 $L\sum_u|A_{0,u}|^2=H_{2,j}+H_{3,j}-H_{6,j}+E_{6,j}$ on each label,
 where the $H$ on the right are unnormalized. Thus the unpaid part can
@@ -471,11 +471,490 @@ $$
 This uses the existing identities
 $\mu(d)\gamma_1(d)=\alpha(d)G(d)\overline{\gamma_2(d)}$
 and the exact additive-character transport $-3as$; here
-$\widetilde g_3$ has DDDS's own additive convention. It is not a
-nonsquarefree-column identity. DDDS v3 §6 estimates its particular cubic
+$\widetilde g_3$ has DDDS's own additive convention. This transport is
+reused as documented in the owner with its v2 citation; it is not a
+nonsquarefree-column identity. The separate comparison with DDDS v3 §6
+below does not identify the two revisions. That section estimates its particular cubic
 Gauss series, with $1<\Re s\le5/4$ and mean square
 $q_h^{1/2}M^{1+\varepsilon}(1+|\Im s|)^2$. It does not remove
 $\lambda_d(a)$ or its moving quadratic conductor. The fixed-order
 owner's B2 growing-ray bound retains an explicit extra conductor cost;
 that cost cannot be replaced by a constant as $a$ varies. These are
 supplier boundaries, not additional analytic estimates.
+
+## Conditional neighborhood moment and every detector witness
+
+Assume that there exist fixed $\eta,\rho>0$ such that, uniformly for
+
+$$
+ |r-r_*|<\rho,\qquad |m-m_*|<\rho,
+$$
+
+every original fixed label and orientation and the entire original
+annular profile/height class satisfy
+
+$$
+ \sum_{u\ {\rm complete\ physical\ rows}}|M_u(Q^r)|^2|S_u(Q^m)|^4
+ \ll_\varepsilon Q^{T_*-\eta+\varepsilon}
+                         \mathcal P_J^2(1+H)^C.
+\tag{H}
+$$
+
+The hypothesis includes quantitative uniformity for the finitely many
+parameter derivatives required by the source smooth calculus. $J,C$
+are fixed independently of $Q$, row, label and length pair in this
+neighborhood. H is unproved. A pointwise bound for one fixed profile,
+one pair of lengths, a primitive-conductor family or a sparse physical
+sector does not satisfy H.
+
+If instead a bound of this form is assumed only for the complete $A_0$
+from M3, with parameters $\eta_0,\rho_0>0$, first set
+
+$$
+ \rho=\min\{\rho_0,1/2000\},\qquad
+ \eta=\min\{\eta_0,1/200\}.
+\tag{H0}
+$$
+
+This is a smaller open intersection with M4's paid collision
+neighborhood, not an extension of M5 to $\rho_0$. M5 and M7 then give
+H on this smaller neighborhood with the displayed $\eta$, retaining
+the cross term and common costs. All consumer choices below must use
+these reduced parameters. A remainder assertion outside that intersection
+alone has no such implication.
+
+Use the existing common buffered bins from C93–C94, with the same fixed
+$\Theta$ for both actual C80 sides, all labels, orientations and
+conjugates. Fix $\alpha>\alpha_0=51/100$ and put
+
+$$
+\begin{aligned}
+ v&=2\alpha-1,& c_\alpha&=5/6-v,&
+ t_0(\alpha)&={5\over5-2v},\\
+ r_0&={2t_0\over3},&m_0&={t_0\over3},&
+ d(\alpha)&={31-32\alpha\over21-12\alpha}
+ ={15-16v\over3(5-2v)}\\
+ &&&=1-vr_0={1\over6}+c_\alpha t_0.
+\end{aligned}
+\tag{M19}
+$$
+
+Let
+
+$$
+\begin{aligned}
+ \alpha_*&={21-5\sqrt6\over12},&
+ d_*&={16-5\sqrt6\over6},&
+ t_0(\alpha_*)&={\sqrt6\over2},\\
+ \kappa&=d_*+2\alpha_*={37-10\sqrt6\over6},&
+ B_*&=\kappa-1,&T_*&=2-d_*.
+\end{aligned}
+$$
+
+Fix the explicit positive parameters
+
+$$
+ h=\min\{1/100,\rho/100,\eta/100\},\quad
+ \delta=h/16,\quad t(\alpha)=t_0(\alpha)-h,
+ \quad |\alpha-\alpha_*|\le h.
+\tag{M20}
+$$
+
+On this interval $2/5\le v\le1/2$, $1/3\le c_\alpha\le13/30$,
+$25/21\le t_0\le5/4$ and $7/12\le d(\alpha)\le43/63$.
+In particular $1<t(\alpha)<3/2$ is a permitted detector setting,
+and $d(\alpha)-\delta>1/6$. Differentiating M19 on these compact
+ranges gives
+
+$$
+ |d(\alpha)-d_*|\le{25\over12}h,\quad
+ |r_0-r_*|\le{5\over6}h,\quad
+ |m_0-m_*|\le{5\over12}h.
+\tag{M21}
+$$
+
+We show that H conditionally bounds every such complete bin by
+$Q^{d(\alpha)-\delta}$ after fixing sufficiently small internal
+losses. Fix an original label and a dyadic witness pair. The source
+supplies the same row, presentation, zero, height and simultaneous
+individual saturation for $M,S$. With aggregate geometric and counting
+errors allocated at most $\lambda\le h/4096$, Markov and the old
+moments give count exponents
+
+$$
+\begin{aligned}
+ A(r)&=E(r)-vr+\lambda,&
+ E(r)&=\max\{1,(1+5r)/6\},\\
+ B(m)&=1-2vm+\lambda,&
+ C(r,m)&=T_*-\eta-v(r+2m)+\lambda,
+\end{aligned}
+\tag{M22}
+$$
+
+where $C$ is available only inside H's neighborhood. Its denominator is
+justified by the simultaneous lower bound
+$|M|^2|S|^4\gg Q^{v(r+2m)-3\epsilon}$; witnesses from different
+rows or different presentations have not been multiplied. The original
+length conditions imply
+
+$$
+ r\le t_0-h+\lambda,\qquad r+m\ge t_0-h-\lambda.
+\tag{M23}
+$$
+
+The source also retains $m\le1/2+O(\epsilon)$ and the lower $r$
+boundary; no equality $r+m=t$ or relation $m=r/2$ is imposed.
+
+**Long witnesses, including $r=1$.** For $r\ge1$,
+$E(r)-vr=1/6+c_\alpha r$. By M19 and M23,
+
+$$
+ A(r)\le d(\alpha)-c_\alpha h+(1+c_\alpha)\lambda
+                          \le d(\alpha)-h/4.
+$$
+
+The finite union loss of at most another $\lambda$ leaves more than
+$\delta$ saving. There is no condition on $m$ in this branch.
+
+**Short witnesses paid by one marginal.** If $r<1$ and either
+
+$$
+ 1-vr\le d(\alpha)-2\delta\quad\hbox{or}\quad
+ 1-2vm\le d(\alpha)-2\delta,
+\tag{M24}
+$$
+
+the appropriate old moment pays the witness. Its two $\lambda$ losses
+leave at least $\delta$ saving. Equality in M24 is included.
+
+**Localization of every remaining short witness.** Failure of both
+inequalities gives the separate upper bounds
+
+$$
+ r<r_0+2\delta/v,\qquad m<m_0+\delta/v.
+$$
+
+Combine each with M23 and the other upper bound to get
+
+$$
+ r>r_0-h-\delta/v-\lambda,\qquad
+ m>m_0-h-2\delta/v-\lambda.
+\tag{M25}
+$$
+
+Using $v\ge2/5$, $\delta=h/16$ and M21 proves
+$|r-r_*|<2h$ and $|m-m_*|<2h$. Since $2h\le\rho/50<\rho$,
+every remaining pair lies strictly within H. This step uses both
+marginal failures separately, on the full allowed two-dimensional length
+region.
+
+**Mixed payment of the remaining witnesses.** The identity
+$r+2m=2(r+m)-r$ and the preceding upper bound for $r$ imply
+
+$$
+ r+2m\ge{4t_0\over3}-2h-2\delta/v-2\lambda.
+$$
+
+Since $v(4t_0/3)=2(1-d(\alpha))$, M22 yields
+
+$$
+ C(r,m)\le2d(\alpha)-d_*-\eta
+                     +2vh+2\delta+(1+2v)\lambda.
+$$
+
+Including the finite union, this is at most $d(\alpha)-\delta$ if
+
+$$
+ \eta>d(\alpha)-d_*+2vh+3\delta+(2+2v)\lambda.
+$$
+
+The right side is bounded above by
+
+$$
+ \left({25\over12}+1+{3\over16}+{3\over4096}\right)h
+ <4h\le\eta/25<\eta.
+$$
+
+This proves the asserted complete-bin saving with unused reserve.
+
+**Boundaries and actual witness selection.** The long case contains
+$r=1$, where $E$ is continuous. At $m\ge1/2-\lambda$ the plain
+moment gives at most $1-v+2v\lambda$ before its counting error, while
+
+$$
+ d(\alpha)-(1-v)=v(1-r_0)\ge1/15.
+$$
+
+Thus the $m=1/2$ boundary and its original small error strip are paid;
+the zero-slot plain fourth moment has no bounded-nonnegative-length
+restriction. With $m=0$, a short $r<1$ cannot satisfy M23, since
+$t_0-h-\lambda>1$. The lower boundary $r=t-1/2-O(\epsilon)$,
+the upper boundary $r=t+O(1/\log Q)$ and every intermediate pair
+are covered by the same cases.
+
+Partition each bin by its original finite label and orientation and its
+$O((\log Q)^2)$ dyadic length pairs. Rowwise profile and height choices
+are handled before summing rows: apply the source parameter Sobolev
+inequality to $F_u(\theta)=M_u(\theta)S_u(\theta)^2$.
+Every derivative is a finite sum of $M_{u,j}S_{u,k}S_{u,l}$, and
+
+$$
+ |M_{u,j}S_{u,k}S_{u,l}|^2
+ \le\tfrac12|M_{u,j}|^2(|S_{u,k}|^4+|S_{u,l}|^4).
+$$
+
+H for the original derivative-stable annular class controls these terms
+with the same $Q$ exponent. Derivatives change profiles, not arithmetic
+coefficients. The inverse cutoff parameter lies in a fixed compact
+interval, the real exponent lies in a compact interval, and the original
+height parameters range over intervals of size $O_e(H_1)$. The finite
+Sobolev covers cost one fixed polynomial in $1+H_1$. Analogous owned
+arguments apply to the marginal moments. Pointwise profile estimates
+without these quantitative derivative costs would leave this step open.
+No arbitrary row-dependent arithmetic weights or uncontrolled nets occur.
+
+The original common $\Theta$ and buffered bins are fixed once, before
+choosing $t=t(\alpha)$. The original buffered maximum is independent of
+$t$; changing that permitted detector setting in finitely many bins only
+changes its cutoff/smooth parameters. Extra $\Pi_i,a$ deletions remain
+in C81–C94, and do not redefine $\Theta$ or the detector zeros.
+
+## Quantified complete C93–C97 consumer
+
+Continue to assume H, the old detector and moments, C77–C97's source
+premises and the actual original coupled-envelope premise. Retain
+precisely C87's bare branch: original $W_0$, corefree/common-$e=1$,
+$C=1$, source projector $\mathfrak b=1$, $q=L=U$,
+$D_{\rm src}=1$, $g=f_i=1$, $N_i=X=U$, $\zeta_i=1$ and no
+additional angular multiplier, with R43's genuine fixed ideal-ray quotient
+and original total class. These capital $D=U^{1/2},A=U^{1/12}$
+consumer scales are distinct from the detector lengths in M1.
+Use the literal $B_i=B_{i,0}$ of C80–C81, $b_A=\mu+K_{A;0}$,
+and all four $\mu/K$ choices on both sides. Keep the original $\xi$,
+signs, phases, product squarefreeness, class-selector mass, defining-modulus
+and collision zeros, and every original $\Pi_i$ mask.
+
+Define the positive reserves
+
+$$
+\begin{aligned}
+ G=\min\bigl\{&\delta,\ (8/5)h^2,\ \kappa-25/12,
+ \ \kappa-101/50,\ \kappa-57/28,\\
+ &\kappa-2,\ \kappa-23/12,\ \kappa\bigr\},
+ \qquad \Gamma=G/4.
+\end{aligned}
+\tag{M26}
+$$
+
+Every entry is strictly positive; in particular
+$\kappa-25/12=(49-20\sqrt6)/12>0$. After the finite loss choices
+below, for every final $\varepsilon>0$ one finite original order $J$
+satisfies
+
+$$
+ M_i^{>1}(R)\ll\mathcal H_{i,J}(R)^2
+                   R U^{\kappa-\Gamma+\varepsilon},\qquad1\le R\le U.
+\tag{M27}
+$$
+
+This is a conditional consequence for the complete specified nonunit
+branch, not the missing mixed estimate itself.
+
+**Counts and every repeated frequency.** Set
+$\widetilde d_\alpha=d(\alpha)-\delta$ for
+$|\alpha-\alpha_*|\le h$, retain the old $\mathcal R(\alpha)$
+elsewhere, and retain $\widetilde d_{\alpha_0}=1$ at the floor.
+The old high branch is still
+$\mathcal R(\alpha)=2(1-\alpha)$ for $\alpha\ge11/12$.
+For the lower density branch the exact complement identity is
+
+$$
+ \kappa-[d(\alpha)+2\alpha]
+ ={8(\alpha-\alpha_*)^2\over7-4\alpha},
+ \qquad \alpha_0<\alpha\le11/12.
+\tag{M28}
+$$
+
+This follows by substitution into M19; the numerator is the square of
+$\alpha-\alpha_*$ with the displayed coefficient. Since
+$7-4\alpha<5$, outside the improved interval it gives a reserve at
+least $(8/5)h^2$. Inside, M19 and M28 give
+$\widetilde d_\alpha+2\alpha\le\kappa-\delta$.
+No assumption that all rows have critical $\alpha$ is made.
+
+Use C95 unchanged except for this count exponent. It counts every
+
+$$
+ k=\epsilon\operatorname{gen}(e_Sr a^6)
+$$
+
+from C79, with all six units, original finite $S$ labels, every integral
+ideal $a$, its $S$ factors and every overlap with $r$. There is no
+restriction $a=1$, $(a,r)=1$ or squarefreeness of $a$. The physical
+reduced part $r$ is good sixth-power-free; lower inducing orders remain.
+For $U^{1/5}\ll Q\ll RU\ll U^2$, the source row norm is $Q$
+and the consumer columns stay at $U^{1/2}$, not $Q^{1/2}$.
+The resulting C95 bound is
+
+$$
+ \mathcal H_{i,J}(R)^2(RU)^{1/6}
+ Q^{\widetilde d_\alpha-1/6}
+ U^{2\min(\alpha,7/8)+\text{small loss}}.
+\tag{M29}
+$$
+
+For $\widetilde d_\alpha\ge1/6$, use $Q\ll RU$ and
+$\widetilde d_\alpha\le1$ to replace this by
+$\mathcal H_{i,J}(R)^2R^{\widetilde d_\alpha}
+U^{\widetilde d_\alpha+2\min(\alpha,7/8)+\text{small loss}}$,
+with $R^{\widetilde d_\alpha}\le R$. The remaining branches are
+all strictly below $\kappa$ before losses:
+
+- The floor has exponent $1+2\alpha_0=101/50$.
+- The cap starts at $7/8$, outside M20. There $d(\alpha)+7/4$
+  is maximized at $7/8$ and equals $2/7+7/4=57/28$.
+- The other density branch has $\mathcal R(\alpha)+2\alpha=2$.
+- If $\widetilde d_\alpha<1/6$, retain C95's negative-$Q$ argument,
+  giving at most $\mathcal H_{i,J}(R)^2R^{1/6}U^{23/12+\text{small loss}}$;
+  substituting an upper endpoint for a negative power would be invalid.
+- For $1<q_r\le U^{1/5}$, retain C84's
+  $\mathcal H_{i,J}(R)^2R^{1/6}U^{25/12+\text{small loss}}$.
+
+M28 and these reserves are precisely the entries of M26. Thus summing
+all original bins and physical dyads gives M27 once aggregate losses are
+at most $G/4$; the chosen $\Gamma=G/4$ leaves further unused reserve.
+The argument changes neither C94's actual-coefficient contour nor any
+source density count outside the fixed critical interval.
+
+**One finite loss and height order.** The following order of choices
+makes the count, suprema and complete consumer simultaneous.
+First fix H's $\eta,\rho$ (using H0 if applicable), then M20 and M26.
+Given a desired final exponent allowance $\xi>0$, choose
+
+$$
+ 0<\lambda\le\min\{h/4096,G/10000,\xi/10000\}.
+$$
+
+Let $C_{\rm err}\ge1$ dominate the finitely many absolute detector
+error constants and loss coefficients on the compact ranges. Choose the
+preliminary detector/moment powers at most
+$\lambda/(1000C_{\rm err})$, reducing further for their fixed finite
+sums, so each aggregate in M22–M23 is at most $\lambda$. Choose one
+bin mesh
+
+$$
+ 0<e<\min\{10^{-3},h/100,\lambda/(100000C_{\rm err}),e_0/2\},
+ \qquad I=\lceil1/e\rceil+2,
+$$
+
+where $e_0$ is the source detector's admissibility threshold for those
+powers. Fix all internal old/mixed moment and parameter-Sobolev orders
+now. The finite label/dyadic union costs at most one further $Q^\lambda$
+for sufficiently large $Q$.
+
+Let $C_H\ge1$ dominate the sum of the now fixed polynomial height
+orders and source detector height requirements. Only now choose
+
+$$
+ 0<\tau\le\min\{1/100,\lambda/(10^6C_{\rm err}C_H)\},
+ \qquad H_1=Q^\tau.
+$$
+
+Fixed multiples $C_eH_1$ satisfy the prescribed source height bounds for
+sufficiently large $Q$. Retain the original cumulative frequency fractions
+within the single source allowance; none is restarted at a later shift.
+Take $Q$ sufficiently large for all $O(1/\log Q)$ errors to be below
+$\lambda$ and all fixed/polylogarithmic count factors to fit their
+allocations. Since $U^{1/5}\ll Q\ll U^2$, the choices work uniformly
+over every retained physical dyad; $Q^\lambda\le O(U^{2\lambda})$.
+Bounded remaining $U$ is absorbed in the fixed constant.
+
+Keep C94's finite buffered contours for both literal columns and all four
+$\mu/K$ terms. Its actual puncture range remains
+$q_P\ll U^{C_\Pi}Q(RU/Q)^{1/6}\ll U^{C_\Pi+2}$.
+Allocate its contour-width, at-most-six $L$-factor, polynomial-deletion,
+old-count, bin and dyadic losses in total at most $G/4$. This is possible
+by reducing each primitive power by the fixed sum of its coefficients,
+as above. All constants may depend on $\eta,\rho$ and the fixed data;
+no claim uniform as $\eta,\rho\to0$ is made.
+
+Only after $\tau$ is fixed choose external Mellin/Fourier tail orders.
+For C94 take an integer $N_{\rm tail}$ with
+$N_{\rm tail}\tau/5>C_0+10$, where $C_0$ is its absolute-line
+exponent independent of that external order, and meet the original
+detector's tail requirements as well. This does not increase the internal
+height order already used to choose $\tau$. Enlarge the final original
+seminorm order $J$ once for all these finite requirements and shell decay
+$B\ge4$. Use the single original coupled measure $dc$ and its one base
+envelope $\mathcal N_{{\rm base},J}$ at this $J$. Its fixed or
+polylogarithmic size and actual availability at that finite order are
+premises, not consequences of H. No envelope is multiplied or reset per
+row, mask, $a$, label, bin, dyad, shell or component. An eta-only envelope
+still needs the existing R43–R46 conversion to this base envelope.
+
+**Entire weighted large-$R$ tail and restoration.** For $R>U$, retain
+C96: the original divisor bound and all $O(RU)$ full frequencies give
+energy $\mathcal H_{i,J}(R)^2RU^{3+\varepsilon}$. No extrapolation
+of density counts or polynomial-puncture ranges is made. The same
+original envelope has
+
+$$
+ \int|dc|\,\mathcal H_{1,J}(R)\mathcal H_{2,J}(R)
+ \ll\mathcal N_{{\rm base},J}(1+R)^{-B}.
+$$
+
+Consequently the dyadic $R>U$ tail is
+$\ll\mathcal N_{{\rm base},J}U^{4-B+\varepsilon}$, which for
+$B\ge4$ is below the claimed $U^{\kappa-\Gamma+\varepsilon}$
+scale. For $1\le R\le U$, apply Cauchy to M27 for the two actual
+columns on the same complete nonunit frequency set, and integrate once
+against this same $dc$. Equal improvements on both sides preserve
+$\Gamma$, not $\Gamma/2$. The ball uses $R=1$, and shell decay
+sums every remaining $R$.
+
+Finally reuse C97's normalization exactly once:
+$q/L^3=U^{-2}$ cancels the raw Gauss-pairing $U^2$, and
+$D^{-2}=U^{-1}$ restores the two original $D^{-1}$ factors. Thus for
+precisely the original signed local bare nonunit contribution,
+
+$$
+\begin{aligned}
+ |\mathcal E_0^{>1}|&\ll\mathcal N_{{\rm base},J}
+                                    U^{\kappa-\Gamma+\varepsilon},\\
+ D^{-2}|\mathcal E_0^{>1}|&\ll\mathcal N_{{\rm base},J}
+                                    U^{B_*-\Gamma+\varepsilon},\\
+ \lambda_{\rm new}&=\kappa-2-\Gamma=B_*-1-\Gamma<B_*-1.
+\end{aligned}
+\tag{M30}
+$$
+
+Taking $\varepsilon<\Gamma$ displays a strict reserve under all named
+premises. There is no extra area, inverse Gauss, division by six or
+second $U^2$ factor and no unweighted infinite-energy assertion.
+
+## What remains missing
+
+The next missing analytic input is H for the complete actual coefficient,
+or equivalently a uniformly saving estimate for $A_0$ on the smaller
+intersection H0, preserving the full smooth/height contract. The paid
+collision split and lower-order blocks do not prove it. M8 prevents
+coefficient-norm power savings from supplying it; M13–M17 prevent the
+specified cubic-only replacement or direct plain-slot invocation from
+supplying it. Joint row-correlated cancellation or a stronger compatible
+arithmetic estimate remains necessary along these routes. A single-pair
+bound leaves, for example, $r=r_*-h/2,m=m_*-h/2$ at $\alpha_*$:
+their sum is $t_0-h$, both old marginal exponents exceed $d_*$, and
+an estimate only at $(r_*,m_*)$ says nothing about them.
+
+Even H plus the named original source and envelope premises gives only
+the specified original-$W_0$ bare nonunit branch. The original-$W_0$
+principal reduced scalar, $k=0$, other cores, common-$e$ and common-column
+branches, other $C/\mathfrak b$ branches, generalized profiles and
+finite/angular labels with their actual measure, bad duals and full J40
+component table remain separate obligations. No all-annulus redesigned
+$W_U$ estimate, signed cutoff-change estimate or transfer of R46's
+exceptional realization to $W_0$ is inferred. The original common-beta
+signed Möbius detector and $\rho$ aggregation, full physical-row
+restoration, full C68/J40, signed Robin and RH remain open. Citation and
+source-integrity checks do not independently certify any analytic source
+proof, original finite-order envelope or mathematical formalization.
