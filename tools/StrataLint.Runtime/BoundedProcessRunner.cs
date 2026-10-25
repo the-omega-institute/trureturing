@@ -105,6 +105,9 @@ internal static class BoundedProcessRunner
         Task? stderr = null;
         Task? stdin = null;
         Task? exitWait = null;
+        Task? stdoutObservation = null;
+        Task? stderrObservation = null;
+        Task? exitObservation = null;
         var operation = "stdout.start";
         Exception? interruptionFailure = null;
         try
@@ -112,13 +115,15 @@ internal static class BoundedProcessRunner
             var output = readStandardOutput(
                 process.StandardOutput.BaseStream,
                 ioCancellation);
-            stdout = observations.ObserveCompletion(output, "stdout.complete");
+            stdout = output;
+            stdoutObservation = observations.ObserveCompletion(output, "stdout.complete");
             operation = "stderr.start";
             var errors = ReadLimitedAsync(
                 process.StandardError.BaseStream,
                 maximumErrorBytes,
                 ioCancellation, standardError, observations, "stderr");
-            stderr = observations.ObserveCompletion(errors, "stderr.complete");
+            stderr = errors;
+            stderrObservation = observations.ObserveCompletion(errors, "stderr.complete");
             operation = "stdin.start";
             stdin = standardInput.IsEmpty
                 ? Task.CompletedTask
@@ -129,12 +134,13 @@ internal static class BoundedProcessRunner
             if (standardInput.IsEmpty) observations.Record("stdin", "not-redirected");
             operation = "exit-wait.start";
             exitWait = process.WaitForExitAsync(cancellation.Token);
+            exitObservation = observations.ObserveCompletion(exitWait, "exit-wait.complete");
             // A failed reader no longer drains its pipe. Observe its failure
             // while the child is running, before a blocked writer can turn an
             // output/parse error into a misleading process timeout.
             var pending = new List<Task>
             {
-                stdout, stderr, observations.ObserveCompletion(exitWait, "exit-wait.complete"),
+                stdout, stderr, exitWait,
             };
             while (pending.Count != 0)
             {
@@ -142,7 +148,6 @@ internal static class BoundedProcessRunner
                 var completed = Task.WhenAny(pending).WaitAsync(cancellation.Token).GetAwaiter().GetResult();
                 operation = completed == stdout ? "stdout.result"
                     : completed == stderr ? "stderr.result" : "exit-wait.result";
-                observations.ObserveExit(process, "has-exited.at-completion");
                 completed.GetAwaiter().GetResult();
                 pending.Remove(completed);
             }
@@ -182,7 +187,7 @@ internal static class BoundedProcessRunner
             // fixture's settlement output must be drained before its sinks close.
             if (interruptBeforeKill is not null) drain.CancelAfter(TimeSpan.FromSeconds(5));
             else drain.Cancel();
-            foreach (var task in new[] { stdout, stderr, stdin })
+            foreach (var task in new[] { stdout, stderr, stdin, stdoutObservation, stderrObservation, exitObservation })
             {
                 try { task?.GetAwaiter().GetResult(); }
                 catch (Exception) { /* Preserve the original process/reader failure. */ }
@@ -272,7 +277,9 @@ internal static class BoundedProcessRunner
 
     // Entries order observations, not the underlying OS events. A false cancellation
     // sample proves the recorded milestone preceded the request; true cannot date it.
+    // The cancellation callback dates its own execution, not the deadline instant.
     // Custom stdout readers expose completion only, so their byte count/EOF stay unknown.
+    // HasExited is probed only before timeout cleanup; it cannot date the original exit.
     internal sealed class CompletionObservations
     {
         private readonly object gate = new();
@@ -335,14 +342,13 @@ internal static class BoundedProcessRunner
                     : exception.CancellationToken == caller ? "caller" : "other-or-none";
                 var stages = new[] { "stdin", "stdin.write", "stdin.flush", "stdin.close", "stdout.bytes",
                     "stdout.eof", "stdout.complete", "stderr.bytes", "stderr.eof", "stderr.complete",
-                    "exit-wait.complete", "has-exited.at-completion", "cancellation.callback", "has-exited.before-cleanup" };
-                var bounds = new[] { "stdout.bytes.before-cancel", "stderr.bytes.before-cancel",
-                    "has-exited.at-completion.before-cancel" };
+                    "exit-wait.complete", "cancellation.callback", "has-exited.before-cleanup" };
+                var bounds = new[] { "stdout.bytes.before-cancel", "stderr.bytes.before-cancel" };
                 return "completion observations [record-order-only; unknown=not-observed; snapshot=non-atomic-before-cleanup; "
                     + $"exception-site={operation}; exception-type={exception.GetType().FullName}; exception-message={exception.Message}; token={origin}; "
                     + $"caller-cancel-requested={caller.IsCancellationRequested.ToString().ToLowerInvariant()}; "
                     + string.Join("; ", stages.Concat(bounds).Select(name => $"{name}={entries.GetValueOrDefault(name, "unknown")}"))
-                    + $"; task-status-sampled-before-cleanup: stdout-observer={Status(stdout)}, stderr-observer={Status(stderr)}, "
+                    + $"; task-status-sampled-before-cleanup: stdout={Status(stdout)}, stderr={Status(stderr)}, "
                     + $"stdin={Status(stdin)}, exit-wait={Status(exitWait)}]";
             }
         }
