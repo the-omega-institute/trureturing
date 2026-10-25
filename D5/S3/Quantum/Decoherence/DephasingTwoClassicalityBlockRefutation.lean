@@ -7,6 +7,7 @@
    digest: A block measurement refutes MUB necessity for time-dependent two-classical dephasing. -/
 
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
@@ -16,11 +17,12 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation
 
-open scoped BigOperators ComplexOrder Kronecker Matrix
+open scoped BigOperators ComplexOrder Kronecker _root_.Matrix
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.Quantum.FiniteDimensional (qubitZ qubit_weyl_star)
-open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (sigma mixedState)
+open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (sigma sigma_posDef mixedState)
+open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence (s2)
 
 noncomputable section
 
@@ -93,22 +95,21 @@ def claim : Prop :=
 
 private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, qubitZ, (2 : ℂ) • qubitZ]
 private def systemState : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1/2, 1/3, 1/6]
-private def amplitude : ℂ := (Real.sqrt 2 : ℂ) / 2
 private def measurementRaw : Matrix (Fin 3) (Fin 3) ℂ :=
-  !![amplitude, amplitude, 0; amplitude, -amplitude, 0; 0, 0, 1]
+  !![s2, s2, 0; s2, -s2, 0; 0, 0, 1]
 
-private theorem amplitude_star : star amplitude = amplitude := by
-  unfold amplitude
+private theorem amplitude_star : star s2 = s2 := by
+  unfold s2
   simp
 
-private theorem amplitude_sq : amplitude ^ 2 = (1 / 2 : ℂ) := by
+private theorem amplitude_sq : s2 ^ 2 = (1 / 2 : ℂ) := by
   have h := D5.S3.Observer.Existence.EmpiricalReflexiveSeparation.complex_sqrt_two_sq
-  unfold amplitude
-  rw [div_pow, h]
+  unfold s2
+  rw [Complex.ofReal_div, Complex.ofReal_ofNat, div_pow, h]
   norm_num
 
 private theorem measurement_unitary : measurementRaw ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
-  have hc : (starRingEnd ℂ) amplitude = amplitude := amplitude_star
+  have hc : (starRingEnd ℂ) s2 = s2 := amplitude_star
   rw [Unitary.mem_iff]
   constructor <;> ext i j
   all_goals
@@ -141,11 +142,7 @@ private theorem states_valid :
     systemState.PosSemidef ∧ Matrix.trace systemState = 1 ∧
     (∀ i j, i ≠ j → systemState i j = 0) ∧ systemState ≠ (1 / (3 : ℂ)) • 1 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · unfold sigma
-    rw [← Matrix.diagonal_one, ← Matrix.diagonal_smul]
-    apply Matrix.PosSemidef.diagonal
-    intro i
-    norm_num [Complex.le_def]
+  · exact sigma_posDef.posSemidef
   · exact mixedState.property.2
   · unfold systemState
     apply Matrix.PosSemidef.diagonal
@@ -162,10 +159,7 @@ private theorem states_valid :
     norm_num at hh
 
 private theorem blocks_hermitian : ∀ j, (blocks j).IsHermitian := by
-  have hz : qubitZ.IsHermitian := by
-    unfold Matrix.IsHermitian
-    rw [← Matrix.star_eq_conjTranspose]
-    exact qubit_weyl_star.2.2.1
+  have hz : qubitZ.IsHermitian := qubit_weyl_star.2.2.1
   intro j
   fin_cases j
   · exact Matrix.isHermitian_zero
