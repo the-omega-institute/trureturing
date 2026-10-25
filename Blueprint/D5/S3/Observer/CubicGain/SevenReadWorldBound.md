@@ -10,7 +10,7 @@ Let E be either J=[[0,1],[1,0]] or M=[[0,1],[1,1]]. The implementation uses a Bo
 
 Put j=b+r(1-r)/b, T=1+b, U=1+2b and V=1+kb, where k=2 for E=J and k=3 for E=M. The seven literal traces are (1,j,T,j+r,U,j+2r,V). In particular the fifth action here is J. Define K=16TUV, B₀=-dTUV, B₂=(C-d)UV, B₄=(Y-d)TV and B₆=(v-d)TU. Let G₁=5B₀+15B₂-5B₄+B₆, G₃=-B₀+9B₂+9B₄-B₆ and G₅=B₀-5B₂+15B₄+5B₆. Each G is an affine polynomial in d. The polynomial driftPolynomial is H_E=(A-d)G₃G₅-2(z-d)G₁G₅+(p-d)G₁G₃.
 
-The four even rows fix the entire polynomial g by interpolation at 0,2,4,6. They give Kg(1)=G₁, Kg(3)=G₃ and Kg(5)=G₅. The odd rows therefore imply H_E(d)=0 without division by any odd sample. The coefficient of d³ is 16b(1+2b)²(4b³+16b²+5b+8) for J and 192b⁴(3b²+12b+4) for M. These coefficients are positive for every b>0. Thus H_E is a nonzero cubic for every choice of observations.
+At each fixed drift, the four even rows fix the entire polynomial g by interpolation at 0,2,4,6. They give Kg(1)=G₁, Kg(3)=G₃ and Kg(5)=G₅. The odd rows therefore imply H_E(d)=0 without division by any odd sample. The coefficient of d³ is 16b(1+2b)²(4b³+16b²+5b+8) for J and 192b⁴(3b²+12b+4) for M. These coefficients are positive for every b>0. Thus H_E is a nonzero cubic for every choice of observations.
 
 **Theorem 1.1 (Drift multiplicity pays for every complete world).**
 
