@@ -7,6 +7,8 @@
    digest: Neither seven-state bipartite walk transfers the sixth coordinate state to the first. -/
 
 import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.ZMod.Basic
@@ -123,11 +125,14 @@ private lemma orbit_mod (s : ℤ) (n : ℕ) :
   have hpow : ((M s).map (Int.castRingHom (ZMod 3)) ^ n) *ᵥ
       ((Int.castRingHom (ZMod 3)) ∘ v) =
       (2 : ZMod 3) ^ n • ((Int.castRingHom (ZMod 3)) ∘ v) := by
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      rw [pow_succ', ← Matrix.mulVec_mulVec, ih, Matrix.mulVec_smul, heigen,
-        smul_smul, pow_succ]
+    have hv : Module.End.HasEigenvector ((M s).map (Int.castRingHom (ZMod 3))).toLin'
+        (2 : ZMod 3) ((Int.castRingHom (ZMod 3)) ∘ v) := by
+      constructor
+      · exact Module.End.mem_eigenspace_iff.mpr heigen
+      · intro hz
+        have hzero := congrFun hz 0
+        norm_num [Function.comp_apply, v] at hzero
+    simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply] using hv.pow_apply n
   simpa only [Function.comp_def, RingHom.map_mulVec, Matrix.map_pow] using hpow
 
 private lemma amplitude_formula (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
