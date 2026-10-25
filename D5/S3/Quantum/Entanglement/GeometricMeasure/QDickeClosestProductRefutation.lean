@@ -7,9 +7,16 @@
    digest: A q-Dicke state has no closest product vector in its q-symmetric subspace. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Positivity
 
 set_option autoImplicit false
+set_option linter.style.longLine false
+
+/-! Ordinary product overlaps and the q-symmetric span for three qubits. -/
 
 noncomputable section
 
@@ -54,11 +61,17 @@ def claim : Prop :=
 
 private lemma unit_coordinates (a : EuclideanSpace ℂ (Fin 2)) (ha : ‖a‖ = 1) :
     ‖a 0‖ ^ 2 + ‖a 1‖ ^ 2 = 1 := by
-  sorry
+  have h := EuclideanSpace.norm_sq_eq a
+  simpa [Fin.sum_univ_two, ha] using h.symm
 
 private lemma scalar_cs (x y u v : ℂ) :
     ‖x * u + y * v‖ ^ 2 ≤ (‖x‖ ^ 2 + ‖y‖ ^ 2) * (‖u‖ ^ 2 + ‖v‖ ^ 2) := by
-  sorry
+  have ht : ‖x * u + y * v‖ ≤ ‖x‖ * ‖u‖ + ‖y‖ * ‖v‖ := by
+    simpa only [norm_mul] using norm_add_le (x * u) (y * v)
+  have hs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+    ![‖x‖, ‖y‖] ![‖u‖, ‖v‖]
+  simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at hs
+  exact (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 ht |>.trans hs
 
 private lemma overlap_four (a b c : EuclideanSpace ℂ (Fin 2)) :
     inner ℂ (dicke1 4) (prod a b c) =
@@ -91,7 +104,8 @@ private lemma no_closest_in_span (a b c : EuclideanSpace ℂ (Fin 2))
   obtain ⟨ha, hb, hc, hn⟩ := closest_coordinates a b c h
   intro hv
   have he := span_relation (prod a b c) hv
-  simp only [prod, WithLp.toLp_apply, hb, mul_zero, zero_mul] at he
+  change a 0 * b 0 * c 1 = 2 * (a 0 * b 1 * c 0) at he
+  rw [hb, mul_zero, zero_mul, mul_zero] at he
   exact hn he
 
 theorem result : ¬ claim := by
