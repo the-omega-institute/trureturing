@@ -467,10 +467,13 @@ private theorem total_hamiltonian_diagonal (m : ℕ) : ∀ n,
   | 1 => rfl
   | n+2 => by
     rw [totalHamiltonian, total_hamiltonian_diagonal]
-    ext I J
-    by_cases h₁ : I.1 = J.1 <;> by_cases h₂ : I.2 = J.2 <;>
-      simp [Matrix.add_apply, Matrix.kroneckerMap_apply, Matrix.diagonal_apply,
-        Matrix.one_apply, totalEnergy, h₁, h₂, Prod.ext_iff]
+    apply Matrix.ext
+    rintro ⟨a, I⟩ ⟨b, J⟩
+    change (if a = b then (energy m a : ℂ) else 0) * (if I = J then 1 else 0) +
+      (if a = b then 1 else 0) * (if I = J then (totalEnergy m (n+1) I : ℂ) else 0) =
+      if (a, I) = (b, J) then ((energy m a + totalEnergy m (n+1) I : ℤ) : ℂ) else 0
+    by_cases h₁ : a = b <;> by_cases h₂ : I = J <;>
+      simp [h₁, h₂, Prod.mk.injEq]
 
 /-- The two explicit orthogonal product-basis words have energy m squared,
 and their actual tensor matrix element is the distinguished monomial. -/
