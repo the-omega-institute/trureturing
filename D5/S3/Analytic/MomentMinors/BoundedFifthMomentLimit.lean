@@ -53,11 +53,12 @@ private lemma mean_gap_pos (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (h : Integrable (fun x : ℝ => |x| ^ 5) μ) (hv : 0 < centralMoment id 2 μ)
     (L : ℝ) (hL : ∀ᵐ x ∂μ, L ≤ x) : 0 < mean μ - L := by
   have hi : Integrable (fun x : ℝ => x) μ := by
-    simpa only [sub_zero, pow_one] using integrable_centered_pow μ h 0 1 (by omega)
+    simpa only [sub_zero, pow_one] using integrable_centered_pow μ h 0 1 (by decide)
   have hshift : Integrable (fun x : ℝ => x - L) μ := hi.sub (integrable_const L)
   have he : (∫ x : ℝ, x - L ∂μ) = mean μ - L := by
     rw [integral_sub hi (integrable_const L)]
-    simp only [mean, integral_const, probReal_univ, one_smul]
+    rw [integral_const, probReal_univ, one_smul]
+    rfl
   have hn : ∀ᵐ x ∂μ, 0 ≤ x - L := hL.mono fun x hx => sub_nonneg.mpr hx
   have hnonneg : 0 ≤ mean μ - L := he ▸ integral_nonneg_of_ae hn
   by_contra hpos
@@ -95,19 +96,22 @@ private lemma integrated_bound (μ : Measure ℝ) [IsProbabilityMeasure μ]
   let B := 2 * a ^ 3 * b - 4 * a ^ 2 * b ^ 2 + 6 * a * b ^ 3 - 3 * b ^ 4
   let C := -a ^ 3 * b ^ 2 + 2 * a ^ 2 * b ^ 3 - 3 * a * b ^ 4
   have h1 : Integrable (fun x : ℝ => x - mean μ) μ := by
-    simpa only [pow_one] using integrable_centered_pow μ h (mean μ) 1 (by omega)
-  have h2 := integrable_centered_pow μ h (mean μ) 2 (by omega)
-  have h5 := integrable_centered_pow μ h (mean μ) 5 (by omega)
+    simpa only [pow_one] using integrable_centered_pow μ h (mean μ) 1 (by decide)
+  have h2 := integrable_centered_pow μ h (mean μ) 2 (by decide)
+  have h5 := integrable_centered_pow μ h (mean μ) 5 (by decide)
   have hfirst : (∫ x : ℝ, x - mean μ ∂μ) = 0 := by
-    simpa only [centralMoment, Pi.pow_apply, Pi.sub_apply, id_eq, mean, pow_one] using
-      (centralMoment_one (X := id) (μ := μ))
+    have hz := centralMoment_one (X := id) (μ := μ)
+    change (∫ x : ℝ, (x - mean μ) ^ 1 ∂μ) = 0 at hz
+    simpa only [pow_one] using hz
   have hsecond : (∫ x : ℝ, (x - mean μ) ^ 2 ∂μ) = a * b := by
     change centralMoment id 2 μ = a * (centralMoment id 2 μ / a)
     field_simp [show a ≠ 0 from ne_of_gt ha]
   have hminor : ∀ᵐ x ∂μ,
       A * (x - mean μ) ^ 2 + B * (x - mean μ) + C ≤ (x - mean μ) ^ 5 := by
     filter_upwards [hL] with x hx
-    exact polynomial_minorant a b (x - mean μ) (by dsimp [a]; linarith)
+    apply polynomial_minorant a b (x - mean μ)
+    change -(mean μ - L) ≤ x - mean μ
+    linarith
   have hi := integral_mono_ae (((h2.const_mul A).add (h1.const_mul B)).add
     (integrable_const C)) h5 hminor
   simp only [Pi.add_apply] at hi
@@ -118,7 +122,12 @@ private lemma integrated_bound (μ : Measure ℝ) [IsProbabilityMeasure μ]
   change a * b * (b - a) * (a ^ 2 + b ^ 2) ≤ centralMoment id 5 μ
   change A * (a * b) + B * 0 + C ≤ centralMoment id 5 μ at hi
   calc
-    _ = A * (a * b) + B * 0 + C := by dsimp [A, B, C]; ring
+    _ = A * (a * b) + B * 0 + C := by
+      change a * b * (b - a) * (a ^ 2 + b ^ 2) =
+        (-a ^ 3 + 2 * a ^ 2 * b - 3 * a * b ^ 2 + 4 * b ^ 3) * (a * b) +
+          (2 * a ^ 3 * b - 4 * a ^ 2 * b ^ 2 + 6 * a * b ^ 3 - 3 * b ^ 4) * 0 +
+          (-a ^ 3 * b ^ 2 + 2 * a ^ 2 * b ^ 3 - 3 * a * b ^ 4)
+      ring
     _ ≤ _ := hi
 
 private lemma normalization (a v M : ℝ) (ha : 0 < a) (hv : 0 < v)
