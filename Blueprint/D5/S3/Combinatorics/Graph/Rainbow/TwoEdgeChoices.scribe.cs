@@ -21,7 +21,7 @@ internal sealed class TwoEdgeChoicesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("repeated-colour-mass"),
                 DeclarationHandle.Create(Prefix + "repeated_colour_mass_le_outdegree"),
                 H("Total Repeated-Colour Endpoint Mass"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Fix a root u. For each endpoint w, repeated counts the intermediate vertices x "
                     + "of u to x to w whose two literal colours coincide. For each fixed outgoing "
@@ -33,7 +33,7 @@ internal sealed class TwoEdgeChoicesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("three-disjoint-classes"),
                 DeclarationHandle.Create(Prefix + "exists_three_disjoint_classes"),
                 H("Three Classes with Disjoint Coordinate Supports"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For any finite choice family A, let a and b be separately injective literal "
                     + "colour maps on A. Join distinct choices exactly when their colour pairs "
@@ -51,7 +51,7 @@ internal sealed class TwoEdgeChoicesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("quantitative-rainbow-core"),
                 DeclarationHandle.Create(Prefix + "deterministic_rainbow_choice_core"),
                 H("Sparse Exceptions and a Quantitative True-Rainbow Base"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For positive nu and n, define B_u by repeated count greater than nu*n/16. "
                     + "The mass estimate proves |B_u| < 16/nu, including the empty exceptional-set "
