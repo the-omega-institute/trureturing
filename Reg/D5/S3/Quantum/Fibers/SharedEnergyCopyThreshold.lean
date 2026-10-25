@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
 import Reg.Support.DependentFamily
+import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 
 /-! Matrix-readout audits for the sparse shared-energy family. -/
 set_option autoImplicit false
@@ -248,12 +249,12 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output n _ := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  Output _ n := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def readoutFunction : ∀ n, Unit → signature.State n → signature.Output n () :=
-  fun n _ r => stateMatrix (copies r n)
+def readoutFunction : Unit → ∀ n, signature.State n → signature.Output () n :=
+  fun _ n r => stateMatrix (copies r n)
 def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
 def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
@@ -262,7 +263,7 @@ abbrev arena : Arena where
   Law R := ∀ (m n : ℕ) (r : signature.State n) (I J : CopyIndex (Fin 3) n),
     degree (tensorExponent n I J) = n ∧
     weight m (tensorExponent n I J) = totalEnergy m n I - totalEnergy m n J ∧
-    R.readout n () r I J = monomial (stateMatrix r) (tensorExponent n I J) ∧
+    R.readout () n r I J = monomial (stateMatrix r) (tensorExponent n I J) ∧
     (pinchedCopies m n r I J = if weight m (tensorExponent n I J) = 0 then
       monomial (stateMatrix r) (tensorExponent n I J) else 0) ∧
     (pinchedCopies m n r).PosSemidef ∧ Matrix.trace (pinchedCopies m n r) = 1
@@ -323,47 +324,46 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 end Tensor
 namespace Pinching
 abbrev signature : Signature where
-  Params := ℕ
+  Params := Unit
   State _ := ℕ
-
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output n _ := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  Output _ _ := _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3)
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def readoutFunction : ∀ n, Unit → ℕ → signature.Output n () :=
-  fun n _ m => pinchedCopies m n (sigma m)
+def lowestEnergyState :=
+  _root_.D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity.pureDensityState
+    (Pi.single (0 : Fin 3) (1 : ℂ)) (by simp [dotProduct])
+def readoutFunction : Unit → Unit → ℕ → signature.Output () () := fun _ _ m => sigma m
 def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
-def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def zeroReadout : Realization signature :=
+  realize signature (fun _ _ _ => lowestEnergyState) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (m n : ℕ), 2 ≤ m → n < 2*m-1 →
-    pinchedCopies m n rho = R.readout n () m
+    pinchedCopies m n rho = pinchedCopies m n (R.readout () () m)
 private theorem bridge : (type_of% sparse_low_pinching) ↔ arena.Law actual := Iff.rfl
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
-  have he := congrArg Matrix.trace (h 2 0 (by omega) (by omega))
-  have ht := (tensor_monomial_bridge 2 0 rho PUnit.unit PUnit.unit).2.2.2.2.2
-  change Matrix.trace (pinchedCopies 2 0 rho) = Matrix.trace 0 at he
-  rw [ht, Matrix.trace_zero] at he
+  have he := congrArg (fun X => X (0 : Fin 3) (0 : Fin 3)) (h 2 1 (by omega) (by omega))
+  change pinchedCopies 2 1 rho (0 : Fin 3) (0 : Fin 3) =
+    pinchedCopies 2 1 lowestEnergyState (0 : Fin 3) (0 : Fin 3) at he
+  rw [(tensor_monomial_bridge 2 1 rho (0 : Fin 3) (0 : Fin 3)).2.2.2.1,
+    (tensor_monomial_bridge 2 1 lowestEnergyState (0 : Fin 3) (0 : Fin 3)).2.2.2.1] at he
+  norm_num [tensorExponent, coordinateExponent, weight, energy, monomial,
+    Fin.sum_univ_succ, Fin.prod_univ_succ] at he
+  change (1/3 : ℂ) = 1 at he
   norm_num at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨1, 1, 2, ?_⟩
+  refine ⟨(), 2, 3, ?_⟩
   intro h
-  have he := congrArg (fun X => X (1 : Fin 3) (2 : Fin 3)) h
-  change pinchedCopies 1 1 (sigma 1) 1 2 = pinchedCopies 2 1 (sigma 2) 1 2 at he
-  rw [(tensor_monomial_bridge 1 1 (sigma 1) 1 2).2.2.2.1,
-    (tensor_monomial_bridge 2 1 (sigma 2) 1 2).2.2.2.1] at he
-  have hw₁ : weight 1 (tensorExponent 1 (1 : Fin 3) 2) = 0 := by
-    norm_num [tensorExponent, coordinateExponent, weight, energy, Fin.sum_univ_succ]
-  have hw₂ : weight 2 (tensorExponent 1 (1 : Fin 3) 2) ≠ 0 := by
-    norm_num [tensorExponent, coordinateExponent, weight, energy, Fin.sum_univ_succ]
-  rw [if_pos hw₁, if_neg hw₂] at he
-  change (1/12 : ℂ) = 0 at he
-  norm_num at he
+  have he := congrArg (fun r => stateMatrix r (2 : Fin 3) (0 : Fin 3)) h
+  change (1/12 : ℂ) * (phase 2 : ℂ) = (1/12 : ℂ) * (phase 3 : ℂ) at he
+  norm_num [phase, Circle.coe_exp, Complex.exp_pi_mul_I,
+    Complex.exp_pi_div_two_mul_I] at he
 
 def family : Registration arena (type_of% sparse_low_pinching) where
   actual := actual
@@ -397,10 +397,10 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
