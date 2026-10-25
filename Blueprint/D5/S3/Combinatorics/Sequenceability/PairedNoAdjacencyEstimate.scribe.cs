@@ -33,9 +33,10 @@ internal sealed class PairedNoAdjacencyEstimateDocument : IScribeDocumentDefinit
                     + "opposite pair is adjacent. Every count and factorial in the displayed ratios is "
                     + "interpreted in the rationals."))), DescribeRole.Theorem),
             Paragraph(Text(
-                    "The finite-event lemmas are consumed bind-only helpers: pointwise_three and "
-                    + "intersection_moment feed bonferroni_three, which feeds no_adjacency_lower_bound. "
-                    + "The actual simultaneous-pair contraction estimate supplies the substantive content.")),
+                    "pointwise_three bounds the alternating binomial sum for the number of events occurring "
+                    + "at each point. intersection_moment counts those binomial coefficients by actual event "
+                    + "intersections. Summing yields bonferroni_three; simultaneous-pair contraction counts then "
+                    + "give no_adjacency_lower_bound on the same circle inventory.")),
             Paragraph(Text(
                     "The actual degree-zero through degree-three intersection counts give the third odd "
                     + "Bonferroni truncation on the original paired circle inventory. Dividing by its positive "

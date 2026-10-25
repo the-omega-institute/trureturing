@@ -36,7 +36,7 @@ $$\forall alpha \in \mathrm{Type},\; \forall A \in \mathrm{Finset}\left(alpha\ri
 
 Every fiber of Orders(A) onto Circles(A) has size A.card. Counting the same finite fibers gives (A.card minus 1)! actual directed circles. The boundary contraction count then counts a single arc in this very same sample space. No independence assumption or quotient of original labels enters the argument.
 
-event_order_card is a consumed bind-only normalization helper. Its live consumer is PairedQuantitativeOrdering.quantitative_good_orders; the arc contraction count provides the substantive content of this module.
+For a nonempty alphabet of distinct labels, event_order_card multiplies a circle-event count by A.card to recover its rooted-order count. PairedQuantitativeOrdering.quantitative_good_orders uses this equality to turn the Good-circle lower bound into a Good-order lower bound.
 
 Only single-arc multiplicity and free rotation normalization are asserted here. Multiple-block intersections, complement-class event accounting, Bonferroni truncation and the residual tail are separate obligations before an all-rank Good-order bound can be concluded.
 

@@ -41,9 +41,9 @@ internal sealed class CircularOrderCountDocument : IScribeDocumentDefinition
                     + "counts a single arc in this very same sample space. No independence assumption or quotient "
                     + "of original labels enters the argument."))), DescribeRole.Theorem),
             Paragraph(Text(
-                    "event_order_card is a consumed bind-only normalization helper. Its live consumer is "
-                    + "PairedQuantitativeOrdering.quantitative_good_orders; the arc contraction count provides the "
-                    + "substantive content of this module.")),
+                    "For a nonempty alphabet of distinct labels, event_order_card multiplies a circle-event "
+                    + "count by A.card to recover its rooted-order count. PairedQuantitativeOrdering.quantitative_good_orders "
+                    + "uses this equality to turn the Good-circle lower bound into a Good-order lower bound.")),
             Paragraph(Text(
                     "Only single-arc multiplicity and free rotation normalization are asserted here. "
                     + "Multiple-block intersections, complement-class event accounting, Bonferroni truncation and "

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Sequenceability/PairedNoAdjacencyEstimate
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum]
    utility: none
    digest: Third-order common-circle Bonferroni estimate for original opposite-pair adjacencies. -/
 

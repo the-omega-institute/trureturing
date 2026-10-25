@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/CircularWords/CircularOrderCount
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.List.Rotate]
+   anchors: [mathlib/module/Mathlib.Data.List.Cycle]
    utility: none
    digest: Free rotation fibers normalize actual finite original-label order inventories. -/
 

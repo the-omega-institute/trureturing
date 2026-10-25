@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.List.Rotate]
+   anchors: [mathlib/module/Mathlib.Data.List.Cycle]
    utility: none
    digest: Zero-total proper-interval Good words are exactly circles with no proper zero arc. -/
 

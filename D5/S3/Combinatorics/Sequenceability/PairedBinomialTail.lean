@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Sequenceability/PairedBinomialTail
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum]
    utility: none
    digest: Finite symmetric binomial tail for the paired circular-block consumer. -/
 
