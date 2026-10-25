@@ -674,4 +674,234 @@ end Compatible
 #print axioms Spectrum.registration
 #print axioms Pair.registration
 #print axioms Low.registration
+
+namespace ExponentWords
+abbrev signature : Signature where
+  Params := _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3)
+  State _ := Exponent
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → ∀ r, signature.State r → signature.Output () r :=
+  fun _ r alpha => monomial (stateMatrix r) alpha
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (m : ℕ) (alpha : Exponent),
+    ∃ I J : CopyIndex (Fin 3) (degree alpha),
+      tensorExponent (degree alpha) I J = alpha ∧
+      totalEnergy m (degree alpha) I - totalEnergy m (degree alpha) J = weight m alpha ∧
+      ∀ r : signature.Params,
+        stateMatrix (copies r (degree alpha)) I J = R.readout () r alpha ∧
+        pinchedCopies m (degree alpha) r I J =
+          if weight m alpha = 0 then R.readout () r alpha else 0
+private theorem bridge : (type_of% exponent_tensor_bridge) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  obtain ⟨I, J, hIJ⟩ := h 2 0
+  have he := (hIJ.2.2 rho).1
+  norm_num [zeroReadout, realize, degree, copies, stateMatrix] at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨rho, 0, coordinateExponent 0 0, ?_⟩
+  intro h
+  cases i
+  change monomial (sparseMatrix 1) 0 = monomial (sparseMatrix 1) (coordinateExponent 0 0) at h
+  norm_num [monomial, coordinateExponent, sparseMatrix, Fin.prod_univ_succ] at h
+
+def family : Registration arena (type_of% exponent_tensor_bridge) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp exponent_tensor_bridge, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    exponent_tensor_bridge (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.ExponentWords.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.ExponentWords.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[4]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ExponentWords
+
+namespace StarIndecomposable
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Exponent
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → Unit → ℕ → Exponent := fun _ _ m => starExponent m
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, 2 ≤ m →
+    Indecomposable m (R.readout () () m) ∧ degree (R.readout () () m) = 2*m-1 ∧
+      ∀ X : Matrix (Fin 3) (Fin 3) ℂ,
+        monomial X (R.readout () () m) = starMonomial m X
+private theorem bridge : (type_of% star_indecomposable) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  exact (h 2 (by omega)).1.1 rfl
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 2, 3, ?_⟩
+  intro h
+  have he := congrArg (fun a : Exponent => a 2 1) h
+  norm_num [actual, readoutFunction, realize, starExponent] at he
+
+def family : Registration arena (type_of% star_indecomposable) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp star_indecomposable, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    star_indecomposable (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.StarIndecomposable.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.StarIndecomposable.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end StarIndecomposable
+
+namespace Hamiltonian
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → ∀ n, ℕ → signature.Output () n := fun _ n m => totalHamiltonian m n
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m n : ℕ,
+    R.readout () n m = Matrix.diagonal (fun I => (totalEnergy m n I : ℂ))
+private theorem bridge : (type_of% total_hamiltonian_diagonal) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have he := congrArg (fun X => X (1 : Fin 3) (1 : Fin 3)) (h 2 1)
+  norm_num [zeroReadout, realize, totalEnergy, energy] at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 2, 3, ?_⟩
+  intro h
+  have he := congrArg (fun X => X (2 : Fin 3) (2 : Fin 3)) h
+  norm_num [actual, readoutFunction, realize, totalHamiltonian, energy] at he
+
+def family : Registration arena (type_of% total_hamiltonian_diagonal) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp total_hamiltonian_diagonal, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    total_hamiltonian_diagonal (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Hamiltonian.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Hamiltonian.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Hamiltonian
+
+#print axioms ExponentWords.registration
+#print axioms StarIndecomposable.registration
+#print axioms Hamiltonian.registration
 end Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
