@@ -35,39 +35,49 @@ internal static partial class CleanLanesCommand
         var branches = AllocationBranches(log, item.Branch);
         foreach (var branch in branches)
         {
-            AllocationLog branchLog;
+            AllocationLog? branchLog = null;
             try
             {
                 var common = ResolveCommonGitDirectory(item.Path, runner);
                 var path = Path.Combine(common, "logs", "refs", "heads", branch);
-                if (branch != item.Branch && !HasLocalAllocationEvidence(item.Path, branch, path, runner))
+                if (branch == item.Branch || HasLocalAllocationEvidence(item.Path, branch, path, runner))
                 {
-                    // Deleted or renamed branches can share a spelling with a surviving revision.
-                    // Bound this historical ambiguity by the checkout's own allocation grace.
-                    ambiguityAgeBound = Math.Max(ambiguityAgeBound, log.Checkouts![branch].Max(static entry => entry.Updated));
-                    continue;
+                    var tip = branch == item.Branch ? item.Head
+                        : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
+                    branchLog = ReadAllocationLog(path, tip);
                 }
-                var tip = branch == item.Branch ? item.Head
-                    : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
-                branchLog = ReadAllocationLog(path, tip);
+                else if (branch.StartsWith("refs/", StringComparison.Ordinal) || IsObjectOid(branch))
+                    continue;
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
                 return new("update_unknown", "update_unknown", "branch_reflog_unreadable");
             }
-            if (branchLog.Error is not null)
-                return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
-            var creation = branchLog.FirstRecord!;
-            if (creation.Updated > now.ToUnixTimeSeconds())
-                return new("age_unverifiable", "age_unverifiable");
-            if (creation.OldHead.All(static c => c == '0'))
+            if (branchLog is not null)
             {
-                if (log.Checkouts!.TryGetValue(branch, out var entries)
-                    && entries.Any(entry => entry.Updated == creation.Updated && entry.NewHead == creation.NewHead))
-                    allocated = Math.Max(allocated, creation.Updated);
+                if (branchLog.Error is not null)
+                    return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
+                var creation = branchLog.FirstRecord!;
+                if (creation.Updated > now.ToUnixTimeSeconds())
+                    return new("age_unverifiable", "age_unverifiable");
+                if (creation.OldHead.Any(static c => c != '0') && creation.Updated > allocated)
+                    return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
             }
-            else if (creation.Updated > allocated)
-                return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
+            if (!log.Checkouts!.TryGetValue(branch, out var entries)) continue;
+            foreach (var checkout in entries)
+            {
+                switch (ClassifyLegacyCheckout(branch, checkout, branchLog))
+                {
+                    case LegacyCheckout.Allocation:
+                        allocated = Math.Max(allocated, checkout.Updated);
+                        break;
+                    case LegacyCheckout.Ambiguous:
+                        ambiguityAgeBound = Math.Max(ambiguityAgeBound, checkout.Updated);
+                        break;
+                    case LegacyCheckout.ExistingBranch:
+                        break;
+                }
+            }
         }
         var ageAnchor = Math.Max(updated.Value, Math.Max(allocated, ambiguityAgeBound));
 
@@ -82,6 +92,36 @@ internal static partial class CleanLanesCommand
 
         var reason = OriginalReclaimBlockReason(item, baseCommit!, ageAnchor, runner, now);
         return new(reason, "original_selectors", null, LockModifiedTicks(item));
+    }
+
+    private enum LegacyCheckout { Allocation, ExistingBranch, Ambiguous }
+
+    private static LegacyCheckout ClassifyLegacyCheckout(
+        string branch, HeadLogRecord checkout, AllocationLog? branchLog)
+    {
+        var creation = branchLog?.FirstRecord;
+        if (creation is null || creation.OldHead.Any(static c => c != '0')
+            || !HasHistoricalBranchIdentity(branch, checkout, branchLog!))
+            return LegacyCheckout.Ambiguous;
+        if (creation.Updated == checkout.Updated && creation.NewHead == checkout.NewHead)
+            return LegacyCheckout.Allocation;
+        return creation.Updated < checkout.Updated ? LegacyCheckout.ExistingBranch : LegacyCheckout.Ambiguous;
+    }
+
+    private static bool HasHistoricalBranchIdentity(string branch, HeadLogRecord checkout, AllocationLog branchLog)
+    {
+        var reference = "refs/heads/" + branch;
+        var historical = reference;
+        foreach (var rename in branchLog.Renames!.AsEnumerable().Reverse())
+        {
+            if (rename.Updated < checkout.Updated) continue;
+            // Different logs cannot order operations within the same second.
+            if (rename.Updated == checkout.Updated) return false;
+            var names = rename.Message["Branch: renamed ".Length..].Split(" to ", StringSplitOptions.None);
+            if (names.Length != 2 || names[1] != historical) return false;
+            historical = names[0];
+        }
+        return historical == reference;
     }
 
     private static bool HasLocalAllocationEvidence(
@@ -127,6 +167,7 @@ internal static partial class CleanLanesCommand
             string? newHead = null;
             var checkouts = new Dictionary<string, List<HeadLogRecord>>(StringComparer.Ordinal);
             var explicitAllocation = false;
+            var renames = new List<HeadLogRecord>();
             HeadLogRecord? firstRecord = null;
             while (reader.ReadLine() is { } line)
             {
@@ -134,6 +175,8 @@ internal static partial class CleanLanesCommand
                 firstRecord ??= record;
                 allocated ??= record!.Updated;
                 newHead = record!.NewHead;
+                if (!treeLog && record.Message.StartsWith("Branch: renamed ", StringComparison.Ordinal))
+                    renames.Add(record);
                 const string allocationPrefix = "worktree-allocation:";
                 if (treeLog && record.Message.StartsWith(allocationPrefix, StringComparison.Ordinal))
                 {
@@ -161,7 +204,7 @@ internal static partial class CleanLanesCommand
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord);
+            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord, Renames: renames);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -178,7 +221,7 @@ internal static partial class CleanLanesCommand
 
     private static bool IsAllocationBranchName(string value) =>
         value.Length != 0 && value != "HEAD"
-        && value[0] != '/' && value[^1] is not ('/' or '.')
+        && value[0] is not ('/' or '-') && value[^1] is not ('/' or '.')
         && !value.Contains("..", StringComparison.Ordinal)
         && !value.Contains("@{", StringComparison.Ordinal)
         && !value.Any(static c => c <= ' ' || c is '~' or '^' or ':' or '?' or '*' or '[' or '\\' or '\u007f')
@@ -187,7 +230,7 @@ internal static partial class CleanLanesCommand
 
     private sealed record AllocationLog(long? Allocated = null, string? Error = null,
         Dictionary<string, List<HeadLogRecord>>? Checkouts = null, bool ExplicitAllocation = false,
-        HeadLogRecord? FirstRecord = null);
+        HeadLogRecord? FirstRecord = null, List<HeadLogRecord>? Renames = null);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)
