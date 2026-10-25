@@ -1,0 +1,71 @@
+fingerprints:
+  raw_sha256: sha256:a158c176a1ec688948ba6062f1f94fe431fa856cfa15acea345a8e0e36ca855d
+  normalized_sha256: sha256:a158c176a1ec688948ba6062f1f94fe431fa856cfa15acea345a8e0e36ca855d
+cas_ref: sha256:a158c176a1ec688948ba6062f1f94fe431fa856cfa15acea345a8e0e36ca855d
+coverage_gids:
+  - gid: D5/S3/Weil/FourierLaplace.fourierLaplace_apply
+    target_statement_id: sha256:d7c50d21c16e0414bafc9b9699b7a84990a1c75366cb83b356c411b879072237
+  - gid: D5/S3/Weil/FourierLaplace.fourierLaplace_involution_conj
+    target_statement_id: sha256:68b9fe2b9ea0fdf6da59d0732c4b753518f99f050bc5f163b1646b257c07715a
+  - gid: D5/S3/Weil/TestFunctions.contDiff
+    target_statement_id: sha256:262a93fde4f8280a33d48d424cb326c48d84642c888f16187ea96b7710accc6b
+  - gid: D5/S3/Weil/TestFunctions.convolutionSquare_apply
+    target_statement_id: sha256:c04a2fe18ce3f69c6929b691b86f667b50dfa519a9213b54235cf55cba8b6f7b
+  - gid: D5/S3/Weil/TestFunctions.convolutionSquare_contDiff
+    target_statement_id: sha256:a7467c2f0421baf6bd5a976cdaa2593c4526daa23fca93166a53276b38e61077
+  - gid: D5/S3/Weil/TestFunctions.convolutionSquare_even
+    target_statement_id: sha256:69e82e2de1b1d99d06005ee519cef3d24073c5604f266dc36c38ad591d834b7a
+  - gid: D5/S3/Weil/TestFunctions.convolutionSquare_hasCompactSupport
+    target_statement_id: sha256:e4d14d9b082cf8f1fb396cda0c1739cecd96fa9059e788f8ef538ecfe8472839
+  - gid: D5/S3/Weil/TestFunctions.even
+    target_statement_id: sha256:c8245f977fa78c186e670b6ac7457292c41b7f171c06b70d8729a299080e4e71
+  - gid: D5/S3/Weil/TestFunctions.hasCompactSupport
+    target_statement_id: sha256:18b3322db11b413d92b6c77347044ebe008793aeff6191ec5759a3ce135d3384
+  - gid: D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity.fourierLaplace_convolutionSquare_real
+    target_statement_id: sha256:0d9535f5fb58dd90bc62535d15441075f54084d162a21a26de3e96911d1667a3
+  - gid: D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity.fourierLaplace_convolutionSquare_real_nonnegative
+    target_statement_id: sha256:03a57d8b1898191d4ed82e18bfb04152df2e8d2d05fdce013c0d4de771d94b91
+  - gid: D5/S3/Weil/WeilIdentity.pole_term_eq_zero_sum_add_prime_sub_archimedean
+    target_statement_id: sha256:3c88ee1d4ad27e80e4942b7ead63b0fe3ca1a9ee4bae1f9eedc9f321d9d191f3
+  - gid: D5/S3/Weil/WeilIdentity.prime_term_eq_pole_add_archimedean_sub_zero_sum
+    target_statement_id: sha256:57235be9a9c14f22e090eef97c42aca0fe8c3167369c47f73e995b3fb27aa1f5
+  - gid: D5/S3/Weil/WeilIdentity.weil_explicit_formula
+    target_statement_id: sha256:61362cd3d9a4d4139a7eed61cb4d8a30b426cf37df3d22a1a4459a64e5acf64d
+  - gid: D5/S3/Weil/ZeroSum.IsNontrivialZero
+    target_statement_id: sha256:a6f28644b8712884b7100900df67fa81c252c0efbf56110547c40f3f8a1de820
+  - gid: D5/S3/Weil/ZeroSum.SymmetricConvergent
+    target_statement_id: sha256:7c64008adb5d54551d0aa5e1583767596ea0734aaaaa680fc87a7e02be4143d3
+  - gid: D5/S3/Weil/ZeroSum.ZeroData
+    target_statement_id: sha256:6113c5c5e0fafd781150a3d4774c4b6125e713165d38bad0217159ea22e9e338
+  - gid: D5/S3/Weil/ZeroSum.spectralParameter
+    target_statement_id: sha256:7845e7a476e150751a7eb339437b31ef182436922d50047329af0da5a693ba91
+  - gid: D5/S3/Weil/ZeroSum.truncatedZeroSum
+    target_statement_id: sha256:c449939783169e775ae441f4b04192ccfd1e962a1b9a5eebf6011b1ca1d72ccc
+  - gid: D5/S3/Weil/ZeroSum.zeroSum
+    target_statement_id: sha256:9ba901509d3b9b50e8142119bfbc227bc61fd3fcc08c995077ebaddd0d3e6cd6
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative
+    target_statement_id: sha256:180116e502120f72d95b7229643efab71d78862048b128c262174b7e4d31d1e6
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_zero_summand_real_nonnegative
+    target_statement_id: sha256:7f14a35b01ea59b3a598cb971fd8dd15749cd080ee2f31072ff24292da863884
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.truncated_zero_sum_critical_offline_split
+    target_statement_id: sha256:c7763f33a7789d0ee826ca9492b2f043cdabc0b4c89a394887178cd4a3a05504
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits.off_line_truncated_sum_real
+    target_statement_id: sha256:400c28e77effaf6d8e98b8f7902ba3e3759c7ade3b9929f554587e7dfbe31b7e
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits.off_line_zero_orbit_sum_eq_four_mul_re
+    target_statement_id: sha256:14eba28892b04fae46b38d79e77209030bc857647b37342acb9807477fc7dae8
+  - gid: D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity
+    target_statement_id: sha256:1fe6c8f5cb6a937df99a3e273695a8734677a218ead6eb080135be70f5dcb1ba
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - c9965bb92cae8e281b153b882e5fb7f97bda7300cc00a89c9fd51288dc9a0539
+    - ea63aa4456a9bf320a38b2d69b1ff2b66d8df725d1fce21c5f6990e79374d7fa
+    - ff4802e125c76bc923668c97061ce5445641132065c374125d6ffdba5ab029b6
+    - cf1ec9146a147d75c6d280f3f8093865262c1d0bce3d68e98c1e261d55dd92e8
+    - 94cfe5c0eb3b5757cd0263ae93c84c43474e610292c3a50745e5c3697f410181
+    - f4e5f9fd55549341d4f54deecf48309d2f4123a018ccf541dea42cb9712ca728
+    - bdb62480f5125711a0e35e9d5e815aeb30bdd701fa1fa233b5674ab1d1efd470
+    - 8ce7e22834643502b6ce12f0acaaebfe86432b6a69a0397803eaa7dbd7d1cd01
+    - 761c8a4cccd510cc723d7ca7fc2289e36505ccd0338cb28bde0a28c94a3055d3

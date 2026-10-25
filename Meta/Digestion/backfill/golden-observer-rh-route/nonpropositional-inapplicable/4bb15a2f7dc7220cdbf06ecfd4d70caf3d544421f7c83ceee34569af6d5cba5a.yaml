@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bb15a2f7dc7220cdbf06ecfd4d70caf3d544421f7c83ceee34569af6d5cba5a
+  normalized_sha256: sha256:4bb15a2f7dc7220cdbf06ecfd4d70caf3d544421f7c83ceee34569af6d5cba5a
+cas_ref: sha256:4bb15a2f7dc7220cdbf06ecfd4d70caf3d544421f7c83ceee34569af6d5cba5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Build, sorry and axiom acceptance rules, without a mathematical claim.
+    previous_atom_id: a25134ca914fe9856d7593d62a647de5d6978ed657f04117f25986bcf83fdf59
+    next_atom_id: 86cbe20b80b7c842e8e9338bc0eb3d9a759904e5e4d246583e46e1c31c6d3ef7

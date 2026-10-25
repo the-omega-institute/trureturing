@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:100fca65607c9073f35a7b277c2ce06be9c175bb04ae91da1d23314112c4382c
+  normalized_sha256: sha256:100fca65607c9073f35a7b277c2ce06be9c175bb04ae91da1d23314112c4382c
+cas_ref: sha256:100fca65607c9073f35a7b277c2ce06be9c175bb04ae91da1d23314112c4382c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Availability metadata and a request to audit its scope, followed by a project introduction.
+    previous_atom_id: da11402b66a4e9fd8e860351622d8897cea20e736d7c0a99430cd4bdf132e8d2
+    next_atom_id: 1b27fd92712504bdbb0ca08f3129ce6cea5926fc3bb1d8911a7d4eca1186282b

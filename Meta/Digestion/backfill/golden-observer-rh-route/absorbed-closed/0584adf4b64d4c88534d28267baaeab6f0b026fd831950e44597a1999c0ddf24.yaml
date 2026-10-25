@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:0584adf4b64d4c88534d28267baaeab6f0b026fd831950e44597a1999c0ddf24
+  normalized_sha256: sha256:0584adf4b64d4c88534d28267baaeab6f0b026fd831950e44597a1999c0ddf24
+cas_ref: sha256:0584adf4b64d4c88534d28267baaeab6f0b026fd831950e44597a1999c0ddf24
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.truncatedZeroSum_tendsto
+    target_statement_id: sha256:c75b514b2dc6986b515e57c283cc498b11b5a9ecd47fe3caf440a5339589d6df
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.paperFT_eq_fourierLaplace
+    target_statement_id: sha256:af77ba1a47eea4dfb97f117586a2cbe4bc4ff59ce4d9890b0eb9e63d41a2df3c
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.tendsto_symmetricIndices
+    target_statement_id: sha256:a26065bd9575e0cd422a02a5259b11327079d29e3b53fc4f56b09a728ad02bc6
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+  - gid: D5/S3/Weil/ZetaBridge/SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData
+    target_statement_id: sha256:4d920c70fb52788a7bf8a37055da70a83649ab255570352ad6169e5fa069895b
+  - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.truncatedZeroSum_enum_invariant
+    target_statement_id: sha256:d20e49378abab3f14a2447d482a7227ea4f182e2bee61cfb59c24abab172f3d6
+  - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.zeroSum_enum_invariant
+    target_statement_id: sha256:9685ee0ea979e07f18732b5e0c19c361a10b547e70b2ca3b7faa5bab2b197b0e
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - afdf0262ba59bbc5ae5081910f05535ff4a8ca3a4babf3b026529abc3ccb58b1
+    - d19511ec8e08eabd25a7a6b7835634f84dda905046f04eb04c2448379589ef34
+    - 6a3788c16349a1b9fd83c4a1325185a13ca3f0c0b0589835f9fa919e13cbc1d5
+    - 3b2b2cce1078a4fc9af5631f76a69ac2cf05feec426a8c4d524c1d8c907f959f
