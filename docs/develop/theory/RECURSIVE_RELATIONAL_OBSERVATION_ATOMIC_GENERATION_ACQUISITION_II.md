@@ -2470,3 +2470,1598 @@ obligations remain unresolved by this bounded conditional theory.
 
 ## 追加锚（本行以下为增补区）
 
+## 68. A recoverable source encoding on the original LAB attachment
+
+**Definition 68.1 (source, acquisition task and represented task).**
+Use exactly the LAB source of AA Definitions 17.1 and 17.3 and the
+minimal guard attachment of Assumption 53.2. Thus the actual source was
+prepared from a known allocated alpha root by a finite legal word of
+addressed promotions and splits. Its unknown entry is any
+$t\in\mathcal D$, where no alpha leaf has an $L$-ending logical address.
+The observer initially has no source-dependent word, roster, size,
+generation record or response table. It has the authentic opaque callable
+root, its original orientation, current exclusive $P/S$ rights, complete
+reply/return connection, source-independent finite code and sufficient
+owned finite backing for each execution claimed. Only complete guard
+replies reveal source-dependent information. Logical addresses stop at
+logical leaves; a beta's terminal material marker is not a logical child.
+
+Calls, observer updates and the later outer service are serialized. There
+is no crash, interrupt, revocation, concurrent writer, autonomous growth,
+observable quota, allocation-name inspection, duration readout, Tag,
+Native Read, field, reset or cloning port. Rights and binding are supplied
+premises, not conclusions learned from guard answers. Retention,
+communication, allocation, local computation and clearing remain paid.
+The acquisition must earn the exact entry code and an actual advanced
+endpoint on this same source. Subsequent use will have the explicitly
+represented interface $Q_J$ of §70, distinct from applying the original
+$Q_A$ directly to the advanced physical term. Neither interface includes
+the seven-request history task $Q_g$ of §§47–52.
+
+**Definition 68.2 (encoding and recognized range).** For finite ordered
+LAB terms define
+
+$$
+J(\alpha)=\alpha,\qquad J(\beta)=\langle\beta,\alpha\rangle,
+\qquad J(\langle u,v\rangle)=\langle J(u),J(v)\rangle.
+$$
+
+Let $\mathcal R$ be the least finite-term grammar
+
+$$
+r::=\alpha\ \mid\ \langle\beta,\alpha\rangle\ \mid\ \langle r,r\rangle.
+$$
+
+Define a partial decoder $K$ as follows. At alpha return alpha. At the
+literal pair $\langle\beta,\alpha\rangle$ return beta. At any other pair,
+recursively decode both children and return their ordered pair, provided
+both decodings succeed. Reject bare beta and every unsuccessful recursive
+case. This is a finite structural procedure on an owned constructor word,
+not a new source primitive. No member of $\mathcal R$ has root beta;
+therefore the literal sentinel pair cannot also be a pair of two members
+of $\mathcal R$. In particular the two pair rules are unambiguous.
+
+**Lemma 68.3 (two round trips and exact birth-typed image).** On all finite
+terms, $K(J(u))=u$. The domain of successful $K$ is exactly $\mathcal R$,
+and $J(K(r))=r$ for every $r\in\mathcal R$. Consequently $J$ is injective,
+and its exact image on reachable LAB entries is
+
+$$
+\mathcal I:=J[\mathcal D]=\mathcal R\cap\mathcal D.
+$$
+
+Proof. Every encoded term has root alpha or branch. For a leaf alpha the
+first round trip is the first rule. For beta it is the sentinel rule.
+For an original branch, both encoded children have root different from
+beta, so the encoded branch cannot be the sentinel. The recursive rule
+and the two induction hypotheses return the original branch. This proves
+the first round trip by structural induction.
+
+Induct on a successful decoder computation. Its alpha case lies in the
+first range rule, its sentinel case in the second, and its recursive pair
+case in the third by the induction hypotheses. Conversely induction on
+the range grammar gives a successful computation: in its third case the
+left child has root different from beta, so the sentinel case does not
+interfere. The same induction proves the second round trip. Applying
+$K$ to an equality of encoded terms proves injectivity.
+
+Encoding preserves every original alpha leaf at its original address.
+The only added alpha leaves are the right children of original beta
+leaves. Hence an $L$-ending alpha in $J(u)$ exists exactly when one existed
+in $u$. For the reverse implication, an $L$-ending alpha in $u$ persists;
+for the forward implication, any new alpha ends in $R$. Thus
+$u\in\mathcal D$ if and only if $J(u)\in\mathcal D$. Every $J(u)$ lies in
+$\mathcal R$. If $r\in\mathcal R\cap\mathcal D$, put $u=K(r)$; then
+$J(u)=r$, and the just-proved equivalence gives $u\in\mathcal D$.
+This proves the displayed image equality, including the singleton entry
+alpha. $\square$
+
+The encoding is not FARG's simultaneous substitution $\rho$: in
+particular $J(\alpha)=\alpha$ whereas $\rho(\alpha)=\beta$.
+The round trips are ordinary syntax facts. Their use below requires an
+actual guard execution reaching $J(t)$ and an earned word for $t$.
+A syntax inverse by itself supplies neither that execution nor a guard
+observation of an unknown entry.
+
+## 69. Actual guard acquisition of an encoded endpoint
+
+**Definition 69.1 (the split sweep).** Begin with empty logical address
+and empty ancestor-continuation stack. At a scheduled address $p$, send
+one complete original $S_p$ frame, consume its complete reply and finish
+its return. Refusal(wrong type) records alpha and finishes this visit.
+Growth$(S,p)$ records beta and finishes this visit: do not schedule either
+newborn child. Refusal(branch) records a branch, visits its left child,
+then its right child, using a backed pending-right flag. Stop when the
+root visit and every pending continuation are finished. An absent refusal
+is outside the promised executions and is not interpreted as a leaf.
+
+The output is Definition 54.1's canonical preorder word, with two-bit
+symbols $00,01,10$ for alpha, beta and branch. Retain one mutable address,
+a finite flag per active ancestor, the growing output word and the actual
+bound root/rights. Scheduling and parsing use only acquired replies, not
+a supplied subtree, fuel, height or stopping bound. The stack program is
+source independent; its actual stack and output are not bounded in size
+by finiteness of that program. This is the entry-node traversal technique
+of §§54 and 62, with a different leaf operation and endpoint.
+
+**Theorem 69.2 (earned entry, exact source and termination).** For every
+$t\in\mathcal D$, every legal old LAB preparation ending at $t$, and every
+installation of Definition 68.1, the split sweep terminates with an owned
+canonical word for $t$ and actual physical source $J(t)$ on the same
+callable root and current authority. It visits exactly the entry logical
+positions, once each in preorder. Its only successful source events are
+one split at every entry beta leaf. Its acquisition endpoints, as the
+entry varies, are exactly $\mathcal I$.
+
+Proof. At the start of any scheduled entry-subtree visit, all previous
+edits are in finished entry-leaf cones, disjoint from the pending subtree.
+A previously split entry leaf has newborn descendants, but the controller
+has finished that visit and never schedules them. A pending child is
+scheduled only after its actual parent produced a branch refusal. Thus
+all scheduled positions exist and their constructors still equal the
+entry constructors. This invariant is preserved by every scheduling
+step and source edit.
+
+Prove the visit assertion by induction on the finite entry subtree,
+allowing arbitrary pending continuations outside its cone. At alpha the
+actual split has the wrong type; it leaves alpha and records alpha.
+At beta the actual split succeeds, leaves the pair beta-alpha and records
+beta. The visit ends in both cases, so neither case uses a newborn child
+as evidence about the entry. At a branch the actual refusal preserves
+both child cones. Apply the left induction hypothesis and then the right
+one; disjointness preserves each hypothesis. Their recorded words form
+the original branch word, and their physical endpoints form the pair of
+encoded children. These are precisely the three clauses of $J$.
+
+Every actual request, reply, End, acknowledgement, return and finite local
+update completes under the installation premises. The structural induction
+establishes finitely many visits and stack operations without passing a
+runtime bound to the observer. It also excludes absent replies. At the
+root completion the output is therefore the exact entry word and the
+physical endpoint is $J(t)$. The current representation needed by §70 is
+this earned word $t$; a second physical-current word $J(t)$ need not be
+retained. The real reference, rights, program and work backing remain
+owned for later use. Every endpoint belongs to $\mathcal I$ by Lemma
+68.3, and each member of that set is obtained from its decoded reachable
+entry by this same sweep. $\square$
+
+**Definition 69.3 (retained-use invariant).** At an outer Ready cut retain
+one valid live word $v$, the same callable source root and its current
+exclusive authority, the framing/adapter program, and owned pending,
+answer and work backing. The invariant is that the actual physical term
+is $J(v)$. The word is initially the acquired $t$, not a supplied response
+oracle. Retaining it as live mutable state gives no separate immutable
+entry archive: after later represented edits, an old entry report requires
+its own retained copy or the restricted reaccess experiment of §72.
+
+## 70. The complete represented continuation on the same source
+
+**Definition 70.1 (outer frames, replies and real macros).** $Q_J$ uses
+exactly Definition 53.3's framing and complete reply alphabet, evaluated
+on the represented term $v$. In particular its addressed request length
+is $2|p|+4$, a Growth reply has length $2|p|+5$, and any of the three
+Refusal reasons has length five. Logical lookup in the earned live word
+uses the original blocking rule: a strict extension through a leaf is
+absent. The complete semantic table is
+
+| Represented target at $p$ | Outer $P_p$ | Outer $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), identity | Refusal(absent), identity |
+| branch | Refusal(branch), identity | Refusal(branch), identity |
+| alpha | Growth$(P,p)$, replace by beta | Refusal(wrong type), identity |
+| beta | Refusal(wrong type), identity | Growth$(S,p)$, replace by pair beta-alpha |
+
+For a represented successful $P_p$, the adapter actually calls $P_p$,
+consumes its complete reply/return, then actually calls $S_p$ and consumes
+that complete reply/return. For a represented successful $S_p$, it
+actually calls $S_{pL}$ and consumes its complete reply/return. Here $pL$
+is the left logical beta of the physical sentinel pair $J(\beta)$;
+it is not the unaddressable material marker of an unsplit beta. The
+adapter checks the expected complete inner successes before committing.
+A predicted refusal requires no source edit or inner call and returns
+its exact outer reason. The other six three-bit tags are complete
+unsupported frames returning the three-bit BadFrame and identity
+successor. They do not call a missing service. A proper unfinished $P/S$
+address frame waits, retains its received input and has no completed reply.
+Exactly one frame is consumed per outer transaction. The outer client
+calls an actual owned adapter entry, whose stored reference is bound to
+the original dispatcher. Both that outer connection and the inner callable
+reference, current grants and input/output backing are retained and paid;
+the represented word does not stand in for either callable binding.
+
+Receive backs every accepted outer bit before releasing its latch. Before
+a successful macro the adapter owns the old word, parsed address, operation,
+phase, proposed successor word and sufficient finite backing/authority
+for the entire macro and reply. Only the permitted real source templates
+allocate source vertices; the adapter installs no new source opcode.
+Between the two inner calls of a represented promotion the outer service
+remains busy even though the original dispatcher has returned. After the
+last inner return, commit the new live word, seal the entire outer answer,
+Print all its bits and End, consume the local acknowledgement, then Return
+and clear finite scratch before Ready. The root, current authority and
+live word survive cleanup. No next outer frame is admitted while busy.
+The real source calls, their traffic, retained intermediate data and the
+outer traffic are all actual operations with separate costs.
+
+**Theorem 70.2 (full successor correspondence and continued use).**
+Starting at any Ready cut satisfying Definition 69.3, Definition 70.1
+implements the complete $Q_A$ table on $v$ through $Q_J$. It returns
+exactly the displayed outer replies and preserves the invariant with
+$v$ replaced by the displayed represented successor. The same assertion
+holds for every finite common adaptive continuation of full frames,
+including refusals and unsupported tags, and for finite extensions of
+pending prefixes. Enabledness is conditional on the same current rights,
+serialized phase, backing and acknowledgement assumptions as above.
+
+Proof. At any logical position of $v$ above its leaves, $J$ retains the
+same branch context and address. Thus a represented alpha at $p$ is an
+actual alpha there. The first real call promotes it to beta; the second
+splits that beta. The net replacement is $J(\beta)$, so, writing $P_pv$
+for the represented successful successor,
+
+$$
+S_p(P_p(J(v)))=J(P_pv).
+$$
+
+At a represented beta at $p$, the physical cone is
+$\langle\beta,\alpha\rangle$. Splitting its actual left logical beta
+gives $\langle\langle\beta,\alpha\rangle,\alpha\rangle$, which is
+$J(\langle\beta,\alpha\rangle)$. Consequently
+
+$$
+S_{pL}(J(v))=J(S_pv).
+$$
+
+In both equations the operations are real legal source changes at the
+stated original-root addresses. Context replacement outside that cone
+commutes with $J$ by its branch clause. These arguments prove actual
+success and the proposed code update; they assume neither a raw read
+port nor an inverse source edit.
+
+For every negative case, finite lookup in the already earned exact word
+gives precisely the represented absent, branch or wrong-type case.
+Returning that reason with no inner edit preserves $J(v)$. The fixed
+unsupported reply and the unchanged source are also exact. Both parsers
+use the stated finite prefix grammar, so a proper partial frame has the
+same waiting condition and every completed extension enters the proper
+case. Actual input backing, full answer construction, End, acknowledgement,
+return and cleanup ensure that equality concerns whole replies and settled
+successors, rather than just an initial response bit. Missing rights or
+wrong phase disable a call; they are not reclassified as a leaf refusal.
+
+Induct on complete outer transactions. The induction hypothesis supplies
+the word/source invariant for the next chosen frame; the one-step argument
+returns the same whole reply and the next invariant. An adaptive client
+therefore makes the same next selection from the same replies. Finite
+prefix extensions follow the same parser transition rule. This proves
+all claimed finite continuations and actual retained callable use.
+$\square$
+
+**Proposition 70.3 (exact returned image and interface distinction).**
+Across all promised acquisitions and completed $Q_J$ continuations the
+physical returned image is exactly $\mathcal I$. For fixed acquired entry
+$t$, it is exactly $J[\operatorname{Desc}(t)]$, where
+$\operatorname{Desc}(t)$ comprises the finite legal LAB successors of $t$,
+including $t$ itself. These assertions do not extend the inverse to every
+intermediate physical cut and do not equate $Q_J$ with raw $Q_A$ on $J(v)$.
+
+Proof. Every represented success is an ordinary LAB successor of $v$;
+refusals and unsupported requests preserve it. Conversely every finite
+legal successor word is realized by the corresponding successful outer
+frames by Theorem 70.2. This gives the fixed-entry equality. Taking all
+entries includes every $J(t)$ already at acquisition return and adds no
+term outside $J[\mathcal D]$, proving the global equality.
+
+For $v=\alpha$, a successful outer promotion has the actual intermediate
+term beta after its first inner return. Bare beta is outside $\mathcal R$,
+so $K$ is undefined there. There is no outer Ready cut at that point.
+For $v=\beta$, outer $P_\varepsilon$ returns wrong type; raw
+$P_\varepsilon$ on the physical $J(v)$ returns branch. The two interfaces
+therefore have different replies on the same physical source. The
+proved correspondence concerns the adapter's outer interface and full
+return, not a client bypassing it, arbitrary interruptions or raw busy
+states. $\square$
+
+## 71. Independently meaningful views on synchronized returned cuts
+
+**Definition 71.1 (four data meanings and their exact domains).** Fix the
+actual opaque root binding, orientation, current authority and the
+source/adapter contract. At a synchronized outer Ready cut with physical
+term $u=J(v)\in\mathcal I$, define the following data using the original
+source meanings of AA §17:
+
+| View | Independently specified content |
+| --- | --- |
+| Space | Actual material address support $S_0(C(u))$, with source edges only |
+| Boundary | Actual terminal-material address antichain $B_0(C(u))$, including beta markers |
+| Time | Actual labelled successful-source causal lifecycle order $E(u)$ of AA Definition 17.1 |
+| Memory | The acquired live canonical word $v$ at the retained callable entry |
+
+Time records event membership, addresses, kinds and causal precedence.
+It does not record a chosen total serial order, refusals, communication,
+controller scheduling or macro boundaries. Space and Boundary do not
+include private record edges. Memory is an actually acquired current word;
+it is not a copy of the whole preparation or outer transcript. The common
+binding/authority context is retained actual material, not secretly part
+of the tree data or something any data conversion manufactures.
+For each view its domain below is precisely its image as $v$ ranges over
+$\mathcal D$, or the restriction to $\operatorname{Desc}(t)$ after a fixed
+entry. Arbitrary finite supports, arbitrary antichains or arbitrary
+labelled orders outside these images are not claimed to have inverses.
+
+**Theorem 71.2 (four-way recovery, route agreement and task kernel).**
+On these exact domains each view recovers the same represented term $v$
+and the actual physical term $u=J(v)$, and hence all the other three
+contents. All conversion routes agree. Their equality kernels are
+exactly equality of $v$, which is also the complete represented
+continuation kernel of $Q_J$ at the fixed binding and authority. These
+recoveries are finite procedures on given owned data. The acquisition
+installs the Memory-based callable service; it does not install three
+additional source read ports.
+
+Proof. Apply the existing AA Theorem 17.2 and Definition 17.3 to the
+actual reachable term $u$. Their original arity parser takes material
+support to $u$; prefix closure takes the terminal antichain to that
+support; event membership and the specified birth types take the actual
+causal order to $u$. These are the supplied original inverses, with
+parameter exactly $u=J(v)$, rather than new tree-inverse theorems. Apply
+$K$ to the resulting term. Lemma 68.3 gives $K(u)=v$. Memory parses its
+own canonical word to $v$ and computes $J(v)=u$. Conversely $v$ computes
+$u$, its material support and terminals, and its labelled causal order
+by the supplied finite definitions. Thus every conversion is the
+appropriate observation after recovery of this same $v$; both round
+trips hold and every composed route agrees on its actual image.
+
+Equal $v$ gives the same complete outer task by Theorem 70.2. For distinct
+$v,w$, descend through their common branch constructors to their first
+differing constructor. The address is present in both. The outer promotion
+there distinguishes alpha, beta and branch respectively by Growth,
+wrong-type refusal and branch refusal. Hence the complete tasks differ.
+The view round trips give precisely the same equality kernel.
+
+All these algorithms parse finite data, construct finite trees or event
+lists and run the given decoder. Their inputs and outputs require owned
+backing and ordinary computation. Computing a boundary or event order
+from the acquired word is a description of the actual source content;
+it is not an observation of previously unexposed serial provenance.
+Neither a correct word nor a conversion creates a reference, root
+association or grant. Those remain the common genuine attachment used
+by the real calls. $\square$
+
+**Theorem 71.3 (dynamics compatibility at the declared cuts).** For every
+complete $Q_J$ transaction between synchronized outer Ready cuts, all four
+recovered dynamics agree with the represented successor table. This also
+holds for every finite composite of such transactions. Time's physical
+update contains two successful LAB events for a represented promotion and
+one event at $pL$ for a represented split.
+
+Proof. By Theorem 70.2 the physical endpoint is the encoding of exactly
+the next represented word. Each final view is its independently specified
+observation in Definition 71.1. Recovering before or after applying that
+observation therefore gives the same next word by Theorem 71.2. For
+Time, the actual calls add $P_p,S_p$ or $S_{pL}$, with their actual
+local/creation precedences; they do not add a single fictitious event
+at the virtual address in place of those real events. Negative cases
+add no successful-source event. This verifies compatibility also for
+that view. Induction gives the finite-composite statement. Intermediate
+inner returns need not lie in the image, as Proposition 70.3 exhibits.
+Private pending words, answer buffers, allocation identities and full
+control phases are outside the claimed view inverse even at cuts where
+the physical term happens to lie in the image. $\square$
+
+## 72. Paid clearing and one advancing reaccess
+
+**Definition 72.1 (the cleared receiver experiment).** Immediately after
+Theorem 69.2, hold the actual source at $J(t)$, admit no represented
+continuation, and perform a paid clearing of the receiver's entire
+accessible entry-dependent information. This includes live/entry/current
+words, caches, reply transcripts, stack, pending input/output and proposed
+words, exported copies or callable archives available to this receiver,
+and any accessible length, layout or metadata that would disclose them.
+The receiver retains only common finite code, the opaque actual root,
+current exclusive rights, their source-independent I/O/adapter connections,
+and a fixed public stage flag selecting this second sweep. There is no
+source-correlated auxiliary provider or future input. The source itself
+is not cleared.
+
+The experiment requires actual clearing authority over these records;
+if an accessible external copy cannot be cleared, it is not an instance
+of this experiment. One realization exports no retained copy and overwrites
+its owned used records, resets list heads/counters to the common empty
+state, and leaves no accessible record of old lengths. Retained arena
+capacity, inaccessible reclaimed backing and their clearing work still
+count as actual material/work. As in Assumption 53.2, occupancy, allocator
+names, duration and resource amounts are not observation channels.
+No claim is made of erasing all past information elsewhere in the world.
+The second receiver starts without an entry-dependent word but with
+sufficient finite paid backing for its actual new execution.
+
+**Theorem 72.2 (source-resident recovery with the correct new predictor).**
+For every $t\in\mathcal D$ in the experiment of Definition 72.1, a second
+split sweep earns an owned word $w=J(t)$ and leaves the same actual source
+at $J^2(t)$. One subsequent paid application of $K$ to $w$ returns the
+original entry $t$, without using any cleared word or transcript. The
+legitimate live predictor for further ordinary $Q_J$ use is $w=J(t)$.
+When $t$ has a beta, the separately decoded $t$ cannot be used directly
+as that live word. For the degenerate entry alpha the two words coincide.
+
+Proof. Lemma 68.3 places $J(t)$ in $\mathcal D$. The new receiver has
+exactly the empty-source-dependent-record entrance required by Theorem
+69.2, now with actual entry $J(t)$ and the same genuine attachment.
+That theorem therefore earns its exact entry $w=J(t)$ and changes the
+source to $J(J(t))$. Lemma 68.3 gives $K(w)=t$ by a finite computation on
+this newly earned word. The computation has no access to cleared data.
+Injectivity of $J$ identifies the original entry in this declared image;
+the distinction survived in the source rather than in an assumed archive.
+
+At the new returned cut the invariant of Definition 69.3 is physical
+source $J(w)$ with live word $w$. Using $t$ directly in that same predictor
+would instead represent source $J(t)$. If $t$ has a beta, encoding strictly
+increases its node count, so $J(t)\ne t$ and injectivity gives
+$J^2(t)\ne J(t)$: the proposed direct use has the wrong invariant.
+For the reachable entry with no beta, namely alpha, both words coincide.
+One may instead compute $J(t)$ anew from the decoded result, paying the
+computation and backing to restore the correct live word. Keeping $w$
+while constructing a separate result $t$ uses both words concurrently;
+that retention and the decode are paid. The reference and current rights
+are never inferred from either word and remain the authentic retained
+ones. $\square$
+
+This is a one-reaccess source-transforming experiment: both sweeps split
+each beta present at their respective entry. When the original entry
+has a beta, the second sweep strictly adds source material. The reachable
+degenerate entry alpha has no beta and is fixed by $J$. The result is
+neither stationary retrieval nor source restoration. If represented
+continuation precedes the clearing, the same construction recovers that
+then-current represented word $v$ from $J(v)$; it does not identify the
+original $t$ without a separately justified version record. No arbitrary
+old-history recovery or indefinite immutable archive service is asserted.
+
+**Proposition 72.3 (precise gain over destructive normalization).**
+The source-resident distinction of Theorem 72.2 is absent from the
+normalization $\nu$ of §54 on each of its nontrivial fixed-skeleton leaf
+fibres. If all other accessible distinctions are genuinely cleared, a
+common deterministic future guard controller cannot recover every entry
+in such a fibre from the normalized source. This comparison concerns
+entry recovery after clearing, not the full resource optimality of either
+procedure.
+
+Proof. On a fixed ordered skeleton, fix all forced left-ending beta
+leaves and vary $m$ eligible root/right-ending leaf labels. These give
+$2^m$ reachable entries and the same actual normalized term: $\nu$ makes
+every leaf beta. With common attachment, authority, cleared accessible
+state and future input, the next actual guard reply is the same in all
+these worlds. The resulting source and receiver states remain equal
+modulo opaque fresh-name spelling. Induction gives the same complete
+finite future, so an exact different entry answer in every world is
+impossible. This is the fibre/pigeonhole obstruction already used in
+§§57 and 59; in particular a fixed-width accessible supplement resolving
+this fibre would require at least $m$ bits. No new general information
+lower bound is needed here.
+
+In contrast $J$ is injective on this fibre and Theorem 72.2 supplies an
+actual guard-only second acquisition and decoder. Merely deleting the
+second of two private words from the normalization procedure would not
+supply this property: an uncleared entry word already computes its
+normalized endpoint, whereas the stated comparison clears that word as
+well. Neither procedure's distinct endpoint or continuation interface
+can be substituted into a fixed-endpoint/original-interface optimum.
+$\square$
+
+## 73. One-run material, traffic, work and retention account
+
+**Definition 73.1 (coordinates and charging convention).** For the actual
+entry $t$ write $a,b$ for its alpha and beta leaf counts, $L=a+b$ for its
+leaf count, $n=2L-1$ for its number of logical nodes, and $h$ for its
+logical height. Put
+
+$$
+D=\sum_{p\in\mathcal L(t)}|p|,\qquad
+D_\beta=\sum_{p\text{ a beta leaf of }t}|p|,
+\qquad N=n+b.
+$$
+
+Here $\mathcal L(t)$ includes all logical positions; $N$ is the initial
+material vertex count, including beta markers. Count request and reply
+payload bits in Definition 53.3's fixed framing. Count End,
+acknowledgement, return and cleanup separately; payload lengths alone
+are not the communication protocol. Source structural assignments use
+AA §22's original three-reference-field representation: four assignments
+per promotion and eight per split, besides actual cursor, allocation,
+grant, observer and communication operations. Every literal reference
+or numerical operand pays its actual representation width.
+
+Old preparation is part of this same source's cost. Its legal successful
+event word has $b$ promotions and $L-1$ splits, hence
+$3+4b+8(L-1)$ source structural assignments including root initialization.
+If $e=b+L-1$ and $H$ is that word's sum of event-address depths, its
+addressed request/reply payloads are $2H+4e$ and $2H+5e$, with $e$ full
+completion cycles. Any additional producer activity is additional actual
+cost. The old word is not supplied as an observer input. Root allocation,
+producer control, actual references/grants, attachment, old I/O/backing
+and any genuinely retained old records remain charged.
+
+**Theorem 73.2 (first sweep and retained live word).** The first sweep
+makes exactly $n$ split calls, of which $b$ succeed. It makes no promotion
+call, adds $2b$ material vertices, and ends with $N+2b$ source vertices.
+Its addressed payloads are
+
+$$
+I_1=2D+4n,\qquad O_1=5n+2D_\beta.
+$$
+
+There are $n$ full End/acknowledgement/return cycles, $D$ source-navigation
+descents and $D$ ascents when each call returns along the parent chain,
+and $8b$ source structural assignments. Its live word has $2n$ constructor
+content bits. These statements hold simultaneously on the run of Theorem
+69.2 and do not include the additional backing listed below.
+
+Proof. Theorem 69.2 visits each entry logical position exactly once,
+with success exactly at its beta leaves. Each success adds two vertices.
+Every request at depth $d$ has $2d+4$ bits. A success reply has $2d+5$
+bits and every refusal has five. Summing separately over all positions
+and successful leaves gives the two payload formulas and completion
+count. Each navigation uses its entry depth, giving $D$ in each direction.
+The original split template gives $8b$ assignments. Two bits per visited
+constructor give $2n$. No read-free synthesis or preliminary traversal
+has been added to these counts. $\square$
+
+An attained observer implementation uses a linked mutable address, backed
+ancestor flags and a tail-appended constructor word. Scheduling appends
+and deletes each entry-tree edge once and changes $O(n)$ flags. Formatting
+addresses, consuming replies and constructing the output use
+$O(n+D)$ symbol operations in addition to source navigation. The address
+and flags have $O(h+1)$ symbols at peak; their links, literal references,
+end pointers, counters, parser and latch backing are additional material.
+Every received/transmitted bit, sealed reply, pending frame and actual
+copy is backed as used. The root, dispatcher, adapter code, source and
+work ownership/grant records are retained for their whole actual lifetime.
+A two-bit constructor payload is not a total memory bound.
+
+**Theorem 73.3 (finite continued-use account).** Suppose a completed
+continuation contains $r$ addressed outer frames and $z$ unsupported
+frames, with $k_P,k_S$ successful represented promotions/splits. Let
+$J_{\rm all}$ be the sum of depths of all its addressed frames, and
+$J_P,J_S$ the depth sums over its successful represented promotions/splits.
+On this continuation the outer payloads are
+
+$$
+I_{\rm out}=2J_{\rm all}+4r+3z,\qquad
+O_{\rm out}=5r+2(J_P+J_S)+3z.
+$$
+
+The real inner payloads and source changes are
+
+$$
+\begin{aligned}
+I_{\rm in}&=4J_P+8k_P+2J_S+6k_S,\\
+O_{\rm in}&=4J_P+10k_P+2J_S+7k_S,\\
+\text{inner completion cycles}&=2k_P+k_S,\\
+\text{added source vertices}&=3k_P+2k_S,\\
+\text{source structural assignments}&=12k_P+8k_S.
+\end{aligned}
+$$
+
+There are additionally $r+z$ outer completion cycles. At its final Ready
+cut the represented leaf count is $L+k_S$, its beta count is $b+k_P$,
+the source has $N+2b+3k_P+2k_S$ vertices, and its live word contains
+$4(L+k_S)-2$ bits.
+
+Proof. At represented depth $d$, a promotion uses two real calls at depth
+$d$. Their total request/reply payload is $8d+18$, split as $4d+8$ input
+and $4d+10$ output. They add one plus two vertices and four plus eight
+structural assignments. A represented split uses one real call at depth
+$d+1$, with $2d+6$ input and $2d+7$ output bits, two vertices and eight
+assignments. Source-navigation descents and ascents for these two cases
+are respectively $2d$ and $d+1$ in each direction. Outer successes have
+request/reply total $4d+9$ in addition to that inner traffic. Outer
+refusals have $2d+4$ input and five output bits and no inner call;
+unsupported frames have three plus three. Summing proves every traffic
+and work coordinate. A represented promotion raises beta count by one
+and preserves leaf count; a represented split raises leaf count by one
+and preserves beta count. The full-binary node formula then gives the
+live-word count and, using the real vertex additions, the material count.
+$\square$
+
+For an explicit finite local implementation, parse each received frame
+and scan the valid current preorder word to locate its logical target.
+A stack of pending subtree slots permits skipping a nonselected subtree.
+For a current $n_i$-node word and depth $d_i$, at most $O(n_i+d_i+1)$
+constructor/address decisions suffice. On a success, copy to proposed
+word backing while replacing the selected leaf symbol; this uses
+$O(n_i+1)$ symbol writes. Retain old and proposed words until the real
+macro completes; their constructor payloads are $2n_i+2n_{i+1}$ bits,
+not their maximum alone. All stack/counter operations, their growing
+widths, references, frame copies, reservations and sealed answers are
+paid too. These are constructive operation counts for this layout, not
+a unit-cost bound for arbitrary-width references or a polynomial bound
+in the size of a succinct source description. Proper pending prefixes
+pay their received bits and work even before a completion cycle exists.
+Any retained outer transcript, old entry archive or exported view adds
+its own actual material, construction, transmission and later use.
+
+**Theorem 73.4 (clearing, second sweep and decode on the same specimen).**
+In Definition 72.1's no-intervening-continuation experiment the second
+sweep starts with
+
+$$
+n'=n+2b,\qquad
+D'=D+2D_\beta+2b,\qquad D'_\beta=D_\beta+b
+$$
+
+logical-node and depth coordinates. It makes $n'$ split calls, exactly
+$b$ successful, and adds $2b$ more material vertices. Its payloads are
+$2D'+4n'$ input and $5n'+2D'_\beta$ output, with $n'$ complete cycles,
+$D'$ descents and $D'$ ascents, and $8b$ source assignments. The physical
+source finally has $N+4b$ vertices. The newly acquired word $J(t)$ has
+$2n'$ content bits; keeping it while decoding a separate $t$ requires an
+additional $2n$ output content bits, besides work and backing.
+
+Proof. Each original beta at depth $d$ becomes one branch at depth $d$
+and two leaves at depth $d+1$, with exactly one beta. Relative to the
+original logical positions this adds two nodes, $2d+2$ to total depth,
+and one to beta-depth sum. Summing gives the three coordinates. Apply
+Theorem 73.2 to the actual second entry $J(t)$; its beta count is still
+$b$ and its material size is $N+2b$. This proves all source/traffic
+formulas on the actual successive run, rather than combining optima
+from separate realizations.
+
+The decoder can read its valid input preorder word once, using a backed
+structural stack. Alpha emits alpha; a branch with immediate left beta
+is the sentinel and consumes that beta and its right alpha, emitting
+beta; any other branch emits branch and parses its children. The valid
+range grammar proves these cases exhaustive and unambiguous. It uses
+$O(n')$ constructor decisions and $2n$ output-content writes, in addition
+to its actual stack, pointers, counters and operand widths. This is an
+arithmetic/symbol operation account, not a total bit-complexity theorem.
+$\square$
+
+The clearing itself scans/overwrites or releases every accessible
+entry-dependent occupied record specified in Definition 72.1, clears
+its accessible metadata and pays every actual such operation. A receiver
+that retained extra transcripts or exports pays to clear them too.
+There is no negative material charge for inaccessible retained capacity.
+At every cut total material counts the actual source's three reference
+fields per vertex, every still allocated record/cell at its real width,
+all code, cursor and allocator descriptors, actual root and grants,
+I/O and pending latches, old/new/proposed/result copies and retained
+backing simultaneously. Total work is the sum of their actual allocations,
+field assignments, symbol/operand operations, communication, navigation,
+clearing and retained-use operations, including old preparation. No
+unspecified auxiliary source field is assumed; if a realization supplies
+extra slots, their allocation and initialization are additional charges.
+Finite conversion/export of §71's views also pays for every constructed
+material address, terminal and labelled event/precedence record. These
+charges prevent the payload formulas from being read as total-resource,
+peak-memory, latency, energy or lifetime optima.
+
+**Proposition 73.5 (a selected source-growth comparison only).** Let
+$c_0=\beta$ and $c_{j+1}=\langle c_j,\alpha\rangle$. On entry $c_j$ the
+split sweep adds two source vertices, while §54's normalization adds
+$j$. Thus the former has a strictly smaller added-source coordinate for
+$j>2$. This comparison does not give total or minimax dominance.
+
+Proof. Induction gives $a=j,b=1$ on this reachable comb. Apply Theorem
+73.2 and Theorem 54.2. The endpoints are $J(c_j)$ and $\nu(c_j)$, and
+their continued tasks differ as specified above. Conversely, on the
+reachable all-beta skeleton with $L$ leaves, normalization adds zero
+vertices while this sweep adds $2L$. Real represented promotions also
+need two inner calls. These same-run coordinates rule out a universal
+source-growth comparison in the opposite direction and supply no total
+ranking. The weighted randomized acquisition optimum of §§61–67 and
+fixed-normalization bounds retain their own tasks, prices and endpoints.
+$\square$
+
+## 74. Supplier correspondence and applicability of recoverable acquisition
+
+**Definition 74.1 (mathematical attribution).** The source-relative
+`repo-derived` contribution is the conjunction of the actual split
+sweep, its injective advanced source, the paid represented service at
+that earned entrance, and the cleared one-reaccess experiment, with
+§73's simultaneous account. Ordered syntax, generic encoding, traversal,
+original source inverses, randomized minimax and information counting
+are supplied mathematics rather than new abstract principles.
+
+| Mathematical supplier | Exact application and boundary |
+| --- | --- |
+| [AA §§17,20–23](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), AAII §§53–59 | Reachable birth typing, actual marker versus logical child, source causal/support/boundary inverses, complete guard lifecycle and structural assignments are used at the actual term $J(v)$. Normalization and its archived-entry service do not establish entry recovery after that archive is cleared. |
+| AAII §§61–67, especially Theorems 62.3 and 66.2 | The public randomized acquisition already supplies entry-node traversal with complete guard replies, earned current use and application of the original inverse. Its GLOBAL/LOCAL mode-zero rule leaves forced $L$-ending betas unchanged; $J$ splits every entry beta, including those. No randomized weighted minimax or original-$Q_A$ inverse is reauthored here. |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs); [NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | The former's private traversal, read-count and stationarity proofs use a nondestructive Native read unavailable here. The latter's private tree-view/child/walk helpers and `term_at_prim`, `readout_prim` act on supplied codes. These supply finite scheduling/navigation patterns, not this guard acquisition or new authority. |
+| [SourceTreeEncoding](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean), [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs) | Tagged finite-tree encodings and the existing substitution injection supply static syntax techniques. Their given-code maps and the substitution $\rho(\alpha)=\beta$ do not execute the present $J(\alpha)=\alpha$ acquisition or its real macros. Lemma 68.3 proves only the syntax obligations needed for this different actual construction. |
+| Pinned mathlib [Algebra/Free.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean) | `FreeMagma.of`, `mul`, `liftAux` and `lift` supply the ordered binary syntax and structural fold. They supply no observation of an unknown source, binding, rights or recovery after an actual edit. |
+| Bennett, [*Logical Reversibility of Computation*, IBM Journal of Research and Development 17, 525–532](https://doi.org/10.1147/rd.176.0525), [primary text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html) | The classical distinction between information retention, history records and their clearing is background. Its reversible-machine construction is not invoked as a reversible LAB operation, free erasure, thermodynamic bound or source-restoration theorem. The present LAB edits remain irreversible and all clearing is paid. |
+| [Native leaf-boundary acquisition II §§24–29](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md) | Public binary-mask/integer-age binding acquisition uses a complete raw roster, field Reset/Add/Read and fresh-zero inheritance. Its unknown raw maps and full field continuation are stronger and different inputs/outputs; they supply neither these guard-only macros nor a new raw binding here. |
+| [Unknown-field startup §§27–33](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md) | The public signed source-provenance producer constructs its rational path/Jacobi observation law under its stated positivity and authentication hypotheses. No map realizing that source by LAB guards is supplied or inferred. |
+
+**Definition 74.2 (distinct source domains).** The conditional all-mode
+spectral count in [Native attractive boundary response §18](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+the maximal zero-mode source-germ theorem in [Atomic boundary continuation
+appendix §108](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md),
+and the outside-band private-randomized clock bounds in [Quadratic clock
+§8](FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md) concern,
+respectively, a continuum boundary-response operator, critical differential
+zero modes, and complete exact-real report worlds. Their hypotheses and
+observations do not install addressed LAB guards, the encoding $J$ or
+its macro service. The present supplier-relative attribution is not a worldwide
+originality claim.
+
+The chosen construction adds no source generator. A split alone suffices
+for its acquisition. Its full represented continuation uses both original
+generators: from the physical alpha entry a controller using only splits
+cannot reach the required promotion endpoint $J(\beta)$, since every
+split refuses; from a physical beta entry promotions alone cannot create
+its required encoded branch. These facts justify the generator uses in
+this construction, without proving a universal minimal alphabet. One
+live word, actual bindings and a finite backed controller suffice at
+Ready; old/proposed words and protocol state coexist during transactions.
+The canonical two-bit word is an explicit sufficient layout, not a
+minimal information code or a lower bound on total retained material.
+
+The four-view conclusion is conditional on original-root oriented LAB
+birth typing and exact returned-image membership, authentic retained
+access, complete serialization and sufficient actual finite backing.
+It concerns causal source time rather than total physical history, and
+current live Memory rather than the full private process state. Data
+recovery cannot certify the attachment premises or create missing rights.
+The paid clearing experiment requires its stated inaccessible-side-channel
+and clearing-authority conditions. Concurrent raw clients, crash recovery,
+noise, revocation, observable exhaustion and arbitrary busy cuts are
+outside this installation.
+
+No stationary entry retrieval, raw-original-interface equivalence,
+arbitrary erased-history recovery, fixed-endpoint optimum, total resource
+dominance, native LAB-to-rational-path or quantum realization, or universal
+minimal generator theorem follows. Existing fixed-$G_{\rm gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, terminal and
+final-no-Ready statements retain their original scopes. A common actual
+realization joining the distinct LAB, path/field and quantum models, with
+the full programme's observations and resource obligations, remains a
+separate missing bridge. The scoped actual acquisition and represented
+continued use proved here do not assert that broader completion.
+
+## 追加锚（本行以下为增补区）
+
+## 75. A root-bound global history supplement from known initialization
+
+**Definition 75.1 (source, service and conditional coordinates).** Fix
+exactly one owned LAB installation of AA Assumption 20.1: an actually
+allocated known $\alpha$ root, current exclusive source and auxiliary
+rights, genuine reference-returning allocation, the supplied local
+acknowledgement, and sufficient actual finite backing for every operation
+asserted to complete. Source changes are only AA (AA.65). There is no
+other writer, deletion, reset, crash, interrupt, revocation, exposed
+allocation order or observable capacity/exhaustion branch. The driver is
+one fixed finite source-independent program, installed before its finite
+request schedule is supplied. This section uses the complete original
+seven-request $Q_g$ of AA Definitions 20.2, 20.4 and 21.1, without changing
+its initialization or replacing its history by a represented task.
+
+Write $w$ for the actual successful addressed $P/S$ word from that alpha,
+and $t$ for its current term. Put $N=|w|=e_\alpha(t)$. Here and below
+$F,h,B,G$ have exactly Definition 60.1's meaning; in particular $G$ is
+history width, not a growth count from another section. Order the current
+logical branch addresses $v_1,\ldots,v_m$ by preorder, left before right.
+At $v_i$ let $W_i$ be the projection of actual events strictly below it
+onto their first side, and use the supplied coordinates
+
+$$
+x_i=e_\beta(t_{v_iL}),\qquad y_i=e_\alpha(t_{v_iR}),\qquad
+R_i=\binom{x_i+y_i}{x_i},\qquad
+r_i=\sum_{j=1}^{x_i}\binom{a_j-1}{j},
+$$
+
+where $a_1<\cdots<a_{x_i}$ are the left positions in $W_i$. Thus
+$0\le r_i<R_i$. Empty products are one. Define the global number
+
+$$
+Z(t,w)=\sum_{i=1}^{m}r_i\prod_{j<i}R_j,\qquad
+F(t)=\prod_{i=1}^{m}R_i,\qquad G(t)=\lceil\log_2F(t)\rceil.
+\tag{AAII.35}
+$$
+
+The first digit is least significant. Branches of radix one remain in
+the traversal, with digit zero. AA Theorem 19.2 supplies the product
+bijection between histories and local shuffles. Theorem 47.3 supplies
+these colex digits and their append law. Mixed-radix packing itself is
+standard finite enumerative coding; none of those static results is a
+new claim here.
+
+**Definition 75.2 (actual global layout at Ready).** Each source vertex
+retains its parent, left, right and auxiliary-reference fields. If $F=1$,
+all auxiliary fields are null and no persistent history header or cell
+exists. If $F>1$, the actual root's auxiliary field binds one owned
+header, with head and tail references, and exactly $G$ owned linked
+cells. Each cell has one bit and one next-reference field. Its contents,
+from head to tail, are the big-endian length-$G$ binary expansion of
+$Z$, padded with zeros; the final next field is null. All other source
+auxiliary fields, including marker fields, are null. No local rank
+headers, persistent count/radix arrays, literal tapes or second packed
+history bank are retained.
+
+The actual reference links, header and cells are initialized objects,
+not a number interpreted as an object address. This rooted layout is
+unique as content and binding shape up to fresh-name spelling; its
+occupancy and length depend on $t$, not on which $w\in\mathcal H(t)$
+occurred. The alphabet restrictions of Definition 60.1 exclude a second
+history channel in object names, capacity, allocator state or fixed
+control. Cleared work capacity can be retained, but is actual charged
+material and is not an additional semantic observation of $Q_g$.
+The valid record domain requires $0\le Z<F$. Corruption, an invalid
+binary pattern or a broken binding is not an additional original refusal
+case; the service theorem is conditional on its maintained actual image.
+
+Ready means root cursor, empty acquired request, pending result, output
+and occupied work contents, no outstanding reservation or maintenance,
+and current source/record/input/output rights. Allocated cleared work
+capacity need not vanish. Busy phases, their live integers and references
+are part of the actual process; Ready does not abbreviate an unfinished
+transaction. The root binding is preserved by both source templates.
+
+**Lemma 75.3 (static interpretation used by this layout).** For fixed
+$t$, successive Euclidean divisions by $R_1,\ldots,R_m$ recover the
+unique digits of (AAII.35) from any $0\le Z<F$. At the end the quotient
+is zero. Consequently the valid global contents at $t$ have exactly
+$F(t)$ values and recover its complete $w$.
+
+Proof. If $Z=r_1+R_1q$, with $0\le r_1<R_1$, Euclidean division gives
+that digit and quotient. Apply the same identity to the remaining
+product. A radix one gives remainder zero and leaves the quotient
+unchanged. After the last factor the bound $Z<F$ forces quotient zero.
+Conversely the displayed sum gives a value in $[0,F)$ for every tuple.
+Apply the supplied colex inverse and AA Theorem 19.2 to that tuple.
+This is the mixed-radix interpretation, not yet a claim that an edited
+source has a correctly maintained record. $\square$
+
+## 76. Paid reservation and a changing-radix transaction
+
+**Lemma 76.1 (which coordinates change).** Let $e$ be an enabled actual
+$P_p$ or $S_p$ at a current logical leaf $p$. For an old branch $v$:
+if $v$ is a proper ancestor of $p$, exactly one of its child event counts
+increases by one, on the side containing $p$; every other old branch's
+counts are unchanged. A split creates just the new branch $p$, whose
+two child counts are zero, so its radix is one. Old branches retain
+their relative preorder. Writing $+$ for the predicted endpoint,
+
+$$
+R_v^+\ge R_v,\qquad F^+\ge F,\qquad G^+\ge G,\qquad N^+=N+1.
+\tag{AAII.36}
+$$
+
+The new digits at old branches are exactly
+
+$$
+r_v^+=
+\begin{cases}
+r_v+\binom{x_v+y_v}{x_v+1},&p\text{ has prefix }vL,\\
+r_v,&p\text{ has prefix }vR\text{ or outside }v.
+\end{cases}
+\tag{AAII.37}
+$$
+
+A prefix $vL$ includes $p=vL$, and similarly for $vR$.
+
+Proof. Projection onto a proper ancestor's first side appends exactly
+that side. An event outside its subtree contributes nothing. There is
+no old branch at the edited leaf. The split's new children are just-born
+beta and alpha, with no child event yet. Old branch objects and their
+ordering survive. The source count identity (AA.73) makes these the
+actual count changes, and Theorem 47.3 gives (AAII.37), including forced
+coordinates. Pascal's identity gives the binomial inequalities, hence
+the product and width inequalities. One actual event is appended to $w$.
+$\square$
+
+**Definition 76.2 (preflight with actual backing).** After a complete
+enabled growth request, retain the actual target reference, its acquired
+address and kind, the root binding and a pending phase. Before changing
+any source field, do the following finite preflight on the present source.
+
+Traverse its logical branches by parent links. At each, count both child
+subtrees by Definition 48.1, and determine whether it is a proper ancestor
+of $p$ by a walk up the target's actual parent chain. Compare child
+references to determine the affected side. Compute both the old radix
+and the predicted new radix by (AAII.36), and multiply into separate
+products $F,F^+$. A prospective split contributes only the unit factor.
+The same actual source counting gives $N$ and the widths $G,G^+$.
+Retain both widths, $N^+$ and whether the old header exists in backed
+pending fields through the edit and replacement. No predicted endpoint
+is supplied as an oracle and no array of ancestral coordinates is
+required. Repeated traversals and arithmetic are paid.
+
+While the source is still unchanged, acquire and initialize the actual
+one new vertex for $P$, or two for $S$, and exactly $G^+-G$ new history
+cells. Acquire a header if and only if $F=1<F^+$. Reserved cells have
+real links and are retained by pending head/tail references, even before
+they join the root-bound list. Obtain finite backed arithmetic, traversal,
+request, answer and continuation storage sufficient for this transaction.
+The outer Growth answer needs $2|p|+5$ backed bits; for Next the already
+acquired old address and selected new address determine its exact
+$2(|p_{\rm old}|+|p_{\rm new}|)+7$ answer bits before editing. Reserve
+those bits and their Print/return cursors as well; retaining the old
+pair and constructing this output are separate paid actions.
+Preflight may itself extend its backed work arena as needed before its
+result is known. It releases no occupied input latch or work value before
+its backing exists. Its finite-allocation premise is Definition 75.1,
+not a claim that a reservation succeeds on an arbitrary fixed-capacity
+device.
+
+A sufficient numerical workspace can be selected from the acquired
+$N^+,G^+$: a fixed number of binary buffers of length at most a fixed
+constant times $G^++N^++1$, with their real links/descriptors, suffices
+for the scalar routines below. Acquired request and output words, their
+cursors and reference widths are additional. Section 80 gives the bound
+and the live coexistence account. Resource acquisition, initialization,
+linking, grant retention and later clearing all have their primitive
+charges. No source edit is enabled until the pending reservation is
+fully backed.
+
+**Definition 76.3 (source edit and replacement computation).** Return
+to the retained actual target along source links, paying this navigation,
+and execute exactly the original material source template, leaving the
+old global list and its bits intact. For $P$, attach the fresh terminal left marker.
+For $S$, reuse the old marker as the new left logical beta root, attach
+its fresh left marker and the fresh right alpha root, and initialize
+all new auxiliary slots null. The existing root-bound header, if any,
+is preserved, even when the target is the root. This is the actual source
+change, with the original structural assignments; it is not an edit of
+a decoded substitute.
+
+Copy the old list's $G$ bits to a backed integer $Q$; if $F=1$ set $Q=0$
+without reading a nonexistent list. Initialize backed $A=0,T=1$.
+Traverse the new source's branches in preorder. If $S$ created $p$, skip
+that branch's unit coordinate. At each old branch $v$, count its actual
+new child events. If it is a proper ancestor of the retained target,
+subtract one in the affected side to recover $x_v,y_v$; otherwise these
+counts already are the old ones. Compute $R_v$ from those old counts,
+and $R_v^+$ from the actual new counts. Perform
+
+$$
+r=Q\bmod R_v,\qquad Q\leftarrow\lfloor Q/R_v\rfloor,
+\qquad r^+\text{ by (AAII.37)},
+$$
+
+$$
+A\leftarrow A+r^+T,\qquad T\leftarrow TR_v^+.
+\tag{AAII.38}
+$$
+
+The multiplication in the first assignment uses the old $T$. Preserve
+operands in backed scratch until their uses finish. All arithmetic is
+ordinary finite binary-string arithmetic, with division and coefficients
+computed as in Definition 48.1; a radix one is a legal divisor.
+
+After this pass, extend the old list by its reserved $G^+-G$ cells and
+write exactly the $G^+$ bits of $A$, with leading zero padding. If a
+first header is reserved, initialize and bind it to the root. If $F^+=1$,
+there is no header or bit write. Keep $A$ and the pending list references
+backed throughout the extension and rewrite. Maintain explicit cursors
+for which fields and bits remain. Once the new header/list is completely
+linked and written, release the reservation status; none of its allocated
+history cells is abandoned or retained as a second persistent version.
+Pass the actual new event/address to the retained outer continuation,
+without an intermediate Ready or output. An addressed $P/S$ continuation
+seals Growth; a Next continuation seals both its retained old pair and
+this actual new pair as in Definition 77.5. That one outer continuation
+Prints all of its specified reply and End, takes the supplied local
+acknowledgement, Returns to the root, and clears occupied request,
+numerical, traversal, reservation and output contents before Ready.
+
+**Theorem 76.4 (correct installed replacement).** For every valid Ready
+state of Definition 75.2 and every enabled finite growth command under
+its completion premises, Definitions 76.2–76.3 terminate, append exactly
+the commanded actual event to $w$, and restore Definition 75.2 at the
+actual successor $t^+$. All old recall answers persist and the new last
+event is represented. No old record is discarded before sufficient
+replacement data and all additional history backing exist.
+
+Proof. Finite subtree traversals, finite parent chains and the exact
+finite arithmetic of Definition 48.1 make preflight finite. Lemma 76.1
+computes the actual endpoint sizes from current data. Reservations precede
+the edit and include all added source and record material. After the
+edit, every old branch is still identifiable by its object and relative
+preorder; only the possible new branch at the retained target is skipped.
+The subtraction prescribed in Definition 76.3 therefore recovers exactly
+the old counts, without reading a destroyed source copy.
+
+Index the old branches $1,\ldots,m$. Immediately before iteration $i$,
+the invariant is
+
+$$
+\begin{aligned}
+Q&=\sum_{j=i}^{m}r_j\prod_{i\le\ell<j}R_\ell,\\
+T&=\prod_{j<i}R_j^+,\qquad
+A=\sum_{j<i}r_j^+\prod_{\ell<j}R_\ell^+,\qquad 0\le A<T.
+\end{aligned}
+\tag{AAII.39}
+$$
+
+It holds initially by (AAII.35). Euclidean division recovers $r_i$ and
+the remaining suffix. Lemma 76.1 gives the actual appended local digit
+$r_i^+$, and $0\le r_i^+<R_i^+$. The two assignments in (AAII.38)
+extend the prefix and its product, preserving the invariant and its
+bound. At termination $Q=0$, $T=F^+$ and $A=Z(t^+,we)$. A skipped unit
+digit changes neither sum nor product. This includes the empty old
+branch list and the transition from $F=1$ to $F^+>1$.
+
+The old bits remain available until $A$ is computed; during rewriting
+$A$ remains available even when the old bits no longer do. Monotonicity
+of $G$ makes reuse plus the reserved increment exactly long enough.
+The completed list consequently has exactly the new canonical bits,
+head/tail and null termination. All source auxiliary slots other than
+the root remain null, including the old marker reused by a split.
+There are no unconsumed reservations. Finite reply construction, Print,
+End, local acknowledgement, root return and clearing restore all the
+Ready conditions. Lemma 75.3 now decodes $we$, so every earlier index
+and the new last index are correct. $\square$
+
+A radix change reweights subsequent digits in (AAII.35). Merely adding
+the local colex increment to the old global number is not (AAII.38).
+The transaction proves the full reweighting identity. It permits real
+busy states with new source and old code, and with partially rewritten
+bits and backed replacement integer. It supplies neither crash atomicity
+nor an inverse for arbitrary interrupted cuts.
+
+## 77. Finite paid consumers of the global record
+
+**Definition 77.1 (a source-bound digit extraction).** At a valid Ready
+record, to obtain the digit of an actual current branch $v$, copy its
+root-bound $G$ bits into backed $Q$. Scan actual logical branches in
+preorder from the actual source root. At each branch compute its radix
+by the two child counts of Definition 48.1, replace $Q$ by its quotient
+on division by that radix, and retain the remainder if this is $v$.
+Stop there. A known forced coordinate can instead return zero without
+reading a record. For $F=1$, all coordinates are forced and no record
+exists. Retain navigation/return references while scanning; no global
+array of digits is created. The repeated scans, comparisons, bit reads,
+coefficient arithmetic and division buffers are all charged.
+
+**Lemma 77.2 (digit extraction is finite and faithful).** Definition
+77.1 returns $r_v$ of the actual $w$ with finite acquired work and no
+source or persistent-record change.
+
+Proof. The finite preorder reaches $v$, the retained actual branch
+reference. Lemma 75.3 identifies each remainder, including those at unit
+radices. Counting uses actual source edges, not encoded future data.
+Finite widths and nonzero finite divisors give finite binary arithmetic.
+The copy, not the live list, is divided. $\square$
+
+**Definition 77.3 (FetchGrowth with the original address result).**
+Receive the original unary $U(k)$ into actual backing. Count the current
+$N=e_\alpha(t)$ on the actual source. Compare the acquired unary marks
+against $N$ using a counter saturated at $N+1$. If $k=0$ or $k>N$, return
+OutOfRange. The whole supplied finite input is still acquired and paid;
+saturation avoids constructing an unnecessarily large binary index.
+For $1\le k\le N$, construct that bounded binary index from its acquired
+marks and use the original recursive event selection as follows.
+
+At a subtree root with known birth type, its forced local event prefix
+is empty for an unchanged birth leaf, $P$ for a born-alpha current beta,
+$PS$ for a born-alpha current branch, and $S$ for a born-beta current
+branch. A selection in this prefix returns its actual kind and the
+accumulated literal address. Otherwise subtract the prefix length.
+At a branch, compute $x,y$ on its actual child subtrees and obtain its
+rank by Definition 77.1, except at a forced coordinate. Apply Definition
+48.2's supplied colex peeling to the remaining index: starting from
+$(i,h,z)=(x+y,x,r)$, compare with $\binom{i-1}h$ to peel a last right
+symbol, or a last left symbol while reducing $h,z$, until the requested
+position is reached. Return that side and its within-side occurrence
+number, descend its actual child, and append the side to the acquired
+address. Repeat there. Unary material markers are never logical children.
+Seal the Recall reply with that event kind and full address, then Print,
+End, local acknowledgement, root Return and occupied-work cleanup.
+
+**Theorem 77.4 (paid actual FetchGrowth).** At every valid returned
+state, every finite complete FetchGrowth request returns exactly AA
+Theorem 19.2's indexed event or OutOfRange, on the same root with the
+original framing, and returns to Ready. It reads only acquired input,
+current source and the actual bound global record.
+
+Proof. Counting supplies the actual number of events. The finite unary
+comparison gives the exact original range decision; it does not assume
+that a binary value of arbitrary input length is free. For an in-range
+index, the forced prefix is the source's actual local event list from
+AA Theorem 17.2. If not selected there, the index lies in the branch's
+shuffle of its two actual child histories. Lemma 77.2 supplies precisely
+the local rank required by the existing decoder of Definition 48.2 and
+Theorem 48.3. That decoder returns the side and the positive within-side
+index; its loop decreases $i$. The actual descent enters a strictly
+smaller logical subtree, so only finitely many such calls occur. A
+selected forced event has exactly the accumulated full address, not a
+rank in place of an address. This is AA's history inverse with its record
+access replaced by the faithful finite digit extraction.
+
+All source scans use the retained genuine root and actual parent/child
+links. Work values and the eventual finite reply are backed, with their
+reads, writes and clearing paid. The original Print/End/local-ACK/Return
+sequence therefore yields the required Ready state. No erased archive,
+future source, abstract rank oracle or unbound converter is used.
+$\square$
+
+**Definition 77.5 (Next as an actual continued consumer).** Receive
+$U(k)$ and call the indexed-selection part of Definition 77.3 internally,
+stopping before its outer Recall sealing, Print, acknowledgement or
+Return. Retain its acquired result and the Next continuation.
+OutOfRange seals the original OutOfRange reply and leaves source and
+record unchanged. Otherwise retain the acquired old event $(a,p)$,
+navigate from the actual root to the historical logical address $p$,
+and follow actual logical left children until a current leaf $q$.
+Select $P_q$ for alpha and $S_q$ for beta. Perform the reservation, source-edit and maintenance phases of
+Definitions 76.2–76.3 for that enabled event, with Next as their retained
+outer continuation, retaining $(a,p)$ and the new $(a^+,q)$. That
+continuation uses those two pairs to seal the original Next reply. There is one outer
+Print, End, local acknowledgement, root Return and cleanup. Internal
+Fetch does not create a second external reply or acknowledgement.
+
+**Theorem 77.6 (finite actual continuation with full result).** An
+in-range Next on a valid returned state performs exactly one genuine
+enabled source growth, returns both the actual recalled event/address
+and the actual new event/address, preserves all previous history entries
+and makes its appended event callable at the following Ready. An
+out-of-range Next returns without growth.
+
+Proof. Theorem 77.4 acquires the old result on this source and record.
+Historical logical positions persist under both source edits, so $p$
+is present now. A finite left descent reaches a leaf, where exactly one
+of the original $P/S$ source changes is enabled. The current exclusive
+rights and preflight backing give its actual execution; Theorem 76.4
+maintains precisely the appended word. The retained old pair is not
+replaced by a recomputation at its new index. Output contains that pair
+and the actually selected new pair. Finite sealing, printing, End,
+local acknowledgement, return and clearing finish the continuation.
+OutOfRange follows the same outer lifecycle without a reservation or
+edit. This proves the original continuation, not a computation on a
+newly synthesized source. $\square$
+
+## 78. The complete unchanged request service and its returned invariant
+
+**Definition 78.1 (full ingress, replies and phases).** Keep AA Definition
+20.2's seven disjoint three-bit request tags. Tag, $P$, $S$,
+HasPromotion and HasSplit take exactly $A(p)=1^{|p|}0p$; FetchGrowth and
+Next take exactly $U(k)=1^k0$. The remaining tag returns BadFrame. The
+reply alphabet is exactly its eight three-bit tags and payloads. At a
+present address, HasPromotion is true exactly when it was born alpha
+and its current subtree is not alpha; HasSplit is true exactly at a
+branch. Both are false absent. Growth refusal reasons are exactly
+absent, branch and wrong type. Missing rights or a wrong phase disables
+the primitive, rather than supplying an extra refusal answer.
+
+The phase graph is Receive, Navigate/Guard, Reserve when needed, actual
+edit, global Maintain, BuildAnswer/seal, Print, End, local ACK, Return,
+cleanup, Ready. Receive copies each occupied input-latch bit to actual
+request backing before releasing it, and retains its tag, length/index
+marks and parser subphase. A proper incomplete frame waits with exactly
+its acquired prefix and pending parser state; it produces no premature
+reply. Queries cannot enter while a transaction or output is pending.
+For a query no edit/maintenance phase is needed; for an internally
+continued Next the retained continuation connects Fetch to Reserve and
+the actual source operation. Complete output, return and cleanup are
+conditions of the declared returned cut, not optional postprocessing.
+
+**Theorem 78.2 (initialized full-service installation).** Under Definition
+75.1's premises, initialize the actual alpha root with all auxiliary
+slots null and an empty request/work state. There is a single installed
+driver realizing Definition 75.2 and the following assertion for every
+finite adaptive sequence of complete original requests with sufficient
+finite backing and supplied finite input/output progress: each request
+has its exact original full reply, local acknowledgement, root return
+and semantic successor; every following Ready satisfies the actual-word
+global-record invariant (AAII.35). A proper finite request prefix has
+its actual acquired pending state and resumes to this conclusion if a
+finite completion is supplied. Every finite legal LAB growth word is
+admitted by this same installation.
+
+Proof. At known alpha, $N=0$, $F=1$, $Z=G=0$; no history object is
+required and the invariant holds. Induct first on received bits within
+a frame. Copy-before-release and the self-delimiting grammar retain
+exactly its acquired prefix; parser marks and counters have backing.
+An address traversal follows real logical links and halts either at
+its requested position or at its first absent edge.
+
+For Tag the arity decoder returns exactly alpha, beta, branch or absent.
+For HasPromotion and HasSplit, birth type and current arity give exactly
+the predicates in Definition 78.1. These queries leave the word and
+record unchanged. For $P/S$, an absent, branch or wrong-type target
+seals precisely the corresponding Refusal, also without change. An
+enabled command executes Theorem 76.4 and seals Growth with its actual
+kind and address. FetchGrowth is Theorem 77.4 and Next is Theorem 77.6.
+The unused tag seals BadFrame. These cases exhaust the complete grammar;
+a disabled primitive has not been recast as a completed request.
+
+Each case seals its actual finite encoded answer before traversing it
+with Print. Finite output progress emits all and only those bits, then
+End; the supplied local acknowledgement enables Return to the same
+retained root. Finite cleanup clears occupied request, pending-result,
+output and scratch contents and discharges all reservations. Thus the
+next Ready is genuine. Induction on completed requests proves the
+adaptive assertion, including preservation of earlier recall answers
+through arbitrarily many queries and finite continued growths. Given
+any finite legal addressed LAB word, supplying its original $P/S$ frames
+in that order makes every guard accept, by AA Theorem 17.2. The driver
+and initialization do not depend on the schedule. Each finite prefix
+has its own sufficient finite resources; no completed infinite physical
+run or uniform capacity bound is asserted. $\square$
+
+**Corollary 78.3 (exact original task relation).** At every returned
+state of this installation, replace its global record mathematically
+by the local shuffle tuple, or by AA's literal ancestral tapes, without
+changing the source. The original $Q_g$ replies, enabledness and semantic
+successors agree for every finite request sequence, including full
+Next results and the corresponding actually selected growth event.
+
+Proof. Lemma 75.3 recovers the exact tuple of the actual word. The
+supplied local/tape services and Theorems 76.4, 77.4, 77.6 use that same
+word for their recall and continuation decisions. For a successful event
+each tuple is updated to the projection of $we$; for a query or refusal
+it is unchanged. Induction gives agreement of all returned semantic
+states and replies. This relation compares the declared service, not
+unexposed allocator identities, intermediate phases or primitive timing.
+It does not claim that a physical conversion of backing or rights is
+free or has been requested. $\square$
+
+## 79. Supplemented views with independently specified meanings
+
+**Definition 79.1 (the four actual returned expressions).** Fix the
+installation, bound root, rights and returned domain of §75. As in AA
+Definition 17.3, $S_0$ is the oriented address support of the actual
+source edges, and $B_0$ is its actual terminal antichain, including unary
+markers. Let $\mathcal Z$ denote the readable root-bound annotation of
+Definition 75.2, empty when $F=1$. Define
+
+$$
+S_Z=(S_0,\mathcal Z),\qquad B_Z=(B_0,\mathcal Z),\qquad
+T_Z=w.
+\tag{AAII.40}
+$$
+
+Memory $M_Z$ selects the actual retained source and global-record fields,
+their live readable backing, the installed callable $Q_g$ driver and its
+current authority. It does not select the request archive, arbitrary
+cleared scratch identities, elapsed ticks or full controller chronology.
+These are meanings of spatial support, terminal boundary, actual serial
+generation time and current callable memory on this one process. The
+spatial and boundary expressions are expressly supplemented views; their
+annotation is an actual attachment, not bare geometry in disguise.
+Equality of their semantic contents is rooted oriented equality with
+bindings retained, up to raw fresh-name spellings, in this fixed
+installation as in AA Definition 21.1.
+
+**Theorem 79.2 (scoped recovery, common kernel and route agreement).**
+On the actual Ready images of Definition 79.1, each of $S_Z,B_Z,T_Z,M_Z$
+recovers the other three as semantic expressions of that same state.
+Every route agrees with the direct recovery. Each expression has exactly
+the complete original $Q_g$ task kernel, namely equality of $w$ at fixed
+installation. The recoveries commute with all its lawful returned
+operations, including Next's complete reply and actual successor.
+
+Proof. Prefix closure of the marker-inclusive $B_0$ gives $S_0$, and
+its maximal elements recover $B_0$. The arity parser of AA Definition
+17.3 recovers $t$. With that source, traverse branches, compute radices,
+and apply Lemma 75.3 and the supplied colex inverse; AA Theorem 19.2
+recovers exactly $w$. Reading $M_Z$'s bound fields gives these same data.
+In the other direction the given finite actual word from known alpha
+determines $t$, all its local event projections and the number (AAII.35),
+hence its canonical rooted annotation content, support and terminals.
+The retained callable expression uses the fixed installed driver and
+current access premises. This is recovery of its semantic description,
+not manufacture of an object binding or authority from a number.
+
+Every round trip fixes the same actual $w$ and its uniquely determined
+$t$ and annotation. Thus inverse and triangle identities hold on these
+images; no independently chosen representatives are silently joined.
+Equal words give equal arity/guards, recalls, selected Next leaves and
+returned updates by Theorem 78.2. If words differ, FetchGrowth at their
+first differing index returns different kind/address pairs; if one is
+a proper prefix, its next index is OutOfRange while the other's is not.
+Thus distinct words fail $Q_g$ equivalence. This proves each exact kernel.
+A query or refusal leaves $w$ fixed, and an actual growth changes it to
+$we$. Next chooses that same $e$ by its recalled pair and actual current
+left descent on either route. Theorem 76.4 gives the unique annotation
+of $we$. Induction proves the claimed commutation for arbitrary finite
+returned request sequences. $\square$
+
+Bare $S_0,B_0$ still recover only the source/causal data, not in general
+the chosen serial history. AA (AA.75)'s two actual words have the same
+source and split chronology and different FetchGrowth/Next answers in
+this installation too. Extra completed queries also change full
+controller chronology without changing any expression in (AAII.40).
+Busy receive, radix-rewrite and pending-output states have additional
+legality and continuation information. Neither that chronology nor an
+all-busy-cut inverse is asserted. Actual-image membership, bindings
+and rights remain hypotheses; a mathematical decoding does not certify
+them or grant physical authority.
+
+## 80. Simultaneous material and complete same-run work
+
+**Definition 80.1 (resource coordinates).** Count every source vertex,
+record header/cell, actual reference-field occurrence and its actual
+width, numerical/input/output bit, descriptor, fixed driver/root/right
+state and retained work capacity at the cut where it exists. Charge
+every actual primitive field read/write, reference/null comparison,
+traversal, allocation and grant, binary arithmetic, link initialization,
+copy, input/output transfer, End, supplied local acknowledgement, Return
+and clearing. Pointer fields are not unit-size bits and an empty or
+cleared buffer need not be absent material. These are simultaneous
+coordinates of this actual execution, not separate minima optimized on
+different runs.
+
+**Proposition 80.2 (persistent selected fields).** At a returned state
+reached after $P_0$ successful promotions and $S_0'$ successful splits,
+put $V=1+P_0+2S_0'$ and $\eta=\mathbf1_{\{F>1\}}$. The layout has
+exactly $V$ source vertices, $3V$ source-edge reference fields, $V$
+auxiliary-reference fields, $\eta$ live history headers, $G$ history
+cells and $G$ history data bits. The live history headers/cells contain
+exactly $2\eta+G$ reference-field occurrences, including null fields.
+These counts exclude neither source markers nor the installed root
+binding; the latter, other driver references and cleared work capacity
+are additional coordinates, rather than members of $2\eta+G$.
+
+Proof. The actual source starts with one vertex; the material templates
+add one for each $P$ and two for each $S$, without deleting any. Definition
+75.2 gives exactly the asserted header/cell objects and fields, with no
+persistent local bank. $F=1$ implies $G=0$. Theorem 76.4 preserves this
+shape on every successful growth; other requests preserve it outright.
+$\square$
+
+**Proposition 80.3 (finite backed coexistence).** Every transaction in
+Theorem 76.4 has a finite implementation by the specified scalar binary
+routines and actual linked traversals. Numerical scratch requires only
+a fixed number of buffers of $O(G^++N^++1)$ bit positions, in addition
+to their real object/reference overhead, acquired request/address/output
+storage, traversal references and retained capacity. This numerical
+bound is not a bound on total peak material. In particular the live old
+record, reserved increment and replacement buffers coexist.
+
+Proof. A current source has at most $N+1$ logical leaves and at most
+$N$ branches, and its material vertex count is at most $2N+1$. Every
+logical child event count is at most $N^+$. Definition 48.1's coefficient
+recurrence has at most $N^+$ iterations, coefficient at most $2^{N^+}$
+and predivision numerator at most $2^{N^+}(N^++1)$. The product $F^+$
+has at most $G^++1$ bits. Partial products have no larger value. The old
+$Z$ and its quotients have at most $G$ bits. In (AAII.39), $T\le F^+$,
+$A<T$, and the next $A+r^+T$ is below the next partial product, at most
+$F^+$. Rank and count operands have at most $N^++1$ bits, apart from
+counting their finite lengths. Schoolbook addition, multiplication and
+Euclidean division use a fixed number of input, output and temporary
+binary strings of a fixed constant multiple of these widths. Loop
+indices need no larger width. Padding/bit extraction can retain a
+backed power of two no larger than $2^{G^+}$. These facts give the stated
+sufficient numerical bound with one fixed program, rather than an
+unbounded-register primitive.
+
+Logical DFS uses parent links, a previous/current pair and a designated
+subtree root. Pending target/root, outer navigation cursor and pass
+state are a fixed number of further reference slots. Proper-ancestor
+tests repeat a finite parent walk instead of retaining an address table.
+The consumer's accumulated address and a sealed reply are separately
+backed finite strings. Thus preflight can reserve a finite sufficient
+arena from its acquired sizes, before the edit. Any earlier capacity
+used to compute those sizes was already acquired while the source was
+unchanged and remains charged if retained.
+
+More precisely, pre-edit cuts can contain the old source, its $G$ live
+cells/header, the reserved one or two vertices, the $G^+-G$ new cells
+and possible new header, preflight products/counters, input, target and
+pending state. Post-edit computation cuts contain the actual advanced
+source, the still-unmodified old code, the reserved increment, old-number
+quotient $Q$, accumulator $A$, product $T$, coefficient/division scratch
+and all retained request/continuation data. Rewrite cuts contain the
+partly rewritten extended list and the still-backed full $A$, plus
+pending bit/link cursors. Output cuts contain the complete new record,
+sealed full reply and Print/return state, together with any not-yet-cleared
+scratch and its capacity. No statement discards those simultaneous
+coordinates. The source's old vertices remain; no uncharged old-source
+clone or reversible erasure is assumed. $\square$
+
+**Definition 80.4 (work of the chosen finite routines).** For explicit
+accounting, a preflight pass evaluates both old and predicted radices
+at every old branch, even when they agree. The post-edit pass evaluates
+both recovered old and actual new radices at every old branch, skipping
+only a new split's unit branch. If $m$ is the old branch count and $d_L$
+is the number of its ancestors affected on the left, these passes call
+exactly $4m$ child-counting tours, $4m+d_L$ binomial evaluations and
+$m$ digit divmods, besides the whole-source event count, branch scans,
+repeated parent-chain tests, width computations, product operations,
+$G$ old-bit acquisition and the $G^+$-bit rewrite. The $d_L$ evaluations
+are the nontrivial calls in (AAII.37); zero-coefficient cases may still
+be evaluated. A pass entering the new unit branch still pays its arity
+and traversal tests. Object reservations, all reference-field operations,
+links and buffer clearing are added, not absorbed into these call counts.
+
+Each digit extraction at $v$ reads at most $G$ live bits, scans a finite
+branch prefix and calls two child-counting tours, one radix evaluation
+and one divmod per scanned branch. Fetch additionally pays its actual
+source count, range comparison, forced-prefix tests and every coefficient
+comparison/subtraction in its colex peeling. There are at most the
+source's finite height many recursive descents, with at most the current
+$N$ peel steps per call. Repeated scans need not be efficient to be
+finite. Next adds this actual recall work, its historical-address and
+left-descent navigation, one preflight/transaction when in range, and
+its larger output/cleanup. All integer routines have bounded finite
+operands as in Proposition 80.3 (with current sizes for a query), and
+every loop decreases a finite traversal, bit count, divisor subroutine
+counter or peeling index. These formulas specify finite paid work, not
+unit-cost oracle calls or a total running-time comparison.
+
+**Proposition 80.5 (full wire traffic and return costs).** For a request
+with address length $d$, the input is exactly $2d+4$ bits; for index $k$
+it is $k+4$ bits; the unused tag costs three. The full replies have the
+following bit lengths, before the additional End and local-ACK actions:
+
+| Reply | Bit length |
+| --- | --- |
+| Tag | $5$ |
+| Boolean | $4$ |
+| Refusal | $5$ |
+| Growth or Recall at address $p$ | $2|p|+5$ |
+| Next with addresses $p,q$ | $2(|p|+|q|)+7$ |
+| OutOfRange or BadFrame | $3$ |
+
+Every complete outer request also pays its actual root Return and
+occupied-work cleanup. A proper finite input prefix pays its acquired
+bits, marks and occupied pending storage even if its suffix never
+arrives. Very long out-of-range indices or absent-address frames have
+no bound in terms of source $N$ alone; their full acquired input,
+parsing and clearing remain separate costs. For successful growths the
+source templates have the original initial three edge-field assignments
+and $4P_0+8S_0'$ later structural assignments, with $V$ auxiliary-slot
+initializations and the global binding/link operations additionally paid.
+
+Proof. Count each three-bit tag and its specified unary/address or kind
+payload from Definition 78.1. Next contains one outer tag and two
+kind/address pairs, not two separately tagged Recall replies. Theorem
+78.2 supplies each actual finite lifecycle. The source assignments are
+those of the unchanged original material templates; the supplement does
+not remove any of them. All extra fields and the wire/return actions
+are distinct from conditional history data bits. $\square$
+
+## 81. Attained conditional payload and demonstrated selected-field savings
+
+**Theorem 81.1 (conditional fixed-source payload attainment).** Fix a
+reachable $t$, the installation, returned phase and current rights, and
+exclude other history-dependent side information exactly as in Definition
+60.1. Among supplements whose fixed-width binary content must support
+all original FetchGrowth answers for every $w\in\mathcal H(t)$, any
+width $g$ satisfies $g\ge G(t)$. The actually installed maintained
+layout of §§75–78 attains this conditional information width with its
+$G(t)$ data bits, including $G=0$ when $F=1$.
+
+Proof. This is Definition 60.5's supplied counting lower bound: the
+$F(t)$ histories are separated by a FetchGrowth index, so $2^g\ge F$.
+Lemma 75.3 makes the global number range over exactly those $F$ values,
+and Theorems 76.4 and 78.2 now give an actual installed history-bearing
+record with the callable full service, rather than merely a static
+numbering. Length, header presence and binding shape are functions of
+$t$. If raw names, allocation choices, capacity or control contents are
+instead exposed as a history channel, their information must be included
+in the lower-bound premise; it cannot be called fixed context. Actual
+reference widths, headers, old/new coexistence and work capacity are
+not claimed to fit in $G$ physical bits. $\square$
+
+**Theorem 81.2 (exact selected persistent differences).** Compare the
+installed local layout of §§47–50 and this global layout at the same
+reachable endpoint, along the same successful LAB word and original
+request schedule, with each layout's own paid work. Their common source
+coordinates are $V,3V,V$. Their live history coordinates are
+
+| Selected coordinate | Local layout | Global layout | Local minus global |
+| --- | --- | --- | --- |
+| Headers | $h$ | $\eta$ | $h-\eta$ |
+| Bit/next cells | $B$ | $G$ | $B-G$ |
+| History data bits | $B$ | $G$ | $B-G$ |
+| Header/cell reference-field occurrences | $2h+B$ | $2\eta+G$ | $2(h-\eta)+(B-G)$ |
+
+Here $\eta=0$ if $h=0$ and $\eta=1$ otherwise. The exact widths and
+locations of these reference fields are charged on their respective
+runs; the last row is a field-occurrence difference, not a subtraction
+of physical reference bits at unequal widths. No total-runtime or
+peak-memory dominance follows.
+
+Proof. The supplied local material theorem 50.2 gives its $h$ headers
+and $B$ cells. Proposition 80.2 gives the global coordinates. The common
+source templates give the same actual endpoint source counts. Definition
+60.1 gives $F=1$ exactly when $h=0$; otherwise $F>1$. The table follows
+by subtraction. The supplied Corollary 60.4 gives $0\le B-G\le h-1$
+for $h\ge1$, and both vanish at $h=0$. Thus for $h=1$ the payloads and
+header counts coincide; for $h\ge2$ the header difference is exactly
+$h-1>0$, whether or not the payload rounding difference is positive.
+$\square$
+
+**Corollary 81.3 (an actual unbounded header saving, with the supplied
+rounding boundary).** On Theorem 60.3's reachable family $t_h$, whose
+nonunit radices are $2,4,\ldots,2h$, both installations admit the
+stated original framed schedule. They have the same $P_0=S_0'=h+1$
+and $V=3h+4$; for $h\ge1$ the global layout uses one rather than $h$
+headers and $G=\lceil h+\log_2(h!)\rceil$ rather than
+$B=\sum_{j=1}^h\lceil\log_2(2j)\rceil$ data cells. The header saving
+$h-1$ is unbounded over finite endpoints. This reuses that family's
+reachability and exact counts. By the already supplied uniform bound
+$B/G\to1$, it establishes no asymptotically nonvanishing fractional
+payload saving. It establishes no total material, work, latency, energy,
+lifetime or minimax optimum. Simultaneous buffers and the repeated
+whole-source scans of §80 remain on the same execution account.
+
+## 82. Supplier correspondence for the installed global transaction
+
+**Definition 82.1 (mathematical attribution and applicability).** The
+`repo-derived` content of §§75–81 is the conjunction of a single actually
+root-bound global LAB annotation, reservation from current source counts,
+correct changing-radix replacement with paid coexistence, source-bound
+digit extraction and the complete original FetchGrowth/Next service,
+its returned supplemented-view recovery and the stated selected-field
+differences. It does not claim invention of enumerative coding, colex,
+mixed-radix conversion, finite traversal, arithmetic or online coding.
+The mathematical suppliers and their precise uses are as follows.
+
+| Supplier | Application and scope |
+| --- | --- |
+| [AA §§17,19–21](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | Known-alpha LAB, birth typing, material markers, actual source templates and rights; the ancestral-shuffle product and complete history inverse; the exact seven request frames, full outputs/acknowledgement/return, Next and task kernels. Its static global mixed-radix observation does not install the present transaction. |
+| AAII Theorem 47.3, Definitions 48.1–48.2 and Theorems 48.3,49.1–49.2 | Existing local colex append law, actual finite source counts/coefficient arithmetic and local decoder, paid original local-rank service and successor relation. Lemmas 76.1,77.2 feed those same ranks to that decoder; they do not reauthor its combinatorial inverse. |
+| AAII §§50–51 and60, especially Theorem 50.2, Theorem 60.3, Corollary 60.4 and Definition 60.5 | Existing material accounting, annotated recovery, the conditional $G$ floor, attained factorial family and rounding/uniform relative bounds are supplied results. The present attained installed global layout and the table in Theorem 81.2 apply them to a different actual storage arrangement. |
+| [Native clocked recovery §8](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md) | Already supplies a paid global enumerative chronology complement with unrank/append/rerank and historical rows under its Native clock/read interface. It is an earlier online-coding supplier. Its global $\rho$ source and ports do not execute the present addressed LAB transaction or establish its original $Q_g$ service. |
+| [Spatial records chronology §§19–20](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) | Existing counted-block transaction, actual-image inverse and separate workspace/output costs are reused as mathematical patterns. Their record parser/source and observation domain differ from the ancestral LAB product. |
+| [SourceTreeEncoding](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean) and its [Scribe](../../../Blueprint/D5/S0/History/Spacetime/SourceTreeEncoding.scribe.cs) | Supplied tagged hereditary-finite/free-tree code equivalence is static syntax, not acquisition or maintained addressed-history storage. |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs); [NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | The private traversal/read-count/stationarity helpers and private tree-view/child/walk helpers establish navigation and code-read facts under their supplied Native read interfaces. No such read port is imported into LAB and they supply no missing attachment authority. |
+| [NativeFiniteMenuCode](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteMenuCode.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteMenuCode.scribe.cs) | Finite-menu mixed-radix tree coding and its private grammar helpers are earlier static code suppliers. They supply no actual LAB reservation, radix-changing maintenance or complete historical continuation. |
+| Pinned mathlib [Nat/Choose/Basic.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Nat/Choose/Basic.lean) | The natural binomial definition, Pascal identity, zero/self and positivity facts supply the coefficient identities already used in §48. No new Lean theorem or kernel verification of this global installation is asserted. |
+| Cover, [*Enumerative Source Encoding*, §I Propositions 1–2 and §II Example 2](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf), [DOI](https://doi.org/10.1109/TIT.1973.1054929) | Classical enumeration/inverse enumeration and fixed-weight indexing are mathematical background, already credited for the local coordinates. Reversing coordinate order gives the supplied colex convention. Physical binding, LAB reservation and this exact returned-service theorem are separate obligations proved above. |
+
+The public guard-only randomized acquisition of §§61–67 concerns an
+unknown-entry task and a paid earned endpoint. The public [raw leaf-boundary
+acquisition II §§24–29](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md)
+uses its complete raw roster, binary masks/integer ages, field
+Reset/Add/Read and fresh-zero binding. The public [signed source-provenance
+construction §§27–33](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md)
+uses its authenticated localized-ring/Jacobi observation law and positivity
+premises. These are distinct available suppliers with different source,
+initialization and continuation interfaces; neither reserving their
+terminology nor silently joining their physical realizations is needed
+for the known-alpha theorem here. No unknown-entry represented-interface
+result of §§68–74 is a premise of §§75–81.
+
+## 83. Exact domain of the global retained-history result
+
+**Definition 83.1 (scope of the conditional installation).** The theorem
+is about one actual initialized source and every finite sufficiently
+backed completed schedule on it. It retains the original complete
+history task, not merely a static terminal code or a selected recall
+example. Its finite completion premises include genuine source and
+record access, exact returned-image membership, exclusive serialization,
+finite supplied input/output progress and the original local ACK. These
+are physical/interface hypotheses, not consequences of mathematical
+source parsing. Geometry or an event description cannot certify them,
+create absent backing or grant a missing right.
+
+The history is maintained from the actual known alpha. There is no
+acquisition of an arbitrary erased earlier history at a later endpoint.
+Current source alone does not determine that history, even with complete
+split order. No source-dependent initialization table, future schedule,
+external chronology oracle, extra Native stationary read port, free
+coefficient, free reference conversion, free erasure or uncharged output
+is assumed. The original licensed source-field tests remain available.
+The conditional $G$-bit theorem concerns the information payload only.
+Headers, actual reference widths, simultaneous old/new data, arithmetic
+and request/output buffers, fixed code/rights and retained capacity are
+additional actual resources. Only Theorem 81.2's selected persistent
+field coordinates and Corollary 81.3's supplied-family consequences
+are compared. No total runtime or peak-memory dominance is asserted.
+
+The returned four-view inverse includes its actual annotation in space
+and boundary, and the serial successful-generation word rather than total physical
+history. It has no all-busy-cut, crash-recovery or interrupted-write
+inverse. Observable exhaustion, concurrent raw clients, noise, revocation
+and arbitrary extra physical observations enlarge the task and lie
+outside the stated model. The earlier fixed-$G_{\rm gc}$, original-$Q$,
+parked-consumer, unchanged-initialization, history, terminal and
+final-no-Ready results keep their original statements and domains.
+No request, initialization or return condition in them is replaced by
+the existence of this different installed supplement.
+
+A native common realization connecting LAB, rational-path/field and
+quantum source models with the full programme's observations, authority
+and complete resource obligations is not supplied. Nor is a universal
+minimal generator, unconditional physical conformance certificate or
+universal common-source inverse. The present installed global history
+transaction and paid continued original service leave those separate
+bridges and full-goal boundaries unresolved.
+
+## 追加锚（本行以下为增补区）
+
