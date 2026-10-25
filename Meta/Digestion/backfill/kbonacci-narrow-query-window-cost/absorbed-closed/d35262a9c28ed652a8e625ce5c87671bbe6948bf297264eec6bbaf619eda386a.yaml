@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d35262a9c28ed652a8e625ce5c87671bbe6948bf297264eec6bbaf619eda386a
   normalized_sha256: sha256:d35262a9c28ed652a8e625ce5c87671bbe6948bf297264eec6bbaf619eda386a
 cas_ref: sha256:d35262a9c28ed652a8e625ce5c87671bbe6948bf297264eec6bbaf619eda386a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/AsymmetricThreeLabelCost.original_asymmetric_three_label_cost
+    target_statement_id: sha256:9ead8b00a79224c91c6390cd928d25334ce221bd0912f2d6fd213f0f97916416
 receipts:
   unresolved_subitems: []
