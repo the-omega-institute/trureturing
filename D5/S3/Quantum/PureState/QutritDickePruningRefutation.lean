@@ -121,6 +121,74 @@ private def targetWord : Word 5 := ![0, 1, 1, 1, 2]
 private def project {n : ℕ} (r : ℕ) (a : Fin 3) (f : State n) : State n :=
   fun t => if wire t r = a then f t else 0
 
+private theorem wire_put_ne {n : ℕ} (t : Word n) (r q : ℕ) (a : Fin 3)
+    (h : r ≠ q) : wire (put t q a) r = wire t r := by
+  by_cases hr : r < n <;> by_cases hq : q < n
+  · simp [wire, put, hr, hq, Function.update_apply, Fin.ext_iff, h]
+  · simp [wire, put, hr, hq]
+  · simp [wire, hr]
+  · simp [wire, hr]
+
+private theorem project_X {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
+    (cs : List (ℕ × Fin 3)) (i j : Fin 3) (f : State n) (h : r ≠ target) :
+    project r a (controlledX target cs i j f) =
+      controlledX target cs i j (project r a f) := by
+  funext t
+  by_cases ht : wire t r = a <;>
+    simp [project, controlledX, wire_put_ne t r target _ h, ht]
+
+private theorem project_R {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
+    (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) (h : r ≠ target) :
+    project r a (controlledR target cs i j c s f) =
+      controlledR target cs i j c s (project r a f) := by
+  funext t
+  by_cases ht : wire t r = a <;>
+    simp [project, controlledR, wire_put_ne t r target _ h, ht]
+
+private theorem scale_X {n : ℕ} (a : ℝ) (target : ℕ)
+    (cs : List (ℕ × Fin 3)) (i j : Fin 3) (f : State n) :
+    controlledX target cs i j (fun t => a * f t) =
+      fun t => a * controlledX target cs i j f t := by
+  funext t
+  unfold controlledX
+  split_ifs <;> rfl
+
+private theorem scale_R {n : ℕ} (a : ℝ) (target : ℕ)
+    (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) :
+    controlledR target cs i j c s (fun t => a * f t) =
+      fun t => a * controlledR target cs i j c s f t := by
+  funext t
+  unfold controlledR
+  split_ifs <;> ring
+
+private theorem project_V (n m l r : ℕ) (a i j : Fin 3) (f : State n)
+    (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
+    project r a (V n m l i j f) = V n m l i j (project r a f) := by
+  simp only [V, project_X r a _ _ _ _ _ hl, project_R r a _ _ _ _ _ _ _ h0]
+
+private theorem project_I (n m l r : ℕ) (a : Fin 3) (f : State n)
+    (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
+    project r a (I n m l f) = I n m l (project r a f) := by
+  simp only [I, project_V n m l r a _ _ _ h0 hl]
+
+private theorem project_II (n m l₁ l₂ r : ℕ) (a : Fin 3) (f : State n)
+    (h0 : r ≠ n - m) (h1 : r ≠ n - m + l₁) (h2 : r ≠ n - m + l₂) :
+    project r a (II n m l₁ l₂ f) = II n m l₁ l₂ (project r a f) := by
+  simp only [II, project_X r a _ _ _ _ _ h1, project_X r a _ _ _ _ _ h2,
+    project_R r a _ _ _ _ _ _ _ h0]
+
+private theorem scale_V (n m l : ℕ) (a : ℝ) (i j : Fin 3) (f : State n) :
+    V n m l i j (fun t => a * f t) = fun t => a * V n m l i j f t := by
+  simp only [V, scale_X, scale_R]
+
+private theorem scale_I (n m l : ℕ) (a : ℝ) (f : State n) :
+    I n m l (fun t => a * f t) = fun t => a * I n m l f t := by
+  simp only [I, scale_V]
+
+private theorem scale_II (n m l₁ l₂ : ℕ) (a : ℝ) (f : State n) :
+    II n m l₁ l₂ (fun t => a * f t) = fun t => a * II n m l₁ l₂ f t := by
+  simp only [II, scale_X, scale_R]
+
 private theorem project_W5 :
     project 0 0 (prunedW 5 5 witnessOccupation (basisState inputWord)) =
       fun t => (1 / Real.sqrt 5) * basisState branchWord t := by
@@ -133,17 +201,40 @@ private theorem W4_branch :
 private theorem project_W4 (f : State 5) :
     project 0 0 (prunedW 5 4 witnessOccupation f) =
       prunedW 5 4 witnessOccupation (project 0 0 f) := by
-  sorry
+  change project 0 0 (II 5 4 3 1 (I 5 4 3 (I 5 4 2 f))) =
+    II 5 4 3 1 (I 5 4 3 (I 5 4 2 (project 0 0 f)))
+  rw [project_II 5 4 3 1 0 0 _ (by decide) (by decide) (by decide),
+    project_I 5 4 3 0 0 _ (by decide) (by decide),
+    project_I 5 4 2 0 0 _ (by decide) (by decide)]
 
 private theorem W4_scale (a : ℝ) (f : State 5) :
     prunedW 5 4 witnessOccupation (fun t => a * f t) =
       fun t => a * prunedW 5 4 witnessOccupation f t := by
-  sorry
+  change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (fun t => a * f t))) =
+    fun t => a * II 5 4 3 1 (I 5 4 3 (I 5 4 2 f)) t
+  rw [scale_I, scale_I, scale_II]
+
+private theorem project_tail (r : ℕ) (hr : r ≤ 1) (a : Fin 3) (f : State 5) :
+    project r a (prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f)) =
+      prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation (project r a f)) := by
+  change project r a (I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 f)))) =
+    I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 (project r a f))))
+  rw [project_I 5 2 1 r a _ (by omega) (by omega),
+    project_II 5 3 2 1 r a _ (by omega) (by omega) (by omega),
+    project_I 5 3 2 r a _ (by omega) (by omega),
+    project_I 5 3 1 r a _ (by omega) (by omega)]
 
 private theorem tail_zero (f : State 5)
     (h : ∀ t, wire t 0 = 0 → wire t 1 ≠ 2 → f t = 0) :
     prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f) targetWord = 0 := by
-  sorry
+  have hf : project 0 0 f = project 1 2 (project 0 0 f) := by
+    funext t
+    by_cases h0 : wire t 0 = 0 <;> by_cases h1 : wire t 1 = 2 <;>
+      simp [project, h0, h1, h t]
+  have h0 := congrFun (project_tail 0 (by decide) 0 f) targetWord
+  rw [hf, ← project_tail 1 (by decide)] at h0
+  simpa [project, targetWord, wire] using h0
+
 
 private theorem output_zero :
     prunedU 5 witnessOccupation (basisState (initialWord 5 witnessOccupation)) targetWord = 0 := by
@@ -168,7 +259,13 @@ private theorem output_zero :
   simpa [prunedU, increasingRange, List.range', List.range'TR] using ht
 
 private theorem target_nonzero : dicke 5 witnessOccupation targetWord ≠ 0 := by
-  sorry
+  have hc : ∀ s, (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+      targetWord).count s = witnessOccupation s := by
+    intro s
+    fin_cases s <;> decide
+  rw [dicke, if_pos hc]
+  norm_num [witnessOccupation, Nat.factorial, Real.sqrt_ne_zero']
+
 
  theorem result : ¬ claim := by
   intro hc
