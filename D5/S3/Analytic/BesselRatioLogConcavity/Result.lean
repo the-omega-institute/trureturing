@@ -9,44 +9,83 @@
 /-
 admission_basis: open-problem-resolution (#21440; Refuted)
 escape_witness: none
-Gamma recurrence, ratio summability, geometric comparison and rational
-normalization instantiate frozen D5 and pinned Mathlib results.
 The designated result is the only public theorem.
-Per-declaration judgement: name | proof_shape | direct consumers | frozen dependencies.
-All escape_witness fields are none. Helpers are expanded for frozen dependencies.
-The frozen declaration alias gamma_pochhammer below means exactly:
-  GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer
-  Lean D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer
-  DECLARATION statement_id sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797
+Bypass test: inline the same-delivery helpers and stop at frozen D5 or pinned
+Mathlib. Every row uses only instantiation, projection and normalization of
+those results. The induction in term_cast preserves the cast of the defining
+recurrence; the tail estimate instantiates le_geom rather than proving a new
+geometric comparison. No row supplies an escape witness.
+Frozen dependency aliases below are declaration identities, not module pins.
 Identity source: .lake/build/stratalint/scoped-lean-report.json.
-  besselI | bind-only (definition) | claim, bessel_eq, bessel_ratio, bessel_pos, witness, result | none
+  coeff:
+    GID D5/S3/Analytic/BesselRedheffer/Series.coeff
+    DECLARATION statement_id sha256:8608141ffc114ca2c1e127301bae3bb0d2def8ce99965d20b40a7773f1deec2f
+  coeff_succ:
+    GID D5/S3/Analytic/BesselRedheffer/Series.coeff_succ
+    DECLARATION statement_id sha256:bbdacefc99a55801cb5c5704671cdfc3cff0ddaa409922d671d10b4407fba5cc
+  summable_norm_series:
+    GID D5/S3/Analytic/BesselRedheffer/Series.summable_norm_series
+    DECLARATION statement_id sha256:c7c21010f8d1b1313e01de02348e7a4c70a927c4b32e7366bc755dbe1e8bf322
+  gamma_pochhammer:
+    GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer
+    DECLARATION statement_id sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797
+Per declaration: name | proof_shape | direct consumers | frozen dependencies.
+  besselI | bind-only (definition) | bessel_eq, bessel_pos, bessel_ratio, claim, result, witness |
+    none
   claim | bind-only (definition) | result | none
-  term | bind-only (definition) | term_nonneg, term_step, term_summable, bessel_term_eq, bessel_summable, bessel_eq, series, series_pos, term_cast, series_lower, tail_ratio, series_upper, bessel_ratio | none
-  term_nonneg | bind-only | series_pos, series_lower, tail_ratio | none
-  term_step | bind-only | term_summable, term_cast, tail_ratio | none
-  term_summable | bind-only | bessel_summable, series_pos, series_lower, series_upper | none
-  bessel_term_eq | bind-only | bessel_summable, bessel_eq | gamma_pochhammer
-  bessel_summable | bind-only | bessel_pos | gamma_pochhammer
+  term | bind-only (definition) | bessel_eq, bessel_ratio, bessel_summable, bessel_term_eq,
+    series, series_lower, series_pos, series_upper, tail_ratio, term_cast, term_eq_coeff,
+    term_step, term_summable | none
+  term_nonneg | bind-only | series_lower, series_pos, tail_ratio | none
+    Bypass: pow_nonneg, ascPochhammer_pos and div_nonneg.
+  term_eq_coeff | bind-only | term_step, term_summable | coeff
+    Bypass: unfolding and ring normalization.
+  term_step | bind-only | tail_ratio, term_cast | coeff, coeff_succ
+    Bypass: coeff_succ, pow_succ and division normalization.
+  term_summable | bind-only | bessel_summable, series_lower, series_pos, series_upper | coeff,
+    summable_norm_series
+    Bypass: summable_norm_series.of_norm and the coefficient correspondence.
+  bessel_term_eq | bind-only | bessel_eq, bessel_summable | gamma_pochhammer
+    Bypass: gamma_pochhammer and positive-base real-power normalization.
+  bessel_summable | bind-only | bessel_pos | coeff, gamma_pochhammer, summable_norm_series
+    Bypass: summability multiplied by a constant.
   bessel_eq | bind-only | bessel_ratio | gamma_pochhammer
-  series | bind-only (definition) | series_pos, series_lower, series_upper, series_product, witness | none
-  series_pos | bind-only | series_product, witness | none
-  qterm | bind-only (definition) | qlower, qupper, term_cast, series_lower, series_upper, numeric_certificate | none
-  qlower | bind-only (definition) | qupper, series_lower, series_upper, numeric_certificate, series_product | none
-  qratio | bind-only (definition) | qupper, tail_ratio, series_upper, numeric_certificate, series_product | none
-  qupper | bind-only (definition) | series_upper, numeric_certificate, series_product | none
-  term_cast | bind-only | series_lower, series_upper | none
-  series_lower | bind-only | series_product | none
-  tail_ratio | bind-only | series_upper | none
-  series_upper | bind-only | series_product | none
+    Bypass: summand rewriting and tsum_mul_left.
+  series | bind-only (definition) | series_lower, series_pos, series_product, series_upper,
+    witness | none
+  series_pos | bind-only | series_product, witness | coeff, summable_norm_series
+    Bypass: sum_le_tsum and the constant term.
+  qterm | bind-only (definition) | numeric_certificate, qlower, qupper, series_lower,
+    series_upper, term_cast | none
+  qlower | bind-only (definition) | numeric_certificate, qupper, series_lower, series_product,
+    series_upper | none
+  qratio | bind-only (definition) | numeric_certificate, qupper, series_product, series_upper,
+    tail_ratio | none
+  qupper | bind-only (definition) | numeric_certificate, series_product, series_upper | none
+  term_cast | bind-only | series_lower, series_upper | coeff, coeff_succ
+    Bypass: induction normalizing casts of the same rational recurrence.
+  series_lower | bind-only | series_product | coeff, coeff_succ, summable_norm_series
+    Bypass: sum_le_tsum and cast normalization.
+  tail_ratio | bind-only | series_upper | coeff, coeff_succ
+    Bypass: the recurrence, nlinarith and division monotonicity.
+  series_upper | bind-only | series_product | coeff, coeff_succ, summable_norm_series
+    Bypass: le_geom, geometric summation and sum_add_tsum_nat_add.
   bessel_ratio | bind-only | witness | gamma_pochhammer
-  bessel_pos | bind-only | result | gamma_pochhammer
+    Bypass: the series identity, real-power identities and field_simp.
+  bessel_pos | bind-only | result | coeff, gamma_pochhammer, summable_norm_series
+    Bypass: positive summands and sum_le_tsum.
   numeric_certificate | bind-only | series_product | none
-  series_product | bind-only | witness | none
-  witness | bind-only | result | gamma_pochhammer
-  result | bind-only | settling result | gamma_pochhammer
+    Bypass: closed rational normalization by norm_num.
+  series_product | bind-only | witness | coeff, coeff_succ, summable_norm_series
+    Bypass: specialized bounds, gcongr and rational normalization.
+  witness | bind-only | result | coeff, coeff_succ, gamma_pochhammer, summable_norm_series
+    Bypass: series_product, cancellation and positive multiplication.
+  result | bind-only | settling result | coeff, coeff_succ, gamma_pochhammer, summable_norm_series
+    Bypass: specialized midpoint concavity, log monotonicity and linarith.
 -/
 
 import D5.S3.Analytic.KummerRatio.BetaIntegral
+import D5.S3.Analytic.BesselRedheffer.Series
 
 noncomputable section
 open Filter Topology
@@ -70,31 +109,24 @@ private lemma term_nonneg {ν w : ℝ} (hν : -1 < ν) (hw : 0 ≤ w) (k : ℕ) 
   exact div_nonneg (pow_nonneg hw _) (mul_nonneg (Nat.cast_nonneg _)
     (ascPochhammer_pos k (ν+1) (by linarith)).le)
 
+private lemma term_eq_coeff (ν w : ℝ) (k : ℕ) :
+    term ν w k = D5.S3.Analytic.BesselRedheffer.Series.coeff (ν+1) k * w^k := by
+  simp only [term, D5.S3.Analytic.BesselRedheffer.Series.coeff]
+  ring
+
 private lemma term_step {ν : ℝ} (hν : -1 < ν) (w : ℝ) (k : ℕ) :
     term ν w (k+1) = (w / ((k+1) * (ν+1+k))) * term ν w k := by
-  have hp := (ascPochhammer_pos k (ν+1) (by linarith)).ne'
-  have hνk : ν+1+(k:ℝ) ≠ 0 := ne_of_gt (by have h := Nat.cast_nonneg' (α := ℝ) k; linarith)
-  have hk : (k:ℝ)+1 ≠ 0 := Nat.cast_add_one_ne_zero k
-  have hf : (k.factorial:ℝ) ≠ 0 := by positivity
-  simp only [term, ascPochhammer_succ_eval, Nat.factorial_succ, Nat.cast_mul,
-    Nat.cast_add, Nat.cast_one, pow_succ]
-  field_simp
+  rw [term_eq_coeff, term_eq_coeff,
+    D5.S3.Analytic.BesselRedheffer.Series.coeff_succ (by linarith : 0 < ν+1), pow_succ]
+  simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
+  ring
 
 private lemma term_summable {ν : ℝ} (hν : -1 < ν) (w : ℝ) :
     Summable (term ν w) := by
-  have hi : Tendsto (fun n : ℕ => 1 / (ν+1+(n:ℝ))) atTop (𝓝 0) := by
-    simpa only [one_div, Function.comp_def] using tendsto_inv_atTop_zero.comp
-      (tendsto_atTop_add_const_left atTop (ν+1) tendsto_natCast_atTop_atTop)
-  have hq : Tendsto (fun n : ℕ => w / ((n+1)*(ν+1+n))) atTop (𝓝 0) := by
-    convert ((tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)).mul hi).const_mul w using 1
-    · ext n; simp only [div_eq_mul_inv, mul_inv_rev]; ring
-    · ring
-  apply summable_of_ratio_norm_eventually_le (r := 1/2) (by norm_num)
-  have hqn : Tendsto (fun n : ℕ => ‖w / ((n+1)*(ν+1+n))‖) atTop (𝓝 0) := by
-    exact tendsto_zero_iff_norm_tendsto_zero.mp hq
-  filter_upwards [hqn.eventually_lt_const (by norm_num : (0:ℝ) < 1/2)] with n hn
-  rw [term_step hν, norm_mul]
-  exact mul_le_mul_of_nonneg_right hn.le (norm_nonneg _)
+  convert (D5.S3.Analytic.BesselRedheffer.Series.summable_norm_series
+    (by linarith : 0 < ν+1) w).of_norm using 1
+  ext k
+  exact term_eq_coeff ν w k
 
 private lemma bessel_term_eq {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) (k : ℕ) :
     (z/2) ^ ((2*k:ℕ)+ν) / ((k.factorial:ℝ) * Real.Gamma (k+ν+1)) =
@@ -205,6 +237,7 @@ private lemma bessel_pos {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) :
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 4000000 in
+-- The sixty-term rational comparisons require exact reduction of large fractions.
 private lemma numeric_certificate :
     (1584/1000:ℚ) ≤ qlower (9/16) ∧
     (223368/1000:ℚ) ≤ qlower (225/16) ∧
@@ -276,7 +309,8 @@ private lemma witness :
     convert series_product using 1; ring
   have hc : 0 < (2:ℝ)^(-(1/10:ℝ)) := Real.rpow_pos_of_pos (by norm_num) _
   calc
-    _ = ((2:ℝ)^(-(1/10:ℝ)))^2 * (series (81/16) / series (81/4))^2 := by ring
+    _ = ((2:ℝ)^(-(1/10:ℝ)))^2 * (series (81/16) / series (81/4))^2 :=
+      mul_pow _ _ _
     _ < ((2:ℝ)^(-(1/10:ℝ)))^2 *
         ((series (9/16) / series (9/4)) * (series (225/16) / series (225/4))) :=
       mul_lt_mul_of_pos_left hd (pow_pos hc _)
