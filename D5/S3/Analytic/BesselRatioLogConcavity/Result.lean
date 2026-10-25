@@ -75,8 +75,8 @@ private lemma term_nonneg {ν w : ℝ} (hν : -1 < ν) (hw : 0 ≤ w) (k : ℕ) 
 private lemma term_step {ν : ℝ} (hν : -1 < ν) (w : ℝ) (k : ℕ) :
     term ν w (k+1) = (w / ((k+1) * (ν+1+k))) * term ν w k := by
   have hp := (ascPochhammer_pos k (ν+1) (by linarith)).ne'
-  have hνk : ν+1+(k:ℝ) ≠ 0 := ne_of_gt (by have h := Nat.cast_nonneg (α := ℝ) k; linarith)
-  have hk : (k:ℝ)+1 ≠ 0 := by positivity
+  have hνk : ν+1+(k:ℝ) ≠ 0 := ne_of_gt (by have h := Nat.cast_nonneg' (α := ℝ) k; linarith)
+  have hk : (k:ℝ)+1 ≠ 0 := Nat.cast_add_one_ne_zero k
   have hf : (k.factorial:ℝ) ≠ 0 := by positivity
   simp only [term, ascPochhammer_succ_eval, Nat.factorial_succ, Nat.cast_mul,
     Nat.cast_add, Nat.cast_one, pow_succ]
@@ -93,7 +93,7 @@ private lemma term_summable {ν : ℝ} (hν : -1 < ν) (w : ℝ) :
     · ring
   apply summable_of_ratio_norm_eventually_le (r := 1/2) (by norm_num)
   have hqn : Tendsto (fun n : ℕ => ‖w / ((n+1)*(ν+1+n))‖) atTop (𝓝 0) := by
-    simpa using hq.norm
+    exact tendsto_zero_iff_norm_tendsto_zero.mp hq
   filter_upwards [hqn.eventually_lt_const (by norm_num : (0:ℝ) < 1/2)] with n hn
   rw [term_step hν, norm_mul]
   exact mul_le_mul_of_nonneg_right hn.le (norm_nonneg _)
@@ -154,7 +154,7 @@ private lemma tail_ratio (w : ℚ) (hw : 0 ≤ w) (k : ℕ) (hk : 60 ≤ k) :
     term (1/10) (w:ℝ) (k+1) ≤ (qratio w:ℝ) * term (1/10) (w:ℝ) k := by
   rw [term_step (by norm_num)]
   apply mul_le_mul_of_nonneg_right _ (term_nonneg (by norm_num) (by exact_mod_cast hw) k)
-  have hk' : (60:ℝ) ≤ k := by exact_mod_cast hk
+  have hk' : (60:ℝ) ≤ k := Nat.ofNat_le_cast.mpr hk
   have hd : (61:ℝ)*(611/10) ≤ (k+1)*((1/10)+1+k) := by nlinarith
   dsimp only [qratio]
   push_cast
@@ -199,7 +199,7 @@ private lemma bessel_pos {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) :
   have hp (k : ℕ) : 0 < (z/2)^((2*k:ℕ)+ν) /
       ((k.factorial:ℝ)*Real.Gamma (k+ν+1)) := by
     have hg := Real.Gamma_pos_of_pos (show 0 < (k:ℝ)+ν+1 by
-      have h := Nat.cast_nonneg (α := ℝ) k; linarith)
+      have h := Nat.cast_nonneg' (α := ℝ) k; linarith)
     positivity
   have hh := (bessel_summable hν hz).sum_le_tsum ({0} : Finset ℕ)
     (fun k _ => (hp k).le)

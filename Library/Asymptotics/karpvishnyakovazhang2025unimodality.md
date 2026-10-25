@@ -4,7 +4,6 @@ authors: D. Karp, A. Vishnyakova, and Y. Zhang
 year: 2025
 title: Unimodality preservation by ratios of functional series and integral transforms
 doi: 10.1007/s00025-025-02431-4
-arxiv: 2408.01755
 url: https://arxiv.org/abs/2408.01755
 claim: "Conjecture 1 asserts unimodality of modified Bessel ratios and log-concavity for positive ordered orders."
 strata_touched:
