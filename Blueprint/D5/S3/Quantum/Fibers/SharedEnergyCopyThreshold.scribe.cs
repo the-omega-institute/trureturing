@@ -71,14 +71,49 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "A positive exponent on either missing edge makes both values zero. "
                     + "Otherwise the primitive kernel and the degree bound force both "
                     + "net oriented exponents to vanish, so conjugate phases cancel."),
-            Paragraph(Text("These matrix and integer-kernel statements do not by themselves "
-                + "establish the least uniform copy order on all density states. That conclusion "
-                + "also requires the upper bound for all labelled zero-weight exponents, "
-                + "the shared Haar average and full total-energy pinching identity, and "
-                + "the equivalence with every compatible complex effect. A compact orbit "
-                + "is distinct from reachability at one exact time. The sparse monomial "
-                + "alone gives no Helstrom optimum, adaptive protocol bound, postselection "
-                + "advantage, or identification of integer description length with copy cost.")))));
+            Def("coordinate", "coordinateExponent", "One labelled occurrence",
+                "The unit exponent at one ordered coordinate retains the row and column labels."),
+            Def("tensorExponent", "tensorExponent", "Exponents of native tensor entries",
+                "Each pair of product-basis words contributes one labelled occurrence at each tensor position."),
+            Def("totalEnergy", "totalEnergy", "Total product-basis energy",
+                "The energy of a word is the sum of its single-copy energies, with zero for the empty word."),
+            Def("projector", "energyProjector", "Complete total-energy projections",
+                "The diagonal projection selects all words with the specified total energy. It preserves the full degenerate energy space."),
+            Def("pinching", "pinchedCopies", "Pinched native tensor states",
+                "Sum the native tensor state between the complete projections over its finite set of total energies."),
+            Thm("tensorBridge", "tensor_monomial_bridge", "Native tensor entries and total-energy pinching", Tensor(),
+                "For every native three-dimensional density state, every copy count and every pair of actual tensor words, "
+                    + "the recursively constructed exponent has that copy count as degree and the total-energy difference as weight. "
+                    + "The actual tensor entry equals its coordinate monomial. Complete total-energy pinching keeps exactly the "
+                    + "zero-weight entries, including off-diagonals inside degenerate blocks. The pinched matrix is positive semidefinite with trace one."),
+            Thm("lowPinching", "sparse_low_pinching", "Low-order complete pinchings agree", LowPinching(),
+                "For every m at least two and every copy count below twice m minus one, the complete total-energy "
+                    + "pinchings of the actual sparse tensor states agree. This uses all labelled entries and includes zero exponents."),
+            Def("wordIndex", "wordIndex", "Tuples in the native tensor basis",
+                "A tuple is mapped to the same recursively parenthesized product basis used by the native density-state copies."),
+            Def("order", "copyOrder", "Two block lengths",
+                "The distinguishing copy count is m plus m minus one."),
+            Def("wordI", "wordI", "First distinguishing word",
+                "The first word has m twos followed by m minus one zeros."),
+            Def("wordJ", "wordJ", "Second distinguishing word",
+                "The second word has m ones followed by m minus one twos."),
+            Def("hamiltonian", "totalHamiltonian", "Sum of the one-copy Hamiltonians",
+                "On each native tensor product, add the first Hamiltonian tensored with the identity to the identity tensored with the remaining Hamiltonian."),
+            Thm("words", "sparse_joint_words", "Actual equal-energy words", Words(),
+                "For every m at least two the two words are distinct, have common energy m squared, and have length twice m minus one. "
+                    + "Their tensor entry on every native state is the distinguished monomial, without a rank or support restriction."),
+            Def("effect", "jointEffect", "Equal-superposition projection",
+                "The effect is one half the outer product of the sum of the two computational basis vectors with its conjugate. "
+                    + "It is a projection on their actual tensor space."),
+            Thm("born", "sparse_joint_effect", "A compatible effect with exact unconditional probabilities", Effect(),
+                "The effect and its complement are positive semidefinite, and the effect commutes with the sum Hamiltonian. "
+                    + "Its unconditional probabilities on the two native sparse tensor states are respectively one third to the "
+                    + "copy count plus and minus one twelfth to that count. Both real probabilities lie between zero and one, "
+                    + "and their gap is positive. The complete total-energy pinchings differ at this copy count."),
+            Paragraph(Text("The Haar-average identity, the upper bound on every labelled indecomposable zero-weight exponent, "
+                + "and the equivalence with all compatible complex effects and the actual compact orbits are further requirements "
+                + "for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive "
+                + "protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.")))));
 
     private static DocumentBlock Def(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
@@ -150,6 +185,63 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
             u, Cdot, Sp, C("star", u), Eq, D(1), Sp, Implies, Sp, RowBreak,
             C("monomial", C("sparseMatrix", D(1)), alpha), Eq,
             C("monomial", C("sparseMatrix", u), alpha)));
+    }
+
+    private static Formula Entry(Formula x, Formula i, Formula j) => C("entry", x, i, j);
+    private static Formula Length(Formula m) => Seq(D(2), Cdot, Sp, m, Minus, D(1));
+    private static Formula Tensor()
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var r = F.Id("r");
+        var i = F.Id("I"); var j = F.Id("J");
+        var a = C("tensorExponent", n, i, j);
+        var x = C("monomial", C("stateMatrix", r), a);
+        var pin = C("pinchedCopies", m, n, r);
+        return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
+            Forall, Sp, r, InMacro, C("DensityState", C("Fin", D(3))), Comma,
+            Forall, Sp, i, Comma, j, InMacro, C("CopyIndex", C("Fin", D(3)), n), Comma, RowBreak,
+            C("degree", a), Eq, n, Sp, Land, Sp,
+            C("weight", m, a), Eq, C("totalEnergy", m, n, i), Minus, C("totalEnergy", m, n, j), Sp, Land, RowBreak,
+            Entry(C("stateMatrix", C("copies", r, n)), i, j), Eq, x, Sp, Land, RowBreak,
+            Entry(pin, i, j), Eq, C("ite", Seq(C("weight", m, a), Eq, D(0)), x, D(0)), Sp, Land, RowBreak,
+            C("PosSemidef", pin), Sp, Land, Sp, C("trace", pin), Eq, D(1)));
+    }
+    private static Formula LowPinching()
+    {
+        var m = F.Id("m"); var n = F.Id("n");
+        return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp, n, Lt, Length(m), Sp, Implies, Sp,
+            C("pinchedCopies", m, n, C("rho")), Eq, C("pinchedCopies", m, n, C("sigma", m))));
+    }
+    private static Formula Words()
+    {
+        var m = F.Id("m"); var r = F.Id("r"); var l = C("copyOrder", m);
+        var i = C("wordI", m); var j = C("wordJ", m);
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp, RowBreak,
+            l, Eq, Length(m), Sp, Land, Sp, i, Neq, Sp, j, Sp, Land, RowBreak,
+            C("totalEnergy", m, l, i), Eq, P(m, D(2)), Sp, Land, Sp,
+            C("totalEnergy", m, l, j), Eq, P(m, D(2)), Sp, Land, RowBreak,
+            Forall, Sp, r, InMacro, C("DensityState", C("Fin", D(3))), Comma,
+            Entry(C("stateMatrix", C("copies", r, l)), i, j), Eq,
+            C("starMonomial", m, C("stateMatrix", r))));
+    }
+    private static Formula Effect()
+    {
+        var m = F.Id("m"); var l = C("copyOrder", m); var q = C("jointEffect", m);
+        var h = C("totalHamiltonian", m, l); var k = Length(m);
+        var r = C("rho"); var s = C("sigma", m);
+        var plus = Seq(P(Third, k), Plus, P(Twelfth, k));
+        var minus = Seq(P(Third, k), Minus, P(Twelfth, k));
+        Formula Prob(Formula x) => C("trace", Seq(q, Cdot, Sp, C("stateMatrix", C("copies", x, l))));
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp, RowBreak,
+            C("PosSemidef", q), Sp, Land, Sp, C("PosSemidef", Seq(D(1), Minus, q)), Sp, Land, RowBreak,
+            q, Cdot, Sp, h, Eq, h, Cdot, Sp, q, Sp, Land, RowBreak,
+            Prob(r), Eq, plus, Sp, Land, Sp, Prob(s), Eq, minus, Sp, Land, RowBreak,
+            D(0), Lt, D(2), Cdot, Sp, P(Twelfth, k), Sp, Land, RowBreak,
+            plus, InMacro, C("Icc", D(0), D(1)), Sp, Land, Sp,
+            minus, InMacro, C("Icc", D(0), D(1)), Sp, Land, RowBreak,
+            C("pinchedCopies", m, l, r), Neq, Sp, C("pinchedCopies", m, l, s)));
     }
 
 }

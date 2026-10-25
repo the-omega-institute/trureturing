@@ -347,7 +347,7 @@ def pinchedCopies (m n : ℕ) (r : DensityState (Fin 3)) :
 private theorem pinched_apply (m n : ℕ) (r : DensityState (Fin 3))
     (I J : CopyIndex (Fin 3) n) : pinchedCopies m n r I J =
       if totalEnergy m n I = totalEnergy m n J then stateMatrix (copies r n) I J else 0 := by
-  simp only [pinchedCopies, Finset.sum_apply]
+  simp only [pinchedCopies, Matrix.sum_apply]
   rw [Finset.sum_eq_single (totalEnergy m n I)]
   · simp [energyProjector, Matrix.mul_diagonal, Matrix.diagonal_mul, eq_comm]
   · intro e he hne
@@ -362,6 +362,7 @@ private theorem pinched_positive (m n : ℕ) (r : DensityState (Fin 3)) :
   have hp : (energyProjector m n e).PosSemidef := by
     apply Matrix.PosSemidef.diagonal
     intro I
+    change (0 : ℂ) ≤ if totalEnergy m n I = e then 1 else 0
     split_ifs <;> simp
   simpa only [hp.isHermitian.eq] using
     (density_posSemidef (copies r n)).mul_mul_conjTranspose_same (energyProjector m n e)
@@ -430,7 +431,7 @@ private theorem word_entry (r : DensityState (Fin 3)) :
     stateMatrix (copies r n) (wordIndex n f) (wordIndex n g) =
       ∏ k, stateMatrix r (f k) (g k)
   | 0, f, g => by
-    change (1 : Matrix PUnit PUnit ℂ) PUnit.unit PUnit.unit = _
+    change (1 : ℂ) = ∏ k : Fin 0, stateMatrix r (f k) (g k)
     simp
   | 1, f, g => by rw [Fin.prod_univ_one]; rfl
   | n+2, f, g => by
@@ -468,8 +469,8 @@ private theorem total_hamiltonian_diagonal (m : ℕ) : ∀ n,
     rw [totalHamiltonian, total_hamiltonian_diagonal]
     ext I J
     by_cases h₁ : I.1 = J.1 <;> by_cases h₂ : I.2 = J.2 <;>
-      simp [Matrix.kronecker_apply, Matrix.diagonal_apply, Matrix.one_apply,
-        totalEnergy, h₁, h₂, Prod.ext_iff]
+      simp [Matrix.add_apply, Matrix.kroneckerMap_apply, Matrix.diagonal_apply,
+        Matrix.one_apply, totalEnergy, h₁, h₂, Prod.ext_iff]
 
 /-- The two explicit orthogonal product-basis words have energy m squared,
 and their actual tensor matrix element is the distinguished monomial. -/
@@ -504,7 +505,7 @@ def jointEffect (m : ℕ) :
 
 private theorem joint_effect_bounds (m : ℕ) (hm : 2 ≤ m) :
     (jointEffect m).PosSemidef ∧ (1 - jointEffect m).PosSemidef := by
-  have h := pairEffect (wordI m) (wordJ m) (sparse_joint_words m hm).2.1
+  let h := pairEffect (wordI m) (wordJ m) (sparse_joint_words m hm).2.1
   have he : jointEffect m = h.val := rfl
   rw [he]
   exact ⟨h.2.1, h.2.2.1⟩

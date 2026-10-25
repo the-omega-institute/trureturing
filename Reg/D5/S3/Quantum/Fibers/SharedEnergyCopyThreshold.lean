@@ -240,6 +240,340 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   options := #[]
 end Low
 
+namespace Tensor
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3)
+
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output n _ := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : ∀ n, Unit → signature.State n → signature.Output n () :=
+  fun n _ r => stateMatrix (copies r n)
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (m n : ℕ) (r : signature.State n) (I J : CopyIndex (Fin 3) n),
+    degree (tensorExponent n I J) = n ∧
+    weight m (tensorExponent n I J) = totalEnergy m n I - totalEnergy m n J ∧
+    R.readout n () r I J = monomial (stateMatrix r) (tensorExponent n I J) ∧
+    (pinchedCopies m n r I J = if weight m (tensorExponent n I J) = 0 then
+      monomial (stateMatrix r) (tensorExponent n I J) else 0) ∧
+    (pinchedCopies m n r).PosSemidef ∧ Matrix.trace (pinchedCopies m n r) = 1
+private theorem bridge : (type_of% tensor_monomial_bridge) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have he := (h 2 0 rho PUnit.unit PUnit.unit).2.2.1
+  change (0 : ℂ) = monomial (stateMatrix rho) 0 at he
+  norm_num [monomial] at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, rho, sigma 2, ?_⟩
+  intro h
+  have he := congrArg (fun X => X (2 : Fin 3) (0 : Fin 3)) h
+  change (1/12 : ℂ) = (1/12 : ℂ) * (phase 2 : ℂ) at he
+  norm_num [phase, Circle.coe_exp, Complex.exp_pi_mul_I] at he
+
+def family : Registration arena (type_of% tensor_monomial_bridge) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp tensor_monomial_bridge, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    tensor_monomial_bridge (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Tensor.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Tensor.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg", "fn", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := some #["arg", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Tensor
+namespace Pinching
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output n _ := Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : ∀ n, Unit → ℕ → signature.Output n () :=
+  fun n _ m => pinchedCopies m n (sigma m)
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (m n : ℕ), 2 ≤ m → n < 2*m-1 →
+    pinchedCopies m n rho = R.readout n () m
+private theorem bridge : (type_of% sparse_low_pinching) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have he := congrArg Matrix.trace (h 2 0 (by omega) (by omega))
+  have ht := (tensor_monomial_bridge 2 0 rho PUnit.unit PUnit.unit).2.2.2.2.2
+  change Matrix.trace (pinchedCopies 2 0 rho) = Matrix.trace 0 at he
+  rw [ht, Matrix.trace_zero] at he
+  norm_num at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 1, 2, ?_⟩
+  intro h
+  have he := congrArg (fun X => X (1 : Fin 3) (2 : Fin 3)) h
+  change pinchedCopies 1 1 (sigma 1) 1 2 = pinchedCopies 2 1 (sigma 2) 1 2 at he
+  rw [(tensor_monomial_bridge 1 1 (sigma 1) 1 2).2.2.2.1,
+    (tensor_monomial_bridge 2 1 (sigma 2) 1 2).2.2.2.1] at he
+  have hw₁ : weight 1 (tensorExponent 1 (1 : Fin 3) 2) = 0 := by
+    norm_num [tensorExponent, coordinateExponent, weight, energy, Fin.sum_univ_succ]
+  have hw₂ : weight 2 (tensorExponent 1 (1 : Fin 3) 2) ≠ 0 := by
+    norm_num [tensorExponent, coordinateExponent, weight, energy, Fin.sum_univ_succ]
+  rw [if_pos hw₁, if_neg hw₂] at he
+  change (1/12 : ℂ) = 0 at he
+  norm_num at he
+
+def family : Registration arena (type_of% sparse_low_pinching) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp sparse_low_pinching, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    sparse_low_pinching (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Pinching.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Pinching.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Pinching
+namespace Words
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → Unit → ℕ → ℤ :=
+  fun _ _ m => totalEnergy m (copyOrder m) (wordI m)
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, 2 ≤ m →
+    copyOrder m = 2*m-1 ∧ wordI m ≠ wordJ m ∧
+    R.readout () () m = (m : ℤ)^2 ∧
+    totalEnergy m (copyOrder m) (wordJ m) = (m : ℤ)^2 ∧
+    ∀ r : _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3),
+      stateMatrix (copies r (copyOrder m)) (wordI m) (wordJ m) = starMonomial m (stateMatrix r)
+private theorem bridge : (type_of% sparse_joint_words) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have ht := (h 2 (by omega)).2.2.1
+  norm_num [zeroReadout, realize] at ht
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 2, 3, ?_⟩
+  intro h
+  change totalEnergy 2 (copyOrder 2) (wordI 2) = totalEnergy 3 (copyOrder 3) (wordI 3) at h
+  rw [(sparse_joint_words 2 (by omega)).2.2.1,
+    (sparse_joint_words 3 (by omega)).2.2.1] at h
+  norm_num at h
+
+def family : Registration arena (type_of% sparse_joint_words) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp sparse_joint_words, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    sparse_joint_words (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Words.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Words.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Words
+namespace Effect
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → Unit → ℕ → ℂ :=
+  fun _ _ m => Matrix.trace (jointEffect m * stateMatrix (copies (sigma m) (copyOrder m)))
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, 2 ≤ m →
+    (jointEffect m).PosSemidef ∧ (1-jointEffect m).PosSemidef ∧
+    jointEffect m * totalHamiltonian m (copyOrder m) =
+      totalHamiltonian m (copyOrder m) * jointEffect m ∧
+    Matrix.trace (jointEffect m * stateMatrix (copies rho (copyOrder m))) =
+      (1/3 : ℂ)^(2*m-1) + (1/12 : ℂ)^(2*m-1) ∧
+    R.readout () () m = (1/3 : ℂ)^(2*m-1) - (1/12 : ℂ)^(2*m-1) ∧
+    (0 : ℝ) < 2*(1/12 : ℝ)^(2*m-1) ∧
+    (1/3 : ℝ)^(2*m-1) + (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
+    (1/3 : ℝ)^(2*m-1) - (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
+    pinchedCopies m (copyOrder m) rho ≠ pinchedCopies m (copyOrder m) (sigma m)
+private theorem bridge : (type_of% sparse_joint_effect) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have ht := (h 2 (by omega)).2.2.2.2.1
+  norm_num [zeroReadout, realize] at ht
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 2, 3, ?_⟩
+  intro h
+  change Matrix.trace (jointEffect 2 * stateMatrix (copies (sigma 2) (copyOrder 2))) =
+    Matrix.trace (jointEffect 3 * stateMatrix (copies (sigma 3) (copyOrder 3))) at h
+  rw [(sparse_joint_effect 2 (by omega)).2.2.2.2.1,
+    (sparse_joint_effect 3 (by omega)).2.2.2.2.1] at h
+  norm_num at h
+
+def family : Registration arena (type_of% sparse_joint_effect) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp sparse_joint_effect, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    sparse_joint_effect (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Effect.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Effect.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "fn", "arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Effect
+#print axioms Tensor.registration
+#print axioms Pinching.registration
+#print axioms Words.registration
+#print axioms Effect.registration
 #print axioms Spectrum.registration
 #print axioms Pair.registration
 #print axioms Low.registration
