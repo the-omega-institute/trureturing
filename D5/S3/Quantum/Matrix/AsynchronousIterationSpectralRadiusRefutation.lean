@@ -78,11 +78,12 @@ private def unstableVector : Fin 2 × BlockIndex 2 sizes → ℂ :=
 private theorem base_square_zero :
     (baseMatrix.map (algebraMap ℝ ℂ) -
       algebraMap ℂ (Matrix (BlockIndex 2 sizes) (BlockIndex 2 sizes) ℂ) (1 / 2)) ^ 2 = 0 := by
+  delta baseMatrix Matrix.map
   apply Matrix.ext
   rintro ⟨i, a⟩ ⟨j, b⟩
   fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
     norm_num [pow_two, Matrix.mul_apply, Fintype.sum_sigma, Fin.sum_univ_two, Fin.sum_univ_succ,
-      baseMatrix, Matrix.map_apply, Matrix.algebraMap_eq_diagonal,
+      Matrix.map_apply, Matrix.algebraMap_eq_diagonal,
       Matrix.diagonal_apply, sizes, Fintype.sum_unique]
 
 private theorem base_spectrum :
@@ -115,9 +116,11 @@ private theorem witness_admissible : Admissible 2 sizes 1 baseMatrix delays (1 /
   · intro i
     norm_num [sizes]
   · intro i
-    simp [delays]
+    delta delays
+    simp only [ite_true]
   · intro i j hij
-    simp [delays, hij]
+    delta delays
+    simp only [ite_eq_right hij, le_refl, and_self]
 
 private theorem unstable_eigenvector :
     unstableVector ≠ 0 ∧
@@ -126,14 +129,16 @@ private theorem unstable_eigenvector :
   constructor
   · intro hzero
     have hh := congrFun hzero (0, ⟨0, 0⟩)
-    norm_num [unstableVector] at hh
+    change (10 : ℂ) = 0 at hh
+    norm_num at hh
   · funext rp
+    delta asyncMatrix baseMatrix delays unstableVector Matrix.map
     unfold Matrix.mulVec dotProduct
     rw [Fintype.sum_prod_type, Fin.sum_univ_two]
     rcases rp with ⟨r, i, a⟩
     fin_cases r <;> fin_cases i <;> fin_cases a <;>
       norm_num [Fintype.sum_sigma, Fin.sum_univ_two, Fintype.sum_unique,
-        asyncMatrix, baseMatrix, delays, unstableVector, Matrix.map_apply, smul_eq_mul]
+        Matrix.map_apply, smul_eq_mul]
 
 private theorem asynchronous_radius :
     ENNReal.ofReal (5 / 4) ≤ radius (asyncMatrix baseMatrix delays 1) := by
@@ -156,11 +161,9 @@ private theorem not_q1 : ¬ Q1 := by
   have hbound := h 2 sizes 1 baseMatrix delays (1 / 2) witness_admissible
   have hroot : (1 / 2 : ℝ) ^ ((1 : ℝ) / (1 + 1)) ≤ 1 :=
     Real.rpow_le_one (by norm_num) (by norm_num) (by norm_num)
-  have hbound' : radius (asyncMatrix baseMatrix delays 1) ≤
-      ENNReal.ofReal ((1 / 2 : ℝ) ^ ((1 : ℝ) / (1 + 1))) := by
-    simpa only [Nat.cast_one] using hbound
+  rw [Nat.cast_one] at hbound
   have hbad := asynchronous_radius.trans
-    (hbound'.trans (ENNReal.ofReal_le_ofReal hroot))
+    (hbound.trans (ENNReal.ofReal_le_ofReal hroot))
   norm_num at hbad
 
 private theorem not_q2 : ¬ Q2 := by
