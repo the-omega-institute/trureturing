@@ -49,7 +49,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     _ = _ := by
       change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
-      simp
+      simp only [mul_zero, Real.exp_zero, neg_div_neg_eq]
 
 private theorem first_laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     literalSourceFirstLaplaceMoment a decayingInput =
@@ -90,7 +90,7 @@ private theorem layer_decaying_one :
   rw [actualResidualLayerCrossValue, if_pos rfl]
   simp only [laplace_decayingInput (by norm_num : (0 : ℝ) < 1),
     first_laplace_decayingInput (by norm_num : (0 : ℝ) < 1)]
-  norm_num [Complex.normSq_apply, map_div₀]
+  norm_num [Complex.normSq_apply, map_div₀, map_ofNat]
 
 private theorem layer_decaying_five_quarters :
     actualResidualLayerCrossValue (5 / 4) (5 / 4) decayingInput =
@@ -98,7 +98,7 @@ private theorem layer_decaying_five_quarters :
   rw [actualResidualLayerCrossValue, if_pos rfl]
   simp only [laplace_decayingInput (by norm_num : (0 : ℝ) < 5 / 4),
     first_laplace_decayingInput (by norm_num : (0 : ℝ) < 5 / 4)]
-  norm_num [Complex.normSq_apply, map_div₀]
+  norm_num [Complex.normSq_apply, map_div₀, map_ofNat]
 
 /- Legal source witnesses are recorded with their actual L1 proofs.
 State itself remains the whole original function space, not this pair. -/

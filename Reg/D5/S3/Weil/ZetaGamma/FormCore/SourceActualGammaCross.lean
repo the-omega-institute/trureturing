@@ -125,7 +125,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     _ = ((1 / (a + 2) : ℝ) : ℂ) := by
       change ((∫ t : ℝ in Ioi 0, Real.exp ((-(a + 2)) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
-      simp
+      simp only [mul_zero, Real.exp_zero, neg_div_neg_eq]
 
 abbrev signature : Signature where
   Params := ℝ
@@ -436,7 +436,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     _ = _ := by
       change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
-      simp
+      simp only [mul_zero, Real.exp_zero, neg_div_neg_eq]
 
 private theorem tail_zero (n : ℕ) :
     actualGammaPositiveTailTerm (fun _ : ℝ => (0 : ℂ)) n = 0 := by
