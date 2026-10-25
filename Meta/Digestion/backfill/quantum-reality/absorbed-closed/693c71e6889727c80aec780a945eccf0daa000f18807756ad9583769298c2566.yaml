@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:693c71e6889727c80aec780a945eccf0daa000f18807756ad9583769298c2566
-  normalized_sha256: sha256:693c71e6889727c80aec780a945eccf0daa000f18807756ad9583769298c2566
-cas_ref: sha256:693c71e6889727c80aec780a945eccf0daa000f18807756ad9583769298c2566
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurement/ContinuationEffectClosure.continuationSpace_closure
-    target_statement_id: sha256:6b5d084e4988a3ec04978c02d7ef3c6bcdc019339bfe93b137a93124ae7548b7
-receipts:
-  unresolved_subitems: []

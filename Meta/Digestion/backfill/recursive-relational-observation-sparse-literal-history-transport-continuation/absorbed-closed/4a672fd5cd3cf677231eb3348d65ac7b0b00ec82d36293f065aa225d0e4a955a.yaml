@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4a672fd5cd3cf677231eb3348d65ac7b0b00ec82d36293f065aa225d0e4a955a
-  normalized_sha256: sha256:4a672fd5cd3cf677231eb3348d65ac7b0b00ec82d36293f065aa225d0e4a955a
-cas_ref: sha256:4a672fd5cd3cf677231eb3348d65ac7b0b00ec82d36293f065aa225d0e4a955a
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/InterleavedWordRecovery.interleaved_word_recovery
-    target_statement_id: sha256:c2efb262cbee4fc24a41335001ff6712734411d0dea185d3081553107da7e648
-receipts:
-  unresolved_subitems: []
