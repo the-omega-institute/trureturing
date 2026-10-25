@@ -8,17 +8,6 @@ internal sealed class PositiveHankelL2Document : IScribeDocumentDefinition
         "Actual positive-half-line L2 Hankel domains, complete Laplace-square series, and the quarter-rate pi Schur bound.",
         H("Literal positive Hankel integrals on arbitrary complex L2 sources"),
         Blocks(Describe.Lean(
-            DescribeId.Create("actual-carleman-l2-domain"),
-            DeclarationHandle.Create(
-                "D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.carleman_actual_l2_domain"),
-            H("The literal Carleman double integral on half-line L2"),
-            StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
-            Blocks(
-                Paragraph(Text("For an arbitrary complex positive-half-line L2 input, the actual absolute Carleman double integral is finite and is bounded by pi times its L2 mass. There is no compact-support, continuity, trace, or pre-assumed double-integrability condition.")),
-                Paragraph(Text("The proof derives the true row integral of sqrt(s)/(sqrt(t)*(s+t)) from the actual Cauchy integral and proves product-measure integrability of the Schur majorant before applying an integral inequality. This theorem is consumed by the half-rate Hankel domain proof."))),
-            DescribeRole.Theorem),
-            Describe.Lean(
             DescribeId.Create("actual-half-rate-hankel-domain-series"),
             DeclarationHandle.Create(
                 "D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain"),
