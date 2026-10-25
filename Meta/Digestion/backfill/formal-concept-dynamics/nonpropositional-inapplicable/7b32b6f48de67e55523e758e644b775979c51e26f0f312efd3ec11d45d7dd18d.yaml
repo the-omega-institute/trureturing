@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+  normalized_sha256: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+cas_ref: sha256:7b32b6f48de67e55523e758e644b775979c51e26f0f312efd3ec11d45d7dd18d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Treatment of public goods is an evaluation item, with no supply or optimality formula.
+    previous_atom_id: 1e68e27b165a8f4129c7f2ff021e4ba451715bc72928314a55e1aec945dc2bb9
+    next_atom_id: 05397b6fdfbc4ed0433f7272745564822dfb409f3aa088b2c00f64d161901d7e

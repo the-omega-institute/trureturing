@@ -2309,3 +2309,847 @@ This finite source-specific acquisition-price result does not complete
 the continuing common-source space/time/boundary/memory programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Exact worst literal traffic on the scaffold family
+
+**Definition 19.1 (the two optimization domains).** Keep Definition
+13.1 and Assumption 13.2 without changing either the authentic output
+$(u_x,k)$ or the competitor class. In particular, the public inputs are
+the authentic scaffold $S$, persistent global correspondence $\pi$ and
+bin $[K,2K-1]$; the only acquired source information consists of paid
+presence bits on the one actual register. Competitors may make arbitrary
+finite adaptive forward updates. Let $\mathscr A(S,K)$ be this class,
+and put $b=2K-1$. Define
+
+$$
+\begin{aligned}
+ W_*(S,K)&=\min_{A\in\mathscr A(S,K)}\max_{x,k}W_A(x,k),\\
+ W_{\rm call}(S,2^r)&=
+ \min_{\substack{A\in\mathscr A(S,2^r)\\\max_{x,k}Q_A(x,k)\le n+r}}
+                         \max_{x,k}W_A(x,k).
+\end{aligned}
+\tag{GPO.55}
+$$
+
+Every maximum is over the full family (GPO.43). These are two different
+optimization problems. Whole literal root words, absences and repetitions
+have exactly the charges of Definition 1.3; prefixes are not shared for
+free. The attaining protocols below establish the displayed minima, not
+just infima. Neither objective includes the separate prices of local
+work, source material, installation, retention or later use.
+
+The guarded navigation supplier in
+[FiniteSourceMass](../../../D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.lean),
+`finite_source_masses`, including its proof-local `threshold_last`, gives
+the following convenient form. For a nonempty semantic suffix $q$, write
+$c(L)=1,c(R)=2$ and
+
+$$
+ \vartheta(q)=2+\sum_{\text{letters of }q\text{ except its last}}c(d).
+ \qquad P_{T_j}(q)=1\ \Longleftrightarrow\ j\ge\vartheta(q),
+ \qquad \vartheta(q)\le2|q|.
+ \tag{GPO.56}
+$$
+
+Indeed its guarded threshold is the maximum of total path cost and
+last-parent path cost plus two. The last edge costs at most two, so the
+second term is that maximum. Equivalently, all proper-prefix residual
+ranks must be at least two; their largest consumed cost occurs at the
+last proper prefix. This also covers singleton suffixes and ranks zero
+and one. The empty suffix is always present. This is reuse of actual
+guarded navigation, not installation of a threshold oracle. By Lemma
+14.1, each nonconstant reached Read is therefore, in one original cone,
+the actual test $2k+e_H+x_i\ge\vartheta(q)$.
+
+**Theorem 19.2 (unconstrained literal optimum in a stated regime).** For
+every finite nonempty scaffold $S$, every $K\ge2$, and
+$n\ge\delta+2K-2$,
+
+$$
+ W_*(S,K)=L+2Kn+\delta+2K-1.
+ \tag{GPO.57}
+$$
+
+The condition on $n$ is sufficient for this formula; no maximal validity
+domain or formula for smaller $n$ is asserted.
+
+Proof. Fix any competitor and the single authentic input
+$(x,k)=(0^n,b)$. For every $i$, compare this run with the allowed input
+obtained by flipping only $x_i$. Correctness requires a first different
+paid reply. At their common reached prefix, Lemma 14.1 supplies the same
+extra-update count $e_i$ and word $p_iq$. The two ranks are
+$2b+e_i$ and $2b+e_i+1$. Equation (GPO.56) forces
+$\vartheta(q)=2b+e_i+1$, hence the selected word has length at least
+$d_i+\lceil(2b+e_i+1)/2\rceil\ge d_i+b+1$.
+The $n$ selected occurrences are distinct because a word enters only
+one original cone.
+
+Compare the same high input with the allowed input $(1^n,b-1)$.
+Here $b-1\ge K$ uses precisely $K\ge2$. Their first different reply
+has common extra-update count $e$, cone ranks $2b+e$ and $2b-1+e$,
+and threshold $\vartheta(q)=2b+e$. Its literal length is at least
+$\delta+b$. This occurrence is different from every selected label
+occurrence: at this occurrence the high rank and its one-label-flipped
+rank are both at least that threshold, so it cannot separate that label
+flip. All charges occur on the same fixed high-input run. Thus
+
+$$
+ W_A(0^n,b)\ge L+n(b+1)+\delta+b.
+ \tag{GPO.58}
+$$
+
+This argument permits every adaptive finite update schedule; it equates
+only actually shared prefixes, not the later schedules of distinct runs.
+
+For attainment choose a shortest public leaf $p_*$. On the stationary
+entrance register submit $\tau_\pi(p_*R^s)$ for
+$s=b,b-1,\ldots,K+1$, stopping at the first one. By (GPO.45) each
+bit is exactly $[k\ge s]$. The first one identifies $k=s$; if all
+bits are zero, set $k=K$. Then submit the $n$ actual words
+$\tau_\pi(p_iR^{k-1}LL)$, acquire their label bits, assemble $u_x$
+and retain $(u_x,k)$. Every operand is public or already acquired.
+The exact costs on this one run are
+
+$$
+\begin{aligned}
+ Q(k)&=\begin{cases}n+b-k+1,&k>K,\\n+K-1,&k=K,\end{cases}\\
+ C(k):=W(k)&=\begin{cases}
+ L+n(k+1)+\displaystyle\sum_{s=k}^{b}(\delta+s),&k>K,\\
+ L+n(K+1)+\displaystyle\sum_{s=K+1}^{b}(\delta+s),&k=K.
+ \end{cases}
+\end{aligned}
+\tag{GPO.59}
+$$
+
+For $K+2\le k\le b$,
+$C(k-1)-C(k)=\delta+k-1-n\le0$ under the stated hypothesis;
+also $C(K)-C(K+1)=-n$. Consequently
+$\max_k C(k)=C(b)=L+n(b+1)+\delta+b$. Together with (GPO.58)
+this proves (GPO.57). The displayed finite loops, binary comparisons,
+literal construction, translation, acquired writes and assembly have
+finite effective implementations exactly as in Theorem 16.2. They pay
+their actual local work and use growing owned backing. They terminate
+under the same progress premise, without any unknown stopping operand.
+$\square$
+
+## 20. The literal price forced by minimum calls
+
+**Theorem 20.1 (exact traffic under the minimum-call constraint).** For
+every finite nonempty scaffold, $K=2^r$ and $r\ge1$, without a lower
+bound on $n$ beyond $n\ge1$,
+
+$$
+ W_{\rm call}(S,K)=L+2Kn+r\delta+2Kr-K+1.
+ \tag{GPO.60}
+$$
+
+The call allowance $n+r$ is already the exact minimum worst $Q$ in
+Theorem 16.2. The additional assertion is the optimal literal price
+within that allowance, including updating competitors.
+
+Proof. Let $D=n+r$ and take a correct competitor with worst $Q\le D$.
+Its finite binary reply tree has $K2^n=2^D$ distinct terminal leaves,
+as in Theorem 15.2. A binary tree of height at most $D$ with $2^D$
+leaves is perfect: each child must attain its own capacity $2^{D-1}$,
+and the same argument recurses. Equivalently, suppressing a one-child
+paid Read would leave every terminal at branching depth $D$ and still
+charge that extra Read, violating $Q\le D$. Thus every Read branches;
+at depth $d$ each child has exactly half of the compatible candidates.
+Deterministic local work and actual updates may occur between these
+Reads and remain real paid actions.
+
+Inductively, before the $(j+1)$st Read, $0\le j<r$, the compatible
+set is $I\times\{0,1\}^n$, where $I=[a,a+m-1]$ has
+$m=2^{r-j}\ge2$ lags. By Lemma 14.1 and (GPO.56), a branching
+Read has a cone suffix and tests $2k+x_i\ge t$, with
+$t=\vartheta(q)-e_H$. If $t=2s$ it selects whole lag layers and
+reveals no label. If $t=2s+1$ is nonconstant, its positive side
+contains whole layers plus exactly half of the layer $k=s$.
+Each whole layer has $2^n$ members, whereas a perfect split requires
+$(m/2)2^n$ members on each side. The half-layer case cannot supply
+that integer multiple of $2^n$. Hence $t$ is even and its unique
+balanced split is $s=a+m/2$. The successor set is again a lag interval
+times the unrestricted label cube. This proves that the first $r$
+Reads must acquire the lag by balanced thresholds before learning any
+label. It is a conclusion about this tight budget, not an assumption
+on all protocols.
+
+On the fixed high-lag input $k=b$, their thresholds are
+$s_j=2K-K/2^j$, $1\le j\le r$. At a reached such Read,
+$\vartheta(q)=2s_j+e_H$, so its length is at least
+$\delta+\lceil(2s_j+e_H)/2\rceil\ge\delta+s_j$.
+Their total literal cost is at least
+
+$$
+ r\delta+\sum_{j=1}^r(2K-K/2^j)
+          =r\delta+2Kr-K+1.
+ \tag{GPO.61}
+$$
+
+After this clock prefix, all $n$ labels are still free. On the same
+input, say $x=0^n$, the $n$ first-difference label occurrences of
+Theorem 15.1 must occur afterwards, and cost at least
+$L+n(b+1)=L+2Kn$. Adding these disjoint occurrences proves the
+lower bound in (GPO.60).
+
+Use the already installed zero-update midpoint comparator of Definition
+16.1 for the upper. Its $j$th clock threshold on any path is at most
+$2K-K/2^j$; equality holds on the high-lag path. This follows by
+induction on the successive equal-size upper subintervals. Use $p_*$
+for every clock word. Their costs are therefore bounded by (GPO.61),
+and the label phase costs $L+n(k+1)\le L+2Kn$. On $k=b$ equality
+holds in both phases, independently of $x$. Its worst $Q$ is $n+r$.
+This proves attainment of (GPO.60). $\square$
+
+**Corollary 20.2 (a strict conflict of the two coordinates).** When
+$K=2^r$, $r\ge2$ and $n\ge\delta+2K-2$, the exact penalty for
+requiring minimum worst calls is
+
+$$
+ W_{\rm call}(S,K)-W_*(S,K)
+       =(r-1)\delta+(2r-3)K+2>0.
+ \tag{GPO.62}
+$$
+
+Proof. Subtract (GPO.57) from (GPO.60). The first term is nonnegative
+and $2r-3\ge1$. Thus no one protocol minimizes both worst $Q$ and
+worst $W$ on this intersection. Each optimum has its own common-run
+upper witness; they have not been added or declared jointly attainable.
+For $r=1$ the two expressions agree. No assertion about the full
+Pareto frontier follows. $\square$
+
+## 21. Acquired use and supplier correspondence for the literal optima
+
+**Proposition 21.1 (same-run prices and even handoff).** The descending
+controller in Theorem 19.2 has worst $Q=n+K-1$; the midpoint controller
+in Theorem 20.1 has worst $Q=n+r$. Both have zero acquisition updates,
+worst $M_{\rm addr}=h+2K$, and their respective exact $W$ values
+just proved. They actually retain the authentic pair at the unchanged
+entrance cut. With the supplied $\pi$ and the derived public original
+count $n$, their usable record is $(\pi,u_x,k,n,0)$ with backing,
+same-root binding and current grants.
+
+Proof. Equations (GPO.59) and the midpoint construction give the call
+counts. Their label words have length $d_i+k+1$; at $k=b$ a deepest
+leaf attains $h+2K$. Every clock word has length at most
+$\delta+b<h+2K$. Actual assembly writes the acquired data into
+owned readable backing and preserves the supplied services through
+handoff. Since $K\ge2$, every successful cut lies in Definition 6.1's
+passive $k\ge2$ domain, with authentic advice $A=B=n$. Theorems
+6.2 and 6.4 therefore apply directly: physical incidence and terminal
+boundary recover the same target, and the retained record recovers
+these data and authentic count $2k$. With fixed $N=2k$, every completed
+logical macro boundary satisfies
+$\widehat r_e=\rho^N(\rho^eu_x)$ on this very register. The supplier
+preserves complete four-valued logical replies, absence, choices,
+outputs, successors and pending cuts. These are reused continuation
+results, not consequences merely of a query optimum. $\square$
+
+If an odd-offset consumer is selected instead, execute one actual
+permitted update and retain its phase: now the register is
+$\rho^{2k+1}u_x$. Theorem 11.1 and Theorem 11.2 then apply with fixed
+$N=2k+1$. That update, its material and actuator work, finite offset
+arithmetic and attachment are additional costs. Either handoff followed
+by a finite continuation with charges $Q_c,W_c,M_c,U_c,J_c$ pays
+$Q+Q_c,W+W_c,\max(M_{\rm addr},M_c)$ and its actual sum of updates
+and local work. Resuming a pending macro retains its already acquired
+bit and evaluator state; it does not refund or repeat that Read.
+
+The programs pay parsing of $S$, shortest-leaf selection, every binary
+counter operation, whole-word construction/translation, output assembly,
+allocation, record access and maintenance. All are finite on their
+attained operands. The Read backend additionally pays at most $W+Q$
+root/edge steps under Definition 1.3's node-following implementation.
+The source, private full writer, public scaffold/orientation/bin, their
+authentication, surviving rights, code, scratch and retention lifetime
+have separate actual prices. A data encoding of $x,k-K$ has $n$ label
+bits and $\lceil\log_2K\rceil$ lag bits, but is not a total memory
+minimum. Finite code does not mean fixed storage capacity.
+
+The source-relative increment beyond Convention 18.2 is (GPO.58)'s
+extra disjoint clock charge, the descending attainment regime, and the
+tight-call forced clock prefix yielding (GPO.60). The existing cone,
+first-difference, finite reply-tree and midpoint results of §§13–16
+are suppliers. FiniteSourceMass and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.scribe.cs)
+supply (GPO.56); NativeSerialMachine and its Scribe supply actual
+reached-prefix control, not a hidden epoch. The ordered algebra remains
+GenealogicalFiberTransport and pinned mathlib's `FreeMagma` as in §18.
+
+For literature comparison, Cicalese–Keszegh–Lidický–Pálvölgyi–Valla,
+[*On the Tree Search Problem with Non-uniform Costs*,
+arXiv:1404.4504v1](https://arxiv.org/abs/1404.4504v1), §§1–2,
+defines cost as the sum of actual query costs along one decision-tree
+path, followed by its maximum. Proposition 2 is the general exponential
+algorithm; **Theorem 2**, rather than Theorem 2.1, is the exact weighted
+path algorithm. Their oracle cuts an edge of one fixed input tree and
+returns its component containing a sought vertex. It does not implement
+the multi-cone unknown label/lag source, changing ranks or literal root
+tariff here. The weighted-search objective is literature-attested;
+neither that path algorithm nor its complexity is transported without
+such a correspondence. The formulas here have the direct proofs above.
+They are repo-derived synthesis, with no worldwide-priority or new Lean
+certification claim. Smaller-$n$ unrestricted $W$, non-power-of-two tight
+call traffic, the whole frontier and total-resource parsimony remain
+outside these exact formulas.
+
+## 追加锚（本行以下为增补区）
+
+## 22. A locally wired service and its exact two-step image
+
+**Definition 22.1 (local birth wiring, with separate tasks).** The
+following service replaces the single global $\pi$ of Assumption
+1.2(1),(7). It does not change the source algebra (GPO.1). At each
+actual branch there are distinguishable physical children $a,b$ and
+a local bijection to its semantic children $L,R$. That bijection
+persists as long as the branch persists. An old branch and its links
+persist under substitution. When a beta leaf splits, one actual hidden
+wiring bit places its semantic beta/alpha children at $a,b$ in either
+order. All finite assignments at all births are legal. No probability
+law, independence law or accessible law tying these choices to the past
+is postulated. The choices are actual actuator inputs and material
+relations, in addition to the labels and substitution; they are not
+free advice to the observer.
+
+Keep one stable bound root, total paid absolute physical-word presence
+Read, localStep, serial forward applyRho and stop. Only a common
+completion acknowledgement is exposed by an update. Full physical
+labels, the writer, past epochs, link creation, allocation identities,
+capacity, runtime and private choices provide no additional channel.
+Control, code, grants and initial accessible backing are common at
+fixed public inputs. Finite-work progress, owned growing readable
+backing, current rights and reference maintenance remain paid installed
+premises. Reads and declared acquisition phases are stationary; no
+concurrent updates, reroot, reset, inverse, clone or historical root is
+supplied. Each old-node update substitutes exactly once at the old
+leaves, as in Proposition 9.3, with the new local wiring in place of a
+global one. Every request, word, computation, allocation and retained
+write is paid.
+
+There are three distinct targets below. The arbitrary-original task
+starts at an authentic $\rho^{2k}u$, with $k\ge1$ and authentic
+$1\le A\le n=\ell(u)\le B<2A$, and asks which semantic original
+$u$ is recoverable. The known-seed task starts at the actual known
+alpha leaf, counts completed updates as $n$, and asks for the full
+physical presence map after the next update, predicted at the current
+cut. Historical calibration instead returns the labelled physical
+state of a preceding cut after one real update. Original identity,
+current prediction and historical recovery are not interchangeable
+claims. The symbol $n$ denotes original leaf count only in §23 and
+completed-update count only in §§24–25.
+
+Write $\operatorname{phys}(t)$ for a labelled tree in its actual
+physical $a/b$ order, and $\operatorname{sh}$ for label erasure.
+Write $[t]$ for rooted label-preserving unordered isomorphism: it
+forgets all child order but retains every branch, leaf and label.
+These are occurrence trees, without subtree sharing or word
+associativity. An unordered isomorphism is not an acquired local
+semantic adapter.
+
+**Theorem 22.2 (exact local two-step recognizer).** Put
+$C=\langle\bullet,\bullet\rangle$. The set of possible unlabelled
+physical shapes after two substitutions on an arbitrary labelled
+physical tree is exactly the grammar
+
+$$
+ \mathcal G_{\rm loc}::=
+ C\ \mid\ \langle C,\bullet\rangle\ \mid\
+ \langle\bullet,C\rangle\ \mid\
+ \langle g_1,g_2\rangle\quad(g_1,g_2\in\mathcal G_{\rm loc}).
+ \tag{GPO.63}
+$$
+
+There is a terminating recognizer/decoder $D_{\rm loc}$ with the
+following exact rules. A leaf rejects. At a branch, two leaf children
+decode to alpha; mixed branch/leaf children decode to beta **only if
+the branch child is exactly $C$**. A mixed case with a larger branch
+rejects. Two branch children decode to their physical ordered pair
+only if both recursive parses succeed; otherwise they reject. This
+recognizes precisely (GPO.63), and every accepted shape has one and
+only one labelled physical predecessor $U$. It accepts $X$ and returns
+$U$ if and only if $X$ is the shape of a possible two-step locally
+wired expansion of $U$. In particular
+$[u]\mapsto[\operatorname{sh}(\rho^2u)]$ is injective.
+
+Proof. After two updates an alpha leaf has shape $C$. A beta leaf
+first creates a beta/alpha pair; the beta child then creates $C$ and
+the alpha child stays a leaf, giving precisely the two mixed codes.
+An old branch retains its physical children, each of which has a
+two-step code with a branch root. Thus the four root cases are
+disjoint, and the mixed case has the stated exact cherry requirement.
+Structural induction gives acceptance and the original physical
+predecessor for every actual expansion.
+
+Conversely, for each accepted code realize its alpha or beta case by
+the two actual leaf substitutions just described, choosing the beta
+code's first birth orientation to match its displayed side. In the
+pair case, realize the two recursive expansions below the old branch,
+whose physical links are retained. This realizes every accepted shape.
+The same disjoint cases force uniqueness of its predecessor; each
+recursive call decreases tree size, proving termination. There need
+not be a unique newborn-frame assignment or a unique expanded labelled
+tree: the inverse just proved concerns the predecessor, not those
+additional hidden fields.
+
+The recognizer is equivariant under local exchanges of the two
+children: its mixed cases both return beta, and its pair case exchanges
+the two decoded children. Consequently unordered-isomorphic accepted
+shapes have unordered-isomorphic labelled decodes. Applying this to
+actual two-step images proves the last injectivity statement. Ordered
+ABT12.1 alone would not prove that unordered assertion. $\square$
+
+## 23. Arbitrary authentic originals: acquisition and the complete fiber
+
+**Theorem 23.1 (acquired physical ancestor and exact semantic fiber).**
+In Definition 22.1's arbitrary-original domain, let $U$ be the authentic
+original written in its actual physical branch order. One common
+effective presence-only procedure acquires and retains $(U,k,n)$ with
+zero updates. For a fixed complete current physical presence service
+and the same authentic interval, the entire semantic target fiber is
+
+$$
+ \{(v,k,n):[v]=[U]\}.
+ \tag{GPO.64}
+$$
+
+Define the unordered-invariant integer $a$ by
+
+$$
+ a(\alpha)=a(\beta)=0,\qquad
+ a(\langle s,t\rangle)=a(s)+a(t)+\mathbf1_{[s]\ne[t]}.
+ \tag{GPO.65}
+$$
+
+There are exactly $2^{a(U)}$ different semantic originals in (GPO.64).
+The fiber is a singleton exactly for perfect monochromatic originals,
+including either single labelled leaf. On every nonsingleton fiber,
+uniform recovery of the original semantic Read/applyRho task from this
+service fails even with arbitrarily many adaptive forward updates.
+The positive acquisition and the negative semantic conclusion concern
+the same full realization class.
+
+Proof. First acquire the finite current physical shape $X$ by a stack
+traversal. Its root is known present. At each confirmed node $p$, pay
+Read$(pa)$; this bit classifies branch versus leaf in a full binary
+tree. Schedule $pa,pb$ only on a branch. Each actual node is visited
+once and stack exhaustion terminates without a size or height oracle.
+Now apply $D_{\rm loc}$, erase the decoded labels, and repeat until
+the first decoded leaf count is at most $B$.
+
+For decoding stage $j\le k$, Theorem 22.2 gives precisely the actual
+physical version of $\rho^{2(k-j)}u$. Its leaf count is at least
+$2^{k-j}n$, using ABT39.1's two-step growth. At every $j<k$ it is
+at least $2n\ge2A>B$, whereas at $j=k$ it is $n\le B$.
+Even the initial count exceeds $B$. Thus the first crossing is exactly
+$k$, no parse past the authentic original is attempted, and the
+returned labels and physical branch order are exactly $U$. All parsing,
+counting and comparisons use finite acquired strings and public advice.
+Actual retained writes make $(U,k,n)$ readable on this same run.
+
+Any alternative realization with the same complete physical presence
+service gives the same $X$, and this deterministic decoding/crossing
+gives the same $U,k,n$. Its semantic original is therefore in $[U]$.
+Conversely, fix any ordered $v$ with $[v]=[U]$. A rooted
+label-preserving unordered isomorphism assigns local frames at its old
+branches so its physical original is exactly $U$. Follow corresponding
+leaves through each actual update: matched alpha leaves become matched
+beta leaves; matched beta leaves create corresponding beta/alpha
+children. Choose their local birth frames to match the physical
+placements of the original realization. Old branches keep their
+frames. Induction realizes the same complete labelled physical tree
+at entrance, not just the same marginal shape, with semantic original
+$v$ and the same authentic $k,n$. This proves both directions of
+(GPO.64).
+
+Let $E(W)$ count ordered labelled representatives of an unordered
+class $W$. A leaf has $E=1$. A branch with distinct child classes
+$X,Y$ has $E=2E(X)E(Y)$, because their two physical positions are
+distinct choices. With equal child classes it has $E=E(X)^2$:
+every ordered pair of representatives occurs, and there is no
+additional exchange factor. Induction proves $E([U])=2^{a(U)}$.
+For $a(U)=0$, every branch has isomorphic children and both have
+zero $a$. Inductively they are perfect monochromatic trees of the
+same height and colour. This proves precisely the singleton
+classification, with its converse immediate from (GPO.65).
+
+For persistence of ambiguity, take any two different ordered originals
+in (GPO.64) with the matched labelled physical entrance trees just
+constructed, and common accessible initialization. After entrance choose
+the same physical rule, for example beta always placed at $a$, at every
+matched new birth in both realizations. This is a legal actual choice
+sequence; it needs no changing adversary or future oracle. Equal
+physical labelled trees then give equal physical presence replies and
+equal labelled successors under each update. Induction on the full
+accessible actions gives identical requests, acquired records, local
+control, acknowledgements, stopping and outputs for every finite
+adaptive controller. Even granting full future physical labels would
+leave this pair indistinguishable. The different semantic originals
+have different four-valued replies at some original semantic address,
+by the finite-tree distinction in Proposition 6.3. Hence no uniformly
+correct acquired adapter can serve all those original continuations.
+This is fiberwise identifiability; it does not deny that a constant
+program can name one source on a separately promised singleton input.
+$\square$
+
+**Proposition 23.2 (quotient prediction, views and the actual bill).**
+From the acquired record of Theorem 23.1 and the actually counted $e$
+subsequent completed updates one can compute
+$[\rho^{2k+e}u]$. This predictor agrees with the unordered labelled
+current register at every attained finite cut. It predicts neither
+arbitrary physical-address replies nor a missing original semantic
+adapter.
+
+Proof. A local exchange at an old branch remains an unordered
+isomorphism after $\rho$, and corresponding leaf replacements are
+unordered-isomorphic. Thus substitution defines a function on these
+unordered classes. Apply it $2k+e$ times to $[U]$. The entrance
+relation and one-step compatibility prove agreement by induction on
+the actual updates. Finite tree evaluation and canonicalization are
+ordinary local computations on retained data; they create no source
+sensor or second mutable root. $\square$
+
+Here space is the actual current physical rooted incidence
+$S_X=\{w:P_X(w)=1\}$; boundary is its terminal physical-address
+antichain $\partial_X$; time is the authentic substitution count
+$2k$; memory is the acquired $(U,k,n)$ with readable backing, the
+same binding and surviving rights. Prefix closure and maximality give
+$\partial_X\leftrightarrow S_X$. Their two parsing routes return
+the same $U,k,n$ and hence count $2k$. Memory recovers the unordered
+labelled current tree and its unordered terminal geometry, and tracks
+them as just proved. These routes are on one actual realization.
+Memory alone does not recover its current physical layout: for
+$u=\alpha,k=2$, the two unequal root-child shapes of $T_4$ may
+occupy opposite physical ports while $U,k,n$ stay fixed. Time alone
+also fails to determine $U$, since alpha and beta originals with
+$n=1$ and the same $k$ have equal advice and time but different labels.
+
+If $X$ has $\Lambda$ leaves, $N=2\Lambda-1$ nodes and height $H$,
+the actual stationary scan has exactly
+
+$$
+ Q=N,\qquad W=\sum_{p\in S_X}(|p|+1),\qquad
+ M_{\rm addr}=H+1,\qquad U_{\rm updates}=0.
+ \tag{GPO.66}
+$$
+
+Every leaf's failed child query is included. Root/edge-following service
+adds at most $W+Q$ traversals. These are one protocol's prices, not
+optima. All stack manipulation, parser passes, counting, comparisons,
+canonicalization, literal construction, allocation, copying and retained
+writes contribute actual finite local work; there is no asserted
+uniform local-time or workspace bound. A preorder $U$ uses $3n-1$
+shape/label bits, with binary $k,n$, framing, capabilities and advice
+additional. The acquired expanded shape and scratch can coexist with
+that output. Every future predictor evaluation, actual update, output
+and lifetime of backing has its own price. Selecting a semantic original
+from the fiber would require at least $2^{a(U)}$ supplementary values;
+none is acquired here. Enlarging storage or re-encoding acquired bits
+cannot supply that distinction.
+
+## 24. A known alpha seed and the current one-update task
+
+**Definition 24.1 (the prediction cut and its task).** Start instead
+with the actual known alpha leaf in the local service of Definition
+22.1. Let $T_m=\rho^m\alpha$ denote the semantic paper tree and
+$X_n$ its actual physically ordered labelled realization after $n$
+completed serial updates, with all actual persistent birth choices.
+Write $S=\operatorname{Pos}(X_n)$ for its current physical shape and
+$\partial S$ for its terminals. For $n\ge2$, let
+
+$$
+ C(S)=\{p:pa,pb\text{ are both leaves of }S\},\qquad
+ \chi_p=\mathbf1_{X_n(pa)=\beta}\quad(p\in C(S)).
+ \tag{GPO.67}
+$$
+
+The task $\mathcal Q_1$ asks, **before** the next update, for its
+entire successor presence response map on all finite physical words,
+including absent words. It can equivalently serve any later chosen
+stationary Read-and-stop request after that one update. This is not
+the semantic tree $T_n$, which is already known from the seed and
+count. New choices made during the next update do not affect the
+unlabelled shape of the new cherries, so $\mathcal Q_1$ is determined
+by the current labelled state; it does not ask an observer to predict
+unmade choices.
+
+**Theorem 24.2 (complete current fibers and their exact sizes).** With
+$F_0=0,F_1=1$, for every attained $n\ge2$ and every attained $S$,
+the current labelled fiber over $S$ consists of exactly the independent
+choices of $(\chi_p)_{p\in C(S)}$, and
+
+$$
+\begin{aligned}
+ |C(S)|&=F_{n-1}=:c,\\
+ \#\{X_n\text{ over this }S\}&=2^c,\\
+ \#\{S\text{ attained at }n\}&=2^{F_n-1},\\
+ \#\{X_n\text{ attained at }n\}&=2^{F_{n+1}-1}.
+\end{aligned}
+\tag{GPO.68}
+$$
+
+The $2^c$ states have pairwise different $\mathcal Q_1$ maps.
+
+Proof. The supplied recurrence is $T_0=\alpha,T_1=\beta$ and
+$T_m=\langle T_{m-1},T_{m-2}\rangle$ for $m\ge2$, with
+$\ell(T_m)=F_{m+1}$. Every branch therefore has a unique rank
+$m\ge2$, determined by its leaf count, since these counts are
+strictly increasing from rank one onward. At rank $m\ge3$ its
+child leaf counts $F_m,F_{m-1}$ are unequal. The physical shape
+therefore identifies which child has which rank. Rank two is the
+sole exception: both children are leaves, one beta and one alpha.
+These are precisely $C(S)$. A rank-zero leaf can only arise as
+the child of rank two; every other leaf is known beta. It follows
+recursively that all remaining ranks, labels and nonterminal local
+orientations are determined by $S,n$, and the displayed terminal
+choices describe the whole fiber.
+
+The number $c_m$ of rank-two occurrences has
+$c_0=c_1=0,c_2=1$ and $c_m=c_{m-1}+c_{m-2}$ for $m\ge3$.
+Thus $c_n=F_{n-1}$. There are $F_{n+1}-1$ actual branches, each
+born with one wiring bit. A fully labelled physical tree recovers
+every one of those bits: unequal-size child subtrees identify the
+nonterminal bits, and the beta position identifies each terminal bit.
+Conversely every assignment is realized at the corresponding actual
+births. Hence there are $2^{F_{n+1}-1}$ labelled trees, without
+identifications. Each shape has exactly the $2^{F_{n-1}}$ states
+already described, yielding $2^{F_n-1}$ shapes. These counts concern
+one joint tree realization per assignment, rather than products of
+separately attainable marginals.
+
+For $p\in C(S)$, after one real update,
+
+$$
+ P_{\rm next}(paa)=\chi_p,\qquad
+ S_{\rm next}=S\ \cup\
+   \{qa,qb:q\text{ is a current beta leaf}\}.
+ \tag{GPO.69}
+$$
+
+Beta becomes a branch and alpha becomes the leaf beta. The new
+branch's orientation permutes only its two new leaves, so neither
+identity depends on that new bit. The reconstructed current labels
+from $(S,\chi)$ give the entire successor set in (GPO.69), hence
+all replies, with no missing absent-word cases. Distinct $\chi$
+give different replies at some $paa$. This proves both exact
+distinction and sufficiency for the full task. $\square$
+
+**Theorem 24.3 (record criterion and finite-preparation obstruction).**
+Conditioned on an attained $S$ at $n\ge2$, a deterministic supplementary
+record supports exact $\mathcal Q_1$ recovery if and only if it
+separates all $2^c$ terminal vectors. For a finite or countable
+randomized supplementary kernel $r(a\mid\chi)$ the condition is
+
+$$
+ r(a\mid\chi)r(a\mid\chi')>0\quad\Longrightarrow\quad
+                 \chi=\chi'.
+ \tag{GPO.70}
+$$
+
+The minimum supplementary alphabet is $2^c$, attained abstractly by
+the $c$ bits. No presence-only finite adaptive preparation ending at
+such a current cut can actually acquire a sufficient supplement,
+even if the full current $S$ and authentic $n$ are also disclosed.
+
+Proof. Equation (GPO.69) identifies the task classes with the terminal
+vectors. One record used on two different classes cannot return both
+different exact reply maps. This proves necessity, including (GPO.70)
+for positive supports of randomized records. With that support
+condition, select the unique vector attached to a reached value and
+use (GPO.69), proving sufficiency. Each vector requires a nonempty
+disjoint support, giving the alphabet bound. This is an information
+criterion, not an acquisition mechanism.
+
+For the acquisition assertion, fix any finite actual controller run
+ending at epoch $n\ge2$. Freeze its actions, accessible randomness
+if any, and every physical choice before its last update. The beta
+leaves split by that update produce exactly the $F_{n-1}$ current
+terminal forks. Vary only their actual birth-wiring bits. The whole
+current shape, the previous observations and the update's common
+acknowledgement remain identical. Every subsequent stationary presence
+answer is also identical. Induction on the accessible controller steps
+therefore preserves requests, allocations, stopping and all actually
+retained accessible fields across these $2^c$ legal realizations.
+Their $\mathcal Q_1$ maps differ by (GPO.69). The run cannot return
+a sufficient record uniformly. For randomized zero-error procedures,
+couple the same independent accessible randomness; the indistinguishable
+record laws cannot have the required disjoint supports. More explicitly,
+if stopping is random, choose an attained finite epoch and a finite
+pre-last-update birth assignment with positive stopping probability
+with respect to the accessible randomness.
+Such a choice exists for a terminating procedure: there are countably
+many finite epochs and only finitely many birth assignments at each.
+For every extension by the last update's terminal bits, the event of
+stopping there and the retained-record law on that event are identical.
+At least two extensions require different outputs, excluding zero error.
+This argument
+allows arbitrary finite earlier preparation and adaptive updates; it
+is not a finite search limit. The excluded cuts $n=0,1$ have no such
+residual and are not used. $\square$
+
+## 25. Sharp historical calibration and renewed current residual
+
+**Theorem 25.1 (one actual update calibrates the preceding boundary).**
+Suppose the actual current $S$ of Definition 24.1 has been acquired
+and retained stationarily. On the same source perform one completed
+update and query $paa$ once for each $p\in C(S)$. The acquired bits
+recover the entire **old** labelled physical tree and its old local
+semantic address adapter. For this calibration segment the jointly
+attained prices are
+
+$$
+ U_{\rm updates}=1,\qquad Q=c,\qquad
+ W=\sum_{p\in C(S)}(|p|+2),\qquad
+ M_{\rm addr}=\max_{p\in C(S)}(|p|+2).
+ \tag{GPO.71}
+$$
+
+Each of the three Read coordinates is sharp among protocols with
+that same acquired $S$, common initialization apart from its data,
+no extra old-label information, exactly one actual update and full
+old-state recovery. After calibration the newest current state still
+has $F_n$ unobserved terminal bits.
+
+Proof. The paid bits are exactly $\chi_p$ by (GPO.69). Theorem
+24.2 reconstructs all old labels and nonterminal orientations;
+the terminal bits fix the remaining old orientations. Composing
+those local correspondences along an old semantic address gives its
+old physical address. This is retained historical data, not a new
+mutable old register.
+
+For lower bounds fix an arbitrary complete run and flip only one
+old $\chi_p$, holding the acquired $S$ and other old choices fixed.
+All pre-update presence replies agree. After the one update, support
+can differ only strictly below $pa$ or $pb$, inside the incomparable
+$p$-cone. Correct old-state output forces a first different Read,
+and its length is at least $|p|+2$. The same first-difference
+argument can be applied separately to each $p$ on that one fixed
+run. Their selected occurrences are distinct, since the terminal-fork
+addresses are prefix-incomparable. Summing, counting and taking their
+maximum gives all three lower bounds of (GPO.71), jointly attained
+by the stated queries. Adaptive queries and additional pre-update
+Reads cannot avoid them. The lower bound is scoped to this segment
+and these prerequisites; it does not claim optimal cost of acquiring
+$S$ or an optimum allowing additional updates or supplementary data.
+
+The update splits the $F_n$ beta leaves at epoch $n$, creating
+$F_n$ new terminal forks. Their new wiring bits affect no presence
+answer yet. Varying just those choices leaves the calibration queries
+and all current stationary observations unchanged, exactly as in
+Theorem 24.3. Thus the decoded old state does not remove the newest
+residual. Repetition acquires successive historical states while
+continually creating this current gap. $\square$
+
+**Proposition 25.2 (independent views and same-source resources).** In
+the known-seed model, physical incidence $S$ and terminal antichain
+$\partial S$ determine one another by maximality and prefix closure.
+For $n\ge2$ either determines $n$ by its Fibonacci leaf count.
+They do not determine $\mathcal Q_1$ without the residual of Theorem
+24.2. Time $n$ alone does not determine physical incidence for
+$n\ge3$: exchanging the unequal root-child shapes gives distinct
+physical supports at the same count. The semantic tree $T_n$ is
+known from time and the alpha seed, and must be distinguished from
+all of these physical recovery statements.
+
+After the actual calibration, either incidence or boundary, together
+with the same acquired $\chi$ bits, reconstructs the same old
+labelled state; (GPO.69) also gives the correct current unlabelled
+state. These routes agree because they use the same old tree and
+actual paid replies. Arbitrary physical Reads and stop on that
+unlabelled state have the computed replies and outputs. A further
+update requires the new current labels and therefore the fresh
+residual; the old recovered adapter is not automatically a current
+adapter below newly created branches. No cloned historical callable
+root or closed transition of the newest labelled state is obtained.
+
+For a concrete acquired prerequisite, the scan of (GPO.66) at epoch
+$n$ has exactly $N_n=2F_{n+1}-1$ calls,
+$W_{\rm shape}=\sum_{q\in S}(|q|+1)$ and maximum $H(S)+1$.
+List its terminal forks by paid local computation and retain their
+actual addresses. This scan followed by calibration has, on one run,
+
+$$
+ Q=N_n+c,\qquad W=W_{\rm shape}+\sum_{p\in C(S)}(|p|+2),
+ \qquad M_{\rm addr}=\max\{H(S)+1,\max_{p\in C(S)}(|p|+2)\},
+ \qquad U_{\rm updates}=1.
+ \tag{GPO.72}
+$$
+
+Its initial scan is an upper bound, not an acquisition optimum. The
+source already has $F_{n+1}$ leaves and $N_n$ nodes; the update
+allocates exactly $2F_n$ new nodes and $2F_n$ child links, and makes
+$F_n$ actual wiring
+choices, in addition to tag overwrites and traversal. Internal update
+work, hidden writer, root/grants, authentication, literal construction,
+stack and address storage, fork extraction, retained bits, reconstruction,
+outputs and retention lifetime all retain their actual prices. The
+$c$-bit supplement minimum counts a data alphabet, not total memory,
+hardware, energy or physical duration. A larger backing or a finite
+program cannot read the missing latest wiring through this interface.
+
+## 26. Local-port suppliers, task boundaries and remaining recovery
+
+The common locally wired service in §22 supports two different
+source-specific deductions. For arbitrary authentic originals, the
+increment is exact local image recognition, physical-order ancestor
+acquisition, the complete semantic fiber and its persistent future
+ambiguity. For the known alpha seed, it is the exact terminal residual,
+its attained shape/state counts, the current-cut obstruction after
+every finite preparation, and the sharp one-update historical remedy.
+GPO Proposition 6.5's old root-swap pair is a supplier boundary, not
+the content of these results. The two tasks are not identified: one
+can know $T_n$ and still lack its physical current continuation map.
+
+| Supplier | Use and precise boundary |
+| --- | --- |
+| ABT12.1, (ABT.30)–(ABT.31), ABT39.1–39.2 | Ordered two-step code inversion, leaf-growth separation and the authentic sharp interval. The new recognizer admits both mixed orientations but checks the exact cherry, and proves the unordered inverse; broad-interval history ambiguity is not removed. |
+| GenealogicalFiberTransport and its owning Scribe; pinned mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`, `FreeMagma.of/mul/lift` | The same free ordered nonassociative source, homomorphic substitution and composition. They do not acquire physical local frames. |
+| ActualFibonacciSupportChain and its owning Scribe, including proof-local recurrence; FiniteSourceMass | The actual Fibonacci recurrence, literal address and guarded support conventions. The new physical correspondence is local, not the ordered semantic interface of these suppliers. |
+| NativeErasedSupportKernels and its owning Scribe, including `root_reflection`, `erased_reply_presence`, `two_step_prefix_kernel`, `even_epoch_support_kernel` | The old erased/support kernels retain the same ordered addresses. Their ordered decoder cannot be transported through hidden local swaps without the correspondence supplied in §§22–23. |
+| NativeFullSourceProducer and its owning Scribe, including `sourceControl`, `traverse`, `stationary`; NativeSerialMachine | Source-blind acquired-stack assembly and reached-prefix control on one register. Our presence scan tests one child per confirmed node instead of borrowing its hidden full reply. |
+| [Native Clocked Recovery and Order](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md), §§2,5,8; [Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), §§1–2,10 | Their installed deterministic source, order, clocks, completed acquired data, ownership and permitted serializers remain premises. No serializer supplies unobserved fresh actuator inputs. |
+| [Native Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md), Definitions 2.1–2.4, §6 and Theorem 11.1 | Its initialized lawful image, actual control/record fields, rights and priced structural basis are retained. Its four-view kernels do not assert that presence acquires the hidden choices of Definition 22.1. |
+
+Kersting–Fischer, [*Measuring tree balance using symmetry nodes*,
+arXiv:2105.00719v2](https://arxiv.org/abs/2105.00719v2), §2,
+Definition 2.1 and Lemma 3.2, supplies rooted unordered isomorphism,
+symmetry-node language and the additive nonsymmetry count. Its fully
+balanced zero case concerns uncoloured shapes. Equation (GPO.65) keeps
+leaf colours, and the elementary ordered-representative count was proved
+explicitly for that coloured case; no new general tree-counting principle
+is claimed.
+
+Nilsson, [*On the Entropy of Random Fibonacci Words*,
+arXiv:1001.3513v1](https://arxiv.org/abs/1001.3513v1), Introduction
+and “Inflated Words”, already treats $0\mapsto1$ and
+$1\mapsto01$ or $10$, with $0=\alpha,1=\beta$, and the overlap
+of inflated word sets. Thus neither the leaf rewriting options nor
+random substitution or word entropy is new here. Our model assigns
+no probability and retains nonassociative branching and persistent
+node incidences. Different tree choices can flatten to the same word;
+Nilsson's word counts are not (GPO.68). Ordered ranked trees and their
+child-number navigation in Engelfriet–Inaba–Maneth, §2 of [TWT],
+likewise supply an order rather than acquire these local frames.
+The finite-state identification comparison in §18 retains its own
+finite transition system and observable-response assumptions. The
+obstruction here is proved directly for every finite preparation of
+the actual unbounded growing tree, without transporting a finite-state
+identification theorem. These are repo-derived source-specific proofs,
+with no universal alpha/beta obstruction, global novelty or additional
+Lean certification claim.
+
+Space is rooted incidence, not a physical metric; time is completed
+substitution count, not physical duration or the full chronology.
+The local theorems neither remove authentic advice and root/grant
+premises nor install a birth-wiring sensor or an endogenous future-wiring
+law. The global results in §§1–21 retain their stronger persistent
+global correspondence and their exact acquisition tasks. The current,
+original-semantic and historical claims above retain their separate
+domains. The original fixed-$G_{\rm gc}$, original-Q, parked-consumer
+and unchanged-initialization problems, and the PR57/PG/NCR/PVC/Atlas
+interfaces, are not repaired by a change of model. No common actual
+atomic/quantum/continuous initialization and action map, time-only
+inverse, unrestricted four-way recovery or minimum total-resource
+implementation is supplied. The bounded acquisition, obstruction and
+historical results leave those programme-level directions unresolved.
+
+## 追加锚（本行以下为增补区）

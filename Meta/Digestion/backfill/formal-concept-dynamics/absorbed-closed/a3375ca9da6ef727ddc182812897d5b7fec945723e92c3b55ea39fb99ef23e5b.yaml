@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a3375ca9da6ef727ddc182812897d5b7fec945723e92c3b55ea39fb99ef23e5b
+  normalized_sha256: sha256:a3375ca9da6ef727ddc182812897d5b7fec945723e92c3b55ea39fb99ef23e5b
+cas_ref: sha256:a3375ca9da6ef727ddc182812897d5b7fec945723e92c3b55ea39fb99ef23e5b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValue/ThresholdPublicGoodDualEquilibria.thresholdUtility
+    target_statement_id: sha256:138b5666109920d6a3e5fffb14bedfa49261febe6079bebf3dbb9e8e40b7d98c
+receipts:
+  unresolved_subitems: []
