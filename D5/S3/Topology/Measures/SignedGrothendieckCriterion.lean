@@ -8,6 +8,7 @@
 
 import D5.S3.Topology.Measures.SignedRieszRepresentation
 import D5.S3.Topology.Measures.L1RawSplitting
+import D5.S3.Topology.Measures.ClopenDisjointization
 import Mathlib.MeasureTheory.Measure.WithDensityFinite
 import Mathlib.MeasureTheory.VectorMeasure.Decomposition.RadonNikodym
 import Mathlib.MeasureTheory.VectorMeasure.WithDensityVec
@@ -443,6 +444,226 @@ theorem weak_of_disjoint_diagonal_variation
       rw [← map_add, ← heq, hrep]
     exact ⟨j, by simpa only [hp, add_zero] using hpa.add hpb⟩
   simpa only [map_sub, sub_add_cancel, zero_add] using hc.add_const (Φ FInf)
+
+
+private lemma signedFunctional_smul (c : ℝ) (s : SignedMeasure K) (g : C(K, ℝ)) :
+    NormPreservingLifts.signedFunctional (c • s) g =
+      c * NormPreservingLifts.signedFunctional s g := by
+  change (∫ᵛ x, g x ∂•(c • s)) = c * (∫ᵛ x, g x ∂•s)
+  simpa only [smul_eq_mul] using VectorMeasure.integral_smul_vectorMeasure
+    (B := ContinuousLinearMap.lsmul ℝ ℝ) (μ := s) (fun x => g x) c
+
+private lemma variation_smul_real (c : ℝ) (s : SignedMeasure K) (A : Set K) :
+    (c • s).totalVariation.real A = |c| * s.totalVariation.real A := by
+  simp only [SignedMeasure.totalVariation_eq_variation, VectorMeasure.variation_smul,
+    measureReal_nnreal_smul_apply, coe_nnnorm, Real.norm_eq_abs]
+
+private lemma smul_regular (c : ℝ) (s : SignedMeasure K)
+    (hs : s.totalVariation.Regular) : (c • s).totalVariation.Regular := by
+  letI := hs
+  rw [SignedMeasure.totalVariation_eq_variation, VectorMeasure.variation_smul,
+    ← SignedMeasure.totalVariation_eq_variation]
+  infer_instance
+
+private lemma signed_apply_bound (s : SignedMeasure K) (A : Set K) :
+    |s A| ≤ s.totalVariation.real univ := by
+  have h := VectorMeasure.norm_measure_le_variation (μ := s) (E := A)
+    (by rw [← SignedMeasure.totalVariation_eq_variation]; exact measure_ne_top _ _)
+  rw [← SignedMeasure.totalVariation_eq_variation, Real.norm_eq_abs] at h
+  exact h.trans (measureReal_mono (subset_univ _) (measure_ne_top _ _))
+
+private lemma signedFunctional_clopen (s : SignedMeasure K) (Z : Set K)
+    (hZ : IsClopen Z) :
+    NormPreservingLifts.signedFunctional s
+      ⟨Z.indicator (fun _ => 1), hZ.continuous_indicator continuous_const⟩ = s Z := by
+  letI : IsFiniteMeasure s.variation := by
+    rw [← SignedMeasure.totalVariation_eq_variation]
+    infer_instance
+  change (∫ᵛ x, Z.indicator (fun _ => (1 : ℝ)) x ∂•s) = s Z
+  simpa using (VectorMeasure.integral_indicator_const
+    (B := ContinuousLinearMap.lsmul ℝ ℝ) (μ := s) (1 : ℝ) hZ.isOpen.measurableSet)
+
+section Oscillation
+variable [ZeroDimensionalSpace K]
+variable (O : ∀ t : ℕ → SignedMeasure K, ∀ W : ℕ → Set K,
+    (∀ n, (t n).totalVariation.Regular) →
+    (∀ n, IsClopen (W n) ∧ (W n).Nonempty) →
+    Pairwise (fun i n => Disjoint (W i) (W n)) →
+    (∀ n, (t n).totalVariation.real univ = 1) →
+    (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+    (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
+    ∃ Z : Set K, IsClopen Z ∧
+      {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite)
+include O
+
+private lemma disjoint_norm_one_no_limit
+    (v : ℕ → SignedMeasure K) (hv : ∀ n, (v n).totalVariation.Regular)
+    (hnorm : ∀ n, (v n).totalVariation.real univ = 1)
+    (E : ℕ → Set K) (hE : ∀ n, MeasurableSet (E n))
+    (hd : Pairwise (fun i n => Disjoint (E i) (E n)))
+    (hc : ∀ n, (v n).totalVariation (E n)ᶜ = 0)
+    (L : StrongDual ℝ C(K, ℝ))
+    (hlim : ∀ g : C(K, ℝ), Tendsto
+      (fun n => NormPreservingLifts.signedFunctional (v n) g) atTop (𝓝 (L g))) : False := by
+  classical
+  obtain ⟨n, W, t, hn, hWd, ht, c, j, hsign, hj, hnj, hct⟩ :=
+    ClopenDisjointization.exists_signed_clopen_disjointization v hv hnorm E hE hd hc
+      (η := (1 / 96 : ℝ)) (by norm_num) (by norm_num)
+  have hprops (k : ℕ) := ht (j k)
+  obtain ⟨Z, hZ, hhigh, hzero⟩ := O (fun k => c • t (j k)) (W ∘ j)
+    (fun k => smul_regular c _ (hprops k).2.2.2.2.2.2.1)
+    (fun k => ⟨(hprops k).1, (hprops k).2.1⟩)
+    (fun a b hab => hWd (hj.injective.ne hab))
+    (fun k => by rw [(hct k).1]; exact (hprops k).2.2.2.2.2.2.2.1)
+    (fun k => (hct k).2.2.1)
+    (fun k => by rw [(hct k).1]; exact (hprops k).2.2.2.2.2.2.2.2.1)
+  let g : C(K, ℝ) := ⟨Z.indicator (fun _ => 1), hZ.continuous_indicator continuous_const⟩
+  let x : ℕ → ℝ := fun k => c * NormPreservingLifts.signedFunctional (v (n (j k))) g
+  let ell : ℝ := c * L g
+  have hx : Tendsto x atTop (𝓝 ell) :=
+    tendsto_const_nhds.mul ((hlim g).comp hnj.tendsto_atTop)
+  have herr (k : ℕ) : |(c • t (j k)) Z - x k| < (1 / 48 : ℝ) := by
+    have hb := signed_apply_bound (c • t (j k) - c • v (n (j k))) Z
+    have he := (hprops k).2.2.2.2.2.2.2.2.2
+    obtain ⟨heq, hlt⟩ := he
+    rw [(hct k).2.2.2, ← heq] at hb
+    have hxk : (c • v (n (j k))) Z = x k := by
+      dsimp [x, g]
+      rw [VectorMeasure.smul_apply, smul_eq_mul]
+      rw [signedFunctional_clopen _ Z hZ]
+    rw [VectorMeasure.sub_apply, hxk] at hb
+    linarith
+  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.mp hx (1 / 48) (by norm_num)
+  by_cases hl : ell < (1 / 12 : ℝ)
+  · obtain ⟨k, hk, hNk⟩ := hhigh.exists_gt N
+    have he := herr k
+    have ht := hN k hNk.le
+    rw [Real.dist_eq] at ht
+    have hp : (1 / 6 : ℝ) ≤ (c • t (j k)) Z := hk
+    have ha := (abs_lt.mp he).2
+    have hb := (abs_lt.mp ht).2
+    linarith
+  · obtain ⟨k, hk, hNk⟩ := hzero.exists_gt N
+    have he := herr k
+    have ht := hN k hNk.le
+    rw [Real.dist_eq] at ht
+    have hz : (c • t (j k)) Z = 0 := hk
+    rw [hz] at he
+    have ha := (abs_lt.mp he).1
+    have hb := (abs_lt.mp ht).1
+    linarith
+
+private lemma disjoint_mass_limit_zero
+    (a : ℕ → SignedMeasure K) (ha : ∀ n, (a n).totalVariation.Regular)
+    (E : ℕ → Set K) (hE : ∀ n, MeasurableSet (E n))
+    (hd : Pairwise (fun i n => Disjoint (E i) (E n)))
+    (hc : ∀ n, (a n).totalVariation (E n)ᶜ = 0)
+    (r : ℝ) (hr : 0 ≤ r)
+    (hq : Tendsto (fun n => (a n).totalVariation.real univ) atTop (𝓝 r))
+    (L : StrongDual ℝ C(K, ℝ))
+    (hlim : ∀ g : C(K, ℝ), Tendsto
+      (fun n => NormPreservingLifts.signedFunctional (a n) g) atTop (𝓝 (L g))) : r = 0 := by
+  by_contra hn
+  have hrpos : 0 < r := lt_of_le_of_ne hr (Ne.symm hn)
+  let q : ℕ → ℝ := fun n => (a n).totalVariation.real univ
+  obtain ⟨N, hN⟩ := eventually_atTop.mp
+    (hq.eventually (eventually_gt_nhds (show r / 2 < r by linarith)))
+  let v : ℕ → SignedMeasure K := fun k => (q (k + N))⁻¹ • a (k + N)
+  have hqpos (k : ℕ) : 0 < q (k + N) :=
+    lt_trans (by linarith : 0 < r / 2) (hN _ (Nat.le_add_left N k))
+  have htail : Tendsto (fun k : ℕ => k + N) atTop atTop :=
+    (strictMono_nat_of_lt_succ (by intro k; omega)).tendsto_atTop
+  apply disjoint_norm_one_no_limit O v
+    (fun k => smul_regular _ _ (ha (k + N)))
+    (fun k => by
+      rw [variation_smul_real, abs_of_pos (inv_pos.mpr (hqpos k))]
+      exact inv_mul_cancel₀ (hqpos k).ne')
+    (fun k => E (k + N)) (fun k => hE (k + N))
+    (fun i j hij => hd (by omega : i + N ≠ j + N))
+    (fun k => by
+      dsimp [v]
+      rw [SignedMeasure.totalVariation_eq_variation, VectorMeasure.variation_smul,
+        ← SignedMeasure.totalVariation_eq_variation, Measure.smul_apply, hc, smul_zero])
+    (r⁻¹ • L)
+  intro g
+  have hi : Tendsto (fun k => (q (k + N))⁻¹) atTop (𝓝 r⁻¹) :=
+    (hq.comp htail).inv₀ hrpos.ne'
+  simpa only [v, signedFunctional_smul, ContinuousLinearMap.smul_apply, smul_eq_mul] using
+    hi.mul ((hlim g).comp htail)
+
+/-- Quantitative signed clopen oscillation implies the full real-dual
+Grothendieck sequence property. O is a property of norm-one signed measures;
+no norm bound is assumed on the arbitrary dual sequence. -/
+theorem weak_of_signed_clopen_oscillation
+    (F : ℕ → StrongDual ℝ C(K, ℝ)) (FInf : StrongDual ℝ C(K, ℝ))
+    (hF : ∀ g : C(K, ℝ), Tendsto (fun n => F n g) atTop (𝓝 (FInf g))) :
+    ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
+      Tendsto (fun n => Φ (F n)) atTop (𝓝 (Φ FInf)) := by
+  obtain ⟨s, hs, hrep, _, hb, hzero⟩ := centered_signed_representatives F FInf hF
+  intro Φ
+  have hc : Tendsto (fun n => Φ (F n - FInf)) atTop (𝓝 0) := by
+    apply Filter.tendsto_of_subseq_tendsto
+    intro ns hns
+    obtain ⟨j, E, r, sInf, hj, hE, hdisj, hdec, hreg, _, hr, hmass, _, hweak⟩ :=
+      exists_signed_raw_restriction_splitting (s ∘ ns) (fun n => hs (ns n))
+        (by obtain ⟨B, hB⟩ := hb; exact ⟨B, fun n => hB (ns n)⟩)
+    let a (n : ℕ) := (s (ns (j n))).restrict (E n)
+    let b (n : ℕ) := (s (ns (j n))).restrict (E n)ᶜ
+    have hselected (g : C(K, ℝ)) : Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (s (ns (j n))) g)
+        atTop (𝓝 0) := (hzero g).comp (hns.comp hj.tendsto_atTop)
+    have heq (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) =
+        NormPreservingLifts.signedFunctional (a n) +
+          NormPreservingLifts.signedFunctional (b n) := by
+      have hd : s (ns (j n)) = a n + b n := hdec n
+      rw [hd]
+      exact signedFunctional_add _ _
+    have halim (g : C(K, ℝ)) : Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (a n) g) atTop
+        (𝓝 ((-NormPreservingLifts.signedFunctional sInf) g)) := by
+      have hbtest := hweak (NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g)
+      have ht := (hselected g).sub hbtest
+      have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
+          NormPreservingLifts.signedFunctional (b n) g =
+          NormPreservingLifts.signedFunctional (a n) g := by rw [heq]; simp
+      simpa only [heval, zero_sub] using ht
+    have hrzero : r = 0 := disjoint_mass_limit_zero O a (fun n => (hreg n).1)
+      E hE hdisj (fun n => by
+        dsimp [a]
+        rw [SignedMeasure.totalVariation_eq_variation, VectorMeasure.variation_restrict (hE n),
+          Measure.restrict_apply (hE n).compl]
+        simp) r hr hmass (-NormPreservingLifts.signedFunctional sInf) halim
+    have hsmall : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n))
+        atTop (𝓝 0) := signedFunctional_small a (by simpa only [hrzero] using hmass)
+    have hbzero (g : C(K, ℝ)) : Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (b n) g) atTop (𝓝 0) := by
+      have hsa : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n) g)
+          atTop (𝓝 0) := by
+        have ht := ((NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g).continuous.tendsto
+          (0 : StrongDual ℝ C(K, ℝ))).comp hsmall
+        convert ht using 1 <;> rfl
+      have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
+          NormPreservingLifts.signedFunctional (a n) g =
+          NormPreservingLifts.signedFunctional (b n) g := by rw [heq]; simp
+      simpa only [heval, sub_self] using (hselected g).sub hsa
+    have hlimzero : NormPreservingLifts.signedFunctional sInf = 0 :=
+      weak_limit_zero_of_evaluation (fun n => NormPreservingLifts.signedFunctional (b n))
+        (NormPreservingLifts.signedFunctional sInf) hweak hbzero
+    have hpa : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (a n)))
+        atTop (𝓝 0) := by
+      have ht := (Φ.continuous.tendsto (0 : StrongDual ℝ C(K, ℝ))).comp hsmall
+      convert ht using 1 <;> first | rfl | simp only [map_zero]
+    have hpb : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (b n)))
+        atTop (𝓝 0) := by simpa only [Function.comp_apply, b, hlimzero, map_zero] using hweak Φ
+    have hp (n : ℕ) : Φ (NormPreservingLifts.signedFunctional (a n)) +
+        Φ (NormPreservingLifts.signedFunctional (b n)) = Φ (F (ns (j n)) - FInf) := by
+      rw [← map_add, ← heq, hrep]
+    exact ⟨j, by simpa only [hp, add_zero] using hpa.add hpb⟩
+  simpa only [map_sub, sub_add_cancel, zero_add] using hc.add_const (Φ FInf)
+
+#print axioms weak_of_signed_clopen_oscillation
+#check @weak_of_signed_clopen_oscillation
+end Oscillation
 
 #print axioms exists_signed_raw_restriction_splitting
 #print axioms weak_of_disjoint_diagonal_variation
