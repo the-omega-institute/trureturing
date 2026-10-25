@@ -83,11 +83,26 @@ private theorem base_square_zero :
   rintro ⟨i, a⟩ ⟨j, b⟩
   fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
     norm_num [pow_two, Matrix.mul_apply, Fintype.sum_sigma, Fin.sum_univ_two, Fin.sum_univ_succ,
-      baseMatrix, Matrix.map_apply, Matrix.algebraMap_eq_diagonal, Matrix.diagonal_apply, sizes, Fintype.sum_unique]
+      baseMatrix, Matrix.map_apply, Matrix.algebraMap_eq_diagonal,
+      Matrix.diagonal_apply, sizes, Fintype.sum_unique]
 
 private theorem base_spectrum :
     spectrum ℂ (baseMatrix.map (algebraMap ℝ ℂ)) = {(1 / 2 : ℂ)} := by
-  sorry
+  let A := baseMatrix.map (algebraMap ℝ ℂ)
+  have hsquare : (A - algebraMap ℂ _ (1 / 2)) ^ 2 = 0 := base_square_zero
+  apply Set.Subset.antisymm
+  · intro z hz
+    have hshift : z - 1 / 2 ∈ spectrum ℂ (A - algebraMap ℂ _ (1 / 2)) := by
+      have hh := (spectrum.add_mem_iff (a := A) (r := z - 1 / 2) (s := 1 / 2)).mp
+        (by simpa only [sub_add_cancel] using hz)
+      convert hh using 1 <;> abel_nf
+    have hpow := spectrum.pow_mem_pow _ 2 hshift
+    rw [hsquare, spectrum.zero_eq] at hpow
+    exact Set.mem_singleton_iff.mpr (sub_eq_zero.mp (eq_zero_of_pow_eq_zero hpow))
+  · rw [Set.singleton_subset_iff, spectrum.mem_iff]
+    apply IsNilpotent.not_isUnit
+    refine ⟨2, ?_⟩
+    rw [← neg_sub A, neg_sq, hsquare]
 
 private theorem base_radius : radius baseMatrix = ENNReal.ofReal (1 / 2) := by
   sorry
