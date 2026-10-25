@@ -15,6 +15,9 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.IntervalCases
 
+/-! The ordinary lower series of the explicit rational evolution algebra refutes
+the proposed binary spectrum in Conjecture 9 of arXiv:2610.22248v1. -/
+
 set_option autoImplicit false
 set_option maxHeartbeats 2000000
 
@@ -94,7 +97,7 @@ private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Mo
   | h m ih =>
     rcases m with _ | (_ | n)
     · simp [ordinaryPower]
-    · exact hfirst
+    · simpa only [ordinaryPower] using hfirst
     · rw [ordinaryPower]
       apply iSup_le
       intro i
@@ -102,7 +105,9 @@ private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Mo
       rintro z ⟨x, hx, y, hy, rfl⟩
       have hh := hmul (i.val + 1) (n + 1 - i.val) x y
         (ih _ (by omega) hx) (ih _ (by omega) hy)
-      convert hh using 1 <;> congr 1 <;> omega
+      have hi := i.isLt
+      have hs : (i.val + 1) + (n + 1 - i.val) = n + 2 := by omega
+      simpa only [hs] using hh
 
 private theorem mul_mem_power {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
     (μ : V →ₗ[K] V →ₗ[K] V) (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
@@ -128,7 +133,8 @@ private theorem product_evolution : IsEvolutionAlgebra product := by
     rw [mul_comm]
   · refine ⟨Fin 15, Pi.basisFun ℚ (Fin 15), ?_⟩
     intro i j hij
-    change (∑ l : Fin 15, _ • rows l) = 0
+    change (∑ l : Fin 15,
+      ((Pi.basisFun ℚ (Fin 15) i) l * (Pi.basisFun ℚ (Fin 15) j) l) • rows l) = 0
     apply Finset.sum_eq_zero
     intro l _
     have h : (Pi.basisFun ℚ (Fin 15) i) l * (Pi.basisFun ℚ (Fin 15) j) l = 0 := by
@@ -192,10 +198,30 @@ private def output : Fin 15 → Fin 15 → Option (Fin 15) := ![
   ![none,none,none,none,none,none,some 14,none,some 14,none,none,none,some 14,some 14,none],
   ![none,none,none,none,none,none,none,none,none,none,none,none,none,none,none]]
 
-set_option maxRecDepth 16000 in
+private theorem product_coordinates (x y : A) : product x y =
+    ![0,
+      x 0 * y 0,
+      x 0 * y 0,
+      x 2 * y 2 - x 1 * y 1,
+      x 0 * y 0 + x 2 * y 2 - x 1 * y 1,
+      x 4 * y 4 - x 3 * y 3,
+      x 5 * y 5,
+      x 4 * y 4 - x 3 * y 3 + x 5 * y 5,
+      x 7 * y 7 - x 6 * y 6,
+      x 8 * y 8,
+      x 9 * y 9,
+      x 10 * y 10,
+      x 11 * y 11,
+      x 7 * y 7 - x 6 * y 6 + x 11 * y 11,
+      x 13 * y 13 - x 12 * y 12] := by
+  ext l
+  fin_cases l <;> norm_num [product, rows, Fin.sum_univ_succ] <;> ring
+
 private theorem product_table : ∀ i j : Fin 15,
     product (v i) (v j) = match output i j with | none => 0 | some k => v k := by
-  decide
+  intro i j
+  rw [product_coordinates]
+  fin_cases i <;> fin_cases j <;> norm_num [v, output]
 
 private theorem weight_table : ∀ i j k : Fin 15,
     output i j = some k → weight i + weight j ≤ weight k := by decide
@@ -234,3 +260,52 @@ private theorem power_256 : ordinaryPower product 256 = ⊥ := by
   rw [← filtration_256]
   exact power_upper 256
 
+
+private theorem witness_step (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
+    (i j k : Fin 15) (h : output i j = some k)
+    (hx : v i ∈ ordinaryPower product a) (hy : v j ∈ ordinaryPower product b) :
+    v k ∈ ordinaryPower product (a + b) := by
+  have hh := mul_mem_power product a b ha hb hx hy
+  rwa [product_table, h] at hh
+
+private theorem witness_255 : v 14 ∈ ordinaryPower product 255 := by
+  have h1 : v 0 ∈ ordinaryPower product 1 := by trivial
+  have he3 : v 2 ∈ ordinaryPower product 1 := by trivial
+  have h2 := witness_step 1 1 (by decide) (by decide) 0 0 1 (by decide) h1 h1
+  have h3 := witness_step 2 1 (by decide) (by decide) 1 2 3 (by decide) h2 he3
+  have h5 := witness_step 3 2 (by decide) (by decide) 3 1 5 (by decide) h3 h2
+  have h10 := witness_step 5 5 (by decide) (by decide) 5 5 6 (by decide) h5 h5
+  have h15 := witness_step 10 5 (by decide) (by decide) 6 5 8 (by decide) h10 h5
+  have h30 := witness_step 15 15 (by decide) (by decide) 8 8 9 (by decide) h15 h15
+  have h60 := witness_step 30 30 (by decide) (by decide) 9 9 10 (by decide) h30 h30
+  have h120 := witness_step 60 60 (by decide) (by decide) 10 10 11 (by decide) h60 h60
+  have h240 := witness_step 120 120 (by decide) (by decide) 11 11 12 (by decide) h120 h120
+  exact witness_step 240 15 (by decide) (by decide) 12 8 14 (by decide) h240 h15
+
+private theorem power_255_ne : ordinaryPower product 255 ≠ ⊥ := by
+  intro h
+  have hh := witness_255
+  rw [h, Submodule.mem_bot] at hh
+  have hz := congrFun hh 14
+  norm_num [v] at hz
+
+private theorem rational_instance : indexExists ℚ 15 255 := by
+  refine ⟨A, inferInstance, inferInstance, inferInstance, product, ?_,
+    product_evolution, power_256, power_255_ne⟩
+  simp [A, Module.finrank_pi]
+
+private theorem arithmetic_failure : ¬ predicted 15 255 := by
+  rintro (⟨a, hk, ha⟩ | h)
+  · have hb : a ≤ 14 := by omega
+    interval_cases a <;> norm_num at hk
+  · have hn : ¬ (2 ≤ (Nat.digits 2 255).count 1 ∧
+        (Nat.log 2 255 : ℤ) + ((Nat.digits 2 255).count 1 : ℤ) ≤ (15 : ℤ) - 1) := by
+      decide
+    exact hn h
+
+/-- The complete original universal equivalence is false. -/
+theorem result : ¬ claim := by
+  intro h
+  exact arithmetic_failure ((h ℚ 15 255 (by decide)).mp rational_instance)
+
+end D5.S3.QuadraticForms.EvolutionAlgebras.NilpotencySpectrumRefutation
