@@ -18,9 +18,9 @@ consumes actual_charged_coefficient_adjoint, tensor nondegeneracy and the
 existing charged_ground_leading through the charged dual consumer.
 There is no claim of a restricted-dual representative, a full corrected
 adjoint, a two-twisted intertwiner, Jacobi, fusion, or a string/AdS bridge.
-The original private singleton coefficient proof is referenced in place,
-using the same native private-name route as LatticeHalfFockCurrentBorcherds.
-No frozen proof is copied or altered.
+The original singleton coefficient proof and its addition and scalar laws
+are reused through their canonical public names in the original owner.
+Their statements and proof bodies are unchanged.
 -/
 
 set_option autoImplicit false
@@ -34,25 +34,15 @@ open LatticeHalfFockCorrectedField LatticeHalfFockFiniteCorrection
 
 
 
-local macro "existingCorrectedAdd" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.ChargedResidue.LatticeHalfFockChargedResidue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_coeff_add))
-local macro "existingCorrectedSmul" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.ChargedResidue.LatticeHalfFockChargedResidue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_coeff_smul))
-local macro "existingCorrectedSingleton" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.ChargedResidue.LatticeHalfFockChargedResidue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_singleton_coeff_charged))
-
 /-- The left orientation on two actual twisted inputs and the original source. -/
 def correctedDualCoefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (e : ℤ) (x y : ActualTensor D hu) : Module.Dual ℂ (Carrier D) where
   toFun a := actualForm D hu ((correctedField D hu a).coeff e x) y
   map_add' a b := by
-    rw [existingCorrectedAdd]
+    rw [D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_coeff_add]
     exact LinearMap.BilinForm.add_left _ _ _
   map_smul' c a := by
-    rw [existingCorrectedSmul]
+    rw [D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_coeff_smul]
     exact LinearMap.BilinForm.smul_left _ _ _
 
 /-- A nonzero original generator coordinate, with no symmetry or Jacobi premise. -/
@@ -66,7 +56,7 @@ theorem correctedDualCoefficient_nonzero_second_ground (D : LatticeData)
   change actualForm D hu
     ((correctedField D hu (Finsupp.single a (1 : Oscillator D))).coeff
       (-chargeNorm D a) x) ((1 : Oscillator D) ⊗ₜ[ℂ] u) ≠ 0
-  rw [existingCorrectedSingleton]
+  rw [D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue.corrected_singleton_coeff_charged]
   simpa only [chargedDualCoefficient, Finsupp.linearCombination_single, one_smul,
     chargedField, HVertexOperator.coeff_of_coeff] using hx
 

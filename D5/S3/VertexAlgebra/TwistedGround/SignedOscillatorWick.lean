@@ -10,6 +10,7 @@
 
 import D5.S3.VertexAlgebra.OriginalCurrentMetric
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+import Mathlib.LinearAlgebra.BilinearForm.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 /-!
