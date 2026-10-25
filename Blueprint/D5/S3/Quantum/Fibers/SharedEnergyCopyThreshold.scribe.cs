@@ -81,6 +81,10 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                 "The diagonal projection selects all words with the specified total energy. It preserves the full degenerate energy space."),
             Def("pinching", "pinchedCopies", "Pinched native tensor states",
                 "Sum the native tensor state between the complete projections over its finite set of total energies."),
+            Def("energyPinch", "energyPinch", "Total-energy pinching of arbitrary matrices",
+                "The same complete projections act on arbitrary complex matrices. Pinching a positive contraction gives a positive contraction commuting with the sum Hamiltonian."),
+            Thm("compatibleEffects", "compatible_effects_iff", "Every compatible complex effect", CompatibleEffects(),
+                "For all native density states, including states of deficient rank, equality of complete total-energy pinchings is equivalent to equality of unconditional trace probabilities for every positive complex effect bounded by the identity and commuting with the sum Hamiltonian. Pinching preserves the trace pairing and maps every complex effect into this commutant. The original effect-trace uniqueness theorem then separates the pinched matrices. No reality restriction is placed on the effect entries, and degenerate blocks retain their complex off-diagonals."),
             Thm("tensorBridge", "tensor_monomial_bridge", "Native tensor entries and total-energy pinching", Tensor(),
                 "For every native three-dimensional density state, every copy count and every pair of actual tensor words, "
                     + "the recursively constructed exponent has that copy count as degree and the total-energy difference as weight. "
@@ -211,6 +215,23 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
         return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
             D(2), Leq, Sp, m, Sp, Implies, Sp, n, Lt, Length(m), Sp, Implies, Sp,
             C("pinchedCopies", m, n, C("rho")), Eq, C("pinchedCopies", m, n, C("sigma", m))));
+    }
+    private static Formula CompatibleEffects()
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var r = F.Id("r");
+        var s = F.Id("s"); var f = F.Id("F");
+        var h = C("totalHamiltonian", m, n);
+        Formula Prob(Formula x) => C("trace", Seq(f, Cdot, Sp,
+            C("stateMatrix", C("copies", x, n))));
+        return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
+            Forall, Sp, r, Comma, s, InMacro, C("DensityState", C("Fin", D(3))), Comma, RowBreak,
+            C("pinchedCopies", m, n, r), Eq, C("pinchedCopies", m, n, s), Sp, Iff, Sp,
+            Forall, Sp, f, InMacro, C("Matrix", C("CopyIndex", C("Fin", D(3)), n),
+                C("CopyIndex", C("Fin", D(3)), n), C("Complex")), Comma, RowBreak,
+            C("PosSemidef", f), Sp, Implies, Sp,
+            C("PosSemidef", Seq(D(1), Minus, f)), Sp, Implies, Sp,
+            f, Cdot, Sp, h, Eq, h, Cdot, Sp, f, Sp, Implies, Sp,
+            Prob(r), Eq, Prob(s)));
     }
     private static Formula Words()
     {

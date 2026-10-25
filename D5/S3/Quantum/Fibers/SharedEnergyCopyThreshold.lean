@@ -7,6 +7,7 @@
    digest: Sparse three-level density matrices and their shared-energy relations. -/
 
 import D5.S3.Quantum.Fibers.RealCopyConjugation
+import D5.S3.Quantum.Foundation.EffectProbabilityExtension
 import D5.S3.Arith.Lattices.CofactorKernel
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
@@ -338,16 +339,23 @@ def energyProjector (m n : ℕ) (e : ℤ) :
     Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
   Matrix.diagonal (fun I => if totalEnergy m n I = e then 1 else 0)
 
-/-- Complete pinching by the actual total-energy projections. -/
-def pinchedCopies (m n : ℕ) (r : DensityState (Fin 3)) :
+/-- Complete total-energy pinching on arbitrary complex matrices. -/
+def energyPinch (m n : ℕ)
+    (X : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) :
     Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
   ∑ e ∈ Finset.univ.image (totalEnergy m n),
-    energyProjector m n e * stateMatrix (copies r n) * energyProjector m n e
+    energyProjector m n e * X * energyProjector m n e
 
-private theorem pinched_apply (m n : ℕ) (r : DensityState (Fin 3))
-    (I J : CopyIndex (Fin 3) n) : pinchedCopies m n r I J =
-      if totalEnergy m n I = totalEnergy m n J then stateMatrix (copies r n) I J else 0 := by
-  simp only [pinchedCopies, Matrix.sum_apply]
+/-- Complete pinching of the native tensor copies. -/
+def pinchedCopies (m n : ℕ) (r : DensityState (Fin 3)) :
+    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
+  energyPinch m n (stateMatrix (copies r n))
+
+private theorem energy_pinch_apply (m n : ℕ)
+    (X : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ)
+    (I J : CopyIndex (Fin 3) n) : energyPinch m n X I J =
+      if totalEnergy m n I = totalEnergy m n J then X I J else 0 := by
+  simp only [energyPinch, Matrix.sum_apply]
   rw [Finset.sum_eq_single (totalEnergy m n I)]
   · simp [energyProjector, Matrix.mul_diagonal, Matrix.diagonal_mul, eq_comm]
   · intro e he hne
@@ -355,8 +363,14 @@ private theorem pinched_apply (m n : ℕ) (r : DensityState (Fin 3))
   · intro hnot
     exact (hnot (Finset.mem_image.mpr ⟨I, Finset.mem_univ _, rfl⟩)).elim
 
-private theorem pinched_positive (m n : ℕ) (r : DensityState (Fin 3)) :
-    (pinchedCopies m n r).PosSemidef := by
+private theorem pinched_apply (m n : ℕ) (r : DensityState (Fin 3))
+    (I J : CopyIndex (Fin 3) n) : pinchedCopies m n r I J =
+      if totalEnergy m n I = totalEnergy m n J then stateMatrix (copies r n) I J else 0 :=
+  energy_pinch_apply m n _ I J
+
+private theorem energy_pinch_positive (m n : ℕ)
+    (X : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) (hX : X.PosSemidef) :
+    (energyPinch m n X).PosSemidef := by
   apply Matrix.posSemidef_sum
   intro e he
   have hp : (energyProjector m n e).PosSemidef := by
@@ -365,7 +379,35 @@ private theorem pinched_positive (m n : ℕ) (r : DensityState (Fin 3)) :
     change (0 : ℂ) ≤ if totalEnergy m n I = e then 1 else 0
     split_ifs <;> simp
   simpa only [hp.isHermitian.eq] using
-    (density_posSemidef (copies r n)).mul_mul_conjTranspose_same (energyProjector m n e)
+    hX.mul_mul_conjTranspose_same (energyProjector m n e)
+
+private theorem pinched_positive (m n : ℕ) (r : DensityState (Fin 3)) :
+    (pinchedCopies m n r).PosSemidef :=
+  energy_pinch_positive m n _ (density_posSemidef (copies r n))
+
+private theorem energy_pinch_one (m n : ℕ) :
+    energyPinch m n 1 = 1 := by
+  ext I J
+  by_cases h : I = J <;> simp [energy_pinch_apply, Matrix.one_apply, h]
+
+private theorem energy_pinch_sub (m n : ℕ)
+    (X Y : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) :
+    energyPinch m n (X-Y) = energyPinch m n X - energyPinch m n Y := by
+  ext I J
+  simp only [energy_pinch_apply, Matrix.sub_apply]
+  split_ifs <;> simp
+
+private theorem energy_pinch_pairing (m n : ℕ)
+    (F X : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) :
+    Matrix.trace (F * energyPinch m n X) = Matrix.trace (energyPinch m n F * X) := by
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, energy_pinch_apply]
+  apply Finset.sum_congr rfl
+  intro I _
+  apply Finset.sum_congr rfl
+  intro J _
+  by_cases h : totalEnergy m n I = totalEnergy m n J
+  · simp [h, h.symm]
+  · simp [h, Ne.symm h]
 
 private theorem pinched_trace (m n : ℕ) (r : DensityState (Fin 3)) :
     Matrix.trace (pinchedCopies m n r) = 1 := by
@@ -474,6 +516,75 @@ private theorem total_hamiltonian_diagonal (m : ℕ) : ∀ n,
       if (a, I) = (b, J) then ((energy m a + totalEnergy m (n+1) I : ℤ) : ℂ) else 0
     by_cases h₁ : a = b <;> by_cases h₂ : I = J <;>
       simp [h₁, h₂, Prod.mk.injEq]
+
+private theorem energy_pinch_commutes (m n : ℕ)
+    (X : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) :
+    energyPinch m n X * totalHamiltonian m n =
+      totalHamiltonian m n * energyPinch m n X := by
+  ext I J
+  simp only [total_hamiltonian_diagonal, Matrix.mul_diagonal, Matrix.diagonal_mul,
+    energy_pinch_apply]
+  split_ifs with h <;> simp [h, mul_comm]
+
+private theorem energy_pinch_fixed (m n : ℕ)
+    (F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ)
+    (hF : F * totalHamiltonian m n = totalHamiltonian m n * F) :
+    energyPinch m n F = F := by
+  ext I J
+  rw [energy_pinch_apply]
+  split_ifs with h
+  · rfl
+  · have he := congrArg (fun X => X I J) hF
+    simp only [total_hamiltonian_diagonal, Matrix.mul_diagonal,
+      Matrix.diagonal_mul] at he
+    have hn : (totalEnergy m n J : ℂ) - (totalEnergy m n I : ℂ) ≠ 0 := by
+      exact sub_ne_zero.mpr (fun he => h (Int.cast_injective he).symm)
+    have hz : F I J * ((totalEnergy m n J : ℂ) - (totalEnergy m n I : ℂ)) = 0 := by
+      linear_combination he
+    exact ((mul_eq_zero.mp hz).resolve_right hn).symm
+
+/-- Equality of the complete energy pinchings is exactly equality of the
+unconditional complex trace pairing for every effect commuting with the actual
+sum Hamiltonian. The effects retain arbitrary complex entries inside every
+degenerate total-energy block. -/
+theorem compatible_effects_iff (m n : ℕ) (r s : DensityState (Fin 3)) :
+    pinchedCopies m n r = pinchedCopies m n s ↔
+      ∀ F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ,
+        F.PosSemidef → (1-F).PosSemidef →
+        F * totalHamiltonian m n = totalHamiltonian m n * F →
+        Matrix.trace (F * stateMatrix (copies r n)) =
+          Matrix.trace (F * stateMatrix (copies s n)) := by
+  have pairing (F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ)
+      (hF : F * totalHamiltonian m n = totalHamiltonian m n * F)
+      (q : DensityState (Fin 3)) :
+      Matrix.trace (F * pinchedCopies m n q) =
+        Matrix.trace (F * stateMatrix (copies q n)) := by
+    change Matrix.trace (F * energyPinch m n _) = _
+    rw [energy_pinch_pairing, energy_pinch_fixed m n F hF]
+  constructor
+  · intro h F _ _ hF
+    rw [← pairing F hF r, h, pairing F hF s]
+  · intro h
+    apply D5.S3.Quantum.Foundation.EffectProbabilityExtension.effect_trace_unique
+    intro E hE hE₁
+    let X := CStarMatrix.ofMatrix.symm E
+    have hX : X.PosSemidef :=
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm hE).posSemidef
+    have hX₁ : (1-X).PosSemidef := by
+      have hpos := map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
+        (sub_nonneg.mpr hE₁)
+      simpa only [map_sub, map_one] using hpos.posSemidef
+    have hP : (1-energyPinch m n X).PosSemidef := by
+      rw [← energy_pinch_one m n, ← energy_pinch_sub]
+      exact energy_pinch_positive m n _ hX₁
+    have he := h (energyPinch m n X) (energy_pinch_positive m n X hX) hP
+      (energy_pinch_commutes m n X)
+    change Matrix.trace (pinchedCopies m n r * X) =
+      Matrix.trace (pinchedCopies m n s * X)
+    rw [Matrix.trace_mul_comm, Matrix.trace_mul_comm (pinchedCopies m n s)]
+    change Matrix.trace (X * energyPinch m n _) = Matrix.trace (X * energyPinch m n _)
+    rw [energy_pinch_pairing, energy_pinch_pairing]
+    exact he
 
 /-- The two explicit orthogonal product-basis words have energy m squared,
 and their actual tensor matrix element is the distinguished monomial. -/
@@ -615,6 +726,7 @@ theorem sparse_joint_effect (m : ℕ) (hm : 2 ≤ m) :
     exact hz (by linear_combination (1/2 : ℂ) * he')
 
 #print axioms tensor_monomial_bridge
+#print axioms compatible_effects_iff
 #print axioms sparse_low_pinching
 #print axioms sparse_joint_words
 #print axioms sparse_joint_effect
