@@ -80,7 +80,7 @@ Positivity and the exact squares identify the candidates uniquely with the posit
 
 **Theorem 1.6 (Strict positivity of the mixed state).**
 
-$$\operatorname{PosDef}\left(\sigma\right)$$
+$$\operatorname{Matrix}.\operatorname{PosDef}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Dynamics}.\operatorname{PositivePauliClockOrder}.\operatorname{sigma}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.sigma_posDef` (`✓ std3`). ∎
 
