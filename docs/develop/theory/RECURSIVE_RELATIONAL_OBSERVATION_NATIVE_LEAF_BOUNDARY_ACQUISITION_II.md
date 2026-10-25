@@ -926,3 +926,298 @@ The newer [same-handle arithmetic continuation](../../../D5/S3/Arith/FibonacciAt
 Proof. The only binary inverse has the new origin and the specific polynomial image (NLBAII.33) as premises. Its Time records the new binary inputs and original causal order, not an old total serialization. Distinct old field-control histories can end at the same origin and hence have identical later binary fields. In the arbitrary-field entrance, initial terminal arming changes the old field, and only the later $x_{\rm mark}$ is reconstructed; that procedure cannot invert an unrecorded earlier alteration. Structural Time and terminal zeros also omit internal field distinctions by Proposition 20.3. Raw-map and authority distinctions are explicitly retained outside the four numerical expressions, as in Proposition 20.4. The attained exact procedures pay their actual growing field widths, enumeration, all simultaneous stores and legal source work; they supply no uniform efficient recognizer or bounded memory. Finally neither theorem has a hypothesis correspondence identifying its new origin, enlarged active experiment or acquired callable dispatcher with an unchanged original initialization, fixed observation task or the named parked/final endpoints. Those bridges would require their own constructions preserving those exact hypotheses and endpoints. No such bridge is asserted here. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 39. A known appended anchor and distinct inherited-terminal distances
+
+**Definition 39.1 (the original binding-acquisition task).** Use exactly the installation of Definitions 17.1–17.3. The entry is every finite reachable $t\in\mathcal D$ with $a$ alpha leaves, $c$ beta leaves and $L=a+c\ge3$, after every legal old producer word ending there. Its actual whole field is zero. The observer receives the authentic opaque original-root-bound service, the complete raw roster $1,\ldots,L$, current rights, the fixed framing/return connection and source-independent finite instruction code. Its source-dependent work records are initially empty. The original term, old word, raw bijection $\lambda_0$, internal coordinates and response law table are absent from its inputs. The source law is the original symmetric zero-diagonal unit adjacency, and the full menu includes the actual calibrated whole-field Reset.
+
+All later steps use this same specimen and its installed persistent-label/fresh-zero lifecycle. Each successful promotion retains old cells and moves its old terminal label to its fresh marker; each successful split retains old cells, moves the acted label to its fresh left marker and appends the known next raw integer at its fresh right terminal. These new terminals have the actual grants of Assumption 17.2. No numerical calculation creates a reference or a grant. Exact arbitrarily large finite rational packets, sufficient finite allocation and work backing, exclusive serial calls, Hold, complete replies and completed matching observer updates have exactly §17's meanings. There is no timing, work, capacity, allocation-name or private-reference inspection channel. No other writer, autonomous Tick, revocation, interruption or observable exhaustion is admitted.
+
+The required acquired report contains the exact entry $(t,\lambda_0)$ and the exact actual advanced term, whole field and exhaustive current raw binding. The actual callable reference and current rights are retained in addition to these numerical records. Restoring the entry tree is not part of this task. A successful scalar Read means a complete in-range Read with its literal rational reply and return consumed. Refused or malformed requests are not successful scalar Reads. A report at a settled endpoint cannot leave an unfinished scalar reply in flight. The minimum below concerns this exact reporting task on this full installation, with no uniform bound on finite growth, word widths or work; it concerns no other resource coordinate.
+
+**Definition 39.2 (earned syntax and the actual chain word).** First actually Hold and run the all-$P$ traversal of Definition 24.1, namely [AAII Definition 54.1 and Theorem 54.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md). Consume every complete Growth or tagged refusal and return. This earns separate entry and current constructor words for $t$ and $\nu(t)$, without earning the arbitrary raw permutation. It makes $2L-1$ actual $P$ calls, of which $a$ succeed; its other replies are $L-1$ branch refusals and $c$ wrong-type refusals. No $S$, field input or scalar Read occurs in this pass. Every original logical leaf is now beta, the raw length is still $L$, and the actual entire field is still zero.
+
+Index the earned original logical leaves by $i=0,\ldots,L-1$ in their original left-to-right order, at addresses $p_i$, and retain their original types $\eta_i$. Put
+
+$$
+q_i=p_iL,\qquad
+\delta_i=d_{C(\nu(t))}(q_0,q_i),\qquad
+D_0=\max_{0\le i<L}\delta_i,
+\tag{NLBAII.50}
+$$
+
+where these distances are finite local computations on the earned graph, not observations of an unknown wave response. Define
+
+$$
+k_0=1,\qquad
+k_i=D_0+i+4-\delta_i\quad(1\le i<L),\qquad
+K=\sum_{i=0}^{L-1}k_i,\qquad D=D_0+L+3.
+\tag{NLBAII.51}
+$$
+
+For $i=0,\ldots,L-1$, in that order, perform the $k_i$ actual splits at
+
+$$
+p_i,\ p_iL,\ \ldots,\ p_iL^{k_i-1}.
+\tag{NLBAII.52}
+$$
+
+Here $L^s$ in an address means $s$ repetitions of the left letter. At split $(i,s)$, $0\le s<k_i$, consume the complete Growth reply and record the appended label and address
+
+$$
+\ell(i,s)=L+\sum_{h<i}k_h+s+1,
+\qquad \ell(i,s)\longmapsto p_iL^sR.
+\tag{NLBAII.53}
+$$
+
+The label is obtained from the installed append rule and the maintained actual length, not from the Growth payload or a concealed allocation ordinal. In particular the first split earns the usable raw anchor
+
+$$
+r_*=L+1=\ell(0,0),\qquad z=p_0R.
+\tag{NLBAII.54}
+$$
+
+Never act at any of the appended right leaves. Let $u$ be the resulting actual term, obtained by replacing original leaf $i$ by $B_{k_i}$, where $B_0=\beta$ and $B_{s+1}=\langle B_s,\alpha\rangle$. Its ordered constructor word and material graph are maintained from the actual replies. For proof only, write $j_i$ for the unknown original raw label of cone $i$. Its current terminal is
+
+$$
+v_i=p_iL^{k_i+1}.
+\tag{NLBAII.55}
+$$
+
+The controller uses the earned logical addresses for growth and known raw integers for field calls; no $j_i$ is an operand before acquisition.
+
+**Lemma 39.3 (legality, exhaustive lifecycle and one actual distance code).** Every split in (NLBAII.52) is enabled. The old labels bind exactly the $v_i$, and all other current labels have exactly (NLBAII.53)'s bindings. The anchor remains $z$, and on this one actual final graph
+
+$$
+d_{C(u)}(z,v_0)=3,\qquad
+d_{C(u)}(z,v_i)=D_0+i+4\quad(1\le i<L).
+\tag{NLBAII.56}
+$$
+
+These $L$ distances are pairwise distinct and their maximum is $D$. The graph has $L+K$ terminals and $N=3L+2K-1$ material vertices, and every cell is still zero.
+
+Proof. The source correspondence of the all-$P$ supplier applies to the growth-channel restriction of §17: its branch/type replies and old/fresh material templates are identical. Promotions leave all logical branch positions fixed and move only their acted terminal labels. Consequently the saved initial terminal in cone $i$ is $p_i$ for $\eta_i=\alpha$ and $p_iL$ for $\eta_i=\beta$, and after normalization either one carries its old label at $q_i$. This establishes the starting correspondence without identifying $j_i$.
+
+Since $\delta_i\le D_0$, every $k_i$ is positive. At stage $s$ of cone $i$, the target $p_iL^s$ is beta: the previous split, if any, created precisely its left beta. Different original leaf addresses are incomparable, so edits in other cones preserve this target. Each success has the full original kind/address reply and finite return; there is no hidden type test or new source opcode. The persistent-label rule moves the same inherited label one further left and appends (NLBAII.53)'s label at the new right alpha. Later targets lie strictly in the continuing left chain or in other cones, so those right terminals persist. Induction proves (NLBAII.53)–(NLBAII.55). The $L$ inherited and $K$ appended assignments are disjoint and exhaust the current terminals.
+
+For $i>0$, the path from the original $q_0=p_0L$ to $q_i$ first uses its edge to $p_0$. Replacing that first vertex by $z=p_0R$ changes neither the length nor the rest of this external path. Growth in cone zero leaves the external path unchanged. Each of the $k_i$ left-chain splits extends the inherited terminal in cone $i$ by exactly one edge, so its distance from $z$ is $\delta_i+k_i=D_0+i+4$. In cone zero there is just one split, and the path $p_0R,p_0,p_0L,p_0LL$ has length three. This proves (NLBAII.56). The other distances start at $D_0+5>3$, increase with $i$, and end at $D_0+L+3=D$.
+
+The normalized material size is $3L-1$, and each split adds two vertices and one terminal. Thus the stated sizes follow. The attachment was wholly zero, and only old-value-preserving growth with fresh zero cells has occurred, so the whole field remains zero. All loops terminate: normalization terminates by its supplier, and every later count and address is computed from its earned finite output. $\square$
+
+## 40. An executed waveform whose one scalar earns both raw maps
+
+**Definition 40.1 (literal input word and decoding).** Freeze growth during this experiment on the just constructed $C(u)$. Set
+
+$$
+H=D+1,\qquad B=4^D=2^{2D},\qquad M=LH.
+\tag{NLBAII.57}
+$$
+
+For $r=0,\ldots,D$, send, in increasing $j=1,\ldots,L$ order, the actual calls
+
+$$
+\operatorname{Add}\bigl(j,B^{H(j-1)+D-r}\bigr).
+\tag{NLBAII.58}
+$$
+
+Consume every acknowledgement and return. If $r<D$, next actually Tick and Hold, consuming both acknowledgements and returns. No appended label is an input. After the last input batch, actually Read$(r_*)$ once and consume its whole literal reply $y$ and return. The Tick reply is only its fixed acknowledgement; no intermediate scalar has been obtained. Hold and serialization allow the finite decoding work without an additional source Tick.
+
+Decode exactly $M$ padded base-$B$ digits of $y$, retaining zero digits even beyond the highest nonzero digit. In block $j$, let $d_j$ be the first positive digit index among $k=0,\ldots,D$ at exponent $H(j-1)+k$. Set
+
+$$
+i(j)=\begin{cases}
+0,&d_j=3,\\
+d_j-D_0-4,&d_j\ne3.
+\end{cases}
+\tag{NLBAII.59}
+$$
+
+Use the saved entry types to construct
+
+$$
+\lambda_0(j)=
+\begin{cases}p_{i(j)},&\eta_{i(j)}=\alpha,\\p_{i(j)}L,&\eta_{i(j)}=\beta,\end{cases}
+\qquad
+\lambda_u(j)=p_{i(j)}L^{k_{i(j)}+1}\quad(1\le j\le L),
+\tag{NLBAII.60}
+$$
+
+and include every appended binding (NLBAII.53). After decoding, actually Reset and Hold, consume both complete returns, and install the full zero-vector predictor at this actual $u$. Export the finite entry/current reports through their backed complete output/acknowledgement/return connection; retain the actual service and current grants. Temporary waveform, quotient and output scratch is cleared only after its last use, with its actual clearing work. Caller-retained copies and the separate entry archive remain separately charged. A completed acquisition cut has no pending frame, source edit, output or uncommitted observer update. The scalar $y$ describes the pre-Reset experiment, whereas the returned current field is the actual post-Reset zero field.
+
+**Theorem 40.2 (one successful Read suffices for the exhaustive unknown binding).** For every attachment in Definition 39.1, Definitions 39.2 and 40.1 terminate and return exactly $(t,\lambda_0)$ and $(u,0,\lambda_u)$, with an exhaustive current bijection and the same actually callable service. There is exactly one successful scalar Read in the entire acquisition. For each earned $t$, its one observed $y$ is injective in the arbitrary initial raw bijection under this actual experiment. Source authenticity, calibration, rights and the initialization are still premises of this conditional conclusion.
+
+Proof. Let $A$ be the actual unit adjacency on the fixed final graph, and let $w_j$ be the terminal actually carrying old raw label $j$. These are proof parameters, not supplied runtime observations. Put $g_j=B^{H(j-1)}$ and $v=\sum_{j=1}^{L}g_je_{w_j}$. The batch with index $r$ adds exactly $B^{D-r}v$, and it is followed by exactly $D-r$ later Ticks. Additions at a fixed batch commute, and all intermediate source operations have their literal declared linear effects. Starting at the whole zero field, expansion of the executed word therefore gives the genuine pre-Read field and actual reply
+
+$$
+\begin{aligned}
+x_{\rm wave}&=\sum_{k=0}^{D}B^k A^k v,\\
+y&=e_z^{\mathsf T}x_{\rm wave}
+ =\sum_{j=1}^{L}\sum_{k=0}^{D}
+ B^{H(j-1)+k}(A^k)_{z,w_j}.
+\end{aligned}
+\tag{NLBAII.61}
+$$
+
+This superposition uses neither a response oracle nor a returning-scalar Tick. The anchor is an actually known raw binding by Lemma 39.3, so the single Read in this formula is legal without the unknown old map.
+
+Every material vertex has degree at most three. The finite-graph walk-count identity, in precisely the unit-adjacency specialization of `SimpleGraph.adjMatrix_pow_apply_eq_card_walk` in [pinned mathlib AdjMatrix.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean), yields nonnegative integral coefficients and the elementary bound
+
+$$
+0\le (A^k)_{z,w_j}\le3^k\le3^D<4^D=B
+\quad(0\le k\le D).
+\tag{NLBAII.62}
+$$
+
+The bound follows by at most three choices at each step of a walk. The exponents $H(j-1)+k$ are distinct because $0\le k<H$. Hence (NLBAII.61) is a carry-free base-$B$ expansion. More explicitly, the remainder modulo $B$ is its coefficient at exponent zero, and division by $B$ leaves the same expression with that coefficient removed and the remaining exponents decreased by one. Induct for exactly $M$ divisions, including all padded zero positions. Thus the actual digit at $(j,k)$ is $(A^k)_{z,w_j}$; no assumption about a nonzero last digit is needed.
+
+This use of nonoverlapping coefficients is classical Kronecker packing; see Harvey, [*Faster polynomial multiplication via multipoint Kronecker substitution*, §3.1, Proposition 5](https://arxiv.org/html/0712.4046v1#S3.SS1). Only its ordinary packing interpretation is used, not its multiplication complexity theorem. The new operational obligation here is (NLBAII.61), realized by the legal source word and known anchor, with the coefficient bound proved for this actual graph.
+
+By NLBA Lemma 2.1, specialized to these positive unit edges and zero diagonal, the first positive coefficient in block $j$ occurs exactly at $d_{C(u)}(z,w_j)$. A shorter walk cannot reach that vertex; the unique shortest tree path contributes one at that distance. Lemma 39.3 puts each such distance within $0,\ldots,D$ and makes the cone distances distinct. Therefore $d_j$ exists, (NLBAII.59) gives exactly the cone carrying $j$, and $j\mapsto i(j)$ is a permutation of $0,\ldots,L-1$. The saved initial type and the proved lifecycle give exactly (NLBAII.60). The appended assignments are already earned directly from actual growth and exhaust all remaining labels. This proves both bijections, including the distinction between an initial alpha vertex and an initial beta marker.
+
+Two different initial maps on this fixed $t$ assign some old raw label to different original cones. Their digit blocks then have different first positive indices. Thus their scalar outputs differ. Conversely the displayed finite digit procedure reconstructs every owed map, so the conclusion is actual acquisition, not merely uniqueness of an abstract inverse.
+
+All stages use earned finite syntax, the known roster, explicit finite integers and the authentic appended anchor. Computing their distances, powers, frames, divisions, finite tables and reports terminates with the stipulated backing. No unknown size or unearned selector controls stopping. The last actual Reset acts on every current cell, including internal cells never read, and final Hold preserves that zero field during report construction and cleanup. The acquired graph and full map consequently describe the genuine final state. No other phase used Read, and this one used Read exactly once. $\square$
+
+## 41. The complete-original-menu zero-Read lower bound
+
+**Theorem 41.1 (no exact zero-Read report from the full menu).** Fix any admitted entry term $t$ with $L\ge3$. Consider any source-independent observer whose initially supplied records, opaque reference roles and bytes, rights, roster, framing and public parameters are identical across the possible initial raw bijections. Allow arbitrary finite adaptive use of every request of §17, arbitrary finite local computation and retained records, and arbitrary finite actual growth and field widths. No uniformly exact terminating reporter of Definition 39.1's entry/current binding task can finish with zero successful scalar Reads. In particular the lower bound is not restricted to the waveform, to binary signals, to scans, to a fixed endpoint, or to a chosen growth schedule.
+
+Proof. Choose two distinct bijections at this same $t$, keeping every observer input and installed public condition fixed. Such a pair is admitted by the arbitrary attachment-bijection clause in Definition 17.1; no reference-byte or permission channel encodes the attachment. Couple the same observer at settled cuts reached without a successful scalar Read. Induct on its entire acquired record and local choices at those cuts, not on equality of the hidden fields. An in-range Read that has begun its reply must complete, including consumption and return, before another settled acquisition endpoint; the menu has no reply-abandonment or cancellation operation. Hence no completed zero-Read report can follow such a call. Partial scalar-reply prefixes need not agree between the installations and are not used in this coupling.
+
+A common addressed $P$ or $S$ sees the same current logical term and therefore the same absent, branch, wrong-type or success case. All full refusal and Growth kind/address replies agree. A success has the same structural successor and the same roster increment in both runs. Its inherited raw label can differ, and the unobserved field can differ; neither fact is part of that reply. Any newly appended integer is determined by the common old length, and its new right-terminal address is determined by the common addressed edit.
+
+An in-range Add, Tick, Reset or Hold has its fixed complete acknowledgement. Its actual field successor can differ without an observable response difference. An out-of-range Add or Read has the common RangeRefusal because the current lengths agree. A malformed complete frame has the same BadFrame. Proper incomplete request frames have the same pending input and no completed output; extensions follow the same fixed grammar until a complete command is determined. Calls disabled by missing rights are disabled in both matched contexts; a disabled call is not an extra scalar or type reply. Finite source/output work, allocation, held local processing and return reveal no further metadata by Assumption 17.2. An incomplete request cannot itself be a settled endpoint either.
+
+Thus, at every coupled settled cut, the complete observations, generated requests, local records, output choices and stopping decisions coincide. Choosing an in-range Read prevents a later zero-Read settled report; every other completed command preserves the coupling. If the observer terminates with a zero-Read report, it therefore returns the same reported initial map on both runs. The required initial maps differ, so the report cannot be exact on both. Retaining more such observations or using more hidden field operations preserves this equality and does not repair the failure. This proves the full-menu claim. The current-map requirement is also substantive: at every common growth history, the original labels remain distinct inherited labels in disjoint original cones, so their differing assignments are not deleted by growth. Already the mandatory entry map suffices for the contradiction. $\square$
+
+**Corollary 41.2 (uniform zero-error randomization and the exact coordinate minimum).** A randomized observer with a source-independent random tape, almost-sure finite termination and zero error separately for every attachment of the fixed $t$ must use at least one successful scalar Read almost surely. If exactness is required for every tape, the deterministic bound holds tape by tape. Combined with Theorem 40.2, the exact least successful-Read count for Definition 39.1's task on the original full installation is one.
+
+Proof. There are only $L!$ initial bijections for fixed $t$. Use one common tape space for them. Intersect their probability-one correctness and finite-termination events; this finite intersection still has probability one. For a fixed tape, the coupling in Theorem 41.1 makes the event of stopping before a successful Read, together with its reported map, identical for all attachments. At any tape in the intersection that event is impossible: one output cannot be every distinct owed map. Its probability is therefore zero. A tape-wise correctness premise gives the same argument without null sets. The deterministic procedure of Theorem 40.2 attains one on every admitted entry and bijection. Honest abstention, later deferred acquisition, or a task asking only for canonical syntax is not the exact terminating report required here. $\square$
+
+## 42. The actual returned endpoint, retained use and canonical expressions
+
+**Corollary 42.1 (application of the full predictor at this acquired endpoint).** Retain the earned $u$, its material graph, exhaustive $\lambda_u$, whole zero vector, current roster length, separate entry report and the authentic actual service reference, rights and backing after Definition 40.1. These initialize invariant (NLBAII.8) on this very advanced source. The full raw predictor and earned canonical dispatcher of Theorems 19.2–19.4 and 28.1 apply at this endpoint and after every finite common adaptive continuation, including arbitrary subsequent rational fields. No further binding-learning assay is needed.
+
+Proof. Lemma 39.3 and Theorem 40.2 give an original-root material-address realization preserving every edge and terminal binding. Its code is the actual $u$, and the actual last Reset makes every field coordinate equal to the retained zero. These are exactly the graph, field and binding hypotheses of (NLBAII.8). The proof of Theorem 28.1 applies to any such earned endpoint, rather than only $\rho(t)$, and has the following complete one-step meanings here.
+
+| Request at the retained current state | Complete reply and matched successor |
+| --- | --- |
+| Reset | Fixed acknowledgement; zero every current coordinate, retaining syntax and roster |
+| Add$(j,q)$ in range | Fixed acknowledgement; add $q$ at precisely $\lambda_u(j)$ |
+| Tick | Fixed acknowledgement; replace the whole vector by the current unit adjacency times that vector |
+| Read$(j)$ in range | Literal current coordinate at $\lambda_u(j)$; identity successor |
+| Hold | Fixed acknowledgement; identity successor with unrequested evolution prevented |
+| $P_p$ at alpha | Complete Growth$(P,p)$; retain old cells, add zero at $pL$, change alpha to beta and move its unique raw label to $pL$ |
+| $S_p$ at beta | Complete Growth$(S,p)$; retain old cells, add zero at $pLL,pR$, form the left-beta/right-alpha branch, move its old label from $pL$ to $pLL$ and append the new last label at $pR$ |
+
+For either growth request an absent address, branch or wrong leaf type returns its distinct original refusal and leaves every component unchanged. Out-of-range integer field labels give RangeRefusal and identity successor; complete malformed packets give BadFrame and identity successor. Proper incomplete frames retain their finite pending bytes and wait without a completed reply or edit. Missing rights disable a call. Fresh grants remain the installed source obligation. The finite code navigation and actual graph/field inclusion prove exactly the same cases in the predictor, including the adjacency identity (NLBAII.9).
+
+For actual use, forward the real call, consume its entire reply and return, and commit the matching paid record update before another settled cut. Induction on common adaptive requests then matches every complete reply and current successor. Hypothetical prediction instead uses a separately charged copy and makes no source call. Canonical ordinal Add/Read is forwarded using the computed inverse raw table at the current ordered terminal; after growth the table is updated by the same lifecycle. Negative and pending cases keep Definition 19.3's handling. The real retained reference and current rights make this continuation callable; the finite numeric maps do not supply authority. This is the existing predictor applied at a newly earned entrance, not a new general simulation theorem. $\square$
+
+**Application 42.2 (the independently specified four expressions at whole-zero cuts).** Fix that actual canonical entry and its binding/authority context. Restrict to settled synchronized acquired-or-later cuts with no pending frame or edit, reachable current term in $\mathcal D$ with at least three leaves, and zero at every material cell. Use the original meanings of Definitions 20.1 and Theorem 28.2:
+
+| Expression | Its independent source content |
+| --- | --- |
+| Space | The actual unrooted unit material tree, complete canonical linear terminal order and present whole zero field, modulo terminal-order-preserving isomorphism |
+| Time | The actual labelled causal birth/lifecycle order $E(u)$ of successful original $P/S$ events from the real seed, including acquisition growth |
+| Boundary | The canonical complete terminal impulse-onset table of the actual unit-adjacency law, diagonal zero, together with the present terminal zero restriction |
+| Memory | The retained current recursive constructor code, full zero vector and canonical ordinal-to-material-terminal table at the fixed callable entry |
+
+Each recovers the same $(u,0)$ and hence the others on this actual joint image, with agreeing routes and the canonical continuation kernel. These are the existing four expressions; none contains an unrestricted command journal. Time omits the waveform, nondestructive calls, Ticks, field inputs and elapsed duration. The complete canonical Boundary table is calculable from the earned graph, with paid computation/export/storage. The single packed anchor reply did not literally sample that complete table. Present terminal zeros here follow from actual whole-field Reset; they are not additional unpaid scalar observations.
+
+Proof. The new hypothesis correspondence is Corollary 42.1 together with its actual final Reset. NLBA Lemmas 2.1 and 2.3 identify the complete onset table with the unit leaf metric and recover the entire subdivision tree. NLBA Theorem 11.1, equivalently the original birth-typed ordered-root rigidity supplied by `NativeMaterialRootRecognition.original_rigidity`, recovers the original ordered $u$ under the complete linear roster, no-left-alpha and at-least-three-leaf hypotheses. Space uses this same root inverse. [AA Theorem 17.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) recovers $u$ from its actual labelled causal order and computes that order from $u$. Memory parses $u$. The whole field is zero by the declared domain. Conversely $(u,0)$ computes exactly these four independently interpreted data. Their inverses therefore all pass through the same $(u,0)$, proving every round trip and route agreement.
+
+The complete canonical successors agree by Corollary 42.1. Equal $(u,0)$ gives equal common canonical futures; unequal $u$ has either a different exposed roster length or a different canonical leaf metric and the original finite Reset/Add/Tick/Read separator, as in Proposition 20.2. Thus the four data kernels have exactly that canonical continuation meaning. For every permitted operation or finite composite whose initial and final cuts lie in the whole-zero domain, recoveries agree with the actual ending views. Intermediate nonzero fields are transported by the full predictor, with no zero-domain inverse asserted there.
+
+The raw implementation table, retained $y$ if kept, entry archive, actual references, grants and parser/backing are additional paid context outside these four data. For fixed $t$ the growth word, $u$ and zero field are independent of the arbitrary initial raw permutation, so these canonical data coincide while the owed raw reports differ. Proposition 20.4's raw arm/grow/Read separator still applies on this grown source. Hence no canonical-to-raw inverse or authority inverse follows. Terminal zeros without the whole-zero hypothesis also remain insufficient by Proposition 20.3. This application changes no existing recovery domain. $\square$
+
+## 43. One-run calls, literal widths and simultaneous material
+
+**Theorem 43.1 (the attained call and source-work vector).** Use the actual parameters of (NLBAII.50)–(NLBAII.57), not coordinates selected from different experiments. Definitions 39.2 and 40.1 have exactly
+
+$$
+\begin{aligned}
+P\text{ calls}&=2L-1,&P\text{ successes}&=a,&S\text{ calls/successes}&=K,\\
+\mathrm{Add}&=L(D+1),&\mathrm{Tick}&=D,&\mathrm{Read}&=1,\\
+\mathrm{Reset}&=1,&\mathrm{Hold}&=D+2,\\
+\text{fresh material vertices}&=a+2K,&
+\text{final terminals}&=L+K,&N&=3L+2K-1.
+\end{aligned}
+\tag{NLBAII.63}
+$$
+
+There are $L-1+c$ addressed refusals and $2L-1+K$ full addressed replies in total. Field fixed acknowledgements number $L(D+1)+2D+3$, in addition to the single literal scalar $y$. Under §21's attained local templates, growth has $4a+8K$ located structural assignments, $a+2K$ fresh active-field zero writes, $a+2K$ changed raw-binding assignments and $K$ roster-length increments. Final Reset writes $N$ active field cells. The Adds perform $L(D+1)$ actual integer additions. A two-buffer Tick realization performs $2(N-1)$ directed neighbour additions and $N$ result-buffer zero writes per Tick. Material allocation, navigation, grants, source/observer service, coding, transport, returns and clearing are additional actual work.
+
+Proof. The normalization makes exactly the stated $P$ visits, successes and refusals. Every later growth is one of the $K$ enabled splits. There are $D+1$ batches of $L$ Adds and $D$ intervening Ticks, with no other scalar observation. Hold occurs initially, after each of those Ticks, and after final Reset. Thus the displayed counts are on one actual trajectory. Adds, Ticks, Reset and Holds each acknowledge, giving $L(D+1)+D+1+(D+2)$ fixed field replies. Material and binding counts follow the persistent promotion/split templates; graph size follows Lemma 39.3. A tree with $N$ vertices has $N-1$ edges, so a fresh result vector can be formed by zeroing it and adding each old endpoint into its neighbour once in each directed edge orientation. These are attained source arithmetic counts, not a source-independent physical fee. No initial Reset is hidden in the acquisition: its initial zero field is the original preparation premise and zero-preserving growth. $\square$
+
+**Proposition 43.2 (width, traffic and local arithmetic on this word).** Put
+
+$$
+W=2DL(D+1)=2DM.
+\tag{NLBAII.64}
+$$
+
+Every nonnegative integer source coordinate, literal waveform operand and scalar reply in this acquisition is less than $2^W$, including nonnegative partial Tick sums. In particular their numerical magnitudes need at most $W$ binary bits; their signed rational packet frames and copies cost their full actual lengths. The bounds
+
+$$
+D_0\le3L-2,\qquad D\le4L+1,\qquad
+K\le1+(L-1)D
+\tag{NLBAII.65}
+$$
+
+give $O(L^2)$ final material and $O(L^3)$ bits per widest numerical word. They assert no constant-width scalar, total bit-time optimum or uniformly bounded lifetime store.
+
+Proof. At any stage, the field at any vertex is a sum of contributions from a subset of the $M$ input occurrences. Occurrence $(r,j)$ has exponent $H(j-1)+D-r$, distinct for all such pairs, and has been propagated at most $D$ times. Its coefficient is the relevant nonnegative walk count and is at most $3^D<B$. All exponent positions lie in $0,\ldots,M-1$. Thus the whole coordinate, and any partial nonnegative sum in computing it, is less than
+
+$$
+\sum_{e=0}^{M-1}(B-1)B^e=B^M=2^W.
+\tag{NLBAII.66}
+$$
+
+The same exponent bound applies to each input. The positive integer in (NLBAII.58) has exponent $E_{rj}=H(j-1)+D-r$ and exactly $2DE_{rj}+1$ numerator bits. The actual $y$ is a positive integer because every old block has a positive distance coefficient. Its numerator also has at most $W$ bits. Zeroing after the last observation cannot enlarge any magnitude.
+
+The normalized graph has $3L-1$ vertices, so every $\delta_i\le3L-2$. For $i>0$, (NLBAII.51) gives $k_i\le D$, and $k_0=1$. This proves (NLBAII.65) and the sufficient asymptotic bounds.
+
+For explicit literal growth traffic let
+
+$$
+\begin{aligned}
+G&=\sum_{p\text{ entry logical node}}|p|,
+& G_\alpha&=\sum_{p\text{ entry alpha leaf}}|p|,\\
+J&=\sum_{i=0}^{L-1}\left(k_i|p_i|+\frac{k_i(k_i-1)}2\right),
+& M_g&=2L-1+K.
+\end{aligned}
+\tag{NLBAII.67}
+$$
+
+The original addressed request and reply payloads are respectively $2(G+J)+4M_g$ and $2(G_\alpha+J)+5M_g$ bits, by §17's $2|p|+4$ request, $2|p|+5$ success and five-bit refusal meanings. Every payload additionally pays its actual completion, End, acknowledgement and return costs. The field-input integers are denominator-one reduced rationals. For a positive numerator of bit length $b$, §17's signed self-delimiting numerator and denominator-one encoding has $2b+5$ payload bits, besides the operation tag and raw-label frame. Consequently each of the $M$ inputs pays its own $b=2DE_{rj}+1$, and the sole $y$ pays the same literal rational rule at its actual bit length. Original raw labels use their $O(\log(L+1))$ encodings; the anchor, appended counters and stored indices pay their actual lengths as well. This accounts for transmitted words, not just the number of scalar calls.
+
+One finite implementation constructs an input by computing its finite integer exponent, shifting a one by $2DE_{rj}$ positions and emitting the entire reduced rational frame. It reuses one operand workspace only after the preceding Add and return finish. The decoder performs exactly $M$ successive quotient/remainder extractions by $B=2^{2D}$, and one zero comparison per extracted digit, retaining the first positive index of each of the $L$ blocks. It need not retain a full $L$-by-$(D+1)$ response matrix. With ordinary full-word copying, each shift or quotient/remainder costs its actual at-most-$W$ bit work; $O(MW)$ bit reads/writes suffice for these waveform/digit operations, in addition to counter/exponent arithmetic, literal I/O, source work, graph construction and map/report copies. Counters, index products, comparisons, address concatenations, the $L$ locally computed tree distances and their maximum all pay their actual finite arithmetic and traversal costs. A direct repeated breadth-first traversal computes the required distances on the earned normalized graph using finite indexed adjacency lists, with no source call. No algebraic operation at growing width is declared a unit-cost physical primitive. $\square$
+
+**Definition 43.3 (simultaneous backing, archives and later calls).** During waveform propagation an attained implementation has the actual $N$-cell source field and its separately allocated $N$-cell Tick result buffer, each with up to $NW$ numerical bits in the displayed sufficient representation. These are distinct from the observer's graph, constructor words, raw tables and arithmetic. Local input generation has its operand, exponent and encoding workspace; receipt/decoding has the literal $y$, a quotient copy and digit/comparison scratch. Separate input, output and transport buffers, and any retained response copy, coexist at their actual widths. These stores are counted while live even if some have equal contents. The final retained $N$-coordinate zero predictor is an additional allocation, not the source field or a reused accounting coordinate. A hypothetical nonzero continuation or a speculative predictor copy has its own full vector and work buffer.
+
+The entry code and map archive, mutable current code and indexed material graph, complete current raw bijection, canonical terminal table, per-cone parameters, first-positive indices, traversal stack and addresses, finite program and all pending/completed output backing are simultaneous actual observer material. An indexed graph/table/code layout uses $O(N\log(N+1))$ numerical bits; an explicit copied-address workspace can conservatively use $O(N^2)$ bits. These estimates are additional to the $W$-bit numerical buffers and the actual reference, grant and connection encodings, which have no claimed $N$-only size bound. The acquisition transcript need not be retained after its consumed data are installed. If the caller or producer does retain it or other outputs, their entire actual backing is additional; a short handle does not remove its accessible archive. Clearing or releasing temporary contents after their last use pays every actual write and binding operation; retained cleared capacity remains paid material.
+
+For a chosen implementation reusing a bounded number of packet buffers on the fixed channels and retaining no optional transcript, the two source vectors, separate predictor and all numerical operand/reply/decoding buffers together use $O(NW+W)$ bits. Combining them with the indexed records and explicit address workspaces gives an attained simultaneous $O(NW+N^2)$ numerical backing bound, plus the distinct actual reference, grant, connection and additional retained-output backing just described. The final $N,W$ dominate earlier sizes and widths, so this is a bound on their coexistence, not a sum of peaks from different trajectories. It is not a minimum-space claim. After final Reset an unused Tick buffer can still contain earlier numerical values: it is not an active material field coordinate, remains charged while allocated, and is erased or released only by paid implementation work. Reset itself supplies no erasure theorem for that backing or for observer archives.
+
+The same-run account includes the original root allocation, actual old producer, roster attachment and field preparation. That producer has $c$ promotions and $L-1$ splits from the known alpha, with its actual old address traffic/navigation, grants and $N_0=2L+c-1$ zero field cells; its old word need not be available as a record. Original field/Tick backing, observer initialization and every later output copy are real resources. Subsequent actual raw/canonical use pays every source call, full reply, current-size adjacency computation, rational arithmetic at its attained widths, graph/table update, ordinal lookup, frame and return. Future rational inputs and growth have no uniform finite lifetime bound. A finite instruction program supplies pointwise finite executions with sufficient finite backing, rather than a fixed finite amount of memory for all of them.
+
+## 44. The acquired coordinate minimum and its remaining mathematical boundaries
+
+**Proposition 44.1 (comparison and separation of scopes).** The exact successful-Read minimum in Corollary 41.2 is not a total acquisition optimum, an optimum at a prescribed original endpoint, or a one-Read arbitrary-field/no-Reset entrance. It changes none of the earlier fixed-model or erased-history statements.
+
+Proof. This trajectory makes $D>0$ actual Ticks, $K$ splits and the wide integer inputs of Proposition 43.2, and ends at its own $u$ with $N=3L+2K-1$. The existing integer-age acquisition of Theorem 27.2 makes $L$ Reads, zero Ticks, $L-1$ splits and only $O(\log(L+1))$-bit field values, ending at a different $5L-3$-vertex source. Both are sufficient exact binding acquisitions on the original installation. A minimum in successful Reads supplies no inequalities for their other coordinates or for a caller's different endpoint constraint. Their separately favorable coordinates cannot be combined into a single attained run.
+
+The waveform calculation starts from actual whole-field zero; its final callable zero predictor is established by an actual full Reset. Assumption 34.1 instead permits arbitrary attachment fields and omits Reset. Neither its different entrance theorem nor the same-specimen implication of §37 supplies these waveform premises. The conclusions here therefore assert no one-Read no-Reset result and no fused minimum with that separate entrance or with the binary image of §30.
+
+Old total serialization is also not recovered. The two old legal words (NLBAII.19) have the same entry term, zero field and causal order. Attach the same raw bijection at that common term. They give identical inputs, this entire experiment, both binding reports and all later complete raw futures, although their old third events differ. This preserves Proposition 22.3's erased-history boundary. Whole-zero canonical views still omit the raw permutation and entry/private archives by Application 42.2, and terminal zeros still omit hidden internal fields by Proposition 20.3. A changed initialization, source, task or returned cut proves no statement about an original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization or final-no-Ready obligation that forbids that change. $\square$
+
+**Scope 44.2 (attribution and the four-expression programme).** The source-relative `repo-derived` content of §§39–41 is the actual legal anchor/distance construction, executed packed waveform, exhaustive unknown entry/current raw-binding acquisition and full-original-menu zero-Read exclusion. Its whole-zero continued use and canonical four-expression consequences in §42 are applications of the existing supplied predictor and inverse at this new entrance. The all-$P$ acquisition, birth typing, material lifecycle, first arrivals, root rigidity and causal inverse retain their original authors' mathematics and hypotheses. Ordinary integer expansion and Kronecker packing are mature tools credited in their actual use in Theorem 40.2; no new generic digit theorem, replay/quotient framework or four-view principle is asserted.
+
+The independently meaningful guard-only source encoding/represented service in [AAII §§68–74](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md) uses its $J$ image and guard attachment, without this raw field roster. The known-initialization maintained global history service in AAII §§75–83 retains its actual annotation and complete original history interface. Neither is an erased arbitrary history inverse or this numerical raw-binding experiment. The [RGII §§59–68](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md) result proves later scalar-origin signed-length conditions and computed lattice/residue consumers on its authentically acquired rational positive-link path with $0<T<\operatorname{Id}$, its own origin and complete outputs. Those operators, ports and task domains are not identified with the present unit branching adjacency by a shared name or a digit expansion. These suppliers are credited rather than counted again as new content. The inspected mathematical correspondences support source-relative attribution, not worldwide priority or a full-corpus absence claim.
+
+Existence of the installed source and its old preparation is a hypothesis; legality of the subsequent displayed construction is proved in Lemma 39.3. Identifiability of the map from the one actual scalar is proved by (NLBAII.61)–(NLBAII.62). Acquisition executes that experiment and finite decoder on the same source. Conditional arithmetic verification of a proposed map under the earned law does not certify authentic binding, full roster, old initialization, fresh-zero allocation, exact calibration, rights or physical conformity. Continued use retains those actual resources and the synchronized full predictor. No inverse creates a missing source reference or permission.
+
+A common actual realization joining unrestricted LAB growth, the original rational-path operations and quantum phase/effect/window sources is still missing, as are the corresponding complete initialization, acquisition, action/output, selector, reference/rights and same-run resource bridges. The exact independent meanings and mutual recovery here remain those of the canonical whole-zero image. No arbitrary rational control-journal inverse, all-busy-cut inverse, noisy physical theorem, universal generator minimum, total runtime/space/material optimum or completion of the full four-expression objective follows. All original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, final-no-Ready and erased-history scopes remain exact.
+
+## 追加锚（本行以下为增补区）
