@@ -133,8 +133,7 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "Its monomial agrees with the distinguished relation on every complex matrix. A zero-weight subexponent "
                     + "has multiplicities in the consecutive-gap integer kernel; its coordinate bounds force the integer multiple "
                     + "to be zero or one. The argument includes m equal to two without merging its coordinate labels."),
-            Paragraph(Text("The upper bound on every labelled indecomposable zero-weight exponent, "
-                + "and the equivalence with the actual compact orbits are further requirements "
+            Paragraph(Text("The all-state equivalence with the actual compact orbits remains required "
                 + "for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive "
                 + "protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.")))));
 
