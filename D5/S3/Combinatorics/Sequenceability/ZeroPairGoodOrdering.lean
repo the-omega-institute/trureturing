@@ -86,51 +86,51 @@ private theorem two_prefix_order (a : ι → G) (ha : Function.Injective a)
       ∀ i, 0 < i → i < w.length →
         ((w.take i).map a).sum ≠ f ∧ ((w.take i).map a).sum ≠ g := by
   classical
-  induction C using Finset.strongInductionOn generalizing f g with
-  | H C ih =>
-    by_cases hc : 1 < C.card
-    · obtain ⟨x, hx, hxf, hxg⟩ := next_choice a ha C f g hc hmiss
-      have hsum : (∑ y ∈ C.erase x, a y) = (∑ y ∈ C, a y) - a x := by
-        have := Finset.sum_erase_add C a hx
-        exact eq_sub_iff_add_eq.mpr this
-      have hm : (∑ y ∈ C.erase x, a y) - (f - a x) ∉ (C.erase x).image a ∨
-          (∑ y ∈ C.erase x, a y) - (g - a x) ∉ (C.erase x).image a := by
-        have he (v : G) : (∑ y ∈ C.erase x, a y) - (v - a x) =
-            (∑ y ∈ C, a y) - v := by rw [hsum]; abel
-        simp only [he]
-        exact hmiss.imp (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
-          (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
-      obtain ⟨w, hw, hp⟩ := ih (C.erase x) (erase_ssubset hx) (f-a x) (g-a x) hm
-      have hwn : w.Nodup := hw.nodup_iff.mpr (C.erase x).nodup_toList
-      have hxn : x ∉ w := by
-        intro h
-        exact notMem_erase x C (mem_toList.mp (hw.mem_iff.mp h))
-      have hN : (x :: w).Nodup := List.nodup_cons.mpr ⟨hxn,hwn⟩
-      refine ⟨x :: w, (List.perm_ext_iff_of_nodup hN C.nodup_toList).mpr ?_, ?_⟩
-      · intro z
-        simp only [List.mem_cons, mem_toList]
-        rw [hw.mem_iff, mem_toList, mem_erase]
-        constructor
-        · rintro (rfl | ⟨_, hz⟩) <;> assumption
-        · intro hz
-          by_cases h : z = x
-          · exact Or.inl h
-          · exact Or.inr ⟨h, hz⟩
-      · intro i hi hil
-        cases i with
-        | zero => omega
-        | succ j =>
-          simp only [List.take_succ_cons, List.map_cons, List.sum_cons]
-          by_cases hj : j = 0
-          · subst j; simpa using And.intro hxf hxg
-          · obtain ⟨hf, hg⟩ := hp j (by omega) (by simpa using hil)
-            constructor
-            · intro h; apply hf; apply eq_sub_iff_add_eq.mpr; simpa [add_comm] using h
-            · intro h; apply hg; apply eq_sub_iff_add_eq.mpr; simpa [add_comm] using h
-    · refine ⟨C.toList, List.Perm.refl _, ?_⟩
-      intro i hi hil
-      simp only [Finset.length_toList] at hil
-      omega
+  induction C using Finset.strongInductionOn generalizing f g
+  rename_i C ih
+  by_cases hc : 1 < C.card
+  · obtain ⟨x, hx, hxf, hxg⟩ := next_choice a ha C f g hc hmiss
+    have hsum : (∑ y ∈ C.erase x, a y) = (∑ y ∈ C, a y) - a x := by
+      have := Finset.sum_erase_add C a hx
+      exact eq_sub_iff_add_eq.mpr this
+    have hm : (∑ y ∈ C.erase x, a y) - (f - a x) ∉ (C.erase x).image a ∨
+        (∑ y ∈ C.erase x, a y) - (g - a x) ∉ (C.erase x).image a := by
+      have he (v : G) : (∑ y ∈ C.erase x, a y) - (v - a x) =
+          (∑ y ∈ C, a y) - v := by rw [hsum]; abel
+      simp only [he]
+      exact hmiss.imp (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
+        (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
+    obtain ⟨w, hw, hp⟩ := ih (C.erase x) (erase_ssubset hx) (f-a x) (g-a x) hm
+    have hwn : w.Nodup := hw.nodup_iff.mpr (C.erase x).nodup_toList
+    have hxn : x ∉ w := by
+      intro h
+      exact notMem_erase x C (mem_toList.mp (hw.mem_iff.mp h))
+    have hN : (x :: w).Nodup := List.nodup_cons.mpr ⟨hxn,hwn⟩
+    refine ⟨x :: w, (List.perm_ext_iff_of_nodup hN C.nodup_toList).mpr ?_, ?_⟩
+    · intro z
+      simp only [List.mem_cons, mem_toList]
+      rw [hw.mem_iff, mem_toList, mem_erase]
+      constructor
+      · rintro (rfl | ⟨_, hz⟩) <;> assumption
+      · intro hz
+        by_cases h : z = x
+        · exact Or.inl h
+        · exact Or.inr ⟨h, hz⟩
+    · intro i hi hil
+      cases i with
+      | zero => omega
+      | succ j =>
+        simp only [List.take_succ_cons, List.map_cons, List.sum_cons]
+        by_cases hj : j = 0
+        · subst j; simpa using And.intro hxf hxg
+        · obtain ⟨hf, hg⟩ := hp j (by omega) (by simpa using hil)
+          constructor
+          · intro h; apply hf; apply eq_sub_iff_add_eq.mpr; simpa [add_comm] using h
+          · intro h; apply hg; apply eq_sub_iff_add_eq.mpr; simpa [add_comm] using h
+  · refine ⟨C.toList, List.Perm.refl _, ?_⟩
+    intro i hi hil
+    simp only [Finset.length_toList] at hil
+    omega
 
 private theorem all_prefix_order (a : ι → G) (ha : Function.Injective a)
     (C : Finset ι) (f g : G) (hf : (0 : G) ≠ f) (hg : (0 : G) ≠ g)
@@ -157,11 +157,11 @@ private theorem nonzero_list (a : ι → G) (C : Finset ι)
     (hz : ∀ U ⊆ C, U.Nonempty → (∑ x ∈ U, a x) ≠ 0)
     {v : List ι} (hn : v.Nodup) (hv : v ≠ []) (hsub : ∀ x ∈ v, x ∈ C) :
     (v.map a).sum ≠ 0 := by
-  have hs : v.toFinset ⊆ C := by simpa using hsub
+  have hs : v.toFinset ⊆ C := fun x hx => hsub x (List.mem_toFinset.mp hx)
   have hne : v.toFinset.Nonempty := by
     obtain ⟨x, hx⟩ := List.exists_mem_of_ne_nil v hv
     exact ⟨x, List.mem_toFinset.mpr hx⟩
-  simpa only [Finset.sum_toFinset a hn] using hz v.toFinset hs hne
+  simpa only [List.sum_toFinset a hn] using hz v.toFinset hs hne
 
 private theorem strong_of_zero_free (a : ι → G) (C : Finset ι)
     (hz : ∀ U ⊆ C, U.Nonempty → (∑ x ∈ U, a x) ≠ 0)
@@ -174,13 +174,13 @@ private theorem strong_of_zero_free (a : ι → G) (C : Finset ι)
       apply List.length_pos_iff.mp
       simp only [v, List.length_take, List.length_drop]
       omega
-    have hvn : v.Nodup := (hn.drop i).take (j-i)
+    have hvn : v.Nodup := hn.drop.take
     have hvC : ∀ x ∈ v, x ∈ C := by
       intro x hx
       exact mem_toList.mp (hw.mem_iff.mp (List.mem_of_mem_drop (List.mem_of_mem_take hx)))
     have hs := List.sum_take_add_sum_drop ((w.take j).map a) i
     have hij' : i ≤ j := hij.le
-    simp only [List.take_map, List.drop_map, List.take_take,
+    simp only [← List.map_take, ← List.map_drop, List.take_take,
       Nat.min_eq_left hij', List.drop_take] at hs
     change pfx a w i + (v.map a).sum = pfx a w j at hs
     exact nonzero_list a C hz hvn hv hvC (by rw [he] at hs; exact add_left_cancel (by simpa using hs))
@@ -242,26 +242,28 @@ private theorem good_of_strong (a : ι → G) {w : List ι} (hw : Strong a w) :
   apply (D5.S1.Words.Sequenceability.SeparatedPrefixReflection.good_iff _).mpr
   intro i j hij hj he
   have h : i = j := hw i j (by simpa using (Nat.le_trans hij.le hj))
-    (by simpa using hj) (by simpa only [pref, List.take_map, pfx] using he)
+    (by simpa using hj) (by simpa only [pref, ← List.map_take, pfx] using he)
   omega
 
 private theorem good_sandwich (a : ι → G) {w : List ι} {s t : ι}
     (hw : Strong a w) (hst : a s + a t = 0)
     (hp : ∀ i, i ≤ w.length → pfx a w i ≠ -a s ∧
       pfx a w i ≠ (w.map a).sum - a s) : Good ((s :: w ++ [t]).map a) := by
-  let W := s :: w ++ [t]
-  have hlen : W.length = w.length + 2 := by simp [W]; omega
+  let W := s :: (w ++ [t])
+  have hlen : W.length = w.length + 2 := by simp [W]
   have hmid (i : ℕ) (hi : i ≤ w.length) : pfx a W (i+1) = a s + pfx a w i := by
     simp only [W, pfx, List.take_succ_cons, List.take_append_of_le_length hi,
       List.map_cons, List.sum_cons]
   have hfull : pfx a W W.length = (w.map a).sum := by
     simp only [pfx, List.take_length, W, List.map_cons, List.map_append,
-      List.sum_cons, List.sum_append, List.map_singleton, List.sum_singleton]
+      List.sum_cons, List.sum_append, List.map_singleton, List.sum_singleton,
+      List.map_nil, List.sum_nil, add_zero]
     rw [eq_neg_of_add_eq_zero_right hst]
     abel
+  change Good (W.map a)
   apply (D5.S1.Words.Sequenceability.SeparatedPrefixReflection.good_iff _).mpr
   intro i j hij hj he
-  have he : pfx a W i = pfx a W j := by simpa only [pref, List.take_map, pfx] using he
+  have he : pfx a W i = pfx a W j := by simpa only [pref, ← List.map_take, pfx] using he
   have hj : j ≤ W.length := by simpa using hj
   by_cases hi0 : i = 0
   · by_cases hjf : j = W.length
@@ -343,7 +345,10 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
       have he := Finset.not_nonempty_iff_eq_empty.mp h
       apply hnz s hs
       simpa only [he, sum_empty] using hT.symm
-    obtain ⟨c, hsingle⟩ := Finset.card_eq_one.mp (by have := hne.card_pos; omega)
+    have hcard : C.card = 1 := by
+      have hpos : 0 < C.card := hne.card_pos
+      omega
+    obtain ⟨c, hsingle⟩ := Finset.card_eq_one.mp hcard
     have hcC : c ∈ C := by simp [hsingle]
     have he : a c = a s := by simpa only [hsingle, sum_singleton] using hT
     exact hsC (ha he ▸ hcC)
@@ -385,7 +390,7 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
   have hpa : ∀ i, i ≤ w.length → pfx a w i ≠ a s := by
     intro i hi he
     let B := (w.take i).toFinset
-    have hn : (w.take i).Nodup := (hw.nodup_iff.mpr D.nodup_toList).take i
+    have hn : (w.take i).Nodup := (hw.nodup_iff.mpr D.nodup_toList).take
     have hBC : B ⊆ C := by
       intro x hx
       exact hDsub (mem_toList.mp (hw.mem_iff.mp (List.mem_of_mem_take (List.mem_toFinset.mp hx))))
@@ -394,9 +399,9 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
       have : c ∈ D := mem_toList.mp (hw.mem_iff.mp (List.mem_of_mem_take (List.mem_toFinset.mp h)))
       exact notMem_erase c C this
     have hBsum : (∑ x ∈ B, a x) = a s := by
-      simpa only [B, Finset.sum_toFinset a hn] using he
+      simpa only [B, List.sum_toFinset a hn, pfx] using he
     apply hz (C \ B) (sdiff_subset) ⟨c, mem_sdiff.mpr ⟨hc, hcB⟩⟩
-    rw [Finset.sum_sdiff hBC, hBsum, hT]
+    rw [Finset.sum_sdiff_eq_sub hBC, hBsum, hT]
     exact sub_self _
   have htStrong : Strong a (t :: w) := strong_cons a hwStrong (by simpa [hat] using hpa)
   have htwSum : ((t :: w).map a).sum = -a c := by simp only [List.map_cons, List.sum_cons, hwSum, hat]; abel
@@ -404,7 +409,8 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
     intro i hi he
     cases i with
     | zero =>
-      have he0 : (0 : G) = -a c + a s := by simpa [pfx, htwSum] using he
+      have he0 : (0 : G) = -a c + a s := by
+        simpa only [pfx, List.take_zero, List.map_nil, List.sum_nil, htwSum] using he
       have he' : a c = a s := by
         have hh := congrArg (fun z => a c + z) he0
         simpa only [add_zero, ← add_assoc, add_neg_cancel, zero_add] using hh
@@ -412,13 +418,16 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
     | succ i =>
       have hf := (hp i (by simpa using hi)).2
       apply hf
-      simp only [pfx, List.take_succ_cons, List.map_cons, List.sum_cons, hat, htwSum] at he
+      simp only [pfx, List.take_succ_cons, List.map_cons, List.sum_cons, hat, hwSum] at he
       change pfx a w i = _
       calc pfx a w i = (-a c+a s) - (-a s) := eq_sub_iff_add_eq.mpr (by simpa [pfx, add_comm] using he)
            _ = _ := by abel)
   have hfullStrong : Strong a (((t :: w) ++ [s]) ++ [c]) := strong_append a htsStrong (by
     intro i hi he
-    have htot : (((t :: w) ++ [s]).map a).sum + a c = a s := by simp [htwSum]; abel
+    have htot : (((t :: w) ++ [s]).map a).sum + a c = a s := by
+      simp only [List.map_append, List.sum_append, List.map_singleton,
+        List.sum_singleton, htwSum]
+      abel
     rw [htot] at he
     by_cases hil : i ≤ (t :: w).length
     · rw [pfx, List.take_append_of_le_length hil] at he
@@ -432,16 +441,19 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
              _ = _ := by abel
     · have hif : i = ((t :: w) ++ [s]).length := by simp only [List.length_append, List.length_singleton] at hi ⊢; omega
       have he' : a c = 0 := by
-        simp only [hif, pfx, List.take_length, List.map_append, List.sum_append,
-          List.map_singleton, List.sum_singleton, htwSum] at he
-        have : -a c = 0 := add_right_cancel (a := a s) (by simpa using he)
-        exact neg_eq_zero.mp this
+        rw [hif] at he
+        change ((t :: w).map a).sum + a s = a s at he
+        rw [htwSum] at he
+        have hh : -a c = 0 := add_right_cancel (show -a c + a s = 0 + a s by simpa using he)
+        exact neg_eq_zero.mp hh
       exact hnz c (hCsub hc) he')
   have hwc : (w ++ [c]).Perm C.toList := by
     have h := insert_order hw c (notMem_erase _ _)
     rw [Finset.insert_erase hc] at h
-    exact (by simpa using (List.perm_append_comm : (w ++ [c]).Perm ([c] ++ w))).trans h
-  have hpX := pair_order ht hs hst.symm (by simpa only [C, Finset.erase_comm] using hwc)
+    have h' : (w ++ [c]).Perm (c :: w) := by
+      simpa using (List.perm_append_comm : (w ++ [c]).Perm ([c] ++ w))
+    exact h'.trans h
+  have hpX := pair_order ht hs hst.symm (by simpa only [C, Finset.erase_right_comm] using hwc)
   refine ⟨((t :: w) ++ [s]) ++ [c], ?_, good_of_strong a hfullStrong⟩
   apply List.Perm.trans _ hpX
   have hswap := (List.Perm.refl (t :: w)).append (List.Perm.swap c s [])
@@ -459,8 +471,8 @@ theorem exists_good_order_of_zero_pair (a : ι → G) (ha : Function.Injective a
   · exact exceptional_order a ha X s t hs ht hst hnz hop hz hTs
   by_cases hTt : (∑ x ∈ C, a x) = a t
   · apply exceptional_order a ha X t s ht hs hst.symm hnz (by simpa [add_comm] using hop)
-    · simpa only [Finset.erase_comm] using hz
-    · simpa only [C, Finset.erase_comm] using hTt
+    · simpa only [Finset.erase_right_comm] using hz
+    · simpa only [C, Finset.erase_right_comm] using hTt
   have hnot : a s ∉ C.image a := by
     intro hh
     obtain ⟨x, hx, he⟩ := mem_image.mp hh
@@ -469,7 +481,7 @@ theorem exists_good_order_of_zero_pair (a : ι → G) (ha : Function.Injective a
   have hmiss : (∑ x ∈ C, a x) - ((∑ x ∈ C, a x) - a s) ∉ C.image a := by
     simpa using hnot
   obtain ⟨w, hw, hp⟩ := all_prefix_order a ha C (-a s) ((∑ x ∈ C, a x)-a s)
-    (by simpa using (hnz s hs).symm)
+    (by simpa using hnz s hs)
     (by intro h; apply hTs; exact sub_eq_zero.mp h.symm)
     (by simpa only [eq_neg_of_add_eq_zero_right hop] using hTt)
     (by
@@ -518,16 +530,16 @@ theorem full_blocker_pair_extract [Fintype ι] (H : Finset (Finset ι))
     by_contra hij
     apply hd
     refine ⟨i,j,hij,?_⟩
-    apply Submodule.Quotient.mk_eq_zero.mp
+    apply (Submodule.Quotient.mk_eq_zero M).mp
     change M.mkQ (Pi.single i 1 - Pi.single j 1) = 0
     rw [map_sub]
     exact sub_eq_zero.mpr he
   have hnz : ∀ i ∈ (univ : Finset ι), a i ≠ 0 := by
     intro i _ he
-    exact hu ⟨i, Submodule.Quotient.mk_eq_zero.mp he⟩
+    exact hu ⟨i, (Submodule.Quotient.mk_eq_zero M).mp he⟩
   have hop : a s + a t = 0 := by
     have he : row {s,t} = Pi.single s (1 : ℤ) + Pi.single t 1 := by simp [row, hst]
-    have hz := Submodule.Quotient.mk_eq_zero.mpr hpair
+    have hz := (Submodule.Quotient.mk_eq_zero M).mpr hpair
     simpa only [he, ← Submodule.mkQ_apply, map_add] using hz
   have hsum (U : Finset ι) : (∑ x ∈ U, a x) = M.mkQ (row U) := by
     simp only [row, map_sum, a]
@@ -537,7 +549,7 @@ theorem full_blocker_pair_extract [Fintype ι] (H : Finset (Finset ι))
     intro U hU hne hz
     apply hnone
     refine ⟨U,hne,hU,?_⟩
-    have hm : row U ∈ rowSpan H := Submodule.Quotient.mk_eq_zero.mp (by
+    have hm : row U ∈ rowSpan H := (Submodule.Quotient.mk_eq_zero M).mp (by
       simpa only [← Submodule.mkQ_apply, ← hsum U] using hz)
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).mp hm
     exact ⟨c,hc⟩
@@ -545,12 +557,12 @@ theorem full_blocker_pair_extract [Fintype ι] (H : Finset (Finset ι))
     (mem_univ _) (mem_univ _) hst hnz hop hzero
   obtain ⟨i,j,hij,hj,hproper,hH⟩ := hcover w hw
   let v := (w.drop i).take (j-i)
-  have hvn : v.Nodup := (hw.nodup_iff.mpr (univ : Finset ι).nodup_toList).drop i |>.take (j-i)
+  have hvn : v.Nodup := (hw.nodup_iff.mpr (univ : Finset ι).nodup_toList).drop.take
   have hm : row v.toFinset ∈ rowSpan H := Submodule.subset_span ⟨⟨v.toFinset,hH⟩,rfl⟩
   have hz : (v.map a).sum = 0 := by
-    rw [← Finset.sum_toFinset a hvn, hsum]
-    exact Submodule.Quotient.mk_eq_zero.mpr hm
+    rw [← List.sum_toFinset a hvn, hsum]
+    exact (Submodule.Quotient.mk_eq_zero M).mpr hm
   apply hgood i j hij (by simpa using hj) (by simpa using hproper)
-  simpa only [List.drop_map, List.take_map] using hz
+  simpa only [← List.map_drop, ← List.map_take] using hz
 
 end D5.S3.Combinatorics.Sequenceability.ZeroPairGoodOrdering
