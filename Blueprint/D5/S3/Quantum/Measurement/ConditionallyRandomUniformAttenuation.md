@@ -10,7 +10,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Formalization.* `D5/S3/Quantum/Measurement/ConditionallyRandomUniformAttenuation.conditioned` (`✓ std3`).
 
-*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. URL: <https://arxiv.org/abs/2110.03099v1>.
+*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. DOI: [10.48550/arXiv.2110.03099](https://doi.org/10.48550/arXiv.2110.03099). URL: <https://arxiv.org/abs/2110.03099v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Formalization.* `D5/S3/Quantum/Measurement/ConditionallyRandomUniformAttenuation.UniformAttenuation` (`✓ std3`).
 
-*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. URL: <https://arxiv.org/abs/2110.03099v1>.
+*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. DOI: [10.48550/arXiv.2110.03099](https://doi.org/10.48550/arXiv.2110.03099). URL: <https://arxiv.org/abs/2110.03099v1>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Formalization.* `D5/S3/Quantum/Measurement/ConditionallyRandomUniformAttenuation.ConditionallyRandom` (`✓ std3`).
 
-*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. URL: <https://arxiv.org/abs/2110.03099v1>.
+*Citation.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. DOI: [10.48550/arXiv.2110.03099](https://doi.org/10.48550/arXiv.2110.03099). URL: <https://arxiv.org/abs/2110.03099v1>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$\left(\operatorname{D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenu
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. URL: <https://arxiv.org/abs/2110.03099v1>.
+*Acknowledgement.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. DOI: [10.48550/arXiv.2110.03099](https://doi.org/10.48550/arXiv.2110.03099). URL: <https://arxiv.org/abs/2110.03099v1>.
 
 *Commentary.*
 
@@ -66,7 +66,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. URL: <https://arxiv.org/abs/2110.03099v1>.
+*Acknowledgement.* Stan Gudder (2021). *Mutually Unbiased Quantum Observables*. DOI: [10.48550/arXiv.2110.03099](https://doi.org/10.48550/arXiv.2110.03099). URL: <https://arxiv.org/abs/2110.03099v1>.
 
 *Commentary.*
 
