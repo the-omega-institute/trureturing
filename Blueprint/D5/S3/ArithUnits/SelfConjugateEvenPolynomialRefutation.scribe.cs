@@ -34,9 +34,10 @@ internal sealed class SelfConjugateEvenPolynomialRefutationDocument : IScribeDoc
                 AssessedProvenance.FromRepo(Source, Invariants), DescribeRole.Definition,
                 Paragraph(Text("In characteristic two, (X+1)^2 = X^2+1 and (X+1)^4 = X^4+1. "
                     + "The two constant terms cancel, so U.comp(X+1)=U. Its highest term has coefficient one, "
-                    + "and its degree is four. Also U=(X^2+X)^2. The general description of translation "
-                    + "invariants as polynomials in X^p-X is the existing result in Section 5 of the second "
-                    + "reference; the family calculation here uses Frobenius directly."))),
+                    + "and its degree is four. Also U=(X^2+X)^2. More generally, for any prime p and field K "
+                    + "of characteristic p, with indeterminate T, the polynomials in K[T] fixed by "
+                    + "translation T+1 are polynomials in T^p-T. This is the existing result in Section 5 "
+                    + "of the second reference; the family calculation here uses Frobenius directly."))),
             Node("P", "The entire power family", All("r", N, Equal(Call("P", F.Id("r")), Pow(F.Id("U"), F.Id("r")))),
                 AssessedProvenance.FromRepo(Source), DescribeRole.Definition,
                 Paragraph(Text("P is defined for every natural r, including zero. The obstruction uses every "
@@ -58,7 +59,7 @@ internal sealed class SelfConjugateEvenPolynomialRefutationDocument : IScribeDoc
                     + "even support cardinality. The degree 4r is even, and the reflection identity follows "
                     + "from -X=X in characteristic two.")),
                 Paragraph(Text("The degree obstruction is uniform: odd r is coprime to 2 and therefore to every "
-                    + "2^k. If 4r=2^k, then r divides 2^k, forcing r=1, contrary to r at least three. "
+                    + "2^k for every natural k. If 4r=2^k, then r divides 2^k, forcing r=1, contrary to r at least three. "
                     + "Monicity gives coefficient one at exponent 4r. Each proposed powers-of-two monomial "
                     + "has coefficient zero there; an arbitrary constant also has coefficient zero because "
                     + "4r is positive. Finite addition preserves that zero coefficient, independently of "
@@ -80,7 +81,7 @@ internal sealed class SelfConjugateEvenPolynomialRefutationDocument : IScribeDoc
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition,
                 Paragraph(Text("The phrase that X^0 is a term means that the constant coefficient of p is nonzero. "
                     + "SourceParity retains the implication to odd m in that case and the implication to even m "
-                    + "otherwise. The zero-constant family therefore belongs to the m-even source branch. "
+                    + "otherwise. For the zero-constant family, this source rule would require even m. "
                     + "The contradiction already excludes all m before imposing this restriction."))),
             Node("DisplayedRepresentation", "The literal displayed representation", RepresentationFormula(false),
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition,
