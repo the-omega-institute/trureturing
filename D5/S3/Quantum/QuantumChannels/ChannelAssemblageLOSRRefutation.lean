@@ -7,8 +7,8 @@
    digest: Tracing the control makes the rotation assemblages free and refutes their angle ordering. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumBounds.CHSHWitness
+import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 
 /-! The literal controlled-rotation family admits a conversion against its angle ordering. -/
@@ -20,9 +20,9 @@ set_option maxRecDepth 4096
 
 noncomputable section
 
-namespace D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
-
 open scoped BigOperators Kronecker Matrix
+
+namespace D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 open D5.S3.Quantum.Foundation.FiniteKrausChannel (finite_kraus_quantum_channel)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -68,14 +68,17 @@ def assemblage (θ : ℝ) : Assemblage := fun a x =>
       intro ρ σ
       dsimp only
       simp only [Matrix.kronecker_add, Matrix.reindex_apply, Matrix.submatrix_add,
-        Pi.add_apply, Matrix.mul_add, Matrix.add_mul, partialTraceRight_add, partialTraceLeft_add]
+        Pi.add_apply, Matrix.mul_add, Matrix.add_mul, partialTraceRight_add,
+        partialTraceLeft_add]
     map_smul' := by
       intro z ρ
       dsimp only
       simp only [RingHom.id_apply, Matrix.kronecker_smul, Matrix.reindex_apply,
-        Matrix.submatrix_smul, Pi.smul_apply, Matrix.mul_smul, Matrix.smul_mul, partialTraceRight_smul]
+        Matrix.submatrix_smul, Pi.smul_apply, Matrix.mul_smul, Matrix.smul_mul,
+        partialTraceRight_smul]
       ext i j
-      simp only [partialTraceLeft, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum] }
+      unfold partialTraceLeft
+      exact (Finset.mul_sum _ _ _).symm }
 
 /-- Equation LOSRtrans-channel, including shared randomness, no retrocausation and memory. -/
 def LOSRConvertible (I I' : Assemblage) : Prop :=
@@ -107,10 +110,22 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
       (if a = 0 then (1 / 2 : ℂ) • ρ
         else (1 / 2 : ℂ) • (rotationY θ * ρ * (rotationY θ).conjTranspose))
       else (1 / 4 : ℂ) • (ρ + rotationY θ * ρ * (rotationY θ).conjTranspose) := by
+  have hcontrolled : controlledRotation θ =
+      D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled 1 (rotationY θ) := by
+    ext ⟨b, i⟩ ⟨c, j⟩
+    fin_cases b <;> fin_cases c <;>
+      simp [controlledRotation, D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
+        Matrix.blockDiagonal_apply]
   ext i j
+  unfold assemblage
+  simp only [LinearMap.coe_mk, AddHom.coe_mk]
+  rw [partialTraceLeft]
+  simp_rw [partialTraceRight, hcontrolled]
+  simp only [Matrix.mul_apply]
   fin_cases a <;> fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    simp [assemblage, measurement, controlledRotation, rotationY, partialTraceLeft,
-      partialTraceRight, Matrix.mul_apply, Matrix.reindex_apply, Matrix.submatrix_apply,
+    simp [measurement, D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
+      Matrix.blockDiagonal_apply, rotationY, Matrix.mul_apply,
+      Matrix.reindex_apply, Matrix.submatrix_apply,
       Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
       D5.S3.QuantumBounds.CHSHWitness.bellDensity,
       D5.S3.QuantumBounds.CHSHWitness.bellVector,
@@ -148,7 +163,8 @@ private lemma pre_cptp : IsCPTP preMap := by
   obtain ⟨channel, hchannel⟩ := finite_kraus_quantum_channel preKraus hK
   intro ρ
   change (MatrixMap.of_kraus preKraus preKraus ρ).trace = ρ.trace
-  simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  unfold MatrixMap.of_kraus
+  simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   rw [← hchannel ρ]
   exact channel.trace_preserving (CStarMatrix.ofMatrix ρ)
 
@@ -177,7 +193,8 @@ private lemma post_cptp (b : Fin 2) : IsCPTP (postMap b) := by
   obtain ⟨channel, hchannel⟩ := finite_kraus_quantum_channel (postKraus b) hK
   intro ρ
   change (MatrixMap.of_kraus (postKraus b) (postKraus b) ρ).trace = ρ.trace
-  simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  unfold MatrixMap.of_kraus
+  simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   rw [← hchannel ρ]
   exact channel.trace_preserving (CStarMatrix.ofMatrix ρ)
 
@@ -193,7 +210,7 @@ private lemma memory_action (Φ : MatrixMap (Fin 2) (Fin 2) ℂ) (b : Fin 2)
   simp_rw [MatrixMap.kron_def]
   unfold Matrix.single Matrix.trace
   simp [preKraus, postKraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.vecMul, dotProduct]
+    Fintype.sum_prod_type, Fin.sum_univ_two]
   ring
 
 private lemma source_branch_trace (θ : ℝ) (a : Fin 2) :
@@ -205,7 +222,7 @@ private lemma source_branch_trace (θ : ℝ) (a : Fin 2) :
   unfold Matrix.trace Matrix.single
   fin_cases a <;>
     simp [rotationY, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
-      Matrix.vecMul, Matrix.vecHead, Matrix.vecTail, dotProduct, div_eq_mul_inv,
+      -Matrix.cons_mul, Matrix.vecHead, Matrix.vecTail, div_eq_mul_inv,
       -Complex.ofReal_cos, -Complex.ofReal_sin] <;>
     simp only [one_div] at hcircle <;>
     linear_combination (1 / 2 : ℂ) * hcircle
