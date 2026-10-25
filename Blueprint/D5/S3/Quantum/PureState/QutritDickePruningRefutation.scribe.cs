@@ -298,7 +298,7 @@ internal sealed class QutritDickePruningRefutationDocument : IScribeDocumentDefi
 
     private static Formula ClaimFormula()
     {
-        Formula k = Typed(Seq(Bang, OpenBracket, X("k₀"), Comma, X("k₁"), Comma, X("k₂"), CloseBracket), Local("Occupation"));
+        Formula k = Typed(Seq(Bang, Parenthesized(Seq(X("k₀"), Comma, X("k₁"), Comma, X("k₂")), squareBrackets: true)), Local("Occupation"));
         Formula input = At(Qualified("D5", "S3", "Combinatorics", "Graph", "LegalWords", "SignedBoundary", "vertexDelta"),
             LocalCall("initialWord", X("n"), k));
         return Equivalence(Local("claim"), All("n", Naturals(), Arrow(LE(D(2), X("n")),
@@ -344,7 +344,8 @@ internal sealed class QutritDickePruningRefutationDocument : IScribeDocumentDefi
         return Seq(Operatorname, Grp(Seq([.. items])));
     }
     private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value, bool squareBrackets = false) =>
+        squareBrackets ? Seq(OpenBracket, value, CloseBracket) : Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
@@ -357,9 +358,9 @@ internal sealed class QutritDickePruningRefutationDocument : IScribeDocumentDefi
         Seq(Qualified("let"), Sp, Typed(X(name), type), Sp, Eq, Sp, Parenthesized(value), Semi, Sp, Parenthesized(body));
     private static Formula Constant(Formula domain, Formula value) => At(Qualified("Function", "const"), Parenthesized(domain), value);
     private static Formula If(Formula condition, Formula yes, Formula no) => At(Qualified("ite"), Parenthesized(condition), yes, no);
-    private static Formula Pair(Formula first, Formula second) => Seq(Open, first, Comma, Sp, second, Close);
-    private static Formula Singleton(Formula value) => Seq(OpenBracket, value, CloseBracket);
-    private static Formula EmptyList() => Typed(Seq(OpenBracket, CloseBracket), Controls());
+    private static Formula Pair(Formula first, Formula second) => Parenthesized(Seq(first, Comma, Sp, second));
+    private static Formula Singleton(Formula value) => Parenthesized(value, squareBrackets: true);
+    private static Formula EmptyList() => Typed(Parenthesized(Seq(), squareBrackets: true), Controls());
     private static Formula Append(Formula left, Formula right) => At(Qualified("List", "append"), left, right);
     private static Formula Cons(Formula head, Formula tail) => At(Qualified("List", "cons"), head, tail);
     private static Formula Range(Formula lower, Formula upper) => At(Qualified("List", "Ico"), lower, upper);
