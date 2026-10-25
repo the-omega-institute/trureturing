@@ -137,10 +137,42 @@ class ProbeCacheTests(unittest.TestCase):
         path.mkdir()
         (path / "probe.pickle").write_bytes(b"typed probe")
         (path / "Evidence.olean").write_bytes(b"checked dependency module")
+        cache.write_signed(path / "source-data.json", {}, self.key)
         cache.write_signed(path / "manifest.json",
                            {"identity": "input", "files": cache.record_files(path)}, self.key)
         cache.valid_record(path, "input", self.key)
         return path
+
+    def test_current_mathematical_data_changes_reject_an_authenticated_record(self):
+        path = self.make_record()
+        source = self.directory / "Target.olean"
+        source.write_bytes(b"current mathematical data")
+        absent_part = self.directory / "Target.olean.private"
+        inputs = cache.source_data_fingerprints(
+            [str(source), str(absent_part)], self.directory, self.key)
+        cache.write_signed(path / "source-data.json", inputs, self.key)
+        cache.write_signed(path / "manifest.json",
+                           {"identity": "input", "files": cache.record_files(path)}, self.key)
+        cache.valid_record(path, "input", self.key)
+        source.write_bytes(b"changed mathematical data")
+        with self.assertRaisesRegex(ValueError, "mathematical input data changed"):
+            cache.valid_record(path, "input", self.key)
+        source.write_bytes(b"current mathematical data")
+        cache.valid_record(path, "input", self.key)
+        absent_part.write_bytes(b"new private declarations")
+        with self.assertRaisesRegex(ValueError, "mathematical input data changed"):
+            cache.valid_record(path, "input", self.key)
+
+    def test_data_changed_during_cold_computation_cannot_be_resigned(self):
+        path = self.make_record()
+        source = self.directory / "Target.olean"
+        source.write_bytes(b"initial mathematical data")
+        (path / "source-input-files.json").write_text(json.dumps([str(source)]))
+        with patch.object(cache, "auth_key", return_value=self.key):
+            cache.snapshot_source_data(path)
+            source.write_bytes(b"changed mathematical data")
+            with self.assertRaisesRegex(ValueError, "mathematical input data changed"):
+                cache.snapshot_source_data(path)
 
     def test_authenticated_entry_skips_wrapper_and_kernel_failure_replays_original(self):
         path = self.make_record()

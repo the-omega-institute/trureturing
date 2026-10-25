@@ -18,7 +18,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v5"
+VERSION = "probe-cache-v6"
 # Explicit procedure identity, checked against Lean's configuration by tests.
 R_VERSION = "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa/analytic-cut-k2/200000"
 
@@ -194,6 +194,49 @@ def record_files(directory):
             if path.name != "manifest.json"}
 
 
+def source_data_fingerprints(paths, root, key):
+    """Hash only Lean-selected mathematical input files, with a signed stat memo."""
+    memo_path = root / "source-data-fingerprints.json"
+    try:
+        memo = read_signed(memo_path, key)
+        if not isinstance(memo, dict):
+            raise ValueError("invalid data fingerprint memo")
+    except (OSError, ValueError, TypeError, KeyError):
+        memo = {}
+    updated = {}
+    fingerprints = {}
+    for name in paths:
+        path = Path(name)
+        if not path.is_absolute() or path.is_dir():
+            raise ValueError("invalid mathematical input file")
+        fingerprints[name] = tree_fingerprint(path, memo, updated)
+    if updated != memo:
+        write_signed(memo_path, updated, key)
+    return fingerprints
+
+
+def validate_source_data(directory, key):
+    expected = read_signed(directory / "source-data.json", key)
+    if not isinstance(expected, dict):
+        raise ValueError("invalid mathematical input inventory")
+    actual = source_data_fingerprints(expected, directory.parent, key)
+    if actual != expected:
+        raise ValueError("mathematical input data changed")
+
+
+def snapshot_source_data(directory):
+    """Called before cold R computation; records carry no verdict information."""
+    directory = Path(directory)
+    key = auth_key()
+    path = directory / "source-data.json"
+    if path.exists():
+        validate_source_data(directory, key)
+    paths = json.loads((directory / "source-input-files.json").read_text())
+    if not isinstance(paths, list) or not all(isinstance(p, str) for p in paths):
+        raise ValueError("invalid mathematical input paths")
+    write_signed(path, source_data_fingerprints(paths, directory.parent, key), key)
+
+
 def valid_record(directory, identity, key):
     manifest = read_signed(directory / "manifest.json", key)
     if manifest["identity"] != identity:
@@ -203,6 +246,9 @@ def valid_record(directory, identity, key):
         raise ValueError("record bytes changed")
     if not any(name.endswith(".pickle") for name in actual):
         raise ValueError("no typed probe record")
+    wall_phase("cache/source-data-start")
+    validate_source_data(directory, key)
+    wall_phase("cache/source-data-end")
 
 
 def emit(message):
@@ -288,6 +334,11 @@ def run(command):
         if input_identity(request, root, key) != identity:
             emit("PROBE_CACHE_NOT_STORED reason=inputs_changed_during_run")
             return 0
+        try:
+            validate_source_data(stage, key)
+        except (OSError, ValueError, TypeError, KeyError) as error:
+            emit(f"PROBE_CACHE_NOT_STORED reason={error}")
+            return 0
         write_signed(stage / "manifest.json", {"identity": identity, "files": files}, key)
         if directory.exists():
             directory.rename(root / (identity + ".rejected-" + secrets.token_hex(8)))
@@ -301,4 +352,7 @@ if __name__ == "__main__":
         raise SystemExit("expected a Lean command")
     if sys.argv[1] == "--native":
         native_run(sys.argv[2:])
+    if sys.argv[1] == "--snapshot-source-data":
+        snapshot_source_data(sys.argv[2])
+        raise SystemExit(0)
     raise SystemExit(run(sys.argv[1:]))

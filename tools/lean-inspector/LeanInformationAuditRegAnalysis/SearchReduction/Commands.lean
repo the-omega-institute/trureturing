@@ -532,7 +532,6 @@ structure ProbeCacheRecord where
   result : Observation
   dependencies : Array Declaration := #[]
   dependencyModule? : Option Name := none
-  sourceInputs? : Option (Array Name × Array ConstantInfo) := none
 
 /-- Current mathematical data, including bodies, inductive rules and the
 target's import population. Procedure implementations are not input bytes. -/
@@ -571,10 +570,45 @@ def probeSourceInputs (source : Environment) (request : Request) :
           changed := true
   return (modules.toArray.qsort Name.quickLt, declarations)
 
+/-- Compiled mathematical inputs are data. Runtime/compiler packages are pinned
+by explicit versions, and judge modules never contribute program bytes. -/
+private def snapshotProbeSourceData (directory : System.FilePath)
+    (source : Environment) (request : Request) : IO Unit := do
+  let (scope, declarations) ← IO.ofExcept (probeSourceInputs source request)
+  let program := fun (name : Name) =>
+    name.toString.startsWith "LeanInformationAudit" &&
+      !name.toString.startsWith "LeanInformationAuditRegTests."
+  let mut modules := scope.foldl (·.insert ·) ({} : NameSet)
+  for info in declarations do
+    if let some index := source.getModuleIdxFor? info.name then
+      let module := source.header.moduleNames[index.toNat]!
+      if program module then throw <| IO.userError s!"search.cache_program_dependency:{module}"
+      modules := modules.insert module
+  let mut files : Array String := #[]
+  let list := directory / "source-input-files.json"
+  if ← list.pathExists then
+    files ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse (← IO.FS.readFile list))
+  for module in modules.toArray.qsort Name.quickLt do
+    let name := module.toString
+    if program module || #["Init", "Lean", "Std", "Lake", "Batteries", "Aesop", "Qq",
+        "Plausible", "LeanSearchClient", "ImportGraph", "ProofWidgets"].any
+        (fun stem => name == stem || name.startsWith (stem ++ ".")) then continue
+    let olean ← IO.FS.realPath (← findOLean module)
+    for part in #[olean, OLeanLevel.server.adjustFileName olean,
+        OLeanLevel.private.adjustFileName olean] do
+      unless files.contains part.toString do files := files.push part.toString
+  IO.FS.createDirAll directory
+  IO.FS.writeFile list ((toJson (files.qsort (· < ·))).compress)
+  let result ← IO.Process.output {
+    cmd := "python3", args := #["tools/scripts/search-reduction-probe-cache.py",
+      "--snapshot-source-data", directory.toString] }
+  unless result.exitCode == 0 do
+    throw <| IO.userError s!"search.cache_source_snapshot_failed:{result.stderr}"
+
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
   return reprStr (localConfiguration, certificateLanguageVersion, transportVersion,
-    "probe-record-v5", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
+    "probe-record-v6", ← IO.getEnv "SEARCH_REDUCTION_PROBE_ID", request.target,
     request.baseline, request.additions, request.baselineCommit, request.informationApplication,
     request.certificates.map CertificateNomination.encode,
     request.edgeCertificates.map (fun (n, c) => (n, c.encode)), owners, name, fixture)
@@ -642,8 +676,7 @@ module or replayed through the kernel before current certificate checks. -/
 unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (source : Environment) (request : Request) (result : Observation)
     (base? : Option Environment := none) (importDependencies : Bool := false)
-    (moduleMinDependencies : Nat := 0)
-    (sourceInputs? : Option (Array Name × Array ConstantInfo) := none) : CommandElabM Unit := do
+    (moduleMinDependencies : Nat := 0) : CommandElabM Unit := do
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
@@ -680,7 +713,7 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
   IO.FS.createDirAll directory
   let temporary := path.addExtension "tmp"
   pickle temporary ({
-    identity, targetHeader := (info.levelParams, info.type), result, dependencies, sourceInputs?,
+    identity, targetHeader := (info.levelParams, info.type), result, dependencies,
     dependencyModule?} : ProbeCacheRecord)
   IO.FS.rename temporary path
 
@@ -694,15 +727,6 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   probeRegions.modify (·.push region)
   unless record.identity == identity && record.result.target == request.target do
     throwError "search.probe_cache_identity_mismatch"
-  if let some expected := record.sourceInputs? then
-    profilePhase "probe/cache-source-inputs-start"
-    let (current, _, _) ← importSource (owners.map fun n => {module := n : Import})
-    let actual ← match probeSourceInputs current request with
-      | .ok value => pure value
-      | .error message => throwError "{message}"
-    unless actual == expected do throwError "search.probe_cache_source_inputs_mismatch"
-    emitLookupRecord s!"PROBE_CACHE_CURRENT_SOURCE_DATA checked=true declarations={actual.2.size} modules={actual.1.size}"
-    profilePhase "probe/cache-source-inputs-end"
   if let some module := record.dependencyModule? then
     let imported ← getEnv
     unless imported.allImportedModuleNames.contains module &&
@@ -773,6 +797,16 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
   let imports := owners.map fun n => {module := n : Import}
   let (source, shared, _) ← importSource imports
   profilePhase "probe/source-import-end"
+  let cacheInputsReady ← if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
+    try
+      profilePhase "probe/source-data-snapshot-start"
+      snapshotProbeSourceData directory source request
+      profilePhase "probe/source-data-snapshot-end"
+      pure true
+    catch ex =>
+      emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
+      pure false
+    else pure false
   -- Exported proof expressions retain source module storage; transient
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
@@ -817,13 +851,13 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     ("module", toJson auditOutput.toString), ("payload", toJson auditPayload.toString),
     ("negative_semantics", toJson "meta-computed full R; not an object-level unprovability proof")] |>.compress}"
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
+    unless cacheInputsReady do
+      logInfo (observationJson result request.baselineCommit).compress
+      return
     profilePhase "probe/cache-save-start"
     try
       saveProbeCache directory identity source request result (some cacheBase)
         (importDependencies := true) (moduleMinDependencies := 4096)
-        (sourceInputs? := some (← match probeSourceInputs source request with
-          | .ok value => pure value
-          | .error message => throwError "{message}"))
       -- The runner authenticates this entry only after the entire original
       -- request succeeds. Hot execution retains executeProbe's source audit,
       -- certificate kernel checks and fresh GraphReading publication, while
