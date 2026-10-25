@@ -254,7 +254,7 @@ internal static partial class CleanLanesCommand
 
         // Initial observations belong to the invocation, including idle paths.
         // Pool observations may supplement them but cannot authorize mutation
-        // after this invocation failed to establish an idle tree's identity.
+        // after this invocation failed to establish a tree's identity.
         var failedPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var item in inventory.Where(item => item.IdentityFailure is not null))
         {
@@ -262,8 +262,7 @@ internal static partial class CleanLanesCommand
             failedPaths.Add(item.Path);
             events.Add(QualificationEvent(item, new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
         }
-        var poolForce = force && !inventory.Any(item => item.IdentityFailure is not null
-            && WorktreePoolCommand.IsIdleBranch(item.Branch));
+        var poolForce = force && failedPaths.Count == 0;
         var poolPaths = InspectIdlePool(repositoryRoot, devCommit, poolForce, inventory, events, runner,
             CompleteRemoval, Observe);
         var qualifications = QualifyLockedLanes(repositoryRoot, inventory.Where(item => item.Locked

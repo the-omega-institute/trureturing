@@ -9,6 +9,54 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdlePoolRetainsFailedTaskReturnedBeforeFreshInventory(bool inject)
+    {
+        using var fixture = new CleanLanesFixture();
+        fixture.AddMergedLane("lane/governance/idle-trigger");
+        var path = fixture.AddMergedLane("lane/governance/task-returning");
+        var calls = 0;
+        var poolObserved = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (inject && IsLaneGit(file, args, directory, path, "rev-parse", "--absolute-git-dir") && ++calls == 1)
+                return GitFailure("initial task identity cause");
+            if (file != "python3" || !IsProtocol(args, "pool")) return null;
+            poolObserved = true;
+            var token = new string('b', 32);
+            var branch = "lane/governance/idle-" + token;
+            CleanLanesFixture.Git(path, "switch", "-c", branch);
+            var log = Path.Combine(fixture.RepositoryRoot, ".git/logs/refs/heads", branch);
+            var rows = File.ReadAllLines(log);
+            rows[0] = rows[0].Split('\t')[0] + "\tworktree-idle:" + token;
+            File.WriteAllLines(log, rows);
+            var pressured = args.ToArray();
+            pressured[2] = pressured[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())",
+                "sys.modules['worktree_pool'].available_fraction = lambda source: 0.04\n"
+                + "sys.exit(sys.modules['worktree_protocol'].main())", StringComparison.Ordinal);
+            return TestProcessRunner.Run("python3", pressured,
+                directory, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.True(poolObserved);
+        Assert.True(result.Success == !inject, result.Output + result.Error);
+        AssertQualificationPublicExit(result, force: true, inject ? 2 : 0);
+        Assert.Equal(inject, Directory.Exists(path));
+        if (inject)
+        {
+            Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+                && row.GetProperty("action").GetString() == "failed"
+                && row.GetProperty("reason").GetString()!.Contains("initial task identity cause", StringComparison.Ordinal));
+            Assert.DoesNotContain(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
+                && row.GetProperty("action").GetString() == "removed");
+            Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        }
+    }
+
+    [Theory]
     [InlineData(false, false, false)]
     [InlineData(true, false, false)]
     [InlineData(true, true, false)]
