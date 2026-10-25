@@ -7,7 +7,6 @@
    digest: A positive three-state cyclic chain violates the pseudo-coarse-grained trade-off bound. -/
 
 import D5.S3.StatisticalMechanics.MarkovMpembaTripletRefutation
-import D5.S3.Divergence.ClassicalDPI
 
 set_option linter.style.header false
 set_option autoImplicit false
