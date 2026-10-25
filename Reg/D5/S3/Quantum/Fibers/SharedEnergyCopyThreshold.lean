@@ -46,7 +46,9 @@ private theorem bridge : (type_of% sparse_density_spectrum) ↔ arena.Law actual
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
   have ht := (h 1 (by simp)).2.1
-  norm_num [zeroReadout, realize, Matrix.trace] at ht
+  change Matrix.trace (0 : Matrix (Fin 3) (Fin 3) ℂ) = 1 at ht
+  rw [Matrix.trace_zero] at ht
+  norm_num at ht
 
 def family : Registration arena (type_of% sparse_density_spectrum) where
   actual := actual
@@ -188,10 +190,11 @@ private theorem bridge : (type_of% sparse_low_monomials) ↔ arena.Law actual :=
 private theorem rejected : ¬ arena.Law rejectedReadout := by
   intro h
   let alpha : Exponent := fun i j => if i = 0 ∧ j = 0 then 1 else 0
-  have hd : degree alpha < 2*2-1 := by norm_num [alpha, degree, Fin.sum_univ_succ]
+  have hd : degree alpha < 2*2-1 := by decide
   have hw : weight 2 alpha = 0 := by norm_num [alpha, weight, energy, Fin.sum_univ_succ]
   have he := h 2 (by omega) alpha hd hw (-1) (by norm_num)
-  norm_num [rejectedReadout, realize, alpha, monomial, Fin.prod_univ_succ] at he
+  norm_num [rejectedReadout, realize, alpha, monomial, Fin.prod_univ_succ,
+    Matrix.one_apply, Matrix.zero_apply] at he
 
 def family : Registration arena (type_of% sparse_low_monomials) where
   actual := actual
