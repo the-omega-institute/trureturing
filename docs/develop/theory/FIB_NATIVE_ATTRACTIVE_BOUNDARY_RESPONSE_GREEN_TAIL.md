@@ -960,3 +960,604 @@ $B_{n,g}+C$ for sufficiently small $E$. The potential-tail
 estimates alone do not supply (22.23).
 
 ## 追加锚（本行以下为增补区）
+## 23. Bounded original-count transfer by localized energy cancellation
+
+**Definition 23.1 (the original realization and localized observations).**
+All statements in this section are ordinary conditional analysis under
+exactly Definition 18.1's analytic hypotheses. Retain the original
+identity unit source, complete marginal, raw measures, heat clock,
+horizontal and central fields, free/Friedrichs closure, and strict
+complex count in (21.1). Retain the full cylinder form (18.8), its
+positive-form closures, every integer angular mode, and both natural
+angular endpoints. Fix an integer $n\ge2$ and a real $g>\lambda_n$;
+write $k=g/(2\pi)$ and $d=d_{n,g}=2L_{n,g}>0$. No constant below
+is asserted uniform in $n$ or $g$.
+
+Use $H_m(s),h_m(s),\mathcal V_m,\mathcal G_m$ from (22.1)--(22.4).
+Thus $\mathcal G_m=D(H_m(0))$, $\mathcal G_m\hookrightarrow\mathcal V_m$,
+and on this fixed operator domain
+
+$$
+H_m(z)=H_m(0)+2mz\sin a+z^2c(a),\qquad z\in\mathbb C.
+\tag{23.1}
+$$
+
+For a cylinder of length $L$, let $Q_L$ and $H_L$ denote its exact
+periodic form and operator. Its longitudinal frequencies are
+$s_j=2\pi j/L$; its strict negative dimension is $P_g(L)$.
+The bounds $H_m(s)\ge-k$ and $H_L\ge-k$ follow from the nonnegative
+homogeneous form and $0<q_n\le1$.
+
+For every finite $\Lambda\ge0$, an angular eigenvector of energy
+at most $\Lambda$ has homogeneous positive energy at most
+$k+\Lambda$. Applying (18.6) with this bound shows that only
+finitely many $m$ and a bounded interval of real $s$ can contribute.
+Their spectral ranks are uniformly finite because
+$h_m(s)\ge A-k$. For those $m$, analytic Fredholm meromorphy in
+(18.7) and its supplied invertible real point give finitely many
+real singular frequencies. At each such $s_0$ there are finite
+$C,r,\rho>0$, with $r$ an integer, such that
+
+$$
+\begin{aligned}
+\|H_m(s)^{-1}\|&\le C|s-s_0|^{-r},
+ &&0<|s-s_0|<\rho,\\
+|h_m(s)[u]|&\ge C^{-1}|s-s_0|^r\|u\|_2^2,
+ &&u\text{ in either strict sign spectral space}.
+\end{aligned}
+\tag{23.2}
+$$
+
+The second line follows by the spectral theorem, separately on
+each sign space. For the positive space we use it only below a
+fixed finite energy cutoff. At $s=s_0$ no inverse is taken.
+These are uses of the same classical analytic Fredholm theorem
+as (18.7), not a longitudinal comparison theorem.
+
+The exact gauge $v_m=e^{-ima/2}w_m$ changes the original central
+expression into
+
+$$
+\begin{aligned}
+\mathcal C_m(s)u
+ &=4cu'+\{2\sin a(is-1)-2imc\}u,\\
+\mathcal C_m(\partial_x)
+ &=2\sin a(\partial_x-1)+4c\partial_a-2imc.
+\end{aligned}
+\tag{23.3}
+$$
+
+For a fixed finite set of $m$, these are bounded maps
+$\mathcal V_m\to L^2(J)$, locally uniformly in $s$; the derivative
+bound uses $c^2\le c$. Define
+
+$$
+\begin{aligned}
+\mathcal Y_m
+ &=\mathcal V_m\oplus
+   L^2((0,\infty),e^{-2t}dt;L^2(J))^{\oplus3},\\
+\mathcal O_m(z)u
+ &=(u,e^{izt}u,e^{izt}\mathcal C_m(z)u,e^{-izt}u).
+\end{aligned}
+\tag{23.4}
+$$
+
+The map $\mathcal O_m(z):\mathcal V_m\to\mathcal Y_m$ is
+holomorphic for $|\operatorname{Im}z|<1$. On a smaller closed strip,
+every power of $t$ arising from differentiation is integrable
+against the displayed exponential weight, uniformly on compact
+$z$ sets. A mass observation below means just the second and
+fourth components, with any fixed scalar factor allowed.
+
+**Theorem 23.2 (localized observations relative to strict energy).**
+For every $\delta>0$ there is a finite $r_-$ independent of $L\ge3$
+and a complex subspace $X_L$ of the full strict negative space of
+$H_L$, of codimension at most $r_-$ in that space, such that,
+with $a_L(w)=-Q_L[w]$,
+
+$$
+\begin{aligned}
+\|w(0)\|_{\oplus_m\mathcal V_m}^2
+ &+\sum_m\int_0^L e^{-2x}
+       \bigl(\|w_m(x)\|_2^2+
+        \|\mathcal C_m(\partial_x)w_m(x)\|_2^2\bigr)\,dx\\
+ &+\sum_m\int_0^L e^{-2(L-x)}\|w_m(x)\|_2^2\,dx
+ \le\delta^2a_L(w),\qquad w\in X_L.
+\end{aligned}
+\tag{23.5}
+$$
+
+The seam is periodic: $w(0)=w(L)$. For each finite $\Lambda>0$,
+the analogous mass-only assertion holds on
+$\operatorname{Ran}\mathbf1_{(0,\Lambda)}(H_L)$, with $Q_L[w]$
+as energy and a finite codimension independent of $L\ge1$.
+Its constants may depend on $\Lambda$. Both assertions include
+all zero-channel couplings and exactly singular grid frequencies.
+
+**Proof.** For each contributing $m$ and each real $s_0$ in its
+compact frequency interval, choose a fixed resolvent contour
+enclosing every eigenvalue in $[-k,\Lambda]$, with its right
+real crossing strictly above $\Lambda$ and outside the spectrum.
+For the negative assertion use $\Lambda=0$. Nearby the associated
+Riesz projection $E(z)$ is holomorphic and is the identity on
+every spectral vector under consideration. It is holomorphic
+from $L^2$ into $\mathcal G_m$: writing
+$B(z)=H_m(z)-H_m(0)$, the identity
+
+$$
+H_m(0)(\zeta-H_m(z))^{-1}
+ =\zeta(\zeta-H_m(z))^{-1}-I-B(z)(\zeta-H_m(z))^{-1}
+\tag{23.6}
+$$
+
+gives this graph norm assertion by contour integration.
+If $E(z)=\sum_{p\ge0}E_p(z-s_0)^p$, all $E_p$ have finite rank
+into $\mathcal G_m$. Indeed $E(z)^2=E(z)$ gives
+
+$$
+E_p=E_0E_p+E_pE_0+\sum_{1\le i<p}E_iE_{p-i},
+\tag{23.7}
+$$
+
+and induction proves the claim. Every Taylor coefficient of
+$\mathcal O_m(z)E(z):L^2\to\mathcal Y_m$ consequently has finite
+rank: each is a finite sum of bounded coefficients of
+$\mathcal O_m(z)$ composed with finite-rank coefficients of $E$.
+
+Near a singular $s_0$, truncate this series at $p$ with
+$p+1>r/2$, using (23.2). On either relevant strict sign space
+the remainder is at most
+
+$$
+C_1|s-s_0|^{p+1}\|u\|_2
+ \le C_2|s-s_0|^{p+1-r/2}\sqrt{|h_m(s)[u]|}.
+\tag{23.8}
+$$
+
+Shrink the fixed neighborhood to make this at most
+$\varepsilon\sqrt{|h_m(s)[u]|}$. At $s=s_0$ the zeroth Taylor
+value equals the exact observation on the chosen cluster,
+so its error is zero. On the compact complement of these
+neighborhoods the inverse is uniformly bounded; a finite cover
+and constant approximations to the continuous finite-rank maps
+$\mathcal O_m(s)E(s)$ give the same estimate. Choose one formula
+on overlaps. There is thus a finite common range
+$R_m\subset\mathcal Y_m$ and linear maps $K_m(s)$ into $R_m$ with
+
+$$
+\|\mathcal O_m(s)u-K_m(s)u\|_{\mathcal Y_m}
+ \le\varepsilon\sqrt{|h_m(s)[u]|}.
+\tag{23.9}
+$$
+
+The range is the sum of finitely many coefficient and projection
+ranges. It is independent of $L$. The chosen $K_m(s)$ need not
+be continuous. This also proves the mass-only version.
+
+Write a periodic low-energy vector as
+
+$$
+w_m(x)=L^{-1/2}\sum_j e^{is_jx}u_{m,j},\qquad s_j=2\pi j/L.
+\tag{23.10}
+$$
+
+Its sum is finite. The number of contributing pairs $(m,j)$ is
+at most $C_*L$ for $L\ge1$, for a fixed $C_*$. Restrict (23.4)
+to $0\le t\le L$ and use $t=L-x$ for the right-end mass.
+The identity $e^{is_jL}=1$ gives exactly the observations in
+(23.5). Restriction is a contraction in the weighted spaces.
+Replace $\mathcal O_m(s_j)u_{m,j}$ by $K_m(s_j)u_{m,j}$ in the
+same Fourier sum, followed by this restriction; call the resulting
+map $F_L$. Its rank is at most $\sum_m\dim R_m$.
+Triangle and Cauchy--Schwarz give
+
+$$
+\|\mathcal J_Lw-F_Lw\|
+ \le\varepsilon\sqrt{C_*a_L(w)}.
+\tag{23.11}
+$$
+
+Here $\mathcal J_L$ denotes the full observation, or the mass-only
+one; on the positive low-energy space set $a_L(w)=Q_L[w]$.
+Choosing $\varepsilon$ and imposing the finitely many linear
+constraints $F_Lw=0$ proves both claims. The full angular trace
+space has not been assigned finite dimension. Strict energy, rather than a uniform negative or positive gap, controls the
+error, including every finite-order zero in (23.2). $\square$
+
+**Theorem 23.3 (bounded extra index from two exponential ends).**
+For every fixed $C\ge0$ there is a finite $R_C$ such that, for
+every real $L\ge1$ and every measurable real multiplier with
+
+$$
+0\le V_L(x,a,\theta)
+ \le C\{e^{-2x}+e^{-2(L-x)}\},
+\tag{23.12}
+$$
+
+the periodic form satisfies
+
+$$
+\operatorname{ind}_-\left(Q_L-\int V_L|w|^2\right)
+ \le P_g(L)+K_0+R_C,
+\tag{23.13}
+$$
+
+where $K_0<\infty$ is independent of $L$. The same upper bound
+holds on the original longitudinal Dirichlet cylinder domain.
+The multiplier need not preserve angular modes.
+
+**Proof.** The kernel rank of $H_L$ is uniformly bounded. All its
+contributions occur at the finitely many real singular frequencies
+and angular integers identified above. For a fixed root and $L$
+there is at most one $j$ with $2\pi j/L$ equal to that root;
+each root has finite kernel dimension. Take $K_0$ to be the sum
+of these dimensions, including every exact resonance.
+
+Remove the strict negative space and this kernel. On the remaining
+positive spectral space decompose $w=w_{\rm lo}+w_{\rm hi}$ at
+energy $\Lambda$, orthogonally for both $L^2$ and $Q_L$. Then
+
+$$
+\|w_{\rm hi}\|_2^2\le\Lambda^{-1}Q_L[w_{\rm hi}].
+\tag{23.14}
+$$
+
+Choose $\Lambda$ so large that $2C/\Lambda<1/4$. The low part
+has the finite mode/frequency support already proved. Apply the
+mass-only part of Theorem 23.2, scaled by $\sqrt C$, to the
+observation
+
+$$
+\mathcal J_L^0w
+ =(\sqrt C e^{-x}w(x),\sqrt C e^{-t}w(L-t))
+\tag{23.15}
+$$
+
+in ordinary $L^2$ on each component. Impose its finite-rank
+constraints on $w_{\rm lo}$, hence on $w$, so that
+$\|\mathcal J_L^0w_{\rm lo}\|\le\beta\sqrt{Q_L[w_{\rm lo}]}$
+with $\beta^2<1/4$. The high part obeys
+$\|\mathcal J_L^0w_{\rm hi}\|\le\sqrt{2C/\Lambda}
+\sqrt{Q_L[w_{\rm hi}]}$. Triangle and Cauchy--Schwarz yield
+
+$$
+\int V_L|w|^2
+ \le\|\mathcal J_L^0w\|^2
+ \le(\beta^2+2C/\Lambda)Q_L[w]<\tfrac12Q_L[w].
+\tag{23.16}
+$$
+
+Thus the perturbed form is nonnegative on a space of codimension
+at most $P_g(L)+K_0+R_C$. A strict negative space intersects it
+only at zero, proving (23.13). The Dirichlet domain embeds in
+the periodic domain by its defining closure. Arbitrarily small
+positive eigenvalues were controlled by (23.2)--(23.11); all
+high energies, angular integers and frequencies were controlled
+by (23.14). This is an explicit index argument for (23.12).
+$\square$
+
+**Theorem 23.4 (the original bounded count and cylinder transfer).**
+For every integer $n\ge2$ and every fixed real $g>\lambda_n$,
+there exist finite $B_{n,g}\ge0$ and $E_0\in(0,1)$ such that
+
+$$
+\left|N_{n,g}(E)-D_g\!\left(\tfrac12\log(1/E)\right)\right|
+ \le B_{n,g},\qquad 0<E<E_0.
+\tag{23.17}
+$$
+
+This establishes the original comparison (22.23). In particular
+the original count satisfies (21.3), under the same unchanged
+analytic hypotheses and original realization.
+
+**Proof.** Choose once and for all
+$a_0\ge\max(0,\ell_n)$ from (20.19), and put
+$T=\tfrac12\log(1/E)$. Denote the original form by
+$q_{\rm orig}=T_1-gW_{n,1}$. The raw polar substitution and gauge
+give, for compact longitudinal support or the zero-extended
+Dirichlet constructions below,
+
+$$
+\begin{aligned}
+d\xi&=\tfrac14e^{4\ell}\,d\ell\,da\,d\theta,
+&4\|f\|_2^2&=\sum_m\int e^{2\ell}|w_m|^2,\\
+4\{q_{\rm orig}[f]+E\|f\|_2^2\}
+ &=Q_g[w]+\sum_m\int e^{-2\ell}
+                  |\mathcal C_m(\partial_\ell)w_m|^2\\
+ &\quad-g\int B_n(\ell,a,\theta)|v|^2
+       +\sum_m\int Ee^{2\ell}|w_m|^2.
+\end{aligned}
+\tag{23.18}
+$$
+
+Here $v_m=e^{-ima/2}w_m$. The central multiplier $-2imc$ in
+(23.3) is retained. The horizontal cross term is integrated with
+zero longitudinal trace, exactly as in (18.13). The full-field
+estimate (20.19)--(20.23) supplies
+
+$$
+\left|g\int B_n|v|^2\right|
+ \le gC_n\int e^{-2\ell}|v|^2.
+\tag{23.19}
+$$
+
+This bound uses the full complex multiplication form, allowing
+angular mixing; the gauge preserves the integrated angular norm.
+The coordinate map is used with the weighted mass identity in
+(23.18) and the following explicit form-domain correspondences.
+
+An original free-domain vector localized into a compact exterior
+log interval maps into the exact natural homogeneous Dirichlet
+cylinder domain. On the original compact smooth core the polar
+identity gives the nonnegative homogeneous norm as four times
+the localized horizontal energy. On this exterior support the
+cylinder $L^2$ norm is bounded by the original one. Original
+core convergence therefore gives homogeneous form convergence;
+Fourier truncation, the natural angular cutoffs of (18.5), and
+longitudinal smoothing give precisely the defining cylinder
+closure, as in the argument following (18.17). The same core
+limit on a half-cylinder starting at $\ell\ge a_0$ permits the
+exterior upper estimates below; the weighted mass identity and
+nonnegative homogeneous identity pass to those limits.
+
+For the converse needed in the lower estimate, consider finite
+sums $z_m(x)=\sum_j\phi_{m,j}(x)u_{m,j}$ with finitely many $m$,
+$u_{m,j}\in\mathcal V_m$, and smooth scalar factors vanishing
+at $0,L$. Approximate the factors in $H^1_0(0,L)$ and the angular
+coefficients in $\mathcal V_m$ by their supplied compact smooth
+cores. For a tensor, the magnetic square is bounded by
+
+$$
+\begin{aligned}
+\int c|\phi'u+im\tan a\,\phi u|^2
+ &\le2\|\phi'\|_2^2\|u\|_2^2
+   +2m^2\|\phi\|_2^2\int_J\frac{\sin^2a}{c}|u|^2,\\
+\|\mathcal C_m(\partial_x)(\phi u)\|_2
+ &\le C_m(\|\phi'\|_2+\|\phi\|_2)\|u\|_{\mathcal V_m}.
+\end{aligned}
+\tag{23.20}
+$$
+
+The angular term is $\|\phi\|_2^2A[u]$, and
+$\|cu'\|_2^2\le\int c|u'|^2$. These estimates give convergence
+in the homogeneous positive norm and, after translation into
+the fixed finite interval $[a_0,a_0+L]$, in the full original
+free norm: the weights $e^{2\ell}$ and $e^{-2\ell}$ are bounded
+there. Undoing the gauge and coordinates for the compact smooth
+approximants gives actual compact smooth Cartesian functions,
+supported away from the pole and both axes. Zero extension across
+the longitudinal endpoints therefore belongs to the original
+$\mathcal H_1$. Equations (23.18)--(23.19) pass to these limits
+by the same approximants and closedness. Constants for this
+density step may depend on the fixed $L$; a uniform approximation
+rate or additional angular trace is not required.
+
+For the lower index bound, take $L_-=T-a_0\ge3$ and the entire
+periodic strict negative space of that length. On the subspace
+$X_{L_-}$ from Theorem 23.2, write $a(w)=-Q_{L_-}[w]$ and
+$b=w(0)=w(L_-)$. Fix a real smooth $\eta$ equal to one near zero
+and supported in $[0,1)$, and put
+
+$$
+\chi_L(x)=\eta(x)+\eta(L-x),\qquad l_b=\chi_Lb,\qquad z=w-l_b.
+\tag{23.21}
+$$
+
+The fixed-width supports are disjoint for $L\ge3$. Natural angular
+density makes $l_b$ a periodic form-domain vector. There are
+constants $A_1,A_2,A_3$ independent of $L$ with
+
+$$
+\|l_b\|_2\le A_1\|b\|_{\oplus_m\mathcal V_m},\qquad
+Q_L[l_b]\le A_2\|b\|_{\oplus_m\mathcal V_m}^2.
+\tag{23.22}
+$$
+
+The joint norm of its three localized mass/central observations
+in (23.5) is at most $A_3\|b\|_{\oplus_m\mathcal V_m}$.
+These estimates follow from the fixed supports of $\chi_L,\chi_L'$
+and (23.3), with $m$ in its fixed negative-energy set. The magnetic
+cross term between real $\chi_L'$ and $im\tan a\,\chi_L$ has
+zero real part. They are the same real seam lift bounds as
+(22.16)--(22.17), with its additional localized observations.
+
+The spectral bound $H_L\ge-k$ gives
+$\|H_Lw\|_2^2\le k a(w)$. The form representation identity yields
+
+$$
+\begin{aligned}
+Q_L[z]
+ &=-a(w)-2\operatorname{Re}\langle H_Lw,l_b\rangle+Q_L[l_b]\\
+ &\le\{-1+2A_1\sqrt{k}\delta+A_2\delta^2\}a(w).
+\end{aligned}
+\tag{23.23}
+$$
+
+Each scalar factor $e^{is_jx}-\chi_L(x)$ in $z$ vanishes at both
+ends. The converse construction above makes its translated inverse
+transform an original free-domain vector $f_z$, extended by zero.
+For $\ell=a_0+x$ and $L=T-a_0$, the exact wall is
+$Ee^{2\ell}=e^{-2(L-x)}$. By (23.5), (23.19), and the lift bounds,
+the central norm, possible positive correction, and soft wall
+in (23.18) for $z$ sum to at most
+$C_1(1+A_3)^2\delta^2a(w)$, where
+
+$$
+C_1=\max\{e^{-2a_0},gC_ne^{-2a_0},1\}.
+\tag{23.24}
+$$
+
+Choose $\delta>0$ once so that
+$2A_1\sqrt{k}\delta+\{A_2+C_1(1+A_3)^2\}\delta^2<1/2$.
+Then
+
+$$
+4\{q_{\rm orig}[f_z]+E\|f_z\|_2^2\}\le-\tfrac12a(w)<0.
+\tag{23.25}
+$$
+
+The linear map $w\mapsto f_z$ is injective, since a nonzero
+kernel vector would contradict this strict inequality. The
+strict complex form-index principle gives
+
+$$
+N_{n,g}(E)\ge P_g(T-a_0)-r_-.
+\tag{23.26}
+$$
+
+For the upper bound, let a smooth $\vartheta$ be zero on
+$(-\infty,0]$, equal to $\pi/2$ on $[1,\infty)$, and have bounded
+derivative. For a fixed $b_0\ge0$ to be chosen, use
+
+$$
+\begin{aligned}
+\chi_{\rm in}&=\cos\vartheta(\ell-a_0),\\
+\chi_{\rm out}&=\sin\vartheta(\ell-(T+b_0)),\\
+\chi_{\rm mid}&=\sin\vartheta(\ell-a_0)
+                  \cos\vartheta(\ell-(T+b_0)).
+\end{aligned}
+\tag{23.27}
+$$
+
+For large $T$ the two transition intervals are disjoint, and
+$\sum\chi_j^2=1$ exactly. These are smooth original-free-domain
+multipliers, constant near the pole. With $S_T=\sum|\partial_\ell\chi_j|^2$,
+
+$$
+S_T\le C_\chi\{
+\mathbf1_{[a_0,a_0+1]}+\mathbf1_{[T+b_0,T+b_0+1]}\}.
+\tag{23.28}
+$$
+
+The original IMS identity (18.16) has the exact multiplier
+
+$$
+I_T=S_T\left(\frac c{R^2}+\frac{4\sin^2a}{R^4}\right).
+\tag{23.29}
+$$
+
+Allocate its error to the three components using $\sum\chi_j^2=1$.
+After multiplication by four and the polar substitution the
+cylinder multiplier is exactly $S_T\{c+4e^{-2\ell}\sin^2a\}$,
+bounded by $5C_\chi$ on the exterior transitions.
+
+The inner component has support in a fixed bounded gauge ball;
+only the fixed left transition contributes to its allocated
+error. On a fixed slightly larger bounded Dirichlet region its
+modified form $q_{\rm orig}-\int I_T|f|^2$ has finite negative
+index $K_{\rm in}$ independent of $E,T$. Indeed (15.11)--(15.12)
+give an equivalent shifted original free norm, (15.9) gives local
+Euclidean $H^1$ control, and Rellich compactness gives compact
+form embedding on this bounded region. The modification is a
+fixed bounded multiplier away from the pole. Adding
+$E\|f\|_2^2$ cannot increase $K_{\rm in}$.
+
+The middle component has Dirichlet log support
+$(a_0,T+b_0+1)$, of length $L_+=T+b_0+1-a_0$.
+Its original domain maps into the natural homogeneous Dirichlet
+domain proved above. Drop the nonnegative central and wall terms
+for a lower form bound. Equations (23.19), (23.28)--(23.29) give
+the comparison $Q_g-\int V_{L_+}|w|^2$, where, with $x=\ell-a_0$,
+
+$$
+\begin{aligned}
+V_L(x)&=gC_ne^{-2a_0}e^{-2x}
+ +5C_\chi\{\mathbf1_{[0,1]}(x)+\mathbf1_{[L-1,L]}(x)\}\\
+&\le C_2\{e^{-2x}+e^{-2(L-x)}\},\qquad
+C_2=gC_ne^{-2a_0}+5e^2C_\chi.
+\end{aligned}
+\tag{23.30}
+$$
+
+Theorem 23.3 bounds its strict negative index by
+$P_g(L_+)+K_0+R_{C_2}$. Every angular mode remains in this upper
+comparison, including the high-energy part of (23.14).
+
+On the outer support $\ell\ge T+b_0$ the wall is at least
+$e^{2b_0}$. The homogeneous form is at least $-k$ times the
+cylinder norm, the correction is at least
+$-gC_ne^{-2a_0}$ times that norm, and the allocated IMS error
+is at least $-5C_\chi$ times it. Choose $b_0$ once so that
+
+$$
+e^{2b_0}\ge k+gC_ne^{-2a_0}+5C_\chi+1.
+\tag{23.31}
+$$
+
+After dropping the nonnegative central norm, the outer allocated
+shifted form is nonnegative. The half-cylinder core limit already
+proved gives this inequality on the original exterior closure.
+
+The partition map is injective, and the sum of its allocated
+shifted forms equals $q_{\rm orig}+E\|\cdot\|_2^2$. Project the
+inner component onto the fixed modified operator's negative
+space, and the transformed middle component onto the periodic
+comparison form's negative space. This projection is injective
+on any strictly negative original subspace: in its kernel the
+inner form, middle lower comparison and outer form would all
+be nonnegative. The middle Dirichlet-to-periodic domain inclusion
+justifies its projection. This form-domain dimension argument gives
+
+$$
+N_{n,g}(E)\le K_{\rm in}+P_g(T+b_0+1-a_0)+K_0+R_{C_2}.
+\tag{23.32}
+$$
+
+Finally choose $C_P,C_D$ for the supplied bounds
+$|P_g(L)-dL|\le C_P$ and $|D_g(L)-dL|\le C_D$ for large lengths.
+Increase a fixed $T_0>0$ so that all preceding constructions and
+length thresholds apply for $T>T_0$. Equations (23.26), (23.32) give
+
+$$
+\begin{aligned}
+dT-C_-&\le N_{n,g}(e^{-2T})\le dT+C_+,\\
+C_-&=da_0+C_P+r_-,\\
+C_+&=d|b_0+1-a_0|+C_P+K_{\rm in}+K_0+R_{C_2}.
+\end{aligned}
+\tag{23.33}
+$$
+
+Thus (23.17) holds with
+$B_{n,g}=\max(C_-,C_+)+C_D$ and $E_0=e^{-2T_0}\in(0,1)$.
+All lengths and energies are real; the argument proves the bound
+for every $0<E<E_0$. Since $d=2L_{n,g}$, (23.33) also proves
+the original remainder (21.3). $\square$
+
+**Application 23.5 (original logarithmic threshold placement).**
+Write the original negative eigenvalues as $-\varepsilon_j$,
+with $\varepsilon_j>0$ nonincreasing to zero and repeated with
+complex multiplicity, and put $t_j=\tfrac12\log(1/\varepsilon_j)$.
+The strict convention is
+
+$$
+N_{n,g}(e^{-2T})=\#\{j:t_j<T\}.
+\tag{23.34}
+$$
+
+If $|N_{n,g}(e^{-2T})-dT|\le C$ for large $T$, then for all
+sufficiently large $j$,
+
+$$
+\frac{j-C-1}{d}\le t_j\le\frac{j+C+1}{d},\qquad
+\log(1/\varepsilon_j)=\frac j{L_{n,g}}+O_{n,g}(1).
+\tag{23.35}
+$$
+
+The lower bracket has count at most $j-1$ and the upper bracket
+at least $j+1$, proving these inequalities with the strict
+counting convention and every multiplicity retained. This is a
+direct inversion application of (23.33).
+
+The localized finite-rank estimates (23.9)--(23.16) supply the
+joint original-domain comparison missing from potential decay
+and the cylinder remainder alone. Their strict-energy control
+is used for the full central/wall lower estimate, while their
+positive-space version bounds the extra upper index. The joint original-domain comparison is repo-derived. Classical
+analytic Fredholm meromorphy, Riesz calculus, the strict form-index
+principle and local Rellich compactness are reused in their stated
+realizations. The estimates require no equivalence to a separated
+Euclidean kinetic operator or additional gap or endpoint premise.
+Their constants depend on the fixed parameters; no parameter-uniform
+bound or rate optimality follows.
+
+## 追加锚（本行以下为增补区）
