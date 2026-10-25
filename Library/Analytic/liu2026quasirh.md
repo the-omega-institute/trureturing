@@ -3141,7 +3141,9 @@ ray/angular factors; it is not an extra inverse Gauss sum and is not
 a replacement of $b_A$ by $1$. The original (J5) CRT factors are
 already inside $\gamma_1(s)$ and must not be inserted a second time.
 
-For one original component write its arithmetic column as
+Fix a common refined total ray $[s]=[t]=\sigma$ and include its
+selectors in both original side weights. For one such component write
+its arithmetic column as
 
 $$
 c_s=\mathbf1_{s\ {\rm good\ sf}}
@@ -3278,7 +3280,10 @@ columns absolutely, and arbitrary Fourier decay makes their sum smaller
 than any prescribed power by enlarging the fixed shell cutoff and $B$.
 The same argument bounds the residue tail using the absolute divisor
 mass of $\Theta_{4,A}$. It proves (C60) without truncating the actual
-frequency identity. One derivative order is chosen for all shells,
+frequency identity. In (C59)–(C68), $\mathcal N_J$ denotes the original
+aggregate of component seminorms against the absolute coefficient
+measures, including the $|\eta_{\epsilon,\mathbf r}|$ costs; it is required
+to be fixed or polylogarithmic. One derivative order is chosen for all shells,
 finite components and separated heights. If their growth has degree $h$,
 log-Fourier decay of order greater than $h+5$ is integrable in four
 variables. Derivatives act only on the external profiles, never on
