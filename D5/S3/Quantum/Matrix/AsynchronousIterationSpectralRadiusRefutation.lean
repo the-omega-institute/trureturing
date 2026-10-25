@@ -9,14 +9,17 @@
 import D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree
 import Mathlib.Analysis.Normed.Algebra.Spectrum
 
+/-! A stable two-block iteration becomes unstable when only remote entries are delayed. -/
+
 noncomputable section
 
 open Matrix
+open scoped ENNReal NNReal
 
 namespace D5.S3.Quantum.Matrix.AsynchronousIterationSpectralRadiusRefutation
 
 /-- Coordinates grouped into blocks of the prescribed sizes. -/
-def BlockIndex (ℓ : ℕ) (n : Fin ℓ → ℕ) := Σ i : Fin ℓ, Fin (n i)
+@[reducible] def BlockIndex (ℓ : ℕ) (n : Fin ℓ → ℕ) := Σ i : Fin ℓ, Fin (n i)
 
 /-- The history state has the newest iterate in slot zero. -/
 def asyncMatrix {ℓ : ℕ} {n : Fin ℓ → ℕ}
@@ -35,33 +38,33 @@ def radius {ι : Type*} [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℝ) : �
 /-- Nonempty blocks, zero local delay, bounded positive remote delays, and a stable radius. -/
 def Admissible (ℓ : ℕ) (n : Fin ℓ → ℕ) (k : ℕ)
     (M : Matrix (BlockIndex ℓ n) (BlockIndex ℓ n) ℝ)
-    (δ : Fin ℓ → Fin ℓ → ℕ) (λ : ℝ) : Prop :=
+    (δ : Fin ℓ → Fin ℓ → ℕ) (lambda : ℝ) : Prop :=
   (∀ i, 0 < n i) ∧ (∀ i, δ i i = 0) ∧
     (∀ i j, i ≠ j → 1 ≤ δ i j ∧ δ i j ≤ k) ∧
-    0 < λ ∧ λ < 1 ∧ radius M = ENNReal.ofReal λ
+    0 < lambda ∧ lambda < 1 ∧ radius M = ENNReal.ofReal lambda
 
 /-- The proposed power bound, uniformly over block arrays and admissible delays. -/
 def Q1 : Prop :=
   ∀ (ℓ : ℕ) (n : Fin ℓ → ℕ) (k : ℕ)
     (M : Matrix (BlockIndex ℓ n) (BlockIndex ℓ n) ℝ)
-    (δ : Fin ℓ → Fin ℓ → ℕ) (λ : ℝ),
-    Admissible ℓ n k M δ λ →
-      radius (asyncMatrix M δ k) ≤ ENNReal.ofReal (λ ^ ((1 : ℝ) / (k + 1)))
+    (δ : Fin ℓ → Fin ℓ → ℕ) (lambda : ℝ),
+    Admissible ℓ n k M δ lambda →
+      radius (asyncMatrix M δ k) ≤ ENNReal.ofReal (lambda ^ ((1 : ℝ) / (k + 1)))
 
 /-- A uniformly subunit bound depending only on the original radius and maximum delay. -/
 def Q2 : Prop :=
   ∃ f : ℝ → ℕ → ℝ,
-    (∀ λ k, 0 < λ → λ < 1 → 0 < f λ k ∧ f λ k < 1) ∧
+    (∀ lambda k, 0 < lambda → lambda < 1 → 0 < f lambda k ∧ f lambda k < 1) ∧
     ∀ (ℓ : ℕ) (n : Fin ℓ → ℕ) (k : ℕ)
       (M : Matrix (BlockIndex ℓ n) (BlockIndex ℓ n) ℝ)
-      (δ : Fin ℓ → Fin ℓ → ℕ) (λ : ℝ),
-      Admissible ℓ n k M δ λ →
-        radius (asyncMatrix M δ k) ≤ ENNReal.ofReal (f λ k)
+      (δ : Fin ℓ → Fin ℓ → ℕ) (lambda : ℝ),
+      Admissible ℓ n k M δ lambda →
+        radius (asyncMatrix M δ k) ≤ ENNReal.ofReal (f lambda k)
 
 /-- At least one of the two proposed bounds for the price of asynchrony holds. -/
 def claim : Prop := Q1 ∨ Q2
 
-private def sizes : Fin 2 → ℕ := fun _ => 1
+@[reducible] private def sizes : Fin 2 → ℕ := fun _ => 1
 
 private def baseMatrix : Matrix (BlockIndex 2 sizes) (BlockIndex 2 sizes) ℝ :=
   fun p q => if p.1 = 0 then (if q.1 = 0 then 7 / 4 else 5 / 4)
@@ -76,7 +79,11 @@ private def unstableVector : Fin 2 × BlockIndex 2 sizes → ℂ :=
 private theorem base_square_zero :
     (baseMatrix.map (algebraMap ℝ ℂ) -
       algebraMap ℂ (Matrix (BlockIndex 2 sizes) (BlockIndex 2 sizes) ℂ) (1 / 2)) ^ 2 = 0 := by
-  sorry
+  apply Matrix.ext
+  rintro ⟨i, a⟩ ⟨j, b⟩
+  fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
+    norm_num [pow_two, Matrix.mul_apply, Fintype.sum_sigma, Fin.sum_univ_two, Fin.sum_univ_succ,
+      baseMatrix, Matrix.map_apply, Matrix.algebraMap_eq_diagonal, Matrix.diagonal_apply, sizes, Fintype.sum_unique]
 
 private theorem base_spectrum :
     spectrum ℂ (baseMatrix.map (algebraMap ℝ ℂ)) = {(1 / 2 : ℂ)} := by
