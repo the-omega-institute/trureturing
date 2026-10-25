@@ -5,8 +5,9 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Perfect evolution algebras have monomial automorphisms; Conjecture 3 asks for their sharp all-dimensional maximum order."
+claim: "Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis."
 strata_touched:
+  - D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport
 license: citation-only
@@ -35,3 +36,16 @@ sharp maximum, attainment or an exclusive extremizer classification.
 The group-scheme sequence in equation (2) has no terminal surjectivity claim
 onto the full graph automorphism group. The formal model uses the actual image
 and the actual block-action kernel.
+
+## Hilbert natural-basis uniqueness
+
+Section 2.2.8, Question 46 asks: "If the square of a Hilbert evolution algebra
+is dense, is its natural orthonormal basis unique up to permutation and
+unimodular scalars?" Section 1.8 and the cited Hilbert evolution algebra
+framework allow real or complex scalars, complete orthonormal natural bases,
+and continuous left multiplication. Here the square is the algebraic span of
+all pair products and density is norm density. The subsequent sentence about
+bounded derivations, automorphisms and spectral theory is a separate request.
+A complex counterexample refutes the first universal assertion for the full
+real-or-complex class. The first interrogative is a question in this source,
+not a theorem attributed to its authors.
