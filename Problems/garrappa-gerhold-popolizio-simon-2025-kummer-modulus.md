@@ -113,9 +113,9 @@ read. This is a bounded search, not a priority or completeness assertion.
 - **COMPUTED.** Witness C has $\alpha=3/2$, $\beta=3$ and polynomial form
   $e^z(1-2z+4z^2+8z^3/3)$. Its nonreal zero and positive real-axis value
   are the C readings in Evidence. Thus the numerical failure also occurs
-  with $\alpha>1$, the region in which the source proves complete
-  monotonicity of $1/M(\alpha,\alpha-\beta,\cdot)$. Complete monotonicity
-  alone therefore does not numerically imply this modulus inequality.
+  with $\alpha>1$. Comparing this witness with the paper's reciprocal
+  complete-monotonicity result requires the function and interval
+  qualifications in ASSUMED-UNVERIFIED.
 - **COMPUTED.** Witness B has $\alpha=2$, $\beta=3/2$, so its second
   parameter is $1/2>0$. At $z=-10+5i$, the B readings in Evidence give
   $|M(2,1/2,z)|<M(2,1/2,-10)$. Both computed claims use the same pinned
@@ -142,3 +142,11 @@ are unverified. No new network search is asserted. B and C are numerical
 observations at fixed parameters, not Lean proofs or uniform parameter
 regions. The log-concavity consequence is proved in prose only. A complete
 classification beyond the paper's proved range is not supplied.
+
+The precise function, parameter restrictions and interval of the paper's
+reciprocal complete-monotonicity result have not been checked against the
+article. That result cannot be applied to witness C on $[0,\infty)$:
+the displayed closed form gives $f(0)=1$ and $f'(0)=-1$, hence
+$(1/f)'(0)=1$, whereas a completely monotone function is nonincreasing.
+This derivative check is in prose; the numerical failure at C does not
+establish a counterexample within a completely monotone reciprocal class.
