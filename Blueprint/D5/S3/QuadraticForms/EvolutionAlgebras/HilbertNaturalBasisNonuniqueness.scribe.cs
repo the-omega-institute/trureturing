@@ -77,9 +77,11 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
     }
     private static Formula WholeClaim => And(Full(R), Full(C));
     private static DocumentBlock.Describe Desc(string name, string title, Formula formula, string text,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))), role,
+            openProblemResolutionClaim: resolution);
 
     public DocumentDefinition Create()
     {
@@ -133,6 +135,9 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                     "Apply the complex universal assertion to the sequence space, mu, e and f. Every standard vector e(i) is the product mu(e(i+1),e(i+1)), so the algebraic product span contains the standard span and its norm closure is the whole space. "
                     + "Both bases are complete, orthonormal and natural. However, f(1) has two nonzero standard coordinates and differs from c times e(j) for every positive j and every complex c. "
                     + "Any proposed permutation and unimodular scalar family would give such an equality at index one. This contradiction refutes the complex assertion and hence the real-or-complex conjunction. The equal-square pair is the failure mechanism: dense square does not forbid two equal nonzero basis squares.",
-                    AssessedProvenance.FromRepo(Survey, Table, Hilbert, Rotation), DescribeRole.Theorem)), []));
+                    AssessedProvenance.FromRepo(Survey, Table, Hilbert, Rotation), DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("kaygorodov-martin-gonzalez-viruel-2026-hilbert-natural-basis-uniqueness"),
+                        ResolutionKind.Refuted))), []));
     }
 }
