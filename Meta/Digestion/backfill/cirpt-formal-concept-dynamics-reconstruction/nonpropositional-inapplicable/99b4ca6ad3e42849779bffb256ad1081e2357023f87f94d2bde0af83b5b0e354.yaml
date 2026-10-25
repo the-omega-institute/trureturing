@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99b4ca6ad3e42849779bffb256ad1081e2357023f87f94d2bde0af83b5b0e354
+  normalized_sha256: sha256:99b4ca6ad3e42849779bffb256ad1081e2357023f87f94d2bde0af83b5b0e354
+cas_ref: sha256:99b4ca6ad3e42849779bffb256ad1081e2357023f87f94d2bde0af83b5b0e354
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 路径依赖机制列表中的 FLOW 更新项，未给出定量断言。
+    previous_atom_id: 2a96929cfb405474b0f1ac327d53ff0b4abe6ce3d697fd8f8a55b767e5c5971f
+    next_atom_id: 578c58ced3046df19379bbf6e0692cec4c4f6e33dd00173805fa4999a2233f68
