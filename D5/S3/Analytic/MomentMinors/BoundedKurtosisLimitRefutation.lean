@@ -75,7 +75,9 @@ private lemma integral_witness (f : ℝ → ℝ) :
   ring
 
 private lemma mean_witness : mean witness = 2 := by
-  sorry
+  unfold mean
+  rw [integral_witness]
+  norm_num
 
 private lemma moment_two_witness : centralMoment id 2 witness = 1 / 2 := by
   sorry
