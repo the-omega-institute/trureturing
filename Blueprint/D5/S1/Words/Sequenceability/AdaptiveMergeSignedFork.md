@@ -1,0 +1,24 @@
+# AdaptiveMergeSignedFork
+
+## Abstract
+
+Fix distinct nonzero a,b in a finite alphabet A and a Good compressed word L,(a+b),R. Assume L and R have distinct labels in A minus {a,b} and are disjoint. If both adjacent expansions fail, then M(a,b), M(b,a), E(a,b) or E(b,a) holds. M(x,y) quantifies disjoint nonempty Finsets U,V contained in A minus {x}, with y in V, sum U = -x and sum V = x. E(x,y) quantifies disjoint nonempty Finsets avoiding both x and y, each with sum -x. ForkEdge is exactly the disjunction of these four predicates, independent of any word. Same-side collision suffixes are nested; their difference together with the other merge label supplies M. Opposite-side suffix and prefix are disjoint and supply E. Right/right collisions reduce by reversal. List certificates are converted using nodup and List.sum_toFinset, preserving each original label with coefficient one. The original fixed C2 x C4 chosen-pair refutation calibrates the quantifier boundary and is not copied or generalized here.
+
+**Theorem 1.1 (Two failed orientations force original-label signed subsets).**
+
+Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeSignedFork.two_collision_fork`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeSignedFork.two_collision_fork` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix distinct nonzero a,b in a finite alphabet A and a Good compressed word L,(a+b),R. Assume L and R have distinct labels in A minus {a,b} and are disjoint. If both adjacent expansions fail, then M(a,b), M(b,a), E(a,b) or E(b,a) holds. M(x,y) quantifies disjoint nonempty Finsets U,V contained in A minus {x}, with y in V, sum U = -x and sum V = x. E(x,y) quantifies disjoint nonempty Finsets avoiding both x and y, each with sum -x. ForkEdge is exactly the disjunction of these four predicates, independent of any word. Same-side collision suffixes are nested; their difference together with the other merge label supplies M. Opposite-side suffix and prefix are disjoint and supply E. Right/right collisions reduce by reversal. List certificates are converted using nodup and List.sum_toFinset, preserving each original label with coefficient one. The original fixed C2 x C4 chosen-pair refutation calibrates the quantifier boundary and is not copied or generalized here.
+
+The unrestricted adaptive principle and original arbitrary-subset parent remain OPEN. Under H and existence of a legal pair for an arbitrary finite nonzero alphabet of size at least three, it remains OPEN whether some actual Good compressed order has a Good adjacent expansion; a complete checked counterexample would refute that principle. Static legal-edge inclusion in ForkEdge does not decide it. The published IntegerStrongOrdering theorem is reused in a transient exact-telescope check; no new integer ordering theorem is retained and concrete ZMod Good is not generalized. No literature novelty claim follows from repository search. Four-slot Reg registration is unfinished; see https://github.com/the-omega-institute/trureturing/issues/21061 for exact targets and missing source-binding evidence.
+
+## References
+
+- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeSignedFork.two_collision_fork`
+- Dependency: [D5/S1/Words/Sequenceability/AdaptiveMergePrefix](AdaptiveMergePrefix.md)
