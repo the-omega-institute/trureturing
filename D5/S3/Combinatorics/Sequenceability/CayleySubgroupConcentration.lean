@@ -277,7 +277,7 @@ theorem near_invariant_localization {K : Type*} [Group K] [Fintype K]
   have hsq (g : K) : displacement v g ^ 2 =
       2 - 2 * ∑ x : K, v x * v (x * g) := by
     simp only [displacement, norm_sub_sq_real, (regularIso g).norm_map, hv,
-      PiLp.inner_apply, real_inner_eq_mul, regularIso_apply, mul_comm]
+      PiLp.inner_apply, RCLike.inner_apply, RCLike.conj_to_real, regularIso_apply]
     ring
   have hsecond : (∑ t ∈ T, displacement v t ^ 2) ≤ 2 * β * T.card := by
     simp_rw [hsq]

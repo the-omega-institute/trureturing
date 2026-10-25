@@ -108,7 +108,8 @@ def family : Registration arena.{u} (type_of% (@near_invariant_localization.{u})
     norm_num [actual, realize, p, retained] at he
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@near_invariant_localization.{u}) (Realization signature.{u}) Unit Unit where
+    (@near_invariant_localization.{u}) (Realization signature.{u})
+    (type_of% (@Subgroup.{u})) Unit where
   unitName := `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.near_invariant_localization.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.family
   realizationSource := none
@@ -124,7 +125,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := none
+  escapeFrom := some (@Subgroup.{u})
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
     definition := none
