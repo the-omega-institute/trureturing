@@ -54,7 +54,7 @@ For the reverse direction, normality and the Gram identities give commutation wi
 
 Every construction also applies to Fin 0: the matrix and index equalities are empty and no choice of an index or positive rank is used. The half endpoint and zero singular values are included in both directions. At a = 1, g is constant and the injectivity step fails exactly as in the retained refutation. The published lower interval 0 ≤ a ≤ 1/2 is literature-attested Theorem 2.3, not independently formalized here. Parameters outside [0,1], infinite-dimensional operators, a general functional injectivity repair and a new singular-matrix classification are outside this application. The earlier Question 2.14 scalar-pair refutation is distinct.
 
-The application introduces no retained positive theorem, GID, resolution marker or audit wrapper. The canonical CFC supplier's dependent/pointwise arena, exact reconstruction, whole-family intervention and sensitivity audit remains unfinished under issue #19914; removing an application declaration does not finish that audit. Literature completeness and priority remain ASSUMED-UNVERIFIED.
+The application introduces no retained positive theorem, GID, resolution marker or audit wrapper. The canonical CFC supplier's dependent/pointwise arena, exact reconstruction, whole-family intervention and sensitivity audit remains unfinished; removing an application declaration does not finish that audit. Literature completeness and priority remain ASSUMED-UNVERIFIED.
 
 ## References
 
