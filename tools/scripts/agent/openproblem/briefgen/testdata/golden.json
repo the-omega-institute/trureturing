@@ -33,12 +33,12 @@
     "scratch/briefs/review-sample-tests.md": "af9465a967a0bf0be05f37f0b3c6ac75ebe71e5de4b684b977c515c8dda8bb57"
   },
   "gen_review.py:codex3": {
-    "scratch/briefs/review-sample-quality.md": "2c5eca6c61752b8ab505c82b1b12737bb4400b1ae3346eba1d089afbdb9d0e37",
-    "scratch/briefs/review-sample-quality-r1.md": "a2313a28867a91c2a7abf62e771ebb076a9dc14017227601d92f5c040cd22cfb",
+    "scratch/briefs/review-sample-quality.md": "13b1a8581e7147e6a87f054aaeba66c9d15cf7f16aeb2cc907546999f8cb86af",
+    "scratch/briefs/review-sample-quality-r1.md": "c73efd496039c44106d658311efb01bdc8abb75cd2d71bd275ad06125c20cad4",
     "scratch/briefs/review-sample-architecture.md": "f201a9e998f1978c36f27a07d3eca681d71200c27845d6c5848563937efc968d",
-    "scratch/briefs/review-sample-tests-r1.md": "68abea5689e19106a3d0a88225700ab79415014e6cedd8b3947c56b7c868bd6a",
-    "scratch/briefs/review-sample-architecture-r1.md": "62c534d00ce3b62d5edf7cbcec68d6d482850f4f63ec043c944d366211564eb7",
-    "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
+    "scratch/briefs/review-sample-tests-r1.md": "33e6864853df8c0249b288269316eda59e065aba8312e96371358a3cc228a529",
+    "scratch/briefs/review-sample-architecture-r1.md": "9b50601eff2f3a2cc1c4fe89e671a6effd0804989051b177ec6f8606a419fbf9",
+    "scratch/briefs/review-sample-tests.md": "cacf877d62875312cae775afc9744c5ab5035975b1bae0ec9c7afaeeda06253a"
   },
   "gen_stage_briefs.py": {
     "scratch/briefs/mirror-check-sample.md": "79b13c12c24e75cdea877a86630dd9165e4c85ae9b7cce8df785b1f965e6f71f",
