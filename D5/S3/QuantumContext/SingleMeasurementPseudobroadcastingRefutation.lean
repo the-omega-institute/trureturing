@@ -101,23 +101,27 @@ private lemma measurement_povm : IsPOVM measurement := by
 
 private lemma postprocessings_convex {d m : ℕ}
     (p : Fin m → Matrix (Fin d) (Fin d) ℂ) : Convex ℝ (postprocessings p) := by
-  rintro e ⟨c, hc, rfl⟩ f ⟨b, hb, rfl⟩ x y hx hy hxy
-  refine ⟨fun o => x * c o + y * b o, fun o => ?_, ?_⟩
-  · constructor
-    · exact add_nonneg (mul_nonneg hx (hc o).1) (mul_nonneg hy (hb o).1)
-    · nlinarith [(hc o).2, (hb o).2]
-  · rw [Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+  let F : (Fin m → ℝ) →ₗ[ℝ] Matrix (Fin d) (Fin d) ℂ :=
+    ∑ o, (LinearMap.proj o).smulRight (p o)
+  convert (convex_Icc (0 : Fin m → ℝ) 1).linear_image F using 1
+  ext e
+  simp only [Set.mem_image, Set.mem_Icc, Pi.le_def,
+    Pi.zero_apply, Pi.one_apply, ← forall_and]
+  refine exists_congr fun c => ?_
+  simp only [F, LinearMap.sum_apply, LinearMap.smulRight_apply, LinearMap.proj_apply]
+  have heq : (∑ o, c o • p o) = ∑ o, (c o : ℂ) • p o := by
     apply Finset.sum_congr rfl
     intro o _
-    ext i j
-    simp [Matrix.smul_apply, Complex.real_smul, add_mul, mul_assoc]
+    exact (algebraMap_smul ℂ (c o) (p o)).symm
+  rw [heq]
+  exact and_congr_right fun _ => eq_comm
 
 private lemma postprocessings_complement {d m : ℕ}
     {p : Fin m → Matrix (Fin d) (Fin d) ℂ} (hp : IsPOVM p)
     {e : Matrix (Fin d) (Fin d) ℂ} (he : e ∈ postprocessings p) :
     1 - e ∈ postprocessings p := by
   rcases he with ⟨c, hc, rfl⟩
-  refine ⟨fun o => 1 - c o, fun o => ⟨by linarith [(hc o).2], by linarith [(hc o).1]⟩, ?_⟩
+  refine ⟨fun o => 1 - c o, fun o => Set.Icc.one_sub_mem (hc o), ?_⟩
   rw [← hp.2, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro o _
@@ -155,19 +159,14 @@ private lemma witness_subtheory : Subtheory preparations effects := by
 private lemma witness_generated : GeneratedBy effects 1 := by
   refine ⟨fun _ => 4, fun _ => measurement, fun _ => measurement_povm, ?_⟩
   change convexHull ℝ (postprocessings measurement) = _
-  congr 1
-  ext e
-  simp only [Set.mem_iUnion]
-  exact ⟨fun h => ⟨0, h⟩, fun ⟨_, h⟩ => h⟩
+  simp only [Set.iUnion_const]
 
 private lemma one_copy {d : ℕ} {t a : Set (Matrix (Fin d) (Fin d) ℂ)}
     (h : Subtheory t a) : PseudoBroadcastable t a 1 := by
   let e : (Fin 1 → Fin d) ≃ Fin d := Equiv.funUnique _ _
   let ξ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ]
       Matrix (Fin 1 → Fin d) (Fin 1 → Fin d) ℂ :=
-    { toFun := fun x => x.submatrix e e
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
+    (Matrix.reindexLinearEquiv ℂ ℂ e.symm e.symm).toLinearMap
   have tr (x : Matrix (Fin d) (Fin d) ℂ) : (ξ x).trace = x.trace :=
     e.sum_comp (fun j => x j j)
   have marginal (x : Matrix (Fin d) (Fin d) ℂ) (i : Fin 1) :
