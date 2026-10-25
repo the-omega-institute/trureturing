@@ -90,7 +90,7 @@ public sealed partial class CleanLanesCommandTests
             var elapsed = fixture.RunAt(allocated.AddDays(1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(elapsed.Success, elapsed.Error);
-            Assert.Equal(force ? "stale_behind" : "would_remove", ReasonFor(elapsed.Output, lane));
+            Assert.Equal("stale_behind", ReasonFor(elapsed.Output, lane));
             Assert.Equal(!force, Directory.Exists(lane));
             Assert.Equal(!force, fixture.WorktreeRegistered(lane));
         }

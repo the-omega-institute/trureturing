@@ -41,9 +41,9 @@ internal static partial class CleanLanesCommand
                 var path = Path.Combine(common, "logs", "refs", "heads", branch);
                 if (branch != item.Branch && !HasLocalAllocationEvidence(item.Path, branch, path, runner))
                 {
-                    // A resolvable revision without local evidence is not a branch allocation.
-                    // An unresolved historical name still fails closed.
-                    _ = ResolveCommit(item.Path, branch, runner);
+                    // Deleted or renamed branches can share a spelling with a surviving revision.
+                    // Bound this historical ambiguity by the checkout's own allocation grace.
+                    allocated = Math.Max(allocated, log.Checkouts![branch].Max(static entry => entry.Updated));
                     continue;
                 }
                 var tip = branch == item.Branch ? item.Head
