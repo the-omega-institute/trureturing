@@ -21,7 +21,7 @@ namespace D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction
 open GenealogicalFiberTransport (Source substitution)
 open NativeCompletionPrefixLifting
 open CompletionHomogeneousFixedPoints
-open ActualTreeReadoutAcquisition (Address)
+open ActualTreeReadoutAcquisition (Address Reply)
 
 abbrev Expr (m : Nat) := CompletionPositiveDriftRegion.Expr 0 m
 

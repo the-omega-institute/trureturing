@@ -56,7 +56,7 @@ internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefin
                         ExistsTyped("w", Call("NativeValues", m),
                             AndAlso(Call("Satisfies", s, w),
                                 All("i", Call("Fin", m), Imp(Call("holds", b, i),
-                                    Seq(Call("valueAt", w, i), Sp, Eq, Sp, Call("valueAt", v, i)))))))))))));
+                                    Seq(Call("valueAt", w, i), Sp, Eq, Sp, Call("valueAt", v, i))))))))))))));
     }
 
     private static Formula ExistsTyped(string name, Formula type, Formula body) =>
