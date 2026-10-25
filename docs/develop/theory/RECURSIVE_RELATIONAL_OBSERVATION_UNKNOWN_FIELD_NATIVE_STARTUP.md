@@ -453,3 +453,294 @@ The sufficient cap remedy trades P's installed unit preparation for supplied ord
 [HoKalman]: https://doi.org/10.1524/auto.1966.14.112.545
 
 ## 追加锚（本行以下为增补区）
+
+## 10. A confidence-qualified contract without order advice
+
+**Definition 10.1 (the randomized uncapped task).** Fix one finite specimen $(N,T,x^{\rm in})$ satisfying (UFS.1), with arbitrary signed $x^{\rm in}\in\mathbb Q^N$, before any random bits are drawn. Retain Assumption 1.2's exact Read, returning Tick, Hold and signed rational Add service, common root binding, class/fixedness assurance, exclusive serial access and paid storage/control backing, but remove the cap and its assurance. The public numerical input is an integer $b\ge1$. No $N$, coefficient, entry-field, energy or word-length bound is supplied. Reset, cloning and additional specimen ports remain absent.
+
+The controller additionally has a paid source of independent fair bits, independent of the fixed specimen and of all preceding draws. This is an explicit randomness resource and independence premise; it is not inferred from the endpoint observations or replaced by a finite deterministic seed. Only finitely many bits are requested on each run. The generator, its current material, access right, output framing and actual work/backing are charged separately from the specimen. The controller is one finite effective program with growing finite stores, in the sense of §1.
+
+The correctness contract is now
+
+$$
+\forall (N,T,x^{\rm in})\ \forall b\ge1,\qquad
+\mathbb P_\omega\!\left[\mathcal C(N,T,x^{\rm in},b,\omega)\right]
+\ge1-2^{-b},
+\tag{UFS.25}
+$$
+
+where $\mathcal C$ is one joint assertion: the exported native law and current field are exact, the retained predictor is correct for every legal finite adaptive continuation, a unit field has actually been prepared, and a subsequent actual passive segment has reached P Definition 39.1's domain with its original four meanings. Termination is required on every tape. A rejected local candidate is not an error certificate about the specimen. An exported result is confidence-qualified: on exceptional tapes its model, preparation assertion and view interpretation may be wrong without a warning. There is no claim of an exact hidden-order certificate or of one tape correct for every specimen.
+
+**Definition 10.2 (stage amplitudes).** For $n\ge1$ set
+
+$$
+\ell_n=\lceil\log_2(n+1)\rceil,\qquad
+k_n=b+n+\ell_n,\qquad M_n=2^{k_n},\qquad
+\delta_n=2^{-b-n}.
+\tag{UFS.26}
+$$
+
+At stage $n$ exactly $k_n$ fresh bits, interpreted as an unsigned binary integer, choose $U_n$ uniformly from $\{0,\ldots,M_n-1\}$. There is no rejection sampling. The stage number is a computed search variable, not native-order advice.
+
+**Lemma 10.3 (a randomized determinant gate on the actual field).** At a held cut let the actual field be any $z\in\mathbb Q^N$. Execute Add$(u)$, Read the resulting root $y_0(u)$, and execute $2n$ actual Ticks with all their returns $y_1(u),\ldots,y_{2n}(u)$. Define
+
+$$
+\begin{aligned}
+y_j(u)&=e_0^{\mathsf T}T^j(z+u e_0),\\
+D_{n,z}(u)&=\det\bigl(y_{i+j}(u)\bigr)_{0\le i,j\le n}.
+\end{aligned}
+\tag{UFS.27}
+$$
+
+If $n<N$, this is a nonzero rational polynomial of degree exactly $n+1$, with strictly positive leading coefficient. Consequently, conditional on any preceding history that reaches this cut, a fresh $U_n$ satisfies
+
+$$
+\mathbb P\bigl[D_{n,z}(U_n)=0\mid\text{preceding history}\bigr]
+\le\frac{n+1}{M_n}\le\delta_n.
+\tag{UFS.28}
+$$
+
+If $n=N$, then $D_{N,z}(u)=0$ for every $z$ and every rational $u$.
+
+Proof. Write $g_j=e_0^{\mathsf T}T^jz$. The matrix in (UFS.27) is $G+uH_n$, where $G=(g_{i+j})$ and $H_n=(m_{i+j})$. Multilinearity of the determinant gives its coefficient of $u^{n+1}$ as $\det H_n$. P Lemma 37.1 gives $H_n=K_n^{\mathsf T}K_n>0$ for $n<N$, so that coefficient is nonzero. This argument uses no sign or cyclicity assumption on $z$. The finite atomic factorization of §2 is compatible with these signed free weights; positivity is required only of the impulse leading coefficient.
+
+The mature univariate root bound says that a nonzero degree-$(n+1)$ polynomial has at most $n+1$ distinct rational roots. This is, in particular, the bound supplied by pinned mathlib's `Polynomial.card_roots'` and `Polynomial.card_le_degree_of_subset_roots`, together with `Polynomial.mem_roots` for a nonzero polynomial. Uniform sampling and $2^{\ell_n}\ge n+1$ give (UFS.28). Conditional on the preceding history, $z$ is fixed before these bits, even if earlier rejected branches changed it.
+
+For $n=N$, put $w=z+u e_0$. The same observed matrix factors as
+
+$$
+\bigl(y_{i+j}(u)\bigr)_{0\le i,j\le N}
+=[e_0,Te_0,\ldots,T^Ne_0]^{\mathsf T}
+ [w,Tw,\ldots,T^Nw].
+\tag{UFS.29}
+$$
+
+Both factors pass through $\mathbb Q^N$, so this $(N+1)$-row matrix is singular. This proves the last assertion without interpreting an early zero determinant as native flatness. $\square$
+
+## 11. A bounded candidate branch with no rollback
+
+**Definition 11.1 (the total candidate branch $\mathcal B_n$).** The input to this branch is the current held specimen, the finite search value $n$, and its existing complete command/return record. The statement $N\le n$ is a trial hypothesis, not supplied information. The following finite construction is a guarded version of §§2–6 with trial cap $R=n$.
+
+1. Issue a new Hold and Read $f_0$. Execute exactly $2n-1$ returning Ticks, then Hold. In this branch only, $f_j$ denotes the free response from its actual entry field $z$; no Add has occurred during this prefix. Compute $r=\operatorname{rank}(f_{i+j})_{0\le i,j<n}$ by rational elimination with bounded pivot search. For $r=0$ take the candidate free sequence to be zero. For $r>0$ require the leading $r$-row block to be nonsingular before solving (UFS.6). Generate the candidate recurrence sequence $\widehat f_j$ from its first $r$ values through index $4n-1$, and require agreement with every observed $f_0,\ldots,f_{2n-1}$. A failed determinant, solve or comparison rejects the branch at this held cut. This includes the $r=0$ case when the observed prefix is not all zero.
+
+2. Write $s=2n-1$. Execute Add$(1)$ and Read $v_0$. Execute at most $n$ pairs of returning Ticks, with a Hold after each pair. After $j$ pairs form $d_i=v_i-\widehat f_{s+i}$ for $0\le i\le2j$, and require $d_0=1$. Examine $H_j(d)=(d_{i+l})_{0\le i,l\le j}$. Continue only while this matrix is positive definite and $j<n$. At its first singular occurrence, require its preceding leading block $H_{j-1}(d)>0$ and set $d=j$ for the trial native dimension. A nonsingular block that is not positive definite rejects the branch. A positive definite block at $j=n$ also rejects it. Thus the branch never searches beyond $2n$ post-pulse Ticks. In the singular case the positive preceding block and the zero Schur complement imply positive semidefiniteness and rank exactly $d$; these are finite matrix statements, not an assertion about the hidden order.
+
+3. For this $1\le d\le n$, apply the monic moment-orthogonalization formulas (UFS.10) to the available $d_i$. Require every denominator used to be nonzero and every required norm to be positive. For each positive reduced norm ratio, compute the floor integer square roots of its numerator and denominator and square them back. Reject unless both are exact squares. Use their positive rational ratio as the link. Form the symmetric tridiagonal candidate $A\in\mathbb Q^{d\times d}$; require positive links, $A>0$ and $I-A>0$. Positive definiteness is decided by the finitely many leading principal minors. Compute its monic characteristic polynomial $q_A$, impulse vector $\mu_A$, and finite rational transfer $F_A$ as in P Proposition 37.4. Require $e_0^{\mathsf T}A^j e_0=d_j$ for every acquired $0\le j\le2d$. All these calculations have bounded degree and dimension. No factorization into unknown real eigenvalues is requested.
+
+4. Form $\mathcal O_d(A)$ and $C_d(A)$ by (UFS.11) and (UFS.15), replacing $T,N$ with $A,d$. Check nonsingularity before each solve. Set
+
+$$
+\widehat w=\mathcal O_d(A)^{-1}(v_0,\ldots,v_{d-1})^{\mathsf T},\qquad
+\widehat x_*=A^{2d}\widehat w,\qquad
+C_d(A)u=e_0-A^d\widehat x_*.
+\tag{UFS.30}
+$$
+
+Retain the candidate native/predictive records of Definition 4.1 with this $A,\widehat x_*$. Reject if any required arithmetic or check fails. Otherwise retain the finite rational pulse list $u_0,\ldots,u_{d-1}$. At this point the actual specimen has undergone the free prefix, Add$(1)$, and $2d$ further Ticks. The vector in (UFS.30) is only a candidate for that actual cut until correctness has been established.
+
+5. Execute exactly $d$ pairs Tick; Add$(u_j)$, including Add$(0)$ when prescribed, with a Hold after each pair. Update the candidate predictor as in Definition 4.1 and retain every actual Tick scalar and acknowledgement. Compare every Tick scalar with its candidate prediction, retaining a Boolean conjunction of these finite comparisons. After the final pair, Read the actual root and include comparison with $1$. This is a proposed new origin, not yet an unconditional unit-origin assertion.
+
+6. Execute exactly $2d$ further returning Ticks with no Add, and a Hold after every pair. Retain the origin Read and all these actual scalar replies as a new segment, and compare them with $e_0^{\mathsf T}A^j e_0$ for $0\le j\le2d$. Continue to update the candidate native/predictive record. Once step 5 has begun, complete steps 5–6 even if a scalar comparison fails; the conjunction records failure. All prescribed inputs have already been computed. This convention gives a fixed finite suffix and leaves every real output accounted for.
+
+7. If every comparison succeeded, accept the candidate and export its law, synchronized candidate field/predictor and its four proposed views at $k=2d$. Space, Boundary and Memory are computed from $(A,A^{2d}e_0)$ by Definition 6.1; Time is the actual segment of step 6, including its origin Read. Otherwise reject at the final held cut. No P39 phase-enumeration or image-recognition search is run on an unverified candidate: $2d$ is the actually executed suffix length. Later view inverses are guaranteed only on the correctness event and their declared images.
+
+All divisions in these steps are preceded by nonzero tests. Rank, determinant, linear-system, positivity, equality and square tests use exact finite integer/rational algorithms; a failed arithmetic precondition returns rejection. There is no unbounded search for a rational square root, a spectrum, an image point or a later flat block. A branch rejected before steps 5–6 issues none of their commands. A branch rejected after that suffix has performed all of it.
+
+**Proposition 11.2 (totality, exact capped specialization and preserved field).** For every finite promised specimen, every current rational field, and every $n\ge1$, $\mathcal B_n$ either accepts or rejects after finite work. If the actual $N\le n$, it accepts, with $d=N$, the exact native law and actual field, genuine unit preparation and a real P39 passive segment. Its counts in that case are exactly those of Proposition 8.2 with $R=n$.
+
+On every branch, including a rejected one, the next source state is the actual advanced state. If $t$ Ticks and pulses $(s_l,u_l)$ have been executed since that branch's entry field $z$, then
+
+$$
+x_{\rm next}=T^t z+\sum_l u_lT^{t-s_l}e_0.
+\tag{UFS.31}
+$$
+
+The specimen remains at this field and all its emitted values, input words and acknowledgements remain in the retained record. Rejection does not restore $z$, undo a pulse or erase a returned scalar. It need not reveal the coordinates of $x_{\rm next}$.
+
+Proof. Every loop has a bound in $n$ or $d\le n$; all exact tests terminate on rational/integer inputs. Elimination searches a finite set of pivots, and a singular required system rejects before division. The integer square-root tests are finite also when the input is not a rational square. The suffix has predetermined finite length and rational inputs even if $A$ is not the actual law. The actual source remains finite and rational under every such command. These facts prove totality without assuming the trial cap.
+
+If $N\le n$, Proposition 2.2 proves the free recurrence, including zero and noncyclic entry fields. Every added guard in step 1 then succeeds. Theorem 3.1 makes the differences in step 2 the actual impulse moments. P Lemma 37.1 makes the first singular block occur at $d=N$, with all required positive leading blocks. P Proposition 37.3 gives the actual positive rational links, so every root, positivity and moment check succeeds and $A=T$. The observability solve in (UFS.30) is exactly (UFS.12); hence $\widehat x_*$ is the true advanced field. Theorems 4.2 and 5.1 make every preparation comparison true and the actual proposed origin equal to $e_0$. Theorem 6.2 then makes the passive segment and every comparison true. The fresh initial Hold and all pair Holds follow Convention 8.1, yielding the same capped counts. The guards add local calculation, not source commands.
+
+Finally (UFS.31) is (UFS.3), based on the actually executed prefix, whether or not a candidate passed. Read and Hold leave it unchanged. Retaining the same source and its complete command/return record proves the asserted preservation. Neither the rank calculated in step 1, the singularity in step 2, nor finite consistency in step 7 certifies the trial cap on its own. $\square$
+
+## 12. The cap-free finite procedure and its specimenwise probability
+
+**Definition 12.1 (the stagewise startup).** Begin at stage $n=1$. Hold the current source while drawing exactly the bits in Definition 10.2. Execute the gate of Lemma 10.3: Add$(U_n)$, Read, and $2n$ returning Ticks. Hold and evaluate its observed determinant. If it is nonzero, pass to stage $n+1$. If it is zero, run $\mathcal B_n$ from the actual held field $T^{2n}(z+U_n e_0)$ left by that gate. Accept and halt precisely when the branch accepts; after a rejection pass to stage $n+1$ with the actual field and record left by (UFS.31). The determinant is computed directly from its paid samples; its polynomial coefficients and the hidden $T$ are not inputs. The only randomness in this startup is the prescribed finite bit block at each reached stage.
+
+**Theorem 12.2 (termination on every tape by the native-order stage).** Definition 12.1 is one finite program independent of the unknown specimen. On every admitted finite specimen, every $b\ge1$ and every bit tape, it halts at a stage $m\le N$. Every attempted branch and every intervening local computation is finite. No order bound or field-width bound is an input.
+
+Proof. Induct over the stages. The actual field at each entry remains rational by the command semantics and Proposition 11.2. The stage uses a fixed finite bit block, $2n$ Ticks and a finite determinant calculation. A nonzero determinant advances the stage after finite work; a zero determinant invokes a total branch. If no earlier stage accepted, stage $N$ is therefore reached. Lemma 10.3 makes its determinant zero for every amplitude and every entry field. Here the trial hypothesis of $\mathcal B_N$ is true. Proposition 11.2 makes this branch accept with no further randomness. Thus no run enters stage $N+1$. This is a stage bound in terms of the hidden actual order, not a public deadline or a constant bound on rational computation time. $\square$
+
+**Theorem 12.3 (one high-probability correctness event).** For each fixed specimen and $b$, there is an event $E$ of tapes with
+
+$$
+\mathbb P(E)\ge
+1-2^{-b}\bigl(1-2^{-(N-1)}\bigr)\ge1-2^{-b}
+\tag{UFS.32}
+$$
+
+on which every gate at $n<N$ is nonzero, the stopping stage is $N$, and the accepted branch has the exact conclusions of Proposition 11.2. For $N=1$ every tape belongs to $E$.
+
+Proof. Let $Z_n$ be the event that stage $n<N$ is reached and its gate determinant is zero. Conditional on any preceding finite history reaching that stage, the actual field is fixed and the next block is independent and uniform. Lemma 10.3 gives conditional probability at most $\delta_n$. Averaging over these histories gives $\mathbb P(Z_n)\le\delta_n$, including histories in which previous candidate branches were rejected after real controls. Define $E$ to be the complement of $\bigcup_{n=1}^{N-1}Z_n$. The finite union bound gives
+
+$$
+\mathbb P(E^c)\le\sum_{n=1}^{N-1}2^{-b-n}
+=2^{-b}\bigl(1-2^{-(N-1)}\bigr).
+\tag{UFS.33}
+$$
+
+On $E$, stage 1, and successively every stage below $N$, has a nonzero gate and invokes no candidate branch. Stage $N$ is reached; Theorem 12.2 and Proposition 11.2 give its exact acceptance. The empty union at $N=1$ proves the last assertion. The ordinary root bound and union bound are the only probability estimates used; no distribution on specimens, entries or spectral weights is assumed. $\square$
+
+## 13. The joint event includes acquisition, real preparation and continued use
+
+**Theorem 13.1 (complete confidence-qualified unknown-field startup).** On the single event $E$ of Theorem 12.3, the same run has all the following properties simultaneously.
+
+- Its accepted $N,T$, impulse law, native field at the acquisition cut (UFS.30), and final native field are exact. The initial random pulses and every gate Tick are included in the actual entry field of the successful branch, rather than treated as a reset or a second specimen.
+- The branch's $N$ actual Tick/Add pairs prepare exactly $e_0$ at a new recorded origin $o$. The subsequent origin Read and $2N$ actual passive Ticks have the exact ordered values $(m_0,\ldots,m_{2N})$. At the terminal cut the physical field is $T^{2N}e_0$ relative to this new origin.
+- Its retained $T,q,\mu$, native vector $\widehat x$ and predictive vector $a$ satisfy $\widehat x=x_{\rm actual}$ and $a=\mathcal O_Nx_{\rm actual}$. They predict every declared output and native successor for every finite legal adaptive continuation in the original Read/Tick/Hold/signed-Add menu. Scratch forecasts require no new source observation. Real calls retain their original rights, update the actual specimen, and keep this record synchronized.
+- Space, Time, Boundary and Memory have precisely Definition 6.1's independent meanings and satisfy P Definition 39.1 with $k=2N$. Every recovery route and transported passive Tick agrees as in P Propositions 39.3–39.4. The independently retained command/output record does not become an extra field of each view.
+
+These are one joint probability-$\ge1-2^{-b}$ claim, including the universal quantifier over later finite continuations; there is no extra error probability per output or continuation.
+
+Proof. On $E$ the candidate branch is $\mathcal B_N$ with a true cap hypothesis, so Proposition 11.2 supplies its exact actual-cut identity, control execution and passive segment. Its unknown entry field is whatever the preceding random gate operations actually produced. The capped theorem applies to every such rational field, without requiring cyclicity, sign or a size bound. Substituting its earned law and field in Theorem 4.2 proves the invariant for every future field and legal operation. Induction on any common adaptive policy gives all of its outputs and successors, including arbitrary rational Add inputs and common future random choices. This is a deterministic consequence on each tape in $E$, so it does not require a union bound over policies.
+
+Theorem 5.1 justifies the new unit origin by actual source operations. Theorem 6.2 then applies only to the separately paid passive suffix, which has no Add. It supplies the four-view domain, all inverses and route agreement. A later Add preserves the complete predictor but need not preserve that passive domain. Nothing identifies the earlier gate trajectory or the unknown entry history with a passive unit trajectory. $\square$
+
+**Proposition 13.2 (the correctness contract has changed).** Theorems 12.2–13.1 neither contradict nor weaken Theorem 7.3. They give (UFS.25) for specimens fixed before independent bits. They give no exact order assertion from a zero gate or finitely many matching outputs, no all-tape correctness on every specimen, and no recovery of erased pre-entry chronology.
+
+Proof. An early zero gate at $n<N$ is explicitly allowed by Lemma 10.3's finite root set. A consistent rational candidate at such a stage has dimension at most $n<N$; acceptance there exports a wrong native law. The probability argument bounds the event allowing this outcome, rather than certifying each accepted transcript. In particular its order of quantifiers is $\forall$ fixed specimen, probability over independent tapes. A witness chosen after a tape, as in a deterministic indistinguishability argument, cannot be substituted into that probability bound as though it had been fixed in advance. Conversely Theorem 7.3 still rules out a deterministic protocol with exact correctness and termination on all admitted specimens. This construction has removed that correctness requirement and added paid independent randomness; it does not claim a Las Vegas or zero-error solution.
+
+Such silent errors are possible, rather than merely left unclassified. Fix $b$ and one particular stage-1 bit block. On $T_0=(1/2)$ with zero entry field, that block gives a finite accepting stage-1 history by Proposition 11.2. Apply Lemma 7.2 and exactly the input-compensation construction (UFS.20) to this finite history, including the selected random Add as an ordinary prescribed pulse. It gives one larger positive contracting rational path and one rational entry field that reproduce every scalar and acknowledgement through that acceptance. The selected block is then fixed in defining this specimen, before its fresh bits are drawn. With probability $1/M_1>0$ the new run draws that block, replays the same finite calculations and exports the one-cell law on the larger specimen. No later random block is requested. This reuses the old finite-history witness and is consistent with (UFS.32); it does not choose the specimen after the fresh draw.
+
+The actual origin is newly earned, and Proposition 5.2 still supplies distinct older histories with the same entry field. The source, arbitrary signed-field class and missing Reset/clone/coefficient ports are unchanged. The earlier deterministic obstruction, capped counts and all passive/journal domain restrictions therefore retain their exact scopes. $\square$
+
+## 14. Same-run calls, bits, traffic and rejected attempts
+
+**Definition 14.1 (the attained Hold schedule and run quantities).** A gate uses one initial Hold during bit selection, Add$(U_n)$, one Read, $2n$ returning Ticks, and a final Hold during its determinant calculation. A candidate branch uses the fresh initial Hold, the free-prefix Hold and the pair Holds of Definition 11.1. No additional Hold is needed for its bounded checks. Rejecting a prefix leaves the last such Hold in effect. Successive Holds may be redundant but are still issued and charged. Let $m\le N$ be the actual stopping stage, and let $J,A,R,H$ count all actual specimen Ticks, Adds, Reads and Holds through its acceptance. The random source has its own draws and frames.
+
+**Proposition 14.2 (all-tape resource counts).** Every run uses exactly
+
+$$
+K_m=\sum_{n=1}^m k_n
+=mb+\frac{m(m+1)}2+\sum_{n=1}^m\ell_n
+\le mb+\frac{m(m+1)}2+m\lceil\log_2(m+1)\rceil
+\tag{UFS.34}
+$$
+
+fresh fair bits. For each reached stage its gate has exactly $(2n,1,1,2)$ in the coordinate order (Tick, Add, Read, Hold). A branch rejected at any prefix contributes at most $(7n-1,n+1,3,3n+2)$. Consequently all actual runs, including every failed check and preparation, satisfy
+
+| Coordinate | Upper bound through stage $m$ |
+| --- | --- |
+| Ticks $J$ | $9m(m+1)/2-m$ |
+| Adds $A$ | $m(m+1)/2+2m$ |
+| Reads $R$ | $4m$ |
+| Holds $H$ | $3m(m+1)/2+4m$ |
+| Scalar returns $J+R$ | $9m(m+1)/2+3m$ |
+| Fixed acknowledgements $A+H$ | $2m(m+1)+6m$ |
+| Specimen calls and return frames $J+A+R+H$ | $13m(m+1)/2+9m$ |
+
+The exact counts on any run are obtained by adding the displayed gate counts and the actual executed prefixes of its candidate branches. Each Add transmits its actual rational input, including the random integer and every zero or signed preparation pulse. The random generator contributes its $K_m$ bit returns, draws and actual framing in addition to this table.
+
+Proof. No randomness is used inside a candidate branch, so (UFS.34) is exact. A complete candidate of dimension $d\le n$ uses $2n-1+5d$ Ticks, $d+1$ Adds, three Reads and $3d+2$ Holds, by the actual command list and Proposition 8.2. A rejected prefix cannot exceed these bounds with $d$ replaced by $n$; a failed first-flat-block search still stops after $2n$ post-pulse Ticks. Adding the gate gives per-stage upper bounds $9n-1,n+2,4,3n+4$. Sum them over $1\le n\le m$. Every Tick and Read emits one scalar, every Add and Hold one acknowledgement, and every command has one return frame, giving the last three rows. $\square$
+
+**Proposition 14.3 (exact traffic on the stated success event).** On $E$, all stages $n<N$ consist only of their gates; stage $N$ has its gate and the complete true capped branch with $R=N$. The exact totals are
+
+$$
+\begin{aligned}
+J&=N^2+8N-1,& A&=2N+1,\\
+R&=N+3,& H&=5N+2,\\
+J+R&=N^2+9N+2,& A+H&=7N+3,\\
+J+A+R+H&=N^2+16N+5,& K&=K_N.
+\end{aligned}
+\tag{UFS.35}
+$$
+
+Proof. The gates contribute $2\sum_{n=1}^N n=N(N+1)$ Ticks, $N$ Adds, $N$ Reads and $2N$ Holds. The successful candidate contributes $7N-1$ Ticks, $N+1$ Adds, three Reads and $3N+2$ Holds, exactly Proposition 8.2 at $R=N$. Sum these actual disjoint portions. These are new procedure counts, not replacements for any count in §§3–8 or P §§37–41 and 57. $\square$
+
+**Proposition 14.4 (source work and literal widths).** With P Proposition 41.2's direct simultaneous-buffer source update, the very same run performs $J(3N-2)$ source rational multiplications and $J(2N-2)+A$ source rational additions. Every scalar, Add input, random-bit return, command, acknowledgement and final export has its literal encoding and framing cost. A fixed acknowledgement is not a rational scalar. Neither a failed candidate nor a merely predicted scalar removes any actual source work or emitted item.
+
+Proof. Each real Tick uses the original $N$-cell source, regardless of a candidate's smaller dimension. Every actual Add performs one real root addition. Read, Hold and serialization contribute their own actual work. The counts thus follow from the original service and the attained totals, with no substitution of the candidate size for the physical $N$. $\square$
+
+## 15. Finite widths and material on every tape
+
+**Definition 15.1 (widths and separately supplied material).** Let $B$ and $X$ be the total binary lengths of the true coefficient words and original entry-field words as in Proposition 8.3. They are proof parameters, not controller inputs. For a completed run $\rho$, let $W_\rho\ge1$ be the maximum actual integer/rational width in its source buffers, inputs, replies, candidate computations and predictor, including intermediate numerators/denominators and integer square tests. Use reduced rationals as in Convention 8.1. Let $L_{\rm io}$ count the actual bits written/read in all numerical traffic, framing, retained command/return records and exports, including separately materialized copies. Let $G_{\rm work},G_{\rm live}$ be the actual randomness provider's work and coexisting retained material, and let $I_{\rm access}$ denote the actual source/random references, program, rights, assurances and control/storage backing, with numerical representation sizes and nonnumerical backing distinguished.
+
+**Proposition 15.2 (finite rational work, including false branches).** There is an attained choice of the finite exact algorithms in Definition 11.1 with observer arithmetic/comparison work $O(m^5)$, and $O(m^2)$ integer square-root tests, on every run stopping at stage $m$. These counts include the detector determinants, failed elimination or positivity tests, false extrapolations, rejected link roots, candidate decoding, preparation, passive checking and retained predictor installation. There are absolute constants $c,C$ for this choice such that every tape on a fixed specimen satisfies
+
+$$
+\begin{aligned}
+H_0&=B+X+b+N+\lceil\log_2(N+2)\rceil+10,\\
+W_\rho&\le C\,8^{\,c(N+1)^5}H_0.
+\end{aligned}
+\tag{UFS.36}
+$$
+
+In terms of actual attained widths, one sufficient bit-work bound, including the direct source arithmetic, is
+
+$$
+O\!\left(\left[m^5+(5N-4)J+A\right]W_\rho^3
+       +K_m+L_{\rm io}\right)+G_{\rm work},
+\tag{UFS.37}
+$$
+
+with actual installation/control/backing work added. This is a finite sufficient bound, without a claim of arithmetic optimality or a polynomial width bound for false candidates.
+
+Proof. Reduced rational Gaussian elimination with finite pivot search costs $O(n^3)$ field operations per matrix of size at most $n+1$. Computing the at most $n$ successive blocks and all their finite leading-minor tests costs $O(n^4)$ if previously needed minors are reused. Alternatively, computing each matrix's positive-definiteness criterion by one symmetric elimination, rejecting zero or negative pivots, gives the same bound. Monic solves, moment pairings, native decoding and observability/control construction fit $O(n^4)$ as in Proposition 8.3, with all guards included. Determinants or the characteristic polynomial can be computed by elimination or the tridiagonal continuant; permutation enumeration is unnecessary. Generating and checking at most $4n$ free values takes $O(n^2)$ field operations. Each of the at most $n-1$ candidate links needs two finite integer-root tests. Propagating its bounded preparation/passive suffix and its predictor also fits the same arithmetic bound. A failed prefix costs at most the complete bounded calculation. Summing $O(n^4)$ and $O(n)$ over $n\le m$ gives the asserted bounds.
+
+For finiteness of widths on exceptional tapes, the smaller true-cap width estimate (UFS.23) is not used. In particular a false extrapolated value need not have a true-response denominator. Instead use the elementary height estimate for exact rational operations. If the existing operand widths are at most $h\ge1$, addition, subtraction, multiplication, division by a tested nonzero value, gcd/lcm and their unreduced cross-products have widths at most $4h+4$. Reduction does not increase widths. Integer floor-root extraction and squaring checks use widths bounded by a constant multiple of their input widths. These estimates also cover rejected tests and the actual source's additions and multiplications.
+
+The original source words have widths at most $B+X$. Each new random integer has width at most $k_N+1\le b+N+\lceil\log_2(N+1)\rceil+1$. Apart from bit copying/counters, all later rational words are obtained from those words and fixed small constants by the stated operations. The observer uses $O(N^5)$ such operations because $m\le N$. The source uses $O(NJ+A)=O(N^3)$ of them by Proposition 14.2. Increasing an absolute constant $c$ absorbs fixed factors and root-test intermediate widths into at most $c(N+1)^5$ height-growth steps, each bounded by multiplication by $8$. This proves (UFS.36). It allows bad candidate pulses to increase all later source widths; none has been omitted or bounded using a fictitious rollback.
+
+School integer multiplication/division at width $O(W_\rho)$ takes $O(W_\rho^2)$ bit steps. Euclidean reduction and binary-search integer square roots each admit the safe $O(W_\rho^3)$ bound. The preceding arithmetic counts, Proposition 14.4's source work, $K_m$ bit assembly, and actual I/O therefore give (UFS.37). The generosity of (UFS.36) makes no assumption that these widths are public or actually attained. It is a proof envelope; (UFS.37) charges actual widths. $\square$
+
+**Proposition 15.3 (one coexisting layout).** A single attained layout can keep all the following on every tape. Numerical words have their actual widths bounded by $W_\rho$; an archive's framing and any separate copy are additional material.
+
+| Coexisting component | Sufficient charge |
+| --- | --- |
+| Actual specimen | $N$ cells, $N-1$ links, true $B$-bit coefficients, and two state buffers of $O(NW_\rho)$ bits. |
+| Complete actual startup record | Every command, transmitted pulse, scalar return and acknowledgement, including rejected attempts: $O(m^2W_\rho)$ numerical bits plus actual framing/indexing. No failed branch is erased from this record. |
+| Randomness material | The $K_m$ consumed bits if retained, the current amplitude/cursor, actual $G_{\rm live}$, randomness access/independence assurance and backing. A separate retained bit copy is charged separately. |
+| Detector and candidate arrays | A constant number of at most $(m+1)$-row rational arrays, including elimination/pivot scratch, free/impulse windows, observability/control matrices: $O(m^2W_\rho)$ bits. |
+| Law, predictor and preparation | Candidate/native coefficients, $q,\mu,F$, a constant number of native/predictive vectors, the computed pulse list and progress: $O(m^2W_\rho)$ bits suffices concurrently with the arrays. |
+| Four exported views | Their actual separate encodings. At acceptance their prescribed numerical data take $O(mW_\rho)$ bits; Time has $2d+1$ actual entries. Extra export, delivery or future Time-list copies are added. |
+| Program, counters and access | The actual finite program, $b$ and expanding stage/call counters, serialization buffers, root/source reference, Read/Tick/Hold/signed-Add rights, exclusive control, class/fixedness assurance and all storage/control backing. |
+
+Thus one simultaneous numerical-store allowance is
+
+$$
+O\!\left(B+(N+m^2)W_\rho+K_m+\log_2(b+1)\right),
+\tag{UFS.38}
+$$
+
+plus actual framing, generator/program/access representations, additional output/archive copies and their backing. The generator and source work in (UFS.37) belongs to this same run and layout. Shared material is counted once only if actually shared.
+
+Proof. Retain the full actual record, while reusing only the local arithmetic arrays after a rejection. Their maximum dimension is $m+1$, and every candidate has $d\le m$. The listed constant number of arrays and vectors supports the bounded algorithms of Proposition 15.2; no array indexed by an unbounded unknown order or by all candidate histories is allocated. The two source buffers coexist with them and use the physical $N$, not a false candidate's $d$. The bit store, current random amplitude, accepted predictor and its actual passive segment also coexist. Adding these numerical stores gives (UFS.38), with all extra copies and supplied material explicitly added. No numeric state or source reference creates the missing call or random-generation rights. $\square$
+
+**Proposition 15.4 (the confidence parameter does not bound literal memory).** Fixed $b$ and $N$ give no bound on required startup widths independent of $B,X$, and no bound on all later literal output widths or retained Time material.
+
+Proof. Already for $N=1$, $T=(1/2)$ and entry $x^{\rm in}=M\in\mathbb Z$, the first gate Read is $M+U_1$. The finite random amplitude range for fixed $b$ cannot bound its width as $M$ varies. After successful preparation, the passive outputs $2^{-k}$ have denominator width $k+1$. These are the same exact serialization and growing-record boundaries as Proposition 8.5 and P Proposition 41.5. Neither high confidence nor finite program/order changes them. $\square$
+
+## 16. Supplier correspondence and the exact remaining boundaries
+
+**Definition 16.1 (mathematical source correspondence).** The repository suppliers in this correspondence are interpreted at the public revision `f47bca550530488dc21a7a4443c14166932452e3`, with the following hypothesis correspondence.
+
+| Supplier | Exact supplied content and subtraction |
+| --- | --- |
+| This volume, §§1–6 and 8 | The rational unknown-field service, signed visible-rank argument, capped free-response certificate, impulse subtraction, native decode, true advanced-cut predictor, executed controllability solve, earned unit origin and paid P39 entry are reused. The branch's correctness under a true trial cap is exactly these results. Their old counts are unchanged. |
+| This volume, §7 | The uncapped deterministic exact obstruction includes arbitrary finite adaptive signed Adds and returning Ticks on the same positive contracting path class. It is retained with its exact all-source deterministic contract. It does not supply a fixed-specimen randomized obstruction. |
+| [P §§36–41][P] | The same native positive-link Jacobi matrix gives cyclic root columns and positive impulse Gram blocks. Native reconstruction, observability, all-field predictive updates, the original passive four-view domain and source arithmetic are supplied. Unknown entry fields and random gates do not inherit the authentic-origin premise until actual preparation has earned it. |
+| [P §§52–58][P] | The no-retained-length integer-pulse inverse starts from the authentically prepared and already acquired source with its earned law and origin. It supplies neither the unknown-field randomized gate nor hidden-order advice. Its integer-word, origin, diagnostic-advance, journal and resource boundaries remain exact; no such history inverse is applied to this startup's arbitrary rational preparation journal. |
+| [FiniteAtomicHankelVandermonde][HVD] and its [Scribe][HVDs] | `hankel_moment_matrix_factorization` supplies finite signed atomic factorization, not early signed-block positivity or an upper order certificate. Lemma 10.3's positive leading coefficient is supplied instead by the actual impulse Gram matrix and native triangularity. |
+| [FiniteHoKalmanBlocks][HK] and its [Scribe][HKs] | `sample_factorizations` and `finite_samples_exact_recovery` retain their explicit reference-order hypothesis; `finite_samples_order_lower_bound` is a lower bound only. The new trial procedure does not turn either into a finite-data hidden-order certificate. |
+| [CoefficientDrivenJacobiCharacteristicPolynomial][JAC] and its [Scribe][JACs] | The original native decode uses its coefficient multiplication, Gram--Schmidt and characteristic-polynomial results, including private `orthogonal_power_basis_monic`, `orthogonal_power_basis_upper_zero`, `squared_norm_pos` and Jacobi-entry/tridiagonal helpers. These are covered suppliers, not new lemmas here. |
+| [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs) | Use state $\mathbb R^N$, output $\mathbb R$, update $T$, readout $e_0^{\mathsf T}$ and horizon $N$. P's native Krylov triangularity supplies the nonsingular observation map; the paid branch prefix supplies its actual right-hand side. |
+| [Teschl, §2.5][Teschl], equations (2.109)–(2.118), printed pp. 42–43, with the finite-support paragraph on p. 44 | These own moment orthogonalization and positive Jacobi reconstruction. Here $C(N+1)=\det H_N=0$ is justified for extracted true impulse moments at a true cap. Theorem 2.13's nonfinite-support hypothesis is not imposed on a finite specimen, and its inverse theory does not certify an early signed gate. |
+| [Pinned mathlib, polynomial roots](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Polynomial/Roots.lean) | `Polynomial.card_roots'`, `Polynomial.card_le_degree_of_subset_roots` and `Polynomial.mem_roots` give the mature univariate root-count step for the nonzero rational polynomial $D_{n,z}$. The conditional sampling and summable error allocation use ordinary finite probability and the union bound. None of these general algebraic/probability facts is asserted as a new theorem. |
+
+The additional source-relative content is the actual-field determinant gate with a positive impulse leading coefficient, its independent summable confidence allocation, the total guarded capped branch on false hypotheses, and their combination into every-tape termination by stage $N$ with one joint correctness event and the same-run accounts above. This is a construction for this declared service and changed correctness contract, not an assertion of worldwide priority for randomized rank tests, inverse Jacobi theory or finite linear control.
+
+**Definition 16.2 (scope of the new result).** The continuing limitations are part of the stated domain. Exact rational serialization, installed class/fixedness/root assurance, arbitrary signed input rights, effective Hold, successful serial calls, retained backing and independent fair bits are premises; physical authenticity is not acquired by the probability calculation. The result gives no noisy or finite-resolution instrument, zero-error uncapped identification, all-source correctness on one tape, bounded-energy lower bound, optimal horizon, minimum total resource claim, recovery of erased chronology, or all-controlled-history four-view equivalence. The passive P39 statement applies after the actual new unit origin and its actual paid suffix, while complete prediction has the larger original action domain.
+
+No correspondence with native $\alpha/\beta$ constructors, universal generator pair, original fixed-$G_{\rm gc}$/original-$Q$ apparatus, parked consumer, or arbitrary graph/physical geometry is supplied. Such a correspondence still requires its own common-source initialization, operation/output transport, acquisition and retained-right/resource bridge. This bounded stochastic startup theorem leaves those original obligations and the full four-expression programme in their original scopes.
+
+## 追加锚（本行以下为增补区）
