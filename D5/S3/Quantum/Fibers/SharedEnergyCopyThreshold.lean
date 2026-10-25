@@ -859,6 +859,8 @@ theorem star_indecomposable (m : ℕ) (hm : 2 ≤ m) :
     simp [monomial, starExponent, starMonomial, Fin.prod_univ_succ, mul_comm]
 
 
+set_option backward.isDefEq.respectTransparency false
+
 /-- The actual diagonal unitary representation of the circle in the fixed basis. -/
 def energyRepresentation (m : ℕ) : Circle →* Matrix.unitaryGroup (Fin 3) ℂ where
   toFun z := ⟨Matrix.diagonal (fun i => (z : ℂ) ^ energy m i), by
@@ -867,7 +869,8 @@ def energyRepresentation (m : ℕ) : Circle →* Matrix.unitaryGroup (Fin 3) ℂ
       Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
     funext i
-    rw [← map_zpow, ← mul_zpow, unit_phase, one_zpow]⟩
+    change (z : ℂ) ^ energy m i * star ((z : ℂ) ^ energy m i) = 1
+    rw [star_zpow₀, ← mul_zpow, unit_phase, one_zpow]⟩
   map_one' := by
     apply Subtype.ext
     simp
@@ -883,7 +886,7 @@ private theorem energy_representation_continuous (m : ℕ) :
     Continuous (energyRepresentation m) := by
   apply Continuous.subtype_mk
   apply Continuous.matrix_diagonal
-  exact continuous_pi fun i => (continuous_subtype_val.zpow (energy m i))
+  exact continuous_pi fun i => continuous_subtype_val.comp (continuous_id.zpow (energy m i))
 
 private def energyLift (m : ℕ) (z : Circle) : energyGroup m :=
   ⟨energyRepresentation m z, ⟨z, rfl⟩⟩
@@ -926,7 +929,7 @@ private theorem copies_matrix (r : DensityState (Fin 3)) : ∀ n,
 private theorem tensor_representation (m : ℕ) (z : Circle) : ∀ n,
     matrixCopies (energyRepresentation m z).val n =
       Matrix.diagonal (fun I => (z : ℂ) ^ totalEnergy m n I)
-  | 0 => by ext I J; simp [matrixCopies, totalEnergy, Matrix.diagonal]
+  | 0 => by ext I J; simp [matrixCopies, totalEnergy, Matrix.diagonal, Matrix.one_apply]
   | 1 => rfl
   | n+2 => by
     rw [matrixCopies, tensor_representation]
@@ -944,6 +947,7 @@ private theorem tensor_time_exponential (m n : ℕ) (t : ℝ) :
     Matrix.exp_diagonal]
   congr 1
   funext I
+  rw [Pi.coe_exp]
   change NormedSpace.exp (-Complex.I * (t : ℂ) * (totalEnergy m n I : ℂ)) = _
   rw [← Circle.coe_zpow, ← Circle.exp_intCast_mul, Circle.coe_exp,
     Complex.exp_eq_exp_ℂ]
@@ -971,15 +975,137 @@ theorem energy_group_realization (m : ℕ) :
     · rintro ⟨U, rfl⟩
       obtain ⟨z, rfl⟩ := energy_lift_surjective m U
       refine ⟨-Complex.arg (z : ℂ), ?_⟩
-      simpa only [neg_neg, matrixCopies, Circle.exp_arg] using
+      simpa only [neg_neg, matrixCopies, Circle.exp_arg, energyLift] using
         tensor_time_exponential m 1 (-Complex.arg (z : ℂ))
   refine ⟨?_, ?_⟩
-  · rw [htime, (isCompact_range
-      (continuous_subtype_val.comp continuous_subtype_val)).isClosed.closure_eq]
+  · rw [htime]
+    exact (isCompact_range (continuous_subtype_val.comp continuous_subtype_val :
+      Continuous (fun U : energyGroup m => (U.val : Matrix (Fin 3) (Fin 3) ℂ)))).isClosed.closure_eq.symm
   · intro n t
     rw [tensor_time_exponential m 1 t]
     exact (tensor_time_exponential m n t).symm
 
+
+private theorem matrix_copies_conjugate (U X : Matrix (Fin 3) (Fin 3) ℂ) : ∀ n,
+    matrixCopies (U * X * Uᴴ) n =
+      matrixCopies U n * matrixCopies X n * (matrixCopies U n)ᴴ
+  | 0 => by simp [matrixCopies]
+  | 1 => rfl
+  | n+2 => by
+    simp only [matrixCopies, matrix_copies_conjugate U X (n+1),
+      Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+
+private theorem orbit_tensor_entry (m n : ℕ) (z : Circle)
+    (X : Matrix (Fin 3) (Fin 3) ℂ) (I J : CopyIndex (Fin 3) n) :
+    matrixCopies ((energyRepresentation m z).val * X * (energyRepresentation m z).valᴴ) n I J =
+      (z : ℂ)^(totalEnergy m n I - totalEnergy m n J) * matrixCopies X n I J := by
+  rw [matrix_copies_conjugate, tensor_representation,
+    Matrix.diagonal_conjTranspose, Matrix.diagonal_mul, Matrix.mul_diagonal]
+  have hs : star ((z : ℂ)^totalEnergy m n J) = ((z : ℂ)^totalEnergy m n J)⁻¹ := by
+    rw [← Circle.coe_zpow, ← Circle.coe_inv, Circle.coe_inv_eq_conj]
+    rfl
+  change (z : ℂ)^totalEnergy m n I * matrixCopies X n I J *
+    star ((z : ℂ)^totalEnergy m n J) = _
+  rw [hs, zpow_sub₀ (Circle.coe_ne_zero z), div_eq_mul_inv]
+  ring
+
+private theorem energy_lift_mul (m : ℕ) (z w : Circle) :
+    energyLift m (z*w) = energyLift m z * energyLift m w := by
+  apply Subtype.ext
+  exact (energyRepresentation m).map_mul z w
+
+/-- The actual Haar average of tensor copies of a single conjugated input.
+One and the same matrix-group element occurs in every tensor factor. The
+finite-dimensional integral is written in its matrix coordinates. -/
+def sharedMoment (m n : ℕ) (r : DensityState (Fin 3)) :
+    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ := fun I J =>
+  ∫ U : energyGroup m,
+    matrixCopies ((U.val : Matrix (Fin 3) (Fin 3) ℂ) * stateMatrix r *
+      (U.val : Matrix (Fin 3) (Fin 3) ℂ)ᴴ) n I J ∂energyHaar m
+
+private theorem shared_moment_entry (m n : ℕ) (r : DensityState (Fin 3))
+    (I J : CopyIndex (Fin 3) n) :
+    sharedMoment m n r I J = if totalEnergy m n I = totalEnergy m n J then
+      stateMatrix (copies r n) I J else 0 := by
+  classical
+  by_cases h : totalEnergy m n I = totalEnergy m n J
+  · rw [if_pos h]
+    have hf : (fun U : energyGroup m =>
+        matrixCopies ((U.val : Matrix (Fin 3) (Fin 3) ℂ) * stateMatrix r *
+          (U.val : Matrix (Fin 3) (Fin 3) ℂ)ᴴ) n I J) =
+        fun _ => stateMatrix (copies r n) I J := by
+      funext U
+      obtain ⟨z, rfl⟩ := energy_lift_surjective m U
+      change matrixCopies ((energyRepresentation m z).val * stateMatrix r *
+        (energyRepresentation m z).valᴴ) n I J = _
+      rw [orbit_tensor_entry, h, sub_self, zpow_zero, one_mul, copies_matrix]
+    simp [sharedMoment, hf]
+  · rw [if_neg h]
+    let k := totalEnergy m n I - totalEnergy m n J
+    have hk : k ≠ 0 := sub_ne_zero.mpr h
+    let v : Circle := Circle.exp (Real.pi / (k : ℝ))
+    have hv : (v : ℂ)^k = -1 := by
+      rw [show v = Circle.exp (Real.pi / (k : ℝ)) from rfl,
+        ← Circle.coe_zpow, ← Circle.exp_intCast_mul]
+      have hk' : (k : ℝ) ≠ 0 := by exact_mod_cast hk
+      rw [mul_div_cancel₀ _ hk', Circle.coe_exp, Complex.exp_pi_mul_I]
+    change (∫ U : energyGroup m, _ ∂energyHaar m) = 0
+    apply MeasureTheory.integral_eq_zero_of_mul_left_eq_neg
+      (g := energyLift m v)
+    intro U
+    obtain ⟨z, rfl⟩ := energy_lift_surjective m U
+    rw [← energy_lift_mul]
+    change matrixCopies ((energyRepresentation m (v*z)).val * stateMatrix r *
+      (energyRepresentation m (v*z)).valᴴ) n I J =
+        -matrixCopies ((energyRepresentation m z).val * stateMatrix r *
+          (energyRepresentation m z).valᴴ) n I J
+    rw [orbit_tensor_entry, orbit_tensor_entry, Circle.coe_mul, mul_zpow]
+    change ((v : ℂ)^k * (z : ℂ)^k) * _ = -((z : ℂ)^k * _)
+    rw [hv]
+    ring
+
+/-- Haar averaging over the actual compact matrix group is exactly complete
+TOTAL-energy pinching, including all degenerate-block cross entries. -/
+theorem shared_haar_pinching (m n : ℕ) (r : DensityState (Fin 3)) :
+    sharedMoment m n r = pinchedCopies m n r := by
+  ext I J
+  rw [shared_moment_entry, pinched_apply]
+
+/-- The actual compact matrix orbit of a native density state. -/
+def SameEnergyOrbit (m : ℕ) (r s : DensityState (Fin 3)) : Prop :=
+  ∃ U : energyGroup m, stateMatrix s =
+    (U.val : Matrix (Fin 3) (Fin 3) ℂ) * stateMatrix r *
+      (U.val : Matrix (Fin 3) (Fin 3) ℂ)ᴴ
+
+private theorem orbit_pinching_equal (m n : ℕ) (r s : DensityState (Fin 3))
+    (h : SameEnergyOrbit m r s) : pinchedCopies m n r = pinchedCopies m n s := by
+  obtain ⟨U, hU⟩ := h
+  obtain ⟨z, rfl⟩ := energy_lift_surjective m U
+  ext I J
+  simp only [pinched_apply]
+  split_ifs with he
+  · rw [← copies_matrix, ← copies_matrix, hU]
+    change matrixCopies (stateMatrix r) n I J =
+      matrixCopies ((energyRepresentation m z).val * stateMatrix r *
+        (energyRepresentation m z).valᴴ) n I J
+    rw [orbit_tensor_entry, he, sub_self, zpow_zero, one_mul]
+  · rfl
+
+/-- The sparse positive states lie on distinct actual compact orbits. Their
+actual shared Haar moments agree below the claimed order and differ at it. -/
+theorem sparse_compact_separation (m : ℕ) (hm : 2 ≤ m) :
+    ¬ SameEnergyOrbit m rho (sigma m) ∧
+    (∀ n : ℕ, n < 2*m-1 → sharedMoment m n rho = sharedMoment m n (sigma m)) ∧
+    sharedMoment m (copyOrder m) rho ≠ sharedMoment m (copyOrder m) (sigma m) := by
+  have hd := (sparse_joint_effect m hm).2.2.2.2.2.2.2.2.1
+  refine ⟨fun h => hd (orbit_pinching_equal m (copyOrder m) rho (sigma m) h), ?_, ?_⟩
+  · intro n hn
+    rw [shared_haar_pinching, shared_haar_pinching]
+    exact sparse_low_pinching m n hm hn
+  · simpa only [shared_haar_pinching] using hd
+
+#print axioms shared_haar_pinching
+#print axioms sparse_compact_separation
 #print axioms energy_group_realization
 #print axioms exponent_tensor_bridge
 #print axioms star_indecomposable
