@@ -115,7 +115,7 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "copy count plus and minus one twelfth to that count. Both real probabilities lie between zero and one, "
                     + "and their gap is positive. The complete total-energy pinchings differ at this copy count."),
             Paragraph(Text("The Haar-average identity, the upper bound on every labelled indecomposable zero-weight exponent, "
-                + "and the equivalence with all compatible complex effects and the actual compact orbits are further requirements "
+                + "and the equivalence with the actual compact orbits are further requirements "
                 + "for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive "
                 + "protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.")))));
 
