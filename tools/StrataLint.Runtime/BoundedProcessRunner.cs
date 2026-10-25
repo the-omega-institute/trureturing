@@ -26,8 +26,10 @@ internal static class BoundedProcessRunner
         CancellationToken cancellationToken = default,
         Action<Process>? interruptBeforeKill = null)
     {
-        var result = RunStreaming(fileName, arguments, workingDirectory, timeout, maximumOutputBytes,
-            (stream, cancellation) => ReadLimitedAsync(stream, maximumOutputBytes, cancellation, standardOutput),
+        var observations = new CompletionObservations();
+        var result = RunStreaming(observations, fileName, arguments, workingDirectory, timeout, maximumOutputBytes,
+            (stream, cancellation) => ReadLimitedAsync(stream, maximumOutputBytes, cancellation, standardOutput,
+                observations, "stdout"),
             standardInput, environment, standardError, cancellationToken, interruptBeforeKill);
         return new ProcessOutput(result.ExitCode, result.StandardOutput, result.StandardError);
     }
@@ -44,6 +46,23 @@ internal static class BoundedProcessRunner
         Stream? standardError = null,
         CancellationToken cancellationToken = default,
         Action<Process>? interruptBeforeKill = null)
+        => RunStreaming(new CompletionObservations(), fileName, arguments, workingDirectory, timeout,
+            maximumErrorBytes, readStandardOutput, standardInput, environment, standardError,
+            cancellationToken, interruptBeforeKill);
+
+    private static StreamedProcessOutput<T> RunStreaming<T>(
+        CompletionObservations observations,
+        string fileName,
+        IEnumerable<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout,
+        int maximumErrorBytes,
+        Func<Stream, CancellationToken, Task<T>> readStandardOutput,
+        ReadOnlyMemory<byte> standardInput,
+        IReadOnlyDictionary<string, string>? environment,
+        Stream? standardError,
+        CancellationToken cancellationToken,
+        Action<Process>? interruptBeforeKill)
     {
         cancellationToken.ThrowIfCancellationRequested();
         var startInfo = new ProcessStartInfo
@@ -77,44 +96,59 @@ internal static class BoundedProcessRunner
 
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         cancellation.CancelAfter(timeout);
+        observations.Cancellation = cancellation.Token;
+        using var cancellationObservation = cancellation.Token.Register(
+            () => observations.Record("cancellation.callback", "invoked"));
         using var drain = new CancellationTokenSource();
         var ioCancellation = interruptBeforeKill is null ? cancellation.Token : drain.Token;
         Task? stdout = null;
         Task? stderr = null;
         Task? stdin = null;
+        Task? exitWait = null;
+        var operation = "stdout.start";
         Exception? interruptionFailure = null;
         try
         {
             var output = readStandardOutput(
                 process.StandardOutput.BaseStream,
                 ioCancellation);
-            stdout = output;
+            stdout = observations.ObserveCompletion(output, "stdout.complete");
+            operation = "stderr.start";
             var errors = ReadLimitedAsync(
                 process.StandardError.BaseStream,
                 maximumErrorBytes,
-                ioCancellation, standardError);
-            stderr = errors;
+                ioCancellation, standardError, observations, "stderr");
+            stderr = observations.ObserveCompletion(errors, "stderr.complete");
+            operation = "stdin.start";
             stdin = standardInput.IsEmpty
                 ? Task.CompletedTask
                 : WriteInputAsync(
                     process.StandardInput.BaseStream,
                     standardInput,
-                    ioCancellation);
+                    ioCancellation, observations);
+            if (standardInput.IsEmpty) observations.Record("stdin", "not-redirected");
+            operation = "exit-wait.start";
+            exitWait = process.WaitForExitAsync(cancellation.Token);
             // A failed reader no longer drains its pipe. Observe its failure
             // while the child is running, before a blocked writer can turn an
             // output/parse error into a misleading process timeout.
             var pending = new List<Task>
             {
-                stdout, stderr, process.WaitForExitAsync(cancellation.Token),
+                stdout, stderr, observations.ObserveCompletion(exitWait, "exit-wait.complete"),
             };
             while (pending.Count != 0)
             {
+                operation = "completion-arbitration";
                 var completed = Task.WhenAny(pending).WaitAsync(cancellation.Token).GetAwaiter().GetResult();
+                operation = completed == stdout ? "stdout.result"
+                    : completed == stderr ? "stderr.result" : "exit-wait.result";
+                observations.ObserveExit(process, "has-exited.at-completion");
                 completed.GetAwaiter().GetResult();
                 pending.Remove(completed);
             }
             try
             {
+                operation = "stdin.result";
                 stdin.GetAwaiter().GetResult();
             }
             catch (IOException) when (process.HasExited)
@@ -128,11 +162,14 @@ internal static class BoundedProcessRunner
         }
         catch (OperationCanceledException exception)
         {
+            // Freeze the evidence before interruption, kill and joining can change it.
+            var completion = observations.Snapshot(process, stdout, stderr, stdin, exitWait,
+                operation, exception, cancellationToken, ioCancellation);
             InterruptAndKill();
             if (cancellationToken.IsCancellationRequested) throw;
             var settlement = interruptionFailure is null ? string.Empty
                 : $"; native settlement unresolved: {interruptionFailure.Message}";
-            throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds{settlement}", exception);
+            throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds{settlement}; {completion}", exception);
         }
         catch
         {
@@ -166,16 +203,35 @@ internal static class BoundedProcessRunner
     private static async Task WriteInputAsync(
         Stream stream,
         ReadOnlyMemory<byte> bytes,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        CompletionObservations observations)
     {
+        var operation = "stdin.write";
         try
         {
             await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+            observations.Record(operation, $"completed(bytes={bytes.Length})");
+            operation = "stdin.flush";
             await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+            observations.Record(operation, "completed");
+        }
+        catch (Exception exception)
+        {
+            observations.Record(operation, $"threw({exception.GetType().FullName})");
+            throw;
         }
         finally
         {
-            stream.Close();
+            try
+            {
+                stream.Close();
+                observations.Record("stdin.close", "completed");
+            }
+            catch (Exception exception)
+            {
+                observations.Record("stdin.close", $"threw({exception.GetType().FullName})");
+                throw;
+            }
         }
     }
 
@@ -183,14 +239,23 @@ internal static class BoundedProcessRunner
         Stream stream,
         int maximumBytes,
         CancellationToken cancellationToken,
-        Stream? destination = null)
+        Stream? destination,
+        CompletionObservations observations,
+        string channel)
     {
+        observations.Record($"{channel}.bytes", "0");
         using var memory = new MemoryStream();
         var buffer = new byte[8192];
         while (true)
         {
             var count = await stream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
-            if (count == 0) return memory.ToArray();
+            if (count == 0)
+            {
+                observations.Record($"{channel}.eof", "observed");
+                return memory.ToArray();
+            }
+            observations.Record($"{channel}.bytes", (memory.Length + count).ToString(
+                System.Globalization.CultureInfo.InvariantCulture));
             if (memory.Length + count > maximumBytes)
             {
                 throw new InvalidOperationException($"process output exceeded {maximumBytes} bytes");
@@ -203,6 +268,86 @@ internal static class BoundedProcessRunner
                 await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
             }
         }
+    }
+
+    // Entries order observations, not the underlying OS events. A false cancellation
+    // sample proves the recorded milestone preceded the request; true cannot date it.
+    // Custom stdout readers expose completion only, so their byte count/EOF stay unknown.
+    internal sealed class CompletionObservations
+    {
+        private readonly object gate = new();
+        private readonly Dictionary<string, string> entries = new(StringComparer.Ordinal);
+        private int sequence;
+        internal CancellationToken Cancellation { private get; set; }
+
+        internal void Record(string name, string value)
+        {
+            lock (gate)
+            {
+                var canceled = Cancellation.IsCancellationRequested;
+                var entry = $"{value}#{++sequence}(cancel-requested={canceled.ToString().ToLowerInvariant()})";
+                entries[name] = entry;
+                // Keep a useful pre-request lower bound even if a later read/probe wins the snapshot.
+                if (!canceled) entries[$"{name}.before-cancel"] = entry;
+            }
+        }
+
+        internal async Task ObserveCompletion(Task task, string name)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+                Record(name, "completed");
+            }
+            catch (Exception exception)
+            {
+                Record(name, $"threw({exception.GetType().FullName})");
+                throw;
+            }
+        }
+
+        internal void ObserveExit(Process process, string name)
+        {
+            lock (gate)
+            {
+                var before = Cancellation.IsCancellationRequested;
+                string value;
+                try { value = process.HasExited.ToString().ToLowerInvariant(); }
+                catch (Exception exception)
+                {
+                    value = $"unknown(threw {exception.GetType().FullName}: {exception.Message})";
+                }
+                // Both samples must be false to locate this probe before cancellation.
+                Record(name, $"{value}(cancel-before={before.ToString().ToLowerInvariant()})");
+            }
+        }
+
+        internal string Snapshot(Process process, Task? stdout, Task? stderr, Task? stdin, Task? exitWait,
+            string operation, OperationCanceledException exception, CancellationToken caller,
+            CancellationToken ioCancellation)
+        {
+            lock (gate)
+            {
+                ObserveExit(process, "has-exited.before-cleanup");
+                var origin = !exception.CancellationToken.CanBeCanceled ? "none"
+                    : exception.CancellationToken == Cancellation ? "shared-linked"
+                    : exception.CancellationToken == ioCancellation ? "io"
+                    : exception.CancellationToken == caller ? "caller" : "other-or-none";
+                var stages = new[] { "stdin", "stdin.write", "stdin.flush", "stdin.close", "stdout.bytes",
+                    "stdout.eof", "stdout.complete", "stderr.bytes", "stderr.eof", "stderr.complete",
+                    "exit-wait.complete", "has-exited.at-completion", "cancellation.callback", "has-exited.before-cleanup" };
+                var bounds = new[] { "stdout.bytes.before-cancel", "stderr.bytes.before-cancel",
+                    "has-exited.at-completion.before-cancel" };
+                return "completion observations [record-order-only; unknown=not-observed; snapshot=non-atomic-before-cleanup; "
+                    + $"exception-site={operation}; exception-type={exception.GetType().FullName}; exception-message={exception.Message}; token={origin}; "
+                    + $"caller-cancel-requested={caller.IsCancellationRequested.ToString().ToLowerInvariant()}; "
+                    + string.Join("; ", stages.Concat(bounds).Select(name => $"{name}={entries.GetValueOrDefault(name, "unknown")}"))
+                    + $"; task-status-sampled-before-cleanup: stdout-observer={Status(stdout)}, stderr-observer={Status(stderr)}, "
+                    + $"stdin={Status(stdin)}, exit-wait={Status(exitWait)}]";
+            }
+        }
+
+        private static string Status(Task? task) => task?.Status.ToString() ?? "not-created";
     }
 
     private static void TryKill(Process process)
