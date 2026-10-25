@@ -130,7 +130,10 @@ internal sealed class DephasingTwoClassicalityBlockRefutationDocument : IScribeD
                             + "force that squared norm to equal 1/3, a contradiction. The failure concerns "
                             + "necessity of unbiasedness; the sufficiency statement for unbiased bases "
                             + "in TeX lines 326–346 is not contradicted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lonigro-chruscinski-2022-dephasing-two-classicality-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(
