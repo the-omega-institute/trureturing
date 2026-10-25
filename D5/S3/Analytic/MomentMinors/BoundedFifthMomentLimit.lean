@@ -8,7 +8,6 @@
 
 import D5.S3.Analytic.MomentMinors.Defs
 import Mathlib.Probability.Moments.Basic
-import Mathlib.Tactic.Ring
 
 /-! Fifth central moment bounds from a nonnegative quintic certificate. -/
 
