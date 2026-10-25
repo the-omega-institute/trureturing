@@ -1,14 +1,10 @@
-/- CANONICAL PREPARED SOURCE_ONLY / UNCOMPILED. No native/build run.
-Sole new public result: actual U+hU physical moment domains and estimates.
-All dual constants, integrals, layers and CS machinery stay private. -/
-
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Actual physical moment supplier on U with originalPhysicalH6 U.
-The dual integrals, their domains and constants remain private and are
-consumed by the actual weighted-CS theorem at the end of this owner.
-All actual integrals retain their strict half-line domains. No native,
-Gamma-energy or RH acceptance is claimed.
--/
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiWeightedPhysicalMoments
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaGamma/FormCore/ActualSuzukiWeightedPhysicalMoments
+   mirror-E: none(waiver:analytic-physical-moment-estimates)
+   anchors: []
+   utility: none
+   digest: Original H6 physical product domains and weighted trace and logarithmic moment bounds. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 import Mathlib.MeasureTheory.Function.L2Space
