@@ -71,7 +71,9 @@ private theorem unitarySourceFourier_extended_plancherel {f : ℝ → ℂ}
     _ = ENNReal.ofReal (1 / (2 * Real.pi)) *
         ∫⁻ ξ : ℝ,
           ‖D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f ξ‖ₑ ^ 2 := by
-      rw [lintegral_neg_eq_self]
+      congr 1
+      exact lintegral_neg_eq_self (fun ξ : ℝ =>
+        ‖D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f ξ‖ₑ ^ 2) volume
     _ = _ :=
       (D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angular_extended_plancherel hf₁ hf₂).symm
 
@@ -89,6 +91,7 @@ theorem unitarySourceFourier_squared_integrable {f : ℝ → ℂ}
       _ = ∫⁻ t : ℝ, ENNReal.ofReal (‖f t‖ ^ 2) := by
         apply lintegral_congr_ae
         exact Eventually.of_forall fun t => by
+          dsimp only
           rw [ENNReal.ofReal_pow (norm_nonneg _) 2, ofReal_norm]
       _ < ⊤ := (hasFiniteIntegral_iff_ofReal hspatialNN).1 hspatial.hasFiniteIntegral
   have hfreqFinite :
@@ -97,6 +100,7 @@ theorem unitarySourceFourier_squared_integrable {f : ℝ → ℂ}
       _ = ∫⁻ ξ : ℝ, ‖unitarySourceFourier f ξ‖ₑ ^ 2 := by
         apply lintegral_congr_ae
         exact Eventually.of_forall fun ξ => by
+          dsimp only
           rw [ENNReal.ofReal_pow (norm_nonneg _) 2, ofReal_norm]
       _ = ∫⁻ t : ℝ, ‖f t‖ₑ ^ 2 :=
         unitarySourceFourier_extended_plancherel hf₁ hf₂
@@ -158,7 +162,7 @@ private theorem source_unitary_add {f g : ℝ → ℂ}
       𝓕 (fun t => f t + g t) (-ξ / (2 * Real.pi)) =
         𝓕 f (-ξ / (2 * Real.pi)) + 𝓕 g (-ξ / (2 * Real.pi)) := by
     simpa only [Real.fourier_eq, Pi.add_apply] using congrFun
-      (VectorFourier.fourierIntegral_add Real.continuous_fourierChar continuous_inner hf hg)
+      (VectorFourier.fourierIntegral_add Real.continuous_fourierChar (by fun_prop) hf hg)
       (-ξ / (2 * Real.pi))
   simp only [unitarySourceFourier, hraw, mul_add]
 
@@ -233,12 +237,18 @@ theorem actual_constant_reflected_cross_re_zero {u : ℝ → ℂ}
               unitarySourceFourier U (-ξ)).re := by
         apply integral_congr_ae
         exact Eventually.of_forall fun ξ => by
+          dsimp only
           rw [show E = fun t => U t + V t from rfl,
             source_unitary_add hU₁ hV₁, source_norm_add_sq]
           simp only [V, source_unitary_reflect]
       _ = _ := by
-        rw [integral_add (hUF.add hVF) (hC.re.const_mul 2),
-          integral_add hUF hVF, integral_const_mul, integral_re hC]
+        have hSum : Integrable (fun ξ => ‖unitarySourceFourier U ξ‖ ^ 2 +
+            ‖unitarySourceFourier V ξ‖ ^ 2) volume := hUF.add hVF
+        have hTerm : Integrable (fun ξ => 2 * ((starRingEnd ℂ)
+            (unitarySourceFourier U ξ) * unitarySourceFourier U (-ξ)).re) volume :=
+          hC.re.const_mul 2
+        rw [integral_add hSum hTerm, integral_add hUF hVF,
+          integral_const_mul, integral_re hC]
   rw [actual_unitary_mass_integral hE₁ hE₂,
     actual_unitary_mass_integral hU₁ hU₂,
     actual_unitary_mass_integral hV₁ hV₂] at hFreq
@@ -267,11 +277,16 @@ private theorem actual_bare_quarter_increment_cross {c : ℝ} (hc : 0 < c)
   have hC : Integrable C volume := actual_unweighted_reflected_cross_integrable hu₁ hu₂
   obtain ⟨_, hR₀, hRi₀⟩ := actual_resolvent_reflected_cross_laplace_square hc hu₁
   have hR : Integrable (fun ξ => actualResolventSymbol c ξ * C ξ) volume := by
-    simpa only [C, mul_assoc] using hR₀
+    convert hR₀ using 1
+    funext ξ
+    exact (mul_assoc _ _ _).symm
   have hRi : (∫ ξ : ℝ, actualResolventSymbol c ξ * C ξ) =
       (Complex.normSq (∫ t : ℝ, (Real.exp (-c * t) : ℂ) * u t ∂halfline) : ℂ) /
         ((2 * c : ℝ) : ℂ) := by
-    simpa only [C, mul_assoc] using hRi₀
+    convert hRi₀ using 1
+    congr 1
+    funext ξ
+    exact (mul_assoc _ _ _).symm
   have hPoint (ξ : ℝ) :
       (actualBareQuarterIncrement c ξ : ℂ) * C ξ =
         (1 / c : ℂ) * C ξ - (c : ℂ) * (actualResolventSymbol c ξ * C ξ) := by
@@ -284,6 +299,7 @@ private theorem actual_bare_quarter_increment_cross {c : ℝ} (hc : 0 < c)
     exact (hC.const_mul _).sub (hR.const_mul _)
   refine ⟨by simpa only [C, mul_assoc] using hInt, ?_⟩
   have hZero := actual_constant_reflected_cross_re_zero hu₁ hu₂
+  simp only [mul_assoc]
   change (∫ ξ : ℝ, (actualBareQuarterIncrement c ξ : ℂ) * C ξ).re = _
   simp_rw [hPoint]
   rw [integral_sub (hC.const_mul _) (hR.const_mul _),
@@ -332,7 +348,7 @@ private theorem actual_bare_quarter_partial_cross (N : ℕ)
       apply Finset.sum_congr rfl
       intro n _
       exact (actual_bare_quarter_increment_cross (by positivity) hu₁ hu₂).2
-    _ = _ := by rw [Finset.sum_div, Finset.sum_neg_distrib]
+    _ = _ := by rw [← Finset.sum_div, Finset.sum_neg_distrib]
 
 private theorem actual_bare_quarter_increment_nonneg {c : ℝ} (hc : 0 < c) (ξ : ℝ) :
     0 ≤ actualBareQuarterIncrement c ξ := by
@@ -354,7 +370,9 @@ private theorem actual_bare_quarter_partial_nonneg (N : ℕ) (ξ : ℝ) :
 private theorem actual_bare_quarter_partial_continuous (N : ℕ) :
     Continuous (actualBareQuarterPartial N) := by
   unfold actualBareQuarterPartial actualBareQuarterIncrement
-  fun_prop (disch := positivity)
+  apply continuous_finsetSum
+  intro n hn
+  exact continuous_const.sub (continuous_const.div (by fun_prop) (fun ξ => by positivity))
 
 /-- Finite spectral energies have their actual domains from the bounded
 approximants and actual Fourier L2 mass; no infinite graph is assumed. -/
@@ -368,6 +386,7 @@ private theorem actual_bare_quarter_partial_energy_integrable (N : ℕ)
     ((continuous_unitarySourceFourier hf₁).norm.pow 2)
   apply (hM.const_mul B).mono' hCont.aestronglyMeasurable
   exact Eventually.of_forall fun ξ => by
+    dsimp only [Pi.mul_apply, Pi.pow_apply]
     rw [Real.norm_of_nonneg (mul_nonneg (actual_bare_quarter_partial_nonneg N ξ)
       (sq_nonneg _))]
     apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
@@ -450,23 +469,25 @@ private theorem actual_bare_quarter_partial_energy_identity (N : ℕ)
     actual_bare_quarter_partial_energy_integrable N (source_zero_l1 hu₁) (source_zero_l2 hu₂)
   have hB : Integrable B volume := by
     have h := (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
-    simpa only [A, B, actual_bare_quarter_partial_even] using h
+    simpa only [Function.comp_def, A, B, actual_bare_quarter_partial_even] using h
   obtain ⟨hR, hRi⟩ := actual_bare_quarter_partial_cross N hu₁ hu₂
   have hReflect : (∫ ξ, B ξ) = ∫ ξ, A ξ := by
     have h := integral_neg_eq_self A volume
-    simpa only [A, B, actual_bare_quarter_partial_even] using h
+    simpa only [Function.comp_def, A, B, actual_bare_quarter_partial_even] using h
   calc
     _ = ∫ ξ : ℝ, (A ξ + B ξ) + 2 * (R ξ).re := by
       apply integral_congr_ae
       exact Eventually.of_forall fun ξ => by
+        dsimp only
         rw [actual_even_zero_fourier hu₁, source_norm_add_sq]
         dsimp [A, B, R, U]
         simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
           zero_mul, zero_add, sub_zero]
         ring
     _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
-      rw [integral_add (hA.add hB) (hR.re.const_mul 2),
-        integral_add hA hB, integral_const_mul, integral_re hR]
+      have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
+      have hTerm : Integrable (fun ξ => 2 * (R ξ).re) volume := hR.re.const_mul 2
+      rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul, integral_re hR]
     _ = _ := by rw [hReflect, hRi]; ring
 
 /-- The literal bare quarter weight, with its actual digamma input. -/
@@ -568,8 +589,7 @@ theorem actual_bare_quarter_even_zero_domain_and_identity
     simp only [Complex.ofReal_re]
     apply tsum_congr
     intro n
-    simp only [L, D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace,
-      add_comm (1 / 4 : ℝ)]
+    simp [L, D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace, add_comm]
   have hLpos (n : ℕ) : 0 ≤ L n := Complex.normSq_nonneg _
   have hLle (N : ℕ) : (∑ n ∈ Finset.range N, L n) ≤ ∑' n, L n :=
     hS.sum_le_tsum (Finset.range N) (fun n _ => hLpos n)
@@ -644,7 +664,8 @@ private theorem actual_bare_quarter_cross_integrable
     ‖unitarySourceFourier (zeroExtension u) (-ξ)‖ ^ 2
   have hA : Integrable A volume := hU
   have hB : Integrable B volume := by
-    simpa only [A, B, actual_bare_quarter_even] using (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
+    simpa only [Function.comp_def, A, B, actual_bare_quarter_even] using
+      (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
   have hF := (continuous_unitarySourceFourier (source_zero_l1 hu₁)).aestronglyMeasurable
   have hFm := ((continuous_unitarySourceFourier (source_zero_l1 hu₁)).comp
     (continuous_neg)).aestronglyMeasurable
@@ -684,7 +705,8 @@ theorem actual_bare_quarter_reflected_cross
       unitarySourceFourier (zeroExtension u) (-ξ)
   have hA : Integrable A volume := hU
   have hB : Integrable B volume := by
-    simpa only [A, B, actual_bare_quarter_even] using (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
+    simpa only [Function.comp_def, A, B, actual_bare_quarter_even] using
+      (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
   have hR : Integrable R volume := actual_bare_quarter_cross_integrable hu₁ hU
   have hReflect : (∫ ξ, B ξ) = ∫ ξ, A ξ := by
     simpa only [A, B, actual_bare_quarter_even] using integral_neg_eq_self A volume
@@ -694,15 +716,20 @@ theorem actual_bare_quarter_reflected_cross
       _ = ∫ ξ : ℝ, (A ξ + B ξ) + 2 * (R ξ).re := by
         apply integral_congr_ae
         exact Eventually.of_forall fun ξ => by
+          dsimp only [actualBareQuarterEnergy]
           rw [actual_even_zero_fourier hu₁, source_norm_add_sq]
           dsimp [A, B, R]
           simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
             zero_mul, zero_add, sub_zero]
           ring
       _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
-        rw [integral_add (hA.add hB) (hR.re.const_mul 2),
-          integral_add hA hB, integral_const_mul, integral_re hR]
-      _ = _ := by rw [hReflect]; ring
+        have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
+        have hTerm : Integrable (fun ξ => 2 * (R ξ).re) volume := hR.re.const_mul 2
+        rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul, integral_re hR]
+      _ = _ := by
+        rw [hReflect]
+        dsimp only [A, actualBareQuarterEnergy]
+        ring
   refine ⟨hR, ?_⟩
   have hPaid := (actual_bare_quarter_even_zero_domain_and_identity hu₁ hu₂).2 hU
   change (∫ ξ, R ξ).re = _
