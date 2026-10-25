@@ -140,7 +140,7 @@ private lemma bessel_term_eq {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) (k : ℕ)
   unfold term
   ring
 
-private lemma bessel_summable {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) :
+lemma bessel_summable {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) :
     Summable (fun k : ℕ => (z/2)^((2*k:ℕ)+ν) /
       ((k.factorial:ℝ)*Real.Gamma (k+ν+1))) := by
   simp_rw [bessel_term_eq hν hz]
