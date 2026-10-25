@@ -25,10 +25,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p op => op p.2) (fun e => nomatch e)
+  realize signature (fun _ p op => op p.2) (fun e => Empty.elim e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p _ => p.2) (fun e => nomatch e)
+  realize signature (fun _ p _ => p.2) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -87,7 +87,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p op => op p.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p op => op p.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
