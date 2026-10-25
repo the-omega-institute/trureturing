@@ -1636,3 +1636,154 @@ physical spatial dimension. Such a realization still requires the
 separate correspondence specified in Definitions 5.2 and 8.2.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Sharp central remainder and nonattainment
+
+**Definition 10.1 (the fixed full-Green quotient).** Retain exactly
+Definition 9.1's complex closure $\mathcal H_1$, fields $U,V,Z_H$,
+Lebesgue measure and natural angular constant $K=2\pi\lambda_0$.
+Write
+
+$$
+W[u]=\int_{\mathbb R^3}\mathcal G_1(\xi)|u(\xi)|^2\,d\xi,
+\qquad Q[u]=\frac{\mathcal T_1[u]}{W[u]}\quad(0\ne u\in\mathcal H_1).
+\tag{10.1}
+$$
+
+Here $\mathcal G_1=\int_0^\infty h_1(t,\cdot)\,dt$ is the
+original-clock Lebesgue unit-source Green field of (9.2), with both
+time endpoints retained. C, Definition 16.2, gives $0<W[u]<\infty$
+for every nonzero $u\in\mathcal H_1$.
+
+**Corollary 10.2 (optimal central coefficient and no extremizer).**
+For every complex $u\in\mathcal H_1$, including zero and with no
+angular symmetry assumption,
+
+$$
+\mathcal T_1[u]-K W[u]\ge\|Z_Hu\|_2^2.
+\tag{10.2}
+$$
+
+The central coefficient one is optimal even on the compact smooth
+core: for every real $c>1$ there is a nonzero
+$u\in C_c^\infty(\mathbb R^3;\mathbb C)$ such that
+
+$$
+\mathcal T_1[u]-K W[u]<c\|Z_Hu\|_2^2.
+\tag{10.3}
+$$
+
+Moreover,
+
+$$
+\mathcal T_1[u]>K W[u]\quad(0\ne u\in\mathcal H_1),
+\qquad \inf_{0\ne u\in\mathcal H_1}Q[u]=K.
+\tag{10.4}
+$$
+
+Thus the sharp quotient has no nonzero $\mathcal H_1$ extremizer.
+Every normalized minimizing sequence $W[u_n]=1$,
+$\mathcal T_1[u_n]\to K$ necessarily satisfies
+
+$$
+\|Z_Hu_n\|_2^2\le\mathcal T_1[u_n]-K\longrightarrow0.
+\tag{10.5}
+$$
+
+Proof. For arbitrary complex compact smooth $u$, the chain (9.21),
+starting at $\mathcal E_H[u]$, already gives
+$\mathcal E_H[u]\ge K W[u]$. Its auxiliary rotation norm and Fourier
+modulus impose no restriction on the original $u$. For any
+$u\in\mathcal H_1$, choose its defining compact smooth approximation
+$u_j$. Then $u_j\to u$ in $L^2$, all three closed derivatives
+converge in $L^2$, and $\mathcal E_H[u_j]\to\mathcal E_H[u]$.
+Along an almost-everywhere convergent subsequence, the nonnegativity
+of $\mathcal G_1$ and Fatou's lemma give
+
+$$
+K W[u]\le\liminf_j K W[u_j]\le\mathcal E_H[u].
+\tag{10.6}
+$$
+
+This proves weighted finiteness on the entire closure independently
+of C, (15.8). Adding the closed central energy proves (10.2), also
+for $u=0$.
+
+To identify that central derivative, let $g$ be the $L^2$ limit of
+$\partial_z u_j$. Integration by parts against any
+$\eta\in C_c^\infty(\mathbb R^3;\mathbb C)$ yields
+
+$$
+\int g\,\overline\eta\,d\xi
+ =\lim_j\int\partial_z u_j\,\overline\eta\,d\xi
+ =-\lim_j\int u_j\,\overline{\partial_z\eta}\,d\xi
+ =-\int u\,\overline{\partial_z\eta}\,d\xi.
+\tag{10.7}
+$$
+
+Hence the closed $Z_Hu$ is exactly the distributional derivative
+$\partial_z u$. If $Z_Hu=0$, convolve $u$ in Euclidean coordinates
+with any compact smooth approximate identity $\varphi_\delta$.
+The function $u\ast\varphi_\delta$ is smooth, lies in $L^2$ by Young's
+inequality, and has zero $z$ derivative, so it is independent of $z$.
+Fubini on the infinite-measure central line forces this $L^2$
+function to vanish. Since $u\ast\varphi_\delta\to u$ in $L^2$, we
+obtain $u=0$. In particular $\|Z_Hu\|_2^2>0$ for every nonzero
+member of the actual closure. This argument makes no identification
+of $\mathcal H_1$ with Euclidean $H^1$.
+
+For sharpness choose nonzero $a\in C_c^\infty(\mathbb R^2;\mathbb C)$
+and $b\in C_c^\infty(\mathbb R;\mathbb C)$ with $b'\not\equiv0$.
+Put $\phi(X,z)=a(X)b(z)$,
+$A=\mathcal E_H[\phi]\ge0$ and
+$B=\|Z_H\phi\|_2^2=\|a\|_2^2\|b'\|_2^2>0$.
+For $s>0$ set $\delta_s(X,z)=(sX,s^2z)$ and
+$u_s=\phi\circ\delta_{1/s}$. Every $u_s$ is a nonzero compact
+smooth test. The exact fields in (9.1) give
+
+$$
+\begin{aligned}
+Uu_s&=s^{-1}(U\phi)\circ\delta_{1/s},&
+Vu_s&=s^{-1}(V\phi)\circ\delta_{1/s},\\
+Z_Hu_s&=s^{-2}(Z_H\phi)\circ\delta_{1/s},&
+\det D\delta_s&=s^4,\\
+\mathcal E_H[u_s]&=s^2 A,&\|Z_Hu_s\|_2^2&=B.
+\end{aligned}
+\tag{10.8}
+$$
+
+Given $c>1$, choose $s^2=(c-1)B/[2(A+B)]>0$.
+By (10.6), $W[u_s]$ is finite, and its nonnegativity implies
+
+$$
+\mathcal T_1[u_s]-K W[u_s]\le B+s^2 A
+ \le B+\tfrac12(c-1)B<cB.
+\tag{10.9}
+$$
+
+This proves (10.3). No homogeneity, pole regularity or asymptotic
+formula for $\mathcal G_1$ is used; its clock, source and full-time
+integral are unchanged.
+
+For nonzero $u$, (10.2) and the zero-kernel argument give the strict
+inequality in (10.4). The positive denominator supplied by C,
+Definition 16.2, permits division. Theorem 9.3, using C, Theorem
+16.3's annular upper bound, already supplies the infimum $K$.
+Consequently it is attained by no nonzero member of $\mathcal H_1$.
+Finally (10.2) gives (10.5) directly. $\square$
+
+The Fatou passage, distributional integration by parts, Young's
+inequality and approximate-identity convergence used in this proof
+are classical measure and convolution arguments; see G. B. Folland,
+*Real Analysis*, second edition, Chapters 2 and 8. The dilation
+identities (10.8) use only the fields of Definition 9.1. The
+source-specific optimal-coefficient and nonattainment conclusions
+are repo-derived consequences of (9.21), Theorem 9.3 and the positive
+Green denominator in C, Definition 16.2; they assert no historical
+priority. The vanishing in (10.5) is only a necessary central-energy
+condition, with no profile convergence or compactness conclusion.
+All statements concern the whole-group $\mathcal H_1$ closure;
+they give no slab extremizer statement, zero-noise completed-domain
+identification, physical realization or additional response rank law.
+
+## 追加锚（本行以下为增补区）
