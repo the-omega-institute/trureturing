@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Probability.CommonReservoirGraph
 
+/-! Five simultaneous graph reservoir events and the actual literal palette. -/
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped BigOperators ENNReal
 noncomputable section
@@ -81,6 +83,7 @@ private theorem parameters (p ν α n : ℝ) (hp : 0 < p) (hp1 : p ≤ 1)
       (mul_le_mul hp3 hν2α (sq_nonneg ν) hp.le) hn.le
   exact ⟨htlog, hbase, hrank, h1, h2, hscale.trans h3, hscale.trans h4⟩
 
+set_option maxHeartbeats 800000 in
 /-- All five events concern the same outcome. The only families supplied in advance
 are deterministic layers; no stochastic certificate or per-star law is an input. -/
 theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
@@ -127,7 +130,7 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
       intro z
       by_cases hw : z.2 ∉ exceptions G c z.1 (ν * Fintype.card V / 16)
       · by_cases hs : ν * Fintype.card V / 4 ≤ ((twoStep G z.1 z.2).card : ℝ)
-        · simpa only [hw, hs, true_implies, not_le] using
+        · simpa [P, t, n, hw, hs] using
             graph_base_lower_tail G c hout hin hloop p ν Tb hν hn hTb z.1 z.2 hw hs
         · simp [hs, Real.exp_nonneg]
       · simp [hw, Real.exp_nonneg])
@@ -162,7 +165,8 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
           ((graph_incoming_lower_tail G c hin p _ _ (1 / 2) (by norm_num)).trans
             (Real.exp_le_exp.mpr ?_))
         nlinarith
-      · simp [hs, Real.exp_nonneg])
+      · change ¬ν * n / 4 ≤ ((incoming G (L z.1 z.2.1) z.2.2).card : ℝ) at hs
+        simp [hs, Real.exp_nonneg])
     have he : {ω : (V ⊕ C) → Bool | ¬∀ z : V × Fin (Fintype.card V) × V,
       ν * n / 4 ≤ ((incoming G (L z.1 z.2.1) z.2.2).card : ℝ) →
         Tr ≤ incomingCount G c (L z.1 z.2.1) z.2.2 ω} = R := by
@@ -173,13 +177,15 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
     apply forall_failure P (fun w ω => Tr ≤ incomingCount G c univ w ω)
     intro w
     have hm : t ≤ (p : ℝ) ^ 2 * (incoming G univ w).card := hmeanI.trans
-      (mul_le_mul_of_nonneg_left (hdegI w) (sq_nonneg (p : ℝ)))
+      (by simpa only [mul_assoc] using
+        mul_le_mul_of_nonneg_left (hdegI w) (sq_nonneg (p : ℝ)))
     have hsub : {ω | ¬Tr ≤ incomingCount G c univ w ω} ⊆
         {ω | incomingCount G c univ w ω ≤
           (1 - (1 / 2 : ℝ)) * ((p : ℝ) ^ 2 * (incoming G univ w).card)} := by
       intro ω hω
       have ht := not_le.mp hω
-      have ht0 : 0 ≤ t := by dsimp [t, n]; positivity
+      have ht0 : 0 ≤ t := by
+        exact mul_nonneg (mul_nonneg (pow_nonneg p.property.1 3) hν.le) (Nat.cast_nonneg _)
       dsimp [Tr, t, n] at *
       linarith
     refine (measureReal_mono hsub).trans
@@ -192,10 +198,12 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
     have hh := pair_loss_upper_tail p (fun x : outNeighbors G u => (x : V))
       (fun x => c u x) Subtype.val_injective (fun x y h => Subtype.ext
         (hout u (mem_filter.mp x.property).2 (mem_filter.mp y.property).2 h))
+    simp only [Fintype.card_coe] at hh
     refine (measureReal_mono ?_).trans (hh.trans (Real.exp_le_exp.mpr ?_))
     · intro ω hω
       have ht := not_le.mp hω
       dsimp [retainedOut] at ht
+      change 3 * (p : ℝ) * (outNeighbors G u).card ≤ _
       linarith
     · have hh := mul_le_mul_of_nonneg_left (hdegO u) p.property.1
       dsimp [n]; linarith
@@ -205,10 +213,12 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
     have hh := pair_loss_upper_tail p (fun x : incoming G univ w => (x : V))
       (fun x => c x w) Subtype.val_injective (fun x y h => Subtype.ext
         (hin w (mem_filter.mp x.property).2 (mem_filter.mp y.property).2 h))
+    simp only [Fintype.card_coe] at hh
     refine (measureReal_mono ?_).trans (hh.trans (Real.exp_le_exp.mpr ?_))
     · intro ω hω
       have ht := not_le.mp hω
       dsimp [retainedIn] at ht
+      change 3 * (p : ℝ) * (incoming G univ w).card ≤ _
       linarith
     · have hh := mul_le_mul_of_nonneg_left (hdegI w) p.property.1
       dsimp [n]; linarith
@@ -216,7 +226,9 @@ theorem common_event_exponential_bound (G : Digraph V) (c : V → V → C)
     have he : D = {ω | ¬∀ u, (1 - 3 * (p : ℝ)) * (outNeighbors G u).card ≤
         retainedOut G c u ω} ∪
       {ω | ¬∀ w, (1 - 3 * (p : ℝ)) * (incoming G univ w).card ≤
-        retainedIn G c w ω} := by ext ω; simp [D, DegreeEvent]; tauto
+        retainedIn G c w ω} := by
+          ext ω
+          simp only [D, DegreeEvent, Set.mem_union, Set.mem_ofPred_eq, not_and_or]
     rw [he]
     have h₁ := forall_failure P _ _ hDo
     have h₂ := forall_failure P _ _ hDi
@@ -308,8 +320,13 @@ theorem common_reservoir_probability (G : Digraph V) (c : V → V → C)
     rw [← add_div]
     apply (div_le_div_iff₀ (pow_pos hnR 2) hnR).mpr
     nlinarith
-  dsimp [n, t] at *
-  linarith
+  have hsum : Real.exp (-((p : ℝ) * n) / 3) +
+      2 * n * Real.exp (-((p : ℝ) * α * n) / 5) +
+      n ^ 2 * Real.exp (-(9 * t) / 512) + n ^ 3 * Real.exp (-t / 32) +
+      n * Real.exp (-t / 8) ≤ 5 / n := by
+    simp only [div_eq_mul_inv] at hS hD hB hR hI hRI ⊢
+    nlinarith only [hS, hD, hB, hR, hI, hRI]
+  exact (sub_le_sub_left hsum 1).trans hh
 
 section LiteralPalette
 
@@ -338,7 +355,8 @@ theorem palette_colour_eq_iff (G : Digraph V) (c : V → V → Colour)
     (q₀ : ActualPalette G c) (u w x y : V) (huw : G.Adj u w) (hxy : G.Adj x y) :
     paletteColour G c q₀ u w = paletteColour G c q₀ x y ↔ c u w = c x y := by
   classical
-  simp only [paletteColour, dif_pos huw, dif_pos hxy, Subtype.mk.injEq]
+  simp only [paletteColour, huw, hxy, ↓reduceDIte]
+  exact Subtype.ext_iff
 
 /-- A global colour type may be infinite or even coincide with the vertex type.
 The probability concerns the actual finite palette and a sum-tagged product law. -/
@@ -373,6 +391,10 @@ theorem actual_palette_common_reservoir (G : Digraph V) (c : V → V → Colour)
     ν α hν hν1 hα hn hlog hscale hdegO hdegI L⟩
 
 end LiteralPalette
+
+example : Set.Icc (0 : ℝ) 1 := ⟨1, by norm_num⟩
+
+example : (Fin 65536 ⊕ (Fin 65536 × Fin 65536)) → Bool := fun _ => false
 
 -- A concrete model of every numerical and graph hypothesis of the probability block.
 -- Its degrees are computed symbolically by erasing one vertex, without enumeration.

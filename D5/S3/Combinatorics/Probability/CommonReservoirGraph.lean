@@ -9,6 +9,8 @@
 import D5.S3.Combinatorics.Graph.Rainbow.TwoEdgeChoices
 import D5.S3.Combinatorics.Probability.CommonReservoirRows
 
+/-! Actual graph rainbow and incoming counts under the common reservoir law. -/
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped BigOperators ENNReal
 noncomputable section
@@ -111,6 +113,9 @@ theorem graph_base_lower_tail (G : Digraph V) (c : V → V → C)
     (reservoirLaw p).real {ω | baseCount G c u w ω < Tb} ≤
       Real.exp (-(9 * ((p : ℝ) ^ 3 * ν * Fintype.card V)) / 512) := by
   classical
+  letI : IsProbabilityMeasure (reservoirLaw p : Measure ((V ⊕ C) → Bool)) := by
+    unfold reservoirLaw
+    infer_instance
   let A := rainbow c u w (twoStep G u w)
   obtain ⟨T, hT, hcard⟩ := rainbow_base_data G c hout hin hloop ν hν hn u w hw hs
   have hmem (x : A) : ∃ i, (x : V) ∈ T i := (hT.2.1 x).mp x.property
@@ -134,9 +139,11 @@ theorem graph_base_lower_tail (G : Digraph V) (c : V → V → C)
         (fun _ => (1 : ℝ)) ω) ≤ (1 - (3 / 4 : ℝ)) *
           ((p : ℝ) ^ 3 * Fintype.card A)} := by
     intro ω hω
+    change baseCount G c u w ω < Tb at hω
     change baseCount G c u w ω ≤ _
     linarith
-  refine (measureReal_mono hsub).trans (hh.trans (Real.exp_le_exp.mpr ?_))
+  refine (measureReal_mono hsub (measure_ne_top _ _)).trans
+    (hh.trans (Real.exp_le_exp.mpr ?_))
   nlinarith
 
 /-- Incoming properness proves the actual predecessor rows independent; the layer
@@ -148,7 +155,8 @@ theorem graph_incoming_lower_tail (G : Digraph V) (c : V → V → C)
       (1 - δ) * ((p : ℝ) ^ 2 * (incoming G L w).card)} ≤
       Real.exp (-(δ ^ 2 * ((p : ℝ) ^ 2 * (incoming G L w).card)) / 2) := by
   classical
-  exact pair_lower_tail p (fun x : incoming G L w => (x : V)) (fun x => c x w)
+  simpa only [incomingCount, Fintype.card_coe] using
+    pair_lower_tail p (fun x : incoming G L w => (x : V)) (fun x => c x w)
     Subtype.val_injective (fun x y h => Subtype.ext
       (hin w (mem_filter.mp x.property).2 (mem_filter.mp y.property).2 h)) δ hδ
 

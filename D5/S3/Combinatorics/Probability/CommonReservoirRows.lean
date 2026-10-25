@@ -9,6 +9,8 @@
 import D5.S3.Combinatorics.Probability.TripleReservoir
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
+/-! Actual retained and lost star rows in one tagged product space. -/
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped BigOperators ENNReal
 noncomputable section
@@ -32,6 +34,7 @@ def pairCount (vertex : A → V) (colour : A → C) (ω : (V ⊕ C) → Bool) : 
 def lossCount (vertex : A → V) (colour : A → C) (ω : (V ⊕ C) → Bool) : ℝ :=
   ∑ i, (lossEvent (vertex i) (colour i)).indicator (fun _ => (1 : ℝ)) ω
 
+omit [Fintype A] in
 private theorem pair_rows (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour : A → C)
     (hv : Function.Injective vertex) (hc : Function.Injective colour) (b : Bool) :
     let E := fun i => {ω : (V ⊕ C) → Bool |
@@ -49,7 +52,7 @@ private theorem pair_rows (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour :
   have hP : IsProbabilityMeasure P := by dsimp [P, reservoirLaw]; infer_instance
   let := hP
   have hm (r : R) : MeasurableSet (B r) := (Set.toFinite _).measurableSet
-  have he (i : A) : E i = ⋂ r ∈ S i, B r := by ext ω; simp [E, S, B]; rfl
+  have he (i : A) : E i = ⋂ r ∈ S i, B r := by ext ω; simp [E, S, B]
   have hind : iIndepFun (fun (r : R) (ω : R → Bool) => ω r) P :=
     iIndepFun_pi (X := fun (_ : R) (x : Bool) => x) (fun _ => measurable_id.aemeasurable)
   have hB : iIndepSet B P := by
@@ -59,8 +62,8 @@ private theorem pair_rows (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour :
       (sets := fun _ => ({b} : Set Bool)) (fun _ _ => measurableSet_singleton b)
   have hbp (r : R) : P.real (B r) = if b then (p : ℝ) else 1 - (p : ℝ) := by
     have ht : P.real {ω : R → Bool | ω r = true} = (p : ℝ) := by
-      have h := (measurePreserving_eval (fun _ : R => bernoulliMeasure true false p) r).
-        measure_preimage (measurableSet_singleton true).nullMeasurableSet
+      have h := (measurePreserving_eval (fun _ : R => bernoulliMeasure true false p) r).measure_preimage
+        (measurableSet_singleton true).nullMeasurableSet
       change P {ω : R → Bool | ω r = true} = _ at h
       rw [measureReal_def, h, bernoulliMeasure_apply_of_mem_of_notMem p
         (measurableSet_singleton true) (by simp) (by simp)]
@@ -69,10 +72,12 @@ private theorem pair_rows (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour :
     | true => exact ht
     | false =>
       have heq : B r = {ω : R → Bool | ω r = true}ᶜ := by
-        ext ω; simp [B]; cases ω r <;> simp
+        ext ω; cases h : ω r <;> simp [B, h]
       rw [heq, measureReal_compl ((Set.toFinite _).measurableSet), probReal_univ, ht]
+      simp
   have hmean (i : A) : ∫ ω, (E i).indicator (fun _ => (1 : ℝ)) ω ∂P =
       (if b then (p : ℝ) else 1 - (p : ℝ)) ^ 2 := by
+    change (∫ ω, (E i).indicator (1 : (R → Bool) → ℝ) ω ∂P) = _
     rw [integral_indicator_one ((Set.toFinite _).measurableSet), he, measureReal_def,
       hB.meas_biInter]
     simp only [ENNReal.toReal_prod]
@@ -90,8 +95,8 @@ private theorem pair_rows (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour :
     simp only [S, mem_insert, mem_singleton] at hri hrj
     rcases hri with hri | hri <;> rcases hrj with hrj | hrj
     · exact hij (hv (Sum.inl.inj (hri.symm.trans hrj)))
-    · exact Sum.noConfusion (hri.symm.trans hrj)
-    · exact Sum.noConfusion (hri.symm.trans hrj)
+    · cases hri.symm.trans hrj
+    · cases hri.symm.trans hrj
     · exact hij (hc (Sum.inr.inj (hri.symm.trans hrj)))
   have hu : (⋂ i ∈ T, E i) = ⋂ r ∈ T.biUnion S, B r := by
     ext ω
@@ -129,7 +134,7 @@ theorem pair_lower_tail (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colour : A
   rw [he] at ht
   simpa [pairCount, X] using ht
 
-private theorem bounded_independent_upper {Ω I : Type*} [Fintype Ω]
+private theorem bounded_independent_upper {Ω I : Type*} [Finite Ω]
     [MeasurableSpace Ω] [MeasurableSingletonClass Ω] [Fintype I]
     (P : Measure Ω) [IsProbabilityMeasure P] (X : I → Ω → ℝ)
     (hind : iIndepFun X P) (hb : ∀ i ω, X i ω ∈ Set.Icc (0 : ℝ) 1)
@@ -161,9 +166,9 @@ theorem pair_loss_upper_tail (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colou
   have hp : IsProbabilityMeasure P := by dsimp [P, reservoirLaw]; infer_instance
   let := hp
   let X := fun i => (lossEvent (vertex i) (colour i)).indicator (fun _ => (1 : ℝ))
-  let Y := fun i => {ω : (V ⊕ C) → Bool |
-    ω (Sum.inl (vertex i)) = false ∧ ω (Sum.inr (colour i)) = false}.
-      indicator (fun _ => (1 : ℝ))
+  let Y := fun i => ({ω : (V ⊕ C) → Bool |
+    ω (Sum.inl (vertex i)) = false ∧ ω (Sum.inr (colour i)) = false}).indicator
+      (fun _ => (1 : ℝ))
   have hr := pair_rows p vertex colour hv hc false
   have heq : X = fun i ω => 1 - Y i ω := by
     funext i ω
@@ -171,7 +176,8 @@ theorem pair_loss_upper_tail (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colou
       cases h₂ : ω (Sum.inr (colour i)) <;> simp [X, Y, lossEvent, h₁, h₂]
   have hind : iIndepFun X P := by
     rw [heq]
-    exact hr.1.comp (fun _ x : ℝ => 1 - x) (fun _ => measurable_const.sub measurable_id)
+    exact hr.1.comp (fun (_ : A) (x : ℝ) => 1 - x)
+      (fun _ => measurable_const.sub measurable_id)
   have hb (i : A) (ω) : X i ω ∈ Set.Icc (0 : ℝ) 1 := by
     by_cases h : ω ∈ lossEvent (vertex i) (colour i) <;> simp [X, h]
   have hm (i : A) : ∫ ω, X i ω ∂P = 2 * (p : ℝ) - (p : ℝ) ^ 2 := by
@@ -180,7 +186,9 @@ theorem pair_loss_upper_tail (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colou
     rw [hY, integral_const]; simp; ring
   have hs : (∑ i, ∫ ω, X i ω ∂P) =
       (2 * (p : ℝ) - (p : ℝ) ^ 2) * Fintype.card A := by
-    simp_rw [hm]; simp [mul_comm]
+    simp_rw [hm]
+    simp only [sum_const, card_univ, nsmul_eq_mul]
+    ring
   have hl : (2 / 5 : ℝ) ≤ Real.log (3 / 2) := by
     have h := Real.le_log_one_add_of_nonneg (x := (1 / 2 : ℝ)) (by norm_num)
     norm_num at h ⊢; exact h
@@ -191,12 +199,13 @@ theorem pair_loss_upper_tail (p : Set.Icc (0 : ℝ) 1) (vertex : A → V) (colou
   refine hh.trans (Real.exp_le_exp.mpr ?_)
   have hd : 0 ≤ (Fintype.card A : ℝ) := Nat.cast_nonneg _
   have hl' := mul_le_mul_of_nonneg_right hl
-    (show 0 ≤ 3 * (p : ℝ) * Fintype.card A by positivity)
+    (show 0 ≤ 3 * (p : ℝ) * Fintype.card A from
+      mul_nonneg (mul_nonneg (by norm_num) p.property.1) (Nat.cast_nonneg _))
   nlinarith [sq_nonneg (p : ℝ), mul_nonneg (sq_nonneg (p : ℝ)) hd]
 
 def vertexCount (ω : (V ⊕ C) → Bool) : ℝ :=
-  ∑ v : V, {ω : (V ⊕ C) → Bool | ω (Sum.inl v) = true}.
-    indicator (fun _ => (1 : ℝ)) ω
+  ∑ v : V, ({ω : (V ⊕ C) → Bool | ω (Sum.inl v) = true}).indicator
+    (fun _ => (1 : ℝ)) ω
 
 /-- The common vertex reservoir has upper tail exp(-pn/3) at 2pn. -/
 theorem vertex_upper_tail (p : Set.Icc (0 : ℝ) 1) :
@@ -218,6 +227,7 @@ theorem vertex_upper_tail (p : Set.Icc (0 : ℝ) 1) :
     exact (hind.precomp Sum.inl_injective).measure_inter_preimage_eq_mul T
       (sets := fun _ => ({true} : Set Bool)) (fun _ _ => measurableSet_singleton true)
   have hm (v : V) : ∫ ω, X v ω ∂P = (p : ℝ) := by
+    change (∫ ω, (E v).indicator (1 : (R → Bool) → ℝ) ω ∂P) = _
     rw [integral_indicator_one ((Set.toFinite _).measurableSet), measureReal_def]
     have h := (measurePreserving_eval (fun _ : R => bernoulliMeasure true false p)
       (Sum.inl v)).measure_preimage (measurableSet_singleton true).nullMeasurableSet
@@ -237,7 +247,8 @@ theorem vertex_upper_tail (p : Set.Icc (0 : ℝ) 1) :
     Real.exp_log (by norm_num : (0 : ℝ) < 2)] at hh
   refine hh.trans (Real.exp_le_exp.mpr ?_)
   have hl' := mul_le_mul_of_nonneg_right hl
-    (show 0 ≤ 2 * (p : ℝ) * Fintype.card V by positivity)
+    (show 0 ≤ 2 * (p : ℝ) * Fintype.card V from
+      mul_nonneg (mul_nonneg (by norm_num) p.property.1) (Nat.cast_nonneg _))
   nlinarith
 
 end D5.S3.Combinatorics.Probability.CommonReservoirRows
