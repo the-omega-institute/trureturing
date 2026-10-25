@@ -96,6 +96,7 @@ private theorem loss_cons (D : LatticeData) (i : Index D) (w : List (Index D))
     weightLoss D (i::w) (s,t) = i.2-s.val + weightLoss D w t := by
   have hs := s.isLt
   have ht := nativeLowerWeight D w t
+  simp only [wordWeight] at ht
   simp only [weightLoss, wordWeight, lowerWord, List.map_cons, List.sum_cons,
     sourceWeight]
   omega
@@ -113,18 +114,13 @@ theorem normalP_X (D : LatticeData) (i : Index D) :
       X none ^ (i.2-s) * X (some (i.1,s))) = _
   simp only [map_sum, map_mul, map_pow, optionEquivLeft_C,
     optionEquivLeft_X_none, optionEquivLeft_X_some]
-  rw [Fin.sum_univ_eq_sum_range]
+  rw [Fin.sum_univ_eq_sum_range (fun s : ℕ =>
+    Polynomial.monomial (i.2-s)
+      (((-1 : ℂ)^(i.2+1) * ((i.2+1).choose (s+1) : ℂ)) • (X (i.1,s) : Oscillator D)))]
   apply Finset.sum_congr rfl
   intro s hs
-  change Polynomial.C (C ((-1 : ℂ)^(i.2+1) * ((i.2+1).choose (s+1) : ℂ))) *
-      Polynomial.X ^ (i.2-s) * Polynomial.C (X (i.1,s)) = _
-  rw [show Polynomial.C (C ((-1 : ℂ)^(i.2+1) * ((i.2+1).choose (s+1) : ℂ))) *
-        Polynomial.X ^ (i.2-s) * Polynomial.C (X (i.1,s)) =
-      Polynomial.C (((-1 : ℂ)^(i.2+1) * ((i.2+1).choose (s+1) : ℂ)) • X (i.1,s)) *
-        Polynomial.X ^ (i.2-s) by
-          simp only [smul_eq_C_mul, map_mul]
-          ring,
-    Polynomial.C_mul_X_pow_eq_monomial]
+  simp only [← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul, map_mul, map_pow]
+  ring
 
 /-- Genuine finite product expansion over the EXISTING dependent JetTuple.
 Repeated source letters remain separate occurrences until polynomial addition. -/
@@ -137,6 +133,7 @@ private theorem normalP_word (D : LatticeData) (w : List (Index D)) :
   | cons i w ih =>
     rw [wordPolynomial, map_mul, normalP_X, ih]
     simp only [Finset.sum_mul, Finset.mul_sum, Fintype.sum_prod_type]
+    rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro s hs
     apply Finset.sum_congr rfl
@@ -167,29 +164,29 @@ theorem normal_homogeneous_readout (D : LatticeData) (hu : IsUnit D.G.det)
         paritySign (chargeNorm D a / 2) *
           readPolynomial D ell (normalP D (monomial m 1)) := by
     have hw : Finsupp.weight (sourceWeight D) m = R := hp (mem_support_iff.mp hm)
-    have hw' : wordWeight D (LatticeAllStateField.occurrences D m) = R :=
+    have hw' : wordWeight D (LatticeHalfFockFockNormalField.occurrences D m) = R :=
       (LatticeHalfFockFiniteCorrection.wordWeight_occurrences D m).trans hw
-    have hword : wordPolynomial D (LatticeAllStateField.occurrences D m) = monomial m (1 : ℂ) :=
+    have hword : wordPolynomial D (LatticeHalfFockFockNormalField.occurrences D m) = monomial m (1 : ℂ) :=
       (wordPolynomial_prod D _).trans (LatticeAllStateField.occurrences_product D m)
-    have hP := normalP_word D (LatticeAllStateField.occurrences D m)
+    have hP := normalP_word D (LatticeHalfFockFockNormalField.occurrences D m)
     rw [hword] at hP
     rw [hP, map_sum, Finset.mul_sum]
     change actualForm D hu ((polynomialField D hu a (monomial m 1)).coeff e x) y = _
     rw [actual_polynomial_monomial_transpose]
-    simp only [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro s hs
     rw [readPolynomial_monomial, map_smul]
-    have he : transposeExponent D a (LatticeAllStateField.occurrences D m) s e =
-        shiftIndex D a R (weightLoss D (LatticeAllStateField.occurrences D m) s)-e := by
-      have h := nativeTransposeLoss D a (LatticeAllStateField.occurrences D m) s e
+    have he : transposeExponent D a (LatticeHalfFockFockNormalField.occurrences D m) s e =
+        shiftIndex D a R (weightLoss D (LatticeHalfFockFockNormalField.occurrences D m) s)-e := by
+      have h := nativeTransposeLoss D a (LatticeHalfFockFockNormalField.occurrences D m) s e
       rw [hw'] at h
       calc
         _ = -e-2*chargeNorm D a-4*(R : ℤ)+
-            2*(weightLoss D (LatticeAllStateField.occurrences D m) s : ℤ) := h
+            2*(weightLoss D (LatticeHalfFockFockNormalField.occurrences D m) s : ℤ) := h
         _ = _ := by dsimp [shiftIndex]; ring
     rw [he]
-    simp only [normalRight, smul_eq_mul, mul_assoc]
+    dsimp [ell, normalRight, chargeNorm]
+    ring
   have expand : p = ∑ m ∈ p.support, p.coeff m • monomial m (1 : ℂ) := by
     simpa only [smul_monomial, smul_eq_mul, mul_one] using p.as_sum
   let F := normalLeft D hu a e x y
@@ -203,6 +200,7 @@ theorem normal_homogeneous_readout (D : LatticeData) (hu : IsUnit D.G.det)
   apply Finset.sum_congr rfl
   intro m hm
   rw [single m hm]
+  dsimp [G]
   ring
 
 end D5.S3.VertexAlgebra.CorrectedInversion

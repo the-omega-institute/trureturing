@@ -63,7 +63,8 @@ private theorem native_polynomial_X (D : LatticeData) (a : Charge D)
     _ = _ := by
       rw [← Finset.sum_range_reflect (fun n => Polynomial.monomial n
         (((r+1).choose n : ℂ) • (X (i,r-n) : Oscillator D))) (r+1),
-        Fin.sum_univ_eq_sum_range]
+        Fin.sum_univ_eq_sum_range (fun s : ℕ => Polynomial.monomial (r-s)
+          (((r+1).choose (s+1) : ℂ) • (X (i,s) : Oscillator D)))]
       apply Finset.sum_congr rfl
       intro s hs
       have hs' : s ≤ r := by have := Finset.mem_range.mp hs; omega
