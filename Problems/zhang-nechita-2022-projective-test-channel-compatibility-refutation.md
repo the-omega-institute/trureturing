@@ -46,7 +46,7 @@ All helper names below refer to the canonical module; they are private except fo
 
 1. **The channel.** `depol` is `depolarized LinearMap.id (3 / 10)` on $M_2(\mathbb C)$, hence
    $\Phi(X)=\frac7{10}X+\frac3{20}\operatorname{Tr}(X)I_2$.
-   With no additional hypotheses, `depol_cptp` proves this fixed map is CPTP by identifying it with the Pauli channel of probabilities $(31/40,3/40,3/40,3/40)$; `depol_dual` proves its trace dual equals itself.
+   With no additional hypotheses, the frozen `dep_cptp` of `D5/S3/QuantumChannels/PurelyNonUnitalEternalNonMarkovianity.lean`, applied at $\eta=7/10$, proves this fixed map is CPTP; its Pauli probabilities are $(31/40,3/40,3/40,3/40)$; `depol_dual` proves its trace dual equals itself.
 2. **Every pair of bases has a parent.** For arbitrary $U,V\in\operatorname{U}(2)$ and $a,b\in\{0,1\}$, put $E_a=|U_a\rangle\langle U_a|$, $F_b=|V_b\rangle\langle V_b|$, $A_a=2E_a-I_2$ and $B_b=2F_b-I_2$. For every such unitary and outcome, `effect_facts` proves the projector is Hermitian, has trace one, is idempotent, and the two projectors sum to $I_2$; `centered_facts` proves the centered matrices are Hermitian, traceless, square to $I_2$, and sum to zero within each basis. For any complex $2\times2$ matrices $A,B$ with $\operatorname{Tr}A=\operatorname{Tr}B=0$, `traceless_anticommutator` gives $AB+BA=\operatorname{Tr}(AB)I_2$.
 
    `parent_positive`, for every $U,V\in\operatorname{U}(2)$ and $a,b\in\{0,1\}$, proves positivity of
@@ -74,13 +74,13 @@ The settlement would miss the source conjecture if either compatibility predicat
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.lean` (388 lines).
+The canonical source is `D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.lean` (373 lines).
 
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registrations.** `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.lean.json`, statement `sha256:417c80f64a4edf660afdb93795f806c152d720741ac99621b5c92a679f067aa7`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.lean.json`, statement `sha256:4fea9a0e2b483bf2e1689a863b47555a458a544b392f28cac4854c49b2c586d6`.
 
 Declaration statements:
 
