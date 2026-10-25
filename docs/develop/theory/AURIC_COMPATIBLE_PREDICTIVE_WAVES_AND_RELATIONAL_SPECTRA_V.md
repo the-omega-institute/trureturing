@@ -2465,3 +2465,642 @@ Jeronimo–Perrucci–Tsigaridas 的上述 Theorem 1 是 `literature-attested` �
 
 ## 追加锚（本行以下为增补区）
 
+
+## 82. 原完整复集合的全部三维复实现
+
+**定义 82.1（复三维比较合同与固定坐标）。** 固定任意 $0<d<1$ 和任意实 $\theta$ 满足 $\sin(2\theta)\ne0$，令 $c=d/2$。对象、存在分解 $\rho=A+D$、负扇区 $N=\ell^\perp$ 和完整集合 $\mathcal K_d$ 均取 (54.1)–(54.5)，不将它替换为仅有 $\rho_{\xi\xi}=c$ 的密度矩阵集合。在 $(\xi,e,f)$ 基中置
+
+$$
+P_\xi=\xi\xi^\dagger,\quad E=\frac12(\xi+e)(\xi+e)^\dagger,
+\quad V_0=Ue^{\mathrm i\theta W},\quad V_1=V_0W,
+\quad \operatorname{Ad}_Q(X)=QXQ^\dagger.
+\tag{82.1}
+$$
+
+一个复三维实现由同一个保持全部凸组合的映射 $\sigma:\mathcal K_d\to\mathcal D(\mathbb C^3)$、同一个合法效果 $0\preceq F\preceq I_3$ 和两个固定的复 Kraus CP 映射组成：
+
+$$
+\Phi_j(X)=\sum_\alpha L_{j\alpha}XL_{j\alpha}^\dagger,
+\qquad \sum_{j,\alpha}L_{j\alpha}^\dagger L_{j\alpha}=I_3.
+\tag{82.2}
+$$
+
+对每个 $\rho\in\mathcal K_d$、每个有限时间词 $h=(j_1,\ldots,j_n)$ 和两种终端结果，要求
+
+$$
+\begin{aligned}
+\operatorname{Tr}(F\Phi_h(\sigma(\rho)))
+ &=2^{-n}\operatorname{Tr}(EV_h\rho V_h^\dagger),\\
+\operatorname{Tr}((I_3-F)\Phi_h(\sigma(\rho)))
+ &=2^{-n}[1-\operatorname{Tr}(EV_h\rho V_h^\dagger)].
+\end{aligned}
+\tag{82.3}
+$$
+
+$\Phi_h=\Phi_{j_n}\cdots\Phi_{j_1}$，$V_h=V_{j_n}\cdots V_{j_1}$，最左标签最早作用，空词也包括在内。允许不可达支持、不可观察方向、任意隐藏纤维、任意 Kraus 表示和初始依赖状态的分支质量；不预设逐支公平、可逆、协变或效果信息完备。此定义是 (54.10) 的复矩阵版本，沿用 (54.8) 的原始联合概率及第二卷 (39.5) 的五维桥。
+
+**定理 82.2（全称复三维实现的过滤分类）。** 定义 82.1 的全部实现恰为以下族。存在唯一参数 $p\in[c,1/2]$，一个固定酉 $R\in U(3)$ 和一个共同选择 $\varepsilon\in\{0,1\}$，令 $\mathcal C_0(X)=X$、$\mathcal C_1(X)=\bar X$，其中共轭取固定源基，及
+
+$$
+\begin{gathered}
+G_p=\sqrt{p/c}\,P_\xi+
+\sqrt{(1-p)/(1-c)}\,(I_3-P_\xi),\\
+\sigma_p(\rho)=G_p\rho G_p,\qquad
+F_p=G_p^{-1}EG_p^{-1},\qquad
+\Phi_{p,j}=\tfrac12\operatorname{Ad}_{V_j}.
+\end{gathered}
+\tag{82.4}
+$$
+
+则对全部实际初始态和全部复输入矩阵，
+
+$$
+\begin{gathered}
+\sigma(\rho)=R\mathcal C_\varepsilon(\sigma_p(\rho))R^\dagger,
+\qquad F=R\mathcal C_\varepsilon(F_p)R^\dagger,\\
+\Phi_j(X)=\tfrac12 U_jXU_j^\dagger,
+\qquad U_j=R\mathcal C_\varepsilon(V_j)R^\dagger.
+\end{gathered}
+\tag{82.5}
+$$
+
+反之，每个这样的 $p,R,\varepsilon$ 都满足原合同。分类的对象是分支 CP 映射；给两个 $U_j$ 分别乘任意标量相位不改变它。每个分支的任意 Kraus 表只是 $\alpha_{j\alpha}U_j$ 的共线表，$\sum_\alpha|\alpha_{j\alpha}|^2=1/2$。共同复共轭比较全部表示资料，不是一个取得的 CP 转置操作。
+
+这里分类 $\sigma$ 在实际 $\mathcal K_d$ 上的值、$F$ 在整个三维空间上的值以及 $\Phi_j$ 在整个 $M_3(\mathbb C)$ 上的值；不把离开制备域后任意延伸且在原域恒为零的仿射项算作另一个实现。复最小维数三的既有下界由六维仿射单射及 $m^2-1\ge6$ 给出，标准 qutrit 实现给上界；这一最小值是供应，分类不重复计作新的维数发现。必要性由 §§83–86 给出，充分性及参数唯一性见定理 86.2。
+
+## 83. 任意复 CP 竞争者的完整矩阵收缩与维数饱和
+
+**定理 83.1（三维合同迫使全矩阵 CP 群）。** 每个定义 82.1 的实现，其全部可达支持就是 $\mathbb C^3$；归一化分支 $T_j=2\Phi_j$ 在完整矩阵空间上的词闭包是具有 CP 逆的紧群。
+
+证明。将 (82.3) 两种结果相加，得
+
+$$
+X_{h,\rho}=T_h\sigma(\rho)\succeq0,
+\qquad \operatorname{Tr}X_{h,\rho}=1.
+\tag{83.1}
+$$
+
+令 $H_{\rm r}$ 为这些矩阵支持的复线性张成，$n=\dim H_{\rm r}\le3$。若 $v\perp H_{\rm r}$，则
+
+$$
+0=v^\dagger T_j(X_{h,\rho})v
+=2\sum_\alpha\|X_{h,\rho}^{1/2}L_{j\alpha}^\dagger v\|^2.
+\tag{83.2}
+$$
+
+逐项非负性使每个原 Kraus 算子保持 $H_{\rm r}$。因此压缩到它仍为复 CP，原仪器和仍 TP，效果压缩合法，制备仿射且保留所有记录。取有限个支持张成的可达密度矩阵的严格正权凸组合 $\Omega\succ0$ 于 $H_{\rm r}$，并取 $\eta>0$ 使 $\Omega\succeq\eta I$。词拼接给 $\operatorname{Tr}(T_h\Omega)=1$，从而
+
+$$
+0\preceq T_h(I)\preceq\eta^{-1}T_h(\Omega),
+\qquad \|T_h\|_{\rm cb}=\|T_h(I)\|\le\eta^{-1}.
+\tag{83.3}
+$$
+
+CP 范数等式也可由正的二乘二算子块在每个矩阵层推出。因此有界的是完整 $M_n(\mathbb C)$ 上的映射，并非仅可达 Hermitian 子空间。其范数闭包 $\mathscr S$ 是紧 CP 半群。
+
+令 $\mathscr R=\operatorname{span}_{\mathbb R}\{X_{h,\rho}\}$。源的两个不同供应是：第二卷定理 40.1 的 $I_3$ 加八个加权效果张成九维 $\operatorname{Herm}_3(\mathbb C)$；本卷 (64.10)–(64.12) 的源可达空间恰为
+
+$$
+\mathscr S_c=\{X\in\operatorname{Herm}_3(\mathbb C):
+ X_{\xi\xi}=c\operatorname{Tr}X\},\qquad \dim_{\mathbb R}\mathscr S_c=8.
+\tag{83.4}
+$$
+
+后一个供应使用原合法纯态 $\sqrt d\,a+\mathrm i\sqrt{1-d}\,g$ 和引理 63.1 的实际下块 $SU(2)$，并非假设初始集合张成全部状态空间。该引理适用于每个 $e^{-2\mathrm i\theta}\notin\{1,-1\}$，包括单位根情形；其下块生成元就是 (62.2) 的 $B_0,B_1$，无实竞争者前提。
+
+定义
+
+$$
+L(X_{h,\rho})=V_h\rho V_h^\dagger.
+\tag{83.5}
+$$
+
+若编码侧有线性关系，将它与迹及每个继续词的 $FT_k$ 配对，便使相应源关系与 $I_3$ 及八个 $M_k$ 配对为零。源效果基非退化，故源关系为零。这证明 $L$ 良定义、满射到 $\mathscr S_c$ 且 $LT_j=\operatorname{Ad}_{V_j}L$，同时 $\operatorname{Tr}X=\operatorname{Tr}LX$ 和 $\operatorname{Tr}(FX)=\operatorname{Tr}(ELX)$ 于 $\mathscr R$。没有假设竞争者自己的效果张成九维。
+
+$\mathscr R,\ker L$ 对闭包不变。选线性截面 $J_L$，则 $\pi(s)=LsJ_L$ 与截面无关，是到源词闭群 $G$ 的连续半群同态；它满射，因为每个源极限可沿同一词子列借 $\mathscr S$ 紧性取得编码极限。源正词闭包是群，所需逆来自紧酉群中的同时回归，而不是新的操作权限。
+
+在已经闭合的 $\mathscr S$ 中取完整复线性映射秩最小的 $a$，秩记为 $r$。$\operatorname{rank}a^2=r$ 排除零处的非平凡 Jordan 块；有界幂排除模大于一的本征值及单位圆上的非平凡 Jordan 块。若非零本征值有模小于一者，令所有单位模本征值同时回归一，幂的极限会有更小秩，矛盾。同一回归遂给 CP 幂等元 $P$，$\operatorname{rank}_{\mathbb C}P=r$。因 $\pi(P)$ 为群中幂等元，$\pi(P)=1$、$LP=L$ 于 $\mathscr R$。
+
+角 $\mathscr K=P\mathscr S P$ 中每个元素的秩都是 $r$，在 $\operatorname{ran}P$ 上可逆；此限制忠实，且其像为紧的可逆矩阵半群。紧性给奇异值的统一正下界；同时回归的正幂给单位与逆。因此 $\mathscr K$ 是单位为 $P$ 的紧群，逆仍有完整矩阵 CP 代表。
+
+置 $H_1=\operatorname{supp}(P\Omega)=\operatorname{supp}P(I)$。在 $P$ 的 Kraus 表中，它等于所有 Kraus 像的张成，所以 $P$ 的整个复矩阵像左右均支持于 $H_1$。只将 $P,\mathscr K$ 限制到 $H_1$，此时不声称原 $T_j$ 保持它。对正的像元素 $Y$，由 $Y\preceq b\Omega$ 再作用 $P$ 得 $Y\preceq bP\Omega$；故 $P\Omega$ 是像锥序单位。对 $k^{-1}(P\Omega)$ 应用该界，给 $P\Omega\preceq b k(P\Omega)$。于是角群的 Haar 平均
+
+$$
+\Omega_1=\int_{\mathscr K}k(P\Omega)\,dk\succ0
+\quad\text{于 }H_1
+\tag{83.6}
+$$
+
+被全角群固定。以 $D_1=\Omega_1^{1/2}$ 作合同，得到完整 $M_{n_1}(\mathbb C)$ 上的 UCP 幂等元
+
+$$
+\widetilde P=\operatorname{Ad}_{D_1^{-1}}P\operatorname{Ad}_{D_1},
+\qquad n_1=\dim H_1\le n.
+\tag{83.7}
+$$
+
+在此消费 Choi–Effros 乘法定理，采用 Prunaru，[*On the Choi–Effros multiplication*](https://arxiv.org/html/1304.6664v2)，定理 1：CP、收缩、幂等映射的像，带乘法 $x\star y=\widetilde P(xy)$、原伴随及继承的完整矩阵序，是复 $C^*$ 代数 $\mathcal A$。这里 CP 与幂等已经成立，保单位 CP 给收缩；并未假设 $P$ 忠实或其像在通常乘法下封闭。角群及其逆在此抽象代数上 UCP，两次 Schwarz 使它们为 $*$ 自同构。
+
+比较物理维数须使用抽象收缩。令 $i:\mathcal A\to M_{n_1}(\mathbb C)$ 是完全序包含，$r_0=i^{-1}\widetilde P$ 是到抽象 $\mathcal A$ 的 UCP 收缩，$r_0i=1$。对 $x\in\mathcal A$，Schwarz 先施于 $i$ 再施 $r_0$，以及直接施于 $r_0$，分别给
+
+$$
+r_0(i(x)^\dagger i(x))\preceq x^*\star x
+\preceq r_0(i(x)^\dagger i(x)).
+\tag{83.8}
+$$
+
+同理有 $xx^*$ 的等号。因此 $i(x)$ 属于抽象 $r_0$ 的乘法域，$r_0:C^*(i(\mathcal A))\to\mathcal A$ 是满射 $*$ 同态。此处不能改称环境投影 $\widetilde P$ 的像全属于其通常乘法域。
+
+有限维具体代数 $C^*(i(\mathcal A))$ 忠实作用于 $\mathbb C^{n_1}$。其核是若干完整简单因子的直和；去掉这些因子的中心物理子空间，便得到 $\mathcal A$ 的维数至多 $n_1$ 的忠实复表示。写 $\mathcal A=\bigoplus_\ell M_{n_\ell}(\mathbb C)$，则
+
+$$
+\sum_\ell n_\ell\le n_1\le n\le3.
+\tag{83.9}
+$$
+
+由于 $LP=L$，$P$ 的自伴像满射到八维 $\mathscr S_c$。保持伴随的复线性映射之复像维数等于其自伴像的实维数。故 $\dim_{\mathbb R}\mathcal A_{\rm sa}\ge8$。成本至多三的复代数中，除 $M_3(\mathbb C)$ 外，只有 $\mathbb C$、$\mathbb C^2$、$M_2(\mathbb C)$、$\mathbb C^3$、$\mathbb C\oplus M_2(\mathbb C)$，自伴维数至多五。因此 $\mathcal A=M_3(\mathbb C)$，$n_1=n=3$，$\operatorname{rank}_{\mathbb C}P=9$，满秩幂等元 $P=I$。这里使用复因子成本，没有把实六维结论移植成复分类。$\mathscr K=\mathscr S$ 遂是所述全矩阵 CP 群。∎
+
+## 84. 原 TP 和、匹配表示与两个生成元的四元数消去
+
+**定理 84.1（所有原归一化分支全局酉且公平）。** 每个定义 82.1 的实现有酉 $U_0,U_1$，使 $T_j=\operatorname{Ad}_{U_j}$ 于整个 $M_3(\mathbb C)$。其紧群到源 $G$ 的 $\pi$ 是同构；一个固定酉坐标使匹配的源 $SU(2)$ 作用为 $1\oplus S$。
+
+证明。定理 83.1 给每个 $T\in\mathscr S$ 完整 CP 逆。$T(I)$ 是序单位；令 $Q_T=T(I)^{1/2}$，则 $\operatorname{Ad}_{Q_T^{-1}}T$ 和其逆 $T^{-1}\operatorname{Ad}_{Q_T}$ 都 UCP。两次 Schwarz 给乘法性，复全矩阵 $*$ 自同构为酉内自同构，故还原后 $T_j=\operatorname{Ad}_{A_j}$，$A_j$ 可逆。
+
+Haar 平均 $T(I)$ 得整个群固定的 $\Omega_2\succ0$。令 $B'_j=\Omega_2^{-1/2}A_j\Omega_2^{1/2}$，则 $B'_j$ 酉。原仪器和 TP 此时在整个已饱和的三维支持上给
+
+$$
+A_0^\dagger A_0+A_1^\dagger A_1=2I,
+\qquad \sum_{j=0}^1(B'_j)^\dagger\Omega_2B'_j=2\Omega_2.
+\tag{84.1}
+$$
+
+置 $D_j=(B'_j)^\dagger\Omega_2B'_j$，酉共轭保持 Hilbert–Schmidt 范数，所以
+
+$$
+\sum_j\|D_j-\Omega_2\|_{\rm HS}^2
+=\sum_j\|D_j\|_{\rm HS}^2-2\|\Omega_2\|_{\rm HS}^2=0.
+\tag{84.2}
+$$
+
+故每个 $B'_j$ 与 $\Omega_2$ 交换，$A_j=B'_j$ 酉。这是从实际 TP 和导出的全局公平性，不是从可达态上的迹一直接推出逐支 TP。Nayak–Sen，[*Invertible Quantum Operations and Perfect Encryption of Quantum States*](https://arxiv.org/html/quant-ph/0605041v4)，定理 2.1 的假设为全输入域上的 CPTP 映射和 CPTP 左逆；只在此时其等维结论适用。上面的完整 CP 逆、保单位化和原 TP 和论证给出此前缺少的桥。
+
+现在 $\mathscr S,G$ 都是闭的紧矩阵 Lie 群。满射 $\pi$ 的微分满射：单位分支之像为 $G^0$，因为紧 Lie 群只有有限多个分支。取紧 Lie 代数上的 Ad 不变内积，$\ker d\pi$ 的正交补仍为理想，且同构于 $\operatorname{Lie}G$。在此补理想中提升源的实际 $\mathfrak{su}(2)$，从单连通 $SU(2)$ 积分，得到 $\lambda:SU(2)\to\mathscr S$，$\pi\lambda(S)=\operatorname{Ad}_{1\oplus S}|_{\mathscr S_c}$。积分定理的域确为 $SU(2)$ 而非 $SO(3)$；参见 Hall 的矩阵群与单连通积分工具，文献对应见 §90。
+
+到 $PU(3)$ 的这个作用经覆盖 $SU(3)\to PU(3)$ 提升为三维复酉表示。三维复 $SU(2)$ 表示只有自旋一、$1\oplus2$ 或三个平凡线。前后两种的中心 $-I_2$ 在共轭上平凡，不能供应源 $\mathscr S_c$ 中中心变号的基本实四维模。因此一个固定酉把提升写成 $1\oplus S$。
+
+在 $\operatorname{Herm}_3$ 中，这个作用分解为两个平凡线、唯一的交叉基本实四维模和唯一下块无迹伴随实三维模。紧群完全可约性及重数一表明这两个非平凡模都完整位于 $\mathscr R$，$L$ 在它们上为同构。故 $\dim\mathscr R\in\{8,9\}$，$\ker L$ 为零或一条平凡线。
+
+若 $k\in\ker\pi$，它是酉共轭，所以在 Hilbert–Schmidt 内积下正交；它保持 $\mathscr R$、$\ker L$ 及 $\mathscr W=\mathscr R\cap(\ker L)^\perp$。对 $X\in\mathscr W$，$(k-I)X$ 同时在 $\ker L$ 和 $\mathscr W$，故为零。全部交叉四维模属于 $\mathscr W$，其 Hermitian 矩阵的复 $*$ 代数生成全部 $M_3$：两种实虚交叉矩阵给 $E_{0r},E_{r0}$，再相乘给所有矩阵单位。因此固定它们的酉共轭只能是恒等，$\ker\pi=1$。此证同时覆盖八维与九维可达空间。源下块 $SU(2)$ 正规于 $G\subseteq\operatorname{Ad}(1\oplus U(2))$，同构 $\pi$ 因而使匹配的 $SU(2)$ 也正规于竞争者群。∎
+
+**定理 84.2（完整生成元匹配与全部待定仿射项）。** 在一个固定酉或共同复共轭坐标中，两个 $T_j$ 同时等于原 $\operatorname{Ad}_{V_j}$。存在 $k>0$、实数 $b\ne0$、实数 $A_F,t_F$ 和一个实仿射函数 $p(\rho)$，使全部实际准备满足
+
+$$
+\begin{gathered}
+\rho=\begin{pmatrix}c&z^\dagger\\z&Q\end{pmatrix},\quad
+Q_0=Q-\frac{1-c}{2}I_2,\\
+\sigma(\rho)=\begin{pmatrix}
+p(\rho)&kz^\dagger\\kz&bQ_0+\frac{1-p(\rho)}2I_2
+\end{pmatrix},\\
+F=\begin{pmatrix}
+A_F&e_1^\dagger/(2k)\\
+e_1/(2k)&t_F I_2+(e_1e_1^\dagger/2-I_2/4)/b
+\end{pmatrix},\quad e_1=(1,0)^{\mathsf T},\\
+A_Fp(\rho)+t_F(1-p(\rho))=(1+c)/4.
+\end{gathered}
+\tag{84.3}
+$$
+
+证明。正规性使每个原竞争者酉保持唯一平凡线及其双维补空间；除去各自无关的标量相位后，写为 $1\oplus D_j$。与匹配 $SU(2)$ 的共轭关系相同，故 $D_j=\chi_j B_j$，$|\chi_j|=1$，其中 $B_j$ 是 (62.2) 的实际下块。
+
+$L$ 的交叉模逆映射是一个非零实交织 $T$。这里复二维基本表示视作实表示的交换子是四元数代数，不能仅取复标量。明确地，
+
+$$
+T=\alpha I+\beta\mathcal Q,\quad \alpha,\beta\in\mathbb C,
+\qquad \mathcal Q(v)=\epsilon_2\bar v,
+\quad \epsilon_2=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+\quad \det_{\mathbb R}T=(|\alpha|^2+|\beta|^2)^2.
+\tag{84.4}
+$$
+
+对 $B\in U(2)$，$\mathcal QB=(\det B)^{-1}B\mathcal Q$。于是两个原生成元的交织 $TB_j=D_jT$ 分别给
+
+$$
+\alpha=\chi_j\alpha,\qquad
+\beta/(\det B_j)=\chi_j\beta,
+\qquad \det B_0=-z_\theta,\quad\det B_1=z_\theta.
+\tag{84.5}
+$$
+
+若 $\alpha\beta\ne0$，两个行列式都必须为一，与其相反符号矛盾。因此 $T$ 纯复线性或纯反线性；只匹配 $SU(2)$ 并不足以排除混合项。线性情形 $\chi_j=1$，固定标量扇区相位使 $T=kI$、$k>0$。反线性情形 $D_j=\epsilon_2\bar B_j\epsilon_2^{-1}$；一个固定下块 $\epsilon_2^{-1}$ 酉及共同共轭把它归入线性情形。此变换同时作用于所有初始态、效果和两个分支。下块伴随系数可变号，因此此阶段仍只要求 $b$ 为非零实数。
+
+源及竞争者的交叉和伴随模都重数一。交叉逆已为 $kI$，伴随实不可约模的交换子为实标量，故其逆为 $bI$。$L$ 在整个可达空间上的线性关系遂逐态给 (84.3) 的制备式；没有要求轨道点仍在初始制备域，也没有额外假设制备协变。迹一给唯一剩余标量函数 $p(\rho)$。它由仿射 $\sigma$ 的一个固定条目给出，因而在原仿射包络上仿射。
+
+将 $\operatorname{Tr}(FX)=\operatorname{Tr}(ELX)$ 配对到完整交叉模和伴随模，分别固定 $F$ 的交叉列及下块无迹部分；余下两个标量为 $A_F,t_F$。源标量部分的 $E$ 配对是 $c/2+(1-c)/4=(1+c)/4$，给最后一式。如果 $\dim\mathscr R=9$，隐藏核方向只能为 $H=\operatorname{diag}(1,-1/2,-1/2)$，且 $\operatorname{Tr}(FH)=A_F-t_F=0$；这个可能性仍保留到原域正性检验。∎
+
+## 85. 复零响应圆、纯态秩与原纯曲线的仿射张成
+
+**定理 85.1（每个实际纯输入的秩一约束）。** 在 (84.3) 中，$F$ 秩一，且每个属于原 $\mathcal K_d$ 的纯态都有秩一编码。存在一个对所有实际纯输入共同的 $p_*\in[c,1/2]$，使
+
+$$
+b=\frac{1-p_*}{1-c},\quad
+k^2=\frac{p_*(1-p_*)}{c(1-c)},\quad
+A_F=\frac{c}{2p_*},\quad t_F=\frac{1-c}{4(1-p_*)}.
+\tag{85.1}
+$$
+
+证明。任取实际纯态，因其 $\xi$ 人口为 $c$，固定无关总体相位后写为 $\sqrt c\,\xi+\sqrt{1-c}\,r_0$。下块 $SU(2)$ 在单位球上传递；对精确群响应恒等式右平移变量，使源向量的下块变成 $e_1$。编码侧相应酉变换 $\Sigma=\sigma(\rho)$ 保持其正性、秩和迹，固定效果不变。只是等式坐标代换，不添加初始态或控制。
+
+令
+
+$$
+S(u)=\begin{pmatrix}u_1&-\bar u_2\\u_2&\bar u_1\end{pmatrix},
+\quad |u_1|^2+|u_2|^2=1,
+\qquad f_c(u)=\frac12|\sqrt c+\sqrt{1-c}\,u_1|^2.
+\tag{85.2}
+$$
+
+响应 $\operatorname{Tr}[F(1\oplus S(u))\Sigma(1\oplus S(u))^\dagger]$ 等于 $f_c(u)$。它在整个圆
+
+$$
+u_1=-a_0,\qquad u_2=r_0'e^{\mathrm i\varphi},
+\quad a_0=\sqrt{c/(1-c)}>0,\quad r_0'=\sqrt{1-a_0^2}>0
+\tag{85.3}
+$$
+
+上为零。正矩阵迹配对等于 $\|F^{1/2}(1\oplus S(u))\Sigma^{1/2}\|_{\rm HS}^2$，所以每个支持幅度分别为零。对 $v=(s_0,x,y)\in\operatorname{ran}\Sigma$、$w=(a_0',b_0,t_0)\in\operatorname{ran}F$，其幅度恒等式完整为
+
+$$
+\bar a_0's_0-a_0(\bar b_0x+\bar t_0y)
++r_0'\bar t_0x e^{\mathrm i\varphi}
+-r_0'\bar b_0y e^{-\mathrm i\varphi}=0.
+$$
+
+比较常数项及两个非零频率的 Laurent 系数，给
+
+$$
+\bar t_0x=0,\qquad \bar b_0y=0,\qquad
+\bar a_0's_0=a_0(\bar b_0x+\bar t_0y).
+\tag{85.4}
+$$
+
+非零源交叉响应及 $kz\ne0$ 使编码交叉非零，故可选一个 $v$ 同时有 $s_0\ne0$ 和 $(x,y)\ne0$。若 $x,y$ 都非零，(85.4) 迫使全部 $w=0$，与响应非零矛盾。若 $x\ne0,y=0$，则每个 $w$ 有 $t_0=0$，且 $\bar a_0's_0=a_0\bar b_0x$，故全部 $w$ 在同一非零复直线；非零 $w$ 的 $a_0',b_0$ 都非零。固定该 $w$ 再作用于任意支持向量，得到 $y=0$ 及相同的 $s_0/x$ 比，全部 $v$ 也在一条复直线。$x=0,y\ne0$ 对称。因此 $\operatorname{rank}F=\operatorname{rank}\Sigma=1$。此论证逐个覆盖全部实际纯态，不指定它们的编码。
+
+回到固定源坐标，$F$ 的非零交叉列沿 $e_1$。秩一正性使它的下块支持恰沿 $e_1$，故
+
+$$
+t_F-1/(4b)=0,\qquad 1/(2b)>0,\qquad
+A_F/(2b)=1/(4k^2).
+\tag{85.5}
+$$
+
+于是 $b>0$、$t_F=1/(4b)$、$A_F=b/(2k^2)$。源纯性给 $Q=zz^\dagger/c$、$\|z\|^2=c(1-c)$。编码秩一及非零交叉使其下块垂直于 $z$ 的本征值为零，故 $1-p(\rho)=b(1-c)$；它对所有纯输入都是同一个 $p_*=1-b(1-c)\in(0,1)$。余下二乘二行列式给 $k^2c(1-c)=p_*(1-p_*)$，即 (85.1)。效果唯一非零本征值及其合法性余量是
+
+$$
+\lambda(p)=\frac{c}{2p}+\frac{1-c}{2(1-p)},\qquad
+1-\lambda(p)=\frac{(p-c)(1-2p)}{2p(1-p)}.
+\tag{85.6}
+$$
+
+在 $0<c<1/2$、$0<p<1$ 中，$F\preceq I$ 恰要求 $p\in[c,1/2]$。两端都保留，且都是秩一投影。∎
+
+**定理 85.2（原域仿射自由度至多为一个真实混合坐标）。** (84.3) 中必有
+
+$$
+p(\rho)=p_*+\nu s(\rho),\qquad
+s(\rho)=\rho_{aa}-d,\quad \nu\in\mathbb R.
+\tag{85.7}
+$$
+
+若 $A_F\ne t_F$，则 $\nu=0$。唯一仍须正性排除的校准是
+
+$$
+p_*=\frac{2c}{1+c},\qquad c\le1/3.
+\tag{85.8}
+$$
+
+证明。复用引理 70.1 的实际纯曲线 $\rho_t=\psi_t\psi_t^\dagger$、$|t|<\delta_d$，及其原五维提升，明确参数为
+
+$$
+\begin{gathered}
+\delta_d=\min\{1,\sqrt{(1-d)/(2d)}\},\qquad
+f_d(t)=\sqrt{\frac{1-3d+2d\cos t}{13-12\cos t}},\\
+\psi_t=\sqrt d\,a+\sqrt d(e^{\mathrm it}-1)h_{\rm out}
+ +\mathrm i(3e^{\mathrm it}-2)f_d(t)g.
+\end{gathered}
+\tag{85.9}
+$$
+
+其合法性是原 $A=\rho_t,D=0$ 分解，不仅是固定人口矩条件。引理 70.2 的逐条矩阵提取 (70.9)–(70.10) 供应仿射函数空间恰为 $\operatorname{span}\{1,x,y,f,xf,yf\}$，$x=\cos t,y=\sin t,f=f_d(t)$。现在证明这六个函数线性独立，从而确定该曲线的精确仿射张成。
+
+奇部关系为 $y(a+bf)=0$。$f^2=(1-3d+2dx)/(13-12x)$ 非常数，因为分子在分母根 $13/12$ 的值为 $1-5d/6>0$，故奇部两个系数为零。偶部关系形如 $A+Bx+(C+Dx)f=0$。若 $C+Dx$ 不恒零，则 $f$ 在开区间上为有理函数，其平方将使上述有理函数成为有理平方；但它有互异的简单零与简单极点，次数奇偶矛盾。若 $C+Dx=0$，其余系数也零。开区间上的等式乘分母后是多项式恒等式，不需要在区间外实现任何状态。
+
+故曲线仿射维数五，恰张成 $\operatorname{Tr}\rho=1$、$C,E$ 两矩及 $\rho_{aa}=d$ 的五维仿射平面。原 $\mathcal K_d$ 的仿射维数六由 (55.2) 的严格正点、$s>0$ 和 $B_d\succ0$ 供应；$s$ 不在整个集合上恒零。由于 $p-p_*$ 在该五维平面上为零，只能为 $\nu s$。将它代入 (84.3) 的标量等式，$A_F\ne t_F$ 时立刻得 $\nu=0$。(85.1) 给 $A_F=t_F$ 当且仅当 $p_*=2c/(1+c)$，而它在合法区间内当且仅当 $c\le1/3$。此时必须继续使用实际混合态，不能以信息完备性排除该合法校准。∎
+
+## 86. 原混合边界消去隐藏项及分类的充分性
+
+**定理 86.1（包括奇异校准的全部仿射项消去）。** 在 (85.8) 及整个 $0<d<1$ 的适用域内，原集合上的正性迫使 $\nu=0$；特别包括 $d=2/3,p_*=1/2$。
+
+证明。在该校准，
+
+$$
+G_*^2=\frac{\operatorname{diag}(2,1,1)}{1+c},\qquad
+\sigma(\rho)=G_*\rho G_*+\nu sH,\quad
+H=\operatorname{diag}(1,-1/2,-1/2).
+\tag{86.1}
+$$
+
+对其作 $G_*^{-1}$ 合同，正性等价于
+
+$$
+\rho+\eta sJ\succeq0,\qquad
+\eta=\nu(1+c)/2,\qquad
+J=\operatorname{diag}(1,-1,-1)=C-I.
+\tag{86.2}
+$$
+
+在 $(a,h_{\rm out},g)$ 基中，$J=\left(\begin{smallmatrix}0&1&0\\1&0&0\\0&0&-1\end{smallmatrix}\right)$。置 $\beta=1-d$、$\alpha=(2+\sqrt2)/\sqrt{12}$、$\gamma=(2-\sqrt2)/\sqrt{12}$；原 $\ell=(-\gamma,\alpha,0)^{\mathsf T}$，$N=\operatorname{span}\{(\alpha,\gamma,0)^{\mathsf T},g\}$。对实数 $v$ 取
+
+$$
+\begin{gathered}
+\psi_0=(\sqrt d,0,\mathrm i\sqrt\beta)^{\mathsf T},\quad
+n_v=(\sqrt\beta,v,-\mathrm i\sqrt d)^{\mathsf T},\\
+w_v=(\alpha,\gamma,
+\mathrm i(\alpha\sqrt\beta+\gamma v)/\sqrt d)^{\mathsf T}.
+\end{gathered}
+\tag{86.3}
+$$
+
+直接内积给 $\psi_0^\dagger n_v=w_v^\dagger n_v=0$、$w_v\in N$，且
+
+$$
+n_v^\dagger Jn_v=2\sqrt\beta v-d.
+\tag{86.4}
+$$
+
+选 $v_-=0$、$v_+=d/\sqrt\beta$，符号分别为 $-d,+d$。固定任一选择及对应 $w=w_v$。以 $u=(x,r+\mathrm i h,\mathrm i g_0)^{\mathsf T}$ 的四个实坐标 $(x,h,r,g_0)$，在 $(\sqrt d,0,0,\sqrt\beta)$ 附近对约束
+
+$$
+\begin{pmatrix}
+\|u\|^2+\epsilon\|w\|^2\\ |u_a|^2\\
+\operatorname{Tr}(C[uu^\dagger+\epsilon ww^\dagger])\\
+\operatorname{Tr}(E[uu^\dagger+\epsilon ww^\dagger])
+\end{pmatrix}
+=\begin{pmatrix}1\\d\\d\\(6-5d)/16\end{pmatrix}
+\tag{86.5}
+$$
+
+应用实隐函数定理。基点导数完整为
+
+$$
+\begin{pmatrix}
+2\sqrt d&0&0&2\sqrt\beta\\
+2\sqrt d&0&0&0\\
+2\sqrt d&0&2\sqrt d&0\\
+\sqrt d/8&3\sqrt6\sqrt\beta/8&3\sqrt d/8&3\sqrt\beta/4
+\end{pmatrix},\qquad
+\det=3\sqrt6\,\beta d\ne0.
+\tag{86.6}
+$$
+
+故对各选择及所有足够小的 $\epsilon>0$，有 $u_\epsilon\to\psi_0$ 满足全部等式。令
+
+$$
+A_\epsilon=u_\epsilon u_\epsilon^\dagger,\quad
+D_\epsilon=\epsilon w_vw_v^\dagger,\quad
+\rho_\epsilon=A_\epsilon+D_\epsilon,
+\qquad s(\rho_\epsilon)=\epsilon\alpha^2>0.
+\tag{86.7}
+$$
+
+$A_\epsilon,D_\epsilon\succeq0$、$D_\epsilon\ell=0$、$(A_\epsilon)_{aa}=d$，加上 (86.5) 证明这是原 (54.2) 中的态。$\ell^\dagger\psi_0=-\gamma\sqrt d\ne0$ 而 $w_v\in N$，所以两列 $(\psi_0,w_v)$ 独立，且 $(u_\epsilon,w_v)$ 对小 $\epsilon$ 保持秩二。$\rho_\epsilon$ 秩二，其核可取连续非零向量 $n_\epsilon\to n_v$。这里连续的是两列支持矩阵的核；虽极限密度矩阵降为秩一，两列支持矩阵在 $\epsilon=0$ 并未降秩。
+
+将 (86.2) 在 $n_\epsilon$ 上求值，给
+
+$$
+0\le\eta\,\epsilon\alpha^2 n_\epsilon^\dagger Jn_\epsilon.
+\tag{86.8}
+$$
+
+两个选择的严格相反符号在足够小正 $\epsilon$ 保留，分别迫使 $\eta\le0$ 和 $\eta\ge0$。因此 $\eta=\nu=0$。没有使用放松集合，也没有要求一个对所有 $d$ 一致的 $\epsilon$ 邻域。$d=2/3$ 时 $\beta d>0$、$G_*$ 可逆，(86.6) 不退化，故端点校准 $p_*=1/2$ 同样包含。∎
+
+**定理 86.2（全词充分性、闭区间及参数唯一性）。** (82.4)–(82.5) 满足定义 82.1，且不同 $p$ 不被其中的固定酉或共同共轭等同。因此定理 82.2 的必要充分性成立。
+
+证明。定理 84.2、85.1、85.2、86.1 给必要性：$p(\rho)=p_*$ 于整个原集合，(84.3) 的各块恰为 $G_{p_*}\rho G_{p_*}$，效果为 $G_{p_*}^{-1}EG_{p_*}^{-1}$，两个分支为原酉共轭的一半。
+
+反向，对每个 $c\le p\le1/2$，$G_p$ 严格正、可逆并与两个实际 $V_j$ 交换。全部原态有 $\rho_{\xi\xi}=c$，故
+
+$$
+\operatorname{Tr}(G_p\rho G_p)=p+(1-p)=1.
+\tag{86.9}
+$$
+
+合同保持正性和原集合上的仿射性。(85.6) 给合法效果；$V_j/\sqrt2$ 的伴随平方和为 $I$。对每个有限词，归纳给
+
+$$
+\Phi_h(\sigma_p(\rho))
+=2^{-|h|}G_pV_h\rho V_h^\dagger G_p.
+\tag{86.10}
+$$
+
+以 $F_p$ 配对恰得 (82.3) 第一式；其迹为 $2^{-|h|}$，所以补效果给第二式，空词也成立。固定酉同时变换保持全部配对；共同共轭保持实迹概率，并把分支变成 $\operatorname{Ad}_{\bar V_j}/2$，仍 CP。
+
+源 $SU(2)$ 动态在 Hilbert 空间上只有一条平凡线，故任何两实现之间的固定酉或共同共轭等价必须保持这条动态选出的线。其初始人口就是 $p$，所以不同 $p$ 不等价。最后，$\Phi_j$ 的 Choi 矩阵秩一；其任意 Kraus 向量化都是该 Choi 支持上的向量，故任意表只能共线，平方系数和固定为 $1/2$。这不鉴别各自标量相位。∎
+
+## 追加锚（本行以下为增补区）
+
+## 87. 合法奇异校准、效果效率与被预测确定的量
+
+**定理 87.1（八维效果跨度是分类中的合法点）。** 定理 82.2 的每个标准代表，其可达状态线性空间都是
+
+$$
+\mathscr S_p=\{X\in\operatorname{Herm}_3:X_{\xi\xi}=p\operatorname{Tr}X\},
+\qquad \dim\mathscr S_p=8.
+\tag{87.1}
+$$
+
+但 $I_3$ 加全部原生联合效果的实张成维数为
+
+$$
+\dim\operatorname{span}_{\mathbb R}
+\bigl(\{I_3\}\cup\{\Phi_h^*(F_p):h\text{ 有限}\}\bigr)
+=\begin{cases}
+8,&p=2c/(1+c),\ c\le1/3,\\
+9,&\text{其余合法 }p.
+\end{cases}
+\tag{87.2}
+$$
+
+在八维情形，其迹配对消去子恰为 $\mathbb RH$，其中 $H=\operatorname{diag}(1,-1/2,-1/2)$。此点及两个投影端点不使 $G_p$ 奇异。
+
+证明。$G_p$ 与源群交换，$\operatorname{Ad}_{G_p}$ 把八维 $\mathscr S_c$ 双射到 $\mathscr S_p$，给 (87.1)。$SU(2)$ 效果轨道分解为一个非零固定标量分量 $\operatorname{diag}(A_F,t_F,t_F)$、一个非零交叉基本四维分量和一个非零下块伴随三维分量。两个非平凡分量不可约且不同构，完整位于轨道张成。添加 $I_3$ 时，两个标量方向独立恰在 $A_F\ne t_F$。用 (85.1) 解得相等恰在 (85.8)。当 $A_F=t_F$，两标量方向重合，唯一正交标量为 $H$；所有词效果都消去它。非零词权重不改变张成维数。
+
+这说明在定理 84.2 阶段添加 $\nu sH$ 确实可能在所有读数下不可见；定理 86.1 使用整个原集合的正性才排除它。源的九维效果基不能被误当作竞争者的信息完备前提。在 $c=1/3$，奇异校准恰与 $p=1/2$ 投影端点重合，效果跨度仍八维，正性排除仍成立。所有推导只除以 $c,1-c,p,1-p$ 及非零的 $k,b$，从未除以 $1-2p$；因此 $p=1/2$ 的纯度方程重根也未被遗漏。$p=c$ 不满足 $A_F=t_F$，因为 $c<1$。若 $c>1/3$，特殊值不合法，所有合法校准的跨度都是九维。∎
+
+**定理 87.2（效率全区间与秩、谱的不同地位）。** 在同一个原生预测表的全部复三维实现内，效果秩固定为一，但其效率 $\|F\|=\operatorname{Tr}F$ 的值恰遍历
+
+$$
+\left[\frac12+\sqrt{c(1-c)},1\right].
+\tag{87.3}
+$$
+
+每个原态的编码秩固定，而一般混态的谱、纯度和 von Neumann 熵不由原生表唯一确定。具体写 $a_p=p/c$、$b_p=(1-p)/(1-c)$，有
+
+$$
+\begin{gathered}
+\operatorname{rank}\sigma_p(\rho)=\operatorname{rank}\rho,\qquad
+\det\sigma_p(\rho)=a_pb_p^2\det\rho,\\
+\operatorname{Tr}(\sigma_p(\rho)^2)
+=p^2+2a_pb_p\|z\|^2+b_p^2\operatorname{Tr}(Q^2),
+\quad \rho=\begin{pmatrix}c&z^\dagger\\z&Q\end{pmatrix}.
+\end{gathered}
+\tag{87.4}
+$$
+
+证明。效率是 (85.6) 的 $\lambda(p)$。其导数为 $-c/(2p^2)+(1-c)/(2(1-p)^2)$，唯一最小点
+
+$$
+p_{\rm eff}=\frac{\sqrt c}{\sqrt c+\sqrt{1-c}}\in[c,1/2]
+\tag{87.5}
+$$
+
+给 (87.3) 下端；两个区间端点给一，连续性给整个区间。$G_p$ 可逆，合同保持秩，行列式相乘和分块平方给 (87.4)。在内部 $c<p<1/2$ 时效果是严格小于其支撑投影的秩一效果；投影恰在两个端点。混态谱与熵确实可变的原域实例见定理 88.2。
+
+第二卷的源效果基从精确表确定源 $\rho$；定理 82.2 则使所有允许的三维实现具有相同的编码秩、同一对分支通道（取固定酉或共同共轭等价）及同一完整词动力学。分支的 Choi 秩、各词超算子谱和酉相对本征相位因此在该等价意义下固定；标量 Kraus 相位仍不属于通道。任何表示量在这次实验中可识别，当且仅当它在所列 $p$ 族及其固定坐标等价上恒定。这是给定模型类内的精确判断，未涉及更大载体的隐藏自由度。∎
+
+## 88. 全部例子的原五维来源与精确半参数反例
+
+**定理 88.1（分类所用纯、混合态都对应原通道）。** 定理 85.2 的曲线、定理 86.1 的两支混合边界以及下述 $d=1/2$ 的实例，均属于原完整 $\mathcal K_d$ 并有原域 $M_3\to M_5$ CPTP 提升，具有原全部完整输入效果 $Y_j$ 和后继 $S_\rho$。
+
+证明。复用第一卷定理 35.4 和本卷 (55.5) 的一般提升，明确为
+
+$$
+\begin{gathered}
+D_+=\frac1{\sqrt2}\begin{pmatrix}1&1&0&0&0\\0&0&\sqrt2&0&0\\0&0&0&1&1\end{pmatrix},\quad
+D_-=\frac1{\sqrt2}\begin{pmatrix}1&-1&0&0&0\\0&0&0&0&0\\0&0&0&-1&1\end{pmatrix},\\
+\omega=D_+^\dagger AD_++D_-^\dagger DD_-,\qquad
+T_\omega(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega.
+\end{gathered}
+\tag{88.1}
+$$
+
+$x\mapsto(D_+x,D_-x)$ 是 $\mathbb C^5\to\mathbb C^3\oplus N$ 的酉识别；$A,D$ 是 (54.2) 中实际正分解，故 $\omega$ 正且迹一。$T_\omega$ 的 Kraus 表为 $BP_+$ 及 $\sqrt{\lambda_r}w_rf^\dagger$，其中 $\omega=\sum_r\lambda_rw_rw_r^\dagger$；伴随平方和为 $P_++ff^\dagger=I_3$。第一卷 (35.3)、(35.6) 给
+
+$$
+\begin{gathered}
+T_\omega^*(J_0)=\operatorname{diag}(1,0,d),\\
+T_\omega^*(J_1)=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\qquad
+T_\omega^*(J_2)=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix},\\
+\mathcal GT_\omega(X)=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho]B^\dagger=S_\rho(X).
+\end{gathered}
+\tag{88.2}
+$$
+
+三个 $Y_j$ 是 $(q,r,f)$ 输入基中的完整矩阵，含全部跨条目，不只是 $ff$ 上的三个数；原递推 $J_{j+2}=(J_j+J_{j+1})/2$、$j\ge1$ 延续到所有深度。故这是原纤维提升而非矩拟合。第二卷 (39.5)、(39.7) 再给同一时间词下的两个原始联合终端响应。
+
+对纯曲线取 $A=\psi_t\psi_t^\dagger,D=0$，其物理纯向量正是 (70.4) 的
+
+$$
+\eta_t=\sqrt d\,p_H+\sqrt d(e^{\mathrm it}-1)Br
++\mathrm i(3e^{\mathrm it}-2)f_d(t)c_H,
+\quad p_H=Bq,\quad c_H=(e_0+e_1-e_3-e_4)/2.
+\tag{88.3}
+$$
+
+供应恒等式 $D_+^\dagger(a,h_{\rm out},g)=(p_H,Br,c_H)$、$K_j\eta_t=B\psi_t/\sqrt2$ 保留实际五维仪器。对 (86.7)，取 $u_+=D_+^\dagger u_\epsilon$、$w_-=D_-^\dagger w_v$，则 $\omega=u_+u_+^\dagger+\epsilon w_-w_-^\dagger$。其每个参数来自已证的原正分解，因而直接消费相同的 (88.1)–(88.2)。这些提升的存在没有增加实际制备分解或访问其环境的权限。∎
+
+**定理 88.2（$d=1/2$ 的相同预测、不同混谱与效果）。** 对任意允许的 $\theta$，原态
+
+$$
+\rho_{\rm mix}=\tfrac12(aa^\dagger+gg^\dagger)
+\tag{88.4}
+$$
+
+在 $p=1/4,3/8,1/2$ 三个实现中的谱分别为
+
+$$
+\{1/2,1/2,0\},\qquad\{7/12,5/12,0\},\qquad\{2/3,1/3,0\},
+\tag{88.5}
+$$
+
+纯度分别为 $1/2,37/72,5/9$。首末两者的熵分别为 $\log2$ 和 $-\frac23\log\frac23-\frac13\log\frac13$；三者的全部原生联合表相同。两个端点效果为投影，$p=3/8$ 的效率为 $14/15$。另一个合法校准 $p=2/5$ 的效率为 $15/16$、效果跨度为八。
+
+证明。$a_{\xi}=1/\sqrt2$、$g_{\xi}=0$、$a\perp g$。$\rho_{\rm mix}$ 的迹、$aa$ 人口和 $C,E$ 两矩为 $1,1/2,1/2,7/32$，取 $A=\rho_{\rm mix},D=0$ 即为实际集合分解。其原提升为 (88.1)，$\omega=(p_Hp_H^\dagger+c_Hc_H^\dagger)/2$，不替换原后继。
+
+$G_pa$ 与 $G_pg$ 仍正交；其平方范数为 $2p+2(1-p)/3$ 和 $4(1-p)/3$。故两个非零本征值为 $(1+2p)/3$、$2(1-p)/3$，代入给 (88.5) 及纯度、熵。用 (85.6) 给效果数值；$c=1/4$ 时 (85.8) 为 $p=2/5$，定理 87.1 给八维跨度。所有表相同直接由 (86.10)，不是只相同于某个有限终点。∎
+
+**定理 88.3（原纯对的无限制区分性仍依校准而变）。** 在 $d=1/2$，取原纯态及其原五维提升
+
+$$
+\psi_\pm=(a\pm\mathrm i g)/\sqrt2,\qquad
+\eta_\pm=(p_H\pm\mathrm i c_H)/\sqrt2.
+\tag{88.6}
+$$
+
+$p=1/4$ 时两个编码正交，迹范数距离为二；$p=1/2$ 时重叠模为 $1/3$，距离为 $4\sqrt2/3$。两种表示对各个原世界仍给相同的全部原生联合表，但不存在将后一对编码同时送回前一对的 CPTP 映射。
+
+证明。$\psi_\pm$ 是 (85.9) 在 $t=0$ 的两个原相位符号，或直接取 $A=\psi_\pm\psi_\pm^\dagger,D=0$ 检验原约束。(88.1) 的 $\omega=\eta_\pm\eta_\pm^\dagger$ 给同一个原域提升。编码纯向量 $G_p\psi_\pm$ 已归一化，其内积为
+
+$$
+\langle G_p\psi_+,G_p\psi_-\rangle=(4p-1)/3.
+\tag{88.7}
+$$
+
+两纯态的迹范数距离为 $2\sqrt{1-|\langle\varphi,\chi\rangle|^2}$，代入得到所列值。CPTP 迹距离收缩排除从 $4\sqrt2/3$ 到二的同时映射。它没有说两个不同原世界的原生表彼此相等；相等的是同一世界在不同校准中的表。因而受限原生表等价没有供应所有量子决策、任意效果或带辅助系统统计实验的等价。∎
+
+## 89. 条件酉守恒、擦除记录与相干记录的三个对象
+
+**定理 89.1（每个固定校准内的守恒及其适用对象）。** 对定理 82.2 中任意固定的实现，每个给定历史的归一化后继都是酉共轭。因此它保持该实现内的整个密度谱、熵以及成对态的迹距离和保真度。两个分支共同固定的可观察量代数为
+
+$$
+\{X:U_j^\dagger XU_j=X\ (j=0,1)\}
+=\operatorname{span}_{\mathbb C}\{I_3,P_{\rm singlet}\}.
+\tag{89.1}
+$$
+
+其准备人口 $\operatorname{Tr}(P_{\rm singlet}\sigma(\rho))=p$ 对原态不变，却在预测等价校准之间变化。擦除分支标签的通道一般不保持记忆熵。
+
+证明。这里 $S(X)=-\operatorname{Tr}(X\log X)$，约定 $0\log0=0$；成对保真度取 $\operatorname{Fid}(X,Y)=\|\sqrt X\sqrt Y\|_1^2$，迹范数距离不除以二。每个历史总质量为 $2^{-|h|}>0$，归一化后继为 $\operatorname{Ad}_{U_h}$，酉不变量遂给第一项。这是给定历史的数学后继，不授予选支操作。固定量等价于与两个酉交换，因而与其紧闭群交换。该群包含 $1\oplus SU(2)$，其单态与双态不等价，双态复不可约；Schur 引理给块标量，反向这两个块标量确实与实际两个生成元交换。故有 (89.1)，其人口值由 (82.4) 给出。
+
+标准代表的非选择通道为
+
+$$
+\Lambda(X)=\tfrac12(V_0XV_0^\dagger+V_1XV_1^\dagger)
+=\operatorname{Ad}_{V_0}\left(\frac{X+WXW}{2}\right).
+\tag{89.2}
+$$
+
+它为随机酉通道，熵凹性给 $S(\Lambda(X))\ge S(X)$，但不保证等号。对原 $d=1/2$、标准校准 $p=c$ 的纯 $\psi_+$，其 $f$ 人口为 $5/16$，$W$ 的正扇区人口为 $11/16$；去相干后两块纯向量正交，故输出谱为 $\{11/16,5/16,0\}$，熵严格大于输入的零。额外酉 $V_0$ 不改变该谱。因此不能把条件酉守恒写成擦除标签后的无条件熵守恒。∎
+
+**定理 89.2（相干记录等距的存在及输出谱）。** 对每个固定实现，数学映射
+
+$$
+\mathcal V:\mathbb C^3\longrightarrow\mathbb C^3\otimes\mathbb C^2,
+\qquad \mathcal Vx=\frac1{\sqrt2}\sum_{j=0}^1U_jx\otimes|j\rangle
+\tag{89.3}
+$$
+
+是等距；保留其整个输出时，$\mathcal VX\mathcal V^\dagger$ 与 $X$ 有相同非零谱及熵。若记录被去相干，联合输出熵为 $S(X)+\log2$；若再丢弃记录，记忆输出为 $\Lambda(X)$。等距的存在不推出原生合同提供相干环境、记录相位或逆向控制访问。
+
+证明。$\mathcal V^\dagger\mathcal V=\frac12\sum_jU_j^\dagger U_j=I_3$，谱结论来自等距嵌入。记录去相干后是两个正交块 $\frac12U_jXU_j^\dagger$，其本征值为 $X$ 每个本征值的一半各重复两次，所以熵为所列值；偏迹给 (89.2) 的相应坐标版本。给 $U_j$ 独立乘相位不改变分支 CP 映射，却可改变 (89.3) 的记录间相位；原合同没有辨别这些相位的记录测量。因此这个数学扩张也没有补出原合同未取得的操作权利。∎
+
+## 90. 本源对应、成熟工具与尚待取得的校准关系
+
+**定义 90.1（分类的数学归属及精确供应）。** 定理 82.2 的 `repo-derived` 内容是：在原全部复 $\mathcal K_d$ 及全词双终端合同中，对全部三维复 CP 竞争者给出唯一残余参数的闭区间、同时匹配两个生成元、并用原混合边界排除不被原生读数看到的仿射偏移。这是源特定综合，不主张工具发明权或全域文献优先权。既有复三维最小值、原集合与提升、实六维最小值和有限记录结果是供应，不作为这项分类的新发现。
+
+原对象的参数对应为：第一卷 §17.1 的五维 $K_0,K_1,B$ 及 $U,W,E$ 固定 (82.1)；第一卷定理 35.2、35.4、35.6 固定全复输入、完整 $\mathcal K_d$、原 $N$ 及全部提升；第二卷定理 39.3–39.4 固定时间顺序、双终端及 $2^{-|h|}$ 权重，定理 40.1 固定源 $I_3$ 加八个实际加权效果；本卷引理 63.1 及 (64.10)–(64.12) 固定实际 $SU(2)$ 和八维源可达空间；引理 70.1–70.2 固定原纯曲线、五维提升和矩阵条目函数空间。这里没有重作实五维排除或把实因子成本当成复因子成本。
+
+作为 `literature-attested` 的中间工具，Choi–Effros，*Injectivity and operator spaces*，J. Functional Analysis **24**, 156–209，定理 3.1，及 [Prunaru 定理 1](https://arxiv.org/html/1304.6664v2)，只在 (83.7) 的完整复 UCP 幂等元处消费。保单位性给收缩性，像继承的是完整矩阵序；(83.8) 的乘法域属于抽象余域的收缩。有限维复 $C^*$ 直和结构、Schwarz 及乘法域都是成熟工具，物理维数约束由 (83.9) 的实际忠实表示桥承担。
+
+[Nayak–Sen 定理 2.1–2.2](https://arxiv.org/html/quant-ph/0605041v4) 的全域逆条件不能从初始可达公平性省略：定理 83.1 先给全矩阵 CP 逆，(84.1)–(84.2) 再使用原 TP 和得到逐支 TP，此后其等维 CPTP 逆特例才适用。没有把预测商上的可逆性代替一个 CP 全域逆。
+
+[Hall，*An Elementary Introduction to Groups and Representations*](https://arxiv.org/html/math-ph/0005032v1)，命题 2.12、定理 3.23、5.33 及有限维 $SU(2)$ 表示部分，分别供应 $SU(2)$ 单连通性、闭矩阵群的局部指数及单连通域的 Lie 同态积分；对象是已证明紧闭的矩阵群，核理想以 Ad 不变内积显式分裂。Schur 引理的实版本只给非零交织可逆，复标量交换子部分不能用于实四维基本模；(84.4) 明确保留其完整四元数交换子，(84.5) 用两个原生成元而非仅 $SU(2)$ 排除混合交织。隐函数定理只在 (86.6) 非零的四实坐标导数处使用；局部解经 (86.7) 回到原正分解和实际五维提升。
+
+[Monras–Winter，*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*](https://arxiv.org/html/1412.3634v1) 供应可达／零观察商及 CP 正实现的成熟背景，其平稳过程与锥合同不直接等于本源带制备索引和双终端的合同。(83.5) 的商、可达支持及复成本逐项由原记录建立。[Jenčová，*Comparison of quantum channels and statistical experiments*](https://arxiv.org/html/1512.07016v2)，定理 4 的随机化判据要求相应量子决策空间或辅助系统检验；受限原生词效果未供应这些测试，故不能由原生表等价直接推出 CPTP 统计等价，定理 88.3 给出本源的实际障碍。Lin 等 [arXiv:1810.05631v2](https://arxiv.org/abs/1810.05631v2) 的制备／门／读出共同规范自由度是已有背景；本源的新增负担是整个原集合上的穷尽分类和隐藏仿射项消去，而非重新命名一般规范例子。
+
+**定义 90.2（条件重建与具体的取得问题）。** 定理 82.2 是在给定复 Hilbert 载体、Born 配对、复 Kraus CP、仿射混合语义、仪器组合以及 (54.2)、(54.8) 的实际源／取得合同内的条件重建。它没有分类更大维复实现，没有给噪声或有限样本分类，没有确定原擦除菜单的全 $d$ 最小最大中心，没有确立量子原则的物理起源或一组逻辑最小公设，也没有无条件信息守恒或经验物理结论。$d=0,1$ 或 $\sin(2\theta)=0$ 不属于该定理；零圆半径、源维数及导数在这些被排除边界须另行分析。
+
+剩余的起源侧问题可以具体表为：原环境就绪、重复仪器和终端记录之外，哪一个实际取得的共同关系使兼容表示族上的 $p$ 及仍存坐标自由度成为可认证量？若另供应动态单态投影 $P_{\rm singlet}$ 的已标定读出，其概率就是 $p$，因此会固定这一个参数；但 (89.1) 中该算子的数学存在及守恒没有供应测量它的权限。原生表不变时，没有只对它后处理的函数能区分不同 $p$。单独取得 $F$ 是投影仍留下 $p=c$ 与 $p=1/2$ 两个不同端点；单独取得效果效率也一般留下最小值两侧的两个校准。这些正是待补的关系辨识义务，而非把某个额外操作直接加入既有合同。
+
+若目标还包括固定共同酉坐标或共轭方向，新增关系须相应打破该共同等价，例如经实际供应的相干参考及其联合校准；只是宣称有共同来源或可以写出一个复坐标并不完成它。紧闭包、Haar 平均、群逆和正过滤在证明中约束全部精确兼容实现，始终不增加控制、选支、独立副本、环境或相位访问。精确概率等式亦不等于有限实验已取得这些实数。原全参数最小最大、有限噪声和取得问题保持各自原目标与量词，不能被此三维分类替换。
+
+## 追加锚（本行以下为增补区）
