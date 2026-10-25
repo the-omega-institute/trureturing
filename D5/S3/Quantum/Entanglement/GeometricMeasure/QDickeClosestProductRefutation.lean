@@ -8,7 +8,6 @@
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Positivity
 
