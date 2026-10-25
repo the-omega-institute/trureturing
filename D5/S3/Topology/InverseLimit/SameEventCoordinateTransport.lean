@@ -11,6 +11,8 @@ through its actual SignedSuccessorCoordinates.Result. No split is constructed
 or assumed to have happened in a raw history by this local lemma. -/
 import D5.S3.Topology.InverseLimit.SignedSuccessorCoordinates
 
+/-! Transport full fibres through the same coordinate insertion. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -24,7 +26,7 @@ open Measures.SignedSplitSuccessor
 
 private theorem same_result_whole_fibre_transport
     {a b : Ordinal.{0}} (H : Prefix (Order.succ a))
-    (Y Z : Set (H.Space (last a))) (R : Result H Y Z)
+    (Y Z : Set (H.Space (SignedSuccessorCoordinates.last a))) (R : Result H Y Z)
     (hba : b ≤ a) (y : ℕ → Cube b) (M : Fin 2 → Set ℕ)
     (C : TopologicalSpace.Clopens (splitCarrier Y Z))
     (h0 : ∀ n ∈ M 0, ∀ x : splitCarrier Y Z,

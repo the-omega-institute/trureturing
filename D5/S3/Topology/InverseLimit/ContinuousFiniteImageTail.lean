@@ -8,8 +8,9 @@
 
 /- Same-path private tail preparation; no event or history existence is asserted. -/
 import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
-import D5.S3.Topology.InverseLimit.CountableClopenReflection
 import Mathlib.Topology.InductiveDimension.Classes
+
+/-! A continuous clopen preimage contradicts the original proper-stage F law. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,9 +20,11 @@ open scoped Topology Ordinal
 
 namespace D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
 
-open SignedProperLimit SignedBirthEnumeration CountableClopenReflection
+open SignedProperLimit SignedBirthEnumeration
 
 universe u
+
+attribute [local instance] Classical.propDecidable
 
 /-- This uses the continuous preimage, never the image of a source clopen. -/
 private theorem exists_ambient_clopen_preimage {X : Type u}
@@ -49,28 +52,6 @@ private theorem exists_ambient_clopen_preimage {X : Type u}
   · intro hfx
     exact hED ⟨x, hfx, rfl⟩
 
-/-- The one ambient extension is reflected once, above an arbitrary proper
-bound. No map, inverse, or graph is reflected. -/
-private theorem exists_later_preimage_stage (H : Prefix (ω₁ : Ordinal.{0}))
-    (base : Label) (A : Set H.LimitSpace) (hA : IsClosed A)
-    (f : A → H.LimitSpace) (hf : Continuous f)
-    (C : Set H.LimitSpace) (hC : IsClopen C) :
-    ∃ c : Label, base ≤ c ∧ ∃ Dc : Set (H.Space c), IsClopen Dc ∧
-      ∀ x : A, H.projection c x.val ∈ Dc ↔ f x ∈ C := by
-  obtain ⟨D, hD, htrace⟩ := exists_ambient_clopen_preimage A hA f hf C hC
-  have hl : Order.IsSuccLimit (ω₁ : Ordinal.{0}) := Cardinal.isSuccLimit_omega 1
-  have hs : ∀ {i j} (g : i ⟶ j), Surjective (H.diagram.map g) := by
-    intro i j g y
-    obtain ⟨z, hz⟩ := H.onto j.unop i.unop (leOfHom g.unop) y
-    exact ⟨z, Subtype.ext hz⟩
-  obtain ⟨c, hbc, V, hV, hDV, _, _⟩ :=
-    CountableClopenReflection.exists_common_stage H.diagram H.cone
-      (H.coneIsLimit hl) hs base (fun _ : Unit => D) (fun _ => hD)
-  refine ⟨c, hbc, V (), hV (), fun x => ?_⟩
-  have hh := htrace x
-  rw [hDV ()] at hh
-  exact hh
-
 /-- The finite error is deleted from each original reservoir separately.
 The split pools need not cover J exactly. -/
 private theorem infinite_original_pools (J : Set ℕ) (N M : Bool → Set ℕ)
@@ -82,7 +63,7 @@ private theorem infinite_original_pools (J : Set ℕ) (N M : Bool → Set ℕ)
   have hfinite : {n : ℕ | ¬ (n ∈ J → n ∈ M false ∪ M true)}.Finite :=
     Filter.mem_cofinite.mp hDJ
   intro e
-  apply ((hC e).diff hfinite).mono
+  apply ((hC e).sdiff hfinite).mono
   rintro n ⟨⟨hnJ, hnN⟩, hnerr⟩
   have hnM : n ∈ M false ∪ M true := by
     by_contra hh
@@ -114,36 +95,28 @@ private theorem not_tendsto_of_two_infinite_pools
   have hb := hN n1 hN1.le hn1.1
   rw [hg0 n0 hn0.2, Real.dist_eq] at ha
   rw [hg1 n1 hn1.2, Real.dist_eq] at hb
-  have hc := abs_add (1 - L) (L - 0)
+  have hc := abs_add_le (1 - L) (L - 0)
   rw [abs_sub_comm 0 L] at hb
   have he : (1 - L) + (L - 0) = (1 : ℝ) := by ring
   rw [he] at hc
-  norm_num at hc
+  norm_num at ha hb hc
   linarith
 
-/-- The final contradiction is local to an original proper prefix. The split
-information is a local consumer input, not a new history interface or endpoint
-assumption: the eventual endpoint must obtain it from the one actual event.
-The existing public signedFunctional_charFn supplies the observable. -/
-private theorem proper_F_excludes_split_dirac_lifts
+/-- The original every-selection F law evaluated on the entire original
+source Dirac lift, with a reference chosen after that lift. -/
+private theorem dirac_test_tendsto
     {l : Ordinal.{0}} (H : Prefix l) (D : H.Data) (laws : H.Laws D)
-    (r d b c : Coord l) (hwr : ω ≤ r.1)
-    (hrb : r < b) (hdb : d < b) (hbc : b ≤ c)
-    (M : Bool → Set ℕ)
-    (hM : ∀ e, M e ⊆ D.N r d e)
-    (hJb : D.J r d b = M false ∪ M true)
+    (r d c : Coord l) (hwr : ω ≤ r.1) (hrc : r < c) (hdc : d < c)
     (z : ℕ → H.Space c)
     (hsource : ∀ n, (D.nu r ⟨d.1, d.2.trans D.proper⟩ n).1 =
-      (Measure.dirac (H.map r c (hrb.le.trans hbc) (z n))).toSignedMeasure)
-    (Dc : Set (H.Space c)) (hDc : IsClopen Dc)
-    (hzero : ∀ n ∈ M false, z n ∈ Dc)
-    (hone : ∀ n ∈ M true, z n ∉ Dc) : False := by
+      (Measure.dirac (H.map r c hrc.le (z n))).toSignedMeasure)
+    (Dc : Set (H.Space c)) (hDc : IsClopen Dc) :
+    ∃ L : ℝ, Tendsto (fun n => if z n ∈ Dc then (1 : ℝ) else 0)
+      (along (D.J r d c)) (𝓝 L) := by
   classical
   letI : Countable (Coord c.1) :=
     (Cardinal.countable_Iio_of_lt_omega_one (c.2.trans D.proper)).to_subtype
   letI : MetricSpace (H.Space c) := TopologicalSpace.metrizableSpaceMetric _
-  have hrc : r < c := hrb.trans_le hbc
-  have hdc : d < c := hdb.trans_le hbc
   let sigma : ℕ → RegularSigned (H.Space c) := fun n => regularPoint (z n)
   have hmass (n : ℕ) : (sigma n).1.totalVariation univ = 1 := by
     simp [sigma, regularPoint, SignedMeasure.totalVariation,
@@ -160,6 +133,7 @@ private theorem proper_F_excludes_split_dirac_lifts
     change ((Measure.dirac (z n)) ((H.map r c hrc.le) ⁻¹' B)).toReal = _
     rw [← Measure.map_apply (H.map r c hrc.le).continuous.measurable hB,
       Measure.map_dirac' (H.map r c hrc.le).continuous.measurable]
+    rfl
   have hclass (n : ℕ) : H.OldClass D r d c hrc.le n (sigma n) :=
     ⟨hmass n, (hmap n).trans (hsource n).symm⟩
   obtain ⟨mu, _, hconv⟩ := laws.F r d c hrc hwr hdc sigma hclass
@@ -169,22 +143,64 @@ private theorem proper_F_excludes_split_dirac_lifts
     (along (D.J r d c)) (𝓝 (Measures.NormPreservingLifts.signedFunctional mu.1 g)) at heval
   have htest : Tendsto (fun n => (sigma n).1 Dc) (along (D.J r d c)) (𝓝 (mu.1 Dc)) := by
     simpa only [g, Measures.ClopenCauchyConvergence.signedFunctional_charFn] using heval
-  have hDJ : AlmostSubset (D.J r d c) (M false ∪ M true) := by
-    rw [← hJb]
-    exact laws.DJ r d b c hwr hrb hdb hbc
-  have hpools := infinite_original_pools (D.J r d c) (D.N r d) M
-    (laws.B r d hwr) (fun e => laws.C r d c e hwr hrc hdc) hM hDJ
   have hvalue (n : ℕ) : (sigma n).1 Dc = if z n ∈ Dc then (1 : ℝ) else 0 := by
     change (pointJordan (z n)).toSignedMeasure Dc = _
     simp [pointJordan, JordanDecomposition.toSignedMeasure,
       Measure.toSignedMeasure_apply_measurable hDc.isClosed.measurableSet,
       Measure.real, Measure.dirac_apply' _ hDc.isClosed.measurableSet]
-  apply not_tendsto_of_two_infinite_pools (D.J r d c) (M false) (M true)
-    (fun n => (sigma n).1 Dc) (hpools false) (hpools true) ?_ ?_ ⟨mu.1 Dc, htest⟩
-  · intro n hn
-    rw [hvalue, if_pos (hzero n hn)]
-  · intro n hn
-    rw [hvalue, if_neg (hone n hn)]
+    split_ifs with hn
+    · rw [Set.indicator_of_mem hn]
+      norm_num
+    · rw [Set.indicator_of_notMem hn]
+      norm_num
+  exact ⟨mu.1 Dc, by simpa only [hvalue] using htest⟩
+
+/-- The original proper-stage laws alone force a clopen dichotomy for every
+all-n Dirac lift of an original whole birth sequence. No split event or pool
+replacement is a premise of this conclusion. -/
+theorem proper_F_clopen_dichotomy
+    {l : Ordinal.{0}} (H : Prefix l) (D : H.Data) (laws : H.Laws D)
+    (r d c : Coord l) (hwr : ω ≤ r.1) (hrc : r < c) (hdc : d < c)
+    (z : ℕ → H.Space c)
+    (hsource : ∀ n, (D.nu r ⟨d.1, d.2.trans D.proper⟩ n).1 =
+      (Measure.dirac (H.map r c hrc.le (z n))).toSignedMeasure) :
+    ∀ Dc : Set (H.Space c), IsClopen Dc →
+      (D.J r d c ∩ {n | z n ∈ Dc}).Finite ∨
+      (D.J r d c ∩ {n | z n ∉ Dc}).Finite := by
+  classical
+  intro Dc hDc
+  obtain ⟨L, hL⟩ := dirac_test_tendsto H D laws r d c hwr hrc hdc z hsource Dc hDc
+  by_contra h
+  have h0 : (D.J r d c ∩ {n | z n ∈ Dc}).Infinite := fun h0 => h (Or.inl h0)
+  have h1 : (D.J r d c ∩ {n | z n ∉ Dc}).Infinite := fun h1 => h (Or.inr h1)
+  exact not_tendsto_of_two_infinite_pools (D.J r d c) {n | z n ∈ Dc} {n | z n ∉ Dc}
+    (fun n => if z n ∈ Dc then (1 : ℝ) else 0) h0 h1
+    (fun n hn => if_pos hn) (fun n hn => if_neg hn) ⟨L, hL⟩
+
+/-- The two original reservoirs survive the actual finite DJ error. -/
+private theorem proper_F_excludes_split_dirac_lifts
+    {l : Ordinal.{0}} (H : Prefix l) (D : H.Data) (laws : H.Laws D)
+    (r d b c : Coord l) (hwr : ω ≤ r.1)
+    (hrb : r < b) (hdb : d < b) (hbc : b ≤ c)
+    (M : Bool → Set ℕ)
+    (hM : ∀ e, M e ⊆ D.N r d e)
+    (hJb : D.J r d b = M false ∪ M true)
+    (z : ℕ → H.Space c)
+    (hsource : ∀ n, (D.nu r ⟨d.1, d.2.trans D.proper⟩ n).1 =
+      (Measure.dirac (H.map r c (hrb.le.trans hbc) (z n))).toSignedMeasure)
+    (Dc : Set (H.Space c)) (hDc : IsClopen Dc)
+    (hzero : ∀ n ∈ M false, z n ∈ Dc)
+    (hone : ∀ n ∈ M true, z n ∉ Dc) : False := by
+  have hrc : r < c := hrb.trans_le hbc
+  have hdc : d < c := hdb.trans_le hbc
+  have hDJ : AlmostSubset (D.J r d c) (M false ∪ M true) := by
+    rw [← hJb]
+    exact laws.DJ r d b c hwr hrb hdb hbc
+  have hpools := infinite_original_pools (D.J r d c) (D.N r d) M
+    (laws.B r d hwr) (fun e => laws.C r d c e hwr hrc hdc) hM hDJ
+  rcases proper_F_clopen_dichotomy H D laws r d c hwr hrc hdc z hsource Dc hDc with h0 | h1
+  · exact hpools false (h0.subset (fun n hn => ⟨hn.1, hzero n hn.2⟩))
+  · exact hpools true (h1.subset (fun n hn => ⟨hn.1, hone n hn.2⟩))
 
 /-- At a proper stage obeying the original every-selection F law, no continuous
 map on a closed domain separates the two pools of any historical J replacement.

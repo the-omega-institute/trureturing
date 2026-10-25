@@ -15,6 +15,8 @@ import D5.S3.Topology.InverseLimit.CountableClopenReflection
 import D5.S3.Topology.InverseLimit.CofinalTaskSchedule
 import D5.S3.Topology.Separation.SynchronizedClopenSupports
 
+/-! Original launch capture for continuous maps on the literal limit carrier. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -58,7 +60,7 @@ theorem exists_original_dirac_capture
         (∀ n, ((nu theta (hwb.trans hbt.le) t).1 n).1 =
           (Measure.dirac (H.projection theta (f (x n)))).toSignedMeasure) ∧
         (∀ n, H.projection theta (f (x n)) ∈
-          (V theta (hwb.trans hbt.le)).clopen n ∩ P theta (hwb.trans hbt.le) (decode k).2) ∧
+          ((V theta (hwb.trans hbt.le)).clopen n : Set (H.Space theta)) ∩ (P theta (hwb.trans hbt.le) (decode k).2 : Set (H.Space theta))) ∧
         (∀ n, (((nu theta (hwb.trans hbt.le) s).1 n).1).totalVariation
           (P theta (hwb.trans hbt.le) (decode k).1 : Set (H.Space theta))ᶜ = 0) ∧
         (∀ y : ℕ → H.Space theta,
@@ -67,6 +69,7 @@ theorem exists_original_dirac_capture
   classical
   letI : ∀ a : Label, Countable (Coord a.1) := fun a =>
     (Cardinal.countable_Iio_of_lt_omega_one a.2).to_subtype
+  letI : ∀ j, Nonempty (H.diagram.obj j) := fun j => inferInstanceAs (Nonempty (H.Space j.unop))
   have hl : Order.IsSuccLimit (ω₁ : Ordinal.{0}) := Cardinal.isSuccLimit_omega 1
   obtain ⟨R, hR, hAR, hfR, x, W, hW, hWdis, hxW⟩ :=
     Separation.SynchronizedClopenSupports.exists_synchronized_clopen_supports
@@ -113,12 +116,14 @@ theorem exists_original_dirac_capture
     rw [hlaunch b i theta hwb hbt hit hres, hi]
     rfl
   have hsrc (n : ℕ) : H.projection theta (x n).val ∈ (V theta hwt).clopen n := by
+    change H.projection theta (x n).val ∈ ((V theta hwt).clopen n : Set (H.Space theta))
     rw [hrow]
     change H.projection b (x n).val ∈ B (.inr n)
     have hh := (hxW n).1
     change (x n).val ∈ T (.inr n) at hh
     rwa [hTB (.inr n)] at hh
   have htgt (n : ℕ) : H.projection theta (f (x n)) ∈ (V theta hwt).clopen n := by
+    change H.projection theta (f (x n)) ∈ ((V theta hwt).clopen n : Set (H.Space theta))
     rw [hrow]
     change H.projection b (f (x n)) ∈ B (.inr n)
     have hh := (hxW n).2
@@ -157,7 +162,8 @@ theorem exists_original_dirac_capture
     hsrc_eq, htgt_eq, ?_, ?_, ?_⟩
   · simpa only [hk, hj, hll] using hRQ
   · intro n
-    simpa only [hk, hll] using And.intro (htgt n) (htgtQ n)
+    simp only [hk, hll]
+    exact ⟨htgt n, htgtQ n⟩
   · intro n
     simp only [hk, hj]
     rw [hs]
@@ -169,7 +175,7 @@ theorem exists_original_dirac_capture
       Set.indicator_of_notMem (not_not.mpr (hsrcR n))]
   · intro y hy
     funext n
-    exact Measure.injective_dirac
+    exact MeasureTheory.injective_dirac
       (Measure.toSignedMeasure_eq_toSignedMeasure_iff.mp ((hy n).symm.trans (htgt_eq n)))
 
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageCapture
