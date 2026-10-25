@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Full signed raw restriction splitting and the disjoint-variation sufficient criterion. -/
+   digest: Signed raw splitting and the full real-dual implication from signed clopen oscillation. -/
 
 import D5.S3.Topology.Measures.SignedRieszRepresentation
 import D5.S3.Topology.Measures.L1RawSplitting
@@ -19,14 +19,15 @@ import Mathlib.Analysis.Normed.Module.DoubleDual
 import Mathlib.Order.Filter.AtTopBot.CountablyGenerated
 
 /-!
-# Signed raw splitting and the disjoint-variation sufficient criterion
+# Signed raw splitting and signed clopen oscillation
 
 The common finite controlling measure is not assumed regular. The density map
 uses the actual L1–L∞ pairing. Its weak limit receives a regular signed
 representative from signed Riesz representation, independently of the
 regularity of a particular density measure. The unconditional signed raw
-splitting is consumed by the full sufficient criterion. The diagonal-TV
-hypothesis for the CH construction remains a separate open obligation.
+splitting is consumed by the full sufficient criteria. Quantitative signed
+clopen oscillation excludes a positive captured-mass limit through a fixed
+TV error estimate. No CH instance of either sufficient hypothesis is supplied.
 -/
 
 set_option autoImplicit false

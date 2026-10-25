@@ -444,3 +444,33 @@ no new literature theorem is attributed to Kania–Kąkol. The sufficient
 hypothesis remains unproved for the proposed CH construction. Neither
 result supplies CH bookkeeping, the signed induction, capture/global
 obligations, the closed-copy prohibition or a solution of Problem 8.2.
+
+
+## Quantitative signed clopen oscillation criterion
+
+On an arbitrary-universe compact Hausdorff zero-dimensional Borel space K,
+`SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation` assumes the
+following explicit property O. Every regular signed norm-one sequence carried
+in total variation by pairwise disjoint nonempty clopens, with positive Jordan
+mass at least one half, has a single clopen Z at which the evaluations are at
+least one sixth infinitely often and zero infinitely often. Under O, arbitrary
+weak-star-convergent sequences in the full real continuous dual of C(K,Real)
+converge under every continuous double-dual test. Uniform boundedness is
+derived, and no positivity or nonemptiness premise is added.
+
+The analytic argument combines the unconditional raw signed restriction split
+with signed clopen disjointization at parameter 1/96. The latter gives one
+constant sign and fixed TV error below 1/48. On the oscillating clopen, the
+selected original evaluations exceed 7/48 infinitely often and have absolute
+value below 1/48 infinitely often, excluding a real limit. A positive raw
+captured-mass limit would yield a norm-one disjointly carried weak-star
+convergent normalized tail by reciprocal continuity, so the mass limit must
+be zero. The small captured part, the weak complementary part and the
+all-subsequence criterion give the full dual implication.
+
+This is a synthesis of classical analytic mechanisms, not a claim of global
+mathematical novelty or attribution of this exact quantitative formulation
+to Kania and Kakol. The cited article supplies the Talagrand-scheme context;
+O remains a separate conditional hypothesis. No formal CH instance of O,
+full signed-ball endpoint, anti-homeomorphism result or official solution of
+Problem 8.2 is established by this criterion.
