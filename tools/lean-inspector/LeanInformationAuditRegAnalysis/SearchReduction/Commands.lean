@@ -531,6 +531,7 @@ structure ProbeCacheRecord where
   targetHeader : List Name × Expr
   result : Observation
   dependencies : Array Declaration := #[]
+  dependencyModule? : Option Name := none
 
 private def probeIdentity (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool) : IO String := do
@@ -584,11 +585,24 @@ def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPubl
   finally setEnv before
   emitLookupRecord s!"PROBE_CACHE_KERNEL_CERTIFICATES count={proofs.size} standard_axioms=true"
 
-/-- Typed dependency declarations are replayed through the kernel before
-consumers recheck certificates and recompute the published classifier. -/
+/-- Freeze only kernel-checked dependency declarations into an ordinary Lean
+module. Hot imports use the same compiled-module trust boundary as cold imports;
+certificates and the classifier are still checked in the current process. -/
+def writeCacheDependencyModule (directory : System.FilePath) (identity : String)
+    (base : Environment) (dependencies : Array Declaration) : MetaM Name := do
+  let module := s!"SearchReductionDependencies_{hash identity}" |>.toName
+  withEnv base <| withPublicationContext do
+    replayCacheDependencies dependencies
+    IO.FS.createDirAll directory
+    writeModule ((← getEnv).setMainModule module)
+      (directory / (module.toString ++ ".olean")) (writeIR := false)
+  return module
+
+/-- Typed dependency declarations are either imported from a kernel-checked
+module or replayed through the kernel before current certificate checks. -/
 unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     (source : Environment) (request : Request) (result : Observation)
-    (base? : Option Environment := none) : CommandElabM Unit := do
+    (base? : Option Environment := none) (importDependencies : Bool := false) : CommandElabM Unit := do
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let path := directory / s!"probe-{hash identity}.pickle"
@@ -606,10 +620,14 @@ unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
     match captureCacheDependencies source base request.target roots with
     | .ok declarations => pure declarations
     | .error error => throwError "{error}"
+  let dependencyModule? ← if importDependencies then
+    pure (some (← liftTermElabM <| writeCacheDependencyModule directory identity base dependencies))
+    else pure none
   IO.FS.createDirAll directory
   let temporary := path.addExtension "tmp"
   pickle temporary ({
-    identity, targetHeader := (info.levelParams, info.type), result, dependencies} : ProbeCacheRecord)
+    identity, targetHeader := (info.levelParams, info.type), result, dependencies,
+    dependencyModule?} : ProbeCacheRecord)
   IO.FS.rename temporary path
 
 unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
@@ -622,7 +640,15 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   probeRegions.modify (·.push region)
   unless record.identity == identity && record.result.target == request.target do
     throwError "search.probe_cache_identity_mismatch"
-  liftTermElabM <| withPublicationContext <| replayCacheDependencies record.dependencies
+  if let some module := record.dependencyModule? then
+    let imported ← getEnv
+    unless imported.allImportedModuleNames.contains module &&
+        record.dependencies.all (fun declaration =>
+          declaration.getNames.all imported.isImportedConst) do
+      throwError "search.cache_dependency_module_not_imported:{module}"
+    emitLookupRecord s!"PROBE_CACHE_IMPORTED_DEPENDENCIES count={record.dependencies.size} module={module}"
+  else
+    liftTermElabM <| withPublicationContext <| replayCacheDependencies record.dependencies
   let source ← getEnv
   profilePhase "probe/cache-load-end"
   let mainModule := (← getEnv).header.mainModule
@@ -729,7 +755,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
     profilePhase "probe/cache-save-start"
     try
-      saveProbeCache directory identity source request result (some cacheBase)
+      saveProbeCache directory identity source request result (some cacheBase) (importDependencies := true)
       -- The runner authenticates this entry only after the entire original
       -- request succeeds. Hot execution retains executeProbe's source audit,
       -- certificate kernel checks and fresh GraphReading publication, while
@@ -739,8 +765,9 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
       -- Reuse the checked payload emitted before importing the source.
       -- Its small environment predates any newly initialized source extensions.
       IO.FS.writeBinFile (directory / payloadName) (← IO.FS.readBinFile auditPayload)
+      let dependencyModule := s!"SearchReductionDependencies_{hash identity}"
       IO.FS.writeFile (directory / (entry ++ ".lean"))
-        ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
+        (s!"import {dependencyModule}\n" ++
           "set_option Elab.async false\nset_option maxHeartbeats 0\n" ++
           "run_cmd do\n" ++
           "  let some directory ← IO.getEnv \"SEARCH_REDUCTION_PROBE_READ\"\n" ++

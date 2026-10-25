@@ -88,6 +88,8 @@ class ProbeCacheTests(unittest.TestCase):
             self.assertEqual(cache.run(["lean", "request.lean"]), 23)
         self.assertEqual(commands, [["lean", str(path / "entry-probe.lean")],
                                     ["lean", "request.lean"]])
+        self.assertEqual(environments[0]["LEAN_PATH"].split(os.pathsep)[0], str(path))
+        self.assertNotEqual(environments[1].get("LEAN_PATH", "").split(os.pathsep)[0], str(path))
         self.assertIn("SEARCH_REDUCTION_PROBE_READ", environments[0])
         self.assertNotIn("SEARCH_REDUCTION_PROBE_READ", environments[1])
         self.assertIn("SEARCH_REDUCTION_PROBE_WRITE", environments[1])

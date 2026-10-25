@@ -17,7 +17,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v3"
+VERSION = "probe-cache-v4"
 
 
 def canonical(value):
@@ -208,7 +208,11 @@ def run(command):
             hot_command = replay_command(command, directory)
             if hot_command != command:
                 emit("PROBE_CACHE_ENTRY selected=authenticated request_elaboration=reused")
-            result = subprocess.call(hot_command, env=env)
+            hot_env = dict(env)
+            # The authenticated entry imports its checked dependency module.
+            # Only this hot subprocess sees the record directory on Lean's path.
+            hot_env["LEAN_PATH"] = str(directory.absolute()) + os.pathsep + env.get("LEAN_PATH", "")
+            result = subprocess.call(hot_command, env=hot_env)
             if result == 0:
                 return 0
             if result == 75:
