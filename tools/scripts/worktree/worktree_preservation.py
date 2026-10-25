@@ -235,7 +235,7 @@ def remove(options):
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
                                      recovery_branch=recovery_branch,
                                      recovery_roots=getattr(stack, "recovery_roots", [])))
-        except (Refused, OSError, subprocess.SubprocessError) as error:
+        except Exception as error:
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,

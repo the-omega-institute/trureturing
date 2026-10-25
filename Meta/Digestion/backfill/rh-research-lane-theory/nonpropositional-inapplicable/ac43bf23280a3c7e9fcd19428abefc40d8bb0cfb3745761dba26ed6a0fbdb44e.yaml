@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac43bf23280a3c7e9fcd19428abefc40d8bb0cfb3745761dba26ed6a0fbdb44e
+  normalized_sha256: sha256:ac43bf23280a3c7e9fcd19428abefc40d8bb0cfb3745761dba26ed6a0fbdb44e
+cas_ref: sha256:ac43bf23280a3c7e9fcd19428abefc40d8bb0cfb3745761dba26ed6a0fbdb44e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 arXiv:2606.09096v1 的章节定位链接。
+    previous_atom_id: 24e3794053f6cc548697648a1f04ea16597d43192ec2a55f4d6dae27975c1f7a
+    next_atom_id: 38edb9d19ee68045535b6cc9030d4498a974e974d07f05d1d800555439e97e71

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80d01c31c6e104ab51b534918dc388e4b3e9b7557cd3b8de10ca3b9c448360ad
+  normalized_sha256: sha256:80d01c31c6e104ab51b534918dc388e4b3e9b7557cd3b8de10ca3b9c448360ad
+cas_ref: sha256:80d01c31c6e104ab51b534918dc388e4b3e9b7557cd3b8de10ca3b9c448360ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 截断 separator 的 deposit/cover 次序及后续追加规则。
+    previous_atom_id: c7c17aa8d0f4169f6bee9a15c0c20155f7ccc272f56ed2af94f3d61e5fa0440f
+    next_atom_id: 18d3379d4bdfcf235d9150c1ac64424bbd6d3f41a58af8daeb1dab6c953ece8a

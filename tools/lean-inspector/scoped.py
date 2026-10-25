@@ -260,7 +260,8 @@ def compiled_modules(root, logs):
     """Actual successful Lean build captions, separate from report extraction."""
     names = build_work.output_names(root / '.lake/build')
     result = set()
-    expression = re.compile(r'^[^\s]+ \[[0-9]+/[0-9]+\](?: \(Optional\))? Built ([^\s()]+)')
+    # Match a complete target caption, not the first word of a compound job.
+    expression = re.compile(r'^[^\s]+ \[[0-9]+/[0-9]+\](?: \(Optional\))? Built ([^\s()]+)(?: \([^()]*\))?$')
     for stream in ('stdout', 'stderr'):
         for line in (logs / ('report.' + stream + '.log')).read_text().splitlines():
             if match := expression.match(line):

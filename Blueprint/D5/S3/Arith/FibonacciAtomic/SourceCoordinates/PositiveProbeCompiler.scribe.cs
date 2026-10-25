@@ -128,7 +128,7 @@ internal sealed class PositiveProbeCompilerDocument : IScribeDocumentDefinition
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula EqOf(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
     private static Formula Add(Formula x, Formula y) => Seq(x, Plus, y);
-    private static Formula Sub(Formula x, Formula y) => Seq(x, Minus, y);
+    private static Formula Sub(Formula x, Formula y) => Par(Seq(x, Minus, y));
     private static Formula LeOf(Formula x, Formula y) => Seq(x, Sp, Le, Sp, y);
     private static Formula And(params Formula[] fs) => Join(Land, fs);
     private static Formula Or(Formula a, Formula b) => Join(Lor, [a,b]);
@@ -139,7 +139,7 @@ internal sealed class PositiveProbeCompilerDocument : IScribeDocumentDefinition
         return Par(result);
     }
     private static Formula All(string x, Formula type, Formula body) =>
-        Seq(Forall, Sp, V(x), Sp, InMacro, Sp, type, Comma, Sp, body);
+        Par(Seq(Forall, Sp, V(x), Sp, InMacro, Sp, type, Comma, Sp, body));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula N => C("Nat");
     private static Formula K => C("K", V("H"));

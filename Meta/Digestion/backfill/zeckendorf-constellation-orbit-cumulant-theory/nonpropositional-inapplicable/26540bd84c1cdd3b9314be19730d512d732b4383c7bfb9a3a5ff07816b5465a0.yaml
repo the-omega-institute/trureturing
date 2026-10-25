@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26540bd84c1cdd3b9314be19730d512d732b4383c7bfb9a3a5ff07816b5465a0
+  normalized_sha256: sha256:26540bd84c1cdd3b9314be19730d512d732b4383c7bfb9a3a5ff07816b5465a0
+cas_ref: sha256:26540bd84c1cdd3b9314be19730d512d732b4383c7bfb9a3a5ff07816b5465a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only proposition, not a nonpropositional classification. Nonnegative weighted integer counts whose mean crosses the one-hit threshold have a sample count at least two. Checked for arbitrary finite weighted sums and, without a finite-domain restriction, arbitrary integrable weighted counts on a measure space. Pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 supplies Finset.sum_le_sum, MeasureTheory.integral_mono, mul_le_mul_of_nonneg_left, Nat.cast_le, and integer order normalization. D5-wide shape searches include private declarations and weighted/average/threshold/integral/occupancy/existence patterns; inspected PrimeGaps.IntegerAverages, GreedyResidues.weighted_union_bound, ShortGapOccupancyBridge, ShortTranslateClosure, RationalIntervalExpression.checked_expression_encloses, and FiveModePredictiveLawGeometry.Core.cutoff_first_nonstrict. No available frozen declaration found supplying this general upper-one-to-two-hit threshold inference; the rational-enclosure checker requires interval hypotheses and the cutoff theorem requires geometric-decay hypotheses absent here. The accepted transient examples apply the named upstream monotonicity statements directly; no D5 theorem is added.
+    previous_atom_id: b506804d7f96bac6d8de2a160f28b2bb42bd16706cb2598422838e292a67e38f
+    next_atom_id: 8994cc38248da7b530cba0514e5549833799b4d8e31aeefdbdaec240b1f8f64b

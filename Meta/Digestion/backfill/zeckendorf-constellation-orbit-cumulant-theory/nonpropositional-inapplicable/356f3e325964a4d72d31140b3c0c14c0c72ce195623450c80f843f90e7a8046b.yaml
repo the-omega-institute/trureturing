@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:356f3e325964a4d72d31140b3c0c14c0c72ce195623450c80f843f90e7a8046b
+  normalized_sha256: sha256:356f3e325964a4d72d31140b3c0c14c0c72ce195623450c80f843f90e7a8046b
+cas_ref: sha256:356f3e325964a4d72d31140b3c0c14c0c72ce195623450c80f843f90e7a8046b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional vocabulary-list item: Kloosterman sheaf rank names an analytic input category; no sheaf, rank value, inequality, or quantified assertion is specified.'
+    previous_atom_id: 210d700f221afc0b42c0397b7f613b95cd537be7b6189148b76f2f7d7b1f33eb
+    next_atom_id: 8c3b0a887c53421e6df95a8c582c48b57ca23b35259465e19c8f9f15e6bac254

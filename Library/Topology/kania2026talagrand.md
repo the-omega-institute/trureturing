@@ -95,6 +95,71 @@ the signed-measure induction (A)–(G), or the retrospective paired-Dirac
 capture argument. Problem 8.2 remains unresolved here; no official
 acceptance is asserted.
 
+## Nonmetric clopen disjointization
+
+The local selection statement concerns arbitrary compact Hausdorff
+zero-dimensional Borel spaces. For regular probabilities mu_n carried by
+pairwise disjoint Borel E_n and 0 < eta < 1, its conclusion is an increasing
+subsequence and pairwise disjoint nonempty clopens retaining probability
+greater than 1-eta/2. The ordinary argument is a classical selection proof,
+not a novelty claim or a claim that this theorem originates in the cited
+Problem 8.2 article.
+
+The construction uses the pinned Mathlib general Prokhorov forward compactness
+instance for ProbabilityMeasure K. A cluster nu is regularized by applying
+positive RealRMK to its continuous integral functional; nu is not assumed
+regular. The representing lambda is finite on compact K before its integral
+of one proves probability mass. Continuous clopen indicators supply precisely
+the fixed-clopen convergence needed by the finite-history induction. They do
+not supply convergence on moving Borel carriers. Summability of lambda(E_n),
+regular compact cores, outer open approximations and a finite clopen sandwich
+complete the ordinary construction without a metric or countable base.
+
+For a real finite regular signed input, carrying means zero total variation
+on the complement of the carrier. Normalization uses
+q=totalVariation(u)(W), never the cancelling signed value u(W). Restriction
+and positive rescaling give t=q inverse times u restricted to W, total
+variation norm one, and exact error 2(1-q). On a further increasing
+subsequence a single sign makes positive Jordan mass at least one half.
+That sign acts on both t and the corresponding original u. A fixed positive
+error bound does not imply weak-star convergence of the approximants.
+
+The canonical implementation source is
+`D5.S3.Topology.Measures.ClopenDisjointization`; its corresponding Scribe
+states the full positive and paired-sign signed telescopes. Source presence
+is not kernel acceptance. Neither this selection statement nor its signed
+normalization establishes KPR, the signed (A)-(G) recursion, final capture,
+the Grothendieck endpoint or exclusion in the whole signed dual unit ball.
+
+The local source is kernel-checked under the pinned project toolchain. It
+contains the two public suppliers
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_clopen_disjointization`
+and
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_signed_clopen_disjointization`.
+The scoped report records statement identities
+`sha256:7d793bb2985eff9fa64f7451af62ac5c451f2692ecfce37248db61ac4ec3b867`
+and
+`sha256:db82e144a84a7e6ceb423a536d401f0006f2a0ac37c94eb7ab7ea23c50b8518f`,
+with type identities
+`sha256:5d83d13afbefa6152a937e5a6eacfcc6658b937475f2aa4b1e4a7b38defd9b74`
+and
+`sha256:931f69e143389d4d4e9147855d510b47b2ad4844f3ef31d908cd44bad809b542`.
+The accepted target axiom closure is `Classical.choice`, `Quot.sound` and
+`propext`; this is a local supplier record, not an attribution of the
+construction to Kania and Kąkol and not a novelty or solved-problem claim.
+The positive theorem has the arbitrary nonmetric compact Hausdorff
+zero-dimensional Borel hypotheses stated above. The signed theorem carries
+and normalizes by total variation, has exact error `2 * (1 - q)`, and uses one
+common sign on both sequences. No weak-star convergence is inferred.
+
+The information registration remains unfinished for both public suppliers.
+Issue https://github.com/the-omega-institute/trureturing/issues/20708 records
+the missing whole-family variation, sensitivity, observational dependence,
+enrolled readout binding and complete raw `sourceSelection` evidence; the
+broader reconstruction context is issue 16293. The issue is an unfinished
+audit disclosure, not a `declared_validated` registration, and no retry is
+claimed here.
+
 ## Eventual point-pair equality supplier
 
 The repository theorem

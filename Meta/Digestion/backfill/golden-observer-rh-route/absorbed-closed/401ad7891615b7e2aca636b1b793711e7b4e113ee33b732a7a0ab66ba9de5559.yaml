@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:401ad7891615b7e2aca636b1b793711e7b4e113ee33b732a7a0ab66ba9de5559
+  normalized_sha256: sha256:401ad7891615b7e2aca636b1b793711e7b4e113ee33b732a7a0ab66ba9de5559
+cas_ref: sha256:401ad7891615b7e2aca636b1b793711e7b4e113ee33b732a7a0ab66ba9de5559
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_right_half_strip_converse
+    target_statement_id: sha256:d76c63d010430cd7f93abb0a4311c00048a83dacf3f19d48cc1d770fdf51cdae
+receipts:
+  unresolved_subitems: []

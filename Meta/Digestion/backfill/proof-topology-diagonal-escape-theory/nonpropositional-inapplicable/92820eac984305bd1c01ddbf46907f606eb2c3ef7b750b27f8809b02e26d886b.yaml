@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+  normalized_sha256: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+cas_ref: sha256:92820eac984305bd1c01ddbf46907f606eb2c3ef7b750b27f8809b02e26d886b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有拓扑分离缺陷的部标题及定义引导词。
+    previous_atom_id: 92577115f045973f115653c5c641b2fbcf2c8396ae034fa5485db4794f6565ea
+    next_atom_id: 3d54f904a6e315896269b2f1638146844ad4ca4fbef724999dc98d976ab0e2aa

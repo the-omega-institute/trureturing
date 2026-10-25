@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c258333c49cee5250d786e8d0d95a2a71974705e2d63e33a3a0080a2aed46f7
+  normalized_sha256: sha256:6c258333c49cee5250d786e8d0d95a2a71974705e2d63e33a3a0080a2aed46f7
+cas_ref: sha256:6c258333c49cee5250d786e8d0d95a2a71974705e2d63e33a3a0080a2aed46f7
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/EventualClickDoobInstrument.eventual_click_doob_instrument
+    target_statement_id: sha256:cd37f80264b1d323ca986f2616e59d46887593c406f18a7a5e3786e703677802
+  - gid: D5/S3/Quantum/Measurement/ExactConditionalPreparationCost.exact_conditional_preparation_cost
+    target_statement_id: sha256:9543f852721336b1f4f1972a120de91d6bafd9daa1d04c3f3890f92281c35d82
+  - gid: D5/S3/Quantum/Measurement/GeneralInstrumentSurvivalLimit.survival_tendsto_maximal_fixed_effect
+    target_statement_id: sha256:d7bc483a20c67dea24570584349f4d61460bd2497ca71808cd98d6c64afa95a5
+receipts:
+  unresolved_subitems: []
