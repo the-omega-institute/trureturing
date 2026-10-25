@@ -8,6 +8,9 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
 
+/-! Raw functional systems use the existing unrestricted native completion.
+Finite dependency descent uses a positive additive weight on actual leaves. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -45,7 +48,7 @@ def represented (family : List Component) : Set CompletionTree :=
 
 /-- The full original statement, on the unrestricted completed native domain. -/
 def Obstruction : Prop :=
-  ∀ (a : Nat) (H : NativeRankedEqualityCompiler.Homogeneous), PairRoot H →
+  ∀ (a : Nat) (H : Homogeneous), PairRoot H →
     eval H (leaf true) = atomic a → ∀ family : List Component,
       {X : CompletionTree | rho^[a] X = eval H X} ≠ represented family
 
@@ -117,7 +120,7 @@ private theorem dependency_present {m : Nat} {S : System m}
 
 /-- A finite designated value constrains its own dependencies; no finiteness
 condition is imposed on disconnected or unused auxiliary states. -/
-theorem finite_dependency_descent {m : Nat} {S : System m}
+private theorem finite_dependency_descent {m : Nat} {S : System m}
     {v : Fin m → CompletionTree} (sat : Satisfies S v) {i j : Fin m}
     (e : Dependency S i j) (s : Source) (hs : embed s = v i) :
     ∃ t : Source, embed t = v j ∧ leafWeight t ≤ leafWeight s ∧
@@ -127,15 +130,52 @@ theorem finite_dependency_descent {m : Nat} {S : System m}
     (finite_iterate_iff e.power _).mp
       (finite_subtree e.address ⟨s, hs⟩ present)
   obtain ⟨t, ht⟩ := fj
-  refine ⟨t, ht, ?_, ?_⟩
   rw [← hs, ← ht, iterate_embed] at present
   have below := leafWeight_subtree e.address s (substitution^[e.power] t) present
   have shifted := leafWeight_iterate e.power t
+  refine ⟨t, ht, ?_, ?_⟩
   · omega
   · rintro (guarded | positive)
     · have strict := below.2 guarded
       omega
     · have strict := shifted.2 positive
       omega
+
+inductive Walk {m : Nat} (S : System m) : Fin m → Fin m → Type where
+  | nil (i : Fin m) : Walk S i i
+  | cons {i j k : Fin m} : Dependency S i j → Walk S j k → Walk S i k
+
+/-- An occurrence beneath a pair or with a positive shift is a strict edge. -/
+def Walk.Strict {m : Nat} {S : System m} {i j : Fin m} : Walk S i j → Prop
+  | .nil _ => False
+  | .cons e tail => e.address ≠ [] ∨ 0 < e.power ∨ tail.Strict
+
+private theorem finite_walk_descent {m : Nat} {S : System m}
+    {v : Fin m → CompletionTree} (sat : Satisfies S v) {i j : Fin m}
+    (walk : Walk S i j) (s : Source) (hs : embed s = v i) :
+    ∃ t : Source, embed t = v j ∧ leafWeight t ≤ leafWeight s ∧
+      (walk.Strict → leafWeight t < leafWeight s) := by
+  induction walk generalizing s with
+  | nil i => exact ⟨s, hs, le_rfl, False.elim⟩
+  | cons edge tail ih =>
+    obtain ⟨u, hu, leu, ltu⟩ := finite_dependency_descent sat edge s hs
+    obtain ⟨t, ht, let_, ltt⟩ := ih u hu
+    refine ⟨t, ht, let_.trans leu, ?_⟩
+    rintro (guarded | positive | strict)
+    · exact let_.trans_lt (ltu (Or.inl guarded))
+    · exact let_.trans_lt (ltu (Or.inr positive))
+    · exact (ltt strict).trans_le leu
+
+/-- Every dependency cycle at a finite native value consists solely of
+zero-power root links. Infinite values at other states remain unrestricted. -/
+theorem finite_cycle_is_silent {m : Nat} {S : System m}
+    {v : Fin m → CompletionTree} (sat : Satisfies S v) {i : Fin m}
+    (cycle : Walk S i i) (finite : IsFinite (v i)) : ¬ cycle.Strict := by
+  obtain ⟨s, hs⟩ := finite
+  obtain ⟨t, ht, _, strict⟩ := finite_walk_descent sat cycle s hs
+  have eq := NativeCompletionSupportClosure.embed_injective (ht.trans hs.symm)
+  subst t
+  intro live
+  exact (Nat.lt_irrefl _) (strict live)
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction
