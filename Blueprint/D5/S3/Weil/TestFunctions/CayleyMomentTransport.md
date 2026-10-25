@@ -76,7 +76,19 @@ Lean statement: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.inverseMeasurePa
 
 The pairing is the real-line integral of the local Fourier-Laplace transform against the supplied positive measure.
 
-**Theorem 1.7 (Local Fourier moments transport through Cayley compactification).**
+**Theorem 1.7 (The positive-scale Cayley map omits the identity).**
+
+Lean statement: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayley_circle_ne_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayley_circle_ne_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At every finite real spectral parameter and every positive scale, the existing Cayley circle map differs from the circle identity.
+
+**Theorem 1.8 (Local Fourier moments transport through Cayley compactification).**
 
 $$\forall a \in \operatorname{Real}\left(\right), nu \in \operatorname{Measure}\left(\operatorname{Real}\left(\right)\right), phi \in \operatorname{WeilTestFunction}\left(\right),\; 0 < a \Rightarrow \left(\operatorname{integral}\left(z, \operatorname{Circle}\left(\right), \operatorname{cayleyMomentFunction}\left(a, phi, z\right), \operatorname{cayleyCompactification}\left(a, nu\right)\right) = \operatorname{integral}\left(xi, \operatorname{Real}\left(\right), \operatorname{fourierLaplace}\left(phi, xi\right), nu\right) \land \left(\operatorname{integral}\left(z, \operatorname{Circle}\left(\right), \operatorname{cayleyMomentFunction}\left(a, phi, z\right), \operatorname{cayleyCompactification}\left(a, nu\right)\right) = \operatorname{inverseMeasurePairing}\left(nu, phi\right) \land \operatorname{integral}\left(z, \operatorname{Circle}\left(\right), \operatorname{cayleyMomentFunction}\left(a, phi, z\right), \operatorname{normalizedCircleHaar}\left(\right)\right) = \operatorname{complex}\left(2 \cdot a\right) \cdot phi\left(0\right)\right)\right)$$
 
@@ -96,6 +108,7 @@ The normalized circle Haar moment is also public and equals twice the scale time
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayleyCompactification`
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayleyInverse`
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayleyMomentFunction`
+- Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayley_circle_ne_one`
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayley_moment_transport`
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.inverseMeasurePairing`
 - Truth anchor: `D5/S3/Weil/TestFunctions/CayleyMomentTransport.resolventDensity`
