@@ -122,7 +122,8 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("sigma-pos-def"),
                 DeclarationHandle.Create(Owner + "sigma_posDef"),
                 H("Strict positivity of the mixed state"),
-                StatementSource.FromAuthor(Disp(Call("PosDef",SigmaLower))),
+                StatementSource.FromAuthor(Disp(new Formula.Apply(QualifiedName("Matrix.PosDef"),
+                    [QualifiedName("D5.S3.Quantum.Dynamics.PositivePauliClockOrder.sigma")]))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(DefinitionDsl.Text(
                     "The maximally mixed qubit matrix sigma is positive definite."))),
