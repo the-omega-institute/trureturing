@@ -58,3 +58,22 @@ run_cmd liftTermElabM do
       throwError "private replay introduced a nonstandard axiom"
     logInfo "probe cache: private/public normalized-name collision replayed through kernel"
   finally setEnv before
+
+run_cmd liftTermElabM do
+  let rows := (List.range 3).toArray.map fun _ =>
+    ({strategy := "shared closure", outcome := .found,
+      proof? := some (mkConst ``True.intro)} : Attempt)
+  let result : Observation := {
+    target := `cacheBatchRegression, base := .incomplete .undecided,
+    paired := .incomplete .undecided, verdict := .insufficient, attempts := rows }
+  profilePhase "regression/shared-axiom-closure-start"
+  checkCachedProbeCertificates result
+  if let some path ← IO.getEnv "SEARCH_REDUCTION_PROFILE" then
+    let trace ← IO.FS.readFile path
+    let trace := (trace.splitOn "regression/shared-axiom-closure-start").getLast!
+    unless (trace.splitOn "certificate/kernel/start").length == 4 do
+      throwError "cached certificate batch did not check all three proofs"
+    unless (trace.splitOn "certificate/axioms-batch/start").length == 2 &&
+        (trace.splitOn "certificate/axioms/start").length == 1 do
+      throwError "cached certificates repeated the common axiom traversal"
+  logInfo "probe cache: three kernel checks share one complete axiom traversal"

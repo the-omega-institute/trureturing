@@ -30,6 +30,12 @@ case "${1:-}" in
         "$module" "$search_test_seconds" "$search_test_exit"
       test "$search_test_exit" -eq 0 || exit "$search_test_exit"
     done
+    # Execute the shared-closure work regression even when Lake reuses its module.
+    cache_kernel_test_dir=$(mktemp -d build/lean-inspector/cache-kernel-work.XXXXXX)
+    SEARCH_REDUCTION_PROBE_CACHE=0 \
+      SEARCH_REDUCTION_PROFILE="$cache_kernel_test_dir/phases.log" \
+      make search-reduction-run \
+        REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/ProbeCacheKernel.lean
     make search-reduction-index-failure-test
     SEARCH_REDUCTION_TELEMETRY=1 make search-reduction-run \
       REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/LookupTelemetry.lean
