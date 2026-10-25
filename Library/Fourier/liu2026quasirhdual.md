@@ -2964,3 +2964,8 @@ positivity or monotonicity under physical-row selection. This reduction
 is paper-level only and does not strengthen the principal estimate,
 prove a lower bound or impossibility theorem, certify the manuscript,
 or close J40, signed Robin restoration or RH.
+
+The [joint mixed-Mobius and residue companion](liu2026quasirhresidue.md)
+proves a source-conditional improvement of the fifteen radial mixed terms,
+with the original profiles and punctures, and records the actual finite
+residue interface. Its scope and remaining J40 obligations are explicit.
