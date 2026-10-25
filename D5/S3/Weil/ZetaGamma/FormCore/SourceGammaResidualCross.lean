@@ -121,9 +121,8 @@ private theorem actual_residual_layer_partial_fraction
   have hdc : ξ ^ 2 + c ^ 2 ≠ 0 := by positivity
   have hda : ξ ^ 2 + a ^ 2 ≠ 0 := by positivity
   unfold actualResidualLayer actualResolventSymbol
-  push_cast
-  field_simp [Complex.ofReal_ne_zero.mpr hc.ne', Complex.ofReal_ne_zero.mpr hd,
-    Complex.ofReal_ne_zero.mpr hdc, Complex.ofReal_ne_zero.mpr hda]
+  norm_cast
+  field_simp [hc.ne', hd, hdc, hda]
   <;> ring
 
 /-- Nonresonant and resonant layers both consume actual inverse kernels;
@@ -135,29 +134,39 @@ theorem actual_residual_layer_cross_value
       actualResidualLayerCrossValue a c u := by
   by_cases hca : c = a
   · subst c
-    simp only [actualResidualLayerCrossValue, if_pos rfl]
+    simp [actualResidualLayerCrossValue]
     have hPoint (ξ : ℝ) :
         (actualResidualLayer a a ξ : ℂ) = actualResonantSymbol a ξ := by
       unfold actualResidualLayer actualResonantSymbol
       congr 1
       ring
     simp_rw [hPoint]
-    simpa only [actualSourceSpectralCross, literalSourceLaplace,
-      literalSourceFirstLaplaceMoment, mul_assoc] using
-        (actual_resonant_reflected_cross_laplace_moment ha hu).2
+    have h := (actual_resonant_reflected_cross_laplace_moment ha hu).2
+    simp only [mul_assoc] at h
+    exact h
   · simp only [actualResidualLayerCrossValue, if_neg hca]
     obtain ⟨_, hA₀, hAi₀⟩ := actual_resolvent_reflected_cross_laplace_square ha hu
     obtain ⟨_, hC₀, hCi₀⟩ := actual_resolvent_reflected_cross_laplace_square hc hu
     have hA : Integrable (fun ξ => actualResolventSymbol a ξ * actualSourceSpectralCross u ξ) volume := by
-      simpa only [actualSourceSpectralCross, mul_assoc] using hA₀
+      convert hA₀ using 1
+      funext ξ
+      exact (mul_assoc _ _ _).symm
     have hC : Integrable (fun ξ => actualResolventSymbol c ξ * actualSourceSpectralCross u ξ) volume := by
-      simpa only [actualSourceSpectralCross, mul_assoc] using hC₀
+      convert hC₀ using 1
+      funext ξ
+      exact (mul_assoc _ _ _).symm
     have hAi : (∫ ξ, actualResolventSymbol a ξ * actualSourceSpectralCross u ξ) =
         (Complex.normSq (literalSourceLaplace a u) : ℂ) / ((2 * a : ℝ) : ℂ) := by
-      simpa only [actualSourceSpectralCross, literalSourceLaplace, mul_assoc] using hAi₀
+      convert hAi₀ using 1
+      congr 1
+      funext ξ
+      exact (mul_assoc _ _ _).symm
     have hCi : (∫ ξ, actualResolventSymbol c ξ * actualSourceSpectralCross u ξ) =
         (Complex.normSq (literalSourceLaplace c u) : ℂ) / ((2 * c : ℝ) : ℂ) := by
-      simpa only [actualSourceSpectralCross, literalSourceLaplace, mul_assoc] using hCi₀
+      convert hCi₀ using 1
+      congr 1
+      funext ξ
+      exact (mul_assoc _ _ _).symm
     have hInt : (∫ ξ, (actualResidualLayer a c ξ : ℂ) * actualSourceSpectralCross u ξ) =
         ((c / (c ^ 2 - a ^ 2) : ℝ) : ℂ) *
           (Complex.normSq (literalSourceLaplace c u) : ℂ) / ((2 * c : ℝ) : ℂ) -
