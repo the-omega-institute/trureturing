@@ -19,8 +19,6 @@ class ScopedDotnetCases:
 
 def exercise(source, cli, root, mode, ambient):
     source, cli, root = map(Path, (source, cli, root))
-    sys.path.insert(0, str(source / "tools/scripts/worktree"))
-    import worktree_protocol as protocol
     main, target = root / "dotnet main", root / "dotnet tree"
     main.mkdir()
     environment = dict(os.environ)
@@ -64,6 +62,11 @@ def exercise(source, cli, root, mode, ambient):
     (main / "NuGet.Config").write_text("<configuration><packageSources><clear /></packageSources></configuration>")
     tools = main / "tools"
     tools.mkdir()
+    for package in ("Reg", "tools/lean-inspector-reg"):
+        for name in ("lakefile.toml", "lake-manifest.json"):
+            destination = main / package / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source / package / name, destination)
     projects = []
     for name in ("One", "Two", "Three"):
         project = tools / name
@@ -116,6 +119,11 @@ def exercise(source, cli, root, mode, ambient):
     # cleanup or build-server shutdown occurs before the probe.
     run([sys.executable, "-B", script, "--source", main, "with", "--path", target,
          "--exclusive", "--git", "--operation", "idle-pool", "--", "true"])
+    probe = ("import fcntl,pathlib,sys; "
+             "handles=[p.open('r+b') for p in pathlib.Path(sys.argv[1]).glob('*.lock')]; "
+             "assert handles; "
+             "[fcntl.flock(h,fcntl.LOCK_EX|fcntl.LOCK_NB) for h in handles]")
+    run([sys.executable, "-c", probe, main / ".git/worktree-operations"])
     policies = [(target / "tools" / name / (name + ".policy")).read_text().splitlines()
                 for name, _ in projects]
     assert policies == [list(settings.values())] * len(projects), policies
