@@ -158,6 +158,36 @@ Since a+b = 5/12, every row sum and every column sum equals the corresponding on
 
 For the first measurement projector and the computational projector at 0, the (0,1) entries of their products in the two orders are 0 and 1/2. They do not commute. Finally the (2,0) measurement entry is zero, whose squared norm is 0 rather than 1/3. Applying claim to these matrices would force that squared norm to equal 1/3, a contradiction. The failure concerns necessity of unbiasedness; the sufficiency statement for unbiased bases in TeX lines 326–346 is not contradicted.
 
+## A stationary five-mode application with no common reducing projection
+
+Use the mode order (0,1,2,3,13) = (000,100,010,001,101), with coordinate projectors Pₓ. The original waiting/read model has the following real symmetric Hamiltonian K, waits U(t) = exp(−itK) for t ≥ 0, all density matrices as inputs, complete rank-one Lüders reads, finite classical outcome feedback and Stop. No phase gate, coarse-block instrument, energy measurement or additional preparation is added to this menu.
+
+$$
+K = \begin{pmatrix}0&1&1&1&0\\1&0&0&0&1\\1&0&0&0&0\\1&0&0&0&1\\0&1&0&1&0\end{pmatrix}
+$$
+
+$$
+\rho\left(\varepsilon\right) = \frac{I}{5} + \left(\varepsilon\right) \cdot \left(K\right)
+$$
+
+For every real ε > 0 with 5ε‖K‖op < 1, where the norm is the Euclidean operator norm, ρ(ε) is positive semidefinite, has trace one and differs from I₅/5. Indeed, the self-adjoint bound K ≥ −‖K‖op I gives ρ(ε) ≥ (1/5−ε‖K‖op)I ≥ 0; the diagonal of K vanishes and its (0,1) entry is one. Every wait fixes ρ(ε), because it is an affine polynomial in K. A spectral unitary W gives WᴴKW = diag(λⱼ) and Wᴴρ(ε)W = diag(1/5+ελⱼ). The eigenvalues λⱼ are distinct: an eigenvector of K whose mode-1 coordinate vanishes must be zero, as follows from its five row equations; two independent eigenvectors of the same eigenvalue would yield such a vector. Consequently these density eigenvalues are nonuniform for every allowed ε.
+
+Take the dephasing coordinates to be this passive energy frame, d = 5, m = 1, σ = [1], Hⱼ = [λⱼ], the system input Wᴴρ(ε)W, and measurement matrix V = Wᴴ. The measurement projectors are WᴴPₓW. The map X ↦ (WᴴXW) ⊗ [1], with the canonical identification of the one-dimensional bath coordinate, preserves products, adjoints, scalar multiplication, exponentials and trace. It maps K to the literal hamiltonian Hs, U(t) to propagator Hs t, and each native branch to luders V x. Thus it transports the intervened joint trace formula itself, without a reduced-channel regression or a bath reset. The change of coordinates supplies no physical operation.
+
+$$
+\begin{aligned}\left(P_{1}\right)\left(x, t_{1}\right) = \frac{1}{5}\\\left(P_{2}\right)\left(y, t_{2}, x, t_{1}\right) = \frac{\left\lvert U\left(\left(t_{2}\right) - \left(t_{1}\right)\right)_{yx}\right\rvert^{2}}{5}\end{aligned}
+$$
+
+These are prob1 and prob2 for every t₀ ≤ t₁ ≤ t₂ and every pair of outcomes, with the same fixed initial data. Stationarity gives Pₓρ(ε)Pₓ = Pₓ/5, so the first outcome has weight 1/5 and its conditional state is Pₓ. Unitarity makes every row and column sum of |U(u)ᵧₓ|² equal to one. The one-time law is therefore normalized and both two-time marginals are 1/5 for every ordered pair, proving twoClassical. The law is nonconstant: the (0,1) transition probability is zero at duration zero and positive at sufficiently small positive durations, since its real-frame amplitude has derivative one at zero. This supplies timeDependent as defined above.
+
+The two PVMs have no nontrivial common orthogonal reducing projection. In native coordinates, a matrix Q commuting with all Pₓ is diagonal. Commuting also with K forces equality along the edges 0–1, 0–2, 0–3 and 1–13, so Q is scalar. In the energy frame, commuting with all energy projectors implies commuting with diag(λⱼ); conjugating back gives precisely the preceding pair of commutation conditions. An idempotent scalar is zero or one. The simple spectrum makes these rank-one energy projectors the distinct spectral projectors. Nevertheless the measurement is not mutually unbiased: (0,1,0,−1,0) is a nonzero zero-energy vector, and every zero-energy eigenvector has mode-0 coordinate zero by row 2 of K. Hence an entry Vⱼ₀ is zero, rather than having squared norm 1/5. Full compatibility is also excluded, since a mode projector would otherwise be a nontrivial common reducing projection.
+
+Let D = diag(1,i,i,i,1). Then DᴴKD = iA, where A is FiveModeRealWaitSpan.generator, and DᴴU(t)D is the entrywise complex embedding of the real orthogonal matrix exp(tA). The transformed state is I₅/5+iεA; its entrywise real part equals that of I₅/5. The Hermitian-input theorem FiveModeRealResponse.five_mode_real_response_fiber therefore gives equality of every finite complete-record law. Conjugation fixes each mode projector, intertwines the waits and preserves trace; induction on RankOneFeedbackProtocol.Protocol transports the equality back, including every feedback branch and Stop. Thus the nonuniform density spectrum is invisible to this entire permitted predictive interface, rather than only to one-time populations.
+
+This preparation aliasing does not make insertion of a measurement noninvasive. Use the native return experiment of SelfGeneratedPredictiveMemory §16: first outcome N = 000 at time 0, last outcome N at 2t, with a full intermediate mode read at t in the inserted experiment. Its first branch is exactly P_N/5. Writing p_A for the return probability from P_N without the intermediate read and p_B for the sum over its intermediate outcomes, the two joint probabilities are p_A/5 and p_B/5. In the real frame p_A = exp(2tA)₀₀² and p_B = ∑ⱼ exp(tA)₀ⱼ² exp(tA)ⱼ₀². Their difference g has g(0) = g′(0) = 0 and g″(0) = 4∑ⱼ A₀ⱼ² > 0. The derivative sign theorem followed by the mean-value theorem gives one δ > 0 for which p_B > p_A whenever 0 < t < δ. The joint insertion gap is therefore (p_B−p_A)/5 > 0, uniformly in the allowed ε. The same scalar-bath trace transport proves this three-time consistency violation in the dephasing frame. It reuses the native insertion mechanism; it asserts neither consistency at every order nor an inequality at every positive time.
+
+This existing-result synthesis rules out the proposed repair that merely excludes nontrivial common reducing projections of the energy and mode PVMs. The block refutation above remains its own three-level result. The five-mode application supplies complex Hilbert-space density matrices, Born probabilities, Lüders branches and the fixed coherent Hamiltonian as model principles. It derives no such operations from ignorance, information conservation or the five-mode support alone. The scalar bath describes closed coherent dynamics and gives no retained-environment extension. Acquiring the required preparations, phase references and composition law from the native predictive contract remains a separate quantum-origin problem. No physical realization or literature-novelty claim is made.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.claim`

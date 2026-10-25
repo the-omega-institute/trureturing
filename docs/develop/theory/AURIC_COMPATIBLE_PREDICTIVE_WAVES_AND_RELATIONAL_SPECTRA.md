@@ -4414,3 +4414,439 @@ $$
 - [Watrous 作者版第三章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)：§3.3 完全有界迹范数，命题 3.44 的通道范数；[既有 Library 条目](../../../Library/Quantum/watrous2018theory.md) 及其定理 2.22、2.26、推论 2.27 的完整 Kraus 表示。特殊相位差的完整范数等式由 (29.8)–(29.9) 后的压缩证明承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 原通道完整纤维的后继约化
+
+**定义 35.1（全深度原数据与原负扇区）。** 沿用 §17、§29 的全部复线性通道、原效果菜单及不除以二的 diamond 范数。固定 $0<t<1$，置 $d=t^2$、$\beta=1-d$、$r=(\xi-e)/\sqrt2$，输入基为 $(q,r,f)$，后继 qutrit 基为 $(a,h,g)=(Uq,Ur,Uf)$；此处 $h$ 不指 (29.11) 的效果向量。令 $p=Bq$，保留 §17.3 的 $D_\pm$，并在原 qutrit 坐标中取
+
+$$
+\ell=(0,1,0)^{\mathsf T},\quad k=(1,0,1)^{\mathsf T}/\sqrt2,\quad N=\ell^\perp=\operatorname{span}_{\mathbb C}\{k,g\},\quad k_-=(e_0-e_1-e_3+e_4)/2.
+$$
+
+这里 $N$ 是原 $D_-$ 的像，不是可自由旋转的负扇区。以 $s_\ell=(\sqrt2-2)/\sqrt{12}$、$c_\ell=(\sqrt2+2)/\sqrt{12}$、$\alpha=(2+\sqrt2)/\sqrt{12}$、$\gamma=(2-\sqrt2)/\sqrt{12}$ 表示
+
+$$
+a=\alpha k+s_\ell\ell,\quad h=\gamma k+c_\ell\ell,\quad \tau=-s_\ell/c_\ell=3-2\sqrt2,\quad \alpha^2=(3+2\sqrt2)/6.
+$$
+
+$Vx=(D_+x,D_-x)$ 是 $\mathbb C^5\to\mathbb C^3\oplus N$ 的酉识别，且 $Vp=(a,0)$、$VBr=(h,0)$、$Vc=(g,0)$、$Vk_-=(0,k)$、$Vb=(0,g)$。令 $C=(a+h)(a+h)^\dagger$，$E,F$ 为 (17.2)，则 $E+2F=3I/4+3C/8$。定义原通道纤维
+
+$$
+\mathcal F_t=\{T:M_3\to M_5\text{ CPTP}:T^\dagger(J_j)=Y_j\ (j\ge0)\},\qquad Y_j=T_{t,+}^\dagger(J_j)=T_{t,-}^\dagger(J_j).
+\tag{35.1}
+$$
+
+量词包括不受限的五维输出支持及 Kraus 秩；$Y_j$ 是完整输入效果算子，不是某个输入的期望值。对任意 qutrit 密度矩阵 $\rho,\sigma$，记
+
+$$
+S_\rho(X)=B\bigl[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho\bigr]B^\dagger,\qquad R_\sigma=S_\sigma.
+\tag{35.2}
+$$
+
+**定理 35.2（三个原约束与任意复通道的后继刚性）。** 原纤维 (35.1) 恰由 $j=0,1,2$ 的约束定义，而且每个 $T\in\mathcal F_t$ 都有唯一密度矩阵 $\rho$ 使 $\mathcal GT=S_\rho$，等式在全部复输入矩阵及任意有限未触动参考上成立。
+
+证明。令 $H_j=B^\dagger J_jB$。原递推为 $H_{j+1}=\Delta_W(U^\dagger H_jU)$、$J_{j+1}=D_+^\dagger H_jD_++D_-^\dagger H_jD_-$。由 (29.6)，$H_2=(H_0+H_1)/2$，故
+
+$$
+J_{j+2}=(J_j+J_{j+1})/2\quad(j\ge1),\qquad
+Y_0=\operatorname{diag}(1,0,d),\quad Y_1=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\quad Y_2=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix}.
+\tag{35.3}
+$$
+
+$Y_j$ 满足相同递推，因而前三个约束没有遗漏尾部条件。取任意有限 Kraus 表示 $T(X)=\sum_jL_jXL_j^\dagger$；其存在性消费 Watrous 定理 2.26、推论 2.27。由 $Y_0$ 的 $qq=1$、$rr=0$ 和保迹性，$L_jq=\lambda_jp$、$\sum|\lambda_j|^2=1$、$p^\dagger L_jr=0$。这里不推出逐项 $p^\dagger L_jf=0$。置 $X_j=D_+L_j$、$Z_j=D_-L_j$。$\sum_j\bar\lambda_jX_jr=yh+zg$ 的两个交叉效果条件为 $3y+\sqrt6z=3$、$3y-\sqrt6z=3$，故该均值为 $h$。于是
+
+$$
+\sum_j\bigl(\|X_jr-\lambda_jh\|^2+\|Z_jr\|^2\bigr)=0,
+\quad X_jr=\lambda_jh,\quad Z_jr=0.
+$$
+
+对 $m=\sum_j\bar\lambda_jL_jf$，保迹的 $qf,rf$ 条目给 $D_+m\perp a,h$。故 $D_+m$ 为 $g$ 的倍数，而 $Y_1$ 的 $qf=0$ 与 $a^\dagger Eg=\sqrt6/16\ne0$ 迫使该倍数为零。四个正扇区矩阵单位遂固定为 $\operatorname{Ad}_{BU}$，四个跨扇区单位全部消失，唯一剩余的 $ff^\dagger$ 像为 $B\rho B^\dagger$。正性及保迹给 $\rho\succeq0$、$\operatorname{Tr}\rho=1$。九个复矩阵单位及参考分块展开给出所述全部量词。∎
+
+**定义 35.3（忠实后继集合与纯扇区截面）。** 记
+
+$$
+\mathcal K_d=\{\rho=A+D:A,D\succeq0,\ \operatorname{ran}D\subseteq N,\ \operatorname{Tr}\rho=1,\ a^\dagger Aa=d,\ \operatorname{Tr}(C\rho)=d,\ \operatorname{Tr}(E\rho)=(6-5d)/16\},\quad
+\mathcal K_d^0=\mathcal K_d\cap\{\rho_{aa}=d\}.
+\tag{35.4}
+$$
+
+由于 $E+2F=3I/4+3C/8$，最后两个矩等价于 $\operatorname{Tr}(E\rho)=(6-5d)/16$、$\operatorname{Tr}(F\rho)=(6+11d)/32$。
+
+**定理 35.4（完整集合、消元与原域提升）。** $\{\mathcal GT:T\in\mathcal F_t\}=\{S_\rho:\rho\in\mathcal K_d\}$。等价地，$\mathcal K_d$ 是具有 (35.4) 的迹及两个矩、并满足
+
+$$
+\rho\succeq0,\qquad s:=\rho_{aa}-d\ge0,\qquad B_d(\rho):=\begin{pmatrix}d&a^\dagger\rho\ell\\\ell^\dagger\rho a&\ell^\dagger\rho\ell\end{pmatrix}\succeq0
+\tag{35.5}
+$$
+
+的全部复矩阵。$\mathcal K_d$ 非空、紧且凸。
+
+证明。给定原通道，取 $\omega=T(ff^\dagger)$、$A=D_+\omega D_+^\dagger$、$D=D_-\omega D_-^\dagger$。原 $P,J_1,J_2$ 的 $ff$ 条目恰给 (35.4)。反之，对任意 (35.4) 的分解，$\omega=V^\dagger(A\oplus D)V$ 是五维密度矩阵，且
+
+$$
+T_\omega(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega
+\tag{35.6}
+$$
+
+是原域 CPTP，具有 (35.3) 的三个完整效果及全部后续效果，后继为 $S_{A+D}$。由于 $D\ell=0$，(35.5) 的必要性是 $A$ 在 $a,\ell$ 上的压缩正性。为证明充分性，令 $L=\ell^\dagger\rho\ell$。写 $y=\rho_{hh}$，两个矩给 $\Re\rho_{ah}=-(s+y)/2$，从而
+
+$$
+L=s_\ell^2d+\frac{2-\sqrt2}{3}s+\frac{2+\sqrt2}{3}y\ge s_\ell^2d>0.
+\tag{35.7}
+$$
+
+于是 $A_{\min}=\rho\ell\ell^\dagger\rho/L$ 满足 $0\preceq A_{\min}\preceq\rho$，且 $\rho-A_{\min}$ 支持于 $N$。(35.5) 给 $(A_{\min})_{aa}\le d\le\rho_{aa}$。在 $A_{\min}$ 与 $\rho$ 间取 $aa$ 条目为 $d$ 的凸组合 $A$，令 $D=\rho-A$，即得忠实分解。非空性由原相位世界给出；(35.5) 是密度矩阵紧集内的闭凸约束，故紧且凸。∎
+
+**定理 35.5（全部参考与任意共同重建的精确外层约化）。** 令 $r_t=r(\mathcal F_t)$，则
+
+$$
+r_t=\min_{\sigma\succeq0,\ \operatorname{Tr}\sigma=1}\ \max_{\rho\in\mathcal K_d}\|\rho-\sigma\|_1,\qquad
+\|S_\rho-R_\sigma\|_\diamond=\|\rho-\sigma\|_1.
+\tag{35.8}
+$$
+
+两层极值均达到；中心 $\sigma$ 允许在 $\mathcal K_d$ 外。可以选实对称中心，但相容通道和对手仍为复数。对 $c\ge0$，半径至多 $2c$ 等价于对全部 $\rho\in\mathcal K_d$ 有 $\sigma-cI\preceq\rho\preceq\sigma+cI$。
+
+证明。对任意复参考输入 $Z$，差通道的放大像为 $Z_{ff}\otimes B(\rho-\sigma)B^\dagger$。压缩的迹范数不增、张量迹范数相乘，且 $ff^\dagger$ 达到等号，故同 §29 的直接论证给第二式。对任意竞争 CPTP $R$，取 CPTP 压缩
+
+$$
+\mathcal C_B(Y)=B^\dagger YB+\operatorname{Tr}((I_5-BB^\dagger)Y)gg^\dagger,\qquad \sigma=\mathcal C_B(R(ff^\dagger)).
+$$
+
+在 $ff^\dagger$ 上求值，再对 Hermitian 差用通道的迹范数收缩性，得 $\|R-S_\rho\|_\diamond\ge\|\sigma-\rho\|_1$。这覆盖全部竞争 $R$；不预设其输出支持。紧性和连续性给达到性。原矩阵为实，故 $\rho\mapsto\bar\rho$ 保持集合，凸性允许把中心换为 $(\sigma+\bar\sigma)/2$。最后，迹零 Hermitian 三阶矩阵 $H$ 的正、负谱中至少一侧至多一个非零特征值，所以 $\|H\|_1=2\|H\|_{\rm op}$，得到双侧区间等价。迹范数背景消费 Watrous 第三章；特殊差映射的任意复输入等号由上述压缩证明承担。∎
+
+**定理 35.6（原平面的六实参数约束）。** 对 $\tau=3-2\sqrt2$，全部 $\mathcal K_d$ 恰为
+
+$$
+\rho=\begin{pmatrix}d+s&-(s+y)/2+\mathrm iv&(4s-3w+\mathrm im)/\sqrt6\\-(s+y)/2-\mathrm iv&y&(w+\mathrm in)/\sqrt6\\(4s-3w-\mathrm im)/\sqrt6&(w-\mathrm in)/\sqrt6&1-d-s-y\end{pmatrix},\quad
+\rho\succeq0,\quad s\ge0,\quad v^2+\frac{[y+(1+2\tau)s]^2}{4}\le d(y-\tau^2s),
+\tag{35.9}
+$$
+
+其中 $s,y,w,v,m,n\in\mathbb R$。它特别蕴含
+
+$$
+0\le s\le\frac{3+2\sqrt2}{8}d,\quad 0\le D_{kk}\le3d/4,\qquad
+\operatorname{Tr}((I-gg^\dagger)\rho)\le3d-2\tau s+2\sqrt{d[d-(1+\tau)^2s]}.
+\tag{35.10}
+$$
+
+证明。两个矩分别给 $\Re\rho_{ah}=-(s+y)/2$、$\Re\rho_{ag}+3\Re\rho_{hg}=4s/\sqrt6$。代入 $\ell=c_\ell(h-\tau a)$，$\det B_d\ge0$ 恰为 (35.9) 的最后一式。把它看作关于 $y$ 的二次不等式，并舍去 $v^2\ge0$，其判别式要求 $d-(1+\tau)^2s\ge0$，上根为 $y\le2d-(1+2\tau)s+2\sqrt{d[d-(1+\tau)^2s]}$。这给 (35.10)，其中 $\rho_{aa}-d=\alpha^2D_{kk}$ 在每个提升中成立。人口上包络仅为必要条件，不能代替完整矩阵正性。∎
+
+## 36. 复完整纤维的全部极端边界
+
+**定义 36.1（压缩坐标）。** 等价地写 (35.9) 为
+
+$$
+\rho=\begin{pmatrix}d+s&u+\mathrm iv&p_0+\mathrm iq_0\\u-\mathrm iv&y&r_0+\mathrm it_0\\p_0-\mathrm iq_0&r_0-\mathrm it_0&z\end{pmatrix},\quad
+u=-(s+y)/2,\quad r_0=(4s/\sqrt6-p_0)/3,\quad z=1-d-s-y.
+$$
+
+这里六个自由实数为 $(s,y,p_0,v,q_0,t_0)$，与 (35.9) 的关系是 $p_0=(4s-3w)/\sqrt6$、$q_0=m/\sqrt6$、$t_0=n/\sqrt6$。记 $A=\rho_{\{a,h\}}$、$\delta=\det A$、$b=(p_0+\mathrm iq_0,r_0+\mathrm it_0)^{\mathsf T}$、$L=\ell^\dagger\rho\ell$、$\mathfrak D=\det B_d(\rho)$，则
+
+$$
+\mathfrak D=c_\ell^2\delta-sL,\qquad \det\rho=z\delta-b^\dagger\operatorname{adj}(A)b.
+\tag{36.1}
+$$
+
+**定理 36.2（穷尽的三个极端层）。** 对每个 $0<d<1$，$\operatorname{Ext}(\mathcal K_d)$ 恰为以下 $\mathsf P,\mathsf R_0,\mathsf R_+$ 三层；所有坐标及扰动均为复 Hermitian，中心是否属于集合不影响此分类。
+
+$\mathsf P$ 是全部可行纯态。取 $\theta\in[-\pi,\pi]$，令 $H=\sqrt d(e^{\mathrm i\theta}-1)$、$Y=|H|^2$、$C_\theta=\sqrt d+3H$、$Z=1-d-Y\ge0$。全部纯态为 $\psi\psi^\dagger$，其中
+
+$$
+\psi=\sqrt d\,a+Hh+Gg,\qquad G=\eta\mathrm i C_\theta\sqrt Z/|C_\theta|,\quad\eta\in\{+1,-1\}.
+\tag{36.2}
+$$
+
+$C_\theta$ 从不为零；$Z=0$ 时两个符号相同。$d<1/5$ 时所有 $\theta$ 合法且 $Z>0$；$d=1/5$ 时分支在 $\theta=\pi$ 相接；$d>1/5$ 时恰要求 $\cos\theta\ge(3d-1)/(2d)$。
+
+$\mathsf R_+$ 恰由 (36.1) 中满足 $s>0$、$\delta>0$、$\mathfrak D=0$、$z\delta=b^\dagger\operatorname{adj}(A)b$ 的点构成。它们自动正半定且秩二。
+
+$\mathsf R_0$ 是 $s=0$、$\mathfrak D>0$ 的秩二可行点中通过下式的点。此时 $\delta>0$，核向量唯一地写为 $n=(\xi_0,\eta_0,1)^{\mathsf T}$。定义
+
+$$
+\begin{gathered}
+c_1=(-3\Re\xi_0+5\Re\eta_0)/6,\quad c_2=\Im\xi_0-\Im\eta_0/3,\\
+c_3=1+|\eta_0|^2-\Re(\bar\xi_0\eta_0),\quad c_4=-2\Im(\bar\xi_0\eta_0),\quad \mathfrak J=c_1c_4-c_2c_3.
+\end{gathered}
+\tag{36.3}
+$$
+
+所需充要判据为 $\mathfrak J\ne0$。没有秩三极端点；$s=\mathfrak D=0$ 的全部秩二点均非极端；$L=0$ 的可行层为空。
+
+证明。消费 Chiribella, *Extreme quantum states and processes, and extreme points of general spectrahedra in finite dimensional algebras*, arXiv:2311.10929v1，定理 1 第 2 项及推论 1–2 的有限维复直和锥支撑判据：等式映射在支撑 Hermitian 空间上单射，恰等价于极端性。对本集合使用仿射双射
+
+$$
+\rho\longmapsto\rho\oplus s\oplus B_d(\rho)\in M_3(\mathbb C)\oplus\mathbb C\oplus M_2(\mathbb C).
+$$
+
+其逆是第一块投影。等式为 $\operatorname{Tr}R=1$、$\operatorname{Tr}(ER)=(6-5d)/16$、$\operatorname{Tr}(FR)=(6+11d)/32$、$t-R_{aa}=-d$ 及
+
+$$
+C_0-\begin{pmatrix}0&a^\dagger R\ell\\\ell^\dagger Ra&\ell^\dagger R\ell\end{pmatrix}=\operatorname{diag}(d,0).
+$$
+
+它们在十四维实 Hermitian 空间中的秩恰为八：$t$ 和 $C_0$ 坐标分开五行，$I,E,F$ 线性独立；由 $ag$、$ah$ 条目依次得 $cI+uE+vF=0\Rightarrow v=2u\Rightarrow u=0\Rightarrow c=0$。所以极端点必有
+
+$$
+\operatorname{rank}(\rho)^2+\mathbf1_{s>0}+\operatorname{rank}(B_d)^2\le8.
+\tag{36.4}
+$$
+
+此处不需严格可行性。支撑判据的原因是 $X\pm\epsilon H\succeq0$ 的双侧小扰动恰要求 $H=P_XHP_X$，再施加齐次等式；这只作为上述源特定分类的中间工具。因 $B_{00}=d>0$，(36.4) 排除秩三，秩二极端点不能同时有 $s>0$、$\mathfrak D>0$。
+
+若 $\rho$ 秩一，则 $\delta=0$，(36.1) 和 $L>0$ 给 $s=\mathfrak D=0$。固定非零 $a$ 振幅为 $\sqrt d$，两个矩恰为 $|H+\sqrt d|^2=d$、$\Re(C_\theta\bar G)=0$，从而给 (36.2)；$|C_\theta|^2=d(13-12\cos\theta)>0$。纯密度矩阵本已极端，故得到 $\mathsf P$ 及全部分支端点。
+
+若 $s>0$，可行性使 $\delta\ge sL/c_\ell^2>0$；秩界迫使 $\mathfrak D=0$。反之，所述秩二点的 $B_d$ 秩一，其任一支撑扰动的 $00$ 条目为零，故整个 $B_d$ 扰动为零。对 $S=\operatorname{supp}\rho$ 上的对应扰动 $H_0$，有 $a^\dagger H_0\ell=\ell^\dagger H_0\ell=0$。$a,\ell$ 的 $\rho$-Gram 行列式为 $(d+s)L-|a^\dagger\rho\ell|^2=sL>0$，所以 $P_Sa,P_S\ell$ 独立，迫使 $H_0\ell=0$。它至多支撑于 $S$ 的一维子空间，$\operatorname{Tr}H_0=0$ 再迫使 $H_0=0$。这证明 $\mathsf R_+$ 的充要性；$A>0$ 和零 Schur 补给正性及秩二。
+
+对 $s=0,\mathfrak D>0$，记 $k_0=(\xi_0,\eta_0)^{\mathsf T}$。满足 $H_0n=0$ 的全部候选扰动由
+
+$$
+A_H=\begin{pmatrix}0&-Y_0/2+\mathrm iV_0\\-Y_0/2-\mathrm iV_0&Y_0\end{pmatrix},\quad b_H=-A_Hk_0,\quad z_H=k_0^\dagger A_Hk_0
+$$
+
+唯一确定，剩余效果等式和迹等式恰为 $c_1Y_0+c_2V_0=0$、$c_3Y_0+c_4V_0=0$。因此没有非零扰动恰等价于 $\mathfrak J\ne0$，得到 $\mathsf R_0$。
+
+最后，$s=\mathfrak D=0$ 的秩二点有秩一 $ah$ 块 $vv^\dagger$，$v=(\sqrt d,H,0)^{\mathsf T}$，支撑为 $\operatorname{span}\{v,g\}$。令 $C_v=\sqrt d+3H\ne0$，则
+
+$$
+H_0=\mathrm i C_v|g\rangle\langle v|-\mathrm i\bar C_v|v\rangle\langle g|
+$$
+
+非零、支撑于该空间，且其迹、$aa$ 条目、$E,F$ 矩和 $B_d$ 扰动全为零，故该点非极端。(35.7) 排除 $L=0$；所有秩及退化面均已穷尽。∎
+
+**定理 36.3（混合层的参数化、非空性与复数必要性）。** $\mathsf R_0$ 还可直接参数化：任取复 $\xi_0,\eta_0$ 使 (36.3) 的 $\mathfrak J\ne0$，置
+
+$$
+b_1=-d\Re\xi_0/3,\quad b_2=1-d(1+|\xi_0|^2),\quad Y_0=(b_1c_4-c_2b_2)/\mathfrak J,\quad V_0=(c_1b_2-b_1c_3)/\mathfrak J.
+\tag{36.5}
+$$
+
+令 $A=\left(\begin{smallmatrix}d&-Y_0/2+\mathrm iV_0\\-Y_0/2-\mathrm iV_0&Y_0\end{smallmatrix}\right)$、$b=-Ak_0$、$z=k_0^\dagger Ak_0$；恰保留 $dY_0-Y_0^2/4-V_0^2>0$ 的参数即可穷尽该层。两个混合层在每个内点参数 $d$ 均非空，而实秩二 $s=0$ 态不属于 $\mathsf R_0$。
+
+证明。固定核的非齐次矩与迹方程为 $c_1Y_0+c_2V_0=b_1$、$c_3Y_0+c_4V_0=b_2$，解之即为 (36.5)。$A>0$ 与因子分解 $\rho=QAQ^\dagger$、$Q=(I_2,-k_0)^{\dagger}$ 给全部所需条件。若核为实，$c_2=c_4=0$，所以 $\mathfrak J=0$，说明只搜索实对手会丢掉整个混合极端层。具体地，置 $T=1-d$，则
+
+$$
+W_d=\begin{pmatrix}d&-dT/2&-\mathrm i\sqrt d\,T\\-dT/2&dT&\mathrm i\sqrt d\,T^2/2\\\mathrm i\sqrt d\,T&-\mathrm i\sqrt d\,T^2/2&T^2\end{pmatrix}
+\tag{36.6}
+$$
+
+有迹一及原两个矩，核为 $(\mathrm iT/\sqrt d,0,1)^{\mathsf T}$，$\delta=d^2T(d+3)/4>0$、$\mathfrak D=c_\ell^2\delta>0$、$\mathfrak J=-T/\sqrt d\ne0$；同一 $QAQ^\dagger$ 分解证明正性及秩二，故 $W_d\in\mathsf R_0$。
+
+为构造 $\mathsf R_+$，在 $v=0$ 的 $\mathfrak D(s,y)=0$ 上，从 $(s,y)=(0,0)$ 出发有 $\mathfrak D_y=c_\ell^2d>0$、$\mathfrak D_s=-s_\ell^2d$，隐函数给小正分支 $y'(0)=s_\ell^2/c_\ell^2>0$，且 $\delta=sL/c_\ell^2>0$。对 $c_0=(1,3)^{\mathsf T}$，约束 $\Re(c_0^\dagger b)=4s/\sqrt6$ 下的最小 $b^\dagger A^{-1}b$ 为 $8s^2/(3c_0^\dagger Ac_0)\to0$，而 $z\to1-d>0$。取实最小解，再添适量纯虚分量即可达到 $b^\dagger A^{-1}b=z$。这给每个 $d$ 的 $\mathsf R_+$ 点。∎
+
+**定理 36.4（完整最坏态搜索的极端约化）。** 对任意密度中心 $\sigma$，包括 $\sigma\notin\mathcal K_d$，$\max_{\rho\in\mathcal K_d}\|\rho-\sigma\|_1$ 至少在 $\mathsf P\cup\mathsf R_0\cup\mathsf R_+$ 的一点达到。对任意 $c\ge0$，双侧区间 $\sigma-cI\preceq\rho\preceq\sigma+cI$ 在全 $\mathcal K_d$ 成立，恰等价于在全部三个层成立。
+
+证明。有限维紧凸集的 Minkowski 极端点表示及迹范数凸性给第一结论，仿射矩阵不等式给第二结论。这里消费成熟紧凸几何，不从必要秩界单独推出极端性，也不从可取实中心推出可取实最坏态。∎
+
+## 37. 纯截面的精确中心、混合活动世界与关系切口
+
+**定理 37.1（纯后继只占一个真截面）。** $\mathcal K_d$ 的每个纯态都满足 $\rho_{aa}=d$。而 $\mathcal K_d^0$ 恰为具有原迹及 $E,C$ 矩并满足 $\rho_{aa}=d$ 的全部密度矩阵；其每个点都有 $A=\rho,D=0$ 的原域提升。
+
+证明。若 $\rho=A+D$ 秩一，正性迫使 $A,D$ 为 $\rho$ 的非负标量倍数。若 $D\ne0$，则 $\rho$ 支持于 $N$，从而 $\operatorname{Tr}(C\rho)=4\rho_{kk}/3=d$，但 $\rho_{aa}=\alpha^2\rho_{kk}<d$，与 (35.5) 矛盾。因此 $D=0$、$\rho_{aa}=d$。反向截面结论由定义 35.3 直接成立。纯态的完整参数化为 (36.2)，不能将其穷尽性误用于混合态。∎
+
+**定理 37.2（$d=5/61$ 的整个纯截面精确中心）。** 固定 $d_0=5/61$、$\beta_0=56/61$，在 $(w,z,g)$ 基中置
+
+$$
+w=(a-2h)/\sqrt5,\quad z=(2a+h)/\sqrt5,\quad
+\bar\sigma=\frac{25}{61}ww^\dagger+\frac{36}{61}gg^\dagger,\quad \bar c=\frac{30}{61},\quad
+Z=(\bar\sigma+\bar cI)^{-1}=\operatorname{diag}(61/55,61/30,61/66)_{(w,z,g)}.
+\tag{37.1}
+$$
+
+在全部密度中心中，纯后继族与更大的 $\mathcal K_{d_0}^0$ 的最小最大迹半径都恰为 $60/61$，且中心唯一为 $\bar\sigma$。相应条件子问题的共同 CPTP 重建可取 $R_{\bar\sigma}$；这不是完整 $\mathcal F_t$ 的最优性断言。
+
+证明。直接展开得 $Z=(61/66)I+(61/110)aa^\dagger+(61/165)C$，故对每个 $\rho\in\mathcal K_{d_0}^0$，
+
+$$
+\operatorname{Tr}(Z\rho)=61/66+(61/110+61/165)(5/61)=1.
+\tag{37.2}
+$$
+
+此处使用有限维等期望纯态系综工具，给出所需构造以固定假设：$B_0=\rho^{1/2}(Z-I)\rho^{1/2}$ 为迹零 Hermitian。若非零，在最小、最大特征向量间连续插值选一个零期望单位向量；压缩至其正交补，迹仍为零，归纳得到 $B_0$ 对角全零的正交基 $(e_j)$。非零列 $\rho^{1/2}e_j$ 归一化后给 $\rho$ 的纯态系综，每项 $v_j$ 都满足 $v_j^\dagger Zv_j=1$。此工具不要求每项同时保持原两个矩。对任意这样的单位 $v$，秩一支配判据给 $vv^\dagger\preceq\bar\sigma+\bar cI$；差 $vv^\dagger-\bar\sigma$ 迹零且至多有一个正特征值，故迹范数至多 $2\bar c$。凸性给整个截面的上界。对实际纯后继，支配差有核，故 $\bar c$ 恰为差的一个特征值，距离恰为 $2\bar c$。
+
+兼容纯态 $\psi_\pm=\sqrt{25/61}\,w\pm\mathrm i\sqrt{36/61}\,g$ 的中点为 $\bar\sigma$，相互迹距离为 $120/61$；它们的原物理提升向量为 $\sqrt{d_0}p-2\sqrt{d_0}Br\pm\mathrm i\sqrt{1-5d_0}c$。三角不等式给半径下界 $60/61$。为证唯一性，令 $H=\mathrm i(gw^\dagger-wg^\dagger)$，其谱为 $1,-1,0$，且 $\operatorname{Tr}(H\psi_\pm\psi_\pm^\dagger)=\pm60/61$。若密度 $\sigma$ 距两端均不超过 $60/61$，迹范数对偶先迫使 $\operatorname{Tr}(H\sigma)=0$，再迫使两端的对偶不等式均为等号。于是 $\psi_+\psi_+^\dagger-\sigma$ 的正、负部分分别支撑于 $H$ 的一维 $+1,-1$ 空间；迹零及距离给该差为 $(30/61)H$，所以 $\sigma=\bar\sigma$。定理 35.5 把这些界转移至全部共同 CPTP 重建。∎
+
+**定理 37.3（原域混合通道超出整个纯族最优球）。** 仍取 $d=d_0$、$\beta=\beta_0$，令 $\varepsilon=10^{-8}$。以下显式原域 CPTP 通道 $T_\varepsilon\in\mathcal F_t$ 的秩二后继满足
+
+$$
+\|\mathcal GT_\varepsilon-R_{\bar\sigma}\|_\diamond>60/61+\varepsilon/400.
+\tag{37.3}
+$$
+
+定义所用精确实数及原平面向量为
+
+$$
+\zeta=\frac{6\sqrt d(5\alpha+\gamma)}{23},\quad N_0=\sqrt{\zeta^2+\beta},\quad
+\nu=(\zeta k+\mathrm i\sqrt\beta\,g)/N_0,\quad
+m_\nu=\nu^\dagger C\nu=\frac{4\zeta^2}{3N_0^2},\quad e_\nu=16\nu^\dagger E\nu=\frac{(\alpha+3\gamma)^2\zeta^2+6\beta}{N_0^2}.
+\tag{37.4}
+$$
+
+对 $0\le s\le10^{-3}$，正平方根给出
+
+$$
+\begin{gathered}
+x_s=\sqrt{d-sm_\nu}-\sqrt d,\quad c_s=\sqrt d+3x_s,\quad u_s=\frac{s(6+3m_\nu-e_\nu)}{2\sqrt6\,c_s},\quad v_s=\sqrt{\beta-s-x_s^2-u_s^2},\\
+\psi_s=\sqrt d\,a+x_sh+(u_s+\mathrm iv_s)g,\quad A_s=\psi_s\psi_s^\dagger,\quad D_s=s\nu\nu^\dagger,\quad \rho_s=A_s+D_s.
+\end{gathered}
+\tag{37.5}
+$$
+
+其物理提升为 $\eta_s=\sqrt d\,p+x_sBr+(u_s+\mathrm iv_s)c$、$\eta_-=(\zeta k_-+\mathrm i\sqrt\beta\,b)/N_0$，$T_s$ 的三个 Kraus 算子为 $BP_+$、$\eta_sf^\dagger$、$\sqrt s\,\eta_-f^\dagger$。
+
+证明。先核对整个连续族的合法性。$0\le m_\nu\le2$、$0\le e_\nu\le16$，且在所述区间 $d-sm_\nu>1/16$。从平方根公式与 $c_s$ 的定义依次得到
+
+$$
+|x_s|\le8s,\quad |x_s'|\le6,\quad |x_s''|\le192,\quad c_s\ge1/5,\quad |c_s'|\le18,\quad |c_s''|\le576.
+\tag{37.6}
+$$
+
+置 $K=(6+3m_\nu-e_\nu)/(2\sqrt6)$，则 $|K|\le12/(2\sqrt6)<5/2$。所用导数为
+
+$$
+x_s'=-\frac{m_\nu}{2\sqrt{d-sm_\nu}},\quad x_s''=-\frac{m_\nu^2}{4(d-sm_\nu)^{3/2}},\quad
+u_s'=\frac K{c_s}-\frac{sKc_s'}{c_s^2},\quad u_s''=-\frac{2Kc_s'}{c_s^2}-\frac{sKc_s''}{c_s^2}+\frac{2sK(c_s')^2}{c_s^3}.
+$$
+
+代入 (37.6) 及 $s\le10^{-3}$ 得
+
+$$
+|u_s|\le35s,\quad |u_s'|\le40,\quad |u_s''|\le7000,\quad \beta-s-x_s^2\ge3/4,\quad v_s^2\ge2/3.
+\tag{37.7}
+$$
+
+最后两个下界由 $\beta=56/61$、$s\le10^{-3}$ 和前述 $x_s,u_s$ 上界直接得出，所以所有定义在闭区间上有效。由 $2v_sv_s'=-1-2x_sx_s'-2u_su_s'$ 及其导数，得 $|v_s'|\le4$、$|v_s''|\le2600$。这些是整个区间的解析界。
+
+由定义 $\|\psi_s\|^2=1-s$、$(A_s)_{aa}=d$、$\operatorname{ran}D_s\subset N$，而
+
+$$
+|\sqrt d+x_s|^2+sm_\nu=d,\qquad
+c_s^2+6(\beta-s-x_s^2)=6-5d-s(6+3m_\nu).
+\tag{37.8}
+$$
+
+故 $\operatorname{Tr}(C\rho_s)=d$；加上 $2\sqrt6c_su_s=s(6+3m_\nu-e_\nu)$ 得 $16\operatorname{Tr}(E\rho_s)=6-5d$。于是 $\rho_s\in\mathcal K_d$，其 $F$ 矩也正确。$V\eta_s=(\psi_s,0)$、$V\eta_-=(0,\nu)$，所以 Kraus 伴随平方和为 $P_++[(1-s)+s]ff^\dagger=I_3$，$T_s$ 为原域 CPTP，后继为 $S_{\rho_s}$，并满足全部原深度效果约束。$\ell^\dagger\psi_s=s_\ell\sqrt d+c_\ell x_s<0$，故 $\psi_s\notin N$；对 $s>0$，$\rho_s$ 秩二，且
+
+$$
+(\rho_s)_{aa}=d+s\alpha^2\zeta^2/N_0^2>d.
+\tag{37.9}
+$$
+
+为证严格越球，取 $\psi_0=\sqrt d\,a+\mathrm i\sqrt\beta\,g$、$f_*=Z\psi_0$，并令 $F_*(s)=f_*^\dagger\rho_sf_*$。由 (37.2)，$F_*(0)=1$ 且 $f_*^\dagger(\bar\sigma+\bar cI)f_*=1$。对 $N$ 上的正算子及投影向量
+
+$$
+D_{\rm ref}=(61/66)I_N+(61/165)C|_N,\quad f_N=P_Nf_*,\quad
+D_{\rm ref}^{-1}f_N=\zeta k+\mathrm i\sqrt\beta\,g,\quad
+S_0=f_N^\dagger D_{\rm ref}^{-1}f_N=\frac{244+16\sqrt2}{253}>1
+\tag{37.10}
+$$
+
+可直接计算 $f_*=(61\sqrt d/165)(5a+h)+\mathrm i(61\sqrt\beta/66)g$。因为 $x_0'=-m_\nu/(2\sqrt d)$、$v_0'=-1/(2\sqrt\beta)$，$A_s$ 的导数贡献为 $-61/66-(61/165)m_\nu=-\nu^\dagger D_{\rm ref}\nu$，而 $D_s$ 的贡献为 $|f_N^\dagger\nu|^2$。因此
+
+$$
+F_*'(0)=\frac{S_0(S_0-1)}{N_0^2}>1/80,
+\tag{37.11}
+$$
+
+其中 $S_0-1>1/40$、$N_0^2<2$ 均由 $7/5<\sqrt2<3/2$ 代入 (37.4)、(37.10) 得到。由 (37.6)–(37.7)，$\|\psi_s'\|\le50$、$\|\psi_s''\|<10000$；又 $\|\psi_s\|\le1$、$\|Z\|=61/30<3$，故
+
+$$
+|F_*''(s)|\le2\|f_*\|^2(\|\psi_s'\|^2+\|\psi_s\|\,\|\psi_s''\|)<250000.
+$$
+
+Taylor 余项界现在给
+
+$$
+F_*(\varepsilon)>1+\varepsilon/80-125000\varepsilon^2=1+9\varepsilon/800.
+\tag{37.12}
+$$
+
+$\|f_*\|^2<9$ 与 Rayleigh 商遂给 $\lambda_{\max}(\rho_\varepsilon-\bar\sigma)>\bar c+\varepsilon/800$。迹零 qutrit 恒等式及定理 35.5 得 (37.3)。这也证明 $\mathcal K_d^0$ 在此参数为完整后继集的真子集。∎
+
+**定理 37.4（每个完整最优重建必有活动混合世界）。** 在 $d=5/61$，完整半径 $r_t>60/61$。每个完整最优密度中心至少有一个达到其最坏距离的 $\rho$ 满足 $\rho_{aa}>d$；这样的 $\rho$ 必混合，且其每个原域提升都有 $D_{kk}>0$。每个最优共同 CPTP 重建也有这类原通道达到最坏损失。
+
+证明。若完整半径等于 $60/61$，达到的中心由定理 37.2 的两纯端点唯一迫为 $\bar\sigma$，与 (37.3) 矛盾。设 $\sigma_*$ 是任一完整最优中心，半径 $r>60/61$；若其全部最大点都在 $\mathcal K_d^0$，则 $\bar\sigma$ 在这个紧最大点集上的损失均至多 $60/61$。连续性使某邻域内其损失统一严格小于 $r$；邻域外 $\sigma_*$ 的损失也统一严格小于 $r$。迹范数凸性于是使 $(1-\lambda)\sigma_*+\lambda\bar\sigma$ 在充分小的 $\lambda>0$ 时严格更好，矛盾。每个提升中 $\rho_{aa}-d=\alpha^2D_{kk}$，给正激发；定理 37.1 排除纯态。对任一最优 CPTP $R$，定理 35.5 的压缩 $ff$ 输出必是最优密度中心；上述活动 $\rho$ 的任一原提升对 $R$ 的通道损失至少为 $r$，又至多为 $r$，故达到。注意 (37.3) 的加性差只属于固定 $\bar\sigma$，这里没有将它冒充完整最优半径的同量加性下界。∎
+
+**定理 37.5（真实平面激发的缺失效果及精确条件切口）。** 定义 $P_a=Baa^\dagger B^\dagger$ 及
+
+$$
+Q_a=\mathcal G^\dagger(P_a)=P+\alpha^2k_-k_-^\dagger.
+\tag{37.13}
+$$
+
+它是实合法效果，超出 $I$ 及全部原 $J_j$ 的实、复线性张成。对每个 $T\in\mathcal F_t$，$T^\dagger(Q_a)=qq^\dagger+\rho_{aa}ff^\dagger$。若额外效果算子数据实际供应 $T^\dagger(Q_a)=qq^\dagger+dff^\dagger$，后继集合恰缩为 $\mathcal K_d^0$。原矩还把这一隐藏坐标与实相干联系为
+
+$$
+\Re(\rho_{ag}+3\rho_{hg})=4(\rho_{aa}-d)/\sqrt6.
+\tag{37.14}
+$$
+
+证明。$D_+^\dagger a=p$、$D_-^\dagger a=\alpha k_-$ 给 (37.13)；$p,k_-$ 正交且 $0<\alpha^2<1$ 证明效果合法。定理 35.2 的后继形式给伴随公式。原纯相位世界与 $T_\varepsilon$ 的全部原效果和 $I$ 数据一致，而 $Q_a$ 的响应差为 $\varepsilon\alpha^2\zeta^2/N_0^2>0$，所以它不在该张成中。一般 $d$ 下，新增等式恰为 $D_{kk}=0$；正性迫使 $D$ 仅支持于 $g$，将它吸收到 $A$ 得 $\mathcal K_d^0$。反向每个截面态都有 (35.6) 的提升及该新增数据。(37.14) 由 (35.9) 得出。效果的数学存在不蕴含其测量已被取得，也不增加时钟、相位控制、参考或副本权限；在 $d=5/61$，即使条件切口实际取得，剩余精确半径仍为 $60/61$。∎
+
+## 38. 完整纤维的固定重建风险、严格上界与未决中心
+
+**定理 38.1（两个固定中心的精确风险及两端渐近）。** 对每个 $0<d=t^2<1$，在完整原纤维上
+
+$$
+\sup_{T\in\mathcal F_t}\|\mathcal GT-R_{gg^\dagger}\|_\diamond=2\sqrt{\min\{5d,1\}},\qquad
+\sup_{T\in\mathcal F_t}\|\mathcal GT-R_{aa^\dagger}\|_\diamond=2\sqrt{1-d}.
+\tag{38.1}
+$$
+
+前者就是原 $S_B$ 的风险。完整最小最大半径满足
+
+$$
+r_t\ge2\sqrt{d(1-d)},\qquad d\le1/5\Longrightarrow r_t\ge2\sqrt{5d(1-5d)},\qquad
+r_t\sim2\sqrt{5d}\ (d\downarrow0),\quad r_t\sim2\sqrt{1-d}\ (d\uparrow1).
+\tag{38.2}
+$$
+
+证明。对任一忠实分解 $\rho=A+D$，令 $m=\operatorname{Tr}((I-gg^\dagger)\rho)$。原矩给恒等式
+
+$$
+5d-m=\operatorname{Tr}\bigl(A(2a+h)(2a+h)^\dagger\bigr)+(5/3)D_{kk}\ge0.
+\tag{38.3}
+$$
+
+因此 $m\le\min\{5d,1\}$。成熟纯态距离公式及纯态系综、平方根凹性给 $\|\rho-gg^\dagger\|_1\le2\sqrt{1-\rho_{gg}}=2\sqrt m$。当 $d\le1/5$，原可行纯向量 $\sqrt d\,a-2\sqrt d\,h\pm\mathrm i\sqrt{1-5d}\,g$ 达到该上界；其原物理提升把 $(a,h,g)$ 换为 $(p,Br,c)$。当 $d\ge1/5$，取 $u=1-d$、$x=-u/(2\sqrt d)+\mathrm i\sqrt{u-u^2/(4d)}$，单位向量 $\sqrt d\,a+xh$ 满足全部原矩，且与 $g$ 正交，给风险二。
+
+由于 $\rho_{aa}\ge d$，相同系综估计给第二风险上界；原纯相位世界有 $aa$ 人口恰为 $d$，达到它。纯相位对给 (38.2) 第一界；上述临界激发符号对的半距离给第二界。故 $d\downarrow0$ 时 $\sqrt{1-5d}\le r_t/(2\sqrt{5d})\le1$，$d\uparrow1$ 时 $\sqrt d\le r_t/(2\sqrt{1-d})\le1$，夹逼得两端渐近。上述达到态的原通道皆有 $\delta(T)=d$，所以 §29 的统一平方根稳定系数还满足 $C_*\ge2\sqrt5$；这里没有给出匹配的全域最优系数。∎
+
+**定理 38.2（每个参数的显式严格小于 $4/3$ 的可行重建）。** 令 $e_d=(6-5d)/16$，并置
+
+$$
+a_d=d-2/3,\quad b_d=e_d-1/3,\quad h_d=a_d^2+b_d^2,\quad M_d=(4|a_d|+2|b_d|)/3,\quad
+H_d=a_d(C-2I/3)+b_d(E-I/3),\quad \epsilon_d=\frac{h_d^2}{32M_d^3},\quad \sigma_H=I/3+\epsilon_dH_d.
+\tag{38.4}
+$$
+
+则 $\sigma_H$ 为严格正密度矩阵，其原域重建满足
+
+$$
+\sup_{T\in\mathcal F_t}\|\mathcal GT-R_{\sigma_H}\|_\diamond\le U_H(d):=\frac43-\frac{h_d^3}{32M_d^3}<\frac43,\qquad
+r_t\le\frac43-\frac{2}{1405\sqrt{1405}}.
+\tag{38.5}
+$$
+
+证明。$h_d>0$，因为 $d=2/3$ 和 $e_d=1/3$ 不能同时成立。$H_d$ 实且迹零，$\|H_d\|_{\rm op}\le M_d$；每个原可行 $\rho$ 都有 $\operatorname{Tr}(H_d\rho)=h_d$。非空性遂给 $0<h_d\le M_d$。令 $\delta=(h_d/(4M_d))^2\le1/16$，则 $\epsilon_dM_d=\delta/2\le1/32$，所以 $\sigma_H$ 严格正且迹一。
+
+对任意复单位向量 $v$，若 $v^\dagger\rho v\le1-\delta$，则 $v^\dagger(\rho-\sigma_H)v\le2/3-\delta/2$。否则成熟纯态距离上界给 $\|\rho-vv^\dagger\|_1\le2\sqrt\delta$，从而 $v^\dagger H_dv\ge h_d-2M_d\sqrt\delta=h_d/2$，故 $v^\dagger(\rho-\sigma_H)v\le2/3-\epsilon_dh_d/2$。相反方向 $\lambda_{\max}(\sigma_H-\rho)\le1/3+\epsilon_dM_d\le2/3-\epsilon_dh_d/2$；最后一步由 $\epsilon_dM_d\le1/32$、$h_d\le M_d$ 给出。两侧连同迹零三阶恒等式、定理 35.5 给第一界。
+
+又 $5a_d+16b_d=-8/3$，Cauchy--Schwarz 给 $\sqrt{h_d}\ge8/(3\sqrt{281})$，而 $M_d\le(2\sqrt5/3)\sqrt{h_d}$。因此 $h_d/M_d\ge4/\sqrt{1405}$，代入即给统一严格裕量。该中心只是显式可行者，不宣称最优。∎
+
+**定义 38.3（剩余精确关系与物理前提）。** 完整中心问题仍是：对每个 $0<d<1$ 求具体达到的密度 $\sigma_*(d)$ 及 $c(d)$，并证明
+
+$$
+\sigma_*(d)-c(d)I\preceq\rho\preceq\sigma_*(d)+c(d)I\quad(\rho\in\mathcal K_d),\qquad
+\inf_{\sigma\succeq0,\ \operatorname{Tr}\sigma=1}\max_{\rho\in\mathcal K_d}\|\rho-\sigma\|_1=2c(d),
+\tag{38.6}
+$$
+
+包括对所有密度中心的匹配下证书。已有上下界为 $r_t\le\min\{2\sqrt{\min\{5d,1\}},2\sqrt{1-d},U_H(d)\}$ 和 (38.2)，$d=5/61$ 还严格大于 $60/61$；这些尚不确定全参数最优值或最优中心。经 $\operatorname{diag}(1,1,\sqrt6)$ 合同变换，(35.9) 的正性及候选双侧区间均可写为 $\mathbb Q(\sqrt2)$ 上至多三次的主子式条件，实迹一中心有五个自由坐标；这一代数表示并未选出最优根或分支。定理 36.2 允许只在全部三个极端层上证明区间，但定理 37.4 要求最优接触包含非零原 $N$ 激发的混合态，纯族中心不能完成 (38.6)。
+
+这里复 Hilbert 空间、密度矩阵、CPTP 组合及 Born 效果配对都是供应的量子结构前提。另一个未决关系是：哪些实际取得的关系数据可控制 $\rho_{aa}$ 及 (37.14) 的实相干，又可进一步消除切口后仍存的相容后继宽度？$Q_a$ 只给一个精确的条件切口；其数学存在不供应取得性，也不从本卷结果推出量子结构本身的物理起源。
+
+**定义 38.4（数学来源与适用域）。** §§35–38 的原模型应用及常数、极端层、混合反例和风险关系为 `repo-derived`；不主张文献全域新颖性或经验实现。原模型的固定供应是本卷 §17、§29–30、§34；所有通道保持原域、全部深度和擦除标签菜单，没有增加分支仪器历史、返回环境、副本、参考制备或相位权限。成熟中间工具的来源为：Watrous, *The Theory of Quantum Information*，[作者版第二章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) 定理 2.26、推论 2.27、命题 2.28 的有限复 Kraus/Choi 与紧性背景，及[第三章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf) 命题 3.44、定理 3.51 的迹范数背景；Chiribella, [*Extreme quantum states and processes, and extreme points of general spectrahedra in finite dimensional algebras*](https://arxiv.org/html/2311.10929v1)，§2.3、定理 1 第 2 项、推论 1–2、式 (20) 的支撑扰动与复直和秩界。有限维谱分解、Schur 补、纯态系综、迹范数对偶、紧凸表示及 Taylor 余项仅作为各条新应用证明中的成熟中间步骤，不作为另立的新理论；(35.8) 的全复参考等号和原平面矩阵条件由相应直接推导承担。
+
+## 追加锚（本行以下为增补区）
