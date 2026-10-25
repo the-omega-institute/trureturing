@@ -921,3 +921,410 @@ four-expression programme is asserted.
 [PCR]: ../../../D5/S3/Quantum/Reduction/ProbeComponentRigidity.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Uniform square-root stability of the original erased successor
+
+**Theorem 27.1 (Unrestricted erased-successor stability).**
+Keep exactly $B,E,P$ of [STR], Definitions 1.1–1.2 and (19.1),
+and the actual full-$H$ operators $A_j(\theta)$ of [STR],
+Definition 11.1 and (19.2), on $H=\mathbb C^5$. For every fixed
+known real $\theta$, define
+
+$$
+\begin{aligned}
+\Phi_\theta(Y)&=\sum_{j=0}^1 A_j(\theta)YA_j(\theta)^{\dagger},\\
+J_0&=P,\qquad J_1=\sum_{j=0}^1 A_j^{\dagger} PA_j,\\
+J_2&=\sum_{j,k=0}^1(A_kA_j)^{\dagger} P(A_kA_j).
+\end{aligned}
+\tag{27.1}
+$$
+
+These are exactly the three completely unlabelled raw success
+effects of [STR], (25.1), with chronological products $A_kA_j$
+and the original joint weights. For every complex-linear
+completely positive trace-preserving map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$ with unrestricted output, put
+
+$$
+\delta_\theta(T)=\max_{r=0,1,2}
+\bigl\|T^{\dagger}(J_r)-B^{\dagger} J_rB\bigr\|_{\mathrm{op}}.
+\tag{27.2}
+$$
+
+Here a dagger on a map denotes its trace adjoint and
+$\operatorname{Ad}_B(X)=BXB^{\dagger}$. For a complex-linear map
+$\Lambda:M_3(\mathbb C)\to M_5(\mathbb C)$, use the full,
+unhalved diamond norm
+
+$$
+\|\Lambda\|_\diamond=
+\sup_{d\ge1}\ \sup_{0\ne Z\in M_d(\mathbb C)\otimes M_3(\mathbb C)}
+\frac{\|(\operatorname{id}_{M_d}\otimes\Lambda)(Z)\|_1}{\|Z\|_1},
+\qquad \|Z\|_1=\operatorname{Tr}\sqrt{Z^{\dagger} Z}.
+\tag{27.3}
+$$
+
+Every finite untouched reference and every complex amplified input,
+without positivity or Hermiticity restrictions, occurs in this
+supremum. Uniformly in $\theta$ and $T$,
+
+$$
+\delta_\theta(T)\le1
+\quad\Longrightarrow\quad
+\bigl\|\Phi_\theta\circ T-
+\Phi_\theta\circ\operatorname{Ad}_B\bigr\|_\diamond
+\le1200\sqrt{\delta_\theta(T)}.
+\tag{27.4}
+$$
+
+Thus $C=1200$ and $\eta=1$ are valid. There is no extra observation,
+label or control, conditioning, output-support promise or reference
+access in the hypotheses.
+
+Proof. All inner products and matrices below are complex. Reuse the full-$H$ reduction
+and exact matrices of [STR], Theorem 26.1, equations (26.4)–(26.9). The unitary
+coefficient matrix mixing $(K_0,K_1)$ into $(A_0,A_1)$ gives, on the entire
+$M_5(\mathbb C)$,
+
+$$
+\Phi_\theta(Y)=\mathcal G(Y)=K_0YK_0^{\dagger}+K_1YK_1^{\dagger}.
+$$
+
+Consequently both chronological effects are independent of $\theta$:
+$J_1=\mathcal G^{\dagger}(P)$ and $J_2=(\mathcal G^{\dagger})^2(P)$. A dagger on a map
+denotes its trace adjoint. Put
+
+$$
+D_+=B^{\dagger}(K_0+K_1)/\sqrt2,\qquad D_-=B^{\dagger}(K_0-K_1)/\sqrt2.
+$$
+
+The full-$H$ matrices, without input restriction, are
+
+$$
+D_+=\frac1{\sqrt2}\begin{pmatrix}1&1&0&0&0\\0&0&\sqrt2&0&0\\0&0&0&1&1\end{pmatrix},\quad
+D_-=\frac1{\sqrt2}\begin{pmatrix}1&-1&0&0&0\\0&0&0&0&0\\0&0&0&-1&1\end{pmatrix}.
+$$
+
+Thus $D_+^{\dagger} D_++D_-^{\dagger} D_-=I_5$ and
+$\operatorname{ran}D_-=N=\operatorname{span}\{(1,0,0)^{\mathsf T},(0,0,1)^{\mathsf
+T}\}$, and
+
+$$
+\mathcal G(Y)=B(D_+YD_+^{\dagger}+D_-YD_-^{\dagger})B^{\dagger}.
+\tag{27.5}
+$$
+
+Let $q=(\xi+e)/\sqrt2$, $r=(\xi-e)/\sqrt2$ and $f=(1,-1,0)^{\mathsf T}/\sqrt2$.
+Define $a=D_+Bq$, $h=D_+Br$ and $g=D_-Bf=(1,0,-1)^{\mathsf T}/\sqrt2$. Then
+$(q,r,f)$ and $(a,h,g)$ are orthonormal bases, and
+
+$$
+D_+Bq=a,\ D_-Bq=0,\ D_+Br=h,\ D_-Br=0,\ D_+Bf=0,\ D_-Bf=g.
+\tag{27.6}
+$$
+
+In particular the target qutrit channel $R_0(X)=B^{\dagger}\mathcal
+G(BXB^{\dagger})B$ maps $qq^{\dagger},qr^{\dagger},rq^{\dagger},rr^{\dagger}$ to
+$aa^{\dagger},ah^{\dagger},ha^{\dagger},hh^{\dagger}$, respectively, maps $ff^{\dagger}$ to
+$gg^{\dagger}$, and annihilates the four cross units involving $f$.
+
+We reuse [STR], equations (26.5)–(26.9). Write $F=B^{\dagger} J_1B$, a positive
+contraction. In the output basis $(a,h,g)$, the positive contractions $E,F$ are
+
+$$
+E=\frac1{16}\begin{pmatrix}1&3&\sqrt6\\3&9&3\sqrt6\\\sqrt6&3\sqrt6&6\end{pmatrix},\quad
+F=\frac1{32}\begin{pmatrix}17&3&-\sqrt6\\3&9&-3\sqrt6\\-\sqrt6&-3\sqrt6&6\end{pmatrix}.
+\tag{27.7}
+$$
+
+Moreover
+
+$$
+J_1=D_+^{\dagger}ED_++D_-^{\dagger}ED_-,\qquad
+J_2=D_+^{\dagger}FD_++D_-^{\dagger}FD_-.
+\tag{27.8}
+$$
+
+For the two target compressions $B^{\dagger} J_1B$ and $B^{\dagger} J_2B$, their $qr$
+entries are $3/16$ and $3/32$, their $qf,rf$ entries are zero, and their $ff$
+entries are $3/8$ and $3/16$, respectively. Their $q,r$ principal blocks are
+respectively
+
+$$
+\begin{pmatrix}1/16&3/16\\3/16&9/16\end{pmatrix},\qquad
+\begin{pmatrix}17/32&3/32\\3/32&9/32\end{pmatrix}.
+\tag{27.9}
+$$
+
+These identities concern the original raw chronological sums, not conditional or
+labelled effects.
+
+Take a finite rectangular Kraus representation $T(X)=\sum_l L_lXL_l^{\dagger}$, with
+$\sum_l L_l^{\dagger} L_l=I_3$. This is the standard finite-dimensional Kraus
+representation: see M.-D. Choi, “Completely positive linear maps on complex
+matrices,” *Linear Algebra and its Applications* **10** (1975), 285–290,
+[doi:10.1016/0024-3795(75)90075-0](https://doi.org/10.1016/0024-3795(75)90075-0).
+For this representation and the trace-norm facts used below, see also John
+Watrous, *The Theory of Quantum Information*, Cambridge University Press (2018),
+[Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). Set $X_l=D_+L_l$ and
+$Y_l=D_-L_l$. Then
+
+$$
+\sum_l(X_l^{\dagger}X_l+Y_l^{\dagger}Y_l)=I_3,\qquad \operatorname{ran}Y_l\subset N,
+\tag{27.10}
+$$
+
+and the channel $R(X)=\sum_l(X_lXX_l^{\dagger}+Y_lXY_l^{\dagger})$ satisfies
+$\mathcal G\circ T=\operatorname{Ad}_B\circ R$. By (27.6), $P$ corresponds under
+the isometry $x\mapsto(D_+x,D_-x)$ to the projection onto $(a,0)$. All estimates
+below therefore apply to every original $T$.
+
+Write $\delta=\delta_\theta(T)$ and $\epsilon=\sqrt\delta$, with $0\le\delta\le1$.
+For a sequence of vectors, its norm means the square root of the sum of squared
+norms. In particular (27.10) says that the combined sequence $(X_lz,Y_lz)_l$ has
+norm one for each unit $z$. We repeatedly use
+
+$$
+\left\|\sum_l v_lw_l^{\dagger}\right\|_1\le
+\left(\sum_l\|v_l\|^2\right)^{1/2}
+\left(\sum_l\|w_l\|^2\right)^{1/2}.
+\tag{27.11}
+$$
+
+This follows from the trace norm of a rank-one matrix, the triangle inequality
+and Cauchy–Schwarz.
+
+First put $\alpha_l=a^{\dagger} X_lq$, $A=\sum_l|\alpha_l|^2$ and
+$e_l=X_lq-\alpha_la$. Positivity, trace preservation and the $J_0$ defect give
+
+$$
+1-\delta\le A\le1,\qquad
+\sum_l(\|e_l\|^2+\|Y_lq\|^2)=1-A\le\delta,
+\qquad
+\sum_l|a^{\dagger}X_l z|^2\le\delta\quad(z=r,f).
+\tag{27.12}
+$$
+
+Here the last inequality uses the zero target $J_0$ expectation on $r,f$.
+
+We next extract two spectral estimates using only $J_1+2J_2$. Put $Q=E+2F$,
+$b=(a+h)/\sqrt2$ and $k=(1,0,1)^{\mathsf T}/\sqrt2$; $b$ here is a local proof
+vector. Formula (27.7) gives on the whole plus output space and on $N$,
+respectively,
+
+$$
+Q=\tfrac34 I_3+\tfrac34 bb^{\dagger},\qquad
+Q|_N=\tfrac34 I_N+\tfrac12 kk^{\dagger}.
+\tag{27.13}
+$$
+
+Here $Q|_N$ denotes compression to $N$. The block operator $H_Q=Q\oplus Q|_N$ has
+minimum $3/4$ and maximum $3/2$, attained only on the line $(b,0)$. Its
+restriction to the orthogonal complement of that line has eigenvalues at most
+$5/4$. If $s=(q+r)/\sqrt2$, (27.9) gives the target expectations
+
+$$
+s^{\dagger}B^{\dagger}(J_1+2J_2)Bs=\tfrac32,\qquad
+f^{\dagger}B^{\dagger}(J_1+2J_2)Bf=\tfrac34.
+\tag{27.14}
+$$
+
+The operator defect for this combination is at most $3\delta$. The maximum in
+(27.14), the gap $1/4$ and (27.10) imply
+
+$$
+\|(Y_l s)_l\|\le\sqrt{12}\,\epsilon,
+\qquad
+\|(Y_l r)_l\|\le\sqrt2\|(Y_l s)_l\|+\|(Y_l q)_l\|
+\le(\sqrt{24}+1)\epsilon\le6\epsilon.
+\tag{27.15}
+$$
+
+The minimum in (27.14) instead gives
+
+$$
+\tfrac34\sum_l|b^{\dagger}X_l f|^2+
+\tfrac12\sum_l|k^{\dagger}Y_l f|^2\le3\delta.
+\tag{27.16}
+$$
+
+Together with (27.12) and $h=\sqrt2b-a$, this yields sequence bounds
+
+$$
+\|(a^{\dagger}X_lf)_l\|\le\epsilon,\quad
+\|(h^{\dagger}X_lf)_l\|\le(2\sqrt2+1)\epsilon\le4\epsilon,\quad
+\|(k^{\dagger}Y_lf)_l\|\le\sqrt6\epsilon\le3\epsilon.
+$$
+
+Define $\beta_l=g^{\dagger} X_lf$, $\gamma_l=g^{\dagger} Y_lf$, $u_l=X_lf-\beta_lg$
+and $v_l=Y_lf-\gamma_lg$. The bases $(a,h,g)$ of $\mathbb C^3$ and $(k,g)$ of $N$
+are orthonormal, so the preceding inequalities imply
+
+$$
+\sum_l(\|u_l\|^2+\|v_l\|^2)\le36\delta,
+\quad n:=\sum_l(|\beta_l|^2+|\gamma_l|^2)\le1,
+\quad 1-n\le36\delta.
+\tag{27.17}
+$$
+
+The displayed component bounds already give $1+16+9<36$.
+
+For $z=r,f$, let $M_z=\sum_l\overline{\alpha_l}X_lz$. By (27.12), $|a^{\dagger}
+M_z|\le\epsilon$. Replacing the $q$ column by $(\alpha_la,0)$ in each of the
+$J_1,J_2$ cross moments costs at most $\epsilon$, by (27.11), (27.12), (27.10) and
+the contraction norms of $E,F$. The original operator defects cost at most
+$\delta\le\epsilon$. Thus, with $d_r=1$ and $d_f=0$,
+
+$$
+|a^{\dagger}EM_z-3d_z/16|\le2\epsilon,\qquad
+|a^{\dagger}FM_z-3d_z/32|\le2\epsilon.
+\tag{27.18}
+$$
+
+Write $M_z=xa+yh+tg$. Multiplication by $16$ and $32$ in (27.18) gives
+
+$$
+|x+3y+\sqrt6t-3d_z|\le32\epsilon,\quad
+|17x+3y-\sqrt6t-3d_z|\le64\epsilon,\quad |x|\le\epsilon.
+$$
+
+Adding and subtracting these complex equations proves
+
+$$
+|y-d_z|\le19\epsilon,\qquad
+|t|\le(56/\sqrt6)\epsilon\le23\epsilon.
+$$
+
+Consequently
+
+$$
+\|M_r-h\|\le30\epsilon,\qquad \|M_f\|\le30\epsilon,
+\tag{27.19}
+$$
+
+since $\sqrt{1+19^2+23^2}<30$. There is no reality restriction on $x,y,t$.
+
+We now bound all nine complex matrix units. Equations (27.11), (27.12), and
+(27.19) directly give
+
+$$
+\|R(qq^{\dagger})-aa^{\dagger}\|_1\le2\delta+2\epsilon\le4\epsilon,
+\quad
+\|R(qr^{\dagger})-ah^{\dagger}\|_1\le31\epsilon,
+\quad
+\|R(qf^{\dagger})\|_1\le31\epsilon.
+\tag{27.20}
+$$
+
+For the second and third inequalities, $R(qz^{\dagger})=aM_z^{\dagger}$ plus an error
+of trace norm at most $\epsilon$. For the first, expand $X_lq=\alpha_la+e_l$; the
+coefficient error is at most $\delta$, the two cross terms total at most
+$2\epsilon$, and the remaining positive terms have trace at most $\delta$.
+
+Set $d_l=X_lr-\alpha_lh$. Then (27.10), (27.12) and (27.19) yield
+
+$$
+\sum_l(\|d_l\|^2+\|Y_l r\|^2)
+=1+A-2\operatorname{Re}(h^{\dagger}M_r)\le60\epsilon.
+\tag{27.21}
+$$
+
+Also the vector $\sum_l\overline{\alpha_l}d_l=M_r-Ah$ has norm at most
+$31\epsilon$. Expanding the $rr$ output as its $Ahh^{\dagger}$ term, its two cross
+terms and its positive remainder, and using (27.21), proves
+
+$$
+\|R(rr^{\dagger})-hh^{\dagger}\|_1\le\delta+62\epsilon+60\epsilon
+\le123\epsilon.
+\tag{27.22}
+$$
+
+Similarly, expanding (27.17), the two cross terms for $ff$ have total trace norm
+at most $2\sqrt{n(1-n)}\le12\epsilon$, and its coefficient error and positive
+remainder total $2(1-n)\le72\delta$. Hence
+
+$$
+\|R(ff^{\dagger})-gg^{\dagger}\|_1\le84\epsilon.
+\tag{27.23}
+$$
+
+For completeness, the $rf$ unit requires the leakage estimate (27.15). Write
+
+$$
+R(rf^{\dagger})=w g^{\dagger}+H_0,\qquad
+w=\sum_l(\overline{\beta_l}X_l r+\overline{\gamma_l}Y_l r).
+$$
+
+By (27.11) and (27.17), $\|H_0\|_1\le6\epsilon$. Write $w=xa+yh+tg$. Equations
+(27.12), (27.15) and $n\le1$ give $|x|\le7\epsilon$. Trace preservation on
+$rf^{\dagger}$ gives $\operatorname{Tr}R(rf^{\dagger})=0$, so $|t|=|g^{\dagger}
+w|\le6\epsilon$. The original $J_1$ cross defect and (27.8) imply
+
+$$
+|\operatorname{Tr}(E R(rf^{\dagger}))|\le\delta,
+\qquad |g^{\dagger}Ew|\le\delta+6\epsilon\le7\epsilon.
+$$
+
+Using the $g$ row of (27.7),
+
+$$
+3\sqrt6\,|y|\le112\epsilon+\sqrt6|x|+6|t|
+\le(148+7\sqrt6)\epsilon\le23(3\sqrt6)\epsilon.
+$$
+
+Thus $\|w\|\le\sqrt{7^2+23^2+6^2}\epsilon\le25\epsilon$ and
+
+$$
+\|R(rf^{\dagger})\|_1\le31\epsilon.
+\tag{27.24}
+$$
+
+The three reversed cross units obey the same bounds because $R,R_0$ preserve
+adjoints. Equations (27.20), (27.22)–(27.24) therefore prove, for every $i,j$ in
+the orthonormal basis $(q,r,f)$,
+
+$$
+\|(R-R_0)(|i\rangle\langle j|)\|_1\le123\epsilon.
+\tag{27.25}
+$$
+
+Finally, fix any finite reference dimension $d$ and any complex matrix $Z\in
+M_d(\mathbb C)\otimes M_3(\mathbb C)$, with no positivity or Hermiticity
+restriction. Expand
+
+$$
+Z=\sum_{i,j}Z_{ij}\otimes|i\rangle\langle j|.
+$$
+
+Each block is a left and right compression by operators of norm one, so the
+trace-norm ideal inequality gives $\|Z_{ij}\|_1\le\|Z\|_1$. Trace-norm
+multiplicativity on tensor products and (27.25) imply
+
+$$
+\| (\mathrm{id}_{M_d}\otimes(R-R_0))(Z)\|_1
+\le\sum_{i,j}\|Z_{ij}\|_1\,
+\|(R-R_0)(|i\rangle\langle j|)\|_1
+\le1107\epsilon\|Z\|_1.
+$$
+
+This bound holds simultaneously for every $d$ and every nonzero complex $Z$.
+Postcomposition by the isometry $B$ preserves trace norms at every reference
+dimension: conjugation by $I_d\otimes B$ preserves the nonzero singular values of
+every matrix. Equations (27.5)–(27.6) and the full-$H$ $\theta$ cancellation
+therefore give the claimed unhalved diamond bound, with $1107\le1200$. The
+argument also includes $\delta=0$. This proves the theorem. $\square$
+
+The full-$H$ reduction and exact matrices in (27.5)–(27.9) are
+reused from [STR], Theorem 26.1. The new quantitative inference
+is the simultaneous use of the global minimum and maximum in
+(27.13)–(27.16), followed by the nine matrix-unit estimates and
+the explicit reference-independent amplification. The zero-defect
+source alone does not supply this inference. The two Kraus
+summands and their linear combinations are internal proof
+coordinates, not accessible additional detectors or branch labels.
+The conclusion concerns the erased successor; [STR], Theorem 25.1,
+retains its distinct preceding-channel counterexample. There is no
+claim of optimal constant or exponent, minimum resources, physical
+realization or worldwide novelty.
+
+## 追加锚（本行以下为增补区）
