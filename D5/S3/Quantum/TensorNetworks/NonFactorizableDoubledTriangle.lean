@@ -8,7 +8,6 @@
 
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.TypeTags.Finite
-import Mathlib.Data.Fin.Rev
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Basic.Real.Basic
