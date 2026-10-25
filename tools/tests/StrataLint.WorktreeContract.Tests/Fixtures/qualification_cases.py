@@ -8,6 +8,53 @@ from unittest.mock import patch
 
 
 class QualificationCases:
+    def pool_revalidation_keeps_refusal_and_prior_eviction(self):
+        import worktree_protocol as protocol
+        import worktree_pool as pool
+        from pathlib import Path
+        original = pool.qualify
+        for change in ("disappeared", "identity", "refused", "native"):
+            with self.subTest(change=change):
+                older, newer = self.pool_pair(suffix=change)
+                calls = []
+                def injected(source, path, *args, **kwargs):
+                    if Path(path) == newer:
+                        calls.append(True)
+                        if len(calls) == 2:
+                            self.assertFalse(older.exists())
+                            if change == "disappeared":
+                                self.g(self.main, "worktree", "remove", newer)
+                            elif change == "identity":
+                                self.make_idle(newer, self.base)
+                            elif change == "refused":
+                                raise protocol.Refused("initialization_in_progress")
+                            else:
+                                raise protocol.GitFailure("fatal: revalidation native cause")
+                    return original(source, path, *args, **kwargs)
+                output = io.StringIO()
+                with patch.object(pool, "qualify", side_effect=injected), \
+                        patch.object(pool, "available_fraction", return_value=0.04), redirect_stdout(output):
+                    code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
+                self.assertEqual(2, len(calls))
+                self.assertEqual(74, code)
+                result = json.loads(output.getvalue().splitlines()[-1])
+                self.assertEqual("failed", result["status"])
+                removed = next(row for row in result["items"] if row["path"] == str(older))
+                retained = next(row for row in result["items"] if row["path"] == str(newer))
+                self.assertEqual("removed", removed["outcome"])
+                self.assertEqual(self.base, removed["checkpoint"]["commit"])
+                self.assertEqual(str(newer), retained["path"])
+                if change == "native":
+                    self.assertEqual("sweep_failed", retained["outcome"])
+                    self.assertIn("revalidation native cause", retained["error"])
+                else:
+                    self.assertEqual("retained", retained["outcome"])
+                    self.assertEqual(dict(disappeared="missing_or_linked_tree", identity="idle_identity_changed",
+                                          refused="initialization_in_progress")[change], retained["reason"])
+                self.assertEqual(change != "disappeared", newer.exists())
+                if newer.exists():
+                    self.g(self.main, "worktree", "remove", newer)
+
     def native_identity_races_are_refused(self):
         import worktree_protocol as protocol
         from pathlib import Path

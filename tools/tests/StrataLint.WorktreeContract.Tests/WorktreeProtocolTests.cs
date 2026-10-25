@@ -226,6 +226,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
