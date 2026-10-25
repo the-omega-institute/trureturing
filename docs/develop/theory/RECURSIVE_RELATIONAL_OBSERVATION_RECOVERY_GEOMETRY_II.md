@@ -1610,3 +1610,350 @@ No arbitrary signed-word uniqueness, general bounded-alphabet converse for nonre
 Native $\alpha/\beta$ constructors are not identified with the paid affine pulse actions. A common native realization would need a proved state, legal-operation, initialization, complete-output, observation and resource correspondence. Binary scalar/pulse recovery supplies none of these bridges by terminology alone. The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, final-no-Ready and erased-history claims retain their exact original scopes; this work proves no new statement in them. Joining LAB, rational-path and quantum models, and completing the sustained four-expression programme, remain separate obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 69. Two precise transport classes on the original native and path sources
+
+**Definition 69.1 (actual sources, bindings and complete calls).** The native source is the owned, rooted and ordered LAB source of [Atomic Generation Acquisition, §§17,20](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), with logical terms
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad P_p:\alpha\longmapsto\beta,
+\qquad S_p:\beta\longmapsto\langle\beta,\alpha\rangle.
+\tag{69.1}
+$$
+
+Addresses are finite words in $L,R$. The logical leaf $\beta$ has a material unary left marker; that marker is not an additional logical leaf or an admissible logical target. The material encoding $C(t)$ has one vertex for $\alpha$, two for $\beta$, and an ordered root with the two encodings below it for a branch. A promotion retains its root and adds one marker. A split retains the root, reuses its old marker as the new left beta root, and adds a marker and a right alpha, hence adds two vertices. Logical reachability has the original birth constraint: no alpha leaf occurs at an address ending in $L$.
+
+Use exactly the guards and framing of [Atomic Generation Acquisition II, Definition 53.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md). For either request kind, an absent address returns Refusal(absent), and a branch returns Refusal(branch). At an alpha, $P$ returns Growth$(P,p)$ and performs (69.1), whereas $S$ returns Refusal(wrong type). At a beta, $S$ returns Growth$(S,p)$ and performs (69.1), whereas $P$ returns Refusal(wrong type). Every refusal leaves the source unchanged. With $A(p)=1^{|p|}0p$, a complete addressed request has its three-bit kind tag followed by $A(p)$, length $2|p|+4$. Growth has the original three-bit reply tag, kind bit and $A(p)$, length $2|p|+5$; each of the three distinct refusal reasons has length five. Each of the other six three-bit request tags returns the original three-bit BadFrame, unchanged. A proper incomplete addressed frame waits; a handler consumes exactly one frame. Every completed answer includes all its bits, End, the supplied local acknowledgement and Return with the prescribed cleanup. Missing authority or a wrong phase disables the primitive; it does not manufacture a type refusal. No Tag, size read, journal, history reader or indirect logical-leaf read is added.
+
+The path source is exactly Definition 36.1: a finite, initially unknown $N\ge1$, rational symmetric tridiagonal $T$, strictly positive adjacent links, and $0<T<I$, with $b=e_0$ and actual initial field $b$. The original Read returns $b^{\mathsf T}x$ without changing $x$; Tick changes $x$ to $Tx$ and returns $b^{\mathsf T}Tx$; Add$(u)$, $u\in\mathbb Q$, changes $x$ to $x+ub$ and returns its fixed acknowledgement. If the installed Add also returns the updated root scalar, that scalar is an additional complete output. Hold leaves the field unchanged, returns its acknowledgement and prevents autonomous evolution during the held local calculation. The actual entrance is Theorem 37.2's unknown-size acquisition, not a supplied matrix or a reset: it executes $2N$ Ticks, one Read and $N+1$ Holds, consumes the $2N+1$ scalar outputs, earns $N,T$, and ends at
+
+$$
+x_*=T^{2N}b.
+\tag{69.2}
+$$
+
+All endpoints below use this preparation. The root binding, exact arithmetic and responses, installed Add/Read/Tick/Hold rights, exclusive serialization, absence of concurrent writers or revocation, and sufficient finite source, response and working backing are premises. Earning a law does not authenticate those premises or allocate their resources.
+
+**Definition 69.2 (independent views and the paired-source declaration).** Native Space is the present rooted, ordered material address support with its original edge meanings; Boundary is its terminal-address antichain; Time is the labelled causal order of successful promotions and splits, with predecessor constraints at their actual addresses. These are the original independent meanings of Atomic Generation Acquisition §17, whose source, boundary and causal inverses are used on their reached images. The original root binding is fixed; semantic equality disregards fresh allocation-name spellings exactly as $Q_A$ does. Recovering the address geometry does not allocate its vertices or recover an additional raw-name roster. Time here forgets the serial ordering of independent successful events and does not include failed probes. Recovering it does not recover an erased serial journal. Native Memory in the tasks below is sufficient present information for their stated guards and successors, rather than a copy of that journal.
+
+A paired execution means two actually supplied sources: the native source and the path source just specified, with their actual references, authorities, backing and held serialization. A selector first causes its prescribed native calls, then its prescribed path calls; a settled cut occurs only after all complete replies, acknowledgements, source effects and local commits. The union of those resources is charged on that execution. This declaration supplies no map identifying the two physical sources. A native realization by one path would additionally require an initialization, legal-operation, complete-output, successor and resource correspondence. The endpoint restrictions in §§71 and 74 concern two different classes of proposed correspondences; neither asserts that every native-to-path correspondence belongs to its class.
+
+## 70. Repeatable independent native growth with actual distinguishing guards
+
+**Definition 70.1 (the two native growth coordinates).** Put
+
+$$
+C_0=\beta,\qquad C_{j+1}=\langle C_j,\alpha\rangle,
+\qquad t_{a,b}=\langle C_a,C_b\rangle\quad(a,b\in\mathbb N).
+\tag{70.1}
+$$
+
+Here $C_j$ denotes a logical comb, distinct from the material-encoding notation $C(t)$. From the owned known alpha, the actual calls $P_\varepsilon;S_\varepsilon;P_R$, with their whole Growth replies, prepare $t_{0,0}$. Define $H_L$ as follows. Start at address $q=L$ and issue $P_q$. On Refusal(branch), replace $q$ by $qL$ and repeat. On Refusal(wrong type), issue $S_q$, consume its whole Growth reply and return. Define $H_R$ with initial address $R$. These are guarded native procedures, not fixed-length native command words. They use the original paid address traversal and call framing; an unexpected different reply does not satisfy their declared source domain.
+
+**Proposition 70.2 (all coordinate pairs, full guards and independent events).** At $t_{a,b}$, $H_L$ terminates at $t_{a+1,b}$ after exactly $a+1$ refused $P$ calls and one successful $S$ call; $H_R$ terminates at $t_{a,b+1}$ after $b+1$ refused $P$ calls and one successful $S$ call. Both orders of the two procedures are legal and have identical final native source. Every pair $(a,b)\in\mathbb N^2$ is reached. Distinct pairs are distinguished by an actual original guard.
+
+**Proof.** In the left comb, addresses $L,LL,\ldots,LL^{a-1}$ are branches, and $LL^a$ is beta. Thus the first $a$ probes give the complete branch-refusal frame, the next gives the complete wrong-type-refusal frame, and the following $S$ grows that beta. It inserts one further comb branch, leaving every right-side object unchanged. This proves the count and successor, also when $a=0$. The right proof has the same address calculation with initial $R$. The subtrees are disjoint, so either order has successor $t_{a+1,b+1}$. Induction reaches all pairs.
+
+If $a<a'$, issue $P_{LL^a}$ to the two states. It returns Refusal(wrong type) at $t_{a,b}$ and Refusal(branch) at $t_{a',b'}$, with both sources unchanged. If the left coordinates agree and $b<b'$, use $P_{RL^b}$. Reversing the pair covers the remaining inequalities. These are different original complete replies, not abstract tests added to the source. The material source has exactly $5+2(a+b)$ vertices. Its causal successful-event order consists of the fixed preparation and two independent chains; its possible serial shuffles are additional history information. $\square$
+
+## 71. Complete classification of fixed original-command blocks
+
+**Definition 71.1 (fixed-block field representation).** After (69.2), choose two finite straight-line blocks $W_L,W_R$ of the original path menu. Their commands and rational Add operands may depend on the earned law and fixed context, but not on future selectors, intermediate returned values or the current field. Reads, Holds and all acknowledgements are actually executed and consumed. No reset, inverse Tick or other field actuator is allowed. Interpreting a selector $L$ as the paired procedure $H_L;W_L$ and $R$ as $H_R;W_R$, ask whether the settled path field is a single function $E(a,b)$ of the current native source, independent of the selector route. This is an endpoint requirement; complete native and path reply traces remain their respective actual traces, without an assumed equality between them.
+
+Let $m,n$ be the numbers of Ticks in $W_L,W_R$. Command induction gives their field effects
+
+$$
+F(x)=T^m x+c,\qquad G(x)=T^n x+d,\qquad c,d\in\mathbb Q^N.
+\tag{71.1}
+$$
+
+An Add operand $u$ contributes $uT^r b$, where $r$ is the number of subsequent Ticks in that block. Reads and Holds do not change (71.1). This formula counts the actual block, including zero operands and redundant observations.
+
+**Theorem 71.2 (route or collision, with every zero-Tick case).** For every source of Definition 69.1 and every pair of blocks of Definition 71.1, define
+
+$$
+\Delta=(T^n-I)c-(T^m-I)d.
+\tag{71.2}
+$$
+
+A route-independent field representation on all $\mathbb N^2$ exists if and only if $\Delta=0$. If $\Delta\ne0$, the legal native routes $LR$ and $RL$ reach the same native source and path fields differing by $\Delta$. If $\Delta=0$, the following is the complete equality classification, and in every case $E$ fails to be injective.
+
+1. If $m,n>0$, there is a common rational point
+
+$$
+z=(I-T^m)^{-1}c=(I-T^n)^{-1}d,
+\qquad E(a,b)=z+T^{ma+nb}(x_*-z).
+\tag{71.3}
+$$
+
+If $x_*=z$, all fields agree. Otherwise
+
+$$
+E(a,b)=E(a',b')\quad\Longleftrightarrow\quad ma+nb=ma'+nb'.
+\tag{71.4}
+$$
+
+In particular, for $g=\gcd(m,n)$, the distinct pairs $(n/g,0)$ and $(0,m/g)$ collide.
+
+2. If $m=0<n$, then $c=0$, $F=I$, and, with $z=(I-T^n)^{-1}d$,
+
+$$
+E(a,b)=z+T^{nb}(x_*-z).
+\tag{71.5}
+$$
+
+It is constant when $x_*=z$; otherwise equality holds exactly when $b=b'$, so the entire first coordinate is lost. If $n=0<m$, the symmetric assertion holds: $d=0$, and nonconstant equality is exactly $a=a'$.
+
+3. If $m=n=0$, there are rational $r,s$ with $c=rb$, $d=sb$, and
+
+$$
+E(a,b)=x_*+(ra+sb)b,
+\qquad E(a,b)=E(a',b')\Longleftrightarrow
+r(a-a')+s(b-b')=0.
+\tag{71.6}
+$$
+
+This map also has a collision between distinct nonnegative pairs, including when either or both coefficients vanish.
+
+**Proof.** Applying the individual command effects proves (71.1) by induction through each block. Direct composition gives
+
+$$
+G(F(x))-F(G(x))=T^n c+d-T^m d-c=\Delta.
+\tag{71.7}
+$$
+
+The two legal routes in Proposition 70.2 therefore prove necessity. If $\Delta=0$, the affine maps commute on every field. Any two finite selector words with the same multiplicities are related by adjacent interchanges of $LR$ and $RL$: move the first required letter leftward, and continue inductively on the remaining suffix. Each interchange preserves the field by (71.7). Consequently the endpoint depends only on $(a,b)$, proving sufficiency without restricting later routes.
+
+The eigenvalues of $T$ lie in $(0,1)$. Hence $T^j$ and $I-T^j$ are invertible for every positive $j$. Their rational inverses exist because their matrices are rational and have nonzero determinants. In the first case, $\Delta=0$ says $(I-T^n)c=(I-T^m)d$. The two invertible polynomial matrices commute with each other and with their inverses. Multiplication gives the equality defining $z$. Both affine maps then fix $z$; induction gives (71.3). If exponents $p<q$ produced equal nonconstant fields, then
+
+$$
+0=T^p(I-T^{q-p})(x_*-z),
+\tag{71.8}
+$$
+
+whose invertible factors would imply $x_*=z$. Equal exponents suffice, proving (71.4). The displayed distinct pairs have common exponent $mn/g$.
+
+If $m=0<n$, (71.2) reduces to $(T^n-I)c=0$, so $c=0$. Centering $G$ at its unique fixed point proves (71.5), and (71.8) proves its exact equality classification. Exchanging the blocks proves the other case.
+
+If neither block has a Tick, its Adds only sum scalar multiples of the same $b$, proving (71.6). If $r=0$, varying $a$ gives a collision; if $s=0$, varying $b$ does. Otherwise choose a positive common denominator $D$ and integers $A=Dr$, $B=Ds$. The nonzero integer vector $(B,-A)$ satisfies the kernel equation. Writing it as its coordinatewise positive part minus its negative part gives two distinct pairs in $\mathbb N^2$ with the same image. This also treats opposite signs without assuming positive translations. The alternatives exhaust all nonnegative $m,n$. $\square$
+
+## 72. Actual distinguishing futures and the conditional price of extra records
+
+**Proposition 72.1 (route separation is observable; collisions have equal path futures).** In the noncommuting case of Theorem 71.2, the two route endpoints are distinguished by a common original-menu continuation consisting of Read followed by $N-1$ returning Ticks. In any collision case, equal field endpoints with the same earned law, binding, rights and all other selected recovery inputs have identical complete replies and equal successors for every common finite adaptive original-path continuation. The common continuation has the same initial local continuation state and selects its next command only from its declared inputs and acquired complete replies. Their different native states nevertheless have the distinguishing guard of Proposition 70.2.
+
+**Proof.** The positive-link path has the triangular cyclic matrix $K=[b,Tb,\ldots,T^{N-1}b]$: the coordinate $j$ of $T^j b$ is the positive product of the first $j$ links, and all coordinates beyond $j$ vanish. Thus $K$ and $\mathcal O_N=K^{\mathsf T}$ are invertible, as in Lemma 37.1. For unequal endpoint fields $y,y'$, at least one entry of $\mathcal O_N(y-y')$ is nonzero. The prescribed actual continuation returns exactly $b^{\mathsf T}T^j y$ for $0\le j<N$, including the first nondestructive Read and all subsequent Tick outputs. It therefore distinguishes the fields. It leaves them at $T^{N-1}y,T^{N-1}y'$, rather than granting a free vector observation.
+
+For equal fields, a common Read has equal scalar reply and unchanged equal successors; a common Tick has equal returned scalar and equal $T$-successors; a common Add with the same operand has equal acknowledgements, equal optional root outputs and equal translated successors; a common Hold has equal acknowledgement and unchanged successors. Given a common adaptive protocol and equal other selected inputs, its next choice is the same after equal complete reply prefixes. Induction proves the assertion, with identical legal-domain conditions and completed acknowledgements. A pending incomplete request stays pending in both. Proposition 70.2 supplies the different native guard. Old block outputs need not have agreed: this proof does not delete a surviving archive or a controller distinction. $\square$
+
+**Corollary 72.2 (an exact conditional auxiliary alphabet).** Suppose $m,n>0$, $\Delta=0$, and a decoder is required to recover every present native pair from the current path field and a jointly selected auxiliary value $A$. For every $h\ge0$, the collision fibre contains
+
+$$
+(a_j,b_j)=\left(\frac ng j,\frac mg(h-j)\right),
+\qquad 0\le j\le h,
+\qquad ma_j+nb_j=\operatorname{lcm}(m,n)h.
+\tag{72.1}
+$$
+
+Thus the auxiliary values actually available on those $h+1$ cases must have at least $h+1$ distinguishable possibilities. A fixed-width binary auxiliary register needs at least $\lceil\log_2(h+1)\rceil$ bits on that fibre. If $x_*=z$, the same conclusion still holds, with an even larger field fibre.
+
+For each zero-Tick identity case of Theorem 71.2, the analogous fibre contains $h+1$ pairs obtained by varying the lost coordinate from zero to $h$. In the case $m=n=0$, choose a nonzero integer vector $w$ in the kernel of $(r,s)$ as in that theorem, and write $w=w^+-w^-$ with nonnegative coordinatewise parts. Then the $h+1$ pairs $jw^++(h-j)w^-$, $0\le j\le h$, share one field. Thus every commuting case requires arbitrarily large auxiliary alphabets if recovery of all native pairs is required.
+
+**Proof.** All pairs in (72.1) are distinct, nonnegative and actually reachable. Equation (71.3) gives a common field. The zero-Tick identity cases follow from (71.5). In the translation case, the difference between the $j$th and $j'$th displayed pairs is $(j-j')w$, nonzero for distinct indices, while the functional $(r,s)$ annihilates that difference. Equation (71.6) therefore gives a common field. Two cases with the same jointly selected auxiliary value would give identical decoder inputs and different required answers. Injectivity on each finite set proves the alphabet bound and its fixed-width binary consequence. $\square$
+
+Here $A$ includes every varying selected input: retained request or reply traces, a selector count, addresses, controller state, source-dependent code or constants, references and rights, archive contents and accessible backing, and any surviving source-dependent scratch. A short archive handle does not replace the distinguishable contents or callable behavior behind that handle. If an actual native guard is admitted as a recovery query, its distinguishing response is additional input and cannot be declared absent. A surviving archive can satisfy the bound; the corollary is not an erased-history theorem in its presence. A route-dependent path field can also escape the route-independent premise. No count of variable-length encodings or total resource optimum follows from this fixed-fibre alphabet statement.
+
+**Resource statement 72.3 (the same paired execution).** At native endpoint $t_{a,b}$ the material source is $5+2(a+b)$ vertices. Beyond its three-call preparation, its actual guard-scan refusals number $a(a+1)/2+b(b+1)/2$, and its successful splits number $a+b$. The preparation's request/Growth payload is 31 bits. One $H$ call at local coordinate $j$ has refusal probes at depths $1,\ldots,j+1$ and a successful split at depth $j+1$; its request/reply payload is
+
+$$
+\sum_{d=1}^{j+1}(2d+9)+4(j+1)+9=j^2+16j+24.
+\tag{72.2}
+$$
+
+Summing (72.2) for $0\le j<a$ and $0\le j<b$ gives the complete addressed payload beyond preparation. End, acknowledgement, Return, navigation, backing and local address calculations are separate real operations. The path has its original $N$ vertices and actual field values. If $B_{L,Q},B_{R,Q}$ count occurrences of command $Q$ in the two literal blocks, the continuation executes exactly $aB_{L,Q}+bB_{R,Q}$ such commands, in addition to entrance; its Tick count is $ma+nb$. Every returning Tick, Read, optional Add scalar and fixed acknowledgement remains paid. Both source supports, root references, actual grants, law storage, fixed block literals, controller and work arena, all selected records and any coexisting archives/backing are charged together. Each arbitrarily long finite native run requires its own adequate finite provision; no fixed finite source quota serves all pairs. Finite blocks do not bound the widths of repeatedly evolved rational fields, addresses or counters. The optimized obstruction concerns a canonical field representation; it is not a bound on every augmented representation or on the entire cost vector.
+
+## 73. An actual finite independent layer and complete settled auxiliary inputs
+
+**Definition 73.1 (the native independent layer).** Fix an integer $k\ge1$. From the owned alpha, for $j=0,\ldots,k-1$ execute $P_{R^j}$ and then $S_{R^j}$, consuming both whole Growth replies. This prepares incomparable beta leaves
+
+$$
+p_i=R^iL\quad(0\le i<k),
+\qquad\text{and one continuing alpha at }R^k.
+\tag{73.1}
+$$
+
+A valid selector Select$(i)$, $0\le i<k$, means the actual original call $S_{p_i}$. For a subset $U\subseteq\{0,\ldots,k-1\}$, let $t_U$ be the source after precisely those distinct selections in $U$. At an unused $i$ the complete reply is Growth$(S,p_i)$ and the successor is $t_{U\cup\{i\}}$; at a used $i$ the reply is Refusal(branch) and the source stays $t_U$. Every subset, every ordering of its elements and every finite sequence with repetitions is legal under sufficient backing. Different subsets are distinguished by an actual Select in their symmetric difference. The original $P_{p_i}$ also distinguishes beta from branch by wrong-type versus branch refusal, without changing either source. Each partial sequence extends to one reaching all $k$ selected leaves. Thus equality of subsets is exactly equality of the complete Select continuation task on this reached layer, although that task is smaller than unrestricted $Q_A$.
+
+**Proof of the source assertions.** At step $j$ the continuing leaf $R^j$ is alpha, so its promotion and split have the stated guards and leave the next continuing alpha at $R^{j+1}$. Its left beta is never touched by later preparation. The addresses $p_i$ are incomparable; a split at one cannot affect another. After that split the same address is a branch, proving the two complete-reply cases and all successor statements. Choosing any enumeration of a subset reaches it, and appending its complement reaches the full subset. Initially the prepared support has $1+3k$ vertices; at $t_U$ it has $1+3k+2|U|$, reaching $1+5k$ at the full subset. The same source, terminal-boundary and causal-order inverses of Definition 69.2 recover this present layer; the causal order does not specify the permutation of its independent selections. $\square$
+
+**Definition 73.2 (adaptive canonical-cut pulse class).** Fix the actual acquired path of (69.2), its whole primitive integer law $q$ of Definition 44.2, positive leading coefficient $a\ge2$, and a digit bound $0\le H<a$. A pulse with digit $d\in\{0,\ldots,H\}$ is literally Tick; Add$(d)$; Read, including when $d=0$. At pre-pulse field $x$ its complete outputs are
+
+$$
+\tau=b^{\mathsf T}Tx,\quad\mathrm{ack}_{\rm Add},\quad
+ y=b^{\mathsf T}(Tx+db)=\tau+d,
+\qquad x'=Tx+db,
+\tag{73.2}
+$$
+
+with any installed optional Add scalar included as well. A translator must serve every finite valid Select sequence on the actual layer, with its complete native replies and successors, under the supplied adequate finite backing. In particular every reached partial subset admits service of its remaining selections; excluding an order or stopping at a partial subset is outside this class. It may adapt its finite pulse block for each Select to all actually available inputs and replies, and may use arbitrary finite paid scratch while busy. Reads and Holds may occur outside pulses; every post-entrance Tick and Add must belong to a completed pulse. There is no other path motion, reset or source re-preparation. Intermediate cuts can be busy, but settled cuts have completed calls, outputs and commits and no pending external request.
+
+The canonical-field condition is that every settled history reaching native $t_U$ has the same actual path field $z_U$. This includes differing orders, repetitions and any admitted choices of the translator. The recovery condition is an exact decoder of $U$ from that field and a joint auxiliary input taking at most $R$ distinguishable values over all these cuts, for some integer $R\ge1$. The fixed common context may contain $k,R$, the earned law and origin, a fixed program, fixed references and rights and a common cleared workspace capacity. Every other varying selected decoder input is part of the joint auxiliary value: records, old inputs and outputs, counters, pending selectors retained after commit, code/control state, reference or grant variations, source-dependent allocation shape, accessible archives and their backing contents, and surviving scratch. Callable side objects are counted by their distinguishable permitted recovery behavior, not just handle bytes. Random choices, if admitted, satisfy these same requirements on every admitted execution and are included when retained or selected.
+
+The lower bound grants the decoder the exact current field; granting it does not install a free vector-reading port. A decoder that selects an original native guard or a surviving native/producer archive as additional recovery input must include its distinguishable behavior in the auxiliary alphabet. In particular, querying all $k$ original $P_{p_i}$ guards can reveal the subset, and then a bound $R<2^k$ cannot describe that complete collection of inputs. The supplied native source may be the object of the later actual Select actuation without being selected as a free earlier recovery oracle. All coexisting objects remain paid physical resources even when they are outside the decoder's selected inputs. Unbounded busy scratch is allowed; only information surviving or accessible at a settled recovery cut is bounded by $R$.
+
+For a finite digit word $w$ of length $l$, the actual field is
+
+$$
+X(w)=T^{l+2N}b+\sum_{i=0}^{l-1}w_iT^{l-1-i}b.
+\tag{73.3}
+$$
+
+Theorems 52.3 and 53.1 supply its injectivity on all finite words over this menu, including different lengths and the empty word. They use the authentic origin and the full primitive law, not one chosen spectral root. We use that result as a supplier, without replacing it by an extra clock construction.
+
+## 74. Cofinal canonical cuts force a motion-capacity restriction
+
+**Theorem 74.1 (complete auxiliary-capacity bound).** Every translator of Definition 73.2 serving the actual layer of Definition 73.1 satisfies the following. If a finite execution reaches the full subset after $M$ post-entrance pulses, then
+
+$$
+2^k\le R(M+1),\qquad
+M\ge\left\lceil\frac{2^k}{R}\right\rceil-1.
+\tag{74.1}
+$$
+
+All full-subset executions have the same literal pulse word. For each subset $U$, all histories reaching it have a unique pulse word $v_U$, which is a prefix of that common full word. A refused repeat Select executes no pulse between its two settled cuts. Thus (74.1) holds on every full execution, including executions containing repeated selectors, not merely on a separately chosen optimal order.
+
+**Proof.** Choose one actual full execution and call its pulse word $W$, length $M$. Another full execution has the same final field by canonicality. Injectivity of (73.3) makes its entire word equal to $W$, including its length. Now take any finite history reaching $U$. Definition 73.1 extends its actual native history to the full subset. Serving the appended selectors appends a pulse word; it cannot remove earlier pulses. The resulting full word is $W$, so the partial word is a prefix of $W$. Two histories reaching the same $U$ have the same canonical field and hence, by the same injectivity, identical pulse words. This defines $v_U$. No assumption of fixed blocks or order-independent busy computations has been used.
+
+For each of the $2^k$ subsets, choose one reached settled cut and its actual jointly selected auxiliary value $A_U$. The map
+
+$$
+U\longmapsto(v_U,A_U)
+\tag{74.2}
+$$
+
+is injective. Indeed, equal pairs give equal exact fields by (73.3) and equal all selected auxiliary inputs, so the exact decoder must return the same subset. The word $W$ has exactly $M+1$ prefixes, including the empty and whole words, and the joint auxiliary alphabet has at most $R$ values. Counting the possible pairs proves the first inequality. Since $M+1$ is an integer, it implies the second.
+
+Finally, a repeat Select leaves $U$ unchanged. If its pre-cut pulse word is $v$ and its post-cut word is $vw$, canonicality gives $X(v)=X(vw)$. Injectivity gives equality of the literal finite words, hence $|w|=0$. Reads, Holds, complete refusals and busy work can still occur and are paid. This proves all claims. $\square$
+
+**Scope 74.2 (the quantified restriction).** The argument uses three separate premises: actual independent cofinal native subsets, injectivity of the original bounded-digit pulse words from the actual acquired phase, and canonical settled fields with a complete jointly bounded auxiliary alphabet. It is not a restriction on arbitrary adaptive path commands, signed/unbounded menus, noncanonical fields retaining route information, an altered origin, an unconstrained auxiliary archive or a decoder with uncounted source queries. A retained backing that distinguishes subsets either enlarges $R$ or violates the premise; it cannot be silently removed from the count. No pulse bound is inferred merely from a finite program, a bounded number of named registers or a small handle. The bound concerns pulse motion and settled distinguishability, not peak scratch, field bit widths, total source material, elapsed work or serial-history recovery.
+
+## 75. A paid two-source consumer attains exactly the restricted bound
+
+**Definition 75.1 (installation and the two counted coordinates).** Supply both actual sources, their preparation and acquisition as in Definitions 69.1 and 73.1, with one serial controller and adequate finite material for the following fixed $k,R$ task. Keep their two references and original authorities; no source is manufactured by a numerical representation of the other. At each settled cut require the native source to be $t_U$, and put
+
+$$
+r(U)=\sum_{i\in U}2^i,\qquad
+n(U)=\left\lfloor\frac{r(U)}R\right\rfloor,\qquad
+s(U)=r(U)-Rn(U),
+\qquad
+M_* =\left\lfloor\frac{2^k-1}{R}\right\rfloor
+     =\left\lceil\frac{2^k}{R}\right\rceil-1.
+\tag{75.1}
+$$
+
+The required path field and sole varying selected auxiliary register are
+
+$$
+x_U=T^{2N+n(U)}b,
+\qquad s=s(U)\in\{0,\ldots,R-1\}.
+\tag{75.2}
+$$
+
+No $n$, rank, mask, current predictor, input journal, past outputs or selector count is retained as another selected register. Fixed code and context may contain $k,R,N,T$ and the earned origin. The scalar-origin and direct residue consumers of §§59–67 are suppliers for exactly this kind of finite arithmetic consumption; the following uses only their original passive-root specialization, Lemma 39.2. It claims no additional implementation of a clock.
+
+The recovery phase selects only the path root Read and the residue register. The native reference is used for the subsequent actual Select actuation; it is not queried to recover $U$. A native traversal, separate archived subset, hidden counter or surviving source-dependent allocator state would be an additional selected input and would change the claimed alphabet. A common fixed-capacity work arena, including fixed-format exact integer and rational buffers large enough for this finite task, is supplied and charged. All scratch, request/reply buffers and variable local state are cleared before each settled cut; its available capacity and allocation shape there are the same for every subset. This finite backing requirement is an explicit installation premise, not a consequence of the number of program instructions. The path's actual rational values and their physical encoding are paid field material. Their finite maximum encoding capacity can likewise be fixed across this task, with canonical value encodings and zero padding; no additional source-dependent header or stale payload is offered to the decoder. Native source material is also paid, whether selected by the decoder or not.
+
+**Theorem 75.2 (actual recovery and every finite Select continuation).** The installation of Definition 75.1 has an exact finite service for every valid finite adaptive sequence of Select requests, including repetitions. At its settled cuts it satisfies (75.2), recovers the native subset and hence its present Space, Boundary and causal Time, and returns the complete original native reply and actual native successor. A first successful selection of $i$ executes exactly
+
+$$
+\left\lfloor\frac{r(U)+2^i}{R}\right\rfloor
+ -\left\lfloor\frac{r(U)}R\right\rfloor
+\tag{75.3}
+$$
+
+zero pulses. A repeated selection executes none. Every full-subset execution has exactly $M_*$ post-entrance pulses and at most $R$ jointly selected auxiliary values. It therefore attains (74.1) in precisely those two coordinates.
+
+**Proof.** Initially $U=\varnothing$, $r=n=s=0$, and the preparations put the sources at $t_\varnothing,x_*$, as required. Suppose the invariant holds at a settled cut. Enter a busy phase and Hold the actual path. Its actual Read returns
+
+$$
+y=b^{\mathsf T}T^{2N+n}b=m_{2N+n}.
+\tag{75.4}
+$$
+
+For a nonzero $b$ and $0<T<I$, the passive moments strictly decrease:
+
+$$
+m_j-m_{j+1}=b^{\mathsf T}T^j(I-T)b>0\quad(j\ge0).
+\tag{75.5}
+$$
+
+Indeed, diagonalizing the real symmetric $T$ makes this a sum of nonnegative terms $c_\ell^2\lambda_\ell^j(1-\lambda_\ell)$, at least one strictly positive. This is the supplied passive-moment fact. Using the actually earned rational $T$, enumerate $n_0=0,\ldots,M_*$ and compute each rational $m_{2N+n_0}$ by finite exact matrix arithmetic until it equals the actually returned $y$. Existence follows from (75.2) and $n\le M_*$; uniqueness follows from (75.5). Thus this paid local procedure obtains the correct $n$, then $r=Rn+s$, then the unique $k$-bit subset $U$. It has no unearned passive epoch or response oracle. The number, sizes and cost of its arithmetic operations are paid busy work.
+
+Decode the valid request $i$ and issue the actual original $S_{p_i}$, consuming its entire framed response, End, local acknowledgement and Return. If $i\notin U$, Definition 73.1 gives Growth$(S,p_i)$ and source $t_{U'}$, $U'=U\cup\{i\}$. The recovered rank has zero $i$th bit, so $r'=r+2^i$ exactly, without a carry into other subset bits. Put $n'=\lfloor r'/R\rfloor$, $s'=r'-Rn'$. Then $n'\ge n$. Execute $n'-n$ complete zero pulses on the same path, consuming every returning Tick scalar, Add acknowledgement and Read scalar. They change $T^{2N+n}b$ to $T^{2N+n'}b$ and establish (75.2) for $U'$. Store $s'$. If $i\in U$, the actual response is Refusal(branch), both the subset and its rank stay unchanged, and execute no pulse. Thus both branches agree with the actual full native reply and successor, not just with a predicted Boolean success flag.
+
+A final Hold fixes the path while the controller completes its local commit, emits the buffered original native response and clears its temporary data under the supplied End/acknowledgement/Return convention. No later request is admitted until cleanup and commit have finished. The busy interval, including the interval after the native source has changed and before its path/residue update, is not exposed as a settled recovery cut. The fixed response frame is itself consumed or cleared before that cut; a surviving external archive, if later selected, is additional input. The invariant is restored. Induction covers every finite adaptive valid sequence, since equality of earlier complete replies allows the next request to be selected from exactly its actual prefix.
+
+For this restricted Select service, one may use fixed-format local request fields of width $\max(1,\lceil\log_2k\rceil)$ with a complete-message delimiter. A complete malformed or out-of-range local request returns a declared local rejection, leaves both sources and $s$ unchanged and executes no source call. A proper incomplete frame remains busy/pending until completed, rather than producing an original source refusal. Missing authority disables the actual source call. None of these local conventions adds an original native guard outcome or offers the full unrestricted $Q_A$ through a new tag. For valid selectors the actual addressed request sent to the source is exactly Definition 69.1's original $S$ frame.
+
+The rank is nondecreasing, and each successful step executes the difference of its two successive quotients. Telescoping from zero to $\lfloor(2^k-1)/R\rfloor$ gives exactly $M_*$ pulses, regardless of selection order or repeats. The final field depends only on $U$ at every settled cut, so canonicality holds. The residue has at most $R$ values; no other varying selected input survives by the installation's explicit clearing and fixed-capacity conditions. This proves attainment. If $R\ge2^k$, $M_*=0$ and the residue already holds the whole rank; that boundary case is included. Finally, the recovered subset specifies exactly the actual prepared source with its selected incomparable splits. Applying the original native inverses recovers its present support, terminal boundary and causal event order. Conversely, the support parses the present constructor at each $p_i$, which is a branch exactly for $i\in U$; the terminal boundary recovers that support by prefix closure; and the labelled causal order contains $S_{p_i}$ exactly for $i\in U$. Each of these independent native views therefore recovers $U$, and then the two Memory coordinates in (75.2) by (75.1), on the paired invariant image. These are mathematical recovery maps on the stated views; they do not add a geometric-read port or allocate a replacement source. The actual installed recovery procedure above uses only the original path root and the paid residue. None of these maps reconstructs the order of the independent selections or earlier emitted replies. $\square$
+
+**Resource statement 75.3 (actual calls, replies and widths).** Let $J\ge k$ be the number of valid Select requests on a full-subset execution, including repeats. Native preparation executes $k$ promotions and $k$ splits. Continuation executes $k$ successful splits and $J-k$ branch refusals. Its final support has $1+5k$ vertices. Preparation request/Growth payload is
+
+$$
+\sum_{j=0}^{k-1}2(4j+9)=4k^2+14k;
+\tag{75.6}
+$$
+
+successful continuation payload is
+
+$$
+\sum_{i=0}^{k-1}\bigl(4(i+1)+9\bigr)=2k^2+11k.
+\tag{75.7}
+$$
+
+Each repeated request at index $i$ additionally pays $2i+11$ addressed request/refusal bits. These equations exclude the separately paid End, acknowledgement, Return, local selector input/output, source navigation, assignments and local buffering.
+
+Choose exactly the initial Hold and recovery Read and final Hold of Theorem 75.2 on each valid call, with no other continuation Holds. Including the original unknown-size path acquisition, the actual original-menu counts are
+
+$$
+\begin{aligned}
+\#\mathrm{Tick}&=2N+M_*,&\#\mathrm{Add}&=M_*,\\
+\#\mathrm{Read}&=1+J+M_*,&\#\mathrm{Hold}&=N+1+2J.
+\end{aligned}
+\tag{75.8}
+$$
+
+Consequently mandatory scalar replies number $2N+1+J+2M_*$; Add/Hold acknowledgements number $M_*+N+1+2J$. An optional updated-root Add reply contributes another $M_*$ scalars. These are counts of actual calls and complete outputs, not unit-cost bounds for their payloads or arithmetic. All original native and path supports coexist with their two roots, original source and response ports, retained authorities, earned matrix and origin, fixed code/constants, selector input, residue encoding, current field encoding, cleared work arena and any external response/archive/backing that actually survives. A fixed-width residue implementation uses $\lceil\log_2R\rceil$ bits, permitting zero bits when $R=1$; its control and physical slot overhead is separate. If a backing, allocator, controller or external caller retains varying information accessible to recovery, it enlarges the joint alphabet and the two-coordinate assertion must be reevaluated with that actual alphabet.
+
+The enumeration and update require temporary $n,r,U$, rational powers, comparisons, buffered responses and loop counters; their widths and work are charged while busy, though their cleared contents are absent at the next settled cut. Adequate common capacity can be supplied for fixed finite $k,R,N,T$: there are finitely many possible subsets, valid inputs and intermediate arithmetic calculations in the stated bounded enumeration and at most $M_*$ pulses. Reserve their maximum required finite capacities in advance, with fixed allocation shape and complete clearing. This explains the finite existence of such backing without supplying it for free or imposing a uniform bound over all $k$.
+
+An authentic scalar example exposes the separate width cost. For $N=1,T=(1/2)$ the original acquisition ends at $x_*=1/4$. After $n$ zero pulses the field is $1/2^{n+2}$ and its reduced denominator needs $n+3$ binary digits. In particular the final field alone has denominator width $M_*+3$. The Tick and Read of pulse $s$, $1\le s\le M_*$, both return $1/2^{s+2}$; just the sum of their reduced-denominator digit lengths is
+
+$$
+2\sum_{s=1}^{M_*}(s+3)=M_*^2+7M_*.
+\tag{75.9}
+$$
+
+Phase-recovery Reads, entrance outputs, signs, numerators, frame syntax, acknowledgements and all temporary arithmetic add to this lower accounting. Thus sharpness of $(M_*,R)$ is not a peak-memory, total-bit, total-work or total-material optimum. The native source has been supplied alongside the path throughout; the construction is not a native realization by a path.
+
+## 76. Exact supplier correspondence and the remaining realization obligations
+
+**Correspondence 76.1 (the mathematical delta).** The route criterion in Theorem 71.2 uses the mature commuting-square and affine-map principles represented by [Faithful Observation Commutation Criterion](../../../Blueprint/D5/S3/ConceptDynamics/Faithfulness/FaithfulObservationCommutationCriterion.md), [Integer Affine Square Collision](../../../Blueprint/D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerAffineSquareCollision.md) and [Enabled Path Swap Connectivity](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.md). Their general square/kernel facts do not specify the actual repeatable LAB procedures, the legal guards, the original rational command normal forms, all zero-Tick alternatives or the exact equality kernels (71.4)–(71.6). Those hypotheses and calculations provide the source-specific classification here. The fixed-point semiconjugacy supplier [Fixed Point Semiconjugacy](../../../Blueprint/D5/S3/Observer/Bridges/FixedPointSemiconjugacy.md), and the elementary upstream `Function.IsFixedPt.map` in [pinned Mathlib](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Dynamics/FixedPoints/Basic.lean), carry fixed points under an already given semiconjugacy; neither installs the missing native/path map. Proposition 72.1 uses the actual path observability matrix, consistently with [Finite Observability Equivalence](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.md), and pays the actual destructive observation continuation.
+
+Theorem 74.1 uses ordinary finite-cardinality injection, as in upstream `Fintype.card_le_of_injective`, after proving the cofinal common-prefix property from actual native continuations and authentic pulse-word injectivity. The new restriction is this property for the precise adaptive canonical-cut class with all selected auxiliary inputs included, not a new general counting theorem. Theorems 52.3 and 53.1 already supply the whole-law, all-length bounded-digit injectivity; §§59–67 already supply scalar-origin/lattice clocks and direct residue consumers, including later returned-root and continuation limits. Theorem 75.2 consumes those supplied capabilities only to attain the bound's pulse/settled-alphabet coordinates, with complete replies, two sources, finite backing and numerical widths retained in the bill.
+
+The integral algebra behind the supplied pulse result uses Gauss's primitive-divisibility lemma over $\mathbb Z\subset\mathbb Q$, with the full primitive annihilator and no irreducibility assumption, as attached to Proposition 44.3. [Akiyama–Thuswaldner–Zaïmi, *Comments on the height reducing property II*, Theorem 3 and Remark 11](https://arxiv.org/html/1403.7480v1) concern bounded-digit zero representations at an algebraic number with no unit-circle conjugates. Applying a scalar root result alone would not identify the full cyclic-vector kernel of a reducible path law, the actual acquired origin, a LAB guard or the complete callable service. This numeration result is a credited supplier comparison, not a substitute for those hypotheses. The source-specific results in §§70–75 are repository-derived mathematical synthesis; no claim of worldwide priority follows from a finite source or literature comparison.
+
+**Correspondence 76.2 (other public models do not identify the translator classes).** [Native Continuation Affine Obstruction and Approximation, Definition 4.1](FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md) allows arbitrary finite-dimensional affine lifts of its full continuous probability-displacement service with an affine ten-coordinate readout. Its lawful intervals, quantum preparation, square-root output functions and continuum of displacements are different from (69.1), (69.2) and the two literal original-path blocks. That obstruction supplies neither this fixed-block classification nor the adaptive bounded-digit prefix restriction.
+
+[Returned Arithmetic Behavior and Serial Continued Use](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Acquisition/SameHandleContinuation.md) supplies positive closing from natural-pair sources, the actual fixed-modulus reply $\gcd(2a+3b,H)$, actions $(a,b)\mapsto(b,a+b)$ and $(a,b)\mapsto(a+1,b)$, and same-handle continuation under its explicit service/completion premises. Its immutable acquired entry and maintained current residue are not LAB's addressed alpha/beta constructors or an earned original rational-path field. [Native Full Source Producer](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.md) likewise assumes its own material observations and retained production information; a source read or retained trace there does not become a free guard or erased journal here.
+
+The centered circular `OriginalM5` source and its full-word consumer in [M5SourceRows](../../../Blueprint/D5/S3/Combinatorics/Circle/M5SourceRows.md) and [M5FullWordConsumer](../../../Blueprint/D5/S3/Combinatorics/Circle/M5FullWordConsumer.md) have their own source-row, extrema and capacity hypotheses. The exact-real quadratic-report and private-randomization models of [Private-Randomization Quadratic Clock, §§9–10](FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md) quantify compatible report worlds, error budgets and decision losses, rather than this original path command service. The original critical Heisenberg zero-mode subspace of [Boundary Geometry Continuation III Appendix, §109](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md) concerns its stated continuous differential operator, weights and maximal zero domain. None of these source hypotheses identifies its objects, operations, observations or resources with both actual sources of Definition 69.1. Their arithmetic, clock or geometric terminology is insufficient to transport a verdict or a resource bound between those models.
+
+[Predictive Waves and Relational Spectra II, Definitions 39.1–39.2 and Theorems 39.3–39.4](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_II.md) fixes the actual five-dimensional Kraus instrument, a known mixing angle, retained labels and a prescribed terminal binary measurement. Its exact operator/probability version retains complete joint weights for the same instrument and does not turn finite samples into exact probabilities or supply an extra input-preparation menu. The resulting qutrit observation-space and successor-fibre criteria act on complex CPTP channels; they are not a correspondence with the LAB guards or the rational affine pulse field. Similarly, [Entanglement Buffer Availability Lower Bound](../../../Blueprint/D5/S3/Quantum/Decoherence/EntanglementBufferAvailabilityLowerBound.md) compares its supplied discrete-time probability/fidelity formula under admissible purification coefficients; its memory count is not the complete settled auxiliary alphabet of Definition 73.2. No result in either conditional domain is contradicted or duplicated by (71.2) or (74.1).
+
+**Limits 76.3 (two restrictions and an unfilled bridge).** The fixed-block result says that a route-independent encoding of all repeatable native coordinate pairs into the original path field by two fixed original-command blocks must collide, and gives every collision kernel and its actual native/path distinguishing consequences. It does not prohibit route-dependent fields, adaptive blocks or properly charged auxiliary records. The adaptive result says that a cofinal independent native layer encoded by injective bounded-digit pulse words with canonical settled fields needs at least $\lceil2^k/R\rceil-1$ pulses when all selected settled auxiliary inputs jointly have at most $R$ values. It does not prohibit other adaptive encodings, other origins or menus, or a surviving archive whose capacity violates that premise. The paid attainment proves only this latter coordinate tradeoff in an explicitly augmented two-source installation.
+
+A common-source native-to-original-path installation remains a separate obligation: identify one actual initialization and reference binding, match every claimed legal operation and refusal, complete outputs and acknowledgements, successor states and continuing rights, and account for all coexisting field, source, control, record and backing resources. None of the endpoint arguments constructs this identification. Recovering a native causal order or current subset does not recover an arbitrary erased serial record; a surviving producer or archive must be included as material and, when selected, as input. No quantum/window/future-closure correspondence is inferred. The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization and final-no-Ready statements keep their own hypotheses and unresolved boundaries. The sustained four-expression objective requires these actual-source and task correspondences beyond the two translator-class restrictions proved here.
+
+## 追加锚（本行以下为增补区）
