@@ -8,7 +8,6 @@
 
 import Mathlib.Basic.Complex.Basic
 import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.Tactic.Ring
 
 /-! The diagonal spinor brackets force their weight element to vanish in a reduced algebra. -/
 
@@ -176,5 +175,70 @@ theorem result : ¬ claim := by
   rcases hc with hc | hc
   · exact not_conjE6 hc
   · exact not_conjTruck hc
+
+end D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation
+
+#print axioms D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation.result
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let moduleName := "D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation"
+  let roots := [``D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation.result,
+    ``D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation.claim]
+  let mut pending := roots
+  let mut visited : NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.head!
+    pending := pending.tail!
+    unless visited.contains name do
+      visited := visited.insert name
+      if let some info := env.find? name then
+        pending := info.type.getUsedConstants.toList ++ pending
+        if let some value := info.value? (allowOpaque := true) then
+          pending := value.getUsedConstants.toList ++ pending
+  let entries := env.constants.toList.filter fun entry =>
+    (entry.1.toString.splitOn moduleName).length > 1
+  let rows := entries.map fun (name, info) =>
+    let dependencies := info.type.getUsedConstants ++
+      ((info.value? (allowOpaque := true)).map Expr.getUsedConstants).getD #[]
+    Json.mkObj [
+      ("name", toJson name.toString),
+      ("user_name", toJson (privateToUserName name).toString),
+      ("private", toJson (isPrivateName name)),
+      ("reachable", toJson (visited.contains name)),
+      ("direct_dependencies", toJson (dependencies.map Name.toString))]
+  let unreachable := entries.filter fun (name, _) => !visited.contains name
+  let some claimInfo := env.find? roots[1]! | throwError "claim missing"
+  let some resultInfo := env.find? roots[0]! | throwError "result missing"
+  let literalProp := claimInfo.type == Expr.sort Level.zero
+  let literalNotClaim := resultInfo.type == mkApp (mkConst ``Not) (mkConst roots[1]!)
+  let report := Json.mkObj [
+    ("roots", toJson (roots.map Name.toString)),
+    ("constant_count", toJson entries.length),
+    ("closure_size", toJson visited.toArray.size),
+    ("unreachable", toJson (unreachable.map fun row => row.1.toString)),
+    ("claim_literal_Prop", toJson literalProp),
+    ("result_literal_Not_claim", toJson literalNotClaim),
+    ("constants", Json.arr rows.toArray)]
+  IO.FS.writeFile "/Users/chronoai/.sshx/4c3fd99787b7d7541a2bf8a8/attempt-1/closure-audit.json"
+    (report.pretty ++ "\n")
+  IO.FS.writeFile "/Users/chronoai/.sshx/4c3fd99787b7d7541a2bf8a8/attempt-1/namespace-constants.txt"
+    (String.intercalate "\n" (entries.map fun row => row.1.toString) ++ "\n")
+  logInfo m!"CLOSURE_AUDIT constants={entries.length} unreachable={unreachable.length}"
+  logInfo m!"COMPILED_SHAPE claim:Prop={literalProp} result:Not_claim={literalNotClaim}"
+  unless unreachable.isEmpty && literalProp && literalNotClaim do
+    throwError "closure or utility shape audit failed"
+
+namespace D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation
+
+example : Nonempty ℂ := ⟨0⟩
+
+example : (0 : ℂ) = 0 := by
+  have hp : IsPoissonBracket (R := ℂ) (fun _ _ => 0) := by
+    unfold IsPoissonBracket
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> intros <;> simp
+  exact bracket_forces_zero (fun _ _ => 0) hp 1 (by decide) 0 0 0 0 0
+    (by simp) (by simp) (by simp) (by simp) rfl rfl
 
 end D5.S3.Quantum.Algebra.CoulombBranchPoissonBracketRefutation
