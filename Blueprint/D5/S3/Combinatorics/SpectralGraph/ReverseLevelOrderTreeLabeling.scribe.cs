@@ -70,7 +70,10 @@ internal sealed class ReverseLevelOrderTreeLabelingDocument : IScribeDocumentDef
                         + "vertex must be adjacent to the vertex with label i, since a nonadjacent entry is zero. "
                         + "The label comparison makes that vertex a parent, so uniqueness identifies it with w. "
                         + "Applying l identifies its row label with l(w). This proves existence and uniqueness for every required column."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("leskovjanova-mista-2025-reverse-level-order-tree-labeling"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
