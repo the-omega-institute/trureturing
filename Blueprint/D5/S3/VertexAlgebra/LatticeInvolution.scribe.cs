@@ -38,8 +38,8 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                         + "finite-charge linear extension proves theta squared "
                         + "is identity and gives an actual linear equivalence."))),
                 DescribeRole.Theorem),
-            H("Positive-rank application: a nonzero oscillator detects exact order two"),
-            Paragraph(Text("For every lattice datum D as above with 0 < D.rank, "
+            Paragraph(Text("Positive-rank application of existing results. "
+                + "For every lattice datum D as above with 0 < D.rank, "
                 + "theta D is not LinearEquiv.refl over the complex numbers on "
                 + "Carrier D, and orderOf(theta D)=2 in the group of complex-linear "
                 + "self-equivalences. These are consequences of the reflection "
