@@ -12,7 +12,6 @@ import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
