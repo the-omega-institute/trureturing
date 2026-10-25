@@ -711,7 +711,8 @@ set_option backward.isDefEq.respectTransparency false in
 theorem no_deterministic_exact_acquisition
     (rho : ℚ) (hrho : 0 < rho) (L E : Type*) (p : Controller L E)
     (initial : L) (target : AcquisitionTarget E) :
-    ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ), InBall rho z →
+    ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ),
+      (0 ≤ rho ∧ (∑ i, (z i : ℝ) ^ 2) ≤ (rho : ℝ) ^ 2) →
       (∃ w e, Successful p s.matrix initial z w e) ∧
       ∀ w e, Successful p s.matrix initial z w e →
         target.Correct s (finalState s.matrix z w) e) := by
@@ -832,7 +833,8 @@ set_option backward.isDefEq.respectTransparency false in
 theorem no_fair_zero_error_exact_acquisition
     (rho : ℚ) (hrho : 0 < rho) (L E : Type*) (p : BitController L E)
     (initial : L) (target : AcquisitionTarget E) :
-    ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ), InBall rho z →
+    ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ),
+      (0 ≤ rho ∧ (∑ i, (z i : ℝ) ^ 2) ≤ (rho : ℝ) ^ 2) →
       fairMeasure (finiteSuccess p initial s z)ᶜ = 0 ∧
       fairMeasure (errorEvent p initial target s z) = 0) := by
   change ¬ FairAcquiresOnBall rho p initial target

@@ -107,16 +107,16 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p z => @decide (InBall p.1 z) (Classical.propDecidable _))
+  realize signature (fun _ _ z => ∑ i, (z i : ℝ) ^ 2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ p _ => (p.1 : ℝ) ^ 2 + 1) (fun e => nomatch e)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
@@ -133,7 +133,7 @@ def theoremLaw (R : Realization Admission.signature) : Prop :=
   ∀ (rho : ℚ) (_hrho : 0 < rho) (L : Type u) (E : Type v)
     (p : Controller L E) (initial : L) (target : AcquisitionTarget E),
     ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ),
-      R.readout () ⟨rho, s⟩ z = true →
+      (0 ≤ rho ∧ R.readout () ⟨rho, s⟩ z ≤ (rho : ℝ) ^ 2) →
       (∃ w e, Successful p s.matrix initial z w e) ∧
         ∀ w e, Successful p s.matrix initial z w e →
           target.Correct s (finalState s.matrix z w) e)
@@ -143,7 +143,7 @@ abbrev arena : Arena where
   Law := theoremLaw.{u,v}
 
 private theorem actual_law : arena.{u,v}.Law Admission.actual := by
-  simpa only [theoremLaw, Admission.actual, realize, decide_eq_true_eq] using
+  simpa only [theoremLaw, Admission.actual, realize] using
     (@no_deterministic_exact_acquisition.{u,v})
 
 private theorem rejected_law : ¬ arena.{u,v}.Law Admission.rejected := by
@@ -154,10 +154,11 @@ private theorem rejected_law : ¬ arena.{u,v}.Law Admission.rejected := by
   apply hh
   intro s z hz
   simp [Admission.rejected, realize] at hz
+  linarith
 
 def family : Registration arena.{u,v} (type_of% @no_deterministic_exact_acquisition.{u,v}) where
   actual := Admission.actual
-  bridge := by simp only [theoremLaw, Admission.actual, realize, decide_eq_true_eq]
+  bridge := by simp only [theoremLaw, Admission.actual, realize]
   variation := ⟨actual_law, Admission.rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨Admission.rejected,
     fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
@@ -167,7 +168,7 @@ def family : Registration arena.{u,v} (type_of% @no_deterministic_exact_acquisit
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@no_deterministic_exact_acquisition.{u,v})
     (type_of% (realize Admission.signature
-      (fun _ p z => @decide (InBall p.1 z) (Classical.propDecidable _))
+      (fun _ _ z => ∑ i, (z i : ℝ) ^ 2)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Observer.Linear.SmallSignedEntryTranscriptCompensation.no_deterministic_exact_acquisition.__information_unit
   realizationName := `Reg.D5.S3.Observer.Linear.SmallSignedEntryTranscriptCompensation.Deterministic.family
@@ -181,7 +182,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Admission.signature
-    (fun _ p z => @decide (InBall p.1 z) (Classical.propDecidable _))
+    (fun _ _ z => ∑ i, (z i : ℝ) ^ 2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -193,11 +194,11 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg",
-        "body", "body", "domain"]
-      stateBinder := 0
+        "body", "body", "domain", "arg", "fn", "arg"]
+      stateBinder := 8
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -212,7 +213,7 @@ def theoremLaw (R : Realization Admission.signature) : Prop :=
   ∀ (rho : ℚ) (_hrho : 0 < rho) (L : Type u) (E : Type v)
     (p : BitController L E) (initial : L) (target : AcquisitionTarget E),
     ¬ (∀ (s : NativeSource) (z : Fin s.order → ℚ),
-      R.readout () ⟨rho, s⟩ z = true →
+      (0 ≤ rho ∧ R.readout () ⟨rho, s⟩ z ≤ (rho : ℝ) ^ 2) →
       fairMeasure (finiteSuccess p initial s z)ᶜ = 0 ∧
         fairMeasure (errorEvent p initial target s z) = 0)
 
@@ -221,7 +222,7 @@ abbrev arena : Arena where
   Law := theoremLaw.{u,v}
 
 private theorem actual_law : arena.{u,v}.Law Admission.actual := by
-  simpa only [theoremLaw, Admission.actual, realize, decide_eq_true_eq] using
+  simpa only [theoremLaw, Admission.actual, realize] using
     (@no_fair_zero_error_exact_acquisition.{u,v})
 
 private theorem rejected_law : ¬ arena.{u,v}.Law Admission.rejected := by
@@ -232,10 +233,11 @@ private theorem rejected_law : ¬ arena.{u,v}.Law Admission.rejected := by
   apply hh
   intro s z hz
   simp [Admission.rejected, realize] at hz
+  linarith
 
 def family : Registration arena.{u,v} (type_of% @no_fair_zero_error_exact_acquisition.{u,v}) where
   actual := Admission.actual
-  bridge := by simp only [theoremLaw, Admission.actual, realize, decide_eq_true_eq]
+  bridge := by simp only [theoremLaw, Admission.actual, realize]
   variation := ⟨actual_law, Admission.rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨Admission.rejected,
     fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
@@ -245,7 +247,7 @@ def family : Registration arena.{u,v} (type_of% @no_fair_zero_error_exact_acquis
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@no_fair_zero_error_exact_acquisition.{u,v})
     (type_of% (realize Admission.signature
-      (fun _ p z => @decide (InBall p.1 z) (Classical.propDecidable _))
+      (fun _ _ z => ∑ i, (z i : ℝ) ^ 2)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S3.Observer.Linear.SmallSignedEntryTranscriptCompensation.no_fair_zero_error_exact_acquisition.__information_unit
   realizationName := `Reg.D5.S3.Observer.Linear.SmallSignedEntryTranscriptCompensation.Fair.family
@@ -259,7 +261,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize Admission.signature
-    (fun _ p z => @decide (InBall p.1 z) (Classical.propDecidable _))
+    (fun _ _ z => ∑ i, (z i : ℝ) ^ 2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -271,11 +273,11 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg",
-        "body", "body", "domain"]
-      stateBinder := 0
+        "body", "body", "domain", "arg", "fn", "arg"]
+      stateBinder := 8
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
