@@ -246,6 +246,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("scoped_git_configuration_disables_background_git")]
+    [InlineData("native_lock_inspector_receives_scoped_environment")]
     [InlineData("timed_out_git_releases_index_lock")]
     public void ScopedGitLeavesNoLockHolderBehind(string probe)
     {

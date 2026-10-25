@@ -23,14 +23,17 @@ def exercise(source, cli, root, mode, ambient):
     main.mkdir()
     environment = dict(os.environ)
     settings = {"MSBUILDDISABLENODEREUSE": "1", "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
-                "UseSharedCompilation": "false"}
+                "UseSharedCompilation": "false", "UseRazorBuildServer": "false",
+                "_RazorForceBuildServer": "false"}
     for name in settings:
         environment.pop(name, None)
     if ambient == "unsafe":
         environment.update(MSBUILDDISABLENODEREUSE="0", DOTNET_CLI_USE_MSBUILD_SERVER="1",
-                           UseSharedCompilation="true")
+                           UseSharedCompilation="true", UseRazorBuildServer="true",
+                           _RazorForceBuildServer="true")
     # A unique compiler identity prevents borrowing an unrelated host server.
     environment["SharedCompilationId"] = uuid.uuid4().hex
+    environment["_RazorBuildServerPipeName"] = uuid.uuid4().hex
     environment["DOTNET_CLI_HOME"] = str(root / "dotnet-home")
     environment["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"] = "1"
     environment["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
@@ -71,10 +74,20 @@ def exercise(source, cli, root, mode, ambient):
     for name in ("One", "Two", "Three"):
         project = tools / name
         project.mkdir()
+        razor = mode == "razor" and name == "One"
+        sdk = "Microsoft.NET.Sdk.Razor" if razor else "Microsoft.NET.Sdk"
         (project / (name + ".csproj")).write_text(
-            '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>'
-            '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>')
+            '<Project Sdk="' + sdk + '"><PropertyGroup><TargetFramework>net10.0</TargetFramework>'
+            '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>'
+            + ('<UseRazorSourceGenerator>false</UseRazorSourceGenerator>'
+               '<AddRazorSupportForMvc>true</AddRazorSupportForMvc>' if razor else '')
+            + '</PropertyGroup>'
+            + ('<ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /></ItemGroup>' if razor else '')
+            + '</Project>')
         (project / "Source.cs").write_text("public class " + name + " { public int Value => 42; }\n")
+        if razor:
+            (project / "Views").mkdir()
+            (project / "Views/Index.cshtml").write_text('<p>Scoped Razor @(6 * 7)</p>\n')
         (project / "packages.lock.json").write_text('{"version":1,"dependencies":{"net10.0":{}}}\n')
         projects.append((name, str(uuid.uuid4()).upper()))
     (tools / "StrataLint.sln").write_text(
@@ -90,7 +103,8 @@ def exercise(source, cli, root, mode, ambient):
     (main / "Directory.Build.targets").write_text(
         '<Project><Target Name="ObserveScopedProcess" AfterTargets="Restore;_GenerateRestoreGraphProjectEntry;CoreCompile">'
         '<WriteLinesToFile File="$(MSBuildProjectDirectory)/$(MSBuildProjectName).policy" Overwrite="true" '
-        'Lines="$(MSBUILDDISABLENODEREUSE);$(DOTNET_CLI_USE_MSBUILD_SERVER);$(UseSharedCompilation)" />'
+        'Lines="$(MSBUILDDISABLENODEREUSE);$(DOTNET_CLI_USE_MSBUILD_SERVER);$(UseSharedCompilation);'
+        '$(UseRazorBuildServer);$(_RazorForceBuildServer)" />'
         '</Target></Project>')
     git("add", ".")
     git("commit", "-m", "Scoped restore fixture")
@@ -109,7 +123,7 @@ def exercise(source, cli, root, mode, ambient):
         token = "worktree-init:" + uuid.uuid4().hex
         git("update-ref", "--create-reflog", "-m", token, "refs/heads/" + branch, base, "0" * len(base))
         git("worktree", "add", "--no-checkout", "--lock", "--reason", token, target, branch)
-    elif mode == "build":
+    elif mode in ("build", "razor"):
         git("worktree", "add", "-b", branch, target, base)
         entry = [sys.executable, "-B", script, "--source", main, "with", "--path", target,
                  "--exclusive", "--git", "--operation", "idle-pool", "--", "dotnet", "build",
@@ -127,9 +141,12 @@ def exercise(source, cli, root, mode, ambient):
     policies = [(target / "tools" / name / (name + ".policy")).read_text().splitlines()
                 for name, _ in projects]
     assert policies == [list(settings.values())] * len(projects), policies
-    if mode == "build":
+    if mode in ("build", "razor"):
         for name, _ in projects:
             assert (target / "tools" / name / "bin/Debug/net10.0" / (name + ".dll")).is_file()
+        if mode == "razor":
+            generated = target / "tools/One/obj/Debug/net10.0/Razor/Views/Index.cshtml.g.cs"
+            assert "Scoped Razor" in generated.read_text(), generated
     else:
         receipt = json.loads(run(entry))
         assert receipt["status"] == "reused", receipt

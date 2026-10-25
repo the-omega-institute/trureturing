@@ -16,6 +16,8 @@ public sealed class ScopedDotnetLaunchTests(ITestOutputHelper output)
     [InlineData("recovery", "unsafe")]
     [InlineData("build", "unset")]
     [InlineData("build", "unsafe")]
+    [InlineData("razor", "unset")]
+    [InlineData("razor", "unsafe")]
     public void RealDotnetLaunchReleasesScopesBeforeDescendantCleanup(string mode, string ambient)
     {
         if (OperatingSystem.IsWindows()) return;

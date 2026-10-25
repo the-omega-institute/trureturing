@@ -170,6 +170,24 @@ class ProtocolTests(ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, Detache
         job = self.run_protocol("with", "--path", self.tree, "--git", "--", "sh", "-c", script)
         self.assertEqual(expected, job.stdout.strip())
 
+    def native_lock_inspector_receives_scoped_environment(self):
+        observed = self.root / "inspector.json"
+        inspector = self.root / "lsof"
+        expected = {"MSBUILDDISABLENODEREUSE": "1", "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
+                    "UseSharedCompilation": "false", "UseRazorBuildServer": "false",
+                    "_RazorForceBuildServer": "false"}
+        inspector.write_text(
+            "#!/usr/bin/env python3\nimport json,os,sys\nfrom pathlib import Path\n"
+            f"Path({str(observed)!r}).write_text(json.dumps({{k:os.environ.get(k) for k in {list(expected)!r}}}))\n"
+            "sys.exit(1)\n")
+        inspector.chmod(0o755)
+        with ExitStack() as stack, patch.object(protocol.shutil, "which", return_value=str(inspector)), \
+                patch.dict(os.environ, MSBUILDDISABLENODEREUSE="0", DOTNET_CLI_USE_MSBUILD_SERVER="1",
+                           UseSharedCompilation="true", UseRazorBuildServer="true", _RazorForceBuildServer="true"):
+            protocol.tree_scope(stack, self.main, self.tree, True)
+            self.assertEqual([], protocol.native_lock_holders(self.tree / "index.lock"))
+        self.assertEqual(expected, json.loads(observed.read_text()))
+
     def timed_out_git_releases_index_lock(self):
         ready = self.root / "filter.ready"
         os.mkfifo(ready)
