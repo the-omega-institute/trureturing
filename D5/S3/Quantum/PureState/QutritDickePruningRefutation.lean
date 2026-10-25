@@ -229,7 +229,8 @@ private theorem i53_input : I 5 5 3 (basisState inputWord) = basisState inputWor
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V inputWord
-    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+    norm_num (config := { implicitDefEqProofs := false })
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
@@ -248,7 +249,8 @@ private theorem project_w5 :
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold project II inputWord branchWord
-    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+    norm_num (config := { implicitDefEqProofs := false })
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff,
       Fin.forall_fin_succ, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)]
   all_goals ring
@@ -266,7 +268,8 @@ private theorem i42_branch :
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V branchWord
-    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+    norm_num (config := { implicitDefEqProofs := false })
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
@@ -282,7 +285,8 @@ private theorem i43_branch :
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V branchWord
-    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+    norm_num (config := { implicitDefEqProofs := false })
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
@@ -298,7 +302,8 @@ private theorem ii431_branch :
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold II branchWord
-    norm_num [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+    norm_num (config := { implicitDefEqProofs := false })
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 private theorem w4_branch :
