@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b03d3c2a4b9e5abd9a9cd54553b40c2136ba5fc74f7fc8add64ac8ee0e168f5
+  normalized_sha256: sha256:7b03d3c2a4b9e5abd9a9cd54553b40c2136ba5fc74f7fc8add64ac8ee0e168f5
+cas_ref: sha256:7b03d3c2a4b9e5abd9a9cd54553b40c2136ba5fc74f7fc8add64ac8ee0e168f5
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity.fourierLaplace_real_eq_fourier
+    target_statement_id: sha256:d0870c1c27d4ff8371c40fcfd9bbdcff834d845c3bd3d8436fc9acf01a0784ce
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.paperFT_eq_fourierLaplace
+    target_statement_id: sha256:af77ba1a47eea4dfb97f117586a2cbe4bc4ff59ce4d9890b0eb9e63d41a2df3c
+receipts:
+  unresolved_subitems: []
