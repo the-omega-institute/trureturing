@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A uniformly integrable real L1 sequence over an arbitrary finite measure has a Banach-weak convergent subsequence. -/
+   digest: Finite-measure uniformly integrable real L1 sequences have weak subsequences. -/
 
 import D5.S3.Topology.Measures.L1WeakExtraction
 import Mathlib.MeasureTheory.Function.L2Space
@@ -12,6 +12,8 @@ import Mathlib.MeasureTheory.Function.UniformIntegrable
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Finiteness
+
+/-! Weak subsequences of uniformly integrable real L1 sequences. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -34,8 +36,10 @@ private noncomputable def l2ToL1 : Lp ℝ 2 μ →L[ℝ] Lp ℝ 1 μ := by
   refine L.mkContinuous C.toReal (fun f => ?_)
   change (eLpNorm f 1 μ).toReal ≤ C.toReal * (eLpNorm f 2 μ).toReal
   have h : eLpNorm f 1 μ ≤ eLpNorm f 2 μ * C := by
-    simpa [C] using eLpNorm_le_eLpNorm_mul_rpow_measure_univ
+    have h := eLpNorm_le_eLpNorm_mul_rpow_measure_univ
       (show (1 : ℝ≥0∞) ≤ 2 by norm_num) f.aestronglyMeasurable
+    norm_num at h
+    exact h
   have hfin : eLpNorm f 2 μ * C ≠ ∞ := ENNReal.mul_ne_top f.eLpNorm_lt_top.ne hC
   simpa only [ENNReal.toReal_mul, mul_comm] using ENNReal.toReal_mono hfin h
 

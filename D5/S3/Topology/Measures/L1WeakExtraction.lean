@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform approximation by bounded Hilbert sequences yields Banach-weak subsequences without ambient separability. -/
+   digest: Bounded Hilbert approximations give weak subsequences in Banach spaces. -/
 
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.Normed.Module.WeakDual
@@ -15,10 +15,12 @@ import Mathlib.Topology.Sequences
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 
+/-! Weak extraction through countably many bounded Hilbert approximations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open Set Filter Topology
+open Set Filter Topology TopologicalSpace
 open scoped InnerProductSpace
 
 namespace D5.S3.Topology.Measures.L1WeakExtraction
@@ -40,7 +42,7 @@ private theorem common_weak_subsequence_separable
     WeakDual.metrizable_of_isCompact ℝ H (B m) (hB m)
   let z (n : ℕ) : ∀ m, B m := fun m =>
     ⟨(InnerProductSpace.toDual ℝ H (t m n)).toWeakDual, by
-      change ‖InnerProductSpace.toDual ℝ H (t m n) - 0‖ ≤ R m
+      change dist (InnerProductSpace.toDual ℝ H (t m n)) 0 ≤ R m
       simpa using hb m n⟩
   obtain ⟨p, j, hj, hz⟩ := CompactSpace.tendsto_subseq z
   let q (m : ℕ) : H :=
@@ -106,7 +108,8 @@ theorem exists_weak_subsequence_of_hilbert_approximation
       have ht : ‖T (t m (j n)) - T (t k (j n))‖ ≤ δ m + δ k := by
         calc
           _ ≤ ‖T (t m (j n)) - f (j n)‖ + ‖f (j n) - T (t k (j n))‖ :=
-            norm_sub_le _ _ _
+            by simpa only [dist_eq_norm] using
+              dist_triangle (T (t m (j n))) (f (j n)) (T (t k (j n)))
           _ ≤ δ m + δ k := by
             rw [norm_sub_rev (T (t m (j n))) (f (j n))]
             exact add_le_add (herr m (j n)) (herr k (j n))
@@ -148,7 +151,7 @@ theorem exists_weak_subsequence_of_hilbert_approximation
       have hlast : dist (φ (z m)) (φ v) ≤ ‖φ‖ * ‖z m - v‖ := by
         rw [dist_eq_norm, ← map_sub]
         exact φ.le_opNorm _
-      exact add_le_add (add_le_add_right hfirst _) hlast
+      exact add_le_add (add_le_add hfirst le_rfl) hlast
     _ < ε := by linarith [hN n hn]
 
 end D5.S3.Topology.Measures.L1WeakExtraction
