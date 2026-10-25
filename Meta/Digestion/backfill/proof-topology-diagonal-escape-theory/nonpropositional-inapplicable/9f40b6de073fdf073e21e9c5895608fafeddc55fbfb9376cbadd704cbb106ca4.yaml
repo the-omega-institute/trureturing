@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f40b6de073fdf073e21e9c5895608fafeddc55fbfb9376cbadd704cbb106ca4
+  normalized_sha256: sha256:9f40b6de073fdf073e21e9c5895608fafeddc55fbfb9376cbadd704cbb106ca4
+cas_ref: sha256:9f40b6de073fdf073e21e9c5895608fafeddc55fbfb9376cbadd704cbb106ca4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PC.4 正规形的复合律；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 48b3c63e4d71fb9032dcf83e5fa522ae33b203104c69d2c36762f762a2cb347f
+    next_atom_id: 8a7e8f59e851fcf147a823142935b2946cb5e5cddb68d06bb821e283e1d049e8
