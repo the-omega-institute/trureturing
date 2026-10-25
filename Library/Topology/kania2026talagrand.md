@@ -274,6 +274,38 @@ capture, or the Theorem A closed-copy prohibition. Problem 8.2 and
 the complete CH/Talagrand endpoint remain unresolved here, and no
 official acceptance is asserted.
 
+## Literal successor-coordinate constructor
+
+`D5.S3.Topology.InverseLimit.SignedSuccessorCoordinates.exists_successor_coordinates`
+takes every `a : Ordinal.{0}`, `H : SignedProperLimit.Prefix (succ a)` and
+closed cover `Y ∪ Z = univ` of `K := H.Space ⟨a, lt_succ a⟩`, including
+`a = 0`, overlapping sides and either empty side. Its
+`Nonempty (Result H Y Z)` supplies a closed nonempty literal carrier
+`C ⊆ SignedProperLimit.Cube (succ a)` and a homeomorphism
+`e : SignedSplitSuccessor.splitCarrier Y Z ≃ₜ C`. The carrier is exactly
+the insertion range: `e(k,b)` reads `k(i)` at every `i < a` and `b` at
+coordinate `a`; its inverse reads the literal restriction to `a` and
+coordinate `a`. The output `Prefix (succ (succ a))` retains every old
+carrier exactly and has top carrier `C`. Its compatibility and onto
+fields cover every pair of stages. For every `c ≤ a`, the proved
+restriction equation identifies restriction from `C` to `c` with
+restriction of the inverse's old component. Old pairs reuse `H`; onto
+from the new stage to any old stage uses `H.onto` to lift to `K`, then
+the actual cover projection to choose a sheet and insert it.
+
+The construction reuses the original `SignedProperLimit` coordinate
+core and `SignedSplitSuccessor.splitCarrier`. Pinned Mathlib's
+`Homeomorph.funSplitAt` and `Homeomorph.piCongrLeft` supply splitting and
+reindexing; compactness of the closed split and the Hausdorff cube give
+the closed range and range homeomorphism via
+`Continuous.isClosedEmbedding` and `Topology.IsEmbedding.toHomeomorph`.
+This repository-derived local topology supplier is not attributed to
+Kania–Kąkol as a new theorem. It leaves full-history assembly, the signed
+measure system and (A)–(G), CH bookkeeping and the final CH/Talagrand
+endpoints open. Its information registration remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21448; no
+`declared_validated` registration or solved-problem claim is made.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
