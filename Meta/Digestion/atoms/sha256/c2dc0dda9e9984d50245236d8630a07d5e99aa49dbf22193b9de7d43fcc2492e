@@ -1,0 +1,20 @@
+**Theorem 12.3 (one high-probability correctness event).** For each fixed specimen and $b$, there is an event $E$ of tapes with
+
+$$
+\mathbb P(E)\ge
+1-2^{-b}\bigl(1-2^{-(N-1)}\bigr)\ge1-2^{-b}
+\tag{UFS.32}
+$$
+
+on which every gate at $n<N$ is nonzero, the stopping stage is $N$, and the accepted branch has the exact conclusions of Proposition 11.2. For $N=1$ every tape belongs to $E$.
+
+Proof. Let $Z_n$ be the event that stage $n<N$ is reached and its gate determinant is zero. Conditional on any preceding finite history reaching that stage, the actual field is fixed and the next block is independent and uniform. Lemma 10.3 gives conditional probability at most $\delta_n$. Averaging over these histories gives $\mathbb P(Z_n)\le\delta_n$, including histories in which previous candidate branches were rejected after real controls. Define $E$ to be the complement of $\bigcup_{n=1}^{N-1}Z_n$. The finite union bound gives
+
+$$
+\mathbb P(E^c)\le\sum_{n=1}^{N-1}2^{-b-n}
+=2^{-b}\bigl(1-2^{-(N-1)}\bigr).
+\tag{UFS.33}
+$$
+
+On $E$, stage 1, and successively every stage below $N$, has a nonzero gate and invokes no candidate branch. Stage $N$ is reached; Theorem 12.2 and Proposition 11.2 give its exact acceptance. The empty union at $N=1$ proves the last assertion. The ordinary root bound and union bound are the only probability estimates used; no distribution on specimens, entries or spectral weights is assumed. $\square$
+

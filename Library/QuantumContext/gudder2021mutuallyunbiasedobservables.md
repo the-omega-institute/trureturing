@@ -3,7 +3,7 @@ bibkey: gudder2021mutuallyunbiasedobservables
 authors: Stan Gudder
 year: 2021
 title: "Mutually Unbiased Quantum Observables"
-doi: null
+doi: 10.48550/arXiv.2110.03099
 url: https://arxiv.org/abs/2110.03099v1
 claim: "The paper defines sequential products A∘B=A^{1/2}BA^{1/2} of effects on a finite-dimensional Hilbert space, finite observables, sequential products of observables and the conditioned observable (B|A)_y=Σ_x A_x∘B_y, introduces uniform attenuation (Condition (1)) and conditional randomness (Condition (2)) of two observables, proves that Condition (1) implies Condition (2) and that the two are equivalent for sharp observables, and states that it does not know whether the converse of Theorem 2.1(i) or (ii) holds."
 strata_touched:
@@ -48,4 +48,4 @@ Source: https://arxiv.org/abs/2110.03099v1
   - Conditions (1) and (2), l. 174–182;
   - Theorem 2.1, l. 184–188;
   - the question, l. 223.
-- DOI: none found. The arXiv record lists no journal reference or DOI.
+- DOI: 10.48550/arXiv.2110.03099 (https://doi.org/10.48550/arXiv.2110.03099; DataCite lists this arXiv-issued DOI with creator Gudder, Stan, 2021). The arXiv record lists no journal reference and no publisher DOI.

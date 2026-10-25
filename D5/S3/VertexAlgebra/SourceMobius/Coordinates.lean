@@ -16,7 +16,7 @@ open LatticeGeneratingFieldLocality LatticeSugawaraCurrents MvPolynomial
 open LatticeHalfFockFiniteCorrection (sourceWeight)
 open scoped BigOperators
 
-private theorem variable_power (D : LatticeData) (a : Charge D) (i : Fin D.rank)
+theorem variable_power (D : LatticeData) (a : Charge D) (i : Fin D.rank)
     (r n : ℕ) (h : n ≤ r) :
     ((sectorL1 D a).toLinearMap ^ n) (X (i,r)) =
       ((r+1).descFactorial n : ℂ) • X (i,r-n) := by
@@ -35,7 +35,7 @@ private theorem variable_power (D : LatticeData) (a : Charge D) (i : Fin D.rank)
       push_cast
       ring
 
-private theorem variable_power_charge (D : LatticeData) (a : Charge D)
+theorem variable_power_charge (D : LatticeData) (a : Charge D)
     (i : Fin D.rank) (r : ℕ) :
     ((sectorL1 D a).toLinearMap ^ (r+1)) (X (i,r)) =
       ((r+1).factorial : ℂ) • C (bilinear D (unitCharge D i) a : ℂ) := by

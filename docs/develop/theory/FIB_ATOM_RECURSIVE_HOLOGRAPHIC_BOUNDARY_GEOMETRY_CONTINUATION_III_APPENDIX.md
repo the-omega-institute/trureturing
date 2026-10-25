@@ -3240,3 +3240,151 @@ $$
 Neither $m_e=0$, $m_e=1$ nor a strictly intermediate value is selected. Cumulative source probability at radii large compared with $h_n$, existence and dimension of nonzero $\mathcal N_0$, actual attainability of its profiles and defects, and any surviving probability scale or profile remain unresolved. No positivity, simplicity, uniqueness, new source boundary condition or maximal/Friedrichs identification is imposed. No native source-to-state realization or physical why-three conclusion follows. These ordinary mathematical proofs make no claim of Lean verification.
 
 ## 追加锚（本行以下为增补区）
+
+## 108. A necessary source germ for every original maximal zero mode
+
+**Definition 108.1 (original critical operator and source annuli).** Retain the group, Lebesgue Haar measure, unit-source field, horizontal generator and clock of (82.5), (82.8) and (107.1). Thus $G=H^1\times\mathbb R$, $d\mu=dx\,dy\,dz\,dw$, $L=-\sum_{i=1}^3X_i^2$, with $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$, and $\Gamma$ is the original positive degree-$-3$ field satisfying $L\Gamma=\delta_e$. Fix the same $a,\eta>0$, central units, $D_w=-i\partial_w$ and $g_c=16\sqrt{a\eta}$. The spaces and forms are precisely those of §§87.1, 87.4 and 104.2:
+
+$$
+\begin{gathered}
+\mathcal E_2=D(L^{1/2})\cap D(D_w),\qquad
+K[u]=aT[u]+\eta D_2[u],\qquad
+q_c[u]=K[u]-g_cV[u]\quad(u\in\mathcal E_2),\\
+S\phi=(aL+\eta D_w^2-g_c\Gamma)\phi,
+\qquad D(S)=\mathcal D_0=C_c^\infty(G\setminus\{e\};\mathbb C),
+\qquad \mathcal N_0=\ker S^*.
+\end{gathered}
+\tag{108.1}
+$$
+
+Write $\overline q_c$ for the nonnegative Friedrichs closure of the core form, with domain $\mathcal Q_c$. In particular $\mathcal E_2\subset\mathcal Q_c$, the two forms agree on $\mathcal E_2$, and $\mathcal N_0\cap\mathcal Q_c=\{0\}$ by (104.6). These are existing supplies, not an identification of the maximal and Friedrichs domains. Put
+
+$$
+\kappa=\sqrt{\eta/a},\qquad \xi=(x,y,z),\qquad
+s=w-xy/2,\qquad t=s/\kappa,\qquad
+R_\kappa=(|\xi|^2+t^2)^{1/2},\qquad
+A_{c,C}(r)=\{p:cr<R_\kappa(p)<Cr\}.
+\tag{108.2}
+$$
+
+All zero modes and form domains are complex. The diagnostic annuli in (108.2) are in the original space; no change of source, measure or differential operator is made.
+
+**Theorem 108.2 (every nonzero maximal zero mode has a divergent annular germ).** For every $v\in\mathcal N_0\setminus\{0\}$ and every fixed $0<c<C<\infty$,
+
+$$
+\lim_{r\downarrow0}\frac1{r^2}
+ \int_{A_{c,C}(r)}|v|^2\,d\mu=+\infty.
+\tag{108.3}
+$$
+
+Equivalently, if a vector $v\in\mathcal N_0$ has a finite lower limit in (108.3) for even one such pair $c,C$, it is zero. The limit is for each fixed vector and pair; no uniform rate over nonzero zero modes is asserted.
+
+**Proof.** First justify the original exterior-domain statement needed to use a source cutoff. By the definition of $S^*$, $v$ solves $(aL+\eta D_w^2-g_c\Gamma)v=0$ distributionally on $G\setminus\{e\}$. The principal symbol of its free part, in the original chart, is
+
+$$
+a\bigl(\zeta_x^2+(\zeta_y+x\zeta_w)^2+\zeta_z^2\bigr)
+ +\eta\zeta_w^2.
+\tag{108.4}
+$$
+
+It is bounded below by a positive multiple of $|\zeta|^2$ on each compact coordinate set. The coefficients and $\Gamma$ are smooth off $e$. Local distributional elliptic regularity therefore gives $v\in H^2_{\mathrm{loc}}(G\setminus\{e\})$. This is the local regularity supply in Shubin, [*Essential self-adjointness for semi-bounded magnetic Schrödinger operators on non-compact manifolds*, arXiv:math/0007019v1, §5.1, Lemma 5.1](https://arxiv.org/html/math/0007019v1). Its correspondence here uses the smooth dual metric with squared covector norm (108.4), zero magnetic one-form, the same smooth positive measure $d\mu$, and potential $-g_c\Gamma$, which is locally bounded on the punctured manifold. All $X_i$ and $\partial_w$ have zero divergence for $d\mu$, so its free differential expression is exactly $aL+\eta D_w^2$. Only the local lemma is used; no completeness or essential self-adjointness assertion on the punctured space is required.
+
+For a real smooth function $f$, denote its cutoff cost by
+
+$$
+\mathcal C[f]=a\sum_i|X_if|^2+\eta|\partial_wf|^2.
+\tag{108.5}
+$$
+
+If $f\in C_c^\infty(G\setminus\{e\};\mathbb R)$, then $fv\in\mathcal E_2$. The weak equation can be tested with $f^2v$: on its compact support the coefficients and potential are bounded and $v\in H^1$, so compact smooth approximation extends the equation to this test. Expanding the product derivatives and taking real parts gives the exact identity
+
+$$
+q_c[fv]=\int_G\mathcal C[f]|v|^2\,d\mu.
+\tag{108.6}
+$$
+
+All integrals in this step are on a compact set separated from $e$. The same approximation puts $fv$ in the core-form closure and agrees with the finite-integral form. This is the usual complex cutoff identity, corresponding to Shubin's §5.1, (5.2)–(5.3); the real part handles arbitrary complex $v$.
+
+Now let $\zeta\in C^\infty(G;[0,1])$ vanish on a neighborhood of $e$ and have compactly supported differential. It need not have compact support. Choose a fixed $\chi\in C_c^\infty(G;[0,1])$ equal to one near $e$, and set $\chi_H=\chi\circ\delta_{1/H}$, where $\delta_H$ is the original Carnot dilation and $H\to\infty$. Homogeneity of the original vector fields gives
+
+$$
+\|X_i\chi_H\|_\infty\le C H^{-1},\qquad
+\|\partial_w\chi_H\|_\infty\le C H^{-2},\qquad
+\|\mathcal C[\chi_H]\|_\infty\le C(aH^{-2}+\eta H^{-4}).
+\tag{108.7}
+$$
+
+For all sufficiently large $H$, $\chi_H=1$ on the compact support of $d\zeta$. Thus the two cutoff differentials have disjoint supports. Apply (108.6) with $f=\zeta\chi_H$ to obtain
+
+$$
+q_c[\zeta\chi_Hv]
+ =\int_G\mathcal C[\zeta]|v|^2\,d\mu
+  +\int_G\zeta^2\mathcal C[\chi_H]|v|^2\,d\mu.
+\tag{108.8}
+$$
+
+The first integral is finite because its coefficient is bounded and compactly supported. Also $\Gamma$ is bounded on the complement of any neighborhood of $e$: the original homogeneous estimate $\Gamma\le B_\Gamma\rho^{-3}$, with $\rho=(|\xi|^4+s^2)^{1/4}$, gives decay at infinity, and smoothness gives the remaining compact bound. Hence $V[\zeta\chi_Hv]\le B_\zeta\|v\|_2^2$. Since $K=q_c+g_cV$ on $\mathcal E_2$, (108.7)–(108.8) bound $K[\zeta\chi_Hv]$ uniformly for large $H$.
+
+On each compact set $\chi_H$ is identically one for all sufficiently large $H$. Exhausting $G$ by compact sets in this kinetic bound shows that the distributional derivatives $X_i(\zeta v)$ and $\partial_w(\zeta v)$ are globally square integrable. The free domain characterization (84.2) and the ordinary central Sobolev characterization therefore give $\zeta v\in\mathcal E_2$. The product rule now proves $\chi_H\zeta v\to\zeta v$ in $\mathcal E_2$: terms with $\chi_H-1$ tend to zero by dominated convergence against these square-integrable derivatives, and terms with a derivative of $\chi_H$ tend to zero by (108.7) and $v\in L^2$. The potential terms converge as well because $\Gamma$ is bounded where $\zeta\ne0$. Passing to the limit in (108.8) consequently proves the needed exterior identity
+
+$$
+\zeta v\in\mathcal E_2\subset\mathcal Q_c,\qquad
+\overline q_c[\zeta v]=q_c[\zeta v]
+ =\int_G\mathcal C[\zeta]|v|^2\,d\mu.
+\tag{108.9}
+$$
+
+This passage uses no global finiteness of the uncut kinetic or potential integrals of $v$, and no assertion that $\Gamma v\in L^2$.
+
+Fix $c,C$ as in the theorem. Choose a real $\theta\in C^\infty([0,\infty);[0,1])$ equal to zero for $u\le c$ and to one for $u\ge C$, with $\operatorname{supp}\theta'\subset(c,C)$, and put $\zeta_r=\theta(R_\kappa/r)$. This is a smooth exterior cutoff of the kind just treated. The original fields in the $(\xi,t)$ chart are
+$X_1=\partial_x-y\partial_t/(2\kappa)$, $X_2=\partial_y+x\partial_t/(2\kappa)$, $X_3=\partial_z$, and $\partial_w=\kappa^{-1}\partial_t$. Therefore, at $R_\kappa>0$, using $\eta/\kappa^2=a$,
+
+$$
+\mathcal C[R_\kappa]
+ =a\left(1+\frac{(x^2+y^2)t^2}{4\kappa^2R_\kappa^2}\right)
+ \le a\left(1+\frac{R_\kappa^2}{4\kappa^2}\right).
+\tag{108.10}
+$$
+
+The chain rule and (108.9) give, for $0<r\le1$,
+
+$$
+0\le\overline q_c[\zeta_rv]
+ \le\frac{B_{c,C}}{r^2}\int_{A_{c,C}(r)}|v|^2\,d\mu,
+\qquad
+B_{c,C}=a\|\theta'\|_\infty^2
+       \left(1+\frac{C^2}{4\kappa^2}\right)<\infty.
+\tag{108.11}
+$$
+
+Suppose the annular ratio in (108.3) were bounded along some sequence $r_j\downarrow0$. Equation (108.11) and $\|\zeta_{r_j}v\|_2\le\|v\|_2$ would bound $\zeta_{r_j}v$ in the Hilbert space $\mathcal Q_c$, equipped with norm squared $\|\cdot\|_2^2+\overline q_c[\cdot]$. Take a weakly convergent subsequence in that space. Its continuous inclusion into $L^2$ sends this subsequence to its weak $L^2$ limit. But dominated convergence gives $\zeta_{r_j}v\to v$ strongly in $L^2$, since $\zeta_{r_j}\to1$ off the Haar-null point $e$. The weak form-space limit is consequently the vector $v$, so $v\in\mathcal Q_c$. Since also $v\in\mathcal N_0$, (104.6) forces $v=0$.
+
+For a nonzero $v$, no sequence approaching zero can thus have bounded annular ratio. The nonnegative ratio must tend to $+\infty$, which proves (108.3). In particular the argument uses boundedness in the complete form norm and weak compactness, not a Cauchy claim about shrinking source cutoffs. It imposes no sign or symmetry on $v$. $\square$
+
+**Corollary 108.3 (necessary germ of an attained subsequential weak profile).** Let $\sigma_n>2$ tend to $2$, and choose any nonzero attained critical zero states in the original full complex $\mathcal E_{\sigma_n}$ as in Definition 107.1. Normalize amplitudes by $V[u_n]=1$, put $M_n=\|u_n\|_2^2$ and $v_n=u_n/\sqrt{M_n}$, so $\|v_n\|_2=1$. Along any common subsequence furnished by §§104–105, use exactly their state and probability limits:
+
+$$
+v_n\rightharpoonup v\text{ in }L^2(G,d\mu),\qquad
+|v_n|^2d\mu\longrightarrow|v|^2d\mu+m_e\delta_e,
+\qquad v\in\mathcal N_0,\qquad \|v\|_2^2=1-m_e.
+\tag{108.12}
+$$
+
+The measure convergence here is on the one-point compactification, and its infinity coefficient is zero by §105. If $m_e<1$, the normalized nonzero profile $w=v/\sqrt{1-m_e}$ belongs to $\mathcal N_0$, has norm one, and for every fixed $0<c<C<\infty$,
+
+$$
+\lim_{r\downarrow0}r^{-2}\int_{A_{c,C}(r)}|v|^2\,d\mu
+ =\lim_{r\downarrow0}r^{-2}\int_{A_{c,C}(r)}|w|^2\,d\mu
+ =+\infty.
+\tag{108.13}
+$$
+
+Conversely, if the weak profile in (108.12) has finite lower limit of this annular ratio for one pair $c,C$, then $v=0$ and $m_e=1$.
+
+**Proof.** The identity $\|v\|_2^2=1-m_e$ in the already established defect representation makes $v$ nonzero exactly when $m_e<1$. The space $\mathcal N_0$ is complex linear. Apply Theorem 108.2 to $v$ and to its positive scalar normalization $w$. Its equivalent zero criterion proves the converse, after which the same defect identity gives $m_e=1$. No resource measure, shrinking-scale limit of $v_n$, or new existence or attainability assertion enters this implication. $\square$
+
+**Definition 108.4 (supplier correspondence and unresolved alternatives).** The free distributional domain used in (108.9) is (84.2), the punctured free-core density and inclusion $\mathcal E_2\subset\mathcal Q_c$ are §§87.1 and 87.4, and the maximal/Friedrichs intersection and actual defect representation are (104.6) and (105.2). The local regularity and compact cutoff identity are the mature intermediate supplies identified with Shubin's Lemma 5.1 and (5.3) above. His global self-adjointness theorems are not applied to the puncture. The closed form Hilbert-space construction is the one in Teschl, [*Mathematical Methods in Quantum Mechanics*, §2.3, (2.45)–(2.47), Theorems 2.12–2.13](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), already used in §87.4; continuous inclusion and Hilbert weak compactness give the bounded-cutoff passage here. These suppliers neither replace $\Gamma$ nor identify $D(S^*)$ with $\mathcal Q_c$. The original exterior passage (108.7)–(108.9), diagnostic cutoff cost (108.10) and their source-germ consequence (108.3) give the deduction for this fixed operator; no general cutoff or elliptic regularity theorem is proposed as a new result.
+
+Theorem 108.2 is a necessary condition for nonzero elements of the original maximal zero space. It does not prove that this space is nonzero, determine its dimension or classify its elements. Corollary 108.3 does not construct a nonzero actual weak profile, determine $m_e$, or show that any prescribed zero mode or defect is attained. The ratio in (108.3) is a germ of a fixed limiting vector; it is not a joint limit in $n,r$, a cumulative probability bound for the actual sequence, or a surviving scale. In particular the excluded length $h_n$ of §107 is not turned into a surviving length. Existence and dimension of $\mathcal N_0$, actual profile attainability, source-atom selection, cumulative actual probability and surviving scales remain unresolved. Neither a new source boundary condition nor a native or physical spatial-dimension conclusion is obtained.
+
+## 追加锚（本行以下为增补区）

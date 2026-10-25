@@ -1,0 +1,11 @@
+**Definition 4.1 (the synchronized observer record).** At the held cut of Theorem 3.1 retain $N,T,q$, $\mu=(m_0,\ldots,m_{N-1})$, a native record $\widehat x=x_*$, and $a=\mathcal O_N\widehat x$. Also retain the actual bound source reference, required rights and backing. They remain distinct from numerical encodings. Calls are serialized; the local update is committed before exposing the next completed cut.
+
+| Actual command | Native-record update | Predictive-record update | Predicted complete output |
+| --- | --- | --- | --- |
+| Read | unchanged | unchanged | $a_0$ |
+| Tick | $\widehat x\gets T\widehat x$ | $a'_j=a_{j+1}$ for $j<N-1$, $a'_{N-1}=-\sum_{j<N}q_ja_j$ | $a'_0$ after the update |
+| Add$(u)$ | $\widehat x\gets\widehat x+u e_0$ | $a'_j=a_j+u\mu_j$ | fixed acknowledgement |
+| Hold | unchanged | unchanged | fixed acknowledgement |
+
+Here $q(z)=z^N+\sum_{j<N}q_jz^j$. At $N=1$ the Tick row consists only of its recurrence formula. A forecast on scratch records sends no actual command and obtains no actual observation. All source and observer work and scalar serialization remain charged.
+

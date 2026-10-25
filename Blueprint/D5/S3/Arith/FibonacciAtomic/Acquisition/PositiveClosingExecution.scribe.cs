@@ -64,6 +64,18 @@ internal sealed class PositiveClosingExecutionDocument : IScribeDocumentDefiniti
                 + "halts with decode(H,(y,recover(H,a))). For H>1 initialization is "
                 + "stage(false,B(H),initialAxis,0). For H=1 it is stage(true,0,initialAxis,0), "
                 + "so no source call is made. The fallback is the zero residue pair.")),
+            Describe.Lean(DescribeId.Create("positive-closing-residue-run"),
+                DeclarationHandle.Create(Prefix + "residue_run"), H("Whole-word residue transport"),
+                StatementSource.FromAuthor(All("H", N, All("w", C("ListBool"), All("v", Pair,
+                    EqOf(C("res", V("H"), C("Run", V("w"), V("v"))),
+                        C("graftRun", C("alpha"), C("mapNot", V("w")), C("res", V("H"), V("v")))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "graftRun is GraftAffineClosure.run with alpha=(1,0). Its Boolean convention "
+                    + "is false for replacement and true for graft, so mapNot complements the "
+                    + "original chronological word. The equality holds for every natural H and "
+                    + "every natural pair, without a positive-modulus premise. It transports the "
+                    + "actual original word to its residue action; the installed scratch predictor "
+                    + "uses this same transport at every synchronized current cut."))), DescribeRole.Theorem),
             Definition("executionWord", "The action word of this same run", All("H", N,
                 All("v", Pair, EqOf(A, C("ite", EqOf(V("H"), D(1)), C("nil"),
                     C("append", C("actions", V("H"), K, C("tape", V("H"), V("v"), C("false"))),

@@ -1,0 +1,57 @@
+**Theorem 3.3 (all-parameter bounds for arbitrary private seeds).** For
+every $c>0$ and finite $E\ge0$,
+
+$$
+\boxed{
+\frac H2\le R_{\mathrm{private}}(c,E)
+\le\min\left\{R_{\mathrm{ad},3}(c,E),\frac{F+H}{4}\right\}.
+}
+\tag{3.4}
+$$
+
+The lower bound holds over all the seed spaces of Definition 1.2.
+It uses two complete worlds fixed independently of every seed.
+
+**Proof.** For $E>0$, apply the attained full-grid diameter supplier,
+Three-Index Design, Theorem 18.2, at $I=\{0,1,2,3\}$,
+$a+b=-3$, $b-a=2E$. Its candidates are $c/3,G,Q,G$,
+so it supplies complete legal worlds $W_-,W_+$ with all four
+reports equal and origin distance $H$. Both gains and offsets are
+finite, and the two four-coordinate errors belong to the original
+closed cube. This is the fixed finite-set supplier, also used in
+Uniform Report Designs, Sections 30--34; no adaptive branch
+certificate is being promoted to a randomized lower bound.
+
+Fix any one admissible private strategy, with an arbitrary seed
+space. For each seed, the two worlds give the same $y_0$, the same
+first choice, the same acquired second report, the same second
+choice, and the same final acquired report. Total deterministic
+history rules therefore give the same answer $T_\omega$ in both
+worlds. For every seed,
+
+$$
+|T_\omega-\tau(W_-)|+|T_\omega-\tau(W_+)|\ge H.
+\tag{3.5}
+$$
+
+Both losses are measurable by the per-world hypothesis, so finite
+additivity of nonnegative integrals gives
+
+$$
+\mathbb E|T-\tau(W_-)|+\mathbb E|T-\tau(W_+)|\ge H.
+\tag{3.6}
+$$
+
+At least one of these two fixed-world expected losses is at least
+$H/2$. The assertion remains valid if an expectation is infinite.
+There is no integration over the source, no interchange of an
+uncountable supremum and expectation, and no appeal to a minimax
+or symmetrization theorem. If $E=0$, $H=0$ and the lower bound is
+immediate.
+
+Theorem 3.2 supplies the second upper bound. Every deterministic
+strategy is an admissible one-point-seed strategy: its functions
+need not be measurable in the world, since each fixed-world seed
+map is constant. Taking the infimum over them supplies the first
+upper bound. $\square$
+
