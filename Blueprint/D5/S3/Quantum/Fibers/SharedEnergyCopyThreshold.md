@@ -412,29 +412,9 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.Indecomposable`
 
 An exponent is nonzero, has weight zero, and contains no nonzero proper subexponent of weight zero. This definition retains diagonal coordinates and distinguishes coordinates with equal numerical gaps.
 
-**Definition 1.35 (Exponent of the sparse relation).**
+For every natural m at least two, let alpha have multiplicity m at the ordered coordinate (2,1), multiplicity m minus one at (0,2), and zero at all other coordinates. Its weight is m times (m minus one) minus (m minus one) times m, hence zero; its degree is twice m minus one. Its monomial on every complex three by three matrix X is exactly X(2,1) to the power m times X(0,2) to the power m minus one. These statements keep all nine coordinate labels, including the coincident numerical gaps when m equals two.
 
-Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent`
-
-*Formalization.* `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The ordered coordinate (2,1) has multiplicity m and (0,2) has multiplicity m minus one; all other multiplicities vanish.
-
-**Theorem 1.36 (The sparse relation is indecomposable).**
-
-$$\forall m\in\operatorname{Nat}(),2\leq m \implies \operatorname{Indecomposable}(m,\operatorname{starExponent}(m)) \land \operatorname{degree}(\operatorname{starExponent}(m))=2\cdot m-1 \land\\\forall X\in\operatorname{Matrix}(\operatorname{Fin}(3),\operatorname{Fin}(3),\operatorname{Complex}()),\operatorname{monomial}(X,\operatorname{starExponent}(m))=\operatorname{starMonomial}(m,X)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.star_indecomposable` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every m at least two, this exponent is indecomposable and has degree twice m minus one. Its monomial agrees with the distinguished relation on every complex matrix. A zero-weight subexponent has multiplicities in the consecutive-gap integer kernel; its coordinate bounds force the integer multiple to be zero or one. The argument includes m equal to two without merging its coordinate labels.
+The indecomposability of alpha follows directly from D5/S3/Arith/Lattices/CofactorKernel.primitive_kernel_span. Take the one-row integer matrix A with entries m minus one and m, and the primitive vector v with entries m and minus (m minus one). The augmented determinant is one, A times v is zero, the coordinate sum of v is one, and its coordinate gcd is one. If beta is a nonnegative subexponent of alpha with weight zero, its only possible nonzero coordinates are (2,1) and (0,2). The vector (beta(2,1), minus beta(0,2)) lies in the integer kernel of A. The cited theorem makes it ell times v. Since zero is at most beta(2,1) and beta(2,1) is at most m, the integer ell is zero or one. Thus beta is zero or alpha. The exponent alpha is nonzero, so it is an indecomposable zero-weight exponent attaining degree twice m minus one. Together with the general labelled degree bound, this gives the exact maximal degree. This application uses the original primitive integer-kernel theorem; it supplies no additional claim about experimental access to matrix coordinates.
 
 The all-state compact-orbit theorem combines these sparse lower bounds with labelled exponent decomposition and phase reconstruction to obtain the least uniform order. The explicit effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.
 
@@ -464,9 +444,7 @@ The all-state compact-orbit theorem combines these sparse lower bounds with labe
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_low_monomials`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_low_pinching`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_pair_data`
-- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starMonomial`
-- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.star_indecomposable`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.tensorExponent`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.tensor_monomial_bridge`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.totalEnergy`
