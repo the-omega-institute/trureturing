@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Signed density and dual-transfer bridges for the disjoint-variation criterion. -/
+   digest: Full signed raw restriction splitting and the disjoint-variation sufficient criterion. -/
 
 import D5.S3.Topology.Measures.SignedRieszRepresentation
+import D5.S3.Topology.Measures.L1RawSplitting
 import Mathlib.MeasureTheory.Measure.WithDensityFinite
 import Mathlib.MeasureTheory.VectorMeasure.Decomposition.RadonNikodym
 import Mathlib.MeasureTheory.VectorMeasure.WithDensityVec
@@ -17,13 +18,14 @@ import Mathlib.Analysis.Normed.Module.DoubleDual
 import Mathlib.Order.Filter.AtTopBot.CountablyGenerated
 
 /-!
-# Signed bridges for a disjoint-variation sufficient criterion
+# Signed raw splitting and the disjoint-variation sufficient criterion
 
 The common finite controlling measure is not assumed regular. The density map
 uses the actual L1–L∞ pairing. Its weak limit receives a regular signed
 representative from signed Riesz representation, independently of the
-regularity of a particular density measure. The full raw splitting and the
-outer sufficient criterion are not asserted here.
+regularity of a particular density measure. The unconditional signed raw
+splitting is consumed by the full sufficient criterion. The diagonal-TV
+hypothesis for the CH construction remains a separate open obligation.
 -/
 
 set_option autoImplicit false
@@ -332,34 +334,141 @@ private lemma signedFunctional_small (s : ℕ → SignedMeasure K)
   exact squeeze_zero (fun n => norm_nonneg _)
     (fun n => NormPreservingLifts.signedFunctional_norm_le (s n)) hs
 
-#print axioms commonMeasure_vector_ac
-#print axioms commonMeasure_zero
-#print axioms common_rn_data
-#print axioms common_rn_bounded
-#print axioms density_indicator_restrict
-#print axioms restriction_mass
-#print axioms signed_restrict_add_compl
-#print axioms restriction_regular
-#print axioms densityToDual_apply
-#print axioms densityToDual_toL1
-#print axioms densityToDual_norm_le
-#print axioms densityToDual_rnL1
-#print axioms densityToDual_indicator
-#print axioms weak_transfer_regular
-#print axioms centered_uniform_bound
-#print axioms centered_signed_representatives
-#print axioms weak_limit_zero_of_evaluation
-#print axioms signedFunctional_add
-#print axioms signedFunctional_small
-#check @common_rn_data
-#check @restriction_mass
-#check @restriction_regular
-#check @densityToDual
-#check @densityToDual_norm_le
-#check @weak_transfer_regular
-#check @centered_signed_representatives
-#check @weak_limit_zero_of_evaluation
-#check @Filter.tendsto_of_subseq_tendsto
+
+private lemma l1_restrict_rnL1 (s : SignedMeasure K) (μ : Measure K)
+    [IsFiniteMeasure μ] {E : Set K} (hE : MeasurableSet E) :
+    L1Restriction.restrict E hE (rnL1 s μ) =
+      ((s.integrable_rnDeriv μ).indicator hE).toL1 (E.indicator (s.rnDeriv μ)) := by
+  apply Lp.ext
+  filter_upwards [L1Restriction.coe_restrict E hE (rnL1 s μ),
+    (s.integrable_rnDeriv μ).coeFn_toL1,
+    ((s.integrable_rnDeriv μ).indicator hE).coeFn_toL1] with x hx hq hi
+  rw [hx, hi]
+  have hqx : (rnL1 s μ : K → ℝ) x = s.rnDeriv μ x := hq
+  by_cases hm : x ∈ E <;> simp [hm, hqx]
+
+/-- Unconditional signed raw splitting on any compact Hausdorff Borel space.
+The two pieces are literal restrictions of the same selected input; the
+complement converges against every continuous functional on the dual. -/
+theorem exists_signed_raw_restriction_splitting (s : ℕ → SignedMeasure K)
+    (hs : ∀ n, (s n).totalVariation.Regular)
+    (hb : ∃ B : ℝ, ∀ n, (s n).totalVariation.real univ ≤ B) :
+    ∃ (j : ℕ → ℕ) (E : ℕ → Set K) (r : ℝ) (sInf : SignedMeasure K),
+      StrictMono j ∧ (∀ n, MeasurableSet (E n)) ∧
+      Pairwise (fun i n => Disjoint (E i) (E n)) ∧
+      (∀ n, s (j n) = (s (j n)).restrict (E n) + (s (j n)).restrict (E n)ᶜ) ∧
+      (∀ n, (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).Regular ∧
+        (SignedMeasure.totalVariation ((s (j n)).restrict (E n)ᶜ)).Regular) ∧
+      (∀ n, (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).real univ +
+        (SignedMeasure.totalVariation ((s (j n)).restrict (E n)ᶜ)).real univ =
+        (s (j n)).totalVariation.real univ) ∧
+      0 ≤ r ∧ Tendsto
+        (fun n => (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).real univ)
+        atTop (𝓝 r) ∧ sInf.totalVariation.Regular ∧
+      ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
+        Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional
+          ((s (j n)).restrict (E n)ᶜ))) atTop
+          (𝓝 (Φ (NormPreservingLifts.signedFunctional sInf))) := by
+  let μ := commonMeasure s
+  let f (n : ℕ) := rnL1 (s n) μ
+  obtain ⟨j, E, hE, v, r, hj, hdisj, _, _, hweak, hr, hmass⟩ :=
+    L1RawSplitting.exists_raw_restriction_splitting μ f (common_rn_bounded s hb)
+  have hnorm (n : ℕ) :
+      (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).real univ =
+        ‖L1Restriction.restrict (E n) (hE n) (f (j n))‖ := by
+    rw [l1_restrict_rnL1]
+    exact restriction_mass _ _ (commonMeasure_vector_ac s (j n)) (hE n)
+  have hJ (n : ℕ) : densityToDual μ
+      (L1Restriction.restrict (E n)ᶜ (hE n).compl (f (j n))) =
+      NormPreservingLifts.signedFunctional ((s (j n)).restrict (E n)ᶜ) := by
+    rw [l1_restrict_rnL1]
+    exact densityToDual_indicator _ _ (commonMeasure_vector_ac s (j n)) (hE n).compl
+  obtain ⟨sInf, hsInf, _, _, hlim⟩ := weak_transfer_regular μ
+    (fun n => L1Restriction.restrict (E n)ᶜ (hE n).compl (f (j n))) v hweak
+  refine ⟨j, E, r, sInf, hj, hE, hdisj, ?_, ?_, ?_, hr, ?_, hsInf, ?_⟩
+  · intro n
+    exact (signed_restrict_add_compl (s (j n)) (hE n)).1.symm
+  · intro n
+    exact ⟨restriction_regular _ (hs (j n)) (hE n),
+      restriction_regular _ (hs (j n)) (hE n).compl⟩
+  · intro n
+    exact (signed_restrict_add_compl (s (j n)) (hE n)).2
+  · simpa only [hnorm] using hmass
+  · intro Φ
+    simpa only [hJ] using hlim Φ
+
+/-- A disjoint-diagonal total-variation condition on all bounded regular
+signed weak-star-null sequences is sufficient for the full Grothendieck
+sequence implication. The norm bound on the arbitrary dual input is derived,
+not assumed. This theorem does not establish the diagonal hypothesis for a
+CH construction. -/
+theorem weak_of_disjoint_diagonal_variation
+    (H : ∀ s : ℕ → SignedMeasure K,
+      (∀ n, (s n).totalVariation.Regular) →
+      (∃ B : ℝ, ∀ n, (s n).totalVariation.real univ ≤ B) →
+      (∀ g : C(K, ℝ), Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (s n) g) atTop (𝓝 0)) →
+      ∀ E : ℕ → Set K, (∀ n, MeasurableSet (E n)) →
+        Pairwise (fun i n => Disjoint (E i) (E n)) →
+        Tendsto (fun n =>
+          (SignedMeasure.totalVariation ((s n).restrict (E n))).real univ) atTop (𝓝 0))
+    (F : ℕ → StrongDual ℝ C(K, ℝ)) (FInf : StrongDual ℝ C(K, ℝ))
+    (hF : ∀ g : C(K, ℝ), Tendsto (fun n => F n g) atTop (𝓝 (FInf g))) :
+    ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
+      Tendsto (fun n => Φ (F n)) atTop (𝓝 (Φ FInf)) := by
+  obtain ⟨s, hs, hrep, _, hb, hzero⟩ := centered_signed_representatives F FInf hF
+  intro Φ
+  have hc : Tendsto (fun n => Φ (F n - FInf)) atTop (𝓝 0) := by
+    apply Filter.tendsto_of_subseq_tendsto
+    intro ns hns
+    obtain ⟨j, E, r, sInf, hj, hE, hdisj, hdec, _, _, _, _, _, hweak⟩ :=
+      exists_signed_raw_restriction_splitting (s ∘ ns) (fun n => hs (ns n))
+        (by obtain ⟨B, hB⟩ := hb; exact ⟨B, fun n => hB (ns n)⟩)
+    let a (n : ℕ) := (s (ns (j n))).restrict (E n)
+    let b (n : ℕ) := (s (ns (j n))).restrict (E n)ᶜ
+    have hselected (g : C(K, ℝ)) : Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (s (ns (j n))) g)
+        atTop (𝓝 0) := (hzero g).comp (hns.comp hj.tendsto_atTop)
+    have hsmall : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n))
+        atTop (𝓝 0) := by
+      apply signedFunctional_small
+      exact H (fun n => s (ns (j n))) (fun n => hs (ns (j n)))
+        (by obtain ⟨B, hB⟩ := hb; exact ⟨B, fun n => hB (ns (j n))⟩)
+        hselected E hE hdisj
+    have heq (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) =
+        NormPreservingLifts.signedFunctional (a n) +
+          NormPreservingLifts.signedFunctional (b n) := by
+      conv_lhs => rw [hdec n]
+      exact signedFunctional_add _ _
+    have hbzero (g : C(K, ℝ)) : Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (b n) g) atTop (𝓝 0) := by
+      have hsa : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n) g)
+          atTop (𝓝 0) := by
+        simpa using (NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g).continuous.continuousAt.tendsto.comp hsmall
+      have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
+          NormPreservingLifts.signedFunctional (a n) g =
+          NormPreservingLifts.signedFunctional (b n) g := by
+        rw [heq]
+        simp
+      simpa only [heval, sub_self] using (hselected g).sub hsa
+    have hlimzero : NormPreservingLifts.signedFunctional sInf = 0 :=
+      weak_limit_zero_of_evaluation (fun n => NormPreservingLifts.signedFunctional (b n))
+        (NormPreservingLifts.signedFunctional sInf) hweak hbzero
+    have hpa : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (a n)))
+        atTop (𝓝 0) := by
+      simpa using Φ.continuous.continuousAt.tendsto.comp hsmall
+    have hpb : Tendsto (fun n => Φ (NormPreservingLifts.signedFunctional (b n)))
+        atTop (𝓝 0) := by simpa only [hlimzero, map_zero] using hweak Φ
+    have hp (n : ℕ) : Φ (NormPreservingLifts.signedFunctional (a n)) +
+        Φ (NormPreservingLifts.signedFunctional (b n)) = Φ (F (ns (j n)) - FInf) := by
+      rw [← map_add, ← heq, hrep]
+    exact ⟨j, by simpa only [hp, add_zero] using hpa.add hpb⟩
+  simpa only [map_sub, sub_add_cancel] using hc.add_const (Φ FInf)
+
+#print axioms exists_signed_raw_restriction_splitting
+#print axioms weak_of_disjoint_diagonal_variation
+#check @exists_signed_raw_restriction_splitting
+#check @weak_of_disjoint_diagonal_variation
 
 end Compact
 end D5.S3.Topology.Measures.SignedGrothendieckCriterion
