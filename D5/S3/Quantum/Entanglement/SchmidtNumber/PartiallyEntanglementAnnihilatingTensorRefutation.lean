@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.claim; result=D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.result; claim=D5/S3/Quantum/Entanglement/SchmidtNumber/PartiallyEntanglementAnnihilatingTensorRefutation.claim
-   digest: Non-local Schmidt-number annihilating channels need not remain so under tensor products. -/
+   digest: Tensor products need not preserve non-local Schmidt-number annihilation. -/
 
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 import D5.S3.Quantum.Entanglement.GraphDensity.UniqueBasisFormationRefutation

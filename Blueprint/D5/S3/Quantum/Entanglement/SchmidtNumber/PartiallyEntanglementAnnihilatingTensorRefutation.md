@@ -14,7 +14,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(e: \operatorname{Matri
 
 *Commentary.*
 
-A linear map on the bipartite d by d system is non-local when it cannot be expressed as the tensor product of two completely positive, trace-preserving maps on the individual d-dimensional systems. This is the distinction in Section V, main.tex line 630. The predicate only excludes such a factorization; complete positivity and trace preservation of the bipartite map are separate conditions.
+A linear map on the bipartite d by d system is non-local when it cannot be expressed as the tensor product of two completely positive, trace-preserving maps on the individual d-dimensional systems. This is the distinction in Section IV, main.tex line 630. The predicate only excludes such a factorization; complete positivity and trace preservation of the bipartite map are separate conditions.
 
 **Definition 1.2 (Non-local partial entanglement annihilation).**
 
@@ -26,7 +26,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(r: \mathbb{N}\right), 
 
 *Commentary.*
 
-A non-local r-partially entanglement annihilating channel is completely positive and trace preserving, is non-local, has r strictly below d, and sends every positive semidefinite trace-one input to an operator of Schmidt number at most r. This is Section V, main.tex line 632. SchmidtNumberLE expresses the existence of a finite convex decomposition into normalized pure states whose coefficient matrices all have rank at most r, corresponding to the Schmidt-number definition in Section II, lines 261–265.
+A non-local r-partially entanglement annihilating channel is completely positive and trace preserving, is non-local, has r strictly below d, and sends every positive semidefinite trace-one input to an operator of Schmidt number at most r. This is Section IV, main.tex line 632. SchmidtNumberLE expresses the existence of a finite convex decomposition into normalized pure states whose coefficient matrices all have rank at most r, corresponding to the Schmidt-number definition in Section II, lines 261–265.
 
 **Definition 1.3 (The tensor product across the aligned split).**
 
