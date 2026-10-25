@@ -1561,3 +1561,554 @@ Their constants depend on the fixed parameters; no parameter-uniform
 bound or rate optimality follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Natural channel isolation and the original-domain phase boundary
+
+**Definition 24.1 (fixed realization and reused suppliers).**
+For every integer $n\ge2$, use precisely Definition 18.1 of the
+[original source](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md), with
+its definitions and analytic suppliers as stated at revision
+[d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md).
+Thus the source is the identity unit source, the time integral and
+unweighted omitted-coordinate marginal are complete, measures are raw,
+the heat clock has covariance $2$, and $\epsilon=1$. The horizontal
+and central fields, units, free closure and Friedrichs realization
+are unchanged. In particular, on complex $L^2(\mathbb R^3,d\xi)$,
+
+$$
+\begin{aligned}
+\mathcal H_1&=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,
+ (\|f\|_2^2+\|Uf\|_2^2+\|Vf\|_2^2+\|Zf\|_2^2)^{1/2}},\\
+q_{\rm orig}&=T_1-gW_{n,1},\qquad D(q_{\rm orig})=\mathcal H_1,
+\qquad \mathscr A=A_{n,1,g}.
+\end{aligned}
+\tag{24.1}
+$$
+
+Here $\mathscr A$ is the operator associated with the original form;
+its operator domain $D(\mathscr A)$ is distinct from $\mathcal H_1$.
+The analytic assumptions are exactly those listed in Definition 18.1:
+Theorem 10.2's original-field formulas and locally uniform off-pole
+convergence, the full complex polar identity (12.12)--(12.13), the
+closed natural angular form and compact embedding supplied by V,
+Theorem 10.2 at the revision fixed in Definition 1.1, natural-core
+approximation (13.6)--(13.8), complete-field scaling (14.9), and the
+original closed form, compact smooth core and local estimates
+(15.9)--(15.12). Suppliers C and V retain their statements at
+5cec4fa83ae7bbb4e787c42606525db4cd11ed48, as fixed in Definition 1.1.
+They are conditional analytic suppliers here.
+
+Write $J=(-\pi/2,\pi/2)$, $c(a)=\cos a$, $q=q_n$ as in (20.3),
+$\mu=\mu_n$, $\lambda_n=2\pi\mu$, and
+
+$$
+\begin{aligned}
+\mathcal H_c&=\{b\in L^2(J;\mathbb C):b\in AC_{\rm loc}(J),
+                                     \ \sqrt c\,b'\in L^2(J)\},\\
+A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,\qquad
+Q[b]=\int_Jq|b|^2\,da,\qquad C[b]=\int_Jc|b|^2\,da,\\
+B[b]&=A[b]-\mu Q[b],\qquad k=\frac g{2\pi},\qquad h[b]=A[b]-kQ[b].
+\end{aligned}
+\tag{24.2}
+$$
+
+All unweighted angular norms below are complex $L^2(J,da)$ norms.
+In particular $0<q_*\le q\le1$ and $A\ge\lambda_0\|\cdot\|_2^2$
+with $\lambda_0>0$. The pencil is exactly (18.1), on
+$D_0=\mathcal H_c$ and
+$D_m=\mathcal H_c\cap L^2(J,\sin^2a/c\,da)$ for every nonzero
+integer $m$. No endpoint value is prescribed. Every rank and
+multiplicity in this section is complex.
+
+Reuse Theorem 15.2's original discreteness and lower semiboundedness,
+the bounded-frequency assertion (18.6), the complete-source estimate
+(20.19), and the exact original identities and natural form-domain
+correspondences (23.18)--(23.20). Also reuse (23.17), (23.33) and
+(23.35); in particular, for fixed $n,g>\lambda_n$,
+
+$$
+N_{n,g}(E)=L_{n,g}\log(1/E)+O_{n,g}(1),\qquad
+ t_j-\frac{j}{2L_{n,g}}=O_{n,g}(1),\quad
+ t_j=\tfrac12\log(1/\varepsilon_j).
+\tag{24.3}
+$$
+
+Here $-\varepsilon_j$ are all original negative eigenvalues in the
+order and with the multiplicities of (23.34). These are reused
+bounded count and placement results, without a phase-convergence
+conclusion. All subsequent assertions remain conditional on the
+unchanged analytic suppliers above.
+
+**Lemma 24.2 (near-threshold isolation in every integer mode).**
+For every integer $n\ge2$ there exists a finite
+$g_n^{\rm iso}>\lambda_n$ such that for every fixed
+$g\in(\lambda_n,g_n^{\rm iso})$ there is $s=s_{n,g}>0$ with
+
+$$
+\nu_{n,g}(\sigma,m)=
+\begin{cases}
+1,&m=0,\ |\sigma|<s,\\
+0,&\text{otherwise},
+\end{cases}
+\qquad d_{n,g}=\frac s\pi,\qquad L_{n,g}=\frac{s}{2\pi}.
+\tag{24.4}
+$$
+
+At each root $\sigma=\pm s$ the pencil kernel has complex dimension
+one and the corresponding eigenvalue has nonzero derivative. For all
+$m\ne0$ and all real $\sigma$ there is a common strictly positive
+unweighted angular lower bound. The threshold $g_n^{\rm iso}$ asserts
+channel isolation only; it is not a threshold for a full geometric
+phase law.
+
+Proof. Fix $n$. The definition of $\mu$ gives $B\ge0$, and attainment
+supplies a nonzero kernel vector. Since $q$ is bounded, closedness and
+compact embedding of $A$ imply compact resolvent for $B$. The modulus
+chain rule preserves $Q$ and cannot increase $A$, so there is a
+nonnegative real kernel vector $b_0$. Its interior equation is
+
+$$
+-4(cb_0')'+(c-\mu q)b_0=0.
+\tag{24.5}
+$$
+
+On every compact subinterval $c$ is smooth and positive and $q$ is
+smooth; interior regularity makes this a classical equation. An
+interior zero of $b_0$ would also have derivative zero, by
+nonnegativity. Uniqueness for the linear initial-value equation would
+then give $b_0=0$, a contradiction. Thus $b_0>0$ in $J$.
+The modulus of every nonzero real kernel vector is likewise a
+minimizer and strictly positive in the interior. Two independent real
+kernel vectors would admit a nonzero real linear combination vanishing
+at a prescribed interior point, which is impossible. Real coefficients
+therefore give complex kernel dimension one. Normalize $\|b_0\|_2=1$.
+Reflection preserves $B$, so uniqueness of its positive normalized
+kernel generator makes $b_0$ even. Compact resolvent now gives a
+strictly positive second eigenvalue $\gamma$ of $B$.
+
+At $k=\mu$, let $e_m(\sigma)$ be the lowest eigenvalue of the form
+
+$$
+B[b]+\int_Jc(\sigma+m\tan a)^2|b|^2\,da,\qquad b\in D_m.
+\tag{24.6}
+$$
+
+For $m\ne0$ it is positive. Indeed compactness would supply a zero
+eigenvector if the bottom were zero. Both nonnegative terms would
+vanish, so that vector would be a multiple of $b_0$ and
+$\sigma+m\tan a$ would vanish almost everywhere on $J$, a contradiction.
+This positivity is uniform. If $e_m(\sigma)\le1$, its unit minimizing
+eigenvector satisfies
+
+$$
+A[b]+\int_Jc(\sigma+m\tan a)^2|b|^2\,da
+=e_m(\sigma)+\mu Q[b]\le1+\mu.
+\tag{24.7}
+$$
+
+Assertion (18.6), applied with $K=\mu+1$, confines every such pair
+to finitely many integers $m$ and a bounded real frequency interval.
+For each fixed $m$ the expansion (18.4) is a bounded polynomial
+perturbation on a common form domain, so the lowest eigenvalue is
+continuous in $\sigma$. Its positive minimum on that compact interval,
+for each of the finitely many nonzero modes, together with the exterior
+bound $1$, gives $\eta>0$ such that $e_m(\sigma)\ge\eta$ for every
+$m\ne0$ and every real $\sigma$. If there are no such modes in the
+bounded set, take $\eta=1$.
+
+Choose $0<\delta_0<\min(1,\eta/2,\gamma/2)$ and set
+$g_n^{\rm iso}=2\pi(\mu+\delta_0)$. For fixed $g$ in the asserted
+interval write $\delta=k-\mu\in(0,\delta_0)$. Since $Q\le\|\cdot\|_2^2$,
+all nonzero modes have lower bound $\eta-\delta>0$. For $m=0$ the form
+is $B-\delta Q+\sigma^2C$, whose second eigenvalue is at least
+$\gamma-\delta>0$. Its first eigenvalue at $\sigma=0$ is negative
+by the trial $b_0$.
+
+Let $f_\delta(t)$ be the first eigenvalue of $B-\delta Q+tC$ for
+$t\ge0$. It is continuous by bounded perturbation. For $t_2>t_1$,
+a unit lowest eigenvector $u_2$ at $t_2$ gives, by min-max,
+
+$$
+f_\delta(t_2)\ge f_\delta(t_1)+(t_2-t_1)C[u_2]
+>f_\delta(t_1).
+\tag{24.8}
+$$
+
+The last inequality uses $c>0$ almost everywhere. The function is
+positive for all sufficiently large $t$: otherwise a unit vector of
+nonpositive energy would violate (18.6) with homogeneous bound $K=k$.
+Thus exactly one $s>0$ satisfies $f_\delta(s^2)=0$. The second-eigenvalue
+bound gives its simple kernel. Bounded analytic perturbation by
+$\sigma^2c$ gives derivative $2\sigma C[u]$ at each root for a unit
+eigenvector $u$, which is nonzero at $\pm s$. This proves all ranks
+in (24.4), including strict negative rank zero at the roots. Integrating
+that rank over all integers exactly as in (18.2)/(21.2) gives
+$d=(2s)/(2\pi)=s/\pi$ and $L=d/2=s/(2\pi)$. $\square$
+
+**Proposition 24.3 (weighted natural indicial realization and endpoints).**
+For every fixed $n,g$ in Lemma 24.2's interval, the same form $h$ on
+$\mathcal H_c$ defines a lower semibounded compact-resolvent
+self-adjoint operator $K_g$ in the auxiliary space $L^2(J,c\,da)$.
+It has exactly one simple negative eigenvalue $-s^2$, no zero eigenvalue,
+and a positive gap to its remaining spectrum. The complex-frequency
+roots of the $m=0$ pencil are precisely $\pm s$ and purely imaginary
+roots separated from zero. Its real positive even negative eigenvector
+$\psi$, normalized by $C[\psi]=1$, has finite strictly positive limits
+at both endpoints, bounded derivative, and zero endpoint flux
+$4c\psi'$. These endpoint conclusions are derived, not imposed.
+The statement about complex roots concerns only $m=0$.
+
+Proof. Compactness first gives, for each $\epsilon>0$, a finite
+$D_\epsilon$ such that
+
+$$
+\|b\|_2^2\le\epsilon A[b]+D_\epsilon C[b],\qquad b\in\mathcal H_c.
+\tag{24.9}
+$$
+
+Otherwise choose counterexamples normalized to norm one with
+$\epsilon A[b_j]+jC[b_j]<1$. Their bounded $A$ energy gives a
+strongly unweighted $L^2$ convergent subsequence, with norm-one limit
+$b$. Bounded multiplication by $c$ gives $C[b]=0$, contradicting
+$c>0$ almost everywhere. Since $Q\le\|\cdot\|_2^2$, choose
+$\epsilon<1/k$ and then sufficiently large finite $\beta$.
+The form $h+\beta C$ is coercive and has norm equivalent to $A+C$.
+That norm is complete by closedness and
+$A\ge\lambda_0\|\cdot\|_2^2$. The natural domain contains the compact
+smooth angular core, is dense in $L^2(c\,da)$, and embeds compactly
+there. The closed-form representation theorem therefore supplies
+$K_g$ on precisely this form domain.
+
+The negative form index depends on $h$ on $\mathcal H_c$, independently
+of the chosen Hilbert inner product. Lemma 24.2 makes it exactly one,
+so the negative weighted eigenvalue is simple. A zero weighted
+eigenvector would satisfy $h[b,\phi]=0$ for every
+$\phi\in\mathcal H_c$; as $b\in L^2(da)$, this is also the weak
+equation putting it in the operator domain and kernel of
+$H_{n,g}(0,0)$. That operator is invertible by Lemma 24.2.
+Thus zero is absent and compact resolvent gives a positive gap above
+the single negative eigenvalue.
+
+More generally, for any complex frequency $z$, the equation
+$K_g\psi=-z^2\psi$ is equivalent to
+$H_{n,g}(z,0)\psi=0$. This equivalence includes associated operator
+domains: the weighted weak equation has right side $-z^2c\psi$ in
+unweighted $L^2$, while the unweighted pencil equation has right side
+$-z^2\psi$ in weighted $L^2$. The common form domain is unchanged.
+Self-adjointness of $K_g$ forces $-z^2$ to be a real eigenvalue.
+The real root $s$ from Lemma 24.2 identifies its unique negative
+eigenvalue as $-s^2$; the positive eigenvalues give purely imaginary
+roots whose distances from zero have a strictly positive lower bound.
+
+The modulus and interior ODE argument, applied to the nonnegative
+form $h+s^2C$, gives a positive generator $\psi$. Simplicity and
+reflection make its $C$-normalized positive generator even. Its equation
+and flux are
+
+$$
+-4(c\psi')'+(c-kq)\psi=-s^2c\psi,\qquad
+p_*=4c\psi',\qquad p_*'=((1+s^2)c-kq)\psi.
+\tag{24.10}
+$$
+
+Since $c^2\le c$, both $p_*$ and $p_*'$ are in $L^2(J,da)$, so
+$p_*\in H^1(J)$ has endpoint traces. The finite energy
+$\int_J|p_*|^2/c<\infty$ and the simple endpoint zeros of $c$ force
+both traces to vanish. At endpoint distance $d$, the $H^1$ estimate
+gives $|p_*|=O(\sqrt d)$ and thus $|\psi'|=O(d^{-1/2})$.
+This is integrable, so $\psi$ has finite endpoint limits and is bounded.
+Now (24.10) makes $p_*'$ bounded, whence $p_*=O(d)$ and $\psi'$ is
+bounded.
+
+If one endpoint value of $\psi$ were zero, integrate the two equations
+from that endpoint, using $c(d)\asymp d$. With
+$M(d)=\sup_{0\le t\le d}|\psi(t)|$, boundedness of their coefficients
+gives $|p_*(d)|\le C_1dM(d)$, and then
+$|\psi(d)|\le C_2dM(d)$. Taking the supremum forces $M(d)=0$ for
+sufficiently small $d$, and interior uniqueness gives $\psi=0$.
+This contradicts its normalization; positivity in the interior then
+makes both endpoint limits strictly positive. In particular
+$\mathcal C_0(s)\psi$ from (23.3) is unweighted $L^2$, also directly
+from $\mathcal H_c$ and $c^2\le c$. The auxiliary weighted realization
+does not replace the original Hilbert space or diagonalize its mass
+wall. $\square$
+
+**Proposition 24.4 (finite negative rank outside the exact symmetry sector).**
+For every fixed $n,g$ in Lemma 24.2's interval, let $\mathcal S$ consist
+of original $L^2$ functions independent of the horizontal angle $\theta$
+and even in $z$. It reduces $\mathscr A$, and the restriction of
+$\mathscr A$ to $\mathcal S^\perp$ has finite total negative complex
+spectral rank. Thus deleting finitely many original negative eigenvalue
+occurrences leaves only $\mathcal S$. Higher even angular components
+inside $\mathcal S$ remain.
+
+Proof. The exact complete heat Fourier column (10.3)/(20.8) depends
+horizontally only on $\rho$ and is even in the central Fourier variable:
+its factors are $e^{-\epsilon^2tk^2}$,
+$|k|/(4\pi\sinh(|k|t))$,
+$\cosh(|k|t)^{-(n-1)}$, and
+$\exp(-|k|\coth(|k|t)\rho^2/4)$. Hence inverse Fourier transform
+and the complete time integral make the actual potential rotationally
+invariant and even in $z$. Rotations preserve raw measure, the compact
+smooth original core and $Z$, and transform the horizontal fields by
+an orthogonal pair. Every integer Fourier sector therefore reduces
+the original closed form and its Friedrichs operator.
+
+In the $m=0$ sector, $z$ reflection preserves horizontal energy because
+the angular-central cross term vanishes there, and it preserves
+central energy and potential. Equivalently, in (23.3), reflection
+$a\mapsto-a$ anticommutes with
+$\mathcal C_0(\partial_\ell)=2\sin a(\partial_\ell-1)+4c\partial_a$,
+so its squared norm is invariant. Reflection preserves the original
+core closure. This proves the claimed reducing sector for the actual
+complete source and operator.
+
+For every $m\ne0$, Lemma 24.2 gives lower bound $\eta-\delta$.
+For $m=0$ odd in $a$, orthogonality to even $b_0$ gives $B\ge\gamma$,
+so $B-\delta Q+\sigma^2C\ge\gamma-\delta$ for all real $\sigma$.
+Put $\zeta=\min(\eta-\delta,\gamma-\delta)>0$. Zero extension of a
+compact exterior cylinder function and Plancherel therefore give
+
+$$
+Q_g[w]\ge\zeta\int|v|^2\,d\ell\,da\,d\theta
+\quad\text{on }\mathcal S^\perp.
+\tag{24.11}
+$$
+
+The original-to-cylinder correspondence after (23.18), followed by
+original core approximation and longitudinal cutoffs, extends this
+inequality to the exterior free domain. The gauge preserves the
+integrated angular norm. No endpoint value has been added.
+
+Choose $a_*\ge\max(0,\ell_n)$ so that
+$gC_ne^{-2a_*}\le\zeta/4$. The exact original formula (23.18), its
+nonnegative central term and (23.19) imply, on exterior vectors in
+$\mathcal S^\perp$ supported in $\ell>a_*$,
+
+$$
+q_{\rm orig}[f]\ge\frac{3\zeta}{16}\int|v|^2
+ =\frac{3\zeta}{4}\int R^{-2}|f|^2\,d\xi.
+\tag{24.12}
+$$
+
+The equality retains the raw Jacobian
+$\int|v|^2=4\int R^{-2}|f|^2\,d\xi$.
+Take a smooth $\vartheta$ from $0$ to $\pi/2$, constant outside
+$(0,1)$, and a finite width $H>0$, and set
+$\chi_{\rm in}=\cos\vartheta((\ell-a_*)/H)$,
+$\chi_{\rm out}=\sin\vartheta((\ell-a_*)/H)$.
+They are smooth original multipliers, constant near the pole, preserve
+$\mathcal S^\perp$, and have squared sum one. If
+$|\chi_{\rm in}'|^2+|\chi_{\rm out}'|^2\le D/H^2$, the exact IMS
+multiplier (18.16) satisfies on its transition annulus
+
+$$
+I=(|\chi_{\rm in}'|^2+|\chi_{\rm out}'|^2)
+ \left(\frac c{R^2}+\frac{4\sin^2a}{R^4}\right)
+\le\frac{D(1+4e^{-2a_*})}{H^2}R^{-2}.
+\tag{24.13}
+$$
+
+Choose finite $H$ making its coefficient at most $\zeta/4$.
+Then $q_{\rm orig}[\chi_{\rm out}f]-\int I|\chi_{\rm out}f|^2$
+is nonnegative on $\mathcal S^\perp$.
+
+The inner component is supported in a fixed compact set. Choose a
+bounded smooth Euclidean domain $\Omega$ containing it in its interior.
+On its original free Dirichlet closure, (15.11)--(15.12) and boundedness
+of $I$ give
+$q_{\rm orig}-I\ge\alpha T_1-\beta\|\cdot\|_2^2$ for some
+$\alpha>0$, with equivalent shifted free form norm. Estimate (15.9)
+gives local Euclidean $H^1$ control; Rellich compactness gives compact
+embedding into $L^2(\Omega)$. This inner shifted form therefore has a
+finite-dimensional negative spectral space, of complex rank $K_{\rm in}$.
+Original core approximation shows that multiplication by $\chi_{\rm in}$
+maps the original domain into this Dirichlet domain.
+
+For any strictly negative original form subspace $X\subset\mathcal S^\perp$,
+map $f$ to the projection of $\chi_{\rm in}f$ onto that inner negative
+space. This map is injective: a kernel vector has nonnegative inner
+shifted form and nonnegative outer shifted form, and the IMS identity,
+allocating $I$ by $\chi_{\rm in}^2+\chi_{\rm out}^2=1$, would give
+$q_{\rm orig}[f]\ge0$. Hence $\dim_{\mathbb C}X\le K_{\rm in}$.
+The strict form-index principle proves finite total negative rank on
+$\mathcal S^\perp$. Its contribution is a fixed finite deletion; it
+proves neither simplicity nor a phase law inside $\mathcal S$.
+$\square$
+
+**Proposition 24.5 (exact original ground-channel form compression).**
+Fix $n,g$ in Lemma 24.2's interval, and take $s$ and the real positive
+even $C$-normalized $\psi$ of Proposition 24.3. For any
+$a_0\ge\ell_n$ and $u\in C_c^\infty((a_0,\infty);\mathbb C)$,
+
+$$
+f(R,a,\theta)=\frac{R^{-1}}{\sqrt{2\pi}}u(\log R)\psi(a)
+\quad\text{belongs to }\mathcal H_1.
+\tag{24.14}
+$$
+
+Define the finite real coefficients and complete-source compression
+
+$$
+\begin{aligned}
+M_0&=\int_J\psi^2\,da,\qquad p(a)=2\sin a\,\psi(a),
+\qquad r(a)=4c\psi'-2\sin a\,\psi,\\
+\alpha&=\int_Jp^2\,da,\qquad\beta=\int_Jpr\,da,
+\qquad\tau=\int_Jr^2\,da,\\
+V(\ell)&=-g\int_JB_n(\ell,a)\psi(a)^2\,da.
+\end{aligned}
+\tag{24.15}
+$$
+
+Here $B_n$ is exactly the complete-source error in (20.23)/(23.18),
+independent of $\theta$ by the complete heat formula. With all
+longitudinal integrals over $(a_0,\infty)$, the exact identities are
+
+$$
+\begin{aligned}
+4q_{\rm orig}[f]
+ &=\int\Big\{|u'|^2-s^2|u|^2
+ +e^{-2\ell}\big(\alpha|u'|^2
+       +2\beta\operatorname{Re}(u'\overline u)+\tau|u|^2\big)
+ +V(\ell)|u|^2\Big\}\,d\ell,\\
+4\|f\|_2^2&=M_0\int e^{2\ell}|u|^2\,d\ell,
+\qquad |V(\ell)|\le gC_nM_0e^{-2\ell}.
+\end{aligned}
+\tag{24.16}
+$$
+
+These assertions concern the original free form domain only.
+
+Proof. Approximate $\psi$ in its supplied natural angular form norm
+by the compact smooth angular core. On the fixed compact longitudinal
+support of $u$, (23.20) controls both the homogeneous form and the
+original central derivative, using $c^2\le c$; both exponential weights
+are bounded there. Undoing coordinates gives actual compact smooth
+Cartesian approximants away from the axes and pole. They converge in
+the full original free norm, proving (24.14), with no graph-domain
+assertion.
+
+For $m=0$, the homogeneous part of (23.18) on this tensor is
+$\int(C[\psi]|u'|^2+h[\psi]|u|^2)\,d\ell$.
+Since $C[\psi]=1$ and $h[\psi]=-s^2$, these are exactly the first
+two terms in (24.16). The retained central derivative is exactly
+
+$$
+\mathcal C_0(\partial_\ell)(u\psi)=p\,u'+r\,u.
+\tag{24.17}
+$$
+
+Its squared norm gives the three $e^{-2\ell}$ terms, with finite
+coefficients by natural energy and $c^2\le c$. The factor
+$1/\sqrt{2\pi}$ gives unit angular $\theta$ norm. The raw Jacobian
+in (23.18) gives precisely the mass $M_0e^{2\ell}$, and (20.19)
+integrated against $\psi^2$ gives the stated bound on $V$.
+These substitutions and the form-domain limit prove (24.16).
+Testing against angular vectors outside $\operatorname{span}\{\psi\}$
+still produces central, complete-source and mass couplings. Thus this
+compression identifies no reducing scalar operator and supplies no
+original operator-domain quasimode or phase result. $\square$
+
+**Application 24.6 (sufficient original quasimodes and multiplicity exhaustion).**
+Fix $n,g$ in Lemma 24.2's interval, $L=L_{n,g}=s/(2\pi)$, and the
+original $\mathscr A$ in (24.1). Suppose there exist $D\in(0,\infty)$
+and nonzero $f_j\in D(\mathscr A)$ for every sufficiently large integer
+$j$, such that
+
+$$
+a_j=De^{-j/L},\qquad
+\frac{\|(\mathscr A+a_j)f_j\|_2}{\|f_j\|_2}=o(a_j).
+\tag{24.18}
+$$
+
+Then the full ordered original negative spectrum, including every
+complex multiplicity, satisfies
+$\varepsilon_j e^{j/L}\longrightarrow C\in(0,\infty)$.
+The antecedent (24.18) is not established here.
+
+Proof. The original spectral theorem gives
+$\operatorname{dist}(-a_j,\operatorname{spec}\mathscr A)
+\le\|(\mathscr A+a_j)f_j\|_2/\|f_j\|_2$.
+Choose positive $r_j\to0$ strictly exceeding the relative residual.
+Each magnitude interval
+$I_j=[a_j(1-r_j),a_j(1+r_j)]$ then contains an actual negative
+eigenvalue occurrence: the corresponding spectral interval lies away
+from zero, and the original negative spectrum there is discrete.
+The ratio $a_{j+1}/a_j=e^{-1/L}<1$ makes these intervals pairwise
+disjoint for all sufficiently large $j$. Select one occurrence $b_j$
+from each. Then $b_j/a_j\to1$ and $b_j$ is eventually strictly decreasing.
+
+The selected multiset count is
+$N_{\rm sel}(E)=L\log(1/E)+O(1)$: eventually
+$a_j/2\le b_j\le2a_j$, and solving the exact geometric inequalities
+for $a_j$ gives these bounds, with finite beginnings absorbed in $O(1)$.
+By the reused original bounded count (23.33),
+$N_{n,g}(E)-N_{\rm sel}(E)$ is bounded for sufficiently small $E$.
+It counts the unselected occurrences, is nonnegative, and is
+nondecreasing as $E$ decreases. Only finitely many such occurrences
+therefore exist. This includes all extra complex multiplicities,
+extra occurrences in the intervals, and eigenvalues outside them.
+It gives a fixed indexing shift, rather than a bounded varying error.
+
+Consequently a fixed integer $\kappa$ satisfies
+$\varepsilon_{j+\kappa}=b_j$ for every sufficiently large $j$, and
+
+$$
+\varepsilon_{j+\kappa}e^{(j+\kappa)/L}
+ =\frac{b_j}{a_j}De^{\kappa/L}
+ \longrightarrow De^{\kappa/L}\in(0,\infty).
+\tag{24.19}
+$$
+
+This proves the application using the actual original spectral theorem,
+discreteness and bounded count. Original form-domain tensors or a
+residual merely $O(a_j)$ do not satisfy (24.18). $\square$
+
+**Remark 24.7 (sources and the unresolved original-domain bridge).**
+The isolation, weighted natural realization, endpoint estimates and
+finite symmetry-complement rank above are repository deductions under
+the stated suppliers. The compressed identity is an application of the
+existing exact original form formulas. The residual-to-spectrum and
+bounded-count exhaustion mechanism in Application 24.6 is mature; see
+Andrew Hassell and Simon Marshall, *Eigenvalues of Schrödinger operators
+with potential asymptotically homogeneous of degree $-2$*,
+[arXiv:math/0510617v1, Lemma 3 and Section 7](https://arxiv.org/html/math/0510617v1).
+The application has a self-contained proof here and uses the original
+bounded count as its specific input.
+
+Theorem 2 of that primary source has a distinct applicability boundary:
+it concerns the Euclidean $\mathbb R^3$ Laplacian, a potential exactly
+$P(\omega)/r^2$ outside a fixed radius, one strictly supercritical
+spherical eigenvalue, and every other spherical eigenvalue strictly
+above threshold. No bridge placing the original kinetic form, central
+regularization, complete-source error, natural endpoints, mass wall
+and Friedrichs closure under those hypotheses has been supplied.
+That theorem is not applied to the original operator here.
+
+No original $D(\mathscr A)$ quasimodes with the relative $o(a_j)$
+residual in (24.18) have been produced. Still missing are a connection
+from the original core to a nonzero oscillatory asymptotic coefficient,
+a decaying low-energy solution and matching estimates for the coupled
+wall $Ee^{2\ell}$ with the original mass, and graph control of the
+full central expression
+$2\sin a(\partial_\ell-1)+4c\partial_a-2imc$ and complete-source
+correction. The auxiliary weighted angular basis does not diagonalize
+the original unweighted mass. Any original zero-energy resonance
+allowed by Definition 18.1 must be handled; none is excluded by an
+additional premise.
+
+For $s=2\pi L$, the missing phase limit is equivalently convergence of
+$t_j-\pi j/s$ to a finite real value, in which case the phase factor
+would be $\exp(-2\lim_j(t_j-\pi j/s))$. The accepted (23.35) only
+bounds this expression. Neither phase convergence nor an original
+spectral ratio is established. Simplicity of the natural channel does
+not imply simplicity of original eigenvalues; summable coefficients,
+a scalar form compression and finite index errors do not establish
+general phase matching. Thus the existence, for every $n\ge2$, of a
+full geometric-phase threshold above $\lambda_n$ remains unresolved.
+The constants and isolation intervals here need not be uniform in
+$n$ or $g$, and no explicit interval or phase constant is asserted.
+These are ordinary conditional analytic results, without a claim of
+kernel verification, physical realization or literature priority.
+
+## 追加锚（本行以下为增补区）
