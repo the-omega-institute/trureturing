@@ -9,24 +9,40 @@ structure CacheFixture where
   directory : System.FilePath
   request : Request
   result : Observation
+  dependencies : Array Declaration
 
 def CacheFixture.write (f : CacheFixture) (result : Observation) : IO Unit :=
   pickle (f.directory / s!"probe-{hash f.identity}.pickle")
-    ({identity := f.identity, targetHeader := ([], mkConst ``True), result} : ProbeCacheRecord)
+    ({
+      identity := f.identity
+      targetHeader := ([], mkConst ``True)
+      result
+      dependencies := f.dependencies} : ProbeCacheRecord)
 
 /-- Each replay case owns a compiler process, which releases imported regions on exit. -/
 unsafe def withCacheFixture (action : CacheFixture → CommandElabM Unit) : CommandElabM Unit := do
   let original ← getEnv
+  let target := `cacheFixtureTarget
+  let auxiliary := `cacheFixtureAux
+  liftTermElabM do
+    for name in #[target, auxiliary] do
+      discard <| checkProof name [] (mkConst ``True) (mkConst ``True.intro)
+  let source ← getEnv
   let identity := s!"cache-replay-regression-{← IO.monoNanosNow}"
   let directory : System.FilePath := "build/lean-inspector/" ++ identity
   let request : Request := {
-    target := ``True.intro, «baseline» := #[], baselineCommit := "cache-regression" }
+    target, «baseline» := #[], baselineCommit := "cache-regression" }
   let result : Observation := {
     target := request.target, base := .incomplete .undecided,
-    paired := .incomplete .undecided, verdict := .insufficient }
+    paired := .incomplete .undecided, verdict := .insufficient
+    attempts := #[{strategy := "cached", outcome := .found, proof? := some (mkConst auxiliary)}] }
+  let dependencies ← match captureCacheDependencies source original target #[auxiliary] with
+    | .ok declarations => pure declarations
+    | .error message => throwError "{message}"
   try
-    saveProbeCache directory identity original request result
-    action {identity, directory, request, result}
+    saveProbeCache directory identity source request result (some original)
+    modifyEnv fun _ => original
+    action {identity, directory, request, result, dependencies}
   finally modifyEnv fun _ => original
 
 end LeanInformationAudit.Tests.SearchReduction
