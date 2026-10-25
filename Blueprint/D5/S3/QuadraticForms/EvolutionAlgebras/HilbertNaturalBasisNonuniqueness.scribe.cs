@@ -34,7 +34,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
     private static Formula C => X("Complex");
     private static Formula R => X("Real");
     private static Formula P => X("PNat");
-    private static Formula HSpace => Call("lp", Lam("i", P, C), D(2));
+    private static Formula HSpace => Call("lp", App(Q("Function", "const"), P, C), D(2));
     private static Formula A => X("A");
     private static Formula M => X("m");
     private static Formula Norm(Formula x) => new Formula.Norm(x);
