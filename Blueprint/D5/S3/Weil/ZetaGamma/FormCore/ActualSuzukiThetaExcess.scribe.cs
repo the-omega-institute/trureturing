@@ -9,7 +9,7 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
         "D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Source-only candidate: the original physical H6 condition supplies almost "
+        "The original physical H6 condition supplies almost "
             + "everywhere convergence of the complete physical theta series, preservation "
             + "of H6 and control of the normalized sixth-moment excess for the same source.",
         H("Actual H6 Sources and the Complete Theta Transform"),
@@ -23,13 +23,14 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
                 Blocks(
                     Paragraph(Text(
                         "For every original physical source F with originalPhysicalH6(F), "
-                            + "the candidate asserts all three clauses together: "
+                            + "the theorem proves all three clauses together: "
                             + "originalPhysicalH6(fullTheta(F)); genuine integrability on "
                             + "x>pi of ((x/pi)^6-1)*norm(fullTheta(F)(x))^2; and its "
                             + "integral at most C^2 times the same excess integral of F. "
                             + "Here C is the actual convergent series sum over j>=0 of "
                             + "(j+1)^(-3). The coefficient C is not replaced by a supplied "
-                            + "finite constant, and no optimality claim is made.")),
+                            + "finite constant. Since C=zeta(3)>1, this is a boundedness "
+                            + "estimate; no strict contraction or optimality is claimed.")),
                     Paragraph(Text(
                         "The predicate originalPhysicalH6 means MemLp 2 on the original "
                             + "half-line x>pi together with genuine integrability of "
@@ -38,13 +39,13 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
                             + "coefficient model, assumed theta convergence, assumed excess "
                             + "bound or Gamma form-domain premise occurs in this statement.")),
                     Paragraph(Text(
-                        "The proposed proof uses the nonnegative densities (x/pi)^6-b "
+                        "The proof uses the nonnegative densities (x/pi)^6-b "
                             + "for b=0 and b=1. Dilation by n^2 contributes the measure "
                             + "Jacobian n^(-2), and the sixth-moment scaling dominates the "
                             + "squared mode amplitude n^8. This yields the n^(-3) mode "
                             + "norm estimate in weighted L2. The b=0 estimate supplies H6 "
                             + "preservation, while b=1 gives the displayed excess bound. "
-                            + "The proposed L2 series is tied back to the literal fullTheta "
+                            + "The L2 series is tied back to the literal fullTheta "
                             + "representative almost everywhere; a totalized sum alone "
                             + "does not serve as convergence evidence.")),
                     Paragraph(Text(
@@ -54,7 +55,7 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
                             + "readout by -1 fails at the lawful zero H6 source because "
                             + "C>0. Actual dependence is witnessed by zero and the H6 "
                             + "indicator of (2*pi,3*pi], whose excess is finite and positive. "
-                            + "The audit proof and raw selector are source proposals only."))),
+                            + "Both audits retain the original source states."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-h6-physical-term-summable-ae"),
@@ -64,14 +65,14 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every F satisfying originalPhysicalH6(F), the candidate "
-                            + "asserts Summable(j -> physicalTerm(F,j,x)) for almost every "
+                        "For every F satisfying originalPhysicalH6(F), the theorem "
+                            + "proves Summable(j -> physicalTerm(F,j,x)) for almost every "
                             + "x with respect to volume restricted to x>pi. It concerns "
                             + "the literal complex mode series, with the original F. It "
                             + "asserts no pointwise convergence on every x and supplies "
                             + "no convergence premise as an input.")),
                     Paragraph(Text(
-                        "The proposed weighted-L2 mode estimate makes the sum of mode "
+                        "The weighted-L2 mode estimate makes the sum of mode "
                             + "norms finite. A function-space series result then supplies "
                             + "almost everywhere summability. Strict positivity of the "
                             + "b=0 density transfers that property to the original "

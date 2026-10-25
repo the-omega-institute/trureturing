@@ -1,10 +1,4 @@
-/- SOURCE_ONLY.UNCOMPILED, 2026-10-25.
-Mirrored audit candidate for the three unchanged actual-H6 theta suppliers.
-Immutable D5 input SHA256:
-2e171122e4e8fb7c9489d339d1b0af3c6934eab69ce0336d95ea5abf264e5ddd
-No native build, source-binding, kernel, axiom-closure or registration acceptance
-is claimed. The imported D5 candidate is not installed in the read-only main
-checkout. Every raw selector below is a proposal requiring native extraction.
+/- Mirrored audits for the two actual-H6 theta laws.
 All original telescopes and clauses remain; each law changes one data occurrence.
 -/
 
@@ -32,9 +26,8 @@ private theorem zero_h6 : originalPhysicalH6 (fun _ : ℝ => (0 : ℂ)) := by
 
 /- This interval is contained in x>pi and lies strictly below 4*pi. Its
 H6 membership and finite excess are proved before its integral is observed.
-The interval witness proof is reused from the explicitly supplied earlier
-SOURCE_ONLY.UNCOMPILED weighted-physical registration source, with no claim
-that that earlier candidate was compiled or accepted. -/
+The interval witness proof is reused from the weighted-physical registration
+source. -/
 private def indicatorInput : ℝ → ℂ :=
   (Ioc (2 * Real.pi) (3 * Real.pi)).indicator (fun _ => (1 : ℂ))
 
@@ -104,30 +97,6 @@ private theorem indicator_excess_pos :
   rw [setIntegral_pos_iff_support_of_nonneg_ae hnonneg indicator_excess_integrable,
     hsupp, Real.volume_Ioc]
   exact ENNReal.ofReal_pos.mpr (by linarith [Real.pi_pos])
-
-private theorem indicator_mode_zero (j : ℕ) (hj : j ≠ 0) (x : ℝ)
-    (hx : Real.pi ≤ x) : physicalTerm indicatorInput j x = 0 := by
-  have hj1 : 1 ≤ j := Nat.one_le_iff_ne_zero.mpr hj
-  have ha : (2 : ℝ) ≤ ((j + 1 : ℕ) : ℝ) := by
-    exact_mod_cast Nat.succ_le_succ hj1
-  have ha2 : (4 : ℝ) ≤ ((j + 1 : ℕ) : ℝ) ^ (2 : ℕ) := by
-    nlinarith [sq_nonneg (((j + 1 : ℕ) : ℝ) - 2)]
-  have hscale : 4 * Real.pi ≤ ((j + 1 : ℕ) : ℝ) ^ (2 : ℕ) * x :=
-    (mul_le_mul_of_nonneg_right ha2 Real.pi_pos.le).trans
-      (mul_le_mul_of_nonneg_left hx (sq_nonneg _))
-  have hnot : ((j + 1 : ℕ) : ℝ) ^ (2 : ℕ) * x ∉
-      Ioc (2 * Real.pi) (3 * Real.pi) := by
-    intro hmem
-    linarith [hmem.2, Real.pi_pos]
-  have hz : indicatorInput (((j + 1 : ℕ) : ℝ) ^ (2 : ℕ) * x) = 0 :=
-    Set.indicator_of_notMem hnot _
-  rw [physicalTerm, hz, mul_zero]
-
-private theorem indicator_fullTheta (x : ℝ) (hx : Real.pi ≤ x) :
-    fullTheta indicatorInput x = indicatorInput x := by
-  unfold fullTheta
-  rw [tsum_eq_single 0 (fun j hj => indicator_mode_zero j hj x hx)]
-  simp [physicalTerm]
 
 private theorem indicator_midpoint_mem :
     5 * Real.pi / 2 ∈ Ioc (2 * Real.pi) (3 * Real.pi) := by
@@ -220,7 +189,7 @@ private def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- SOURCE_ONLY.UNCOMPILED selector: F=0,hF=1. Two And-right edges,
+/- Selector: F=0,hF=1. Two And-right edges,
 then the inequality RHS and the multiplication RHS. No integral binder
 is entered. All original parameters are still universally quantified. -/
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -331,7 +300,7 @@ private def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- SOURCE_ONLY.UNCOMPILED selector: F=0,hF=1,AE x=2,mode j=3.
+/- Selector: F=0,hF=1,AE x=2,mode j=3.
 Filter.Eventually's predicate is fn/arg; enter its x body, then fn/arg
 selects Summable's function before its explicit default summation filter.
 Enter its j body. Two fn edges select exactly physicalTerm F,

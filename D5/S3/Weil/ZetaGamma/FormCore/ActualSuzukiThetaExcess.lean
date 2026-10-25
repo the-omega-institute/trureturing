@@ -1,9 +1,10 @@
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Actual originalPhysicalH6 / fullTheta excess supplier. No new worktree or
-compiler was started. This candidate reuses the existing physicalTerm,
-fullTheta and originalPhysicalH6 definitions. Every helper is consumed by
-the public suppliers. No theta-convergence or D-bound premise is added.
--/
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess
+   mirror-E: none(waiver:analytic-theta-excess-estimate)
+   anchors: []
+   utility: none
+   digest: Original physical H6 preserves the complete theta transform and bounds its sixth-moment excess. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 import Mathlib.Analysis.PSeries
