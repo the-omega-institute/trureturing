@@ -4,7 +4,7 @@
 
 A three-level block measurement has time-dependent two-classical dephasing statistics without mutual unbiasedness.
 
-The system and bath have coordinate types Fin d and Fin m. Matrices have complex entries, and CoeSort.coe displays the carrier of Matrix.unitaryGroup explicitly. Subtype.val gives the underlying matrix of V. The computational rank-one projectors are basisProjector j, and unitaryEvolution U X is UXUᴴ. Matrix.kroneckerMap with scalar multiplication forms the tensor product. Real times are embedded into the complex scalars by Complex.ofReal; the two casts of the natural dimension d are distinguished by their displayed types. Source line numbers refer to main.tex in arXiv:2211.02014v2.
+The system and bath have coordinate types Fin d and Fin m. Matrices have complex entries, and CoeSort.coe displays the carrier of Matrix.unitaryGroup explicitly. Subtype.val gives the underlying matrix of V. The computational rank-one projectors are basisProjector j, and unitaryEvolution U X is UXUᴴ. Matrix.kroneckerMap with scalar multiplication forms the tensor product. Real times are embedded into the complex scalars by Complex.ofReal; the two casts of the natural dimension d are distinguished by their displayed types. Source line numbers refer to dephasing-v2.tex in arXiv:2211.02014v2.
 
 **Definition 1.1 (The dephasing Hamiltonian).**
 
