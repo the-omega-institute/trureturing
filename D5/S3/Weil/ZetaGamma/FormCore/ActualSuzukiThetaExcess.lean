@@ -366,20 +366,5 @@ theorem actual_h6_physicalTerm_summable_ae
       (thetaExcessDensity_continuous 0).measurable.ennreal_ofReal.aemeasurable hden
   exact hac.ae_le hpoint
 
-/-- Literal fullTheta respects H6 source subtraction and complex scaling
-almost everywhere. No convergence or linearity premise is assumed. -/
-theorem actual_h6_fullTheta_sub_smul_ae
-    (F N : ℝ → ℂ) (hF : originalPhysicalH6 F) (hN : originalPhysicalH6 N) (c : ℂ) :
-    fullTheta (fun x => F x - c * N x) =ᵐ[volume.restrict (Ioi Real.pi)]
-      (fun x => fullTheta F x - c * fullTheta N x) := by
-  filter_upwards [actual_h6_physicalTerm_summable_ae F hF,
-    actual_h6_physicalTerm_summable_ae N hN] with x hFs hNs
-  calc
-    _ = ∑' j : ℕ, (physicalTerm F j x - c * physicalTerm N j x) := by
-      apply tsum_congr
-      intro j
-      dsimp [physicalTerm]
-      ring
-    _ = _ := (hFs.hasSum.sub (hNs.hasSum.mul_left c)).tsum_eq
 
 end D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample

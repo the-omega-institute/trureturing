@@ -90,47 +90,5 @@ internal sealed class ActualSuzukiThetaExcessDocument : IScribeDocumentDefinitio
                             + "the half-line has nonzero measure. Actual dependence uses "
                             + "zero and the same H6 interval indicator, distinguished by "
                             + "mode j=0 at x=5*pi/2."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-h6-full-theta-sub-smul-ae"),
-                DeclarationHandle.Create(Owner + "actual_h6_fullTheta_sub_smul_ae"),
-                H("Subtraction and complex scaling for the same full transform"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "For every F,N with originalPhysicalH6(F) and "
-                            + "originalPhysicalH6(N), and every complex c, the candidate "
-                            + "asserts fullTheta(x -> F(x)-c*N(x)) equal almost everywhere "
-                            + "on x>pi to x -> fullTheta(F)(x)-c*fullTheta(N)(x). "
-                            + "Both original functions, both H6 proofs and the arbitrary "
-                            + "complex scalar remain quantified in this one law. The "
-                            + "almost-everywhere convergence needed for the sum identity "
-                            + "is supplied by the preceding theorem.")),
-                    Paragraph(Text(
-                        "This identity is an organizational helper for subsequent "
-                            + "source subtraction. It does not present linearity alone "
-                            + "as new mathematical novelty. The substantive analytic "
-                            + "dependency is convergence and excess control from the "
-                            + "same original H6 source.")),
-                    Paragraph(Text(
-                        "The mirrored audit retains all F,N,hF,hN,c binders. It observes "
-                            + "only the first fullTheta(F) function on the right side; "
-                            + "the left transform and c*fullTheta(N) stay literal. "
-                            + "Replacing that operand by the constant-one function fails "
-                            + "with F=N=0 and c=0. Actual dependence again uses zero and "
-                            + "the H6 interval indicator: all modes j>=1 vanish for "
-                            + "x>=pi because the support is below 4*pi, so the complete "
-                            + "theta transform equals the indicator there and is one at "
-                            + "5*pi/2. This support calculation is an audit witness, not "
-                            + "a restriction on the theorem's arbitrary F and N.")),
-                    Paragraph(Text(
-                        "These are SOURCE_ONLY.UNCOMPILED candidates. Kernel and axiom "
-                            + "checks, full-law source reconstruction, selector binding "
-                            + "and required admission remain unresolved. The dependency "
-                            + "is intended for the original-source mean-zero Gamma lower "
-                            + "comparison; it gives no Gamma graph-domain conclusion "
-                            + "from H6, no complete Weil-energy sign and no proof of RH "
-                            + "or the Robin criterion."))),
                 DescribeRole.Theorem))));
 }
