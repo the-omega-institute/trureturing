@@ -11,9 +11,10 @@ import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Measurements.VisibleStateSpaceDimension
 
+/-! One finite qubit measurement generates a contextual one-copy pseudo-broadcastable subtheory. -/
+
 set_option autoImplicit false
 set_option maxRecDepth 4096
-set_option linter.style.header false
 set_option linter.style.longLine false
 noncomputable section
 open scoped BigOperators ComplexOrder
@@ -86,8 +87,7 @@ private lemma rho_density (j : Fin 4) : IsDensity (rho j) := by
   refine ⟨(Matrix.posSemidef_vecMulVec_self_star _).smul (by norm_num : (0 : ℝ) ≤ 1 / 10), ?_⟩
   fin_cases j <;>
     simp only [rho, Matrix.trace_fin_two, Matrix.smul_apply, Matrix.vecMulVec_apply,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, Pi.star_apply] <;>
-    norm_num [Complex.real_smul]
+      Pi.star_apply] <;> norm_num [Complex.real_smul]
 
 private lemma measurement_povm : IsPOVM measurement := by
   constructor
@@ -172,14 +172,14 @@ private lemma one_copy {d : ℕ} {t a : Set (Matrix (Fin d) (Fin d) ℂ)}
     e.sum_comp (fun j => x j j)
   have marginal (x : Matrix (Fin d) (Fin d) ℂ) (i : Fin 1) :
       partialTraceKeep i (ξ x) = x := by
-    have : IsEmpty {j : Fin 1 // j ≠ i} :=
-      ⟨fun j => j.2 (Subsingleton.elim _ _)⟩
+    have empty : Fintype.card {j : Fin 1 // j ≠ i} = 0 :=
+      Fintype.card_eq_zero_iff.mpr ⟨fun j => j.2 (Subsingleton.elim _ _)⟩
     ext a b
     change (∑ z : ({j : Fin 1 // j ≠ i} → Fin d),
       x (if h : (0 : Fin 1) = i then a else z ⟨0, h⟩)
         (if h : (0 : Fin 1) = i then b else z ⟨0, h⟩)) = x a b
     simp only [show (0 : Fin 1) = i from Subsingleton.elim _ _, dite_true,
-      Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_ofIsEmpty,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fun, empty,
       pow_zero, one_smul]
   refine ⟨ξ, tr, ?_, ?_⟩
   · intro i ρ hρ f hf
@@ -221,16 +221,14 @@ private lemma witness_relations :
     measurement 2 + measurement 3 = (1 / 2 : ℂ) • 1 := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp only [rho, measurement, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, Pi.star_apply] <;>
-    norm_num [Complex.real_smul]
+      Matrix.cons_val_zero, Pi.star_apply] <;> norm_num [Complex.real_smul]
 
 private lemma born_sum (j : Fin 4) :
     (rho j * measurement (![0, 0, 1, 1] j)).trace +
       (rho j * measurement (![2, 3, 2, 3] j)).trace = 17 / 20 := by
   fin_cases j <;>
     simp only [rho, measurement, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
-      Matrix.smul_apply, Matrix.vecMulVec_apply, Matrix.cons_val_zero, Matrix.cons_val_succ,
-      Pi.star_apply] <;> norm_num [Complex.real_smul]
+      Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply] <;> norm_num [Complex.real_smul]
 
 private lemma witness_contextual : ¬ Noncontextual preparations effects := by
   rintro ⟨ι, g, s, hn, hm, hr, ht, hb⟩
@@ -276,10 +274,12 @@ private lemma witness_contextual : ¬ Noncontextual preparations effects := by
     have h := corner_bound (μ 0 l).re (μ 1 l).re (μ 2 l).re (μ 3 l).re
       (r 0 l).re (r 2 l).re (hn' 0) (hn' 1) (hn' 2) (hn' 3) hrel (hr' 0) (hr' 2)
       (by linarith [hr' 1]) (by linarith [hr' 3])
-    convert h using 1 <;>
-      simp [Fin.sum_univ_succ, ix, iz, Complex.mul_re, Complex.add_re, hi, hx1, hy1] <;> ring
+    convert h using 1
+    simp [Fin.sum_univ_succ, ix, iz, Complex.mul_re, Complex.add_re, hi, hx1, hy1]
+    ring
   have total : HasSum (fun l => (μ 0 l).re + (μ 3 l).re) 2 := by
-    convert (Complex.hasSum_re (sums 0)).add (Complex.hasSum_re (sums 3)) using 1 <;> norm_num
+    convert (Complex.hasSum_re (sums 0)).add (Complex.hasSum_re (sums 3)) using 1
+    norm_num
   have score (j : Fin 4) :
       HasSum (fun l => (μ j l * (r (ix j) l + r (iz j) l)).re) (17 / 20 : ℝ) := by
     have h := (reproduce j (ix j)).add (reproduce j (iz j))
