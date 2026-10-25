@@ -122,6 +122,7 @@ private theorem physicalTerm_aestronglyMeasurable
     exact Set.indicator_of_mem hax F
   have hfc := hc.restrict.congr heq
   convert hfc.const_mul (((j + 1 : ℕ) : ℂ) ^ (4 : ℕ)) using 1
+  rfl
 
 private theorem physicalTerm_norm_sq (F : ℝ → ℂ) (j : ℕ) (x : ℝ) :
     ‖physicalTerm F j x‖ ^ 2 =
@@ -152,7 +153,6 @@ private theorem physicalTerm_h6
     rw [physicalTerm_norm_sq]
     dsimp [h, a]
     field_simp
-    <;> ring
   have hmeas := physicalTerm_aestronglyMeasurable F hF j
   have hsq : Integrable (fun x : ℝ => ‖physicalTerm F j x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := by
@@ -205,7 +205,6 @@ private theorem physicalTerm_excess_mass_le
     · rw [physicalTerm_norm_sq]
       dsimp [a]
       field_simp
-      <;> ring
     · dsimp [h]
       ring
   have htail_le :
@@ -229,7 +228,6 @@ private theorem physicalTerm_excess_mass_le
     _ = thetaModeCoefficient j ^ 2 * thetaExcessMass b F := by
       dsimp [thetaModeCoefficient, a]
       field_simp
-      <;> ring
 
 private theorem thetaModeCoefficient_summable : Summable thetaModeCoefficient := by
   have h : Summable (fun n : ℕ => ((n : ℝ) ^ (3 : ℕ))⁻¹) :=
