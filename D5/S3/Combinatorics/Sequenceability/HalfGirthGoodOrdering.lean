@@ -6,6 +6,7 @@
    utility: none
    digest: Rank-aware greedy ordering of original labels above half girth. -/
 
+
 import D5.S3.Combinatorics.Sequenceability.PairedZeroSubsetSpectrum
 import D5.S1.Words.Sequenceability.SeparatedPrefixReflection
 import Mathlib.Order.Interval.Finset.Nat
@@ -28,7 +29,7 @@ variable {X : Type u} {G : Type v} [Fintype X] [DecidableEq X] [AddCommGroup G]
 
 private def total (a : X → G) (w : List X) : G := (w.map a).sum
 
-private def prefix (a : X → G) (w : List X) (i : ℕ) : G := total a (w.take i)
+private def ps (a : X → G) (w : List X) (i : ℕ) : G := total a (w.take i)
 
 private theorem total_append (a : X → G) (u v : List X) :
     total a (u ++ v) = total a u + total a v := by
@@ -38,21 +39,21 @@ private theorem total_finset (a : X → G) {w : List X} (hw : w.Nodup) :
     total a w = ∑ x ∈ w.toFinset, a x := (List.sum_toFinset a hw).symm
 
 private theorem prefix_split (a : X → G) (w : List X) {i j : ℕ} (hij : i ≤ j) :
-    prefix a w i + total a ((w.drop i).take (j - i)) = prefix a w j := by
+    ps a w i + total a ((w.drop i).take (j - i)) = ps a w j := by
   have h := List.sum_take_add_sum_drop ((w.map a).take j) i
   simpa only [List.take_take, Nat.min_eq_left hij, List.drop_take,
-    List.take_map, List.drop_map, prefix, total] using h
+    ← List.map_take, ← List.map_drop, ps, total] using h
 
 private theorem prefix_ne_of_short (a : X → G) {K : ℕ}
     (hshort : ∀ u : List X, u.Nodup → 0 < u.length → u.length < K → total a u ≠ 0)
     {w : List X} (hw : w.Nodup) {i j : ℕ} (hij : i < j)
-    (hj : j ≤ w.length) (hK : j - i < K) : prefix a w i ≠ prefix a w j := by
+    (hj : j ≤ w.length) (hK : j - i < K) : ps a w i ≠ ps a w j := by
   intro he
   have hs := prefix_split a w hij.le
   have hlen : ((w.drop i).take (j - i)).length = j - i := by
     simp only [List.length_take, List.length_drop]
     omega
-  have hn := hshort ((w.drop i).take (j - i)) ((hw.drop i).take _)
+  have hn := hshort ((w.drop i).take (j - i)) hw.drop.take
     (by rw [hlen]; omega) (by rw [hlen]; exact hK)
   exact hn (by rw [← he] at hs; exact add_left_cancel (hs.trans (add_zero _).symm))
 
@@ -83,7 +84,7 @@ private theorem replacement_rank (a : X → G) {S A B : Finset X}
   have hd : Disjoint (S \ A) B := by
     apply Finset.disjoint_left.mpr
     intro x hx hxb
-    exact (Finset.mem_compl.mp (hB hxb)) (Finset.mem_of_mem_sdiff hx)
+    exact (Finset.mem_compl.mp (hB hxb)) (Finset.mem_sdiff.mp hx).1
   have hTn : T.Nonempty := by
     obtain ⟨x, hxS, hxA⟩ := Finset.exists_of_ssubset hA
     exact ⟨x, Finset.mem_union_left B (Finset.mem_sdiff.mpr ⟨hxS, hxA⟩)⟩
@@ -114,12 +115,12 @@ private theorem greedy_prefixes (a : X → G) (ha : Function.Injective a)
       (∑ x ∈ T, a x) = 0 → S.card ≤ T.card) :
     ∃ r : List X, r.Nodup ∧ r.toFinset = S ∧
       ∀ d, 0 < d → d < S.card → ∀ j, 0 < j → j ≤ c.length →
-        prefix a r d ≠ total a (c.drop (c.length - j)) := by
+        ps a r d ≠ total a (c.drop (c.length - j)) := by
   classical
   have build : ∀ d, d ≤ S.card → ∃ r : List X,
       r.Nodup ∧ r.toFinset ⊆ S ∧ r.length = d ∧
       ∀ e, 0 < e → e ≤ d → e < S.card → ∀ j, 0 < j → j ≤ c.length →
-        prefix a r e ≠ total a (c.drop (c.length - j)) := by
+        ps a r e ≠ total a (c.drop (c.length - j)) := by
     intro d
     induction d with
     | zero =>
@@ -166,13 +167,13 @@ private theorem greedy_prefixes (a : X → G) (ha : Function.Injective a)
             exact hcS (List.mem_toFinset.mpr (List.mem_of_mem_drop (List.mem_toFinset.mp hy)))
           have hrank := replacement_rank a hS hmin hAS (by simp) hB (by
             rw [Finset.sum_insert hxr, ← total_finset a hr,
-              ← total_finset a (hc.drop _)]
+              ← total_finset a hc.drop]
             simpa [add_comm] using he)
           have hBcard : (c.drop (c.length - j)).toFinset.card = j := by
-            rw [List.toFinset_card_of_nodup (hc.drop _), List.length_drop]
+            rw [List.toFinset_card_of_nodup hc.drop, List.length_drop]
             omega
           apply Finset.mem_image.mpr
-          exact ⟨j, Finset.mem_Icc.mpr ⟨by omega, hjc⟩, rfl⟩
+          exact ⟨j, Finset.mem_Icc.mpr ⟨by omega, hjc⟩, he.symm⟩
       obtain ⟨x, hxR, hx⟩ := next
       have hxr : x ∉ r := by
         simpa using (Finset.mem_sdiff.mp hxR).2
@@ -185,37 +186,36 @@ private theorem greedy_prefixes (a : X → G) (ha : Function.Injective a)
       · simpa using Finset.insert_subset (Finset.mem_sdiff.mp hxR).1 hrS
       · intro e he hed heK j hj hjc
         by_cases her : e ≤ d
-        · simpa only [prefix, List.take_append, hrd, Nat.sub_eq_zero_of_le her,
+        · simpa only [ps, List.take_append, hrd, Nat.sub_eq_zero_of_le her,
             List.take_zero, List.append_nil] using havoid e he her heK j hj hjc
         · have heq : e = d + 1 := by omega
           subst e
           have hlen : (r ++ [x]).length = d + 1 := by simp [hrd]
-          simpa only [prefix, ← hlen, List.take_length, total_append, total,
-            List.map_singleton, List.sum_singleton] using hx heK j hj hjc
+          simpa [ps, ← hlen, total] using hx heK j hj hjc
   obtain ⟨r, hr, hrS, hrl, havoid⟩ := build S.card (le_refl _)
   have hrEq : r.toFinset = S := Finset.eq_of_subset_of_card_le hrS (by
     rw [List.toFinset_card_of_nodup hr, hrl])
   exact ⟨r, hr, hrEq, fun d hd hdK j hj hjc => havoid d hd hdK.le hdK j hj hjc⟩
 
 private theorem prefix_append_left (a : X → G) (c t : List X) {i : ℕ}
-    (hi : i ≤ c.length) : prefix a (c ++ t) i = prefix a c i := by
-  simp [prefix, List.take_append, Nat.sub_eq_zero_of_le hi]
+    (hi : i ≤ c.length) : ps a (c ++ t) i = ps a c i := by
+  simp [ps, List.take_append, Nat.sub_eq_zero_of_le hi]
 
 private theorem prefix_append_right (a : X → G) (c t : List X) {i : ℕ}
     (hi : c.length ≤ i) :
-    prefix a (c ++ t) i = total a c + prefix a t (i - c.length) := by
-  simp [prefix, List.take_append, List.take_of_length_le hi, total_append]
+    ps a (c ++ t) i = total a c + ps a t (i - c.length) := by
+  simp [ps, List.take_append, List.take_of_length_le hi, total_append]
 
 /- The reversed greedy list makes the whole S block the sole zero interval.
-The equivalent prefix formulation includes all interval endpoints. -/
+The equivalent ps formulation includes all interval endpoints. -/
 private theorem sole_collision (a : X → G) {K : ℕ}
     (hshort : ∀ u : List X, u.Nodup → 0 < u.length → u.length < K → total a u ≠ 0)
     (c r : List X) (hw : (c ++ r.reverse).Nodup) (hrK : r.length = K)
     (hgap : c.length < K) (hrzero : total a r = 0)
     (havoid : ∀ d, 0 < d → d < K → ∀ j, 0 < j → j ≤ c.length →
-      prefix a r d ≠ total a (c.drop (c.length - j))) :
+      ps a r d ≠ total a (c.drop (c.length - j))) :
     ∀ i j, i < j → j ≤ (c ++ r.reverse).length →
-      prefix a (c ++ r.reverse) i = prefix a (c ++ r.reverse) j →
+      ps a (c ++ r.reverse) i = ps a (c ++ r.reverse) j →
       i = c.length ∧ j = (c ++ r.reverse).length := by
   intro i j hij hj he
   have hlen : (c ++ r.reverse).length = c.length + K := by simp [hrK]
@@ -234,28 +234,29 @@ private theorem sole_collision (a : X → G) {K : ℕ}
   have hvK : v ≤ K := by dsimp [v]; omega
   rw [prefix_append_left a c r.reverse hic.le,
     prefix_append_right a c r.reverse hjc'.le] at he
-  have hcs : prefix a c i + total a (c.drop i) = total a c := by
-    simpa [prefix] using prefix_split a c (j := c.length) hic.le
+  have hcs : ps a c i + total a (c.drop i) = total a c := by
+    simpa only [← List.map_take, ← List.map_drop, ps, total] using
+      List.sum_take_add_sum_drop (c.map a) i
   have htz : total a r.reverse = 0 := by simpa [total] using hrzero
-  have hts : prefix a r.reverse v + total a (r.reverse.drop v) = 0 := by
-    have h : prefix a r.reverse v + total a (r.reverse.drop v) = total a r.reverse := by
-      simpa only [prefix, total, List.take_map, List.drop_map] using
+  have hts : ps a r.reverse v + total a (r.reverse.drop v) = 0 := by
+    have h : ps a r.reverse v + total a (r.reverse.drop v) = total a r.reverse := by
+      simpa only [ps, total, ← List.map_take, ← List.map_drop] using
         List.sum_take_add_sum_drop (r.reverse.map a) v
     rwa [htz] at h
   have hcross : total a (c.drop i) = total a (r.reverse.drop v) := by
-    apply add_right_cancel (b := prefix a r.reverse v)
+    apply add_right_cancel (b := ps a r.reverse v)
     calc
-      total a (c.drop i) + prefix a r.reverse v = 0 := by
-        apply add_left_cancel (a := prefix a c i)
+      total a (c.drop i) + ps a r.reverse v = 0 := by
+        apply add_left_cancel (a := ps a c i)
         simpa only [add_assoc, add_zero, ← hcs] using he.symm
-      _ = total a (r.reverse.drop v) + prefix a r.reverse v := by
+      _ = total a (r.reverse.drop v) + ps a r.reverse v := by
         simpa only [add_comm] using hts.symm
-  have hrev : total a (r.reverse.drop v) = prefix a r (K - v) := by
-    simp [List.drop_reverse, prefix, total, hrK]
+  have hrev : total a (r.reverse.drop v) = ps a r (K - v) := by
+    simp [List.drop_reverse, ps, total, hrK]
   rw [hrev] at hcross
   by_cases hvfull : v = K
-  · have hz : total a (c.drop i) = 0 := by simpa [hvfull, prefix, total] using hcross
-    exact (hshort (c.drop i) (hc.drop i) (by simp; omega) (by simp; omega) hz).elim
+  · have hz : total a (c.drop i) = 0 := by simpa [hvfull, ps, total] using hcross
+    exact (hshort (c.drop i) hc.drop (by simp; omega) (by simp; omega) hz).elim
   · have hh := havoid (K - v) (by omega) (by omega) (c.length - i)
       (by omega) (by omega)
     exact (hh (by simpa only [show c.length - (c.length - i) = i by omega]
@@ -263,13 +264,13 @@ private theorem sole_collision (a : X → G) {K : ℕ}
 
 private theorem swap_prefix (a : X → G) (p q : List X) (c s : X) {i : ℕ}
     (hi : i ≠ p.length + 1) :
-    prefix a (p ++ s :: c :: q) i = prefix a (p ++ c :: s :: q) i := by
+    ps a (p ++ s :: c :: q) i = ps a (p ++ c :: s :: q) i := by
   by_cases hip : i ≤ p.length
   · rw [prefix_append_left a p _ hip, prefix_append_left a p _ hip]
   · have htwo : 2 ≤ i - p.length := by omega
     rw [prefix_append_right a p _ (by omega), prefix_append_right a p _ (by omega)]
     obtain ⟨n, hn⟩ : ∃ n, i - p.length = n + 2 := ⟨i - p.length - 2, by omega⟩
-    simp only [prefix, hn, List.take_succ_cons, total, List.map_cons, List.sum_cons]
+    simp only [ps, hn, List.take_succ_cons, total, List.map_cons, List.sum_cons]
     abel
 
 private theorem swapped_good (a : X → G) (ha : Function.Injective a) {K : ℕ}
@@ -278,7 +279,7 @@ private theorem swapped_good (a : X → G) (ha : Function.Injective a) {K : ℕ}
     (hK : q.length + 1 = K) (hgap : p.length + 1 < K)
     (hzero : total a (s :: q) = 0)
     (hsole : ∀ i j, i < j → j ≤ (p ++ c :: s :: q).length →
-      prefix a (p ++ c :: s :: q) i = prefix a (p ++ c :: s :: q) j →
+      ps a (p ++ c :: s :: q) i = ps a (p ++ c :: s :: q) j →
       i = p.length + 1 ∧ j = (p ++ c :: s :: q).length) :
     Good ((p ++ s :: c :: q).map a) := by
   have hperm : (p ++ s :: c :: q).Perm (p ++ c :: s :: q) :=
@@ -289,15 +290,19 @@ private theorem swapped_good (a : X → G) (ha : Function.Injective a) {K : ℕ}
     exact fun he => (List.nodup_cons.mp h).1 (by simp [he])
   have hlen : (p ++ s :: c :: q).length = p.length + 1 + K := by simp; omega
   have hnew : ∀ j, p.length + 1 < j → j ≤ (p ++ s :: c :: q).length →
-      prefix a (p ++ s :: c :: q) (p.length + 1) ≠ prefix a (p ++ s :: c :: q) j := by
+      ps a (p ++ s :: c :: q) (p.length + 1) ≠ ps a (p ++ s :: c :: q) j := by
     intro j hj hjw
     by_cases hjend : j = (p ++ s :: c :: q).length
     · subst j
       intro he
-      have hpref : prefix a (p ++ s :: c :: q) (p.length + 1) = total a p + a s := by
-        simp [prefix, List.take_append, total]
-      have hend : prefix a (p ++ s :: c :: q) (p ++ s :: c :: q).length =
-          total a p + a s + a c + total a q := by simp [prefix, total]; abel
+      have hpref : ps a (p ++ s :: c :: q) (p.length + 1) = total a p + a s := by
+        rw [prefix_append_right a p _ (by omega)]
+        simp [ps, total]
+      have hend : ps a (p ++ s :: c :: q) (p ++ s :: c :: q).length =
+          total a p + a s + a c + total a q := by
+        rw [show ps a (p ++ s :: c :: q) (p ++ s :: c :: q).length =
+          total a (p ++ s :: c :: q) by simp [ps]]
+        simp [total, add_assoc]
       rw [hpref, hend] at he
       have hz : a s + total a q = 0 := by simpa [total] using hzero
       have heq : a c = a s := by
@@ -313,9 +318,9 @@ private theorem swapped_good (a : X → G) (ha : Function.Injective a) {K : ℕ}
   apply (D5.S1.Words.Sequenceability.SeparatedPrefixReflection.good_iff _).mpr
   intro i j hij hj he
   have hjw : j ≤ (p ++ s :: c :: q).length := by simpa using hj
-  have he' : prefix a (p ++ s :: c :: q) i = prefix a (p ++ s :: c :: q) j := by
-    simpa [D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref, prefix, total,
-      List.take_map] using he
+  have he' : ps a (p ++ s :: c :: q) i = ps a (p ++ s :: c :: q) j := by
+    simpa [D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref, ps, total,
+      ← List.map_take] using he
   by_cases hi : i = p.length + 1
   · subst i
     exact (hnew j hij hjw he').elim
@@ -349,28 +354,29 @@ theorem exists_good_order (a : X → G) (ha : Function.Injective a)
     have hSm : S.card ≤ Fintype.card X := Finset.card_le_univ S
     have hshort := short_of_minimum a hSm hmin
     let c := Sᶜ.toList
-    have hclen : c.length = Fintype.card X - S.card := by simp [c]
+    have hclen : c.length = Fintype.card X - S.card := by simp [c, Finset.card_compl]
     have hgap : c.length < S.card := by omega
-    obtain ⟨r, hr, hrS, hav⟩ := greedy_prefixes a ha S c (by simp [c])
+    obtain ⟨r, hr, hrS, hav⟩ := greedy_prefixes a ha S c (Finset.nodup_toList _)
       (by simp [c]) hgap hS.2.2 hmin
     have hrlen : r.length = S.card := by
       rw [← List.toFinset_card_of_nodup hr, hrS]
     have hrzero : total a r = 0 := by rw [total_finset a hr, hrS]; exact hS.2.2
     have hw : (c ++ r.reverse).Nodup := by
       apply List.nodup_append.mpr
-      refine ⟨by simp [c], hr.reverse, ?_⟩
+      refine ⟨Finset.nodup_toList _, List.nodup_reverse.mpr hr, ?_⟩
       intro x hxc y hyr hxy
       subst y
       have hxr := hyr
       have hxS : x ∈ S := by rw [← hrS]; simpa using hxr
       exact (Finset.mem_compl.mp (by simpa [c] using hxc)) hxS
     have hinventory : (c ++ r.reverse).toFinset = univ := by
-      simp [c, hrS, Finset.compl_union_self]
+      simp only [List.toFinset_append, List.toFinset_reverse, c, Finset.toFinset_toList, hrS]
+      exact Finset.compl_union_self S
     have hsole := sole_collision a hshort c r hw hrlen hgap hrzero hav
     have hcne : c ≠ [] := by
       intro he
       have hc0 : Sᶜ = ∅ := by simpa [c] using congrArg List.toFinset he
-      exact hS.2.1 (Finset.compl_eq_empty_iff.mp hc0)
+      exact hS.2.1 (compl_eq_bot.mp hc0)
     obtain ⟨x, p', hcx'⟩ := List.exists_cons_of_ne_nil
       (show c.reverse ≠ [] by simpa using hcne)
     let p := p'.reverse
@@ -411,9 +417,9 @@ theorem exists_good_order (a : X → G) (ha : Function.Injective a)
     by_contra hp
     have hlen : ((univ : Finset X).toList.map a).length = Fintype.card X := by simp
     have hd : j - i < Fintype.card X := by omega
-    apply prefix_ne_of_short a hshort (Finset.nodup_toList _) hij (by simpa using hj) hd
-    simpa [D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref, prefix, total,
-      List.take_map] using he
+    apply prefix_ne_of_short a hshort (Finset.nodup_toList _) hij (by simpa only [List.length_map] using hj) hd
+    simpa [D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref, ps, total,
+      ← List.map_take] using he
 
 end
 end D5.S3.Combinatorics.Sequenceability.HalfGirthGoodOrdering
