@@ -4478,7 +4478,7 @@ Since $F$ is an isometry, $\|Z\|=\|X\|$. Combining with (24.9),
 
 $$
 \|K-ihB\|\le\|H-hI_3\|+\|Z\|
- \le(9437184+7)b<10000000b.
+ \le(9437184+7)b\le10000000b.
 \tag{24.22}
 $$
 
@@ -4497,7 +4497,7 @@ By (24.4), $b\le270001\delta$, and the coefficient is at most
 
 $$
 (20000000\cdot270001+270000)\delta
- =5400020270000\delta<6000000000000\delta.
+ =5400020270000\delta\le6000000000000\delta.
 \tag{24.24}
 $$
 
