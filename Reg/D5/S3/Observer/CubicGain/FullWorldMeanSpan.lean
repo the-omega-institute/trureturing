@@ -60,7 +60,7 @@ def source_registration : Registration arena (type_of% @full_world_mean_span) wh
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@full_world_mean_span) (Realization signature) Type Unit := {
+      (@full_world_mean_span) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Observer.CubicGain.FullWorldMeanSpan.full_world_mean_span.__information_unit
   realizationName := `Reg.D5.S3.Observer.CubicGain.FullWorldMeanSpan.source_registration
   realizationSource := none
@@ -76,7 +76,7 @@ def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some OriginalWorld
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Observer.CubicGain.FullWorldMeanSpan
     definition := none
