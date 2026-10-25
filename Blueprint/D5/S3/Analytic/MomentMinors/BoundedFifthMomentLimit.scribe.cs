@@ -100,7 +100,10 @@ internal sealed class BoundedFifthMomentLimitDocument : IScribeDocumentDefinitio
                         + "everywhere for ν. Applying the lower inequality to ν at −U and using "
                         + "mean ν − (−U) = U − mean μ yields the upper inequality for μ. "
                         + "The two implications give the stated conjunction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("meer-weeks-2024-bounded-fifth-moment-limit"),
+                    ResolutionKind.Proved)))));
 
     private static Formula FifthBoundFormula() => All("z", Reals(),
         Equal(Typed(At(Local("fifthBound"), X("z")), Reals()),
