@@ -118,19 +118,22 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
         Matrix.blockDiagonal_apply]
   ext i j
   unfold assemblage
-  simp only [LinearMap.coe_mk, AddHom.coe_mk]
-  rw [partialTraceLeft]
-  simp_rw [partialTraceRight, hcontrolled]
-  simp only [Matrix.mul_apply]
+  simp only [LinearMap.coe_mk, AddHom.coe_mk, Matrix.reindex_apply]
+  unfold partialTraceLeft
+  simp only [Matrix.mul_apply, Matrix.kroneckerMap_apply]
+  unfold partialTraceRight
+  simp only [Matrix.submatrix_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
+  simp only [hcontrolled]
   fin_cases a <;> fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    simp [measurement, D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
-      Matrix.blockDiagonal_apply, rotationY, Matrix.mul_apply,
+    with_unfolding_all simp [measurement,
+      D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
+      Matrix.blockDiagonal_apply, rotationY, Matrix.mul_apply, Matrix.one_apply,
       Matrix.reindex_apply, Matrix.submatrix_apply,
       Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
       D5.S3.QuantumBounds.CHSHWitness.bellDensity,
       D5.S3.QuantumBounds.CHSHWitness.bellVector,
       D5.S3.Quantum.QubitWitnesses.bellCoefficients, qubitX, qubitZ,
-      Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, Matrix.conjTranspose_apply,
+      Matrix.vecMulVec_apply, -Matrix.cons_mul, Matrix.conjTranspose_apply,
       Complex.conj_ofReal,
       D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self,
       -Complex.ofReal_cos, -Complex.ofReal_sin] <;> ring
