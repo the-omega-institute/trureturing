@@ -161,7 +161,7 @@ private theorem source_unitary_add {f g : ℝ → ℂ}
   have hraw :
       𝓕 (fun t => f t + g t) (-ξ / (2 * Real.pi)) =
         𝓕 f (-ξ / (2 * Real.pi)) + 𝓕 g (-ξ / (2 * Real.pi)) := by
-    simpa only [Real.fourier_eq, Pi.add_apply] using congrFun
+    exact congrFun
       (VectorFourier.fourierIntegral_add (L := innerₗ ℝ)
         Real.continuous_fourierChar continuous_inner hf hg)
       (-ξ / (2 * Real.pi))
@@ -593,7 +593,7 @@ theorem actual_bare_quarter_even_zero_domain_and_identity
       add_comm (1 / 4 : ℝ)] using hS₀
   have hH : (D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.actualHankel (1 / 4) u).re =
       ∑' n : ℕ, L n := by
-    rw [hH₀]
+    rw [hH₀, ← Complex.ofReal_tsum, Complex.ofReal_re]
     apply tsum_congr
     intro n
     simp [L, D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace, add_comm]
@@ -685,6 +685,9 @@ private theorem actual_bare_quarter_cross_integrable
   apply ((hA.add hB).div_const 2).mono'
     ((hw.mul (Complex.continuous_conj.comp_aestronglyMeasurable hF)).mul hFm)
   exact Eventually.of_forall fun ξ => by
+    change ‖(actualBareQuarterWeight ξ : ℂ) *
+      (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
+        unitarySourceFourier (zeroExtension u) (-ξ)‖ ≤ (A ξ + B ξ) / 2
     simp only [norm_mul, Complex.norm_conj, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (actual_bare_quarter_nonneg ξ)]
     dsimp [A, B]
