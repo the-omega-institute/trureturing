@@ -67,7 +67,7 @@ inductive Occurs : Expr k m → Address → Nat → Fin m → Prop
   | left {A B p a x} : Occurs A p a x → Occurs (.pair A B) (false :: p) a x
   | right {A B p a x} : Occurs B p a x → Occurs (.pair A B) (true :: p) a x
 
-private theorem occurrence_value (mode : Fin k → Bool) (param : Fin k → Nat)
+theorem occurrence_value (mode : Fin k → Bool) (param : Fin k → Nat)
     (v : Fin m → CompletionTree) {A : Expr k m} {p : Address} {a : Nat} {x : Fin m}
     (h : Occurs A p a x) : subtree p (value mode param v A) = some (rho^[a] (v x)) := by
   induction h with
