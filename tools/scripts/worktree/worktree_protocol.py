@@ -30,7 +30,9 @@ GIT_TERMINATION_GRACE_SECONDS = 30
 SCOPED_GIT_CONFIG = (("core.fsmonitor", ""), ("maintenance.auto", "false"), ("gc.auto", "0"))
 SCOPED_PROCESS_ENVIRONMENT = {"MSBUILDDISABLENODEREUSE": "1",
                               "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
-                              "UseSharedCompilation": "false"}
+                              "UseSharedCompilation": "false",
+                              "UseRazorBuildServer": "false",
+                              "_RazorForceBuildServer": "false"}
 
 
 def scope_fds():
@@ -277,7 +279,8 @@ def native_lock_holders(path):
     inspector = shutil.which("lsof")
     if inspector:
         result = subprocess.run([inspector, "-nP", "-F", "p", "--", str(path)],
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30,
+                                env=git_environment())
         if result.stderr or result.returncode not in (0, 1):
             raise OSError("incomplete lsof inspection")
         rows = result.stdout.decode("ascii").splitlines()
