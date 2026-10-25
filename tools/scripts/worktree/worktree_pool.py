@@ -192,7 +192,7 @@ def pr_evidence(path, number):
     return evidence
 
 
-def unused_base(source, branch, head):
+def unused_base(source, path, branch, head):
     """Creation and claim both create the task ref at the allocated base."""
     if not branch.startswith("refs/heads/"):
         raise Refused("return_current_branch_required")
@@ -200,20 +200,43 @@ def unused_base(source, branch, head):
     try:
         if log.is_symlink():
             raise ValueError("linked branch log")
-        rows = log.read_bytes().splitlines()
+        raw = log.read_bytes()
+        if not raw.endswith(b"\n"):
+            raise ValueError("incomplete branch log")
+        rows = raw[:-1].split(b"\n")
         records = [re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
-                                rb".+ -?[0-9]+ [+-][0-9]{4}\t.*", row) for row in rows]
+                                rb"[^<>\n]+ <[^<>\n]*> ([0-9]+) [+-][0-9]{4}\t.*", row) for row in rows]
         if not records or not all(records):
             raise ValueError("missing or malformed branch log")
         base = records[0][2]
         if records[0][1] != b"0" * len(base):
             raise ValueError("missing branch creation")
+        if any(previous[2] != current[1] for previous, current in zip(records, records[1:])):
+            raise ValueError("discontinuous branch log")
     except (OSError, ValueError) as error:
         raise Refused("unused_allocation_unknown") from error
-    # Checking every retained transition also refuses commit-then-reset histories.
     if (base.decode("ascii") != head or any(record[2] != base for record in records)
             or any(record[1] != base for record in records[1:])):
         raise Refused("unused_task_commits_require_pr")
+    try:
+        now = int(time.time())
+        created = int(records[0][3])
+        cutoff = now - 30 * 86400
+        # A retained creation can outlive selectively expired task transitions.
+        # Bound freshness by every configured policy rather than reimplementing
+        # Git's ref-pattern matching. Unmatched patterns only tighten this bound.
+        for root in {Path(source).resolve(), Path(path).resolve()}:
+            configured = git(root, "config", "--null", "--type=expiry-date", "--get-regexp",
+                             r"^gc\..*reflogexpire(unreachable)?$", check=False)
+            if configured.returncode not in (0, 1):
+                raise ValueError("unresolvable expiry policy")
+            if configured.returncode == 0:
+                for entry in configured.stdout.rstrip(b"\0").split(b"\0"):
+                    cutoff = max(cutoff, int(entry.rsplit(b"\n", 1)[1]))
+        if created <= cutoff or any(not created <= int(record[3]) <= now for record in records):
+            raise ValueError("expired or invalid branch evidence")
+    except (OSError, ValueError, IndexError, subprocess.SubprocessError) as error:
+        raise Refused("unused_allocation_unknown") from error
     return base.decode("ascii")
 
 
@@ -246,14 +269,6 @@ def returned_snapshot(options):
         _, metadata = identity(options.source, path)
         branch = git_scope(stack, options.source, path)
         evidence = pr_evidence(path, options.pr) if options.pr is not None else None
-        allocation_base = None
-        if evidence is None:
-            clean(path, metadata)
-            allocation_base = unused_base(options.source, branch, value(path, "rev-parse", "HEAD"))
-        endpoint = remote_endpoint(path, "origin", push=True)
-        remote = confirm(path, "origin", "dev",
-                         evidence["mergeCommit"]["oid"] if evidence else allocation_base, endpoint)
-        dev = remote["observed_tip"]
         already = False
         if idle_reference(branch):
             try:
@@ -262,6 +277,16 @@ def returned_snapshot(options):
             except Refused as error:
                 if str(error) != "not_idle":
                     raise
+        allocation_base = None
+        if evidence is None:
+            clean(path, metadata)
+            if already:
+                raise Refused("unused_return_already_idle")
+            allocation_base = unused_base(options.source, path, branch, value(path, "rev-parse", "HEAD"))
+        endpoint = remote_endpoint(path, "origin", push=True)
+        remote = confirm(path, "origin", "dev",
+                         evidence["mergeCommit"]["oid"] if evidence else allocation_base, endpoint)
+        dev = remote["observed_tip"]
         task = "refs/heads/" + evidence["headRefName"] if evidence else branch
         if already:
             idle_state(options.source, path, dev)

@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 from unittest.mock import patch
 import uuid
 
@@ -95,6 +96,79 @@ class IdlePoolCases:
         self.g(self.tree, "reflog", "expire", "--expire=all", "refs/heads/" + self.branch)
         self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def unused_history(self, creation_age, commit_age=None, reset_age=None):
+        self.g(self.tree, "switch", "--detach", self.base)
+        self.g(self.tree, "branch", "-D", self.branch)
+        now = int(time.time())
+        def dated(age, *args):
+            with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(now - age * 86400) + " +0000"):
+                self.g(self.tree, *args)
+        dated(creation_age, "switch", "-c", self.branch, self.base)
+        if commit_age is not None:
+            (self.tree / "owned").write_text("task commit\n")
+            dated(commit_age, "commit", "-am", "Task")
+            dated(reset_age, "reset", "--hard", self.base)
+
+    def pool_unused_return_refuses_selectively_expired_task_history(self):
+        self.unused_history(40, 40, 40)
+        reference = "refs/heads/" + self.branch
+        self.g(self.tree, "reflog", "expire", reference)
+        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+        self.assertEqual(["branch: Created from " + self.base], rows)
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_refuses_partially_expired_creation(self):
+        self.unused_history(100, 100, 0)
+        reference = "refs/heads/" + self.branch
+        self.g(self.tree, "reflog", "expire", "--expire=90.days.ago", "--expire-unreachable=never", reference)
+        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+        self.assertEqual(["reset: moving to " + self.base], rows)
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_refuses_discontinuous_history(self):
+        self.unused_history(0, 0, 0)
+        self.g(self.tree, "reflog", "delete", "refs/heads/" + self.branch + "@{1}")
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_refuses_already_idle_without_pr(self):
+        self.unused_return()
+        reference = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+        self.assertIn("unused_return_already_idle", self.unused_return(expect=73).stderr)
+        self.assertEqual(reference, self.g(self.tree, "symbolic-ref", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+
+    def pool_unused_return_obeys_configured_expiry_bounds(self):
+        for key in ("gc.reflogExpireUnreachable", "gc.reflogExpire",
+                    "gc.refs/heads/lane/*.reflogExpireUnreachable",
+                    "gc.refs/heads/elsewhere/*.reflogExpireUnreachable"):
+            with self.subTest(key=key):
+                self.unused_history(2)
+                self.g(self.tree, "config", key, "1 day ago")
+                self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+                self.g(self.tree, "config", "--unset", key)
+
+    def pool_unused_return_refuses_unresolvable_expiry(self):
+        self.g(self.tree, "config", "gc.refs/heads/*.reflogExpireUnreachable", "not-an-expiry")
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+
+    def pool_unused_return_accepts_disabled_expiry_settings(self):
+        for setting in ("never", "false"):
+            with self.subTest(setting=setting):
+                self.unused_history(2)
+                self.g(self.tree, "config", "gc.reflogExpireUnreachable", setting)
+                self.g(self.tree, "config", "gc.refs/heads/*.reflogExpireUnreachable", setting)
+                self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
+
+    def pool_unused_return_accepts_internal_cr_in_identity(self):
+        with patch.dict(os.environ, GIT_COMMITTER_NAME="Protocol\rTests"):
+            self.unused_history(0)
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        self.assertIn(b"Protocol\rTests <", log.read_bytes())
+        self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
 
     def pool_unused_return_requires_remote_dev_retention(self):
         (self.main / "owned").write_text("unpublished base\n")
