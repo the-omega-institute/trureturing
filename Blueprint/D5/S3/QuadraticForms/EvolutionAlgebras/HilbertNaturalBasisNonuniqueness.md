@@ -80,6 +80,10 @@ $$\neg \left(\left(\forall A \in Type,\; [\operatorname{NormedAddCommGroup}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kaygorodov-martin-gonzalez-viruel-2026-hilbert-natural-basis-uniqueness` (refuted) by `D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kaygorodov-martin-gonzalez-viruel-2026-hilbert-natural-basis-uniqueness","declaration_gid":"D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
