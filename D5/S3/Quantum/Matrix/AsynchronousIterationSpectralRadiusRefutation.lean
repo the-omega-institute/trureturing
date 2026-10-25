@@ -95,7 +95,7 @@ private theorem base_spectrum :
     have hshift : z - 1 / 2 ∈ spectrum ℂ (A - algebraMap ℂ _ (1 / 2)) := by
       have hh := (spectrum.add_mem_iff (a := A) (r := z - 1 / 2) (s := 1 / 2)).mp
         (by simpa only [sub_add_cancel] using hz)
-      convert hh using 1 <;> abel_nf
+      simpa only [neg_add_eq_sub] using hh
     have hpow := spectrum.pow_mem_pow _ 2 hshift
     rw [hsquare, spectrum.zero_eq] at hpow
     exact Set.mem_singleton_iff.mpr (sub_eq_zero.mp (eq_zero_of_pow_eq_zero hpow))
@@ -105,7 +105,11 @@ private theorem base_spectrum :
     rw [← neg_sub A, neg_sq, hsquare]
 
 private theorem base_radius : radius baseMatrix = ENNReal.ofReal (1 / 2) := by
-  sorry
+  unfold radius
+  rw [spectralRadius_eq_of_unital, base_spectrum]
+  simp only [Set.mem_singleton_iff, iSup_iSup_eq_left]
+  convert (ENNReal.ofReal_coe_nnreal (p := ‖(1 / 2 : ℂ)‖₊)).symm using 1 <;>
+    norm_num [coe_nnnorm, norm_div]
 
 private theorem witness_admissible : Admissible 2 sizes 1 baseMatrix delays (1 / 2) := by
   sorry
