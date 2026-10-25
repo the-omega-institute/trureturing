@@ -705,7 +705,9 @@ private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
   obtain ⟨I, J, hIJ⟩ := h 2 0
   have he := (hIJ.2.2 rho).1
-  norm_num [zeroReadout, realize, degree, copies, stateMatrix] at he
+  have hd : degree (0 : Exponent) = 0 := by simp [degree]
+  simp only [hd] at he
+  norm_num [zeroReadout, realize, copies, stateMatrix, Matrix.one_apply] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨rho, 0, coordinateExponent 0 0, ?_⟩
@@ -851,13 +853,13 @@ private theorem bridge : (type_of% total_hamiltonian_diagonal) ↔ arena.Law act
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
   have he := congrArg (fun X => X (1 : Fin 3) (1 : Fin 3)) (h 2 1)
-  norm_num [zeroReadout, realize, totalEnergy, energy] at he
+  norm_num [zeroReadout, realize, totalEnergy, energy, Matrix.zero_apply, Matrix.diagonal_apply] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 2, 3, ?_⟩
   intro h
   have he := congrArg (fun X => X (2 : Fin 3) (2 : Fin 3)) h
-  norm_num [actual, readoutFunction, realize, totalHamiltonian, energy] at he
+  norm_num [actual, readoutFunction, realize, totalHamiltonian, energy, Matrix.diagonal_apply] at he
 
 def family : Registration arena (type_of% total_hamiltonian_diagonal) where
   actual := actual
