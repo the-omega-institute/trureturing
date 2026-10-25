@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:500306ef3a8e0a49f1f849e5f0d36d1e08f4a8685c36f8e01f77a5f5418e427d
+  normalized_sha256: sha256:500306ef3a8e0a49f1f849e5f0d36d1e08f4a8685c36f8e01f77a5f5418e427d
+cas_ref: sha256:500306ef3a8e0a49f1f849e5f0d36d1e08f4a8685c36f8e01f77a5f5418e427d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.two_step_adaptive_residue_identification
+    target_statement_id: sha256:f9ba922bc1baa225ff2a91cfe643391ab3b4f270c3c4a37bd6f4be6fd4956b7a
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/AdaptiveEarlyStopping.expected_experiment_count_eq_one_add
+    target_statement_id: sha256:d12e8e7dc66ab6806104786845d8462d6cb6a00da754b993321b2ec6aea73bcb
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/AdaptiveEarlyStopping.expected_experiment_count_lt_two
+    target_statement_id: sha256:43b1855f2098b55bdf662e647c66554bb96c7460b8c13d8ce425f92e46e814f5
+receipts:
+  unresolved_subitems: []

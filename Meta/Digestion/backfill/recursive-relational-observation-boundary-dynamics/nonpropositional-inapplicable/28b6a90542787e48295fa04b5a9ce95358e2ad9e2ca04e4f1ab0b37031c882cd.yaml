@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:28b6a90542787e48295fa04b5a9ce95358e2ad9e2ca04e4f1ab0b37031c882cd
+  normalized_sha256: sha256:28b6a90542787e48295fa04b5a9ce95358e2ad9e2ca04e4f1ab0b37031c882cd
+cas_ref: sha256:28b6a90542787e48295fa04b5a9ce95358e2ad9e2ca04e4f1ab0b37031c882cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition of the uniform-completion label: the displayed norm limit is the proposed predicate, not an assertion that a projection sequence satisfies it.'
+    previous_atom_id: 2cb2c4673c3c2c18dd362fb16af1018659bdd95d9a0379332fdbb9a64a476bcd
+    next_atom_id: 093725034a411e7c9a6f6de59ad4a42ff5a9582f83884229178bbd5eb1810c4c
