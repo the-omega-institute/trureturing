@@ -87,7 +87,7 @@ private theorem pulse_charge (g p : ℕ) (hg : 2 ≤ g) (hp : 6 ≤ p)
         omega
       simp [extendedBit, inside, absent]
 
-private theorem zero_script (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
+theorem zero_script (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
     (short : m < k) (n : ℕ) (words : List (Fin m → Bool))
     (v : ZMod 2) (phase : ZMod (k+1)) (s : ℕ) (hs : s < k) :
     scriptArchive (List.replicate n (fun _ : Fin m => false) ++ words)
