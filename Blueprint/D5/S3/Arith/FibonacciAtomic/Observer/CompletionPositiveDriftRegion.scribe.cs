@@ -6,6 +6,14 @@ internal sealed class CompletionPositiveDriftRegionDocument : IScribeDocumentDef
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "CompletionPositiveDriftRegion", H("Exact positive-drift completed region split"), Blocks(
+            Describe.Lean(DescribeId.Create("omega-not-finite"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.omega_not_finite"),
+                H("The leafless completed tree has no finite source"),
+                StatementSource.FromAuthor(Disp(Seq(Neg, Sp,
+                    Par(Call("IsFinite", Call("Omega")))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Omega is fixed by the native substitution rho. If it were the embedding of a finite source t, injectivity of the embedding would make t fixed by substitution. The finite clock kappa increases by one under substitution, so no such finite source exists. This excludes Omega both from the finite region alternative and from finite canonical derivations."))
+                ), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("positive-drift-region-split"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.positive_drift_region_split"),
                 H("A positive cycle forces its whole forward region to be atomic or leafless"), Statement(),
