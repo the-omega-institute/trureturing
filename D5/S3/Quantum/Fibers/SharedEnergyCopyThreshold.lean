@@ -258,7 +258,7 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
         (1/3 : ℂ)^(alpha 2 2) * ((1/12 : ℂ)^(alpha 0 2))^2 *
         ((1/12 : ℂ)^(alpha 1 2))^2) * z) hp
     simp only [one_div, mul_one, pow_two] at hc
-    simpa only [mul_assoc, mul_left_comm, mul_comm] using hc.symm
+    convert hc.symm using 1 <;> (simp only [one_div]; ring)
   · by_cases hz₀ : alpha 0 1 = 0
     · have hz₁ : alpha 1 0 ≠ 0 := fun h => hz ⟨hz₀,h⟩
       simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₁]
