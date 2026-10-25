@@ -168,7 +168,8 @@ attribution is separate from the mathematical evidence.
 The scoped build of `D5.S3.Analytic.KarpZhangCatalanPower.Result` and
 `D5.S3.Analytic.KarpZhangConjecture.Result` checks the settlement and the
 consumer closure of the shared Abel declarations. The axiom closure of
-every public theorem of the three Catalan-power modules is contained in
+every public theorem of the Catalan-power settling module
+`D5.S3.Analytic.KarpZhangCatalanPower.Result` is contained in
 $\{\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}\}$.
 Local compilation is distinct from freezing, publication and required CI.
 No numerical computation is used as proof evidence.
@@ -218,6 +219,6 @@ are unverified. The source and literature checks supplied in the
 preregistration are coordinating-line evidence, not a new online search
 by this offline implementation seat. The producer attribution is supplied
 by that line. Four-slot escape registrations for the newly authored public
-theorems of the Catalan-power modules are not completed; their proofs do
-not constitute those registrations. This audit boundary is associated with
+theorems of `D5.S3.Analytic.KarpZhangCatalanPower.Result` are not completed;
+their proofs do not constitute those registrations. This audit boundary is associated with
 preregistration #21083 and requires the corresponding owner registrations.

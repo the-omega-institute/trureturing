@@ -25,7 +25,12 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/KarpZhangCatalanPower/Result.delta"),
                 H("The finite Turanian coefficient"), StatementSource.FromAuthor(DeltaFormula()),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The coefficient a is Coeff.a, the literal quotient (t) rising factorial 2k divided by (t+1) rising factorial k times k factorial. The finite sum is the degree-m Cauchy coefficient; neither convergence nor growth assumptions on h are needed."))),
+                Blocks(Paragraph(Text("Printed page 8: “Forming the generalized Turánian”")),
+                    new DocumentBlock.DisplayFormula(SourceTuranian()),
+                    Paragraph(Text("“we will have”")),
+                    new DocumentBlock.DisplayFormula(SourceCoefficient()),
+                    new DocumentBlock.DisplayFormula(SourceKernel()),
+                    Paragraph(Text("The coefficient a is Coeff.a, the literal quotient (t) rising factorial 2k divided by (t+1) rising factorial k times k factorial. Expanding the displayed M_k distributes 1/(k!(m-k)!) over its two products; each product is exactly Coeff.a k at its first shifted parameter times Coeff.a (m-k) at its second shifted parameter. Multiplication by h(k)h(m-k) and summation for k=0,...,m gives the Lean range (m+1) sum, with the same subtraction order. The source series starts at m=2; the finite definition also includes the vanishing degrees zero and one. Neither convergence nor growth assumptions on h are needed."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("karp-zhang-catalan-claim"),
                 DeclarationHandle.Create("D5/S3/Analytic/KarpZhangCatalanPower/Result.claim"),
@@ -39,11 +44,52 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 H("Both signs hold in every degree"), StatementSource.FromAuthor(Disp(F.Id("claim"))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The index law makes the full kernel sum zero. The positive derivative generator and reflected-interval cancellation give nonnegative central tails, including mu=0. The generic Abel identity KarpZhangReciprocal.Result.abel_layers writes delta as the increments of h(k)h(m-k) times these tails.")),
-                    Paragraph(Text("For log-concavity, KarpZhangReciprocal.Result.balanced_step makes the increments nonnegative. For log-convexity, a zero at index one propagates to every positive index. Otherwise all entries are positive, the adjacent inequalities make successive ratios increase, and the balanced products decrease. Thus their increments are nonpositive. This includes finite and singleton log-concave supports and the log-convex sequence supported only at zero. The central term is counted once and the degrees zero and one require no special assumption."))),
+                    Paragraph(Text("For log-concavity, KarpZhangReciprocal.Result.balanced_step makes the increments nonnegative. For log-convexity, a zero at index one propagates to every positive index. Otherwise all entries are positive, the adjacent inequalities make successive ratios increase, and the balanced products decrease. The increments for q ≥ 1 are nonpositive; the q = 0 contribution vanishes because the full tail is zero. This includes finite and singleton log-concave supports and the log-convex sequence supported only at zero. The central term is counted once and the degrees zero and one require no special assumption."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("karp-zhang-2023-conjecture-4-2"),
                     ResolutionKind.Proved)))));
+
+    private static Formula SourceTuranian()
+    {
+        Formula x = F.Id("x");
+        Formula m = F.Id("m");
+        Formula h = F.Id("h");
+        Formula coefficient = new Formula.Subscript(DeltaLower, m);
+        Formula series(Formula t) => Seq(h, Open, t, Semi, Sp, x, Close);
+        return Seq(Equal(Seq(new Formula.Subscript(Delta, h), Open,
+                    Alpha, Comma, Sp, Beta, Semi, Sp, x, Close),
+                Subtract(Multiply(series(Add(Mu, Alpha)), series(Add(Mu, Beta))),
+                    Multiply(series(Mu), series(Add(Add(Mu, Alpha), Beta))))),
+            Eq, Seq(Sum, Underscore, Grp(m, Eq, Num(2)), Caret, Grp(Infty), Sp,
+                coefficient, Sp, new Formula.Power(x, m)));
+    }
+
+    private static Formula SourceCoefficient()
+    {
+        Formula m = F.Id("m");
+        Formula k = F.Id("k");
+        return Equal(new Formula.Subscript(DeltaLower, m),
+            Seq(Sum, Underscore, Grp(k, Eq, Num(0)), Caret, Grp(m), Sp,
+                new Formula.Subscript(F.Id("h"), k), Sp,
+                new Formula.Subscript(F.Id("h"), Subtract(m, k)), Sp,
+                new Formula.Subscript(F.Id("M"), k)));
+    }
+
+    private static Formula SourceKernel()
+    {
+        Formula m = F.Id("m");
+        Formula k = F.Id("k");
+        Formula r = Subtract(m, k);
+        Formula rising(Formula t, Formula n) => new Formula.Subscript(Parenthesized(t), n);
+        Formula product(Formula u, Formula v) => new Formula.Fraction(
+            Multiply(rising(u, Multiply(Num(2), k)), rising(v, Multiply(Num(2), r))),
+            Multiply(rising(Add(u, Num(1)), k), rising(Add(v, Num(1)), r)));
+        return Equal(new Formula.Subscript(F.Id("M"), k),
+            Multiply(new Formula.Fraction(Num(1), Multiply(Seq(k, Bang), Seq(Parenthesized(r), Bang))),
+                Seq(OpenBracket, Subtract(product(Add(Mu, Alpha), Add(Mu, Beta)),
+                    product(Mu, Add(Add(Mu, Alpha), Beta))), CloseBracket)));
+    }
 
     private static Formula ConvexFormula()
     {
@@ -95,6 +141,8 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         return Disp(Iff(F.Id("claim"), assertion));
     }
 
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
@@ -132,17 +180,9 @@ internal static class CoeffSection
                 All("n", Nat(), All("t", Real(), Imp(Lt(Seq(Minus, D(1)), X("t")),
                     Eq(A(X("n"), X("t")), Eval(Call("coeffPoly", X("n")), X("t")))))),
                 "For t greater than minus one, all factors of (t+1) at rising order n are positive. Pochhammer multiplication splits off these factors and cancels them, including t=0."),
-            Node("a_product", "The finite product", DescribeRole.Theorem,
-                All("n", Nat(), All("t", Real(), Imp(Le(D(1), X("n")),
-                    Imp(Lt(Seq(Minus, D(1)), X("t")),
-                        Eq(A(X("n"), X("t")), Mul(Div(X("t"), Fact(X("n"))),
-                            Seq(F.Prod, Underscore, Grp(Seq(X("r"), InMacro,
-                                App(Q("Finset", "Ico"), Add(X("n"), D(1)), Mul(D(2), X("n"))))),
-                                Sp, Par(Add(X("t"), X("r")))))))))),
-                "For n at least one the remaining product runs from n+1 through 2n-1. Finset.Ico excludes its upper endpoint. This representation proves positivity."),
             Node("a_pos", "Positivity", DescribeRole.Theorem,
                 All("n", Nat(), All("t", Real(), Imp(Lt(D(0), X("t")), Lt(D(0), A(X("n"), X("t")))))),
-                "Every coefficient is positive at a positive parameter. Degree zero is one; in positive degree each factor in the finite product is positive."),
+                "The numerator rising factorial and both denominator factors are positive at a positive parameter, by ascPochhammer_pos and factorial positivity."),
             Node("a_zero_parameter", "The zero parameter", DescribeRole.Theorem,
                 All("n", Nat(), Imp(Lt(D(0), X("n")), Eq(A(X("n"), D(0)), D(0)))),
                 "At parameter zero every positive-degree coefficient vanishes. This supplies the boundary case of the interval tail inequality."),
