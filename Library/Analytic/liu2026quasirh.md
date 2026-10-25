@@ -2972,3 +2972,10 @@ duals and their joint profile costs still require estimates on the
 same original $\beta$ rows. No moving-$U$ replacement of $b_U$ is used.
 The complete J29/J40 contraction, signed Robin restoration and RH
 remain open; there is no Lean certification or priority claim here.
+
+## Four-factor exceptional continuation
+
+The four-factor exceptional, cutoff and interface results C51–C68,
+and their exact frequency-residue continuation C69–C76, are in the
+[Fourier note](../Fourier/liu2026quasirhdual.md#four-inverse-factors-on-the-same-coprime-realization).
+They reuse C21–C50 here with their original hypotheses and scopes.
