@@ -6,13 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.claim; result=D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.result; claim=D5/S3/Quantum/TensorNetworks/NonFactorizableDoubledTriangle.claim
    digest: The doubled triangle obstructs factorizability by a parity product identity. -/
 
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Group.TypeTags.Finite
+import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.Basic.Real.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 namespace D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangle
 
@@ -20,14 +15,9 @@ namespace D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangle
 def WeightedSimplicialComplex {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) : Prop :=
   (∀ S T, S ⊆ T → Ω S ∣ Ω T) ∧ ∀ i, Ω {i} ≠ 0
 
-/-- A facet is a maximal nonzero-weight simplex. -/
-def IsFacet {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ)
-    (S : Finset (Fin (n + 1))) : Prop :=
-  Ω S ≠ 0 ∧ ∀ T, S ⊆ T → Ω T ≠ 0 → T = S
-
 /-- Each facet has exactly its weight many distinct copies. -/
 def Multifacet {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) :=
-  Σ F : {S // IsFacet Ω S}, Fin (Ω F.val)
+  Σ F : {S // Maximal (fun T => Ω T ≠ 0) S}, Fin (Ω F.val)
 
 /-- The collapse map forgets the copy index. -/
 def collapse {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ}
@@ -37,10 +27,6 @@ def collapse {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ}
 def Incident {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (i : Fin (n + 1)) :=
   {x : Multifacet Ω // i ∈ collapse x}
 
-/-- Restriction of a global labeling to the multifacets incident at a vertex. -/
-def restrict {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} {ι : Type}
-    (α : Multifacet Ω → ι) (i : Fin (n + 1)) : Incident Ω i → ι := fun x => α x.val
-
 /-- Both invariance of weights and linearity of collapse are required. -/
 def Compatible {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
     (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω)) : Prop :=
@@ -48,12 +34,6 @@ def Compatible {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G
   letI := B
   (∀ (g : G) (S : Finset (Fin (n + 1))), Ω (S.image (g • ·)) = Ω S) ∧
     ∀ (g : G) (x : Multifacet Ω), collapse (g • x) = (collapse x).image (g • ·)
-
-/-- Pullback by the inverse action, on global labelings. -/
-def translate {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} {G : Type} [Group G]
-    (B : MulAction G (Multifacet Ω)) {ι : Type} (g : G) (α : Multifacet Ω → ι) :=
-  letI := B
-  fun x => α (g⁻¹ • x)
 
 /-- Collapse linearity makes inverse pullback well defined on local labelings. -/
 def transport {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} {G : Type} [Group G]
@@ -71,7 +51,9 @@ noncomputable def K {n : ℕ} {Ω : Finset (Fin (n + 1)) → ℕ} (G : Type) [Gr
     (A : MulAction G (Fin (n + 1))) (B : MulAction G (Multifacet Ω))
     {ι : Type} (α : Multifacet Ω → ι) : ℕ :=
   Nat.card {γ : Multifacet Ω → ι //
-    ∀ i, ∃ g : G, A.smul g i = i ∧ restrict (translate B g γ) i = restrict α i}
+    ∀ i, ∃ g : G, A.smul g i = i ∧
+      Subtype.restrict (fun x => i ∈ collapse x) ((@arrowAction _ _ _ _ B).smul g γ) =
+      Subtype.restrict (fun x => i ∈ collapse x) α}
 
 /-- Finite index sets are represented by `Fin m`, including the empty index set. -/
 def Factorizable {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group G]
@@ -80,7 +62,7 @@ def Factorizable {n : ℕ} (Ω : Finset (Fin (n + 1)) → ℕ) (G : Type) [Group
   ∀ m : ℕ, ∃ C : (i : Fin (n + 1)) → (Incident Ω i → Fin m) → ℝ,
     (∀ i β, 0 < C i β) ∧
     (∀ g i β, C (A.smul g i) (transport h g i β) = C i β) ∧
-    ∀ α, ∏ i, C i (restrict α i) = (K G A B α : ℝ)⁻¹
+    ∀ α, ∏ i, C i (Subtype.restrict (fun x => i ∈ collapse x) α) = (K G A B α : ℝ)⁻¹
 
 /-- The universal assertion whose negation answers the source's question. -/
 def claim : Prop :=
@@ -97,9 +79,9 @@ private theorem triangle_valid : WeightedSimplicialComplex triangle := by
   decide
 
 private theorem triangle_facets (S : Finset (Fin 3)) :
-    IsFacet triangle S ↔ ∃ e : Fin 3, S = Finset.univ.erase e := by
+    Maximal (fun T => triangle T ≠ 0) S ↔ ∃ e : Fin 3, S = Finset.univ.erase e := by
   revert S
-  unfold IsFacet triangle
+  unfold Maximal triangle
   decide
 
 private theorem edge_weight (e : Fin 3) : triangle (Finset.univ.erase e) = 2 := by
@@ -127,11 +109,6 @@ private theorem copy_incident (i : Fin 3) (x : Fin 3 × Fin 2) :
   rw [collapse, copy]
   simp only [Finset.mem_erase, Finset.mem_univ, and_true]
 
-private theorem group_cases (g : Multiplicative (ZMod 2)) :
-    g = 1 ∨ g = Multiplicative.ofAdd 1 := by
-  exact (by decide : ∀ k : Multiplicative (ZMod 2),
-    k = 1 ∨ k = Multiplicative.ofAdd 1) g
-
 private def vertexAction : MulAction (Multiplicative (ZMod 2)) (Fin 3) where
   smul _ i := i
   one_smul _ := rfl
@@ -151,10 +128,15 @@ private def facetAction : MulAction (Multiplicative (ZMod 2)) (Multifacet triang
     change (⟨x.1, if g * h = 1 then x.2 else x.2.rev⟩ : Multifacet triangle) =
       ⟨x.1, if g = 1 then (if h = 1 then x.2 else x.2.rev)
         else (if h = 1 then x.2 else x.2.rev).rev⟩
-    rcases group_cases g with rfl | rfl <;>
-      rcases group_cases h with rfl | rfl <;>
-      simp [show (Multiplicative.ofAdd (1 : ZMod 2)) ^ 2 = 1 by decide,
-        show Multiplicative.ofAdd (1 : ZMod 2) ≠ 1 by decide, ← pow_two]
+    rcases (show g = 1 ∨ g = Multiplicative.ofAdd 1 from
+      D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary g.toAdd) with
+      rfl | rfl <;>
+      rcases (show h = 1 ∨ h = Multiplicative.ofAdd 1 from
+        D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary h.toAdd) with
+        rfl | rfl <;>
+      simp [show (Multiplicative.ofAdd (1 : ZMod 2)) ^ 2 = 1 from ZMod.natCast_self 2,
+        show Multiplicative.ofAdd (1 : ZMod 2) ≠ 1 from
+          (one_ne_zero : (1 : ZMod 2) ≠ 0), ← pow_two]
 
 private theorem copy_smul (g : Multiplicative (ZMod 2)) (x : Fin 3 × Fin 2) :
     facetAction.smul g (copy x) = copy (x.1, if g = 1 then x.2 else x.2.rev) := by
@@ -192,7 +174,8 @@ private theorem alpha_copy (a b c : Fin 2) (x : Fin 3 × Fin 2) :
 
 private theorem local_pullback (g : Multiplicative (ZMod 2))
     (γ : Multifacet triangle → Fin 2) (a b c : Fin 2) (i : Fin 3) :
-    restrict (translate facetAction g γ) i = restrict (alpha a b c) i ↔
+    Subtype.restrict (fun x => i ∈ collapse x) ((@arrowAction _ _ _ _ facetAction).smul g γ) =
+      Subtype.restrict (fun x => i ∈ collapse x) (alpha a b c) ↔
       ∀ x : Fin 3 × Fin 2, i ≠ x.1 →
         γ (copy (x.1, if g = 1 then x.2 else x.2.rev)) = rawLabel a b c x := by
   constructor
@@ -222,7 +205,8 @@ private theorem count_transfer (a b c : Fin 2) :
   intro γ
   change (∀ i, ∃ g : Multiplicative (ZMod 2),
     vertexAction.smul g i = i ∧
-      restrict (translate facetAction g γ) i = restrict (alpha a b c) i) ↔
+      Subtype.restrict (fun x => i ∈ collapse x) ((@arrowAction _ _ _ _ facetAction).smul g γ) =
+      Subtype.restrict (fun x => i ∈ collapse x) (alpha a b c)) ↔
         Qualifies a b c (γ ∘ copy)
   unfold Qualifies
   apply forall_congr'
@@ -230,17 +214,19 @@ private theorem count_transfer (a b c : Fin 2) :
   constructor
   · rintro ⟨g, _, hg⟩
     have ht := (local_pullback g γ a b c i).mp hg
-    rcases group_cases g with rfl | rfl
+    rcases (show g = 1 ∨ g = Multiplicative.ofAdd 1 from
+      D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity.binary g.toAdd) with
+        rfl | rfl
     · exact Or.inl (by simpa only [ite_true, Function.comp_apply] using ht)
     · exact Or.inr (by simpa only [(show Multiplicative.ofAdd (1 : ZMod 2) ≠ 1
-        from by decide), ↓reduceIte, Function.comp_apply] using ht)
+        from (one_ne_zero : (1 : ZMod 2) ≠ 0)), ↓reduceIte, Function.comp_apply] using ht)
   · rintro (hi | hi)
     · refine ⟨1, rfl, (local_pullback 1 γ a b c i).mpr ?_⟩
       simpa only [ite_true, Function.comp_apply] using hi
     · refine ⟨Multiplicative.ofAdd 1, rfl,
         (local_pullback (Multiplicative.ofAdd 1) γ a b c i).mpr ?_⟩
       simpa only [(show Multiplicative.ofAdd (1 : ZMod 2) ≠ 1
-        from by decide), ↓reduceIte, Function.comp_apply] using hi
+        from (one_ne_zero : (1 : ZMod 2) ≠ 0)), ↓reduceIte, Function.comp_apply] using hi
 
 private theorem raw_counts (a b c : Fin 2) :
     Nat.card {γ : (Fin 3 × Fin 2) → Fin 2 // Qualifies a b c γ} =
@@ -255,11 +241,12 @@ private theorem counts (a b c : Fin 2) :
   rw [count_transfer, raw_counts]
 
 private noncomputable def product (C : (i : Fin 3) → (Incident triangle i → Fin 2) → ℝ)
-    (a b c : Fin 2) : ℝ := ∏ i, C i (restrict (alpha a b c) i)
+    (a b c : Fin 2) : ℝ := ∏ i, C i (Subtype.restrict (fun x => i ∈ collapse x) (alpha a b c))
 
 private theorem restrict_alpha (a b c a' b' c' : Fin 2) (i : Fin 3)
     (h : ∀ e : Fin 3, e ≠ i → ![a, b, c] e = ![a', b', c'] e) :
-    restrict (alpha a b c) i = restrict (alpha a' b' c') i := by
+    Subtype.restrict (fun x => i ∈ collapse x) (alpha a b c) =
+      Subtype.restrict (fun x => i ∈ collapse x) (alpha a' b' c') := by
   funext ⟨y, hy⟩
   obtain ⟨x, rfl⟩ := copy_bijective.surjective y
   change alpha a b c (copy x) = alpha a' b' c' (copy x)
@@ -273,15 +260,18 @@ private theorem parity_identity
     (C : (i : Fin 3) → (Incident triangle i → Fin 2) → ℝ) :
     product C 0 0 0 * product C 0 1 1 * product C 1 0 1 * product C 1 1 0 =
       product C 0 0 1 * product C 0 1 0 * product C 1 0 0 * product C 1 1 1 := by
-  have h0 (a b c : Fin 2) : restrict (alpha a b c) 0 = restrict (alpha 0 b c) 0 := by
+  have h0 (a b c : Fin 2) : Subtype.restrict (fun x => 0 ∈ collapse x) (alpha a b c) =
+      Subtype.restrict (fun x => 0 ∈ collapse x) (alpha 0 b c) := by
     apply restrict_alpha
     intro e he
     fin_cases e <;> simp_all
-  have h1 (a b c : Fin 2) : restrict (alpha a b c) 1 = restrict (alpha a 0 c) 1 := by
+  have h1 (a b c : Fin 2) : Subtype.restrict (fun x => 1 ∈ collapse x) (alpha a b c) =
+      Subtype.restrict (fun x => 1 ∈ collapse x) (alpha a 0 c) := by
     apply restrict_alpha
     intro e he
     fin_cases e <;> simp_all
-  have h2 (a b c : Fin 2) : restrict (alpha a b c) 2 = restrict (alpha a b 0) 2 := by
+  have h2 (a b c : Fin 2) : Subtype.restrict (fun x => 2 ∈ collapse x) (alpha a b c) =
+      Subtype.restrict (fun x => 2 ∈ collapse x) (alpha a b 0) := by
     apply restrict_alpha
     intro e he
     fin_cases e <;> simp_all
