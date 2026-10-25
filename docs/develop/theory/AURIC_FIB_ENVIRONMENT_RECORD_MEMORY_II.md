@@ -2747,7 +2747,7 @@ If its accepted set is empty, every optimum has $0\le h<t$.
 Proof. Inverting (36.5) through the original $G_s$ gives (37.1)–(37.3).
 The determinants of $K_2$ and $I_2-K_2$ are respectively the last two
 expressions filtered in (37.3). Since
-$T_0=1+t-d\in(t,1+t)$ with closed endpoint bounds, both $T_0$ and
+$T_0=1+t-d\in[t,1+t]\subset(0,3/2)$, both $T_0$ and
 $2-T_0$ are positive. Nonnegative determinant and positive trace of
 each real symmetric block prove $0\le K_2\le I_2$.
 The residual is (36.5).
