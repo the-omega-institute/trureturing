@@ -13,6 +13,98 @@ import uuid
 
 
 class IdlePoolCases:
+    def unused_return(self, expect=0, joined=True):
+        return self.run_protocol("return", "--path", self.tree,
+            *(["--writers-joined"] if joined else []), expect=expect)
+
+    def pool_unused_created_tree_returns_without_pr(self):
+        (self.main / "owned").write_text("advanced dev\n")
+        self.g(self.main, "commit", "-am", "Advance dev")
+        dev = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "push", "origin", "dev")
+        self.g(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
+        self.pool_github(state="OPEN")
+        result = json.loads(self.run_protocol("return", "--path", self.tree,
+            "--writers-joined", env=self.pool_env).stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(self.base, result["allocation_base"])
+        self.assertEqual(dev, result["dev_commit"])
+        self.assertEqual([], result["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertTrue(self.tree.exists())
+        self.assertTrue(self.g(self.tree, "branch", "--show-current").strip().startswith("lane/governance/idle-"))
+        self.assertEqual(dev, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", "origin/dev").strip())
+
+    def pool_unused_claimed_tree_returns_without_pr(self):
+        (self.main / ".gitignore").write_text(".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n")
+        self.g(self.main, "add", ".gitignore")
+        self.g(self.main, "commit", "-m", "Scaffold ignores")
+        self.g(self.main, "push", "origin", "dev")
+        self.pool_return()
+        self.pool_claim(path=self.tree, base=self.g(self.main, "rev-parse", "HEAD").strip())
+        allocated = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+        result = json.loads(self.unused_return().stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(allocated, result["allocation_base"])
+        self.assertEqual("refs/heads/lane/math/next", result["task_branch"])
+        self.assertEqual(allocated, self.g(self.main, "rev-parse", "lane/math/next").strip())
+
+    def pool_unused_return_refuses_task_commit_even_after_reset(self):
+        (self.tree / "owned").write_text("task commit\n")
+        self.g(self.tree, "commit", "-am", "Task")
+        for reset in (False, True):
+            if reset:
+                self.g(self.tree, "reset", "--hard", self.base)
+            result = self.unused_return(expect=73)
+            self.assertIn("unused_task_commits_require_pr", result.stderr)
+            self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+            self.assertTrue(self.tree.exists())
+
+    def pool_unused_return_refuses_dirty_content(self):
+        for kind in ("tracked", "staged", "untracked"):
+            with self.subTest(kind=kind):
+                target = self.tree / ("new" if kind == "untracked" else "owned")
+                target.write_text("preserve " + kind + "\n")
+                if kind == "staged":
+                    self.g(self.tree, "add", "owned")
+                result = self.unused_return(expect=73)
+                self.assertIn("idle_dirty", result.stderr)
+                self.assertEqual("preserve " + kind + "\n", target.read_text())
+                self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+                self.g(self.tree, "reset", "--hard", self.base)
+                if kind == "untracked":
+                    target.unlink()
+
+    def pool_unused_return_keeps_join_scope_lock_and_operation_guards(self):
+        self.assertIn("host_must_join", self.unused_return(expect=73, joined=False).stderr)
+        holder = self.hold()
+        self.assertIn("busy_scope:tree:", self.unused_return(expect=73).stderr)
+        holder.communicate("done\n", timeout=10)
+        self.g(self.main, "worktree", "lock", "--reason", "intentional", self.tree)
+        self.assertIn("intentional_or_initialization_lock", self.unused_return(expect=73).stderr)
+        self.g(self.main, "worktree", "unlock", self.tree)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "MERGE_HEAD").write_text(self.base + "\n")
+        self.assertIn("unfinished_operation:MERGE_HEAD", self.unused_return(expect=73).stderr)
+        (metadata / "MERGE_HEAD").unlink()
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_refuses_missing_creation_evidence(self):
+        self.g(self.tree, "reflog", "expire", "--expire=all", "refs/heads/" + self.branch)
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_requires_remote_dev_retention(self):
+        (self.main / "owned").write_text("unpublished base\n")
+        self.g(self.main, "commit", "-am", "Unpublished base")
+        other = self.root / "other-tree"
+        self.g(self.main, "worktree", "add", "-b", "lane/math/unpublished", other, "HEAD")
+        self.tree = other
+        self.assertIn("remote_does_not_retain_commit", self.unused_return(expect=73).stderr)
+        self.assertEqual("lane/math/unpublished", self.g(other, "branch", "--show-current").strip())
+
     def implicit_requests_allocate_distinct_trees(self):
         for name in ("lake-manifest.json", "Reg/lakefile.toml", "Reg/lake-manifest.json",
                      "tools/lean-inspector-reg/lakefile.toml", "tools/lean-inspector-reg/lake-manifest.json"):

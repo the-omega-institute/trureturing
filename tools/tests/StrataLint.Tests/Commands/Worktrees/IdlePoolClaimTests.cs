@@ -8,6 +8,40 @@ namespace StrataLint.Tests;
 
 public sealed partial class WorktreeCommandTests
 {
+    [Fact]
+    public void IdleUnusedFreshCreationReturnsWithoutPr()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        using var remote = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(repository.Path, ".gitignore"),
+            ".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n.lake/\n");
+        TestGit.Run(repository.Path, "add", ".gitignore");
+        TestGit.Run(repository.Path, "commit", "-m", "Scaffold ignores");
+        TestGit.Run(remote.Path, "init", "--bare");
+        TestGit.Run(repository.Path, "remote", "add", "origin", remote.Path);
+        TestGit.Run(repository.Path, "push", "origin", "dev");
+        var target = Path.Combine(repository.Path, "unused");
+        var created = WorktreeCommand.Run(repository.Path,
+            ["--kind", "governance", "--name", "unused", "--path", target, "--base", "dev", "--skip-restore"]);
+        Assert.True(created.Success, created.Error);
+        Assert.Equal("", WorktreeHookFixture.RunGit(target, "status", "--porcelain"));
+        Directory.CreateDirectory(Path.Combine(target, ".lake"));
+        File.WriteAllText(Path.Combine(target, ".lake", "sentinel"), "cache bytes");
+
+        var returned = WorktreeCommand.Run(target, ["return", "--writers-joined"]);
+
+        Assert.True(returned.Success, returned.Error);
+        using var receipt = JsonDocument.Parse(returned.Output);
+        Assert.Equal("returned", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal(WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "dev").Trim(),
+            receipt.RootElement.GetProperty("allocation_base").GetString());
+        Assert.Equal("cache bytes", File.ReadAllText(Path.Combine(target, ".lake", "sentinel")));
+        Assert.StartsWith("lane/governance/idle-", WorktreeHookFixture.RunGit(target, "branch", "--show-current"));
+        Assert.Equal("", WorktreeHookFixture.RunGit(target, "status", "--porcelain"));
+    }
+
     [Theory]
     [InlineData("busy")]
     [InlineData("available")]

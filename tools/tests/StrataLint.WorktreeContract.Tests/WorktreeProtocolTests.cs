@@ -289,6 +289,13 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("pool_return_preserves_post_merge_work_branch_and_cache")]
+    [InlineData("pool_unused_created_tree_returns_without_pr")]
+    [InlineData("pool_unused_claimed_tree_returns_without_pr")]
+    [InlineData("pool_unused_return_refuses_task_commit_even_after_reset")]
+    [InlineData("pool_unused_return_refuses_dirty_content")]
+    [InlineData("pool_unused_return_keeps_join_scope_lock_and_operation_guards")]
+    [InlineData("pool_unused_return_refuses_missing_creation_evidence")]
+    [InlineData("pool_unused_return_requires_remote_dev_retention")]
     [InlineData("pool_scope_contention_has_no_tree_effect")]
     [InlineData("pool_implicit_claim_busy_has_no_allocation")]
     [InlineData("pool_return_checkpoint_without_native_lock_never_inspects_holders")]

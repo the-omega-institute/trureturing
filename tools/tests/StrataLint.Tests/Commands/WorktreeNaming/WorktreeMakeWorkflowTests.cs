@@ -85,7 +85,7 @@ public sealed class WorktreeMakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "1", "PR is required")]
+    [InlineData("", "", "Host must join")]
     [InlineData("42", "", "Host must join")]
     public void ReturnRejectsMissingInputsBeforeStartingCli(string pr, string joined, string error)
     {
@@ -114,6 +114,22 @@ public sealed class WorktreeMakeWorkflowTests
         Assert.True(File.Exists(marker));
         Assert.Contains("worktree\nreturn\n--pr\n42\n--writers-joined\n",
             System.Text.Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReturnWithoutPrPassesJoinAssertionToCanonicalCli()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree-return", "WRITERS_JOINED=1");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(File.Exists(marker));
+        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains("worktree\nreturn\n--writers-joined\n", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("--pr", output, StringComparison.Ordinal);
     }
 
     private static string PrepareFixture(string fixtureRoot)
