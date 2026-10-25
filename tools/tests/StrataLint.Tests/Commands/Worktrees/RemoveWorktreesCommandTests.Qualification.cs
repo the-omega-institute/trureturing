@@ -9,6 +9,21 @@ namespace StrataLint.Tests;
 public sealed partial class RemoveWorktreesCommandTests
 {
     [Theory]
+    [InlineData("event")]
+    [InlineData("status")]
+    [InlineData("extra")]
+    public void NamedRemovalRejectsInconsistentReceiptEnvelope(string malformed)
+    {
+        var rows = new List<object> { new { path = "/fixture/linked", outcome = "removed" } };
+        if (malformed == "extra") rows.Add(new { path = "/fixture/unrequested", outcome = "removed" });
+        var payload = JsonSerializer.Serialize(new { @event = malformed == "event" ? "unexpected" : "worktree_removal",
+            status = malformed == "status" ? "failed" : "succeeded", items = rows });
+        var runner = new ScriptedWorktreeProcessRunner(new InventoryRunner(), (file, _, _) => file == "python3"
+            ? new ProcessOutput(0, Encoding.UTF8.GetBytes(payload), []) : null);
+        AssertResult(RemoveWorktreesCommand.Run("/fixture/main", ["--names", "linked"], runner), 74, 0, 1, 0);
+    }
+
+    [Theory]
     [InlineData(68, "not a canonical refusal")]
     [InlineData(73, "")]
     [InlineData(73, "WORKTREE_RETAINED reason\nextra")]

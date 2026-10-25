@@ -118,8 +118,9 @@ LOCK_AGE_SECONDS = 24 * 60 * 60
 def qualification_identity(source, path, snapshot, deadline=None):
     """Preserve native failures unless a fresh observation confirms identity drift."""
     marker = path / ".git"
-    pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
+    pointer = None
     try:
+        pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
         return identity(source, path, snapshot=snapshot)
     except (GitFailure, OSError, subprocess.TimeoutExpired):
         if path.is_symlink() or not path.is_dir():

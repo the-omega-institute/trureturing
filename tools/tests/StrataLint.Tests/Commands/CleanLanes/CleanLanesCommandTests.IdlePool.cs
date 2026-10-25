@@ -9,10 +9,11 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void IdleInitialIdentityFailureMustRemainFailed(bool inject, bool force)
+    [InlineData(false, false, false)]
+    [InlineData(true, false, false)]
+    [InlineData(true, true, false)]
+    [InlineData(true, true, true)]
+    public void IdleInitialIdentityFailureMustRemainFailed(bool inject, bool force, bool poolTimeout)
     {
         using var fixture = new CleanLanesFixture();
         var token = new string('a', 32);
@@ -32,6 +33,7 @@ public sealed partial class CleanLanesCommandTests
             {
                 poolObserved = true;
                 if (inject) Assert.DoesNotContain("--force", args);
+                if (poolTimeout) throw new TimeoutException("later pool observation deadline");
             }
             return null;
         });
@@ -39,7 +41,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(poolObserved);
         Assert.Equal(!inject, result.Success);
         AssertQualificationPublicExit(result, force, inject ? 2 : 0);
-        Assert.Equal(inject ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal(inject ? poolTimeout ? 2 : 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal(inject ? "deferred" : "completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         if (inject) Assert.Contains(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path
             && row.GetProperty("action").GetString() == "failed"

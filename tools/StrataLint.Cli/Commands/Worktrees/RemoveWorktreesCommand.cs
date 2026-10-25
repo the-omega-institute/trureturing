@@ -104,10 +104,16 @@ internal static class RemoveWorktreesCommand
         try
         {
             using var document = JsonDocument.Parse(removal.Output);
-            var outcomes = document.RootElement.GetProperty("items").EnumerateArray().ToArray();
+            var receipt = document.RootElement;
+            var outcomes = receipt.GetProperty("items").EnumerateArray().ToArray();
+            if (receipt.GetProperty("event").GetString() != "worktree_removal" || outcomes.Length != items.Length)
+                throw new InvalidOperationException("invalid removal receipt envelope");
             var resolved = items.Select(item =>
             {
                 var outcome = outcomes.Single(entry => entry.GetProperty("path").GetString() == item.Path);
+                if (outcome.GetProperty("outcome").GetString() is not
+                    ("removed" or "refused" or "qualification_failed" or "checkpoint_failed" or "partial_or_indeterminate"))
+                    throw new InvalidOperationException("unknown removal outcome");
                 item = item with
                 {
                     RecoveryBranch = outcome.TryGetProperty("recovery_branch", out var recovery) ? recovery.GetString() : null,
@@ -122,6 +128,7 @@ internal static class RemoveWorktreesCommand
                 if (outcome.GetProperty("outcome").GetString() == "refused")
                 {
                     var reason = outcome.GetProperty("reason").GetString()!;
+                    if (string.IsNullOrWhiteSpace(reason)) throw new InvalidOperationException("missing removal refusal reason");
                     var code = reason.StartsWith("locked_", StringComparison.Ordinal) ? 68 : 73;
                     return item with { Outcome = code == 68 ? "locked" : "identity_refused", Error = reason, ExitCode = code };
                 }
@@ -132,6 +139,8 @@ internal static class RemoveWorktreesCommand
             }).ToArray();
             var failed = resolved.Any(item => item.ExitCode == 74);
             var refused = resolved.Any(item => item.ExitCode is 68 or 73);
+            if (receipt.GetProperty("status").GetString() != (failed ? "failed" : refused ? "refused" : "succeeded"))
+                throw new InvalidOperationException("inconsistent removal receipt status");
             if (failed && removal.ExitCode != 74 || !failed && !refused && !removal.Success
                 || refused && !failed && removal.ExitCode is not (68 or 73))
                 throw new InvalidOperationException("inconsistent removal process exit=" + removal.ExitCode);
