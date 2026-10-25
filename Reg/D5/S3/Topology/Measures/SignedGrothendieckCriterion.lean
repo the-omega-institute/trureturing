@@ -2,6 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Topology.Measures.SignedGrothendieckCriterion
 
+/-!
+# Exact source families for the signed splitting and sufficient criterion
+
+The readouts retain the original theorem telescopes and vary the captured
+mass nonnegativity and the final scalar neighborhood, respectively.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -13,18 +20,18 @@ open _root_.D5.S3.Topology.Measures
 open _root_.D5.S3.Topology.Measures.SignedGrothendieckCriterion
 universe u
 
-def rawSignature : DependentFamily.Signature where
+@[reducible] def rawSignature : DependentFamily.Signature where
   Params := Unit
   State := fun _ => ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output := fun _ _ => Prop
+  Output := fun _ _ => Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def rawActual : DependentFamily.Realization rawSignature :=
-  DependentFamily.realize rawSignature (fun _ _ r => 0 ≤ r) (fun a => nomatch a)
+  DependentFamily.realize rawSignature (fun _ _ (r : ℝ) => decide (0 ≤ r)) (fun a => nomatch a)
 
 def rawLaw (R : DependentFamily.Realization rawSignature) : Prop :=
   ∀ {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
@@ -41,7 +48,7 @@ def rawLaw (R : DependentFamily.Realization rawSignature) : Prop :=
       (∀ n, (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).real univ +
         (SignedMeasure.totalVariation ((s (j n)).restrict (E n)ᶜ)).real univ =
         (s (j n)).totalVariation.real univ) ∧
-      R.readout () () r ∧ Tendsto
+      R.readout () () r = true ∧ Tendsto
         (fun n => (SignedMeasure.totalVariation ((s (j n)).restrict (E n))).real univ)
         atTop (𝓝 r) ∧ sInf.totalVariation.Regular ∧
       ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
@@ -49,14 +56,16 @@ def rawLaw (R : DependentFamily.Realization rawSignature) : Prop :=
           ((s (j n)).restrict (E n)ᶜ))) atTop
           (𝓝 (Φ (NormPreservingLifts.signedFunctional sInf)))
 
-def rawArena : DependentFamily.Arena where
+@[reducible] def rawArena : DependentFamily.Arena where
   signature := rawSignature
   Law := rawLaw.{u}
 abbrev rawScope := type_of% (@exists_signed_raw_restriction_splitting.{u})
-theorem rawBridge : rawScope.{u} ↔ rawArena.{u}.Law rawActual := Iff.rfl
+theorem rawBridge : rawScope.{u} ↔ rawArena.{u}.Law rawActual := by
+  simp only [rawScope, rawArena, rawLaw, rawActual, DependentFamily.realize,
+    decide_eq_true_eq]
 
 def rawRejected : DependentFamily.Realization rawSignature :=
-  DependentFamily.realize rawSignature (fun _ _ _ => False) (fun a => nomatch a)
+  DependentFamily.realize rawSignature (fun _ _ _ => false) (fun a => nomatch a)
 
 theorem rawPositive : rawArena.{u}.Law rawActual :=
   rawBridge.mp (@exists_signed_raw_restriction_splitting.{u})
@@ -67,7 +76,7 @@ theorem rawNegative : ¬ rawArena.{u}.Law rawRejected := by
     (by intro n; simp only [SignedMeasure.totalVariation_zero]; infer_instance)
     ⟨0, by intro n; simp [SignedMeasure.totalVariation_zero]⟩
   obtain ⟨j, E, r, sInf, hj, hE, hd, hdec, hreg, hm, hr, _⟩ := hr
-  exact hr
+  exact Bool.false_ne_true hr
 
 def rawFamily : DependentFamily.Registration rawArena.{u} rawScope.{u} where
   actual := rawActual
@@ -84,10 +93,10 @@ def rawFamily : DependentFamily.Registration rawArena.{u} rawScope.{u} where
   dependence := by
     intro i
     refine ⟨(), 0, -1, ?_⟩
-    change (0 ≤ (0 : ℝ)) ≠ (0 ≤ (-1 : ℝ))
+    change decide (0 ≤ (0 : ℝ)) ≠ decide (0 ≤ (-1 : ℝ))
     norm_num
 
-def weakSignature : DependentFamily.Signature where
+@[reducible] def weakSignature : DependentFamily.Signature where
   Params := Unit
   State := fun _ => ℝ
   Role := Unit
@@ -118,14 +127,14 @@ def weakLaw (R : DependentFamily.Realization weakSignature) : Prop :=
     ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
       Tendsto (fun n => Φ (F n)) atTop (R.readout () () (Φ FInf))
 
-def weakArena : DependentFamily.Arena where
+@[reducible] def weakArena : DependentFamily.Arena where
   signature := weakSignature
   Law := weakLaw.{u}
 abbrev weakScope := type_of% (@weak_of_disjoint_diagonal_variation.{u})
 theorem weakBridge : weakScope.{u} ↔ weakArena.{u}.Law weakActual := Iff.rfl
 
 def weakRejected : DependentFamily.Realization weakSignature :=
-  DependentFamily.realize weakSignature (fun _ _ _ => ⊥) (fun a => nomatch a)
+  DependentFamily.realize weakSignature (fun _ _ _ => (⊥ : Filter ℝ)) (fun a => nomatch a)
 
 theorem weakPositive : weakArena.{u}.Law weakActual :=
   weakBridge.mp (@weak_of_disjoint_diagonal_variation.{u})
@@ -144,13 +153,14 @@ theorem weakNegative : ¬ weakArena.{u}.Law weakRejected := by
     intro s hs hb hz E hE hd
     have heq (n : ℕ) : (s n).restrict (E n) = 0 := by
       ext A hA
-      have ha : A = ∅ := Set.eq_empty_iff_forall_not_mem.2 (fun x _ => isEmptyElim x)
+      have ha : A = ∅ := Subsingleton.elim A ∅
       simp [ha]
     simp only [heq, SignedMeasure.totalVariation_zero]
     simpa using (tendsto_const_nhds (x := (0 : ℝ)))
   have ht := h (K := ULift.{u} Empty) Hempty (fun _ => 0) 0
     (fun g => by simpa using tendsto_const_nhds) 0
-  exact (Filter.not_neBot.mpr rfl) ht.neBot
+  have hbot : (⊥ : Filter ℝ).NeBot := by simpa only [weakRejected, DependentFamily.realize] using ht.neBot
+  exact (Filter.not_neBot.mpr rfl) hbot
 
 def weakFamily : DependentFamily.Registration weakArena.{u} weakScope.{u} where
   actual := weakActual
@@ -186,12 +196,16 @@ def rawRegistration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
   readout := some (DependentFamily.realize rawSignature
-    (fun _ _ r => 0 ≤ r) (fun a => nomatch a))
+    (fun _ _ (r : ℝ) => decide (0 ≤ r)) (fun a => nomatch a))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
   escapeFrom := some ℝ
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -217,7 +231,11 @@ def weakRegistration :
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
   escapeFrom := some ℝ
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
