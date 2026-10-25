@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d7ed6797f5c007a4b379dbc210c51682fc5d571ce1c5be15941b05851c9ddbe
+  normalized_sha256: sha256:9d7ed6797f5c007a4b379dbc210c51682fc5d571ce1c5be15941b05851c9ddbe
+cas_ref: sha256:9d7ed6797f5c007a4b379dbc210c51682fc5d571ce1c5be15941b05851c9ddbe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Q.8 is a methodological schema: it prescribes audit fields for causal-observer theorems and cautions against extending finite joint-law algebra to unqualified causal claims. The field names, registration instruction and caution assert no mathematical equality, inequality, existence or identifiability theorem.'
+    previous_atom_id: 346f8080c3ed5b78125335f3c0350b970dfb95c8dd32028fa693197498729213
+    next_atom_id: 3fa15572dd53d0454b52b6fc83e1e5099633f8efee28f29fb40dd469295b371a
