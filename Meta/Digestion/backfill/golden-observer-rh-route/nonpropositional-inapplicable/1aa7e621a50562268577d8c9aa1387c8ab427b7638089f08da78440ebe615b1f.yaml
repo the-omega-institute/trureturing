@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1aa7e621a50562268577d8c9aa1387c8ab427b7638089f08da78440ebe615b1f
+  normalized_sha256: sha256:1aa7e621a50562268577d8c9aa1387c8ab427b7638089f08da78440ebe615b1f
+cas_ref: sha256:1aa7e621a50562268577d8c9aa1387c8ab427b7638089f08da78440ebe615b1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M1-a/M1-b 的节标题、面板及探针来源和工单元数据。
+    previous_atom_id: 5fa831bde1dd35bd95200810064a479835304f57e0ce002edfe768fa0b46d87d
+    next_atom_id: 566eda0419fba00d50724208ed519d6fbe5b58d2d169ef4fa5d67304a981a14b

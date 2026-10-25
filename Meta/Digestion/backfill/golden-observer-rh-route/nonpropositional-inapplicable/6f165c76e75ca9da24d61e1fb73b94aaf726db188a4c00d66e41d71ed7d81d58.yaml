@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f165c76e75ca9da24d61e1fb73b94aaf726db188a4c00d66e41d71ed7d81d58
+  normalized_sha256: sha256:6f165c76e75ca9da24d61e1fb73b94aaf726db188a4c00d66e41d71ed7d81d58
+cas_ref: sha256:6f165c76e75ca9da24d61e1fb73b94aaf726db188a4c00d66e41d71ed7d81d58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M7 要求另证极点和结构零点计数，条目本身没有计数等式。
+    previous_atom_id: 74d49f4df9fac533d14e54970cc9c7c8b03e7ec75b6021bf84bc63a1c753e4cf
+    next_atom_id: 0ff287b4aaf6f6320f6be65ccf9da035ed62dddf5d24283d8661147fc2f45328

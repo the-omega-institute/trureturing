@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:d18a397e5cd3ea9728b6870d331d477364aa7ca4f2d927212c0baf510557a43b
+  normalized_sha256: sha256:d18a397e5cd3ea9728b6870d331d477364aa7ca4f2d927212c0baf510557a43b
+cas_ref: sha256:d18a397e5cd3ea9728b6870d331d477364aa7ca4f2d927212c0baf510557a43b
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineMellinKernel.halflineFunctional_integral
+    target_statement_id: sha256:74affae80e9c0e2ebaa626fe04b062c5906edb91a6c5ad2a667af1b70bf04690
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineMellinKernel.halflineFunctional_norm_sq
+    target_statement_id: sha256:c069ac14c379cc07bf757612ae110b03ca21a1e910342e0ae93896ae46651149
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineMellinKernel.realSourceVector_tail
+    target_statement_id: sha256:e5c407a7665d2863505b15c2264d35f9b2bb3dfd2b7c4a64104cdef012a32569
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineZeroSeparation.halflineFunctional_realSource
+    target_statement_id: sha256:93e9191464b53147b99bee3712535ab50794df3d404943cc40740e1145f3cb26
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineZeroSeparation.halflineFunctional_target
+    target_statement_id: sha256:a818edad94a7f1551ffc84e6b493f087da1937e1e83ccee121879f24d0294dad
+  - gid: D5/S3/Observer/Hilbert/NymanHalflineZeroSeparation.nyman_halfline_e11
+    target_statement_id: sha256:9c269e188d841d16f97164b07c1dcb1f7a249a59d6fd776b485b31b1c8225518
+receipts:
+  unresolved_subitems: []

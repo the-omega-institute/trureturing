@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36994899148bb8b62a66cae082a9334c38374b2bf70e1ca50f0b93450c5dfa2e
+  normalized_sha256: sha256:36994899148bb8b62a66cae082a9334c38374b2bf70e1ca50f0b93450c5dfa2e
+cas_ref: sha256:36994899148bb8b62a66cae082a9334c38374b2bf70e1ca50f0b93450c5dfa2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 四 预算与结算 一席位轮(codex-cli,独立 worktree,三条公开定理同模块;deposit 绑 G-g-6 atom,G-g-4/5 走 PR-1b 收据后 PR-2 cover)。实施须 import 冻结的 `GoldenGermThirdOrderFactorization
+    previous_atom_id: abd15064cddd6bf17b0697cf0e0856b225ac4d2b378d42384b8e650a80f9c766
+    next_atom_id: 3ee29ed5374fe4e1e677833e264ca9f05c470978da5aedac25f42383f90963a0

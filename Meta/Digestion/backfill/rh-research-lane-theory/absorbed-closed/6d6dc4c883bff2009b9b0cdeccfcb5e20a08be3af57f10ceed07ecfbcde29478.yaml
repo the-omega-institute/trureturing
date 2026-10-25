@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:6d6dc4c883bff2009b9b0cdeccfcb5e20a08be3af57f10ceed07ecfbcde29478
+  normalized_sha256: sha256:6d6dc4c883bff2009b9b0cdeccfcb5e20a08be3af57f10ceed07ecfbcde29478
+cas_ref: sha256:6d6dc4c883bff2009b9b0cdeccfcb5e20a08be3af57f10ceed07ecfbcde29478
+coverage_gids:
+  - gid: D5/S3/Weil/BurnolGram/FiniteMixedWeilMajorant.finiteMixedMajorant_summable
+    target_statement_id: sha256:f21d4ae16afb6bb90b24bda771a93d2bb0e9594dfed09b1368c2a0c27141da4d
+  - gid: D5/S3/Weil/BurnolGram/FiniteMixedWeilMajorant.finite_synthesis_absolute_sum_le
+    target_statement_id: sha256:349981e591d198ec628d9db2db84f2aa28becd359781c84faa13c34052a57c72
+  - gid: D5/S3/Weil/BurnolGram/FiniteOrbitBurnolPacket.exists_orbitBurnolPacket
+    target_statement_id: sha256:7b7416e0033bec795c37dda47a4b855f3197cbbc84635e6305f8d0b560ee55d4
+  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.burnolSynthesis_target_union_value
+    target_statement_id: sha256:7d81149f0922cd249ed10068a4d8c299b4621bb3e22befc3a4477ea8cc5b0d4a
+  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.exists_common_depth_strictly_negative
+    target_statement_id: sha256:4954176ad5e0f7dd05b65b34c8e1729f69526eecfca5e42ef63e0fa7de79d3f9
+  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.finite_multiOrbit_full_weil_negative_family
+    target_statement_id: sha256:6295d478877f8046c67f20f92055192c4f49757b1bd24cb29120ae4c41dbeca2
+  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.multiOrbitBurnol_error_tendsto_zero
+    target_statement_id: sha256:6727847e537516f38bd6a710a1d80acf1281e21b127a5baf43fdc1a019910445
+  - gid: D5/S3/Weil/BurnolGram/MultiOrbitBurnolUniformRemainder.multiOrbitBurnol_uniform_remainder
+    target_statement_id: sha256:bf9c85d4f0f42b0b53439b0eb2e068a4e1041be0dd11ea999413f4074cb9c3d3
+receipts:
+  unresolved_subitems: []
