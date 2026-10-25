@@ -1,0 +1,214 @@
+/- GID: D5/S3/Topology/InverseLimit/ContinuousFiniteImageTail
+   generality: G
+   mirror-B: D5/B/S3/Topology/InverseLimit/ContinuousFiniteImageTail
+   mirror-E: none(waiver:implementation-flight)
+   anchors: []
+   utility: none
+   digest: Original whole Dirac capture and proper-stage finite-image obstruction. -/
+
+/- Same-path private tail preparation; no event or history existence is asserted. -/
+import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
+import D5.S3.Topology.InverseLimit.CountableClopenReflection
+import Mathlib.Topology.InductiveDimension.Classes
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+open Set Filter Function MeasureTheory CategoryTheory CategoryTheory.Limits Opposite
+open scoped Topology Ordinal
+
+namespace D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
+
+open SignedProperLimit SignedBirthEnumeration CountableClopenReflection
+
+universe u
+
+/-- This uses the continuous preimage, never the image of a source clopen. -/
+private theorem exists_ambient_clopen_preimage {X : Type u}
+    [TopologicalSpace X] [CompactSpace X] [T2Space X] [ZeroDimensionalSpace X]
+    (A : Set X) (hA : IsClosed A) (f : A → X) (hf : Continuous f)
+    (C : Set X) (hC : IsClopen C) :
+    ∃ D : Set X, IsClopen D ∧ ∀ x : A, x.val ∈ D ↔ f x ∈ C := by
+  let E : Set A := f ⁻¹' C
+  have hE : IsClopen E := hC.preimage hf
+  have hclosed : IsClosed ((Subtype.val : A → X) '' E) :=
+    hA.isClosedEmbedding_subtypeVal.isClosedMap _ hE.isClosed
+  have hclosed' : IsClosed ((Subtype.val : A → X) '' Eᶜ) :=
+    hA.isClosedEmbedding_subtypeVal.isClosedMap _ hE.compl.isClosed
+  have hdis : (Subtype.val : A → X) '' E ⊆ ((Subtype.val : A → X) '' Eᶜ)ᶜ := by
+    rintro _ ⟨x, hx, rfl⟩ ⟨y, hy, hxy⟩
+    have he : y = x := Subtype.ext hxy
+    subst y
+    exact hy hx
+  obtain ⟨D, hD, hED, hDsub⟩ :=
+    exists_clopen_of_closed_subset_open hclosed hclosed'.isOpen_compl hdis
+  refine ⟨D, hD, fun x => ⟨?_, ?_⟩⟩
+  · intro hx
+    by_contra hfx
+    exact hDsub hx ⟨x, hfx, rfl⟩
+  · intro hfx
+    exact hED ⟨x, hfx, rfl⟩
+
+/-- The one ambient extension is reflected once, above an arbitrary proper
+bound. No map, inverse, or graph is reflected. -/
+private theorem exists_later_preimage_stage (H : Prefix (ω₁ : Ordinal.{0}))
+    (base : Label) (A : Set H.LimitSpace) (hA : IsClosed A)
+    (f : A → H.LimitSpace) (hf : Continuous f)
+    (C : Set H.LimitSpace) (hC : IsClopen C) :
+    ∃ c : Label, base ≤ c ∧ ∃ Dc : Set (H.Space c), IsClopen Dc ∧
+      ∀ x : A, H.projection c x.val ∈ Dc ↔ f x ∈ C := by
+  obtain ⟨D, hD, htrace⟩ := exists_ambient_clopen_preimage A hA f hf C hC
+  have hl : Order.IsSuccLimit (ω₁ : Ordinal.{0}) := Cardinal.isSuccLimit_omega 1
+  have hs : ∀ {i j} (g : i ⟶ j), Surjective (H.diagram.map g) := by
+    intro i j g y
+    obtain ⟨z, hz⟩ := H.onto j.unop i.unop (leOfHom g.unop) y
+    exact ⟨z, Subtype.ext hz⟩
+  obtain ⟨c, hbc, V, hV, hDV, _, _⟩ :=
+    CountableClopenReflection.exists_common_stage H.diagram H.cone
+      (H.coneIsLimit hl) hs base (fun _ : Unit => D) (fun _ => hD)
+  refine ⟨c, hbc, V (), hV (), fun x => ?_⟩
+  have hh := htrace x
+  rw [hDV ()] at hh
+  exact hh
+
+/-- The finite error is deleted from each original reservoir separately.
+The split pools need not cover J exactly. -/
+private theorem infinite_original_pools (J : Set ℕ) (N M : Bool → Set ℕ)
+    (hB : Disjoint (N false) (N true))
+    (hC : ∀ e, (J ∩ N e).Infinite)
+    (hM : ∀ e, M e ⊆ N e)
+    (hDJ : AlmostSubset J (M false ∪ M true)) :
+    ∀ e, (J ∩ M e).Infinite := by
+  have hfinite : {n : ℕ | ¬ (n ∈ J → n ∈ M false ∪ M true)}.Finite :=
+    Filter.mem_cofinite.mp hDJ
+  intro e
+  apply ((hC e).diff hfinite).mono
+  rintro n ⟨⟨hnJ, hnN⟩, hnerr⟩
+  have hnM : n ∈ M false ∪ M true := by
+    by_contra hh
+    exact hnerr (by intro h; exact hh (h hnJ))
+  refine ⟨hnJ, ?_⟩
+  cases e with
+  | false =>
+    rcases hnM with h | h
+    · exact h
+    · exact False.elim (Set.disjoint_left.mp hB hnN (hM true h))
+  | true =>
+    rcases hnM with h | h
+    · exact False.elim (Set.disjoint_left.mp hB (hM false h) hnN)
+    · exact h
+
+/-- A single proper-stage filter cannot converge on two infinite pools with
+opposite indicator values. The reference is chosen after the sequence. -/
+private theorem not_tendsto_of_two_infinite_pools
+    (J M0 M1 : Set ℕ) (g : ℕ → ℝ)
+    (h0 : (J ∩ M0).Infinite) (h1 : (J ∩ M1).Infinite)
+    (hg0 : ∀ n ∈ M0, g n = 1) (hg1 : ∀ n ∈ M1, g n = 0) :
+    ¬ ∃ L : ℝ, Tendsto g (along J) (𝓝 L) := by
+  rintro ⟨L, hL⟩
+  have heps := Metric.tendsto_nhds.mp hL (1 / 3) (by norm_num)
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (eventually_inf_principal.mp heps)
+  obtain ⟨n0, hn0, hN0⟩ := h0.exists_gt N
+  obtain ⟨n1, hn1, hN1⟩ := h1.exists_gt N
+  have ha := hN n0 hN0.le hn0.1
+  have hb := hN n1 hN1.le hn1.1
+  rw [hg0 n0 hn0.2, Real.dist_eq] at ha
+  rw [hg1 n1 hn1.2, Real.dist_eq] at hb
+  have hc := abs_add (1 - L) (L - 0)
+  rw [abs_sub_comm 0 L] at hb
+  have he : (1 - L) + (L - 0) = (1 : ℝ) := by ring
+  rw [he] at hc
+  norm_num at hc
+  linarith
+
+/-- The final contradiction is local to an original proper prefix. The split
+information is a local consumer input, not a new history interface or endpoint
+assumption: the eventual endpoint must obtain it from the one actual event.
+The existing public signedFunctional_charFn supplies the observable. -/
+private theorem proper_F_excludes_split_dirac_lifts
+    {l : Ordinal.{0}} (H : Prefix l) (D : H.Data) (laws : H.Laws D)
+    (r d b c : Coord l) (hwr : ω ≤ r.1)
+    (hrb : r < b) (hdb : d < b) (hbc : b ≤ c)
+    (M : Bool → Set ℕ)
+    (hM : ∀ e, M e ⊆ D.N r d e)
+    (hJb : D.J r d b = M false ∪ M true)
+    (z : ℕ → H.Space c)
+    (hsource : ∀ n, (D.nu r ⟨d.1, d.2.trans D.proper⟩ n).1 =
+      (Measure.dirac (H.map r c (hrb.le.trans hbc) (z n))).toSignedMeasure)
+    (Dc : Set (H.Space c)) (hDc : IsClopen Dc)
+    (hzero : ∀ n ∈ M false, z n ∈ Dc)
+    (hone : ∀ n ∈ M true, z n ∉ Dc) : False := by
+  classical
+  letI : Countable (Coord c.1) :=
+    (Cardinal.countable_Iio_of_lt_omega_one (c.2.trans D.proper)).to_subtype
+  letI : MetricSpace (H.Space c) := TopologicalSpace.metrizableSpaceMetric _
+  have hrc : r < c := hrb.trans_le hbc
+  have hdc : d < c := hdb.trans_le hbc
+  let sigma : ℕ → RegularSigned (H.Space c) := fun n => regularPoint (z n)
+  have hmass (n : ℕ) : (sigma n).1.totalVariation univ = 1 := by
+    simp [sigma, regularPoint, SignedMeasure.totalVariation,
+      JordanDecomposition.toJordanDecomposition_toSignedMeasure, pointJordan]
+  have hmap (n : ℕ) : (sigma n).1.map (H.map r c hrc.le) =
+      (Measure.dirac (H.map r c hrc.le (z n))).toSignedMeasure := by
+    change ((pointJordan (z n)).toSignedMeasure).map (H.map r c hrc.le) = _
+    simp only [pointJordan, JordanDecomposition.toSignedMeasure,
+      Measure.toSignedMeasure_zero, sub_zero]
+    ext B hB
+    rw [VectorMeasure.map_apply _ (H.map r c hrc.le).continuous.measurable hB,
+      Measure.toSignedMeasure_apply_measurable ((H.map r c hrc.le).continuous.measurable hB),
+      Measure.toSignedMeasure_apply_measurable hB]
+    change ((Measure.dirac (z n)) ((H.map r c hrc.le) ⁻¹' B)).toReal = _
+    rw [← Measure.map_apply (H.map r c hrc.le).continuous.measurable hB,
+      Measure.map_dirac' (H.map r c hrc.le).continuous.measurable]
+  have hclass (n : ℕ) : H.OldClass D r d c hrc.le n (sigma n) :=
+    ⟨hmass n, (hmap n).trans (hsource n).symm⟩
+  obtain ⟨mu, _, hconv⟩ := laws.F r d c hrc hwr hdc sigma hclass
+  let g := (LocallyConstant.charFn ℝ hDc).toContinuousMap
+  have heval := (tendsto_iff_forall_eval_tendsto_topDualPairing.mp hconv) g
+  change Tendsto (fun n => Measures.NormPreservingLifts.signedFunctional (sigma n).1 g)
+    (along (D.J r d c)) (𝓝 (Measures.NormPreservingLifts.signedFunctional mu.1 g)) at heval
+  have htest : Tendsto (fun n => (sigma n).1 Dc) (along (D.J r d c)) (𝓝 (mu.1 Dc)) := by
+    simpa only [g, Measures.ClopenCauchyConvergence.signedFunctional_charFn] using heval
+  have hDJ : AlmostSubset (D.J r d c) (M false ∪ M true) := by
+    rw [← hJb]
+    exact laws.DJ r d b c hwr hrb hdb hbc
+  have hpools := infinite_original_pools (D.J r d c) (D.N r d) M
+    (laws.B r d hwr) (fun e => laws.C r d c e hwr hrc hdc) hM hDJ
+  have hvalue (n : ℕ) : (sigma n).1 Dc = if z n ∈ Dc then (1 : ℝ) else 0 := by
+    change (pointJordan (z n)).toSignedMeasure Dc = _
+    simp [pointJordan, JordanDecomposition.toSignedMeasure,
+      Measure.toSignedMeasure_apply_measurable hDc.isClosed.measurableSet,
+      Measure.real, Measure.dirac_apply' _ hDc.isClosed.measurableSet]
+  apply not_tendsto_of_two_infinite_pools (D.J r d c) (M false) (M true)
+    (fun n => (sigma n).1 Dc) (hpools false) (hpools true) ?_ ?_ ⟨mu.1 Dc, htest⟩
+  · intro n hn
+    rw [hvalue, if_pos (hzero n hn)]
+  · intro n hn
+    rw [hvalue, if_neg (hone n hn)]
+
+/-- At a proper stage obeying the original every-selection F law, no continuous
+map on a closed domain separates the two pools of any historical J replacement.
+The pools and original reservoirs are arbitrary actual input sets; no delayed
+event, final history, or finite-image endpoint is postulated by this theorem. -/
+theorem no_continuous_pool_separation
+    {l : Ordinal.{0}} (H : Prefix l) (D : H.Data) (laws : H.Laws D)
+    (r d b c : Coord l) (hwr : ω ≤ r.1)
+    (hrb : r < b) (hdb : d < b) (hbc : b ≤ c)
+    (M : Bool → Set ℕ) (hM : ∀ e, M e ⊆ D.N r d e)
+    (hJb : D.J r d b = M false ∪ M true)
+    (A : Set (H.Space c)) (hA : IsClosed A)
+    (x : ℕ → A)
+    (hsource : ∀ n, (D.nu r ⟨d.1, d.2.trans D.proper⟩ n).1 =
+      (Measure.dirac (H.map r c (hrb.le.trans hbc) (x n).val)).toSignedMeasure)
+    (f : A → H.Space c) (hf : Continuous f)
+    (C : Set (H.Space c)) (hC : IsClopen C) :
+    ¬ ((∀ n ∈ M false, f (x n) ∈ C) ∧
+       (∀ n ∈ M true, f (x n) ∉ C)) := by
+  intro hsplit
+  obtain ⟨Dc, hDc, htrace⟩ := exists_ambient_clopen_preimage A hA f hf C hC
+  exact proper_F_excludes_split_dirac_lifts H D laws r d b c hwr hrb hdb hbc M hM hJb
+    (fun n => (x n).val) hsource Dc hDc
+    (fun n hn => (htrace (x n)).mpr (hsplit.1 n hn))
+    (fun n hn hmem => hsplit.2 n hn ((htrace (x n)).mp hmem))
+
+end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
