@@ -97,7 +97,10 @@ internal sealed class CoulombBranchPoissonBracketRefutationDocument : IScribeDoc
                             + "The obstruction concerns precisely the displayed normalized mixed brackets "
                             + "together with the vanishing equal-charge brackets in a reduced complex algebra; "
                             + "it does not require any adjoint-generator relations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gledhill-hanany-2023-coulomb-branch-poisson-bracket-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(
