@@ -16,7 +16,7 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
         Blocks(
             Paragraph(Text(
                 "Vertices are indexed by Fin (n + 1). A and B denote the specified actions on vertices and multifacets, respectively. "
-                    + "Compatibility proofs in applications and membership proofs in subtype constructors are implicit; these proofs do not affect values.")),
+                    + "Membership proofs in subtype constructors are implicit; these proofs do not affect values.")),
             Node("weighted-simplicial-complex", "WeightedSimplicialComplex", "Weighted simplicial complexes",
                 WeightedFormula(), AssessedProvenance.FromLiterature(Source),
                 "A natural weight is assigned to every vertex subset. Weights divide the weights of larger subsets, "
@@ -155,8 +155,8 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
         Formula target = Incident(Act("A", X("g"), X("i")));
         Formula inverseImage = Act("B", Inverse(X("g")), At(Qualified("Subtype", "val"), X("x")));
         Formula value = LambdaOf("x", target, At(X("β"), Seq(Langle, Sp, inverseImage, Sp, Rangle)));
-        Formula equation = Equal(Typed(LocalCall("transport", X("g"), X("i"), X("β")), Arrow(target, X("ι"))), value);
-        return ActionBinders(Imp(Compatibility(), All("ι", Type(), All("g", X("G"),
+        Formula equation = Equal(Typed(LocalCall("transport", X("h"), X("g"), X("i"), X("β")), Arrow(target, X("ι"))), value);
+        return ActionBinders(All("h", Compatibility(), All("ι", Type(), All("g", X("G"),
             All("i", Vertices(), All("β", Arrow(Incident(X("i")), X("ι")), equation))))), finite: false);
     }
 
@@ -179,19 +179,19 @@ internal sealed class NonFactorizableDoubledTriangleDocument : IScribeDocumentDe
         Formula positive = All("i", Vertices(), All("β", localLabels,
             Rel(Typed(D(0), Reals()), FormulaRelationOperator.LessThan, At(X("C"), X("i"), X("β")))));
         Formula invariant = All("g", X("G"), All("i", Vertices(), All("β", localLabels,
-            Equal(At(X("C"), Act("A", X("g"), X("i")), LocalCall("transport", X("g"), X("i"), X("β"))),
+            Equal(At(X("C"), Act("A", X("g"), X("i")), LocalCall("transport", X("h"), X("g"), X("i"), X("β"))),
                 At(X("C"), X("i"), X("β"))))));
         Formula factors = ProductOver("i", Vertices(), At(X("C"), X("i"), Restrict(X("i"), X("α"))));
         Formula realCount = Typed(At(Qualified("Nat", "cast"), LocalCall("K", X("G"), X("A"), X("B"), X("α"))), Reals());
         Formula equations = All("α", Arrow(Multifacets(), FinOf(X("m"))), Equal(factors, Inverse(realCount)));
         Formula solution = All("m", Naturals(), Some("C", factorType, And(positive, And(invariant, equations))));
-        return ActionBinders(Imp(Compatibility(), Iff(LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B")), solution)),
+        return ActionBinders(All("h", Compatibility(), Iff(LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B"), X("h")), solution)),
             finite: true);
     }
 
     private static Formula ClaimFormula() => Iff(Local("claim"), WeightBinders(
         Imp(LocalCall("WeightedSimplicialComplex", X("ω")), GroupBinders(
-            Imp(Compatibility(), LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B"))), finite: true))));
+            All("h", Compatibility(), LocalCall("Factorizable", X("ω"), X("G"), X("A"), X("B"), X("h"))), finite: true))));
 
     private static Formula WeightBinders(Formula body) =>
         All("n", Naturals(), All("ω", Arrow(VertexSets(), Naturals()), body));

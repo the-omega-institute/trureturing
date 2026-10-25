@@ -8,7 +8,6 @@
 
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.Group.Action.End
 
 namespace D5.S3.Quantum.TensorNetworks.NonFactorizableDoubledTriangle
 
