@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d0c8c416186ad434137b8fb6174f1e407c359700d3da5b6ad4c33170d0e20f5d
+  normalized_sha256: sha256:d0c8c416186ad434137b8fb6174f1e407c359700d3da5b6ad4c33170d0e20f5d
+cas_ref: sha256:d0c8c416186ad434137b8fb6174f1e407c359700d3da5b6ad4c33170d0e20f5d
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.equal_at_earlier_level
+    target_statement_id: sha256:2263f9a33dc5d9e36d05e494f442e7abc3ed8b40608222d633155a10558f2b04
+receipts:
+  unresolved_subitems: []
