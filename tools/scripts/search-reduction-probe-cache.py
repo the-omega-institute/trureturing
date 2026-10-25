@@ -105,10 +105,14 @@ def input_identity(request, root, key):
     updated = {}
     # Hash source and the actual compiled judge/dependency closure. The research
     # library and production index are fingerprinted in their entirety.
-    inputs = [Path(request), Path("lean-toolchain"), Path("lake-manifest.json"),
+    inputs = [Path(request), Path("Makefile"), Path("lean-toolchain"), Path("lake-manifest.json"),
               Path("tools/lean-inspector-reg/lakefile.lean"),
               Path("tools/lean-inspector"),
-              Path(".lake/build/lean-inspector/reg/lib/lean"),
+              Path("tools/lean-inspector-interface"), Path("Reg"),
+              Path(".lake/build/lean-inspector/reg/lib"),
+              Path(".lake/build/lean-inspector/interface/lib"),
+              Path(".lake/build/lean-inspector/producer/lib"),
+              Path(".lake/build/reg/lib/lean"),
               Path(".lake/packages/mathlib/lake-manifest.json"),
               Path(".lake/packages/mathlib/Mathlib.lean"),
               Path("tools/scripts/search-reduction-runner.sh"), Path(__file__)]
@@ -171,6 +175,9 @@ def run(command):
     env.pop("SEARCH_REDUCTION_PROBE_READ", None)
     env.pop("SEARCH_REDUCTION_PROBE_WRITE", None)
     env["SEARCH_REDUCTION_PROBE_ID"] = identity
+    # Candidate checkpoints and local query answers also inherit the full
+    # semantic identity when the whole probe has to follow the cold path.
+    env["SEARCH_REDUCTION_RESUME_INPUTS"] = identity
     if directory.exists():
         try:
             valid_record(directory, identity, key)

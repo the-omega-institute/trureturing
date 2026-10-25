@@ -212,6 +212,10 @@ search-reduction-test: search-reduction-index-fixtures
 	@env -u SEARCH_REDUCTION_INDEX /bin/bash tools/scripts/search-reduction-runner.sh test
 search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 
+.PHONY: search-reduction-probe-cache-test
+search-reduction-probe-cache-test:
+	@python3 tools/scripts/search-reduction-probe-cache-test.py
+
 search-reduction-index-failure-test:
 	@/bin/bash tools/scripts/search-reduction-runner.sh index-failure-test
 

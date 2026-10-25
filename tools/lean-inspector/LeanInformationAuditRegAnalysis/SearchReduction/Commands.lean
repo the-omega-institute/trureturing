@@ -287,7 +287,8 @@ private partial def exportConstant (source : Environment) (target n : Name) : Me
 /-- Publication compiles finite constructor data and checks proofs independently
 of the search and of the request wrapper's elaborator recursion limit. -/
 def withPublicationContext {α : Type} (action : MetaM α) : MetaM α :=
-  withOptions (fun opts => opts.set `maxRecDepth (max 100000 (maxRecDepth.get opts))) <|
+  withOptions (fun opts => (opts.set `maxRecDepth (max 100000 (maxRecDepth.get opts)))
+    |>.setBool `Elab.async false) <|
     withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) action
 
 /-- The typed result is computed by the same compiled classifier as A1. -/
@@ -548,7 +549,7 @@ private def probeProofs (result : Observation) : Array Expr := Id.run do
       reading.baselineProof?.toArray ++ reading.pairedProof?.toArray
   return proofs
 
-private def recheckProbeProofs (result : Observation) : MetaM Unit := do
+def checkCachedProbeCertificates (result : Observation) : MetaM Unit := withPublicationContext do
   let proofs := probeProofs result
   for proof in proofs do checkLocalProof (← inferType proof) proof
   emitLookupRecord s!"PROBE_CACHE_KERNEL_CERTIFICATES count={proofs.size} standard_axioms=true"
@@ -556,12 +557,18 @@ private def recheckProbeProofs (result : Observation) : MetaM Unit := do
 /-- A small ordinary Lean module holds only proof dependencies. Its consumers
 recheck every certificate and recompute the published classifier at trust zero. -/
 private unsafe def saveProbeCache (directory : System.FilePath) (identity : String)
-    (source publicationBase : Environment) (request : Request) (result : Observation) : CommandElabM Unit := do
+    (source : Environment) (request : Request) (result : Observation) : CommandElabM Unit := do
   let some info := (source.setExporting false).find? request.target
     | throwError "search.cache_missing_target"
   let module := s!"SearchReductionEvidence_{hash identity}"
   let path := directory / s!"probe-{hash identity}.pickle"
   let before ← getEnv
+  -- Owner initializers may register new extensions. A fresh import initializes
+  -- their default state before the small dependency module is serialized.
+  let publicationBase ← importModules
+    #[{module := `LeanInformationAuditRegAnalysis.SearchReduction.Commands}]
+    options 0 (leakEnv := false) (loadExts := true)
+  probeRegions.modify (· ++ publicationBase.header.regions)
   try
     modifyEnv fun _ => publicationBase.setMainModule module.toName
     liftTermElabM <| withPublicationContext do
@@ -598,7 +605,7 @@ private unsafe def replayProbeCache (directory : System.FilePath) (identity : St
   let mainModule := (← getEnv).header.mainModule
   modifyEnv fun _ => source.setMainModule mainModule
   profilePhase "probe/cache-kernel-start"
-  liftTermElabM <| withPublicationContext <| recheckProbeProofs record.result
+  liftTermElabM <| withPublicationContext <| checkCachedProbeCertificates record.result
   profilePhase "probe/cache-kernel-end"
   auditProbeCertificates source request record.result
   profilePhase "probe/publication-start"
@@ -625,7 +632,6 @@ private unsafe def replayProbeCache (directory : System.FilePath) (identity : St
 
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     (fixture : Bool := false) : CommandElabM Unit := do
-  let publicationBase ← getEnv
   let identity ← probeIdentity request owners name fixture
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_READ" then
     if ← replayProbeCache directory identity request owners name then return
@@ -689,7 +695,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
     ("negative_semantics", toJson "meta-computed full R; not an object-level unprovability proof")] |>.compress}"
   if let some directory ← IO.getEnv "SEARCH_REDUCTION_PROBE_WRITE" then
     profilePhase "probe/cache-save-start"
-    try saveProbeCache directory identity source publicationBase request result
+    try saveProbeCache directory identity source request result
     catch ex => emitLookupRecord s!"PROBE_CACHE save_rejected={← ex.toMessageData.toString}"
     profilePhase "probe/cache-save-end"
   logInfo (observationJson result request.baselineCommit).compress
