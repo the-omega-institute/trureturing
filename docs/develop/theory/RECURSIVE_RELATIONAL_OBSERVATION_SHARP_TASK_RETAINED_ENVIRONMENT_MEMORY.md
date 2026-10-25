@@ -2816,3 +2816,768 @@ available or whether lawful CPTP perturbations require square-root
 behavior. Neither alternative is resolved here.
 
 ## 追加锚（本行以下为增补区）
+## 17. The optimal uniform local Hölder exponent for the actual full-H tests
+
+**Theorem 17.1 (A first-order invisible family and the sharp exponent;
+repo-derived).** Keep exactly Definitions 1.1–1.2 and 11.1. All spaces
+and matrix algebras are over $\mathbb C$. In the fixed physical
+orthonormal basis $(e_0,\ldots,e_4)$ of $H=\mathbb C^5$, put
+
+$$
+\begin{gathered}
+r=\sqrt2,\qquad
+u=(e_0+e_3)/r,\qquad v_H=(e_1+e_4)/r,\qquad z=e_2,
+\qquad B=(u,v_H,z),\\
+c_0=(e_0-e_3)/r,\qquad c_1=(e_1-e_4)/r,
+\qquad C_\perp=(c_0,c_1),\qquad J=I_5-BB^\dagger,\\
+a=\frac{r+1}{\sqrt{12}},\qquad b=\frac{r-2}{\sqrt{12}},
+\qquad q=v_e=(a,a,b)^{\mathsf T},\qquad E=qq^\dagger,\\
+p=Bq=a u+a v_H+bz,\qquad P=pp^\dagger,
+\qquad P_1=P,\qquad P_0=I_5-P.
+\end{gathered}
+\tag{17.1}
+$$
+
+Here $u,v_H,z$ are precisely the vectors of (1.1), and $q$ is the
+vector of (1.5). For each real, fixed, known calibration angle
+$\theta$, use the actual operators $A_j(\theta)$ of (11.1) on all
+of $H$. For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$ define
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\|T^\dagger(A_j(\theta)^\dagger P_yA_j(\theta))
+-B^\dagger A_j(\theta)^\dagger P_yA_j(\theta)B\|_{\mathrm{op}}
+\Bigr\}.
+\end{aligned}
+\tag{17.2}
+$$
+
+Thus this is exactly (13.23), including both outcomes $y$ for each
+actual label $j$. The channel error uses the full unhalved diamond
+norm, with arbitrary finite untouched inaccessible references:
+
+$$
+\|\Lambda\|_\diamond
+=\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+\frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1},
+\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{17.3}
+$$
+
+Define explicitly
+
+$$
+\begin{gathered}
+S=\begin{pmatrix}
+-(1+2r)/3&-(5+2r)/9&(1+r)/9\\
+-(5+2r)/9&-(1+2r)/3&(1+r)/9\\
+(1+r)/9&(1+r)/9&0
+\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0&0\\0&1&0\end{pmatrix},\\
+G=BSB^\dagger+C_\perp ZB^\dagger+BZ^\dagger C_\perp^\dagger,
+\qquad K=GB=BS+C_\perp Z,\\
+U_t=\exp(itG),\qquad W_t=U_tB,\qquad
+T_t(X)=W_tXW_t^\dagger\quad(t\in\mathbb R).
+\end{gathered}
+\tag{17.4}
+$$
+
+Each $T_t$ is a complex-linear CPTP map on the full stipulated
+rectangular domain. At the permitted fixed calibration $\theta=0$,
+for every $0<t\le1/25$ it satisfies
+
+$$
+\begin{gathered}
+0< t^2\left(\sqrt2 a-\frac12\right)^2
+\le\delta_0(T_t)\le50t^2,\\
+\|T_t-\operatorname{Ad}_B\|_\diamond\ge t.
+\end{gathered}
+\tag{17.5}
+$$
+
+In particular, with $t_n=1/(25n)$ and $T_n=T_{t_n}$, for every
+integer $n\ge1$,
+
+$$
+0<\delta_0(T_n)\le\frac{2}{25n^2},\qquad
+\|T_n-\operatorname{Ad}_B\|_\diamond\ge\frac1{25n},\qquad
+\frac{\|T_n-\operatorname{Ad}_B\|_\diamond}{\delta_0(T_n)}
+\ge\frac n2.
+\tag{17.6}
+$$
+
+Consequently there are no finite constants $C>0$ and $\eta>0$
+such that, simultaneously for all real $\theta$ and all these
+complex CPTP maps,
+
+$$
+\delta_\theta(T)\le\eta
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond\le C\delta_\theta(T).
+\tag{17.7}
+$$
+
+More generally no exponent $\alpha>1/2$ admits a local bound with
+a finite constant, even at $\theta=0$. Together with Theorem 13.3,
+this makes $1/2$ the optimal worst-case uniform local Hölder exponent
+on exactly this domain. This does not determine a best constant,
+an exact optimal modulus function, or the optimal exponent
+separately at each nonzero angle.
+
+No output restriction to $R=B\mathbb C^3$, conditional branch
+correctness, full-$H$ fairness, or known input state is assumed.
+The effects in (17.2) retain the actual joint label probabilities;
+they are not conditioned or renormalized. When $T$ is an average
+corrected channel, the channel error here is the error of that
+average, without a uniform approximation assertion on every
+history/record branch of arbitrarily small weight. Calibration is
+held fixed and known when each defect is evaluated.
+
+Proof. The coordinates (17.1) give
+
+$$
+\begin{gathered}
+B^\dagger B=I_3,\qquad
+C_\perp^\dagger C_\perp=I_2,\qquad
+B^\dagger C_\perp=0,\\
+BB^\dagger+C_\perp C_\perp^\dagger=I_5,
+\qquad \|q\|=\|p\|=1.
+\end{gathered}
+\tag{17.8}
+$$
+
+At $\theta=0$, (11.1) gives $A_0=K_0$ and $A_1=K_1$.
+Their full five-dimensional effects and the tested rank-one vectors
+are exactly
+
+$$
+\begin{aligned}
+D_0:=A_0^\dagger A_0&=\operatorname{diag}(1,0,1/2,0,1),
+& D_1:=A_1^\dagger A_1&=I_5-D_0,\\
+t_0:=A_0^\dagger p&=a e_0+(a/r)e_2+b e_4,
+& t_1:=A_1^\dagger p&=a e_1+(a/r)e_2+b e_3.
+\end{aligned}
+\tag{17.9}
+$$
+
+It follows that the entire collection of five effects tested in
+(17.2), at this angle, is
+
+$$
+\mathcal M={P,\ t_0t_0^\dagger,\ t_1t_1^\dagger,
+\ D_0-t_0t_0^\dagger,\ D_1-t_1t_1^\dagger\}.
+\tag{17.10}
+$$
+
+Indeed $A_j^\dagger P_1A_j=t_jt_j^\dagger$ and
+$A_j^\dagger P_0A_j=D_j-t_jt_j^\dagger$. Each $M\in\mathcal M$
+is a positive contraction: $0\le P\le I_5$ and
+$0\le A_j^\dagger P_yA_j\le D_j\le I_5$. These are actual
+full-$H$ effects, and $D_j$ has not been replaced by $I_5/2$.
+
+The matrix $S$ is real symmetric, so (17.4) gives $G=G^\dagger$.
+Hence $U_t$ is unitary and $W_t^\dagger W_t=I_3$ for real $t$.
+For every finite reference, conjugation by $W_t\otimes I$ preserves
+positivity, and the last identity gives trace preservation.
+Thus the single rectangular Kraus operator $W_t$ defines a
+complex-linear CPTP map, including all complex input coherences.
+This is the usual finite-dimensional Kraus criterion; see John
+Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapter 2. No postselection is involved. A useful explicit bound is
+
+$$
+\begin{gathered}
+\|Z\|_{\mathrm{op}}=1,\qquad
+\|S\|_{\mathrm{HS}}^2=\frac{80+40r}{27}<6,\\
+h:=\|G\|_{\mathrm{op}}
+\le\|S\|_{\mathrm{op}}+2\|Z\|_{\mathrm{op}}
+\le\|S\|_{\mathrm{HS}}+2<\sqrt6+2<5.
+\end{gathered}
+\tag{17.11}
+$$
+
+The displayed Hilbert–Schmidt identity is obtained by squaring the
+nine entries of $S$ and using $r^2=2$; its strict inequality follows
+from $r<3/2$.
+
+The exact cancellation certificate consists of the following finite
+matrix identities, all in the coordinates (17.1) and (17.4):
+
+$$
+\begin{gathered}
+\lambda=-\frac{10+7r}{9},\qquad
+\mu=\frac{2r-1}{9},\\
+p^\dagger K=\lambda p^\dagger B,\qquad
+t_j^\dagger K=\mu t_j^\dagger B\quad(j=0,1),
+\qquad B^\dagger K=S,\\
+B^\dagger D_0K=
+\begin{pmatrix}
+(1-r)/3&-(5+2r)/18&(1+r)/18\\
+-(5+2r)/18&-(2+r)/3&(1+r)/18\\
+(1+r)/18&(1+r)/18&0
+\end{pmatrix}.
+\end{gathered}
+\tag{17.12}
+$$
+
+These equalities follow by substituting (17.1), (17.4) and (17.9)
+and multiplying, with $r^2=2$. They give, in particular,
+
+$$
+\begin{aligned}
+B^\dagger PK&=\lambda B^\dagger PB,\\
+B^\dagger(t_jt_j^\dagger)K&=
+\mu B^\dagger(t_jt_j^\dagger)B\quad(j=0,1),\\
+B^\dagger D_1K&=S-B^\dagger D_0K.
+\end{aligned}
+\tag{17.13}
+$$
+
+The first two lines are Hermitian because $\lambda,\mu$ are real.
+The displayed matrix $B^\dagger D_0K$ is real symmetric, as are
+$S$ and therefore $B^\dagger D_1K$. Subtracting the corresponding
+rank-one terms proves that $B^\dagger MK$ is Hermitian for every
+one of the five effects in (17.10), including both $y=0$ effects.
+For each such $M$ define $F_M(t)=B^\dagger U_t^\dagger MU_tB$.
+Differentiation now gives the whole matrix identity
+
+$$
+F_M'(0)=i(B^\dagger MK-K^\dagger MB)=0
+\qquad(M\in\mathcal M).
+\tag{17.14}
+$$
+
+Thus the certificate cancels all entries of the complex $3\times3$
+effect matrices, not just expectations on particular real inputs.
+
+For every real $s$, differentiating once more yields
+
+$$
+\begin{aligned}
+F_M''(s)&=-B^\dagger U_s^\dagger[G,[G,M]]U_sB,\\
+\|F_M''(s)\|_{\mathrm{op}}
+&\le4h^2\|M\|_{\mathrm{op}}\le100,\\
+\|F_M(t)-F_M(0)\|_{\mathrm{op}}&\le50t^2
+\quad(t\in\mathbb R).
+\end{aligned}
+\tag{17.15}
+$$
+
+The last line follows by integrating twice and using (17.14).
+Since $T_t^\dagger(M)=F_M(t)$ and $F_M(0)=B^\dagger MB$,
+these are exactly the five differences in (17.2). Consequently
+$\delta_0(T_t)\le50t^2$, without a fairness assumption or an
+output restriction.
+
+For the lower bound on channel error, use the legitimate pure
+qutrit input $x=(1,0,0)^{\mathsf T}$, with ideal output $u=Bx$.
+By (17.4) and (17.8), $JGu=C_\perp Zx=c_0$ and $\|c_0\|=1$.
+The integral remainder for the finite matrix exponential gives
+
+$$
+\|U_t-I_5-itG\|_{\mathrm{op}}
+\le\frac{h^2t^2}{2}\le\frac{25t^2}{2},\qquad
+\|JU_tu\|\ge t-\frac{25t^2}{2}\ge\frac t2
+\quad(0<t\le1/25).
+\tag{17.16}
+$$
+
+Indeed the second derivative of $U_s$ is $-G^2U_s$, whose norm
+is at most $h^2$, and $Ju=0$.
+For two unit vectors $u,w$, the unhalved trace distance of their
+rank-one projections is
+
+$$
+\|ww^\dagger-uu^\dagger\|_1
+=2\sqrt{1-|\langle u,w\rangle|^2}.
+\tag{17.17}
+$$
+
+This standard pure-state trace-distance identity is also immediate
+on their at most two-dimensional span: the difference has trace
+zero and eigenvalues
+$\pm\sqrt{1-|\langle u,w\rangle|^2}$, with zeros on the
+orthogonal complement. See also Watrous, Chapters 2–3, for
+trace-distance and channel-distinguishability conventions.
+The range of $J$ is orthogonal to $u$, so taking $w=U_tu$ gives
+
+$$
+\begin{aligned}
+\|(T_t-\operatorname{Ad}_B)(xx^\dagger)\|_1
+&=2\sqrt{1-|\langle u,U_tu\rangle|^2}\\
+&\ge2\|JU_tu\|\ge t,\\
+\|T_t-\operatorname{Ad}_B\|_\diamond&\ge t
+\qquad(0<t\le1/25).
+\end{aligned}
+\tag{17.18}
+$$
+
+The last line uses $d=1$ and $X=xx^\dagger$ in (17.3), where
+$\|X\|_1=1$. Allowing any further finite untouched reference can
+only increase the supremum. In particular no factor of two is
+removed from this lower bound.
+
+The defect on this interval is strictly positive as well.
+Since $JGp=C_\perp Zq=a(c_0+c_1)$, (17.16)'s remainder estimate
+applied to $p$ yields
+
+$$
+\begin{aligned}
+\|JU_tp\|&\ge t\sqrt2 a-\frac{25t^2}{2}
+\ge t\left(\sqrt2 a-\frac12\right)>0,\\
+\sqrt2 a&=\frac{1+\sqrt2}{\sqrt6}>\frac12
+\qquad(0<t\le1/25).
+\end{aligned}
+\tag{17.19}
+$$
+
+On input $q$, the immediate ideal effect has expectation one,
+whereas the actual expectation is $|\langle p,U_tp\rangle|^2$.
+As $\operatorname{ran}J\subseteq p^\perp$, this gives
+
+$$
+\begin{aligned}
+\delta_0(T_t)
+&\ge|\langle q,(T_t^\dagger(P)-E)q\rangle|\\
+&=1-|\langle p,U_tp\rangle|^2
+\ge\|JU_tp\|^2
+\ge t^2\left(\sqrt2 a-\frac12\right)^2>0.
+\end{aligned}
+\tag{17.20}
+$$
+
+Equations (17.15), (17.18) and (17.20) prove (17.5).
+Substitution of $t_n=1/(25n)$ gives
+$50t_n^2=2/(25n^2)$ and hence all of (17.6). In particular the
+defects tend to zero while the displayed error-to-defect ratios
+diverge. Given any proposed finite $C>0$ and $\eta>0$ in (17.7),
+choose an integer $n$ large enough that
+
+$$
+n>2C,\qquad \frac{2}{25n^2}\le\eta.
+\tag{17.21}
+$$
+
+Then $\delta_0(T_n)\le\eta$ but the ratio in (17.6) exceeds
+$C$, a contradiction. The permitted single calibration
+$\theta=0$ suffices to refute constants quantified over all real
+calibration angles.
+
+For any fixed $\alpha>1/2$, (17.5) also gives
+
+$$
+\frac{\|T_t-\operatorname{Ad}_B\|_\diamond}
+{\delta_0(T_t)^\alpha}
+\ge 50^{-\alpha}t^{1-2\alpha}\longrightarrow+\infty
+\qquad(t\downarrow0).
+\tag{17.22}
+$$
+
+Thus no finite coefficient and positive local defect threshold
+can give that exponent, even at zero angle. For the complementary
+upper bound, directly reuse Theorem 13.3: on precisely this full
+complex CPTP domain, uniformly over all real $\theta$,
+
+$$
+\delta_\theta(T)\le\varepsilon\le\frac12,\quad\varepsilon>0
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond\le800\sqrt\varepsilon.
+\tag{17.23}
+$$
+
+For positive defect take $\varepsilon=\delta_\theta(T)$; at zero
+defect let $\varepsilon\downarrow0$ in the same inequality.
+This supplies the exponent $1/2$, while (17.22) excludes every
+larger exponent. The upper estimate is the existing Theorem 13.3,
+and the present construction adds its matching exponent obstruction.
+It does not yield an optimal coefficient, an exact modulus, a
+classification at every nonzero angle, or a calibration-error model.
+It makes no physical-realization or resource-minimum assertion.
+$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 18. Global linear stability with exact qutrit output support
+
+**Theorem 18.1 (All-angle effect-to-diamond linear bound on the supported output; repo-derived).**
+Use the actual embedding and tests of Definitions 1.1–1.2 and 11.1.
+Explicitly, in the physical orthonormal basis $(e_0,\ldots,e_4)$ of
+$H=\mathbb C^5$, and in the input qutrit, respectively, put
+
+$$
+\begin{gathered}
+u=(e_0+e_3)/\sqrt2,\qquad v_H=(e_1+e_4)/\sqrt2,\qquad z=e_2,
+\qquad B=(u,v_H,z),\qquad R=\operatorname{ran}B,\qquad Q=BB^\dagger,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\qquad
+ e=(1,1,-2)^{\mathsf T}/\sqrt6,\qquad
+ f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+u_0=(\xi+e)/\sqrt2,\qquad E=u_0u_0^\dagger,\qquad
+ p=Bu_0,\qquad P=pp^\dagger,\qquad P_1=P,\qquad P_0=I_5-P.
+\end{gathered}
+\tag{18.1}
+$$
+
+Thus $B^\dagger B=I_3$ and $Q$ is precisely the output-support
+projection, whereas $P$ is the immediate task effect. For every real,
+fixed, known angle $\theta$, the actual acquisition on all of $H$ is
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_3|,\\
+A_0(\theta)&=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1(\theta)=i\sin\theta K_0+\cos\theta K_1.
+\end{aligned}
+\tag{18.2}
+$$
+
+Let $T:M_3(\mathbb C)\to M_5(\mathbb C)$ be any complex-linear
+CPTP map with the exact output-support property
+
+$$
+T(X)=QT(X)Q\qquad\text{for every }X\in M_3(\mathbb C).
+\tag{18.3}
+$$
+
+With $T^\dagger$ its trace adjoint, define the same actual defect as
+in (13.23) and (17.2):
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\bigl\|T^\dagger(A_j^\dagger P_yA_j)
+       -B^\dagger A_j^\dagger P_yA_jB\bigr\|_{\mathrm{op}}\Bigr\}.
+\end{aligned}
+\tag{18.4}
+$$
+
+Here $A_j=A_j(\theta)$. The continuation effects retain their actual
+labels and their joint probabilities; neither outcome is conditioned
+or renormalized. Then, uniformly in every such $\theta$ and $T$,
+
+$$
+\|T-\operatorname{Ad}_B\|_\diamond
+\le216578\,\delta_\theta(T),\qquad
+\operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{18.5}
+$$
+
+This is a global bound, with no restriction on the size of the defect.
+In particular it gives the local implication with $C=216578$ and
+$\eta=1/2$. The norm is the full unhalved diamond norm
+
+$$
+\|\Lambda\|_\diamond
+=\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+\frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
+\tag{18.6}
+$$
+
+Thus the estimate includes every finite untouched inaccessible
+reference and every complex amplified input matrix, and in particular
+every joint density matrix. The constant is an explicit upper bound.
+Theorem 17.1 retains its stated domain and conclusion: its obstructing
+family has output outside $R$, as identified below, so (18.3) excludes
+that family. The supported-output contract here is precisely the one
+in Theorem 5.2; the continuation still uses the full actual operators
+(11.1), restated in (18.2).
+
+Proof. Write $\delta=\delta_\theta(T)$, use Euclidean vector norms,
+and let $\|M\|_{\mathrm{HS}}^2=\operatorname{Tr}(M^\dagger M)$.
+Compression gives
+
+$$
+\Phi(X)=B^\dagger T(X)B,\qquad
+T=\operatorname{Ad}_B\circ\Phi,\qquad
+\Psi=\Phi^\dagger,\qquad \Psi(I_3)=I_3.
+\tag{18.7}
+$$
+
+Indeed compression is completely positive, and exact support gives
+$\operatorname{Tr}\Phi(X)=\operatorname{Tr}(QT(X))
+=\operatorname{Tr}T(X)=\operatorname{Tr}X$. Consequently $\Phi$ is
+CPTP and, for every physical matrix $M\in M_5(\mathbb C)$,
+$T^\dagger(M)=\Psi(B^\dagger MB)$.
+
+Use exactly the three probes of (5.6)–(5.7) and the frame (13.26):
+
+$$
+\begin{gathered}
+u_1=\frac{\xi-e/2+(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+u_2=\frac{\xi-e/2-(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+\Pi_i=u_iu_i^\dagger\quad(0\le i\le2),\\
+\|u_i\|=1,\qquad \langle u_i,u_k\rangle=\tfrac14\quad(i\ne k),\\
+S=\sum_{i=0}^2\Pi_i
+ =\operatorname{diag}_{(\xi,e,f)}(3/2,3/4,3/4)
+ \succeq\tfrac34I_3.
+\end{gathered}
+\tag{18.8}
+$$
+
+The inner product is conjugate-linear in its first argument.
+For the exact correspondence with (1.4), let
+$U_0(x_0,x_1,x_2)=(x_0,x_2,x_1)$,
+$W(x_0,x_1,x_2)=(x_1,x_0,x_2)$,
+$V_0=U_0e^{i\theta W}$ and $V_1=V_0W$.
+The actual identity $A_jB=BV_j/\sqrt2$ and the probe identities
+already evaluated in §5 give
+
+$$
+\begin{aligned}
+B^\dagger PB&=\Pi_0,&
+B^\dagger A_j^\dagger P_1A_jB&=\tfrac12\Pi_{j+1},\\
+B^\dagger A_j^\dagger P_0A_jB&=\tfrac12(I_3-\Pi_{j+1})
+&& (j=0,1).
+\end{aligned}
+\tag{18.9}
+$$
+
+These are compressions of the actual full-$H$ effects, justified for
+$T$ by (18.3). In particular the weights are $1/2$, with no
+full-$H$ fairness identity assumed. Set
+$\epsilon_i=\|\Psi(\Pi_i)-\Pi_i\|_{\mathrm{op}}$.
+Since $\Psi$ is unital, the complementary effect differences are
+negatives of their corresponding $y=1$ differences. Thus
+
+$$
+\delta=\max\{\epsilon_0,\epsilon_1/2,\epsilon_2/2\},\qquad
+\sum_{i=0}^2\epsilon_i\le5\delta,\qquad
+\epsilon_i\le2\delta.
+\tag{18.10}
+$$
+
+We first establish the elementary scalar estimate needed for the
+quantitative argument, inside this proof. For an arbitrary complex
+$3\times3$ matrix $M$, put
+
+$$
+\begin{gathered}
+d_i=\|[\Pi_i,M]\|_{\mathrm{HS}},\qquad
+\lambda_i=\langle u_i,Mu_i\rangle,\qquad c=\lambda_0,\\
+e_i=(I_3-\Pi_i)Mu_i,\qquad
+f_0=u_0^\dagger M(I_3-\Pi_0).
+\end{gathered}
+\tag{18.11}
+$$
+
+Here $f_0$ is a row vector. Since
+$e_i=-[\Pi_i,M]u_i$ and
+$f_0=u_0^\dagger[\Pi_0,M]$, we have
+$\|e_i\|\le d_i$ and $\|f_0\|\le d_0$.
+Evaluate $u_0^\dagger Mu_i$ using first the row decomposition at
+$u_0$, then the column decomposition at $u_i$. For $i=1,2$ the
+nonzero overlap in (18.8) gives
+
+$$
+\frac{\lambda_i-\lambda_0}{4}
+=f_0u_i-u_0^\dagger e_i,\qquad
+|\lambda_i-c|\le4(d_0+d_i).
+\tag{18.12}
+$$
+
+It follows that
+$\|(M-cI_3)u_0\|\le d_0$ and
+$\|(M-cI_3)u_i\|\le4d_0+5d_i$ for $i=1,2$.
+For $A=M-cI_3$, the frame bound gives
+$\sum_i\|Au_i\|^2=\operatorname{Tr}(A^\dagger AS)
+\ge(3/4)\|A\|_{\mathrm{HS}}^2$.
+Cauchy–Schwarz, in the form
+$(4a+5b)^2\le41(a^2+b^2)$, therefore yields
+
+$$
+\begin{aligned}
+\|M-cI_3\|_{\mathrm{HS}}^2
+&\le\tfrac43\bigl[d_0^2+(4d_0+5d_1)^2+(4d_0+5d_2)^2\bigr]\\
+&\le\tfrac43(83d_0^2+41d_1^2+41d_2^2)
+\le111\sum_{i=0}^2\|[\Pi_i,M]\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{18.13}
+$$
+
+No reality or self-adjointness assumption on $M$ was used.
+
+Take a finite Kraus representation
+$\Phi(X)=\sum_\ell L_\ell XL_\ell^\dagger$ with
+$\sum_\ell L_\ell^\dagger L_\ell=I_3$.
+Such a representation follows by spectral decomposition of the
+positive $9\times9$ Choi matrix
+$\sum_{a,b=1}^3|a\rangle\langle b|\otimes
+\Phi(|a\rangle\langle b|)$: writing its eigenvectors as vectorized
+matrices yields the $L_\ell$, and its trace-preserving partial trace
+gives the displayed Kraus normalization.
+For any projection $\Pi$ let $\Delta=\Psi(\Pi)-\Pi$.
+Expanding the commutators and using that normalization gives
+
+$$
+\begin{aligned}
+\sum_\ell[\Pi,L_\ell]^\dagger[\Pi,L_\ell]
+&=\Psi(\Pi)-\Psi(\Pi)\Pi-\Pi\Psi(\Pi)+\Pi\\
+&=\Delta-\Delta\Pi-\Pi\Delta.
+\end{aligned}
+\tag{18.14}
+$$
+
+For each rank-one $\Pi_i$, taking the trace and using trace norm
+and operator norm duality gives
+
+$$
+\begin{aligned}
+\sum_\ell\|[\Pi_i,L_\ell]\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}\bigl((I_3-2\Pi_i)
+                    (\Psi(\Pi_i)-\Pi_i)\bigr)\\
+&\le\|I_3-2\Pi_i\|_1\,\epsilon_i=3\epsilon_i.
+\end{aligned}
+\tag{18.15}
+$$
+
+The left side is nonnegative. Put
+$c_\ell=\langle u_0,L_\ell u_0\rangle$ and
+$N_\ell=L_\ell-c_\ell I_3$.
+Apply (18.13) to each $L_\ell$, then (18.15) and (18.10), to obtain
+the Kraus residual estimate
+
+$$
+R_N:=\sum_\ell\|N_\ell\|_{\mathrm{HS}}^2
+\le111\cdot3\sum_{i=0}^2\epsilon_i
+\le1665\delta.
+\tag{18.16}
+$$
+
+The symbol $R_N$ is a nonnegative scalar, distinct from the output
+space $R$.
+
+To retain the coherent contribution rather than lose a square root,
+use trace preservation exactly. Define
+
+$$
+\begin{gathered}
+s=\sum_\ell|c_\ell|^2,\qquad
+M_0=\sum_\ell\overline{c_\ell}N_\ell,\qquad
+D=\sum_\ell N_\ell^\dagger N_\ell,\\
+sI_3+M_0+M_0^\dagger+D=I_3,\qquad
+H_c=\frac{M_0-M_0^\dagger}{2i}=H_c^\dagger.
+\end{gathered}
+\tag{18.17}
+$$
+
+Expanding $\Phi(X)$ and substituting the Hermitian part of $M_0$
+from this identity gives the exact decomposition on every complex
+matrix $X$:
+
+$$
+\begin{aligned}
+\Phi(X)-X&=i[H_c,X]+\mathcal V(X),\\
+\mathcal V(X)&=\sum_\ell N_\ell XN_\ell^\dagger
+                        -\tfrac12(DX+XD).
+\end{aligned}
+\tag{18.18}
+$$
+
+Since $D\succeq0$, we have
+$\|D\|_{\mathrm{op}}\le\operatorname{Tr}D=R_N$ and
+$\sum_\ell\|N_\ell\|_{\mathrm{op}}^2\le R_N$.
+The trace-norm ideal inequality
+$\|AXB\|_1\le\|A\|_{\mathrm{op}}\|X\|_1\|B\|_{\mathrm{op}}$
+therefore implies, for every finite $d$ and every complex
+$X\in M_3(\mathbb C)\otimes M_d(\mathbb C)$,
+
+$$
+\begin{aligned}
+\|(\mathcal V\otimes\operatorname{id}_{M_d})(X)\|_1
+&\le\left(\sum_\ell\|N_\ell\|_{\mathrm{op}}^2
+                           +\|D\|_{\mathrm{op}}\right)\|X\|_1\\
+&\le2R_N\|X\|_1.
+\end{aligned}
+\tag{18.19}
+$$
+
+Likewise the explicit adjoint
+$\mathcal V^\dagger(Y)=\sum_\ell N_\ell^\dagger YN_\ell
+-(DY+YD)/2$ satisfies
+$\|\mathcal V^\dagger(\Pi_i)\|_{\mathrm{op}}\le2R_N$.
+Taking the trace adjoint in (18.18) gives
+$\Psi(\Pi_i)-\Pi_i=-i[H_c,\Pi_i]
++\mathcal V^\dagger(\Pi_i)$, hence
+
+$$
+\|[H_c,\Pi_i]\|_{\mathrm{op}}
+\le\epsilon_i+2R_N\le2\delta+2R_N.
+\tag{18.20}
+$$
+
+Apply the scalar estimate (18.13) again, now to $M=H_c$.
+Its scalar $h=\langle u_0,H_cu_0\rangle$ is real.
+For $3\times3$ matrices,
+$\|A\|_{\mathrm{HS}}\le\sqrt3\|A\|_{\mathrm{op}}$.
+Thus (18.20), with three commutators, yields
+
+$$
+\begin{aligned}
+\|H_c-hI_3\|_{\mathrm{op}}
+&\le\|H_c-hI_3\|_{\mathrm{HS}}\\
+&\le\sqrt{111\cdot3\cdot3}\,(2\delta+2R_N)\\
+&=\sqrt{999}\,(2\delta+2R_N)
+\le64(\delta+R_N),
+\end{aligned}
+\tag{18.21}
+$$
+
+where $999<32^2$. Since scalar matrices do not contribute to a
+commutator, the same trace-norm ideal inequality, together with
+(18.19), proves for every such $d$ and complex $X$ that
+
+$$
+\begin{aligned}
+\|((\Phi-\operatorname{id}_{M_3})\otimes\operatorname{id}_{M_d})(X)\|_1
+&\le\bigl(2\|H_c-hI_3\|_{\mathrm{op}}+2R_N\bigr)\|X\|_1\\
+&\le(128\delta+130R_N)\|X\|_1\\
+&\le(128+130\cdot1665)\delta\|X\|_1\\
+&=216578\delta\|X\|_1.
+\end{aligned}
+\tag{18.22}
+$$
+
+Finally (18.7) gives the exact amplified correspondence
+
+$$
+\begin{aligned}
+&((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(X)\\
+&\quad=(B\otimes I_d)
+  [((\Phi-\operatorname{id}_{M_3})\otimes\operatorname{id}_{M_d})(X)]
+  (B^\dagger\otimes I_d).
+\end{aligned}
+\tag{18.23}
+$$
+
+Isometric embedding preserves the nonzero singular values and hence
+the trace norm of every complex matrix. Taking both suprema in
+(18.6) proves
+$\|T-\operatorname{Ad}_B\|_\diamond
+=\|\Phi-\operatorname{id}_{M_3}\|_\diamond\le216578\delta$.
+Nothing in the argument uses smallness of $\delta$; it also includes
+$\delta=0$ directly. Choosing $\eta=1/2$ gives the stated local form.
+The exact rigidity at zero defect is the existing supported-output
+conclusion of Theorem 5.2; no new general exact-rigidity theorem is
+needed here.
+
+For the distinction from Theorem 17.1, retain its notation
+$U_t=\exp(itG)$ and $T_t=\operatorname{Ad}_{U_tB}$ at $\theta=0$.
+For $x=(1,0,0)^{\mathsf T}$ its exhibited family satisfies
+
+$$
+\|(I_5-Q)U_tBx\|\ge t/2>0\qquad(0<t\le1/25).
+\tag{18.24}
+$$
+
+Consequently $T_t(xx^\dagger)$ is not supported in $R$, so it fails
+(18.3). Its obstruction on the unrestricted output domain and the
+linear estimate on the exactly supported domain are compatible.
+$\square$
+
+## 追加锚（本行以下为增补区）
