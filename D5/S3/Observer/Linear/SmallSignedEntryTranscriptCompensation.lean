@@ -1,7 +1,7 @@
-/- GID: D5 / S3 / Observer / Linear / SmallSignedEntryTranscriptCompensation
+/- GID: D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation
    generality: G
-   mirror - B: D5 / B / S3 / Observer / Linear / SmallSignedEntryTranscriptCompensation
-   mirror - E: none(waiver:evidence - not - specified - by - formal - manifest)
+   mirror-B: D5/B/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Small signed entries compensate complete finite native transcripts. -/
