@@ -310,7 +310,36 @@ private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
 private theorem witness_positive :
     ((3 / 2 : ℂ) • (1 : Matrix ((Fin 2 × Fin 2) × Fin 2)
       ((Fin 2 × Fin 2) × Fin 2) ℂ) - P - Q).PosSemidef := by
-  sorry
+  let B : Matrix (Fin 4) ((Fin 2 × Fin 2) × Fin 2) ℂ :=
+    ![fun x => if x = ((0, 0), 0) then 1 else
+        if x = ((0, 1), 1) ∨ x = ((1, 0), 1) then -1 else 0,
+      fun x => if x = ((0, 1), 1) then 1 else if x = ((1, 0), 1) then -1 else 0,
+      fun x => if x = ((1, 1), 1) then 1 else
+        if x = ((0, 1), 0) ∨ x = ((1, 0), 0) then -1 else 0,
+      fun x => if x = ((0, 1), 0) then 1 else if x = ((1, 0), 0) then -1 else 0]
+  let D : Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) ℂ :=
+    Matrix.diagonal fun x => if x = ((0, 0), 1) ∨ x = ((1, 1), 0) then 3 / 2 else 0
+  have hD : D.PosSemidef := by
+    apply Matrix.PosSemidef.diagonal
+    intro x
+    dsimp only
+    split_ifs <;> norm_num [Complex.le_def]
+  have he : (3 / 2 : ℂ) • (1 : Matrix ((Fin 2 × Fin 2) × Fin 2)
+      ((Fin 2 × Fin 2) × Fin 2) ℂ) - P - Q = (1 / 2 : ℂ) • (B.conjTranspose * B) + D := by
+    ext x y
+    change (3 / 2 : ℂ) * (1 : Matrix ((Fin 2 × Fin 2) × Fin 2)
+      ((Fin 2 × Fin 2) × Fin 2) ℂ) x y - P x y - Q x y =
+        (1 / 2 : ℂ) * (∑ k : Fin 4, star (B k x) * B k y) + D x y
+    rcases x with ⟨⟨a, b⟩, r⟩
+    rcases y with ⟨⟨c, d⟩, s⟩
+    fin_cases a <;> fin_cases b <;> fin_cases r <;>
+      fin_cases c <;> fin_cases d <;> fin_cases s <;>
+      norm_num [P, Q, B, D, Fin.sum_univ_succ,
+        bellDensity, bellVector, D5.S3.Quantum.QubitWitnesses.bellCoefficients,
+        Matrix.vecMulVec_apply, complex_sqrt_two_inv_mul_self]
+  rw [he]
+  exact ((Matrix.posSemidef_conjTranspose_mul_self B).smul
+    (show (0 : ℂ) ≤ 1 / 2 by norm_num [Complex.le_def])).add hD
 
 private theorem no_joint_channel : ¬ ChannelCompatible depol depol := by
   rintro ⟨Λ, hΛ, hL, hR⟩
