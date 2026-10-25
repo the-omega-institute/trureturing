@@ -1,14 +1,28 @@
-/- Native integration of original Corr covariance with the terminal original normal
-transpose API. No changed oscillator, pairing, or correction normalization. -/
+/- GID: D5/S3/VertexAlgebra/CorrectedInversion/NormalReadout
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/CorrectedInversion/NormalReadout
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Original triangular normal transpose as finite polynomial coordinates. -/
 import D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose
 import D5.S3.VertexAlgebra.HalfFock.ActualCorrCovariance
 import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.TwistedGround.ActualChargedAdjoint
 
+/-!
+# Original normal reflection in finite polynomial coordinates
+
+The actual signed current and normal transpose are those of
+`HalfFock.NormalScalarTranspose`. The dependent JetTuple product expansion
+identifies their original triangular sum with the original Corr normalReflection.
+The form retains its given bilinear orientation, arbitrary signed coefficient
+indices and charge norm. No symmetry or positivity assumption is introduced.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
 noncomputable section
 open scoped BigOperators
 namespace D5.S3.VertexAlgebra.CorrectedInversion
@@ -40,7 +54,7 @@ def readPolynomial (D : LatticeData) (ell : ℕ → Module.Dual ℂ (Oscillator 
     readPolynomial D ell (Polynomial.monomial j p) = ell j p := by
   have h : shiftCoefficients D (Polynomial.monomial j p) = Finsupp.single j p := by
     ext k
-    simp [shiftCoefficients, Polynomial.coeff_monomial]
+    simp [shiftCoefficients]
   simp [readPolynomial, h]
 
 theorem readPolynomial_support (D : LatticeData)
@@ -92,7 +106,7 @@ local macro "nativeTransposeLoss" : term => pure (Lean.mkIdent
     `D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.transposeExponent_loss))
 
 private theorem loss_cons (D : LatticeData) (i : Index D) (w : List (Index D))
-    (s : Fin (i.2+1)) (t : JetTuple D w) :
+    (s : Fin (i.2 + 1)) (t : JetTuple D w) :
     weightLoss D (i::w) (s,t) = i.2-s.val + weightLoss D w t := by
   have hs := s.isLt
   have ht := nativeLowerWeight D w t
@@ -101,6 +115,8 @@ private theorem loss_cons (D : LatticeData) (i : Index D) (w : List (Index D))
     sourceWeight]
   omega
 
+set_option maxHeartbeats 4000000 in
+-- Allow normalization of the finite dependent polynomial sums.
 /-- Restore exactly the signed lower jets of the original normal transpose as one
 ordinary finite polynomial. No tuple choices are identified or discarded. -/
 theorem normalP_X (D : LatticeData) (i : Index D) :
@@ -122,6 +138,8 @@ theorem normalP_X (D : LatticeData) (i : Index D) :
   simp only [← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul, map_mul, map_pow]
   ring
 
+set_option maxHeartbeats 4000000 in
+-- Allow normalization of the finite dependent polynomial sums.
 /-- Genuine finite product expansion over the EXISTING dependent JetTuple.
 Repeated source letters remain separate occurrences until polynomial addition. -/
 private theorem normalP_word (D : LatticeData) (w : List (Index D)) :
@@ -148,6 +166,8 @@ private theorem normalP_word (D : LatticeData) (w : List (Index D)) :
     simp only [smul_eq_C_mul, map_mul]
     ring
 
+set_option maxHeartbeats 4000000 in
+-- Allow normalization of the finite dependent polynomial sums.
 /-- Group the original monomial transpose as coefficients of the canonical
 normal-reflection polynomial. The triangular choices retain all occurrences. -/
 theorem normal_homogeneous_readout (D : LatticeData) (hu : IsUnit D.G.det)
@@ -166,7 +186,8 @@ theorem normal_homogeneous_readout (D : LatticeData) (hu : IsUnit D.G.det)
     have hw : Finsupp.weight (sourceWeight D) m = R := hp (mem_support_iff.mp hm)
     have hw' : wordWeight D (LatticeHalfFockFockNormalField.occurrences D m) = R :=
       (LatticeHalfFockFiniteCorrection.wordWeight_occurrences D m).trans hw
-    have hword : wordPolynomial D (LatticeHalfFockFockNormalField.occurrences D m) = monomial m (1 : ℂ) :=
+    have hword : wordPolynomial D (LatticeHalfFockFockNormalField.occurrences D m) =
+        monomial m (1 : ℂ) :=
       (wordPolynomial_prod D _).trans (LatticeAllStateField.occurrences_product D m)
     have hP := normalP_word D (LatticeHalfFockFockNormalField.occurrences D m)
     rw [hword] at hP

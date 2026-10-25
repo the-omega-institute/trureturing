@@ -85,8 +85,12 @@ private theorem weightSign_monomial (D : LatticeData) (m : Index D →₀ ℕ) (
   | single_add i n m hi hn ih =>
     rw [monomial_single_add, map_mul, map_pow, ih, map_add,
       Finsupp.weight_single]
-    simp [weightSign, smul_pow, smul_mul_smul, pow_add, pow_mul,
-      nsmul_eq_mul, mul_comm]
+    simp [weightSign, smul_pow, pow_add, pow_mul]
+    rw [smul_smul]
+    congr 1
+    simp only [← pow_mul]
+    rw [Nat.mul_comm]
+    ring
 
 private theorem weightSign_homogeneous (D : LatticeData) (p : Oscillator D) (R : ℕ)
     (hp : IsWeightedHomogeneous (sourceWeight D) p R) :
@@ -116,13 +120,16 @@ private theorem affineP_eq_native (D : LatticeData) (a : Charge D) (p : Oscillat
       congr 1
       change optionEquivLeft ℂ (Index D) (C ((-1 : ℂ)^(i.2+1) *
         (bilinear D (unitCharge D i.1) a : ℂ)) * X none ^ (i.2+1)) = _
-      simp only [map_mul, map_pow, optionEquivLeft_C, optionEquivLeft_X_none,
-        Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul]
-      rw [← MvPolynomial.C_mul]
+      simp only [map_mul, map_pow, optionEquivLeft_C, optionEquivLeft_X_none]
+      simp only [← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul, map_mul, map_pow]
+      ring
     change affineP D a (X i) = SourceMobius.flowPolynomial D a (weightSign D (X i))
     rw [hx, normalP_X]
-    simp only [weightSign, aeval_X, map_smul, native_polynomial_X,
-      smul_add, Finset.smul_sum, Polynomial.smul_monomial, smul_smul, sourceWeight]
+    have native := native_polynomial_X D a i.1 i.2
+    change SourceMobius.flowPolynomial D a (X i) = _ at native
+    simp only [weightSign, aeval_X, map_smul]
+    rw [native]
+    simp only [smul_add, Finset.smul_sum, Polynomial.smul_monomial, smul_smul, sourceWeight]
   exact AlgHom.congr_fun maps p
 
 /-- Exact signed divided powers, consuming native flowPolynomial_coeff directly. -/
@@ -154,7 +161,7 @@ theorem affineP_above_weight (D : LatticeData) (a : Charge D) (p : Oscillator D)
     apply Finset.sum_eq_zero
     intro n hn
     have hne : n ≠ k := by have := Finset.mem_range.mp hn; omega
-    simp [Polynomial.coeff_monomial, hne, Ne.symm hne]
+    simp [Polynomial.coeff_monomial, hne]
   rw [hz, smul_zero]
 
 end D5.S3.VertexAlgebra.CorrectedInversion

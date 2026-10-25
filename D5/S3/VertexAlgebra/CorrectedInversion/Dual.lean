@@ -47,65 +47,6 @@ and original finite charge direct sum. Finsupp addition merges every collision. 
 def coordinateInversion (D : LatticeData) : Carrier D →ₗ[ℂ] (ℤ →₀ Carrier D) :=
   Finsupp.lsum ℂ (sectorInversion D)
 
-/-- Actual source coefficients and actual mode powers, with an explicit test
-for coincident shifts. No injectivity of shifts, charges or monomial lists. -/
-theorem coordinateInversion_coeff (D : LatticeData) (v : Carrier D) (d : ℤ) :
-    coordinateInversion D v d =
-      ∑ a ∈ v.support, ∑ m ∈ (v a).support, (v a).coeff m •
-        ∑ j ∈ Finset.range (m.weight (sourceWeight D)+1),
-          if shiftIndex D a (m.weight (sourceWeight D)) j = d then
-            (paritySign (chargeNorm D a / 2) * (-1 : ℂ)^(m.weight (sourceWeight D)) *
-              (j.factorial : ℂ)⁻¹) •
-              ((sugawaraMode D (gramComplex D)⁻¹ 1 ^ j)
-                (Finsupp.single a (monomial m (1 : ℂ))))
-          else 0 := by
-  classical
-  have expand (a : Charge D) : sectorInversion D a (v a) =
-      ∑ m ∈ (v a).support, (v a).coeff m • monomialInversion D a m := by
-    have hp : v a = ∑ m ∈ (v a).support, (v a).coeff m • monomial m (1 : ℂ) := by
-      simpa only [smul_monomial, smul_eq_mul, mul_one] using (v a).as_sum
-    conv_lhs => rw [hp]
-    simp only [map_sum, map_smul, sectorInversion_monomial]
-  simp only [coordinateInversion, Finsupp.lsum_apply, Finsupp.sum,
-    Finsupp.finsetSum_apply]
-  simp_rw [expand]
-  simp only [Finsupp.finsetSum_apply, Finsupp.smul_apply, monomialInversion,
-    Finsupp.single_apply]
-
-/-- Finite source/monomial/jet support envelope, permitting cancellation. -/
-def inversionWindow (D : LatticeData) (v : Carrier D) : Finset ℤ := by
-  classical
-  exact v.support.biUnion (fun a => (v a).support.biUnion (fun m =>
-    (Finset.range (m.weight (sourceWeight D)+1)).image
-      (shiftIndex D a (m.weight (sourceWeight D)))))
-
-theorem coordinateInversion_support (D : LatticeData) (v : Carrier D) :
-    (coordinateInversion D v).support ⊆ inversionWindow D v := by
-  classical
-  intro d hd
-  by_contra outside
-  apply (Finsupp.mem_support_iff.mp hd)
-  rw [coordinateInversion_coeff]
-  apply Finset.sum_eq_zero
-  intro a ha
-  apply Finset.sum_eq_zero
-  intro m hm
-  have hz : (∑ j ∈ Finset.range (m.weight (sourceWeight D)+1),
-      if shiftIndex D a (m.weight (sourceWeight D)) j = d then
-        (paritySign (chargeNorm D a / 2) * (-1 : ℂ)^(m.weight (sourceWeight D)) *
-          (j.factorial : ℂ)⁻¹) •
-          ((sugawaraMode D (gramComplex D)⁻¹ 1 ^ j)
-            (Finsupp.single a (monomial m (1 : ℂ)))) else 0) = 0 := by
-    apply Finset.sum_eq_zero
-    intro j hj
-    have ne : shiftIndex D a (m.weight (sourceWeight D)) j ≠ d := by
-      intro eq
-      apply outside
-      exact Finset.mem_biUnion.mpr ⟨a,ha,Finset.mem_biUnion.mpr
-        ⟨m,hm,Finset.mem_image.mpr ⟨j,hj,eq⟩⟩⟩
-    simp only [if_neg ne]
-  rw [hz, smul_zero]
-
 /-- Existing original left functional; no replacement pairing is chosen. -/
 abbrev K_L (D : LatticeData) (hu : IsUnit D.G.det) (e : ℤ)
     (x y : ActualTensor D hu) := correctedDualCoefficient D hu e x y
