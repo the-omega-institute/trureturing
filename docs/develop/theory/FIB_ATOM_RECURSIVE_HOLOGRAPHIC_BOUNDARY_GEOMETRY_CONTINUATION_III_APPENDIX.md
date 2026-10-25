@@ -1359,3 +1359,256 @@ Whether any of the equivalent critical existence statements in Theorem 101.5 hol
 The mathematical carrier, original field, Haar measure, horizontal kinetic form and clock in these statements are fixed throughout. There is no finite-band restriction, marginal-field substitution or modification of the original-law fixed-budget problem. No positive heat or Markov law for the $\sigma>2$ added kinetic operator is assumed. A native source-to-state realization and a physical dimension conclusion require additional bridges not contained in these variational statements.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. Actual critical zero states from a source-specific mass bound
+
+**Definition 102.1 (unchanged source and auxiliary constants).** Use exactly Definition 101.1, including the complex domain $\mathcal E_\sigma$, the original degree-$-3$ field $\Gamma$, Lebesgue Haar measure, and $\sigma>2$, $a,\eta>0$. Put
+
+$$
+\begin{gathered}
+s=w-xy/2,\qquad \xi=(x,y,z),\qquad
+\rho(p)=\bigl(|\xi|^4+s^2\bigr)^{1/4},\\
+B_\Gamma=\sup_{p\ne e}\rho(p)^3\Gamma(p),\qquad
+Z_\sigma=|D_w|^\sigma,\qquad
+A=aL+\eta Z_\sigma.
+\end{gathered}
+\tag{102.1}
+$$
+
+The sum defining $A$ is the nonnegative joint spectral sum of the strongly commuting free operators, not the interacting operator. Its represented form is $S_{a,\eta}$ on $\mathcal E_\sigma$. Write $H_{a,\eta,g}$ for the represented interacting operator of §101.5, and retain the sesquilinear forms $t,d_\sigma,v$ and inner product convention of that section.
+
+The gauge $\rho$ is the homogeneous norm already used in the proof of (85.28). In shear coordinates the group product is the symmetric Heisenberg product times the independent $z$ addition; its first stratum has dimension three and its second stratum dimension one. Thus its homogeneous dimension is $Q=3+2=5$, its dilations are precisely (101.9), and the shear has Jacobian one. Smoothness and degree $-3$ of the actual Green field on the compact unit $\rho$ sphere give
+
+$$
+0<B_\Gamma<\infty,\qquad
+0<\Gamma(p)\le B_\Gamma\rho(p)^{-3}\quad(p\ne e).
+\tag{102.2}
+$$
+
+Fix finite constants $h_1,h_2$ supplied by Ciatti–Cowling–Ricci, *Hardy and uncertainty inequalities on stratified Lie groups*, [primary text](https://arxiv.org/html/1308.2373v1), Theorem A, Theorem 3.1 and Corollary 3.2, for this norm, this sub-Laplacian and $p=2$, at orders $1$ and $2$, respectively. Both orders lie strictly below $Q/p=5/2$. Set $K_\Gamma=B_\Gamma h_1h_2$. These constants are finite control constants; no optimal value is assigned to them.
+
+**Theorem 102.2 (uniform mass control for actual nonpositive-energy states).** Suppose $g\ge0$, $\varepsilon\ge0$ and $u\in\mathcal E_\sigma$ satisfy the actual weak equation
+
+$$
+a\,t(\phi,u)+\eta\,d_\sigma(\phi,u)
+ -g\,v(\phi,u)=-\varepsilon\langle\phi,u\rangle
+ \qquad(\phi\in\mathcal E_\sigma).
+\tag{102.3}
+$$
+
+Then
+
+$$
+\|u\|_2\le\frac{gK_\Gamma}{a}\sqrt{T[u]}.
+\tag{102.4}
+$$
+
+In particular, every nonpositive-energy eigenstate of $H_{a,\eta,g}$ obeys this bound, uniformly as its eigenvalue approaches zero. If also $V[u]=1$, then
+
+$$
+S_{a,\eta}[u]=g-\varepsilon\|u\|_2^2\le g,
+\qquad
+\|u\|_2^2\le\frac{K_\Gamma^2g^3}{a^3}.
+\tag{102.5}
+$$
+
+The estimate requires the equation; it is not a bound for arbitrary states with bounded homogeneous kinetic quantity.
+
+**Proof.** The cited Hardy inequalities, as mature intermediates, give on $C_c^\infty(G)$
+
+$$
+\|\rho^{-1}f\|_2\le h_1\|L^{1/2}f\|_2,
+\qquad
+\|\rho^{-2}f\|_2\le h_2\|Lf\|_2.
+\tag{102.6}
+$$
+
+Their client sub-Laplacian is exactly $L=-X_1^2-X_2^2-X_3^2$ from (84.1): the three original horizontal fields form a basis of the first stratum and have zero divergence for the stated Haar measure. Passing to shear coordinates changes neither the measure nor this operator, and does not add a central second derivative. The supplier's homogeneous norm may be chosen to be $\rho$; no equivalence with an unverified explicit Green formula is required. The first inequality is used only at order one, and the second is the order-two Rellich inequality furnished by the same corollary.
+
+Here are the core and closure details for extending (102.6). For a smooth compact approximate identity $\kappa_j$ on $G$, convolution $\kappa_j*f$ is an average of left translates of $f$. Left translation commutes with every $X_i$ and preserves the closed free form. Its unitary action therefore commutes with the represented $L$. Consequently, for $f\in D(L)$,
+
+$$
+L(\kappa_j*f)=\kappa_j*(Lf),\qquad
+\kappa_j*f\longrightarrow f\quad\hbox{in }D(L)
+\tag{102.7}
+$$
+
+with its graph norm. For $f\in D(L^{1/2})$, the identities $X_i(\kappa_j*f)=\kappa_j*(X_if)$ give the corresponding convergence in the free form norm. These convergence statements follow from strong continuity of translations on $L^2$, applied also to $Lf$ or $X_if$. Convolution is smooth: after changing the integration variable, local derivatives fall on the smooth compact convolution factor, and are locally integrable against $f\in L^2$.
+
+To obtain compact support, take a smooth compact $\chi$ equal to one near $e$ and put $\chi_R=\chi\circ\delta_{1/R}$. Homogeneity gives $\|X_i\chi_R\|_\infty=O(R^{-1})$ and $\|L\chi_R\|_\infty=O(R^{-2})$. For a fixed smoothed function $f_j=\kappa_j*f$, the distributional product identity is
+
+$$
+L(\chi_Rf_j)=\chi_RLf_j
+ -2\sum_i(X_i\chi_R)(X_if_j)+(L\chi_R)f_j.
+\tag{102.8}
+$$
+
+If $f\in D(L)$, all terms on the right are in $L^2$, since $D(L)\subset D(L^{1/2})$. Dominated convergence for the first term and the displayed derivative bounds for the other terms give graph convergence as $R\to\infty$. The product is in $C_c^\infty(G)$, so it is in the domain of the represented free operator; (102.8) is its operator action. The first-derivative product rule proves the same cutoff convergence in the free form norm. Choosing $R$ after $j$ proves that $C_c^\infty(G)$ is a core both for $L$ and for its form. These are free cores; no interacting operator core is asserted or used.
+
+Apply (102.6) to differences of these core approximants. The weighted functions are Cauchy in $L^2$, and a subsequence converging almost everywhere in the unweighted $L^2$ space identifies their limits with $\rho^{-1}f$ or $\rho^{-2}f$, respectively. The identity element is a Haar-null set. Thus the first inequality extends to all of $D(L^{1/2})$, and the second to all of $D(L)$. In particular (102.2), Cauchy–Schwarz and these extended inequalities give the actual, absolutely convergent pairing estimate
+
+$$
+\begin{aligned}
+\int_G\Gamma|\overline\phi u|\,d\mu
+ &\le B_\Gamma\|\rho^{-2}\phi\|_2\|\rho^{-1}u\|_2\\
+ &\le K_\Gamma\|L\phi\|_2\sqrt{T[u]}
+ \qquad\bigl(\phi\in D(L),\ u\in D(L^{1/2})\bigr).
+\end{aligned}
+\tag{102.9}
+$$
+
+This is a pairing estimate, not the assertion $\Gamma u\in L^2$.
+
+For completeness, the free resolvent used as a form test has the required domain on the full central spectrum. Proposition 85.2 identifies $L$ with its actual central direct integral and gives strong commutation with the central spectral projections. Thus $L$ and $Z_\sigma$ have a joint spectral measure on $[0,\infty)^2$, with variables $(\ell,\omega)$. The multiplier $a\ell+\eta\omega$ defines $A$. Its square-root domain is exactly
+
+$$
+D(A^{1/2})=D(L^{1/2})\cap D(Z_\sigma^{1/2})
+ =\mathcal E_\sigma,
+\qquad
+D(A)=D(L)\cap D(Z_\sigma).
+\tag{102.10}
+$$
+
+Indeed, its form integrability is equivalent to that of $\ell+\omega$, and its squared multiplier is bounded above and below by positive multiples of $\ell^2+\omega^2$. This also identifies its form with $a t+\eta d_\sigma$, by integration in that joint measure and polarization. It uses the original closed free domains, not an observer representation of the interaction. For every $r>0$ the bounded inverse $R_r=(A+r)^{-1}$ consequently satisfies
+
+$$
+R_rf\in D(A)\subset\mathcal E_\sigma\cap D(L),\qquad
+\|LR_rf\|_2\le a^{-1}\|f\|_2
+\quad(f\in L^2),
+\tag{102.11}
+$$
+
+because $\ell/(a\ell+\eta\omega+r)\le1/a$. The represented-form identity on such tests is
+
+$$
+a\,t(R_rf,u)+\eta\,d_\sigma(R_rf,u)
+ =\langle AR_rf,u\rangle\qquad(u\in\mathcal E_\sigma).
+\tag{102.12}
+$$
+
+It follows either from the same joint integral or from closed-form representation. No core for $A$ and no separate multiplier domain for $\Gamma$ is needed here.
+
+Take $\phi=R_{\varepsilon+\delta}f$ in (102.3), with $f\in L^2$ arbitrary and $\delta>0$. Equations (102.9)–(102.12) give
+
+$$
+\begin{aligned}
+\left|\left\langle
+ (I-\delta R_{\varepsilon+\delta})f,u\right\rangle\right|
+ &=g\,|v(R_{\varepsilon+\delta}f,u)|\\
+ &\le\frac{gK_\Gamma}{a}\sqrt{T[u]}\,\|f\|_2.
+\end{aligned}
+\tag{102.13}
+$$
+
+There is no zero spectral atom of $A$. In fact $A u=0$ implies $D_\sigma[u]=0$, while the actual central Fourier transform of an $L^2$ state with this property is supported at the null singleton $\lambda=0$ and is zero. Hence, also when $\varepsilon=0$, the spectral theorem and dominated convergence give
+
+$$
+\delta R_{\varepsilon+\delta}f\longrightarrow0
+ \quad\hbox{in }L^2\quad(\delta\downarrow0).
+\tag{102.14}
+$$
+
+Taking this limit in (102.13) and then taking the supremum over $\|f\|_2=1$ proves (102.4). Testing (102.3) with $u$ itself gives (102.5), using $aT[u]\le S_{a,\eta}[u]$. All tests were in the original full form domain. In particular neither a positivity-preserving heat law for $A$ nor an order comparison of noncommuting inverses has entered the proof. $\square$
+
+**Theorem 102.3 (actual critical attainment and strict threshold refinements).** For every $\sigma>2$ and $a,\eta>0$, the true threshold $g_\sigma^*(a,\eta)$ of (101.1) is attained by a nonzero actual state $u\in\mathcal E_\sigma$. It may be chosen so that
+
+$$
+V[u]=1,\qquad S_{a,\eta}[u]=g_\sigma^*(a,\eta).
+\tag{102.15}
+$$
+
+Consequently $u/\|u\|_2$ is an actual normalized zero eigenvector of $H_{a,\eta,g_\sigma^*}$, and all four equivalent critical existence statements in Theorem 101.5 hold. In the exact notation of (101.1), (101.5) and (101.10),
+
+$$
+0<\mathcal C_\sigma<\frac18,\qquad
+ g_\sigma^*(a,\eta)>g_{\rm suf}(a,\eta)
+ =\frac{8a^\alpha\eta^\beta}{\alpha^\alpha\beta^\beta}.
+\tag{102.16}
+$$
+
+**Proof.** Write $g_*=g_\sigma^*(a,\eta)$ and $g_n=g_*+1/n$. Theorem 101.3 gives $0<g_*<\infty$ and, for each $n$, an actual normalized negative-energy eigenstate $v_n\in\mathcal E_\sigma$ of $H_{a,\eta,g_n}$, with eigenvalue $-\varepsilon_n<0$. Its represented form and exact domain are those of Theorem 87.5. In particular its equation holds for every test in $\mathcal E_\sigma$. Since $0<V[v_n]<\infty$, set
+
+$$
+u_n=\frac{v_n}{\sqrt{V[v_n]}}.
+\tag{102.17}
+$$
+
+Amplitude rescaling preserves that weak equation. Threshold nonnegativity and its negative-energy identity give
+
+$$
+V[u_n]=1,\qquad
+ g_*\le S_{a,\eta}[u_n]
+ =g_n-\varepsilon_n\|u_n\|_2^2<g_n.
+\tag{102.18}
+$$
+
+Now apply Theorem 102.2 to these actual equation-satisfying states, not to an arbitrary quotient-minimizing sequence. It gives
+
+$$
+\|u_n\|_2^2\le\frac{K_\Gamma^2g_n^3}{a^3}
+ \le\frac{K_\Gamma^2(g_*+1)^3}{a^3}.
+\tag{102.19}
+$$
+
+Together with (102.18), this bounds the complete Hilbert norm of $\mathcal E_\sigma$. Take a subsequence weakly converging there to $u$. The full actual-field compact embedding of Theorem 87.5 gives, after further subselection, strong convergence in $L^2(G,\Gamma d\mu)$ to that same $u$. Hence $V[u]=1$. Weak lower semicontinuity and (102.18) imply $S_{a,\eta}[u]\le g_*$, while the defining threshold inequality on the entire $\mathcal E_\sigma$ implies $S_{a,\eta}[u]\ge g_*V[u]=g_*$. This proves (102.15). In particular $u$ is a nonzero $L^2$ function with the original distributional horizontal derivatives and the required central moment, not merely a vector in a homogeneous completion. No convergence of the total $L^2$ masses or limiting eigenvalues was presumed.
+
+To identify the actual operator domain, the closed form $q_{a,\eta,g_*}$ is nonnegative on exactly $\mathcal E_\sigma$, by Theorems 87.5 and 101.3, and has value zero at $u$. Cauchy–Schwarz for that nonnegative Hermitian form gives $q_{a,\eta,g_*}(\phi,u)=0$ for every $\phi\in\mathcal E_\sigma$. The characterization of the represented operator domain therefore puts $u\in D(H_{a,\eta,g_*})$ with $H_{a,\eta,g_*}u=0$: the representing vector is the actual zero vector of $L^2$. This argument does not split the represented operator into separately defined vectors $Au$ and $\Gamma u$. Since $0<\|u\|_2<\infty$, normalization gives the asserted zero eigenvector.
+
+By Theorem 101.5 this same state attains $\mathcal C_\sigma$, and its virial balance is (101.20). Apply the strict per-state bound (101.2) to this nonzero extremizer:
+
+$$
+\mathcal C_\sigma
+ =\frac{V[u]}{T[u]^\alpha D_\sigma[u]^\beta}<\frac18.
+\tag{102.20}
+$$
+
+Positivity is already (101.11). Substitution into the exact coefficient identity from Theorem 101.4,
+
+$$
+g_\sigma^*(a,\eta)
+ =\frac{a^\alpha\eta^\beta}
+ {\alpha^\alpha\beta^\beta\mathcal C_\sigma},
+\tag{102.21}
+$$
+
+proves the strict second refinement in (102.16). The strict supremum bound follows from actual attainment together with the strict per-state inequality; the latter alone would not prove it. $\square$
+
+**Proposition 102.4 (the mass bound does not extend to arbitrary quotient minimizers).** Even after imposing $V=1$, a sequence with $S_{a,\eta}/V\to g_\sigma^*(a,\eta)$ need not be bounded in $L^2$.
+
+**Proof.** Choose $u$ from (102.15) and a fixed normalized nonzero punctured core state $h$. For $R\to\infty$ put $b_R=R^{1/2}U_Rh$, with the original Carnot dilation (101.9). Then
+
+$$
+\begin{gathered}
+\|b_R\|_2^2=R,\qquad
+T[b_R]=R^{-1}T[h],\\
+D_\sigma[b_R]=R^{1-2\sigma}D_\sigma[h],\qquad
+V[b_R]=R^{-2}V[h].
+\end{gathered}
+\tag{102.22}
+$$
+
+Thus $S_{a,\eta}[b_R]\to0$ and $V[b_R]\to0$. Cauchy–Schwarz separately for the two nonnegative kinetic forms and for the actual weighted inner product gives
+
+$$
+S_{a,\eta}[u+b_R]\longrightarrow g_*,\qquad
+V[u+b_R]\longrightarrow1.
+\tag{102.23}
+$$
+
+For sufficiently large $R$, define $w_R=(u+b_R)/\sqrt{V[u+b_R]}$. Each $w_R$ is an actual form state with $V[w_R]=1$ and quotient tending to $g_*$. But the reverse triangle inequality gives
+
+$$
+\|w_R\|_2\ge
+ \frac{R^{1/2}-\|u\|_2}{\sqrt{V[u+b_R]}}\longrightarrow\infty.
+\tag{102.24}
+$$
+
+No disjoint-support or local central-operator assumption is used: all cross terms were controlled by their corresponding Hilbert seminorms. This example explains the need for the equation in Theorem 102.2 and the choice of actual negative eigenstates in the proof of Theorem 102.3. $\square$
+
+**Definition 102.5 (mathematical attribution and scope).** The Hardy and Rellich estimates (102.6) are literature-attested intermediates, with the precise correspondence to Ciatti–Cowling–Ricci given above. Their §2 uses Lebesgue Haar measure in exponential coordinates and the sub-Laplacian formed from a basis of the first stratum; the shear identifies those conventions with this source without a measure rescaling. Their adjoint identity (3.1) concerns the bounded weighted Riesz operator and its adjoint. It does not assert that $\Gamma u$ lies in ordinary $L^2$, nor that an everywhere-defined unweighted inverse exists at zero. The form pairing (102.9) and regularized resolvent tests (102.11)–(102.14) supply the client passage instead. Their positive free heat kernel is a fact about $L$; no such property is transferred to $A$.
+
+The new source-specific deductions are the uniform equation-based mass estimate, its use with the existing full-field compactness and negative eigenstates to obtain an actual critical state, and the resulting strict refinements of the constants in §101. The free domains, strong central reduction, actual Green bound, higher-order weighted compactness and critical quotient/operator equivalences remain the supplies of §§84–87 and §101. These deductions are repository-derived; neither the general Hardy/Rellich mechanism nor an exhaustive literature novelty claim is attributed to them.
+
+All conclusions concern the original $H^1\times\mathbb R$ carrier, full complex domain, original source, Haar measure, degree-$-3$ field, actual horizontal kinetic form and clock. No marginal field, band restriction, new source or Green kernel of the added law is substituted. A full homogeneous-completion reconstruction theorem is not asserted. No exact sharp numerical value of $\mathcal C_\sigma$ or $g_\sigma^*$, positivity or simplicity of a critical eigenstate, extension to $\sigma=2$, native source-to-state realization or physical dimension conclusion is supplied.
+
+## 追加锚（本行以下为增补区）
