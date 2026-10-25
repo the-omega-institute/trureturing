@@ -157,7 +157,7 @@ private theorem missingPoint_not_mem : missingPoint ∉ representationSet cycleF
   simp [missingPoint, h0, h2] at hc0 hc2
   nlinarith
 
-private def coordinate (i : Fin 5) : Fin 5 → ℝ := Pi.single i 1
+def coordinate (i : Fin 5) : Fin 5 → ℝ := Pi.single i 1
 
 private def endpointA : Fin 5 → ℝ := ![0, 1, 1, 1, 1]
 private def endpointB : Fin 5 → ℝ := ![1, 0, 1, 1, 1]

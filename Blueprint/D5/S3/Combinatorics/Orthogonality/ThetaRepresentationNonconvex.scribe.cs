@@ -16,6 +16,16 @@ internal sealed class ThetaRepresentationNonconvexDocument : IScribeDocumentDefi
         H("Nonconvexity of the theta representation set"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("theta-coordinate-vector"),
+                DeclarationHandle.Create(Prefix + "coordinate"),
+                H("The coordinate vectors in five dimensions"),
+                StatementSource.FromAuthor(Disp(All("i", Call("Fin", D(5)),
+                    Eq(Call("coordinate", F.Id("i")), Call("single", F.Id("i"), D(1)))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Here single denotes Pi.single over the reals, so coordinate(i) has value one at i and zero at every other coordinate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("theta-representation-set"),
                 DeclarationHandle.Create(Prefix + "representationSet"),
                 H("The full orthonormal representation set"),

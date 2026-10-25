@@ -6,16 +6,13 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim; result=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.result; claim=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim
    digest: Six projected lines give counterexamples to both locality tensor conjectures. -/
 
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.Linarith
+import D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
 
 noncomputable section
 
 namespace D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation
+
+open D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex (coordinate)
 
 def IsLocalityVectorSpace (K : Type) {E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) : Prop :=
@@ -25,9 +22,6 @@ def IsLocalityVectorSpace (K : Type) {E : Type} [Field K] [AddCommGroup E] [Modu
 def localityProduct {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E) : Set (E × E) :=
   {p | p.1 ∈ V ∧ p.2 ∈ W ∧ r p.1 p.2}
-
-def pairRel {E : Type} (r : E → E → Prop) (p q : E × E) : Prop :=
-  r p.1 q.1 ∧ r p.2 q.2
 
 def spanRel {K X : Type} [Zero K] (s : X → X → Prop) (a b : X →₀ K) : Prop :=
   ∀ x ∈ a.support, ∀ y ∈ b.support, s x y
@@ -60,8 +54,8 @@ abbrev localityTensor {K E : Type} [Field K] [AddCommGroup E] [Module K E]
 
 def quotientRel {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E) (a b : localityTensor r V W) : Prop :=
-  ∃ u v : freeSpan r V W, Submodule.Quotient.mk u = a ∧
-    Submodule.Quotient.mk v = b ∧ spanRel (pairRel r) u.1 v.1
+  Relation.Map (fun u v : freeSpan r V W => spanRel (Prod.RProd r r) u.1 v.1)
+    Submodule.Quotient.mk Submodule.Quotient.mk a b
 
 def LocalityCompatible {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (W : Submodule K E) : Prop :=
@@ -76,15 +70,13 @@ def TensorConjecture : Prop :=
 def PairConjecture : Prop :=
   ∀ (K E : Type) [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E), IsLocalityVectorSpace K r →
-    LocalityCompatible (fun a b : freeSpan r V W => spanRel (pairRel r) a.1 b.1)
+    LocalityCompatible (fun a b : freeSpan r V W => spanRel (Prod.RProd r r) a.1 b.1)
       ((bilIdeal r V W).comap (freeSpan r V W).subtype)
 
 def claim : Prop := TensorConjecture ∨ PairConjecture
 
-private def project : (Fin 5 → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) where
-  toFun v := ![v 0, v 1, v 2]
-  map_add' _ _ := by ext i; fin_cases i <;> rfl
-  map_smul' _ _ := by ext i; fin_cases i <;> rfl
+private def project : (Fin 5 → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
+  LinearMap.funLeft ℝ ℝ (Fin.castAdd 2)
 
 private def direction (i : Fin 6) : Fin 3 → ℝ :=
   ![![0, 1, 0], ![1, 1, 0], ![1, -1, 0], ![0, 0, 1], ![1, 0, 1], ![1, 0, -1]] i
@@ -96,15 +88,13 @@ private def rel (v t : Fin 5 → ℝ) : Prop :=
   (project v = 0 ∨ project t = 0 ∨ ∃ i, project v ∈ line i ∧ project t ∈ line i) ∧
     v 3 * t 2 = 0 ∧ t 3 * v 2 = 0 ∧ v 4 * t 1 = 0 ∧ t 4 * v 1 = 0
 
-private def e (i : Fin 5) : Fin 5 → ℝ := Pi.single i 1
-
 private def X (k : Fin 5) : (Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ :=
-  (1 / 2 : ℝ) • Finsupp.single (e 0 + e k, e 0 + e k) 1 +
-    (1 / 2 : ℝ) • Finsupp.single (e 0 - e k, e 0 - e k) 1 -
-    Finsupp.single (e k, e k) 1
+  (1 / 2 : ℝ) • Finsupp.single (coordinate 0 + coordinate k, coordinate 0 + coordinate k) 1 +
+    (1 / 2 : ℝ) • Finsupp.single (coordinate 0 - coordinate k, coordinate 0 - coordinate k) 1 -
+    Finsupp.single (coordinate k, coordinate k) 1
 
 private def Y (i : Fin 5) : (Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ :=
-  Finsupp.single (e i, e i) 1
+  Finsupp.single (coordinate i, coordinate i) 1
 
 private def phi (i : Fin 5) :
     ((Fin 5 → ℝ) × (Fin 5 → ℝ) →₀ ℝ) →ₗ[ℝ] ℝ :=
@@ -218,37 +208,37 @@ private theorem X_supported (k : Fin 5) (hk : k = 1 ∨ k = 2) :
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 1 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 2 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
     · apply diagonal_supported _ 0 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
   · unfold X
     apply Submodule.sub_mem
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 4 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 5 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
     · apply diagonal_supported _ 3 <;>
         solve
-        | norm_num [e.eq_1, Pi.single_apply]
+        | norm_num [coordinate, Pi.single_apply]
         | ext j; fin_cases j <;>
-            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
+            norm_num [project.eq_1, direction.eq_1, coordinate, Pi.single_apply]
 
 private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
     Y i ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
@@ -256,11 +246,13 @@ private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
   apply Finsupp.single_mem_supported
   refine ⟨Submodule.mem_top, Submodule.mem_top, ?_⟩
   rcases hi with rfl | rfl <;>
-    norm_num [rel.eq_1, project.eq_1, e.eq_1, Pi.single_apply,
-      show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
+    norm_num [rel.eq_1, project.eq_1, coordinate, Pi.single_apply,
+      funext_iff, Fin.forall_fin_succ]
 
 private theorem X_support_cases (k : Fin 5) {p} (hp : p ∈ (X k).support) :
-    p = (e 0 + e k, e 0 + e k) ∨ p = (e 0 - e k, e 0 - e k) ∨ p = (e k, e k) := by
+    p = (coordinate 0 + coordinate k, coordinate 0 + coordinate k) ∨
+      p = (coordinate 0 - coordinate k, coordinate 0 - coordinate k) ∨
+      p = (coordinate k, coordinate k) := by
   classical
   unfold X at hp
   rcases Finset.mem_union.mp (Finsupp.support_sub hp) with hp | hp
@@ -295,8 +287,8 @@ private theorem X_polarization (k : Fin 5) :
       Submodule.subset_span (Or.inr (Or.inr (Or.inr ⟨a, Submodule.mem_top,
         x, Submodule.mem_top, -1, rfl⟩)))
     simpa only [neg_one_smul, sub_neg_eq_add] using h
-  let a := e 0
-  let b := e k
+  let a := coordinate 0
+  let b := coordinate k
   have hp := S.add_mem (S.add_mem (hL a b (a + b)) (hR a a b)) (hR b a b)
   have hm := S.add_mem (S.add_mem (hL a (-b) (a - b)) (hR a a (-b)))
     (hR (-b) a (-b))
@@ -314,16 +306,16 @@ private theorem X_difference :
   simpa only [sub_sub_sub_cancel_right] using h
 
 private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i = 4)) :
-    spanRel (pairRel rel) (X k) (Y i) := by
+    spanRel (Prod.RProd rel rel) (X k) (Y i) := by
   classical
   intro p hp q hq
-  have hq : q = (e i, e i) := ((Finsupp.mem_support_single _ _ _).mp hq).1
+  have hq : q = (coordinate i, coordinate i) := ((Finsupp.mem_support_single _ _ _).mp hq).1
   subst q
   rcases X_support_cases k hp with rfl | rfl | rfl <;>
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
-    unfold pairRel rel <;>
-    norm_num [project.eq_1, e.eq_1, Pi.single_apply,
-      show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
+    apply Prod.RProd.intro <;>
+    norm_num [rel.eq_1, project.eq_1, coordinate, Pi.single_apply,
+      funext_iff, Fin.forall_fin_succ]
 
 private theorem phi_vanishes (i : Fin 5) {a} (ha :
     a ∈ bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤) : phi i a = 0 := by
@@ -340,7 +332,7 @@ private theorem phi_vanishes (i : Fin 5) {a} (ha :
 
 private theorem phi_values : phi 0 (X 1) = 1 ∧ phi 3 (Y 3 + Y 4) = 1 ∧
     phi 4 (Y 3 + Y 4) = 1 := by
-  norm_num [phi.eq_1, X.eq_1, Y.eq_1, e.eq_1, Pi.single_apply]
+  norm_num [phi.eq_1, X.eq_1, Y.eq_1, coordinate, Pi.single_apply]
 
 private theorem phi_support (i : Fin 5) {a} (ha : phi i a ≠ 0) :
     ∃ p ∈ a.support, p.1 i * p.2 i ≠ 0 := by
@@ -371,14 +363,16 @@ private theorem key_obstruction {v t : Fin 5 → ℝ} (h : rel v t)
 private theorem no_joint_related
     (a b c : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤)
     (ha : phi 0 a.1 ≠ 0) (hb : phi 3 b.1 ≠ 0) (hc : phi 4 c.1 ≠ 0)
-    (hab : spanRel (pairRel rel) a.1 b.1) (hac : spanRel (pairRel rel) a.1 c.1) :
+    (hab : spanRel (Prod.RProd rel rel) a.1 b.1) (hac : spanRel (Prod.RProd rel rel) a.1 c.1) :
     False := by
   obtain ⟨p, hp, hp0⟩ := phi_support 0 ha
   obtain ⟨q, hq, hq3⟩ := phi_support 3 hb
   obtain ⟨t, ht, ht4⟩ := phi_support 4 hc
-  have h2 : p.1 2 = 0 := (mul_eq_zero.mp (hab p hp q hq).1.2.2.1).resolve_left
+  have hpq : rel p.1 q.1 := by cases hab p hp q hq with | intro h _ => exact h
+  have hpt : rel p.1 t.1 := by cases hac p hp t ht with | intro h _ => exact h
+  have h2 : p.1 2 = 0 := (mul_eq_zero.mp hpq.2.2.1).resolve_left
     (mul_ne_zero_iff.mp hq3).1
-  have h1 : p.1 1 = 0 := (mul_eq_zero.mp (hac p hp t ht).1.2.2.2.2).resolve_left
+  have h1 : p.1 1 = 0 := (mul_eq_zero.mp hpt.2.2.2.2).resolve_left
     (mul_ne_zero_iff.mp ht4).1
   have hl : p ∈ localityProduct rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
     a.2 hp
@@ -406,8 +400,8 @@ private theorem pair_refuted : ¬ PairConjecture := by
     ⟨Y 4, Y_supported 4 (Or.inr rfl)⟩
   have hw : x' - x ∈ (bilIdeal rel ⊤ ⊤).comap (freeSpan rel ⊤ ⊤).subtype :=
     ⟨X_difference, (x' - x).2⟩
-  have hxy : spanRel (pairRel rel) x.1 y.1 := X_related 1 3 (Or.inl ⟨rfl, rfl⟩)
-  have hxz : spanRel (pairRel rel) (x + (x' - x)).1 z.1 := by
+  have hxy : spanRel (Prod.RProd rel rel) x.1 y.1 := X_related 1 3 (Or.inl ⟨rfl, rfl⟩)
+  have hxz : spanRel (Prod.RProd rel rel) (x + (x' - x)).1 z.1 := by
     rw [show x + (x' - x) = x' by module]
     exact X_related 2 4 (Or.inr ⟨rfl, rfl⟩)
   obtain ⟨w, hw, hwy, hwz⟩ := H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality
@@ -418,8 +412,8 @@ private theorem pair_refuted : ¬ PairConjecture := by
     rw [map_add, phi_values.1, hw0, add_zero]
   apply no_joint_related (x + w) y z _ _ _ hwy hwz
   · rw [ha]; norm_num
-  · norm_num [y, Y.eq_1, phi.eq_1, e.eq_1, Pi.single_apply]
-  · norm_num [z, Y.eq_1, phi.eq_1, e.eq_1, Pi.single_apply]
+  · norm_num [y, Y.eq_1, phi.eq_1, coordinate, Pi.single_apply]
+  · norm_num [z, Y.eq_1, phi.eq_1, coordinate, Pi.single_apply]
 
 private theorem tensor_refuted : ¬ TensorConjecture := by
   intro H
@@ -437,9 +431,9 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
   have heq : q x' = q x := (Submodule.Quotient.eq I).mpr
     ⟨X_difference, (x' - x).2⟩
   have hxy : quotientRel rel ⊤ ⊤ (q x) (q y) :=
-    ⟨x, y, rfl, rfl, X_related 1 3 (Or.inl ⟨rfl, rfl⟩)⟩
+    ⟨x, y, X_related 1 3 (Or.inl ⟨rfl, rfl⟩), rfl, rfl⟩
   have hxz : quotientRel rel ⊤ ⊤ (q x) (q z) :=
-    ⟨x', z, heq, rfl, X_related 2 4 (Or.inr ⟨rfl, rfl⟩)⟩
+    ⟨x', z, X_related 2 4 (Or.inr ⟨rfl, rfl⟩), heq, rfl⟩
   obtain ⟨S, hS⟩ := (H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality).2.2 {q x}
   have hy : q y ∈ S := by
     change q y ∈ (S : Set (localityTensor rel ⊤ ⊤))
@@ -459,7 +453,7 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
     rw [hS] at h
     rw [map_add]
     exact h (q x) (Set.mem_singleton _)
-  obtain ⟨a, b, ha, hb, hab⟩ := hyz
+  obtain ⟨a, b, hab, ha, hb⟩ := hyz
   have ha0 : phi 0 a.1 = 1 := (phi_quotient 0 ha).trans phi_values.1
   have hb3 : phi 3 b.1 = 1 := (phi_quotient 3 hb).trans phi_values.2.1
   have hb4 : phi 4 b.1 = 1 := (phi_quotient 4 hb).trans phi_values.2.2
@@ -468,10 +462,6 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
   · rw [hb3]; norm_num
   · rw [hb4]; norm_num
 
-theorem result : ¬ claim := by
-  intro h
-  rcases h with h | h
-  · exact tensor_refuted h
-  · exact pair_refuted h
+theorem result : ¬ claim := not_or.mpr ⟨tensor_refuted, pair_refuted⟩
 
 end D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation
