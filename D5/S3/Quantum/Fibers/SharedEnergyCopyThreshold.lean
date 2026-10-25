@@ -334,6 +334,42 @@ private theorem tensor_entry (r : DensityState (Fin 3)) :
     change stateMatrix r I.1 J.1 * stateMatrix (copies r (n+1)) I.2 J.2 = _
     rw [tensorExponent, monomial_add, coordinate_monomial, tensor_entry]
 
+private theorem degree_zero (alpha : Exponent) : degree alpha = 0 ↔ alpha = 0 := by
+  simp [degree, Finset.sum_eq_zero_iff, funext_iff]
+
+private theorem exponent_words : ∀ n (alpha : Exponent), degree alpha = n →
+    ∃ I J : CopyIndex (Fin 3) n, tensorExponent n I J = alpha
+  | 0, alpha, hd => by
+    refine ⟨PUnit.unit, PUnit.unit, ?_⟩
+    simpa only [tensorExponent] using ((degree_zero alpha).mp hd).symm
+  | n+1, alpha, hd => by
+    obtain ⟨i, j, hij⟩ : ∃ i j, alpha i j ≠ 0 := by
+      by_contra! h
+      have hz : alpha = 0 := funext fun a => funext fun b => h a b
+      simp [hz, degree] at hd
+    let beta := alpha - coordinateExponent i j
+    have hle : coordinateExponent i j ≤ alpha := by
+      intro a b
+      simp only [coordinateExponent]
+      split_ifs with h
+      · obtain ⟨rfl, rfl⟩ := h
+        omega
+      · exact Nat.zero_le _
+    have hadd : coordinateExponent i j + beta = alpha := add_tsub_cancel_of_le hle
+    have hb : degree beta = n := by
+      have he := congrArg degree hadd
+      rw [degree_add, coordinate_degree, hd] at he
+      omega
+    cases n with
+    | zero =>
+      have hz := (degree_zero beta).mp hb
+      refine ⟨i, j, ?_⟩
+      simpa only [tensorExponent, hz, add_zero] using hadd
+    | succ k =>
+      obtain ⟨I, J, hIJ⟩ := exponent_words (k+1) beta hb
+      refine ⟨(i, I), (j, J), ?_⟩
+      simpa only [tensorExponent, hIJ] using hadd
+
 /-- The full projection onto one total energy, with all its degeneracy retained. -/
 def energyProjector (m n : ℕ) (e : ℤ) :
     Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
@@ -428,6 +464,23 @@ theorem tensor_monomial_bridge (m n : ℕ) (r : DensityState (Fin 3))
   refine ⟨tensor_degree n I J, tensor_weight m n I J, tensor_entry r n I J, ?_,
     pinched_positive m n r, pinched_trace m n r⟩
   simp only [pinched_apply, tensor_weight, sub_eq_zero, tensor_entry]
+
+/-- Every labelled exponent is realized by actual native tensor words. The same
+words work for all density states, including zero entries and deficient rank. -/
+theorem exponent_tensor_bridge (m : ℕ) (alpha : Exponent) :
+    ∃ I J : CopyIndex (Fin 3) (degree alpha),
+      tensorExponent (degree alpha) I J = alpha ∧
+      totalEnergy m (degree alpha) I - totalEnergy m (degree alpha) J = weight m alpha ∧
+      ∀ r : DensityState (Fin 3),
+        stateMatrix (copies r (degree alpha)) I J = monomial (stateMatrix r) alpha ∧
+        pinchedCopies m (degree alpha) r I J =
+          if weight m alpha = 0 then monomial (stateMatrix r) alpha else 0 := by
+  obtain ⟨I, J, h⟩ := exponent_words (degree alpha) alpha rfl
+  refine ⟨I, J, h, ?_, ?_⟩
+  · rw [← tensor_weight, h]
+  · intro r
+    have he := tensor_monomial_bridge m (degree alpha) r I J
+    simpa only [h] using And.intro he.2.2.1 he.2.2.2.1
 
 /-- Below twice the upper energy minus one, the literal sparse native tensor
 states have equal complete total-energy pinchings. -/
