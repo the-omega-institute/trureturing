@@ -300,7 +300,7 @@ private theorem same_drift_card_le_two {e : Bool} {b A C z Y p v d : ℝ}
         ((hS W hw).2.trans (hS U hu).2.symm) hru
     rw [← Finset.card_image_iff.mpr hinj]
     apply le_trans (Finset.card_le_card (t := {V.1,1+(i : ℝ)*b-V.1}) ?_)
-      (by by_cases h : V.1=1+(i : ℝ)*b-V.1 <;> simp [h])
+      Finset.card_le_two
     intro r hr
     obtain ⟨W,hw,rfl⟩ := Finset.mem_image.mp hr
     have htrace := fixed_active_trace (hS W hw).1 hv ((hS W hw).2.trans hvd.symm) i hi.2
@@ -318,6 +318,39 @@ private theorem square_dvd_three {q a b c : Polynomial ℝ}
     (ha : q ∣ a) (hb : q ∣ b) : q^2 ∣ a*c*b := by
   simpa [pow_two,mul_assoc,mul_left_comm,mul_comm] using
     dvd_mul_of_dvd_left (mul_dvd_mul ha hb) c
+
+private theorem double_elimination (G F L : Polynomial ℝ) (A z p d : ℝ)
+    (hp : p=d) (hL : L.IsRoot d)
+    (h : (G.IsRoot d ∧ A=d) ∨ (F.IsRoot d ∧ z=d)) :
+    (X-Polynomial.C d)^2 ∣ (Polynomial.C A-X)*F*L-
+      2*(Polynomial.C z-X)*G*L+(Polynomial.C p-X)*G*F := by
+  have hld := Polynomial.dvd_iff_isRoot.mpr hL
+  have hpd : X-Polynomial.C d ∣ Polynomial.C p-X := by
+    apply Polynomial.dvd_iff_isRoot.mpr
+    simp [Polynomial.IsRoot,hp]
+  rcases h with ⟨hG,ha⟩ | ⟨hF,hz⟩
+  · have had : X-Polynomial.C d ∣ Polynomial.C A-X := by
+      apply Polynomial.dvd_iff_isRoot.mpr
+      simp [Polynomial.IsRoot,ha]
+    have hgd := Polynomial.dvd_iff_isRoot.mpr hG
+    apply dvd_add
+    · apply dvd_sub
+      · exact square_dvd_three had hld
+      · simpa only [mul_assoc,mul_left_comm,mul_comm] using
+          (square_dvd_three (c := 2*(Polynomial.C z-X)) hgd hld)
+    · simpa only [mul_assoc,mul_left_comm,mul_comm] using
+        (square_dvd_three (c := F) hpd hgd)
+  · have hzd : X-Polynomial.C d ∣ Polynomial.C z-X := by
+      apply Polynomial.dvd_iff_isRoot.mpr
+      simp [Polynomial.IsRoot,hz]
+    have hfd := Polynomial.dvd_iff_isRoot.mpr hF
+    apply dvd_add
+    · apply dvd_sub
+      · simpa only [mul_assoc,mul_left_comm,mul_comm] using
+          (square_dvd_three (c := Polynomial.C A-X) hfd hld)
+      · simpa only [mul_assoc,mul_left_comm,mul_comm] using
+          (square_dvd_three (c := 2*G) hzd hld)
+    · exact square_dvd_three hpd hfd
 
 private theorem distinct_same_drift_double {e : Bool} {b A C z Y p v : ℝ}
     (hb : 0 < b) (hz : z ≠ A)
@@ -343,45 +376,18 @@ private theorem distinct_same_drift_double {e : Bool} {b A C z Y p v : ℝ}
     have h := odd_equations hV 2
     rw [h5] at h
     simpa [hK,sub_eq_zero] using h.symm
-  have hG5 : X-Polynomial.C V.2.2.1 ∣ oddNumerators e b C Y v 2 :=
-    Polynomial.dvd_iff_isRoot.mpr h5
-  have hP : X-Polynomial.C V.2.2.1 ∣ Polynomial.C p-X := by
-    apply Polynomial.dvd_iff_isRoot.mpr
-    simp [Polynomial.IsRoot,hp]
-  unfold driftPolynomial
-  dsimp
+  apply double_elimination _ _ _ A z p V.2.2.1 hp h5
   rcases h01 with h0 | h1
-  · have ha : A=V.2.2.1 := by
-      have h := odd_equations hV 0
-      rw [h0] at h
-      simpa [hK,sub_eq_zero] using h.symm
-    have hA : X-Polynomial.C V.2.2.1 ∣ Polynomial.C A-X := by
-      apply Polynomial.dvd_iff_isRoot.mpr
-      simp [Polynomial.IsRoot,ha]
-    have hG0 : X-Polynomial.C V.2.2.1 ∣ oddNumerators e b C Y v 0 :=
-      Polynomial.dvd_iff_isRoot.mpr h0
-    apply dvd_add
-    · apply dvd_sub
-      · exact square_dvd_three hA hG5
-      · simpa [mul_assoc,mul_left_comm,mul_comm] using
-          (square_dvd_three (c := 2*(Polynomial.C z-X)) hG0 hG5)
-    · exact square_dvd_three hP hG0
-  · have hz' : z=V.2.2.1 := by
-      have h := odd_equations hV 1
-      rw [h1] at h
-      simpa [hK,sub_eq_zero] using h.symm
-    have hZ : X-Polynomial.C V.2.2.1 ∣ Polynomial.C z-X := by
-      apply Polynomial.dvd_iff_isRoot.mpr
-      simp [Polynomial.IsRoot,hz']
-    have hG1 : X-Polynomial.C V.2.2.1 ∣ oddNumerators e b C Y v 1 :=
-      Polynomial.dvd_iff_isRoot.mpr h1
-    apply dvd_add
-    · apply dvd_sub
-      · simpa [mul_assoc,mul_left_comm,mul_comm] using
-          (square_dvd_three (c := Polynomial.C A-X) hG1 hG5)
-      · simpa [mul_assoc,mul_left_comm,mul_comm] using
-          (square_dvd_three (c := 2*oddNumerators e b C Y v 0) hZ hG5)
-    · exact square_dvd_three hP hG1
+  · left
+    refine ⟨h0,?_⟩
+    have h := odd_equations hV 0
+    rw [h0] at h
+    simpa [hK,sub_eq_zero] using h.symm
+  · right
+    refine ⟨h1,?_⟩
+    have h := odd_equations hV 1
+    rw [h1] at h
+    simpa [hK,sub_eq_zero] using h.symm
 
 /-- Distinct complete worlds consume drift roots with their full multiplicity. -/
 theorem native_drift_multiset_le_roots (e : Bool) (b A C z Y p v : ℝ)
@@ -415,5 +421,28 @@ theorem native_drift_multiset_le_roots (e : Bool) (b A C z Y p v : ℝ)
       rw [(hT V hv).2] at hdiv
       exact hbound.trans ((Polynomial.le_rootMultiplicity_iff hnonzero).mpr hdiv)
   · simp [Finset.not_nonempty_iff_eq_empty.mp he]
+
+/-- Finiteness and the bound count distinct complete original triples, at one b. -/
+theorem seven_read_world_bound (e : Bool) (b A C z Y p v : ℝ)
+    (hb : 0 < b) (hz : z ≠ A) :
+    (sevenFiber e b A C z Y p v).Finite ∧ (sevenFiber e b A C z Y p v).ncard ≤ 3 := by
+  classical
+  have hcap (S : Finset OriginalWorld) (hS : ∀ W ∈ S, W ∈ sevenFiber e b A C z Y p v) :
+      S.card ≤ 3 := by
+    have h := Multiset.card_le_card (native_drift_multiset_le_roots e b A C z Y p v hb hz S hS)
+    simp only [Multiset.card_map] at h
+    exact h.trans ((Polynomial.card_roots' _).trans (Polynomial.natDegree_le_of_degree_le
+      (drift_degree e b A C z Y p v)))
+  have hfinite : (sevenFiber e b A C z Y p v).Finite := by
+    by_contra hinf
+    obtain ⟨S,hS,hcard⟩ := Set.Infinite.exists_subset_card_eq hinf 4
+    have h := hcap S (by intro W hw; exact hS hw)
+    omega
+  refine ⟨hfinite,?_⟩
+  simpa only [← Set.ncard_coe_finset,hfinite.coe_toFinset] using
+    hcap hfinite.toFinset (by simp)
+
+#print axioms native_drift_multiset_le_roots
+#print axioms seven_read_world_bound
 
 end D5.S3.Observer.CubicGain.SevenReadWorldBound
