@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29b33b7c6128d6848b29b22cf9027eec5d70b03a9bb41eabbaafdbc6b2d6a4db
+  normalized_sha256: sha256:29b33b7c6128d6848b29b22cf9027eec5d70b03a9bb41eabbaafdbc6b2d6a4db
+cas_ref: sha256:29b33b7c6128d6848b29b22cf9027eec5d70b03a9bb41eabbaafdbc6b2d6a4db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只列举近线精度这一观察参数，没有给出精度界或存在性断言。
+    previous_atom_id: bc737d16f0d9b5df754951ccdf96e5442b1cda72bebc255306024b4db2ac5cfc
+    next_atom_id: c75f7cc376054af7ec2c2db62e1d0ea2e3df6de65fbb707405b9411759c69217
