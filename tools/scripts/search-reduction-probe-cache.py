@@ -17,7 +17,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v1"
+VERSION = "probe-cache-v2"
 
 
 def canonical(value):
