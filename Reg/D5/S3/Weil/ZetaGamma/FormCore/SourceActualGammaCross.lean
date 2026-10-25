@@ -309,64 +309,71 @@ private theorem graph_admissible_separation :
 
 namespace ShiftedGraph
 
-open Classical
-
 abbrev signature : Signature where
-  Params := ℝ
-  State _ := ℝ → ℂ
+  Params := ℝ → ℂ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := ℝ → ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ f => decide (InActualBareQuarterGraph f))
+  realize signature (fun _ f c ξ =>
+    (gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => (1 : ℝ)) (fun e => nomatch e)
 
-/- Whole original telescope and iff. Only its entire original RHS is
-observed; original global L1 and L2 remain hypotheses, never conclusions
-replaced by a chosen source subset. Arbitrary real shifts are retained. -/
+/- The entire original telescope and iff are retained. The observation is
+the original Gamma integrand, with f as parameter and the later shift c
+as state. Both original global L1 and L2 hypotheses remain in the law. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {f : ℝ → ℂ} (_hf₁ : Integrable f volume)
     (_hf₂ : MemLp f 2 volume) (c : ℝ),
-    Integrable (fun ξ : ℝ =>
-      (gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2) volume ↔
-        r.readout () c f = true
+    Integrable (r.readout () f c) volume ↔ InActualBareQuarterGraph f
 
 private theorem source_reconstruction :
     (type_of% (@shifted_actual_gamma_graph_equivalence)) ↔
-      arena.Law actual := by
-  simp only [arena, actual, realize, decide_eq_true_eq]
+      arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
-  obtain ⟨f, hf₁, hf₂, hNotGamma⟩ := exists_legal_non_gamma_source
-  have hbad := hall hf₁ hf₂ 0
-  change (Integrable (fun ξ : ℝ =>
-    (gammaWeight ξ + (0 : ℝ)) * ‖unitarySourceFourier f ξ‖ ^ 2) volume ↔ true = true) at hbad
-  exact hNotGamma (hbad.mpr rfl)
+  have hbad := (hall (f := fun _ : ℝ => (0 : ℂ))
+    (by simp) MemLp.zero' 0).mpr zero_quarter_graph
+  change Integrable (fun _ : ℝ => (1 : ℝ)) volume at hbad
+  have hFinite : IsFiniteMeasure (volume : Measure ℝ) :=
+    (integrable_const_iff_isFiniteMeasure (by norm_num : (1 : ℝ) ≠ 0)).mp hbad
+  have hfin := @measure_lt_top ℝ _ (volume : Measure ℝ) hFinite univ
+  simpa using hfin
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
+  classical
   intro i
-  obtain ⟨f₀, f₁, _hf₀₁, _hf₀₂, _hf₁₁, _hf₁₂, hGraph, hNotGraph⟩ :=
+  obtain ⟨_f₀, f, _hf₀₁, _hf₀₂, _hf₁, _hf₂, _hGraph, hNotGraph⟩ :=
     graph_admissible_separation
-  refine ⟨(0 : ℝ), f₀, f₁, ?_⟩
-  change decide (InActualBareQuarterGraph f₀) ≠ decide (InActualBareQuarterGraph f₁)
-  simp [hGraph, hNotGraph]
+  have hFourier : ∃ ξ : ℝ, unitarySourceFourier f ξ ≠ 0 := by
+    by_contra! hZero
+    apply hNotGraph
+    simp [InActualBareQuarterGraph, hZero]
+  obtain ⟨ξ, hξ⟩ := hFourier
+  refine ⟨f, (0 : ℝ), (1 : ℝ), ?_⟩
+  change (fun ξ : ℝ => (gammaWeight ξ + 0) * ‖unitarySourceFourier f ξ‖ ^ 2) ≠
+    (fun ξ : ℝ => (gammaWeight ξ + 1) * ‖unitarySourceFourier f ξ‖ ^ 2)
+  intro heq
+  have hValue := congrFun heq ξ
+  have hPositive : 0 < ‖unitarySourceFourier f ξ‖ ^ 2 :=
+    sq_pos_of_pos (norm_pos_iff.mpr hξ)
+  nlinarith [hValue]
 
 def familyRegistration : Registration arena
     (type_of% (@shifted_actual_gamma_graph_equivalence)) where
   actual := actual
   bridge := source_reconstruction
-  variation := ⟨(by
-    simpa only [arena, actual, realize, decide_eq_true_eq] using
-      @shifted_actual_gamma_graph_equivalence), rejected, rejected_law⟩
+  variation := ⟨@shifted_actual_gamma_graph_equivalence, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -377,10 +384,9 @@ def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- All four original binders f,hf1,hf2,c remain in the source law.
-The selected complete Iff RHS is observed through its Boolean reflection;
-decide_eq_true_eq reconstructs precisely the original proposition.
-The selected f operand supplies the state after the shift coordinate c. -/
+/- The selected occurrence is the complete original Gamma integrand.
+The original f binder is coordinate 0 and c is state binder 3. No source
+predicate is reified and no source binder, premise or conclusion changes. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@shifted_actual_gamma_graph_equivalence) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross.shifted_actual_gamma_graph_equivalence.__information_unit
@@ -394,7 +400,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨familyRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => decide (InActualBareQuarterGraph f))
+  readout := some (realize signature (fun _ f c ξ =>
+    (gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -403,13 +410,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross
     definition := none
-    coordinates := #[3]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
