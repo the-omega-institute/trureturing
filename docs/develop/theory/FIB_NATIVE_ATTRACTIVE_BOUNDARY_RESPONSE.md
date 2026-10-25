@@ -4361,3 +4361,533 @@ justified error comparison transferring it to the original
 positive-noise potential.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. The conditional logarithmic counting limit and its all-mode coefficient
+
+**Definition 18.1 (the fixed count and natural angular fibres).**
+Fix an integer $n\ge2$. Retain exactly the identity unit source,
+raw Lebesgue measures, covariance-$2$ heat clock, complete time
+integral and whole unweighted $W\in\mathbb R^{2n-2}$ marginal in
+(17.1). The central noise is fixed at $\epsilon=1$. The operator
+$A_{n,1,g}$ and strict complex count $N_{n,g}(E)$ are those of
+(17.2), on the full original free closure $\mathcal H_1$, with no
+symmetry or extra trace restriction. Use $J,c,I_n,q_n,\mathcal H_c,A$
+of (12.3)--(12.4), $Q_n,q_*,\mu_n$ of (13.1), and
+$\lambda_n=2\pi\mu_n$. Thus $0<q_*\le q_n\le1$.
+
+The analytic hypotheses are the original-field formulas and
+locally uniform off-pole convergence of Theorem 10.2, the full
+complex polar identity (12.12)--(12.13), the closed natural angular
+form and compact embedding supplied by V, Theorem 10.2 at the
+revision in Definition 1.1, the natural-core approximation
+(13.6)--(13.8), the complete-field scaling (14.9), and the original
+closed form, compact smooth core and local estimates
+(15.9)--(15.12). All conclusions below are ordinary conditional
+analysis under these hypotheses.
+
+For real $g>0$, put $k=g/(2\pi)$. On complex $L^2(J,da)$ define
+
+$$
+\begin{aligned}
+D_0&=\mathcal H_c,\\
+D_m&=\left\{b\in\mathcal H_c:
+       \int_J\frac{\sin^2a}{c(a)}|b|^2\,da<\infty\right\}
+                      &&(m\in\mathbb Z\setminus\{0\}),\\
+h_{n,g}(\sigma,m)[b]
+ &=A[b]+\int_J c(a)(\sigma+m\tan a)^2|b|^2\,da-kQ_n[b],
+ &D(h_{n,g}(\sigma,m))&=D_m,\qquad \sigma\in\mathbb R.
+\end{aligned}
+\tag{18.1}
+$$
+
+Let $H_{n,g}(\sigma,m)$ be the self-adjoint operator of this form,
+and set
+
+$$
+\nu_{n,g}(\sigma,m)
+ =\dim_{\mathbb C}\operatorname{Ran}
+       \mathbf1_{(-\infty,0)}(H_{n,g}(\sigma,m)),\qquad
+ d_{n,g}=\frac1{2\pi}\sum_{m\in\mathbb Z}
+                  \int_{\mathbb R}\nu_{n,g}(\sigma,m)\,d\sigma.
+\tag{18.2}
+$$
+
+The domains in (18.1) are natural finite-energy domains; the extra
+integral for $m\ne0$ is exactly integrability of the full square,
+not a prescribed angular endpoint value. Finiteness of (18.2)
+and the existence of these operators are included in the proof below.
+
+**Theorem 18.2 (the original retained count and all-mode phase integral).**
+Under Definition 18.1's analytic hypotheses, for every integer
+$n\ge2$ and every fixed real $g>\lambda_n$,
+
+$$
+\begin{aligned}
+0<L_{n,g}&=\frac{d_{n,g}}2
+ =\frac1{4\pi}\sum_{m\in\mathbb Z}
+        \int_{\mathbb R}\nu_{n,g}(\sigma,m)\,d\sigma<\infty,\\
+N_{n,g}(E)&=L_{n,g}\log(1/E)+o(\log(1/E))
+                                      \qquad(E\downarrow0).
+\end{aligned}
+\tag{18.3}
+$$
+
+For fixed $n$, the coefficient $L_{n,g}$ is continuous in
+$g>\lambda_n$. Every integer angular mode and its complex
+multiplicity is included, including couplings at which an
+angular channel has a zero eigenvalue.
+
+**Proof.** Fix $n$. The construction of the coefficient will use
+all $g>0$; the original counting conclusion uses $g>\lambda_n$.
+First consider the nonnegative part of (18.1). The sum of the
+closed form $A$ and the nonnegative multiplication square is
+closed on its intersection domain. This domain is $D_m$ because
+
+$$
+c(\sigma+m\tan a)^2
+ =m^2\frac{\sin^2a}{c}+2m\sigma\sin a+\sigma^2c.
+\tag{18.4}
+$$
+
+The last two multipliers are bounded. The domain is dense since
+it contains $C_c^\infty(J;\mathbb C)$. Its embedding into $L^2(J)$
+is compact, being continuously contained in $\mathcal H_c$ with
+its form norm. The bounded Hermitian perturbation $-kq_n$
+therefore gives a closed lower semibounded form and a
+self-adjoint compact-resolvent operator, with $H_{n,g}\ge-k$.
+These are the classical closed-form representation and compact
+form-embedding implications, applied to the stated natural domain.
+
+The compact angular core has exactly that domain as its form
+closure. For $m=0$, bounded truncation of real and imaginary parts,
+then (13.6)--(13.7)'s logarithmic endpoint cutoffs, and interior
+mollification prove density in $\mathcal H_c$. For $m\ne0$, use
+the same cutoffs $\eta_\varepsilon$. At endpoint distance $s$,
+$c\asymp s$, $\sin^2a/c\asymp s^{-1}$ and
+
+$$
+c|\eta_\varepsilon'|^2
+ \le \frac{C}{s\log(1/\varepsilon)^2}
+             \mathbf1_{\{\varepsilon^2<s<\varepsilon\}}.
+\tag{18.5}
+$$
+
+Multiplication by $|b|^2$ and the extra integrability in $D_m$
+make this derivative cost tend to zero. The removed weighted
+potential, derivative and $L^2$ tails also tend to zero.
+Interior mollification then converges in the entire positive
+form norm. This proves core density without changing either
+natural angular endpoint to a Dirichlet endpoint.
+
+Next there is a bounded region containing every contributing
+frequency and mode. More precisely, for each finite $K$, the set
+of pairs $(\sigma,m)\in\mathbb R\times\mathbb Z$ for which some
+$\|b\|_2=1$ satisfies
+
+$$
+A[b]+\int_Jc(\sigma+m\tan a)^2|b|^2\,da\le K
+\tag{18.6}
+$$
+
+is bounded. Otherwise choose such pairs with
+$r_j=(\sigma_j^2+m_j^2)^{1/2}\to\infty$ and normalized functions
+$b_j$. Compactness of the $A$ form embedding gives, along a
+subsequence, $b_j\to b$ strongly in $L^2(J)$, $\|b\|_2=1$.
+Also $(\sigma_j/r_j,m_j/r_j)\to(s,t)$ with $s^2+t^2=1$.
+Divide the square bound by $r_j^2$. On each compact subinterval
+of $J$, strong convergence and uniform convergence of its
+multiplier imply $c(s+t\tan a)^2|b|^2=0$ almost everywhere.
+The function $s+t\tan a$ has at most one zero in $J$, and is
+not identically zero. Thus $b=0$ almost everywhere, a contradiction.
+This argument also applies to real $m$ whenever that is useful.
+
+If $h_{n,g}(\sigma,m)[b]\le0$ for a unit vector, (18.6) holds
+with $K=k$. Moreover $h_{n,g}\ge A-k$, so its nonpositive
+spectral rank is at most the number of eigenvalues of the
+operator of $A$ in $(-\infty,k]$, which is finite. Taking a larger
+$K$ gives the same bounded-support and rank conclusions for
+bounded spectral thresholds. These bounds are uniform for $g$
+in a fixed compact subset of $(0,\infty)$. In particular, only
+finitely many integers $m$ can contribute to (18.2).
+
+For a fixed such $m$, (18.4) gives a bounded polynomial
+perturbation of $H_{n,g}(0,m)$, with the same operator domain.
+Writing $R_m=(H_{n,g}(0,m)+k+1)^{-1}$, one obtains
+
+$$
+H_{n,g}(z,m)R_m
+ =I+\bigl(2mz\sin a+z^2c-k-1\bigr)R_m,
+                       \qquad z\in\mathbb C.
+\tag{18.7}
+$$
+
+The right side is a holomorphic family of identity plus compact
+operators on $L^2(J)$, hence Fredholm of index zero on the
+connected domain $\mathbb C$. By (18.6) with $K=k+1$, it is
+invertible for some sufficiently large real $z$. Analytic
+Fredholm theory, in Dyatlov--Zworski, *Mathematical Theory of
+Scattering Resonances*, version 1.0, Theorem C.8, printed p.522
+([author text](https://math.mit.edu/~dyatlov/res/res_final.pdf)),
+therefore makes its noninvertibility set discrete. There are
+only finitely many real zeros in the compact contributing
+interval. Away from them the strict negative index is locally
+constant, by norm-resolvent continuity of the bounded
+perturbation. Thus $\nu_{n,g}(\cdot,m)$ is bounded, compactly
+supported and constant on finitely many intervals apart from
+finitely many points. It is Riemann integrable.
+
+For continuity in $g$, fix $g_0>0$ and a compact positive
+coupling neighbourhood. The support and rank bounds just proved
+are common throughout that neighbourhood. For each fixed $m$,
+except at the finitely many real zeros for $g_0$, the bounded
+perturbation $-(g-g_0)q_n/(2\pi)$ preserves the negative index
+for sufficiently small $|g-g_0|$. Dominated convergence over
+finitely many modes and a fixed bounded frequency interval gives
+$d_{n,g}\to d_{n,g_0}$. This includes $g_0$ with a zero channel.
+For $g>\lambda_n$, the attained natural minimizer of $A/Q_n$
+has $h_{n,g}(0,0)[b]<0$. The strict inequality persists on an
+open interval of $\sigma$ about zero. Consequently
+$0<d_{n,g}<\infty$ in the required supercritical range.
+
+We now relate this phase integral to finite log intervals.
+Use unitary Fourier series in the actual $2\pi$ circle
+$\mathbb T$, and write $v_m(\ell,a)=e^{-ima/2}w_m(\ell,a)$.
+For a log interval of length $T$, define the auxiliary form
+
+$$
+\mathcal Q_g[w]=\sum_{m\in\mathbb Z}\int_0^T\int_J
+ \left\{4c|\partial_aw_m|^2+c|w_m|^2
+       +c|\partial_\ell w_m+im\tan a\,w_m|^2
+       -kq_n|w_m|^2\right\}\,da\,d\ell.
+\tag{18.8}
+$$
+
+Its norm $\|w\|^2=\sum_m\int_0^T\int_J|w_m|^2$ is the cylinder
+$L^2$ norm. Take the positive-form closure of finite sums of
+smooth longitudinal functions and compact smooth angular
+functions. Periodic longitudinal functions define the periodic
+realization; functions compactly supported in $(0,T)$ define
+the realization with Dirichlet log interfaces. Angular closures
+remain the natural ones proved above in both cases. Denote their
+strict negative indices by $P_g(T)$ and $D_g(T)$, respectively.
+Fourier series in the periodic variable give precisely the
+operators (18.1) at $\sigma=2\pi j/T$, $j\in\mathbb Z$. The
+support argument for every finite $K$, together with compactness
+in each angular fibre, also gives compact resolvent for this
+periodic realization. Its lower bound is $-k$.
+
+The form-domain variational principle therefore gives
+
+$$
+\begin{aligned}
+P_g(T)&=\sum_{m,j\in\mathbb Z}
+                 \nu_{n,g}(2\pi j/T,m)=d_{n,g}T+O_{n,g}(1),\\
+D_g(T)&\le P_g(T).
+\end{aligned}
+\tag{18.9}
+$$
+
+For the first equality and its error, count the lattice points
+in each of the finitely many intervals of constancy of $\nu$.
+Each interval contributes its length times $T/(2\pi)$ with a
+bounded error. The finitely many threshold points contribute
+another bounded error, with their strict counts retained.
+The second inequality uses the embedding of the Dirichlet log
+form domain into the periodic one; it imposes no angular trace.
+Here and below the variational principle is the classical
+form-domain result in Teschl, *Mathematical Methods in Quantum
+Mechanics*, authorized online first edition, Theorems 4.10 and
+4.12(i), printed p.119
+([author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)).
+It identifies a strict negative spectral rank with the supremum
+of dimensions of strictly negative complex form subspaces.
+
+For the reverse density, fix $\delta>0$ and let $S_T$ be the
+periodic spectral subspace below $-\delta$. Repeating the same
+Fredholm argument for $H_{n,g}+\delta$ gives
+
+$$
+r_T:=\dim S_T=d_\delta T+O_{n,g,\delta}(1),\qquad
+ d_\delta=\frac1{2\pi}\sum_m\int_{\mathbb R}
+  \dim\operatorname{Ran}\mathbf1_{(-\infty,-\delta)}
+                 (H_{n,g}(\sigma,m))\,d\sigma.
+\tag{18.10}
+$$
+
+The common bounded support and rank imply $d_\delta\uparrow d_{n,g}$
+as $\delta\downarrow0$. Choose an orthonormal basis of $S_T$
+consisting of longitudinal Fourier modes and angular eigenvectors.
+The sum of their squared angular norms at each $\ell$ is $r_T/T$.
+If $T>2h$, the positive operator on $S_T$ given by the mass in
+$B_h=(0,h)\cup(T-h,T)$ has trace $2hr_T/T$. Removing its
+eigenvectors with eigenvalue greater than $\varepsilon$ costs
+at most $2hr_T/(T\varepsilon)=O_{h,\varepsilon,\delta}(1)$
+dimensions. On the retained subspace $S'_T$,
+$\int_{B_h}|w|^2\le\varepsilon\|w\|^2$.
+
+Take a real smooth $0\le\chi\le1$, zero near the log endpoints,
+one outside $B_h$, with $|\chi'|\le C/h$. If $H^{\rm per}_g$
+is the operator of (18.8), its restriction to $S_T$ has norm
+at most $k$. The product rule for
+$\partial_\ell+im\tan a$ gives the exact identity and estimate
+
+$$
+\begin{aligned}
+\mathcal Q_g[\chi w]
+ &=\operatorname{Re}\langle H^{\rm per}_gw,\chi^2w\rangle
+       +\sum_m\int c|\chi'|^2|w_m|^2\\
+ &\le\bigl(-\delta+k\sqrt\varepsilon+C^2/h^2\bigr)\|w\|^2,
+                      \qquad w\in S'_T.
+\end{aligned}
+\tag{18.11}
+$$
+
+Indeed $\|(1-\chi^2)w\|\le\sqrt\varepsilon\|w\|$.
+Choose $\varepsilon<1$ small and $h$ large, both independent of
+$T$, so that (18.11) is at most $-\delta\|w\|^2/2$.
+The cutoff map is injective since
+$\|\chi w\|^2\ge(1-\varepsilon)\|w\|^2$.
+It follows that $D_g(T)\ge d_\delta T-O_{n,g,\delta}(1)$.
+Together with (18.9), first taking $T\to\infty$ and then
+$\delta\downarrow0$ proves
+
+$$
+\lim_{T\to\infty}\frac{D_g(T)}T=d_{n,g}.
+\tag{18.12}
+$$
+
+The subspaces in this lower comparison have a strict negative
+margin. They contain only finitely many longitudinal frequencies
+and angular modes for each fixed $T$. The angular core density
+above and longitudinal smoothing therefore approximate them in
+the positive form norm by finite sums compactly supported in
+$(0,T)\times J$. Finite-dimensional approximation preserves
+linear independence and a strict negative margin. After undoing
+the gauge, these give actual compact smooth Cartesian functions
+on annuli, extended by zero near both axes and the pole. In
+particular the supremal density in (18.12) can be approached by
+such smooth trial spaces. No assertion that the unrestricted
+angular boundary space has finite codimension is needed.
+
+It remains to transfer this density to the original operator.
+Put $\ell=\log R$, $f=R^{-1}v$, and use the coordinates (12.3).
+Raw measure and direct differentiation give
+
+$$
+\begin{aligned}
+d\xi&=\tfrac14e^{4\ell}\,d\ell\,da\,d\theta,
+&4\|f\|_2^2&=\int e^{2\ell}|v|^2,\\
+Zf&=e^{-3\ell}\{2\sin a(\partial_\ell v-v)+4c\partial_av\},
+&4\|Zf\|_2^2&=\int e^{-2\ell}
+       |2\sin a(\partial_\ell v-v)+4c\partial_av|^2.
+\end{aligned}
+\tag{18.13}
+$$
+
+The integrals on the right are over the log-polar variables.
+In (12.12), after the angular gauge and integration in $\ell$,
+the cross term involving $-v$ integrates to zero for compact
+support or periodic interfaces; its angular-circle part also
+has zero real integral. Thus four times the homogeneous
+horizontal-minus-potential form is exactly (18.8), including
+all magnetic cross terms. The original spectral wall is
+$4E\|f\|_2^2=\int E e^{2\ell}|v|^2$.
+
+Write $\omega(a,\theta)=(\sqrt c\cos\theta,\sqrt c\sin\theta,
+\sin a/4)\in\Sigma=\{R=1\}$ and
+$\delta_r(x,y,z)=(rx,ry,r^2z)$. Complete-field scaling gives
+
+$$
+e^{2\ell}M_{n,1}(\delta_{e^\ell}\omega)
+       =M_{n,e^{-\ell}}(\omega).
+\tag{18.14}
+$$
+
+The compact sphere $\Sigma$, including its two axis directions,
+is disjoint from the pole. The locally uniform convergence in
+Theorem 10.2 and $q_*>0$ imply that for each $\zeta>0$ there is
+$\ell_0\ge0$ such that, uniformly in $a,\theta$ and
+$\ell\ge\ell_0$,
+
+$$
+\frac{g-\zeta}{2\pi}q_n(a)
+ \le gM_{n,e^{-\ell}}(\omega(a,\theta))
+ \le\frac{g+\zeta}{2\pi}q_n(a).
+\tag{18.15}
+$$
+
+This is a pointwise comparison of the actual whole marginal,
+valid simultaneously for all angular modes. The central term
+in (18.13) is nonnegative. On a translate by $a_0\ge0$ of any
+fixed finite-dimensional smooth cylinder space its value is at
+most $C_{\rm space}e^{-2a_0}\|w\|^2$. The constant is finite by
+finite dimensionality and (18.13); the preceding core
+approximation also gives finite central derivatives directly.
+
+For the upper index comparison fix $\zeta>0$. Choose real
+smooth cutoffs in $\ell$ with squared sum one: one inner cutoff,
+and exterior cutoffs spaced by $L$, each supported in an
+interval of length $T=L+2h$. Sine and cosine interpolation in
+the overlaps of width $h$ gives $\sum_j|\chi_j'|^2\le C/h^2$,
+with a constant independent of $L>2h$ and $E$.
+The product rule for the actual fields gives the IMS identity
+
+$$
+\begin{aligned}
+q_1[f]+E\|f\|_2^2
+ &=\sum_j\{q_1[\chi_jf]+E\|\chi_jf\|_2^2\}
+                          -\int\mathcal I|f|^2\,d\xi,\\
+\mathcal I&=\sum_j|\chi_j'|^2
+           \left(\frac c{R^2}+\frac{4\sin^2a}{R^4}\right).
+\end{aligned}
+\tag{18.16}
+$$
+
+This is the usual IMS product identity, as in Teschl, Lemma
+11.3, printed p.243; here the displayed multiplier follows
+from $|\nabla_H\log R|^2=c/R^2$ and
+$|Z\log R|^2=4\sin^2a/R^4$. It follows first on the original
+smooth core and then on $\mathcal H_1$ by form closure.
+The partition is locally finite; the nonnegative energy sums
+and the bounded localization multiplier justify the infinite sum.
+
+Allocate $-\mathcal I$ to each localized form using
+$\sum\chi_j^2=1$. On exterior supports (18.13) bounds four
+times this error by $5C h^{-2}\|w\|^2$. Choose $h$ large
+so $5C/h^2\le\zeta q_* /(2\pi)$, and choose the start of the
+exterior supports beyond $\ell_0$ in (18.15). Any initial
+transition can be included in the fixed inner region. Each
+exterior localized original form is consequently bounded below,
+after multiplication by four and dropping its central energy, by
+
+$$
+\mathcal Q_{g+2\zeta}[w]+\int E e^{2\ell}|w|^2.
+\tag{18.17}
+$$
+
+The logarithmic endpoints are Dirichlet interfaces. The
+localized original form domain maps into this natural homogeneous
+domain: the full identity (12.12), its form closure, and the
+angular core density above give precisely this inclusion.
+Only longitudinal interfaces have been introduced.
+
+The inner cutoff is supported in a fixed bounded gauge ball
+(for fixed $L,h,\ell_0$). Its Dirichlet original realization,
+including its bounded localization error, has compact resolvent.
+Indeed (15.9) gives local Euclidean $H^1$ control, (15.11)--(15.12)
+give an equivalent shifted form norm, and classical Rellich
+compactness on that bounded region gives a compact embedding.
+Its strict negative index $K_{\rm in}$ is finite and independent
+of $E$. This uses Euclidean control only on that bounded region.
+
+Let $k_+=(g+2\zeta)/(2\pi)$. Since
+$\mathcal Q_{g+2\zeta}\ge-k_+\|w\|^2$, an exterior piece starting
+at $\ell\ge\tfrac12\log(k_+/E)$ has nonnegative comparison
+form (18.17). Only $\log(1/E)/(2L)+O(1)$ pieces can contribute;
+each has index at most $D_{g+2\zeta}(L+2h)\le P_{g+2\zeta}(L+2h)$.
+The localization map $f\mapsto(\chi_jf)_j$ is injective.
+Projection onto the direct sum of local negative spectral
+spaces is injective on any strictly negative original subspace:
+a vector in its kernel would make every localized comparison
+nonnegative, contradicting (18.16)--(18.17).
+The strict-index principle therefore gives
+
+$$
+\limsup_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le\frac{P_{g+2\zeta}(L+2h)}{2L}
+ \longrightarrow\frac{d_{n,g+2\zeta}}2\qquad(L\to\infty).
+\tag{18.18}
+$$
+
+Here $h$ is fixed before $L$ grows, and $E\downarrow0$ is taken
+first. The fixed inner index and the finite initial and endpoint
+pieces vanish upon division by $\log(1/E)$.
+
+For the lower comparison take $0<\zeta<g-\lambda_n$.
+For a fixed $T$, choose an $r$-dimensional compact smooth
+cylinder trial space from (18.12), at coupling $g-\zeta$, with
+$\mathcal Q_{g-\zeta}[w]\le-\gamma\|w\|^2$ for some $\gamma>0$.
+Choose $a_0$ sufficiently large for (18.15) on every interval
+$[a_0+jT,a_0+(j+1)T]$, $j\ge0$, and for the central term of
+each translated space to be at most $\gamma\|w\|^2/4$.
+The latter follows from (18.13)'s bound
+$C_{\rm space}e^{-2a_0}$ and decreases on successive translates.
+Keep only the intervals for which
+
+$$
+E e^{2(a_0+(j+1)T)}\le\gamma/4.
+\tag{18.19}
+$$
+
+On each copy, four times $q_1+E\|\cdot\|_2^2$ is at most
+$(-\gamma+\gamma/4+\gamma/4)\|w\|^2<0$ by (18.15).
+After undoing the coordinates these are actual compact smooth
+Cartesian trials in the original fixed-noise core. Their
+supports are disjoint, so locality makes their direct sum a
+strictly negative complex subspace. The number of retained
+copies is $\log(1/E)/(2T)+O(1)$, and hence
+
+$$
+\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \ge\frac r{2T}.
+\tag{18.20}
+$$
+
+By (18.12) and its smooth-core construction, $r/T$ can approach
+$d_{n,g-\zeta}$, with $T$ and the trial space fixed before
+$E\downarrow0$. Combining (18.18)--(18.20) gives
+
+$$
+\frac{d_{n,g-\zeta}}2
+ \le\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le\limsup_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \le\frac{d_{n,g+2\zeta}}2.
+\tag{18.21}
+$$
+
+Finally let $\zeta\downarrow0$. Continuity of $d_{n,g}$ and its
+strict positivity and finiteness prove (18.3) and continuity of
+$L_{n,g}$. The periodic cylinder has been removed through both
+index comparisons, while the original source, natural angular
+endpoints and full complex $\mathcal H_1$ domain remain fixed.
+
+**Definition 18.3 (attribution and the sharper remainder boundary).**
+Theorem 18.2 is a source-specific deduction from Definition
+18.1's analytic hypotheses. Its additional mathematical content
+is the natural all-mode phase density, its log-interface
+comparison and its transfer to the actual positive-noise whole
+marginal. The analytic Fredholm theorem is used only for the
+bounded polynomial perturbation (18.7), with compactness and
+one invertible point verified there. The form-index principle,
+product and IMS identities, and Rellich compactness are the
+classical intermediates attributed in the proof and in §15.
+None of these classical results alone identifies this coefficient
+or transfers it to the original retained operator. This
+conditional deduction carries no literature-priority claim.
+
+Equation (18.3) answers the limit question (17.27) under the
+stated analytic hypotheses. It does not identify the single-trial
+supremum $S_{n,g}$ with $L_{n,g}$, evaluate a numerical coefficient,
+or imply an individual eigenvalue asymptotic. There is no
+uniformity in $n$ or $g$, no physical realization assertion and
+no kernel certification of these ordinary analytic statements.
+A sharper, separately quantified remainder assertion is
+
+$$
+\begin{gathered}
+\text{for every integer }n\ge2\text{ and every fixed }g>\lambda_n,
+\quad\exists C_{n,g}<\infty,\ \exists E_{n,g}\in(0,1):\\
+\left|N_{n,g}(E)-L_{n,g}\log(1/E)\right|\le C_{n,g}
+                  \quad(0<E<E_{n,g}).
+\end{gathered}
+\tag{18.22}
+$$
+
+This assertion remains unresolved here. The bounded errors in
+the auxiliary periodic count (18.9) do not give (18.22): the
+transfer first fixes coupling and interface tolerances and then
+takes their limits, without a bounded remainder for the original
+count. No replacement of its fixed positive noise, whole
+marginal or natural full-domain realization is part of (18.3).
+
+## 追加锚（本行以下为增补区）
