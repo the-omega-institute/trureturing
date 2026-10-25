@@ -157,15 +157,15 @@ internal sealed class PositiveClosingExecutionDocument : IScribeDocumentDefiniti
     private static Formula Par(Formula f) => Seq(Open,f,Close);
     private static Formula EqOf(Formula x,Formula y) => Seq(x,Sp,Eq,Sp,y);
     private static Formula LeOf(Formula x,Formula y) => Seq(x,Sp,Le,Sp,y);
-    private static Formula Add(Formula x,Formula y) => Seq(x,Plus,y);
-    private static Formula Mul(Formula x,Formula y) => Seq(x,Sp,Cdot,Sp,y);
-    private static Formula Imp(Formula x,Formula y) => Seq(Par(x),Sp,Implies,Sp,Par(y));
-    private static Formula All(string x,Formula t,Formula b) => Seq(Forall,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b);
-    private static Formula Ex(string x,Formula t,Formula b) => Seq(Exists,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b);
+    private static Formula Add(Formula x,Formula y) => Par(Seq(x,Plus,y));
+    private static Formula Mul(Formula x,Formula y) => Par(Seq(x,Sp,Cdot,Sp,y));
+    private static Formula Imp(Formula x,Formula y) => Par(Seq(Par(x),Sp,Implies,Sp,Par(y)));
+    private static Formula All(string x,Formula t,Formula b) => Par(Seq(Forall,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b));
+    private static Formula Ex(string x,Formula t,Formula b) => Par(Seq(Exists,Sp,V(x),Sp,InMacro,Sp,t,Comma,Sp,b));
     private static Formula And(params Formula[] fs)
     {
-        var r=fs[0];
-        for(var i=1;i<fs.Length;i++) r=Seq(r,Sp,Land,Sp,fs[i]);
+        var r=Par(fs[0]);
+        for(var i=1;i<fs.Length;i++) r=Seq(r,Sp,Land,Sp,Par(fs[i]));
         return Par(r);
     }
     private static Formula N => C("Nat");
