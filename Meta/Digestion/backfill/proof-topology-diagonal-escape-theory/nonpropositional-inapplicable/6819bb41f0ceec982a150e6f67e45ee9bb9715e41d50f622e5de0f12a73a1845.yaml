@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6819bb41f0ceec982a150e6f67e45ee9bb9715e41d50f622e5de0f12a73a1845
+  normalized_sha256: sha256:6819bb41f0ceec982a150e6f67e45ee9bb9715e41d50f622e5de0f12a73a1845
+cas_ref: sha256:6819bb41f0ceec982a150e6f67e45ee9bb9715e41d50f622e5de0f12a73a1845
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“SM.1 分次迹与二元 Möbius 恢复”，不包含定义、量词或数学断言。
+    previous_atom_id: 931bbba7a191a0b4c7d4fe0f8255f5e1e8f36e3abc8a28e8346588315815d0a1
+    next_atom_id: 78e7773d48f6fbeb1655ee9aa0553d2ce10153ac350a8b92d7247e3e6e48066d

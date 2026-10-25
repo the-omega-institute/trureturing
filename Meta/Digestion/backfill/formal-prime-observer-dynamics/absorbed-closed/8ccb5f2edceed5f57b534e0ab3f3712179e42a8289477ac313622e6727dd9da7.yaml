@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8ccb5f2edceed5f57b534e0ab3f3712179e42a8289477ac313622e6727dd9da7
+  normalized_sha256: sha256:8ccb5f2edceed5f57b534e0ab3f3712179e42a8289477ac313622e6727dd9da7
+cas_ref: sha256:8ccb5f2edceed5f57b534e0ab3f3712179e42a8289477ac313622e6727dd9da7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
+    target_statement_id: sha256:4a55efd1e36e468a51d6d6c51bfd25ea290f2a8e631a099b4ce2afdb59c57570
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.jointLaw
+    target_statement_id: sha256:b92dd00f29dd968b7d2d0787a9cec2a9c20335e5e20ff8392c39a18b4a073dc5
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.observationalReverseModel
+    target_statement_id: sha256:16752db9913ee276a7d3b6ba342481a2b8e46800dbc772bf4bb3549c38f6c3f8
+receipts:
+  unresolved_subitems: []

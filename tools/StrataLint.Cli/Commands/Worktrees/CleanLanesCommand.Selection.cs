@@ -31,36 +31,54 @@ internal static partial class CleanLanesCommand
         if (log.Error is not null)
             return new("update_unknown", "update_unknown", log.Error);
         var allocated = log.Allocated!.Value;
+        var ambiguityAgeBound = allocated;
         var branches = AllocationBranches(log, item.Branch);
         foreach (var branch in branches)
         {
-            AllocationLog branchLog;
+            AllocationLog? branchLog = null;
             try
             {
+                if (branch != item.Branch && !IsAllocationBranchName(item.Path, branch, runner)) continue;
                 var common = ResolveCommonGitDirectory(item.Path, runner);
-                var tip = branch == item.Branch ? item.Head
-                    : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
-                branchLog = ReadAllocationLog(Path.Combine(common, "logs", "refs", "heads", branch), tip);
+                var path = Path.Combine(common, "logs", "refs", "heads", branch);
+                if (branch == item.Branch || HasLocalAllocationEvidence(item.Path, branch, path, runner))
+                {
+                    var tip = branch == item.Branch ? item.Head
+                        : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
+                    branchLog = ReadAllocationLog(path, tip);
+                }
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
                 return new("update_unknown", "update_unknown", "branch_reflog_unreadable");
             }
-            if (branchLog.Error is not null)
-                return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
-            var creation = branchLog.FirstRecord!;
-            if (creation.Updated > now.ToUnixTimeSeconds())
-                return new("age_unverifiable", "age_unverifiable");
-            if (creation.OldHead.All(static c => c == '0'))
+            if (branchLog is not null)
             {
-                if (log.Checkouts!.TryGetValue(branch, out var entries)
-                    && entries.Any(entry => entry.Updated == creation.Updated && entry.NewHead == creation.NewHead))
-                    allocated = Math.Max(allocated, creation.Updated);
+                if (branchLog.Error is not null)
+                    return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
+                var creation = branchLog.FirstRecord!;
+                if (creation.Updated > now.ToUnixTimeSeconds())
+                    return new("age_unverifiable", "age_unverifiable");
+                if (creation.OldHead.Any(static c => c != '0') && creation.Updated > allocated)
+                    return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
             }
-            else if (creation.Updated > allocated)
-                return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
+            if (!log.Checkouts!.TryGetValue(branch, out var entries)) continue;
+            foreach (var checkout in entries)
+            {
+                switch (ClassifyLegacyCheckout(branch, checkout, branchLog))
+                {
+                    case LegacyCheckout.Allocation:
+                        allocated = Math.Max(allocated, checkout.Updated);
+                        break;
+                    case LegacyCheckout.Ambiguous:
+                        ambiguityAgeBound = Math.Max(ambiguityAgeBound, checkout.Updated);
+                        break;
+                    case LegacyCheckout.ExistingBranch:
+                        break;
+                }
+            }
         }
-        var ageAnchor = Math.Max(updated.Value, allocated);
+        var ageAnchor = Math.Max(updated.Value, Math.Max(allocated, ambiguityAgeBound));
 
         if (merged.Value)
         {
@@ -73,6 +91,47 @@ internal static partial class CleanLanesCommand
 
         var reason = OriginalReclaimBlockReason(item, baseCommit!, ageAnchor, runner, now);
         return new(reason, "original_selectors", null, LockModifiedTicks(item));
+    }
+
+    private enum LegacyCheckout { Allocation, ExistingBranch, Ambiguous }
+
+    private static LegacyCheckout ClassifyLegacyCheckout(
+        string branch, HeadLogRecord checkout, AllocationLog? branchLog)
+    {
+        var creation = branchLog?.FirstRecord;
+        if (creation is null || creation.OldHead.Any(static c => c != '0')
+            || !HasHistoricalBranchIdentity(branch, checkout, branchLog!))
+            return LegacyCheckout.Ambiguous;
+        if (creation.Updated == checkout.Updated && creation.NewHead == checkout.NewHead)
+            return LegacyCheckout.Allocation;
+        return creation.Updated < checkout.Updated ? LegacyCheckout.ExistingBranch : LegacyCheckout.Ambiguous;
+    }
+
+    private static bool HasHistoricalBranchIdentity(string branch, HeadLogRecord checkout, AllocationLog branchLog)
+    {
+        var reference = "refs/heads/" + branch;
+        var historical = reference;
+        foreach (var rename in branchLog.BranchTransfers!.AsEnumerable().Reverse())
+        {
+            if (rename.Updated < checkout.Updated) continue;
+            // Different logs cannot order operations within the same second.
+            if (rename.Updated == checkout.Updated) return false;
+            if (!rename.Message.StartsWith("Branch: renamed ", StringComparison.Ordinal)) return false;
+            var names = rename.Message["Branch: renamed ".Length..].Split(" to ", StringSplitOptions.None);
+            if (names.Length != 2 || names[1] != historical) return false;
+            historical = names[0];
+        }
+        return historical == reference;
+    }
+
+    private static bool HasLocalAllocationEvidence(
+        string root, string branch, string logPath, IWorktreeProcessRunner runner)
+    {
+        if (File.Exists(logPath) || new FileInfo(logPath).LinkTarget is not null) return true;
+        var reference = "refs/heads/" + branch;
+        var references = Decode(RunGit(root, ["for-each-ref", "--format=%(refname)", reference],
+            runner, "could not inspect allocation branch identity").StandardOutput);
+        return references.Split('\n', StringSplitOptions.RemoveEmptyEntries).Contains(reference, StringComparer.Ordinal);
     }
 
     private static long? LockModifiedTicks(RegisteredWorktree item) => item.Locked
@@ -108,6 +167,7 @@ internal static partial class CleanLanesCommand
             string? newHead = null;
             var checkouts = new Dictionary<string, List<HeadLogRecord>>(StringComparer.Ordinal);
             var explicitAllocation = false;
+            var branchTransfers = new List<HeadLogRecord>();
             HeadLogRecord? firstRecord = null;
             while (reader.ReadLine() is { } line)
             {
@@ -115,6 +175,8 @@ internal static partial class CleanLanesCommand
                 firstRecord ??= record;
                 allocated ??= record!.Updated;
                 newHead = record!.NewHead;
+                if (!treeLog && record.Message.StartsWith("Branch: ", StringComparison.Ordinal))
+                    branchTransfers.Add(record);
                 const string allocationPrefix = "worktree-allocation:";
                 if (treeLog && record.Message.StartsWith(allocationPrefix, StringComparison.Ordinal))
                 {
@@ -132,17 +194,14 @@ internal static partial class CleanLanesCommand
                     && separator >= prefix.Length)
                 {
                     var branch = record.Message[(separator + 4)..];
-                    if (IsAllocationBranchName(branch))
-                    {
-                        if (!checkouts.TryGetValue(branch, out var entries)) checkouts.Add(branch, entries = []);
-                        entries.Add(record);
-                    }
+                    if (!checkouts.TryGetValue(branch, out var entries)) checkouts.Add(branch, entries = []);
+                    entries.Add(record);
                 }
             }
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord);
+            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord, BranchTransfers: branchTransfers);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -157,18 +216,22 @@ internal static partial class CleanLanesCommand
         return branches;
     }
 
-    private static bool IsAllocationBranchName(string value) =>
-        value.Length != 0 && value != "HEAD" && !IsObjectOid(value)
-        && value[0] != '/' && value[^1] is not ('/' or '.')
-        && !value.Contains("..", StringComparison.Ordinal)
-        && !value.Contains("@{", StringComparison.Ordinal)
-        && !value.Any(static c => c <= ' ' || c is '~' or '^' or ':' or '?' or '*' or '[' or '\\' or '\u007f')
-        && value.Split('/').All(static part => part.Length != 0 && part[0] != '.'
-            && !part.EndsWith(".lock", StringComparison.Ordinal));
+    private static bool IsAllocationBranchName(
+        string root, string value, IWorktreeProcessRunner runner)
+    {
+        if (value == "HEAD") return false;
+        var result = runner.Run("git", ["check-ref-format", "--branch", value], root,
+            TimeSpan.FromSeconds(120));
+        if (result.ExitCode == 128) return false;
+        if (result.ExitCode != 0)
+            throw new InvalidOperationException("could not validate allocation branch name");
+        // Previous-checkout expressions can expand to a valid branch name.
+        return Decode(result.StandardOutput).TrimEnd('\r', '\n') == value;
+    }
 
     private sealed record AllocationLog(long? Allocated = null, string? Error = null,
         Dictionary<string, List<HeadLogRecord>>? Checkouts = null, bool ExplicitAllocation = false,
-        HeadLogRecord? FirstRecord = null);
+        HeadLogRecord? FirstRecord = null, List<HeadLogRecord>? BranchTransfers = null);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)

@@ -12,7 +12,7 @@ import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 open PowerSeries
 open D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 open private geom geom_map geom_inverse row normalized exact_normalization
-  Agree normalized_change advance advance_zero advance_agree normalized_unique
+  normalized_change advance advance_zero advance_agree normalized_unique
   normalized_map solution solution_zero solution_normalized from
   D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 

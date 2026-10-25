@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d24acfe7f0653bc1b39862636839eeb150c968674581de48ec0d3388db6fd225
+  normalized_sha256: sha256:d24acfe7f0653bc1b39862636839eeb150c968674581de48ec0d3388db6fd225
+cas_ref: sha256:d24acfe7f0653bc1b39862636839eeb150c968674581de48ec0d3388db6fd225
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 目标 T 的语义职责说明。
+    previous_atom_id: 992aeac105803ec660b1a455e9d11ab4ba5acd0374dc39363eaf665d647695ec
+    next_atom_id: 8da7ff0902904a57d4c42b4c5bd663eb6dd03f9f0a493e25d9466052314888ff

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ad211f052013ed78bfbe5b3c214eef2785314616e34ce21ddf7f8c36d312068
+  normalized_sha256: sha256:2ad211f052013ed78bfbe5b3c214eef2785314616e34ce21ddf7f8c36d312068
+cas_ref: sha256:2ad211f052013ed78bfbe5b3c214eef2785314616e34ce21ddf7f8c36d312068
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 治理语境为“本轮不主张”，本项仅排除相位已同步这一结论，不断言相位同步或其否定。
+    previous_atom_id: 46d463975cb00039fd1fff496a8a80fd9a0a014fb4487cd2d399fcf588ae030c
+    next_atom_id: 828eafc1eafc34a6014cebff31e363392e168d86d9f3fb0016d43bf9e7467553

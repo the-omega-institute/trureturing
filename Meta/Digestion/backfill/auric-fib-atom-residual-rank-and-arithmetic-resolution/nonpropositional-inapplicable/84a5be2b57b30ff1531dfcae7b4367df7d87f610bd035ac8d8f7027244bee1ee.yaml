@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84a5be2b57b30ff1531dfcae7b4367df7d87f610bd035ac8d8f7027244bee1ee
+  normalized_sha256: sha256:84a5be2b57b30ff1531dfcae7b4367df7d87f610bd035ac8d8f7027244bee1ee
+cas_ref: sha256:84a5be2b57b30ff1531dfcae7b4367df7d87f610bd035ac8d8f7027244bee1ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional methodological commentary asking whether a new formula adds an independent relation; no additional mathematical assertion beyond the preceding theorem and proof.
+    previous_atom_id: c4fba3be498f51cd90735bcd330088c368520e578933bb27bdc7f4da31e55381
+    next_atom_id: bfcd9e965c26c0acf651a8a950c9f5ff8275beabd23694dcb237439f51639641

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:712f2fcc7db8d181907ebebe673013aa5d94690bda3605e3b3fe498466a9fa72
+  normalized_sha256: sha256:712f2fcc7db8d181907ebebe673013aa5d94690bda3605e3b3fe498466a9fa72
+cas_ref: sha256:712f2fcc7db8d181907ebebe673013aa5d94690bda3605e3b3fe498466a9fa72
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.PointedHolonomyAt
+    target_statement_id: sha256:bf13c1e184f5209413266532a13cb402730a7c51b19c030f758a72d9abf887e7
+receipts:
+  unresolved_subitems: []

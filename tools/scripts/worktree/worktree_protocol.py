@@ -28,6 +28,11 @@ GIT_TERMINATION_GRACE_SECONDS = 30
 # An empty core.fsmonitor disables it both where Git reads a boolean and where
 # older Git reads a hook path; "false" would name a hook program there.
 SCOPED_GIT_CONFIG = (("core.fsmonitor", ""), ("maintenance.auto", "false"), ("gc.auto", "0"))
+SCOPED_PROCESS_ENVIRONMENT = {"MSBUILDDISABLENODEREUSE": "1",
+                              "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
+                              "UseSharedCompilation": "false",
+                              "UseRazorBuildServer": "false",
+                              "_RazorForceBuildServer": "false"}
 
 
 def scope_fds():
@@ -65,16 +70,21 @@ def inherited_environment():
             if not key.startswith("GIT_") or key in permitted}
 
 
-def git_environment(overrides=None):
-    environment = inherited_environment()
-    # A builtin fsmonitor daemon or detached automatic maintenance outlives the
-    # command that starts it and inherits open scope descriptors, so it would
-    # hold the scope after the job ends.
+def scoped_process_environment():
+    # Background Git and .NET servers would retain inherited scope descriptors
+    # after the foreground command returns. Active descendants keep inheriting.
+    environment = dict(SCOPED_PROCESS_ENVIRONMENT)
     for index, (key, setting) in enumerate(SCOPED_GIT_CONFIG):
         environment[f"GIT_CONFIG_KEY_{index}"] = key
         environment[f"GIT_CONFIG_VALUE_{index}"] = setting
     environment["GIT_CONFIG_COUNT"] = str(len(SCOPED_GIT_CONFIG))
+    return environment
+
+
+def git_environment(overrides=None):
+    environment = inherited_environment()
     environment.update(overrides or {})
+    environment.update(scoped_process_environment())
     return environment
 
 
@@ -269,7 +279,8 @@ def native_lock_holders(path):
     inspector = shutil.which("lsof")
     if inspector:
         result = subprocess.run([inspector, "-nP", "-F", "p", "--", str(path)],
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30,
+                                env=git_environment())
         if result.stderr or result.returncode not in (0, 1):
             raise OSError("incomplete lsof inspection")
         rows = result.stdout.decode("ascii").splitlines()
@@ -404,8 +415,8 @@ def reuse(options, allow_recovered_base=False):
             expected = git(options.source, "show", pin_revision + ":" + pin).stdout
             if (path / pin).read_bytes() != expected:
                 raise Refused("incompatible_pin:" + pin)
-        print(json.dumps(dict(event="worktree_init", status="reused", path=str(path),
-                              branch=options.branch, base_revision=base)), flush=True)
+        return dict(event="worktree_init", status="reused", path=str(path),
+                    branch=options.branch, base_revision=base)
 
 
 def main(argv=None):
@@ -425,6 +436,18 @@ def main(argv=None):
     joined.add_argument("--path", type=Path, required=True)
     joined.add_argument("--branch", required=True)
     joined.add_argument("--base", required=True)
+    returned = commands.add_parser("return")
+    returned.add_argument("--path", type=Path, default=Path.cwd())
+    returned.add_argument("--pr", type=int, required=True)
+    returned.add_argument("--writers-joined", action="store_true")
+    claimed = commands.add_parser("claim")
+    claimed.add_argument("--path", type=Path)
+    claimed.add_argument("--branch", required=True)
+    claimed.add_argument("--base", required=True)
+    claimed.add_argument("--skip-restore", action="store_true")
+    pool = commands.add_parser("pool")
+    pool.add_argument("--dev", required=True)
+    pool.add_argument("--force", action="store_true")
     recovery = commands.add_parser("recover-init")
     recovery.add_argument("--path", type=Path, required=True)
     recovery.add_argument("--branch", required=True)
@@ -468,7 +491,13 @@ def main(argv=None):
                 options.argv.pop(0)
             with_command(options)
         elif options.action == "reuse":
-            reuse(options)
+            print(json.dumps(reuse(options)), flush=True)
+        elif options.action in ("return", "claim", "pool"):
+            from worktree_pool import return_tree, claim, sweep
+            result = (return_tree(options) if options.action == "return" else claim(options)
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+            print(json.dumps(result), flush=True)
+            return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
             from worktree_publication import recover_initialization
             print(json.dumps(recover_initialization(options)), flush=True)

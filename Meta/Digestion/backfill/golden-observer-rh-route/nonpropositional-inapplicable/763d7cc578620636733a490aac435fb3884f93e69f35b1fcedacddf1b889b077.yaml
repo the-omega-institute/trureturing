@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:763d7cc578620636733a490aac435fb3884f93e69f35b1fcedacddf1b889b077
+  normalized_sha256: sha256:763d7cc578620636733a490aac435fb3884f93e69f35b1fcedacddf1b889b077
+cas_ref: sha256:763d7cc578620636733a490aac435fb3884f93e69f35b1fcedacddf1b889b077
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限窗口 PSD 趋势证明全局正性的句子是被拒绝的措辞，不是全局正性定理。
+    previous_atom_id: 9d0d96a7ada40fd7c4b9ffe9187583697a71c7a2f34833c6ce225f13642fd440
+    next_atom_id: f1b84049e35542c734a2069216dedd410e9a6fa09d85dafa57b0ab00d3d6c501

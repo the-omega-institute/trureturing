@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b2830e6897669127db84d83d5072b2830e96defc8c56746e0f8df3bfdc7863a
+  normalized_sha256: sha256:0b2830e6897669127db84d83d5072b2830e96defc8c56746e0f8df3bfdc7863a
+cas_ref: sha256:0b2830e6897669127db84d83d5072b2830e96defc8c56746e0f8df3bfdc7863a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“本轮不主张”支配，仅排除列表已经按实数时间排序的交付承诺。
+    previous_atom_id: aff18c37ffd1b3aefd83264eea366a38791125f273d0445e48871fd19e06481a
+    next_atom_id: 8284fcc285fa879d8d0e6878bb3a509c58b6980158df51738fb6c6b5f311cb2f

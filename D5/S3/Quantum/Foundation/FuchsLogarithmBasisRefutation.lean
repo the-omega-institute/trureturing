@@ -136,11 +136,11 @@ private lemma ksum_real_smul (a : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) :
 open Matrix
 open scoped MatrixOrder ComplexOrder Kronecker
 
-private def rho0 : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![1/2, 1/3, 1/6]
+def rho0 : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![1/2, 1/3, 1/6]
 private def rho1 : Matrix (Fin 3) (Fin 3) ℂ := !![7/16, -1/16, 0; -1/16, 5/16, 0; 0, 0, 1/4]
 private def gramRow : Matrix (Fin 3) (Fin 3) ℂ := !![1/4, -1/4, 0; 0, 0, 0; 0, 0, 0]
 
-private theorem rho0_posDef : rho0.PosDef := by
+theorem rho0_posDef : rho0.PosDef := by
   apply Matrix.PosDef.diagonal
   intro i
   fin_cases i <;> norm_num
@@ -156,7 +156,7 @@ private theorem rho1_posDef : rho1.PosDef := by
   intro i
   fin_cases i <;> norm_num
 
-private theorem rho0_trace : rho0.trace = 1 := by
+theorem rho0_trace : rho0.trace = 1 := by
   norm_num [rho0, Matrix.trace, Matrix.diag, Fin.sum_univ_succ]
 
 private theorem rho1_trace : rho1.trace = 1 := by

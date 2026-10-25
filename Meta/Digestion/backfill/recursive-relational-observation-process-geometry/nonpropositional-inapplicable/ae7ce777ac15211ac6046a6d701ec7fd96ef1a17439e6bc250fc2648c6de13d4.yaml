@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae7ce777ac15211ac6046a6d701ec7fd96ef1a17439e6bc250fc2648c6de13d4
+  normalized_sha256: sha256:ae7ce777ac15211ac6046a6d701ec7fd96ef1a17439e6bc250fc2648c6de13d4
+cas_ref: sha256:ae7ce777ac15211ac6046a6d701ec7fd96ef1a17439e6bc250fc2648c6de13d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条引入指定测试空间、正交集及受限和全域根基的记号，没有附加根基比较或可去除性断言。
+    previous_atom_id: 077b03ab16b289b4113f09207a95eb1a76c4c56b6ba91d24d3df0cfab0bc4a26
+    next_atom_id: 1f37795c373fa53c7e419199dfa81b8a5a5f0d4f379b2b5ba918c49f9af884de

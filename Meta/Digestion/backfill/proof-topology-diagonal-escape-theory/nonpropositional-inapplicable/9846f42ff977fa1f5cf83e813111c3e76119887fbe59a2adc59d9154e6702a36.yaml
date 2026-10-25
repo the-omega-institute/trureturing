@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9846f42ff977fa1f5cf83e813111c3e76119887fbe59a2adc59d9154e6702a36
+  normalized_sha256: sha256:9846f42ff977fa1f5cf83e813111c3e76119887fbe59a2adc59d9154e6702a36
+cas_ref: sha256:9846f42ff977fa1f5cf83e813111c3e76119887fbe59a2adc59d9154e6702a36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有黄金恢复与原始规范性分离节标题。
+    previous_atom_id: 93439943a48b7b038a31f23930af91a1451b10055355b883f6e0ca98c243f5a4
+    next_atom_id: cbf5e06dbbb28cdae61a6a686a5d6fa777e3b2ef9040308563cbefa897123e36

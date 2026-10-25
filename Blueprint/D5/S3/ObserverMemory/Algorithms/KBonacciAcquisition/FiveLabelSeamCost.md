@@ -1,8 +1,8 @@
-# Five labels across an actual terminal seam
+# Five-label seams and asymmetric three-label waiting
 
 ## Abstract
 
-Five initial phase labels have exact paid seam cost h plus two.
+Five initial phase labels have paid seam cost h plus two; asymmetric three-label supports at arbitrary width have cost h plus one.
 
 **Theorem 1.1 (Exact acquisition cost of five initial phase labels).**
 
@@ -22,7 +22,54 @@ For the upper bound issue pulses at positions 2g-1 and 3g-1, then h-1 all-zero b
 
 For the lower bound the five initial phases with indices zero through four have five distinct labels at tail zero. Their actual joint histories are covered by the original first-window waiting and binary-discrimination lower bound. Since the first window has width five and the first revisit occurs after h blocks, this gives h+clog(2,5)-1=h+2. The case h=1 has no waiting blocks and still uses three paid blocks.
 
+## Asymmetric three-label application at arbitrary width
+
+### Parameters, INITIAL target and original cost
+
+Fix arbitrary integers g≥2 and 3≤u<p with gcd(u,p)=1. Write p=hu+r with 1≤r<u, and set T=gp, k=T-1 and m=gu. Thus h≥1, gcd(m,k+1)=g, m/g=u, (k+1)/g=p, and the quotient p/u in natural-number division is h. Moreover k-m=g(p-u)-1≥1, so every word used below has length m<k. These are the parameters of the original matched k-bonacci reader, whose coefficient at position i is one exactly when i modulo T is zero or minus one.
+
+Let Y be any label type and A,B,C be pairwise distinct elements of Y. Choose arbitrary nonempty disjoint sets HB⊆{1,…,u-r} and HC⊆{1,…,u-1}. Neither set is required to be a singleton. Fix any initial value v in ZMod 2. For every j in {0,…,p-1} and every legal initial tail s<k, prescribe f(some(v,-jg modulo T,s)) to be B when j∈HB, C when j∈HC, and A otherwise. The target always refers to this INITIAL joint record. Its values on the other value fiber, at rejection, and off the actual source records are unrestricted.
+
+For either fixed Boolean alphabet, the sources are every actual finite history of complete width-m blocks, including the empty history and histories already rejected. The full alphabet admits every Boolean block; the local alphabet admits those avoiding k consecutive ones internally. Both execute each actual cross-block seam. A live record retains value, length phase and terminal run of ones together. The source/history equivalence in `D5/S3/ObserverMemory/Algorithms/KBonacciIrreversibleAcquisition`.whole_first_zero_acquisition realizes every permitted joint record in either alphabet. The identities record_history and output_record in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalExecutionBridge` identify the record and endpoint reading of that same flattened history. No independent choice of three reachable marginal coordinates is used.
+
+Write C_v(f) for OriginalNarrowCost.OriginalFiberCost with these k,m,v and the chosen alphabet. This is the infimum, in the extended natural numbers, of uniform paid-block budgets for an archive-only selector correct on every actual initial history with free reading v, together with the initially rejected histories. The free initial reading and the chronological archive of issued words and their endpoint replies are its only observations. Each issued complete block costs one, including all-zero waiting words and all padding. No reset, hidden initial clock, block-internal observation or unexecuted branch is supplied.
+
+### One literal pulse script, with all tails and seams
+
+For H⊆{1,…,u}, define P(H) to be the length-m Boolean word with bit one exactly at positions jg-1 for j∈H, and zero at every other position. Equivalently concatenate, for j=1,…,u, g-1 zeros followed by the indicator of j∈H. Thus the complete word, its padding, its head and its terminal bit are fixed together. Since g≥2, its first bit is zero and distinct ones are separated by at least one zero.
+
+The increment_derivative identity in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse` evaluates the increment at phase -jg as the sum modulo two of the bits at jg and jg-1, with zero extension outside the word and the separate j=0 endpoint case. For P(H), the first term is zero and the second is the indicator of H. This determines the response on all p initial phase indices, including zero and those outside the first window. Hence P(HC), issued first, has endpoint difference d0=1 exactly on HC.
+
+Issue the fixed complete script P(HC), then h-1 copies of the all-zero width-m word, then P(r+HB), where r+HB={r+j:j∈HB}. Its last query is issued at block index h, after h blocks have actually been paid. Since hm=T-rg, the absolute position of its pulse for j∈HB is hm+(r+j)g-1=T+jg-1. The coefficient has period T, so its endpoint difference dh is one exactly on the INITIAL set HB. The support condition j≤u-r ensures r+j≤u, so each last pulse lies at a legal local position at most m-1. No free phase shift is assumed.
+
+For any legal incoming tail s<k, the head-zero short_safe_execution identity of WindowChargeInverse executes each entire word successfully and advances the phase by m. Its short_legal identity puts every issued word in both alphabets because m<k. The first pulse word ends in zero, since HC excludes u; FiveLabelSeamCost.last_zero therefore gives terminal tail zero. FiveLabelSeamCost.zero_script, with n=h-1, preserves the current value through every waiting word and advances the phase by exactly (h-1)m. The final pulse word may end in one when u∈r+HB; execution stops there, so no clearing block is required. Every initial tail and every intervening actual seam is covered by the same word execution. For h=1 the waiting list is empty and the script consists of the two pulse words.
+
+### Paid execution and decoding the initial label
+
+Let y0 be the free initial value, y1 the endpoint after the first pulse, yh the endpoint just before the final pulse, and y(h+1) the last endpoint. All are nonrejected on these sources. Read d0=y1-y0 and dh=y(h+1)-yh in ZMod 2 from the actual archive, with yh=y1 when h=1. Return C when d0=1, B when d0=0 and dh=1, and A otherwise. Disjointness of HB and HC makes these respectively the original C, B and A classes. The decoder never evaluates f on the destructively updated record. The source protocol may stop immediately on C after the first block; continuing the prescribed script on that branch also returns C and gives the same uniform upper bound.
+
+The declaration original_final_script in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder` applies to this literal list of words and this endpoint decoder. It supplies an archive whose word projection is exactly that list, whose length is its length, and whose PaidTrace starts from the original record of the actual initial word. The free-reading wrapper stops at once with f(none) on an initially rejected source and uses this final-script selector on free reading v. The declaration trace_congr in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FullPositiveWindowPrice` transfers that same paid trace because the selectors agree on this fixed free reading. Finally execute_paid_trace in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace` identifies it with the original execute operation and the number of issued blocks. Together with record_history and output_record, these statements apply to every actual initial block history, including empty histories, without replacing the original history by a newly chosen representative.
+
+The prescribed live script has length 1+(h-1)+1=h+1. Its decoder is correct uniformly over all p phases and every legal initial tail in the fixed value fiber, and the rejected branch costs zero. Thus h+1 is feasible for the original cost and C_v(f)≤h+1. Behavior on a different free value can be selected independently; no bound for that fiber follows without its own target hypothesis. Unreachable records impose no additional original-history obligation, and f(none) remains an arbitrary label. The archive records only the words actually issued and their replies.
+
+### Matching lower bound and scope of both equalities
+
+At tail zero, consider the first u initial phase indices 0≤j<u in this same value fiber. All their target values lie in {A,B,C}. Index zero supplies A, a member of HB supplies B, and a member of HC supplies C; the support bounds and nonemptiness put all three representatives inside this window. Pairwise distinctness makes the range cardinality exactly three. The joint source/history equivalence realizes these records as actual histories in either alphabet, with common initial value v and common tail zero.
+
+Apply original_cost_lower in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost` with gcd(m,k+1)=g, m/g=u, (k+1)/g=p and p/u=h. Its lower bound is h+clog(2,3)-1=h+1. The waiting in this bound is actual waiting: after the first block, some common reply retains two distinct INITIAL labels, and the following h-1 blocks encounter no active coefficient for the selected first-window records. They give the same reply or reject together; rejection cannot recover the two labels. One more paid block is necessary. This lower bound permits arbitrary adaptive selectors and the full alphabet, rather than restricting competitors to the displayed pulse script.
+
+Combining the original paid-history upper and lower bounds gives C_v(f)=h+1 for every fixed v and for both alphabets. Since hu<p=hu+r<(h+1)u, the ordinary ceiling satisfies ceil(p/u)=h+1. Therefore both equalities C_v(f)=h+1=ceil(p/u) hold with all the stated arbitrary parameters and supports.
+
+This is a repository-derived application of the cited original declarations to three INITIAL phase labels. The five-label theorem above has its own parameters p=5h+1, m=5g and its different cost h+2; none of those restrictions is imposed here. The present conclusion requires the two support bounds, disjointness, and independence of the initial tail throughout the specified value fiber. It asserts neither an arbitrary-target minimax formula nor a bound on a differently prescribed fiber. Offline strategy computation, storage and label comparisons are outside the paid-block cost; no physical resource or literature-novelty claim follows.
+
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FiveLabelSeamCost.original_five_label_seam_cost`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FullPositiveWindowPrice](FullPositiveWindowPrice.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FullPositiveWindowPrice](FullPositiveWindowPrice.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace](OriginalAcquiredTrace.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalExecutionBridge](OriginalExecutionBridge.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost](OriginalNarrowCost.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/PhysicalWindowDecoder](PhysicalWindowDecoder.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse](WindowChargeInverse.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciIrreversibleAcquisition](../KBonacciIrreversibleAcquisition.md)
