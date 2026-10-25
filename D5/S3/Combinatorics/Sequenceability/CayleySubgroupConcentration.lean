@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Sequenceability/CayleySubgroupConcentration
    generality: G
-   mirror-B: none
+   mirror-B: D5/B/S3/Combinatorics/Sequenceability/CayleySubgroupConcentration
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -163,7 +163,7 @@ private theorem rounded_plateau {K : Type*} [Group K] [Fintype K]
     have hrev := hreverse (c i) b.val
     rw [heq] at hrev
     have hij : (j.val : ℝ) + 1 ≤ i.val := by exact_mod_cast hji
-    nlinarith
+    nlinarith [mul_le_mul_of_nonneg_right hij ha.le]
   have hpack : Function.Injective pack := by
     rintro ⟨i, b⟩ ⟨j, e⟩ he
     have hij : i = j := by
@@ -183,11 +183,12 @@ private theorem rounded_plateau {K : Type*} [Group K] [Fintype K]
   have hround : 4 < (3 * (q : ℝ) + 1) * τ := by
     have : 4 / τ < 3 * (q : ℝ) + 1 := by linarith
     exact (div_lt_iff₀ hτ).mp this
-  have hqtau : (8 / 7 : ℝ) < (q : ℝ) * τ := by nlinarith
+  have hqtau : (8 / 7 : ℝ) < (q : ℝ) * τ := by
+    nlinarith [mul_le_mul_of_nonneg_right hqR hτ.le]
   have hn : (0 : ℝ) < Fintype.card K := by exact_mod_cast Fintype.card_pos
   have hbig := mul_le_mul_of_nonneg_left hlarge (show (0 : ℝ) ≤ q by positivity)
   dsimp [B] at hcardR
-  nlinarith
+  nlinarith [mul_lt_mul_of_pos_right hqtau hn]
 
 private theorem exists_large_displacement {K : Type*} [Group K] [Fintype K]
     (v : EuclideanSpace ℝ K) (hv : ‖v‖ = 1) (hmean : ∑ x : K, v x = 0) :
