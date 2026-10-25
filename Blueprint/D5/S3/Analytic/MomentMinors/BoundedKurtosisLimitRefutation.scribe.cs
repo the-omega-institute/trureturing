@@ -89,7 +89,10 @@ internal sealed class BoundedKurtosisLimitRefutationDocument : IScribeDocumentDe
                         + "in the first implication gives 2 ≤ kurtosisBound (s/2) (1/2). "
                         + "The value 3/2 computed above would then give 2 ≤ 3/2, "
                         + "a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("meer-weeks-2024-bounded-kurtosis-limit-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula KurtosisBoundFormula() => All("δ", Reals(), All("δm", Reals(),
         Equal(Typed(At(Local("kurtosisBound"), X("δ"), X("δm")), Reals()),
