@@ -29,7 +29,10 @@ internal sealed class GuptaMiuraGridDispersionDocument : IScribeDocumentDefiniti
                 H("The rectangular-grid dispersion bound"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Every integer 1-Lipschitz function on every finite rectangular grid has median-dispersion at most D(m,n). Row and column sorting reduce the estimate to increasing functions, and the centered FKG comparison bounds their absolute deviations by those of the coordinate sum. Reflection pairs that sum around its mean. The source's Theorem 4.1 and Proposition 4.2 then give the stated origami diameter for positive rectangles; those origami reductions and the separate abstract ν-chain conjecture are outside this theorem."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gupta-2026-miura-grid-dispersion-inequality-4"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("gupta-miura-" + name.ToLowerInvariant()),

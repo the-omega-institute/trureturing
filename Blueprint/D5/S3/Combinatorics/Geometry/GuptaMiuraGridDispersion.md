@@ -60,6 +60,10 @@ $$\forall m \in \mathbb{N},\; \forall n \in \mathbb{N},\; \forall phi \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/GuptaMiuraGridDispersion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gupta-2026-miura-grid-dispersion-inequality-4` (proved) by `D5/S3/Combinatorics/Geometry/GuptaMiuraGridDispersion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gupta-2026-miura-grid-dispersion-inequality-4","declaration_gid":"D5/S3/Combinatorics/Geometry/GuptaMiuraGridDispersion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chakshu Gupta (2026). *Height functions on the m × n Miura-ori flip graph: degree sequence and diameter*. DOI: [10.48550/arXiv.2606.22614](https://doi.org/10.48550/arXiv.2606.22614). URL: <https://arxiv.org/abs/2606.22614v2>.
