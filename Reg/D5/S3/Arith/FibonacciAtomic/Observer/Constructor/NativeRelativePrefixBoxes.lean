@@ -78,7 +78,7 @@ def evidence : Registration arena (type_of% (@canonical_factor_levels)) where
     omega
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@canonical_factor_levels) (Realization signature) Unit Unit where
+    (@canonical_factor_levels) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes.canonical_factor_levels.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes.evidence
   realizationSource := none
@@ -112,5 +112,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 #print axioms evidence
+
+end
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes
