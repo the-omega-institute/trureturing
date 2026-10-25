@@ -110,5 +110,83 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms evidence
 #print axioms registration
 
+
+namespace Extension
+
+abbrev arena : Arena where
+  signature := NativeFunctionalObstruction.signature
+  Law R := ∀ {m : Nat} (S : System m) (B : Fin m → Prop) (v : Fin m → CompletionTree),
+    BoundaryClosed S B →
+    (∀ i E, B i → S i = some E → R.readout () ⟨m, S, i⟩ v = value v E) →
+    ∃ w : Fin m → CompletionTree,
+      (∀ i E, S i = some E → R.readout () ⟨m, S, i⟩ w = value w E) ∧
+      ∀ i, B i → R.readout () ⟨m, S, i⟩ w = R.readout () ⟨m, S, i⟩ v
+
+private theorem rejected_law : ¬ arena.Law NativeFunctionalObstruction.rejected := by
+  intro law
+  let S : System 1 := fun _ => some (.ground (.of false))
+  obtain ⟨w, sat, _⟩ := law S (fun _ => False) (fun _ => Omega)
+    (by intro i E no; exact no.elim) (by intro i E no; exact no.elim)
+  have h := sat 0 (.ground (.of false)) rfl
+  have hs : (FreeMagma.of true :
+      _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport.Source) = .of false :=
+    _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionSupportClosure.embed_injective h
+  cases hs
+
+def evidence : Registration arena (type_of% (@whole_system_boundary_extension)) where
+  actual := NativeFunctionalObstruction.actual
+  bridge := Iff.rfl
+  variation := ⟨@whole_system_boundary_extension, NativeFunctionalObstruction.rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨NativeFunctionalObstruction.rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨⟨1, (fun _ => none), 0⟩, (fun _ => leaf true), (fun _ => leaf false), ?_⟩
+    intro h
+    have hs : (FreeMagma.of true :
+        _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport.Source) = .of false :=
+      _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionSupportClosure.embed_injective h
+    cases hs
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@whole_system_boundary_extension) (Realization NativeFunctionalObstruction.signature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction.whole_system_boundary_extension.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction.Extension.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize NativeFunctionalObstruction.signature
+    (fun _ p v => v p.2.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms registration
+
+end Extension
+
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
