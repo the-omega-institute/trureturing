@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:24e71fd4c625aebd1e4eade979081954cf0fe7d95e128a62ee40715b8bd6df24
   normalized_sha256: sha256:24e71fd4c625aebd1e4eade979081954cf0fe7d95e128a62ee40715b8bd6df24
 cas_ref: sha256:24e71fd4c625aebd1e4eade979081954cf0fe7d95e128a62ee40715b8bd6df24
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/SevenReadWorldBound.seven_read_world_bound
+    target_statement_id: sha256:9498b8693d76516679ee0befc758acdaa69831de7540de98a6eaba845a6d02ca
 receipts:
   unresolved_subitems: []
