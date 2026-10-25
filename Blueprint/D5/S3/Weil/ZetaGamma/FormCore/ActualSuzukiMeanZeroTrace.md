@@ -20,7 +20,7 @@ Let L0 be the integral over t>0 of exp(-5*t/4)*actualGammaProfile F(t), let Lt b
 
 The physical coordinate identities compute the actual profile mass and endpoint tail. The even-profile mass identity converts mean zero into 5*L0 = integral((x^(5/4)-pi^(5/4))*fullTheta F(x),x>pi), retaining the endpoint trace. A logarithmic change of variables identifies Lt with pi^(5/4) times the physical log moment. The original H6 condition supplies H6 for fullTheta F; applying actual_h6_weighted_physical_moments to that transform gives the two squared estimates, whose product gives the final bound.
 
-The theorem actual_h6_mean_zero_positive_fullTheta_excess_all_gamma_domains in ActualSuzukiFiniteGammaEnergy constructs one source satisfying H6, actual even-B mean zero, every real constant-shift Gamma form domain, the complete same-input HasSum, positive original excess and positive fullTheta excess. The HasSum identifies fullTheta with that source on x>=pi. This construction supplies a nontrivial mean-zero example; the moment law itself quantifies over every original F with its stated hypotheses and assumes no realization theorem.
+The theorem actual_h6_mean_zero_positive_fullTheta_excess_all_gamma_domains in ActualSuzukiFiniteMeanZeroWitness constructs one source satisfying H6, actual even-B mean zero, every real constant-shift Gamma form domain, the complete same-input HasSum, positive original excess and positive fullTheta excess. The HasSum identifies fullTheta with that source on x>=pi. This construction supplies a nontrivial mean-zero example; the moment law itself quantifies over every original F with its stated hypotheses and assumes no realization theorem.
 
 This is a quantitative dependency for the stronger original-F Gamma lower comparison. That comparison keeps its original source F, actual mean-zero hypothesis and separately required Gamma form domain. This moment law does not derive that domain from H6, does not replace original excess by transformed excess in the comparison, and does not settle RH. No literature novelty is claimed for this synthesis.
 
@@ -44,4 +44,6 @@ Profile L1/L2 does not assert integrability of the additional Gamma-weighted Fou
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiMeanZeroTrace.actual_h6_gamma_profile_l1_l2`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiMeanZeroTrace.actual_h6_mean_zero_physical_moment_bounds`
+- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess](ActualSuzukiThetaExcess.md)
+- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiWeightedPhysicalMoments](ActualSuzukiWeightedPhysicalMoments.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/FormCore/RightExponentialTailL1Mass](RightExponentialTailL1Mass.md)
