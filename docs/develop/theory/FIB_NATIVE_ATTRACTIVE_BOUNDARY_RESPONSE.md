@@ -3227,3 +3227,334 @@ forcing or physical dimension conclusion. The parent self-field
 collapse and source-retention obstructions of §10 are unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. The supercritical retained operator and its infinite negative spectrum
+
+**Definition 15.1 (the original retained form and its realization).**
+Fix an integer $n\ge2$, $\epsilon>0$, and
+$g>\lambda_n=2\pi\mu_n$, with exactly the source and fields of
+Definition 10.1 and the angular constant of Definition 13.1. Write
+$M=M_{n,\epsilon}$ for the actual complete unweighted marginal,
+$W=W_{n,\epsilon}$ and $T=T_\epsilon$ as in Definition 14.1.
+All norms and scalar products use complex $L^2(\mathbb R^3,d\xi)$
+with raw $d\xi=dx\,dy\,dz$. The form in question is
+
+$$
+ q[f]=T[f]-gW[f],\qquad D(q)=\mathcal H_\epsilon .
+ \tag{15.1}
+$$
+
+Thus its domain is the original full complex free closure. A
+Friedrichs realization below means the self-adjoint operator
+associated with this form after closedness and lower
+semiboundedness have been established. It does not mean the
+higher-contact parent attractive operator of (10.7).
+
+**Theorem 15.2 (closed supercritical form and complete negative spectrum).**
+For every set of parameters in Definition 15.1, the form (15.1)
+is densely defined, closed and lower semibounded on exactly
+$\mathcal H_\epsilon$, and its compact smooth core remains a form
+core. Its associated Friedrichs operator $A_{n,\epsilon,g}$ satisfies
+
+$$
+ \sigma_{\mathrm{ess}}(A_{n,\epsilon,g})=[0,\infty).
+ \tag{15.2}
+$$
+
+The negative spectrum consists of infinitely many isolated
+eigenvalues of finite multiplicity. Listed with multiplicity, they
+can be arranged as
+
+$$
+ -\infty<E_1\le E_2\le\cdots<0,\qquad E_j\longrightarrow0.
+ \tag{15.3}
+$$
+
+There is no other accumulation point of the negative spectrum.
+The constants needed for lower boundedness are allowed to depend
+on $n,\epsilon,g$.
+
+**Proof.** We first check the singularity and tail of the actual
+potential. The nonnegative central convolution (10.4), the Gaussian
+supremum and the zero Fourier mode (10.3) give, for $t>0$,
+
+$$
+\begin{aligned}
+ m_{n,\epsilon}(t,\rho,z)
+ &\le \|\varphi_{\epsilon,t}\|_\infty
+                \int_{\mathbb R}m_{n,0}(t,\rho,s)\,ds\\
+ &=(4\pi)^{-3/2}\epsilon^{-1}t^{-3/2}
+                 e^{-\rho^2/(4t)}.
+\end{aligned}
+\tag{15.4}
+$$
+
+Integrate this nonnegative estimate over the whole time interval.
+For $\rho>0$,
+
+$$
+ \int_0^\infty t^{-3/2}e^{-\rho^2/(4t)}dt
+       =\frac{2\sqrt\pi}{\rho},
+ \qquad
+ 0<M(\rho,z)\le\frac1{4\pi\epsilon\rho}.
+ \tag{15.5}
+$$
+
+This estimate does not infer pointwise order from Fourier-column
+order. On every bounded set, cylindrical integration of
+$\rho^{-p}$ shows that $M\in L^p_{\mathrm{loc}}$ for
+$1\le p<2$. In particular we can fix $p=7/4>3/2$.
+
+For the tail set
+$R(\xi)=(\rho^4+16z^2)^{1/4}$,
+$\delta_a(x,y,z)=(ax,ay,a^2z)$ and $\Sigma=\{R=1\}$.
+The uniform off-pole small-time bounds (10.9)--(10.10) and their
+large-time $C_nt^{-2}$ bound imply
+
+$$
+ C_{n,\epsilon}:=
+ \sup_{\substack{0\le\eta\le\epsilon\\\omega\in\Sigma}}
+          M_{n,\eta}(\omega)<\infty .
+ \tag{15.6}
+$$
+
+Here $\Sigma$ is compact and avoids the pole, and the cited
+bounds dominate the complete time integral uniformly on the
+displayed parameter interval. The exact scaling (14.9), with
+$a=R(\xi)\ge1$, now gives
+
+$$
+ M(\xi)=a^{-2}M_{n,\epsilon/a}(\delta_{1/a}\xi)
+       \le C_{n,\epsilon}R(\xi)^{-2}.
+ \tag{15.7}
+$$
+
+Together with off-pole continuity, this proves boundedness outside
+any fixed source neighbourhood and uniform decay to zero at
+spatial infinity.
+
+We next verify the form-domain hypotheses. Positive $\epsilon$
+gives local Euclidean regularity through the original derivatives:
+
+$$
+ \partial_x f=Uf+\frac y2 Zf,\qquad
+ \partial_y f=Vf-\frac x2 Zf,\qquad
+ \partial_z f=Zf.
+ \tag{15.8}
+$$
+
+For each compact smooth cutoff $\chi$, the product rule on the
+defining core, followed by its $\mathcal H_\epsilon$ closure, gives
+
+$$
+ \|\chi f\|_{H^1(\mathbb R^3)}^2
+       \le C_{\chi,\epsilon}\bigl(T[f]+\|f\|_2^2\bigr),
+ \qquad f\in\mathcal H_\epsilon .
+ \tag{15.9}
+$$
+
+Only local regularity is asserted here. In particular (15.9)
+makes no global identification of the free domain with an
+isotropic Euclidean Sobolev space.
+
+Choose a bounded source neighbourhood $K$ and a cutoff equal to
+one on $K$. Since $M\in L^{7/4}(K)$, its truncated high part
+satisfies
+
+$$
+ \|M\mathbf1_{K\cap\{M>B\}}\|_{3/2}\longrightarrow0
+          \qquad(B\longrightarrow\infty).
+ \tag{15.10}
+$$
+
+Hölder and the classical three-dimensional Sobolev inequality bound
+its potential integral by the left side of (15.10) times
+$\|\chi f\|_6^2$. The part of $M$ at most $B$ on $K$ contributes
+at most $B\|f\|_2^2$, and $M$ is bounded on the complement of $K$.
+Using (15.9) and choosing $B$ sufficiently large proves
+
+$$
+ \text{for every }d>0\text{ there is }C_d<\infty
+ \text{ such that }\quad
+ W[f]\le dT[f]+C_d\|f\|_2^2
+ \quad(f\in\mathcal H_\epsilon).
+ \tag{15.11}
+$$
+
+Take $d<1/g$. The classical KLMN theorem applies to the densely
+defined closed nonnegative form $T$ and the Hermitian perturbation
+$-gW$. It yields closedness on exactly the same domain and
+
+$$
+ q[f]\ge(1-gd)T[f]-gC_d\|f\|_2^2.
+ \tag{15.12}
+$$
+
+Its shifted form norm is equivalent to the original free form
+norm, so the original compact smooth core stays a form core.
+The closed-form representation theorem therefore defines the
+self-adjoint Friedrichs operator in (15.2).
+
+For the essential spectrum we check compactness in this same
+realization. The map
+
+$$
+ J:\mathcal H_\epsilon\longrightarrow L^2(d\xi),
+       \qquad Jf=\sqrt M\,f
+ \tag{15.13}
+$$
+
+is compact when the source has norm
+$(T[f]+\|f\|_2^2)^{1/2}$. Indeed, a sequence bounded in that norm
+is locally bounded in Euclidean $H^1$ by (15.9). The classical
+Rellich compactness theorem gives, after a diagonal subsequence,
+local convergence in $L^{14/3}$, since $14/3<6$.
+Hölder with $M\in L^{7/4}$ gives convergence of $Jf$ in $L^2$
+on each bounded set. On its complement, (15.7) makes the
+weighted tails uniformly small, because the unweighted $L^2$
+norms are bounded. Thus the subsequence is Cauchy in the whole
+target space of (15.13).
+
+Let $L$ be the free self-adjoint operator of $T$. For sufficiently
+large $s>0$ define
+
+$$
+ S_s=(L+s)^{-1/2},\qquad B_s=JS_s,\qquad K_s=B_s^*B_s.
+ \tag{15.14}
+$$
+
+The map $S_s$ is bounded into the free form domain, so $B_s$
+and $K_s$ are compact. Estimate (15.11) gives
+$\|K_s\|\le d+C_d/s$. Choose first $gd<1$ and then $s$ large
+enough that $g\|K_s\|<1$. The variational representation of
+$q+s$ gives
+
+$$
+\begin{aligned}
+ (A_{n,\epsilon,g}+s)^{-1}
+     &=S_s(I-gK_s)^{-1}S_s,\\
+ (A_{n,\epsilon,g}+s)^{-1}-(L+s)^{-1}
+     &=gS_s(I-gK_s)^{-1}K_sS_s.
+\end{aligned}
+\tag{15.15}
+$$
+
+The second line is compact. This argument uses relative form
+compactness; it does not require multiplication by $M$ to be
+bounded on unweighted $L^2$ or to have the free operator domain.
+
+For completeness the whole free essential spectrum has an
+explicit singular Weyl family. Fix $\lambda\ge0$,
+$k=\sqrt\lambda$, and $\phi\in C_c^\infty(\mathbb R^3;\mathbb C)$
+with $\|\phi\|_2=1$. Put
+
+$$
+ \phi_a=a^{-2}\phi\circ\delta_{1/a},
+       \qquad u_a=e^{ikx}\phi_a .
+ \tag{15.16}
+$$
+
+The retained Jacobian is $a^4$, so $\|u_a\|_2=1$. Their norms on
+each fixed compact set tend to zero, and hence $u_a\rightharpoonup0$
+in $L^2$. Compact smooth tests belong to $D(L)$ by integration by
+parts and the defining form-core approximation. With
+$L_H=-U^2-V^2$, direct differentiation gives
+
+$$
+\begin{aligned}
+ (L-\lambda)u_a
+    &=e^{ikx}(L_H\phi_a-\epsilon^2Z^2\phi_a-2ikU\phi_a),\\
+ \|(L-\lambda)u_a\|_2
+    &\le a^{-2}\|L_H\phi\|_2
+       +\epsilon^2a^{-4}\|Z^2\phi\|_2
+       +2k a^{-1}\|U\phi\|_2
+       \longrightarrow0 .
+\end{aligned}
+\tag{15.17}
+$$
+
+The singular Weyl criterion puts every $\lambda\ge0$ in
+$\sigma_{\mathrm{ess}}(L)$. Nonnegativity of $L$ gives the reverse
+containment. The compact resolvent difference (15.15) and the
+classical Weyl theorem now prove (15.2), in both directions.
+
+Finally use one of the actual zero-noise annular trials supplied
+by (13.9)--(13.11). Since $g>\lambda_n$, choose one fixed
+nonzero compact smooth $h$, supported away from the pole, with
+
+$$
+ \|h\|_2=1,\qquad
+ \mathcal E_H[h]-gW_{n,0}[h]<0.
+ \tag{15.18}
+$$
+
+Its support lies between gauge radii $r_->0$ and $r_+<\infty$.
+Set $h_a=a^{-2}h\circ\delta_{1/a}$. Each $h_a$ is a normalized
+test in the original fixed-$\epsilon$ core. Exact scaling gives
+
+$$
+ q[h_a]=a^{-2}
+ \left(\mathcal E_H[h]+\epsilon^2a^{-2}\|Zh\|_2^2
+                          -gW_{n,\epsilon/a}[h]\right).
+ \tag{15.19}
+$$
+
+The locally uniform off-pole limit from Theorem 10.2 makes the
+parenthesis tend to the strictly negative number in (15.18).
+Thus $q[h_a]<0$ for every sufficiently large $a$. Choose such
+scales with $a_{j+1}>(r_+/r_-)a_j$. The corresponding supports
+are separated annuli. Locality of the original derivatives and
+the multiplication form gives
+
+$$
+ q\left[\sum_{j=1}^N c_jh_{a_j}\right]
+       =\sum_{j=1}^N|c_j|^2q[h_{a_j}]<0
+          \quad\text{whenever }(c_1,\ldots,c_N)\ne0 .
+ \tag{15.20}
+$$
+
+The form-domain variational principle makes the negative spectral
+projection have dimension at least $N$ for every $N$.
+By (15.2), each negative spectral point is an isolated eigenvalue
+of finite multiplicity. Estimate (15.12) bounds their lower end;
+an accumulation at a finite negative point would belong to the
+essential spectrum. There are therefore infinitely many
+eigenvalues, their only accumulation point is zero, and (15.3)
+follows.
+
+**Definition 15.3 (correspondence, attribution and spectral scope).**
+The marginal in (15.4)--(15.7) is the original field of (10.2),
+with both time endpoints retained. The sharp zero-noise annular
+trials and their original-domain approximation are supplied by
+§13; (15.19) uses the same complete scaling as §14.
+The new model-specific bridges are the local integrability and
+tail checks for this actual marginal, its relative form
+compactness on the original positive-noise domain, the explicit
+free Weyl family, and the separated actual-field negative
+subspaces. The spectral consequence is repo-derived from these
+checks and the stated suppliers, without a global-priority claim.
+
+The generic closed-form, perturbation and variational results are
+classical. In Gerald Teschl,
+[*Mathematical Methods in Quantum Mechanics*, authorized online
+first edition](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+Theorem 6.24, printed p.150, gives KLMN; Theorem 6.19,
+printed p.146, gives essential-spectrum invariance under compact
+resolvent difference; Lemma 6.26, printed pp.151--152, gives the
+form-compact version. The singular Weyl criterion is Lemma 6.17,
+printed pp.145--146, and the form-domain min-max statements are
+Theorems 4.10 and 4.12(i), printed p.119. The Sobolev and Rellich
+inputs in (15.9)--(15.13) are the classical three-dimensional
+local embeddings, used with compact cutoffs and exponent
+$14/3<6$. None of these generic statements alone verifies the
+actual retained potential or the annular subspaces.
+
+These conclusions concern the retained analytic reference form
+at each fixed positive noise. They preserve the nonautonomous
+retention statement and the separate parent collapse of
+Theorem 10.2. They give no parameter-uniform lower bound, no
+identification of an attractive zero-noise completion with the
+positive-noise free domain, and no negative-eigenvalue counting
+asymptotic.
+
+## 追加锚（本行以下为增补区）
