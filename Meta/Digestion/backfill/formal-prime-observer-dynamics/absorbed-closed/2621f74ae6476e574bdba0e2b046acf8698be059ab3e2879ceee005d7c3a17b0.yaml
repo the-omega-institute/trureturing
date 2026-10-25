@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2621f74ae6476e574bdba0e2b046acf8698be059ab3e2879ceee005d7c3a17b0
+  normalized_sha256: sha256:2621f74ae6476e574bdba0e2b046acf8698be059ab3e2879ceee005d7c3a17b0
+cas_ref: sha256:2621f74ae6476e574bdba0e2b046acf8698be059ab3e2879ceee005d7c3a17b0
+coverage_gids:
+  - gid: D5/S3/Factorization/Embeddings/FiniteValuationPortraitObjectLayer.finite_valuation_portrait_eq_iff_base_unit_ratio
+    target_statement_id: sha256:11b890ec8d2055e9925ffab15bcdc407fa06a43961d94615bf15ca9315ef9a20
+receipts:
+  unresolved_subitems: []
