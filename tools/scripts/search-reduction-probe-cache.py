@@ -20,6 +20,23 @@ import time
 VERSION = "probe-cache-v4"
 
 
+def wall_phase(label):
+    """Outer-process timing, kept separate from Lean's monotonic clock."""
+    path = os.environ.get("SEARCH_REDUCTION_PROFILE")
+    if path:
+        with open(path, "a") as stream:
+            stream.write(f"WALL {time.monotonic_ns()} {label}\n")
+
+
+def native_run(command):
+    wall_phase("native/environment-start")
+    native_env = json.loads(subprocess.check_output([
+        "lake", "-d", "tools/lean-inspector-reg", "env", "python3", "-c",
+        "import json, os; print(json.dumps(dict(os.environ)))"], text=True))
+    wall_phase("native/environment-end")
+    os.execvpe(command[0], command, native_env)
+
+
 def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
 
@@ -97,11 +114,13 @@ def tree_fingerprint(path, memo, updated):
 
 
 def input_identity(request, root, key):
+    wall_phase("fingerprint/memo-read-start")
     memo_path = root / "fingerprints.json"
     try:
         memo = read_signed(memo_path, key)
     except (OSError, ValueError, TypeError, KeyError):
         memo = {}
+    wall_phase("fingerprint/memo-read-end")
     updated = {}
     # Hash source and the actual compiled judge/dependency closure. The research
     # library and production index are fingerprinted in their entirety.
@@ -122,8 +141,14 @@ def input_identity(request, root, key):
     if not os.environ.get("SEARCH_REDUCTION_INDEX"):
         inputs += [Path("build/lean-inspector/lookup-index"),
                    Path("build/lean-inspector/search-reduction-test-index")]
-    fingerprint = [(str(path), tree_fingerprint(path, memo, updated)) for path in inputs]
+    fingerprint = []
+    for path in inputs:
+        wall_phase(f"fingerprint/tree-start path={path}")
+        fingerprint.append((str(path), tree_fingerprint(path, memo, updated)))
+        wall_phase(f"fingerprint/tree-end path={path}")
+    wall_phase("fingerprint/memo-write-start")
     write_signed(memo_path, updated, key)
+    wall_phase("fingerprint/memo-write-end")
     # Profiling/telemetry paths do not change mathematical inputs. Unknown
     # SEARCH_REDUCTION options are conservative cache invalidators.
     operational = {"SEARCH_REDUCTION_REQUESTS", "SEARCH_REDUCTION_PROFILE",
@@ -179,6 +204,7 @@ def replay_command(command, directory):
 
 
 def run(command):
+    wall_phase("cache/runner-start")
     request = os.environ["SEARCH_REDUCTION_REQUESTS"]
     if os.environ.get("SEARCH_REDUCTION_PROBE_CACHE") == "0":
         return subprocess.call(command)
@@ -187,7 +213,9 @@ def run(command):
     root.mkdir(parents=True, exist_ok=True)
     key = auth_key()
     started = time.monotonic()
+    wall_phase("cache/fingerprint-start")
     identity = input_identity(request, root, key)
+    wall_phase("cache/fingerprint-end")
     emit(f"PROBE_CACHE_INPUT identity={identity} seconds={time.monotonic()-started:.6f}")
     directory = root / identity
     env = dict(os.environ)
@@ -199,11 +227,13 @@ def run(command):
     # semantic identity when the whole probe has to follow the cold path.
     env["SEARCH_REDUCTION_RESUME_INPUTS"] = identity
     if directory.exists():
+        wall_phase("cache/authentication-start")
         try:
             valid_record(directory, identity, key)
         except (OSError, ValueError, TypeError, KeyError) as error:
             emit(f"PROBE_CACHE_REJECTED reason={error}")
         else:
+            wall_phase("cache/authentication-end")
             env["SEARCH_REDUCTION_PROBE_READ"] = str(directory.absolute())
             hot_command = replay_command(command, directory)
             if hot_command != command:
@@ -212,7 +242,9 @@ def run(command):
             # The authenticated entry imports its checked dependency module.
             # Only this hot subprocess sees the record directory on Lean's path.
             hot_env["LEAN_PATH"] = str(directory.absolute()) + os.pathsep + env.get("LEAN_PATH", "")
+            wall_phase("lean/hot-start")
             result = subprocess.call(hot_command, env=hot_env)
+            wall_phase("lean/hot-end")
             if result == 0:
                 return 0
             if result == 75:
@@ -221,7 +253,9 @@ def run(command):
             env.pop("SEARCH_REDUCTION_PROBE_READ", None)
     stage = Path(tempfile.mkdtemp(prefix="pending-", dir=root))
     env["SEARCH_REDUCTION_PROBE_WRITE"] = str(stage.absolute())
+    wall_phase("lean/cold-start")
     result = subprocess.call(command, env=env)
+    wall_phase("lean/cold-end")
     if result != 0:
         return result
     files = record_files(stage)
@@ -241,4 +275,6 @@ def run(command):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         raise SystemExit("expected a Lean command")
+    if sys.argv[1] == "--native":
+        native_run(sys.argv[2:])
     raise SystemExit(run(sys.argv[1:]))

@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Resolve Lake's environment, then release its build graph before native work.
 native_run() {
-  python3 -c 'import json, os, subprocess, sys; native_env = json.loads(subprocess.check_output(["lake", "-d", "tools/lean-inspector-reg", "env", "python3", "-c", "import json, os; print(json.dumps(dict(os.environ)))"], text=True)); os.execvpe(sys.argv[1], sys.argv[1:], native_env)' "$@"
+  python3 tools/scripts/search-reduction-probe-cache.py --native "$@"
 }
 
 case "${1:-}" in
