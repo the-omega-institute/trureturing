@@ -44,14 +44,17 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   let I := ULift.{u} Bool
   let G := ULift.{v} ℤ
-  let a : I → G := fun i => if i.down then 1 else -1
+  let a : I → G := fun i => ⟨if i.down then (1 : ℤ) else -1⟩
   let s : I := ⟨false⟩
   let t : I := ⟨true⟩
   have ha : Function.Injective a := by
     rintro ⟨i⟩ ⟨j⟩ he
     have hh := congrArg ULift.down he
     cases i <;> cases j <;> norm_num [a] at hh ⊢
-  have hst : s ≠ t := by simp [s,t]
+  have hst : s ≠ t := by
+    intro he
+    have hh : false = true := congrArg ULift.down he
+    cases hh
   have hnz : ∀ x ∈ ({s,t} : Finset I), a x ≠ 0 := by
     intro x hx
     simp only [Finset.mem_insert, Finset.mem_singleton] at hx
@@ -62,7 +65,10 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     have he : U = ∅ := Finset.subset_empty.mp (by simpa [hst] using hU)
     simpa [he] using hne
   obtain ⟨W, _, hf⟩ := @h I G inferInstance a ha {s,t} s t
-    (by simp) (by simp) hst hnz (by norm_num [a,s,t]) hz
+    (by simp) (by simp) hst hnz
+    (by apply ULift.ext; norm_num [a,s,t])
+    (by simpa only [Finset.subset_iff, Finset.mem_erase, Finset.mem_insert,
+      Finset.mem_singleton] using hz)
   exact hf
 
 def family : Registration arena.{u,v}
@@ -81,14 +87,14 @@ def family : Registration arena.{u,v}
     intro i
     let I := ULift.{u} (Fin 3)
     let G := ULift.{v} ℤ
-    let a : I → G := fun i => if i.down = 0 then 1 else if i.down = 1 then -1 else 2
+    let a : I → G := fun i => ⟨if i.down = 0 then (1 : ℤ) else if i.down = 1 then -1 else 2⟩
     let p : signature.Params := ⟨I,G,inferInstance,a⟩
     let x : I := ⟨0⟩
     let y : I := ⟨1⟩
     let z : I := ⟨2⟩
     refine ⟨p, [x,z,y], [x,y,z], ?_⟩
     change Good (([x,z,y] : List I).map a) ≠ Good (([x,y,z] : List I).map a)
-    have hg : Good ([1,2,-1] : List G) := by
+    have hg : Good ([⟨1⟩,⟨2⟩,⟨-1⟩] : List G) := by
       intro i j hij hj hp
       have hj3 : j ≤ 3 := by simpa using hj
       have hc : (i=0 ∧ j=1) ∨ (i=0 ∧ j=2) ∨ (i=1 ∧ j=2) ∨
@@ -100,10 +106,12 @@ def family : Registration arena.{u,v}
         intro he
         have hh := congrArg ULift.down he
         norm_num at hh
-    have hb : ¬ Good ([1,-1,2] : List G) := by
+    have hb : ¬ Good ([⟨1⟩,⟨-1⟩,⟨2⟩] : List G) := by
       intro h
       have hh := h 0 2 (by omega) (by simp) (Or.inr (by simp))
-      simpa using hh
+      apply hh
+      apply ULift.ext
+      norm_num
     intro he
     have hg' : Good (([x,z,y] : List I).map a) := by simpa [a,x,y,z] using hg
     apply hb
