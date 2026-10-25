@@ -21,7 +21,7 @@ internal sealed class DephasingTwoClassicalityBlockRefutationDocument : IScribeD
                     + "and unitaryEvolution U X is UXUᴴ. Matrix.kroneckerMap with scalar multiplication "
                     + "forms the tensor product. Real times are embedded into the complex scalars by Complex.ofReal; "
                     + "the two casts of the natural dimension d are distinguished by their displayed types. "
-                    + "Source line numbers refer to main.tex in arXiv:2211.02014v2.")),
+                    + "Source line numbers refer to dephasing-v2.tex in arXiv:2211.02014v2.")),
             Node("hamiltonian", "hamiltonian", "The dephasing Hamiltonian", HamiltonianFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "The Hamiltonian is the sum of the computational system projector tensored with its bath Hamiltonian. "
