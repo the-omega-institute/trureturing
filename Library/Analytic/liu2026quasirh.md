@@ -2856,3 +2856,119 @@ It supplies no unconditional fixed-power decay or nonzero main term.
 This is a paper-level `repo-derived` application of classical inputs
 to the actual coefficients, not a new zero-free theorem or a
 literature-priority claim.
+
+## The coupled Euler product under an explicit reciprocal strip
+
+The two-variable series behind the actual $\Theta_A(P)$ in (C42) is,
+initially for $\Re z,\Re w>0$,
+
+$$
+\begin{aligned}
+F_P(z,w)&=\prod_{p\notin SP}
+ \left(1-\frac{2(q_p^{-z}+q_p^{-w})}{q_p+2}\right)
+ =\zeta_K(1+z)^{-2}\zeta_K(1+w)^{-2}H_P(z,w),\\
+(H_P)_p&=\begin{cases}
+\displaystyle\frac{1-2(q_p^{-z}+q_p^{-w})/(q_p+2)}
+ {(1-q_p^{-1-z})^2(1-q_p^{-1-w})^2},&p\notin SP,\\[4pt]
+\displaystyle\frac1{(1-q_p^{-1-z})^2(1-q_p^{-1-w})^2},&p\mid SP.
+\end{cases}
+\end{aligned}
+\tag{C47}
+$$
+
+The correction $H_P$ is holomorphic for $\Re z,\Re w>-1/2$, by
+normal convergence. On compact real substrips its unexcluded local
+factor minus $1$ is bounded by a constant times
+$q_p^{-2-\Re z}+q_p^{-2-\Re w}+q_p^{-2-2\Re z}
++q_p^{-2-2\Re w}+q_p^{-2-\Re z-\Re w}$.
+Every exponent exceeds $1$ in that domain. The displayed denominators
+cannot vanish there; there is no mixed polar divisor, and no division
+by the possibly vanishing numerator is used. Uniformly in the imaginary
+parts on such substrips, $H_P\ll_\eta q_P^\eta$ for every $\eta>0$.
+
+**Reciprocal hypothesis.** For $1/2\le\beta<1$, let $R_\beta$ mean
+that $\zeta_K$ has no zeros in $\Re s>\beta$ and, for every
+$\delta>0$, there are finite $B_\delta,C_\delta$ such that
+
+$$
+\left|\zeta_K(\sigma+it)^{-1}\right|
+ \le C_\delta(1+|t|)^{B_\delta}
+ \quad(\sigma\ge\beta+\delta),
+\qquad \zeta_K(1)^{-1}:=0.
+\tag{C48}
+$$
+
+This is a hypothesis about the principal Dedekind zeta function itself.
+It is stronger than the classical shrinking zero-free region used in
+(C43); a nonprincipal Hecke bound does not replace it.
+
+Under $R_\beta$, double Mellin inversion gives
+$\Theta_A(P)=(2\pi i)^{-2}\iint
+\widehat W(z)\widehat W(w)A^{z+w}F_P(z,w)\,dz\,dw$.
+Move both lines to $\beta-1+\delta>-1/2$.
+Each simple pole of $\widehat W$ at $0$ is canceled by the corresponding
+double reciprocal-zeta zero, so neither shift produces a residue.
+The fixed strip margin, (C48), normal convergence of $H_P$ and rapid
+decay of $\widehat W$ pay both vertical integrals and horizontal joins.
+This gives $\Theta_A(P)\ll A^{-2(1-\beta)+2\delta}q_P^\eta$.
+Allocate $\delta,\eta$ to $\varepsilon$ using $q_P\le A^2$.
+For reciprocal growth exponent $B_\delta$, derivative order
+$J>2B_\delta+10$, enlarged for the ordinary zeta bounds in (C44),
+suffices for these Mellin steps.
+
+The same hypothesis moves the line in (C45) to $\beta+\delta$ and
+gives $S_r(D;F)\ll\|F\|_{C^J}D^{\beta+\delta}q_r^\eta$.
+Indeed the deleted product costs $q_r^\eta$ on each fixed positive
+real substrip. Keep $q_r\ll D^{4/3}$ and repeat the three outer-mass
+estimates in (C46); each Möbius-containing term is
+$O_\varepsilon(\mathcal N_J U^{(1+\beta)/2+\varepsilon})$.
+The $KK$ error is unchanged. Consequently
+
+$$
+\boxed{\begin{aligned}
+M(P;\Phi)&=U C_P I_\Phi\Theta_A(P)
+ +O_\varepsilon\!\left(\mathcal N_J
+ [U^{(1+\beta)/2+\varepsilon}+U^{19/24+\varepsilon}]\right),\\
+\Theta_A(P)&\ll_\varepsilon U^{-(1-\beta)/6+\varepsilon},\\
+M(P;\Phi)&\ll_\varepsilon\mathcal N_J
+ U^{1-(1-\beta)/6+\varepsilon}.
+\end{aligned}}
+\tag{C49}
+$$
+
+In particular, under $R_{7/8}$ the four exponents are explicit:
+
+$$
+\begin{aligned}
+\Theta_A(P)&\ll_\varepsilon U^{-1/48+\varepsilon},\qquad
+M(P;\Phi)\ll_\varepsilon\mathcal N_J U^{47/48+\varepsilon},\\
+\frac{M(P;\Phi)}U
+ &=C_P I_\Phi\Theta_A(P)
+ +O_\varepsilon\!\left(\mathcal N_J
+ [U^{-1/16+\varepsilon}+U^{-5/24+\varepsilon}]\right).
+\end{aligned}
+\tag{C50}
+$$
+
+The two unnormalized errors are $U^{15/16+\varepsilon}$ and
+$U^{19/24+\varepsilon}$; also $M/D\ll_\varepsilon
+\mathcal N_J U^{23/48+\varepsilon}$.
+The [pinned primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex)
+states the $7/8$ region in `thm:main`; `lem:logarithmic-control`
+includes the principal regularizer and conditional reciprocal bound.
+This numerical use is **source-conditional** on $R_{7/8}$, not a
+classical unconditional zero-free theorem or certification of that
+source's major proof.
+
+Equations (C41)–(C50) supply the actual radial density input missing
+from a direct use of [Xu–Sang v2, (3.9)](https://arxiv.org/html/2610.17675v2).
+They do not give a full weighted Gram formula or a positive actual
+theta main term. For a ray group of order $h$, two class indicators
+give this trivial-trivial Fourier component coefficient $h^{-2}$;
+general finite weights give their own trivial-trivial coefficient.
+The remaining ray modes, unit and angular factors, common-$e$ signed
+detector, all cores and column gcds, nonexceptional frequencies, bad
+duals and their joint profile costs still require estimates on the
+same original $\beta$ rows. No moving-$U$ replacement of $b_U$ is used.
+The complete J29/J40 contraction, signed Robin restoration and RH
+remain open; there is no Lean certification or priority claim here.
