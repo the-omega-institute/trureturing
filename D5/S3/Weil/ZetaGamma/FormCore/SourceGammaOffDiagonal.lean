@@ -102,7 +102,7 @@ private theorem crossIntegrand_integrable
   apply hbase.mono
     (hphase.aestronglyMeasurable.mul hbase.aestronglyMeasurable)
   exact Eventually.of_forall fun z => by
-    simp only [crossIntegrand, norm_mul, sourcePhase_norm, one_mul, le_refl]
+    simp only [Pi.mul_apply, crossIntegrand, norm_mul, sourcePhase_norm, one_mul, le_refl]
 
 private theorem pointwise_cross_integral (p u : ℝ → ℂ) (ξ : ℝ) :
     p ξ * (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
@@ -123,7 +123,9 @@ private theorem pointwise_cross_integral (p u : ℝ → ℂ) (ξ : ℝ) :
         ∫ z : ℝ × ℝ,
           (starRingEnd ℂ) (sourcePhase ξ z.1 * u z.1) *
             (sourcePhase (-ξ) z.2 * u z.2) ∂halfline.prod halfline) := by
-      rw [integral_prod_mul]
+      rw [integral_prod_mul
+        (fun s : ℝ => (starRingEnd ℂ) (sourcePhase ξ s * u s))
+        (fun t : ℝ => sourcePhase (-ξ) t * u t)]
     _ = N ^ 2 * ∫ z : ℝ × ℝ,
         p ξ * ((starRingEnd ℂ) (sourcePhase ξ z.1 * u z.1) *
           (sourcePhase (-ξ) z.2 * u z.2)) ∂halfline.prod halfline := by
@@ -195,7 +197,7 @@ theorem actual_l1_reflected_unitary_cross_kernel
       simp_rw [pointwise_cross_integral]
       rw [integral_const_mul]
     _ = (((2 * Real.pi : ℝ) : ℂ)⁻¹) *
-        ∫ z : ℝ × ℝ, ∫ ξ : ℝ, crossIntegrand p u ξ z
+        ∫ z : ℝ × ℝ, (∫ ξ : ℝ, crossIntegrand p u ξ z)
           ∂halfline.prod halfline := by
       congr 1
       exact integral_integral_swap hH
@@ -222,14 +224,19 @@ private theorem actualResolventKernel_continuous (a : ℝ) :
 private theorem actualResolventKernel_integrable {a : ℝ} (ha : 0 < a) :
     Integrable (actualResolventKernel a) volume := by
   have hn : IntegrableOn (actualResolventKernel a) (Iic (0 : ℝ)) := by
-    apply ((integrableOn_exp_mul_Iic ha 0).ofReal.div_const
-      ((2 * a : ℝ) : ℂ)).congr
+    have hi : Integrable (fun z : ℝ => (Real.exp (a * z) : ℂ))
+        (volume.restrict (Iic (0 : ℝ))) := (integrableOn_exp_mul_Iic ha 0).ofReal
+    apply (hi.div_const ((2 * a : ℝ) : ℂ)).congr
     filter_upwards [ae_restrict_mem measurableSet_Iic] with z hz
+    change z ≤ 0 at hz
     simp only [actualResolventKernel, abs_of_nonpos hz, neg_mul_neg]
   have hp : IntegrableOn (actualResolventKernel a) (Ioi (0 : ℝ)) := by
-    apply ((integrableOn_exp_mul_Ioi (by linarith : -a < 0) 0).ofReal.div_const
-      ((2 * a : ℝ) : ℂ)).congr
+    have hi : Integrable (fun z : ℝ => (Real.exp (-a * z) : ℂ))
+        (volume.restrict (Ioi (0 : ℝ))) :=
+      (integrableOn_exp_mul_Ioi (by linarith : -a < 0) 0).ofReal
+    apply (hi.div_const ((2 * a : ℝ) : ℂ)).congr
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with z hz
+    change 0 < z at hz
     simp only [actualResolventKernel, abs_of_pos hz]
   simpa only [Iic_union_Ioi, integrableOn_univ] using hn.union hp
 
@@ -306,7 +313,7 @@ private theorem actualResolventKernel_fourier {a : ℝ} (ha : 0 < a) (ξ : ℝ) 
   calc
     _ = (∫ t : ℝ in Iic 0, Complex.exp (m * t) / ((2 * a : ℝ) : ℂ)) +
         (∫ t : ℝ in Ioi 0, Complex.exp (n * t) / ((2 * a : ℝ) : ℂ)) := by
-      rw [← integral_Iic_add_Ioi hleft hright]
+      rw [← intervalIntegral.integral_Iic_add_Ioi hleft hright]
       congr 1
       · apply setIntegral_congr_fun measurableSet_Iic
         intro t ht
@@ -317,20 +324,19 @@ private theorem actualResolventKernel_fourier {a : ℝ} (ha : 0 < a) (ξ : ℝ) 
     _ = (1 / m - 1 / n) / ((2 * a : ℝ) : ℂ) := by
       simp_rw [div_eq_mul_inv, integral_mul_const]
       rw [integral_exp_mul_complex_Iic hm 0, integral_exp_mul_complex_Ioi hn 0]
-      simp only [mul_zero, Complex.exp_zero]
+      simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
       ring
     _ = actualResolventSymbol a (2 * Real.pi * ξ) := by
       have ha0 : (a : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr ha.ne'
       have hd : (((2 * Real.pi * ξ) ^ 2 + a ^ 2 : ℝ) : ℂ) ≠ 0 :=
         Complex.ofReal_ne_zero.mpr (by positivity)
       unfold actualResolventSymbol
-      push_cast
+      dsimp only [m, n] at hm0 hn0 ⊢
+      push_cast at hm0 hn0 hd ⊢
       field_simp [hm0, hn0, ha0, hd]
-      dsimp [m, n]
-      push_cast
-      ring_nf
-      simp only [Complex.I_sq]
-      ring
+      <;> ring_nf
+      <;> simp only [Complex.I_sq]
+      <;> ring
 
 /-- Exact inverse operator kernel with the normalization used by the
 actual reflected-cross theorem. All integrability is paid first. -/
@@ -364,6 +370,7 @@ theorem actual_resolvent_inverse_kernel {a : ℝ} (ha : 0 < a) (z : ℝ) :
     convert hInv using 1
     apply integral_congr_ae
     exact Eventually.of_forall fun ξ => by
+      dsimp only
       rw [actualResolventKernel_fourier ha]
       unfold sourcePhase
       congr 1
@@ -384,7 +391,8 @@ private theorem literalLaplace_l1 {a : ℝ} (ha : 0 < a)
   have hm : Continuous (fun t : ℝ => (Real.exp (-a * t) : ℂ)) := by fun_prop
   apply hu.mono (hm.aestronglyMeasurable.mul hu.aestronglyMeasurable)
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-  simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+  change 0 < t at ht
+  simp only [Pi.mul_apply, norm_mul, Complex.norm_real, Real.norm_eq_abs,
     abs_of_pos (Real.exp_pos (-a * t))]
   calc
     Real.exp (-a * t) * ‖u t‖ ≤ 1 * ‖u t‖ :=
@@ -429,7 +437,10 @@ theorem actual_resolvent_reflected_cross_laplace_square
     _ = (Complex.normSq (∫ t : ℝ, (Real.exp (-a * t) : ℂ) * u t ∂halfline) : ℂ) /
         ((2 * a : ℝ) : ℂ) := by
       simp_rw [div_eq_mul_inv]
-      rw [integral_mul_const, integral_prod_mul, integral_conj, ← Complex.normSq_eq_conj_mul_self]
+      rw [integral_mul_const, integral_prod_mul
+        (fun t : ℝ => (starRingEnd ℂ) ((Real.exp (-a * t) : ℂ) * u t))
+        (fun t : ℝ => (Real.exp (-a * t) : ℂ) * u t),
+        integral_conj, ← Complex.normSq_eq_conj_mul_self]
 
 /- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
 Same-owner APPEND after actual resolvent source, before namespace end.
@@ -460,9 +471,12 @@ private theorem exp_abs_self_convolution_nonnegative
     funext t
     by_cases ht0 : t ≤ 0
     · have hzt : 0 ≤ z - t := by linarith
-      have htM : t ∉ Ioc (0 : ℝ) z := by simp only [mem_Ioc]; linarith
-      have htR : t ∉ Ioi z := by simp only [mem_Ioi]; linarith
-      simp only [l, m, r, Set.indicator_of_mem ht0, Set.indicator_of_notMem htM,
+      have htL : t ∈ Iic (0 : ℝ) := ht0
+      have htM : t ∉ Ioc (0 : ℝ) z := by
+        rintro ⟨ht, _⟩
+        linarith
+      have htR : t ∉ Ioi z := not_lt.mpr (le_trans ht0 hz)
+      simp only [l, m, r, Set.indicator_of_mem htL, Set.indicator_of_notMem htM,
         Set.indicator_of_notMem htR, add_zero, abs_of_nonpos ht0, abs_of_nonneg hzt]
       rw [← Real.exp_add, ← Real.exp_add]
       congr 1
@@ -482,9 +496,12 @@ private theorem exp_abs_self_convolution_nonnegative
       · have htz' : z < t := lt_of_not_ge htz
         have hzt : z - t < 0 := by linarith
         have htL : t ∉ Iic (0 : ℝ) := ht0
-        have htM : t ∉ Ioc (0 : ℝ) z := by simp only [mem_Ioc]; linarith
+        have htM : t ∉ Ioc (0 : ℝ) z := by
+          rintro ⟨_, htz⟩
+          linarith
+        have htR : t ∈ Ioi z := htz'
         simp only [l, m, r, Set.indicator_of_notMem htL,
-          Set.indicator_of_notMem htM, Set.indicator_of_mem htz', zero_add,
+          Set.indicator_of_notMem htM, Set.indicator_of_mem htR, zero_add,
           abs_of_pos ht, abs_of_neg hzt]
         rw [← Real.exp_add, ← Real.exp_add]
         congr 1
@@ -493,7 +510,9 @@ private theorem exp_abs_self_convolution_nonnegative
     dsimp [l]
     rw [integral_indicator measurableSet_Iic, integral_const_mul,
       integral_exp_mul_Iic (by positivity : 0 < 2 * a) 0]
-    simp
+    simp only [mul_zero, Real.exp_zero]
+    field_simp [ha.ne']
+    <;> ring
   have hMi : (∫ t : ℝ, m t) = z * Real.exp (-a * z) := by
     dsimp [m]
     rw [integral_indicator measurableSet_Ioc, setIntegral_const,
@@ -507,9 +526,13 @@ private theorem exp_abs_self_convolution_nonnegative
       rw [← Real.exp_add]
       congr 1
       ring
-    field_simp [ha.ne']
-    nlinarith [he]
-  rw [heq, integral_add (hL.add hM) hR, integral_add hL hM, hLi, hMi, hRi]
+    calc
+      _ = (Real.exp (a * z) * Real.exp ((-2 * a) * z)) / (2 * a) := by
+        field_simp [ha.ne']
+        <;> ring
+      _ = Real.exp (-a * z) / (2 * a) := by rw [he]
+  rw [heq, integral_add (f := fun t : ℝ => l t + m t) (g := r)
+    (hL.add hM) hR, integral_add hL hM, hLi, hMi, hRi]
   field_simp [ha.ne']
   <;> ring
 
@@ -531,7 +554,7 @@ private theorem actualResolventKernel_self_convolution_nonnegative
         <;> ring
     _ = (((∫ t : ℝ, Real.exp (-a * |t|) * Real.exp (-a * |z - t|)) /
           (4 * a ^ 2) : ℝ) : ℂ) := by
-      rw [integral_ofReal, integral_div]
+      rw [integral_complex_ofReal, integral_div]
     _ = _ := by
       rw [exp_abs_self_convolution_nonnegative ha hz]
       congr 1
@@ -575,8 +598,11 @@ private theorem actualResolventSymbol_sq_integrable {a : ℝ} (ha : 0 < a) :
     Integrable (fun ξ : ℝ => actualResolventSymbol a ξ ^ 2) volume := by
   have hP := actualResolventSymbol_integrable ha
   have hm : Continuous (fun ξ : ℝ => actualResolventSymbol a ξ ^ 2) := by
-    unfold actualResolventSymbol
-    fun_prop (disch := positivity)
+    have hden : Continuous (fun ξ : ℝ => ξ ^ 2 + a ^ 2) := by fun_prop
+    have hreal : Continuous (fun ξ : ℝ => (ξ ^ 2 + a ^ 2)⁻¹) :=
+      hden.inv₀ (fun ξ => ne_of_gt
+        (add_pos_of_nonneg_of_pos (sq_nonneg ξ) (sq_pos_of_pos ha)))
+    exact (Complex.continuous_ofReal.comp hreal).pow 2
   apply (hP.norm.const_mul ((a ^ 2)⁻¹)).mono' hm.aestronglyMeasurable
   exact Eventually.of_forall fun ξ => by
     have hr0 : 0 ≤ (ξ ^ 2 + a ^ 2)⁻¹ := by positivity
@@ -584,9 +610,10 @@ private theorem actualResolventSymbol_sq_integrable {a : ℝ} (ha : 0 < a) :
       simpa only [one_div] using
         (one_div_le_one_div_of_le (sq_pos_of_pos ha)
           (by nlinarith : a ^ 2 ≤ ξ ^ 2 + a ^ 2))
-    simpa only [actualResolventSymbol, norm_pow, Complex.norm_real,
-      Real.norm_eq_abs, abs_of_nonneg hr0, pow_two] using
-      mul_le_mul_of_nonneg_right hr hr0
+    change ‖(((ξ ^ 2 + a ^ 2)⁻¹ : ℝ) : ℂ) ^ 2‖ ≤
+      (a ^ 2)⁻¹ * ‖(((ξ ^ 2 + a ^ 2)⁻¹ : ℝ) : ℂ)‖
+    rw [norm_pow, Complex.norm_of_nonneg hr0, Complex.norm_of_nonneg hr0]
+    simpa only [pow_two] using mul_le_mul_of_nonneg_right hr hr0
 
 private theorem actualResolventKernel_norm_le {a : ℝ} (ha : 0 < a) (z : ℝ) :
     ‖actualResolventKernel a z‖ ≤ (2 * a)⁻¹ := by
@@ -595,7 +622,7 @@ private theorem actualResolventKernel_norm_le {a : ℝ} (ha : 0 < a) (z : ℝ) :
     Real.exp_le_one_iff.2 (by nlinarith [abs_nonneg z])
   simp only [actualResolventKernel, norm_div, Complex.norm_real,
     Real.norm_eq_abs, abs_of_pos (Real.exp_pos _), abs_of_pos hd]
-  exact (div_le_iff₀ hd).2 (by simpa [ne_of_gt hd] using he)
+  simpa only [one_div] using div_le_div_of_nonneg_right he hd.le
 
 /-- Consumed Fourier-inversion helper. The actual transform equality is
 a paid argument from the concrete resolvent/convolution calculation;
@@ -624,6 +651,7 @@ private theorem actual_inverse_kernel_of_raw_transform
   convert hInv using 1
   apply integral_congr_ae
   exact Eventually.of_forall fun ξ => by
+    dsimp only
     rw [hFT ξ]
     unfold sourcePhase
     congr 1
@@ -666,7 +694,7 @@ private theorem phase_mul_l1 {p : ℝ → ℂ} (hp : Integrable p volume) (z : �
     fun_prop
   apply hp.mono (hm.aestronglyMeasurable.mul hp.aestronglyMeasurable)
   exact Eventually.of_forall fun ξ => by
-    simp only [norm_mul, sourcePhase_norm, one_mul, le_refl]
+    simp only [Pi.mul_apply, norm_mul, sourcePhase_norm, one_mul, le_refl]
 
 private theorem actual_kernel_sub_const_mul
     {p q : ℝ → ℂ} (hp : Integrable p volume) (hq : Integrable q volume)
@@ -729,7 +757,7 @@ theorem actual_resonant_reflected_cross_kernel
         (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
           unitarySourceFourier (zeroExtension u) (-ξ)) =
       ∫ z : ℝ × ℝ,
-        (((Real.exp (-a * (z.1 + z.2)) * (1 - a * (z.1 + z.2)) /
+        ((Real.exp (-a * (z.1 + z.2)) * (1 - a * (z.1 + z.2)) /
             (4 * a ^ 2) : ℝ) : ℂ) *
           ((starRingEnd ℂ) (u z.1) * u z.2) ∂halfline.prod halfline := by
   obtain ⟨hSpec, _, hCross⟩ := actual_l1_reflected_unitary_cross_kernel
@@ -762,9 +790,11 @@ private theorem literalFirstLaplaceMoment_l1 {a : ℝ} (ha : 0 < a)
   apply (hu.norm.const_mul a⁻¹).mono'
     (hm.aestronglyMeasurable.mul hu.aestronglyMeasurable)
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-  simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+  change 0 < t at ht
+  simp only [Pi.mul_apply, norm_mul, Complex.norm_real, Real.norm_eq_abs,
     abs_of_pos ht, abs_of_pos (Real.exp_pos _)]
-  exact mul_le_mul_of_nonneg_right (firstMoment_weight_bound ha ht) (norm_nonneg _)
+  simpa only [mul_assoc] using
+    mul_le_mul_of_nonneg_right (firstMoment_weight_bound ha ht) (norm_nonneg (u t))
 
 /-- Moment compression of the actual resonant cross. The first moment's
 actual L1 domain is supplied inside this theorem, rather than assumed.
@@ -790,7 +820,11 @@ theorem actual_resonant_reflected_cross_laplace_moment
   have hTc : Integrable (fun t => (starRingEnd ℂ) (T t)) halfline := by
     simpa using (Complex.conjCLE : ℂ →L[ℝ] ℂ).integrable_comp hT
   have hLL := (hLc.mul_prod hL).div_const ((4 * a ^ 2 : ℝ) : ℂ)
-  have hMix := ((hTc.mul_prod hL).add (hLc.mul_prod hT)).div_const ((4 * a : ℝ) : ℂ)
+  have hMix : Integrable (fun z : ℝ × ℝ =>
+      ((starRingEnd ℂ) (T z.1) * L z.2 +
+        (starRingEnd ℂ) (L z.1) * T z.2) / ((4 * a : ℝ) : ℂ))
+      (halfline.prod halfline) :=
+    ((hTc.mul_prod hL).add (hLc.mul_prod hT)).div_const ((4 * a : ℝ) : ℂ)
   have hCross := (actual_resonant_reflected_cross_kernel ha hu).2
   have hComplex :
       (∫ ξ : ℝ,
@@ -824,7 +858,10 @@ theorem actual_resonant_reflected_cross_laplace_moment
         rw [integral_sub hLL hMix]
         simp_rw [integral_div]
         rw [integral_add (hTc.mul_prod hL) (hLc.mul_prod hT)]
-        simp_rw [integral_prod_mul, integral_conj]
+        rw [integral_prod_mul (fun t : ℝ => (starRingEnd ℂ) (L t)) L,
+          integral_prod_mul (fun t : ℝ => (starRingEnd ℂ) (T t)) L,
+          integral_prod_mul (fun t : ℝ => (starRingEnd ℂ) (L t)) T]
+        simp_rw [integral_conj]
         rw [← Complex.normSq_eq_conj_mul_self]
   refine ⟨hT, ?_⟩
   rw [hComplex]
