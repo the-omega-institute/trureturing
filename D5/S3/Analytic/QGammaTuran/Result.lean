@@ -13,9 +13,9 @@ Per-declaration judgment (generated constant dependencies, same-delivery helpers
 * qturanCoeff: proof_shape: bind-only (definition); consumers: claim, result.
 * qprod: proof_shape: bind-only (definition); consumer: result.
 * checkLower: proof_shape: bind-only (definition); consumers: instDecidableCheckLower, result.
-* instDecidableCheckLower: proof_shape: bind-only; consumer: result.
+* instDecidableCheckLower: proof_shape: bind-only (definition); consumer: result.
 * checkUpper: proof_shape: bind-only (definition); consumers: instDecidableCheckUpper, result.
-* instDecidableCheckUpper: proof_shape: bind-only; consumer: result.
+* instDecidableCheckUpper: proof_shape: bind-only (definition); consumer: result.
 * lower3: proof_shape: bind-only (definition); consumer: result.
 * lower7: proof_shape: bind-only (definition); consumer: result.
 * upperQ: proof_shape: bind-only (definition); consumer: result.
