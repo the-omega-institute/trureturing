@@ -26,7 +26,7 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output p _ := Module.End ℂ (ActualTensor p.D p.hu)
+  Output _ p := Module.End ℂ (ActualTensor p.D p.hu)
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -57,7 +57,7 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output p _ := ActualTensor p.D p.hu
+  Output _ p := ActualTensor p.D p.hu
   Anchor := Empty
   finiteAnchor := inferInstance
 

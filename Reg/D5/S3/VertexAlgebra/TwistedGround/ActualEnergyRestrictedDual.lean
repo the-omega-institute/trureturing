@@ -6,7 +6,7 @@ set_option autoImplicit false
 noncomputable section
 open scoped TensorProduct
 namespace Reg.D5.S3.VertexAlgebra.TwistedGround.ActualEnergyRestrictedDual
-open _root_.D5.S3.VertexAlgebra.LeanInformationAudit
+open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality _root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
@@ -109,11 +109,12 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.TwistedGround.ActualEnergyRestrictedDual
     definition := none
     coordinates := #[0,1,2,3,4,5,6,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","body","body","fn","arg"]
-                   stateBinder := 8
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]

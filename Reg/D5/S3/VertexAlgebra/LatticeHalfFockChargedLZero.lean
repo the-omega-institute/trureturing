@@ -124,7 +124,7 @@ end
 
 /- The consumed tensor-current addition has this exact source bridge.
 Its separate four-slot evidence remains unfinished under issue #21259. -/
-def tensorCurrentReadout (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (k : ℤ) :
+noncomputable def tensorCurrentReadout (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (k : ℤ) :
     Module.End ℂ (ActualTensor D hu) :=
   tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 0 *
       tensorCurrent D (ActualGround D hu) i k -
