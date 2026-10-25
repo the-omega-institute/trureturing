@@ -4510,3 +4510,177 @@ a density-state supremum with the full complex-matrix diamond norm.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Full-H leakage invisible to completely erased acquisitions
+
+**Theorem 25.1 (Zero erased defect outside the embedded dephasing family; repo-derived).**
+Keep exactly $B,E,P,P_0,P_1$ of (19.1), Definitions 1.1–1.2
+and 11.1, and the actual full-$H$ operators $A_j(\theta)$ of
+(19.2). Write $z_H=e_2$ for the physical vector denoted by $z$ there,
+to distinguish it from the complex parameter in $\mathcal D_z$ of
+(8.3). For every fixed known real $\theta$, erase all acquisition
+labels at depths one and two and retain only the raw final-success
+effects
+
+$$
+\begin{aligned}
+J_0&=P,\\
+J_1&=\sum_{j=0}^1 A_j^\dagger P A_j,\\
+J_2&=\sum_{j,k=0}^1(A_kA_j)^\dagger P(A_kA_j),\\
+\delta_{\mathrm{unlabelled},\theta}(T)
+ &=\max_{r=0,1,2}
+ \|T^\dagger(J_r)-B^\dagger J_rB\|_{\mathrm{op}}.
+\end{aligned}
+\tag{25.1}
+$$
+
+There is a single complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$, independent of $\theta$,
+with unrestricted output, such that for every real $\theta$
+
+$$
+\delta_{\mathrm{unlabelled},\theta}(T)=0,\qquad
+\inf_{z\in\mathbb C,\ |z|\le1}
+ \|T-\operatorname{Ad}_B\circ\mathcal D_z\|_\diamond\ge2.
+\tag{25.2}
+$$
+
+Here the diamond norm is unhalved and takes both suprema over all
+finite untouched reference spaces and all nonzero complex amplified
+input matrices. Thus no finite constants $C,\eta>0$, independent of
+$\theta,T$, can make
+$\delta_{\mathrm{unlabelled},\theta}(T)\le\eta$ imply a diamond
+distance at most $C\sqrt{\delta_{\mathrm{unlabelled},\theta}(T)}$
+to this family. The defect uses raw probabilities uniformly over all
+qutrit density inputs, without conditional normalization.
+
+Proof. With $f$ of (1.5), set
+
+$$
+\begin{gathered}
+c=(e_0+e_1-e_3-e_4)/2,\qquad b=Bf,\\
+c^\dagger c=1,\qquad B^\dagger c=0,\qquad P_-=ff^\dagger,\\
+L_0=BP_+,\qquad L_1=cf^\dagger,\qquad
+T(X)=L_0XL_0^\dagger+L_1XL_1^\dagger.
+\end{gathered}
+\tag{25.3}
+$$
+
+The two rectangular Kraus matrices satisfy
+$L_0^\dagger L_0+L_1^\dagger L_1=P_++ff^\dagger=I_3$.
+The standard Kraus criterion therefore makes $T$ a complex-linear
+CPTP map on the full stated domain. In particular its minus-sector
+output is allowed to lie outside $\operatorname{ran}B$.
+
+Define the actual erased acquisition on $M_5(\mathbb C)$ by
+
+$$
+\mathcal G(Y)=K_0YK_0^\dagger+K_1YK_1^\dagger
+ =\sum_{j=0}^1A_j(\theta)YA_j(\theta)^\dagger,\qquad
+J_r=(\mathcal G^\dagger)^r(P)\quad(r=0,1,2).
+\tag{25.4}
+$$
+
+The equality follows because the coefficient matrix
+$\left(\begin{smallmatrix}\cos\theta&i\sin\theta\\
+i\sin\theta&\cos\theta\end{smallmatrix}\right)$ taking
+$(K_0,K_1)$ to $(A_0,A_1)$ is unitary for every real $\theta$.
+Thus (25.4) is angle independent on every full-$H$ matrix, including
+leaked states. Directly from the original operators (11.1), (19.2),
+
+$$
+\begin{aligned}
+K_0B&=BU_0/\sqrt2,& K_1B&=BU_0W/\sqrt2,\\
+K_0c&=(u-z_H)/2,& K_1c&=(u-z_H)/2,\\
+K_0b&=(u-z_H)/2,& K_1b&=-(u-z_H)/2.
+\end{aligned}
+\tag{25.5}
+$$
+
+Consequently the erased identity (8.1) and these full-$H$ actions give
+
+$$
+\begin{aligned}
+\mathcal G\circ\operatorname{Ad}_B
+ &=\operatorname{Ad}_{BU_0}\circ\Delta_W,\\
+\mathcal G(cc^\dagger)&=\mathcal G(bb^\dagger).
+\end{aligned}
+\tag{25.6}
+$$
+
+For every complex $X\in M_3(\mathbb C)$,
+$P_-XP_-=(f^\dagger Xf)ff^\dagger$. Substitution into (25.3)
+and (25.6), using $\Delta_W^2=\Delta_W$, proves the exact identity
+of complex-linear maps
+
+$$
+\mathcal G\circ T
+ =\mathcal G\circ\operatorname{Ad}_B\circ\Delta_W
+ =\mathcal G\circ\operatorname{Ad}_B.
+\tag{25.7}
+$$
+
+For the immediate effect, put $q=q_0$ of (19.1). Since $Wq=q$,
+$E=P_+EP_+$; and $c\perp\operatorname{ran}B$ gives
+$c^\dagger Pc=0$. Hence, directly from the Kraus formula,
+
+$$
+T^\dagger(J_0)=T^\dagger(P)=E=B^\dagger PB.
+\tag{25.8}
+$$
+
+For $r=1,2$, compose (25.7) with $\mathcal G^{r-1}$ and take
+trace adjoints at $P$. This yields the actual raw effect equalities
+
+$$
+T^\dagger(J_1)=B^\dagger J_1B,\qquad
+T^\dagger(J_2)=B^\dagger J_2B.
+\tag{25.9}
+$$
+
+No individually labelled effect has been substituted for a sum.
+Equations (25.8)–(25.9) imply zero defect and equality of the three
+raw success probabilities for every qutrit density input. Moreover
+(25.7) tensor-extends to every finite untouched reference: any common
+channel applied after that erased acquisition has the same output
+on the two routes. This concerns the successor, rather than the
+state before the acquisition.
+
+For every complex $z$ with $|z|\le1$, (8.3) fixes $ff^\dagger$.
+The same trace-one input therefore separates $T$ from every member
+of the comparison family:
+
+$$
+\begin{aligned}
+T(ff^\dagger)&=cc^\dagger,\\
+(\operatorname{Ad}_B\circ\mathcal D_z)(ff^\dagger)&=bb^\dagger,\\
+\|cc^\dagger-bb^\dagger\|_1&=2,\\
+\inf_{|z|\le1}\|T-\operatorname{Ad}_B\circ\mathcal D_z\|_\diamond
+ &\ge2.
+\end{aligned}
+\tag{25.10}
+$$
+
+Indeed $b,c$ are orthogonal unit vectors, so their projection
+difference has eigenvalues $1,-1$ and zeros. The reference of
+dimension one and input $ff^\dagger$ are included in the full
+complex-matrix diamond supremum; allowing arbitrary finite references
+preserves this lower bound. At this channel every proposed modulus
+in the statement has right side zero, whereas (25.10) has left side
+at least two, proving the asserted failure for every $C,\eta>0$.
+No equality value of the diamond norm or optimal resource claim is
+needed.
+
+The source-relative construction is the replacement of the minus
+output by $cc^\dagger$ in (25.3), together with (25.7) and (25.10).
+It reuses the erased identity and dephasing family (8.1)–(8.3), and
+the full-$H$ operators (11.1), (19.2). The Kraus criterion and
+trace-norm principles are standard; see John Watrous,
+[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapters 2–3. Theorem 8.2 retains its supported qutrit-output domain;
+Theorems 19.1 and 24.1 retain their richer labelled tests. None is
+altered by (25.2), which neither classifies all full-$H$ solutions
+nor asserts global priority, physical realization or native
+availability of the stipulated observables. $\square$
+
+## 追加锚（本行以下为增补区）
