@@ -59,6 +59,15 @@ internal sealed class CayleyNumericalConcentrationDocument : IScribeDocumentDefi
                     + "image of a label in T. Exact subgroup cardinality and retention "
                     + "give index(H)<=1/((1-epsilon)sigma)<2/sigma. No quotient group "
                     + "or normality is used.")),
+                Paragraph(Text("The full theorem's source-owner information audit remains "
+                    + "unfinished: the current full-telescope registration is declared_unresolved "
+                    + "at source.dictionary_or_proof_coordinate. Its original Group and Fintype "
+                    + "dictionaries are required to reconstruct the typed subgroup and retained "
+                    + "labels. The kernel-checked family proofs do not supply an accepted source "
+                    + "binding. The theorem-specific disclosure is "
+                    + "https://github.com/the-omega-institute/trureturing/issues/21393. "
+                    + "The separate localization audit issue 21342 remains unresolved. "
+                    + "Neither registration is claimed to be declared_validated.")),
                 Paragraph(Text("This is literature-adapted structural mathematics from "
                     + "Section 4 of Bedert, Bucic, Kravitz, Montgomery and Muyesser, "
                     + "arXiv:2508.18254v1, with no novelty claim. Identity labels are "
