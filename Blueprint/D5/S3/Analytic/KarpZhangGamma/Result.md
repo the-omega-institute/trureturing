@@ -6,7 +6,7 @@ Paired reciprocal-gamma kernels and the two-variable transform.
 
 **Theorem 1.1 (Reflection of a finite sum).**
 
-$$\forall f \in Nat \to Real,\; \forall m \in Nat,\; \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} f\left(k\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} \operatorname{if} (2 \cdot k < m) \operatorname{then} (f\left(k\right) + f\left(m - k\right)) \operatorname{else} (f\left(k\right))$$
+$$\forall f \in Nat \to Real,\; \forall m \in Nat,\; \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (f\left(k\right)) = \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (\operatorname{if} (2 \cdot k < m) \operatorname{then} (f\left(k\right) + f\left(m - k\right)) \operatorname{else} (f\left(k\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Result.pair_sum` (`✓ std3`). ∎
 
