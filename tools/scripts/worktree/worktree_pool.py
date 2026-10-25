@@ -154,7 +154,8 @@ def sweep_locked(source, dev, force=False):
         # This is the batch receipt boundary, including pressure reads and scope
         # release. The common remover retains its own checkpoint/recovery fields.
         if stage == "revalidate" and isinstance(error, Refused) and not isinstance(error, GitFailure):
-            outcomes.append(dict(observed, outcome="retained", reason=str(error)))
+            outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
+                                 error=str(error), error_type=type(error).__name__))
             receipt["status"] = "failed"
         else:
             sweep_failure(receipt, observed, stage, error)

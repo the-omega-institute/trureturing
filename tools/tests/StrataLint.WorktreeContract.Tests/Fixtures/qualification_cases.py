@@ -108,6 +108,8 @@ class QualificationCases:
                 self.assertEqual("removed", removed["outcome"])
                 self.assertEqual(self.base, removed["checkpoint"]["commit"])
                 self.assertEqual(str(newer), retained["path"])
+                self.assertEqual("revalidate", retained.get("stage"))
+                self.assertTrue(retained.get("error"))
                 if change == "native":
                     self.assertEqual("sweep_failed", retained["outcome"])
                     self.assertIn("revalidation native cause", retained["error"])
