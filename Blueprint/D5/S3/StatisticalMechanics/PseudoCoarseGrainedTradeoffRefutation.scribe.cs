@@ -109,7 +109,10 @@ internal sealed class PseudoCoarseGrainedTradeoffRefutationDocument : IScribeDoc
                             + "with aggregate endpoints x = 1/2 and y = (2 − r)/6 and the interior value "
                             + "s above. The asserted non-strict inequality contradicts the strict reverse "
                             + "inequality, proving the negation of claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gu-2023-pseudo-coarse-grained-tradeoff"),
+                    ResolutionKind.Refuted))
         )));
 
     private static Formula BinarySteadyStateFormula()
