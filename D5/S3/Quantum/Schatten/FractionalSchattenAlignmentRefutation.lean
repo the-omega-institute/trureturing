@@ -41,15 +41,16 @@ private lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool
       diagonal (fun k => d₀ k ^ s.count false * d₁ k ^ s.count true) := by
   induction s with
   | nil =>
-    rw [wordProduct.eq_1]
+    change (1 : Matrix (Fin m) (Fin m) ℂ) =
+      diagonal (fun k => d₀ k ^ 0 * d₁ k ^ 0)
     simp [diagonal_one]
   | cons b s ih =>
+    change (if b then diagonal d₁ else diagonal d₀) *
+      wordProduct (diagonal d₀) (diagonal d₁) s = _
+    rw [ih]
     cases b <;>
-      simp only [wordProduct, List.map_cons, List.prod_cons, Bool.false_eq_true,
-        reduceIte] at * <;>
-      rw [ih, diagonal_mul_diagonal] <;>
-      congr 1 <;> funext k <;>
-      simp [pow_succ] <;> ring
+      simp only [Bool.false_eq_true, reduceIte, diagonal_mul_diagonal] <;>
+      congr 1 <;> funext k <;> simp [pow_succ] <;> ring
 
 private lemma trace_forms (s : List Bool) :
     (wordProduct a₀ a₁ s).trace =
