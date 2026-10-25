@@ -71,6 +71,9 @@ private theorem actual_dependence :
   have hexp : Real.exp (-1 : ℝ) < 1 :=
     Real.exp_lt_one_iff.mpr (by norm_num)
   norm_num [actualResolventKernel, Complex.div_re] at hre
+  have hexpre := Complex.exp_ofReal_re (-1 : ℝ)
+  simp only [Complex.ofReal_neg, Complex.ofReal_one] at hexpre
+  rw [hexpre] at hre
   linarith
 
 def familyRegistration : Registration arena
@@ -239,9 +242,11 @@ private theorem decayingInput_l1 : Integrable decayingInput halfline := by
 private theorem laplace_decayingInput :
     (∫ t : ℝ, (Real.exp (-(1 : ℝ) * t) : ℂ) * decayingInput t ∂halfline) =
       (1 / 3 : ℂ) := by
+  have hexp : (∫ t : ℝ in Ioi 0, Real.exp ((-3 : ℝ) * t)) = (1 / 3 : ℝ) := by
+    rw [integral_exp_mul_Ioi (by norm_num : (-3 : ℝ) < 0) 0]
+    norm_num
   calc
-    _ = ((∫ t : ℝ, Real.exp ((-3 : ℝ) * t) ∂halfline) : ℂ) := by
-      rw [← integral_complex_ofReal]
+    _ = ∫ t : ℝ, (Real.exp ((-3 : ℝ) * t) : ℂ) ∂halfline := by
       apply integral_congr_ae
       exact Filter.Eventually.of_forall fun t => by
         simp only [decayingInput, ← Complex.ofReal_mul]
@@ -249,9 +254,11 @@ private theorem laplace_decayingInput :
         rw [← Real.exp_add]
         congr 1
         ring
+    _ = Complex.ofReal (∫ t : ℝ, Real.exp ((-3 : ℝ) * t) ∂halfline) :=
+      integral_complex_ofReal
     _ = (1 / 3 : ℂ) := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp ((-3 : ℝ) * t)) : ℂ) = _
-      rw [integral_exp_mul_Ioi (by norm_num : (-3 : ℝ) < 0) 0]
+      change Complex.ofReal (∫ t : ℝ in Ioi 0, Real.exp ((-3 : ℝ) * t)) = _
+      rw [hexp]
       norm_num
 
 private theorem first_laplace_decayingInput :
@@ -266,8 +273,7 @@ private theorem first_laplace_decayingInput :
     norm_num [Real.rpow_two, hG2] at h
     exact h
   calc
-    _ = ((∫ t : ℝ, t * Real.exp (-((3 : ℝ) * t)) ∂halfline) : ℂ) := by
-      rw [← integral_complex_ofReal]
+    _ = ∫ t : ℝ, ((t * Real.exp (-((3 : ℝ) * t)) : ℝ) : ℂ) ∂halfline := by
       apply integral_congr_ae
       exact Filter.Eventually.of_forall fun t => by
         simp only [decayingInput, Complex.ofReal_mul]
@@ -277,8 +283,10 @@ private theorem first_laplace_decayingInput :
           congr 1
           ring
         rw [mul_assoc, ← Complex.ofReal_mul, he]
+    _ = Complex.ofReal (∫ t : ℝ, t * Real.exp (-((3 : ℝ) * t)) ∂halfline) :=
+      integral_complex_ofReal
     _ = (1 / 9 : ℂ) := by
-      change ((∫ t : ℝ in Ioi 0, t * Real.exp (-((3 : ℝ) * t))) : ℂ) = _
+      change Complex.ofReal (∫ t : ℝ in Ioi 0, t * Real.exp (-((3 : ℝ) * t))) = _
       rw [hmoment]
       norm_num
 
