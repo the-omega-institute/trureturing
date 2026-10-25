@@ -68,7 +68,10 @@ private theorem negative : ¬ arena.{z}.Law rejected := by
         if j.val ∈ ({1} : Finset ℕ) then ULift.up 1
         else if j.val ∈ ({2} : Finset ℕ) then ULift.up 2 else ULift.up 0 := by
     intro j s hs
-    fin_cases j <;> norm_num [sampleTarget, ZMod.val_natCast]
+    fin_cases j <;> norm_num [sampleTarget,
+      show (2 : ZMod 8).val = 2 from rfl,
+      show (4 : ZMod 8).val = 4 from rfl,
+      show (6 : ZMod 8).val = 6 from rfl]
   exact (law 2 3 4 1 1 (by decide) (by decide) (by decide) (by decide)
     (by decide) (by decide) (by decide) {1} {2} (by simp) (by simp) (by decide)
     (by intro j hj; simp only [Finset.mem_singleton] at hj; subst j; decide)
