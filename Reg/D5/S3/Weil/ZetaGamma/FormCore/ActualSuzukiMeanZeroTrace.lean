@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiMeanZeroTrace
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteGammaEnergy
+import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteMeanZeroWitness
 import Reg.Support.DependentFamily
 import Mathlib.Tactic
 

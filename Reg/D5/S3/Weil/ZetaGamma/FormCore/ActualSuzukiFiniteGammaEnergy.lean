@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteGammaEnergy
+import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteMeanZeroWitness
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
@@ -250,7 +251,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteGammaEnergy
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteMeanZeroWitness
     definition := none
     coordinates := #[]
     readouts := #[{
