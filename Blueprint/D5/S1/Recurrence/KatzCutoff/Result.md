@@ -24,6 +24,10 @@ $$(\forall n: \mathbb{N}, (6 \le n) \implies (\exists a: \mathbb{R}, (\frac{1}{\
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/KatzCutoff/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/evans-francis-jones-2025-katz-cutoff-limit` (proved) by `D5/S1/Recurrence/KatzCutoff/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"evans-francis-jones-2025-katz-cutoff-limit","declaration_gid":"D5/S1/Recurrence/KatzCutoff/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Emily J. Evans, Amanda E. Francis and Rebecca D. Jones (2025). *Katz similarity index comparisons*. DOI: [10.48550/arXiv.2509.02874](https://doi.org/10.48550/arXiv.2509.02874). URL: <https://arxiv.org/abs/2509.02874v1>.
