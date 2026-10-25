@@ -92,7 +92,7 @@ def sourceRegistration : Registration arena
     change (0 : ℕ) ≠ 3
     decide +kernel
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@effective_short_compiler)
     (Realization signature) (Type) Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PositiveProbeCompiler.informationUnit
@@ -111,7 +111,7 @@ def registration : LeanInformationAudit.Contract.Registration
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ × ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PositiveProbeCompiler
     definition := none
