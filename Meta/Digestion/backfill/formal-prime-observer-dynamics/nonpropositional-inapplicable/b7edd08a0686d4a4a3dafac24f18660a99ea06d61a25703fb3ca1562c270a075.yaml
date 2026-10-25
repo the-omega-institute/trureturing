@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7edd08a0686d4a4a3dafac24f18660a99ea06d61a25703fb3ca1562c270a075
+  normalized_sha256: sha256:b7edd08a0686d4a4a3dafac24f18660a99ea06d61a25703fb3ca1562c270a075
+cas_ref: sha256:b7edd08a0686d4a4a3dafac24f18660a99ea06d61a25703fb3ca1562c270a075
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 列明标准 interventional essential graph 结论的使用边界，是适用规范而非另一个图论断言。'
+    previous_atom_id: d131f1f3c94fad627937e527ed32aa64fb0e1857a5478050ad5f5adbdf8be565
+    next_atom_id: 68c533998ceaf35387d84558bb211286678077136a28b82c27ff49eac9f71c0f

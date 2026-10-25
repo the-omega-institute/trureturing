@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:edf8d67586ebd56f832a2a893be917ee147dfc6c2b40eebb28512e1e20bc59bd
+  normalized_sha256: sha256:edf8d67586ebd56f832a2a893be917ee147dfc6c2b40eebb28512e1e20bc59bd
+cas_ref: sha256:edf8d67586ebd56f832a2a893be917ee147dfc6c2b40eebb28512e1e20bc59bd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 引入环境索引 e 与环境 joint law 的记号，没有给出待证的分布关系。'
+    previous_atom_id: 2d08ad243d50692eacfe808eb0e13cf33b0dc4cbbe604e2d78e9567de6609dd0
+    next_atom_id: 39849448638d2052c2e1cbb9d5176688a0e906cd7220d657cdff2c43d0ed6d67
