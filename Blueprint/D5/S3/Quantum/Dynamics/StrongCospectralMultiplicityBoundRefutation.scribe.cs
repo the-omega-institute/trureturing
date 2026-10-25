@@ -68,7 +68,10 @@ internal sealed class StrongCospectralMultiplicityBoundRefutationDocument : IScr
                         "Both parts of G are nonempty, so G is connected. Apply the asserted bound with n = 5 and S = {0,1}, whose cardinality is two. "
                             + "It gives 2 ≤ 5/m. Since m ≥ 3, its real cast is positive; multiplying by it gives 2m ≤ 5, while m ≥ 3 gives 2m ≥ 6. "
                             + "This contradiction refutes the asserted extension."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("monterde-2022-strong-cospectral-multiplicity-bound-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
