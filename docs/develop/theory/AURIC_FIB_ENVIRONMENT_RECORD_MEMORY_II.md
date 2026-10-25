@@ -2463,3 +2463,1434 @@ complementary value with this same channel. The parameter and resource
 domains remain exactly those of (31.1) and (35.2). $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Interior residuals and real supporting functionals
+
+**Definition 36.1 (Interior task and signed coordinates).**
+Use the ordered orthonormal basis $(\xi,e,f)$, the actual channel
+$F=\operatorname{Ad}_{U_0}\circ\Delta_W$, and the fair independent,
+entirely erased chronological histories of [ERM, Definition 27.1][ERM].
+For a finite integer $n\ge2$ put
+
+$$
+\begin{gathered}
+s=(-1/2)^{n-1},\quad \alpha=(1+s)/2,\quad \beta=(1-s)/2,\\
+p,q,r>0,\quad p+q+r=1,\quad m=1-r,\quad k=\sqrt{rm},\\
+v=(\sqrt p,\sqrt q,\sqrt r)^{\mathsf T},\quad E=vv^{\mathsf T},\quad
+u=p/m,\quad \nu=q/m,\quad c=\sqrt{pq},\\
+a=(\sqrt p,\sqrt q)^{\mathsf T}/\sqrt m,\qquad
+b=(-\sqrt q,\sqrt p)^{\mathsf T}/\sqrt m.
+\end{gathered}
+\tag{36.1}
+$$
+
+Here $u+\nu=1$; $a,b$ are orthonormal vectors in the fixed upper
+plane. Their use to analyze a residual does not change the basis of
+$G_s$. Throughout §§36–43, assume that the floor criterion
+[ERM, (27.24)][ERM] fails. In particular $r\ne1/2$ and $k<\eta_n(E)$.
+All radicals of positive quantities mean positive real radicals.
+The original signed $s$, including $s=-1/2$ at $n=2$, is retained.
+For a real block effect the existing image and forward identities are
+
+$$
+\begin{gathered}
+K=K_2\oplus d,\quad K_2=\begin{pmatrix}x&z\\z&y\end{pmatrix},\quad
+0\le K_2\le I_2,\quad 0\le d\le1,\\
+G_s(K)=\begin{pmatrix}x&sz\\sz&\alpha y+\beta d\end{pmatrix}
+                  \oplus(\beta y+\alpha d),\\
+B=U_0KU_0^\dagger,\qquad
+F^n(Y)=U_0G_s(\Delta_W(Y))U_0^\dagger.
+\end{gathered}
+\tag{36.2}
+$$
+
+These are [ERM, Proposition 27.2, (27.6)–(27.7)][ERM].
+The optimization and its lower functional remain [ERM, (27.4)][ERM],
+over all complex effects and all complex input density matrices.
+The positive and negative parts of a Hermitian matrix are denoted by
+$Y_+,Y_-$, so $Y=Y_+-Y_-$ and both parts are positive semidefinite.
+
+**Theorem 36.2 (Extreme contacts and the real support bridge).**
+A real minimizing block effect exists. Every such optimum has residual
+$R=G_s(K)-E$ with spectrum
+
+$$
+(-t,h,t),\qquad t=\eta_n(E),\qquad k<t<1/2,\qquad 0\le h\le t.
+\tag{36.3}
+$$
+
+There is a real symmetric $Y$ with $\|Y\|_1=1$ such that, writing
+$H=G_s(\Delta_W(Y))$,
+
+$$
+\begin{gathered}
+\operatorname{Tr}(HK)=\operatorname{Tr}(H_+),\qquad
+-\operatorname{Tr}(YR)=t,\\
+t=\operatorname{Tr}(YE)-\operatorname{Tr}((F^n(Y))_+).
+\end{gathered}
+\tag{36.4}
+$$
+
+Its positive part is supported on the $-t$ residual eigenspace and its
+negative part on the $+t$ eigenspace. Both parts are nonzero. The
+propagated block $H$ is nonzero.
+If $h=t$, the image is, for one of the two signs of $e_0$,
+
+$$
+\begin{gathered}
+e_0=\pm\sqrt{t^2-k^2}\ne0,\\
+C_2=(m-e_0)aa^{\mathsf T}+tbb^{\mathsf T},\qquad C_{ff}=r+e_0,\\
+w=A_0a+B_0f,\quad A_0=\sqrt{(t+e_0)/(2t)},\quad
+B_0=\sqrt{(t-e_0)/(2t)},\quad R=tI_3-2tww^{\mathsf T}.
+\end{gathered}
+\tag{36.5}
+$$
+
+Conversely the displayed image has residual spectrum $(-t,t,t)$.
+
+Proof. The real block effect interval is compact convex. Conjugation
+averaging preserves its image and cannot increase distance to the real
+$E$, giving the same minimum as the complex problem. At a positive
+optimum both norm extremes must be active. If only the positive
+extreme is active, replace $C=G_s(K)$ by $(1-\lambda)C$. Then
+$R_{\rm new}=(1-\lambda)R-\lambda E$ has positive extreme at most
+$(1-\lambda)t<t$, and its negative bound remains strict for small
+$\lambda>0$. If only the negative extreme is active, use
+$(1-\lambda)C+\lambda I_3$ and
+$R_{\rm new}=(1-\lambda)R+\lambda(I_3-E)$. Both are feasible images.
+Since $C\ge0$ and $E$ has rank one, a two-dimensional negative
+subspace of $R$ would meet $v^\perp$, where its quadratic form is
+nonnegative. Thus at most one eigenvalue is negative and $h\ge0$.
+
+For the strict upper bound put $A=1-2r\ne0$ and
+$D=A(aa^{\mathsf T}\oplus(-1))-bb^{\mathsf T}$.
+The finite block inverse $L=G_s^{-1}(D)$ exists because $s\ne0$.
+For sufficiently small $0<\varepsilon<1/2$, $I_3/2+\varepsilon L$
+is an effect. In the orthonormal basis
+$(v,\sqrt r\,a-\sqrt m\,f,b)$ its residual eigenvalues are
+
+$$
+\pm\sqrt{1/4-A^2\varepsilon(1-\varepsilon)},\qquad 1/2-\varepsilon,
+\tag{36.6}
+$$
+
+all strictly within $(-1/2,1/2)$. The floor theorem supplies $t>k$.
+
+Separate the compact convex attainable image from the open operator
+norm ball of radius $t$ about $E$ in the real vector space of all
+Hermitian matrices. Normalize the nonzero separating functional by
+its dual trace norm. The infimum of $\operatorname{Tr}(YX)$ on this
+ball is $\operatorname{Tr}(YE)-t\|Y\|_1$. Separation bounds the
+attainable support above by this quantity; the norm bound evaluated
+at an attaining $C$ gives the reverse inequality. Consequently both
+inequalities in
+
+$$
+\operatorname{Tr}(YE)-\operatorname{Tr}(H_+)
+ \le\operatorname{Tr}(Y(E-C))\le\|Y\|_1\|E-C\|_{\rm op}=t
+\tag{36.7}
+$$
+
+are equalities. Here the support identity follows from (36.2) and
+self-adjointness of $G_s$ on blocks for the trace pairing, or directly
+from [ERM, (27.4)][ERM]. Averaging $Y$ with its entrywise conjugate
+preserves the target pairing and does not increase its norm or
+propagated support. Its value remains $t$ and its norm remains one:
+a smaller positive norm would, after rescaling, give a lower bound
+strictly larger than $t$. This gives a real $Y$ and (36.4).
+
+Diagonalize $Y$. Equality in the last inequality of (36.7) forces
+every positive-weight eigenvector into $\ker(R+tI_3)$ and every
+negative-weight eigenvector into $\ker(R-tI_3)$: the positive
+matrices $tI_3\pm R$ annihilate vectors on which their quadratic
+forms vanish. A positive semidefinite $Y$ has dual value at most
+$\operatorname{Tr}(Y(E-I_3))\le0$, since $G_s(I_3)=I_3$; a negative
+semidefinite $Y$ has value at most $\operatorname{Tr}(YE)\le0$.
+Both signs are therefore nonzero. If $H=0$, invertibility of $G_s$
+on blocks forces $\Delta_W(Y)=0$. Such a cross-only matrix satisfies
+$\operatorname{Tr}(YE)\le k\|Y\|_1=k$, contradicting $t>k$.
+Indeed its trace norm is twice the Euclidean norm of its cross vector,
+and its pairing is bounded by twice that norm times $\sqrt{rm}$.
+
+If $h=t$, write $R=tI_3-2tww^{\mathsf T}$. Its fixed upper-to-$f$
+entries are $-\sqrt r(\sqrt p,\sqrt q)^{\mathsf T}$. Hence, changing
+the overall sign of $w$ if needed, $w=A_0a+B_0f$ with $A_0,B_0>0$,
+$A_0^2+B_0^2=1$ and $2tA_0B_0=k$. Setting
+$e_0=t(A_0^2-B_0^2)$ gives (36.5), including $e_0^2=t^2-k^2$.
+Substitution proves the converse. $\square$
+
+## 37. The finite repeated-contact prescription
+
+**Definition 37.1 (Repeated-contact roots and primal filters).**
+In the domain of Definition 36.1 define
+
+$$
+\begin{gathered}
+U(t)=p+\nu t,\quad
+V(t)=(\alpha q-\beta r+\alpha ut)/s,\quad
+Z(t)=(c/s)(1-t/m),\\
+W_0=(\alpha\nu+\beta)/s,\quad L_0=c/(ms),\\
+D_0=(\alpha r-\beta q)/s,\quad D_1=-\beta u/s,\quad
+D_2=(\alpha+\beta\nu)/s,\\
+f_0(t)=U(t)V(t)-Z(t)^2+(uW_0-L_0^2)(t^2-k^2),\\
+g_0(t)=-uV(t)-W_0U(t)+2L_0Z(t).
+\end{gathered}
+\tag{37.1}
+$$
+
+The degrees of $f_0,g_0$ are at most two and one. Use the four pairs
+
+$$
+\begin{aligned}
+(f_1,g_1)&=(D_0+D_1t,D_2),\\
+(f_2,g_2)&=(D_0-1+D_1t,D_2),\\
+(f_3,g_3)&=(f_0,g_0),\\
+(f_4,g_4)&=(f_0+D_0+(D_1-1)t,g_0+D_2),\\
+P_j(t)&=f_j(t)^2-g_j(t)^2(t^2-k^2).
+\end{aligned}
+\tag{37.2}
+$$
+
+Discard identically zero $P_j$ from root generation. For each other
+$P_j$, take every distinct real root $k<t<1/2$ and both values
+$e_0=\pm\sqrt{t^2-k^2}$, retaining the unsquared equation
+$f_j(t)+g_j(t)e_0=0$. Define
+
+$$
+\begin{gathered}
+x=U(t)-ue_0,\quad y=V(t)-W_0e_0,\quad
+z=Z(t)-L_0e_0,\quad d=D_0+D_1t+D_2e_0,\\
+0\le d\le1,\qquad f_0(t)+g_0(t)e_0\ge0,\\
+f_0(t)+D_0+(D_1-1)t+(g_0(t)+D_2)e_0\ge0.
+\end{gathered}
+\tag{37.3}
+$$
+
+Only candidates satisfying all these filters proceed. They have
+$K_2=\left(\begin{smallmatrix}x&z\\z&y\end{smallmatrix}\right)$,
+$K=K_2\oplus d$ and $T_0=x+y=1+t-d$.
+
+**Definition 37.2 (Repeated-contact witness sampler).**
+For a candidate of Definition 37.1 list its active normal generators
+in the following order:
+
+$$
+\begin{array}{c|c}
+\text{condition}&\text{generator }H=M\oplus\zeta\\ \hline
+d=0&0_2\oplus(-1)\\
+d=1&0_2\oplus1\\
+\det K_2=0&-(I_2-K_2/T_0)\oplus0\\
+\det(I_2-K_2)=0&[K_2-(T_0-1)I_2]/(2-T_0)\oplus0
+\end{array}
+\tag{37.4}
+$$
+
+There are at most two generators. With one generator use it as $H$;
+with two put $H(\theta)=(1-\theta)H_1+\theta H_2$, $0\le\theta\le1$.
+With no generator there is no witness candidate. For each such $H$ put
+
+$$
+\begin{gathered}
+A=\begin{pmatrix}M_{00}&M_{01}/s\\
+M_{01}/s&(\alpha M_{11}-\beta\zeta)/s\end{pmatrix},\qquad
+c_0=(\alpha\zeta-\beta M_{11})/s,\\
+A_0=\sqrt{(t+e_0)/(2t)},\quad B_0=\sqrt{(t-e_0)/(2t)},\\
+\ell=\frac{(t+e_0)a^{\mathsf T}Aa-(t-e_0)c_0}{2e_0},\quad
+g=(A_0/B_0)(\ell I_2-A)a,\\
+Y_{\rm raw}=\begin{pmatrix}A&g\\g^{\mathsf T}&c_0\end{pmatrix},\qquad
+Q=\begin{pmatrix}
+-b^{\mathsf T}Ab&-b^{\mathsf T}Aa/B_0\\
+-b^{\mathsf T}Aa/B_0&\ell-a^{\mathsf T}Aa-c_0
+\end{pmatrix}.
+\end{gathered}
+\tag{37.5}
+$$
+
+Require
+
+$$
+\ell>0,\quad Q_{00}\ge0,\quad Q_{11}\ge0,\quad\det Q\ge0.
+\tag{37.6}
+$$
+
+For two generators the first three polynomials in (37.6) are affine
+in $\theta$, and $\det Q$ has degree at most two. Partition $[0,1]$
+by its endpoints and all real roots there of these nonzero polynomials.
+Test all partition points and all adjacent midpoints against every
+original inequality. Identically zero polynomials are omitted only
+from the partition. There are at most thirteen samples. For one
+generator test (37.6) directly. A passing sample defines
+
+$$
+N=\ell+\operatorname{Tr}Q>0,\qquad Y=Y_{\rm raw}/N.
+\tag{37.7}
+$$
+
+A repeated-contact entry is accepted exactly when its primal and
+witness filters both pass.
+
+**Theorem 37.3 (Global equality and conditional nonemptiness).**
+Every accepted entry of Definitions 37.1–37.2 satisfies
+
+$$
+0\le K\le I_3,\quad\|Y\|_1=1,\quad
+\|G_s(K)-E\|_{\rm op}=t
+=\operatorname{Tr}(YE)-\operatorname{Tr}((F^n(Y))_+)=\eta_n(E).
+\tag{37.8}
+$$
+
+Whenever an optimum has repeated positive contact $h=t$ in (36.3),
+the accepted repeated-contact set is nonempty. Its root generation uses
+at most twelve roots, of degrees at most $2,2,4,4$, each with two signs.
+If its accepted set is empty, every optimum has $0\le h<t$.
+
+Proof. Inverting (36.5) through the original $G_s$ gives (37.1)–(37.3).
+The determinants of $K_2$ and $I_2-K_2$ are respectively the last two
+expressions filtered in (37.3). Since
+$T_0=1+t-d\in[t,1+t]\subset(0,3/2)$, both $T_0$ and
+$2-T_0$ are positive. Nonnegative determinant and positive trace of
+each real symmetric block prove $0\le K_2\le I_2$.
+The residual is (36.5).
+
+If $K_2$ has both endpoint eigenvalues, then $T_0=1$ and $d=t$ is
+interior. If $d=0$, then $T_0=1+t>1$ excludes a zero upper eigenvalue;
+if $d=1$, then $T_0=t<1$ excludes a unit upper eigenvalue. Hence at
+most two generators in (37.4) occur, and all its denominators are
+positive. The generators span precisely the active real block normal
+cone of the effect interval at $K$; each and every nonnegative
+combination attains its support at $K$.
+
+Direct multiplication gives $Y_{\rm raw}w=\ell w$ for the $w$ of
+(36.5). On its orthogonal complement with orthonormal basis
+$(b,B_0a-A_0f)$, the restriction of $Y_{\rm raw}$ is $-Q$.
+Its off-diagonal there is $b^{\mathsf T}Aa/B_0$, and its second
+diagonal is $a^{\mathsf T}Aa+c_0-\ell$. Thus (37.6) gives
+$\|Y_{\rm raw}\|_1=N$ and $-\operatorname{Tr}(Y_{\rm raw}R)=tN$.
+Also $G_s(\Delta_W(Y_{\rm raw}))=H$ and
+$\operatorname{Tr}(HK)=\operatorname{Tr}(H_+)$. The trace-pairing
+identity (36.2) therefore gives (37.8) by (36.7), against the whole
+complex effect interval.
+
+For conditional exhaustion take a repeated-contact optimum and the
+supporting $Y$ of Theorem 36.2. Its positive eigenspace is the line
+spanned by $w$, with positive eigenvalue $\ell$; its negative part is
+on $w^\perp$. Its nonzero $H$ is a nonnegative combination of the
+one or two active normals. Rescale their coefficients to sum to one.
+The block data $A,c_0$ and $Yw=\ell w$ uniquely recover $\ell,g$
+by (37.5), since $e_0\ne0$. Its negative restriction is $-Q\le0$.
+Thus an admissible $\theta$ exists. The signs and zero tests of all
+polynomials in (37.6) are constant on each open partition interval,
+so a partition point or midpoint passes.
+
+At least one nonzero $P_j$ must bind at this optimum. Otherwise every
+active constraint would be an identity along
+$e_0=\operatorname{sgn}(e_0)\sqrt{t^2-k^2}$, and all other constraints
+would stay strict as $t$ decreases slightly, contradicting minimality.
+Indeed $P_j\equiv0$ implies $f_j=g_j=0$: $t^2-k^2$ has two distinct
+roots and is not a rational-function square, so
+$f_j^2=g_j^2(t^2-k^2)$ with $g_j\ne0$ is impossible. Such a constraint
+vanishes on the entire branch. This argument includes exceptional
+coefficient degeneracies. The sum of the four degree bounds is twelve;
+multiple roots are retained once. Zero normal eigenvalues, determinant
+transitions, scalar endpoints and $n=2$ obey the same filters.
+The denominators $m,s,t,e_0,B_0,T_0,2-T_0$ are nonzero on the stated
+domain; no derivative or $\alpha-s^2$ is inverted. $\square$
+
+## 38. A quadratic interior family and a simple-contact obstruction
+
+**Theorem 38.1 (An explicit positive-interior quadratic family).**
+Suppose $s>0$, equivalently odd finite $n\ge3$. In the notation of
+(36.1), put
+
+$$
+\begin{gathered}
+A=1-\beta u,\quad B=\beta u,\quad J=1-2B>0,\quad
+C_0=r-\alpha+\beta p,\\
+t=\frac{A\sqrt{C_0^2+Jk^2}-BC_0}{J},\quad
+e_0=(Bt-C_0)/A,\quad \omega=(t-\beta)/A.
+\end{gathered}
+\tag{38.1}
+$$
+
+If $e_0<0$, $t<1/2$ and $\omega\le t/(u+\nu/s^2)$, then
+$\eta_n(E)=t$, attained by
+
+$$
+K_2=\begin{pmatrix}
+t-u\omega&-\omega\sqrt{u\nu}/s\\
+-\omega\sqrt{u\nu}/s&u\omega
+\end{pmatrix},\qquad d=1.
+\tag{38.2}
+$$
+
+The image is (36.5); in particular $C_{01}=-\omega\sqrt{u\nu}<0$.
+A matching witness is $Y=Y_{\rm raw}/N$, where
+
+$$
+\begin{gathered}
+\ell=-\frac{\nu(t+e_0)+(\alpha/\beta)(t-e_0)}{2e_0}>0,
+\qquad N=2\ell-s/\beta,\\
+Y_{\rm raw}=\begin{pmatrix}
+0&0&\ell\sqrt{pr}/(t-e_0)\\
+0&-1&(\ell+1)\sqrt{qr}/(t-e_0)\\
+\ell\sqrt{pr}/(t-e_0)&(\ell+1)\sqrt{qr}/(t-e_0)&\alpha/\beta
+\end{pmatrix}.
+\end{gathered}
+\tag{38.3}
+$$
+
+Proof. Since $A+B=1$ and $A^2-B^2=J>0$, the value in (38.1)
+is the unique positive root of
+
+$$
+Jt^2+2BC_0t-C_0^2-A^2k^2=0.
+\tag{38.4}
+$$
+
+The leading coefficient is positive and the constant is negative.
+The equation gives $e_0^2=t^2-k^2$. Its value at $t=\beta$ is
+$-A^2sm<0$, so $t>\beta$, $\omega>0$. Substitution gives
+$\omega=t+e_0-m$ and $d=1$. In (38.2),
+$x=t-u\omega=(m-e_0)u+t\nu>0$, its trace is $t<1/2$, and
+
+$$
+\det K_2=u\omega\,[t-\omega(u+\nu/s^2)]\ge0.
+\tag{38.5}
+$$
+
+Thus $0\le K_2<I_2$, with residual eigenvalues $-t,t,t$.
+The $w$ of (36.5) satisfies $Y_{\rm raw}w=\ell w$.
+Moreover $\det Y_{\rm raw}=(Y_{{\rm raw},02})^2>0$, while its
+$0,f$ principal determinant is negative. With $\ell>0$ these facts
+force both other eigenvalues to be negative, and
+$N=\|Y_{\rm raw}\|_1>0$. Its propagation is
+$G_s(\Delta_W(Y_{\rm raw}))=0_2\oplus(s/\beta)$, whose support is
+attained at $d=1$. Pairing with $R=tI_3-2tww^{\mathsf T}$ gives
+the matching global equality as in (37.8). $\square$
+
+**Proposition 38.2 (An exact strict interior example).**
+For $n=3$, $s=1/4$, $p=q=1/32$, $r=15/16$, and arbitrary task
+phases, Theorem 38.1 applies strictly, with
+
+$$
+\begin{gathered}
+t=(\sqrt{1569841}-249)/2560,\qquad
+2560t^2+498t-589=0,\\
+K_2=\frac1{13}\begin{pmatrix}5t+3&12-32t\\12-32t&8t-3\end{pmatrix},
+\quad d=1,\quad e_0=(48t-83)/208.
+\end{gathered}
+\tag{38.6}
+$$
+
+There is a nonempty open neighborhood of these populations, within
+the positive simplex at $n=3$, on which the same quadratic rule holds.
+
+Proof. The polynomial in (38.6) is negative at $3/8$ and positive at
+$2/5$, so $3/8<t<2/5<17/41$. Hence $e_0<0$ and
+
+$$
+\det K_2=3(8t-3)(17-41t)/169>0.
+\tag{38.7}
+$$
+
+Its trace is $t<1/2$, and $t>k=\sqrt{15}/16$.
+All inequalities of Theorem 38.1 are strict. Continuity of its
+positive-root formula and these inequalities supplies the open
+neighborhood. The phase transfer is that of Proposition 27.2. $\square$
+
+**Proposition 38.3 (A positive-interior family with only simple positive contacts).**
+At $n=3$ let $q_*$ be the unique root in $(1/16,1/12)$ of
+
+$$
+123904q_*^2-43264q_*+2527=0.
+\tag{38.8}
+$$
+
+Set $p_*=1-q_*$, $y_*=1/8$, $w_*=\sqrt7/8$,
+$\ell_*=\sqrt{p_*q_*}-\sqrt7/32$, $\Delta=y_*-q_*$, and
+$t_*=\sqrt{\Delta^2+\ell_*^2}$. For every sufficiently small
+$\rho>0$, the populations
+
+$$
+p=(1-\rho)p_*,\quad q=(1-\rho)q_*,\quad r=\rho
+\tag{38.9}
+$$
+
+are outside the floor region, and every optimum has $h<t$ in (36.3).
+
+Proof. The polynomial in (38.8) has values $307$ and $-1961/9$ at
+the two interval endpoints, and its derivative is negative there and
+throughout the interval. Its equation and $19-128q_*>0$ give the
+unsquared identity
+
+$$
+(19/64-2q_*)\sqrt7/8=(3/16)\sqrt{q_*(1-q_*)}.
+\tag{38.10}
+$$
+
+This is exactly (31.5)–(31.7)'s stationarity equation for $y_*=1/8$.
+Since $q_*>1/16$ and $q_*<1/2$,
+$\ell_*>(2\sqrt{15}-\sqrt7)/32>1/8$, so $t_*>y_*$.
+Theorem 31.3 therefore gives the boundary optimum
+
+$$
+K_{2,*}=\begin{pmatrix}7/8&\sqrt7/8\\\sqrt7/8&1/8\end{pmatrix},
+\quad d_*=1/8,\quad\operatorname{spec}(G_s(K_*)-E_*)=(-t_*,y_*,t_*).
+\tag{38.11}
+$$
+
+This boundary optimizer is unique. Its propagated dual upper block
+from (31.13) is
+$\left(\begin{smallmatrix}\Delta/t_*&s\ell_*/(2t_*)\\
+s\ell_*/(2t_*)&0\end{smallmatrix}\right)$, strictly indefinite, so
+support equality fixes $K_2=K_{2,*}$. If $d$ differs from $d_*$,
+the upper residual changes by $\beta(d-d_*)|e\rangle\langle e|$.
+Both extreme eigenvectors have nonzero $e$ component since $\ell_*>0$.
+A positive change increases the $+t_*$ Rayleigh quotient; a negative
+change decreases the $-t_*$ quotient. Either makes the norm exceed $t_*$.
+
+Distance to the fixed compact attainable set is one-Lipschitz in $E$.
+Along (38.9), $E_\rho\to E_*$ and $\eta_n(E_\rho)\to t_*>0$,
+whereas $k_\rho\to0$. Thus these tasks are outside the floor for
+all sufficiently small positive $\rho$. If arbitrarily small $\rho$
+admitted a repeated-contact optimum, compactness would give a
+subsequence of its effects converging to a boundary optimum, necessarily
+$K_*$. Eigenvalue continuity would force its limiting residual spectrum
+to be $(-t_*,t_*,t_*)$, contradicting $y_*<t_*$. $\square$
+
+## 39. Exact algebraic operations for the simple-contact families
+
+**Definition 39.1 (Coefficient field, factors and root conventions).**
+For §§39–43 retain Definition 36.1 and assume that the accepted set of
+Definitions 37.1–37.2 is empty. Put
+
+$$
+\ell_0=1-\alpha s>0,\qquad
+\gamma=\sqrt{\frac{\beta\ell_0}{\alpha s^2}}>0,\qquad
+L=\mathbb Q(p,q,r,s,\sqrt p,\sqrt q,\sqrt r,\gamma).
+\tag{39.1}
+$$
+
+In §§39–43 the symbols $u,w,j$ are algebraic chart variables; the
+population ratio $u$ of (36.1) is used only in §§36–38.
+Work in the real closure $\mathbb K\subset\mathbb R$ of the ordered
+field $L$. Factorization means irreducible factorization over
+$\mathbb K$, normalized to leading coefficient one in a fixed monomial
+order. Discard units and retain repeated factors once. Absolute
+irreducibility is determined by factorization over $\mathbb K(i)$.
+A real irreducible factor which splits there has two distinct conjugate
+factors. Every real-root list retains distinct repeated roots once.
+All operations below use exact arithmetic, factors, determinants and
+real roots; every original equality and inequality is reimposed after
+squaring, factorization, resultants or sampling.
+For a symmetric $3\times3$ matrix write
+
+$$
+\sigma_2(A)=A_{00}A_{11}+A_{00}A_{22}+A_{11}A_{22}
+             -A_{01}^2-A_{02}^2-A_{12}^2.
+\tag{39.2}
+$$
+
+Thus $\det(\lambda I_3-A)=\lambda^3-\operatorname{Tr}(A)\lambda^2+
+\sigma_2(A)\lambda-\det A$.
+
+**Definition 39.2 (Coprime intersections and nonabsolute real zeros).**
+For nonzero coprime $A,B\in\mathbb K[u,w]$ define
+$\mathcal I(A,B)$ as follows. If both are independent of $w$, return
+no points. Otherwise form the ordinary Sylvester determinant
+$R(u)=\operatorname{Res}_w(A,B)$, take all its real roots $u_0$, and
+then all common real roots $w_0$ of $A(u_0,w),B(u_0,w)$.
+Use $\gcd(0,P)=P$; a nonzero constant has no roots.
+Coprimeness makes $R$ nonzero. Both specializations cannot vanish
+identically, since that would give their common factor $u-u_0$.
+This is a finite enumeration containing every real common zero.
+The case of two polynomials independent of $w$ has no common zero,
+as coprime univariate polynomials have none.
+
+For a real irreducible nonabsolute $C(u,w)$ depending on both
+variables, define its finite real-zero operation to be
+$\mathcal I(C,C_u)$. They are coprime in characteristic zero.
+Every real zero of $C$ is singular: if $C$ is a nonzero real
+constant times $D\overline D$, a real zero forces both factors to
+vanish, and therefore both partial derivatives vanish. The distinct
+complex curves have no common component, so these real zeros are
+finite. If $C$ depends on just one variable, return no points: such
+a nonabsolute irreducible univariate polynomial over a real closed
+field is quadratic without real roots. Returned points are still
+subject to all original filters.
+
+**Definition 39.3 (Two exact curve samplers).**
+Let $C(u,w)$ be absolutely irreducible and real. For a bounded open
+horizontal strip $a<w<b$, with no further restrictions, use the
+following strip sampler. If $C$ depends on $u$, form the nonzero
+polynomial
+
+$$
+S(w)=\operatorname{lc}_u(C)\operatorname{Res}_u(C,C_u).
+\tag{39.3}
+$$
+
+Partition $[a,b]$ by $a,b$ and all real roots of $S$ inside it.
+Test every partition point strictly within the strip and every
+adjacent midpoint. At each selected $w$, take all real $u$-roots of
+$C(u,w)$. If $C$ is independent of $u$, it is linear in $w$; at its
+root in the strip use $u=0$.
+
+The open-domain sampler uses
+
+$$
+u\ne0,\qquad d_0(w)\ne0,\qquad V(u,w)d_0(w)>0,
+\tag{39.4}
+$$
+
+where $d_0,V$ will be the explicit polynomials of §41. First discard
+$C$ if it divides $u$, $d_0$ or $V$. If it depends on $u$, form
+
+$$
+S(w)=\operatorname{lc}_u(C)\operatorname{Res}_u(C,C_u)
+       C(0,w)d_0(w)\operatorname{Res}_u(C,V).
+\tag{39.5}
+$$
+
+All factors are nonzero after those discards. Partition the real line
+by the real roots of $S$. Test every root and one point of every
+complementary interval: adjacent midpoints, the extreme root minus
+one or plus one in the two tails, and zero if there are no roots.
+At each selected $w$, take all real $u$-roots of $C(u,w)$ and retain
+exactly those in (39.4). If $C$ is independent of $u$, use its linear
+$w$-root, discard it if $d_0(w)=0$, and partition the $u$-line by zero
+and all real roots of $V(u,w)$; use the same point, midpoint and tail
+rule and the same open-domain tests.
+
+These samplers are finite and nonempty whenever the respective curve
+domain is nonempty. Off the roots of $S$, degree in $u$ stays constant
+and the distinct real roots vary continuously without collisions.
+Their number and, for (39.5), their signs relative to $u=0$ and $V=0$
+are constant on each complementary interval. Every fiber over a root
+of $S$ is tested directly. If $C$ depends on $u$, $C(u,w_0)$ cannot
+vanish identically, since this would give the factor $w-w_0$.
+Thus its fibers are finite. These facts also include vertical
+components; horizontal components are the explicitly treated linear
+$w$-factors.
+
+**Definition 39.4 (Evaluation on a constant-value component).**
+If $C$ is absolutely irreducible, $C\nmid B$, and $A/B$ is constant
+on $C$, divide $A,B$ by $C$ in the fixed monomial order. Select the
+first nonzero coefficient of $\operatorname{rem}_C B$, obtain $c$
+by the ratio to the corresponding coefficient of
+$\operatorname{rem}_C A$, and verify the entire identity
+
+$$
+\operatorname{rem}_C A=c\operatorname{rem}_C B.
+\tag{39.6}
+$$
+
+This evaluates the constant exactly. The constant assertions below
+follow from vanishing tangential differentiation, or from both
+ambient partial derivatives vanishing on the curve. In characteristic
+zero a nonconstant rational function on an irreducible curve has
+nonzero differential: use that function as a transcendence coordinate
+and extend differentiation through the finite separable function-field
+extension. Absolute irreducibility makes its algebraic constant field
+$\mathbb K$. Thus zero differential implies a constant in $\mathbb K$,
+which (39.6) evaluates. This includes singular points of the same
+component wherever the denominator is nonzero. These elementary
+resultant and function-field facts are intermediate tools for the
+specific prescriptions below.
+
+## 40. Projector faces and finite global witnesses
+
+**Definition 40.1 (Two projector charts and primal value generation).**
+For real $u$ set $N=1+u^2$ and use both charts
+
+$$
+\Pi_1(u)=\frac1N\begin{pmatrix}1&u\\u&u^2\end{pmatrix},\qquad
+\Pi_2(u)=\frac1N\begin{pmatrix}u^2&u\\u&1\end{pmatrix}.
+\tag{40.1}
+$$
+
+They cover every real rank-one upper-plane projection, including both
+coordinate projections. For every family in this definition put
+
+$$
+A=N(G_s(K)-E),\quad P=-\sigma_2(A),\quad f=P/N^2,\quad
+h=\operatorname{Tr}K-1,\quad F=\det A+NhP.
+\tag{40.2}
+$$
+
+These are actual polynomial formulas in the parameters: use (36.2),
+(39.2) and the ordinary determinant. In particular no unspecified
+elimination ideal enters their definition.
+
+First use the endpoint families $K=\Pi_j(u)\oplus\delta$ for
+$j=1,2$ and $\delta=0,1$, with $h=\delta$.
+If $F(u)\not\equiv0$, take all its real roots. If $F\equiv0$, put
+$H(u)=NP_u-4uP$ and take all its real roots when $H\not\equiv0$.
+If both vanish identically, use $u=0$.
+For each chart also use, with $0<w<1$, the three families
+
+$$
+\begin{array}{c|c|c}
+\text{family}&K&h\\ \hline
+\mathrm P&\Pi_j(u)\oplus w&w\\
+\mathrm L&w\Pi_j(u)\oplus1&w\\
+\mathrm U&(I_2-w\Pi_j(u))\oplus0&1-w
+\end{array}
+\tag{40.3}
+$$
+
+For each family factor its nonzero $F(u,w)$ into distinct real
+irreducible factors $C$. For a nonabsolute factor use its finite real
+zeros from Definition 39.2. For an absolute factor form
+
+$$
+J_C=(NP_u-4uP)C_w-NP_wC_u.
+\tag{40.4}
+$$
+
+If $C\nmid J_C$, take $\mathcal I(C,J_C)$.
+If $C\mid J_C$, evaluate the constant $c=P/N^2$ on $C$ using
+$\operatorname{rem}_C P=c\operatorname{rem}_C(N^2)$.
+Only if $k^2<c<1/4$, put $t=\sqrt c$ and apply the strip sampler
+of Definition 39.3: use $(0,t)$ for P and L, and $(1-t,1)$ for U.
+Every sampled pair is a candidate.
+
+For every generated endpoint or face point reimpose its original
+family equations and intervals and the exact primal filters
+
+$$
+F=0,\quad P>0,\quad k<t=\sqrt P/N<1/2,\quad 0\le h<t.
+\tag{40.5}
+$$
+
+The family automatically gives effect feasibility. Its entry is
+accepted only after the witness sampler of Definition 40.2 passes.
+In particular the $\delta=1$ endpoint branch fails (40.5), but is
+retained in the enumeration as an explicit endpoint convention.
+
+**Definition 40.2 (Finite necessary and sufficient witness sampler).**
+For a feasible candidate with residual $R=G_s(K)-E$ of spectrum
+$(-t,h,t)$, $k<t<1/2$, $0\le h<t$, put
+
+$$
+\begin{gathered}
+P_-=(R-hI_3)(R-tI_3)/(2t(t+h)),\\
+P_+=(R+tI_3)(R-hI_3)/(2t(t-h)),\\
+Y(a)=aP_--(1-a)P_+,\qquad 0<a<1,\\
+H(a)=G_s(\Delta_W(Y(a)))=M(a)\oplus c(a).
+\end{gathered}
+\tag{40.6}
+$$
+
+Require
+
+$$
+\begin{gathered}
+[M,K_2]=0,\quad Q_1=MK_2\ge0,\quad Q_0=-M(I_2-K_2)\ge0,\\
+c(a)d\ge0,\qquad-c(a)(1-d)\ge0.
+\end{gathered}
+\tag{40.7}
+$$
+
+After the commutator equality, $Q_0,Q_1$ are real symmetric; positivity
+means exactly two diagonal inequalities and a determinant inequality
+for each. There is one independent affine commutator equality, six
+affine diagonal or scalar inequalities, and two determinant
+inequalities of degree at most two in $a$.
+Partition $[0,1]$ by its endpoints and all real roots there of these
+nonzero polynomials; test all partition points and adjacent midpoints,
+always imposing $0<a<1$ and every original condition in (40.7).
+Zero polynomials are omitted only from the partition. There are at
+most twenty-five samples. The first passing sample supplies $Y$.
+
+**Theorem 40.3 (Primal generation and complete witness filtering on its faces).**
+Every accepted primal entry has a feasible effect and a trace-norm-one
+matching global witness, with value $t=\eta_n(E)$. If a global optimum
+is on any endpoint or P, L, U face in Definition 40.1, at least one
+entry of those families is accepted. For a supplied simple-contact
+feasible effect satisfying (40.5), the finite witness sampler passes
+if and only if that effect is a global optimum.
+
+Proof. Trace preservation gives $\operatorname{Tr}(G_s(K)-E)=h$.
+When $F=0$, $P>0$, its characteristic polynomial is
+
+$$
+\det(\lambda I_3-(G_s(K)-E))=(\lambda-h)(\lambda^2-P/N^2).
+\tag{40.8}
+$$
+
+Thus (40.5) is exactly the simple spectrum $(-t,h,t)$ in the required
+range. The two projector charts are rational descriptions of lines
+with a nonzero first or second coordinate; together they include
+their respective missing coordinate lines without an infinite
+parameter. They do not rotate a sector of the physical map $G_s$.
+
+The face polynomial $F$ is not identically zero. For P its leading
+$w^3$ coefficient is $-\alpha\beta N^3\ne0$. For L or U, evaluate
+at $u=1$ and let $J=G_s(\Pi_j(1)\oplus0)$. This positive matrix
+has trace one and rank at least two, so $\sigma_2(J)>\det J$.
+Their leading $w^3$ coefficients are respectively
+$N^3(\det J-\sigma_2(J))$ and its negative, both nonzero there.
+This includes $n=2$.
+
+At an optimum with interior family parameters, the strict spectral
+inequalities are open. Every nearby real point of $F=0$ preserving
+them is a feasible effect with error $\sqrt f$. On a regular point
+of an absolute factor $C$, a local minimum of $f$ has zero tangential
+derivative, precisely $J_C=0$. At a singular point both partials of
+$C$ vanish, so again $J_C=0$. If $C\nmid J_C$, the coprime
+intersection therefore contains the point. If $C\mid J_C$, the
+function-field fact in Definition 39.4 makes $f$ constant on $C$.
+The strip sampler supplies a feasible point with the same value as
+the original optimum, which is consequently another global optimum.
+Nonabsolute factors have only the finite singular real points handled
+in Definition 39.2. Repeated $F$-factors are retained once, and their
+factor-specific $J_C$ avoids any squarefree or simple-root assumption.
+For an endpoint, a nonzero $F$ supplies its root; if $F\equiv0$,
+differentiation of $f$ gives $H=NP_u-4uP=0$, unless $f$ is constant.
+In that last case $u=0$ has the same value and the same strict
+spectral conditions as the optimum, since $h=\delta$ is fixed.
+
+Evaluating (40.6)'s projector polynomials at the three distinct
+residual eigenvalues gives exactly the rank-one orthogonal projectors
+onto $-t$ and $+t$. Hence $\|Y(a)\|_1=1$ and
+$-\operatorname{Tr}(Y(a)R)=t$. In a simultaneous eigenbasis the
+commuting positivity tests in (40.7) read
+$\mu\kappa\ge0$ and $-\mu(1-\kappa)\ge0$. They say
+$\mu\le0$ at $\kappa=0$, $\mu\ge0$ at $\kappa=1$, and $\mu=0$
+at an interior effect eigenvalue. These are exactly support attainment
+over the entire upper effect interval. The scalar conditions are the
+same support criterion for $d$. Thus
+$\operatorname{Tr}(HK)=\operatorname{Tr}(H_+)$ and (36.7) proves
+sufficiency against all complex effects.
+
+Conversely Theorem 36.2 supplies a real matching witness at every
+simple-contact optimum. Both signs are nonzero, and equality in norm
+duality puts them on the two simple extreme eigenspaces. Thus that
+witness is exactly $Y(a)$ for some $0<a<1$, and its support condition
+is (40.7). All signs and equality truth values are constant on each
+open partition interval. The finite sampler therefore passes whenever
+such an $a$ exists. It also passes for every sampled constant-component
+global optimum above. The sampler tests witnesses of a supplied
+effect; value generation is furnished by Definition 40.1. $\square$
+
+## 41. Reciprocal dual conics and exact effect reconstruction
+
+**Definition 41.1 (Two conic charts and their dual values).**
+For each $\epsilon\in\{-1,+1\}$ put $\chi=(1+\epsilon)/2$.
+For real $j$ use both charts
+
+$$
+\begin{array}{c|ccc}
+ &d_0(j)&a_0(j)&b_0(j)\\ \hline
+\mathrm A&\alpha-2j+sj^2&sj^2-\alpha&2j(j-\alpha)\\
+\mathrm B&s-2j+\alpha j^2&s-\alpha j^2&2(1-\alpha j)
+\end{array}
+\tag{41.1}
+$$
+
+The symbols $d_0,a_0,b_0$ are chart polynomials, not effect entries.
+Charts A and B are reciprocal under $j\mapsto1/j$.
+For $u\ne0$, $d_0(j)\ne0$ define
+
+$$
+\begin{gathered}
+g_0=\gamma u a_0/d_0,\quad g_1=\gamma b_0/d_0,\\
+Z=\begin{pmatrix}
+\epsilon u^2&\epsilon u/s&g_0\\
+\epsilon u/s&\epsilon\alpha/s&g_1\\
+g_0&g_1&-\epsilon\beta/s
+\end{pmatrix},\\
+G_s(\Delta_W(Z))=
+\epsilon\begin{pmatrix}u^2&u\\u&1\end{pmatrix}\oplus0,\\
+Q(u)=u^4+(4/s^2-2)u^2+1/s^2,\\
+L_\epsilon(u)=\epsilon\bigl(pu^2+2\sqrt{pq}\,u/s+
+                 (\alpha q-\beta r)/s\bigr)-\chi(1+u^2),\\
+V(u,j)=L_\epsilon(u)d_0(j)
+       +2\gamma\sqrt r\,[\sqrt p\,u a_0(j)+\sqrt q\,b_0(j)],\\
+T(u,j)=Q(u)d_0(j)^2+4\gamma^2[u^2a_0(j)^2+b_0(j)^2],\\
+N_Z=\sqrt T/|d_0|,\qquad \phi(u,j)=\operatorname{sgn}(d_0)V/\sqrt T.
+\end{gathered}
+\tag{41.2}
+$$
+
+The open domain for these formulas is
+$u\ne0$, $d_0\ne0$, $Vd_0>0$. In particular $\phi>0$.
+
+**Theorem 41.2 (Conic determinant, norm and kernel identities).**
+Every point of this open domain satisfies
+
+$$
+\begin{gathered}
+\alpha g_0^2-2ug_0g_1+su^2g_1^2
+     =\beta\ell_0u^2/s^2,\qquad \det Z=0,\\
+\det Z_{\{0,1\}}=-\ell_0u^2/s^2<0,\quad
+\tau:=\operatorname{Tr}Z=\epsilon(1+u^2),\\
+\sigma:=\sigma_2(Z)
+=-\frac{(1-s^2)u^2+\alpha\beta}{s^2}-g_0^2-g_1^2<0,\\
+\|Z\|_1=\sqrt{\tau^2-4\sigma}=N_Z>0.
+\end{gathered}
+\tag{41.3}
+$$
+
+Thus $Z$ has one positive eigenvalue, one negative eigenvalue and one
+zero eigenvalue. With
+
+$$
+P_0=\operatorname{adj}(Z)/\sigma,\qquad
+S=[2Z-\tau(I_3-P_0)]/N_Z,
+\tag{41.4}
+$$
+
+$P_0$ is its orthogonal kernel projector and $S=\operatorname{sign}Z$.
+The vector $b_0^{\rm ker}=((P_0)_{02},(P_0)_{12})$ is nonzero.
+The normalized $Y=Z/N_Z$ is a trace-norm-one dual witness with value
+$\phi(u,j)$.
+
+Proof. Substitution of either row of (41.1) gives the conic identity
+in (41.3). Write $Z=\left(\begin{smallmatrix}A&g\\g^{\mathsf T}&c_0\end{smallmatrix}\right)$.
+Its upper determinant is $-\ell_0u^2/s^2$, and
+$c_0=-\epsilon\beta/s\ne0$. The Schur determinant
+$\det Z=\det A(c_0-g^{\mathsf T}A^{-1}g)$ vanishes exactly by the
+conic identity. Computing its three principal minors gives the
+formula for $\sigma$; the diagonal sum gives $\tau$.
+The upper indefinite block and $\sigma<0$ prove the asserted rank
+and signs. The gap between the two nonzero eigenvalues is
+$\sqrt{\tau^2-4\sigma}$. Expanding gives
+
+$$
+\tau^2-4\sigma=Q(u)+4(g_0^2+g_1^2)=T/d_0^2,
+\tag{41.5}
+$$
+
+proving the norm formula and $T>0$ at every $d_0\ne0$.
+On the kernel the adjugate eigenvalue is the product of the two
+nonzero eigenvalues, namely $\sigma$; elsewhere it is zero. This
+proves $P_0$. On the two other eigenvalues, the formula for $S$ is
+their signed difference divided by their gap, proving (41.4).
+
+The kernel is spanned by $(-A^{-1}g,1)$. Since $c_0\ne0$ and
+$\det Z=0$, one has $g\ne0$, so this vector has both a nonzero upper
+part and a nonzero last coordinate. Its projector therefore has
+$b_0^{\rm ker}\ne0$. The propagated raw positive-part trace is
+$\chi(1+u^2)$, and expansion of its target pairing gives
+
+$$
+\operatorname{Tr}(ZE)-\operatorname{Tr}((G_s(\Delta_W(Z)))_+)=V/d_0.
+\tag{41.6}
+$$
+
+Dividing by $N_Z$ and using (36.2) proves the stated dual value.
+$\square$
+
+**Definition 41.3 (Finite extraction of dual critical values).**
+In each signed chart form the actual polynomials
+
+$$
+A_{\rm crit}=2V_uT-VT_u,\qquad B_{\rm crit}=2V_jT-VT_j.
+\tag{41.7}
+$$
+
+If both vanish identically, evaluate the constant $c=V^2/T$ by
+coefficient proportionality $V^2=cT$. Only if $k^2<c<1/4$ use
+$u=1,-1$ and one $j$ sample in each interval cut out by the two
+distinct real roots of $d_0$: adjacent midpoints and the two tails
+as in Definition 39.3. Retain exactly the open-domain points.
+The discriminant of either $d_0$ is $4\ell_0>0$; its leading
+coefficient is nonzero. Since $V^2=cT>0$ on $d_0\ne0$, the sign of
+$Vd_0$ is constant on each component of this domain, and these samples
+find an admissible point whenever one exists.
+
+Otherwise put $G_{\rm crit}=\gcd(A_{\rm crit},B_{\rm crit})$ with
+$\gcd(0,P)=P$. The two nonzero nonconstant quotients, when both
+present, are coprime; include their intersection $\mathcal I$ of
+Definition 39.2. This same operation applies when only one quotient
+depends on $j$. A nonzero constant quotient contributes no points;
+an identically zero quotient paired with $1$ contributes none.
+These conventions include all critical points off $G_{\rm crit}=0$.
+For each distinct real irreducible factor $C$ of $G_{\rm crit}$:
+use Definition 39.2 for nonabsolute $C$; for absolute $C$, discard
+it if it divides $u$, $d_0$, $V$ or $T$. Otherwise evaluate its
+constant $c=V^2/T$ by
+$\operatorname{rem}_C(V^2)=c\operatorname{rem}_C T$.
+Only if $k^2<c<1/4$, apply the open-domain curve sampler of
+Definition 39.3 with the displayed markers $u,d_0,V$.
+
+For every generated pair reimpose
+$u\ne0$, $d_0\ne0$, $Vd_0>0$ and
+$k<t=\phi(u,j)<1/2$, then apply the reconstruction below.
+
+**Definition 41.4 (Exact primal reconstruction and sufficient filters).**
+For each generated dual point use $Z,N_Z,P_0,S$ of (41.2)–(41.4).
+Put $b=b_0^{\rm ker}$, $e=(\sqrt{pr},\sqrt{qr})$, and
+
+$$
+\begin{gathered}
+h=\frac{b\mathbin{\cdot}[t(S_{02},S_{12})-e]}{b\mathbin{\cdot}b},\\
+hb=t(S_{02},S_{12})-e,\qquad 0\le h<t,\\
+C=E-tS+hP_0,\\
+x=C_{00},\quad z=C_{01}/s,\quad
+y=(\alpha C_{11}-\beta C_{22})/s,\quad
+d=(\alpha C_{22}-\beta C_{11})/s.
+\end{gathered}
+\tag{41.8}
+$$
+
+The vector equality is an unsquared filter, not merely its scalar
+projection. Require the complete effect inequalities
+
+$$
+0\le d\le1,\quad 0\le x,y\le1,\quad
+z^2\le xy,\quad z^2\le(1-x)(1-y).
+\tag{41.9}
+$$
+
+Accept the entry precisely when every equality and inequality passes;
+then take $K=\left(\begin{smallmatrix}x&z\\z&y\end{smallmatrix}\right)\oplus d$
+and $Y=Z/N_Z$.
+
+**Theorem 41.5 (Global sufficiency of reconstructed conic entries).**
+Every accepted conic entry attains $t=\eta_n(E)$ with the matching
+trace-norm-one witness $Y$.
+
+Proof. The nonzero $b$ makes its denominator positive. The unsquared
+vector equality makes the cross block of $C$ vanish, and (41.8) is
+then exactly the finite-$s$ inverse of $G_s$. Inequalities (41.9)
+are equivalent to effect feasibility. Its residual is
+$R=-tS+hP_0$, of spectrum $(-t,t,h)$ and norm $t$.
+By (41.6) the normalized physical dual value is precisely
+$\phi=t$. Weak duality (36.7) gives equality. This implication
+uses the explicit reconstruction filters, without any stationarity
+assumption. $\square$
+
+## 42. Nonempty exhaustive selection for simple contacts
+
+**Theorem 42.1 (No missing interior support type).**
+Under Definition 39.1, the combined accepted lists of §§40–41 are
+nonempty. Every accepted entry has the common value $\eta_n(E)$.
+This includes all signed finite horizons, $n=2$, multiple roots,
+singular or constant-value components, zero middle residual
+eigenvalues, zero support eigenvalues and rank transitions.
+
+Proof. By Theorems 36.2 and 37.3 every optimum has residual spectrum
+$(-t,h,t)$ with $k<t<1/2$ and $0\le h<t$. Its real matching witness
+has rank two, one positive and one negative eigenvalue, and kernel
+the middle residual eigenspace. Write
+
+$$
+H=G_s(\Delta_W(Y))=M\oplus c_0.
+\tag{42.1}
+$$
+
+First classify every support possibility. One has $H\ne0$ by
+Theorem 36.2, and in fact $M\ne0$. If $M=0$, $c_0\ne0$, the inverse
+block formulas give
+$Y_{00}=Y_{01}=0$, $Y_{11}=-\beta c_0/s\ne0$ and
+$Y_{22}=\alpha c_0/s$. Rank two forces
+$\det Y=-Y_{11}Y_{02}^2=0$, hence $Y_{02}=0$.
+Then $e_0=(1,0,0)^{\mathsf T}$ lies in its kernel and would be the
+middle residual eigenvector. This contradicts
+$R_{02}=-\sqrt{pr}\ne0$. The alternative $c_0=0$ would give $H=0$.
+
+Support attainment in (36.4) makes $M$ a normal to the upper effect
+interval at $K_2$. Both upper eigenvalues cannot be interior, since
+then $M=0$. Nor can $K_2=I_2$, since
+$h=\operatorname{Tr}K-1=1+d\ge1>t$.
+If $K_2=0$, the same trace identity and $h\ge0$ force $d=1$, $h=0$;
+but then
+
+$$
+\det(G_s(0_2\oplus1)-E)=-p\alpha\beta\ne0,
+\tag{42.2}
+$$
+
+contradicting the zero middle eigenvalue. Consequently the only upper
+effect spectra and permitted scalar positions are
+
+$$
+\begin{array}{c|c|c}
+\operatorname{spec}K_2&\text{scalar case}&\text{family or support}\\ \hline
+(0,1)&d=0,1&\text{endpoint projector}\\
+(0,1)&0<d<1&\mathrm P\\
+(0,\lambda),\ 0<\lambda<1&d=1&\mathrm L\\
+(0,\lambda),\ 0<\lambda<1&0<d<1&c_0=0,\ M\text{ negative rank one}\\
+(\kappa,1),\ 0<\kappa<1&d=0&\mathrm U\\
+(\kappa,1),\ 0<\kappa<1&0<d<1&c_0=0,\ M\text{ positive rank one}
+\end{array}
+\tag{42.3}
+$$
+
+Indeed for $(0,\lambda)$, $h=\lambda+d-1\ge0$ excludes $d=0$;
+for $(\kappa,1)$, $h=\kappa+d<t<1/2$ excludes $d=1$.
+The ranks and signs of $M$ in the last two support cases follow
+from its vanishing on the interior upper eigenvalue and its sign on
+the sole endpoint. This is an exhaustive partition, not an assumption
+of strict complementarity. When a free upper eigenvalue reaches an
+endpoint, it enters the projector cases; scalar transitions enter the
+listed scalar endpoints. All feasible non-strict norm and support
+conditions are retained.
+
+Theorem 40.3 supplies an accepted entry for every optimum on the first,
+second, third or fifth row. Its proof also covers an optimum on a
+nonabsolute factor or singular point. On a constant component the
+sampler may choose another effect, but its error is the same global
+value and the necessary witness filter passes. Vertical and horizontal
+components are included by Definition 39.3; no regular-Jacobian
+hypothesis is used.
+
+For either remaining row $c_0=0$ and $M$ is nonzero signed rank one.
+Its support vector has both coordinates nonzero. A vector supported
+only on the second coordinate gives $Y_{00}=Y_{01}=0$ and nonzero
+$Y_{11}$; rank two then gives $Y_{02}=0$ and makes $e_0$ the kernel,
+contradicting $R_{02}\ne0$. A vector supported only on the first
+coordinate gives $Y_{11}=Y_{22}=Y_{01}=0$; then
+$\det Y=-Y_{00}Y_{12}^2=0$ makes $e_1=(0,1,0)^{\mathsf T}$ the
+kernel, contradicting $R_{12}=-\sqrt{qr}\ne0$.
+After positive rescaling there are $u\ne0$ and
+$\epsilon\in\{-1,+1\}$ such that
+
+$$
+M=\epsilon\begin{pmatrix}u^2&u\\u&1\end{pmatrix}.
+\tag{42.4}
+$$
+
+Inverting $G_s$ determines its upper input block and bottom diagonal
+exactly as in $Z$ of (41.2). Rank two requires precisely the conic
+identity (41.3). This conic is real and nondegenerate: its upper
+matrix is invertible indefinite and its bottom diagonal times its
+upper determinant is nonzero.
+
+For explicit coverage put $x=g_0/(u\gamma)$, $y=g_1/\gamma$.
+The conic becomes $\alpha x^2-2xy+sy^2=\alpha$, with known point
+$(1,0)$. The lines $y=j(x-1)$ through it give chart A of (41.1).
+The tangent direction $j=\alpha$ yields the base point, since its
+denominator is $\alpha(s\alpha-1)=-\alpha\ell_0\ne0$.
+The only missing projective line direction is vertical. Its other
+intersection is $(1,2/s)$, obtained at $j=0$ in chart B.
+The latter is the reciprocal $j\mapsto1/j$ chart, so both together
+cover the entire real conic. Poles with $d_0=0$ are never evaluated;
+every finite conic point, including both branches, has a finite
+coordinate in one of the two charts.
+
+It remains to prove that finite critical extraction retains a global
+dual value and that its reconstruction passes. On each chart the
+objective $\phi=\operatorname{sgn}(d_0)V/\sqrt T$ is smooth on its
+open domain. Every normalized chart point is a valid dual witness.
+The normalized matching witness realizes $t>k$ and is therefore a
+local maximum on its chart, giving $A_{\rm crit}=B_{\rm crit}=0$
+without dividing by any derivative. The common zeros off
+$G_{\rm crit}=0$ belong to the coprime quotient intersection.
+Nonabsolute common factors have the finite singular real zeros of
+Definition 39.2. An absolute common factor through this open-domain
+point cannot divide $u,d_0,V$ or $T$. On that factor both partials
+of $V^2/T$ vanish, so its function-field differential vanishes and
+Definition 39.4 gives the constant $c=t^2$.
+The open-domain sampler is nonempty there and supplies a genuine
+normalized dual witness with positive value $\sqrt c=t$.
+This includes points over projection discriminants and leading
+coefficient zeros, which are tested directly. If both critical
+polynomials vanish identically, the same constant-value argument
+holds on the whole domain. For $k^2<c<1/4$, the sign of $Vd_0$
+is constant on each component of
+$\{u\ne0,d_0\ne0\}$, so the stated two $u$ samples and one sample
+per $j$ interval suffice. Zero critical polynomials, repeated common
+factors and multiple resultant roots are thus all included.
+
+Finally fix any original primal optimum $K_*$ and any normalized
+sampled dual witness $Y$ of value $t$. Both endpoints of
+
+$$
+t=\operatorname{Tr}(YE)-\operatorname{Tr}(H_+)
+\le\operatorname{Tr}(Y(E-G_s(K_*)))
+\le\|Y\|_1\|E-G_s(K_*)\|_{\rm op}=t
+\tag{42.5}
+$$
+
+are equal. Simplicity of the two residual extremes makes its middle
+projector exactly $P_0=\ker Y$ and its signed extreme part
+$\operatorname{sign}Y=S$. Consequently
+
+$$
+G_s(K_*)-E=-tS+h_*P_0,\qquad 0\le h_*<t.
+\tag{42.6}
+$$
+
+The cross-block equality is the unsquared vector equality in (41.8).
+Since $b\ne0$, its scalar formula uniquely recovers $h_*$, and
+inverting $G_s$ recovers $K_*$ itself. Every effect filter therefore
+passes. Thus at least one conic candidate is accepted in each of the
+two remaining support cases. Theorems 40.3 and 41.5 prove globality
+of all accepted entries and equality of their values. $\square$
+
+## 43. Degree bounds and deterministic selection
+
+**Definition 43.1 (Fixed selection order).**
+In the repeated-contact prescription order $j=1,2,3,4$ of (37.2),
+then the increasing distinct roots $t$, then the negative $e_0$ sign
+before the positive sign, and the normal generators as in (37.4).
+Order partition samples increasingly and select the first passing
+entry. If that accepted set is empty, use the following simple-contact
+order: endpoint projector families first, then P, L, U in written
+order, with chart 1 before chart 2; then the dual families with
+$\epsilon=-1$ before $+1$ and chart A before B. Normalize factors
+as in Definition 39.1 and order their finite coefficient tuples
+lexicographically in the fixed monomial order. Order root and sample
+coordinates increasingly, and take the first accepted entry and the
+first passing witness sample. All such choices give the same value.
+
+**Theorem 43.2 (Uniform finite degrees and denominator domains).**
+The simple-contact construction requires only factorization of
+polynomials of total degree at most eleven, arithmetic, exact scalar
+tests and univariate real roots of degree at most $104$. Its value
+has algebraic degree over $\mathbb Q(p,q,r,s)$ at most
+
+$$
+16\cdot792\cdot11!.
+\tag{43.1}
+$$
+
+Its effect and witness coordinates are algebraic by the displayed
+bounded root and rational-radical operations. Every candidate and
+sample list is finite with bounds independent of the input populations
+and finite horizon. The deterministic selection of Definition 43.1
+is consequently defined on the whole domain of Definition 36.1.
+
+Proof. Write bidegrees in the order $(u,w)$ for primal faces. Directly
+from the displayed matrix formulas,
+
+$$
+\deg P\le(4,2),\quad \deg F\le(6,3),\quad\deg J_C\le(11,4).
+\tag{43.2}
+$$
+
+The Sylvester resultant $\operatorname{Res}_w(C,J_C)$ has $u$-degree
+at most $4\cdot6+3\cdot11=57$, and recovering $w$ needs degree at
+most four. Endpoint $F$ has degree at most six and its fallback
+$NP_u-4uP$ degree at most five. A nonabsolute primal factor has
+finite-zero resultant degree at most $33$. For a flat primal
+component, the projection polynomial (39.3) has degree at most $36$
+and its fibers degree at most six. Thus singular and flat cases
+have equally fixed degree bounds.
+
+For each dual conic chart, in the order $(u,j)$,
+
+$$
+\deg V\le(2,2),\quad\deg T\le(4,4),\quad
+\deg A_{\rm crit}\le(5,6),\quad\deg B_{\rm crit}\le(6,5).
+\tag{43.3}
+$$
+
+The coprime critical resultant has $u$-degree at most
+$5\cdot5+6\cdot6=61$, with $j$ recovery degree at most six.
+A common factor has bidegree at most $(6,6)$ and total degree at
+most eleven. Its nonabsolute real-zero resultant degree is at most
+$66$. For an absolute common factor the five factors in (39.5)
+have respective degree bounds $6,66,6,2,24$, so its projection
+polynomial has degree at most
+
+$$
+6+66+6+2+24=104.
+\tag{43.4}
+$$
+
+Its fibers have degree at most six. Horizontal factors and whole-plane
+constant branches use the lower-degree rules already specified.
+These estimates give parameter-independent finite candidate counts;
+a loose bound is fewer than $100000$ primal-or-dual candidates before
+the at-most-twenty-five primal witness samples. The repeated-contact
+bounds are those of Theorem 37.3, with at most thirteen scalar
+certificate samples. No stationary point or resultant root is accepted
+without its sufficient global witness or exact reconstruction filters.
+
+For the field-degree assertion, a normalized polynomial of total
+degree $d$ has at most $d$ absolute factors. Galois action permutes
+those factors, so the joint algebraic coefficient field of its
+normalized factors has degree at most $d!$. The primal factors come
+from $F$ of total degree at most nine. A nonflat primal value has
+degree over $L$ at most
+$9!\cdot57\cdot4\cdot2=456\cdot9!$; nonabsolute finite points give
+at most $198\cdot9!$, and flat-component values at most $2\cdot9!$.
+An isolated coprime dual value gives degree at most
+$61\cdot6\cdot2=732$.
+The dual common factors have total degree at most eleven; their
+nonabsolute finite points give at most
+$11!\cdot66\cdot6\cdot2=792\cdot11!$, and constant-component
+values at most $2\cdot11!$. Thus $792\cdot11!$ bounds every selected
+simple-contact value over $L$. Adjoining the four radicals
+$\sqrt p,\sqrt q,\sqrt r,\gamma$ costs at most sixteen over
+$\mathbb Q(p,q,r,s)$, proving (43.1). These are algebraic degree
+bounds, with no assertion about numerical cost.
+
+Finally every denominator has a stated domain. In the primal charts
+$N=1+u^2>0$. In (40.6), $2t(t+h)>0$ and $2t(t-h)>0$, including
+$h=0$. In the conic charts $s\ne0$ and
+$\alpha,\beta,\ell_0,\gamma>0$; $d_0\ne0$ is tested,
+$T>0$, $\sigma_2(Z)<0$, and $b\mathbin{\cdot}b>0$ were proved in
+Theorem 41.2. Repeated-contact denominators were checked in
+Theorem 37.3. In Theorem 38.1, $A,J,\beta,t-e_0$ are positive and
+$e_0<0$; its normalization is the proved positive trace norm.
+No division uses $\alpha-s^2$, a polynomial derivative, a Jacobian,
+a root separation or an untested zero. In particular
+$\alpha=s^2$ at $n=2$ changes no rule. Zero polynomials and factors,
+multiple roots, horizontal and vertical components, chart poles and
+constant-value components all have explicit branches. Non-strict
+filters retain rank and scalar endpoints and $h=0$.
+Theorems 37.3 and 42.1 give nonemptiness, and every accepted entry
+has its own primal and matching dual equality. The fixed orders
+therefore select a pair without a remaining feasibility or optimization
+parameter. $\square$
+
+## 44. Combination with all boundaries, phases and the terminal decoder
+
+**Definition 44.1 (All finite horizons and populations).**
+For the task of [ERM, Definition 27.1][ERM], use the following ordered
+suppliers. At $n=0,1$ use [ERM, Theorem 27.3][ERM]. For $n\ge2$
+use [ERM, Theorems 27.4–27.5][ERM] on $p=0$ or $q=0$, and
+Theorem 35.1, with its balanced priority in Theorem 30.3, on
+$r=0,pq>0$. Their stated population endpoints include the vertices;
+at every zero task error select the input witness $Y=E$.
+For positive populations first use the floor region of
+[ERM, Theorem 27.7, (27.24)][ERM]. If it fails, use Definitions
+37.1–37.2 when their accepted list is nonempty; otherwise use §§40–43.
+
+The inherited floor test is also a finite scalar test, rather than
+an unevaluated choice of its parameter $\lambda$. Substitute the
+explicit affine quantities of (27.24) into their scalar bounds and
+two determinant inequalities. Partition $[0,k]$ by its endpoints
+and the real roots there of all nonzero resulting polynomials, which
+have degree at most two; test every partition point and every adjacent
+midpoint against all the original inequalities. Omit zero polynomials
+only from this partition. If any point passes, use the least passing
+sample in that order and the effect of Theorem 27.7 with the universal
+floor witness (27.9). Constant signs on each complementary interval
+make this test equivalent to the original criterion. No floor
+parameter remains to optimize. This use leaves the inherited boundary
+and floor formulas and their hypotheses intact.
+
+**Theorem 44.2 (Exact all-input optimum and a same-qutrit CPTP decoder).**
+For every complex unit $v_{\rm act}$, every finite integer $n\ge0$,
+and every real instrument angle in [ERM, Definition 27.1][ERM],
+Definition 44.1 gives the value, an attaining effect and a matching
+lower certificate for the rank-one task
+$E_{\rm act}=|v_{\rm act}\rangle\langle v_{\rm act}|$.
+For the positive-interior branches let
+
+$$
+\begin{gathered}
+v_{\rm act}=\Lambda(\sqrt p,\sqrt q,\sqrt r)^{\mathsf T},\quad
+K_\Lambda=\Lambda K\Lambda^\dagger,\quad
+Y_\Lambda=\Lambda Y\Lambda^\dagger,\\
+B=U_0K_\Lambda U_0^\dagger,\\
+\mathcal D_B(X)=\operatorname{Tr}(BX)E_{\rm act}
+ +\operatorname{Tr}((I_3-B)X)(I_3-E_{\rm act})/2.
+\end{gathered}
+\tag{44.1}
+$$
+
+The boundary and small-horizon suppliers give the same effect and
+decoder interface on their own domains. At every zero value use
+$Y_\Lambda=E_{\rm act}$, the phase transfer of the witness $Y=E$.
+For every selected pair,
+
+$$
+\begin{gathered}
+0\le B\le I_3,\qquad Y_\Lambda=Y_\Lambda^\dagger,\qquad
+\|Y_\Lambda\|_1=1,\\
+\eta_n(E_{\rm act})
+=\|(F^n)^\dagger(B)-E_{\rm act}\|_{\rm op}
+=\operatorname{Tr}(Y_\Lambda E_{\rm act})
+ -\operatorname{Tr}((F^n(Y_\Lambda))_+),\\
+\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{Tr}(E_{\rm act}\mathcal D_B(F^n(\rho)))
+              -\operatorname{Tr}(E_{\rm act}\rho)\right|
+=\eta_n(E_{\rm act}).
+\end{gathered}
+\tag{44.2}
+$$
+
+This determines the rank-one quantitative target of [ERM, Definition
+27.10][ERM]; complementation supplies each corresponding rank-two
+task, and $0,I_3$ have value zero. The decoder is chosen for this
+one task and horizon and is fixed for all complex qutrit inputs.
+The resources are exactly the terminal qutrit with the chronological
+history erased, as in (27.1).
+
+Proof. The stated earlier theorems supply $n=0,1$, all population
+boundaries and the floor region with their own domains and endpoint
+conventions. For positive populations outside the floor, Theorem 36.2
+gives (36.3). If a repeated-contact optimum exists, Theorem 37.3
+supplies a nonempty accepted repeated-contact list. If that list is
+empty, every optimum is simple at its positive extreme, and Theorem
+42.1 supplies a nonempty simple-contact list. Theorems 37.3, 40.3
+and 41.5 prove the matching equalities for every accepted entry.
+The explicit finite rules and Theorem 43.2 provide the stated
+algebraic selection, including both signs of $s$ and all degeneracies.
+Propositions 38.2 and 38.3 respectively supply an exact open
+quadratic region and positive-interior tasks requiring the
+simple-contact complement; neither replaces any boundary hypothesis.
+
+For a zero-value branch, the selected rank-one projection satisfies
+$Y_\Lambda=E_{\rm act}=E_{\rm act}^\dagger\ge0$,
+$\|Y_\Lambda\|_1=\operatorname{Tr}(E_{\rm act})=1$ and
+$\operatorname{Tr}(Y_\Lambda E_{\rm act})=1$.
+The actual physical channel
+$F=\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1})$
+of [ERM, (27.3)][ERM] preserves positivity and trace, as does every
+$F^n$, including $F^0=\mathrm{id}$. Hence
+$F^n(Y_\Lambda)\ge0$ and
+$\operatorname{Tr}((F^n(Y_\Lambda))_+)=\operatorname{Tr}(F^n(Y_\Lambda))=1$.
+Its global lower value in [ERM, (27.4)][ERM] is therefore $1-1=0$,
+matching the inherited attaining effect. This construction applies to
+every zero-value population and horizon without division by the error
+or by a population. It uses the original forward channel and arbitrary
+complex $v_{\rm act}$. It adds only the task projection to the finite
+prescription; the positive-value witnesses and their selections are
+those of the stated suppliers.
+
+Proposition 27.2 gives the phase transfer in (44.1), preserving the
+entire attainable image and the forward dual support identity.
+In particular it is $Y_\Lambda$ itself that is the input functional;
+the physical effect is conjugated by $U_0$. Only the diagonal
+invariance of $G_s$ and its effect image is used here.
+
+For complete positivity and trace preservation, diagonalize
+$B=\sum_{j=1}^3 b_j|u_j\rangle\langle u_j|$, $0\le b_j\le1$,
+and choose an orthonormal basis $w_1,w_2$ of $\ker E_{\rm act}$.
+The Kraus operators
+
+$$
+L_j=\sqrt{b_j}|v_{\rm act}\rangle\langle u_j|,\qquad
+M_{\ell j}=\sqrt{(1-b_j)/2}|w_\ell\rangle\langle u_j|,
+\quad 1\le j\le3,\quad1\le\ell\le2
+\tag{44.3}
+$$
+
+all act on the same $\mathbb C^3$. Their adjoint products sum to
+$I_3$, and their Kraus sum is (44.1). Orthogonality of the prepared
+states gives $\mathcal D_B^\dagger(E_{\rm act})=B$.
+Conversely the adjoint of every allowed CPTP decoder is positive
+and unital, so its image of $E_{\rm act}$ is an effect.
+For every Hermitian residual $T$ the spectral theorem gives
+
+$$
+\sup_{\rho\in\mathsf D(\mathbb C^3)}|\operatorname{Tr}(T\rho)|
+=\max_j|\lambda_j(T)|=\|T\|_{\rm op},
+\tag{44.4}
+$$
+
+with equality at an extreme eigenstate. Thus the selected primal
+residual and its global witness compare with every complex input,
+every complex effect and every allowed decoder, proving (44.2).
+Real coordinates of the selected pair impose no restriction on
+these quantified complex domains.
+Finally the unital complement identity of [ERM, Proposition 27.8][ERM]
+negates the residual under $B\mapsto I_3-B$, with the corresponding
+exchange of the prepared range and kernel states. It gives the same
+value for the complementary rank-two task, including use of the same
+channel for this complementary binary pair. The theorem concerns
+separate fixed tasks and finite horizons; retained-memory recovery,
+uniform recovery over unbounded horizons and simultaneous correction
+of arbitrary task collections have their separate quantifiers.
+$\square$
+
+## 追加锚（本行以下为增补区）
