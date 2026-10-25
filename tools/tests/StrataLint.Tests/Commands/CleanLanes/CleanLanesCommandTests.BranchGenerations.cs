@@ -69,22 +69,25 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(false, true)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void ExistingCheckoutOfReplacementDoesNotEraseOrRenewEarlierGrace(bool renamedReplacement, bool force)
+    [InlineData("create", false)]
+    [InlineData("create", true)]
+    [InlineData("rename", false)]
+    [InlineData("rename", true)]
+    [InlineData("copy", false)]
+    [InlineData("copy", true)]
+    public void ExistingCheckoutOfReplacementDoesNotEraseOrRenewEarlierGrace(string replacement, bool force)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/replacement-checkout-origin");
         var allocated = fixture.LastUpdate(lane).AddDays(2);
-        if (renamedReplacement)
+        if (replacement != "create")
             CleanLanesFixture.GitAt(lane, allocated.AddMinutes(-1), "branch", "harness/replacement-generation");
         CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", "origin/dev");
         CleanLanesFixture.GitAt(lane, allocated.AddMinutes(1), "checkout", "--detach", "HEAD");
         CleanLanesFixture.GitAt(lane, allocated.AddSeconds(90), "branch", "-d", "origin/dev");
-        if (renamedReplacement)
-            CleanLanesFixture.GitAt(lane, allocated.AddMinutes(2), "branch", "-m", "harness/replacement-generation", "origin/dev");
+        if (replacement != "create")
+            CleanLanesFixture.GitAt(lane, allocated.AddMinutes(2), "branch", replacement == "rename" ? "-m" : "-c",
+                "harness/replacement-generation", "origin/dev");
         else
             CleanLanesFixture.GitAt(lane, allocated.AddMinutes(2), "branch", "origin/dev");
         CleanLanesFixture.GitAt(lane, allocated.AddHours(1), "switch", "origin/dev");
