@@ -8,17 +8,6 @@
 
 import Mathlib.LinearAlgebra.Matrix.Symmetric
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Option
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
 import D5.S3.Observer.Linear.FiniteRealZeroFillRegister
 
 set_option autoImplicit false
@@ -26,7 +15,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-open scoped BigOperators Classical
+open scoped BigOperators
 
 namespace D5.S3.Quantum.Optimization.GlobalZZGateTimeBound
 
