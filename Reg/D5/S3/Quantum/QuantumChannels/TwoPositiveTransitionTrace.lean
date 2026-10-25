@@ -25,15 +25,11 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def empty_anchor (e : Empty) (n : Type u) : Matrix n n ℂ := Empty.elim e
-
-def matrix_readout (_ : Unit) (n : Type u) (X : Matrix n n ℂ) : Matrix n n ℂ := X
-
 def actual : Realization signature.{u} :=
-  realize signature matrix_readout empty_anchor
+  realize signature (fun _ _ X => X) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => 0) empty_anchor
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -59,7 +55,7 @@ theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   exact zero_ne_one hc
 
 def source_registration : Registration arena.{u} (type_of% @trace_rank_one.{u}) where
-  actual := realize signature matrix_readout empty_anchor
+  actual := actual
   bridge := Iff.rfl
   variation := ⟨trace_rank_one, rejected, rejected_law⟩
   sensitivity := by
@@ -87,7 +83,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature matrix_readout empty_anchor)
+  readout := some (realize signature (fun _ _ X => X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
