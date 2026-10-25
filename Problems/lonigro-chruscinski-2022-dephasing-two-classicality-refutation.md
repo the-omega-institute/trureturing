@@ -78,13 +78,13 @@ The refutation would miss the source if it substituted a reduced-channel regress
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.lean` (332 lines).
+The canonical source is `D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.lean` (336 lines).
 
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registrations.** `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.lean.json`, statement `sha256:c43f6fdbb750c649952e3b80a4df3337cc9a1b94fe998f45ab7542be54068c55`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.lean.json`, statement `sha256:6239f247d02d5871a9753ccb7eb36b9df0bdee916554f56c239a39bc5e5cdafe`.
 
 Declaration statements:
 

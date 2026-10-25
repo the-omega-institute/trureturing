@@ -175,3 +175,4 @@ For the first measurement projector and the computational projector at 0, the (0
 - Dependency: [D5/S3/Quantum/Dynamics/PositivePauliClockOrder](../Dynamics/PositivePauliClockOrder.md)
 - Dependency: [D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation](../Foundation/FuchsLogarithmBasisRefutation.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](../Information/BinaryStabilizerLocalInequivalence.md)
+- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../RandomCircuits/HaarTwoCopyTwirl.md)

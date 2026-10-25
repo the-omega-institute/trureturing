@@ -5,7 +5,7 @@ year: 2022
 title: "On the classicality of quantum dephasing processes"
 doi: 10.3389/frqst.2022.1090022
 url: https://arxiv.org/abs/2211.02014v2
-claim: "The paper studies the multitime statistics of pure dephasing systems probed by repeated sharp measurements, proves that a diagonal initial state measured in any basis unbiased with respect to the dephasing basis gives a 2-classical process for every environment, and conjectures that, apart from a maximally mixed initial state, this is the only measurement choice yielding a genuinely time-dependent 2-classical process."
+claim: "The paper studies the multitime statistics of pure dephasing systems probed by repeated sharp measurements, proves that a diagonal initial state measured in a phase-modified Fourier basis of Eq. eq:mubs, which is unbiased with respect to the dephasing basis, gives a 2-classical process for every environment, and conjectures that, apart from a maximally mixed initial state, this is the only measurement choice yielding a genuinely time-dependent 2-classical process."
 strata_touched:
   - D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation
 license: citation-only
