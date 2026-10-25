@@ -8,13 +8,6 @@
 
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
 
