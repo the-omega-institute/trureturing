@@ -1016,3 +1016,295 @@ P's authentic unit entrance, the capped arbitrary-field entrance, the randomized
 The original arbitrary-signed-field obstruction and every fixed-$G_{\rm gc}$/original-$Q$, parked-consumer, unchanged-initialization and lost-chronology statement retain their exact original domains. This rational path result supplies no transport to native $\alpha/\beta$ constructors, universal generator pair, arbitrary graph geometry or another physical process. Such a transport still requires a common actual initialization, operation/output correspondence, internal acquisition and retained-resource bridge. The four-expression recovery here is the authentic newly prepared passive domain of Theorem 20.2; the full unrestricted programme remains beyond this bounded result.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Arbitrarily small signed entry fields can conceal a longer native path
+
+**Definition 24.1 (uncapped entry balls and the exact acquisition task).**
+Retain precisely Assumption 1.2's bound root, serial Read, returning Tick,
+Hold and arbitrary rational signed Add, with its assurances, rights and
+sufficient finite backing. There is no order cap. For a supplied rational
+$\rho\ge0$, let $\mathcal C_\rho$ consist of all finite $N\ge1$, rational
+symmetric Jacobi matrices with strictly positive adjacent links, and
+rational entry vectors $z$, such that
+
+$$
+\tfrac14 I\le T\le\tfrac34 I,\qquad \|z\|_2\le\rho.
+\tag{UFS.53}
+$$
+
+The enclosure is fixed for the entire class. No common positive lower
+bound on the links, denominator/width bound, order bound or additional
+source observation is supplied. The radius bounds the entry field only;
+subsequent authorized Add inputs need not obey it. The one-cell case has
+no adjacent-link condition. A controller is one source-independent finite
+effective program for the public $\rho$, with arbitrary finite adaptive
+computation, storage and commands on each finite run.
+
+An exact acquisition must terminate successfully with either the actual
+native order and law, the entire native impulse law in an effective
+finite description, or a finite self-sufficient predictor for the complete
+service from its **actual advanced stopping cut**. Such a predictor must
+compute the complete declared returns of every finite legal continuation,
+including its successive updated predictive state, without consulting new
+source returns for hypothetical evaluation. Fixed words are included;
+induction on matching replies then covers adaptive continuations. Keeping
+a callable reference and forwarding an unpredicted request is actual use,
+but alone is not this predictive acquisition. No claim here requires
+recovering an erased entry journal.
+
+**Lemma 24.2 (small signed compensation of a complete finite transcript).**
+Fix $\rho>0$ and any finite completed command transcript $\pi$ on the
+reference specimen $T_0=(\lambda)$, $\lambda=1/2$, with entry zero. Include
+every scalar return, every returning Tick, fixed acknowledgement and
+local stopping decision. Suppose $\pi$ has $t$ Ticks. There is one fixed
+specimen $(S,z)\in\mathcal C_\rho$ of order $M=t+2$ that gives exactly
+this complete transcript under replay of its commands, with
+$\|z\|_1<\rho$. Its second native impulse moment is
+$\lambda^2+\epsilon^2$ for some rational $\epsilon>0$, whereas the
+reference moment is $\lambda^2$.
+
+Proof. Put $c=1/8$. For rational $0<\epsilon\le c$, take $S=S_\epsilon$
+to have all diagonal entries $\lambda$, first link $\epsilon$ and all
+remaining links $c$. For every real vector $v$, writing $b_i$ for these
+links gives
+
+$$
+\left|v^{\mathsf T}(S-\lambda I)v\right|
+\le\sum_{i=0}^{M-2}b_i(v_i^2+v_{i+1}^2)
+\le\tfrac14\|v\|_2^2.
+\tag{UFS.54}
+$$
+
+Each coordinate meets at most two links of size at most $1/8$. Thus
+(UFS.53) holds, uniformly in $M$ and $\epsilon$, and every actual link is
+positive.
+
+Write $\eta_j=(S_\epsilon^j)_{00}$. Expanding matrix powers as finite
+walk sums, every walk from cell zero back to zero crosses its first link
+an even number of times. A walk never crossing it stays at zero.
+Consequently there are polynomials $H_j\in\mathbb Q[X]$ with
+
+$$
+\eta_j=\lambda^j+\epsilon^2 H_j(\epsilon^2),\qquad
+H_0=H_1=0,\quad H_2=1.
+\tag{UFS.55}
+$$
+
+For $1\le i\le t$ the same parity argument gives rational polynomials
+$K_{ji}$ such that $(S_\epsilon^j)_{0i}=\epsilon K_{ji}(\epsilon^2)$.
+They vanish when $i>j$. At $i=j$ the unique length-$j$ path has no stay
+or backward step, so $K_{jj}=c^{j-1}$. Setting $\epsilon=0$ in these
+polynomial identities is only bookkeeping; it is never the admitted
+witness matrix.
+
+List the transcript's Add inputs as $(s_\ell,u_\ell)$, where $s_\ell$
+is the number of Ticks preceding that actual Add. For $0\le j\le t$
+define
+
+$$
+g_j=\sum_{s_\ell\le j}u_\ell
+       (\lambda^{j-s_\ell}-\eta_{j-s_\ell})
+    =\epsilon^2 D_j(\epsilon^2),\qquad D_j\in\mathbb Q[X].
+\tag{UFS.56}
+$$
+
+Here $g_0=0$. Define rational polynomials successively by
+
+$$
+W_j(X)=c^{1-j}\left(D_j(X)-\sum_{i=1}^{j-1}K_{ji}(X)W_i(X)\right)
+\quad(1\le j\le t).
+\tag{UFS.57}
+$$
+
+These triangular pivots are fixed nonzero constants, not powers of
+$\epsilon$. Set $z_0=z_{t+1}=0$ and
+$z_i=\epsilon W_i(\epsilon^2)$ for $1\le i\le t$. When $t=0$, take
+$z=0$ in dimension two. The triangular identities prove
+$e_0^{\mathsf T}S_\epsilon^jz=g_j$ for every $0\le j\le t$.
+
+To choose one rational witness, let $C$ be one plus the sum of the absolute
+values of all coefficients of all the $W_i$; the empty sum is zero.
+For $0<\epsilon\le c<1$,
+$\|z\|_1\le\epsilon(C-1)<\epsilon C$. Choose
+$\epsilon=\min\{c,\rho/(2C)\}$. Then $z$ is rational and
+$\|z\|_2\le\|z\|_1<\rho$. This choice fixes the entire specimen before
+any replay.
+
+Consider now any chronological cut of $\pi$, at epoch $j$, with only
+its already executed pulses $P$ included. Formula (UFS.3) gives the root
+on the new specimen as
+
+$$
+g_j+\sum_{\ell\in P}u_\ell\eta_{j-s_\ell}
+   =\sum_{\ell\in P}u_\ell\lambda^{j-s_\ell}.
+\tag{UFS.58}
+$$
+
+Indeed every pulse at an earlier epoch has already occurred. A pulse at
+epoch $j$ that is in (UFS.56) but has not yet occurred contributes zero
+to $g_j$, since $\lambda^0=\eta_0=1$. Thus the identity applies before
+and after each Add, to repeated Reads and to the output immediately
+following **each** Tick update. Holds and Adds have the same fixed
+acknowledgements. The right-hand side is exactly the reference root.
+This proves equality of all declared outputs, not merely a selected
+subsequence. With identical inputs and outputs, induction through the
+controller's local computation gives the same subsequent adaptive
+command, rational input, local state and stopping/export decision.
+Finally (UFS.55) at $j=2$ proves the stated impulse difference, whether
+or not that index was observed in $\pi$. $\square$
+
+## 25. Exact finite acquisition has a closed zero-radius endpoint
+
+**Theorem 25.1 (one exact-acquisition dichotomy).** For Definition 24.1's
+closed classes the following statements hold.
+
+1. For every rational $\rho>0$, no deterministic controller terminates
+   successfully and correctly on every specimen in $\mathcal C_\rho$
+   for any of the exact acquisition targets in Definition 24.1.
+2. For the same positive radii, no controller using independent paid fair
+   bits has both zero error on every fixed specimen and almost-sure
+   successful finite acquisition on every specimen. A successful finite
+   computation is required to have read only finitely many bits. Zero
+   error means probability zero of an incorrect successful export;
+   unsuccessful runs or nontermination do not count as successful
+   acquisition.
+3. At $\rho=0$ the already supplied authentic unit-impulse construction
+   does terminate exactly, acquire the native law and initialize the
+   complete retained predictor from its actual stopping state.
+
+Proof. For part 1, run a proposed total correct controller on the
+one-cell zero-entry reference. Its successful stopping transcript
+$\pi$ is finite. Lemma 24.2 supplies one admitted specimen that repeats
+that whole transcript and hence the same successful export. The two
+native orders differ, and their impulse laws differ already at the
+second moment. Thus neither a native-law export nor an impulse-law
+export can be correct on both.
+
+For the predictor target it is essential to use the actual final states,
+not the entries or an unexecuted reset. They are respectively
+
+$$
+a=\sum_\ell u_\ell\lambda^{t-s_\ell},\qquad
+b=S^t z+\sum_\ell u_\ell S^{t-s_\ell}e_0.
+\tag{UFS.59}
+$$
+
+Starting at these very cuts, consider the two legal alternative words
+$W=$ Tick; Tick and $W^+=$ Add$(1)$; Tick; Tick. On any one source the
+last-root difference between these two alternatives is its second
+native impulse moment, independently of its current state. If the
+complete continuations agreed between the two sources for both words,
+subtracting their final scalars would force
+$\lambda^2=\lambda^2+\epsilon^2$. Hence at least one word has different
+returns. The same exported self-sufficient predictor cannot be correct
+on both actual stopping states. These are two alternatives quantified
+by the task, not an experiment requiring cloning, reset or execution
+of both words on one specimen. A failure on fixed words also defeats
+prediction of every legal adaptive continuation.
+
+For part 2, first fix the reference specimen, independently of all bits.
+Almost-sure successful finite acquisition implies that at least one
+successful finite execution reads a finite bit word $w$. More explicitly,
+the successful finite executions are a countable union of cylinders of
+finite bit prefixes; every such cylinder has probability
+$2^{-|w|}>0$, with probability one when $w$ is empty. Fix one stopping
+prefix. All its infinite extensions give the same finite transcript
+$\pi$ and export, because no further bit has been read at this stop.
+Zero error on the reference forces that export to be correct there:
+an incorrect fixed export on this cylinder would already have positive
+error probability.
+
+Construct the single witness $(S,z)$ from this one $\pi$ by Lemma 24.2,
+and fix it before a fresh independent fair-bit run. On its $w$ cylinder,
+local computation and all returning observations agree by induction,
+so the controller again stops with the identical export. The native-law
+or actual-cut predictor contradiction from part 1 makes it incorrect
+on this witness. Its error probability is at least $2^{-|w|}>0$.
+This contradicts zero error. The witness is not selected separately for
+each infinite tape. No numerical error floor independent of the
+controller, transcript or radius is asserted. The exported predictor
+here is the finite locally evaluable exact predictor in Definition 24.1;
+future random bits are not a source observation. Even if its evaluation
+were allowed fresh independent bits with zero-error almost-sure exact
+answers, their common law could not equal two different required scalar
+answers almost surely on the separating word.
+
+For part 3, the closed condition $\|z\|_2\le0$ gives $z=0$ on the
+actual source, without an observation or an inferred unknown norm.
+Execute the authorized Add$(1)$ and receive its acknowledgement. This
+really establishes $e_0$. Apply [P Theorem 37.2][P]: the initial Read
+and $2N$ actual returning Ticks give $2N+1$ scalar returns; the first
+singular positive impulse Hankel block earns the uncapped order.
+[P Propositions 37.3–37.4][P] supply native rational Jacobi inversion,
+least recurrence and transfer. The actual final vector is
+$T^{2N}e_0$, and [P §§40–41][P] supply its retained complete-menu
+predictor and continued same-root use, conditional on the already
+supplied binding and rights. Every Hold, acknowledgement, scalar,
+calculation and retained record has its stated real cost. These are
+applications of the supplied positive endpoint, not new inversion or
+retention theorems. The fixed enclosure lies strictly inside $0<T<I$,
+so all those supplier hypotheses hold. $\square$
+
+An open radius-zero ball is empty and is not this positive endpoint.
+The dichotomy concerns exactly these nested **closed** entry classes,
+this service and these exact successful acquisition contracts.
+
+## 26. Small-entry scope, mathematical credit and the remaining bridge
+
+**Definition 26.1 (source-relative content).** Lemma 24.2 contributes
+the small-entry compensation: one weak first link changes every finite
+forced impulse response by $\epsilon^2$ while the triangular observation
+solve needs only an $O(\epsilon)$ signed entry. Its constants and the
+chosen positive link depend on the whole finite reference transcript;
+its spectral enclosure does not. Since the witness has
+$\|z\|_1<\rho$, the same obstruction also applies when a positive open
+or closed $\ell^1$ or $\ell^\infty$ entry ball replaces (UFS.53), using
+$\|z\|_\infty\le\|z\|_2\le\|z\|_1$. No norm equivalence with a hidden
+dimension-dependent constant is needed.
+
+The existing §7 supplies arbitrary-field finite-transcript
+indistinguishability and actual-final-cut separation. Formula (UFS.3)
+supplies the exact free/forced ages, and the present proof preserves
+every returning Tick. Finite-prefix cylinders give the elementary
+fair-bit consequence; no new general probability principle is claimed.
+Native inversion and retained use at the zero endpoint belong to
+[P §§37,40–41][P]. The classical moment/Jacobi supplier is
+[Teschl, §2.5][Teschl], equations (2.109)–(2.118) and the finite-support
+paragraph on printed p.44. That paragraph, rather than Theorem 2.13's
+nonfinite-support hypothesis, is the finite-chain correspondence.
+The `repo-derived` delta is the consolidated positive-radius signed-entry
+obstruction, its specified zero-error consequence and its contrast with
+the credited closed-zero endpoint. This is a source-relative claim,
+without a worldwide novelty or new Lean-certification claim.
+
+**Definition 26.2 (unmoved acquisition and realization boundaries).**
+Theorem 25.1 permits an arbitrarily weak positive first link and
+unbounded rational widths and order. It supplies no fixed-positive-lower-link,
+bounded-width or capped-order obstruction. Exact equality of returns
+and exact successful acquisition are essential to its statement; no
+approximate/noisy or confidence lower bound follows. In particular,
+§§10–16's randomized confidence-qualified acquisition permits an error
+event and keeps its original contract. The positive-probability error
+found here does not contradict that contract.
+
+Sections 17–23 instead assume an authentic zero-start producer using
+nonnegative rational pulses: $z=p(T)e_0$ with nonnegative polynomial
+coefficients. That provenance makes $I+p(T)>0$ and supplies their
+positive weighted-Hankel stopping argument. A small arbitrary signed
+vector is not a certificate of that producer history. The compensation
+lemma does not assert that its witness belongs to this producer class,
+and it leaves its deterministic acquisition, preparation and real passive
+entrance intact. The coordinatewise nonnegative-field counterexample
+in Proposition 22.1 still concerns its specified test alone.
+
+The result depends on the actual installed rational path service,
+exclusive rights, class assurance and finite backing. It acquires none
+of those premises and certifies no physical conformance. It transports
+neither to alpha/beta growth nor to a fixed universal relation structure.
+All fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and erased-chronology statements keep their
+original scopes. No arbitrary controlled-history four-view inverse,
+physical realization, global resource optimum or completion of the
+unrestricted common-process programme is asserted.
+
+## 追加锚（本行以下为增补区）
