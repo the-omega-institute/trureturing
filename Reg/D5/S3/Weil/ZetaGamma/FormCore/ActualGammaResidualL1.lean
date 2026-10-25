@@ -1,7 +1,5 @@
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-One original public theorem, complete a>0 telescope and all five conclusions.
-The selected source occurrence is only the exact norm-series RHS in clause 4.
-The source-selection path still requires native AST and audit verification. -/
+/- One public theorem, complete a>0 telescope and all five conclusions.
+The selected source occurrence is only the exact norm-series RHS in clause 4. -/
 
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.ActualGammaResidualL1

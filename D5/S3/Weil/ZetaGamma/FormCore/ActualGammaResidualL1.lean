@@ -6,15 +6,14 @@
    utility: none
    digest: Actual quarter-digamma resolvent L1 domain, exact positive rational-layer norm series and bare increment HasSum. -/
 
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Selected natural owner: D5/S3/Weil/ZetaGamma/FormCore/ActualGammaResidualL1.
+/- Selected natural owner: D5/S3/Weil/ZetaGamma/FormCore/ActualGammaResidualL1.
 Standalone actual digamma residual family, using existing PUBLIC GammaSeries
 HasSum at z=-3/4+ix and the existing digamma recurrence. No import, append,
 visibility patch or mutation of ArchimedeanJumpDecomposition is needed.
 The only public theorem has a>0 and five outputs; its final output is the
 literal bare increment HasSum needed by the finite spectral MCT consumer.
-All private suppliers have actual consumers in this unit. No kernel,
-Reg, official acceptance, energy-positivity or RH result is claimed.
+All private suppliers have actual consumers in this unit.
+No energy-positivity or RH result is claimed.
 -/
 
 import D5.S3.Weil.ZetaGamma.GammaMu
