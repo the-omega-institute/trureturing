@@ -37,7 +37,7 @@ def rejected : DependentFamily.Realization signature.{v} :=
 
 abbrev arena : DependentFamily.Arena where
   signature := signature.{v}
-  Law R := ∀ {X : Type u} {G : Type v} [Fintype X] [DecidableEq X] [AddCommGroup G]
+  Law R := ∀ {X : Type u} {G : Type v} [Fintype X] [AddCommGroup G]
     (a : X → G) (ha : Function.Injective a) (ha0 : ∀ x, a x ≠ 0)
     (k : ℕ) (hk : 2 ≤ k) (hkm : k ≤ Fintype.card X) (hhalf : Fintype.card X < 2 * k)
     (hgirth : ∀ T : Finset X, T.Nonempty → T ≠ Finset.univ →
@@ -76,7 +76,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     obtain ⟨x, rfl⟩ := Finset.card_eq_one.mp hcard
     exact ha0 x (by simpa using hz)
   obtain ⟨w, _, hw⟩ := @h (ULift.{u} (Fin 2)) (ULift.{v} ℤ)
-    inferInstance inferInstance inferInstance a ha ha0 2 (by decide) (by simp) (by simp) hg
+    inferInstance inferInstance a ha ha0 2 (by decide) (by simp) (by simp) hg
   change false = true at hw
   cases hw
 
@@ -128,7 +128,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "arg", "body", "arg"]
+        "body", "body", "body", "body", "body", "arg", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
