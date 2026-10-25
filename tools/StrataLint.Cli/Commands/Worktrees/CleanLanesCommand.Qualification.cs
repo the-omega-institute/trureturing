@@ -7,7 +7,8 @@ internal static partial class CleanLanesCommand
 {
     private enum QualificationOutcome { Eligible, Refused, Failed, Deferred }
 
-    private sealed record QualificationResult(string? Reason = null, QualificationOutcome Outcome = QualificationOutcome.Eligible)
+    private sealed record QualificationResult(string? Reason = null,
+        QualificationOutcome Outcome = QualificationOutcome.Eligible, string? Diagnostic = null)
     {
         public bool Failed => Outcome is QualificationOutcome.Failed or QualificationOutcome.Deferred;
     }
@@ -22,6 +23,13 @@ internal static partial class CleanLanesCommand
         var summarySeen = false;
         Exception? receiptError = null;
         CommandResult? result = null;
+        IReadOnlyDictionary<string, QualificationResult> InvalidBatch(Exception exception)
+        {
+            var failure = QualificationFailure(exception, result);
+            failure = failure with { Reason = "qualification_failed:batch_protocol_error:" + failure.Reason };
+            return paths.ToDictionary(path => path, path => results.TryGetValue(path, out var prior) && prior.Failed
+                ? prior with { Diagnostic = failure.Reason } : failure, StringComparer.Ordinal);
+        }
         try
         {
             var budget = Math.Min(600L * paths.Count, 3600L);
@@ -91,11 +99,7 @@ internal static partial class CleanLanesCommand
             // RunStreaming drains its callback before returning/throwing.
             // Completed observations survive; no receipt grants removal authority.
             if (receiptError is not null)
-            {
-                var invalid = QualificationFailure(receiptError, result);
-                return paths.ToDictionary(path => path, _ => invalid with
-                    { Reason = "qualification_failed:batch_protocol_error:" + invalid.Reason }, StringComparer.Ordinal);
-            }
+                return InvalidBatch(receiptError);
             var failure = QualificationFailure(exception, result);
             if (results.Count == paths.Count && !results.Values.Any(item => item.Failed))
                 results.Add(string.Empty, failure);
@@ -106,9 +110,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            var failure = QualificationFailure(exception, result);
-            return paths.ToDictionary(path => path, _ => failure with
-                { Reason = "qualification_failed:batch_protocol_error:" + failure.Reason }, StringComparer.Ordinal);
+            return InvalidBatch(exception);
         }
     }
 
@@ -165,5 +167,6 @@ internal static partial class CleanLanesCommand
         : value[..2048] + "...[truncated]..." + value[^2048..];
 
     private static CleanLaneEvent QualificationEvent(RegisteredWorktree item, QualificationResult result) =>
-        BlockedWorktree(item, result.Reason!) with { Action = result.Failed ? "failed" : "skipped" };
+        BlockedWorktree(item, result.Reason!) with
+            { Action = result.Failed ? "failed" : "skipped", Diagnostic = result.Diagnostic };
 }

@@ -13,6 +13,7 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData("reordered")]
     [InlineData("mixed")]
+    [InlineData("failed_protocol")]
     [InlineData("duplicate")]
     [InlineData("missing")]
     [InlineData("deadline")]
@@ -22,20 +23,21 @@ public sealed partial class CleanLanesCommandTests
     {
         var paths = new[] { "/fixture/a space\nnewline", "/fixture/b", "/fixture/c" };
         var rows = paths.Select((path, index) => new { path,
-            outcome = index == 0 ? "refused" : index == 1 && mode == "mixed" ? "failed" : "qualified",
-            reason = index == 0 ? "locked_recent" : index == 1 && mode == "mixed" ? "qualification_failed:GitFailure:native cause" : null }).Reverse().ToList();
+            outcome = index == 0 ? "refused" : index == 1 && mode is "mixed" or "failed_protocol" ? "failed" : "qualified",
+            reason = index == 0 ? "locked_recent" : index == 1 && mode is "mixed" or "failed_protocol" ? "qualification_failed:GitFailure:native cause" : null }).Reverse().ToList();
         if (mode == "duplicate") rows.Add(rows[0]);
         if (mode == "missing") rows.RemoveAt(0);
         var output = string.Join("\n", rows.Select(row => JsonSerializer.Serialize(new
             { @event = "worktree_qualification_item", row.path, row.outcome, row.reason }))) + "\n";
         output += JsonSerializer.Serialize(new { @event = "worktree_qualification",
-            status = mode == "mixed" ? "failed" : "succeeded", item_count = rows.Count }) + "\n";
+            status = mode is "mixed" or "failed_protocol" ? "failed" : "succeeded", item_count = rows.Count }) + "\n";
+        if (mode == "failed_protocol") output += "{invalid row\n";
         var partial = JsonSerializer.Serialize(new
             { @event = "worktree_qualification_item", path = paths[0], outcome = "refused", reason = "locked_recent" }) + "\n";
         if (mode == "active_deadline") partial += JsonSerializer.Serialize(new
             { @event = "worktree_qualification_started", path = paths[1] }) + "\n";
         var runner = new QualificationStreamRunner(mode is "deadline" or "active_deadline" ? partial : output,
-            mode == "mixed" ? 74 : 0, mode is "deadline" or "active_deadline" or "completed_deadline");
+            mode is "mixed" or "failed_protocol" ? 74 : 0, mode is "deadline" or "active_deadline" or "completed_deadline");
         var candidates = paths.Concat([paths[0]]).Select(path => new RegisteredWorktree(path, "head", "branch", "metadata", true, "manual")).ToArray();
         var method = typeof(CleanLanesCommand).GetMethod("QualifyLockedLanes", BindingFlags.Static | BindingFlags.NonPublic)!;
         var results = (IDictionary)method.Invoke(null, ["/fixture", candidates, runner])!;
@@ -44,6 +46,13 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(3, runner.Arguments.Count(argument => argument == "--path"));
         string? Reason(string path) => (string?)results[path]!.GetType().GetProperty("Reason")!.GetValue(results[path]);
         bool Failed(string path) => (bool)results[path]!.GetType().GetProperty("Failed")!.GetValue(results[path])!;
+        if (mode == "failed_protocol")
+        {
+            Assert.Equal("qualification_failed:GitFailure:native cause", Reason(paths[1]));
+            Assert.All(paths, path => Assert.True(Failed(path)));
+            Assert.Contains("batch_protocol_error", Reason(paths[0]));
+            return;
+        }
         if (mode is "duplicate" or "missing")
         {
             foreach (var path in paths)
