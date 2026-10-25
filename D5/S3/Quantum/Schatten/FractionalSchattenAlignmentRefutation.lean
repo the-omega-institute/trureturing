@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Schatten.Holder
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+import D5.S3.Observer.Hankel.WordHankelRealization
 
 /-! A diagonal counterexample to word-trace control of fractional Schatten norms. -/
 
@@ -17,19 +18,18 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 open Matrix
+open D5.S3.Observer.Hankel.WordHankelRealization (wordProduct)
 open scoped BigOperators ComplexOrder MatrixOrder
 
 namespace D5.S3.Quantum.Schatten.FractionalSchattenAlignmentRefutation
-
-def wordProduct {m : ℕ} (a₀ a₁ : Matrix (Fin m) (Fin m) ℂ) (s : List Bool) :=
-  (s.map (fun b => if b then a₁ else a₀)).prod
 
 def claim : Prop :=
   ∀ (m : ℕ) (a₀ a₁ b₀ b₁ : Matrix (Fin m) (Fin m) ℂ),
     a₀.PosSemidef → a₁.PosSemidef → b₀.PosSemidef → b₁.PosSemidef →
     a₀.charpoly = b₀.charpoly → a₁.charpoly = b₁.charpoly →
-    (∀ s : List Bool, (wordProduct a₀ a₁ s).trace.im = 0 ∧
-      ‖(wordProduct b₀ b₁ s).trace‖ ≤ (wordProduct a₀ a₁ s).trace.re) →
+    (∀ s : List Bool, (wordProduct (fun b : Bool => if b then a₁ else a₀) s).trace.im = 0 ∧
+      ‖(wordProduct (fun b : Bool => if b then b₁ else b₀) s).trace‖ ≤
+        (wordProduct (fun b : Bool => if b then a₁ else a₀) s).trace.re) →
     ∀ p : ℝ, 1 ≤ p → schattenNorm (b₀ + b₁) p ≤ schattenNorm (a₀ + a₁) p
 
 private def a₀ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![0, 1, 1, 2]
@@ -37,7 +37,7 @@ private def a₁ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![1, 0, 1, 2]
 private def b₁ : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![0, 1, 2, 1]
 
 private lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool) :
-    wordProduct (diagonal d₀) (diagonal d₁) s =
+    wordProduct (fun b : Bool => if b then diagonal d₁ else diagonal d₀) s =
       diagonal (fun k => d₀ k ^ s.count false * d₁ k ^ s.count true) := by
   induction s with
   | nil =>
@@ -46,16 +46,16 @@ private lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool
     simp [diagonal_one]
   | cons b s ih =>
     change (if b then diagonal d₁ else diagonal d₀) *
-      wordProduct (diagonal d₀) (diagonal d₁) s = _
+      wordProduct (fun b : Bool => if b then diagonal d₁ else diagonal d₀) s = _
     rw [ih]
     cases b <;>
       simp only [Bool.false_eq_true, reduceIte, diagonal_mul_diagonal] <;>
       congr 1 <;> funext k <;> simp [pow_succ] <;> ring
 
 private lemma trace_forms (s : List Bool) :
-    (wordProduct a₀ a₁ s).trace =
+    (wordProduct (fun b : Bool => if b then a₁ else a₀) s).trace =
       ((0 ^ s.count false + 0 ^ s.count true + 1 + 2 ^ (s.count false + s.count true) : ℕ) : ℂ) ∧
-    (wordProduct a₀ b₁ s).trace =
+    (wordProduct (fun b : Bool => if b then b₁ else a₀) s).trace =
       ((0 ^ (s.count false + s.count true) + 1 + 2 ^ s.count false +
         2 ^ s.count true : ℕ) : ℂ) := by
   constructor <;>
@@ -70,10 +70,9 @@ private lemma nat_gap (m n : ℕ) :
     cases n with
     | zero => simp
     | succ n =>
-      have hm : 1 ≤ (2 : ℕ) ^ m := one_le_pow₀ (by decide)
-      have hn : 1 ≤ (2 : ℕ) ^ n := one_le_pow₀ (by decide)
-      simp only [Nat.succ_add, Nat.add_succ, pow_succ, pow_add]
-      nlinarith [Nat.mul_le_mul hm hn]
+      have hm : 2 ≤ (2 : ℕ) ^ (m + 1) := le_self_pow₀ (by decide) (Nat.succ_ne_zero m)
+      have hn : 2 ≤ (2 : ℕ) ^ (n + 1) := le_self_pow₀ (by decide) (Nat.succ_ne_zero n)
+      simpa [pow_add, Nat.add_assoc, Nat.mul_assoc] using Nat.add_le_add_left (add_le_mul hm hn) 1
 
 private lemma witness_psd : a₀.PosSemidef ∧ a₁.PosSemidef ∧ b₁.PosSemidef := by
   refine ⟨PosSemidef.diagonal ?_, PosSemidef.diagonal ?_, PosSemidef.diagonal ?_⟩ <;>
@@ -85,8 +84,9 @@ private lemma witness_spectra : a₁.charpoly = b₁.charpoly := by
   ring
 
 private lemma word_bounds (s : List Bool) :
-    (wordProduct a₀ a₁ s).trace.im = 0 ∧
-      ‖(wordProduct a₀ b₁ s).trace‖ ≤ (wordProduct a₀ a₁ s).trace.re := by
+    (wordProduct (fun b : Bool => if b then a₁ else a₀) s).trace.im = 0 ∧
+      ‖(wordProduct (fun b : Bool => if b then b₁ else a₀) s).trace‖ ≤
+        (wordProduct (fun b : Bool => if b then a₁ else a₀) s).trace.re := by
   obtain ⟨ha, hb⟩ := trace_forms s
   rw [ha, hb]
   constructor
