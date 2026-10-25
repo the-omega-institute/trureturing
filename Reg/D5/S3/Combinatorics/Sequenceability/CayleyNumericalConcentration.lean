@@ -15,7 +15,8 @@ universe u
 
 namespace Reg.D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
 
-open _root_.D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
+open _root_.D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration (density retained)
+open _root_.D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
@@ -114,7 +115,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_subgroup_concentration.{u}) (Realization signature.{u})
     (type_of% (@Subgroup.{u})) Unit where
   unitName := .str
-    `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.exists_subgroup_concentration
+    `D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration.exists_subgroup_concentration
     "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration.family
   realizationSource := none

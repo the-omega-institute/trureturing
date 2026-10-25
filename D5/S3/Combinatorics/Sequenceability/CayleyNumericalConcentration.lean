@@ -19,7 +19,9 @@ nor exclusion of the identity is assumed. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
+namespace D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
+
+open D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration (density retained near_invariant_localization)
 
 open scoped BigOperators
 noncomputable section
@@ -632,4 +634,4 @@ theorem exists_subgroup_concentration
   · exact retained_index S hS ε hεhalf H hretain
 
 end
-end D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
+end D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
