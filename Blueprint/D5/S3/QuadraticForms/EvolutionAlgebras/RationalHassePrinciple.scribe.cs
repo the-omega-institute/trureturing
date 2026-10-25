@@ -24,7 +24,7 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Iff(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Iff, b);
-    private static Formula Negate(Formula a) => Seq(Neg, Sp, Parenthesized(a));
+    private static Formula Negate(Formula a) => Seq(Neg, Sp, Open, a, Close);
     private static Formula Instance(Formula t, Formula body) =>
         Seq(OpenBracket, t, CloseBracket, Sp, body);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
@@ -41,8 +41,6 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
     private static Formula Apply(Formula p, Formula x, Formula y) => Call("Apply", p, x, y);
     private static Formula Prod(Formula k, Formula x) => Call("Product", k, x);
     private static Formula Basis(Formula x) => Call("Basis", Fin, K, x);
-    private static Formula Mul(Formula a, Formula b) =>
-        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula FieldContext(Formula body) =>
         All("K", V("Type"), Instance(Call("Field", K), body));
     private static Formula SpaceContext(string name, Formula body) =>
@@ -69,7 +67,7 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
             All("b", Basis(X), All("c", Basis(Y),
                 Imp(Call("Natural", Mu, V("b")), Imp(Call("Natural", Nu, V("c")),
                     Imp(Call("Perfect", Nu), All("f", Call("LinearEquiv", K, X, Y),
-                        Imp(Preserves, MonomialConclusion))))))))));
+                        Imp(Preserves, MonomialConclusion)))))))))));
     private static Formula ClaimFormula => Some("A", Bundle, Some("B", Bundle,
         And(Call("Perfect", Call("multiplication", V("A"))),
             And(Call("Perfect", Call("multiplication", V("B"))),
