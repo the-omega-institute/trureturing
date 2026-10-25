@@ -4,21 +4,7 @@
 
 Actual positive-half-line L2 Hankel domains, complete Laplace-square series, and the quarter-rate pi Schur bound.
 
-**Theorem 1.1 (The literal Carleman double integral on half-line L2).**
-
-Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.carleman_actual_l2_domain`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.carleman_actual_l2_domain` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For an arbitrary complex positive-half-line L2 input, the actual absolute Carleman double integral is finite and is bounded by pi times its L2 mass. There is no compact-support, continuity, trace, or pre-assumed double-integrability condition.
-
-The proof derives the true row integral of sqrt(s)/(sqrt(t)*(s+t)) from the actual Cauchy integral and proves product-measure integrability of the Schur majorant before applying an integral inequality. This theorem is consumed by the half-rate Hankel domain proof.
-
-**Theorem 1.2 (Actual Hankel domains and the full Laplace-square series for k>=1/2).**
+**Theorem 1.1 (Actual Hankel domains and the full Laplace-square series for k>=1/2).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain`
 
@@ -34,7 +20,7 @@ Every Laplace integral is paid by the existing RightExponentialTail.right_expone
 
 The theorem is a live supplier for the k+1 tail in the all-positive-rate proof. The Schur and Carleman method is classical; no novelty claim is attached to that method.
 
-**Theorem 1.3 (The same actual domains and full series at every k>0).**
+**Theorem 1.2 (The same actual domains and full series at every k>0).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain_all_positive_rates`
 
@@ -48,7 +34,7 @@ The exact split K_k(x)=exp(-k*x)+K_(k+1)(x) pays the first term by the actual ex
 
 The complete original Laplace-square sum is recovered by a legitimate shift of its summable tail, not by assuming that the actual Hankel integral equals a series. The first rank-one term is a genuinely integrable product. This theorem supplies the already proved complex domain and series used in the quarter-rate refinement.
 
-**Theorem 1.4 (The quarter-rate Schur row extends the pi bound to k>=1/4).**
+**Theorem 1.3 (The quarter-rate Schur row extends the pi bound to k>=1/4).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain_quarter_sharp`
 
@@ -70,8 +56,8 @@ The result concerns this literal positive Hankel form. It proves an upper bound,
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.carleman_actual_l2_domain`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain_all_positive_rates`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/PositiveHankelL2.positive_hankel_actual_l2_domain_quarter_sharp`
+- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/CarlemanL2](CarlemanL2.md)
 - Dependency: [D5/S3/Weil/ZetaGamma/FormCore/RightExponentialTailL2](RightExponentialTailL2.md)

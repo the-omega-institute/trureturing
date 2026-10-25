@@ -9,6 +9,7 @@
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic
 
