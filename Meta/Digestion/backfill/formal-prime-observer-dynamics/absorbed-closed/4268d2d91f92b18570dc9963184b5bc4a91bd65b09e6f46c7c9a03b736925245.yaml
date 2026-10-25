@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:4268d2d91f92b18570dc9963184b5bc4a91bd65b09e6f46c7c9a03b736925245
+  normalized_sha256: sha256:4268d2d91f92b18570dc9963184b5bc4a91bd65b09e6f46c7c9a03b736925245
+cas_ref: sha256:4268d2d91f92b18570dc9963184b5bc4a91bd65b09e6f46c7c9a03b736925245
+coverage_gids:
+  - gid: D5/S1/Eigenstructure/NilpotentJordanChains.nilpotent_jordan_chains_rank
+    target_statement_id: sha256:f846af15cc3d1d971785729237ab8cd874769c3247bdf98691b12385973beb90
+  - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.exact_block_count_from_successive_increments
+    target_statement_id: sha256:9e765932b358ba87b980bc5e7489376871e3a38773b1c6beb85766df6909a283
+  - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.finite_kernel_tower_recovers_block_profile
+    target_statement_id: sha256:ae23dfbd5d06ac0b40adbda3eff8d3ce2d329e577c99be0530d712768448d832
+  - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.kernel_increment_counts_blocks_at_least
+    target_statement_id: sha256:3ba1d3ac1a9db557c408cdc3c4be4625c579c6ca2cc02a81a84c11c6c3c3895e
+receipts:
+  unresolved_subitems: []

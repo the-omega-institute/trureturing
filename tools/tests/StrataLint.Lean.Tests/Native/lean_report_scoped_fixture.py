@@ -238,7 +238,12 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
 
     def scoped(self, targets, success=True):
         if self.compiler_seed is not None:
-            self.run_lake('-d', 'tools/lean-inspector', 'build', 'leanInspector/reportInspector')
+            # Restore both tools in the workspace used by scoped production.
+            # Compiler preparation must not compile any project/report inputs.
+            prepared = self.run_lake('--no-build', '-d', 'tools/lean-inspector-reg', 'build',
+                                     'leanInspector/reportInspector', 'leanInspector/inputDiscovery')
+            self.record_result('compiler-restore', dict(raw_exit=prepared.returncode,
+                stdout=prepared.stdout, stderr=prepared.stderr))
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/report/lean-report-scoped.sh'),
             '--targets', targets, '--output', str(self.output), '--log-dir', str(self.logs)], cwd=self.root, env=self.env)
         if success:
@@ -311,9 +316,14 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']
         self.assertEqual(len(inspections), 1, '[FAIL] selected_modules_share_one_native_inspection_batch')
         cold_work = json.loads((self.logs / 'work.json').read_text())
+        build_log = ''.join((self.logs / ('report.' + stream + '.log')).read_text()
+                            for stream in ('stdout', 'stderr'))
+        self.record_result('cold-scope', cold_work, paths=[self.logs / 'work.json',
+            self.logs / 'report.stdout.log', self.logs / 'report.stderr.log'])
+        self.assertIn('Built Inspector native production batch', build_log)
         self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
         self.assertEqual(cold_work['compiled_module_names'],
-                         ['D5.A', 'D5.B', 'LeanInformationAudit.Contract.InputDiscovery'])
+                         ['D5.A', 'D5.B'])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
         self.assertEqual(before, [path.read_bytes() for path in protected],

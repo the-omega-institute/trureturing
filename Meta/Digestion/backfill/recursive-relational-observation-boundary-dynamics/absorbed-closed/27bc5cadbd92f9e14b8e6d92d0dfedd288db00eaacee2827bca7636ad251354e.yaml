@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:27bc5cadbd92f9e14b8e6d92d0dfedd288db00eaacee2827bca7636ad251354e
+  normalized_sha256: sha256:27bc5cadbd92f9e14b8e6d92d0dfedd288db00eaacee2827bca7636ad251354e
+cas_ref: sha256:27bc5cadbd92f9e14b8e6d92d0dfedd288db00eaacee2827bca7636ad251354e
+coverage_gids:
+  - gid: D5/S3/Observer/AgencySelf/AgencyEnrichment.agency_enrichment_kernel_eq_current_iff_no_residual
+    target_statement_id: sha256:8f05b6f3f8c3b057b2f7cc366d5613165272d9b57bfd8830a7d0b82bdd71856d
+  - gid: D5/S3/Observer/AgencySelf/AgencyEnrichment.strategy_factorization_iff_no_residual
+    target_statement_id: sha256:667389f8d40f06b5e9eee0ebc2a72131f4e7ab05ddd31ca14aa6e9d28a007aa9
+  - gid: D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.pair_readout_kernel
+    target_statement_id: sha256:b92156a773a1f9ce87f6cc761d0b330325f24e1db4c3c9434edb0ceb0cff68d4
+  - gid: D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.pair_readout_least_common_refinement
+    target_statement_id: sha256:d6d253d9a0497d53f08c8fecd2c0d9fcf8af7d03dff6bd5f2464bb94ca1032dc
+receipts:
+  unresolved_subitems: []

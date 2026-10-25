@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f996a68f8a3e26e0402303b7200b4ecaadbc9dc3bf96ec589a77a0b555ba81a
+  normalized_sha256: sha256:8f996a68f8a3e26e0402303b7200b4ecaadbc9dc3bf96ec589a77a0b555ba81a
+cas_ref: sha256:8f996a68f8a3e26e0402303b7200b4ecaadbc9dc3bf96ec589a77a0b555ba81a
+coverage_gids:
+  - gid: D5/S3/TotalVariation/Countable/HellingerCountableComparison.summable_sq_sqrt_sub_sqrt_not_summable_abs_sub_witness
+    target_statement_id: sha256:1788e0262530797b814d1a2c25d14b421cedefd53f43a98319f45947dbf9c9a9
+  - gid: D5/S3/TotalVariation/Countable/HellingerCountableComparison.summable_sq_sqrt_sub_sqrt_of_summable_abs_sub
+    target_statement_id: sha256:42745fddbad50c9e3c9b02e519b083eca79ec395b5e924fb6e7cbce2f8af0636
+receipts:
+  unresolved_subitems: []

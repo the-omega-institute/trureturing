@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c35ac0820ab4ba062b2de7b16cdf6f48e182e22aef7eabb8829ff98cd0adeb00
+  normalized_sha256: sha256:c35ac0820ab4ba062b2de7b16cdf6f48e182e22aef7eabb8829ff98cd0adeb00
+cas_ref: sha256:c35ac0820ab4ba062b2de7b16cdf6f48e182e22aef7eabb8829ff98cd0adeb00
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: L17 的 Rodgers-Tao 文献、版本与主题定位，不在此条声称热阈值下界。'
+    previous_atom_id: 23b932d2d2d6bbf8264b36f5b039a634d7c7cc134004bcd51773478cd15b3b00
+    next_atom_id: 79eaeee19ef38715a1502f73fb42abcc87319eb20123debcaad7511c87b674d2
