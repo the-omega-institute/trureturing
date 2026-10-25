@@ -8,7 +8,6 @@
 
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Tactic.NormNum
 
 /-! # Noninjectivity of the power sum and entanglement dimension on integer partitions -/
 
