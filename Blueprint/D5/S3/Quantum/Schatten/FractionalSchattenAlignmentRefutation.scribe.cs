@@ -97,7 +97,10 @@ internal sealed class FractionalSchattenAlignmentRefutationDocument : IScribeDoc
                             + "and p = 3/2 would give the opposite weak inequality. The strict comparison "
                             + "contradicts it. This disproves the implication from all word traces to "
                             + "all real orders p ≥ 1; it does not decide the spin alignment conjecture itself."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alhejji-knill-2024-fractional-schatten-alignment"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
