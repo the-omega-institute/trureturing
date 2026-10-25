@@ -92,7 +92,9 @@ private lemma moment_four_witness : centralMoment id 4 witness = 1 / 2 := by
   norm_num
 
 private lemma coefficient_lt : Real.sqrt (1 / 2) / 2 < (1 / 2 : ℝ) := by
-  sorry
+  have hs : Real.sqrt (1 / 2) < (1 : ℝ) :=
+    (Real.sqrt_lt (by norm_num) (by norm_num)).mpr (by norm_num)
+  linarith
 
 private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 2 := by
   sorry
