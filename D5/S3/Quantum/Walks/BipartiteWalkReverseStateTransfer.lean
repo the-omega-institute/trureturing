@@ -71,15 +71,17 @@ private def w : Fin 7 → ℤ := ![2, 0, 0, -2, 2, -1, 0]
 
 private lemma integer_form_def :
     (3 : ℂ) • Udef = (M (-1)).map (Int.castRingHom ℂ) := by
+  rw [Udef.eq_1, P.eq_1, Q.eq_1, M.eq_1]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [Udef, P, Q, M, Matrix.mul_apply, Fin.sum_univ_succ,
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ,
       Matrix.one_apply]
 
 private lemma integer_form_disp :
     (3 : ℂ) • Udisp = (M 1).map (Int.castRingHom ℂ) := by
+  rw [Udisp.eq_1, M.eq_1]
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [Udisp, M]
+  fin_cases i <;> fin_cases j <;> norm_num
 
 private lemma scaled_matrix (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
@@ -89,14 +91,15 @@ private lemma scaled_matrix (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
 
 private lemma integer_first_column (s : ℤ) :
     (M s).mulVec (Pi.single 1 1) = v := by
-  rw [Matrix.mulVec_single_one]
+  rw [Matrix.mulVec_single_one, M.eq_1, v.eq_1]
   ext i
-  fin_cases i <;> norm_num [M, v, Matrix.col_apply]
+  fin_cases i <;> norm_num [Matrix.col_apply]
 
 private lemma integer_invariant (s : ℤ) :
     (M s).mulVec v = (2 : ℤ) • v + (3 : ℤ) • w := by
+  rw [M.eq_1, v.eq_1, w.eq_1]
   ext i
-  fin_cases i <;> norm_num [M, v, w, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private lemma first_steps (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
