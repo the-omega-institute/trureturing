@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection, regular signed-measure lifting, exact eventual point-pair equality and uniform strong-dual norm separation of compact Stonean weak-star embeddings, without the CH induction.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, without the CH induction or the final collision premise.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -476,3 +476,97 @@ no new literature theorem is attributed to Kania–Kąkol. The sufficient
 hypothesis remains unproved for the proposed CH construction. Neither
 result supplies CH bookkeeping, the signed induction, capture/global
 obligations, the closed-copy prohibition or a solution of Problem 8.2.
+
+## The full signed-ball analytic reduction
+
+Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
+Borel $K$, `SignedBallReduction.exists_normalized_disjoint_embedding` takes
+an arbitrary weak-star continuous injection $h:\beta\mathbb N\to D$ with
+$\|h(p)\|\leq1$ for every $p$. Its output is a sequence of regular signed
+measures $b_n$, pairwise disjoint Borel sets $E_n$, and a continuous
+injection $f:\beta\mathbb N\to D$ satisfying
+
+$$|b_n|(K)=1,\qquad |b_n|(K\setminus E_n)=0,\qquad
+f(n)=Tb_n,\qquad \|f(p)\|\leq1\quad(p\in\beta\mathbb N).$$
+
+The quantification covers the entire real signed dual unit ball. Neither
+positivity, constant raw KPR norms nor a preselected collision-free
+subsequence is an input. No zero-dimensionality is needed at this stage.
+
+Signed RMK represents the principal values. The raw signed restriction
+splitting gives, after an increasing selection,
+$x_n=Tu_n+Tv_n$, with literal disjoint Borel carriers for $u_n$,
+$Tv_n\to V$ against every member of $D^*$, and
+$r_n=\|Tu_n\|\to r\geq0$. The selected original full extension $\widehat x$
+is still injective: an injection of the discrete index set induces an
+injection of its ultrafilter spaces. Banach–Alaoglu extends the bounded
+$Tu_n$ sequence. At every free ultrafilter $p$, continuous-function
+evaluation and uniqueness of limits give
+
+$$\widehat u(p)=\widehat x(p)-V.$$
+
+If $r=0$, then $Tu_n\to0$ in norm, so $\widehat x(p)=V$ at every free
+$p$. There are two distinct free ultrafilters, contradicting injection.
+Thus $r>0$, and a tail has $r_n>0$. Normalize on that tail by the actual
+norms: $b_n=u_n/r_n$. Scalar variation and restriction identities preserve
+regularity and the literal carrying sets and give $|b_n|(K)=1$. The
+varying normalization is justified by the norm estimate
+
+$$\left\|\frac{Tu_n}{r_n}-\frac{Tu_n}{r}\right\|
+ \leq \left|r_n^{-1}-r^{-1}\right|\sup_m\|Tu_m\|\longrightarrow0.$$
+
+Consequently $\widehat b(p)=(\widehat x(p)-V)/r$ at every free $p$.
+This proves free/free injection. Disjoint carriers and variation mass one
+give principal/principal injection: equal measures carried by two disjoint
+sets would have zero total variation.
+
+For completeness, separate injection on these two pieces does not yet
+give full injection. Each principal value can coincide with at most one
+free value. `CountableAvoidance.exists_infinite_notMem` avoids this
+countable collection by an actual infinite subset $A\subseteq\mathbb N$.
+Starting with an infinite pool, split each pool into two disjoint infinite
+sets and choose a half absent from the next forbidden ultrafilter. An
+infinite diagonal set is contained in every fixed later pool modulo a
+finite set; freeness makes these finite errors irrelevant. On the clopen
+of ultrafilters containing $A$, both orientations of principal/free
+collision are excluded. An increasing enumeration of $A$ therefore yields
+injection on the entire compactification, not only on its remainder.
+
+`WeakStarPerturbation.norm_sub_le_of_denseRange` supplies the needed
+global perturbation step for arbitrary real normed spaces. If weak-star
+continuous $f,g:T\to X^*$ satisfy $\|f(i(a))-g(i(a))\|\leq\epsilon$ on
+a dense range, then the same estimate holds for every $p\in T$.
+The proof uses the inverse image of the weak-star closed norm ball under
+$f-g$; it does not assert continuity of the norm. If every unequal pair
+of $f$-values has distance at least $c$ and $2\epsilon<c$, equality of two
+$g$-values contradicts the triangle inequality. This is the full-domain
+`injective_of_approximation` theorem.
+
+For zero-dimensional $K$, `SignedBallReduction.SignedClopenCollision`
+states the remaining analytic sufficient hypothesis. For **every** regular
+signed sequence $z_n$ of variation mass one, carried by pairwise disjoint
+nonempty clopens $W_n$, with $z_n^+(K)\geq1/2$, **every** continuous
+extension of its principal integration functionals has a collision at two
+distinct free ultrafilters. This is a sequence-level collision statement;
+it contains no KPR supplier or nonembedding conclusion.
+
+`not_injective_signed_ball_of_collision` derives nonembedding of the whole
+signed ball from exactly this hypothesis. Apply the full normalization
+above, then directly reuse
+`WeakStarNormSeparation.exists_pos_le_norm_sub` to obtain a global gap
+$c>0$. Put $\eta=\min(c/16,1/4)$. The existing signed clopen
+disjointization supplies normalized regular signed restrictions $t_n$,
+disjoint nonempty clopens, and variation error less than $2\eta$. Its
+further increasing selection supplies one common sign $s\in\{1,-1\}$
+such that $(st_n)^+(K)\geq1/2$. Multiply the whole selected original
+sequence by this same sign; the global gap remains $c$. Banach–Alaoglu
+extends $st_n$. The principal error bound transfers to every ultrafilter,
+and $2(2\eta)<c$ preserves full injection, contradicting the collision
+hypothesis.
+
+These are repository deductions from classical signed RMK, KPR splitting,
+Banach–Alaoglu and the existing clopen and norm-separation suppliers, not
+new results attributed to Kania–Kąkol. Establishing SignedClopenCollision
+for the intended CH compactum, the transfinite construction, signed
+induction and global capture remains outside this analytic reduction.
+The reduction alone is not a solution of Problem 8.2.
