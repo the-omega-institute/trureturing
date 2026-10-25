@@ -127,6 +127,7 @@ internal static partial class CleanLanesCommand
                     head = item.Head,
                     action = item.Action,
                     reason = item.Reason,
+                    diagnostic = item.Diagnostic,
                     recovery_branch = item.RecoveryBranch,
                     recovery_branch_candidate = item.RecoveryBranchCandidate,
                     native_locks = item.NativeLocks,
@@ -624,5 +625,6 @@ internal static partial class CleanLanesCommand
         string? RecoveryBranchCandidate = null,
         string? SelectionReason = null,
         string? SelectionDetail = null,
-        JsonElement? NativeLocks = null);
+        JsonElement? NativeLocks = null,
+        string? Diagnostic = null);
 }

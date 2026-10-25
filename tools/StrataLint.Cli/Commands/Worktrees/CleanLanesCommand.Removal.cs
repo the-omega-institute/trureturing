@@ -167,7 +167,8 @@ internal static partial class CleanLanesCommand
                     return new(LaneRemovalOutcome.QualificationFailed,
                         QualificationFailure(new InvalidOperationException("missing removal receipt"), removal).Reason!);
                 return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate,
-                    NativeLocks: nativeLocks);
+                    NativeLocks: nativeLocks, Diagnostic: "exit=" + removal.ExitCode + ":stderr=" + BoundedDiagnostic(removal.Error)
+                        + ":error=" + (outcome.Value.TryGetProperty("error", out var error) ? BoundedDiagnostic(error.GetString() ?? "") : ""));
             }
             if (outcome?.GetProperty("outcome").GetString() != "removed"
                 || !RemovalDiagnosticsMatch(removal.Error, nativeLocks))
@@ -222,7 +223,7 @@ internal static partial class CleanLanesCommand
                     result.Reason),
             _ => throw new InvalidOperationException($"unknown lane removal outcome: {result.Outcome}"),
         }) with { RecoveryBranch = result.RecoveryBranch, RecoveryBranchCandidate = result.RecoveryBranchCandidate,
-            NativeLocks = result.NativeLocks };
+            NativeLocks = result.NativeLocks, Diagnostic = result.Diagnostic };
 
     private enum LaneRemovalOutcome
     {
@@ -236,5 +237,5 @@ internal static partial class CleanLanesCommand
 
     private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason,
         string? RecoveryBranch = null, string? RecoveryBranchCandidate = null,
-        System.Text.Json.JsonElement? NativeLocks = null);
+        System.Text.Json.JsonElement? NativeLocks = null, string? Diagnostic = null);
 }

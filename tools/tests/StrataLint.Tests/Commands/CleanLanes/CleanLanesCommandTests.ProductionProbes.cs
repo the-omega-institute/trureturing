@@ -336,6 +336,12 @@ public sealed partial class CleanLanesCommandTests
                 "worktree_remove_failed_state_indeterminate");
         }
 
+        foreach (var partial in partials)
+        {
+            var row = Assert.Single(items, item => item.GetProperty("path").GetString() == partial);
+            Assert.Contains("synthetic failure after destructive removal", row.GetProperty("diagnostic").GetString());
+        }
+
         AssertMergedWorktreeItem(
             items,
             removed,

@@ -130,6 +130,11 @@ internal static class RemoveWorktreesCommand
                     : item with { Outcome = "failed", ExitCode = 74,
                         Error = outcome.GetProperty("error").GetString() };
             }).ToArray();
+            var failed = resolved.Any(item => item.ExitCode == 74);
+            var refused = resolved.Any(item => item.ExitCode is 68 or 73);
+            if (failed && removal.ExitCode != 74 || !failed && !refused && !removal.Success
+                || refused && !failed && removal.ExitCode is not (68 or 73))
+                throw new InvalidOperationException("inconsistent removal process exit=" + removal.ExitCode);
             return Complete(resolved.Any(item => item.ExitCode == 74) ? 74
                 : resolved.FirstOrDefault(item => item.ExitCode != 0)?.ExitCode ?? 0, resolved);
         }

@@ -8,6 +8,18 @@ namespace StrataLint.Tests;
 
 public sealed partial class RemoveWorktreesCommandTests
 {
+    [Fact]
+    public void NamedRemovalAbnormalExitCannotBecomeSuccessfulFromCompletedReceipt()
+    {
+        var inventory = new InventoryRunner();
+        var payload = JsonSerializer.Serialize(new { items = new[] { new { path = "/fixture/linked", outcome = "removed" } } });
+        var runner = new ScriptedWorktreeProcessRunner(inventory, (file, _, _) => file == "python3"
+            ? new ProcessOutput(17, Encoding.UTF8.GetBytes(payload), Encoding.UTF8.GetBytes("Traceback:\nOSError: named boundary cause\n")) : null);
+        var result = RemoveWorktreesCommand.Run("/fixture/main", ["--names", "linked"], runner);
+        AssertResult(result, 74, 0, 1, 0);
+        Assert.Contains("OSError: named boundary cause", result.Output);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
