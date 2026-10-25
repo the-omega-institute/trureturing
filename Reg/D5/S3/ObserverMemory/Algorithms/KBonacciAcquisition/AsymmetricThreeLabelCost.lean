@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.AsymmetricThreeLabelCost
 import Reg.Support.SingleDependentReadout
 
+/-! # Source-bound audit of the complete asymmetric native cost law -/
+
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
 open LiteralModel OriginalNarrowCost AsymmetricThreeLabelCost
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -38,7 +40,7 @@ def rejected : Realization signature :=
     (disjoint : Disjoint HB HC)
     (boundB : ∀ j ∈ HB, 1 ≤ j ∧ j ≤ u-r)
     (boundC : ∀ j ∈ HC, 1 ≤ j ∧ j < u)
-    (A B C : Y) (differentAB : A≠B) (differentAC : A≠C) (differentBC : B≠C) :
+    (A B C : Y) (differentAB : A≠B) (differentAC : A≠C) (differentBC : B≠C),
     let k := g*p-1
     let m := g*u
     let hk : 0<k := by
@@ -66,7 +68,7 @@ private theorem negative : ¬ arena.{z}.Law rejected := by
         if j.val ∈ ({1} : Finset ℕ) then ULift.up 1
         else if j.val ∈ ({2} : Finset ℕ) then ULift.up 2 else ULift.up 0 := by
     intro j s hs
-    fin_cases j <;> norm_num [sampleTarget]
+    fin_cases j <;> decide
   exact (law 2 3 4 1 1 (by decide) (by decide) (by decide) (by decide)
     (by decide) (by decide) (by decide) {1} {2} (by simp) (by simp) (by decide)
     (by intro j hj; simp only [Finset.mem_singleton] at hj; subst j; decide)
