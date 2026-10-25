@@ -34,7 +34,6 @@ The classical background is Frenkel, Lepowsky and Meurman, Vertex Operator Algeb
 
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/ActualMobiusCovariance.corrected_field_l1_coefficient`
 - Dependency: [D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity](../../Quantum/Algebra/ConditionalPolynomialRigidity.md)
-- Dependency: [D5/S3/VertexAlgebra/HalfFock/ActualMobiusCharged](ActualMobiusCharged.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero](../LatticeHalfFockChargedLZero.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCurrentWard](../LatticeHalfFockCurrentWard.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation](../LatticeHalfFockOriginalTranslation.md)
