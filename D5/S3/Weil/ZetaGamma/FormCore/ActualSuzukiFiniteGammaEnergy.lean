@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-source-domain-refutation)
    anchors: []
    utility: none
-   digest: Unbounded finite Gamma energy under a strict physical moment cap. -/
+   digest: Unbounded finite Gamma energy and a six-clause actual mean-zero source with positive original and fullTheta excess. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiMeanZeroTrace

@@ -54,8 +54,8 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
 
-/- Only the value of the ORIGINAL let D is observed. In particular the
-two L1 clauses, L0, Lt, all three estimates and hmean remain literal. -/
+/- The readout is the fullTheta excess D; both L1 clauses, both moments,
+all three estimates and the actual mean-zero hypothesis are retained. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (F : ℝ → ℂ) (_hF : originalPhysicalH6 F)
@@ -180,8 +180,8 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (fun _ : ℝ => (1 : ℂ))) (fun e => nomatch e)
 
-/- Observe the function operand of the FIRST L1 clause only. The original
-H6 premise and entire second actual-profile MemLp clause remain literal. -/
+/- The readout is the profile in the L1 clause; the original H6 premise
+and the actual-profile MemLp clause are retained. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (F : ℝ → ℂ) (_hF : originalPhysicalH6 F),

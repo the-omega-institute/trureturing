@@ -34,8 +34,8 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (0 : ℝ)) (fun e => nomatch e)
 
--- Keep every physical, finite-domain, energy and sequence clause literally.
--- Observe only the one positive physical-mass operand of the selected F.
+-- The readout is the selected source's physical mass. All physical,
+-- form-domain, energy and approximation-sequence clauses are retained.
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (K B : ℝ) (_hK : 1 < K),
@@ -143,9 +143,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms audit
 
 
-/- Only the final literal fullTheta-excess operand varies. The existential
-binder and all five preceding clauses remain literal. The readout uses the
-enrolled DependentFamily.realize template. -/
+/- The readout is the final fullTheta excess of the same existential source.
+H6, actual mean zero, every shifted Gamma domain, complete HasSum and positive
+original excess are retained. -/
 namespace StrongMeanZero
 
 abbrev signature : Signature where

@@ -6,19 +6,11 @@
    utility: none
    digest: Actual mean-zero two-moment bounds and original-H6 Gamma profile L1/L2 domains. -/
 
-/- SOURCE_ONLY.UNCOMPILED. Canonical NEXT source candidate, prepared 2026-10-26.
-No compiler, Reg acceptance, required check, freeze, publication or merge is claimed.
-Immutable source SHA256: 6518668dc54811baa3e4c2184d785bf49ce671207947fe9b768d6b5313e93603.
-The two public laws and both actual B-profile definitions are byte-identical.
-The actual fullTheta supplier is still an uncompiled dependency in this attempt.
-The weighted physical supplier's native compilation at immutable commit
-94e6b93437461ecaa2812ef59ed76efca18dbae8 is supplied by the root, not rerun here;
-statement_id sha256:b1dc6e91486fcce5e61b4f5f88386adfd1d1cf8cba375ed5be32cd8a1dbcfa99.
-The literal L1 tail-mass API is merged in canonical main.
-Only originalPhysicalH6 F and the actual even-B mean are hypotheses of the
-moment law. No theta convergence, bound, trace-zero or Gamma domain is assumed.
-The original-F Gamma lower-comparison theorem is outside this owner and unchanged.
--/
+/- The original H6 source determines its complete theta transform and actual
+Gamma profile. Vanishing of the actual even-B mean bounds two Laplace moments
+by the fullTheta sixth-moment excess. H6 also gives profile L1 and L2 on the
+positive half-line. The endpoint trace is retained; Gamma-weighted Fourier
+form-domain membership is a separate condition. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiWeightedPhysicalMoments
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiThetaExcess
@@ -432,9 +424,8 @@ theorem actual_h6_mean_zero_physical_moment_bounds
   refine ⟨hZeroInt, hLog.2.1, h0, h1, ?_⟩
   exact (sq_le_sq₀ (mul_nonneg (norm_nonneg L0) (norm_nonneg Lt)) (by positivity)).1 hProdSq
 
-/- SOURCE_ONLY.UNCOMPILED. The private L1 supplier stays in this same
-compilation unit. This public profile-domain supplier is intended for the
-original-F Gamma comparison. It asserts profile L1/L2, not the Gamma graph. -/
+/- The physical coordinate identities give profile L1 and L2 without an
+additional Gamma-weighted Fourier form-domain hypothesis. -/
 
 /-- The SAME original H6 source supplies genuine L1 and L2 domains for
 its actual complete-theta Gamma profile on the positive half-line. -/

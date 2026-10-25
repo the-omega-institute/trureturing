@@ -10,8 +10,10 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite actual Gamma energies are unbounded relative to physical mass "
-            + "under every strict physical sixth-moment cap, with actual H6 convergence.",
-        H("Finite Gamma Energy and H6 Approximation"),
+            + "under every strict physical sixth-moment cap, with actual H6 convergence; "
+            + "one actual mean-zero source also has all shifted Gamma domains and "
+            + "positive original and full theta excess.",
+        H("Finite Gamma Energy, H6 Approximation and Actual Mean Zero"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("finite-actual-gamma-energy-unbounded"),
@@ -110,8 +112,8 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                             + "((x/pi)^6-1)*norm(fullTheta(F,x))^2 are strictly positive.")),
                     Paragraph(Text(
                         "Two compactly supported finite features with scales 1 and "
-                            + "1/4 supply the construction inside this owner, using its "
-                            + "private finite support and Fourier proofs. If the small "
+                            + "1/4 supply the construction through finite support and "
+                            + "Fourier decay. If the small "
                             + "feature already has zero actual even-B mean, choose it. "
                             + "Otherwise subtract its mean-normalized multiple from the "
                             + "large feature. The complete mean functional is linear: "
@@ -119,10 +121,10 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                             + "the endpoint trace. At the large feature center the small "
                             + "feature vanishes, so cancellation cannot erase the source.")),
                     Paragraph(Text(
-                        "Continuity and compact support pay original H6 and the "
+                        "Continuity and compact support give original H6 and the "
                             + "integrability needed by the mean and Fourier calculations. "
                             + "Finite Fourier decay and a quadratic bound for the Gamma "
-                            + "weight pay every constant-shift form domain of the actual "
+                            + "weight give every constant-shift form domain of the actual "
                             + "constructed source. Each branch supplies its own complete "
                             + "same-input HasSum. Its tsum equality identifies fullTheta "
                             + "with F on x>=pi and transfers the original excess to the "
@@ -130,11 +132,9 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                             + "no Gamma domain for an arbitrary H6 mean-zero input and "
                             + "requires no additional trace-zero premise.")),
                     Paragraph(Text(
-                        "The mirrored registration preserves the entire "
-                            + "existential source law and varies only its final literal "
-                            + "fullTheta-excess scalar. Zero readout makes final positivity "
-                            + "impossible. Actual observational dependence compares zero "
-                            + "with the same constructed positive-fullTheta witness. "
-                            + "The same-source existence result does not settle RH."))),
+                        "All six conclusions hold for this one constructed source. "
+                            + "The mean-zero cancellation retains the endpoint trace, "
+                            + "and the fullTheta positivity uses its complete HasSum "
+                            + "identity. The existence result does not settle RH."))),
                 DescribeRole.Theorem))));
 }
