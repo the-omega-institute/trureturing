@@ -16,7 +16,7 @@
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
 | 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
 | 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
-| 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
+| 构建并冻结无对应理论卷(故无 atom)的形式化 | `make deposit-uncovered GID=<gid>` |
 | 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
 | 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
 | 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
@@ -65,7 +65,7 @@
 
 本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
 
-**形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以理论卷或摄入为前置。开工前用 `make show-atom`/`make atom-context` 查所处理内容是否已有 atom：已有就在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；尚无 atom 时直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
+**形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以先写理论卷为前置。所形式化的内容**已有理论卷**(`docs/develop/theory/**` 中存在对应 markdown)时，必须经消化系统入链：该卷尚未摄入就先 `make ingest`，再用 `make show-atom`/`make atom-context` 定位对应 atom，在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；不得绕过已有理论卷直接 `deposit-uncovered`。**只有不存在对应理论卷**时，才直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是这类形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
 **形式化不改判官**(τ=0 owner 2026-09-29,原话「形式化过程中, 不要改判官, 如果信息逃逸无法登记也不要改判官」):形式化 lane 与形式化交付只改内容面(D5、Blueprint、Reg 声明源码与内容模板、消化账本、理论卷),不得修改判官——`tools/**`(含 StrataLint、lean-inspector、报告生成与调度脚本)、判官 Interface/Impl 包、`.github/**` 及其它准入面。判官缺陷或判官阻塞形式化时,新建或复用 issue 写明阻塞判词与读数,继续其余数学工作;判官修复归判官所有者线,不在形式化交付中夹带。本款对形式化 lane 优先于第 5.5 条的当场 hotfix 要求。
 〔守护：**工作优先级与软纪律**；本条不把消化收据升级为证明，也不宣称既有机器检查已随文字修改。〕
 
@@ -78,7 +78,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
 - **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
-- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付也不以理论卷或摄入为前置(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
+- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付不以先写理论卷为前置，但内容已有理论卷时须先摄入并经 deposit/cover 入链(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -365,14 +365,14 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 4.7 生产链、冻结与消化状态
 
 **理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态。**
-本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；形式化交付可以不经理论卷与 ingest，直接从 `D5/<GID 路径>.lean` 入链：内容已有 atom 时同一交付 deposit 并 cover，尚无 atom 时经 `make deposit-uncovered` 冻结，不产 coverage 边(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
+本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；内容已有理论卷的形式化交付须先经 ingest 取得 atom，再在同一交付 deposit 并 cover；只有不存在对应理论卷时，形式化交付才直接从 `D5/<GID 路径>.lean` 入链，经 `make deposit-uncovered` 冻结，不产 coverage 边(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
 
 ```
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
-  │ make ingest (可选；形式化不以此为前置)
+  │ make ingest (纯理论 PR 可选；形式化内容已有本卷时必经)
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
   └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
-  │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出;无 atom 时从此处起步
+  │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出;仅当不存在对应理论卷时从此处起步
   ▼
 D5/<GID 路径>.lean                           数学唯一真源
   │ 手写 Scribe 定义(叙事 canonical 源)
