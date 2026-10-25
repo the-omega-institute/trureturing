@@ -7,13 +7,6 @@
    digest: A fifteen-dimensional evolution algebra has ordinary nilpotency index 256. -/
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.DerivationAnnihilatorObstruction
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Data.Nat.Log
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.IntervalCases
 
 /-! The ordinary lower series of the explicit rational evolution algebra refutes
 the proposed binary spectrum in Conjecture 9 of arXiv:2610.22248v1. -/
