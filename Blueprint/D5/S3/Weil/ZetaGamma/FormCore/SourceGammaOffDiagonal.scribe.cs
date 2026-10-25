@@ -38,7 +38,7 @@ internal sealed class SourceGammaOffDiagonalDocument : IScribeDocumentDefinition
                 H("The double pole retains its sign"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The actual multiplier xi^2/(xi^2+a^2)^2 has inverse kernel exp(-a*abs(z))*(1-a*abs(z))/(4*a^2). The proof computes the genuine exponential self-convolution. This signed kernel is retained, including its change of sign."))),
+                Blocks(Paragraph(Text("For a>0, the actual multiplier xi^2/[a*(xi^2+a^2)^2] has inverse kernel exp(-a*abs(z))*(1-a*abs(z))/(4*a^2). The proof computes the genuine exponential self-convolution. This signed kernel is retained, including its change of sign."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-gamma-off-diagonal-actual-resonant-reflected-cross-kernel"),
@@ -46,7 +46,7 @@ internal sealed class SourceGammaOffDiagonalDocument : IScribeDocumentDefinition
                 H("The actual resonant reflected double integral"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For the original arbitrary complex L1 source, the resonant reflected spectral cross and its actual double half-line kernel integral agree. The sum s+t and signed kernel remain literal."))),
+                Blocks(Paragraph(Text("For a>0 and the original arbitrary complex L1 source, the resonant reflected spectral cross and its actual double half-line kernel integral agree. The sum s+t and signed kernel remain literal."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-gamma-off-diagonal-actual-resonant-reflected-cross-laplace-moment"),
@@ -54,6 +54,6 @@ internal sealed class SourceGammaOffDiagonalDocument : IScribeDocumentDefinition
                 H("The resonant first moment is explicit"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The real resonant cross is normSq(Laplace(a,u))/(4*a^2) minus Re(conj(Laplace(a,u))*FirstMoment(a,u))/(2*a). The genuine first moment is integrable. The mixed term is retained in the later actual Gamma calculation; the kernel suppliers alone imply no energy positivity."))),
+                Blocks(Paragraph(Text("For a>0, the real resonant cross is normSq(Laplace(a,u))/(4*a^2) minus Re(conj(Laplace(a,u))*FirstMoment(a,u))/(2*a). The genuine first moment is integrable. The mixed term is retained in the later actual Gamma calculation; the kernel suppliers alone imply no energy positivity."))),
                 DescribeRole.Theorem))));
 }
