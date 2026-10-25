@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:040405573b56a952e7c4a35420b5309c2c4968fa6b8393d544ae9903091b1ba0
+  normalized_sha256: sha256:040405573b56a952e7c4a35420b5309c2c4968fa6b8393d544ae9903091b1ba0
+cas_ref: sha256:040405573b56a952e7c4a35420b5309c2c4968fa6b8393d544ae9903091b1ba0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: AIM 行规定空标题不能计作覆盖并保留原始论文义务，属于覆盖方法说明。'
+    previous_atom_id: cf6489729ddd88ebb209d2290030d95b19a378726ce26fde95621d39551bc5e9
+    next_atom_id: 449c38808c72cd7d4fa12482752c3a27fae17316e5fa331a7f042cb1578d7890

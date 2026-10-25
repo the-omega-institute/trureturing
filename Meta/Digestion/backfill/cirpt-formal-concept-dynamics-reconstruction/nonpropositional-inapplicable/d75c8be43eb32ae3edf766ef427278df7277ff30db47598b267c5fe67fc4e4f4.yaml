@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d75c8be43eb32ae3edf766ef427278df7277ff30db47598b267c5fe67fc4e4f4
+  normalized_sha256: sha256:d75c8be43eb32ae3edf766ef427278df7277ff30db47598b267c5fe67fc4e4f4
+cas_ref: sha256:d75c8be43eb32ae3edf766ef427278df7277ff30db47598b267c5fe67fc4e4f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在权力的解释清单中列出决定哪些过程可以发生，没有指定过程并断言其存在。
+    previous_atom_id: e7fa81a26b2c93cfe992d930034989f9825380f4a996a0d3b10c4191ceeb51cd
+    next_atom_id: 419a00a92f84e7c8c2f96958181ab4dd891de1c51e51e9bd366d6dfd84fab351

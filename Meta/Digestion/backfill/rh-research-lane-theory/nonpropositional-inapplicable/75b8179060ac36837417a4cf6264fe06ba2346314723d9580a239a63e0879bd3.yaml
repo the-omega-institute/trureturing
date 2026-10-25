@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75b8179060ac36837417a4cf6264fe06ba2346314723d9580a239a63e0879bd3
+  normalized_sha256: sha256:75b8179060ac36837417a4cf6264fe06ba2346314723d9580a239a63e0879bd3
+cas_ref: sha256:75b8179060ac36837417a4cf6264fe06ba2346314723d9580a239a63e0879bd3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: F08 仅指定 sigma、H_n、P_k 和 Euler phi 的记号；后续三条不等式不属于此 atom。'
+    previous_atom_id: 2c18b73af58d2ba40c7a8e3a6351dd225d89a3afb5604661a6c574e5617539fd
+    next_atom_id: 8c0c933b93ac8b2f172977a8433f3d3d6553e0af3af0a1850904597be767b0b9

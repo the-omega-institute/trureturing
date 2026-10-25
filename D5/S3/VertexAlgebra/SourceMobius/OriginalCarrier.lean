@@ -14,7 +14,7 @@ open LatticeGeneratingFieldLocality LatticeSugawaraCurrents MvPolynomial
 open LatticeHalfFockFiniteCorrection (sourceWeight)
 open scoped BigOperators
 
-private theorem gram_det_unit (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem gram_det_unit (D : LatticeData) (hu : IsUnit D.G.det) :
     IsUnit (gramComplex D).det := by
   have h := hu.map (Int.castRingHom ℂ)
   rw [RingHom.map_det] at h

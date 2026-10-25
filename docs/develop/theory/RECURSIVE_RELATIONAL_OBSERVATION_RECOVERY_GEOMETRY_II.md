@@ -458,3 +458,1155 @@ The public `NoRepetitionSequenceUnambiguousDiscrimination` result assumes normal
 The countermodels in §42 locate essential restrictions: positive-link rooted path membership, authentic origin and passive chronology; fixed exact law and literal rational access; and retained rights for operational use. No unknown-coefficient minimum-Read count, optimal total resource, minimum total memory or physical cost is proved. No arbitrary graph/sign inverse, controlled-journal/duration inverse, noisy finite instrument or membership certificate is supplied. These conclusions do not solve an old fixed-$G_{\rm gc}$/original-$Q$ task, identify this source with another author's common-moment source, derive physical space, reduce all sources to universal $\alpha/\beta$ generators or complete the unrestricted four-expression programme. Those tasks retain their own assumptions and missing realization/proof obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 44. The acquired source with a finite nonnegative pulse menu
+
+**Definition 44.1 (one retained origin and its controlled chronology).** Retain exactly the source, preparation and installed premises of Definitions 36.1–36.3. Perform Theorem 37.2 on that actual source, retaining its native matrix, law and the same callable installation. Write
+
+$$
+b=e_0,\qquad x_*=T^{2N}b,\qquad
+K=[b,Tb,\ldots,T^{N-1}b],\qquad M=K^{-1}TK.
+$$
+
+Thus $x_*$ is the actual acquired phase. Invertibility of $K$ is supplied by Lemma 37.1, rather than supplied as order or coefficient advice. Whenever pulses are used, the separate Add right of Assumption 36.2 is installed. Fix an integer $H\ge0$. A pulse word of length $L\ge0$ is the actual ordered input list
+
+$$
+u=(u_0,\ldots,u_{L-1})\in\{0,\ldots,H\}^L.
+$$
+
+Its $i$th action is literally Tick; Add$(u_i)$; Read. If $x_i$ is the field before that action, the intermediate Tick output, acknowledgement and final Read output are respectively
+
+$$
+\tau_i=b^{\mathsf T}Tx_i,\qquad \mathrm{ack}_{\rm Add},\qquad
+y_i=b^{\mathsf T}(Tx_i+u_i b),
+\qquad x_{i+1}=Tx_i+u_i b.
+$$
+
+All three are outputs. Hold and local calculation produce no additional Ticks. The initial acquired origin and the completed pulse length $L$ are retained; $L$ is an earned counter, not an inferred passive epoch. The target is this word, including zero pulses and their positions. An archive of earlier inputs or emitted replies is a separate retained object. The current field need not contain that archive.
+
+**Definition 44.2 (the integer polynomial of the earned law).** In §§44–51 denote the monic rational polynomial of Proposition 37.4 by $\bar q$. Clear its coefficient denominators and divide by their positive greatest common divisor, choosing positive leading coefficient, to obtain the unique primitive polynomial
+
+$$
+q(z)=\sum_{j=0}^{N}q_jz^j\in\mathbb Z[z],\qquad
+a=q_N>0,\qquad \bar q=q/a,\qquad
+h=\max_{0\le j\le N}|q_j|.
+$$
+
+No irreducibility hypothesis is imposed. Both $q(T)=0$ and the absence of a nonzero annihilator of $b$ of degree below $N$ are supplied by Proposition 37.4 and Lemma 37.1. In fact $a\ge2$: the roots $\lambda_i$ of $\bar q$ are the $N$ eigenvalues of the actual symmetric $T$, with $0<\lambda_i<1$, so
+
+$$
+0<|q_0|=a\prod_{i=1}^{N}\lambda_i<a.
+$$
+
+The two endpoint inequalities use $N\ge1$ and strict positivity and contraction. Since $q_0$ is a nonzero integer, they imply the assertion. In particular $h\ge a$.
+
+**Proposition 44.3 (the exact pulse polynomial on the actual phase).** For every promised source, $H,L$ and actual word $u$,
+
+$$
+\begin{aligned}
+x_L(u)&=T^Lx_*+E_L(u),\\
+E_L(u)&=\sum_{j=0}^{L-1}T^jb\,u_{L-1-j}.
+\end{aligned}
+$$
+
+For two words of this same length, put
+
+$$
+P_{uv}(z)=\sum_{j=0}^{L-1}
+ (u_{L-1-j}-v_{L-1-j})z^j\in\mathbb Z[z].
+$$
+
+Their full native endpoints agree if and only if $q\mid P_{uv}$ in $\mathbb Q[z]$. This is also equivalent to $P_{uv}=qS$ for some $S\in\mathbb Z[z]$.
+
+Proof. The state formula is Lemma 38.2 with pulses at the successive post-Tick epochs; equivalently its induction has step $x\mapsto Tx+ub$. In particular the homogeneous term is $T^{L+2N}b$, with no new zero preparation. Subtracting two equal-length formulas gives $P_{uv}(T)b$.
+
+Divide an arbitrary rational $P$ by the monic $\bar q$, obtaining $P=\bar q A+R$ with $\deg R<N$. If $P(T)b=0$, then $R(T)b=0$, hence $R=0$ by the independence of the columns of $K$. The converse follows from $q(T)=0$. Scaling $\bar q$ by $a$ does not change rational divisibility.
+
+For the integral quotient, apply Gauss's primitive-divisibility lemma with coefficient domain $\mathbb Z$, fraction field $\mathbb Q$, primitive divisor $q$ and integral dividend $P_{uv}$. Its precise supplied statement is `Polynomial.IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` in [pinned Mathlib, GaussLemma](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Polynomial/GaussLemma.lean). It requires primitivity of the divisor, not irreducibility or primitivity of the dividend. It supplies $S\in\mathbb Z[z]$ directly. This mature algebraic step is an intermediate supplier, not a new divisibility theorem. $\square$
+
+## 45. The sharp all-length menu threshold and a bounded collision
+
+**Lemma 45.1 (the actual bounded region and the pulse lattices).** Define the computable rational vector and integer
+
+$$
+s=(I-T)^{-1}b,\qquad
+R=\left\lceil a\max_{0\le i<N}\sum_{k=0}^{N-1}
+ |(K^{-1})_{ik}|s_k\right\rceil,\qquad
+C=(2R+1)^N.
+$$
+
+All entries of $s$ are positive. For $L\ge N$ put
+
+$$
+\Lambda_L=\sum_{j=0}^{L-1}\mathbb Z M^j e_0\subset\mathbb Q^N.
+$$
+
+Then $\Lambda_N=\mathbb Z^N$ and
+
+$$
+[\Lambda_L:\mathbb Z^N]=a^{L-N}.
+$$
+
+For every word over $\{0,\ldots,a\}$ its vector $K^{-1}E_L(u)$ belongs to $\Lambda_L\cap[-R,R]^N$, and this intersection has at most $Ca^{L-N}$ points.
+
+Proof. Positive definiteness makes every diagonal entry of $T$ positive, and the links are positive. Thus $T$ is entrywise nonnegative. The finite-dimensional geometric series, justified by $\|T\|_2<1$, gives
+
+$$
+s=\sum_{j\ge0}T^jb.
+$$
+
+For cell $k$ the term $T^kb$ has positive $k$th coordinate by Lemma 37.1. Consequently $s_k>0$, and nonnegative pulse digits at most $a$ give the entrywise bound $0\le E_L(u)\le as$. The definition of $R$ therefore bounds every power-basis coordinate by $R$. These constants are rational matrix calculations followed by an integer ceiling, with no spectral or response oracle.
+
+Since $K^{-1}b=e_0$ and $K^{-1}T^jb=e_j$ for $j<N$, the initial lattice is $\mathbb Z^N$. For $l\ge N$ the quotient $\Lambda_{l+1}/\Lambda_l$ is generated by the class of $M^le_0$. The relation $z^{l-N}q(z)$ shows that this class has order dividing $a$. Conversely, if $nM^le_0\in\Lambda_l$ for an integer $n$, there is an integral polynomial of the form
+
+$$
+nz^l-\sum_{j<l}c_jz^j
+$$
+
+that annihilates $b$ at $T$. Proposition 44.3 and its primitive-divisibility supplier make it an integral multiple of $q$. If $n\ne0$, comparison of leading coefficients gives $a\mid n$. Thus the cyclic quotient has exactly $a$ elements. Multiplication of these finite indices proves the displayed index for every $L\ge N$.
+
+Each of its $a^{L-N}$ cosets modulo $\mathbb Z^N$ has at most $(2R+1)^N$ points in $[-R,R]^N$: in each coordinate a translate of $\mathbb Z$ has at most $2R+1$ points in an interval of length $2R$. This proves the count without replacing an actual lattice count by a volume approximation. $\square$
+
+**Theorem 45.2 (exact finite-menu chronology threshold).** For each promised acquired source and integer $H\ge0$,
+
+$$
+\bigl[\text{$E_L$ is injective on $\{0,\ldots,H\}^L$
+ for every finite $L$}\bigr]\quad\Longleftrightarrow\quad H<a.
+$$
+
+If $H\ge a$, two distinct words of one common length can be constructed from the earned finite law alone. One sufficient explicit length is
+
+$$
+\ell=N+aC,
+$$
+
+with $C$ as in Lemma 45.1. More sharply, any $l\ge N$ satisfying $(a+1)^l>Ca^{l-N}$ suffices. The construction uses digits at most $a$, hence is valid for every $H\ge a$.
+
+Proof. Suppose $H<a$ and two endpoints agree. A nonzero difference polynomial $P_{uv}$ would equal $qS$ with integral nonzero $S$ by Proposition 44.3. Its leading coefficient would be $a$ times a nonzero integer, so its magnitude would be at least $a$. Every coefficient of $P_{uv}$ has magnitude at most $H$, a contradiction. Thus $P_{uv}=0$, giving equality of all word positions. This also covers $H=0$ and the empty word.
+
+For the converse, the $(a+1)^l$ words over $\{0,\ldots,a\}$ map, in the same power coordinates, into the at most $Ca^{l-N}$ points of Lemma 45.1. The finite pigeonhole principle gives distinct words with equal $E_l$, hence equal actual native endpoints from $x_*$. For $l=N+aC$, Bernoulli's inequality gives
+
+$$
+\frac{(a+1)^l}{a^{l-N}}
+=(a+1)^N(1+1/a)^{aC}
+\ge(a+1)^N(1+C)>C.
+$$
+
+This verifies a finite bound by integer inequalities. To find a pair, form the finite list of those words, evaluate their endpoint vectors by rational arithmetic on the earned $T,x_*$, and compare the exact vectors until equality. The pigeonhole bound proves termination. These evaluations are local calculations; none enacts a hypothetical input on the specimen, queries an unobserved response or requires another initialization. One may instead compare polynomial remainders modulo the earned $q$. Neither option is asserted to have small cost. $\square$
+
+**Corollary 45.3 (short horizons and delayed collisions).** For every menu bound $H$, no collision is possible at $L\le N$. At $L=N+1$, a collision exists if and only if $H\ge h$. Consequently, when $a\le H<h$, collisions exist at some finite lengths but none at or before $N+1$.
+
+Proof. A nonzero polynomial of degree below $N$ cannot annihilate $b$. At length $N+1$, a nonzero divisible difference polynomial has degree $N$ and, by integral divisibility, equals $cq$ for an integer $c\ne0$. Its maximum coefficient magnitude is $|c|h\ge h$. Conversely, if $H\ge h$, write $q_j=q_j^+-q_j^-$ with $q_j^\pm\in\{0,\ldots,h\}$ and assign these coefficients in reverse order to two length-$N+1$ words. They are distinct and their difference polynomial is $q$. Apply Proposition 44.3. The remaining assertion follows from Theorem 45.2. $\square$
+
+**Example 45.4 (a nonempty delay interval).** The promised native path
+
+$$
+T=\begin{pmatrix}3/4&1/8\\1/8&3/4\end{pmatrix}
+$$
+
+has eigenvalues $5/8,7/8$ and primitive polynomial $q(z)=64z^2-96z+35$. Thus $N=2$, $a=64$ and $h=96$. Every integer menu bound $64\le H<96$ has eventual collisions by Theorem 45.2, although lengths at most three are injective. The example illustrates the distinction between the leading-coefficient threshold and the first possible degree; the quantified assertions do not depend on this example.
+
+## 46. Post-pulse acquisition and the independently meaningful expressions
+
+**Definition 46.1 (the four controlled expressions and their shared context).** Fix the actually acquired installation of Definition 44.1 and an earned length $L$. The following data have distinct meanings.
+
+| Expression | Exposed data at the declared pulse cut |
+| --- | --- |
+| Space | The actual rooted native path and its current field $(T,x_L)$. |
+| Time | The actual ordered paid input word $u\in\{0,\ldots,H\}^L$. |
+| Boundary | The literal callable root service; an acquired numerical boundary window consists of its next $N$ scalar root replies under Read followed by $N-1$ Ticks. |
+| Memory | The earned law and the current predictive vector $w=\mathcal O_Nx_L$, with the acquired origin, length, and original retained callable installation. |
+
+Here $\mathcal O_N=K^{\mathsf T}$ is exactly the native observation matrix of Proposition 39.3. All numerical recovery directions below may use the shared earned law, $H$, $L$ and the original origin $x_*$. The boundary window contains prospective observations, not prior pulse symbols. Predictive Memory stores $N$ current predictions, not a definitionally inserted copy of Time. Space exposes actual native cells, not arbitrary realization coordinates. The handle, rights, assurance and backing are additional actual parts of the installation. None of the four numerical descriptions certifies them from a transcript.
+
+**Theorem 46.2 (same-specimen acquisition and exact word recovery).** Suppose $H<a$. After any actual length-$L$ pulse word, there is a terminating procedure that recovers that word using exactly $N$ new scalar root replies and $N-1$ new Ticks on the same specimen, then finite local calculation. It recovers the native field at the pulse endpoint and leaves a predictive record synchronized with the actual current field after those observation Ticks.
+
+Proof. Read the present root value $z_0$ and then execute $N-1$ Ticks, retaining their scalar returns $z_1,\ldots,z_{N-1}$. No Add occurs during this observation window. Its exact semantics are
+
+$$
+z_j=b^{\mathsf T}T^jx_L,\qquad
+z=\mathcal O_Nx_L.
+$$
+
+Invertibility of $\mathcal O_N=K^{\mathsf T}$ is already earned by Lemma 37.1. Apply the finite observability inverse of Proposition 39.3 to obtain $x_L=\mathcal O_N^{-1}z$. This is the supplied observability algebra with state space $\mathbb R^N$, evolution $T$, scalar readout $b^{\mathsf T}$ and horizon $N$, not another law-identification experiment. It also matches `finite_observability_equivalence` in [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs): its stacked map uses times $0,\ldots,N-1$, and $K$ supplies its full-rank hypothesis here. The infinite-family law and authentic origin were earned before these calls.
+
+Compute $d=x_L-T^Lx_*$. Among the finite $(H+1)^L$ menu words, compare $E_L$ with $d$ by exact local rational calculation. Existence of a match follows from the actual run, and Theorem 45.2 supplies uniqueness. At $L=0$ the sole candidate is the empty word and the same observation procedure is still permitted. No new calls are used in this finite decoding.
+
+During the window the actual specimen has advanced to $x_{\rm now}=T^{N-1}x_L$. Hold it while setting
+
+$$
+\widehat x=x_{\rm now},\qquad w_{\rm now}=\mathcal O_Nx_{\rm now}.
+$$
+
+The new record therefore represents the true current field. If $N=1$, the window has one Read and no Tick, so the two fields coincide. In general the procedure keeps the recovered historical endpoint $x_L$ distinct from $x_{\rm now}$; it performs no rollback or Reset. The $N-1$ diagnostic Ticks are retained as such, not silently reinterpreted as pulse actions or erased from the source's actual chronology. $\square$
+
+**Proposition 46.3 (agreement of recovery routes and subsequent actual use).** In the regime $H<a$, the numerical Space, Time and predictive Memory of Definition 46.1 determine one another on their declared actual images, with the shared acquired context. The paid Boundary window determines the same pulse endpoint and Time. Every numerical recovery route through these data agrees. The retained installation after Theorem 46.2 supports every finite common legal adaptive continuation, predicting all its outputs and actual successors, including subsequent rational Add inputs when authorized.
+
+Proof. Time computes $x_L$ by Proposition 44.3 and then $w=\mathcal O_Nx_L$. Space computes $w$, and Memory recovers $x_L$ by the supplied observation inverse. Each computes the same unique pulse word by Theorem 45.2 and the finite decoding in Theorem 46.2. Thus every route factors through this same actual native field and its unique word. The numerical boundary window gives that field by the same inverse. From Time or Space one may calculate its predicted window, but only actual Read/Tick calls acquire that window's source provenance and advance its cut.
+
+At the new held cut the invariant of Theorem 40.2 holds with $\widehat x=x_{\rm now}$ and $w_{\rm now}=\mathcal O_Nx_{\rm now}$. Its proof applies to every rational current vector, so use it directly for subsequent calls. For clarity, writing $\bar q=q/a$, the predictive Tick update is
+
+$$
+w'_j=w_{j+1}\ (j<N-1),\qquad
+w'_{N-1}=-\sum_{j<N}(q_j/a)w_j,
+$$
+
+and Add$(v)$ replaces $w_j$ by $w_j+v\mu_j$. The actual service and record use the same supplied $v$, source binding and serialized calls. These identities give the intermediate Tick root, Add acknowledgement and final Read separately. Equal prior replies also give equal adaptive choices, exactly as in Theorem 40.2. This reuses its complete-action invariant; no journal inverse follows from that invariant alone.
+
+On a pulse cut before diagnostic Ticks, appending one actual pulse satisfies
+
+$$
+x_{L+1}=Tx_L+u_Lb,\qquad E_{L+1}=TE_L+u_Lb.
+$$
+
+The inverse at the earned length $L+1$ therefore returns exactly the old word followed by $u_L$. After diagnostic Ticks, continued prediction starts at the advanced actual field. A later consecutive pulse block may use that retained field as its known initial phase; the same affine difference and injectivity argument applies, with its own retained block length. It is not asserted to have started at $x_*$ without those intervening Ticks. $\square$
+
+## 47. Endpoint erasure, common futures and the price of an archive
+
+**Theorem 47.1 (exponential equal-endpoint histories).** Suppose $H\ge a$, and let $U\ne V$ be any equal-endpoint pulse pair of common length $\ell$. For each integer $m\ge0$, the actual source admits $2^m$ distinct legal pulse histories of length $m\ell$ with identical current native fields, law, origin, length and retained rights. If no distinguishing past information is retained, every common future source operation sequence, including a finite adaptive one, has identical complete outputs and successors on those histories. Consequently those present data, even supplemented with all common future source behavior, cannot recover the pulse word on the full declared domain.
+
+Proof. A fixed block $W$ acts on every starting field by
+
+$$
+F_W(x)=T^\ell x+E_\ell(W).
+$$
+
+The block collision says $E_\ell(U)=E_\ell(V)$, so $F_U=F_V$ as maps on every current field. Choose independently $U$ or $V$ in each of the $m$ block positions. Starting from the same actual $x_*$, all block-boundary fields, in particular the final field, agree. The $2^m$ concatenated words are distinct because their equal-length blocks have fixed boundaries and $U\ne V$. All of them are permitted drives of this original acquired installation; no extra source is used to enact a block within a run.
+
+From an equal field and the same $T$, Read and Hold give equal outputs without changing the field, Tick gives the same updated field and root output, and any common Add input gives the same acknowledgement and updated field. Thus the present-state equality is a congruence for the entire installed menu. Induction gives the assertion for common finite sequences. An adaptive policy depending only on the shared current data and later replies makes identical choices at each step; a shared random tape gives the same conclusion pathwise. Equality for all finite prefixes also gives equality of any common infinite response stream where that stream is defined.
+
+The theorem concerns erased past information. A controller state, external reference or input supplier that still distinguishes the earlier words is additional retained information and cannot be omitted from its premise. Past emissions are likewise not equated by endpoint equality. $\square$
+
+**Proposition 47.2 (complete past emissions reveal the inputs).** For every $H$, including $H\ge a$, retaining both scalar replies of each original pulse permits exact recovery of every input by
+
+$$
+u_i=y_i-\tau_i.
+$$
+
+In particular the histories in Theorem 47.1 do not have identical complete past emissions. On its $2^m$-element equal-endpoint family, any fixed-width binary archive that, together with the common present data, recovers the word must contain at least $m$ variable data bits.
+
+Proof. The root has $b^{\mathsf T}b=1$. Add$(u_i)$ changes its value by exactly $u_i$, with no intervening Tick, giving the identity. At the first differing pulse of two words, the prior fields and intermediate Tick replies agree, whereas the final Read replies differ by the nonzero input difference. Thus equality of complete past emissions would imply equality of every pulse input. Finally $m$ independent block choices require at least $2^m$ distinct archive values; a fixed-width binary store of $r$ bits has at most $2^r$ values. $\square$
+
+**Corollary 47.3 (the exact failure boundary).** For each fixed acquired source, a pulse-word inverse valid at all retained finite lengths from current native state and the earned law exists exactly when $H<a$. At $H\ge a$, current Boundary and predictive Memory still support exact future prediction as in Theorem 40.2, while some earlier pulse words remain indistinguishable unless past information is retained. This obstruction neither applies to an archive that distinguishes them nor contradicts the original passive phase inverse.
+
+Proof. The positive direction is Theorem 45.2 with finite decoding, and the negative direction is Theorem 47.1. Future prediction uses the already supplied current-state invariant. Definition 39.1's passive domain has no Add pulses, and its Time is the acquired passive root transcript rather than the controlled input word of Definition 44.1. Proposition 47.2 accounts for the archive alternative explicitly. $\square$
+
+## 48. Bounded fields still carry unbounded exact chronology
+
+**Theorem 48.1 (exact-state information lower bound).** Fix a promised acquired source and $1\le H<a$. For every fixed length $L$, its actual pulse menu realizes exactly $(H+1)^L$ distinct native endpoints. All of them, simultaneously for every finite $L$, lie in the bounded box
+
+$$
+\prod_{i=0}^{N-1}[0,(H+1)s_i],\qquad s=(I-T)^{-1}b.
+$$
+
+Any fixed-width binary representation that distinguishes all the configurations on this length stratum, with a common decoder and the shared acquired context, needs at least
+
+$$
+\left\lceil L\log_2(H+1)\right\rceil
+$$
+
+variable data bits. This applies also to the full predictive vector, since its map from the native field is invertible.
+
+Proof. The actual finite controller can drive any of the $(H+1)^L$ allowed words. Theorem 45.2 makes their endpoints distinct. Every term $T^jb$ is entrywise nonnegative, and their sum is $s$. The authentic acquired-phase term $T^{2N+L}b$ is one of those terms, so it is bounded entrywise by $s$; the pulse term is bounded by $Hs$. This proves the same fixed box for all $L$, preserving the actual nonzero initial phase.
+
+If a fixed-width representation had $r$ variable bits, it would have at most $2^r$ values. Distinguishing the realized endpoints forces $2^r\ge(H+1)^L$ and hence the displayed ceiling. The observation inverse transports distinctness to predictive Memory. A reference to varying external backing counts that backing as part of the representation; a common law description can be shared because it does not vary among these words. The bound concerns fixed-width distinguishability, not a lower bound for every individual variable-length codeword. $\square$
+
+**Corollary 48.2 (no uniform positive exact-resolution margin).** Under Theorem 48.1 the minimum distance between distinct endpoints cannot have a positive lower bound independent of $L$, either in native Euclidean coordinates or in the fixed predictive coordinates. Consequently bounded native amplitude and finite vector dimension do not supply a uniform finite-precision exact chronology instrument.
+
+Proof. A bounded box in finite-dimensional Euclidean space can be partitioned into finitely many boxes of diameter less than any specified $\varepsilon>0$. Once $(H+1)^L$ exceeds that finite count, two distinct endpoints lie in one box. The predictive image is another bounded finite-dimensional set because $\mathcal O_N$ is a fixed linear map, so the same argument applies there. This proves the absence of a uniform margin, without postulating a noise distribution or asserting impossibility for a differently specified approximate task. $\square$
+
+## 49. One attained acquisition, decoding and continued-use account
+
+**Definition 49.1 (binary sizes of the same source and observer).** Use Convention 41.1's reduced rational encoding and denote the native coefficient size by $B$. Let $D$ be the product of their positive denominators, so $DT$ is integral and $\log_2D\le B$. After acquisition one may retain the following finite rational data:
+
+$$
+T,\ K,\ K^{-1},\ \mathcal O_N,\ \mathcal O_N^{-1},\ q,\ \mu,\ x_*,\ s.
+$$
+
+Let $F\ge B+N$ bound their total binary encoding, including the numerators and denominators of the fixed matrices, and the maximum intermediate width in the fixed calculations used to construct them. These data are computed from the earned source law by finite matrix arithmetic; their widths are charged. Such an $F$ is finite for every earned source and can be chosen after those fixed calculations. No bound $F$ is supplied before acquisition. For a fixed $H,L$, put
+
+$$
+\begin{aligned}
+Q_L&=(H+1)^L,\qquad d_H=\lceil\log_2(H+1)\rceil,\\
+W_L&=1+F+(L+3N)\lceil\log_2(D+1)\rceil
+       +\lceil\log_2(H+2)\rceil
+       +\lceil\log_2(L+2)\rceil.
+\end{aligned}
+$$
+
+$W_L$ is an envelope up to absolute constant factors for the explicitly described variable-width rational calculations below. Binary counters, copying, comparisons, rational reduction, input/output serialization, source operations, reference/rights and backing have their own charges. In particular a field-operation count does not set the cost of operating on a $W_L$-bit integer to one bit operation.
+
+**Proposition 49.2 (source calls and complete traffic on one run).** One attained route consists of the original acquisition, $L$ pulse actions, the observation window of Theorem 46.2, and the subsequent held local decoding. Before a later continuation, its exact totals are
+
+$$
+\begin{array}{c|c}
+\text{Source operation or output}&\text{Count}\\ \hline
+\mathrm{Tick}&2N+L+(N-1)=3N+L-1\\
+\mathrm{Add}&L\\
+\mathrm{Read}&1+L+1=L+2\\
+\text{Scalar root replies}&(2N+1)+2L+N=3N+1+2L\\
+\text{Add acknowledgements}&L.
+\end{array}
+$$
+
+One can use the $N+1$ acquisition Holds of Proposition 41.2 and one additional Hold after the observation window. Any further Holds, policy calls and copied outputs are charged separately. The pulse symbols are $L$ paid serialized input words even if subsequently discarded.
+
+Proof. Acquisition has one Read and $2N$ Ticks. Each pulse has one Tick, one Add and one Read; its Tick return and final Read are two scalar outputs. The final window has one Read and $N-1$ Ticks, giving $N$ scalar replies. Fixed acknowledgements are added rather than counted as scalars. No autonomous Tick occurs between these operations, so the source's actual state at the held decoding cut is exactly $T^{N-1}x_L$.
+
+For the direct two-buffer native multiplication of Proposition 41.2, multiply the Tick count by $3N-2$ source scalar multiplications and $2N-2$ additions. Add also performs its actual root addition. Literal bit traffic is the sum of the serialized lengths of every input, reply and acknowledgement, together with operation/control framing. Source preparation, acquired-class assurance, root binding, the installed Add right and all retained backing remain additional coexisting resources, as in Assumption 36.2. $\square$
+
+**Proposition 49.3 (attained exact widths and local work).** The above route can use the acquisition bound of Proposition 41.3, followed by $O(N^3)$ rational operations to construct fixed inverse matrices. The $L$ pulse updates and the observation-window synchronization use $O(N(L+N))$ further rational operations when the redundant native record is retained. For $H<a$, one finite local decoder uses at most
+
+$$
+O\bigl(Q_LN(L+1)+N^2+NL\bigr)
+$$
+
+additional rational operations and exact comparisons, without further source calls. Its current rational words and transient numerator products have width $O(W_L)$; its menu words and output require $O(Ld_H+L+1)$ binary data bits. The numerical input and scalar-root traffic of Proposition 49.2 is at most $O((N+L)W_L)$ bits, with actual fixed acknowledgements and operation framing added. These are sufficient bounds, without an optimality assertion.
+
+Proof. The acquisition calculation and its square-root charges are already supplied in §41. Constructing $K$ and the observation matrix uses successive sparse products; exact elimination constructs their inverses with a conservative cubic field-operation allowance, at the actual fixed widths included in $F$.
+
+After $t$ total Ticks from the authentic preparation, all native coordinate denominators divide $D^t$: Tick multiplies by $D^{-1}(DT)$ and an integral pulse introduces no new denominator. Through the last observation reply, $t\le L+3N-1$. Every current coordinate has magnitude at most $(H+1)\|s\|_\infty$. This was proved in Theorem 48.1 at pulse cuts, and remains true during diagnostic Ticks because $Ts=s-b\le s$ entrywise. Intermediate Tick and post-Add cuts have the same bound. Since the total encoding of $s$ is included in $F$, the reduced numerator and denominator lengths are
+
+$$
+O\bigl(F+(L+3N)\log_2(D+1)+\log_2(H+2)\bigr).
+$$
+
+For fixed-matrix products use a common denominator equal to the product of the relevant fixed denominators, whose logarithm is at most $F$, together with $D^t$. Taking at most $N$ summands adds only $O(\log(N+1))$ bits. Reduction and cross-multiplication for equality use widths within an absolute constant factor of this envelope. The same argument bounds the recovered pulse endpoint, the current predictive vector, the computed baseline $T^Lx_*$ and every locally simulated candidate. Intermediate products before reduction have at most twice these widths.
+
+For a decoder with an explicit finite bound, list the $Q_L$ candidate menu words and evaluate each starting at the retained $x_*$ by $L$ sparse local updates $v\mapsto Tv+u_i b$. Compare its final native vector with the recovered $x_L$. Each candidate takes $O(N(L+1))$ rational operations and comparisons, and no candidate sends a command to the specimen. A candidate counter and its $L$ symbols suffice to form the finite list successively; no table of all endpoints is required. The actual-image promise supplies one match and Theorem 45.2 supplies exactly one. A candidate word and a distinct retained output copy each have at most $Ld_H$ symbol bits, with length and framing charged. The baseline calculation, matrix-vector observation inverse and current synchronization fit the remaining allowance. All counters, including the enumeration counter of at most $\lceil\log_2 Q_L\rceil+1$ bits, are finite and charged. Finally each of the $O(N+L)$ scalar replies has width $O(W_L)$, and each of the $L$ nonnegative integer inputs has width $O(\log_2(H+2))\subseteq O(W_L)$. This proves the numerical traffic bound. $\square$
+
+**Proposition 49.4 (simultaneous stores and later use).** There is one layout realizing Propositions 49.2–49.3 in which the following resources coexist at the decoding cut:
+
+| Coexisting resource | Size or mathematical charge |
+| --- | --- |
+| Actual source | $N$ cells, $N-1$ links, coefficient store $B$ and two state buffers of $O(NW_L)$ bits. |
+| Acquired data and fixed observer law | The retained $2N+1$-value acquisition record, of $O(N^2B+N)$ bits by §41, and the fixed $F$-bit data of Definition 49.1. |
+| Current observer and observation record | Native/predictive vectors, the $N$ paid observation replies, and $O(NW_L)$ bits of current numeric data. |
+| Inverse-matrix scratch | At most $O(N^2W_L)$ bits, retained here as a conservative allowance even if some fixed calculations have finished. |
+| Candidate, counters and recovered word | $O(Ld_H+L+\log(N+2)+1)$ bits, with distinct retained input/output copies added when present. |
+| Optional pulse-reply archive | Its actual $A_{\rm past}$ bits, including both scalar replies if both are retained. |
+| Serialization and extra delivery copies | Their actual simultaneous $A_{\rm io}$ bits. |
+| Installation and access | Actual origin/class assurance, finite controller description, source reference, Read/Tick/Hold/Add rights and their backing. |
+
+Consequently the stated numerical stores have the simultaneous sufficient bound
+
+$$
+O\bigl(F+N^2B+N^2W_L+Ld_H+L+A_{\rm past}+A_{\rm io}+1\bigr),
+$$
+
+with the actual installation, description, reference/rights and backing charges added. A store shared in fact need be counted only once; a second retained copy is added. Acquisition peak scratch retains its separate bound from §41, and may be allocated together with these stores if a single larger layout is wanted.
+
+Proof. Add the listed stores, rather than selecting different components from incompatible runs. Theorem 46.2's replies are acquired by this same source, while the source buffers, earned law, optional archives and retained installation remain present. Proposition 49.3 gives the common width envelope and the finite candidate scratch. A bit-cost realization can apply any terminating exact integer arithmetic to these finite words: for example, grade-school multiplication/division and Euclidean reduction give a polynomial bit charge per listed rational operation. Comparisons and copying pay their actual word lengths. No bounded bit cost independent of $W_L$ is inferred from the operation count.
+
+After decoding, use Proposition 46.3's actual current predictive record. Each subsequent call pays its source work, literal traffic, predictive update and any redundant native update, as specified in Proposition 41.5. A later rational Add has its own input numerator/denominator widths, so the integer-menu envelope $W_L$ is not asserted for an unrestricted rational continuation. A long additional finite integer-menu run obtains an envelope with its actual larger tick/pulse counts. These bounds allow growing precision and storage; Theorem 48.1 forbids concluding uniformly bounded information memory from fixed $N$. $\square$
+
+**Proposition 49.5 (finite cost of constructing a collision).** In Theorem 45.2 put $Q=(a+1)^\ell$ and use $W_\ell$ with menu bound $a$. A local construction can retain the $Q$ words and their evaluated endpoints in
+
+$$
+O\bigl(Q(NW_\ell+\ell\lceil\log_2(a+1)\rceil+1)+F\bigr)
+$$
+
+bits. It takes $O(QN(\ell+1))$ rational operations for the vectors and at most $O(Q^2N)$ coordinate comparisons to locate a matching pair. No source call is part of this construction.
+
+Proof. Apply the same finite candidate evaluations and width bound as in Proposition 49.3, retaining rather than discarding their endpoints. Compare every distinct pair if necessary. Theorem 45.2 ensures one comparison succeeds. These deliberately conservative finite bounds record the cost of the asserted construction; they do not assert efficient search or require enacting the listed words. $\square$
+
+## 50. Which history and which length the theorem recovers
+
+**Proposition 50.1 (integer granularity is material).** The threshold of Theorem 45.2 cannot be extended merely by bounding the magnitudes of arbitrary rational pulses by a number smaller than $a$. For the original promised scalar source $T=(1/2)$, the acquired phase is $x_*=1/4$, $q(z)=2z-1$ and $a=2$. Its original rational Add interface admits the distinct equal-length words
+
+$$
+u=(1/4,0),\qquad v=(0,1/8),
+$$
+
+with the same endpoint $3/16$, despite all their pulse magnitudes being at most $1/4<a$.
+
+Proof. The common baseline is $T^2x_*=1/16$. The pulse contribution of $u$ is $(1/2)(1/4)=1/8$ and that of $v$ is $1/8$. Their difference polynomial is $z/4-1/8=q(z)/8$. The integral quotient and the integral leading-coefficient obstruction used in Theorem 45.2 do not apply to this rational difference polynomial. These inputs are legal in the original interface but are outside the integer menu of Definition 44.1. $\square$
+
+**Definition 50.2 (domain of the controlled inverse).** The inverse theorems in §§45–49 concern the actual consecutive pulse word from the acquired phase, its finite nonnegative integer alphabet and its retained earned length. Recovering an erased $L$ is not a supplied step, and the equal-length proof makes no assertion that such recovery is impossible in every individual source. The inverse does not identify Hold durations, extra Reads, arbitrary rational input journals, unrecorded diagnostic Ticks or an unauthenticated origin. It preserves the countermodels of §42 and the original passive meaning of §39. Exact access, fixed-law membership and the installed operations remain premises. No finite transcript is taken to install calibration, source-class membership, additional ports, permission or physical realization. Theorem 47.1 concerns identical current fields and common futures, while Proposition 47.2 explicitly distinguishes earlier emissions.
+
+## 51. Mathematical supplier correspondence and the source-relative gain
+
+**Definition 51.1 (supplied intermediate mathematics and its actual use).** The cited repository statements are used with their own hypotheses, through the following correspondences.
+
+| Supplier | Correspondence inside these proofs |
+| --- | --- |
+| This volume, §§36–38 | Authentic $b=e_0$, actual $2N$-Tick acquisition, recovered native $T$, positive links, $0<T<I$, cyclic $K$ and $x_*=T^{2N}b$ are exactly the source here. Lemma 38.2 supplies the affine forced response. No new preparation or order service is substituted. |
+| This volume, §§39–41 | $\mathcal O_N=K^{\mathsf T}$, the current-state inverse, adaptive action transport and acquisition resources are reused. The new Time is the finite pulse word; the old Time remains the paid passive scalar transcript on its original domain. |
+| [FiniteHoKalmanBlocks](../../../D5/S3/Observer/Hankel/FiniteHoKalmanBlocks.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Hankel/FiniteHoKalmanBlocks.scribe.cs) | Its selected Hankel factorization and all-time realization algebra are prior suppliers to the earned law. Its arbitrary-candidate rank theorem supplies a lower dimension bound, not this integer-menu injectivity threshold or unknown-source membership. |
+| [CoefficientDrivenJacobiCharacteristicPolynomial](../../../D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.scribe.cs) | The power basis is $T^jb$, the moment pairing is the actual Euclidean inner product, and coefficient multiplication is $T$ in that basis. Its private monicity/triangularity and positive-norm helpers and public characteristic-polynomial conclusion supply the §37 correspondence. The primitive $q$ here is a scalar multiple of that monic polynomial; neither irreducibility nor a trace-weight hypothesis is added. |
+| [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its owning Scribe | Take state $\mathbb R^N$, output $\mathbb R$, evolution $T$, readout $b^{\mathsf T}$, horizon $N$. The supplied equivalence of zero kernel, full stacked rank and positive Gram is used through the actual invertible $K^{\mathsf T}$, with prospective source replies earned in Theorem 46.2. Generic observability is not a new conclusion. |
+| Pinned Mathlib's primitive-divisibility lemma cited in Proposition 44.3 | Domain $\mathbb Z$, fraction field $\mathbb Q$, primitive divisor $q$ and arbitrary integral difference polynomial. This supplies the integral quotient even for reducible $q$, which is necessary both for the leading-coefficient obstruction and the exact lattice indices. |
+
+These are intermediate suppliers inside the controlled-source proof. The additional inference is the exact leading-coefficient/menu threshold, its effective bounded same-length collision, its delayed first possible horizon, and the consequent actual pulse recovery/archive/precision distinction. It is a source-relative mathematical synthesis, not an attribution of generic Gauss, observability, finite coding or pigeonhole principles to this source.
+
+**Definition 51.2 (literature and overlap boundary).** [Akiyama–Thuswaldner–Zaïmi, *Comments on the height reducing property II*, arXiv:1403.7480v1, Theorem 3](https://arxiv.org/html/1403.7480v1) supplies finite-automaton recognition of bounded-digit zero representations for an algebraic number with no unit-modulus conjugate. With one irreducible factor of $q$, one may take an eigenvalue as its algebraic number and the difference digits as its bounded alphabet; all conjugates of that eigenvalue are among the roots of $q$ and lie in $(0,1)$. The theorem concerns zero representations and does not install this acquired native path, an actual pulse experiment or the retained phase. For reducible $q$, a zero at only one chosen root does not imply annihilation of the cyclic vector. Proposition 44.3 requires divisibility by the whole $q$. The primitive-divisibility, bounded-region and finite-index argument of §45 treats that whole polynomial directly and supplies its stated length bound. Neither finite-automaton zero recognition nor number-system terminology is claimed as new here.
+
+The [Predictive Waves volume, Definitions 4.1 and Theorems 4.2–4.4](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md) assumes cross-inner-product conservation for an isometric recursion; its positive-metric criterion requires unit-modulus eigenvalues. The present native $T$ has all eigenvalues strictly between zero and one, so no positive metric turns its Tick into that isometry. Its Theorem 6.4's hidden-leaf memory is a continuous forced equation, not the finite integer pulse word considered here. The retained joint reference and growing-record requirements of its Definition 12.1 are compatible disciplines, not a supplier of the menu threshold.
+
+[Sharp Task Retained Environment Memory, Theorem 24.1](RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY.md) uses its specified isometry $B:\mathbb C^3\to\mathbb C^5$, actual full-space acquisition operators, complex-linear CPTP map, immediate/one-step effects and raw depth-two effects with only the first acquisition label erased. Its conclusion is a uniform diamond-norm stability estimate relative to $\operatorname{Ad}_B$. No CPTP map, qutrit input family or those effects occur in Definitions 44.1–44.2. Its partial erasure is not an equality of these native rational pulse endpoints. There is no source transport making that estimate a proof of this threshold, and no quantum stability conclusion is inferred here.
+
+**Definition 51.3 (remaining mathematical scope).** The recovered structure in this continuation is the original acquired path, its actual field, its literal root observations and predictive memory, with a sharply delimited new chronology task. The all-length inverse is conditional on the nonnegative integer menu bound $H<a$ and the retained earned length; outside that menu range the equal-length obstruction is exact. The original arbitrary rational controlled-journal failure, passive-domain claims and initialization remain unchanged. No conclusion here settles an original fixed-$G_{\rm gc}$, original-$Q$ or parked-consumer obligation, identifies unknown call rights, proves a universal $\alpha/\beta$ reduction or completes an all-source four-expression recovery theorem. Deriving physical laws or authenticating a physical device is not a premise-free consequence of these conditional digital-source theorems.
+
+## 追加锚（本行以下为增补区）
+
+## 52. The authentic acquired phase separates every integer pulse length
+
+**Definition 52.1 (the original endpoint without a supplied length).** Keep precisely Definitions 36.1–36.2 and the actual acquisition of Theorem 37.2. Write $b=e_0$, $K=[b,Tb,\ldots,T^{N-1}b]$, $\mathcal O_N=K^{\mathsf T}$, and $x_*=T^{2N}b$. Use Definition 44.2's primitive integer law $q$, its positive leading coefficient $a\ge2$, and the monic rational law $\bar q=q/a$. A finite signed integer word $u=(u_0,\ldots,u_{L-1})\in\mathbb Z^L$ means the same actual consecutive actions as in Definition 44.1: for each symbol, Tick; Add$(u_i)$; Read. In particular a zero symbol still executes all three commands. The native endpoint is
+
+$$
+X(u)=T^{L+2N}b+\sum_{i=0}^{L-1}u_iT^{L-1-i}b.
+\tag{52.1}
+$$
+
+The empty word has $X(\varepsilon)=x_*$. Length is part of the mathematical finite-list type, but a separately retained old length is not an input to any inverse below. The origin, root binding, earned law, installed menu, exact access, successful serialization and backing remain those of §§36–41. No change to preparation or source class accompanies this removal of an input.
+
+For a word $u$ define its integer endpoint polynomial
+
+$$
+A_u(z)=z^{L+2N}+\sum_{i=0}^{L-1}u_i z^{L-1-i},
+\qquad X(u)=A_u(T)b.
+\tag{52.2}
+$$
+
+The leading term represents the evolution of the actual original unit preparation through acquisition and the pulses. It is not an extra prepared marker or a source operation.
+
+**Lemma 52.2 (the integral annihilator ideal and its leading coefficients).** For every $P\in\mathbb Z[z]$,
+
+$$
+P(T)b=0\quad\Longleftrightarrow\quad
+P=qS\text{ for some }S\in\mathbb Z[z].
+\tag{52.3}
+$$
+
+Consequently every nonzero integral annihilator of $b$ has leading coefficient divisible by $a$; in particular there is no monic integral annihilator.
+
+Proof. This is the arbitrary-polynomial argument of Proposition 44.3: divide over $\mathbb Q$ by $\bar q$; the remainder has degree below $N$ and vanishes on $b$, so independence of $b,Tb,\ldots,T^{N-1}b$ makes it zero. Gauss's primitive-divisibility lemma then gives an integral quotient by $q$. Conversely $q(T)=0$. For nonzero $S$, the leading coefficient of $qS$ is $a$ times the nonzero integral leading coefficient of $S$. Since $a\ge2$, it cannot be one. This uses the whole earned polynomial, with no irreducibility premise or selection of one eigenvalue. $\square$
+
+**Theorem 52.3 (length separation for arbitrary signed integer words).** For every acquired source of Definition 52.1, all $L,M\ge0$, and all $u\in\mathbb Z^L$, $v\in\mathbb Z^M$,
+
+$$
+X(u)=X(v)\quad\Longrightarrow\quad L=M.
+\tag{52.4}
+$$
+
+There is no bound on the magnitudes or signs of the symbols. The assertion includes comparison with the empty word.
+
+Proof. Suppose, by exchanging the words if necessary, that $L>M$. The polynomial $A_u-A_v$ is monic of degree $L+2N$. Indeed, the other preparation term has degree $M+2N<L+2N$, and every pulse term has degree at most $L-1<L+2N$. Thus nothing cancels its leading coefficient one, including when $M=0$. Equality of the native endpoints would make this monic integer polynomial annihilate $b$, contrary to Lemma 52.2. Hence unequal lengths are impossible. $\square$
+
+The theorem separates the length strata of the actual affine endpoints $X(u)$, not those of the forced terms $E_L(u)$ alone. For example $E_L(0,\ldots,0)=0$ at every length. Subtracting the preparation term before length has been recovered would discard exactly the distinction used in the proof. Neither monotonicity of controlled root values nor a special sign pattern of the pulses is assumed.
+
+## 53. The sharp menu threshold on the disjoint union of lengths
+
+**Theorem 53.1 (complete finite-word recovery criterion without length advice).** Fix any acquired original source and integer $H\ge0$. On the disjoint union
+
+$$
+\mathcal U_H=\coprod_{L\ge0}\{0,\ldots,H\}^L,
+\tag{53.1}
+$$
+
+the native endpoint map $u\mapsto X(u)$ is injective if and only if $H<a$.
+
+Proof. If two endpoints agree, Theorem 52.3 first gives equal lengths. For $H<a$, Theorem 45.2 then gives equal words, since their common preparation terms cancel and their forced endpoints agree. Conversely, for $H\ge a$ reuse exactly the equal-length collision supplier of Theorem 45.2. With its computed $R,C$, it constructs distinct words $U,V\in\{0,\ldots,a\}^{\ell}$, where $\ell=N+aC$ suffices, with $E_\ell(U)=E_\ell(V)$. Adding the same $T^\ell x_*$ gives $X(U)=X(V)$. These words lie in $\mathcal U_H$. No new collision hypothesis or irreducible factor is substituted. $\square$
+
+**Corollary 53.2 (binary recovery and the actual failure boundary).** Every acquired original source admits complete endpoint recovery of every finite binary pulse word, including its length, because $1<a$. The zero-only menu is also injective across all finite lengths. If $H\ge a$, the length remains recoverable as a function of the endpoint on its integer image, but the full word is not: the obstruction is already within a single length stratum. The short-horizon conclusions of Corollary 45.3 remain exact: no same-length collision at $L\le N$, and one at $L=N+1$ exactly when $H\ge h$, where $h=\max_j|q_j|$.
+
+Proof. Apply Theorem 53.1 for $H=1$ and $H=0$, and Theorem 52.3 for length alone. The supplied equal-length conclusions and collisions are unchanged by removing length advice. $\square$
+
+**Proposition 53.3 (limits imposed by integer granularity, origin and outputs).** The conclusions above do not extend to arbitrary rational pulse histories in the original legal menu. For the original one-cell source $T=(1/2)$, $x_*=1/4$, the empty word and the one-symbol rational word $(1/8)$ have the same native endpoint. Moreover, the distinct equal-length words in Proposition 50.1 still collide. Neither a bounded rational amplitude below $a$ nor knowledge of the earned law repairs these failures.
+
+Proof. The nonempty endpoint is $(1/2)(1/4)+1/8=1/4$. This is a legal Tick; Add$(1/8)$; Read, with Tick reply $1/8$, Add acknowledgement and final Read $1/4$. It is not the empty command/output sequence. Proposition 50.1 supplies the equal-length collision within the same promised scalar source. In both examples rational difference polynomials need not have integral quotients of the kind used in Lemma 52.2. $\square$
+
+The authentic origin is also material: at a different preparation $x=0$, zero pulse words of all lengths have endpoint zero. This is Counterexample 42.4's excluded origin, not a counterexample to Theorem 52.3. Likewise insertion of Read calls or Hold intervals changes a complete journal without changing the field. The current theorem recovers the specified consecutive integer pulse word, not those insertions, wall time or arbitrary rational journals. For $H\ge a$, Theorem 47.1's equal-field block family still has identical common future behavior, while Proposition 47.2 still recovers each symbol from its retained pair of earlier scalar outputs. No archive is assumed destroyed: the inverse question specifies its inputs, and any coexisting distinguishing archive remains additional information.
+
+## 54. An exact local inverse that receives no old length
+
+**Definition 54.1 (the length-first search).** The numerical inputs are the earned $N,T$, the actual acquired origin $x_*=T^{2N}b$, the task menu bound $H<a$, and a rational vector $x$ promised to lie in $X(\mathcal U_H)$. No old length, old word, source response oracle or archive is an input. Retain a scratch length $l$, initially zero. At this length enumerate the finite set $\{0,\ldots,H\}^l$ in lexicographic order, including its sole empty candidate at $l=0$. For each candidate $c$, copy $x_*$ to a scratch vector and execute locally, in chronological order,
+
+$$
+v\longmapsto Tv+c_i b.
+\tag{54.1}
+$$
+
+Compare the resulting vector with $x$ by exact rational equality. On a match output $(l,c)$ and stop; after an unsuccessful finite stratum increment $l$. The scratch length is a search variable built by this computation, not a supplied count of source events. None of these candidate calculations calls Tick or Add on the specimen.
+
+**Theorem 54.2 (termination and uniqueness on the actual image).** Definition 54.1 terminates on every promised input and returns exactly its actual pulse word and length. It uses no further source call and can run while the original source is held.
+
+Proof. Write the actual word as $u$ and its mathematical length as $L$. Each stratum below $L$ is finite, and Theorem 52.3 excludes every candidate there. The finite stratum at $L$ contains $u$; its simulation is (52.1), so a match is reached. Theorem 53.1 excludes any other matching word. At $L=0$ the first candidate succeeds. Finite exact rational arithmetic and comparisons implement every step, without an a priori bound on $L$ or its operand widths. On vectors outside the promised image the search need not halt; a total image-recognition algorithm is not asserted. $\square$
+
+**Proposition 54.3 (effective length recovery on the whole signed integer image).** Even without a finite digit menu, the earned law and a promised endpoint of some finite signed integer word effectively determine its length. This does not make the signed word unique.
+
+Proof. At successive integers $r=0,1,2,\ldots$, examine all words of lengths at most $r$ with entries in $\{-r,\ldots,r\}$, simulating (54.1), and stop at a matching endpoint. Each stage is finite. If the actual word has length $L$ and maximum absolute entry $J$ (take $J=0$ for the empty word), stage $r\ge\max(L,J)$ includes it. Thus some match occurs, and Theorem 52.3 makes the length of every match equal to $L$. There can be distinct matching words at that same length; for example the reverse coefficient list of $q$ and the all-zero list, both of length $N+1$, have the same forced endpoint. The proposition returns a length and one witness, not a unique signed history. $\square$
+
+The finite-menu consumer below uses Definition 54.1. The signed search is only a length procedure with its own finite, potentially much larger work; no finite-menu cost bound is assigned to its unbounded-height enumeration.
+
+## 55. Four expressions with the old counter removed
+
+**Definition 55.1 (one domain and independent exposed data).** Fix the original acquired installation, its earned law and authentic origin, and an integer task menu $0\le H<a$. The domain consists of all completed consecutive pulse cuts $X(u)$ for $u\in\mathcal U_H$. The shared numerical context is $(N,T,q,\mu,x_*,H)$, with redundant components optionally computed from the earned law as in §§37–40. It contains no old $L$ or old pulse record. Define the four expressions by their own data:
+
+| Expression | Exposed data and meaning |
+| --- | --- |
+| Space | The actual rooted weighted path and present native cell field $(T,X(u))$, with cells identified by their native rooted distances. |
+| Time | The finite ordered actual input list $u$, including zero symbols; its list structure has its own length. It is not a list of Hold durations or all commands ever issued. |
+| Boundary | The same literal callable root service. Its acquired numerical window is $z_j=b^{\mathsf T}T^jX(u)$ for $0\le j<N$, obtained by one actual Read and $N-1$ returning Ticks. |
+| Memory | The earned recurrence and initial impulse values, and the current predictive vector $w=\mathcal O_NX(u)$. Its entries are the next $N$ autonomous root predictions, not stored old symbols or a stored old pulse count. |
+
+The installed source handle, rights, authentic origin/class assurance, serialization, controller and backing are retained separately from these numerical data. Boundary as an actual capability includes its real binding and permissions; a computed vector of predicted replies is only its numerical expression. An acquired boundary window has a named starting cut and its known diagnostic protocol, rather than a supplied count of earlier pulses.
+
+**Theorem 55.2 (effective recovery and agreeing routes).** On Definition 55.1's actual images, Space, Time and numerical Memory effectively determine one another without an old length input. The numerical Boundary window determines those same data. Conversely each of the other numerical expressions computes exactly that window's values. Every composition of these recovery maps agrees with the direct map.
+
+Proof. Time computes (52.1), using its own finite list, and then $w=\mathcal O_NX(u)$. Space computes this same $w$. Memory recovers $X(u)=\mathcal O_N^{-1}w$ by the earned invertible observation matrix. The Boundary window satisfies $z=\mathcal O_NX(u)$ and uses the identical inverse. Apply Definition 54.1 and Theorem 54.2 to the recovered field to obtain the unique actual word and its length. All these maps therefore factor through the same $(T,X(u),u)$, proving route agreement. Conversely multiplication by the fixed $\mathcal O_N$ computes the numerical window from the field. It does not acquire its observations, advance the source, restore a past cut or create a missing capability. $\square$
+
+**Proposition 55.3 (pulse dynamics and every declared output).** At a pulse cut, write $x=X(u)$, $w=\mathcal O_Nx$, and let $v\in\{0,\ldots,H\}$ be the next actually supplied symbol. The actual pulse and its predictive implementation are
+
+$$
+\begin{aligned}
+x^{\rm tick}&=Tx,&\quad \tau&=b^{\mathsf T}Tx,\\
+x^+&=Tx+vb,& y&=b^{\mathsf T}Tx+v,\\
+w^{\rm tick}_j&=w_{j+1}\ (j<N-1),&
+w^{\rm tick}_{N-1}&=-\sum_{j<N}(q_j/a)w_j,\\
+w^+_j&=w^{\rm tick}_j+v\mu_j.&&
+\end{aligned}
+\tag{55.1}
+$$
+
+Tick emits $\tau$ after its update, Add emits its fixed acknowledgement, and Read emits $y$. Hold, if called, emits its fixed acknowledgement and preserves the field. If the installed Add also declares a post-Add scalar, it is the same $y$ and is an additional output. The inverse at the new pulse cut returns exactly $u$ followed by $v$, without receiving its length separately. The recovered word and earned origin also compute the complete scalar replies and fixed acknowledgements of every original pulse.
+
+Proof. These are the actual service semantics and Definition 40.1's all-field predictive identities, with $\bar q=q/a$. The last formula uses $(\mathcal O_Nb)_j=m_j=\mu_j$ and $\mu_0=1$. Also $X(uv)=TX(u)+vb$ by (52.1). Theorem 53.1 supplies the unique word at this new endpoint; hence inverse and append agree. Applying $\mathcal O_N$ gives the same update along the Space, Boundary-numerical and Memory routes. None of the separate pulse outputs is suppressed by calling the pulse one alphabet symbol. Starting the local recurrence at $x_*$ and applying the recovered list reproduces every intermediate $x_i$, hence each $\tau_i$, acknowledgement and $y_i$ by induction. These reconstructed numerical replies agree with the actual emitted values; the computation does not acquire their original observation provenance or identify unrecorded extra commands. $\square$
+
+## 56. Actual endpoint acquisition and continued service at the advanced cut
+
+**Theorem 56.1 (same-specimen no-length recovery and synchronized installation).** After any actual word in Definition 55.1, the original root service acquires its endpoint and recovers its word and length with exactly $N$ new scalar replies and $N-1$ new Ticks, followed by finite local decoding during Hold. At completion the installed predictor represents the actual specimen at its true advanced cut, not the historical pulse endpoint.
+
+Proof. Apply exactly Theorem 46.2's observation protocol: one Read at the pulse endpoint, then $N-1$ actual returning Ticks with no Add, then Hold. The received values satisfy
+
+$$
+z=\mathcal O_Nx_{\rm hist},\qquad
+x_{\rm hist}=X(u),\qquad
+x_{\rm now}=T^{N-1}x_{\rm hist}.
+\tag{56.1}
+$$
+
+Compute $x_{\rm hist}=\mathcal O_N^{-1}z$ and use Theorem 54.2 to recover $u,L$ without any supplied old count. During the held interval initialize and commit
+
+$$
+\widehat x=x_{\rm now}=T^{N-1}x_{\rm hist},\qquad
+w_{\rm now}=\mathcal O_Nx_{\rm now}.
+\tag{56.2}
+$$
+
+No source Tick occurs during these local computations. The actual state is consequently the one in (56.2) when the next call is exposed. For $N=1$ there is no diagnostic Tick and the historical and current fields coincide. This protocol uses the already acquired law and its root binding; it neither rediscovers the law nor obtains a new preparation, port or right. $\square$
+
+**Proposition 56.2 (diagnostic chronology is not a pulse journal).** The recovered $L$ counts only the original consecutive pulse actions. The specimen in Theorem 56.1 has undergone $2N+L+N-1$ actual Ticks from its original unit preparation. Its $N-1$ diagnostic Ticks have not been rolled back. Numerically,
+
+$$
+x_{\rm now}=X\bigl(u\,0^{N-1}\bigr),
+\tag{56.3}
+$$
+
+but the diagnostic command/output suffix is not the actual pulse suffix $0^{N-1}$.
+
+Proof. Applying Tick $N-1$ times multiplies (52.1) by $T^{N-1}$, which gives (56.3). A zero pulse would additionally issue Add$(0)$ and Read after each Tick, with their acknowledgement and scalar output. The diagnostic protocol issues neither of those after each Tick; it has the one initial Read and the final Hold. Thus the equality is an equality of native fields, not of complete histories or their emissions. The historical field in (56.1), recovered from the acquired window with its stated starting cut, is the input to the word inverse. Applying that inverse instead to the advanced field would recover the numerical word $u0^{N-1}$, whose extra symbols cannot be called actual executed pulses. $\square$
+
+**Theorem 56.3 (complete finite common adaptive service).** Retain the original binding, legal rights and backing after Theorem 56.1. For every finite common adaptive continuation in the original installed Read/Tick/Hold/Add menu, including arbitrary authorized rational Add inputs, the predictor returns every declared output exactly and stays synchronized with the complete actual native field at each committed cut.
+
+Proof. Initialization is (56.2). Theorem 40.2 applies to this rational current field and its predictive image; its invariant does not require a passive or integer-word history. Explicitly Read and Hold preserve the field, Tick uses the shift/recurrence in (55.1) and emits its new root, and Add$(r)$ replaces $\widehat x$ by $\widehat x+rb$ and every $w_j$ by $w_j+r\mu_j$, emitting the installed acknowledgement and optional post-Add scalar. These identities preserve $\widehat x=x_{\rm actual}$ and $w=\mathcal O_Nx_{\rm actual}$. Each local commit completes before exposing the next call. Induction on the continuation gives equal preceding outputs, hence identical adaptive choices of next command, rational input and stopping decision. A common random tape is included pathwise. This is the existing complete-action invariant initialized at the actual advanced cut, not an assertion that a history inverse remains valid on every controlled field. $\square$
+
+Theorem 55.3's no-length append law concerns consecutive pulses from $x_*$. After the diagnostic suffix or arbitrary later rational controls, continued prediction uses (56.2), while a new history-inversion claim must establish its own original-domain correspondence. Knowing an arbitrary new starting field alone supplies the same-length affine cancellation, but not Theorem 52.3's monic preparation term. No unknown-length inverse for all blocks from every rational starting field is inferred. In particular the rational and journal counterexamples of §§42 and 53 remain in force.
+
+## 57. An attained simultaneous resource account without the old input
+
+**Definition 57.1 (width and candidate quantities on the actual run).** Use Convention 41.1 and Definition 49.1's acquired-source quantities $B,D,F$, including the fixed matrices, $x_*,s=(I-T)^{-1}b$ and their actual construction widths. Use Proposition 41.3's acquisition width envelope $U$. For the actual word length $L$ define, for analysis rather than as decoder advice,
+
+$$
+\begin{aligned}
+S_L&=\sum_{l=0}^{L}(H+1)^l,\qquad d_H=\lceil\log_2(H+1)\rceil,\\
+W_L&=1+F+(L+3N)\lceil\log_2(D+1)\rceil
+ +\lceil\log_2(H+2)\rceil+\lceil\log_2(L+2)\rceil,\\
+V_L&=\max(U,W_L).
+\end{aligned}
+\tag{57.1}
+$$
+
+All counters and storage expand as needed during search. These after-the-fact envelopes need not be known at entry. For $H=0$, $S_L=L+1$; for $H\ge1$, it is the stated finite geometric sum. No exponential candidate table is retained by Definition 54.1.
+
+**Proposition 57.2 (same-run source operations and complete traffic).** One realization is the original acquisition, the $L$ original pulse actions, and Theorem 56.1's diagnostic acquisition and held decoding. With Add returning its original fixed acknowledgement, its exact source counts before a later continuation are
+
+| Source operation or emitted item | Count |
+| --- | --- |
+| Tick | $3N+L-1$ |
+| Add | $L$ |
+| Read | $L+2$ |
+| Hold | $N+2$ |
+| Scalar root replies | $3N+1+2L$ |
+| Add acknowledgements | $L$ |
+| Hold acknowledgements | $N+2$ |
+
+The Hold count selects the $N+1$ acquisition Holds of Proposition 41.2 and the final diagnostic Hold; extra Holds are added when used. If Add also emits the optional post-Add root, add $L$ scalar outputs and their serialization. Every pulse input, command frame, acknowledgement, Read and returning-Tick scalar is part of the traffic.
+
+Proof. These are Proposition 49.2's counts on the identical physical operation sequence, with the explicit selected Holds added. The decoder's additional length strata are local computations during the final Hold, so they add no source operation. A direct two-buffer source Tick performs $3N-2$ scalar multiplications and $2N-2$ additions. Thus these source totals multiply by $3N+L-1$, and the $L$ Adds contribute $L$ actual root additions. Read serialization and Hold/control work have their own actual costs. Fixed acknowledgements are not silently counted as rational scalars. $\square$
+
+**Proposition 57.3 (attained exact arithmetic, precision and search work).** The same realization admits acquisition with Proposition 41.3's $O(N^4)$ rational operations and its $N-1$ promised-square root extractions, fixed matrix construction with a conservative additional $O(N^3)$ rational operations, and $O(N(L+N))$ rational operations for retained pulse updates and diagnostic synchronization. Definition 54.1's subsequent local decoding uses at most
+
+$$
+O\bigl(N(L+1)S_L+N^2+NL\bigr)
+\tag{57.2}
+$$
+
+rational operations and coordinate comparisons. Its rational data and transient arithmetic products have width $O(W_L)$. The scalar/input numerical traffic is $O((N+L)W_L)$ bits, with literal command framing and all acknowledgements added. These are sufficient upper bounds for the specified algorithm, with no total-cost or decoder-optimality claim.
+
+Proof. Reuse the acquisition and fixed-data calculations of §§41 and 49. In the local search every candidate has length $l\le L$, because a match is reached in the actual stratum. There are at most $S_L$ examined candidates. A fresh copy of $x_*$, $l$ sparse updates and one native-vector comparison cost $O(N(l+1))$ field operations and comparisons. Summing gives the first term in (57.2); observation inversion, propagation to the current cut and its predictive conversion fit the remaining terms. None is a source query.
+
+For widths, all actual coordinates through the diagnostic suffix have denominators dividing $D^t$ at total Tick count $t\le L+3N-1$. Integer Adds introduce no new denominator. The same holds for every simulated candidate through its at most $l+2N\le L+2N$ ticks from unit preparation. Entrywise nonnegativity, $Ts=s-b\le s$, and $0\le u_i\le H$ give $0\le x_i\le(H+1)s$ for every actual intermediate field and every such candidate, exactly as in §§48–49. Thus their reduced numerator and denominator widths are $O(W_L)$. For the fixed-matrix observation inverse and synchronization use common denominators of the fixed entries, whose total encoding is bounded by $F$, together with the actual $D^t$; summing $N$ terms adds $O(\log(N+1))$. Multiplication before reduction and cross-products for equality change widths by only a constant factor. This also bounds each actual scalar reply, each locally predicted scalar and the recovered historical vector. The input symbols have $O(\log_2(H+2))$ bits each. Proposition 57.2 now gives the numerical traffic bound. The acquisition calculations retain their distinct width $O(U)$, included in $O(V_L)$ for a whole-run allowance.
+
+Candidate creation, lexicographic increments, indexing and output copying are charged in addition to field operations. They admit the conservative bound $O((L+1)(d_H+\log_2(L+2)+1)S_L)$ bit steps by scanning each finite candidate and its binary counters. Exact arithmetic has a finite bit realization: school multiplication/division takes $O(V_L^2)$ per pair of $O(V_L)$-bit integers; Euclid needs $O(V_L)$ such divisions, giving the safe $O(V_L^3)$ allowance for reduction or a rational field operation. Binary-search integer square roots also fit $O(V_L^3)$. Consequently one sufficient local arithmetic/control bound is
+
+$$
+O\!\left(
+ [N^4+N^3+N(L+N)+N(L+1)S_L]V_L^3
+ +(L+1)(d_H+\log_2(L+2)+1)S_L
+\right),
+\tag{57.3}
+$$
+
+with actual installation, input/output handling and delivery work added. The source arithmetic of Proposition 57.2 adds at most $O(((3N+L-1)(5N-4)+L)V_L^3)$ bit steps using the same conservative rational-arithmetic implementation. All these estimates allow growing words; exact rationals have not been replaced by constant-width real registers. $\square$
+
+**Proposition 57.4 (coexisting source, producer, observer and retained material).** A single layout attaining the preceding claims may retain all of the following simultaneously. Let $P_{\rm live}$ be the actual producer/input-provider store, $A_{\rm past}$ the actual retained pulse-input/reply archive beyond the separately listed stores, and $A_{\rm io}$ the actual extra simultaneous I/O and delivery copies. None is a decoder input.
+
+| Coexisting component | Charge in this layout |
+| --- | --- |
+| Original source | $N$ cells, $N-1$ links, its $B$-bit coefficient store, and two state buffers of $O(NV_L)$ bits. |
+| Earned observer data | The actual $2N+1$-value acquisition record of $O(N^2B+N)$ bits and the fixed $F$-bit law/matrix data. |
+| Historical endpoint, current predictor and acquired window | A constant number of $N$-vectors, including distinct $x_{\rm hist}$ and $x_{\rm now}$, and $O(NV_L)$ bits. |
+| Matrix/elimination and exact-arithmetic scratch | A conservative $O(N^2V_L)$ bits, sufficient also for acquisition scratch. |
+| Local search and its result | One candidate, one evaluated vector, search length/cursors and one recovered output word, using $O(NV_L+L(d_H+1)+\log_2(L+2)+1)$ bits. |
+| Producer/input provider | Its actual $P_{\rm live}$ bits and retained backing, even if it keeps the original input list or its own event count. |
+| Additional archives and serialization copies | $A_{\rm past}+A_{\rm io}$ actual bits; distinct copies are added. |
+| Installed access and control | Actual source reference, authentic preparation/class/root assurance, Read/Tick/Hold/Add rights, exclusive serial control, finite programs and their storage/service backing. |
+
+The numerical/data stores have the simultaneous sufficient allowance
+
+$$
+O\bigl(F+N^2B+N^2V_L+L(d_H+1)+\log_2(L+2)
+ +P_{\rm live}+A_{\rm past}+A_{\rm io}+1\bigr),
+\tag{57.4}
+$$
+
+with the actual installed-access/control/backing charges added. A shared object is counted once only when it is actually shared; a retained second copy is additional.
+
+Proof. Allocate the displayed finite stores on the same run and add their sizes. The decoder reads only its stated inputs, so a producer's retained list, a pulse-reply archive or a separate counter can coexist without being used to prove recovery. For a concrete attained producer, supply the actual finite word as its paid list, retain that list and its cursor, and issue its original pulses in order. Its list/cursor store is $O(L(d_H+1)+\log_2(L+2)+1)$ bits and is charged even after completion if retained. Reading its inputs, issuing its calls and retaining its data have their actual work costs. The decoder does not inspect this list or its cursor. Other producers have their own $P_{\rm live}$ and work charges. A decision to begin acquisition is invocation at an already completed pulse cut, not a new marker command or an algorithm inferring that a still-active producer has finished.
+
+The source, producer, acquired records, predictor, scratch, old emissions, output and access installation coexist; selecting one component's peak from a different run cannot remove any of them. Proposition 57.3 and the width bound of §41 make the scratch allowance sufficient. Optional archives add their actual writing and retention costs. Later calls add their actual source arithmetic, predictor updates, input/output and retained-data costs as in Proposition 41.5 and Theorem 56.3. For arbitrary later rational Adds, use their actual new numerator/denominator widths; (57.1) is an integer-menu envelope for the stated run, not for all rational continuations. $\square$
+
+**Corollary 57.5 (removing advice does not bound memory or precision).** For $1\le H<a$, Theorem 48.1's lower bound $\lceil L\log_2(H+1)\rceil$ for fixed-width distinguishability at length $L$ still applies, and Corollary 48.2's absence of a uniform positive exact-resolution margin still applies. Even for $H=0$, Theorem 52.3 supplies infinitely many distinct endpoints as length varies. Hence a finite number of cells, a finite predictive dimension and a finite decoder program do not supply a uniform finite information-memory bound for exact all-length recovery.
+
+Proof. Restrict the new domain to any one old length stratum and reuse the supplied lower bounds. For $H=0$, the distinct fields are $T^{L+2N}b$ for all $L\ge0$ by Theorem 52.3; a fixed finite state set cannot distinguish infinitely many fields. The local decoder pays for its growing search counter, precision, scratch and output. Eliminating its old-length input establishes sufficiency with less advice; the present enumeration bound does not imply less total computation, storage or acquisition cost than every decoder receiving that advice. $\square$
+
+## 58. Mathematical correspondence, covered suppliers and remaining bridges
+
+**Correspondence 58.1 (the reused source and the additional inference).** The mathematical supplier relationships are exact:
+
+| Supplier | Hypothesis correspondence and role |
+| --- | --- |
+| This volume, §§36–41 | The same rational positive-link path, $0<T<I$, authentic $b=e_0$, actual $2N$-Tick acquisition, native $T$, cyclic $K$, $x_*=T^{2N}b$, exact root binding and installed rights are retained. Native acquisition and the all-field predictive invariant are reused. |
+| This volume, §§44–45 | The same primitive whole law $q$, $a\ge2$, Gauss integral quotient, sharp $H<a$ same-length criterion and effective $H\ge a$ collision are reused, including reducible laws and the original $R,C,\ell$. No collision or generic numeration theorem is presented as a new supplier. |
+| This volume, §§46–49 | The same prospective root window, observation inverse, advanced cut, complete-output distinction, bounded-field information lower bound and width calculations are reused. The length-first decoder changes the candidate count from $(H+1)^L$ to at most $S_L$; its counter is computed locally. |
+| [FiniteHoKalmanBlocks](../../../D5/S3/Observer/Hankel/FiniteHoKalmanBlocks.lean) and its [Scribe](../../../Blueprint/D5/S3/Observer/Hankel/FiniteHoKalmanBlocks.scribe.cs) | The selected Hankel realization algebra is already part of the earned-law supplier. Its explicit reference order and arbitrary-candidate rank lower bound are not source-order advice added here. |
+| [CoefficientDrivenJacobiCharacteristicPolynomial](../../../D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.lean) and its [Scribe](../../../Blueprint/D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.scribe.cs) | Use $E=\mathbb R^N$, power basis $T^jb$, actual Euclidean moment pairing and multiplication by $T$. Its private monicity, upper-coordinate vanishing, positive squared norm and Jacobi subdiagonal/tridiagonal arguments, and public characteristic-polynomial results, are covered suppliers to §37. They are not missing lemmas re-created for this extension. |
+| [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs) | State $\mathbb R^N$, output $\mathbb R$, update $T$, readout $b^{\mathsf T}$ and horizon $N$ give the stacked map $\mathcal O_N=K^{\mathsf T}$. Native triangularity supplies its full-rank hypothesis, while the literal Read/returning-Tick protocol supplies the actual window. |
+| [Pinned Mathlib, GaussLemma](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Polynomial/GaussLemma.lean), `Polynomial.IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` | Take $R=\mathbb Z$, $K=\mathbb Q$, primitive divisor $q$ and arbitrary integer dividend $P$. Its hypotheses require neither irreducibility of $q$ nor primitivity of $P$. It is the mature integral-divisibility step in Lemma 52.2. |
+
+The additional `repo-derived` inference is that unequal-length authentic endpoints give a monic integral annihilator, excluded by the already earned $a\ge2$. Combining that inference with the supplied same-length theorem removes length advice on the entire finite-menu union. Sections 54–57 supply its terminating local consumer, actual observation/synchronization and simultaneous resource account. The role of the authentic preparation term is essential; no statement of external mathematical priority is made.
+
+**Correspondence 58.2 (numeration and exact acquisition boundaries).** The following results have different exact source domains and retain their proved conclusions.
+
+[Akiyama–Thuswaldner–Zaïmi, *Comments on the height reducing property II*, arXiv:1403.7480v1, Theorem 3](https://arxiv.org/html/1403.7480v1) already supplies finite-automaton recognition of bounded-digit zero representations at an algebraic number with no conjugate on the unit circle. This is `literature-attested` numeration mathematics, as credited in Definition 51.2. Applied to a root of an irreducible factor of the earned $q$, its hypothesis holds because all conjugates are among roots in $(0,1)$. However vanishing at one root need not annihilate the whole native cyclic vector when $q$ is reducible. The proof here uses the full annihilator ideal and does not infer a whole-source inverse from one spectral factor. No automaton construction, fast digit-extraction bound or optimal decoder is claimed.
+
+[Signed Passive Clock, Theorems 2.1, 4.2 and 5.1](RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_PASSIVE_CLOCK.md) supplies its exact rooted interior-weight/cubic criterion, two-output passive phase recovery, native acquisition and true advanced-cut predictor for its signed contraction class. Its theorem concerns an authentic passive orbit and its declared two-value window; it is not the controlled integer word map (52.1). Here positivity and strict contraction are the original assumptions, not the larger signed class. The all-field predictive identities common to these sources are credited rather than counted as an additional discovery.
+
+[Cyclic Leaf Boundary Ambiguity, §§1–7](RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_LEAF_BOUNDARY_AMBIGUITY.md) uses a supplied size, zero entrance, multiple leaf ports and acknowledgement-only Tick, with its separately installed extra read for positive identification. [Native Discovery and Retained Context, §§8–12](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DISCOVERY_AND_RETAINED_CONTEXT.md) uses immutable ordered labelled trees, all literal finite addresses, independent completions and selected terminal-measurability contracts; its fixed-source expected factor two is a paid tree-discovery result. Neither service is the original one-root returning-Tick path, and neither supplies its integer pulse-history inverse. Their conclusions are preserved without importing their extra ports, source caps, probability laws or retained-context assumptions.
+
+[Unknown Field Native Startup, Theorems 3.1, 5.1, 6.2 and 7.3](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md) supplies capped-order unknown-field identification, paid actual unit preparation, entry into the original passive domain, and the stated uncapped deterministic obstruction. Its cap, startup pulse and later preparation are actual premises/operations of those theorems. They are not substituted for this volume's already authentic unit preparation and original acquisition. In particular this extension neither solves the uncapped unknown-field startup problem nor asserts that such startup was previously unsolved in the capped case.
+
+[Arithmetic Acquisition Return, §§10–11](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) already proves positive modular closing on the actual original $R/G$ apparatus, its sharp paid-read return theorem, synchronized retained continuation and same-run costs. Its positive closing words restore the original modular arithmetic behavior while the integer source continues forward. No gap in that closing/return result is inferred from a different Scribe, and no part of it is claimed here. Its source, outputs, quotient and target are distinct from exact native integer pulse endpoints.
+
+**Scope 58.3 (the remaining bridges).** Sections 50–51 delimit the earlier retained-length results; §§52–57 prove the additional no-length recovery on the explicitly stated integer domain. The retained-length theorems, their collisions and every other earlier scoped outcome stand unchanged. The newly recovered Time is exactly a finite consecutive integer pulse list from the authentic acquired cut. It is not a complete command/output journal, a noisy physical measurement theorem, a replacement for authentic preparation or an inferred permission system.
+
+Native $\alpha/\beta$ generation remains a candidate foundation. Identifying its native constructors, legal operations, root observations, acquired origin and retained capability with the affine symbols $x\mapsto Tx$ and $x\mapsto Tx+b$ would require an explicit common realization, a proved state/operation/output correspondence and its resource account. Binary pulse injectivity alone supplies none of those bridges: the two binary choices are the paid Tick; Add$(0)$; Read and Tick; Add$(1)$; Read actions on this fixed path, not native $\alpha$ and $\beta$ constructors. The existing original-$G_{\rm gc}$, original-$Q$, parked-consumer, arbitrary-source geometry and full four-expression programme therefore retain their own obligations. Physical authentication, a universal reduction and completion of that programme require additional stated bridges.
+
+## 追加锚（本行以下为增补区）
+
+## 59. An earned later origin on the actual scalar source
+
+**Definition 59.1 (scalar specialization and a later held cut).** Specialize Definitions 36.1–36.3 to the actual one-cell source $N=1$. Its unknown law is multiplication by a reduced rational
+
+$$
+\lambda=\frac rs,\qquad r,s\in\mathbb Z,\quad 1\le r<s,\quad \gcd(r,s)=1.
+\tag{59.1}
+$$
+
+Theorem 37.2's actual experiment earns this law and leaves the cell at $\lambda^2$. Keep the original root-bound callable reference, exact rational ports, Read/Tick/Add/Hold rights, complete replies, serialization and sufficient finite backing. At a later settled cut, an actual Read followed by Hold earns the current reduced scalar
+
+$$
+v=\frac pq,\qquad p\in\mathbb Z,\quad q\ge1,\quad \gcd(|p|,q)=1.
+\tag{59.2}
+$$
+
+For $v=0$ take $p=0,q=1$. The scalar is an observed actual origin for the subsequent experiment. The law alone does not assert this preparation. One explicit paid entrance, for any prescribed rational $v$, is to execute Add$(v-\lambda^2)$; Read; Hold after the original acquisition. The returned Read must equal $v$ by the actual Add law. An already reached later origin can instead be used after its own paid preparation and Read/Hold; its preceding costs remain attached to that run.
+
+For a finite signed word $u=(u_0,\ldots,u_{L-1})\in\mathbb Z^L$, execute literally Tick; Add$(u_i)$; Read for each symbol, including zero. If $x_i$ is the state before symbol $i$, its first scalar reply is $\lambda x_i$, its Add reply is the installed fixed acknowledgement (with the updated scalar too if that version declares it), its final Read is $x_{i+1}=\lambda x_i+u_i$, and its successor is that actual scalar. Thus
+
+$$
+X_v(u)=\lambda^L v+\sum_{i=0}^{L-1}u_i\lambda^{L-1-i},\qquad X_v(\varnothing)=v.
+\tag{59.3}
+$$
+
+The formula follows by induction on the actual actions. No tick, Add, reply or change of origin is implicit in this notation. The erased-past recovery input consists of $r,s,v$ and the current exact endpoint, with the fixed installed context; it contains neither $L$, $u$ nor their earlier reply archive.
+
+## 60. Exact origin classification for signed pulse length
+
+**Theorem 60.1 (all signed lengths, with a constructive converse).** For every actual scalar law and earned origin in Definition 59.1,
+
+$$
+\begin{split}
+&\bigl[\ \forall L,M\ge0\ \forall u\in\mathbb Z^L\ \forall w\in\mathbb Z^M,
+\quad X_v(u)=X_v(w)\Longrightarrow L=M\ \bigr]\\
+&\hspace{45mm}\Longleftrightarrow\quad s\nmid p.
+\end{split}
+\tag{60.1}
+$$
+
+When $s\nmid p$, one prime divisor of $s$ gives an exact length formula on the whole signed image. When $s\mid p$, two unequal positive lengths, both at most $2q$, and signed words at those lengths with equal endpoints can be constructed by finite integer arithmetic. This is length separation, not signed-word uniqueness.
+
+**Proof.** Suppose first that $s\nmid p$. Then $p\ne0$. Choose a prime $\ell\mid s$ with $\nu_\ell(p)<e:=\nu_\ell(s)$. For nonzero rationals, $\nu_\ell$ denotes numerator valuation minus denominator valuation, so $c:=\nu_\ell(v)<e$. Since $\ell\nmid r$, multiplication by $\lambda$ lowers this valuation by $e$. After the first such multiplication its valuation is $c-e<0$. Adding an integer cannot change a negative valuation: for nonzero integer $k$, $\nu_\ell(k)\ge0$, and the valuation of a sum of two nonzero terms of different valuations is their minimum. Adding zero leaves the term unchanged. In particular the resulting term cannot vanish. Induction gives, for every signed word, including the empty word,
+
+$$
+X_v(u)\ne0,\qquad \nu_\ell(X_v(u))=c-Le,
+\qquad L=\frac{c-\nu_\ell(X_v(u))}{e}.
+\tag{60.2}
+$$
+
+The $L=0$ assertion uses $v\ne0$ directly; the induction only uses the negative valuation after each Tick. Equal endpoints therefore have equal lengths. All valuations here are of nonzero rationals; no convention assigning a finite valuation to zero is used.
+
+Now suppose $s\mid p$. Reducedness implies $\gcd(q,s)=1$. Put
+
+$$
+m=q,\qquad q_r=\gcd(q,r^m),\qquad q_0=q/q_r.
+\tag{60.3}
+$$
+
+For each prime $\ell\mid r$, if $\ell^t\mid q$ then $t\le q=m$, and $r^m$ contains the entire $\ell$-primary part of $q$. Thus $q_r$ contains exactly the primary factors of $q$ whose primes divide $r$, $\gcd(q_r,q_0)=1$, and $\gcd(q_0,rs)=1$. If $q_0=1$, take $d=1$. Otherwise the unit $sr^{-1}$ modulo $q_0$ has a positive power equal to one with exponent at most $q_0$: among $q_0+1$ consecutive powers two coincide, and cancellation is valid for a unit. In either case choose
+
+$$
+1\le d\le q_0,\qquad s^d\equiv r^d\pmod {q_0},\qquad n=m+d.
+\tag{60.4}
+$$
+
+Then $2\le n\le2q$. The factor $q_r$ divides $r^m$, while $q_0$ divides $s^d-r^d$. Consequently
+
+$$
+Z=\frac{r^m(s^d-r^d)p}{qs}\in\mathbb Z.
+\tag{60.5}
+$$
+
+The additional division by $s$ is legitimate because $s\mid p$. Since $\gcd(r^{n-1},s^{n-1})=1$, extended Euclid constructs integers $A,B$ with
+
+$$
+Ar^{n-1}+Bs^{n-1}=Z.
+\tag{60.6}
+$$
+
+Take the length-$m$ zero word and the length-$n$ word whose first and last symbols are $A,B$, with every intervening symbol zero. Formula (59.3) gives
+
+$$
+\begin{aligned}
+X_v(A,0,\ldots,0,B)
+ &=\lambda^n v+\frac{Z}{s^{n-1}}\\
+ &=\lambda^n v+\frac{r^m(s^d-r^d)p}{q s^n}
+ =\lambda^m v=X_v(0^m).
+\end{aligned}
+\tag{60.7}
+$$
+
+For $p=0$ this also works, with $A=B=0$. The lengths differ because $d\ge1$. Searching the finitely many exponents in (60.4), then applying Euclid, is a terminating construction. The two-symbol words $(s,0)$ and $(0,r)$ always have equal endpoints at the same length two, since their input contributions are both $r$. Thus even the favorable case in (60.1) does not give arbitrary signed-word uniqueness. $\square$
+
+**Corollary 60.2 (what an endpoint collision erases).** At the equal endpoints of (60.7), fix the same actual law, root binding and currently enabled Read/Tick/Add/Hold rights. Every common finite adaptive continuation has identical complete future outputs and identical scalar successors. Therefore those present data and common future experiments cannot recover the erased signed length on the full bad-origin domain. Earlier emissions or a distinguishing archive are additional data to which this obstruction does not apply.
+
+**Proof.** Read and Hold have identity successors; Read returns the same current scalar and Hold its fixed acknowledgement. Tick multiplies that same scalar by $\lambda$ and returns the same result. Add applies the same supplied rational and returns the same acknowledgement and any declared updated scalar. Induction on calls proves equality of outputs and successors. An adaptive selector that has received the same preceding replies makes the same next choice. The complete past outputs were not asserted equal in (60.7). $\square$
+
+## 61. Direct bounded digits and the reciprocal converse
+
+**Theorem 61.1 (later-origin bounded-word inverse).** Let $D_s=\{0,\ldots,s-1\}$ and suppose $s\nmid p$. On the promised image of all finite actual $D_s$ pulse words, $r,s,v$ and the exact endpoint determine the entire word and its length by a finite direct residue procedure, with one digit decision per symbol and no enumeration of candidate words.
+
+**Proof.** Recover $L$ by (60.2). If $L=0$, return the empty word. For $L>0$ form
+
+$$
+A_0=\frac{s^Lx-r^Lv}{s}\in\mathbb Z,
+\qquad R_i=r^{L-1-i}\quad(0\le i<L).
+\tag{61.1}
+$$
+
+Every $R_i$ is invertible modulo $s$. With $[t]_s$ the unique representative in $D_s$, set successively
+
+$$
+d_i=[A_iR_i^{-1}]_s,\qquad
+A_{i+1}=\frac{A_i-d_iR_i}{s}.
+\tag{61.2}
+$$
+
+The input promise and (59.3) give the invariant
+
+$$
+A_i=\sum_{j=i}^{L-1}u_j r^{L-1-j}s^{j-i}.
+\tag{61.3}
+$$
+
+Modulo $s$ it forces $d_i=u_i$, since both belong to $D_s$. Subtraction and division give the invariant for $i+1$. Hence all divisions are exact and $A_L=0$. Powers can be generated by repeated multiplication; after the initial $R_0$, the next $R_i$ is obtained by exact division by $r$ until $i=L-1$. No negative exponent is needed. This proves termination, uniqueness and correctness, including zero digits and leading or trailing zeros. $\square$
+
+**Theorem 61.2 (bounded-word iff for reciprocal scalars).** If $r=1$, the endpoint map (59.3) is injective on the disjoint union $\coprod_{L\ge0}D_s^L$ if and only if $s\nmid p$. For $s\mid p$, unequal-length colliding $D_s$ words can be constructed finitely.
+
+**Proof.** Sufficiency is Theorem 61.1. For necessity, $\gcd(q,s)=1$. Choose $d\ge1$ with $s^d\equiv1\pmod q$, using $d=1$ if $q=1$. Then
+
+$$
+C=\frac{(s^d-1)v}{s}\in\mathbb Z.
+\tag{61.4}
+$$
+
+If $C\ge0$, put $j=0,k=C$. If $C<0$, put $j=\lceil -C/s^d\rceil$ and $k=C+s^dj$, so $0\le k<s^d$. In both cases $j,k\ge0$ and $k-s^dj=C$. Choose $m\ge1$ large enough that $j<s^m$ and $k<s^{m+d}$. Write $j$ and $k$ in base $s$, padding with zeros to exactly $m$ and $m+d$ digits, respectively, with the least significant digit first in chronological order. These are allowed actual pulse words. A length-$h$ such word encoding integer $J$ has endpoint $(v+sJ)/s^h$ by (59.3). Therefore
+
+$$
+\frac{v+sj}{s^m}=\frac{v+sk}{s^{m+d}},
+\tag{61.5}
+$$
+
+because $sk-s^{d+1}j=(s^d-1)v$. The lengths are unequal. This covers negative and zero $v$ as well as positive $v$. $\square$
+
+**Scope 61.3 (digit limitations).** For every coprime $1\le r<s$, Theorem 60.1 is an exact signed-length classification and Theorem 61.1 gives the stated sufficient bounded-digit recovery domain. The necessity direction of Theorem 61.2 is restricted to $r=1$. The signed collision construction (60.6) places no bound on $A,B$, and cannot be substituted as a bounded-digit converse for $r>1$. No such general converse is asserted. The equal-length signed collision in Theorem 60.1 also explains why the signed-length task is strictly less than recovery of a signed word.
+
+## 62. Scalar views, actual continued use and simultaneous resources
+
+**Definition 62.1 (independent scalar data and common context).** Fix the earned $(r,s,v)$, installed source and rights. On the actual $D_s$ image with $s\nmid p$, Space is the actual one-cell weighted geometry and current field $x$; Time is the actual finite consecutive pulse list; Boundary is a literal current root Read made at that endpoint; numerical Memory is the current autonomous prediction scalar $w=x$ with its earned multiplication law. These are the scalar specializations of field geometry, pulse chronology, root data and sufficient predictive state. The common context contains the earned origin but no old word or length. The callable reference and authority are retained outside these numerical data; a computed copy of a boundary value is not a newly observed reply. This geometry has one cell, and no higher-dimensional geometry is inferred from it.
+
+**Proposition 62.2 (recovery, concatenation and the original service).** On that image the four numerical data determine one another, all routes agree, and pulse concatenation is compatible with the actual dynamics. At the held endpoint, the retained scalar predictor supplies every declared output and successor of every finite common adaptive continuation in the original legal menu, including rational Adds outside $D_s$ when authorized. History recovery after those general continuations is not asserted.
+
+**Proof.** Space, Boundary and Memory each provide the same $x$; Theorem 61.1 recovers the unique Time. Conversely Time computes $x$ by (59.3), hence all three numerical data. Every route therefore passes through the same unique word and endpoint. For finite words $u,t$,
+
+$$
+X_v(ut)=\lambda^{|t|}X_v(u)+\sum_{i<|t|}t_i\lambda^{|t|-1-i},
+\tag{62.1}
+$$
+
+by iterating the actual affine update; this also proves compatibility of all pulse composites on the inverse domain. For future primitive calls, the predictor keeps $w=x$. Read returns $w$ without change; Tick sets $w\leftarrow\lambda w$ and returns it; Add$(h)$ sets $w\leftarrow w+h$ and returns the installed fixed acknowledgement and the updated scalar if declared; Hold returns its fixed acknowledgement without change. The implementation forwards each enabled call through the actual retained handle, consumes its entire reply and return, and commits this same record update at the settled cut. The one-step identities and induction give the complete adaptive assertion. The model's finite frames, exact rational encoding and rights are retained, not inferred by the numerical calculation. $\square$
+
+**Proposition 62.3 (one explicit paid run).** Use Definition 59.1's prescribed-$v$ entrance after the original acquisition, then $L$ actual pulses, then an endpoint Read and Hold, even if the last pulse already read that scalar. With fixed-acknowledgement Add, this one run has exactly
+
+$$
+\begin{array}{c|ccccc}
+ &\mathrm{Tick}&\mathrm{Add}&\mathrm{Read}&\mathrm{Hold}&\text{mandatory scalar replies}\\ \hline
+\text{total}&L+2&L+1&L+3&4&2L+5.
+\end{array}
+\tag{62.2}
+$$
+
+There are $L+5$ fixed Add/Hold acknowledgements. If Add also declares its updated scalar, there are $L+1$ additional scalar replies. All literal rational inputs, framing, call completion, delivery and cleanup have their actual costs. This run leaves the actual scalar at $X_v(u)$; its diagnostic Read/Hold causes no advance. An arbitrary earlier route to $v$ substitutes its own actual preparation costs for the displayed single Add entrance.
+
+**Proof.** For $N=1$, Theorem 37.2 uses two returning Ticks, one Read, two Holds and three scalar replies. The prescribed entrance adds one Add, one Read and one Hold. Each pulse adds one Tick, one Add, one Read and two mandatory scalars. The last endpoint Read/Hold adds one of each and one scalar. Summing gives (62.2), including $L=0$; Add and Hold supply their fixed acknowledgements. $\square$
+
+**Proposition 62.4 (actual scalar widths and work).** Use reduced binary rational encodings. Let $B$ bound the total numerical encoding size of $r,s,v$ and the prescribed preparation operand, with $B\ge1$. For $D_s$ pulses there is a direct implementation of Theorem 61.1 whose numerical intermediate widths obey
+
+$$
+W=O\bigl(B+(L+2)\log_2(s+1)+1\bigr).
+\tag{62.3}
+$$
+
+It uses finitely many trial divisions to factor $s$ and select $\ell$, repeated exact divisions to compute (60.2), and $L$ residue decisions. A conservative sufficient bit-work bound, including ordinary Euclid and reduced rational arithmetic, is
+
+$$
+O\bigl((s+W+L+1)W^3\bigr).
+\tag{62.4}
+$$
+
+An attained simultaneous numerical layout uses $O(B+W+L\log_2(s+1)+\log_2(L+2))$ bits for source scalar/law buffers, the scalar predictive record, arithmetic workspace, counters and the decoded word. Actual source preparation and its producer, any separately retained old input/reply archives, I/O copies, program/parser, reference/grants and finite backing are additional coexisting stores and work, charged once each. They are neither decoder advice nor bounded by its information payload.
+
+**Proof.** After $i$ pulses the denominator divides $q s^i$, and $|x_i|\le |v|+(s-1)/(1-r/s)$. Thus numerator and denominator widths have the envelope (62.3). The powers in (61.1), the integers in (61.3), their products and Euclid coefficients have the same envelope up to an absolute constant. Trial factorization using candidate divisors at most $s$ takes at most $s$ tests with operands within this envelope. The valuations require at most $O(W)$ repeated divisions on the nonzero numerator and denominator. Powers, residue extraction and exact updates require $O(L+1)$ further arithmetic operations and Euclid calls, which can each be paid by a conservative $O(W^3)$ school arithmetic bound, including rational reduction. Retaining the output digits and one current collection of scalar arithmetic operands gives the claimed layout. One may retain and pay an additional producer/archive on the same run without reading it as decoder input. The estimate depends on the value $s$, not polynomially on its binary length. The signed collision construction can have length proportional to $q$ and very large digits; its work and stores pay those actual lengths and widths instead. For unbounded signed input words, their supplied magnitudes and resulting widths must likewise be paid. Neither (62.4) nor finite scalar dimension supplies a uniform finite-precision instrument or a total-performance optimum. $\square$
+
+## 63. Computed coordinates for the acquired pulse lattices
+
+**Definition 63.1 (the authentic arbitrary-order input).** Return to the actual rational path of Definitions 36.1–36.3 with arbitrary unknown finite $N\ge1$, positive links and $0<T<I$, authentic preparation $b=e_0$, and Theorem 37.2's executed acquisition. Retain its earned native $T$, cyclic matrix $K=[b,Tb,\ldots,T^{N-1}b]$, $M=K^{-1}TK$, $v_j=M^je_0$, and actual acquired origin $x_*=T^{2N}b$. Here $v_j$ denotes a vector, independently of the scalar origin $v$ in §§59–62. The primitive whole integer law is $q(z)=a z^N+\sum_{i<N}q_i z^i$, with $a\ge2$, and its monic rational law is $\bar q=q/a$. Neither irreducibility nor a selected spectral factor is assumed.
+
+For $n\ge N$ use exactly Lemma 45.1's lattice
+
+$$
+\Lambda_n=\sum_{j<n}\mathbb Z v_j,\qquad
+\Lambda_N=\mathbb Z^N.
+\tag{63.1}
+$$
+
+The same lemma already supplies that $\Lambda_{n+1}/\Lambda_n$ is cyclic of exact order $a$, generated by $v_n$. This exact-order statement is an input from its full primitive-law proof, not an additional lattice-order theorem. The computational task here is to produce finite membership matrices and explicit residue maps and consume them at the actual acquired endpoint. All matrix entries and vectors below are rational or integer encodings computed from this earned input.
+
+**Proposition 63.2 (one explicit extension step).** Starting with $C_N=I$, finite integer arithmetic constructs nonsingular integer matrices $C_n$ such that
+
+$$
+C_n\Lambda_n=\mathbb Z^N,\qquad
+\Lambda_n=\{y\in\mathbb Q^N:C_ny\in\mathbb Z^N\}.
+\tag{63.2}
+$$
+
+At each $n\ge N$, it also constructs a homomorphism
+
+$$
+\phi_n:\Lambda_{n+1}\longrightarrow\mathbb Z/a\mathbb Z,
+\qquad \ker\phi_n=\Lambda_n,\qquad \phi_n(v_n)=1.
+\tag{63.3}
+$$
+
+Membership is computed by exact rational matrix multiplication and integrality of all coordinates. Evaluation of $\phi_n$ on its declared domain is computed by one integer residue of an explicit rational linear form.
+
+**Proof.** Suppose (63.2) holds at $n$. Exact order $a$ gives $a v_n\in\Lambda_n$, so
+
+$$
+t=a C_n v_n\in\mathbb Z^N\setminus\{0\}.
+\tag{63.4}
+$$
+
+Nonvanishing follows because $T$, hence $M$, is invertible. Put $g=\gcd(|t_0|,\ldots,|t_{N-1}|)>0$. Construct an integer unimodular matrix $U$ with $Ut=g e_0$. For completeness, swap a nonzero coordinate into the first position and change its sign if necessary. If the current first entry and another entry are $R,S$, not both zero, Euclid gives $A R+B S=g'$, where $g'=\gcd(|R|,|S|)>0$. Apply on these two rows the integer matrix
+
+$$
+\begin{pmatrix}A&B\\-S/g'&R/g'\end{pmatrix}.
+\tag{63.5}
+$$
+
+It has determinant one and sends $(R,S)^{\mathsf T}$ to $(g',0)^{\mathsf T}$. Skip pairs of zeros. Repeating over the other coordinates gives the asserted $U$, including $N=1$ by a possible sign change. Each operation has an integer inverse, so the product is unimodular.
+
+The vector $C_n v_n=t/a$ has exact order $a$ modulo $\mathbb Z^N$, since $C_n$ is an isomorphism of the lattices in (63.2). After applying $U$ that order is the order of $g/a$ modulo $\mathbb Z$, namely $a/\gcd(g,a)$. Hence $\gcd(g,a)=1$. Therefore
+
+$$
+\begin{aligned}
+U C_n\Lambda_{n+1}
+ &=\mathbb Z^N+\mathbb Z(g/a)e_0
+   =(a^{-1}\mathbb Z)\times\mathbb Z^{N-1},\\
+C_{n+1}&=\operatorname{diag}(a,1,\ldots,1)U C_n.
+\end{aligned}
+\tag{63.6}
+$$
+
+The last matrix is nonsingular and integer, and maps $\Lambda_{n+1}$ onto $\mathbb Z^N$. Its full preimage of $\mathbb Z^N$ is precisely that lattice, since it is invertible over $\mathbb Q$. This proves (63.2) inductively.
+
+Choose $h\in\mathbb Z$ by Euclid so that $hg\equiv1\pmod a$. For $y\in\Lambda_{n+1}$ define
+
+$$
+\phi_n(y)=\bigl[h a(U C_n y)_0\bigr]_a.
+\tag{63.7}
+$$
+
+The expression inside the residue is an integer on this domain by (63.6). It is additive. Its value at $v_n$ is $[hg]_a=1$. Its zero condition is $a(U C_n y)_0\equiv0\pmod a$, since $h$ is a unit modulo $a$. Equivalently $(U C_n y)_0$ is an integer. All other coordinates already are integers by (63.6), so this condition is $UC_n y\in\mathbb Z^N$, or $y\in\Lambda_n$. This proves (63.3). In particular (63.7) is not a residue operation on an arbitrary rational outside its stated domain. The construction computes $v_{n+1}=Mv_n$, its integer row transformations and all denominators by ordinary finite arithmetic; it invokes no membership, basis or quotient oracle. $\square$
+
+## 64. A lattice clock and direct digits without an old length
+
+**Theorem 64.1 (computed clock on the entire signed image).** For every source of Definition 63.1, every $L\ge0$ and every actual signed integer pulse word $u\in\mathbb Z^L$, put $x=X(u)$ as in (52.1) and $z=K^{-1}x$. Then
+
+$$
+\min\{n\ge N:z\in\Lambda_n\}=L+2N+1.
+\tag{64.1}
+$$
+
+Starting with $C_N$, Proposition 63.2's successive membership tests therefore recover $L$ without an old length, word or archive, using exactly $L+N+1$ extension steps and $L+N+2$ tests on this promised input. This computes the signed length already known to be unique by Theorem 52.3, with no candidate-word enumeration.
+
+**Proof.** In power coordinates the actual endpoint identity is
+
+$$
+z=v_d+\sum_{j=0}^{L-1}p_jv_j,
+\qquad d=L+2N,\qquad p_j=u_{L-1-j}.
+\tag{64.2}
+$$
+
+The sum belongs to $\Lambda_d$, because every $j<L<d$. Exact order $a\ge2$ gives $v_d\notin\Lambda_d$. Thus $z\notin\Lambda_d$, but $z\in\Lambda_{d+1}$. Since the lattices increase, it belongs to none of the earlier lattices with index at least $N$. This proves (64.1), including $L=0$, when the sum is empty. Testing $N,N+1,\ldots,d+1$ uses $d+2-N=L+N+2$ tests and requires construction of $C_{N+1},\ldots,C_{d+1}$, exactly $d+1-N=L+N+1$ extensions. At each step the predicate is computed by (63.2). The analysis uses the actual $L$ only to count the run; the controller stops at its first successful membership test. $\square$
+
+**Theorem 64.2 (direct bounded-menu consumer).** Fix an integer $0\le H<a$. From the earned source data and a rational endpoint promised to belong to $X(\coprod_{L\ge0}\{0,\ldots,H\}^L)$, the computed filtration and residues return the entire actual word and length. Besides the ascending membership tests of Theorem 64.1, the procedure makes exactly $L$ digit decisions and finitely many vector operations. It consumes the same inverse domain as Theorem 53.1.
+
+**Proof.** Recover $L$ by Theorem 64.1, retain the matrices and residue forms already constructed, and form
+
+$$
+\rho=z-v_{L+2N}=\sum_{j<L}p_jv_j.
+\tag{64.3}
+$$
+
+For $j=L-1,L-2,\ldots,N$, when this range is nonempty, the current residual is in $\Lambda_{j+1}$. Its coefficient $p_j$ is the unique representative in $\{0,\ldots,H\}$ of $\phi_j(\rho)$: the lower-index part is in $\Lambda_j$, and $\phi_j(v_j)=1$. Because $H<a$, two allowed coefficients cannot have the same residue modulo $a$. Compute the least nonnegative residue by integer division; the promise ensures that it is at most $H$. Use this value for $p_j$ and replace $\rho\leftarrow\rho-p_jv_j$. The residual then lies in $\Lambda_j$ with precisely its lower-index expansion, proving the descent invariant.
+
+At its end, or immediately when $L\le N$, the residual is
+
+$$
+\rho=\sum_{j<\min(L,N)}p_je_j,
+\tag{64.4}
+$$
+
+because $v_j=e_j$ for $j<N$. Its first $\min(L,N)$ coordinates give the remaining digits directly; all other coordinates are zero. Reverse their order to obtain the chronological word $u$. There are $\max(L-N,0)$ residue decisions and $\min(L,N)$ coordinate decisions, totaling $L$. For $L=0$, the residual is zero and the procedure returns the empty word. This proves termination and the exact answer without re-proving the supplied injectivity or collision threshold. $\square$
+
+**Scope 64.3 (recognition and signed ambiguity).** The clock terminates on the full signed endpoint image; signed digits themselves can be ambiguous. The bounded consumer terminates on its promised image. For a general rational input, successive membership tests need not terminate. A successful membership test by itself is not a certificate of a legal history: its index could give a negative proposed length, and its residual could fail the allowed digit conditions. Theorems 64.1–64.2 are exact promised-domain inverses, not a total membership decision for their infinite image. At $H\ge a$, the supplied equal-length collisions remain, while the authentic signed length still has (64.1). No extension to arbitrary later vector origins is made by subtracting the original $v_{L+2N}$ without justification.
+
+## 65. Literal boundary acquisition and the actual advanced predictor
+
+**Definition 65.1 (one endpoint window on the same specimen).** After any actual pulse word on the authentic source, let $x_{\rm hist}=X(u)$ be its endpoint. Execute the original diagnostic of Theorem 56.1: Read once, perform $N-1$ returning Ticks, then Hold. The literal scalar list and the actual held field are
+
+$$
+\begin{aligned}
+y&=(b^{\mathsf T}T^j x_{\rm hist})_{j=0}^{N-1}
+   =\mathcal O_Nx_{\rm hist},\qquad \mathcal O_N=K^{\mathsf T},\\
+x_{\rm now}&=T^{N-1}x_{\rm hist}.
+\end{aligned}
+\tag{65.1}
+$$
+
+The inverse $\mathcal O_N^{-1}$ and native $T$ are earned suppliers from §§37, 40 and 56. The decoder takes their finite encodings and this actually acquired $y$. It does not receive a full response oracle. It computes $x_{\rm hist}=\mathcal O_N^{-1}y$, then applies §§63–64 during the actual Hold. It installs its live record at $x_{\rm now}$ in (65.1). The diagnostic metadata says that exactly $N-1$ observation Ticks have occurred; it is independent of the erased $L$.
+
+**Theorem 65.2 (installed lattice consumer and complete future service).** For each promised actual source, $0\le H<a$ and every finite actual allowed pulse word, Definition 65.1 followed by Theorem 64.2 recovers the original word and length and retains an exact predictor for the actual advanced specimen. It needs exactly $N$ new scalar replies and $N-1$ new Ticks, with no further source calls for the lattice arithmetic. Every finite common adaptive continuation in the original installed menu has its complete outputs and actual successors predicted exactly.
+
+**Proof.** Native cyclicity gives $\mathcal O_N^{-1}$, so the paid list recovers the exact historical endpoint. This meets Theorem 64.2's authentic input promise. Its finite arithmetic terminates while Hold preserves the advanced actual field. Initialize the live predictive vector by
+
+$$
+w_j=b^{\mathsf T}T^j x_{\rm now}\quad(0\le j<N).
+\tag{65.2}
+$$
+
+For the full menu, Read returns $w_0$ without changing the state. Tick uses the monic whole law:
+
+$$
+w'_j=w_{j+1}\ (j<N-1),\qquad
+w'_{N-1}=-\sum_{i<N}\bar q_iw_i,
+\tag{65.3}
+$$
+
+and returns $w'_0$. For $N=1$, (65.3) consists solely of its last formula. An authorized rational Add$(h)$ gives
+
+$$
+w'_j=w_j+h\mu_j,\qquad \mu_j=b^{\mathsf T}T^jb,
+\tag{65.4}
+$$
+
+and returns the installed fixed acknowledgement, together with $w'_0$ if that Add version declares it. Hold returns its fixed acknowledgement and preserves $w$. These identities are the supplied all-field predictive invariant of Theorem 56.3, here initialized at (65.1). Indeed the next native states are $Tx$, $x+hb$, $x$, $x$ for Tick, Add, Read, Hold, respectively; multiplication by $\mathcal O_N$ gives (65.3)–(65.4). Thus $w=\mathcal O_Nx$ remains true for every rational current field, including after a future Add outside the decoding alphabet.
+
+Retain and use the actual root-bound service reference, enabled rights, exact frame convention, serialization, reply/return and finite backing. The consumer forwards each admitted call there, consumes every declared output and the completed return, and commits the corresponding record update before the next settled cut. Numerical evaluation supplies predictions of these outputs; it is not an extra source read or a substitute handle. One-step equality and induction prove equality along any finite common adaptive choice of operations. This establishes actual continued use of the same advanced specimen, rather than merely computation of a historical predictor. $\square$
+
+**Proposition 65.3 (the two cuts and diagnostic provenance).** At the returned held cut, Space and live Memory refer to $x_{\rm now}$; the stored Boundary list in (65.1) starts at $x_{\rm hist}$. Both endpoints are retained as distinct records if both are needed. There is no rollback. Numerically $x_{\rm now}=X(u0^{N-1})$, but the diagnostic suffix is not an actual zero-pulse suffix and is not part of the recovered pulse Time.
+
+**Proof.** The zero-input affine updates multiply by $T$, giving the numerical identity. An actual zero pulse additionally executes Add$(0)$ and Read and has their complete outputs and returns; the diagnostic only executes the stated returning Ticks after its initial Read. Hence equality of numeric endpoints does not identify command lists or emitted outputs. Equation (65.1) gives the actual advance and determines which record the live invariant must use. $\square$
+
+## 66. Independently meaningful expressions at the returned cut
+
+**Definition 66.1 (the joint returned image).** Fix the earned authentic source, task bound $H<a$, original binding/rights and the diagnostic schedule of Definition 65.1. The domain consists exactly of returned held cuts after some finite actual $\{0,\ldots,H\}$ pulse list from $x_*$ and that diagnostic. Shared numerical context is the earned $(N,T,q,\mu,x_*,H)$ and the known diagnostic count $N-1$, without an old $L$ or pulse list. Define the expressions independently:
+
+| Expression | Exposed numerical data and meaning |
+| --- | --- |
+| Space | The actual rooted weighted path and complete present native field $x_{\rm now}$, modulo root-preserving weighted coordinate identification |
+| Time | The actual finite consecutive pulse list before the prescribed diagnostic, with that diagnostic distinguished by its fixed schedule |
+| Boundary | The literal paid ordered $N$-value root window $y$ of (65.1), retained from its actual observation |
+| Memory | The earned law and the live sufficient vector $(b^{\mathsf T}T^j x_{\rm now})_{j<N}$ of current autonomous root predictions |
+
+The law/origin metadata is common context, not a hidden copy of Time. The retained callable handle, rights, actual record encodings and backing are additional resources attached to this service, not numerical coordinates manufactured by a view inverse. Source outputs may be copied into records with their ordinary copy cost; merely calculating their equal numeric values does not earn observation provenance.
+
+**Theorem 66.2 (returned-cut recovery, routes and task kernel).** On Definition 66.1's exact actual image, each expression determines the other three numerical expressions, the original pulse length, the historical endpoint and the actual present endpoint. Every recovery route agrees. These data have exactly the same kernel as the complete current original continuation task on this fixed image. The maps respect pulse concatenation at historical pulse cuts and passage through the prescribed diagnostic. They also respect every finite legal primitive continuation for which the claimed initial and final view domains are met; intervening all-field prediction is always provided by Theorem 65.2.
+
+**Proof.** From Boundary apply $\mathcal O_N^{-1}$ to get $x_{\rm hist}$, Theorem 64.2 to get Time, and $T^{N-1}$ to get actual Space and hence Memory. From Space invert $T^{N-1}$, which is possible because $T$ is positive definite, obtaining the historical endpoint and the same inverse. From Memory first use $\mathcal O_N^{-1}$ to get $x_{\rm now}$ and proceed as from Space. From Time use (52.1) for $x_{\rm hist}$, then (65.1)–(65.2) for all other numerical data. These are equalities on the same jointly realized process. A reconstructed numerical window is equal to the recorded window; its actual observation is the supplied diagnostic, not an additional conclusion about a computation. Every route factors through the unique original word and these two deterministic endpoints, proving route agreement.
+
+Equal present fields give equal full future output/successor behavior by Theorem 65.2. Conversely if two present fields differ, their difference has nonzero image under invertible $\mathcal O_N$. Consequently Read followed by at most $N-1$ returning Ticks distinguishes a coordinate of that image, using the actual legal ports. Thus full continuation equivalence is exactly equality of $x_{\rm now}$. Invertible $T^{N-1}$ and Theorem 53.1 make this exactly equality of the original allowed pulse list on the declared image. This proves the kernel assertion without identifying complete old journals with current state outside that image.
+
+For pulse dynamics, (59.3)'s vector analogue follows directly from the same affine updates:
+
+$$
+X(ut)=T^{|t|}X(u)+\sum_{i<|t|}t_iT^{|t|-1-i}b.
+\tag{66.1}
+$$
+
+Applying the diagnostic after the concatenated word gives the actual present field $T^{N-1}X(ut)$. Transport through these equalities proves compatibility for formation of pulse lists followed by their diagnostic. This is not an instruction to append $t$ from the already advanced returned state and call its pulse list $ut$. For a primitive continuation starting at a returned cut, use the actual present field as its initial field, not $x_{\rm hist}$. Theorem 65.2 gives its actual successors and all outputs. Whenever the ending cut also meets Definition 66.1 with its specified original-origin history and diagnostic, the inverse just proved recovers that ending cut's unique data. Composition therefore agrees with the direct recovery there. No assertion that every primitive continuation remains in this inverse domain is needed. $\square$
+
+## 67. Arithmetic counts and all actual coexisting material
+
+**Proposition 67.1 (one path run and its literal traffic).** Realize Definition 63.1's original acquisition, $L$ actual pulses, Definition 65.1's diagnostic and held lattice decoding on one source. With fixed-acknowledgement Add the counts before a later continuation are exactly
+
+$$
+\begin{array}{c|ccccc}
+ &\mathrm{Tick}&\mathrm{Add}&\mathrm{Read}&\mathrm{Hold}&\text{mandatory scalar replies}\\ \hline
+\text{total}&3N+L-1&L&L+2&N+2&3N+2L+1.
+\end{array}
+\tag{67.1}
+$$
+
+There are $L+N+2$ fixed Add/Hold acknowledgements. If Add also returns its updated scalar, add $L$ scalar replies. No lattice step is a source primitive, and no reduction of these source counts relative to Proposition 57.2 is claimed.
+
+**Proof.** The original acquisition has $2N$ Ticks, one Read, $N+1$ Holds and $2N+1$ scalar replies. The pulses add $L$ Ticks, $L$ Adds, $L$ Reads and $2L$ mandatory scalars. The diagnostic adds $N-1$ Ticks, one Read, one Hold and $N$ scalars. Summing proves (67.1), including $N=1$ and $L=0$. Every call pays its actual input encoding, framing, transmission, complete reply/return, record construction, delivery and cleanup in addition to this count. $\square$
+
+**Proposition 67.2 (a fully computed local bill).** Let
+
+$$
+E=L+N+1.
+\tag{67.2}
+$$
+
+One implementation retains all $C_n$, necessary residue forms and vectors constructed before the first successful test. Excluding Euclidean subroutines, the ascending construction, membership tests and descending decoder use $O(E N^3)$ integer/rational arithmetic operations. Lattice row reduction and modular inverses require at most $N E$ calls to extended Euclid. Ordinary gcd reductions within rational arithmetic are additional subroutines included in its width-dependent bit cost below. There are no oracle operations. The live table, vectors, output digits and numerical workspace have $O((E+1)N^2)$ integer/rational entries. These are counts in the actual $L$ and $N$, not a polynomial bound in the binary input size.
+
+**Proof.** There are exactly $E$ extensions by Theorem 64.1. At one extension, compute $C_n v_n$ and $Mv_n$ with $O(N^2)$ rational operations. The row reduction (63.5) uses at most $N-1$ pairwise extended gcd calls, followed by one call for the inverse of $g$ modulo $a$, at most $N$ in all. Explicitly retaining and multiplying the row matrices and $C_n$ can conservatively be done in $O(N^3)$ further arithmetic operations; applying $C_n$ to $z$ costs $O(N^2)$. Each of the $L$ digit decisions and vector subtractions costs $O(N^2)$ or less from the saved forms and vectors. Initial and final fixed-size matrix applications are within this bound. The table has $E+1$ matrices of $N^2$ entries and at most $O(E N)$ vector/form entries; the output and remaining workspace fit the same bound. The case $N=1$ uses only sign normalization and the one modular-inverse Euclid call per extension. No candidate word is generated or tested. $\square$
+
+**Proposition 67.3 (width-dependent bit work and one simultaneous layout).** Let $W\ge1$ be the maximum actual signed-integer bit width on this implementation, including numerators, denominators, unreduced products and sums, Euclid inputs/intermediates/coefficients, row and membership calculations, digits and counters. Let $S_{\rm fixed}$ be the actual numeric storage for the already acquired native law, moments, fixed matrices/inverses, literal boundary record and the live/historical/predictive vectors, and $S_{\rm source}$ the source's actual law and active buffers. One conservative additional decoding bound is
+
+$$
+\text{bit work}=O(E N^3W^3),\qquad
+\text{table/output/workspace bits}=O((E+1)N^2W).
+\tag{67.3}
+$$
+
+An attained simultaneous total-space account at the held decoding cut is
+
+$$
+\begin{split}
+S_{\rm source}+S_{\rm fixed}
+ +O((E+1)N^2W)
+ +P_{\rm live}+A_{\rm past}+A_{\rm io}+S_{\rm access}.
+\end{split}
+\tag{67.4}
+$$
+
+Here $P_{\rm live}$ is actual producer/input-provider material, $A_{\rm past}$ separately retained input/reply archives, $A_{\rm io}$ extra simultaneous I/O and delivery copies, and $S_{\rm access}$ program/parser, actual references, grants and other finite backing. These denote disjoint charged stores; shared material is counted once, and no archive or producer record is consulted by the decoder. Their arbitrary encodings have no bound inferred from the numerical estimate.
+
+**Proof.** School integer addition, multiplication and division on operands/intermediates of width at most $W$ have a conservative $O(W^2)$ cost; Euclid and rational reduction have a conservative $O(W^3)$ cost. Paying this bound for the arithmetic and Euclid calls in Proposition 67.2 proves (67.3). Its entry count times actual width proves its storage estimate. Retain the source's two field buffers, acquired fixed matrices, current native/predictive vectors, literal boundary record and historical endpoint, while the same observer holds the lattice tables and decoded list. Retain any actual producer, old archive, I/O copies and access material alongside them. This is a single layout realizing the sum (67.4), rather than unrelated minima of different runs.
+
+Source execution and acquisition are additional work: the existing tridiagonal Tick uses $3N-2$ products and $2N-2$ additions, Add changes the root, and all actual operands pay their widths. Theorem 37.2's native acquisition can use Proposition 41.3's $O(N^4)$ rational operations and $N-1$ promised rational-square extractions; fixed inverses use an additional $O(N^3)$ rational operations. Retained source/predictor updates for the pulses and diagnostic use the existing $O(N(L+N))$ rational-operation implementation. Each square extraction, I/O operation, source-creation/preparation step, producer action and later continuation has its separate actual work and width cost. Combining these with (67.3) is the account for this one run. Later rational inputs can increase widths and material, and must be charged at their actual later values. $\square$
+
+**Scope 67.4 (payload, constructive work and complexity).** The table procedure removes the candidate enumeration of §54 and supplies finite exact membership/residue arithmetic. No bound polynomial in the encoded initial input has been proved here for $W$, $L$ or the total work. Equation (67.3) is conditional on the actual maximum width, not an estimate setting that width to one. The information lower bounds of §48 remain: for $1\le H<a$, length-$L$ endpoints distinguish $(H+1)^L$ actual words, requiring at least $\lceil L\log_2(H+1)\rceil$ bits in a fixed-width lossless record. Table storage, source, programs, authority and archives are further material, not that payload. For $H=0$ the clock still has unbounded distinct lengths. No uniform precision bound, lower source-call count, optimal lattice basis, total-runtime improvement or peak-memory dominance follows. A supplied enumeration remains a sufficient alternative whenever its own actual costs meet the task.
+
+## 68. Supplier correspondence, scalar overlap and exact remaining bridges
+
+**Proposition 68.1 (the common scalar case is one result).** On the authentic $N=1$ specialization, the clock/residue consumer and the scalar valuation/digit consumer recover the same length and word. Their common authentic scalar case is a single deduction. The later-origin classification of §§59–61 and arbitrary-order computed consumer of §§63–67 have distinct additional domains.
+
+**Proof.** The primitive law is $q(z)=sz-r$, so $a=s$ and $v_j=(r/s)^j$. For $n\ge1$,
+
+$$
+\Lambda_n=s^{-(n-1)}\mathbb Z.
+\tag{68.1}
+$$
+
+Indeed each generator is in the right-hand side; conversely $1$ and $r^{n-1}/s^{n-1}$ generate it by $\gcd(r^{n-1},s^{n-1})=1$. The authentic origin is $\lambda^2=r^2/s^2$, whose reduced numerator is coprime to $s$. For every prime $\ell\mid s$, its valuation formula is $\nu_\ell(X(u))=-(L+2)\nu_\ell(s)$. Hence the first membership index in (68.1) is $L+3$, agreeing with $L+2N+1$ and the scalar formula. For the allowed digits $H<s$, both procedures return the unique actual word; for $H=s-1$ the scalar residue formula applies directly, and restriction gives the smaller alphabets. No second independent authentic-scalar theorem is needed. An arbitrary actual later scalar $p/q$ need not equal $\lambda^2$, so its exact good/bad-origin classification is additional. Conversely §§59–61 do not supply the matrix construction or whole-law residues for arbitrary $N$. $\square$
+
+**Correspondence 68.2 (mathematical inputs and their hypotheses).** Repository suppliers in this section are interpreted at fixed public revision [1de6e6e8a3a3b77e922bc23dad5636224d083358](https://github.com/the-omega-institute/trureturing/tree/1de6e6e8a3a3b77e922bc23dad5636224d083358). The deductions are `repo-derived` relative to the following supplied mathematics, without a worldwide priority assertion.
+
+| Supplier | Exact correspondence and role |
+| --- | --- |
+| This volume, §§36–41 | The original rational positive-link native path, authentic unit preparation, unknown-size paid acquisition, cyclic $K$, native law and actual $T^{2N}b$ are reused. The scalar experiment deliberately earns a later actual origin; the arbitrary-order consumer keeps the authentic one. |
+| This volume, Lemma 45.1, Proposition 44.3 and Lemma 52.2 | The whole primitive integral annihilator ideal and exact order $a$ of every successive lattice quotient are supplied. They permit reducible $q$. Proposition 63.2 computes the matrices and maps for those specific lattices; it does not present their exact quotient order as new. |
+| This volume, §§52–58 | Authentic signed-length separation, the sharp finite-menu inverse/collisions, original enumerative consumer, observation inverse, complete original menu, retained capability and advanced-cut/resource distinctions are supplied. The new arbitrary-order work is the computed filtration clock and descending residue consumer on that same image. |
+| [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs) | State $\mathbb R^N$, output $\mathbb R$, update $T$, readout $b^{\mathsf T}$ and horizon $N$ give $\mathcal O_N$. Native cyclicity supplies injectivity, while the actual Read/returning-Tick diagnostic supplies its input. Its general observation inverse is a reused intermediate. |
+| [CoefficientDrivenJacobiCharacteristicPolynomial](../../../D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.lean) and its [Scribe](../../../Blueprint/D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.scribe.cs) | The actual moment pairing, power basis and multiplication by $T$ supply the native Jacobi reconstruction used in §37. Its private monicity, degree/orthogonality and positive-norm/tridiagonal proofs are covered suppliers, not absent interfaces re-proved here. |
+| [Pinned Mathlib Gauss lemma](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Polynomial/GaussLemma.lean), `Polynomial.IsPrimitive.dvd_of_fraction_map_dvd_fraction_map` | The primitive divisor is the whole $q\in\mathbb Z[z]$, fraction field $\mathbb Q$, dividend an arbitrary integer annihilator. This supplies the integral quotient in the already proved lattice order; irreducibility is unnecessary. |
+| [Pinned rational valuation library](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/NumberTheory/Padics/PadicVal/Basic.lean) | The classical nonzero rational valuation product and unequal-valuation sum laws underlie (60.2). The proof uses ordinary valuations only on nonzero terms, explicitly separating zero integer inputs. The later-origin iff and its actual signed collisions are source-specific deductions. |
+
+Extended Euclid, unimodular two-row reduction, cyclic integer residues and ordinary base-$s$ expansion are `literature-attested` elementary arithmetic. They are proved to act on the required objects in (60.3)–(60.7), (61.1)–(61.5) and (63.4)–(63.7); no new general Euclidean or lattice normal-form theorem is claimed. [Akiyama–Thuswaldner–Zaïmi, *Comments on the height reducing property II*, arXiv:1403.7480v1, Theorem 3, its proof and Remark 11](https://arxiv.org/html/1403.7480v1) give finite-automaton recognition of bounded-digit zero representations for an algebraic number without unit-circle conjugates. A root of an irreducible factor of the present $q$ satisfies their hypothesis because all its conjugates are roots in $(0,1)$. Vanishing at that root alone need not annihilate the full cyclic vector when $q$ is reducible. Their zero-representation automaton does not install this path, earn its origin or identify its complete observation/continuation interface. Its numeration mathematics is credited; the present whole-law consumer uses the supplied integral ideal instead of claiming an unsupplied equivalence with one spectral factor.
+
+**Correspondence 68.3 (other public sources retain their own domains).** [Atomic Generation Acquisition II, §§61–67](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md) supplies actual randomized guard acquisition, fixed-input weighted minimax and full LAB continuation on its reached tree image. [Unknown Field Native Startup, §§27–33](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md) supplies signed localized-ring producer provenance, its principal-Hankel stopping certificate, actual preparation and continued service. [Native Leaf Boundary Acquisition II, §§24–29](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md) supplies actual raw-binding separation through fresh-zero growth, complete raw/canonical continuation and its own same-run binary/age tradeoffs. These are supplied results, not new randomized minimax, signed startup, binding or original-tree inverse theorems of this scalar/lattice construction. Its later scalar Read does not replace the signed producer's acquisition hypotheses, and its computed matrices are not a raw-label decoder.
+
+[Native Attractive Boundary Response, §18](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md) concerns the full complex spectral count for its fixed unit-source marginal and natural angular fibres, conditional on its analytic hypotheses. [Boundary Geometry Continuation III Appendix, §108](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md) gives a necessary annular germ of original maximal zero modes, without establishing their existence or selection. [Private-Randomization Quadratic Clock, §8](FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md) treats independent seeds and complete real-report worlds with bounded report errors and an unrestricted expected-loss criterion. None of those operators, exact-real report ports or probability/energy quantities is identified with the rational path's Tick/Add law by (59.3) or (64.2). No common physical realization is inferred from their scalar, clock or boundary terminology.
+
+**Scope 68.4 (what these two theorems establish).** The scalar result gives exact later-origin signed-length recovery/collisions, a direct bounded-digit inverse on its sufficient domain, and the reciprocal-only bounded converse, all after an earned actual origin. The arbitrary-order result gives a computed lattice clock/residue consumer on the authentically acquired path, its actual returned-cut recovery and synchronized original-menu service, with arithmetic counts paid at actual widths. Their common authentic scalar specialization is credited once. The independently meaningful geometries are the stated one-cell or native weighted-path fields; Time is the specified consecutive pulse list, Boundary the specified paid root data, and Memory the stated sufficient present predictor.
+
+No arbitrary signed-word uniqueness, general bounded-alphabet converse for nonreciprocal later scalars, arbitrary later vector-origin classification, arbitrary rational command-history inverse, complete old-output journal recovery, physical authentication or polynomial-input/total-resource optimum is obtained. Current equal fields can erase old histories even when their common futures are predicted exactly. Archives that retain the distinction remain additional material. Exact source membership, reference binding, current authority, held serialization and sufficient backing remain hypotheses rather than facts certified by these finite observations.
+
+Native $\alpha/\beta$ constructors are not identified with the paid affine pulse actions. A common native realization would need a proved state, legal-operation, initialization, complete-output, observation and resource correspondence. Binary scalar/pulse recovery supplies none of these bridges by terminology alone. The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization, final-no-Ready and erased-history claims retain their exact original scopes; this work proves no new statement in them. Joining LAB, rational-path and quantum models, and completing the sustained four-expression programme, remain separate obligations.
+
+## 追加锚（本行以下为增补区）

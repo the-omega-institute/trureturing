@@ -5,8 +5,10 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Perfect evolution algebras have monomial automorphisms; Conjecture 3 asks for their sharp all-dimensional maximum order."
+claim: "Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms."
 strata_touched:
+  - D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases
+  - D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport
 license: citation-only
@@ -35,3 +37,33 @@ sharp maximum, attainment or an exclusive extremizer classification.
 The group-scheme sequence in equation (2) has no terminal surjectivity claim
 onto the full graph automorphism group. The formal model uses the actual image
 and the actual block-action kernel.
+
+## Hilbert natural-basis uniqueness
+
+Section 2.2.8, Question 46, page 26 asks: "If the square of a Hilbert evolution algebra
+is dense, is its natural orthonormal basis unique up to permutation and
+unimodular scalars?" Section 1.8 and the cited Hilbert evolution algebra
+framework allow real or complex scalars, complete orthonormal natural bases,
+and continuous left multiplication. Here the square is the algebraic span of
+all pair products and density is norm density. The subsequent sentence about
+bounded derivations, automorphisms and spectral theory is a separate request.
+A complex counterexample refutes the first universal assertion for the full
+real-or-complex class. The first interrogative is a question in this source,
+not a theorem attributed to its authors.
+
+## Natural bases with finite full automorphisms
+
+Section 2.2.2, Question 14 asks: "Describe the set of natural bases (up to
+permutation and scaling) of a non-degenerate evolution algebra. When is it
+finite? Can it be infinite for an algebra whose automorphism group is finite?"
+The selected assertion is the entire final sentence. Section 1.1 permits
+an arbitrary field, assumes finite dimension unless otherwise stated, and
+identifies nondegeneracy with zero annihilator. Aut denotes all field-valued
+linear multiplication automorphisms. Complex scalars give a permitted
+existence witness. Basis equivalence allows arbitrary permutations and
+independent nonzero scalars, without quotienting by algebra automorphisms.
+
+The two-dimensional algebra and its finite full group are prior ingredients
+from arXiv:1807.02362v1 and arXiv:2303.00862v1. The Q14 endpoint combines
+these with a separated infinite family in the exact basis quotient. It
+does not answer the first two interrogatives or assert global priority.

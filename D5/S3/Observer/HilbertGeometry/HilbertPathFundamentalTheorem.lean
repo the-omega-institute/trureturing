@@ -51,7 +51,7 @@ private theorem ac_lipschitz_comp {X Y : Type*} [PseudoMetricSpace X] [PseudoMet
 
 variable {H ι : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
 
-private theorem finite_coordinate_derivative_bound {f : ℝ → H} {g : ℝ → ℝ}
+theorem finite_coordinate_derivative_bound {f : ℝ → H} {g : ℝ → ℝ}
     {v : ι → H} (hv : Orthonormal ℝ v) {t : ℝ}
     (hc : ∀ i, DifferentiableAt ℝ (fun x => ⟪v i, f x⟫_ℝ) t)
     (hg : DifferentiableAt ℝ g t)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35c05b5e35bce9e018440d260157b57ad138caa865e2acee69aa4821c724d445
+  normalized_sha256: sha256:35c05b5e35bce9e018440d260157b57ad138caa865e2acee69aa4821c724d445
+cas_ref: sha256:35c05b5e35bce9e018440d260157b57ad138caa865e2acee69aa4821c724d445
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 文献条目、版本与归属声明；不将被引用结果的名称或适用范围声明作为独立数学断言。
+    previous_atom_id: fc733ea0b26545a903dcd5ad8e98d992a385a72bb1b216e6760b687d3e42596d
+    next_atom_id: 0097143b34526b92783b702ccc4e4a6ce33188a1ce12f47d63ca1b158c290654

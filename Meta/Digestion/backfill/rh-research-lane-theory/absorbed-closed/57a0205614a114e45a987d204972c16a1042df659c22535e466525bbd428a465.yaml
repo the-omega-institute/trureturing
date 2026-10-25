@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:57a0205614a114e45a987d204972c16a1042df659c22535e466525bbd428a465
+  normalized_sha256: sha256:57a0205614a114e45a987d204972c16a1042df659c22535e466525bbd428a465
+cas_ref: sha256:57a0205614a114e45a987d204972c16a1042df659c22535e466525bbd428a465
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/ZeroDataPresentationEquiv.mirrorIndex_fixed_iff_critical
+    target_statement_id: sha256:1ac49353602c609b4ddbb2c225633d33da8cb6fc784459e5bffeba56bc67f0c6
+  - gid: D5/S3/Weil/ZeroData/ZeroDataPresentationEquiv.mirrorIndex_gamma
+    target_statement_id: sha256:3e85b93805dee0ddd0919de5d91be29c5e34b5363346e267dc58c4d3031d62d7
+  - gid: D5/S3/Weil/ZeroData/ZeroDataPresentationEquiv.mirrorIndex_involutive
+    target_statement_id: sha256:41e827185806d42946e2f3dd6284727ecdff25f0e8d10920515f3bd9ce4df98b
+  - gid: D5/S3/Weil/ZeroData/ZeroDataPresentationEquiv.mirrorIndex_multiplicity
+    target_statement_id: sha256:c7964fb76a400809f640bd1468b54c8965f0df408980ff3862d5ec8c3b1daebd
+  - gid: D5/S3/Weil/ZeroData/ZeroDataPresentationEquiv.mirrorIndex_zero
+    target_statement_id: sha256:5473b54a7673e6ba4b396678da63ad75294c7c974eb35c752858029249661ab6
+receipts:
+  unresolved_subitems: []

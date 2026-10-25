@@ -614,11 +614,11 @@ theorem Corr_coefficient_bidegree (D : LatticeData) (q : Charge D)
 consumer. ℓ k is any ℂ-linear oscillator readout, e.g. the actual bilinear
 normal-field coefficient at -e-2N-4R+2k. There is NO transpose/covariance
 hypothesis on ℓ, and no replacement correctedField is defined. -/
-private def scalarReadout (D : LatticeData)
+def scalarReadout (D : LatticeData)
     (ℓ : ℕ → Module.Dual ℂ (Oscillator D)) : Polynomial (Oscillator D) →ₗ[ℂ] ℂ :=
   (Finsupp.lsum ℂ ℓ).comp (shiftCoefficients D)
 
-private theorem scalarReadout_monomial (D : LatticeData)
+theorem scalarReadout_monomial (D : LatticeData)
     (ℓ : ℕ → Module.Dual ℂ (Oscillator D)) (s : ℕ) (p : Oscillator D) :
     scalarReadout D ℓ (Polynomial.C p * Polynomial.X ^ s) = ℓ s p := by
   simp only [Polynomial.C_mul_X_pow_eq_monomial, scalarReadout,

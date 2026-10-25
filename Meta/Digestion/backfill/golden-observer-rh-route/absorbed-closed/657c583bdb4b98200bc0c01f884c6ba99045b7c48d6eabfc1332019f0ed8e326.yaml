@@ -1,0 +1,47 @@
+fingerprints:
+  raw_sha256: sha256:657c583bdb4b98200bc0c01f884c6ba99045b7c48d6eabfc1332019f0ed8e326
+  normalized_sha256: sha256:657c583bdb4b98200bc0c01f884c6ba99045b7c48d6eabfc1332019f0ed8e326
+cas_ref: sha256:657c583bdb4b98200bc0c01f884c6ba99045b7c48d6eabfc1332019f0ed8e326
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/ObjectiveCore.golden_resource_sigma_identity
+    target_statement_id: sha256:422e35723b2862614c2dc89f788ad1a52cba9136c04f3e846fb0edcf3b790def
+  - gid: D5/S3/Arith/GoldenResource/PrefixDeficitKernel.D
+    target_statement_id: sha256:983b33c3ed966ed2e43f914465ff1ad59c6e4bcf817e6babc8af924fb638018a
+  - gid: D5/S3/Arith/GoldenResource/PrefixDeficitKernel.Q
+    target_statement_id: sha256:c472bbd9c1694bab47b5e61769143d850747e12a8c041ae2e3bd50f8292ffb5e
+  - gid: D5/S3/Arith/GoldenResource/PrefixDeficitKernel.S
+    target_statement_id: sha256:fe080566f863e2c12d0b7547d74d47581ade18a0f9c0733bff2fe94cc616e0ec
+  - gid: D5/S3/Arith/GoldenResourceObjectiveFactorization.golden_resource_objective_factorization
+    target_statement_id: sha256:41926aebceb350bcadbea1dc070d7e0ef1d3a8f6a36dd80d79a1193dbc69529f
+  - gid: D5/S3/Weil/FourierLaplace.fourierLaplace_apply
+    target_statement_id: sha256:d7c50d21c16e0414bafc9b9699b7a84990a1c75366cb83b356c411b879072237
+  - gid: D5/S3/Weil/PrimePoleTerms.primeSummand
+    target_statement_id: sha256:8f24624468801f2a8b7bc3c669ea89df4070762cbf2032f1f5a80846e42e7bea
+  - gid: D5/S3/Weil/PrimePoleTerms.primeTerm
+    target_statement_id: sha256:e90d7ddc167d3e767c4dc3d34f4360d6dfeb5b5e4da8285249e06a4bc201b757
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.rh_iff_canonical_li_global_expansion
+    target_statement_id: sha256:fc0636c793c8f4640572418398ead26538742cbb85b45a1692f23156fe902f61
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.xi_disk_zero_free_iff_right_half_plane
+    target_statement_id: sha256:3450ddde1e75d95628137f9592b7256fa9b83e03baa87b91b43377b6330b785d
+  - gid: D5/S3/Weil/Probability/CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh
+    target_statement_id: sha256:d5a630bbf7945069a2595ef412653a28476a0f0941c5fb578b9b27c5fd4c8773
+  - gid: D5/S3/Weil/Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity
+    target_statement_id: sha256:9f8bdc94875389e5db038a20f9a3857cb51f60810a213609374506ca87106924
+  - gid: D5/S3/Weil/TestFunctions.WeilTestFunction
+    target_statement_id: sha256:ade56f6f01282a1f3ce04b1dc19420fa35e106351a05a1dbdf2bb17559798f8c
+  - gid: D5/S3/Weil/TestFunctions.convolutionSquare_apply
+    target_statement_id: sha256:c04a2fe18ce3f69c6929b691b86f667b50dfa519a9213b54235cf55cba8b6f7b
+  - gid: D5/S3/Weil/TestFunctions.involution_apply
+    target_statement_id: sha256:a7d0ae01f82c0af4c6cc0f4075dbb7364c99475e774f7638c89e50b1f12f9124
+  - gid: D5/S3/Weil/ZeroSum.spectralParameter
+    target_statement_id: sha256:7845e7a476e150751a7eb339437b31ef182436922d50047329af0da5a693ba91
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonicalLiCoefficient
+    target_statement_id: sha256:78813700a426d0bb8c91321bb8afa0f7125ed9abddf2ddaba0a857cd6f1f5f06
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_local_expansion
+    target_statement_id: sha256:26a2ec64e3cbb9437ecfac5d20f2e0575f606719b2a107bfa562c987d435efc3
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.liGenerator
+    target_statement_id: sha256:d9853b17e4d78ac2fb33901fd2566897f73ff28bc04b2450c9597687491f9a5f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d11d80f8048356df285e0a1d44a70c0b476e86da99ea4ff16ecc03b413b30be
+  normalized_sha256: sha256:2d11d80f8048356df285e0a1d44a70c0b476e86da99ea4ff16ecc03b413b30be
+cas_ref: sha256:2d11d80f8048356df285e0a1d44a70c0b476e86da99ea4ff16ecc03b413b30be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic locator for reference [B1]: title/URL, PDF page range and locations of the half-line setup, natural-number generators and theorem 1.1. These are citation coordinates, not an assertion of the closure criterion.'
+    previous_atom_id: 0109066288a86bbf95a7967e1836ed17e807a3ace0ea953937a53a90f3db5eed
+    next_atom_id: b344089a66613dfea7236beb9fe3158e708bb30ebbbc8cdb48e2b67074b328a6

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c351bc0d0a363bafbcfe2bf2af453e5547848e7d83e363d0a9902ef924dd7028
+  normalized_sha256: sha256:c351bc0d0a363bafbcfe2bf2af453e5547848e7d83e363d0a9902ef924dd7028
+cas_ref: sha256:c351bc0d0a363bafbcfe2bf2af453e5547848e7d83e363d0a9902ef924dd7028
+coverage_gids:
+  - gid: D5/S3/TotalVariation/Hellinger.hellinger_sq_div_two_le_total_variation
+    target_statement_id: sha256:d586ac17737d6bef9392fa09de06a24c2b5ff8b478ef1ad99ce58f4cdd182ded
+receipts:
+  unresolved_subitems: []

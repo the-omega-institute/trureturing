@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ee5589d1255d35007b8bad728e9224e5504573398778deb55a6a6c5fc69e994
+  normalized_sha256: sha256:4ee5589d1255d35007b8bad728e9224e5504573398778deb55a6a6c5fc69e994
+cas_ref: sha256:4ee5589d1255d35007b8bad728e9224e5504573398778deb55a6a6c5fc69e994
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条为第17节的阶段化研究导言，说明所讨论的分辨率方向，不陈述自然性或极限恢复的数学结果。
+    previous_atom_id: d7d01c81d2f506f0b82f0e325536a62663f87c7d9271e48665eb969a1017b0c6
+    next_atom_id: 16eb0a96f1d80fcf765a750674a3dc1085fab28b39785c703b299742f76bffb4

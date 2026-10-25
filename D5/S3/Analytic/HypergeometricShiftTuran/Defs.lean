@@ -15,7 +15,11 @@ Per-declaration proof_shape:
 * coeff: bind-only definition; consumers: turanCoeff, TwoBlockResult.seriesCoeff.
 * turanCoeff: bind-only definition; consumers: claim, Result.first_coefficient_eq,
   TwoBlockResult.empty_unshifted_eq.
-* esymm: bind-only definition; consumers: cond13, TwoBlockResult.half_parameter_cond13.
+* esymm: bind-only definition; consumers: cond13, esymm_const.
+* esymm_const: bind-only; consumers: TwoBlockResult.half_parameter_cond13,
+  FunctionResult.witness_cond13.
+  Direct frozen dependency: D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm;
+    statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
 * cond13: bind-only definition; consumers: claim, TwoBlockResult.claim,
   TwoBlockResult.half_parameter_cond13.
 * claim: bind-only definition; consumer: Result.result.
@@ -36,8 +40,9 @@ Per-declaration proof_shape:
   TwoBlockResult.half_parameter_family_neg.
 * pi_base_bound: bind-only; consumers: Result.half_parameter_family_neg,
   TwoBlockResult.half_parameter_family_neg.
-Each row has escape_witness: none and Direct frozen dependencies: none.
-This is the shared supporting dependency of the two settling Result modules;
+Each row has escape_witness: none. Except for esymm_const as listed above,
+Direct frozen dependencies: none.
+This is the shared supporting dependency of the coefficient and function Result modules;
 its consumed helpers supply neither an escape witness nor a separate admission basis.
 The utility is none: these definitions and general identities are supporting
 objects, not a bounded enumeration, checker, numeric reduction or certified instance.
@@ -68,6 +73,18 @@ def turanCoeff {p q : ℕ} (a : Fin p → ℝ) (b : Fin q → ℝ)
 /-- The elementary symmetric function of the entries, retaining multiplicities. -/
 def esymm {p : ℕ} (a : Fin p → ℝ) (k : ℕ) : ℝ :=
   ((Finset.univ : Finset (Fin p)).val.map a).esymm k
+
+/-- The elementary symmetric function of a constant vector. -/
+lemma esymm_const (n k : ℕ) (x : ℝ) :
+    esymm (fun _ : Fin n => x) k = (n.choose k : ℝ) * x ^ k := by
+  rw [esymm, Finset.esymm_map_val]
+  calc
+    ∑ t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, ∏ _i ∈ t, x =
+        ∑ _t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, x ^ k := by
+      apply Finset.sum_congr rfl
+      intro t ht
+      rw [Finset.prod_const, (Finset.mem_powersetCard.mp ht).2]
+    _ = (n.choose k : ℝ) * x ^ k := by simp
 
 /-- Consecutive inequalities in the elementary symmetric ratio chain. -/
 def cond13 {p q : ℕ} (a : Fin p → ℝ) (b : Fin q → ℝ) : Prop :=

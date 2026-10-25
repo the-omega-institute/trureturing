@@ -34,7 +34,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree checkpoint --message-file FILE | "
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
-        + "StrataLint worktree return --pr N --writers-joined | "
+        + "StrataLint worktree return [--pr N] --writers-joined | "
         + "StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
@@ -113,6 +113,7 @@ internal static class WorktreeCommand
         var stage = "preflight";
         int? failureExitCode = null;
         IDisposable? initializationScope = null;
+        string? idleClaimFallback = null;
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
@@ -123,7 +124,7 @@ internal static class WorktreeCommand
                 options = options with { Path = attachedPath };
             else
             {
-                var claimed = WorktreePoolCommand.TryClaim(options, runner);
+                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback);
                 if (claimed is not null) return claimed;
             }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
@@ -207,6 +208,7 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                idle_claim_fallback = idleClaimFallback,
             }) + "\n";
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }

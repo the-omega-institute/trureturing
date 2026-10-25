@@ -1,4 +1,4 @@
-"""Native idle branches, bounded retention, merged-task return and atomic claim."""
+"""Native idle branches, bounded retention, task return and atomic claim."""
 
 from contextlib import ExitStack
 import json
@@ -159,7 +159,10 @@ def sweep(source, dev, force=False):
             acquire(stack, source, "operation:idle-pool", True)
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
-        sweep_failure(receipt, dict(path=str(source), branch=None, head=dev), "pool_scope", error)
+        receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
+                                  outcome="refused" if isinstance(error, Refused) else "failed",
+                                  error=str(error), error_type=type(error).__name__)
+        receipt["status"] = "failed"
     return receipt
 
 
@@ -187,6 +190,33 @@ def pr_evidence(path, number):
         if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", oid):
             raise Refused("pr_commit_invalid")
     return evidence
+
+
+def unused_base(source, path, branch, head):
+    """Creation and claim both create the task ref at the allocated base."""
+    if not branch.startswith("refs/heads/"):
+        raise Refused("return_current_branch_required")
+    log = common(source) / "logs" / branch
+    try:
+        if log.is_symlink():
+            raise ValueError("linked branch log")
+        raw = log.read_bytes()
+        rows = raw.split(b"\n", 1)
+        if len(rows) != 2:
+            raise ValueError("incomplete branch creation")
+        creation = re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
+                                rb"[^<>\n]+ <[^<>\n]*> [0-9]+ [+-][0-9]{4}\t.*", rows[0])
+        if creation is None:
+            raise ValueError("missing or malformed branch creation")
+        base = creation[2]
+        if creation[1] != b"0" * len(base):
+            raise ValueError("missing branch creation")
+    except (OSError, ValueError) as error:
+        raise Refused("unused_allocation_unknown") from error
+    if (base.decode("ascii") != head
+            or value(path, "rev-parse", "--verify", branch + "^{commit}") != head):
+        raise Refused("unused_task_commits_require_pr")
+    return base.decode("ascii")
 
 
 def return_tree(options):
@@ -217,10 +247,7 @@ def returned_snapshot(options):
             raise Refused("intentional_or_initialization_lock")
         _, metadata = identity(options.source, path)
         branch = git_scope(stack, options.source, path)
-        evidence = pr_evidence(path, options.pr)
-        endpoint = remote_endpoint(path, "origin", push=True)
-        remote = confirm(path, "origin", "dev", evidence["mergeCommit"]["oid"], endpoint)
-        dev = remote["observed_tip"]
+        evidence = pr_evidence(path, options.pr) if options.pr is not None else None
         already = False
         if idle_reference(branch):
             try:
@@ -229,7 +256,17 @@ def returned_snapshot(options):
             except Refused as error:
                 if str(error) != "not_idle":
                     raise
-        task = "refs/heads/" + evidence["headRefName"]
+        allocation_base = None
+        if evidence is None:
+            clean(path, metadata)
+            if already:
+                raise Refused("unused_return_already_idle")
+            allocation_base = unused_base(options.source, path, branch, value(path, "rev-parse", "HEAD"))
+        endpoint = remote_endpoint(path, "origin", push=True)
+        remote = confirm(path, "origin", "dev",
+                         evidence["mergeCommit"]["oid"] if evidence else allocation_base, endpoint)
+        dev = remote["observed_tip"]
+        task = "refs/heads/" + evidence["headRefName"] if evidence else branch
         if already:
             idle_state(options.source, path, dev)
             acquire(stack, options.source, "ref:" + task, True)
@@ -238,7 +275,7 @@ def returned_snapshot(options):
             if branch != task:
                 raise Refused("pr_head_mismatch")
             tip = value(path, "rev-parse", "HEAD")
-        if git(path, "merge-base", "--is-ancestor", evidence["headRefOid"], tip, check=False).returncode:
+        if evidence and git(path, "merge-base", "--is-ancestor", evidence["headRefOid"], tip, check=False).returncode:
             raise Refused("pr_head_outside_tree")
         if already and value(path, "rev-parse", "HEAD") == dev:
             return dict(event="worktree_return", status="already_idle", path=str(path), dev_commit=dev,
@@ -258,9 +295,12 @@ def returned_snapshot(options):
         idle_state(options.source, path, dev)
         if already:
             git(path, "update-ref", "-d", branch, checkpoint["commit"])
-        return dict(event="worktree_return", status="returned", path=str(path), dev_commit=dev,
-                    task_branch=task, idle_branch=idle, checkpoint=checkpoint,
-                    commits_not_in_dev=outstanding, remote=remote)
+        result = dict(event="worktree_return", status="returned", path=str(path), dev_commit=dev,
+                      task_branch=task, idle_branch=idle, checkpoint=checkpoint,
+                      commits_not_in_dev=outstanding, remote=remote)
+        if allocation_base is not None:
+            result["allocation_base"] = allocation_base
+        return result
 
 
 def allocation_record(path, metadata, commit):
@@ -278,7 +318,12 @@ def allocation_record(path, metadata, commit):
 
 def claim(options):
     with ExitStack() as pool_scope:
-        acquire(pool_scope, options.source, "operation:idle-pool", True)
+        try:
+            acquire(pool_scope, options.source, "operation:idle-pool", True)
+        except Refused as error:
+            if options.path is not None or str(error) != "busy_scope:operation:idle-pool":
+                raise
+            return dict(event="worktree_init", status="no_idle", reason=str(error))
         rows = inventory(options.source)
         candidates = ([options.path] if options.path else
                       [Path(row["worktree"]) for row in rows if idle_reference(row.get("branch", ""))])

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b447049164e707f3e4a43ae7b47351f8fa3424949701e96a48ff10f932e1556c
+  normalized_sha256: sha256:b447049164e707f3e4a43ae7b47351f8fa3424949701e96a48ff10f932e1556c
+cas_ref: sha256:b447049164e707f3e4a43ae7b47351f8fa3424949701e96a48ff10f932e1556c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明符号 u_t 表示控制输入；没有状态方程、存在性或性质断言。
+    previous_atom_id: 0e056983841ae1e682eeeca98bd25bdf6c76df000cc23e34db6a750136c8f235
+    next_atom_id: e96a46e67028b65c4e6deeab8a5c5d925492e141f99e230c005f8bb9139861e1

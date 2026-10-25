@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b344089a66613dfea7236beb9fe3158e708bb30ebbbc8cdb48e2b67074b328a6
+  normalized_sha256: sha256:b344089a66613dfea7236beb9fe3158e708bb30ebbbc8cdb48e2b67074b328a6
+cas_ref: sha256:b344089a66613dfea7236beb9fe3158e708bb30ebbbc8cdb48e2b67074b328a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic locator for reference [B2]: title/URL and the page, theorem, coefficient-definition and exponent passages consulted. The epsilon/exponent fragment identifies the cited passage; the coefficient decay theorem is stated elsewhere.'
+    previous_atom_id: 2d11d80f8048356df285e0a1d44a70c0b476e86da99ea4ff16ecc03b413b30be
+    next_atom_id: 6ae20419e48c79f1b6599d11a60702af17dcfcd03bef3ef83ce510b010d18311
