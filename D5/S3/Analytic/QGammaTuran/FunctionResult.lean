@@ -8,19 +8,18 @@
 
 /-
 admission_basis: open-problem-resolution (Conjecture 1, function clause; Refuted).
-All declarations in this module have proof_shape: bind-only after expansion
-of same-delivery helpers; escape_witness: none. The series estimates instantiate
-Mathlib's geometric domination, sum/tsum comparison and finite-prefix splitting.
-The radius estimate applies Mathlib's le_radius_of_summable to the absolute
-geometric majorant. The rational certificates use norm_num, and the final
-comparison uses linarith.
+All declarations have proof_shape: bind-only after expansion of same-delivery
+helpers; escape_witness: none. The product bounds apply frozen finite-product
+loss and Mathlib convergence inequalities. Series estimates use geometric
+domination, sum/tsum comparison and finite-prefix splitting. The radius estimate
+applies le_radius_of_summable to an absolute geometric majorant. Rational
+certificates use norm_num; the final comparison uses linarith.
 The settling result supplies the external-open-problem-resolution basis.
-Per-declaration consumers (from elaborated declaration values):
+Per-declaration consumers (compiled types and values, auxiliary constants expanded):
 * claim: result.
 * hbounds: numH10, numH3, numH6.
 * hshift: negative_bounds.
-* hsum: hbounds, hshift, negative_bounds, numH10, numH3, numH6, series_eq, series_product,
-  witness_negative.
+* hsum: hbounds, hshift, negative_bounds, numH10, numH3, numH6, series_eq, series_product, witness_negative.
 * hsummable: hbounds, hshift, hsummable_any.
 * hsummable_any: series_summable.
 * negative_bounds: witness_negative.
@@ -32,18 +31,24 @@ Per-declaration consumers (from elaborated declaration values):
 * numP6: negative_bounds.
 * plower: hbounds, numH10, numH3, numH6.
 * pupper: hbounds, numH10, numH3, numH6.
-* q: negative_bounds, numH10, numH3, numH6, numP3, numP6, qlt, qpos, qpower, result,
-  witness_negative, witness_radius, y, ylt, ypos.
-* qlt: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative,
-  witness_radius.
-* qpos: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative,
-  witness_radius.
+* q: negative_bounds, numH10, numH3, numH6, numP3, numP6, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos.
+* qlt: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius.
+* qpos: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative, witness_radius.
 * qpower: witness_negative.
+* qprod_bounds: hbounds, numP3, numP6.
+* qprod_le_one: hbounds, hsummable, qprod_bounds.
+* qprod_lower: qprod_bounds.
+* qprod_multipliable: qprod_le_one, qprod_lower, qprod_split, qprod_step.
+* qprod_ne_zero: qprod_pos.
+* qprod_nonneg: hbounds, hsummable, qprod_pos.
+* qprod_pos: witness_negative.
+* qprod_split: qprod_bounds.
+* qprod_step: negative_bounds.
 * qseries: claim, result, series_eq, series_product, witness_negative.
-* r: negative_bounds, numH10, numH3, numH6, numP3, numP6, q, qlt, qpos, qpower, result,
-  witness_negative, witness_radius, y, ylt, ypos.
+* r: negative_bounds, numH10, numH3, numH6, numP3, numP6, q, qlt, qpos, qpower, result, witness_negative, witness_radius, y, ylt, ypos.
 * radius: claim, witness_radius.
 * result: settlement of the function clause.
+* rqgamma_eq: normalizedTerm.
 * series_eq: series_product.
 * series_product: witness_negative.
 * series_summable: witness_radius.
@@ -52,17 +57,68 @@ Per-declaration consumers (from elaborated declaration values):
 * y: negative_bounds, numH10, numH3, numH6, witness_negative, ylt, ypos.
 * ylt: negative_bounds, numH10, numH3, numH6.
 * ypos: negative_bounds, numH10, numH3, numH6.
-Same-delivery helpers from Result (not frozen prerequisites): rqgamma,
-qprod, rqgamma_eq, qprod_step, qprod_nonneg, qprod_le_one, qprod_bounds,
-qprod_pos and their product-convergence prerequisites.
 Direct frozen D5 dependencies after same-delivery expansion:
-* claim and result: module GID D5/S3/Analytic/ReciprocalGammaTuran/Defs;
+Addresses below are declaration GIDs with DECLARATION statement_id values
+from .lake/build/stratalint/scoped-lean-report.json. Result.qprod is the
+newly public owner definition; its public identity below is to be re-pinned
+at landing. The owner proof and statements retain their original source.
+* plower, pupper, q, qlt, qpos, qpower, qprod_multipliable, r, y, ylt, ypos:
+  none.
+* hshift, hsum, hsummable, hsummable_any, qprod_le_one, qprod_ne_zero, qprod_nonneg, qprod_pos, qprod_split, qprod_step:
+  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
+  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
+* normalizedTerm, rqgamma_eq, series_eq, series_product, series_summable, witness_radius:
+  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
+  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
+  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
+  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+* result:
+  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
+  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
+  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
+  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq;
   declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq;
   DECLARATION statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
-* result also: module GID D5/S3/Analytic/ReciprocalGammaTuran/Defs;
+  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one;
   declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.admissible_one;
   DECLARATION statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
-* Every other declaration: none.
+  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
+* witness_negative:
+  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
+  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
+  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
+  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
+* hbounds, negative_bounds, numH10, numH3, numH6, numP3, numP6, qprod_bounds, qprod_lower:
+  GID D5/S3/Analytic/QGammaTuran/Result.qprod;
+  declaration D5.S3.Analytic.QGammaTuran.Result.qprod;
+  DECLARATION statement_id sha256:102741937a30352c055770194f7c1c4f248ae8ecfb2e0e90b687277348fa17e6.
+  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  declaration D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum;
+  DECLARATION statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
+* qseries, radius:
+  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
+  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+* claim:
+  GID D5/S3/Analytic/QGammaTuran/Result.rqgamma;
+  declaration D5.S3.Analytic.QGammaTuran.Result.rqgamma;
+  DECLARATION statement_id sha256:ab476dd764739df0f7601665b6752e7088069909de5c7ee0b40b1fb362b7a7c1.
+  GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq;
+  declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq;
+  DECLARATION statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
 -/
 
 import D5.S3.Analytic.QGammaTuran.Result
@@ -74,6 +130,115 @@ open D5.S3.Analytic.ReciprocalGammaTuran.Defs
 set_option maxHeartbeats 2000000
 set_option maxRecDepth 4096
 namespace D5.S3.Analytic.QGammaTuran.FunctionResult
+private lemma qprod_multipliable {q : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1) (a : ℝ) :
+    Multipliable (fun j : ℕ => 1 - a * q ^ j) := by
+  simpa only [sub_eq_add_neg, neg_mul] using
+    Real.multipliable_one_add_of_summable
+      ((summable_geometric_of_lt_one hq0 hq1).mul_left (-a))
+
+private lemma qprod_step {q : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1) (a : ℝ) :
+    qprod q a = (1 - a) * qprod q (a*q) := by
+  unfold qprod
+  have htail : Multipliable (fun j : ℕ => 1 - a * q^(j+1)) := by
+    convert qprod_multipliable hq0 hq1 (a*q) using 1
+    ext j
+    rw [pow_succ]
+    ring
+  rw [tprod_eq_zero_mul' htail]
+  simp only [pow_zero, mul_one]
+  congr 1
+  apply tprod_congr
+  intro j
+  rw [pow_succ]
+  ring
+
+private lemma qprod_nonneg {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) : 0 ≤ qprod q a := by
+  unfold qprod
+  exact tprod_nonneg fun i => sub_nonneg.mpr
+    (by nlinarith [pow_le_one₀ hq0 hq1.le (n := i)] : a*q^i ≤ 1)
+
+private lemma qprod_ne_zero {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a < 1) : qprod q a ≠ 0 := by
+  unfold qprod
+  have hs : Summable (fun j : ℕ => ‖- (a * q^j)‖) := by
+    simpa only [norm_neg, Real.norm_eq_abs, abs_of_nonneg (mul_nonneg ha0 (pow_nonneg hq0 _))]
+      using (summable_geometric_of_lt_one hq0 hq1).mul_left a
+  have hn (j : ℕ) : 1 + -(a * q^j) ≠ 0 := by
+    have h : a*q^j < 1 := by nlinarith [pow_le_one₀ hq0 hq1.le (n := j)]
+    linarith
+  simpa only [sub_eq_add_neg] using tprod_one_add_ne_zero_of_summable hn hs
+
+private lemma qprod_pos {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a < 1) : 0 < qprod q a :=
+  lt_of_le_of_ne (qprod_nonneg hq0 hq1 ha0 ha1.le) (qprod_ne_zero hq0 hq1 ha0 ha1).symm
+
+private lemma qprod_le_one {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) : qprod q a ≤ 1 := by
+  apply (qprod_multipliable hq0 hq1 a).tprod_le_of_prod_range_le
+  intro n
+  exact Finset.prod_le_one₀
+    (fun i _ => sub_nonneg.mpr (by nlinarith [pow_le_one₀ hq0 hq1.le (n := i)]))
+    (fun i _ => sub_le_self _ (mul_nonneg ha0 (pow_nonneg hq0 _)))
+
+private lemma qprod_lower {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) : 1 - a / (1-q) ≤ qprod q a := by
+  have hs := (summable_geometric_of_lt_one hq0 hq1).mul_left a
+  have hp := (qprod_multipliable hq0 hq1 a).hasProd.tendsto_prod_nat
+  have hsum := hs.hasSum.tendsto_sum_nat
+  have hfinite (n : ℕ) : 1 - ∑ i ∈ Finset.range n, a*q^i ≤ ∏ i ∈ Finset.range n, (1-a*q^i) := by
+    have h := D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum
+      (Finset.range n) (fun i => a*q^i)
+      (fun i _ => mul_nonneg ha0 (pow_nonneg hq0 i))
+      (fun i _ => by nlinarith [pow_le_one₀ hq0 hq1.le (n := i)])
+    linarith
+
+  have h := le_of_tendsto_of_tendsto' (tendsto_const_nhds.sub hsum) hp hfinite
+  simpa only [qprod, tsum_mul_left, tsum_geometric_of_lt_one hq0 hq1, div_eq_mul_inv] using h
+
+private lemma qprod_split {q : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1) (a : ℝ) (n : ℕ) :
+    qprod q a = (∏ j ∈ Finset.range n, (1-a*q^j)) * qprod q (a*q^n) := by
+  have ht : Multipliable (fun j : ℕ => 1-a*q^(j+n)) := by
+    convert qprod_multipliable hq0 hq1 (a*q^n) using 1
+    ext j
+    rw [pow_add]
+    ring
+  rw [qprod, ← ht.prod_mul_tprod_nat_mul']
+  congr 1
+  apply tprod_congr
+  intro j
+  simp only [pow_add]
+  ring
+
+private lemma qprod_bounds {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) (n : ℕ) :
+    (∏ j ∈ Finset.range n, (1-a*q^j)) * (1-a*q^n/(1-q)) ≤ qprod q a ∧
+    qprod q a ≤ ∏ j ∈ Finset.range n, (1-a*q^j) := by
+  have ht0 := mul_nonneg ha0 (pow_nonneg hq0 n)
+  have ht1 : a*q^n ≤ 1 := by nlinarith [pow_le_one₀ hq0 hq1.le (n := n)]
+  have hp0 : 0 ≤ ∏ j ∈ Finset.range n, (1-a*q^j) :=
+    Finset.prod_nonneg fun j _ => sub_nonneg.mpr
+      (by nlinarith [pow_le_one₀ hq0 hq1.le (n := j)])
+  rw [qprod_split hq0 hq1 a n]
+  exact ⟨mul_le_mul_of_nonneg_left (qprod_lower hq0 hq1 ht0 ht1) hp0,
+    (mul_le_mul_of_nonneg_left (qprod_le_one hq0 hq1 ht0 ht1) hp0).trans_eq (mul_one _)⟩
+
+private lemma rqgamma_eq {q : ℝ} (hq : 0 < q) (x : ℝ) :
+    rqgamma q x = qprod q (q^x) / (qprod q q * (1-q)^(1-x)) := by
+  unfold rqgamma
+  have hn : (∏' j : ℕ, (1-q^(x+j))) = qprod q (q^x) := by
+    unfold qprod
+    apply tprod_congr
+    intro j
+    rw [Real.rpow_add_natCast (ne_of_gt hq)]
+  have hd : (∏' j : ℕ, (1-q^((j:ℝ)+1))) = qprod q q := by
+    unfold qprod
+    apply tprod_congr
+    intro j
+    rw [Real.rpow_add_one (ne_of_gt hq), Real.rpow_natCast]
+    ring
+  rw [hn, hd]
+
 private def hsum (q a y : ℝ) : ℝ := ∑' n : ℕ, y^n * qprod q (a*q^n)
 private lemma hsummable {q a y : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
     (ha0 : 0 ≤ a) (ha1 : a ≤ 1) (hy0 : 0 ≤ y) (hy1 : y < 1) :

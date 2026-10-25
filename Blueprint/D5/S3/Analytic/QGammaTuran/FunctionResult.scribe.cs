@@ -11,6 +11,16 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A convergent reciprocal q-gamma series whose function Turanian is negative.",
         H("The function clause of Conjecture 1 is false"), Blocks(
+            Node("qprod_multipliable", QHyp(All("a", R, Call("Multipliable", Lambda("j", Sub(D(1), Mul(V("a"), Pow(V("q"), V("j")))))))), "Geometric summability makes the q-product multipliable."),
+            Node("qprod_step", QHyp(All("a", R, Eqn(P(V("a")), Mul(Sub(D(1), V("a")), P(Mul(V("a"), V("q"))))))), "Removing the first product factor shifts its parameter by q."),
+            Node("qprod_nonneg", QA(false, Leq(D(0), P(V("a")))), "Nonnegative product factors give a nonnegative infinite product."),
+            Node("qprod_ne_zero", QA(true, new Formula.Not(Eqn(P(V("a")), D(0)))), "Strictly positive factors and geometric convergence exclude a zero product."),
+            Node("qprod_pos", QA(true, Positive(P(V("a")))), "The infinite product is positive for a in the half-open unit interval."),
+            Node("qprod_le_one", QA(false, Leq(P(V("a")), D(1))), "Products of factors in the unit interval are at most one."),
+            Node("qprod_lower", QA(false, Leq(Sub(D(1), new Formula.Fraction(V("a"), Sub(D(1), V("q")))), P(V("a")))), "The geometric sum bounds the loss of the product from one."),
+            Node("qprod_split", QHyp(All("a", R, All("n", N, Eqn(P(V("a")), Mul(FiniteP(), P(Mul(V("a"), Pow(V("q"), V("n"))))))))), "A finite prefix times the remaining infinite product equals the full product."),
+            Node("qprod_bounds", QA(false, All("n", N, Both(Leq(Mul(FiniteP(), Sub(D(1), new Formula.Fraction(Mul(V("a"), Pow(V("q"), V("n"))), Sub(D(1), V("q"))))), P(V("a"))), Leq(P(V("a")), FiniteP())))), "A finite prefix gives both bounds, using the geometric tail loss for the lower bound."),
+            Node("rqgamma_eq", All("q", R, Imp(Positive(V("q")), All("x", R, Eqn(RG(V("x")), new Formula.Fraction(P(Pow(V("q"), V("x"))), Mul(P(V("q")), Pow(Sub(D(1), V("q")), Sub(D(1), V("x"))))))))), "The reciprocal q-gamma definition in q-Pochhammer notation."),
             Node("qseries", BindR("q mu x", All("g", new Formula.TypeArrow(N, R),
                 Eqn(QS(V("mu"), V("x"), V("g")), InfiniteSum("n", Term(V("mu"), V("x"), V("g")))))),
                 "Theorem 3, printed page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define g(µ; x) = ∑ₙ₌₀∞ gₙxⁿ/Γq(µ + n). (16)” The reciprocal is the infinite-product rqgamma of Result. Equation (6), printed page 4: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” At nonpositive integers the reciprocal extension is zero.", DescribeRole.Definition, true),
@@ -35,11 +45,11 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
             Node("hbounds", QAY(false, All("K", N, All("N", N, Both(
                 Leq(SumK(Mul(Pow(V("y"), V("n")), Call("plower", V("q"), Mul(V("a"), Pow(V("q"), V("n"))), V("N")))), HS(V("a"))),
                 Leq(HS(V("a")), Add(SumK(Mul(Pow(V("y"), V("n")), Call("pupper", V("q"), Mul(V("a"), Pow(V("q"), V("n"))), V("N")))), Div(Pow(V("y"), V("K")), Sub(D(1), V("y"))))))))),
-                "Result.qprod_bounds bounds each product in a finite prefix. Summable.sum_le_tsum supplies the lower bound; the omitted normalized terms are at most a geometric tail y^K/(1−y)."),
+                "qprod_bounds bounds each product in a finite prefix. Summable.sum_le_tsum supplies the lower bound; the omitted normalized terms are at most a geometric tail y^K/(1−y)."),
             Node("normalizedTerm", QPositive(BindR("s x", All("n", N, Eqn(
                 Mul(Pow(V("x"), V("n")), RG(Add(V("s"), V("n")))),
                 Div(Mul(Pow(Mul(V("x"), Sub(D(1), V("q"))), V("n")), P(Mul(Pow(V("q"), V("s")), Pow(V("q"), V("n"))))), Den(V("s"))))))),
-                "Result.rqgamma_eq and the real power addition law normalize each term. The denominator is independent of n."),
+                "rqgamma_eq and the real power addition law normalize each term. The denominator is independent of n."),
             Node("series_eq", QPositive(BindR("s x", Eqn(QS(V("s"), V("x"), One()),
                 Div(Call("hsum", V("q"), Pow(V("q"), V("s")), Mul(V("x"), Sub(D(1), V("q")))), Den(V("s")))))),
                 "Taking the infinite sum gives the normalized expression for the constant-sequence q-gamma series."),
@@ -90,6 +100,9 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
             H(name.Replace("_", " ")), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+    private static Formula QHyp(Formula body) => All("q", R, Imp(Leq(D(0), V("q")), Imp(Less(V("q"), D(1)), body)));
+    private static Formula QA(bool strict, Formula body) => QHyp(All("a", R, Imp(Leq(D(0), V("a")), Imp(strict ? Less(V("a"), D(1)) : Leq(V("a"), D(1)), body))));
+    private static Formula FiniteP() => Finite("prod", "j", V("n"), Sub(D(1), Mul(V("a"), Pow(V("q"), V("j")))));
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Seq(Mathbb, Grp(V("N")), Sp);
     private static Formula R => Seq(Mathbb, Grp(V("R")), Sp);
