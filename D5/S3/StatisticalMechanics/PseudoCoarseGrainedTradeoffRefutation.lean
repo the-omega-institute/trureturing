@@ -147,9 +147,9 @@ private theorem steady_formula :
   ring
 
 private theorem steady_bounds (r : ℝ) (hr : 0 < r) (hb : r < 1/4) :
-    0 < (2-3*r)/(6*(1-r)) ∧ (2-3*r)/(6*(1-r)) < 1 := by
+    0 < (2-3*r)/(6*(1-r)) ∧ (2-3*r)/(6*(1-r)) < 1/3 := by
   have hd : 0 < 6*(1-r) := by linarith
-  exact ⟨div_pos (by linarith) hd, (div_lt_one hd).2 (by linarith)⟩
+  exact ⟨div_pos (by linarith) hd, (div_lt_iff₀ hd).2 (by linarith)⟩
 
 private theorem split_divergence (z : ℝ) :
     klDivergence ![z, (1-z)/2, (1-z)/2] uniform =
@@ -193,7 +193,8 @@ private theorem strict_violation (r : ℝ) (hr : 0 < r) (hb : r < 1/4) :
     klDivergence ![1/2, 1-1/2] ![(2-3*r)/(6*(1-r)), 1-(2-3*r)/(6*(1-r))] -
       klDivergence ![(2-r)/6, 1-(2-r)/6]
         ![(2-3*r)/(6*(1-r)), 1-(2-3*r)/(6*(1-r))] := by
-  obtain ⟨hs, hs1⟩ := steady_bounds r hr hb
+  obtain ⟨hs, hs3⟩ := steady_bounds r hr hb
+  have hs1 : (2-3*r)/(6*(1-r)) < 1 := hs3.trans (by norm_num)
   have hy : 0 < (2-r)/6 := by linarith
   have hy1 : (2-r)/6 < 1 := by linarith
   have hq : ![(2-r)/6, (4+r)/12, (4+r)/12] =
@@ -224,7 +225,8 @@ theorem result : ¬ claim := by
   intro h
   obtain ⟨ht, hr, hb⟩ := time_bounds
   obtain ⟨hp, hq⟩ := endpoints
-  obtain ⟨hs, hs1⟩ := steady_bounds residual hr hb
+  obtain ⟨hs, hs3⟩ := steady_bounds residual hr hb
+  have hs1 : (2-3*residual)/(6*(1-residual)) < 1 := hs3.trans (by norm_num)
   have hu : ∀ i, 0 < uniform i := by
     intro i
     fin_cases i <;> norm_num [uniform.eq_1]
