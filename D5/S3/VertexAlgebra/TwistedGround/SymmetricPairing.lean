@@ -7,6 +7,7 @@
    digest: A nondegenerate symmetric invariant pairing on the exact selected actual ground. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.FlipAverage
+import Mathlib.RepresentationTheory.Invariants
 
 /-! Symmetrizing the invariant average on the selected actual ground. -/
 
