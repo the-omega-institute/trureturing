@@ -78,16 +78,6 @@ private theorem run_fold (w : List Bool) (v : ℕ × ℕ) :
   | nil => rfl
   | cons b w ih => exact ih (step b v)
 
-private theorem run_append (w z : List Bool) (v : ℕ × ℕ) :
-    runWord (w ++ z) v = runWord z (runWord w v) := by
-  simp only [run_fold, List.foldl_append]
-
-private theorem run_replicate (b : Bool) (k : ℕ) (v : ℕ × ℕ) :
-    runWord (List.replicate k b) v = (step b)^[k] v := by
-  induction k generalizing v with
-  | zero => rfl
-  | succ k ih => simpa [List.replicate_succ, runWord, Function.iterate_succ_apply] using ih (step b v)
-
 private theorem residue_run (H : ℕ) (w : List Bool) (v : ℕ × ℕ) :
     residueSource H (runWord w v) =
       GraftAffineClosure.run (1, 0) (w.map Bool.not) (residueSource H v) := by
@@ -155,7 +145,7 @@ private theorem closing_letter (H : ℕ) (hH : 0 < H) (b : Bool) (v : ℕ × ℕ
       congr 1
       have := (period_spec H hH).1
       omega
-    rw [hn, run_replicate]
+    rw [hn, SourceCoordinates.PositiveProbeCompiler.run_replacements]
     change residueSource H (replace^[period H] v) = residueSource H v
     rw [cast_replacements]
     exact hp
@@ -171,7 +161,7 @@ private theorem closing_restores (H : ℕ) (hH : 0 < H) (w : List Bool) (v : ℕ
     rw [hc]
     have he : runWord ((b :: w) ++ (closing H w ++ closeLetter H b)) v =
         runWord (closeLetter H b) (runWord (cycleWord H w) (step b v)) := by
-      simp only [List.cons_append, runWord, run_append, cycleWord]
+      simp only [List.cons_append, runWord, SourceCoordinates.PositiveProbeCompiler.run_append, cycleWord]
     rw [he]
     calc
       _ = residueSource H (runWord (closeLetter H b) (step b v)) :=
@@ -270,7 +260,7 @@ private theorem actions_restore (H k : ℕ) (hH : 0 < H) (tape : List (ℕ × �
   | cons t tape ih =>
     change residueSource H
       (runWord (cycleWord H (compile H k t.1) ++ actions H k tape) v) = _
-    rw [run_append]
+    rw [SourceCoordinates.PositiveProbeCompiler.run_append]
     rw [ih, closing_restores H hH]
 
 private theorem rounds_run (H : ℕ) (hH : 0 < H) (entry : ℕ × ℕ) (s : Bool)
@@ -297,9 +287,9 @@ private theorem rounds_run (H : ℕ) (hH : 0 < H) (entry : ℕ × ℕ) (s : Bool
     have hn : residueSource H (runWord (cycleWord H w) current) = residueSource H entry :=
       (closing_restores H hH w current).trans hc
     have ht := ih next (runWord (cycleWord H w) current) hn es t out l
-      (by simpa only [rounds, actions, List.flatMap_cons, run_append] using hr)
+      (by simpa only [rounds, actions, List.flatMap_cons, SourceCoordinates.PositiveProbeCompiler.run_append] using hr)
     have hclose := close_run H (closing H w) s j next y (runWord w current)
-      _ t out l (by simpa only [cycleWord, run_append] using ht)
+      _ t out l (by simpa only [cycleWord, SourceCoordinates.PositiveProbeCompiler.run_append] using ht)
     have hread : Run (controller H) H (.reading w s j a y) (runWord w current)
         (.reply g :: ((closing H w).map Event.action ++ .compute ::
           (events H k (rounds H (compiledReply H entry k) j next).2 ++ es))) t out l := by
@@ -381,7 +371,7 @@ private theorem word_growth (w : List Bool) (v : ℕ × ℕ) :
 
 private theorem prefix_growth (w pre post : List Bool) (v : ℕ × ℕ) (hw : w = pre ++ post) :
     quantity (runWord pre v) ≤ quantity (runWord w v) := by
-  rw [hw, run_append]
+  rw [hw, SourceCoordinates.PositiveProbeCompiler.run_append]
   exact (word_growth post (runWord pre v)).1
 
 /-- Semantic run data; the controller itself has no entry argument. -/
@@ -458,7 +448,7 @@ private theorem actual_run (H : ℕ) (hH : 1 ≤ H) (v : ℕ × ℕ) :
   have first := rounds_run H hpos v false (costBound H) (fun _ => initialAxis) 0
     v rfl _ _ _ _ bridge
   refine ⟨.stage true 0 t.1 y, ?_⟩
-  simpa only [controller, if_neg h1, executionEvents, executionWord, run_append,
+  simpa only [controller, if_neg h1, executionEvents, executionWord, SourceCoordinates.PositiveProbeCompiler.run_append,
     stageDirection, Bool.false_eq_true, ↓reduceIte, stageData, r, t, w, z, y] using first
 
 private theorem execution_counts (H : ℕ) (hH : 1 ≤ H) (v : ℕ × ℕ) :
@@ -582,7 +572,7 @@ theorem positive_execution (H : ℕ) (hH : 1 ≤ H) (v : ℕ × ℕ) :
   have hr : residueSource H (runWord (executionWord H v) v) = residueSource H v := by
     by_cases h1 : H = 1
     · simp [executionWord, h1, runWord]
-    · simp only [executionWord, if_neg h1, run_append]
+    · simp only [executionWord, if_neg h1, SourceCoordinates.PositiveProbeCompiler.run_append]
       rw [actions_restore H _ (by omega), actions_restore H _ (by omega)]
   have reads : paidReads (executionEvents H v) = (if H = 1 then 0 else 2 * costBound H) := by
     rw [hc.1, hc.2.1, hc.2.2.1]
