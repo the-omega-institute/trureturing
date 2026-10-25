@@ -343,7 +343,7 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     (hF : ∀ d : ℤ,
       tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 * F.coeff d -
         F.coeff d * tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
-      G.coeff d + ((d : ℂ)/2-1) • F.coeff (d-2) + 2 • H.coeff (d-2))
+      G.coeff d + ((d : ℂ)/2-1) • F.coeff (d-2) + (2 : ℂ) • H.coeff (d-2))
     (i : Fin D.rank) (r : ℕ) (j e : ℤ) :
     tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
         flatCoefficient D hu F [(i,r)] (j,()) e -
@@ -352,7 +352,7 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       flatCoefficient D hu G [(i,r)] (j,()) e +
         (((e+2*j+2*(r:ℤ)+3 : ℤ):ℂ)/2-1) •
           flatCoefficient D hu F [(i,r)] (j,()) (e-2) +
-        2 • flatCoefficient D hu H [(i,r)] (j,()) (e-2) +
+        (2 : ℂ) • flatCoefficient D hu H [(i,r)] (j,()) (e-2) +
         (-frequency j * jetScalar r j) •
           flatCoefficient D hu F [(i,0)] (j+1,()) (e+2*(r:ℤ)-2) +
         if j = -1 then (1/2 * halfBinomial r : ℂ) •
@@ -365,7 +365,7 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     exact actual_current_l1 D hu i k
   have left (k d : ℤ) : T * (J k * F.coeff d) - (J k * F.coeff d) * T =
       (-frequency k) • (J (k+1) * F.coeff d) + J k * G.coeff d +
-        ((d:ℂ)/2-1) • (J k * F.coeff (d-2)) + 2 • (J k * H.coeff (d-2)) := by
+        ((d:ℂ)/2-1) • (J k * F.coeff (d-2)) + (2 : ℂ) • (J k * H.coeff (d-2)) := by
     calc
       _ = (T*J k-J k*T)*F.coeff d + J k*(T*F.coeff d-F.coeff d*T) := by noncomm_ring
       _ = _ := by
@@ -374,7 +374,7 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
         abel
   have right (k d : ℤ) : T * (F.coeff d * J k) - (F.coeff d * J k) * T =
       G.coeff d * J k + ((d:ℂ)/2-1) • (F.coeff (d-2)*J k) +
-        2 • (H.coeff (d-2)*J k) + (-frequency k) • (F.coeff d * J (k+1)) := by
+        (2 : ℂ) • (H.coeff (d-2)*J k) + (-frequency k) • (F.coeff d * J (k+1)) := by
     calc
       _ = (T*F.coeff d-F.coeff d*T)*J k + F.coeff d*(T*J k-J k*T) := by noncomm_ring
       _ = _ := by
@@ -408,6 +408,166 @@ private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
       rw [right]
       module
+
+
+/-- Pointwise summation of the original singleton commutator. Only the shorter
+source law hF is used. No endomorphism-valued global support is assumed. -/
+private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (F G H : NativeField D hu)
+    (hF : ∀ d : ℤ,
+      tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 * F.coeff d -
+        F.coeff d * tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      G.coeff d + ((d : ℂ)/2-1) • F.coeff (d-2) + (2 : ℂ) • H.coeff (d-2))
+    (i : Fin D.rank) (r : ℕ) (e : ℤ) (x : ActualTensor D hu) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1
+        ((singletonLinear D hu (i,r) F).coeff e x) -
+      (singletonLinear D hu (i,r) F).coeff e
+        (tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 x) =
+      (singletonLinear D hu (i,r) G).coeff e x +
+        ((e : ℂ)/2-1+2*(r+1 : ℂ)) • (singletonLinear D hu (i,r) F).coeff (e-2) x +
+        (2 : ℂ) • (singletonLinear D hu (i,r) H).coeff (e-2) x +
+        (if r = 0 then 0 else (r+1 : ℂ) • (singletonLinear D hu (i,r-1) F).coeff e x) +
+        (1/2 * halfBinomial r : ℂ) •
+          (tensorCurrent D (ActualGround D hu) i 0 (F.coeff (e+2*(r:ℤ)+1) x) -
+            F.coeff (e+2*(r:ℤ)+1) (tensorCurrent D (ActualGround D hu) i 0 x)) := by
+  classical
+  let T := tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1
+  have finite (A : NativeField D hu) (s : ℕ) (d : ℤ) (v : ActualTensor D hu) :
+      Function.HasFiniteSupport (fun j : ℤ => flatCoefficient D hu A [(i,s)] (j,()) d v) := by
+    have inj : Function.Injective (fun j : ℤ => (j, ())) :=
+      fun a b h => congrArg Prod.fst h
+    exact (flatTerm_finite D hu A [(i,s)] d v).fun_comp_of_injective inj
+  let u := fun j : ℤ => flatCoefficient D hu F [(i,r)] (j,()) (e-2) x
+  let v := fun j : ℤ => flatCoefficient D hu F [(i,0)] (j,()) (e+2*(r:ℤ)-2) x
+  let g := fun j : ℤ => flatCoefficient D hu G [(i,r)] (j,()) e x
+  let h := fun j : ℤ => flatCoefficient D hu H [(i,r)] (j,()) (e-2) x
+  let b := fun j : ℤ => (((e+2*j+2*(r:ℤ)+3 : ℤ):ℂ)/2-1) • u j
+  let k := fun j : ℤ => (-frequency (j-1) * jetScalar r (j-1)) • v j
+  let l := fun j : ℤ => if r = 0 then 0 else
+    (r+1 : ℂ) • flatCoefficient D hu F [(i,r-1)] (j,()) e x
+  let c : ℂ := (e:ℂ)/2-1+2*(r+1 : ℂ)
+  let B : ActualTensor D hu := (1/2 * halfBinomial r : ℂ) •
+    (tensorCurrent D (ActualGround D hu) i 0 (F.coeff (e+2*(r:ℤ)+1) x) -
+      F.coeff (e+2*(r:ℤ)+1) (tensorCurrent D (ActualGround D hu) i 0 x))
+  let w := fun j : ℤ => if j = -1 then B else 0
+  have fu : Function.HasFiniteSupport u := finite F r (e-2) x
+  have fv : Function.HasFiniteSupport v := finite F 0 (e+2*(r:ℤ)-2) x
+  have fg : Function.HasFiniteSupport g := finite G r e x
+  have fh : Function.HasFiniteSupport h := finite H r (e-2) x
+  have fb : Function.HasFiniteSupport b := Function.HasFiniteSupport.smul_right _ fu
+  have fk : Function.HasFiniteSupport k := Function.HasFiniteSupport.smul_right _ fv
+  have fkshift : Function.HasFiniteSupport (fun j : ℤ => k (j+1)) :=
+    fk.fun_comp_of_injective (fun a b h => by omega)
+  have fl : Function.HasFiniteSupport l := by
+    by_cases hr : r = 0
+    · apply (Set.finite_empty : (∅ : Set ℤ).Finite).subset
+      intro j hj
+      exact False.elim (hj (by simp [l, hr]))
+    · simpa only [l, if_neg hr] using
+        (finite F (r-1) e x).fun_comp (smul_zero (r+1 : ℂ))
+  have fw : Function.HasFiniteSupport w := by
+    apply (Set.finite_singleton (-1 : ℤ)).subset
+    intro j hj
+    by_contra hn
+    apply hj
+    simp only [Set.mem_singleton_iff] at hn
+    simp [w, hn]
+  have f2h := fh.fun_comp (smul_zero (2:ℂ))
+  have term (j : ℤ) :
+      T (flatCoefficient D hu F [(i,r)] (j,()) e x) -
+        flatCoefficient D hu F [(i,r)] (j,()) e (T x) =
+      g j + b j + (2 : ℂ) • h j + k (j+1) + w j := by
+    have ht := congrArg (fun U : Module.End ℂ (ActualTensor D hu) => U x)
+      (singleton_term_l1 D hu F G H hF i r j e)
+    simpa only [T, g, b, u, h, k, v, w, B, show j+1-1=j by omega,
+      Module.End.mul_apply, LinearMap.sub_apply, LinearMap.add_apply,
+      LinearMap.smul_apply, ite_apply, LinearMap.zero_apply] using ht
+  have summed : T ((singletonLinear D hu (i,r) F).coeff e x) -
+      (singletonLinear D hu (i,r) F).coeff e (T x) =
+      ∑ᶠ j : ℤ, (g j + b j + (2 : ℂ) • h j + k (j+1) + w j) := by
+    rw [singletonLinear_coefficient, singletonLinear_coefficient,
+      map_finsum _ (finite F r e x),
+      ← finsum_sub_distrib ((finite F r e x).fun_comp (map_zero T)) (finite F r e (T x))]
+    exact finsum_congr term
+  have split : (∑ᶠ j : ℤ, (g j+b j+(2 : ℂ) • h j+k (j+1)+w j)) =
+      (∑ᶠ j : ℤ, g j)+(∑ᶠ j : ℤ, b j)+(∑ᶠ j : ℤ, (2 : ℂ) • h j)+
+        (∑ᶠ j : ℤ, k (j+1))+(∑ᶠ j : ℤ, w j) := by
+    calc
+      _ = (∑ᶠ j : ℤ, (g j+b j+(2 : ℂ) • h j+k (j+1))) + ∑ᶠ j : ℤ, w j :=
+        finsum_add_distrib (((fg.add fb).add f2h).add fkshift) fw
+      _ = ((∑ᶠ j : ℤ, (g j+b j+(2 : ℂ) • h j)) + ∑ᶠ j : ℤ, k (j+1)) + ∑ᶠ j : ℤ, w j := by
+        congr 1
+        exact finsum_add_distrib ((fg.add fb).add f2h) fkshift
+      _ = (((∑ᶠ j : ℤ, (g j+b j)) + ∑ᶠ j : ℤ, (2 : ℂ) • h j) + ∑ᶠ j : ℤ, k (j+1)) +
+          ∑ᶠ j : ℤ, w j := by
+        congr 1; congr 1
+        exact finsum_add_distrib (fg.add fb) f2h
+      _ = _ := by
+        congr 1; congr 1; congr 1
+        exact finsum_add_distrib fg fb
+  have reindex : (∑ᶠ j : ℤ, k (j+1)) = ∑ᶠ j : ℤ, k j :=
+    finsum_eq_of_bijective (fun j : ℤ => j+1)
+      ⟨fun a b h => by omega, fun b => ⟨b-1, by omega⟩⟩ (fun _ => rfl)
+  have boundary : (∑ᶠ j : ℤ, w j) = B := by
+    rw [finsum_eq_single _ (-1) (fun j hj => by simp [w, hj])]
+    simp [w]
+  have uj (j : ℤ) : u j = jetScalar r j • v j := by
+    have ht := congrArg (fun U : Module.End ℂ (ActualTensor D hu) => U x)
+      (flat_singleton_jet D hu F i r j (e-2))
+    simpa only [u, v, LinearMap.smul_apply,
+      show e-2+2*(r:ℤ) = e+2*(r:ℤ)-2 by omega] using ht
+  have lj (j : ℤ) : l j =
+      (if r = 0 then 0 else (r+1 : ℂ)*jetScalar (r-1) j) • v j := by
+    by_cases hr : r = 0
+    · simp [l, hr]
+    · have sh : e+2*((r-1:ℕ):ℤ) = e+2*(r:ℤ)-2 := by omega
+      dsimp only [l, v]
+      rw [if_neg hr, if_neg hr, flat_singleton_jet]
+      simp only [LinearMap.smul_apply, smul_smul, sh]
+  have coefficient (j : ℤ) :
+      (((e+2*j+2*(r:ℤ)+3 : ℤ):ℂ)/2-1)*jetScalar r j +
+        (-frequency (j-1)*jetScalar r (j-1)) =
+      c*jetScalar r j + (if r = 0 then 0 else (r+1 : ℂ)*jetScalar (r-1) j) := by
+    have hs := jet_l1_scalar r j
+    dsimp only [c, frequency]
+    push_cast
+    linear_combination hs
+  have pair (j : ℤ) : b j + k j = c • u j + l j := by
+    dsimp only [b, k]
+    rw [uj, lj]
+    simp only [smul_smul]
+    rw [← add_smul, coefficient, add_smul]
+  have contract : (∑ᶠ j : ℤ, b j)+(∑ᶠ j : ℤ, k j) =
+      c • (∑ᶠ j : ℤ, u j)+(∑ᶠ j : ℤ, l j) := by
+    calc
+      _ = ∑ᶠ j : ℤ, (b j+k j) := (finsum_add_distrib fb fk).symm
+      _ = ∑ᶠ j : ℤ, (c • u j+l j) := finsum_congr pair
+      _ = (∑ᶠ j : ℤ, c • u j)+(∑ᶠ j : ℤ, l j) :=
+        finsum_add_distrib (fu.fun_comp (smul_zero c)) fl
+      _ = _ := by rw [← smul_finsum' c fu]
+  have lower : (∑ᶠ j : ℤ, l j) =
+      if r = 0 then 0 else (r+1 : ℂ) • (singletonLinear D hu (i,r-1) F).coeff e x := by
+    by_cases hr : r = 0
+    · simp [l, hr]
+    · rw [if_neg hr, singletonLinear_coefficient]
+      change (∑ᶠ j : ℤ, (if r=0 then 0 else (r+1 : ℂ) •
+        flatCoefficient D hu F [(i,r-1)] (j,()) e x)) = _
+      simp only [if_neg hr]
+      exact (smul_finsum' (r+1 : ℂ) (finite F (r-1) e x)).symm
+  change T ((singletonLinear D hu (i,r) F).coeff e x) -
+    (singletonLinear D hu (i,r) F).coeff e (T x) = _
+  rw [summed, split, reindex, boundary, ← smul_finsum' (2:ℂ) fh]
+  calc
+    _ = (∑ᶠ j : ℤ, g j) + ((∑ᶠ j : ℤ, b j)+(∑ᶠ j : ℤ, k j)) +
+        (2 : ℂ) • (∑ᶠ j : ℤ, h j) + B := by abel
+    _ = _ := by
+      rw [contract, lower]
+      simp only [singletonLinear_coefficient]
+      change (∑ᶠ j : ℤ, g j) + (c • (∑ᶠ j : ℤ, u j) + _) +
+        (2 : ℂ) • (∑ᶠ j : ℤ, h j) + B = _
+      abel
+
+#print axioms singleton_l1
 
 #print axioms singleton_term_l1
 
