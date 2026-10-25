@@ -37,13 +37,13 @@ internal sealed class SmallSignedEntryTranscriptCompensationDocument : IScribeDo
         F.Id("rho"), Gt, D(0), Comma, Sp, Forall, Sp, F.Id("w"), InMacro, Sp,
         App("List", F.Id("Command")), Comma, Sp,
         Exists, Sp, F.Id("epsilon"), Comma, Sp, F.Id("s"), Comma, Sp, F.Id("z"), Colon, Sp,
-        D(0), Lt, F.Id("epsilon"), Le, Frac, Grp(D(1)), Grp(D(8)), Wedge, Sp,
-        App("order", F.Id("s")), Eq, App("t", F.Id("w")), Plus, D(2), Wedge, Sp,
-        App("InBall", F.Id("rho"), F.Id("z")), Wedge, Sp,
-        Sum, Underscore, Grp(F.Id("i")), Abs(App("z", F.Id("i"))), Lt, F.Id("rho"), Wedge, Sp,
+        D(0), Lt, F.Id("epsilon"), Le, Frac, Grp(D(1)), Grp(D(8)), Land, Sp,
+        App("order", F.Id("s")), Eq, App("t", F.Id("w")), Plus, D(2), Land, Sp,
+        App("InBall", F.Id("rho"), F.Id("z")), Land, Sp,
+        Sum, Underscore, Grp(F.Id("i")), Abs(App("z", F.Id("i"))), Lt, F.Id("rho"), Land, Sp,
         App("run", F.Id("S"), F.Id("z"), F.Id("w")), Eq,
-        App("run", F.Id("reference"), D(0), F.Id("w")), Wedge, Sp,
-        Sub(Pow(F.Id("S"), D(2)), F.Id("00")), Eq,
+        App("run", F.Id("reference"), D(0), F.Id("w")), Land, Sp,
+        Sub(Pow(F.Id("S"), D(2)), Seq(D(0), Comma, D(0))), Eq,
         Pow(Seq(Open, Frac, Grp(D(1)), Grp(D(2)), Close), D(2)), Plus,
         Pow(F.Id("epsilon"), D(2))));
 
@@ -54,11 +54,11 @@ internal sealed class SmallSignedEntryTranscriptCompensationDocument : IScribeDo
         App(fair ? "BitController" : "Controller", F.Id("L"), F.Id("E")), Comma, Sp,
         Forall, Sp, F.Id("initial"), InMacro, Sp, F.Id("L"), Comma, Sp,
         Forall, Sp, F.Id("target"), InMacro, Sp, App("AcquisitionTarget", F.Id("E")), Comma, Sp,
-        Neg, App(fair ? "FairAcquiresOnBall" : "AcquiresOnBall", F.Id("rho"), F.Id("p"),
+        Neg, Sp, App(fair ? "FairAcquiresOnBall" : "AcquiresOnBall", F.Id("rho"), F.Id("p"),
             F.Id("initial"), F.Id("target"))));
 
     private static Formula App(string name, params Formula[] xs) => new Formula.Apply(F.Id(name), [.. xs]);
     private static Formula Pow(Formula x, Formula n) => Seq(x, Caret, Grp(n));
     private static Formula Sub(Formula x, Formula n) => Seq(x, Underscore, Grp(n));
-    private static Formula Abs(Formula x) => Seq(Vert, x, Vert);
+    private static Formula Abs(Formula x) => Seq(Bar, x, Bar);
 }
