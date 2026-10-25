@@ -8,11 +8,208 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 from unittest.mock import patch
 import uuid
 
 
 class IdlePoolCases:
+    def unused_return(self, expect=0, joined=True):
+        return self.run_protocol("return", "--path", self.tree,
+            *(["--writers-joined"] if joined else []), expect=expect)
+
+    def pool_unused_created_tree_returns_without_pr(self):
+        (self.main / "owned").write_text("advanced dev\n")
+        self.g(self.main, "commit", "-am", "Advance dev")
+        dev = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "push", "origin", "dev")
+        self.g(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
+        self.pool_github(state="OPEN")
+        result = json.loads(self.run_protocol("return", "--path", self.tree,
+            "--writers-joined", env=self.pool_env).stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(self.base, result["allocation_base"])
+        self.assertEqual(dev, result["dev_commit"])
+        self.assertEqual([], result["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertTrue(self.tree.exists())
+        self.assertTrue(self.g(self.tree, "branch", "--show-current").strip().startswith("lane/governance/idle-"))
+        self.assertEqual(dev, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", "origin/dev").strip())
+
+    def pool_unused_claimed_tree_returns_without_pr(self):
+        (self.main / ".gitignore").write_text(".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n")
+        self.g(self.main, "add", ".gitignore")
+        self.g(self.main, "commit", "-m", "Scaffold ignores")
+        self.g(self.main, "push", "origin", "dev")
+        self.pool_return()
+        self.pool_claim(path=self.tree, base=self.g(self.main, "rev-parse", "HEAD").strip())
+        allocated = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+        result = json.loads(self.unused_return().stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(allocated, result["allocation_base"])
+        self.assertEqual("refs/heads/lane/math/next", result["task_branch"])
+        self.assertEqual(allocated, self.g(self.main, "rev-parse", "lane/math/next").strip())
+
+    def pool_unused_return_refuses_task_tip(self):
+        (self.tree / "owned").write_text("task commit\n")
+        self.g(self.tree, "commit", "-am", "Task")
+        tip = self.g(self.tree, "rev-parse", "HEAD").strip()
+        result = self.unused_return(expect=73)
+        self.assertIn("unused_task_commits_require_pr", result.stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        self.assertEqual(tip, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertTrue(self.tree.exists())
+
+    def pool_unused_return_accepts_commit_then_reset(self):
+        (self.tree / "owned").write_text("task commit\n")
+        self.g(self.tree, "commit", "-am", "Task")
+        abandoned = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.g(self.tree, "reset", "--hard", self.base)
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        before = log.read_bytes()
+        result = json.loads(self.unused_return().stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(self.base, result["allocation_base"])
+        self.assertEqual([], result["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual(before, log.read_bytes())
+        self.assertEqual("commit", self.g(self.main, "cat-file", "-t", abandoned).strip())
+
+    def pool_unused_return_refuses_dirty_content(self):
+        for kind in ("tracked", "staged", "untracked"):
+            with self.subTest(kind=kind):
+                target = self.tree / ("new" if kind == "untracked" else "owned")
+                target.write_text("preserve " + kind + "\n")
+                if kind == "staged":
+                    self.g(self.tree, "add", "owned")
+                result = self.unused_return(expect=73)
+                self.assertIn("idle_dirty", result.stderr)
+                self.assertEqual("preserve " + kind + "\n", target.read_text())
+                self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+                self.g(self.tree, "reset", "--hard", self.base)
+                if kind == "untracked":
+                    target.unlink()
+
+    def pool_unused_return_keeps_join_scope_lock_and_operation_guards(self):
+        self.assertIn("host_must_join", self.unused_return(expect=73, joined=False).stderr)
+        holder = self.hold()
+        self.assertIn("busy_scope:tree:", self.unused_return(expect=73).stderr)
+        holder.communicate("done\n", timeout=10)
+        self.g(self.main, "worktree", "lock", "--reason", "intentional", self.tree)
+        self.assertIn("locked_recent", self.unused_return(expect=73).stderr)
+        self.g(self.main, "worktree", "unlock", self.tree)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "MERGE_HEAD").write_text(self.base + "\n")
+        self.assertIn("unfinished_operation:MERGE_HEAD", self.unused_return(expect=73).stderr)
+        (metadata / "MERGE_HEAD").unlink()
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_refuses_missing_creation_evidence(self):
+        reference = "refs/heads/" + self.branch
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        self.assertEqual("", self.g(self.tree, "reflog", "show", "--format=%gs", reference))
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def unused_history(self, creation_age, commit_age=None, reset_age=None):
+        self.g(self.tree, "switch", "--detach", self.base)
+        self.g(self.tree, "branch", "-D", self.branch)
+        now = int(time.time())
+        def dated(age, *args):
+            with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(now - age * 86400) + " +0000"):
+                self.g(self.tree, *args)
+        dated(creation_age, "switch", "-c", self.branch, self.base)
+        if commit_age is not None:
+            (self.tree / "owned").write_text("task commit\n")
+            dated(commit_age, "commit", "-am", "Task")
+            dated(reset_age, "reset", "--hard", self.base)
+
+    def pool_unused_return_accepts_selectively_expired_task_history(self):
+        self.unused_history(40, 40, 40)
+        reference = "refs/heads/" + self.branch
+        self.g(self.main, "config", "gc.reflogExpire", "now")
+        self.g(self.main, "config", "gc.reflogExpireUnreachable", "now")
+        self.assertEqual(["reset: moving to " + self.base, "commit: Task", "branch: Created from " + self.base],
+            self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines())
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+        self.assertEqual(["branch: Created from " + self.base], rows)
+        result = self.run_owned_command([sys.executable, "-B", self.source_root /
+            "tools/scripts/worktree/worktree_protocol.py", "return", "--writers-joined"],
+            self.tree, phase="protocol", timeout=30, check=False)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        returned = json.loads(result.stdout)
+        self.assertEqual("returned", returned["status"])
+        self.assertEqual(self.base, returned["allocation_base"])
+        self.assertEqual([], returned["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
+
+    def pool_unused_return_refuses_partially_expired_creation(self):
+        self.unused_history(100, 100, 0)
+        reference = "refs/heads/" + self.branch
+        self.g(self.tree, "reflog", "delete", reference + "@{1}")
+        self.g(self.tree, "reflog", "delete", reference + "@{1}")
+        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+        self.assertEqual(["reset: moving to " + self.base], rows)
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_unused_return_uses_creation_record_only(self):
+        for history in ("discontinuous", "malformed", "backward-clock"):
+            with self.subTest(history=history):
+                self.unused_history(0, 1 if history == "backward-clock" else 0, 0)
+                log = self.main / ".git/logs/refs/heads" / self.branch
+                if history == "discontinuous":
+                    self.g(self.tree, "reflog", "delete", "refs/heads/" + self.branch + "@{1}")
+                elif history == "malformed":
+                    with log.open("ab") as output:
+                        output.write(b"unreadable later transition\n")
+                before = log.read_bytes()
+                self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
+                self.assertEqual(before, log.read_bytes())
+
+    def pool_unused_return_refuses_invalid_creation_record(self):
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        creation = log.read_bytes()
+        for record in (b"malformed\n", creation.rstrip(b"\n")):
+            with self.subTest(record=record):
+                log.write_bytes(record)
+                self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+                self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        log.write_bytes(creation)
+        saved = log.with_name(log.name + "-saved")
+        log.rename(saved)
+        log.symlink_to(saved.name)
+        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+        self.assertEqual(creation, saved.read_bytes())
+
+    def pool_unused_return_refuses_already_idle_without_pr(self):
+        self.unused_return()
+        reference = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+        self.assertIn("unused_return_already_idle", self.unused_return(expect=73).stderr)
+        self.assertEqual(reference, self.g(self.tree, "symbolic-ref", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+
+    def pool_unused_return_accepts_internal_cr_in_identity(self):
+        with patch.dict(os.environ, GIT_COMMITTER_NAME="Protocol\rTests"):
+            self.unused_history(0)
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        self.assertIn(b"Protocol\rTests <", log.read_bytes())
+        self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
+
+    def pool_unused_return_requires_remote_dev_retention(self):
+        (self.main / "owned").write_text("unpublished base\n")
+        self.g(self.main, "commit", "-am", "Unpublished base")
+        other = self.root / "other-tree"
+        self.g(self.main, "worktree", "add", "-b", "lane/math/unpublished", other, "HEAD")
+        self.tree = other
+        self.assertIn("remote_does_not_retain_commit", self.unused_return(expect=73).stderr)
+        self.assertEqual("lane/math/unpublished", self.g(other, "branch", "--show-current").strip())
+
     def implicit_requests_allocate_distinct_trees(self):
         for name in ("lake-manifest.json", "Reg/lakefile.toml", "Reg/lake-manifest.json",
                      "tools/lean-inspector-reg/lakefile.toml", "tools/lean-inspector-reg/lake-manifest.json"):
