@@ -2969,3 +2969,19 @@ The [joint mixed-Mobius and residue companion](liu2026quasirhresidue.md)
 proves a source-conditional improvement of the fifteen radial mixed terms,
 with the original profiles and punctures, and records the actual finite
 residue interface. Its scope and remaining J40 obligations are explicit.
+
+## A small reduced-frequency sector of the actual C68 columns
+
+The [reduced-frequency companion](liu2026quasirhreduced.md#a-small-reduced-frequency-sector-of-the-actual-c68-columns)
+retains C77–C86 for the small nonunit sector of the actual bare-J4
+columns, with the original and exact redesigned cutoffs. Its
+[original-W0 dominant endpoint](liu2026quasirhreduced.md#a-source-conditional-dominant-endpoint-for-original-w0)
+retains C87–C92's sharper $R^{1/6}$ bound on $q_r\asymp U$.
+The [all-annulus original-W0 endpoint](liu2026quasirhreduced.md#a-source-conditional-all-annulus-endpoint-for-original-w0)
+extends bare nonunit coverage in C93–C97 to every $r>1$, with all
+sixth-power repetitions, independent physical-row and column scales,
+one original coupled envelope and the weighted large-shell tail.
+The source-conditional raw $U^\kappa$, $D^{-2}$-restored $U^{B_*}$
+endpoint has zero strict C68 reserve; the exceptional original-W0
+principal scalar, other branches and full C68/J40/RH remain open.
+C51–C76 remain in this note.

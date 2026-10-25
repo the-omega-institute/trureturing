@@ -1,0 +1,106 @@
+**Theorem 7.5 (unrestricted improvement and a matching region).**
+On exactly the source and arbitrary-seed class of Definitions
+1.1--1.2, for every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$,
+
+$$
+\boxed{
+\frac G2\le R_{\mathrm{private}}
+ \le\min\{R_{\mathrm{ad},3},V\},\qquad
+V=\frac G2+\frac{(1-\min\{1,c/3\})(P-G)}4.
+}
+\tag{7.16}
+$$
+
+On this entire strict band $V<U_{\mathrm{new}}$.
+Wherever $U_{\mathrm{new}}\le R_{\mathrm{ad},3}$,
+(7.16) strictly improves the upper bound in (6.22).
+In particular this holds on the nonempty band
+$c/3<E\le(1+2c)/4$ for every $c>0$.
+For $c\ge3$, including $c=3$, the unrestricted value is
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac G2
+ =\frac{c(1+E)}{2(3+c)}
+ \quad\left(\frac c3\le E\le\frac{1+c}{2}\right).
+}
+\tag{7.17}
+$$
+
+The endpoint $E=c/3$ has the already known value $E/2$ for
+every $c>0$. For $0<c<3$ the remaining certified width on the
+strict band is
+
+$$
+0\le R_{\mathrm{private}}-\frac G2
+ \le\frac{(3-c)(P-G)}{12}.
+\tag{7.18}
+$$
+
+**Proof.** Theorem 3.3 applies to every permitted seed probability
+space and supplies the lower bound $H/2=G/2$ on this band.
+Its same two complete legal full-grid worlds are fixed before
+every seed; the original pointwise sum inequality (3.5) is
+integrable using only per-world measurability. Theorem 7.4
+supplies a lawful upper strategy, and one-point seed spaces
+still supply the upper bound $R_{\mathrm{ad},3}$. This proves
+(7.16) for the whole competitor class.
+
+With $\kappa=c/(c+6)$ as in Section 6, one has
+$\alpha>\kappa$: if $c\le3$, $c/3>c/(c+6)$, and if
+$c\ge3$, $1>c/(c+6)$. Therefore
+
+$$
+U_{\mathrm{new}}-V
+ =\frac{(\alpha-\kappa)\chi}{4}>0.
+\tag{7.19}
+$$
+
+When the old upper bound is active, its value is
+$U_{\mathrm{new}}$, and
+$\min\{R_{\mathrm{ad},3},V\}\le V<U_{\mathrm{new}}$.
+On the specified narrower band, Uniform Report Designs,
+Theorem 31.4, gives $R_{\mathrm{ad},3}=P/2$ and
+
+$$
+\frac P2-U_{\mathrm{new}}
+ =\frac{(1+\kappa)\chi}{4}>0.
+\tag{7.20}
+$$
+
+That band has positive length
+$(1+2c)/4-c/3=(3+2c)/12$, and its upper endpoint is included.
+This verifies strict improvement on a nonempty active-bound
+domain without requiring a classification of every active domain.
+
+For $c\ge3$ one has $\alpha=1$, so (7.16) matches the
+unrestricted lower bound, proving (7.17) on the strict band.
+At $E=c/3$, $P=G=E$, and the inherited endpoint result
+completes its closed lower boundary. For $0<c<3$,
+$\alpha=c/3$, and subtraction gives (7.18).
+The threshold $c\ge3$ is sufficient for this matching argument;
+no necessity assertion about that threshold follows.
+
+The comparison literature remains exactly scoped as in Section 1:
+Krieg--Novak--Ullrich, Sections 1--2, concerns a linear target and
+a class with additional product measurability, and
+Casini--Garulli--Vicino, Section 4, equations (7)--(10), supplies
+regression strips rather than this nonlinear target's minimax value.
+The deductions (7.9)--(7.19) use the cited repository separation,
+joint fibers, scalar feasibility and complete-world witnesses.
+
+For $0<c<3$ and $c/3<E\le(1+c)/2$, (7.18) has positive
+right-hand width; it determines no unrestricted equality there.
+For every $c>0$ the intermediate domain
+$(1+c)/2<E<E_\star(c)$ from Definition 5.1 also remains beyond
+this matching argument. In that domain $r>1/2$, so (7.8) is no
+longer supplied on all of the tapered region by the same
+near-separation branch. Determining these remaining values requires
+stronger lawful fixed-world upper or lower estimates on the original
+class. The inherited exact regions (5.2) remain available.
+The two-point seed used to construct $\Gamma^\alpha$ gives no
+reduction of the unrestricted infimum to finite seeds; unrestricted
+equality in (7.17) follows from matching an upper strategy to the
+arbitrary-seed lower certificate. $\square$
+

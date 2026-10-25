@@ -201,7 +201,7 @@ private theorem phi_nonunital (t : ℝ) (ht : 0 < t) : Phi t 1 ≠ 1 := by
       LinearMap.smulRight_apply, Matrix.traceLinearMap_apply, Matrix.vecMulVec, Matrix.trace,
           smul_eq_mul,
     ne_of_gt ht, D_ne t] at e
-private theorem dep_cptp (eta : ℝ) (h0 : 0 ≤ eta) (h1 : eta ≤ 1) :
+theorem dep_cptp (eta : ℝ) (h0 : 0 ≤ eta) (h1 : eta ≤ 1) :
     IsCPTP (depolarized (d := 2) LinearMap.id (1 - eta)) := by
   let p : Fin 4 → ℝ := ![eta+(1-eta)/4, (1-eta)/4, (1-eta)/4, (1-eta)/4]
   have hp : ∀ μ, 0 ≤ p μ := by
