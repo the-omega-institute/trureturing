@@ -578,6 +578,89 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[]
 end Effect
+
+namespace Compatible
+abbrev signature : Signature where
+  Params := ℕ × ℕ
+  State _ := _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix (CopyIndex (Fin 3) p.2) (CopyIndex (Fin 3) p.2) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def readoutFunction : Unit → ∀ p, signature.State p → signature.Output () p :=
+  fun _ p r => pinchedCopies p.1 p.2 r
+def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
+def zeroReadout : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (m n : ℕ) (r s : signature.State (m,n)),
+    R.readout () (m,n) r = R.readout () (m,n) s ↔
+      ∀ F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ,
+        F.PosSemidef → (1-F).PosSemidef →
+        F * totalHamiltonian m n = totalHamiltonian m n * F →
+        Matrix.trace (F * stateMatrix (copies r n)) =
+          Matrix.trace (F * stateMatrix (copies s n))
+private theorem bridge : (type_of% compatible_effects_iff) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro h
+  have hp := sparse_joint_effect 2 (by omega)
+  have he := (h 2 (copyOrder 2) rho (sigma 2)).mp rfl
+    (jointEffect 2) hp.1 hp.2.1 hp.2.2.1
+  rw [hp.2.2.2.1, hp.2.2.2.2.1] at he
+  norm_num at he
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨(2, copyOrder 2), rho, sigma 2, ?_⟩
+  change pinchedCopies 2 (copyOrder 2) rho ≠ pinchedCopies 2 (copyOrder 2) (sigma 2)
+  exact (sparse_joint_effect 2 (by omega)).2.2.2.2.2.2.2.2
+
+def family : Registration arena (type_of% compatible_effects_iff) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp compatible_effects_iff, zeroReadout, rejected⟩
+  sensitivity := ⟨fun i => ⟨zeroReadout,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    compatible_effects_iff (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Compatible.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.Compatible.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Compatible
+#print axioms Compatible.registration
 #print axioms Tensor.registration
 #print axioms Pinching.registration
 #print axioms Words.registration
