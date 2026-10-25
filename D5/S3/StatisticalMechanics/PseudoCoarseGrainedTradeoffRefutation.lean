@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/PseudoCoarseGrainedTradeoffRefutation.claim; result=D5/S3/StatisticalMechanics/PseudoCoarseGrainedTradeoffRefutation.result; claim=D5/S3/StatisticalMechanics/PseudoCoarseGrainedTradeoffRefutation.claim
-   digest: A positive three-state cyclic chain violates the pseudo-coarse-grained trade-off bound. -/
+   digest: A positive cyclic chain violates the pseudo-coarse-grained trade-off bound. -/
 
 import D5.S3.StatisticalMechanics.MarkovMpembaTripletRefutation
 
