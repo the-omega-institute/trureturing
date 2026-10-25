@@ -48,7 +48,7 @@ theorem eventually_small_cross_tails
       ← Lp.enorm_def, ← ofReal_norm]
     exact ENNReal.ofReal_le_ofReal (hb m)
   have hμ : μ (tailSet K (f m)) ≤ D / K := by
-    have hmark := meas_ge_le_lintegral_div (Lp.aestronglyMeasurable (f m)).enorm.aemeasurable
+    have hmark := meas_ge_le_lintegral_div (Lp.aestronglyMeasurable (f m)).enorm
       (show (K : ℝ≥0∞) ≠ 0 by exact_mod_cast hK.ne') (ENNReal.natCast_ne_top K)
     have heq : {x | (K : ℝ≥0∞) ≤ ‖f m x‖ₑ} = tailSet K (f m) := by
       ext x
@@ -59,7 +59,7 @@ theorem eventually_small_cross_tails
   have hbound : eLpNorm ((tailSet K (f m)).indicator (f n)) 1 μ ≤ ENNReal.ofReal ε := by
     rw [eLpNorm_indicator_eq_eLpNorm_restrict (measurable_tailSet K (f m)).nullMeasurableSet]
     exact hsmall ⟨n, by omega⟩ (tailSet K (f m)) (hμ.trans hKd.le)
-  change (eLpNorm ((tailSet K (f m)).indicator (f n)) 1 μ).toReal ≤ ε
+  rw [restrict, Lp.norm_toLp]
   simpa only [ENNReal.toReal_ofReal hε.le] using
     ENNReal.toReal_mono ENNReal.ofReal_ne_top hbound
 

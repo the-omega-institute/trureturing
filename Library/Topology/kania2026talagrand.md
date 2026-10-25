@@ -256,3 +256,39 @@ by a Hahn–Banach norming functional of norm at most one; completeness and a
 three-term estimate give convergence against every L1 functional. This
 argument includes the zero space and requires no positive measure premise.
 It neither assumes nor proves the CH induction or the full signed endpoint.
+
+For the raw-restriction construction, choose the actual strongly measurable
+representative of each L1 class and use its integer hard-tail masses Q(n,k).
+A common scalar Hilbert subsequence makes these bounded masses converge for
+every k at once. Their limits c(k) decrease, and alpha is their infimum.
+At each recursive step a large cutoff makes c(k) close to alpha and makes
+its superlevel support have small integral for every input in the finite
+original prefix already passed. Markov's inequality controls that support's
+measure; uniform integrability of a finite family controls the old-input
+integrals. Selecting the next source index after these conditions are fixed
+makes its moving tail mass close to alpha. The effect of the ith support on
+every earlier selected input is at most 2 to the power minus i.
+
+Write A(i) for these actual measurable superlevel sets and let E(i) be A(i)
+minus the union of all later A(h). The E(i) are pairwise disjoint as sets.
+The countable-union integral inequality bounds the removed part by the
+geometric tail, at most 2 to the power minus i. Thus the norms of the literal
+restrictions to E(i) have the same limit alpha as the restrictions to A(i).
+For every positive fixed integer k below the moving cutoff, the k-tail mass
+of the literal complement of A(i) is exactly Q(i,k) minus the moving tail
+mass. Its limit is c(k) minus alpha. These limits vanish as k increases;
+a separate finite-prefix estimate gives uniform integrability of the entire
+complement sequence.
+
+The difference between the literal complements of E(i) and A(i) is exactly
+the restriction to A(i) intersected with the union of its later supports.
+Its L1 norm tends to zero by the same geometric bound. Apply the genuine
+weak-extraction argument to the complements of A(i), and transfer each
+continuous real functional across this norm-null difference. Passing to
+that final common subsequence preserves actual set disjointness, the
+indicator identities and the disjoint-norm limit. In particular, no input
+measure is corrected, no constant-norm assumption is inserted, and both
+summands are the literal restrictions of the same selected original L1
+class. Their sum and the sum of their norms equal the original class and
+its norm respectively. This is the classical analytic supplier only;
+the signed-measure transfer and full CH/Talagrand endpoint are separate.

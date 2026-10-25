@@ -58,13 +58,13 @@ theorem exists_selection
         dist (c K) α < ε i / 2 := by
       have ev : ∀ᶠ K in atTop, i < K ∧ P i (a N) K ∧ dist (c K) α < ε i / 2 := by
         filter_upwards [eventually_gt_atTop i, hP i (a N),
-          hcα.eventually (Metric.ball_mem_nhds α (by positivity))]
+          hcα.eventually (Metric.ball_mem_nhds α (ε := ε i / 2) (by linarith [hε i]))]
           with K hi hp hd
         exact ⟨hi, hp, hd⟩
       exact ev.exists
     have ev : ∀ᶠ n in atTop, N < n ∧ dist (Q (a n) K) (c K) < ε i / 2 := by
       filter_upwards [eventually_gt_atTop N,
-        (hclim K).eventually (Metric.ball_mem_nhds (c K) (by positivity))] with n hn hd
+        (hclim K).eventually (Metric.ball_mem_nhds (c K) (ε := ε i / 2) (by linarith [hε i]))] with n hn hd
       exact ⟨hn, hd⟩
     obtain ⟨n, hn, hd⟩ := ev.exists
     exact ⟨K, n, hn, hiK, hpK, (dist_triangle (Q (a n) K) (c K) α).trans_lt (by linarith)⟩
@@ -76,7 +76,7 @@ theorem exists_selection
   let j (i : ℕ) := a (b (i + 1))
   let K (i : ℕ) := cut i (b i)
   have hbi : StrictMono (fun i => b (i + 1)) :=
-    hbm.comp (strictMono_nat_of_lt_succ (fun _ => by omega))
+    fun i j hij => hbm (show i + 1 < j + 1 by omega)
   have hj : StrictMono j := ha.comp hbi
   refine ⟨j, K, c, α, fun i => a (b i), hj, fun i => hcut i (b i), hα, hαk,
     hcα, fun k => (hclim k).comp hbi.tendsto_atTop, ?_, fun i => hp i (b i), ?_⟩
@@ -84,6 +84,7 @@ theorem exists_selection
     apply squeeze_zero (fun i => dist_nonneg) (fun i => (herr i (b i)).le)
       tendsto_one_div_add_atTop_nhds_zero_nat
   · intro h i hhi
-    exact ha.monotone (hbm.monotone (by omega))
+    change a (b (h + 1)) ≤ a (b i)
+    exact ha.monotone (hbm.monotone (show h + 1 ≤ i by omega))
 
 end D5.S3.Topology.Measures.L1TailSelection
