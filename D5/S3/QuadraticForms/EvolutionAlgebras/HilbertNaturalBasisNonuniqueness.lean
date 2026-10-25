@@ -35,18 +35,16 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-abbrev H := lp (fun _ : ℕ+ => ℂ) 2
-
-noncomputable def e : HilbertBasis ℕ+ ℂ H :=
-  HilbertBasis.ofRepr (LinearIsometryEquiv.refl ℂ H)
+noncomputable def e : HilbertBasis ℕ+ ℂ (lp (fun _ : ℕ+ => ℂ) 2) :=
+  HilbertBasis.ofRepr (LinearIsometryEquiv.refl ℂ (lp (fun _ : ℕ+ => ℂ) 2))
 
 /- proof_shape: bind-only; consumers: mu_on_e. -/
-private theorem e_eq_single (i : ℕ+) : e i = (lp.single 2 i 1 : H) := by
+private theorem e_eq_single (i : ℕ+) : e i = (lp.single 2 i 1 : (lp (fun _ : ℕ+ => ℂ) 2)) := by
   apply e.repr.injective
   rw [e.repr_self]
   rfl
 
-private noncomputable def coefficient (i : ℕ+) : ℂ →L[ℂ] ℂ →L[ℂ] H :=
+private noncomputable def coefficient (i : ℕ+) : ℂ →L[ℂ] ℂ →L[ℂ] (lp (fun _ : ℕ+ => ℂ) 2) :=
   (LinearMap.mk₂ ℂ (fun a b : ℂ => (a * b) • e (if i = 1 then 1 else i - 1))
     (by intros; simp [add_mul, add_smul])
     (by intros; simp [mul_smul, smul_eq_mul, mul_assoc])
@@ -58,7 +56,7 @@ private noncomputable def coefficient (i : ℕ+) : ℂ →L[ℂ] ℂ →L[ℂ] H
     rw [norm_smul, norm_mul, e.orthonormal.norm_eq_one]
     simp)
 
-noncomputable def mu : H →L[ℂ] H →L[ℂ] H :=
+noncomputable def mu : (lp (fun _ : ℕ+ => ℂ) 2) →L[ℂ] (lp (fun _ : ℕ+ => ℂ) 2) →L[ℂ] (lp (fun _ : ℕ+ => ℂ) 2) :=
   lp.dualPairing 2 2 coefficient (K := 1) (by
     intro i
     apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
@@ -80,7 +78,7 @@ private theorem mu_on_e (i j : ℕ+) :
   · intro k hk
     simp [lp.single_apply, Pi.single_apply, hk.symm]
 
-private noncomputable def rotated (i : ℕ+) : H :=
+private noncomputable def rotated (i : ℕ+) : (lp (fun _ : ℕ+ => ℂ) 2) :=
   if i = 1 then (3 / 5 : ℂ) • e 1 + (4 / 5 : ℂ) • e 2
   else if i = 2 then (-4 / 5 : ℂ) • e 1 + (3 / 5 : ℂ) • e 2
   else e i
@@ -123,7 +121,7 @@ private theorem e_mem_rotated_span (i : ℕ+) :
       rw [← hh]
       exact subset_span ⟨i, rfl⟩
 
-noncomputable def f : HilbertBasis ℕ+ ℂ H :=
+noncomputable def f : HilbertBasis ℕ+ ℂ (lp (fun _ : ℕ+ => ℂ) 2) :=
   HilbertBasis.mk rotated_orthonormal (by
     rw [← e.dense_span]
     apply Submodule.topologicalClosure_mono
@@ -134,7 +132,7 @@ private theorem f_eq_rotated (i : ℕ+) : f i = rotated i := by
   exact congrFun (HilbertBasis.coe_mk _ _) i
 
 /- proof_shape: bind-only; consumers: complex_refutation. -/
-private theorem h_separable : SeparableSpace H := by
+private theorem h_separable : SeparableSpace (lp (fun _ : ℕ+ => ℂ) 2) := by
   apply TopologicalSpace.isSeparable_univ_iff.mp
   have hs := (Set.countable_range e).isSeparable.span (R := ℂ)
   have hc := hs.closure
@@ -155,7 +153,7 @@ private theorem f_natural (i j : ℕ+) (hij : i ≠ j) : mu (f i) (f j) = 0 := b
 
 /- proof_shape: bind-only; consumers: complex_refutation. -/
 private theorem dense_square :
-    (span ℂ {z : H | ∃ x y : H, mu x y = z}).topologicalClosure = ⊤ := by
+    (span ℂ {z : (lp (fun _ : ℕ+ => ℂ) 2) | ∃ x y : (lp (fun _ : ℕ+ => ℂ) 2), mu x y = z}).topologicalClosure = ⊤ := by
   apply top_unique
   rw [← e.dense_span]
   apply Submodule.topologicalClosure_mono
@@ -171,8 +169,8 @@ private theorem f_not_scalar_e (j : ℕ+) (c : ℂ) : f 1 ≠ c • e j := by
   classical
   intro heq
   rw [f_eq_rotated] at heq
-  have h1 := congrArg (fun x : H => inner ℂ (e 1) x) heq
-  have h2 := congrArg (fun x : H => inner ℂ (e 2) x) heq
+  have h1 := congrArg (fun x : (lp (fun _ : ℕ+ => ℂ) 2) => inner ℂ (e 1) x) heq
+  have h2 := congrArg (fun x : (lp (fun _ : ℕ+ => ℂ) 2) => inner ℂ (e 2) x) heq
   simp only [rotated, ite_true, inner_add_right, inner_smul_right,
     orthonormal_iff_ite.mp e.orthonormal] at h1 h2
   by_cases hj : j = 1
@@ -195,11 +193,11 @@ def uniqueness (𝕜 : Type) [RCLike 𝕜] : Prop :=
 /- proof_shape: bind-only; consumers: result. -/
 private theorem complex_refutation : ¬ uniqueness ℂ := by
   intro h
-  have : SeparableSpace H := h_separable
-  have hm (v : H) : ∃ M : ℝ, 0 < M ∧ ∀ w, ‖mu v w‖ ≤ M * ‖w‖ := by
+  have : SeparableSpace (lp (fun _ : ℕ+ => ℂ) 2) := h_separable
+  have hm (v : (lp (fun _ : ℕ+ => ℂ) 2)) : ∃ M : ℝ, 0 < M ∧ ∀ w, ‖mu v w‖ ≤ M * ‖w‖ := by
     refine ⟨‖mu v‖ + 1, by positivity, fun w => ?_⟩
     exact (mu v).le_opNorm w |>.trans (by gcongr; linarith)
-  obtain ⟨σ, c, _, hid⟩ := h H mu.toLinearMap₁₂ e f hm
+  obtain ⟨σ, c, _, hid⟩ := h (lp (fun _ : ℕ+ => ℂ) 2) mu.toLinearMap₁₂ e f hm
     (by intro i j hij; simp [mu_on_e, hij]) f_natural dense_square
   exact f_not_scalar_e (σ 1) (c 1) (hid 1)
 

@@ -34,7 +34,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
     private static Formula C => X("Complex");
     private static Formula R => X("Real");
     private static Formula P => X("PNat");
-    private static Formula HSpace => X("H");
+    private static Formula HSpace => Call("lp", Lam("i", P, C), D(2));
     private static Formula A => X("A");
     private static Formula M => X("m");
     private static Formula Norm(Formula x) => new Formula.Norm(x);
@@ -97,18 +97,16 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                 Paragraph(Text("Question 46 in section 2.2.8 of Kaygorodov, Martin Gonzalez and Viruel asks: If the square of a Hilbert evolution algebra is dense, is its natural orthonormal basis unique up to permutation and unimodular scalars? "
                     + "The square means the algebraic span of all products; density and completeness use the Hilbert norm. Definition 2.2 of Vidal, Cadavid and Rodriguez permits real or complex scalars and requires bounded left multiplication for every fixed vector. "
                     + "The two scalar cases are conjoined in claim. Its complex branch alone fails. The separate questions about derivations, automorphisms and spectral theory are outside this assertion.")),
-                Desc("H", "The complete sequence space", Equal(HSpace, Call("lp", Lam("i", P, C), D(2))),
-                    "H is the complex square-summable sequence space on all positive integers, with its standard norm and inner product. It is complete and separable. Its standard orthonormal family has closed linear span H; no algebraic Hamel basis is used.",
-                    AssessedProvenance.FromLiterature(Hilbert)),
+                Paragraph(Text("The witness space is the complex square-summable sequence space lp on all positive integers at exponent two, with its standard norm and inner product. It is complete and separable. The standard orthonormal family has closed linear span equal to the whole space; no algebraic Hamel basis is used.")),
                 Desc("e", "The standard complete orthonormal basis",
                     Equal(X("e"), App(Q("HilbertBasis", "ofRepr"), App(Q("LinearIsometryEquiv", "refl"), C, HSpace))),
-                    "The identity isometric representation of H supplies e. Each e(i) is the sequence with coordinate one at i and zero elsewhere.",
+                    "The identity isometric representation of the sequence space supplies e. Each e(i) is the sequence with coordinate one at i and zero elsewhere.",
                     AssessedProvenance.FromLiterature(Hilbert)),
                 Desc("mu", "A continuous complex-bilinear multiplication",
                     And(Rel(X("mu"), FormulaRelationOperator.MemberOf,
                             Call("ContinuousLinearMap", C, HSpace, Call("ContinuousLinearMap", C, HSpace, HSpace))),
                         All("x", HSpace, All("y", HSpace, Equal(Mi(X("x"), X("y")), sum)))),
-                    "The series converges in H by the lp.dualPairing construction from uniformly bounded coordinate bilinear maps and the two-two Holder pairing. Scalar multiplication is complex-linear in both inputs: the coefficient is x(i)y(i), without conjugation. "
+                    "The series converges in the sequence space by the lp.dualPairing construction from uniformly bounded coordinate bilinear maps and the two-two Holder pairing. Scalar multiplication is complex-linear in both inputs: the coefficient is x(i)y(i), without conjugation. "
                     + "The table is e(1)^2=e(2)^2=e(1) and e(i+1)^2=e(i), with every mixed standard-basis product zero. This table is Example 3.7 of Solenoids in automorphism groups of evolution algebras. "
                     + "For each v the positive number norm(mu(v))+1 bounds left multiplication on every w. Joint continuity of this particular product is stronger than the left-multiplication requirement.",
                     AssessedProvenance.FromRepo(Table, Hilbert)),
@@ -117,7 +115,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                         All("i", P, Equal(App(X("f"), i), Call("ite", Equal(i, D(1)), first,
                             Call("ite", Equal(i, D(2)), second, Ei(i)))))),
                     "Only the first two basis vectors change. The real coefficients 3/5 and 4/5 satisfy 9/25+16/25=1, so this block is unitary over the complex scalars. "
-                    + "Its inverse gives e(1)=(3/5)f(1)-(4/5)f(2) and e(2)=(4/5)f(1)+(3/5)f(2); all other vectors agree. Thus the closed span is H. "
+                    + "Its inverse gives e(1)=(3/5)f(1)-(4/5)f(2) and e(2)=(4/5)f(1)+(3/5)f(2); all other vectors agree. Thus the closed span is the whole sequence space. "
                     + "Since e(1)^2=e(2)^2, the two mixed terms cancel and f is natural for the same multiplication. The equal-square rotation method occurs in Examples 3.6-3.7 of Hilbert evolution algebras, weighted digraphs, and nilpotency.",
                     AssessedProvenance.FromRepo(Rotation)),
                 Desc("uniqueness", "The scalar-specific universal assertion",
@@ -132,7 +130,7 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                     + "The real universal assertion and the complex universal assertion are both required. Their conjunction faithfully states the first interrogative under the complete Hilbert-space convention. The complex assertion alone is a consequence of this conjunction; they are not asserted equivalent.",
                     AssessedProvenance.FromLiterature(Survey)),
                 Desc("result", "Refutation by the complex Hilbert example", new Formula.Not(WholeClaim),
-                    "Apply the complex universal assertion to H, mu, e and f. Every standard vector e(i) is the product mu(e(i+1),e(i+1)), so the algebraic product span contains the standard span and its norm closure is H. "
+                    "Apply the complex universal assertion to the sequence space, mu, e and f. Every standard vector e(i) is the product mu(e(i+1),e(i+1)), so the algebraic product span contains the standard span and its norm closure is the whole space. "
                     + "Both bases are complete, orthonormal and natural. However, f(1) has two nonzero standard coordinates and differs from c times e(j) for every positive j and every complex c. "
                     + "Any proposed permutation and unimodular scalar family would give such an equality at index one. This contradiction refutes the complex assertion and hence the real-or-complex conjunction. The equal-square pair is the failure mechanism: dense square does not forbid two equal nonzero basis squares.",
                     AssessedProvenance.FromRepo(Survey, Table, Hilbert, Rotation), DescribeRole.Theorem)), []));
