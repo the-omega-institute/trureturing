@@ -35,6 +35,7 @@ private theorem representation (C : Submodule F2 Word) (x : IntVector) :
   · rintro ⟨m, hm, hx, hc, hs⟩
     refine ⟨m, hm, (fun i => (x i - m) / 2), ?_, hc, hs⟩
     intro i
+    change x i = m + 2 * ((x i - m) / 2)
     have := hx i
     omega
   · rintro ⟨m, hm, a, hx, hc, hs⟩
@@ -44,15 +45,12 @@ private theorem representation (C : Submodule F2 Word) (x : IntVector) :
         funext i; rw [hx i]; omega
       rwa [he]
 
-private theorem red_add (a b : IntVector) : red (a+b) = red a + red b := by
-  ext i; simp [red]
-
-private theorem red_neg (a : IntVector) : red (-a) = -red a := by
-  ext i; simp [red]
-
 private theorem admissible_zero (C : Submodule F2 Word) : Admissible C 0 := by
   apply (representation C 0).2
-  exact ⟨0, Or.inl rfl, 0, by simp, by simpa [red] using C.zero_mem, by simp⟩
+  refine ⟨0, Or.inl rfl, 0, by simp, ?_, by simp⟩
+  have hz : red (0 : IntVector) = (0 : Word) := by ext i; simp [red]
+  rw [hz]
+  exact C.zero_mem
 
 private theorem admissible_add (C : Submodule F2 Word)
     (h1 : (fun _ : Fin 24 => (1 : F2)) ∈ C)
@@ -67,7 +65,7 @@ private theorem admissible_add (C : Submodule F2 Word)
   · dsimp [k]; rcases hm with rfl | rfl <;> rcases hn with rfl | rfl <;> norm_num
   · intro i; change x i + y i = _; rw [ha i, hb i]; dsimp [k,d]; ring
   · have hd : red d = red a + red b + (m*n : F2) • (fun _ : Fin 24 => (1 : F2)) := by
-      ext i; simp [d,red] <;> ring
+      ext i; simp [d,red]
     rw [hd]
     exact C.add_mem (C.add_mem hca hcb) (C.smul_mem _ h1)
   · simp only [Pi.add_apply, Finset.sum_add_distrib]
@@ -103,6 +101,7 @@ private theorem weight_red (a : IntVector) :
   intro i _
   have hz : red a i = 0 ↔ a i % 2 = 0 := by
     rw [red, ZMod.intCast_zmod_eq_zero_iff_dvd, Int.dvd_iff_emod_eq_zero]
+    norm_num
   split_ifs with h
   · simp [hz.mp h]
   · have hp := Int.emod_nonneg (a i) (by norm_num : (2:ℤ) ≠ 0)
@@ -142,7 +141,7 @@ private theorem square_rep {x a : IntVector} {m : ℤ}
   calc
     _ = ∑ i, (m^2 + (4*m)*a i + 4*(a i)^2) := by
       apply Finset.sum_congr rfl; intro i _; rw [h i]; ring
-    _ = _ := by simp [Finset.sum_add_distrib, Finset.mul_sum] <;> ring
+    _ = _ := by simp [Finset.sum_add_distrib, Finset.mul_sum]
 
 /-- Double evenness and the literal sum congruence imply a multiple of sixteen. -/
 theorem squareSum_div_sixteen (C : Submodule F2 Word)
@@ -152,18 +151,21 @@ theorem squareSum_div_sixteen (C : Submodule F2 Word)
   obtain ⟨t, ht⟩ := squares_div_four C h4 a hc
   have hsum := sum_rep ha
   have hsq := square_rep ha
-  have hdiv := Int.emod_add_ediv (∑ i, x i) 8
+  have hdiv := Int.emod_add_mul_ediv (∑ i, x i) 8
   refine ⟨-m^2 + m*((∑ i, x i)/8) + t, ?_⟩
   rw [hs] at hdiv
   have ham : (∑ i, a i) = 4*((∑ i, x i)/8) - 10*m := by omega
   rw [hsq, ht, ham]
   ring
 
-private theorem squareSum_nonneg (x : IntVector) : 0 ≤ squareSum x :=
-  Finset.sum_nonneg fun i _ => sq_nonneg (x i)
-
 private theorem squareSum_pos {x : IntVector} (hx : x ≠ 0) : 0 < squareSum x := by
-  have hi : ∃ i, x i ≠ 0 := by simpa only [funext_iff, Pi.zero_apply, not_forall] using hx
+  have hi : ∃ i, x i ≠ 0 := by
+    classical
+    by_contra h
+    apply hx
+    funext i
+    by_contra hi
+    exact h ⟨i, hi⟩
   obtain ⟨i, hi⟩ := hi
   have hle : (x i)^2 ≤ squareSum x := Finset.single_le_sum (fun j _ => sq_nonneg (x j)) (Finset.mem_univ i)
   exact lt_of_lt_of_le (sq_pos_of_ne_zero hi) hle
@@ -202,10 +204,15 @@ theorem construction_lower_bound (C : Submodule F2 Word)
       have hsq : squareSum b ≡ ∑ i, b i [ZMOD 2] := by
         apply Int.ModEq.sum
         intro i _
-        have h := square_mod_four (b i)
-        have hdiv := Int.emod_emod_of_dvd ((b i)^2) (show (2:ℤ) ∣ 4 by norm_num)
+        change (b i)^2 % 2 = b i % 2
+        rw [pow_two, Int.mul_emod]
+        have h0 := Int.emod_nonneg (b i) (by norm_num : (2 : ℤ) ≠ 0)
+        have h1 := Int.emod_lt_of_pos (b i) (by norm_num : (0 : ℤ) < 2)
+        have h : b i % 2 = 0 ∨ b i % 2 = 1 := by omega
+        rcases h with h | h <;> simp [h]
+      have hsq0 : squareSum b % 2 = 0 := by
+        have he := hsq.eq
         omega
-      have hsq0 : squareSum b % 2 = 0 := hsq.trans hb
       have hxnorm : squareSum x = 16*squareSum b := by
         unfold squareSum
         simp_rw [hxb]
@@ -261,8 +268,11 @@ private theorem shortest_mem : Admissible code shortestVector := by
   · have h : red a = octad := by
       ext i
       have hi : octad i = 0 ∨ octad i = 1 := by
-        have := (octad i).val_lt
-        fin_cases (octad i) <;> simp
+        have hz := ZMod.val_lt (octad i)
+        have hv : (octad i).val = 0 ∨ (octad i).val = 1 := by omega
+        rcases hv with h | h
+        · left; apply ZMod.val_injective 2; simpa using h
+        · right; apply ZMod.val_injective 2; change (octad i).val = 1; exact h
       rcases hi with h | h <;> simp [red,a,h]
     rw [h]; exact octad_mem
   · have h : ∑ i, shortestVector i = 2*(weight octad : ℤ) := by
@@ -301,8 +311,11 @@ theorem minimum_norm :
 theorem euclidean_scaling (x : IntVector) :
     (∑ i, ((x i : ℝ) / Real.sqrt 8)^2) = (scaledSquare x : ℝ) := by
   have hs : (Real.sqrt 8)^2 = (8:ℝ) := Real.sq_sqrt (by norm_num)
-  simp only [div_pow,hs,← Finset.sum_div]
-  simp [scaledSquare,squareSum]
+  calc
+    _ = (∑ i, (x i : ℝ)^2) / 8 := by
+      simp_rw [div_pow, hs]
+      simp only [div_eq_mul_inv, Finset.sum_mul]
+    _ = _ := by simp [scaledSquare, squareSum]
 
 #print axioms minimum_norm
 #print axioms pairing_integral

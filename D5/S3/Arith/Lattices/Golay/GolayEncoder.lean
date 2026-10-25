@@ -59,8 +59,15 @@ private theorem reverseCoordinate_involutive : Function.Involutive reverseCoordi
   simp only [reverseCoordinate]
   split_ifs <;> simp_all only <;> omega
 
+/-- Reverse the twenty-three cyclic coordinates and fix the extension coordinate. -/
+def reverseCoordinateEquiv : Fin 24 ≃ Fin 24 where
+  toFun := reverseCoordinate
+  invFun := reverseCoordinate
+  left_inv := reverseCoordinate_involutive
+  right_inv := reverseCoordinate_involutive
+
 private theorem reference_generator_reverse :
-    referenceGenerator = generator.submatrix reverseCoordinate Fin.rev := by
+    referenceGenerator = generator.submatrix reverseCoordinateEquiv Fin.rev := by
   ext i j
   fin_cases i <;> fin_cases j <;> decide +kernel
 
@@ -71,13 +78,13 @@ def encode : Message →ₗ[F2] Word := generator.mulVecLin
 permutations; it does not replace the approved generator by a code hypothesis. -/
 theorem reference_encoder_identification :
     referenceGenerator.mulVecLin =
-      (LinearMap.funLeft F2 F2 reverseCoordinate).comp
+      (LinearMap.funLeft F2 F2 reverseCoordinateEquiv).comp
         (encode.comp (LinearMap.funLeft F2 F2 (Fin.rev : Fin 12 → Fin 12))) := by
   rw [reference_generator_reverse]
-  have h := Matrix.mulVecLin_submatrix reverseCoordinate
+  have h := Matrix.mulVecLin_submatrix reverseCoordinateEquiv
     (⟨Fin.rev, Fin.rev, Fin.rev_involutive, Fin.rev_involutive⟩ : Fin 12 ≃ Fin 12) generator
-  change (generator.submatrix reverseCoordinate Fin.rev).mulVecLin =
-    (LinearMap.funLeft F2 F2 reverseCoordinate).comp
+  change (generator.submatrix reverseCoordinateEquiv Fin.rev).mulVecLin =
+    (LinearMap.funLeft F2 F2 reverseCoordinateEquiv).comp
       (generator.mulVecLin.comp (LinearMap.funLeft F2 F2 (Fin.rev : Fin 12 → Fin 12))) at h
   exact h
 
@@ -155,6 +162,167 @@ private theorem weight_zero_iff (v : Word) : weight v = 0 ↔ v = 0 := by
   · intro h; ext i; have := h i; split_ifs at this with hi <;> simp_all
   · intro h; subst v; simp
 
+private abbrev WeightSpectrum (n : ℕ) : Prop :=
+  let w := weight (encode (message n))
+  w = 0 ∨ w = 8 ∨ w = 12 ∨ w = 16 ∨ w = 24
+
+private theorem block_0 : ∀ lo : Fin 64, WeightSpectrum (0 * 64 + lo.val) := by decide +kernel
+private theorem block_1 : ∀ lo : Fin 64, WeightSpectrum (1 * 64 + lo.val) := by decide +kernel
+private theorem block_2 : ∀ lo : Fin 64, WeightSpectrum (2 * 64 + lo.val) := by decide +kernel
+private theorem block_3 : ∀ lo : Fin 64, WeightSpectrum (3 * 64 + lo.val) := by decide +kernel
+private theorem block_4 : ∀ lo : Fin 64, WeightSpectrum (4 * 64 + lo.val) := by decide +kernel
+private theorem block_5 : ∀ lo : Fin 64, WeightSpectrum (5 * 64 + lo.val) := by decide +kernel
+private theorem block_6 : ∀ lo : Fin 64, WeightSpectrum (6 * 64 + lo.val) := by decide +kernel
+private theorem block_7 : ∀ lo : Fin 64, WeightSpectrum (7 * 64 + lo.val) := by decide +kernel
+private theorem block_8 : ∀ lo : Fin 64, WeightSpectrum (8 * 64 + lo.val) := by decide +kernel
+private theorem block_9 : ∀ lo : Fin 64, WeightSpectrum (9 * 64 + lo.val) := by decide +kernel
+private theorem block_10 : ∀ lo : Fin 64, WeightSpectrum (10 * 64 + lo.val) := by decide +kernel
+private theorem block_11 : ∀ lo : Fin 64, WeightSpectrum (11 * 64 + lo.val) := by decide +kernel
+private theorem block_12 : ∀ lo : Fin 64, WeightSpectrum (12 * 64 + lo.val) := by decide +kernel
+private theorem block_13 : ∀ lo : Fin 64, WeightSpectrum (13 * 64 + lo.val) := by decide +kernel
+private theorem block_14 : ∀ lo : Fin 64, WeightSpectrum (14 * 64 + lo.val) := by decide +kernel
+private theorem block_15 : ∀ lo : Fin 64, WeightSpectrum (15 * 64 + lo.val) := by decide +kernel
+private theorem block_16 : ∀ lo : Fin 64, WeightSpectrum (16 * 64 + lo.val) := by decide +kernel
+private theorem block_17 : ∀ lo : Fin 64, WeightSpectrum (17 * 64 + lo.val) := by decide +kernel
+private theorem block_18 : ∀ lo : Fin 64, WeightSpectrum (18 * 64 + lo.val) := by decide +kernel
+private theorem block_19 : ∀ lo : Fin 64, WeightSpectrum (19 * 64 + lo.val) := by decide +kernel
+private theorem block_20 : ∀ lo : Fin 64, WeightSpectrum (20 * 64 + lo.val) := by decide +kernel
+private theorem block_21 : ∀ lo : Fin 64, WeightSpectrum (21 * 64 + lo.val) := by decide +kernel
+private theorem block_22 : ∀ lo : Fin 64, WeightSpectrum (22 * 64 + lo.val) := by decide +kernel
+private theorem block_23 : ∀ lo : Fin 64, WeightSpectrum (23 * 64 + lo.val) := by decide +kernel
+private theorem block_24 : ∀ lo : Fin 64, WeightSpectrum (24 * 64 + lo.val) := by decide +kernel
+private theorem block_25 : ∀ lo : Fin 64, WeightSpectrum (25 * 64 + lo.val) := by decide +kernel
+private theorem block_26 : ∀ lo : Fin 64, WeightSpectrum (26 * 64 + lo.val) := by decide +kernel
+private theorem block_27 : ∀ lo : Fin 64, WeightSpectrum (27 * 64 + lo.val) := by decide +kernel
+private theorem block_28 : ∀ lo : Fin 64, WeightSpectrum (28 * 64 + lo.val) := by decide +kernel
+private theorem block_29 : ∀ lo : Fin 64, WeightSpectrum (29 * 64 + lo.val) := by decide +kernel
+private theorem block_30 : ∀ lo : Fin 64, WeightSpectrum (30 * 64 + lo.val) := by decide +kernel
+private theorem block_31 : ∀ lo : Fin 64, WeightSpectrum (31 * 64 + lo.val) := by decide +kernel
+private theorem block_32 : ∀ lo : Fin 64, WeightSpectrum (32 * 64 + lo.val) := by decide +kernel
+private theorem block_33 : ∀ lo : Fin 64, WeightSpectrum (33 * 64 + lo.val) := by decide +kernel
+private theorem block_34 : ∀ lo : Fin 64, WeightSpectrum (34 * 64 + lo.val) := by decide +kernel
+private theorem block_35 : ∀ lo : Fin 64, WeightSpectrum (35 * 64 + lo.val) := by decide +kernel
+private theorem block_36 : ∀ lo : Fin 64, WeightSpectrum (36 * 64 + lo.val) := by decide +kernel
+private theorem block_37 : ∀ lo : Fin 64, WeightSpectrum (37 * 64 + lo.val) := by decide +kernel
+private theorem block_38 : ∀ lo : Fin 64, WeightSpectrum (38 * 64 + lo.val) := by decide +kernel
+private theorem block_39 : ∀ lo : Fin 64, WeightSpectrum (39 * 64 + lo.val) := by decide +kernel
+private theorem block_40 : ∀ lo : Fin 64, WeightSpectrum (40 * 64 + lo.val) := by decide +kernel
+private theorem block_41 : ∀ lo : Fin 64, WeightSpectrum (41 * 64 + lo.val) := by decide +kernel
+private theorem block_42 : ∀ lo : Fin 64, WeightSpectrum (42 * 64 + lo.val) := by decide +kernel
+private theorem block_43 : ∀ lo : Fin 64, WeightSpectrum (43 * 64 + lo.val) := by decide +kernel
+private theorem block_44 : ∀ lo : Fin 64, WeightSpectrum (44 * 64 + lo.val) := by decide +kernel
+private theorem block_45 : ∀ lo : Fin 64, WeightSpectrum (45 * 64 + lo.val) := by decide +kernel
+private theorem block_46 : ∀ lo : Fin 64, WeightSpectrum (46 * 64 + lo.val) := by decide +kernel
+private theorem block_47 : ∀ lo : Fin 64, WeightSpectrum (47 * 64 + lo.val) := by decide +kernel
+private theorem block_48 : ∀ lo : Fin 64, WeightSpectrum (48 * 64 + lo.val) := by decide +kernel
+private theorem block_49 : ∀ lo : Fin 64, WeightSpectrum (49 * 64 + lo.val) := by decide +kernel
+private theorem block_50 : ∀ lo : Fin 64, WeightSpectrum (50 * 64 + lo.val) := by decide +kernel
+private theorem block_51 : ∀ lo : Fin 64, WeightSpectrum (51 * 64 + lo.val) := by decide +kernel
+private theorem block_52 : ∀ lo : Fin 64, WeightSpectrum (52 * 64 + lo.val) := by decide +kernel
+private theorem block_53 : ∀ lo : Fin 64, WeightSpectrum (53 * 64 + lo.val) := by decide +kernel
+private theorem block_54 : ∀ lo : Fin 64, WeightSpectrum (54 * 64 + lo.val) := by decide +kernel
+private theorem block_55 : ∀ lo : Fin 64, WeightSpectrum (55 * 64 + lo.val) := by decide +kernel
+private theorem block_56 : ∀ lo : Fin 64, WeightSpectrum (56 * 64 + lo.val) := by decide +kernel
+private theorem block_57 : ∀ lo : Fin 64, WeightSpectrum (57 * 64 + lo.val) := by decide +kernel
+private theorem block_58 : ∀ lo : Fin 64, WeightSpectrum (58 * 64 + lo.val) := by decide +kernel
+private theorem block_59 : ∀ lo : Fin 64, WeightSpectrum (59 * 64 + lo.val) := by decide +kernel
+private theorem block_60 : ∀ lo : Fin 64, WeightSpectrum (60 * 64 + lo.val) := by decide +kernel
+private theorem block_61 : ∀ lo : Fin 64, WeightSpectrum (61 * 64 + lo.val) := by decide +kernel
+private theorem block_62 : ∀ lo : Fin 64, WeightSpectrum (62 * 64 + lo.val) := by decide +kernel
+private theorem block_63 : ∀ lo : Fin 64, WeightSpectrum (63 * 64 + lo.val) := by decide +kernel
+
+private theorem blocks_spectrum (b l : Fin 64) :
+    WeightSpectrum (b.val * 64 + l.val) := by
+  fin_cases b
+  · exact block_0 l
+  · exact block_1 l
+  · exact block_2 l
+  · exact block_3 l
+  · exact block_4 l
+  · exact block_5 l
+  · exact block_6 l
+  · exact block_7 l
+  · exact block_8 l
+  · exact block_9 l
+  · exact block_10 l
+  · exact block_11 l
+  · exact block_12 l
+  · exact block_13 l
+  · exact block_14 l
+  · exact block_15 l
+  · exact block_16 l
+  · exact block_17 l
+  · exact block_18 l
+  · exact block_19 l
+  · exact block_20 l
+  · exact block_21 l
+  · exact block_22 l
+  · exact block_23 l
+  · exact block_24 l
+  · exact block_25 l
+  · exact block_26 l
+  · exact block_27 l
+  · exact block_28 l
+  · exact block_29 l
+  · exact block_30 l
+  · exact block_31 l
+  · exact block_32 l
+  · exact block_33 l
+  · exact block_34 l
+  · exact block_35 l
+  · exact block_36 l
+  · exact block_37 l
+  · exact block_38 l
+  · exact block_39 l
+  · exact block_40 l
+  · exact block_41 l
+  · exact block_42 l
+  · exact block_43 l
+  · exact block_44 l
+  · exact block_45 l
+  · exact block_46 l
+  · exact block_47 l
+  · exact block_48 l
+  · exact block_49 l
+  · exact block_50 l
+  · exact block_51 l
+  · exact block_52 l
+  · exact block_53 l
+  · exact block_54 l
+  · exact block_55 l
+  · exact block_56 l
+  · exact block_57 l
+  · exact block_58 l
+  · exact block_59 l
+  · exact block_60 l
+  · exact block_61 l
+  · exact block_62 l
+  · exact block_63 l
+
+private theorem all_messages_spectrum (n : Fin 4096) : WeightSpectrum n.val := by
+  have hi : n.val / 64 < 64 := by omega
+  have lo : n.val % 64 < 64 := Nat.mod_lt _ (by decide)
+  let b : Fin 64 := ⟨n.val / 64, hi⟩
+  let l : Fin 64 := ⟨n.val % 64, lo⟩
+  have hn : b.val * 64 + l.val = n.val := by
+    dsimp [b, l]
+    omega
+  exact hn ▸ blocks_spectrum b l
+
+
+theorem weight_spectrum (v : Word) (hv : v ∈ code) :
+    weight v = 0 ∨ weight v = 8 ∨ weight v = 12 ∨ weight v = 16 ∨ weight v = 24 := by
+  obtain ⟨m, rfl⟩ := hv
+  obtain ⟨n, rfl⟩ := message_surjective m
+  exact all_messages_spectrum n
+
+theorem doubly_even (v : Word) (hv : v ∈ code) : 4 ∣ weight v := by
+  rcases weight_spectrum v hv with h | h | h | h | h <;> rw [h] <;> norm_num
+
+theorem minimum_weight (v : Word) (hv : v ∈ code) (hn : v ≠ 0) : 8 ≤ weight v := by
+  have hn' : weight v ≠ 0 := mt (weight_zero_iff v).mp hn
+  rcases weight_spectrum v hv with h | h | h | h | h <;> omega
+
 theorem all_ones_mem : (fun _ : Fin 24 => (1 : F2)) ∈ code := by
   refine ⟨message 3189, ?_⟩
   ext i
@@ -181,29 +349,36 @@ theorem self_orthogonal (v w : Word) (hv : v ∈ code) (hw : w ∈ code) :
 def coordinatePairing : LinearMap.BilinForm F2 Word :=
   dotProductBilin F2 F2
 
-private theorem coordinatePairing_symm : coordinatePairing.IsSymm := by
-  constructor
-  intro v w
-  change dotProduct v w = dotProduct w v
-  exact dotProduct_comm v w
+/-- Auxiliary splitting matrix. Its row masks were obtained from (I + GD)Dᵀ.
+Only the following kernel-checked matrix identity is used in the proof. -/
+private def complement : Matrix (Fin 24) (Fin 12) F2 := fun i j =>
+  if (![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 10, 20, 40, 83, 165, 329, 658, 1319, 2638, 1] : Fin 24 → ℕ) i |>.testBit j.val then 1 else 0
+private theorem decomposition : generator * decoder + complement * generator.transpose = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> decide +kernel
 
-private theorem coordinatePairing_nondegenerate : coordinatePairing.Nondegenerate := by
-  apply coordinatePairing_symm.isRefl.nondegenerate_iff_separatingLeft.mpr
-  intro v h
-  exact dotProduct_eq_zero v h
-
-/-- Self-duality for the standard nondegenerate binary coordinate pairing. -/
-set_option diagnostics true in
-theorem self_dual : LinearMap.BilinForm.orthogonal (R := F2) (M := Word)
-    coordinatePairing code = code := by
-  have hc : code ≤ coordinatePairing.orthogonal code := by
-    intro v hv w hw
+/-- Self-duality for the actual binary coordinate pairing, by exact matrix reconstruction. -/
+theorem self_dual : coordinatePairing.orthogonal code = code := by
+  apply le_antisymm
+  · intro v hv
+    have ht : generator.transpose *ᵥ v = 0 := by
+      apply dotProduct_eq_zero
+      intro a
+      rw [dotProduct_comm, Matrix.dotProduct_transpose_mulVec, dotProduct_comm]
+      exact (LinearMap.BilinForm.mem_orthogonal_iff.mp hv) (encode a) ⟨a, rfl⟩
+    refine ⟨decoder *ᵥ v, ?_⟩
+    change generator *ᵥ (decoder *ᵥ v) = v
+    have h := congrArg (fun A : Matrix (Fin 24) (Fin 24) F2 => A *ᵥ v) decomposition
+    rw [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
+      ht, Matrix.mulVec_zero, add_zero, Matrix.one_mulVec] at h
+    exact h
+  · intro v hv
+    rw [LinearMap.BilinForm.mem_orthogonal_iff]
+    intro w hw
+    change dotProduct w v = 0
     exact self_orthogonal w v hw hv
-  have hr := LinearMap.BilinForm.finrank_orthogonal coordinatePairing_nondegenerate code
-  have hdim : Module.finrank F2 Word = 24 := by simp
-  rw [code_finrank, hdim] at hr
-  exact (Submodule.eq_of_le_of_finrank_le hc (by rw [code_finrank, hr])).symm
 
 #print axioms encode_injective
+#print axioms weight_spectrum
 #print axioms self_dual
 end D5.S3.Arith.Lattices.Golay.GolayEncoder

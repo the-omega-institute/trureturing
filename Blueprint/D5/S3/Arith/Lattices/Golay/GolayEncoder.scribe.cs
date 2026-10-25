@@ -31,12 +31,14 @@ internal sealed class GolayEncoderDocument : IScribeDocumentDefinition
                 "The computed spectrum together with the weight-zero characterization yields the universal lower bound.", DescribeRole.Theorem),
             Node("claim-10", "all_ones_mem", "The all-ones carry word belongs",
                 "The encoder applied to message 3189 is the actual all-ones word needed for odd plus odd integer-vector closure.", DescribeRole.Theorem),
+            Node("claim-11a", "octad_mem", "The encoded octad belongs to the linear image",
+                "Its message witness is retained by the actual encoder-image definition and is consumed by the shortest-vector construction.", DescribeRole.Theorem),
             Node("claim-11", "octad_weight", "An encoded weight-eight word",
                 "The octad is the encoder applied to message one, not a separately supplied codeword.", DescribeRole.Theorem),
             Node("claim-12", "self_orthogonal", "Orthogonality from the generator",
                 "The actual generator has zero Gram matrix, yielding orthogonality of every pair of its linear-image words.", DescribeRole.Theorem),
             Node("claim-13", "self_dual", "Self-duality",
-                "Orthogonal inclusion and complementary dimension for the nondegenerate standard binary pairing give equality with the orthogonal complement.", DescribeRole.Theorem))));
+                "A small kernel-checked matrix splitting identity reconstructs every orthogonal vector through the actual encoder, giving equality with the orthogonal complement.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string declaration, string heading, string prose,
         DescribeRole role) => Describe.Lean(
