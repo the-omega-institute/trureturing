@@ -35,7 +35,7 @@ A basis measurement is a classical test of a channel's output. The conjecture as
 The bounded literature check recorded in #21608 reports:
 
 - The orchestrator found only arXiv v1; its TeX retains the conjecture. The published version retains it as Conjecture 1 according to the search report cited in the issue (PMC9222584).
-- Crossref reported three citing works and Semantic Scholar listed four: arXiv:2606.23647, arXiv:2410.20117, arXiv:2303.02662, and Fei–Li–Luo, Entropy 25, 463 (2023). The orchestrator reports reading the three arXiv TeX sources and finding citations in lists of channel-incompatibility criteria. The search report describes Fei–Li–Luo as summarizing the criterion without settling the conjecture.
+- Crossref reported three citing works and Semantic Scholar listed four: arXiv:2606.23647, arXiv:2410.20117, arXiv:2303.02662, and Fei–Li–Luo, Entropy 25, 463 (2023). In their TeX sources, arXiv:2303.02662 cites the paper among existing channel-compatibility criteria (`compatible-unitarity-pairs.tex`, l. 173), arXiv:2606.23647 in its introduction's list of works on channel incompatibility (`main_updated.tex`, l. 170), and arXiv:2410.20117 when introducing Schur channels (`Fidelity_preservation_for_mixed_unitary_quantum_channels.tex`, l. 335); none addresses the conjecture. The search report describes Fei–Li–Luo as summarizing the criterion without settling the conjecture.
 - The issue records no prior repository issue, module, Library note or dossier on this conjecture. It identifies the qubit joint-measurability and cloning bounds as classical ingredients, while a statement connecting them to a refutation was `not-found-in-searched-scope`.
 
 These are bounded search reports, not an exhaustive novelty claim.
