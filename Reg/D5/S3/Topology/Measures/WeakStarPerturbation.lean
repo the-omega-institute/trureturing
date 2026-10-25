@@ -14,7 +14,7 @@ noncomputable section
 namespace Reg.D5.S3.Topology.Measures.WeakStarPerturbation
 
 open Set Filter Function
-open scoped Topology
+open scoped _root_.Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.D5.S3.Topology.Measures.WeakStarPerturbation
 

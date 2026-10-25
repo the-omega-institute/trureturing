@@ -13,8 +13,8 @@ noncomputable section
 
 namespace Reg.D5.S3.Topology.Measures.SignedBallReduction
 
-open Set Filter MeasureTheory
-open scoped Topology
+open Set Filter Function MeasureTheory
+open scoped _root_.Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.D5.S3.Topology.Measures.NormPreservingLifts
 open _root_.D5.S3.Topology.Measures.SignedBallReduction
