@@ -9,6 +9,8 @@
 import D5.S3.Analytic.MomentMinors.Defs
 import Mathlib.Probability.Moments.Basic
 
+/-! A symmetric three-point law exceeds the proposed bidisperse kurtosis upper bound. -/
+
 noncomputable section
 
 open MeasureTheory ProbabilityTheory
@@ -42,7 +44,10 @@ private def witness : Measure ℝ :=
     (1 / 4 : ℝ≥0∞) • Measure.dirac 3
 
 private lemma witness_probability : IsProbabilityMeasure witness := by
-  sorry
+  constructor
+  norm_num [witness, Measure.add_apply, Measure.smul_apply]
+  apply (ENNReal.toReal_eq_toReal_iff' (by finiteness) (by finiteness)).mp
+  norm_num [ENNReal.toReal_add]
 
 private lemma witness_bounds : ∀ᵐ x ∂witness, (1 : ℝ) ≤ x ∧ x ≤ 3 := by
   sorry
@@ -69,7 +74,7 @@ private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 
 /-- The three-point law with masses `1/4, 1/2, 1/4` on `1, 2, 3` violates the upper limit. -/
 theorem result : ¬ claim := by
   intro h
-  letI : IsProbabilityMeasure witness := witness_probability
+  haveI : IsProbabilityMeasure witness := witness_probability
   have hm : 0 < mean witness := by rw [mean_witness]; norm_num
   have hv : 0 < centralMoment id 2 witness := by rw [moment_two_witness]; norm_num
   have hc := h 1 3 (by norm_num) witness witness_bounds hm hv
