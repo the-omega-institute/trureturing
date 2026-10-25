@@ -442,7 +442,8 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
     · have hif : i = ((t :: w) ++ [s]).length := by simp only [List.length_append, List.length_singleton] at hi ⊢; omega
       have he' : a c = 0 := by
         rw [hif] at he
-        change ((t :: w).map a).sum + a s = a s at he
+        simp only [pfx, List.take_length, List.map_append, List.sum_append,
+          List.map_singleton, List.sum_singleton] at he
         rw [htwSum] at he
         have hh : -a c = 0 := add_right_cancel (show -a c + a s = 0 + a s by simpa using he)
         exact neg_eq_zero.mp hh
