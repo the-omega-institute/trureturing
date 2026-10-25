@@ -86,7 +86,7 @@ internal static partial class CleanLanesCommand
             return Refused("race_changed");
         var refreshedSelection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
         if (refreshedSelection != selection) return Refused("race_changed");
-        var reason = LockBlockReason(repositoryRoot, item, runner) ?? refreshedSelection.BlockReason;
+        var reason = refreshedSelection.BlockReason;
         if (reason is not null) return Refused(reason);
 
         string? recoveryBranch = null;
@@ -133,7 +133,8 @@ internal static partial class CleanLanesCommand
             }
             if (!removal.Success)
             {
-                if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
+                var refusal = CanonicalRefusal(removal);
+                if (refusal is not null) return Refused(refusal);
                 if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
                     return new(LaneRemovalOutcome.CheckpointFailed,
                         "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate,
@@ -152,28 +153,6 @@ internal static partial class CleanLanesCommand
         // Retain both observed branches and refs created for detached recovery
         // through the invocation's later orphan sweep.
         return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch, NativeLocks: nativeLocks);
-    }
-
-    private static string? LockBlockReason(
-        string repositoryRoot, RegisteredWorktree item, IWorktreeProcessRunner runner)
-    {
-        if (!item.Locked) return null;
-        try
-        {
-            // Python qualification owns marker liveness and intentional-lock age.
-            // Mutation repeats qualification while holding its required scopes.
-            var preview = WorktreeProtocolCommand.Run(repositoryRoot,
-                ["remove", "--path", item.Path, "--preview"], runner, TimeSpan.FromSeconds(600));
-            if (preview.Success) return null;
-            const string prefix = "WORKTREE_RETAINED ";
-            var error = preview.Error.Trim();
-            return preview.ExitCode is 68 or 73 && error.StartsWith(prefix, StringComparison.Ordinal)
-                && error.Length > prefix.Length ? error[prefix.Length..] : "identity_or_lock_refused";
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return "identity_or_lock_refused";
-        }
     }
 
     private static LaneRemovalResult Refused(string reason) =>

@@ -253,6 +253,10 @@ internal static partial class CleanLanesCommand
 
         var poolPaths = InspectIdlePool(repositoryRoot, devCommit, force, inventory, events, runner,
             CompleteRemoval, Observe);
+        var qualifications = QualifyLockedLanes(repositoryRoot, inventory.Where(item => item.Locked
+            && !poolPaths.Contains(item.Path) && item.Path != inventory[0].Path
+            && item.GitDirectory is not null && item.GitDirectory != commonGitDirectory
+            && Directory.Exists(item.Path) && HasGitMarker(item.Path)).ToArray(), runner);
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
             if (poolPaths.Contains(item.Path)) continue;
@@ -290,10 +294,11 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var reason = LockBlockReason(repositoryRoot, item, runner);
-            if (reason is not null)
+            var qualification = qualifications.GetValueOrDefault(item.Path);
+            if (qualification?.Reason is not null)
             {
-                events.Add(BlockedWorktree(item, reason));
+                incomplete |= qualification.Failed;
+                events.Add(QualificationEvent(item, qualification));
                 continue;
             }
 
@@ -313,11 +318,10 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var preview = WorktreeProtocolCommand.Run(repositoryRoot,
-                ["remove", "--path", item.Path, "--preview"], runner, TimeSpan.FromSeconds(600));
-            if (!preview.Success)
+            var preview = qualification ?? PreviewLane(repositoryRoot, item, runner);
+            if (preview.Reason is not null)
             {
-                events.Add(BlockedWorktree(item, "identity_or_lock_refused"));
+                events.Add(QualificationEvent(item, preview));
                 incomplete = true;
                 continue;
             }

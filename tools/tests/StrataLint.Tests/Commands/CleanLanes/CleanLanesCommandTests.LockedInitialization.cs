@@ -17,7 +17,7 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
-            if (file != "python3" || !IsProtocol(args, "remove") || !args.Contains("--preview")) return null;
+            if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
             modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
@@ -49,7 +49,7 @@ public sealed partial class CleanLanesCommandTests
         var production = new ProductionWorktreeProcessRunner();
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
-            if (file != "python3" || !IsProtocol(args, "remove") || !args.Contains("--preview")) return null;
+            if (file != "python3" || !IsQualification(args)) return null;
             qualified++;
             var modified = args.ToArray();
             modified[2] = modified[2].Replace("sys.exit(sys.modules['worktree_protocol'].main())", """
@@ -65,7 +65,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(qualified > 0);
         var removal = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         Assert.True(removal.Success, removal.Error);
-        Assert.Equal("identity_or_lock_refused", ReasonFor(removal.Output, lane));
+        Assert.Equal("initialization_in_progress", ReasonFor(removal.Output, lane));
         Assert.True(Directory.Exists(lane));
     }
 

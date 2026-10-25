@@ -10,7 +10,7 @@ import subprocess
 import time
 import uuid
 
-from worktree_protocol import (Refused, git, value, common, inventory, identity,
+from worktree_protocol import (Refused, GitFailure, git, value, common, inventory, identity,
                                acquire, git_scope, remote_endpoint, tree_scope)
 
 
@@ -114,13 +114,13 @@ def interrupted_removal(target, metadata, stack, source, branch):
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
-def qualify(source, path, stack=None):
+def qualify(source, path, stack=None, snapshot=None):
     """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
     path = Path(path).resolve()
-    item, metadata = identity(source, path)
-    rows = inventory(source)
+    item, metadata = identity(source, path, snapshot=snapshot)
+    rows = snapshot[0] if snapshot is not None else inventory(source)
     if path == Path(rows[0]["worktree"]).resolve():
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
@@ -134,6 +134,8 @@ def qualify(source, path, stack=None):
                 else:
                     tree_scope(stack, source, path, True)
             except Refused as error:
+                if not str(error).startswith("busy_scope:"):
+                    raise
                 raise Refused("initialization_in_progress") from error
             return item
         lock = metadata / "locked"
@@ -143,6 +145,43 @@ def qualify(source, path, stack=None):
         if age < LOCK_AGE_SECONDS:
             raise Refused("locked_recent")
     return item
+
+
+def qualification_failure(error):
+    kind = "timeout" if isinstance(error, subprocess.TimeoutExpired) else "unavailable"
+    detail = type(error).__name__ + ":" + str(error)
+    if isinstance(error, subprocess.TimeoutExpired) and error.stderr:
+        stderr = error.stderr
+        detail += ":stderr=" + (stderr.decode(errors="replace") if isinstance(stderr, bytes) else stderr)
+    return "qualification_failed:" + kind + ":" + detail
+
+
+def qualify_batch(options):
+    """Preview each path independently; the snapshot grants no mutation authority.
+
+    Initialization probes may create cooperative scope metadata and briefly take
+    exclusive entry. No checkpoint, ref update, unlock or removal occurs here.
+    """
+    paths = list(dict.fromkeys(options.path))
+    outcomes = []
+    try:
+        snapshot = inventory(options.source), common(options.source)
+    except Exception as error:
+        outcomes = [dict(path=str(path), outcome="failed", reason=qualification_failure(error))
+                    for path in paths]
+    else:
+        for path in paths:
+            try:
+                qualify(options.source, path, snapshot=snapshot)
+                outcomes.append(dict(path=str(path), outcome="qualified", reason=None))
+            except GitFailure as error:
+                outcomes.append(dict(path=str(path), outcome="failed", reason=qualification_failure(error)))
+            except Refused as error:
+                outcomes.append(dict(path=str(path), outcome="refused", reason=str(error)))
+            except Exception as error:
+                outcomes.append(dict(path=str(path), outcome="failed", reason=qualification_failure(error)))
+    return dict(event="worktree_qualification", items=outcomes,
+                status="failed" if any(item["outcome"] == "failed" for item in outcomes) else "succeeded")
 
 
 def remove(options):

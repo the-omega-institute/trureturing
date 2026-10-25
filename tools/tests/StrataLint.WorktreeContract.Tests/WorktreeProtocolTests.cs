@@ -226,6 +226,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("batch_qualification_preserves_each_reason_and_tree")]
+    [InlineData("batch_qualification_reports_errors_without_hiding_other_results")]
     [InlineData("recovery_resolved_conflict_does_not_veto_removal")]
     [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
     [InlineData("recovery_local_repository_is_not_a_remote")]

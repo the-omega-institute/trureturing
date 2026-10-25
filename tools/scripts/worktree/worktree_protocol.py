@@ -153,18 +153,19 @@ def inventory(root):
     return records
 
 
-def identity(source, path):
+def identity(source, path, snapshot=None):
     path = Path(path).absolute()
     if path.is_symlink() or not path.is_dir():
         raise Refused("missing_or_linked_tree")
     path = path.resolve()
-    match = [r for r in inventory(source) if Path(r["worktree"]).resolve() == path]
-    if len(match) != 1 or common(path) != common(source):
+    rows, source_common = snapshot if snapshot is not None else (inventory(source), common(source))
+    match = [r for r in rows if Path(r["worktree"]).resolve() == path]
+    if len(match) != 1 or common(path) != source_common:
         raise Refused("repository_identity")
     if Path(value(path, "rev-parse", "--show-toplevel")).resolve() != path:
         raise Refused("tree_identity")
     metadata = Path(value(path, "rev-parse", "--absolute-git-dir")).resolve()
-    if metadata != common(source):
+    if metadata != source_common:
         pointer = path / ".git"
         if pointer.is_symlink() or not pointer.is_file():
             raise Refused("git_pointer")
@@ -460,6 +461,8 @@ def main(argv=None):
     removal.add_argument("--force", action="store_true")
     removal.add_argument("--preview", action="store_true")
     removal.add_argument("--expected", action="append", default=[])
+    qualification = commands.add_parser("qualify")
+    qualification.add_argument("--path", action="append", type=Path, required=True)
     retirement = commands.add_parser("retire-branch")
     retirement.add_argument("--branch", required=True)
     retirement.add_argument("--commit", required=True)
@@ -501,6 +504,11 @@ def main(argv=None):
         elif options.action == "recover-init":
             from worktree_publication import recover_initialization
             print(json.dumps(recover_initialization(options)), flush=True)
+        elif options.action == "qualify":
+            from worktree_preservation import qualify_batch
+            result = qualify_batch(options)
+            print(json.dumps(result), flush=True)
+            return 74 if result["status"] == "failed" else 0
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
