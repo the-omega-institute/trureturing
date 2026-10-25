@@ -22,7 +22,7 @@ namespace D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation
 
 def IsLocalityVectorSpace (K : Type) {E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) : Prop :=
-  Symmetric r ∧ r 0 0 ∧ ∀ U : Set E,
+  (∀ ⦃x y⦄, r x y → r y x) ∧ r 0 0 ∧ ∀ U : Set E,
     ∃ S : Submodule K E, (S : Set E) = {x | ∀ u ∈ U, r u x}
 
 def localityProduct {K E : Type} [Field K] [AddCommGroup E] [Module K E]
@@ -125,7 +125,7 @@ private theorem line_unique {v : Fin 3 → ℝ} (hv : v ≠ 0) {i j : Fin 6}
   have h1 := congrFun (ha.trans hb.symm) 1
   have h2 := congrFun (ha.trans hb.symm) 2
   fin_cases i <;> fin_cases j <;>
-    norm_num [direction, Pi.smul_apply, smul_eq_mul] at h0 h1 h2 ⊢ <;>
+    norm_num [direction.eq_1, Pi.smul_apply, smul_eq_mul] at h0 h1 h2 ⊢ <;>
     (exfalso; apply hn; linarith)
 
 private def projectedPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) where
@@ -158,7 +158,11 @@ private def projectedPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) w
 
 private def singletonPolar (v : Fin 5 → ℝ) : Submodule ℝ (Fin 5 → ℝ) where
   carrier := {t | rel v t}
-  zero_mem' := by change rel v 0; unfold rel; simp only [map_zero, Pi.zero_apply, mul_zero, zero_mul]; tauto
+  zero_mem' := by
+    change rel v 0
+    rw [rel.eq_1]
+    simp only [map_zero, Pi.zero_apply, mul_zero, zero_mul]
+    tauto
   add_mem' := by
     intro t u ht hu
     refine ⟨(projectedPolar v).add_mem ht.1 hu.1, ?_⟩
@@ -216,20 +220,38 @@ private theorem X_supported (k : Fin 5) (hk : k = 1 ∨ k = 2) :
     apply Submodule.sub_mem
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 1 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 2 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
     · apply diagonal_supported _ 0 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
   · unfold X
     apply Submodule.sub_mem
     · apply Submodule.add_mem
       · apply Submodule.smul_mem; apply diagonal_supported _ 4 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
       · apply Submodule.smul_mem; apply diagonal_supported _ 5 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
     · apply diagonal_supported _ 3 <;>
-        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+        solve
+        | norm_num [e.eq_1, Pi.single_apply]
+        | ext j; fin_cases j <;>
+            norm_num [project.eq_1, direction.eq_1, e.eq_1, Pi.single_apply]
 
 private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
     Y i ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
@@ -237,7 +259,8 @@ private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
   apply Finsupp.single_mem_supported
   refine ⟨Submodule.mem_top, Submodule.mem_top, ?_⟩
   rcases hi with rfl | rfl <;>
-    norm_num [rel, project, e, Pi.single_apply, show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
+    norm_num [rel.eq_1, project.eq_1, e.eq_1, Pi.single_apply,
+      show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
 
 private theorem X_support_cases (k : Fin 5) {p} (hp : p ∈ (X k).support) :
     p = (e 0 + e k, e 0 + e k) ∨ p = (e 0 - e k, e 0 - e k) ∨ p = (e k, e k) := by
@@ -302,7 +325,7 @@ private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i 
   rcases X_support_cases k hp with rfl | rfl | rfl <;>
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
     unfold pairRel rel <;>
-    norm_num [project, e, Pi.single_apply,
+    norm_num [project.eq_1, e.eq_1, Pi.single_apply,
       show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
 
 private theorem phi_vanishes (i : Fin 5) {a} (ha :
@@ -312,21 +335,21 @@ private theorem phi_vanishes (i : Fin 5) {a} (ha :
   | mem f hf =>
     rcases hf with ⟨a, _, b, _, x, _, rfl⟩ | ⟨a, _, x, _, y, _, rfl⟩ |
       ⟨a, _, x, _, k, rfl⟩ | ⟨a, _, x, _, k, rfl⟩ <;>
-      simp only [phi, map_sub, map_smul, Finsupp.linearCombination_single,
-        one_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul] <;> ring
+      simp only [phi.eq_1, map_sub, map_smul, Finsupp.linearCombination_single,
+        Pi.add_apply, Pi.smul_apply, smul_eq_mul] <;> ring
   | zero => exact map_zero _
   | add a b _ _ ha hb => rw [map_add, ha, hb, zero_add]
   | smul c a _ ha => rw [map_smul, ha, smul_zero]
 
 private theorem phi_values : phi 0 (X 1) = 1 ∧ phi 3 (Y 3 + Y 4) = 1 ∧
     phi 4 (Y 3 + Y 4) = 1 := by
-  norm_num [phi, X, Y, e, Pi.single_apply]
+  norm_num [phi.eq_1, X.eq_1, Y.eq_1, e.eq_1, Pi.single_apply]
 
 private theorem phi_support (i : Fin 5) {a} (ha : phi i a ≠ 0) :
     ∃ p ∈ a.support, p.1 i * p.2 i ≠ 0 := by
   classical
   by_contra h
-  push_neg at h
+  push Not at h
   apply ha
   unfold phi
   rw [Finsupp.linearCombination_apply, Finsupp.sum]
@@ -346,8 +369,8 @@ private theorem key_obstruction {v t : Fin 5 → ℝ} (h : rel v t)
   have h1 := congrFun hc 1
   have h2 := congrFun hc 2
   by_contra hn
-  push_neg at hn
-  fin_cases i <;> norm_num [direction, project, Pi.smul_apply, smul_eq_mul] at h0 h1 h2
+  push Not at hn
+  fin_cases i <;> norm_num [direction.eq_1, project.eq_1, Pi.smul_apply, smul_eq_mul] at h0 h1 h2
   all_goals apply hv; linarith [hn.1, hn.2]
 
 private theorem no_joint_related
@@ -400,8 +423,8 @@ private theorem pair_refuted : ¬ PairConjecture := by
     rw [map_add, phi_values.1, hw0, add_zero]
   apply no_joint_related (x + w) y z _ _ _ hwy hwz
   · rw [ha]; norm_num
-  · norm_num [y, Y, phi, e, Pi.single_apply]
-  · norm_num [z, Y, phi, e, Pi.single_apply]
+  · norm_num [y, Y.eq_1, phi.eq_1, e.eq_1, Pi.single_apply]
+  · norm_num [z, Y.eq_1, phi.eq_1, e.eq_1, Pi.single_apply]
 
 private theorem tensor_refuted : ¬ TensorConjecture := by
   intro H
