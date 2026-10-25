@@ -125,7 +125,7 @@ internal sealed class FractionalSchattenAlignmentRefutationDocument : IScribeDoc
     private static Formula Positive(string name) => At(Qualified("Matrix", "PosSemidef"), X(name));
     private static Formula Charpoly(string name) => At(Qualified("Matrix", "charpoly"), X(name));
     private static Formula Schatten(Formula matrix) =>
-        At(Qualified("D5", "S3", "Quantum", "Schatten", "schattenNorm"), matrix, X("p"));
+        At(Qualified("schattenNorm"), matrix, X("p"));
     private static Formula MatrixType() => At(Qualified("Matrix"),
         At(Qualified("Fin"), X("m")), At(Qualified("Fin"), X("m")), Complexes());
     private static Formula Local(string name) =>
