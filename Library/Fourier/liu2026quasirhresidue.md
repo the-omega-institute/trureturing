@@ -1292,14 +1292,18 @@ capacities; no coarse-slot or conditional-cofactor estimate is supplied.
 
 ### Uniform Type-I transfer with the original Hecke suppliers
 
-Retain **all** C29 premises: the buffered upper and reciprocal bounds
+Retain **all** [C29 premises](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin): the buffered upper and reciprocal bounds
 for the original Hecke family on the same bins, their original counts
 $R(\delta)$, floor $a_0=51/100$, zero-prime-slot nonprincipal plain
 fourth moment, polynomial-size complete original deletion masks,
 bounded annular lengths, original zero extensions and finite ray
 presentations. Principal inducing exceptions have precisely C25–C29's
 bounded-support treatment; no general principal plain-moment theorem
-is assumed. These are conditional inputs of the pinned primary
+is assumed. For a fixed finite twist, a principal inducing character on
+the sixth-power-free physical rows has good-prime support inside that
+twist support and bounded valuations, hence occurs only at bounded
+scales. No new conductor lower bound is introduced. These are
+conditional inputs of the pinned primary
 manuscript (`lem:buffered-bins`, `lem:detector-dyads`, `lem:plain`,
 `lem:logarithmic-control`, `lem:deleted-euler-factors`,
 `lem:smooth-calculus`), not consequences of the principal $R_{7/8}$.
@@ -1308,11 +1312,18 @@ For fixed $x\in[L^{-1},L]$, use cutoff $W_0(t/x)$ and dyadic blocks
 $Q\le2Ax$, with $C=D/Q$. Their joint logarithmic profiles have uniform
 seminorms: on a nonzero block $Q/(Ax)\le2$. The two finite internal
 Fourier/Mellin heights share the same fixed fraction of the original
-buffer $T_1$ as in C29; tails stay on absolute lines and are paid by its
+buffer $T_1$ as in C29, with the two local lines at
+$\Re s=\Re t=a_{\rm bin}+8e$; tails stay on absolute lines and are paid by its
 fixed polynomial growth and chosen decay. The range
 $Q\ll U^{1/12+\eta}$ remains a bounded annular polynomial range, with
 $Q<D$. There is no larger row-twist allowance or infinite local contour.
-On a nonfloor bin the same positive quantity therefore satisfies
+Here $\delta=2a_{\rm bin}-1$, and the original counting exponent is
+$R(\delta)=(15-16\delta)/(15-6\delta)$ for
+$1/50<\delta\le5/6$, and $R(\delta)=1-\delta$ for
+$5/6\le\delta\le1$. The local upper and reciprocal estimates
+together give the first bound; the inverse-square estimate and the
+original full nonprincipal plain fourth moment give the second, after
+C26’s summable correction. On that same positive bin quantity this gives
 
 $$
 T_{Q,x}(\delta)\ll U^\varepsilon
