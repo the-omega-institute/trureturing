@@ -2204,8 +2204,10 @@ cofactor blocks remains legitimate, but cannot certify standard
 every-split well-factorability at these original levels. General
 fixed-block multilinear estimates and signed cancellation are not
 excluded. Nothing here is an energy lower bound, a lower bound or
-obstruction for the signed (J40) complement, or a joint estimate at
-the sufficient local $13/6$ benchmark. The original Hecke domain,
+obstruction for the signed (J40) complement, or a joint estimate reaching
+the sufficient local exponent $1+B_*-\sigma$ for $\sigma>0$.
+The exponent $13/6$ is the generic local energy baseline.
+The original Hecke domain,
 raw sextic collision zeros, common $\beta$, signs and common-$e$
 detector, fixed/polylog profile seminorms, and all unit/ray/core/bad-dual
 aggregation costs remain in the original contract. In particular,
