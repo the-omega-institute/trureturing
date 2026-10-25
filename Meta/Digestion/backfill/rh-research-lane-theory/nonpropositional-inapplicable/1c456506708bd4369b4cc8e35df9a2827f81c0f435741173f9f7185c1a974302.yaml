@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c456506708bd4369b4cc8e35df9a2827f81c0f435741173f9f7185c1a974302
+  normalized_sha256: sha256:1c456506708bd4369b4cc8e35df9a2827f81c0f435741173f9f7185c1a974302
+cas_ref: sha256:1c456506708bd4369b4cc8e35df9a2827f81c0f435741173f9f7185c1a974302
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非主张清单中的运输边界，未断言 prime-side 壳层商已支配零点径向缺陷。
+    previous_atom_id: b53e1e39a1ecd59de643ae78e918284e50f3a8019e5fe863362b59490e949e0a
+    next_atom_id: 922c06ad04f5252899eab606985f0ac5e58718efdae3e0614d9ff7d7fd0f1ab4
