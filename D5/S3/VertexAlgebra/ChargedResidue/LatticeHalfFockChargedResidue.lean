@@ -106,9 +106,8 @@ private theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
   simp only [HahnModule.of_symm_smul, HahnSeries.coeff_smul,
     HVertexOperator.coeff_apply_apply]
 
-/- The empty correction word is the charged singleton field on the actual
-   tensor carrier.  This is the concrete bridge used by the projected slice
-   expansion below; it does not introduce a second field construction. -/
+/- The empty-correction charged readout is supplied by the shared original
+   corrected-field owner, and consumed in the projected slice expansion. -/
 /- The two projected components are expanded before any residue regrouping.
    This keeps the two signed charge fields and the projected sign explicit on
    the original actual tensor carrier. -/

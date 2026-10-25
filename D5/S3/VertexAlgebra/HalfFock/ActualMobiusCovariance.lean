@@ -10,6 +10,7 @@ import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentWard
 import D5.S3.VertexAlgebra.SourceMobius.PositiveMode
+import D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity
 
 /- Classical twisted lattice construction; original conventions and notices
 are inherited from the imported owners. No replacement field is introduced.
@@ -679,7 +680,7 @@ private theorem ground_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     Matrix.inv_eq_left_inv (HalfFockSpectralFiberSource.actualInverse_left D hu)
   have s1 : LatticeSugawaraCurrents.sugawaraMode D H 1 a = 0 :=
     LatticeSugawaraVirasoro.sugawaraMode_ground_positive D H q 1 (by omega)
-  have s0 : LatticeSugawaraCurrents.sugawaraMode D H 0 a = (bilinear D q q : ℂ)/2 • a := by
+  have s0 : LatticeSugawaraCurrents.sugawaraMode D H 0 a = ((bilinear D q q : ℂ)/2) • a := by
     rw [LatticeSugawaraVirasoro.sugawaraMode_ground_zero,
       LatticeSugawaraConformal.chargeQuadratic_eq D H
         (HalfFockSpectralFiberSource.actualInverse_left D hu)
@@ -690,11 +691,353 @@ private theorem ground_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     intro x
     rw [LatticeHalfFockCorrectedField.corrected_singleton_coeff_charged]
     simp only [chargedField,HVertexOperator.coeff_of_coeff]
-  dsimp only
   rw [inv,s1,s0]
   simp only [map_zero,map_smul,Pi.zero_apply,Pi.smul_apply,zero_add]
-  rw [coeff,coeff,charged_l1_coefficient]
+  simp only [coeff]
+  rw [charged_l1_coefficient]
   module
+
+
+private theorem insertion_coeff_cutoff (D : LatticeData) (hu : IsUnit D.G.det)
+    (b : Carrier D) (i : Fin D.rank) (r N : ℕ)
+    (hN : LatticeSugawaraCurrents.vectorFrequencyBound D b < N) (e : ℤ) :
+    (LatticeHalfFockCorrectedField.correctedField D hu
+      (LatticeFiniteNegativeGeneration.neutralMode D i (-((r+1:ℕ):ℤ)) b)).coeff e =
+      (singletonLinear D hu (i,r) (LatticeHalfFockCorrectedField.correctedField D hu b)).coeff e +
+      ∑ n ∈ Finset.range N,
+        ((r+1:ℂ)*halfBinomial (r+1)*halfBinomial n / ((r+1:ℂ)+(n:ℂ))) •
+          (LatticeHalfFockCorrectedField.correctedField D hu
+            (LatticeFiniteNegativeGeneration.neutralMode D i (n:ℤ) b)).coeff
+              (e+2*((r+1+n:ℕ):ℤ)) := by
+  have original := congrArg (fun A : NativeField D hu => A.coeff e)
+    (LatticeHalfFockCorrectedField.correctedField_negative_current_insertion D hu (i,r) b)
+  simp only [sourceWeight,map_add,map_sum,map_smul,Pi.add_apply,Pi.smul_apply,
+    Finset.sum_apply,LatticeHalfFockCorrectedField.shiftField_coefficient_public] at original
+  simp only [Nat.cast_add,Nat.cast_one] at original
+  rw [original]
+  congr 1
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro n hn hnold
+  have above : (LatticeSugawaraCurrents.vectorFrequencyBound D b:ℤ) < (n:ℤ) := by
+    exact_mod_cast (show LatticeSugawaraCurrents.vectorFrequencyBound D b < n by
+      simp only [Finset.mem_range,not_lt] at hnold
+      omega)
+  simp [LatticeSugawaraCurrents.neutralMode_vanish D i b (n:ℤ) above]
+
+private theorem zero_ward_cutoff (D : LatticeData) (hu : IsUnit D.G.det)
+    (b : Carrier D) (i : Fin D.rank) (N : ℕ)
+    (hN : LatticeSugawaraCurrents.vectorFrequencyBound D b < N)
+    (e : ℤ) (x : ActualTensor D hu) :
+    tensorCurrent D (ActualGround D hu) i 0
+        ((LatticeHalfFockCorrectedField.correctedField D hu b).coeff e x) -
+      (LatticeHalfFockCorrectedField.correctedField D hu b).coeff e
+        (tensorCurrent D (ActualGround D hu) i 0 x) =
+      ∑ n ∈ Finset.range N, Ring.choose (1/2:ℂ) n •
+        (LatticeHalfFockCorrectedField.correctedField D hu
+          (LatticeFiniteNegativeGeneration.neutralMode D i (n:ℤ) b)).coeff
+            (e-1+2*(n:ℤ)) x := by
+  have original := LatticeHalfFockCorrectedField.correctedField_current_ward D hu i b 0 e x
+  simp only [frequency,Int.cast_zero,zero_add,mul_zero] at original
+  rw [original]
+  apply Finset.sum_subset (Finset.range_mono (by omega))
+  intro n hn hnold
+  have above : (LatticeSugawaraCurrents.vectorFrequencyBound D b:ℤ) < (n:ℤ) := by
+    exact_mod_cast (show LatticeSugawaraCurrents.vectorFrequencyBound D b < n by
+      simp only [Finset.mem_range,not_lt] at hnold
+      omega)
+  simp [LatticeSugawaraCurrents.neutralMode_vanish D i b (n:ℤ) above]
+
+private def L1Law (D : LatticeData) (hu : IsUnit D.G.det) (a : Carrier D) : Prop :=
+  ∀ e : ℤ,
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+        (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e -
+      (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1 a)).coeff e +
+      ((e:ℂ)/2-1) • (LatticeHalfFockCorrectedField.correctedField D hu a).coeff (e-2) +
+      (2:ℂ) • (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 0 a)).coeff (e-2)
+
+private theorem l1_law_zero (D : LatticeData) (hu : IsUnit D.G.det) : L1Law D hu 0 := by
+  intro e
+  simp only [map_zero, Pi.zero_apply, mul_zero, zero_mul, sub_self, smul_zero, add_zero]
+
+private theorem l1_law_add (D : LatticeData) (hu : IsUnit D.G.det)
+    (a b : Carrier D) (ha : L1Law D hu a) (hb : L1Law D hu b) : L1Law D hu (a+b) := by
+  intro e
+  have h1 := ha e
+  have h2 := hb e
+  simp only [map_add, Pi.add_apply, mul_add, add_mul, smul_add]
+  linear_combination h1+h2
+
+private theorem l1_law_smul (D : LatticeData) (hu : IsUnit D.G.det)
+    (c : ℂ) (a : Carrier D) (ha : L1Law D hu a) : L1Law D hu (c • a) := by
+  intro e
+  have hh := ha e
+  simp only [map_smul, Pi.smul_apply, Algebra.mul_smul_comm, Algebra.smul_mul_assoc, smul_smul]
+  linear_combination c • hh
+
+private theorem l1_law_sum (D : LatticeData) (hu : IsUnit D.G.det)
+    {ι : Type*} (s : Finset ι) (f : ι → Carrier D) (hf : ∀ i ∈ s, L1Law D hu (f i)) :
+    L1Law D hu (∑ i ∈ s, f i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simpa using l1_law_zero D hu
+  | @insert i s hi ih =>
+    rw [Finset.sum_insert hi]
+    exact l1_law_add D hu _ _ (hf i (by simp)) (ih (fun j hj => hf j (by simp [hj])))
+
+/-- Assembly of the original evaluated insertion, including the zero-mode
+crossover. The hypotheses are consumed only as the smaller-source induction
+steps in the full source theorem. -/
+private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (b : Carrier D) (i : Fin D.rank) (r : ℕ)
+    (hb : L1Law D hu b)
+    (hJ : ∀ n : ℕ, L1Law D hu (LatticeFiniteNegativeGeneration.neutralMode D i (n:ℤ) b)) :
+    L1Law D hu (LatticeFiniteNegativeGeneration.neutralMode D i (-((r+1:ℕ):ℤ)) b) := by
+  classical
+  let F := LatticeHalfFockCorrectedField.correctedField D hu
+  let A (d : ℤ) : Carrier D →ₗ[ℂ] Module.End ℂ (ActualTensor D hu) :=
+    (LinearMap.proj d).comp (HVertexOperator.coeff.comp F)
+  let T := tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1
+  let S := LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹
+  let J := LatticeFiniteNegativeGeneration.neutralMode D i
+  let comm : Module.End ℂ (ActualTensor D hu) →ₗ[ℂ] Module.End ℂ (ActualTensor D hu) :=
+    LinearMap.mulLeft ℂ T - LinearMap.mulRight ℂ T
+  have inverse : (LatticeSugawaraCurrents.gramComplex D)⁻¹ = HalfFockSpectralFiberSource.actualInverse D :=
+    Matrix.inv_eq_left_inv (HalfFockSpectralFiberSource.actualInverse_left D hu)
+  have source (j k : ℤ) (v : Carrier D) : S j (J k v) =
+      J k (S j v) - (k:ℂ) • J (j+k) v := by
+    have hh := congrArg (fun U : Module.End ℂ (Carrier D) => U v)
+      (LatticeSugawaraCurrents.sugawaraMode_current_commutator D
+        (HalfFockSpectralFiberSource.actualInverse D)
+        (HalfFockSpectralFiberSource.actualInverse_left D hu)
+        (HalfFockSpectralFiberSource.actualInverse_right D hu) i j k)
+    simp only [Module.End.mul_apply, LinearMap.sub_apply, LinearMap.smul_apply] at hh
+    dsimp only [S,J]
+    rw [inverse]
+    linear_combination hh
+  let N := max (LatticeSugawaraCurrents.vectorFrequencyBound D b)
+    (max (LatticeSugawaraCurrents.vectorFrequencyBound D (S 1 b))
+      (LatticeSugawaraCurrents.vectorFrequencyBound D (S 0 b))) + 1
+  have hNb : LatticeSugawaraCurrents.vectorFrequencyBound D b < N := by dsimp [N]; omega
+  have hN1 : LatticeSugawaraCurrents.vectorFrequencyBound D (S 1 b) < N := by dsimp [N]; omega
+  have hN0 : LatticeSugawaraCurrents.vectorFrequencyBound D (S 0 b) < N := by dsimp [N]; omega
+  let k (n : ℕ) := (r+1:ℂ)*halfBinomial (r+1)*halfBinomial n / ((r+1:ℂ)+(n:ℂ))
+  let R (v : Carrier D) (d : ℤ) := ∑ n ∈ Finset.range N,
+    k n • A (d+2*((r+1+n:ℕ):ℤ)) (J (n:ℤ) v)
+  let Q (v : Carrier D) (d : ℤ) := (singletonLinear D hu (i,r) (F v)).coeff d
+  have ins (v : Carrier D) (hv : LatticeSugawaraCurrents.vectorFrequencyBound D v < N) (d : ℤ) :
+      A d (J (-((r+1:ℕ):ℤ)) v) = Q v d + R v d :=
+    insertion_coeff_cutoff D hu v i r N hv d
+  intro e
+  let f (n : ℕ) := A (e+2*((r+n:ℕ):ℤ)) (J (n:ℤ) b)
+  let E := (∑ n ∈ Finset.range N, (((r+1:ℂ)+(n:ℂ))*k n) • f n) +
+    ∑ n ∈ Finset.range N, ((n:ℂ)*k n) • f (n+1)
+  let c : ℂ := (e:ℂ)/2-1+2*(r+1:ℂ)
+  let lower := if r=0 then 0 else (r+1:ℂ) •
+    (singletonLinear D hu (i,r-1) (F b)).coeff e
+  let boundary := (1/2*halfBinomial r : ℂ) •
+    (tensorCurrent D (ActualGround D hu) i 0 * A (e+2*(r:ℤ)+1) b -
+      A (e+2*(r:ℤ)+1) b * tensorCurrent D (ActualGround D hu) i 0)
+  have single : comm (Q b e) = Q (S 1 b) e + c • Q b (e-2) +
+      (2:ℂ) • Q (S 0 b) (e-2) + lower + boundary := by
+    apply LinearMap.ext
+    intro x
+    exact singleton_l1 D hu (F b) (F (S 1 b)) (F (S 0 b)) hb i r e x
+  have lower_cancel : lower + boundary = (r+1:ℂ) • A e (J (1-((r+1:ℕ):ℤ)) b) + E := by
+    have cancel : boundary = E +
+        (if r=0 then f 0 else (r+1:ℂ) • ∑ n ∈ Finset.range N,
+          ((r:ℂ)*halfBinomial r*halfBinomial n / ((r:ℂ)+(n:ℂ))) • f n) := by
+      apply LinearMap.ext
+      intro x
+      have hc := evaluated_insertion_l1_cancel D hu b i r N hNb e x
+      have hw := zero_ward_cutoff D hu b i N hNb (e+2*(r:ℤ)+1) x
+      dsimp only [boundary]
+      simp only [LinearMap.smul_apply,LinearMap.sub_apply,Module.End.mul_apply]
+      rw [hw]
+      have shift (n : ℕ) : e+2*(r:ℤ)+1-1+2*(n:ℤ) = e+2*((r+n:ℕ):ℤ) := by push_cast; ring
+      simp only [shift]
+      simpa only [E,k,f,A,J,LinearMap.comp_apply,LinearMap.proj_apply,
+        LinearMap.add_apply,LinearMap.smul_apply,Finset.sum_apply,DFunLike.ite_apply,
+        LinearMap.zero_apply] using hc
+    rw [cancel]
+    by_cases hr : r=0
+    · subst r
+      simp only [lower,if_pos rfl,Nat.cast_zero,zero_add,Nat.cast_one,one_smul,
+        Nat.zero_add,Int.cast_zero,mul_zero,add_zero] at *
+      dsimp only [f]
+      simp only [show (1:ℤ)-((0+1:ℕ):ℤ)=0 by norm_num]
+      abel
+    · have il := insertion_coeff_cutoff D hu b i (r-1) N hNb e
+      have nr : r-1+1=r := by omega
+      have shift (n : ℕ) : e+2*((r-1+1+n:ℕ):ℤ) = e+2*((r+n:ℕ):ℤ) := by omega
+      simp only [nr,shift] at il
+      have mode : (1:ℤ)-((r+1:ℕ):ℤ) = -((r-1+1:ℕ):ℤ) := by omega
+      rw [mode]
+      change lower + (E+_) = (r+1:ℂ) •
+        (LatticeHalfFockCorrectedField.correctedField D hu (J (-((r-1+1:ℕ):ℤ)) b)).coeff e + E
+      rw [show r-1+1=r by omega,il]
+      dsimp only [lower,f,k,A,J]
+      simp only [if_neg hr,LinearMap.comp_apply,LinearMap.proj_apply]
+      module
+  have residual : comm (R b e) = R (S 1 b) e + c • R b (e-2) +
+      (2:ℂ) • R (S 0 b) (e-2) - E := by
+    have term (n : ℕ) : k n • comm (A (e+2*((r+1+n:ℕ):ℤ)) (J (n:ℤ) b)) =
+        k n • A (e+2*((r+1+n:ℕ):ℤ)) (J (n:ℤ) (S 1 b)) +
+        c • (k n • A (e-2+2*((r+1+n:ℕ):ℤ)) (J (n:ℤ) b)) +
+        (2:ℂ) • (k n • A (e-2+2*((r+1+n:ℕ):ℤ)) (J (n:ℤ) (S 0 b))) -
+        (((r+1:ℂ)+(n:ℂ))*k n) • f n - ((n:ℂ)*k n) • f (n+1) := by
+      have hc := hJ n (e+2*((r+1+n:ℕ):ℤ))
+      change T * A _ (J _ b) - A _ (J _ b) * T = _ at hc
+      change k n • (T * A _ (J _ b) - A _ (J _ b) * T) = _
+      rw [hc]
+      change k n • (A _ (S 1 (J (n:ℤ) b)) + _ + (2:ℂ) • A _ (S 0 (J (n:ℤ) b))) = _
+      rw [source,source]
+      simp only [map_sub,map_smul]
+      have shift : e+2*((r+1+n:ℕ):ℤ)-2 = e-2+2*((r+1+n:ℕ):ℤ) := by omega
+      have fs : e-2+2*((r+1+n:ℕ):ℤ) = e+2*((r+n:ℕ):ℤ) := by omega
+      have ns : (1:ℤ)+(n:ℤ) = ((n+1:ℕ):ℤ) := by omega
+      have fn : e+2*((r+1+n:ℕ):ℤ) = e+2*((r+(n+1):ℕ):ℤ) := by omega
+      simp only [shift,zero_add,ns]
+      dsimp only [f,c]
+      rw [← fs,← fn]
+      push_cast
+      module
+    dsimp only [R]
+    rw [map_sum]
+    simp only [map_smul]
+    rw [Finset.sum_congr rfl (fun n hn => term n)]
+    simp only [Finset.sum_add_distrib,Finset.sum_sub_distrib,← Finset.smul_sum]
+    dsimp only [E]
+    abel
+  change comm (A e (J (-((r+1:ℕ):ℤ)) b)) =
+    A e (S 1 (J (-((r+1:ℕ):ℤ)) b)) + ((e:ℂ)/2-1) • A (e-2) (J (-((r+1:ℕ):ℤ)) b) +
+    (2:ℂ) • A (e-2) (S 0 (J (-((r+1:ℕ):ℤ)) b))
+  rw [source,source]
+  simp only [map_sub,map_smul,zero_add]
+  rw [ins b hNb e, map_add,single,residual,ins (S 1 b) hN1 e,
+    ins (S 0 b) hN0 (e-2),ins b hNb (e-2)]
+  have lc := lower_cancel
+  dsimp only [c] at *
+  push_cast
+  linear_combination lc
+
+#print axioms insertion_l1
+
+/-- Oscillator-length induction on the original charge sector. Positive
+currents differentiate and strictly lower length; mode zero remains the
+original charge scalar. -/
+private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (p : Oscillator D) : L1Law D hu (Finsupp.single q p) := by
+  classical
+  have ground : L1Law D hu (Finsupp.single q (1 : Oscillator D)) := ground_l1 D hu q
+  have bounded : ∀ n : ℕ, ∀ p : Oscillator D, p.totalDegree ≤ n →
+      L1Law D hu (Finsupp.single q p) := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro p hp
+      have mon (m : Index D →₀ ℕ) (c : ℂ) (hm : m.sum (fun _ e => e) ≤ n) :
+          L1Law D hu (Finsupp.single q (MvPolynomial.monomial m c)) := by
+        by_cases hz : m=0
+        · subst m
+          simpa only [MvPolynomial.monomial_zero,MvPolynomial.C_eq_smul_one,
+            ← Finsupp.smul_single] using l1_law_smul D hu c _ ground
+        · obtain ⟨v,hv⟩ := Finsupp.support_nonempty_iff.mpr hz
+          have vle : Finsupp.single v 1 ≤ m :=
+            Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hv))
+          let t := m-Finsupp.single v 1
+          have teq : t+Finsupp.single v 1=m := tsub_add_cancel_of_le vle
+          have length : t.sum (fun _ e => e)+1=m.sum (fun _ e => e) := by
+            rw [← teq]
+            simp only [Finsupp.sum_add_index',Finsupp.sum_single_index,add_zero]
+          have ht : t.sum (fun _ e => e)<n := by omega
+          let b : Carrier D := Finsupp.single q (MvPolynomial.monomial t c)
+          have deg : (MvPolynomial.monomial t c : Oscillator D).totalDegree ≤ t.sum (fun _ e => e) :=
+            MvPolynomial.totalDegree_monomial_le t c
+          have hb : L1Law D hu b := ih _ ht _ deg
+          have positive (k : ℕ) : L1Law D hu
+              (LatticeFiniteNegativeGeneration.neutralMode D v.1 (k:ℤ) b) := by
+            cases k with
+            | zero =>
+              have he : LatticeFiniteNegativeGeneration.neutralMode D v.1 0 b =
+                  (bilinear D (unitCharge D v.1) q : ℂ) • b := by
+                dsimp only [b]
+                rw [LatticeSugawaraCurrents.neutralMode_single]
+                simp only [LatticeFiniteNegativeGeneration.neutralPolynomialMode,lt_self_iff_false,
+                  if_false,if_true,LinearMap.smul_apply,LinearMap.id_apply,Finsupp.smul_single]
+              rw [Nat.cast_zero,he]
+              exact l1_law_smul D hu _ _ hb
+            | succ k =>
+              have derivatives (j : Fin D.rank) : L1Law D hu
+                  (Finsupp.single q (MvPolynomial.pderiv (j,k) (MvPolynomial.monomial t c))) := by
+                by_cases hz : MvPolynomial.pderiv (j,k) (MvPolynomial.monomial t c : Oscillator D)=0
+                · rw [hz,Finsupp.single_zero]
+                  exact l1_law_zero D hu
+                · have hd := D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity.API.totalDegree_pderiv_lt
+                    (MvPolynomial.monomial t c : Oscillator D) (j,k) hz
+                  exact ih _ (lt_trans hd (lt_of_le_of_lt deg ht)) _ le_rfl
+              have hs := l1_law_smul D hu (k+1:ℂ) _
+                (l1_law_sum D hu Finset.univ
+                  (fun j : Fin D.rank => (D.G v.1 j : ℂ) •
+                    Finsupp.single q (MvPolynomial.pderiv (j,k) (MvPolynomial.monomial t c)))
+                  (fun j hj => l1_law_smul D hu _ _ (derivatives j)))
+              simpa only [b,LatticeSugawaraCurrents.neutralMode_single,
+                LatticeFiniteNegativeGeneration.neutralPolynomialMode,
+                Nat.cast_add,Nat.cast_one,show ¬ (k:ℤ)+1<0 by omega,
+                show ¬ (k:ℤ)+1=0 by omega,if_false,
+                add_sub_cancel_right,Int.toNat_natCast,LinearMap.smul_apply,
+                LinearMap.sum_apply,Derivation.coeFn_coe,Finsupp.smul_single,
+                Finsupp.single_finsetSum] using hs
+          have step := insertion_l1 D hu b v.1 v.2 hb positive
+          have creation : LatticeFiniteNegativeGeneration.neutralMode D v.1 (-((v.2+1:ℕ):ℤ)) b =
+              Finsupp.single q (MvPolynomial.monomial m c) := by
+            dsimp only [b]
+            rw [LatticeSugawaraCurrents.neutralMode_single]
+            simp only [LatticeFiniteNegativeGeneration.neutralPolynomialMode,
+              show -((v.2+1:ℕ):ℤ)<0 by omega,if_true,LinearMap.mulLeft_apply]
+            have index : ((-(-((v.2+1:ℕ):ℤ))-1).toNat)=v.2 := by omega
+            rw [index]
+            congr 1
+            rw [MvPolynomial.X,MvPolynomial.monomial_mul_monomial]
+            rw [add_comm,teq,one_mul]
+          rwa [creation] at step
+      have expansion : Finsupp.single q p = ∑ m ∈ p.support,
+          Finsupp.single q (MvPolynomial.monomial m (p.coeff m)) := by
+        rw [← Finsupp.single_finsetSum]
+        exact congrArg (Finsupp.single q) p.as_sum
+      rw [expansion]
+      exact l1_law_sum D hu p.support _ (fun m hm => mon m (p.coeff m)
+        (le_trans (MvPolynomial.le_totalDegree hm) hp))
+  exact bounded p.totalDegree p le_rfl
+
+/-- Physical z=t² special-conformal coefficient covariance for EVERY original
+source and actual target input. All corrections, inverse Gram contractions,
+signed exponents, and original independent source L0/L1 actions are retained. -/
+theorem corrected_field_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Carrier D) (e : ℤ) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+        (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e -
+      (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1 a)).coeff e +
+      ((e:ℂ)/2-1) • (LatticeHalfFockCorrectedField.correctedField D hu a).coeff (e-2) +
+      (2:ℂ) • (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 0 a)).coeff (e-2) := by
+  have ha : L1Law D hu a := by
+    classical
+    have expansion : a = ∑ q ∈ a.support, Finsupp.single q (a q) := a.sum_single.symm
+    rw [expansion]
+    exact l1_law_sum D hu a.support _ (fun q hq => polynomial_l1 D hu q (a q))
+  exact ha e
+
+#print axioms corrected_field_l1_coefficient
+
+#print axioms insertion_coeff_cutoff
+#print axioms zero_ward_cutoff
 
 #print axioms ground_l1
 
