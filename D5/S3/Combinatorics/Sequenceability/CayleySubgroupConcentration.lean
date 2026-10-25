@@ -28,6 +28,72 @@ open scoped BigOperators Pointwise
 noncomputable section
 attribute [local instance] Classical.propDecidable
 
+def density {K : Type*} [Fintype K] (T : Finset K) : ℝ :=
+  (T.card : ℝ) / Fintype.card K
+
+def retained {G : Type*} [Group G] [Fintype G]
+    (S : Finset G) (H : Subgroup G) : Finset H :=
+  Finset.univ.filter (fun t : H => (t : G) ∈ S)
+
+private def regularIso {K : Type*} [Group K] [Fintype K] (g : K) :
+    EuclideanSpace ℝ K ≃ₗᵢ[ℝ] EuclideanSpace ℝ K :=
+  LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ
+    { toFun := fun x => x * g⁻¹
+      invFun := fun x => x * g
+      left_inv := by intro x; simp [mul_assoc]
+      right_inv := by intro x; simp [mul_assoc] }
+
+private theorem regularIso_apply {K : Type*} [Group K] [Fintype K]
+    (g : K) (v : EuclideanSpace ℝ K) (x : K) :
+    regularIso g v x = v (x * g) := rfl
+
+private theorem regularIso_one {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) : regularIso (1 : K) v = v := by
+  ext x
+  simp [regularIso_apply]
+
+private theorem regularIso_mul {K : Type*} [Group K] [Fintype K]
+    (g h : K) (v : EuclideanSpace ℝ K) :
+    regularIso (g * h) v = regularIso g (regularIso h v) := by
+  ext x
+  simp [regularIso_apply, mul_assoc]
+
+private theorem regularIso_orbit_sum {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (hmean : ∑ x : K, v x = 0) :
+    ∑ g : K, regularIso g v = 0 := by
+  ext x
+  change (∑ g : K, regularIso g v) x = 0
+  rw [show (∑ g : K, regularIso g v) x = ∑ g : K, v (x * g) by
+    simp [regularIso_apply]]
+  rw [Fintype.sum_equiv (Equiv.mulLeft x) (fun g => v (x * g)) v (fun _ => rfl)]
+  exact hmean
+
+private def displacement {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (g : K) : ℝ := ‖regularIso g v - v‖
+
+private theorem displacement_mul {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (g h : K) :
+    displacement v (g * h) ≤ displacement v g + displacement v h := by
+  calc
+    ‖regularIso (g * h) v - v‖ =
+        ‖regularIso g (regularIso h v - v) + (regularIso g v - v)‖ := by
+          rw [map_sub, ← regularIso_mul]
+          congr 1
+          abel
+    _ ≤ ‖regularIso g (regularIso h v - v)‖ + ‖regularIso g v - v‖ := norm_add_le _ _
+    _ = displacement v g + displacement v h := by
+      rw [(regularIso g).norm_map]
+      simp only [displacement, add_comm]
+
+private theorem displacement_inv {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (g : K) : displacement v g⁻¹ = displacement v g := by
+  calc
+    ‖regularIso g⁻¹ v - v‖ = ‖regularIso g (regularIso g⁻¹ v - v)‖ :=
+      ((regularIso g).norm_map _).symm
+    _ = ‖v - regularIso g v‖ := by
+      rw [map_sub, ← regularIso_mul, mul_inv_cancel, regularIso_one]
+    _ = ‖regularIso g v - v‖ := norm_sub_rev _ _
+
 private def lengthBall {K : Type*} [Fintype K] (D : K → ℝ) (r : ℝ) : Finset K :=
   Finset.univ.filter (fun g => D g ≤ r)
 
@@ -122,6 +188,148 @@ private theorem rounded_plateau {K : Type*} [Group K] [Fintype K]
   have hbig := mul_le_mul_of_nonneg_left hlarge (show (0 : ℝ) ≤ q by positivity)
   dsimp [B] at hcardR
   nlinarith
+
+private theorem exists_large_displacement {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (hv : ‖v‖ = 1) (hmean : ∑ x : K, v x = 0) :
+    ∃ g : K, (4 / 5 : ℝ) < displacement v g := by
+  by_contra! h
+  have horbit := regularIso_orbit_sum v hmean
+  have hsum : (∑ g : K, (v - regularIso g v)) = (Fintype.card K : ℝ) • v := by
+    simp [Finset.sum_sub_distrib, horbit, Nat.cast_smul_eq_nsmul]
+  have hnorm := norm_sum_le (Finset.univ : Finset K) (fun g => v - regularIso g v)
+  rw [hsum, norm_smul, hv, mul_one, Real.norm_of_nonneg (by positivity)] at hnorm
+  have hbound : (∑ g : K, ‖v - regularIso g v‖) ≤
+      (Fintype.card K : ℝ) * (4 / 5) := by
+    calc
+      _ ≤ ∑ _g : K, (4 / 5 : ℝ) := Finset.sum_le_sum (fun g _ => by
+        simpa only [displacement, norm_sub_rev] using h g)
+      _ = _ := by simp
+  have hn : (0 : ℝ) < Fintype.card K := by exact_mod_cast Fintype.card_pos
+  linarith
+
+private theorem dense_ball_proper_stabilizer {K : Type*} [Group K] [Fintype K]
+    (v : EuclideanSpace ℝ K) (hv : ‖v‖ = 1) (hmean : ∑ x : K, v x = 0)
+    (τ : ℝ) (hτ : 0 < τ) (hτone : τ ≤ 1)
+    (hlarge : (9 / 10 : ℝ) * τ * Fintype.card K ≤
+      (lengthBall (displacement v) (τ / 5)).card) :
+    ∃ X : Finset K, 1 ∈ X ∧
+      (∀ x ∈ X, displacement v x ≤ 4 / 5) ∧
+      MulAction.stabilizer K X ≠ ⊤ ∧
+      ∀ b ∈ lengthBall (displacement v) (τ / 5),
+        b ∈ MulAction.stabilizer K X := by
+  obtain ⟨k, hk, hkbound, hplateau⟩ := rounded_plateau (displacement v)
+    (displacement_mul v) (displacement_inv v) τ hτ hτone hlarge
+  let X := lengthBall (displacement v) (((k - 1 : ℕ) : ℝ) * (τ / 5))
+  have hone : (1 : K) ∈ X := by
+    apply (mem_lengthBall _ _ _).mpr
+    simp only [displacement, regularIso_one, sub_self, norm_zero]
+    positivity
+  have hradius : (k : ℝ) * (τ / 5) ≤ 4 / 5 := by
+    have := (le_div_iff₀ hτ).mp hkbound
+    linarith
+  have hsmall : ∀ x ∈ X, displacement v x ≤ 4 / 5 := by
+    intro x hx
+    exact le_trans ((mem_lengthBall _ _ x).mp hx)
+      (le_trans (mul_le_mul_of_nonneg_right (by exact_mod_cast Nat.sub_le k 1)
+        (by positivity)) hradius)
+  have hstabilize : ∀ b ∈ lengthBall (displacement v) (τ / 5),
+      b ∈ MulAction.stabilizer K X := by
+    intro b hb
+    apply MulAction.mem_stabilizer_finset_iff_smul_finset_subset.mpr
+    intro y hy
+    obtain ⟨x, hx, rfl⟩ := Finset.mem_smul_finset.mp hy
+    apply (mem_lengthBall _ _ _).mpr
+    have hbx : displacement v (b * x) ≤ (k : ℝ) * (τ / 5) := by
+      have hb' := (mem_lengthBall _ _ _).mp hb
+      have hx' := (mem_lengthBall _ _ _).mp hx
+      have hcast : ((k - 1 : ℕ) : ℝ) + 1 = k := by
+        exact_mod_cast Nat.sub_add_cancel hk
+      have := displacement_mul v b x
+      change displacement v (b * x) ≤ _
+      nlinarith
+    exact (mem_lengthBall _ _ _).mp (hplateau ▸ (mem_lengthBall _ _ _).mpr hbx)
+  have hproper : MulAction.stabilizer K X ≠ ⊤ := by
+    intro htop
+    obtain ⟨g, hg⟩ := exists_large_displacement v hv hmean
+    have hgmem : g ∈ MulAction.stabilizer K X := by rw [htop]; trivial
+    have hsub := MulAction.mem_stabilizer_finset_iff_smul_finset_subset.mp hgmem
+    have hgin : g ∈ X := hsub (by
+      simpa using Finset.smul_mem_smul_finset g hone)
+    exact (not_lt_of_ge (hsmall g hgin)) hg
+  exact ⟨X, hone, hsmall, hproper, hstabilize⟩
+
+/-- A near-invariant mean-zero regular vector localizes almost all original
+labels in an actual proper stabilizer. The zero-defect case is included. -/
+theorem near_invariant_localization {K : Type*} [Group K] [Fintype K]
+    (T : Finset K) (hT : T.Nonempty)
+    (β : ℝ) (hβ0 : 0 ≤ β) (hβ : β ≤ (density T) ^ 2 / 1000)
+    (v : EuclideanSpace ℝ K) (hv : ‖v‖ = 1)
+    (hmean : (∑ x : K, v x) = 0)
+    (hcorr : (1 - β) * (T.card : ℝ) ≤
+      ∑ t ∈ T, ∑ x : K, v x * v (x * t)) :
+    ∃ L : Subgroup K, L ≠ ⊤ ∧
+      (1 - 50 * β / (density T) ^ 2) * (T.card : ℝ) ≤
+        ((retained T L).card : ℝ) := by
+  let τ := density T
+  have hn : (0 : ℝ) < Fintype.card K := by exact_mod_cast Fintype.card_pos
+  have hd : (0 : ℝ) < T.card := by exact_mod_cast hT.card_pos
+  have hτ : 0 < τ := div_pos hd hn
+  have hτone : τ ≤ 1 := (div_le_one hn).mpr (by exact_mod_cast T.card_le_univ)
+  have hsq (g : K) : displacement v g ^ 2 =
+      2 - 2 * ∑ x : K, v x * v (x * g) := by
+    simp only [displacement, norm_sub_sq_real, (regularIso g).norm_map, hv,
+      PiLp.inner_apply, real_inner_eq_mul, regularIso_apply]
+    ring
+  have hsecond : (∑ t ∈ T, displacement v t ^ 2) ≤ 2 * β * T.card := by
+    simp_rw [hsq]
+    simp only [Finset.sum_sub_distrib, Finset.sum_const, ← Finset.mul_sum,
+      nsmul_eq_mul]
+    nlinarith [hcorr]
+  let B := lengthBall (displacement v) (τ / 5)
+  have hbad : ((T \ B).card : ℝ) * (τ / 5) ^ 2 ≤ 2 * β * T.card := by
+    calc
+      _ = ∑ _t ∈ T \ B, (τ / 5) ^ 2 := by simp
+      _ ≤ ∑ t ∈ T \ B, displacement v t ^ 2 := by
+        apply Finset.sum_le_sum
+        intro t ht
+        have ht' := Finset.mem_sdiff.mp ht
+        have hl : τ / 5 < displacement v t := lt_of_not_ge (fun h =>
+          ht'.2 ((mem_lengthBall _ _ _).mpr h))
+        nlinarith [show 0 < τ / 5 by positivity]
+      _ ≤ ∑ t ∈ T, displacement v t ^ 2 :=
+        Finset.sum_le_sum_of_subset_of_nonneg Finset.sdiff_subset (fun _ _ _ => sq_nonneg _)
+      _ ≤ _ := hsecond
+  have hbad' : ((T \ B).card : ℝ) ≤ 50 * β / τ ^ 2 * T.card := by
+    rw [show 50 * β / τ ^ 2 * (T.card : ℝ) =
+      (50 * β * T.card) / τ ^ 2 by ring]
+    apply (le_div_iff₀ (sq_pos_of_pos hτ)).mpr
+    nlinarith [hbad]
+  have hcards : ((T ∩ B).card : ℝ) + ((T \ B).card : ℝ) = T.card := by
+    exact_mod_cast Finset.card_inter_add_card_sdiff T B
+  have hret : (1 - 50 * β / τ ^ 2) * (T.card : ℝ) ≤ (T ∩ B).card := by
+    nlinarith
+  have hβsmall : 50 * β / τ ^ 2 ≤ (1 / 20 : ℝ) := by
+    apply (div_le_iff₀ (sq_pos_of_pos hτ)).mpr
+    dsimp [τ] at *
+    linarith
+  have hlarge : (9 / 10 : ℝ) * τ * Fintype.card K ≤ B.card := by
+    have hsub : ((T ∩ B).card : ℝ) ≤ B.card := by
+      exact_mod_cast Finset.card_le_card Finset.inter_subset_right
+    have hτn : τ * Fintype.card K = T.card := div_mul_cancel₀ _ hn.ne'
+    nlinarith [mul_le_mul_of_nonneg_right hβsmall hd.le]
+  obtain ⟨X, _, _, hproper, hcontain⟩ :=
+    dense_ball_proper_stabilizer v hv hmean τ hτ hτone hlarge
+  let L := MulAction.stabilizer K X
+  have hcount : (T ∩ B).card ≤ (retained T L).card := by
+    let f : {t // t ∈ T ∩ B} → {t // t ∈ retained T L} := fun t =>
+      ⟨⟨t.val, hcontain t.val (Finset.mem_inter.mp t.property).2⟩,
+        by simpa [retained] using (Finset.mem_inter.mp t.property).1⟩
+    have hf : Function.Injective f := by
+      intro t u h
+      exact Subtype.ext (congrArg (fun z => (z.val : K)) h)
+    simpa only [Fintype.card_coe] using Fintype.card_le_of_injective f hf
+  refine ⟨L, hproper, le_trans hret ?_⟩
+  exact_mod_cast hcount
 
 end
 end D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
