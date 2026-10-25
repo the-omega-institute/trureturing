@@ -38,6 +38,7 @@ Source: https://arxiv.org/abs/2205.14616v1
   - the locality tensor product, Definition `defn:loctensprod1`, l. 556–562;
   - the relation on a free span, Eq. `eq:locrelonthefreespan`, l. 755–769;
   - locality compatibility, Definition `defn:loccompatible`, l. 1880–1886;
+  - the Remark identifying $\top_{V\times_\top W}$ with $V^{\times_\top4}$ when $V=W$, l. 1972–1975;
   - compatibility implies that the quotient is a locality vector space, Theorem `thm:quotientlocality-vs`, l. 1935;
   - Conjectural statement `conj:main1`, l. 1984–1987.
 - DOI: 10.1007/s40879-025-00822-z (https://doi.org/10.1007/s40879-025-00822-z; Crossref lists European Journal of Mathematics, volume 11, article 41, published 16 June 2025). The journal text was not read (subscription); its abstract lists the question whether the locality tensor product of two locality vector spaces is a locality vector space as open.

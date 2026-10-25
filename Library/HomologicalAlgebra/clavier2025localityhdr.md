@@ -28,10 +28,22 @@ and, among the listed evidence:
 
 > We could not find counterexamples, although we did spend time and effort to build them.
 
+The locality cartesian power (Eq. `eq:lprod`):
+
+> $X^{_\top k}: = \underbrace{X \times_\top \cdots \times_\top X}_{k \text{ factors}}: = \left\{ (x_1,\cdots,x_k)\in X^k\,\left|\, (x_i,x_j)\in \top, 1\leq i\neq j\leq k\right.\right\}.$
+
+and the explicit description of the tensor locality:
+
+> Then for $X, Y\in E\otimes_\top E$, we have $X\top_{\otimes 2} Y$ if we can write $X=\sum_i v_i\otimes w_i,\qquad Y=\sum_i v'_i\otimes w'_i$ such that $(v_i,w_i,v'_j,w'_j)\in E^{\times_\top 4}$ for any $i$ and $j$.
+
+(the displays are written inline here).
+
 ## Verified locator
 
 Source: https://arxiv.org/abs/2506.09493v1
 - URL: https://arxiv.org/abs/2506.09493v1 (source chapter `LOC.tex`, md5 `41f5e772e40d5eaf8583e8903293dbbb`, 1831 lines):
+  - the locality cartesian power, Eq. `eq:lprod`, l. 219–221;
   - the quotient locality, Definition `defn:quotientlocality`, l. 606–612;
+  - the explicit description of the tensor locality through $E^{\times_\top4}$, l. 743–747;
   - the statement that $E\otimes_\top E$ being a locality vector space is still a conjecture, l. 749;
   - the conjecture and its evidence, Conjecture `conj:loc_tensor`, l. 1794–1806.
