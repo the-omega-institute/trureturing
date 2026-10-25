@@ -96,7 +96,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             Helper("witness", "The strict reversal of the midpoint inequality", Witness(),
                 "Put t=exp(−2). The product difference is (1+t)t−(1−t)^2/4=(3t^2+6t−1)/4. A rational bound on exp(1) gives an upper bound on t for which this expression is strictly negative."),
             Helper("half_noninteger", "Half-integer orders are noninteger",
-                All("k", Z, All("n", Z, Ne(Add(V("k"), Qn(1,2)), V("n")))),
+                All("k", Z, All("n", Z, Ne(Add(Parenthesized(Seq(Call("Int.cast", V("k")), Colon, R)), Qn(1,2)), Parenthesized(Seq(Call("Int.cast", V("n")), Colon, R))))),
                 "For integers k and n, the real number k+1/2 differs from n because doubling would equate an odd integer with an even one."),
             Describe.Lean(DescribeId.Create("bessel-product-order-refutation"),
                 DeclarationHandle.Create(Prefix + "result"), H("Refutation of order log-convexity"),

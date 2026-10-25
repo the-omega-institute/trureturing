@@ -86,9 +86,9 @@ internal sealed class GawronUlasFactorialSignConjectureDocument : IScribeDocumen
         var parts = Add(Add(App("Multiset", "replicate", Subtract(Subtract(n, twice), sixfold), Num(1)),
             App("Multiset", "replicate", y, Num(2))), App("Multiset", "replicate", z, Num(6)));
         return Disp(All("n", Nat(), All("y", Nat(), All("z", Nat(),
-            All("h", Le(Add(twice, sixfold), n),
-                Equal(Call("partition126", n, y, z, F.Id("h")),
-                    new Formula.Apply(Qualified("Nat", "Partition", "ofSums"), [n, parts])))))));
+            Seq(Forall, Sp, Parenthesized(Seq(F.Id("h"), Colon, Sp, Le(Add(twice, sixfold), n))),
+                Comma, Sp, Parenthesized(Equal(Call("partition126", n, y, z, F.Id("h")),
+                    new Formula.Apply(Qualified("Nat", "Partition", "ofSums"), [n, parts]))))))));
     }
 
     private static Formula CFormula()
