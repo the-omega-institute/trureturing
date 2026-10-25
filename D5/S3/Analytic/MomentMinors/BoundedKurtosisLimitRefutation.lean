@@ -1,0 +1,84 @@
+/- GID: D5/S3/Analytic/MomentMinors/BoundedKurtosisLimitRefutation
+   generality: I
+   mirror-B: D5/B/S3/Analytic/MomentMinors/BoundedKurtosisLimitRefutation
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/MomentMinors/BoundedKurtosisLimitRefutation.claim; result=D5/S3/Analytic/MomentMinors/BoundedKurtosisLimitRefutation.result; claim=D5/S3/Analytic/MomentMinors/BoundedKurtosisLimitRefutation.claim
+   digest: A three-point probability law violates the Meer–Weeks two-sided kurtosis limits. -/
+
+import D5.S3.Analytic.MomentMinors.Defs
+import Mathlib.Probability.Moments.Basic
+
+noncomputable section
+
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+open D5.S3.Analytic.MomentMinors.Defs (mean)
+
+namespace D5.S3.Analytic.MomentMinors.BoundedKurtosisLimitRefutation
+
+/-- The bidisperse standardized fourth moment at an extremal distance. -/
+def kurtosisBound (δ δm : ℝ) : ℝ := (δ / δm - δm / δ) ^ 2 + 1
+
+/-- The two-sided Meer–Weeks kurtosis limits for bounded real probability laws. -/
+def claim : Prop :=
+  ∀ (L U : ℝ), L < U → ∀ (μ : Measure ℝ) [IsProbabilityMeasure μ],
+    (∀ᵐ x ∂μ, L ≤ x ∧ x ≤ U) →
+    0 < mean μ → 0 < centralMoment id 2 μ →
+    let σ := Real.sqrt (centralMoment id 2 μ)
+    let δ := σ / mean μ
+    let δmin := |1 - L / mean μ|
+    let δmax := |1 - U / mean μ|
+    let δ₁ := min δmin δmax
+    let δ₂ := max δmin δmax
+    let δ' := Real.sqrt (δ₁ * δ₂)
+    let D4 := centralMoment id 4 μ / centralMoment id 2 μ ^ 2
+    (δ < δ₁ → 1 ≤ D4 ∧ D4 ≤ kurtosisBound δ δ₂) ∧
+      (δ₁ ≤ δ → δ < δ' → kurtosisBound δ δ₁ ≤ D4 ∧ D4 ≤ kurtosisBound δ δ₂)
+
+private def witness : Measure ℝ :=
+  (1 / 4 : ℝ≥0∞) • Measure.dirac 1 +
+    (1 / 2 : ℝ≥0∞) • Measure.dirac 2 +
+    (1 / 4 : ℝ≥0∞) • Measure.dirac 3
+
+private lemma witness_probability : IsProbabilityMeasure witness := by
+  sorry
+
+private lemma witness_bounds : ∀ᵐ x ∂witness, (1 : ℝ) ≤ x ∧ x ≤ 3 := by
+  sorry
+
+private lemma integral_witness (f : ℝ → ℝ) :
+    (∫ x, f x ∂witness) = f 1 / 4 + f 2 / 2 + f 3 / 4 := by
+  sorry
+
+private lemma mean_witness : mean witness = 2 := by
+  sorry
+
+private lemma moment_two_witness : centralMoment id 2 witness = 1 / 2 := by
+  sorry
+
+private lemma moment_four_witness : centralMoment id 4 witness = 1 / 2 := by
+  sorry
+
+private lemma coefficient_lt : Real.sqrt (1 / 2) / 2 < (1 / 2 : ℝ) := by
+  sorry
+
+private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 2 := by
+  sorry
+
+/-- The three-point law with masses `1/4, 1/2, 1/4` on `1, 2, 3` violates the upper limit. -/
+theorem result : ¬ claim := by
+  intro h
+  letI : IsProbabilityMeasure witness := witness_probability
+  have hm : 0 < mean witness := by rw [mean_witness]; norm_num
+  have hv : 0 < centralMoment id 2 witness := by rw [moment_two_witness]; norm_num
+  have hc := h 1 3 (by norm_num) witness witness_bounds hm hv
+  dsimp only at hc
+  rw [mean_witness, moment_two_witness, moment_four_witness] at hc
+  norm_num only [div_self, one_div, show |(1 : ℝ) - 1 / 2| = 1 / 2 by norm_num,
+    show |(1 : ℝ) - 3 / 2| = 1 / 2 by norm_num, min_self, max_self] at hc
+  have hu := (hc.1 coefficient_lt).2
+  rw [bound_value] at hu
+  norm_num at hu
+
+end D5.S3.Analytic.MomentMinors.BoundedKurtosisLimitRefutation
