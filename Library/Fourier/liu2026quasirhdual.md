@@ -1389,3 +1389,377 @@ with their actual coefficients, phases and zeros. Their combined real
 upper bound is not supplied. The nonrough Type-II part remains outside
 this specialization, so a saving for these rough shapes alone does not
 prove the full (J24), signed Robin restoration or RH.
+
+### A simultaneous cubic average in the full weighted small-parity sector
+
+The following `repo-derived` application uses [de Faveri,
+*Optimal large sieve for fixed order characters*, arXiv:2610.04045v1,
+§8, Proposition 8.1, (8.1)](https://arxiv.org/html/2610.04045v1#S8.Thmtheorem1)
+on the original two convolution variables and the square part of the
+complete dual ideal. The other inputs are the Gauss CRT and smooth calculus
+of the [pinned primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`lem:fixed-gauss-phase`, `eq:sextic-sieve-pair-gauss`,
+`eq:sextic-sieve-pair-poisson`, `eq:sextic-sieve-transform-bounds` and
+`lem:smooth-calculus`, with the already matched
+[all-column CRT](../Analytic/faveri2026fixedorder.md#extending-the-classwise-pole-consumer-to-all-convolution-columns).
+This is a paper/source-conditional estimate, with no new sieve,
+literature-priority claim or Lean certification.
+
+**The sector is defined after the original Poisson expansion.** Keep
+$c_{\tau,T}$ in (J24), $T=U^{1/12}$, and the actual
+$b=\lambda_{\mathrm{II},b}$ in (J4), with $|b|\le\tau_3$.
+More generally the argument accepts the stated $C_b\tau_k$ envelope.
+For $1\le P<U^{1/6}$ and $H\ge1$, let $\mathfrak D_{P,\le H}$ be the
+sum of the actual complete-dual terms of
+$\sum_\tau E_{6,\,P\le P(a,c)<\min(2P,U^{1/6})}(c_{\tau,T})$
+whose good dual part satisfies $q_{r_2(m_{\rm good})}\le H$.
+The selector is inserted in each pair's Poisson series before profile
+separation and the common-$e$ expansion. This definition retains every
+original finite ray/angular component, original $\ell,r$ term,
+repeated core, occupancy choice, allocation, bad-prime dual part and
+required derivative profile. All dual dyads are retained, with the
+original Fourier decay. It defines neither a positive physical moment
+nor a nonnegative subset of $E_6$. The source-conditional bound is
+
+$$
+\boxed{
+|\mathfrak D_{P,\le H}|
+\ll C_b^4U^{1+\varepsilon}
+       \left(H^{1/2}+P^{1/3}H^{2/3}\right).
+}
+\tag{J26}
+$$
+
+Constants have the same fixed-data and profile-seminorm dependence as
+(J18)--(J19); their original fixed or polylogarithmic aggregate costs
+are required. In particular,
+
+$$
+\boxed{
+H(P)=U^{1/8}P^{-1/2}
+\quad\Longrightarrow\quad
+|\mathfrak D_{P,\le H(P)}|
+\ll C_b^4U^{13/12+\varepsilon}.
+}
+\tag{J27}
+$$
+
+Since $H(P)\ge U^{1/24}$ in this $P$ range, the same estimate, summed
+over $P$, pays the entire original expanded sector with
+$q_{r_2(m_{\rm good})}\le U^{1/24}$. No repeated-core cutoff beyond the
+one already present in $c_{\tau,T}$ is added.
+
+**Actual coefficients in a fixed core.** Use exactly the notation of
+(J18)--(J19): $t_a=c_0r_0$, $t_c=c_0s_0$, with pairwise coprime
+squarefree $c_0,r_0,s_0$; $d_a\mid s_0$, $d_c\mid r_0$; and
+
+$$
+a=Agx,\quad c=Bgy,\quad A=t_a^2d_a,\quad B=t_c^2d_c,
+\quad f_0=r_0s_0,\quad F_0=q_{f_0},\quad
+X=\frac{U}{q_AG},\quad Y=\frac{U}{q_BG}.
+$$
+
+The primitive fixed character $\rho$ on $f_0$ has local exponents
+$2-\mathbf1_{p\mid d_c}$ at $p\mid r_0$, and
+$-2+\mathbf1_{p\mid d_a}$ at $p\mid s_0$, in the original raw sextic
+symbols. These exponents are $1,2,-1,-2$, respectively; its original
+zeros are retained. The remaining zero-only radical is
+$R_0=\operatorname{rad}(gABS)/f_0$.
+Fix the original $r\mid R_0$, the allowed $\ell$ and
+$\kappa=q_\ell^6q_r$. The row substitution supplies
+$\rho(r)\chi_x(r)\overline{\chi_y(r)}$ and the original
+$\ell$-coprimality masks. Its Möbius signs remain outside the two side
+norms. The complete CRT root is the cited one, including
+$\Gamma(\rho)$, the fixed bulk-class reciprocity factor and
+$\gamma_{-1}(y)=\chi_y(-1)\overline{\gamma_1(y)}$.
+
+After detecting $(x,y)=1$, fix the squarefree $e$ and allocate
+$d_a=d_{a,1}d_{a,2}$, $g=g_1g_2$, $e=e_1e_2$. On the $a$ side put
+
+$$
+k_i=t_ad_{a,i}g_ie_i,\qquad
+x=euv,\qquad d_1=k_1u,\quad d_2=k_2v,
+\qquad q_u\asymp L_1,\quad q_v\asymp L_2.
+$$
+
+Thus $L_1L_2\asymp X/q_e$ and each $L_i\ll D/q_{t_a}\le D$.
+Every original convolution coefficient remains $b(k_1u)b(k_2v)$;
+in particular the three-slot definition of $\lambda_{\mathrm{II},b}$
+is neither opened into new independent vectors nor replaced by an
+optimizing vector. Its envelope is used only for squared vector norms.
+Use $t_c,d_c$ on the other side. The original caps
+$q_{t_a},q_{t_c}\le T$ are scalar restrictions on these fixed cores
+and remain in the outer sum.
+
+Here is an explicit separated presentation, with constants depending
+only on the fixed data of this application left outside the scalar.
+Let $\delta_i(w)$ retain squarefreeness, goodness,
+$(w,\ell t_at_cge)=1$ and its chosen ray class; let $\zeta_i(w)$
+be the chosen factor in the original multiplicative ray/angular
+expansion, with its original coefficient outside the scalar. For the
+(J4) component itself $\zeta_i=1$; factors already included in $\xi$
+are not inserted again.
+Partition the two variable classes far enough that $\mathcal R(u,v)$
+in (J5) is constant. With
+$\theta_e(w)=\chi_e(w)\chi_w(e)$, write
+
+$$
+\begin{aligned}
+A_u&=b(k_1u)V(q_{k_1}q_u/D)\xi(u)\gamma_1(u)\theta_e(u)
+       \eta_1(u)q_u^{it_1},\\
+B_v&=b(k_2v)V(q_{k_2}q_v/D)\xi(v)\gamma_1(v)\theta_e(v)
+       \eta_2(v)q_v^{it_2}.
+\end{aligned}
+\tag{J28}
+$$
+
+To specify $\eta_i$, fix a generator $\widetilde s$ of the bad-prime
+part of $m$, together with any original unit component. On the $a$
+side its factors are exactly
+
+$$
+\eta_i(w)=\delta_i(w)\zeta_i(w)\rho(w)\chi_w(f_0r)
+                         \overline{\chi_w(\widetilde s)}.
+$$
+
+For the $c$ side conjugate its entire scalar: replace
+$\rho(w)\chi_w(f_0r)$ in this formula by
+$\overline{\rho(w)}\chi_w(-f_0r)$, retain its own original finite
+factors and profiles, and conjugate the resulting side in the final
+pairing. The $-1$ is precisely the retained $\gamma_{-1}$ sign.
+Factors evaluated at $e$ or the allocated fixed cores stay outside;
+any original collision there makes that term zero. All displayed
+$\eta_i$ have modulus at most the original component bound. Fixed
+core characters are coefficient factors, not added to the bad set of
+the cited theorem. Norm normalizations on compact annuli are included
+in the separated smooth profile; $t_1,t_2$ are its real Mellin heights.
+This describes each original finite component separately, with its
+original coefficient in the outer sum.
+
+For this fixed component the unnormalized scalar is therefore
+
+$$
+H_{\beta z^2}
+ =\sum_{u,v}A_uB_v\kappa_u(v)
+       \overline{\chi_u(\beta z^2)\chi_v(\beta z^2)},
+\qquad \kappa_u=\chi_u^2.
+\tag{J29}
+$$
+
+The full dual ideal is $m=s\beta z^2$, where
+$m_{\rm good}=\beta z^2$ uniquely, $\beta=r_2(m_{\rm good})$ is
+squarefree, and $(\beta,z)>1$ is allowed. The bounded primitive-core
+factor $\overline{\rho(m)}$ and the common-$e$ collision mask are
+still outer row multipliers. Formula (J29) is an algebraic extension
+of the original coprime bulk formula, used only inside its exact
+Möbius detection. It asserts no primitive conductor formula for the
+added noncoprime pairs.
+
+**Match the fixed-vector theorem, including its zeros.** Multiplicativity
+and the zero-preserving convention for powers give, for every $u,v,\beta,z$,
+
+$$
+\kappa_u(v)\overline{\chi_u(\beta z^2)}
+ =\overline{\chi_u(\beta)}\kappa_u(vz^2).
+\tag{J30}
+$$
+
+A prime common to $u$ and any of $v,\beta,z$ makes both sides zero.
+The $v$-dual zeros remain in the other factor of (J29). For fixed
+$\beta,\widetilde s,e$, allocations and separating heights, set
+$\lambda_u=A_u\overline{\chi_u(\beta)}$. This vector is squarefree
+in $u$ and independent of both $v$ and $z$.
+
+The character correspondence is exact, rather than an identification
+by order alone. The primary manuscript defines
+$\kappa_u(w)=(w/u)_3$ on its generators congruent to $1\pmod3$.
+[De Faveri's Example 2.2](https://arxiv.org/html/2610.04045v1#S2.SS4)
+identifies its cubic family with $\chi^{\rm dF}_u(w)=(u/w)_3$ for
+these same primary generators. The primary manuscript's precise cubic
+reciprocity in `lem:fixed-gauss-phase` gives equality on coprime inputs;
+both families are zero on collisions, by their respective definitions.
+Apply that example with its fixed exclusion of the prime above $3$;
+our original extra fixed bad primes are retained as support masks.
+On added positive-norm rows use the source character family itself;
+the equality with the raw kernel is needed only on the original good
+rows. Thus no growing modulus or extra reciprocity weight is inserted in
+Proposition 8.1. The sextic sign $\mathcal R$ has already been retained
+in (J5), and is not an omitted cubic correction.
+
+Cauchy in $v$ gives, before any row enlargement,
+
+$$
+|H_{\beta z^2}|^2
+\le\left(\sum_v|B_v|^2|\chi_v(\beta z^2)|^2\right)
+ \sum_{v\ {\rm original}}
+ \left|\sum_u\lambda_u\kappa_u(vz^2)\right|^2.
+$$
+
+Bound the first factor by $C_b^2U^\varepsilon L_2$ and enlarge the
+$v,z$ sets only in the remaining nonnegative squared norm. Proposition
+8.1 applies with $(\mathfrak q,\mathfrak a,\mathfrak b)=(u,v,z)$,
+$\|\lambda\|_2^2\ll C_b^2U^\varepsilon L_1$, and gives
+
+$$
+\begin{aligned}
+\sum_{z\sim Z}|H_{\beta z^2}|^2
+ &\ll C_b^4(UZ)^\varepsilon L_1L_2 F(L_2,Z;L_1),\\
+F(A,B;Q)&=AB+\min(A,B)^{2/3}\max(A,B)^{1/3}Q
+                  +\min(A,B)^{1/3}\max(A,B)^{2/3}Q^{2/3}.
+\end{aligned}
+\tag{J31}
+$$
+
+The outer ideals in the cited theorem are arbitrary, so $z$ need not
+be squarefree or coprime to $\beta$. Its only squarefree requirement
+is the one already met by $u$. Remark 8.2's unworked cube-free inner
+extension is not used. In particular this argument never treats the
+moving joint coefficient array $B_{m,v}$ as a common inner vector.
+Common-$e$, fixed-core and $v$-dual row masks can be enlarged only at
+the positive-norm step above; they have not been deleted from the
+signed contraction.
+
+**Sum allocations and parity cores before restoring normalization.**
+For $L_1,L_2\ll D$ and every $Z\ge1$,
+
+$$
+F(L_2,Z;L_1)\ll DZ+D^{4/3}Z^{2/3}.
+$$
+
+For $Z\le D$ its two mixed terms are at most
+$D^{4/3}Z^{2/3}$; for $Z\ge D$ they are bounded by
+$D^{4/3}Z^{2/3}$ and $DZ$, respectively. Thus this comparison imposes
+no upper cutoff on $Z$. In a good-dual dyad $q_{m_{\rm good}}\asymp M$,
+$Z\asymp(M/q_\beta)^{1/2}$ and only $q_\beta\ll M$ occur. Ordinary
+ideal counting yields
+
+$$
+\sum_{q_\beta\le H}Z\ll M^{1/2}H^{1/2},\qquad
+\sum_{q_\beta\le H}Z^{2/3}\ll M^{1/3}H^{2/3},
+$$
+
+where empty $Z<1$ boxes are omitted; the bounds also hold when $H>M$.
+Cauchy over the actual allocations costs only divisors. Since
+$L_1L_2\asymp X/q_e$ and
+$\sum_{q_e\ll X}\tau_k(e)/q_e\ll U^\varepsilon$, summing $e$ gives
+
+$$
+\boxed{
+\sum_{\substack{e,\,m_{\rm good}\sim M\\ q_{r_2(m_{\rm good})}\le H}}
+ |H_{a,e}(m)|^2
+\ll C_b^4(UM)^\varepsilon X\,
+ \left[DM^{1/2}H^{1/2}+D^{4/3}M^{1/3}H^{2/3}\right].
+}
+\tag{J32}
+$$
+
+The $(UM)^\varepsilon$ notation retains the source theorem's
+length loss on the unrestricted dual dyads. The original nonempty-row
+cutoff bounds $\ell,r$ and the core scales polynomially in $U$, so
+$N_s\ll U^{O(1)}$ below. Rapid decay absorbs the remaining
+$(1+M/N_s)^{\varepsilon}$ factor; the final loss is $U^\varepsilon$
+after choosing the input epsilon smaller.
+
+The $Y$ side has its own allocations and the identical bracket.
+Apply Cauchy between these two complete $(e,m)$ side norms with all
+original outer masks bounded there. Restore $D^{-2}=U^{-1}$ and the
+Poisson factor $U/(\kappa\sqrt{F_0XY})$: per fixed core the bracket
+in (J32) is multiplied by $1/(\kappa\sqrt{F_0})$.
+Counting $c_0,r_0,s_0,g$ in their dyads gives precisely the (J19)
+prefactor $GC\sqrt{RS}/\kappa$.
+
+Occupancy ideals remain in every identity and coefficient. In this
+positive majorant they only decrease $X,Y$ and the natural length;
+their number is a divisor loss. With the same $X_0,Y_0$ as (J19),
+write
+
+$$
+N_s=\frac{\kappa U}{C^4RSG^2q_s}.
+$$
+
+This is an upper bound for the actual natural good-dual length, not a
+truncation. For $\alpha=1/2,1/3$ and fixed $A_1>1$,
+$\sum_{M\ge1\ {\rm dyadic}}M^\alpha(1+M/N_s)^{-A_1}\ll N_s^\alpha$,
+also when $N_s<1$. On every dual dyad, the original transform and each
+required logarithmic derivative contribute arbitrary decay in
+$M/N_s$ beyond this scale. Summing all dyads in (J32), including the
+case $N_s<1$, replaces $M^{1/2},M^{1/3}$ by
+$N_s^{1/2},N_s^{1/3}$ in the positive bound. The core envelope is
+consequently
+
+$$
+C_b^4U^{1+\varepsilon}
+\left[
+ C^{-1}\kappa^{-1/2}q_s^{-1/2}H^{1/2}
+ +G^{1/3}C^{-1/3}(RS)^{1/6}
+       \kappa^{-2/3}q_s^{-1/3}H^{2/3}
+\right].
+\tag{J33}
+$$
+
+The $\ell$ sums are $\sum q_\ell^{-3}$ and $\sum q_\ell^{-4}$,
+both convergent. The original zero-only $r$ sums have powers
+$q_r^{-1/2}$ and $q_r^{-2/3}$ and cost $U^\varepsilon$ over divisors
+of $R_0$. The two fixed-$S$ dual sums converge by the displayed
+$q_s^{-1/2}$ and $q_s^{-1/3}$ factors. All core dyads and finite
+partitions cost the original $U^\varepsilon$ allowance. No principal
+bulk exception appears: $X,Y\gg U/P^2\gg U^{1/2}$, as in (J19).
+
+For completeness, profile separation is made before applying (J31).
+On fixed annuli its transform factor has argument a fixed monomial
+in the normalized $u,v,z$ norms and the ratio $M/N_s$.
+`lem:smooth-calculus` supplies a common coefficient measure for these
+rows. Below the natural scale all required logarithmic derivatives
+are uniformly bounded by smoothness at zero; above it they have
+arbitrary rapid decay. Differentiating any of the originally required
+profiles changes its finite seminorm and logarithmic factors, not
+$b$, its squarefree support, or the independence of $\lambda_u$.
+The arbitrary-vector bound (J31) is uniform in the separating norm
+phases and bounded multiplicative angular factors. Minkowski therefore
+restores every original finite component and required derivative with
+its original fixed or polylogarithmic total cost. No polynomial
+height budget is renewed for each component.
+
+Finally $P\asymp C^2RSG$, so
+$C^{-1}\le1$ and
+$G^{1/3}C^{-1/3}(RS)^{1/6}\ll P^{1/3}$. Summing (J33) proves (J26).
+At $H=H(P)$ its two terms are respectively
+$U^{17/16+\varepsilon}P^{-1/4}$ and $U^{13/12+\varepsilon}$,
+which proves (J27).
+
+**The complementary target keeps the original signs.** In the restricted
+$P=1$, good-dual, $h=\ell=r=1$ consumer, (J32) and the original
+normalization give
+
+$$
+|\mathfrak E_{1,b,\,q_{r_2(m)}\le H}(M)|
+\ll C_b^4U^\varepsilon
+ \left[U^{1/2}M^{1/2}H^{1/2}
+       +U^{2/3}M^{1/3}H^{2/3}\right].
+$$
+
+For $1\le M\le U$ and $H\ge1$, the first term is bounded by the
+second. At $M=U$ this pays $H\le U^{1/8}$, beyond the $U^{1/30}$ range
+already paid by (J21). The full-parameter assertion is (J27), not an
+extrapolation from this restricted example.
+Let $\mathfrak D_{>}$ denote the remaining actual expanded sum in
+(J24), with $q_{r_2(m_{\rm good})}>H(P)$ in its $P$ dyad and with
+all the same original parameters and weights. Exact Poisson expansion
+and the complementary selectors give
+
+$$
+\operatorname{Re}\sum_\tau E_{6,\,P<U^{1/6}}(c_{\tau,T})
+ =\operatorname{Re}\mathfrak D_{>}
+   +\operatorname{Re}\sum_{P<U^{1/6}}\mathfrak D_{P,\le H(P)}.
+$$
+
+The second summand is now bounded by $C_b^4U^{13/12+\varepsilon}$.
+A bound $\operatorname{Re}\mathfrak D_{>}
+\ll C_b^4U^{B_*-\sigma+\varepsilon}$, for some $\sigma>0$ uniformly
+under the same original component/derivative contract, would supply
+(J24) with the resulting exponent
+$\max\{13/12,B_*-\sigma\}<B_*$. Such a bound is not supplied.
+The complement includes the natural $M\asymp U$ squarefree good duals;
+its aggregate real part still requires joint cancellation. This
+application proves no complete J24 estimate, inverse-fourth saving,
+signed Robin restoration or RH conclusion.
