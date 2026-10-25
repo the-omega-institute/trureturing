@@ -8,6 +8,42 @@ from unittest.mock import patch
 
 
 class QualificationCases:
+    def native_identity_races_are_refused(self):
+        import worktree_protocol as protocol
+        from pathlib import Path
+        for native in ("--git-common-dir", "--show-toplevel", "--absolute-git-dir"):
+            for change in ("tree", "marker", "identity", "pointer_format", "present"):
+                with self.subTest(native=native, change=change):
+                    marker, backup = self.tree / ".git", self.root / "disappeared"
+                    original_marker, original_value = marker.read_bytes(), protocol.value
+                    injected = []
+                    def read(root, *args):
+                        if Path(root).resolve() == self.tree.resolve() and native in args and not injected:
+                            injected.append(True)
+                            if change == "tree":
+                                self.tree.rename(backup)
+                            elif change == "marker":
+                                marker.unlink()
+                            elif change == "identity":
+                                marker.write_text("gitdir: " + str(self.main / ".git") + "\n")
+                            elif change == "pointer_format":
+                                marker.write_bytes(original_marker.rstrip(b"\n"))
+                            raise protocol.GitFailure("fatal: direct identity cause")
+                        return original_value(root, *args)
+                    try:
+                        with patch.object(protocol, "value", side_effect=read), self.assertRaises(protocol.Refused) as caught:
+                            protocol.identity(self.main, self.tree)
+                        self.assertTrue(injected)
+                        operational = change in ("present", "pointer_format")
+                        self.assertIs(type(caught.exception), protocol.GitFailure if operational else protocol.Refused)
+                        self.assertEqual("fatal: direct identity cause" if operational else dict(
+                            tree="missing_or_linked_tree", marker="git_pointer", identity="git_pointer_identity")[change],
+                            str(caught.exception))
+                    finally:
+                        if backup.exists():
+                            backup.rename(self.tree)
+                        marker.write_bytes(original_marker)
+
     def qualification_native_identity_races_are_refused(self):
         import worktree_protocol as protocol
         from contextlib import redirect_stderr

@@ -231,6 +231,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
     [InlineData("qualification_native_identity_races_are_refused")]
+    [InlineData("native_identity_races_are_refused")]
     [InlineData("qualification_stream_preserves_completed_and_defers_unreached")]
     [InlineData("runlocal_final_qualification_refusal")]
     [InlineData("runlocal_final_qualification_failure")]

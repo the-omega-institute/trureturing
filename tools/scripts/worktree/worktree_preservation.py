@@ -115,46 +115,6 @@ def interrupted_removal(target, metadata, stack, source, branch):
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
-def qualification_identity(source, path, snapshot, deadline=None):
-    """Preserve native failures unless a fresh observation confirms identity drift."""
-    marker = path / ".git"
-    def pointer_target(data):
-        lines = os.fsdecode(data).splitlines()
-        return (path / lines[0][8:]).resolve() if len(lines) == 1 and lines[0].startswith("gitdir: ") else None
-    pointer = None
-    try:
-        pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
-        return identity(source, path, snapshot=snapshot)
-    except (GitFailure, OSError, subprocess.TimeoutExpired):
-        if path.is_symlink() or not path.is_dir():
-            raise Refused("missing_or_linked_tree")
-        if marker.is_symlink() or not marker.exists():
-            raise Refused("git_pointer")
-        try:
-            previous_target = pointer_target(pointer) if pointer is not None else None
-            current = marker.read_bytes() if marker.is_file() else b""
-            changed = previous_target is not None and pointer_target(current) != previous_target
-        except OSError:
-            changed = False
-        if changed:
-            raise Refused("git_pointer_identity")
-        # The batch alarm still bounds native rechecks. An exhausted alarm must
-        # not start another native read after its execution budget has expired.
-        if deadline is None or time.monotonic() < deadline:
-            try:
-                rows = inventory(source)
-                previous = [row for row in snapshot[0] if Path(row["worktree"]).resolve() == path]
-                current = [row for row in rows if Path(row["worktree"]).resolve() == path]
-            except Exception:
-                pass
-            else:
-                if not current:
-                    raise Refused("repository_identity")
-                if current != previous:
-                    raise Refused("observed_identity_changed")
-        raise
-
-
 def qualify(source, path, stack=None, snapshot=None, deadline=None):
     """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
@@ -163,7 +123,7 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
     if not path.is_dir():
         raise Refused("missing_or_linked_tree")
     snapshot = snapshot if snapshot is not None else (inventory(source), common(source))
-    item, metadata = qualification_identity(source, path, snapshot, deadline)
+    item, metadata = identity(source, path, snapshot=snapshot, deadline=deadline)
     rows = snapshot[0]
     if path == Path(rows[0]["worktree"]).resolve():
         raise Refused("main_worktree")

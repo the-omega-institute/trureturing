@@ -153,12 +153,53 @@ def inventory(root):
     return records
 
 
-def identity(source, path, snapshot=None):
+def identity(source, path, snapshot=None, deadline=None):
+    """Preserve native failures unless a fresh observation confirms identity drift."""
     path = Path(path).absolute()
     if path.is_symlink() or not path.is_dir():
         raise Refused("missing_or_linked_tree")
     path = path.resolve()
-    rows, source_common = snapshot if snapshot is not None else (inventory(source), common(source))
+    marker = path / ".git"
+    def pointer_target(data):
+        lines = os.fsdecode(data).splitlines()
+        return (path / lines[0][8:]).resolve() if len(lines) == 1 and lines[0].startswith("gitdir: ") else None
+    pointer = None
+    try:
+        pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
+        snapshot = snapshot if snapshot is not None else (inventory(source), common(source))
+        return _read_identity(path, snapshot)
+    except (GitFailure, OSError, subprocess.TimeoutExpired):
+        if path.is_symlink() or not path.is_dir():
+            raise Refused("missing_or_linked_tree")
+        if marker.is_symlink() or not marker.exists():
+            raise Refused("git_pointer")
+        try:
+            previous_target = pointer_target(pointer) if pointer is not None else None
+            current = marker.read_bytes() if marker.is_file() else b""
+            changed = previous_target is not None and pointer_target(current) != previous_target
+        except OSError:
+            changed = False
+        if changed:
+            raise Refused("git_pointer_identity")
+        # The batch alarm still bounds native rechecks. An exhausted alarm must
+        # not start another native read after its execution budget has expired.
+        if deadline is None or time.monotonic() < deadline:
+            try:
+                rows = inventory(source)
+                previous = [row for row in snapshot[0] if Path(row["worktree"]).resolve() == path] if snapshot is not None else None
+                current = [row for row in rows if Path(row["worktree"]).resolve() == path]
+            except Exception:
+                pass
+            else:
+                if not current:
+                    raise Refused("repository_identity")
+                if previous is not None and current != previous:
+                    raise Refused("observed_identity_changed")
+        raise
+
+
+def _read_identity(path, snapshot):
+    rows, source_common = snapshot
     match = [r for r in rows if Path(r["worktree"]).resolve() == path]
     if len(match) != 1 or common(path) != source_common:
         raise Refused("repository_identity")
