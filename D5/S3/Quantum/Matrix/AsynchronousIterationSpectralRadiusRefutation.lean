@@ -7,7 +7,6 @@
    digest: A stable two-block matrix has an unstable asynchronous iteration with unit delays. -/
 
 import D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree
-import Mathlib.Analysis.Normed.Algebra.Spectrum
 
 /-! A stable two-block iteration becomes unstable when only remote entries are delayed. -/
 
