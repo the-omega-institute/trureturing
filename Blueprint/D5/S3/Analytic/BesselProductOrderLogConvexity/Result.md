@@ -10,11 +10,17 @@ $$\forall nu \in \mathbb {R},\; \forall u \in \mathbb {R},\; \operatorname {bess
 
 *Formalization.* `D5/S3/Analytic/BesselProductOrderLogConvexity/Result.besselK` (`✓ std3`).
 
-*Citation.* Á. Baricz and S. Ponnusamy (2013). *On Turán type inequalities for modified Bessel functions*. URL: <https://arxiv.org/abs/1010.3346>.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Modified Bessel Functions: Definitions and Basic Properties; Connection Formulas*. URL: <https://dlmf.nist.gov/10.25>.
 
 *Commentary.*
 
-The first-kind function besselI in every formula is the existing D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI: its summand is (u/2)^(2k+nu)/(k! Gamma(k+nu+1)). The second-kind function uses the standard connection formula Kν(u)=(π/2)(I−ν(u)−Iν(u))/sin(νπ), DLMF 10.27.4. For positive u and noninteger nu this is the standard modified Bessel function Kν, with the same first-kind normalization. Lean's real quotient is a total operation; only noninteger orders enter the assertion below, so no value assigned by that operation at an integer is used.
+DLMF §10.25(ii), equation 10.25.2 (https://dlmf.nist.gov/10.25.E2), defines the first-kind function by: “I_ν(z) = (½z)^ν Σ_{k=0}^∞ (¼z²)^k / (k! Γ(ν+k+1)).” The page states that the principal branch of I_ν(z) “is analytic in ℂ∖(−∞,0]”.
+
+The first-kind function besselI in every formula is the existing D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI. At real z=u>0, the principal branch agrees with the real power: (u/2)^nu (u²/4)^k=(u/2)^(2k+nu). Thus the owner's summand (u/2)^(2k+nu)/(k! Gamma(k+nu+1)) has exactly the DLMF normalization.
+
+DLMF §10.27(ii), equation 10.27.4 (https://dlmf.nist.gov/10.27.E4), gives: “K_ν(z) = ½π (I_{−ν}(z) − I_ν(z)) / sin(νπ)”, followed by “When ν is an integer limiting values are taken”. Equation 10.27.1 (https://dlmf.nist.gov/10.27.E1) states: “I_{−n}(z) = I_n(z), n an integer.”
+
+For positive u and noninteger nu, besselK is this standard connection formula with the same first-kind normalization. Lean's real quotient is a total operation; only noninteger orders enter the assertion below, so no value assigned by that operation at an integer is used. Integer-order K values require the stated limiting convention and are outside this definition's asserted correspondence.
 
 **Definition 1.2 (The product at a fixed argument).**
 
@@ -26,7 +32,9 @@ $$\forall u \in \mathbb {R},\; \forall nu \in \mathbb {R},\; \operatorname {P}\l
 
 *Commentary.*
 
-The product is P(u,nu)=Iν(u)Kν(u). The argument u is its first parameter, while the order nu is its second parameter.
+On printed p. 1 of arXiv:1010.3346v1, §1, Baricz and Ponnusamy write: “Let us denote with Iν and Kν the modified Bessel functions of the first and second kind, respectively. For definitions, recurrence formulas and other properties of modified Bessel functions of the first and second kind we refer to the classical book of G.N. Watson [Wa].”
+
+The product is P(u,nu)=Iν(u)Kν(u). The argument u is its first parameter, while the order nu is its second parameter. The defining-series and connection-formula quotations above are from DLMF; the paper's passage identifies the functions and refers the reader to Watson.
 
 **Definition 1.3 (The necessary midpoint product inequality).**
 

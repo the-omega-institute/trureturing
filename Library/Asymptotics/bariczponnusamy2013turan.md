@@ -27,6 +27,10 @@ of the arXiv version.
 
 ## Source statements
 
+The identification and definition referral in §1, printed p. 1:
+
+> Let us denote with Iν and Kν the modified Bessel functions of the first and second kind, respectively. For definitions, recurrence formulas and other properties of modified Bessel functions of the first and second kind we refer to the classical book of G.N. Watson [Wa].
+
 Theorem 1(4), printed p. 4:
 
 > the function ν ↦ I_{√ν}(u)K_{√ν}(u) is log-convex on (0, ∞) for all u > 0 fixed;
@@ -45,14 +49,17 @@ The final Conjecture in §3, printed p. 7:
 
 ## Mathematical correspondence
 
-The first-kind function is the existing
-`D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI`, defined by the
-standard Gamma-denominator power series. For noninteger ν the
-second-kind function is
-
-$$K_\nu(u)=\frac{\pi}{2}\frac{I_{-\nu}(u)-I_\nu(u)}{\sin(\nu\pi)},$$
-
-the standard connection formula DLMF 10.27.4. The formal assertion keeps
+The defining reference is the
+[DLMF modified-Bessel note](nist2026dlmfmodifiedbessel.md), which quotes
+the first-kind series in equation 10.25.2 and the second-kind connection
+formula in equation 10.27.4, including the principal branch and the
+integer-order limiting convention. At real u > 0, the frozen owner's
+`D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI` uses that series
+with its positive-real principal-branch normalization. The second-kind
+definition agrees with the quoted connection formula at noninteger orders;
+its totalized quotient at integer orders is not used.
+The paper's p. 1 passage identifies the functions and refers to Watson,
+rather than supplying either defining formula. The formal assertion keeps
 only the three-point inequality at noninteger orders. A positive
 log-convex function satisfies this inequality, so its failure refutes
 the stated conjecture.

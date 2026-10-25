@@ -8,6 +8,8 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Asymptotics/bariczponnusamy2013turan");
+    private static readonly LibraryNoteRef Definitions =
+        LibraryNoteRef.Create("D5/L/Asymptotics/nist2026dlmfmodifiedbessel");
     private const string Prefix = "D5/S3/Analytic/BesselProductOrderLogConvexity/Result.";
     private const string Conjecture = "The function ν ↦ I_ν(u)K_ν(u) is log-convex on (−1, ∞) for all u > 0 fixed.";
     private const string TheoremOne = "the function ν ↦ I_{√ν}(u)K_{√ν}(u) is log-convex on (0, ∞) for all u > 0 fixed;";
@@ -24,15 +26,19 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                         Fr(Mul(Fr(Call("Real.pi"), D(2)),
                             Sub(I(Negate(V("nu")), V("u")), I(V("nu"), V("u")))),
                             Call("Real.sin", Mul(V("nu"), Call("Real.pi"))))))))),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The first-kind function besselI in every formula is the existing D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI: its summand is (u/2)^(2k+nu)/(k! Gamma(k+nu+1)). The second-kind function uses the standard connection formula Kν(u)=(π/2)(I−ν(u)−Iν(u))/sin(νπ), DLMF 10.27.4. For positive u and noninteger nu this is the standard modified Bessel function Kν, with the same first-kind normalization. Lean's real quotient is a total operation; only noninteger orders enter the assertion below, so no value assigned by that operation at an integer is used."))),
+                AssessedProvenance.FromLiterature(Definitions),
+                Blocks(Paragraph(Text("DLMF §10.25(ii), equation 10.25.2 (https://dlmf.nist.gov/10.25.E2), defines the first-kind function by: “I_ν(z) = (½z)^ν Σ_{k=0}^∞ (¼z²)^k / (k! Γ(ν+k+1)).” The page states that the principal branch of I_ν(z) “is analytic in ℂ∖(−∞,0]”.")),
+                    Paragraph(Text("The first-kind function besselI in every formula is the existing D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI. At real z=u>0, the principal branch agrees with the real power: (u/2)^nu (u²/4)^k=(u/2)^(2k+nu). Thus the owner's summand (u/2)^(2k+nu)/(k! Gamma(k+nu+1)) has exactly the DLMF normalization.")),
+                    Paragraph(Text("DLMF §10.27(ii), equation 10.27.4 (https://dlmf.nist.gov/10.27.E4), gives: “K_ν(z) = ½π (I_{−ν}(z) − I_ν(z)) / sin(νπ)”, followed by “When ν is an integer limiting values are taken”. Equation 10.27.1 (https://dlmf.nist.gov/10.27.E1) states: “I_{−n}(z) = I_n(z), n an integer.”")),
+                    Paragraph(Text("For positive u and noninteger nu, besselK is this standard connection formula with the same first-kind normalization. Lean's real quotient is a total operation; only noninteger orders enter the assertion below, so no value assigned by that operation at an integer is used. Integer-order K values require the stated limiting convention and are outside this definition's asserted correspondence."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("bessel-product-function"),
                 DeclarationHandle.Create(Prefix + "P"), H("The product at a fixed argument"),
                 StatementSource.FromAuthor(Disp(All("u", R, All("nu", R,
                     Eqn(P(V("u"), V("nu")), Mul(I(V("nu"), V("u")), K(V("nu"), V("u")))))))),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The product is P(u,nu)=Iν(u)Kν(u). The argument u is its first parameter, while the order nu is its second parameter."))),
+                Blocks(Paragraph(Text("On printed p. 1 of arXiv:1010.3346v1, §1, Baricz and Ponnusamy write: “Let us denote with Iν and Kν the modified Bessel functions of the first and second kind, respectively. For definitions, recurrence formulas and other properties of modified Bessel functions of the first and second kind we refer to the classical book of G.N. Watson [Wa].”")),
+                    Paragraph(Text("The product is P(u,nu)=Iν(u)Kν(u). The argument u is its first parameter, while the order nu is its second parameter. The defining-series and connection-formula quotations above are from DLMF; the paper's passage identifies the functions and refers the reader to Watson."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("bessel-product-midpoint-claim"),
                 DeclarationHandle.Create(Prefix + "claim"), H("The necessary midpoint product inequality"),

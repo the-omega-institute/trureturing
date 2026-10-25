@@ -21,8 +21,8 @@ Current declaration identities from the scoped Lean report:
   S: GID D5/S3/Analytic/BesselRatioLogConcavity/Result.bessel_summable
      Lean name: D5.S3.Analytic.BesselRatioLogConcavity.Result.bessel_summable
      statement_id: sha256:644a8c30490609feaef0b2cef77ba07a09379e4a19585cb2a496d3db75505920
-B belongs to the frozen owner. S is its existing summability lemma exposed
-by removing private; canonical owner re-pinning is required for that visibility.
+B and S are declarations of BesselRatioLogConcavity.Result; S supplies
+the convergence hypotheses used in the recurrence.
 Compiler-generated proof constants are internal details, not extra source rows.
 Per declaration: name | proof_shape | direct consumers | frozen owner dependencies.
   besselK | bind-only (definition) | P | B
