@@ -1,5 +1,6 @@
 using static StrataLint.Cli.RegisteredWorktreeInventory;
 using StrataLint.Engine;
+using StrataLint.Runtime;
 
 namespace StrataLint.Cli;
 
@@ -183,7 +184,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            if (!dispatched || exception is System.ComponentModel.Win32Exception)
+            if (!dispatched || BoundedProcessRunner.FailedBeforeStart(exception))
                 return new(LaneRemovalOutcome.QualificationFailed, QualificationFailure(exception, removal).Reason!);
             return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate",
                 recoveryBranch, recoveryBranchCandidate, NativeLocks: nativeLocks,

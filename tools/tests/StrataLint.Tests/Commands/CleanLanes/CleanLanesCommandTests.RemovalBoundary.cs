@@ -7,8 +7,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
-    [Fact]
-    public void RemovalOuterTimeoutAfterNativeDeletionIsIndeterminate()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RemovalOuterTimeoutAfterNativeDeletionIsIndeterminate(bool settlementFailure)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/removal-outer-deadline";
@@ -37,6 +39,7 @@ public sealed partial class CleanLanesCommandTests
                 {
                     using var reader = new StreamReader(stream, Encoding.UTF8);
                     deletionObserved = await reader.ReadLineAsync(cancellation) == "native deletion completed";
+                    if (settlementFailure) throw new System.ComponentModel.Win32Exception("native settlement failed after deletion");
                     throw new TimeoutException("outer removal deadline after native deletion");
                 });
             throw new InvalidOperationException("expected outer removal deadline");
@@ -52,7 +55,8 @@ public sealed partial class CleanLanesCommandTests
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == lane);
         Assert.Equal("partially_removed", item.GetProperty("action").GetString());
         Assert.Equal("worktree_remove_failed_state_indeterminate", item.GetProperty("reason").GetString());
-        Assert.Contains("TimeoutException:outer removal deadline after native deletion", item.GetProperty("diagnostic").GetString());
+        Assert.Contains(settlementFailure ? "Win32Exception:native settlement failed after deletion"
+            : "TimeoutException:outer removal deadline after native deletion", item.GetProperty("diagnostic").GetString());
         var invocation = Assert.Single(runner.Invocations, call => IsProtocol(call.Arguments, "remove"));
         Assert.Equal(TimeSpan.FromSeconds(600), invocation.Timeout);
         var summary = ReadSummary(result.Output);

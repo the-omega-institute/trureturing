@@ -87,7 +87,7 @@ public sealed partial class CleanLanesCommandTests
     {
         foreach (var (stage, force) in new[] { ("batch", false), ("batch", true),
             ("preview", false), ("remove", true) })
-            foreach (var failure in new[] { "outer_timeout", "unavailable", "traceback", "malformed", "missing" })
+            foreach (var failure in new[] { "outer_timeout", "unavailable", "start_refused", "traceback", "malformed", "missing" })
                 yield return [stage, force, failure];
     }
 
@@ -98,12 +98,22 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/boundary-failure");
         if (stage != "preview") fixture.LockLane(lane, "worktree-init:malformed");
-        var runner = fixture.CreateRunner((file, args, _) =>
+        var runner = fixture.CreateRunner((file, args, directory) =>
         {
             if (file != "python3" || !(stage == "batch" ? IsProtocol(args, "qualify")
                 : IsProtocol(args, "remove") && args.Contains("--preview") == (stage == "preview"))) return null;
             if (failure == "outer_timeout") throw new TimeoutException("outer qualification deadline");
-            if (failure == "unavailable") throw new System.ComponentModel.Win32Exception("python unavailable at qualification boundary");
+            if (failure is "unavailable" or "start_refused")
+            {
+                var previous = BoundedProcessRunner.StartProcess.Value;
+                try
+                {
+                    BoundedProcessRunner.StartProcess.Value = _ => failure == "start_refused" ? false
+                        : throw new System.ComponentModel.Win32Exception("python unavailable at qualification boundary");
+                    return new ProductionWorktreeProcessRunner().Run(file, args, directory, TimeSpan.FromSeconds(600));
+                }
+                finally { BoundedProcessRunner.StartProcess.Value = previous; }
+            }
             return failure == "traceback"
                 ? new ProcessOutput(17, [], Encoding.UTF8.GetBytes("Traceback (most recent call last):\n" + new string('x', 6000) + "\nOSError: causal qualification diagnostic\n"))
                 : new ProcessOutput(0, Encoding.UTF8.GetBytes(failure == "missing"
@@ -114,7 +124,7 @@ public sealed partial class CleanLanesCommandTests
         AssertQualificationPublicExit(result, force, 2);
         Assert.True(Directory.Exists(lane));
         var reason = ReasonFor(result.Output, lane);
-        var indeterminate = stage == "remove" && failure != "unavailable";
+        var indeterminate = stage == "remove" && failure is not ("unavailable" or "start_refused");
         Assert.StartsWith(indeterminate ? "worktree_remove_failed_state_indeterminate" : "qualification_failed:", reason);
         var item = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == lane);
         if (failure == "traceback") Assert.Contains("OSError: causal qualification diagnostic",
