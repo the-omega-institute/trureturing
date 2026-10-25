@@ -2927,3 +2927,303 @@ is supplied. The parent self-field collapse and nonautonomous
 retention statements of §10 are unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. The exact retained constant at every positive central noise
+
+**Definition 14.1 (the original positive-noise retained quotient).**
+Fix an integer $n\ge2$ and a real $\epsilon>0$. Retain exactly
+Definition 10.1's $H^n$ identity unit source, raw Lebesgue density,
+covariance-$2$ horizontal clock, independent central covariance
+$2\epsilon^2$, and complete unweighted marginal $M_{n,\epsilon}$.
+On the retained $\mathbb R^3$ use the same fields $U,V,Z$ and set
+
+$$
+\begin{aligned}
+T_\epsilon[f]&=\mathcal E_H[f]+\epsilon^2\|Zf\|_2^2,\\
+\mathcal H_\epsilon
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+                   {(\|f\|_2^2+T_\epsilon[f])^{1/2}},\\
+W_{n,\epsilon}[f]&=\int_{\mathbb R^3}M_{n,\epsilon}|f|^2\,d\xi,\\
+\Lambda_{n,\epsilon}
+ &=\inf_{0\ne f\in\mathcal H_\epsilon}
+                         \frac{T_\epsilon[f]}{W_{n,\epsilon}[f]},\\
+\lambda_n&=2\pi\mu_n.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $\mu_n$ is precisely Definition 12.1's natural angular
+infimum, with the same $q_n$ and no imposed endpoint trace.
+Theorem 10.2 supplies positive finite denominators for nonzero
+states in this original free domain, which is contained in
+$\mathcal H_0$. No symmetry condition is imposed.
+
+**Theorem 14.2 (positive-noise sharpness and strictness on the full domain).**
+For every integer $n\ge2$ and every real $\epsilon>0$, with
+exactly Definition 14.1's objects,
+
+$$
+\begin{aligned}
+\Lambda_{n,\epsilon}&=2\pi\mu_n,\\
+T_\epsilon[f]-2\pi\mu_nW_{n,\epsilon}[f]
+ &\ge\epsilon^2\|Zf\|_2^2
+ &&(f\in\mathcal H_\epsilon),\\
+T_\epsilon[f]&>2\pi\mu_nW_{n,\epsilon}[f]
+ &&(0\ne f\in\mathcal H_\epsilon).
+\end{aligned}
+\tag{14.2}
+$$
+
+In particular the sharp quotient has no nonzero extremizer in
+the original full complex free domain.
+
+**Proof.** Fix $n$ and $\epsilon$. First let
+$f\in C_c^\infty(\mathbb R^3;\mathbb C)$ be arbitrary.
+Use the rotation norm and central Fourier modulus from
+(9.11)–(9.17):
+
+$$
+\begin{aligned}
+w(\rho,z)&=\left(\frac1{2\pi}\int_0^{2\pi}
+                         |f(\rho,\theta,z)|^2\,d\theta\right)^{1/2},\\
+F(\rho,k)&=\int_{\mathbb R}e^{-ikz}w(\rho,z)\,dz,
+&\psi(\rho,k)&=|F(\rho,k)|,\\
+v(\rho,z)&=\frac1{2\pi}\int_{\mathbb R}e^{ikz}\psi(\rho,k)\,dk.
+\end{aligned}
+\tag{14.3}
+$$
+
+The inverse is initially in $L^2$. Those supplied norm-chain-rule
+and Plancherel arguments give
+
+$$
+\begin{aligned}
+W_{n,\epsilon}[w]&=W_{n,\epsilon}[f],\\
+v\in\mathcal H_1\subset\mathcal H_0,
+\qquad \mathcal E_H[v]&\le\mathcal E_H[w]
+                                  \le\mathcal E_H[f].
+\end{aligned}
+\tag{14.4}
+$$
+
+The first equality uses rotation invariance of the actual marginal.
+The construction is an auxiliary transformation of an unrestricted
+complex input. In particular the rotation norm does not discard
+the input's magnetic angular energy: with
+$D=\rho^{-1}\partial_\theta+(\rho/2)\partial_z$,
+periodicity gives
+$(\rho/2)ww_z=\operatorname{Re}(2\pi)^{-1}
+\int\overline f\,Df\,d\theta$, and Cauchy–Schwarz bounds this
+part by the original $|Df|^2$ energy. The norm chain rule controls
+the radial derivative. The Fourier modulus contracts the radial
+derivative and preserves the $\rho^2k^2/4$ term. Membership of $v$
+in the original closure follows by cutting off its central tails
+and mollifying in Euclidean $H^1$ on a fixed bounded horizontal
+support, where the field coefficients are bounded independently
+of $z$, exactly as in (9.16).
+
+Write $P_{n,\eta}(t,\rho,k)=\widehat m_{n,\eta}(t,\rho,k)$.
+Keep the higher-contact factor in (10.3), rather than compare
+to the native rank-one field. For every $t>0$,
+
+$$
+\begin{aligned}
+P_{n,\epsilon}(t,\rho,k)
+ &=e^{-\epsilon^2tk^2}P_{n,0}(t,\rho,k),\\
+P_{n,0}(t,\rho,k)
+ &=\frac{|k|}{4\pi\sinh(|k|t)}
+       e^{-|k|\rho^2\coth(|k|t)/4}
+                           \operatorname{sech}(|k|t)^{n-1},\\
+0&\le P_{n,\epsilon}(t,\rho,k)\le P_{n,0}(t,\rho,k).
+\end{aligned}
+\tag{14.5}
+$$
+
+At $k=0$ the second line denotes its continuous value
+$B(t,\rho)=(4\pi t)^{-1}e^{-\rho^2/(4t)}$. Each column is real
+and even, and its modulus is at most $B(t,\rho)$, the central
+mass of the corresponding fixed-time density.
+
+For almost every $\rho>0$, (9.17) gives $F(\rho,\cdot)\in L^1$.
+The bound by $B(t,\rho)$ therefore makes all the following double
+integrals absolutely convergent, with absolute value bounded by
+$B(t,\rho)\|F(\rho,\cdot)\|_1^2/(2\pi)^2$. The same fixed-time
+Fourier inversion as (9.18)–(9.19) gives
+
+$$
+\begin{aligned}
+\int_{\mathbb R}m_{n,\epsilon}(t,\rho,z)|w|^2\,dz
+ &=\frac1{(2\pi)^2}\iint
+       P_{n,\epsilon}(t,\rho,k-\ell)
+           F(\rho,k)\overline{F(\rho,\ell)}\,dk\,d\ell\\
+ &\le\frac1{(2\pi)^2}\iint
+       P_{n,0}(t,\rho,k-\ell)
+                   \psi(\rho,k)\psi(\rho,\ell)\,dk\,d\ell\\
+ &=\int_{\mathbb R}m_{n,0}(t,\rho,z)|v|^2\,dz.
+\end{aligned}
+\tag{14.6}
+$$
+
+The inequality takes the modulus of the first, real nonnegative
+pairing and then uses (14.5). Integrate the physical nonnegative
+pairings first in $2\pi\rho\,d\rho$ and then over all
+$0<t<\infty$. Tonelli and the complete-time identity (10.4) give
+
+$$
+\lambda_nW_{n,\epsilon}[f]
+ \le\lambda_nW_{n,0}[v]
+ \le\mathcal E_H[v]\le\mathcal E_H[f].
+\tag{14.7}
+$$
+
+The middle inequality is the supplied zero-noise inequality of
+Theorems 12.2 and 13.2. Its finite right side also controls the
+entire time integral. No signed infinite-time Fourier integral,
+pointwise Green ordering, or removal of a time endpoint is used.
+
+For arbitrary $f\in\mathcal H_\epsilon$ take its defining compact
+smooth core sequence. It converges in $L^2$ and in horizontal
+derivative norms, and a subsequence converges almost everywhere.
+Fatou applied to the nonnegative actual marginal extends (14.7)
+to $f$. Adding $\epsilon^2\|Zf\|_2^2$ proves the second line of
+(14.2), and hence $\Lambda_{n,\epsilon}\ge\lambda_n$.
+
+For the opposite inequality reuse the actual nonzero compact smooth
+annular tests $g_j=f_{j,j}$ of (13.9)–(13.11). They satisfy
+
+$$
+\frac{\mathcal E_H[g_j]}{W_{n,0}[g_j]}\longrightarrow\lambda_n,
+\qquad \|Zg_j\|_2<\infty.
+\tag{14.8}
+$$
+
+In particular these are Cartesian functions supported away from
+the pole, with the original natural angular endpoints handled by
+the approximations (13.6)–(13.8).
+
+For any fixed such test $g$ and any $a>0$ put
+$D_ag(X_1,z)=a^{-1}g(X_1/a,z/a^2)$. The retained Jacobian is
+$a^4$. The exact complete-field scaling following (10.12) and the
+original field identities give
+
+$$
+\begin{aligned}
+M_{n,\epsilon}(aX_1,a^2z)&=a^{-2}M_{n,\epsilon/a}(X_1,z),\\
+\|D_ag\|_2^2&=a^2\|g\|_2^2,
+&\mathcal E_H[D_ag]&=\mathcal E_H[g],\\
+\|ZD_ag\|_2^2&=a^{-2}\|Zg\|_2^2,
+&W_{n,\epsilon}[D_ag]&=W_{n,\epsilon/a}[g].
+\end{aligned}
+\tag{14.9}
+$$
+
+The field scaling retains the complete parent time integral and
+the whole omitted fibre: their scaling factors are respectively
+$a^2$ and $a^{2n-2}$, against the parent heat-density factor
+$a^{-(2n+2)}$. Every finite-$a$ test remains in the original
+compact smooth core for the fixed original $\epsilon$.
+
+The off-pole locally uniform limit supplied by (10.9)–(10.10)
+and the large-time bound in Theorem 10.2 gives, on the fixed
+compact support of $g$,
+$W_{n,\epsilon/a}[g]\to W_{n,0}[g]>0$. Thus
+
+$$
+\frac{T_\epsilon[D_ag]}{W_{n,\epsilon}[D_ag]}
+ =\frac{\mathcal E_H[g]+\epsilon^2a^{-2}\|Zg\|_2^2}
+              {W_{n,\epsilon/a}[g]}
+ \longrightarrow\frac{\mathcal E_H[g]}{W_{n,0}[g]}
+ \qquad(a\to\infty).
+\tag{14.10}
+$$
+
+Apply this limit separately to each $g_j$. It gives
+$\Lambda_{n,\epsilon}\le\mathcal E_H[g_j]/W_{n,0}[g_j]$
+for every $j$, and then (14.8) proves the matching upper bound.
+Equivalently, choose a finite $a_j$ for each $j\ge2$ such that
+
+$$
+\left|\frac{W_{n,\epsilon/a_j}[g_j]}{W_{n,0}[g_j]}-1\right|
+ \le\frac1j,
+\qquad
+\frac{\epsilon^2a_j^{-2}\|Zg_j\|_2^2}{W_{n,0}[g_j]}
+ \le\frac1j.
+\tag{14.11}
+$$
+
+The actual tests $D_{a_j}g_j$ then have quotient at most
+$(\mathcal E_H[g_j]/W_{n,0}[g_j]+1/j)/(1-1/j)$, which tends
+to $\lambda_n$. No estimate uniform in $j$, $n$ or $\epsilon$
+is required, and the original tested Green field always has the
+fixed noise $\epsilon$.
+
+Finally $Zf=0$ in distributions for an $L^2(\mathbb R^3)$ state
+forces $f=0$: its partial Fourier transform is supported on the
+null set $k=0$, so vanishes in $L^2$. The positive central
+remainder in (14.2) is therefore strictly positive for every
+nonzero $f\in\mathcal H_\epsilon$. This proves the final line
+and nonattainment. $\square$
+
+**Corollary 14.3 (the exact positive-noise nonnegative coupling range).**
+For every fixed $n\ge2$, $\epsilon>0$ and $g\ge0$, on exactly
+$\mathcal H_\epsilon$ define
+
+$$
+\mathfrak q_{n,\epsilon,g}[f]
+        =T_\epsilon[f]-gW_{n,\epsilon}[f].
+\tag{14.12}
+$$
+
+This form is nonnegative on its entire original domain if and
+only if $0\le g\le2\pi\mu_n$. Throughout this interval,
+
+$$
+\mathfrak q_{n,\epsilon,g}[f]
+ \ge\left(1-\frac{g}{2\pi\mu_n}\right)T_\epsilon[f],
+\tag{14.13}
+$$
+
+and at the endpoint it is strictly positive on every nonzero
+original-domain state. For each $g>2\pi\mu_n$ there is a nonzero
+compact smooth state making (14.12) negative.
+
+**Proof.** Theorem 14.2 gives
+$W_{n,\epsilon}[f]\le T_\epsilon[f]/\lambda_n$ and endpoint
+strictness. For $g>\lambda_n$, one of the actual trials in
+(14.11) has quotient below $g$, so its form value is negative.
+$\square$
+
+**Definition 14.4 (correspondence, attribution and scope).**
+The same higher-contact source generates both the original full
+field and its unweighted retained marginal. Theorem 10.2 supplies
+their fixed-time columns, complete-time estimates and exact scaling;
+Theorem 13.2 supplies the natural angular constant and actual
+annular sharp tests. The rotation-norm and Fourier-modulus
+constructions, their original-domain membership, and the
+absolutely convergent fixed-time pairing are reused from §9.
+The source-relative additional composition keeps the rank-$n$
+factor in the noise comparison and applies the supplied sharp tests
+to the fixed positive-noise marginal by outward dilation.
+
+The oscillator formula, Plancherel, Sobolev norm and modulus chain
+rules, cutoff approximation, Fubini, Tonelli and Fatou are classical
+intermediate principles, with the attributions in §§9–10 and 13.
+In particular Krötz–Thangavelu–Xu,
+[*The heat kernel transform for the Heisenberg group*, §2.2,
+(2.2.1) and §4.1, (4.1.2)](https://arxiv.org/html/math/0401243v2),
+supplies classical heat columns rather than this exact retained
+quotient. The different multipliers and lower-bound comparisons
+of Kombe and D'Arca–Fanelli–Franceschi–Prandi retain the limited
+attribution in Definitions 9.4 and 13.4. The composition here is
+repo-derived; no exhaustive literature priority is asserted.
+
+The coupling form remains Definition 10.3's retained analytic
+reference form. Its exact nonnegative interval does not identify
+a critical attractive completion, classify shifted semiboundedness
+outside the interval, or turn the nonautonomous retained densities
+into a projected semigroup. The result supplies no estimate uniform
+in rank or noise, native source-to-state realization, physical
+forcing or physical dimension conclusion. The parent self-field
+collapse and source-retention obstructions of §10 are unchanged.
+
+## 追加锚（本行以下为增补区）
