@@ -61,7 +61,6 @@ Direct frozen dependencies:
   statement_id: sha256:d61de90cc28d6523a1fe07ed3c2b17777577f024e9a9fb298768e08905cdd7f7
   D5/S3/Observer/DefectModularFirstLaw/ThermofieldMarginalModularSpectrum.countablePartialTraceRight
   statement_id: sha256:c6846f133601aed0da4374874130871a2ce330b4ac1cf7e8d91254664f5ee81e
-Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter
@@ -78,7 +77,7 @@ def genLaguerre (k m : ℕ) (x : ℝ) : ℝ :=
   ∑ i ∈ Finset.range (m + 1), (-1 : ℝ)^i * ((m+k).choose (m-i) : ℝ) *
     x^i / (i.factorial : ℝ)
 
-private def wignerFockUpper (m n : ℕ) (α : ℂ) : ℂ :=
+def wignerFockUpper (m n : ℕ) (α : ℂ) : ℂ :=
   ((2 / Real.pi * (-1 : ℝ)^m * Real.sqrt ((m.factorial : ℝ) / (n.factorial : ℝ))) : ℂ) *
     (2 * α)^(n-m) * (genLaguerre (n-m) m (4 * ‖α‖^2) : ℂ) *
     (Real.exp (-2 * ‖α‖^2) : ℂ)
@@ -513,19 +512,5 @@ theorem result : ¬ claim := by
   exact family_not_extreme (1/2) (by norm_num)
     (h 2 (psi_a (1/2)) (phi_a (1/2)) (psi_a_norm _) (phi_a_norm _))
 
-#print axioms result
-#print axioms family_not_extreme
-#check wignerFockUpper
-#check sparse
-#check psi_a
-#check phi_a
-#check familyS
-#check familyH
-#check familyEps
-#check familyState
-#check familyEnd
-#check familyR
-#check outputCoeff
-#check familyOutput
 
 end D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality
