@@ -168,7 +168,7 @@ def sweep(source, dev, force=False):
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
         receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
-                                  outcome="refused" if isinstance(error, Refused) else "failed",
+                                  outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
                                   error=str(error), error_type=type(error).__name__)
         receipt["status"] = "failed"
     return receipt
@@ -402,6 +402,6 @@ def claim(options):
                 attached = git(candidate, "symbolic-ref", "--quiet", "HEAD", check=False)
                 if options.path or allocated_branch or attached.stdout.strip() == reference.encode():
                     raise
-                if not isinstance(error, Refused):
+                if isinstance(error, GitFailure) or not isinstance(error, Refused):
                     raise
         return dict(event="worktree_init", status="no_idle")

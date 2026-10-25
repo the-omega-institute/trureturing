@@ -227,6 +227,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
+    [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
+    [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
     [InlineData("qualification_stream_preserves_completed_and_defers_unreached")]
     [InlineData("runlocal_final_qualification_refusal")]

@@ -8,6 +8,43 @@ from unittest.mock import patch
 
 
 class QualificationCases:
+    def pool_scope_operational_failure_is_failed(self):
+        import worktree_protocol as protocol
+        import worktree_pool as pool
+        for error in (protocol.Refused("busy_scope:operation:idle-pool"),
+                      protocol.GitFailure("fatal: pool entry qualification broke"), OSError("pool entry unavailable")):
+            output = io.StringIO()
+            with patch.object(pool, "acquire", side_effect=error), redirect_stdout(output):
+                code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base])
+            self.assertEqual(74, code)
+            result = json.loads(output.getvalue())
+            self.assertEqual("failed", result["status"])
+            self.assertEqual("refused" if type(error) is protocol.Refused else "failed", result["failure"]["outcome"])
+            self.assertEqual(str(error), result["failure"]["error"])
+            self.assertEqual([], result["items"])
+
+    def pool_claim_qualification_failure_cannot_become_no_idle(self):
+        import worktree_protocol as protocol
+        import worktree_pool as pool
+        from contextlib import redirect_stderr
+        self.pool_return()
+        for failed in (False, True):
+            output, errors = io.StringIO(), io.StringIO()
+            error = (protocol.GitFailure("fatal: claim qualification broke") if failed
+                     else protocol.Refused("idle_locked"))
+            with patch.object(pool, "qualify", side_effect=error), redirect_stdout(output), redirect_stderr(errors):
+                code = protocol.main(["--source", str(self.main), "claim", "--branch",
+                                      "lane/governance/qualification-claim", "--base", self.base, "--skip-restore"])
+            self.assertEqual(73 if failed else 0, code)
+            if failed:
+                self.assertEqual("", output.getvalue())
+                self.assertIn("fatal: claim qualification broke", errors.getvalue())
+            else:
+                self.assertEqual("no_idle", json.loads(output.getvalue())["status"])
+            self.assertTrue(self.tree.is_dir())
+            self.assertIn("lane/governance/idle-", self.g(self.tree, "branch", "--show-current"))
+            self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/governance/qualification-claim").strip())
+
     def batch_qualification_preserves_each_reason_and_tree(self):
         import worktree_protocol as protocol
         recent = self.root / "recent"
