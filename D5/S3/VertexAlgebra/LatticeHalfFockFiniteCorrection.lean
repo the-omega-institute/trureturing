@@ -741,7 +741,9 @@ theorem insertion_l1_scalar (r n : ℕ) :
       rw [half_successor n]
       have n1 : (1 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 1 + n ≠ 0)
       have n2 : (2 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 2 + n ≠ 0)
-      field_simp [n1, n2, ns]
+      have n2a : (1 : ℂ) + ((n : ℂ) + 1) ≠ 0 := by
+        exact_mod_cast (by omega : 1 + (n + 1) ≠ 0)
+      field_simp [n1, n2, ns, n2a]
       <;> ring
     · rw [if_neg hr, half_successor r, half_successor n]
       have lower : (r : ℂ) + (n + 1 : ℂ) ≠ 0 := by
@@ -750,3 +752,5 @@ theorem insertion_l1_scalar (r n : ℕ) :
       <;> ring
 
 end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.insertion_l1_scalar

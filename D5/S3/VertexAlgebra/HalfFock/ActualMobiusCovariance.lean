@@ -262,5 +262,9 @@ theorem charged_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
   rw [rows, cols, quad, sub_eq_iff_eq_add.mp seed]
   module
 
+#print axioms charged_pair_l1
+#print axioms charged_normal_sum_l1
+#print axioms charged_l1_coefficient
+
 end
 end D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance
