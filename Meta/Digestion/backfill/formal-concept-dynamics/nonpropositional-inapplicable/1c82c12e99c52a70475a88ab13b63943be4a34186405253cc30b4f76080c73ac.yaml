@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c82c12e99c52a70475a88ab13b63943be4a34186405253cc30b4f76080c73ac
+  normalized_sha256: sha256:1c82c12e99c52a70475a88ab13b63943be4a34186405253cc30b4f76080c73ac
+cas_ref: sha256:1c82c12e99c52a70475a88ab13b63943be4a34186405253cc30b4f76080c73ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此段只引入历史类型 Gamma、当前状态 E、日志 L、历史目标 T 的类型参数；账本充分性的因子化断言位于后续独立 atom。
+    previous_atom_id: b18fc812d713f336dd3e62521dd7a62a16d038bd1d965b740c121e74a14af386
+    next_atom_id: 778c29119f5ff445f3f966246a0ba6cadf1fad9f15edacdcac8fda60423503b4

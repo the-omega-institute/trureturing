@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32
+  normalized_sha256: sha256:962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32
+cas_ref: sha256:962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 本 theorem-fragment 仅列“假设 Im(C) 有限”，没有定理的存在目标结论；将给定有限像作为前提而不声称任意像有限。'
+    previous_atom_id: b8545f3b034488817925019346f2a6e38ca7d9c0fe6a57167c7d90848afe47d4
+    next_atom_id: 34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5

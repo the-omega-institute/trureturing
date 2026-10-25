@@ -2091,3 +2091,728 @@ The qutrit-output storage conclusions of §10 and the independent
 realization requirements of §12 retain their stated hypotheses.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Full-H labelled continuation through a finite coherent port
+
+**Definition 14.1 (the storage extension of the actual late task).**
+Keep Definitions 1.1–1.2 and 11.1 exactly: every real calibration
+$\theta$, known integer horizon $n\ge0$, every qutrit density input
+$\rho$ embedded by the specified $B$, the actual fair histories,
+and a complete input-independent finite or countable kernel $r(a\mid h)$.
+There is no intermediate quantum feedback. The physical terminal
+specimen, inaccessible untouched reference and history information
+are those of that acquisition, without a copy or alternative dilation.
+
+For an integer $q\ge1$ and each record $a$, allow an encoder and
+decoder
+
+$$
+\begin{aligned}
+ \operatorname{Enc}_a &:M_5\longrightarrow
+                      \bigoplus_{\ell\in\mathsf L_a}M_q,\\
+ \operatorname{Dec}_a((Y_\ell)_\ell)
+       &=\sum_{\ell\in\mathsf L_a}\operatorname{Dec}_{a\ell}(Y_\ell),
+ \qquad \operatorname{Dec}_{a\ell}:M_q\longrightarrow M_5,\\
+ \mathcal D_a&=\operatorname{Dec}_a\circ\operatorname{Enc}_a.
+\end{aligned}
+\tag{14.1}
+$$
+
+The flag alphabet $\mathsf L_a$ is finite, with no prescribed bound
+on its finite size. The encoder is CPTP into the direct sum and each
+decoder is CPTP on its **entire** block. The flags may depend on the
+unknown specimen. They are classical, with no coherent cross-flag
+carrier, and are consumed or discarded by decoding before the task.
+During the storage interval all input-dependent quantum information
+available for use passes through the $q$-dimensional block. The
+original specimen, an environment, a reference or preshared entanglement
+cannot bypass it. The history record is distinct from these new
+specimen-dependent flags; every accessible history-dependent classical
+carrier is already included in $a$.
+
+All maps are fixed, calibrated and installed before the unknown input
+and before the late task choice. They may depend on $a,n,\theta$,
+but not on that choice. Their full-$H$ output may leak outside $R$.
+Correctness is exactly the two alternatives of (11.2): immediate
+$(\widehat E,I_5-\widehat E)$, or one further actual **full-$H$**
+acquisition (11.1), retaining both $j$ and the terminal result $y$.
+There is no further correction after that acquisition. Thus this is a
+port-factorization restriction on the full-$H$ decoder contract, not
+an application of the qutrit-output theorem to leaked states.
+
+**Corollary 14.2 (exact coherent dimension with arbitrary full-H output).**
+For every $\theta\in\mathbb R$, $n\ge0$, complete kernel $r$ as
+above and integer $q\ge1$, maps (14.1) satisfying the whole task
+(11.2) exist if and only if
+
+$$
+ \left[r(a\mid h)r(a\mid g)>0\ \Longrightarrow\
+                [Q_h]=[Q_g]\right]\quad\text{for every }a,h,g,
+ \qquad q\ge3.
+ \tag{14.2}
+$$
+
+For every admissible supplied record, the exact minimum coherent port
+dimension is therefore three, with unrestricted full-$H$ output and
+arbitrarily many finite consumed classical flags. The record criterion
+and its alphabet minimum $m_n(\theta)$ are supplied by Theorem 11.2.
+Theorem 13.1 supplies the complete corrected-channel classification on
+the actual qutrit input corner, including every positive history/record
+branch. This corollary applies that classification to the finite-port
+factorization; it asserts no additional rigidity theorem.
+
+Proof. Each $\mathcal D_a$ in (14.1) is CPTP on all of $H$ and is
+applied before the same late choice. Theorem 11.2 gives the record
+necessity. All of Theorem 13.1's hypotheses also hold: the original
+weights are still $p_{h,a}=2^{-n}r(a\mid h)$, every qutrit density
+is allowed, and all immediate and future joint $(j,y)$ equations,
+including $y=0$, are required. Its conclusion (13.3) therefore gives
+$\Phi_{h,a}(X)=BXB^\dagger$ for every positive original branch.
+No output-in-$R$ condition is assumed in this application; it is a
+consequence of that supplied classification on the actual inputs.
+
+Fix any positive $(h,a)$. Finite rectangular Kraus representations for
+the encoder and the whole-block decoders give matrices
+$E_{a\ell u}:H\to\mathbb C^q$ and
+$D_{a\ell v}:\mathbb C^q\to H$, normalized by
+$\sum_{\ell,u}E_{a\ell u}^\dagger E_{a\ell u}=I_5$ and
+$\sum_vD_{a\ell v}^\dagger D_{a\ell v}=I_q$ for each flag.
+Thus the actual corrected branch has the finite Kraus family
+
+$$
+ K_{\ell vu}=D_{a\ell v}E_{a\ell u}BQ_h,
+ \qquad \operatorname{rank}K_{\ell vu}\le q,
+ \qquad \sum_{\ell,v,u}K_{\ell vu}^\dagger K_{\ell vu}=I_3.
+ \tag{14.3}
+$$
+
+This is the same-flag factorization supplied by [CoherentFlagPort][CFP]
+and [FiniteKrausRepresentation][KRAUS], now with input dimension three
+and output dimension five. The Choi matrix of this branch is the
+rank-one $|B\rangle\!\rangle\langle\!\langle B|$ by (13.3).
+The positive Choi support argument used in Theorem 13.1 consequently
+makes every $K_{\ell vu}$ a scalar multiple of $B$. Kraus
+normalization guarantees a nonzero member. That member has rank three,
+so (14.3) forces $q\ge3$. Choosing one positive branch suffices also
+when the history record is countable; no finite global record alphabet
+or new conditional-correctness assumption has been inserted. Such a
+branch exists by (13.6), including at $n=0$.
+
+For attainment suppose the record condition holds. For every positive
+$a$ choose a word-class representative $Q_a$, and fix any qutrit
+density $\tau$. For $q=3$ take a single constant storage flag and
+the whole-space maps
+
+$$
+ \operatorname{Enc}_a(X)
+   =Q_a^\dagger B^\dagger XBQ_a+
+                    \operatorname{Tr}((I_5-P_R)X)\tau,
+ \qquad \operatorname{Dec}(Y)=BYB^\dagger.
+ \tag{14.4}
+$$
+
+The first encoder term is CP with Kraus matrix $Q_a^\dagger B^\dagger$;
+the second is CP measure-and-prepare on the positive complement effect.
+Their traces sum to $\operatorname{Tr}X$. The decoder is CPTP since
+$B^\dagger B=I_3$. Thus the encoder acts on all of $H$, not only on
+promised inputs. On every actual compatible history,
+$Q_a^\dagger Q_h$ is scalar, so their composition restores
+$B\rho B^\dagger$ branchwise, and with any untouched finite reference.
+The immediate task and every actual future $j,y$ event then have their
+specified laws, including $y=0$.
+
+For $q>3$, choose an isometry $J:\mathbb C^3\to\mathbb C^q$,
+encode the right side of (14.4) by $Y\mapsto JYJ^\dagger$, and
+decode a whole block $Z$ by
+
+$$
+ BJ^\dagger ZJB^\dagger+
+         \operatorname{Tr}((I_q-JJ^\dagger)Z)\sigma,
+ \tag{14.5}
+$$
+
+where $\sigma$ is any density on $H$. This is a complete CPTP
+padding on unused directions and agrees on the encoded block. Zero
+probability records may have arbitrary fixed CPTP codecs. The construction
+also covers $n=0$, with the unique empty-word representative. It proves
+sufficiency and exact attainment of (14.2). $\square$
+
+## 15. Attained joint retention and continued use
+
+**Proposition 15.1 (the upper's complete interface).** For (14.4),
+retain the acquired history record through its representative inverse
+and keep its actual subrecords if the future task requests them.
+For every finite reference $Z$ and input density on $\mathbb C^3\otimes Z$,
+the history-resolved post-decoding joint law is
+
+$$
+ \sum_{h,a}p_{h,a}|h,a\rangle\langle h,a|\otimes
+                (B\otimes I_Z)\rho(B^\dagger\otimes I_Z).
+ \tag{15.1}
+$$
+
+Here $h$ indexes the actual acquisition events, not an additional
+accessible history register. Sum over its unretained components to
+obtain the retained-record interface. Any history subrecord kept for
+later use must actually have been acquired, included in the complete
+record $a$, and retained with its own backing and cost.
+
+After the one actual full-$H$ acquisition their joint successor is
+exactly
+
+$$
+ \sum_{h,a,j}p_{h,a}|h,a,j\rangle\langle h,a,j|\otimes
+        \tfrac12(BV_j\otimes I_Z)\rho
+                         (V_j^\dagger B^\dagger\otimes I_Z).
+ \tag{15.2}
+$$
+
+The storage flag is constant in this construction. Keeping it adds
+only that constant classical field. These formulas attain the stronger
+joint task that retains the old record as well as $j,y$. The existence
+criterion and coherent minimum stay (14.2) for that stronger task.
+
+Proof. Branchwise restoration in (14.4) gives each block of (15.1).
+Apply the very same $A_j$, using $A_jB=BV_j/\sqrt2$, to obtain
+(15.2). Composing the terminal binary test on each block gives the
+full joint $(a,j,y)$ law and any actually retained subrecord of $h$.
+Any specified common finite continuation instrument, including one
+controlled by that retained subrecord, composes with equal subnormalized
+blocks and therefore has equal joint outputs and successors. These
+identities describe the attained construction. The underlying branchwise
+recovery is also supplied for every successful unflagged scheme by
+Theorem 13.1; no new classification is inferred here. Necessity for the
+stronger task follows by forgetting the old record and applying
+Corollary 14.2; the upper just given proves sufficiency. $\square$
+
+For an arbitrary encoder with specimen-dependent flags, retaining a
+flag past decoding requires its actual CP instrument blocks
+$\mathcal K_{a\ell}=\operatorname{Dec}_{a\ell}\operatorname{Enc}_{a\ell}$,
+not an independent flag appended to the average (13.1). Its successor blocks are
+$p_{h,a}\mathcal A_j\mathcal K_{a\ell}
+(BQ_h\rho Q_h^\dagger B^\dagger)$, with the reference map when
+present. The unflagged task does not prescribe the probabilities of
+these added flag values. Its corrected-channel classification is Theorem 13.1; a
+flag-resolved comparison must still specify the actual instrument blocks
+and the intended flag law. The constant-flag upper fixes that law
+explicitly.
+
+At $\theta=\pi/6$, use the existing actual acquisition of all $n$
+labels and the $n$ inverse-letter invocations of ERM16.1 before the
+fixed $R$-to-qutrit storage encoding and $B$ decoder. At $\theta=0$,
+use its acquired full-word permutation accumulator and selected inverse:
+the reachable full-word counts are $1,2,4,6$ at $n=0,1,2,\ge3$,
+with the supplied known-horizon small-case encodings. These are
+full-word controls, not the smaller single-task suffix or three-position
+record of §3. One may factor (14.4) as this full-$H$ inverse followed
+by the fixed encoder, since the inverse is identity on $R^\perp$.
+This realizes the same channel, and makes explicit when the old
+record can be released. No inverse is needed for $n=0$.
+
+The same run pays $n$ fresh environment preparations, interactions,
+measurements and actual label acquisitions, all record writes and
+retained reads, inverse controls, one encoder, the three-dimensional
+coherent port for its holding interval, one decoder, calibration,
+schedule/address workspace, service permissions and any classical
+carrier. The old record must remain readable through inverse selection
+and invocation; keeping it longer costs its actual lifetime. The late
+continuation adds one actual preparation, interaction, measurement and
+new label acquisition, then one terminal binary test; the immediate
+choice adds that test alone. All those prices coexist. The port minimum
+does not minimize total memory, control count, energy, latency, or
+physical carrier dimension five. The inaccessible reference is preserved
+by the upper and supplies no usable storage bypass.
+
+For an arbitrary fixed real $\theta$, (14.2) is a finite-dimensional
+channel-existence theorem for a supplied kernel. It does not uniformly
+decide exact-real word equalities, acquire an unknown calibration,
+compile arbitrary representative tables or install exact codecs.
+The explicit acquired/effective upper accounts above are restricted
+to the supplied exact calibrations and installed controls. The
+existential theorem does not replace those operational prerequisites.
+
+## 16. Supplier correspondence and the remaining recovery scope
+
+The full-$H$ corrected-channel classification is Theorem 13.1,
+(13.2)–(13.5), on the exact original domain of Definition 11.1.
+Its evaluated residual calculation (13.14)–(13.21), including the
+actual complementary future outcomes, is the supplier that removes
+possible leakage on the actual corrected inputs. It is not an open
+classification problem here. The physical decoder's off-$R$ input
+behavior remains outside that classification.
+
+Corollary 14.2 expresses the finite consumed-flag storage consequence
+of that supplied theorem and the existing rank-through-port principle.
+The full-word record iff and $m_n$ are reused from Theorem 11.2;
+branchwise recovery, including an untouched finite reference, is reused
+from Theorem 13.1. In particular the existence, corrected-channel and
+reference conclusions already have their suppliers. The remaining
+storage application specifies the whole-$H$ encoder, whole-block
+padding, attained joint interface and the acquired-use resource cuts
+in §§14–15. It is an explicit application and attainment, not a new
+classification, rank inequality or independently new rigidity argument.
+It resolves the finite-flag coherent-port question left outside §13
+only on Definition 14.1's exact storage domain.
+
+[CoherentFlagPort][CFP] and its [owning Scribe][CFPB] supply the
+same-flag Kraus composition and complete complement-filled decoder
+construction; [FiniteKrausRepresentation][KRAUS] and its
+[owning Scribe][KRAUSB] supply finite rectangular CP representations.
+The square connected-probe statement
+`port_component_lower_bound` is not directly a theorem about an
+$M_3\to M_5$ channel. In (14.3) only the rectangular product and its
+rank bound are used; Theorem 13.1 supplies the actual channel to which
+that factorization is applied. The ordinary rank inequality for a
+product through $\mathbb C^q$ is the `rank_mul_le`/`rank_le_card_width`
+supplier in pinned mathlib's `Mathlib/LinearAlgebra/Matrix/Rank.lean`.
+
+Bluhm–Rauber–Wolf, [arXiv:1708.04898v4][BRW], Definition 4.1 and
+the proof of Lemma 5.2, supply the finite classical-quantum compression
+model and the rank-at-most-$q$ composite Kraus argument. The present
+input corner is the actual $R$ of the five-level source, rather than
+all five-level densities; (14.4) extends the attained encoder to the
+entire physical input algebra. The source-specific classification is
+credited to §13, not to a generic observable-compression theorem.
+These are ordinary analytical applications with no worldwide-priority
+or new Lean-certification claim.
+
+The independent full-$H$ real-filter classification in [MRQB], §§19–26,
+concerns contractive invertible filters, real/skew source coordinates,
+all-success-prefix detector laws and least filter depth. Its preparations,
+records, controls and output task differ from (11.2). It does not
+identify those filters with the codecs (14.1).
+
+[ERM II][ERMII], §§31–35, already supplies, for its fixed actual
+channel, the exact erased-history spectator–$e$ task value for every
+population $0<p<1$ and finite $n\ge2$, with a same-qutrit decoder
+and matching full-complex certificates. That quantitative boundary
+with zero $f$ population, including the reused balanced case, is
+supplied rather than a missing minimax result. It permits neither a
+retained history record nor the late joint task (11.2), and does not
+supply (14.2). Its interior with all three populations positive and
+uniform unbounded-horizon questions keep their own stated scope.
+The signed P/Q, autonomous STOP, fixed-apparatus, original-Q,
+parked-consumer and unchanged-initialization problems likewise retain
+their original conditions and remaining obligations.
+
+Chronology here is the actual label word with its acquisition count;
+the terminal task boundary is the stated immediate/future effect
+interface; memory is an acquired word-class record plus the coherent
+specimen with installed callable controls. Their common-source relation
+is (13.1) and the attained joint law (15.2). The count alone does not
+select a nontrivial word class. No independent acquired spatial
+incidence or metric view, physical-duration inverse, atomic/quantum
+common initialization, or alpha/beta universality is supplied. Unknown
+calibration acquisition, finite-precision stability and total-resource
+parsimony remain separate. Thus this full-$H$ port application is a
+bounded recovery/continued-use contribution toward the continuing
+programme, not unrestricted four-expression recovery.
+
+## 追加锚（本行以下为增补区）
+## 13.3. Uniform finite-precision stability for the actual full-H tests
+
+**Theorem 13.3 (Uniform stability of the average corrected channel).**
+Fix precisely the model of Definitions 1.1–1.2 and 11.1 and the
+actual coordinates used in Theorem 13.1. Thus
+$B:\mathbb C^3\to H=\mathbb C^5$ is the specified isometric
+embedding, $v=v_e$, $E=vv^\dagger$, $p=Bv$, $P=pp^\dagger$,
+$P_1=P$, and $P_0=I_5-P$. For each real calibration angle
+$\theta$, the instrument is fixed and known: its two operators
+$A_j=A_j(\theta)$, $j\in\{0,1\}$, are exactly the actual
+full-$H$ operators (11.1), acting on all five output dimensions.
+For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$, let $T^\dagger$ denote
+its trace adjoint and define the actual test defect by
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\bigl\|T^\dagger(A_j^\dagger P_yA_j)
+       -B^\dagger A_j^\dagger P_yA_jB\bigr\|_{\mathrm{op}}
+\Bigr\}.
+\end{aligned}
+\tag{13.23}
+$$
+
+Both outcomes of each labelled continuation are included; these are
+joint effects for the actual label $j$, without conditioning or
+renormalizing its probability. Uniformly for every real $\theta$,
+every such $T$, and every real $0<\varepsilon\le\varepsilon_0=1/2$,
+
+$$
+\delta_\theta(T)\le\varepsilon
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond
+ \le C\sqrt\varepsilon,\qquad
+C=800,\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{13.24}
+$$
+
+Here the diamond norm is unhalved and ranges over arbitrary finite
+untouched inaccessible references:
+
+$$
+\|\Lambda\|_\diamond
+ =\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+ \frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
+\tag{13.25}
+$$
+
+In particular the bound holds on every joint input density with such
+a reference. There is no restriction that $T$ have output in
+$R=B\mathbb C^3$, no assumed conditional branch correctness, no
+full-$H$ fairness law, and no assumption that the input state is
+known. The defect is a uniform input test: for each Hermitian effect
+difference its operator norm equals the supremum of the absolute
+expectation over all complex qutrit density inputs. The statement
+therefore retains all input coherences. When $T$ is the average
+corrected channel (13.1), (13.24) certifies that average; it does not
+assert a uniform approximate guarantee on every history/record
+branch of arbitrarily small weight.
+
+Proof. Fix an arbitrary real $\theta$ and a channel satisfying the
+hypotheses. Vector norms are Euclidean, and $\|\cdot\|_{\mathrm{HS}}$
+is the Hilbert–Schmidt norm. Put $Q=I_5-P$,
+$t_j=A_j^\dagger p$, and $F_j=w_jw_j^\dagger$, with the actual
+vectors from (13.7). In the orthonormal input frame $(\xi,e,f)$,
+these vectors and their frame operator are
+
+$$
+\begin{gathered}
+v=\frac{\xi+e}{\sqrt2},\qquad
+w_0=\frac{\xi-e/2+(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+w_1=\frac{\xi-e/2-(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\\
+vv^\dagger+F_0+F_1
+ =\operatorname{diag}_{(\xi,e,f)}(3/2,3/4,3/4)
+ \succeq\tfrac34 I_3.
+\end{gathered}
+\tag{13.26}
+$$
+
+Indeed, $F_0+F_1$ is the outer product of $\xi-e/2$ with
+itself plus $(3/4)ff^\dagger$, whereas
+$vv^\dagger=(\xi+e)(\xi+e)^\dagger/2$; their mixed
+$\xi,e$ entries cancel. This is a uniformly conditioned
+nonorthogonal frame, not an orthogonal-probe assumption. The exact
+identities (13.8) and the ideal compression used in (13.9) give
+
+$$
+\begin{aligned}
+B^\dagger t_j&=e^{-i\theta}w_j/\sqrt2,&
+w_j^\dagger v&=1/4,&
+A_jBw_j&=e^{i\theta}p/\sqrt2,\\
+B^\dagger A_j^\dagger PA_jB&=F_j/2,&
+B^\dagger A_j^\dagger QA_jB&=(I_3-F_j)/2.
+\end{aligned}
+\tag{13.27}
+$$
+
+The last identity uses $A_jB=BV_j/\sqrt2$ only on the ideal
+embedded corner. It does not replace $A_j^\dagger A_j$ on $H$
+by $I_5/2$.
+
+We first quantify the full-$H$ kernel calculation of Theorem 13.1.
+To distinguish the physical vector from the input $v$, write
+$v_H=(e_1+e_4)/\sqrt2$, with $u=(e_0+e_3)/\sqrt2$ and
+$z=e_2$ as in (1.1). Put $c_\theta=\cos\theta$ and
+$s_\theta=\sin\theta$. The actual formulas (13.18) read
+
+$$
+\begin{aligned}
+A_0k&=(c_\theta k_0+i s_\theta k_1)u
+       +e^{i\theta}k_2v_H/\sqrt2
+       +(i s_\theta k_3+c_\theta k_4)z,\\
+A_1k&=(i s_\theta k_0+c_\theta k_1)u
+       +e^{i\theta}k_2v_H/\sqrt2
+       +(c_\theta k_3+i s_\theta k_4)z.
+\end{aligned}
+\tag{13.28}
+$$
+
+Their three rows in the orthonormal output frame $(u,v_H,z)$
+have disjoint coordinate supports and squared norms $1,1/2,1$.
+Consequently the nonzero singular values of each $A_j$ are
+$1,1,1/\sqrt2$, so $\|A_j\|_{\mathrm{op}}=1$ and
+$\|t_j\|\le1$. Orthonormal bases for their kernels are,
+respectively,
+
+$$
+\begin{aligned}
+\ker A_0&=\operatorname{span}\{
+ -i s_\theta e_0+c_\theta e_1,
+ c_\theta e_3-i s_\theta e_4\},\\
+\ker A_1&=\operatorname{span}\{
+ c_\theta e_0-i s_\theta e_1,
+ -i s_\theta e_3+c_\theta e_4\}.
+\end{aligned}
+\tag{13.29}
+$$
+
+Write $h=x$ times the first displayed kernel vector plus $y$ times
+the second for either $j$. As in (13.17)–(13.20), set
+
+$$
+\begin{gathered}
+\alpha=\frac{\sqrt2+1}{\sqrt{12}},\qquad
+\beta=\frac{\sqrt2-2}{\sqrt{12}},\qquad
+p=\alpha u+\alpha v_H+\beta z,\qquad
+\gamma=\alpha-\beta=\alpha+|\beta|=\frac{\sqrt3}{2},\\
+p^\dagger h=\frac{\alpha e^{-i\theta}}{\sqrt2}(x+y),
+\qquad t_{1-j}^\dagger h=\alpha x+\beta y.
+\end{gathered}
+\tag{13.30}
+$$
+
+For completeness, the second identity follows from
+$A_{1-j}h=xu+yz$ in both kernel bases; the first follows by
+substituting $u,v_H,z$ into $p$. If $m=x+y$ and
+$n=\alpha x+\beta y$, then
+$x=(n-\beta m)/\gamma$ and $y=(\alpha m-n)/\gamma$.
+Since $\sqrt2/\alpha<3$ and $2/\gamma<3$, it follows that
+
+$$
+\|h\|\le |x|+|y|
+ \le |m|+\frac{2}{\gamma}|n|
+ \le3\bigl(|p^\dagger h|+|t_{1-j}^\dagger h|\bigr).
+\tag{13.31}
+$$
+
+For arbitrary $k\in H$, decompose $k=h+r$ orthogonally with
+$h\in\ker A_j$. The singular values give
+$\|r\|\le\sqrt2\|A_jk\|$. Using (13.31),
+$\|p\|=1$, and $\|t_{1-j}\|\le1$, we obtain the uniform
+full-$H$ coercivity estimate
+
+$$
+\begin{aligned}
+\|k\|&\le
+ 3\bigl(|p^\dagger k|+|t_{1-j}^\dagger k|\bigr)+7\|r\|\\
+&\le 10\|A_jk\|+3|p^\dagger k|+3|t_{1-j}^\dagger k|,
+\qquad j=0,1.
+\end{aligned}
+\tag{13.32}
+$$
+
+Here $7\sqrt2<10$. No step divides by $\sin\theta$ or
+$\cos\theta$, so the constants include their zero cases.
+
+By the standard finite-dimensional CP/Kraus representation, choose
+$T(X)=\sum_\ell L_\ell XL_\ell^\dagger$ with
+$L_\ell:\mathbb C^3\to H$ and
+$\sum_\ell L_\ell^\dagger L_\ell=I_3$. One can obtain this
+finite family by diagonalizing the positive $15\times15$ Choi
+matrix. For each Kraus operator define nonnegative quadratic defects
+
+$$
+\begin{aligned}
+a_\ell&=\|QL_\ell v\|^2,&
+b_\ell&=\|p^\dagger L_\ell(I_3-E)\|_{\mathrm{HS}}^2,\\
+g_{\ell j}&=\|t_j^\dagger L_\ell(I_3-F_j)\|_{\mathrm{HS}}^2,&
+h_{\ell j}&=\|QA_jL_\ell w_j\|^2,\\
+q_\ell&=a_\ell+b_\ell+g_{\ell0}+g_{\ell1}
+                      +h_{\ell0}+h_{\ell1}.
+\end{aligned}
+\tag{13.33}
+$$
+
+Let $(x_1,x_2)$ and $(z_{j1},z_{j2})$ be orthonormal bases of
+$v^\perp$ and $w_j^\perp$, respectively. Trace preservation,
+(13.23), and (13.27) imply
+
+$$
+\begin{aligned}
+\sum_\ell a_\ell
+ &=1-\langle v,T^\dagger(P)v\rangle\le\varepsilon,\\
+\sum_\ell b_\ell
+ &=\sum_{a=1}^2\langle x_a,T^\dagger(P)x_a\rangle
+ \le2\varepsilon,\\
+\sum_\ell g_{\ell j}
+ &=\sum_{a=1}^2\langle z_{ja},T^\dagger(t_jt_j^\dagger)z_{ja}\rangle
+ \le2\varepsilon,\\
+\sum_\ell h_{\ell j}
+ &=\langle w_j,T^\dagger(A_j^\dagger QA_j)w_j\rangle
+ \le\varepsilon,\\
+\sum_\ell q_\ell&\le9\varepsilon.
+\end{aligned}
+\tag{13.34}
+$$
+
+Each quantity on the left is nonnegative. In the second and third
+lines the ideal expectation is zero on the indicated orthogonal
+complement, giving positive false-positive defects rather than
+cancellation estimates. In the fourth line the ideal expectation
+vanishes at $w_j$ because its compression is $(I_3-F_j)/2$.
+This line uses the actual $y=0$ effect and is essential for leaked
+outputs. The $y=1$ effect is $t_jt_j^\dagger$ and supplies the
+third line. Thus both continuation outcomes enter the estimate.
+
+For a single index $\ell$, suppress that index temporarily and put
+$c=p^\dagger Lv$ and $N=L-cB$. The definitions give
+
+$$
+Nv=QLv,\qquad \|Nv\|=\sqrt a,\qquad
+p^\dagger N=p^\dagger L(I_3-E),\qquad
+\|p^\dagger N\|=\sqrt b.
+\tag{13.35}
+$$
+
+Decompose $t_j^\dagger L=\lambda_jw_j^\dagger+\rho_j$ with
+$\rho_j=t_j^\dagger L(I_3-F_j)$ and
+$\|\rho_j\|=\sqrt{g_j}$. By (13.27),
+$t_j^\dagger B=e^{i\theta}w_j^\dagger/\sqrt2$.
+Hence $t_j^\dagger N=d_jw_j^\dagger+\rho_j$ for
+$d_j=\lambda_j-ce^{i\theta}/\sqrt2$. Evaluating this row at
+$v$ gives $d_j/4=t_j^\dagger Nv-\rho_jv$, and consequently
+
+$$
+|d_j|\le4(\sqrt a+\sqrt{g_j}),\qquad
+\|t_j^\dagger N\|\le4\sqrt a+5\sqrt{g_j}.
+\tag{13.36}
+$$
+
+Since $QA_jBw_j=0$, one has
+$\|QA_jNw_j\|=\sqrt{h_j}$. The remaining component of
+$A_jNw_j$ is $p^\dagger A_jNw_j=t_j^\dagger Nw_j$.
+Applying (13.36) and then (13.32) to $k=Nw_j$ proves the
+per-Kraus residual bounds
+
+$$
+\begin{aligned}
+\|A_jNw_j\|&\le\sqrt{h_j}+4\sqrt a+5\sqrt{g_j},\\
+\|Nw_j\|&\le
+ 52\sqrt a+3\sqrt b+50\sqrt{g_j}
+          +15\sqrt{g_{1-j}}+10\sqrt{h_j},\\
+\|Nw_j\|^2&\le5538q,
+\qquad 52^2+3^2+50^2+15^2+10^2=5538.
+\end{aligned}
+\tag{13.37}
+$$
+
+The last line is Cauchy–Schwarz applied to the five indicated
+nonnegative defects, whose sum is at most $q$. The coefficient
+$52$ in the second line is $10\cdot4+3\cdot4$; the other terms
+come directly from the three terms in (13.32). This also makes
+explicit where the complementary label $1-j$ supplies coercivity.
+
+The frame lower bound (13.26) now controls the whole rectangular
+operator, including its components outside $R$:
+
+$$
+\begin{aligned}
+\|N\|_{\mathrm{HS}}^2
+ &\le\tfrac43\bigl(\|Nv\|^2+\|Nw_0\|^2+\|Nw_1\|^2\bigr)\\
+ &\le\tfrac43(1+2\cdot5538)q
+   =\tfrac{44308}{3}q\le15000q,\\
+\sum_\ell\|L_\ell-c_\ell B\|_{\mathrm{HS}}^2
+ &\le135000\varepsilon,
+ \qquad c_\ell=p^\dagger L_\ell v.
+\end{aligned}
+\tag{13.38}
+$$
+
+For the first inequality, take the trace of $N^\dagger N$ times
+the positive operator inequality (13.26). The last line uses
+(13.34); neither the number of Kraus operators nor $\theta$
+appears in its constant.
+
+Let $\mathcal K$ have orthonormal basis $|\ell\rangle$ indexed
+by this finite Kraus family. Define
+$Wx=\sum_\ell L_\ell x\otimes|\ell\rangle$ and
+$\mathbf c=\sum_\ell c_\ell|\ell\rangle$. Trace preservation
+makes $W$ an isometry. Positivity and the immediate defect give
+
+$$
+ r^2:=\|\mathbf c\|^2
+ =\langle v,T^\dagger(P)v\rangle\in[1-\varepsilon,1].
+\tag{13.39}
+$$
+
+Thus $r>0$ for the stated range of $\varepsilon$. Put
+$\eta=\mathbf c/r$ and $Ux=Bx\otimes\eta$; $U$ is an
+isometry inducing $\operatorname{Ad}_B$. If
+$W_cx=Bx\otimes\mathbf c$, then (13.38) bounds
+$\|W-W_c\|_{\mathrm{op}}$ by its Hilbert–Schmidt norm, and
+$\|W_c-U\|_{\mathrm{op}}=1-r$. Since
+$1-r=(1-r^2)/(1+r)\le\varepsilon\le\sqrt\varepsilon$, we get
+
+$$
+\|W-U\|_{\mathrm{op}}
+ \le\sqrt{135000\varepsilon}+1-r
+ \le(\sqrt{135000}+1)\sqrt\varepsilon.
+\tag{13.40}
+$$
+
+Finally let $Z=\mathbb C^d$ be any finite untouched reference and
+let $X$ be any complex matrix on $\mathbb C^3\otimes Z$, without
+assuming positivity or Hermiticity. Up to the canonical reordering
+of tensor factors, write $W_Z=W\otimes I_Z$ and
+$U_Z=U\otimes I_Z$. The difference before discarding
+$\mathcal K$ is
+
+$$
+W_ZXW_Z^\dagger-U_ZXU_Z^\dagger
+ =(W_Z-U_Z)XW_Z^\dagger
+      +U_ZX(W_Z^\dagger-U_Z^\dagger).
+\tag{13.41}
+$$
+
+The standard ideal-property estimate
+$\|AXB\|_1\le\|A\|_{\mathrm{op}}\|X\|_1\|B\|_{\mathrm{op}}$
+and the isometry norms bound this by
+$2\|W-U\|_{\mathrm{op}}\|X\|_1$. Partial trace over
+$\mathcal K$ is trace-norm contractive even for these arbitrary
+matrices: its trace-dual map sends $Y$ to $Y\otimes I_{\mathcal K}$,
+which has the same operator norm as $Y$, so trace/operator-norm
+duality proves the contraction. Therefore, simultaneously for all
+finite $d$ and all $X$,
+
+$$
+\begin{aligned}
+\|((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(X)\|_1
+ &\le2\|W-U\|_{\mathrm{op}}\|X\|_1,\\
+\|T-\operatorname{Ad}_B\|_\diamond
+ &\le2(\sqrt{135000}+1)\sqrt\varepsilon
+ <800\sqrt\varepsilon.
+\end{aligned}
+\tag{13.42}
+$$
+
+For the final numerical comparison, $135000<399^2$, so
+$2(\sqrt{135000}+1)<800$. This proves (13.24) with the full
+unhalved reference norm. $\square$
+
+The concrete use is finite-precision average-channel certification
+in this specified model: uniform error at most $\varepsilon$ in
+the immediate effect and the four actual labelled continuation
+effects certifies diamond error at most $800\sqrt\varepsilon$
+for the corrected average, including correlations with every finite
+inaccessible reference. Theorem 13.1 supplies exact rigidity and
+the source identities; (13.32)–(13.42) supply its quantitative
+continuation, rather than inferring a modulus from exact rigidity
+alone. Finite CP/Kraus representation, frame estimates, isometric
+dilations, the trace-norm ideal property and trace/operator-norm
+duality are standard finite-dimensional suppliers; see, for example,
+John Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapters 2–3. The actual full-$H$ identities are (11.1),
+(13.7)–(13.8), and (13.17)–(13.20) of this volume, with fixed
+source version `e0e3018402506726c33d4521451e9d3153abd0bc`.
+The quantitative increment here is source-relative; no global
+literature novelty, optimal constant, or optimal exponent is claimed.
+
+The estimate supplies no calibration-error model,
+physical realization, resource minimum, or additional exact
+record/resource classification. The known instrument is held fixed
+when the defect is evaluated. The estimate does not transfer to
+every rare history/record branch: approximate closeness of an
+average does not give Theorem 13.1's exact rank-one-mixture conclusion
+uniformly on branches with arbitrarily small weights. The original
+critical causal-memory and realization questions retain their own
+hypotheses and unresolved boundaries.
+
+The optimal local modulus remains undetermined: for these same
+actual tests, determine whether a uniform local linear modulus is
+available or whether lawful CPTP perturbations require square-root
+behavior. Neither alternative is resolved here.
+
+## 追加锚（本行以下为增补区）

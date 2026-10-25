@@ -1348,3 +1348,374 @@ $$
 本节的承重结论是这些既有仪器和数值边界在本卷精确摘要合同中的应用；采用普通有限维数学证明，不主张新的概率表示、量子重建、物理定律或文献原创性。相干态、去相干态和正定态两组输入分别检验 populations 与事件支持的合并，不能将任一反例扩大为全部摘要不可能或任意记忆下界。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Normalized periodic startup laws and their exact phase constraints
+
+**Definition 17.1 (a source-bound startup lasso).** Throughout §§17–20 keep Assumption 1.1 and Definition 1.4, with $a\ne b$ and $0<2\epsilon<\kappa$. The parameters $p,q,r,\epsilon$ are real. In particular $0<u<v<1$, both holding orientations are included, and $p=q$ is allowed. All histories, initialization, normalized emissions and the same total actual/generated update have exactly the meanings of Definitions 1.2–1.3. No synchronization delay or history-probability cutoff is added.
+
+Fix integers $K\ge1$, $\ell\ge1$. For each phase $i\in\{0,\ldots,\ell-1\}$ supply real numbers
+
+$$
+t_i,\alpha_i,\beta_i\ge0,\qquad
+ t_i+\alpha_i+\beta_i=1,\qquad
+ \Gamma=\prod_{i=0}^{\ell-1}t_i<1.
+\tag{17.1}
+$$
+
+Here $\alpha_i$ is unconditional dominant-category exit mass, and $\beta_i$ is unconditional minority-category exit mass. They are not source transition parameters. Write $[i+j]$ for reduction modulo $\ell$, and use the source conditional exit rows $E_d,E_f$ of Definition 5.1. Define one observer on the disjoint labels
+
+$$
+I,\quad R_0,\ldots,R_4,\quad
+ A_0,\ldots,A_{K-1},\quad T_0,\ldots,T_{\ell-1}.
+\tag{17.2}
+$$
+
+For every label $z$ and every singleton $j\in\{0,1,3\}$ set $U(z,j)=R_j$. Its complete $B$ update is
+
+$$
+\begin{aligned}
+U(I,B)&=A_0,&
+U(A_k,B)&=A_{k+1} &&(0\le k<K-1),\\
+U(A_{K-1},B)&=T_0,&
+U(T_i,B)&=T_{[i+1]},\\
+U(R_0,B)&=R_4,&
+U(R_1,B)=U(R_3,B)&=R_2,\\
+U(R_2,B)&=R_2,&U(R_4,B)&=R_4.
+\end{aligned}
+\tag{17.3}
+$$
+
+The initial label is $I$. In visible order $(0,1,3,B)$ its row is $(1/5,1/5,1/5,2/5)$. The row at $R_j$ is $v_j$ from Proposition 2.1, and the row at $A_k$ is $(1-\delta_k)v_d+\delta_kv_f$. At phase $T_i$ set
+
+$$
+e_{T_i}(B)=t_i,\qquad
+ e_{T_i}(j)=\alpha_iE_d(j)+\beta_iE_f(j)
+ \quad(j\in\{0,1,3\}).
+\tag{17.4}
+$$
+
+These data specify every row and every update, including actual source-legal exits of forecast probability zero. A phase with $t_i=1$ has $\alpha_i=\beta_i=0$ and is allowed if another phase makes $\Gamma<1$. A zero $t_i$ is also allowed. No division by $1-t_i$ is needed. The label phase is retained internally; no external counter advances it.
+
+**Definition 17.2 (two complete-law errors per phase).** Let $Q_i$ be the complete generated profile at $T_i$. For $n\ge0$ put
+
+$$
+C_{i,n}=\prod_{h=0}^{n-1}t_{[i+h]},\qquad C_{i,0}=1.
+\tag{17.5}
+$$
+
+The probability of first exit after exactly $n$ further $B$ symbols, in category $d$ or $f$, is respectively
+
+$$
+q_i(n,d)=C_{i,n}\alpha_{[i+n]},\qquad
+q_i(n,f)=C_{i,n}\beta_{[i+n]}.
+\tag{17.6}
+$$
+
+For every $x\in[0,1]$ define
+
+$$
+\begin{aligned}
+\mathcal E_i(x)=1
+ &-\sum_{n\ge0}\min\bigl((1-x)(1-v)v^n,
+                          C_{i,n}\alpha_{[i+n]}\bigr)\\
+ &-\sum_{n\ge0}\min\bigl(x(1-u)u^n,
+                          C_{i,n}\beta_{[i+n]}\bigr).
+\end{aligned}
+\tag{17.7}
+$$
+
+All series are nonnegative and bounded by one. The phase feasibility conditions are exactly
+
+$$
+\boxed{\quad
+\mathcal E_i(0)\le\epsilon,\qquad
+\mathcal E_i(\delta_{K+i})\le\epsilon
+\quad(0\le i<\ell).
+\quad}
+\tag{17.8}
+$$
+
+The second endpoint is the minority weight at that phase's first actual occurrence, $K+i$. It is not replaced by the larger weight $\delta_K$ at all phases.
+
+The already defined weighted geometric overlap $\mathcal O$ of Definition 5.4 gives a finite-residue expression for each error. Define, for $0\le j<\ell$,
+
+$$
+\begin{aligned}
+V_j(x)&=\frac{(1-x)(1-v)v^j}{1-v^\ell},&
+U_j(x)&=\frac{x(1-u)u^j}{1-u^\ell},\\
+D_{ij}&=\frac{C_{i,j}\alpha_{[i+j]}}{1-\Gamma},&
+L_{ij}&=\frac{C_{i,j}\beta_{[i+j]}}{1-\Gamma}.
+\end{aligned}
+\tag{17.9}
+$$
+
+Then the equivalent expression used below is
+
+$$
+\mathcal E_i(x)=1-\sum_{j=0}^{\ell-1}
+\left[
+\mathcal O\bigl(V_j(x),v^\ell;D_{ij},\Gamma\bigr)
++\mathcal O\bigl(U_j(x),u^\ell;L_{ij},\Gamma\bigr)
+\right].
+\tag{17.10}
+$$
+
+Thus, for fixed $K,\ell$, feasibility has $2\ell$ inequalities on $\ell$ normalized triples, or $2\ell$ free real row coordinates. The source and phase indices in this expression are finite; no finite truncation of a future horizon is being substituted for the errors.
+
+**Theorem 17.3 (necessary and sufficient phase feasibility).** The observer of Definition 17.1 satisfies the unchanged uniform accuracy contract of Definition 1.3 if and only if (17.8) holds. For all $i$ and $x\in[0,1]$,
+
+$$
+d(G_x,Q_i)=\mathcal E_i(x).
+\tag{17.11}
+$$
+
+For each $k<K$ its exact transient error and initialized error are
+
+$$
+\begin{aligned}
+d(G_{\delta_k},D_{A_k})
+ &=\frac{u^K+v^K}{u^k+v^k}\,\mathcal E_0(\delta_K),\\
+d(F_*,D_I)
+ &=\frac{u^K+v^K}{5}\,\mathcal E_0(\delta_K).
+\end{aligned}
+\tag{17.12}
+$$
+
+Every label in (17.2) is actually reached. In particular the full initialized cardinality is $6+K+\ell$, with no omitted generated-only resource. Feasibility implies the strict condition $K\ge J$.
+
+Proof. The exact pure generator and its total update are the suppliers in Proposition 2.1 and Theorem 6.1. Each $E_d,E_f$ is normalized, so (17.1) makes (17.4) a normalized nonnegative row. Consequently Definition 1.3 gives coherent profiles on the whole carrier. The actual-history invariant, obtained from Proposition 2.1 and (17.3), is
+
+$$
+z(h)=
+\begin{cases}
+I,&h=\varnothing,\\
+A_k,&h=B^{k+1},\ k<K,\\
+T_{[k-K]},&h=B^{k+1},\ k\ge K,\\
+R_j,&h\text{ contains a singleton and its current mode is }j.
+\end{cases}
+\tag{17.13}
+$$
+
+This invariant uses actual source probabilities, irrespective of any zero in a forecast row. All five pure labels have the positive witnesses in Proposition 2.1; every startup label has its displayed positive all-$B$ witness.
+
+For the error computation, the survivor mass at phase $i$ after $m\ell+j$ generated $B$ symbols is
+
+$$
+C_{i,m\ell+j}=\Gamma^m C_{i,j},\qquad
+m\ge0,\quad0\le j<\ell.
+\tag{17.14}
+$$
+
+In particular it tends to zero. Products and (17.14) remain valid at $\Gamma=0$, with $0^0=1$. The exit law (17.6) is normalized, since exit masses telescope as $C_{i,n}-C_{i,n+1}$ and the survivor limit is zero. The true law $G_x$ exits in the same two disjoint categories with masses $(1-x)(1-v)v^n$ and $x(1-u)u^n$. Within category $d$ its exit symbol has law $E_d$, and within category $f$ it has law $E_f$; these conditional proportions agree with (17.4) whenever the corresponding mass is positive. After individual exit symbol $j$, both laws have the exact continuation $F_j$.
+
+Apply Lemma 2.2 and the normalized overlap identity, grouping exit symbols within each category. The common within-category law and common post-exit continuations make each category's absolute contribution the absolute difference of its coefficients. This gives (17.11) with precisely (17.7). Regrouping its nonnegative terms by $n=m\ell+j$, and using (17.14), gives (17.10): for example the dominant sequences are
+
+$$
+V_j(x)(1-v^\ell)(v^\ell)^m,
+\qquad D_{ij}(1-\Gamma)\Gamma^m.
+$$
+
+The minority sequences give the other overlap. This is a complete-law identity, not only a next-symbol or unmarked waiting-time calculation.
+
+For necessity of (17.8), phase $i$ occurs on every actual history $B^{K+i+m\ell+1}$, $m\ge0$. The true profiles there are $G_{\delta_{K+i+m\ell}}$. Accuracy at $m=0$ and (17.11) give the second inequality. Since their distances to $F_d=G_0$ tend to zero, the triangle inequality gives $d(F_d,Q_i)\le\epsilon$, hence the first inequality. No actual infinite history is acquired in taking this limit.
+
+For sufficiency, $G_x$ is affine in $x$ and finite-word TV is convex. Therefore the two bounds at $0$ and $\delta_{K+i}>0$ give
+
+$$
+d(G_x,Q_i)\le\epsilon
+\quad\text{for every }0\le x\le\delta_{K+i}.
+\tag{17.15}
+$$
+
+This includes all later minority weights assigned to phase $i$ by (17.13). Every synchronized actual history is exact at its pure label. At $A_k$, put $m=K-k$. The true rows on the transient chain and singleton resets agree with the source until either the first singleton or $m$ further $B$ symbols. In the first case the full continuation agrees. In the second, the common prefix has probability
+
+$$
+S_{k,K}=\frac{u^K+v^K}{u^k+v^k}\le1,
+$$
+
+and the two residuals are $G_{\delta_K}$ and $Q_0$. Thus finite-word TV is zero for $H\le m$, and equals
+
+$$
+S_{k,K}\operatorname{TV}
+\bigl(G_{\delta_K}^{H-m},Q_0^{H-m}\bigr)
+\quad\text{for }H>m.
+$$
+
+This is the exact-prefix localization of Theorem 6.1 with its terminal residual replaced by $Q_0$; agreement on all other prefix branches is unchanged. Taking the supremum proves the first identity of (17.12). The initialized singleton branches agree, and the first $B$ has probability $2/5$ and enters $A_0$. The same localization proves the second identity, since $u^0+v^0=2$. Both prefactors are at most one. Hence (17.8) verifies all remaining histories and the empty query.
+
+Finally $T_0$ repeats after $\ell$ further $B$ inputs. Apply the strict recurrence theorem 4.2 to its first occurrence at startup index $K$. It gives $\delta_K<2\epsilon$, equivalently $K\ge J$. This uses the existing periodic diameter obstruction, including the excluded exact tie, without restricting the phase rows further. $\square$
+
+## 18. Normalization of every smaller unrestricted carrier
+
+**Theorem 18.1 (no-larger normalized replacement).** Let $O$ be any finite observer of Definition 1.3 satisfying the original guarantee. Write $n=|Z|$ for its whole carrier, including initialization and generated-only configurations. If
+
+$$
+n<6+N_1,
+\tag{18.1}
+$$
+
+then there are integers $K\ge J$, $\ell\ge1$, with
+
+$$
+K+\ell\le n-6<N_1,
+\tag{18.2}
+$$
+
+and real normalized rows (17.1) satisfying all of (17.8). Consequently Definition 17.1 gives an accurate replacement of size $6+K+\ell\le n$.
+
+The statement imposes no form on $O$ before the replacement. It includes duplicated recurrent presentations, synchronized transient exits, arbitrary singleton proportions, generated-only states, and arbitrary total updates. It asserts existence of another accurate observer; it does not assert an isomorphism or preservation of all the original observer's generated profiles.
+
+Proof. By Theorem 3.1 choose any closed irreducible class $C$ of the actual synchronized source–observer pair chain. Its complete generated profiles are exact pure profiles, and its configuration projection contains at least five distinct labels. By Corollary 4.4 and (18.1), the startup orbit
+
+$$
+z_k=z(B^{k+1}),\qquad k\ge0,
+$$
+
+never meets this projection. Initialization lies outside that projection because its accurate profile is separated from every pure law by Proposition 2.1. It also lies outside the startup orbit: otherwise its one decoder would be within $\epsilon$ of both $F_*$ and a startup mixture, whose distance is at least $1/25>2\epsilon$.
+
+The startup orbit is a finite orbit of $z\mapsto U(z,B)$. Reuse finite-map eventual periodicity, as in `FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic`, choosing its least entry index and least period. It consists of $K$ distinct transient labels followed by $\ell\ge1$ distinct cyclic labels, with no collisions among those $K+\ell$ labels. These labels avoid initialization and all five selected exact labels. Hence $K+\ell\le n-6$. The collision $z_K=z_{K+\ell}$ and Theorem 4.2 give $K\ge J\ge1$.
+
+Extract only the following row data from each original cyclic label $z_{K+i}$:
+
+$$
+\begin{aligned}
+t_i&=e_{z_{K+i}}(B),\\
+\alpha_i&=\sum_{j\in\operatorname{supp}E_d}e_{z_{K+i}}(j),\\
+\beta_i&=\sum_{j\in\operatorname{supp}E_f}e_{z_{K+i}}(j).
+\end{aligned}
+\tag{18.3}
+$$
+
+The two exit supports partition $\{0,1,3\}$, so these triples are nonnegative and normalized. If $\Gamma=1$, all cyclic $B$ emissions equal one and the generated future from every cyclic label is all $B$ forever. At such a label its TV distance from $F_d$ tends to one, whereas the positive startup histories at that phase force distance at most $\epsilon$ from $F_d$ by their limiting true profiles. Since $\epsilon<1$, this is impossible. Thus $\Gamma<1$.
+
+Before its first singleton the original generator follows precisely this cycle. Its first-exit time and category distribution is therefore (17.6), independently of what its singleton updates do afterward. Call its full profile at $z_{K+i}$ $Q_i^{\mathrm{old}}$. Accuracy on all $B^{K+i+m\ell+1}$ gives
+
+$$
+d(G_{\delta_{K+i}},Q_i^{\mathrm{old}})\le\epsilon,
+\qquad d(F_d,Q_i^{\mathrm{old}})\le\epsilon.
+\tag{18.4}
+$$
+
+The second bound again follows by the profile-metric limit. Coarsen each profile in (18.4) to first-exit time and category, using Lemma 2.2 and a further finite category coarsening. This contracts both distances, and the contracted endpoint errors are exactly $\mathcal E_i(\delta_{K+i})$ and $\mathcal E_i(0)$. Thus (17.8) holds for the extracted triples.
+
+Use these triples in Definition 17.1. Replacing exit proportions by $E_d,E_f$ and sending each singleton directly to $R_j$ realizes those contracted errors as full errors by Theorem 17.3. Replacing all startup transient rows by the true transient rows makes the earlier errors the localized quantities (17.12), each at most $\epsilon$. The resulting five-state pure generator, initialization, transients and phases are all on one explicitly specified carrier. Its size is $6+K+\ell\le n$ and its actual update is total.
+
+No deletion of a generated-only label from $O$ was presumed harmless. Rather, $n$ first counts every such label, and (18.2) is a lower count inside that complete carrier. The different constructed observer then uses only its own listed labels. Likewise no unique recurrent source presentation or exact synchronized exit machinery was inferred from $O$; only the supplied exact class and the contracted first-exit data were used. $\square$
+
+## 19. The exact unrestricted cardinality as phase feasibility
+
+**Definition 19.1 (the bounded phase-feasible set).** Let
+
+$$
+\mathscr F=\left\{(K,\ell):
+\begin{array}{l}
+K,\ell\text{ integers},\quad K\ge J,\quad\ell\ge1,\quad K+\ell<N_1,\\
+\text{there exist real triples satisfying (17.1) and (17.8)}
+\end{array}\right\}.
+\tag{19.1}
+$$
+
+There are only finitely many integer pairs in this set. Its real-row existence tests are the explicit phase constraints (17.7), equivalently (17.10), rather than a quantification over arbitrary observers, decoders or exit graphs. No existence of a rational optimizer is included in this definition.
+
+**Theorem 19.2 (unrestricted initialized minimum).** For the whole competitor class of Definition 1.3, at every allowed real unequal-holding source and tolerance in the separation domain,
+
+$$
+\boxed{\displaystyle
+N_{\mathrm{gen}}(\epsilon)
+=6+\min\left(\{N_1\}\cup
+             \{K+\ell:(K,\ell)\in\mathscr F\}\right).
+}
+\tag{19.2}
+$$
+
+All the phase error inequalities are non-strict. The entry cutoff remains strict through $K\ge J$, and the source-exact alternative accepts $\delta_{N_1}=\epsilon$. The formula holds in both holding orientations and at $p=q$.
+
+Proof. The source-exact construction of Theorem 6.1 has $6+N_1$ configurations and satisfies the unchanged guarantee. Every pair in $\mathscr F$, with any of its witnessing real rows, gives $6+K+\ell$ accurate configurations by Theorem 17.3. The finite nonempty set on the right of (19.2) therefore gives an attained upper bound.
+
+Conversely let $O$ be any accurate finite competitor of size $n$. If $n\ge6+N_1$, it is no smaller than that right-hand side. If $n<6+N_1$, Theorem 18.1 supplies a pair in $\mathscr F$ with $6+K+\ell\le n$. Again the right-hand side is no larger than $n$. This applies to every finite carrier, so it proves the matching lower bound and (19.2). $\square$
+
+For $\ell=1$, write $t=t_0$ and, since $\Gamma=t<1$, $\beta_0=(1-t)\beta$, $\alpha_0=(1-t)(1-\beta)$. Then (17.8) is exactly the two-variable geometric criterion of Definition 5.4 at $D=\delta_K$. Thus no new one-phase optimization is claimed. In the first-candidate situation of Theorem 6.3, $K+\ell=N_2+1$ and $K\ge J\ge N_2$ force $K=N_2,\ell=1$; a diameter tie makes even that impossible. Equation (19.2) retains that theorem and its tie behavior while admitting every larger candidate below the source-exact alternative.
+
+The reduction is stronger than eventual periodicity alone: it removes all separate exit machinery and duplicated synchronized presentations, normalizes within-category exit proportions, replaces every startup transient row by its true row, and reduces every infinite family of actual startup obligations to two complete-law errors for each retained phase. These replacements, together with the bound $K+\ell<N_1$, are the additional content relative to Definition 10.2. The remaining continuous feasibility problems are not analytically eliminated for every real parameter.
+
+At equal holdings $a=b$ the assumptions of §§17–19 do not apply; Theorem 7.1 supplies the separate initialized minimum seven, including zero error. At unequal holdings and zero error it supplies absence of a finite observer. Neither result is changed by substituting a limiting value into (19.2).
+
+## 20. Supplied-witness checking, actual acquisition and callable use
+
+**Corollary 20.1 (an exact checker for rational supplied witnesses).** Suppose exact rational $p,q,r,\epsilon$ are supplied in binary, as in Assumption 9.1, together with integers $K,\ell$ and rational phase triples. There is a terminating exact decision of whether these data satisfy the small unequal-holding domain, (19.1)'s integer bounds, (17.1) and all of (17.8), including equality cases. Accepted data specify an accurate total observer by (17.2)–(17.4). This checks a supplied witness, without deciding existence of real rows, existence of rational rows at every feasible boundary, or which structural pair attains the minimum.
+
+Proof. Rational arithmetic checks admissibility, the tolerance including its strict margin, unequal holdings, normalization and $\Gamma<1$. Proposition 9.2 supplies exact terminating cutoff calculations for $J,N_1$, including ties. All quantities in (17.9) are rational, with positive denominators.
+
+For completeness, each occurrence of the existing overlap $\mathcal O(A,\rho;B,\sigma)$ in (17.10) has $A,B\ge0$ and $0\le\rho,\sigma<1$. Write $a_0=A(1-\rho)$ and $b_0=B(1-\sigma)$. Its summands are $\min(a_0\rho^m,b_0\sigma^m)$. A zero $A$ or $B$ gives zero. If $\rho=\sigma$, the overlap is $\min(A,B)$. If $\sigma=0<\rho$, it is $\min(a_0,B)$; the symmetric zero case is $\min(A,b_0)$. These cases include a cycle with $\Gamma=0$ and zero exit-category masses.
+
+In the remaining case both ratios are positive and unequal. If $\rho<\sigma$, let $M$ be the first integer with $a_0\rho^M\le b_0\sigma^M$. The positive ratio $a_0\rho^m/(b_0\sigma^m)$ strictly decreases to zero, so exact successive rational comparisons find $M$. Summing the two geometric pieces gives
+
+$$
+\mathcal O(A,\rho;B,\sigma)
+=B(1-\sigma^M)+A\rho^M.
+\tag{20.1}
+$$
+
+If $\rho>\sigma$, use the first $M$ with $a_0\rho^M\ge b_0\sigma^M$, which exists by the increasing ratio. Then
+
+$$
+\mathcal O(A,\rho;B,\sigma)
+=A(1-\rho^M)+B\sigma^M.
+\tag{20.2}
+$$
+
+Zero coefficients were already handled. At an exact crossing either assignment of its equal summands gives the same value. Each overlap, hence each endpoint error and its non-strict comparison against the supplied rational $\epsilon$, is now an exact rational computation. There are at most $4\ell^2$ overlap occurrences in all $2\ell$ endpoint tests. This proves termination and the claimed exact boundary decisions. These geometric sums are intermediate evaluations of Definition 5.4, not a new general distance algorithm for arbitrary labelled Markov chains. $\square$
+
+The rational hypothesis includes the tolerance. A finite rational source and rational witness do not provide an exact comparison against an arbitrary real tolerance name. Conversely, the real-parameter theorems 17.3–19.2 do not require rationality of any of their parameters or witnessing rows. General approximation names, without a stronger comparison service or certified slack, provide neither their exact equality tests nor uniform synthesis at their boundary cases, as already distinguished in §9.
+
+**Definition 20.2 (one installed execution and its separately charged requests).** Fix one actual source run from Assumption 1.1, one supplied feasible observer from Definition 17.1 and its installed model/row data. Initialization writes $I$. After $n$ actual acquired symbols, where $n\ge0$, exactly $n$ passive read deliveries and $n$ applications of the total table $U$ produce the retained label in (17.13). There is no hidden-mode access, reset, replayed source, supplied recording age or archive consultation. The labels $A_k,T_i$ encode precisely the unresolved transient position or periodic phase used by this observer. A singleton acquired on this very run overwrites it by the correct $R_j$, even if the forecast probability of that singleton was zero.
+
+At a chosen boundary a request can return the installed symbolic generator together with its current label, a single generated word probability, or the full horizon-$H$ law. Its interpretation is the next-read convention of Definition 1.2, including $Y_0$ at initialization. A hypothetical word evaluator uses a scratch copy of the classical label and applies this same $U$ along that word; it does not advance or clone the actual source, or replace the retained actual label by a hypothetical successor. Scratch, request and output storage are additional to the retained configuration. Subsequent actual acquisitions continue from the retained label by (17.3).
+
+For general real row data these requests specify mathematical laws, and finite-word outputs may be left as symbolic products in the supplied row names. The finite label update is directly tabulated; effective exact numerical output is asserted below only for the rational representation. A finite list of arbitrary real names is not thereby a finite exact numerical implementation.
+
+**Proposition 20.3 (same-run represented resources).** In the execution of Definition 20.2 put $N=6+K+\ell$. Under the fixed-width naming convention of Definition 9.3, the retained label requires and admits $\lceil\log_2N\rceil$ bits; all $N$ values are actually reachable on some positive history. For the one chosen execution with $n$ reads and any finite list of subsequent word-law requests, the acquisition work is exactly the $n$ reads and $n$ table updates just specified, and each individual length-$H$ word request can be evaluated with $H$ row-factor multiplications and $H$ scratch-label updates. A direct complete horizon-$H$ table uses $4^H$ entries and can be evaluated with $H4^H$ such multiplications and updates. These arithmetic-operation counts do not declare unit bit cost for rational arithmetic or for sensor acquisition.
+
+In the rational specialization, let $B$ bound the numerator and denominator bit lengths of each supplied source parameter and tolerance, and let $L$ bound those of each supplied phase coordinate. One sufficient installed emission/update table for this same observer has size
+
+$$
+O\bigl((K+1)^2B+\ell(B+L)+N\log(N+1)\bigr)
+\quad\text{bits}.
+\tag{20.3}
+$$
+
+For $C=O((K+1)B+B+L)$ bounding a single installed rational row entry's numerator and denominator lengths, a single length-$H$ product has a sufficient $O(HC+1)$-bit rational output and accumulator. Its materialized input word uses $2H$ symbol bits; a scratch label and traversal indices must also be allocated. A direct materialized full law with explicit word addresses has sufficient output size $O(4^H(HC+H+1))$ bits. Copying a standalone symbolic descriptor copies the installed table and current label; referring to an already retained table still charges that table to this execution.
+
+Proof. Reachability and the exact initialized cardinality are Theorem 17.3. The naming argument is the existing capacity statement in Definition 9.3. A word probability is exactly the product in Definition 1.3, which performs the stated number of factors and total updates without conditional divisions. Evaluating all $4^H$ words separately proves the sufficient full-table operation count. No claim of optimal evaluation or simultaneous scratch-space minimality is made.
+
+For (20.3), source rows have $O(B)$-bit entries. The true row at transient $k$ has $O((k+1)B)$-bit rational entries by the power-ratio calculation of Proposition 9.2; summing over $k<K$ gives $O((K+1)^2B)$. Each phase row is made from its supplied coordinates and the fixed source exit proportions $E_2=(0,q/s,p/s)$ and $E_4=(1,0,0)$, costing $O(B+L)$ bits per entry and a constant number of entries per phase. Four successor addresses per label cost $O(N\log(N+1))$. Products of $H$ entry numerators and denominators add at most their bit lengths, proving the accumulator/output bound; fraction reduction cannot enlarge it. Materializing the addresses and every probability gives the sufficient full-law storage bound.
+
+If the supplied-witness checker is used once when installing this very table, its work and workspace are charged separately to that run. For an implementation scanning successive rational powers as in Corollary 20.1, let $M_\nu$ be the crossing index actually reached by each nontrivial overlap test in this installation. A sufficient rational-operation count for that check is
+
+$$
+O\left(N_1+\ell^2+\sum_\nu(M_\nu+1)\right).
+\tag{20.4}
+$$
+
+Computing cutoffs up to $N_1$ covers $J\le N_1$; forming all phase-prefix products takes $O(\ell^2)$ operations; each crossing scan takes $O(M_\nu+1)$ operations, with its exact geometric sums afterward. All operands' growing bit lengths, comparison work, input decoding and installation writes still count. The values $M_\nu$ belong to this one supplied witness, and (20.4) asserts no parameter-independent or polynomial bit bound. Choosing or obtaining the witness is not included as a free oracle operation. $\square$
+
+The accuracy statements concern conditional laws, not a realized future word or an old archive. A periodic phase admits unboundedly many startup ages, and the source witnesses of Proposition 10.3 already prevent general archive/age recovery from a predictive boundary. Equation (19.2) optimizes only the abstract initialized label count among fixed-installed-source deterministic observers. It does not optimize the total table, scratch, numerical precision, latency or physical memory of the one execution above. The source-bound model and witnessing rows are supplied design data; §§17–20 do not acquire an unknown real calibration, choose a feasible real witness effectively, or install a native sensor. In particular the nonsingleton-calibration obstructions of [Finite-start Predictive Memory, §§10–11](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md) retain their original common-observer domains.
+
+## 21. Supplier subtraction and the remaining recovery boundary
+
+**Definition 21.1 (source-relative content and correspondence).** The normalization theorem 18.1, the phase-complete characterization 17.3 and the unrestricted cardinality identity 19.2 are `repo-derived` ordinary mathematical results. Their source-specific addition is the contraction-and-replacement argument for every carrier below $6+N_1$, including all the extra machinery enumerated in Definition 10.2. The following previously supplied results keep their own proofs and scopes.
+
+| Supplier | Reused content and the remaining application |
+| --- | --- |
+| This volume, Proposition 2.1 and Lemma 2.2; [Finite-start Predictive Memory, §§1–5](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md) | Actual reachable profiles, positive startup histories, singleton synchronization, mixture geometry, separation, first-exit contraction and common-continuation equality. Their new consumer is the normalized multi-phase replacement; these facts are not new claims here. |
+| This volume, Theorems 3.1, 4.2 and Corollary 4.4; [`FiveModeRecurrentPairRigidity`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeRecurrentPairRigidity.lean), `recurrent_pair_rigidity`; [`FiveModeStrictStartup`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeStrictStartup.lean), `startup_collision_strict` | Exact synchronized recurrent classes and the strict periodic tie obstruction. Theorem 18.1 uses their original unrestricted hypotheses to reserve five exact labels and separate the entire smaller startup orbit. Their affinity and diameter proofs are not repeated. |
+| [`FiniteOrbitPeriodBound`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean), `finite_orbit_and_readout_eventually_periodic` | Ordinary finite-map eventual periodicity supplies the orbit form. It does not remove exit graphs, normalize rows, certify all-history approximation or prove (19.2); those are the additional source-specific steps. |
+| This volume, Definitions 5.1, 5.4, Theorems 5.5, 6.1 and 6.3; [`FiveModeSelfGeneratedLaws`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/ObserverMemory/Prediction/FiveModeSelfGeneratedLaws.lean), `GeneratedObserver`, `source_product_localization`, `N1_generator_accuracy`, `initialized_generated_minimum` | The same-update interface, exact-prefix localization, source-exact alternative, attained-minimum background, and one-phase geometric feasibility are suppliers. The new phase constraints use the first weight $\delta_{K+i}$ at each phase and cover every structural pair below that alternative. The geometric crossing sums and rational storage estimates are intermediate applications of existing geometric laws and §9's representations. |
+| Chen–Kiefer, [*On the Total Variation Distance of Labelled Markov Chains*, arXiv:1405.2852v1, Definition 1, §4 and Theorem 7](https://arxiv.org/html/1405.2852v1), [DOI](https://doi.org/10.1145/2603088.2603099) | Source symbol matrices are $PD_y$; a generated observer has matrices $e_z(y)\mathbf1_{z'=U(z,y)}$. These are the primary finite labelled-chain definitions and fixed-machine full-process TV background. Their rational representation assumption for algorithms is retained. Fixed-machine equivalence and distance approximation do not themselves give this all-actual-history minimum or exact rational phase-witness test. |
+| [`OriginalRectangleSmoothing`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleSmoothing.lean), `finite_record_smoothing_by_original_success_count`; [`PositiveRectangleLaw`](https://github.com/the-omega-institute/trureturing/blob/d5e7fbecb49c0e928696f6857b331b3dbd54d128/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.lean), `actual_trimmed_obstruction` | The former bounds changes of a center-bit posterior under added exterior records, using positive rectangular words in a stationary binary presentation. The latter excludes those rectangles for presentations of its specified twelve-state visible law. Neither statement supplies this five-mode initialized cardinality normalization or its phase errors; no same-law identification or theorem transfer from those different tasks is assumed here. |
+
+The exact full-class statement is (19.2) with its explicit finite family of real-row feasibility problems. Analytical resolution of every such problem, a rational witness at every real feasible boundary, and effective arbitrary-real minimum synthesis remain unproved. All existing equality, zero-error, first-candidate and near-equality results retain their stated domains. There is no physical-realization, global-novelty or new Lean-certification claim for this addition.
+
+In this passive source, time exposes acquisition order, boundary exposes the coarse read $\chi$ and the retained conditional-law interface, and memory exposes the internally updated label. The relation established here is the exact minimum size of a boundary that can continue its own approximate law through the actual update, with source-bound acquisition and callable use given in §20. It supplies no spatial metric, clock duration, general old-archive inverse or four-way recovery. The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer and unchanged-initialization problems are not replaced by this stochastic instance. Acquiring calibration, references and rights, constructing a common atomic/quantum/continuous realization, and proving total-resource parsimony and unrestricted space–time–boundary–memory mutual recovery remain separate obligations of the full objective.
+
+## 追加锚（本行以下为增补区）

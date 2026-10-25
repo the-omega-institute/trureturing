@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82c660f4e6ae50cda27017864f070185b25385aea44a4b227d2c936440837024
+  normalized_sha256: sha256:82c660f4e6ae50cda27017864f070185b25385aea44a4b227d2c936440837024
+cas_ref: sha256:82c660f4e6ae50cda27017864f070185b25385aea44a4b227d2c936440837024
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: frontier 技术前件清单中的 genus-zero product 名称，不断言任何指定函数已有该乘积。
+    previous_atom_id: 66c1e40fcf19afc9d13d3af088fec1c7ba7a15d7d751373b1ff082c3afaf308b
+    next_atom_id: 22d6b9b199068a0d625ab62b1b636051634e010e19019aeb70ae6d509f7b7ff8
