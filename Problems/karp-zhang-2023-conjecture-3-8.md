@@ -162,8 +162,8 @@ gives the all-degree homogeneous positivity, the beta-lifting theorem and
 the paired-sign/Abel reduction.
 
 The Lean sources are
-`D5/S3/Analytic/KarpZhangNinh/Homogeneous.lean`,
-`D5/S3/Analytic/KarpZhangNinh/Beta.lean` and
+`D5/S3/Analytic/KarpZhangNinh/Beta.lean` (including the `Homogeneous` namespace)
+and
 `D5/S3/Analytic/KarpZhangNinh/Result.lean`.
 `Result.result : Result.claim` is kernel-checked by the scoped settling-module
 build. This is distinct from freezing and Scribe resolution admission.

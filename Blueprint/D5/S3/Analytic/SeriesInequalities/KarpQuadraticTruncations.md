@@ -4,7 +4,7 @@
 
 Two quadratic truncations of the Karp-Zhang series have nonnegative generalized Turan coefficients for every nonnegative real pair of shifts.
 
-The targets are r2 and r3 of issue #5969, from Dmitrii Karp and Yi Zhang, Log-concavity and log-convexity of series containing multiple Pochhammer symbols, Fractional Calculus and Applied Analysis 27 (2024), 458-486, DOI 10.1007/s13540-023-00238-0. The results concern only the specified truncations of Conjectures 1 and 2, not either full series conjecture.
+The two-term r = 3 polynomial and the quadratic with coefficients h0, h1*t and h2*t*(t+3)/2 are truncations of the multiple-Pochhammer series studied by Dmitrii Karp and Yi Zhang, Log-concavity and log-convexity of series containing multiple Pochhammer symbols, Fractional Calculus and Applied Analysis 27 (2024), 458-486, DOI 10.1007/s13540-023-00238-0. The results concern only the specified truncations of Conjectures 1 and 2, not either full series conjecture.
 
 **Theorem 1.1 (Nonnegative equal-degree Pochhammer difference).**
 
@@ -12,11 +12,11 @@ $$\forall (n: Nat), \forall (mu: Real), \forall (alpha: Real), \forall (beta: Re
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Dmitrii Karp and Yi Zhang (2023). *Log-concavity and log-convexity of series containing multiple Pochhammer symbols*. DOI: [10.1007/s13540-023-00238-0](https://doi.org/10.1007/s13540-023-00238-0). URL: <https://arxiv.org/abs/2305.09029>.
 
 *Commentary.*
 
-For every natural degree, positive real base and nonnegative real shifts, the product at the two intermediate parameters dominates the product at the endpoints. Each Pochhammer symbol is Mathlib's ascending Pochhammer polynomial in degree n evaluated at its parameter.
+Equation (6), printed page 4 of arXiv:2305.09029v3: “Note that [log((µ)ₙᵣ)]″ = ψ′(µ + rn) − ψ′(µ) ≤ 0,” where ψ is the digamma function. This log-concavity gives the four-point form: the product at µ+α and µ+β dominates the product at µ and µ+α+β for a positive base and nonnegative shifts. For each degree at least two, take the source index to be one and its multiplier r to be the degree. Degree zero gives equality; degree one gives the difference αβ ≥ 0. Each Pochhammer symbol is Mathlib's ascending Pochhammer polynomial in degree n evaluated at its parameter.
 
 **Definition 1.2 (The two-term r = 3 polynomial).**
 

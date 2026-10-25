@@ -6,7 +6,6 @@
    utility: none
    digest: Coefficientwise log-concavity for the triple rising-factorial series. -/
 
-import D5.S3.Analytic.KarpZhangNinh.Homogeneous
 import D5.S3.Analytic.KarpZhangNinh.Beta
 import D5.S3.Analytic.KarpZhangGamma.Result
 import D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations
@@ -14,8 +13,8 @@ import D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations
 /-!
 admission_basis: open-problem-resolution (#21124; Proved)
 Judgment form: the source claim keeps the full sequence predicate, all natural
-degrees, and all nonnegative real parameters. Supporting content is the
-trisection balancing inequality and the general symmetric beta lifting.
+degrees, and all nonnegative real parameters. The beta module hosts consumed bind-only
+trisection balancing helpers and the content-bearing symmetric beta lifting.
 Finite pairing, one-sign-change weighting and the Abel decomposition are
 reused from their existing owners.
 Utility none: all declarations are uniform polynomial identities and inequalities,
@@ -485,7 +484,7 @@ private theorem Z_symm (m : ℕ) (u v : ℝ) : Z m u v = Z m v u := by
   rw [show m+1-1-k=m-k by omega, show m-(m-k)=k by omega]
   exact mul_comm _ _
 
-/- proof_shape: content; escape_witness: Beta.betaMean_antiOn, Homogeneous.residue_filter;
+/- proof_shape: content; escape_witness: Beta.betaMean_antiOn;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.full_tail_nonneg;
 direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
 stacked_dependencies: none. -/
@@ -502,7 +501,7 @@ private theorem Z_monotoneOn (m : ℕ) (hm : 2≤m) {S : ℝ} (hS : 0≤S) :
   rw [lift_normalization, lift_normalization] at he
   exact (mul_le_mul_iff_right₀ (by positivity : (0:ℝ)<((3*m).factorial:ℝ))).mp he
 
-/- proof_shape: content; escape_witness: Homogeneous.strictMonoOn_slice;
+/- proof_shape: content; escape_witness: Beta.betaMean_antiOn;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg_pos;
 direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
 stacked_dependencies: none. -/

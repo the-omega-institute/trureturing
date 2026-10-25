@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Analytic/KarpZhangConjecture/Result
   - D5/S3/Analytic/KarpZhangCatalanPower/Result
   - D5/S3/Analytic/KarpZhangNinh/Result
+  - D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations
 license: citation-only
 triage: anchor
 ---
@@ -158,3 +159,30 @@ with $(\mu)_{rn}/(rn-1)!$ is neither coefficient-wise log-convex nor
 coefficient-wise log-concave for $r\ge4$ by numerical computations.
 This is a source-reported numerical boundary, not an all-parameter
 formal refutation supplied by the $r=3$ assertion.
+
+## Rising-factorial log-concavity, equation (6), page 4
+
+> Note that
+>
+> $$
+> [\log((\mu)_{nr})]''=\psi'(\mu+rn)-\psi'(\mu)\le0, \tag{6}
+> $$
+
+Here $\psi$ is the digamma function. For any degree $d\ge2$, take the
+source index $n=1$ and multiplier $r=d$. The log-concavity assertion gives
+the four-point inequality below: for $F(t)=\log((t)_d)$, concavity makes
+$F(t+\alpha)-F(t)$ nonincreasing in $t$. Comparing $t=\mu$ and
+$t=\mu+\beta$ and exponentiating gives
+
+$$
+(\mu+\alpha)_d(\mu+\beta)_d
+\ge (\mu)_d(\mu+\alpha+\beta)_d
+\qquad(\mu>0,\ \alpha,\beta\ge0).
+$$
+
+Degree zero is equality and the degree-one difference is $\alpha\beta$.
+This is `KarpQuadraticTruncations.pochhammer_turan_nonneg`; its owner is
+`D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.lean`.
+The homogeneous trisection identities for Conjecture 3.8 are in the
+`Homogeneous` namespace of `D5/S3/Analytic/KarpZhangNinh/Beta.lean`;
+the same module supplies symmetric beta lifting.

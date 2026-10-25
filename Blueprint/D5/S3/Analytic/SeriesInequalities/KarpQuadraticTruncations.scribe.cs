@@ -15,7 +15,7 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
         H("Karp-Zhang Quadratic Truncations"),
         Blocks(
             Paragraph(Text(
-                "The targets are r2 and r3 of issue #5969, from Dmitrii Karp and Yi Zhang, "
+                "The two-term r = 3 polynomial and the quadratic with coefficients h0, h1*t and h2*t*(t+3)/2 are truncations of the multiple-Pochhammer series studied by Dmitrii Karp and Yi Zhang, "
                     + "Log-concavity and log-convexity of series containing multiple Pochhammer "
                     + "symbols, Fractional Calculus and Applied Analysis 27 (2024), 458-486, "
                     + "DOI 10.1007/s13540-023-00238-0. The results concern only the specified "
@@ -35,12 +35,17 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
                                                 Poch(Add(F.Id("mu"), F.Id("beta")))),
                                             Multiply(Poch(F.Id("mu")),
                                                 Poch(Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Asymptotics/karpzhang2023pochhammer")),
                 Blocks(Paragraph(Text(
-                    "For every natural degree, positive real base and nonnegative real shifts, "
-                        + "the product at the two intermediate parameters dominates the product "
-                        + "at the endpoints. Each Pochhammer symbol is Mathlib's ascending "
-                        + "Pochhammer polynomial in degree n evaluated at its parameter."))),
+                    "Equation (6), printed page 4 of arXiv:2305.09029v3: “Note that [log((µ)ₙᵣ)]″ = ψ′(µ + rn) − ψ′(µ) ≤ 0,” "
+                        + "where ψ is the digamma function. This log-concavity gives the four-point form: "
+                        + "the product at µ+α and µ+β dominates the product at µ and µ+α+β "
+                        + "for a positive base and nonnegative shifts. For each degree at least two, "
+                        + "take the source index to be one and its multiplier r to be the degree. "
+                        + "Degree zero gives equality; degree one gives the difference αβ ≥ 0. "
+                        + "Each Pochhammer symbol is Mathlib's ascending Pochhammer polynomial "
+                        + "in degree n evaluated at its parameter."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("r2-polynomial"),
