@@ -6,12 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.claim; result=D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.result; claim=D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.claim
    digest: A uniform characteristic-two family refutes the sparse-power self-conjugacy assertion. -/
 
-import Mathlib.Algebra.CharP.Two
 import Mathlib.Algebra.Polynomial.Expand
-import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 noncomputable section
 
