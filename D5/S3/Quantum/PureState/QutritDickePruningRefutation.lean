@@ -189,10 +189,36 @@ private theorem scale_II (n m l₁ l₂ : ℕ) (a : ℝ) (f : State n) :
     II n m l₁ l₂ (fun t => a * f t) = fun t => a * II n m l₁ l₂ f t := by
   simp only [II, scale_X, scale_R]
 
+set_option maxHeartbeats 800000 in
+private theorem I53_input : I 5 5 3 (basisState inputWord) = basisState inputWord := by
+  funext t
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [ht]
+  generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
+    norm_num [I, V, controlledX, controlledR, controlsHold, wire, put,
+      basisState, inputWord, Equiv.swap_apply_def, Function.update_apply,
+      funext_iff, Fin.forall_fin_succ]
+
+set_option maxHeartbeats 800000 in
 private theorem project_W5 :
     project 0 0 (prunedW 5 5 witnessOccupation (basisState inputWord)) =
       fun t => (1 / Real.sqrt 5) * basisState branchWord t := by
-  sorry
+  change project 0 0 (II 5 5 4 1 (I 5 5 3 (basisState inputWord))) = _
+  rw [I53_input]
+  funext t
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [ht]
+  generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
+    norm_num [project, II, controlledX, controlledR, controlsHold, wire, put,
+      basisState, inputWord, branchWord, Equiv.swap_apply_def, Function.update_apply,
+      funext_iff, Fin.forall_fin_succ, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)] <;>
+    ring
 
 set_option maxHeartbeats 800000 in
 private theorem I42_branch :
