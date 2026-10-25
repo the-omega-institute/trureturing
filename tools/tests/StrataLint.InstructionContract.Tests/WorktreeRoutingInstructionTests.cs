@@ -111,32 +111,43 @@ public sealed class WorktreeRoutingInstructionTests
     }
 
     [Fact]
-    public void ReviewSeatsForbidRepositoryMutationsAndWritingChecks()
+    public void ReviewSeatsAllowFetchAndAssignedWorktreeBuildsWithoutChangingHeadOrStatus()
     {
         var instructions = Read("tools/scripts/agent/openproblem/templates/blocks/review-readonly-block.md");
 
-        Assert.Contains("Do not fetch, create worktrees, switch branches", instructions, StringComparison.Ordinal);
-        Assert.Contains("merge, rebase, commit, reset, stash or push", instructions, StringComparison.Ordinal);
-        Assert.Contains("Never create a worktree under `/tmp`, `/private/tmp` or `$TMPDIR`", instructions, StringComparison.Ordinal);
-        Assert.Contains("Do not run builds or tests that write files", instructions, StringComparison.Ordinal);
-        Assert.Contains("including ignored caches or reports", instructions, StringComparison.Ordinal);
-        Assert.DoesNotContain("git fetch", instructions, StringComparison.Ordinal);
-        Assert.DoesNotContain("git worktree add", instructions, StringComparison.Ordinal);
+        Assert.Contains("git fetch origin dev", instructions, StringComparison.Ordinal);
+        Assert.Contains("Do not merge, rebase, commit, reset, stash or switch branches in this worktree, and do not push", instructions, StringComparison.Ordinal);
+        Assert.Contains("Builds and tests may run in the assigned worktree", instructions, StringComparison.Ordinal);
+        Assert.Contains("must leave `git status --short` empty", instructions, StringComparison.Ordinal);
+        Assert.Contains("`git rev-parse HEAD` equal to the assigned head", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Do not fetch", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Do not run builds or tests", instructions, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ReviewSeatsUsePinnedReadsAndDelegateWritingChecksToCaller()
+    public void ReviewSeatsUsePinnedReadsAndAskCallerForAnotherWorktree()
     {
         var instructions = Read("tools/scripts/agent/openproblem/templates/blocks/review-readonly-block.md");
 
-        Assert.Contains("git show <commit>:<path>", instructions, StringComparison.Ordinal);
-        Assert.Contains("git grep <pattern> <commit> -- <path>", instructions, StringComparison.Ordinal);
-        Assert.Contains("git diff <base> <head> -- <path>", instructions, StringComparison.Ordinal);
-        Assert.Contains("`git rev-parse HEAD` equal to the assigned head", instructions, StringComparison.Ordinal);
-        Assert.Contains("Report checks that need writes back to the caller", instructions, StringComparison.Ordinal);
-        Assert.Contains("the caller runs them in a compatible linked worktree per CLAUDE.md §6.1", instructions, StringComparison.Ordinal);
-        Assert.Contains("reusing one first and creating one only when isolation is needed", instructions, StringComparison.Ordinal);
-        Assert.Contains("A clean `git status --short` alone does not prove read-only execution", instructions, StringComparison.Ordinal);
+        foreach (var command in new[]
+        {
+            "git show <commit>:<path>",
+            "git grep <pattern> <commit> -- <path>",
+            "git diff <base> <head> -- <path>",
+        })
+        {
+            Assert.Contains(command, instructions, StringComparison.Ordinal);
+            Assert.True(instructions.IndexOf("git fetch origin dev", StringComparison.Ordinal) <
+                instructions.IndexOf(command, StringComparison.Ordinal));
+        }
+
+        Assert.Contains("Do not create another worktree", instructions, StringComparison.Ordinal);
+        Assert.Contains("including under `/tmp`, `/private/tmp` or `$TMPDIR`", instructions, StringComparison.Ordinal);
+        Assert.Contains("If a check needs another worktree, report it to the caller", instructions, StringComparison.Ordinal);
+        Assert.Contains("who follows CLAUDE.md §6.1", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("git worktree add", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("or create a temporary worktree", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Report checks that need writes back to the caller", instructions, StringComparison.Ordinal);
     }
 
     [Theory]
