@@ -59,7 +59,8 @@ private lemma trace_forms (s : List Bool) :
       ((0 ^ (s.count false + s.count true) + 1 + 2 ^ s.count false +
         2 ^ s.count true : ℕ) : ℂ) := by
   constructor <;>
-    simp [a₀, a₁, b₁, word_diagonal, trace_diagonal, Fin.sum_univ_succ, -List.count_false_add_count_true, pow_add] <;> ring
+    simp [a₀, a₁, b₁, word_diagonal, trace_diagonal, Fin.sum_univ_succ,
+      -List.count_false_add_count_true, pow_add] <;> ring
 
 private lemma nat_gap (m n : ℕ) :
     0 ^ (m + n) + 1 + 2 ^ m + 2 ^ n ≤ 0 ^ m + 0 ^ n + 1 + 2 ^ (m + n) := by
