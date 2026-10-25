@@ -2103,3 +2103,223 @@ P4 中，各完备读取的效果和为 $I$，故 $\sum_op_o=\operatorname{tr}\r
 [sorkin]: https://arxiv.org/abs/gr-qc/9401003v2
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 负谱裕量的有限相位参考见证
+
+**定义 14.1（校准独立参考与联合相干测试）。** 令 $k\ge1$ 为整数，固定
+
+$$
+z=\frac{(1,\mathrm i)^T}{\sqrt2},\qquad R=zz^\dagger.
+$$
+
+深度 $m$ 的参考合同供应 $m$ 份按同一相位约定校准、实际独立制备的参考，联合参考为 $R^{\otimes m}$；参考与待检验系统也按独立复合合同接续，候选联合核规定为 $D\otimes R^{\otimes m}$。联合标签空间为
+
+$$
+\mathcal H_{k,m}=\mathbb C^k\otimes(\mathbb C^2)^{\otimes m},
+\qquad
+\mathcal I_{k,m}=\{1,\ldots,k\}\times\{0,1\}^m.
+$$
+
+对所需的非空 $E\subseteq\mathcal I_{k,m}$，合同还供应联合相干投影
+
+$$
+u_E=|E|^{-1/2}\sum_{(j,a)\in E}|j,a\rangle,
+\qquad F_E=|u_E\rangle\langle u_E|.
+$$
+
+对 Hermitian 候选核 $D\in M_k(\mathbb C)$，定义其在该合同中的预测值
+
+$$
+t_D(E)=\operatorname{tr}\bigl[(D\otimes R^{\otimes m})F_E\bigr].
+\tag{14.1}
+$$
+
+这里 $D$ 是待检验共同实现性的候选核，不预设正半定，也不要求能够把非正的 $D$ 制备为状态。参考态和投影是实际操作资源；式 (14.1) 是候选核对这些操作所给出的数值。此定义不另加 $\operatorname{tr}D=1$ 或历史总权重归一化；若候选模型具有其中一种归一化，以下结论仍适用。
+
+**定理 14.2（负谱裕量给出的定量有限相位见证）。** 设
+
+$$
+D=D^\dagger\in M_k(\mathbb C),\qquad
+\|D\|_{\mathrm{op}}\le M,\qquad
+\lambda_{\min}(D)\le-\alpha,\qquad
+0<\alpha\le M.
+$$
+
+取
+
+$$
+L=\left\lceil\frac{8M\sqrt k}{\alpha}\right\rceil,
+\qquad
+B=\lceil2\sqrt kL\rceil,
+\qquad
+m=3+\lceil\log_2B\rceil.
+\tag{14.2}
+$$
+
+则存在非空集合 $E\subseteq\mathcal I_{k,m}$，使
+
+$$
+1\le |E|\le B,\qquad
+\boxed{\ t_D(E)\le-\frac{\alpha}{288k}\ }.
+\tag{14.3}
+$$
+
+具体地，每种四分之一相位在参考中至少有 $B$ 条可用历史，并且
+
+$$
+B\le27\frac{kM}{\alpha},\qquad
+2^m<16B\le432\frac{kM}{\alpha},\qquad
+m\le4+\log_2\!\left(27\frac{kM}{\alpha}\right).
+\tag{14.4}
+$$
+
+因此参考副本深度为 $O(1+\log(kM/\alpha))$。当定义 14.1 的参考与该 $F_E$ 被供应时，式 (14.3) 给出带明确负裕量的共同实现性反证。
+
+证明。由有限维 Hermitian 谱定理，取单位向量 $v\in\mathbb C^k$，满足 $v^\dagger Dv\le-\alpha$。对每个坐标，把 $L\Re v_j$ 和 $L\Im v_j$ 分别取最近整数；半整数处任取一个最近整数。所得 $d\in\mathbb Z[\mathrm i]^k$ 满足
+
+$$
+\|d-Lv\|_2^2
+=\sum_{j=1}^k\bigl((\Re d_j-L\Re v_j)^2
+ +(\Im d_j-L\Im v_j)^2\bigr)
+\le\frac{k}{2}.
+$$
+
+置 $w=d/L$、$h=w-v$ 和 $e=\|h\|_2$。由 $L\ge8M\sqrt k/\alpha$，
+
+$$
+e\le\frac{\sqrt{k/2}}L
+\le\frac{\alpha}{8\sqrt2M}
+\le\frac{\alpha}{8M}\le\frac18.
+\tag{14.5}
+$$
+
+特别地 $\|w\|_2\ge1-e\ge7/8$，故 $d\ne0$。展开二次型，利用算子范数界得到
+
+$$
+\begin{aligned}
+|w^\dagger Dw-v^\dagger Dv|
+&=|h^\dagger Dv+v^\dagger Dh+h^\dagger Dh|\\
+&\le M e(2+e)
+\le\frac{17\alpha}{64}<\frac{\alpha}{2}.
+\end{aligned}
+$$
+
+所以
+
+$$
+d^\dagger Dd=L^2w^\dagger Dw
+\le-\frac{\alpha L^2}{2}.
+\tag{14.6}
+$$
+
+为控制所需历史数，写 $d_j=x_j+\mathrm i y_j$，其中 $x_j,y_j\in\mathbb Z$，并令
+
+$$
+P=\sum_{j=1}^k(|x_j|+|y_j|).
+$$
+
+$d\ne0$ 保证 $P\ge1$；在 $2k$ 个实坐标上用 Cauchy--Schwarz，并利用式 (14.5)，得到
+
+$$
+\begin{aligned}
+P&\le\sqrt{2k}\,\|d\|_2
+\le\sqrt{2k}\,L(1+e)\\
+&\le\frac{9\sqrt2}{8}\sqrt kL
+<2\sqrt kL\le B.
+\end{aligned}
+\tag{14.7}
+$$
+
+下面核对每种相位的供应量。对 $r\in\mathbb Z/4\mathbb Z$，令
+
+$$
+n_r(q)=\#\{a\in\{0,1\}^q:|a|\equiv r\pmod4\}.
+$$
+
+每条长度 $q$ 的历史，追加 $0$ 保持相位，追加 $1$ 将相位乘以 $\mathrm i$；因此
+
+$$
+n_r(q+1)=n_r(q)+n_{r-1}(q).
+$$
+
+由长度三的二项式系数，
+
+$$
+(n_0(3),n_1(3),n_2(3),n_3(3))=(1,3,3,1).
+$$
+
+若四类在深度 $q\ge3$ 都至少有 $2^{q-3}$ 条，则递推式使深度 $q+1$ 的每类至少有 $2^{q-2}$ 条。归纳得到 $n_r(q)\ge2^{q-3}$，所以式 (14.2) 的深度满足
+
+$$
+n_r(m)\ge2^{m-3}=2^{\lceil\log_2B\rceil}\ge B
+\quad(r=0,1,2,3).
+\tag{14.8}
+$$
+
+第 $j$ 组要求的四类历史数分别取为
+
+$$
+\begin{aligned}
+N_{j,0}&=\max\{x_j,0\},&
+N_{j,2}&=\max\{-x_j,0\},\\
+N_{j,1}&=\max\{-y_j,0\},&
+N_{j,3}&=\max\{y_j,0\}.
+\end{aligned}
+$$
+
+每个 $N_{j,r}$ 都是非负整数，全部需求的总数为 $P$。对任意固定相位 $r$，有 $\sum_jN_{j,r}\le P\le B\le n_r(m)$，故可在该相位类中按这些数目选取互不重复的历史，分给各组。不同相位类本身互不相交，因而所得 $A_1,\ldots,A_k\subseteq\{0,1\}^m$ 可同时两两不交，且
+
+$$
+|A_j|=|x_j|+|y_j|,\qquad
+\sum_{a\in A_j}\mathrm i^{|a|}
+=x_j-\mathrm i y_j=\overline d_j.
+\tag{14.9}
+$$
+
+允许 $d_j=0$ 时 $A_j$ 为空。令 $E=\bigcup_j\{j\}\times A_j$，则 $|E|=P\ge1$。参考向量的每个历史分量为 $(z^{\otimes m})_a=2^{-m/2}\mathrm i^{|a|}$。由式 (14.9)，直接计算联合相干投影的预测值：
+
+$$
+\begin{aligned}
+t_D(E)
+&=\frac1P\sum_{j,\ell}D_{j\ell}
+ \left(\sum_{a\in A_j}(z^{\otimes m})_a\right)
+ \overline{\left(\sum_{b\in A_\ell}(z^{\otimes m})_b\right)}\\
+&=\frac{2^{-m}}P\sum_{j,\ell}\overline d_jD_{j\ell}d_\ell
+=\frac{2^{-m}}P\,d^\dagger Dd.
+\end{aligned}
+\tag{14.10}
+$$
+
+特别地，所选相位之和是 $\overline d_j$；这个共轭保证式 (14.10) 使用原候选核 $D$ 的负方向。
+
+最后核对取整后的常数。对任意 $B>0$，有 $2^{\lceil\log_2B\rceil}<2B$，包括 $B$ 为二的幂时，故 $2^m<16B$。又因 $M/\alpha\ge1$ 和 $k\ge1$，有 $L\ge8\sqrt k$，特别地 $\sqrt kL\ge1$，于是
+
+$$
+B\le2\sqrt kL+1\le3\sqrt kL.
+$$
+
+联立式 (14.6)、$P\le B$ 和上述两个上界，得到
+
+$$
+\begin{aligned}
+t_D(E)
+&\le-\frac{\alpha L^2}{2}\frac{2^{-m}}P
+\le-\frac{\alpha L^2}{32B^2}\\
+&\le-\frac{\alpha L^2}{32(3\sqrt kL)^2}
+=-\frac{\alpha}{288k}.
+\end{aligned}
+$$
+
+令 $x=M\sqrt k/\alpha\ge1$，则 $L=\lceil8x\rceil\le8x+1\le9x$，从而
+
+$$
+B\le3\sqrt kL\le27\frac{kM}{\alpha}.
+$$
+
+再用 $\lceil\log_2B\rceil\le1+\log_2B$，便得式 (14.4) 的全部结论。∎
+
+定理 14.2 的整数逼近与相位计数是本卷定理 2.10 构造的定量推导（repo-derived）；联合投影的归一化沿用推论 2.11。两条既有结果仍承担任意深度下的强正性等价。Dowker--Wilkes [dw] 供应复合与强正性的背景：对弱正系统类 $\mathcal A\subseteq\mathcal W$，其 Theorem 3 以张量闭合与 Galois 自对偶共同推出 $\mathcal A$ 等于强正类；Theorem 4 在这类系统仅满足张量闭合时，得到 $\mathcal A$ 包含于强正类或包含于元素非负实值类的二分。此处的有限深度及常数由上面的整数逼近、四相位递推和归一化计算给出。
+
+深度界依赖已指定的 $\alpha>0$，当 $\alpha\downarrow0$ 时增大，因而该界不提供固定深度、有限精度的精确半正定判定。证明从一个负谱方向选取 $E$，只给出见证的存在及资源规模，不给寻找该方向、选择并实现 $F_E$ 的多项式时间算法。实际独立且共同校准的参考副本，以及集合内标签的联合相干投影，均须按定义 14.1 供应；仅有边缘态相同的相关副本不满足张量独立条件。若只有基测量的粗粒化 $\sum_{(j,a)\in E}|j,a\rangle\langle j,a|$，式 (14.10) 的交叉项不在该操作中，故上述见证不随之取得。
+
+## 追加锚（本行以下为增补区）
