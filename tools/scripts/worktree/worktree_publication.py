@@ -57,8 +57,7 @@ def recover_initialization(options):
     rows = [row for row in inventory(options.source)
             if Path(row["worktree"]).resolve() == options.path.resolve()]
     if rows and "locked" not in rows[0]:
-        reuse(options, allow_recovered_base=True)
-        return dict(event="worktree_init", status="already_initialized", path=str(options.path.resolve()))
+        return reuse(options, allow_recovered_base=True)
     with ExitStack() as stack:
         try:
             path = tree_scope(stack, options.source, options.path, True)
@@ -73,8 +72,7 @@ def recover_initialization(options):
                 raise Refused("intentional_worktree_lock")
             # Ordinary reuse uses its own shared entry and index/ref scopes.
             stack.close()
-            reuse(options, allow_recovered_base=True)
-            return dict(event="worktree_init", status="already_initialized", path=str(path))
+            return reuse(options, allow_recovered_base=True)
         token, creation = creation_witness(options.source, reference)
         expected = getattr(options, "expected_token", None)
         if expected and expected != token:

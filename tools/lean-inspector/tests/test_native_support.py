@@ -691,7 +691,7 @@ class NativeArtifactTestSupport(NativeSharedTestSupport):
 
 
 def stage_compiler(output):
-    """Build the declared compiler target once; Lake owns its staged materials."""
+    """Build the report and input-discovery compilers; Lake owns their stage."""
     registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
     if set(registration) != {'package_directory', 'target'}:
         raise ValueError('invalid native compiler fixture registration')
@@ -706,7 +706,7 @@ def stage_compiler(output):
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         fixture.run_lake('-d', registration['package_directory'], 'build',
-                         '-o', str(mappings), registration['target'])
+                         '-o', str(mappings), registration['target'], 'inputDiscovery')
         fixture.run_lake('cache', 'stage', str(mappings), str(output))
         # Access permissions apply to the directory produced by Lake stage;
         # they do not select or discover build inputs or reusable materials.

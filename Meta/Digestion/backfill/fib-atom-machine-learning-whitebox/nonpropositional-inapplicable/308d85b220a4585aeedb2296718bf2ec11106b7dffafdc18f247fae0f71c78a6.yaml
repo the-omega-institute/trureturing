@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:308d85b220a4585aeedb2296718bf2ec11106b7dffafdc18f247fae0f71c78a6
+  normalized_sha256: sha256:308d85b220a4585aeedb2296718bf2ec11106b7dffafdc18f247fae0f71c78a6
+cas_ref: sha256:308d85b220a4585aeedb2296718bf2ec11106b7dffafdc18f247fae0f71c78a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只定义完整诊断标签的指示矩阵及齐次/仿射解码合同，规定计费口径；没有陈述秩或最小维数。
+    previous_atom_id: 227627a88c592886c7e6340be6c897b523dc20111189af0f8a201ed8535f8e1c
+    next_atom_id: d1d5abbc64030a3871fae18a19ca8ca722e0e65254e8f57f5814da6276637350

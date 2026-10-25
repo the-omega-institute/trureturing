@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e0e6587dc91cc62b051fd02d58d38e84c800523edd5b2772e46e72b5e542a02a
+  normalized_sha256: sha256:e0e6587dc91cc62b051fd02d58d38e84c800523edd5b2772e46e72b5e542a02a
+cas_ref: sha256:e0e6587dc91cc62b051fd02d58d38e84c800523edd5b2772e46e72b5e542a02a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“MF.2 隐藏初态与记忆核的精确消元”，不包含定义、量词或数学断言。
+    previous_atom_id: 2ad8d11f011ff23e988afc926a691b6dcea11f5426e7fbbe2d6265d2ba90724a
+    next_atom_id: 021b6dddf0eb058efe6bc72469ffcb682057fbfec37cd5de520765525136f73e

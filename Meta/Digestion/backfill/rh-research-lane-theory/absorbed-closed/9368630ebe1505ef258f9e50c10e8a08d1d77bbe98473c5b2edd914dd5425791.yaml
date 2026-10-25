@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:9368630ebe1505ef258f9e50c10e8a08d1d77bbe98473c5b2edd914dd5425791
+  normalized_sha256: sha256:9368630ebe1505ef258f9e50c10e8a08d1d77bbe98473c5b2edd914dd5425791
+cas_ref: sha256:9368630ebe1505ef258f9e50c10e8a08d1d77bbe98473c5b2edd914dd5425791
+coverage_gids:
+  - gid: D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflection_pair_signed_determinant
+    target_statement_id: sha256:b466170fbb9a1c0e63b158fd2f5ec87704e7b43ad9e9a40d5f6132a43d8d38b7
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.common_zero_phase_norm_one
+    target_statement_id: sha256:a08f21a3da5ffcd328af406333178fc6287174cfab2104cff9d6f80bbdaa0a96
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.critical_displacement_critical_line_mirror
+    target_statement_id: sha256:317a3da514a88020b0bb4465b0473b662d8e0d41fdbd8de77964fb00a3b65dd2
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.normalized_zero_mode_factorization
+    target_statement_id: sha256:4cd60f4e4a0f64b5ea452250761bdb930b0e05af89dcb582171a84537530343c
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.radialZeroMode
+    target_statement_id: sha256:6ba9698143d3c8b5415e8a78830b5646deead4201d3ae94060ce750343d8248f
+receipts:
+  unresolved_subitems: []

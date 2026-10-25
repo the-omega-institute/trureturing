@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+  normalized_sha256: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+cas_ref: sha256:8c931b5d09ccd99d6e708b78abf709b6f881a781883bd652ba50b1b5186697cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 请求构造有限零点集上的比较载体及追加规则；未断言两种读数相等或构造已经存在。
+    previous_atom_id: 8abb3b8533ed4205864e1cdf1972d0ef3355b6ced387a8d3b701a2291e8d766a
+    next_atom_id: aa828c7bccb1d3f8d20baa0595175a5486ec22b12072de852c8d70af093dc09c
