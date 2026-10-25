@@ -217,7 +217,7 @@ private theorem head_charge (g p : ℕ) (hg : 2 ≤ g) (hp : 6 ≤ p)
     simp [nz]
   · simp
 
-private theorem last_zero (m : ℕ) (hm : 1 ≤ m) (B : Fin m → Bool)
+theorem last_zero (m : ℕ) (hm : 1 ≤ m) (B : Fin m → Bool)
     (last : B ⟨m-1,by omega⟩=false) : tailAfter 0 B=0 := by
   obtain ⟨n,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : m≠0)
   apply last_false_tail n B 0
