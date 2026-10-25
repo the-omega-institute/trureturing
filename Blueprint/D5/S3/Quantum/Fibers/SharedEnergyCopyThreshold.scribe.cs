@@ -51,6 +51,29 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "has l1 norm at least twice m minus one. The kernel calculation applies "
                     + "the cofactor kernel theorem after checking its determinant, sum and gcd "
                     + "premises for these actual consecutive gaps."),
+            Def("energies", "energy", "Integer energy labels",
+                "The labelled basis energies are zero, one and m. Integer differences "
+                    + "are used before grouping any equal numerical gaps."),
+            Def("exponents", "Exponent", "Labelled matrix exponents",
+                "An exponent is a natural number at each of the nine ordered matrix "
+                    + "coordinates. Opposite directions and repeated numerical gaps "
+                    + "remain different coordinates."),
+            Def("degree", "degree", "Total exponent degree",
+                "The degree is the sum of all nine natural multiplicities."),
+            Def("weight", "weight", "Total energy weight",
+                "The weight sums each actual ordered energy difference times its "
+                    + "natural multiplicity, in the integers."),
+            Def("monomials", "monomial", "Actual coordinate monomials",
+                "The monomial is the product of all nine matrix entries raised to "
+                    + "their natural exponents. In particular zero to the zeroth power "
+                    + "is one."),
+            Thm("low", "sparse_low_monomials", "Every low zero-weight monomial", Low(),
+                "For every m at least two, every labelled exponent of degree less "
+                    + "than twice m minus one and weight zero gives the same monomial "
+                    + "on the first matrix and on every unit phase in the sparse family. "
+                    + "A positive exponent on either missing edge makes both values zero. "
+                    + "Otherwise the primitive kernel and the degree bound force both "
+                    + "net oriented exponents to vanish, so conjugate phases cancel."),
             Paragraph(Text("These matrix and integer-kernel statements do not by themselves "
                 + "establish the least uniform copy order on all density states. That conclusion "
                 + "also requires the upper bound for all labelled zero-weight exponents, "
@@ -118,4 +141,18 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
             ell, Neq, Sp, D(0), Sp, Implies, Sp, length, Leq, Sp,
             A(Seq(ell, Cdot, Sp, m)), Plus, A(Seq(ell, Cdot, Sp, Open, Minus, pred, Close)), Close));
     }
+    private static Formula Low()
+    {
+        var m = F.Id("m"); var alpha = F.Id("a"); var u = F.Id("u");
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp,
+            Forall, Sp, alpha, InMacro, C("Exponent"), Comma, RowBreak,
+            C("degree", alpha), Lt, D(2), Cdot, Sp, m, Minus, D(1), Sp, Implies, Sp,
+            C("weight", m, alpha), Eq, D(0), Sp, Implies, Sp, RowBreak,
+            Forall, Sp, u, InMacro, C("Complex"), Comma,
+            u, Cdot, Sp, C("star", u), Eq, D(1), Sp, Implies, Sp, RowBreak,
+            C("monomial", C("sparseMatrix", D(1)), alpha), Eq,
+            C("monomial", C("sparseMatrix", u), alpha)));
+    }
+
 }

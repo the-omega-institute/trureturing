@@ -239,7 +239,7 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       have h₂ : |k₂| ≤ (alpha 2 0 : ℤ) + alpha 0 2 := by
         dsimp [k₂]
         exact abs_le.mpr ⟨by omega, by omega⟩
-      simp only [degree, Fin.sum_univ_succ, Nat.cast_add, Nat.cast_zero]
+      simp [degree, Fin.sum_univ_succ]
       omega
     have hlt : (degree alpha : ℤ) < 2*(m : ℤ)-1 := by
       have h : degree alpha + 1 < 2*m := by omega
@@ -256,9 +256,12 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       rw [← mul_pow, mul_comm, hu, one_pow]
     simp [monomial, sparseMatrix, Fin.prod_univ_succ, hz₀, hz₁, ha, hb, mul_pow]
     simp only [Complex.star_def] at hp
-    linear_combination -((3 : ℂ)⁻¹^(alpha 0 0) * (3 : ℂ)⁻¹^(alpha 1 1) *
-      (3 : ℂ)⁻¹^(alpha 2 2) * ((12 : ℂ)⁻¹^(alpha 0 2))^2 *
-      ((12 : ℂ)⁻¹^(alpha 1 2))^2) * hp
+    have hc := congrArg (fun z : ℂ =>
+      ((1/3 : ℂ)^(alpha 0 0) * (1/3 : ℂ)^(alpha 1 1) *
+        (1/3 : ℂ)^(alpha 2 2) * ((1/12 : ℂ)^(alpha 0 2))^2 *
+        ((1/12 : ℂ)^(alpha 1 2))^2) * z) hp
+    simp only [one_div, mul_one] at hc
+    convert hc.symm using 1 <;> ring
   · by_cases hz₀ : alpha 0 1 = 0
     · have hz₁ : alpha 1 0 ≠ 0 := fun h => hz ⟨hz₀,h⟩
       simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₁]

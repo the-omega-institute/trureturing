@@ -91,12 +91,35 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 end Spectrum
 
 namespace Pair
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Matrix (Fin 3) (Fin 3) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ m => stateMatrix (sigma m)) (fun e => nomatch e)
+def zeroReadout : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 1, 2, ?_⟩
+  intro h
+  have he := congrArg (fun X => X 2 0) h
+  norm_num [actual, realize, stateMatrix, sigma, sparseState, sparseMatrix, phase,
+    Circle.coe_exp, Complex.exp_pi_mul_I] at he
+
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ m : ℕ, 2 ≤ m →
-    (R.readout () () 1).PosDef ∧ (R.readout () () (phase m)).PosDef ∧
-    starMonomial m (R.readout () () 1) = (1/12 : ℂ) ^ (2*m-1) ∧
-    starMonomial m (R.readout () () (phase m)) = -(1/12 : ℂ) ^ (2*m-1) ∧
+    (stateMatrix rho).PosDef ∧ (R.readout () () m).PosDef ∧
+    starMonomial m (stateMatrix rho) = (1/12 : ℂ) ^ (2*m-1) ∧
+    starMonomial m (R.readout () () m) = -(1/12 : ℂ) ^ (2*m-1) ∧
     (∀ k₁ k₂ : ℤ, ((m : ℤ)-1)*k₁ + (m : ℤ)*k₂ = 0 ↔
       ∃ ell : ℤ, k₁ = ell*(m : ℤ) ∧ k₂ = ell*(-((m : ℤ)-1))) ∧
     (∀ ell : ℤ, ell ≠ 0 → (2*(m : ℤ)-1) ≤
@@ -105,7 +128,7 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% sparse_pair_data) ↔ arena.Law actual := Iff.rfl
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
-  have ht := (h 2 (by omega)).1.diag_pos (i := (0 : Fin 3))
+  have ht := (h 2 (by omega)).2.1.diag_pos (i := (0 : Fin 3))
   exact (lt_irrefl (0 : ℂ)) ht
 
 def family : Registration arena (type_of% sparse_pair_data) where
@@ -130,7 +153,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ u => sparseMatrix u) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ m => stateMatrix (sigma m)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -143,7 +166,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       path := #["body", "body", "arg", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
