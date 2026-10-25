@@ -107,13 +107,9 @@ class NativeFixture(unittest.TestCase):
             if input is not None:
                 stdin.write(input)
                 stdin.seek(0)
-            process = subprocess.Popen(arguments, cwd=cwd, env=env,
-                                       stdin=stdin, stdout=stdout, stderr=stderr,
-                                       start_new_session=True, pass_fds=pass_fds)
+            process = None
             evidence = dict(event="fixture_command", phase=phase, command=arguments, cwd=cwd,
-                            pid=process.pid, guard_seconds=timeout,
-                            fixture_elapsed_seconds=started - self.fixture_started)
-            print(json.dumps(dict(evidence, status="started"), separators=(",", ":")), flush=True)
+                            guard_seconds=timeout, fixture_elapsed_seconds=started - self.fixture_started)
             expired = False
             interrupted = None
             before = []
@@ -132,6 +128,12 @@ class NativeFixture(unittest.TestCase):
                                               output=text, byte_offset=offsets[index]), separators=(",", ":")),
                               flush=True)
             try:
+                # Arm settlement before acquisition and startup publication.
+                process = subprocess.Popen(arguments, cwd=cwd, env=env,
+                                           stdin=stdin, stdout=stdout, stderr=stderr,
+                                           start_new_session=True, pass_fds=pass_fds)
+                evidence["pid"] = process.pid
+                print(json.dumps(dict(evidence, status="started"), separators=(",", ":")), flush=True)
                 deadline = started + timeout
                 last_snapshot = 0
                 while process.poll() is None:
@@ -152,53 +154,56 @@ class NativeFixture(unittest.TestCase):
                                               native=self.group_snapshot(process.pid))), flush=True)
                         last_snapshot = now
             except BaseException as error:
+                if process is None:
+                    raise
                 interrupted = error
             finally:
-                execution_elapsed = time.monotonic() - started
-                snapshot_started = time.monotonic()
-                # Only this newly created process group is signalled. Other participants
-                # and reused external services have independent OS lifetimes.
-                try:
+                if process is not None:
+                    execution_elapsed = time.monotonic() - started
+                    snapshot_started = time.monotonic()
+                    # Only this newly created process group is signalled. Other participants
+                    # and reused external services have independent OS lifetimes.
                     try:
-                        before = self.group_snapshot(process.pid)
-                    except (OSError, subprocess.SubprocessError) as error:
-                        evidence["snapshot_error"] = repr(error)
-                    snapshot_elapsed = time.monotonic() - snapshot_started
-                    for signum in (signal.SIGTERM, signal.SIGKILL):
                         try:
-                            os.killpg(process.pid, signum)
-                        except ProcessLookupError:
-                            break
-                        except OSError as error:
-                            signal_errors.append(dict(operation="signal", signal=signum, error=repr(error)))
-                        until = time.monotonic() + 5
-                        while time.monotonic() < until:
-                            process.poll()
+                            before = self.group_snapshot(process.pid)
+                        except (OSError, subprocess.SubprocessError) as error:
+                            evidence["snapshot_error"] = repr(error)
+                        snapshot_elapsed = time.monotonic() - snapshot_started
+                        for signum in (signal.SIGTERM, signal.SIGKILL):
                             try:
-                                os.killpg(process.pid, 0)
+                                os.killpg(process.pid, signum)
                             except ProcessLookupError:
                                 break
                             except OSError as error:
-                                observation = dict(operation="probe", signal=signum, error=repr(error))
-                                if observation not in signal_errors:
-                                    signal_errors.append(observation)
-                            select.select([], [], [], 0.05)
+                                signal_errors.append(dict(operation="signal", signal=signum, error=repr(error)))
+                            until = time.monotonic() + 5
+                            while time.monotonic() < until:
+                                process.poll()
+                                try:
+                                    os.killpg(process.pid, 0)
+                                except ProcessLookupError:
+                                    break
+                                except OSError as error:
+                                    observation = dict(operation="probe", signal=signum, error=repr(error))
+                                    if observation not in signal_errors:
+                                        signal_errors.append(observation)
+                                select.select([], [], [], 0.05)
+                            else:
+                                continue
+                            break
+                        process.poll()
+                        try:
+                            os.killpg(process.pid, 0)
+                        except ProcessLookupError:
+                            evidence["settled"] = True
+                            self.commands_settled = True
                         else:
-                            continue
-                        break
-                    process.poll()
-                    try:
-                        os.killpg(process.pid, 0)
-                    except ProcessLookupError:
-                        evidence["settled"] = True
-                        self.commands_settled = True
-                    else:
-                        raise RuntimeError("owned process group survived SIGKILL")
-                except BaseException as error:
-                    self.commands_settled = False
-                    settlement_error = repr(error)
-                finally:
-                    evidence["signal_errors"] = signal_errors
+                            raise RuntimeError("owned process group survived SIGKILL")
+                    except BaseException as error:
+                        self.commands_settled = False
+                        settlement_error = repr(error)
+                    finally:
+                        evidence["signal_errors"] = signal_errors
             settlement_elapsed = time.monotonic() - started - execution_elapsed
             emit_partial(final=True)
             stdout.seek(0)
