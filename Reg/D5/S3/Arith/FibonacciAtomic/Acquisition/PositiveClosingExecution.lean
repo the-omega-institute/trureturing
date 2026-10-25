@@ -182,7 +182,8 @@ def sourceRegistration : Registration arena (type_of% residue_run) where
     fun i => nomatch i⟩
   dependence := dependence
 
-def registration : Contract.Registration (@residue_run) (Realization signature) Type Unit where
+def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@residue_run) (Realization signature) Type Unit where
   unitName := `wholeWordResidueTransport
   realizationName :=
     `Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution.ResidueTransport.sourceRegistration

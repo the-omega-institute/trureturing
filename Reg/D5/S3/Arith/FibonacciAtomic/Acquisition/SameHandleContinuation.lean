@@ -17,6 +17,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.SameHandleContinuation
+universe u
 
 structure Parameters where
   Handle : Type
@@ -58,7 +59,7 @@ abbrev arena : Arena where
       B.value h y = runWord w v ∧ B.lawful h y ∧
       paidReads es = (if H = 1 then 0 else 2 * costBound H) ∧
       (H = 1 → y = x) ∧
-      (∀ (S : Type) (P : Controller S (ZMod H × ZMod H)) (J : ℕ),
+      (∀ (S : Type u) (P : Controller S (ZMod H × ZMod H)) (J : ℕ),
         (∀ z : ℕ × ℕ, ∃ rs s u,
           Run P H P.initial z rs s u (residueSource H z) ∧ paidReads rs ≤ J) →
         paidReads es ≤ J) ∧
@@ -105,7 +106,7 @@ private theorem arithmeticComplete : Completion arithmeticService () :=
 
 private def zeroTariffs : Tariffs := ⟨fun _ => 0, fun _ => 0, fun _ => 0⟩
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro bad
   obtain ⟨t, y, hr, hv, hl, reads, h1, competitor, aligned, cuts,
     continuations, actualWords, future⟩ :=
@@ -126,7 +127,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   change (0 : ZMod 2) = 1 at he
   exact zero_ne_one he
 
-def sourceRegistration : Registration arena (type_of% (@same_handle_return.{0})) where
+def sourceRegistration : Registration arena.{u} (type_of% (@same_handle_return.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨same_handle_return, rejected, rejected_law⟩
@@ -135,18 +136,18 @@ def sourceRegistration : Registration arena (type_of% (@same_handle_return.{0}))
     fun i => nomatch i⟩
   dependence := dependence
 
-def registration : Contract.Registration (@same_handle_return.{0})
+def registration : Contract.Registration.{1,1,1,0,0,0,1,0,0,0,0,0} (@same_handle_return.{u})
     (Realization signature) Type Unit where
   unitName := `sameHandleReturn
   realizationName :=
     `Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.SameHandleContinuation.sourceRegistration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := .anonymous
   localNames := false
-  realization := .source arena ⟨sourceRegistration⟩
+  realization := .source arena.{u} ⟨sourceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
