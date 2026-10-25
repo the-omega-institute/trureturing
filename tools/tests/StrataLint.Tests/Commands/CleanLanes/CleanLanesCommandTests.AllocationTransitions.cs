@@ -67,6 +67,30 @@ public sealed partial class CleanLanesCommandTests
 
     [Theory]
     [InlineData("origin/dev")]
+    [InlineData("refs/heads/dev")]
+    public void NonBranchCheckoutIgnoresLocalBranchNamespaceDirectories(string destination)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/branch-namespace");
+        var checkout = fixture.LastUpdate(lane).AddDays(2);
+        CleanLanesFixture.Git(lane, "update-ref", "refs/remotes/origin/dev", fixture.Head(lane));
+        CleanLanesFixture.Git(lane, "branch", destination + "/child");
+        var prefixLog = Path.Combine(fixture.RepositoryRoot, ".git", "logs", "refs", "heads", destination);
+        Assert.True(Directory.Exists(prefixLog));
+        CleanLanesFixture.GitAt(lane, checkout, "checkout", "--detach", destination);
+
+        foreach (var force in new[] { false, true })
+        {
+            var result = fixture.RunAt(checkout.AddHours(1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+
+            Assert.True(result.Success, result.Error);
+            Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
+            Assert.Equal(!force, Directory.Exists(lane));
+        }
+    }
+
+    [Theory]
+    [InlineData("origin/dev")]
     [InlineData("refs/remotes/origin/dev")]
     [InlineData("refs/heads/dev")]
     [InlineData("heads/dev")]
