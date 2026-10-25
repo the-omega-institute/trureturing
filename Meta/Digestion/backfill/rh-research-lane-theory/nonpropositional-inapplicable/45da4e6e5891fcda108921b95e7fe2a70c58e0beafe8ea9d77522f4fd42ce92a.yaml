@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45da4e6e5891fcda108921b95e7fe2a70c58e0beafe8ea9d77522f4fd42ce92a
+  normalized_sha256: sha256:45da4e6e5891fcda108921b95e7fe2a70c58e0beafe8ea9d77522f4fd42ce92a
+cas_ref: sha256:45da4e6e5891fcda108921b95e7fe2a70c58e0beafe8ea9d77522f4fd42ce92a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 Suzuki 论文局部形式与定义域的主题引用。
+    previous_atom_id: e52dff0b15292ed61c4885ae1df59efd30c581b2bce9337d1e0ee631dc54a8af
+    next_atom_id: 189bef9175177614f01183a58aedab6f5968c6b30de733c7e2a41ab76ba3a2eb
