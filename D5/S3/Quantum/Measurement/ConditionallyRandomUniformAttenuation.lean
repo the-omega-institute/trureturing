@@ -95,7 +95,22 @@ private lemma attenuation_of_conditioned
     (c : ℂ) (hc : IsSelfAdjoint c)
     (hcond : ∑ x, seqProduct (A x) B = c • 1) :
     ∀ x, seqProduct (A x) B = c • A x := by
-  sorry
+  have hroot (x : Fin m) : CFC.sqrt (A x) * CFC.sqrt (A x) = A x :=
+    CFC.sqrt_mul_sqrt_self (A x) (hA.1 x).nonneg
+  have hcenter (x : Fin m) :
+      CFC.sqrt (A x) * (B - c • 1) * CFC.sqrt (A x) =
+        seqProduct (A x) B - c • A x := by
+    unfold seqProduct
+    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
+    rw [mul_sub, sub_mul, mul_smul_comm, mul_one, smul_mul_assoc, hroot x]
+  have hsum : ∑ x, CFC.sqrt (A x) * (B - c • 1) * CFC.sqrt (A x) = 0 := by
+    simp_rw [hcenter]
+    rw [Finset.sum_sub_distrib, ← Finset.smul_sum, hcond, hA.2, sub_self]
+  have hz := psd_sum_sandwich_zero (fun x => CFC.sqrt (A x))
+    (fun x => Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (A x)))
+    (B - c • 1) (hB.sub (Matrix.isHermitian_one.smul hc)) hsum
+  intro x
+  exact sub_eq_zero.mp ((hcenter x).symm.trans (hz x))
 
 theorem result : claim := by
   intro d m n A B _hm _hn hA hB h x y
