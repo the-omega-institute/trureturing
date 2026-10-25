@@ -195,6 +195,7 @@ theorem exists_latticeData_of_real_selfdual
     B (e a : Fin n → ℝ) (e c : Fin n → ℝ)
   rw [heR a, heR c, hpairR]
   simp only [Int.cast_sum, Int.cast_mul]
+  rfl
 
 end D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 

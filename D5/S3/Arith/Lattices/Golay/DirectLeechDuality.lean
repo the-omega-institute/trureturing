@@ -6,11 +6,14 @@
    utility: none
    digest: Real selfduality follows directly from integral coordinate and binary-code probes. -/
 
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.BilinearForm.DualLattice
 import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Choose
+import Lean.Elab.Tactic.Omega
 
 
 
@@ -22,8 +25,8 @@ abbrev Coord := Fin 24
 abbrev RealSpace := Coord → ℝ
 abbrev BinarySpace := Coord → ZMod 2
 
-def B : LinearMap.BilinForm ℝ RealSpace :=
-  (1 / 8 : ℝ) • LinearMap.dotProductBilin ℝ ℝ
+noncomputable def B : LinearMap.BilinForm ℝ RealSpace :=
+  (1 / 8 : ℝ) • dotProductBilin ℝ ℝ
 
 def castVector (a : Coord → ℤ) : RealSpace := fun i => (a i : ℝ)
 
@@ -49,20 +52,6 @@ private lemma dot_spike (a : Coord → ℤ) (i : Coord) (v : ℤ) :
 
 private lemma B_apply (x y : RealSpace) :
     B x y = (1 / 8 : ℝ) * ∑ i, x i * y i := rfl
-
-private lemma B_symm (x y : RealSpace) : B x y = B y x := by
-  rw [B_apply, B_apply]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro i _
-  exact mul_comm _ _
-
-private lemma B_add_self (x y : RealSpace) :
-    B (x + y) (x + y) = B x x + 2 * B x y + B y y := by
-  rw [LinearMap.BilinForm.add_left,
-    LinearMap.BilinForm.add_right, LinearMap.BilinForm.add_right,
-    B_symm y x]
-  ring
 
 private lemma B_integer (a b : Coord → ℤ) :
     B (castVector a) (castVector b) =
@@ -100,10 +89,12 @@ lemma eight_mem
   refine mem_from_integer_data hmem (m := 0) (z := spike i 4)
     (Or.inl rfl) ?_ ?_ ?_
   · intro j
-    by_cases hji : j = i <;> norm_num [spike, hji]
+    simp only [spike]
+    split_ifs <;> norm_num <;> decide
   · have hz : (fun j => (spike i 4 j : ZMod 2)) = 0 := by
       funext j
-      by_cases hji : j = i <;> norm_num [spike, hji]
+      simp only [spike]
+      split_ifs <;> norm_num <;> decide
     rw [hz]
     exact C.zero_mem
   · refine ⟨1, ?_⟩
@@ -118,13 +109,13 @@ private lemma four_difference_mem
   refine mem_from_integer_data hmem (m := 0)
     (z := fun j => spike i 2 j - spike 0 2 j) (Or.inl rfl) ?_ ?_ ?_
   · intro j
-    by_cases hji : j = i <;> by_cases hj0 : j = 0 <;>
-      norm_num [spike, hji, hj0]
+    simp only [spike]
+    split_ifs <;> norm_num <;> decide
   · have hz :
         (fun j => ((spike i 2 j - spike 0 2 j : ℤ) : ZMod 2)) = 0 := by
       funext j
-      by_cases hji : j = i <;> by_cases hj0 : j = 0 <;>
-        norm_num [spike, hji, hj0]
+      simp only [spike]
+      split_ifs <;> norm_num <;> decide
     rw [hz]
     exact C.zero_mem
   · refine ⟨0, ?_⟩
@@ -200,10 +191,12 @@ private lemma glue_mem
   refine mem_from_integer_data hmem (m := 1) (z := spike 0 (-2))
     (Or.inr rfl) ?_ ?_ ?_
   · intro j
-    by_cases hj0 : j = 0 <;> norm_num [spike, hj0]
+    simp only [spike]
+    split_ifs <;> norm_num <;> decide
   · have hz : (fun j => (spike 0 (-2) j : ZMod 2)) = 0 := by
       funext j
-      by_cases hj0 : j = 0 <;> norm_num [spike, hj0]
+      simp only [spike]
+      split_ifs <;> norm_num <;> decide
     rw [hz]
     exact C.zero_mem
   · refine ⟨2, ?_⟩
@@ -244,24 +237,6 @@ private lemma dual_integer_dot
   have he : ((∑ i, a i * b i : ℤ) : ℝ) = 8 * (n : ℝ) := by
     linarith
   exact_mod_cast he
-
-private lemma raw_le_dual
-    {K : Submodule ℤ RealSpace}
-    (hnorm : ∀ x ∈ K, ∃ k : ℤ, B x x = 2 * (k : ℝ)) :
-    K ≤ B.dualSubmodule K := by
-  intro x hx
-  apply (LinearMap.BilinForm.mem_dualSubmodule B).mpr
-  intro y hy
-  obtain ⟨kx, hkx⟩ := hnorm x hx
-  obtain ⟨ky, hky⟩ := hnorm y hy
-  obtain ⟨kxy, hkxy⟩ := hnorm (x + y) (K.add_mem hx hy)
-  apply Submodule.mem_one.mpr
-  refine ⟨kxy - kx - ky, ?_⟩
-  change ((kxy - kx - ky : ℤ) : ℝ) = B x y
-  have hp := B_add_self x y
-  rw [hkxy, hkx, hky] at hp
-  push_cast
-  linarith
 
 private lemma dual_le_raw
     {C : Submodule (ZMod 2) BinarySpace} {K : Submodule ℤ RealSpace}
@@ -346,9 +321,8 @@ private lemma dual_le_raw
 
 /-- Direct real integral-pairing selfduality of the exact raw construction.
 
-All four hypotheses concern the original binary code or the original integer
-construction.  No statement that these hypotheses hold for a concrete code is
-made here; its native owner must supply those independent proofs. -/
+The hypotheses concern the binary code and the literal integer construction.
+The actual Golay lattice consumer discharges them from its original suppliers. -/
 theorem raw_integer_construction_dual_eq
     (C : Submodule (ZMod 2) (Fin 24 → ZMod 2))
     (K : Submodule ℤ (Fin 24 → ℝ))
@@ -361,10 +335,15 @@ theorem raw_integer_construction_dual_eq
         (∀ i, x i = (m : ℝ) + 2 * (z i : ℝ)) ∧
         (fun i => (z i : ZMod 2)) ∈ C ∧
         ∃ q : ℤ, (∑ i, (m + 2 * z i)) = 4 * m + 8 * q)
-    (hnorm : ∀ x ∈ K, ∃ k : ℤ,
-      ((1 / 8 : ℝ) • LinearMap.dotProductBilin ℝ ℝ) x x = 2 * (k : ℝ)) :
-    ((1 / 8 : ℝ) • LinearMap.dotProductBilin ℝ ℝ).dualSubmodule K = K := by
+    (hintegral : ∀ x ∈ K, ∀ y ∈ K, ∃ k : ℤ,
+      B x y = (k : ℝ)) :
+    B.dualSubmodule K = K := by
   change B.dualSubmodule K = K
-  exact le_antisymm (dual_le_raw hself hdoubly hmem) (raw_le_dual hnorm)
+  refine le_antisymm (dual_le_raw hself hdoubly hmem) ?_
+  intro x hx
+  apply (LinearMap.BilinForm.mem_dualSubmodule B).mpr
+  intro y hy
+  obtain ⟨k, hk⟩ := hintegral x hx y hy
+  exact Submodule.mem_one.mpr ⟨k, hk.symm⟩
 
 end D5.S3.Arith.Lattices.Golay.DirectLeechDuality

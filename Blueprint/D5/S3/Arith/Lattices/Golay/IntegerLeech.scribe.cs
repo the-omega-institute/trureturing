@@ -11,6 +11,8 @@ internal sealed class IntegerLeechDocument : IScribeDocumentDefinition
         "The integral Golay construction and its exact minimum",
         H("The integral Golay construction and its exact minimum"),
         Blocks(
+            Node("representation", "representation", "The exact quotient representation",
+                "The original admissibility conditions are equivalent to coordinates m plus twice an integer vector, with the same canonical parity bit, code residue and coordinate-sum congruence. This existing supplier is exposed for the real image and direct selfduality construction.", DescribeRole.Theorem),
             Node("claim-1", "Admissible", "Literal integral congruence coordinates",
                 "An integer vector has a common parity bit m in zero or one; its quotient residue is a codeword, and its coordinate sum is congruent to four m modulo eight.", DescribeRole.Definition),
             Node("claim-2", "integerLattice", "Additive closure is derived",

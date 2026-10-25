@@ -50,8 +50,9 @@ private theorem raw_membership (x : Space) :
     refine (mem_lattice x).mpr ⟨a, ?_, ?_⟩
     · apply (representation code a).mpr
       refine ⟨m, hm, z, fun _ => rfl, hc, ?_⟩
-      change (∑ i, m + 2 * z i) % 8 = 4 * m
-      rw [hs]; rcases hm with rfl | rfl <;> omega
+      have hs' : (∑ j : Fin 24, a j) = 4 * m + 8 * q := hs
+      change (∑ j : Fin 24, a j) % 8 = 4 * m
+      rw [hs']; rcases hm with rfl | rfl <;> omega
     · ext i
       change ((m + 2 * z i : ℤ) : ℝ) = x i
       rw [hx i]; push_cast; ring
@@ -73,23 +74,35 @@ theorem integral_pairing (x y : Space) (hx : x ∈ lattice) (hy : y ∈ lattice)
   obtain ⟨k, hk⟩ := pairing_integral code all_ones_mem doubly_even ha hb
   refine ⟨k, ?_⟩
   change (1 / 8 : ℝ) * ∑ i, (a i : ℝ) * (b i : ℝ) = _
-  rw [← Int.cast_sum, ← hk]
-  push_cast; ring
+  simp only [← Int.cast_mul, ← Int.cast_sum]
+  rw [hk]; push_cast; ring
 
 /-- Real selfduality of the actual code and original integer congruences. -/
 theorem self_dual : pairing.dualSubmodule lattice = lattice := by
   apply DirectLeechDuality.raw_integer_construction_dual_eq code lattice
   · intro w
-    rw [← GolayEncoder.self_dual, LinearMap.BilinForm.mem_orthogonal_iff]
-    apply forall₂_congr
-    intro c hc
-    change dotProduct c w = 0 ↔ dotProduct w c = 0
-    rw [dotProduct_comm]
+    constructor
+    · intro hw c hc
+      exact self_orthogonal w c hw hc
+    · intro hw
+      rw [← GolayEncoder.self_dual]
+      apply LinearMap.BilinForm.mem_orthogonal_iff.mpr
+      intro c hc
+      change dotProduct c w = 0
+      rw [dotProduct_comm]
+      exact hw c hc
   · intro c hc
-    have h := doubly_even c hc
-    simpa [weight, Finset.sum_boole] using h
+    classical
+    have hw : (Finset.univ.filter (fun i => c i ≠ 0)).card = weight c := by
+      rw [Finset.card_eq_sum_ones, Finset.sum_filter]
+      unfold weight
+      apply Finset.sum_congr rfl
+      intro i _
+      by_cases hi : c i = 0 <;> simp [hi]
+    rw [hw]
+    exact doubly_even c hc
   · exact raw_membership
-  · exact even_norm
+  · exact fun x hx y hy => integral_pairing x y hx hy
 
 private theorem eight_mem (i : Fin 24) :
     DirectLeechDuality.castVector (DirectLeechDuality.spike i 8) ∈ lattice :=
@@ -104,9 +117,12 @@ instance : DiscreteTopology lattice := by
     intro i
     exact ⟨a i, rfl⟩
   let f : lattice → J := fun x => ⟨x, hle x.property⟩
-  exact DiscreteTopology.of_continuous_injective
-    (continuous_subtype_val.subtype_mk (fun x => hle x.property))
-    (fun x y h => Subtype.ext (congrArg Subtype.val h))
+  have hf : Continuous f := continuous_subtype_val.subtype_mk (fun x => hle x.property)
+  have hinj : Function.Injective f := by
+    intro x y h
+    apply Subtype.ext
+    exact congrArg (fun z : J => (z : Space)) h
+  exact DiscreteTopology.of_continuous_injective hf hinj
 
 instance : IsZLattice ℝ lattice where
   span_top := by
@@ -116,10 +132,16 @@ instance : IsZLattice ℝ lattice where
     rintro _ ⟨i, rfl⟩
     have h := (Submodule.span ℝ (lattice : Set Space)).smul_mem (1 / 8 : ℝ)
       (Submodule.subset_span (eight_mem i))
-    convert h using 1
-    ext j
-    by_cases hj : j = i <;>
-      simp [DirectLeechDuality.castVector, DirectLeechDuality.spike, Pi.basisFun_apply, hj]
+    have he : (1 / 8 : ℝ) •
+        DirectLeechDuality.castVector (DirectLeechDuality.spike i 8) =
+        (Pi.basisFun ℝ (Fin 24)) i := by
+      ext j
+      by_cases hj : j = i
+      · subst j
+        simp [DirectLeechDuality.castVector, DirectLeechDuality.spike, Pi.basisFun_apply]
+      · simp [DirectLeechDuality.castVector, DirectLeechDuality.spike,
+          Pi.basisFun_apply, hj, Ne.symm hj]
+    rwa [he] at h
 
 private theorem positive (x : Space) (hx : x ≠ 0) : 0 < pairing x x := by
   have hi : ∃ i, x i ≠ 0 := by
@@ -140,15 +162,18 @@ theorem exists_positive_even_unimodular_gram :
       (∀ a c : Charge D, (bilinear D a c : ℝ) =
         pairing (e a : Space) (e c : Space)) := by
   have hsym : pairing.IsSymm := by
+    constructor
     intro x y
     change (1 / 8 : ℝ) * dotProduct x y = (1 / 8 : ℝ) * dotProduct y x
     rw [dotProduct_comm]
   have hB : pairing.Nondegenerate := by
-    intro x hx
-    by_contra hn
-    have hp := positive x hn
-    have hz := hx x
-    linarith
+    constructor <;> intro x hx <;> by_contra hn
+    · have hp := positive x hn
+      have hz := hx x
+      linarith
+    · have hp := positive x hn
+      have hz := hx x
+      linarith
   obtain ⟨D, b, e, hrank, hunit, hpos, he, hgram, hcoord, hpair⟩ :=
     exists_latticeData_of_real_selfdual lattice pairing hB hsym positive self_dual
       (fun x => even_norm x x.property)
@@ -156,4 +181,5 @@ theorem exists_positive_even_unimodular_gram :
 
 #print axioms self_dual
 #print axioms exists_positive_even_unimodular_gram
+end
 end D5.S3.Arith.Lattices.Golay.RealLeech
