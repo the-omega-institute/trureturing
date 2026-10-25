@@ -9,6 +9,7 @@ current inspector binding remain to be supplied. -/
 
 noncomputable section
 namespace Reg.D5.S3.VertexAlgebra.CollisionAnalytic.AbsoluteEvaluation
+universe u v
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
 open CollisionRationalExpansions.OrderedRationalExpansion
@@ -18,12 +19,12 @@ open UniformGradedLocalCorrelator
 open CollisionAbsoluteEvaluation.Labelled
 
 abbrev monomialSource := type_of%
-  (@_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.monomial_family)
+  (@_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.monomial_family.{u,v})
 abbrev collisionSource := type_of%
   (@_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.Labelled.collision_absolute_evaluation)
 
-example : monomialSource :=
-  @_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.monomial_family
+example : monomialSource.{u,v} :=
+  @_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.monomial_family.{u,v}
 example : collisionSource :=
   @_root_.D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.Labelled.collision_absolute_evaluation
 
@@ -63,8 +64,8 @@ def collisionSignature : Signature where
 def collisionActual : Realization collisionSignature :=
   realize collisionSignature
     (fun _ p P e => (orderedRationalFor ℂ p.n p.sigma
-      (algebraMap _ (CommonRational ℂ p.n) P /
-       algebraMap _ (CommonRational ℂ p.n)
+      (algebraMap (LabelledPolynomial ℂ p.n) (CommonRational ℂ p.n) P /
+       algebraMap (LabelledPolynomial ℂ p.n) (CommonRational ℂ p.n)
          (∏ q ∈ labelledPairs p.n, pairPolynomial q.1 q.2 ^ p.orders q))).coeff
           (orderExponents p.n p.sigma e) * monomial p.z e)
     (fun e => nomatch e)
