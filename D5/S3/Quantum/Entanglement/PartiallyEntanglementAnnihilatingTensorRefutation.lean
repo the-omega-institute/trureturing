@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
+import D5.S3.Quantum.Entanglement.GraphDensity.UniqueBasisFormationRefutation
 
 /-! Two replacements onto a Schmidt-rank-two qutrit state yield Schmidt rank four. -/
 
@@ -157,7 +158,38 @@ private theorem psi_rank : (coeff psi).rank = 4 := by
 
 private theorem pure_rank_le {d r : ℕ} (u : Ket (Fin d × Fin d))
     (h : SchmidtNumberLE (proj u) r) : (coeff u).rank ≤ r := by
-  sorry
+  classical
+  rcases h with ⟨N, p, w, hp, ht, hr, havg⟩
+  let e : D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Ensemble
+      (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec) := {
+    N := N
+    weight := p
+    nonneg := hp
+    le_one := fun i => by
+      calc
+        p i ≤ ∑ j, p j := Finset.single_le_sum (fun j _ => hp j) (Finset.mem_univ i)
+        _ = 1 := ht
+    total := ht
+    psi := fun i => (w i).vec
+    unit := fun i => (w i).normalized'
+    average := by
+      change ∑ i, (p i : ℂ) • proj (w i) = proj u
+      exact havg.symm }
+  obtain ⟨i, hi⟩ : ∃ i, 0 < p i := by
+    by_contra hn
+    push_neg at hn
+    have hz : ∑ i, p i = 0 := Finset.sum_eq_zero fun i _ => le_antisymm (hn i) (hp i)
+    linarith
+  obtain ⟨z, hz, heq⟩ :=
+    D5.S3.Quantum.Entanglement.GraphDensity.UniqueBasisFormationRefutation.positive_phase
+      u.vec u.normalized' e i hi
+  have hz0 : z ≠ 0 := norm_ne_zero_iff.mp (by rw [hz]; norm_num)
+  have hc : coeff (w i) = z • coeff u := by
+    ext a b
+    exact congrFun heq (a, b)
+  have hri := hr i
+  rwa [hc, Matrix.rank_smul_of_mem_nonZeroDivisors _
+    (mem_nonZeroDivisors_of_ne_zero hz0)] at hri
 
 private theorem replacement_kron
     (x : Matrix ((Fin 3 × Fin 3) × (Fin 3 × Fin 3))
