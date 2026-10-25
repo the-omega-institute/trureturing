@@ -46,7 +46,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
     norm_num [dotProduct, Fin.sum_univ_two]
   have ht := (h ![1, 0] hv).2.2.1
   change Matrix.trace (0 : Matrix (Fin 2) (Fin 2) ℂ) = 1 at ht
-  simpa using ht
+  simp at ht
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
