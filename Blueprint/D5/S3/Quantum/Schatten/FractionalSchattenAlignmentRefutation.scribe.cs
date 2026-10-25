@@ -75,7 +75,7 @@ internal sealed class FractionalSchattenAlignmentRefutationDocument : IScribeDoc
                             + "of each inclusion are that natural number cast to ℝ. The natural-number "
                             + "comparison therefore proves the required word-trace inequalities.")),
                     Paragraph(Text(
-                        "For a real nonnegative diagonal d and any real p, the Schatten norm of "
+                        "For a real nonnegative diagonal d and a real p ≥ 1, the Schatten norm of "
                             + "diag(k ↦ (d(k) : ℂ)) is (Σk d(k)^p)^(1/p). To obtain this identity, "
                             + "write D = diag(k ↦ (d(k) : ℂ)). Then Dᴴ · (Dᴴ)ᴴ = DᴴD is "
                             + "diag(k ↦ ((d(k)^2 : ℝ) : ℂ)). Continuous functional calculus acts "
