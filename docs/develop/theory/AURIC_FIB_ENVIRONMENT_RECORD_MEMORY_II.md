@@ -3748,7 +3748,7 @@ suppliers. At $n=0,1$ use [ERM, Theorem 27.3][ERM]. For $n\ge2$
 use [ERM, Theorems 27.4–27.5][ERM] on $p=0$ or $q=0$, and
 Theorem 35.1, with its balanced priority in Theorem 30.3, on
 $r=0,pq>0$. Their stated population endpoints include the vertices;
-where the task error is zero use nonnegativity as its lower certificate.
+at every zero task error select the input witness $Y=E$.
 For positive populations first use the floor region of
 [ERM, Theorem 27.7, (27.24)][ERM]. If it fails, use Definitions
 37.1–37.2 when their accepted list is nonempty; otherwise use §§40–43.
@@ -3788,13 +3788,14 @@ B=U_0K_\Lambda U_0^\dagger,\\
 $$
 
 The boundary and small-horizon suppliers give the same effect and
-decoder interface on their own domains. For every selected pair,
-with a norm-at-most-one witness when the value is zero,
+decoder interface on their own domains. At every zero value use
+$Y_\Lambda=E_{\rm act}$, the phase transfer of the witness $Y=E$.
+For every selected pair,
 
 $$
 \begin{gathered}
 0\le B\le I_3,\qquad Y_\Lambda=Y_\Lambda^\dagger,\qquad
-\|Y_\Lambda\|_1\le1,\\
+\|Y_\Lambda\|_1=1,\\
 \eta_n(E_{\rm act})
 =\|(F^n)^\dagger(B)-E_{\rm act}\|_{\rm op}
 =\operatorname{Tr}(Y_\Lambda E_{\rm act})
@@ -3827,6 +3828,24 @@ algebraic selection, including both signs of $s$ and all degeneracies.
 Propositions 38.2 and 38.3 respectively supply an exact open
 quadratic region and positive-interior tasks requiring the
 simple-contact complement; neither replaces any boundary hypothesis.
+
+For a zero-value branch, the selected rank-one projection satisfies
+$Y_\Lambda=E_{\rm act}=E_{\rm act}^\dagger\ge0$,
+$\|Y_\Lambda\|_1=\operatorname{Tr}(E_{\rm act})=1$ and
+$\operatorname{Tr}(Y_\Lambda E_{\rm act})=1$.
+The actual physical channel
+$F=\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1})$
+of [ERM, (27.3)][ERM] preserves positivity and trace, as does every
+$F^n$, including $F^0=\mathrm{id}$. Hence
+$F^n(Y_\Lambda)\ge0$ and
+$\operatorname{Tr}((F^n(Y_\Lambda))_+)=\operatorname{Tr}(F^n(Y_\Lambda))=1$.
+Its global lower value in [ERM, (27.4)][ERM] is therefore $1-1=0$,
+matching the inherited attaining effect. This construction applies to
+every zero-value population and horizon without division by the error
+or by a population. It uses the original forward channel and arbitrary
+complex $v_{\rm act}$. It adds only the task projection to the finite
+prescription; the positive-value witnesses and their selections are
+those of the stated suppliers.
 
 Proposition 27.2 gives the phase transfer in (44.1), preserving the
 entire attainable image and the forward dual support identity.
