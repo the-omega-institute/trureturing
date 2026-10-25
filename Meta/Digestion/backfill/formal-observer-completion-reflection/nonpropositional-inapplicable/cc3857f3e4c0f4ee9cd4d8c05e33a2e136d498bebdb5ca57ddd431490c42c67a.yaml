@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc3857f3e4c0f4ee9cd4d8c05e33a2e136d498bebdb5ca57ddd431490c42c67a
+  normalized_sha256: sha256:cc3857f3e4c0f4ee9cd4d8c05e33a2e136d498bebdb5ca57ddd431490c42c67a
+cas_ref: sha256:cc3857f3e4c0f4ee9cd4d8c05e33a2e136d498bebdb5ca57ddd431490c42c67a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 为评价函数及状态载体 X 设定符号，等式 e(x,π)=Lπ(x) 是定义，未断言评价具有额外性质。'
+    previous_atom_id: 289180701b72fe78c3af3321d33f7a2f36877d2999399ae439b8684c18752362
+    next_atom_id: 9fa1b03ace603c059e809dc6fba20c127b725484e469d969740b2c9b001fb2bc

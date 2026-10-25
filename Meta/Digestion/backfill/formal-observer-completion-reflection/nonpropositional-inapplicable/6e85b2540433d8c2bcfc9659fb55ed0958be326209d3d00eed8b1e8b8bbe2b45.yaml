@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e85b2540433d8c2bcfc9659fb55ed0958be326209d3d00eed8b1e8b8bbe2b45
+  normalized_sha256: sha256:6e85b2540433d8c2bcfc9659fb55ed0958be326209d3d00eed8b1e8b8bbe2b45
+cas_ref: sha256:6e85b2540433d8c2bcfc9659fb55ed0958be326209d3d00eed8b1e8b8bbe2b45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 设置抽象 law 与物理状态空间 W 的建模输入，未断言存在实现态射。'
+    previous_atom_id: a30e005d45565a468e08ad569054f0c5605eb92a6319dd6b708ab0da2b96b36f
+    next_atom_id: 941fa54ba5d61509c30665eeb058d19c5e4a9e7edced3257cf29337bb3ce750f

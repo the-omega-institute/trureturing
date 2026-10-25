@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:890a3adebb7cb01bdbd5327bedb21823936411f3242106f112f20372e860128f
+  normalized_sha256: sha256:890a3adebb7cb01bdbd5327bedb21823936411f3242106f112f20372e860128f
+cas_ref: sha256:890a3adebb7cb01bdbd5327bedb21823936411f3242106f112f20372e860128f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列素数—时间协议状态这个应用标签，没有给出其与受控系统等价的断言。'
+    previous_atom_id: e9a4f1c7ffbff40111dedefa9a22f9a2202cd7571f83d398d27fa84154b27bc1
+    next_atom_id: 6ee6691f6f648fdedd044852d80ed99d1648f37a8adccc3f77751a29fa08c38a
