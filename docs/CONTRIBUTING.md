@@ -199,7 +199,7 @@ cd ../trureturing-SESSION-ID
 This creates `lane/governance/first-docs` and restores locked .NET dependencies.
 For later tasks, commit existing work, confirm a clean tree and switch to a
 validated branch in the same session worktree, following
-[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
 Other branch kinds are `math` and `theory`; file-level checks still apply.
 Maintainers use `BASE=origin/dev`.
 
@@ -308,7 +308,7 @@ results on your PR and address failures. GitHub branch-protection configuration
 is an external setting, not a guarantee supplied by this guide. An open PR or
 green local check is not a merged contribution: completion is **MERGED** into
 `dev`. Reuse the session worktree for subsequent tasks; cleanup follows
-[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+[§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).
 
 The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
 [licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)

@@ -73,6 +73,43 @@ The displayed Parseval equality on p.16 omits this factor. Its fixed
 factor can be absorbed in the arbitrary requested $\mu$, but numerical
 constants must retain it; no numerical constant is transferred here.
 
+## The original Yoshida supplier already gives the direct Weil bound
+
+Hiroyuki Yoshida, *On Hermitian Forms attached to Zeta Functions*,
+*Advanced Studies in Pure Mathematics* **21** (1992), 281–325,
+[DOI:10.2969/aspm/02110281](https://doi.org/10.2969/aspm/02110281),
+is the primary source behind the cited leakage argument. The
+[publisher PDF](https://projecteuclid.org/ebooks/advanced-studies-in-pure-mathematics/Zeta-Functions-in-Geometry/chapter/On-Hermitian-Forms-attached-to-Zeta-Functions/10.2969/aspm/02110281.pdf)
+was read through its 45-page text extraction. The following are source
+statements, without a full proof audit, numerical reproduction or Lean
+certification.
+
+Yoshida's §2 uses the same zero-extended smooth periodic space $K(a)$.
+In §3, $K_N(a)$ removes the Fourier modes $|n|\le N$. His Lemma 3
+states, for each fixed number field $k$ and its original Weil form,
+
+$$
+\forall a_0,\mu>0\ \exists N\ge0\ \forall 0<a\le a_0\
+\forall\varphi\in K_N(a):\qquad
+\langle\varphi,\varphi\rangle
+\ge\mu\|\varphi\|_{L^2(-a,a)}^2.
+$$
+
+The norm is squared in the lemma and again in §7, equation (7.3).
+The Fourier convention is $\widehat\varphi(t)=\int\varphi(x)e^{itx}dx$,
+so the proof retains the coefficient $1/(2\pi)$ in its low-frequency
+Fourier integral. This is a direct Weil-form estimate on $\varphi$;
+Suzuki's displayed screw-form estimate above instead uses its primitive.
+Neither the forms nor their right-hand metrics should be identified
+without the stated primitive map and its normalization.
+
+Thus generic existence of a positive high complement is already a
+classical supplier. Its cutoff still depends on the support ceiling
+and requested margin. It does not decide the finite corrected block,
+supply its cofinal sign, or bound the complete selected-source prime
+discrepancy. The selected-source signed estimate remains a separate
+obligation.
+
 ## The finite form retains the correction from its complement
 
 Section 5.2, printed pp.17–19, uses a closed positive subspace $V_N(a)$
@@ -98,15 +135,18 @@ $a>0$, equivalently the absence of a zero eigenvalue for its integral
 operator at every such support. This equivalence supplies no
 unconditional all-support nondegeneracy assertion.
 
-Section 5.4, printed p.23, reports Yoshida's unconditional
-nondegeneracy on $C(a)$ and $K(a)$ (his Propositions 2 and 7), while
-his RH criterion concerns the completed space
+Section 5.4, printed p.23, reports Yoshida's nondegeneracy results.
+In Yoshida's original §3, Proposition 2 gives nondegeneracy on $C(a)$
+for every $a>0$, for each fixed number field $k$. His §8, Proposition 7, gives nondegeneracy on $K(a)$
+for $k=\mathbb Q$. His §8, Theorem 2, states that RH for $\zeta_k$
+is equivalent to nondegeneracy on the completed space
 $\widehat K(a)=W(a)\oplus\widehat{K_N(a)}$ for every $a>0$.
-Here the high subspace is completed in the positive Weil-form metric.
-These Yoshida attributions remain secondary: his original text has
-not been inspected here. In particular, the unsquared norm displayed
-in Suzuki's p.12 summary is not silently replaced by a claimed
-original homogeneous coercivity statement.
+Here the high subspace is completed in the positive Weil-form metric;
+$W(a)$ is the form-orthogonal finite complement, whose form matrix
+is continuous in the bases constructed in §7. These are original-source statements,
+not an unconditional completed-space nondegeneracy assertion. The
+squared-norm high-complement supplier is Lemma 3 itself, rather than
+an unsquared-norm summary.
 
 For the [project's actual Fourier sections](connesconsanimoscovici2026spectral.md#an-explicit-error-for-the-actual-even-fourier-sections),
 the remaining obligation is the actual corrected sign, with controlled
@@ -115,3 +155,7 @@ one must also identify the source space, metric and transported form
 with the domain in the reused criterion. Nondegeneracy on smooth
 sources alone does not discharge the completed-space hypothesis.
 This source comparison provides no new Robin estimate or RH proof.
+
+## Limits of global imaginary-translation positivity
+
+The [Conrey–Li source](conreyli1998positivity.md) records an existing obstruction to two specified global imaginary-translation positivity conditions in reproducing-kernel function spaces. Their operators and translation domains require separate identification with the actual theta source. Their reported failure neither replaces the complete Weil criterion nor determines the sign on the selected physical-source class.

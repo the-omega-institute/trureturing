@@ -170,13 +170,13 @@ private theorem representation (H c : ℕ) (hH : 1 < H) :
     · simp [Nat.mod_eq_of_lt (by omega : 1 < H), h1]
     · exact Nat.mod_mod c H
 
-private theorem run_append (l m : List Bool) (v : ℕ × ℕ) :
+theorem run_append (l m : List Bool) (v : ℕ × ℕ) :
     runWord (l ++ m) v = runWord m (runWord l v) := by
   induction l generalizing v with
   | nil => rfl
   | cons b l ih => exact ih (TerminalGcdAcquisitionCost.step b v)
 
-private theorem run_replacements (k : ℕ) (v : ℕ × ℕ) :
+theorem run_replacements (k : ℕ) (v : ℕ × ℕ) :
     runWord (List.replicate k true) v = replace^[k] v := by
   induction k generalizing v with
   | zero => rfl
