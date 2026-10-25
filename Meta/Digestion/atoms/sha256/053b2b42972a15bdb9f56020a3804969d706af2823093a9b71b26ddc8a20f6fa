@@ -1,0 +1,30 @@
+**Proposition 8.3 (finite attained arithmetic and widths).** Let $B$ be the total binary encoding length of the actual $2N-1$ coefficient words and $X$ that of the initial $N$ field words, including their signs and denominators. These are proof parameters, not startup advice. There is an exact implementation of the construction through (UFS.18) with $O(R^4)$ rational arithmetic/gcd/lcm/comparison operations, $N-1$ promised rational-square-root extractions, and a conservative intermediate integer/rational width
+
+$$
+U=O\!\left(R^2\bigl(B+X+\log(R+1)+1\bigr)\right).
+\tag{UFS.23}
+$$
+
+In particular every admitted specimen has finite work and storage. No bound on these widths or on the control amplitudes follows from $R$ alone.
+
+Proof. Let $D$ be the product of coefficient denominators and $E$ the product of entry-field denominators, so $\log_2 D\le B$ and $\log_2 E\le X$. They need not be known by the observer. Before unit preparation, the freely evolving term has denominators dividing $ED^j$ and norm at most $\|x^{\rm in}\|\le\sqrt N\,2^X$. After the startup Add$(1)$, its extra term has denominators dividing $D^j$ and norm at most one. Every free value, impulse value and actual startup scalar used has exponent $O(R)$ and reduced width $O(X+RB+\log(R+1)+1)$.
+
+For the signed rank test, clear denominators with the lcm of the observed entries. This lcm divides $ED^{2R-1}$. The recurrence solve has right-hand side from the same prefix. For an $h$-row integer matrix with entry width $L$, Hadamard's bound gives minor width $O(hL+h\log(h+1))$. Rank-revealing fraction-free elimination with row/column pivoting computes its rank and solves its nonsingular selected systems with intermediate widths of this size. Here $h\le R$ and $L=O(X+RB+\log(R+1)+1)$, within (UFS.23). Zero pivots are dealt with by pivot search; signed free blocks need no positivity assumption.
+
+Retain the $\gamma_j$ with a common determinant denominator from (UFS.6). In extrapolation, clear the current free-value window by its lcm before forming the recurrence sum. Its denominator divides $ED^h$ for the largest actual index $h$ of that window, which remains $O(R)$ during startup. Products, sums and reduction therefore retain width $O(U)$: unrelated denominators are not multiplied afresh for every summand. The reduced predicted values are the actual $f_j$ by Proposition 2.2. Subtraction yields actual impulse values with their stated denominators.
+
+P's coefficient/recurrence decoding uses integer-scaled positive impulse blocks, their minors, monic orthogonality solves and finite pairings. The same minor bound applies, with $X$ unnecessary for those impulse blocks. Pairings can use their common determinant denominators; their product and sum widths are $O(U)$. Each link square root is taken on the reduced numerator and denominator of a promised rational square. Integer roots and exact squaring checks are finite at these widths. Matrix powers to exponents $O(R)$ construct $\mathcal O_N$, the actual field and $C_N$ using common denominators and reduced arithmetic. The observability solve has startup values as its right-hand side and has the same augmented-minor bound.
+
+For control, $T^Nx_*$ has denominators dividing $ED^{s+3N}$. Clearing the coefficients and right-hand side of (UFS.16) therefore gives entries of width $O(X+RB+\log(R+1)+1)$. The inverse/control solve gives all pulse inputs with a common determinant denominator $\Delta$ and numerator/denominator widths $O(U)$. During actual preparation, (UFS.17) shows that every source coordinate has a denominator dividing $E\Delta D^{s+3N}$, and magnitude at most $\|x_*\|+\sum_j|u_j|$. Both its logarithmic denominator and logarithmic magnitude are $O(U)$. Adding the final $2N$ passive Ticks only increases the exponent by $O(R)$; in fact after preparation their states are exactly $T^ke_0$. Thus source buffers, all returns, predictor states and control arithmetic have finite $O(U)$ width as claimed.
+
+One rank elimination and free recurrence solve cost $O(R^3)$ arithmetic operations. Free extrapolation through $s+2N$ costs $O(R^2)$ operations. Successive pulse-block tests and separate monic-polynomial solves cost $O(\sum_{j\le N}(j+1)^3)=O(N^4)$. Observability, control and record installation add at most cubic arithmetic and quadratic sparse power generation. Gcd/lcm calculations, comparisons and counter work fit a conservative $O(R^4)$ allowance at these widths. This proves the displayed attained bounds.
+
+For an explicit bit interpretation let $A(U)$ bound a reduced rational arithmetic/gcd/lcm/comparison operation at width $O(U)$, and let $Q(U)$ bound an integer square-root extraction with its exact test. Schoolbook integer algorithms give finite polynomial bounds; for example conservative choices $A(U)=O(U^3)$ and $Q(U)=O(U^3)$ suffice. Algebraic observer work is then at most
+
+$$
+O\bigl(R^4A(U)+R Q(U)\bigr),
+\tag{UFS.24}
+$$
+
+with the source operations, serialization, allocated storage, rights/backing and any separately materialized output charged in addition. No unit-cost real-number or root oracle has been used. $\square$
+
