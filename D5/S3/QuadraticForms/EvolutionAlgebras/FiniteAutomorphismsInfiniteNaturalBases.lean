@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A nondegenerate complex evolution algebra has finite full automorphisms and infinitely many natural bases modulo permutation and independent scaling. -/
+   digest: Finite full automorphisms coexist with an infinite natural-basis quotient. -/
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
 import Mathlib.LinearAlgebra.Basis.Fin
@@ -91,7 +91,10 @@ private theorem aut_classify (f : Aut mu) :
     simpa using haa.symm
   have hae : a = (1, 0) := Prod.ext ha₁ ha₂
   have hab : mu a b = 0 := by
-    simpa [a, b, mu] using (f.property (1, 0) (0, 1)).symm
+    have h := f.property (1, 0) (0, 1)
+    have hz : mu (1, 0) (0, 1) = 0 := by ext <;> simp [mu]
+    rw [hz, map_zero] at h
+    exact h.symm
   have hb₁ : b.1 = 0 := by simpa [hae, mu] using congrArg Prod.fst hab
   have hbb : mu b b = a := by
     simpa [a, b, mu] using (f.property (0, 1) (0, 1)).symm
@@ -118,12 +121,12 @@ private theorem finite_full_aut : Finite (Aut mu) := by
   have hd : (f.val (0, 1)).2 = (g.val (0, 1)).2 := by
     change decide ((f.val (0, 1)).2 = 1) = decide ((g.val (0, 1)).2 = 1) at h
     have hi := decide_eq_decide.mp h
-    rcases hdf with hf₁ | hf₋
+    rcases hdf with hf₁ | hfNeg
     · exact hf₁.trans (hi.mp hf₁).symm
-    · rcases hdg with hg₁ | hg₋
-      · have hc : (1 : ℂ) = -1 := (hi.mpr hg₁).symm.trans hf₋
+    · rcases hdg with hg₁ | hgNeg
+      · have hc : (1 : ℂ) = -1 := (hi.mpr hg₁).symm.trans hfNeg
         norm_num at hc
-      · exact hf₋.trans hg₋.symm
+      · exact hfNeg.trans hgNeg.symm
   apply Subtype.ext
   apply LinearEquiv.ext
   intro x
@@ -187,7 +190,7 @@ private theorem family_separation {n m : ℕ}
     have hu : (u 0 : ℂ) = ((n + 1 : ℕ) : ℂ) := by simpa using h₁.symm
     have hz : (((n + 1) * (m + 1) + 1 : ℕ) : ℂ) = 0 := by
       simp only [Prod.smul_fst, smul_eq_mul, hu] at h₀
-      push_cast
+      push_cast at h₀ ⊢
       linear_combination h₀
     have : (n + 1) * (m + 1) + 1 = 0 := by exact_mod_cast hz
     omega
