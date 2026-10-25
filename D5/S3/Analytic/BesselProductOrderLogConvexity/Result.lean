@@ -2,12 +2,55 @@
    generality: I
    mirror-B: D5/B/S3/Analytic/BesselProductOrderLogConvexity/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral, Mathlib.Analysis.SpecialFunctions.Trigonometric.Series, Mathlib.Analysis.Complex.ExponentialBounds]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Series, mathlib/module/Mathlib.Analysis.Complex.ExponentialBounds]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/BesselProductOrderLogConvexity/Result.claim; result=D5/S3/Analytic/BesselProductOrderLogConvexity/Result.result; claim=D5/S3/Analytic/BesselProductOrderLogConvexity/Result.claim
    digest: Half-integer Bessel products refute log-convexity in the order. -/
 
+/-
+admission_basis: open-problem-resolution (Baricz-Ponnusamy final Conjecture; Refuted).
+Per-declaration judgment: all rows have escape_witness: none.
+After expanding same-delivery helpers, the proof uses the reused first-kind
+series and its summability, Mathlib Gamma duplication and recurrence, the
+hyperbolic series, tsum identities, exponential bounds, and normalization.
+Every theorem row is bind-only; the settling conclusion supplies the
+open-problem-resolution admission basis.
+Current declaration identities from the scoped Lean report:
+  B: GID D5/S3/Analytic/BesselRatioLogConcavity/Result.besselI
+     Lean name: D5.S3.Analytic.BesselRatioLogConcavity.Result.besselI
+     statement_id: sha256:b2c7dbd6b47657b5e857da424f6a6c4634758f039c6c82466b824b24e46d79be
+  S: GID D5/S3/Analytic/BesselRatioLogConcavity/Result.bessel_summable
+     Lean name: D5.S3.Analytic.BesselRatioLogConcavity.Result.bessel_summable
+     statement_id: sha256:644a8c30490609feaef0b2cef77ba07a09379e4a19585cb2a496d3db75505920
+B belongs to the frozen owner. S is its existing summability lemma exposed
+by removing private; canonical owner re-pinning is required for that visibility.
+Compiler-generated proof constants are internal details, not extra source rows.
+Per declaration: name | proof_shape | direct consumers | frozen owner dependencies.
+  besselK | bind-only (definition) | P | B
+  P | bind-only (definition) | claim, product_values, result, witness | B
+  claim | bind-only (definition) | result | B
+  a | bind-only (definition) | a_eq_sqrt, half_values, minus_term, plus_term | none
+  gamma_factorial | bind-only | minus_term | none
+  minus_term | bind-only | half_values, plus_term | none
+  plus_term | bind-only | half_values | none
+  a_eq_sqrt | bind-only | half_values | none
+  half_values | bind-only | product_values | B
+  summand | bind-only (definition) | lower, recurrence, shift, step | none
+  lower | bind-only | recurrence, step | none
+  shift | bind-only | step | none
+  step | bind-only | recurrence | none
+  recurrence | bind-only | recurrence_minus, recurrence_plus | B, S
+  recurrence_minus | bind-only | product_values | B, S
+  recurrence_plus | bind-only | product_values | B, S
+  product_values | bind-only | witness | B, S
+  exp_bound | bind-only | witness | none
+  witness | bind-only | result | B, S
+  half_noninteger | bind-only | result | none
+  result | bind-only | settling result | B, S
+The utility is certified-instance with basis refutes. The only public theorem
+is result, whose conclusion is exactly the negation of claim.
+-/
+
 import D5.S3.Analytic.BesselRatioLogConcavity.Result
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Mathlib.Analysis.Complex.ExponentialBounds
 open scoped BigOperators
@@ -30,15 +73,20 @@ private def a : ℝ := (1/2:ℝ)^((-1/2:ℝ)) / Real.sqrt Real.pi
 private lemma gamma_factorial (k : ℕ) :
     (k.factorial:ℝ) * Real.Gamma (k+1/2) * (4:ℝ)^k =
       ((2*k).factorial:ℝ) * Real.sqrt Real.pi := by
-  induction k with
-  | zero => simpa only [Nat.cast_zero, zero_add, Nat.factorial_zero, Nat.mul_zero, Nat.cast_one, pow_zero, mul_one, one_mul] using Real.Gamma_one_half_eq
-  | succ k ih =>
-    rw [show ((k+1:ℕ):ℝ)+1/2 = (k:ℝ)+1/2+1 by push_cast; ring,
-      Real.Gamma_add_one (by positivity), Nat.factorial_succ,
-      show 2*(k+1) = (2*k+1)+1 by omega,
-      Nat.factorial_succ, Nat.factorial_succ, pow_succ]
-    push_cast at *
-    linear_combination 4*((k:ℝ)+1)*((k:ℝ)+1/2)*ih
+  have h := Real.Gamma_mul_Gamma_add_half ((k:ℝ)+1/2)
+  rw [show (k:ℝ)+1/2+1/2 = k+1 by ring, Real.Gamma_nat_eq_factorial,
+    show 2*((k:ℝ)+1/2) = ((2*k:ℕ):ℝ)+1 by push_cast; ring,
+    Real.Gamma_nat_eq_factorial,
+    show 1-(((2*k:ℕ):ℝ)+1) = -((2*k:ℕ):ℝ) by ring,
+    Real.rpow_neg, Real.rpow_natCast] at h
+  · have hp : (2:ℝ)^(2*k) = (4:ℝ)^k := by rw [pow_mul]; norm_num
+    rw [hp] at h
+    have h4 : (4:ℝ)^k ≠ 0 := by positivity
+    field_simp at h
+    rw [show ((k:ℝ)*2+1)/2 = k+1/2 by ring] at h
+    linear_combination h
+  · norm_num
+
 
 private lemma minus_term (k : ℕ) :
     (1/2:ℝ)^((2*k:ℕ)+((-1/2:ℝ))) /

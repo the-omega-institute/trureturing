@@ -47,7 +47,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 All("k", N, Eqn(Mul(Mul(Factorial(V("k")),
                     Call("Real.Gamma", Add(V("k"), Qn(1,2)))), Pow(D(4), V("k"))),
                     Mul(Factorial(Mul(D(2), V("k"))), Call("Real.sqrt", Call("Real.pi"))))),
-                "The Gamma value at one half is sqrt(pi). The Gamma and factorial recurrences extend it to k+1/2 and give the even-factorial identity."),
+                "Mathlib's Gamma duplication formula at k+1/2, together with the Gamma values at positive integers, gives the even-factorial identity after real-power normalization."),
             Helper("minus_term", "The terms at order minus one half",
                 All("k", N, Eqn(BesselTerm(Negate(Qn(1,2)), V("k")),
                     Fr(V("a"), Factorial(Mul(D(2), V("k")))))),
@@ -135,7 +135,8 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             if (parts.Count > 0) parts.Add(Dot);
             parts.Add(V(word));
         }
-        return new Formula.Apply(Seq(Operatorname, Sp, Grp([.. parts])), [.. args]);
+        var head = Seq(Operatorname, Sp, Grp([.. parts]));
+        return args.Length == 0 ? head : new Formula.Apply(head, [.. args]);
     }
     private static Formula I(Formula nu, Formula u) => Call("besselI", nu, u);
     private static Formula K(Formula nu, Formula u) => Call("besselK", nu, u);
