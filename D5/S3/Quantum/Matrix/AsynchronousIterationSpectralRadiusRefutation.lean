@@ -112,7 +112,13 @@ private theorem base_radius : radius baseMatrix = ENNReal.ofReal (1 / 2) := by
     norm_num [coe_nnnorm, norm_div]
 
 private theorem witness_admissible : Admissible 2 sizes 1 baseMatrix delays (1 / 2) := by
-  sorry
+  refine ⟨?_, ?_, ?_, by norm_num, by norm_num, base_radius⟩
+  · intro i
+    norm_num [sizes]
+  · intro i
+    simp [delays]
+  · intro i j hij
+    simp [delays, hij]
 
 private theorem unstable_eigenvector :
     unstableVector ≠ 0 ∧
