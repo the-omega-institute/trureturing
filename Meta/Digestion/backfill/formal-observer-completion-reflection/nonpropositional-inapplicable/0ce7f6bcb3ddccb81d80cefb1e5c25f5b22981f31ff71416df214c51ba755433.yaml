@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+  normalized_sha256: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+cas_ref: sha256:0ce7f6bcb3ddccb81d80cefb1e5c25f5b22981f31ff71416df214c51ba755433
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以弱强算子闭包结束操作清单并定义 Core 元组，四个问题是术语释义。
+    previous_atom_id: 301f7dbb009cc268c8fa3c4b32796cb03278b0417d143a80fca30263562549cb
+    next_atom_id: 2fce21da17f77ea632d19b5fcf2c12542119e0f40ded5a7c1e6a3ed8ac4e8492
