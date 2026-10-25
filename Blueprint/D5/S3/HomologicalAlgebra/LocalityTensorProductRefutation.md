@@ -88,19 +88,7 @@ $$\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorn
 
 The locality tensor product is the free span of local pairs modulo its bilinearity subspace, as in the definition in main.tex, lines 556–562. CoeSort.coe explicitly regards the free-span submodule as a type of elements. Taking the inverse image under Submodule.subtype puts the denominator inside that type before forming the quotient.
 
-**Definition 1.8 (Componentwise generator locality).**
-
-$$\forall \left(E: \operatorname{Type}\right), \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.componentwise}\left(E, r\right): \left(E \times E\right) \to \left(\left(E \times E\right) \to \left(\operatorname{Prop}\right)\right)\right) = \operatorname{Prod.RProd}\left(r, r\right)\right)\right)$$
-
-*Formalization.* `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.componentwise` (`✓ std3`).
-
-*Citation.* Pierre J. Clavier; Loic Foissy; Diego A. López; Sylvie Paycha (2022). *Tensor products and the Milnor-Moore theorem in the locality setup*. DOI: [10.1007/s40879-025-00822-z](https://doi.org/10.1007/s40879-025-00822-z). URL: <https://arxiv.org/abs/2205.14616v1>.
-
-*Commentary.*
-
-Two generators are related when their first entries are related and their second entries are related. This is Prod.RProd r r, the relation of arXiv:2205.14616v1, main.tex, lines 447–449.
-
-**Definition 1.9 (Pairwise locality of four entries).**
+**Definition 1.8 (Pairwise locality of four entries).**
 
 $$\forall \left(E: \operatorname{Type}\right), \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(p: E \times E\right), \left(\forall \left(q: E \times E\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.fourWay}\left(E, r, p, q\right)\right) \Leftrightarrow \left(\left(r\left(\operatorname{Prod.fst}\left(p\right), \operatorname{Prod.snd}\left(p\right)\right)\right) \land \left(\left(r\left(\operatorname{Prod.fst}\left(p\right), \operatorname{Prod.fst}\left(q\right)\right)\right) \land \left(\left(r\left(\operatorname{Prod.fst}\left(p\right), \operatorname{Prod.snd}\left(q\right)\right)\right) \land \left(\left(r\left(\operatorname{Prod.snd}\left(p\right), \operatorname{Prod.fst}\left(q\right)\right)\right) \land \left(\left(r\left(\operatorname{Prod.snd}\left(p\right), \operatorname{Prod.snd}\left(q\right)\right)\right) \land \left(r\left(\operatorname{Prod.fst}\left(q\right), \operatorname{Prod.snd}\left(q\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -110,9 +98,9 @@ $$\forall \left(E: \operatorname{Type}\right), \left(\forall \left(r: \left(E\ri
 
 *Commentary.*
 
-The four entries p₁, p₂, q₁ and q₂ must be pairwise related: all six unordered pairs satisfy r. The pairs within each generator are included. This is the literal four-entry condition of arXiv:2506.09493v1, LOC.tex, lines 220 and 743–747. It implies componentwise locality; the two relations need not coincide even when V = W.
+The four entries p₁, p₂, q₁ and q₂ must be pairwise related: all six unordered pairs satisfy r. The pairs within each generator are included. This is the literal four-entry condition of arXiv:2506.09493v1, LOC.tex, lines 220 and 743–747. It implies the relational product Prod.RProd r r, namely r(v,v′) ∧ r(w,w′). This componentwise reading is the relation of arXiv:2205.14616v1, main.tex, lines 447–449. The two relations need not coincide even when V = W.
 
-**Definition 1.10 (Existential locality on the quotient).**
+**Definition 1.9 (Existential locality on the quotient).**
 
 $$\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left([\operatorname{Field}\left(K\right)], \left([\operatorname{AddCommGroup}\left(E\right)], \left([\operatorname{Module}\left(K, E\right)], \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(s: \left(E \times E\right) \to \left(\left(E \times E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(V: \operatorname{Submodule}\left(K, E\right)\right), \left(\forall \left(W: \operatorname{Submodule}\left(K, E\right)\right), \left(\forall \left(a: \operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.localityTensor}\left(r, V, W\right)\right), \left(\forall \left(b: \operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.localityTensor}\left(r, V, W\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.quotientRel}\left(r, s, V, W, a, b\right)\right) \Leftrightarrow \left(\operatorname{Relation.Map}\left(\lambda \left(u: \operatorname{CoeSort.coe}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.freeSpan}\left(r, V, W\right)\right)\right) \mapsto \left(\lambda \left(v: \operatorname{CoeSort.coe}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.freeSpan}\left(r, V, W\right)\right)\right) \mapsto \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.spanRel}\left(s, \operatorname{Subtype.val}\left(u\right), \operatorname{Subtype.val}\left(v\right)\right)\right)\right), \operatorname{Submodule.Quotient.mk}, \operatorname{Submodule.Quotient.mk}, a, b\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -124,7 +112,7 @@ $$\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorn
 
 For a generator relation s, two quotient classes are related if they have representatives whose supports are related by s. Subtype.val explicitly takes each representative to its ambient coefficient function. Relation.Map takes the direct image under the two quotient maps; it requires the existence of related representatives, as in arXiv:2506.09493v1, LOC.tex, lines 606–612. The componentwise and four-way generator relations give the two readings considered here.
 
-**Definition 1.11 (Locality-compatible subspaces).**
+**Definition 1.10 (Locality-compatible subspaces).**
 
 $$\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left([\operatorname{Field}\left(K\right)], \left([\operatorname{AddCommGroup}\left(E\right)], \left([\operatorname{Module}\left(K, E\right)], \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(W: \operatorname{Submodule}\left(K, E\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.LocalityCompatible}\left(r, W\right)\right) \Leftrightarrow \left(\forall \left(x: E\right), \left(\forall \left(y: E\right), \left(\forall \left(z: E\right), \left(\forall \left(w: E\right), \left(\left(w \in W\right) \to \left(\left(r\left(x, y\right)\right) \to \left(\left(r\left(x + w, z\right)\right) \to \left(\exists \left(w': E\right), \left(\left(w' \in W\right) \land \left(\left(r\left(x + w', y\right)\right) \land \left(r\left(x + w', z\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -136,7 +124,7 @@ $$\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorn
 
 A subspace W is locality compatible when the following simultaneous adjustment is possible. If x is related to y and x + w is related to z for some w in W, then a single adjustment w′ in W makes x + w′ related to both y and z. This is Definition 6.7 of main.tex, lines 1880–1886. The predicate itself is defined for any relation r.
 
-**Definition 1.12 (The locality tensor-product conjecture).**
+**Definition 1.11 (The locality tensor-product conjecture).**
 
 $$\forall \left(s: \forall \left(E: \operatorname{Type}\right), \left(\left(\left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right) \to \left(\left(E \times E\right) \to \left(\left(E \times E\right) \to \left(\operatorname{Prop}\right)\right)\right)\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.TensorConjecture}\left(s\right)\right) \Leftrightarrow \left(\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left([\operatorname{Field}\left(K\right)], \left([\operatorname{AddCommGroup}\left(E\right)], \left([\operatorname{Module}\left(K, E\right)], \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(V: \operatorname{Submodule}\left(K, E\right)\right), \left(\forall \left(W: \operatorname{Submodule}\left(K, E\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.IsLocalityVectorSpace}\left(K, r\right)\right) \to \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.IsLocalityVectorSpace}\left(K, \operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.quotientRel}\left(r, s\left(E, r\right), V, W\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -148,7 +136,7 @@ $$\forall \left(s: \forall \left(E: \operatorname{Type}\right), \left(\left(\lef
 
 For a chosen generator-relation rule s, every field K and K-vector space E, every locality relation r and every pair of subspaces V and W, the conjecture asserts that the quotient locality on the locality tensor product is a locality vector-space relation. This is Conjecture conj:loc_tensor of arXiv:2506.09493v1, LOC.tex, lines 1797–1799. Its literal thesis reading uses fourWay; the componentwise reading uses the relation of source 1. K and E range over Type, without a finite-dimensionality hypothesis.
 
-**Definition 1.13 (The locality-compatibility conjecture).**
+**Definition 1.12 (The locality-compatibility conjecture).**
 
 $$\forall \left(s: \forall \left(E: \operatorname{Type}\right), \left(\left(\left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right) \to \left(\left(E \times E\right) \to \left(\left(E \times E\right) \to \left(\operatorname{Prop}\right)\right)\right)\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.PairConjecture}\left(s\right)\right) \Leftrightarrow \left(\forall \left(K: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left([\operatorname{Field}\left(K\right)], \left([\operatorname{AddCommGroup}\left(E\right)], \left([\operatorname{Module}\left(K, E\right)], \left(\forall \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right), \left(\forall \left(V: \operatorname{Submodule}\left(K, E\right)\right), \left(\forall \left(W: \operatorname{Submodule}\left(K, E\right)\right), \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.IsLocalityVectorSpace}\left(K, r\right)\right) \to \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.LocalityCompatible}\left(\lambda \left(a: \operatorname{CoeSort.coe}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.freeSpan}\left(r, V, W\right)\right)\right) \mapsto \left(\lambda \left(b: \operatorname{CoeSort.coe}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.freeSpan}\left(r, V, W\right)\right)\right) \mapsto \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.spanRel}\left(s\left(E, r\right), \operatorname{Subtype.val}\left(a\right), \operatorname{Subtype.val}\left(b\right)\right)\right)\right), \operatorname{Submodule.comap}\left(\operatorname{Submodule.subtype}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.freeSpan}\left(r, V, W\right)\right), \operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.bilIdeal}\left(r, V, W\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -160,9 +148,9 @@ $$\forall \left(s: \forall \left(E: \operatorname{Type}\right), \left(\left(\lef
 
 For the same unrestricted fields, vector spaces and subspaces, the conjecture asserts that the bilinearity subspace inside the free span of local pairs is locality compatible with the support relation induced by the chosen generator-relation rule s. Conjectural statement 6.16 of main.tex, lines 1984–1987, uses componentwise locality. The four-way variant uses the thesis relation on the same generators.
 
-**Definition 1.14 (The disjunction of all four assertions).**
+**Definition 1.13 (The disjunction of all four assertions).**
 
-$$\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.claim}\right) \Leftrightarrow \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.TensorConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.componentwise}\right)\right) \lor \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.TensorConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.fourWay}\right)\right) \lor \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.PairConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.componentwise}\right)\right) \lor \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.PairConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.fourWay}\right)\right)\right)\right)\right)$$
+$$\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.claim}\right) \Leftrightarrow \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.TensorConjecture}\left(\lambda \left(E: \operatorname{Type}\right) \mapsto \left(\lambda \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right) \mapsto \left(\operatorname{Prod.RProd}\left(r, r\right)\right)\right)\right)\right) \lor \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.TensorConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.fourWay}\right)\right) \lor \left(\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.PairConjecture}\left(\lambda \left(E: \operatorname{Type}\right) \mapsto \left(\lambda \left(r: \left(E\right) \to \left(\left(E\right) \to \left(\operatorname{Prop}\right)\right)\right) \mapsto \left(\operatorname{Prod.RProd}\left(r, r\right)\right)\right)\right)\right) \lor \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.PairConjecture}\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.fourWay}\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim` (`✓ std3`).
 
@@ -174,7 +162,7 @@ $$\left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.c
 
 The proposition asserts that at least one of the tensor-product or locality-compatibility conjectures holds under either componentwise or four-way locality. Its negation refutes all four assertions separately.
 
-**Theorem 1.15 (A counterexample to both conjectures under both relations).**
+**Theorem 1.14 (A counterexample to both conjectures under both relations).**
 
 $$\neg \left(\operatorname{D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation.claim}\right)$$
 
@@ -215,7 +203,6 @@ For the tensor-product conjecture, let q be the quotient map. Since A₂ − A�
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.bilIdeal`
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.bilRelations`
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim`
-- Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.componentwise`
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.fourWay`
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.freeSpan`
 - Truth anchor: `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.localityProduct`

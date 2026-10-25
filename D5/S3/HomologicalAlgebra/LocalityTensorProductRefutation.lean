@@ -50,10 +50,6 @@ abbrev localityTensor {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E) : Type :=
   freeSpan r V W ⧸ (bilIdeal r V W).comap (freeSpan r V W).subtype
 
-/-- Componentwise locality from arXiv:2205.14616v1, main.tex, lines 447–449. -/
-def componentwise (E : Type) (r : E → E → Prop) : E × E → E × E → Prop :=
-  Prod.RProd r r
-
 /-- Pairwise locality of all four entries from arXiv:2506.09493v1, LOC.tex,
 lines 220 and 743–747. The six pairs include those inside each generator. -/
 def fourWay (E : Type) (r : E → E → Prop) (p q : E × E) : Prop :=
@@ -82,8 +78,8 @@ def PairConjecture (s : ∀ E : Type, (E → E → Prop) → E × E → E × E �
       ((bilIdeal r V W).comap (freeSpan r V W).subtype)
 
 def claim : Prop :=
-  TensorConjecture componentwise ∨ TensorConjecture fourWay ∨
-    PairConjecture componentwise ∨ PairConjecture fourWay
+  TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨
+    PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay
 
 private def project : (Fin 5 → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
   LinearMap.funLeft ℝ ℝ (Fin.castAdd 2)
@@ -476,18 +472,17 @@ private theorem tensor_refuted
   · rw [hb4]; norm_num
 
 theorem result : ¬ claim := by
-  have cm : ∀ {p q}, componentwise (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q :=
-    fun h => h
   have cd : ∀ v w, rel v v → rel w w → rel v w →
-      componentwise (Fin 5 → ℝ) rel (v, v) (w, w) :=
+      Prod.RProd rel rel (v, v) (w, w) :=
     fun _ _ _ _ h => ⟨h, h⟩
   have fm : ∀ {p q}, fourWay (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q :=
     fun h => ⟨h.2.1, h.2.2.2.2.1⟩
   have fd : ∀ v w, rel v v → rel w w → rel v w →
       fourWay (Fin 5 → ℝ) rel (v, v) (w, w) :=
     fun _ _ hv hw h => ⟨hv, h, h, h, h, hw⟩
-  exact not_or.mpr ⟨tensor_refuted componentwise cm cd, not_or.mpr
+  exact not_or.mpr ⟨tensor_refuted (fun _ r => Prod.RProd r r) (fun h => h) cd, not_or.mpr
     ⟨tensor_refuted fourWay fm fd, not_or.mpr
-      ⟨pair_refuted componentwise cm cd, pair_refuted fourWay fm fd⟩⟩⟩
+      ⟨pair_refuted (fun _ r => Prod.RProd r r) (fun h => h) cd,
+        pair_refuted fourWay fm fd⟩⟩⟩
 
 end D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation

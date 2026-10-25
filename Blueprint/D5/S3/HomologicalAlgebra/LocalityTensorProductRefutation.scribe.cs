@@ -65,17 +65,14 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                     + "CoeSort.coe explicitly regards the free-span submodule as a type of elements. "
                     + "Taking the inverse image under Submodule.subtype puts the denominator inside that type before forming the quotient.",
                 AssessedProvenance.FromLiterature(Source)),
-            Definition("componentwise", "componentwise", "Componentwise generator locality",
-                ComponentwiseFormula(),
-                "Two generators are related when their first entries are related and their second entries are related. "
-                    + "This is Prod.RProd r r, the relation of arXiv:2205.14616v1, main.tex, lines 447–449.",
-                AssessedProvenance.FromLiterature(Source)),
             Definition("four-way", "fourWay", "Pairwise locality of four entries",
                 FourWayFormula(),
                 "The four entries p₁, p₂, q₁ and q₂ must be pairwise related: all six unordered pairs satisfy r. "
                     + "The pairs within each generator are included. This is the literal four-entry condition of "
                     + "arXiv:2506.09493v1, LOC.tex, lines 220 and 743–747. "
-                    + "It implies componentwise locality; the two relations need not coincide even when V = W.",
+                    + "It implies the relational product Prod.RProd r r, namely r(v,v′) ∧ r(w,w′). "
+                    + "This componentwise reading is the relation of arXiv:2205.14616v1, main.tex, lines 447–449. "
+                    + "The two relations need not coincide even when V = W.",
                 AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("quotient-relation", "quotientRel", "Existential locality on the quotient",
                 QuotientRelationFormula(),
@@ -265,11 +262,6 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
         Typed(Tensor(), Qualified("Type")),
         At(Qualified("HasQuotient", "Quotient"), FreeType(), IdealInFree())));
 
-    private static Formula ComponentwiseFormula() =>
-        All("E", Qualified("Type"), All("r", RelationOn(X("E")),
-            Equal(Typed(LocalCall("componentwise", X("E"), X("r")), RelationOn(Pairs())),
-                ProductRelation())));
-
     private static Formula FourWayFormula()
     {
         Formula p1 = At(Qualified("Prod", "fst"), X("p"));
@@ -324,9 +316,11 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
     }
 
     private static Formula ClaimFormula() => IffOf(Local("claim"),
-        OrOf(LocalCall("TensorConjecture", Local("componentwise")),
+        OrOf(LocalCall("TensorConjecture",
+                LambdaOf("E", Qualified("Type"), LambdaOf("r", RelationOn(X("E")), ProductRelation()))),
             OrOf(LocalCall("TensorConjecture", Local("fourWay")),
-                OrOf(LocalCall("PairConjecture", Local("componentwise")),
+                OrOf(LocalCall("PairConjecture",
+                        LambdaOf("E", Qualified("Type"), LambdaOf("r", RelationOn(X("E")), ProductRelation()))),
                     LocalCall("PairConjecture", Local("fourWay"))))));
 
     private static Formula RelationRule() => All("E", Qualified("Type"),
