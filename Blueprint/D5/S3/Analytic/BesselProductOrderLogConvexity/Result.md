@@ -232,7 +232,7 @@ $$\forall k \in \mathbb {Z},\; \forall n \in \mathbb {Z},\; k + \frac{1}{2} \ne 
 
 *Commentary.*
 
-If k+1/2 were an integer n, doubling would give 2k+1=2n, which contradicts parity. Integer arguments are coerced to real numbers in the displayed comparison.
+For integers k and n, the real number k+1/2 differs from n because doubling would equate an odd integer with an even one.
 
 **Theorem 1.19 (Refutation of order log-convexity).**
 
