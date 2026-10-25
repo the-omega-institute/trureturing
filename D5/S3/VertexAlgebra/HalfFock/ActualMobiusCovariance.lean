@@ -724,7 +724,7 @@ private theorem insertion_coeff_cutoff (D : LatticeData) (hu : IsUnit D.G.det)
     (LatticeHalfFockCorrectedField.correctedField_negative_current_insertion D hu (i,r) b)
   simp only [sourceWeight,map_add,map_sum,map_smul,Pi.add_apply,Pi.smul_apply,
     Finset.sum_apply,LatticeHalfFockCorrectedField.shiftField_coefficient_public] at original
-  simp only [Nat.cast_add,Nat.cast_one] at original
+  simp only [Nat.cast_add,Nat.cast_one] at original ⊢
   rw [original]
   congr 1
   apply Finset.sum_subset (Finset.range_mono (by omega))
@@ -856,7 +856,11 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       (2:ℂ) • Q (S 0 b) (e-2) + lower + boundary := by
     apply LinearMap.ext
     intro x
-    exact singleton_l1 D hu (F b) (F (S 1 b)) (F (S 0 b)) hb i r e x
+    simpa only [comm,Q,c,lower,boundary,A,LinearMap.comp_apply,LinearMap.proj_apply,
+      LinearMap.mulLeft_apply,LinearMap.mulRight_apply,LinearMap.sub_apply,
+      Module.End.mul_apply,LinearMap.add_apply,LinearMap.smul_apply,DFunLike.ite_apply,
+      LinearMap.zero_apply] using
+      singleton_l1 D hu (F b) (F (S 1 b)) (F (S 0 b)) hb i r e x
   have lower_cancel : lower + boundary = (r+1:ℂ) • A e (J (1-((r+1:ℕ):ℤ)) b) + E := by
     have cancel : boundary = E +
         (if r=0 then f 0 else (r+1:ℂ) • ∑ n ∈ Finset.range N,
@@ -865,12 +869,13 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       intro x
       have hc := evaluated_insertion_l1_cancel D hu b i r N hNb e x
       have hw := zero_ward_cutoff D hu b i N hNb (e+2*(r:ℤ)+1) x
-      dsimp only [boundary]
-      simp only [LinearMap.smul_apply,LinearMap.sub_apply,Module.End.mul_apply]
+      dsimp only [boundary,A,F]
+      simp only [LinearMap.comp_apply,LinearMap.proj_apply,LinearMap.smul_apply,
+        LinearMap.sub_apply,Module.End.mul_apply]
       rw [hw]
       have shift (n : ℕ) : e+2*(r:ℤ)+1-1+2*(n:ℤ) = e+2*((r+n:ℕ):ℤ) := by push_cast; ring
       simp only [shift]
-      simpa only [E,k,f,A,J,LinearMap.comp_apply,LinearMap.proj_apply,
+      simpa only [E,k,f,A,J,F,LinearMap.comp_apply,LinearMap.proj_apply,
         LinearMap.add_apply,LinearMap.smul_apply,Finset.sum_apply,DFunLike.ite_apply,
         LinearMap.zero_apply] using hc
     rw [cancel]
@@ -879,18 +884,18 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       simp only [lower,if_pos rfl,Nat.cast_zero,zero_add,Nat.cast_one,one_smul,
         Nat.zero_add,Int.cast_zero,mul_zero,add_zero] at *
       dsimp only [f]
-      simp only [show (1:ℤ)-((0+1:ℕ):ℤ)=0 by norm_num]
       abel
     · have il := insertion_coeff_cutoff D hu b i (r-1) N hNb e
       have nr : r-1+1=r := by omega
       have shift (n : ℕ) : e+2*((r-1+1+n:ℕ):ℤ) = e+2*((r+n:ℕ):ℤ) := by omega
-      simp only [nr,shift] at il
+      have cr : ((r-1:ℕ):ℂ)+1=(r:ℂ) := by exact_mod_cast nr
+      simp only [nr,shift,cr] at il
       have mode : (1:ℤ)-((r+1:ℕ):ℤ) = -((r-1+1:ℕ):ℤ) := by omega
       rw [mode]
       change lower + (E+_) = (r+1:ℂ) •
         (LatticeHalfFockCorrectedField.correctedField D hu (J (-((r-1+1:ℕ):ℤ)) b)).coeff e + E
       rw [show r-1+1=r by omega,il]
-      dsimp only [lower,f,k,A,J]
+      dsimp only [lower,f,k,A,J,F]
       simp only [if_neg hr,LinearMap.comp_apply,LinearMap.proj_apply]
       module
   have residual : comm (R b e) = R (S 1 b) e + c • R b (e-2) +
@@ -904,7 +909,10 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
       change T * A _ (J _ b) - A _ (J _ b) * T = _ at hc
       change k n • (T * A _ (J _ b) - A _ (J _ b) * T) = _
       rw [hc]
-      change k n • (A _ (S 1 (J (n:ℤ) b)) + _ + (2:ℂ) • A _ (S 0 (J (n:ℤ) b))) = _
+      change k n • (A (e+2*((r+1+n:ℕ):ℤ)) (S 1 (J (n:ℤ) b)) +
+        (((e+2*((r+1+n:ℕ):ℤ):ℤ):ℂ)/2-1) •
+          A (e+2*((r+1+n:ℕ):ℤ)-2) (J (n:ℤ) b) +
+        (2:ℂ) • A (e+2*((r+1+n:ℕ):ℤ)-2) (S 0 (J (n:ℤ) b))) = _
       rw [source,source]
       simp only [map_sub,map_smul]
       have shift : e+2*((r+1+n:ℕ):ℤ)-2 = e-2+2*((r+1+n:ℕ):ℤ) := by omega
@@ -927,12 +935,13 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     A e (S 1 (J (-((r+1:ℕ):ℤ)) b)) + ((e:ℂ)/2-1) • A (e-2) (J (-((r+1:ℕ):ℤ)) b) +
     (2:ℂ) • A (e-2) (S 0 (J (-((r+1:ℕ):ℤ)) b))
   rw [source,source]
+  rw [show (1:ℤ)+(-((r+1:ℕ):ℤ))=1-((r+1:ℕ):ℤ) by omega]
   simp only [map_sub,map_smul,zero_add]
   rw [ins b hNb e, map_add,single,residual,ins (S 1 b) hN1 e,
     ins (S 0 b) hN0 (e-2),ins b hNb (e-2)]
   have lc := lower_cancel
-  dsimp only [c] at *
-  push_cast
+  dsimp only [c] at lc ⊢
+  push_cast at lc ⊢
   linear_combination (norm := module) lc
 
 
@@ -953,8 +962,8 @@ private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
           L1Law D hu (Finsupp.single q (MvPolynomial.monomial m c)) := by
         by_cases hz : m=0
         · subst m
-          simpa only [MvPolynomial.monomial_zero,MvPolynomial.C_eq_smul_one,
-            ← Finsupp.smul_single] using l1_law_smul D hu c _ ground
+          rw [MvPolynomial.monomial_zero,MvPolynomial.C_eq_smul_one,← Finsupp.smul_single]
+          exact l1_law_smul D hu c _ ground
         · obtain ⟨v,hv⟩ := Finsupp.support_nonempty_iff.mpr hz
           have vle : Finsupp.single v 1 ≤ m :=
             Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hv))
