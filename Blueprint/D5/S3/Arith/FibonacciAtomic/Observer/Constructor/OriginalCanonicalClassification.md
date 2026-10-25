@@ -33,5 +33,6 @@ For any FunctionalCase, apply the statement to its unchanged definitions and mod
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.original_canonical_synthesis`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion](../CompletionPositiveDriftRegion.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction](OriginalNativeConstruction.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceCoordinates/NativeRotationDepthGap](../../SourceCoordinates/NativeRotationDepthGap.md)

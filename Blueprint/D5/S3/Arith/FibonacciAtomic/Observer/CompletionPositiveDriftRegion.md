@@ -4,7 +4,19 @@
 
 CompletionPositiveDriftRegion
 
-**Theorem 1.1 (A positive cycle forces its whole forward region to be atomic or leafless).**
+**Theorem 1.1 (The leafless completed tree has no finite source).**
+
+$$\neg (\operatorname{IsFinite}\left(\operatorname{Omega}\left(\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.omega_not_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Omega is fixed by the native substitution rho. If it were the embedding of a finite source t, injectivity of the embedding would make t fixed by substitution. The finite clock kappa increases by one under substitution, so no such finite source exists. This excludes Omega both from the finite region alternative and from finite canonical derivations.
+
+**Theorem 1.2 (A positive cycle forces its whole forward region to be atomic or leafless).**
 
 $$\forall k, m: Nat, (\forall E: \operatorname{System}\left(k, m\right), (\forall mode: (\operatorname{Fin}\left(k\right)) \to (Bool), (\forall param: (\operatorname{Fin}\left(k\right)) \to (Nat), (\forall root: \operatorname{Fin}\left(m\right), (\forall c: \operatorname{PositiveCycle}\left(E, root\right), (\forall extra: ((\operatorname{Fin}\left(m\right)) \to (\operatorname{CompletionTree}\left(\right))) \to (Prop), (\forall v: (\operatorname{Fin}\left(m\right)) \to (\operatorname{CompletionTree}\left(\right)), (((\operatorname{Solution}\left(E, mode, param, extra, v\right)) \iff ((\operatorname{FiniteAlternative}\left(c, mode, param, extra, v\right)) \lor (\operatorname{InfiniteAlternative}\left(c, mode, param, extra, v\right)))) \land (\neg ((\operatorname{FiniteAlternative}\left(c, mode, param, extra, v\right)) \land (\operatorname{InfiniteAlternative}\left(c, mode, param, extra, v\right))))))))))))$$
 
@@ -26,5 +38,6 @@ The displayed equivalence proves both directions, and the second conjunct proves
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.omega_not_finite`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/CompletionPositiveDriftRegion.positive_drift_region_split`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints](CompletionHomogeneousFixedPoints.md)
