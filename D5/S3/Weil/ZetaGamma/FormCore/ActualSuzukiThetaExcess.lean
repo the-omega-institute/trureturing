@@ -383,4 +383,3 @@ theorem actual_h6_fullTheta_sub_smul_ae
     _ = _ := (hFs.hasSum.sub (hNs.hasSum.mul_left c)).tsum_eq
 
 end D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
-
