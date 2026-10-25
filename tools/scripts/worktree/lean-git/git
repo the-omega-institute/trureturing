@@ -12,6 +12,9 @@ def command_offset(arguments):
     position = 0
     while position < len(arguments) and arguments[position].startswith("-"):
         argument = arguments[position]
+        if argument in ("-h", "--help", "-v", "--version", "--exec-path",
+                        "--html-path", "--man-path", "--info-path"):
+            return len(arguments)
         position += 2 if argument in ("-C", "-c", "--git-dir", "--work-tree", "--namespace", "--config-env") else 1
     return position
 

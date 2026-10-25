@@ -24,7 +24,7 @@ public sealed partial class LeanCacheProvisionerTests
             quiet ? ["diff", "--quiet", "HEAD"] : ["diff", "--exit-code", "HEAD"]);
 
         var configuration = RunGitReader(fixture, dependency, "config", "--show-origin", "--get-regexp",
-            "^(core|diff|extensions)\\.");
+            @"^(core|diff|extensions)\.");
         Assert.True(result.ExitCode == (dirty ? 1 : 0),
             $"diff exit={result.ExitCode}; expected={(dirty ? 1 : 0)}; lexical={dependency}; "
             + $"physical={LeanCacheGuard.PhysicalPath(dependency)}; "
@@ -77,6 +77,30 @@ public sealed partial class LeanCacheProvisionerTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(before, GitMaterialBytes(dependency));
+    }
+
+    [Theory]
+    [InlineData("--exec-path")]
+    [InlineData("--version")]
+    [InlineData("--help")]
+    [InlineData("--html-path")]
+    [InlineData("--man-path")]
+    [InlineData("--info-path")]
+    public void CanonicalReaderForwardsTerminalGitQueries(string query)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        string[] arguments = ["-c", "man.viewer=fixture", "-c", "man.fixture.cmd=false", query, "diff"];
+        var native = TestProcessRunner.Run("git", ["-C", dependency, .. arguments], dependency,
+            TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+
+        var result = RunGitReader(fixture, dependency, arguments);
+
+        Assert.Equal(native.ExitCode, result.ExitCode);
+        Assert.EndsWith(Encoding.UTF8.GetString(native.StandardOutput),
+            Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Equal(native.StandardError, result.StandardError);
     }
 
     [Fact]
