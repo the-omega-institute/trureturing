@@ -268,7 +268,19 @@ $$\forall m,n\in\operatorname{Nat}(),\forall r\in\operatorname{DensityState}(\op
 
 For every native three-dimensional density state, every copy count and every pair of actual tensor words, the recursively constructed exponent has that copy count as degree and the total-energy difference as weight. The actual tensor entry equals its coordinate monomial. Complete total-energy pinching keeps exactly the zero-weight entries, including off-diagonals inside degenerate blocks. The pinched matrix is positive semidefinite with trace one.
 
-**Theorem 1.23 (Low-order complete pinchings agree).**
+**Theorem 1.23 (Every exponent has native tensor words).**
+
+$$\forall m\in\operatorname{Nat}(),\forall a\in\operatorname{Exponent}(),\exists I,J\in\operatorname{CopyIndex}(\operatorname{Fin}(3),\operatorname{degree}(a)),\\\operatorname{tensorExponent}(\operatorname{degree}(a),I,J)=a \land \operatorname{totalEnergy}(m,\operatorname{degree}(a),I)-\operatorname{totalEnergy}(m,\operatorname{degree}(a),J)=\operatorname{weight}(m,a) \land\\\forall r\in\operatorname{DensityState}(\operatorname{Fin}(3)),\operatorname{entry}(\operatorname{stateMatrix}(\operatorname{copies}(r,\operatorname{degree}(a))),I,J)=\operatorname{monomial}(\operatorname{stateMatrix}(r),a) \land\\\operatorname{entry}(\operatorname{pinchedCopies}(m,\operatorname{degree}(a),r),I,J)=\operatorname{ite}(\operatorname{weight}(m,a)=0,\operatorname{monomial}(\operatorname{stateMatrix}(r),a),0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.exponent_tensor_bridge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every labelled exponent is realized by two words whose length is its degree. Their energy difference is its weight, and their tensor entry is its monomial on every native state. The construction successively removes one actual coordinate occurrence. It includes the empty exponent, zero matrix entries, deficient rank and repeated numerical gaps.
+
+**Theorem 1.24 (Low-order complete pinchings agree).**
 
 $$\forall m,n\in\operatorname{Nat}(),2\leq m \implies n<2\cdot m-1 \implies \operatorname{pinchedCopies}(m,n,\operatorname{rho}())=\operatorname{pinchedCopies}(m,n,\operatorname{sigma}(m))$$
 
@@ -280,7 +292,7 @@ $$\forall m,n\in\operatorname{Nat}(),2\leq m \implies n<2\cdot m-1 \implies \ope
 
 For every m at least two and every copy count below twice m minus one, the complete total-energy pinchings of the actual sparse tensor states agree. This uses all labelled entries and includes zero exponents.
 
-**Definition 1.24 (Tuples in the native tensor basis).**
+**Definition 1.25 (Tuples in the native tensor basis).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordIndex`
 
@@ -292,7 +304,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordIndex`
 
 A tuple is mapped to the same recursively parenthesized product basis used by the native density-state copies.
 
-**Definition 1.25 (Two block lengths).**
+**Definition 1.26 (Two block lengths).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.copyOrder`
 
@@ -304,7 +316,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.copyOrder`
 
 The distinguishing copy count is m plus m minus one.
 
-**Definition 1.26 (First distinguishing word).**
+**Definition 1.27 (First distinguishing word).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordI`
 
@@ -316,7 +328,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordI`
 
 The first word has m twos followed by m minus one zeros.
 
-**Definition 1.27 (Second distinguishing word).**
+**Definition 1.28 (Second distinguishing word).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordJ`
 
@@ -328,7 +340,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordJ`
 
 The second word has m ones followed by m minus one twos.
 
-**Definition 1.28 (Sum of the one-copy Hamiltonians).**
+**Definition 1.29 (Sum of the one-copy Hamiltonians).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.totalHamiltonian`
 
@@ -340,7 +352,19 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.totalHamiltonian
 
 On each native tensor product, add the first Hamiltonian tensored with the identity to the identity tensored with the remaining Hamiltonian.
 
-**Theorem 1.29 (Actual equal-energy words).**
+**Theorem 1.30 (The actual sum Hamiltonian is diagonal).**
+
+$$\forall m,n\in\operatorname{Nat}(),\operatorname{totalHamiltonian}(m,n)=\operatorname{diagonal}((\lambda I:\operatorname{CopyIndex}(\operatorname{Fin}(3),n),\operatorname{totalEnergy}(m,n,I)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.total_hamiltonian_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m and every native tensor length, the recursive sum Hamiltonian is diagonal in the native product basis. Its diagonal is the sum of the actual one-copy energy labels.
+
+**Theorem 1.31 (Actual equal-energy words).**
 
 $$\forall m\in\operatorname{Nat}(),2\leq m \implies \\\operatorname{copyOrder}(m)=2\cdot m-1 \land \operatorname{wordI}(m)\neq \operatorname{wordJ}(m) \land\\\operatorname{totalEnergy}(m,\operatorname{copyOrder}(m),\operatorname{wordI}(m))=(m)^{2} \land \operatorname{totalEnergy}(m,\operatorname{copyOrder}(m),\operatorname{wordJ}(m))=(m)^{2} \land\\\forall r\in\operatorname{DensityState}(\operatorname{Fin}(3)),\operatorname{entry}(\operatorname{stateMatrix}(\operatorname{copies}(r,\operatorname{copyOrder}(m))),\operatorname{wordI}(m),\operatorname{wordJ}(m))=\operatorname{starMonomial}(m,\operatorname{stateMatrix}(r))$$
 
@@ -352,7 +376,7 @@ $$\forall m\in\operatorname{Nat}(),2\leq m \implies \\\operatorname{copyOrder}(m
 
 For every m at least two the two words are distinct, have common energy m squared, and have length twice m minus one. Their tensor entry on every native state is the distinguished monomial, without a rank or support restriction.
 
-**Definition 1.30 (Equal-superposition projection).**
+**Definition 1.32 (Equal-superposition projection).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.jointEffect`
 
@@ -364,7 +388,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.jointEffect`
 
 The effect is one half the outer product of the sum of the two computational basis vectors with its conjugate. It is a projection on their actual tensor space.
 
-**Theorem 1.31 (A compatible effect with exact unconditional probabilities).**
+**Theorem 1.33 (A compatible effect with exact unconditional probabilities).**
 
 $$\forall m\in\operatorname{Nat}(),2\leq m \implies \\\operatorname{PosSemidef}(\operatorname{jointEffect}(m)) \land \operatorname{PosSemidef}(1-\operatorname{jointEffect}(m)) \land\\\operatorname{jointEffect}(m)\cdot \operatorname{totalHamiltonian}(m,\operatorname{copyOrder}(m))=\operatorname{totalHamiltonian}(m,\operatorname{copyOrder}(m))\cdot \operatorname{jointEffect}(m) \land\\\operatorname{trace}(\operatorname{jointEffect}(m)\cdot \operatorname{stateMatrix}(\operatorname{copies}(\operatorname{rho}(),\operatorname{copyOrder}(m))))=(\frac{1}{3})^{2\cdot m-1}+(\frac{1}{12})^{2\cdot m-1} \land \operatorname{trace}(\operatorname{jointEffect}(m)\cdot \operatorname{stateMatrix}(\operatorname{copies}(\operatorname{sigma}(m),\operatorname{copyOrder}(m))))=(\frac{1}{3})^{2\cdot m-1}-(\frac{1}{12})^{2\cdot m-1} \land\\0<2\cdot (\frac{1}{12})^{2\cdot m-1} \land\\(\frac{1}{3})^{2\cdot m-1}+(\frac{1}{12})^{2\cdot m-1}\in\operatorname{Icc}(0,1) \land (\frac{1}{3})^{2\cdot m-1}-(\frac{1}{12})^{2\cdot m-1}\in\operatorname{Icc}(0,1) \land\\\operatorname{pinchedCopies}(m,\operatorname{copyOrder}(m),\operatorname{rho}())\neq \operatorname{pinchedCopies}(m,\operatorname{copyOrder}(m),\operatorname{sigma}(m)) \land\\\forall n\in\operatorname{Nat}(),n<2\cdot m-1 \implies \forall F\in\operatorname{Matrix}(\operatorname{CopyIndex}(\operatorname{Fin}(3),n),\operatorname{CopyIndex}(\operatorname{Fin}(3),n),\operatorname{Complex}()),\\\operatorname{PosSemidef}(F) \implies \operatorname{PosSemidef}(1-F) \implies F\cdot \operatorname{totalHamiltonian}(m,n)=\operatorname{totalHamiltonian}(m,n)\cdot F \implies \operatorname{trace}(F\cdot \operatorname{stateMatrix}(\operatorname{copies}(\operatorname{rho}(),n)))=\operatorname{trace}(F\cdot \operatorname{stateMatrix}(\operatorname{copies}(\operatorname{sigma}(m),n)))$$
 
@@ -376,11 +400,48 @@ $$\forall m\in\operatorname{Nat}(),2\leq m \implies \\\operatorname{PosSemidef}(
 
 The effect and its complement are positive semidefinite, and the effect commutes with the sum Hamiltonian. Its unconditional probabilities on the two native sparse tensor states are respectively one third to the copy count plus and minus one twelfth to that count. Both real probabilities lie between zero and one, and their gap is positive. The complete total-energy pinchings differ at this copy count. At every smaller copy count all compatible complex effects have equal probabilities on the two actual tensor states.
 
-The Haar-average identity, the upper bound on every labelled indecomposable zero-weight exponent, and the equivalence with the actual compact orbits are further requirements for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.
+**Definition 1.34 (Labelled indecomposable zero-weight exponents).**
+
+Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.Indecomposable`
+
+*Formalization.* `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.Indecomposable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An exponent is nonzero, has weight zero, and contains no nonzero proper subexponent of weight zero. This definition retains diagonal coordinates and distinguishes coordinates with equal numerical gaps.
+
+**Definition 1.35 (Exponent of the sparse relation).**
+
+Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent`
+
+*Formalization.* `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ordered coordinate (2,1) has multiplicity m and (0,2) has multiplicity m minus one; all other multiplicities vanish.
+
+**Theorem 1.36 (The sparse relation is indecomposable).**
+
+$$\forall m\in\operatorname{Nat}(),2\leq m \implies \operatorname{Indecomposable}(m,\operatorname{starExponent}(m)) \land \operatorname{degree}(\operatorname{starExponent}(m))=2\cdot m-1 \land\\\forall X\in\operatorname{Matrix}(\operatorname{Fin}(3),\operatorname{Fin}(3),\operatorname{Complex}()),\operatorname{monomial}(X,\operatorname{starExponent}(m))=\operatorname{starMonomial}(m,X)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.star_indecomposable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m at least two, this exponent is indecomposable and has degree twice m minus one. Its monomial agrees with the distinguished relation on every complex matrix. A zero-weight subexponent has multiplicities in the consecutive-gap integer kernel; its coordinate bounds force the integer multiple to be zero or one. The argument includes m equal to two without merging its coordinate labels.
+
+The upper bound on every labelled indecomposable zero-weight exponent, and the equivalence with the actual compact orbits are further requirements for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage. Integer description length and physical copy cost are distinct quantities.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.Exponent`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.Indecomposable`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.compatible_effects_iff`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.coordinateExponent`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.copyOrder`
@@ -388,6 +449,7 @@ The Haar-average identity, the upper bound on every labelled indecomposable zero
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.energy`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.energyPinch`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.energyProjector`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.exponent_tensor_bridge`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.jointEffect`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.monomial`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.phase`
@@ -402,11 +464,14 @@ The Haar-average identity, the upper bound on every labelled indecomposable zero
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_low_monomials`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_low_pinching`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparse_pair_data`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starExponent`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starMonomial`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.star_indecomposable`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.tensorExponent`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.tensor_monomial_bridge`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.totalEnergy`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.totalHamiltonian`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.total_hamiltonian_diagonal`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.weight`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordI`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.wordIndex`
