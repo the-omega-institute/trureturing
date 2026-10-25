@@ -507,6 +507,125 @@ data, and a uniform bound with the original $b$ weights over the full
 natural dual length remain unproved bridges. No analytic saving,
 natural-boundary theorem, originality claim or RH conclusion follows.
 
+### One-factor completion retains a joint coefficient array
+
+This is a `repo-derived`, source-conditional applicability and cost check
+for (J4)--(J6), reusing finite Fourier/Gauss identities. Fix an original
+ray/unit component and its original representative of each ideal, extending
+coefficients by zero to $\mathcal O=\mathbb Z[\omega]$. Put $\delta=\sqrt{-3}$,
+$e_K(z)=\exp(2\pi i\operatorname{Tr}_{K/\mathbb Q}z)$; the codifferent is
+$\delta^{-1}\mathcal O$, so $e_K(rx/(\delta f))$ pairs $\mathcal O/(f)$ perfectly.
+After the finite reciprocity correction, extract from one actual $u$ factor
+its primitive finite character $\chi_m$, of conductor $\mathfrak f=(f)$ and
+$Q=N\mathfrak f$. At fixed $m,v$, write that factor as
+$S_{m,v}=\sum_u a_v(u)\chi_m(u)$, $H_m=\sum_v c_m(v)S_{m,v}$,
+with the original outer weights $c_m(v)$. Set, for $x,r\bmod f$,
+
+$$
+A_{m,v}(x)=\sum_{u\equiv x\ (f)}a_v(u),\qquad
+B_{m,v}(r)=Q^{-1/2}\sum_{x\bmod f}A_{m,v}(x)e_K(-rx/(\delta f)).
+$$
+
+Fourier inversion and the primitive Gauss identity give exactly
+
+$$
+S_{m,v}=\gamma_m\sum_{r\bmod f}B_{m,v}(r)\overline{\chi_m(r)},\qquad
+\gamma_m=Q^{-1/2}\sum_{x\bmod f}\chi_m(x)e_K(x/(\delta f)),\quad
+|\gamma_m|=1,\qquad \sum_r|B_{m,v}(r)|^2=\sum_x|A_{m,v}(x)|^2.
+$$
+
+[Gao--Zhao v2, §2.2 (2.3) and Lemma 2.3](https://arxiv.org/html/2201.01885v2#S2.SS2)
+give the squarefree Gauss magnitude, coprime shifts and local collision
+zeros, with $\widetilde e(z)=e_K(z/\delta)$. The primitive identity vanishes
+at nonunits of $\mathfrak f$. For imprimitive original constituents use
+this primitive conductor and retain every extra zero mask in $a_v$;
+unit Gauss normalization at the larger original modulus is not asserted.
+Injective periodization of the support $q_u\ll N_u$ gives
+$\|B_{m,v}\|_2=\|a_v\|_2$; $N_u=o(Q)$ suffices by the diameter bound below.
+But $a_v$ retains $b(e_1u)$, $\gamma_1(u)$, $\theta_e(u)$, $\kappa_u(v)$,
+the original profiles, angular/ray data and all zeros. Thus $B$ depends on
+both $m$ and $v$; no common coefficient vector or short support follows.
+For a nontrivial primitive ray character and the smooth compactly supported
+radial majorant specified in [de Faveri v1, Lemma 3.1](https://arxiv.org/html/2610.04045v1#S3.Thmtheorem1),
+the ideal sum has prefactor $N/\sqrt Q$ and rapidly decaying dual length
+$Q/N$. That smooth-coefficient statement is not applied to this $a_v$.
+
+For $e_1=e_2=1$, $N_u=N_v=D=\sqrt U$ and $Q\asymp U$, rowwise Cauchy
+over all $Q$ transformed coordinates gives the specified certificate
+
+$$
+|H_m/D|^2\ll C_b^4U^\varepsilon QN_uN_v^2/D^2
+\asymp C_b^4U^{3/2+\varepsilon}.
+$$
+
+Here $H_m=H_{1,m}^{1,1}$ is the unnormalized (J6) scalar. Its elementary
+physical-coordinate certificate instead uses $N_u^2N_v^2/D^2$; completion
+followed by this Cauchy costs $Q/N_u\asymp U^{1/2}$. The already owned (J6)
+certificate is $C_b^4U^{2/3+\varepsilon}$. These are upper certificates
+for the same normalized scalar, not lower bounds or full-(J24) exponents.
+
+**Moving collision zeros test the short-dual premise.** At $N_u=N$,
+$Q\asymp N^2$, take any fixed finite rational centers
+$\Xi\subset K/\mathcal O$. Choose a fixed ideal $\mathfrak H$ with
+$\xi\mathfrak H\subset\mathcal O$ for every $\xi\in\Xi$; this includes
+packets from all original fixed bad moduli. Suppose $E=\|a_v\|_2^2>0$
+and a good prime $\mathfrak p\mid v$ has $P=N\mathfrak p$ and
+$(\mathfrak p,\mathfrak H)=1$. The actual $\kappa_u(v)$ makes $a_v(u)=0$
+whenever $\mathfrak p\mid u$, including the zero extension outside support.
+Choose $P$ representatives $h\in\mathfrak H$ modulo $\mathfrak p$ with
+$Nh\ll_{\mathfrak H}P$, using a fundamental parallelogram of
+$\mathfrak H\mathfrak p$. Require reduction modulo $f$ injective on the
+support and all its translates by these $h$. For $q_u\ll N$, $P=o(N)$
+and $Q\asymp N^2$, their squared diameter is $O_{\mathfrak H}(N+P)<Q$,
+which verifies this requirement: a nonzero element of $(f)$ has norm at least $Q$.
+For each supported $u$, some $h$ has $u+h\equiv0\pmod{\mathfrak p}$;
+no alias can fill that zero. With $T_hA(x)=A(x+h)$, consequently
+$\sum_h\|T_hA-A\|_2^2\ge E$.
+
+Let $E_{\rm tail}(\Xi,L)$ be the $B$ energy outside the union of bands
+$\operatorname{dist}(r/f,\xi+\mathcal O)^2\le L/N$; equivalently
+$|r-f\xi|^2\le LQ/N$ modulo $f\mathcal O$, the ordinary dual norm scale.
+On these bands $|e_K(rh/(\delta f))-1|^2\ll_{\mathfrak H}PL/N$,
+since $\xi$ annihilates $\mathfrak H$; elsewhere it is at most $4$.
+Parseval, summed over the $P$ translations, therefore gives
+
+$$
+E\le C_\Xi P^2(L/N)E+4P E_{\rm tail}(\Xi,L),\qquad
+E_{\rm tail}(\Xi,L)\ge\frac{1-C_\Xi P^2L/N}{4P}E.
+$$
+
+**An actual nonzero instance.** Use $b=\lambda_{\mathrm{II},b}$,
+$A_{\rm b}=N^{1/6}$, $U=N^2$, and a fixed original $V\ne0$. Use the (J5)
+factor with its original two $V$ profiles and fixed Mellin heights.
+In a compact interval where $|V|>0$, choose squarefree $v=\mathfrak p\mathfrak q\mathfrak r$
+with $P\asymp\log N\le A_{\rm b}$ and $q_{\mathfrak q},q_{\mathfrak r}\asymp\sqrt{N/P}>2A_{\rm b}$.
+The exact [C25/C37--C40 coefficient](../Analytic/liu2026quasirh.md#cofactor-recursion-and-the-actual-prime-slot-capacity)
+has only $1,\mathfrak p$ in its $W$-weighted divisor sum, giving
+$K_{A_{\rm b}}(v)=1-2=-1$ and $b(v)=\mu(v)+K_{A_{\rm b}}(v)=-2$.
+Choose $u$ as a distinct rough semiprime of norm in the same nonzero
+$V$ interval times $N$, with both primes $\asymp\sqrt N>4A_{\rm b}$;
+(C33) gives $b(u)=2$. The [existing fixed-ray prime-pair counting input](../Analytic/liu2026quasirh.md#the-original-convolution-norm-before-sixth-power-compression)
+supplies these choices: fix prime classes with the prescribed product
+classes, use disjoint fixed relative norm intervals at the displayed scales,
+and delete the finitely many collisions. Choose a good prime dual $m$
+of norm $\asymp N^2$ in an allowed class; its primitive conductor has
+$Q\asymp N^2$, and it meets neither $u$ nor $v$. Original unit representatives
+and finite twists are retained, $\kappa_u(v)\ne0$, and all remaining (J5)
+phases have unit modulus. The specified nonzero $V$ intervals and allowed
+classes therefore give $a_v(u)\ne0$ and $E>0$ for this actual factor.
+Taking $L=N^{1/2}$ (eventually $2\le L\le N/10$) gives
+$E_{\rm tail}/E\ge1/(8P)\gg1/\log N$. This refutes uniform
+$E_{\rm tail}\ll_A L^{-A}E$ for these actual Type-II factors, even after
+any fixed finite rational packets. It is no lower bound for $H_m$, a row
+moment or (J24): cross terms can cancel. Growing or $m$-dependent packets
+and joint-array estimates remain possible. Completion leaves the weighted
+$\sum_v c_m(v)B_{m,v}(r)$ contraction against $\overline{\chi_m(r)}$ joint
+in $m,v,r$. The unpaid quantitative target remains exactly (J24), with each
+eligible factor replaced by this array, at full natural lengths and with
+every original component and required profile derivative.
+No new harmonic-analysis theorem, analytic saving, originality, RH proof
+or Lean certification is claimed.
+
 ### A common-gcd region with all original row expansions
 
 The same cubic interface and joint sextic estimate also pay an
