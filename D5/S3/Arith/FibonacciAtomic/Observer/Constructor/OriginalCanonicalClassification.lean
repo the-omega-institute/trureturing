@@ -6,6 +6,7 @@
    utility: kind=checker; basis=terminal=atom:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.edgeSystem
    digest: Exact native canonical finiteness and terminating inclusive prefixes for original functional cases. -/
 
+import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalNativeConstruction
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 
@@ -74,19 +75,7 @@ private theorem canonical_finite_derivation (E : Definitions k m) (guarded : Pai
     Derives E mode e := by
   let v := native E mode p (fun _ => Omega)
   have sol := native_solution E guarded mode p (fun _ => Omega)
-  have noOmega : ¬ IsFinite Omega := by
-    have avoid : ∀ t : Source, embed t ≠ Omega := by
-      intro t
-      induction t with
-      | of b =>
-          intro eq
-          have root := congrArg (fun X => (PFunctor.M.dest X).1) (eq.trans omega_node)
-          simp [embed, leaf, node] at root
-      | mul l r ihl _ =>
-          intro eq
-          exact ihl (node_inj (eq.trans omega_node)).1
-    rintro ⟨t, ht⟩
-    exact avoid t ht
+  have noOmega : ¬ IsFinite Omega := CompletionPositiveDriftRegion.omega_not_finite
   have all : ∀ n i t, t.length = n → embed t = v i → Ready E mode i := by
     intro n
     induction n using Nat.strong_induction_on with

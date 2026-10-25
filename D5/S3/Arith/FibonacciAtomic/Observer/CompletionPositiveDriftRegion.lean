@@ -402,7 +402,7 @@ private theorem atomic_injective : Function.Injective atomic := by
 private theorem atomic_finite (q : Nat) : IsFinite (atomic q) :=
   ⟨substitution^[q] (.of true), (iterate_embed q (.of true)).symm⟩
 
-private theorem omega_not_finite : ¬ IsFinite Omega := by
+theorem omega_not_finite : ¬ IsFinite Omega := by
   rintro ⟨t, ht⟩
   have eq : substitution t = t := embed_injective (by rw [← rho_embed, ht, rho_omega])
   have clock := congrArg kappa eq
