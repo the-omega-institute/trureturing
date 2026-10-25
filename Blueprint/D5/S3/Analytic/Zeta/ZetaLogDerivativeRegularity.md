@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Analytic/Zeta/ZetaLogDerivativeRegularity.regularizedPrin
 
 *Commentary.*
 
-For every nontrivial zeta zero rho there is a positive integer m such that (s-(rho-1/2)) times the cancelled principal term tends to -m/2 as s approaches rho-1/2 through distinct points. The analytic-unit factorization of zeta supplies m; the subtracted density term is regular at this translated zero.
+For every nontrivial zeta zero rho there is a positive integer m, with the local analytic-unit factorization HasZetaZeroMultiplicity(rho,m), such that (s-(rho-1/2)) times the cancelled principal term tends to -m/2 as s approaches rho-1/2 through distinct points. The analytic-unit factorization of zeta supplies m; the subtracted density term is regular at this translated zero.
 
 ## References
 

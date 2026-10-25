@@ -66,7 +66,7 @@ internal sealed class ZetaLogDerivativeRegularityDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every nontrivial zeta zero rho there is a positive integer m "
+                    "For every nontrivial zeta zero rho there is a positive integer m, with the local analytic-unit factorization HasZetaZeroMultiplicity(rho,m), "
                     + "such that (s-(rho-1/2)) times the cancelled principal term "
                     + "tends to -m/2 as s approaches rho-1/2 through distinct points. "
                     + "The analytic-unit factorization of zeta supplies m; the "
