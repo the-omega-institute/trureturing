@@ -124,7 +124,19 @@ $$\forall m\in\operatorname{Nat}(),2\leq m \implies \neg \operatorname{SameEnerg
 
 For every m at least two the literal sparse positive states belong to distinct actual compact orbits. Their shared Haar moments agree at every smaller copy count and differ at the stated count. Orbit conjugation preserves each complete total-energy pinching, so the explicit high-order tensor entry excludes orbit equivalence.
 
-The all-state upper implication and the least uniform orbit-separating order require further arguments. The explicit sparse effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage.
+**Theorem 1.11 (The exact least positive uniform copy order).**
+
+$$\forall m\in\operatorname{Nat}(),2\leq m \implies \operatorname{IsLeast}(\{N:\operatorname{Nat}() \mid 0<N \land \forall r,s\in\operatorname{DensityState}(\operatorname{Fin}(3)),(\operatorname{sharedMoment}(m,N,r)=\operatorname{sharedMoment}(m,N,s) \iff \operatorname{SameEnergyOrbit}(m,r,s))\},2\cdot m-1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.least_uniform_order` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m at least two, twice m minus one is the least positive order at which equality of actual shared Haar moments is equivalent to membership in the same actual compact energy orbit, uniformly over every native three-dimensional density state. Every zero-weight exponent decomposes by strictly decreasing degree into labelled indecomposable exponents. Their degree bound and monomial multiplication extend one moment's equality to all zero-weight monomials. Hermitian coordinate pairs give equal moduli and identical zero supports. If the weight-one coordinate is nonzero, its phase ratio determines the common circle phase. If it vanishes, the remaining two nonzero coordinates have consecutive weights, so their zero-weight relation gives a common phase by a ratio. A single nonzero coordinate admits a circle root, and the empty support is immediate. These cases give an actual conjugating matrix, including deficient rank and m equal to two. Orbit conjugation gives the reverse implication at every order. The literal positive sparse pair excludes every smaller positive order.
+
+The explicit sparse effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage.
 
 ## References
 
@@ -133,9 +145,11 @@ The all-state upper implication and the least uniform orbit-separating order req
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.energyHaar`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.energyRepresentation`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.energy_group_realization`
+- Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.least_uniform_order`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.matrixCopies`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.moment_determines_monomials`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.sharedMoment`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.shared_haar_pinching`
 - Truth anchor: `D5/S3/Quantum/Fibers/SharedEnergyCompactAction.sparse_compact_separation`
 - Dependency: [D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold](SharedEnergyCopyThreshold.md)
+- Dependency: [D5/S3/Quantum/Fibers/SharedEnergyGapBound](SharedEnergyGapBound.md)
