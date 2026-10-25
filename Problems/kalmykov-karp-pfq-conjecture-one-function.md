@@ -54,7 +54,8 @@ It then says:
 
 Section 3 sets $a_1,b_1$ empty, identifying $a=a_2$ in (10). The first
 sentence admits a standing-scope reading; the next admits a section-local
-reading. We do not choose between them. The encoded claim imposes $1\le p$.
+reading. The source-scope ambiguity is unresolved. The encoded claim imposes
+$1\le p$.
 Its nonempty-numerator counterexample refutes both that restricted universal
 claim and the broader claim allowing $p=0$.
 
@@ -133,9 +134,8 @@ actual infinite sums. Its only public theorem is `result`.
 
 The supplied literature check examined 15 OpenAlex citing works and the
 existing repository dossiers and found no settlement of this function clause
-in that scope. The implementation seat uses the supplied source text and
-performs no network search. This is not an exhaustive literature or priority
-claim. The candidate and initial numerical witness are from the Claude Code
+in that scope. Literature completeness and priority remain unverified.
+The candidate and initial numerical witness are from the Claude Code
 orchestrator using Claude Opus 5.5; the formal implementation is by a Codex
 CLI seat.
 

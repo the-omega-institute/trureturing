@@ -94,6 +94,7 @@ Per-declaration judgement (compiled-value dependencies; new helpers inlined):
       statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
 * witness_cond13: proof_shape: bind-only; escape_witness: none.
   consumers: result.
+  shared same-delivery helper: Defs.esymm_const (inlined below).
   direct frozen D5 dependencies:
     D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm;
       statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
@@ -316,20 +317,10 @@ private lemma witness_negative :
 
 private lemma witness_cond13 :
     cond13 (fun _ : Fin 1 => (1:ℝ)) (fun _ : Fin 12 => (1/2:ℝ)) := by
-  have he (n k : ℕ) (x : ℝ) :
-      esymm (fun _ : Fin n => x) k = (n.choose k : ℝ) * x ^ k := by
-    rw [esymm, Finset.esymm_map_val]
-    calc
-      ∑ t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, ∏ _i ∈ t, x =
-          ∑ _t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, x ^ k := by
-        apply Finset.sum_congr rfl
-        intro t ht
-        rw [Finset.prod_const, (Finset.mem_powersetCard.mp ht).2]
-      _ = (n.choose k : ℝ) * x ^ k := by simp
   intro j hj
-  have hj0 : j = 0 := by omega
+  have hj0 : j = 0 := Nat.lt_one_iff.mp hj
   subst j
-  norm_num [he]
+  norm_num [esymm_const]
 
 /-- Conjecture 1's universal function nonnegativity assertion is false. -/
 theorem result : ¬ claim := by
