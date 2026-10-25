@@ -1077,9 +1077,10 @@ private theorem meanZeroSeparatedFeature_fullHasSum (a : ℂ) {x : ℝ}
   have hsmall := finitePhysical_fullHasSum 0
     (by norm_num : (0 : ℝ) < 1 / 4) (by norm_num : (1 / 4 : ℝ) ≤ 1) hx
   convert hlarge.sub (hsmall.mul_left a) using 1
-  funext k
-  simp only [meanZeroSeparatedFeature, physicalTerm]
-  ring
+  · funext k
+    simp only [meanZeroSeparatedFeature, physicalTerm]
+    ring
+  · rfl
 
 private theorem meanZeroSeparatedFeature_actualProfile_eq (a : ℂ) :
     actualGammaProfile (meanZeroSeparatedFeature a) =
@@ -1103,7 +1104,7 @@ private theorem meanZeroSeparatedFeature_actualProfile_eq (a : ℂ) :
           (by norm_num : (0 : ℝ) < 1) (by norm_num : (1 : ℝ) ≤ 1) hx).tsum_eq
         have hs := (finitePhysical_fullHasSum 0
           (by norm_num : (0 : ℝ) < 1 / 4) (by norm_num : (1 / 4 : ℝ) ≤ 1) hx).tsum_eq
-        simp only [actualGammaProfile, if_pos ht, hc, hl, hs, meanZeroSeparatedFeature]
+        simp only [actualGammaProfile, if_pos ht, fullTheta, hc, hl, hs, meanZeroSeparatedFeature]
         ring
       · simp only [actualGammaProfile, if_neg ht, mul_zero, sub_self]
     _ = _ := by rw [hlarge, hsmall]
@@ -1127,7 +1128,9 @@ private theorem meanZeroFiniteProfile_continuous_mul_integrable {κ : ℝ} (hκ 
       (isCompact_Icc (a := κ / 4) (b := 3 * κ / 4))
     intro t ht
     by_contra hn
-    exact ht (by rw [finiteCompressed_zero_off 0 hκ hn, mul_zero])
+    exact ht (by
+      change g t * finiteCompressedProfile 0 κ t = 0
+      rw [finiteCompressed_zero_off 0 hκ hn, mul_zero])
   exact (hg.mul (finiteCompressed_continuous 0 κ)).integrable_of_hasCompactSupport hs
 
 private theorem meanZeroFiniteProfile_phase_integrable {κ : ℝ} (hκ : 0 < κ) (ξ : ℝ) :
@@ -1164,8 +1167,10 @@ private theorem meanZeroSeparatedFeature_in_all_shift_domains (a : ℂ) (c : ℝ
         (meanZeroFiniteProfile_integrable hκ)).comp (by fun_prop))
   have hfreq : Continuous
       (unitarySourceFourier (actualGammaProfile (meanZeroSeparatedFeature a))) := by
-    simp_rw [meanZeroSeparatedFeature_fourier]
-    exact (hc 1 (by norm_num)).sub (continuous_const.mul (hc (1 / 4) (by norm_num)))
+    convert (hc 1 (by norm_num)).sub
+      (continuous_const.mul (hc (1 / 4) (by norm_num))) using 1
+    funext ξ
+    exact meanZeroSeparatedFeature_fourier a ξ
   have hlarge := finiteCompressed_all_shift_integrable 0
     (by norm_num : (0 : ℝ) < 1) |c|
   have hsmall := finiteCompressed_all_shift_integrable 0
@@ -1179,7 +1184,7 @@ private theorem meanZeroSeparatedFeature_in_all_shift_domains (a : ℂ) (c : ℝ
     (by linarith [(Symbol.actualGammaWeight_bounds ξ).1])
   have hg : |Symbol.gammaWeight ξ + c| ≤ Symbol.gammaWeight ξ + |c| := by
     calc
-      _ ≤ |Symbol.gammaWeight ξ| + |c| := abs_add _ _
+      _ ≤ |Symbol.gammaWeight ξ| + |c| := abs_add_le _ _
       _ = _ := by rw [abs_of_nonneg hg0]
   have hsq :
       ‖unitarySourceFourier (actualGammaProfile (meanZeroSeparatedFeature a)) ξ‖ ^ 2 ≤
@@ -1193,6 +1198,7 @@ private theorem meanZeroSeparatedFeature_in_all_shift_domains (a : ℂ) (c : ℝ
     nlinarith only [h, sq_nonneg
       (‖unitarySourceFourier (finiteCompressedProfile 0 1) ξ‖ -
         ‖a‖ * ‖unitarySourceFourier (finiteCompressedProfile 0 (1 / 4)) ξ‖)]
+  simp only [Pi.mul_apply, Pi.add_apply, Pi.pow_apply]
   rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg (sq_nonneg _)]
   calc
     _ ≤ (Symbol.gammaWeight ξ + |c|) *

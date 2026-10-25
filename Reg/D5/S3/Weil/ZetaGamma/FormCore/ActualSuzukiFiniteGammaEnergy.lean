@@ -126,7 +126,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      -- Proposed raw path: K, B and hK bodies; Exists F; four right And
+      -- Raw source path: K, B and hK bodies; Exists F; four right And
       -- branches; positive physical-mass clause; its right operand.
       -- Lexical binders: K=0, B=1, hK=2, F=3. No integral x lambda is entered.
       path := #["body", "body", "body", "arg", "body",
@@ -143,11 +143,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms audit
 
 
-/- SOURCE_ONLY.UNCOMPILED: one new strongest full-source registration attempt.
-Only the final literal fullTheta-excess operand varies. The original existential
-binder and all five preceding clauses remain literal, without synthetic inputs.
-The readout uses the enrolled DependentFamily.realize template imported above.
-No producer binding or declared_validated status is claimed. -/
+/- Only the final literal fullTheta-excess operand varies. The existential
+binder and all five preceding clauses remain literal. The readout uses the
+enrolled DependentFamily.realize template. -/
 namespace StrongMeanZero
 
 abbrev signature : Signature where
@@ -223,7 +221,7 @@ def family : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- PROPOSED RAW SOURCE PATH, UNVERIFIED until the actual producer runs:
+/- Raw source path:
 Exists F predicate argument/body; five right And branches; final LT right
 operand. The integral lambda is not entered. F is lexical stateBinder 0;
 there are no outer parameter coordinates. Earlier mean, all-shift, fullHasSum

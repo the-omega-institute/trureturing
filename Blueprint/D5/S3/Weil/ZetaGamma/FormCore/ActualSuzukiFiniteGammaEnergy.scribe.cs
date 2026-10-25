@@ -100,7 +100,7 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "SOURCE_ONLY.UNCOMPILED proposal. There exists one original "
+                        "There exists one original "
                             + "physical H6 source F with integral over the real line of "
                             + "actualSuzukiEvenBProfile(F) equal to zero. This same F "
                             + "belongs to originalGammaFormDomain(c,F) for every real c, "
@@ -130,13 +130,11 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                             + "no Gamma domain for an arbitrary H6 mean-zero input and "
                             + "requires no additional trace-zero premise.")),
                     Paragraph(Text(
-                        "The proposed mirrored registration preserves the entire "
+                        "The mirrored registration preserves the entire "
                             + "existential source law and varies only its final literal "
                             + "fullTheta-excess scalar. Zero readout makes final positivity "
                             + "impossible. Actual observational dependence compares zero "
                             + "with the same constructed positive-fullTheta witness. "
-                            + "Kernel compilation, Scribe emission and producer validation "
-                            + "of the raw source selector remain pending. No registration "
-                            + "acceptance or RH conclusion is asserted."))),
+                            + "The same-source existence result does not settle RH."))),
                 DescribeRole.Theorem))));
 }

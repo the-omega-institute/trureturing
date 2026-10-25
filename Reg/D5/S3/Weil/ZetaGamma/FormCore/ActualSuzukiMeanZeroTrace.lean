@@ -1,17 +1,3 @@
-/- SOURCE_ONLY.UNCOMPILED. Faithful full-source audit ATTEMPTS, 2026-10-26.
-Both original telescopes and every conclusion clause are retained.
-No compiler, producer binding, declared_validated result or required-check
-acceptance is claimed. The exact proposed raw selectors are below.
-
-Moments depends on the SEPARATE stronger same-compilation-unit finite-feature
-witness proposal in Witness/ActualMeanZeroSeparatedFeature.FULLTHETA.APPEND.
-SOURCE_ONLY.UNCOMPILED.lean. That fragment must first be appended inside
-ActualSuzukiFiniteGammaEnergy, with its original private helpers in scope.
-The weaker original-excess witness alone does NOT discharge this dependency.
-ProfileDomains uses the existing complete finite-Gamma-energy theorem.
-No H6/mean-zero hypothesis is turned into a Gamma graph assumption.
--/
-
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiMeanZeroTrace
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiFiniteGammaEnergy
@@ -133,7 +119,7 @@ def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- PROPOSED raw path, not producer-validated: three forall bodies F,hF,hmean,
+/- Raw source path: three forall bodies F,hF,hmean,
 then the L0 and Lt let bodies, then D's value. The integral lambda is NOT
 entered. F is lexical binder 0; no parameter coordinates are fixed. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -238,7 +224,7 @@ def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- PROPOSED raw path: F,hF bodies; And's first argument; IntegrableOn's
+/- Raw source path: F,hF bodies; And's first argument; IntegrableOn's
 function argument (two trailing explicit arguments: set and measure).
 F is lexical binder 0. No integral or pointwise state is introduced. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
