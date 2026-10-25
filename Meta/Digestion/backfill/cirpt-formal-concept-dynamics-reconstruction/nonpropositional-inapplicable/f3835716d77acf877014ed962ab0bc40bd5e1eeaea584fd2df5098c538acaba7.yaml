@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:f3835716d77acf877014ed962ab0bc40bd5e1eeaea584fd2df5098c538acaba7
+  normalized_sha256: sha256:f3835716d77acf877014ed962ab0bc40bd5e1eeaea584fd2df5098c538acaba7
+cas_ref: sha256:f3835716d77acf877014ed962ab0bc40bd5e1eeaea584fd2df5098c538acaba7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 目标、当前界面两种函数角色的命名与语义职责约定。
+    previous_atom_id: 49dca486009df6dc98699d3e7ef1c0516d2b9cd146e5f90d338d885255507202
+    next_atom_id: 8da7ff0902904a57d4c42b4c5bd663eb6dd03f9f0a493e25d9466052314888ff
+  chain_atoms:
+    - 992aeac105803ec660b1a455e9d11ab4ba5acd0374dc39363eaf665d647695ec
+    - d24acfe7f0653bc1b39862636839eeb150c968674581de48ec0d3388db6fd225

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c23842e45c50f796ba55a9725de0bc23a7c9c819f583c933a67d67cdbd4a724
+  normalized_sha256: sha256:9c23842e45c50f796ba55a9725de0bc23a7c9c819f583c933a67d67cdbd4a724
+cas_ref: sha256:9c23842e45c50f796ba55a9725de0bc23a7c9c819f583c933a67d67cdbd4a724
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条将连续归一化传播函数作为给定数据，规定叶内读数，不断言群协变律或常频率表示。
+    previous_atom_id: 93f82eca53cf342b1c754a4b982eb9488995dc8be3c191785c2d1202df0df5e4
+    next_atom_id: 5f1fdbc82b29196b58ab9002e1d8dfa4db4fe3794ee5675a90b49e47f1fc94de

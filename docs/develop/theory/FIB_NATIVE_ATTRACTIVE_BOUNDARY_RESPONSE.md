@@ -2304,3 +2304,320 @@ they give no slab extremizer statement, zero-noise completed-domain
 identification, physical realization or additional response rank law.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Strict retained zero-noise gap for every higher-contact rank
+
+**Definition 12.1 (the unchanged retained quotient and angular weight).**
+Fix an arbitrary integer $n\ge2$ and retain Definition 10.1's parent
+$H^n=\mathbb R^{2n}\times\mathbb R$, raw Lebesgue density, identity
+unit pole and horizontal covariance-$2$ clock. In particular,
+
+$$
+\begin{aligned}
+U_j&=\partial_{x_j}-\tfrac{y_j}{2}\partial_z,&
+V_j&=\partial_{y_j}+\tfrac{x_j}{2}\partial_z,\\
+L_{n,0}&=-\sum_{j=1}^n(U_j^2+V_j^2),&
+G_{n,0}&=\int_0^\infty e^{-tL_{n,0}}\delta_0\,dt,\\
+M_{n,0}(X_1,z)&=\int_{\mathbb R^{2n-2}}
+                    G_{n,0}(X_1,W,z)\,dW,&X_1&=(x,y).
+\end{aligned}
+\tag{12.1}
+$$
+
+Both time endpoints and the entire unweighted fibre are retained.
+Thus $M_{n,0}$ is exactly (10.2), with coefficient (10.5), rather
+than a projected semigroup kernel or a state-conditioned interaction.
+On retained $\mathbb R^3$ put $\rho=|X_1|$, $d\xi=dx\,dy\,dz$,
+$U=\partial_x-(y/2)\partial_z$, $V=\partial_y+(x/2)\partial_z$ and
+$\mathcal E_H[f]=\|Uf\|_2^2+\|Vf\|_2^2$. The domain remains
+
+$$
+\begin{aligned}
+\mathcal H_0
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,
+                  (\|f\|_2^2+\mathcal E_H[f])^{1/2}},\\
+W_n[f]&=\int_{\mathbb R^3}M_{n,0}|f|^2\,d\xi,&
+\Lambda_n&=\inf_{0\ne f\in\mathcal H_0}
+                         \frac{\mathcal E_H[f]}{W_n[f]}.
+\end{aligned}
+\tag{12.2}
+$$
+
+The positivity and bound in Theorem 10.2 give $0<W_n[f]<\infty$
+for nonzero $f\in\mathcal H_0$. This is the horizontal free closure,
+with no central-derivative, angular-symmetry or trace requirement.
+Use the polar coordinates of V, (10.9), in the retained variables:
+
+$$
+\begin{aligned}
+R&=(\rho^4+16z^2)^{1/4},&
+\rho^2&=R^2\cos a,&4z&=R^2\sin a,\\
+J&=(-\pi/2,\pi/2),&c(a)&=\cos a,&
+I_n&=\int_0^{\pi/2}\sin(t)^{n-2}\,dt,\\
+q_n(a)&=\frac1{I_n}\int_0^1
+          \frac{v^{n-2}}{\sqrt{1-v^2\sin^2a}}\,dv.
+\end{aligned}
+\tag{12.3}
+$$
+
+The natural complex angular domain and form are precisely those of
+V, Definition 10.1 and Theorem 10.2:
+
+$$
+\begin{aligned}
+\mathcal H_c&=\{b\in L^2(J;\mathbb C):b\in AC_{\rm loc}(J),\quad
+                                  \sqrt c\,b'\in L^2(J)\},\\
+A[b]&=\int_J\big(4c|b'|^2+c|b|^2\big)\,da,\\
+\lambda_0&=\inf_{0\ne b\in\mathcal H_c}
+                    \frac{A[b]}{\|b\|_2^2}>0,
+\qquad K=2\pi\lambda_0,\\
+\mu_n&=\inf_{0\ne b\in\mathcal H_c}
+               \frac{A[b]}{\int_Jq_n|b|^2\,da}.
+\end{aligned}
+\tag{12.4}
+$$
+
+There are no imposed Dirichlet values at either endpoint. All
+references to V here use the revision fixed in Definition 1.1.
+
+**Theorem 12.2 (an attained angular bound and strict retained gap).**
+For every integer $n\ge2$, the actual marginal has the exact angular
+multiplier
+
+$$
+M_{n,0}(\rho,z)=\frac1{2\pi}R^{-2}q_n(a)\qquad(R>0).
+\tag{12.5}
+$$
+
+Here $q_n$ extends continuously to $\overline J$ and satisfies
+
+$$
+q_n(\pm\pi/2)=1,\qquad
+0<q_n(0)=\frac1{(n-1)I_n}\le q_n(a)<1\quad(a\in J).
+\tag{12.6}
+$$
+
+The infimum $\mu_n$ is finite and is attained by some
+$b_n\in\mathcal H_c$ with $\int_Jq_n|b_n|^2\,da=1$.
+It satisfies $\mu_n>\lambda_0$. On the entire original complex
+retained domain,
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&\ge2\pi\mu_n W_n[f]
+                       &&(f\in\mathcal H_0),\\
+K&<2\pi\mu_n\le\Lambda_n<\infty.
+\end{aligned}
+\tag{12.7}
+$$
+
+Proof. Set $D_n=c_n\pi^{n-1}/\Gamma(n-1)$, where $c_n$ is
+exactly (10.5). The classical beta integral and gamma duplication
+formula give
+
+$$
+\begin{aligned}
+I_n&=\frac{\sqrt\pi\,\Gamma((n-1)/2)}{2\Gamma(n/2)},\\
+\Gamma(n-1)&=\frac{2^{n-2}}{\sqrt\pi}
+                 \Gamma((n-1)/2)\Gamma(n/2),\\
+2\pi D_n&=\frac{2^{n-1}\Gamma(n/2)^2}{\pi\Gamma(n-1)}
+             =\frac1{I_n}.
+\end{aligned}
+\tag{12.8}
+$$
+
+In the actual fibre integral (10.5), put $s=R^2u$. Its numerator
+and denominator scale respectively as $R^{2n-2}$ and $R^{2n}$,
+so the remaining integral is
+
+$$
+M_{n,0}=D_nR^{-2}\int_0^\infty
+        \frac{u^{n-2}}{((u+\cos a)^2+\sin^2a)^{n/2}}\,du.
+\tag{12.9}
+$$
+
+For $\alpha=|a|>0$, substitute
+$u=\sin\alpha\cot\theta-\cos\alpha
+=\sin(\alpha-\theta)/\sin\theta$.
+As $u$ increases from $0$ to infinity, $\theta$ decreases from
+$\alpha$ to $0$; also
+$|du|=\sin\alpha\,\sin^{-2}\theta\,d\theta$ and
+$(u+\cos\alpha)^2+\sin^2\alpha
+=\sin^2\alpha/\sin^2\theta$.
+The powers of $\sin\theta$ cancel, giving
+
+$$
+\begin{aligned}
+q_n(a)
+ &=\frac{\int_0^\alpha\sin(t)^{n-2}\,dt}
+          {I_n\sin(\alpha)^{n-1}}\\
+ &=\frac1{I_n}\int_0^1
+         \frac{v^{n-2}}{\sqrt{1-v^2\sin^2\alpha}}\,dv.
+\end{aligned}
+\tag{12.10}
+$$
+
+The last equality uses $t=\arcsin(v\sin\alpha)$. At $a=0$,
+the integral in (12.9) is
+$\int_0^\infty u^{n-2}(1+u)^{-n}\,du=B(n-1,1)=1/(n-1)$,
+which agrees with (12.3). Equations (12.8)–(12.10) prove (12.5)
+with the original unit-source coefficient, density and clock.
+
+For all $a\in\overline J$, the integrand in (12.3) is dominated by
+$v^{n-2}/\sqrt{1-v^2}$, whose integral is $I_n$.
+Dominated convergence proves continuity and the endpoint values.
+For $a\in J$ and $0<v<1$,
+$\sqrt{1-v^2\sin^2a}>\sqrt{1-v^2}$, proving $q_n(a)<1$.
+The denominator in (12.3) is at most one, proving the positive
+lower bound in (12.6). In particular $1-q_n>0$ almost everywhere
+on $J$, although there is no uniform pointwise loss up to its
+endpoints. Pointwise strictness alone does not establish a strict
+gap between infima.
+
+To obtain that gap, use the closedness and compact embedding
+$\mathcal H_c\hookrightarrow L^2(J)$ supplied by V, Theorem 10.2.
+These properties and $A\ge\lambda_0\|\cdot\|_2^2$ extend to
+complex functions by splitting real and imaginary parts.
+A nonzero constant trial gives $\mu_n<\infty$. Normalize a
+minimizing sequence $b_j$ by $\int_Jq_n|b_j|^2\,da=1$.
+Its bounded $A[b_j]$ and $\lambda_0>0$ bound its closed-form
+Hilbert norm. The classical direct method gives a subsequence
+converging weakly in that form norm and, by compactness, strongly
+in $L^2(J)$ to $b_n\in\mathcal H_c$.
+Boundedness of $q_n$ preserves the weighted normalization.
+Weak lower semicontinuity of $A$ and the definition of the infimum
+then imply $A[b_n]=\mu_n$. Since $b_n\ne0$,
+
+$$
+\begin{aligned}
+\mu_n=A[b_n]
+ &\ge\lambda_0\|b_n\|_2^2\\
+ &=\lambda_0\left(1+\int_J(1-q_n)|b_n|^2\,da\right)
+ >\lambda_0.
+\end{aligned}
+\tag{12.11}
+$$
+
+This compact angular minimization is on the natural finite-energy
+domain, without changing its endpoint conditions.
+
+For the transfer, let $f\in C_c^\infty(\mathbb R^3\setminus\{0\};
+\mathbb C)$ be arbitrary, put $\ell=\log R$, and write
+$f=R^{-1}v(\ell,a,\theta)$, with
+$X_1=R\sqrt{\cos a}(\cos\theta,\sin\theta)$.
+The raw volume is $R^3dR\,da\,d\theta/4$.
+V, (10.9)–(10.11), give the full complex identity
+
+$$
+\mathcal E_H[f]=\frac14\int_{\mathbb R\times J\times\mathbb T}
+ \left\{c|v_\ell-v+\tan a\,v_\theta|^2
+        +4c|v_a+\tfrac12v_\theta|^2\right\}
+          \,d\ell\,da\,d\theta.
+\tag{12.12}
+$$
+
+Use the unitary Fourier transform in $\ell$ and the unitary Fourier
+series in $\theta$. For each $\sigma\in\mathbb R$ and
+$m\in\mathbb Z$, write the transformed coefficient as
+$e^{-ima/2}b_{\sigma,m}(a)$. The same identity, together with
+(12.5) and Plancherel, yields
+
+$$
+\begin{aligned}
+\mathcal E_H[f]
+ &=\frac14\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+ \left\{4c|b'_{\sigma,m}|^2
+   +c\big(1+(\sigma+m\tan a)^2\big)|b_{\sigma,m}|^2\right\}
+      \,da\,d\sigma,\\
+W_n[f]
+ &=\frac1{8\pi}\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+                         q_n|b_{\sigma,m}|^2\,da\,d\sigma.
+\end{aligned}
+\tag{12.13}
+$$
+
+Every finite-energy admissible fibre lies in the original
+$\mathcal H_c$, as in V. Dropping only the nonnegative extra
+square bounds its angular energy below by
+$A[b_{\sigma,m}]\ge\mu_n\int_Jq_n|b_{\sigma,m}|^2\,da$.
+The factors $1/4$ and $1/(8\pi)$ in (12.13) give precisely
+$\mathcal E_H[f]\ge2\pi\mu_nW_n[f]$.
+Every integer angular mode and almost every real radial frequency
+are included; no radial or real-valued restriction is imposed.
+The polar chart omits only measure-zero axes. The supplied identity
+is obtained by integration and form approximation there, with the
+natural $\mathcal H_c$ endpoints, not extra boundary values.
+
+To remove the puncture, for a fixed complex compact smooth $f$
+choose a smooth cutoff $\chi_\delta$ that is zero on the Euclidean
+ball of radius $\delta$ and one outside the ball of radius
+$2\delta$, with gradient bounded by $C/\delta$.
+On the compact support of $f$, the coefficients of $U,V$ are
+bounded. The added squared horizontal derivative error in
+$\chi_\delta f$ is therefore
+$O(\delta^3\delta^{-2})=O(\delta)$.
+The removed original derivative terms and the $L^2$ error tend
+to zero. This is the pole-cutoff argument of §9, so
+$\chi_\delta f\to f$ in the horizontal form norm.
+Nonnegativity of $M_{n,0}$ and Fatou's lemma extend the inequality
+to every $f\in C_c^\infty(\mathbb R^3;\mathbb C)$.
+For arbitrary $f\in\mathcal H_0$, take its defining smooth core
+sequence. Horizontal derivative convergence gives convergence of
+$\mathcal E_H$; $L^2$ convergence supplies an almost-everywhere
+convergent subsequence. Fatou once more gives (12.7) on the whole
+closure, including zero, and also weighted finiteness there.
+Positivity of the actual marginal off the pole gives $W_n[f]>0$
+for nonzero $f$. Division and infimum prove
+$\Lambda_n\ge2\pi\mu_n>K$. A nonzero compact smooth test supported
+in an annulus has finite energy and finite positive denominator,
+so $\Lambda_n<\infty$. The integer $n\ge2$ was arbitrary. $\square$
+
+**Corollary 12.3 (the strengthened sufficient zero-noise interval).**
+For every integer $n\ge2$, with precisely the source, density,
+clock and full complex domain of Definition 12.1, put
+$\delta_n=2\pi(\mu_n-\lambda_0)>0$. Then
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&\ge(K+\delta_n)W_n[f]
+                                      &&(f\in\mathcal H_0),\\
+\mathcal E_H[f]-gW_n[f]
+ &\ge\left(1-\frac{g}{2\pi\mu_n}\right)\mathcal E_H[f]\ge0
+                       &&(0\le g\le2\pi\mu_n).
+\end{aligned}
+\tag{12.14}
+$$
+
+Proof. Substitute $K+\delta_n=2\pi\mu_n$ in (12.7), then multiply
+$W_n[f]\le\mathcal E_H[f]/(2\pi\mu_n)$ by $g\ge0$.
+Thus the sufficient interval for the retained reference form in
+(10.6), at zero noise and this fixed $n$, contains
+$[0,2\pi\mu_n]$, which strictly extends $[0,K]$. $\square$
+
+The source-specific angular multiplier, its weighted minimization
+and the resulting sufficient retained interval are repo-derived
+consequences of (10.5) and V's natural angular form and all-mode
+identity. The gauge-kernel ingredients keep their Folland/Kombe
+attribution from §10. The beta/gamma identities, Rellich compactness
+used in V, Hilbert-space direct method, weak lower semicontinuity,
+dominated convergence, Plancherel and Fatou are classical
+intermediate inputs, not additional new theorems. For these
+variational and integration principles see L. C. Evans,
+*Partial Differential Equations*, second edition, Chapters 5 and 8,
+and G. B. Folland, *Real Analysis*, second edition, Chapters 2, 6
+and 8. No historical priority claim accompanies this derivation.
+
+The bound (12.7) does not identify the exact value of $\Lambda_n$
+or assert $\Lambda_n=2\pi\mu_n$. Angular attainment in (12.11)
+is not a whole-space optimizer assertion. The positive margin is
+$n$-dependent; no uniform gap in $n$, positive-noise improvement,
+slab or trace conclusion, or critical completed-domain
+identification follows here. Section 11's different full-Green
+quotient has individual-test strictness and infimum $K$; it supplies
+no strict-infimum premise for (12.7). The retained comparison
+remains Definition 10.3's analytic reference form. It creates no
+autonomous retained generator, probability law on the whole fibre,
+state-conditioned interaction, native higher-contact realization
+or physical-space or response-rank interpretation.
+
+## 追加锚（本行以下为增补区）

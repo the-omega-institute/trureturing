@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8264977c54089409dadfd3f3de3fbc8fb944ee9c7c391264da58022a981189c5
+  normalized_sha256: sha256:8264977c54089409dadfd3f3de3fbc8fb944ee9c7c391264da58022a981189c5
+cas_ref: sha256:8264977c54089409dadfd3f3de3fbc8fb944ee9c7c391264da58022a981189c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 热力学充分性卷第2节到第2.3节的来源对应记录。
+    previous_atom_id: dfea3114703dffd8495b0af47bdd39978210179f8065861796671c8e59bcfa6f
+    next_atom_id: 9da59f841b4a4081f6e969f83f4eda155d181e5685e2f9a677d25131c660ac02
