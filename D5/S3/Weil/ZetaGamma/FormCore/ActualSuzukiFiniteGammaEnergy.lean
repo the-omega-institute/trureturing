@@ -1199,7 +1199,9 @@ private theorem meanZeroSeparatedFeature_in_all_shift_domains (a : ℂ) (c : ℝ
       (‖unitarySourceFourier (finiteCompressedProfile 0 1) ξ‖ -
         ‖a‖ * ‖unitarySourceFourier (finiteCompressedProfile 0 (1 / 4)) ξ‖)]
   simp only [Pi.mul_apply, Pi.add_apply, Pi.pow_apply]
-  rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg (sq_nonneg _)]
+  rw [Real.norm_eq_abs, abs_mul,
+    abs_of_nonneg (sq_nonneg
+      ‖unitarySourceFourier (actualGammaProfile (meanZeroSeparatedFeature a)) ξ‖)]
   calc
     _ ≤ (Symbol.gammaWeight ξ + |c|) *
         ‖unitarySourceFourier (actualGammaProfile (meanZeroSeparatedFeature a)) ξ‖ ^ 2 :=
