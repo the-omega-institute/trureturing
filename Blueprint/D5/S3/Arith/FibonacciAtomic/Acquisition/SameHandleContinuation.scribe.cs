@@ -174,7 +174,7 @@ internal sealed class SameHandleContinuationDocument : IScribeDocumentDefinition
                         + "handling, installation of code/data and service blocks, authentic binding and "
                         + "rights, backing provision, source storage/retention and retained records. A "
                         + "global replacement is not one local rewrite or bit operation. Each chosen "
-                        + "finite continuation adds its own R/G calls, service tariffs, local input/update/" 
+                        + "finite continuation adds its own R/G calls, service tariffs, local input/update/"
                         + "output work and any retained future data; hypothetical evaluation adds local "
                         + "work and no source call. No acquisition bound covers an unbounded future tape. "
                         + "Realizing the current gcd port and these supplied services/rights on a narrower "
