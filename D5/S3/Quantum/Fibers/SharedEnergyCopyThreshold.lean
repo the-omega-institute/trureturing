@@ -104,7 +104,7 @@ def sparseState (u : ℂ) (hu : u * star u = 1) : DensityState (Fin 3) :=
 def phase (m : ℕ) : Circle := Circle.exp (Real.pi / ((m : ℝ) - 1))
 
 private theorem unit_phase (u : Circle) : (u : ℂ) * star (u : ℂ) = 1 := by
-  simpa only [Complex.star_def, Complex.mul_conj, Circle.normSq_coe,
+  simp only [Complex.star_def, Complex.mul_conj, Circle.normSq_coe,
     Complex.ofReal_one]
 
 /-- The first literal matrix in the sparse pair. -/
@@ -148,7 +148,7 @@ private theorem supported_kernel_iff (m k₁ k₂ : ℤ) :
         have h₀ : Finset.univ.gcd v ∣ v 0 := Finset.gcd_dvd (Finset.mem_univ _)
         have h₁ : Finset.univ.gcd v ∣ v 1 := Finset.gcd_dvd (Finset.mem_univ _)
         have hd : Finset.univ.gcd v ∣ 1 := by
-          convert dvd_add h₀ h₁ using 1 <;> simp [v]
+          convert dvd_add h₀ h₁ using 1; simp [v]
         have hn := normalize_eq_one.mpr (isUnit_iff_dvd_one.mpr hd)
         simpa only [Finset.normalize_gcd] using hn
       have hx : A *ᵥ ![k₁,k₂] = 0 := by
@@ -233,11 +233,18 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       linear_combination hw
     obtain ⟨ell, he₁, he₂⟩ := (supported_kernel_iff (m : ℤ) k₁ k₂).mp hk
     have hnorm : |k₁| + |k₂| ≤ (degree alpha : ℤ) := by
-      dsimp [k₁, k₂]
-      simp [degree, Fin.sum_univ_succ]
+      have h₁ : |k₁| ≤ (alpha 2 1 : ℤ) + alpha 1 2 := by
+        dsimp [k₁]
+        exact abs_le.mpr ⟨by omega, by omega⟩
+      have h₂ : |k₂| ≤ (alpha 2 0 : ℤ) + alpha 0 2 := by
+        dsimp [k₂]
+        exact abs_le.mpr ⟨by omega, by omega⟩
+      simp only [degree, Fin.sum_univ_succ, Nat.cast_add, Nat.cast_zero]
       omega
     have hlt : (degree alpha : ℤ) < 2*(m : ℤ)-1 := by
-      exact_mod_cast hd
+      have h : degree alpha + 1 < 2*m := by omega
+      have h' : (degree alpha : ℤ) + 1 < 2*(m : ℤ) := by exact_mod_cast h
+      omega
     have hell : ell = 0 := by
       by_contra hne
       have hlen := supported_kernel_length (m : ℤ) ell (by exact_mod_cast hm) hne
@@ -248,13 +255,14 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
     have hp : star u ^ alpha 0 2 * u ^ alpha 0 2 = 1 := by
       rw [← mul_pow, mul_comm, hu, one_pow]
     simp [monomial, sparseMatrix, Fin.prod_univ_succ, hz₀, hz₁, ha, hb, mul_pow]
-    linear_combination -((1/3 : ℂ)^(alpha 0 0) * (1/3 : ℂ)^(alpha 1 1) *
-      (1/3 : ℂ)^(alpha 2 2) * ((1/12 : ℂ)^(alpha 0 2))^2 *
-      ((1/12 : ℂ)^(alpha 1 2))^2) * hp
-  · push_neg at hz
-    rcases hz with hz | hz
-    · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz]
-    · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz]
+    simp only [Complex.star_def] at hp
+    linear_combination -((3 : ℂ)⁻¹^(alpha 0 0) * (3 : ℂ)⁻¹^(alpha 1 1) *
+      (3 : ℂ)⁻¹^(alpha 2 2) * ((12 : ℂ)⁻¹^(alpha 0 2))^2 *
+      ((12 : ℂ)⁻¹^(alpha 1 2))^2) * hp
+  · by_cases hz₀ : alpha 0 1 = 0
+    · have hz₁ : alpha 1 0 ≠ 0 := fun h => hz ⟨hz₀,h⟩
+      simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₁]
+    · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₀]
 
 #print axioms sparse_low_monomials
 #print axioms sparse_density_spectrum
