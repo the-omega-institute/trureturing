@@ -37,7 +37,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     literalSourceLaplace a decayingInput = ((1 / (a + 2) : ℝ) : ℂ) := by
   unfold literalSourceLaplace
   calc
-    _ = ((∫ t : ℝ, Real.exp (-(a + 2) * t) ∂halfline) : ℂ) := by
+    _ = ((∫ t : ℝ, Real.exp (-(a + 2) * t) ∂halfline : ℝ) : ℂ) := by
       rw [← integral_complex_ofReal]
       apply integral_congr_ae
       exact Eventually.of_forall fun t => by
@@ -47,7 +47,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
         congr 1
         ring
     _ = _ := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t)) : ℂ) = _
+      change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
       simp
 
@@ -62,10 +62,10 @@ private theorem first_laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     have h := Real.integral_rpow_mul_exp_neg_mul_Ioi
       (a := (2 : ℝ)) (r := a + 2) (by norm_num) (by linarith)
     norm_num [Real.rpow_two, hG2, div_pow] at h
-    exact h
+    simpa only [one_div] using h
   unfold literalSourceFirstLaplaceMoment
   calc
-    _ = ((∫ t : ℝ, t * Real.exp (-((a + 2) * t)) ∂halfline) : ℂ) := by
+    _ = ((∫ t : ℝ, t * Real.exp (-((a + 2) * t)) ∂halfline : ℝ) : ℂ) := by
       rw [← integral_complex_ofReal]
       apply integral_congr_ae
       exact Eventually.of_forall fun t => by
@@ -77,7 +77,7 @@ private theorem first_laplace_decayingInput {a : ℝ} (ha : 0 < a) :
           ring
         rw [mul_assoc, ← Complex.ofReal_mul, he]
     _ = _ := by
-      change ((∫ t : ℝ in Ioi 0, t * Real.exp (-((a + 2) * t))) : ℂ) = _
+      change ((∫ t : ℝ in Ioi 0, t * Real.exp (-((a + 2) * t)) : ℝ) : ℂ) = _
       rw [hmoment]
 
 private theorem layer_zero (a c : ℝ) :
@@ -87,18 +87,18 @@ private theorem layer_zero (a c : ℝ) :
 
 private theorem layer_decaying_one :
     actualResidualLayerCrossValue 1 1 decayingInput = (1 / 108 : ℝ) := by
-  simp only [actualResidualLayerCrossValue, if_pos rfl]
+  rw [actualResidualLayerCrossValue, if_pos rfl]
   simp only [laplace_decayingInput (by norm_num : (0 : ℝ) < 1),
     first_laplace_decayingInput (by norm_num : (0 : ℝ) < 1)]
-  norm_num [Complex.normSq_apply]
+  norm_num [Complex.normSq_apply, map_div₀]
 
 private theorem layer_decaying_five_quarters :
     actualResidualLayerCrossValue (5 / 4) (5 / 4) decayingInput =
       (192 / 54925 : ℝ) := by
-  simp only [actualResidualLayerCrossValue, if_pos rfl]
+  rw [actualResidualLayerCrossValue, if_pos rfl]
   simp only [laplace_decayingInput (by norm_num : (0 : ℝ) < 5 / 4),
     first_laplace_decayingInput (by norm_num : (0 : ℝ) < 5 / 4)]
-  norm_num [Complex.normSq_apply]
+  norm_num [Complex.normSq_apply, map_div₀]
 
 /- Legal source witnesses are recorded with their actual L1 proofs.
 State itself remains the whole original function space, not this pair. -/

@@ -41,13 +41,14 @@ private theorem decayingInput_l1 : Integrable decayingInput halfline := by
 private theorem decayingInput_l2 : MemLp decayingInput 2 halfline := by
   apply (memLp_two_iff_integrable_sq_norm decayingInput_l1.aestronglyMeasurable).2
   have h := integrableOn_exp_mul_Ioi (by norm_num : (-4 : ℝ) < 0) 0
-  convert h using 1
-  funext t
-  simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_pos (Real.exp_pos _), pow_two]
-  rw [← Real.exp_add]
-  congr 1
-  ring
+  change Integrable (fun t : ℝ => Real.exp ((-4 : ℝ) * t)) halfline at h
+  apply h.congr
+  exact Filter.Eventually.of_forall fun t => by
+    simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (Real.exp_pos _), pow_two]
+    rw [← Real.exp_add]
+    congr 1
+    ring
 
 /- The source phase has the original positive sign +I*ξ*t.
 No Fourier convention is silently changed. -/
@@ -73,6 +74,7 @@ private theorem decayingInput_fourier (ξ : ℝ) :
   rw [unitarySourceFourier_eq_integral, hPoint,
     integral_indicator measurableSet_Ioi, integral_exp_mul_complex_Ioi hm 0]
   simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
+  rfl
 
 private theorem decayingInput_fourier_sq (ξ : ℝ) :
     ‖unitarySourceFourier (zeroExtension decayingInput) ξ‖ ^ 2 =
@@ -106,7 +108,7 @@ private theorem decayingInput_quarter_graph :
 private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace a decayingInput = ((1 / (a + 2) : ℝ) : ℂ) := by
   calc
-    _ = ((∫ t : ℝ, Real.exp ((-(a + 2)) * t) ∂halfline) : ℂ) := by
+    _ = ((∫ t : ℝ, Real.exp ((-(a + 2)) * t) ∂halfline : ℝ) : ℂ) := by
       unfold D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace
       rw [← integral_complex_ofReal]
       apply integral_congr_ae
@@ -117,7 +119,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
         congr 1
         ring
     _ = ((1 / (a + 2) : ℝ) : ℂ) := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp ((-(a + 2)) * t)) : ℂ) = _
+      change ((∫ t : ℝ in Ioi 0, Real.exp ((-(a + 2)) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
       simp
 
@@ -144,8 +146,8 @@ private theorem decayingInput_hankel_positive :
   have hPositive : 0 < ∑' n : ℕ, L n := by
     rw [h0] at hle
     linarith
-  rw [hH]
-  simpa only [Complex.ofReal_re] using hPositive
+  rw [hH, ← Complex.ofReal_tsum, Complex.ofReal_re]
+  exact hPositive
 
 abbrev signature : Signature where
   Params := Unit
@@ -577,10 +579,11 @@ private theorem exists_nonmeasurable_real_set :
   have hcount : #(MeasurableSpace.countableGeneratingSet ℝ) ≤ ℵ₀ :=
     (MeasurableSpace.countable_countableGeneratingSet (α := ℝ)).le_aleph0
   have hbound : #{s : Set ℝ // MeasurableSet s} ≤ 𝔠 := by
-    simpa only [MeasurableSpace.generateFrom_countableGeneratingSet] using
-      (MeasurableSpace.cardinal_measurableSet_le_continuum
-        (s := MeasurableSpace.countableGeneratingSet ℝ)
-        (hcount.trans Cardinal.aleph0_le_continuum))
+    have hg := MeasurableSpace.cardinal_measurableSet_le_continuum
+      (s := MeasurableSpace.countableGeneratingSet ℝ)
+      (hcount.trans Cardinal.aleph0_le_continuum)
+    rw [MeasurableSpace.generateFrom_countableGeneratingSet] at hg
+    exact hg
   let f : Set ℝ → {s : Set ℝ // MeasurableSet s} := fun s => ⟨s, hall s⟩
   have hf : Function.Injective f := by
     intro s t hst
@@ -702,13 +705,14 @@ private theorem decayingInput_l1 : Integrable decayingInput halfline := by
 private theorem decayingInput_l2 : MemLp decayingInput 2 halfline := by
   apply (memLp_two_iff_integrable_sq_norm decayingInput_l1.aestronglyMeasurable).2
   have h := integrableOn_exp_mul_Ioi (by norm_num : (-4 : ℝ) < 0) 0
-  convert h using 1
-  funext t
-  simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_pos (Real.exp_pos _), pow_two]
-  rw [← Real.exp_add]
-  congr 1
-  ring
+  change Integrable (fun t : ℝ => Real.exp ((-4 : ℝ) * t)) halfline at h
+  apply h.congr
+  exact Filter.Eventually.of_forall fun t => by
+    simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (Real.exp_pos _), pow_two]
+    rw [← Real.exp_add]
+    congr 1
+    ring
 
 private theorem decayingInput_fourier (ξ : ℝ) :
     unitarySourceFourier (zeroExtension decayingInput) ξ =
@@ -732,6 +736,7 @@ private theorem decayingInput_fourier (ξ : ℝ) :
   rw [unitarySourceFourier_eq_integral, hPoint,
     integral_indicator measurableSet_Ioi, integral_exp_mul_complex_Ioi hm 0]
   simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
+  rfl
 
 private theorem decayingInput_fourier_zero_ne :
     unitarySourceFourier (zeroExtension decayingInput) 0 ≠ 0 := by

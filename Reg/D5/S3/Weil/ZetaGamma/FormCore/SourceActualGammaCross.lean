@@ -38,13 +38,14 @@ private theorem decayingInput_l1 : Integrable decayingInput halfline := by
 private theorem decayingInput_l2 : MemLp decayingInput 2 halfline := by
   apply (memLp_two_iff_integrable_sq_norm decayingInput_l1.aestronglyMeasurable).2
   have h := integrableOn_exp_mul_Ioi (by norm_num : (-4 : ℝ) < 0) 0
-  convert h using 1
-  funext t
-  simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_pos (Real.exp_pos _), pow_two]
-  rw [← Real.exp_add]
-  congr 1
-  ring
+  change Integrable (fun t : ℝ => Real.exp ((-4 : ℝ) * t)) halfline at h
+  apply h.congr
+  exact Filter.Eventually.of_forall fun t => by
+    simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (Real.exp_pos _), pow_two]
+    rw [← Real.exp_add]
+    congr 1
+    ring
 
 /- The source phase has the original positive sign +I*ξ*t.
 No Fourier convention is silently changed. -/
@@ -70,6 +71,7 @@ private theorem decayingInput_fourier (ξ : ℝ) :
   rw [unitarySourceFourier_eq_integral, hPoint,
     integral_indicator measurableSet_Ioi, integral_exp_mul_complex_Ioi hm 0]
   simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
+  rfl
 
 private theorem decayingInput_fourier_sq (ξ : ℝ) :
     ‖unitarySourceFourier (zeroExtension decayingInput) ξ‖ ^ 2 =
@@ -110,7 +112,7 @@ private theorem decayingInput_gamma_domain (c : ℝ) :
 private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     literalSourceLaplace a decayingInput = ((1 / (a + 2) : ℝ) : ℂ) := by
   calc
-    _ = ((∫ t : ℝ, Real.exp ((-(a + 2)) * t) ∂halfline) : ℂ) := by
+    _ = ((∫ t : ℝ, Real.exp ((-(a + 2)) * t) ∂halfline : ℝ) : ℂ) := by
       unfold literalSourceLaplace
       rw [← integral_complex_ofReal]
       apply integral_congr_ae
@@ -121,7 +123,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
         congr 1
         ring
     _ = ((1 / (a + 2) : ℝ) : ℂ) := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp ((-(a + 2)) * t)) : ℂ) = _
+      change ((∫ t : ℝ in Ioi 0, Real.exp ((-(a + 2)) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
       simp
 
@@ -421,7 +423,7 @@ private theorem decayingInput_l1 : Integrable decayingInput halfline := by
 private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
     literalSourceLaplace a decayingInput = ((1 / (a + 2) : ℝ) : ℂ) := by
   calc
-    _ = ((∫ t : ℝ, Real.exp (-(a + 2) * t) ∂halfline) : ℂ) := by
+    _ = ((∫ t : ℝ, Real.exp (-(a + 2) * t) ∂halfline : ℝ) : ℂ) := by
       unfold literalSourceLaplace
       rw [← integral_complex_ofReal]
       apply integral_congr_ae
@@ -432,7 +434,7 @@ private theorem laplace_decayingInput {a : ℝ} (ha : 0 < a) :
         congr 1
         ring
     _ = _ := by
-      change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t)) : ℂ) = _
+      change ((∫ t : ℝ in Ioi 0, Real.exp (-(a + 2) * t) : ℝ) : ℂ) = _
       rw [integral_exp_mul_Ioi (by linarith : -(a + 2) < 0) 0]
       simp
 
