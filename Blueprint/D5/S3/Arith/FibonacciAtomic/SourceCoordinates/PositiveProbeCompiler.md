@@ -8,7 +8,7 @@ The actual source is any natural pair v=(a,b), including (0,0). The original cal
 
 **Definition 1.1 (The original least direction).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \operatorname{K}\left(H\right) = \operatorname{min}\left(\operatorname{positiveFibDirections}\left(H\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), \operatorname{K}\left(H\right) = \operatorname{min}\left(\operatorname{positiveFibDirections}\left(H\right)\right))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.direction` (`✓ std3`).
 
@@ -20,7 +20,7 @@ K(H)=direction(H) is the least k>=1 with H<=fib(k+4). The terminating natural-nu
 
 **Definition 1.2 (The graft allowance).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \operatorname{Gamma}\left(H\right) = 1+\operatorname{floorDiv}\left(\operatorname{K}\left(H\right)+2, 2\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), \operatorname{Gamma}\left(H\right) = 1+\operatorname{floorDiv}\left(\operatorname{K}\left(H\right)+2, 2\right))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.graftBound` (`✓ std3`).
 
@@ -32,7 +32,7 @@ Gamma(H)=graftBound(H)=1+floor((K(H)+2)/2), equivalently 1+ceil((K(H)+1)/2). Thi
 
 **Definition 1.3 (An executable shift representative).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall c \in \operatorname{Nat}\left(\right), \operatorname{t}\left(H, c\right) = \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 0, 0, \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 1, H+1, \operatorname{mod}\left(c, H\right)\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall c \in \operatorname{Nat}\left(\right), \operatorname{t}\left(H, c\right) = \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 0, 0, \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 1, H+1, \operatorname{mod}\left(c, H\right)\right)\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.positiveLift` (`✓ std3`).
 
@@ -44,7 +44,7 @@ Let d=c mod H. The representative t(H,c) is zero when d=0, H+1 when d=1, and d o
 
 **Definition 1.4 (A finite list of available weights).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall c \in \operatorname{Nat}\left(\right), \operatorname{Z}\left(H, c\right) = \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 0, \operatorname{nil}\left(\right), \operatorname{append}\left(\operatorname{filterNotTwo}\left(\operatorname{zeckendorf}\left(\operatorname{t}\left(H, c\right)-2\right)\right), \operatorname{singleton}\left(\operatorname{ite}\left(\operatorname{containsTwo}\left(\operatorname{zeckendorf}\left(\operatorname{t}\left(H, c\right)-2\right)\right), 4, 3\right)\right)\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall c \in \operatorname{Nat}\left(\right), \operatorname{Z}\left(H, c\right) = \operatorname{ite}\left(\operatorname{mod}\left(c, H\right) = 0, \operatorname{nil}\left(\right), \operatorname{append}\left(\operatorname{filterNotTwo}\left(\operatorname{zeckendorf}\left((\operatorname{t}\left(H, c\right)-2)\right)\right), \operatorname{singleton}\left(\operatorname{ite}\left(\operatorname{containsTwo}\left(\operatorname{zeckendorf}\left((\operatorname{t}\left(H, c\right)-2)\right)\right), 4, 3\right)\right)\right)\right)))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.weights` (`✓ std3`).
 
@@ -56,7 +56,7 @@ Z(H,c)=weights(H,c) is empty when c mod H=0. Otherwise let z=Nat.zeckendorf(t(H,
 
 **Definition 1.5 (Chronological emission from descending weights).**
 
-$$(\forall k \in \operatorname{Nat}\left(\right), \operatorname{E}\left(k, \operatorname{nil}\left(\right)\right) = \operatorname{repeatR}\left(k\right) \land \forall k \in \operatorname{Nat}\left(\right), \forall i \in \operatorname{Nat}\left(\right), \forall l \in \operatorname{ListNat}\left(\right), \operatorname{E}\left(k, \operatorname{cons}\left(i, l\right)\right) = \operatorname{append}\left(\operatorname{repeatR}\left(k-i-3\right), \operatorname{consG}\left(\operatorname{E}\left(i-3, l\right)\right)\right))$$
+$$((\forall k \in \operatorname{Nat}\left(\right), \operatorname{E}\left(k, \operatorname{nil}\left(\right)\right) = \operatorname{repeatR}\left(k\right)) \land (\forall k \in \operatorname{Nat}\left(\right), (\forall i \in \operatorname{Nat}\left(\right), (\forall l \in \operatorname{ListNat}\left(\right), \operatorname{E}\left(k, \operatorname{cons}\left(i, l\right)\right) = \operatorname{append}\left(\operatorname{repeatR}\left((k-(i-3))\right), \operatorname{consG}\left(\operatorname{E}\left((i-3), l\right)\right)\right)))))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.emit` (`✓ std3`).
 
@@ -68,7 +68,7 @@ E(k,l)=emit(k,l) treats k as the number of replacements still to emit. For an em
 
 **Definition 1.6 (The public compiler).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), \forall k \in \operatorname{Nat}\left(\right), \forall c \in \operatorname{Nat}\left(\right), \operatorname{W}\left(H, k, c\right) = \operatorname{E}\left(k, \operatorname{Z}\left(H, c\right)\right)$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (\forall k \in \operatorname{Nat}\left(\right), (\forall c \in \operatorname{Nat}\left(\right), \operatorname{W}\left(H, k, c\right) = \operatorname{E}\left(k, \operatorname{Z}\left(H, c\right)\right))))$$
 
 *Formalization.* `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.compile` (`✓ std3`).
 
@@ -80,7 +80,7 @@ W(H,k,c)=compile(H,k,c)=E(k,Z(H,c)). Its inputs are public natural numbers, and 
 
 **Theorem 1.7 (Both directions and every shifted terminal reply).**
 
-$$\forall H \in \operatorname{Nat}\left(\right), (1 < H) \implies ((1 \le \operatorname{K}\left(H\right) \land H \le \operatorname{fib}\left(\operatorname{K}\left(H\right)+4\right) \land \forall j \in \operatorname{Nat}\left(\right), ((1 \le j \land H \le \operatorname{fib}\left(j+4\right))) \implies (\operatorname{K}\left(H\right) \le j) \land \forall k \in \operatorname{Nat}\left(\right), \forall c \in \operatorname{Nat}\left(\right), ((k = \operatorname{K}\left(H\right) \lor k = \operatorname{K}\left(H\right)+1)) \implies ((\operatorname{descending}\left(\operatorname{Z}\left(H, c\right)\right) \land \forall i \in \operatorname{Nat}\left(\right), (\operatorname{member}\left(i, \operatorname{Z}\left(H, c\right)\right)) \implies ((3 \le i \land i \le \operatorname{K}\left(H\right)+3)) \land \operatorname{sumFib}\left(\operatorname{Z}\left(H, c\right)\right) = \operatorname{t}\left(H, c\right) \land \operatorname{countR}\left(\operatorname{W}\left(H, k, c\right)\right) = k \land \operatorname{countG}\left(\operatorname{W}\left(H, k, c\right)\right) = \operatorname{length}\left(\operatorname{Z}\left(H, c\right)\right) \land \operatorname{countG}\left(\operatorname{W}\left(H, k, c\right)\right) \le \operatorname{Gamma}\left(H\right) \land \forall v \in \operatorname{NatPair}\left(\right), (\operatorname{q}\left(\operatorname{Run}\left(\operatorname{W}\left(H, k, c\right), v\right)\right) = \operatorname{q}\left(\operatorname{iterateR}\left(k, v\right)\right)+\operatorname{t}\left(H, c\right) \land \operatorname{gcd}\left(\operatorname{q}\left(\operatorname{Run}\left(\operatorname{W}\left(H, k, c\right), v\right)\right), H\right) = \operatorname{gcd}\left(\operatorname{q}\left(\operatorname{iterateR}\left(k, v\right)\right)+c, H\right))))))$$
+$$(\forall H \in \operatorname{Nat}\left(\right), (1 < H) \implies ((1 \le \operatorname{K}\left(H\right) \land H \le \operatorname{fib}\left(\operatorname{K}\left(H\right)+4\right) \land (\forall j \in \operatorname{Nat}\left(\right), ((1 \le j \land H \le \operatorname{fib}\left(j+4\right))) \implies (\operatorname{K}\left(H\right) \le j)) \land (\forall k \in \operatorname{Nat}\left(\right), (\forall c \in \operatorname{Nat}\left(\right), ((k = \operatorname{K}\left(H\right) \lor k = \operatorname{K}\left(H\right)+1)) \implies ((\operatorname{descending}\left(\operatorname{Z}\left(H, c\right)\right) \land (\forall i \in \operatorname{Nat}\left(\right), (\operatorname{member}\left(i, \operatorname{Z}\left(H, c\right)\right)) \implies ((3 \le i \land i \le \operatorname{K}\left(H\right)+3))) \land \operatorname{sumFib}\left(\operatorname{Z}\left(H, c\right)\right) = \operatorname{t}\left(H, c\right) \land \operatorname{countR}\left(\operatorname{W}\left(H, k, c\right)\right) = k \land \operatorname{countG}\left(\operatorname{W}\left(H, k, c\right)\right) = \operatorname{length}\left(\operatorname{Z}\left(H, c\right)\right) \land \operatorname{countG}\left(\operatorname{W}\left(H, k, c\right)\right) \le \operatorname{Gamma}\left(H\right) \land (\forall v \in \operatorname{NatPair}\left(\right), (\operatorname{q}\left(\operatorname{Run}\left(\operatorname{W}\left(H, k, c\right), v\right)\right) = \operatorname{q}\left(\operatorname{iterateR}\left(k, v\right)\right)+\operatorname{t}\left(H, c\right) \land \operatorname{gcd}\left(\operatorname{q}\left(\operatorname{Run}\left(\operatorname{W}\left(H, k, c\right), v\right)\right), H\right) = \operatorname{gcd}\left(\operatorname{q}\left(\operatorname{iterateR}\left(k, v\right)\right)+c, H\right))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/SourceCoordinates/PositiveProbeCompiler.effective_short_compiler` (`✓ std3`). ∎
 
