@@ -124,7 +124,8 @@ private theorem exponential_eigenvector {E : Type*} [NormedAddCommGroup E]
     funext n
     simp only [map_smul, ContinuousLinearMap.apply_apply, hp, smul_smul, smul_eq_mul]
   rw [heq] at hF
-  exact hF.unique (by simpa only [← Complex.exp_eq_exp_ℂ] using hμ)
+  rw [← Complex.exp_eq_exp_ℂ] at hμ
+  exact hF.unique hμ
 
 private theorem projected_log_trace
     (G P : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
@@ -192,9 +193,9 @@ private theorem endpoint_kernel :
     have := congrArg (fun X : Matrix (Fin 3) (Fin 3) ℂ => X 0 0) h
     norm_num [Matrix.single] at this
   · ext i j
+    unfold wernerHolevo Matrix.transposeLinearEquiv
     fin_cases i <;> fin_cases j <;>
-      norm_num [wernerHolevo, Matrix.trace, Matrix.single, Matrix.one_apply,
-        Matrix.transposeLinearEquiv]
+      norm_num [Matrix.trace, Matrix.single, Matrix.one_apply]
 
 private theorem endpoint_not_exp
     (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) :
@@ -225,9 +226,9 @@ private theorem sector_trace_hamiltonian (H : Matrix (Fin 3) (Fin 3) ℂ) :
     symmetricTrace (hamiltonianMap H) - 5 * antisymmetricTrace (hamiltonianMap H) = 0 := by
   unfold symmetricTrace antisymmetricTrace
   rw [matrix_supertrace, matrix_supertrace]
-  simp [symmetricProjection, antisymmetricProjection, hamiltonianMap,
-    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
-    Matrix.one_apply, Matrix.transposeLinearEquiv, Complex.mul_re, Complex.mul_im]
+  unfold symmetricProjection antisymmetricProjection hamiltonianMap Matrix.transposeLinearEquiv
+  simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
+    Matrix.one_apply, Complex.mul_re, Complex.mul_im]
   ring
 
 private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
@@ -238,9 +239,9 @@ private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
         Complex.normSq (V 1 2 + V 2 1)) := by
   unfold symmetricTrace antisymmetricTrace
   rw [matrix_supertrace, matrix_supertrace]
-  simp [symmetricProjection, antisymmetricProjection, dissipatorMap,
-    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
-    Matrix.one_apply, Matrix.transposeLinearEquiv, Complex.mul_re, Complex.mul_im,
+  unfold symmetricProjection antisymmetricProjection dissipatorMap Matrix.transposeLinearEquiv
+  simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
+    Matrix.one_apply, Complex.mul_re, Complex.mul_im,
     Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
   norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
     Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
@@ -252,17 +253,25 @@ private theorem gksl_trace_inequality
   obtain ⟨m, H, V, _, hform⟩ := hG
   have hG : G = hamiltonianMap H + ∑ k, dissipatorMap (V k) := by
     ext X i j
-    simpa [hamiltonianMap, dissipatorMap, Matrix.mul_assoc] using
-      congrArg (fun Y => Y i j) (hform X)
+    unfold hamiltonianMap dissipatorMap
+    simpa [Matrix.mul_assoc] using congrArg (fun Y => Y i j) (hform X)
   rw [hG]
   have hS : symmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
       symmetricTrace (hamiltonianMap H) + ∑ k, symmetricTrace (dissipatorMap (V k)) := by
-    simp only [symmetricTrace, ← Module.End.mul_eq_comp, add_mul, Finset.sum_mul,
+    unfold symmetricTrace
+    change (LinearMap.trace ℂ _
+      ((hamiltonianMap H + ∑ k, dissipatorMap (V k)) * symmetricProjection)).re = _
+    simp only [add_mul, Finset.sum_mul,
       map_add, map_sum, Complex.add_re, Complex.re_sum]
+    simp only [Module.End.mul_eq_comp]
   have hA : antisymmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
       antisymmetricTrace (hamiltonianMap H) + ∑ k, antisymmetricTrace (dissipatorMap (V k)) := by
-    simp only [antisymmetricTrace, ← Module.End.mul_eq_comp, add_mul, Finset.sum_mul,
+    unfold antisymmetricTrace
+    change (LinearMap.trace ℂ _
+      ((hamiltonianMap H + ∑ k, dissipatorMap (V k)) * antisymmetricProjection)).re = _
+    simp only [add_mul, Finset.sum_mul,
       map_add, map_sum, Complex.add_re, Complex.re_sum]
+    simp only [Module.End.mul_eq_comp]
   rw [hS, hA]
   have hham := sector_trace_hamiltonian H
   have hsum : 0 ≤ ∑ k, (symmetricTrace (dissipatorMap (V k)) -
@@ -281,8 +290,9 @@ private theorem gksl_trace_inequality
 
 private theorem generatorExp_commute
     (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) : Commute G (generatorExp G) := by
+  unfold generatorExp
   apply (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3))).injective
-  simp only [map_mul, generatorExp, AlgEquiv.apply_symm_apply]
+  simp only [map_mul, AlgEquiv.apply_symm_apply]
   exact (Commute.refl _).exp_right.eq
 
 private theorem gksl_trace_zero
@@ -300,9 +310,9 @@ private theorem gksl_trace_zero
 private theorem wernerHolevo_one (x : ℝ) :
     wernerHolevo x (1 : Matrix (Fin 3) (Fin 3) ℂ) = 1 := by
   ext i j
+  unfold wernerHolevo Matrix.transposeLinearEquiv
   fin_cases i <;> fin_cases j <;>
-    norm_num [wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
-      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+    norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.one_apply] <;> ring
 
 private theorem generator_unital (x : ℝ) (hx : x ≠ 0)
     (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G)
@@ -339,7 +349,8 @@ private theorem generator_transpose (x : ℝ) (hx : x ≠ 0)
   have ht := gksl_trace_zero G hG X
   ext i j
   have hij := congrArg (fun Y : Matrix (Fin 3) (Fin 3) ℂ => Y i j) hh
-  simp [wernerHolevo, ht, h1, Matrix.transposeLinearEquiv] at hij
+  unfold wernerHolevo Matrix.transposeLinearEquiv at hij
+  simp [ht, h1] at hij
   exact hij.resolve_right hx
 
 private theorem generator_projection_commute (x : ℝ) (hx : x ≠ 0)
@@ -351,47 +362,49 @@ private theorem generator_projection_commute (x : ℝ) (hx : x ≠ 0)
   have hT := generator_transpose x hx G hG hexp
   constructor
   · ext X i j
-    simp [symmetricProjection, Matrix.transposeLinearEquiv, h1, ht, hT]
+    unfold symmetricProjection Matrix.transposeLinearEquiv
+    simp [h1, ht, hT]
   · ext X i j
-    simp [antisymmetricProjection, Matrix.transposeLinearEquiv, hT]
+    unfold antisymmetricProjection Matrix.transposeLinearEquiv
+    simp [hT]
 
 private theorem symmetricProjection_idempotent : IsIdempotentElem symmetricProjection := by
   ext X i j
+  unfold symmetricProjection Matrix.transposeLinearEquiv
   fin_cases i <;> fin_cases j <;>
-    norm_num [symmetricProjection, Matrix.trace, Fin.sum_univ_succ,
-      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+    norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.one_apply] <;> ring
 
 private theorem antisymmetricProjection_idempotent : IsIdempotentElem antisymmetricProjection := by
   ext X i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [antisymmetricProjection, Matrix.transposeLinearEquiv] <;> ring
+  unfold antisymmetricProjection Matrix.transposeLinearEquiv
+  fin_cases i <;> fin_cases j <;> norm_num <;> ring
 
 private theorem symmetricProjection_trace : LinearMap.trace ℂ _ symmetricProjection = 5 := by
   rw [matrix_supertrace]
-  norm_num [symmetricProjection, Matrix.trace, Fin.sum_univ_succ,
-    Matrix.transposeLinearEquiv, Matrix.single, Matrix.one_apply]
+  unfold symmetricProjection Matrix.transposeLinearEquiv
+  norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.single, Matrix.one_apply]
   norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
     Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
 
 private theorem antisymmetricProjection_trace :
     LinearMap.trace ℂ _ antisymmetricProjection = 3 := by
   rw [matrix_supertrace]
-  norm_num [antisymmetricProjection, Fin.sum_univ_succ,
-    Matrix.transposeLinearEquiv, Matrix.single]
+  unfold antisymmetricProjection Matrix.transposeLinearEquiv
+  norm_num [Fin.sum_univ_succ, Matrix.single]
 
 private theorem wernerHolevo_symmetricProjection (x : ℝ) :
     wernerHolevo x * symmetricProjection = (1 - 3 * (x : ℂ) / 2) • symmetricProjection := by
   ext X i j
+  unfold wernerHolevo symmetricProjection Matrix.transposeLinearEquiv
   fin_cases i <;> fin_cases j <;>
-    norm_num [symmetricProjection, wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
-      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+    norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.one_apply] <;> ring
 
 private theorem wernerHolevo_antisymmetricProjection (x : ℝ) :
     wernerHolevo x * antisymmetricProjection = (1 - (x : ℂ) / 2) • antisymmetricProjection := by
   ext X i j
+  unfold wernerHolevo antisymmetricProjection Matrix.transposeLinearEquiv
   fin_cases i <;> fin_cases j <;>
-    norm_num [antisymmetricProjection, wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
-      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+    norm_num [Matrix.trace, Fin.sum_univ_succ, Matrix.one_apply] <;> ring
 
 private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
     (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
@@ -418,8 +431,10 @@ private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
   rw [symmetricProjection_trace] at hTS
   rw [antisymmetricProjection_trace] at hTA
   constructor
-  · simpa [symmetricTrace, Module.End.mul_eq_comp] using hTS
-  · simpa [antisymmetricTrace, Module.End.mul_eq_comp] using hTA
+  · unfold symmetricTrace
+    simpa [Module.End.mul_eq_comp] using hTS
+  · unfold antisymmetricTrace
+    simpa [Module.End.mul_eq_comp] using hTA
 
 private theorem strict_log_inequality (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3) :
     5 * Real.log (1 - 3 * x / 2) < 15 * Real.log (1 - x / 2) := by
