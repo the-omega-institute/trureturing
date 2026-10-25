@@ -153,7 +153,16 @@ private theorem asynchronous_radius :
     (5 / 4 : ℂ) hmem
 
 private theorem not_q1 : ¬ Q1 := by
-  sorry
+  intro h
+  have hbound := h 2 sizes 1 baseMatrix delays (1 / 2) witness_admissible
+  have hroot : (1 / 2 : ℝ) ^ ((1 : ℝ) / (1 + 1)) ≤ 1 :=
+    Real.rpow_le_one (by norm_num) (by norm_num) (by norm_num)
+  have hbound' : radius (asyncMatrix baseMatrix delays 1) ≤
+      ENNReal.ofReal ((1 / 2 : ℝ) ^ ((1 : ℝ) / (1 + 1))) := by
+    simpa only [Nat.cast_one] using hbound
+  have hbad := asynchronous_radius.trans
+    (hbound'.trans (ENNReal.ofReal_le_ofReal hroot))
+  norm_num at hbad
 
 private theorem not_q2 : ¬ Q2 := by
   sorry
