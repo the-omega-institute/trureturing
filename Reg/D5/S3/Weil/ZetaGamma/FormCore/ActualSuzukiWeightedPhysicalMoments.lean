@@ -103,7 +103,11 @@ private theorem indicator_excess_integrable :
       (Ioi Real.pi) := by
   have hU := indicator_h6
   have hs := (memLp_two_iff_integrable_sq_norm hU.1.aestronglyMeasurable).1 hU.1
-  simpa only [sub_mul, one_mul] using hU.2.sub hs
+  have hd := hU.2.sub hs
+  change Integrable
+    (fun x : ℝ => (x / Real.pi) ^ (6 : ℕ) * ‖indicatorInput x‖ ^ 2 -
+      ‖indicatorInput x‖ ^ 2) (volume.restrict (Ioi Real.pi)) at hd
+  simpa only [IntegrableOn, sub_mul, one_mul] using hd
 
 private theorem excess_weight_pos {x : ℝ} (hx : Real.pi < x) :
     0 < (x / Real.pi) ^ (6 : ℕ) - 1 := by
