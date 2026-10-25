@@ -149,8 +149,8 @@ private lemma density_one (t : ℝ) : density 1 1 1 t = 2*besselK 0 (2*sqrt t) :
 
 private lemma bessel_mix (t : ℝ) (ht : 0<t) :
     2*besselK 0 (2*sqrt t) = ∫ s in Ioi 0, s⁻¹ * kernel t s := by
-  have hr : 0 < sqrt t := sqrt_pos.mpr ht
-  have hne := ne_of_gt hr
+  have hr : 0 < sqrt t := sqrt_pos_of_pos ht
+  have hne := sqrt_ne_zero'.mpr ht
   have hs : (sqrt t)^2 = t := sq_sqrt ht.le
   have hp (x : ℝ) :
       exp x * ((exp x)⁻¹ * kernel t (exp x)) = exp (-exp x-t/exp x) := by
@@ -253,7 +253,7 @@ private lemma exp_scaled_bounds (y : ℝ) (hy : 0≤y) (hy' : y≤32)
     exp (-y) ≤ (poly (-y/32) + err (-y/32))^32 := by
   have h := Real.exp_bound (x := -y/32) (n := 6) (by rw [abs_of_nonpos (by linarith)]; linarith) (by norm_num)
   change |exp (-y/32)-poly (-y/32)| ≤ err (-y/32) at h
-  have hl : poly (-y/32)-err (-y/32) ≤ exp (-y/32) := by linarith [(abs_sub_le_iff.mp h).2]
+  have hl : poly (-y/32)-err (-y/32) ≤ exp (-y/32) := by exact sub_le_of_abs_sub_le_left h
   have hh : exp (-y/32) ≤ poly (-y/32)+err (-y/32) := by linarith [(abs_sub_le_iff.mp h).1]
   have he : exp (-y/32)^32 = exp (-y) := by rw [← exp_nat_mul]; congr 1; norm_num; ring
   constructor
@@ -701,7 +701,7 @@ private lemma upper_cell (k : ℕ) (hk : k<96) (s : ℝ)
   apply le_trans _ (upper_certificate k hk hk8)
   by_cases hk7 : k≤7
   · have hb : (((k:ℝ)+1)/12)^2 ≤ (1/2:ℝ) := by
-      have : (k:ℝ)≤7 := by exact_mod_cast hk7
+      have : (k:ℝ)≤7 := by exact Nat.cast_le_ofNat.mpr hk7
       have := Nat.cast_nonneg (α := ℝ) k
       nlinarith [sq_nonneg ((k:ℝ)-7)]
     have hp : s*(((k:ℝ)+1)/12) ≤ (1/2:ℝ) := by
@@ -715,7 +715,7 @@ private lemma upper_cell (k : ℕ) (hk : k<96) (s : ℝ)
   · have hk9 : 9≤k := by omega
     have ha : 0<(k:ℝ)/12 := by positivity
     have hp : (1/2:ℝ)≤((k:ℝ)/12)^2 := by
-      have : 9≤(k:ℝ) := by exact_mod_cast hk9
+      have : 9≤(k:ℝ) := by exact Nat.ofNat_le_cast.mpr hk9
       nlinarith [sq_nonneg ((k:ℝ)-9)]
     have h := kernel_dec (1/2) ((k:ℝ)/12) s ha hs.1.le
       (hp.trans (by nlinarith [mul_nonneg (sub_nonneg.mpr hs.1.le) ha.le]))
