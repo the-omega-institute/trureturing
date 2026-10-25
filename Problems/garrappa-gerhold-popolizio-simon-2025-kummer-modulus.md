@@ -19,7 +19,7 @@ DOI 10.1016/j.jmaa.2025.129588, arXiv:2410.11852v4, Remark 6:
 
 > In view of the preceding result and Remark 2, one may ask if for all α, β > 0 one has |M(α, α−β, z)| ≥ M(α, α−β, ℜz), z ∈ ℂ. (2.4) … In particular, (2.4) holds globally for α > 1 ≥ β > 0 … The question whether (2.4) holds globally for all α, β > 0 seems to be still open.
 
-Remark 2(a) identifies M as M as "a Kummer confluent hypergeometric function": M(a, b, z) = Σ_{n≥0} (a)_n z^n / ((b)_n n!), b ∉ {0, −1, −2, …}.
+Remark 2(a) identifies M as "a Kummer confluent hypergeometric function": M(a, b, z) = Σ_{n≥0} (a)_n z^n / ((b)_n n!), b ∉ {0, −1, −2, …}.
 
 The verified locators are Remark 6 and Remark 2(a) of v4; a page number
 is not asserted from the supplied extract.

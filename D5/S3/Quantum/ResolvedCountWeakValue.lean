@@ -13,7 +13,8 @@ inputAmplitude_smul: proof_shape: bind-only; escape_witness: none.
   Consumers: ResolvedCountWeakValue.M4, ResolvedCountWeakValue.inputAmplitude_mul, ResolvedCountWeakValue.insertion_ratio_scaling.
 weighted_exp_hasSum: proof_shape: bind-only; escape_witness: none.
   Direct frozen dependencies: none.
-  Consumers: ResolvedCountWeakValue.numberExponential_inner.
+  Consumers: ResolvedCountWeakValue.numberExponential_inner;
+    KummerModulusLowerBound.Result.second_exp_hasSum; KummerModulusLowerBound.Result.complex_closed.
 numberExponential_inner: proof_shape: bind-only; escape_witness: none.
   Direct frozen dependencies: D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.exponentialCoeff sha256:cb182c9ed363d82cfb0d430c863be611cfb70e76a948f78891550d474d0afa6d; D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.exponentialVector sha256:418ab9c15b2602b221e2546f26ebe3b3556b537c07e53e72f2e1dc326149453f.
   Consumers: ResolvedCountWeakValue.createdSingle_inner.
