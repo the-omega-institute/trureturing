@@ -715,8 +715,16 @@ class NativeColdPublicationTests:
         # Restoring compiler outputs must leave all project/report work cold.
         self.run_lake('--no-build', '-d', 'tools/lean-inspector', 'build',
                       'reportInspector', 'inputDiscovery')
-        for package in [self.root, self.root / 'Reg']:
-            self.assertFalse((package / '.lake/build/lib/lean').exists())
+        # The compiler library shares the root Lean directory. Its exact
+        # inventory must be restored, with no project-owned modules mixed in.
+        library = self.root / '.lake/build/lib/lean'
+        self.assertEqual({str(path.relative_to(library)) for path in library.rglob('*.olean')}, {
+            'Inspector.olean', 'LeanInformationAudit/RawArtifacts.olean',
+            'LeanInformationAudit/CompiledMetadata.olean', 'LeanInformationAudit/CompiledAxioms.olean',
+            'LeanInformationAudit/Contract/SourceAudit.olean', 'LeanInformationAudit/Contract/Literal.olean',
+            'LeanInformationAudit/Sha256.olean', 'LeanInformationAudit/Contract/InputDiscovery.olean'})
+        self.assertFalse((self.root / '.lake/build/reg').exists())
+        self.assertFalse((self.root / 'Reg/.lake/build').exists())
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
         self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         for name in before:
