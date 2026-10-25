@@ -43,6 +43,8 @@ class NativeFixture(unittest.TestCase):
         try:
             returned = super().run(result)
             completed = True
+            if self.fixture_interrupted:
+                returned.stop()
             published_failure = any(test is self or getattr(test, "test_case", None) is self
                                     for test, _ in returned.failures + returned.errors + returned.skipped
                                     + getattr(returned, "expectedFailures", []))
