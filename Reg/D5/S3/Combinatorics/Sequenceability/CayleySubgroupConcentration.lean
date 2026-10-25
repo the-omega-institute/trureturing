@@ -70,10 +70,11 @@ private theorem signedBit_ne : signedBit.{u} ≠ 0 := by
   norm_num [signedBit] at this
 
 private def unitBit : EuclideanSpace ℝ Bit.{u} :=
-  ‖signedBit‖⁻¹ • signedBit
+  ‖signedBit.{u}‖⁻¹ • signedBit.{u}
 
 private theorem unitBit_norm : ‖unitBit.{u}‖ = 1 := by
-  simp [unitBit, norm_smul, inv_mul_cancel₀ (norm_ne_zero_iff.mpr signedBit_ne)]
+  rw [unitBit, norm_smul, Real.norm_of_nonneg (inv_nonneg.mpr (norm_nonneg _))]
+  exact inv_mul_cancel₀ (norm_ne_zero_iff.mpr signedBit_ne.{u})
 
 private theorem unitBit_mean : (∑ g : Bit.{u}, unitBit g) = 0 := by
   simp [unitBit, ← Finset.mul_sum, signedBit_mean]
@@ -91,7 +92,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 def family : Registration arena.{u} (type_of% (@near_invariant_localization.{u})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨near_invariant_localization, rejected, rejected_law⟩
+  variation := ⟨by
+    intro K g f T hT β hβ0 hβ v hv hm hc
+    exact near_invariant_localization T hT β hβ0 hβ v hv hm hc,
+    rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -104,13 +108,18 @@ def family : Registration arena.{u} (type_of% (@near_invariant_localization.{u})
     intro i
     let p : Params.{u} := ⟨Bit, inferInstance, inferInstance, Finset.univ⟩
     refine ⟨p, ⊥, ⊤, ?_⟩
+    have htop : Fintype.card (⊤ : Subgroup Bit.{u}) = 2 := by
+      rw [← Nat.card_eq_fintype_card, Subgroup.card_top, Nat.card_eq_fintype_card]
+      simp [Bit]
     intro he
-    norm_num [actual, realize, p, retained] at he
+    norm_num [actual, realize, p, retained, htop] at he
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@near_invariant_localization.{u}) (Realization signature.{u})
     (type_of% (@Subgroup.{u})) Unit where
-  unitName := `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.near_invariant_localization.__information_unit
+  unitName := .str
+    `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.near_invariant_localization
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.family
   realizationSource := none
   generated := false
