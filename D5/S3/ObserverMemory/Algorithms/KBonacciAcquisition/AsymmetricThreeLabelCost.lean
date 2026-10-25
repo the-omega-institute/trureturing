@@ -214,7 +214,9 @@ private theorem archive_correct {Y : Type z} (g u p h r : ℕ)
         (List.replicate (h-1) ((fun _ : Fin (g*u) => false),some (v+c)) ++
           [(pulse g u (HB.image (r+·)),some (v+c+b))]) := by
     simp only [words,List.cons_append,scriptArchive,root,endpointReading]
-    rw [FiveLabelSeamCost.zero_script (g*p-1) (g*u) (by omega) hm short (h-1)]
+    rw [FiveLabelSeamCost.zero_script (g*p-1) (g*u) (by omega) hm short (h-1)
+      [pulse g u (HB.image (r+·))] (v+c)
+      (-((j*g : ℕ) : ZMod (g*p-1+1))+(g*u : ℕ)) 0 (by omega)]
     simp only [ite_self,phase,scriptArchive,final,endpointReading]
     rfl
   rw [issued]
@@ -379,7 +381,7 @@ theorem original_asymmetric_three_label_cost {Y : Type z} (g u p h r : ℕ)
       have script := original_final_script k m (by omega) (words g u h r HB HC) read w (some v) []
       dsimp only at script
       have length : (words g u h r HB HC).length=h+1 := by
-        simp only [words,List.length_cons,List.length_append,List.length_replicate,List.length_singleton]
+        simp only [words,List.length_cons,List.length_append,List.length_replicate,List.length_nil]
         omega
       have trace := (FullPositiveWindowPrice.trace_congr π
         (finalSelector 0 (words g u h r HB HC) read) (some v) (by intro ar; rfl)
@@ -390,6 +392,7 @@ theorem original_asymmetric_three_label_cost {Y : Type z} (g u p h r : ℕ)
       exact ⟨_,trace,script.2.2.1.trans length,le_rfl⟩
   refine ⟨le_antisymm (iInf_le_of_le ⟨h+1,upper⟩ le_rfl) lowerBound,?_⟩
   symm
+  have subtract : p+u-1+1=p+u := by omega
   apply Nat.div_eq_of_lt_le <;> nlinarith
 
 #print axioms original_asymmetric_three_label_cost
