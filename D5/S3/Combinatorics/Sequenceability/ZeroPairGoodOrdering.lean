@@ -98,8 +98,8 @@ private theorem two_prefix_order (a : ι → G) (ha : Function.Injective a)
       have he (v : G) : (∑ y ∈ C.erase x, a y) - (v - a x) =
           (∑ y ∈ C, a y) - v := by rw [hsum]; abel
       simp only [he]
-      exact hmiss.imp (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
-        (fun h hh => h (Finset.image_mono (erase_subset x C) hh))
+      exact hmiss.imp (fun h hh => h (Finset.image_mono a (erase_subset x C) hh))
+        (fun h hh => h (Finset.image_mono a (erase_subset x C) hh))
     obtain ⟨w, hw, hp⟩ := ih (C.erase x) (erase_ssubset hx) (f-a x) (g-a x) hm
     have hwn : w.Nodup := hw.nodup_iff.mpr (C.erase x).nodup_toList
     have hxn : x ∉ w := by
@@ -183,7 +183,7 @@ private theorem strong_of_zero_free (a : ι → G) (C : Finset ι)
     simp only [← List.map_take, ← List.map_drop, List.take_take,
       Nat.min_eq_left hij', List.drop_take] at hs
     change pfx a w i + (v.map a).sum = pfx a w j at hs
-    exact nonzero_list a C hz hvn hv hvC (by rw [he] at hs; exact add_left_cancel (by simpa using hs))
+    exact nonzero_list a C hz hvn hv hvC (by rw [he] at hs; simpa using hs)
   intro i j hi hj he
   by_contra h
   rcases lt_or_gt_of_ne h with hij | hji
@@ -420,7 +420,7 @@ private theorem exceptional_order (a : ι → G) (ha : Function.Injective a)
       apply hf
       simp only [pfx, List.take_succ_cons, List.map_cons, List.sum_cons, hat, hwSum] at he
       change pfx a w i = _
-      calc pfx a w i = (-a c+a s) - (-a s) := eq_sub_iff_add_eq.mpr (by simpa [pfx, add_comm] using he)
+      calc pfx a w i = (-a c+a s) - (-a s) := eq_sub_iff_add_eq.mpr (by simpa [pfx, add_comm, sub_eq_add_neg] using he)
            _ = _ := by abel)
   have hfullStrong : Strong a (((t :: w) ++ [s]) ++ [c]) := strong_append a htsStrong (by
     intro i hi he
