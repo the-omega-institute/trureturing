@@ -6,7 +6,6 @@
    utility: none
    digest: Neither seven-state bipartite walk transfers the sixth coordinate state to the first. -/
 
-import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Analysis.Complex.Norm
