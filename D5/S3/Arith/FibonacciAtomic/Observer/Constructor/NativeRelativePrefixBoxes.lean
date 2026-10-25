@@ -77,8 +77,7 @@ private theorem cost_gap (q : Address) (i : Nat) :
       | zero => simp
       | succ i =>
           have h := ih i
-          cases a <;> simp [List.drop_succ_cons, pathCost, Nat.min_add_add_right,
-            Nat.min_comm] at * <;> omega
+          cases a <;> simp [List.drop_succ_cons, pathCost, Nat.min_comm] at * <;> omega
 
 private theorem last_cons (a : Bool) (r : Address) (hr : r ≠ []) :
     lastRight (a :: r) = lastRight r := by
@@ -103,7 +102,9 @@ private theorem descriptor_collision (q : Address) (i j : Nat) (b c : Bool)
           | zero => omega
           | succ j =>
               have h := ih i j (by simpa using hi) (by simpa using hj) (by omega)
-              simpa [descriptor, DoubleAt, Nat.succ_eq_add_one, Nat.add_assoc] using h
+              simpa only [descriptor, List.drop_succ_cons, DoubleAt, List.length_cons,
+                List.getElem?_cons_succ, Nat.succ_eq_add_one, Nat.add_lt_add_iff_right,
+                Nat.add_left_inj] using h
       | zero =>
           cases j with
           | zero => omega
@@ -133,21 +134,23 @@ private theorem descriptor_collision (q : Address) (i j : Nat) (b c : Bool)
                   have := hd.1
                   cases q <;> simp_all
                 subst a
-                simp [descriptor, leafFactor, pathCost, hn, last_cons false q hn]
+                simp [descriptor, leafFactor, pathCost, hn, last_cons false q hn, Nat.add_comm]
 
 private theorem double_descriptors (q : Address) (i : Nat) (h : DoubleAt q i)
     (j : Nat) (b : Bool) (hj : j ≤ q.length) :
     descriptor q j b = descriptor q i false ↔
       (j = i ∧ b = false) ∨ (j = i+1 ∧ b = true) := by
-  have hi : i ≤ q.length := by have := h.1; omega
+  have hi1 : i+1 < q.length := h.1
+  have hi : i ≤ q.length := by omega
   have pair := (descriptor_collision q i (i+1) false true hi (by omega) (by omega)).mpr
     ⟨rfl,rfl,rfl,h⟩
   constructor
   · intro he
-    rcases lt_trichotomy j i with hlt | rfl | hgt
+    rcases lt_trichotomy j i with hlt | hji | hgt
     · have hc := (descriptor_collision q j i b false hj hi hlt).mp he
       cases hc.2.1
-    · exact Or.inl ⟨rfl,(same_position q i b false).mp he⟩
+    · subst j
+      exact Or.inl ⟨rfl,(same_position q i b false).mp he⟩
     · have hc := (descriptor_collision q i j false b hi hj hgt).mp he.symm
       exact Or.inr ⟨hc.2.2.1,hc.2.1⟩
   · rintro (⟨rfl,rfl⟩ | ⟨rfl,rfl⟩)
@@ -170,10 +173,11 @@ private theorem descriptor_class (q : Address) (i : Nat) (b : Bool)
     intro j hj c
     constructor
     · intro he
-      rcases lt_trichotomy j i with hlt | rfl | hgt
+      rcases lt_trichotomy j i with hlt | hji | hgt
       · have hc := (descriptor_collision q j i c b hj hi hlt).mp he
-        exact (hd ⟨j,hc.2.2.2,by rw [he, hc.1]⟩).elim
-      · exact ⟨rfl,(same_position q i c b).mp he⟩
+        exact (hd ⟨j,hc.2.2.2,he.symm.trans (by rw [hc.1])⟩).elim
+      · subst j
+        exact ⟨rfl,(same_position q i c b).mp he⟩
       · have hc := (descriptor_collision q i j b c hi hj hgt).mp he.symm
         exact (hd ⟨i,hc.2.2.2,by rw [hc.1]⟩).elim
     · rintro ⟨rfl,rfl⟩; rfl
@@ -239,7 +243,10 @@ private theorem spine_cylinder (a : Address) (d : Nat) (t : Source)
     (ha : a.length < d) (ht : Canonical (d-a.length) t) :
     Canonical d (spine a t) ∧ readout a (spine a t) = readout [] t := by
   induction a generalizing d with
-  | nil => simpa [spine] using And.intro ht rfl
+  | nil =>
+      constructor
+      · simpa [spine] using ht
+      · rfl
   | cons b a ih =>
       cases d with
       | zero => simp at ha
@@ -247,9 +254,13 @@ private theorem spine_cylinder (a : Address) (d : Nat) (t : Source)
           have h := ih d (by simp at ha; omega) (by simpa using ht)
           have hd : 0 < d := by simp at ha; omega
           have alpha : Canonical d (.of true) := by cases d <;> simp_all [Canonical]
-          cases b <;> simpa [spine, List.foldr, Canonical, readout] using
-            (show (Canonical d (spine a t) ∧ Canonical d (.of true)) ∧
-              readout a (spine a t) = readout [] t from ⟨⟨h.1,alpha⟩,h.2⟩)
+          cases b
+          · simpa [spine, List.foldr, Canonical, readout] using
+              (show (Canonical d (spine a t) ∧ Canonical d (.of true)) ∧
+                readout a (spine a t) = readout [] t from ⟨⟨h.1,alpha⟩,h.2⟩)
+          · simpa [spine, List.foldr, Canonical, readout] using
+              (show (Canonical d (.of true) ∧ Canonical d (spine a t)) ∧
+                readout a (spine a t) = readout [] t from ⟨⟨alpha,h.1⟩,h.2⟩)
 
 private theorem cylinders_attained (d : Nat) (q : Address) (hq : q.length < d) :
     (∀ i : Nat, i ≤ q.length → ∀ b : Bool,
@@ -281,7 +292,7 @@ private theorem path_edge (d : Nat) (q : Address) (hq : q.length < d)
   have hd : 0 < d := by omega
   have hi : i < q.length := by have := h.1; omega
   have take : q.take (i+1) = q.take i ++ [false] := by
-    rw [List.take_succ, h.2]; rfl
+    rw [List.take_add_one, h.2]; rfl
   have e := (scalarReadout d hd u).property.2 (q.take i) false
     (by simp [List.length_take]; omega)
   simpa [NativeConstructorArrays.scalarReadout, extend, List.length_take,
@@ -365,9 +376,9 @@ private theorem classify_level (d : Nat) (q : Address) (hq : q.length < d)
   have witnesses := cylinders_attained d q hq
   rcases actual_blocker q u.val with ⟨hz,hr⟩ | ⟨i,hi,b,hr,hg⟩
   · have he : z = (0,false) := hu.symm.trans hz
-    subst z
+    rw [he]
     left
-    refine ⟨rfl,gamma_zero q,?_⟩
+    refine ⟨rfl,(fun v => gamma_zero q v.val),?_⟩
     ext y
     constructor
     · rintro ⟨v,hv,rfl⟩
@@ -378,7 +389,7 @@ private theorem classify_level (d : Nat) (q : Address) (hq : q.length < d)
       obtain ⟨v,hv⟩ := witnesses.2
       exact ⟨v,(gamma_zero q v.val).mpr hv,hv⟩
   · have he : z = descriptor q i b := hu.symm.trans hg
-    subst z
+    rw [he]
     rcases descriptor_class q i b hi with hs | ⟨k,hk,he,hc⟩
     · right; left
       refine ⟨i,b,hi,hs,level_single d q i b hi hs,?_⟩
@@ -456,10 +467,11 @@ private theorem predict_shift (a : Bool) (q : Address) (k : Nat) :
       split_ifs <;> omega
   | cons b q =>
       have hp : 0 < pathCost (b :: q) := by cases b <;> simp [pathCost] <;> omega
-      cases a <;> simp only [leafFactor, List.cons_ne_nil, ↓reduceIte,
-        last_cons _ _ (by simp), pathCost, Bool.false_eq_true, if_false, if_true,
-        Nat.add_zero]
-      all_goals unfold predict; split_ifs <;> simp_all <;> omega
+      have cost : pathCost (a :: b :: q) = (if a then 2 else 1) + pathCost (b :: q) := rfl
+      simp only [leafFactor, List.cons_ne_nil, ↓reduceIte]
+      rw [cost, last_cons a (b :: q) (by simp)]
+      cases a <;> simp only [Bool.false_eq_true, ite_false, ite_true, Nat.add_zero]
+      all_goals unfold predict; simp only [Prod.fst,Prod.snd]; split_ifs <;> simp_all <;> omega
 
 private theorem atomic_trajectory (q : Address) (k : Nat) :
     readout q (substitution^[k] (.of true)) = predict (leafFactor q true) k := by
@@ -476,7 +488,10 @@ private theorem atomic_trajectory (q : Address) (k : Nat) :
       cases k with
       | zero =>
           have hp : 0 < pathCost (a :: q) := by cases a <;> simp [pathCost] <;> omega
-          simp [readout, predict, leafFactor]; omega
+          change Reply.absent = predict (leafFactor (a :: q) true) 0
+          unfold predict leafFactor
+          simp only [Prod.fst,Prod.snd]
+          split_ifs <;> omega
       | succ k => cases k with
         | zero =>
             cases q with
@@ -484,16 +499,23 @@ private theorem atomic_trajectory (q : Address) (k : Nat) :
             | cons b q =>
                 have hp : 2 ≤ pathCost (a :: b :: q) := by
                   cases a <;> cases b <;> simp [pathCost] <;> omega
-                simp [readout, predict, leafFactor]; omega
+                change Reply.absent = predict (leafFactor (a :: b :: q) true) 1
+                unfold predict leafFactor
+                simp only [Prod.fst,Prod.snd]
+                split_ifs <;> omega
         | succ k =>
             rw [show k+1+1 = k+2 by omega, NativeRankedEqualityCompiler.atomic_pair,
               predict_shift]
-            cases a <;> simpa [readout] using ih _
+            cases a
+            · change readout q (substitution^[k+1] (.of true)) = _
+              exact ih (k+1)
+            · change readout q (substitution^[k] (.of true)) = _
+              exact ih k
 
 private theorem beta_decoder (q : Address) (k : Nat) :
     predict (leafFactor q true) (k+1) = predict (leafFactor q false) k := by
   cases q with
-  | nil => simp [predict, leafFactor, pathCost]; split_ifs <;> omega
+  | nil => simp [predict, leafFactor, pathCost]
   | cons a q =>
       have hp : 0 < pathCost (a :: q) := by cases a <;> simp [pathCost] <;> omega
       unfold predict leafFactor
@@ -508,22 +530,18 @@ private theorem native_trajectory (q : Address) (u : Source) (k : Nat) :
       | of b => cases b with
         | true => exact atomic_trajectory [] k
         | false =>
-            have shift : substitution^[k] (.of false) = substitution^[k+1] (.of true) := by
-              rw [Function.iterate_succ_apply]; rfl
-            rw [shift, atomic_trajectory, beta_decoder]; rfl
+            rw [FiniteMenu.Kernel.beta_shift, atomic_trajectory, beta_decoder]; rfl
       | mul l r =>
-          rw [Function.Semiconj₂.iterate (fun s t => substitution.map_mul s t) k l r]
+          rw [FiniteMenu.Kernel.iter_mul]
           simp [readout, gamma, predict]
   | cons a q ih =>
       cases u with
       | of b => cases b with
         | true => exact atomic_trajectory (a :: q) k
         | false =>
-            have shift : substitution^[k] (.of false) = substitution^[k+1] (.of true) := by
-              rw [Function.iterate_succ_apply]; rfl
-            rw [shift, atomic_trajectory, beta_decoder]; rfl
+            rw [FiniteMenu.Kernel.beta_shift, atomic_trajectory, beta_decoder]; rfl
       | mul l r =>
-          rw [Function.Semiconj₂.iterate (fun s t => substitution.map_mul s t) k l r]
+          rw [FiniteMenu.Kernel.iter_mul]
           cases a <;> simpa [readout, gamma] using ih _
 
 private theorem decoder_injective (z w : Factor)
@@ -536,11 +554,12 @@ private theorem decoder_injective (z w : Factor)
     split_ifs at h₁ h₂ <;> simp_all <;> omega
   apply Prod.ext first
   by_contra h
-  obtain ⟨b,c,rfl⟩ := z
-  obtain ⟨e,f,rfl⟩ := w
+  rcases z with ⟨b,c⟩
+  rcases w with ⟨e,f⟩
   simp only [Prod.fst, Prod.snd] at *
   subst e
-  cases c <;> cases f <;> simp_all
+  cases c <;> cases f <;> simp_all only [Bool.false_eq_true, Bool.true_eq_false,
+    not_true_eq_false, not_false_eq_true, false_implies, true_implies]
   all_goals
     have hs := same (b-2)
     unfold predict at hs
@@ -560,7 +579,7 @@ private theorem factor_guard (q : Address) (u : Source) :
 
 /-- Every attained complete factor has exactly its actual relative prefix box,
 with all cylinders and both collision alternatives realized canonically. -/
-theorem relative_prefix_boxes (d : Nat) (hd : 0 < d) (q : Address)
+theorem relative_prefix_boxes (d : Nat) (q : Address)
     (hq : q.length < d) (z : Factor) (attained : ∃ u : S d, gamma q u.val = z) :
     level d q z = {u : S d | ∀ v : Address, v.IsPrefix q →
       readout v u.val ∈ projection d q v z} ∧
