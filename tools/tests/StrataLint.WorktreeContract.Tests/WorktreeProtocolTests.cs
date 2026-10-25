@@ -288,6 +288,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("pool_return_preserves_post_merge_work_branch_and_cache")]
+    [InlineData("pool_scope_contention_has_no_tree_effect")]
     [InlineData("pool_return_checkpoint_without_native_lock_never_inspects_holders")]
     [InlineData("pool_return_checkpoint_reports_cleared_native_locks")]
     [InlineData("pool_return_requires_join_and_real_merge_evidence")]

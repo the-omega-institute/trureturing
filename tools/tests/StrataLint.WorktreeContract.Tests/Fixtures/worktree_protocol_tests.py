@@ -22,6 +22,7 @@ from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
 from lock_recovery_cases import LockRecoveryCases
+from scoped_dotnet_cases import ScopedDotnetCases
 
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
@@ -30,7 +31,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
@@ -1036,7 +1037,12 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
 
 if __name__ == "__main__":
     NativeFixture.install_interrupt_handler()
-    if len(sys.argv) == 3 and sys.argv[1] == "--initializer":
+    if len(sys.argv) == 5 and sys.argv[1] == "--scoped-dotnet":
+        fixture = ProtocolTests("scoped_dotnet_launch")
+        fixture.scoped_cli, fixture.scoped_mode, fixture.scoped_ambient = sys.argv[2:]
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        sys.exit(0 if result.wasSuccessful() else 1)
+    elif len(sys.argv) == 3 and sys.argv[1] == "--initializer":
         fixture = ProtocolTests("initializer_lifetime")
         fixture.initializer_cli = sys.argv[2]
         result = unittest.TextTestRunner(verbosity=2).run(fixture)

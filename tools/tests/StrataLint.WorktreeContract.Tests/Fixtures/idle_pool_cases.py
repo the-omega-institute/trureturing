@@ -12,6 +12,23 @@ import uuid
 
 
 class IdlePoolCases:
+    def pool_scope_contention_has_no_tree_effect(self):
+        self.pool_return()
+        holder = self.hold("--operation", "idle-pool")
+        for force in (False, True):
+            result = json.loads(self.run_protocol("pool", "--dev", self.base,
+                *(["--force"] if force else []), expect=74).stdout)
+            self.assertEqual("failed", result["status"])
+            self.assertEqual([], result["items"])
+            self.assertEqual("operation:idle-pool", result["failure"]["scope"])
+            self.assertEqual("pool_scope", result["failure"]["stage"])
+            self.assertEqual("busy_scope:operation:idle-pool", result["failure"]["error"])
+            self.assertEqual("refused", result["failure"]["outcome"])
+            self.assertTrue(self.tree.exists())
+        holder.communicate("done\n", timeout=10)
+        result = json.loads(self.run_protocol("pool", "--dev", self.base).stdout)
+        self.assertEqual("succeeded", result["status"])
+
     def pool_github(self, **changes):
         payload = dict(state="MERGED", baseRefName="dev", headRefName=self.branch,
                        headRefOid=self.base, mergeCommit=dict(oid=self.base), autoMergeRequest=None)
