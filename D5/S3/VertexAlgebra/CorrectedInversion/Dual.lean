@@ -1,19 +1,27 @@
-/-
-UNCOMPILED. Finite coordinate inversion of each original Carrier source, with
-coincident integer shifts added. K_L is the existing left dual coefficient;
-K_R retains the distinct right orientation of the same chosen actualForm.
-No symmetry, representability, or fixed-dual finite-charge-support premise.
-Source reconciliation uses native Corr734f7f and pinned SourceMobius d561416f;
-it still depends on the unresolved normal STAGING boundary of NormalReadout.
-No compilation or native full-inversion acceptance is asserted.
--/
+/- GID: D5/S3/VertexAlgebra/CorrectedInversion/Dual
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/CorrectedInversion/Dual
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite original-source coordinate inversion and actual functional-dual identity. -/
 import D5.S3.VertexAlgebra.CorrectedInversion.Corrected
 import D5.S3.VertexAlgebra.SourceMobius.OriginalCarrier
 import D5.S3.VertexAlgebra.TwistedGround.CorrectedDualCoefficient
 
+/-!
+# Finite original-source functional-dual inversion
+
+The coordinate transform uses the original inverse-Gram Sugawara mode 1,
+monomial source weights and finite factorial powers. Linear extension through
+the existing monomial basis and charge direct sum adds coincident shifts.
+K_L is the existing left functional; K_R retains the distinct original right
+actualForm orientation. Only the transformed input has finite support. No
+fixed-dual finite-charge support or restricted-dual representability is claimed.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 noncomputable section
 open scoped BigOperators
 namespace D5.S3.VertexAlgebra.CorrectedInversion
@@ -78,6 +86,8 @@ local macro "existingGramDetUnit" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.SourceMobius.OriginalCarrier 0) ++
     `D5.S3.VertexAlgebra.SourceMobius.gram_det_unit))
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the finite original-mode and scalar readout sums.
 private theorem dualReadout_monomial (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (m : Index D →₀ ℕ) (e : ℤ) (x y : ActualTensor D hu) :
     dualReadout D hu e x y (monomialInversion D a m) =
@@ -86,8 +96,10 @@ private theorem dualReadout_monomial (D : LatticeData) (hu : IsUnit D.G.det)
   let R := m.weight (sourceWeight D)
   let delta := (SourceMobius.sectorL1 D a).toLinearMap
   let eps := paritySign (chargeNorm D a / 2) * (-1 : ℂ)^R
-  have hHG := Matrix.nonsing_inv_mul (LatticeSugawaraCurrents.gramComplex D) (existingGramDetUnit D hu)
-  have hGH := Matrix.mul_nonsing_inv (LatticeSugawaraCurrents.gramComplex D) (existingGramDetUnit D hu)
+  have hHG := Matrix.nonsing_inv_mul (LatticeSugawaraCurrents.gramComplex D)
+    (existingGramDetUnit D hu)
+  have hGH := Matrix.mul_nonsing_inv (LatticeSugawaraCurrents.gramComplex D)
+    (existingGramDetUnit D hu)
   have he (j : ℕ) : shiftIndex D a R j-e =
       -e-2*chargeNorm D a-4*(R : ℤ)+2*(j : ℤ) := by
     dsimp [shiftIndex]
@@ -122,6 +134,8 @@ private theorem dualReadout_monomial (D : LatticeData) (hu : IsUnit D.G.det)
       symm
       exact actual_corrected_monomial_inversion D hu a m e x y
 
+set_option maxHeartbeats 4000000 in
+-- Reduce the original finite charge direct sum to its monomial basis.
 /-- Extension through the EXISTING basis and original finite direct sum.
 This proof does not assume an all-source inversion or desired dual law. -/
 private theorem actual_dual_inversion_linear (D : LatticeData) (hu : IsUnit D.G.det)
