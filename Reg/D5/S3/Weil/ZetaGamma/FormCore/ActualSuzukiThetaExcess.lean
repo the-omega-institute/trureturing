@@ -66,7 +66,7 @@ private theorem indicator_excess_integrable :
       (Ioi Real.pi) := by
   have hU := indicator_h6
   have hs := (memLp_two_iff_integrable_sq_norm hU.1.aestronglyMeasurable).1 hU.1
-  simpa only [sub_mul, one_mul] using hU.2.sub hs
+  simpa only [IntegrableOn, Pi.sub_apply, sub_mul, one_mul] using hU.2.sub hs
 
 private theorem excess_weight_pos {x : ℝ} (hx : Real.pi < x) :
     0 < (x / Real.pi) ^ (6 : ℕ) - 1 := by
@@ -116,7 +116,9 @@ private theorem indicator_mode_zero (j : ℕ) (hj : j ≠ 0) (x : ℝ)
       Ioc (2 * Real.pi) (3 * Real.pi) := by
     intro hmem
     linarith [hmem.2, Real.pi_pos]
-  simp [physicalTerm, indicatorInput, hnot]
+  have hz : indicatorInput (((j + 1 : ℕ) : ℝ) ^ (2 : ℕ) * x) = 0 :=
+    Set.indicator_of_notMem hnot _
+  rw [physicalTerm, hz, mul_zero]
 
 private theorem indicator_fullTheta (x : ℝ) (hx : Real.pi ≤ x) :
     fullTheta indicatorInput x = indicatorInput x := by
@@ -306,7 +308,10 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   change physicalTerm (fun _ : ℝ => (0 : ℂ)) ≠ physicalTerm indicatorInput
   intro heq
   have hpoint := congrFun (congrFun heq 0) (5 * Real.pi / 2)
-  norm_num [physicalTerm, indicatorInput, indicator_midpoint_mem] at hpoint
+  have hmid : indicatorInput (5 * Real.pi / 2) = 1 :=
+    Set.indicator_of_mem indicator_midpoint_mem _
+  norm_num only [physicalTerm, Nat.zero_add, Nat.cast_one, one_pow, one_mul,
+    mul_zero, hmid] at hpoint
 
 private def familyRegistration : Registration arena
     (type_of% (@actual_h6_physicalTerm_summable_ae)) where
@@ -411,7 +416,12 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   intro heq
   have hpoint := congrFun heq (5 * Real.pi / 2)
   rw [indicator_fullTheta (5 * Real.pi / 2) (by linarith [Real.pi_pos])] at hpoint
-  norm_num [fullTheta, physicalTerm, indicatorInput, indicator_midpoint_mem] at hpoint
+  have hz : fullTheta (fun _ : ℝ => (0 : ℂ)) (5 * Real.pi / 2) = 0 := by
+    simp [fullTheta, physicalTerm]
+  have hmid : indicatorInput (5 * Real.pi / 2) = 1 :=
+    Set.indicator_of_mem indicator_midpoint_mem _
+  rw [hz, hmid] at hpoint
+  exact zero_ne_one hpoint
 
 private def familyRegistration : Registration arena
     (type_of% (@actual_h6_fullTheta_sub_smul_ae)) where
