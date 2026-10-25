@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:d5e940fae46cb3675a551b18fccd0e23fe9a89aedbb125410c014613f20e2228
+  normalized_sha256: sha256:d5e940fae46cb3675a551b18fccd0e23fe9a89aedbb125410c014613f20e2228
+cas_ref: sha256:d5e940fae46cb3675a551b18fccd0e23fe9a89aedbb125410c014613f20e2228
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion
+    target_statement_id: sha256:6f2573e12aeaee475ace7e3307159c2a5c49b4b273c515fede13deac7100ac0a
+  - gid: D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.jointKernel_eq_canonical_jointKernel
+    target_statement_id: sha256:da265755e84a6eb5618d0fd2cf20516ce753c161ae3e1c7078fb2494760a4fc8
+  - gid: D5/S3/ConceptDynamics/InformationEscape/ExactRate.escapeNumerator
+    target_statement_id: sha256:3ecd9290ccd25bd9cb93011ef69e1e0e8c63775c1c0aa6ff44690e3f64032547
+  - gid: D5/S3/ConceptDynamics/InformationEscape/ExactRate.escapeRate
+    target_statement_id: sha256:d666d4976ff79b732573a30786d1e6140b93d7dc0f032a6f41ca51aaeac79a63
+  - gid: D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lowersEscape_false_of_recoverable
+    target_statement_id: sha256:cb7de79712b38621ec0a6305e14c3a5b41e686db4cdab8027e564585793854bc
+receipts:
+  unresolved_subitems: []
