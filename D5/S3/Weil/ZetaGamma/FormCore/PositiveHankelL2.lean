@@ -4,8 +4,7 @@
    mirror-E: none(waiver:actual-positive-halfline-Hankel-domain)
    anchors: []
    utility: none
-   digest: Actual half-line L2 Hankel domains, complete positive Laplace-square series,
-     and the quarter-rate pi Schur bound. -/
+   digest: Actual half-line L2 Hankel domains, complete positive Laplace-square series, and the quarter-rate pi Schur bound. -/
 
 
 import D5.S3.Weil.ZetaGamma.FormCore.RightExponentialTailL2
