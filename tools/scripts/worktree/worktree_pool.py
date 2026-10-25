@@ -201,42 +201,21 @@ def unused_base(source, path, branch, head):
         if log.is_symlink():
             raise ValueError("linked branch log")
         raw = log.read_bytes()
-        if not raw.endswith(b"\n"):
-            raise ValueError("incomplete branch log")
-        rows = raw[:-1].split(b"\n")
-        records = [re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
-                                rb"[^<>\n]+ <[^<>\n]*> ([0-9]+) [+-][0-9]{4}\t.*", row) for row in rows]
-        if not records or not all(records):
-            raise ValueError("missing or malformed branch log")
-        base = records[0][2]
-        if records[0][1] != b"0" * len(base):
+        rows = raw.split(b"\n", 1)
+        if len(rows) != 2:
+            raise ValueError("incomplete branch creation")
+        creation = re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
+                                rb"[^<>\n]+ <[^<>\n]*> [0-9]+ [+-][0-9]{4}\t.*", rows[0])
+        if creation is None:
+            raise ValueError("missing or malformed branch creation")
+        base = creation[2]
+        if creation[1] != b"0" * len(base):
             raise ValueError("missing branch creation")
-        if any(previous[2] != current[1] for previous, current in zip(records, records[1:])):
-            raise ValueError("discontinuous branch log")
     except (OSError, ValueError) as error:
         raise Refused("unused_allocation_unknown") from error
-    if (base.decode("ascii") != head or any(record[2] != base for record in records)
-            or any(record[1] != base for record in records[1:])):
+    if (base.decode("ascii") != head
+            or value(path, "rev-parse", "--verify", branch + "^{commit}") != head):
         raise Refused("unused_task_commits_require_pr")
-    try:
-        now = int(time.time())
-        created = int(records[0][3])
-        cutoff = now - 30 * 86400
-        # A retained creation can outlive selectively expired task transitions.
-        # Bound freshness by every configured policy rather than reimplementing
-        # Git's ref-pattern matching. Unmatched patterns only tighten this bound.
-        for root in {Path(source).resolve(), Path(path).resolve()}:
-            configured = git(root, "config", "--null", "--type=expiry-date", "--get-regexp",
-                             r"^gc\..*reflogexpire(unreachable)?$", check=False)
-            if configured.returncode not in (0, 1):
-                raise ValueError("unresolvable expiry policy")
-            if configured.returncode == 0:
-                for entry in configured.stdout.rstrip(b"\0").split(b"\0"):
-                    cutoff = max(cutoff, int(entry.rsplit(b"\n", 1)[1]))
-        if created <= cutoff or any(not created <= int(record[3]) <= now for record in records):
-            raise ValueError("expired or invalid branch evidence")
-    except (OSError, ValueError, IndexError, subprocess.SubprocessError) as error:
-        raise Refused("unused_allocation_unknown") from error
     return base.decode("ascii")
 
 
