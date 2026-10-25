@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
 
+/-! Labelled zero-weight exponents in the fixed three-level basis. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -50,6 +52,8 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
     (ha : a = 0 ∨ A = 0) (hb : b = 0 ∨ B = 0) :
     degree (gaps a A b B 0 C) ≤ 2*m-1 := by
   have hm₁ : 1 ≤ m := by omega
+  have hm₂ : 1 ≤ m-1 := by omega
+  have hsucc : m-1+1 = m := by omega
   have hw := h.2.1
   rw [gaps_weight] at hw
   have hn : a+(m-1)*b = A+(m-1)*B+m*C := by
@@ -68,11 +72,14 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
       have hC : C = 0 := by nlinarith
       subst A; subst B; subst C
       exact (h.1 (by ext i j; fin_cases i <;> fin_cases j <;> simp [gaps])).elim
-    · have hB : B = 0 := hb.resolve_left hbz
+    · have hbpos : 0 < b := by omega
+      have hB : B = 0 := hb.resolve_left hbz
       subst B
       by_cases hC : m-1 ≤ C
       · have hbm : m ≤ b := by
           have hmul := Nat.mul_le_mul_left m hC
+          by_contra! hbad
+          have hmul' := Nat.mul_le_mul_left (m-1) (by omega : b ≤ m-1)
           nlinarith
         apply force_degree m _ (gaps 0 0 m 0 0 (m-1)) h
         · apply gaps_nonzero; omega
@@ -94,7 +101,8 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
             simp only [Nat.cast_zero, Nat.cast_one, Nat.cast_sub hm₁]
             ring
           · rw [gaps_degree]; omega
-        · have hbc : C+1 ≤ b := by
+        · have hCpos : 0 < C := by omega
+          have hbc : C+1 ≤ b := by
             by_contra! hbad
             have hmul := Nat.mul_le_mul_left (m-1) (by omega : b ≤ C)
             nlinarith
@@ -111,7 +119,8 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
             simp only [Nat.cast_zero, Nat.cast_add, Nat.cast_one, hcast]
             ring
           · rw [gaps_degree]; omega
-  · have hA : A = 0 := ha.resolve_left haz
+  · have hapos : 0 < a := by omega
+    have hA : A = 0 := ha.resolve_left haz
     subst A
     by_cases hbz : b = 0
     · subst b
@@ -123,9 +132,10 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
         · apply gaps_nonzero; omega
         · intro i j
           fin_cases i <;> fin_cases j <;> simp [gaps] <;> omega
-        · rw [gaps_weight]; simp; ring
+        · rw [gaps_weight]; simp
         · rw [gaps_degree]; omega
-      · have ha₁ : m-1 ≤ a := by nlinarith
+      · have hBpos : 0 < B := by omega
+        have ha₁ : m-1 ≤ a := by nlinarith
         apply force_degree m _ (gaps (m-1) 0 0 1 0 0) h
         · apply gaps_nonzero; omega
         · intro i j
@@ -134,21 +144,22 @@ private theorem oriented_bound (m : ℕ) (hm : 2 ≤ m) (a A b B C : ℕ)
           simp only [Nat.cast_zero, Nat.cast_one, Nat.cast_sub hm₁]
           ring
         · rw [gaps_degree]; omega
-    · have hB : B = 0 := hb.resolve_left hbz
+    · have hbpos : 0 < b := by omega
+      have hB : B = 0 := hb.resolve_left hbz
       subst B
       have hC : 1 ≤ C := by nlinarith
       apply force_degree m _ (gaps 1 0 1 0 0 1) h
       · apply gaps_nonzero; omega
       · intro i j
         fin_cases i <;> fin_cases j <;> simp [gaps] <;> omega
-      · rw [gaps_weight]; norm_num; ring
+      · rw [gaps_weight]; norm_num
       · rw [gaps_degree]; omega
 
 private theorem weight_transpose (m : ℕ) (alpha : Exponent) :
-    weight m alpha.transpose = -weight m alpha := by
+    weight m (Matrix.transpose alpha) = -weight m alpha := by
   unfold weight
   rw [Finset.sum_comm]
-  simp only [Matrix.transpose_apply, Finset.sum_neg_distrib]
+  simp only [Matrix.transpose_apply, ← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro i _
   apply Finset.sum_congr rfl
@@ -156,19 +167,19 @@ private theorem weight_transpose (m : ℕ) (alpha : Exponent) :
   ring
 
 private theorem degree_transpose (alpha : Exponent) :
-    degree alpha.transpose = degree alpha := by
+    degree (Matrix.transpose alpha) = degree alpha := by
   exact Finset.sum_comm
 
 private theorem indecomposable_transpose (m : ℕ) (alpha : Exponent)
-    (h : Indecomposable m alpha) : Indecomposable m alpha.transpose := by
+    (h : Indecomposable m alpha) : Indecomposable m (Matrix.transpose alpha) := by
   refine ⟨?_, ?_, ?_⟩
   · intro he
     apply h.1
     simpa using congrArg Matrix.transpose he
   · rw [weight_transpose, h.2.1, neg_zero]
   · intro beta hle hw
-    have hle' : beta.transpose ≤ alpha := fun i j => hle j i
-    have hw' : weight m beta.transpose = 0 := by rw [weight_transpose, hw, neg_zero]
+    have hle' : (Matrix.transpose beta : Exponent) ≤ alpha := fun i j => hle j i
+    have hw' : weight m (Matrix.transpose beta) = 0 := by rw [weight_transpose, hw, neg_zero]
     rcases h.2.2 _ hle' hw' with hz | he
     · left; simpa using congrArg Matrix.transpose hz
     · right; simpa using congrArg Matrix.transpose he
@@ -233,7 +244,7 @@ theorem indecomposable_degree_bound (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       by_cases hmax : alpha 2 0 = 0
       · exact oriented alpha h hz (hp' 1 0 (by decide)) (hp' 2 1 (by decide)) hmax
       · rw [← degree_transpose alpha]
-        apply oriented alpha.transpose (indecomposable_transpose m alpha h)
+        apply oriented (Matrix.transpose alpha) (indecomposable_transpose m alpha h)
         · exact hz
         · exact (hp' 1 0 (by decide)).symm
         · exact (hp' 2 1 (by decide)).symm
