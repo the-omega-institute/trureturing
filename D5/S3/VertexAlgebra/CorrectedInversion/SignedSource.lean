@@ -1,17 +1,25 @@
-/-
-UNCOMPILED source reconciliation. Native SourceMobius owns the derivation,
-polynomial ODE, factorial recurrence, finite flow, and nilpotence. This module
-only identifies the canonical ActualCorrCovariance affineSource at immutable
-734f7f7030a4a2972c5a6f809bbfb345c5b940c2 with that native polynomial flow after
-the weight sign. No evaluation-at-infinitely-many-scalars argument.
-NormalReadout still has the explicitly documented normal STAGING boundary.
--/
+/- GID: D5/S3/VertexAlgebra/CorrectedInversion/SignedSource
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/CorrectedInversion/SignedSource
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Original signed affine source coefficients as finite L1 divided powers. -/
 import D5.S3.VertexAlgebra.CorrectedInversion.NormalReadout
 import D5.S3.VertexAlgebra.SourceMobius.Coordinates
 
+/-!
+# Signed affine source and the original L1 flow
+
+The original affineSource is identified with flowPolynomial after the
+source-weight sign, by finite generator coordinates and algebra-homomorphism
+extensionality. Homogeneity supplies the single sign (-1)^R, independent of
+the divided-power index. Native SourceMobius supplies the original derivation,
+factorial coefficients and nilpotence; no desired covariance is assumed.
+-/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 noncomputable section
 open scoped BigOperators
 namespace D5.S3.VertexAlgebra.CorrectedInversion
@@ -28,6 +36,8 @@ local macro "existingVariableCharge" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.SourceMobius.Coordinates 0) ++
     `D5.S3.VertexAlgebra.SourceMobius.variable_power_charge))
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the finite factorial and binomial coordinate sums.
 /-- Finite polynomial-coordinate conversion of native coefficients. This is a
 consumed helper, not a second flow definition or a polynomial ODE proof. -/
 private theorem native_polynomial_X (D : LatticeData) (a : Charge D)
@@ -77,6 +87,8 @@ private theorem native_polynomial_X (D : LatticeData) (a : Charge D)
 private def weightSign (D : LatticeData) : Oscillator D →ₐ[ℂ] Oscillator D :=
   aeval (fun i => (-1 : ℂ)^(sourceWeight D i) • X i)
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the finite polynomial source substitution.
 private theorem weightSign_monomial (D : LatticeData) (m : Index D →₀ ℕ) (z : ℂ) :
     weightSign D (monomial m z) =
       (-1 : ℂ)^(Finsupp.weight (sourceWeight D) m) • monomial m z := by
@@ -105,6 +117,8 @@ private theorem weightSign_homogeneous (D : LatticeData) (p : Oscillator D) (R :
   intro m hm
   rw [hp (mem_support_iff.mp hm)]
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the finite polynomial source substitution.
 private theorem affineP_eq_native (D : LatticeData) (a : Charge D) (p : Oscillator D) :
     affineP D a p = SourceMobius.flowPolynomial D a (weightSign D p) := by
   have maps : affineP D a = (SourceMobius.flowPolynomial D a).comp (weightSign D) := by
@@ -122,7 +136,6 @@ private theorem affineP_eq_native (D : LatticeData) (a : Charge D) (p : Oscillat
         (bilinear D (unitCharge D i.1) a : ℂ)) * X none ^ (i.2+1)) = _
       simp only [map_mul, map_pow, optionEquivLeft_C, optionEquivLeft_X_none]
       simp only [← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul, map_mul, map_pow]
-      ring
     change affineP D a (X i) = SourceMobius.flowPolynomial D a (weightSign D (X i))
     rw [hx, normalP_X]
     have native := native_polynomial_X D a i.1 i.2

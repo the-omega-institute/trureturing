@@ -1,14 +1,25 @@
-/- UNCOMPILED finite original-Corr assembly against immutable native Corr734f7f.
-All field endpoints are the original correctedPolynomial/correctedField, using
-the original signed shiftField coefficient e+2s. NormalReadout retains the explicit
-normal STAGING boundary described in NATIVE_INTERFACE_PLAN.md. Corr acceptance
-alone is not kernel acceptance of this module or of full inversion. -/
+/- GID: D5/S3/VertexAlgebra/CorrectedInversion/Corrected
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/CorrectedInversion/Corrected
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Full original corrected-field inversion from normal transpose and finite L1 flow. -/
 import D5.S3.VertexAlgebra.CorrectedInversion.SignedSource
+
+/-!
+# Original corrected-field inversion
+
+The normal transpose is applied at the original coefficient e+2c. Exact Corr
+bidegree transports source weight R to R-c, and original Corr covariance
+exchanges the finite coefficient sums. The signed affine source coefficients
+then give the finite exp(L1) formula on the original actualForm, in its given
+orientation. No desired inversion, ground symmetry or positive norm is assumed.
+-/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
 noncomputable section
 open scoped BigOperators
 namespace D5.S3.VertexAlgebra.CorrectedInversion
@@ -111,6 +122,8 @@ private theorem shifted_exponent (N e : ℤ) (R c t : ℕ) (hc : c ≤ R) :
   push_cast
   ring
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the original finite Corr coefficient convolution.
 /-- The actual finite (c,t) assembly. Normal transpose is applied at e+2c;
 Corr homogeneity transports its weight; original Corr covariance exchanges the
 finite sums; the original shiftField rule reconstructs correctedPolynomial. -/
@@ -176,6 +189,8 @@ private theorem corrected_affine_support (D : LatticeData) (hu : IsUnit D.G.det)
       simp only [shiftIndex, Nat.cast_add]
       ring
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the original finite Corr coefficient convolution.
 /-- Replace the actual affine support with the sharp finite interval. All
 added terms are zero by native SourceMobius nilpotence and its finite expansion. -/
 private theorem corrected_affine_range (D : LatticeData) (hu : IsUnit D.G.det)
@@ -197,6 +212,8 @@ private theorem corrected_affine_range (D : LatticeData) (hu : IsUnit D.G.det)
   · intro j hj absent
     rw [Polynomial.notMem_support_iff.mp absent, map_zero]
 
+set_option maxHeartbeats 4000000 in
+-- Normalize the original finite Corr coefficient convolution.
 /-- Full original-field homogeneous inversion, including zero polynomials,
 rank zero, all signed e and N, and arbitrary chosen actualForm orientation. -/
 theorem actual_corrected_single_inversion (D : LatticeData) (hu : IsUnit D.G.det)
@@ -210,6 +227,12 @@ theorem actual_corrected_single_inversion (D : LatticeData) (hu : IsUnit D.G.det
             ((j.factorial : ℂ)⁻¹ • (((SourceMobius.sectorL1 D a).toLinearMap^j) p)))).coeff
               (-e-2*chargeNorm D a-4*(R : ℤ)+2*(j : ℤ)) y) := by
   simp only [correctedField_single]
+  change correctedLeft D hu a e x y p =
+    paritySign (chargeNorm D a / 2) * (-1 : ℂ)^R *
+      ∑ j ∈ Finset.range (R+1),
+        correctedRight D hu a (-e-2*chargeNorm D a-4*(R : ℤ)+2*(j : ℤ)) x y
+          ((j.factorial : ℂ)⁻¹ • (((SourceMobius.sectorL1 D a).toLinearMap^j) p))
+  simp only [map_smul]
   have h := corrected_affine_range D hu a p R hp e x y
   simp_rw [affineP_coeff D a p R _ hp, map_smul] at h
   rw [← Finset.smul_sum] at h
@@ -218,7 +241,7 @@ theorem actual_corrected_single_inversion (D : LatticeData) (hu : IsUnit D.G.det
     dsimp [shiftIndex]
     ring
   simp_rw [he] at h
-  simpa only [correctedLeft, correctedRight, smul_eq_mul, mul_assoc] using h
+  simpa only [smul_eq_mul, mul_assoc] using h
 
 /-- The requested monomial statement is a direct use of the stronger
 homogeneous theorem. It introduces no additional premise. -/

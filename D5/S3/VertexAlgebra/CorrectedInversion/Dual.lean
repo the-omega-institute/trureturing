@@ -30,7 +30,7 @@ def monomialInversion (D : LatticeData) (a : Charge D) (m : Index D →₀ ℕ) 
   let R := m.weight (sourceWeight D)
   ∑ j ∈ Finset.range (R+1), Finsupp.single (shiftIndex D a R j)
     ((paritySign (chargeNorm D a / 2) * (-1 : ℂ)^R * (j.factorial : ℂ)⁻¹) •
-      ((sugawaraMode D (gramComplex D)⁻¹ 1 ^ j)
+      ((sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1 ^ j)
         (Finsupp.single a (monomial m (1 : ℂ)))))
 
 private def sectorInversion (D : LatticeData) (a : Charge D) :
@@ -86,8 +86,8 @@ private theorem dualReadout_monomial (D : LatticeData) (hu : IsUnit D.G.det)
   let R := m.weight (sourceWeight D)
   let delta := (SourceMobius.sectorL1 D a).toLinearMap
   let eps := paritySign (chargeNorm D a / 2) * (-1 : ℂ)^R
-  have hHG := Matrix.nonsing_inv_mul (gramComplex D) (existingGramDetUnit D hu)
-  have hGH := Matrix.mul_nonsing_inv (gramComplex D) (existingGramDetUnit D hu)
+  have hHG := Matrix.nonsing_inv_mul (LatticeSugawaraCurrents.gramComplex D) (existingGramDetUnit D hu)
+  have hGH := Matrix.mul_nonsing_inv (LatticeSugawaraCurrents.gramComplex D) (existingGramDetUnit D hu)
   have he (j : ℕ) : shiftIndex D a R j-e =
       -e-2*chargeNorm D a-4*(R : ℤ)+2*(j : ℤ) := by
     dsimp [shiftIndex]
