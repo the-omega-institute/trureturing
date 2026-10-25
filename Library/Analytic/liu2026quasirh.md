@@ -3283,3 +3283,230 @@ finite components and separated heights. If their growth has degree $h$,
 log-Fourier decay of order greater than $h+5$ is integrable in four
 variables. Derivatives act only on the external profiles, never on
 $b_A$, and no budget is restarted per $a$ or ray class.
+
+## Joint cutoff certificate and the unpaid estimates
+
+Put $B_*=(31-10\sqrt6)/6$ and
+$\Delta=7/6-B_*=(5\sqrt6-12)/3=0.082482904638630\ldots$.
+The unnormalized local energy comparison exponent is $1+B_*$;
+restoring the original $D^{-2}=U^{-1}$ coefficient normalization gives
+the exponent $B_*$ used in J40. This comparison does not identify the
+entire Gauss object (C59) with J40 or pay its omitted parameters.
+At the unchanged $A=U^{1/12}$, (C52) and (C60), conditionally on
+$R_{7/8}$, give the following explicit certificate:
+
+$$
+\begin{aligned}
+\Theta_{4,A}(P)&\ll_\varepsilon U^{-1/24+\varepsilon}q_P^\varepsilon,\\
+|\mathcal E_{\rm rad}|&\ll_\varepsilon\mathcal N_JU^\varepsilon
+ (U^{17/8}+U^{101/48}+U^{47/24}),\\
+17/8-(1+B_*)&=0.040816237971963\ldots,\\
+101/48-(1+B_*)&=0.019982904638630\ldots,\qquad
+1+B_*=2.084183762028037\ldots.
+\end{aligned}
+\tag{C61}
+$$
+
+The $101/48$ term is the fifteen-$\mu$ aggregate, not the smaller
+error that would result from squaring the two-factor mean. These are
+upper-bound certificate gaps, not lower bounds for any actual term.
+No full energy improvement follows, and no selected Poisson component
+has been declared nonnegative.
+
+**The same coefficient pays Type I.** For $A=U^\alpha$, keep the
+actual split (C25), the original physical family, all finite ray
+presentations, original zero extensions and the shared finite-height
+allowance. Reuse (C29), whose primary suppliers are the
+[pinned manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`lem:buffered-bins`, `lem:detector-dyads`, and the zero-prime-slot
+case of `lem:plain`. These require the original nonprincipal inducing
+rows, polynomial-size original deletion masks, bounded annular length
+ranges, and finite internal Mellin heights whose total lies within
+the same buffer. There is no new conductor lower bound. The proof of
+(C29) is uniform in $Q\ll U^\alpha$, since only the smooth profile's
+$Q/A$ ratio changes. It supplies, on the very same bin,
+
+$$
+\begin{aligned}
+T_Q(\delta)&\ll U^\varepsilon
+ \min\{U^{f(\delta)},U^{1+2\alpha\delta}\},\\
+f(\delta)&=R(\delta)+\delta
+ =\delta+\frac{15-16\delta}{15-6\delta}
+ \quad(1/50<\delta\le5/6),\qquad
+f(\delta)=1\quad(5/6\le\delta\le1).
+\end{aligned}
+\tag{C62}
+$$
+
+The floor separately costs $U^{1+\alpha/25+\varepsilon}$. Norm heights
+and all internal Mellin variables share the original buffer; the
+Fourier/Mellin tail orders are chosen once after the desired loss.
+There is no infinite-local-contour extension or differentiation of
+$b_A$. Dyadic and fixed/polylog aggregate costs are absorbed only
+within the original common envelope.
+
+Differentiation gives $f'(\delta)=1-150/(15-6\delta)^2$ and
+$f''(\delta)=-1800/(15-6\delta)^3<0$. Hence the unique maximum is
+
+$$
+\delta_*=(15-5\sqrt6)/6=0.458758547680685\ldots,\qquad
+f(\delta_*)=B_*,\qquad
+\alpha_I=\frac{B_*-1}{2\delta_*}
+ =\frac{3-\sqrt6}{6}=0.091751709536137\ldots.
+\tag{C63}
+$$
+
+This bin is also inside the range $\delta\le3/4$ if that restriction
+is imposed from the source's $7/8$ Hecke region. For the full bin range,
+the envelope $\max_\delta\min\{f(\delta),1+2\alpha\delta\}$ has a
+strict gap below $B_*$ exactly when $0<\alpha<\alpha_I$.
+Indeed at $\delta_*$ its minimum is $B_*$ for $\alpha\ge\alpha_I$.
+Below that threshold, the increasing line intersects the decreasing
+side of $f$ at
+
+$$
+\delta_\alpha=\frac{15-10/(1-2\alpha)}6>\delta_*,\qquad
+\tau(\alpha)=1+2\alpha\delta_\alpha<B_*.
+\tag{C64}
+$$
+
+Before this crossing the minimum is at most the line's value there;
+after it, $f$ decreases to $1$. The floor is smaller since
+$2\delta_\alpha>1/25$. Thus $\tau$ is an admissible full-range Type-I
+exponent, and $\tau(1/12)=13/12$, recovering (C30).
+This is a limit of these two UPPER BOUND inputs. It does not assert
+that the critical bin is populated at its counting bound or that any
+actual Type-I moment attains that exponent.
+
+For $\alpha<\alpha_I$, the same positive $L^4$ Minkowski argument as
+(C31) gives $\mathcal T_{\rm II}\ll U^{B_*+\varepsilon}$ and
+
+$$
+|\mathcal T_\mu-\mathcal T_{\rm II}|
+ \ll U^{(3B_*+\tau(\alpha))/4+\varepsilon}.
+\tag{C65}
+$$
+
+The original cubic and large-product-squarepart payments add $13/12$,
+so the full difference-transfer exponent is
+$\max\{13/12,(3B_*+\tau(\alpha))/4\}$, with reserve
+$\min\{B_*-13/12,(B_*-\tau(\alpha))/4\}$.
+Here $B_*-13/12=0.000850428694703\ldots$.
+At $\alpha_I$ the interference reserve vanishes. A one-sided triangle
+transfer also needs a Type-I exponent below $B_*$ and does not repair
+this envelope limit.
+
+**The coupled-current-input incompatibility.** Making just the
+four-factor residue upper bound in (C60) smaller than $U^{1+B_*}$
+requires the sufficient-estimate inequality
+$4\alpha(1-\beta)>\Delta$. At $\beta=7/8$ this becomes
+
+$$
+\alpha>\alpha_G=2\Delta
+ =0.164965809277260\ldots,
+\qquad\hbox{whereas the paid Type-I envelope requires }\alpha<\alpha_I.
+\tag{C66}
+$$
+
+The windows are disjoint, though both endpoints satisfy the exact-split
+support limit $\alpha<1/4$. As $\alpha\uparrow\alpha_I$ the residue
+certificate approaches exponent $13/6-\alpha_I/2
+=2.120790811898598\ldots>1+B_*$, while the Type-I reserve tends to
+zero. Moreover the $R_{7/8}$ bound for $\mathcal R_\mu$ in (C60)
+is $U^{101/48+\varepsilon}$ for every such cutoff, so merely changing
+$A$ does not pay that error either. The $KK$ contour error alone is
+below target throughout this Type-I window.
+
+For general $\beta$, the main-term and Type-I inequalities can overlap
+only if $\beta<2-\sqrt6/2=0.775255128608411\ldots$; at the fixed
+$\alpha=1/12$ the main-term inequality is
+$\beta<13-5\sqrt6=0.752551286084110\ldots$.
+The separate errors still require
+$(10+3\beta)/6<1+B_*$ and $23/12+\alpha/2<1+B_*$.
+These are conditional algebraic thresholds for the displayed estimates,
+not new zero-free regions, necessary RH conditions, actual lower bounds
+or a global impossibility theorem. A hypothetical squared-two-factor
+interface has the same formal residue exponent, but (C51) shows why it
+cannot replace this four-factor theorem or its fifteen-term error.
+
+**The next exceptional input has a fixed meaning.** Define
+
+$$
+\mathscr S_4(U)=U^{-1/6}\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+ \sum_a C_4(P_a)\Theta_{4,A}(P_a)
+ I_4(q_{e_S(\mathbf r)}q_a^6/U).
+\tag{C67}
+$$
+
+At the unchanged cutoff a sufficient new frequency-average estimate is
+$|\mathscr S_4(U)|\ll\mathcal N_JU^{-\Delta-\sigma+\varepsilon}$
+for some fixed $\sigma>0$. Currently (C52) supplies only
+$U^{-1/24+\varepsilon}$. This target asks for cancellation on the
+same coupled frequency realization. It must be accompanied by
+$|\mathcal R_\mu|,|\mathcal R_{\rm tw}|
+\ll\mathcal N_JU^{1+B_*-\sigma+\varepsilon}$, or a bound of this
+strength for their same-object signed sum together with the residue.
+The $KK$ remainder is already smaller. Principal $R_\beta$ supplies
+neither the ray/angular residual estimate nor a nonprincipal inverse
+Hecke estimate. All these targets are unproved.
+
+**A sufficient local nonexceptional interface, also unproved.** The
+precise gap in [Xu–Sang v2, (2.6), (3.6)–(3.7) and Lemma
+3.2](https://arxiv.org/html/2610.17675v2#S3.SS2) concerns arithmetic
+columns on the same Poisson row. Freeze its $C,\mathfrak b$,
+$g=(\operatorname{rad}C,k)$, tensor branch and ray term. Put
+$X=L^2/q$, $N=L/(q_Cq_{\mathfrak b})$, $N_i=N/q_{f_i}$,
+$K_{\rm row}\asymp RX/q_C$ and $k=gk'$. Let $D_{\rm src}=N\mathfrak d$
+be the source moving-twist radical norm, distinct from $D=\sqrt U$,
+and let $R_{C,g}$ be its (3.7). The fixed $\Pi_i$ masks are independent
+of $k'$. Let $d_i(n)$ be the actual compressed column coefficient at
+$C\mathfrak b f_i n$, including its original side/core allocations;
+for actual squarefree columns the admissible branch has $C$ squarefree
+and $f_i=1$. A sufficient hypothesis $W(\lambda)$ is
+
+$$
+\sum_{\substack{0<q_{k'}\ll K_{\rm row}/q_g\\\psi^*_{k'}\ne1}}
+\left|\sum_n d_i(n)\nu_i(n)\chi_n(k')
+ \chi_n(gd_{\mathbf e}C^\flat)\mathbf1_{(n,\Pi_i)=1}
+ V_i(q_n/N_i)\right|^2
+\ll N_i(K_{\rm row}/q_g)D_{\rm src}R_{C,g}
+ U^{\lambda+\varepsilon}.
+\tag{C68}
+$$
+
+The symbols $\nu_i,d_{\mathbf e},C^\flat,\psi^*_{k'}$ are exactly those
+of the frozen source branch (3.6). Quantification includes all its
+original polynomial-size masks, collision zeros, fixed twists and
+prescribed bounded profiles, with fixed polynomial height costs and
+no new conductor lower bound. It is not a claim for optimized or plain
+columns. Divisor-boundedness gives $\sum|d_i(n)|^2\ll N_iU^\varepsilon$;
+that mass statement does not prove (C68).
+
+To check local sufficiency, Cauchy on the same $k'$ row gives
+$w_{C,g}\sqrt{M_1M_2}$, where $M_i$ is the left side of (C68).
+The source relation $w_{C,g}R_{C,g}/q_g\le q_C$ bounds this by
+$NRXD_{\rm src}U^{\lambda+\varepsilon}$. On dyads
+$q_C\asymp C_0,q_{\mathfrak b}\asymp B_0$, restoring $q/L^3$ and the
+$O(C_0B_0)$ frozen labels gives $RD_{\rm src}U^{\lambda+\varepsilon}$.
+Shell decay pays $R$. In the corefree $q=L=U$, $D_{\rm src}=1$
+normalization of (C59), restoration of $U^2$ therefore gives
+$U^{2+\lambda+\varepsilon}$. Thus $\lambda<B_*-1$ would suffice
+locally; $\lambda=1/12$ would leave the reserve
+$B_*-13/12$ above. The original plain-coefficient (2.6) does not
+supply (C68). Its proof would be a new actual-coefficient estimate.
+External log-Fourier separation pays its fixed polynomial height
+cost with sufficiently rapid decay; derivatives still avoid $b_A$.
+
+Even these exceptional and nonexceptional local targets together do
+not close J40. They must be placed back on its original common beta
+rows, with all product-squareparts $P<U^{1/6}$, common-$e$ signed
+Möbius detector, $\rho$, nontrivial cores, common-column gcds, unit/ray/
+angular terms, bad duals and full natural dual dyads. Moving
+$D_{\rm src}$ losses and every profile/height coefficient must then be
+summed under the one original fixed/polylog aggregate budget; they
+cannot enter an unspecified constant. A physical squarefree-row subset
+may be restricted after a complete positive energy bound, not by
+monotonicity of a signed nonexceptional or exceptional component.
+The actual same-beta signed contraction, signed Robin restoration and
+RH remain open. No Lean, source-major-proof or priority certification
+is made.
