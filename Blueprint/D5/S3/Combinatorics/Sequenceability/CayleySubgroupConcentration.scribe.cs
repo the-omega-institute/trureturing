@@ -47,6 +47,11 @@ internal sealed class CayleySubgroupConcentrationDocument : IScribeDocumentDefin
                     + "lemma. This permission does not transfer to rainbow-path consumers. "
                     + "No connector, matching, coupling or absorption proof is certified, "
                     + "and original proper-interval Good and unrestricted AM remain open. "
-                    + "The construction is literature-adapted, with no novelty claim."))),
+                    + "The construction is literature-adapted, with no novelty claim.")),
+                Paragraph(Text("The faithful dependent-family Reg proof compiles, but its "
+                    + "source binding remains declared_unresolved with diagnostic "
+                    + "source.residual_requires_open. An accepted binding certificate is "
+                    + "missing; no declared_validated audit is claimed. The source-owner "
+                    + "disclosure is https://github.com/the-omega-institute/trureturing/issues/21342."))),
             DescribeRole.Theorem))));
 }
