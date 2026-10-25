@@ -90,9 +90,14 @@ jobs:
       # and its references, explicit copied/embedded runtime inputs, analyzer
       # files and inherited build configuration). It is taken before anything is
       # built; an exact hit skips the build.
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: true
           cache-dependency-path: |
             tools/StrataLint.Cli/packages.lock.json
@@ -275,9 +280,14 @@ jobs:
       # and its references, explicit copied/embedded runtime inputs, analyzer
       # files and inherited build configuration). It is taken before anything is
       # built; an exact hit skips the build.
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: true
           cache-dependency-path: |
             tools/StrataLint.Cli/packages.lock.json
