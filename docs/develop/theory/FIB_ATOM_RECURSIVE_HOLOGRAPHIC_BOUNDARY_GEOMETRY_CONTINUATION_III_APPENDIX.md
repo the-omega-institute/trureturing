@@ -2671,3 +2671,308 @@ Krötz–Thangavelu–Xu, [*The heat kernel transform for the Heisenberg group*,
 The additional conclusion is repository-derived for the same actual states: no probability mass escapes to infinity, and fixed exterior cutoffs converge strongly along the existing weak subsequences. It is not a new heat law, an inverse of the auxiliary AFV comparison, a resource-measure conclusion or an exhaustive literature-priority claim. The coefficient $m_e$, whether $\ker S^*$ contains nonzero elements, which such elements and source defects are attained by actual selections, and any surviving source scale or profile remain unresolved. Equation (104.6) continues to put any nonzero weak profile outside $\mathcal Q_c$; no source boundary condition or maximal/Friedrichs domain identity is imposed. No native source-to-state realization or physical space-dimension conclusion follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 106. Actual probability vanishes on every shrinking diagnostic annulus
+
+**Definition 106.1 (fixed diagnostic and the actual selections).** Retain the original $G=H^1\times\mathbb R$, product, Haar measure, unit-source Green field $\Gamma$, horizontal $L$, free clock and central spectral units of Definition 103.1. Fix the same $a,\eta>0$ and set
+
+$$
+\kappa=\sqrt{\eta/a},\qquad \xi=(x,y,z),\qquad s=w-xy/2,
+\qquad R_\kappa(p)=\bigl(|\xi|^2+(s/\kappa)^2\bigr)^{1/2}.
+\tag{106.1}
+$$
+
+This is a fixed analytic diagnostic on the original group, not a new group norm, kinetic law, heat clock or source. For every sequence $\sigma_n>2$ tending to $2$, without monotonicity, select any nonzero attained complex critical zero states on the full $\mathcal E_{\sigma_n}$, and normalize only their amplitudes by
+
+$$
+V[u_n]=1,\qquad M_n=\|u_n\|_2^2,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\qquad
+\epsilon_n=\sigma_n-2.
+\tag{106.2}
+$$
+
+These are exactly the selections of Definitions 103.1 and 104.1. Their existence, full form equation, endpoint kinetic limits, $M_n\to0$ and $\epsilon_n\log(1/M_n)\to0$ are supplied by §§101–104. No sign, positivity, simplicity, uniqueness or profile condition is imposed. All state limits use the fixed complex Hilbert spaces with the indicated Lebesgue measures.
+
+**Theorem 106.2 (all shrinking annuli and diagnostic zooms of actual states).** For every selection in Definition 106.1, every sequence $r_n>0$ tending to zero and every fixed $0<c<C<\infty$,
+
+$$
+\int_{\{c r_n<R_\kappa<C r_n\}}|v_n|^2d\mu\longrightarrow0.
+\tag{106.3}
+$$
+
+In particular the order of limits in the following uniform small-radius assertion is valid:
+
+$$
+\lim_{\delta\downarrow0}\limsup_{n\to\infty}
+ \sup_{0<r\le\delta}
+ \int_{\{cr<R_\kappa<Cr\}}|v_n|^2d\mu=0.
+\tag{106.4}
+$$
+
+The conclusion is also uniform over the actual critical-state choices. Precisely, if $\mathcal Z_\sigma$ is the set of all $L^2$-normalized attained complex critical zero states in the original $\mathcal E_\sigma$, then
+
+$$
+\lim_{\delta\downarrow0}\limsup_{\sigma\downarrow2}
+ \sup_{v\in\mathcal Z_\sigma}\sup_{0<r\le\delta}
+ \int_{\{cr<R_\kappa<Cr\}}|v|^2d\mu=0.
+\tag{106.5}
+$$
+
+Here $\sigma\downarrow2$ means approach from above, without a monotonicity requirement. The inner limiting operations in (106.4)–(106.5) precede $\delta\downarrow0$; neither formula asserts a rate in $r$ for a fixed order.
+
+Equivalently, for every such $r_n$, the actual norm-one diagnostic zooms
+
+$$
+\begin{aligned}
+F_n(X,t)
+ &=\kappa^{1/2}r_n^2\,
+ v_n\!\left(r_nX_1,r_nX_2,r_nX_3,
+       \kappa r_nt+\tfrac12r_n^2X_1X_2\right),\\
+\|F_n\|_{L^2(\mathbb R^4,dXdt)}&=1
+\end{aligned}
+\tag{106.6}
+$$
+
+converge weakly to zero in global $L^2(\mathbb R^4)$ and strongly to zero in $L^2(K)$ for every compact $K\subset\mathbb R^4\setminus\{0\}$. They have no globally strongly convergent subsequence. The shear and the Jacobian $d\mu=\kappa r_n^4dXdt$ in (106.6) are those of the original states; no nonlinear Fourier-modulus comparison is inverted.
+
+**Proof.** Write $\mathcal G(\xi,s)=\Gamma(\xi,s+x y/2)$ and, for $r>0$, put
+
+$$
+\begin{gathered}
+W_r(X,t)=r^2\mathcal G(rX,\kappa rt),\\
+Y_{1,r}=\partial_{X_1}-\frac{rX_2}{2\kappa}\partial_t,
+\quad Y_{2,r}=\partial_{X_2}+\frac{rX_1}{2\kappa}\partial_t,
+\quad Y_{3,r}=\partial_{X_3},\qquad
+\mathcal L_r=-\sum_iY_{i,r}^2.
+\end{gathered}
+\tag{106.7}
+$$
+
+The exact original marginal and homogeneous bound, already supplied by §§82–85 and (102.2), imply
+
+$$
+\begin{gathered}
+\int_{\mathbb R}W_r(X,t)dt=\frac1{4\pi\kappa|X|}
+ \quad(X\ne0),\\
+0\le W_r(X,t)
+ \le B_\Gamma r^{1/2}
+          \bigl(r^2|X|^4+\kappa^2t^2\bigr)^{-3/4}.
+\end{gathered}
+\tag{106.8}
+$$
+
+The second formula is only an upper bound for the same $\Gamma$. In particular, for fixed $d>0$, $W_r\le C_d r^{1/2}$ on $|t|\ge d$, and its central mass outside $|t|<d$ is $O(r^{1/2}d^{-1/2})$, uniformly in $X$. Together with the first formula this is an approximate identity in the central variable on each compact set $0<b\le|X|\le B$. It is not a pointwise replacement of the original field by a trace multiplier.
+
+We shall use two direct consequences on sets away from the diagnostic origin. First, for each compact $K\subset\mathbb R^4\setminus\{0\}$ and each $\tau>0$, there is $C_{K,\tau}$, independent of $0<r\le1$, such that
+
+$$
+\int W_r|h|^2dXdt
+ \le\tau\|\partial_th\|_2^2+C_{K,\tau}\|h\|_2^2
+ \quad\bigl(h\in H^1(\mathbb R^4),\ \operatorname{supp}h\subset K\bigr).
+\tag{106.9}
+$$
+
+To see this, choose $b,d>0$ so that $K\cap\{|X|<b\}$ is contained in $\{|t|\ge d\}$. On $|X|<b$ the second bound in (106.8) bounds the integral by $C_d\|h\|_2^2$. On $|X|\ge b$ its marginal bounds it by $(4\pi\kappa b)^{-1}\int\sup_t|h(X,t)|^2dX$. The one-dimensional inequality used in (104.32) bounds this last integral by $\|h\|_2\|\partial_th\|_2$. Young's inequality gives (106.9). This proof applies to complex $h$.
+
+Second, if $r_j\to0$, $H_j$ is bounded in $H^1$ locally off zero, and $H_j\to H$ strongly in $L^2$ locally off zero, then for every $\phi\in C_c^\infty(\mathbb R^4\setminus\{0\};\mathbb C)$,
+
+$$
+\int W_{r_j}\overline\phi H_jdXdt
+ \longrightarrow\frac1{4\pi\kappa}
+       \int_{\mathbb R^3}\frac{\overline{\phi(X,0)}H(X,0)}{|X|}dX.
+\tag{106.10}
+$$
+
+Here the right side uses the local Sobolev trace. For a detailed justification, split the support of $\phi$ into a part away from $t=0$ and a part with $|X|$ bounded below. The first part tends to zero by (106.8) and the local $L^2$ bound. On the second part insert a fixed smooth cutoff, supported away from zero and equal to one on a neighborhood of that part and its projection onto $t=0$. For the resulting $h_j=\overline\phi H_j$, both the $H^1$ norms and the horizontal supports are bounded. Its traces converge strongly in $L^2$: the squared trace norm of a compactly supported difference is bounded by its $L^2$ norm times a bounded central derivative norm, using the same one-dimensional trace inequality. For almost every $X$,
+
+$$
+|h_j(X,t)-h_j(X,0)|
+ \le |t|^{1/2}\|\partial_th_j(X,\cdot)\|_2.
+$$
+
+On $|t|<d$, integration against $W_{r_j}$ and its marginal gives an error at most $C d^{1/2}$, by Cauchy–Schwarz in the bounded horizontal support. On $|t|\ge d$, the bound $C r_j^{1/2}|t|^{-3/2}$ controls the integral of $h_j$ by its bounded compact-support $L^1$ norm and controls the subtracted trace by $C r_j^{1/2}d^{-1/2}$ times its bounded $L^1$ norm. Fix $d$, let $j\to\infty$, and then let $d\downarrow0$. The marginal identity and strong trace convergence give (106.10). Smooth partitions of the support justify the indicated split, including where $X=0$ but $t\ne0$.
+
+We next prove the local bounds needed to apply (106.10) to the actual zooms. First restrict to any subsequence on which
+
+$$
+r_n\ge\ell_n:=\sqrt{M_n}.
+\tag{106.11}
+$$
+
+Since $r_n\to0$ and $\epsilon_n\log(1/M_n)\to0$, its central coefficient satisfies
+
+$$
+b_n=(\kappa r_n)^{-\epsilon_n}\longrightarrow1.
+\tag{106.12}
+$$
+
+Indeed eventually $\kappa r_n<1$, and
+$0\le-\epsilon_n\log(\kappa r_n)
+\le\epsilon_n\log(1/M_n)/2+\epsilon_n|\log\kappa|$.
+The unitary coordinate map in (106.6) sends the original full form domain exactly onto the distributional intersection defined by $Y_{i,r_n}F\in L^2$ and $|D_t|^{\sigma_n/2}F\in L^2$. Changing variables in the actual full form equation, and dividing its kinetic coefficient by $a r_n^{-2}$, gives on that entire transformed domain
+
+$$
+\sum_i\langle Y_{i,r_n}\psi,Y_{i,r_n}F_n\rangle
+ +b_n\langle|D_t|^{\sigma_n/2}\psi,
+                |D_t|^{\sigma_n/2}F_n\rangle
+ =\frac{g_n}{a}\int W_{r_n}\overline\psi F_ndXdt.
+\tag{106.13}
+$$
+
+There is no change of source, central spectral convention or interacting operator domain in this identity. In particular it holds for complex states and their legitimate form tests, without requiring $\Gamma v_n\in L^2$.
+
+The global low-order moment in the commutator estimate is bounded. Using the unitary central transform and spectral Hölder as in (104.8),
+
+$$
+\begin{gathered}
+D_{\epsilon_n}[v_n]
+ \le\left(\frac{D_{\sigma_n}[u_n]}{M_n}\right)^{\epsilon_n/\sigma_n}
+ =O(1),\\
+D_{\epsilon_n}[F_n]
+ =(\kappa r_n)^{\epsilon_n}D_{\epsilon_n}[v_n],\qquad
+b_n\bigl(1+D_{\epsilon_n}[F_n]\bigr)
+ =b_n+D_{\epsilon_n}[v_n]=O(1).
+\end{gathered}
+\tag{106.14}
+$$
+
+Here $D_\nu[F]=\||D_t|^{\nu/2}F\|_2^2$ for diagnostic functions, and $D_\nu[v_n]$ still uses the original $w$ coordinate. The boundedness is a consequence of the supplied actual-state limits, not an extra spectral cutoff.
+
+Fix a real $\chi\in C_c^\infty(\mathbb R^4\setminus\{0\})$. Multiplication by $\chi$ and $\chi^2$ preserves the transformed domain. For the central domain this is the Fourier convolution multiplier bound of §104.2; for the horizontal derivatives it is the distributional product rule with $Y_{i,r_n}\chi$ bounded uniformly for $r_n\le1$. Thus $\psi=\chi^2F_n$ is a legal test in (106.13). The same whole-line double-commutator estimate (104.9), now in $t$ and multiplied by $b_n$, and the horizontal product rule give
+
+$$
+\begin{aligned}
+\sum_i\|Y_{i,r_n}(\chi F_n)\|_2^2
+ +b_nD_{\sigma_n}[\chi F_n]
+ &\le\frac{g_n}{a}\int W_{r_n}|\chi F_n|^2dXdt\\
+ &\quad+C_\chi\{1+b_n(1+D_{\epsilon_n}[F_n])\}.
+\end{aligned}
+\tag{106.15}
+$$
+
+The constants in (104.9) are uniform for $2<\sigma_n\le5/2$ and depend only on the fixed cutoff's central Fourier seminorms. This use of (104.9) includes its control of the nonlocal tails; localization has not been replaced by a fixed-test convergence argument. For each $n$, $\chi F_n\in H^1$: its central derivative is in $L^2$ since $\sigma_n>2$, and its ordinary horizontal derivatives follow from (106.7) on the compact support. No uniform bound has yet been assumed.
+
+Apply (106.9) to the potential term. The inequality $D_2[h]\le\|h\|_2^2+D_{\sigma_n}[h]$, the bounded $g_n$, and $b_n\to1$ allow a fixed sufficiently small $\tau$ to absorb its central derivative term into the left side of (106.15). Since $\|F_n\|_2=1$ and (106.14) bounds the error, this proves
+
+$$
+\sum_i\|Y_{i,r_n}(\chi F_n)\|_2^2
+ +D_{\sigma_n}[\chi F_n]+\|\chi F_n\|_{H^1(\mathbb R^4)}^2
+ \le C_\chi.
+\tag{106.16}
+$$
+
+For the last bound solve (106.7) for the ordinary horizontal derivatives; their extra coefficients are bounded on this support. Thus every subsequence satisfying (106.11) has a further subsequence with $F_n\rightharpoonup F$ in global $L^2$, with weak $H^1$ and strong $L^2$ convergence locally off zero. The local limits agree with the global weak limit. This uses ordinary Rellich compactness and a countable exhaustion, not a bound on the full global $H^1$ norms.
+
+Move the free operators onto a fixed smooth compact test $\phi$ off zero in (106.13). One has
+$\mathcal L_{r_n}\phi\to-\Delta_X\phi$ strongly in global $L^2$, directly from its polynomial coefficients, and
+$b_n|D_t|^{\sigma_n}\phi\to-\partial_t^2\phi$ strongly in global $L^2$, by (106.12) and Fourier dominated convergence. This last convergence is on the whole central line, including the nonlocal tails. Equation (106.10) handles the actual potential term, and $g_n\to g_c$ with $g_c/(4\pi a\kappa)=4/\pi$ gives
+
+$$
+\int_{\mathbb R^4}\nabla\overline\phi\cdot\nabla F\,dXdt
+ =\frac4\pi\int_{\mathbb R^3}
+        \frac{\overline{\phi(X,0)}F(X,0)}{|X|}dX
+ \quad\bigl(\phi\in C_c^\infty(\mathbb R^4\setminus\{0\})\bigr).
+\tag{106.17}
+$$
+
+The left side uses the local $H^1$ limit. This is a conclusion about a diagnostic limit of actual states, rather than a hypothesis prescribing that limit. It imposes no Friedrichs boundary condition at the puncture.
+
+We prove that (106.17) has no nonzero solution in $L^2(\mathbb R^4)\cap H^1_{\rm loc}(\mathbb R^4\setminus\{0\})$. This consumed intermediate uses separation of radial and angular variables, not identification with the original maximal operator. On $S^3\subset\mathbb R^4$ let $\Sigma=\{t=0\}\cap S^3=S^2$ and consider the angular form
+
+$$
+\mathfrak a[h,k]=\int_{S^3}\nabla_S\overline h\cdot\nabla_Sk\,d\omega
+ -\frac4\pi\int_\Sigma\overline h k\,d\omega_\Sigma,
+ \qquad D(\mathfrak a)=H^1(S^3).
+\tag{106.18}
+$$
+
+This is a closed lower-bounded complex form with compact resolvent. Here are its needed hypotheses: the trace estimate on a tubular neighborhood of the compact equator gives
+$\|h|_\Sigma\|_2^2\le\tau\|\nabla_Sh\|_2^2+C_\tau\|h\|_2^2$
+for every $\tau>0$. It follows by integrating the one-dimensional normal trace estimate in finitely many smooth charts; the chart Jacobians are bounded above and below. For sufficiently small $\tau$, adding a fixed multiple of $\|h\|_2^2$ to (106.18) makes its norm equivalent to the complete $H^1$ norm, proving closedness and a lower bound. For a sufficiently large positive shift, the represented inverse maps bounded $L^2$ sets into bounded $H^1$ sets by coercivity of the shifted form. Compactness of $H^1(S^3)\hookrightarrow L^2(S^3)$ therefore makes that inverse compact. It is self-adjoint and injective. Closed-form representation and the compact self-adjoint spectral theorem therefore give a complete orthonormal basis $e_j\in H^1(S^3)$ with real eigenvalues $\lambda_j$ and
+$\mathfrak a(h,e_j)=\lambda_j\langle h,e_j\rangle$ for all $h\in H^1(S^3)$. No angular simplicity, sign or sharp lower bound for $\lambda_j$ is needed.
+
+Write $R=(|X|^2+t^2)^{1/2}$ and
+$f_j(R)=\langle e_j,F(R,\cdot)\rangle_{L^2(S^3)}$. Local $H^1$ regularity off zero and the trace inequality extend (106.17), by smooth density, to compactly supported $H^1$ tests on every radial annulus. In particular $\phi=\zeta(R)e_j(\omega)$ is legal for $\zeta\in C_c^\infty(0,\infty)$. In polar variables the interface term has radial factor $R\,dR$, since $dX=R^2dR\,d\omega_\Sigma$ on $t=0$ and its weight is $R^{-1}$. The angular gradient term has the same factor. Consequently
+
+$$
+\int_0^\infty
+ \bigl(R^3\overline{\zeta'}f_j'+\lambda_jR\overline\zeta f_j\bigr)dR=0,
+\qquad
+\int_0^\infty R^3|f_j(R)|^2dR<\infty.
+\tag{106.19}
+$$
+
+The first equation is the Euler equation
+$-f_j''-3R^{-1}f_j'+\lambda_jR^{-2}f_j=0$
+distributionally on $(0,\infty)$; its solutions are classical there. If $\lambda_j>-1$, put $\nu_j=\sqrt{1+\lambda_j}>0$. Then
+$f_j=A_jR^{-1+\nu_j}+B_jR^{-1-\nu_j}$.
+Integrability at infinity first forces $A_j=0$. When $\nu_j\le1$ it also forces $B_j=0$, including the logarithmically divergent case $\nu_j=1$. When $\nu_j>1$, integrability at zero forces $B_j=0$. If $\lambda_j=-1$, the solutions are $R^{-1}(A_j+B_j\log R)$ and no nonzero solution is integrable at infinity with weight $R^3$. If $\lambda_j<-1$, the solutions are $R^{-1}(A_je^{i\tau_j\log R}+B_je^{-i\tau_j\log R})$, $\tau_j=\sqrt{-1-\lambda_j}$. For a nonzero pair the nonnegative squared oscillatory factor has a positive mean over its logarithmic period, so the weighted integral at infinity diverges. Thus $f_j=0$ for every $j$. Completeness of the angular basis, and the countability of that basis, give $F=0$ almost everywhere. This proves the intermediate at precisely the punctured local-regularity level obtained from the actual equation; no extension condition at $R=0$ was inserted.
+
+Every subsequential limit extracted under (106.11) is therefore zero. The relative compactness in (106.16) on each compact set off zero implies strong local convergence of the entire subsequence there. Global weak convergence to zero follows by testing first on compact sets away from zero, whose $L^2$ functions are dense in global $L^2$, and using $\|F_n\|_2=1$.
+
+It remains to handle the indices with $r_n<\ell_n$, without assuming (106.12) on those indices. A compact diagnostic set in (106.6) is contained in $|X|\le B$, $|t|\le B$ for some $B<\infty$. Its original image has central sections of length at most $2\kappa B r_n\le2\kappa B\ell_n$. The actual-state estimate (104.15), valid for arbitrary moving central sections, shows that its probability tends to zero. Thus on these indices $F_n\to0$ strongly on every compact set, including sets meeting zero, and hence weakly in global $L^2$. Combining the two sets of indices proves the zoom conclusions for every $r_n\to0$.
+
+By the exact Jacobian in (106.6), the diagnostic annulus in (106.3) corresponds to $c<(|X|^2+t^2)^{1/2}<C$. Its closure is compact and avoids zero, proving (106.3). Conversely (106.3) for all fixed $c,C$ contains every compact set off zero in such an annulus, so it implies strong convergence there and then global weak convergence by density. The conserved norm excludes a globally strongly convergent subsequence.
+
+Finally, if (106.4) failed, choose $\delta_j\downarrow0$, strictly increasing indices $n_j$ and $0<r_j\le\delta_j$ with annular masses bounded below by a fixed positive number. Apply (106.3) to that subsequence to obtain a contradiction. A failure of (106.5) similarly chooses orders $\sigma_j\to2$, actual states in $\mathcal Z_{\sigma_j}$ and $r_j\to0$ with a positive lower bound. Normalize those states to $V=1$ and apply the theorem, whose inputs and proof hold for every actual selection. This proves both uniform assertions in their stated order of limits. $\square$
+
+**Corollary 106.3 (centered original Carnot zooms at arbitrary shrinking radii).** Under Definition 106.1, let $h_n>0$ be any sequence tending to zero. Use the original dilation $\delta_h(x,y,z,w)=(hx,hy,hz,h^2w)$ and set
+
+$$
+Z_n(q)=h_n^{5/2}v_n(\delta_{h_n}q),\qquad
+\mathcal A=\{q:\xi(q)=0\}.
+\tag{106.20}
+$$
+
+Then $\|Z_n\|_{L^2(G,d\mu)}=1$, $Z_n\rightharpoonup0$ in global $L^2(G,d\mu)$, and $Z_n\to0$ strongly in $L^2(K,d\mu)$ for every compact $K\subset G\setminus\mathcal A$. There is no globally strongly convergent subsequence. The exceptional set is explicitly the central line $x=y=z=0$; no strong conclusion on compact sets meeting that line is asserted at arbitrary radii.
+
+**Proof.** The original Haar Jacobian of $\delta_h$ is $h^5$. In the original shear coordinate $s(\delta_hq)=h^2s(q)$, so
+
+$$
+R_\kappa(\delta_hq)
+ =h\bigl(|\xi(q)|^2+h^2(s(q)/\kappa)^2\bigr)^{1/2}.
+\tag{106.21}
+$$
+
+On each indicated compact $K$, $|\xi|$ has a strictly positive lower bound, while $|\xi|$ and $|s|$ are bounded above. Hence its image under $\delta_{h_n}$ lies in a diagnostic annulus $c h_n<R_\kappa<C h_n$ with fixed positive $c,C$. Equations (106.3) and (106.21) prove the strong local assertion. The line $\mathcal A$ has Haar measure zero, so compactly supported $L^2$ tests avoiding it are dense in global $L^2$. The norm bound gives global weak convergence to zero; norm one excludes global strong subsequences.
+
+The radius quantifier here extends to every centered $h_n\to0$, but the local conclusion avoids $\mathcal A$. At $h_n=O(M_n^{1/4})$, Theorem 104.4 already gives the stronger conclusion on every compact set and after arbitrary moving translations. That result is reused as stated; this corollary neither extends its moving-center quantifier to larger radii nor supplies its full compact-set conclusion at arbitrary radii. $\square$
+
+**Proposition 106.4 (annular vanishing alone does not remove a source atom).** The conclusions (106.3)–(106.5), considered as statements about probabilities and shrinking annuli, do not imply that a source defect is zero. In the same original chart let $\omega_3=|S^3|$ and define the absolutely continuous probability measures
+
+$$
+d\pi_j(p)=\frac{1}{\kappa\omega_3j}
+ R_\kappa(p)^{-4}
+ \mathbf1_{\{e^{-2j}<R_\kappa(p)<e^{-j}\}}d\mu(p),
+ \qquad j=1,2,\ldots.
+\tag{106.22}
+$$
+
+They converge narrowly to $\delta_e$, while for every $0<c<C<\infty$,
+
+$$
+\sup_{r>0}\pi_j\{cr<R_\kappa<Cr\}
+ \le\frac{\log(C/c)}j\longrightarrow0.
+\tag{106.23}
+$$
+
+**Proof.** The shear followed by $s=\kappa t$ gives $d\mu=\kappa\,d\xi dt$, so radial integration in four variables gives total mass $j^{-1}\int_{e^{-2j}}^{e^{-j}}dR/R=1$. An annulus intersects a logarithmic interval of length at most $\log(C/c)$, giving (106.23). The supports shrink to $e$ in the original topology, proving the narrow limit. These are measure examples only; they are not asserted to solve an actual critical equation or to realize any of its defects. Their role is the exact logical distinction between vanishing fixed-ratio annuli and exclusion of logarithmically spread source probability. $\square$
+
+**Definition 106.5 (suppliers, correspondence and the remaining source problem).** The original field's marginal, positivity, homogeneity and Haar/shear conventions are the supplies of §§82–85, (102.2) and (103.8). Attainment and the actual full-complex equation are §§101.5 and 102.3. The endpoint and subexponential limits used in (106.12)–(106.14) are §103, not new mass or resource estimates. The varying-order localization estimate, its multiplier/domain justification and the actual short-central-section probability bound are (104.9) and (104.15). The exterior probability theorem §105 remains in force without a second proof.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, arXiv:1105.0335v1, Theorem 1.1 and (8)](https://arxiv.org/abs/1105.0335v1), give the mature halfspace trace supply underlying §87 at $n=4$, $\beta_{\rm AFV}=2$: $H(4,2)=2/\pi$ per halfspace and $4/\pi$ on both. The primary theorem is for real functions; the complex extension and its actual-field comparison are the already supplied §87.2. Neither that theorem nor its nonattainment statement is used as an assertion about a maximal punctured domain. In (106.17) the same numerical coefficient is obtained directly from the original marginal and $g_c/(4\pi a\kappa)=4/\pi$. The angular spectral decomposition and its radial integrability proof above explicitly exclude all punctured local-$H^1$, global-$L^2$ solutions of this auxiliary limiting interface equation, rather than inferring that exclusion from the smaller closed trace form's zero kernel.
+
+Closed-form representation and the compact self-adjoint spectral theorem are mature supplies, as in [Teschl, *Mathematical Methods in Quantum Mechanics*, authorized online edition, version February 12, 2009, Theorems 2.13 and 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf). Their client here is the angular form (106.18) on $L^2(S^3)$, with closedness, lower bound and compact embedding proved above. They do not identify any original singular operator domain. Ordinary one-dimensional trace estimates, Sobolev/Rellich compactness, spectral Hölder, Fourier dominated convergence, polar coordinates and the Euler equation are consumed intermediates inside the actual-state proof. The source-specific deduction is repository-derived: the exact diagnostic equation, uniform local control, its actual-to-interface limit, and the exclusion of every shrinking fixed-ratio probability annulus, with the directly consumed zoom consequences. No exhaustive literature-priority or world-originality assertion is attached to these deductions.
+
+For the original maximal operator $S^*$ of (104.5), §§104–105 still yield exactly
+
+$$
+v\in\ker S^*,\qquad m_\infty=0,\qquad
+\|v\|_2^2+m_e=1,\qquad
+\ker S^*\cap\mathcal Q_c=\{0\}.
+\tag{106.24}
+$$
+
+Theorem 106.2 does not determine $m_e$, prove triviality or existence of $\ker S^*$, or decide which maximal zero states or defects are attained by actual selections. Its auxiliary interface equation arises only after a shrinking diagnostic change of variables; its zero-space result is not a domain identification for $S^*$ or a replacement source law. The remaining obligations are a genuinely actual-state bound excluding or determining logarithmic source spreading, an original maximal-domain/attainability analysis, and a surviving probability scale or profile if one exists. No positivity, simplicity, uniqueness, native source-to-state realization or physical space-dimension conclusion follows. These are ordinary theoretical statements; they supply no Lean certification and do not complete the continuing why-three problem.
+
+## 追加锚（本行以下为增补区）
