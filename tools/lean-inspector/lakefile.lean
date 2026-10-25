@@ -342,6 +342,19 @@ private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) 
     return cast (by simp [key]) job
   return cast (by simp [key]) job
 
+-- Only a successful native chunk may enter the ordinary module transaction.
+-- Use the module's package and captured input trace, just as its public facet does.
+private def commitPendingReport (mod : Module) (request : PreparedArtifact) : JobM ReportArtifact :=
+    withCurrPackage mod.pkg do
+  setTrace request.inputTrace
+  let pending := request.file.addExtension "pending"
+  try
+    buildArtifact request.file do
+      IO.FS.rename pending request.file
+      pure PUnit.unit
+  finally
+    removeFileIfExists pending
+
 private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
@@ -355,21 +368,18 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
     if let some row := request.artifact? then
       setTrace row.outputTrace
       return row
-    let pending := request.file.addExtension "pending"
     -- Lake removes a stale output before invoking the build callback. Retain
     -- the existing module transaction only for FIB leaves that can reuse it.
     -- This is a transient rename, never a second cache or a freshness key.
     let previous := request.file.addExtension "fib-previous"
     if !request.args[6]!.isEmpty && (← previous.pathExists) && !(← request.file.pathExists) then
       IO.FS.rename previous request.file
-    let batched := batch?.isSome && request.args[6]!.isEmpty
-    let preserve := !batched && !request.args[6]!.isEmpty && (← request.file.pathExists)
+    if batch?.isSome && request.args[6]!.isEmpty then
+      return ← commitPendingReport mod request
+    let preserve := !request.args[6]!.isEmpty && (← request.file.pathExists)
     if preserve then IO.FS.rename request.file previous
     let args := request.args.push (if preserve then previous.toString else "")
-    let build := if batched then do
-        IO.FS.rename pending request.file
-        pure PUnit.unit
-      else do
+    let build := do
         request.prepareProduction
         if request.args[6]!.isEmpty then
           proc { (← nativeCommand pkg (#["module"] ++ args)) with env := request.env }
@@ -399,8 +409,6 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
     catch error =>
       if preserve then IO.FS.rename previous request.file
       throw error
-    finally
-      if batched then removeFileIfExists pending
 
 private def nativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := do
   let key := (mod.facet `inspectorModuleReport).key
@@ -479,13 +487,22 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
     try observePhase "lake-source-whitelists" "start" catch _ => pure ()
-    let requests ← artifacts.filterMapM fun request => do
-      if request.artifact?.isSome || !request.args[6]!.isEmpty then return none
-      request.prepareProduction
-      return some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
+    let requests := (artifacts.filter fun request =>
+      request.artifact?.isNone && request.args[6]!.isEmpty).qsort fun a b => a.args[1]! < b.args[1]!
+    -- Keep bounded native batches, committing each successful chunk before
+    -- starting the next. Compiler/projection jobs above remain asynchronous.
+    let mut start := 0
+    while start < requests.size do
+      let chunk := requests.extract start (min (start + 100) requests.size)
+      for request in chunk do request.prepareProduction
+      runBatch pkg (chunk.map fun request =>
+        ("produce", request.args.set! 5 (request.file.addExtension "pending").toString))
+      for request in chunk do
+        let some mod := (← getWorkspace).findModule? request.args[1]!.toName
+          | error s!"registered report module is not in the Lake workspace: {request.args[1]!}"
+        discard <| commitPendingReport mod request
+      start := start + chunk.size
     try observePhase "lake-source-whitelists" "finish" catch _ => pure ()
-    unless requests.isEmpty do
-      runBatch pkg requests
   let batch ← registerJob "Inspector native production batch" batch
   reportState.batch.set (some (members, batch))
   let mut rows := #[]
