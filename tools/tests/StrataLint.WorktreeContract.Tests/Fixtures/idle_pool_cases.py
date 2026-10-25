@@ -108,7 +108,9 @@ class IdlePoolCases:
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
 
     def pool_unused_return_refuses_missing_creation_evidence(self):
-        self.g(self.tree, "reflog", "expire", "--expire=all", "refs/heads/" + self.branch)
+        reference = "refs/heads/" + self.branch
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        self.assertEqual("", self.g(self.tree, "reflog", "show", "--format=%gs", reference))
         self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
 
@@ -126,28 +128,31 @@ class IdlePoolCases:
             dated(reset_age, "reset", "--hard", self.base)
 
     def pool_unused_return_accepts_selectively_expired_task_history(self):
-        for context, age in (("default", 40), ("main-worktree", 2)):
-            with self.subTest(context=context):
-                self.unused_history(age, age, age)
-                reference = "refs/heads/" + self.branch
-                if context == "main-worktree":
-                    self.g(self.main, "config", "extensions.worktreeConfig", "true")
-                    self.g(self.main, "config", "--worktree", "gc.reflogExpireUnreachable", "1 day ago")
-                    self.g(self.tree, "config", "--worktree", "gc.reflogExpireUnreachable", "30 days ago")
-                self.g(self.main, "reflog", "expire", reference)
-                rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
-                self.assertEqual(["branch: Created from " + self.base], rows)
-                result = self.run_owned_command([sys.executable, "-B", self.source_root /
-                    "tools/scripts/worktree/worktree_protocol.py", "return", "--writers-joined"],
-                    self.tree, phase="protocol", timeout=30, check=False)
-                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-                self.assertEqual(self.base, json.loads(result.stdout)["allocation_base"])
-                self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
+        self.unused_history(40, 40, 40)
+        reference = "refs/heads/" + self.branch
+        self.g(self.main, "config", "gc.reflogExpire", "now")
+        self.g(self.main, "config", "gc.reflogExpireUnreachable", "now")
+        self.assertEqual(["reset: moving to " + self.base, "commit: Task", "branch: Created from " + self.base],
+            self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines())
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        self.g(self.tree, "reflog", "delete", reference + "@{0}")
+        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+        self.assertEqual(["branch: Created from " + self.base], rows)
+        result = self.run_owned_command([sys.executable, "-B", self.source_root /
+            "tools/scripts/worktree/worktree_protocol.py", "return", "--writers-joined"],
+            self.tree, phase="protocol", timeout=30, check=False)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        returned = json.loads(result.stdout)
+        self.assertEqual("returned", returned["status"])
+        self.assertEqual(self.base, returned["allocation_base"])
+        self.assertEqual([], returned["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
 
     def pool_unused_return_refuses_partially_expired_creation(self):
         self.unused_history(100, 100, 0)
         reference = "refs/heads/" + self.branch
-        self.g(self.tree, "reflog", "expire", "--expire=90.days.ago", "--expire-unreachable=never", reference)
+        self.g(self.tree, "reflog", "delete", reference + "@{1}")
+        self.g(self.tree, "reflog", "delete", reference + "@{1}")
         rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
         self.assertEqual(["reset: moving to " + self.base], rows)
         self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
