@@ -9,7 +9,7 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
     private const string Module = "D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sparse positive density matrices in the fixed three-level energy basis have "
-            + "a primitive phase-sensitive relation of degree twice the upper energy minus one.",
+            + "a phase-sensitive relation of degree twice the upper energy minus one.",
         H("Sparse Shared Energy Relations"), Blocks(
             Def("matrix", "sparseMatrix", "Literal sparse Hermitian matrices",
                 "The diagonal entries are one third. The entries between the first and "
@@ -35,7 +35,7 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
             Def("second", "sigma", "Second sparse density state",
                 "The second native state has the same diagonal and zero entries and "
                     + "uses the resonant phase on the edge between the first and third levels."),
-            Def("relation", "starMonomial", "The primitive supported monomial",
+            Def("relation", "starMonomial", "The phase-sensitive supported monomial",
                 "The monomial is the entry from level two to level one to the power m, "
                     + "times the entry from level zero to level two to the power m minus one. "
                     + "Natural powers retain the value one at exponent zero, even at zero entries."),

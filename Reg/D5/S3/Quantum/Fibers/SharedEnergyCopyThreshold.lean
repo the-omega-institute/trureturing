@@ -195,6 +195,8 @@ private theorem rejected : ¬ arena.Law rejectedReadout := by
   have he := h 2 (by omega) alpha hd hw (-1) (by norm_num)
   norm_num [rejectedReadout, realize, alpha, monomial, Fin.prod_univ_succ,
     Matrix.one_apply, Matrix.zero_apply] at he
+  change (1 : ℂ) = 0 at he
+  norm_num at he
 
 def family : Registration arena (type_of% sparse_low_monomials) where
   actual := actual
