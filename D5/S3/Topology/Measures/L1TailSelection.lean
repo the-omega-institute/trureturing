@@ -9,7 +9,7 @@
 import D5.S3.Topology.Measures.L1WeakExtraction
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 /-! A countable diagonal selection for the hard-tail concentration argument. -/
 
@@ -42,7 +42,7 @@ theorem exists_selection
       simpa only [Real.norm_eq_abs, abs_of_nonneg (hQ n k).1] using (hQ n k).2)
   have hclim (k : ℕ) : Tendsto (fun n => Q (a n) k) atTop (𝓝 (c k)) :=
     hc k (ContinuousLinearMap.id ℝ ℝ)
-  have hcpos (k : ℕ) : 0 ≤ c k := le_of_tendsto' (hclim k) (fun n => (hQ (a n) k).1)
+  have hcpos (k : ℕ) : 0 ≤ c k := ge_of_tendsto' (hclim k) (fun n => (hQ (a n) k).1)
   have hcm : Antitone c := fun k l hkl =>
     le_of_tendsto_of_tendsto' (hclim l) (hclim k) (fun n => hmono (a n) hkl)
   have hcb : BddBelow (range c) := ⟨0, by rintro _ ⟨k, rfl⟩; exact hcpos k⟩
@@ -67,7 +67,7 @@ theorem exists_selection
         (hclim K).eventually (Metric.ball_mem_nhds (c K) (by positivity))] with n hn hd
       exact ⟨hn, hd⟩
     obtain ⟨n, hn, hd⟩ := ev.exists
-    exact ⟨K, n, hn, hiK, hpK, (dist_triangle _ _ _).trans_lt (by linarith)⟩
+    exact ⟨K, n, hn, hiK, hpK, (dist_triangle (Q (a n) K) (c K) α).trans_lt (by linarith)⟩
   choose cut next hnext hcut hp herr using step
   let b : ℕ → ℕ := Nat.rec 0 (fun i n => next i n)
   have hb (i : ℕ) : b (i + 1) = next i (b i) := rfl
