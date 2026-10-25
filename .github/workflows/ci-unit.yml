@@ -47,10 +47,16 @@ jobs:
         env:
           UNIT: ${{ inputs.unit }}
         run: python3 tools/scripts/workflow/ci_checks.py describe "$UNIT"
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        if: fromJSON(steps.definition.outputs.definition)['dotnet']
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - if: fromJSON(steps.definition.outputs.definition)['dotnet']
         uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
           cache: true
           cache-dependency-path: ${{ fromJSON(steps.definition.outputs.definition)['cache-dependency-path'] }}
       - id: prepared
