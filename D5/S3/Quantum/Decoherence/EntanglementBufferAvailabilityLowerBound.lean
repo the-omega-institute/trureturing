@@ -7,10 +7,6 @@
    digest: The always-failing purification policy minimizes buffer availability. -/
 
 import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
 
 /-! Availability bound for the discrete-time entanglement-buffer formula. -/
 
