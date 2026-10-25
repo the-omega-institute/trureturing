@@ -1763,3 +1763,249 @@ The complement includes the natural $M\asymp U$ squarefree good duals;
 its aggregate real part still requires joint cancellation. This
 application proves no complete J24 estimate, inverse-fourth saving,
 signed Robin restoration or RH conclusion.
+
+
+### Retaining the shorter modulus and both actual side lengths
+
+The same sector $\mathfrak D_{P,\le H}$ defined before (J26) admits
+an estimate with no $P^{1/3}$ loss. Reuse de Faveri v1 Proposition 8.1,
+(8.1), and Example 2.2 in exactly the character correspondence of
+(J28)--(J31), together with the owned Gauss, Poisson and smooth-calculus
+applications through (J33). For the original $c_{\tau,T}$ of (J24),
+$T=U^{1/12}$, and its actual $b=\lambda_{\mathrm{II},b}$, or the stated
+$C_b\tau_k$ envelope, the source-conditional strengthening is
+
+$$
+\boxed{
+|\mathfrak D_{P,\le H}|
+ \ll C_b^4U^{1+\varepsilon}(H^{1/2}+H^{2/3}),
+ \qquad 1\le P<U^{1/6},\quad H\ge1.
+}
+\tag{J34}
+$$
+
+This is the identical complete weighted sector: the parity selector is
+still inserted in each original Poisson series, before separation and
+common-$e$ detection. In particular all repeated cores, occupancies,
+common-$e$ signs, original $\ell,r$ expansions, bad duals, finite
+components and derivative profiles in that definition remain present.
+The constants and aggregate profile/height costs are those of
+(J26)--(J33). Uniformly in the same $P$ range,
+
+$$
+\boxed{
+H=U^{1/8}
+ \quad\Longrightarrow\quad
+|\mathfrak D_{P,\le U^{1/8}}|
+ \ll C_b^4U^{13/12+\varepsilon}.
+}
+\tag{J35}
+$$
+
+This fixed cutoff also pays the sum over all the $P$ dyads with their
+original signs. It enlarges the tapered paid sector of (J27), whose
+cutoff is $U^{1/8}P^{-1/2}$; it does not change that earlier estimate.
+
+**Orient each actual allocation before applying the supplier.** In
+(J28)--(J29), fix the cores, the original finite component and heights,
+$\widetilde s$, $e$ and its allocations, and the squarefree parity
+ideal $\beta$. Let
+
+$$
+Q=\min(L_1,L_2),\qquad L=\max(L_1,L_2),\qquad
+K=QL\asymp X/q_e,\qquad W_a=D/q_{t_a}.
+$$
+
+On nonempty annuli $Q,L\ge1$ up to fixed annular constants, which are
+absorbed throughout, and $L\ll W_a$. Cubic reciprocity in the pinned
+`lem:fixed-gauss-phase` gives $\kappa_u(v)=\kappa_v(u)$ on coprime
+primary inputs. Both sides are zero on collisions, so this equality
+also holds on the algebraically extended scalar in (J29). If $v$ is
+the shorter variable, interchange the two entire vectors and their
+separate masks and heights. The scalar and its fixed outside phases
+are unchanged. In particular this operation does not replace sextic
+reciprocity by a sign-free assertion: its original $\mathcal R$ factor
+and the negative-root side's $-1$ factor remain exactly as in (J28).
+
+The shorter variable is now the squarefree modulus $\mathfrak q$ in
+Proposition 8.1. Its actual vector is the corresponding vector of
+(J28) multiplied by $\overline{\chi_{\mathfrak q}(\beta)}$, as in
+(J30), and is independent of the other original convolution variable
+and $z$. The remaining convolution coefficient, including its dual
+zeros, is removed only by the same Cauchy inequality used for (J31).
+Thus (J31) applies with $(A,B;Q)=(L,Z;Q)$; it is not an application
+to a moving vector or a new optimized vector. Example 2.2 and the
+precise primary cubic reciprocity already checked there identify the
+source character in either orientation. Its exclusion of the prime
+above $3$ is fixed; the other original excluded primes and core
+characters stay coefficient masks or factors, not growing bad data
+for the supplier. The outer $z$ remains arbitrary, and $(\beta,z)>1$
+is allowed. No cube-free inner extension from Remark 8.2 is needed.
+
+For the function $F$ in (J31), retaining the actual product gives
+
+$$
+F(L,Z;Q)\ll LZ+K^{2/3}Z^{2/3},
+ \qquad 1\le Q\le L,\quad Z\ge1.
+\tag{J36}
+$$
+
+Indeed, if $Z\le L$, the two mixed terms are
+$Z^{2/3}L^{1/3}Q$ and $Z^{1/3}L^{2/3}Q^{2/3}$.
+Their ratios to $K^{2/3}Z^{2/3}$ are respectively
+$(Q/L)^{1/3}$ and $Z^{-1/3}$, both at most one.
+If $Z\ge L$, the ratios are $(Q/Z)^{1/3}$ and $L^{-1/3}$,
+again at most one. This comparison has no upper restriction on $Z$.
+It preserves $K$ in place of the earlier bound $D^2$ and uses the
+shorter modulus in the first ratio.
+
+Consequently a single allocation satisfies
+
+$$
+\sum_{z\sim Z}|H_{\beta z^2}|^2
+ \ll C_b^4(UZ)^\varepsilon K
+       [W_aZ+K^{2/3}Z^{2/3}].
+$$
+
+Both original coefficients $b(k_1u)b(k_2v)$ remain those in (J28).
+Their separate squared norms supply the factor $C_b^4K$; their fixed
+allocated divisor factors are absorbed by $U^\varepsilon$.
+No multiplicativity, cancellation or differentiability of $b$ is used.
+For $m_{\rm good}=\beta z^2\sim M$, use the same parity counts as in
+(J32): the sums of $Z$ and $Z^{2/3}$ over $q_\beta\le H$ are at most
+$M^{1/2}H^{1/2}$ and $M^{1/3}H^{2/3}$. Empty boxes are omitted, so
+these statements hold also for $H>M$. Cauchy over the actual
+allocations costs only divisors. Summing the common ideal $e$ uses
+$\sum_{q_e\ll X}\tau_j(e)/q_e\ll U^\varepsilon$ for the first term
+and the convergent $\sum_e\tau_j(e)/q_e^{5/3}$ for the second, with
+fixed $j$. Thus the complete positive side norm obeys
+
+$$
+\boxed{
+\sum_{\substack{e,\,m_{\rm good}\sim M\\
+ q_{r_2(m_{\rm good})}\le H}}|H_{a,e}(m)|^2
+ \ll C_b^4(UM)^\varepsilon X
+ \left[W_aM^{1/2}H^{1/2}
+           +X^{2/3}M^{1/3}H^{2/3}\right].
+}
+\tag{J37}
+$$
+
+The other side has its own shorter-variable choice, actual $Y$ and
+$W_c=D/q_{t_c}$. The choices need not agree across the two sides or
+across allocations: each bounds a complete positive side norm.
+Cauchy then pairs the two norms on the same original $(e,m)$ set.
+The common-$e$ Möbius coefficient, $\overline{\rho(m)}$ and all other
+outer phases are retained in the signed pairing, with their absolute
+values bounded at this step. No positivity of the selected physical
+contraction is asserted.
+
+**Restore all four unequal-side cross products.** Keep
+$C,R,S,G,X_0,Y_0$ from (J19). The actual lengths satisfy
+$X\le X_0=U/(C^2R^2G)$ and $Y\le Y_0=U/(C^2S^2G)$, while
+$W_a\asymp D/(CR)$ and $W_c\asymp D/(CS)$. Restoring the two
+original $D^{-1}$ coefficients and the original Poisson factor, then
+counting the cores in their dyads, gives the positive majorant
+
+$$
+\frac{C_b^4(UM)^\varepsilon GC\sqrt{RS}}{\kappa}
+ \sqrt{\mathcal B_a(M,H)\mathcal B_c(M,H)},
+\quad
+\begin{cases}
+\mathcal B_a=W_aM^{1/2}H^{1/2}+X_0^{2/3}M^{1/3}H^{2/3},\\
+\mathcal B_c=W_cM^{1/2}H^{1/2}+Y_0^{2/3}M^{1/3}H^{2/3}.
+\end{cases}
+\tag{J38}
+$$
+
+Occupancy ideals remain in the original coefficients, conductor and
+zeros. They are omitted only from this increasing positive majorant:
+they decrease $X,Y$ and the natural dual length and have only a divisor
+number of choices. In particular they do not increase $W_a,W_c$.
+The original caps $q_{t_a},q_{t_c}\le T$ are retained, although no
+additional use of them is needed for the bound below.
+
+For each fixed bad-prime dual part $s$, the natural good-dual scale is
+bounded above by the same
+$N_s=\kappa U/(C^4RSG^2q_s)$ as before (J33).
+Expand the square root in (J38) into its four positive cross products
+before summing dual dyads. Their $M$ powers are $1/2,5/12,5/12,1/3$.
+The original transform and required logarithmic derivatives supply
+arbitrary decay above $N_s$. The dyadic inequality used for (J33)
+therefore replaces each $M^\alpha$ by $N_s^\alpha$, including when
+$N_s<1$, without truncating the complete dual. With a smaller input
+epsilon, the source length loss is absorbed exactly as for (J32).
+The resulting four core costs, in the order first--first,
+first--second, second--first, second--second, are bounded by
+
+$$
+\begin{aligned}
+C_b^4U^{1+\varepsilon}\big[&
+ C^{-2}(RS)^{-1/2}\kappa^{-1/2}q_s^{-1/2}H^{1/2}\\
+&+C^{-11/6}G^{-1/6}R^{-5/12}S^{-7/12}
+       \kappa^{-7/12}q_s^{-5/12}H^{7/12}\\
+&+C^{-11/6}G^{-1/6}R^{-7/12}S^{-5/12}
+       \kappa^{-7/12}q_s^{-5/12}H^{7/12}\\
+&+C^{-5/3}G^{-1/3}(RS)^{-1/2}
+       \kappa^{-2/3}q_s^{-1/3}H^{2/3}\big].
+\end{aligned}
+\tag{J39}
+$$
+
+All four products are needed for asymmetric $X,Y$; no equality of the
+side lengths or allocations is assumed. Every displayed core power
+is nonpositive, so there is no $P$ loss when summing their dyads.
+Since $\kappa=q_\ell^6q_r$, the original $\ell$ sums are respectively
+$\sum q_\ell^{-3}$, $\sum q_\ell^{-7/2}$ and
+$\sum q_\ell^{-4}$, all convergent. The original $r\mid R_0$ sums
+retain powers $q_r^{-1/2},q_r^{-7/12},q_r^{-2/3}$ and cost divisors.
+The bad-prime dual sums have strictly positive decay powers
+$1/2,5/12,1/3$ and converge. Core dyads and allocations cost the
+original $U^\varepsilon$ allowance. The bulk lengths still satisfy
+$X,Y\gg U/P^2\gg U^{1/2}$, so no principal $x=y=1$ exception is added.
+
+Profile separation and restoration are precisely those already
+justified for (J31)--(J33): separate the whole original coupled profile
+on annuli before the fixed-vector application, use smoothness at zero
+and rapid decay at infinity, and restore it by its common coefficient
+measure. The shorter-variable choice depends only on the allocation's
+lengths, not on a moving row. It only exchanges the two original
+separating phases; the source norm bound is uniform in them.
+Minkowski restores all original finite ray/angular presentations and
+required derivatives with the same fixed or polylogarithmic aggregate
+seminorm/height cost. No derivative falls on $b$ and no height budget
+is renewed per component. Since $H^{7/12}\le H^{2/3}$ for $H\ge1$,
+(J39) proves (J34). At $H=U^{1/8}$ the endpoint powers are
+$U^{17/16+\varepsilon}$ and $U^{13/12+\varepsilon}$, proving (J35).
+
+**The enlarged sector has its own exact signed complement.** Let
+$\mathfrak D_{>}^{\rm unif}$ be the actual original expanded sum in
+(J24) selected, in every $P<U^{1/6}$ dyad, by
+$q_{r_2(m_{\rm good})}>U^{1/8}$. Keep every original coefficient,
+parameter, phase, zero, bad dual and profile on this complementary
+support. Exact complementary selectors give
+
+$$
+\operatorname{Re}\sum_\tau E_{6,\,P<U^{1/6}}(c_{\tau,T})
+ =\operatorname{Re}\mathfrak D_{>}^{\rm unif}
+   +\operatorname{Re}\sum_{P<U^{1/6}}
+                      \mathfrak D_{P,\le U^{1/8}},
+ \qquad T=U^{1/12}.
+\tag{J40}
+$$
+
+This complement differs from the tapered $\mathfrak D_{>}$ after
+(J33); the selector $U^{1/8}P^{-1/2}$ there has not been silently
+changed. The second term in (J40) is paid at
+$C_b^4U^{13/12+\varepsilon}$ by (J35). A uniform aggregate real bound
+$\operatorname{Re}\mathfrak D_{>}^{\rm unif}
+\ll C_b^4U^{B_*-\sigma+\varepsilon}$ for some $\sigma>0$, under the
+same original component and derivative contract, would supply the
+saving needed in (J24)--(J25), with exponent
+$\max\{13/12,B_*-\sigma\}<B_*$. That complementary bound is not
+supplied. In particular the natural $M\asymp U$ squarefree good duals
+remain in it and still require joint cancellation. The refinement is
+a source-conditional application of the cited suppliers, with no new
+sieve, literature-priority or Lean-certification claim. It proves no
+large-parity complement estimate, full (J24), inverse-fourth saving,
+signed Robin restoration or RH conclusion.
