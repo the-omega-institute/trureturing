@@ -124,7 +124,17 @@ private theorem unstable_eigenvector :
     unstableVector ≠ 0 ∧
     (asyncMatrix baseMatrix delays 1).map (algebraMap ℝ ℂ) *ᵥ unstableVector =
       (5 / 4 : ℂ) • unstableVector := by
-  sorry
+  constructor
+  · intro hzero
+    have hh := congrFun hzero (0, ⟨0, 0⟩)
+    norm_num [unstableVector] at hh
+  · funext rp
+    unfold Matrix.mulVec dotProduct
+    rw [Fintype.sum_prod_type, Fin.sum_univ_two]
+    rcases rp with ⟨r, i, a⟩
+    fin_cases r <;> fin_cases i <;> fin_cases a <;>
+      norm_num [Fintype.sum_sigma, Fin.sum_univ_two, Fintype.sum_unique,
+        asyncMatrix, baseMatrix, delays, unstableVector, Matrix.map_apply, smul_eq_mul]
 
 private theorem asynchronous_radius :
     ENNReal.ofReal (5 / 4) ≤ radius (asyncMatrix baseMatrix delays 1) := by
