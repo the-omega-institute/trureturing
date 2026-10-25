@@ -11,7 +11,6 @@ open _root_.D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality (l
 open _root_.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped ComplexOrder MatrixOrder
-open Classical
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -29,6 +28,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+open Classical in
 def actual : Realization signature :=
   realize signature (fun _ p B => decide (UniformAttenuation p.2.2.2 B))
     (fun e => nomatch e)
@@ -66,6 +66,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   cases hbad
 
 theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   refine ⟨⟨1, 1, 1, fun _ => 1⟩, (fun _ => 1), (fun _ => 0), ?_⟩
   have hgood : UniformAttenuation
@@ -87,12 +88,14 @@ theorem dependence : ObservationalDependence signature actual := by
 def source_registration : Registration arena claim where
   actual := actual
   bridge := by
+    classical
     constructor
     · intro h d m n A B hm hn hA hB hr
       exact decide_eq_true (h d m n A B hm hn hA hB hr)
     · intro h d m n A B hm hn hA hB hr
       exact of_decide_eq_true (h d m n A B hm hn hA hB hr)
   variation := ⟨by
+    classical
     intro d m n A B hm hn hA hB hr
     exact decide_eq_true (result d m n A B hm hn hA hB hr), rejected, rejected_law⟩
   sensitivity := by
@@ -103,6 +106,7 @@ def source_registration : Registration arena claim where
       exact nomatch e
   dependence := dependence
 
+open Classical in
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation.result)
