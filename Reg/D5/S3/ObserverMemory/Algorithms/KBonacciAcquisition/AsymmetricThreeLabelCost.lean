@@ -94,7 +94,8 @@ def evidence : Registration arena.{z}
     have impossible : (3 : ℕ∞)=2 := atTwo ▸ rfl
     norm_num at impossible
 
-noncomputable def registration : LeanInformationAudit.Contract.Registration
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.AsymmetricThreeLabelCost.original_asymmetric_three_label_cost.{z})
     (type_of% (realize signature actual.readout actual.anchor)) (type_of% (ℕ∞)) Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.AsymmetricThreeLabelCost.informationUnit,
