@@ -40,7 +40,9 @@ private lemma word_diagonal {m : ℕ} (d₀ d₁ : Fin m → ℂ) (s : List Bool
     wordProduct (diagonal d₀) (diagonal d₁) s =
       diagonal (fun k => d₀ k ^ s.count false * d₁ k ^ s.count true) := by
   induction s with
-  | nil => simp [wordProduct, diagonal_one]
+  | nil =>
+    rw [wordProduct.eq_1]
+    simp [diagonal_one]
   | cons b s ih =>
     cases b <;>
       simp only [wordProduct, List.map_cons, List.prod_cons, Bool.false_eq_true,
