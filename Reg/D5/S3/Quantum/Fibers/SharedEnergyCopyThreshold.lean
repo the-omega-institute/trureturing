@@ -279,7 +279,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro h
   cases i
   have he := congrArg (fun X => X (2 : Fin 3) (0 : Fin 3)) h
-  change (1/12 : ℂ) = (1/12 : ℂ) * (phase 2 : ℂ) at he
+  change (1/12 : ℂ) * 1 = (1/12 : ℂ) * (phase 2 : ℂ) at he
   norm_num [phase, Circle.coe_exp, Complex.exp_pi_mul_I] at he
 
 def family : Registration arena (type_of% tensor_monomial_bridge) where

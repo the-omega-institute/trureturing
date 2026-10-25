@@ -406,7 +406,7 @@ private theorem energy_pinch_pairing (m n : ℕ)
   apply Finset.sum_congr rfl
   intro J _
   by_cases h : totalEnergy m n I = totalEnergy m n J
-  · simp [h, h.symm]
+  · simp only [h, ite_true]
   · simp [h, Ne.symm h]
 
 private theorem pinched_trace (m n : ℕ) (r : DensityState (Fin 3)) :
@@ -571,9 +571,10 @@ theorem compatible_effects_iff (m n : ℕ) (r s : DensityState (Fin 3)) :
     have hX : X.PosSemidef :=
       (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm hE).posSemidef
     have hX₁ : (1-X).PosSemidef := by
-      have hpos := map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
-        (sub_nonneg.mpr hE₁)
-      simpa only [map_sub, map_one] using hpos.posSemidef
+      apply Matrix.nonneg_iff_posSemidef.mp
+      change (0 : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ) ≤
+        CStarMatrix.ofMatrixStarAlgEquiv.symm (1-E)
+      exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm (sub_nonneg.mpr hE₁)
     have hP : (1-energyPinch m n X).PosSemidef := by
       rw [← energy_pinch_one m n, ← energy_pinch_sub]
       exact energy_pinch_positive m n _ hX₁
