@@ -155,3 +155,7 @@ one must also identify the source space, metric and transported form
 with the domain in the reused criterion. Nondegeneracy on smooth
 sources alone does not discharge the completed-space hypothesis.
 This source comparison provides no new Robin estimate or RH proof.
+
+## Limits of global imaginary-translation positivity
+
+The [Conrey–Li source](conreyli1998positivity.md) records an existing obstruction to two specified global imaginary-translation positivity conditions in reproducing-kernel function spaces. Their operators and translation domains require separate identification with the actual theta source. Their reported failure neither replaces the complete Weil criterion nor determines the sign on the selected physical-source class.
