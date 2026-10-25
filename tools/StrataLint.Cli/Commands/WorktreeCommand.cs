@@ -118,8 +118,14 @@ internal static class WorktreeCommand
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
-            var claimed = WorktreePoolCommand.TryClaim(options, runner);
-            if (claimed is not null) return claimed;
+            var attachedPath = WorktreePoolCommand.FindAttachedTaskPath(options, runner);
+            if (attachedPath is not null)
+                options = options with { Path = attachedPath };
+            else
+            {
+                var claimed = WorktreePoolCommand.TryClaim(options, runner);
+                if (claimed is not null) return claimed;
+            }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
                 BoundedProcessRunner.HangDetectionBudget).ExitCode == 0)

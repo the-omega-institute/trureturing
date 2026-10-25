@@ -13,21 +13,15 @@ internal static class WorktreePoolCommand
         branch is not null && branch.StartsWith(IdlePrefix, StringComparison.Ordinal)
             && branch.Length > IdlePrefix.Length;
 
+    internal static string? FindAttachedTaskPath(WorktreeOptions options, IWorktreeProcessRunner runner) =>
+        options.PreferIdle
+            ? RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner, resolveGitDirectories: false)
+                .SingleOrDefault(item => item.Branch == options.Branch)?.Path
+            : null;
+
     internal static CommandResult? TryClaim(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
-        if (options.PreferIdle)
-        {
-            var attached = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
-                resolveGitDirectories: false).SingleOrDefault(item => item.Branch == options.Branch);
-            if (attached is not null)
-            {
-                var reused = WorktreeCommand.RecoverInitialization(options with { Path = attached.Path }, runner);
-                if (reused.Success && LeanPinSet.TryReadWorktree(attached.Path, out var reason) is null)
-                    throw new InvalidOperationException(reason);
-                return reused;
-            }
-        }
-        else
+        if (!options.PreferIdle)
         {
             if (!Directory.Exists(options.Path)) return null;
             var attached = runner.Run("git", ["branch", "--show-current"], options.Path,
