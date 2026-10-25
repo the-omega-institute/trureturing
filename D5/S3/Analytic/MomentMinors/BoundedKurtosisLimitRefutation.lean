@@ -99,10 +99,9 @@ private lemma coefficient_lt : Real.sqrt (1 / 2) / 2 < (1 / 2 : ℝ) := by
 private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 2 := by
   let s : ℝ := Real.sqrt (1 / 2)
   have hs2 : s ^ 2 = 1 / 2 := Real.sq_sqrt (by norm_num)
-  have hs : 0 < s := Real.sqrt_pos.mpr (by norm_num)
   have hi : (1 / 2 : ℝ) / (s / 2) = 2 * s := by
-    apply (div_eq_iff (ne_of_gt (div_pos hs (by norm_num)))).mpr
-    nlinarith only [hs2]
+    dsimp only [s]
+    rw [div_div_eq_mul_div, mul_comm (1 / 2 : ℝ), mul_div_assoc, Real.div_sqrt]
   unfold kurtosisBound
   change (s / 2 / (1 / 2) - (1 / 2) / (s / 2)) ^ 2 + 1 = 3 / 2
   rw [hi, show s / 2 / (1 / 2) = s by ring]
