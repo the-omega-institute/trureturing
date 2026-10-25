@@ -107,6 +107,7 @@ internal sealed class SameHandleContinuationDocument : IScribeDocumentDefinition
                         + "modulus, initial local/backend states, exact event tape, terminal local/backend "
                         + "states, earned output and external work. ProtocolRun uses the same B,h,H. "
                         + "All displayed conjunctions and implications retain their indicated scopes.")),
+                    ContinuationPresentation(),
                     Paragraph(Text("The same result holds for every admitted completed acquisition outcome: "
                         + "any ServiceRun from the given actual x has es as its tape, t as its final local "
                         + "state, e as its earned output, the same arithmetic endpoint and exact serviceBill, "
@@ -216,44 +217,68 @@ internal sealed class SameHandleContinuationDocument : IScribeDocumentDefinition
     private static Formula Protocol(Formula a,Formula es,Formula b) => C("ProtocolRun",V("B"),V("h"),V("H"),a,es,b);
     private static Formula Reply(Formula w,Formula x) => C("terminalGcd",V("H"),w,x);
     private static Formula Prediction(Formula c,Formula w) => C("predict",V("H"),c,w);
+    private static Formula ContinuedAt(Formula endpoint) =>
+        C("Continued",V("B"),V("h"),V("H"),Value(V("x")),Entry,endpoint);
+
+    private static DocumentBlock ContinuationPresentation()
+    {
+        var endpoint=V("a");
+        var future=All("W",Words,And(EqOf(Prediction(Entry,V("W")),Reply(V("W"),Value(endpoint))),
+            EqOf(Reply(V("W"),Value(endpoint)),Reply(V("W"),Value(V("x"))))));
+        var current=C("current",C("memory",V("f")));
+        var backend=Value(C("world",V("f")));
+        var cutScratch=C("scratch",V("H"),current,V("V"));
+        var cutExecution=All("V",Words,Ex("z",V("X"),And(
+            Protocol(V("f"),C("continuationEvents",V("V")),Ready(V("z"),cutScratch)),
+            EqOf(Value(V("z")),C("runWord",V("V"),backend)),
+            EqOf(cutScratch,C("res",V("H"),Value(V("z")))),
+            All("W",Words,EqOf(Prediction(cutScratch,V("W")),Reply(C("append",V("V"),V("W")),backend))))));
+        var cuts=All("r",C("ListSignal"),All("f",C("Frame",V("X"),V("H")),
+            Imp(Protocol(Ready(endpoint,Entry),V("r"),V("f")),And(
+                EqOf(C("entry",C("memory",V("f"))),Entry),C("Aligned",V("B"),V("h"),V("H"),V("f")),
+                Imp(EqOf(C("phase",C("memory",V("f"))),C("ready")),And(
+                    EqOf(current,C("res",V("H"),backend)),All("W",Words,EqOf(Prediction(current,V("W")),Reply(V("W"),backend))),cutExecution))))));
+        var scratch=C("scratch",V("H"),Entry,V("V"));
+        var continuations=All("V",Words,Ex("z",V("X"),And(
+            Protocol(Ready(endpoint,Entry),C("continuationEvents",V("V")),Ready(V("z"),scratch)),
+            EqOf(Value(V("z")),C("runWord",V("V"),Value(endpoint))),EqOf(scratch,C("res",V("H"),Value(V("z")))),
+            All("W",Words,EqOf(Prediction(scratch,V("W")),Reply(C("append",V("V"),V("W")),Value(V("x"))))))));
+        var allWords=All("V",Words,All("f",C("Frame",V("X"),V("H")),
+            Imp(Protocol(Ready(endpoint,Entry),C("continuationEvents",V("V")),V("f")),And(
+                EqOf(C("phase",C("memory",V("f"))),C("ready")),
+                EqOf(current,C("scratch",V("H"),Entry,V("V"))),
+                EqOf(backend,C("runWord",V("V"),Value(endpoint))),
+                All("W",Words,EqOf(Prediction(current,V("W")),
+                    Reply(C("append",V("V"),V("W")),Value(V("x")))))))));
+        return new DocumentBlock.Section(H("The complete continuation contract at each backend endpoint"), Blocks(
+            Paragraph(Text("For the same fixed T,X,H,B,h,x and the abbreviations v,e above, let a be any "
+                + "backend endpoint in X. Continued(B,h,H,v,e,a) means exactly the conjunction of the "
+                + "following five formulas, in order. The theorem asserts this entire conjunction at y "
+                + "and at every admitted completed acquisition endpoint y2. The formulas share these "
+                + "fixed parameters; each displayed quantifier and implication keeps its full scope. "
+                + "This is the existing Lean definition Continued with start=readyFrame(a,e,e).")),
+            Paragraph(Text("The installed returned cut is aligned:")),
+            new DocumentBlock.DisplayFormula(C("Aligned",V("B"),V("h"),V("H"),Ready(endpoint,Entry))),
+            Paragraph(Text("Every actual finite protocol prefix preserves entry and alignment; each "
+                + "reachable ready frame has its synchronized reader and every further finite execution:")),
+            new DocumentBlock.DisplayFormula(cuts),
+            Paragraph(Text("Every finite original word has a completed actual execution from the returned cut, "
+                + "with its exact source endpoint, synchronized current and all later predictions:")),
+            new DocumentBlock.DisplayFormula(continuations),
+            Paragraph(Text("Every completed actual execution of such a word has the displayed ready phase, "
+                + "current, arithmetic endpoint and all later predictions:")),
+            new DocumentBlock.DisplayFormula(allWords),
+            Paragraph(Text("Every finite future prediction at the returned cut agrees with both the actual "
+                + "returned source and the entry source, including the empty word:")),
+            new DocumentBlock.DisplayFormula(future)));
+    }
+
     private static Formula Result()
     {
         var competitor=All("S",C("Type"),All("P",C("Controller",V("S"),Residues),All("J",N,
             Imp(All("z",C("NatPair"),Ex("r",C("ListEvent"),Ex("s",V("S"),Ex("u",C("NatPair"),And(
                 C("Run",V("P"),V("H"),C("initial",V("P")),V("z"),V("r"),V("s"),V("u"),C("res",V("H"),V("z"))),
                 LeOf(C("paidReads",V("r")),V("J"))))))),LeOf(Reads,V("J"))))));
-        Formula ContinuedAt(Formula endpoint)
-        {
-            var future=All("W",Words,And(EqOf(Prediction(Entry,V("W")),Reply(V("W"),Value(endpoint))),
-            EqOf(Reply(V("W"),Value(endpoint)),Reply(V("W"),Value(V("x"))))));
-            var current=C("current",C("memory",V("f")));
-            var backend=Value(C("world",V("f")));
-            var cutScratch=C("scratch",V("H"),current,V("V"));
-            var cutExecution=All("V",Words,Ex("z",V("X"),And(
-                Protocol(V("f"),C("continuationEvents",V("V")),Ready(V("z"),cutScratch)),
-                EqOf(Value(V("z")),C("runWord",V("V"),backend)),
-                EqOf(cutScratch,C("res",V("H"),Value(V("z")))),
-                All("W",Words,EqOf(Prediction(cutScratch,V("W")),Reply(C("append",V("V"),V("W")),backend))))));
-            var cuts=All("r",C("ListSignal"),All("f",C("Frame",V("X"),V("H")),
-                Imp(Protocol(Ready(endpoint,Entry),V("r"),V("f")),And(
-                    EqOf(C("entry",C("memory",V("f"))),Entry),C("Aligned",V("B"),V("h"),V("H"),V("f")),
-                    Imp(EqOf(C("phase",C("memory",V("f"))),C("ready")),And(
-                        EqOf(current,C("res",V("H"),backend)),All("W",Words,EqOf(Prediction(current,V("W")),Reply(V("W"),backend))),cutExecution))))));
-            var scratch=C("scratch",V("H"),Entry,V("V"));
-            var continuations=All("V",Words,Ex("z",V("X"),And(
-                Protocol(Ready(endpoint,Entry),C("continuationEvents",V("V")),Ready(V("z"),scratch)),
-                EqOf(Value(V("z")),C("runWord",V("V"),Value(endpoint))),EqOf(scratch,C("res",V("H"),Value(V("z")))),
-                All("W",Words,EqOf(Prediction(scratch,V("W")),Reply(C("append",V("V"),V("W")),Value(V("x"))))))));
-            var allWords=All("V",Words,All("f",C("Frame",V("X"),V("H")),
-                Imp(Protocol(Ready(endpoint,Entry),C("continuationEvents",V("V")),V("f")),And(
-                    EqOf(C("phase",C("memory",V("f"))),C("ready")),
-                    EqOf(current,C("scratch",V("H"),Entry,V("V"))),
-                    EqOf(backend,C("runWord",V("V"),Value(endpoint))),
-                    All("W",Words,EqOf(Prediction(current,V("W")),
-                        Reply(C("append",V("V"),V("W")),Value(V("x")))))))));
-            return And(C("Aligned",V("B"),V("h"),V("H"),Ready(endpoint,Entry)),
-                cuts,continuations,allWords,future);
-        }
         var allAcquisitions=All("rs",C("ListEvent"),All("t2",C("AcquisitionPhase",V("H")),
             All("y2",V("X"),All("l2",Residues,All("n2",N,
                 Imp(C("ServiceRun",V("B"),V("h"),V("p"),C("P",V("H")),V("H"),
