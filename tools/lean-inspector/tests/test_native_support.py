@@ -231,6 +231,7 @@ defaultFacets = ["static"]
                      'tools/scripts/worktree/lean_cache_release.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/worktree/lean-git/git',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
@@ -521,7 +522,7 @@ defaultFacets = ["static"]
         shutil.copyfile(ROOT / name, target)
         if name == "tools/lean-inspector/Inspector.lean":
             target.write_text(transport_inspector(target.read_text()))
-        target.chmod(0o755 if name.endswith('.sh') else 0o644)
+        shutil.copymode(ROOT / name, target)
     def write(self, name, value):
         target = self.root / name
         target.parent.mkdir(parents=True, exist_ok=True)
