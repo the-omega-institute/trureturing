@@ -182,7 +182,7 @@ private lemma pairwise_witness :
   intro u hu v hv θ
   simp only [mem_insert, mem_singleton] at hu hv
   rcases hu with rfl | rfl <;> rcases hv with rfl | rfl
-  · exact ⟨1, by norm_num, by simp⟩
+  · exact ⟨1, by norm_num, by rw [one_smul]⟩
   · exact strong_pair θ
   · obtain ⟨c, hc, hp⟩ := strong_pair θ
     have hc2 : c * c = 1 := by
@@ -190,7 +190,7 @@ private lemma pairwise_witness :
         (abs_eq_iff_mul_self_eq.mp (hc.trans abs_one.symm))
     refine ⟨c, hc, ?_⟩
     rw [hp, smul_smul, hc2, one_smul]
-  · exact ⟨1, by norm_num, by simp⟩
+  · exact ⟨1, by norm_num, by rw [one_smul]⟩
 
 private lemma bound_contradiction (m : ℕ) (hm : 3 ≤ m) (h : (2 : ℝ) ≤ 5 / m) :
     False := by
