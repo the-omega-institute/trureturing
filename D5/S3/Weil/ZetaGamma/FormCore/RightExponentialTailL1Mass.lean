@@ -4,13 +4,7 @@
    mirror-E: none(waiver:actual-halfline-l1-mass)
    anchors: []
    utility: none
-   digest: Literal half-line L1 tail integrability and exact outer mass with its original endpoint trace. -/
-
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Canonical-placement candidate only; no native/build/acceptance was run.
-The original public theorem statements and literal rightExponentialTail
-are retained. This standalone module contains no inverse-B append.
--/
+   digest: Exact endpoint mass and the optimal uniform half-line L1 tail constant. -/
 
 import D5.S3.Weil.ZetaGamma.FormCore.RightExponentialTail
 import Mathlib.Analysis.Convolution
@@ -18,6 +12,8 @@ import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Tactic
+
+/-! Half-line L1 tail integrability and its literal endpoint mass. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -129,7 +125,7 @@ theorem right_exponential_tail_l1_integrable_and_mass
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
     have hts : t + s ∈ Ioi (0 : ℝ) := by
       change 0 < t + s
-      linarith [hs]
+      exact add_pos_of_nonneg_of_pos ht (show 0 < s from hs)
     simp only [G, Set.indicator_of_mem hts]
   have hnegative (t : ℝ) (ht : t ≤ 0) :
       rightExponentialTail k G t =
@@ -171,6 +167,139 @@ theorem right_exponential_tail_l1_integrable_and_mass
   rw [hleft, hwhole, integral_congr_ae hposae,
     hpositive 0 le_rfl] at hparts
   linear_combination hparts
+
+private theorem l1_tail_ofReal (k : ℝ) (v : ℝ → ℝ) (t : ℝ) :
+    rightExponentialTail k (fun x => (v x : ℂ)) t =
+      ((∫ s : ℝ in Ioi 0, Real.exp (-k * s) * v (t + s) : ℝ) : ℂ) := by
+  change (∫ s : ℝ in Ioi 0, (Real.exp (-k * s) : ℂ) * (v (t + s) : ℂ)) = _
+  simp_rw [← Complex.ofReal_mul]
+  exact integral_complex_ofReal
+
+private theorem l1_tail_norm_bound {k : ℝ} (hk : 0 < k) (u : ℝ → ℂ)
+    (hu : IntegrableOn u (Ioi (0 : ℝ))) :
+    (∫ t : ℝ in Ioi 0, ‖rightExponentialTail k u t‖) ≤
+      k⁻¹ * ∫ t : ℝ in Ioi 0, ‖u t‖ := by
+  let v : ℝ → ℂ := fun t => (‖u t‖ : ℂ)
+  have hv : IntegrableOn v (Ioi (0 : ℝ)) := hu.norm.ofReal
+  obtain ⟨hRu, _⟩ := right_exponential_tail_l1_integrable_and_mass hk u hu
+  obtain ⟨hRv, hm⟩ := right_exponential_tail_l1_integrable_and_mass hk v hv
+  have hvreal (t : ℝ) :
+      (rightExponentialTail k v t).re =
+        ∫ s : ℝ in Ioi 0, Real.exp (-k * s) * ‖u (t + s)‖ := by
+    rw [show v = (fun t => (‖u t‖ : ℂ)) from rfl, l1_tail_ofReal]
+    rfl
+  have hpoint (t : ℝ) :
+      ‖rightExponentialTail k u t‖ ≤ (rightExponentialTail k v t).re := by
+    rw [hvreal]
+    simpa only [rightExponentialTail, norm_mul, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)] using
+      norm_integral_le_integral_norm
+        (fun s : ℝ => (Real.exp (-k * s) : ℂ) * u (t + s))
+        (μ := volume.restrict (Ioi (0 : ℝ)))
+  have hzero : 0 ≤ (rightExponentialTail k v 0).re := by
+    rw [hvreal]
+    exact integral_nonneg fun s => mul_nonneg (Real.exp_nonneg _) (norm_nonneg _)
+  have hvmass :
+      (∫ t : ℝ in Ioi 0, v t) = ((∫ t : ℝ in Ioi 0, ‖u t‖ : ℝ) : ℂ) :=
+    integral_complex_ofReal
+  have hmreal :
+      (∫ t : ℝ in Ioi 0, (rightExponentialTail k v t).re) =
+        k⁻¹ * ((∫ t : ℝ in Ioi 0, ‖u t‖) -
+          (rightExponentialTail k v 0).re) := by
+    have hre :
+        (∫ t : ℝ in Ioi 0, (rightExponentialTail k v t).re) =
+          (∫ t : ℝ in Ioi 0, rightExponentialTail k v t).re := by
+      simpa only [RCLike.re_eq_complex_re] using (integral_re hRv)
+    rw [hre, hm, hvmass]
+    simp
+  calc
+    _ ≤ ∫ t : ℝ in Ioi 0, (rightExponentialTail k v t).re :=
+      integral_mono hRu.norm hRv.re hpoint
+    _ = _ := hmreal
+    _ ≤ k⁻¹ * ∫ t : ℝ in Ioi 0, ‖u t‖ := by
+      exact mul_le_mul_of_nonneg_left (sub_le_self _ hzero) (inv_pos.mpr hk).le
+
+private def l1_exp_profile (a : ℝ) (t : ℝ) : ℂ :=
+  (Real.exp (-a * t) : ℂ)
+
+private theorem l1_exp_integrable {a : ℝ} (ha : 0 < a) :
+    IntegrableOn (l1_exp_profile a) (Ioi (0 : ℝ)) :=
+  (integrableOn_exp_mul_Ioi (a := -a) (neg_neg_of_pos ha) 0).ofReal
+
+private theorem l1_exp_norm_mass {a : ℝ} (ha : 0 < a) :
+    (∫ t : ℝ in Ioi 0, ‖l1_exp_profile a t‖) = a⁻¹ := by
+  simp only [l1_exp_profile, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_pos (Real.exp_pos _)]
+  rw [integral_exp_mul_Ioi (a := -a) (neg_neg_of_pos ha) 0]
+  simp
+
+private theorem l1_exp_tail {k a : ℝ} (hk : 0 < k) (ha : 0 < a) (t : ℝ) :
+    rightExponentialTail k (l1_exp_profile a) t =
+      (((k + a)⁻¹ : ℝ) : ℂ) * l1_exp_profile a t := by
+  calc
+    _ = ∫ s : ℝ in Ioi 0,
+        (Real.exp (-(k + a) * s) : ℂ) * l1_exp_profile a t := by
+      apply integral_congr_ae
+      exact Eventually.of_forall fun s => by
+        change (Real.exp (-k * s) : ℂ) *
+          (Real.exp (-a * (t + s)) : ℂ) =
+          (Real.exp (-(k + a) * s) : ℂ) * (Real.exp (-a * t) : ℂ)
+        rw [← Complex.ofReal_mul, ← Complex.ofReal_mul,
+          ← Real.exp_add, ← Real.exp_add]
+        congr 2
+        ring
+    _ = (∫ s : ℝ in Ioi 0, (Real.exp (-(k + a) * s) : ℂ)) *
+        l1_exp_profile a t := integral_mul_const _ _
+    _ = _ := by
+      have hint :
+          (∫ s : ℝ in Ioi 0, Real.exp (-(k + a) * s)) = (k + a)⁻¹ := by
+        rw [integral_exp_mul_Ioi (a := -(k + a)) (by linarith) 0]
+        simp only [mul_zero, Real.exp_zero, neg_div_neg_eq, one_div]
+      rw [integral_complex_ofReal, hint]
+
+private theorem l1_exp_tail_norm_mass {k a : ℝ} (hk : 0 < k) (ha : 0 < a) :
+    (∫ t : ℝ in Ioi 0, ‖rightExponentialTail k (l1_exp_profile a) t‖) =
+      (k + a)⁻¹ * a⁻¹ := by
+  have hnorm (t : ℝ) :
+      ‖rightExponentialTail k (l1_exp_profile a) t‖ =
+        (k + a)⁻¹ * ‖l1_exp_profile a t‖ := by
+    rw [l1_exp_tail hk ha, norm_mul]
+    congr 1
+    rw [Complex.norm_real, Real.norm_eq_abs,
+      abs_of_pos (inv_pos.mpr (add_pos hk ha))]
+  simp_rw [hnorm]
+  rw [integral_const_mul, l1_exp_norm_mass ha]
+
+/-- The exact optimal constant for the actual right exponential tail on
+all complex positive-half-line L1 inputs is the reciprocal decay rate.
+The converse uses a whole positive-scale exponential family. -/
+theorem right_exponential_tail_l1_bound_iff {k : ℝ} (hk : 0 < k) (C : ℝ) :
+    (∀ (u : ℝ → ℂ), IntegrableOn u (Ioi (0 : ℝ)) →
+      (∫ t : ℝ in Ioi 0, ‖rightExponentialTail k u t‖) ≤
+        C * ∫ t : ℝ in Ioi 0, ‖u t‖) ↔ k⁻¹ ≤ C := by
+  constructor
+  · intro h
+    have hratio (a : ℝ) (ha : 0 < a) : (k + a)⁻¹ ≤ C := by
+      have hb := h (l1_exp_profile a) (l1_exp_integrable ha)
+      rw [l1_exp_tail_norm_mass hk ha, l1_exp_norm_mass ha] at hb
+      exact (mul_le_mul_iff_of_pos_right (inv_pos.mpr ha)).mp hb
+    have hC : 0 < C := lt_of_lt_of_le
+      (inv_pos.mpr (add_pos hk (show (0 : ℝ) < 1 by norm_num)))
+      (hratio 1 (by norm_num))
+    by_contra hnot
+    have hsmall : C < k⁻¹ := lt_of_not_ge hnot
+    have hgap : k < C⁻¹ := (lt_inv_comm₀ hC hk).mp hsmall
+    let a : ℝ := (C⁻¹ - k) / 2
+    have ha : 0 < a := by dsimp [a]; linarith
+    have hka : k + a < C⁻¹ := by dsimp [a]; linarith
+    have hinv : C < (k + a)⁻¹ :=
+      (lt_inv_comm₀ hC (add_pos hk ha)).mpr hka
+    exact (not_lt_of_ge (hratio a ha)) hinv
+  · intro hC u hu
+    exact (l1_tail_norm_bound hk u hu).trans
+      (mul_le_mul_of_nonneg_right hC
+        (integral_nonneg fun t => norm_nonneg (u t)))
+
 
 end D5.S3.Weil.ZetaGamma.FormCore.RightExponentialTail
 
