@@ -61,7 +61,7 @@ internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefin
 
     private static Formula ExistsTyped(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
-    private static Formula AndAlso(Formula left, Formula right) => Seq(Par(left), Sp, Wedge, Sp, Par(right));
+    private static Formula AndAlso(Formula left, Formula right) => Seq(Par(left), Sp, Land, Sp, Par(right));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Par(Formula value) => Seq(Open, value, Close);
