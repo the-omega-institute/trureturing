@@ -5,6 +5,7 @@ import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 
 /-! Matrix-readout audits for the sparse shared-energy family. -/
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped MatrixOrder ComplexOrder BigOperators
 
@@ -703,11 +704,15 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% exponent_tensor_bridge) ↔ arena.Law actual := Iff.rfl
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
-  have hzero := h 2 (0 : Exponent)
-  simp only [degree, Pi.zero_apply, Finset.sum_const_zero] at hzero
-  obtain ⟨I, J, hIJ⟩ := hzero
+  obtain ⟨I, J, hIJ⟩ := h 2 0
   have he := (hIJ.2.2 rho).1
-  norm_num [zeroReadout, realize, copies, stateMatrix, Matrix.one_apply] at he
+  change stateMatrix (copies rho (degree 0)) I J = 0 at he
+  have ht := (tensor_monomial_bridge 2 (degree 0) rho I J).2.2.1
+  rw [hIJ.1] at ht
+  have hone : monomial (stateMatrix rho) 0 = 1 := by
+    norm_num [monomial, Fin.prod_univ_succ]
+  rw [hone] at ht
+  exact one_ne_zero (ht.symm.trans he)
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨rho, 0, coordinateExponent 0 0, ?_⟩
@@ -853,8 +858,7 @@ private theorem bridge : (type_of% total_hamiltonian_diagonal) ↔ arena.Law act
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
   have he := congrArg (fun X => X (1 : Fin 3) (1 : Fin 3)) (h 2 1)
-  change (0 : ℂ) = 1 at he
-  exact zero_ne_one he
+  norm_num [zeroReadout, realize, totalEnergy, energy, Matrix.diagonal, CopyIndex] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 2, 3, ?_⟩
