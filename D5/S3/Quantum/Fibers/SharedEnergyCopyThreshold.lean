@@ -264,6 +264,106 @@ theorem sparse_low_monomials (m : ℕ) (hm : 2 ≤ m) (alpha : Exponent)
       simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₁]
     · simp [monomial, sparseMatrix, Fin.prod_univ_succ, zero_pow hz₀]
 
+/-- A single labelled occurrence of an ordered matrix coordinate. -/
+def coordinateExponent (i j : Fin 3) : Exponent :=
+  fun a b => if a = i ∧ b = j then 1 else 0
+
+/-- The full labelled exponent of a native tensor matrix entry. -/
+def tensorExponent : (n : ℕ) → CopyIndex (Fin 3) n → CopyIndex (Fin 3) n → Exponent
+  | 0, _, _ => 0
+  | 1, I, J => coordinateExponent I J
+  | n + 2, I, J => coordinateExponent I.1 J.1 + tensorExponent (n+1) I.2 J.2
+
+/-- Total energy of a native product-basis word. -/
+def totalEnergy (m : ℕ) : (n : ℕ) → CopyIndex (Fin 3) n → ℤ
+  | 0, _ => 0
+  | 1, I => energy m I
+  | n + 2, I => energy m I.1 + totalEnergy m (n+1) I.2
+
+private theorem coordinate_degree (i j : Fin 3) : degree (coordinateExponent i j) = 1 := by
+  classical
+  simp [degree, coordinateExponent]
+
+private theorem coordinate_weight (m : ℕ) (i j : Fin 3) :
+    weight m (coordinateExponent i j) = energy m i - energy m j := by
+  classical
+  simp [weight, coordinateExponent]
+
+private theorem coordinate_monomial (X : Matrix (Fin 3) (Fin 3) ℂ) (i j : Fin 3) :
+    monomial X (coordinateExponent i j) = X i j := by
+  classical
+  simp [monomial, coordinateExponent, ite_and, apply_ite]
+
+private theorem degree_add (a b : Exponent) : degree (a+b) = degree a + degree b := by
+  simp [degree, Finset.sum_add_distrib]
+
+private theorem weight_add (m : ℕ) (a b : Exponent) :
+    weight m (a+b) = weight m a + weight m b := by
+  simp [weight, Nat.cast_add, add_mul, Finset.sum_add_distrib]
+
+private theorem monomial_add (X : Matrix (Fin 3) (Fin 3) ℂ) (a b : Exponent) :
+    monomial X (a+b) = monomial X a * monomial X b := by
+  simp [monomial, pow_add, Finset.prod_mul_distrib]
+
+private theorem tensor_degree : ∀ (n : ℕ) (I J : CopyIndex (Fin 3) n),
+    degree (tensorExponent n I J) = n
+  | 0, _, _ => by simp [tensorExponent, degree]
+  | 1, I, J => coordinate_degree I J
+  | n+2, I, J => by
+    rw [tensorExponent, degree_add, coordinate_degree, tensor_degree]
+    omega
+
+private theorem tensor_weight (m : ℕ) : ∀ (n : ℕ) (I J : CopyIndex (Fin 3) n),
+    weight m (tensorExponent n I J) = totalEnergy m n I - totalEnergy m n J
+  | 0, _, _ => by simp [tensorExponent, weight, totalEnergy]
+  | 1, I, J => coordinate_weight m I J
+  | n+2, I, J => by
+    rw [tensorExponent, weight_add, coordinate_weight, tensor_weight]
+    simp only [totalEnergy]
+    ring
+
+private theorem tensor_entry (r : DensityState (Fin 3)) :
+    ∀ (n : ℕ) (I J : CopyIndex (Fin 3) n),
+    stateMatrix (copies r n) I J = monomial (stateMatrix r) (tensorExponent n I J)
+  | 0, I, J => by
+    have : I = J := Subsingleton.elim _ _
+    simp [copies, stateMatrix, tensorExponent, monomial, this]
+  | 1, I, J => (coordinate_monomial _ I J).symm
+  | n+2, I, J => by
+    change stateMatrix r I.1 J.1 * stateMatrix (copies r (n+1)) I.2 J.2 = _
+    rw [tensorExponent, monomial_add, coordinate_monomial, tensor_entry]
+
+/-- The complete total-energy pinching on the actual tensor carrier. Equal-energy
+matrix entries, including off-diagonal entries in degenerate blocks, are retained. -/
+def pinchedCopies (m n : ℕ) (r : DensityState (Fin 3)) :
+    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
+  fun I J => if totalEnergy m n I = totalEnergy m n J then
+    stateMatrix (copies r n) I J else 0
+
+/-- Every actual tensor entry has the indicated labelled exponent, total degree
+and weight. Its total-energy pinching retains exactly the zero-weight entries. -/
+theorem tensor_monomial_bridge (m n : ℕ) (r : DensityState (Fin 3))
+    (I J : CopyIndex (Fin 3) n) :
+    degree (tensorExponent n I J) = n ∧
+    weight m (tensorExponent n I J) = totalEnergy m n I - totalEnergy m n J ∧
+    stateMatrix (copies r n) I J = monomial (stateMatrix r) (tensorExponent n I J) ∧
+    pinchedCopies m n r I J = if weight m (tensorExponent n I J) = 0 then
+      monomial (stateMatrix r) (tensorExponent n I J) else 0 := by
+  refine ⟨tensor_degree n I J, tensor_weight m n I J, tensor_entry r n I J, ?_⟩
+  simp only [pinchedCopies, tensor_weight, sub_eq_zero, tensor_entry]
+
+/-- Below twice the upper energy minus one, the literal sparse native tensor
+states have equal complete total-energy pinchings. -/
+theorem sparse_low_pinching (m n : ℕ) (hm : 2 ≤ m) (hn : n < 2*m-1) :
+    pinchedCopies m n rho = pinchedCopies m n (sigma m) := by
+  ext I J
+  rw [(tensor_monomial_bridge m n rho I J).2.2.2,
+    (tensor_monomial_bridge m n (sigma m) I J).2.2.2]
+  split_ifs with h
+  · exact sparse_low_monomials m hm (tensorExponent n I J)
+      (by rwa [tensor_degree]) h (phase m) (unit_phase _)
+  · rfl
+
 #print axioms sparse_low_monomials
 #print axioms sparse_density_spectrum
 #print axioms sparse_pair_data
