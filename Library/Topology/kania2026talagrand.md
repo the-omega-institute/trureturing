@@ -396,3 +396,83 @@ summands are the literal restrictions of the same selected original L1
 class. Their sum and the sum of their norms equal the original class and
 its norm respectively. This is the classical analytic supplier only;
 the signed-measure transfer and full CH/Talagrand endpoint are separate.
+
+
+## Signed raw transfer and the sufficient diagonal criterion
+
+Let $K$ be any compact Hausdorff space with its Borel measurable structure,
+and put $D=C(K,\mathbb R)^*$. Regularity below means regularity of the actual
+total-variation measure, not an automatic property of arbitrary Borel measures.
+The project theorem
+`SignedGrothendieckCriterion.exists_signed_raw_restriction_splitting`
+transports the real L1 supplier to arbitrary regular signed inputs $s_n$
+with $\sup_n |s_n|(K)<\infty$.
+
+Set $\rho=\sum_n |s_n|$ and $\mu=\rho.\mathrm{toFinite}$. The sum is SFinite;
+no finiteness or regularity of the sum is used. Its finite equivalent $\mu$ includes the
+all-zero case. Each $s_n$ has a real integrable RN density $q_n$ with respect
+to $\mu$, and its actual L1 class satisfies $\|q_n\|_1=|s_n|(K)$.
+`SignedMeasure.absolutelyContinuous_ennreal_iff` supplies the vector absolute
+continuity needed for signed reconstruction. Indicator density integration
+identifies the L1 literal restrictions with the literal signed restrictions.
+
+The L1 splitting therefore gives a strictly increasing $j$, measurable sets
+$E_n$ pairwise disjoint as actual sets, a number $r\geq0$, and a regular
+signed measure $s_\infty$. With
+
+$$a_n=s_{j(n)}|_{E_n},\qquad b_n=s_{j(n)}|_{K\setminus E_n},$$
+
+both TVs are regular, and
+
+$$s_{j(n)}=a_n+b_n,\qquad |a_n|(K)+|b_n|(K)=|s_{j(n)}|(K),
+\qquad |a_n|(K)\longrightarrow r.$$
+
+For every $\Phi\in D^*$ one has
+$\Phi(Tb_n)\to\Phi(Ts_\infty)$, where $Ts$ is the signed integration
+functional. The actual bounded linear map
+$J:L^1(\mu)\to D$, $Jf(g)=\int fg\,d\mu$, comes from the L1–L-infinity
+pairing and the continuous-function inclusion. Its norm is at most one;
+injectivity, isometry and surjectivity are not used. Every $\Phi\circ J$
+is an L1 weak test. Signed RMK supplies a regular representative of $Jv$
+for the L1 weak limit $v$. The particular density measure $\mu v$ is not
+asserted regular. Regularity of the literal pieces instead follows from
+the original regular TV and `variation_restrict`.
+
+The public theorem
+`SignedGrothendieckCriterion.weak_of_disjoint_diagonal_variation`
+uses the following explicit sufficient hypothesis on $K$:
+
+$$\begin{gathered}
+\text{For every TV-bounded regular signed weak-star-null sequence }s_n,\\
+\text{and every pairwise disjoint measurable sequence }E_n,
+\quad \operatorname{TV}(s_n|_{E_n})(K)\longrightarrow0.
+\end{gathered}$$
+
+Here $\operatorname{TV}(s_n|_{E_n})$ denotes the TV of the literal signed restriction
+$s_n|_{E_n}$. The hypothesis is over all such signed sequences and sets.
+It is not a weak convergence or splitting premise. Under this hypothesis,
+for arbitrary $F_n,F_\infty\in D$,
+
+$$[\forall g\in C(K,\mathbb R),\ F_n(g)\to F_\infty(g)]
+\quad\Longrightarrow\quad
+[\forall\Phi\in D^*,\ \Phi(F_n)\to\Phi(F_\infty)].$$
+
+No norm bound is assumed in this final statement. Banach–Steinhaus on the
+complete space $C(K,\mathbb R)$ bounds $F_n-F_\infty$. Signed RMK chooses
+regular representatives with TV masses exactly those norms. For any
+selector $ns$ tending to infinity, the raw split applies to $s\circ ns$.
+The diagonal hypothesis makes its captured part norm-null. The complement
+is Banach-weak convergent; its continuous-function evaluations tend to
+zero by exact decomposition. The actual double-dual inclusion evaluates
+its weak limit at each continuous function, identifying that functional
+as zero. Additivity gives convergence along a further selector; the genuine
+`Filter.tendsto_of_subseq_tendsto` then gives the original sequence limit.
+Its API requires only that $ns$ tend to infinity, and that generality is
+retained. Adding the arbitrary limit completes the implication.
+
+These are repository compositions of the classical splitting supplier,
+signed RMK and uniform boundedness, with the parameter correspondence above;
+no new literature theorem is attributed to Kania–Kąkol. The sufficient
+hypothesis remains unproved for the proposed CH construction. Neither
+result supplies CH bookkeeping, the signed induction, capture/global
+obligations, the closed-copy prohibition or a solution of Problem 8.2.
