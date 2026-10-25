@@ -191,8 +191,9 @@ end Extension
 
 namespace Perturbation
 
-abbrev rejected : Realization NativeFunctionalObstruction.signature :=
-  realize NativeFunctionalObstruction.signature
+abbrev rejected : Realization NativeFunctionalObstruction.signature := by
+  classical
+  exact realize NativeFunctionalObstruction.signature
     (fun _ p v => if v p.2.2 = leaf true then leaf true else leaf false)
     (fun e => nomatch e)
 
@@ -293,19 +294,20 @@ end Perturbation
 
 namespace Obstruction
 
-abbrev rejected : Realization NativeFunctionalObstruction.signature :=
-  realize NativeFunctionalObstruction.signature
+abbrev rejected : Realization NativeFunctionalObstruction.signature := by
+  classical
+  exact realize NativeFunctionalObstruction.signature
     (fun _ p v => if ∃ n, v p.2.2 = atomic n then v p.2.2 else Omega)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := NativeFunctionalObstruction.signature
   Law R := ∀ (a : Nat) (H : Homogeneous), PairRoot H →
-    eval H (leaf true) = atomic a → ∀ family : List Component,
+    eval H (leaf true) = atomic a → ∀ family : List NativeComponent,
       {X : CompletionTree | rho^[a] X = eval H X} ≠
         {X : CompletionTree | ∃ C ∈ family, ∃ v,
-          Satisfies C.equations v ∧
-          R.readout () ⟨C.states, C.equations, C.designated⟩ v = X}
+          NativeSatisfies C.equations v ∧
+          R.readout () ⟨C.states, (fun _ => none), C.designated⟩ v = X}
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   classical
@@ -315,14 +317,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have anchor : eval H (leaf true) = atomic 2 := by
     change node (rho (leaf true)) (leaf true) = rho (rho (leaf true))
     rw [rho_alpha, rho_beta]
-  let C : Component := ⟨1, (fun _ => none), 0⟩
+  let C : NativeComponent := ⟨1, (fun _ => none), 0⟩
   have impossible := law 2 H root anchor [C]
   apply impossible
   ext X
   change (rho^[2] X = eval H X) ↔
-    ∃ D ∈ [C], ∃ v, Satisfies D.equations v ∧
-      rejected.readout () ⟨D.states, D.equations, D.designated⟩ v = X
-  have sat : ∀ v : Fin 1 → CompletionTree, Satisfies C.equations v := by
+    ∃ D ∈ [C], ∃ v, NativeSatisfies D.equations v ∧
+      rejected.readout () ⟨D.states, (fun _ => none), D.designated⟩ v = X
+  have sat : ∀ v : Fin 1 → CompletionTree, NativeSatisfies C.equations v := by
     intro v i E eq
     cases eq
   constructor
@@ -376,7 +378,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
-    definition := some `D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction.projected
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalObstruction
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction.nativeProjected
+      path := #[] }
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "arg", "body", "arg", "fn"]

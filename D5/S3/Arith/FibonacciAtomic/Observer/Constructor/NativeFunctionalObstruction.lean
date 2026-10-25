@@ -782,7 +782,7 @@ private theorem component_atomic_unique (a : Nat) (H : Homogeneous) (root : Pair
 
 /-- Under only the original alpha anchor, no finite union of arbitrary
 rank-free functional-system projections is the full homogeneous solution set. -/
-theorem rank_free_obstruction : Obstruction := by
+private theorem distributed_rank_free_obstruction : Obstruction := by
   classical
   intro a H root anchor family equal
   let target : Set CompletionTree := {X | rho^[a] X = eval H X}
@@ -829,5 +829,114 @@ theorem rank_free_obstruction : Obstruction := by
   have finite := finite_orbit family contained
   rw [all] at finite
   exact Set.infinite_univ finite
+
+
+/-- Arbitrary finite native expressions, with powers allowed at any node. -/
+inductive NativeExpr (m : Nat) where
+  | ground : Source → NativeExpr m
+  | var : Fin m → NativeExpr m
+  | shift : Nat → NativeExpr m → NativeExpr m
+  | pair : NativeExpr m → NativeExpr m → NativeExpr m
+
+def nativeValue {m : Nat} (v : Fin m → CompletionTree) : NativeExpr m → CompletionTree
+  | .ground t => embed t
+  | .var i => v i
+  | .shift a E => rho^[a] (nativeValue v E)
+  | .pair A B => node (nativeValue v A) (nativeValue v B)
+
+abbrev NativeSystem (m : Nat) := Fin m → Option (NativeExpr m)
+
+def NativeSatisfies {m : Nat} (S : NativeSystem m) (v : Fin m → CompletionTree) : Prop :=
+  ∀ i E, S i = some E → v i = nativeValue v E
+
+structure NativeComponent where
+  states : Nat
+  equations : NativeSystem states
+  designated : Fin states
+
+def nativeProjected (C : NativeComponent) : Set CompletionTree :=
+  {X | ∃ v, NativeSatisfies C.equations v ∧ v C.designated = X}
+
+def nativeRepresented (family : List NativeComponent) : Set CompletionTree :=
+  {X | ∃ C ∈ family, X ∈ nativeProjected C}
+
+/-- The full target with arbitrary original placement of native fixed powers. -/
+def NativeObstruction : Prop :=
+  ∀ (a : Nat) (H : Homogeneous), PairRoot H →
+    eval H (leaf true) = atomic a → ∀ family : List NativeComponent,
+      {X : CompletionTree | rho^[a] X = eval H X} ≠ nativeRepresented family
+
+private def exprShift {m : Nat} (a : Nat) : Expr m → Expr m
+  | .ground t => .ground (substitution^[a] t)
+  | .token i _ => Fin.elim0 i
+  | .var b i => .var (a+b) i
+  | .pair A B => .pair (exprShift a A) (exprShift a B)
+
+private theorem value_exprShift {m : Nat} (a : Nat) (E : Expr m)
+    (v : Fin m → CompletionTree) : value v (exprShift a E) = rho^[a] (value v E) := by
+  induction E with
+  | ground t => exact (iterate_embed a t).symm
+  | token i c => exact Fin.elim0 i
+  | var b i => exact Function.iterate_add_apply rho a b (v i)
+  | pair A B ihA ihB =>
+    change node (value v (exprShift a A)) (value v (exprShift a B)) =
+      rho^[a] (node (value v A) (value v B))
+    rw [ihA, ihB, iterate_node]
+
+private def nativeCompile {m : Nat} : NativeExpr m → Expr m
+  | .ground t => .ground t
+  | .var i => .var 0 i
+  | .shift a E => exprShift a (nativeCompile E)
+  | .pair A B => .pair (nativeCompile A) (nativeCompile B)
+
+private theorem nativeCompile_value {m : Nat} (E : NativeExpr m)
+    (v : Fin m → CompletionTree) : value v (nativeCompile E) = nativeValue v E := by
+  induction E with
+  | ground t => rfl
+  | var i => rfl
+  | shift a E ih =>
+    change value v (exprShift a (nativeCompile E)) = rho^[a] (nativeValue v E)
+    rw [value_exprShift, ih]
+  | pair A B ihA ihB => exact congrArg₂ node ihA ihB
+
+private def systemCompile {m : Nat} (S : NativeSystem m) : System m :=
+  fun i => (S i).map nativeCompile
+
+private theorem systemCompile_satisfies {m : Nat} (S : NativeSystem m)
+    (v : Fin m → CompletionTree) : NativeSatisfies S v ↔ Satisfies (systemCompile S) v := by
+  constructor
+  · intro sat i E eq
+    cases h : S i with
+    | none => simp [systemCompile, h] at eq
+    | some F =>
+      have ef : nativeCompile F = E := by simpa only [systemCompile, h, Option.map_some,
+        Option.some.injEq] using eq
+      subst E
+      exact (sat i F h).trans (nativeCompile_value F v).symm
+  · intro sat i E eq
+    have h : systemCompile S i = some (nativeCompile E) := by
+      simp only [systemCompile, eq, Option.map_some]
+    exact (sat i (nativeCompile E) h).trans (nativeCompile_value E v)
+
+private def componentCompile (C : NativeComponent) : Component :=
+  ⟨C.states, systemCompile C.equations, C.designated⟩
+
+private theorem familyCompile_represented (family : List NativeComponent) :
+    represented (family.map componentCompile) = nativeRepresented family := by
+  ext X
+  constructor
+  · rintro ⟨D, mem, v, sat, hx⟩
+    obtain ⟨C, memC, rfl⟩ := List.mem_map.mp mem
+    exact ⟨C, memC, v, (systemCompile_satisfies C.equations v).mpr sat, hx⟩
+  · rintro ⟨C, mem, v, sat, hx⟩
+    exact ⟨componentCompile C, List.mem_map.mpr ⟨C, mem, rfl⟩,
+      v, (systemCompile_satisfies C.equations v).mp sat, hx⟩
+
+/-- The original rank-free obstruction, including arbitrary fixed powers of
+subexpressions, all original equations and unrestricted infinite auxiliaries. -/
+theorem rank_free_obstruction : NativeObstruction := by
+  intro a H root anchor family eq
+  apply distributed_rank_free_obstruction a H root anchor (family.map componentCompile)
+  exact eq.trans (familyCompile_represented family).symm
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeFunctionalObstruction
