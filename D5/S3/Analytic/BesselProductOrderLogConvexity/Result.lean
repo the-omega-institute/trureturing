@@ -46,8 +46,8 @@ Per declaration: name | proof_shape | direct consumers | frozen owner dependenci
   witness | bind-only | result | B, S
   half_noninteger | bind-only | result | none
   result | bind-only | settling result | B, S
-The utility is certified-instance with basis refutes. The only public theorem
-is result, whose conclusion is exactly the negation of claim.
+The utility is certified-instance with basis refutes. The public theorems are
+result, whose conclusion is exactly the negation of claim, and half_noninteger.
 -/
 
 import D5.S3.Analytic.BesselRatioLogConcavity.Result
