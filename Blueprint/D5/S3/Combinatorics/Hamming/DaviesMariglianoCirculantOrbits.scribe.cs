@@ -32,7 +32,10 @@ internal sealed class DaviesMariglianoCirculantOrbitsDocument : IScribeDocumentD
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("On Fin 30, join two vertices when their residues modulo 2, 3 and 5 disagree in exactly one coordinate. Translation by one is a cyclic graph symmetry. The three edge types have respectively zero, one and three common neighbours. These intrinsic counts distinguish the types under every automorphism; paths using the other two types recover equality of each coordinate. The eight coordinate disagreement patterns therefore give at least eight distinct unordered-pair orbits. An integer circulant certificate shows that the adjacency operator is annihilated by X(X−7)(X−5)(X−4)(X−2)(X+1)(X+3). Applying this identity to an eigenvector places every real eigenvalue in {−3,−1,0,2,4,5,7}. Hence there are at most seven distinct eigenvalues, contradicting the equality. The proof uses only these bounds; exact counts and infinite families are separate assertions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("davies-marigliano-2021-circulant-orbit-eigenvalue-conjecture"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(

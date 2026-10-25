@@ -58,6 +58,10 @@ $$\neg (\forall (n: \mathbb{N}), \forall (G: \operatorname{SimpleGraph}\left(\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hamming/DaviesMariglianoCirculantOrbits.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/davies-marigliano-2021-circulant-orbit-eigenvalue-conjecture` (refuted) by `D5/S3/Combinatorics/Hamming/DaviesMariglianoCirculantOrbits.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"davies-marigliano-2021-circulant-orbit-eigenvalue-conjecture","declaration_gid":"D5/S3/Combinatorics/Hamming/DaviesMariglianoCirculantOrbits.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Isobel Davies and Orlando Marigliano (2021). *Coloured Graphical Models and their Symmetries*. URL: <https://arxiv.org/abs/2012.01905v5>.
