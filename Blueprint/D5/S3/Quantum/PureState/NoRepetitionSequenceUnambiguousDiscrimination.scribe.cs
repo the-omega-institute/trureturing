@@ -179,7 +179,7 @@ internal sealed class NoRepetitionSequenceUnambiguousDiscriminationDocument : IS
         All("z", OptionOf(Labels()), Equal(LocalCall("inducedEffect", X("F"), X("d"), X("z")),
             SumOver("o", Outcomes(), If(Equal(At(X("d"), X("o")), X("z")),
                 At(Qualified("D5", "S3", "Quantum", "Recovery", "ProductPrefixRigidity", "productMap"),
-                    LambdaOf("x", FinOf(X("k")), FinOf(X("N"))),
+                    At(Qualified("Function", "const"), FinOf(X("k")), FinOf(X("N"))),
                     LambdaOf("j", FinOf(X("k")), At(X("F"), At(X("o"), X("j"))))),
                 Typed(D(0), ProductMatrix()))))))));
 
