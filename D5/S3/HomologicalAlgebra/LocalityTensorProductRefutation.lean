@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim; result=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.result; claim=D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.claim
-   digest: Six projected lines give counterexamples to both locality tensor conjectures. -/
+   digest: Six projected lines refute both conjectures for componentwise and four-way locality. -/
 
 import Mathlib.Tactic
 
@@ -50,9 +50,19 @@ abbrev localityTensor {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E) : Type :=
   freeSpan r V W ⧸ (bilIdeal r V W).comap (freeSpan r V W).subtype
 
+/-- Componentwise locality from arXiv:2205.14616v1, main.tex, lines 447–449. -/
+def componentwise (E : Type) (r : E → E → Prop) : E × E → E × E → Prop :=
+  Prod.RProd r r
+
+/-- Pairwise locality of all four entries from arXiv:2506.09493v1, LOC.tex,
+lines 220 and 743–747. The six pairs include those inside each generator. -/
+def fourWay (E : Type) (r : E → E → Prop) (p q : E × E) : Prop :=
+  r p.1 p.2 ∧ r p.1 q.1 ∧ r p.1 q.2 ∧ r p.2 q.1 ∧ r p.2 q.2 ∧ r q.1 q.2
+
 def quotientRel {K E : Type} [Field K] [AddCommGroup E] [Module K E]
-    (r : E → E → Prop) (V W : Submodule K E) (a b : localityTensor r V W) : Prop :=
-  Relation.Map (fun u v : freeSpan r V W => spanRel (Prod.RProd r r) u.1 v.1)
+    (r : E → E → Prop) (s : E × E → E × E → Prop)
+    (V W : Submodule K E) (a b : localityTensor r V W) : Prop :=
+  Relation.Map (fun u v : freeSpan r V W => spanRel s u.1 v.1)
     Submodule.Quotient.mk Submodule.Quotient.mk a b
 
 def LocalityCompatible {K E : Type} [Field K] [AddCommGroup E] [Module K E]
@@ -60,18 +70,20 @@ def LocalityCompatible {K E : Type} [Field K] [AddCommGroup E] [Module K E]
   ∀ x y z, ∀ w ∈ W, r x y → r (x + w) z →
     ∃ w' ∈ W, r (x + w') y ∧ r (x + w') z
 
-def TensorConjecture : Prop :=
+def TensorConjecture (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop) : Prop :=
   ∀ (K E : Type) [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E),
-    IsLocalityVectorSpace K r → IsLocalityVectorSpace K (quotientRel r V W)
+    IsLocalityVectorSpace K r → IsLocalityVectorSpace K (quotientRel r (s E r) V W)
 
-def PairConjecture : Prop :=
+def PairConjecture (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop) : Prop :=
   ∀ (K E : Type) [Field K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E), IsLocalityVectorSpace K r →
-    LocalityCompatible (fun a b : freeSpan r V W => spanRel (Prod.RProd r r) a.1 b.1)
+    LocalityCompatible (fun a b : freeSpan r V W => spanRel (s E r) a.1 b.1)
       ((bilIdeal r V W).comap (freeSpan r V W).subtype)
 
-def claim : Prop := TensorConjecture ∨ PairConjecture
+def claim : Prop :=
+  TensorConjecture componentwise ∨ TensorConjecture fourWay ∨
+    PairConjecture componentwise ∨ PairConjecture fourWay
 
 private def project : (Fin 5 → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
   LinearMap.funLeft ℝ ℝ (Fin.castAdd 2)
@@ -287,15 +299,23 @@ private theorem X_difference :
     (X_polarization 2) (X_polarization 1)
   simpa only [sub_sub_sub_cancel_right] using h
 
-private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i = 4)) :
-    spanRel (Prod.RProd rel rel) (X k) (Y i) := by
+private theorem X_related
+    (s : (Fin 5 → ℝ) × (Fin 5 → ℝ) → (Fin 5 → ℝ) × (Fin 5 → ℝ) → Prop)
+    (hd : ∀ v w, rel v v → rel w w → rel v w → s (v, v) (w, w))
+    (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i = 4)) :
+    spanRel s (X k) (Y i) := by
   classical
   intro p hp q hq
+  have hpp := ((X_supported k (h.elim (fun h => Or.inl h.1)
+    (fun h => Or.inr h.1))) hp).2.2
+  have hqq := ((Y_supported i (h.elim (fun h => Or.inl h.2)
+    (fun h => Or.inr h.2))) hq).2.2
   have hq : q = (Pi.single i 1, Pi.single i 1) := ((Finsupp.mem_support_single _ _ _).mp hq).1
   subst q
-  rcases X_support_cases k hp with rfl | rfl | rfl <;>
+  rcases X_support_cases k hp with rfl | rfl | rfl
+  all_goals apply hd _ _ hpp hqq
+  all_goals
     rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
-    apply Prod.RProd.intro <;>
     norm_num [rel.eq_1, project.eq_1, Pi.single_apply,
       funext_iff, Fin.forall_fin_succ]
 
@@ -370,7 +390,11 @@ private theorem phi_quotient (i : Fin 5)
   rw [map_sub] at hz
   exact sub_eq_zero.mp hz
 
-private theorem pair_refuted : ¬ PairConjecture := by
+private theorem pair_refuted
+    (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop)
+    (hm : ∀ {p q}, s (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q)
+    (hd : ∀ v w, rel v v → rel w w → rel v w →
+      s (Fin 5 → ℝ) rel (v, v) (w, w)) : ¬ PairConjecture s := by
   intro H
   let x : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
     ⟨X 1, X_supported 1 (Or.inl rfl)⟩
@@ -382,22 +406,28 @@ private theorem pair_refuted : ¬ PairConjecture := by
     ⟨Y 4, Y_supported 4 (Or.inr rfl)⟩
   have hw : x' - x ∈ (bilIdeal rel ⊤ ⊤).comap (freeSpan rel ⊤ ⊤).subtype :=
     ⟨X_difference, (x' - x).2⟩
-  have hxy : spanRel (Prod.RProd rel rel) x.1 y.1 := X_related 1 3 (Or.inl ⟨rfl, rfl⟩)
-  have hxz : spanRel (Prod.RProd rel rel) (x + (x' - x)).1 z.1 := by
+  have hxy : spanRel (s (Fin 5 → ℝ) rel) x.1 y.1 :=
+    X_related _ hd 1 3 (Or.inl ⟨rfl, rfl⟩)
+  have hxz : spanRel (s (Fin 5 → ℝ) rel) (x + (x' - x)).1 z.1 := by
     rw [show x + (x' - x) = x' by module]
-    exact X_related 2 4 (Or.inr ⟨rfl, rfl⟩)
+    exact X_related _ hd 2 4 (Or.inr ⟨rfl, rfl⟩)
   obtain ⟨w, hw, hwy, hwz⟩ := H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality
     x y z (x' - x) hw hxy hxz
   have ha : phi 0 (x + w).1 = 1 := by
     change phi 0 (X 1 + w.1) = 1
     have hw0 : phi 0 w.1 = 0 := phi_vanishes 0 hw.1
     rw [map_add, phi_values.1, hw0, add_zero]
-  apply no_joint_related (x + w) y z _ _ _ hwy hwz
+  apply no_joint_related (x + w) y z _ _ _
+    (fun p hp q hq => hm (hwy p hp q hq)) (fun p hp q hq => hm (hwz p hp q hq))
   · rw [ha]; norm_num
   · norm_num [y, Y.eq_1, phi.eq_1, Pi.single_apply]
   · norm_num [z, Y.eq_1, phi.eq_1, Pi.single_apply]
 
-private theorem tensor_refuted : ¬ TensorConjecture := by
+private theorem tensor_refuted
+    (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop)
+    (hm : ∀ {p q}, s (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q)
+    (hd : ∀ v w, rel v v → rel w w → rel v w →
+      s (Fin 5 → ℝ) rel (v, v) (w, w)) : ¬ TensorConjecture s := by
   intro H
   let x : freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ :=
     ⟨X 1, X_supported 1 (Or.inl rfl)⟩
@@ -412,10 +442,10 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
   let q := I.mkQ
   have heq : q x' = q x := (Submodule.Quotient.eq I).mpr
     ⟨X_difference, (x' - x).2⟩
-  have hxy : quotientRel rel ⊤ ⊤ (q x) (q y) :=
-    ⟨x, y, X_related 1 3 (Or.inl ⟨rfl, rfl⟩), rfl, rfl⟩
-  have hxz : quotientRel rel ⊤ ⊤ (q x) (q z) :=
-    ⟨x', z, X_related 2 4 (Or.inr ⟨rfl, rfl⟩), heq, rfl⟩
+  have hxy : quotientRel rel (s (Fin 5 → ℝ) rel) ⊤ ⊤ (q x) (q y) :=
+    ⟨x, y, X_related _ hd 1 3 (Or.inl ⟨rfl, rfl⟩), rfl, rfl⟩
+  have hxz : quotientRel rel (s (Fin 5 → ℝ) rel) ⊤ ⊤ (q x) (q z) :=
+    ⟨x', z, X_related _ hd 2 4 (Or.inr ⟨rfl, rfl⟩), heq, rfl⟩
   obtain ⟨S, hS⟩ := (H ℝ (Fin 5 → ℝ) rel ⊤ ⊤ rel_locality).2.2 {q x}
   have hy : q y ∈ S := by
     change q y ∈ (S : Set (localityTensor rel ⊤ ⊤))
@@ -429,7 +459,7 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
     intro u hu
     obtain rfl := Set.mem_singleton_iff.mp hu
     exact hxz
-  have hyz : quotientRel rel ⊤ ⊤ (q x) (q (y + z)) := by
+  have hyz : quotientRel rel (s (Fin 5 → ℝ) rel) ⊤ ⊤ (q x) (q (y + z)) := by
     have h := S.add_mem hy hz
     change q y + q z ∈ (S : Set (localityTensor rel ⊤ ⊤)) at h
     rw [hS] at h
@@ -439,11 +469,25 @@ private theorem tensor_refuted : ¬ TensorConjecture := by
   have ha0 : phi 0 a.1 = 1 := (phi_quotient 0 ha).trans phi_values.1
   have hb3 : phi 3 b.1 = 1 := (phi_quotient 3 hb).trans phi_values.2.1
   have hb4 : phi 4 b.1 = 1 := (phi_quotient 4 hb).trans phi_values.2.2
-  apply no_joint_related a b b _ _ _ hab hab
+  apply no_joint_related a b b _ _ _
+    (fun p hp q hq => hm (hab p hp q hq)) (fun p hp q hq => hm (hab p hp q hq))
   · rw [ha0]; norm_num
   · rw [hb3]; norm_num
   · rw [hb4]; norm_num
 
-theorem result : ¬ claim := not_or.mpr ⟨tensor_refuted, pair_refuted⟩
+theorem result : ¬ claim := by
+  have cm : ∀ {p q}, componentwise (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q :=
+    fun h => h
+  have cd : ∀ v w, rel v v → rel w w → rel v w →
+      componentwise (Fin 5 → ℝ) rel (v, v) (w, w) :=
+    fun _ _ _ _ h => ⟨h, h⟩
+  have fm : ∀ {p q}, fourWay (Fin 5 → ℝ) rel p q → Prod.RProd rel rel p q :=
+    fun h => ⟨h.2.1, h.2.2.2.2.1⟩
+  have fd : ∀ v w, rel v v → rel w w → rel v w →
+      fourWay (Fin 5 → ℝ) rel (v, v) (w, w) :=
+    fun _ _ hv hw h => ⟨hv, h, h, h, h, hw⟩
+  exact not_or.mpr ⟨tensor_refuted componentwise cm cd, not_or.mpr
+    ⟨tensor_refuted fourWay fm fd, not_or.mpr
+      ⟨pair_refuted componentwise cm cd, pair_refuted fourWay fm fd⟩⟩⟩
 
 end D5.S3.HomologicalAlgebra.LocalityTensorProductRefutation

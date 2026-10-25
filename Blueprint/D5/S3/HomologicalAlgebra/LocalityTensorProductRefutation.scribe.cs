@@ -13,7 +13,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
         LibraryNoteRef.Create("D5/L/HomologicalAlgebra/clavier2025localityhdr");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A locality structure on real five-space refutes both locality tensor-product conjectures.",
+        "A locality structure on real five-space refutes both conjectures for componentwise and four-way locality.",
         H("Locality tensor products need not be locality vector spaces"),
         Blocks(
             Definition("locality-vector-space", "IsLocalityVectorSpace", "Locality vector spaces",
@@ -65,14 +65,25 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                     + "CoeSort.coe explicitly regards the free-span submodule as a type of elements. "
                     + "Taking the inverse image under Submodule.subtype puts the denominator inside that type before forming the quotient.",
                 AssessedProvenance.FromLiterature(Source)),
+            Definition("componentwise", "componentwise", "Componentwise generator locality",
+                ComponentwiseFormula(),
+                "Two generators are related when their first entries are related and their second entries are related. "
+                    + "This is Prod.RProd r r, the relation of arXiv:2205.14616v1, main.tex, lines 447–449.",
+                AssessedProvenance.FromLiterature(Source)),
+            Definition("four-way", "fourWay", "Pairwise locality of four entries",
+                FourWayFormula(),
+                "The four entries p₁, p₂, q₁ and q₂ must be pairwise related: all six unordered pairs satisfy r. "
+                    + "The pairs within each generator are included. This is the literal four-entry condition of "
+                    + "arXiv:2506.09493v1, LOC.tex, lines 220 and 743–747. "
+                    + "It implies componentwise locality; the two relations need not coincide even when V = W.",
+                AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("quotient-relation", "quotientRel", "Existential locality on the quotient",
                 QuotientRelationFormula(),
-                "Two quotient classes are related if they have representatives whose supports are related component by component. "
-                    + "Prod.RProd r r requires r on both first components and on both second components, "
-                    + "as in main.tex, lines 447–449. Subtype.val explicitly takes each representative to its ambient coefficient function. "
+                "For a generator relation s, two quotient classes are related if they have representatives "
+                    + "whose supports are related by s. Subtype.val explicitly takes each representative to its ambient coefficient function. "
                     + "Relation.Map takes the direct image under the two quotient maps; it requires the existence of related representatives, "
-                    + "rather than requiring all representatives to be related. This is the quotient locality of "
-                    + "arXiv:2506.09493v1, LOC.tex, lines 606–612.",
+                    + "as in arXiv:2506.09493v1, LOC.tex, lines 606–612. "
+                    + "The componentwise and four-way generator relations give the two readings considered here.",
                 AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("locality-compatible", "LocalityCompatible", "Locality-compatible subspaces",
                 LocalityCompatibleFormula(),
@@ -83,27 +94,30 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 AssessedProvenance.FromLiterature(Source)),
             Definition("tensor-conjecture", "TensorConjecture", "The locality tensor-product conjecture",
                 TensorConjectureFormula(),
-                "For every field K and K-vector space E, every locality relation r and every pair of subspaces V and W, "
+                "For a chosen generator-relation rule s, every field K and K-vector space E, "
+                    + "every locality relation r and every pair of subspaces V and W, "
                     + "the conjecture asserts that the quotient locality on the locality tensor product is a locality vector-space relation. "
                     + "This is Conjecture conj:loc_tensor of arXiv:2506.09493v1, LOC.tex, lines 1797–1799. "
+                    + "Its literal thesis reading uses fourWay; the componentwise reading uses the relation of source 1. "
                     + "K and E range over Type, without a finite-dimensionality hypothesis.",
                 AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("pair-conjecture", "PairConjecture", "The locality-compatibility conjecture",
                 PairConjectureFormula(),
                 "For the same unrestricted fields, vector spaces and subspaces, the conjecture asserts that "
                     + "the bilinearity subspace inside the free span of local pairs is locality compatible "
-                    + "with the support relation induced by componentwise locality. "
-                    + "This is Conjectural statement 6.16 of main.tex, lines 1984–1987.",
+                    + "with the support relation induced by the chosen generator-relation rule s. "
+                    + "Conjectural statement 6.16 of main.tex, lines 1984–1987, uses componentwise locality. "
+                    + "The four-way variant uses the thesis relation on the same generators.",
                 AssessedProvenance.FromLiterature(Source)),
-            Definition("claim", "claim", "The disjunction of the two conjectures",
-                IffOf(Local("claim"), OrOf(Local("TensorConjecture"), Local("PairConjecture"))),
-                "The proposition asserts that at least one of the two universal conjectures holds. "
-                    + "Its negation therefore refutes each conjecture separately.",
+            Definition("claim", "claim", "The disjunction of all four assertions",
+                ClaimFormula(),
+                "The proposition asserts that at least one of the tensor-product or locality-compatibility conjectures "
+                    + "holds under either componentwise or four-way locality. Its negation refutes all four assertions separately.",
                 AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
-                H("A counterexample to both conjectures"),
+                H("A counterexample to both conjectures under both relations"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source),
                 Proof(),
@@ -149,7 +163,10 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 + "Subtracting the identities for k = 2 and k = 1 gives A₂ − A₁ in that submodule. "
                 + "Its local support places the difference in the intersection defining the bilinearity subspace. "
                 + "Checking the three possible support pairs of each Aₖ also gives that A₁ is support-related to c₃ "
-                + "and A₂ is support-related to c₄.")),
+                + "and A₂ is support-related to c₄ under both generator relations. "
+                + "Every generator used here is diagonal, of the form (v,v). Local support supplies R(v,v), "
+                + "so the componentwise cross relation supplies all four cross pairs and the local diagonal pairs "
+                + "supply the remaining two conditions of four-way locality.")),
         Paragraph(Text(
             "For each i in Fin 5, extend [v,t] ↦ vᵢtᵢ linearly to a real functional Fᵢ on the ambient free span. "
                 + "Each functional vanishes on every bilinearity generator by distributivity and scalar multiplication; "
@@ -163,7 +180,8 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 + "Now suppose a,b,c have local support, F₀(a) ≠ 0, F₃(b) ≠ 0 and F₄(c) ≠ 0, "
                 + "and a is support-related to both b and c. Choose support pairs (v,t) of a, (u,s) of b "
                 + "and (h,j) of c with v₀t₀ ≠ 0, u₃s₃ ≠ 0 and h₄j₄ ≠ 0. "
-                + "Componentwise relatedness gives R(v,u) and R(v,h). The equations u₃v₂ = 0 and h₄v₁ = 0 force v₂ = v₁ = 0. "
+                + "Either generator relation implies componentwise relatedness, giving R(v,u) and R(v,h). "
+                + "The equations u₃v₂ = 0 and h₄v₁ = 0 force v₂ = v₁ = 0. "
                 + "But the pair (v,t) has local support, contradicting the preceding alternative. "
                 + "Finally, equality of quotient classes makes the difference of representatives lie in the bilinearity subspace, "
                 + "so every Fᵢ has equal values on equal quotient classes.")),
@@ -180,8 +198,9 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 + "would be a subspace. Closure under addition would make q(A₁) related to q(c₃ + c₄). "
                 + "Choose related representatives a,b of these two classes. Invariance of the functionals on classes gives "
                 + "F₀(a) = 1 and F₃(b) = F₄(b) = 1. Applying the same obstruction to a,b,b is impossible. "
-                + "Thus the tensor-product conjecture and the locality-compatibility conjecture are both false, "
-                + "which negates their disjunction.")));
+                + "Both arguments apply to each generator relation: diagonal generators provide the positive relations, "
+                + "and projection to componentwise locality gives the same obstruction. "
+                + "Thus both conjectures are false for both relations, negating the four-term disjunction.")));
 
     private static Formula LocalityVectorSpaceFormula()
     {
@@ -246,15 +265,35 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
         Typed(Tensor(), Qualified("Type")),
         At(Qualified("HasQuotient", "Quotient"), FreeType(), IdealInFree())));
 
+    private static Formula ComponentwiseFormula() =>
+        All("E", Qualified("Type"), All("r", RelationOn(X("E")),
+            Equal(Typed(LocalCall("componentwise", X("E"), X("r")), RelationOn(Pairs())),
+                ProductRelation())));
+
+    private static Formula FourWayFormula()
+    {
+        Formula p1 = At(Qualified("Prod", "fst"), X("p"));
+        Formula p2 = At(Qualified("Prod", "snd"), X("p"));
+        Formula q1 = At(Qualified("Prod", "fst"), X("q"));
+        Formula q2 = At(Qualified("Prod", "snd"), X("q"));
+        Formula R(Formula a, Formula b) => At(X("r"), a, b);
+        return All("E", Qualified("Type"), All("r", RelationOn(X("E")),
+            All("p", Pairs(), All("q", Pairs(),
+                IffOf(LocalCall("fourWay", X("E"), X("r"), X("p"), X("q")),
+                    AndOf(R(p1, p2), AndOf(R(p1, q1), AndOf(R(p1, q2),
+                        AndOf(R(p2, q1), AndOf(R(p2, q2), R(q1, q2)))))))))));
+    }
+
     private static Formula QuotientRelationFormula()
     {
         Formula relation = LambdaOf("u", FreeType(), LambdaOf("v", FreeType(),
-            LocalCall("spanRel", ProductRelation(), Value("u"), Value("v"))));
-        return Parameters(All("a", Tensor(), All("b", Tensor(),
-            IffOf(LocalCall("quotientRel", X("r"), X("V"), X("W"), X("a"), X("b")),
-                At(Qualified("Relation", "Map"), relation,
-                    Qualified("Submodule", "Quotient", "mk"), Qualified("Submodule", "Quotient", "mk"),
-                    X("a"), X("b"))))));
+            LocalCall("spanRel", X("s"), Value("u"), Value("v"))));
+        Formula body = IffOf(LocalCall("quotientRel", X("r"), X("s"), X("V"), X("W"), X("a"), X("b")),
+            At(Qualified("Relation", "Map"), relation,
+                Qualified("Submodule", "Quotient", "mk"), Qualified("Submodule", "Quotient", "mk"),
+                X("a"), X("b")));
+        return VectorBinders(All("r", RelationOn(X("E")), All("s", RelationOn(Pairs()),
+            SubspaceBinders(All("a", Tensor(), All("b", Tensor(), body))))));
     }
 
     private static Formula LocalityCompatibleFormula()
@@ -269,18 +308,30 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
             IffOf(LocalCall("LocalityCompatible", X("r"), X("W")), body))));
     }
 
-    private static Formula TensorConjectureFormula() => IffOf(Local("TensorConjecture"),
-        Parameters(Arrow(LocalCall("IsLocalityVectorSpace", X("K"), X("r")),
-            LocalCall("IsLocalityVectorSpace", X("K"), LocalCall("quotientRel", X("r"), X("V"), X("W"))))));
+    private static Formula TensorConjectureFormula() => All("s", RelationRule(),
+        IffOf(LocalCall("TensorConjecture", X("s")),
+            Parameters(Arrow(LocalCall("IsLocalityVectorSpace", X("K"), X("r")),
+                LocalCall("IsLocalityVectorSpace", X("K"),
+                    LocalCall("quotientRel", X("r"), RuleRelation(), X("V"), X("W")))))));
 
     private static Formula PairConjectureFormula()
     {
         Formula relation = LambdaOf("a", FreeType(), LambdaOf("b", FreeType(),
-            LocalCall("spanRel", ProductRelation(), Value("a"), Value("b"))));
-        return IffOf(Local("PairConjecture"), Parameters(
+            LocalCall("spanRel", RuleRelation(), Value("a"), Value("b"))));
+        return All("s", RelationRule(), IffOf(LocalCall("PairConjecture", X("s")), Parameters(
             Arrow(LocalCall("IsLocalityVectorSpace", X("K"), X("r")),
-                LocalCall("LocalityCompatible", relation, IdealInFree()))));
+                LocalCall("LocalityCompatible", relation, IdealInFree())))));
     }
+
+    private static Formula ClaimFormula() => IffOf(Local("claim"),
+        OrOf(LocalCall("TensorConjecture", Local("componentwise")),
+            OrOf(LocalCall("TensorConjecture", Local("fourWay")),
+                OrOf(LocalCall("PairConjecture", Local("componentwise")),
+                    LocalCall("PairConjecture", Local("fourWay"))))));
+
+    private static Formula RelationRule() => All("E", Qualified("Type"),
+        Arrow(RelationOn(X("E")), RelationOn(Pairs())));
+    private static Formula RuleRelation() => At(X("s"), X("E"), X("r"));
 
     private static Formula X(string name) => name == "w'" ? Seq(F.Id("w"), Apos) : F.Id(name);
     private static Formula Qualified(params string[] parts) =>
