@@ -68,14 +68,6 @@ private def hamiltonian {R : Type*} [CommRing R] [Algebra ℂ R]
   simp only [smul_eq_mul]
   ring
 
-private lemma bracket_pow {R : Type*} [CommRing R] [Algebra ℂ R]
-    (br : R → R → R) (hp : IsPoissonBracket br) (a h : R) (k : ℕ) :
-    br a (h ^ k) = k • (h ^ (k - 1) * br a h) := by
-  have hk := (hamiltonian br hp a).leibniz_pow h k
-  unfold hamiltonian at hk
-  simpa only [Derivation.coe_mk', LinearMap.coe_mk, AddHom.coe_mk,
-    smul_eq_mul, nsmul_eq_mul, mul_assoc] using hk
-
 private lemma bracket_mul_left {R : Type*} [CommRing R] [Algebra ℂ R]
     (br : R → R → R) (hp : IsPoissonBracket br) (a b c : R) :
     br (a * b) c = a * br b c + br a c * b := by
@@ -89,10 +81,7 @@ private lemma bracket_forces_zero {R : Type*} [CommRing R] [Algebra ℂ R] [IsRe
     (hxy : br x y = h ^ e) (hzw : br z w = h ^ e)
     (hxw : br x w = 0) (hxz : br x z = 0) : h = 0 := by
   have ha := hp.2.2.2.2.1
-  have hz (a : R) : br a 0 = 0 := by
-    have hh := (hamiltonian br hp a).map_zero
-    unfold hamiltonian at hh
-    simpa only [Derivation.coe_mk', LinearMap.coe_mk, AddHom.coe_mk] using hh
+  have hz (a : R) : br a 0 = 0 := (hamiltonian br hp a).map_zero
   cases e with
   | zero => exact (Nat.not_succ_le_zero 0 he).elim
   | succ k =>
@@ -100,18 +89,19 @@ private lemma bracket_forces_zero {R : Type*} [CommRing R] [Algebra ℂ R] [IsRe
     have hxh : br x h = -x := by rw [ha x h, hhx]
     have hj := hp.2.2.2.2.2.2 x z w
     rw [hzw, hwx, hxz, hz z, hz w, add_zero, add_zero,
-      bracket_pow br hp x h (k + 1), hxh] at hj
+      (show br x (h ^ (k + 1)) = (k + 1) • (h ^ (k + 1 - 1) * br x h) from
+        (hamiltonian br hp x).leibniz_pow h (k + 1)), hxh] at hj
     have hpowx : h ^ k * x = 0 := by
       have hc : ((k + 1 : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.succ_ne_zero k)
       have hscaled : ((k + 1 : ℕ) : ℂ) • (h ^ k * x) = 0 := by
         rw [Nat.cast_smul_eq_nsmul]
         simpa only [Nat.add_sub_cancel, mul_neg, smul_neg, neg_eq_zero] using hj
-      have hh := congrArg (fun a : R => ((k + 1 : ℕ) : ℂ)⁻¹ • a) hscaled
-      simpa only [smul_smul, inv_mul_cancel₀ hc, one_smul, smul_zero] using hh
+      exact (smul_eq_zero_iff_right hc).mp hscaled
     have hzero : br (h ^ k * x) y = 0 := by
       rw [hpowx, ha 0 y, hz y, neg_zero]
     rw [bracket_mul_left br hp, hxy, ha (h ^ k) y,
-      bracket_pow br hp y h k, ha y h, hhy, neg_neg] at hzero
+      (show br y (h ^ k) = k • (h ^ (k - 1) * br y h) from
+        (hamiltonian br hp y).leibniz_pow h k), ha y h, hhy, neg_neg] at hzero
     simp only [nsmul_eq_mul] at hzero
     have hterm : h * ((k : R) * (h ^ (k - 1) * y)) * x = 0 := by
       cases k with
@@ -139,11 +129,7 @@ private lemma spinor_forces_zero {R : Type*} [CommRing R] [Algebra ℂ R] [IsRed
     (hs : SpinorBrackets br h sUp sDn e) : h = 0 := by
   let i : Fin N := ⟨0, lt_of_lt_of_le (by decide : 0 < 2) hN⟩
   let j : Fin N := ⟨1, lt_of_lt_of_le (by decide : 1 < 2) hN⟩
-  have hij : i ≠ j := by
-    intro hij
-    have := congrArg Fin.val hij
-    change 0 = 1 at this
-    exact Nat.zero_ne_one this
+  have hij : i ≠ j := (Fin.ne_iff_vne i j).mpr Nat.zero_ne_one
   apply bracket_forces_zero br hp e he h (sUp i) (sDn i) (sUp j) (sDn j)
   · exact hs.1 i
   · exact hs.2.1 i
