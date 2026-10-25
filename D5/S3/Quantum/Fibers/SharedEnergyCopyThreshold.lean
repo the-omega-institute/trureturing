@@ -870,7 +870,7 @@ def energyRepresentation (m : ℕ) : Circle →* Matrix.unitaryGroup (Fin 3) ℂ
     congr 1
     funext i
     change (z : ℂ) ^ energy m i * star ((z : ℂ) ^ energy m i) = 1
-    rw [star_zpow₀, ← mul_zpow, unit_phase, one_zpow]⟩
+    rw [star_zpow₀, ← mul_zpow, unit_phase, _root_.one_zpow]⟩
   map_one' := by
     apply Subtype.ext
     simp
@@ -886,7 +886,11 @@ private theorem energy_representation_continuous (m : ℕ) :
     Continuous (energyRepresentation m) := by
   apply Continuous.subtype_mk
   apply Continuous.matrix_diagonal
-  exact continuous_pi fun i => continuous_subtype_val.comp (continuous_id.zpow (energy m i))
+  apply continuous_pi
+  intro i
+  change Continuous (fun z : Circle => ((z ^ energy m i : Circle) : ℂ))
+  exact continuous_subtype_val.comp
+    ((continuous_id : Continuous (fun z : Circle => z)).zpow (energy m i))
 
 private def energyLift (m : ℕ) (z : Circle) : energyGroup m :=
   ⟨energyRepresentation m z, ⟨z, rfl⟩⟩
@@ -909,6 +913,10 @@ def energyHaar (m : ℕ) : MeasureTheory.Measure (energyGroup m) :=
 
 instance energyHaarProbability (m : ℕ) : MeasureTheory.IsProbabilityMeasure (energyHaar m) :=
   ⟨MeasureTheory.Measure.haarMeasure_self⟩
+
+instance energyHaarLeftInvariant (m : ℕ) : (energyHaar m).IsMulLeftInvariant := by
+  unfold energyHaar
+  infer_instance
 
 /-- Matrix tensor powers in exactly the basis used by native density copies. -/
 def matrixCopies (X : Matrix (Fin 3) (Fin 3) ℂ) : (n : ℕ) →
@@ -992,15 +1000,18 @@ private theorem matrix_copies_conjugate (U X : Matrix (Fin 3) (Fin 3) ℂ) : ∀
   | 0 => by simp [matrixCopies]
   | 1 => rfl
   | n+2 => by
-    simp only [matrixCopies, matrix_copies_conjugate U X (n+1),
-      Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+    change (U * X * Uᴴ) ⊗ₖ matrixCopies (U * X * Uᴴ) (n+1) =
+      (U ⊗ₖ matrixCopies U (n+1)) * (X ⊗ₖ matrixCopies X (n+1)) *
+        (U ⊗ₖ matrixCopies U (n+1))ᴴ
+    rw [matrix_copies_conjugate U X (n+1), Matrix.conjTranspose_kronecker,
+      Matrix.mul_kronecker_mul, Matrix.mul_kronecker_mul]
 
 private theorem orbit_tensor_entry (m n : ℕ) (z : Circle)
     (X : Matrix (Fin 3) (Fin 3) ℂ) (I J : CopyIndex (Fin 3) n) :
     matrixCopies ((energyRepresentation m z).val * X * (energyRepresentation m z).valᴴ) n I J =
       (z : ℂ)^(totalEnergy m n I - totalEnergy m n J) * matrixCopies X n I J := by
   rw [matrix_copies_conjugate, tensor_representation,
-    Matrix.diagonal_conjTranspose, Matrix.diagonal_mul, Matrix.mul_diagonal]
+    Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul]
   have hs : star ((z : ℂ)^totalEnergy m n J) = ((z : ℂ)^totalEnergy m n J)⁻¹ := by
     rw [← Circle.coe_zpow, ← Circle.coe_inv, Circle.coe_inv_eq_conj]
     rfl
