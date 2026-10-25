@@ -59,11 +59,14 @@ private theorem depol_cptp : IsCPTP depol := by
   have heq : depol = pauliChannel ![31 / 40, 3 / 40, 3 / 40, 3 / 40] := by
     rw [depol.eq_1]
     ext X i j
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply,
+      LinearMap.smulRight_apply, Matrix.traceLinearMap_apply]
+    unfold Matrix.trace
     fin_cases i <;> fin_cases j <;>
       norm_num [depol, pauliChannel, sigma,
         D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
         D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-        Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.trace, Fin.sum_univ_succ] <;>
+        Matrix.mul_apply, Matrix.vecMul_apply_eq_sum, Fin.sum_univ_succ] <;>
       ring_nf <;> norm_num [Complex.I_sq] <;> ring
   rw [heq]
   exact channel_cptp _ (by intro i; fin_cases i <;> norm_num)
@@ -97,13 +100,16 @@ private theorem effect_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
       (fun k => (U : Matrix (Fin 2) (Fin 2) ℂ) k i) = 1 := by
     have h := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i i)
       (Matrix.UnitaryGroup.star_mul_self U)
-    simpa [Matrix.star_eq_conjTranspose, Matrix.mul_apply, dotProduct] using h
+    simp only [Matrix.star_eq_conjTranspose, Matrix.mul_apply] at h
+    unfold dotProduct
+    simpa using h
   refine ⟨?_, ?_, (pure_state_handshake _ hn 1).1, ?_⟩
   · rw [effect.eq_1]
     exact (Matrix.posSemidef_vecMulVec_self_star _).isHermitian
   · change (rankOneDensity _).trace = 1
-    simpa only [rankOneDensity, Matrix.trace_vecMulVec, dotProduct, Pi.star_apply,
-      mul_comm] using hn
+    rw [rankOneDensity, Matrix.trace_vecMulVec]
+    unfold dotProduct at hn ⊢
+    simpa only [Pi.star_apply, mul_comm] using hn
   · have h := Unitary.coe_mul_star_self U
     change (U : Matrix (Fin 2) (Fin 2) ℂ) *
       (U : Matrix (Fin 2) (Fin 2) ℂ).conjTranspose = 1 at h
@@ -133,13 +139,15 @@ private theorem centered_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
 private theorem traceless_anticommutator (A B : Matrix (Fin 2) (Fin 2) ℂ)
     (hA : A.trace = 0) (hB : B.trace = 0) :
     A * B + B * A = (A * B).trace • 1 := by
+  unfold Matrix.trace at hA hB
   have ha : A 1 1 = -A 0 0 := by
-    simpa [Matrix.trace, Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hA
+    simpa [Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hA
   have hb : B 1 1 = -B 0 0 := by
-    simpa [Matrix.trace, Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hB
+    simpa [Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hB
   ext i j
+  unfold Matrix.trace
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.mul_apply, Matrix.trace, Fin.sum_univ_two, ha, hb] <;> ring
+    simp [Matrix.mul_apply, Fin.sum_univ_two, ha, hb] <;> ring
 
 private def parent (U V : unitaryGroup (Fin 2) ℂ) (a b : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
@@ -187,7 +195,8 @@ private theorem parent_positive (U V : unitaryGroup (Fin 2) ℂ) (a b : Fin 2) :
     ring
   let H := (α : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) + (7 / 10 : ℂ) • K
   have hH : H.IsHermitian :=
-    (Matrix.isHermitian_one.smul (by simp [IsSelfAdjoint])).add (hK.smul (by norm_num [IsSelfAdjoint]))
+    (Matrix.isHermitian_one.smul (by unfold IsSelfAdjoint; simp)).add
+      (hK.smul (by unfold IsSelfAdjoint; norm_num))
   have he : H.conjTranspose * H + (c : ℂ) • 1 = (2 * (α : ℂ)) • H := by
     rw [hH.eq]
     dsimp only [H]
@@ -277,7 +286,8 @@ private theorem jointChoi_trace (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
   rw [Fintype.sum_prod_type, Finset.sum_comm]
   change (1 / 2 : ℂ) * (∑ i : Fin 2, (Λ (Matrix.single i i 1)).trace) = 1
   simp_rw [hΛ.2]
-  norm_num [Matrix.trace, Matrix.single, Fin.sum_univ_two]
+  unfold Matrix.trace Matrix.single
+  norm_num [Fin.sum_univ_two]
 
 private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hL : ∀ X, partialTraceRight (Λ X) = depol X)
@@ -292,7 +302,11 @@ private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
   have hp : (jointChoi Λ * P).trace = (1 / 4 : ℂ) *
       ∑ i : Fin 2, ∑ j : Fin 2, ∑ b : Fin 2,
         Λ (Matrix.single i j 1) (i, b) (j, b) := by
-    norm_num [jointChoi, P, Matrix.trace, Matrix.mul_apply, MatrixMap.choi_matrix,
+    rw [jointChoi, Matrix.smul_mul, Matrix.trace_smul]
+    change (1 / 2 : ℂ) *
+      (∑ x : (Fin 2 × Fin 2) × Fin 2, ∑ y : (Fin 2 × Fin 2) × Fin 2,
+        Λ (Matrix.single x.2 y.2 1) x.1 y.1 * P y x) = _
+    norm_num [P,
       Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
       D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
       complex_sqrt_two_inv_mul_self]
@@ -300,7 +314,11 @@ private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
   have hq : (jointChoi Λ * Q).trace = (1 / 4 : ℂ) *
       ∑ i : Fin 2, ∑ j : Fin 2, ∑ a : Fin 2,
         Λ (Matrix.single i j 1) (a, i) (a, j) := by
-    norm_num [jointChoi, Q, Matrix.trace, Matrix.mul_apply, MatrixMap.choi_matrix,
+    rw [jointChoi, Matrix.smul_mul, Matrix.trace_smul]
+    change (1 / 2 : ℂ) *
+      (∑ x : (Fin 2 × Fin 2) × Fin 2, ∑ y : (Fin 2 × Fin 2) × Fin 2,
+        Λ (Matrix.single x.2 y.2 1) x.1 y.1 * Q y x) = _
+    norm_num [Q,
       Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
       D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
       complex_sqrt_two_inv_mul_self]
