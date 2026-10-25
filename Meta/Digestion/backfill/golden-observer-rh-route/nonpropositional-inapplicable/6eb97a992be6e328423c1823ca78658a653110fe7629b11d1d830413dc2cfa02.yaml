@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6eb97a992be6e328423c1823ca78658a653110fe7629b11d1d830413dc2cfa02
+  normalized_sha256: sha256:6eb97a992be6e328423c1823ca78658a653110fe7629b11d1d830413dc2cfa02
+cas_ref: sha256:6eb97a992be6e328423c1823ca78658a653110fe7629b11d1d830413dc2cfa02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This settlement-list entry preserves three previously named obligations and their wording; it does not assert their mathematical conclusions.
+    previous_atom_id: d4382857a0ba296d9f4a81ddadd83f251a5abb4bc9c96a7cd7b21fa888cf313b
+    next_atom_id: b37915a4fea53c939652e6fd6d80508b486e3e12c33a2a2daa1ca46a9aa2a298
