@@ -11,28 +11,34 @@
 
 admission_basis: open-problem-resolution (#21189; Refuted)
 All rows have proof_shape: bind-only and escape_witness: none.
-The ratio recurrence, summability, geometric tail and finite comparison use
-pinned Mathlib instantiation and normalization. The external conjecture
-settlement supplies the module's admission basis.
-The utility kind is certified-instance with basis refutes; claim and result
-are the closed universal assertion and its kernel-checked negation.
-
+Gamma recurrences, summability, geometric domination and the finite comparison
+use pinned Mathlib instantiation and normalization. The external conjecture
+settlement supplies the module's admission basis. The utility kind is
+certified-instance with basis refutes; claim is the universal assertion and
+result is its kernel-checked negation.
+Declaration identities come from the scoped Lean producing report at
+.lake/build/stratalint/scoped-lean-report.json.
 Per-declaration judgement (compiled-value dependencies; new helpers inlined):
 * fval: proof_shape: bind-only; escape_witness: none.
   consumers: fval_eq, turanian, witness_negative.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
 * turanian: proof_shape: bind-only; escape_witness: none.
   consumers: claim, result, witness_negative.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
 * claim: proof_shape: bind-only; escape_witness: none.
   consumers: result.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13; statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13;
+      statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
 * term: proof_shape: bind-only; escape_witness: none.
-  consumers: aterm_ratio, aterm_upper, fval_eq, half_lower, term_half, term_integer, term_nonneg, term_ratio, term_step, term_summable, witness_negative.
+  consumers: aterm_ratio, aterm_upper, fval_eq, half_lower, term_half, term_integer,
+    term_nonneg, term_ratio, term_step, term_summable, witness_negative.
   direct frozen D5 dependencies: none.
 * term_nonneg: proof_shape: bind-only; escape_witness: none.
   consumers: aterm_ratio, half_lower, term_ratio, term_summable, witness_negative.
@@ -44,7 +50,7 @@ Per-declaration judgement (compiled-value dependencies; new helpers inlined):
   consumers: term_summable.
   direct frozen D5 dependencies: none.
 * term_summable: proof_shape: bind-only; escape_witness: none.
-  consumers: aterm_upper, fval_eq, half_lower.
+  consumers: aterm_upper, half_lower.
   direct frozen D5 dependencies: none.
 * aterm: proof_shape: bind-only; escape_witness: none.
   consumers: aterm_upper, aterm_upper_numeric, term_integer, witness_negative.
@@ -79,17 +85,27 @@ Per-declaration judgement (compiled-value dependencies; new helpers inlined):
 * fval_eq: proof_shape: bind-only; escape_witness: none.
   consumers: witness_negative.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
 * witness_negative: proof_shape: bind-only; escape_witness: none.
   consumers: result.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+* witness_cond13: proof_shape: bind-only; escape_witness: none.
+  consumers: result.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm;
+      statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
 * result: proof_shape: bind-only; escape_witness: none.
   consumers: external conjecture settlement #21189.
   direct frozen D5 dependencies:
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13; statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
-    D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm; statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff;
+      statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13;
+      statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm;
+      statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
 
 The only public theorem is the refutation result, exempt under the utility
 refutes rule. All proof helpers are private and have the named consumers.
@@ -118,20 +134,25 @@ def turanian {p q : ℕ} (a : Fin p → ℝ) (b : Fin q → ℝ) (μ α β x : �
 /-- The function nonnegativity clause of Conjecture 1. -/
 def claim : Prop :=
   ∀ (p q : ℕ) (a : Fin p → ℝ) (b : Fin q → ℝ),
-    p ≤ q → (∀ i, 0 < a i) → (∀ j, 0 < b j) → cond13 a b →
+    1 ≤ p → p ≤ q → (∀ i, 0 < a i) → (∀ j, 0 < b j) → cond13 a b →
       ∀ μ α β x : ℝ, 1 ≤ μ → 0 ≤ α → 0 ≤ β → 0 ≤ x →
         0 ≤ turanian a b μ α β x
 
 private def term (t : ℝ) (n : ℕ) : ℝ :=
-  (Real.Gamma (t + n))⁻¹ ^ 12 * 5000 ^ n / (n.factorial : ℝ)
-private lemma term_nonneg (t : ℝ) (n : ℕ) : 0 ≤ term t n := by
+  Real.Gamma (t + 1/2 + n) * (Real.Gamma (t + n))⁻¹ ^ 12 *
+    2000 ^ n / (n.factorial : ℝ)
+private lemma term_nonneg (t : ℝ) (ht : 1 ≤ t) (n : ℕ) : 0 ≤ term t n := by
   unfold term
+  have hg := (Real.Gamma_pos_of_pos (by positivity : 0 < t + 1/2 + (n:ℝ))).le
   positivity
 private lemma term_step (t : ℝ) (ht : 0 < t) (n : ℕ) :
-    term t (n+1) = (5000 / (((n : ℝ)+1) * (t+n)^12)) * term t n := by
+    term t (n+1) = (2000 * (t+1/2+n) / (((n : ℝ)+1) * (t+n)^12)) *
+      term t n := by
   have htn : t + (n : ℝ) ≠ 0 := ne_of_gt (by positivity)
+  have htn' : t + 1/2 + (n : ℝ) ≠ 0 := ne_of_gt (by positivity)
   unfold term
-  rw [Nat.cast_add, Nat.cast_one, ← add_assoc, Real.Gamma_add_one htn,
+  rw [Nat.cast_add, Nat.cast_one, ← add_assoc, ← add_assoc,
+    Real.Gamma_add_one htn', Real.Gamma_add_one htn,
     Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
   simp only [mul_inv_rev, mul_pow]
   field_simp
@@ -139,27 +160,33 @@ private lemma term_step (t : ℝ) (ht : 0 < t) (n : ℕ) :
 private lemma term_ratio (t : ℝ) (ht : 1 ≤ t) (n : ℕ) (hn : 8 ≤ n) :
     term t (n+1) ≤ (1/2:ℝ) * term t n := by
   rw [term_step t (by linarith) n]
-  apply mul_le_mul_of_nonneg_right _ (term_nonneg t n)
+  apply mul_le_mul_of_nonneg_right _ (term_nonneg t ht n)
   have hn' : (8 : ℝ) ≤ n := Nat.ofNat_le_cast.mpr hn
-  have hp : (9 : ℝ)^12 ≤ (t+n)^12 := pow_le_pow_left₀ (Nat.ofNat_nonneg' 9) (by linarith) 12
+  have hu : (9:ℝ) ≤ t+n := by linarith
+  have hp : (9 : ℝ)^11 ≤ (t+n)^11 := pow_le_pow_left₀ (by norm_num) hu 11
+  have hp' : (9:ℝ)^11 * (t+n) ≤ (t+n)^12 := by
+    simpa [pow_succ] using mul_le_mul_of_nonneg_right hp (by linarith : 0 ≤ t+n)
   apply (div_le_iff₀ (by positivity : 0 < ((n:ℝ)+1)*(t+n)^12)).2
   nlinarith
 private lemma term_summable (t : ℝ) (ht : 1 ≤ t) : Summable (term t) := by
   apply summable_of_ratio_norm_eventually_le one_half_lt_one
   filter_upwards [eventually_ge_atTop 8] with n hn
-  simpa only [Real.norm_eq_abs, abs_of_nonneg (term_nonneg t _)] using term_ratio t ht n hn
+  simpa only [Real.norm_eq_abs, abs_of_nonneg (term_nonneg t ht _)] using term_ratio t ht n hn
 
 private def aterm (n : ℕ) : ℝ :=
-  5000 ^ n / ((n.factorial : ℝ) * ((n+1).factorial : ℝ)^12)
+  (((2*(n+2)-1).doubleFactorial : ℝ) / 2^(n+2)) *
+    2000 ^ n / ((n.factorial : ℝ) * ((n+1).factorial : ℝ)^12)
 
 private def hterm (k n : ℕ) : ℝ :=
-  5000 ^ n / ((n.factorial : ℝ) *
+  ((n+k).factorial : ℝ) * 2000 ^ n / ((n.factorial : ℝ) *
     (((2*(n+k)-1).doubleFactorial : ℝ) / 2^(n+k))^12)
 
-private lemma term_integer (n : ℕ) : term 2 n = aterm n := by
+private lemma term_integer (n : ℕ) : term 2 n = Real.sqrt Real.pi * aterm n := by
   unfold term aterm
   rw [show (2:ℝ)+n = ((n+1 : ℕ):ℝ)+1 by push_cast; ring,
-    Real.Gamma_nat_eq_factorial]
+    Real.Gamma_nat_eq_factorial,
+    show (2:ℝ)+1/2+n = ((n+2:ℕ):ℝ)+1/2 by push_cast; ring,
+    Real.Gamma_nat_add_half]
   simp only [inv_pow, div_eq_mul_inv, mul_inv_rev]
   ring
 
@@ -168,121 +195,150 @@ private lemma term_half (k n : ℕ) :
   have hs : (Real.sqrt Real.pi)^12 = Real.pi^6 := by
     rw [show 12 = 2*6 from (Nat.succ_mul_succ 1 5).symm, pow_mul, Real.sq_sqrt Real.pi_pos.le]
   unfold term hterm
-  rw [show (k:ℝ)+1/2+n = ((n+k:ℕ):ℝ)+1/2 by push_cast; ring,
+  rw [show (k:ℝ)+1/2+1/2+n = ((n+k:ℕ):ℝ)+1 by push_cast; ring,
+    Real.Gamma_nat_eq_factorial,
+    show (k:ℝ)+1/2+n = ((n+k:ℕ):ℝ)+1/2 by push_cast; ring,
     Real.Gamma_nat_add_half]
   rw [inv_pow, div_pow, mul_pow, hs]
   simp only [div_eq_mul_inv, mul_inv_rev, inv_pow, inv_inv]
   ring_nf
   norm_num
 
-private def rho : ℝ := 5000 / (9 * 10^12)
+private def rho : ℝ := 74 / 100000000000
 
-private lemma aterm_ratio (n : ℕ) (hn : 8 ≤ n) :
+private lemma aterm_ratio (n : ℕ) (hn : 9 ≤ n) :
     term 2 (n+1) ≤ rho * term 2 n := by
   rw [term_step 2 zero_lt_two n]
-  apply mul_le_mul_of_nonneg_right _ (term_nonneg 2 n)
-  have hn' : (8:ℝ) ≤ n := Nat.ofNat_le_cast.mpr hn
-  have hp : (10:ℝ)^12 ≤ (2+n)^12 := pow_le_pow_left₀ (Nat.ofNat_nonneg' 10) (by linarith) 12
-  unfold rho
-  apply div_le_div_of_nonneg_left (Nat.ofNat_nonneg' 5000) (by norm_num)
-  nlinarith
+  apply mul_le_mul_of_nonneg_right _ (term_nonneg 2 one_le_two n)
+  have hn' : (9:ℝ) ≤ n := Nat.ofNat_le_cast.mpr hn
+  have hp : (11:ℝ)^11 ≤ (2+n)^11 := pow_le_pow_left₀ (by norm_num) (by linarith) 11
+  have hp' : (11:ℝ)^11 * (2+n) ≤ (2+n)^12 := by
+    simpa [pow_succ] using mul_le_mul_of_nonneg_right hp (by positivity : 0 ≤ (2:ℝ)+n)
+  apply (div_le_iff₀ (by positivity : 0 < ((n:ℝ)+1)*(2+n)^12)).2
+  have hden : 10 * (11:ℝ)^11 * (2+n) ≤ ((n:ℝ)+1)*(2+n)^12 := by
+    calc
+      _ ≤ ((n:ℝ)+1) * ((11:ℝ)^11 * (2+n)) := by nlinarith
+      _ ≤ _ := mul_le_mul_of_nonneg_left hp' (by positivity)
+  calc
+    _ ≤ rho * (10 * (11:ℝ)^11 * (2+n)) := by
+      norm_num [rho]
+      nlinarith only [hn']
+    _ ≤ _ := mul_le_mul_of_nonneg_left hden (by norm_num [rho])
 
 private lemma aterm_upper :
-    (∑' n, term 2 n) ≤ (∑ n ∈ Finset.range 8, aterm n) + aterm 8 / (1-rho) := by
+    (∑' n, term 2 n) ≤ Real.sqrt Real.pi *
+      ((∑ n ∈ Finset.range 10, aterm n) + aterm 10 / (1-rho)) := by
   have hr0 : 0 ≤ rho := by norm_num [rho]
   have hr1 : rho < 1 := by norm_num [rho]
-  have hm (n : ℕ) : term 2 (n+8) ≤ rho^n * term 2 8 := by
-    simpa only [zero_add] using le_geom (u := fun n => term 2 (n+8)) hr0 n
-      (fun k _ => aterm_ratio (k+8) (Nat.le_add_left 8 k))
+  have hm (n : ℕ) : term 2 (n+10) ≤ rho^n * term 2 10 := by
+    simpa only [zero_add] using le_geom (u := fun n => term 2 (n+10)) hr0 n
+      (fun k _ => aterm_ratio (k+10) (by omega))
   have htail := Summable.tsum_le_tsum hm
-    ((summable_nat_add_iff 8).2 (term_summable 2 one_le_two))
-    ((summable_geometric_of_lt_one hr0 hr1).mul_right (term 2 8))
+    ((summable_nat_add_iff 10).2 (term_summable 2 one_le_two))
+    ((summable_geometric_of_lt_one hr0 hr1).mul_right (term 2 10))
   rw [tsum_mul_right, tsum_geometric_of_lt_one hr0 hr1, term_integer] at htail
-  have he := Summable.sum_add_tsum_nat_add 8 (term_summable 2 one_le_two)
-  simp_rw [term_integer] at he
-  simp_rw [term_integer] at htail
-  simp_rw [term_integer]
+  have he := Summable.sum_add_tsum_nat_add 10 (term_summable 2 one_le_two)
   rw [← he]
-  exact add_le_add le_rfl (by simpa [div_eq_mul_inv, mul_comm] using htail)
+  simp_rw [term_integer]
+  rw [← Finset.mul_sum, mul_add]
+  simp_rw [term_integer] at htail
+  exact add_le_add le_rfl (by simpa [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using htail)
 
 private lemma aterm_upper_numeric :
-    (∑ n ∈ Finset.range 8, aterm n) + aterm 8 / (1-rho) ≤ (9/4:ℝ) := by
-  norm_num [aterm, rho, Finset.sum_range_succ, Nat.factorial]
+    (∑ n ∈ Finset.range 10, aterm n) + aterm 10 / (1-rho) ≤ (1672/1000:ℝ) := by
+  norm_num [aterm, rho, Finset.sum_range_succ, Nat.factorial, Nat.doubleFactorial]
 
 private lemma hterm_lower (k : ℕ) :
-    (∑ n ∈ Finset.range 2, hterm k n) ≤ ∑ n ∈ Finset.range 8, hterm k n := by
-  apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono Nat.AtLeastTwo.prop)
+    (∑ n ∈ Finset.range 3, hterm k n) ≤ ∑ n ∈ Finset.range 10, hterm k n := by
+  apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (by omega))
   intro n _ _
   unfold hterm
   positivity
 
 private lemma half_lower (k : ℕ) (hk : 1 ≤ k) :
-    Real.pi⁻¹^6 * (∑ n ∈ Finset.range 8, hterm k n) ≤ ∑' n, term ((k:ℝ)+1/2) n := by
-  have h := Summable.sum_le_tsum (Finset.range 8)
-    (fun n _ => term_nonneg ((k:ℝ)+1/2) n)
-    (term_summable ((k:ℝ)+1/2) (by
-      have h : (1:ℝ) ≤ k := Nat.one_le_cast.mpr hk
-      linarith))
+    Real.pi⁻¹^6 * (∑ n ∈ Finset.range 10, hterm k n) ≤ ∑' n, term ((k:ℝ)+1/2) n := by
+  have ht : (1:ℝ) ≤ (k:ℝ)+1/2 := by
+    have h : (1:ℝ) ≤ k := Nat.one_le_cast.mpr hk
+    linarith
+  have h := Summable.sum_le_tsum (Finset.range 10)
+    (fun n _ => term_nonneg ((k:ℝ)+1/2) ht n)
+    (term_summable ((k:ℝ)+1/2) ht)
   simpa only [term_half, Finset.mul_sum] using h
 
-private lemma fval_eq (μ : ℝ) (hμ : 1 ≤ μ) :
-    fval (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ)) μ 5000 =
+private lemma fval_eq (μ : ℝ) :
+    fval (fun _ : Fin 1 => 1) (fun _ : Fin 12 => (1/2:ℝ)) μ 2000 =
       ∑' n, term (μ+1/2) n := by
   unfold fval
-  have hsum : HasSum (fun n : ℕ =>
-      coeff (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ)) (μ+n) *
-        5000^n / (n.factorial : ℝ)) (∑' n, term (μ+1/2) n) := by
-    convert (term_summable (μ+1/2) (by linarith)).hasSum using 1
-    ext n
-    simp [coeff, term, inv_pow, add_left_comm, add_assoc, add_comm]
-  exact hsum.tsum_eq
+  apply tsum_congr
+  intro n
+  simp [coeff, term, inv_pow, div_eq_mul_inv, add_left_comm, add_assoc, add_comm]
+  norm_num
 
 private lemma witness_negative :
-    turanian (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ))
-      1 (1/2) (1/2) 5000 < 0 := by
-  have ha : (∑' n, term 2 n) ≤ (9/4:ℝ) := aterm_upper.trans aterm_upper_numeric
-  have ha0 : 0 ≤ ∑' n, term 2 n := tsum_nonneg (term_nonneg 2)
-  have hr : (161000:ℝ) ≤ ∑ n ∈ Finset.range 8, hterm 1 n := by
+    turanian (fun _ : Fin 1 => 1) (fun _ : Fin 12 => (1/2:ℝ))
+      1 (1/2) (1/2) 2000 < 0 := by
+  have ha : (∑' n, term 2 n) ≤ Real.sqrt Real.pi * (1672/1000:ℝ) :=
+    aterm_upper.trans (mul_le_mul_of_nonneg_left aterm_upper_numeric (Real.sqrt_nonneg _))
+  have ha0 : 0 ≤ ∑' n, term 2 n := tsum_nonneg (term_nonneg 2 one_le_two)
+  have hr : (136700:ℝ) ≤ ∑ n ∈ Finset.range 10, hterm 1 n := by
     refine le_trans ?_ (hterm_lower 1)
-    norm_num [hterm, Finset.sum_range_succ, Nat.doubleFactorial]
-  have hs : (34:ℝ) ≤ ∑ n ∈ Finset.range 8, hterm 2 n := by
+    norm_num [hterm, Finset.sum_range_succ, Nat.doubleFactorial, Nat.factorial]
+  have hs : (69:ℝ) ≤ ∑ n ∈ Finset.range 10, hterm 2 n := by
     refine le_trans ?_ (hterm_lower 2)
-    norm_num [hterm, Finset.sum_range_succ, Nat.doubleFactorial]
-  have hr' : Real.pi⁻¹^6 * 161000 ≤ ∑' n, term (3/2) n := by
+    norm_num [hterm, Finset.sum_range_succ, Nat.doubleFactorial, Nat.factorial]
+  have hr' : Real.pi⁻¹^6 * 136700 ≤ ∑' n, term (3/2) n := by
     exact (mul_le_mul_of_nonneg_left hr (by positivity)).trans
       (by convert half_lower 1 NeZero.one_le using 1 <;> norm_num)
-  have hs' : Real.pi⁻¹^6 * 34 ≤ ∑' n, term (5/2) n := by
+  have hs' : Real.pi⁻¹^6 * 69 ≤ ∑' n, term (5/2) n := by
     exact (mul_le_mul_of_nonneg_left hs (by positivity)).trans
       (by convert half_lower 2 NeZero.one_le using 1 <;> norm_num)
-  have hpi : (9/4:ℝ)^2 * Real.pi^12 < 161000*34 := by
+  have hpi : (1672/1000:ℝ)^2 * Real.pi^13 < 136700*69 := by
     calc
-      _ ≤ (9/4:ℝ)^2 * (3.1416:ℝ)^12 := mul_le_mul_of_nonneg_left
-        (pow_le_pow_left₀ Real.pi_pos.le Real.pi_lt_d4.le 12) (sq_nonneg (9/4))
+      _ ≤ (1672/1000:ℝ)^2 * (3.1416:ℝ)^13 := mul_le_mul_of_nonneg_left
+        (pow_le_pow_left₀ Real.pi_pos.le Real.pi_lt_d4.le 13) (sq_nonneg _)
       _ < _ := by norm_num
-  have hnum : (9/4:ℝ)^2 < (Real.pi⁻¹^6 * 161000) * (Real.pi⁻¹^6 * 34) := by
-    have he : (Real.pi⁻¹^6 * 161000) * (Real.pi⁻¹^6 * 34) =
-        (161000*34:ℝ) / Real.pi^12 := by
-      field_simp
+  have hnum : (Real.sqrt Real.pi * (1672/1000:ℝ))^2 <
+      (Real.pi⁻¹^6 * 136700) * (Real.pi⁻¹^6 * 69) := by
+    have he : (Real.pi⁻¹^6 * 136700) * (Real.pi⁻¹^6 * 69) =
+        (136700*69:ℝ) / Real.pi^12 := by field_simp
     rw [he]
-    exact (lt_div_iff₀ (by positivity)).2 hpi
-  have hprod := mul_le_mul hr' hs' (by positivity : 0 ≤ Real.pi⁻¹^6 * 34)
-    (tsum_nonneg (term_nonneg (3/2)))
+    apply (lt_div_iff₀ (by positivity)).2
+    rw [mul_pow, Real.sq_sqrt Real.pi_pos.le]
+    nlinarith [hpi]
+  have hprod := mul_le_mul hr' hs' (by positivity : 0 ≤ Real.pi⁻¹^6 * 69)
+    (tsum_nonneg (term_nonneg (3/2) (by norm_num)))
   have hmid := mul_self_le_mul_self ha0 ha
   unfold turanian
   norm_num only
-  simp only [fval_eq (3/2) (by norm_num), fval_eq 1 (le_refl 1),
-    fval_eq 2 one_le_two]
+  simp only [fval_eq (3/2), fval_eq 1, fval_eq 2]
   norm_num only at *
   nlinarith
+
+private lemma witness_cond13 :
+    cond13 (fun _ : Fin 1 => (1:ℝ)) (fun _ : Fin 12 => (1/2:ℝ)) := by
+  have he (n k : ℕ) (x : ℝ) :
+      esymm (fun _ : Fin n => x) k = (n.choose k : ℝ) * x ^ k := by
+    rw [esymm, Finset.esymm_map_val]
+    calc
+      ∑ t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, ∏ _i ∈ t, x =
+          ∑ _t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, x ^ k := by
+        apply Finset.sum_congr rfl
+        intro t ht
+        rw [Finset.prod_const, (Finset.mem_powersetCard.mp ht).2]
+      _ = (n.choose k : ℝ) * x ^ k := by simp
+  intro j hj
+  have hj0 : j = 0 := by omega
+  subst j
+  norm_num [he]
 
 /-- Conjecture 1's universal function nonnegativity assertion is false. -/
 theorem result : ¬ claim := by
   intro hclaim
-  have h := hclaim 0 12 (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ))
-    (Nat.zero_le 12) (by intro i; exact Fin.elim0 i) (fun _ => one_half_pos)
-    (by intro j hj; exact (Nat.not_lt_zero j hj).elim)
-    1 (1/2) (1/2) 5000 (le_refl 1) (by norm_num) (by norm_num)
-    (Nat.ofNat_nonneg' 5000)
+  have h := hclaim 1 12 (fun _ : Fin 1 => 1) (fun _ : Fin 12 => (1/2:ℝ))
+    (le_refl 1) (by norm_num) (fun _ => zero_lt_one) (fun _ => one_half_pos)
+    witness_cond13
+    1 (1/2) (1/2) 2000 (le_refl 1) (by norm_num) (by norm_num)
+    (Nat.ofNat_nonneg' 2000)
   exact (not_lt_of_ge h) witness_negative
 
 end D5.S3.Analytic.HypergeometricShiftTuran.FunctionResult

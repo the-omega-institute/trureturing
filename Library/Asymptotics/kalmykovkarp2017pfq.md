@@ -93,7 +93,7 @@ Conjecture 2 on page 6 of arXiv:1611.06724v1 states verbatim:
 
 > Conjecture 2. Suppose p1 ≤ q1 , p2 ≤ q2 and conditions (13) hold for a1 , b1 and a2 , b2 . Then the function µ → f (µ; x) defined in (3) is log-concave on [1, ∞) and the corresponding generalized Turánian ∆f (α, β; x) has nonnegative coefficients at all powers of x.
 
-The standing assumption on page 2 states verbatim:
+Section 2, page 3, states verbatim:
 
 > We will always assume that a2 is not empty (i.e. p2 ≥ 1), while all other subvectors are allowed to be empty.
 
@@ -147,10 +147,14 @@ Conjecture 1, page 6, states verbatim:
 
 `FunctionResult.fval` is the real infinite sum in equation (10), using the
 frozen Gamma ratio `Defs.coeff`. `FunctionResult.turanian` is equation (9).
-`FunctionResult.claim` retains every hypothesis of the function clause in the
-$p\le q$ branch, without the extra restriction needed only for coefficients.
-`FunctionResult.result` refutes it at $p=0$, $q=12$, $b_j=1/2$,
-$\mu=1$, $\alpha=\beta=1/2$, $x=5000$. The proof establishes convergence
+`FunctionResult.claim` imposes $1\le p\le q$ and the remaining function
+hypotheses, without the extra restriction needed only for coefficients.
+The nonempty-$a_2$ sentence in Section 2 is followed by “In this section we
+will consider log-convexity of the function f (µ; x) defined in (3) under these
+assumptions.” Its scope in Section 3 need not be decided: the claim with
+$1\le p$ is refuted by a witness valid under both the standing and
+section-local readings. `FunctionResult.result` uses $p=1$, $a=(1)$,
+$q=12$, $b_j=1/2$, $\mu=1$, $\alpha=\beta=1/2$, $x=2000$. The proof establishes convergence
 and estimates the infinite sums; it does not infer a function sign from a
 negative Taylor coefficient. Its exact scope is recorded in
 `Problems/kalmykov-karp-pfq-conjecture-one-function.md`.

@@ -6,7 +6,7 @@ A convergent-series counterexample to the function clause of Conjecture 1.
 
 **Definition 1.1 (The function in equation (10)).**
 
-Lean statement: `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.fval`
+$$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(p\right) \to \mathbb{R},\; \forall b \in \operatorname{Fin}\left(q\right) \to \mathbb{R},\; \forall mu \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{fval}\left(a, b, mu, x\right) = \sum'_{n: \mathbb{N}} \operatorname{Defs.coeff}\left(a, b, mu + n\right) \cdot \frac{x^{n}}{\operatorname{Nat.factorial}\left(n\right)}$$
 
 *Formalization.* `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.fval` (`✓ std3`).
 
@@ -18,7 +18,7 @@ Equation (10), page 5 of arXiv:1611.06724v1: “f (µ; x) = Γ(a + µ)/Γ(b + µ
 
 **Definition 1.2 (The function Turanian).**
 
-Lean statement: `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.turanian`
+$$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(p\right) \to \mathbb{R},\; \forall b \in \operatorname{Fin}\left(q\right) \to \mathbb{R},\; \forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{turanian}\left(a, b, mu, alpha, beta, x\right) = \operatorname{fval}\left(a, b, mu + alpha, x\right) \cdot \operatorname{fval}\left(a, b, mu + beta, x\right) - \operatorname{fval}\left(a, b, mu, x\right) \cdot \operatorname{fval}\left(a, b, mu + alpha + beta, x\right)$$
 
 *Formalization.* `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.turanian` (`✓ std3`).
 
@@ -30,7 +30,7 @@ Equation (9), page 5: “∆f (α, β; x) := f (µ + α; x)f (µ + β; x) − f 
 
 **Definition 1.3 (The universal function assertion).**
 
-Lean statement: `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim`
+$$claim = \left(\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(p\right) \to \mathbb{R},\; \forall b \in \operatorname{Fin}\left(q\right) \to \mathbb{R},\; (1 \le p) \Rightarrow ((p \le q) \Rightarrow ((\forall i \in \operatorname{Fin}\left(p\right),\; 0 < a\left(i\right)) \Rightarrow ((\forall j \in \operatorname{Fin}\left(q\right),\; 0 < b\left(j\right)) \Rightarrow ((\operatorname{Defs.cond13}\left(a, b\right)) \Rightarrow (\forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall x \in \mathbb{R},\; (1 \le mu) \Rightarrow ((0 \le alpha) \Rightarrow ((0 \le beta) \Rightarrow ((0 \le x) \Rightarrow (0 \le \operatorname{turanian}\left(a, b, mu, alpha, beta, x\right))))))))))\right)$$
 
 *Formalization.* `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim` (`✓ std3`).
 
@@ -40,11 +40,11 @@ Lean statement: `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim`
 
 Theorem 3, page 5: “Theorem 3. If p ≤ q and conditions (13) are satisfied, then ∆f (α, β; x) ≥ 0 for x ≥ 0, µ, β ≥ 0 and α ∈ N, where ∆f (α, β; x) is defined in (9) with f from (10). Moreover, if α ≤ β + 1, then δm ≥ 0 for all m ∈ N0.”
 
-Conjecture 1, page 6: “Conjecture 1. All conclusions of Theorem 3 hold for all α, β ≥ 0 if µ ≥ 1.” The claim is precisely its function clause in the p at most q branch: all positive numerator and denominator parameter vectors satisfying Defs.cond13, all mu at least one, all nonnegative alpha, beta and x. It imposes no alpha at most beta+1 condition, since that restriction belongs to the coefficient clause. A zero-length numerator is permitted, and condition (13) is then vacuous.
+Conjecture 1, page 6: “Conjecture 1. All conclusions of Theorem 3 hold for all α, β ≥ 0 if µ ≥ 1.” The claim is its function clause in the branch 1 ≤ p ≤ q: all positive numerator and denominator parameter vectors satisfying Defs.cond13, all mu at least one, all nonnegative alpha, beta and x. It imposes no alpha at most beta+1 condition, since that restriction belongs to the coefficient clause. Section 2, page 3, states: “We will always assume that a₂ is not empty (i.e. p₂ ≥ 1), while all other subvectors are allowed to be empty.” It continues: “In this section we will consider log-convexity of the function f (µ; x) defined in (3) under these assumptions.” Section 3 sets a₁ and b₁ empty, so a=a₂. Whether nonemptiness carries into that section or is local to Section 2, the witness with p=1 belongs to the domain. Refuting the claim with 1 ≤ p refutes both readings.
 
 **Theorem 1.4 (Refutation by an exact series estimate).**
 
-$$\neg claim$$
+$$\neg (\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(p\right) \to \mathbb{R},\; \forall b \in \operatorname{Fin}\left(q\right) \to \mathbb{R},\; (1 \le p) \Rightarrow ((p \le q) \Rightarrow ((\forall i \in \operatorname{Fin}\left(p\right),\; 0 < a\left(i\right)) \Rightarrow ((\forall j \in \operatorname{Fin}\left(q\right),\; 0 < b\left(j\right)) \Rightarrow ((\operatorname{Defs.cond13}\left(a, b\right)) \Rightarrow (\forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall x \in \mathbb{R},\; (1 \le mu) \Rightarrow ((0 \le alpha) \Rightarrow ((0 \le beta) \Rightarrow ((0 \le x) \Rightarrow (0 \le \operatorname{turanian}\left(a, b, mu, alpha, beta, x\right)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.result` (`✓ std3`). ∎
 
@@ -58,11 +58,11 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take p=0, q=12, every denominator parameter equal to one half, mu=1, alpha=beta=1/2 and x=5000. Write A=fval at mu=3/2, fval at mu=1 as pi to the power -6 times R, and fval at mu=2 as pi to the power -6 times S. The integer and half-integer Gamma formulas give positive rational series for A, R and S.
+Take p=1, a=(1), q=12, every denominator parameter equal to one half, mu=1, alpha=beta=1/2 and x=2000. Write fval at mu=3/2 as sqrt(pi) times A′, fval at mu=1 as pi to the power -6 times R, and fval at mu=2 as pi to the power -6 times S. The integer and half-integer Gamma formulas give positive rational series for A′, R and S.
 
-Use the first eight terms for each series. The tail of A is at most its term of index eight divided by 1-rho, where rho=5000/(9 times 10 to the power 12). The upper bound for A is at most 9/4. The first eight rational terms of R sum to at least 161000 and those of S to at least 34; these lower bounds already follow from their first two terms. Mathlib's pi<3.1416 and exact rational arithmetic give (9/4) squared times pi to the power 12 less than 161000 times 34. Therefore A squared is strictly smaller than pi to the power -12 times R times S. The Turanian is strictly negative.
+Use the first ten terms for each series. The tail of A′ is at most its term of index ten divided by 1-rho, where rho=74/100000000000 bounds every successive ratio after index nine. The resulting upper bound for A′ is at most 1672/1000. The first ten rational terms of R sum to at least 136700 and those of S to at least 69; these lower bounds already follow from their first three terms. Mathlib's pi<3.1416 and exact rational arithmetic give (1672/1000) squared times pi to the power 13 less than 136700 times 69. Hence pi times A′ squared is strictly smaller than pi to the power -12 times R times S. The Turanian is strictly negative.
 
-The dimensions, positive denominator parameters and nonnegative shifts satisfy every hypothesis of claim. Thus universal function nonnegativity is false. Theorem 3's integer-shift statement is unaffected by these two half shifts.
+The numerator is nonempty and all parameters are positive. Condition (13) reduces to (1/2)^12 ≤ 12(1/2)^11; the dimensions and nonnegative shifts satisfy every hypothesis of claim. Thus universal function nonnegativity is false. Theorem 3's integer-shift statement is unaffected by these two half shifts.
 
 ## References
 
