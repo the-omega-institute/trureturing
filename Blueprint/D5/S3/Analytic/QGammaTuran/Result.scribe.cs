@@ -52,7 +52,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Seq(Mathbb, Grp(V("N")));
     private static Formula R => Seq(Mathbb, Grp(V("R")));
-    private static Formula Paren(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args)
     {
         var parts = new List<Formula>();
@@ -72,16 +72,16 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula Positive(Formula value) =>
         new Formula.Relation(D(0), FormulaRelationOperator.LessThan, value);
     private static Formula Imp(Formula left, Formula right) =>
-        new Formula.Logic(Paren(left), FormulaLogicOperator.Implies, Paren(right));
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Sub(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
-    private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Paren(value), exponent);
+    private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Parenthesized(value), exponent);
     private static Formula Product(string name, Formula body) => Seq(
-        new Formula.Subscript(Seq(Prod, Apos), Seq(V(name), Colon, Sp, N)), Sp, Paren(body));
+        new Formula.Subscript(Seq(Prod, Apos), Seq(V(name), Colon, Sp, N)), Sp, Parenthesized(body));
     private static Formula Scalars(Formula body) =>
         All("mu", R, All("alpha", R, All("beta", R, body)));
     private static Formula Coefficient(Formula degree) =>
@@ -104,7 +104,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         var second = Mul(Reciprocal(Add(k, V("mu"))),
             Reciprocal(Add(Add(Add(other, V("mu")), V("alpha")), V("beta"))));
         var summand = Mul(Mul(new Formula.Apply(V("g"), [k]),
-            new Formula.Apply(V("g"), [other])), Paren(Sub(first, second)));
+            new Formula.Apply(V("g"), [other])), Parenthesized(Sub(first, second)));
         var sum = Seq(new Formula.Subscript(Sum, Seq(k, InMacro, Sp,
             Call("Finset.range", Add(V("m"), D(1))))), Sp, summand);
         return All("q", R, All("g", new Formula.TypeArrow(N, R), Scalars(All("m", N,
