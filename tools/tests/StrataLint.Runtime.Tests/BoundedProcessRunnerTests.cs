@@ -22,6 +22,12 @@ public sealed class BoundedProcessRunnerTests
             }));
         Assert.True(interrupted);
         Assert.Contains("timed out after 1 seconds", exception.Message, StringComparison.Ordinal);
+        Assert.IsAssignableFrom<OperationCanceledException>(exception.InnerException);
+        // Settlement produces both EOFs only after the timeout evidence was captured.
+        Assert.Contains("snapshot=non-atomic-before-cleanup", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("stdout.eof=unknown", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("stderr.eof=unknown", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("has-exited.before-cleanup=false(cancel-before=true)", exception.Message, StringComparison.Ordinal);
         Assert.Equal("readysettled", System.Text.Encoding.UTF8.GetString(stdout.ToArray()));
         Assert.Equal("retained", System.Text.Encoding.UTF8.GetString(stderr.ToArray()));
     }
@@ -70,13 +76,51 @@ public sealed class BoundedProcessRunnerTests
     public void ExpiredBudgetRemainsTimeoutWhileCallerCancellationRemainsCancellation()
     {
         if (OperatingSystem.IsWindows()) return;
-        Assert.Throws<TimeoutException>(() => BoundedProcessRunner.Run(
+        var timeout = Assert.Throws<TimeoutException>(() => BoundedProcessRunner.Run(
             "/bin/sh", ["-c", "while :; do :; done"], Path.GetTempPath(), TestBudgets.ZeroDuration, 16));
+        Assert.IsAssignableFrom<OperationCanceledException>(timeout.InnerException);
+        Assert.Contains("record-order-only; unknown=not-observed", timeout.Message, StringComparison.Ordinal);
+        Assert.Contains("stdin=not-redirected#", timeout.Message, StringComparison.Ordinal);
+        Assert.Contains("task-status-sampled-before-cleanup:", timeout.Message, StringComparison.Ordinal);
+        Assert.Contains("exception-site=", timeout.Message, StringComparison.Ordinal);
+        Assert.Contains("exit-wait.complete=", timeout.Message, StringComparison.Ordinal);
+        var classified = Assert.Throws<SkipException>(() => TestProcessRunner.Classify<int>(() => throw timeout, "/bin/sh"));
+        Assert.Equal($"infrastructure-hang-guard expired for /bin/sh: {timeout.Message}", classified.Message);
         using var cancellation = new CancellationTokenSource();
         Assert.ThrowsAny<OperationCanceledException>(() => BoundedProcessRunner.RunStreaming<int>(
             "/bin/sh", ["-c", "while :; do :; done"], Path.GetTempPath(), TestBudgets.ScriptProcessHangGuard, 16,
             (_, _) => { cancellation.Cancel(); return Task.FromCanceled<int>(cancellation.Token); },
             cancellationToken: cancellation.Token));
+    }
+
+    [Fact]
+    public async Task CompletionEvidenceKeepsOrderingUnknownsAndExceptionsWithoutInferringExit()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var observations = new BoundedProcessRunner.CompletionObservations { Cancellation = cancellation.Token };
+        observations.Record("stdin.write", "completed(bytes=26)");
+        observations.Record("stdout.bytes", "26");
+        await observations.ObserveCompletion(Task.CompletedTask, "stdout.complete");
+        cancellation.Cancel();
+        observations.Record("stdout.bytes", "27");
+        var failure = new IOException("original reader failure");
+        Assert.Same(failure, await Assert.ThrowsAsync<IOException>(() => observations.ObserveCompletion(
+            Task.FromException(failure), "stderr.complete")));
+        using var unstarted = new System.Diagnostics.Process();
+        var snapshot = observations.Snapshot(unstarted, null, null, null, null, "completion-arbitration",
+            new OperationCanceledException("original cancellation", cancellation.Token), default, cancellation.Token);
+        Assert.Contains("stdin.write=completed(bytes=26)#1(cancel-requested=false)", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stdout.complete=completed#3(cancel-requested=false)", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stdout.bytes=27#4(cancel-requested=true)", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stdout.bytes.before-cancel=26#2(cancel-requested=false)", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stdout.eof=unknown", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stderr.complete=threw(System.IO.IOException)", snapshot, StringComparison.Ordinal);
+        Assert.Contains("stdin.close=unknown", snapshot, StringComparison.Ordinal);
+        Assert.Contains("has-exited.before-cleanup=unknown(threw System.InvalidOperationException:", snapshot, StringComparison.Ordinal);
+        Assert.Contains("exception-message=original cancellation; token=shared-linked", snapshot, StringComparison.Ordinal);
+        Assert.Contains("exit-wait=not-created", snapshot, StringComparison.Ordinal);
+        observations.Record("stdout.eof", "observed");
+        Assert.Contains("stdout.eof=unknown", snapshot, StringComparison.Ordinal);
     }
 
     [Xunit.SkippableTheory]
