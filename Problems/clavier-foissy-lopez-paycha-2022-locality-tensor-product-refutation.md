@@ -18,6 +18,8 @@ P. J. Clavier, L. Foissy, D. A. López and S. Paycha, *Tensor products and the M
 
 The locator is the downloaded TeX `Clavier_Foissy_Lopez_Paycha_arxiv.tex`, lines 1984–1987, label `conj:main1`, md5 `1f6041a82cd80114573aa776694ccf20`. Quotations expand typesetting macros without changing the wording.
 
+The paper's Notations, `Clavier_Foissy_Lopez_Paycha_arxiv.tex`, line 321, specifies that $\mathbb K$ is a commutative field of characteristic zero. Both conjectures below, under both generator-relation readings, quantify over fields of characteristic zero. The thesis states no characteristic restriction; refuting its assertion even on characteristic-zero fields also refutes the unrestricted assertion.
+
 The tensor-product conjecture is stated explicitly by P. J. Clavier, *TRAPs, Generalisations of MZVs, Locality and Resurgence for Quantum Field Theories*, arXiv:2506.09493v1 (2025), chapter `LOC.tex`, lines 1797–1799, label `conj:loc_tensor`, md5 `41f5e772e40d5eaf8583e8903293dbbb`:
 
 > Let $(E,\top)$ be any locality vector space, $V$ and $W$ any two locality vector subspaces of $E$. Then $(V\otimes_\top W,\overline{\top})$ is a locality vector space.
@@ -33,7 +35,7 @@ The sources disagree: the paper's Remark at lines 1972–1975 identifies its com
 
 For either generator relation $g$, write $s_g(a,b)$ when every pair in the support of $a\in F$ is $g$-related to every pair in the support of $b\in F$. The relation on $F/I=V\otimes_\top W$ is existential: two classes are related precisely when they have $s_g$-related representatives. Locality compatibility of $I$ means that for all $x,y,z\in F$ and $w\in I$, if $s_g(x,y)$ and $s_g(x+w,z)$, there is $w'\in I$ with both $s_g(x+w',y)$ and $s_g(x+w',z)$.
 
-Issue [#21552](https://github.com/the-omega-institute/trureturing/issues/21552), including [comment 6396883196](https://github.com/the-omega-institute/trureturing/issues/21552#issuecomment-6396883196), fixes `TensorConjecture g` as the tensor-product assertion and `PairConjecture g` as the compatibility assertion for the chosen generator relation, each universally quantified over every field $\mathbb K$, every $\mathbb K$-vector space $E$ in `Type`, every locality relation and every pair of subspaces, without a finite-dimensionality hypothesis. The module defines `claim := TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨ PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay` and proves `result : ¬ claim`, refuting both universal assertions for each generator relation.
+The problem is tracked in issue [#21552](https://github.com/the-omega-institute/trureturing/issues/21552), including [comment 6396883196](https://github.com/the-omega-institute/trureturing/issues/21552#issuecomment-6396883196). The module defines `TensorConjecture g` as the tensor-product assertion and `PairConjecture g` as the compatibility assertion for the chosen generator relation, each universally quantified over every field $\mathbb K$ of characteristic zero, every $\mathbb K$-vector space $E$ in `Type`, every locality relation and every pair of subspaces, without a finite-dimensionality hypothesis. The module defines `claim := TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨ PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay` and proves `result : ¬ claim`, refuting both universal assertions for each generator relation.
 
 The definitions and source locators are recorded in [the paper note](../Library/HomologicalAlgebra/clavieretal2022localitytensor.md) and [the thesis note](../Library/HomologicalAlgebra/clavier2025localityhdr.md).
 
@@ -78,7 +80,7 @@ The componentwise reading matches the paper's TeX lines 340–359, 387–394, 42
 
 ## Evidence
 
-The canonical source is `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.lean` (488 lines).
+The canonical source is `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.lean` (488 lines), with both conjectures quantified over characteristic-zero fields.
 
 - **Proof.** It proves `result : ¬ claim`, where `claim := TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨ PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay`. Both refutations use the same self-related diagonal generators for their positive comparisons, and four-way relatedness reduces to componentwise relatedness for the obstruction.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
@@ -100,7 +102,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 ### What the settlement shows
 
-**Proved by `result`:** the disjunction `TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨ PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay` is false. Thus neither the tensor-product assertion nor the compatibility assertion, quantified over all fields $\mathbb K$, all $\mathbb K$-vector spaces $E$ in `Type`, all locality relations and all pairs of subspaces, as stated in Problem, is valid for either generator relation.
+**Proved by `result`:** the disjunction `TensorConjecture (fun _ r => Prod.RProd r r) ∨ TensorConjecture fourWay ∨ PairConjecture (fun _ r => Prod.RProd r r) ∨ PairConjecture fourWay` is false. Thus neither the tensor-product assertion nor the compatibility assertion, quantified over all fields $\mathbb K$ of characteristic zero, all $\mathbb K$-vector spaces $E$ in `Type`, all locality relations and all pairs of subspaces, as stated in Problem, is valid for either generator relation.
 
 **Computed, not formalized** (exact rational arithmetic, `c11281b496c6d78e4f59f67f-witness-check.py`; every item reproduced by the orchestrator by hand): the eight displayed diagonal generator pairs for $X_1,X_2,Y_3,Y_4$ are local. Each of the three support comparisons for $s(X_1,Y_3)$ and for $s(X_2,Y_4)$ returns true; each of the three comparisons for $s(X_1,Y_4)$ and for $s(X_2,Y_3)$ returns false. Both displayed $X_k$, for $k=1,2$, have ordinary tensor image $e_0\otimes e_0$, checked in all 25 matrix entries. These computations concern only the displayed elements and do not search over alternative representatives.
 

@@ -67,12 +67,12 @@ def LocalityCompatible {K E : Type} [Field K] [AddCommGroup E] [Module K E]
     ∃ w' ∈ W, r (x + w') y ∧ r (x + w') z
 
 def TensorConjecture (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop) : Prop :=
-  ∀ (K E : Type) [Field K] [AddCommGroup E] [Module K E]
+  ∀ (K E : Type) [Field K] [CharZero K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E),
     IsLocalityVectorSpace K r → IsLocalityVectorSpace K (quotientRel r (s E r) V W)
 
 def PairConjecture (s : ∀ E : Type, (E → E → Prop) → E × E → E × E → Prop) : Prop :=
-  ∀ (K E : Type) [Field K] [AddCommGroup E] [Module K E]
+  ∀ (K E : Type) [Field K] [CharZero K] [AddCommGroup E] [Module K E]
     (r : E → E → Prop) (V W : Submodule K E), IsLocalityVectorSpace K r →
     LocalityCompatible (fun a b : freeSpan r V W => spanRel (s E r) a.1 b.1)
       ((bilIdeal r V W).comap (freeSpan r V W).subtype)

@@ -91,19 +91,22 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 AssessedProvenance.FromLiterature(Source)),
             Definition("tensor-conjecture", "TensorConjecture", "The locality tensor-product conjecture",
                 TensorConjectureFormula(),
-                "For a chosen generator-relation rule s, every field K and K-vector space E, "
+                "For a chosen generator-relation rule s, every field K of characteristic zero and K-vector space E, "
                     + "every locality relation r and every pair of subspaces V and W, "
                     + "the conjecture asserts that the quotient locality on the locality tensor product is a locality vector-space relation. "
                     + "This is Conjecture conj:loc_tensor of arXiv:2506.09493v1, LOC.tex, lines 1797–1799. "
+                    + "The thesis states no characteristic restriction. Here K has characteristic zero, as in the paper's Notations, "
+                    + "Clavier_Foissy_Lopez_Paycha_arxiv.tex, line 321. Refuting this restricted assertion also refutes the unrestricted thesis assertion. "
                     + "Its literal thesis reading uses fourWay; the componentwise reading uses the relation of source 1. "
                     + "K and E range over Type, without a finite-dimensionality hypothesis.",
                 AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("pair-conjecture", "PairConjecture", "The locality-compatibility conjecture",
                 PairConjectureFormula(),
-                "For the same unrestricted fields, vector spaces and subspaces, the conjecture asserts that "
+                "For the same fields K of characteristic zero, vector spaces and subspaces, the conjecture asserts that "
                     + "the bilinearity subspace inside the free span of local pairs is locality compatible "
                     + "with the support relation induced by the chosen generator-relation rule s. "
                     + "Conjectural statement 6.16 of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 1984–1987, uses componentwise locality. "
+                    + "Its characteristic-zero restriction is specified in the paper's Notations, line 321. "
                     + "The four-way variant uses the thesis relation on the same generators.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("claim", "claim", "The disjunction of all four assertions",
@@ -304,7 +307,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
         IffOf(LocalCall("TensorConjecture", X("s")),
             Parameters(Arrow(LocalCall("IsLocalityVectorSpace", X("K"), X("r")),
                 LocalCall("IsLocalityVectorSpace", X("K"),
-                    LocalCall("quotientRel", X("r"), RuleRelation(), X("V"), X("W")))))));
+                    LocalCall("quotientRel", X("r"), RuleRelation(), X("V"), X("W")))), characteristicZero: true)));
 
     private static Formula PairConjectureFormula()
     {
@@ -312,7 +315,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
             LocalCall("spanRel", RuleRelation(), Value("a"), Value("b"))));
         return All("s", RelationRule(), IffOf(LocalCall("PairConjecture", X("s")), Parameters(
             Arrow(LocalCall("IsLocalityVectorSpace", X("K"), X("r")),
-                LocalCall("LocalityCompatible", relation, IdealInFree())))));
+                LocalCall("LocalityCompatible", relation, IdealInFree())), characteristicZero: true)));
     }
 
     private static Formula ClaimFormula() => IffOf(Local("claim"),
@@ -346,11 +349,17 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
         Seq(LambdaLower, Sp, Typed(X(name), type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Instance(Formula type, Formula body) =>
         Seq(OpenBracket, type, CloseBracket, Comma, Sp, Parenthesized(body));
-    private static Formula VectorBinders(Formula body) => All("K", Qualified("Type"), All("E", Qualified("Type"),
-        Instance(At(Qualified("Field"), X("K")), Instance(At(Qualified("AddCommGroup"), X("E")),
-            Instance(At(Qualified("Module"), X("K"), X("E")), body)))));
+    private static Formula VectorBinders(Formula body, bool characteristicZero = false)
+    {
+        Formula vectorSpace = Instance(At(Qualified("AddCommGroup"), X("E")),
+            Instance(At(Qualified("Module"), X("K"), X("E")), body));
+        return All("K", Qualified("Type"), All("E", Qualified("Type"),
+            Instance(At(Qualified("Field"), X("K")), characteristicZero
+                ? Instance(At(Qualified("CharZero"), X("K")), vectorSpace) : vectorSpace)));
+    }
     private static Formula SubspaceBinders(Formula body) => All("V", SubmoduleOf(X("E")), All("W", SubmoduleOf(X("E")), body));
-    private static Formula Parameters(Formula body) => VectorBinders(All("r", RelationOn(X("E")), SubspaceBinders(body)));
+    private static Formula Parameters(Formula body, bool characteristicZero = false) =>
+        VectorBinders(All("r", RelationOn(X("E")), SubspaceBinders(body)), characteristicZero);
     private static Formula RelationOn(Formula type) => Arrow(type, Arrow(type, Qualified("Prop")));
     private static Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(Parenthesized(domain), Parenthesized(codomain));
     private static Formula AndOf(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
