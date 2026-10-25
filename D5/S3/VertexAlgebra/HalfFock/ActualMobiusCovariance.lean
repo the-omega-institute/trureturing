@@ -325,6 +325,82 @@ private theorem actual_current_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     LinearMap.id_apply, TensorProduct.sub_tmul, TensorProduct.smul_tmul',
     frequency, add_comm 1 j] using h
 
+
+/-- A single original normal-order term. The hypothesis is local induction
+information on the shorter source, not an assumption of the final theorem.
+The only exceptional reindexing is j=-1 to the nonnegative mode 0. -/
+private theorem singleton_term_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (F G H : NativeField D hu)
+    (hF : ∀ d : ℤ,
+      tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 * F.coeff d -
+        F.coeff d * tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      G.coeff d + ((d : ℂ)/2-1) • F.coeff (d-2) + 2 • H.coeff (d-2))
+    (i : Fin D.rank) (r : ℕ) (j e : ℤ) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+        flatCoefficient D hu F [(i,r)] (j,()) e -
+      flatCoefficient D hu F [(i,r)] (j,()) e *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+      flatCoefficient D hu G [(i,r)] (j,()) e +
+        (((e+2*j+2*(r:ℤ)+3 : ℤ):ℂ)/2-1) •
+          flatCoefficient D hu F [(i,r)] (j,()) (e-2) +
+        2 • flatCoefficient D hu H [(i,r)] (j,()) (e-2) +
+        (-frequency j * jetScalar r j) •
+          flatCoefficient D hu F [(i,0)] (j+1,()) (e+2*(r:ℤ)-2) +
+        if j = -1 then (1/2 * halfBinomial r : ℂ) •
+          (tensorCurrent D (ActualGround D hu) i 0 * F.coeff (e+2*(r:ℤ)+1) -
+            F.coeff (e+2*(r:ℤ)+1) * tensorCurrent D (ActualGround D hu) i 0)
+        else 0 := by
+  let T := tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1
+  let J := tensorCurrent D (ActualGround D hu) i
+  have hc (k : ℤ) : T * J k - J k * T = (-frequency k) • J (k+1) := by
+    exact actual_current_l1 D hu i k
+  have left (k d : ℤ) : T * (J k * F.coeff d) - (J k * F.coeff d) * T =
+      (-frequency k) • (J (k+1) * F.coeff d) + J k * G.coeff d +
+        ((d:ℂ)/2-1) • (J k * F.coeff (d-2)) + 2 • (J k * H.coeff (d-2)) := by
+    calc
+      _ = (T*J k-J k*T)*F.coeff d + J k*(T*F.coeff d-F.coeff d*T) := by noncomm_ring
+      _ = _ := by
+        rw [hc, hF]
+        simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, mul_add]
+        abel
+  have right (k d : ℤ) : T * (F.coeff d * J k) - (F.coeff d * J k) * T =
+      G.coeff d * J k + ((d:ℂ)/2-1) • (F.coeff (d-2)*J k) +
+        2 • (H.coeff (d-2)*J k) + (-frequency k) • (F.coeff d * J (k+1)) := by
+    calc
+      _ = (T*F.coeff d-F.coeff d*T)*J k + F.coeff d*(T*J k-J k*T) := by noncomm_ring
+      _ = _ := by
+        rw [hc, hF]
+        simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, add_mul]
+  have scalar0 (k : ℤ) : jetScalar 0 k = 1 := by simp [jetScalar]
+  have down : e-2+2*j+2*(r:ℤ)+3 = (e+2*j+2*(r:ℤ)+3)-2 := by omega
+  have next : e+2*(r:ℤ)-2+2*(j+1)+3 = e+2*j+2*(r:ℤ)+3 := by omega
+  simp only [flatCoefficient, jetCurrent, scalar0, Nat.cast_zero, mul_zero, add_zero, one_smul]
+  simp only [down, next]
+  change T * _ - _ * T = _
+  by_cases cross : j = -1
+  · subst j
+    simp only [show (-1 : ℤ) < 0 by omega, ite_true,
+      show ¬ (-1+1 : ℤ) < 0 by omega, ite_false, neg_add_cancel,
+      show e+2*(-1)+2*(r:ℤ)+3 = e+2*(r:ℤ)+1 by omega]
+    simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
+    rw [left]
+    simp only [jet_boundary]
+    simp only [frequency, Int.cast_neg, Int.cast_one]
+    module
+  · have signs : (j+1 < 0) ↔ j < 0 := by omega
+    simp only [if_neg cross, signs, add_zero]
+    by_cases negative : j < 0
+    · simp only [negative, ite_true, if_neg cross, add_zero]
+      simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
+      rw [left]
+      module
+    · simp only [negative, ite_false, if_neg cross, add_zero]
+      simp only [Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
+      rw [right]
+      module
+
+#print axioms singleton_term_l1
+
 #print axioms jet_shift
 #print axioms jet_l1_scalar
 #print axioms actual_current_l1
