@@ -1612,3 +1612,358 @@ The new source-specific deductions are the uniform equation-based mass estimate,
 All conclusions concern the original $H^1\times\mathbb R$ carrier, full complex domain, original source, Haar measure, degree-$-3$ field, actual horizontal kinetic form and clock. No marginal field, band restriction, new source or Green kernel of the added law is substituted. A full homogeneous-completion reconstruction theorem is not asserted. No exact sharp numerical value of $\mathcal C_\sigma$ or $g_\sigma^*$, positivity or simplicity of a critical eigenstate, extension to $\sigma=2$, native source-to-state realization or physical dimension conclusion is supplied.
 
 ## 追加锚（本行以下为增补区）
+
+## 103. Fixed-source endpoint limits of actual critical states
+
+**Definition 103.1 (fixed data, common spaces and normalization).** Work on precisely the group of (82.5), with product $pp'=(x+x',y+y',z+z',w+w'+xy')$, identity $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, and
+
+$$
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\qquad D_w=-i\partial_w.
+\tag{103.1}
+$$
+
+The operator $L$ is the original nonnegative free realization, its clock remains $e^{-tL}$, and $\Gamma=\int_0^\infty h_t\,dt$ is its original positive degree-$-3$ Green field with unit source $L\Gamma=\delta_e$. Fix $a,\eta>0$. All powers of $|D_w|$, all logarithms below and all central cutoffs use one fixed original coordinate and fixed spectral units, without a parameter-dependent rescaling. For complex states and $\nu>0$ use the full distributional spaces and forms (with $\sigma>2$ in the threshold and product expressions)
+
+$$
+\begin{gathered}
+\mathcal E_\nu=D(L^{1/2})\cap D(|D_w|^{\nu/2}),\qquad
+\|u\|_{\mathcal E_\nu}^2=\|u\|_2^2+T[u]+D_\nu[u],\\
+T[u]=\sum_i\|X_i u\|_2^2,\qquad
+D_\nu[u]=\||D_w|^{\nu/2}u\|_2^2,\qquad
+V[u]=\|\sqrt\Gamma u\|_2^2,\\
+g_\sigma=g_\sigma^*(a,\eta)
+ =\inf_{0\ne u\in\mathcal E_\sigma}\frac{aT[u]+\eta D_\sigma[u]}{V[u]},\\
+\alpha_\sigma=\frac{2\sigma-3}{2\sigma-2},\qquad
+\beta_\sigma=\frac1{2\sigma-2},\qquad
+\mathcal C_\sigma=\sup_{0\ne u\in\mathcal E_\sigma}
+ \frac{V[u]}{T[u]^{\alpha_\sigma}D_\sigma[u]^{\beta_\sigma}},\\
+g_c=16\sqrt{a\eta},\qquad t_c=\frac{g_c}{2a},\qquad
+ d_c=\frac{g_c}{2\eta},\qquad t_cd_c=64,\\
+q_c[u]=aT[u]+\eta D_2[u]-g_cV[u]\quad(u\in\mathcal E_2).
+\end{gathered}
+\tag{103.2}
+$$
+
+The critical Friedrichs space $\mathcal Q_c$ and form $\overline q_c$ are exactly those of Theorem 87.4, with norm squared $\|u\|_2^2+\overline q_c[u]$. In particular $\mathcal E_2\subset\mathcal Q_c$, $\overline q_c=q_c$ there, and the zero kernel in the whole $\mathcal Q_c$ is already established. The field, threshold and product definitions are those of §§87 and 101, not new objects generated from the added kinetic operator.
+
+For every sequence $\sigma_n>2$ tending to $2$, choose **any** nonzero actual critical zero state supplied by Theorem 102.3, and rescale only its amplitude to obtain $u_n\in\mathcal E_{\sigma_n}$ with $V[u_n]=1$. Put $g_n=g_{\sigma_n}$ and $M_n=\|u_n\|_2^2>0$. Every such selection satisfies the actual weak equation and the existing virial identities
+
+$$
+\begin{gathered}
+a\,t(\phi,u_n)+\eta\,d_{\sigma_n}(\phi,u_n)
+ =g_n v(\phi,u_n)\quad(\phi\in\mathcal E_{\sigma_n}),\\
+aT[u_n]=\alpha_{\sigma_n}g_n,\qquad
+\eta D_{\sigma_n}[u_n]=\beta_{\sigma_n}g_n.
+\end{gathered}
+\tag{103.3}
+$$
+
+Here the $L^2$ inner product is antilinear in the first argument, $t(\phi,u)=\sum_i\langle X_i\phi,X_i u\rangle$, $d_\nu(\phi,u)=\langle|D_w|^{\nu/2}\phi,|D_w|^{\nu/2}u\rangle$, and $v(\phi,u)=\int\Gamma\overline\phi u\,d\mu$. The punctured core is $\mathcal D_0=C_c^\infty(G\setminus\{e\};\mathbb C)$. No positivity, simplicity, uniqueness, chosen profile or compactness uniform in $\sigma$ is assumed. Limits of finite measures below are narrow: they are tested against every bounded continuous complex function on the original $G$.
+
+**Theorem 103.2 (true threshold and sharp product limit).** At the fixed data of Definition 103.1,
+
+$$
+\lim_{\sigma\downarrow2}g_\sigma=g_c,\qquad
+\lim_{\sigma\downarrow2}\mathcal C_\sigma=\frac18.
+\tag{103.4}
+$$
+
+**Proof.** The sufficient bound and exact coefficient relation from (101.5), (101.11) are
+
+$$
+g_\sigma\ge b_\sigma:=
+ \frac{8a^{\alpha_\sigma}\eta^{\beta_\sigma}}
+ {\alpha_\sigma^{\alpha_\sigma}\beta_\sigma^{\beta_\sigma}},\qquad
+\mathcal C_\sigma=
+ \frac{a^{\alpha_\sigma}\eta^{\beta_\sigma}}
+ {\alpha_\sigma^{\alpha_\sigma}\beta_\sigma^{\beta_\sigma}g_\sigma}.
+\tag{103.5}
+$$
+
+Since $\alpha_\sigma,\beta_\sigma\to1/2$, $b_\sigma\to g_c$. For the reverse bound, Proposition 87.3 supplies, for each $\delta>0$, a fixed nonzero punctured core state $f\in\mathcal D_0$ with $(aT[f]+\eta D_2[f])/V[f]<g_c+\delta$. Such an $f$ belongs to every finite-order domain. For $2\le\sigma\le3$, its central spectral integral is dominated by $(1+|\lambda|^3)|b_f(\xi,\lambda)|^2$, which is integrable. Hence $D_\sigma[f]\to D_2[f]$, and the defining infimum gives
+
+$$
+\limsup_{\sigma\downarrow2}g_\sigma
+ \le\frac{aT[f]+\eta D_2[f]}{V[f]}<g_c+\delta.
+$$
+
+Let $\delta\downarrow0$ and use (103.5). This proves both limits. The core endpoint sharpness and the coefficient formula are reused, not re-proved as new results. This argument alone makes no assertion about monotonicity or the side of approach. $\square$
+
+**Theorem 103.3 (actual states in the common endpoint topology).** For every selection in Definition 103.1,
+
+$$
+\begin{gathered}
+T[u_n]\longrightarrow t_c,\qquad
+D_{\sigma_n}[u_n]\longrightarrow d_c,\qquad
+D_2[u_n]\longrightarrow d_c,\qquad q_c[u_n]\longrightarrow0,\\
+u_n\rightharpoonup0\ \hbox{in }\mathcal E_2,\qquad
+M_n\longrightarrow0,\qquad
+\|\rho^{-1}u_n\|_2\longrightarrow0,\qquad
+\|u_n\|_{\mathcal Q_c}\longrightarrow0,
+\end{gathered}
+\tag{103.6}
+$$
+
+where $\rho=(|\xi|^4+(w-xy/2)^2)^{1/4}$ is the original homogeneous norm of (102.1). Thus the convergence in ordinary $L^2$ is strong. To remove any ambiguity about weighted-norm conventions, (103.6) means $\int\rho^{-2}|u_n|^2d\mu\to0$; also $\int\rho^{-1}|u_n|^2d\mu\to0$. There is no strongly convergent subsequence in $\mathcal E_2$ or in $L^2(G,\Gamma d\mu)$.
+
+**Proof.** The first two kinetic limits follow directly from (103.3) and (103.4). The equation-based estimate (102.5) gives the uniform bound $M_n\le K_\Gamma^2g_n^3/a^3$. To control the endpoint central derivative without changing the state, use (87.3) and (101.4): with $\theta_n=(\sigma_n-2)/(\sigma_n-1)$,
+
+$$
+\frac{64}{T[u_n]}<D_2[u_n]
+ \le D_1[u_n]^{\theta_n}D_{\sigma_n}[u_n]^{1-\theta_n}
+ \le T[u_n]^{\theta_n}D_{\sigma_n}[u_n]^{1-\theta_n}.
+\tag{103.7}
+$$
+
+Both outside expressions tend to $d_c$, because $t_cd_c=64$. Consequently $D_2[u_n]\to d_c$ and $q_c[u_n]\to at_c+\eta d_c-g_c=0$. The sequence is bounded in the actual Hilbert space $\mathcal E_2$.
+
+The inclusion $\mathcal E_2\to\mathcal Q_c$ is bounded: $0\le q_c[u]\le aT[u]+\eta D_2[u]$. Every weakly convergent $\mathcal E_2$ subsequence therefore converges weakly in $\mathcal Q_c$ to the same actual $L^2$ function $u$. Weak lower semicontinuity gives $\overline q_c[u]\le\liminf q_c[u_n]=0$. The zero-kernel result (87.19) forces $u=0$. Boundedness and weak subsequence extraction in this Hilbert space now show that the full sequence converges weakly to zero in $\mathcal E_2$.
+
+On every fixed compact coordinate box, the actual derivatives $X_1u_n,X_2u_n,X_3u_n,\partial_wu_n$ control all ordinary first derivatives: $\partial_yu_n=X_2u_n-x\partial_wu_n$, and $x$ is bounded there. Multiplication by a fixed smooth compact cutoff thus gives a bounded ordinary $H^1(\mathbb R^4)$ sequence. Rellich compactness and the just-identified weak limit give $u_n\to0$ in $L^2$ on every compact set, for the full sequence. This is local compactness only.
+
+Positivity, smoothness and degree $-3$ of the same $\Gamma$ on the compact unit $\rho$ sphere supply constants
+
+$$
+0<b_\Gamma:=\min_{\rho=1}\Gamma
+ \le \rho(p)^3\Gamma(p)\le B_\Gamma<\infty\quad(p\ne e).
+\tag{103.8}
+$$
+
+For $0<r<R$, the inner and outer parts of the softer weighted norm satisfy
+
+$$
+\int_{\rho<r}\rho^{-2}|u_n|^2d\mu\le\frac r{b_\Gamma}V[u_n]=\frac r{b_\Gamma},\qquad
+\int_{\rho>R}\rho^{-2}|u_n|^2d\mu\le R^{-2}M_n.
+\tag{103.9}
+$$
+
+The compact annulus $r\le\rho\le R$ contributes a quantity tending to zero by local $L^2$ convergence. First fix $r,R$ and let $n\to\infty$, then let $r\downarrow0$, $R\to\infty$. The uniform mass bound proves $\|\rho^{-1}u_n\|_2\to0$ without assuming global strong convergence.
+
+The actual equation supplies the missing global implication. For each $n$, set $A_n=aL+\eta|D_w|^{\sigma_n}$ and $R_{n,\delta}=(A_n+\delta)^{-1}$. The legal full-spectrum tests of (102.10)–(102.14) give $R_{n,\delta}f\in\mathcal E_{\sigma_n}\cap D(L)$ and $\|LR_{n,\delta}f\|_2\le a^{-1}\|f\|_2$. The order-two Hardy/Rellich supply in (102.6) gives the more useful version of the pairing bound,
+
+$$
+\begin{aligned}
+|v(\phi,u_n)|
+ &\le B_\Gamma\|\rho^{-2}\phi\|_2\|\rho^{-1}u_n\|_2\\
+ &\le B_\Gamma h_2\|L\phi\|_2\|\rho^{-1}u_n\|_2
+ \quad(\phi\in D(L)).
+\end{aligned}
+\tag{103.10}
+$$
+
+Insert $\phi=R_{n,\delta}f$ into (103.3), using closed-form representation exactly as in (102.12). It follows that
+
+$$
+\left|\left\langle(I-\delta R_{n,\delta})f,u_n\right\rangle\right|
+ \le\frac{g_n B_\Gamma h_2}{a}\|f\|_2\|\rho^{-1}u_n\|_2.
+\tag{103.11}
+$$
+
+For each fixed $n$, $\ker A_n=\{0\}$ and $\delta R_{n,\delta}f\to0$ as $\delta\downarrow0$, by the original central spectral measure. Taking that limit first, and then the supremum over $\|f\|_2=1$, yields
+
+$$
+\|u_n\|_2\le\frac{g_n B_\Gamma h_2}{a}\|\rho^{-1}u_n\|_2\longrightarrow0.
+\tag{103.12}
+$$
+
+No uniform limit in $(n,\delta)$, assertion $\Gamma u_n\in L^2$, or interacting operator core is used. Cauchy–Schwarz also gives $\int\rho^{-1}|u_n|^2d\mu\le\|u_n\|_2\|\rho^{-1}u_n\|_2\to0$. Since $\overline q_c[u_n]=q_c[u_n]\to0$, (103.12) proves strong convergence in $\mathcal Q_c$ with exactly the norm stated above.
+
+On the other hand, $\|u_n\|_{\mathcal E_2}^2\to t_c+d_c>0$, while the only weak $\mathcal E_2$ limit is zero. This excludes every strongly convergent subsequence there. If a subsequence converged strongly in $L^2(G,\Gamma d\mu)$, then on each compact annulus (103.8) would identify its limit with the local $L^2$ limit zero. Exhaustion identifies the weighted limit as zero almost everywhere, contradicting $V[u_n]=1$. These are the precise failures of strong compactness despite strong convergence in the weaker spaces. $\square$
+
+**Theorem 103.4 (concentration of potential and local endpoint kinetic resources).** In the same $V=1$ normalization, the actual finite measures satisfy
+
+$$
+\Gamma|u_n|^2d\mu\ \longrightarrow\ \delta_e,\qquad
+\sum_{i=1}^3|X_i u_n|^2d\mu\ \longrightarrow\ t_c\delta_e,\qquad
+|\partial_wu_n|^2d\mu\ \longrightarrow\ d_c\delta_e
+\tag{103.13}
+$$
+
+narrowly on $G$. These are potential and local endpoint kinetic resources; the last measure belongs to $D_2$, and no local density for the fractional functional $D_{\sigma_n}$ is introduced.
+
+**Proof.** For every fixed $r>0$, (103.8) and $M_n\to0$ give
+
+$$
+\int_{\rho\ge r}\Gamma|u_n|^2d\mu\le B_\Gamma r^{-3}M_n\longrightarrow0.
+\tag{103.14}
+$$
+
+The potential measure has total one, proving its claimed limit.
+
+For the two kinetic measures, choose real smooth $\chi,\zeta$ with $\chi^2+\zeta^2=1$, $\chi=0$ on $\rho\le r/2$, and $\chi=1$ on $\rho\ge r$. For example use the sine and cosine of a smooth function of $\rho$ constant at $0$ and $\pi/2$ on these regions. Their derivatives are supported on a compact annulus and bounded. Both products with $u_n$ belong to $\mathcal E_2$. The first-order product rules and cancellation of mixed terms give the exact local endpoint identity
+
+$$
+\begin{aligned}
+q_c[\chi u_n]+q_c[\zeta u_n]
+ &=q_c[u_n]+\int_G W_r|u_n|^2d\mu,\\
+W_r&=a\sum_i\bigl(|X_i\chi|^2+|X_i\zeta|^2\bigr)
+ +\eta\bigl(|\partial_w\chi|^2+|\partial_w\zeta|^2\bigr),\qquad
+\|W_r\|_\infty<\infty.
+\end{aligned}
+\tag{103.15}
+$$
+
+The potential term splits here because this is multiplication by a partition of unity. Nonnegativity of the endpoint form implies $0\le q_c[\chi u_n]\le q_c[u_n]+\|W_r\|_\infty M_n\to0$. Also $V[\chi u_n]\le B_\Gamma(r/2)^{-3}M_n\to0$. Consequently
+
+$$
+aT[\chi u_n]+\eta D_2[\chi u_n]
+ =q_c[\chi u_n]+g_cV[\chi u_n]\longrightarrow0.
+\tag{103.16}
+$$
+
+On $\rho\ge r$, these derivatives equal those of $u_n$. Thus each kinetic measure has mass tending to zero outside every such neighbourhood of $e$, including the whole exterior tail. Their total masses tend to $t_c,d_c$ by (103.6). For any bounded continuous test, continuity at $e$ controls its variation inside a sufficiently small $\rho$ ball, and its supremum controls the vanishing exterior contribution. This proves all three narrow limits, without assuming tightness in advance. $\square$
+
+**Proposition 103.5 (every fixed original central band loses its resource budgets).** Fix any $0\le\Lambda<\infty$ in the original units and let $P=P_\Lambda=\mathbf1_{[0,\Lambda]}(|D_w|)$, $Q=I-P$. In the notation of Definition 103.1,
+
+$$
+\begin{array}{c|cccc}
+ &V&T&D_2&D_{\sigma_n}\\ \hline
+Pu_n&0&0&0&0\\
+Qu_n&1&t_c&d_c&d_c
+\end{array}
+\quad\hbox{are the respective limits.}
+\tag{103.17}
+$$
+
+Each entry means the functional of the **projected state**: for example $V[Pu_n]=\|\sqrt\Gamma Pu_n\|_2^2$, $T[Pu_n]=\sum_i\|X_iPu_n\|_2^2$ and $D_{\sigma_n}[Pu_n]=\||D_w|^{\sigma_n/2}Pu_n\|_2^2$. It does not mean a projection applied to a local resource density or to $\sqrt\Gamma u_n$. The kinetic orthogonal splittings are exact; the potential need not commute with $P$ and need not split additively.
+
+**Proof.** The original strong free reduction of Proposition 85.2 makes $P,Q$ preserve every relevant free form domain, with orthogonal splitting for $T,D_2,D_{\sigma_n}$. The sequence $\sigma_n$ is bounded, so for $\Lambda>0$
+
+$$
+D_2[Pu_n]\le\Lambda^2M_n\to0,\qquad
+D_{\sigma_n}[Pu_n]\le\max\{1,\Lambda^{\sup_n\sigma_n}\}M_n\to0.
+\tag{103.18}
+$$
+
+Since $T[Pu_n]\le T[u_n]$ is bounded, the endpoint estimate gives $V[Pu_n]\le\frac18\sqrt{T[Pu_n]D_2[Pu_n]}\to0$. To obtain the horizontal budget, use the actual equation with the legitimate test $Pu_n\in\mathcal E_{\sigma_n}$:
+
+$$
+0\le aT[Pu_n]+\eta D_{\sigma_n}[Pu_n]
+ =g_n v(Pu_n,u_n)\le g_n\sqrt{V[Pu_n]V[u_n]}\longrightarrow0.
+\tag{103.19}
+$$
+
+The middle pairing is real and nonnegative by the equality; its absolute value is bounded by weighted Cauchy–Schwarz. Orthogonal kinetic splitting and (103.6) give the complementary kinetic limits. For the potential, use the weighted triangle inequality instead:
+
+$$
+\left|\sqrt{V[Qu_n]}-\sqrt{V[u_n]}\right|
+ \le\sqrt{V[Pu_n]}\longrightarrow0.
+\tag{103.20}
+$$
+
+The cross pairing $v(Pu_n,Qu_n)$ tends to zero as well, by the same weighted inequality and boundedness of $V[Qu_n]$. When $\Lambda=0$, $P=0$ on the actual $L^2$ central spectrum and the assertions follow directly. Thus a fixed band cannot retain any of the stated potential or kinetic budgets, although no fractional spatial-density localization has been asserted. $\square$
+
+**Corollary 103.6 (what amplitude normalization to $L^2=1$ preserves).** Set $v_n=u_n/\sqrt{M_n}$. Then $\|v_n\|_2=1$, $M_n\to0$, and exactly
+
+$$
+\begin{gathered}
+V[v_n]=M_n^{-1}\longrightarrow\infty,\qquad
+\frac{T[v_n]}{V[v_n]}=T[u_n]\longrightarrow t_c,\\
+\frac{D_{\sigma_n}[v_n]}{V[v_n]}=D_{\sigma_n}[u_n]\longrightarrow d_c,\qquad
+\frac{D_2[v_n]}{V[v_n]}=D_2[u_n]\longrightarrow d_c.
+\end{gathered}
+\tag{103.21}
+$$
+
+In particular each of the three kinetic totals diverges, $T[v_n]/D_2[v_n]\to t_c/d_c=\eta/a$, and $D_{\sigma_n}[v_n]/D_2[v_n]\to1$. The relative resource measures are amplitude invariant:
+
+$$
+\begin{gathered}
+\frac{\Gamma|v_n|^2d\mu}{V[v_n]}=\Gamma|u_n|^2d\mu\longrightarrow\delta_e,\\
+\frac{\sum_i|X_iv_n|^2d\mu}{T[v_n]}
+ =\frac{\sum_i|X_iu_n|^2d\mu}{T[u_n]}\longrightarrow\delta_e,\\
+\frac{|\partial_wv_n|^2d\mu}{D_2[v_n]}
+ =\frac{|\partial_wu_n|^2d\mu}{D_2[u_n]}\longrightarrow\delta_e.
+\end{gathered}
+\tag{103.22}
+$$
+
+For each fixed $\Lambda$, the fractions $F[P_\Lambda v_n]/F[v_n]$ tend to zero and $F[(I-P_\Lambda)v_n]/F[v_n]$ tend to one, for $F=V,T,D_2,D_{\sigma_n}$. These are again functionals of projected states. No conclusion about the location or tightness of the unweighted probability measures $|v_n|^2d\mu$, or a weak or strong state limit or profile for $v_n$, is made.
+
+**Proof.** Every indicated form and each displayed local measure is quadratic under amplitude scaling. Divide the identities and limits of Theorems 103.3–103.4 and Proposition 103.5 by the positive $M_n$, or by the corresponding positive total resource, as appropriate. No statement about $|u_n|^2/M_n$ follows from the unnormalized convergence $u_n\to0$ in $L^2$ or from the relative resource identities alone. $\square$
+
+**Theorem 103.7 (infinite difference quotients and a subexponential mass restriction).** In the fixed units of Definition 103.1,
+
+$$
+\lim_{\sigma\downarrow2}\frac{g_\sigma-g_c}{\sigma-2}=+\infty,\qquad
+\lim_{\sigma\downarrow2}\frac{1/8-\mathcal C_\sigma}{\sigma-2}=+\infty.
+\tag{103.23}
+$$
+
+For every actual $V=1$ selection in that definition,
+
+$$
+(\sigma_n-2)\log(1/M_n)\longrightarrow0.
+\tag{103.24}
+$$
+
+In particular $g_\sigma>g_c$ for all sufficiently small positive $\sigma-2$. For every fixed $K>0$, both positive gaps in (103.23) eventually exceed $K(\sigma-2)$. For every $c>0$, eventually $M_n>\exp[-c/(\sigma_n-2)]$, while $M_n\to0$. These statements give neither monotonicity nor a sharp asymptotic rate or spatial scale.
+
+**Proof.** Write $\epsilon_n=\sigma_n-2$. Same-state spectral interpolation (87.12) gives
+
+$$
+D_2[u_n]^{\sigma_n}\le D_{\sigma_n}[u_n]^2M_n^{\epsilon_n}.
+$$
+
+Since $M_n<1$ eventually, logarithms and (103.6) imply
+
+$$
+0\le\epsilon_n\log(1/M_n)
+ \le2\log D_{\sigma_n}[u_n]-\sigma_n\log D_2[u_n]\longrightarrow0.
+\tag{103.25}
+$$
+
+This proves (103.24) without prescribing a profile or a relation between central and spatial scales.
+
+For the threshold difference quotient, the norm-bearing endpoint estimate (87.4) and the exact virial identities give
+
+$$
+1=V[u_n]\le\frac18
+ \left(\frac{\alpha_{\sigma_n}g_n}{a}\right)^{1/2}
+ \left(\frac{\beta_{\sigma_n}g_n}{\eta}\right)^{1/\sigma_n}
+ M_n^{\epsilon_n/(2\sigma_n)}.
+\tag{103.26}
+$$
+
+Define the scalar functions, smooth from the right at $2$,
+
+$$
+r_\sigma=\frac12+\frac1\sigma,\qquad
+F_\sigma=\frac12\log\frac{\alpha_\sigma g_c}{a}
+ +\frac1\sigma\log\frac{\beta_\sigma g_c}{\eta}-\log8.
+\tag{103.27}
+$$
+
+Here $F_2=\frac12\log(t_cd_c)-\log8=0$, so $|F_\sigma|\le C(\sigma-2)$ near $2$. Taking logarithms in (103.26) consequently yields
+
+$$
+r_{\sigma_n}\frac{\log(g_n/g_c)}{\epsilon_n}
+ \ge\frac{\log(1/M_n)}{2\sigma_n}-C\longrightarrow+\infty.
+\tag{103.28}
+$$
+
+Use $M_n\to0$, $r_{\sigma_n}\to1$ and $g_n\to g_c$ to obtain $(g_n-g_c)/\epsilon_n\to+\infty$. The sequence $\sigma_n\downarrow2$ was arbitrary in the sense of approach from above, without a monotonicity requirement, and each such sequence admits an actual selection by §102.3. Thus this is the full first limit in (103.23).
+
+Finally (103.5) gives $g_\sigma/b_\sigma=1/(8\mathcal C_\sigma)$. The function $b_\sigma$ is smooth at $2$ with $b_2=g_c$, so $\log(b_\sigma/g_c)=O(\sigma-2)$. Hence
+
+$$
+\frac{\log(1/(8\mathcal C_\sigma))}{\sigma-2}
+ =\frac{\log(g_\sigma/g_c)-\log(b_\sigma/g_c)}{\sigma-2}
+ \longrightarrow+\infty.
+\tag{103.29}
+$$
+
+As $\mathcal C_\sigma\to1/8$ from below by (102.16), $\log(1/(8\mathcal C_\sigma))\sim8(1/8-\mathcal C_\sigma)$. This proves the second limit and the stated eventual implications. $\square$
+
+**Definition 103.8 (supplier correspondence, new content and remaining boundaries).** The repository supplies used here are: the original positive smooth homogeneous unit-source field and coordinate conventions from §§82–85; the sharp whole-domain endpoint inequality and core threshold from §§87.2–87.3; the actual critical Friedrichs extension and its zero kernel from §87.4; the first-moment interpolation, exact coefficient identity and actual virial balance from §§101.2, 101.4–101.5; and the equation-based mass bound, legal free resolvent tests and actual critical attainment from §§102.2–102.3. None of those earlier results is claimed as a new theorem of this section or as newly Lean-verified.
+
+The literature intermediates have specific consumed roles. Ciatti–Cowling–Ricci, [*Hardy and uncertainty inequalities on stratified Lie groups*, primary text](https://arxiv.org/html/1308.2373v1), Theorem A, Theorem 3.1 and Corollary 3.2, give $\|\rho^{-k}f\|_2\le h_k\|L^{k/2}f\|_2$ for $k=1,2$: this is the original stratified $G$ with homogeneous dimension $Q=5$, $p=2$ and $k<Q/p=5/2$. Order one enters through §102's initial uniform mass bound; order two, extended to $D(L)$ there, is directly consumed in (103.10). Their theorem is an inequality for the original sub-Laplacian and a homogeneous norm, not for a newly generated Green field or a positivity-preserving higher-order law.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, primary text](https://arxiv.org/html/1105.0335v1), Theorem 1.1 and (8), at $n=4$, $\beta_{\rm AFV}=2$, supply the existing trace intermediate with constant $2/\pi$ on each halfspace, hence $4/\pi$ on both. Its passage to the actual full-field sharp endpoint, its core sharpness and zero-kernel comparison were proved in §87 and are used here through those results; the halfspace trace potential is never substituted for $\Gamma$. Teschl, [*Mathematical Methods in Quantum Mechanics*, primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 2.13, supplies closed-form representation on $L^2(G,d\mu)$, consumed through the represented equations and the tests (103.11). Its KLMN Theorem 6.24 is already used in the higher-order closed-domain and existence supply, not invoked at relative bound one to claim closedness on $\mathcal E_2$. The Hilbert weak-compactness, local Euclidean Rellich, product-rule localization, Fourier interpolation and measure arguments used in the proofs are mature intermediate methods.
+
+The source-specific additional deductions are the limits of the true thresholds and sharp product constants; the universal, amplitude-normalized actual-state endpoint convergence and its two failures of strong compactness; localization of the actual potential and endpoint kinetic measures; escape of the projected-state resource budgets from every fixed central band; and the difference-quotient and subexponential restrictions. The source correspondence and repository overlap scope concern these fixed-field deductions and the indicated intermediates. They assert no exhaustive literature search or world-originality judgment.
+
+At fixed $\sigma>2$, §102 furnishes an actual critical zero state. At $\sigma=2$, §87.4 excludes such a nonzero state even in $\mathcal Q_c$. Equations (103.6), (103.13) and (103.17) give a precise way those statements coexist: under $V=1$, ordinary mass disappears and the state tends strongly to zero in the closed critical form norm, whereas nonzero potential and endpoint kinetic resources concentrate at the same original source and leave every fixed central band. This is not loss or concentration of a normalized probability mass. After $L^2=1$ normalization only the exact totals, ratios and relative resource conclusions above are asserted; its unweighted probability location, tightness, weak or strong limit, spatial/central profile and sharp scale remain unproved here. No positivity, simplicity, uniqueness, resonance classification, native source-to-state realization or physical dimension conclusion is obtained. All proofs are ordinary mathematics on the full complex actual domains; no Lean verification or completion of the continuing why-three research goal is claimed.
+
+## 追加锚（本行以下为增补区）
