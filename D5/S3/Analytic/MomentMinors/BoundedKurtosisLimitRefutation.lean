@@ -97,7 +97,16 @@ private lemma coefficient_lt : Real.sqrt (1 / 2) / 2 < (1 / 2 : ℝ) := by
   linarith
 
 private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 2 := by
-  sorry
+  let s : ℝ := Real.sqrt (1 / 2)
+  have hs2 : s ^ 2 = 1 / 2 := Real.sq_sqrt (by norm_num)
+  have hs : 0 < s := Real.sqrt_pos.mpr (by norm_num)
+  have hi : (1 / 2 : ℝ) / (s / 2) = 2 * s := by
+    apply (div_eq_iff (ne_of_gt (div_pos hs (by norm_num)))).mpr
+    nlinarith only [hs2]
+  unfold kurtosisBound
+  change (s / 2 / (1 / 2) - (1 / 2) / (s / 2)) ^ 2 + 1 = 3 / 2
+  rw [hi, show s / 2 / (1 / 2) = s by ring]
+  nlinarith only [hs2]
 
 /-- The three-point law with masses `1/4, 1/2, 1/4` on `1, 2, 3` violates the upper limit. -/
 theorem result : ¬ claim := by
