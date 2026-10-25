@@ -2976,3 +2976,267 @@ $$
 Theorem 106.2 does not determine $m_e$, prove triviality or existence of $\ker S^*$, or decide which maximal zero states or defects are attained by actual selections. Its auxiliary interface equation arises only after a shrinking diagnostic change of variables; its zero-space result is not a domain identification for $S^*$ or a replacement source law. The remaining obligations are a genuinely actual-state bound excluding or determining logarithmic source spreading, an original maximal-domain/attainability analysis, and a surviving probability scale or profile if one exists. No positivity, simplicity, uniqueness, native source-to-state realization or physical space-dimension conclusion follows. These are ordinary theoretical statements; they supply no Lean certification and do not complete the continuing why-three problem.
 
 ## 追加锚（本行以下为增补区）
+
+## 107. Critical-form energy and an excluded actual source ball
+
+**Definition 107.1 (unchanged source, actual states and the energy length).** Retain the original product
+$pp'=(x+x',y+y',z+z',w+w'+xy')$ on $G=H^1\times\mathbb R$, identity $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, and
+$X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$.
+The nonnegative free realization is $L=-\sum_iX_i^2$, its clock is $e^{-tL}$, and $\Gamma=\int_0^\infty h_t\,dt$ is its original positive degree-$-3$ unit-source Green field, $L\Gamma=\delta_e$. Fix the original $a,\eta>0$ and central coordinate and spectral units. With $D_w=-i\partial_w$, use exactly the full complex spaces and functionals of (103.2):
+$\mathcal E_\nu=D(L^{1/2})\cap D(|D_w|^{\nu/2})$,
+$T[u]=\sum_i\|X_iu\|_2^2$, $D_\nu[u]=\||D_w|^{\nu/2}u\|_2^2$ and
+$V[u]=\int\Gamma|u|^2d\mu$.
+Write
+
+$$
+\begin{gathered}
+g_\sigma=\inf_{0\ne u\in\mathcal E_\sigma}
+ \frac{aT[u]+\eta D_\sigma[u]}{V[u]},\qquad
+g_c=16\sqrt{a\eta},\\
+q_c[u]=aT[u]+\eta D_2[u]-g_cV[u]\quad(u\in\mathcal E_2),\\
+\kappa=\sqrt{\eta/a},\qquad \xi=(x,y,z),\qquad s=w-xy/2,\qquad
+R_\kappa=\bigl(|\xi|^2+(s/\kappa)^2\bigr)^{1/2}.
+\end{gathered}
+\tag{107.1}
+$$
+
+The nonnegative closed form $\overline q_c$ on $\mathcal Q_c$ is the critical Friedrichs form of §87.4, with norm squared $\|u\|_2^2+\overline q_c[u]$; it equals $q_c$ on $\mathcal E_2$. The diagnostic $R_\kappa$ changes neither the original product nor the source.
+
+For every sequence $\sigma_n>2$ tending to $2$, without monotonicity, select any nonzero attained critical zero states in the original complex $\mathcal E_{\sigma_n}$, and rescale only amplitudes so that $V[u_n]=1$. Attainment and their full-domain equation are those of §§101.5 and 102.3, equivalently (103.3). Put
+
+$$
+\begin{gathered}
+M_n=\|u_n\|_2^2>0,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\qquad
+\ell_n=\sqrt{M_n},\\
+\delta_n=q_c[u_n],\qquad
+E_n=q_c[v_n]=\delta_n/M_n,\qquad
+\epsilon_n=\sigma_n-2,\qquad g_n=g_{\sigma_n}.
+\end{gathered}
+\tag{107.2}
+$$
+
+All limits below concern every such actual selection on the fixed Hilbert space $L^2(G,d\mu)$. There is no assumption on sign, positivity, simplicity, uniqueness or a chosen profile.
+
+**Lemma 107.2 (closed trace concentration and its exact original marginal consumer).** Let $\Phi$, $\mathcal Q_\delta$ and $\mathfrak t$ be exactly the auxiliary profile, closed domain and form of (87.6)–(87.8). Thus, writing $r=|\xi|$ and $\varrho=(r^2+t^2)^{1/2}$ in the auxiliary $\mathbb R^4$,
+
+$$
+\begin{gathered}
+\Phi(\xi,t)=\frac2{\pi r}\arctan\frac r{|t|},\qquad
+\Phi(\xi,0)=r^{-1},\qquad \Phi(0,t)=\frac2{\pi|t|},\qquad
+\frac2{\pi\varrho}\le\Phi\le\frac1\varrho,\\
+\mathfrak t[f]=\int_{\mathbb R^4}\Phi^2|\nabla(f/\Phi)|^2\,d\xi\,dt
+ \quad(f\in\mathcal Q_\delta).
+\end{gathered}
+\tag{107.3}
+$$
+
+The domain is the closure of $C_c^\infty(\mathbb R^4\setminus\{0\};\mathbb C)$ for the norm squared $\|f\|_2^2+\mathfrak t[f]$ specified in §87. For every complex $f$ in this whole domain and every $b>0$,
+
+$$
+\int_{\mathbb R^4}\frac{|f|^2}{|\xi|}\,d\xi\,dt
+ \le\pi^2\|f\|_2\sqrt{\mathfrak t[f]},
+\qquad
+\int_{\{|\xi|<b\}}|f|^2\,d\xi\,dt
+ \le\pi^2 b\|f\|_2\sqrt{\mathfrak t[f]}.
+\tag{107.4}
+$$
+
+Consequently every $\psi\in\mathcal Q_c$, including its singular elements outside $\mathcal E_2$, satisfies the original-space bounds
+
+$$
+\int_G\frac{|\psi|^2}{|\xi|}\,d\mu
+ \le\frac{\pi^2}{\sqrt a}\|\psi\|_2\sqrt{\overline q_c[\psi]},
+\qquad
+\int_{\{|\xi|<b\}}|\psi|^2\,d\mu
+ \le\frac{\pi^2b}{\sqrt a}\|\psi\|_2\sqrt{\overline q_c[\psi]}.
+\tag{107.5}
+$$
+
+The constant is a sufficient constant, with no sharpness assertion.
+
+**Proof.** First take $f$ in the punctured smooth core and put $g=f/\Phi$, $W=\varrho^{-2}$. On its support $g$ is bounded and locally $H^1$, also across $t=0$, because $\Phi$ is positive and locally Lipschitz away from the origin. For $r>0$ introduce the bounded real vector field
+
+$$
+F(\xi,t)=\frac{(\xi,t)}{\varrho}+\left(\frac{\xi}{r},0\right),
+\qquad |F|\le2.
+$$
+
+A direct divergence calculation in four Euclidean variables gives
+
+$$
+\begin{aligned}
+\operatorname{div}(WF)
+ &=\frac W\varrho+\frac{2Wt^2}{r\varrho^2}\\
+ &=\frac Wr\left[u+2(1-u^2)\right]\ge\frac Wr,
+ \qquad u=\frac r\varrho\in[0,1].
+\end{aligned}
+\tag{107.6}
+$$
+
+Indeed $u+2(1-u^2)-1=(1-u)(2u+1)\ge0$. The integration by parts against $|g|^2$ is valid on $r>\tau$, followed by $\tau\downarrow0$. The support is compact and avoids the origin; on its intersection with $r=\tau$ the weight and $g$ are uniformly bounded for small $\tau$. The cylindrical boundary flux is therefore $O(\tau^2)$ and tends to zero. The divergence is locally integrable across that axis on this support. There is no interface boundary term: $g$ is a single $H^1$ function across $t=0$, and $WF$ is smooth there when $r>0$. It follows that
+
+$$
+\begin{aligned}
+\int\frac W r|g|^2
+ &\le\int\operatorname{div}(WF)|g|^2
+ =-2\operatorname{Re}\int W\overline g\,F\cdot\nabla g\\
+ &\le4\left(\int W|g|^2\right)^{1/2}
+       \left(\int W|\nabla g|^2\right)^{1/2}.
+\end{aligned}
+\tag{107.7}
+$$
+
+Since $\Phi^2\le W\le(\pi^2/4)\Phi^2$, the left side dominates $\int |f|^2/r$, whereas the last line is at most $\pi^2\|f\|_2\sqrt{\mathfrak t[f]}$. This proves the first inequality of (107.4) on the core with the real part required for arbitrary complex $f$. For any $f\in\mathcal Q_\delta$, choose core approximants converging in the closed form norm. Their $L^2$ norms and form values converge. An almost everywhere convergent subsequence and Fatou's lemma give the first inequality on all of $\mathcal Q_\delta$. The second follows from $1\le b/r$ on $0<r<b$. In particular the proof requires no separate finiteness of the gradient and trace terms whose difference defines the core form.
+
+The auxiliary homogeneity is exact on this closure. For $\lambda>0$, set
+$\mathscr D_\lambda f(\xi,t)=\lambda^2 f(\lambda\xi,\lambda t)$.
+The profile has degree $-1$, so the change of variables in (107.3) yields, first on the core,
+
+$$
+\|\mathscr D_\lambda f\|_2=\|f\|_2,\qquad
+\mathfrak t[\mathscr D_\lambda f]=\lambda^2\mathfrak t[f],\qquad
+\int\frac{|\mathscr D_\lambda f|^2}{r}
+ =\lambda\int\frac{|f|^2}{r}.
+\tag{107.8}
+$$
+
+Core approximation and the inverse $\mathscr D_{1/\lambda}$ extend the domain invariance and form identity to $\mathcal Q_\delta$; the weighted integral identity follows directly by change of variables. Both sides of the first inequality in (107.4) scale by $\lambda$; its cylinder bound at radius $b$ for $\mathscr D_\lambda f$ is the bound at radius $\lambda b$ for $f$. These auxiliary Euclidean dilations are not asserted to dilate the original source law.
+
+To pass to the actual original space, use only the established forward map (87.26). In shear coordinates set $\Psi(\xi,s)=\psi(\xi,s+xy/2)$ and let $b_\psi=\mathcal F_s\Psi$ be the unitary central transform. Define on every $L^2$ state
+
+$$
+\mathcal M\psi(\xi,t)=
+ \kappa^{1/2}\bigl(\mathcal F_s^{-1}|b_\psi|\bigr)(\xi,\kappa t).
+$$
+
+For every Borel $A\subset\mathbb R^3$, fibrewise Plancherel, Tonelli's theorem and $dw=ds$ give the exact identity
+
+$$
+\begin{aligned}
+\int_{A\times\mathbb R}|\mathcal M\psi(\xi,t)|^2d\xi\,dt
+ &=\int_{A\times\mathbb R}|b_\psi(\xi,\lambda)|^2d\xi\,d\lambda\\
+ &=\int_{\{p\in G:\xi(p)\in A\}}|\psi(p)|^2d\mu(p).
+\end{aligned}
+\tag{107.9}
+$$
+
+This is a marginal identity for all complex $L^2$ states; it makes no pointwise density identification in the central variable. It also holds with any nonnegative measurable function of $\xi$ as multiplier, by simple-function approximation.
+
+The norm-preserving map $\mathcal M$ is $L^2$-Lipschitz because the modulus is a contraction before inverse Fourier transformation. On the original punctured core (87.27) gives $\mathfrak t[\mathcal M\psi]\le q_c[\psi]/a$. Its constants are unchanged: if $U=\mathcal F_s^{-1}|b_\psi|$, then $A[\mathcal M\psi]=A[U]\le T[\psi]$, $C[\mathcal M\psi]=\kappa^2D_2[\psi]$, $J[\mathcal M\psi]=\kappa J[U]$, and the actual source bound is $V[\psi]\le J[U]/(4\pi)$. Here $A$, $C$ and $J$ are precisely (87.5), while $a\kappa^2=\eta$ and $g_c/(4\pi)=4a\kappa/\pi$. For a $\mathcal Q_c$ core approximating sequence, its images therefore converge in $L^2$ with bounded $\mathfrak t$ values. Lower semicontinuity of the nonnegative closed form, extended by $+\infty$ outside $\mathcal Q_\delta$, gives exactly the whole-closure comparison (87.28):
+$\mathcal M\psi\in\mathcal Q_\delta$ and
+$\mathfrak t[\mathcal M\psi]\le\overline q_c[\psi]/a$.
+This uses no estimate on differences of the images in the form norm. Apply (107.4) to this image, then (107.9) with multiplier $1/r$ and with $A=\{r<b\}$. Norm preservation proves (107.5), without an inverse map or an original-domain identification. $\square$
+
+**Theorem 107.3 (divergent critical energy and exclusion at its own length).** For every actual selection of Definition 107.1, $\delta_n>0$ for every $n$, so that the energy length
+
+$$
+h_n=\sqrt{a/E_n}
+\tag{107.10}
+$$
+
+is well-defined. The following limits all hold:
+
+$$
+\begin{gathered}
+\delta_n\longrightarrow0,\qquad
+E_n\longrightarrow+\infty,\qquad
+\frac{M_n}{g_{\sigma_n}-g_c}\longrightarrow0,\\
+h_n\longrightarrow0,\qquad
+\frac{h_n}{\ell_n}\longrightarrow+\infty,\\
+\text{for every fixed }C>0,\qquad
+\int_{\{R_\kappa<C h_n\}}|v_n|^2d\mu\longrightarrow0.
+\end{gathered}
+\tag{107.11}
+$$
+
+The threshold-gap ratio is taken on its eventual positive denominator. In addition, the estimate consumed in the last assertion is, for every $n$ and every $b>0$,
+
+$$
+\int_{\{|\xi|<b\}}|v_n|^2d\mu\le\pi^2\,b/h_n.
+\tag{107.12}
+$$
+
+**Proof.** The inclusion $\mathcal E_{\sigma_n}\subset\mathcal E_2\subset\mathcal Q_c$ follows from $|\lambda|^2\le1+|\lambda|^{\sigma_n}$. Since $u_n\ne0$, the zero-kernel assertion (87.19) for the whole critical closed form gives $\delta_n>0$. Its limit zero and $M_n\to0$ are the existing actual-state limits (103.6). Equation (107.5), applied to $v_n$ of norm one and form value $E_n$, gives (107.12).
+
+Suppose $E_n$ did not tend to infinity. Along a subsequence it would be bounded by a fixed $B>0$, so the $v_n$ would be bounded in the Hilbert space $\mathcal Q_c$. Take a further weak subsequence there. Its weak $L^2$ limit is the same vector $v\in\mathcal Q_c$. Theorem 104.2, after further extraction if necessary, puts this same actual weak profile in $\mathcal N_0=\ker S^*$, where $S$ is exactly (104.5). Thus (104.6) forces $v=0$. Equation (105.3) now gives, for every fixed $b>0$,
+
+$$
+\int_{\{R_\kappa\ge b\}}|v_n|^2d\mu\longrightarrow0.
+$$
+
+The indicator of this exterior is a legitimate bounded measurable cutoff vanishing near $e$. Since $\{R_\kappa<b\}\subset\{|\xi|<b\}$, (107.5) gives along this subsequence
+
+$$
+1\le\frac{\pi^2b}{\sqrt a}\sqrt B+o(1).
+\tag{107.13}
+$$
+
+Choosing a fixed $0<b<\sqrt a/(2\pi^2\sqrt B)$ is a contradiction. Hence $E_n\to+\infty$. This step uses exterior strong convergence and the intersection $\mathcal N_0\cap\mathcal Q_c=\{0\}$, without identifying the maximal and Friedrichs domains.
+
+For the threshold-gap comparison, test the original full-domain equation (103.3) with $u_n$ itself. It gives the exact same-state identity
+
+$$
+\delta_n=(g_n-g_c)+\eta\bigl(D_2[u_n]-D_{\sigma_n}[u_n]\bigr).
+\tag{107.14}
+$$
+
+For $\epsilon>0$ and $x\ge0$, the difference $x^2-x^{2+\epsilon}$ is nonpositive when $x\ge1$, while for $0<x<1$,
+
+$$
+x^2(1-x^\epsilon)\le-\epsilon x^2\log x
+ \le\frac{\epsilon}{2\mathrm e}.
+$$
+
+The last bound follows by maximizing $-x^2\log x$ on $(0,1)$; at $x=0$ the difference is zero. Plancherel with the original fixed central units therefore gives
+
+$$
+D_2[u_n]-D_{\sigma_n}[u_n]\le
+ \frac{\epsilon_n}{2\mathrm e}M_n,\qquad
+\frac{g_n-g_c}{M_n}
+ \ge E_n-\frac{\eta\epsilon_n}{2\mathrm e}\longrightarrow+\infty.
+\tag{107.15}
+$$
+
+The denominator $g_n-g_c$ is consequently positive eventually, and its stated reciprocal ratio tends to zero. Both central moments in (107.14) are finite on the original $\mathcal E_{\sigma_n}$; no order comparison between those moments is presumed. The two length limits follow from $E_n\to\infty$ and the exact identity
+
+$$
+\frac{h_n}{\ell_n}=\sqrt{\frac a{\delta_n}}\longrightarrow+\infty.
+\tag{107.16}
+$$
+
+Finally fix $C>0$ and then any $0<c<C$. Since $h_n\to0$, the actual annular exclusion (106.3), with $r_n=h_n$, gives
+
+$$
+\int_{\{c h_n<R_\kappa<C h_n\}}|v_n|^2d\mu\longrightarrow0.
+$$
+
+The inner diagnostic ball is contained in $|\xi|<c h_n$, so (107.12) bounds its probability by $\pi^2c$. Diagnostic spheres have Haar measure zero, since in $(\xi,s/\kappa)$ they are Euclidean spheres and $d\mu=\kappa\,d\xi\,d(s/\kappa)$. It follows that
+
+$$
+0\le\limsup_{n\to\infty}
+ \int_{\{R_\kappa<C h_n\}}|v_n|^2d\mu\le\pi^2c.
+\tag{107.17}
+$$
+
+Letting $c\downarrow0$ proves the last assertion of (107.11). Every step applies to arbitrary actual selections and to approach from above without monotonicity. $\square$
+
+**Definition 107.4 (mathematical correspondence and remaining limits).** The original model, source normalization and full-complex actual equation are those of §§82–87 and §§101–103. The closure and forward comparison used here are precisely (87.6)–(87.8) and (87.26)–(87.28). The actual-state consumers are (103.3), (103.6), (104.6), exterior strong convergence (105.3), and the arbitrary shrinking annuli (106.3). The proof of Lemma 107.2 supplies the additional weighted divergence estimate on the whole closed trace form; (107.9) is the exact horizontal marginal, rather than an inverse auxiliary correspondence.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, arXiv:1105.0335v1, Theorem 1.1 and (8), (12)](https://arxiv.org/abs/1105.0335v1), supply the trace intermediate already consumed in §87. At $n=4$, $\beta_{\rm AFV}=2$, the bulk Hardy term vanishes and (8) gives $H(4,2)=2/\pi$ per halfspace, hence $4/\pi$ for the two halfspaces. Formula (12) becomes $\int_0^\infty((a+t)^2+r^2)^{-1}da=r^{-1}\arctan(r/t)$ for $t>0$; boundary normalization by $2/\pi$ and even reflection give exactly (107.3). The primary theorem concerns real functions; the complex ground-state representation and closed-form comparison are the established §87 supplies, and the real-part argument and closure passage in (107.7) prove the additional estimate for the full complex domain.
+
+Kalaman–Yessirkegenov, [*Cylindrical Hardy, Sobolev type and Caffarelli–Kohn–Nirenberg type inequalities and identities*, arXiv:2407.08393v1, §3.1, Theorem 2(i), (3.1)](https://arxiv.org/abs/2407.08393v1), give a complex cylindrical Hardy inequality on $C_c^\infty(\mathbb R^n\setminus\{x'=0\})$. With $n=4$, $k=3$, $p=2$, $\alpha=2$, $x'=\xi$ and $x''=t$, it reads
+$\frac14\int |f|^2/r^2\le\int|\xi\cdot\nabla_\xi f|^2/r^2\le\int|\nabla_\xi f|^2$
+on that test domain. This identifies the overlap in cylindrical divergence methods. That theorem supplies no bound by the critical form after trace subtraction, nor an extension to $\mathcal Q_\delta$ or an actual-state assertion. Those passages are proved in (107.6)–(107.9), so its test-domain estimate is not used in place of them. The new source-specific conclusion is the actual-state theorem (107.11), deduced using the stated existing supplies; there is no exhaustive literature-priority claim.
+
+The energy length is an excluded source-ball scale. It is not a proved surviving scale or a probability profile. In every subsequential decomposition of §§104–105 the only asserted defect identity remains
+
+$$
+v\in\mathcal N_0,\qquad m_\infty=0,\qquad
+\|v\|_2^2+m_e=1,\qquad \mathcal N_0\cap\mathcal Q_c=\{0\}.
+\tag{107.18}
+$$
+
+Neither $m_e=0$, $m_e=1$ nor a strictly intermediate value is selected. Cumulative source probability at radii large compared with $h_n$, existence and dimension of nonzero $\mathcal N_0$, actual attainability of its profiles and defects, and any surviving probability scale or profile remain unresolved. No positivity, simplicity, uniqueness, new source boundary condition or maximal/Friedrichs identification is imposed. No native source-to-state realization or physical why-three conclusion follows. These ordinary mathematical proofs make no claim of Lean verification.
+
+## 追加锚（本行以下为增补区）
