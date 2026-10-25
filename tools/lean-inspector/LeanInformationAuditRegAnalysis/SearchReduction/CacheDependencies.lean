@@ -1,4 +1,4 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
+import LeanInformationAuditRegAnalysis.SearchReduction.Lookup
 import Batteries.Tactic.OpenPrivate
 
 /-! A cache carries ordinary declarations, replayed through the Lean kernel.

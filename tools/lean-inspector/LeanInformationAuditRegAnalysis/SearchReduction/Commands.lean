@@ -618,6 +618,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   unless ← path.pathExists do return false
   profilePhase "probe/cache-load-start"
   let (record, region) ← unpickle ProbeCacheRecord path
+  profilePhase "probe/cache-unpickle-end"
   probeRegions.modify (·.push region)
   unless record.identity == identity && record.result.target == request.target do
     throwError "search.probe_cache_identity_mismatch"
