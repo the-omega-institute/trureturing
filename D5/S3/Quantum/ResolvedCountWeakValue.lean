@@ -122,7 +122,7 @@ private lemma inputAmplitude_smul (k : ℕ) (α : ℂ) :
   exact congrFun (by simpa only [smul_eq_mul, mul_one] using
     (Pi.single_smul (f := fun _ : Fin (k+1) => ℂ) (0 : Fin (k+1)) α (1 : ℂ)))
 
-private lemma weighted_exp_hasSum (t : ℂ) :
+lemma weighted_exp_hasSum (t : ℂ) :
     HasSum (fun n : ℕ => (n : ℂ) * t ^ n / (n.factorial : ℂ))
       (t * Complex.exp t) := by
   apply (hasSum_nat_add_iff' 1).mp
