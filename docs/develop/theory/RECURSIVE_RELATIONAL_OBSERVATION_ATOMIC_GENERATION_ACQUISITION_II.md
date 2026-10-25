@@ -2470,3 +2470,754 @@ obligations remain unresolved by this bounded conditional theory.
 
 ## 追加锚（本行以下为增补区）
 
+## 68. A recoverable source encoding on the original LAB attachment
+
+**Definition 68.1 (source, acquisition task and represented task).**
+Use exactly the LAB source of AA Definitions 17.1 and 17.3 and the
+minimal guard attachment of Assumption 53.2. Thus the actual source was
+prepared from a known allocated alpha root by a finite legal word of
+addressed promotions and splits. Its unknown entry is any
+$t\in\mathcal D$, where no alpha leaf has an $L$-ending logical address.
+The observer initially has no source-dependent word, roster, size,
+generation record or response table. It has the authentic opaque callable
+root, its original orientation, current exclusive $P/S$ rights, complete
+reply/return connection, source-independent finite code and sufficient
+owned finite backing for each execution claimed. Only complete guard
+replies reveal source-dependent information. Logical addresses stop at
+logical leaves; a beta's terminal material marker is not a logical child.
+
+Calls, observer updates and the later outer service are serialized. There
+is no crash, interrupt, revocation, concurrent writer, autonomous growth,
+observable quota, allocation-name inspection, duration readout, Tag,
+Native Read, field, reset or cloning port. Rights and binding are supplied
+premises, not conclusions learned from guard answers. Retention,
+communication, allocation, local computation and clearing remain paid.
+The acquisition must earn the exact entry code and an actual advanced
+endpoint on this same source. Subsequent use will have the explicitly
+represented interface $Q_J$ of §70, distinct from applying the original
+$Q_A$ directly to the advanced physical term. Neither interface includes
+the seven-request history task $Q_g$ of §§47–52.
+
+**Definition 68.2 (encoding and recognized range).** For finite ordered
+LAB terms define
+
+$$
+J(\alpha)=\alpha,\qquad J(\beta)=\langle\beta,\alpha\rangle,
+\qquad J(\langle u,v\rangle)=\langle J(u),J(v)\rangle.
+$$
+
+Let $\mathcal R$ be the least finite-term grammar
+
+$$
+r::=\alpha\ \mid\ \langle\beta,\alpha\rangle\ \mid\ \langle r,r\rangle.
+$$
+
+Define a partial decoder $K$ as follows. At alpha return alpha. At the
+literal pair $\langle\beta,\alpha\rangle$ return beta. At any other pair,
+recursively decode both children and return their ordered pair, provided
+both decodings succeed. Reject bare beta and every unsuccessful recursive
+case. This is a finite structural procedure on an owned constructor word,
+not a new source primitive. No member of $\mathcal R$ has root beta;
+therefore the literal sentinel pair cannot also be a pair of two members
+of $\mathcal R$. In particular the two pair rules are unambiguous.
+
+**Lemma 68.3 (two round trips and exact birth-typed image).** On all finite
+terms, $K(J(u))=u$. The domain of successful $K$ is exactly $\mathcal R$,
+and $J(K(r))=r$ for every $r\in\mathcal R$. Consequently $J$ is injective,
+and its exact image on reachable LAB entries is
+
+$$
+\mathcal I:=J[\mathcal D]=\mathcal R\cap\mathcal D.
+$$
+
+Proof. Every encoded term has root alpha or branch. For a leaf alpha the
+first round trip is the first rule. For beta it is the sentinel rule.
+For an original branch, both encoded children have root different from
+beta, so the encoded branch cannot be the sentinel. The recursive rule
+and the two induction hypotheses return the original branch. This proves
+the first round trip by structural induction.
+
+Induct on a successful decoder computation. Its alpha case lies in the
+first range rule, its sentinel case in the second, and its recursive pair
+case in the third by the induction hypotheses. Conversely induction on
+the range grammar gives a successful computation: in its third case the
+left child has root different from beta, so the sentinel case does not
+interfere. The same induction proves the second round trip. Applying
+$K$ to an equality of encoded terms proves injectivity.
+
+Encoding preserves every original alpha leaf at its original address.
+The only added alpha leaves are the right children of original beta
+leaves. Hence an $L$-ending alpha in $J(u)$ exists exactly when one existed
+in $u$. For the reverse implication, an $L$-ending alpha in $u$ persists;
+for the forward implication, any new alpha ends in $R$. Thus
+$u\in\mathcal D$ if and only if $J(u)\in\mathcal D$. Every $J(u)$ lies in
+$\mathcal R$. If $r\in\mathcal R\cap\mathcal D$, put $u=K(r)$; then
+$J(u)=r$, and the just-proved equivalence gives $u\in\mathcal D$.
+This proves the displayed image equality, including the singleton entry
+alpha. $\square$
+
+The encoding is not FARG's simultaneous substitution $\rho$: in
+particular $J(\alpha)=\alpha$ whereas $\rho(\alpha)=\beta$.
+The round trips are ordinary syntax facts. Their use below requires an
+actual guard execution reaching $J(t)$ and an earned word for $t$.
+A syntax inverse by itself supplies neither that execution nor a guard
+observation of an unknown entry.
+
+## 69. Actual guard acquisition of an encoded endpoint
+
+**Definition 69.1 (the split sweep).** Begin with empty logical address
+and empty ancestor-continuation stack. At a scheduled address $p$, send
+one complete original $S_p$ frame, consume its complete reply and finish
+its return. Refusal(wrong type) records alpha and finishes this visit.
+Growth$(S,p)$ records beta and finishes this visit: do not schedule either
+newborn child. Refusal(branch) records a branch, visits its left child,
+then its right child, using a backed pending-right flag. Stop when the
+root visit and every pending continuation are finished. An absent refusal
+is outside the promised executions and is not interpreted as a leaf.
+
+The output is Definition 54.1's canonical preorder word, with two-bit
+symbols $00,01,10$ for alpha, beta and branch. Retain one mutable address,
+a finite flag per active ancestor, the growing output word and the actual
+bound root/rights. Scheduling and parsing use only acquired replies, not
+a supplied subtree, fuel, height or stopping bound. The stack program is
+source independent; its actual stack and output are not bounded in size
+by finiteness of that program. This is the entry-node traversal technique
+of §§54 and 62, with a different leaf operation and endpoint.
+
+**Theorem 69.2 (earned entry, exact source and termination).** For every
+$t\in\mathcal D$, every legal old LAB preparation ending at $t$, and every
+installation of Definition 68.1, the split sweep terminates with an owned
+canonical word for $t$ and actual physical source $J(t)$ on the same
+callable root and current authority. It visits exactly the entry logical
+positions, once each in preorder. Its only successful source events are
+one split at every entry beta leaf. Its acquisition endpoints, as the
+entry varies, are exactly $\mathcal I$.
+
+Proof. At the start of any scheduled entry-subtree visit, all previous
+edits are in finished entry-leaf cones, disjoint from the pending subtree.
+A previously split entry leaf has newborn descendants, but the controller
+has finished that visit and never schedules them. A pending child is
+scheduled only after its actual parent produced a branch refusal. Thus
+all scheduled positions exist and their constructors still equal the
+entry constructors. This invariant is preserved by every scheduling
+step and source edit.
+
+Prove the visit assertion by induction on the finite entry subtree,
+allowing arbitrary pending continuations outside its cone. At alpha the
+actual split has the wrong type; it leaves alpha and records alpha.
+At beta the actual split succeeds, leaves the pair beta-alpha and records
+beta. The visit ends in both cases, so neither case uses a newborn child
+as evidence about the entry. At a branch the actual refusal preserves
+both child cones. Apply the left induction hypothesis and then the right
+one; disjointness preserves each hypothesis. Their recorded words form
+the original branch word, and their physical endpoints form the pair of
+encoded children. These are precisely the three clauses of $J$.
+
+Every actual request, reply, End, acknowledgement, return and finite local
+update completes under the installation premises. The structural induction
+establishes finitely many visits and stack operations without passing a
+runtime bound to the observer. It also excludes absent replies. At the
+root completion the output is therefore the exact entry word and the
+physical endpoint is $J(t)$. The current representation needed by §70 is
+this earned word $t$; a second physical-current word $J(t)$ need not be
+retained. The real reference, rights, program and work backing remain
+owned for later use. Every endpoint belongs to $\mathcal I$ by Lemma
+68.3, and each member of that set is obtained from its decoded reachable
+entry by this same sweep. $\square$
+
+**Definition 69.3 (retained-use invariant).** At an outer Ready cut retain
+one valid live word $v$, the same callable source root and its current
+exclusive authority, the framing/adapter program, and owned pending,
+answer and work backing. The invariant is that the actual physical term
+is $J(v)$. The word is initially the acquired $t$, not a supplied response
+oracle. Retaining it as live mutable state gives no separate immutable
+entry archive: after later represented edits, an old entry report requires
+its own retained copy or the restricted reaccess experiment of §72.
+
+## 70. The complete represented continuation on the same source
+
+**Definition 70.1 (outer frames, replies and real macros).** $Q_J$ uses
+exactly Definition 53.3's framing and complete reply alphabet, evaluated
+on the represented term $v$. In particular its addressed request length
+is $2|p|+4$, a Growth reply has length $2|p|+5$, and any of the three
+Refusal reasons has length five. Logical lookup in the earned live word
+uses the original blocking rule: a strict extension through a leaf is
+absent. The complete semantic table is
+
+| Represented target at $p$ | Outer $P_p$ | Outer $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), identity | Refusal(absent), identity |
+| branch | Refusal(branch), identity | Refusal(branch), identity |
+| alpha | Growth$(P,p)$, replace by beta | Refusal(wrong type), identity |
+| beta | Refusal(wrong type), identity | Growth$(S,p)$, replace by pair beta-alpha |
+
+For a represented successful $P_p$, the adapter actually calls $P_p$,
+consumes its complete reply/return, then actually calls $S_p$ and consumes
+that complete reply/return. For a represented successful $S_p$, it
+actually calls $S_{pL}$ and consumes its complete reply/return. Here $pL$
+is the left logical beta of the physical sentinel pair $J(\beta)$;
+it is not the unaddressable material marker of an unsplit beta. The
+adapter checks the expected complete inner successes before committing.
+A predicted refusal requires no source edit or inner call and returns
+its exact outer reason. The other six three-bit tags are complete
+unsupported frames returning the three-bit BadFrame and identity
+successor. They do not call a missing service. A proper unfinished $P/S$
+address frame waits, retains its received input and has no completed reply.
+Exactly one frame is consumed per outer transaction. The outer client
+calls an actual owned adapter entry, whose stored reference is bound to
+the original dispatcher. Both that outer connection and the inner callable
+reference, current grants and input/output backing are retained and paid;
+the represented word does not stand in for either callable binding.
+
+Receive backs every accepted outer bit before releasing its latch. Before
+a successful macro the adapter owns the old word, parsed address, operation,
+phase, proposed successor word and sufficient finite backing/authority
+for the entire macro and reply. Only the permitted real source templates
+allocate source vertices; the adapter installs no new source opcode.
+Between the two inner calls of a represented promotion the outer service
+remains busy even though the original dispatcher has returned. After the
+last inner return, commit the new live word, seal the entire outer answer,
+Print all its bits and End, consume the local acknowledgement, then Return
+and clear finite scratch before Ready. The root, current authority and
+live word survive cleanup. No next outer frame is admitted while busy.
+The real source calls, their traffic, retained intermediate data and the
+outer traffic are all actual operations with separate costs.
+
+**Theorem 70.2 (full successor correspondence and continued use).**
+Starting at any Ready cut satisfying Definition 69.3, Definition 70.1
+implements the complete $Q_A$ table on $v$ through $Q_J$. It returns
+exactly the displayed outer replies and preserves the invariant with
+$v$ replaced by the displayed represented successor. The same assertion
+holds for every finite common adaptive continuation of full frames,
+including refusals and unsupported tags, and for finite extensions of
+pending prefixes. Enabledness is conditional on the same current rights,
+serialized phase, backing and acknowledgement assumptions as above.
+
+Proof. At any logical position of $v$ above its leaves, $J$ retains the
+same branch context and address. Thus a represented alpha at $p$ is an
+actual alpha there. The first real call promotes it to beta; the second
+splits that beta. The net replacement is $J(\beta)$, so, writing $P_pv$
+for the represented successful successor,
+
+$$
+S_p(P_p(J(v)))=J(P_pv).
+$$
+
+At a represented beta at $p$, the physical cone is
+$\langle\beta,\alpha\rangle$. Splitting its actual left logical beta
+gives $\langle\langle\beta,\alpha\rangle,\alpha\rangle$, which is
+$J(\langle\beta,\alpha\rangle)$. Consequently
+
+$$
+S_{pL}(J(v))=J(S_pv).
+$$
+
+In both equations the operations are real legal source changes at the
+stated original-root addresses. Context replacement outside that cone
+commutes with $J$ by its branch clause. These arguments prove actual
+success and the proposed code update; they assume neither a raw read
+port nor an inverse source edit.
+
+For every negative case, finite lookup in the already earned exact word
+gives precisely the represented absent, branch or wrong-type case.
+Returning that reason with no inner edit preserves $J(v)$. The fixed
+unsupported reply and the unchanged source are also exact. Both parsers
+use the stated finite prefix grammar, so a proper partial frame has the
+same waiting condition and every completed extension enters the proper
+case. Actual input backing, full answer construction, End, acknowledgement,
+return and cleanup ensure that equality concerns whole replies and settled
+successors, rather than just an initial response bit. Missing rights or
+wrong phase disable a call; they are not reclassified as a leaf refusal.
+
+Induct on complete outer transactions. The induction hypothesis supplies
+the word/source invariant for the next chosen frame; the one-step argument
+returns the same whole reply and the next invariant. An adaptive client
+therefore makes the same next selection from the same replies. Finite
+prefix extensions follow the same parser transition rule. This proves
+all claimed finite continuations and actual retained callable use.
+$\square$
+
+**Proposition 70.3 (exact returned image and interface distinction).**
+Across all promised acquisitions and completed $Q_J$ continuations the
+physical returned image is exactly $\mathcal I$. For fixed acquired entry
+$t$, it is exactly $J[\operatorname{Desc}(t)]$, where
+$\operatorname{Desc}(t)$ comprises the finite legal LAB successors of $t$,
+including $t$ itself. These assertions do not extend the inverse to every
+intermediate physical cut and do not equate $Q_J$ with raw $Q_A$ on $J(v)$.
+
+Proof. Every represented success is an ordinary LAB successor of $v$;
+refusals and unsupported requests preserve it. Conversely every finite
+legal successor word is realized by the corresponding successful outer
+frames by Theorem 70.2. This gives the fixed-entry equality. Taking all
+entries includes every $J(t)$ already at acquisition return and adds no
+term outside $J[\mathcal D]$, proving the global equality.
+
+For $v=\alpha$, a successful outer promotion has the actual intermediate
+term beta after its first inner return. Bare beta is outside $\mathcal R$,
+so $K$ is undefined there. There is no outer Ready cut at that point.
+For $v=\beta$, outer $P_\varepsilon$ returns wrong type; raw
+$P_\varepsilon$ on the physical $J(v)$ returns branch. The two interfaces
+therefore have different replies on the same physical source. The
+proved correspondence concerns the adapter's outer interface and full
+return, not a client bypassing it, arbitrary interruptions or raw busy
+states. $\square$
+
+## 71. Independently meaningful views on synchronized returned cuts
+
+**Definition 71.1 (four data meanings and their exact domains).** Fix the
+actual opaque root binding, orientation, current authority and the
+source/adapter contract. At a synchronized outer Ready cut with physical
+term $u=J(v)\in\mathcal I$, define the following data using the original
+source meanings of AA §17:
+
+| View | Independently specified content |
+| --- | --- |
+| Space | Actual material address support $S_0(C(u))$, with source edges only |
+| Boundary | Actual terminal-material address antichain $B_0(C(u))$, including beta markers |
+| Time | Actual labelled successful-source causal lifecycle order $E(u)$ of AA Definition 17.1 |
+| Memory | The acquired live canonical word $v$ at the retained callable entry |
+
+Time records event membership, addresses, kinds and causal precedence.
+It does not record a chosen total serial order, refusals, communication,
+controller scheduling or macro boundaries. Space and Boundary do not
+include private record edges. Memory is an actually acquired current word;
+it is not a copy of the whole preparation or outer transcript. The common
+binding/authority context is retained actual material, not secretly part
+of the tree data or something any data conversion manufactures.
+For each view its domain below is precisely its image as $v$ ranges over
+$\mathcal D$, or the restriction to $\operatorname{Desc}(t)$ after a fixed
+entry. Arbitrary finite supports, arbitrary antichains or arbitrary
+labelled orders outside these images are not claimed to have inverses.
+
+**Theorem 71.2 (four-way recovery, route agreement and task kernel).**
+On these exact domains each view recovers the same represented term $v$
+and the actual physical term $u=J(v)$, and hence all the other three
+contents. All conversion routes agree. Their equality kernels are
+exactly equality of $v$, which is also the complete represented
+continuation kernel of $Q_J$ at the fixed binding and authority. These
+recoveries are finite procedures on given owned data. The acquisition
+installs the Memory-based callable service; it does not install three
+additional source read ports.
+
+Proof. Apply the existing AA Theorem 17.2 and Definition 17.3 to the
+actual reachable term $u$. Their original arity parser takes material
+support to $u$; prefix closure takes the terminal antichain to that
+support; event membership and the specified birth types take the actual
+causal order to $u$. These are the supplied original inverses, with
+parameter exactly $u=J(v)$, rather than new tree-inverse theorems. Apply
+$K$ to the resulting term. Lemma 68.3 gives $K(u)=v$. Memory parses its
+own canonical word to $v$ and computes $J(v)=u$. Conversely $v$ computes
+$u$, its material support and terminals, and its labelled causal order
+by the supplied finite definitions. Thus every conversion is the
+appropriate observation after recovery of this same $v$; both round
+trips hold and every composed route agrees on its actual image.
+
+Equal $v$ gives the same complete outer task by Theorem 70.2. For distinct
+$v,w$, descend through their common branch constructors to their first
+differing constructor. The address is present in both. The outer promotion
+there distinguishes alpha, beta and branch respectively by Growth,
+wrong-type refusal and branch refusal. Hence the complete tasks differ.
+The view round trips give precisely the same equality kernel.
+
+All these algorithms parse finite data, construct finite trees or event
+lists and run the given decoder. Their inputs and outputs require owned
+backing and ordinary computation. Computing a boundary or event order
+from the acquired word is a description of the actual source content;
+it is not an observation of previously unexposed serial provenance.
+Neither a correct word nor a conversion creates a reference, root
+association or grant. Those remain the common genuine attachment used
+by the real calls. $\square$
+
+**Theorem 71.3 (dynamics compatibility at the declared cuts).** For every
+complete $Q_J$ transaction between synchronized outer Ready cuts, all four
+recovered dynamics agree with the represented successor table. This also
+holds for every finite composite of such transactions. Time's physical
+update contains two successful LAB events for a represented promotion and
+one event at $pL$ for a represented split.
+
+Proof. By Theorem 70.2 the physical endpoint is the encoding of exactly
+the next represented word. Each final view is its independently specified
+observation in Definition 71.1. Recovering before or after applying that
+observation therefore gives the same next word by Theorem 71.2. For
+Time, the actual calls add $P_p,S_p$ or $S_{pL}$, with their actual
+local/creation precedences; they do not add a single fictitious event
+at the virtual address in place of those real events. Negative cases
+add no successful-source event. This verifies compatibility also for
+that view. Induction gives the finite-composite statement. Intermediate
+inner returns need not lie in the image, as Proposition 70.3 exhibits.
+Private pending words, answer buffers, allocation identities and full
+control phases are outside the claimed view inverse even at cuts where
+the physical term happens to lie in the image. $\square$
+
+## 72. Paid clearing and one advancing reaccess
+
+**Definition 72.1 (the cleared receiver experiment).** Immediately after
+Theorem 69.2, hold the actual source at $J(t)$, admit no represented
+continuation, and perform a paid clearing of the receiver's entire
+accessible entry-dependent information. This includes live/entry/current
+words, caches, reply transcripts, stack, pending input/output and proposed
+words, exported copies or callable archives available to this receiver,
+and any accessible length, layout or metadata that would disclose them.
+The receiver retains only common finite code, the opaque actual root,
+current exclusive rights, their source-independent I/O/adapter connections,
+and a fixed public stage flag selecting this second sweep. There is no
+source-correlated auxiliary provider or future input. The source itself
+is not cleared.
+
+The experiment requires actual clearing authority over these records;
+if an accessible external copy cannot be cleared, it is not an instance
+of this experiment. One realization exports no retained copy and overwrites
+its owned used records, resets list heads/counters to the common empty
+state, and leaves no accessible record of old lengths. Retained arena
+capacity, inaccessible reclaimed backing and their clearing work still
+count as actual material/work. As in Assumption 53.2, occupancy, allocator
+names, duration and resource amounts are not observation channels.
+No claim is made of erasing all past information elsewhere in the world.
+The second receiver starts without an entry-dependent word but with
+sufficient finite paid backing for its actual new execution.
+
+**Theorem 72.2 (source-resident recovery with the correct new predictor).**
+For every $t\in\mathcal D$ in the experiment of Definition 72.1, a second
+split sweep earns an owned word $w=J(t)$ and leaves the same actual source
+at $J^2(t)$. One subsequent paid application of $K$ to $w$ returns the
+original entry $t$, without using any cleared word or transcript. The
+legitimate live predictor for further ordinary $Q_J$ use is $w=J(t)$.
+When $t$ has a beta, the separately decoded $t$ cannot be used directly
+as that live word. For the degenerate entry alpha the two words coincide.
+
+Proof. Lemma 68.3 places $J(t)$ in $\mathcal D$. The new receiver has
+exactly the empty-source-dependent-record entrance required by Theorem
+69.2, now with actual entry $J(t)$ and the same genuine attachment.
+That theorem therefore earns its exact entry $w=J(t)$ and changes the
+source to $J(J(t))$. Lemma 68.3 gives $K(w)=t$ by a finite computation on
+this newly earned word. The computation has no access to cleared data.
+Injectivity of $J$ identifies the original entry in this declared image;
+the distinction survived in the source rather than in an assumed archive.
+
+At the new returned cut the invariant of Definition 69.3 is physical
+source $J(w)$ with live word $w$. Using $t$ directly in that same predictor
+would instead represent source $J(t)$. If $t$ has a beta, encoding strictly
+increases its node count, so $J(t)\ne t$ and injectivity gives
+$J^2(t)\ne J(t)$: the proposed direct use has the wrong invariant.
+For the reachable entry with no beta, namely alpha, both words coincide.
+One may instead compute $J(t)$ anew from the decoded result, paying the
+computation and backing to restore the correct live word. Keeping $w$
+while constructing a separate result $t$ uses both words concurrently;
+that retention and the decode are paid. The reference and current rights
+are never inferred from either word and remain the authentic retained
+ones. $\square$
+
+This is a one-reaccess source-transforming experiment: both sweeps split
+each beta present at their respective entry. When the original entry
+has a beta, the second sweep strictly adds source material. The reachable
+degenerate entry alpha has no beta and is fixed by $J$. The result is
+neither stationary retrieval nor source restoration. If represented
+continuation precedes the clearing, the same construction recovers that
+then-current represented word $v$ from $J(v)$; it does not identify the
+original $t$ without a separately justified version record. No arbitrary
+old-history recovery or indefinite immutable archive service is asserted.
+
+**Proposition 72.3 (precise gain over destructive normalization).**
+The source-resident distinction of Theorem 72.2 is absent from the
+normalization $\nu$ of §54 on each of its nontrivial fixed-skeleton leaf
+fibres. If all other accessible distinctions are genuinely cleared, a
+common deterministic future guard controller cannot recover every entry
+in such a fibre from the normalized source. This comparison concerns
+entry recovery after clearing, not the full resource optimality of either
+procedure.
+
+Proof. On a fixed ordered skeleton, fix all forced left-ending beta
+leaves and vary $m$ eligible root/right-ending leaf labels. These give
+$2^m$ reachable entries and the same actual normalized term: $\nu$ makes
+every leaf beta. With common attachment, authority, cleared accessible
+state and future input, the next actual guard reply is the same in all
+these worlds. The resulting source and receiver states remain equal
+modulo opaque fresh-name spelling. Induction gives the same complete
+finite future, so an exact different entry answer in every world is
+impossible. This is the fibre/pigeonhole obstruction already used in
+§§57 and 59; in particular a fixed-width accessible supplement resolving
+this fibre would require at least $m$ bits. No new general information
+lower bound is needed here.
+
+In contrast $J$ is injective on this fibre and Theorem 72.2 supplies an
+actual guard-only second acquisition and decoder. Merely deleting the
+second of two private words from the normalization procedure would not
+supply this property: an uncleared entry word already computes its
+normalized endpoint, whereas the stated comparison clears that word as
+well. Neither procedure's distinct endpoint or continuation interface
+can be substituted into a fixed-endpoint/original-interface optimum.
+$\square$
+
+## 73. One-run material, traffic, work and retention account
+
+**Definition 73.1 (coordinates and charging convention).** For the actual
+entry $t$ write $a,b$ for its alpha and beta leaf counts, $L=a+b$ for its
+leaf count, $n=2L-1$ for its number of logical nodes, and $h$ for its
+logical height. Put
+
+$$
+D=\sum_{p\in\mathcal L(t)}|p|,\qquad
+D_\beta=\sum_{p\text{ a beta leaf of }t}|p|,
+\qquad N=n+b.
+$$
+
+Here $\mathcal L(t)$ includes all logical positions; $N$ is the initial
+material vertex count, including beta markers. Count request and reply
+payload bits in Definition 53.3's fixed framing. Count End,
+acknowledgement, return and cleanup separately; payload lengths alone
+are not the communication protocol. Source structural assignments use
+AA §22's original three-reference-field representation: four assignments
+per promotion and eight per split, besides actual cursor, allocation,
+grant, observer and communication operations. Every literal reference
+or numerical operand pays its actual representation width.
+
+Old preparation is part of this same source's cost. Its legal successful
+event word has $b$ promotions and $L-1$ splits, hence
+$3+4b+8(L-1)$ source structural assignments including root initialization.
+If $e=b+L-1$ and $H$ is that word's sum of event-address depths, its
+addressed request/reply payloads are $2H+4e$ and $2H+5e$, with $e$ full
+completion cycles. Any additional producer activity is additional actual
+cost. The old word is not supplied as an observer input. Root allocation,
+producer control, actual references/grants, attachment, old I/O/backing
+and any genuinely retained old records remain charged.
+
+**Theorem 73.2 (first sweep and retained live word).** The first sweep
+makes exactly $n$ split calls, of which $b$ succeed. It makes no promotion
+call, adds $2b$ material vertices, and ends with $N+2b$ source vertices.
+Its addressed payloads are
+
+$$
+I_1=2D+4n,\qquad O_1=5n+2D_\beta.
+$$
+
+There are $n$ full End/acknowledgement/return cycles, $D$ source-navigation
+descents and $D$ ascents when each call returns along the parent chain,
+and $8b$ source structural assignments. Its live word has $2n$ constructor
+content bits. These statements hold simultaneously on the run of Theorem
+69.2 and do not include the additional backing listed below.
+
+Proof. Theorem 69.2 visits each entry logical position exactly once,
+with success exactly at its beta leaves. Each success adds two vertices.
+Every request at depth $d$ has $2d+4$ bits. A success reply has $2d+5$
+bits and every refusal has five. Summing separately over all positions
+and successful leaves gives the two payload formulas and completion
+count. Each navigation uses its entry depth, giving $D$ in each direction.
+The original split template gives $8b$ assignments. Two bits per visited
+constructor give $2n$. No read-free synthesis or preliminary traversal
+has been added to these counts. $\square$
+
+An attained observer implementation uses a linked mutable address, backed
+ancestor flags and a tail-appended constructor word. Scheduling appends
+and deletes each entry-tree edge once and changes $O(n)$ flags. Formatting
+addresses, consuming replies and constructing the output use
+$O(n+D)$ symbol operations in addition to source navigation. The address
+and flags have $O(h+1)$ symbols at peak; their links, literal references,
+end pointers, counters, parser and latch backing are additional material.
+Every received/transmitted bit, sealed reply, pending frame and actual
+copy is backed as used. The root, dispatcher, adapter code, source and
+work ownership/grant records are retained for their whole actual lifetime.
+A two-bit constructor payload is not a total memory bound.
+
+**Theorem 73.3 (finite continued-use account).** Suppose a completed
+continuation contains $r$ addressed outer frames and $z$ unsupported
+frames, with $k_P,k_S$ successful represented promotions/splits. Let
+$J_{\rm all}$ be the sum of depths of all its addressed frames, and
+$J_P,J_S$ the depth sums over its successful represented promotions/splits.
+On this continuation the outer payloads are
+
+$$
+I_{\rm out}=2J_{\rm all}+4r+3z,\qquad
+O_{\rm out}=5r+2(J_P+J_S)+3z.
+$$
+
+The real inner payloads and source changes are
+
+$$
+\begin{aligned}
+I_{\rm in}&=4J_P+8k_P+2J_S+6k_S,\\
+O_{\rm in}&=4J_P+10k_P+2J_S+7k_S,\\
+\text{inner completion cycles}&=2k_P+k_S,\\
+\text{added source vertices}&=3k_P+2k_S,\\
+\text{source structural assignments}&=12k_P+8k_S.
+\end{aligned}
+$$
+
+There are additionally $r+z$ outer completion cycles. At its final Ready
+cut the represented leaf count is $L+k_S$, its beta count is $b+k_P$,
+the source has $N+2b+3k_P+2k_S$ vertices, and its live word contains
+$4(L+k_S)-2$ bits.
+
+Proof. At represented depth $d$, a promotion uses two real calls at depth
+$d$. Their total request/reply payload is $8d+18$, split as $4d+8$ input
+and $4d+10$ output. They add one plus two vertices and four plus eight
+structural assignments. A represented split uses one real call at depth
+$d+1$, with $2d+6$ input and $2d+7$ output bits, two vertices and eight
+assignments. Source-navigation descents and ascents for these two cases
+are respectively $2d$ and $d+1$ in each direction. Outer successes have
+request/reply total $4d+9$ in addition to that inner traffic. Outer
+refusals have $2d+4$ input and five output bits and no inner call;
+unsupported frames have three plus three. Summing proves every traffic
+and work coordinate. A represented promotion raises beta count by one
+and preserves leaf count; a represented split raises leaf count by one
+and preserves beta count. The full-binary node formula then gives the
+live-word count and, using the real vertex additions, the material count.
+$\square$
+
+For an explicit finite local implementation, parse each received frame
+and scan the valid current preorder word to locate its logical target.
+A stack of pending subtree slots permits skipping a nonselected subtree.
+For a current $n_i$-node word and depth $d_i$, at most $O(n_i+d_i+1)$
+constructor/address decisions suffice. On a success, copy to proposed
+word backing while replacing the selected leaf symbol; this uses
+$O(n_i+1)$ symbol writes. Retain old and proposed words until the real
+macro completes; their constructor payloads are $2n_i+2n_{i+1}$ bits,
+not their maximum alone. All stack/counter operations, their growing
+widths, references, frame copies, reservations and sealed answers are
+paid too. These are constructive operation counts for this layout, not
+a unit-cost bound for arbitrary-width references or a polynomial bound
+in the size of a succinct source description. Proper pending prefixes
+pay their received bits and work even before a completion cycle exists.
+Any retained outer transcript, old entry archive or exported view adds
+its own actual material, construction, transmission and later use.
+
+**Theorem 73.4 (clearing, second sweep and decode on the same specimen).**
+In Definition 72.1's no-intervening-continuation experiment the second
+sweep starts with
+
+$$
+n'=n+2b,\qquad
+D'=D+2D_\beta+2b,\qquad D'_\beta=D_\beta+b
+$$
+
+logical-node and depth coordinates. It makes $n'$ split calls, exactly
+$b$ successful, and adds $2b$ more material vertices. Its payloads are
+$2D'+4n'$ input and $5n'+2D'_\beta$ output, with $n'$ complete cycles,
+$D'$ descents and $D'$ ascents, and $8b$ source assignments. The physical
+source finally has $N+4b$ vertices. The newly acquired word $J(t)$ has
+$2n'$ content bits; keeping it while decoding a separate $t$ requires an
+additional $2n$ output content bits, besides work and backing.
+
+Proof. Each original beta at depth $d$ becomes one branch at depth $d$
+and two leaves at depth $d+1$, with exactly one beta. Relative to the
+original logical positions this adds two nodes, $2d+2$ to total depth,
+and one to beta-depth sum. Summing gives the three coordinates. Apply
+Theorem 73.2 to the actual second entry $J(t)$; its beta count is still
+$b$ and its material size is $N+2b$. This proves all source/traffic
+formulas on the actual successive run, rather than combining optima
+from separate realizations.
+
+The decoder can read its valid input preorder word once, using a backed
+structural stack. Alpha emits alpha; a branch with immediate left beta
+is the sentinel and consumes that beta and its right alpha, emitting
+beta; any other branch emits branch and parses its children. The valid
+range grammar proves these cases exhaustive and unambiguous. It uses
+$O(n')$ constructor decisions and $2n$ output-content writes, in addition
+to its actual stack, pointers, counters and operand widths. This is an
+arithmetic/symbol operation account, not a total bit-complexity theorem.
+$\square$
+
+The clearing itself scans/overwrites or releases every accessible
+entry-dependent occupied record specified in Definition 72.1, clears
+its accessible metadata and pays every actual such operation. A receiver
+that retained extra transcripts or exports pays to clear them too.
+There is no negative material charge for inaccessible retained capacity.
+At every cut total material counts the actual source's three reference
+fields per vertex, every still allocated record/cell at its real width,
+all code, cursor and allocator descriptors, actual root and grants,
+I/O and pending latches, old/new/proposed/result copies and retained
+backing simultaneously. Total work is the sum of their actual allocations,
+field assignments, symbol/operand operations, communication, navigation,
+clearing and retained-use operations, including old preparation. No
+unspecified auxiliary source field is assumed; if a realization supplies
+extra slots, their allocation and initialization are additional charges.
+Finite conversion/export of §71's views also pays for every constructed
+material address, terminal and labelled event/precedence record. These
+charges prevent the payload formulas from being read as total-resource,
+peak-memory, latency, energy or lifetime optima.
+
+**Proposition 73.5 (a selected source-growth comparison only).** Let
+$c_0=\beta$ and $c_{j+1}=\langle c_j,\alpha\rangle$. On entry $c_j$ the
+split sweep adds two source vertices, while §54's normalization adds
+$j$. Thus the former has a strictly smaller added-source coordinate for
+$j>2$. This comparison does not give total or minimax dominance.
+
+Proof. Induction gives $a=j,b=1$ on this reachable comb. Apply Theorem
+73.2 and Theorem 54.2. The endpoints are $J(c_j)$ and $\nu(c_j)$, and
+their continued tasks differ as specified above. Conversely, on the
+reachable all-beta skeleton with $L$ leaves, normalization adds zero
+vertices while this sweep adds $2L$. Real represented promotions also
+need two inner calls. These same-run coordinates rule out a universal
+source-growth comparison in the opposite direction and supply no total
+ranking. The weighted randomized acquisition optimum of §§61–67 and
+fixed-normalization bounds retain their own tasks, prices and endpoints.
+$\square$
+
+## 74. Supplier correspondence and applicability of recoverable acquisition
+
+**Definition 74.1 (mathematical attribution).** The source-relative
+`repo-derived` contribution is the conjunction of the actual split
+sweep, its injective advanced source, the paid represented service at
+that earned entrance, and the cleared one-reaccess experiment, with
+§73's simultaneous account. Ordered syntax, generic encoding, traversal,
+original source inverses, randomized minimax and information counting
+are supplied mathematics rather than new abstract principles.
+
+| Mathematical supplier | Exact application and boundary |
+| --- | --- |
+| [AA §§17,20–23](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), AAII §§53–59 | Reachable birth typing, actual marker versus logical child, source causal/support/boundary inverses, complete guard lifecycle and structural assignments are used at the actual term $J(v)$. Normalization and its archived-entry service do not establish entry recovery after that archive is cleared. |
+| AAII §§61–67, especially Theorems 62.3 and 66.2 | The public randomized acquisition already supplies entry-node traversal with complete guard replies, earned current use and application of the original inverse. Its GLOBAL/LOCAL mode-zero rule leaves forced $L$-ending betas unchanged; $J$ splits every entry beta, including those. No randomized weighted minimax or original-$Q_A$ inverse is reauthored here. |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs); [NativeUniformTree](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | The former's private traversal, read-count and stationarity proofs use a nondestructive Native read unavailable here. The latter's private tree-view/child/walk helpers and `term_at_prim`, `readout_prim` act on supplied codes. These supply finite scheduling/navigation patterns, not this guard acquisition or new authority. |
+| [SourceTreeEncoding](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean), [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs) | Tagged finite-tree encodings and the existing substitution injection supply static syntax techniques. Their given-code maps and the substitution $\rho(\alpha)=\beta$ do not execute the present $J(\alpha)=\alpha$ acquisition or its real macros. Lemma 68.3 proves only the syntax obligations needed for this different actual construction. |
+| Pinned mathlib [Algebra/Free.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean) | `FreeMagma.of`, `mul`, `liftAux` and `lift` supply the ordered binary syntax and structural fold. They supply no observation of an unknown source, binding, rights or recovery after an actual edit. |
+| Bennett, [*Logical Reversibility of Computation*, IBM Journal of Research and Development 17, 525–532](https://doi.org/10.1147/rd.176.0525), [primary text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html) | The classical distinction between information retention, history records and their clearing is background. Its reversible-machine construction is not invoked as a reversible LAB operation, free erasure, thermodynamic bound or source-restoration theorem. The present LAB edits remain irreversible and all clearing is paid. |
+| [Native leaf-boundary acquisition II §§24–29](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md) | Public binary-mask/integer-age binding acquisition uses a complete raw roster, field Reset/Add/Read and fresh-zero inheritance. Its unknown raw maps and full field continuation are stronger and different inputs/outputs; they supply neither these guard-only macros nor a new raw binding here. |
+| [Unknown-field startup §§27–33](RECURSIVE_RELATIONAL_OBSERVATION_UNKNOWN_FIELD_NATIVE_STARTUP.md) | The public signed source-provenance producer constructs its rational path/Jacobi observation law under its stated positivity and authentication hypotheses. No map realizing that source by LAB guards is supplied or inferred. |
+
+**Definition 74.2 (distinct source domains).** The conditional all-mode
+spectral count in [Native attractive boundary response §18](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+the maximal zero-mode source-germ theorem in [Atomic boundary continuation
+appendix §108](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md),
+and the outside-band private-randomized clock bounds in [Quadratic clock
+§8](FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md) concern,
+respectively, a continuum boundary-response operator, critical differential
+zero modes, and complete exact-real report worlds. Their hypotheses and
+observations do not install addressed LAB guards, the encoding $J$ or
+its macro service. The present supplier-relative attribution is not a worldwide
+originality claim.
+
+The chosen construction adds no source generator. A split alone suffices
+for its acquisition. Its full represented continuation uses both original
+generators: from the physical alpha entry a controller using only splits
+cannot reach the required promotion endpoint $J(\beta)$, since every
+split refuses; from a physical beta entry promotions alone cannot create
+its required encoded branch. These facts justify the generator uses in
+this construction, without proving a universal minimal alphabet. One
+live word, actual bindings and a finite backed controller suffice at
+Ready; old/proposed words and protocol state coexist during transactions.
+The canonical two-bit word is an explicit sufficient layout, not a
+minimal information code or a lower bound on total retained material.
+
+The four-view conclusion is conditional on original-root oriented LAB
+birth typing and exact returned-image membership, authentic retained
+access, complete serialization and sufficient actual finite backing.
+It concerns causal source time rather than total physical history, and
+current live Memory rather than the full private process state. Data
+recovery cannot certify the attachment premises or create missing rights.
+The paid clearing experiment requires its stated inaccessible-side-channel
+and clearing-authority conditions. Concurrent raw clients, crash recovery,
+noise, revocation, observable exhaustion and arbitrary busy cuts are
+outside this installation.
+
+No stationary entry retrieval, raw-original-interface equivalence,
+arbitrary erased-history recovery, fixed-endpoint optimum, total resource
+dominance, native LAB-to-rational-path or quantum realization, or universal
+minimal generator theorem follows. Existing fixed-$G_{\rm gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, terminal and
+final-no-Ready statements retain their original scopes. A common actual
+realization joining the distinct LAB, path/field and quantum models, with
+the full programme's observations and resource obligations, remains a
+separate missing bridge. The scoped actual acquisition and represented
+continued use proved here do not assert that broader completion.
+
+## 追加锚（本行以下为增补区）
+
