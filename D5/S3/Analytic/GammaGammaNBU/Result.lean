@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/GammaGammaNBU/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.Analysis.SumIntegralComparisons]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/GammaGammaNBU/Result.claim; result=D5/S3/Analytic/GammaGammaNBU/Result.result; claim=D5/S3/Analytic/GammaGammaNBU/Result.claim
-   digest: Bessel integral substitution and rational quadrature refute universal gamma-gamma NBU. -/
+   digest: Bessel integral substitution and rational quadrature refute gamma-gamma NBU. -/
 
 /-
 admission_basis: open-problem-resolution (BPV Question 8; Refuted).
@@ -12,8 +12,9 @@ escape_witness: none.
 The only public theorem is result, the exact negation of claim.
 All rows are bind-only after inlining same-delivery helpers. The analytic
 steps instantiate exponential change of variables, integral_comp_abs,
-integrable_prod_iff, integral_integral_swap, interval integral monotonicity
-and adjacent-interval additivity. Exponent comparisons are algebraic
+integrable_prod_iff, integral_integral_swap, sum_Ico_le_integral_of_le
+and integral_le_sum_Ico_of_le after scaling the grid. The upper comparison
+changes only the zero endpoint, preserving the integral. Exponent comparisons are algebraic
 normalization; exponential bounds instantiate Real.exp_bound and monotonicity
 of natural powers. Finite tables and sums use exact rational normalization.
 No row claims an escape witness. No D5 module is imported, so every row has
@@ -118,6 +119,7 @@ Per declaration: name | proof_shape | consumers | frozen dependencies.
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SumIntegralComparisons
 open MeasureTheory Set Real Filter
 open scoped Topology BigOperators
 noncomputable section
@@ -271,50 +273,64 @@ private lemma exp_upper_cert (y r : ℝ) (hy : 0≤y) (hy' : y≤32)
 
 private lemma grid_integral_lower (u h : ℝ) (hu : 0≤u) (hh : 0<h)
     (n : ℕ) (c : ℕ → ℝ)
-    (hb : ∀ k<n, ∀ s∈Ioo ((k:ℝ)*h) ((k+1:ℕ)*h), c k ≤ kernel u s) :
+    (hb : ∀ k<n, ∀ s∈Ico ((k:ℝ)*h) ((k+1:ℕ)*h), c k ≤ kernel u s) :
     h * ∑ k∈Finset.range n, c k ≤ ∫ s in (0:ℝ)..(n:ℝ)*h, kernel u s := by
-  have hint (k : ℕ) : IntervalIntegrable (kernel u) volume ((k:ℝ)*h) ((k+1:ℕ)*h) := by
-    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by push_cast; nlinarith)]
-    apply (kernel_integrable u hu).mono_set
-    intro s hs
-    have : 0≤(k:ℝ)*h := mul_nonneg (Nat.cast_nonneg _) hh.le
-    exact lt_of_le_of_lt this hs.1
-  have hsum := intervalIntegral.sum_integral_adjacent_intervals (n := n)
-    (a := fun k => (k:ℝ)*h) (fun k _ => hint k)
-  simp only [Nat.cast_zero, zero_mul] at hsum
-  rw [← hsum]
-  rw [Finset.mul_sum]
-  apply Finset.sum_le_sum
-  intro k hk
-  have he : h*c k = ∫ s in (k:ℝ)*h..((k+1:ℕ):ℝ)*h, c k := by
-    simp only [intervalIntegral.integral_const, smul_eq_mul, Nat.cast_add, Nat.cast_one]
-    ring
-  rw [he]
-  apply intervalIntegral.integral_mono_on_of_le_Ioo (by push_cast; nlinarith) (by simp) (hint k)
-  exact hb k (Finset.mem_range.mp hk)
+  have hi : IntervalIntegrable (kernel u) volume 0 ((n:ℝ)*h) := by
+    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by positivity)]
+    exact (kernel_integrable u hu).mono_set (fun s hs => hs.1)
+  have his : IntervalIntegrable (fun x => kernel u (h*x)) volume 0 (n:ℝ) := by
+    simpa [hh.ne'] using hi.comp_mul_left (c := h)
+  have hsum := sum_Ico_le_integral_of_le (a := 0) (b := n)
+    (f := fun x => c ⌊x⌋₊) (g := fun x => kernel u (h*x)) (Nat.zero_le n)
+    (by
+      intro k hk x hx
+      rw [Nat.floor_natCast]
+      apply hb k hk.2 (h*x)
+      constructor
+      · simpa [mul_comm] using mul_le_mul_of_nonneg_left hx.1 hh.le
+      · simpa [mul_comm] using mul_lt_mul_of_pos_left hx.2 hh)
+    (by simpa using (intervalIntegrable_iff_integrableOn_Ico_of_le
+      (Nat.cast_nonneg n)).mp his)
+  simp only [Nat.cast_zero, Nat.floor_natCast, Nat.Ico_zero_eq_range] at hsum
+  have hscaled := mul_le_mul_of_nonneg_left hsum hh.le
+  simpa [intervalIntegral.integral_comp_mul_left, hh.ne', smul_eq_mul,
+    mul_comm h] using hscaled
+
 private lemma grid_integral_upper (u h : ℝ) (hu : 0≤u) (hh : 0<h)
     (n : ℕ) (c : ℕ → ℝ)
-    (hb : ∀ k<n, ∀ s∈Ioo ((k:ℝ)*h) ((k+1:ℕ)*h), kernel u s ≤ c k) :
+    (hb : ∀ k<n, ∀ s∈Ico ((k:ℝ)*h) ((k+1:ℕ)*h), 0<s → kernel u s ≤ c k) :
     (∫ s in (0:ℝ)..(n:ℝ)*h, kernel u s) ≤ h * ∑ k∈Finset.range n, c k := by
-  have hint (k : ℕ) : IntervalIntegrable (kernel u) volume ((k:ℝ)*h) ((k+1:ℕ)*h) := by
-    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by push_cast; nlinarith)]
-    apply (kernel_integrable u hu).mono_set
-    intro s hs
-    have : 0≤(k:ℝ)*h := mul_nonneg (Nat.cast_nonneg _) hh.le
-    exact lt_of_le_of_lt this hs.1
-  have hsum := intervalIntegral.sum_integral_adjacent_intervals (n := n)
-    (a := fun k => (k:ℝ)*h) (fun k _ => hint k)
-  simp only [Nat.cast_zero, zero_mul] at hsum
-  rw [← hsum]
-  rw [Finset.mul_sum]
-  apply Finset.sum_le_sum
-  intro k hk
-  have he : h*c k = ∫ s in (k:ℝ)*h..((k+1:ℕ):ℝ)*h, c k := by
-    simp only [intervalIntegral.integral_const, smul_eq_mul, Nat.cast_add, Nat.cast_one]
-    ring
-  rw [he]
-  apply intervalIntegral.integral_mono_on_of_le_Ioo (by push_cast; nlinarith) (hint k) (by simp)
-  exact hb k (Finset.mem_range.mp hk)
+  let g (x : ℝ) := if x=0 then c 0 else kernel u (h*x)
+  have hi : IntervalIntegrable (kernel u) volume 0 ((n:ℝ)*h) := by
+    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (by positivity)]
+    exact (kernel_integrable u hu).mono_set (fun s hs => hs.1)
+  have his : IntervalIntegrable (fun x => kernel u (h*x)) volume 0 (n:ℝ) := by
+    simpa [hh.ne'] using hi.comp_mul_left (c := h)
+  have heq : EqOn (fun x => kernel u (h*x)) g (uIoo 0 (n:ℝ)) := by
+    rw [uIoo_of_le (Nat.cast_nonneg n)]
+    intro x hx
+    simp [g, ne_of_gt hx.1]
+  have hsum := integral_le_sum_Ico_of_le (a := 0) (b := n)
+    (f := fun x => c ⌊x⌋₊) (g := g) (Nat.zero_le n)
+    (by
+      intro k hk x hx
+      rw [Nat.floor_natCast]
+      by_cases hx0 : x=0
+      · have hk0 : k=0 := by simpa [hx0] using hx.1
+        simp [g, hx0, hk0]
+      · have hxpos : 0<x := lt_of_le_of_ne ((Nat.cast_nonneg k).trans hx.1) (Ne.symm hx0)
+        simp only [g, ite_eq_right hx0]
+        apply hb k hk.2 (h*x) ?_ (mul_pos hh hxpos)
+        constructor
+        · simpa [mul_comm] using mul_le_mul_of_nonneg_left hx.1 hh.le
+        · simpa [mul_comm] using mul_lt_mul_of_pos_left hx.2 hh)
+    (by simpa using (intervalIntegrable_iff_integrableOn_Ico_of_le
+      (Nat.cast_nonneg n)).mp (his.congr_uIoo heq))
+  simp only [Nat.cast_zero, Nat.floor_natCast, Nat.Ico_zero_eq_range] at hsum
+  rw [← intervalIntegral.integral_congr_uIoo heq] at hsum
+  have hscaled := mul_le_mul_of_nonneg_left hsum hh.le
+  simpa [intervalIntegral.integral_comp_mul_left, hh.ne', smul_eq_mul,
+    mul_comm h] using hscaled
 
 private def lowerData (k : ℕ) : ℝ :=
   (if k < 100 then (if k < 50 then (if k < 25 then (if k < 12 then (if k < 6 then (if k < 3 then (if k < 1 then 0/1000000 else (if k < 2 then 0/1000000 else 3/1000000)) else (if k < 4 then 213/1000000 else (if k < 5 then 1645/1000000 else 5516/1000000))) else (if k < 9 then (if k < 7 then 12195/1000000 else (if k < 8 then 21249/1000000 else 31904/1000000)) else (if k < 10 then 43379/1000000 else (if k < 11 then 55023/1000000 else 66355/1000000)))) else (if k < 18 then (if k < 15 then (if k < 13 then 77047/1000000 else (if k < 14 then 86893/1000000 else 95778/1000000)) else (if k < 16 then 103657/1000000 else (if k < 17 then 110526/1000000 else 116415/1000000))) else (if k < 21 then (if k < 19 then 121372/1000000 else (if k < 20 then 125457/1000000 else 128734/1000000)) else (if k < 23 then (if k < 22 then 131272/1000000 else 133138/1000000) else (if k < 24 then 134397/1000000 else 135109/1000000))))) else (if k < 37 then (if k < 31 then (if k < 28 then (if k < 26 then 135127/1000000 else (if k < 27 then 134535/1000000 else 133606/1000000)) else (if k < 29 then 132381/1000000 else (if k < 30 then 130898/1000000 else 129192/1000000))) else (if k < 34 then (if k < 32 then 127294/1000000 else (if k < 33 then 125233/1000000 else 123034/1000000)) else (if k < 35 then 120719/1000000 else (if k < 36 then 118310/1000000 else 115824/1000000)))) else (if k < 43 then (if k < 40 then (if k < 38 then 113279/1000000 else (if k < 39 then 110689/1000000 else 108067/1000000)) else (if k < 41 then 105424/1000000 else (if k < 42 then 102772/1000000 else 100119/1000000))) else (if k < 46 then (if k < 44 then 97472/1000000 else (if k < 45 then 94840/1000000 else 92229/1000000)) else (if k < 48 then (if k < 47 then 89643/1000000 else 87088/1000000) else (if k < 49 then 84567/1000000 else 82084/1000000)))))) else (if k < 75 then (if k < 62 then (if k < 56 then (if k < 53 then (if k < 51 then 79643/1000000 else (if k < 52 then 77245/1000000 else 74892/1000000)) else (if k < 54 then 72587/1000000 else (if k < 55 then 70330/1000000 else 68123/1000000))) else (if k < 59 then (if k < 57 then 65967/1000000 else (if k < 58 then 63861/1000000 else 61807/1000000)) else (if k < 60 then 59804/1000000 else (if k < 61 then 57853/1000000 else 55953/1000000)))) else (if k < 68 then (if k < 65 then (if k < 63 then 54105/1000000 else (if k < 64 then 52307/1000000 else 50558/1000000)) else (if k < 66 then 48860/1000000 else (if k < 67 then 47210/1000000 else 45609/1000000))) else (if k < 71 then (if k < 69 then 44054/1000000 else (if k < 70 then 42547/1000000 else 41084/1000000)) else (if k < 73 then (if k < 72 then 39667/1000000 else 38293/1000000) else (if k < 74 then 36962/1000000 else 35673/1000000))))) else (if k < 87 then (if k < 81 then (if k < 78 then (if k < 76 then 34425/1000000 else (if k < 77 then 33217/1000000 else 32048/1000000)) else (if k < 79 then 30916/1000000 else (if k < 80 then 29822/1000000 else 28763/1000000))) else (if k < 84 then (if k < 82 then 27740/1000000 else (if k < 83 then 26750/1000000 else 25793/1000000)) else (if k < 85 then 24869/1000000 else (if k < 86 then 23976/1000000 else 23113/1000000)))) else (if k < 93 then (if k < 90 then (if k < 88 then 22279/1000000 else (if k < 89 then 21474/1000000 else 20696/1000000)) else (if k < 91 then 19946/1000000 else (if k < 92 then 19221/1000000 else 18521/1000000))) else (if k < 96 then (if k < 94 then 17846/1000000 else (if k < 95 then 17194/1000000 else 16565/1000000)) else (if k < 98 then (if k < 97 then 15958/1000000 else 15373/1000000) else (if k < 99 then 14808/1000000 else 14264/1000000))))))) else (if k < 150 then (if k < 125 then (if k < 112 then (if k < 106 then (if k < 103 then (if k < 101 then 13738/1000000 else (if k < 102 then 13232/1000000 else 12743/1000000)) else (if k < 104 then 12272/1000000 else (if k < 105 then 11818/1000000 else 11380/1000000))) else (if k < 109 then (if k < 107 then 10958/1000000 else (if k < 108 then 10551/1000000 else 10159/1000000)) else (if k < 110 then 9781/1000000 else (if k < 111 then 9417/1000000 else 9066/1000000)))) else (if k < 118 then (if k < 115 then (if k < 113 then 8727/1000000 else (if k < 114 then 8401/1000000 else 8087/1000000)) else (if k < 116 then 7785/1000000 else (if k < 117 then 7493/1000000 else 7213/1000000))) else (if k < 121 then (if k < 119 then 6942/1000000 else (if k < 120 then 6682/1000000 else 6431/1000000)) else (if k < 123 then (if k < 122 then 6189/1000000 else 5956/1000000) else (if k < 124 then 5732/1000000 else 5516/1000000))))) else (if k < 137 then (if k < 131 then (if k < 128 then (if k < 126 then 5308/1000000 else (if k < 127 then 5108/1000000 else 4915/1000000)) else (if k < 129 then 4730/1000000 else (if k < 130 then 4551/1000000 else 4379/1000000))) else (if k < 134 then (if k < 132 then 4213/1000000 else (if k < 133 then 4054/1000000 else 3900/1000000)) else (if k < 135 then 3753/1000000 else (if k < 136 then 3610/1000000 else 3473/1000000)))) else (if k < 143 then (if k < 140 then (if k < 138 then 3342/1000000 else (if k < 139 then 3215/1000000 else 3093/1000000)) else (if k < 141 then 2975/1000000 else (if k < 142 then 2862/1000000 else 2753/1000000))) else (if k < 146 then (if k < 144 then 2648/1000000 else (if k < 145 then 2548/1000000 else 2451/1000000)) else (if k < 148 then (if k < 147 then 2357/1000000 else 2267/1000000) else (if k < 149 then 2181/1000000 else 2098/1000000)))))) else (if k < 175 then (if k < 162 then (if k < 156 then (if k < 153 then (if k < 151 then 2018/1000000 else (if k < 152 then 1941/1000000 else 1867/1000000)) else (if k < 154 then 1795/1000000 else (if k < 155 then 1727/1000000 else 1661/1000000))) else (if k < 159 then (if k < 157 then 1597/1000000 else (if k < 158 then 1536/1000000 else 1477/1000000)) else (if k < 160 then 1421/1000000 else (if k < 161 then 1366/1000000 else 1314/1000000)))) else (if k < 168 then (if k < 165 then (if k < 163 then 1264/1000000 else (if k < 164 then 1215/1000000 else 1169/1000000)) else (if k < 166 then 1124/1000000 else (if k < 167 then 1081/1000000 else 1039/1000000))) else (if k < 171 then (if k < 169 then 999/1000000 else (if k < 170 then 961/1000000 else 924/1000000)) else (if k < 173 then (if k < 172 then 889/1000000 else 854/1000000) else (if k < 174 then 822/1000000 else 790/1000000))))) else (if k < 187 then (if k < 181 then (if k < 178 then (if k < 176 then 760/1000000 else (if k < 177 then 730/1000000 else 702/1000000)) else (if k < 179 then 675/1000000 else (if k < 180 then 649/1000000 else 624/1000000))) else (if k < 184 then (if k < 182 then 600/1000000 else (if k < 183 then 577/1000000 else 555/1000000)) else (if k < 185 then 533/1000000 else (if k < 186 then 513/1000000 else 493/1000000)))) else (if k < 193 then (if k < 190 then (if k < 188 then 474/1000000 else (if k < 189 then 456/1000000 else 438/1000000)) else (if k < 191 then 421/1000000 else (if k < 192 then 405/1000000 else 389/1000000))) else (if k < 196 then (if k < 194 then 374/1000000 else (if k < 195 then 360/1000000 else 346/1000000)) else (if k < 198 then (if k < 197 then 333/1000000 else 320/1000000) else (if k < 199 then 307/1000000 else 296/1000000))))))))
@@ -676,12 +692,12 @@ private lemma peak_upper (s : ℝ) (hs : 0<s) : kernel (1/2) s ≤ 1/4 := by
   nlinarith
 
 private lemma lower_cell (k : ℕ) (hk : k<200) (s : ℝ)
-    (hs : s∈Ioo ((k:ℝ)/25) (((k:ℝ)+1)/25)) : lowerData k ≤ kernel 1 s := by
+    (hs : s∈Ico ((k:ℝ)/25) (((k:ℝ)+1)/25)) : lowerData k ≤ kernel 1 s := by
   by_cases hk0 : k=0
   · subst k; norm_num [lowerData]; exact (exp_pos _).le
   have hp : 0<(k:ℝ)/25 := by exact div_pos (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hk0)) (by norm_num)
   apply (lower_certificate k hk hk0).trans
-  apply le_trans _ (kernel_lower 1 ((k:ℝ)/25) (((k:ℝ)+1)/25) s hp ⟨hs.1.le, hs.2.le⟩)
+  apply le_trans _ (kernel_lower 1 ((k:ℝ)/25) (((k:ℝ)+1)/25) s hp ⟨hs.1, hs.2.le⟩)
   apply le_min
   · apply exp_le_exp.mpr
     have := le_max_left ((k:ℝ)/25+1/((k:ℝ)/25)) (((k:ℝ)+1)/25+1/(((k:ℝ)+1)/25))
@@ -692,9 +708,8 @@ private lemma lower_cell (k : ℕ) (hk : k<200) (s : ℝ)
     dsimp [lowerY, kernel]
     linarith
 
-private lemma upper_cell (k : ℕ) (hk : k<96) (s : ℝ)
-    (hs : s∈Ioo ((k:ℝ)/12) (((k:ℝ)+1)/12)) : kernel (1/2) s ≤ upperData k := by
-  have hs0 : 0<s := lt_of_le_of_lt (by positivity) hs.1
+private lemma upper_cell (k : ℕ) (hk : k<96) (s : ℝ) (hs0 : 0<s)
+    (hs : s∈Ico ((k:ℝ)/12) (((k:ℝ)+1)/12)) : kernel (1/2) s ≤ upperData k := by
   by_cases hk8 : k=8
   · subst k
     convert peak_upper s hs0 using 1; norm_num [upperData]
@@ -717,8 +732,8 @@ private lemma upper_cell (k : ℕ) (hk : k<96) (s : ℝ)
     have hp : (1/2:ℝ)≤((k:ℝ)/12)^2 := by
       have : 9≤(k:ℝ) := by exact Nat.ofNat_le_cast.mpr hk9
       nlinarith [sq_nonneg ((k:ℝ)-9)]
-    have h := kernel_dec (1/2) ((k:ℝ)/12) s ha hs.1.le
-      (hp.trans (by nlinarith [mul_nonneg (sub_nonneg.mpr hs.1.le) ha.le]))
+    have h := kernel_dec (1/2) ((k:ℝ)/12) s ha hs.1
+      (hp.trans (by nlinarith [mul_nonneg (sub_nonneg.mpr hs.1) ha.le]))
     convert h using 1
     simp only [upperY, ite_eq_right hk7, kernel]
     congr 1
@@ -842,7 +857,7 @@ private lemma witness_lower : (2731/10000:ℝ) ≤ survival 1 1 1 1 := by
 private lemma witness_upper : survival 1 1 1 (1/2) ≤ (467/1000:ℝ) := by
   rw [survival_mix (1/2) (by norm_num)]
   have h := grid_integral_upper (1/2) (1/12) (by norm_num) (by norm_num) 96 upperData
-    (by intro k hk s hs; apply upper_cell k hk s; simpa [div_eq_mul_inv, Nat.cast_add, Nat.cast_one] using hs)
+    (by intro k hk s hs hs0; apply upper_cell k hk s hs0; simpa [div_eq_mul_inv, Nat.cast_add, Nat.cast_one] using hs)
   have hn : (1/12)*∑ k∈Finset.range 96, upperData k ≤ (466/1000:ℝ) := by
     norm_num [Finset.sum_range_succ, upperData]
   have ht : (∫ s in Ioi (8:ℝ), kernel (1/2) s) ≤ (1/1000:ℝ) := by

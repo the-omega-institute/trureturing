@@ -103,11 +103,13 @@ the formal refutation.
 The theorem uses the exact density and survival definitions above.
 
 The immutable
-[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/bc1ad98b5325b120d4de45cc8f6e90c53ecd9fcf/experiments/baricz-ponnusamy-vuorinen-gamma-gamma-nbu)
+[experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/7156ef78bc18146678361a7a461b4f9351e79c5a/experiments/baricz-ponnusamy-vuorinen-gamma-gamma-nbu)
 contains the following independent numerical checks.
 
 - **COMPUTED.** `python3 gg-cert.py`, exit 0; SHA-256
-  `17f76d12ae5c71f41897d09111c62dc9cdd9f34cfd9320d7a28da85fbfd9f201`.
+  `0decfbf57b0ba234cffabbaf925a551a2f224080d0533407a05c650287e3059d`.
+  The script checks its $e^{-1}$ enclosure against the alternating Taylor
+  sums $S_{23}\le e^{-1}\le S_{22}$.
   Outward-rounded rational quadrature at $a=b=\alpha=1$ gives
   $S(1)\in[0.273125\ldots,0.303005\ldots]$ and
   $S(1/2)\in[0.432959\ldots,0.467563\ldots]$ and verifies the strict

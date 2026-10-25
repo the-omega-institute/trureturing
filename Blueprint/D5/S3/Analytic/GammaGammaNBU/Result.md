@@ -234,7 +234,7 @@ A rational upper endpoint above the upper Taylor power also bounds the exponenti
 
 **Theorem 1.20 (grid integral lower).**
 
-$$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname {Real}\left(\right),\; (0 \le u) \Rightarrow ((0 < h) \Rightarrow (\forall n \in \operatorname {Nat}\left(\right),\; \forall c \in \operatorname {Nat}\left(\right) \to \operatorname {Real}\left(\right),\; (\forall k \in \operatorname {Nat}\left(\right),\; (k < n) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ioo}\left((k) \cdot (h), ((k) + (1)) \cdot (h)\right)) \Rightarrow (c\left(k\right) \le \operatorname {kernel}\left(u, s\right)))) \Rightarrow ((h) \cdot (\operatorname {Finset.sum}\left(\operatorname {Finset.range}\left(n\right), \lambda k: \operatorname {Nat}\left(\right), c\left(k\right)\right)) \le \operatorname {intervalIntegral}\left(\lambda s: \operatorname {Real}\left(\right), \operatorname {kernel}\left(u, s\right), 0, (n) \cdot (h), \operatorname {MeasureTheory.volume}\left(\right)\right))))$$
+$$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname {Real}\left(\right),\; (0 \le u) \Rightarrow ((0 < h) \Rightarrow (\forall n \in \operatorname {Nat}\left(\right),\; \forall c \in \operatorname {Nat}\left(\right) \to \operatorname {Real}\left(\right),\; (\forall k \in \operatorname {Nat}\left(\right),\; (k < n) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ico}\left((k) \cdot (h), ((k) + (1)) \cdot (h)\right)) \Rightarrow (c\left(k\right) \le \operatorname {kernel}\left(u, s\right)))) \Rightarrow ((h) \cdot (\operatorname {Finset.sum}\left(\operatorname {Finset.range}\left(n\right), \lambda k: \operatorname {Nat}\left(\right), c\left(k\right)\right)) \le \operatorname {intervalIntegral}\left(\lambda s: \operatorname {Real}\left(\right), \operatorname {kernel}\left(u, s\right), 0, (n) \cdot (h), \operatorname {MeasureTheory.volume}\left(\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GammaGammaNBU/Result.grid_integral_lower` (`✓ std3`). ∎
 
@@ -242,11 +242,11 @@ $$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname
 
 *Commentary.*
 
-The sum of adjacent interval integrals equals the integral over the entire grid. Integrability follows by restriction of kernel_integrable; integral_mono_on_of_le_Ioo compares each cell with its constant rectangle. Natural grid indices are coerced to real numbers in products with h.
+After s=h x, sum_Ico_le_integral_of_le compares the lower rectangles with the integral. IntervalIntegrable.comp_mul_left transfers kernel_integrable to the rescaled interval; integral_comp_mul_left returns the original scale. The lower bounds include the left endpoints of the cells.
 
 **Theorem 1.21 (grid integral upper).**
 
-$$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname {Real}\left(\right),\; (0 \le u) \Rightarrow ((0 < h) \Rightarrow (\forall n \in \operatorname {Nat}\left(\right),\; \forall c \in \operatorname {Nat}\left(\right) \to \operatorname {Real}\left(\right),\; (\forall k \in \operatorname {Nat}\left(\right),\; (k < n) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ioo}\left((k) \cdot (h), ((k) + (1)) \cdot (h)\right)) \Rightarrow (\operatorname {kernel}\left(u, s\right) \le c\left(k\right)))) \Rightarrow (\operatorname {intervalIntegral}\left(\lambda s: \operatorname {Real}\left(\right), \operatorname {kernel}\left(u, s\right), 0, (n) \cdot (h), \operatorname {MeasureTheory.volume}\left(\right)\right) \le (h) \cdot (\operatorname {Finset.sum}\left(\operatorname {Finset.range}\left(n\right), \lambda k: \operatorname {Nat}\left(\right), c\left(k\right)\right)))))$$
+$$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname {Real}\left(\right),\; (0 \le u) \Rightarrow ((0 < h) \Rightarrow (\forall n \in \operatorname {Nat}\left(\right),\; \forall c \in \operatorname {Nat}\left(\right) \to \operatorname {Real}\left(\right),\; (\forall k \in \operatorname {Nat}\left(\right),\; (k < n) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ico}\left((k) \cdot (h), ((k) + (1)) \cdot (h)\right)) \Rightarrow ((0 < s) \Rightarrow (\operatorname {kernel}\left(u, s\right) \le c\left(k\right))))) \Rightarrow (\operatorname {intervalIntegral}\left(\lambda s: \operatorname {Real}\left(\right), \operatorname {kernel}\left(u, s\right), 0, (n) \cdot (h), \operatorname {MeasureTheory.volume}\left(\right)\right) \le (h) \cdot (\operatorname {Finset.sum}\left(\operatorname {Finset.range}\left(n\right), \lambda k: \operatorname {Nat}\left(\right), c\left(k\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GammaGammaNBU/Result.grid_integral_upper` (`✓ std3`). ∎
 
@@ -254,7 +254,7 @@ $$\forall u \in \operatorname {Real}\left(\right),\; \forall h \in \operatorname
 
 *Commentary.*
 
-The sum of adjacent interval integrals equals the integral over the entire grid. Integrability follows by restriction of kernel_integrable; integral_mono_on_of_le_Ioo compares each cell with its constant rectangle. Natural grid indices are coerced to real numbers in products with h.
+After s=h x, integral_le_sum_Ico_of_le compares the integral with the upper rectangles. At x=0 the rescaled integrand is assigned c(0), since kernel(u,0)=1 need not satisfy the first rectangle bound. It equals the original integrand on the open interval, so integral_congr_uIoo preserves its integral and IntervalIntegrable.congr_uIoo preserves integrability. Positive left endpoints satisfy the cell bounds; integral_comp_mul_left returns the original scale.
 
 **Definition 1.22 (lowerData).**
 
@@ -786,7 +786,7 @@ The square inequality (s−7/10)²≥0 gives s+(1/2)/s≥7/5. The rational Taylo
 
 **Theorem 1.66 (lower cell).**
 
-$$\forall k \in \operatorname {Nat}\left(\right),\; (k < 200) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ioo}\left(\frac{k}{25}, \frac{(k) + (1)}{25}\right)) \Rightarrow (\operatorname {lowerData}\left(k\right) \le \operatorname {kernel}\left(1, s\right)))$$
+$$\forall k \in \operatorname {Nat}\left(\right),\; (k < 200) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ico}\left(\frac{k}{25}, \frac{(k) + (1)}{25}\right)) \Rightarrow (\operatorname {lowerData}\left(k\right) \le \operatorname {kernel}\left(1, s\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GammaGammaNBU/Result.lower_cell` (`✓ std3`). ∎
 
@@ -794,11 +794,11 @@ $$\forall k \in \operatorname {Nat}\left(\right),\; (k < 200) \Rightarrow (\fora
 
 *Commentary.*
 
-Endpoint exponential bounds and monotonicity give this bound throughout each open cell. The first lower cell uses zero; the upper cell containing √(1/2) uses the peak bound 1/4.
+Endpoint exponential bounds and monotonicity give this lower bound throughout each left-closed, right-open cell. The first lower cell has height zero, which also bounds the value at s=0.
 
 **Theorem 1.67 (upper cell).**
 
-$$\forall k \in \operatorname {Nat}\left(\right),\; (k < 96) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (s \in \operatorname {Set.Ioo}\left(\frac{k}{12}, \frac{(k) + (1)}{12}\right)) \Rightarrow (\operatorname {kernel}\left(\frac{1}{2}, s\right) \le \operatorname {upperData}\left(k\right)))$$
+$$\forall k \in \operatorname {Nat}\left(\right),\; (k < 96) \Rightarrow (\forall s \in \operatorname {Real}\left(\right),\; (0 < s) \Rightarrow ((s \in \operatorname {Set.Ico}\left(\frac{k}{12}, \frac{(k) + (1)}{12}\right)) \Rightarrow (\operatorname {kernel}\left(\frac{1}{2}, s\right) \le \operatorname {upperData}\left(k\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GammaGammaNBU/Result.upper_cell` (`✓ std3`). ∎
 
@@ -806,7 +806,7 @@ $$\forall k \in \operatorname {Nat}\left(\right),\; (k < 96) \Rightarrow (\foral
 
 *Commentary.*
 
-Endpoint exponential bounds and monotonicity give this bound throughout each open cell. The first lower cell uses zero; the upper cell containing √(1/2) uses the peak bound 1/4.
+Endpoint exponential bounds and monotonicity give this upper bound at every positive point of each left-closed, right-open cell. The cell containing √(1/2) uses the peak bound 1/4. The value at s=0 is excluded and is handled by the integral endpoint replacement.
 
 **Theorem 1.68 (lowerSum0).**
 
