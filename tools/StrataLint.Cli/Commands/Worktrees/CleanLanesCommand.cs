@@ -290,7 +290,7 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var reason = LockAgeBlockReason(item, now);
+            var reason = LockBlockReason(repositoryRoot, item, runner);
             if (reason is not null)
             {
                 events.Add(BlockedWorktree(item, reason));
