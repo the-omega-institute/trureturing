@@ -438,7 +438,7 @@ def main(argv=None):
     joined.add_argument("--base", required=True)
     returned = commands.add_parser("return")
     returned.add_argument("--path", type=Path, default=Path.cwd())
-    returned.add_argument("--pr", type=int, required=True)
+    returned.add_argument("--pr", type=int)
     returned.add_argument("--writers-joined", action="store_true")
     claimed = commands.add_parser("claim")
     claimed.add_argument("--path", type=Path)
