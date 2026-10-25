@@ -1,0 +1,84 @@
+**Definition 1.3 (compatible intervals and diameter constants).** For
+$(u,v)\in\mathcal P$ and any real history $r=(r_0,r_u,r_v)$, set
+
+$$
+C_{uv}(r)=\left\{t\in K:\exists A\ge m,\ B\in\mathbb R,
+       \ |r_i-A(i+t)^2-B|\le\varepsilon\quad(i=0,u,v)\right\}.
+\tag{1.6}
+$$
+
+Every witness of membership has finite gain and offset; its unread
+error may be fixed to zero to give a complete world. Conversely,
+projection of the complete error cube gives exactly the three
+constraints in (1.6). Every nonempty $C_{uv}(r)$ is a compact interval,
+by the exact positive-denominator change of variables in
+[Three-Index Design, Theorem 3.1](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md):
+
+$$
+\lambda=1/A,\qquad \xi=2t,\qquad
+\omega_0=(At^2+B)/A,
+\qquad
+\begin{cases}
+0\le\lambda\le1/m,\\
+2a\le\xi\le2b,\\
+|\lambda r_i-i^2-\xi i-\omega_0|\le\varepsilon\lambda
+                                      &(i=0,u,v).
+\end{cases}
+\tag{1.7}
+$$
+
+This is an exact joint feasible set; it is not a box of independent
+difference errors. The symbol $\omega_0$ in (1.7) is a real nuisance
+coordinate, unrelated to the private seed $\omega$. The compactness
+and midpoint suppliers originate in
+[Self-Calibrating Relation Mathematics II, Theorem 80.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
+For $E=0$ compactness is immediate from $C_{uv}(r)\subseteq\{z\}$.
+
+Put
+
+$$
+\begin{gathered}
+P=\frac{c(1+2E)}{3+2c},\qquad
+Q=\frac{cE}{1+c},\qquad
+G=\frac{c(1+E)}{3+c},\\
+F=\min\{2E,\max(c/3,P,Q,G)\},\qquad
+H=\min\{2E,\max(c/3,G,Q)\},\qquad
+D_0=\min(2E,c/3).
+\end{gathered}
+\tag{1.8}
+$$
+
+Thus $0\le D_0\le H\le F<\infty$. The reused fixed-design
+diameters are $F$ for both $013$ and $023$, and $H$ for the full
+grid $0123$, by Three-Index Design, Theorems 3.1 and 18.2.
+Here and below $013$ abbreviates the acquired set $\{0,1,3\}$,
+and similarly for the other paths. The letter $H$ in (1.8) is a
+diameter, not a time-domain endpoint or a prefix-conditioned function
+from Uniform Report Designs.
+
+The original separation supplier is Three-Index Design, Theorem 2.1.
+Its fixed-pair counterpart is the repository declaration
+`QuadraticThreeIndexSeparation.quadratic_three_index_separation`
+in [QuadraticThreeIndexSeparation.lean](../../../D5/S3/Observer/MetricGeometry/QuadraticThreeIndexSeparation.lean).
+The private helpers `coordinate_bounds`, `right_lower`, `lower`,
+`center_le`, `centered_upper`, `centered_minimal`, `value_right`,
+`value_reflected`, `reflected_norm`, `upper_right_near`,
+`upper_right_far`, and the `attain_*` lemmas concern that fixed-pair
+separation and its finite attaining calibrations. They do not state
+the simultaneous origin-conditioned decision guarantee below.
+
+The bounded-error feasible-set correspondence is the classical one of
+Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf):
+the regression vector is $(i^2,i,1)$, the coefficient vector is
+$(A,2A\tau,A\tau^2+B)$, and the additive error bound is
+$\delta=\varepsilon$. Their feasible set is an intersection of
+regression strips. Their coordinate linear programs yield bounding
+orthotopes; such outer orthotopes do not replace this problem's
+joint feasible set or its nonlinear origin target. This classical
+method and the cited repository suppliers are intermediate ingredients;
+the new deductions are the origin-conditioned reconstruction,
+same-world expected bounds and attained family risk in Sections 2--4.
+These deductions are repo-derived ordinary mathematical proofs, with
+no assertion of global priority or of an exhaustive literature search.
+
