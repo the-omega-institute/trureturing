@@ -194,9 +194,52 @@ private theorem project_W5 :
       fun t => (1 / Real.sqrt 5) * basisState branchWord t := by
   sorry
 
+set_option maxHeartbeats 800000 in
+private theorem I42_branch :
+    I 5 4 2 (basisState branchWord) = basisState branchWord := by
+  funext t
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [ht]
+  generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
+    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
+      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
+      funext_iff, Fin.forall_fin_succ]
+
+set_option maxHeartbeats 800000 in
+private theorem I43_branch :
+    I 5 4 3 (basisState branchWord) = basisState branchWord := by
+  funext t
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [ht]
+  generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
+    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
+      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
+      funext_iff, Fin.forall_fin_succ]
+
+set_option maxHeartbeats 800000 in
+private theorem II431_branch :
+    II 5 4 3 1 (basisState branchWord) = basisState branchWord := by
+  funext t
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
+    ext i
+    fin_cases i <;> rfl
+  rw [ht]
+  generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e <;>
+    norm_num [I, V, II, controlledX, controlledR, controlsHold, wire, put,
+      basisState, branchWord, Equiv.swap_apply_def, Function.update_apply,
+      funext_iff, Fin.forall_fin_succ]
+
 private theorem W4_branch :
     prunedW 5 4 witnessOccupation (basisState branchWord) = basisState branchWord := by
-  sorry
+  change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (basisState branchWord))) = basisState branchWord
+  rw [I42_branch, I43_branch, II431_branch]
 
 private theorem project_W4 (f : State 5) :
     project 0 0 (prunedW 5 4 witnessOccupation f) =
