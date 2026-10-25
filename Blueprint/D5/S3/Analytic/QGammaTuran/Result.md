@@ -73,3 +73,4 @@ The conclusion concerns the coefficient clause. The function-positivity and para
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.result`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.rqgamma`
 - Dependency: [D5/S3/Analytic/ReciprocalGammaTuran/Defs](../ReciprocalGammaTuran/Defs.md)
+- Dependency: [D5/S3/Factorization/JordanCototientRecordLimitInfinity](../../Factorization/JordanCototientRecordLimitInfinity.md)

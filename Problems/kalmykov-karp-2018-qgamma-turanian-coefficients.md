@@ -143,10 +143,6 @@ The following readings concern the scripts at that revision.
   occur at $(t,\mu,m)=(0.7,-0.7,2)$ and the positive minimum at
   $(0.05,-0.05,4)$. These are finite numerical observations.
 
-The refutation route was derived by the Claude Code orchestrator
-(Claude Opus 5.5); the Lean implementation is due to the codex-cli
-implementation seat.
-
 The supplied literature scope comprises the cited-by works recorded for
 OpenAlex W2603745271: arXiv:1808.05105 cites the source but supplies no
 settlement of Conjecture 1; the 2019 journal version adds no settlement

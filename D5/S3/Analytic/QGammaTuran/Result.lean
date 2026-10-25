@@ -9,37 +9,43 @@
 /-
 admission_basis: open-problem-resolution (Conjecture 1, coefficient clause; Refuted).
 Per-declaration judgment (generated constant dependencies, same-delivery helpers inlined):
-* rqgamma: proof_shape: bind-only (definition); consumers: qturanCoeff, result.
-* qturanCoeff: proof_shape: bind-only (definition); consumers: claim, result.
-* qprod: proof_shape: bind-only (definition); consumer: result.
-* checkLower: proof_shape: bind-only (definition); consumers: instDecidableCheckLower, result.
-* instDecidableCheckLower: proof_shape: bind-only (definition); consumer: result.
-* checkUpper: proof_shape: bind-only (definition); consumers: instDecidableCheckUpper, result.
-* instDecidableCheckUpper: proof_shape: bind-only (definition); consumer: result.
-* lower3: proof_shape: bind-only (definition); consumer: result.
-* lower7: proof_shape: bind-only (definition); consumer: result.
-* upperQ: proof_shape: bind-only (definition); consumer: result.
-* r: proof_shape: bind-only (definition); consumers: q, result.
-* q: proof_shape: bind-only (definition); consumers: bracket, result.
-* bracket: proof_shape: bind-only (definition); consumer: result.
+* rqgamma: proof_shape: bind-only (definition); escape_witness: none; consumers: qturanCoeff, result.
+* qturanCoeff: proof_shape: bind-only (definition); escape_witness: none; consumers: claim, result.
+* qprod: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* checkLower: proof_shape: bind-only (definition); escape_witness: none; consumers: instDecidableCheckLower, result.
+* instDecidableCheckLower: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* checkUpper: proof_shape: bind-only (definition); escape_witness: none; consumers: instDecidableCheckUpper, result.
+* instDecidableCheckUpper: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* lower3: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* lower7: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* upperQ: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
+* r: proof_shape: bind-only (definition); escape_witness: none; consumers: q, result.
+* q: proof_shape: bind-only (definition); escape_witness: none; consumers: bracket, result.
+* bracket: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
   Direct frozen D5 dependencies of all preceding declarations: none.
-* claim: proof_shape: bind-only (definition); consumer: result.
+* claim: proof_shape: bind-only (definition); escape_witness: none; consumer: result.
   Direct frozen D5 dependency:
   GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq
   declaration statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
-* result: proof_shape: content; consumer: the coefficient clause's refutation.
+* result: proof_shape: content; escape_witness: result (lowerSound/upperSound rounded-state product enclosures); consumer: the coefficient clause's refutation.
   Direct frozen D5 dependencies:
   GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq
   declaration statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347;
   GID D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one
-  declaration statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
+  declaration statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069;
+  GID D5/S3/Factorization/JordanCototientRecordLimitInfinity.one_sub_prod_le_sum
+  declaration statement_id sha256:2ae9c4b59c9a8107bcc321a08d511c7f7b3dbfd7742469936401e2f244f3e6bd.
 The local lowerSound and upperSound inductions establish rounded-state product
 invariants. The remaining product bounds, recurrences and coefficient reduction
-are local to result and reuse Mathlib inequalities. No escape witness is claimed;
-the module's admission basis is the external problem's settling result.
+reuse frozen and Mathlib inequalities. The escape witness is the lowerSound/upperSound
+rounded-state product induction, used by qprod_numeric and witness_negative to
+establish strict negativity. Instantiation and normalization of upstream facts
+do not supply these certificate-state invariants or their numerical enclosures;
+they remain a genuine estimate on the proof path after the upstream-only bypass.
 -/
 
 import D5.S3.Analytic.ReciprocalGammaTuran.Defs
+import D5.S3.Factorization.JordanCototientRecordLimitInfinity
 import Mathlib.Analysis.SpecialFunctions.Log.Summable
 
 noncomputable section
@@ -302,9 +308,8 @@ theorem result : ¬ claim := by
 
   have qprod_nonneg {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
       (ha0 : 0 ≤ a) (ha1 : a ≤ 1) : 0 ≤ qprod q a := by
-    apply ge_of_tendsto' (qprod_multipliable hq0 hq1 a).hasProd.tendsto_prod_nat
-    intro n
-    exact Finset.prod_nonneg fun i _ => sub_nonneg.mpr
+    unfold qprod
+    exact tprod_nonneg fun i => sub_nonneg.mpr
       (by nlinarith [pow_le_one₀ hq0 hq1.le (n := i)] : a*q^i ≤ 1)
 
   have qprod_ne_zero {q a : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
@@ -336,14 +341,11 @@ theorem result : ¬ claim := by
     have hp := (qprod_multipliable hq0 hq1 a).hasProd.tendsto_prod_nat
     have hsum := hs.hasSum.tendsto_sum_nat
     have hfinite (n : ℕ) : 1 - ∑ i ∈ Finset.range n, a*q^i ≤ ∏ i ∈ Finset.range n, (1-a*q^i) := by
-      rw [Finset.prod_one_sub_ordered]
-      apply sub_le_sub_left
-      apply Finset.sum_le_sum
-      intro i hi
-      apply mul_le_of_le_one_right (mul_nonneg ha0 (pow_nonneg hq0 _))
-      exact Finset.prod_le_one₀
-        (fun j _ => sub_nonneg.mpr (by nlinarith [pow_le_one₀ hq0 hq1.le (n := j)]))
-        (fun j _ => sub_le_self _ (mul_nonneg ha0 (pow_nonneg hq0 _)))
+      have h := D5.S3.Factorization.JordanCototientRecordLimitInfinity.one_sub_prod_le_sum
+        (Finset.range n) (fun i => a*q^i)
+        (fun i _ => mul_nonneg ha0 (pow_nonneg hq0 i))
+        (fun i _ => by nlinarith [pow_le_one₀ hq0 hq1.le (n := i)])
+      linarith
 
     have h := le_of_tendsto_of_tendsto' (tendsto_const_nhds.sub hsum) hp hfinite
     simpa only [qprod, tsum_mul_left, tsum_geometric_of_lt_one hq0 hq1, div_eq_mul_inv] using h
@@ -392,7 +394,7 @@ theorem result : ¬ claim := by
       have hyt' : (t.2:ℝ)*d ≤ (s.2:ℝ)*(d-s.1) := by
         exact_mod_cast hyt
       have hnon : 0 ≤ 1-a*q^n := by
-        have := (div_le_one hd').2 hs'
+        have := (div_le_one₀ hd').mpr hs'
         linarith
       have hx' : a*q^(n+1) ≤ (t.1:ℝ)/d := by
         rw [pow_succ]
