@@ -130,7 +130,10 @@ internal sealed class GlobalZZGateTimeBoundDocument : IScribeDocumentDefinition
                         + "so the folded weights are feasible. Each class has mass one, hence their scaled sum has mass d times the real cast of K. "
                         + "Folding preserves this mass, which equals gateBound(n) times offDiagSup(M) and in particular satisfies the asserted inequality. "
                         + "The construction uses only the strictly upper triangular entries; symmetry and the zero diagonal specify the coupling matrices in the claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bassler-heinrich-kliesch-2024-global-zz-gate-time-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SignVecFormula() => All("n", Naturals(),
         Equal(Typed(LocalCall("SignVec", X("n")), Qualified("Type")),
