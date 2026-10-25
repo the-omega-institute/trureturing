@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1beced2596c2272b817da1bc161acfc08734d5cad7725ae3577ef256d891870c
+  normalized_sha256: sha256:1beced2596c2272b817da1bc161acfc08734d5cad7725ae3577ef256d891870c
+cas_ref: sha256:1beced2596c2272b817da1bc161acfc08734d5cad7725ae3577ef256d891870c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给定L、B、f后定义F(x)=Lx-B(x,x)+f，没有声称F存在零点或具有耗散性。
+    previous_atom_id: b6d68a15f1f33c8d262cc1cde8e5739fba9ee2b4fa62b06d9f7e883806d84f7a
+    next_atom_id: bde0f650b09f86bcf5bcd6f638d15175ecb58d16812432a67bef13f7fb6fc62d

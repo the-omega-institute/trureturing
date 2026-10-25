@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f45bd8a062f67fa955ff2045abfb3a393b32f09ebff4ff4026a49ecfd0fe8f82
+  normalized_sha256: sha256:f45bd8a062f67fa955ff2045abfb3a393b32f09ebff4ff4026a49ecfd0fe8f82
+cas_ref: sha256:f45bd8a062f67fa955ff2045abfb3a393b32f09ebff4ff4026a49ecfd0fe8f82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 复用纪律清单中的 conceptJoin 名称，不断言联合操作的性质。
+    previous_atom_id: 82b2009635e0ed934fbbedbb1f3659d519e9f4ae171f7dcb564b0f8c616e0744
+    next_atom_id: d9bf5708ddf41861ad9c87e0ec986fa512724620e61ebdd2eb2958520adfa64a

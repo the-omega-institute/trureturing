@@ -420,3 +420,416 @@ Type-I coefficient and consumers are retained without new claims.
 No selected-Poisson positivity, principal lower bound, stronger
 zero-free strip, upstream main-proof certification, signed Robin
 restoration or RH conclusion follows. The full research goal remains RH.
+
+
+## Original-product zeros and finite rectangular residues
+
+Retain exactly C73's $\bar Q_A,\bar H,\bar D_q$ and the original
+$W,S$; the results here concern that local principal scalar. They
+add finite polar information to R12, without evaluating
+$S_{\rm actual}$ or changing R1–R12. Put $L=\log A$ and
+
+$$
+N_q(\mathbf z)=1-\frac{2\sum_{i=1}^4q^{-z_i}}{\bar D_q},\qquad
+D_q(\mathbf z)=\prod_{i=1}^4(1-q^{-1-z_i})^{-2},\qquad
+\bar D_q=q+5+\frac1{q-1}.
+\tag{R13}
+$$
+
+Thus $\bar H_p=N_{q_p}D_{q_p}$ outside $S$, and
+$\bar H_p=D_{q_p}$ inside $S$. These are C73's original factors,
+with the four-way exclusive-prime rule; no product of independent
+two-slot factors is substituted.
+
+**The finite norm-7 factor.** The fixed arithmetic datum in the
+[pinned primary manuscript, notation preceding its additive character](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex)
+puts every prime above $6$ in $S$, together with the original fixed
+modulus supports. In $K=\mathbb Q(\sqrt{-3})$, $3$ ramifies,
+a rational prime $p\equiv1\pmod3$ splits into two primes of norm
+$p$, and $p\equiv2\pmod3$ is inert with norm $p^2$.
+For example these alternatives follow by factoring
+$X^2+X+1$ modulo $p\ne3$: its roots are precisely the nontrivial
+cube roots of unity. The primes over $2,3$ are excluded; the next
+possible good norm is $7$, followed by $13$ (the inert prime $5$
+has norm $25$). In particular no good norm lies below $13$ except
+$7$. Define, using the unchanged $S$,
+
+$$
+n_7=\#\{p\notin S:q_p=7\}\in\{0,1,2\},\qquad
+P_7(\mathbf z)=1-\frac{12}{73}\sum_{i=1}^4 7^{-z_i}.
+\tag{R14}
+$$
+
+No norm-7 prime is newly excluded. Since $\bar D_7=73/6$, construct
+$H_*$ directly as follows: at every unexcluded norm-7 prime use
+$D_7$; at other unexcluded primes use $N_qD_q$; at primes in $S$
+use $D_q$. This deletes only those finitely many numerators and
+never divides by a numerator. Then
+
+$$
+\bar H=P_7^{\,n_7}H_*,\qquad
+H_*\text{ is holomorphic and nowhere zero near every point of }
+\{\Re z_i\ge-1/4\ (1\le i\le4)\}.
+\tag{R15}
+$$
+
+Indeed for $q\ge13$ throughout that polytube,
+
+$$
+|1-N_q|\le\frac{8q^{1/4}}{\bar D_q}<1.
+$$
+
+The strict inequality follows from $q+5>8q^{1/4}$: it holds at
+$13$, as $18^4>8^4\cdot13$, and the difference has derivative
+$1-2q^{-3/4}>0$ thereafter. All denominators are nonzero since
+$\Re(1+z_i)\ge3/4$. C73's normal convergence, unchanged by finitely
+many factors, and the locally summable deviations from $1$ imply
+nonvanishing of the product of these nonzero factors. The strict
+bounds and C73's open domain $\Re z_i>-1/2$ also give the asserted
+local neighborhoods. Thus R15 identifies the complete zero locus
+of $\bar H$ in this polytube: it is empty when $n_7=0$, and is
+exactly $P_7=0$ when $n_7>0$.
+
+There are two useful consequences with different scopes. First,
+$\bar H$ itself is nowhere zero on $\Re z_i\ge-1/5$: the only
+additional check is $8\cdot7^{1/5}<73/6$, equivalently
+$7\cdot48^5<73^5$. Second, on a conjugate-balanced tuple,
+
+$$
+H_*(a,a,\bar a,\bar a)>0\qquad(\Re a\ge-1/4).
+\tag{R16}
+$$
+
+For each remaining good numerator its value is
+$1-8q^{-\Re a}\cos(\Im a\log q)/\bar D_q>0$.
+The denominator at every prime is $|1-q^{-1-a}|^{-8}>0$;
+removed norm-7 numerators leave only this denominator. Normal
+convergence makes the positive product strictly positive. This is a
+statement about the Euler correction, not positivity of the physical
+contraction or a selected Poisson component.
+
+**A genuine one-coordinate polar slice.** Suppose $\varrho$ is a
+zero of this same $\zeta_K$, of multiplicity $m\ge1$, with
+$3/4\le\Re\varrho<1$, and set $a=\varrho-1$.
+Fix arbitrary $z_2,z_3,z_4$ with $\Re z_j\ge1$. In this slice
+$\bar H(a,z_2,z_3,z_4)\ne0$: at every good prime $q\ge7$,
+
+$$
+|1-N_q|\le\frac{2(q^{1/4}+3/q)}{\bar D_q}<1,
+$$
+
+because $2q^{1/4}<q$ and $6/q<5$. The same nonzero-product
+argument applies, including norm $7$. The other three reciprocal
+zeta factors are nonzero since their arguments have real part at
+least $2$. Consequently C73's $\bar F$ has a pole of exact order
+$2m$ in $z_1$ at $a$ on this slice. For its cutoff integrand below,
+the order is $2m-v$ if $\widehat W$ has vanishing order $v<2m$
+at $a$ and the other three cutoff values are nonzero; if $v\ge2m$
+the singularity is removable. In particular the original cutoff's
+nonvanishing at $a$ is an explicit sufficient hypothesis for a genuine
+order-$2m$ pole. No such zero or cutoff nonvanishing is asserted to
+exist. This rules out an automatic Euler-numerator cancellation of
+all these zero divisors, without asserting noncancellation at every
+four-zero intersection.
+
+**All finite faces and residues.** Reuse the finite-contour principle
+of [SV5 and its retained remainder](../ArithSums/srivastav2025sievevaughan.md#fixed-truncation-mellin-interface-and-remaining-source-coupling)
+for the present original four-variable integrand
+
+$$
+G_A(\mathbf z)=\bar H(\mathbf z)
+ \prod_{i=1}^4\left[\widehat W(z_i)A^{z_i}
+                         \zeta_K(1+z_i)^{-2}\right],\qquad
+\bar Q_A=\frac1{(2\pi i)^4}\int_{(c)^4}G_A(\mathbf z)\,d\mathbf z,
+\quad c>0.
+\tag{R17}
+$$
+
+The inversion is initially absolute, using C73. Fix $0<h<1/2$,
+write $b=-h$, and take a finite $T>0$ for which the boundary of
+$[b,c]+i[-T,T]$ meets no zero of $\zeta_K(1+z)$.
+Let $\mathcal Z$ be its finite set of distinct interior zero
+positions $a=\varrho-1$, recording each zero's multiplicity
+separately. The only possible polar divisors of $G_A$ in this
+rectangle product are these coordinate divisors. At $z_i=0$ the
+simple pole of $\widehat W$ is canceled by the double zero of the
+reciprocal zeta square, as in C74; there is no zero-position residue
+at $0$ and no mixed polar divisor.
+
+For a meromorphic function $f$, let the following operators act only
+in coordinate $i$:
+
+$$
+\begin{aligned}
+I_{b,i}f&=\frac1{2\pi i}\int_{b-iT}^{b+iT}f\,dz_i,
+& Z_if&=\sum_{a\in\mathcal Z}\operatorname{Res}_{z_i=a}f,\\
+H_{+,i}f&=\frac1{2\pi i}\int_{b+iT}^{c+iT}f\,dz_i,
+& H_{-,i}f&=\frac1{2\pi i}\int_{b-iT}^{c-iT}f\,dz_i.
+\end{aligned}
+$$
+
+Both horizontal integrals are oriented left to right. The full exact
+finite-height identity is
+
+$$
+\begin{aligned}
+\bar Q_A
+ &=\sum_{E\sqcup B\sqcup C_+\sqcup C_-=[4]}
+ (-1)^{|C_-|}
+ \left(\prod_{i\in E}Z_i\right)
+ \left(\prod_{i\in B}I_{b,i}\right)
+ \left(\prod_{i\in C_+}H_{+,i}\right)
+ \left(\prod_{i\in C_-}H_{-,i}\right)G_A+E_T,\\
+E_T&=\frac1{(2\pi)^4}
+ \int_{\mathbb R^4\setminus[-T,T]^4}
+ G_A(c+it_1,\ldots,c+it_4)\,d\mathbf t,\\
+|E_T|&\ll_{N,c,K,S,W} A^{4c}(1+T)^{-N}\qquad(A\ge1)
+ \quad\text{for each fixed }N.
+\end{aligned}
+\tag{R18}
+$$
+
+The sum runs over all $4^4$ ordered partitions; empty products are
+identities. Each $Z_i$ is itself the full finite sum over zero
+positions. Thus a term with $k$ residues retains the factor
+$(2\pi i)^{-(4-k)}$ from its remaining paths. This includes every
+mixed residue/left-line/horizontal contribution, not just the full
+corners. To prove it, truncate the original four right lines,
+apply $I_{c,i}=I_{b,i}+Z_i+H_{+,i}-H_{-,i}$ successively, and
+expand. The one-variable residue theorem gives that sign by the
+positively oriented rectangle starting up its right edge. Compact
+boundary paths, finitely many interior zeros and absence of mixed
+polar divisors justify these finite interchanges and commuting
+residues. The tail is only on the original right lines. There
+$\bar H$ and the reciprocal zetas are bounded, and R7 gives arbitrary
+Mellin decay of the fixed smooth cutoff, proving its displayed bound.
+No estimate on a left-strip reciprocal, no infinite zero sum and no
+disappearance of horizontal connectors is used. Substitution into R12
+retains its exact multiplier $(\bar C/6)U^{13/6}S_{\rm actual}$
+and all component-specific physical prefactors, with no new field
+residue or unit factor.
+
+**Multiplicity and the coupled derivative.** For a selected residue
+coordinate $i$, let $\varrho_i$ have multiplicity $m_i$, put
+$a_i=\varrho_i-1$ and define the holomorphic local function
+
+$$
+b_i(z)=\widehat W(z)
+ \left(\frac{(z-a_i)^{m_i}}{\zeta_K(1+z)}\right)^2,
+\qquad
+b_i(a_i)=\widehat W(a_i)
+ \left(\frac{m_i!}{\zeta_K^{(m_i)}(\varrho_i)}\right)^2.
+\tag{R19}
+$$
+
+For any subset $E$ the residue at its chosen zero positions is exactly
+
+$$
+A^{\sum_{i\in E}a_i}
+\left[
+ \prod_{i\in E}\frac{(L+\partial_i)^{2m_i-1}}{(2m_i-1)!}
+ \left\{\bar H(\mathbf z)\prod_{i\in E}b_i(z_i)\right\}
+\right]_{z_i=a_i\ (i\in E)}
+\prod_{j\notin E}\left[\widehat W(z_j)A^{z_j}
+                              \zeta_K(1+z_j)^{-2}\right].
+\tag{R20}
+$$
+
+This follows by extracting the coefficient of
+$\prod_{i\in E}(z_i-a_i)^{2m_i-1}$ after factoring out the poles
+and $A^{\sum a_i}$. Vanishing cutoffs or numerator factors are
+already included; $2m_i$ is the possible order, not an assertion
+that every intersection has that order.
+
+For four simple zeros, R20 is
+$A^{\sum_i a_i}[\prod_i(L+\partial_i)
+ \{\bar H\prod_i b_i\}]_{\mathbf a}$.
+If every original $\widehat W(a_i)\ne0$, an equivalent explicit
+coupled formula is
+
+$$
+\begin{aligned}
+\operatorname{Res}_{\mathbf z=\mathbf a}G_A
+ &=A^{\sum_i a_i}\left(\prod_i B_i\right)
+   \left[\prod_i(L+d_i+\partial_i)\bar H\right]_{\mathbf a},\\
+B_i&=\frac{\widehat W(a_i)}{\zeta_K'(\varrho_i)^2},\qquad
+ d_i=\frac{\widehat W'(a_i)}{\widehat W(a_i)}
+                -\frac{\zeta_K''(\varrho_i)}{\zeta_K'(\varrho_i)}.
+\end{aligned}
+\tag{R21}
+$$
+
+Each $d_i$ in the operator is its fixed displayed value; derivatives
+act on the full $\bar H$. In particular this is not a product of
+four independent one-variable residue constants.
+
+**Nonzero simple corners, including norm-7 resonance.** Suppose
+$\varrho=\sigma+i\gamma$ is a simple nonreal zero of $\zeta_K$,
+$3/4\le\sigma<1$, and the actual $\widehat W(a)\ne0$ at
+$a=\varrho-1$. Such corners enter R18 when $1-h<\sigma$ and
+$|\gamma|<T$; the boundary is still required to avoid all zeros.
+Since $W$ is real, the conjugate values agree under conjugation. Set $u=7^{-a}=x+iy$, $k_7=12/73$,
+$c_7=k_7\log7$, and $B_\varrho=\widehat W(a)/\zeta_K'(\varrho)^2$.
+For the ordered balanced corner
+$\mathbf a=(a,a,\bar a,\bar a)$ write
+$P=P_7(\mathbf a)=1-4k_7x$ and
+$V=H_*(\mathbf a)|B_\varrho|^4>0$.
+Its residue is $A^{4(\sigma-1)}$ times a real polynomial in $L$.
+Its degree and leading coefficient are
+
+$$
+\begin{array}{c|c|c}
+\text{condition}&\text{degree}&\text{leading coefficient}\\ \hline
+n_7=0\text{ or }P\ne0&4&P^{n_7}V\\
+P=0,\ n_7=1&3&(\log7)V\\
+P=0,\ n_7=2&2&4c_7^2(3x^2+y^2)V .
+\end{array}
+\tag{R22}
+$$
+
+In the first row $P^0=1$, even at $P=0$. All listed coefficients
+are nonzero. To see the resonant rows directly, $\partial_iP_7=c_7u_i$
+and $\partial_i\partial_jP_7=0$ for $i\ne j$. When $P=0$,
+$\sum_i\partial_iP_7=\log7$. For $P_7^2$, the first nonzero
+squarefree derivative sum is
+
+$$
+\sum_{i<j}\partial_i\partial_j(P_7^2)
+ =2c_7^2\sum_{i<j}u_i u_j
+ =4c_7^2(3x^2+y^2),\qquad
+(u_1,u_2,u_3,u_4)=(u,u,\bar u,\bar u).
+$$
+
+Every smaller derivative of $P_7^{n_7}$ vanishes at resonance, so
+the highest surviving power of $L$ places exactly $n_7$ derivatives
+on that factor. Derivatives of $H_*$ and $b_i$ then affect only
+lower powers. Resonance forces $x=73/48>0$, proving the last
+coefficient is nonzero. Conjugation followed by slot permutation
+fixes the balanced residue, proving reality. The six distinct
+permutations have equal residues by symmetry of the original product
+and cutoff, so their sum is six times this same polynomial.
+
+For the repeated simple-zero corner $(a,a,a,a)$ the residue is
+$A^{4a}$ times a complex polynomial. Put
+$P=1-4k_7u$ and $V'=H_*(a,a,a,a)B_\varrho^4\ne0$.
+Away from resonance (or when $n_7=0$), its degree is $4$ with
+leading coefficient $P^{n_7}V'$. At $P=0$, $u=73/48$; its degree
+and leading coefficient are $3,(\log7)V'$ for $n_7=1$, and
+$2,\tfrac34(\log7)^2V'$ for $n_7=2$. The latter follows from
+$2\sum_{i<j}c_7^2u^2=12c_7^2u^2=\tfrac34(\log7)^2$.
+No extra factorial arises from repeating the zero in distinct
+coordinates. Multiplicity of a zero of $\zeta_K$ itself is instead
+handled by R19–R20. These corner statements are conditional on
+simplicity and the original cutoff value; neither is inferred from
+$R_{7/8}$. They do not show that the sum over other zeros, mixed
+paths and all common-scale signed components is nonzero or large.
+
+**Domain at the requested depth.** R15 covers a rectangle product
+of depth $h=249/1000<1/4$. In C76's formal exponent arithmetic,
+$12\Delta=20\sqrt6-48$, and, for the positive margin
+$\nu=1/3000$,
+
+$$
+4h-12(\Delta+\nu)=\frac{6124}{125}-20\sqrt6
+ =0.002205144336438\ldots>0,
+\qquad 6124^2-6\cdot2500^2=3376>0.
+\tag{R23}
+$$
+
+Thus the original-product factorization reaches a depth that would
+be sufficient if the entire R18 expression admitted the corresponding
+power bound. This is domain applicability only. The $\bar H$
+nonvanishing tube of depth $1/5$ reaches only the formal all-line
+exponent $4/5$; it gives no reciprocal-zeta strip or contour bound.
+No left-line, mixed-residue or horizontal estimate at the deeper
+rectangle is supplied. In particular no such bound is deduced from
+$R_{7/8}$, and no limit $T\to\infty$ is taken here.
+
+**Primary comparison and remaining consumer.** The following mappings
+concern this zero-sensitive interface; they do not repeat R11's
+settled Riesz normalization or replace the original profiles.
+
+- Goldston–Pintz–Yildirim, [*Primes in Tuples I*, v1, Proposition 1,
+  (2.14), (7.7)–(7.9)](https://arxiv.org/html/math/0508185v1),
+  concerns integer tuple means with $M=k_1+k_2+\ell_1+\ell_2$,
+  $R\ll N^{1/2}(\log N)^{-4M}$ and $h\le R^C$. Its main term is
+  $N\binom{\ell_1+\ell_2}{\ell_1}(\log R)^{r+\ell_1+\ell_2}
+  \mathfrak S/(r+\ell_1+\ell_2)!$, with $\mathfrak S$ replaced by
+  $\mathfrak S+o_M(1)$. Setting $R=A,k_i=2$ matches an inverse-zeta
+  square, but its shared-prime factor $p^{-1-s_1-s_2}$ is forbidden
+  here; its logarithmic cutoff has Mellin pole order
+  $k_i+\ell_i+1\ge3$, whereas the original $W$ has order $1$.
+  Matching that order would require $\ell_i=-2$, outside its scope.
+- Reuse [SV38's GKM supplier](../ArithSums/srivastav2025sievevaughan.md#a-published-moment-obstruction-applies-to-the-original-linear-factor).
+  In Granville–Koukoulopoulos–Maynard, [v4, Theorems 1.3–1.4 and
+  (8.5)–(8.6)](https://arxiv.org/html/1606.06781v4), the moment
+  exponent at $2k=4$ is $\max\{2-4m,-1\}$ for integer smoothing
+  index $m\ge0$. For a fixed real $C^m$ profile supported in
+  $(-\infty,1]$, with bounded derivatives through $m>3/2$ and
+  $f(0)\ne0$, Theorem 1.4(a) gives
+  $c_{2,f}/\log R+O((\log R)^{-2+\varepsilon})$ when
+  $x\ge R^4\log^2R$. Its local factor
+  $1+p^{-1}\sum_{\varnothing\ne I\subseteq[4]}
+  (-1)^{|I|}p^{-\sum_{i\in I}s_i}$ permits all divisor overlaps,
+  unlike R13. Moreover $f_R(t)=W(R^t/A)$ with $R=2A$ has a
+  transition width $\log2/\log R$, so its derivative bounds grow
+  with $R$; it is not the theorem's fixed-profile family.
+- Chen An, [*A Generalization of Graham's Estimate on the
+  Barban–Vehov Problem*, v1, Theorem 1.1](https://arxiv.org/html/2206.10104v1),
+  does allow $k=K$ and $1\le w<y\le x$, but its weights are
+  $\mu_k(d)$ times the plateau/logarithmic ramp from $w$ to $y$.
+  Its ideal mean square is $x/\log(y/w)+
+  O_{[k:\mathbb Q],\mathrm{disc}(k)}(C_{\beta_0}x/\log^2(y/w))$,
+  where $C_{\beta_0}=(1-\beta_0)^{-6}
+  \min\{1,|\zeta_k'(\beta_0)|\}^{-2}$ if the specified Siegel
+  zero exists, and $1$ otherwise. The square permits shared
+  divisors and lacks both $2^{\omega}$ and the four-way mask;
+  neither this cutoff nor its logarithmic saving supplies C76.
+- Hu–Kaneko–Martin–Schildkraut, [*On a Mertens-type conjecture for
+  number fields*, v2, Lemma 2.4, Proposition 2.12 and
+  Theorem 1.4](https://arxiv.org/html/2109.06665v2), has the correct
+  abelian field class. Its chosen heights and formula with residues
+  $x^{\varrho}/(\varrho\zeta_K'(\varrho))$ assume RH for
+  $\zeta_K$ and, for the formula, simple nontrivial zeros.
+  The limiting-distribution theorem additionally assumes
+  $\sum_{0\le\gamma\le T}|\zeta_K'(1/2+i\gamma)|^{-2}
+  \ll_\alpha T^{1+\alpha}$ for $0\le\alpha<2-\sqrt3$.
+  Those premises do not follow from $R_{7/8}$; a single reciprocal
+  also does not provide estimates for the present four coupled
+  reciprocal squares. None of these global conclusions is invoked
+  in R18–R22.
+
+The finite identity and its nonzero conditional corners specify what
+a deeper contour argument must retain. A direct theta improvement
+still needs estimates for their joint sum and all finite faces;
+merely choosing a deeper line adds no saving. The alternative with
+direct payoff is evaluation or cancellation of the actual R12 scalar.
+The pinned definitions provide a functional, not that instantiated
+full-J40 value. The missing operands are the complete actual
+$a(d_1,d_2)$ and $\Omega_{\epsilon,\mathbf r}$ of C57–C59 and
+R12's signed component/height measure. At their producer this must
+retain J28's $\delta_i,\zeta_i,\rho(w),\chi_w(f_0r)$ and bad-dual
+conjugates, the same beta and common $e$ with its Mobius sign,
+both core/occupancy allocations, the original $\ell,r$ terms and
+J40's selector $q_{r_2(m_{\rm good})}>U^{1/8}$. The actual row and
+column Mellin values, all physical prefactors and the one common
+absolute height envelope must accompany them. C59's
+corefree/common-$e=1$ branch and R11's documented J4 diagonal do
+not supply that full aggregate. No arbitrary profile, $h^{-2}$
+diagonal substitution or redesigned cutoff evaluates it.
+
+A smallest next mathematical consumer is a bound or actual signed
+cancellation of R18's retained zero/face contributions at this depth,
+or an instantiated cancellation of $S_{\rm actual}$. The first is
+accepted only with its original cutoff, multiplicities and all
+boundaries paid; the second only from the original full signed
+operands and common envelope. An omitted face, an assumed cutoff
+value or substitution of a different overlap law invalidates the
+corresponding claim. Until one such estimate or cancellation is
+proved, doing nothing and the present finite representation share
+the same unresolved principal exponent; the representation adds
+explicit polar data rather than a new bound. No principal lower
+bound, global asymptotic, isolated-pair spectral corollary, full-$b$
+cancellation, upstream-proof certification, signed Robin restoration
+or RH conclusion is asserted. These are repo-derived paper deductions,
+not Lean or CI evidence, and no priority claim is made.
