@@ -276,62 +276,103 @@ official acceptance is asserted.
 
 ## Delayed whole-fibre signed splitting
 
-The construction-specific local source
-`D5.S3.Topology.Measures.SignedDelayedSplit` concerns the delayed
-common-row step of the proposed CH construction. It is derived from the
-supplied ordinary candidate and the repository's ordered signed-column
-and signed reference-convergence suppliers. The ordinary candidate is
-fallible input, and this note makes no attribution or novelty claim for
-the assembled proof.
+The construction-specific sources `SignedDelayedSplit` and
+`SignedDelayedSuccessor` in `D5.S3.Topology.Measures` implement the local
+delayed common-row step in the proposed CH construction. Their role is
+in the signed induction associated with the paper's conditions (A)–(G).
+The local refinement also uses a supplied ordinary mathematical candidate
+as fallible design input. It is a project synthesis of compact metric
+selection, norm-preserving signed lifting and the existing ordered-column
+and signed reference-convergence suppliers, with no literature novelty
+claim for this assembled proof.
 
-`exists_delayed_fibre_pools` starts with the actual onto predecessor
-projection, original supports V(n), target points y(n) in V(n) and a
-clopen Q, and both infinite original intersections J with N(e). It
-chooses points f(n) over y(n) and infinite S(e) inside those intersections
-such that f converges to z(e) along S(e). Eventual coordinate E on the
-whole original supports transfers that convergence to every point of
-the actual fibre: each clopen neighborhood of z(e) eventually contains
-the entire fibre over y(n). This uses finite-coordinate determination
-of a clopen, without assuming that an old fibre is a singleton.
+`exists_delayed_fibre_pools` starts with the actual continuous onto
+predecessor projection, original supports V(n), target points y(n) in
+V(n) and Q, and both infinite original intersections J with N(e).
+It chooses infinite subsets of those exact intersections and cluster
+points z(e). Eventual coordinate E on the whole original supports
+transfers convergence of selected points to every point of the fibre:
+every clopen neighborhood of z(e) eventually contains the entire fibre
+over y(n). No old fibre is assumed to be a singleton.
 
-`exists_parity_ordered_split` takes two infinite pools with a common
-positive-variation reference on fixed clopens, the actual Dirac-labelled
-target sequence, and signed reference data for the auxiliary rows.
-Column q selects its target index from pool q modulo two. The target
-slice is clipped to V(n) intersect Q, and finite auxiliary tests are
-fixed before their indices. One resulting closed Boolean split has
-onto old projection, target whole-support fibre constancy even outside
-Q, whole-fibre separation of the target points by column parity, the
-original signed G bounds, and one common represented regular signed
-limit for every auxiliary lift choice along each increasing fixed-label
-column subsequence. Positive target variation is separate from every
-auxiliary signed limit.
+`exists_delayed_pool_plan` resolves the equal and distinct cluster cases
+internally. Equal points retain the two original parity pools as target
+column pools. Distinct points give an old clopen separator. Finite
+thinning separates the entire target fibres; an independent infinite
+target reserve is split from one source pool, while each source set
+stays in its original N(e). Both target column parities use this reserve.
+Target auxiliary parity and source reservoir parity therefore have
+separate meanings in this branch.
 
-The true sheet lies over Q. If P is a disjoint source clopen and the
-original source signed measures are carried by P, every successor
-source choice projects to an old norm-preserving choice. Old signed F
-then transfers to the selected target-index range, which is an infinite
-refinement of the original source J and meets each original N(e)
-infinitely through its parity range. The proof uses the same split as
-the target and auxiliary conclusions.
+`exists_parity_ordered_split` is the consumed finite-construction core.
+The finite earlier exclusion R is fixed first. Whole target-fibre
+convergence and auxiliary-support avoidance of the selected point let
+the next target be chosen in its prescribed column pool. The clopen
+is literally H = p inverse-image (V(n) intersect Q) minus R. Its finite
+Boolean tests are fixed next, and only then are auxiliary indices
+chosen. All norm-preserving signed lifts satisfy the finite signed
+marginal bound; the other rows are never replaced by positive measures.
+The prescribed Dirac target gives mass one on H. Thus the finite strict
+thirteen-forty-eighths and one-sixth bounds hold. Closure of the even
+H's gives one split with onto old projection, whole-support fibre E,
+and the scheduled signed G estimates.
 
-These are local suppliers. The two pool cluster points are not proved
-to coincide, and the split still requires their common positive
-reference convergence as input. The distinct-cluster delayed branch,
-final enlarged I and its residual births, literal ordinal successor
-integration, raw-entry recursion and final omega-one construction remain
-outside these statements. They do not establish the anti-homeomorphism,
-Grothendieck or full signed dual-ball endpoints. Problem 8.2 and official
-acceptance remain open.
+`exists_internal_delayed_split` consumes both cluster branches and the
+core, selecting its own target reference and pools. It returns infinite
+M(e) inside the original source J and N(e), and one clopen of the same
+split separating the entire fibres over y(n) on M(0) and M(1). In the
+distinct case these source indices avoid every chosen target support,
+so the new coordinate is false on their whole original supports.
+Every target slice lies above Q. If the original source signed measures
+are carried by a disjoint clopen P, the true sheet is absent above P.
+Projection therefore transfers old source F without singleton fibres.
+A genuine successor lift supplies one regular source reference; whole
+support E gives that same reference to every selection. Its quantifier
+order is one reference followed by all lift selections.
 
-The owning Reg mirror preserves the original theorem telescopes and
-their actual proof applications. Its four-slot information registration
-is unfinished. Issue
-https://github.com/the-omega-institute/trureturing/issues/21750 records
-the missing full source reconstruction and realization equivalence,
-lawful enrolled readout, whole-family variation and sensitivity, and
-observational dependence. Those source bindings are not
-`declared_validated` registrations.
+`SignedDelayedSuccessor.exists_delayed_successor` starts from actual
+born signed data and the original old laws. Old I, J and N exist only
+on genuinely old rows. Every row has signed sequences for the old labels
+and the residual label, with norm one, support-nullity, regular Jordan
+parts and positive Jordan mass at least one half. The target row is old;
+its target sequence is prescribed Dirac data. The new row uses its own
+internally chosen signed birth clusters. It has no invented old J or N.
+
+For auxiliary columns c(q), its final sets have the exact formulas:
+
+- I(r) contains the indices c(q).m(r) with code(r) < q; on the actual
+  target row it additionally contains M(0) union M(1).
+- J at the actual source pair is exactly M(0) union M(1); every other
+  old-label J is its fixed-label auxiliary range.
+- Every genuinely born old N is preserved. New-row old-label N(e) is
+  the corresponding fixed-label auxiliary parity range.
+
+These sets satisfy A–C, exact one-step I/J refinement sufficient for the
+inherited almost-inclusion D, whole-support E, and common every-choice
+signed F. Residual selection occurs only after the final I is fixed:
+compact metric weak-star compactness selects its residual J on that I,
+then splits J into two infinite reservoirs. Whole-support E transfers
+its regular reference to every signed lift selection. This includes
+old/old, new-row/old-label, old-row/residual and doubly new cases. The
+scheduled G witnesses are merely two infinite index sets, without an
+extra membership requirement in the updated I. Actual norm-preserving
+lift classes are inhabited for every old and residual label.
+
+The result is a local compact metric split supplier. Literal ordinal
+successor insertion and readback, once-born raw I/J/N, stage-local delayed
+eligibility, compatible well-founded raw-history recursion, and the final
+omega-one cube construction remain further obligations. The local
+supplier proves neither anti-homeomorphism, the Grothendieck endpoint nor
+the entire signed dual-ball endpoint. Problem 8.2, full CH Lean completion
+and official acceptance remain open.
+
+The owning Reg mirrors preserve the unabridged source telescopes and
+actual proof applications. Four-slot information registration remains
+unfinished under https://github.com/the-omega-institute/trureturing/issues/21750:
+full realization and source reconstruction, lawful enrolled readout,
+whole-family variation and sensitivity, and observational dependence
+are still missing. These source bindings are not `declared_validated`
+registrations.
 
 ## Verified locator
 
