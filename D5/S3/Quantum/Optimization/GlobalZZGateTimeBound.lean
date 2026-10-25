@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.Linear.FiniteRealZeroFillRegister
 
+/-! Nonnegative sign schedules from round-robin matchings and their product laws. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -26,11 +28,12 @@ def IsFeasible {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) (lam : SignVec n → �
   (∀ m, 0 ≤ lam m) ∧ ∀ i j, i < j →
     M i j = ∑ m, lam m * ((-1 : ℝ) ^ (m.val i).toNat * (-1 : ℝ) ^ (m.val j).toNat)
 
+private theorem options_nonempty (n : ℕ) :
+    (Finset.univ : Finset (Option (Fin n × Fin n))).Nonempty := Finset.univ_nonempty
+
 def offDiagSup {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : ℝ :=
-  Finset.univ.sup' Finset.univ_nonempty (fun p : Option (Fin n × Fin n) =>
-    match p with
-    | none => 0
-    | some (i, j) => if i < j then |M i j| else 0)
+  Finset.univ.sup' (options_nonempty n) (fun p : Option (Fin n × Fin n) =>
+    p.elim 0 (fun e => if e.1 < e.2 then |M e.1 e.2| else 0))
 
 def gateBound (n : ℕ) : ℝ := ((if Even n then n - 1 else n : ℕ) : ℝ)
 
@@ -388,17 +391,13 @@ private theorem offDiagSup_nonneg {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
     0 ≤ offDiagSup M := by
   unfold offDiagSup
   exact Finset.le_sup' (fun p : Option (Fin n × Fin n) =>
-    match p with
-    | none => (0 : ℝ)
-    | some (i, j) => if i < j then |M i j| else 0) (Finset.mem_univ none)
+    p.elim (0 : ℝ) (fun e => if e.1 < e.2 then |M e.1 e.2| else 0)) (Finset.mem_univ none)
 
 private theorem entry_le_offDiagSup {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ)
     (i j : Fin n) (hij : i < j) : |M i j| ≤ offDiagSup M := by
   unfold offDiagSup
   have h := Finset.le_sup' (fun p : Option (Fin n × Fin n) =>
-      match p with
-      | none => (0 : ℝ)
-      | some (i, j) => if i < j then |M i j| else 0)
+      p.elim (0 : ℝ) (fun e => if e.1 < e.2 then |M e.1 e.2| else 0))
       (Finset.mem_univ (some (i, j)))
   change (if i < j then |M i j| else 0) ≤ _ at h
   rw [ite_eq_left hij] at h
