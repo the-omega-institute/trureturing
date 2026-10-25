@@ -33,22 +33,22 @@ other local names belong to Result; cross-module names have prefix D5.S3.Analyti
   consumers: kernel_sum_nonneg.
 * Kernel.gamma_balanced_shift: proof_shape: bind-only; escape_witness: none;
   consumers: Kernel.kernel_sum_nonneg, reciprocalPair_balanced.
-* Kernel.kernel: proof_shape: definition; escape_witness: none;
+* Kernel.kernel: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Kernel.kernel_sum_nonneg, finite_pairing, pairedKernel, pairedKernel_bracket, pairedKernel_sum_nonneg, transformDelta, two_variable_nonneg, KarpZhangGamma.Series.transformed_delta.
 * Kernel.kernel_sum_nonneg: proof_shape: bind-only; escape_witness: none;
   consumers: pairedKernel_sum_nonneg.
 
-* pairedKernel: proof_shape: definition; escape_witness: none;
+* pairedKernel: proof_shape: bind-only (definition); escape_witness: none;
   consumers: finite_pairing, pairedKernel_bracket, pairedKernel_sign, pairedKernel_sum_nonneg, two_variable_nonneg.
-* reciprocalPair: proof_shape: definition; escape_witness: none;
+* reciprocalPair: proof_shape: bind-only (definition); escape_witness: none;
   consumers: fourBracket, fourBracket_backward, fourBracket_swap, pairedKernel_bracket, reciprocalPair_balanced, reciprocalPair_step.
-* fourBracket: proof_shape: definition; escape_witness: none;
+* fourBracket: proof_shape: bind-only (definition); escape_witness: none;
   consumers: bracket_backward_nat, fourBracket_backward, fourBracket_swap, pairedKernel_bracket, pairedKernel_sign.
 * reciprocalPair_balanced: proof_shape: bind-only; escape_witness: none;
   consumers: fourBracket_backward.
 * reciprocalPair_step: proof_shape: bind-only; escape_witness: none;
   consumers: fourBracket_backward.
-* recurrenceFactor: proof_shape: definition; escape_witness: none;
+* recurrenceFactor: proof_shape: bind-only (definition); escape_witness: none;
   consumers: fourBracket_backward, recurrenceFactor_increment, recurrenceFactor_mono.
 * recurrenceFactor_mono: proof_shape: bind-only; escape_witness: none;
   consumers: fourBracket_backward.
@@ -70,7 +70,7 @@ other local names belong to Result; cross-module names have prefix D5.S3.Analyti
   consumers: pairedKernel_sum_nonneg, two_variable_nonneg.
 * pairedKernel_sum_nonneg: proof_shape: bind-only; escape_witness: none;
   consumers: two_variable_nonneg.
-* transformDelta: proof_shape: definition; escape_witness: none;
+* transformDelta: proof_shape: bind-only (definition); escape_witness: none;
   consumers: two_variable_nonneg, KarpZhangGamma.Series.gamma_half, KarpZhangGamma.Series.transformed_delta.
 * two_variable_nonneg: proof_shape: content; escape_witness: pairedKernel_sign;
   consumers: KarpZhangGamma.Series.gamma_half.

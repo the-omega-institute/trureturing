@@ -21,9 +21,9 @@ rates zero; the singleton case is included.
 
 Per-declaration proof_shape (local names belong to this namespace;
 cross-module names have prefix D5.S3.Analytic):
-* kappa: proof_shape: definition; escape_witness: none;
+* kappa: proof_shape: bind-only (definition); escape_witness: none;
   consumers: coercivity, variance_bound, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_variance_bound.
-* variance: proof_shape: definition; escape_witness: none;
+* variance: proof_shape: bind-only (definition); escape_witness: none;
   consumers: variance_bound, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.slice_concave, KarpZhangReciprocal.IntervalConvolution.variance_expand.
 * left_sum: proof_shape: bind-only; escape_witness: none;
   consumers: coercivity, integration_by_parts.

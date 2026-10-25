@@ -23,15 +23,15 @@ bind-only and supplies inputs to the reversible-rate variance argument.
 Per-declaration proof_shape (Coeff names belong to the coefficient namespace;
 other local names belong to IntervalConvolution; cross-module names have
 prefix D5.S3.Analytic):
-* Coeff.c: proof_shape: definition; escape_witness: none;
+* Coeff.c: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Coeff.c_deriv, Coeff.c_pos, Coeff.c_succ, Coeff.coefficient_calculus, F, balance, coefficient_step, rate_curvature, score_deriv, score_variance_bound, symmetric, weight, weight_deriv, weight_pos, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.delta.
-* Coeff.lambda: proof_shape: definition; escape_witness: none;
+* Coeff.lambda: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Coeff.c_deriv, Coeff.c_succ, Coeff.coefficient_calculus, Coeff.lambda_antitone, Coeff.lambda_deriv, Coeff.lambda_pos, balance, birth, coefficient_step, death, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
-* Coeff.eta: proof_shape: definition; escape_witness: none;
+* Coeff.eta: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Coeff.c_deriv, Coeff.coefficient_calculus, Coeff.curvature_bound, Coeff.eta_deriv, Coeff.lambda_deriv, Coeff.psi, Coeff.psi_deriv, coefficient_step, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
-* Coeff.psi: proof_shape: definition; escape_witness: none;
+* Coeff.psi: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Coeff.c_deriv, Coeff.coefficient_calculus, Coeff.psi_deriv, coefficient_step, rate_curvature, score, score_deriv, score_variance_bound, weight_deriv, weight_pos.
-* Coeff.chi: proof_shape: definition; escape_witness: none;
+* Coeff.chi: proof_shape: bind-only (definition); escape_witness: none;
   consumers: Coeff.chi_nonneg, Coeff.coefficient_calculus, Coeff.curvature_bound, Coeff.psi_deriv, coefficient_step, curvature, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
 * Coeff.c_pos: proof_shape: bind-only; escape_witness: none;
   consumers: coefficient_calculus.
@@ -61,17 +61,17 @@ prefix D5.S3.Analytic):
 * Coeff.coefficient_calculus: proof_shape: bind-only; escape_witness: none;
   consumers: coefficient_step, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
 
-* F: proof_shape: definition; escape_witness: none;
+* F: proof_shape: bind-only (definition); escape_witness: none;
   consumers: shift_tail, symmetric, symmetric_tail, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.reciprocal_half.
-* weight: proof_shape: definition; escape_witness: none;
+* weight: proof_shape: bind-only (definition); escape_witness: none;
   consumers: balance, score_variance_bound, slice_concave, symmetric_tail, total_pos, weight_deriv, weight_pos.
-* score: proof_shape: definition; escape_witness: none;
+* score: proof_shape: bind-only (definition); escape_witness: none;
   consumers: score_deriv, score_variance_bound, slice_concave, weight_deriv.
-* curvature: proof_shape: definition; escape_witness: none;
+* curvature: proof_shape: bind-only (definition); escape_witness: none;
   consumers: score_deriv, score_variance_bound, slice_concave.
-* birth: proof_shape: definition; escape_witness: none;
+* birth: proof_shape: bind-only (definition); escape_witness: none;
   consumers: balance, rate_curvature, score_variance_bound.
-* death: proof_shape: definition; escape_witness: none;
+* death: proof_shape: bind-only (definition); escape_witness: none;
   consumers: balance, rate_curvature, score_variance_bound.
 * weight_pos: proof_shape: bind-only; escape_witness: none;
   consumers: score_variance_bound, total_pos.

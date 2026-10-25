@@ -21,9 +21,9 @@ minors with Weighting.coefficientwise_weighting.
 
 Per-declaration proof_shape (local names belong to this namespace;
 cross-module names have prefix D5.S3.Analytic):
-* binomialProduct: proof_shape: definition; escape_witness: none;
+* binomialProduct: proof_shape: bind-only (definition); escape_witness: none;
   consumers: KarpZhangGamma.Kernel.binomialGamma_sum, KarpZhangGamma.Kernel.reciprocalGamma_sum, KarpZhangGamma.Result.two_variable_nonneg, binomialProduct_comm, binomialProduct_succ, binomial_minor, productCoeff_eq, smoothing_minor.
-* productCoeff: proof_shape: definition; escape_witness: none;
+* productCoeff: proof_shape: bind-only (definition); escape_witness: none;
   consumers: KarpZhangGamma.Kernel.reciprocalGamma_sum, KarpZhangGamma.Result.transformDelta, KarpZhangGamma.Result.two_variable_nonneg, KarpZhangGamma.Series.transformed_delta, KarpZhangGamma.Series.transformed_product, productCoeff_eq, smoothed_weighting, smoothing_minor.
 * balanced_product: proof_shape: content; escape_witness: KarpZhangReciprocal.Result.ratio_bound;
   consumers: binomial_minor.

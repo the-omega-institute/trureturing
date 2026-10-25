@@ -19,11 +19,11 @@ and exact zero-support convention are retained.
 
 Per-declaration proof_shape (local names belong to this namespace;
 cross-module names have prefix D5.S3.Analytic):
-* IsLogConcave: proof_shape: definition; escape_witness: none;
+* IsLogConcave: proof_shape: bind-only (definition); escape_witness: none;
   consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, KarpZhangGamma.Result.two_variable_nonneg, KarpZhangGamma.Series.gamma_half, KarpZhangGamma.Smoothing.balanced_product, KarpZhangGamma.Smoothing.binomial_minor, KarpZhangGamma.Smoothing.smoothed_weighting, KarpZhangGamma.Smoothing.smoothing_minor, balanced_step, positive_between, ratio_bound, reciprocal_half.
-* delta: proof_shape: definition; escape_witness: none;
+* delta: proof_shape: bind-only (definition); escape_witness: none;
   consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, abel_reduction, reciprocal_half.
-* increment: proof_shape: definition; escape_witness: none;
+* increment: proof_shape: bind-only (definition); escape_witness: none;
   consumers: abel_layers, abel_reduction, layers, telescope.
 * positive_between: proof_shape: bind-only; escape_witness: none;
   consumers: balanced_step, ratio_bound.

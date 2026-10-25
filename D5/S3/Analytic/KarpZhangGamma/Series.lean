@@ -20,15 +20,15 @@ There is no convergence or growth hypothesis.
 
 Per-declaration proof_shape (local names belong to this namespace;
 cross-module names have prefix D5.S3.Analytic):
-* gammaCoeff: proof_shape: definition; escape_witness: none;
+* gammaCoeff: proof_shape: bind-only (definition); escape_witness: none;
   consumers: gammaCoeff_one, gammaCoeff_recurrence, gammaCoeff_zero, gammaDelta, gamma_half, positive_beta_transform, series_identification.
-* scale: proof_shape: definition; escape_witness: none;
+* scale: proof_shape: bind-only (definition); escape_witness: none;
   consumers: gammaCoeff_zero, gamma_half, positive_beta_transform, scale_neutral, scale_pos, scale_succ, series_identification.
-* indices: proof_shape: definition; escape_witness: none;
+* indices: proof_shape: bind-only (definition); escape_witness: none;
   consumers: diagonal, diagonal_eq, diagonal_jshift, diagonal_mul_left, diagonal_recurrence, diagonal_rshift, mem_indices.
 * mem_indices: proof_shape: bind-only; escape_witness: none;
   consumers: diagonal_eq, diagonal_jshift, diagonal_recurrence, diagonal_rshift.
-* diagonal: proof_shape: definition; escape_witness: none;
+* diagonal: proof_shape: bind-only (definition); escape_witness: none;
   consumers: diagonal_eq, diagonal_jshift, diagonal_mul_left, diagonal_product, diagonal_recurrence, diagonal_rshift, positive_beta_transform, transformCoeff_diagonal, transformed_product.
 * diagonal_eq: proof_shape: bind-only; escape_witness: none;
   consumers: diagonal_product, positive_beta_transform, transformCoeff_diagonal.
@@ -38,7 +38,7 @@ cross-module names have prefix D5.S3.Analytic):
   consumers: diagonal_recurrence.
 * diagonal_jshift: proof_shape: bind-only; escape_witness: none;
   consumers: diagonal_recurrence.
-* atom: proof_shape: definition; escape_witness: none;
+* atom: proof_shape: bind-only (definition); escape_witness: none;
   consumers: atom_jshift, atom_product, atom_rshift, diagonal_recurrence, positive_beta_transform, transformCoeff_diagonal, transformed_product.
 * atom_rshift: proof_shape: bind-only; escape_witness: none;
   consumers: diagonal_recurrence.
@@ -56,7 +56,7 @@ cross-module names have prefix D5.S3.Analytic):
   consumers: positive_beta_transform.
 * positive_beta_transform: proof_shape: content; escape_witness: positive_beta_transform;
   consumers: series_identification.
-* transformCoeff: proof_shape: definition; escape_witness: none;
+* transformCoeff: proof_shape: bind-only (definition); escape_witness: none;
   consumers: gamma_half, series_identification, transformCoeff_diagonal, transformed_delta, transformed_product.
 * series_identification: proof_shape: content; escape_witness: positive_beta_transform;
   consumers: gamma_half.
@@ -74,7 +74,7 @@ cross-module names have prefix D5.S3.Analytic):
   consumers: transformed_delta.
 * transformed_delta: proof_shape: bind-only; escape_witness: none;
   consumers: gamma_half.
-* gammaDelta: proof_shape: definition; escape_witness: none;
+* gammaDelta: proof_shape: bind-only (definition); escape_witness: none;
   consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, gamma_half.
 * gamma_half: proof_shape: content; escape_witness: positive_beta_transform;
   consumers: KarpZhangConjecture.Result.result.
