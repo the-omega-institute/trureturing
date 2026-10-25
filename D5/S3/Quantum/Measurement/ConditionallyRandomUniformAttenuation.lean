@@ -13,25 +13,21 @@ import D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality
 noncomputable section
 
 open scoped ComplexOrder MatrixOrder
+open D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality (luders)
+open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 
 namespace D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation
 
 variable {d m n : ℕ}
 
-def seqProduct (A B : Matrix (Fin d) (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
-  D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders A B
-
-def IsObservable (A : Fin m → Matrix (Fin d) (Fin d) ℂ) : Prop :=
-  D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.IsPOVM A
-
 def conditioned (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ) (y : Fin n) :
-    Matrix (Fin d) (Fin d) ℂ := ∑ x, seqProduct (A x) (B y)
+    Matrix (Fin d) (Fin d) ℂ := ∑ x, luders (A x) (B y)
 
 def UniformAttenuation (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ) : Prop :=
-  ∀ x y, seqProduct (A x) (B y) = (1 / n : ℂ) • A x ∧
-    seqProduct (B y) (A x) = (1 / m : ℂ) • B y
+  ∀ x y, luders (A x) (B y) = (1 / n : ℂ) • A x ∧
+    luders (B y) (A x) = (1 / m : ℂ) • B y
 
 def ConditionallyRandom (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ) : Prop :=
@@ -41,7 +37,7 @@ def ConditionallyRandom (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
 def claim : Prop :=
   ∀ (d m n : ℕ) (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ),
-    0 < m → 0 < n → IsObservable A → IsObservable B →
+    0 < m → 0 < n → IsPOVM A → IsPOVM B →
     ConditionallyRandom A B → UniformAttenuation A B
 
 private lemma sqrt_sandwich_trace (K X : Matrix (Fin d) (Fin d) ℂ)
@@ -90,18 +86,17 @@ private lemma psd_sum_sandwich_zero
     _ = 0 := by rw [hy, mul_zero, zero_mul]
 
 private lemma attenuation_of_conditioned
-    (A : Fin m → Matrix (Fin d) (Fin d) ℂ) (hA : IsObservable A)
+    (A : Fin m → Matrix (Fin d) (Fin d) ℂ) (hA : IsPOVM A)
     (B : Matrix (Fin d) (Fin d) ℂ) (hB : B.IsHermitian)
     (c : ℂ) (hc : IsSelfAdjoint c)
-    (hcond : ∑ x, seqProduct (A x) B = c • 1) :
-    ∀ x, seqProduct (A x) B = c • A x := by
+    (hcond : ∑ x, luders (A x) B = c • 1) :
+    ∀ x, luders (A x) B = c • A x := by
   have hroot (x : Fin m) : CFC.sqrt (A x) * CFC.sqrt (A x) = A x :=
     CFC.sqrt_mul_sqrt_self (A x) (hA.1 x).nonneg
   have hcenter (x : Fin m) :
       CFC.sqrt (A x) * (B - c • 1) * CFC.sqrt (A x) =
-        seqProduct (A x) B - c • A x := by
-    unfold seqProduct
-    unfold D5.S3.Quantum.Measurements.CalibratedJointMeasurabilityOptimality.luders
+        luders (A x) B - c • A x := by
+    unfold luders
     rw [mul_sub, sub_mul, mul_smul_comm, mul_one, smul_mul_assoc, hroot x]
   have hsum : ∑ x, CFC.sqrt (A x) * (B - c • 1) * CFC.sqrt (A x) = 0 := by
     simp_rw [hcenter]
