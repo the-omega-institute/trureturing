@@ -4,7 +4,19 @@
 
 A negative Cauchy coefficient for a reciprocal q-gamma series.
 
-**Definition 1.1 (Reciprocal q-gamma by its infinite product).**
+**Definition 1.1 (The q-Pochhammer infinite product).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \operatorname{qprod} \left(q, a\right) = \prod'_{j: \mathbb{N}} (1 - a \cdot (q)^{j})$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/Result.qprod` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The product with parameter a has factors 1−aqʲ. It supplies the normalized series in FunctionResult.
+
+**Definition 1.2 (Reciprocal q-gamma by its infinite product).**
 
 $$\forall q \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{rqgamma}\left(q, x\right) = \frac{\prod'_{j: \mathbb{N}} (1 - (q)^{x + j})}{\prod'_{j: \mathbb{N}} (1 - (q)^{j + 1}) \cdot (1 - q)^{1 - x}}$$
 
@@ -16,7 +28,7 @@ $$\forall q \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{rqgamma}
 
 Equation (6), page 4 of arXiv:1702.03788v1: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” The preceding definition is “(a; q)∞ = lim n→∞ (a; q)n”, with (a; q)n the product of 1−aq^k for k from zero to n−1. For real 0<q<1 the numerator in rqgamma is (q^x;q)∞ and its denominator is (q;q)∞ times (1−q)^(1−x). Thus rqgamma is the reciprocal of equation (6) wherever Γq is finite. For 0<q<1 the denominator is nonzero. The numerator vanishes exactly when x is a nonpositive integer: a factor is zero precisely when x+j=0 for some natural j. This gives the reciprocal extension by zero used for the series coefficients.
 
-**Definition 1.2 (The exact Cauchy coefficient).**
+**Definition 1.3 (The exact Cauchy coefficient).**
 
 $$\forall q \in \mathbb{R},\; \forall g \in \mathbb{N} \to \mathbb{R},\; \forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall m \in \mathbb{N},\; \operatorname{qturanCoeff}\left(q, g, mu, alpha, beta, m\right) = \sum_{k\in \operatorname{Finset.range}\left(m + 1\right)} g\left(k\right) \cdot g\left(m - k\right) \cdot (\operatorname{rqgamma}\left(q, k + mu + alpha\right) \cdot \operatorname{rqgamma}\left(q, m - k + mu + beta\right) - \operatorname{rqgamma}\left(q, k + mu\right) \cdot \operatorname{rqgamma}\left(q, m - k + mu + alpha + beta\right))$$
 
@@ -28,7 +40,7 @@ $$\forall q \in \mathbb{R},\; \forall g \in \mathbb{N} \to \mathbb{R},\; \forall
 
 Theorem 3 uses g(µ;x)=∑ₙ₌₀∞ gₙxⁿ/Γq(µ+n) and ∆g(α,β;x)=g(µ+α;x)g(µ+β;x)−g(µ;x)g(µ+α+β;x). The coefficient of x^m in these two Cauchy products is exactly qturanCoeff: k runs from zero to m and the second index is m−k. The subtraction order is unchanged.
 
-**Definition 1.3 (The coefficient assertion for positive real shifts).**
+**Definition 1.4 (The coefficient assertion for positive real shifts).**
 
 $$claim = \left(\forall q \in \mathbb{R},\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N} \to \mathbb{R},\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq}\left(g\right)) \Rightarrow (\forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max}\left(-beta, -1\right) \le mu) \Rightarrow ((alpha \le beta + 1) \Rightarrow (\forall m \in \mathbb{N},\; 0 < \operatorname{qturanCoeff}\left(q, g, mu, alpha, beta, m\right))))))))\right)$$
 
@@ -44,7 +56,7 @@ Conjecture 1, page 12: “All conclusions of Theorem 3 are valid for all α > 0,
 
 The definition on page 3 states: “A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.” These are exactly the nontriviality, nonnegativity, log-concavity and no-internal-zeros conditions of the reused D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq. Its frozen theorem admissible_one supplies the constant sequence gₙ=1.
 
-**Theorem 1.4 (A negative coefficient of degree two).**
+**Theorem 1.5 (A negative coefficient of degree two).**
 
 $$\neg claim$$
 
@@ -69,6 +81,7 @@ The conclusion concerns the coefficient clause. The function-positivity and para
 ## References
 
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.claim`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qturanCoeff`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.result`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.rqgamma`

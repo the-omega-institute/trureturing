@@ -19,6 +19,11 @@ public sealed class LeanCacheRunScriptTests
         var calls = Path.Combine(fixture.Path, "calls");
         Directory.CreateDirectory(Path.GetDirectoryName(script)!);
         Directory.CreateDirectory(bin);
+        const string gitReader = "tools/scripts/worktree/lean-git/git";
+        var gitTarget = Path.Combine(repository, gitReader);
+        Directory.CreateDirectory(Path.GetDirectoryName(gitTarget)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), gitReader), gitTarget);
+        File.SetUnixFileMode(gitTarget, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"), script);
         WriteExecutable(Path.Combine(bin, "dotnet"),
             "#!/bin/bash\nprintf '%s\\n' call \"$@\" >> \"$CALLS\"\nexit \"$BUILD_EXIT\"\n");
@@ -56,6 +61,11 @@ public sealed class LeanCacheRunScriptTests
         var wrapped = Path.Combine(fixture.Path, "wrapped-command");
         Directory.CreateDirectory(Path.GetDirectoryName(script)!);
         Directory.CreateDirectory(bin);
+        const string gitReader = "tools/scripts/worktree/lean-git/git";
+        var gitTarget = Path.Combine(repository, gitReader);
+        Directory.CreateDirectory(Path.GetDirectoryName(gitTarget)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), gitReader), gitTarget);
+        File.SetUnixFileMode(gitTarget, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         File.Copy(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"),
             script);

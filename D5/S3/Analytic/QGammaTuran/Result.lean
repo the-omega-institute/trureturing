@@ -66,7 +66,7 @@ def qturanCoeff (q : ℝ) (g : ℕ → ℝ) (μ α β : ℝ) (m : ℕ) : ℝ :=
     (rqgamma q ((k:ℝ)+μ+α) * rqgamma q (((m-k:ℕ):ℝ)+μ+β) -
       rqgamma q ((k:ℝ)+μ) * rqgamma q (((m-k:ℕ):ℝ)+μ+α+β))
 
-private def qprod (q a : ℝ) : ℝ := ∏' j : ℕ, (1 - a * q ^ j)
+def qprod (q a : ℝ) : ℝ := ∏' j : ℕ, (1 - a * q ^ j)
 
 private def checkLower (d b : ℕ) (s : ℕ × ℕ) : List (ℕ × ℕ) → Prop
   | [] => True
