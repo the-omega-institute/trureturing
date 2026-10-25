@@ -158,27 +158,9 @@ def registration : Contract.Registration.{1,1,1,0,0,0,1,0,0,0,0,0} (@same_handle
 
 #print axioms sourceRegistration
 
-
--- Transient exact fixed-H hypothesis/domain check; removed after compilation.
-example (H : ℕ) (hH : 1 ≤ H) (x : ℕ × ℕ) :
-    (∃ t y, ServiceRun (arithmeticService H) () zeroTariffs
-      (PositiveClosingExecution.controller H) H
-      (PositiveClosingExecution.controller H).initial x
-      (PositiveClosingExecution.executionEvents H x) t y (residueSource H x)
-      (serviceBill zeroTariffs (PositiveClosingExecution.executionEvents H x) x)) ∧
-    (∀ K, K ≠ H → ¬ Completion (arithmeticService H) () K) := by
-  constructor
-  · obtain ⟨t, y, hr, _⟩ :=
-      @same_handle_return.{u} Unit (ℕ × ℕ) H hH (arithmeticService H) ()
-        (arithmeticComplete H) zeroTariffs x trivial
-    exact ⟨t, y, hr⟩
-  · intro K hKH complete
-    obtain ⟨g, y, hr⟩ := complete.read x trivial
-    exact hKH hr.1
-
 run_cmd do
   let allowed : Array Lean.Name := #[``propext, ``Classical.choice, ``Quot.sound]
-  for name in #[``registration] do
+  for name in #[``same_handle_return, ``sourceRegistration, ``registration] do
     let axioms ← Lean.collectAxioms name
     for axiomName in axioms do
       unless allowed.contains axiomName do

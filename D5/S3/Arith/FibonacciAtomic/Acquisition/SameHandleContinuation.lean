@@ -122,24 +122,24 @@ private theorem service_agrees {Handle World : Type} {S L : Type*}
     | halt ht =>
       cases Instruction.halt.inj (hs.symm.trans ht)
       exact ⟨rfl, rfl, hv, rfl, rfl, hx⟩
-    | compute ht _ => simp only [hs] at ht
-    | action ht _ _ => simp only [hs] at ht
-    | read ht _ _ => simp only [hs] at ht
+    | compute ht _ => cases hs.symm.trans ht
+    | action ht _ _ => cases hs.symm.trans ht
+    | read ht _ _ => cases hs.symm.trans ht
   | compute hs _ ih =>
     intro x hx hv rs t' y l' n actual
     cases actual with
-    | halt ht => simp only [hs] at ht
+    | halt ht => cases hs.symm.trans ht
     | compute ht tail =>
       cases Instruction.compute.inj (hs.symm.trans ht)
       obtain ⟨rfl, rfl, hu, rfl, hn, hl⟩ := ih x hx hv tail
       exact ⟨rfl, rfl, hu, rfl, hn, hl⟩
-    | action ht _ _ => simp only [hs] at ht
-    | read ht _ _ => simp only [hs] at ht
+    | action ht _ _ => cases hs.symm.trans ht
+    | read ht _ _ => cases hs.symm.trans ht
   | @action s s' v b es t u l hs _ ih =>
     intro x hx hv rs t' y l' n actual
     cases actual with
-    | halt ht => simp only [hs] at ht
-    | compute ht _ => simp only [hs] at ht
+    | halt ht => cases hs.symm.trans ht
+    | compute ht _ => cases hs.symm.trans ht
     | action ht ha tail =>
       obtain ⟨rfl, rfl⟩ := Instruction.action.inj (hs.symm.trans ht)
       have he := B.action_effect _ _ _ _ hx ha
@@ -147,13 +147,13 @@ private theorem service_agrees {Handle World : Type} {S L : Type*}
         ih _ he.2 (he.1.trans (congrArg (step b) hv)) tail
       refine ⟨rfl, rfl, hu, rfl, ?_, hl⟩
       simp only [serviceBill, hv, hn]
-    | read ht _ _ => simp only [hs] at ht
+    | read ht _ _ => cases hs.symm.trans ht
   | @read s k v es t u l hs _ ih =>
     intro x hx hv rs t' y l' n actual
     cases actual with
-    | halt ht => simp only [hs] at ht
-    | compute ht _ => simp only [hs] at ht
-    | action ht _ _ => simp only [hs] at ht
+    | halt ht => cases hs.symm.trans ht
+    | compute ht _ => cases hs.symm.trans ht
+    | action ht _ _ => cases hs.symm.trans ht
     | @read _ k' _ x' g _ _ _ _ _ ht ha tail =>
       cases Instruction.read.inj (hs.symm.trans ht)
       obtain ⟨he, hg, hl⟩ := B.read_effect _ _ _ _ _ hx ha
