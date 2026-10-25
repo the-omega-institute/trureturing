@@ -335,7 +335,7 @@ private theorem actualResolventKernel_fourier {a : ℝ} (ha : 0 < a) (ξ : ℝ) 
       push_cast at hm0 hn0 hd ⊢
       field_simp [hm0, hn0, ha0, hd]
       <;> ring_nf
-      <;> simp only [Complex.I_sq]
+      <;> norm_num [Complex.I_sq]
       <;> ring
 
 /-- Exact inverse operator kernel with the normalization used by the
@@ -612,7 +612,7 @@ private theorem actualResolventSymbol_sq_integrable {a : ℝ} (ha : 0 < a) :
           (by nlinarith : a ^ 2 ≤ ξ ^ 2 + a ^ 2))
     change ‖(((ξ ^ 2 + a ^ 2)⁻¹ : ℝ) : ℂ) ^ 2‖ ≤
       (a ^ 2)⁻¹ * ‖(((ξ ^ 2 + a ^ 2)⁻¹ : ℝ) : ℂ)‖
-    rw [norm_pow, Complex.norm_of_nonneg hr0, Complex.norm_of_nonneg hr0]
+    rw [norm_pow, Complex.norm_of_nonneg hr0]
     simpa only [pow_two] using mul_le_mul_of_nonneg_right hr hr0
 
 private theorem actualResolventKernel_norm_le {a : ℝ} (ha : 0 < a) (z : ℝ) :
