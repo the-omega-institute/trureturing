@@ -188,6 +188,7 @@ theorem shifted_actual_gamma_graph_equivalence {f : ℝ → ℂ}
       (25 / gammaScale)).mono' hQuarterM
     exact Eventually.of_forall fun ξ => by
       have hq : 0 ≤ ‖unitarySourceFourier f ξ‖ ^ 2 := sq_nonneg _
+      dsimp only
       rw [Real.norm_eq_abs, abs_of_nonneg
         (mul_nonneg (actual_bare_quarter_nonneg ξ) hq)]
       have h := mul_le_mul_of_nonneg_right (quarter_le_shifted_gamma_absolute c ξ) hq
@@ -196,12 +197,13 @@ theorem shifted_actual_gamma_graph_equivalence {f : ℝ → ℂ}
           (25 / gammaScale) *
             (|gammaWeight ξ + c| * ‖unitarySourceFourier f ξ‖ ^ 2 +
               gammaRemainderBound c * ‖unitarySourceFourier f ξ‖ ^ 2) from by
-          nlinarith [h])
+          convert h using 1 <;> ring)
   · intro hQ
     apply ((hQ.const_mul gammaScale).add
       (hmass.const_mul (gammaRemainderBound c))).mono' hGammaM
     exact Eventually.of_forall fun ξ => by
       have hq : 0 ≤ ‖unitarySourceFourier f ξ‖ ^ 2 := sq_nonneg _
+      dsimp only
       rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hq]
       have h := mul_le_mul_of_nonneg_right (shifted_gamma_quarter_absolute_upper c ξ) hq
       calc
@@ -258,22 +260,35 @@ private theorem actual_gamma_reflected_cross_complete_series
   let P : ℝ → ℂ := fun ξ => actualResolventSymbol (5 / 4) ξ * C ξ
   let K : ℝ := gammaScale * gammaBase + 1 + 4 * Real.sqrt Real.pi + c
   have hA : Integrable A volume := by
-    simpa only [A, C, actualSourceSpectralCross, mul_assoc] using hW₀
+    convert hW₀ using 1
+    funext ξ
+    exact (mul_assoc _ _ _).symm
   have hB : Integrable B volume := hB₀
   have hP : Integrable P volume := by
-    simpa only [P, C, actualSourceSpectralCross, mul_assoc] using hP₀
+    convert hP₀ using 1
+    funext ξ
+    exact (mul_assoc _ _ _).symm
   have hC : Integrable C volume := actual_unweighted_reflected_cross_integrable hu₁ hu₂
   have hARe : (∫ ξ, A ξ).re =
       -(D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.actualHankel (1 / 4) u).re / 2 := by
-    simpa only [A, C, actualSourceSpectralCross, mul_assoc] using hWi₀
+    convert hWi₀ using 1
+    apply congrArg Complex.re
+    apply integral_congr_ae
+    exact Eventually.of_forall fun ξ => (mul_assoc _ _ _).symm
   have hBRe : (∫ ξ, B ξ).re =
       ∑' n : ℕ, actualResidualLayerCrossValue (5 / 4) ((n : ℝ) + 1 / 4) u :=
     hBS.tsum_eq.symm
   have hPRe : (∫ ξ, P ξ).re = Complex.normSq (literalSourceLaplace (5 / 4) u) / (5 / 2) := by
-    have h := congrArg Complex.re hPi₀
-    norm_num only [show 2 * (5 / 4 : ℝ) = 5 / 2 by norm_num] at h
-    simpa only [P, C, actualSourceSpectralCross, literalSourceLaplace, mul_assoc,
-      Complex.div_ofReal_re, Complex.ofReal_re] using h
+    have hPi : (∫ ξ, P ξ) =
+        (Complex.normSq (literalSourceLaplace (5 / 4) u) : ℂ) /
+          ((2 * (5 / 4) : ℝ) : ℂ) := by
+      convert hPi₀ using 1
+      · apply integral_congr_ae
+        exact Eventually.of_forall fun ξ => (mul_assoc _ _ _).symm
+      · rfl
+    have h := congrArg Complex.re hPi
+    norm_num [Complex.div_ofReal_re] at h
+    exact h
   have hCRe : (∫ ξ, C ξ).re = 0 := actual_constant_reflected_cross_re_zero hu₁ hu₂
   have hPoint (ξ : ℝ) :
       ((gammaWeight ξ + c : ℝ) : ℂ) * C ξ =
@@ -287,6 +302,11 @@ private theorem actual_gamma_reflected_cross_complete_series
   have hI2 := hB.const_mul ((gammaScale * (3 / 2) : ℝ) : ℂ)
   have hI3 := hP.const_mul ((gammaScale * (3 / 2) * gammaBase : ℝ) : ℂ)
   have hI4 := hC.const_mul (K : ℂ)
+  have hI12 : Integrable (fun ξ => (gammaScale : ℂ) * A ξ -
+      ((gammaScale * (3 / 2) : ℝ) : ℂ) * B ξ) volume := hI1.sub hI2
+  have hI123 : Integrable (fun ξ => (gammaScale : ℂ) * A ξ -
+      ((gammaScale * (3 / 2) : ℝ) : ℂ) * B ξ -
+      ((gammaScale * (3 / 2) * gammaBase : ℝ) : ℂ) * P ξ) volume := hI12.sub hI3
   have hGammaCross : Integrable (fun ξ : ℝ => ((gammaWeight ξ + c : ℝ) : ℂ) * C ξ) volume := by
     simp_rw [hPoint]
     exact ((hI1.sub hI2).sub hI3).add hI4
@@ -296,8 +316,8 @@ private theorem actual_gamma_reflected_cross_complete_series
         ((gammaScale * (3 / 2) * gammaBase : ℝ) : ℂ) * (∫ ξ, P ξ) +
         (K : ℂ) * (∫ ξ, C ξ) := by
     simp_rw [hPoint]
-    rw [integral_add ((hI1.sub hI2).sub hI3) hI4,
-      integral_sub (hI1.sub hI2) hI3, integral_sub hI1 hI2]
+    rw [integral_add hI123 hI4,
+      integral_sub hI12 hI3, integral_sub hI1 hI2]
     simp_rw [integral_const_mul]
   refine ⟨hGammaCross, ?_⟩
   change Real.sqrt Real.pi * (-(∫ ξ : ℝ, ((gammaWeight ξ + c : ℝ) : ℂ) * C ξ).re) = _
@@ -356,7 +376,7 @@ private theorem actual_gamma_literal_even_energy_difference_complete_series
   let R : ℝ → ℂ := fun ξ => ((gammaWeight ξ + c : ℝ) : ℂ) * actualSourceSpectralCross u ξ
   have hA : Integrable A volume := hGamma
   have hB : Integrable B volume := by
-    simpa only [A, B, literal_shifted_gamma_even] using
+    simpa only [Function.comp_def, A, B, literal_shifted_gamma_even] using
       (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
   obtain ⟨hR, hRvalue⟩ := actual_gamma_reflected_cross_complete_series c hu₁ hu₂ hGamma
   have hReflect : (∫ ξ, B ξ) = ∫ ξ, A ξ := by
@@ -373,14 +393,18 @@ private theorem actual_gamma_literal_even_energy_difference_complete_series
       _ = ∫ ξ : ℝ, (A ξ + B ξ) + 2 * (R ξ).re := by
         apply integral_congr_ae
         exact Eventually.of_forall fun ξ => by
+          dsimp only
           rw [actual_even_zero_fourier hu₁, hPoint]
           dsimp [A, B, R, actualSourceSpectralCross]
           simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
             zero_mul, zero_add, sub_zero]
           ring
       _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
-        rw [integral_add (hA.add hB) (hR.re.const_mul 2),
-          integral_add hA hB, integral_const_mul, integral_re hR]
+        have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
+        have hTerm : Integrable (fun ξ => 2 * (R ξ).re) volume := hR.re.const_mul 2
+        rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul]
+        have hre : (∫ ξ : ℝ, (R ξ).re) = (∫ ξ : ℝ, R ξ).re := integral_re hR
+        rw [hre]
       _ = _ := by rw [hReflect]; ring
   constructor
   · simpa only [actual_literal_even_fourier] using hGE
@@ -428,17 +452,19 @@ private theorem gamma_tail_scalar_hasSum : HasSum gammaTailScalar
     ((4 / 5) * ((Complex.digamma (1 / 4)).re - (Complex.digamma 1).re +
       Real.log 2 + 49 / 15)) := by
   have hquarter : (1 / 4 : ℂ) ∈ Complex.integerComplement := by
-    simpa only [Complex.ofReal_zero, mul_zero, add_zero] using
-      Zeta23.MuFields.abscissa_mem (a := (1 / 4 : ℝ)) (by norm_num) (by norm_num) 0
+    convert Zeta23.MuFields.abscissa_mem (a := (1 / 4 : ℝ))
+      (by norm_num) (by norm_num) 0 using 1 <;> norm_num
   have hhalf : (1 / 2 : ℂ) ∈ Complex.integerComplement := by
-    simpa only [Complex.ofReal_zero, mul_zero, add_zero] using
-      Zeta23.MuFields.abscissa_mem (a := (1 / 2 : ℝ)) (by norm_num) (by norm_num) 0
+    convert Zeta23.MuFields.abscissa_mem (a := (1 / 2 : ℝ))
+      (by norm_num) (by norm_num) 0 using 1 <;> norm_num
   have h54 : (5 / 4 : ℂ) ∈ Complex.integerComplement := by
     convert (Complex.add_intCast_mem_integerComplement 1).2 hquarter using 1 <;> norm_num
   have h52 : (5 / 2 : ℂ) ∈ Complex.integerComplement := by
     convert (Complex.add_intCast_mem_integerComplement 2).2 hhalf using 1 <;> norm_num
-  have hA := real_digamma_gap_hasSum (z := (5 / 4 : ℝ)) (by norm_num) h54
-  have hB := real_digamma_gap_hasSum (z := (5 / 2 : ℝ)) (by norm_num) h52
+  have hA := real_digamma_gap_hasSum (z := (5 / 4 : ℝ)) (by norm_num)
+    (by convert h54 using 1 <;> norm_num)
+  have hB := real_digamma_gap_hasSum (z := (5 / 2 : ℝ)) (by norm_num)
+    (by convert h52 using 1 <;> norm_num)
   have h := ((hA.mul_left 2).sub hB).mul_left (2 / 5 : ℝ)
   have hRow (n : ℕ) : gammaTailScalar n =
       (2 / 5 : ℝ) *
@@ -452,8 +478,11 @@ private theorem gamma_tail_scalar_hasSum : HasSum gammaTailScalar
       have hp : 0 < ((n : ℝ) + 9 / 4) ^ 2 - (5 / 4 : ℝ) ^ 2 := by
         nlinarith [Nat.cast_nonneg (α := ℝ) n]
       exact hp.ne'
+    have hfactor : ((n : ℝ) + 9 / 4) ^ 2 - (5 / 4 : ℝ) ^ 2 =
+        ((n : ℝ) + 1) * ((n : ℝ) + 7 / 2) := by ring
     unfold gammaTailScalar
-    field_simp [h1, h2, h3, h4, hd]
+    rw [hfactor]
+    field_simp (disch := positivity)
     <;> ring
   have hQ := congrArg Complex.re
     (Complex.digamma_apply_add_nat
@@ -466,10 +495,10 @@ private theorem gamma_tail_scalar_hasSum : HasSum gammaTailScalar
   have hHalfValue : (Complex.digamma (1 / 2)).re =
       (Complex.digamma 1).re - 2 * Real.log 2 := by
     rw [Complex.digamma_one_half, Complex.digamma_one]
-    simp only [Complex.sub_re, Complex.neg_re, Complex.mul_re,
-      Complex.ofReal_re, Complex.ofReal_im, Complex.re_ofNat, Complex.im_ofNat,
-      zero_mul, sub_zero, Complex.log_ofReal_re]
-    ring
+    have hlog : (Complex.log (2 : ℂ)).re = Real.log 2 := by
+      exact Complex.log_ofReal_re (2 : ℝ)
+    norm_num [Complex.sub_re, Complex.neg_re, Complex.mul_re, hlog]
+    <;> ring
   have hQValue : (Complex.digamma (9 / 4)).re =
       (Complex.digamma (1 / 4)).re + 24 / 5 := by
     norm_num [Finset.sum_range_succ] at hQ ⊢
@@ -484,8 +513,8 @@ private theorem gamma_tail_scalar_hasSum : HasSum gammaTailScalar
   convert h using 1
   · ext n
     exact hRow n
-  · norm_num only [show (5 / 4 : ℂ) + 1 = 9 / 4 by norm_num,
-      show (5 / 2 : ℂ) + 1 = 7 / 2 by norm_num]
+  · norm_num only [show ((5 / 4 : ℝ) : ℂ) + 1 = 9 / 4 by norm_num,
+      show ((5 / 2 : ℝ) : ℂ) + 1 = 7 / 2 by norm_num]
     rw [hQValue, hHValue, hHalfValue]
     linarith [hOne]
 
@@ -532,8 +561,7 @@ private theorem actual_gamma_actual_series_compression
       add_comm (1 / 4 : ℝ)] using hL₀
   have hH : (D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.actualHankel (1 / 4) u).re =
       ∑' n : ℕ, L n := by
-    rw [hH₀]
-    simp only [Complex.ofReal_re]
+    rw [hH₀, ← Complex.ofReal_tsum, Complex.ofReal_re]
     apply tsum_congr
     intro n
     simp only [L, literalSourceLaplace,
@@ -571,7 +599,10 @@ private theorem actual_gamma_actual_series_compression
     norm_num only [show (1 : ℝ) + 1 / 4 = 5 / 4 by norm_num]
     have hShift : (n : ℝ) + 2 + 1 / 4 = (n : ℝ) + 9 / 4 := by ring
     simp_rw [hShift]
-    field_simp [hc, h1, h2, hd]
+    have hfactor : ((n : ℝ) + 9 / 4) ^ 2 - (5 / 4 : ℝ) ^ 2 =
+        ((n : ℝ) + 1) * ((n : ℝ) + 7 / 2) := by ring
+    rw [hfactor]
+    field_simp (disch := positivity)
     <;> ring
   have h3V := Summable.mul_left (3 : ℝ) hVt
   have h3T := Summable.mul_right (L 1) (Summable.mul_left (3 / 2 : ℝ) hT)
@@ -580,7 +611,7 @@ private theorem actual_gamma_actual_series_compression
   have hPsum : (∑' n : ℕ, actualGammaPositiveTailTerm u n) =
       (∑' n : ℕ, L (n + 2)) + 3 * (∑' n : ℕ, V (n + 2)) +
         (3 / 2 : ℝ) * (∑' n : ℕ, gammaTailScalar n) * L 1 := by
-    rw [tsum_congr hTailRow, tsum_add (hLt.add h3V) h3T, tsum_add hLt h3V]
+    rw [tsum_congr hTailRow, (hLt.add h3V).tsum_add h3T, hLt.tsum_add h3V]
     simp_rw [tsum_mul_left, tsum_mul_right]
   have hLsplit := (hL.sum_add_tsum_nat_add 2).symm
   have hVsplit := (hV.sum_add_tsum_nat_add 2).symm
