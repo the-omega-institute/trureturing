@@ -208,9 +208,10 @@ private theorem strict_violation (r : ℝ) (hr : 0 < r) (hb : r < 1/4) :
     (by norm_num) (by norm_num) hy hy1 hs hs1
   have hratio : 2*((2-3*r)/(6*(1-r)))/(1-(2-3*r)/(6*(1-r))) =
       (4-6*r)/(4-3*r) := by
-    have h1 : 1-r ≠ 0 := by linarith
-    have h4 : 4-r*3 ≠ 0 := by linarith
-    field_simp [h1, h4, ne_of_gt (sub_pos.mpr hs1)]
+    have h1 : 0 < 1-r := by linarith
+    have h4 : 0 < 4-r*3 := by linarith
+    have hd : 0 < 1-(2-3*r)/(6*(1-r)) := sub_pos.mpr hs1
+    field_simp (disch := first | positivity | linarith)
     ring
   rw [hratio] at he
   have hl : Real.log ((4-6*r)/(4-3*r)) < 0 :=
