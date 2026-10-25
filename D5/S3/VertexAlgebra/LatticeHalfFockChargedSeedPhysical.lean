@@ -521,7 +521,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeHalfFockChargedSeedPhysical
 open LatticeGeneratingFieldLocality LatticeHalfFock
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockChargedCoefficients
-open LatticeHalfFockFockNormalField LatticeHalfFockFiniteCorrection
+open LatticeHalfFockFockNormalField
 open scoped BigOperators TensorProduct
 noncomputable section
 
