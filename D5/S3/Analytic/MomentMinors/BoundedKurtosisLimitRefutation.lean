@@ -50,7 +50,16 @@ private lemma witness_probability : IsProbabilityMeasure witness := by
   norm_num [ENNReal.toReal_add]
 
 private lemma witness_bounds : ∀ᵐ x ∂witness, (1 : ℝ) ≤ x ∧ x ≤ 3 := by
-  sorry
+  unfold witness
+  simp only [ae_add_measure_iff]
+  constructor
+  · constructor
+    · apply Measure.ae_smul_measure
+      norm_num [ae_dirac_eq]
+    · apply Measure.ae_smul_measure
+      norm_num [ae_dirac_eq]
+  · apply Measure.ae_smul_measure
+    norm_num [ae_dirac_eq]
 
 private lemma integral_witness (f : ℝ → ℝ) :
     (∫ x, f x ∂witness) = f 1 / 4 + f 2 / 2 + f 3 / 4 := by
@@ -74,7 +83,7 @@ private lemma bound_value : kurtosisBound (Real.sqrt (1 / 2) / 2) (1 / 2) = 3 / 
 /-- The three-point law with masses `1/4, 1/2, 1/4` on `1, 2, 3` violates the upper limit. -/
 theorem result : ¬ claim := by
   intro h
-  haveI : IsProbabilityMeasure witness := witness_probability
+  have : IsProbabilityMeasure witness := witness_probability
   have hm : 0 < mean witness := by rw [mean_witness]; norm_num
   have hv : 0 < centralMoment id 2 witness := by rw [moment_two_witness]; norm_num
   have hc := h 1 3 (by norm_num) witness witness_bounds hm hv
