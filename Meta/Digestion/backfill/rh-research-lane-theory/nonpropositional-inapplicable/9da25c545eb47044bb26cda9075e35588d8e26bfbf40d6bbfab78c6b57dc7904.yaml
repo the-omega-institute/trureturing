@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9da25c545eb47044bb26cda9075e35588d8e26bfbf40d6bbfab78c6b57dc7904
+  normalized_sha256: sha256:9da25c545eb47044bb26cda9075e35588d8e26bfbf40d6bbfab78c6b57dc7904
+cas_ref: sha256:9da25c545eb47044bb26cda9075e35588d8e26bfbf40d6bbfab78c6b57dc7904
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列出机器 owner 的文件路径目录清单，不陈述数学结果。
+    previous_atom_id: 13ff3fa6caca08a56862bfb2b8560161a3e7dd622fc0d371781d6a6235c39df9
+    next_atom_id: 026cdd425518e216df035e342777e322f1aa2340b803c925e25212199e848e93

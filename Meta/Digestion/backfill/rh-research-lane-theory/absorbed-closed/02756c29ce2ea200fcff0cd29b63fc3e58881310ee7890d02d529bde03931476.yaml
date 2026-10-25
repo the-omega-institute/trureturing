@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02756c29ce2ea200fcff0cd29b63fc3e58881310ee7890d02d529bde03931476
+  normalized_sha256: sha256:02756c29ce2ea200fcff0cd29b63fc3e58881310ee7890d02d529bde03931476
+cas_ref: sha256:02756c29ce2ea200fcff0cd29b63fc3e58881310ee7890d02d529bde03931476
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourierPhase
+    target_statement_id: sha256:6689b9ca93e156d464dbac68d134a600c8662f9e9583f09aadd9f428ee45cb0f
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.secondMagnusSwapKernel
+    target_statement_id: sha256:34c0fa0218c0f7e9f9b64a3e013918836e4601996b6fdcbcb869dbb0ed8468cc
+receipts:
+  unresolved_subitems: []

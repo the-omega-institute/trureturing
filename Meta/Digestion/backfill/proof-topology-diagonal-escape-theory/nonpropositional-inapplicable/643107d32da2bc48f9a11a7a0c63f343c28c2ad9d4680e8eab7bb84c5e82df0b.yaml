@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:643107d32da2bc48f9a11a7a0c63f343c28c2ad9d4680e8eab7bb84c5e82df0b
+  normalized_sha256: sha256:643107d32da2bc48f9a11a7a0c63f343c28c2ad9d4680e8eab7bb84c5e82df0b
+cas_ref: sha256:643107d32da2bc48f9a11a7a0c63f343c28c2ad9d4680e8eab7bb84c5e82df0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定路径的边序列含义、见证身份及 dominator 的定义，未声称具体图的 dominator 计算结果。
+    previous_atom_id: 708bc61f1a284a7a1617cab1268de458b2d5f39f292b916ee9b8900289ca2f51
+    next_atom_id: 347f8f50547ed137b156fdeaff14b04a281465e8b4e2d99029fd1694a601cd16

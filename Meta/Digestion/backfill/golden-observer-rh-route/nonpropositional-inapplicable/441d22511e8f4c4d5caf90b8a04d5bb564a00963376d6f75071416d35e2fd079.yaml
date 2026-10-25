@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:441d22511e8f4c4d5caf90b8a04d5bb564a00963376d6f75071416d35e2fd079
+  normalized_sha256: sha256:441d22511e8f4c4d5caf90b8a04d5bb564a00963376d6f75071416d35e2fd079
+cas_ref: sha256:441d22511e8f4c4d5caf90b8a04d5bb564a00963376d6f75071416d35e2fd079
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: F 波规定扩大 L 时同时报告谱隙和尾项，是报告要求，未断言两者取值。
+    previous_atom_id: c0be76bb3139e7509e7b77146d41237752a5c757b9b5fbed229e831dd67da430
+    next_atom_id: b9cd1ac878508571381809fa53558abd0bdf9804435e938e37e11f31734847c0
