@@ -162,6 +162,21 @@ private lemma amplitude_formula (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
   rw [one_div, inv_pow, mul_comm] at hentry
   simpa only [div_eq_mul_inv] using hentry
 
+private lemma fraction_ne_one (a : ℤ) (n : ℕ) (hmod : (a : ZMod 3) ≠ 0) :
+    ‖(a : ℂ) / (3 : ℂ) ^ (n + 1)‖ ≠ 1 := by
+  intro heq
+  have habs : |(a : ℝ)| = (3 : ℝ) ^ (n + 1) := by
+    rw [Complex.norm_div, Complex.norm_intCast, Complex.norm_pow,
+      Complex.norm_ofNat] at heq
+    exact (div_eq_one_iff_eq (pow_ne_zero _ (by norm_num))).mp heq
+  have habsInt : |a| = (3 : ℤ) ^ (n + 1) := by
+    exact_mod_cast habs
+  have hdvd : (3 : ℤ) ∣ a := by
+    apply (dvd_abs 3 a).mp
+    rw [habsInt]
+    exact dvd_pow_self 3 (Nat.succ_ne_zero n)
+  exact hmod ((ZMod.intCast_zmod_eq_zero_iff_dvd a 3).mpr hdvd)
+
 private lemma amplitude_ne_one (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) (k : ℕ) :
     ‖((U ^ k).mulVec (Pi.single 5 1)) 0‖ ≠ 1 := by
