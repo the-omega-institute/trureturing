@@ -231,6 +231,7 @@ private structure PreparedArtifact where
   inputTrace : BuildTrace
   artifact? : Option ReportArtifact
   prepareProduction : JobM Unit
+  judged : Bool
 
 -- These private jobs are interned in Lake's invocation store.
 module_data inspectorPreparedReport : PreparedArtifact
@@ -332,7 +333,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
         pure PUnit.unit
       let inputTrace ← getTrace
       let artifact? ← probeArtifact file build
-      return ⟨file, args, env, inputTrace, artifact?, prepareProduction⟩
+      return ⟨file, args, env, inputTrace, artifact?, prepareProduction, !ownInputs.isEmpty⟩
 
 private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := do
   let key := (mod.facet `inspectorPreparedReport).key
@@ -494,13 +495,18 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     let mut start := 0
     while start < requests.size do
       let chunk := requests.extract start (min (start + 100) requests.size)
-      for request in chunk do request.prepareProduction
-      runBatch pkg (chunk.map fun request =>
-        ("produce", request.args.set! 5 (request.file.addExtension "pending").toString))
-      for request in chunk do
-        let some mod := (← getWorkspace).findModule? request.args[1]!.toName
-          | error s!"registered report module is not in the Lake workspace: {request.args[1]!}"
-        discard <| commitPendingReport mod request
+      -- Native production separates raw and judged inputs within each window.
+      -- Commit each such chunk before the next native compiler process starts.
+      for judged in #[false, true] do
+        let group := chunk.filter fun request => request.judged == judged
+        unless group.isEmpty do
+          for request in group do request.prepareProduction
+          runBatch pkg (group.map fun request =>
+            ("produce", request.args.set! 5 (request.file.addExtension "pending").toString))
+          for request in group do
+            let some mod := (← getWorkspace).findModule? request.args[1]!.toName
+              | error s!"registered report module is not in the Lake workspace: {request.args[1]!}"
+            discard <| commitPendingReport mod request
       start := start + chunk.size
     try observePhase "lake-source-whitelists" "finish" catch _ => pure ()
   let batch ← registerJob "Inspector native production batch" batch

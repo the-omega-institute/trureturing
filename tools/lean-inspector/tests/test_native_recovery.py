@@ -64,6 +64,10 @@ class NativeRecoveryConsumerTests:
         # More than one real native chunk, with the existing four fixture roots.
         for index in range(100):
             self.write(f'D5/Durable{index:03}.lean', f'def durable{index:03} : Nat := {index}\n')
+        fixture = self.root / 'Fixture.lean'
+        fixture.write_text(fixture.read_text() + '\nnamespace LeanInformationAudit.Contract\n'
+            'structure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n'
+            'def durabilityInput : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
         control = self.root / 'chunk-interruption'
         control.write_text(interruption)
         producer = self.root / 'tools/lean-inspector/native.py'
@@ -87,8 +91,10 @@ class NativeRecoveryConsumerTests:
         state = self.root / '.lake/build/lean-inspector'
         names = json.loads((state / 'module-inputs.json').read_text())['modules']
         self.assertEqual(len(names), 104)
-        first = sorted(names)[:100]
-        remaining = sorted(names)[100:]
+        first = sorted(name for name in names if name != 'Fixture')
+        remaining = ['Fixture']
+        projection = json.loads((state / 'judge-inputs/Fixture.json').read_text())
+        self.assertEqual([row['name'] for row in projection['inputs']], ['durabilityInput'])
         self.assertIn('Fixture', json.loads((self.root / 'interrupted-chunk.json').read_text()))
         self.assertFalse((state / 'report.zip').exists())
         before = self.stamps()
