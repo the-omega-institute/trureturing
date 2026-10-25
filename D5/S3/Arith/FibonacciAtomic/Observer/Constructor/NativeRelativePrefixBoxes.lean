@@ -134,7 +134,7 @@ private theorem descriptor_collision (q : Address) (i j : Nat) (b c : Bool)
                   have := hd.1
                   cases q <;> simp_all
                 subst a
-                simp [descriptor, leafFactor, pathCost, hn, last_cons false q hn, Nat.add_comm]
+                simp [descriptor, leafFactor, pathCost, hn, last_cons false q hn, Nat.add_comm] <;> omega
 
 private theorem double_descriptors (q : Address) (i : Nat) (h : DoubleAt q i)
     (j : Nat) (b : Bool) (hj : j ≤ q.length) :
@@ -240,7 +240,7 @@ private theorem actual_blocker (q : Address) (u : Source) :
             · cases a <;> simpa [gamma, descriptor] using hg
 
 private theorem spine_cylinder (a : Address) (d : Nat) (t : Source)
-    (ha : a.length < d) (ht : Canonical (d-a.length) t) :
+    (ha : a.length < d) (ht : Canonical (d - a.length) t) :
     Canonical d (spine a t) ∧ readout a (spine a t) = readout [] t := by
   induction a generalizing d with
   | nil =>
@@ -268,7 +268,7 @@ private theorem cylinders_attained (d : Nat) (q : Address) (hq : q.length < d) :
     (∃ u : S d, readout q u.val = .branch) := by
   have leaf (a : Address) (ha : a.length < d) (b : Bool) :
       ∃ u : S d, readout a u.val = leafReply b := by
-    have ht : Canonical (d-a.length) (.of b) := by
+    have ht : Canonical (d - a.length) (.of b) := by
       have : 0 < d-a.length := by omega
       cases h : d-a.length <;> simp_all [Canonical]
     have h := spine_cylinder a d (.of b) ha ht
@@ -464,7 +464,7 @@ private theorem predict_shift (a : Bool) (q : Address) (k : Nat) :
       predict (leafFactor q true) (k + if a then 0 else 1) := by
   cases q with
   | nil => cases a <;> simp [predict, leafFactor, pathCost, lastRight] <;>
-      split_ifs <;> omega
+      split_ifs <;> simp_all <;> omega
   | cons b q =>
       have hp : 0 < pathCost (b :: q) := by cases b <;> simp [pathCost] <;> omega
       have cost : pathCost (a :: b :: q) = (if a then 2 else 1) + pathCost (b :: q) := rfl
@@ -491,7 +491,7 @@ private theorem atomic_trajectory (q : Address) (k : Nat) :
           change Reply.absent = predict (leafFactor (a :: q) true) 0
           unfold predict leafFactor
           simp only [Prod.fst,Prod.snd]
-          split_ifs <;> omega
+          split_ifs <;> simp_all <;> omega
       | succ k => cases k with
         | zero =>
             cases q with
@@ -502,7 +502,7 @@ private theorem atomic_trajectory (q : Address) (k : Nat) :
                 change Reply.absent = predict (leafFactor (a :: b :: q) true) 1
                 unfold predict leafFactor
                 simp only [Prod.fst,Prod.snd]
-                split_ifs <;> omega
+                split_ifs <;> simp_all <;> omega
         | succ k =>
             rw [show k+1+1 = k+2 by omega, NativeRankedEqualityCompiler.atomic_pair,
               predict_shift]
@@ -592,10 +592,14 @@ theorem relative_prefix_boxes (d : Nat) (q : Address)
     (∃ u : S d, readout q u.val = .branch) ∧
     (∀ (u : Source) (k : Nat), readout q (substitution^[k] u) = predict (gamma q u) k) ∧
     (∀ u v : Source, gamma q u = gamma q v ↔
-      ∀ k : Nat, readout q (substitution^[k] u) = readout q (substitution^[k] v)) := by
+      ∀ k : Nat, readout q (substitution^[k] u) = readout q (substitution^[k] v)) ∧
+    (∀ u : Source, (gamma q u).2 = true → 2 ≤ (gamma q u).1) ∧
+    (∀ u : Source, readout q u = .absent →
+      ∃ i : Nat, i < q.length ∧ ∃ b : Bool,
+        readout (q.take i) u = leafReply b ∧ gamma q u = descriptor q i b) := by
   have hc := classify_level d q hq z attained
   have wa := cylinders_attained d q hq
-  refine ⟨box_from_classification d q z hc,hc,?_,wa.1,wa.2,native_trajectory q,?_⟩
+  refine ⟨box_from_classification d q z hc,hc,?_,wa.1,wa.2,native_trajectory q,?_,factor_guard q,?_⟩
   · intro i j b c hi hj hij; exact descriptor_collision q i j b c hi hj hij
   · intro u v
     constructor
@@ -603,6 +607,15 @@ theorem relative_prefix_boxes (d : Nat) (q : Address)
     · intro h
       exact decoder_injective _ _ (factor_guard q u) (factor_guard q v)
         (fun k => (native_trajectory q u k).symm.trans ((h k).trans (native_trajectory q v k)))
+
+  · intro u ha
+    rcases actual_blocker q u with ⟨_,hr⟩ | ⟨i,hi,b,hr,hg⟩
+    · rw [ha] at hr; cases hr
+    · refine ⟨i,?_,b,hr,hg⟩
+      by_contra h
+      have he : i = q.length := by omega
+      rw [he, List.take_length, ha] at hr
+      cases b <;> cases hr
 
 #print axioms relative_prefix_boxes
 
