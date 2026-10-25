@@ -12,8 +12,11 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.QuantumBounds.CHSHWitness
 
+/-! Noisy qubit projective tests admit parents while their channel has no joint extension. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder
@@ -53,10 +56,32 @@ private def depol : MatrixMap (Fin 2) (Fin 2) ℂ :=
     (3 / 20 : ℂ) • (Matrix.traceLinearMap (Fin 2) ℂ ℂ).smulRight 1
 
 private theorem depol_cptp : IsCPTP depol := by
-  sorry
+  have heq : depol = pauliChannel ![31 / 40, 3 / 40, 3 / 40, 3 / 40] := by
+    ext X i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [depol, pauliChannel, sigma,
+        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+        Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.trace, Fin.sum_univ_succ] <;>
+      ring_nf <;> norm_num [Complex.I_sq] <;> ring
+  rw [heq]
+  exact channel_cptp _ (by intro i; fin_cases i <;> norm_num)
+    (by norm_num [Fin.sum_univ_succ])
 
 private theorem depol_dual : depol.dual = depol := by
-  sorry
+  apply LinearMap.ext
+  intro A
+  apply Matrix.ext_iff_trace_mul_right.mpr
+  intro X
+  calc
+    (depol.dual A * X).trace = (A * depol X).trace := by
+      rw [Matrix.trace_mul_comm, ← MatrixMap.Dual.trace_eq, Matrix.trace_mul_comm]
+    _ = (depol A * X).trace := by
+      simp only [depol, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply,
+        LinearMap.smulRight_apply, Matrix.traceLinearMap_apply, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul,
+        Matrix.smul_mul, Matrix.mul_one, Matrix.one_mul, Matrix.trace_add,
+        Matrix.trace_smul]
+      ring
 
 private def effect (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ := rankOneDensity (fun k => (U : Matrix (Fin 2) (Fin 2) ℂ) k i)
@@ -67,17 +92,51 @@ private def centered (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
 private theorem effect_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
     (effect U i).IsHermitian ∧ (effect U i).trace = 1 ∧
       effect U i * effect U i = effect U i ∧ effect U 0 + effect U 1 = 1 := by
-  sorry
+  have hn : star (fun k => (U : Matrix (Fin 2) (Fin 2) ℂ) k i) ⬝ᵥ
+      (fun k => (U : Matrix (Fin 2) (Fin 2) ℂ) k i) = 1 := by
+    have h := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i i)
+      (Matrix.UnitaryGroup.star_mul_self U)
+    simpa [Matrix.star_eq_conjTranspose, Matrix.mul_apply, dotProduct] using h
+  refine ⟨(Matrix.posSemidef_vecMulVec_self_star _).isHermitian, ?_,
+    (pure_state_handshake _ hn 1).1, ?_⟩
+  · change (rankOneDensity _).trace = 1
+    simpa only [rankOneDensity, Matrix.trace_vecMulVec, dotProduct, Pi.star_apply,
+      mul_comm] using hn
+  · have h := Unitary.coe_mul_star_self U
+    change (U : Matrix (Fin 2) (Fin 2) ℂ) *
+      (U : Matrix (Fin 2) (Fin 2) ℂ).conjTranspose = 1 at h
+    rw [← h]
+    ext a b
+    simp [effect, rankOneDensity, Matrix.vecMulVec_apply, Matrix.mul_apply, Fin.sum_univ_two]
 
 private theorem centered_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
     (centered U i).IsHermitian ∧ (centered U i).trace = 0 ∧
       centered U i * centered U i = 1 ∧ centered U 0 + centered U 1 = 0 := by
-  sorry
+  obtain ⟨hh, ht, hs, hc⟩ := effect_facts U i
+  refine ⟨(hh.smul (by norm_num)).sub Matrix.isHermitian_one, ?_, ?_, ?_⟩
+  · simp only [centered, Matrix.trace_sub, Matrix.trace_smul, ht, Matrix.trace_one,
+      Fintype.card_fin]
+    norm_num
+  · unfold centered
+    calc
+      _ = (4 : ℂ) • (effect U i * effect U i) - (4 : ℂ) • effect U i + 1 := by
+        simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul,
+          Matrix.mul_one, Matrix.one_mul]
+        module
+      _ = 1 := by rw [hs]; module
+  · unfold centered
+    linear_combination (norm := module) (2 : ℂ) • hc
 
 private theorem traceless_anticommutator (A B : Matrix (Fin 2) (Fin 2) ℂ)
     (hA : A.trace = 0) (hB : B.trace = 0) :
     A * B + B * A = (A * B).trace • 1 := by
-  sorry
+  have ha : A 1 1 = -A 0 0 := by
+    simpa [Matrix.trace, Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hA
+  have hb : B 1 1 = -B 0 0 := by
+    simpa [Matrix.trace, Fin.sum_univ_two, eq_neg_iff_add_eq_zero, add_comm] using hB
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Matrix.trace, Fin.sum_univ_two, ha, hb] <;> ring
 
 private def parent (U V : unitaryGroup (Fin 2) ℂ) (a b : Fin 2) :
     Matrix (Fin 2) (Fin 2) ℂ :=
@@ -110,11 +169,19 @@ private def Q : Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) �
 
 private theorem jointChoi_positive (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hΛ : IsCPTP Λ) : (jointChoi Λ).PosSemidef := by
-  sorry
+  exact ((MatrixMap.choi_PSD_iff_CP_map Λ).mp hΛ.1).smul
+    (show (0 : ℂ) ≤ 1 / 2 by norm_num [Complex.le_def])
 
 private theorem jointChoi_trace (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hΛ : IsCPTP Λ) : (jointChoi Λ).trace = 1 := by
-  sorry
+  unfold jointChoi
+  rw [Matrix.trace_smul]
+  change (1 / 2 : ℂ) * (∑ p : (Fin 2 × Fin 2) × Fin 2,
+    Λ (Matrix.single p.2 p.2 1) p.1 p.1) = 1
+  rw [Fintype.sum_prod_type, Finset.sum_comm]
+  change (1 / 2 : ℂ) * (∑ i : Fin 2, (Λ (Matrix.single i i 1)).trace) = 1
+  simp_rw [hΛ.2]
+  norm_num [Matrix.trace, Matrix.single, Fin.sum_univ_two]
 
 private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hL : ∀ X, partialTraceRight (Λ X) = depol X)
