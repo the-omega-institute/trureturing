@@ -70,6 +70,10 @@ $$\exists v: \mathbb{N} \to \mathbb{N}, \exists w: \mathbb{N} \to \mathbb{N}, \e
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ExtremalDensity/BogartJimenezSalazarConstantDepthHom.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bogart-jimenez-salazar-2026-strongly-polynomial-question-3-19` (proved) by `D5/S3/Combinatorics/ExtremalDensity/BogartJimenezSalazarConstantDepthHom.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bogart-jimenez-salazar-2026-strongly-polynomial-question-3-19","declaration_gid":"D5/S3/Combinatorics/ExtremalDensity/BogartJimenezSalazarConstantDepthHom.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tristram Bogart and Santiago Jiménez-Salazar (2026). *Strongly regular graphs, strongly polynomial sequences, and two-level polynomials*. DOI: [10.48550/arXiv.2609.32077](https://doi.org/10.48550/arXiv.2609.32077). URL: <https://arxiv.org/abs/2609.32077v1>.

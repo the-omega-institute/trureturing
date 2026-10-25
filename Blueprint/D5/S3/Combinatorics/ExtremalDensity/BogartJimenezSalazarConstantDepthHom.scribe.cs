@@ -27,14 +27,16 @@ internal sealed class BogartJimenezSalazarConstantDepthHomDocument : IScribeDocu
             Entry("claim", "claim", "Question 3.19", EqTo(V("claim"), ClaimBody()),
                 "Question 3.19, p. 14, verbatim: “" + Question + "” The assertion quantifies over arbitrary finite simple graph sequences. Depth means maximal uniform integer constant depth: some d≥−1 works for all nonnegative parameters, and every larger integer constant fails. This does not assert a pointwise greatest depth function.", true),
             Entry("result", "result", "An affirmative answer to Question 3.19", ClaimBody(),
-                "Take G_q=K_{q+3,2} and H_n=K_{1,n,n}. Their homomorphism count is 2n²(n+1)^(q+3)+4n^(q+4)+2^(q+3)n^(q+3)+2n². Its degree is q+5. The first three codegree coefficients are 2, 2q+10, and (q+3)(q+2)+2^(q+3). The first two are polynomial in q; the third cannot be polynomial, since sufficiently many forward differences annihilate a polynomial and preserve the exponential 2^(q+3). Fixed finite proper colourings and independent choices inside each target part give strong polynomiality of both sequences. The formula and the colouring argument include parameter zero and the empty fixed graph.", false, DescribeRole.Theorem))));
+                "Take G_q=K_{q+3,2} and H_n=K_{1,n,n}. Their homomorphism count is 2n²(n+1)^(q+3)+4n^(q+4)+2^(q+3)n^(q+3)+2n². Its degree is q+5. The first three codegree coefficients are 2, 2q+10, and (q+3)(q+2)+2^(q+3). The first two are polynomial in q; the third cannot be polynomial, since sufficiently many forward differences annihilate a polynomial and preserve the exponential 2^(q+3). Fixed finite proper colourings and independent choices inside each target part give strong polynomiality of both sequences. The formula and the colouring argument include parameter zero and the empty fixed graph.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bogart-jimenez-salazar-2026-strongly-polynomial-question-3-19"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string prose, bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        string prose, bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(Disp(formula)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => FormulaDsl.Id(name);
     private static Formula N(int n) => new Formula.Number(n);
