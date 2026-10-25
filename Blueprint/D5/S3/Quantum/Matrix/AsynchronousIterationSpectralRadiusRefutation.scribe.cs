@@ -126,7 +126,10 @@ internal sealed class AsynchronousIterationSpectralRadiusRefutationDocument : IS
                         + "ENNReal.ofReal (5/4) ≤ ENNReal.ofReal (f (1/2) 1). Since f (1/2) 1 is nonnegative, "
                         + "this implies 5/4 ≤ f (1/2) 1, contradicting f (1/2) 1 < 1. "
                         + "Each alternative is false, so their disjunction is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aksoy-et-al-2023-asynchronous-iteration-spectral-radius-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula AsyncMatrixFormula()
     {
