@@ -191,7 +191,8 @@ private theorem stage_estimates {G : Type*} [Group G] [Fintype G]
       nlinarith [mul_nonneg (sub_nonneg.mpr hp2) hσ.le]
   have hsquared : p * σ ^ 2 / 10 ≤ τ ^ 2 := by
     have hsq := mul_self_le_mul_self (by positivity : 0 ≤ p * σ / 2) hweak
-    have hpp : 0 ≤ p ^ 2 - p := by nlinarith
+    have hpp : 0 ≤ p ^ 2 - p := by
+      nlinarith [mul_nonneg hp.le (sub_nonneg.mpr hpone)]
     have hprod := mul_nonneg hpp (sq_nonneg σ)
     nlinarith
   refine ⟨hT, hdensity, ?_⟩
@@ -232,7 +233,9 @@ private theorem embedded_localization {G : Type*} [Group G] [Fintype G]
     simpa only [Nat.card_eq_fintype_card] using L.card_mul_index
   have hhalf : 2 * Fintype.card H' ≤ Fintype.card H := by
     rw [hc, ← hmul]
-    nlinarith
+    calc
+      2 * Fintype.card L = Fintype.card L * 2 := Nat.mul_comm _ _
+      _ ≤ Fintype.card L * L.index := Nat.mul_le_mul_left _ hi
   refine ⟨hle, hret, hhalf, ?_⟩
   have hpos : 0 < Fintype.card H' := Fintype.card_pos
   omega
