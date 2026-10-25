@@ -3199,3 +3199,385 @@ It makes no physical-realization or resource-minimum assertion.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Global linear stability with exact qutrit output support
+
+**Theorem 18.1 (All-angle effect-to-diamond linear bound on the supported output; repo-derived).**
+Use the actual embedding and tests of Definitions 1.1–1.2 and 11.1.
+Explicitly, in the physical orthonormal basis $(e_0,\ldots,e_4)$ of
+$H=\mathbb C^5$, and in the input qutrit, respectively, put
+
+$$
+\begin{gathered}
+u=(e_0+e_3)/\sqrt2,\qquad v_H=(e_1+e_4)/\sqrt2,\qquad z=e_2,
+\qquad B=(u,v_H,z),\qquad R=\operatorname{ran}B,\qquad Q=BB^\dagger,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\qquad
+ e=(1,1,-2)^{\mathsf T}/\sqrt6,\qquad
+ f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+u_0=(\xi+e)/\sqrt2,\qquad E=u_0u_0^\dagger,\qquad
+ p=Bu_0,\qquad P=pp^\dagger,\qquad P_1=P,\qquad P_0=I_5-P.
+\end{gathered}
+\tag{18.1}
+$$
+
+Thus $B^\dagger B=I_3$ and $Q$ is precisely the output-support
+projection, whereas $P$ is the immediate task effect. For every real,
+fixed, known angle $\theta$, the actual acquisition on all of $H$ is
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+2^{-1/2}|v_H\rangle\langle e_2|
+                         +|z\rangle\langle e_3|,\\
+A_0(\theta)&=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1(\theta)=i\sin\theta K_0+\cos\theta K_1.
+\end{aligned}
+\tag{18.2}
+$$
+
+Let $T:M_3(\mathbb C)\to M_5(\mathbb C)$ be any complex-linear
+CPTP map with the exact output-support property
+
+$$
+T(X)=QT(X)Q\qquad\text{for every }X\in M_3(\mathbb C).
+\tag{18.3}
+$$
+
+With $T^\dagger$ its trace adjoint, define the same actual defect as
+in (13.23) and (17.2):
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\bigl\|T^\dagger(A_j^\dagger P_yA_j)
+       -B^\dagger A_j^\dagger P_yA_jB\bigr\|_{\mathrm{op}}\Bigr\}.
+\end{aligned}
+\tag{18.4}
+$$
+
+Here $A_j=A_j(\theta)$. The continuation effects retain their actual
+labels and their joint probabilities; neither outcome is conditioned
+or renormalized. Then, uniformly in every such $\theta$ and $T$,
+
+$$
+\|T-\operatorname{Ad}_B\|_\diamond
+\le216578\,\delta_\theta(T),\qquad
+\operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{18.5}
+$$
+
+This is a global bound, with no restriction on the size of the defect.
+In particular it gives the local implication with $C=216578$ and
+$\eta=1/2$. The norm is the full unhalved diamond norm
+
+$$
+\|\Lambda\|_\diamond
+=\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+\frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
+\tag{18.6}
+$$
+
+Thus the estimate includes every finite untouched inaccessible
+reference and every complex amplified input matrix, and in particular
+every joint density matrix. The constant is an explicit upper bound.
+Theorem 17.1 retains its stated domain and conclusion: its obstructing
+family has output outside $R$, as identified below, so (18.3) excludes
+that family. The supported-output contract here is precisely the one
+in Theorem 5.2; the continuation still uses the full actual operators
+(11.1), restated in (18.2).
+
+Proof. Write $\delta=\delta_\theta(T)$, use Euclidean vector norms,
+and let $\|M\|_{\mathrm{HS}}^2=\operatorname{Tr}(M^\dagger M)$.
+Compression gives
+
+$$
+\Phi(X)=B^\dagger T(X)B,\qquad
+T=\operatorname{Ad}_B\circ\Phi,\qquad
+\Psi=\Phi^\dagger,\qquad \Psi(I_3)=I_3.
+\tag{18.7}
+$$
+
+Indeed compression is completely positive, and exact support gives
+$\operatorname{Tr}\Phi(X)=\operatorname{Tr}(QT(X))
+=\operatorname{Tr}T(X)=\operatorname{Tr}X$. Consequently $\Phi$ is
+CPTP and, for every physical matrix $M\in M_5(\mathbb C)$,
+$T^\dagger(M)=\Psi(B^\dagger MB)$.
+
+Use exactly the three probes of (5.6)–(5.7) and the frame (13.26):
+
+$$
+\begin{gathered}
+u_1=\frac{\xi-e/2+(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+u_2=\frac{\xi-e/2-(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+\Pi_i=u_iu_i^\dagger\quad(0\le i\le2),\\
+\|u_i\|=1,\qquad \langle u_i,u_k\rangle=\tfrac14\quad(i\ne k),\\
+S=\sum_{i=0}^2\Pi_i
+ =\operatorname{diag}_{(\xi,e,f)}(3/2,3/4,3/4)
+ \succeq\tfrac34I_3.
+\end{gathered}
+\tag{18.8}
+$$
+
+The inner product is conjugate-linear in its first argument.
+For the exact correspondence with (1.4), let
+$U_0(x_0,x_1,x_2)=(x_0,x_2,x_1)$,
+$W(x_0,x_1,x_2)=(x_1,x_0,x_2)$,
+$V_0=U_0e^{i\theta W}$ and $V_1=V_0W$.
+The actual identity $A_jB=BV_j/\sqrt2$ and the probe identities
+already evaluated in §5 give
+
+$$
+\begin{aligned}
+B^\dagger PB&=\Pi_0,&
+B^\dagger A_j^\dagger P_1A_jB&=\tfrac12\Pi_{j+1},\\
+B^\dagger A_j^\dagger P_0A_jB&=\tfrac12(I_3-\Pi_{j+1})
+&& (j=0,1).
+\end{aligned}
+\tag{18.9}
+$$
+
+These are compressions of the actual full-$H$ effects, justified for
+$T$ by (18.3). In particular the weights are $1/2$, with no
+full-$H$ fairness identity assumed. Set
+$\epsilon_i=\|\Psi(\Pi_i)-\Pi_i\|_{\mathrm{op}}$.
+Since $\Psi$ is unital, the complementary effect differences are
+negatives of their corresponding $y=1$ differences. Thus
+
+$$
+\delta=\max\{\epsilon_0,\epsilon_1/2,\epsilon_2/2\},\qquad
+\sum_{i=0}^2\epsilon_i\le5\delta,\qquad
+\epsilon_i\le2\delta.
+\tag{18.10}
+$$
+
+We first establish the elementary scalar estimate needed for the
+quantitative argument, inside this proof. For an arbitrary complex
+$3\times3$ matrix $M$, put
+
+$$
+\begin{gathered}
+d_i=\|[\Pi_i,M]\|_{\mathrm{HS}},\qquad
+\lambda_i=\langle u_i,Mu_i\rangle,\qquad c=\lambda_0,\\
+e_i=(I_3-\Pi_i)Mu_i,\qquad
+f_0=u_0^\dagger M(I_3-\Pi_0).
+\end{gathered}
+\tag{18.11}
+$$
+
+Here $f_0$ is a row vector. Since
+$e_i=-[\Pi_i,M]u_i$ and
+$f_0=u_0^\dagger[\Pi_0,M]$, we have
+$\|e_i\|\le d_i$ and $\|f_0\|\le d_0$.
+Evaluate $u_0^\dagger Mu_i$ using first the row decomposition at
+$u_0$, then the column decomposition at $u_i$. For $i=1,2$ the
+nonzero overlap in (18.8) gives
+
+$$
+\frac{\lambda_i-\lambda_0}{4}
+=f_0u_i-u_0^\dagger e_i,\qquad
+|\lambda_i-c|\le4(d_0+d_i).
+\tag{18.12}
+$$
+
+It follows that
+$\|(M-cI_3)u_0\|\le d_0$ and
+$\|(M-cI_3)u_i\|\le4d_0+5d_i$ for $i=1,2$.
+For $A=M-cI_3$, the frame bound gives
+$\sum_i\|Au_i\|^2=\operatorname{Tr}(A^\dagger AS)
+\ge(3/4)\|A\|_{\mathrm{HS}}^2$.
+Cauchy–Schwarz, in the form
+$(4a+5b)^2\le41(a^2+b^2)$, therefore yields
+
+$$
+\begin{aligned}
+\|M-cI_3\|_{\mathrm{HS}}^2
+&\le\tfrac43\bigl[d_0^2+(4d_0+5d_1)^2+(4d_0+5d_2)^2\bigr]\\
+&\le\tfrac43(83d_0^2+41d_1^2+41d_2^2)
+\le111\sum_{i=0}^2\|[\Pi_i,M]\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{18.13}
+$$
+
+No reality or self-adjointness assumption on $M$ was used.
+
+Take a finite Kraus representation
+$\Phi(X)=\sum_\ell L_\ell XL_\ell^\dagger$ with
+$\sum_\ell L_\ell^\dagger L_\ell=I_3$.
+Such a representation follows by spectral decomposition of the
+positive $9\times9$ Choi matrix
+$\sum_{a,b=1}^3|a\rangle\langle b|\otimes
+\Phi(|a\rangle\langle b|)$: writing its eigenvectors as vectorized
+matrices yields the $L_\ell$, and its trace-preserving partial trace
+gives the displayed Kraus normalization.
+For any projection $\Pi$ let $\Delta=\Psi(\Pi)-\Pi$.
+Expanding the commutators and using that normalization gives
+
+$$
+\begin{aligned}
+\sum_\ell[\Pi,L_\ell]^\dagger[\Pi,L_\ell]
+&=\Psi(\Pi)-\Psi(\Pi)\Pi-\Pi\Psi(\Pi)+\Pi\\
+&=\Delta-\Delta\Pi-\Pi\Delta.
+\end{aligned}
+\tag{18.14}
+$$
+
+For each rank-one $\Pi_i$, taking the trace and using trace norm
+and operator norm duality gives
+
+$$
+\begin{aligned}
+\sum_\ell\|[\Pi_i,L_\ell]\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}\bigl((I_3-2\Pi_i)
+                    (\Psi(\Pi_i)-\Pi_i)\bigr)\\
+&\le\|I_3-2\Pi_i\|_1\,\epsilon_i=3\epsilon_i.
+\end{aligned}
+\tag{18.15}
+$$
+
+The left side is nonnegative. Put
+$c_\ell=\langle u_0,L_\ell u_0\rangle$ and
+$N_\ell=L_\ell-c_\ell I_3$.
+Apply (18.13) to each $L_\ell$, then (18.15) and (18.10), to obtain
+the Kraus residual estimate
+
+$$
+R_N:=\sum_\ell\|N_\ell\|_{\mathrm{HS}}^2
+\le111\cdot3\sum_{i=0}^2\epsilon_i
+\le1665\delta.
+\tag{18.16}
+$$
+
+The symbol $R_N$ is a nonnegative scalar, distinct from the output
+space $R$.
+
+To retain the coherent contribution rather than lose a square root,
+use trace preservation exactly. Define
+
+$$
+\begin{gathered}
+s=\sum_\ell|c_\ell|^2,\qquad
+M_0=\sum_\ell\overline{c_\ell}N_\ell,\qquad
+D=\sum_\ell N_\ell^\dagger N_\ell,\\
+sI_3+M_0+M_0^\dagger+D=I_3,\qquad
+H_c=\frac{M_0-M_0^\dagger}{2i}=H_c^\dagger.
+\end{gathered}
+\tag{18.17}
+$$
+
+Expanding $\Phi(X)$ and substituting the Hermitian part of $M_0$
+from this identity gives the exact decomposition on every complex
+matrix $X$:
+
+$$
+\begin{aligned}
+\Phi(X)-X&=i[H_c,X]+\mathcal V(X),\\
+\mathcal V(X)&=\sum_\ell N_\ell XN_\ell^\dagger
+                        -\tfrac12(DX+XD).
+\end{aligned}
+\tag{18.18}
+$$
+
+Since $D\succeq0$, we have
+$\|D\|_{\mathrm{op}}\le\operatorname{Tr}D=R_N$ and
+$\sum_\ell\|N_\ell\|_{\mathrm{op}}^2\le R_N$.
+The trace-norm ideal inequality
+$\|AXB\|_1\le\|A\|_{\mathrm{op}}\|X\|_1\|B\|_{\mathrm{op}}$
+therefore implies, for every finite $d$ and every complex
+$X\in M_3(\mathbb C)\otimes M_d(\mathbb C)$,
+
+$$
+\begin{aligned}
+\|(\mathcal V\otimes\operatorname{id}_{M_d})(X)\|_1
+&\le\left(\sum_\ell\|N_\ell\|_{\mathrm{op}}^2
+                           +\|D\|_{\mathrm{op}}\right)\|X\|_1\\
+&\le2R_N\|X\|_1.
+\end{aligned}
+\tag{18.19}
+$$
+
+Likewise the explicit adjoint
+$\mathcal V^\dagger(Y)=\sum_\ell N_\ell^\dagger YN_\ell
+-(DY+YD)/2$ satisfies
+$\|\mathcal V^\dagger(\Pi_i)\|_{\mathrm{op}}\le2R_N$.
+Taking the trace adjoint in (18.18) gives
+$\Psi(\Pi_i)-\Pi_i=-i[H_c,\Pi_i]
++\mathcal V^\dagger(\Pi_i)$, hence
+
+$$
+\|[H_c,\Pi_i]\|_{\mathrm{op}}
+\le\epsilon_i+2R_N\le2\delta+2R_N.
+\tag{18.20}
+$$
+
+Apply the scalar estimate (18.13) again, now to $M=H_c$.
+Its scalar $h=\langle u_0,H_cu_0\rangle$ is real.
+For $3\times3$ matrices,
+$\|A\|_{\mathrm{HS}}\le\sqrt3\|A\|_{\mathrm{op}}$.
+Thus (18.20), with three commutators, yields
+
+$$
+\begin{aligned}
+\|H_c-hI_3\|_{\mathrm{op}}
+&\le\|H_c-hI_3\|_{\mathrm{HS}}\\
+&\le\sqrt{111\cdot3\cdot3}\,(2\delta+2R_N)\\
+&=\sqrt{999}\,(2\delta+2R_N)
+\le64(\delta+R_N),
+\end{aligned}
+\tag{18.21}
+$$
+
+where $999<32^2$. Since scalar matrices do not contribute to a
+commutator, the same trace-norm ideal inequality, together with
+(18.19), proves for every such $d$ and complex $X$ that
+
+$$
+\begin{aligned}
+\|((\Phi-\operatorname{id}_{M_3})\otimes\operatorname{id}_{M_d})(X)\|_1
+&\le\bigl(2\|H_c-hI_3\|_{\mathrm{op}}+2R_N\bigr)\|X\|_1\\
+&\le(128\delta+130R_N)\|X\|_1\\
+&\le(128+130\cdot1665)\delta\|X\|_1\\
+&=216578\delta\|X\|_1.
+\end{aligned}
+\tag{18.22}
+$$
+
+Finally (18.7) gives the exact amplified correspondence
+
+$$
+\begin{aligned}
+&((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(X)\\
+&\quad=(B\otimes I_d)
+  [((\Phi-\operatorname{id}_{M_3})\otimes\operatorname{id}_{M_d})(X)]
+  (B^\dagger\otimes I_d).
+\end{aligned}
+\tag{18.23}
+$$
+
+Isometric embedding preserves the nonzero singular values and hence
+the trace norm of every complex matrix. Taking both suprema in
+(18.6) proves
+$\|T-\operatorname{Ad}_B\|_\diamond
+=\|\Phi-\operatorname{id}_{M_3}\|_\diamond\le216578\delta$.
+Nothing in the argument uses smallness of $\delta$; it also includes
+$\delta=0$ directly. Choosing $\eta=1/2$ gives the stated local form.
+The exact rigidity at zero defect is the existing supported-output
+conclusion of Theorem 5.2; no new general exact-rigidity theorem is
+needed here.
+
+For the distinction from Theorem 17.1, retain its notation
+$U_t=\exp(itG)$ and $T_t=\operatorname{Ad}_{U_tB}$ at $\theta=0$.
+For $x=(1,0,0)^{\mathsf T}$ its exhibited family satisfies
+
+$$
+\|(I_5-Q)U_tBx\|\ge t/2>0\qquad(0<t\le1/25).
+\tag{18.24}
+$$
+
+Consequently $T_t(xx^\dagger)$ is not supported in $R$, so it fails
+(18.3). Its obstruction on the unrestricted output domain and the
+linear estimate on the exactly supported domain are compatible.
+$\square$
+
+## 追加锚（本行以下为增补区）
