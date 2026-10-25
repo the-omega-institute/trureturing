@@ -78,7 +78,7 @@ private theorem run_fold (w : List Bool) (v : ℕ × ℕ) :
   | nil => rfl
   | cons b w ih => exact ih (step b v)
 
-private theorem residue_run (H : ℕ) (w : List Bool) (v : ℕ × ℕ) :
+theorem residue_run (H : ℕ) (w : List Bool) (v : ℕ × ℕ) :
     residueSource H (runWord w v) =
       GraftAffineClosure.run (1, 0) (w.map Bool.not) (residueSource H v) := by
   rw [run_fold, GraftAffineClosure.run, List.foldl_map]

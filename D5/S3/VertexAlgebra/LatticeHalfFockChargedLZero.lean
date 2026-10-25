@@ -254,4 +254,27 @@ theorem charged_tensor_L_zero_commutator (D : LatticeData)
 
 
 
+/-- Tensor-current zero-mode commutator for the original actual inverse.
+This is consumed by ActualEnergyCovariance's induction through both normal
+ordering branches. The existing private inverse witnesses stay in this file. -/
+theorem tensor_current_L_zero_commutator (D : LatticeData)
+    (hu : IsUnit D.G.det) (i : Fin D.rank) (k : ℤ) :
+    tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 0 *
+        tensorCurrent D (ActualGround D hu) i k -
+      tensorCurrent D (ActualGround D hu) i k *
+        tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 0 =
+      -frequency k • tensorCurrent D (ActualGround D hu) i k := by
+  apply TensorProduct.ext'
+  intro p t
+  have hc := LinearMap.congr_fun
+    (L_current_commutator D (HalfFockSpectralFiberSource.actualInverse D)
+      (HalfFockSpectralFiberSource.actualInverse_left D hu)
+      (HalfFockSpectralFiberSource.actualInverse_right D hu) i 0 k) p
+  simp only [zero_add, Module.End.mul_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply] at hc
+  simp only [tensorL, tensorCurrent, tensorEnd, Module.End.mul_apply,
+    LinearMap.sub_apply, LinearMap.smul_apply, TensorProduct.map_tmul,
+    LinearMap.id_apply]
+  rw [← TensorProduct.sub_tmul, hc, TensorProduct.smul_tmul']
+
 end D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero

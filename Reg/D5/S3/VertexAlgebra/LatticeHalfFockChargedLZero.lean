@@ -121,4 +121,18 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
 end
+
+/- The consumed tensor-current addition has this exact source bridge.
+Its separate four-slot evidence remains unfinished under issue #21259. -/
+noncomputable def tensorCurrentReadout (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (k : ℤ) :
+    Module.End ℂ (ActualTensor D hu) :=
+  tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 0 *
+      tensorCurrent D (ActualGround D hu) i k -
+    tensorCurrent D (ActualGround D hu) i k *
+      tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 0
+
+theorem tensor_current_source_bridge : (type_of% (@tensor_current_L_zero_commutator)) ↔
+    ∀ (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (k : ℤ),
+      tensorCurrentReadout D hu i k = -frequency k • tensorCurrent D (ActualGround D hu) i k := Iff.rfl
+
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
