@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ee6eec5328f16142c330181471747b4efabb8fe9fa78c91944ce9fa9bad076e
+  normalized_sha256: sha256:4ee6eec5328f16142c330181471747b4efabb8fe9fa78c91944ce9fa9bad076e
+cas_ref: sha256:4ee6eec5328f16142c330181471747b4efabb8fe9fa78c91944ce9fa9bad076e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅区分乘积 law 的构造与物理本体／辨识性解释，声明不可自动升级的证明边界；未断言新的概率等式或分离定理。
+    previous_atom_id: 6ecbba7d39174f1c73dedf34f9e0c9863aeb1ad4265e0c1333dae78292148ed8
+    next_atom_id: b19678a05a282ae74f71c5f93584b613ab02480c492c2f0bd71fdc188fa43d29

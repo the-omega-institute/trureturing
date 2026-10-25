@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8cdcbdf1b7c9857ecf1e00614f4854f5067bbb253e89c769b8d8154ff680785d
+  normalized_sha256: sha256:8cdcbdf1b7c9857ecf1e00614f4854f5067bbb253e89c769b8d8154ff680785d
+cas_ref: sha256:8cdcbdf1b7c9857ecf1e00614f4854f5067bbb253e89c769b8d8154ff680785d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入 A(n) 阶乘比与 f(n,q) 商差记号；等式是定义，没有整性、符号或数值计算断言。
+    previous_atom_id: ede162ffd4ce6757ef32c0e714f9a1f6aa1d6e9afb54694296e0ae650d824d36
+    next_atom_id: 170693bfe6600765cf47702b4ea4f5b253438b28e05eb590d2dfe61ff1aa0445

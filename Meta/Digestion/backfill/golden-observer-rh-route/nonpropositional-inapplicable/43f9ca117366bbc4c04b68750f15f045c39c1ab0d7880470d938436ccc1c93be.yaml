@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43f9ca117366bbc4c04b68750f15f045c39c1ab0d7880470d938436ccc1c93be
+  normalized_sha256: sha256:43f9ca117366bbc4c04b68750f15f045c39c1ab0d7880470d938436ccc1c93be
+cas_ref: sha256:43f9ca117366bbc4c04b68750f15f045c39c1ab0d7880470d938436ccc1c93be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Choice of angular-frequency convention, without a transform equality.
+    previous_atom_id: 8092715f74c4ff59e87a5427bfd8a32417e532fe486cce2962d9f7f393bcf1e4
+    next_atom_id: 68539a96f7517b51b4385178e43c1f0091469c6f50d635f8d86dad494af3185a

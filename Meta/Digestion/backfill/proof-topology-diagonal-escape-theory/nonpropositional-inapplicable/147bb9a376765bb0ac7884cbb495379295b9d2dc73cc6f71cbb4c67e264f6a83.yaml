@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:147bb9a376765bb0ac7884cbb495379295b9d2dc73cc6f71cbb4c67e264f6a83
+  normalized_sha256: sha256:147bb9a376765bb0ac7884cbb495379295b9d2dc73cc6f71cbb4c67e264f6a83
+cas_ref: sha256:147bb9a376765bb0ac7884cbb495379295b9d2dc73cc6f71cbb4c67e264f6a83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PB.3 双向有限视野的两边界核；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 7dcb7fe70651c534892a1f8c36bffcf7a3aa8d31e519dad3dad0d950705656f9
+    next_atom_id: c1221306ad413cab3ec26b3fd234dd726cb9c702ab6f1871d2e65780f945625e

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c77c5372db215069723eb13543b1021f9807322745a61041716ae682d304146
+  normalized_sha256: sha256:5c77c5372db215069723eb13543b1021f9807322745a61041716ae682d304146
+cas_ref: sha256:5c77c5372db215069723eb13543b1021f9807322745a61041716ae682d304146
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 按优先级列出五项后续证明目标及分工，没有把非共振、Cesaro 恢复或 Schur 强制作为已证结论。
+    previous_atom_id: c5600e07548311dceed0574dcb9ea14ff3f1b91cfa94b398ae1b5a3bcc1f00b1
+    next_atom_id: 6001aee66c86f3513a652f5ffcca8555d01e14d2328334567c88a2a09baa5c62

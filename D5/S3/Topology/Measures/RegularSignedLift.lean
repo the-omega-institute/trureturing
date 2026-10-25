@@ -70,7 +70,7 @@ private noncomputable def rangeFunctionalCLM [MeasurableSpace L] [BorelSpace L]
     (pullbackIso p hp).range →L[ℝ] ℝ :=
   (rangeFunctional m p hp).mkContinuous (m.real univ) (rangeFunctional_bound m p hp)
 
-private lemma positive_of_norm_le_one {K : Type u} [TopologicalSpace K] [CompactSpace K]
+lemma positive_of_norm_le_one {K : Type u} [TopologicalSpace K] [CompactSpace K]
     (Λ : C(K,ℝ) →L[ℝ] ℝ) (hΛ : ‖Λ‖ ≤ Λ 1) :
     ∀ f : C(K,ℝ), 0 ≤ f → 0 ≤ Λ f := by
   intro f hf
@@ -109,7 +109,7 @@ private lemma positive_of_norm_le_one {K : Type u} [TopologicalSpace K] [Compact
     simp only [smul_eq_mul, mul_one]
   linarith
 
-private noncomputable def restrictionPositive
+noncomputable def restrictionPositive
     {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
     (Λ : C(K,ℝ) →L[ℝ] ℝ) (hpos : ∀ f : C(K,ℝ), 0 ≤ f → 0 ≤ Λ f) :
     C_c(K,ℝ) →ₚ[ℝ] ℝ := by

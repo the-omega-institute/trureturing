@@ -9,7 +9,43 @@ internal sealed class PromiseColoringTotalizationDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Consistent conflict colorings characterize total output automata on promise domains.",
         H("Promise Colorings and Total Output Automata"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("terminal-prefix"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.terminal"),
+                H("Terminal prefixes"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "A word in the promise domain is a prefix of a legal word by using the empty continuation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("root-prefix"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.root"),
+                H("The root prefix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "A chosen legal seed witnesses that the empty word belongs to the prefix domain."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("terminal-output-unique"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.terminal_eq"),
+                H("Output uniqueness within a terminal color"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For any proper transition-consistent coloring, two legal words of the same terminal color have equal prescribed outputs. Otherwise the empty continuation makes their prefixes conflict."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("completed-step-agrees"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.completedStep_eq"),
+                H("Agreement on observed successors"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For each prefix p and letter a whose extension pa is still a prefix, the completed transition from the color of p is the color of pa. The choice of a representative prefix does not affect this result."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("completed-output-agrees"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.completedOutput_eq"),
+                H("Agreement on legal outputs"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "At the terminal color of every legal word, the completed output equals that word's prescribed output, independently of the legal seed used for default choices."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-reaches-color"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.complete_reaches"),
+                H("Evaluation reaches the prefix color"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every legal prefix, evaluating the completed total automaton from its initial state reaches exactly the supplied color of that prefix. The assertion holds for every prefix length and for arbitrary promise domains."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-correct"),
+                DeclarationHandle.Create("D5/S0/Automata/PromiseColoringTotalization.complete_correct"),
+                H("Correctness of the completed machine"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "The completed deterministic output automaton produces f on every word in D. Its behavior outside D is total but is not prescribed by this correctness condition."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("promise-coloring-totalization"),
             DeclarationHandle.Create(
                 "D5/S0/Automata/PromiseColoringTotalization.promise_coloring_iff_total_dfao"),

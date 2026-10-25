@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a5a52742f73da9512e454e7d461b0d136d2b4263f6a286aa203478c899585ce
+  normalized_sha256: sha256:6a5a52742f73da9512e454e7d461b0d136d2b4263f6a286aa203478c899585ce
+cas_ref: sha256:6a5a52742f73da9512e454e7d461b0d136d2b4263f6a286aa203478c899585ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 用给定初态、递推及参数区间定义轨迹和读数 y_n，不包含闭式、正性或收敛断言。
+    previous_atom_id: 8fd08c6cc0f679560a0750dba344a2b0a876a5e2607094f18dbfc1870410e4f5
+    next_atom_id: 58a2c0114c5253761348f4b991ea2e91b12d1c31c25f3a3255c675ce82e87547

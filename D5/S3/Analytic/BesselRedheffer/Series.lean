@@ -19,12 +19,12 @@ set_option maxHeartbeats 800000
 
 namespace D5.S3.Analytic.BesselRedheffer.Series
 
-private noncomputable def coeff (b : ℝ) (n : ℕ) : ℝ :=
+noncomputable def coeff (b : ℝ) (n : ℕ) : ℝ :=
   1 / ((n.factorial : ℝ) * (ascPochhammer ℝ n).eval b)
 
 private lemma coeff_zero (b : ℝ) : coeff b 0 = 1 := by simp [coeff]
 
-private lemma coeff_succ {b : ℝ} (hb : 0 < b) (n : ℕ) :
+lemma coeff_succ {b : ℝ} (hb : 0 < b) (n : ℕ) :
     coeff b (n + 1) = (1 / (b + n) / (n + 1)) * coeff b n := by
   have hp := (ascPochhammer_pos n b hb).ne'
   have hbn : b + (n : ℝ) ≠ 0 := by positivity
@@ -34,7 +34,7 @@ private lemma coeff_succ {b : ℝ} (hb : 0 < b) (n : ℕ) :
     Nat.cast_add, Nat.cast_one]
   field_simp
 
-private lemma summable_norm_series {b : ℝ} (hb : 0 < b) (t : ℝ) :
+lemma summable_norm_series {b : ℝ} (hb : 0 < b) (t : ℝ) :
     Summable (fun n => ‖coeff b n * t ^ n‖) := by
   have hi : Tendsto (fun n : ℕ => 1 / (b + (n : ℝ))) atTop (𝓝 0) := by
     simpa only [one_div, Function.comp_def] using tendsto_inv_atTop_zero.comp

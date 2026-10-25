@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:3cab5cb2b2f12f92b1d3404d60990dc37ceaf1e4da21cc3e371c9acd9587cd26
+  normalized_sha256: sha256:3cab5cb2b2f12f92b1d3404d60990dc37ceaf1e4da21cc3e371c9acd9587cd26
+cas_ref: sha256:3cab5cb2b2f12f92b1d3404d60990dc37ceaf1e4da21cc3e371c9acd9587cd26
+coverage_gids:
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.curvature_ledger_bridge_refuted
+    target_statement_id: sha256:5f9d4080c0930af2581c1102df043159f5e2a6e016932c245e0b462aa62bdd15
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.first_curvature_readout
+    target_statement_id: sha256:98f2a39a9c6b65de2f96cb116cf058d793e5a6d858fb01352093bc48f1a0c905
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.first_deficit_readout
+    target_statement_id: sha256:2145e32439ee38a1a64a6692195e52a55308eca8ffafd3a94922f83db0ec183d
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.no_global_mass_normalization
+    target_statement_id: sha256:7809f6e64dfb21432615598e232c20a540b6e1d3cc9aab9379ef4559ef6c8085
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.second_curvature_readout
+    target_statement_id: sha256:8fe8cb6be78bb2415cccb2ce21ab95af27ce1c4e13d90b08f549af8e91c0e2b3
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.second_deficit_readout
+    target_statement_id: sha256:2486ba8fce5291f1695039988480d3c6b6270be960f2d90b77c6772052af6dd5
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_eq
+    target_statement_id: sha256:5a044405001714759e84100093dfda4bb4ca8f42313a9fb4d7339e8d84a7e2d4
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_deficit_measure_invariant
+    target_statement_id: sha256:48d70f183f2dd73ee27957caa5d6effe4aeb7a3db5a49c5870c0fe8fbe270465
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_zero_readout_compatibility
+    target_statement_id: sha256:f233ddac740cae3256ee31c96b1492ba51c14fae0955ff413a02eb529e87b5d1
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_scaling_eq
+    target_statement_id: sha256:4edc9c141aed4136291f3eda669210473bd680f328439834248fa417466e18c3
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_variation_mirror
+    target_statement_id: sha256:a0557d909dba38a27f18bc188898e8a5a533ca343cc4e3d9b4c09409c8941407
+  - gid: D5/S3/Weil/LedgerDeficitSecondVariation.zero_ledger_address_mirror
+    target_statement_id: sha256:77bb6dcc7a9ed42719dd594c1fe94f81e78c373f10cf4fea767de66f3847fa92
+receipts:
+  unresolved_subitems: []

@@ -246,6 +246,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("scoped_git_configuration_disables_background_git")]
+    [InlineData("native_lock_inspector_receives_scoped_environment")]
     [InlineData("timed_out_git_releases_index_lock")]
     public void ScopedGitLeavesNoLockHolderBehind(string probe)
     {
@@ -280,6 +281,45 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             ["-B", Path.Combine(root,
                 "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
                 root, "ProtocolTests." + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("pool_return_preserves_post_merge_work_branch_and_cache")]
+    [InlineData("pool_scope_contention_has_no_tree_effect")]
+    [InlineData("pool_implicit_claim_busy_has_no_allocation")]
+    [InlineData("pool_return_checkpoint_without_native_lock_never_inspects_holders")]
+    [InlineData("pool_return_checkpoint_reports_cleared_native_locks")]
+    [InlineData("pool_return_requires_join_and_real_merge_evidence")]
+    [InlineData("pool_return_refuses_unretained_merge_wrong_head_and_busy_writer")]
+    [InlineData("pool_return_refuses_conflicts_operations_and_main")]
+    [InlineData("pool_claim_writes_immutable_allocation_and_preserves_cache")]
+    [InlineData("pool_claim_requires_matching_pins_and_clean_idle_attachment")]
+    [InlineData("pool_claim_accepts_returned_tip_ahead_of_tracking_dev")]
+    [InlineData("pool_claim_refuses_exact_symlink")]
+    [InlineData("pool_claim_concurrency_has_one_winner")]
+    [InlineData("pool_capacity_and_pressure_use_one_owner")]
+    [InlineData("pool_return_accepts_squash_and_merge_histories")]
+    [InlineData("pool_sweep_confirms_returned_tip_beyond_stale_tracking")]
+    [InlineData("pool_sweep_refuses_non_dev_idle_tip")]
+    [InlineData("pool_eviction_failures_preserve_receipt_and_exit")]
+    [InlineData("pool_idle_prefixed_task_is_never_released_by_allocation")]
+    [InlineData("pool_validation_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_return_validation_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_pressure_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_confirmation_timeout_after_eviction_preserves_receipt")]
+    [InlineData("pool_unexpected_removal_failure_preserves_recovery")]
+    public void IdlePoolPreservesNativeGitState(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
             standardOutput: stdout, standardError: stderr,
             interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
         Assert.True(result.ExitCode == 0,

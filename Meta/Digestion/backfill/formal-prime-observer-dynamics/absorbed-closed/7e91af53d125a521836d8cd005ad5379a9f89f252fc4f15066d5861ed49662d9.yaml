@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7e91af53d125a521836d8cd005ad5379a9f89f252fc4f15066d5861ed49662d9
+  normalized_sha256: sha256:7e91af53d125a521836d8cd005ad5379a9f89f252fc4f15066d5861ed49662d9
+cas_ref: sha256:7e91af53d125a521836d8cd005ad5379a9f89f252fc4f15066d5861ed49662d9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_independence_is_necessary
+    target_statement_id: sha256:dc90aa559798a6b2d88391a2ef2a8f9f4ff6c8cea3b0dfcd6768978d8d6f4e89
+receipts:
+  unresolved_subitems: []

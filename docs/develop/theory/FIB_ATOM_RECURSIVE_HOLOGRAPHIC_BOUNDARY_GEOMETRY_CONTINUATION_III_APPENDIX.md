@@ -1068,3 +1068,2175 @@ $$
 局部不变量与联合支持约束如何闭合；它没有证明 FIB 原生来源已经产生了
 物理三维空间，也没有消除 §95--§99 所列的运输、测度、时钟、边界和无限
 细化义务。
+## 101. A positive full-domain binding threshold for the higher-order added law
+
+**Definition 101.1 (fixed field and variational threshold).** Retain precisely the source of Continuation III, §§82–87: $G=H^1\times\mathbb R$, its unit source $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, the original horizontal fields $X_i$, the original free generator $L$ and its clock, and its positive degree-$-3$ Green field $\Gamma$. In the shear coordinates $\xi=(x,y,z)$, $s=w-xy/2$, write $\mathcal G(\xi,s)=\Gamma(x,y,z,s+xy/2)$. For $\sigma>2$ use the complex distributional form domain $\mathcal E_\sigma$ of (87.1), with no central band or common central budget, and put
+
+$$
+\begin{gathered}
+T[\psi]=\sum_{i=1}^3\|X_i\psi\|_2^2,\qquad
+D_\nu[\psi]=\big\||D_w|^{\nu/2}\psi\big\|_2^2,\qquad
+V[\psi]=\int_G\Gamma|\psi|^2d\mu,\\
+S_{a,\eta}[\psi]=aT[\psi]+\eta D_\sigma[\psi],\qquad
+q_{a,\eta,g}[\psi]=S_{a,\eta}[\psi]-gV[\psi],\\
+I_\sigma(a,\eta,g)=\inf_{\substack{\psi\in\mathcal E_\sigma\\\|\psi\|_2=1}}
+ q_{a,\eta,g}[\psi],\qquad
+ g_\sigma^*(a,\eta)=\inf_{0\ne\psi\in\mathcal E_\sigma}
+ \frac{S_{a,\eta}[\psi]}{V[\psi]},\\
+\alpha=\frac{2\sigma-3}{2\sigma-2},\qquad
+\beta=\frac1{2\sigma-2},\qquad \alpha+\beta=1,\qquad a,\eta>0,\quad g\ge0.
+\end{gathered}
+\tag{101.1}
+$$
+
+Theorem 87.2 gives $\mathcal E_\sigma\subset\mathcal E_2\subset D(M_{\sqrt\Gamma})$, and $T,D_\sigma,V$ are finite and strictly positive at every nonzero state of this domain. Amplitude normalization therefore leaves the threshold quotient unchanged. This is the added kinetic law; the field in $V$ remains the Green field of the original $L$, rather than a Green field regenerated from the added operator.
+
+**Proposition 101.2 (norm-free estimate for the actual full field).** On the entire $\mathcal E_\sigma$, for every nonzero complex state,
+
+$$
+D_1[\psi]\le T[\psi],\qquad
+0<V[\psi]<\frac18\,T[\psi]^\alpha D_\sigma[\psi]^\beta.
+\tag{101.2}
+$$
+
+In particular the bound involves no power of $\|\psi\|_2$ and no projection of the potential. Its constant $1/8$ is a sufficient constant here; its optimality for $\sigma>2$ is not asserted.
+
+**Proof.** Use the actual unitary central transform $b(\xi,\lambda)$ of (87.2). In the magnetic fibre (85.7) put
+
+$$
+A_\lambda=\partial_x-i\lambda y/2,\qquad
+B_\lambda=\partial_y+i\lambda x/2.
+$$
+
+They are skew symmetric on compact smooth functions, and $[A_\lambda,B_\lambda]=i\lambda$. Integration by parts gives, for $\lambda\ne0$,
+
+$$
+\begin{aligned}
+t_\lambda[f]
+ &=\|(A_\lambda-i\operatorname{sgn}(\lambda)B_\lambda)f\|_2^2
+   +|\lambda|\|f\|_2^2+\|\partial_zf\|_2^2\\
+ &\ge |\lambda|\|f\|_2^2.
+\end{aligned}
+\tag{101.3}
+$$
+
+Closure extends the inequality to the fibre form domain; at $\lambda=0$ its asserted lower bound is zero. Integration over all central frequencies, using the closed free direct integral of Proposition 85.2, proves $D_1\le T$ on $D(L^{1/2})$. In particular this controls the actual central first moment, without replacing magnetic derivatives by ordinary derivatives.
+
+With $\theta=(\sigma-2)/(\sigma-1)$, the identity $2=\theta+(1-\theta)\sigma$ and Hölder applied to $|b|^2d\xi d\lambda$ give
+
+$$
+D_2\le D_1^{(\sigma-2)/(\sigma-1)}D_\sigma^{1/(\sigma-1)}.
+\tag{101.4}
+$$
+
+The strict actual-field endpoint (87.3), followed by (101.4) and $D_1\le T$, yields
+
+$$
+V<\frac18\sqrt{TD_2}
+ \le\frac18 T^{1/2}D_1^{(\sigma-2)/(2\sigma-2)}D_\sigma^{1/(2\sigma-2)}
+ \le\frac18 T^\alpha D_\sigma^\beta.
+$$
+
+All quantities are those of the same state. The zero vector satisfies the non-strict continuous version with both sides zero. $\square$
+
+**Theorem 101.3 (finite positive threshold and the binding alternatives).** Define the explicit sufficient coupling
+
+$$
+g_{\rm suf}(a,\eta)=\frac{8a^\alpha\eta^\beta}{\alpha^\alpha\beta^\beta}.
+\tag{101.5}
+$$
+
+Then
+
+$$
+0<g_{\rm suf}(a,\eta)\le g_\sigma^*(a,\eta)<\infty,
+\qquad
+\begin{cases}
+I_\sigma(a,\eta,g)=0,&0\le g\le g_\sigma^*(a,\eta),\\
+-\infty<I_\sigma(a,\eta,g)<0,&g>g_\sigma^*(a,\eta).
+\end{cases}
+\tag{101.6}
+$$
+
+For every $0\le g<g_\sigma^*(a,\eta)$ the zero infimum is not attained, and more precisely
+
+$$
+q_{a,\eta,g}[\psi]\ge
+ \left(1-\frac{g}{g_\sigma^*(a,\eta)}\right)S_{a,\eta}[\psi]>0
+ \quad(0\ne\psi\in\mathcal E_\sigma).
+\tag{101.7}
+$$
+
+The explicit range $0\le g\le g_{\rm suf}$ also has strictly positive energy at every nonzero state and no normalized minimizer, including its endpoint. For $g>g_\sigma^*$ the negative infimum is attained by a normalized state in exactly $\mathcal E_\sigma$, and this state is an eigenvector of the represented self-adjoint operator. No positivity or simplicity of that eigenvector is part of this assertion.
+
+**Proof.** Weighted arithmetic–geometric mean gives
+
+$$
+T^\alpha D_\sigma^\beta
+ \le\frac{\alpha^\alpha\beta^\beta}{a^\alpha\eta^\beta}
+      (aT+\eta D_\sigma).
+\tag{101.8}
+$$
+
+Thus (101.2) gives $V<S_{a,\eta}/g_{\rm suf}$ at every nonzero state, proving the positive lower bound for the threshold and the claimed strict positivity throughout the sufficient range. Any fixed nonzero punctured core state has $0<V<\infty$ and finite $S_{a,\eta}$, so its quotient proves that the threshold is finite. The infimum may equivalently be taken over that core: its density in $\mathcal E_\sigma$ is (87.1), and (87.4), applied to differences, gives convergence in $L^2(G,\Gamma d\mu)$ under form-norm approximation. Consequently the quotient converges at every nonzero limit state.
+
+The defining infimum implies $S_{a,\eta}\ge g_\sigma^*V$ on the whole domain, giving (101.7) and nonnegativity also at $g=g_\sigma^*$. For the matching zero upper bound take a normalized core state and the outward Carnot dilation
+
+$$
+\delta_R(x,y,z,w)=(Rx,Ry,Rz,R^2w),\qquad
+(U_R\psi)(p)=R^{-5/2}\psi(\delta_{1/R}p).
+$$
+
+The same Haar measure, horizontal fields and original degree-$-3$ field give the exact identities
+
+$$
+\|U_R\psi\|_2=\|\psi\|_2,\qquad
+T[U_R\psi]=R^{-2}T[\psi],\qquad
+D_\sigma[U_R\psi]=R^{-2\sigma}D_\sigma[\psi],\qquad
+V[U_R\psi]=R^{-3}V[\psi].
+\tag{101.9}
+$$
+
+Each $U_R$ is a bijection of $\mathcal E_\sigma$. Letting $R\to\infty$ proves $I_\sigma\le0$ for every finite $g$. Strict per-state positivity excludes attainment in the stated ranges; it does not furnish a uniform gap on the normalized sphere.
+
+If $g>g_\sigma^*$, the definition of infimum supplies a genuine state whose quotient is less than $g$. Its normalization has negative energy. The semiboundedness, exact closed form domain, full weighted compactness and negative-infimum attainment are precisely Theorem 87.5, applied to this $a,\eta,\sigma,g$ and this unchanged $V$. They give finiteness and the normalized eigenvector. This use requires an already established negative trial; weighted compactness alone is not a zero-energy attainment assertion. $\square$
+
+**Theorem 101.4 (exact coefficient scaling and an actual-field trial bound).** Put
+
+$$
+\mathcal C_\sigma=\sup_{0\ne\psi\in\mathcal E_\sigma}
+ \frac{V[\psi]}{T[\psi]^\alpha D_\sigma[\psi]^\beta},\qquad
+\kappa_\sigma=g_\sigma^*(1,1).
+\tag{101.10}
+$$
+
+These constants refer to the full actual-field domain, and
+
+$$
+0<\mathcal C_\sigma\le\frac18,\qquad
+\kappa_\sigma=\frac1{\alpha^\alpha\beta^\beta\mathcal C_\sigma},\qquad
+g_\sigma^*(a,\eta)=a^\alpha\eta^\beta\kappa_\sigma.
+\tag{101.11}
+$$
+
+For all $g\ge0$ the energy scaling is exactly
+
+$$
+I_\sigma(a,\eta,g)
+ =a^{\sigma/(\sigma-1)}\eta^{-1/(\sigma-1)}
+ I_\sigma\!\left(1,1,\frac{g}{a^\alpha\eta^\beta}\right).
+\tag{101.12}
+$$
+
+For any normalized nonzero actual form trial $v$, writing $T_v=T[v]$, $d_v=D_\sigma[v]$ and $V_v=V[v]$, its optimally dilated quotient supplies
+
+$$
+\begin{gathered}
+R_v=\left(\frac{(2\sigma-3)\eta d_v}{aT_v}\right)^{1/(2\sigma-2)},\\
+g_\sigma^*(a,\eta)\le
+ \frac{(aT_v)^\alpha(\eta d_v)^\beta}{\alpha^\alpha\beta^\beta V_v}.
+\end{gathered}
+\tag{101.13}
+$$
+
+In particular a fixed trial, with no change of field or carrier, is
+
+$$
+v_0(x,y,z,w)=\pi^{-1}
+ \exp\!\left[-\frac{x^2+y^2+z^2+(w-xy/2)^2}{2}\right],\qquad
+M_\sigma=\frac{\Gamma_{\!E}((\sigma+1)/2)}{\sqrt\pi},
+\tag{101.14}
+$$
+
+where $\Gamma_{\!E}$ denotes Euler's gamma function. It has norm one, belongs to $\mathcal E_\sigma$ for every finite $\sigma>0$, and satisfies
+
+$$
+\begin{gathered}
+T[v_0]=\frac{13}{8},\qquad D_\sigma[v_0]=M_\sigma,\\
+\mathcal V_0:=V[v_0]
+ =\frac1{\pi^2}\int\mathcal G(\xi,s)e^{-|\xi|^2-s^2}d\xi ds\\
+ =\frac1{\pi^{5/2}}\int_0^\infty\!\int_0^\infty
+ \frac{e^{-\lambda^2/4}\lambda}
+ {\sqrt{1+4t}\,\sinh(\lambda t)\,[4+\lambda\coth(\lambda t)]}
+ \,dt\,d\lambda\ \in(0,\infty),\\
+g_\sigma^*(a,\eta)\le
+ \frac{(13a/8)^\alpha(\eta M_\sigma)^\beta}
+ {\alpha^\alpha\beta^\beta\mathcal V_0}.
+\end{gathered}
+\tag{101.15}
+$$
+
+This is an actual-field trial upper bound, not an asserted value of the exact threshold. A completely elementary, less precise upper bound follows by replacing $\mathcal V_0$ in its denominator by
+
+$$
+\mathcal V_{\rm low}
+ =\frac{e^{-1/4}}{3\pi^{5/2}\sinh(2)[4+\coth(1)]}
+ \le\mathcal V_0.
+\tag{101.16}
+$$
+
+**Proof.** From (101.9), the quotient along the orbit of $v$ is
+
+$$
+\frac{S_{a,\eta}[U_Rv]}{V[U_Rv]}
+ =\frac{aT_vR+\eta d_vR^{3-2\sigma}}{V_v}.
+\tag{101.17}
+$$
+
+Its derivative vanishes at exactly $R_v$; it diverges at both ends because $2\sigma-3>0$. Its minimum is the right side of (101.13). Taking the infimum over all nonzero $v$ is the same as taking the infimum over all states and all $R>0$, since each $U_R$ is a domain bijection and $R=1$ is allowed. The infimum of $T^\alpha D_\sigma^\beta/V$ is $1/\mathcal C_\sigma$. Positivity and finiteness of this supremum follow from (101.2) and any nonzero trial, proving (101.11).
+
+For energy scaling choose $\rho=(\eta/a)^\beta$. Then
+
+$$
+\begin{aligned}
+q_{a,\eta,g}[U_\rho\psi]
+ &=a\rho^{-2}\left(T[\psi]+D_\sigma[\psi]
+       -\frac{g}{a\rho}V[\psi]\right),\\
+a\rho&=a^\alpha\eta^\beta,\qquad
+a\rho^{-2}=a^{\sigma/(\sigma-1)}\eta^{-1/(\sigma-1)}.
+\end{aligned}
+\tag{101.18}
+$$
+
+The unitary domain bijection makes the normalized infima equal, proving (101.12), including where they vanish.
+
+For the Gaussian, the shear has Jacobian one. In $(\xi,s)$ coordinates the three derivatives are $(-x+ys/2)v_0$, $(-y-xs/2)v_0$, and $-zv_0$. Their mixed terms cancel. Each coordinate has variance $1/2$ under $|v_0|^2$, giving $T=3/2+1/8$. The unitary central Fourier transform of the normalized one-dimensional Gaussian is itself, so its $|\lambda|^\sigma$ moment is $M_\sigma$. These facts also check membership in the actual distributional domain, rather than only an ordinary Sobolev domain.
+
+For the potential use the original central Green transform $K_\xi(\lambda)$ of (85.12). Pairing its inverse with $e^{-s^2}$ supplies $\sqrt\pi e^{-\lambda^2/4}/(2\pi)$. The $z$ Gaussian integral of its heat integrand supplies $(1+4t)^{-1/2}$, and the $(x,y)$ integral supplies
+
+$$
+\frac{|\lambda|}
+ {\sinh(|\lambda|t)\,[4+|\lambda|\coth(|\lambda|t)]}.
+$$
+
+Together with $\pi^{-2}$ and the two frequency signs this is exactly (101.15). The pointwise inverse is valid for $\xi\ne0$ by Proposition 85.4. The bound $0<K_\xi(\lambda)\le(4\pi|\xi|)^{-1}$ makes its Gaussian Fourier pairing integrable in $(\xi,\lambda)$; the nonnegative heat integrand then permits Tonelli. Alternatively finiteness already follows from (87.4). The Gaussian never replaces $\mathcal G$ by its marginal.
+
+To obtain (101.16), restrict the positive double integral to $0<\lambda<1$, $1<t<2$. There $e^{-\lambda^2/4}\ge e^{-1/4}$, $\sqrt{1+4t}\le3$, $\lambda/\sinh(\lambda t)\ge1/\sinh(2)$, and $\lambda\coth(\lambda t)\le\coth(1)$. The last two bounds follow from the decrease of $u/\sinh u$ and the increase of $u\coth u$ on $(0,\infty)$. This rectangle has area one. Substitution into (101.13) gives both trial bounds without a numerical sharpness assertion. $\square$
+
+**Theorem 101.5 (critical extremizers and the necessary virial balance).** Let $g=g_\sigma^*(a,\eta)$ and let $H_{a,\eta,g}$ be the operator represented by the closed form on $\mathcal E_\sigma$. The following existence statements are equivalent:
+
+- the normalized infimum $I_\sigma(a,\eta,g)=0$ is attained;
+- the quotient $S_{a,\eta}/V$ attains $g_\sigma^*(a,\eta)$ at a nonzero $L^2$ form state;
+- $\ker H_{a,\eta,g}\ne\{0\}$;
+- the supremum $\mathcal C_\sigma$ in (101.10) is attained by a nonzero state in $\mathcal E_\sigma$.
+
+Every critical zero state $\psi$ satisfies both the weak equation
+
+$$
+a\,t(\phi,\psi)+\eta\,d_\sigma(\phi,\psi)
+ =g_\sigma^*(a,\eta)\,v(\phi,\psi)
+ \qquad(\phi\in\mathcal E_\sigma),
+\tag{101.19}
+$$
+
+and the balances
+
+$$
+\begin{gathered}
+g_\sigma^*V[\psi]=aT[\psi]+\eta D_\sigma[\psi],\\
+2aT[\psi]+2\sigma\eta D_\sigma[\psi]=3g_\sigma^*V[\psi],\\
+aT[\psi]=(2\sigma-3)\eta D_\sigma[\psi],\qquad
+ aT[\psi]=\alpha g_\sigma^*V[\psi],\quad
+ \eta D_\sigma[\psi]=\beta g_\sigma^*V[\psi].
+\end{gathered}
+\tag{101.20}
+$$
+
+Here $t,d_\sigma,v$ are the sesquilinear forms polarized from $T,D_\sigma,V$, with $v(\phi,\psi)=\int\Gamma\overline\phi\psi\,d\mu$. The converse extremizer correspondence is precise: if $v$ attains $\mathcal C_\sigma$, then $U_{R_v}v$, after amplitude normalization, is a critical zero state; any critical zero state already attains $\mathcal C_\sigma$ and has $R_\psi=1$.
+
+**Proof.** At critical coupling the closed form is nonnegative on exactly $\mathcal E_\sigma$ by Theorems 87.5 and 101.3. Thus zero energy is equivalent to quotient equality, and homogeneity permits normalization. Cauchy–Schwarz for the nonnegative form shows that $q[\psi]=0$ implies $q(\phi,\psi)=0$ for all form tests. Form representation then puts $\psi$ in $D(H_{a,\eta,g})$ with $H_{a,\eta,g}\psi=0$; the converse follows from the same representation. This proves (101.19), without requiring the separate multiplier vector $\Gamma\psi$ to lie in $L^2$.
+
+For a critical zero state, the real scalar function $q[U_R\psi]$ is nonnegative for every $R>0$ and vanishes at $R=1$. Its exact expression (101.9) is differentiable even when the state has no dilation-generator derivative in $L^2$. Differentiation of that scalar expression gives the second line of (101.20); combining it with $q[\psi]=0$ gives the remaining balances. Equivalently the state minimizes its dilation-orbit quotient at $R=1$. Its equality in the global quotient and in (101.17)'s orbit minimum, together with (101.11), forces $V/(T^\alpha D_\sigma^\beta)=\mathcal C_\sigma$. Conversely an extremizer of this last ratio reaches the global quotient at its explicit $R_v$, giving zero energy there. $\square$
+
+**Definition 101.6 (supplier correspondence and the unresolved critical alternative).** The source-specific inference is repository-derived: the actual magnetic first-moment bound (101.3), spectral interpolation and the actual-field endpoint combine to make a positive threshold on the full domain, followed by dilation optimization and the binding classification. Its mature intermediate supplies have the following limited roles.
+
+The [Krötz–Thangavelu–Xu primary text](https://arxiv.org/abs/math/0401243v2), §4.1, equation (4.1.2), uses $n=1$, Lebesgue Haar measure and the symmetric Heisenberg product used in (85.1). Its partial central transform uses $e^{+i\lambda s}$, whereas (87.2) uses $e^{-i\lambda s}$; changing $\lambda$ to $-\lambda$ leaves the radial heat coefficient even. Multiplication by the independent $z$ heat factor $(4\pi t)^{-1/2}e^{-z^2/(4t)}$ gives exactly the original $H^1\times\mathbb R$ integrand in (85.12), hence the field used in (101.15). Its §2 full Laplacian, containing an additional central second derivative, is a different generator. The commutator calculation (101.3) uses the actual fibre derivatives and does not transfer a heat estimate from that different generator.
+
+The [Alvino–Ferone–Volpicelli primary text](https://arxiv.org/abs/1105.0335v1), Theorem 1.1 and equation (8), has $n=4$, $\beta_{\rm AFV}=2$ in the supplier of (87.5): its constant is $H(4,2)=2/\pi$ on each halfspace, and hence $4/\pi$ on both. The parameter $\beta_{\rm AFV}$ is unrelated to the exponent $\beta$ in (101.1). The passage from that trace inequality to the strict actual-field endpoint is Theorem 87.2; the halfspace trace weight is not the original potential. [Teschl's primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 6.24 and 2.13, supplies KLMN and closed-form representation on the Hilbert space $L^2(G,d\mu)$. Their client hypotheses and the full weighted compactness required for negative attainment are those proved in Theorem 87.5, not a new assertion that form compactness preserves mass at zero energy.
+
+Whether any of the equivalent critical existence statements in Theorem 101.5 holds for this actual $\mathcal E_\sigma$ and $\Gamma$ remains unresolved here. In particular boundedness of a quotient-minimizing sequence in the homogeneous kinetic quantity does not itself bound its $L^2$ mass, and inhomogeneous weighted compactness from §87.5 does not supply that missing bound. The virial balance is necessary and is not asserted sufficient without the extremizer condition. Neither $\mathcal C_\sigma$ nor $\kappa_\sigma$ is evaluated sharply; $g_{\rm suf}$ and the trial bounds are only certified bounds. The correspondence asserts no exhaustive literature novelty.
+
+The mathematical carrier, original field, Haar measure, horizontal kinetic form and clock in these statements are fixed throughout. There is no finite-band restriction, marginal-field substitution or modification of the original-law fixed-budget problem. No positive heat or Markov law for the $\sigma>2$ added kinetic operator is assumed. A native source-to-state realization and a physical dimension conclusion require additional bridges not contained in these variational statements.
+
+## 追加锚（本行以下为增补区）
+
+## 102. Actual critical zero states from a source-specific mass bound
+
+**Definition 102.1 (unchanged source and auxiliary constants).** Use exactly Definition 101.1, including the complex domain $\mathcal E_\sigma$, the original degree-$-3$ field $\Gamma$, Lebesgue Haar measure, and $\sigma>2$, $a,\eta>0$. Put
+
+$$
+\begin{gathered}
+s=w-xy/2,\qquad \xi=(x,y,z),\qquad
+\rho(p)=\bigl(|\xi|^4+s^2\bigr)^{1/4},\\
+B_\Gamma=\sup_{p\ne e}\rho(p)^3\Gamma(p),\qquad
+Z_\sigma=|D_w|^\sigma,\qquad
+A=aL+\eta Z_\sigma.
+\end{gathered}
+\tag{102.1}
+$$
+
+The sum defining $A$ is the nonnegative joint spectral sum of the strongly commuting free operators, not the interacting operator. Its represented form is $S_{a,\eta}$ on $\mathcal E_\sigma$. Write $H_{a,\eta,g}$ for the represented interacting operator of §101.5, and retain the sesquilinear forms $t,d_\sigma,v$ and inner product convention of that section.
+
+The gauge $\rho$ is the homogeneous norm already used in the proof of (85.28). In shear coordinates the group product is the symmetric Heisenberg product times the independent $z$ addition; its first stratum has dimension three and its second stratum dimension one. Thus its homogeneous dimension is $Q=3+2=5$, its dilations are precisely (101.9), and the shear has Jacobian one. Smoothness and degree $-3$ of the actual Green field on the compact unit $\rho$ sphere give
+
+$$
+0<B_\Gamma<\infty,\qquad
+0<\Gamma(p)\le B_\Gamma\rho(p)^{-3}\quad(p\ne e).
+\tag{102.2}
+$$
+
+Fix finite constants $h_1,h_2$ supplied by Ciatti–Cowling–Ricci, *Hardy and uncertainty inequalities on stratified Lie groups*, [primary text](https://arxiv.org/html/1308.2373v1), Theorem A, Theorem 3.1 and Corollary 3.2, for this norm, this sub-Laplacian and $p=2$, at orders $1$ and $2$, respectively. Both orders lie strictly below $Q/p=5/2$. Set $K_\Gamma=B_\Gamma h_1h_2$. These constants are finite control constants; no optimal value is assigned to them.
+
+**Theorem 102.2 (uniform mass control for actual nonpositive-energy states).** Suppose $g\ge0$, $\varepsilon\ge0$ and $u\in\mathcal E_\sigma$ satisfy the actual weak equation
+
+$$
+a\,t(\phi,u)+\eta\,d_\sigma(\phi,u)
+ -g\,v(\phi,u)=-\varepsilon\langle\phi,u\rangle
+ \qquad(\phi\in\mathcal E_\sigma).
+\tag{102.3}
+$$
+
+Then
+
+$$
+\|u\|_2\le\frac{gK_\Gamma}{a}\sqrt{T[u]}.
+\tag{102.4}
+$$
+
+In particular, every nonpositive-energy eigenstate of $H_{a,\eta,g}$ obeys this bound, uniformly as its eigenvalue approaches zero. If also $V[u]=1$, then
+
+$$
+S_{a,\eta}[u]=g-\varepsilon\|u\|_2^2\le g,
+\qquad
+\|u\|_2^2\le\frac{K_\Gamma^2g^3}{a^3}.
+\tag{102.5}
+$$
+
+The estimate requires the equation; it is not a bound for arbitrary states with bounded homogeneous kinetic quantity.
+
+**Proof.** The cited Hardy inequalities, as mature intermediates, give on $C_c^\infty(G)$
+
+$$
+\|\rho^{-1}f\|_2\le h_1\|L^{1/2}f\|_2,
+\qquad
+\|\rho^{-2}f\|_2\le h_2\|Lf\|_2.
+\tag{102.6}
+$$
+
+Their client sub-Laplacian is exactly $L=-X_1^2-X_2^2-X_3^2$ from (84.1): the three original horizontal fields form a basis of the first stratum and have zero divergence for the stated Haar measure. Passing to shear coordinates changes neither the measure nor this operator, and does not add a central second derivative. The supplier's homogeneous norm may be chosen to be $\rho$; no equivalence with an unverified explicit Green formula is required. The first inequality is used only at order one, and the second is the order-two Rellich inequality furnished by the same corollary.
+
+Here are the core and closure details for extending (102.6). For a smooth compact approximate identity $\kappa_j$ on $G$, convolution $\kappa_j*f$ is an average of left translates of $f$. Left translation commutes with every $X_i$ and preserves the closed free form. Its unitary action therefore commutes with the represented $L$. Consequently, for $f\in D(L)$,
+
+$$
+L(\kappa_j*f)=\kappa_j*(Lf),\qquad
+\kappa_j*f\longrightarrow f\quad\hbox{in }D(L)
+\tag{102.7}
+$$
+
+with its graph norm. For $f\in D(L^{1/2})$, the identities $X_i(\kappa_j*f)=\kappa_j*(X_if)$ give the corresponding convergence in the free form norm. These convergence statements follow from strong continuity of translations on $L^2$, applied also to $Lf$ or $X_if$. Convolution is smooth: after changing the integration variable, local derivatives fall on the smooth compact convolution factor, and are locally integrable against $f\in L^2$.
+
+To obtain compact support, take a smooth compact $\chi$ equal to one near $e$ and put $\chi_R=\chi\circ\delta_{1/R}$. Homogeneity gives $\|X_i\chi_R\|_\infty=O(R^{-1})$ and $\|L\chi_R\|_\infty=O(R^{-2})$. For a fixed smoothed function $f_j=\kappa_j*f$, the distributional product identity is
+
+$$
+L(\chi_Rf_j)=\chi_RLf_j
+ -2\sum_i(X_i\chi_R)(X_if_j)+(L\chi_R)f_j.
+\tag{102.8}
+$$
+
+If $f\in D(L)$, all terms on the right are in $L^2$, since $D(L)\subset D(L^{1/2})$. Dominated convergence for the first term and the displayed derivative bounds for the other terms give graph convergence as $R\to\infty$. The product is in $C_c^\infty(G)$, so it is in the domain of the represented free operator; (102.8) is its operator action. The first-derivative product rule proves the same cutoff convergence in the free form norm. Choosing $R$ after $j$ proves that $C_c^\infty(G)$ is a core both for $L$ and for its form. These are free cores; no interacting operator core is asserted or used.
+
+Apply (102.6) to differences of these core approximants. The weighted functions are Cauchy in $L^2$, and a subsequence converging almost everywhere in the unweighted $L^2$ space identifies their limits with $\rho^{-1}f$ or $\rho^{-2}f$, respectively. The identity element is a Haar-null set. Thus the first inequality extends to all of $D(L^{1/2})$, and the second to all of $D(L)$. In particular (102.2), Cauchy–Schwarz and these extended inequalities give the actual, absolutely convergent pairing estimate
+
+$$
+\begin{aligned}
+\int_G\Gamma|\overline\phi u|\,d\mu
+ &\le B_\Gamma\|\rho^{-2}\phi\|_2\|\rho^{-1}u\|_2\\
+ &\le K_\Gamma\|L\phi\|_2\sqrt{T[u]}
+ \qquad\bigl(\phi\in D(L),\ u\in D(L^{1/2})\bigr).
+\end{aligned}
+\tag{102.9}
+$$
+
+This is a pairing estimate, not the assertion $\Gamma u\in L^2$.
+
+For completeness, the free resolvent used as a form test has the required domain on the full central spectrum. Proposition 85.2 identifies $L$ with its actual central direct integral and gives strong commutation with the central spectral projections. Thus $L$ and $Z_\sigma$ have a joint spectral measure on $[0,\infty)^2$, with variables $(\ell,\omega)$. The multiplier $a\ell+\eta\omega$ defines $A$. Its square-root domain is exactly
+
+$$
+D(A^{1/2})=D(L^{1/2})\cap D(Z_\sigma^{1/2})
+ =\mathcal E_\sigma,
+\qquad
+D(A)=D(L)\cap D(Z_\sigma).
+\tag{102.10}
+$$
+
+Indeed, its form integrability is equivalent to that of $\ell+\omega$, and its squared multiplier is bounded above and below by positive multiples of $\ell^2+\omega^2$. This also identifies its form with $a t+\eta d_\sigma$, by integration in that joint measure and polarization. It uses the original closed free domains, not an observer representation of the interaction. For every $r>0$ the bounded inverse $R_r=(A+r)^{-1}$ consequently satisfies
+
+$$
+R_rf\in D(A)\subset\mathcal E_\sigma\cap D(L),\qquad
+\|LR_rf\|_2\le a^{-1}\|f\|_2
+\quad(f\in L^2),
+\tag{102.11}
+$$
+
+because $\ell/(a\ell+\eta\omega+r)\le1/a$. The represented-form identity on such tests is
+
+$$
+a\,t(R_rf,u)+\eta\,d_\sigma(R_rf,u)
+ =\langle AR_rf,u\rangle\qquad(u\in\mathcal E_\sigma).
+\tag{102.12}
+$$
+
+It follows either from the same joint integral or from closed-form representation. No core for $A$ and no separate multiplier domain for $\Gamma$ is needed here.
+
+Take $\phi=R_{\varepsilon+\delta}f$ in (102.3), with $f\in L^2$ arbitrary and $\delta>0$. Equations (102.9)–(102.12) give
+
+$$
+\begin{aligned}
+\left|\left\langle
+ (I-\delta R_{\varepsilon+\delta})f,u\right\rangle\right|
+ &=g\,|v(R_{\varepsilon+\delta}f,u)|\\
+ &\le\frac{gK_\Gamma}{a}\sqrt{T[u]}\,\|f\|_2.
+\end{aligned}
+\tag{102.13}
+$$
+
+There is no zero spectral atom of $A$. In fact $A u=0$ implies $D_\sigma[u]=0$, while the actual central Fourier transform of an $L^2$ state with this property is supported at the null singleton $\lambda=0$ and is zero. Hence, also when $\varepsilon=0$, the spectral theorem and dominated convergence give
+
+$$
+\delta R_{\varepsilon+\delta}f\longrightarrow0
+ \quad\hbox{in }L^2\quad(\delta\downarrow0).
+\tag{102.14}
+$$
+
+Taking this limit in (102.13) and then taking the supremum over $\|f\|_2=1$ proves (102.4). Testing (102.3) with $u$ itself gives (102.5), using $aT[u]\le S_{a,\eta}[u]$. All tests were in the original full form domain. In particular neither a positivity-preserving heat law for $A$ nor an order comparison of noncommuting inverses has entered the proof. $\square$
+
+**Theorem 102.3 (actual critical attainment and strict threshold refinements).** For every $\sigma>2$ and $a,\eta>0$, the true threshold $g_\sigma^*(a,\eta)$ of (101.1) is attained by a nonzero actual state $u\in\mathcal E_\sigma$. It may be chosen so that
+
+$$
+V[u]=1,\qquad S_{a,\eta}[u]=g_\sigma^*(a,\eta).
+\tag{102.15}
+$$
+
+Consequently $u/\|u\|_2$ is an actual normalized zero eigenvector of $H_{a,\eta,g_\sigma^*}$, and all four equivalent critical existence statements in Theorem 101.5 hold. In the exact notation of (101.1), (101.5) and (101.10),
+
+$$
+0<\mathcal C_\sigma<\frac18,\qquad
+ g_\sigma^*(a,\eta)>g_{\rm suf}(a,\eta)
+ =\frac{8a^\alpha\eta^\beta}{\alpha^\alpha\beta^\beta}.
+\tag{102.16}
+$$
+
+**Proof.** Write $g_*=g_\sigma^*(a,\eta)$ and $g_n=g_*+1/n$. Theorem 101.3 gives $0<g_*<\infty$ and, for each $n$, an actual normalized negative-energy eigenstate $v_n\in\mathcal E_\sigma$ of $H_{a,\eta,g_n}$, with eigenvalue $-\varepsilon_n<0$. Its represented form and exact domain are those of Theorem 87.5. In particular its equation holds for every test in $\mathcal E_\sigma$. Since $0<V[v_n]<\infty$, set
+
+$$
+u_n=\frac{v_n}{\sqrt{V[v_n]}}.
+\tag{102.17}
+$$
+
+Amplitude rescaling preserves that weak equation. Threshold nonnegativity and its negative-energy identity give
+
+$$
+V[u_n]=1,\qquad
+ g_*\le S_{a,\eta}[u_n]
+ =g_n-\varepsilon_n\|u_n\|_2^2<g_n.
+\tag{102.18}
+$$
+
+Now apply Theorem 102.2 to these actual equation-satisfying states, not to an arbitrary quotient-minimizing sequence. It gives
+
+$$
+\|u_n\|_2^2\le\frac{K_\Gamma^2g_n^3}{a^3}
+ \le\frac{K_\Gamma^2(g_*+1)^3}{a^3}.
+\tag{102.19}
+$$
+
+Together with (102.18), this bounds the complete Hilbert norm of $\mathcal E_\sigma$. Take a subsequence weakly converging there to $u$. The full actual-field compact embedding of Theorem 87.5 gives, after further subselection, strong convergence in $L^2(G,\Gamma d\mu)$ to that same $u$. Hence $V[u]=1$. Weak lower semicontinuity and (102.18) imply $S_{a,\eta}[u]\le g_*$, while the defining threshold inequality on the entire $\mathcal E_\sigma$ implies $S_{a,\eta}[u]\ge g_*V[u]=g_*$. This proves (102.15). In particular $u$ is a nonzero $L^2$ function with the original distributional horizontal derivatives and the required central moment, not merely a vector in a homogeneous completion. No convergence of the total $L^2$ masses or limiting eigenvalues was presumed.
+
+To identify the actual operator domain, the closed form $q_{a,\eta,g_*}$ is nonnegative on exactly $\mathcal E_\sigma$, by Theorems 87.5 and 101.3, and has value zero at $u$. Cauchy–Schwarz for that nonnegative Hermitian form gives $q_{a,\eta,g_*}(\phi,u)=0$ for every $\phi\in\mathcal E_\sigma$. The characterization of the represented operator domain therefore puts $u\in D(H_{a,\eta,g_*})$ with $H_{a,\eta,g_*}u=0$: the representing vector is the actual zero vector of $L^2$. This argument does not split the represented operator into separately defined vectors $Au$ and $\Gamma u$. Since $0<\|u\|_2<\infty$, normalization gives the asserted zero eigenvector.
+
+By Theorem 101.5 this same state attains $\mathcal C_\sigma$, and its virial balance is (101.20). Apply the strict per-state bound (101.2) to this nonzero extremizer:
+
+$$
+\mathcal C_\sigma
+ =\frac{V[u]}{T[u]^\alpha D_\sigma[u]^\beta}<\frac18.
+\tag{102.20}
+$$
+
+Positivity is already (101.11). Substitution into the exact coefficient identity from Theorem 101.4,
+
+$$
+g_\sigma^*(a,\eta)
+ =\frac{a^\alpha\eta^\beta}
+ {\alpha^\alpha\beta^\beta\mathcal C_\sigma},
+\tag{102.21}
+$$
+
+proves the strict second refinement in (102.16). The strict supremum bound follows from actual attainment together with the strict per-state inequality; the latter alone would not prove it. $\square$
+
+**Proposition 102.4 (the mass bound does not extend to arbitrary quotient minimizers).** Even after imposing $V=1$, a sequence with $S_{a,\eta}/V\to g_\sigma^*(a,\eta)$ need not be bounded in $L^2$.
+
+**Proof.** Choose $u$ from (102.15) and a fixed normalized nonzero punctured core state $h$. For $R\to\infty$ put $b_R=R^{1/2}U_Rh$, with the original Carnot dilation (101.9). Then
+
+$$
+\begin{gathered}
+\|b_R\|_2^2=R,\qquad
+T[b_R]=R^{-1}T[h],\\
+D_\sigma[b_R]=R^{1-2\sigma}D_\sigma[h],\qquad
+V[b_R]=R^{-2}V[h].
+\end{gathered}
+\tag{102.22}
+$$
+
+Thus $S_{a,\eta}[b_R]\to0$ and $V[b_R]\to0$. Cauchy–Schwarz separately for the two nonnegative kinetic forms and for the actual weighted inner product gives
+
+$$
+S_{a,\eta}[u+b_R]\longrightarrow g_*,\qquad
+V[u+b_R]\longrightarrow1.
+\tag{102.23}
+$$
+
+For sufficiently large $R$, define $w_R=(u+b_R)/\sqrt{V[u+b_R]}$. Each $w_R$ is an actual form state with $V[w_R]=1$ and quotient tending to $g_*$. But the reverse triangle inequality gives
+
+$$
+\|w_R\|_2\ge
+ \frac{R^{1/2}-\|u\|_2}{\sqrt{V[u+b_R]}}\longrightarrow\infty.
+\tag{102.24}
+$$
+
+No disjoint-support or local central-operator assumption is used: all cross terms were controlled by their corresponding Hilbert seminorms. This example explains the need for the equation in Theorem 102.2 and the choice of actual negative eigenstates in the proof of Theorem 102.3. $\square$
+
+**Definition 102.5 (mathematical attribution and scope).** The Hardy and Rellich estimates (102.6) are literature-attested intermediates, with the precise correspondence to Ciatti–Cowling–Ricci given above. Their §2 uses Lebesgue Haar measure in exponential coordinates and the sub-Laplacian formed from a basis of the first stratum; the shear identifies those conventions with this source without a measure rescaling. Their adjoint identity (3.1) concerns the bounded weighted Riesz operator and its adjoint. It does not assert that $\Gamma u$ lies in ordinary $L^2$, nor that an everywhere-defined unweighted inverse exists at zero. The form pairing (102.9) and regularized resolvent tests (102.11)–(102.14) supply the client passage instead. Their positive free heat kernel is a fact about $L$; no such property is transferred to $A$.
+
+The new source-specific deductions are the uniform equation-based mass estimate, its use with the existing full-field compactness and negative eigenstates to obtain an actual critical state, and the resulting strict refinements of the constants in §101. The free domains, strong central reduction, actual Green bound, higher-order weighted compactness and critical quotient/operator equivalences remain the supplies of §§84–87 and §101. These deductions are repository-derived; neither the general Hardy/Rellich mechanism nor an exhaustive literature novelty claim is attributed to them.
+
+All conclusions concern the original $H^1\times\mathbb R$ carrier, full complex domain, original source, Haar measure, degree-$-3$ field, actual horizontal kinetic form and clock. No marginal field, band restriction, new source or Green kernel of the added law is substituted. A full homogeneous-completion reconstruction theorem is not asserted. No exact sharp numerical value of $\mathcal C_\sigma$ or $g_\sigma^*$, positivity or simplicity of a critical eigenstate, extension to $\sigma=2$, native source-to-state realization or physical dimension conclusion is supplied.
+
+## 追加锚（本行以下为增补区）
+
+## 103. Fixed-source endpoint limits of actual critical states
+
+**Definition 103.1 (fixed data, common spaces and normalization).** Work on precisely the group of (82.5), with product $pp'=(x+x',y+y',z+z',w+w'+xy')$, identity $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, and
+
+$$
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\qquad D_w=-i\partial_w.
+\tag{103.1}
+$$
+
+The operator $L$ is the original nonnegative free realization, its clock remains $e^{-tL}$, and $\Gamma=\int_0^\infty h_t\,dt$ is its original positive degree-$-3$ Green field with unit source $L\Gamma=\delta_e$. Fix $a,\eta>0$. All powers of $|D_w|$, all logarithms below and all central cutoffs use one fixed original coordinate and fixed spectral units, without a parameter-dependent rescaling. For complex states and $\nu>0$ use the full distributional spaces and forms (with $\sigma>2$ in the threshold and product expressions)
+
+$$
+\begin{gathered}
+\mathcal E_\nu=D(L^{1/2})\cap D(|D_w|^{\nu/2}),\qquad
+\|u\|_{\mathcal E_\nu}^2=\|u\|_2^2+T[u]+D_\nu[u],\\
+T[u]=\sum_i\|X_i u\|_2^2,\qquad
+D_\nu[u]=\||D_w|^{\nu/2}u\|_2^2,\qquad
+V[u]=\|\sqrt\Gamma u\|_2^2,\\
+g_\sigma=g_\sigma^*(a,\eta)
+ =\inf_{0\ne u\in\mathcal E_\sigma}\frac{aT[u]+\eta D_\sigma[u]}{V[u]},\\
+\alpha_\sigma=\frac{2\sigma-3}{2\sigma-2},\qquad
+\beta_\sigma=\frac1{2\sigma-2},\qquad
+\mathcal C_\sigma=\sup_{0\ne u\in\mathcal E_\sigma}
+ \frac{V[u]}{T[u]^{\alpha_\sigma}D_\sigma[u]^{\beta_\sigma}},\\
+g_c=16\sqrt{a\eta},\qquad t_c=\frac{g_c}{2a},\qquad
+ d_c=\frac{g_c}{2\eta},\qquad t_cd_c=64,\\
+q_c[u]=aT[u]+\eta D_2[u]-g_cV[u]\quad(u\in\mathcal E_2).
+\end{gathered}
+\tag{103.2}
+$$
+
+The critical Friedrichs space $\mathcal Q_c$ and form $\overline q_c$ are exactly those of Theorem 87.4, with norm squared $\|u\|_2^2+\overline q_c[u]$. In particular $\mathcal E_2\subset\mathcal Q_c$, $\overline q_c=q_c$ there, and the zero kernel in the whole $\mathcal Q_c$ is already established. The field, threshold and product definitions are those of §§87 and 101, not new objects generated from the added kinetic operator.
+
+For every sequence $\sigma_n>2$ tending to $2$, choose **any** nonzero actual critical zero state supplied by Theorem 102.3, and rescale only its amplitude to obtain $u_n\in\mathcal E_{\sigma_n}$ with $V[u_n]=1$. Put $g_n=g_{\sigma_n}$ and $M_n=\|u_n\|_2^2>0$. Every such selection satisfies the actual weak equation and the existing virial identities
+
+$$
+\begin{gathered}
+a\,t(\phi,u_n)+\eta\,d_{\sigma_n}(\phi,u_n)
+ =g_n v(\phi,u_n)\quad(\phi\in\mathcal E_{\sigma_n}),\\
+aT[u_n]=\alpha_{\sigma_n}g_n,\qquad
+\eta D_{\sigma_n}[u_n]=\beta_{\sigma_n}g_n.
+\end{gathered}
+\tag{103.3}
+$$
+
+Here the $L^2$ inner product is antilinear in the first argument, $t(\phi,u)=\sum_i\langle X_i\phi,X_i u\rangle$, $d_\nu(\phi,u)=\langle|D_w|^{\nu/2}\phi,|D_w|^{\nu/2}u\rangle$, and $v(\phi,u)=\int\Gamma\overline\phi u\,d\mu$. The punctured core is $\mathcal D_0=C_c^\infty(G\setminus\{e\};\mathbb C)$. No positivity, simplicity, uniqueness, chosen profile or compactness uniform in $\sigma$ is assumed. Limits of finite measures below are narrow: they are tested against every bounded continuous complex function on the original $G$.
+
+**Theorem 103.2 (true threshold and sharp product limit).** At the fixed data of Definition 103.1,
+
+$$
+\lim_{\sigma\downarrow2}g_\sigma=g_c,\qquad
+\lim_{\sigma\downarrow2}\mathcal C_\sigma=\frac18.
+\tag{103.4}
+$$
+
+**Proof.** The sufficient bound and exact coefficient relation from (101.5), (101.11) are
+
+$$
+g_\sigma\ge b_\sigma:=
+ \frac{8a^{\alpha_\sigma}\eta^{\beta_\sigma}}
+ {\alpha_\sigma^{\alpha_\sigma}\beta_\sigma^{\beta_\sigma}},\qquad
+\mathcal C_\sigma=
+ \frac{a^{\alpha_\sigma}\eta^{\beta_\sigma}}
+ {\alpha_\sigma^{\alpha_\sigma}\beta_\sigma^{\beta_\sigma}g_\sigma}.
+\tag{103.5}
+$$
+
+Since $\alpha_\sigma,\beta_\sigma\to1/2$, $b_\sigma\to g_c$. For the reverse bound, Proposition 87.3 supplies, for each $\delta>0$, a fixed nonzero punctured core state $f\in\mathcal D_0$ with $(aT[f]+\eta D_2[f])/V[f]<g_c+\delta$. Such an $f$ belongs to every finite-order domain. For $2\le\sigma\le3$, its central spectral integral is dominated by $(1+|\lambda|^3)|b_f(\xi,\lambda)|^2$, which is integrable. Hence $D_\sigma[f]\to D_2[f]$, and the defining infimum gives
+
+$$
+\limsup_{\sigma\downarrow2}g_\sigma
+ \le\frac{aT[f]+\eta D_2[f]}{V[f]}<g_c+\delta.
+$$
+
+Let $\delta\downarrow0$ and use (103.5). This proves both limits. The core endpoint sharpness and the coefficient formula are reused, not re-proved as new results. This argument alone makes no assertion about monotonicity or the side of approach. $\square$
+
+**Theorem 103.3 (actual states in the common endpoint topology).** For every selection in Definition 103.1,
+
+$$
+\begin{gathered}
+T[u_n]\longrightarrow t_c,\qquad
+D_{\sigma_n}[u_n]\longrightarrow d_c,\qquad
+D_2[u_n]\longrightarrow d_c,\qquad q_c[u_n]\longrightarrow0,\\
+u_n\rightharpoonup0\ \hbox{in }\mathcal E_2,\qquad
+M_n\longrightarrow0,\qquad
+\|\rho^{-1}u_n\|_2\longrightarrow0,\qquad
+\|u_n\|_{\mathcal Q_c}\longrightarrow0,
+\end{gathered}
+\tag{103.6}
+$$
+
+where $\rho=(|\xi|^4+(w-xy/2)^2)^{1/4}$ is the original homogeneous norm of (102.1). Thus the convergence in ordinary $L^2$ is strong. To remove any ambiguity about weighted-norm conventions, (103.6) means $\int\rho^{-2}|u_n|^2d\mu\to0$; also $\int\rho^{-1}|u_n|^2d\mu\to0$. There is no strongly convergent subsequence in $\mathcal E_2$ or in $L^2(G,\Gamma d\mu)$.
+
+**Proof.** The first two kinetic limits follow directly from (103.3) and (103.4). The equation-based estimate (102.5) gives the uniform bound $M_n\le K_\Gamma^2g_n^3/a^3$. To control the endpoint central derivative without changing the state, use (87.3) and (101.4): with $\theta_n=(\sigma_n-2)/(\sigma_n-1)$,
+
+$$
+\frac{64}{T[u_n]}<D_2[u_n]
+ \le D_1[u_n]^{\theta_n}D_{\sigma_n}[u_n]^{1-\theta_n}
+ \le T[u_n]^{\theta_n}D_{\sigma_n}[u_n]^{1-\theta_n}.
+\tag{103.7}
+$$
+
+Both outside expressions tend to $d_c$, because $t_cd_c=64$. Consequently $D_2[u_n]\to d_c$ and $q_c[u_n]\to at_c+\eta d_c-g_c=0$. The sequence is bounded in the actual Hilbert space $\mathcal E_2$.
+
+The inclusion $\mathcal E_2\to\mathcal Q_c$ is bounded: $0\le q_c[u]\le aT[u]+\eta D_2[u]$. Every weakly convergent $\mathcal E_2$ subsequence therefore converges weakly in $\mathcal Q_c$ to the same actual $L^2$ function $u$. Weak lower semicontinuity gives $\overline q_c[u]\le\liminf q_c[u_n]=0$. The zero-kernel result (87.19) forces $u=0$. Boundedness and weak subsequence extraction in this Hilbert space now show that the full sequence converges weakly to zero in $\mathcal E_2$.
+
+On every fixed compact coordinate box, the actual derivatives $X_1u_n,X_2u_n,X_3u_n,\partial_wu_n$ control all ordinary first derivatives: $\partial_yu_n=X_2u_n-x\partial_wu_n$, and $x$ is bounded there. Multiplication by a fixed smooth compact cutoff thus gives a bounded ordinary $H^1(\mathbb R^4)$ sequence. Rellich compactness and the just-identified weak limit give $u_n\to0$ in $L^2$ on every compact set, for the full sequence. This is local compactness only.
+
+Positivity, smoothness and degree $-3$ of the same $\Gamma$ on the compact unit $\rho$ sphere supply constants
+
+$$
+0<b_\Gamma:=\min_{\rho=1}\Gamma
+ \le \rho(p)^3\Gamma(p)\le B_\Gamma<\infty\quad(p\ne e).
+\tag{103.8}
+$$
+
+For $0<r<R$, the inner and outer parts of the softer weighted norm satisfy
+
+$$
+\int_{\rho<r}\rho^{-2}|u_n|^2d\mu\le\frac r{b_\Gamma}V[u_n]=\frac r{b_\Gamma},\qquad
+\int_{\rho>R}\rho^{-2}|u_n|^2d\mu\le R^{-2}M_n.
+\tag{103.9}
+$$
+
+The compact annulus $r\le\rho\le R$ contributes a quantity tending to zero by local $L^2$ convergence. First fix $r,R$ and let $n\to\infty$, then let $r\downarrow0$, $R\to\infty$. The uniform mass bound proves $\|\rho^{-1}u_n\|_2\to0$ without assuming global strong convergence.
+
+The actual equation supplies the missing global implication. For each $n$, set $A_n=aL+\eta|D_w|^{\sigma_n}$ and $R_{n,\delta}=(A_n+\delta)^{-1}$. The legal full-spectrum tests of (102.10)–(102.14) give $R_{n,\delta}f\in\mathcal E_{\sigma_n}\cap D(L)$ and $\|LR_{n,\delta}f\|_2\le a^{-1}\|f\|_2$. The order-two Hardy/Rellich supply in (102.6) gives the more useful version of the pairing bound,
+
+$$
+\begin{aligned}
+|v(\phi,u_n)|
+ &\le B_\Gamma\|\rho^{-2}\phi\|_2\|\rho^{-1}u_n\|_2\\
+ &\le B_\Gamma h_2\|L\phi\|_2\|\rho^{-1}u_n\|_2
+ \quad(\phi\in D(L)).
+\end{aligned}
+\tag{103.10}
+$$
+
+Insert $\phi=R_{n,\delta}f$ into (103.3), using closed-form representation exactly as in (102.12). It follows that
+
+$$
+\left|\left\langle(I-\delta R_{n,\delta})f,u_n\right\rangle\right|
+ \le\frac{g_n B_\Gamma h_2}{a}\|f\|_2\|\rho^{-1}u_n\|_2.
+\tag{103.11}
+$$
+
+For each fixed $n$, $\ker A_n=\{0\}$ and $\delta R_{n,\delta}f\to0$ as $\delta\downarrow0$, by the original central spectral measure. Taking that limit first, and then the supremum over $\|f\|_2=1$, yields
+
+$$
+\|u_n\|_2\le\frac{g_n B_\Gamma h_2}{a}\|\rho^{-1}u_n\|_2\longrightarrow0.
+\tag{103.12}
+$$
+
+No uniform limit in $(n,\delta)$, assertion $\Gamma u_n\in L^2$, or interacting operator core is used. Cauchy–Schwarz also gives $\int\rho^{-1}|u_n|^2d\mu\le\|u_n\|_2\|\rho^{-1}u_n\|_2\to0$. Since $\overline q_c[u_n]=q_c[u_n]\to0$, (103.12) proves strong convergence in $\mathcal Q_c$ with exactly the norm stated above.
+
+On the other hand, $\|u_n\|_{\mathcal E_2}^2\to t_c+d_c>0$, while the only weak $\mathcal E_2$ limit is zero. This excludes every strongly convergent subsequence there. If a subsequence converged strongly in $L^2(G,\Gamma d\mu)$, then on each compact annulus (103.8) would identify its limit with the local $L^2$ limit zero. Exhaustion identifies the weighted limit as zero almost everywhere, contradicting $V[u_n]=1$. These are the precise failures of strong compactness despite strong convergence in the weaker spaces. $\square$
+
+**Theorem 103.4 (concentration of potential and local endpoint kinetic resources).** In the same $V=1$ normalization, the actual finite measures satisfy
+
+$$
+\Gamma|u_n|^2d\mu\ \longrightarrow\ \delta_e,\qquad
+\sum_{i=1}^3|X_i u_n|^2d\mu\ \longrightarrow\ t_c\delta_e,\qquad
+|\partial_wu_n|^2d\mu\ \longrightarrow\ d_c\delta_e
+\tag{103.13}
+$$
+
+narrowly on $G$. These are potential and local endpoint kinetic resources; the last measure belongs to $D_2$, and no local density for the fractional functional $D_{\sigma_n}$ is introduced.
+
+**Proof.** For every fixed $r>0$, (103.8) and $M_n\to0$ give
+
+$$
+\int_{\rho\ge r}\Gamma|u_n|^2d\mu\le B_\Gamma r^{-3}M_n\longrightarrow0.
+\tag{103.14}
+$$
+
+The potential measure has total one, proving its claimed limit.
+
+For the two kinetic measures, choose real smooth $\chi,\zeta$ with $\chi^2+\zeta^2=1$, $\chi=0$ on $\rho\le r/2$, and $\chi=1$ on $\rho\ge r$. For example use the sine and cosine of a smooth function of $\rho$ constant at $0$ and $\pi/2$ on these regions. Their derivatives are supported on a compact annulus and bounded. Both products with $u_n$ belong to $\mathcal E_2$. The first-order product rules and cancellation of mixed terms give the exact local endpoint identity
+
+$$
+\begin{aligned}
+q_c[\chi u_n]+q_c[\zeta u_n]
+ &=q_c[u_n]+\int_G W_r|u_n|^2d\mu,\\
+W_r&=a\sum_i\bigl(|X_i\chi|^2+|X_i\zeta|^2\bigr)
+ +\eta\bigl(|\partial_w\chi|^2+|\partial_w\zeta|^2\bigr),\qquad
+\|W_r\|_\infty<\infty.
+\end{aligned}
+\tag{103.15}
+$$
+
+The potential term splits here because this is multiplication by a partition of unity. Nonnegativity of the endpoint form implies $0\le q_c[\chi u_n]\le q_c[u_n]+\|W_r\|_\infty M_n\to0$. Also $V[\chi u_n]\le B_\Gamma(r/2)^{-3}M_n\to0$. Consequently
+
+$$
+aT[\chi u_n]+\eta D_2[\chi u_n]
+ =q_c[\chi u_n]+g_cV[\chi u_n]\longrightarrow0.
+\tag{103.16}
+$$
+
+On $\rho\ge r$, these derivatives equal those of $u_n$. Thus each kinetic measure has mass tending to zero outside every such neighbourhood of $e$, including the whole exterior tail. Their total masses tend to $t_c,d_c$ by (103.6). For any bounded continuous test, continuity at $e$ controls its variation inside a sufficiently small $\rho$ ball, and its supremum controls the vanishing exterior contribution. This proves all three narrow limits, without assuming tightness in advance. $\square$
+
+**Proposition 103.5 (every fixed original central band loses its resource budgets).** Fix any $0\le\Lambda<\infty$ in the original units and let $P=P_\Lambda=\mathbf1_{[0,\Lambda]}(|D_w|)$, $Q=I-P$. In the notation of Definition 103.1,
+
+$$
+\begin{array}{c|cccc}
+ &V&T&D_2&D_{\sigma_n}\\ \hline
+Pu_n&0&0&0&0\\
+Qu_n&1&t_c&d_c&d_c
+\end{array}
+\quad\hbox{are the respective limits.}
+\tag{103.17}
+$$
+
+Each entry means the functional of the **projected state**: for example $V[Pu_n]=\|\sqrt\Gamma Pu_n\|_2^2$, $T[Pu_n]=\sum_i\|X_iPu_n\|_2^2$ and $D_{\sigma_n}[Pu_n]=\||D_w|^{\sigma_n/2}Pu_n\|_2^2$. It does not mean a projection applied to a local resource density or to $\sqrt\Gamma u_n$. The kinetic orthogonal splittings are exact; the potential need not commute with $P$ and need not split additively.
+
+**Proof.** The original strong free reduction of Proposition 85.2 makes $P,Q$ preserve every relevant free form domain, with orthogonal splitting for $T,D_2,D_{\sigma_n}$. The sequence $\sigma_n$ is bounded, so for $\Lambda>0$
+
+$$
+D_2[Pu_n]\le\Lambda^2M_n\to0,\qquad
+D_{\sigma_n}[Pu_n]\le\max\{1,\Lambda^{\sup_n\sigma_n}\}M_n\to0.
+\tag{103.18}
+$$
+
+Since $T[Pu_n]\le T[u_n]$ is bounded, the endpoint estimate gives $V[Pu_n]\le\frac18\sqrt{T[Pu_n]D_2[Pu_n]}\to0$. To obtain the horizontal budget, use the actual equation with the legitimate test $Pu_n\in\mathcal E_{\sigma_n}$:
+
+$$
+0\le aT[Pu_n]+\eta D_{\sigma_n}[Pu_n]
+ =g_n v(Pu_n,u_n)\le g_n\sqrt{V[Pu_n]V[u_n]}\longrightarrow0.
+\tag{103.19}
+$$
+
+The middle pairing is real and nonnegative by the equality; its absolute value is bounded by weighted Cauchy–Schwarz. Orthogonal kinetic splitting and (103.6) give the complementary kinetic limits. For the potential, use the weighted triangle inequality instead:
+
+$$
+\left|\sqrt{V[Qu_n]}-\sqrt{V[u_n]}\right|
+ \le\sqrt{V[Pu_n]}\longrightarrow0.
+\tag{103.20}
+$$
+
+The cross pairing $v(Pu_n,Qu_n)$ tends to zero as well, by the same weighted inequality and boundedness of $V[Qu_n]$. When $\Lambda=0$, $P=0$ on the actual $L^2$ central spectrum and the assertions follow directly. Thus a fixed band cannot retain any of the stated potential or kinetic budgets, although no fractional spatial-density localization has been asserted. $\square$
+
+**Corollary 103.6 (what amplitude normalization to $L^2=1$ preserves).** Set $v_n=u_n/\sqrt{M_n}$. Then $\|v_n\|_2=1$, $M_n\to0$, and exactly
+
+$$
+\begin{gathered}
+V[v_n]=M_n^{-1}\longrightarrow\infty,\qquad
+\frac{T[v_n]}{V[v_n]}=T[u_n]\longrightarrow t_c,\\
+\frac{D_{\sigma_n}[v_n]}{V[v_n]}=D_{\sigma_n}[u_n]\longrightarrow d_c,\qquad
+\frac{D_2[v_n]}{V[v_n]}=D_2[u_n]\longrightarrow d_c.
+\end{gathered}
+\tag{103.21}
+$$
+
+In particular each of the three kinetic totals diverges, $T[v_n]/D_2[v_n]\to t_c/d_c=\eta/a$, and $D_{\sigma_n}[v_n]/D_2[v_n]\to1$. The relative resource measures are amplitude invariant:
+
+$$
+\begin{gathered}
+\frac{\Gamma|v_n|^2d\mu}{V[v_n]}=\Gamma|u_n|^2d\mu\longrightarrow\delta_e,\\
+\frac{\sum_i|X_iv_n|^2d\mu}{T[v_n]}
+ =\frac{\sum_i|X_iu_n|^2d\mu}{T[u_n]}\longrightarrow\delta_e,\\
+\frac{|\partial_wv_n|^2d\mu}{D_2[v_n]}
+ =\frac{|\partial_wu_n|^2d\mu}{D_2[u_n]}\longrightarrow\delta_e.
+\end{gathered}
+\tag{103.22}
+$$
+
+For each fixed $\Lambda$, the fractions $F[P_\Lambda v_n]/F[v_n]$ tend to zero and $F[(I-P_\Lambda)v_n]/F[v_n]$ tend to one, for $F=V,T,D_2,D_{\sigma_n}$. These are again functionals of projected states. No conclusion about the location or tightness of the unweighted probability measures $|v_n|^2d\mu$, or a weak or strong state limit or profile for $v_n$, is made.
+
+**Proof.** Every indicated form and each displayed local measure is quadratic under amplitude scaling. Divide the identities and limits of Theorems 103.3–103.4 and Proposition 103.5 by the positive $M_n$, or by the corresponding positive total resource, as appropriate. No statement about $|u_n|^2/M_n$ follows from the unnormalized convergence $u_n\to0$ in $L^2$ or from the relative resource identities alone. $\square$
+
+**Theorem 103.7 (infinite difference quotients and a subexponential mass restriction).** In the fixed units of Definition 103.1,
+
+$$
+\lim_{\sigma\downarrow2}\frac{g_\sigma-g_c}{\sigma-2}=+\infty,\qquad
+\lim_{\sigma\downarrow2}\frac{1/8-\mathcal C_\sigma}{\sigma-2}=+\infty.
+\tag{103.23}
+$$
+
+For every actual $V=1$ selection in that definition,
+
+$$
+(\sigma_n-2)\log(1/M_n)\longrightarrow0.
+\tag{103.24}
+$$
+
+In particular $g_\sigma>g_c$ for all sufficiently small positive $\sigma-2$. For every fixed $K>0$, both positive gaps in (103.23) eventually exceed $K(\sigma-2)$. For every $c>0$, eventually $M_n>\exp[-c/(\sigma_n-2)]$, while $M_n\to0$. These statements give neither monotonicity nor a sharp asymptotic rate or spatial scale.
+
+**Proof.** Write $\epsilon_n=\sigma_n-2$. Same-state spectral interpolation (87.12) gives
+
+$$
+D_2[u_n]^{\sigma_n}\le D_{\sigma_n}[u_n]^2M_n^{\epsilon_n}.
+$$
+
+Since $M_n<1$ eventually, logarithms and (103.6) imply
+
+$$
+0\le\epsilon_n\log(1/M_n)
+ \le2\log D_{\sigma_n}[u_n]-\sigma_n\log D_2[u_n]\longrightarrow0.
+\tag{103.25}
+$$
+
+This proves (103.24) without prescribing a profile or a relation between central and spatial scales.
+
+For the threshold difference quotient, the norm-bearing endpoint estimate (87.4) and the exact virial identities give
+
+$$
+1=V[u_n]\le\frac18
+ \left(\frac{\alpha_{\sigma_n}g_n}{a}\right)^{1/2}
+ \left(\frac{\beta_{\sigma_n}g_n}{\eta}\right)^{1/\sigma_n}
+ M_n^{\epsilon_n/(2\sigma_n)}.
+\tag{103.26}
+$$
+
+Define the scalar functions, smooth from the right at $2$,
+
+$$
+r_\sigma=\frac12+\frac1\sigma,\qquad
+F_\sigma=\frac12\log\frac{\alpha_\sigma g_c}{a}
+ +\frac1\sigma\log\frac{\beta_\sigma g_c}{\eta}-\log8.
+\tag{103.27}
+$$
+
+Here $F_2=\frac12\log(t_cd_c)-\log8=0$, so $|F_\sigma|\le C(\sigma-2)$ near $2$. Taking logarithms in (103.26) consequently yields
+
+$$
+r_{\sigma_n}\frac{\log(g_n/g_c)}{\epsilon_n}
+ \ge\frac{\log(1/M_n)}{2\sigma_n}-C\longrightarrow+\infty.
+\tag{103.28}
+$$
+
+Use $M_n\to0$, $r_{\sigma_n}\to1$ and $g_n\to g_c$ to obtain $(g_n-g_c)/\epsilon_n\to+\infty$. The sequence $\sigma_n\downarrow2$ was arbitrary in the sense of approach from above, without a monotonicity requirement, and each such sequence admits an actual selection by §102.3. Thus this is the full first limit in (103.23).
+
+Finally (103.5) gives $g_\sigma/b_\sigma=1/(8\mathcal C_\sigma)$. The function $b_\sigma$ is smooth at $2$ with $b_2=g_c$, so $\log(b_\sigma/g_c)=O(\sigma-2)$. Hence
+
+$$
+\frac{\log(1/(8\mathcal C_\sigma))}{\sigma-2}
+ =\frac{\log(g_\sigma/g_c)-\log(b_\sigma/g_c)}{\sigma-2}
+ \longrightarrow+\infty.
+\tag{103.29}
+$$
+
+As $\mathcal C_\sigma\to1/8$ from below by (102.16), $\log(1/(8\mathcal C_\sigma))\sim8(1/8-\mathcal C_\sigma)$. This proves the second limit and the stated eventual implications. $\square$
+
+**Definition 103.8 (supplier correspondence, new content and remaining boundaries).** The repository supplies used here are: the original positive smooth homogeneous unit-source field and coordinate conventions from §§82–85; the sharp whole-domain endpoint inequality and core threshold from §§87.2–87.3; the actual critical Friedrichs extension and its zero kernel from §87.4; the first-moment interpolation, exact coefficient identity and actual virial balance from §§101.2, 101.4–101.5; and the equation-based mass bound, legal free resolvent tests and actual critical attainment from §§102.2–102.3. None of those earlier results is claimed as a new theorem of this section or as newly Lean-verified.
+
+The literature intermediates have specific consumed roles. Ciatti–Cowling–Ricci, [*Hardy and uncertainty inequalities on stratified Lie groups*, primary text](https://arxiv.org/html/1308.2373v1), Theorem A, Theorem 3.1 and Corollary 3.2, give $\|\rho^{-k}f\|_2\le h_k\|L^{k/2}f\|_2$ for $k=1,2$: this is the original stratified $G$ with homogeneous dimension $Q=5$, $p=2$ and $k<Q/p=5/2$. Order one enters through §102's initial uniform mass bound; order two, extended to $D(L)$ there, is directly consumed in (103.10). Their theorem is an inequality for the original sub-Laplacian and a homogeneous norm, not for a newly generated Green field or a positivity-preserving higher-order law.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, primary text](https://arxiv.org/html/1105.0335v1), Theorem 1.1 and (8), at $n=4$, $\beta_{\rm AFV}=2$, supply the existing trace intermediate with constant $2/\pi$ on each halfspace, hence $4/\pi$ on both. Its passage to the actual full-field sharp endpoint, its core sharpness and zero-kernel comparison were proved in §87 and are used here through those results; the halfspace trace potential is never substituted for $\Gamma$. Teschl, [*Mathematical Methods in Quantum Mechanics*, primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 2.13, supplies closed-form representation on $L^2(G,d\mu)$, consumed through the represented equations and the tests (103.11). Its KLMN Theorem 6.24 is already used in the higher-order closed-domain and existence supply, not invoked at relative bound one to claim closedness on $\mathcal E_2$. The Hilbert weak-compactness, local Euclidean Rellich, product-rule localization, Fourier interpolation and measure arguments used in the proofs are mature intermediate methods.
+
+The source-specific additional deductions are the limits of the true thresholds and sharp product constants; the universal, amplitude-normalized actual-state endpoint convergence and its two failures of strong compactness; localization of the actual potential and endpoint kinetic measures; escape of the projected-state resource budgets from every fixed central band; and the difference-quotient and subexponential restrictions. The source correspondence and repository overlap scope concern these fixed-field deductions and the indicated intermediates. They assert no exhaustive literature search or world-originality judgment.
+
+At fixed $\sigma>2$, §102 furnishes an actual critical zero state. At $\sigma=2$, §87.4 excludes such a nonzero state even in $\mathcal Q_c$. Equations (103.6), (103.13) and (103.17) give a precise way those statements coexist: under $V=1$, ordinary mass disappears and the state tends strongly to zero in the closed critical form norm, whereas nonzero potential and endpoint kinetic resources concentrate at the same original source and leave every fixed central band. This is not loss or concentration of a normalized probability mass. After $L^2=1$ normalization only the exact totals, ratios and relative resource conclusions above are asserted; its unweighted probability location, tightness, weak or strong limit, spatial/central profile and sharp scale remain unproved here. No positivity, simplicity, uniqueness, resonance classification, native source-to-state realization or physical dimension conclusion is obtained. All proofs are ordinary mathematics on the full complex actual domains; no Lean verification or completion of the continuing why-three research goal is claimed.
+
+## 追加锚（本行以下为增补区）
+
+## 104. Actual endpoint probability: domain defects, excluded scales and singular reweighting
+
+**Definition 104.1 (actual selections and probability conventions).** Retain all data, full complex domains and arbitrary critical-state selections of Definition 103.1. In particular the source is $e$, $G=H^1\times\mathbb R$, $d\mu$ is Lebesgue Haar measure, $\Gamma$ is the original unit-source degree-$-3$ Green field, and $a,\eta$, the horizontal operator $L$, its clock and the central spectral units are fixed. For every sequence $\sigma_n>2$ tending to $2$, take any of those actual states, with the two amplitude normalizations
+
+$$
+\begin{gathered}
+V[u_n]=1,\qquad M_n=\|u_n\|_2^2,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\\
+\ell_n=\sqrt{M_n},\qquad \epsilon_n=\sigma_n-2,\qquad
+d_n=D_2[u_n],\\
+\mu_n=|v_n|^2d\mu,\qquad
+\nu_n=M_n\Gamma\,\mu_n=\Gamma|u_n|^2d\mu.
+\end{gathered}
+\tag{104.1}
+$$
+
+Both $\mu_n$ and $\nu_n$ are probability measures. The supplies used below, without a new existence or endpoint-limit claim, are (103.3), (103.6) and (103.24):
+
+$$
+\begin{gathered}
+g_n\to g_c,\quad T[u_n]\to t_c,\quad
+D_{\sigma_n}[u_n]\to d_c,\quad d_n\to d_c>0,\\
+M_n\to0,\qquad \epsilon_n\log(1/M_n)\to0,\qquad
+at_c+\eta d_c=g_c.
+\end{gathered}
+\tag{104.2}
+$$
+
+Write $\xi=(x,y,z)$, $s=w-xy/2$ and $\rho=(|\xi|^4+s^2)^{1/4}$, as in (102.1). Set $B_\rho(p,r)=\{q:\rho(p^{-1}q)<r\}$ and retain $B_\Gamma=\sup_{q\ne e}\rho(q)^3\Gamma(q)<\infty$. A central section of a measurable set is its section at fixed $\xi$, measured in $dw$ or, equivalently, $ds$. Let $\widehat v_n(\xi,\lambda)$ denote the unitary central transform in shear coordinates. The actual spectral probability $\vartheta_n$ on $[0,\infty)$ is defined, for bounded Borel $f$, by
+
+$$
+\int f(x)\,d\vartheta_n(x)
+ =\int f(\ell_n|\lambda|)|\widehat v_n(\xi,\lambda)|^2\,d\xi d\lambda.
+\tag{104.3}
+$$
+
+Analytic changes of variables used to study these measures do not change the original law or spectral units. Weak state limits below are in the common $L^2(G,d\mu)$; local strong convergence is on compact subsets of $G\setminus\{e\}$. Measure convergence on $G\cup\{\infty\}$ means weak convergence against continuous functions on its one-point compactification, whereas convergence of $\vartheta_n$ is narrow convergence on $[0,\infty)$.
+
+**Theorem 104.2 (local probability compactness and the maximal-domain defect).** For every $\chi\in C_c^\infty(G\setminus\{e\};\mathbb C)$ there is a constant $C_\chi$ such that, eventually,
+
+$$
+T[\chi v_n]+D_{\sigma_n}[\chi v_n]+D_2[\chi v_n]
+ +\|\chi v_n\|_{H^1(\mathbb R^4)}^2+\|\chi v_n\|_4^2\le C_\chi.
+\tag{104.4}
+$$
+
+Here the Euclidean norm uses the original coordinate chart. Constants and the sufficiently small interval of $\sigma-2$ can be chosen independently of the actual critical-state selection. Every sequence has a subsequence converging weakly globally in $L^2$ and strongly locally in $L^2$ off $e$ to the same $v$. Define the densely defined symmetric operator and its maximal zero space by
+
+$$
+S\phi=(aL+\eta D_w^2-g_c\Gamma)\phi,\qquad
+D(S)=\mathcal D_0,\qquad \mathcal N_0=\ker S^*.
+\tag{104.5}
+$$
+
+Every such $v$ belongs to $\mathcal N_0$, and
+
+$$
+\mathcal N_0\cap\mathcal Q_c=\{0\}.
+\tag{104.6}
+$$
+
+After further subselection the probability measures have exactly the decomposition
+
+$$
+\mu_n\longrightarrow |v|^2d\mu+m_e\delta_e+m_\infty\delta_\infty,
+\qquad m_e,m_\infty\ge0,\qquad
+\|v\|_2^2+m_e+m_\infty=1.
+\tag{104.7}
+$$
+
+This describes every subsequential limit, by taking a common subsequence for states and measures; it is not a claim that every proposed triple is realizable. The decomposition retains both possible defects simultaneously, without asserting that either is nonzero. Neither coefficient nor the triviality of $\mathcal N_0$ is specified.
+
+**Proof.** The actual equation is (103.3), also for $v_n$ by homogeneity. Its localization requires control uniform in the varying central order. Spectral Hölder and (104.2) give, eventually with $0<\epsilon_n\le1/2$,
+
+$$
+D_{\epsilon_n}[v_n]
+ \le D_{\sigma_n}[v_n]^{\epsilon_n/\sigma_n}
+ =\left(\frac{D_{\sigma_n}[u_n]}{M_n}\right)^{\epsilon_n/\sigma_n}
+ \longrightarrow1.
+\tag{104.8}
+$$
+
+Only boundedness of the left side is inferred; equality or convergence of that moment is not asserted.
+
+For a real $\chi$ as above, the central Fourier calculation needed in this proof is
+
+$$
+\left|D_\sigma[\chi f]-\operatorname{Re}d_\sigma(\chi^2f,f)\right|
+ \le C_\chi\bigl(\|f\|_2^2+D_{\sigma-2}[f]\bigr),
+\qquad 2<\sigma\le5/2.
+\tag{104.9}
+$$
+
+To verify both its order and its uniform constant, first use smooth $f$ and take the Fourier transform in $w$ at each $\xi$. For $p_\sigma(\lambda)=|\lambda|^\sigma$ the left-side difference is the quadratic pairing of $\frac12[\chi,[p_\sigma(D_w),\chi]]$. Symmetrizing the two cutoff Fourier variables $h,k$ gives, up to sign and the fixed Fourier constants, the symbol
+
+$$
+p_\sigma(\lambda+h+k)-p_\sigma(\lambda+h)
+ -p_\sigma(\lambda+k)+p_\sigma(\lambda).
+$$
+
+The fundamental theorem of calculus applied twice bounds its absolute value by
+
+$$
+C|hk|(1+|\lambda|+|h|+|k|)^{\sigma-2},
+\tag{104.10}
+$$
+
+with one $C$ on $[2,5/2]$, since $p_\sigma''(t)=\sigma(\sigma-1)|t|^{\sigma-2}$. Put $\langle\lambda\rangle=(1+\lambda^2)^{1/2}$. For $0\le\epsilon\le1/2$, the weight in (104.10) is bounded by
+$C\langle\lambda\rangle^{\epsilon/2}\langle\lambda+h+k\rangle^{\epsilon/2}\langle h\rangle^2\langle k\rangle^2$.
+The Fourier transforms of $\chi(\xi,\cdot)$ have uniformly bounded Schwartz seminorms. Thus Cauchy–Schwarz in $\lambda$ and integration in $h,k$ bound the pairing by
+$C_\chi\int\langle\lambda\rangle^\epsilon|\widehat f(\xi,\lambda)|^2d\xi d\lambda$,
+which is at most the right side of (104.9). This proves (104.9) with no constant singular at $\sigma=2$. Smooth approximation extends it to the central form domain. The same Fourier convolution bounds show that multiplication by $\chi$ or $\chi^2$ preserves that domain. The horizontal product rule, with bounded $X_i\chi$, shows preservation of $\mathcal E_\sigma$.
+
+Consequently $\chi^2v_n$ is a legal test. Taking real parts of its actual equation, using the horizontal product rule and (104.9), yields
+
+$$
+\begin{aligned}
+aT[\chi v_n]+\eta D_{\sigma_n}[\chi v_n]
+ &=g_nV[\chi v_n]
+   +a\int\sum_i|X_i\chi|^2|v_n|^2d\mu+\eta R_n,\\
+|R_n|&\le C_\chi(1+D_{\epsilon_n}[v_n]).
+\end{aligned}
+\tag{104.11}
+$$
+
+The original $\Gamma$ is bounded on the compact support of $\chi$, and $g_n$ is bounded. Equations (104.8)–(104.11) give the uniform kinetic bound. The scalar inequality $|\lambda|^2\le1+|\lambda|^{\sigma_n}$ bounds $D_2[\chi v_n]$. On this support $x$ is bounded and $\partial_y=X_2-x\partial_w$, so all four ordinary first derivatives are controlled. The ordinary four-dimensional Sobolev embedding $H^1\to L^4$ gives the last term in (104.4). Applying the real-cutoff argument to the real and imaginary parts of $\chi$ gives the complex-cutoff assertion. These are consumed product, Fourier and Sobolev estimates, not separate new inequalities.
+
+The estimates hold uniformly near $2$ over all actual selections: if the needed bound in (104.8) failed uniformly, one could choose $\sigma_j\to2$ and violating actual states, contradicting the universal sequential assertion (104.2). The other constants in (104.11) depend only on the fixed data and $\chi$.
+
+Weak compactness of the unit ball of global $L^2$, local Rellich compactness from (104.4), and a countable exhaustion off $e$ give the state subsequence. For $\phi\in\mathcal D_0$, move all free derivatives onto this smooth test in the actual weak equation:
+
+$$
+a\langle L\phi,v_n\rangle+
+\eta\langle|D_w|^{\sigma_n}\phi,v_n\rangle
+ =g_n\langle\Gamma\phi,v_n\rangle.
+\tag{104.12}
+$$
+
+Here $|D_w|^{\sigma_n}\phi\to D_w^2\phi$ strongly in $L^2$, by Fourier dominated convergence, and $\Gamma\phi\in L^2$ because the support avoids $e$. Global weak convergence therefore gives $\langle S\phi,v\rangle=0$ for every $\phi\in D(S)$. By the definition of the adjoint this is precisely $`v\in D(S^*)`$ and $`S^*v=0`$; no global vector $\Gamma v$ is required.
+
+If also $v\in\mathcal Q_c$, approximate it in that closed form norm by $\phi_j\in\mathcal D_0$. For each fixed $\phi\in\mathcal D_0$, approximation in the second slot gives $\overline q_c(\phi,v)=\langle S\phi,v\rangle=0$. Density then gives $\overline q_c[v]=0$, and (87.19) gives $v=0$. This proves (104.6) without equating maximal and Friedrichs domains.
+
+Finally $G\cup\{\infty\}$ is compact metrizable, so the probability measures have a weakly convergent subsequence. On every compact subset off $e$, strong $L^2$ convergence gives $|v_n|^2\to|v|^2$ in $L^1$. Hence the limiting measure agrees with $|v|^2d\mu$ on $G\setminus\{e\}$; its remaining support is contained in $\{e,\infty\}$. Positivity and total mass one give (104.7). Conversely any measure limit can first be retained and then refined by the state compactness just proved, so every measure limit has this representation. This converse concerns subsequence refinement, not realizability of arbitrary coefficients. $\square$
+
+**Theorem 104.3 (actual probability excludes both inverse-kinetic scales).** For every fixed $0<C<\infty$,
+
+$$
+\sup_{b\in\mathbb R^3}
+ \mu_n\{(\xi,w):|\xi-b|<C\ell_n\}\longrightarrow0.
+\tag{104.13}
+$$
+
+The actual central spectral laws satisfy
+
+$$
+\vartheta_n\longrightarrow\delta_0,\qquad
+\int x^2d\vartheta_n(x)=d_n\longrightarrow d_c>0.
+\tag{104.14}
+$$
+
+In physical central coordinates there is the uniform conclusion
+
+$$
+\sup_{\substack{E\subset G\ \mathrm{measurable}\\
+ \operatorname*{ess\,sup}_\xi |E_\xi|\le C\ell_n}}
+ \mu_n(E)\longrightarrow0.
+\tag{104.15}
+$$
+
+The sections can have arbitrary moving centres, shapes and dependence on $\xi$, and may be specified in $w$ or in $s$. Thus (104.14) is weak concentration of the rescaled spectral probability at zero with a nonvanishing second moment; it is not convergence of second moments to the moment of $\delta_0$.
+
+**Proof.** Use the nonlinear comparison (87.10)–(87.11) with its two exact probability preservations. Define
+
+$$
+U_n(\xi,t)=\mathcal F_s^{-1}|\widehat v_n|(\xi,t),\qquad
+f_n(\xi,t)=\ell_n^2U_n(\ell_n\xi,\ell_n t).
+\tag{104.16}
+$$
+
+The dilation here is Euclidean in the four auxiliary variables, not a Carnot dilation of the original law. Put $A[f]=\|\nabla_\xi f\|_2^2$, $C[f]=\|\partial_t f\|_2^2$ and $J[f]=\int|\xi|^{-1}|f(\xi,0)|^2d\xi$. The existing comparison and its marginal and spectral equalities give, for bounded Borel $F$ in the last line,
+
+$$
+\begin{gathered}
+\|f_n\|_2=1,\qquad A[f_n]\le T[u_n],\qquad C[f_n]=d_n,\qquad
+J[f_n]=M_nJ[U_n]\ge4\pi,\\
+\int|f_n(\xi,t)|^2dt
+ =\ell_n^3\int|v_n(\ell_n\xi,w)|^2dw,\\
+\int F(|\lambda|)|\widehat f_n(\xi,\lambda)|^2d\xi d\lambda
+ =\int F(\ell_n|\lambda|)|\widehat v_n(\xi,\lambda)|^2d\xi d\lambda.
+\end{gathered}
+\tag{104.17}
+$$
+
+In the marginal equality the shear is only a translation on each central fibre. No pointwise central spatial probability equality is used.
+
+The nonnegative auxiliary trace form
+
+$$
+\mathfrak h[f]=aA[f]+\eta C[f]-\frac{4\sqrt{a\eta}}{\pi}J[f]
+\tag{104.18}
+$$
+
+has the closed extension with zero kernel furnished by (87.8)–(87.9), after the fixed central change of variable $\kappa=\sqrt{\eta/a}$. More explicitly $F(\xi,t)=\kappa^{1/2}f(\xi,\kappa t)$ gives $\mathfrak h[f]=a\mathfrak t[F]$. It is not asserted closed on $H^1$. Equations (104.2) and (104.17) imply
+
+$$
+0\le\mathfrak h[f_n]
+ \le aT[u_n]+\eta d_n-g_c\longrightarrow0.
+\tag{104.19}
+$$
+
+The sequence is bounded in ordinary $H^1(\mathbb R^4)$. The bounded inclusion of $H^1$ into the closed trace form domain, followed by weak lower semicontinuity and its zero kernel, shows that every weak $H^1$ limit is zero. Thus $f_n\rightharpoonup0$ in $H^1$ and $f_n\to0$ in $L^2$ on every compact set, for the full sequence.
+
+The following localization is needed to transfer probability information. Fix $r>0$. Choose real smooth $\chi,\zeta$ with $\chi^2+\zeta^2=1$, $\chi=0$ on the Euclidean ball of radius $r$ in $(\xi,t)$ and $\chi=1$ outside its radius-$2r$ ball. The ordinary gradient IMS identity gives
+
+$$
+\mathfrak h[\chi f_n]+\mathfrak h[\zeta f_n]
+ =\mathfrak h[f_n]+\int
+ \left(a(|\nabla_\xi\chi|^2+|\nabla_\xi\zeta|^2)
+ +\eta(|\partial_t\chi|^2+|\partial_t\zeta|^2)\right)|f_n|^2.
+\tag{104.20}
+$$
+
+The error tends to zero by local strong $L^2$ convergence. Both forms on the left are nonnegative. Also $J[\chi f_n]\to0$: on $t=0$ it vanishes for $|\xi|\le r$; on each fixed annulus $r<|\xi|<R$ the traces converge strongly to zero in $L^2$; and on $|\xi|>R$ its contribution is bounded by $R^{-1}\|f_n(\cdot,0)\|_2^2\le C/R$. For completeness, the annular trace convergence follows by applying the one-dimensional trace estimate to a compactly supported cutoff of $f_n$: its $L^2$ norm tends to zero and its first derivative remains bounded. The same estimate without a cutoff gives the uniform global trace bound used for the tail. Hence (104.18)–(104.20) imply
+
+$$
+aA[\chi f_n]+\eta C[\chi f_n]\longrightarrow0,\qquad
+\|f_n-\chi f_n\|_2\longrightarrow0.
+\tag{104.21}
+$$
+
+Only the second assertion concerns probability; the first controls the exterior derivatives.
+
+For each fixed $c>0$, Plancherel now gives
+
+$$
+\|\mathbf1_{(c,\infty)}(|D_t|)f_n\|_2
+ \le\|f_n-\chi f_n\|_2+c^{-1}\|\partial_t(\chi f_n)\|_2
+ \longrightarrow0.
+\tag{104.22}
+$$
+
+By the last equality in (104.17), this is $\vartheta_n((c,\infty))\to0$, proving its narrow limit. Its second moment is exactly $M_nD_2[v_n]=d_n$.
+
+For horizontal probability, the ordinary three-dimensional Sobolev inequality and Hölder, applied at almost every $t$ and integrated, give
+$\int_{|\xi-b|<C}|h(\xi,t)|^2d\xi dt\le C' C^2 A[h]$
+for $h\in H^1(\mathbb R^4)$, uniformly in $b$. Apply this consumed estimate to $h=\chi f_n$, and use (104.21) to replace $h$ by $f_n$ with an $L^2$ error tending to zero. The marginal identity (104.17) proves (104.13), including arbitrary moving horizontal centres.
+
+To pass to actual central spatial probability, fix $c>0$ and set $P_n=\mathbf1_{[0,c/\ell_n]}(|D_w|)$ and $Q_n=I-P_n$. Equation (104.22) gives $\|Q_nv_n\|_2\to0$. Fourier Cauchy–Schwarz in each actual central fibre gives
+
+$$
+\operatorname*{ess\,sup}_w|P_nv_n(\xi,w)|^2
+ \le\frac{c}{\pi\ell_n}\int|v_n(\xi,w)|^2dw.
+$$
+
+Therefore every $E$ in (104.15) satisfies
+
+$$
+\|\mathbf1_Ev_n\|_2
+ \le\sqrt{Cc/\pi}+\|Q_nv_n\|_2.
+\tag{104.23}
+$$
+
+First let $n\to\infty$, then $c\downarrow0$. The estimate is uniform in $E$. A shear translates each section without changing its length, proving the stated coordinate and moving-centre quantifiers. All transfers from $f_n$ use only the two equalities in (104.17) and the actual central Fourier projection; the nonlinear comparison is never inverted. $\square$
+
+**Theorem 104.4 (moving-band probability/resource separation and absence of small Carnot profiles).** For every fixed $c>0$, use the actual $P_n,Q_n$ of the preceding proof. Then
+
+$$
+\|P_nv_n\|_2^2\to1,\qquad \|Q_nv_n\|_2^2\to0,\qquad
+\frac{F[P_nv_n]}{F[v_n]}\to0,\qquad
+\frac{F[Q_nv_n]}{F[v_n]}\to1
+\quad(F=V,T,D_2,D_{\sigma_n}).
+\tag{104.24}
+$$
+
+Each $F$ is evaluated on the projected state. In particular no additive or commuting decomposition of $V$ is asserted. For every fixed $0<C<\infty$,
+
+$$
+\sup_{p\in G}\mu_n(B_\rho(p,C M_n^{1/4}))\longrightarrow0.
+\tag{104.25}
+$$
+
+The same conclusion holds for balls of any fixed Carnot–Carathéodory distance of the original horizontal geometry. More precisely, for arbitrary $p_n\in G$ and $0<r_n\le C M_n^{1/4}$, the norm-one states
+
+$$
+w_n(q)=r_n^{5/2}v_n(p_n\delta_{r_n}q)
+ =\frac{r_n^{5/2}}{\sqrt{M_n}}u_n(p_n\delta_{r_n}q)
+\tag{104.26}
+$$
+
+converge strongly to zero in $L^2$ on every compact subset of $G$, and weakly to zero in global $L^2$. They have no globally strongly convergent subsequence. This excludes any nonzero local $L^2$ profile at these radii even after arbitrary moving translations and the required probability normalization.
+
+**Proof.** The probability assertions in (104.24) are (104.14). For the resources, the same actual law gives
+
+$$
+\begin{aligned}
+D_2[P_nu_n]&=\int_{[0,c]}x^2d\vartheta_n(x)\longrightarrow0,\\
+D_{\sigma_n}[P_nu_n]
+ &=\ell_n^{-\epsilon_n}\int_{[0,c]}x^{2+\epsilon_n}d\vartheta_n(x)
+ \longrightarrow0.
+\end{aligned}
+\tag{104.27}
+$$
+
+Indeed $\ell_n^{-\epsilon_n}\to1$ by (104.2). For either integral, its part on $[0,\delta]$ is uniformly $O(\delta^2)$ and its part on $[\delta,c]$ tends to zero by (104.14); then let $\delta\downarrow0$. This handles the sharp cutoff without a continuity assumption at $c$.
+
+The genuine free reduction of Proposition 85.2 gives $T[P_nu_n]\le T[u_n]$ and preserves $\mathcal E_{\sigma_n}$ for each $n$. The whole-domain endpoint inequality gives
+$V[P_nu_n]\le\frac18\sqrt{T[P_nu_n]D_2[P_nu_n]}\to0$.
+Use the legitimate test $P_nu_n$ in the actual equation:
+
+$$
+0\le aT[P_nu_n]+\eta D_{\sigma_n}[P_nu_n]
+ =g_n v(P_nu_n,u_n)
+ \le g_n\sqrt{V[P_nu_n]V[u_n]}\longrightarrow0.
+\tag{104.28}
+$$
+
+The equality makes the pairing real and nonnegative. Orthogonal kinetic splitting gives the complementary limits $t_c,d_c,d_c$. For the potential, the weighted triangle inequality gives
+$|\sqrt{V[Q_nu_n]}-1|\le\sqrt{V[P_nu_n]}\to0$.
+Divide by the positive full-state resource totals, using (104.2). Amplitude homogeneity identifies the resulting fractions with those for $v_n$. This proves (104.24), without ever applying a central projector to $\Gamma|v_n|^2$.
+
+Every left-translated $\rho$ ball of radius $r$ has central sections of length at most $2r^2$: in symmetric shear coordinates the group product translates the central coordinate by an affine function of $\xi$, while the defining inequality bounds its remaining displacement by $r^2$. At $r=C M_n^{1/4}$ these lengths are at most $2C^2\ell_n$, so (104.15) proves (104.25) uniformly in the centre. Fixed Carnot–Carathéodory balls are contained in fixed multiples of these balls, by homogeneity and boundedness of their unit ball in $\rho$.
+
+Left translation preserves Haar measure and $\delta_r$ has Jacobian $r^5$. Thus (104.26) has norm one. Every compact $K\subset G$ is contained in some $B_\rho(e,R)$, and
+
+$$
+\int_K|w_n|^2d\mu
+ =\int_{p_n\delta_{r_n}K}|v_n|^2d\mu
+ \le\mu_n(B_\rho(p_n,Rr_n))\longrightarrow0.
+\tag{104.29}
+$$
+
+Compactly supported $L^2$ tests are dense in global $L^2$, proving weak convergence to zero. A global strong limit would then be zero, contradicting the conserved norm one. $\square$
+
+**Theorem 104.5 (quantitative separation of probability and the same-state potential probability).** For every $n$, $p\in G$ and $r>0$,
+
+$$
+\begin{aligned}
+\mu_n(B_\rho(p,r))
+ &\le\min\left\{1,\ 2r^2\sqrt{d_n/M_n}\right\},\\
+\nu_n(G\setminus B_\rho(e,r))
+ &\le\min\left\{1,\ \frac{6B_\Gamma\sqrt{M_nd_n}}r\right\}.
+\end{aligned}
+\tag{104.30}
+$$
+
+In particular, for every fixed $1/4<\alpha<1/2$,
+
+$$
+\mu_n(B_\rho(e,M_n^\alpha))\longrightarrow0,\qquad
+\nu_n(G\setminus B_\rho(e,M_n^\alpha))\longrightarrow0,
+\qquad d_{\rm TV}(\mu_n,\nu_n)\longrightarrow1,
+\tag{104.31}
+$$
+
+where $d_{\rm TV}(\mu,\nu)=\sup_E|\mu(E)-\nu(E)|$ for probability measures. Thus the normalized potential resource is asymptotically supported on sets carrying vanishing unweighted probability of the very same actual state.
+
+**Proof.** The one-dimensional Sobolev estimate
+$\|h\|_\infty^2\le\|h\|_2\|h'\|_2$
+for $h\in H^1(\mathbb R)$ follows by integrating the derivative of $|h|^2$ towards both infinities, adding the two bounds and applying Cauchy–Schwarz. Apply it to almost every central fibre of the actual $v_n$, which belongs to $\mathcal E_2$. Integrating the fibre suprema and using Cauchy–Schwarz in $\xi$ gives
+
+$$
+\int\operatorname*{ess\,sup}_w|v_n(\xi,w)|^2d\xi
+ \le\|v_n\|_2\|\partial_wv_n\|_2
+ =\sqrt{d_n/M_n}.
+\tag{104.32}
+$$
+
+The central section length bound $2r^2$ used in the proof of (104.25) now gives the first estimate of (104.30), uniformly in $p$. This estimate uses actual central derivatives and probability, with no substitution of a marginal field.
+
+Put $A_n=\sqrt{d_n/M_n}$. Tonelli's theorem and the first estimate, with centre $e$, give
+
+$$
+\begin{aligned}
+\int_{\rho\ge r}\rho^{-3}d\mu_n
+ &=3\int_r^\infty t^{-4}\mu_n\{r\le\rho<t\}\,dt\\
+ &\le3\int_r^\infty t^{-4}\mu_n(B_\rho(e,t))\,dt
+ \le6A_n/r.
+\end{aligned}
+\tag{104.33}
+$$
+
+Multiplication by $M_nB_\Gamma$ and the actual bound $\Gamma\le B_\Gamma\rho^{-3}$ prove the second estimate in (104.30). Both measures have mass one, giving the stated minima. Substituting $r=M_n^\alpha$ gives upper bounds $2\sqrt{d_n}M_n^{2\alpha-1/2}$ and $6B_\Gamma\sqrt{d_n}M_n^{1/2-\alpha}$, respectively, and both vanish in the prescribed open interval. On the same moving ball $\nu_n$ tends to one while $\mu_n$ tends to zero; hence $1\ge d_{\rm TV}(\mu_n,\nu_n)\to1$. With the alternative convention $\|\mu-\nu\|_{\rm variation}$ the limit is $2$. These elementary inequalities are proof intermediates for the actual-state conclusion, not additional stand-alone novelty claims. $\square$
+
+**Definition 104.6 (mathematical attribution and unresolved boundaries).** The fixed source and its genuine central projections are supplied by §§82–85. The precise Fourier-modulus comparison, its preserved horizontal marginal and central spectral probability, the sharp trace intermediate, and the actual critical Friedrichs zero kernel are those of §§87.2–87.4. The actual full-domain equation and critical states are supplied by §§101.5 and 102.3; all endpoint resource and mass inputs are exactly (104.2) from §103. No trial family replaces an actual state in the assertions above.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, Theorem 1.1 and (8)](https://arxiv.org/html/1105.0335v1), at $n=4$, $\beta=2$, supply the existing $2/\pi$ halfspace trace constant, hence $4/\pi$ on both halfspaces. Its extension to complex $H^1$ functions and its closed auxiliary zero-kernel passage are the supplies proved in §87. The use here is precisely the scaled form (104.18), not a replacement of $\Gamma$ by its marginal and not an inverse of the nonlinear comparison.
+
+Lundholm–Nam–Portmann, [*Fractional Hardy–Lieb–Thirring and related inequalities for interacting systems*, Lemma 14 and Remark 13](https://arxiv.org/html/1501.04570v3), give a fractional IMS localization formula for fixed order $s>0$ on bounded Euclidean domains, with a lower-order error. That is mature localization context. Its constants and the order of its error do not by themselves give the uniform estimate required here as $s=\sigma/2\downarrow1$. The whole-central-line double-commutator bound (104.9)–(104.10), its uniform $D_{\sigma-2}$ error and its consumption of (103.24) provide that passage explicitly.
+
+Ciatti–Cowling–Ricci, [*Hardy and uncertainty inequalities on stratified Lie groups*, Theorem A, Theorem 3.1 and Corollary 3.2](https://arxiv.org/html/1308.2373v1), enter only through the already proved §102–§103 mass supplies: their $p=2$ orders $1,2$ are below $Q/p=5/2$ for this $Q=5$ group, the original $L$ and the homogeneous norm $\rho$. Teschl, [*Mathematical Methods in Quantum Mechanics*, §2.2, (2.19)–(2.20), and §2.3, Theorems 2.12–2.13](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), supplies the mature adjoint and closed-form representation principles. Here the ambient Hilbert space is exactly $L^2(G,d\mu)$, the symmetric initial operator is (104.5), and its Friedrichs form domain is the existing $\mathcal Q_c$. The adjoint test in (104.12) supplies maximal-domain membership, while form-core density and (87.19) supply (104.6); no literature theorem identifies those domains for this singular field. Ordinary Sobolev, Rellich, Plancherel, trace, probability compactness and layer-cake estimates are consumed only inside these deductions.
+
+The repository-derived content is the actual normalized-state local bounds and simultaneous defect representation, the excluded moving probability scales and spectral probability/resource split, and the quantitative singular reweighting of those same actual states. These are fixed-source deductions with the stated supplier correspondence, not a claim of exhaustive literature priority. Equations (104.13)–(104.15) exclude concentration on the inverse-kinetic horizontal and central scales, and (104.25) excludes even translated Carnot profiles of radius $O(M_n^{1/4})$. They select no larger spatial scale or limiting shape. Equation (104.30) also controls potential-probability tails whenever $r_n/\sqrt{M_n}\to\infty$, but does not identify a rescaled potential-probability distribution at $r_n\asymp\sqrt{M_n}$.
+
+The values of $m_e,m_\infty$, existence or nonexistence of nonzero elements of $\mathcal N_0$, attainability of the defect triples, and normalized-probability tightness on the original $G$ remain unresolved. Any nonzero weak profile lies outside $\mathcal Q_c$ by (104.6); no alternate self-adjoint extension is selected. No positivity, simplicity, uniqueness, resonance classification, source-to-state physical realization or physical space-dimension conclusion is implied.
+
+## 追加锚（本行以下为增补区）
+
+## 105. Actual endpoint probability cannot escape to infinity
+
+**Theorem 105.1 (unconditional exterior probability compactness).** Keep exactly the original group, Haar measure, field, operators, clock, central spectral units and fixed $a,\eta>0$ of Definitions 103.1 and 104.1. For every sequence $\sigma_n>2$ tending to $2$, without a monotonicity requirement, choose any nonzero actual attained critical zero states in the full complex $\mathcal E_{\sigma_n}$ and normalize their amplitudes by
+
+$$
+V[u_n]=1,\qquad M_n=\|u_n\|_2^2,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1.
+$$
+
+Then their original-space probabilities satisfy
+
+$$
+\lim_{R\to\infty}\limsup_{n\to\infty}
+ \int_{\{\rho>R\}}|v_n|^2\,d\mu=0.
+\tag{105.1}
+$$
+
+In every simultaneous subsequential decomposition (104.7), consequently,
+
+$$
+m_\infty=0,\qquad \|v\|_2^2+m_e=1.
+\tag{105.2}
+$$
+
+Along each of the weak state subsequences of Theorem 104.2, every fixed bounded measurable cutoff $\zeta$ that vanishes on a neighborhood of $e$ satisfies
+
+$$
+\zeta v_n\longrightarrow\zeta v
+ \quad\hbox{strongly in }L^2(G,d\mu).
+\tag{105.3}
+$$
+
+In particular this holds for smooth exterior cutoffs equal to one outside a compact set. No value of $m_e$, nonzero maximal-adjoint profile, positivity, simplicity or uniqueness is asserted.
+
+**Proof.** All free realizations below are those of §§85.2 and 102.2 on the common Hilbert space $L^2(G,d\mu)$. Write $D=D_w$, $\epsilon_n=\sigma_n-2$ and
+
+$$
+A_\sigma=aL+\eta|D|^\sigma,\qquad
+R_{\sigma,r}=(A_\sigma+r)^{-1}\quad(r>0).
+$$
+
+We use $2\le\sigma\le5/2$ for uniform estimates; every sequence in the statement eventually lies in this interval. The strong commutation and the actual magnetic estimate (101.3) put the joint spectral variables $(\ell,\lambda)$ of $(L,D)$ in
+
+$$
+\ell\ge|\lambda|,\qquad
+A_\sigma(\ell,\lambda)=a\ell+\eta|\lambda|^\sigma.
+\tag{105.4}
+$$
+
+The passage from (101.3) to this spectral support uses the original direct integral: each central fibre has $L_\lambda\ge|\lambda|$, so its spectral projection below $|\lambda|$ vanishes. The domain and form identities are (102.10)–(102.12). Both $L$ and $A_\sigma$ have zero kernel, since a zero vector of either has central Fourier support in the Haar-null singleton $\lambda=0$.
+
+We first record the precise free inverse estimates consumed by the actual-state proof. The order-two Hardy–Rellich inequality extended to $D(L)$ in (102.6), together with the joint multiplier bound, gives
+
+$$
+\|\rho^{-2}R_{\sigma,r}F\|_2
+ \le h_2\|LR_{\sigma,r}F\|_2
+ \le\frac{h_2}{a}\|F\|_2.
+\tag{105.5}
+$$
+
+If $f\in L^2$ and $\rho^2f\in L^2$, duality therefore gives $\|R_{\sigma,r}f\|_2\le(h_2/a)\|\rho^2f\|_2$. The spectral theorem and monotone convergence as $r\downarrow0$ imply $f\in D(A_\sigma^{-1})$, and then dominated convergence gives
+
+$$
+R_{\sigma,r}f\longrightarrow A_\sigma^{-1}f\quad\hbox{in }L^2,
+\qquad
+\|A_\sigma^{-1}f\|_2\le\frac{h_2}{a}\|\rho^2f\|_2.
+\tag{105.6}
+$$
+
+Here $A_\sigma^{-1}$ is its spectral inverse on its actual domain, not an everywhere bounded inverse. A second inverse expression used below is the bounded joint multiplier
+
+$$
+T_\sigma=\frac{D}{A_\sigma},\qquad
+T_\sigma(\ell,\lambda)=\frac{\lambda}{a\ell+\eta|\lambda|^\sigma},
+\qquad \|T_\sigma\|\le a^{-1}.
+\tag{105.7}
+$$
+
+It is defined on all $L^2$ by (105.4), even when $Dh$ is only a distribution. The multipliers $DR_{\sigma,r}$ converge strongly to $T_\sigma$ by dominated convergence. None of these assertions uses an interacting operator domain or a positive heat kernel for $A_\sigma$.
+
+The needed localized inverses are compact, including at zero energy, and continuous as $\sigma\downarrow2$. Here are the low-frequency details. For the original free $L$, let $E_I$ be its spectral projection on $I$. The original sub-Laplacian heat kernel, obtained from the $n=1$ Heisenberg kernel (4.1.2) of Krötz–Thangavelu–Xu and the independent $z$ Gaussian, has
+
+$$
+h_t(e)=c_Lt^{-5/2}\quad(0<t<\infty),\qquad 0<c_L<\infty.
+$$
+
+Indeed its central integral at the identity is a fixed positive constant times $\int_{\mathbb R}\lambda/\sinh(t\lambda)\,d\lambda$, which scales as $t^{-2}$, and the independent Gaussian contributes $t^{-1/2}$. The constants and the clock are the original ones of (85.12). Left invariance, the symmetry and semigroup identity of this free kernel give, for every bounded compactly supported multiplier $m$,
+
+$$
+\|e^{-tL/2}m\|_{\rm HS}^2=h_t(e)\|m\|_2^2,
+\qquad
+\|E_{[0,b]}m\|_{\rm HS}^2\le Cb^{5/2}\|m\|_2^2.
+\tag{105.8}
+$$
+
+In the first formula $m$ denotes multiplication by that function; its Hilbert–Schmidt norm follows by integrating the squared convolution kernel. For the second formula factor $E_{[0,b]}m$ through $e^{-L/(2b)}m$; the remaining spectral multiplier has norm at most $e^{1/2}$. In particular the estimate holds for the indicator of any compact set. Splitting $(0,\delta]$ into $(2^{-j-1}\delta,2^{-j}\delta]$ and using orthogonality of the spectral ranges yields
+
+$$
+\|L^{-1}E_{(0,\delta]}m\|_{\rm HS}^2
+ \le C\|m\|_2^2\delta^{1/2}
+       \sum_{j\ge0}2^{-j/2}.
+\tag{105.9}
+$$
+
+This is the place where the original homogeneous dimension $5>4$ is used. The inverse at low frequency is justified by the convergent spectral sum, rather than by a spectral gap.
+
+On $\ell> K$ the multiplier $A_\sigma^{-1}$ is at most $(aK)^{-1}$. On $0<\ell\le\delta$, factor it as a contraction of norm at most $a^{-1}$ times $L^{-1}$ and use (105.9). On $\delta\le\ell\le K$, (105.8) supplies compactness after multiplication by $m$, and the inverse multipliers converge uniformly to those at $\sigma=2$: the denominator is at least $a\delta$ and $|\lambda|\le K$. First choosing small $\delta$ and large $K$, and then taking $\sigma\downarrow2$, proves
+
+$$
+A_\sigma^{-1}m\text{ is compact},\qquad
+\|A_\sigma^{-1}m-A_2^{-1}m\|\longrightarrow0.
+\tag{105.10}
+$$
+
+These compositions have their legal domain by (105.6), since $m$ has bounded support. Their compactness also follows from the displayed spectral approximations, which converge in operator norm.
+
+For $\ell\ge1$, $|\lambda|\ge1$ implies $A_\sigma\ge a\ell+\eta|\lambda|^2$, while $|\lambda|<1$ gives $|\lambda|/A_\sigma\le(a\ell)^{-1}$. Consequently
+
+$$
+\sup_{\substack{\ell>K\\|\lambda|\le\ell}}
+ \frac{|\lambda|}{a\ell+\eta|\lambda|^\sigma}
+ \le CK^{-1/2}\quad(K\ge1).
+\tag{105.11}
+$$
+
+For $0<\ell\le K$, the difference between the multipliers of $T_\sigma$ and $T_2$ is bounded by
+
+$$
+\frac{\eta|\lambda|\bigl||\lambda|^\sigma-|\lambda|^2\bigr|}
+ {a^2\ell^2}
+ \le\frac{\eta}{a^2}
+       \bigl||\lambda|^{\sigma-1}-|\lambda|\bigr|.
+$$
+
+The last expression tends to zero uniformly on $|\lambda|\le K$, including zero. Thus (105.8) and (105.11) prove
+
+$$
+T_\sigma m\text{ is compact},\qquad
+\|T_\sigma-T_2\|\longrightarrow0.
+\tag{105.12}
+$$
+
+The compactness follows by approximating with $T_\sigma E_{[0,K]}m$, which is Hilbert–Schmidt. The convergence assertion is for bounded operators on all $L^2$.
+
+We now apply these supplies to the actual states. The only extra small-order moment needed for a single central commutator follows directly from (104.2). Spectral Hölder, with $2\epsilon_n\le\sigma_n$, gives
+
+$$
+D_{2\epsilon_n}[v_n]
+ \le\left(\frac{D_{\sigma_n}[u_n]}{M_n}\right)^{2\epsilon_n/\sigma_n}
+ =O(1),\qquad
+\|\langle D\rangle^{\epsilon_n}v_n\|_2=O(1).
+\tag{105.13}
+$$
+
+The logarithm of the first right-hand side tends to zero, by $D_{\sigma_n}[u_n]\to d_c>0$ and $\epsilon_n\log(1/M_n)\to0$. Only boundedness of the moment is asserted. These bounds and (104.4) are uniform over actual critical-state choices sufficiently near $2$: a failure of such boundedness would choose a sequence of orders tending to $2$ and violating actual states, contrary to those universal sequential supplies.
+
+Fix a real $\chi\in C_c^\infty(G)$ with $0\le\chi\le1$ and $\chi=1$ on a neighborhood of $e$. Put $\psi=1-\chi$ and $w_n=\psi v_n$. The horizontal and central multiplier estimates used in §104 show that $w_n\in\mathcal E_{\sigma_n}$. To handle the central part without an unproved uniform single-commutator estimate, let primes denote differentiation in the original $w$ coordinate and set
+
+$$
+h_n=-i\sigma_n\chi'|D|^{\epsilon_n}v_n.
+$$
+
+There are $k_n\in L^2$ such that, as distributions on the original group,
+
+$$
+[|D|^{\sigma_n},\chi]v_n=Dh_n+k_n,\qquad
+\|h_n\|_2+\|k_n\|_2\le C.
+\tag{105.14}
+$$
+
+Here $h_n$ has support in the fixed compact support of $\chi'$. To prove the assertion, at each fixed $\xi=(x,y,z)$ use the central transform and write its input frequency as $\mu$ and the cutoff frequency as $h$. Taylor's formula gives, for $p_\sigma(t)=|t|^\sigma$ and $\epsilon=\sigma-2\in[0,1/2]$,
+
+$$
+\begin{aligned}
+p_\sigma(\mu+h)-p_\sigma(\mu)
+ &=\sigma h\mu|\mu|^\epsilon+r_\sigma(\mu,h),\\
+|r_\sigma(\mu,h)|
+ &\le C|h|^2(\langle\mu\rangle^\epsilon+
+                         \langle h\rangle^\epsilon).
+\end{aligned}
+\tag{105.15}
+$$
+
+The constant is uniform because $p_\sigma''(t)=\sigma(\sigma-1)|t|^\epsilon$. The leading operator is $-i\sigma\chi'D|D|^\epsilon$, which equals $D(-i\sigma\chi'|D|^\epsilon)+\sigma\chi''|D|^\epsilon$. The Fourier transforms of the smooth central sections of $\chi$ have uniformly bounded weighted $L^1$ norms. Young's inequality applied to the remainder in (105.15), followed by integration in $\xi$, bounds its $L^2$ norm by $C\|\langle D\rangle^\epsilon v_n\|_2$. Equation (105.13) proves (105.14). Smooth central Fourier approximation gives the identity on the stated actual domains; the remainder is an $L^2$ operator with exactly this bound. Only the actual domains and (105.13) were used; no reality condition on $v_n$ was imposed.
+
+The remainder also has a uniform weighted tail, which is essential for a zero inverse. Choose a compact horizontal set $K_\xi$ and $J\ge1$ with $\operatorname{supp}\chi\subset K_\xi\times[-J,J]$ in the original coordinates. Then $k_n$ is zero outside $K_\xi\times\mathbb R$. For $|w|>2J$ both cutoff terms in $Dh_n$ vanish, and (105.14) gives
+
+$$
+k_n(\xi,w)=|D|^{\sigma_n}(\chi v_n)(\xi,w).
+$$
+
+For completeness, the off-support kernel here needs no higher-order positive semigroup. For $0<\epsilon\le1/2$ put
+
+$$
+c_\epsilon=
+ \left(2\int_0^\infty\frac{1-\cos r}{r^{1+\epsilon}}\,dr\right)^{-1}.
+$$
+
+The integral is finite and positive. Its integral over $[\pi/2,\pi]$ bounds it below uniformly, so $c_\epsilon$ is uniformly bounded. Fourier inversion of $1-\cos(\lambda r)$ gives the usual $|D|^\epsilon$ singular integral. For a function $g$ supported in $[-J,J]$, away from that interval it is $-c_\epsilon\int g(t)|w-t|^{-1-\epsilon}dt$. Applying $D^2=-\partial_w^2$ there gives
+
+$$
+|D|^{2+\epsilon}g(w)
+ =c_\epsilon(1+\epsilon)(2+\epsilon)
+   \int\frac{g(t)}{|w-t|^{3+\epsilon}}\,dt.
+$$
+
+This calculation starts with smooth $g$ and extends to compactly supported $L^2$ functions distributionally and pointwise off their support by the absolutely convergent integral. It proves the uniform estimate
+
+$$
+|k_n(\xi,w)|
+ \le C|w|^{-1-\sigma_n}
+          \int_{-J}^{J}|\chi v_n(\xi,t)|\,dt
+ \quad(|w|>2J).
+\tag{105.16}
+$$
+
+On $K_\xi\times\mathbb R$, the original shear gives $\rho^2\le C(1+|w|)$. Cauchy–Schwarz in $t$, $\|v_n\|_2=1$, and (105.16) imply, for $W>2J$,
+
+$$
+\int_{|w|>W}\rho^4|k_n|^2\,d\mu
+ \le C\int_W^\infty t^{-2\sigma_n}\,dt
+ \le CW^{-3}.
+\tag{105.17}
+$$
+
+Together with (105.14), this proves $\rho^2k_n\in L^2$ and uniformly vanishing weighted tails as $\rho\to\infty$. The compact horizontal support is important here: on it, $\rho\to\infty$ forces $|w|\to\infty$. The calculation treats the actual central line, not an auxiliary inverse profile correspondence.
+
+The actual equation (103.3), valid also for $v_n$ by amplitude homogeneity, now localizes to
+
+$$
+\begin{gathered}
+A_{\sigma_n}w_n=f_n-\eta Dh_n,\\
+f_n=g_n\Gamma w_n+b_n-\eta k_n,\qquad
+b_n=-a(L\chi)v_n+2a\sum_i(X_i\chi)(X_iv_n).
+\end{gathered}
+\tag{105.18}
+$$
+
+This is an identity of free form functionals, with a distributional derivative in its last term. The supports of $L\chi$ and $X_i\chi$ are compact and avoid $e$; (104.4) therefore bounds $b_n$ in $L^2$ on a fixed compact set. Since $\psi$ vanishes near $e$, $\Gamma\psi$ is bounded. Its weighted tail satisfies
+
+$$
+\|\mathbf1_{\{\rho>R\}}\rho^2\Gamma w_n\|_2
+ \le\frac{B_\Gamma}{R}\|v_n\|_2=\frac{B_\Gamma}{R}.
+$$
+
+Consequently (105.14) and (105.17) give the simultaneous source bounds
+
+$$
+\sup_n\bigl(\|f_n\|_2+\|\rho^2f_n\|_2\bigr)<\infty,
+\qquad
+\lim_{R\to\infty}\sup_n
+ \|\mathbf1_{\{\rho>R\}}\rho^2f_n\|_2=0,
+\tag{105.19}
+$$
+
+after discarding finitely many indices. All constants depend only on the fixed cutoff, fixed model and the uniform endpoint supplies, not on a phase, sign or chosen critical vector.
+
+We justify inversion of (105.18) on its exact domains. Multiplication by $\psi$ preserves $\mathcal E_{\sigma_n}$ by the horizontal product rule and the same central Fourier multiplier bounds used in (105.15). The localized equation first follows on smooth tests from (103.3). Its right-hand side is continuous in the free form norm: $f_n\in L^2$, $h_n\in L^2$ and $\|D\phi\|_2^2\le\|\phi\|_2^2+D_{\sigma_n}[\phi]$. Core density thus extends it to every test in $\mathcal E_{\sigma_n}$. This uses neither $\Gamma v_n\in L^2$ nor a separate operator action on that singular product.
+
+For an arbitrary $F\in L^2$ take the legal free test $R_{\sigma_n,r}F\in D(A_{\sigma_n})\subset\mathcal E_{\sigma_n}$ in this identity. Its central derivative is in $L^2$ by (105.4), and the represented-form identity gives the equality of $L^2$ vectors
+
+$$
+(I-rR_{\sigma_n,r})w_n
+ =R_{\sigma_n,r}f_n-\eta DR_{\sigma_n,r}h_n.
+$$
+
+Here $n$ is fixed while $r\downarrow0$. The zero kernel of $A_{\sigma_n}$ makes the left side tend strongly to $w_n$. Equations (105.6), (105.7) and (105.19) justify the two right-side limits, yielding the actual identity
+
+$$
+w_n=A_{\sigma_n}^{-1}f_n-\eta T_{\sigma_n}h_n
+ \quad\hbox{in }L^2(G,d\mu).
+\tag{105.20}
+$$
+
+Thus no unbounded inverse was applied to an unspecified distribution, and no exchange between the $r$ and $n$ limits is required.
+
+For fixed $R$, let $m_R=\mathbf1_{\{\rho\le R\}}$. By (105.10), the bounded sequence $A_{\sigma_n}^{-1}m_Rf_n$ is relatively compact: it differs in norm by a quantity tending to zero from the image of a bounded sequence under the compact operator $A_2^{-1}m_R$. The remaining part has, by (105.6) and (105.19), norm bounded by
+
+$$
+\frac{h_2}{a}\|\rho^2(1-m_R)f_n\|_2,
+$$
+
+uniformly tending to zero as $R\to\infty$. Hence $\{A_{\sigma_n}^{-1}f_n\}$ is relatively compact in global $L^2$. The $h_n$ are bounded and supported in one fixed compact set. Equation (105.12) gives the same relative compactness for $\{T_{\sigma_n}h_n\}$. Equation (105.20) proves that the actual exterior states $\{\psi v_n\}$ are relatively compact in global $L^2$.
+
+A relatively compact subset of $L^2(G,d\mu)$ has uniformly vanishing tails outside $\rho$ balls: cover it by finitely many $L^2$ balls, use the individual tail limits of their centers, and then shrink the covering radius. Outside a fixed compact set $\psi=1$, so this proves exactly (105.1), with $n\to\infty$ first and $R\to\infty$ second. This argument holds for each arbitrary actual-state selection in the statement.
+
+Finally take any weak subsequence from Theorem 104.2. On compact annuli about $e$ it already converges strongly in $L^2$ to $v$. For a fixed $\zeta$ in (105.3), its support avoids some neighborhood of $e$ and
+
+$$
+\limsup_n\|\mathbf1_{\{\rho>R\}}\zeta(v_n-v)\|_2^2
+ \le2\|\zeta\|_\infty^2
+ \left(\limsup_n\int_{\rho>R}|v_n|^2d\mu
+                      +\int_{\rho>R}|v|^2d\mu\right).
+$$
+
+Both terms tend to zero as $R\to\infty$, the first by (105.1) and the second since $v\in L^2$. The compact annular part converges strongly by §104. This proves (105.3) along the existing subsequence, without requiring further extraction. The same tail estimate excludes an atom at infinity in each measure limit (104.7); its mass identity becomes (105.2). It gives no exclusion of the source atom. $\square$
+
+**Definition 105.2 (primary suppliers, correspondence and remaining boundary).** The source-specific input is the full complex actual equation and critical attainment of §§101.5 and 102.3, the universal endpoint and subexponential limits (104.2), and the punctured local bounds and subsequences of Theorem 104.2. These are reused results, not new claims of attainment or local compactness. The free joint realization, core and legal resolvent tests are those of §§85.2 and 102.2; the fibre support (105.4) is exactly the magnetic estimate (101.3).
+
+Ciatti–Cowling–Ricci, [*Hardy and uncertainty inequalities on stratified Lie groups*, Theorem A and Corollary 3.2](https://arxiv.org/html/1308.2373v1), supply the order-two inequality used in (105.5): $p=2$, order $2<Q/p=5/2$, the original sub-Laplacian and the homogeneous norm $\rho$. Its extension to $D(L)$ is already (102.6). The weighted zero inverse (105.6) is obtained by duality and spectral limits on the specified domain; the citation is not an everywhere-defined unweighted inverse theorem.
+
+Krötz–Thangavelu–Xu, [*The heat kernel transform for the Heisenberg group*, §4.1, equation (4.1.2)](https://arxiv.org/html/math/0401243v2), supply the Heisenberg sub-Laplacian kernel at $n=1$. The shear has Jacobian one and identifies their symmetric group product with the original one; reversing their central Fourier sign leaves the diagonal coefficient even. Multiplication by the independent original $z$ Gaussian gives the original $L$ heat kernel and the $t^{-5/2}$ diagonal used in (105.8). Their full Laplacian with an extra central second derivative is not used. Spectral localization, Hilbert–Schmidt compactness, the one-dimensional Fourier singular-integral identity, Taylor's formula, Young's inequality and the regularized free-form inversion are consumed mathematical intermediates inside this proof. No varying-order single-commutator theorem is imported from a fixed-order fractional IMS formula.
+
+The additional conclusion is repository-derived for the same actual states: no probability mass escapes to infinity, and fixed exterior cutoffs converge strongly along the existing weak subsequences. It is not a new heat law, an inverse of the auxiliary AFV comparison, a resource-measure conclusion or an exhaustive literature-priority claim. The coefficient $m_e$, whether $\ker S^*$ contains nonzero elements, which such elements and source defects are attained by actual selections, and any surviving source scale or profile remain unresolved. Equation (104.6) continues to put any nonzero weak profile outside $\mathcal Q_c$; no source boundary condition or maximal/Friedrichs domain identity is imposed. No native source-to-state realization or physical space-dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）
+
+## 106. Actual probability vanishes on every shrinking diagnostic annulus
+
+**Definition 106.1 (fixed diagnostic and the actual selections).** Retain the original $G=H^1\times\mathbb R$, product, Haar measure, unit-source Green field $\Gamma$, horizontal $L$, free clock and central spectral units of Definition 103.1. Fix the same $a,\eta>0$ and set
+
+$$
+\kappa=\sqrt{\eta/a},\qquad \xi=(x,y,z),\qquad s=w-xy/2,
+\qquad R_\kappa(p)=\bigl(|\xi|^2+(s/\kappa)^2\bigr)^{1/2}.
+\tag{106.1}
+$$
+
+This is a fixed analytic diagnostic on the original group, not a new group norm, kinetic law, heat clock or source. For every sequence $\sigma_n>2$ tending to $2$, without monotonicity, select any nonzero attained complex critical zero states on the full $\mathcal E_{\sigma_n}$, and normalize only their amplitudes by
+
+$$
+V[u_n]=1,\qquad M_n=\|u_n\|_2^2,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\qquad
+\epsilon_n=\sigma_n-2.
+\tag{106.2}
+$$
+
+These are exactly the selections of Definitions 103.1 and 104.1. Their existence, full form equation, endpoint kinetic limits, $M_n\to0$ and $\epsilon_n\log(1/M_n)\to0$ are supplied by §§101–104. No sign, positivity, simplicity, uniqueness or profile condition is imposed. All state limits use the fixed complex Hilbert spaces with the indicated Lebesgue measures.
+
+**Theorem 106.2 (all shrinking annuli and diagnostic zooms of actual states).** For every selection in Definition 106.1, every sequence $r_n>0$ tending to zero and every fixed $0<c<C<\infty$,
+
+$$
+\int_{\{c r_n<R_\kappa<C r_n\}}|v_n|^2d\mu\longrightarrow0.
+\tag{106.3}
+$$
+
+In particular the order of limits in the following uniform small-radius assertion is valid:
+
+$$
+\lim_{\delta\downarrow0}\limsup_{n\to\infty}
+ \sup_{0<r\le\delta}
+ \int_{\{cr<R_\kappa<Cr\}}|v_n|^2d\mu=0.
+\tag{106.4}
+$$
+
+The conclusion is also uniform over the actual critical-state choices. Precisely, if $\mathcal Z_\sigma$ is the set of all $L^2$-normalized attained complex critical zero states in the original $\mathcal E_\sigma$, then
+
+$$
+\lim_{\delta\downarrow0}\limsup_{\sigma\downarrow2}
+ \sup_{v\in\mathcal Z_\sigma}\sup_{0<r\le\delta}
+ \int_{\{cr<R_\kappa<Cr\}}|v|^2d\mu=0.
+\tag{106.5}
+$$
+
+Here $\sigma\downarrow2$ means approach from above, without a monotonicity requirement. The inner limiting operations in (106.4)–(106.5) precede $\delta\downarrow0$; neither formula asserts a rate in $r$ for a fixed order.
+
+Equivalently, for every such $r_n$, the actual norm-one diagnostic zooms
+
+$$
+\begin{aligned}
+F_n(X,t)
+ &=\kappa^{1/2}r_n^2\,
+ v_n\!\left(r_nX_1,r_nX_2,r_nX_3,
+       \kappa r_nt+\tfrac12r_n^2X_1X_2\right),\\
+\|F_n\|_{L^2(\mathbb R^4,dXdt)}&=1
+\end{aligned}
+\tag{106.6}
+$$
+
+converge weakly to zero in global $L^2(\mathbb R^4)$ and strongly to zero in $L^2(K)$ for every compact $K\subset\mathbb R^4\setminus\{0\}$. They have no globally strongly convergent subsequence. The shear and the Jacobian $d\mu=\kappa r_n^4dXdt$ in (106.6) are those of the original states; no nonlinear Fourier-modulus comparison is inverted.
+
+**Proof.** Write $\mathcal G(\xi,s)=\Gamma(\xi,s+x y/2)$ and, for $r>0$, put
+
+$$
+\begin{gathered}
+W_r(X,t)=r^2\mathcal G(rX,\kappa rt),\\
+Y_{1,r}=\partial_{X_1}-\frac{rX_2}{2\kappa}\partial_t,
+\quad Y_{2,r}=\partial_{X_2}+\frac{rX_1}{2\kappa}\partial_t,
+\quad Y_{3,r}=\partial_{X_3},\qquad
+\mathcal L_r=-\sum_iY_{i,r}^2.
+\end{gathered}
+\tag{106.7}
+$$
+
+The exact original marginal and homogeneous bound, already supplied by §§82–85 and (102.2), imply
+
+$$
+\begin{gathered}
+\int_{\mathbb R}W_r(X,t)dt=\frac1{4\pi\kappa|X|}
+ \quad(X\ne0),\\
+0\le W_r(X,t)
+ \le B_\Gamma r^{1/2}
+          \bigl(r^2|X|^4+\kappa^2t^2\bigr)^{-3/4}.
+\end{gathered}
+\tag{106.8}
+$$
+
+The second formula is only an upper bound for the same $\Gamma$. In particular, for fixed $d>0$, $W_r\le C_d r^{1/2}$ on $|t|\ge d$, and its central mass outside $|t|<d$ is $O(r^{1/2}d^{-1/2})$, uniformly in $X$. Together with the first formula this is an approximate identity in the central variable on each compact set $0<b\le|X|\le B$. It is not a pointwise replacement of the original field by a trace multiplier.
+
+We shall use two direct consequences on sets away from the diagnostic origin. First, for each compact $K\subset\mathbb R^4\setminus\{0\}$ and each $\tau>0$, there is $C_{K,\tau}$, independent of $0<r\le1$, such that
+
+$$
+\int W_r|h|^2dXdt
+ \le\tau\|\partial_th\|_2^2+C_{K,\tau}\|h\|_2^2
+ \quad\bigl(h\in H^1(\mathbb R^4),\ \operatorname{supp}h\subset K\bigr).
+\tag{106.9}
+$$
+
+To see this, choose $b,d>0$ so that $K\cap\{|X|<b\}$ is contained in $\{|t|\ge d\}$. On $|X|<b$ the second bound in (106.8) bounds the integral by $C_d\|h\|_2^2$. On $|X|\ge b$ its marginal bounds it by $(4\pi\kappa b)^{-1}\int\sup_t|h(X,t)|^2dX$. The one-dimensional inequality used in (104.32) bounds this last integral by $\|h\|_2\|\partial_th\|_2$. Young's inequality gives (106.9). This proof applies to complex $h$.
+
+Second, if $r_j\to0$, $H_j$ is bounded in $H^1$ locally off zero, and $H_j\to H$ strongly in $L^2$ locally off zero, then for every $\phi\in C_c^\infty(\mathbb R^4\setminus\{0\};\mathbb C)$,
+
+$$
+\int W_{r_j}\overline\phi H_jdXdt
+ \longrightarrow\frac1{4\pi\kappa}
+       \int_{\mathbb R^3}\frac{\overline{\phi(X,0)}H(X,0)}{|X|}dX.
+\tag{106.10}
+$$
+
+Here the right side uses the local Sobolev trace. For a detailed justification, split the support of $\phi$ into a part away from $t=0$ and a part with $|X|$ bounded below. The first part tends to zero by (106.8) and the local $L^2$ bound. On the second part insert a fixed smooth cutoff, supported away from zero and equal to one on a neighborhood of that part and its projection onto $t=0$. For the resulting $h_j=\overline\phi H_j$, both the $H^1$ norms and the horizontal supports are bounded. Its traces converge strongly in $L^2$: the squared trace norm of a compactly supported difference is bounded by its $L^2$ norm times a bounded central derivative norm, using the same one-dimensional trace inequality. For almost every $X$,
+
+$$
+|h_j(X,t)-h_j(X,0)|
+ \le |t|^{1/2}\|\partial_th_j(X,\cdot)\|_2.
+$$
+
+On $|t|<d$, integration against $W_{r_j}$ and its marginal gives an error at most $C d^{1/2}$, by Cauchy–Schwarz in the bounded horizontal support. On $|t|\ge d$, the bound $C r_j^{1/2}|t|^{-3/2}$ controls the integral of $h_j$ by its bounded compact-support $L^1$ norm and controls the subtracted trace by $C r_j^{1/2}d^{-1/2}$ times its bounded $L^1$ norm. Fix $d$, let $j\to\infty$, and then let $d\downarrow0$. The marginal identity and strong trace convergence give (106.10). Smooth partitions of the support justify the indicated split, including where $X=0$ but $t\ne0$.
+
+We next prove the local bounds needed to apply (106.10) to the actual zooms. First restrict to any subsequence on which
+
+$$
+r_n\ge\ell_n:=\sqrt{M_n}.
+\tag{106.11}
+$$
+
+Since $r_n\to0$ and $\epsilon_n\log(1/M_n)\to0$, its central coefficient satisfies
+
+$$
+b_n=(\kappa r_n)^{-\epsilon_n}\longrightarrow1.
+\tag{106.12}
+$$
+
+Indeed eventually $\kappa r_n<1$, and
+$0\le-\epsilon_n\log(\kappa r_n)
+\le\epsilon_n\log(1/M_n)/2+\epsilon_n|\log\kappa|$.
+The unitary coordinate map in (106.6) sends the original full form domain exactly onto the distributional intersection defined by $Y_{i,r_n}F\in L^2$ and $|D_t|^{\sigma_n/2}F\in L^2$. Changing variables in the actual full form equation, and dividing its kinetic coefficient by $a r_n^{-2}$, gives on that entire transformed domain
+
+$$
+\sum_i\langle Y_{i,r_n}\psi,Y_{i,r_n}F_n\rangle
+ +b_n\langle|D_t|^{\sigma_n/2}\psi,
+                |D_t|^{\sigma_n/2}F_n\rangle
+ =\frac{g_n}{a}\int W_{r_n}\overline\psi F_ndXdt.
+\tag{106.13}
+$$
+
+There is no change of source, central spectral convention or interacting operator domain in this identity. In particular it holds for complex states and their legitimate form tests, without requiring $\Gamma v_n\in L^2$.
+
+The global low-order moment in the commutator estimate is bounded. Using the unitary central transform and spectral Hölder as in (104.8),
+
+$$
+\begin{gathered}
+D_{\epsilon_n}[v_n]
+ \le\left(\frac{D_{\sigma_n}[u_n]}{M_n}\right)^{\epsilon_n/\sigma_n}
+ =O(1),\\
+D_{\epsilon_n}[F_n]
+ =(\kappa r_n)^{\epsilon_n}D_{\epsilon_n}[v_n],\qquad
+b_n\bigl(1+D_{\epsilon_n}[F_n]\bigr)
+ =b_n+D_{\epsilon_n}[v_n]=O(1).
+\end{gathered}
+\tag{106.14}
+$$
+
+Here $D_\nu[F]=\||D_t|^{\nu/2}F\|_2^2$ for diagnostic functions, and $D_\nu[v_n]$ still uses the original $w$ coordinate. The boundedness is a consequence of the supplied actual-state limits, not an extra spectral cutoff.
+
+Fix a real $\chi\in C_c^\infty(\mathbb R^4\setminus\{0\})$. Multiplication by $\chi$ and $\chi^2$ preserves the transformed domain. For the central domain this is the Fourier convolution multiplier bound of §104.2; for the horizontal derivatives it is the distributional product rule with $Y_{i,r_n}\chi$ bounded uniformly for $r_n\le1$. Thus $\psi=\chi^2F_n$ is a legal test in (106.13). The same whole-line double-commutator estimate (104.9), now in $t$ and multiplied by $b_n$, and the horizontal product rule give
+
+$$
+\begin{aligned}
+\sum_i\|Y_{i,r_n}(\chi F_n)\|_2^2
+ +b_nD_{\sigma_n}[\chi F_n]
+ &\le\frac{g_n}{a}\int W_{r_n}|\chi F_n|^2dXdt\\
+ &\quad+C_\chi\{1+b_n(1+D_{\epsilon_n}[F_n])\}.
+\end{aligned}
+\tag{106.15}
+$$
+
+The constants in (104.9) are uniform for $2<\sigma_n\le5/2$ and depend only on the fixed cutoff's central Fourier seminorms. This use of (104.9) includes its control of the nonlocal tails; localization has not been replaced by a fixed-test convergence argument. For each $n$, $\chi F_n\in H^1$: its central derivative is in $L^2$ since $\sigma_n>2$, and its ordinary horizontal derivatives follow from (106.7) on the compact support. No uniform bound has yet been assumed.
+
+Apply (106.9) to the potential term. The inequality $D_2[h]\le\|h\|_2^2+D_{\sigma_n}[h]$, the bounded $g_n$, and $b_n\to1$ allow a fixed sufficiently small $\tau$ to absorb its central derivative term into the left side of (106.15). Since $\|F_n\|_2=1$ and (106.14) bounds the error, this proves
+
+$$
+\sum_i\|Y_{i,r_n}(\chi F_n)\|_2^2
+ +D_{\sigma_n}[\chi F_n]+\|\chi F_n\|_{H^1(\mathbb R^4)}^2
+ \le C_\chi.
+\tag{106.16}
+$$
+
+For the last bound solve (106.7) for the ordinary horizontal derivatives; their extra coefficients are bounded on this support. Thus every subsequence satisfying (106.11) has a further subsequence with $F_n\rightharpoonup F$ in global $L^2$, with weak $H^1$ and strong $L^2$ convergence locally off zero. The local limits agree with the global weak limit. This uses ordinary Rellich compactness and a countable exhaustion, not a bound on the full global $H^1$ norms.
+
+Move the free operators onto a fixed smooth compact test $\phi$ off zero in (106.13). One has
+$\mathcal L_{r_n}\phi\to-\Delta_X\phi$ strongly in global $L^2$, directly from its polynomial coefficients, and
+$b_n|D_t|^{\sigma_n}\phi\to-\partial_t^2\phi$ strongly in global $L^2$, by (106.12) and Fourier dominated convergence. This last convergence is on the whole central line, including the nonlocal tails. Equation (106.10) handles the actual potential term, and $g_n\to g_c$ with $g_c/(4\pi a\kappa)=4/\pi$ gives
+
+$$
+\int_{\mathbb R^4}\nabla\overline\phi\cdot\nabla F\,dXdt
+ =\frac4\pi\int_{\mathbb R^3}
+        \frac{\overline{\phi(X,0)}F(X,0)}{|X|}dX
+ \quad\bigl(\phi\in C_c^\infty(\mathbb R^4\setminus\{0\})\bigr).
+\tag{106.17}
+$$
+
+The left side uses the local $H^1$ limit. This is a conclusion about a diagnostic limit of actual states, rather than a hypothesis prescribing that limit. It imposes no Friedrichs boundary condition at the puncture.
+
+We prove that (106.17) has no nonzero solution in $L^2(\mathbb R^4)\cap H^1_{\rm loc}(\mathbb R^4\setminus\{0\})$. This consumed intermediate uses separation of radial and angular variables, not identification with the original maximal operator. On $S^3\subset\mathbb R^4$ let $\Sigma=\{t=0\}\cap S^3=S^2$ and consider the angular form
+
+$$
+\mathfrak a[h,k]=\int_{S^3}\nabla_S\overline h\cdot\nabla_Sk\,d\omega
+ -\frac4\pi\int_\Sigma\overline h k\,d\omega_\Sigma,
+ \qquad D(\mathfrak a)=H^1(S^3).
+\tag{106.18}
+$$
+
+This is a closed lower-bounded complex form with compact resolvent. Here are its needed hypotheses: the trace estimate on a tubular neighborhood of the compact equator gives
+$\|h|_\Sigma\|_2^2\le\tau\|\nabla_Sh\|_2^2+C_\tau\|h\|_2^2$
+for every $\tau>0$. It follows by integrating the one-dimensional normal trace estimate in finitely many smooth charts; the chart Jacobians are bounded above and below. For sufficiently small $\tau$, adding a fixed multiple of $\|h\|_2^2$ to (106.18) makes its norm equivalent to the complete $H^1$ norm, proving closedness and a lower bound. For a sufficiently large positive shift, the represented inverse maps bounded $L^2$ sets into bounded $H^1$ sets by coercivity of the shifted form. Compactness of $H^1(S^3)\hookrightarrow L^2(S^3)$ therefore makes that inverse compact. It is self-adjoint and injective. Closed-form representation and the compact self-adjoint spectral theorem therefore give a complete orthonormal basis $e_j\in H^1(S^3)$ with real eigenvalues $\lambda_j$ and
+$\mathfrak a(h,e_j)=\lambda_j\langle h,e_j\rangle$ for all $h\in H^1(S^3)$. No angular simplicity, sign or sharp lower bound for $\lambda_j$ is needed.
+
+Write $R=(|X|^2+t^2)^{1/2}$ and
+$f_j(R)=\langle e_j,F(R,\cdot)\rangle_{L^2(S^3)}$. Local $H^1$ regularity off zero and the trace inequality extend (106.17), by smooth density, to compactly supported $H^1$ tests on every radial annulus. In particular $\phi=\zeta(R)e_j(\omega)$ is legal for $\zeta\in C_c^\infty(0,\infty)$. In polar variables the interface term has radial factor $R\,dR$, since $dX=R^2dR\,d\omega_\Sigma$ on $t=0$ and its weight is $R^{-1}$. The angular gradient term has the same factor. Consequently
+
+$$
+\int_0^\infty
+ \bigl(R^3\overline{\zeta'}f_j'+\lambda_jR\overline\zeta f_j\bigr)dR=0,
+\qquad
+\int_0^\infty R^3|f_j(R)|^2dR<\infty.
+\tag{106.19}
+$$
+
+The first equation is the Euler equation
+$-f_j''-3R^{-1}f_j'+\lambda_jR^{-2}f_j=0$
+distributionally on $(0,\infty)$; its solutions are classical there. If $\lambda_j>-1$, put $\nu_j=\sqrt{1+\lambda_j}>0$. Then
+$f_j=A_jR^{-1+\nu_j}+B_jR^{-1-\nu_j}$.
+Integrability at infinity first forces $A_j=0$. When $\nu_j\le1$ it also forces $B_j=0$, including the logarithmically divergent case $\nu_j=1$. When $\nu_j>1$, integrability at zero forces $B_j=0$. If $\lambda_j=-1$, the solutions are $R^{-1}(A_j+B_j\log R)$ and no nonzero solution is integrable at infinity with weight $R^3$. If $\lambda_j<-1$, the solutions are $R^{-1}(A_je^{i\tau_j\log R}+B_je^{-i\tau_j\log R})$, $\tau_j=\sqrt{-1-\lambda_j}$. For a nonzero pair the nonnegative squared oscillatory factor has a positive mean over its logarithmic period, so the weighted integral at infinity diverges. Thus $f_j=0$ for every $j$. Completeness of the angular basis, and the countability of that basis, give $F=0$ almost everywhere. This proves the intermediate at precisely the punctured local-regularity level obtained from the actual equation; no extension condition at $R=0$ was inserted.
+
+Every subsequential limit extracted under (106.11) is therefore zero. The relative compactness in (106.16) on each compact set off zero implies strong local convergence of the entire subsequence there. Global weak convergence to zero follows by testing first on compact sets away from zero, whose $L^2$ functions are dense in global $L^2$, and using $\|F_n\|_2=1$.
+
+It remains to handle the indices with $r_n<\ell_n$, without assuming (106.12) on those indices. A compact diagnostic set in (106.6) is contained in $|X|\le B$, $|t|\le B$ for some $B<\infty$. Its original image has central sections of length at most $2\kappa B r_n\le2\kappa B\ell_n$. The actual-state estimate (104.15), valid for arbitrary moving central sections, shows that its probability tends to zero. Thus on these indices $F_n\to0$ strongly on every compact set, including sets meeting zero, and hence weakly in global $L^2$. Combining the two sets of indices proves the zoom conclusions for every $r_n\to0$.
+
+By the exact Jacobian in (106.6), the diagnostic annulus in (106.3) corresponds to $c<(|X|^2+t^2)^{1/2}<C$. Its closure is compact and avoids zero, proving (106.3). Conversely (106.3) for all fixed $c,C$ contains every compact set off zero in such an annulus, so it implies strong convergence there and then global weak convergence by density. The conserved norm excludes a globally strongly convergent subsequence.
+
+Finally, if (106.4) failed, choose $\delta_j\downarrow0$, strictly increasing indices $n_j$ and $0<r_j\le\delta_j$ with annular masses bounded below by a fixed positive number. Apply (106.3) to that subsequence to obtain a contradiction. A failure of (106.5) similarly chooses orders $\sigma_j\to2$, actual states in $\mathcal Z_{\sigma_j}$ and $r_j\to0$ with a positive lower bound. Normalize those states to $V=1$ and apply the theorem, whose inputs and proof hold for every actual selection. This proves both uniform assertions in their stated order of limits. $\square$
+
+**Corollary 106.3 (centered original Carnot zooms at arbitrary shrinking radii).** Under Definition 106.1, let $h_n>0$ be any sequence tending to zero. Use the original dilation $\delta_h(x,y,z,w)=(hx,hy,hz,h^2w)$ and set
+
+$$
+Z_n(q)=h_n^{5/2}v_n(\delta_{h_n}q),\qquad
+\mathcal A=\{q:\xi(q)=0\}.
+\tag{106.20}
+$$
+
+Then $\|Z_n\|_{L^2(G,d\mu)}=1$, $Z_n\rightharpoonup0$ in global $L^2(G,d\mu)$, and $Z_n\to0$ strongly in $L^2(K,d\mu)$ for every compact $K\subset G\setminus\mathcal A$. There is no globally strongly convergent subsequence. The exceptional set is explicitly the central line $x=y=z=0$; no strong conclusion on compact sets meeting that line is asserted at arbitrary radii.
+
+**Proof.** The original Haar Jacobian of $\delta_h$ is $h^5$. In the original shear coordinate $s(\delta_hq)=h^2s(q)$, so
+
+$$
+R_\kappa(\delta_hq)
+ =h\bigl(|\xi(q)|^2+h^2(s(q)/\kappa)^2\bigr)^{1/2}.
+\tag{106.21}
+$$
+
+On each indicated compact $K$, $|\xi|$ has a strictly positive lower bound, while $|\xi|$ and $|s|$ are bounded above. Hence its image under $\delta_{h_n}$ lies in a diagnostic annulus $c h_n<R_\kappa<C h_n$ with fixed positive $c,C$. Equations (106.3) and (106.21) prove the strong local assertion. The line $\mathcal A$ has Haar measure zero, so compactly supported $L^2$ tests avoiding it are dense in global $L^2$. The norm bound gives global weak convergence to zero; norm one excludes global strong subsequences.
+
+The radius quantifier here extends to every centered $h_n\to0$, but the local conclusion avoids $\mathcal A$. At $h_n=O(M_n^{1/4})$, Theorem 104.4 already gives the stronger conclusion on every compact set and after arbitrary moving translations. That result is reused as stated; this corollary neither extends its moving-center quantifier to larger radii nor supplies its full compact-set conclusion at arbitrary radii. $\square$
+
+**Proposition 106.4 (annular vanishing alone does not remove a source atom).** The conclusions (106.3)–(106.5), considered as statements about probabilities and shrinking annuli, do not imply that a source defect is zero. In the same original chart let $\omega_3=|S^3|$ and define the absolutely continuous probability measures
+
+$$
+d\pi_j(p)=\frac{1}{\kappa\omega_3j}
+ R_\kappa(p)^{-4}
+ \mathbf1_{\{e^{-2j}<R_\kappa(p)<e^{-j}\}}d\mu(p),
+ \qquad j=1,2,\ldots.
+\tag{106.22}
+$$
+
+They converge narrowly to $\delta_e$, while for every $0<c<C<\infty$,
+
+$$
+\sup_{r>0}\pi_j\{cr<R_\kappa<Cr\}
+ \le\frac{\log(C/c)}j\longrightarrow0.
+\tag{106.23}
+$$
+
+**Proof.** The shear followed by $s=\kappa t$ gives $d\mu=\kappa\,d\xi dt$, so radial integration in four variables gives total mass $j^{-1}\int_{e^{-2j}}^{e^{-j}}dR/R=1$. An annulus intersects a logarithmic interval of length at most $\log(C/c)$, giving (106.23). The supports shrink to $e$ in the original topology, proving the narrow limit. These are measure examples only; they are not asserted to solve an actual critical equation or to realize any of its defects. Their role is the exact logical distinction between vanishing fixed-ratio annuli and exclusion of logarithmically spread source probability. $\square$
+
+**Definition 106.5 (suppliers, correspondence and the remaining source problem).** The original field's marginal, positivity, homogeneity and Haar/shear conventions are the supplies of §§82–85, (102.2) and (103.8). Attainment and the actual full-complex equation are §§101.5 and 102.3. The endpoint and subexponential limits used in (106.12)–(106.14) are §103, not new mass or resource estimates. The varying-order localization estimate, its multiplier/domain justification and the actual short-central-section probability bound are (104.9) and (104.15). The exterior probability theorem §105 remains in force without a second proof.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, arXiv:1105.0335v1, Theorem 1.1 and (8)](https://arxiv.org/abs/1105.0335v1), give the mature halfspace trace supply underlying §87 at $n=4$, $\beta_{\rm AFV}=2$: $H(4,2)=2/\pi$ per halfspace and $4/\pi$ on both. The primary theorem is for real functions; the complex extension and its actual-field comparison are the already supplied §87.2. Neither that theorem nor its nonattainment statement is used as an assertion about a maximal punctured domain. In (106.17) the same numerical coefficient is obtained directly from the original marginal and $g_c/(4\pi a\kappa)=4/\pi$. The angular spectral decomposition and its radial integrability proof above explicitly exclude all punctured local-$H^1$, global-$L^2$ solutions of this auxiliary limiting interface equation, rather than inferring that exclusion from the smaller closed trace form's zero kernel.
+
+Closed-form representation and the compact self-adjoint spectral theorem are mature supplies, as in [Teschl, *Mathematical Methods in Quantum Mechanics*, authorized online edition, version February 12, 2009, Theorems 2.13 and 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf). Their client here is the angular form (106.18) on $L^2(S^3)$, with closedness, lower bound and compact embedding proved above. They do not identify any original singular operator domain. Ordinary one-dimensional trace estimates, Sobolev/Rellich compactness, spectral Hölder, Fourier dominated convergence, polar coordinates and the Euler equation are consumed intermediates inside the actual-state proof. The source-specific deduction is repository-derived: the exact diagnostic equation, uniform local control, its actual-to-interface limit, and the exclusion of every shrinking fixed-ratio probability annulus, with the directly consumed zoom consequences. No exhaustive literature-priority or world-originality assertion is attached to these deductions.
+
+For the original maximal operator $S^*$ of (104.5), §§104–105 still yield exactly
+
+$$
+v\in\ker S^*,\qquad m_\infty=0,\qquad
+\|v\|_2^2+m_e=1,\qquad
+\ker S^*\cap\mathcal Q_c=\{0\}.
+\tag{106.24}
+$$
+
+Theorem 106.2 does not determine $m_e$, prove triviality or existence of $\ker S^*$, or decide which maximal zero states or defects are attained by actual selections. Its auxiliary interface equation arises only after a shrinking diagnostic change of variables; its zero-space result is not a domain identification for $S^*$ or a replacement source law. The remaining obligations are a genuinely actual-state bound excluding or determining logarithmic source spreading, an original maximal-domain/attainability analysis, and a surviving probability scale or profile if one exists. No positivity, simplicity, uniqueness, native source-to-state realization or physical space-dimension conclusion follows. These are ordinary theoretical statements; they supply no Lean certification and do not complete the continuing why-three problem.
+
+## 追加锚（本行以下为增补区）
+
+## 107. Critical-form energy and an excluded actual source ball
+
+**Definition 107.1 (unchanged source, actual states and the energy length).** Retain the original product
+$pp'=(x+x',y+y',z+z',w+w'+xy')$ on $G=H^1\times\mathbb R$, identity $e$, Lebesgue Haar measure $d\mu=dx\,dy\,dz\,dw$, and
+$X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$.
+The nonnegative free realization is $L=-\sum_iX_i^2$, its clock is $e^{-tL}$, and $\Gamma=\int_0^\infty h_t\,dt$ is its original positive degree-$-3$ unit-source Green field, $L\Gamma=\delta_e$. Fix the original $a,\eta>0$ and central coordinate and spectral units. With $D_w=-i\partial_w$, use exactly the full complex spaces and functionals of (103.2):
+$\mathcal E_\nu=D(L^{1/2})\cap D(|D_w|^{\nu/2})$,
+$T[u]=\sum_i\|X_iu\|_2^2$, $D_\nu[u]=\||D_w|^{\nu/2}u\|_2^2$ and
+$V[u]=\int\Gamma|u|^2d\mu$.
+Write
+
+$$
+\begin{gathered}
+g_\sigma=\inf_{0\ne u\in\mathcal E_\sigma}
+ \frac{aT[u]+\eta D_\sigma[u]}{V[u]},\qquad
+g_c=16\sqrt{a\eta},\\
+q_c[u]=aT[u]+\eta D_2[u]-g_cV[u]\quad(u\in\mathcal E_2),\\
+\kappa=\sqrt{\eta/a},\qquad \xi=(x,y,z),\qquad s=w-xy/2,\qquad
+R_\kappa=\bigl(|\xi|^2+(s/\kappa)^2\bigr)^{1/2}.
+\end{gathered}
+\tag{107.1}
+$$
+
+The nonnegative closed form $\overline q_c$ on $\mathcal Q_c$ is the critical Friedrichs form of §87.4, with norm squared $\|u\|_2^2+\overline q_c[u]$; it equals $q_c$ on $\mathcal E_2$. The diagnostic $R_\kappa$ changes neither the original product nor the source.
+
+For every sequence $\sigma_n>2$ tending to $2$, without monotonicity, select any nonzero attained critical zero states in the original complex $\mathcal E_{\sigma_n}$, and rescale only amplitudes so that $V[u_n]=1$. Attainment and their full-domain equation are those of §§101.5 and 102.3, equivalently (103.3). Put
+
+$$
+\begin{gathered}
+M_n=\|u_n\|_2^2>0,\qquad
+v_n=M_n^{-1/2}u_n,\qquad \|v_n\|_2=1,\qquad
+\ell_n=\sqrt{M_n},\\
+\delta_n=q_c[u_n],\qquad
+E_n=q_c[v_n]=\delta_n/M_n,\qquad
+\epsilon_n=\sigma_n-2,\qquad g_n=g_{\sigma_n}.
+\end{gathered}
+\tag{107.2}
+$$
+
+All limits below concern every such actual selection on the fixed Hilbert space $L^2(G,d\mu)$. There is no assumption on sign, positivity, simplicity, uniqueness or a chosen profile.
+
+**Lemma 107.2 (closed trace concentration and its exact original marginal consumer).** Let $\Phi$, $\mathcal Q_\delta$ and $\mathfrak t$ be exactly the auxiliary profile, closed domain and form of (87.6)–(87.8). Thus, writing $r=|\xi|$ and $\varrho=(r^2+t^2)^{1/2}$ in the auxiliary $\mathbb R^4$,
+
+$$
+\begin{gathered}
+\Phi(\xi,t)=\frac2{\pi r}\arctan\frac r{|t|},\qquad
+\Phi(\xi,0)=r^{-1},\qquad \Phi(0,t)=\frac2{\pi|t|},\qquad
+\frac2{\pi\varrho}\le\Phi\le\frac1\varrho,\\
+\mathfrak t[f]=\int_{\mathbb R^4}\Phi^2|\nabla(f/\Phi)|^2\,d\xi\,dt
+ \quad(f\in\mathcal Q_\delta).
+\end{gathered}
+\tag{107.3}
+$$
+
+The domain is the closure of $C_c^\infty(\mathbb R^4\setminus\{0\};\mathbb C)$ for the norm squared $\|f\|_2^2+\mathfrak t[f]$ specified in §87. For every complex $f$ in this whole domain and every $b>0$,
+
+$$
+\int_{\mathbb R^4}\frac{|f|^2}{|\xi|}\,d\xi\,dt
+ \le\pi^2\|f\|_2\sqrt{\mathfrak t[f]},
+\qquad
+\int_{\{|\xi|<b\}}|f|^2\,d\xi\,dt
+ \le\pi^2 b\|f\|_2\sqrt{\mathfrak t[f]}.
+\tag{107.4}
+$$
+
+Consequently every $\psi\in\mathcal Q_c$, including its singular elements outside $\mathcal E_2$, satisfies the original-space bounds
+
+$$
+\int_G\frac{|\psi|^2}{|\xi|}\,d\mu
+ \le\frac{\pi^2}{\sqrt a}\|\psi\|_2\sqrt{\overline q_c[\psi]},
+\qquad
+\int_{\{|\xi|<b\}}|\psi|^2\,d\mu
+ \le\frac{\pi^2b}{\sqrt a}\|\psi\|_2\sqrt{\overline q_c[\psi]}.
+\tag{107.5}
+$$
+
+The constant is a sufficient constant, with no sharpness assertion.
+
+**Proof.** First take $f$ in the punctured smooth core and put $g=f/\Phi$, $W=\varrho^{-2}$. On its support $g$ is bounded and locally $H^1$, also across $t=0$, because $\Phi$ is positive and locally Lipschitz away from the origin. For $r>0$ introduce the bounded real vector field
+
+$$
+F(\xi,t)=\frac{(\xi,t)}{\varrho}+\left(\frac{\xi}{r},0\right),
+\qquad |F|\le2.
+$$
+
+A direct divergence calculation in four Euclidean variables gives
+
+$$
+\begin{aligned}
+\operatorname{div}(WF)
+ &=\frac W\varrho+\frac{2Wt^2}{r\varrho^2}\\
+ &=\frac Wr\left[u+2(1-u^2)\right]\ge\frac Wr,
+ \qquad u=\frac r\varrho\in[0,1].
+\end{aligned}
+\tag{107.6}
+$$
+
+Indeed $u+2(1-u^2)-1=(1-u)(2u+1)\ge0$. The integration by parts against $|g|^2$ is valid on $r>\tau$, followed by $\tau\downarrow0$. The support is compact and avoids the origin; on its intersection with $r=\tau$ the weight and $g$ are uniformly bounded for small $\tau$. The cylindrical boundary flux is therefore $O(\tau^2)$ and tends to zero. The divergence is locally integrable across that axis on this support. There is no interface boundary term: $g$ is a single $H^1$ function across $t=0$, and $WF$ is smooth there when $r>0$. It follows that
+
+$$
+\begin{aligned}
+\int\frac W r|g|^2
+ &\le\int\operatorname{div}(WF)|g|^2
+ =-2\operatorname{Re}\int W\overline g\,F\cdot\nabla g\\
+ &\le4\left(\int W|g|^2\right)^{1/2}
+       \left(\int W|\nabla g|^2\right)^{1/2}.
+\end{aligned}
+\tag{107.7}
+$$
+
+Since $\Phi^2\le W\le(\pi^2/4)\Phi^2$, the left side dominates $\int |f|^2/r$, whereas the last line is at most $\pi^2\|f\|_2\sqrt{\mathfrak t[f]}$. This proves the first inequality of (107.4) on the core with the real part required for arbitrary complex $f$. For any $f\in\mathcal Q_\delta$, choose core approximants converging in the closed form norm. Their $L^2$ norms and form values converge. An almost everywhere convergent subsequence and Fatou's lemma give the first inequality on all of $\mathcal Q_\delta$. The second follows from $1\le b/r$ on $0<r<b$. In particular the proof requires no separate finiteness of the gradient and trace terms whose difference defines the core form.
+
+The auxiliary homogeneity is exact on this closure. For $\lambda>0$, set
+$\mathscr D_\lambda f(\xi,t)=\lambda^2 f(\lambda\xi,\lambda t)$.
+The profile has degree $-1$, so the change of variables in (107.3) yields, first on the core,
+
+$$
+\|\mathscr D_\lambda f\|_2=\|f\|_2,\qquad
+\mathfrak t[\mathscr D_\lambda f]=\lambda^2\mathfrak t[f],\qquad
+\int\frac{|\mathscr D_\lambda f|^2}{r}
+ =\lambda\int\frac{|f|^2}{r}.
+\tag{107.8}
+$$
+
+Core approximation and the inverse $\mathscr D_{1/\lambda}$ extend the domain invariance and form identity to $\mathcal Q_\delta$; the weighted integral identity follows directly by change of variables. Both sides of the first inequality in (107.4) scale by $\lambda$; its cylinder bound at radius $b$ for $\mathscr D_\lambda f$ is the bound at radius $\lambda b$ for $f$. These auxiliary Euclidean dilations are not asserted to dilate the original source law.
+
+To pass to the actual original space, use only the established forward map (87.26). In shear coordinates set $\Psi(\xi,s)=\psi(\xi,s+xy/2)$ and let $b_\psi=\mathcal F_s\Psi$ be the unitary central transform. Define on every $L^2$ state
+
+$$
+\mathcal M\psi(\xi,t)=
+ \kappa^{1/2}\bigl(\mathcal F_s^{-1}|b_\psi|\bigr)(\xi,\kappa t).
+$$
+
+For every Borel $A\subset\mathbb R^3$, fibrewise Plancherel, Tonelli's theorem and $dw=ds$ give the exact identity
+
+$$
+\begin{aligned}
+\int_{A\times\mathbb R}|\mathcal M\psi(\xi,t)|^2d\xi\,dt
+ &=\int_{A\times\mathbb R}|b_\psi(\xi,\lambda)|^2d\xi\,d\lambda\\
+ &=\int_{\{p\in G:\xi(p)\in A\}}|\psi(p)|^2d\mu(p).
+\end{aligned}
+\tag{107.9}
+$$
+
+This is a marginal identity for all complex $L^2$ states; it makes no pointwise density identification in the central variable. It also holds with any nonnegative measurable function of $\xi$ as multiplier, by simple-function approximation.
+
+The norm-preserving map $\mathcal M$ is $L^2$-Lipschitz because the modulus is a contraction before inverse Fourier transformation. On the original punctured core (87.27) gives $\mathfrak t[\mathcal M\psi]\le q_c[\psi]/a$. Its constants are unchanged: if $U=\mathcal F_s^{-1}|b_\psi|$, then $A[\mathcal M\psi]=A[U]\le T[\psi]$, $C[\mathcal M\psi]=\kappa^2D_2[\psi]$, $J[\mathcal M\psi]=\kappa J[U]$, and the actual source bound is $V[\psi]\le J[U]/(4\pi)$. Here $A$, $C$ and $J$ are precisely (87.5), while $a\kappa^2=\eta$ and $g_c/(4\pi)=4a\kappa/\pi$. For a $\mathcal Q_c$ core approximating sequence, its images therefore converge in $L^2$ with bounded $\mathfrak t$ values. Lower semicontinuity of the nonnegative closed form, extended by $+\infty$ outside $\mathcal Q_\delta$, gives exactly the whole-closure comparison (87.28):
+$\mathcal M\psi\in\mathcal Q_\delta$ and
+$\mathfrak t[\mathcal M\psi]\le\overline q_c[\psi]/a$.
+This uses no estimate on differences of the images in the form norm. Apply (107.4) to this image, then (107.9) with multiplier $1/r$ and with $A=\{r<b\}$. Norm preservation proves (107.5), without an inverse map or an original-domain identification. $\square$
+
+**Theorem 107.3 (divergent critical energy and exclusion at its own length).** For every actual selection of Definition 107.1, $\delta_n>0$ for every $n$, so that the energy length
+
+$$
+h_n=\sqrt{a/E_n}
+\tag{107.10}
+$$
+
+is well-defined. The following limits all hold:
+
+$$
+\begin{gathered}
+\delta_n\longrightarrow0,\qquad
+E_n\longrightarrow+\infty,\qquad
+\frac{M_n}{g_{\sigma_n}-g_c}\longrightarrow0,\\
+h_n\longrightarrow0,\qquad
+\frac{h_n}{\ell_n}\longrightarrow+\infty,\\
+\text{for every fixed }C>0,\qquad
+\int_{\{R_\kappa<C h_n\}}|v_n|^2d\mu\longrightarrow0.
+\end{gathered}
+\tag{107.11}
+$$
+
+The threshold-gap ratio is taken on its eventual positive denominator. In addition, the estimate consumed in the last assertion is, for every $n$ and every $b>0$,
+
+$$
+\int_{\{|\xi|<b\}}|v_n|^2d\mu\le\pi^2\,b/h_n.
+\tag{107.12}
+$$
+
+**Proof.** The inclusion $\mathcal E_{\sigma_n}\subset\mathcal E_2\subset\mathcal Q_c$ follows from $|\lambda|^2\le1+|\lambda|^{\sigma_n}$. Since $u_n\ne0$, the zero-kernel assertion (87.19) for the whole critical closed form gives $\delta_n>0$. Its limit zero and $M_n\to0$ are the existing actual-state limits (103.6). Equation (107.5), applied to $v_n$ of norm one and form value $E_n$, gives (107.12).
+
+Suppose $E_n$ did not tend to infinity. Along a subsequence it would be bounded by a fixed $B>0$, so the $v_n$ would be bounded in the Hilbert space $\mathcal Q_c$. Take a further weak subsequence there. Its weak $L^2$ limit is the same vector $v\in\mathcal Q_c$. Theorem 104.2, after further extraction if necessary, puts this same actual weak profile in $\mathcal N_0=\ker S^*$, where $S$ is exactly (104.5). Thus (104.6) forces $v=0$. Equation (105.3) now gives, for every fixed $b>0$,
+
+$$
+\int_{\{R_\kappa\ge b\}}|v_n|^2d\mu\longrightarrow0.
+$$
+
+The indicator of this exterior is a legitimate bounded measurable cutoff vanishing near $e$. Since $\{R_\kappa<b\}\subset\{|\xi|<b\}$, (107.5) gives along this subsequence
+
+$$
+1\le\frac{\pi^2b}{\sqrt a}\sqrt B+o(1).
+\tag{107.13}
+$$
+
+Choosing a fixed $0<b<\sqrt a/(2\pi^2\sqrt B)$ is a contradiction. Hence $E_n\to+\infty$. This step uses exterior strong convergence and the intersection $\mathcal N_0\cap\mathcal Q_c=\{0\}$, without identifying the maximal and Friedrichs domains.
+
+For the threshold-gap comparison, test the original full-domain equation (103.3) with $u_n$ itself. It gives the exact same-state identity
+
+$$
+\delta_n=(g_n-g_c)+\eta\bigl(D_2[u_n]-D_{\sigma_n}[u_n]\bigr).
+\tag{107.14}
+$$
+
+For $\epsilon>0$ and $x\ge0$, the difference $x^2-x^{2+\epsilon}$ is nonpositive when $x\ge1$, while for $0<x<1$,
+
+$$
+x^2(1-x^\epsilon)\le-\epsilon x^2\log x
+ \le\frac{\epsilon}{2\mathrm e}.
+$$
+
+The last bound follows by maximizing $-x^2\log x$ on $(0,1)$; at $x=0$ the difference is zero. Plancherel with the original fixed central units therefore gives
+
+$$
+D_2[u_n]-D_{\sigma_n}[u_n]\le
+ \frac{\epsilon_n}{2\mathrm e}M_n,\qquad
+\frac{g_n-g_c}{M_n}
+ \ge E_n-\frac{\eta\epsilon_n}{2\mathrm e}\longrightarrow+\infty.
+\tag{107.15}
+$$
+
+The denominator $g_n-g_c$ is consequently positive eventually, and its stated reciprocal ratio tends to zero. Both central moments in (107.14) are finite on the original $\mathcal E_{\sigma_n}$; no order comparison between those moments is presumed. The two length limits follow from $E_n\to\infty$ and the exact identity
+
+$$
+\frac{h_n}{\ell_n}=\sqrt{\frac a{\delta_n}}\longrightarrow+\infty.
+\tag{107.16}
+$$
+
+Finally fix $C>0$ and then any $0<c<C$. Since $h_n\to0$, the actual annular exclusion (106.3), with $r_n=h_n$, gives
+
+$$
+\int_{\{c h_n<R_\kappa<C h_n\}}|v_n|^2d\mu\longrightarrow0.
+$$
+
+The inner diagnostic ball is contained in $|\xi|<c h_n$, so (107.12) bounds its probability by $\pi^2c$. Diagnostic spheres have Haar measure zero, since in $(\xi,s/\kappa)$ they are Euclidean spheres and $d\mu=\kappa\,d\xi\,d(s/\kappa)$. It follows that
+
+$$
+0\le\limsup_{n\to\infty}
+ \int_{\{R_\kappa<C h_n\}}|v_n|^2d\mu\le\pi^2c.
+\tag{107.17}
+$$
+
+Letting $c\downarrow0$ proves the last assertion of (107.11). Every step applies to arbitrary actual selections and to approach from above without monotonicity. $\square$
+
+**Definition 107.4 (mathematical correspondence and remaining limits).** The original model, source normalization and full-complex actual equation are those of §§82–87 and §§101–103. The closure and forward comparison used here are precisely (87.6)–(87.8) and (87.26)–(87.28). The actual-state consumers are (103.3), (103.6), (104.6), exterior strong convergence (105.3), and the arbitrary shrinking annuli (106.3). The proof of Lemma 107.2 supplies the additional weighted divergence estimate on the whole closed trace form; (107.9) is the exact horizontal marginal, rather than an inverse auxiliary correspondence.
+
+Alvino–Ferone–Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, arXiv:1105.0335v1, Theorem 1.1 and (8), (12)](https://arxiv.org/abs/1105.0335v1), supply the trace intermediate already consumed in §87. At $n=4$, $\beta_{\rm AFV}=2$, the bulk Hardy term vanishes and (8) gives $H(4,2)=2/\pi$ per halfspace, hence $4/\pi$ for the two halfspaces. Formula (12) becomes $\int_0^\infty((a+t)^2+r^2)^{-1}da=r^{-1}\arctan(r/t)$ for $t>0$; boundary normalization by $2/\pi$ and even reflection give exactly (107.3). The primary theorem concerns real functions; the complex ground-state representation and closed-form comparison are the established §87 supplies, and the real-part argument and closure passage in (107.7) prove the additional estimate for the full complex domain.
+
+Kalaman–Yessirkegenov, [*Cylindrical Hardy, Sobolev type and Caffarelli–Kohn–Nirenberg type inequalities and identities*, arXiv:2407.08393v1, §3.1, Theorem 2(i), (3.1)](https://arxiv.org/abs/2407.08393v1), give a complex cylindrical Hardy inequality on $C_c^\infty(\mathbb R^n\setminus\{x'=0\})$. With $n=4$, $k=3$, $p=2$, $\alpha=2$, $x'=\xi$ and $x''=t$, it reads
+$\frac14\int |f|^2/r^2\le\int|\xi\cdot\nabla_\xi f|^2/r^2\le\int|\nabla_\xi f|^2$
+on that test domain. This identifies the overlap in cylindrical divergence methods. That theorem supplies no bound by the critical form after trace subtraction, nor an extension to $\mathcal Q_\delta$ or an actual-state assertion. Those passages are proved in (107.6)–(107.9), so its test-domain estimate is not used in place of them. The new source-specific conclusion is the actual-state theorem (107.11), deduced using the stated existing supplies; there is no exhaustive literature-priority claim.
+
+The energy length is an excluded source-ball scale. It is not a proved surviving scale or a probability profile. In every subsequential decomposition of §§104–105 the only asserted defect identity remains
+
+$$
+v\in\mathcal N_0,\qquad m_\infty=0,\qquad
+\|v\|_2^2+m_e=1,\qquad \mathcal N_0\cap\mathcal Q_c=\{0\}.
+\tag{107.18}
+$$
+
+Neither $m_e=0$, $m_e=1$ nor a strictly intermediate value is selected. Cumulative source probability at radii large compared with $h_n$, existence and dimension of nonzero $\mathcal N_0$, actual attainability of its profiles and defects, and any surviving probability scale or profile remain unresolved. No positivity, simplicity, uniqueness, new source boundary condition or maximal/Friedrichs identification is imposed. No native source-to-state realization or physical why-three conclusion follows. These ordinary mathematical proofs make no claim of Lean verification.
+
+## 追加锚（本行以下为增补区）

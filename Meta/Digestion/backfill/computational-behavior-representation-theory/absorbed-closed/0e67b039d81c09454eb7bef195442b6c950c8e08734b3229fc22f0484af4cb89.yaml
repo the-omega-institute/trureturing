@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:0e67b039d81c09454eb7bef195442b6c950c8e08734b3229fc22f0484af4cb89
+  normalized_sha256: sha256:0e67b039d81c09454eb7bef195442b6c950c8e08734b3229fc22f0484af4cb89
+cas_ref: sha256:0e67b039d81c09454eb7bef195442b6c950c8e08734b3229fc22f0484af4cb89
+coverage_gids:
+  - gid: D5/S0/Rewriting/Quotients/SplitSurjectionFactorization.split_surjection_factorization
+    target_statement_id: sha256:6aa03c9ee8a373e9514bc9e2ccdf876a2b00c37b0b412a939b47a4db1d0e4d34
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_limit_eq_gfp
+    target_statement_id: sha256:01fbd4a76a9039c4cffc86d107cc011f952e8d12369abfc1c1065a4672a77610
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_limit_is_greatest_stable_equivalence
+    target_statement_id: sha256:58d0de8c420c8735ed424f58048bc7cdd5760fa4641d34a33cac396cafca0d44
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionProjection
+    target_statement_id: sha256:b15ec6e0891b1a46ee53ce04eb8932154faa2aac6c60506df7a3850221643757
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionRangeEquiv
+    target_statement_id: sha256:0027ebde5e0c22aa839f1d6f2249ad1e5b0ae99d612a2a0213c7c2538b3ba43b
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionReadout
+    target_statement_id: sha256:608ba44db31d9c48a5eba67a9e82b7313985d4e452a8cc8f30712e3ca7de528c
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.completionUpdate
+    target_statement_id: sha256:54288991709b09c27034615cfe7e32b027d18f0b773e5c5b4340211cffbc835f
+  - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.run_word_intertwines
+    target_statement_id: sha256:7828c0cc104406f57ba024c5975c059c914d64a21c3d3ac9818a8ba978b2bb30
+  - gid: D5/S3/ObserverMemory/RefinementDescent/ControlledCompletionDescent.controlled_completion_update_and_readout_descend
+    target_statement_id: sha256:a0610bd355f029bee71b82e403a03ab9f130f48fbcbc6e3e3ce8fd67bb02766e
+receipts:
+  unresolved_subitems: []

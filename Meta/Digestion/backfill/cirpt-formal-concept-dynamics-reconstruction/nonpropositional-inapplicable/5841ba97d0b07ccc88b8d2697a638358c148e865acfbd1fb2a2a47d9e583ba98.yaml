@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5841ba97d0b07ccc88b8d2697a638358c148e865acfbd1fb2a2a47d9e583ba98
+  normalized_sha256: sha256:5841ba97d0b07ccc88b8d2697a638358c148e865acfbd1fb2a2a47d9e583ba98
+cas_ref: sha256:5841ba97d0b07ccc88b8d2697a638358c148e865acfbd1fb2a2a47d9e583ba98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 复用纪律清单中的 ObserverStructure 名称，不宣称某观察者结构存在。
+    previous_atom_id: d9bf5708ddf41861ad9c87e0ec986fa512724620e61ebdd2eb2958520adfa64a
+    next_atom_id: c956e43c6f2e234bee88c5618560e4ef6652be6e174da7af9182f0c81278aa28

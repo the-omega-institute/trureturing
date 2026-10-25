@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96949f54a942bf9d573139d44d8f0c3a99d3abcca11338ec5d2108b6d26bad8d
+  normalized_sha256: sha256:96949f54a942bf9d573139d44d8f0c3a99d3abcca11338ec5d2108b6d26bad8d
+cas_ref: sha256:96949f54a942bf9d573139d44d8f0c3a99d3abcca11338ec5d2108b6d26bad8d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional scope restriction: the empty subset and zero-dimensional case are explicitly excluded; the sentence does not assert that an empty-product moment vanishes.'
+    previous_atom_id: d78231da953cca8cecee999308d7975e527bf0fe1d0ad6975c034ca0708d24dd
+    next_atom_id: 5de57d6b0eb45fc0bbd356fe5e1e9dc47760dbeda54706dad4742ea7c1213728

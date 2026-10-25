@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff5377667b838fe7ad2b47fa2c9a275149203f1a9ba610fe494b4ab293c6aaba
+  normalized_sha256: sha256:ff5377667b838fe7ad2b47fa2c9a275149203f1a9ba610fe494b4ab293c6aaba
+cas_ref: sha256:ff5377667b838fe7ad2b47fa2c9a275149203f1a9ba610fe494b4ab293c6aaba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: B14.3 是 CIRPT 角色的建模归类：把 successor/carry、word 顺序、transfer cocycle 和 ordered rapidity 归入 FLOW；未给出新的等式、界或重构定理。
+    previous_atom_id: ae5c3eb2867005834ed79618d896a8cc51679d6ab569d594d1b6248ab0469176
+    next_atom_id: 629dac35210543733734e794d960c6bcd79139418cfbc58668d9776c3e7bd540

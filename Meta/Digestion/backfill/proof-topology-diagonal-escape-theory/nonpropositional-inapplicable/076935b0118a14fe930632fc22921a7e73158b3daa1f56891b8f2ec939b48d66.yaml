@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:076935b0118a14fe930632fc22921a7e73158b3daa1f56891b8f2ec939b48d66
+  normalized_sha256: sha256:076935b0118a14fe930632fc22921a7e73158b3daa1f56891b8f2ec939b48d66
+cas_ref: sha256:076935b0118a14fe930632fc22921a7e73158b3daa1f56891b8f2ec939b48d66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PT.3 只指定商核 L 及 q_# K(x)=L(q(x)) 为后续条件定理的模型前提，不宣称任意 K 均有此商核。
+    previous_atom_id: b3fe82a52c368c7b9afb48d4161463fd40d16b6fca47b2ff1fe7e6a36265f0ff
+    next_atom_id: c47a4ac454d102dcf3c8d184f34a6c713a743fa72cb9c23b18a02aa7c7a90ba3

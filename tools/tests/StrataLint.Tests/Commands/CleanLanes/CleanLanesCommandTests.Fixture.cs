@@ -46,7 +46,7 @@ public sealed partial class CleanLanesCommandTests
         private static string CreateTemplateRepository()
         {
             var path = TestScratchRoot.Current.CreateDirectory();
-            Git(path, "init", "--initial-branch=dev");
+            Git(path, "init", "--object-format=sha1", "--initial-branch=dev");
             Git(path, "config", "user.email", "stratalint@example.invalid");
             Git(path, "config", "user.name", "StrataLint Tests");
             File.WriteAllText(
