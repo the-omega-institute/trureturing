@@ -24,14 +24,14 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p a => (a ^ 2) ^ (p / 2)) (fun e => nomatch e)
+  realize signature (fun _ a p => (a ^ 2) ^ (p / 2)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ a p : ℝ, R.readout () p a = |a| ^ p
+  Law R := ∀ a p : ℝ, R.readout () a p = |a| ^ p
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -41,9 +41,9 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro _
-  refine ⟨1, 0, 1, ?_⟩
-  change ((0 : ℝ) ^ 2) ^ ((1 : ℝ) / 2) ≠ ((1 : ℝ) ^ 2) ^ ((1 : ℝ) / 2)
-  norm_num [Real.zero_rpow (by norm_num : (1 : ℝ) / 2 ≠ 0)]
+  refine ⟨2, 0, 2, ?_⟩
+  change ((2 : ℝ) ^ 2) ^ ((0 : ℝ) / 2) ≠ ((2 : ℝ) ^ 2) ^ ((2 : ℝ) / 2)
+  norm_num
 
 def source_registration : Registration arena (type_of% @rpow_square_half) where
   actual := actual
@@ -73,7 +73,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p a => (a ^ 2) ^ (p / 2)) (fun e => nomatch e))
+    (realize signature (fun _ a p => (a ^ 2) ^ (p / 2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -81,10 +81,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.NormCompression.StrictSpectralPolyaRefutation
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
