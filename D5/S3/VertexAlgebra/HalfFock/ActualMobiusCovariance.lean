@@ -19,6 +19,8 @@ not the charged calculation below. The endpoint remains unfinished. -/
 set_option autoImplicit false
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
+set_option pp.deepTerms false
+set_option pp.proofs false
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance
@@ -691,6 +693,15 @@ private theorem ground_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     intro x
     rw [LatticeHalfFockCorrectedField.corrected_singleton_coeff_charged]
     simp only [chargedField,HVertexOperator.coeff_of_coeff]
+  change tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 *
+      (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e -
+    (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e *
+      tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1 =
+    (LatticeHalfFockCorrectedField.correctedField D hu
+      (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 1 a)).coeff e +
+    ((e:ℂ)/2-1) • (LatticeHalfFockCorrectedField.correctedField D hu a).coeff (e-2) +
+    (2:ℂ) • (LatticeHalfFockCorrectedField.correctedField D hu
+      (LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹ 0 a)).coeff (e-2)
   rw [inv,s1,s0]
   simp only [map_zero,map_smul,Pi.zero_apply,Pi.smul_apply,zero_add]
   simp only [coeff]
@@ -769,14 +780,14 @@ private theorem l1_law_add (D : LatticeData) (hu : IsUnit D.G.det)
   have h1 := ha e
   have h2 := hb e
   simp only [map_add, Pi.add_apply, mul_add, add_mul, smul_add]
-  linear_combination h1+h2
+  linear_combination (norm := module) h1+h2
 
 private theorem l1_law_smul (D : LatticeData) (hu : IsUnit D.G.det)
     (c : ℂ) (a : Carrier D) (ha : L1Law D hu a) : L1Law D hu (c • a) := by
   intro e
   have hh := ha e
   simp only [map_smul, Pi.smul_apply, Algebra.mul_smul_comm, Algebra.smul_mul_assoc, smul_smul]
-  linear_combination c • hh
+  linear_combination (norm := module) c • hh
 
 private theorem l1_law_sum (D : LatticeData) (hu : IsUnit D.G.det)
     {ι : Type*} (s : Finset ι) (f : ι → Carrier D) (hf : ∀ i ∈ s, L1Law D hu (f i)) :
@@ -817,7 +828,7 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     simp only [Module.End.mul_apply, LinearMap.sub_apply, LinearMap.smul_apply] at hh
     dsimp only [S,J]
     rw [inverse]
-    linear_combination hh
+    linear_combination (norm := module) hh
   let N := max (LatticeSugawaraCurrents.vectorFrequencyBound D b)
     (max (LatticeSugawaraCurrents.vectorFrequencyBound D (S 1 b))
       (LatticeSugawaraCurrents.vectorFrequencyBound D (S 0 b))) + 1
@@ -922,9 +933,8 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   have lc := lower_cancel
   dsimp only [c] at *
   push_cast
-  linear_combination lc
+  linear_combination (norm := module) lc
 
-#print axioms insertion_l1
 
 /-- Oscillator-length induction on the original charge sector. Positive
 currents differentiate and strictly lower length; mode zero remains the
@@ -1034,26 +1044,13 @@ theorem corrected_field_l1_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     exact l1_law_sum D hu a.support _ (fun q hq => polynomial_l1 D hu q (a q))
   exact ha e
 
-#print axioms corrected_field_l1_coefficient
 
-#print axioms insertion_coeff_cutoff
-#print axioms zero_ward_cutoff
 
-#print axioms ground_l1
 
-#print axioms evaluated_insertion_l1_cancel
 
-#print axioms singleton_l1
 
-#print axioms singleton_term_l1
 
-#print axioms jet_shift
-#print axioms jet_l1_scalar
-#print axioms actual_current_l1
 
-#print axioms charged_pair_l1
-#print axioms charged_normal_sum_l1
-#print axioms charged_l1_coefficient
 
 end
 end D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance

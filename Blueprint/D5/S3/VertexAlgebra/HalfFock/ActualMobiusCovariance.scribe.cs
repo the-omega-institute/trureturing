@@ -6,6 +6,14 @@ internal sealed class ActualMobiusCovarianceDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original actual-field special-conformal Ward law: proof in progress",
         H("Actual Mobius L1 covariance"), Blocks(
+        Describe.Lean(DescribeId.Create("actual-mobius-full-source-l1"),
+            DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/ActualMobiusCovariance.corrected_field_l1_coefficient"),
+            H("All-source original physical special-conformal Ward coefficient law"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
+            Blocks(Paragraph(Text("The statement has every original lattice D, determinant-unit witness hu, finite-charge source a and signed exponent e. With physical z=t squared, its two independent source terms are the original inverse-Gram Sugawara modes S1 and S0: [T1,Ae(a)] = Ae(S1 a) + (e/2-1) A(e-2)(a) + 2 A(e-2)(S0 a), as an equality on the whole original actual tensor module. No source homogeneity, positivity, fixed rank, covariance premise or Jacobi premise is introduced.")),
+                Paragraph(Text("The implementation route consumes the charged quadratic Ward calculation, the pointwise original singleton normal-order identity with its mode minus one to zero crossover, the universally proved half-binomial insertion cancellation after the original evaluator, and strong induction on ordinary oscillator degree. Positive source currents differentiate and lower that degree; the zero current retains the original charge scalar. Finite-charge linearity closes the original all-source telescope. Kernel acceptance, axiom closure and independent review are separate verification obligations; this narrative alone certifies none of them."))),
+            DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("actual-mobius-charged-l1-base"),
             DeclarationHandle.Create("D5/S3/VertexAlgebra/HalfFock/ActualMobiusCovariance.charged_l1_coefficient"),
             H("Charged special-conformal coefficient base"), StatementSource.WithoutFormula(),
