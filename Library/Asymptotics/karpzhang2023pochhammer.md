@@ -13,9 +13,6 @@ strata_touched:
   - D5/S3/Analytic/KarpZhangGamma/Series
   - D5/S3/Analytic/KarpZhangConjecture/Result
   - D5/S3/Analytic/KarpZhangCatalanPower/Result
-  - D5/S3/Analytic/KarpZhangNinh/Kernel
-  - D5/S3/Analytic/KarpZhangNinh/Homogeneous
-  - D5/S3/Analytic/KarpZhangNinh/Beta
   - D5/S3/Analytic/KarpZhangNinh/Result
 license: citation-only
 triage: anchor
@@ -117,6 +114,27 @@ nonnegative central tails by reflected-interval cancellation and balancing.
 `KarpZhangCatalanPower.Result.result` proves both coefficient signs for
 all nonnegative base parameters and nonnegative real shifts, reusing the sequence class
 and finite Abel identity from `KarpZhangReciprocal.Result`.
+
+## Coefficient-wise convention, page 1
+
+> if the coefficients $\delta_k$ at all powers of $x$ in (2) are non-negative (non-positive) for all $\alpha,\beta\ge0$ we will say that $\mu\to f(\mu;x)$ is coefficient-wise log-concave (log-convex ).
+
+## Lemma 3.1, page 4
+
+> Let $k,m\in\mathbb N_0$ with $k\le m/2$, $\mu\ge0$ and $\alpha,\beta>0$. Set
+>
+> $$
+> T_{k,m}:=(\mu+\alpha)_k(\mu+\beta)_{m-k}+(\mu+\alpha)_{m-k}(\mu+\beta)_k
+> -(\mu)_k(\mu+\alpha+\beta)_{m-k}-(\mu)_{m-k}(\mu+\alpha+\beta)_k.
+> $$
+>
+> If $T_{k,m}\le0$ for some $1\le k\le m/2$, then $T_{k-1,m}<0$.
+
+This is formula (8). `KarpZhangNinh.Result.Kernel.pairPoch` uses $a,b,c,N$
+for $\mu,\alpha,\beta,m$ respectively.
+`KarpZhangNinh.Result.Kernel.paired_sign_step` proves the positive-$\mu$
+specialization of the published backward-sign implication. The paired
+length argument is part of `D5/S3/Analytic/KarpZhangNinh/Result.lean`.
 
 ## Conjecture 3.8, page 8
 

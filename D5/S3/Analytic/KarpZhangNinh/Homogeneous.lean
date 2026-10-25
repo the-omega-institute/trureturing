@@ -2,19 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangNinh/Homogeneous
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Pow, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.LinearCombination, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Push]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Pow, mathlib/module/Mathlib.Tactic.IntervalCases]
    utility: none
    digest: Homogeneous trisection balancing and its positive coefficient expansion. -/
-import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Push
 
 /-!
 admission_basis: escape-witness; witness: T_nonneg.
@@ -26,12 +19,17 @@ set_option maxHeartbeats 400000
 open Finset
 namespace D5.S3.Analytic.KarpZhangNinh.Homogeneous
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, T_formula,
-residue_filter, residue_succ, weighted_succ. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.residue_filter; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.residue_succ; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.weighted_succ;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def residue (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * if k % 3 = r then 1 else 0
 
-/- proof_shape: bind-only; escape_witness: none; consumer: residue_filter. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.residue_filter;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma residue_succ (n r : ℕ) (hr : r < 3) :
     residue (n+1) r = residue n r + residue n ((r+2)%3) := by
   unfold residue
@@ -43,8 +41,10 @@ private lemma residue_succ (n r : ℕ) (hr : r < 3) :
   have hm : (k+1)%3=r ↔ k%3=(r+2)%3 := by omega
   simp only [hm]
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, T_formula,
-residue_filter. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.residue_filter;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def periodic (q : ℕ) : ℤ :=
   match q % 6 with
   | 0 => 2
@@ -54,7 +54,10 @@ def periodic (q : ℕ) : ℤ :=
   | 4 => -1
   | _ => 1
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: A_formula, T_formula. -/
+/- proof_shape: content; escape_witness: residue_filter;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem residue_filter (n : ℕ) :
     (3 * residue n 0 = 2^n + periodic n) ∧
     (3 * residue n 1 = 2^n + periodic (n+4)) ∧
@@ -70,12 +73,17 @@ theorem residue_filter (n : ℕ) :
       simp only [periodic, Nat.add_mod, Nat.mod_mod, h] at * <;>
       norm_num at * <;> simp only [pow_succ] <;> omega
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A, A_formula, A_nonneg, B,
-K_pos, T_diagonal, T_formula, derivative_coeff, moment_sum, second_succ, shear, weighted_succ. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A; D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_nonneg; D5.S3.Analytic.KarpZhangNinh.Homogeneous.B; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_coeff; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.moment_sum; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.second_succ; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.weighted_succ;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def weighted (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * k * if k % 3 = r then 1 else 0
 
-/- proof_shape: bind-only; escape_witness: none; consumer: A_formula, T_formula. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma weighted_succ (n r : ℕ) (hr : r < 3) :
     weighted (n+1) r = (n+1) * residue n ((r+2)%3) := by
   unfold weighted residue
@@ -93,13 +101,18 @@ private lemma weighted_succ (n r : ℕ) (hr : r < 3) :
   simp only [hm]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: B, K_pos, T, T_diagonal,
-T_formula, derivative_coeff, moment_sum, second_succ, shear. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.B; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_coeff; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.moment_sum; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.second_succ; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def second (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * k * ((k:ℤ)-1) *
     if k % 3 = r then 1 else 0
 
-/- proof_shape: bind-only; escape_witness: none; consumer: T_formula. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma second_succ (n r : ℕ) (hr : r < 3) :
     second (n+1) r = (n+1) * weighted n ((r+2)%3) := by
   unfold second weighted
@@ -117,17 +130,23 @@ private lemma second_succ (n r : ℕ) (hr : r < 3) :
   simp only [hm]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg, K_pos,
-T, T_diagonal, T_formula, T_nonneg, derivative_coeff. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_nonneg; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_coeff;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def A (n : ℕ) : ℤ := weighted n 0 - 2 * weighted (n-1) 0
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: D, K, K_pos, T_diagonal,
-T_formula, T_nonneg, derivative_coeff, derivative_expansion, hasDerivAt_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.D; D5.S3.Analytic.KarpZhangNinh.Homogeneous.K; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg; D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_expansion; D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_coeff;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def T (n N : ℕ) : ℤ :=
   ((N:ℤ)-1) * A n - (second n 0 - 2 * second (n-1) 0)
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg,
-T_diagonal, T_formula, T_nonneg. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_nonneg; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def alpha (n : ℕ) : ℤ :=
   match n % 6 with
   | 0 => -3*n+4
@@ -137,8 +156,10 @@ def alpha (n : ℕ) : ℤ :=
   | 4 => 3*n-2
   | _ => 2
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: T_diagonal, T_formula,
-T_nonneg. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def beta (n : ℕ) : ℤ :=
   match n % 6 with
   | 0 => -3*n+4
@@ -148,8 +169,10 @@ def beta (n : ℕ) : ℤ :=
   | 4 => 4
   | _ => -3*n+8
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: A_nonneg, T_formula, T_nonneg.
--/
+/- proof_shape: content; escape_witness: residue_filter;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_nonneg; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_formula; D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem A_formula (n : ℕ) (hn : 1 ≤ n) :
     3 * A n = 2^(n-1) + alpha n := by
   rcases n with _|_|n
@@ -163,7 +186,10 @@ theorem A_formula (n : ℕ) (hn : 1 ≤ n) :
       simp [alpha, periodic, Nat.add_mod, h, pow_succ] at * <;>
       linear_combination ((n:ℤ)+2)*h₁ - 2*((n:ℤ)+1)*h₂
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: T_diagonal, T_nonneg. -/
+/- proof_shape: content; escape_witness: residue_filter;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem T_formula (n N : ℕ) (hn : 1 ≤ n) :
     3 * T n N = ((N:ℤ)-n)*2^(n-1) + ((N:ℤ)-1)*alpha n -
       ((n:ℤ)-1)*beta n := by
@@ -185,40 +211,104 @@ theorem T_formula (n N : ℕ) (hn : 1 ≤ n) :
       linear_combination ((n:ℤ)+3)*((n:ℤ)+2)*h₁ -
         2*((n:ℤ)+2)*((n:ℤ)+1)*h₂
 
-/- proof_shape: content; escape_witness: power_linear; consumer: A_nonneg. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.A_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma power_linear (n : ℕ) (hn : 5 ≤ n) : (3:ℤ)*n-2 ≤ 2^(n-1) := by
-  induction n, hn using Nat.le_induction with
-  | base => norm_num
-  | succ n hn ih =>
-    have he : n+1-1=(n-1)+1 := by omega
-    rw [he, pow_succ]
-    push_cast
-    omega
+  have hb : (1 : ℤ) + (n - 5 : ℕ) ≤ (2 : ℤ) ^ (n - 5) := by
+    simpa using (one_add_mul_le_pow (a := (1 : ℤ)) (by norm_num) (n - 5))
+  have hp : (2 : ℤ) ^ (n - 1) = 16 * (2 : ℤ) ^ (n - 5) := by
+    calc
+      _ = (2 : ℤ) ^ ((n - 5) + 4) := by congr 1; omega
+      _ = _ := by rw [pow_add]; norm_num; ring
+  have hc : (n : ℤ) = (n - 5 : ℕ) + 5 := by
+    exact_mod_cast (show n = (n - 5) + 5 by omega)
+  rw [hp, hc]
+  nlinarith [(show (0 : ℤ) ≤ (n - 5 : ℕ) by positivity)]
 
-/- proof_shape: content; escape_witness: power_quadratic_one; consumer: T_nonneg. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma power_quadratic_one (n : ℕ) (hn : 7 ≤ n) :
     (3:ℤ)*n^2-3*n+2 ≤ 2^n := by
-  induction n, hn using Nat.le_induction with
-  | base => norm_num
-  | succ n hn ih =>
-    rw [pow_succ (2:ℤ) n]
-    have hn' : (7:ℤ) ≤ n := by exact_mod_cast hn
-    push_cast
-    nlinarith [sq_nonneg ((n:ℤ)-3)]
+  have hbase (q : ℕ) :
+      (3 : ℤ) * q ^ 2 + 39 * q + 128 ≤ 128 * 2 ^ q := by
+    have hBernHalf : (1 : ℤ) + (q / 2 : ℕ) ≤ (2 : ℤ) ^ (q / 2) := by
+      simpa using (one_add_mul_le_pow (a := (1 : ℤ)) (by norm_num) (q / 2))
+    have hsq : ((1 : ℤ) + (q / 2 : ℕ)) ^ 2 ≤ ((2 : ℤ) ^ (q / 2)) ^ 2 :=
+      (sq_le_sq₀ (by positivity) (by positivity)).mpr hBernHalf
+    have hp : (2 : ℤ) ^ q =
+        ((2 : ℤ) ^ (q / 2)) ^ 2 * (2 : ℤ) ^ (q % 2) := by
+      calc
+        _ = (2 : ℤ) ^ (q / 2 * 2 + q % 2) := by congr 1; omega
+        _ = _ := by rw [pow_add, pow_mul]
+    have ht : q % 2 = 0 ∨ q % 2 = 1 := Nat.mod_two_eq_zero_or_one q
+    rcases ht with ht | ht
+    · rw [hp, ht, pow_zero, mul_one]
+      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) := by
+        exact_mod_cast (show q = 2 * (q / 2) by omega)
+      rw [hc]
+      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
+    · rw [hp, ht, pow_one]
+      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) + 1 := by
+        exact_mod_cast (show q = 2 * (q / 2) + 1 by omega)
+      rw [hc]
+      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
+  have hp : (2 : ℤ) ^ n = 128 * (2 : ℤ) ^ (n - 7) := by
+    calc
+      _ = (2 : ℤ) ^ ((n - 7) + 7) := by congr 1; omega
+      _ = _ := by rw [pow_add]; norm_num; ring
+  have hc : (n : ℤ) = (n - 7 : ℕ) + 7 := by
+    exact_mod_cast (show n = (n - 7) + 7 by omega)
+  have hb := hbase (n - 7)
+  rw [hp, hc]
+  nlinarith
 
-/- proof_shape: content; escape_witness: power_quadratic_two; consumer: T_nonneg. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma power_quadratic_two (n : ℕ) (hn : 8 ≤ n) :
     (3:ℤ)*n^2-9*n+8 ≤ 2^(n-1) := by
-  induction n, hn using Nat.le_induction with
-  | base => norm_num
-  | succ n hn ih =>
-    have he : n+1-1=(n-1)+1 := by omega
-    rw [he, pow_succ (2:ℤ) (n-1)]
-    have hn' : (8:ℤ) ≤ n := by exact_mod_cast hn
-    push_cast
-    nlinarith [sq_nonneg ((n:ℤ)-4)]
+  have hbase (q : ℕ) :
+      (3 : ℤ) * q ^ 2 + 39 * q + 128 ≤ 128 * 2 ^ q := by
+    have hBernHalf : (1 : ℤ) + (q / 2 : ℕ) ≤ (2 : ℤ) ^ (q / 2) := by
+      simpa using (one_add_mul_le_pow (a := (1 : ℤ)) (by norm_num) (q / 2))
+    have hsq : ((1 : ℤ) + (q / 2 : ℕ)) ^ 2 ≤ ((2 : ℤ) ^ (q / 2)) ^ 2 :=
+      (sq_le_sq₀ (by positivity) (by positivity)).mpr hBernHalf
+    have hp : (2 : ℤ) ^ q =
+        ((2 : ℤ) ^ (q / 2)) ^ 2 * (2 : ℤ) ^ (q % 2) := by
+      calc
+        _ = (2 : ℤ) ^ (q / 2 * 2 + q % 2) := by congr 1; omega
+        _ = _ := by rw [pow_add, pow_mul]
+    have ht : q % 2 = 0 ∨ q % 2 = 1 := Nat.mod_two_eq_zero_or_one q
+    rcases ht with ht | ht
+    · rw [hp, ht, pow_zero, mul_one]
+      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) := by
+        exact_mod_cast (show q = 2 * (q / 2) by omega)
+      rw [hc]
+      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
+    · rw [hp, ht, pow_one]
+      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) + 1 := by
+        exact_mod_cast (show q = 2 * (q / 2) + 1 by omega)
+      rw [hc]
+      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
+  have hp : (2 : ℤ) ^ (n - 1) = 128 * (2 : ℤ) ^ (n - 8) := by
+    calc
+      _ = (2 : ℤ) ^ ((n - 8) + 7) := by congr 1; omega
+      _ = _ := by rw [pow_add]; norm_num; ring
+  have hc : (n : ℤ) = (n - 8 : ℕ) + 8 := by
+    exact_mod_cast (show n = (n - 8) + 8 by omega)
+  have hb := hbase (n - 8)
+  rw [hp, hc]
+  nlinarith
 
-/- proof_shape: content; escape_witness: power_linear; consumer: T_nonneg. -/
+/- proof_shape: content; escape_witness: residue_filter;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem A_nonneg (n : ℕ) (hn : 1 ≤ n) : 0 ≤ A n := by
   have hf := A_formula n hn
   by_cases hsmall : n < 5
@@ -229,8 +319,10 @@ theorem A_nonneg (n : ℕ) (hn : 1 ≤ n) : 0 ≤ A n := by
       interval_cases h : n % 6 <;> simp [alpha, h] <;> omega
     omega
 
-/- proof_shape: content; escape_witness: power_quadratic_one, power_quadratic_two; consumer:
-K_pos. -/
+/- proof_shape: content; escape_witness: residue_filter;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     0 ≤ T n N := by
   have hf := T_formula n N hn
@@ -269,17 +361,24 @@ theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     simp [alpha, beta, h] at hf ha
     nlinarith [mul_nonneg (by omega : (0:ℤ) ≤ (N:ℤ)-n) ha0]
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: P, coeff_symm, shear,
-Result.Z_monotoneOn, Result.lift_normalization, Result.normalization_term. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.P; D5.S3.Analytic.KarpZhangNinh.Homogeneous.coeff_symm; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.lift_normalization; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.normalization_term;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def coeff (N k : ℕ) : ℝ :=
   if k % 3 = 0 then (k:ℝ) * (N-k) * N.choose k else 0
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: hasDerivAt_slice, shear,
-strictMonoOn_slice, Result.Z_monotoneOn. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice; D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def P (N : ℕ) (x y : ℝ) : ℝ :=
   ∑ k ∈ range (N+1), coeff N k * x^k * y^(N-k)
 
-/- proof_shape: bind-only; escape_witness: none; consumer: Result.Z_monotoneOn. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem coeff_symm (N k : ℕ) (hN : N % 3 = 0) (hk : k ≤ N) :
     coeff N (N-k) = coeff N k := by
   have hm : (N-k)%3=0 ↔ k%3=0 := by omega
@@ -287,12 +386,17 @@ theorem coeff_symm (N k : ℕ) (hN : N % 3 = 0) (hk : k ≤ N) :
   rw [Nat.cast_sub hk]
   split_ifs <;> ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: collect_derivative,
-derivative_coeff, hasDerivAt_slice, shear. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.collect_derivative; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_coeff; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def B (N t : ℕ) : ℝ :=
   (N.choose t : ℝ) * ((((N:ℤ)-1)*weighted (N-t) 0-second (N-t) 0 : ℤ):ℝ)
 
-/- proof_shape: bind-only; escape_witness: none; consumer: shear. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma choose_exchange (N k t : ℕ) (hk : k ≤ N) (ht : t ≤ N-k) :
     (N.choose k : ℝ) * (N-k).choose t =
       (N.choose t : ℝ) * (N-t).choose k := by
@@ -302,7 +406,10 @@ private lemma choose_exchange (N k t : ℕ) (hk : k ≤ N) (ht : t ≤ N-k) :
   rw [he, Nat.choose_symm (by omega : k ≤ N-t)] at h
   exact_mod_cast h
 
-/- proof_shape: bind-only; escape_witness: none; consumer: shear. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.shear;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma moment_sum (N n : ℕ) (hn : n ≤ N) :
     (∑ k ∈ range (n+1),
       (if k%3=0 then (k:ℝ)*(N-k) else 0)*(n.choose k : ℝ)) =
@@ -315,7 +422,10 @@ private lemma moment_sum (N n : ℕ) (hn : n ≤ N) :
   have hkN : k ≤ N := (Nat.le_of_lt_succ (mem_range.mp hk)).trans hn
   split_ifs <;> simp <;> ring
 
-/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private theorem shear (N : ℕ) (x d : ℝ) :
     P N x (x+d) = ∑ t ∈ range (N+1), B N t*x^(N-t)*d^t := by
   unfold P
@@ -373,7 +483,10 @@ private theorem shear (N : ℕ) (x d : ℝ) :
           · simp
         _ = B N t := by rw [moment_sum N (N-t) (by omega)]; rfl
 
-/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma derivative_coeff (N t : ℕ) (ht : t < N) :
     (N-t:ℕ)*B N t - 2*(t+1:ℕ)*B N (t+1) =
       (N-t:ℕ)*(N.choose t:ℝ)*(T (N-t) N:ℝ) := by
@@ -386,7 +499,10 @@ private lemma derivative_coeff (N t : ℕ) (ht : t < N) :
   push_cast at hc ⊢
   linear_combination -2 * (((N:ℝ)-1)*(weighted (N-t-1) 0:ℝ)-(second (N-t-1) 0:ℝ)) * hc
 
-/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma collect_derivative (N : ℕ) (x d : ℝ) :
     (∑ t ∈ range (N+1), B N t *
       (((N-t:ℕ):ℝ)*x^(N-t-1)*d^t - 2*(t:ℝ)*x^(N-t)*d^(t-1))) =
@@ -403,12 +519,17 @@ private lemma collect_derivative (N : ℕ) (x d : ℝ) :
   rw [he]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: derivative_expansion,
-hasDerivAt_slice, strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_expansion; D5.S3.Analytic.KarpZhangNinh.Homogeneous.hasDerivAt_slice; D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def D (N : ℕ) (x d : ℝ) : ℝ :=
   ∑ t ∈ range N, ((N-t:ℕ):ℝ)*(N.choose t:ℝ)*(T (N-t) N:ℝ)*x^(N-t-1)*d^t
 
-/- proof_shape: bind-only; escape_witness: none; consumer: strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_diagonal;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     HasDerivAt (fun s => P N s (S-s)) (D N x (S-2*x)) x := by
   have hfun : (fun s => P N s (S-s)) =
@@ -437,20 +558,60 @@ theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     intro t ht
     ring
 
-/- proof_shape: bind-only; escape_witness: none; consumer: derivative_expansion. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_expansion;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private lemma T_diagonal (N : ℕ) (hN : N%3=0) : T N N = 0 := by
   by_cases hzero : N=0
   · subst N; norm_num [T, A, weighted, second]
-  · have hf := T_formula N N (by omega)
-    have hm : N%6<6 := Nat.mod_lt _ (by omega)
-    interval_cases h : N%6 <;> simp [alpha, beta, h] at hf <;> omega
+  have hsym (x y : ℝ) : P N x y = P N y x := by
+    unfold P
+    rw [← Finset.sum_range_reflect]
+    apply Finset.sum_congr rfl
+    intro k hk
+    have hkN : k ≤ N := Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+    simp only [Nat.add_sub_cancel, Nat.sub_sub_self hkN, coeff_symm N k hN hkN]
+    ring
+  have h : HasDerivAt (fun s => P N s (2-s)) (D N 1 0) 1 := by
+    simpa using hasDerivAt_slice N 2 1
+  have hout : HasDerivAt (fun s => P N s (2-s)) (D N 1 0) (2-(1:ℝ)) := by
+    norm_num
+    exact h
+  have hr := hout.comp 1 ((hasDerivAt_const (1:ℝ) (2:ℝ)).sub (hasDerivAt_id 1))
+  have hr' : HasDerivAt (fun s => P N s (2-s)) (-D N 1 0) 1 := by
+    convert hr using 1
+    · funext s
+      change P N s (2-s) = P N (2-s) (2-(2-s))
+      rw [show 2-(2-s)=s by ring, hsym]
+    · ring
+  have hzD : D N 1 0 = 0 := by
+    have hz := h.unique hr'
+    linarith
+  have hD : D N 1 0 = (N:ℝ)*(T N N:ℝ) := by
+    unfold D
+    rw [Finset.sum_eq_single 0]
+    · simp
+    · intro b hb hb0
+      simp [hb0]
+    · intro h0
+      exact False.elim (h0 (by simp only [Finset.mem_range]; omega))
+  have hNz : (N:ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hzero
+  have hzT : (T N N:ℝ) = 0 :=
+    (mul_eq_zero.mp (hD.symm.trans hzD)).resolve_left hNz
+  exact_mod_cast hzT
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: K_pos, derivative_expansion,
-strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.derivative_expansion; D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.K_pos;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def K (N : ℕ) (x d : ℝ) : ℝ :=
   ∑ n ∈ Icc 1 (N-1), (n:ℝ)*(N.choose n:ℝ)*(T n N:ℝ)*x^(n-1)*d^(N-n-1)
 
-/- proof_shape: bind-only; escape_witness: none; consumer: strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem derivative_expansion (N : ℕ) (hN : N%3=0) (x d : ℝ) :
     D N x d = d*K N x d := by
   unfold D K
@@ -482,7 +643,10 @@ theorem derivative_expansion (N : ℕ) (hN : N%3=0) (x d : ℝ) :
       rw [← pow_sub_one_mul (by simp only [mem_Icc] at hn; omega : N-n ≠ 0) d]
       ring
 
-/- proof_shape: content; escape_witness: T_nonneg; consumer: strictMonoOn_slice. -/
+/- proof_shape: content; escape_witness: T_nonneg;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.strictMonoOn_slice;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 private theorem K_pos (N : ℕ) (hN : N%3=0) (h6 : 6 ≤ N) {x d : ℝ}
     (hx : 0 < x) (hd : 0 < d) : 0 < K N x d := by
   apply sum_pos'
@@ -498,7 +662,10 @@ private theorem K_pos (N : ℕ) (hN : N%3=0) (h6 : 6 ≤ N) {x d : ℝ}
     have hc : (0:ℝ) < (N.choose 3:ℝ) := by exact_mod_cast Nat.choose_pos (by omega : 3≤N)
     positivity
 
-/- proof_shape: content; escape_witness: K_pos; consumer: Result.Z_monotoneOn. -/
+/- proof_shape: content; escape_witness: K_pos;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem strictMonoOn_slice (m : ℕ) (hm : 2 ≤ m) :
     StrictMonoOn (fun t => P (3*m) t (1-t)) (Set.Ioc 0 (1/2:ℝ)) := by
   apply strictMonoOn_of_deriv_pos (convex_Ioc 0 (1/2:ℝ))

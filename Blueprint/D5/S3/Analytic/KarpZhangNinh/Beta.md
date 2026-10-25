@@ -126,4 +126,3 @@ For positive shapes, the beta moment identity and comparison of symmetric beta m
 - Truth anchor: `D5/S3/Analytic/KarpZhangNinh/Beta.polynomial_continuous`
 - Truth anchor: `D5/S3/Analytic/KarpZhangNinh/Beta.polynomial_symm`
 - Dependency: [D5/S3/Analytic/IncompleteBeta/Comparison](../IncompleteBeta/Comparison.md)
-- Dependency: [D5/S3/Analytic/KummerRatio/BetaIntegral](../KummerRatio/BetaIntegral.md)

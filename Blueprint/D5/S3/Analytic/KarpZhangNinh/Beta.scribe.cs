@@ -65,17 +65,17 @@ internal sealed class BetaDocument : IScribeDocumentDefinition
     private static Formula V(string name) => F.Id(name);
     private static Formula Rl() => Seq(Mathbb, Grp(V("R")));
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
-    private static Formula Par(Formula body) => Seq(Open, body, Close);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula App(Formula head, params Formula[] args) => new Formula.Apply(head, [.. args]);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(Seq(V(owner), Dot, V(name))));
-    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Lambda(string name, Formula body) => Par(Seq(LambdaLower, Sp, Par(Seq(V(name), Colon, Sp, Rl())), Sp, Mapsto, Sp, body));
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Parenthesized(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Lambda(string name, Formula body) => Parenthesized(Seq(LambdaLower, Sp, Parenthesized(Seq(V(name), Colon, Sp, Rl())), Sp, Mapsto, Sp, body));
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Member(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -93,5 +93,5 @@ internal sealed class BetaDocument : IScribeDocumentDefinition
     private static Formula BetaMean(Formula w, Formula m, Formula d) => Call("betaMean", w, m, d);
     private static Formula CoefficientSymmetry() => All("k", N(), Imp(Le(V("k"), V("N")), Eq(Call("c", Sub(V("N"), V("k"))), Call("c", V("k")))));
     private static Formula BindCoefficients(Formula body) => All("c", Arrow(N(), Rl()), All("N", N(), body));
-    private static Formula Sum(string name, Formula domain, Formula body) => Seq(F.Sum, Underscore, Grp(Seq(V(name), Sp, InMacro, Sp, domain)), Sp, Par(body));
+    private static Formula Sum(string name, Formula domain, Formula body) => Seq(F.Sum, Underscore, Grp(Seq(V(name), Sp, InMacro, Sp, domain)), Sp, Parenthesized(body));
 }

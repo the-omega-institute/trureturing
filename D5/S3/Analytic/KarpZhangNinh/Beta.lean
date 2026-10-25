@@ -7,7 +7,6 @@
    digest: Symmetric homogeneous polynomials retain balancing monotonicity after beta lifting. -/
 
 import D5.S3.Analytic.IncompleteBeta.Comparison
-import D5.S3.Analytic.KummerRatio.BetaIntegral
 import Mathlib.Topology.Algebra.Polynomial
 
 /-!
@@ -32,37 +31,45 @@ namespace D5.S3.Analytic.KarpZhangNinh.Beta
 open D5.S3.Analytic.KummerRatio.BetaIntegral
 open D5.S3.Analytic.IncompleteBeta.Comparison
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: lift_eq_betaMean, lift_monotoneOn, polynomial_continuous,
-polynomial_symm, Result.Z_monotoneOn. -/
 /-- A homogeneous polynomial written in its degree-`N` monomial basis. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_eq_betaMean; D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn; D5.S3.Analytic.KarpZhangNinh.Beta.polynomial_continuous; D5.S3.Analytic.KarpZhangNinh.Beta.polynomial_symm; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def polynomial (c : ℕ → ℝ) (N : ℕ) (x y : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (N + 1), c k * x ^ k * y ^ (N - k)
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: lift_continuous, lift_eq_betaMean, lift_monotoneOn, lift_symm,
-Result.Z_monotoneOn, Result.lift_normalization. -/
 /-- The rising-factorial lift of a homogeneous polynomial. -/
+/- proof_shape: bind-only; escape_witness: none;
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_continuous; D5.S3.Analytic.KarpZhangNinh.Beta.lift_eq_betaMean; D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn; D5.S3.Analytic.KarpZhangNinh.Beta.lift_symm; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn; _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.lift_normalization;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 def lift (c : ℕ → ℝ) (N : ℕ) (u v : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (N + 1),
     c k * (ascPochhammer ℝ k).eval u * (ascPochhammer ℝ (N - k)).eval v
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_monotoneOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem polynomial_continuous (c : ℕ → ℝ) (N : ℕ) :
     Continuous (fun t : ℝ => polynomial c N t (1 - t)) := by
   unfold polynomial
   fun_prop
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_monotoneOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem lift_continuous (c : ℕ → ℝ) (N : ℕ) (S : ℝ) :
     Continuous (fun s : ℝ => lift c N s (S - s)) := by
   unfold lift
   fun_prop
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_monotoneOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem polynomial_symm (c : ℕ → ℝ) (N : ℕ)
     (hc : ∀ k ≤ N, c (N - k) = c k) (x y : ℝ) :
     polynomial c N x y = polynomial c N y x := by
@@ -75,7 +82,9 @@ theorem polynomial_symm (c : ℕ → ℝ) (N : ℕ)
   ring
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_monotoneOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: none;
+stacked_dependencies: none. -/
 theorem lift_symm (c : ℕ → ℝ) (N : ℕ)
     (hc : ∀ k ≤ N, c (N - k) = c k) (u v : ℝ) :
     lift c N u v = lift c N v u := by
@@ -88,7 +97,9 @@ theorem lift_symm (c : ℕ → ℝ) (N : ℕ)
   ring
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_eq_betaMean. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_eq_betaMean;
+direct_frozen_dependencies: D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45;
+stacked_dependencies: none. -/
 private lemma beta_monomial {u v : ℝ} (hu : 0 < u) (hv : 0 < v) (k l : ℕ) :
     (∫ t in (0 : ℝ)..1,
       t ^ (u - 1) * (1 - t) ^ (v - 1) * (t ^ k * (1 - t) ^ l)) =
@@ -110,7 +121,9 @@ private lemma beta_monomial {u v : ℝ} (hu : 0 < u) (hv : 0 < v) (k l : ℕ) :
   ring
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_monotoneOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
+stacked_dependencies: none. -/
 theorem lift_eq_betaMean (c : ℕ → ℝ) (N : ℕ) {m d : ℝ}
     (hp : 0 < m + d) (hq : 0 < m - d) :
     lift c N (m + d) (m - d) =
@@ -163,7 +176,9 @@ theorem lift_eq_betaMean (c : ℕ → ℝ) (N : ℕ) {m d : ℝ}
   field_simp
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: betaMean_antiOn. -/
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.betaMean_antiOn;
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
+stacked_dependencies: none. -/
 private lemma betaMean_perturb {W : ℝ → ℝ}
     (hW : ContinuousOn W (Icc 0 1)) {m d : ℝ}
     (hp : 0 < m + d) (hq : 0 < m - d) (e : ℝ) :
@@ -185,12 +200,12 @@ private lemma betaMean_perturb {W : ℝ → ℝ}
   rw [heq, intervalIntegral.integral_const_mul]
   ring
 
-/- proof_shape: content; escape_witness: betaMean_antiOn (a strictly increasing
-quadratic perturbation and its zero-perturbation limit extend strict comparison
-to every nondecreasing symmetric continuous integrand);
-consumer: lift_monotoneOn. -/
 /-- The symmetric beta mean is nonincreasing with shape imbalance for every
 continuous integrand nondecreasing toward the midpoint. -/
+/- proof_shape: content; escape_witness: betaMean_antiOn (a strictly increasing quadratic perturbation and its zero-perturbation limit extend strict comparison to every nondecreasing symmetric continuous integrand);
+consumers: D5.S3.Analytic.KarpZhangNinh.Beta.lift_monotoneOn;
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
+stacked_dependencies: none. -/
 theorem betaMean_antiOn {W : ℝ → ℝ}
     (hW : ContinuousOn W (Icc 0 1))
     (hsymm : ∀ t ∈ Icc 0 1, W (1 - t) = W t)
@@ -233,10 +248,12 @@ theorem betaMean_antiOn {W : ℝ → ℝ}
   exact le_of_tendsto_of_tendsto (hlimit e) (hlimit d)
     (Filter.mem_of_superset self_mem_nhdsWithin fun a ha => hperturb a ha)
 
-/- proof_shape: content; escape_witness: betaMean_antiOn;
-consumer: Result.Z_monotoneOn. -/
 /-- Beta lifting preserves balancing monotonicity, including both closed
 endpoints and the degenerate zero-total slice. -/
+/- proof_shape: content; escape_witness: betaMean_antiOn;
+consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Z_monotoneOn;
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
+stacked_dependencies: none. -/
 theorem lift_monotoneOn (c : ℕ → ℝ) (N : ℕ)
     (hc : ∀ k ≤ N, c (N - k) = c k)
     (hmono : MonotoneOn (fun t => polynomial c N t (1 - t)) (Ioc 0 (1 / 2)))

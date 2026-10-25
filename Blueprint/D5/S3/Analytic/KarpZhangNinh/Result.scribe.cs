@@ -12,11 +12,26 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Triple rising-factorial series preserve coefficientwise log-concavity.",
         H("Karp and Zhang's Conjecture 3.8"), Blocks(
+            KernelNode("a", "The positive-degree coefficient", DescribeRole.Definition, KernelAFormula(),
+                "Conjecture 3.8, page 8: “Assume that {fₙ}ₙ₌₀∞ is log-concave and independent of µ. Then the function µ → f(µ; x) = ∑ₙ₌₁∞ fₙ (µ)₃ₙ/(3n − 1)! xⁿ is coefficient-wise log-concave.” The coefficient in positive degree is the displayed rising-factorial quotient. Its degree-zero extension is zero because the series starts at one.", true),
+            KernelNode("raw", "The unpaired Turanian kernel", DescribeRole.Definition, KernelRawFormula(),
+                "The two products are the degree-k and degree-(m-k) factors in the two Cauchy products. Natural subtraction is used only for indices in the finite coefficient sum."),
+            KernelNode("paired", "The reflected kernel", DescribeRole.Definition, KernelPairedFormula(),
+                "Reflection sends k to m-k. The central index contributes once, while every other paired term is the sum of both reflected terms."),
+            KernelNode("pairPoch", "The factorial-free paired difference", DescribeRole.Definition, KernelPairFormula(),
+                "Lemma 3.1, printed page 4: “Let k, m ∈ N₀ with k ≤ m/2, µ ≥ 0 and α, β > 0. Set”. Formula (8) defines Tₖ,ₘ as (µ+α)ₖ(µ+β)ₘ₋ₖ + (µ+α)ₘ₋ₖ(µ+β)ₖ − (µ)ₖ(µ+α+β)ₘ₋ₖ − (µ)ₘ₋ₖ(µ+α+β)ₖ. The displayed pairPoch uses a, b, c and N for µ, α, β and m. It is the paired kernel before positive factorial denominators are removed.", true),
+            KernelNode("a_continuous", "Polynomial parameter dependence", DescribeRole.Theorem,
+                KernelAll("n", KernelN(), KernelCall("Continuous", KernelCall("a", KernelX("n")))),
+                "Every coefficient is a polynomial divided by a fixed positive factorial. Continuity supplies the boundary values of parameter inequalities."),
+            KernelNode("paired_sign_step", "Strict backward propagation", DescribeRole.Theorem, KernelStepFormula(),
+                "Lemma 3.1, printed page 4: “If Tₖ,ₘ ≤ 0 for some 1 ≤ k ≤ m/2, then Tₖ₋₁,ₘ < 0.” The source allows µ ≥ 0; the theorem uses its positive-µ specialization a > 0. Comparing the four reciprocal multipliers after moving one factor from the shorter length to the longer length proves the stated backward implication.", true),
+            KernelNode("paired_sign", "At most one sign change", DescribeRole.Theorem, KernelSignFormula(),
+                "Backward propagation between rising-factorial lengths 3i and 3j excludes a positive triple-Pochhammer pair followed by a negative one. Positive factorial denominators preserve signs; the middle pair has an additional positive factor of two."),
             Describe.Lean(DescribeId.Create("karp-zhang-ninh-delta"),
                 DeclarationHandle.Create("D5/S3/Analytic/KarpZhangNinh/Result.delta"),
                 H("The Turanian coefficient"), StatementSource.FromAuthor(DeltaFormula()),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The source defines the Turanian as f(mu+alpha;x)f(mu+beta;x)-f(mu;x)f(mu+alpha+beta;x). Its coefficientwise convention, page 2, is: “if the coefficients δₖ at all powers of x in (2) are non-negative (non-positive) for all α, β ≥ 0 we will say that µ → f(µ; x) is coefficient-wise log-concave”. Here Kernel.a has zero constant coefficient, so the endpoint summands vanish. A single coefficient sequence is fixed independently of all three real parameters."))),
+                Blocks(Paragraph(Text("The source defines the Turanian as f(mu+alpha;x)f(mu+beta;x)-f(mu;x)f(mu+alpha+beta;x). Its coefficientwise convention, printed page 1, is: “if the coefficients δₖ at all powers of x in (2) are non-negative (non-positive) for all α, β ≥ 0 we will say that µ → f(µ; x) is coefficient-wise log-concave (log-convex ).” Here Kernel.a has zero constant coefficient, so the endpoint summands vanish. A single coefficient sequence is fixed independently of all three real parameters."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("karp-zhang-ninh-convolution"),
                 DeclarationHandle.Create("D5/S3/Analytic/KarpZhangNinh/Result.Z"),
@@ -82,4 +97,89 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula Le(Formula a,Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Implies(Formula a,Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Iff(Formula a,Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
+
+    private static DocumentBlock KernelNode(string name, string title, DescribeRole role,
+        Formula formula, string prose, bool literature = false) =>
+        Describe.Lean(DescribeId.Create("kz38-kernel-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create("D5/S3/Analytic/KarpZhangNinh/Result." + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)),
+            literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula KernelAFormula()
+    {
+        Formula n = KernelX("n"), t = KernelX("t");
+        return KernelAll("n", KernelN(), KernelAll("t", KernelR(), KernelEq(KernelCall("a", n, t),
+            KernelCall("ite", KernelEq(n, D(0)), D(0),
+                KernelDiv(KernelPoch(KernelMul(D(3), n), t), KernelFact(KernelNSub(KernelMul(D(3), n), D(1))))))));
+    }
+
+    private static Formula KernelRawFormula()
+    {
+        Formula mu=KernelX("mu"), alpha=KernelX("alpha"), beta=KernelX("beta"), m=KernelX("m"), k=KernelX("k");
+        Formula expression=KernelSub(KernelMul(KernelCall("a", k, KernelAdd(mu,alpha)), KernelCall("a", KernelNSub(m,k), KernelAdd(mu,beta))),
+            KernelMul(KernelCall("a", k, mu), KernelCall("a", KernelNSub(m,k), KernelAdd(KernelAdd(mu,alpha),beta))));
+        return KernelParameters(KernelAll("m",KernelN(),KernelAll("k",KernelN(),KernelEq(KernelCall("raw",mu,alpha,beta,m,k),expression))));
+    }
+
+    private static Formula KernelPairedFormula()
+    {
+        Formula mu=KernelX("mu"), alpha=KernelX("alpha"), beta=KernelX("beta"), m=KernelX("m"), k=KernelX("k");
+        Formula raw=KernelCall("raw",mu,alpha,beta,m,k);
+        Formula other=KernelCall("raw",mu,alpha,beta,m,KernelNSub(m,k));
+        return KernelParameters(KernelAll("m",KernelN(),KernelAll("k",KernelN(),KernelEq(KernelCall("paired",mu,alpha,beta,m,k),
+            KernelCall("ite",KernelEq(KernelMul(D(2),k),m),raw,KernelAdd(raw,other))))));
+    }
+
+    private static Formula KernelPairFormula()
+    {
+        Formula a=KernelX("a"), b=KernelX("b"), c=KernelX("c"), n=KernelX("N"), k=KernelX("k");
+        Formula value=KernelSub(KernelSub(KernelAdd(KernelMul(KernelPoch(k,KernelAdd(a,b)),KernelPoch(KernelNSub(n,k),KernelAdd(a,c))),
+            KernelMul(KernelPoch(k,KernelAdd(a,c)),KernelPoch(KernelNSub(n,k),KernelAdd(a,b)))),
+            KernelMul(KernelPoch(k,a),KernelPoch(KernelNSub(n,k),KernelAdd(KernelAdd(a,b),c)))),
+            KernelMul(KernelPoch(k,KernelAdd(KernelAdd(a,b),c)),KernelPoch(KernelNSub(n,k),a)));
+        return KernelABC(KernelAll("N",KernelN(),KernelAll("k",KernelN(),KernelEq(KernelCall("pairPoch",a,b,c,n,k),value))));
+    }
+
+    private static Formula KernelStepFormula()
+    {
+        Formula a=KernelX("a"), b=KernelX("b"), c=KernelX("c"), n=KernelX("N"), k=KernelX("k");
+        Formula conclusion=KernelLt(KernelCall("pairPoch",a,b,c,n,KernelNSub(k,D(1))),D(0));
+        conclusion=KernelImp(KernelLe(KernelCall("pairPoch",a,b,c,n,k),D(0)),conclusion);
+        conclusion=KernelImp(KernelLe(KernelMul(D(2),k),n),conclusion);
+        conclusion=KernelImp(KernelLe(D(1),k),conclusion);
+        return KernelABC(KernelAll("N",KernelN(),KernelAll("k",KernelN(),KernelPositiveABC(conclusion))));
+    }
+
+    private static Formula KernelSignFormula()
+    {
+        Formula mu=KernelX("mu"),alpha=KernelX("alpha"),beta=KernelX("beta"),m=KernelX("m"),i=KernelX("i"),j=KernelX("j");
+        Formula conclusion=KernelLe(D(0),KernelCall("paired",mu,alpha,beta,m,j));
+        conclusion=KernelImp(KernelLt(D(0),KernelCall("paired",mu,alpha,beta,m,i)),conclusion);
+        conclusion=KernelImp(KernelLt(i,j),conclusion);
+        conclusion=KernelAll("j",KernelN(),KernelImp(KernelLe(j,new Formula.Apply(Seq(Operatorname,Grp(Seq(KernelX("Nat"),Dot,KernelX("div")))),[m,D(2)])),conclusion));
+        conclusion=KernelAll("i",KernelN(),KernelImp(KernelLe(i,new Formula.Apply(Seq(Operatorname,Grp(Seq(KernelX("Nat"),Dot,KernelX("div")))),[m,D(2)])),conclusion));
+        return KernelParameters(KernelAll("m",KernelN(),KernelImp(KernelLt(D(0),mu),KernelImp(KernelLt(D(0),alpha),KernelImp(KernelLt(D(0),beta),conclusion)))));
+    }
+
+    private static Formula KernelParameters(Formula f)=>KernelAll("mu",KernelR(),KernelAll("alpha",KernelR(),KernelAll("beta",KernelR(),f)));
+    private static Formula KernelABC(Formula f)=>KernelAll("a",KernelR(),KernelAll("b",KernelR(),KernelAll("c",KernelR(),f)));
+    private static Formula KernelPositiveABC(Formula f)=>KernelImp(KernelLt(D(0),KernelX("a")),KernelImp(KernelLt(D(0),KernelX("b")),KernelImp(KernelLt(D(0),KernelX("c")),f)));
+    private static Formula KernelX(string name)=>F.Id(name);
+    private static Formula KernelR()=>F.Id("Real");
+    private static Formula KernelN()=>F.Id("Nat");
+    private static Formula KernelCall(string name,params Formula[] args)=>new Formula.FunctionCall(FormulaIdentifier.Create(name),[..args]);
+    private static Formula KernelAll(string name,Formula type,Formula body)=>new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),type,body);
+    private static Formula KernelEq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
+    private static Formula KernelLt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+    private static Formula KernelLe(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    private static Formula KernelImp(Formula a,Formula b)=>new Formula.Logic(KernelParenthesized(a),FormulaLogicOperator.Implies,KernelParenthesized(b));
+    private static Formula KernelAdd(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Add,b);
+    private static Formula KernelSub(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Subtract,b);
+    private static Formula KernelMul(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
+    private static Formula KernelDiv(Formula a,Formula b)=>new Formula.Fraction(a,b);
+    private static Formula KernelParenthesized(Formula a)=>Seq(Open,a,Close);
+    private static Formula KernelFact(Formula n)=>Seq(KernelParenthesized(n),Bang);
+    private static Formula KernelNSub(Formula a,Formula b)=>new Formula.Apply(Seq(Operatorname,Grp(Seq(KernelX("Nat"),Dot,KernelX("sub")))),[a,b]);
+    private static Formula KernelPoch(Formula n,Formula t)=>new Formula.Apply(Seq(Operatorname,Grp(Seq(KernelX("Polynomial"),Dot,KernelX("eval")))),[t,KernelCall("ascPochhammer",KernelR(),n)]);
 }
