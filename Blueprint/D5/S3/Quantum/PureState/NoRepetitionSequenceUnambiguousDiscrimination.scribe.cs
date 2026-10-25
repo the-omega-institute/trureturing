@@ -129,7 +129,10 @@ internal sealed class NoRepetitionSequenceUnambiguousDiscriminationDocument : IS
                             + "Thus the local and global unambiguous optima defined in revised_02.tex, lines 213–221, both equal value N k s. "
                             + "The same conclusion answers the 2024 no-repetition question for k < N under the stated hypotheses. "
                             + "The minimum-error clause is not claimed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("murshid-gupta-russo-bandyopadhyay-2026-no-repetition-unambiguous-discrimination"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, bool literature) => Describe.Lean(
