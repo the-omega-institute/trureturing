@@ -146,6 +146,7 @@ public sealed partial class CleanLanesCommandTests
             {
                 var bytes = File.ReadAllBytes(log);
                 CleanLanesFixture.Git(lane, "branch", "-D", branch);
+                Directory.CreateDirectory(Path.GetDirectoryName(log)!);
                 File.WriteAllBytes(log, bytes);
             }
             else
