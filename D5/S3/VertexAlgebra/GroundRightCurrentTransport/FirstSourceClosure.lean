@@ -14,8 +14,8 @@ Classical lattice local-field calculus: Bakalov--Kac, math/0402315.
 No positivity, finite charge space, second eigenvector or transport premise. -/
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2000000
 noncomputable section
+set_option maxHeartbeats 2000000
 open scoped BigOperators VertexOperator
 namespace D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
@@ -111,6 +111,12 @@ private theorem original_current_iterate
     h, LatticeHalfFockCurrentBorcherds.source_current] at firstFinite
   simp only [jacobiRightSecondTerm, zero_add,
     h, LatticeHalfFockCurrentBorcherds.source_current] at secondFinite
+  change Function.HasFiniteSupport (fun j : ℕ =>
+    BinomialKernelDelta.chooseSign d j • neutralMode D i (d-j) (mu D a (r+j) b))
+    at firstFinite
+  change Function.HasFiniteSupport (fun j : ℕ =>
+    BinomialKernelDelta.chooseSign d j • (StateFieldResidueReconstruction.epsilon d •
+      mu D a (r+d-j) (neutralMode D i j b))) at secondFinite
   have firstSum :
       (∑ᶠ j : ℕ, BinomialKernelDelta.chooseSign d j •
         neutralMode D i (d-j) (mu D a (r+j) b)) =
@@ -296,6 +302,7 @@ private theorem compatible_add_left
   obtain ⟨hlA, hfA, hsA, eqA⟩ := ha p q r x
   obtain ⟨hlC, hfC, hsC, eqC⟩ := hc p q r x
   refine ⟨hlA.add hlC, hfA.add hfC, hsA.add hsC, ?_⟩
+  dsimp only [targetSlice]
   rw [finsum_add_distrib hlA hlC, finsum_add_distrib hfA hfC,
     finsum_add_distrib hsA hsC, eqA, eqC]
   module
@@ -304,7 +311,7 @@ private theorem first_word
     (D : LatticeData) (hu : IsUnit D.G.det)
     (word : List (Index D)) (alpha : Charge D)
     (epsilon : Bool) (gamma : ℤ)
-    (matching : sectorSign epsilon = (-1 : ℂ)^gamma) :
+    (matching : sectorSign epsilon = (-1 : ℂ) ^ gamma) :
     ∀ b : Carrier D, ∀ delta : ℤ,
       OriginalCompatible D hu
         (rightCurrentWord D word (projectedGround D alpha (wordParity word epsilon)))
@@ -316,7 +323,7 @@ private theorem first_word
       (LatticeHalfFockChargedResidue.charged_sector_ground_pair D hu)
       alpha epsilon gamma delta b matching
   | cons j word ih =>
-    have back : sectorSign (!epsilon) = (-1 : ℂ)^(gamma-1) := by
+    have back : sectorSign (!epsilon) = (-1 : ℂ) ^ (gamma-1) := by
       rw [sectorSign_not, matching]
       have h := zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0) (gamma-1) 1
       rw [show gamma-1+1 = gamma by omega, zpow_one, mul_neg_one] at h
@@ -341,12 +348,12 @@ This is the original all-signed three-supported coefficient law on the
 unchanged actual tensor carrier. -/
 theorem first_eigen_arbitrary_second
     (D : LatticeData) (hu : IsUnit D.G.det) (a : Carrier D) (gamma : ℤ)
-    (eigen : LatticeInvolution.theta D a = (-1 : ℂ)^gamma • a)
+    (eigen : LatticeInvolution.theta D a = (-1 : ℂ) ^ gamma • a)
     (b : Carrier D) (delta : ℤ) :
     OriginalCompatible D hu a b gamma delta := by
   classical
   let epsilon : Bool := if Even gamma then false else true
-  have matching : sectorSign epsilon = (-1 : ℂ)^gamma := by
+  have matching : sectorSign epsilon = (-1 : ℂ) ^ gamma := by
     rw [neg_one_zpow_eq_ite]
     by_cases h : Even gamma <;> simp [epsilon, sectorSign, h]
   have zero : OriginalCompatible D hu (0 : Carrier D) b gamma delta := by
