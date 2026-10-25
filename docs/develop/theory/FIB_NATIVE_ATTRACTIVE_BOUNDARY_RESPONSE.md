@@ -674,7 +674,7 @@ $$
 \begin{aligned}
 q_d(x)&=d_1/2+(1/2-(l+x)/r)d_2,\\
 H_d^v&=-\partial_x^2+q_d(x)^2+vd_2^2/r^2,\\
-G_d^v(x,y)&=(H_d^v)^{-1}(x,y)quad\hbox{with two Dirichlet endpoints},\\
+G_d^v(x,y)&=(H_d^v)^{-1}(x,y)\quad\hbox{with two Dirichlet endpoints},\\
 (H_d^v+s)\psi_{d,s}^v&=0,\qquad
        \psi_{d,s}^v(0)=1,\quad\psi_{d,s}^v(h)=0,\\
 F_{d,s}(y,v)&=\int_0^hG_d^v(x,y)\psi_{d,s}^v(x)\psi_{0,s}(x)\,dx,\\
@@ -690,8 +690,8 @@ $$
 
 Write $\lambda_d^{\sqrt v}(s)=-(\psi_{d,s}^v)'(0)$ for the free
 one-face energy of C, (31.2). The Green kernel in $F_{d,s}$ is
-unshifted; only the two Poisson
-profiles use $s$. Thus $H_s$ is independent of $v$. These are the
+unshifted; only the two Poisson profiles use $s$. Thus $H_s$ is
+independent of $v$. These are the
 original modes of C, Definitions 31.1–31.2 and Theorem 34.1, without
 an altered clock or a regenerated mixed Green potential.
 
@@ -741,11 +741,11 @@ deck images in C, (2.3), have one positive separation because their
 horizontal displacement is $4\pi n$, and for $n=0$ their central
 displacement is $2\pi r m$. The remaining shear $c(k_o)$ ranges over
 a compact interval. Thus the polynomial image counts and the integrable
-$Ct^{-2}e^{-b/t}$ errors have common constants. Off a smaller chart the minimum image distance is bounded below,
-so the same small-time Gaussian upper bound is integrable there.
-The positive-time tail in C, Theorem 1.3 is uniform in both kernel
-variables. These are
-exactly the bounds used to prove (3.2) and (15.4), so the same constants
+$Ct^{-2}e^{-b/t}$ errors have common constants. Off a smaller chart
+the minimum image distance is bounded below, so the same small-time
+Gaussian upper bound is integrable there. The positive-time tail in
+C, Theorem 1.3 is uniform in both kernel variables. These are exactly
+the bounds used to prove (3.2) and (15.4), so the same constants
 work on this compact pole set, including the zero-noise limit. If
 $v_{\max}=0$, choose any auxiliary positive upper noise bound.
 Torus translations remove dependence on $\alpha_o,\beta_o$.
@@ -1067,7 +1067,8 @@ inverse-problem goals. Alberti–Santacesaria,
 [*Calderón's inverse problem with a finite number of measurements*,
 Forum of Mathematics, Sigma 7](https://doi.org/10.1017/fms.2019.31),
 Theorems 1–2, treat bounded potentials in a known finite-dimensional
-linear subspace for a Euclidean Schrödinger problem. It does not
+linear subspace for a Euclidean Schrödinger problem, with full boundary
+outputs for finitely many Dirichlet inputs. That result does not
 apply directly to this moving singular Green multiplier or to the
 zero-noise horizontal operator. Likewise,
 [*Recovering point sources for the inhomogeneous Helmholtz equation*,
