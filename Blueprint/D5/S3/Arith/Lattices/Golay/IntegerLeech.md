@@ -4,7 +4,19 @@
 
 The integral Golay construction and its exact minimum
 
-**Definition 1.1 (Literal integral congruence coordinates).**
+**Theorem 1.1 (The exact quotient representation).**
+
+Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.representation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/Golay/IntegerLeech.representation` (`✓ std3`). ∎
+
+*Citation.* John Leech (1967). *Notes on Sphere Packings*. DOI: [10.4153/CJM-1967-017-0](https://doi.org/10.4153/CJM-1967-017-0). URL: <https://doi.org/10.4153/CJM-1967-017-0>.
+
+*Commentary.*
+
+The original admissibility conditions are equivalent to coordinates m plus twice an integer vector, with the same canonical parity bit, code residue and coordinate-sum congruence. The same integer representative determines both the real image and the raw coordinates in direct selfduality.
+
+**Definition 1.2 (Literal integral congruence coordinates).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.Admissible`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.Admissible`
 
 An integer vector has a common parity bit m in zero or one; its quotient residue is a codeword, and its coordinate sum is congruent to four m modulo eight.
 
-**Definition 1.2 (Additive closure is derived).**
+**Definition 1.3 (Additive closure is derived).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.integerLattice`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.integerLattice`
 
 For an arbitrary binary linear code containing the all-ones word, the literal congruence set is an additive subgroup. The odd plus odd carry is absorbed by the proved all-ones membership.
 
-**Theorem 1.3 (Even scaled norms).**
+**Theorem 1.4 (Even scaled norms).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.squareSum_div_sixteen`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.squareSum_div_sixteen`
 
 For every doubly-even binary linear code and every actual admissible integer vector, the sum of coordinate squares is divisible by sixteen. Dividing by eight therefore gives an even integral squared norm.
 
-**Theorem 1.4 (Every nonzero admissible integer vector has squared integer norm at least 32).**
+**Theorem 1.5 (Every nonzero admissible integer vector has squared integer norm at least 32).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.construction_lower_bound`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.construction_lower_boun
 
 The even nonzero-residue case uses the minimum weight. The zero-residue case uses the coordinate-sum congruence to exclude a sole coordinate of size four. In the odd case every coordinate has absolute value at least one and divisibility by sixteen raises the bound from 24 to 32.
 
-**Theorem 1.5 (The scaled pairing is integral).**
+**Theorem 1.6 (The scaled pairing is integral).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.pairing_integral`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.pairing_integral`
 
 Polarization, the derived additive closure and divisibility of all three squared norms by sixteen imply divisibility of the coordinate dot product by eight.
 
-**Theorem 1.6 (Exact minimum four from actual encoded Golay words).**
+**Theorem 1.7 (Exact minimum four from actual encoded Golay words).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.minimum_norm`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.minimum_norm`
 
 This theorem consumes the constructed Golay linear image and its proved double evenness and minimum weight. Twice the zero-one lift of its encoded octad is an admissible nonzero vector with square sum 32. Every nonzero admissible vector has square sum at least 32, so dividing by eight gives exact squared minimum four.
 
-**Theorem 1.7 (The specified Euclidean scaling).**
+**Theorem 1.8 (The specified Euclidean scaling).**
 
 Lean statement: `D5/S3/Arith/Lattices/Golay/IntegerLeech.euclidean_scaling`
 
@@ -96,5 +108,6 @@ Coordinate division by the real square root of eight gives the same real squared
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.integerLattice`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.minimum_norm`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.pairing_integral`
+- Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.representation`
 - Truth anchor: `D5/S3/Arith/Lattices/Golay/IntegerLeech.squareSum_div_sixteen`
 - Dependency: [D5/S3/Arith/Lattices/Golay/GolayEncoder](GolayEncoder.md)
