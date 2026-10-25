@@ -11,7 +11,6 @@ import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
