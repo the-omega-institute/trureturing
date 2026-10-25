@@ -112,10 +112,11 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
             return All("x", space, All("y", space, Eq(C("product", X("x"), X("y")), vector)));
         }
     }
-    private static DocumentBlock.Describe Desc(string name, Formula formula, string text, DescribeRole role = DescribeRole.Definition, bool source = false) =>
+    private static DocumentBlock.Describe Desc(string name, Formula formula, string text, DescribeRole role = DescribeRole.Definition, bool source = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name switch { "productSpace" => "product-space", "ordinaryPower" => "ordinary-power", "indexExists" => "index-exists", _ => name }), DeclarationHandle.Create(Prefix + name), H(name),
             StatementSource.FromAuthor(Disp(formula)), source ? AssessedProvenance.FromLiterature(Survey) : AssessedProvenance.FromRepo(Survey),
-            Blocks(Paragraph(Text(text))), role);
+            Blocks(Paragraph(Text(text))), role, openProblemResolutionClaim: resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An ordinary nilpotency index outside the proposed binary spectrum.",
@@ -134,6 +135,8 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
             Desc("product", ProductFormula,
                 "In one-based coordinates the natural square rows r are: e2+e3+e5; -e4-e5; e4+e5; -e6-e8; e6+e8; e7+e8; -e9-e14; e9+e14; e10; e11; e12; e13+e14; -e15; e15; 0. The displayed vector uses zero-based coordinate subscripts; the square-row description uses one-based subscripts. The standard coordinate vectors form a natural basis. All mixed products vanish."),
             Desc("result", Seq(Neg, Sp, N("claim")),
-                "Over the infinite field Q this fifteen-dimensional algebra has A^256=0 and A^255 nonzero. The triangular spanning vectors, in order, are e1; e2+e3+e5; e3; e4+e5; e5; e6+e8; e7+e8+e9+e14; e8; e9+e14; e10+e15; e11; e12; e13+e14; e14; e15. Their weights are 1,2,1,3,1,5,10,1,15,30,60,120,240,1,255. Every nonzero product of two such vectors is another vector whose weight is at least the sum of the input weights. Bilinearity therefore gives F_r F_s contained in F_(r+s) for every positive r,s, where F_m spans vectors of weight at least m. Strong induction over all splits gives A^m contained in F_m; F_256 is zero. Starting from e1, and using e3 as the separate degree-one leaf at the second step, the input degree pairs are (1,1), (2,1), (3,2), (5,5), (10,5), (15,15), (30,30), (60,60), (120,120), (240,15). Their outputs are respectively the second, fourth, sixth, seventh, ninth, tenth, eleventh, twelfth, thirteenth and fifteenth spanning vectors. The final product has 255 leaves and equals e15. Hence the ordinary index is exactly 256. At k=255 there are eight one digits and floor(log2(k))=7; their sum 15 exceeds n-1=14, and k is not a power of two. Existence is true and both arithmetic alternatives are false.", DescribeRole.Theorem)
+                "Over the infinite field Q this fifteen-dimensional algebra has A^256=0 and A^255 nonzero. The triangular spanning vectors, in order, are e1; e2+e3+e5; e3; e4+e5; e5; e6+e8; e7+e8+e9+e14; e8; e9+e14; e10+e15; e11; e12; e13+e14; e14; e15. Their weights are 1,2,1,3,1,5,10,1,15,30,60,120,240,1,255. Every nonzero product of two such vectors is another vector whose weight is at least the sum of the input weights. Bilinearity therefore gives F_r F_s contained in F_(r+s) for every positive r,s, where F_m spans vectors of weight at least m. Strong induction over all splits gives A^m contained in F_m; F_256 is zero. Starting from e1, and using e3 as the separate degree-one leaf at the second step, the input degree pairs are (1,1), (2,1), (3,2), (5,5), (10,5), (15,15), (30,30), (60,60), (120,120), (240,15). Their outputs are respectively the second, fourth, sixth, seventh, ninth, tenth, eleventh, twelfth, thirteenth and fifteenth spanning vectors. The final product has 255 leaves and equals e15. Hence the ordinary index is exactly 256. At k=255 there are eight one digits and floor(log2(k))=7; their sum 15 exceeds n-1=14, and k is not a power of two. Existence is true and both arithmetic alternatives are false.", DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kaygorodov-martin-gonzalez-viruel-2026-nilpotency-spectrum-conjecture-9"),
+                    ResolutionKind.Refuted))
         )));
 }
