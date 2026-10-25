@@ -68,10 +68,10 @@ structure Result where
   inverse_old : ∀ z : carrier,
     (equiv.symm z).1.1.1 = restrict (Order.le_succ a) z.1
   inverse_sheet : ∀ z : carrier, (equiv.symm z).1.2 = z.1 (last a)
-  prefix : Prefix (Order.succ (Order.succ a))
+  extended : Prefix (Order.succ (Order.succ a))
   old_carrier : ∀ b : Coord (Order.succ a),
-    prefix.carrier ⟨b.1, lt_trans b.2 (Order.lt_succ (Order.succ a))⟩ = H.carrier b
-  top_carrier : prefix.carrier (last (Order.succ a)) = carrier
+    extended.carrier ⟨b.1, lt_trans b.2 (Order.lt_succ (Order.succ a))⟩ = H.carrier b
+  top_carrier : extended.carrier (last (Order.succ a)) = carrier
   restrict_inverse : ∀ (b : Ordinal.{0}) (h : b ≤ a) (z : carrier),
     restrict (h.trans (Order.le_succ a)) z.1 = restrict h (equiv.symm z).1.1.1
 
@@ -94,7 +94,7 @@ theorem exists_successor_coordinates (hY : IsClosed Y) (hZ : IsClosed Z)
   have hX : IsClosed (splitCarrier Y Z) :=
     ((hY.preimage continuous_fst).inter (isClosed_singleton.preimage continuous_snd)).union
       ((hZ.preimage continuous_fst).inter (isClosed_singleton.preimage continuous_snd))
-  letI : CompactSpace X := hX.isClosedEmbedding_subtypeVal.compactSpace
+  let : CompactSpace X := hX.isClosedEmbedding_subtypeVal.compactSpace
   have honto : Function.Surjective (fun x : X => x.1.1) := by
     intro k
     have hk : k ∈ Y ∪ Z := by rw [hcover]; exact mem_univ k
@@ -138,82 +138,99 @@ theorem exists_successor_coordinates (hY : IsClosed Y) (hZ : IsClosed Z)
     rw [← hback z]
     exact hlower b h (e.symm z)
   let carrier := enlargedCarrier H C
-  have hold (b : Coord (Order.succ a)) :
-      carrier ⟨b.1, lt_trans b.2 (Order.lt_succ (Order.succ a))⟩ = H.carrier b := by
-    simp only [carrier, enlargedCarrier, dif_pos b.2]
-  have htop : carrier (last (Order.succ a)) = C := by
-    simp [carrier, enlargedCarrier, last]
+  have hold (b : Ordinal.{0}) (hb : b < Order.succ a)
+      (hb' : b < Order.succ (Order.succ a)) :
+      carrier ⟨b, hb'⟩ = H.carrier ⟨b, hb⟩ := by
+    dsimp only [carrier, enlargedCarrier]
+    rw [dite_eq_left hb]
+  have htop (hb : Order.succ a < Order.succ (Order.succ a)) :
+      carrier ⟨Order.succ a, hb⟩ = C := by
+    dsimp only [carrier, enlargedCarrier]
+    rw [dite_eq_right (lt_irrefl (Order.succ a))]
   let HP : Prefix (Order.succ (Order.succ a)) :=
     { carrier := carrier
       closed := by
         intro ⟨b, hb⟩
         by_cases h : b < Order.succ a
-        · simpa [carrier, enlargedCarrier, h] using H.closed ⟨b, h⟩
+        · rw [hold b h hb]
+          exact H.closed ⟨b, h⟩
         · have heq : b = Order.succ a :=
             le_antisymm (Order.le_of_lt_succ hb) (le_of_not_gt h)
           subst b
-          simpa only [show (⟨Order.succ a, hb⟩ : Coord _) = last (Order.succ a) from rfl,
-            htop] using hC
+          rw [htop hb]
+          exact hC
       nonempty := by
         intro ⟨b, hb⟩
         by_cases h : b < Order.succ a
-        · simpa [carrier, enlargedCarrier, h] using H.nonempty ⟨b, h⟩
+        · rw [hold b h hb]
+          exact H.nonempty ⟨b, h⟩
         · have heq : b = Order.succ a :=
             le_antisymm (Order.le_of_lt_succ hb) (le_of_not_gt h)
           subst b
-          simpa only [show (⟨Order.succ a, hb⟩ : Coord _) = last (Order.succ a) from rfl,
-            htop] using hnC
+          rw [htop hb]
+          exact hnC
       compatible := by
         intro ⟨b, hb⟩ ⟨c, hc⟩ h x
         change b ≤ c at h
         by_cases hcold : c < Order.succ a
         · have hbold : b < Order.succ a := lt_of_le_of_lt h hcold
           have hx : x.1 ∈ H.carrier ⟨c, hcold⟩ := by
-            simpa [carrier, enlargedCarrier, hcold] using x.2
-          simpa [carrier, enlargedCarrier, hbold] using
+            simpa only [hold c hcold hc] using x.2
+          simpa only [hold b hbold hb] using
             H.compatible ⟨b, hbold⟩ ⟨c, hcold⟩ h ⟨x.1, hx⟩
         · have heq : c = Order.succ a :=
             le_antisymm (Order.le_of_lt_succ hc) (le_of_not_gt hcold)
           subst c
-          have hx : x.1 ∈ C := by simpa only [htop] using x.2
+          have hx : x.1 ∈ C := by simpa only [htop hc] using x.2
           by_cases hbold : b < Order.succ a
           · have hba : b ≤ a := Order.le_of_lt_succ hbold
-            rw [show carrier ⟨b, hb⟩ = H.carrier ⟨b, hbold⟩ by
-              simp [carrier, enlargedCarrier, hbold]]
+            rw [hold b hbold hb]
             rw [hinverse b hba ⟨x.1, hx⟩]
             exact H.compatible ⟨b, hbold⟩ (last a) hba (e.symm ⟨x.1, hx⟩).1.1
           · have heq : b = Order.succ a := le_antisymm h (le_of_not_gt hbold)
             subst b
-            simpa [restrict] using x.2
+            exact x.2
       onto := by
         intro ⟨b, hb⟩ ⟨c, hc⟩ h y
         change b ≤ c at h
         by_cases hcold : c < Order.succ a
         · have hbold : b < Order.succ a := lt_of_le_of_lt h hcold
           have hy : y.1 ∈ H.carrier ⟨b, hbold⟩ := by
-            simpa [carrier, enlargedCarrier, hbold] using y.2
+            simpa only [hold b hbold hb] using y.2
           obtain ⟨x, hx⟩ := H.onto ⟨b, hbold⟩ ⟨c, hcold⟩ h ⟨y.1, hy⟩
           refine ⟨⟨x.1, ?_⟩, hx⟩
-          simpa [carrier, enlargedCarrier, hcold] using x.2
+          simpa only [hold c hcold hc] using x.2
         · have heq : c = Order.succ a :=
             le_antisymm (Order.le_of_lt_succ hc) (le_of_not_gt hcold)
           subst c
           by_cases hbold : b < Order.succ a
           · have hba : b ≤ a := Order.le_of_lt_succ hbold
             have hy : y.1 ∈ H.carrier ⟨b, hbold⟩ := by
-              simpa [carrier, enlargedCarrier, hbold] using y.2
+              simpa only [hold b hbold hb] using y.2
             obtain ⟨k, hk⟩ := H.onto ⟨b, hbold⟩ (last a) hba ⟨y.1, hy⟩
             obtain ⟨x, hx⟩ := honto k
             refine ⟨⟨append x, ?_⟩, ?_⟩
-            · simpa only [htop] using (show append x ∈ C from ⟨x, rfl⟩)
+            · simpa only [htop hc] using (show append x ∈ C from ⟨x, rfl⟩)
             · exact (hlower b hba x).trans ((congrArg (fun k : K => restrict hba k.1) hx).trans hk)
           · have heq : b = Order.succ a := le_antisymm h (le_of_not_gt hbold)
             subst b
             exact ⟨y, rfl⟩ }
-  refine ⟨{ carrier := C, closed := hC, nonempty := hnC, equiv := e,
-    range_eq := ?_, insert := ?_, old_coord := ?_, sheet_coord := hsheet,
-    restrict_equiv := hrestrict, inverse_old := ?_, inverse_sheet := ?_,
-    prefix := HP, old_carrier := hold, top_carrier := htop, restrict_inverse := hinverse }⟩
+  refine ⟨{
+    carrier := C
+    closed := hC
+    nonempty := hnC
+    equiv := e
+    range_eq := ?_
+    insert := ?_
+    old_coord := ?_
+    sheet_coord := hsheet
+    restrict_equiv := hrestrict
+    inverse_old := ?_
+    inverse_sheet := ?_
+    extended := HP
+    old_carrier := fun b => hold b.1 b.2 _
+    top_carrier := htop _
+    restrict_inverse := hinverse }⟩
   · exact Set.ext fun u => ⟨fun hu => by
       obtain ⟨x, rfl⟩ := hu
       exact ⟨x, rfl⟩, fun hu => by
@@ -221,10 +238,10 @@ theorem exists_successor_coordinates (hY : IsClosed Y) (hZ : IsClosed Z)
       exact ⟨x, rfl⟩⟩
   · intro x i
     by_cases h : i.1 < a
-    · simpa only [dif_pos h] using congrFun (hrestrict x) ⟨i.1, h⟩
+    · simpa only [dite_eq_left h] using congrFun (hrestrict x) ⟨i.1, h⟩
     · have ht : i = last a := Subtype.ext
         (le_antisymm (Order.le_of_lt_succ i.2) (le_of_not_gt h))
-      simpa only [dif_neg h, ht] using hsheet x
+      simpa only [dite_eq_right h, ht] using hsheet x
   · intro x i
     exact congrFun (hrestrict x) i
   · intro z
