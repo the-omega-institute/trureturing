@@ -1016,3 +1016,607 @@ P's authentic unit entrance, the capped arbitrary-field entrance, the randomized
 The original arbitrary-signed-field obstruction and every fixed-$G_{\rm gc}$/original-$Q$, parked-consumer, unchanged-initialization and lost-chronology statement retain their exact original domains. This rational path result supplies no transport to native $\alpha/\beta$ constructors, universal generator pair, arbitrary graph geometry or another physical process. Such a transport still requires a common actual initialization, operation/output correspondence, internal acquisition and retained-resource bridge. The four-expression recovery here is the authentic newly prepared passive domain of Theorem 20.2; the full unrestricted programme remains beyond this bounded result.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Arbitrarily small signed entry fields can conceal a longer native path
+
+**Definition 24.1 (uncapped entry balls and the exact acquisition task).**
+Retain precisely Assumption 1.2's bound root, serial Read, returning Tick,
+Hold and arbitrary rational signed Add, with its assurances, rights and
+sufficient finite backing. There is no order cap. For a supplied rational
+$\rho\ge0$, let $\mathcal C_\rho$ consist of all finite $N\ge1$, rational
+symmetric Jacobi matrices with strictly positive adjacent links, and
+rational entry vectors $z$, such that
+
+$$
+\tfrac14 I\le T\le\tfrac34 I,\qquad \|z\|_2\le\rho.
+\tag{UFS.53}
+$$
+
+The enclosure is fixed for the entire class. No common positive lower
+bound on the links, denominator/width bound, order bound or additional
+source observation is supplied. The radius bounds the entry field only;
+subsequent authorized Add inputs need not obey it. The one-cell case has
+no adjacent-link condition. A controller is one source-independent finite
+effective program for the public $\rho$, with arbitrary finite adaptive
+computation, storage and commands on each finite run.
+
+An exact acquisition must terminate successfully with either the actual
+native order and law, the entire native impulse law in an effective
+finite description, or a finite self-sufficient predictor for the complete
+service from its **actual advanced stopping cut**. Such a predictor must
+compute the complete declared returns of every finite legal continuation,
+including its successive updated predictive state, without consulting new
+source returns for hypothetical evaluation. Fixed words are included;
+induction on matching replies then covers adaptive continuations. Keeping
+a callable reference and forwarding an unpredicted request is actual use,
+but alone is not this predictive acquisition. No claim here requires
+recovering an erased entry journal.
+
+**Lemma 24.2 (small signed compensation of a complete finite transcript).**
+Fix $\rho>0$ and any finite completed command transcript $\pi$ on the
+reference specimen $T_0=(\lambda)$, $\lambda=1/2$, with entry zero. Include
+every scalar return, every returning Tick, fixed acknowledgement and
+local stopping decision. Suppose $\pi$ has $t$ Ticks. There is one fixed
+specimen $(S,z)\in\mathcal C_\rho$ of order $M=t+2$ that gives exactly
+this complete transcript under replay of its commands, with
+$\|z\|_1<\rho$. Its second native impulse moment is
+$\lambda^2+\epsilon^2$ for some rational $\epsilon>0$, whereas the
+reference moment is $\lambda^2$.
+
+Proof. Put $c=1/8$. For rational $0<\epsilon\le c$, take $S=S_\epsilon$
+to have all diagonal entries $\lambda$, first link $\epsilon$ and all
+remaining links $c$. For every real vector $v$, writing $b_i$ for these
+links gives
+
+$$
+\left|v^{\mathsf T}(S-\lambda I)v\right|
+\le\sum_{i=0}^{M-2}b_i(v_i^2+v_{i+1}^2)
+\le\tfrac14\|v\|_2^2.
+\tag{UFS.54}
+$$
+
+Each coordinate meets at most two links of size at most $1/8$. Thus
+(UFS.53) holds, uniformly in $M$ and $\epsilon$, and every actual link is
+positive.
+
+Write $\eta_j=(S_\epsilon^j)_{00}$. Expanding matrix powers as finite
+walk sums, every walk from cell zero back to zero crosses its first link
+an even number of times. A walk never crossing it stays at zero.
+Consequently there are polynomials $H_j\in\mathbb Q[X]$ with
+
+$$
+\eta_j=\lambda^j+\epsilon^2 H_j(\epsilon^2),\qquad
+H_0=H_1=0,\quad H_2=1.
+\tag{UFS.55}
+$$
+
+For $1\le i\le t$ the same parity argument gives rational polynomials
+$K_{ji}$ such that $(S_\epsilon^j)_{0i}=\epsilon K_{ji}(\epsilon^2)$.
+They vanish when $i>j$. At $i=j$ the unique length-$j$ path has no stay
+or backward step, so $K_{jj}=c^{j-1}$. Setting $\epsilon=0$ in these
+polynomial identities is only bookkeeping; it is never the admitted
+witness matrix.
+
+List the transcript's Add inputs as $(s_\ell,u_\ell)$, where $s_\ell$
+is the number of Ticks preceding that actual Add. For $0\le j\le t$
+define
+
+$$
+g_j=\sum_{s_\ell\le j}u_\ell
+       (\lambda^{j-s_\ell}-\eta_{j-s_\ell})
+    =\epsilon^2 D_j(\epsilon^2),\qquad D_j\in\mathbb Q[X].
+\tag{UFS.56}
+$$
+
+Here $g_0=0$. Define rational polynomials successively by
+
+$$
+W_j(X)=c^{1-j}\left(D_j(X)-\sum_{i=1}^{j-1}K_{ji}(X)W_i(X)\right)
+\quad(1\le j\le t).
+\tag{UFS.57}
+$$
+
+These triangular pivots are fixed nonzero constants, not powers of
+$\epsilon$. Set $z_0=z_{t+1}=0$ and
+$z_i=\epsilon W_i(\epsilon^2)$ for $1\le i\le t$. When $t=0$, take
+$z=0$ in dimension two. The triangular identities prove
+$e_0^{\mathsf T}S_\epsilon^jz=g_j$ for every $0\le j\le t$.
+
+To choose one rational witness, let $C$ be one plus the sum of the absolute
+values of all coefficients of all the $W_i$; the empty sum is zero.
+For $0<\epsilon\le c<1$,
+$\|z\|_1\le\epsilon(C-1)<\epsilon C$. Choose
+$\epsilon=\min\{c,\rho/(2C)\}$. Then $z$ is rational and
+$\|z\|_2\le\|z\|_1<\rho$. This choice fixes the entire specimen before
+any replay.
+
+Consider now any chronological cut of $\pi$, at epoch $j$, with only
+its already executed pulses $P$ included. Formula (UFS.3) gives the root
+on the new specimen as
+
+$$
+g_j+\sum_{\ell\in P}u_\ell\eta_{j-s_\ell}
+   =\sum_{\ell\in P}u_\ell\lambda^{j-s_\ell}.
+\tag{UFS.58}
+$$
+
+Indeed every pulse at an earlier epoch has already occurred. A pulse at
+epoch $j$ that is in (UFS.56) but has not yet occurred contributes zero
+to $g_j$, since $\lambda^0=\eta_0=1$. Thus the identity applies before
+and after each Add, to repeated Reads and to the output immediately
+following **each** Tick update. Holds and Adds have the same fixed
+acknowledgements. The right-hand side is exactly the reference root.
+This proves equality of all declared outputs, not merely a selected
+subsequence. With identical inputs and outputs, induction through the
+controller's local computation gives the same subsequent adaptive
+command, rational input, local state and stopping/export decision.
+Finally (UFS.55) at $j=2$ proves the stated impulse difference, whether
+or not that index was observed in $\pi$. $\square$
+
+## 25. Exact finite acquisition has a closed zero-radius endpoint
+
+**Theorem 25.1 (one exact-acquisition dichotomy).** For Definition 24.1's
+closed classes the following statements hold.
+
+1. For every rational $\rho>0$, no deterministic controller terminates
+   successfully and correctly on every specimen in $\mathcal C_\rho$
+   for any of the exact acquisition targets in Definition 24.1.
+2. For the same positive radii, no controller using independent paid fair
+   bits has both zero error on every fixed specimen and almost-sure
+   successful finite acquisition on every specimen. A successful finite
+   computation is required to have read only finitely many bits. Zero
+   error means probability zero of an incorrect successful export;
+   unsuccessful runs or nontermination do not count as successful
+   acquisition.
+3. At $\rho=0$ the already supplied authentic unit-impulse construction
+   does terminate exactly, acquire the native law and initialize the
+   complete retained predictor from its actual stopping state.
+
+Proof. For part 1, run a proposed total correct controller on the
+one-cell zero-entry reference. Its successful stopping transcript
+$\pi$ is finite. Lemma 24.2 supplies one admitted specimen that repeats
+that whole transcript and hence the same successful export. The two
+native orders differ, and their impulse laws differ already at the
+second moment. Thus neither a native-law export nor an impulse-law
+export can be correct on both.
+
+For the predictor target it is essential to use the actual final states,
+not the entries or an unexecuted reset. They are respectively
+
+$$
+a=\sum_\ell u_\ell\lambda^{t-s_\ell},\qquad
+b=S^t z+\sum_\ell u_\ell S^{t-s_\ell}e_0.
+\tag{UFS.59}
+$$
+
+Starting at these very cuts, consider the two legal alternative words
+$W=$ Tick; Tick and $W^+=$ Add$(1)$; Tick; Tick. On any one source the
+last-root difference between these two alternatives is its second
+native impulse moment, independently of its current state. If the
+complete continuations agreed between the two sources for both words,
+subtracting their final scalars would force
+$\lambda^2=\lambda^2+\epsilon^2$. Hence at least one word has different
+returns. The same exported self-sufficient predictor cannot be correct
+on both actual stopping states. These are two alternatives quantified
+by the task, not an experiment requiring cloning, reset or execution
+of both words on one specimen. A failure on fixed words also defeats
+prediction of every legal adaptive continuation.
+
+For part 2, first fix the reference specimen, independently of all bits.
+Almost-sure successful finite acquisition implies that at least one
+successful finite execution reads a finite bit word $w$. More explicitly,
+the successful finite executions are a countable union of cylinders of
+finite bit prefixes; every such cylinder has probability
+$2^{-|w|}>0$, with probability one when $w$ is empty. Fix one stopping
+prefix. All its infinite extensions give the same finite transcript
+$\pi$ and export, because no further bit has been read at this stop.
+Zero error on the reference forces that export to be correct there:
+an incorrect fixed export on this cylinder would already have positive
+error probability.
+
+Construct the single witness $(S,z)$ from this one $\pi$ by Lemma 24.2,
+and fix it before a fresh independent fair-bit run. On its $w$ cylinder,
+local computation and all returning observations agree by induction,
+so the controller again stops with the identical export. The native-law
+or actual-cut predictor contradiction from part 1 makes it incorrect
+on this witness. Its error probability is at least $2^{-|w|}>0$.
+This contradicts zero error. The witness is not selected separately for
+each infinite tape. No numerical error floor independent of the
+controller, transcript or radius is asserted. The exported predictor
+here is the finite locally evaluable exact predictor in Definition 24.1;
+future random bits are not a source observation. Even if its evaluation
+were allowed fresh independent bits with zero-error almost-sure exact
+answers, their common law could not equal two different required scalar
+answers almost surely on the separating word.
+
+For part 3, the closed condition $\|z\|_2\le0$ gives $z=0$ on the
+actual source, without an observation or an inferred unknown norm.
+Execute the authorized Add$(1)$ and receive its acknowledgement. This
+really establishes $e_0$. Apply [P Theorem 37.2][P]: the initial Read
+and $2N$ actual returning Ticks give $2N+1$ scalar returns; the first
+singular positive impulse Hankel block earns the uncapped order.
+[P Propositions 37.3–37.4][P] supply native rational Jacobi inversion,
+least recurrence and transfer. The actual final vector is
+$T^{2N}e_0$, and [P §§40–41][P] supply its retained complete-menu
+predictor and continued same-root use, conditional on the already
+supplied binding and rights. Every Hold, acknowledgement, scalar,
+calculation and retained record has its stated real cost. These are
+applications of the supplied positive endpoint, not new inversion or
+retention theorems. The fixed enclosure lies strictly inside $0<T<I$,
+so all those supplier hypotheses hold. $\square$
+
+An open radius-zero ball is empty and is not this positive endpoint.
+The dichotomy concerns exactly these nested **closed** entry classes,
+this service and these exact successful acquisition contracts.
+
+## 26. Small-entry scope, mathematical credit and the remaining bridge
+
+**Definition 26.1 (source-relative content).** Lemma 24.2 contributes
+the small-entry compensation: one weak first link changes every finite
+forced impulse response by $\epsilon^2$ while the triangular observation
+solve needs only an $O(\epsilon)$ signed entry. Its constants and the
+chosen positive link depend on the whole finite reference transcript;
+its spectral enclosure does not. Since the witness has
+$\|z\|_1<\rho$, the same obstruction also applies when a positive open
+or closed $\ell^1$ or $\ell^\infty$ entry ball replaces (UFS.53), using
+$\|z\|_\infty\le\|z\|_2\le\|z\|_1$. No norm equivalence with a hidden
+dimension-dependent constant is needed.
+
+The existing §7 supplies arbitrary-field finite-transcript
+indistinguishability and actual-final-cut separation. Formula (UFS.3)
+supplies the exact free/forced ages, and the present proof preserves
+every returning Tick. Finite-prefix cylinders give the elementary
+fair-bit consequence; no new general probability principle is claimed.
+Native inversion and retained use at the zero endpoint belong to
+[P §§37,40–41][P]. The classical moment/Jacobi supplier is
+[Teschl, §2.5][Teschl], equations (2.109)–(2.118) and the finite-support
+paragraph on printed p.44. That paragraph, rather than Theorem 2.13's
+nonfinite-support hypothesis, is the finite-chain correspondence.
+The `repo-derived` delta is the consolidated positive-radius signed-entry
+obstruction, its specified zero-error consequence and its contrast with
+the credited closed-zero endpoint. This is a source-relative claim,
+without a worldwide novelty or new Lean-certification claim.
+
+**Definition 26.2 (unmoved acquisition and realization boundaries).**
+Theorem 25.1 permits an arbitrarily weak positive first link and
+unbounded rational widths and order. It supplies no fixed-positive-lower-link,
+bounded-width or capped-order obstruction. Exact equality of returns
+and exact successful acquisition are essential to its statement; no
+approximate/noisy or confidence lower bound follows. In particular,
+§§10–16's randomized confidence-qualified acquisition permits an error
+event and keeps its original contract. The positive-probability error
+found here does not contradict that contract.
+
+Sections 17–23 instead assume an authentic zero-start producer using
+nonnegative rational pulses: $z=p(T)e_0$ with nonnegative polynomial
+coefficients. That provenance makes $I+p(T)>0$ and supplies their
+positive weighted-Hankel stopping argument. A small arbitrary signed
+vector is not a certificate of that producer history. The compensation
+lemma does not assert that its witness belongs to this producer class,
+and it leaves its deterministic acquisition, preparation and real passive
+entrance intact. The coordinatewise nonnegative-field counterexample
+in Proposition 22.1 still concerns its specified test alone.
+
+The result depends on the actual installed rational path service,
+exclusive rights, class assurance and finite backing. It acquires none
+of those premises and certifies no physical conformance. It transports
+neither to alpha/beta growth nor to a fixed universal relation structure.
+All fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and erased-chronology statements keep their
+original scopes. No arbitrary controlled-history four-view inverse,
+physical realization, global resource optimum or completion of the
+unrestricted common-process programme is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 27. Authentic signed producers over a localized rational ring
+
+**Definition 27.1 (arithmetic entrance on one actual source).** Fix a public prime $p$ and put
+
+$$
+R_p=\mathbb Z_{(p)}=\{a/b\in\mathbb Q:\ a,b\in\mathbb Z,\ b\ne0,\ p\nmid b\}.
+\tag{UFS.60}
+$$
+
+The denominator condition may equivalently be imposed on the reduced fraction. The unknown order is any finite $N\ge1$. The fixed native rooted Jacobi matrix $T$ satisfies (UFS.1), with the additional condition that every entry belongs to $R_p$. Adjacent links are strictly positive rationals; they need not be units of $R_p$. There is no supplied order, width, degree or producer-length bound.
+
+On this very source an actual producer initializes every cell to zero and executes a finite serial word of Tick, Add$(c)$ with $c\in R_p$, Read and Hold. Producer inputs may have either sign. There is no other input, autonomous evolution, field replacement or law change. Every producer Tick returns its updated root, every Read its present root, and every Add and Hold its fixed acknowledgement. These are real producer outputs, with their own traffic and any retained archives. The receiver is not given the producer word or its archive for free.
+
+Inductively assign a polynomial $h\in R_p[X]$ to the producer cut. Initially $h=0$; a Tick replaces $h$ by $Xh$, an Add$(c)$ by $h+c$, and a Read or Hold leaves it unchanged. Thus the actual handover field is
+
+$$
+x^{\rm in}=h(T)e_0.
+\tag{UFS.61}
+$$
+
+This is a consequence of an executed root-producer history, not a coordinatewise sign condition, a supplied polynomial, or an observer reconstruction of that history. With $J_{\rm p}$ producer Ticks and inputs $c_l$ at epochs $s_l$, its expression is $h(X)=\sum_l c_lX^{J_{\rm p}-s_l}$. The receiver need know none of these coefficients or epochs.
+
+**Assumption 27.2 (handover, rights and full receiving menu).** The initialization, producer restriction, coefficient restriction and fixedness are assured premises. Handover preserves the same field, native law and bound root without a hidden Tick. Retain Assumption 1.2's exact serial Read, returning Tick, arbitrary rational signed Add and Hold service, including its complete outputs, reference, exclusive access, call and input rights, serialization, effective Hold and sufficient finite backing. The receiving Add domain is all of $\mathbb Q$, even though the producer domain was $R_p$. In particular Add$(1/p)$ is authorized. No Reset, clone, size/coefficient port, chosen-index response oracle or timing/work/size side channel is introduced. Neither an order cap nor random bits are inputs. One finite receiving program takes $p$ as public input and applies to every admitted finite source and producer.
+
+The theorem below acquires numerical law and state conditional on this installation. It does not acquire or certify the installation, rights or producer assurance by observing roots. Actual provenance, an algebraic representation such as (UFS.61), and the receiver's acquired numerical record remain different objects. Physical conformance retains the volume's `ASSUMED-UNVERIFIED` boundary.
+
+## 28. Arithmetic provenance prevents premature principal-Hankel singularity
+
+**Theorem 28.1 (signed principal-minor stopping certificate).** For every source and actual producer of Definition 27.1 under Assumption 27.2, execute Hold; Add$(1/p)$; Read. Write the returned root as $y_0$. Subsequently execute returning Ticks in pairs, retaining every scalar, and Hold after each pair. At pair number $n\ge1$, test over $\mathbb Q$ the block
+
+$$
+Y_n=(y_{i+j})_{0\le i,j\le n},\qquad z_j=p y_j,\qquad H_n=(z_{i+j})_{0\le i,j\le n}.
+\tag{UFS.62}
+$$
+
+The first singular tested block occurs exactly at $n=N$, after exactly $2N$ Ticks. Also $Y_0$ is nonsingular. No link-unit premise, nonnegative producer input, positive spectral weight, or positive-definite signed Hankel premise is required. All tests are exact rational singularity tests; reduction modulo $p$ is a proof of noncancellation, not the stopping algorithm.
+
+Proof. Reduction $\rho:R_p\longrightarrow\mathbb F_p$ sends $a/b$ to $\bar a\bar b^{-1}$. Cross multiplication shows it is well defined; it respects sums and products, and its kernel is $pR_p$. In particular an element with reduction $1$ is nonzero in $\mathbb Q$.
+
+Let $b$ denote the actual field just after the exceptional Add, and define the mathematical matrix $C$ by
+
+$$
+b=x^{\rm in}+p^{-1}e_0=p^{-1}Ce_0,\qquad C=I+p h(T).
+\tag{UFS.63}
+$$
+
+All entries of $h(T)$ lie in $R_p$. The real symmetric matrix $C$ commutes with $T$, and its entrywise reduction is $I$. For every native coordinate subset $S$, its principal submatrix $C_{S,S}$ reduces to $I_{S,S}$. The determinant is a sum of products of entries, so
+
+$$
+\rho(\det C_{S,S})=1,\qquad \det C_{S,S}\ne0.
+\tag{UFS.64}
+$$
+
+In particular $C$ is invertible. This conclusion makes no assertion about the signs of its eigenvalues or principal determinants.
+
+Because the source actually evolves from $b$, its returns satisfy $z_j=e_0^{\mathsf T}T^jCe_0$. For $n<N$ put $K_n=[e_0,Te_0,\ldots,T^ne_0]$. Native path triangularity, supplied by [P Lemma 37.1][P], gives
+
+$$
+K_n=\begin{pmatrix}L_n\\0\end{pmatrix},\qquad
+(L_n)_{jj}=\beta_j,\qquad
+\beta_0=1,\quad \beta_j=\prod_{i=0}^{j-1}b_i>0.
+\tag{UFS.65}
+$$
+
+Here $L_n$ is upper triangular and the zero rows correspond to cells beyond $n$. Symmetry of $T$ and commutation with $C$ now give, with $S_n=\{0,\ldots,n\}$,
+
+$$
+\begin{aligned}
+H_n&=K_n^{\mathsf T}CK_n=L_n^{\mathsf T}C_{S_n,S_n}L_n,\\
+\det H_n&=\left(\prod_{j=0}^n\beta_j\right)^2\det C_{S_n,S_n}\ne0.
+\end{aligned}
+\tag{UFS.66}
+$$
+
+The factors $\beta_j$ need only be nonzero in $\mathbb Q$. They may reduce to zero modulo $p$. At $n=N$, the matrix $K_N$ has $N+1$ columns and only $N$ rows, so $H_N=K_N^{\mathsf T}CK_N$ has rank at most $N$. Since $H_n=pY_n$, scaling does not affect rational singularity. Equations (UFS.64)–(UFS.66) include $n=0$, and prove every assertion. The program grows its arrays pair by pair and therefore needs no advance knowledge of $N$. $\square$
+
+**Proposition 28.2 (the earned recurrence is valid at every shift).** At this actual first stop solve
+
+$$
+H_{N-1}(q_0,\ldots,q_{N-1})^{\mathsf T}
+=-(z_N,\ldots,z_{2N-1})^{\mathsf T},\qquad
+q(X)=X^N+\sum_{j<N}q_jX^j.
+\tag{UFS.67}
+$$
+
+Then $q$ is the characteristic polynomial of the actual native $T$, and
+
+$$
+y_{s+N}=-\sum_{j<N}q_jy_{s+j}\quad(s\ge0).
+\tag{UFS.68}
+$$
+
+Its degree $N$ is the least degree of a monic recurrence holding at all nonnegative shifts of $y$. These are all-future statements, rather than a finite-prefix fit.
+
+Proof. Theorem 28.1 gives the nonsingular solve. Let $K=K_{N-1}$. Its equations are $K^{\mathsf T}Cq(T)e_0=0$. Both $K$ and $C$ are invertible, whence $q(T)e_0=0$. Commutation implies $q(T)T^je_0=0$ for every $j$; these vectors include a basis, so $q(T)=0$. No nonzero polynomial of degree less than $N$ annihilates $e_0$, by the same native triangularity. The monic characteristic polynomial has degree $N$ and annihilates $T$; its difference from $q$ therefore vanishes and has degree less than $N$, so it is zero. Multiplying $q(T)=0$ by the actual readout and state gives (UFS.68).
+
+If a monic polynomial $r$ of smaller degree supplied an all-shift recurrence for $y$, its first $N$ equations would give $K^{\mathsf T}Cr(T)e_0=0$, hence $r(T)e_0=0$, a contradiction. Thus the recurrence is least. This proof uses the newly earned principal-minor certificate; finite Ho--Kalman recovery with a reference order is not substituted for that certificate. $\square$
+
+The noncancellation mechanism is specifically $C\equiv I\pmod p$ in native coordinates, followed by a rational triangular congruence. It does not identify the Hankel rank over $\mathbb F_p$. If some link is divisible by $p$ in $R_p$, a reduced Hankel block can be singular well before the correct rational stopping index. Conversely an invertible symmetric $C$ alone would not ensure its smaller coordinate principal blocks were invertible; (UFS.64) supplies exactly that additional condition.
+
+## 29. The actual second pulse, native coordinates and complete retained use
+
+**Theorem 29.1 (native acquisition at the true advanced cut).** Continue on this same specimen from Theorem 28.1's held cut, where the field is $T^{2N}b$. Execute Add$(1)$; Read, then $2N-1$ returning Ticks and a final Hold. Denote these $2N$ actual scalar returns by $v_0,\ldots,v_{2N-1}$. There is an effective exact rational construction of the native $T$, its impulse law and the actual field at this final cut, without reconstructing the producer word or $h$.
+
+Proof. The acquired recurrence extends the first response locally through $y_{4N-1}$. Put $w=T^{2N}b+e_0$, the actual post-second-pulse field. The free/forced identity (UFS.3), with Add and Tick kept as separate actual operations, gives
+
+$$
+v_j=e_0^{\mathsf T}T^jw=y_{2N+j}+m_j,\qquad
+m_j=v_j-y_{2N+j}\quad(0\le j\le2N-1).
+\tag{UFS.69}
+$$
+
+Consequently the subtraction yields the true native impulse moments $m_j=e_0^{\mathsf T}T^je_0$, not the signed weighted moments $y_j$ or their normalization. The $v_j$ are paid observations; the extended $y_j$ are computations from the earned recurrence. Neither is a response-query oracle.
+
+Apply [P Proposition 37.3][P] to these moments with the now-earned order $N$. Its monic moment-orthogonal polynomials $P_j$, $0\le j<N$, have the exact native correspondence
+
+$$
+P_j(T)e_0=\beta_je_j,\quad h_j=\langle P_j,P_j\rangle_m=\beta_j^2,\quad
+a_j=\frac{\langle XP_j,P_j\rangle_m}{h_j},\quad
+b_j=\sqrt{h_{j+1}/h_j}>0.
+\tag{UFS.70}
+$$
+
+The moment pairing is the ordinary Euclidean pairing of polynomial vectors on this actual source. The smaller native impulse Gram matrices are positive because their native Krylov columns are independent; this positivity is not asserted for the first signed response. The diagonal formulas need only moments through $2N-1$, and the link norms through $2N-2$. P's additional moment $m_{2N}$ was an unknown-order stopping certificate; here Theorem 28.1 has already earned the order. Each positive root in (UFS.70) is rational by the source promise. Integer roots of the reduced numerator and denominator, with exact squaring checks, compute it without a real-root oracle. Positive links fix the native orientation. Thus this is an application of the supplied native inverse, not a new moment/Jacobi theorem.
+
+Form the observability matrix $\mathcal O_N=K_{N-1}^{\mathsf T}$ using the recovered $T$, and solve
+
+$$
+\mathcal O_N w=(v_0,\ldots,v_{N-1})^{\mathsf T},\qquad
+x_*=T^{2N-1}w
+=T^{4N-1}(x^{\rm in}+p^{-1}e_0)+T^{2N-1}e_0.
+\tag{UFS.71}
+$$
+
+Native triangularity makes this solve nonsingular. The right-hand side consists of actual returns from $w$, and there really have been $2N-1$ Ticks since that field. Hence $x_*$ is the actual present field, rather than a reset or handover field. At $N=1$ all formulas still apply: the second stage has one Tick, one diagonal and no link-root extraction. The acquired $q$ and true moments also give the supplied uncancelled transfer
+
+$$
+F_T(z)=e_0^{\mathsf T}(zI-T)^{-1}e_0
+=\sum_{j\ge0}m_jz^{-j-1},
+\tag{UFS.72}
+$$
+
+as finite rational polynomial data, by [P Proposition 37.4][P]. $\square$
+
+**Corollary 29.2 (all-field and all-menu service from this cut).** Retain $N,T,q$, $\mu=(m_0,\ldots,m_{N-1})$, $\widehat x=x_*$ and $a=\mathcal O_Nx_*$. Retain also the actual source reference, applicable call/input rights and backing, and the prescribed actual return records. The following supplied predictive updates are correctly initialized at this actual cut for every finite adaptive continuation with arbitrary rational Add inputs.
+
+| Actual command | Native record after the command | Predictive record after the command | Complete output |
+| --- | --- | --- | --- |
+| Read | $\widehat x$ | $a$ | $a_0$ |
+| Tick | $T\widehat x$ | $a'_j=a_{j+1}$ for $j<N-1$; $a'_{N-1}=-\sum_{j<N}q_ja_j$ | $a'_0$ |
+| Add$(r)$, $r\in\mathbb Q$ | $\widehat x+r e_0$ | $a'=a+r\mu$ | fixed acknowledgement |
+| Hold | $\widehat x$ | $a$ | fixed acknowledgement |
+
+Proof. Theorem 29.1 establishes $\widehat x=x_{\rm actual}$ and $a=\mathcal O_Nx_{\rm actual}$ at installation. For every $x\in\mathbb Q^N$, not merely for a cyclic or producer-reachable $x$, the identity $q(T)=0$ gives the Tick row and $\mathcal O_Ne_0=\mu$ gives the Add row. Read and Hold preserve the two identities. Tick's output is the updated root, and no scalar is declared for Add or Hold. Serial receipt and local commit precede the next exposed completed cut. Induction therefore preserves both identities and every output through any finite common adaptive continuation. Equal earlier outputs give the same next chosen command and rational input, so adaptation adds no exception. This is the exact initialization and use of §4 and [P Theorem 40.2][P], with (UFS.71) replacing their entry-state input.
+
+Numerical forecasts on scratch records neither execute a command nor acquire an observation, source reference or right. Actual continued use still calls the same retained source, receives every declared frame and pays all work, traffic and growing records. After receiving an Add outside $R_p$, the arithmetic entrance premise need no longer describe the new field; the all-field predictive invariant still holds. $\square$
+
+## 30. Executed preparation and the exact four-expression image
+
+**Corollary 30.1 (paid entrance, mutual recovery and passive dynamics).** From the held cut (UFS.71), the supplied native controllability construction earns a new actual unit origin on this specimen. After a further actual passive segment of $k\ge2N$ Ticks, the four independently specified data below lie in [P Definition 39.1][P]'s domain, mutually recover one another, agree along every recovery route and commute with passive Tick, Read and Hold.
+
+Proof. Solve, over $\mathbb Q$,
+
+$$
+[T^{N-1}e_0,\ldots,e_0](u_0,\ldots,u_{N-1})^{\mathsf T}
+=e_0-T^Nx_*.
+\tag{UFS.73}
+$$
+
+The reversed Krylov matrix is invertible. Execute in order $N$ pairs Tick; Add$(u_j)$, including any zero Add, and Hold after each pair. Retain every Tick scalar before that pair's Add and every acknowledgement. Induction gives the actual field after $j$ completed pairs as
+
+$$
+x_j=T^jx_*+\sum_{l<j}u_lT^{j-1-l}e_0\quad(0\le j\le N).
+\tag{UFS.74}
+$$
+
+Equation (UFS.73) makes $x_N=e_0$. Call this actual held cut $o$. Read its root and execute $k\ge2N$ returning Ticks with no Add, retaining the origin return and all $k$ subsequent scalars. The actual field is now $x=T^ke_0$. This is §§5–6 and 20's supplied preparation and passive entrance, now applied to the genuinely acquired $T,x_*$. No unexecuted reset is substituted.
+
+The four numerical views have the following independent meanings, relative to this actual origin and common installation.
+
+| View | Exposed data and meaning |
+| --- | --- |
+| Space | $(T,x)$: native rooted cell adjacency/weights and the present native cell field |
+| Time | $(m_0,\ldots,m_k)$: this actual paid ordered passive root segment from $o$ |
+| Boundary | $(F_T,x_0)$: finite endpoint transfer law and present endpoint value |
+| Memory | $(q,\mu,a)$: least native recurrence, its initial impulse values, and present sufficient predictive state $a=\mathcal O_Nx$ |
+
+References, rights, backing and assurance are retained common context, separately charged and not hidden coordinates inside every numerical view. Producer and preparation archives are separate records; none of these views is an unrestricted copy of them.
+
+For completeness the supplier's recovery correspondence is as follows. Time's length gives $k$; its first flat positive impulse block gives $N$, and (UFS.70) gives native $T$. Boundary's rational function expands at infinity to the same moments and thus gives $T$. Memory's least degree gives $N$ and its recurrence and initial values generate the same moments, hence $T$; also $\mathcal O_N^{-1}a=x$. Space already gives $T,x$. Because $0<T<I$, the native impulse law has
+
+$$
+1=m_0>m_1>\cdots>0,\qquad m_j\longrightarrow0.
+\tag{UFS.75}
+$$
+
+Indeed its spectral form is a sum of $\lambda^j$ with positive weights summing to one and $0<\lambda<1$. Thus for Space, Boundary and Memory, enumeration of these rational moments until the current root equals $m_k$ terminates uniquely on their declared actual images. Each route recovers precisely $(T,k,T^ke_0)$; reconstructing a target view from that triple gives route agreement. Reconstructing the numerical Time list reproduces an already paid segment; it does not establish provenance for an unexecuted segment.
+
+Passive Tick sends the triple to $(T,k+1,Tx)$, appends its actual return to Time, preserves $F_T$ and updates Boundary's present root, and shifts Memory by $q$. Read and Hold preserve epoch and field and have their stated complete outputs. These are exactly [P Lemma 39.2 and Propositions 39.3–39.4][P]. On this image, equality of any numerical view fixes the same $(T,k,x)$ and therefore suffices for equality of all complete finite adaptive continuation outputs and corresponding native successors under the common installed menu, by Corollary 29.2. References and legal rights are still common context for that comparison. Enumeration is an inverse on the actual image, not a terminating off-image recognizer or an $N$-only cost bound at arbitrarily late phase. A later Add remains in Corollary 29.2's complete service but does not thereby put an arbitrary controlled journal in this passive four-view domain. $\square$
+
+## 31. One same-run arithmetic-entrance account
+
+**Definition 31.1 (specified schedule and separate bills).** Use exactly §21's schedule with its first receiver Add$(1)$ replaced by Add$(1/p)$: one initial Hold; one Hold after each first-stage Tick pair; one final Hold after the second-stage Ticks, covering native computation and the preparation solve; one Hold after each preparation Tick/Add pair; then the origin Read and $2N$ passive Ticks with one Hold after each passive pair. A Hold ends before the next state-changing command. All indicated Holds and zero Adds are real calls. Use Convention 8.1's literal reduced-rational encoding and actual framing. Initialization, source arithmetic, controller arithmetic, traffic, simultaneous material, retained archives, references and rights are distinct coordinates.
+
+**Proposition 31.2 (attained exact traffic).** For every admitted run, the receiver counts are
+
+| Coordinate | Through native acquisition and predictor installation | Through actual preparation and passive $k=2N$ cut |
+| --- | --- | --- |
+| Returning Ticks | $4N-1$ | $7N-1$ |
+| Adds | $2$ | $N+2$ |
+| Reads | $2$ | $3$ |
+| Holds | $N+2$ | $3N+2$ |
+| Scalar returns | $4N+1$ | $7N+2$ |
+| Fixed acknowledgements | $N+4$ | $4N+4$ |
+| Calls and complete return frames | $5N+5$ | $11N+6$ |
+| Random bits | $0$ | $0$ |
+
+Proof. First-stage stopping uses $2N$ Ticks and $N$ pair Holds. The second stage uses $2N-1$ Ticks and its final Hold. Together they have two Adds, two Reads and the initial Hold. Preparation adds $N$ Ticks, $N$ Adds and $N$ Holds; passive entry adds an origin Read, $2N$ Ticks and $N$ Holds. Every Tick and Read emits a scalar, every Add and Hold an acknowledgement. The resulting sums are precisely §21.2's supplied schedule counts; the changed exceptional pulse changes literal input bits and subsequent rational widths, not command counts. $\square$
+
+**Proposition 31.3 (producer, source, computation and material on that run).** Let the actual producer have counts $J_{\rm p},A_{\rm p},R_{\rm p},H_{\rm p}$. Through the right-hand endpoint in Proposition 31.2, put
+
+$$
+J=J_{\rm p}+7N-1,\quad A=A_{\rm p}+N+2,\quad
+R=R_{\rm p}+3,\quad H=H_{\rm p}+3N+2.
+\tag{UFS.76}
+$$
+
+There are $J+R$ actual scalar returns, $A+H$ acknowledgements, $J+A+R+H$ service calls and $A$ transmitted pulse rationals. The direct simultaneous-buffer implementation of [P Proposition 41.2][P] uses
+
+$$
+J(3N-2)\ \text{rational products},\qquad
+J(2N-2)+A\ \text{rational additions},\qquad NJ\ \text{Tick destination writes}.
+\tag{UFS.77}
+$$
+
+Add's root writes, the actual $N$ initial zero writes, any extra buffer initialization, coefficient installation, parsing/framing/control, reference and grant setup, assurance and storage/backing work are additional paid resources. No producer count is bounded by $N$ alone.
+
+One receiver implementation uses $O(N^4)$ exact rational arithmetic/reduction/comparison operations, $N-1$ positive rational-root extractions and $O(N^2)$ numerical words through this endpoint. Let $W\ge1$ bound the actual widths of every integer/rational operand and intermediate and binary counter on this one finite producer/receiver run, including $p$, transmitted inputs and source operations. Let $L_{\rm io}$ be all actual traffic bits, framing and separately materialized output copies; $G_{\rm p}^{\rm ctl}$ the remaining producer controller work; and $I_{\rm work}$ all remaining setup, access and backing work. A conservative attained bit-work bound is
+
+$$
+O\!\left((N^4+NJ+A)W^3+L_{\rm io}\right)
++G_{\rm p}^{\rm ctl}+I_{\rm work}.
+\tag{UFS.78}
+$$
+
+A coexisting numerical layout uses $O(B+N^2W)$ bits, where $B$ is the actual native coefficient-store length, plus actual producer stores, framing, extra archives/export copies, program, references, rights, assurance and backing. Neither $W$ nor these stores are uniformly bounded by $N$ or the finite program.
+
+Proof. Counts in (UFS.76) add consecutive operations on the same source. Equation (UFS.77) is the supplied direct sparse update count, independent of signs and denominator divisibility; $N=1$ gives one product and no Tick addition. Each Add has one actual root addition. Arbitrarily many producer Ticks from zero or zero Adds can precede a fixed endpoint, proving the absence of an $N$-only producer-count bound.
+
+For receiving computation use exact elimination with row pivoting for each rational $H_n$, including the final singular block. It costs $O(\sum_{n=1}^N(n+1)^3)=O(N^4)$ operations and needs no positivity or modular-rank test. Scaling returns by $p$, solving (UFS.67) and extending (UFS.68) through $4N-1$ fit that bound. Native orthogonality solves and pairings in (UFS.70) are the supplied $O(N^4)$ implementation of P41.3. There are exactly $N-1$ rational link roots. Sparse powers, the observability and control solves, current-state propagation and prediction through the remaining $O(N)$ actual commands fit within cubic additional arithmetic. No search for $h$ or its word is performed.
+
+All divisions have nonzero denominators proved above or in the positive native impulse inverse. Each rational root is computed by integer square roots and exact squaring. Thus every admitted finite run terminates with finite $W$, without receiving $W$ in advance. School integer arithmetic, Euclidean fraction reduction and binary-search integer roots have a conservative $O(W^3)$ bit allowance per indicated operation. The source work, cell writes, actual input parsing and complete traffic give (UFS.78), with the other producer and installation work explicitly added.
+
+A constant number of quadratic arrays for elimination, orthogonality, observability and preparation suffice; scratch is reused after its needed result is retained. The acquired law, two source state buffers, native/predictive state, controls, counters and the $O(N)$ receiver scalars and command/acknowledgement journal fit the numerical allowance. Separate producer archives or exported duplicates remain charged where retained, rather than silently discarded or made free receiver advice. Later arbitrary continuations, extra view conversions, phase enumeration at late $k$, and longer literal Time records incur their actual further work and material. This is a finite attained implementation, not a minimum-total-cost theorem or lifetime-memory bound. $\square$
+
+## 32. Exact countermodels and incomparable entrances
+
+**Proposition 32.1 (coordinate membership does not replace root provenance).** It is false that $x^{\rm in}\in R_p^N$ alone permits Theorem 28.1's stopping test, even when all coefficients lie in $R_p$ and the links are positive but nonunits.
+
+Proof. Set $p=3$ and
+
+$$
+T=\begin{pmatrix}41/100&3/100\\3/100&49/100\end{pmatrix},\qquad x^{\rm in}=e_1.
+\tag{UFS.79}
+$$
+
+Its eigenvalues are $1/2,2/5$, so $0<T<I$. All coefficients and coordinates lie in $R_3$, and the link $3/100$ is a nonunit. The exceptional pulse makes $b=(1/3,1)^{\mathsf T}$, an eigenvector with eigenvalue $1/2$. Hence $y_j=(1/3)(1/2)^j$ and $Y_1$ is singular although $N=2$, with $Y_0\ne0$. This field has no representation $h(T)e_0$ with $h\in R_3[X]$: modulo $3$, $T$ is diagonal, so every such polynomial vector has second coordinate zero, whereas $e_1$ does not. Thus the example violates precisely the weakened provenance premise, not the authentic producer theorem. It refutes that stopping test under the weakening, not every possible algorithm on the larger class. $\square$
+
+**Proposition 32.2 (both arithmetic restrictions matter).** Keeping the actual $R_p$ producer while dropping the coefficient restriction can invalidate the same stopping certificate. Keeping the coefficient restriction while permitting arbitrary rational producer pulses can also invalidate it.
+
+Proof. For the first assertion take $p=3$,
+
+$$
+T=\begin{pmatrix}5/12&1/12\\1/12&5/12\end{pmatrix},
+\tag{UFS.80}
+$$
+
+whose eigenvalues are $1/2,1/3$. The actual producer Add$(-1)$; Tick starts from zero and uses only $R_3$ inputs. Its handover field is $-Te_0$. Add$(1/3)$ then leaves $(-1/12,-1/12)^{\mathsf T}$, an eigenvector of eigenvalue $1/2$. The observed response has nonzero $y_0$ and singular $Y_1$, despite order two. The coefficients of (UFS.80) are not in $R_3$, so reduction of $h(T)$ was unavailable. For the second assertion, on any allowed coefficient matrix, the arbitrary rational producer Add$(-1/p)$ leaves $-e_0/p$ and the marker cancels it completely. All $y_j$ vanish. That pulse lies outside $R_p$. Neither example is an obstruction to all other acquisition strategies. $\square$
+
+**Proposition 32.3 (nonunit links and indefinite signed weights really occur).** The arithmetic entrance is nonempty for every prime $p$ and every finite $N$, even if every adjacent link is a nonunit. It also contains genuinely indefinite $C$, so a positive-weight argument cannot be its general proof.
+
+Proof. Let $A_N$ be the adjacency matrix of the $N$-cell path, including $A_1=0$. Choose an integer $d>4p$ coprime to $p$, and set $T=p(2I+A_N)/d$. For $N>1$ the quadratic form of $2I+A_N$ is
+
+$$
+x_0^2+x_{N-1}^2+\sum_{i=0}^{N-2}(x_i+x_{i+1})^2.
+\tag{UFS.81}
+$$
+
+It is strictly positive for nonzero $x$ and at most $4\|x\|_2^2$. The $N=1$ form is $2x_0^2$. Thus $0<T<I$, all coefficients lie in $R_p$, and every adjacent link $p/d$ is a nonunit. Any finite allowed producer, including the empty word, is admitted.
+
+For indefiniteness choose $p=3$, $T=\left(\begin{smallmatrix}3/8&1/8\\1/8&3/8\end{smallmatrix}\right)$ and the actual producer Add$(-1)$; Tick. Then $h(X)=-X$ and $C=I-3T$ has eigenvalues $1/4,-1/2$. Both spectral components are seen at the root, so the first response has signed spectral weights of opposite signs. Nevertheless every native coordinate principal block has determinant nonzero by (UFS.64), and Theorem 28.1 applies. $\square$
+
+**Proposition 32.4 (the arithmetic and nonnegative-history entrances are incomparable).** For each fixed public prime $p$, Definition 27.1 and Definition 17.1 supply different sufficient source/provenance classes; neither contains the other.
+
+Proof. Choose any integer $d>1$ coprime to $p$ and the one-cell $T=(1/d)$. The arithmetic producer Add$(-1)$ gives a negative handover field. In the nonnegative producer class, $T$ is entrywise nonnegative and every nonnegative root pulse and its later iterates are coordinatewise nonnegative, so that field cannot arise. Conversely Add$(1/p)$ from zero is an allowed nonnegative producer and leaves $e_0/p$. On this same $R_p$ coefficient matrix, every $R_p$ root-producer field belongs to $R_p^N$; $e_0/p$ does not. Thus even fixing this common coefficient matrix does not make either endpoint class include the other. Both protocols retain their original counts and literal bills; neither is declared globally cheaper. $\square$
+
+These countermodels address necessity for this arithmetic certificate and the distinction of the entrances. They do not turn one sufficient construction into a universal characterization of exact acquisition. In particular, the already published small-signed-entry obstruction in §§24–26 concerns arbitrary signed fields with only a norm bound and has its original spectral enclosure and quantifiers. Its witnesses are not asserted to be authentic $R_p$ root-producer endpoints. That obstruction is a supplier boundary, not a new result of the arithmetic entrance. The erased-chronology statement of Proposition 22.3 also retains its scope: an endpoint polynomial or the acquired native law is not an inverse of the actual producer chronology.
+
+## 33. Mathematical provenance and remaining realization boundaries
+
+The source-relative addition is Theorem 28.1's arithmetic-provenance certificate and Proposition 28.2's resulting uncapped all-shift recurrence, together with their actual-source initialization of the existing native acquisition and use constructions. Polynomial evolution (UFS.61) is the signed root-producer version of (UFS.3). Reduction in $\mathbb Z_{(p)}$, determinant compatibility with ring homomorphisms, triangular determinants and congruence are ordinary algebra. For example pinned upstream [matrix determinant algebra](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean) supplies `Matrix.det_mul`, `Matrix.det_transpose` and `Matrix.det_one` over a commutative ring. The new use is the native-coordinate principal-block certificate before the rational Krylov congruence, which permits nonunit links and signed or indefinite weights. This is `repo-derived` mathematical content without a worldwide priority claim.
+
+Native moment inversion is `literature-attested`: [Teschl §2.5][Teschl], equations (2.109)–(2.118), and the finite-support paragraph on printed p.44 give the classical moment/Jacobi construction and its finite termination. Theorem 2.13's nonfinite-support premise is not used for a finite path. [P37][P] supplies the exact native-cell, positivity and rational-root correspondence needed in (UFS.70). The [coefficient-driven Jacobi declarations and their private helpers][JAC], with their [owning Scribe][JACs], use the real Euclidean space $\mathbb R^N$, actual power basis $T^je_0$, self-adjoint multiplication by $T$ and the now-earned characteristic recurrence. The signed $y$ pairing is not that Euclidean native impulse pairing. [FiniteAtomicHankelVandermonde][HVD] and its [Scribe][HVDs] supply the generic finite signed moment factorization, not the new early-block certificate. [FiniteHoKalmanBlocks][HK] and its [Scribe][HKs] retain their explicit reference-order hypothesis; an order lower bound alone supplies no upper-order stopping certificate.
+
+For [finite observability](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs), the exact correspondence is state $\mathbb R^N$, scalar readout $e_0^{\mathsf T}$, update $T$ and horizon $N$. Native triangularity proves invertibility and the paid $v$ supplies its right-hand side. Sections 4–6, 20–21 and [P39–41][P] supply all-field prediction, executed controllability, the actual passive four-view image and the direct-source/resource mechanics; §§29–31 apply them at the newly earned cut with the exceptional marker. None of that mature reconstruction, control or view algebra is presented as newly proved abstract theory. The exact supplier hypotheses are established before each application.
+
+The actual zero initialization, producer/coefficient restrictions, installed fixed law, bound root, exclusive serial menu, exact rational returns, exceptional rational-input right, Hold and sufficient backing remain premises. They are paid or assured as specified, and are not inferred from a matching finite transcript. There is no noisy/approximate rank instrument, uniform literal-width bound, retained-history inverse, minimum-total-resource theorem or physical-conformance certificate here. The no-cap conclusion is termination for each admitted finite source, with an actual-source-dependent finite bill, rather than a common finite horizon over all orders.
+
+No map from native alpha/beta material constructors, a full ordered terminal-list reconstruction, a private-randomization clock experiment, or a quantum boundary realization to this arithmetic root-producer service is supplied. Such a map would have to preserve actual initialization, coefficient/input conditions, complete operations/outputs, root binding, legal access, records and resource costs; a common name or an abstract inverse does not provide it. The fixed-$G_{\rm gc}$/original-$Q$, parked-consumer, unchanged-initialization and final-no-Ready obligations keep their original exact domains. A common native-LAB/path realization, broader mutually recoverable controlled views, independently acquired authority/provenance and full resource minimality remain separate full-programme gaps. The bounded arithmetic entrance and its paid passive four-expression application do not complete that programme.
+
+## 追加锚（本行以下为增补区）

@@ -1226,3 +1226,2924 @@ the linear-target/product-measurability comparisons of
 Krieg--Novak--Ullrich, Sections 1--2, cited in Section 1. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Stronger joint-fiber budgets and an unrestricted exact region
+
+**Definition 7.1 (coefficient and terminal budgets).** Use exactly
+the complete worlds and private strategies of Definitions 1.1--1.2.
+For every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$, retain $P,G$ from (1.8) and
+$\chi,q,r,h$ from (6.2), and put
+
+$$
+\gamma=\frac c3,\qquad
+\alpha=\min\{1,\gamma\},\qquad
+V=\frac G2+\frac{(1-\alpha)\chi}{4}
+ =\frac{P+G-\alpha\chi}{4}.
+\tag{7.1}
+$$
+
+For $-E\le x\le E$ define candidate-origin budgets
+
+$$
+\rho^\alpha_{13}(z+x)=
+\begin{cases}
+G/2-\alpha h(-x),&-E\le x\le0,\\[2pt]
+(P-\alpha\chi)/2+\alpha h(x),&0<x\le E,
+\end{cases}
+\qquad
+\rho^\alpha_{23}(t)=\rho^\alpha_{13}(-3-t).
+\tag{7.2}
+$$
+
+As in (6.3), the center belongs to the first case for each design.
+Only candidate origins in the compatible set are arguments of these
+budgets; the unknown true origin is not an acquired-history operand.
+
+**Theorem 7.2 (joint-fiber compatibility at the larger coefficient).**
+For $m>0$, $c>0$ and $c/3<E\le(1+c)/2$, every real
+three-report history with $C=C_j\ne\varnothing$,
+$j\in\{13,23\}$, has budgets (7.2) that
+are positive and bounded, and satisfy
+
+$$
+|s-t|\le\rho^\alpha_j(s)+\rho^\alpha_j(t)
+\qquad(s,t\in C).
+\tag{7.3}
+$$
+
+Consequently the interval and answer
+
+$$
+\begin{aligned}
+J^\alpha_j(C)&=[L^\alpha_j(C),U^\alpha_j(C)],\\
+L^\alpha_j(C)&=\sup_{t\in C}(t-\rho^\alpha_j(t)),\qquad
+U^\alpha_j(C)=\inf_{t\in C}(t+\rho^\alpha_j(t)),\\
+d^\alpha_j(C)&=\frac{L^\alpha_j(C)+U^\alpha_j(C)}2
+\end{aligned}
+\tag{7.4}
+$$
+
+are well defined and finite, with $J^\alpha_j(C)\ne\varnothing$ and
+
+$$
+|d^\alpha_j(C)-t|\le\rho^\alpha_j(t)\qquad(t\in C).
+\tag{7.5}
+$$
+
+For an empty compatible set set $d^\alpha_j=z$.
+
+**Proof.** The identities (4.4), (6.7) and (6.8) give
+
+$$
+\begin{gathered}
+0<q<r<E,\qquad r\le\frac12,\qquad r-q=\chi>0,\\
+G=\gamma(1+r)=\gamma+(1+2\gamma)\chi,\qquad
+0<\alpha\le1,\qquad \alpha\le\gamma.
+\end{gathered}
+\tag{7.6}
+$$
+
+In particular every budget in (7.2) is at least
+$G/2-\alpha\chi$ and at most $(P+\alpha\chi)/2$, since
+the smallest second-case budget exceeds $G/2-\alpha\chi$ by
+$(1+\alpha)\chi/2$. Moreover,
+
+$$
+G-2\alpha\chi
+ =\gamma+(1+2\gamma-2\alpha)\chi
+ \ge\gamma+\chi>\gamma>0.
+\tag{7.7}
+$$
+
+This proves positivity and boundedness.
+
+For $013$ use the full-prior, favorable-half and cross-center
+restrictions (6.10), supplied by Three-Index Design, Theorems 2.1
+and 3.1. Its local original-coordinate restriction (6.11) says
+that if $z-y,z-x$ belong to this same fiber, $0\le x<y\le E$
+and $x<r$, then, with $d=y-x$ and $w=r-x$,
+
+$$
+d\le\frac{c(1+x)}3=G-\gamma w.
+\tag{7.8}
+$$
+
+Indeed $0\le x<r\le1/2$ puts $k_L(x)=3/(1+x)$ in the
+near branch of the exact separation theorem for $u=1,v=3$.
+The two compatible noiseless triples differ by at most $mc$
+in the original maximum norm. Their exact minimum distance is
+$3md/(1+x)$, which gives (7.8), including $x=0$.
+This uses jointly compatible gains, offsets and original errors;
+no independent box for difference errors is used.
+
+Take first $z-y\le z-x\le z$ in $C_{13}$. Equal origins
+satisfy (7.3) by positivity. If $x\ge r$, both tapers vanish,
+so their radius sum is $G$, sufficient by (6.10). Suppose
+$x<r$ and $d>0$. If $d\le\chi$, then $h(x),h(y)\le\chi$
+and (7.6) imply
+
+$$
+d+\alpha(h(x)+h(y))
+ \le(1+2\alpha)\chi
+ \le(1+2\gamma)\chi=G-\gamma<G.
+\tag{7.9}
+$$
+
+If $d\ge\chi$, the two tapers instead satisfy
+
+$$
+h(x)+h(y)
+ =\min\{\chi,w\}+\min\{\chi,(w-d)_+\}\le w.
+\tag{7.10}
+$$
+
+For $w\le\chi$ the first term is $w$ and the second is zero,
+because $d\ge\chi\ge w$. For $w>\chi$ the first term is
+$\chi$, and $(w-d)_+\le w-\chi$. These two cases prove
+(7.10). Using (7.8) and $\alpha\le\gamma$ now gives
+
+$$
+d+\alpha(h(x)+h(y))
+ \le G-\gamma w+\alpha w\le G.
+\tag{7.11}
+$$
+
+Both (7.9) and (7.11) are precisely
+$d\le G-\alpha(h(x)+h(y))$, the required radius sum for
+these two origins. The separation by $d\le\chi$ or $d\ge\chi$
+is what permits the coefficient in (7.1).
+
+For two origins $z<z+x\le z+y$ in $C_{13}$, if $x\le q$,
+then $h(x)=\chi$, so their radius sum is
+$P+\alpha h(y)\ge P\ge y-x$. If $x>q$, (6.8) gives
+$\chi-h(x)\le x-q$, while the prior gives $y-x\le E-x$.
+Thus
+
+$$
+\begin{aligned}
+\rho^\alpha_{13}(z+x)+\rho^\alpha_{13}(z+y)
+ &=P-\alpha\chi+\alpha(h(x)+h(y))\\
+ &\ge P-\alpha(x-q)
+ \ge P-(x-q)=E-x\ge y-x.
+\end{aligned}
+\tag{7.12}
+$$
+
+Here $\alpha\le1$ is used in the second inequality.
+For $s\le z<t$, (6.10) bounds $t-s$ by $\gamma$,
+whereas (7.7) bounds the two radii's sum below by
+$G-2\alpha\chi>\gamma$. The convention at $z$ is therefore
+also covered. These cases prove (7.3) on every $013$ fiber.
+The exact complete-source reflection (2.7) and (7.2) prove it
+on every $023$ fiber. Reflection relates fixed experiments;
+it is not an acquisition operation.
+
+The scalar budget-intersection argument of Theorem 2.1 applies
+to (7.3): every $s-\rho^\alpha_j(s)$ is at most every
+$t+\rho^\alpha_j(t)$. Its supremum is therefore at most their
+infimum. The nonempty compatible set lies in the bounded prior,
+and the budgets are bounded, so both endpoints in (7.4) are
+finite. Every point of their interval belongs to every
+$[t-\rho^\alpha_j(t),t+\rho^\alpha_j(t)]$, giving (7.5).
+The empty-set convention completes totality. The fixed-pair
+separation, reflection and scalar-intersection ingredients are
+the suppliers already identified in Sections 1--2 and 6;
+(7.9)--(7.11) supply the stronger joint-fiber estimate.
+$\square$
+
+**Definition 7.3 (acquired-history strategy).** Let $\Gamma^\alpha$
+use the source-independent fair seed space $\{13,23\}$ with its
+power-set sigma-algebra and the total acquisition functions (6.14).
+On terminal pairs $(1,3)$ and $(2,3)$, for either seed, use
+$d^\alpha_{13}$ and $d^\alpha_{23}$ from (7.4), respectively,
+formed solely from that pair's three acquired reports.
+On terminal pair $(1,2)$ use the midpoint of $C_{12}$ when
+nonempty, and $z$ when empty. These rules apply on every real
+history, including histories unreachable under that seed.
+All parameters in (7.1)--(7.2) are public and independent of $W$.
+At $E=c/3$ use the existing $\Gamma_{1/2}$ of Definition 3.1.
+
+**Theorem 7.4 (fixed-complete-world upper bound and exact strategy risk).**
+For $m>0$, $c>0$ and $c/3<E\le(1+c)/2$,
+$\Gamma^\alpha$ is lawful under Definition 1.2. Every complete
+world of (1.2), with all its original errors fixed before the seed,
+satisfies
+
+$$
+\mathbb E_{\Gamma^\alpha}|T-\tau|
+ \le
+ \begin{cases}
+ V,&\tau\ne z,\\
+ G/2-\alpha\chi,&\tau=z,
+ \end{cases}
+ \qquad
+ \boxed{\mathcal R(\Gamma^\alpha)=V.}
+\tag{7.13}
+$$
+
+At $E=c/3$ the specified endpoint rule has exact risk $E/2$.
+
+**Proof.** The acquisition functions (6.14) read exactly $013$
+or $023$, each consisting of three actual increasing integer
+indices. Their second continuation is $3$ on every legal
+history, also when the first continuation is $2$.
+Theorem 7.2 gives total finite terminal rules for both these
+pairs. The compact-interval supplier for $C_{12}$ in Definition
+1.3 gives the same property on the unused pair. Thus empty and
+unreachable histories have total finite answers. For each fixed
+complete world, the actual indices and answer are maps on the
+two-point power-set probability space, hence measurable. No world
+measurability or history regularity is required.
+
+Fix one complete $W$. Its gain is any finite $A\ge m$,
+its offset is any $B\in\mathbb R$, and its four original errors
+are any fixed member of the closed cube in (1.2).
+Its true origin belongs to each corresponding compatible set.
+For $x=|\tau-z|>0$, (7.5) bounds the two branch losses, in the
+appropriate order for the sign of $\tau-z$, by
+
+$$
+\frac{P-\alpha\chi}{2}+\alpha h(x),
+ \qquad \frac G2-\alpha h(x).
+\tag{7.14}
+$$
+
+Their fair average is $V$. At $\tau=z$ both budgets are
+$G/2-\alpha\chi$, smaller than $V$ by
+$(1+3\alpha)\chi/4$. This proves the uniform bound using both
+losses in the same complete world. Each execution uses only its
+own acquired history.
+
+For attainment reuse the complete world $W_b$ of (4.5), with its
+gain $m$, finite offset, origin $b$ and all four displayed original
+errors fixed before the seed. The original-coordinate witnesses
+(4.7)--(4.11) give exactly the fibers (6.19). On its $013$ fiber,
+$x=t-z$ runs over $[q,E]$, which is strictly positive.
+On this interval
+$x\mapsto x-\rho^\alpha_{13}(z+x)$ is nondecreasing because
+$h$ is nonincreasing. The map
+$x\mapsto x+\rho^\alpha_{13}(z+x)$ is also nondecreasing:
+for $x_1<x_2$ its increment is at least
+$(1-\alpha)(x_2-x_1)\ge0$ by the Lipschitz bound in (6.8).
+Strict monotonicity is unnecessary, so this includes $\alpha=1$.
+With $h(q)=\chi$ and $h(E)=0$, (7.4) consequently gives
+
+$$
+\begin{aligned}
+L^\alpha_{13}
+ &=b-\frac{P-\alpha\chi}{2},\\
+U^\alpha_{13}
+ &=b-P+\frac{P+\alpha\chi}{2}
+  =b-\frac{P-\alpha\chi}{2}.
+\end{aligned}
+\tag{7.15}
+$$
+
+The $013$ answer therefore has loss $(P-\alpha\chi)/2$.
+On the same world's $023$ fiber, $x\in[r,E]$ and $h(x)=0$,
+so $\rho^\alpha_{23}(z+x)=G/2$ throughout. The fiber is
+$[b-G,b]$, and its budget intersection is the singleton
+$\{b-G/2\}$. This branch's loss is $G/2$. Thus this one
+complete world has expected loss
+$(P-\alpha\chi+G)/4=V$, proving exactness in (7.13).
+
+At the included upper endpoint $E=(1+c)/2$, one has $r=1/2$;
+the near-branch separation used in (7.8) and the finite original
+witnesses (4.7)--(4.11) remain valid. The cases $x=q,r,E$ in
+the taper are closed in (6.8), so no additional endpoint convention
+is needed. At $E=c/3$, the reused endpoint rule has risk $E/2$
+by Theorem 4.1. $\square$
+
+**Theorem 7.5 (unrestricted improvement and a matching region).**
+On exactly the source and arbitrary-seed class of Definitions
+1.1--1.2, for every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$,
+
+$$
+\boxed{
+\frac G2\le R_{\mathrm{private}}
+ \le\min\{R_{\mathrm{ad},3},V\},\qquad
+V=\frac G2+\frac{(1-\min\{1,c/3\})(P-G)}4.
+}
+\tag{7.16}
+$$
+
+On this entire strict band $V<U_{\mathrm{new}}$.
+Wherever $U_{\mathrm{new}}\le R_{\mathrm{ad},3}$,
+(7.16) strictly improves the upper bound in (6.22).
+In particular this holds on the nonempty band
+$c/3<E\le(1+2c)/4$ for every $c>0$.
+For $c\ge3$, including $c=3$, the unrestricted value is
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac G2
+ =\frac{c(1+E)}{2(3+c)}
+ \quad\left(\frac c3\le E\le\frac{1+c}{2}\right).
+}
+\tag{7.17}
+$$
+
+The endpoint $E=c/3$ has the already known value $E/2$ for
+every $c>0$. For $0<c<3$ the remaining certified width on the
+strict band is
+
+$$
+0\le R_{\mathrm{private}}-\frac G2
+ \le\frac{(3-c)(P-G)}{12}.
+\tag{7.18}
+$$
+
+**Proof.** Theorem 3.3 applies to every permitted seed probability
+space and supplies the lower bound $H/2=G/2$ on this band.
+Its same two complete legal full-grid worlds are fixed before
+every seed; the original pointwise sum inequality (3.5) is
+integrable using only per-world measurability. Theorem 7.4
+supplies a lawful upper strategy, and one-point seed spaces
+still supply the upper bound $R_{\mathrm{ad},3}$. This proves
+(7.16) for the whole competitor class.
+
+With $\kappa=c/(c+6)$ as in Section 6, one has
+$\alpha>\kappa$: if $c\le3$, $c/3>c/(c+6)$, and if
+$c\ge3$, $1>c/(c+6)$. Therefore
+
+$$
+U_{\mathrm{new}}-V
+ =\frac{(\alpha-\kappa)\chi}{4}>0.
+\tag{7.19}
+$$
+
+When the old upper bound is active, its value is
+$U_{\mathrm{new}}$, and
+$\min\{R_{\mathrm{ad},3},V\}\le V<U_{\mathrm{new}}$.
+On the specified narrower band, Uniform Report Designs,
+Theorem 31.4, gives $R_{\mathrm{ad},3}=P/2$ and
+
+$$
+\frac P2-U_{\mathrm{new}}
+ =\frac{(1+\kappa)\chi}{4}>0.
+\tag{7.20}
+$$
+
+That band has positive length
+$(1+2c)/4-c/3=(3+2c)/12$, and its upper endpoint is included.
+This verifies strict improvement on a nonempty active-bound
+domain without requiring a classification of every active domain.
+
+For $c\ge3$ one has $\alpha=1$, so (7.16) matches the
+unrestricted lower bound, proving (7.17) on the strict band.
+At $E=c/3$, $P=G=E$, and the inherited endpoint result
+completes its closed lower boundary. For $0<c<3$,
+$\alpha=c/3$, and subtraction gives (7.18).
+The threshold $c\ge3$ is sufficient for this matching argument;
+no necessity assertion about that threshold follows.
+
+The comparison literature remains exactly scoped as in Section 1:
+Krieg--Novak--Ullrich, Sections 1--2, concerns a linear target and
+a class with additional product measurability, and
+Casini--Garulli--Vicino, Section 4, equations (7)--(10), supplies
+regression strips rather than this nonlinear target's minimax value.
+The deductions (7.9)--(7.19) use the cited repository separation,
+joint fibers, scalar feasibility and complete-world witnesses.
+
+For $0<c<3$ and $c/3<E\le(1+c)/2$, (7.18) has positive
+right-hand width; it determines no unrestricted equality there.
+For every $c>0$ the intermediate domain
+$(1+c)/2<E<E_\star(c)$ from Definition 5.1 also remains beyond
+this matching argument. In that domain $r>1/2$, so (7.8) is no
+longer supplied on all of the tapered region by the same
+near-separation branch. Determining these remaining values requires
+stronger lawful fixed-world upper or lower estimates on the original
+class. The inherited exact regions (5.2) remain available.
+The two-point seed used to construct $\Gamma^\alpha$ gives no
+reduction of the unrestricted infimum to finite seeds; unrestricted
+equality in (7.17) follows from matching an upper strategy to the
+arbitrary-seed lower certificate. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 8. Outside-band budgets and further unrestricted exact regions
+
+**Definition 8.1 (outside-band coefficient and budgets).** Retain
+exactly the complete source, exact-real ports, full acquired histories
+and arbitrary-seed competitor class of Definitions 1.1--1.3. Fix
+$m>0$, $c>0$ and
+
+$$
+\frac{1+c}{2}\le E<1+c.
+\tag{8.1}
+$$
+
+Keep $P=c(1+2E)/(3+2c)$ and $Q=cE/(1+c)$, and define
+
+$$
+\begin{gathered}
+\chi_o=P-Q,\qquad q_o=E-P,\qquad r_o=E-Q=\frac{E}{1+c},\\
+\beta=c\left(1-\frac{1+c}{3E}\right)
+      =c\left(1-\frac{1}{3r_o}\right),\qquad
+\vartheta=\min\{1,\beta\},\qquad \gamma=\frac c3,\\
+h_o(x)=\min\{\chi_o,(r_o-x)_+\}\quad(0\le x\le E),\\
+V_o=\frac Q2+\frac{(1-\vartheta)\chi_o}{4}
+   =\frac{P+Q-\vartheta\chi_o}{4}.
+\end{gathered}
+\tag{8.2}
+$$
+
+On candidate origins, rather than as additional receiver inputs, put
+
+$$
+\rho^o_{13}(z+x)=
+\begin{cases}
+Q/2-\vartheta h_o(-x),&-E\le x\le0,\\[2pt]
+(P-\vartheta\chi_o)/2+\vartheta h_o(x),&0<x\le E,
+\end{cases}
+\qquad
+\rho^o_{23}(t)=\rho^o_{13}(-3-t).
+\tag{8.3}
+$$
+
+The center uses the first case for both designs.
+
+The feasible strip intersection in (1.6)--(1.7) has the mathematical
+correspondence in Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+with known regressors and componentwise bounded additive errors.
+Here the regressor is $(i^2,i,1)$, the coefficient vector is
+$(A,2A\tau,A\tau^2+B)$ and the error bound is $\varepsilon$.
+Coordinate bounding orthotopes do not supply the nonlinear target
+$\tau=\theta_1/(2\theta_2)$ or the estimate (8.10).
+
+**Theorem 8.2 (joint compatibility across both separation branches).**
+For every parameter in (8.1), the budgets (8.3) are positive and
+bounded. Every nonempty exact compatible set $C=C_j(r)$, for
+$j\in\{13,23\}$ and any real triple $r$, satisfies
+
+$$
+|s-t|\le\rho^o_j(s)+\rho^o_j(t)\qquad(s,t\in C).
+\tag{8.4}
+$$
+
+Thus the following interval is nonempty and has finite endpoints:
+
+$$
+\begin{aligned}
+J^o_j(C)&=[L^o_j(C),U^o_j(C)],\\
+L^o_j(C)&=\sup_{t\in C}(t-\rho^o_j(t)),\qquad
+U^o_j(C)=\inf_{t\in C}(t+\rho^o_j(t)),\\
+d^o_j(C)&=\frac{L^o_j(C)+U^o_j(C)}2,
+\qquad |d^o_j(C)-t|\le\rho^o_j(t)\quad(t\in C).
+\end{aligned}
+\tag{8.5}
+$$
+
+For an empty compatible set define $d^o_j=z$.
+
+**Proof.** First check the suppliers' parameter ranges and the
+active diameter candidates. On (8.1), $3E>c$ and
+
+$$
+\begin{gathered}
+P-Q=\frac{c(1+c-E)}{(3+2c)(1+c)}>0,\qquad
+Q-G=\frac{c(2E-1-c)}{(1+c)(3+c)}\ge0,\\
+Q\ge\frac c2>\frac c3,\qquad P<E,\qquad Q<E.
+\end{gathered}
+\tag{8.6}
+$$
+
+The separation and finite-attainment formulas are those of
+[Three-Index Design, Theorems 2.1, 3.1 and 18.2](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md).
+The scalar feasibility and compact-interval correspondences are in
+[Self-Calibrating Relation Mathematics II, Sections 80--81](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
+
+Consequently the fixed-design and full-grid formulas in (1.8)
+give $F=P$, $H=Q$, without prior truncation. The exact
+three-coordinate supplier, Three-Index Design, Theorems 2.1--3.1,
+applies with $u=1,v=3$, $a=z-E<b=z+E$, gain lower bound $m$
+and original error bound $\varepsilon=mc/2$. Its full-prior,
+left-half and cross-center consequences, as in (2.5)--(2.6), are
+
+$$
+\begin{gathered}
+|s-t|\le P\quad(s,t\in C_{13}),\\
+s,t\le z\ \Longrightarrow\ |s-t|\le Q,\qquad
+s\le z\le t\ \Longrightarrow\ t-s\le\gamma.
+\end{gathered}
+\tag{8.7}
+$$
+
+For the left-half statement its five candidates are
+$c/3,c/(3+2c),0,G,Q$, and the half-prior length is $E$;
+(8.6) verifies the stated upper bound $Q$ directly.
+
+The new local estimate uses both closed branches of that separation
+supplier. Let $z-y,z-x\in C_{13}$ with $0\le x<y\le E$,
+$x<r_o$, and set $d=y-x$. Their compatible noiseless triples
+are within $2\varepsilon=mc$ in the original maximum norm.
+For this ordered origin pair the exact separation is $md k_L(x)$,
+where, at $u=1,v=3$,
+
+$$
+k_L(x)=
+\begin{cases}3/(1+x),&0\le x\le1/2,\\1/x,&x\ge1/2.
+\end{cases}
+\quad\Longrightarrow\quad
+ d\le
+\begin{cases}c(1+x)/3,&0\le x\le1/2,\\cx,&x\ge1/2.
+\end{cases}
+\tag{8.8}
+$$
+
+Both expressions agree at $x=1/2$; the first includes $x=0$.
+Every finite compatible gain and offset is allowed in this
+comparison. It is a restriction on two members of one exact fiber,
+with the original independent-coordinate cube, not a relaxation
+into independent difference errors.
+
+Since $1/2\le r_o<1$, the identities
+
+$$
+Q=cr_o=\gamma+\beta r_o,\qquad
+\gamma\le\beta<c,\qquad 0<\vartheta\le1,\quad\vartheta\le\beta
+\tag{8.9}
+$$
+
+hold. For $0\le x\le1/2$, subtracting the first bound in
+(8.8) from $Q-\beta(r_o-x)=\gamma+\beta x$
+gives $(\beta-\gamma)x\ge0$. For $1/2\le x<r_o$,
+subtracting $cx$ gives $(c-\beta)(r_o-x)\ge0$.
+Thus throughout the required taper support,
+
+$$
+d\le Q-\beta(r_o-x)\qquad(0\le x<r_o).
+\tag{8.10}
+$$
+
+In particular no near-branch formula is extrapolated beyond its
+junction.
+
+The taper identities are
+
+$$
+\begin{gathered}
+\chi_o=\frac{c(1-r_o)}{3+2c},\qquad
+0<q_o=r_o-\chi_o<r_o<E,\\
+h_o(x)=\chi_o\ (0\le x\le q_o),\quad
+h_o(x)=r_o-x\ (q_o\le x\le r_o),\quad
+h_o(x)=0\ (r_o\le x\le E).
+\end{gathered}
+\tag{8.11}
+$$
+
+Here $q_o>0$ also follows from $P<E$ in (8.6).
+Moreover $\chi_o<\gamma$ and $2\chi_o<r_o$: the latter follows
+from $2c/(3+2c)<1$ and $1-r_o\le r_o$. Hence
+
+$$
+Q-2\vartheta\chi_o
+\ge\gamma+\beta(r_o-2\chi_o)>\gamma>\chi_o>0.
+\tag{8.12}
+$$
+
+Every radius in (8.3) is at least $Q/2-\vartheta\chi_o$
+and at most $(P+\vartheta\chi_o)/2$. This proves positivity
+and boundedness.
+
+For two origins $z-y\le z-x\le z$ in $C_{13}$, let
+$d=y-x\ge0$. If $x\ge r_o$, the radius sum is $Q$, sufficient
+by (8.7). If $x<r_o$ and $d\le\chi_o$, its radius sum is at
+least $Q-2\vartheta\chi_o>\chi_o\ge d$ by (8.12).
+In the remaining case put $w=r_o-x>0$, $d\ge\chi_o$.
+The elementary taper inequality (7.10), with these parameters, is
+
+$$
+h_o(x)+h_o(y)
+=\min\{\chi_o,w\}+\min\{\chi_o,(w-d)_+\}\le w.
+\tag{8.13}
+$$
+
+Indeed for $w\le\chi_o$ the second term vanishes; for
+$w>\chi_o$ it is at most $w-\chi_o$. Therefore (8.10) gives
+
+$$
+d+\vartheta(h_o(x)+h_o(y))
+\le Q-\beta w+\vartheta w\le Q,
+\tag{8.14}
+$$
+
+exactly the required inequality for these two budgets.
+
+For two origins $z<z+x\le z+y$ in $C_{13}$, if $x\le q_o$
+then $h_o(x)=\chi_o$ and their radius sum is
+$P+\vartheta h_o(y)\ge P\ge y-x$. If $x>q_o$, (8.11)
+gives $\chi_o-h_o(x)\le x-q_o$, and consequently
+
+$$
+\begin{aligned}
+\rho^o_{13}(z+x)+\rho^o_{13}(z+y)
+&=P-\vartheta\chi_o+\vartheta(h_o(x)+h_o(y))\\
+&\ge P-\vartheta(x-q_o)
+ \ge P-(x-q_o)=E-x\ge y-x.
+\end{aligned}
+\tag{8.15}
+$$
+
+For $s\le z<t$, (8.7) gives $t-s\le\gamma$, whereas
+(8.12) bounds the radius sum strictly above $\gamma$.
+This includes the center convention. Equal origins are covered by
+positivity. The complete-source reflection (2.7) carries $023$
+fibers to $013$ fibers and exchanges the budgets in (8.3), proving
+(8.4) for the other design without changing acquisition rights.
+Finally (8.4) implies $s-\rho^o_j(s)\le t+\rho^o_j(t)$ for all
+$s,t\in C$. Supremum and infimum give $L^o_j\le U^o_j$;
+boundedness of $C\subseteq K$ and of the budgets gives finite
+endpoints. Every point of $J^o_j$ belongs to every interval
+$[t-\rho^o_j(t),t+\rho^o_j(t)]$, proving (8.5). $\square$
+
+**Definition 8.3 (total three-reading rule).** Let $\Gamma^o$ have
+the source-independent fair seed space $\{13,23\}$ with its
+power-set sigma-algebra. For every real history use
+$f_{13}(r_0)=1$, $f_{23}(r_0)=2$, and
+$g_j(u,r_0,r_u)=3$ for both seeds and both legal values of $u$.
+For either seed, on terminal pair $(1,3)$ output $d^o_{13}$ from
+(8.5) using only $(r_0,r_1,r_3)$; on pair $(2,3)$ output
+$d^o_{23}$ using only $(r_0,r_2,r_3)$. On pair $(1,2)$ output
+the midpoint of $C_{12}$ if nonempty, and $z$ otherwise.
+The rules include every legal real history, including unreachable
+ones. All constants depend only on the public $m,c,E$.
+
+The chronological acquisition order is that of
+[Three-Index Design, Definition 23.1](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md),
+with the complete worlds and parameters of Definitions 1.1--1.2.
+
+**Theorem 8.4 (outside-band unrestricted quantitative bound).**
+For every $m>0$, $c>0$ and $(1+c)/2\le E<1+c$, on exactly
+Definitions 1.1--1.2,
+
+$$
+\boxed{
+\frac Q2\le R_{\mathrm{private}}(c,E)
+\le\min\left\{R_{\mathrm{ad},3}(c,E),
+ \frac Q2+
+ \frac{\bigl(1-\min\{1,c(1-(1+c)/(3E))\}\bigr)(P-Q)}4
+\right\}.
+}
+\tag{8.16}
+$$
+
+The upper strategy $\Gamma^o$ bounds its two analytical branch
+losses in each one complete world; the lower bound holds against
+every permitted arbitrary seed space.
+
+The worst-input expected-error order agrees with Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2).
+Their comparisons assume a continuous linear target and a randomized
+class with product-measurable loss. Augmenting this clock's input by
+its errors makes the reports linear, while the target remains a ratio
+and only per-complete-world seed measurability is imposed here.
+Those comparison theorems do not directly apply to this strategy class.
+
+**Proof.** Each seed of $\Gamma^o$ actually reads exactly $013$
+or $023$, in increasing integer order. Continuation $3$ is legal
+for either $u$. Theorem 8.2 supplies finite total estimates for
+these two terminal pairs. For the unused pair $012$, the compact
+interval supplier is Three-Index Design, Theorem 3.1, with
+$u=1,v=2$, the same nondegenerate prior and original error bound;
+its positive-denominator feasible set gives finite endpoints.
+The empty-set conventions give finite answers on every remaining
+history. Indices and answers are measurable in each fixed world
+because the seed space is finite with its power-set sigma-algebra.
+No regularity of history functions or measurability in the world
+is used.
+
+Fix one arbitrary complete $W=(\tau,A,B,\eta)$ satisfying (1.2).
+Its finite $A\ge m$, finite $B$ and all four errors, including
+unread coordinates, remain fixed for both seed evaluations.
+The true $\tau$ belongs to both corresponding exact compatible
+sets. If $x=|\tau-z|>0$, (8.5) bounds the two losses, in the
+order determined by the sign of $\tau-z$, by
+
+$$
+\frac{P-\vartheta\chi_o}{2}+\vartheta h_o(x),
+\qquad \frac Q2-\vartheta h_o(x).
+\tag{8.17}
+$$
+
+Their fair average is $V_o$. At $\tau=z$ both are bounded by
+$Q/2-\vartheta\chi_o\le V_o$, since the difference is
+$(1+3\vartheta)\chi_o/4>0$. Thus
+$\mathcal R(\Gamma^o)\le V_o$ uniformly on the whole source.
+The other triple in (8.17) is only an analytical evaluation of
+this same complete world; neither execution acquires its missing
+coordinate.
+
+For the unrestricted lower bound reuse the full-grid witness of
+Uniform Report Designs, (32.23) and (34.36), explicitly completed
+in the original four coordinates. With $t=b$, $s=b-Q=z+r_o$,
+put
+
+$$
+\begin{aligned}
+W_s&=(s,m(1+c),\varepsilon-m(1+c)s^2,
+                 (-\varepsilon,\varepsilon,\varepsilon,-\varepsilon)),\\
+W_t&=(t,m,-\varepsilon-mt^2,
+                 (\varepsilon,-\varepsilon,-\varepsilon,\varepsilon)).
+\end{aligned}
+\tag{8.18}
+$$
+
+Because $0<Q<E$, both origins lie in $K$; all gains, offsets
+and four errors are finite and legal. Both worlds depend only on
+$m,c,E$. The difference of their noiseless reports is
+$mc(i^2-3i+1)$, taking the values $mc,-mc,-mc,mc$ at
+$0,1,2,3$, exactly canceled by their error difference.
+Thus their complete four-report vectors coincide.
+
+Fix any admissible strategy on any source-independent seed space.
+For each seed its deterministic history functions see the same
+$y_0$ in these two fixed worlds, select the same $u$, see the
+same next report, select the same $v$, and see the same last
+report. Their finite answers are therefore equal, say $T_\omega$.
+Pointwise in the seed,
+
+$$
+|T_\omega-s|+|T_\omega-t|\ge t-s=Q.
+\tag{8.19}
+$$
+
+Both loss maps are measurable by the stipulated per-world
+hypothesis. Additivity of nonnegative integrals yields a sum of
+the two fixed-world expected losses at least $Q$, even if one
+is infinite. At least one is at least $Q/2$, proving the lower
+bound before taking the infimum over the full strategy class.
+The same complete pair is used for every seed; no branchwise
+choice of witnesses is averaged. Finally every total deterministic
+strategy is admissible on a one-point seed space, so
+$R_{\mathrm{private}}\le R_{\mathrm{ad},3}$. Together with the
+upper strategy this proves (8.16), without a minimax exchange,
+world probability law, compactness reduction of strategies or
+normal-form assumption. $\square$
+
+**Theorem 8.5 (matching region and all finite priors for $c\ge3$).**
+On (8.1), $\beta\ge1$ is sufficient for
+$R_{\mathrm{private}}=Q/2$. Its exact parameter description is
+
+$$
+\begin{cases}
+c\ge3,&(1+c)/2\le E<1+c,\\[2pt]
+3/2<c<3,&\displaystyle
+ \frac{c(1+c)}{3(c-1)}\le E<1+c.
+\end{cases}
+\tag{8.20}
+$$
+
+For $0<c\le3/2$ there are no points of (8.1) with
+$\beta\ge1$. Combining inherited exact regions gives, for every
+$c\ge3$ and every finite $E\ge0$,
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac H2=
+\begin{cases}
+\frac12\min\{2E,c/3\},&0\le E\le c/3,\\[3pt]
+\dfrac{c(1+E)}{2(3+c)},&c/3\le E\le(1+c)/2,\\[5pt]
+\dfrac{cE}{2(1+c)},&E\ge(1+c)/2.
+\end{cases}}
+\tag{8.21}
+$$
+
+**Proof.** If $\beta\ge1$, then $\vartheta=1$ and both
+sides of (8.16) are $Q/2$. For $c\le1$, $\beta<c\le1$.
+For $c>1$, positive-denominator multiplication gives
+
+$$
+\beta\ge1\quad\Longleftrightarrow\quad
+E\ge T(c):=\frac{c(1+c)}{3(c-1)}.
+\tag{8.22}
+$$
+
+The condition $T(c)<1+c$ is equivalent to $c>3/2$, and
+$T(c)\le(1+c)/2$ is equivalent to $c\ge3$.
+This proves (8.20), including the equality $c=3$, where
+$T(3)=2=(1+3)/2$, and the excluded endpoint $c=3/2$,
+where $T(c)=1+c$ lies outside (8.1).
+
+For (8.21), on $0\le E\le c/3$ the five-candidate formulas
+give $F=H=\min\{2E,c/3\}$, and Theorem 3.3 matches.
+In particular $E=0$ is the singleton prior, with risk zero;
+no supplier requiring $a<b$ is needed there. For $E>0$ in
+this interval, Uniform Report Designs, Theorem 31.4, is also
+within its stated domain because $c/3<(1+2c)/4$.
+On $c/3\le E\le(1+c)/2$, Theorem 7.5 applies for $c\ge3$
+and gives $H/2=G/2$, with its separately proved endpoint at
+$E=c/3$. On $(1+c)/2\le E<1+c$, (8.20) gives $H/2=Q/2$.
+For $E\ge1+c$, the candidate comparisons $Q\ge P,G,c/3$
+and $Q<E$ give $F=H=Q$ directly, so Theorem 3.3 again matches.
+This includes $E=1+c$, where $P=Q=c$.
+At $E=c/3$ the adjoining values are $c/6$; at
+$E=(1+c)/2$ they are $G/2=Q/2=c/4$.
+All statements use finite complete-world suppliers or the total
+strategies already specified, with closed endpoint conventions.
+
+The inherited wide-prior region (5.2) also remains exact for all
+$c>0$: for $0<c\le1/2$, Uniform Report Designs, Lemma 32.2,
+gives $E_\star>E_{\mathrm{fit}}$ and
+$(1+c)/2<E_\star<1+c$, so its Theorem 32.4 applies at every
+$E_\star\le E\le1+c$; for $c>1/2$, Lemma 34.2 and
+Theorem 34.5 give precisely that same interval of equality.
+Beyond $1+c$ the fixed-design comparison just given suffices.
+Thus neither the small-$c$ domain of Section 32 nor the
+high-noise domain of Section 34 is extended by assumption.
+In particular $c\ge3$ now includes the entire formerly unresolved
+outside interval $(1+c)/2<E<E_\star(c)$. $\square$
+
+**Theorem 8.6 (rational interior improvement over the previous minimum).**
+For every $m>0$, take
+
+$$
+c=\frac{299}{100}<3,\qquad E=2,\qquad
+K=[-7/2,1/2],\qquad \varepsilon=\frac{299m}{200}.
+\tag{8.23}
+$$
+
+This point lies strictly in
+$(1+c)/2<E<E_\star(c)$ and $\beta>1$. Its new exact value is
+
+$$
+\boxed{R_{\mathrm{private}}(299/100,2)=\frac{299}{399}.}
+\tag{8.24}
+$$
+
+The previously certified minimum upper bound at this point is
+$D(299/100)/2$, and its decrease is strictly greater than
+$116311/14332080$.
+
+**Proof.** Direct rational substitution gives
+
+$$
+P=\frac{1495}{898},\qquad Q=\frac{598}{399},\qquad
+\beta=\frac{20033}{20000}>1,\qquad
+\frac{1+c}{2}=\frac{399}{200}<2<\frac{399}{100}=1+c.
+\tag{8.25}
+$$
+
+To certify the active old bound, use the actual deterministic
+classification, not the fixed-path risk $P/2$. Since $c>1/2$
+and $E_0=(1+2c)/4<2<1+c$, Uniform Report Designs,
+Theorem 34.5, applies. Let $q_c$ be its larger root of
+
+$$
+f_c(q)=(3+4c)q^2-2(3+2c)q+3-c=0.
+\tag{8.26}
+$$
+
+At the rational $c$ in (8.23),
+
+$$
+f_c(7/6)=-\frac{523}{900}<0,
+\qquad f_c(6/5)=\frac1{2500}>0.
+\tag{8.27}
+$$
+
+The quadratic has positive leading coefficient. A point where it
+is negative lies strictly between its roots, so its larger root
+satisfies $7/6<q_c<6/5$. Therefore its exact constant
+$D=c(3+c-q_c^2)/(3+2c)$ obeys the rational certificate
+
+$$
+D_{\mathrm{lo}}:=\frac{27209}{17960}
+ <D<\frac{622817}{404100}=:D_{\mathrm{hi}}.
+\tag{8.28}
+$$
+
+Two exact positive differences are
+
+$$
+D_{\mathrm{lo}}-Q=\frac{116311}{7166040}>0,
+\qquad
+\frac{P+Q}{2}-D_{\mathrm{hi}}
+ =\frac{1089257}{26872650}>0.
+\tag{8.29}
+$$
+
+Since $Q<P$, these imply $Q<D<(P+Q)/2<P$.
+Theorem 34.5 consequently gives
+$R_{\mathrm{ad},3}=\max\{Q,\min\{P,D\}\}/2=D/2$.
+Also $Q<D$ is exactly $E<E_\star=(1+c)D/c$.
+The point is outside the domains of Sections 6--7, whose upper
+endpoint is $(1+c)/2$, and outside the wide exact region (5.2).
+The old all-parameter bound (3.4), with $F=P,H=Q$, therefore
+has actual minimum
+
+$$
+U_{\mathrm{previous}}
+ =\min\left\{R_{\mathrm{ad},3},\frac{P+Q}{4}\right\}
+ =\frac D2>\frac Q2=\frac{299}{399}.
+\tag{8.30}
+$$
+
+Equations (8.25) and (8.16) prove (8.24), and (8.29) gives
+
+$$
+U_{\mathrm{previous}}-R_{\mathrm{private}}
+ =\frac{D-Q}{2}>\frac{116311}{14332080}>0.
+\tag{8.31}
+$$
+
+This certifies improvement over the active previous minimum,
+including its deterministic adaptive supplier.
+
+There is also a nonempty open region of new exactness below $3$:
+
+$$
+\mathcal O=\left\{(c,E):\frac32<c<3,\quad
+ \max\left\{\frac{1+c}{2},T(c)\right\}<E<E_\star(c)\right\}.
+\tag{8.32}
+$$
+
+On $c>3/2$ the rational $T$ and the radical expression
+$E_\star$ from (5.1) are continuous, with positive denominators;
+hence the displayed strict inequalities define an open set.
+The point (8.23) belongs to it by (8.25), (8.29) and (8.22),
+so it is nonempty. Every point of $\mathcal O$ has $\beta>1$
+and lies below $E_\star$, and (8.20) gives $R_{\mathrm{private}}=Q/2$
+there. In this open set, Lemma 34.2 gives $E_1<(1+c)/2<E$,
+so Theorem 34.5 gives $R_{\mathrm{ad},3}=D/2>Q/2$. Also
+$(P+Q)/4>Q/2$. Thus the previous minimum of these two upper
+bounds strictly exceeds the new exact value throughout $\mathcal O$.
+$\square$
+
+**Theorem 8.7 (remaining intervals).** The sufficient criterion
+$\beta\ge1$ makes no necessity assertion. On the remaining
+outside domain
+
+$$
+\frac{1+c}{2}\le E<E_\star(c),\qquad \beta<1,
+\tag{8.33}
+$$
+
+the certified conclusion is
+
+$$
+0\le R_{\mathrm{private}}-\frac Q2
+\le\min\left\{R_{\mathrm{ad},3}-\frac Q2,
+                 \frac{(1-\beta)(P-Q)}4\right\}.
+\tag{8.34}
+$$
+
+It asserts no positive actual gap and no unrestricted equality
+on (8.33). The small-$c$ original-band question also remains:
+for $0<c<3$, $c/3<E\le(1+c)/2$, the inherited estimate is
+
+$$
+0\le R_{\mathrm{private}}-\frac G2
+ \le\frac{(3-c)(P-G)}{12},
+\tag{8.35}
+$$
+
+without a proof that either inequality is attained. These statements
+retain the arbitrary-seed infimum, full histories and unchanged
+complete source.
+
+**Proof.** Subtract the arbitrary-seed lower bound from (8.16)
+when $\vartheta=\beta<1$ to get (8.34). Equation (8.35) is
+exactly Theorem 7.5 on its stated domain. At the common boundary
+$E=(1+c)/2$, $Q=G$, $r_o=1/2$, $\beta=c/3$ and the
+budgets (8.3) coincide with (7.2), so the two estimates agree.
+For $E\ge E_\star$, (5.2) remains available even if $\beta<1$;
+those points are excluded from (8.33). Neither constructing one
+two-point-seed upper strategy nor integrating (8.19) restricts
+the competitor class to finite seeds. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 9. Common-endpoint localization and complementary signed budgets
+
+**Definition 9.1 (one-sided complementary budgets).** Retain precisely
+Definitions 1.1--1.3. In this section assume
+
+$$
+c>0,\qquad \frac c3<E<1+c,
+\qquad \gamma=\frac c3,\quad r=E-H,\quad q=E-P,\quad \chi=P-H.
+\tag{9.1}
+$$
+
+Define the public coefficient
+
+$$
+\lambda=
+\begin{cases}
+\min\{1,c/3\},&E\le(1+c)/2,\\[2pt]
+\min\{1,c(1-(1+c)/(3E))\},&E\ge(1+c)/2.
+\end{cases}
+\tag{9.2}
+$$
+
+The two definitions agree at their common endpoint. Choose a public
+number $w$ satisfying
+
+$$
+\chi\le w\le r,\qquad
+r+\lambda w\le H,\qquad
+\bigl[w=r\ \text{or}\ \lambda(1+4\gamma)\ge1\bigr].
+\tag{9.3}
+$$
+
+Put
+
+$$
+\begin{gathered}
+q_w=r-w,\qquad s_w=\frac{(1-\lambda)w}{2},\qquad
+\ell_w=E-(1+\lambda)w,\qquad
+\nu=\frac{1-\lambda}{1+\lambda},\\
+\psi(x)=\min\{w,(r-x)_+\}-s_w+\nu(x-\ell_w)_+
+\quad(0\le x\le E),\\
+\mathsf b_L(x)=H/2-\psi(x),\qquad
+\mathsf b_R(x)=H/2+\psi(x).
+\end{gathered}
+\tag{9.4}
+$$
+
+Here $L$ labels the favorable separation coefficient $k_L$ of the
+$013$ experiment, and $R$ its other coefficient. These are budgets
+on a single origin half, with
+$\mathsf b_L(x)+\mathsf b_R(x)=H$. They impose no
+cross-center budget inequality. When $0<\lambda<1$, the correction
+has $\psi(r)=-s_w$ and $\psi(E)=s_w$; the radii themselves
+will be nonnegative. Candidate origins, rather than an unknown
+true origin supplied to the receiver, are the arguments of (9.4).
+
+**Theorem 9.2 (one-sided joint-fiber certificate).** Under
+(9.1)--(9.3), the budgets in (9.4) belong to $[0,H]$.
+If two origins $z-y\le z-x\le z$, $0\le x\le y\le E$,
+belong to one exact $013$ compatible set, then
+
+$$
+y-x\le\mathsf b_L(x)+\mathsf b_L(y).
+\tag{9.5}
+$$
+
+If $z\le z+x\le z+y$ belong to one such set, then
+
+$$
+y-x\le\mathsf b_R(x)+\mathsf b_R(y).
+\tag{9.6}
+$$
+
+For $023$, the corresponding positive-half budget is
+$\mathsf b_L$ and the negative-half budget is $\mathsf b_R$.
+All assertions concern the full joint original-coordinate fibers
+(1.6), with every finite gain $A\ge m$ allowed.
+
+**Proof.** The comparisons (4.4), (8.6) and the fixed-set
+suppliers give, throughout (9.1),
+
+$$
+\begin{gathered}
+F=P<E,\qquad
+H=\begin{cases}G,&E\le(1+c)/2,\\Q,&E\ge(1+c)/2,\end{cases}
+\qquad H>\gamma,\\
+0<q<r<1,\qquad \chi=r-q>0,\qquad 0<\lambda\le1.
+\end{gathered}
+\tag{9.7}
+$$
+
+In particular no prior-length truncation is active. On the first
+band $r=(3E-c)/(3+c)\le1/2$; on the second
+$r=E/(1+c)\in[1/2,1)$. Also
+$q=(3E-c)/(3+2c)<1$.
+
+The joint feasible-set correspondence being used is exactly
+(1.6)--(1.7), supplied by Three-Index Design, Theorem 3.1.
+For a selected triple its variables satisfy
+$\lambda_0=1/A$, $\xi=2t$,
+$\omega_0=(At^2+B)/A$, with the three original strip
+constraints imposed together. Conversely, in that closed strip
+polytope $\lambda_0=0$ would make the monic polynomial
+$i^2+\xi i+\omega_0$ vanish at three distinct indices.
+Thus every feasible point has $\lambda_0>0$ and gives the finite
+witness
+
+$$
+A=1/\lambda_0,\quad t=\xi/2,\quad
+B=\omega_0/\lambda_0-At^2,\quad
+\eta_i=r_i-A(i+t)^2-B.
+\tag{9.8}
+$$
+
+The strip inequalities say jointly that all selected
+$|\eta_i|\le\varepsilon$; setting the one unread error to zero
+completes a world. The reverse construction follows by substitution.
+The bounds on $\lambda_0,\xi$, together with the index-zero
+constraint bounding $\omega_0$, make the polytope compact.
+Consequently its origin projection is the same compact interval
+$C_j$, without an upper gain assumption or independent difference
+errors. This is the existing scalar-recovery correspondence, not
+an additional observation channel.
+
+For two members of one $013$ fiber, their noiseless triples differ
+by at most $2\varepsilon=mc$ in the original maximum norm.
+Theorem 2.1 of Three-Index Design therefore gives, on the favorable
+half, for $d=y-x$,
+
+$$
+d\le H,\qquad
+x<r\ \Longrightarrow\ d\le H-\lambda(r-x).
+\tag{9.9}
+$$
+
+The first inequality is the half-prior bound (2.5), with
+$H=G$ or $H=Q$ as in (9.7). For completeness the exact local
+restriction is
+
+$$
+d\le L(x):=
+\begin{cases}c(1+x)/3,&0\le x\le1/2,\\cx,&x\ge1/2.
+\end{cases}
+\tag{9.10}
+$$
+
+On the first band, $x<r\le1/2$ gives
+$L(x)=G-\gamma(r-x)$ and $\lambda\le\gamma$.
+On the second put $\beta=c(1-1/(3r))$. Then
+$H=cr=\gamma+\beta r$ and $\beta\ge\gamma$.
+For $x\le1/2$,
+$H-\beta(r-x)-L(x)=(\beta-\gamma)x\ge0$;
+for $1/2\le x<r$ that difference is
+$(c-\beta)(r-x)\ge0$. Since $\lambda\le\beta$,
+this proves (9.9) on both closed separation branches, including
+$x=0$ and $x=1/2$ wherever applicable. On the other origin half
+the same exact supplier gives
+
+$$
+d\le R(x):=
+\begin{cases}c(1+2x)/3,&0\le x\le1,\\cx,&x\ge1.
+\end{cases}
+\tag{9.11}
+$$
+
+Only its first branch will be needed below. These restrictions
+are necessary conditions on pairs of finite witnesses in the same
+joint fiber; no independent realizability of separate error
+differences is asserted.
+
+From (9.3), $H\ge r+\lambda w\ge(1+\lambda)w$ and hence
+
+$$
+0\le q_w\le r\le\ell_w\le E,\qquad
+0\le\nu<1,\qquad
+\psi(r)=-s_w,\quad \psi(E)=s_w.
+\tag{9.12}
+$$
+
+The successive slopes of $\psi$ on the intervals separated by
+$q_w,r,\ell_w$ are $0,-1,0,\nu$, omitting intervals of
+zero length. In particular
+
+$$
+-s_w\le\psi(x)\le w-s_w=\frac{(1+\lambda)w}{2}\le H/2.
+\tag{9.13}
+$$
+
+Since $s_w\le w-s_w$, this proves both radii nonnegative
+and at most $H$. The functions $x+\psi(x)$ and
+$x-\psi(x)$ are nondecreasing on $[0,E]$.
+
+To prove (9.5), it suffices to show
+$d+\psi(x)+\psi(y)\le H$ for favorable pairs. First suppose
+$y\le r$. Write $h(v)=\min\{w,(r-v)_+\}$.
+Then $y+h(y)\le r$ and $x-h(x)\ge-w$, so
+
+$$
+d+\psi(x)+\psi(y)
+=d+h(x)+h(y)-2s_w
+\le r+w-2s_w=r+\lambda w\le H.
+\tag{9.14}
+$$
+
+If $x<r<y$, put $v=r-x>0$. By (9.9),
+$d\le H-\lambda v$, or equivalently
+$y\le E-(1+\lambda)v$. If $y\le\ell_w$, the correction
+sum is $\min(w,v)-(1-\lambda)w$. This is at most
+$\lambda v$: for $v\ge w$ use $\lambda w\le\lambda v$,
+and for $v\le w$ use
+$v-(1-\lambda)w\le\lambda v$.
+If $y>\ell_w$, the same upper bound for $y$ implies $v<w$
+and
+
+$$
+\nu(y-\ell_w)\le(1-\lambda)(w-v),\qquad
+\psi(x)+\psi(y)
+\le v-(1-\lambda)w+(1-\lambda)(w-v)=\lambda v.
+\tag{9.15}
+$$
+
+Combining either estimate with (9.9) gives (9.5).
+Finally if $r\le x\le y$, monotonicity on that outer interval
+gives
+
+$$
+d+\psi(x)+\psi(y)
+=(y+\psi(y))-(x-\psi(x))
+\le(E+s_w)-(r+s_w)=H.
+\tag{9.16}
+$$
+
+These cases include $x=r$, $y=r$ by their closed alternatives
+and prove the favorable inequality, also for equal origins.
+
+For (9.6) we need $d-\psi(x)-\psi(y)\le H$.
+If $x\ge q_w$, monotonicity and
+$q_w+\psi(q_w)=r-s_w$ give directly
+
+$$
+d-\psi(x)-\psi(y)
+=(y-\psi(y))-(x+\psi(x))
+\le(E-s_w)-(r-s_w)=H.
+\tag{9.17}
+$$
+
+If $x<q_w$, then $q_w>0$ and therefore $w<r$.
+The last condition in (9.3) now supplies
+
+$$
+\nu(1+2\gamma)\le2\gamma.
+\tag{9.18}
+$$
+
+Set $\delta=q_w-x>0$. Since $q_w=r-w\le r-\chi=q<1$,
+the near branch of (9.11) applies. At $q$ its value is
+$R(q)=P=H+\chi$, so
+
+$$
+\begin{aligned}
+R(q_w)&=H+\chi-2\gamma(w-\chi)\le H+w,\\
+d&\le H+w-2\gamma\delta,\qquad
+y\le Y:=E-(1+2\gamma)\delta.
+\end{aligned}
+\tag{9.19}
+$$
+
+For an actual pair $0\le y\le Y\le E$. If $Y\ge\ell_w$,
+(9.12) gives
+$\psi(Y)=s_w-\nu(1+2\gamma)\delta
+\ge s_w-2\gamma\delta$.
+If $Y<\ell_w$, then
+$(1+2\gamma)\delta>(1+\lambda)w$.
+Together with (9.18), this implies
+$2\gamma\delta\ge(1-\lambda)w=2s_w$, so (9.13) gives
+the same lower bound $\psi(Y)\ge s_w-2\gamma\delta$.
+This argument includes $\lambda=1$, where $s_w=\nu=0$.
+Since $y-\psi(y)$ is nondecreasing and
+$\psi(x)=w-s_w$, we conclude
+
+$$
+\begin{aligned}
+d-\psi(x)-\psi(y)
+&\le Y-\psi(Y)-(q_w-\delta+w-s_w)\\
+&\le E-s_w-\delta-(r-s_w-\delta)=H.
+\end{aligned}
+\tag{9.20}
+$$
+
+If $w=r$, the case $x<q_w=0$ is empty, and no condition
+(9.18) is needed. This completes all pair cases.
+
+The complete-world reflection (2.7) exchanges the two fixed
+experiments and the two origin halves. Applying it to these
+inequalities gives the stated $023$ budgets. It only relates
+compatible experiments, and grants no reversed execution.
+All estimates are nonstrict; zero radii and singleton intervals
+are allowed. $\square$
+
+**Definition 9.3 (a terminal rule using the common acquired endpoints).**
+Assume (9.1)--(9.3). For either terminal design $j=13,23$ and
+any real triple, form its exact set $C=C_j$ and the acquired
+endpoint difference $D=r_3-r_0$. If $C$ is empty, output $z$.
+If $C$ is nonempty and $|D|\le mc$, output its ordinary midpoint.
+For the remaining histories, define on $C$ the budget $B_j$ by
+
+$$
+\begin{array}{c|cc}
+ &j=13&j=23\\ \hline
+D>mc&B_j(t)=\mathsf b_R(t-z)&B_j(t)=\mathsf b_L(t-z)\\
+D<-mc&B_j(t)=\mathsf b_L(z-t)&B_j(t)=\mathsf b_R(z-t).
+\end{array}
+\tag{9.21}
+$$
+
+Output the midpoint of the scalar budget intersection
+
+$$
+\left[
+\sup_{t\in C}(t-B_j(t)),\quad
+\inf_{t\in C}(t+B_j(t))
+\right].
+\tag{9.22}
+$$
+
+Let $\Gamma^{\mathrm{end}}_w$ use a source-independent fair
+seed on $\{13,23\}$, with its power-set sigma-algebra.
+For every real history set $f_{13}=1$, $f_{23}=2$ and
+$g_j(u,r_0,r_u)=3$. On terminal pairs $(1,3)$ and $(2,3)$
+use the preceding respective rules, for either seed. On $(1,2)$
+use the ordinary midpoint of $C_{12}$ if nonempty and $z$ otherwise.
+These prescriptions include every legal unreachable history.
+
+**Theorem 9.4 (same-world exact minimax value from the certificate).**
+For every public choice satisfying (9.1)--(9.3), Definition 9.3
+is a finite-valued total strategy under Definition 1.2 and
+
+$$
+\boxed{
+\mathcal R(\Gamma^{\mathrm{end}}_w)
+=R_{\mathrm{private}}(c,E)=H/2.
+}
+\tag{9.23}
+$$
+
+The lower bound holds for every independent seed probability
+space in that definition, with only per-world seed measurability.
+
+**Proof.** For every member $t=z+x$ of either exact compatible
+set, its finite witness (9.8) gives the original-coordinate identity
+
+$$
+D=6Ax+\eta_3-\eta_0,\qquad
+A\ge m,\qquad |\eta_3-\eta_0|\le mc.
+\tag{9.24}
+$$
+
+If $|D|\le mc$, then for $x\ge0$ one has
+$6mx\le D+mc$; for $x\le0$ one has
+$6mx\ge D-mc$. Thus the whole compatible set is contained in
+
+$$
+K\cap\left[z+\frac{D-mc}{6m},\quad
+             z+\frac{D+mc}{6m}\right],
+\tag{9.25}
+$$
+
+whose length is at most $c/3=\gamma<H$. Its midpoint rule
+therefore has loss at most $\gamma/2$ on every member of $C$.
+This is an outer interval consequence of the original joint
+constraints, used only for its valid diameter bound. It is not
+asserted to equal $C$ or to certify feasibility.
+
+If $D>mc$, (9.24) forces $x>0$ in every compatible world;
+if $D<-mc$, it forces $x<0$. Hence all arguments in (9.21)
+are in $[0,E]$ and the whole compatible set is on that one side.
+Theorem 9.2 gives
+$|s-t|\le B_j(s)+B_j(t)$ for all its pairs.
+The scalar intersection argument of Theorem 2.1 now shows that
+(9.22) is nonempty: each $s-B_j(s)$ is at most every
+$t+B_j(t)$. The endpoints are finite because
+$C\subseteq K$ is nonempty and $0\le B_j\le H$.
+Every point of this intersection has loss at most $B_j(t)$
+simultaneously for every $t\in C$. This reasoning requires
+neither positive radii nor an interior point; it covers a zero
+radius forcing a singleton intersection.
+
+The source's scalar-recovery supplier also makes the $012$
+midpoint finite. Thus every terminal prescription is total on
+all real histories, with the explicit empty-set convention.
+Each seed actually reads exactly $013$ or $023$, in increasing
+integer order, with continuation $3$ legal after either choice
+of $u$. In particular the difference $D$ is formed from two
+reports that have actually been acquired in that execution.
+No test of the true origin is a receiver input. All actual
+indices and answers are measurable for each fixed complete world
+on this two-point power-set probability space.
+
+Fix one complete $W$ of (1.2), including its finite gain, offset
+and all four original errors, before the seed. Both analytical
+triples have the same $D=y_3(W)-y_0(W)$.
+If $|D|\le mc$, both losses are at most $\gamma/2\le H/2$.
+Otherwise put $x=|\tau(W)-z|>0$. The two losses are bounded,
+in the order specified by the sign of $D$, by
+$\mathsf b_R(x)$ and $\mathsf b_L(x)$. Their fair average is
+$H/2$. This proves the fixed-world bound uniformly over every
+$A\ge m$, every $B$ and the complete original cube. The other
+seed's triple is only an analytical evaluation on this same
+world; it is not an extra acquired report.
+
+For the lower bound reuse the finite attained full-grid pair of
+Theorem 3.3, supplied by Three-Index Design, Theorem 18.2.
+Its two complete worlds have origins at distance $H$ and equal
+reports at all four indices, with finite gains and offsets and
+legal errors in the original four-coordinate cube. They are fixed
+before any seed of any candidate strategy. For each seed, equality
+of actual reports successively forces the same choices, same
+terminal history and same answer in the two worlds. The sum of
+their two losses is therefore at least $H$ pointwise. Each loss
+is measurable by the individual world's hypothesis, so additivity
+of nonnegative integrals gives a sum of fixed-world expected
+losses at least $H$, even if one is infinite. At least one is
+at least $H/2$. This applies before taking the infimum over all
+allowed seed spaces and gives the reverse inequality in (9.23).
+No source law, joint measurability, finite-seed reduction or
+minimax exchange occurs. $\square$
+
+## 10. Closed small-parameter bands and an all-prior matching family
+
+**Theorem 10.1 (endpoint-width criterion and a small-$c$ curve).**
+For the original complete-source problem, every $c>0$ and finite
+$E\ge0$ with $E\le3H/2$ satisfy
+
+$$
+\boxed{R_{\mathrm{private}}(c,E)=H/2.}
+\tag{10.1}
+$$
+
+More generally, in the strict middle domain (9.1),
+$H\ge(1+\lambda)(E-H)$ is sufficient for the same equality.
+In particular, for every
+
+$$
+0<c<2,\qquad \frac c3\le E\le\frac{3c}{6-c},
+\tag{10.2}
+$$
+
+there is the closed-band value
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac{c(1+E)}{2(3+c)}.
+}
+\tag{10.3}
+$$
+
+**Proof.** On $E\le c/3$ the inherited identity is
+$F=H=\min\{2E,c/3\}$, so Theorem 3.3 matches; this includes
+$E=0$. On $E\ge1+c$, $F=H=Q$ and the same theorem matches.
+In the remaining domain (9.1), choose $w=r=E-H$.
+Then (9.3) requires only $(1+\lambda)r\le H$, and
+Theorem 9.4 applies. If $E\le3H/2$, then $r\le H/2$;
+since $\lambda\le1$, this sufficient inequality holds.
+This proves (10.1) and the more general assertion with the actual
+single-trajectory consumer $\Gamma^{\mathrm{end}}_r$.
+
+For (10.2), $6-c>0$ and
+
+$$
+\frac{3c}{6-c}-\frac c3=\frac{c(3+c)}{3(6-c)}>0,
+\qquad
+\frac{1+c}{2}-\frac{3c}{6-c}
+=\frac{(2-c)(c+3)}{2(6-c)}>0.
+\tag{10.4}
+$$
+
+Thus this band is contained in
+$c/3\le E<(1+c)/2$, where $H=G$. Positive-denominator
+multiplication gives
+
+$$
+E\le3H/2
+\quad\Longleftrightarrow\quad
+(6-c)E\le3c.
+\tag{10.5}
+$$
+
+Equations (10.1) and (10.5) prove (10.3). At the lower endpoint
+$E=c/3$, use the already supplied $\Gamma_{1/2}$ and value
+$E/2=c/6$; no positive $r$ or $w$ is required there.
+At the included upper endpoint, $r=H/2$ and all inequalities
+in (9.3) remain nonstrict. At $c=2$ the two upper boundaries in
+(10.4) meet at $E=3/2$; that point is covered by (10.1).
+The displayed parameter restriction $c<2$ merely isolates the
+stated smaller-$c$ curve. $\square$
+
+**Theorem 10.2 (signed-budget all-prior family).** Define
+
+$$
+c_\dagger=\frac{3(\sqrt{17}-1)}8.
+\tag{10.6}
+$$
+
+For every $c\ge c_\dagger$ and every finite $E\ge0$, on the
+unrestricted strategy class of Definition 1.2,
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac H2=
+\begin{cases}
+\frac12\min\{2E,c/3\},&0\le E\le c/3,\\[3pt]
+\dfrac{c(1+E)}{2(3+c)},&c/3\le E\le(1+c)/2,\\[5pt]
+\dfrac{cE}{2(1+c)},&E\ge(1+c)/2.
+\end{cases}}
+\tag{10.7}
+$$
+
+In particular this holds throughout $c\ge\sqrt{3/2}$.
+The number $c_\dagger$ is a sufficient threshold, with no
+necessity assertion.
+
+**Proof.** For $c\ge3$, (10.7) is already Theorem 8.5.
+The inherited regions $E\le c/3$ and $E\ge1+c$ were also
+settled in the proof of Theorem 10.1. It remains to treat
+$c_\dagger\le c<3$ and (9.1). We choose $w=\chi$ in
+(9.3). The new threshold is the positive root of
+
+$$
+4c^2+3c-9=0.
+\tag{10.8}
+$$
+
+Hence $c>1$, $\gamma=c/3<1$, and
+
+$$
+\gamma(1+4\gamma)\ge1,\qquad
+5c^2+3c-9\ge c^2>0.
+\tag{10.9}
+$$
+
+On the first band $\lambda=\gamma$. On the second,
+$\beta\ge\gamma$ and $\lambda=\min(1,\beta)\ge\gamma$.
+Thus the last condition of (9.3) holds, including its equality
+at the threshold on the first band.
+
+To check the width condition first suppose
+$c/3<E\le(1+c)/2$. Then
+
+$$
+0<r\le1/2,\qquad
+\chi=\frac{\gamma r}{1+2\gamma},\qquad
+H=\gamma(1+r).
+\tag{10.10}
+$$
+
+Since $0<\gamma<1$, the affine function
+$H-r-\gamma\chi=
+\gamma+r(\gamma-1-\gamma^2/(1+2\gamma))$
+decreases in $r$. Its minimum on $0\le r\le1/2$ is
+
+$$
+\frac{5\gamma^2+\gamma-1}{2(1+2\gamma)}
+=\frac{5c^2+3c-9}{6(3+2c)}>0.
+\tag{10.11}
+$$
+
+Therefore $r+\lambda\chi<H$ on this band.
+
+Next suppose $(1+c)/2\le E<1+c$. Now
+$1/2\le r<1$, $H=cr$ and
+$\chi=c(1-r)/(3+2c)$. Put $u=1/r\in(1,2]$.
+Using $\lambda\le\beta=c(1-u/3)$ gives
+
+$$
+\frac{\lambda\chi}{r}
+\le\frac{c^2(u-1)(3-u)}{3(3+2c)}
+\le\frac{c^2}{3(3+2c)},
+\tag{10.12}
+$$
+
+because $(u-1)(3-u)=1-(u-2)^2\le1$.
+Consequently
+
+$$
+H-r-\lambda\chi
+\ge r\left(c-1-\frac{c^2}{3(3+2c)}\right)
+=\frac{r(5c^2+3c-9)}{3(3+2c)}>0.
+\tag{10.13}
+$$
+
+This calculation does not extrapolate the near separation branch
+past $r=1/2$; the coefficient $\beta$ uses both branches as
+proved in (9.9)--(9.10). Since $0<\chi<r$, all conditions in
+(9.3) hold for $w=\chi$. Theorem 9.4 supplies the same-world
+upper strategy and arbitrary-seed lower bound on the whole
+remaining domain, proving (10.7).
+
+All boundaries are included. At $c=c_\dagger$, (9.18) can be
+an equality, while the strict width bounds (10.11)--(10.13)
+still hold; no inverse of $4c^2+3c-9$ was used. The positive
+root in (10.8) is less than $\sqrt{3/2}$: the polynomial is
+strictly increasing on $c>0$ and at $c=\sqrt{3/2}$ its value
+is $3(\sqrt{3/2}-1)>0$. Thus $c=\sqrt{3/2}$ and every
+larger $c$ lie in the proved family.
+
+At $E=0$, the constant answer $z$ has risk zero. At
+$E=c/6$, the minimum $\min(2E,c/3)$ has matching values
+on its two branches. At $E=c/3$, adjoining values are $c/6$;
+at $E=(1+c)/2$, both are $c/4$. At this latter junction
+$r=1/2$, $G=Q$, $\chi=P-G=P-Q$ and the two definitions
+of $\lambda$ agree, so the endpoint rule and its pair estimates
+also agree. At $E=1+c$, $P=Q=c$ and the inherited
+$F=H$ rule gives $c/2$; the strict middle certificate need
+not be extended to its vanishing $\chi$. Every prior in (10.7)
+is finite, and all attaining lower worlds have finite nuisance
+parameters. $\square$
+
+**Theorem 10.3 (nonempty additional small-$c$ domain and remaining scope).**
+For every $0<c<c_\dagger$, the interval
+
+$$
+\frac c3<E\le\frac{3c}{6-c}
+\tag{10.14}
+$$
+
+has positive length, lies in the previously unmatched domain
+of (8.35), and has the exact value (10.3).
+Neither (10.7) nor (10.14) changes the deterministic conclusions
+of Uniform Report Designs or the attained risks of the particular
+strategies in Sections 4, 6 and 7.
+
+On $0<c<c_\dagger$, the equalities of (5.2), Theorem 10.1,
+and every valid certificate (9.3) remain available. For other
+points of $c/3<E<E_\star(c)$ these results do not determine
+the unrestricted value. In particular the sufficient thresholds
+and the failures of their budget conditions imply neither a
+positive actual gap above $H/2$ nor a necessary threshold.
+
+**Proof.** Since $c_\dagger<\sqrt{3/2}<2$, both strict
+comparisons in (10.4) apply and give a nonempty interval above
+$c/3$ and below $(1+c)/2$. The inherited relation
+$(1+c)/2<E_\star(c)$ puts it below the other inherited exact
+region. The right-hand width in (8.35) is positive there because
+$c<3$ and $P-G>0$; (8.35) itself made no claim that the
+actual gap was positive. Theorem 10.1 now settles the value
+with the lawful consumer of Definition 9.3, without changing
+any source or strategy quantifier. Earlier lower and upper bounds
+and exact risks on their own stated domains remain valid.
+
+The comparison with existing mathematics is scoped as follows.
+The exact separations, finite full-grid witnesses, joint fibers,
+reflection and scalar interval-intersection steps are the suppliers
+in Three-Index Design, Sections 2, 3, 18 and 23, and Uniform
+Report Designs, Sections 30--34, already identified in Sections
+1--8. The common-endpoint localization combined with the signed
+transfer (9.14)--(9.20) supplies the complementary decision
+guarantee used here. Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+supplies the classical intersection of known-regressor bounded-error
+strips. Its coordinate bounding orthotopes do not supply the
+joint ratio-target conclusion (9.23). Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2),
+studies continuous linear targets and imposes product measurability
+on randomized loss. The clock target
+$\theta_1/(2\theta_2)$ remains nonlinear even after including
+the four errors in the input, and Definition 1.2 requires only
+per-world seed measurability. Neither comparison theorem is used
+as a substitute for the same-fixed-world upper proof or the
+two-fixed-world lower proof. These are ordinary mathematical
+deductions in the declared clock model, without a claim of
+literature priority or of empirical clock realization. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 11. Actual-prefix continuation and the unrestricted first-order value
+
+**Definition 11.1 (three-path continuation and terminal ratios).** Retain
+exactly Definitions 1.1--1.2. For this section fix
+$m>0$, $0<E\le1/2$, $0<c<1$, and set
+
+$$
+\begin{gathered}
+r_E=\frac{1+E}{2(1+2E)},\qquad
+p_E=\frac{E}{2(1+2E)},\qquad k_E=1-r_E,
+\\
+p(h)=\min\{k_E,\max\{p_E,k_E(h^{-1}-1)\}\}\quad(h>0).
+\end{gathered}
+\tag{11.1}
+$$
+
+Thus $p_E+r_E=1/2$, $0<p_E<k_E<1$, and
+$p_E\le p(h)\le k_E$. Use the independent seed space $[0,1]$
+with its Borel sigma-algebra and uniform probability. For each seed
+$u\in[0,1]$, on every real first history choose index $2$ if
+$u<r_E$ and index $1$ otherwise. After index $2$, choose $3$.
+After the actual prefix $(r_0,r_1)$ at indices $01$, put
+
+$$
+\widehat h=\frac{r_0-r_1}{2m},\qquad
+\bar h=\max\{1/2,\widehat h\},
+\tag{11.2}
+$$
+
+and choose index $2$ if $r_E\le u<r_E+p(\bar h)$, and index
+$3$ otherwise. These prescriptions define the history functions
+also on unreachable legal histories.
+
+For any real triple at the indicated indices, define
+
+$$
+\begin{array}{c|c|c}
+ j&\widehat A_j&\widehat x_j\quad(\widehat A_j>0)\\ \hline
+012&(r_0-2r_1+r_2)/2&1/2+(r_2-r_0)/(4\widehat A_{012})\\
+013&(2r_0-3r_1+r_3)/6&(r_3-r_0)/(6\widehat A_{013})\\
+023&(r_0-3r_2+2r_3)/6&(r_3-r_0)/(6\widehat A_{023}).
+\end{array}
+\tag{11.3}
+$$
+
+The terminal answer is the projection of $z+\widehat x_j$ onto
+$K=[z-E,z+E]$ when $\widehat A_j>0$, and is $z$ when
+$\widehat A_j\le0$. The same terminal prescription is used for
+every seed and every legal terminal pair. Denote this strategy by
+$\Gamma^{\mathrm{prefix}}$.
+
+**Lemma 11.2 (joint original-error inequality for the continuation).**
+For $-E\le x\le E$, $\alpha\ge1$, put $h=\alpha(1-x)$,
+$p=p(h)$, $q=1-r_E-p$. In the original coordinate order $0123$, set
+
+$$
+\begin{aligned}
+w_{012}(x)&=(-3x,\ 6x-3,\ 3-3x,\ 0),\\
+w_{013}(x)&=(-1-2x,\ 3x,\ 0,\ 1-x),\\
+w_{023}(x)&=(-1-x,\ 0,\ 3x,\ 1-2x).
+\end{aligned}
+\tag{11.4}
+$$
+
+Then for every $e\in[-1,1]^4$,
+
+$$
+p|w_{012}(x)\cdot e|+q|w_{013}(x)\cdot e|
+ +r_E|w_{023}(x)\cdot e|
+\le2\alpha(1+E).
+\tag{11.5}
+$$
+
+In particular, all three terms are evaluated on the same four
+original errors.
+
+**Proof.** Write $r=r_E$, $k=k_E$, $p_0=p_E$. The left side is a
+convex function of $e$. Every point of the cube is a convex
+combination of its vertices, so it suffices to bound the vertices.
+Since each row in (11.4) sums to zero and simultaneous sign reversal
+does not change the expression, its nonzero vertex values, divided
+by $2$, are the following seven quantities:
+
+$$
+\begin{aligned}
+M_1&=q(1-x)+r(1-2x),\\
+M_2&=3p(1-x)+3r|x|,\\
+M_3&=(3p+q)(1-x)+r(1+x),\\
+M_4&=3p(1-2x)+3q|x|,\\
+M_5&=3p(1-2x)+q(1+2x)+r(1-2x),\\
+M_6&=3|x|,\\
+M_7&=3p|x|+q(1+2x)+r(1+x).
+\end{aligned}
+\tag{11.6}
+$$
+
+The remaining sign pair gives zero. The assumptions $|x|\le1/2$
+justify all signs used in (11.6).
+
+If $x\le0$, then $h\ge1$ and $p=p_0$, $q=1/2$.
+Each $M_i$ is convex as a function of $x$ on $[-E,0]$.
+At $x=0$ their maximum is $1+2p_0\le1+E$.
+At $x=-E$, the first, third and fifth equal $1+E$; the
+second is $3E(1+E)/(1+2E)\le1+E$; the fourth and sixth
+are $3E\le1+E$. For the seventh use
+
+$$
+M_7=1-p_0-E(2-5p_0-r)\le1,
+\qquad 2-5p_0-r=\frac{3+2E}{2(1+2E)}>0.
+\tag{11.7}
+$$
+
+Convexity therefore bounds all seven by $1+E$, and hence by
+$\alpha(1+E)$, on this half.
+
+Suppose $x\ge0$. We always have $p\ge p_0$, $q\le1/2$.
+Direct subtraction in (11.6), using $0\le x\le1/2$, gives
+
+$$
+M_1\le M_3,\quad M_2\le M_3,\quad M_4\le M_5\le M_3.
+\tag{11.8}
+$$
+
+For the last comparison,
+$M_3-M_5=3x(1-2q)\ge0$. It remains to bound
+$C=M_3$, $J=M_7$ and $3x$. Define
+
+$$
+h_0=\frac{k}{k+p_0}=\frac{1+3E}{1+4E},\qquad
+x_0=1-h_0=\frac{E}{1+4E}.
+\tag{11.9}
+$$
+
+Since $h\ge1-x\ge1/2$, the upper truncation in (11.1) does
+not alter $k(h^{-1}-1)$. For $h\ge h_0$ one has $p=p_0$.
+If also $x\le x_0$, then
+
+$$
+C=1+2p_0-4p_0x\le1+E,
+\qquad
+J=1-p_0+x(3/2+2p_0)\le1+x\le1+E.
+\tag{11.10}
+$$
+
+The second inequality uses $x_0=p_0/(1/2+2p_0)$.
+Also $3x\le1+x\le1+E$, and $\alpha\ge1$.
+
+For $h\le h_0$, use $p=k(h^{-1}-1)$ and
+$h=\alpha(1-x)$. Elementary substitution gives
+
+$$
+\frac C\alpha=(1+x-2k)v+2kv^2,
+\qquad
+\frac J\alpha=(1+k+x)v-kv^2,
+\qquad v=1/\alpha\in(0,1].
+\tag{11.11}
+$$
+
+The first polynomial is convex in $v$, with endpoint values
+$0$ and $1+x$, so it is at most $1+x$. For the second,
+
+$$
+1+x-\frac J\alpha=(1-v)(1+x-kv)\ge0.
+\tag{11.12}
+$$
+
+Thus both are at most $1+x\le1+E$; also
+$3x/\alpha\le3x\le1+x$. This includes $h=h_0$.
+Finally, if $x>x_0$ and $h>h_0$, keep $x,p_0,q,r$ fixed
+and decrease $h$ to $h_0$. This is admissible since
+$h_0>1-x$. Every nonnegative $M_i/\alpha=M_i(1-x)/h$
+can only increase under that change, and its value at $h_0$
+was just bounded. These cases exhaust $x\ge0$ and prove
+(11.5). $\square$
+
+**Theorem 11.3 (a lawful upper bound on every small prior).** For every
+$m>0$, $0<E\le1/2$ and $0<c<1$, Definition 11.1 is an
+admissible strategy on the original complete source, and
+
+$$
+\begin{aligned}
+R_{\mathrm{private}}(c,E)
+&\le\mathcal R(\Gamma^{\mathrm{prefix}})
+\le U_*(c,E):=\frac{c[1+E+4k_Ec]}{6(1-c)}\\
+&\le U(c,E):=\frac{c[1+E+3c(1+3E)]}{6(1-c)}.
+\end{aligned}
+\tag{11.13}
+$$
+
+All preceding upper bounds can still be included in the minimum.
+For fixed $0<E\le1/2$, on $0<c<\min\{1,3E\}$,
+
+$$
+\boxed{
+0\le R_{\mathrm{private}}-\frac H2
+\le\frac{c^2[13+31E+c(3+9E)]}{6(1-c)(3+c)},
+\qquad
+\lim_{c\downarrow0}\frac{R_{\mathrm{private}}(c,E)}c
+ =\frac{1+E}{6}.
+}
+\tag{11.14}
+$$
+
+**Proof.** Fix one complete world before the seed, and write
+$x=\tau-z$, $\alpha=A/m\ge1$. Its noiseless $01$ difference is
+$2A(1-x)$. Consequently the actual prefix satisfies
+
+$$
+h=\alpha(1-x)\ge1/2,\qquad
+|\widehat h-h|\le c/2,\qquad |\bar h-h|\le c/2.
+\tag{11.15}
+$$
+
+The clamp onto $[p_E,k_E]$ is nonexpansive, so
+
+$$
+|p(\bar h)-p(h)|
+\le\frac{k_E|\bar h-h|}{\bar h h}
+\le\frac{k_Ec}{h}.
+\tag{11.16}
+$$
+
+All denominators here are positive. In this fixed world the actual
+path probabilities are $p(\bar h)$, $1-r_E-p(\bar h)$ and
+$r_E$ for $012,013,023$, respectively. The conditional decision
+after $01$ uses its two acquired reports alone.
+
+Quadratic interpolation gives the exact identities, before projection,
+
+$$
+\widehat x_j-x=\frac{w_j(x)\cdot\eta}{6\widehat A_j},
+\qquad
+|\widehat A_{012}-A|\le mc,\qquad
+|\widehat A_{013}-A|,|\widehat A_{023}-A|\le mc/2.
+\tag{11.17}
+$$
+
+For example, subtracting $A$ from the first column of (11.3)
+yields the original linear combinations of the three selected errors;
+substitution in the ratio gives exactly (11.4). Thus
+$\widehat A_j\ge A(1-c)>0$ on every actual triple.
+Projection onto $K$ cannot increase error at $\tau\in K$.
+The four errors in (11.17) remain the one fixed vector of the
+world; no independent error bounds on report differences are used.
+
+Put $S(v)=v|w_{012}\cdot\eta|+(1-r_E-v)|w_{013}\cdot\eta|
++r_E|w_{023}\cdot\eta|$. Lemma 11.2 gives
+$S(p(h))\le2\varepsilon\alpha(1+E)$. Moreover,
+
+$$
+w_{012}(x)-w_{013}(x)=(1-x)(1,-3,3,-1)
+\tag{11.18}
+$$
+
+implies
+$\big||w_{012}\cdot\eta|-|w_{013}\cdot\eta|\big|
+\le8\varepsilon(1-x)$. Combining this with (11.16)--(11.17)
+bounds the expected loss on this same complete world by
+
+$$
+\begin{aligned}
+\frac{S(p(\bar h))}{6A(1-c)}
+&\le\frac{2\varepsilon\alpha(1+E)
+       +8\varepsilon(1-x)k_Ec/h}{6A(1-c)}\\
+&=\frac{c(1+E)}{6(1-c)}
+  +\frac{2k_Ec^2}{3\alpha^2(1-c)}
+\le U_*(c,E).
+\end{aligned}
+\tag{11.19}
+$$
+
+Since $4k_E=2(1+3E)/(1+2E)\le3(1+3E)$, this is at most
+$U(c,E)$. No gain upper bound was used.
+
+The rules in Definition 11.1 are total: on arbitrary histories their
+clamped probability is defined, all choices are chronological, and
+(11.3) either has a strictly positive denominator or uses the finite
+answer $z$. The projection is finite. For each fixed world, the
+actual path events are intervals of the seed and the answer is one
+of three fixed real numbers. Hence indices and answer are measurable
+on the displayed seed space, including zero-probability branches and
+the boundary seeds. Each seed acquires exactly three reports; the
+other two possible triples in (11.19) are analytical evaluations on
+this same world, without additional acquisitions. This proves
+admissibility and the uniform upper bounds.
+
+For $c<3E$ and $E\le1/2$, the constants (1.8) have
+$H=G=c(1+E)/(3+c)$ and $F=P$. Indeed $G>c/3$,
+$G\ge Q$, and $G<E<2E$. The arbitrary-seed full-grid pair in
+Theorem 3.3 supplies $R_{\mathrm{private}}\ge G/2$. Subtracting
+$G/2$ from $U$ gives precisely the fraction in (11.14), whose
+denominators are positive. Dividing these lower and upper bounds by
+$c$ and letting $c\downarrow0$ proves the limit for every fixed
+positive $E$ in the stated interval. $\square$
+
+**Proposition 11.4 (strict improvement over the active published minimum).**
+At $E=1/10$ and every $0<c\le1/200$, the minimum of the
+upper bounds in Sections 1--10 is
+
+$$
+V(c,1/10)=\frac{c(10c+69)}{120(2c+3)},
+\tag{11.20}
+$$
+
+and the admissible bound in Theorem 11.3 satisfies
+
+$$
+U(c,1/10)=\frac{c(11+39c)}{60(1-c)}<V(c,1/10).
+\tag{11.21}
+$$
+
+**Proof.** This range has $c/3<E<(1+c)/2$ and
+$E\le(1+2c)/4$. Uniform Report Designs, Theorem 31.4,
+therefore gives $R_{\mathrm{ad},3}=P/2$; Theorem 7.5 makes
+$V=G/2+(1-c/3)(P-G)/4$ smaller than the other upper bounds
+from Sections 1--7. Substitution gives (11.20).
+The outside-prior domain of Section 8 is absent. The wide exact
+region starts at $E_\star>(1+c)/2$, and $c<c_\dagger$.
+In Section 9 the necessary width condition for its certificate is
+$E-H\le H$, whereas here
+
+$$
+2H=\frac{11c}{5(3+c)}\le\frac{11}{3000}<\frac1{10}.
+\tag{11.22}
+$$
+
+So no choice of its $w$ is admissible; the narrower sufficient
+condition of Theorem 10.1 is absent as well. Thus none of the
+additional upper consumers in Sections 8--10 lowers (11.20).
+Finally direct subtraction gives
+
+$$
+V-U=\frac{c(3-337c-166c^2)}{120(1-c)(2c+3)}>0.
+\tag{11.23}
+$$
+
+The numerator factor decreases on $c\ge0$ and at $1/200$ is
+$26217/20000>0$. All denominators in (11.20)--(11.23) are
+positive. This is an improvement over the active prior minimum,
+without an assertion that $U$ is an exact finite-$c$ value. $\square$
+
+## 12. Finite complete worlds, endpoint-only loss and actual path occupation
+
+**Definition 12.1 (endpoint-only subclass and finite witnesses).**
+For any strategy of Definition 1.2, let
+
+$$
+\pi_\Gamma(W)=\mathbb P\{(u_\omega(W),v_\omega(W))=(1,2)\}.
+\tag{12.1}
+$$
+
+The event is measurable by that definition. Let $R_{\mathrm{end}}(c,E)$
+be the infimum of $\mathcal R(\Gamma)$ over the entire subclass
+satisfying $\pi_\Gamma(W)=0$ for every complete world. The seed
+space and all history functions remain unrestricted as in
+Definition 1.2; the exceptional seed set may depend on the world.
+
+For $m>0$, $0<E\le1/2$, $0<c<3E$ and any integer $N\ge1$,
+put $t=c/3$. Define complete worlds $X_0,\ldots,X_N$ and
+$Y_0,\ldots,Y_{N-1}$ by the following finite parameters, where
+$J=A(\tau-z)$:
+
+$$
+\begin{array}{c|c|c|c}
+ &A&J&\eta/\varepsilon\\ \hline
+X_j&m(1+jt)&mE&(1,-1,-1,-1)\\
+Y_j&m(1+(j+2)t)&m(E-t)&(-1,1,1,1).
+\end{array}
+\tag{12.2}
+$$
+
+In each row set $\tau=z+J/A$ and
+$B=-A\tau^2-\eta_0$. Let $D=6mE-mc$. For any of these worlds
+$W=(\tau,A,B,\eta)$ also define
+
+$$
+W^\dagger=(-3-\tau,A,B-D,\eta^\dagger),
+\qquad \eta^\dagger_i=\eta_{3-i}.
+\tag{12.3}
+$$
+
+These are mathematical choices of complete worlds; the superscript
+is not an operation available during a strategy's execution.
+
+**Theorem 12.2 (a finite pre-seed occupation inequality).** All worlds
+(12.2)--(12.3) belong to the original source. Define the positive
+distances
+
+$$
+\begin{aligned}
+d_{13,j}&=t\frac{1+2E+jt}{(1+jt)(1+(j+2)t)},\\
+d_{23,j}&=t\frac{1+E+(j+1)t}{(1+(j+1)t)(1+(j+2)t)},\\
+S_{13}&=\sum_{j=0}^{N-1}d_{13,j},\qquad
+S_{23}=\sum_{j=0}^{N-1}d_{23,j}.
+\end{aligned}
+\tag{12.4}
+$$
+
+For every original arbitrary-seed strategy $\Gamma$, with
+$\ell(W)=\mathbb E|T(W)-\tau(W)|$, the finite inequality is
+
+$$
+\begin{aligned}
+&\sum_{j=0}^{N}\bigl[\ell(X_j)+\ell(X_j^\dagger)\bigr]
+ +\sum_{j=0}^{N-1}\bigl[\ell(Y_j)+\ell(Y_j^\dagger)\bigr]\\
+&\quad\ge S_{13}+S_{23}
+ -\sum_{j=0}^{N-1}\left[
+ d_{13,j}\pi_\Gamma(X_j)
+ +d_{23,j}\pi_\Gamma(X_{j+1}^\dagger)\right].
+\end{aligned}
+\tag{12.5}
+$$
+
+In particular the left side is at most
+$2(2N+1)\mathcal R(\Gamma)$. No source probability law is required.
+
+**Proof.** Since $0<t<E$, the centered origins of $X_j,Y_j$ lie
+in $(0,E]$; the reflected ones lie in $[-E,0)$. Every gain is
+finite and at least $m$, every offset displayed above is finite,
+and all four errors are fixed signs of $\varepsilon$. Thus all
+worlds are legal. In the original coordinates the report differences
+are
+
+$$
+\begin{aligned}
+y_1-y_0&=2(J-A)+\eta_1-\eta_0,\\
+y_2-y_0&=4J-2A+\eta_2-\eta_0,\\
+y_3-y_0&=6J+\eta_3-\eta_0.
+\end{aligned}
+\tag{12.6}
+$$
+
+Substitution shows that every world in (12.2) has $y_0=0$,
+$y_3=D$, and gives the exact equalities
+
+$$
+\begin{aligned}
+(y_0,y_1,y_3)(X_j)&=(y_0,y_1,y_3)(Y_j),\\
+(y_0,y_2,y_3)(Y_j)&=(y_0,y_2,y_3)(X_{j+1}).
+\end{aligned}
+\tag{12.7}
+$$
+
+For example, from $X_j$ to $Y_j$ the changes in $A,J$ are
+$2mt,-mt$, so the noiseless $01$ difference changes by
+$-6mt=-2mc$, while its original error difference changes by
+$2mc$. From $Y_j$ to $X_{j+1}$ these changes are $-mt,mt$,
+so the corresponding $02$ changes are $2mc$ and $-2mc$.
+The $03$ difference is $D$ in both cases. This verifies the
+joint original-error realizations, including the unread coordinates.
+
+Subtracting the centered origins in each pair gives exactly
+$d_{13,j}=\tau(X_j)-\tau(Y_j)$ and
+$d_{23,j}=\tau(X_{j+1})-\tau(Y_j)$ in (12.4).
+Their numerators and denominators are positive. Reflection obeys
+
+$$
+y_i(W^\dagger)=y_{3-i}(W)-D,
+\tag{12.8}
+$$
+
+so the reflected worlds still have $y_0=0,y_3=-D$. Their
+$013$ pairs are $(Y_j^\dagger,X_{j+1}^\dagger)$ at distance
+$d_{23,j}$, and their $023$ pairs are
+$(X_j^\dagger,Y_j^\dagger)$ at distance $d_{13,j}$.
+
+Fix any seed of any candidate strategy. All these worlds have the
+same initial report zero. Therefore the event
+$I=\{f_\omega(0)=1\}$ is common to them all. It is measurable
+because it is the actual first-index event in, for example, $X_0$.
+On $I$, the pair $(X_j,Y_j)$ supplies the same actual prefix
+$01$. Its third-index decision is consequently the same in both
+worlds. If it is $3$, their entire acquired histories and their
+answers agree, and the sum of their losses is at least $d_{13,j}$.
+If it is $2$, their nonnegative losses are still at least zero.
+The excluded event is exactly the actual $012$ event in $X_j$
+(and also in $Y_j$), rather than a hypothetical path choice.
+On $I^c$, the pair $(Y_j,X_{j+1})$ must execute $023$ in both
+worlds by chronology; (12.7) forces equal answers and a sum of
+losses at least $d_{23,j}$.
+
+For each of the two alternatives these are disjoint pairs among
+$X_0,Y_0,X_1,\ldots,Y_{N-1},X_N$, leaving one world unpaired.
+Summing their triangle inequalities pointwise and then integrating
+therefore gives, with $q=\mathbb P(I)$,
+
+$$
+\sum_{j=0}^{N}\ell(X_j)+\sum_{j=0}^{N-1}\ell(Y_j)
+\ge qS_{13}+(1-q)S_{23}
+ -\sum_{j=0}^{N-1}d_{13,j}\pi_\Gamma(X_j).
+\tag{12.9}
+$$
+
+The reflected pairs give in the same way
+
+$$
+\sum_{j=0}^{N}\ell(X_j^\dagger)
+ +\sum_{j=0}^{N-1}\ell(Y_j^\dagger)
+\ge qS_{23}+(1-q)S_{13}
+ -\sum_{j=0}^{N-1}d_{23,j}\pi_\Gamma(X_{j+1}^\dagger).
+\tag{12.10}
+$$
+
+Adding cancels $q$ and proves (12.5). Every integral used is of
+a measurable loss or actual path event for one fixed world; only
+finitely many such functions are added. If a loss expectation is
+infinite the asserted inequality still holds. Thus no joint
+world--seed measurability, finite-seed reduction or minimax
+interchange enters the proof. The worlds were all fixed before
+the seed, without selecting a different witness after execution.
+$\square$
+
+**Theorem 12.3 (exact first-order endpoint-only penalty).** For every
+fixed $0<E\le1/2$, over the complete original endpoint-only
+subclass of Definition 12.1,
+
+$$
+\boxed{
+\lim_{c\downarrow0}\frac{R_{\mathrm{end}}(c,E)}c
+ =\frac{2+3E}{12},\qquad
+\lim_{c\downarrow0}\frac{R_{\mathrm{end}}(c,E)
+                     -R_{\mathrm{private}}(c,E)}c
+ =\frac E{12}.
+}
+\tag{12.11}
+$$
+
+In particular the restriction is substantive at every fixed positive
+prior width in this interval.
+
+**Proof.** Let $a_N=1+(N+1)c/3$. The denominators in (12.4)
+are at most $a_N^2$, while their respective numerators are at
+least $1+2E$ and $1+E$. If the strategy is endpoint-only,
+all occupation terms in (12.5) vanish, including when its null
+sets differ between worlds. Consequently, for every $N\ge1$,
+
+$$
+R_{\mathrm{end}}(c,E)
+\ge\frac{Nc(2+3E)}{6(2N+1)a_N^2}
+\qquad(0<c<3E).
+\tag{12.12}
+$$
+
+For fixed $N$ take the lower limit as $c\downarrow0$, obtaining
+$N(2+3E)/[6(2N+1)]$. This holds for every integer $N$;
+letting $N$ increase gives $(2+3E)/12$ as a lower bound for
+that lower limit. This order of two scalar limits uses only the
+finite inequalities already proved.
+
+For the upper bound, the fair $013/023$ strategy of Section 3 is
+endpoint-only and has risk at most $(F+H)/4$. For sufficiently
+small $c$ at fixed positive $E\le1/2$, $F=P,H=G$, whence
+
+$$
+\limsup_{c\downarrow0}\frac{R_{\mathrm{end}}(c,E)}c
+\le\lim_{c\downarrow0}\frac14
+ \left(\frac{1+2E}{3+2c}+\frac{1+E}{3+c}\right)
+=\frac{2+3E}{12}.
+\tag{12.13}
+$$
+
+This matches (12.12). Subtract the unrestricted limit (11.14)
+to obtain the second limit in (12.11). The lower argument here
+is a restricted-class conclusion; it does not give a positive
+unrestricted gap above $H/2$. $\square$
+
+**Corollary 12.4 (a necessary nonzero actual $012$ occupation).**
+For every $m>0$ and $0<E\le1/2$, define the public finite numbers
+
+$$
+\begin{gathered}
+N=\left\lceil\frac{4(1+E)}E\right\rceil,\\
+B_{N,E}=\frac{2(2+3E)(N+1)}3
+       +2(2+1/N)(4+10E),\\
+c_E=\min\{1/2,E/(4B_{N,E})\}>0.
+\end{gathered}
+\tag{12.14}
+$$
+
+For every $0<c\le c_E$ and every strategy on the original
+arbitrary-seed class with $\mathcal R(\Gamma)\le U(c,E)$,
+the explicit worlds (12.2)--(12.3) satisfy
+
+$$
+\boxed{
+\Pi_N(\Gamma):=\frac1{2N}\sum_{j=0}^{N-1}
+ [\pi_\Gamma(X_j)+\pi_\Gamma(X_{j+1}^\dagger)]
+ \ge\frac{E}{4(1+2E)}>0.
+}
+\tag{12.15}
+$$
+
+Thus at least one of these $2N$ fixed complete worlds must
+actually use $012$ with at least that probability.
+
+**Proof.** The range (12.14) is contained in $0<c<\min\{1,3E\}$,
+so all the witnesses and bounds apply. Cancellation of one
+positive denominator in (12.4) gives
+
+$$
+d_{13,j}\le\frac{c(1+2E)}3,
+\qquad d_{23,j}\le\frac{c(1+E)}3
+\le\frac{c(1+2E)}3.
+\tag{12.16}
+$$
+
+For example $1+2E+jt\le(1+2E)(1+jt)$;
+the other inequality uses $1+E+(j+1)t\le(1+E)(1+(j+1)t)$.
+Combining (12.5), its finite count of losses, the lower bound
+for $S_{13}+S_{23}$ used in (12.12), and (12.16) gives for
+any finite-risk strategy
+
+$$
+\Pi_N(\Gamma)\ge\frac1{2(1+2E)}
+\left[\frac{2+3E}{a_N^2}
+ -\frac{6(2N+1)\mathcal R(\Gamma)}{Nc}\right].
+\tag{12.17}
+$$
+
+Under the stated risk bound the second term in brackets is at most
+
+$$
+(2+1/N)\frac{1+E+3c(1+3E)}{1-c}
+=(2+1/N)\left[1+E+\frac{c(4+10E)}{1-c}\right].
+\tag{12.18}
+$$
+
+The elementary inequality $(1+s)^{-2}\ge1-2s$ for $s\ge0$
+follows, for example, by multiplying by $(1+s)^2$; the
+resulting difference is $s^2(3+2s)\ge0$. With
+$s=(N+1)c/3$, and using $c\le1/2$, the bracket in (12.17)
+is therefore at least
+
+$$
+E-\frac{1+E}{N}-cB_{N,E}\ge E-E/4-E/4=E/2.
+\tag{12.19}
+$$
+
+This proves (12.15). A finite average of probabilities cannot
+exceed their largest value, giving the stated actual-world
+consequence. Theorem 11.3 supplies an admissible strategy meeting
+the hypothesis, so the implication has a nonempty class of
+consumers. $\square$
+
+**Proposition 12.5 (endpoints, degeneracies and the remaining finite-noise scope).**
+At $E=1/2$, all assertions of Sections 11--12 include the endpoint,
+and their first-order coefficients are respectively $1/4$ and
+$7/24$, with endpoint-only penalty $1/24$. At $E=0$ both risks
+are zero for every $c\ge0$. In the noiseless extension $c=0$,
+both risks are zero for every finite $E\ge0$. For every fixed
+$0<E\le1/2$, (11.14) bounds the unrestricted excess above
+$H/2$ by a quantity of order $c^2$. These statements do not
+identify that excess at a positive finite $c$ outside the inherited
+exact regions, nor determine its second-order coefficient.
+
+**Proof.** At $E=1/2$, $p_E=1/8$, $r_E=3/8$ and $k_E=5/8$.
+The only potentially vanishing factors in (11.6) are $1-2x$ at
+$x=1/2$; they occur as nonnegative summands and were never
+divided by. The prefix bound remains $h\ge1/2$, the interpolated
+gains remain strictly positive for $c<1$, and every denominator
+in (12.2)--(12.19) is positive. Substituting $E=1/2$ in the
+two limits gives the stated coefficients.
+
+If $E=0$, the original target is the single known origin $z$;
+the constant terminal rule $z$ has zero loss and may use only
+$013$. Thus both nonnegative risks are zero. The fixed-positive-$E$
+limits (11.14) and (12.11) are not asserted uniformly through
+$E=0$. If $c=0$, any three distinct acquired reports determine
+the common quadratic polynomial, whose leading coefficient is
+$A\ge m>0$; its linear coefficient divided by $2A$ is the
+original $\tau$. The ratios (11.3), or the exact-fiber supplier
+of Three-Index Design, Theorem 3.1, therefore give zero loss.
+No infinite gain or offset is needed in any boundary argument.
+
+The error interval (11.14) has nonnegative lower endpoint and
+an explicit positive upper endpoint for $c>0,E>0$ in its scope.
+Neither the finite-world endpoint-only lower bound nor the
+occupation consequence changes that lower endpoint to a positive
+unrestricted gap. All earlier exact values and all upper consumers
+remain valid on their original domains; their minimum with
+(11.13) is an available upper bound. The unresolved question at
+other finite-$c$ points is whether a lawful strategy attains $H/2$
+or a stronger same-world lower argument excludes it.
+
+The interpolation identities, convexity on a cube, triangle
+inequalities and finite counting used here are intermediate
+classical facts. The fixed-design separations, joint original
+fibers and full-grid lower pair are the suppliers in
+[Three-Index Design, Sections 2, 3 and 18](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md),
+with the chronological history contract in its Definition 23.1;
+[Uniform Report Designs, Sections 30--34](FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)
+supplies the deterministic comparison. The joint error calculation
+(11.5), its actual-prefix consumer and the finite complete-world
+inequality (12.5) are clock-specific deductions in the original
+source model. They are repo-derived ordinary mathematical results,
+without a claim of literature priority or empirical clock realization.
+
+The literature correspondence remains limited to the hypotheses
+actually shared. Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+uses known regressors and bounded-error strips; here these are
+$(i^2,i,1)$ and the coefficient vector $(A,2A\tau,A\tau^2+B)$.
+Its orthotope construction bounds coordinate parameters and does
+not provide the nonlinear ratio target's private minimax value.
+Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2),
+studies a continuous linear target on a convex Banach-space input
+class and additionally requires product measurability of randomized
+loss. Including the four original errors as input coordinates
+makes the reports linear but leaves $\tau=\theta_1/(2\theta_2)$
+nonlinear, and the chronological coordinate menu and per-world
+measurability in Definition 1.2 remain unchanged. Consequently
+those linear-target comparisons do not replace either (11.19)
+or the finite integration proof (12.9)--(12.10). $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 13. The projected prefix consumer at second order
+
+**Definition 13.1 (normalized loss on one complete world).** Fix
+$m>0$ and $E=1/10$. Throughout this section the consumer is exactly
+$\Gamma^{\mathrm{prefix}}$ of Definition 11.1, including its terminal
+projection. Put
+
+$$
+\begin{gathered}
+r=\frac{11}{24},\qquad k=\frac{13}{24},\qquad
+p_0=\frac1{24},\qquad L=\frac{11}{60},\\
+x=\tau-z\in[-1/10,1/10],\qquad \alpha=A/m\ge1,\qquad
+\eta_i=\frac{mc}{2}e_i,\quad e\in[-1,1]^4,\\
+h=\alpha(1-x),\qquad v=\frac{e_0-e_1}{4},\\
+d_{012}=\frac{e_0-2e_1+e_2}{4},\qquad
+d_{013}=\frac{2e_0-3e_1+e_3}{12},\qquad
+d_{023}=\frac{e_0-3e_2+2e_3}{12},\qquad
+b_j=w_j(x)\mathbin{\cdot}e.
+\end{gathered}
+\tag{13.1}
+$$
+
+Here $w_j$ and $p$ are the original functions (11.4) and (11.1).
+For $0<c\le1/200$, $h+cv\ge359/400>1/2$, so the lower
+clamp in (11.2) is inactive on every complete world. The actual
+path probabilities and unprojected errors are
+
+$$
+\begin{gathered}
+(\lambda_{012},\lambda_{013},\lambda_{023})
+ =\bigl(p(h+cv),\ k-p(h+cv),\ r\bigr),\\
+\delta_j=\widehat x_j-x=\frac{c b_j}{12(\alpha+cd_j)}.
+\end{gathered}
+\tag{13.2}
+$$
+
+All denominators are positive: $|d_{012}|\le1$ and
+$|d_{013}|,|d_{023}|\le1/2$. Write $\Pi$ for projection onto
+$[-1/10,1/10]$, and define
+
+$$
+\ell_c(x,\alpha,e)=\sum_j\lambda_j|\Pi(x+\delta_j)-x|,
+\qquad
+\widetilde\ell_c(x,\alpha,e)=\sum_j\lambda_j|\delta_j|.
+\tag{13.3}
+$$
+
+These are respectively the expected projected and unprojected
+losses in the one fixed world. They are independent of its finite
+offset $B$. Conversely every displayed $(x,\alpha,e)$ is realized
+by a complete world with $A=m\alpha$, $\tau=z+x$, $B=0$ and
+the four errors in (13.1). Thus the consumer risk is exactly
+$\sup_{x,\alpha,e}\ell_c(x,\alpha,e)$ over the displayed domain.
+The three summands are analytical evaluations in that same world;
+each seed still acquires just its actual triple.
+
+**Theorem 13.2 (all first-order equality faces).** Define
+
+$$
+\Phi(x,\alpha,e)=\frac{
+ p(h)|b_{012}|+(k-p(h))|b_{013}|+r|b_{023}|}{12\alpha}.
+\tag{13.4}
+$$
+
+Its maximum is $L$. Equality holds precisely when $\alpha=1$
+and $(x,e)$ belongs to the following faces or their simultaneous
+error sign reversals, with $-1\le u\le1$:
+
+$$
+\begin{array}{c|c|c}
+\text{face}&x&e\\ \hline
+\mathsf L_1&-1/10&(1,1,u,-1)\\
+\mathsf L_2&-1/10&(1,u,1,-1)\\
+\mathsf R&1/10&(1,u,-1,-1).
+\end{array}
+\tag{13.5}
+$$
+
+**Proof.** Lemma 11.2 gives $\Phi\le L$. We first track strictness
+in its proof, before considering the errors. If $x\le0$, then
+$p(h)=p_0$. The seven supports $M_i$ in (11.6) are convex in
+$x$ on $[-1/10,0]$. At the left endpoint their maximum is
+$11/10$, while at zero it is $13/12<11/10$. Consequently
+$\Phi<L$ unless $x=-1/10$ and $\alpha=1$.
+
+For $x\ge0$, use (11.8) to reduce to $C=M_3$, $J=M_7$ and
+$3x$. Here $h_0=13/14$ and $x_0=1/14$. On the floor branch
+with $x\le x_0$, (11.10) gives $C\le13/12$ and
+$J\le1+x\le15/14$, both strictly below $11/10$.
+On $h\le h_0$, (11.11)--(11.12) give
+$C/\alpha,J/\alpha\le1+x$. Both inequalities are strict when
+$\alpha>1$: the polynomial for $C/\alpha$ is strictly convex
+in $1/\alpha$, and the positive factor $1+x-k/\alpha$ in
+(11.12) cannot vanish. Also $3x/\alpha\le3/10<11/10$.
+Thus equality on this branch requires $\alpha=1$ and $x=1/10$.
+In the remaining case $x>x_0$, $h>h_0$, decrease $h$ to $h_0$
+at fixed $x$. The resulting gain
+$\alpha_0=h_0/(1-x)>1$ gives strict inequalities just established.
+Each $M_i/\alpha$ can only increase under this decrease of $h$,
+so the original point is strict as well. This exhausts $x\ge0$.
+
+At either remaining endpoint set $P=(p(h),k-p(h),r)$. The
+identity
+
+$$
+12\Phi(x,1,e)=
+\max_{s\in\{-1,1\}^3}\left(\sum_j P_js_jw_j(x)\right)
+ \mathbin{\cdot}e
+\tag{13.6}
+$$
+
+allows an exhaustive equality calculation on the entire error cube.
+Simultaneous reversal of $s$ reverses the coefficient vector, so
+it suffices to put $s_{012}=1$. The cube maxima of the four
+linear forms, divided by $12$, are
+
+| $(s_{012},s_{013},s_{023})$ | $x=-1/10$ | $x=1/10$ |
+|---|---|---|
+| $(1,1,1)$ | $11/60$ | $11/60$ |
+| $(1,1,-1)$ | $1/20$ | $11/720$ |
+| $(1,-1,1)$ | $0$ | $8/135$ |
+| $(1,-1,-1)$ | $11/60$ | $49/270$ |
+
+These maxima are the sums of the absolute coefficients divided by
+$12$. The coefficient vectors for the entries equal to $L$ are,
+respectively,
+
+$$
+\begin{array}{c|c|c}
+x&s&\sum_jP_js_jw_j(x)\\ \hline
+-1/10&(1,1,1)&(-4/5,-3/10,0,11/10)\\
+-1/10&(1,-1,-1)&(33/40,0,11/40,-11/10)\\
+1/10&(1,1,1)&(-11/10,0,3/10,4/5).
+\end{array}
+\tag{13.7}
+$$
+
+Equality in a cube support forces every coordinate with nonzero
+coefficient to have its coefficient's sign; a zero coefficient
+leaves exactly that coordinate free. The other entries are strictly
+below $L$. Including reversed signs therefore gives exactly (13.5),
+and each displayed face attains $L$. This uses a signed-linear-form
+identity for the first-order function, not a vertex reduction for
+the finite-$c$ rational loss. $\square$
+
+**Theorem 13.3 (uniform local expansion and inward penalties).** In
+neighborhoods of the faces (13.5), let $p_h$ denote the derivative
+of $p$ at $h$. It is zero near the left faces and $-k/h^2$ near
+the right face. Define
+
+$$
+\Psi(x,\alpha,e)=\frac1{12}\left\{
+ \frac{p_hv}{\alpha}(|b_{012}|-|b_{013}|)
+ -\frac{p(h)|b_{012}|d_{012}
+       +(k-p(h))|b_{013}|d_{013}+r|b_{023}|d_{023}}
+       {\alpha^2}\right\}.
+\tag{13.8}
+$$
+
+Uniformly on sufficiently small closed neighborhoods of these faces,
+
+$$
+\widetilde\ell_c=c\Phi+c^2\Psi+O(c^3).
+\tag{13.9}
+$$
+
+For a limit point $e_*$ on a displayed face, put $t=x+1/10$
+on the left and $t=1/10-x$ on the right, and $g=\alpha-1$.
+As $(t,g,e)\longrightarrow(0,0,e_*)$ within the source domain,
+
+$$
+\Phi(x,\alpha,e)=\Phi(x_*,1,e)-D(u)t-Q(u)g+o(t+g),
+\tag{13.10}
+$$
+
+where the coefficients and face values of $\Psi$ are
+
+| face | $D(u)$ | $Q(u)$ | $\Psi(x_*,1,e_*)$ |
+|---|---|---|---|
+| $\mathsf L_1$ | $(15u+19)/144$ | $11/60$ | $11(3u^2+8u+13)/5760$ |
+| $\mathsf L_2$ | $(15u+19)/144$ | $11/60$ | $-(3u^2-30u-17)/960$ |
+| $\mathsf R$ | $1/6$ | $(195u+329)/1440$ | $(351u^2+39u-290)/8640$ |
+
+Both penalty coefficients are strictly positive on $[-1,1]$.
+Error sign reversal preserves $\Phi,D,Q$ and negates $\Psi$.
+
+**Proof.** The left limiting prefix is $11/10>h_0$, and the
+right one is $9/10<h_0$. These are separated from the probability
+kink and from its upper truncation. Expand the actual probability
+as $p(h+cv)=p(h)+cvp_h+O(c^2)$ and each positive reciprocal as
+$(\alpha+cd_j)^{-1}=\alpha^{-1}-cd_j\alpha^{-2}+O(c^2)$.
+All operands and the required derivatives are uniformly bounded
+on the chosen closed neighborhoods and the whole error cube.
+Substitution in (13.2)--(13.3) gives (13.8)--(13.9); in
+particular the expansion is uniform also when some $b_j$ vanishes.
+
+The signed values needed for the derivatives and for (13.8) are
+
+$$
+\begin{array}{c|c|c|c}
+ &b_{012}/12&b_{013}/12&b_{023}/12\\ \hline
+\mathsf L_1&11(u-1)/40&-11/60&-(u+7)/40\\
+\mathsf L_2&3(1-u)/10&-(3u+19)/120&-1/5\\
+\mathsf R&-(4u+5)/20&(u-7)/40&-11/60.
+\end{array}
+\tag{13.11}
+$$
+
+For the two left faces use $p=p_0$, $k-p=1/2$; differentiating
+(13.4) gives $-\partial_x\Phi=(15u+19)/144$ and
+$-\partial_\alpha\Phi=L$. For the right face use
+$p=k/[\alpha(1-x)]-k$; the same differentiation gives
+$\partial_x\Phi=1/6$ and
+$-\partial_\alpha\Phi=(195u+329)/1440$.
+For example on that face
+
+$$
+(d_{012},d_{013},d_{023})
+ =(-u/2,(1-3u)/12,1/6),\qquad v=(1-u)/4,
+$$
+
+and substitution of these quantities and (13.11) into (13.8)
+gives $(351u^2+39u-290)/8640$. On the left $p_h=0$,
+and substitution gives the two other displayed quadratics.
+
+For nonzero $b_j$ the derivatives used in (13.10) vary continuously
+as $e$ approaches $e_*$. The only zero in (13.11) occurs when
+$u=1$ on a left face, where $e_*=(1,1,1,-1)$ and
+$b_{012}(x,e_*)=0$ for every $x$. Since $b_{012}$ is affine in
+$x$,
+
+$$
+\bigl||b_{012}(x,e)|-|b_{012}(x_*,e)|\bigr|
+ \le |x-x_*|\,|\partial_x b_{012}(x,e)|
+ =o(|x-x_*|)
+$$
+
+as $e\to e_*$, and the corresponding gain derivative tends to
+zero as well. This proves (13.10) even at the intersection of the
+left faces, without assuming a rate for $e-e_*$. Finally $d_j$
+and $v$ reverse sign while $|b_j|$ does not, proving the reversal
+assertion. $\square$
+
+**Theorem 13.4 (sharp projected-consumer second-order coefficient).**
+For every $m>0$, at the fixed prior $E=1/10$,
+
+$$
+\boxed{
+\mathcal R(\Gamma^{\mathrm{prefix}})
+ =\frac{11c}{60}+\frac{5c^2}{432}+o(c^2)
+ \qquad(c\downarrow0).
+}
+\tag{13.12}
+$$
+
+The supremum here is over all original complete worlds with finite
+$A\ge m$, finite $B$ and the original four-error cube.
+
+**Proof.** First fix, before the seed, the complete world
+
+$$
+\tau=z+1/10,\qquad A=m,\qquad B=0,\qquad
+\eta=\frac{mc}{2}(1,1,-1,-1).
+\tag{13.13}
+$$
+
+Its actual prefix perturbation is $v=0$, so its probabilities are
+$13/216,13/27,11/24$. Its three errors point into the prior, and
+for $0<c\le4/11$ their absolute values are at most $1/5$.
+Indeed the largest constraint, from $012$, is
+$9c/[20(1-c/2)]\le1/5$, equivalent to $11c\le4$; the
+other two constraints are $c\le12/11$ and $c\le4/3$.
+All three therefore hold on this interval. Projection
+therefore leaves all three answers unchanged. The exact expected
+loss in this complete world is
+
+$$
+\begin{aligned}
+W(c)&=\frac{13}{216}\frac{9c}{20(1-c/2)}
+ +\frac{13}{27}\frac{3c}{20(1-c/6)}
+ +\frac{11}{24}\frac{11c}{60(1+c/6)}\\
+&=Lc+\frac{5c^2}{432}+O(c^3).
+\end{aligned}
+\tag{13.14}
+$$
+
+This proves the required lower limit for this particular consumer's
+worst-world risk, without a lower claim for other consumers.
+
+For the upper limit we first control the unbounded gain domain.
+For $|x|\le1/10$, every row in (11.4) has sum of absolute
+coefficients at most $36/5$. Hence for every $\alpha\ge4$,
+
+$$
+\ell_c\le\widetilde\ell_c
+ \le\frac{3c}{5(\alpha-c)}
+ \le\frac{3c}{5(4-c)}<Lc
+ \qquad(0<c\le1/200).
+\tag{13.15}
+$$
+
+The lower witness tends to $Lc$ after division by $c$, with a
+strictly larger limit than the right-hand side of (13.15) divided
+by $c$. For all sufficiently small $c$, the risk supremum is
+therefore attained in $1\le\alpha\le4$: on this compact domain
+(13.3) is continuous in $(x,\alpha,e)$. This is a tail estimate,
+not a restriction of the source gains.
+
+Uniformly on that compact domain,
+$\widetilde\ell_c=c\Phi+O(c^2)$, by the Lipschitz continuity
+of the clamped probability and the positive denominator bounds.
+Take any sequence $c\downarrow0$ of maximizers and pass to a
+convergent subsequence in $(x,\alpha,e)$. Since
+$\ell_c\ge W(c)$ and $\ell_c\le\widetilde\ell_c$, its limit
+must satisfy $\Phi=L$. Theorem 13.2 places that limit on exactly
+one of the faces (13.5) or a sign reversal.
+
+Let $t,g$ be its inward distance and gain excess as in Theorem
+13.3. The two strictly positive penalties in (13.10), the bound
+$\Phi(x_*,1,e)\le L$, and the boundedness of $\Psi$ imply
+
+$$
+t+g=O(c).
+\tag{13.16}
+$$
+
+To see the rate explicitly, in a sufficiently small neighborhood
+(13.10) gives $\Phi\le L-\gamma(t+g)$ for some
+$\gamma>0$. Equations (13.9) and (13.14) then give
+$Lc-O(c^2)\le\ell_c\le Lc-\gamma c(t+g)+O(c^2)$.
+This proves (13.16) without a rate assumption on the errors'
+distance to their limiting face. Pass to a further subsequence
+so that $t/c\to s\ge0$ and $g/c\to a\ge0$.
+
+Projection now imposes an additional necessary condition on $s$.
+The preceding bounds give both $\ell_c/c\to L$ and
+$\widetilde\ell_c/c\to L$. Thus the projection loss, divided
+by $c$, tends to zero. Every limiting path probability is strictly
+positive. At the left endpoint, a path with limiting coefficient
+$b_j/12<0$ would lose a positive first-order amount if
+$s<-b_j/12$; at the right endpoint the same holds when
+$b_j/12>0$ and $s<b_j/12$. This follows directly from clipping
+an outward error of magnitude $c|b_j|/12+o(c)$ at distance
+$t=cs+o(c)$ from that endpoint. The opposite endpoint is a
+fixed distance $1/5+o(1)$ away and cannot be crossed by these
+$O(c)$ errors. In particular (13.11) yields the necessary bounds
+in the second column below. Some use just one path and need not
+be the strongest necessary bound.
+
+Dropping the nonpositive term
+$[\Phi(x_*,1,e)-L]/c$ from (13.9)--(13.10), and dropping
+the nonpositive gain penalty, gives
+
+$$
+\limsup\frac{\ell_c-Lc}{c^2}
+ \le\Psi(x_*,1,e_*)-D(u)s-Q(u)a
+ \le\Psi(x_*,1,e_*)-D(u)s.
+\tag{13.17}
+$$
+
+All six possibilities are consequently bounded as follows:
+
+| limiting errors | necessary $s\ge$ | upper expression in (13.17) | its maximum on $[-1,1]$ |
+|---|---|---|---|
+| $\mathsf L_1$ | $11/60$ | $11(3u-1)^2/17280$ | $11/1080$ |
+| $-\mathsf L_1$ | $0$ | $-11(3u^2+8u+13)/5760$ | $-11/720$ |
+| $\mathsf L_2$ | $1/5$ | $-(3u-5)^2/2880$ | $-1/720$ |
+| $-\mathsf L_2$ | $3(1-u)/10$ | $11(u+1)(3u-5)/960$ | $0$ |
+| $\mathsf R$ | $0$ | $(351u^2+39u-290)/8640$ | $5/432$ |
+| $-\mathsf R$ | $11/60$ | $65/20736-13(18u+1)^2/103680$ | $65/20736$ |
+
+For the first and third rows the bounds follow from
+$|3u-1|\le4$ and $|3u-5|\ge2$. In the second row the
+quadratic in parentheses is increasing on $[-1,1]$ with minimum
+$8$. The fourth row is nonpositive because $u+1\ge0$ and
+$3u-5<0$. The fifth row is convex, with endpoint values
+$11/4320$ and $5/432$. The last row is a constant minus a
+square, attaining that constant at $u=-1/18$.
+All six maxima are at most $5/432$.
+
+Every sequence realizing a limiting upper quotient has a
+subsequence of the form just treated. The uniform expansions,
+the gain tail and the inward-rate argument cover perturbations
+off the equality faces as well as points on them. They therefore
+give the global upper limit $5/432$. Together with the actual
+complete-world lower witness (13.14), this proves (13.12).
+Only finitely many seed-interval probabilities in one fixed world
+were used at each step; no world-space integration or additional
+measurability assumption is involved. $\square$
+
+**Theorem 13.5 (explicit finite-noise improvement for the same consumer).**
+For every $m>0$, $E=1/10$ and $0<c\le1/200$, put
+
+$$
+D_c=\frac9{10}-\frac c2,\qquad
+B_{\mathrm{prefix}}(c)
+ =\frac{11c}{60(1-c)}
+   +\frac{13c^2}{72D_c(1-c)}
+ =\frac{c(297+160c)}{180(1-c)(9-5c)}.
+\tag{13.18}
+$$
+
+Then, on the entire original complete-world source,
+
+$$
+\begin{gathered}
+R_{\mathrm{private}}(c,1/10)
+ \le\mathcal R(\Gamma^{\mathrm{prefix}})
+ \le B_{\mathrm{prefix}}(c),\\
+U_*(c,1/10)-B_{\mathrm{prefix}}(c)
+ =\frac{13c^2(4-5c)}{36(1-c)(9-5c)}>0.
+\end{gathered}
+\tag{13.19}
+$$
+
+In particular this is a strict improvement over the full preceding
+minimum on an explicit nonempty interval, not just over $U$.
+
+**Proof.** In one arbitrary complete world, $h\ge9/10$ and
+$\widehat h=h+cv\ge D_c\ge359/400$. Clamping onto the
+probability interval is nonexpansive, so
+
+$$
+|p(\widehat h)-p(h)|
+ \le k\frac{|\widehat h-h|}{h\widehat h}
+ \le\frac{kc}{2D_ch}.
+\tag{13.20}
+$$
+
+The exact row difference (11.18) gives
+$\bigl||b_{012}|-|b_{013}|\bigr|\le8(1-x)$ on the common
+four-error cube. Applying Lemma 11.2 at the noiseless prefix and
+then (13.20), with no change of world, yields
+
+$$
+\begin{aligned}
+\sum_j\lambda_j|b_j|
+ &\le2\alpha(1+E)
+       +8(1-x)\frac{kc}{2D_ch}\\
+ &=2\alpha(1+E)+\frac{4kc}{D_c\alpha}.
+\end{aligned}
+\tag{13.21}
+$$
+
+Using $\alpha+cd_j\ge\alpha(1-c)>0$ and projection's
+nonincrease of error in (13.2)--(13.3) gives
+
+$$
+\ell_c\le\frac{c(1+E)}{6(1-c)}
+ +\frac{kc^2}{3D_c\alpha^2(1-c)}
+ \le B_{\mathrm{prefix}}(c).
+\tag{13.22}
+$$
+
+The bound is uniform for every finite $\alpha\ge1$ and every
+finite offset. The consumer, its independent uniform seed, its
+total history rules, its three actual chronological acquisitions
+and its per-world measurability are unchanged from Definition
+11.1 and Theorem 11.3. Direct subtraction of (13.18) from
+$U_*=[11c/60+13c^2/36]/(1-c)$ gives (13.19), with all
+denominators positive on the closed upper endpoint $c=1/200$.
+Proposition 11.4 gives the Sections 1--10 minimum $V>U$, while
+$U_*\le U$. Thus $U_*$ is the full preceding minimum on this
+band and (13.19) improves it strictly. $\square$
+
+**Corollary 13.6 (unrestricted upper envelope and its scope).** Retain
+every earlier applicable upper consumer in the minimum, adding
+(13.18) only on its stated band. At $E=1/10$ and
+$0<c\le1/200$ this gives
+
+$$
+\begin{gathered}
+\frac{11c}{20(3+c)}\le R_{\mathrm{private}}(c,1/10)
+ \le B_{\mathrm{prefix}}(c),\\
+0\le R_{\mathrm{private}}(c,1/10)-\frac H2
+ \le\frac{c^2(2163-335c)}
+ {180(1-c)(9-5c)(3+c)},\\
+0\le\liminf_{c\downarrow0}
+ \frac{R_{\mathrm{private}}(c,1/10)-H/2}{c^2}
+ \le\limsup_{c\downarrow0}
+ \frac{R_{\mathrm{private}}(c,1/10)-H/2}{c^2}
+ \le\frac{157}{2160}.
+\end{gathered}
+\tag{13.23}
+$$
+
+The sharp coefficient (13.12) is a statement about the specified
+projected consumer. It does not identify the unrestricted
+second-order coefficient or its finite-positive-$c$ exact minimax
+value. No uniformity in a varying prior width is asserted.
+
+**Proof.** On the band in question $c<3E$ and $H=G$, so the
+original arbitrary-seed lower bound is
+$H/2=11c/[20(3+c)]$. Subtracting it from (13.18) gives the
+finite expression in (13.23). For the limiting bound use the
+stronger consumer expansion (13.12) and
+
+$$
+\frac H2=\frac{11c}{60}-\frac{11c^2}{180}+O(c^3),
+\qquad \frac5{432}+\frac{11}{180}=\frac{157}{2160}.
+$$
+
+The lower endpoint remains the all-strategy lower bound of Theorem
+3.3; no endpoint-only obstruction is used to strengthen it.
+All worlds in the proofs are complete and fixed before the seed,
+all gains and offsets are finite, and all four errors remain
+coordinates of the same original cube. The parameter endpoints
+$x=\pm1/10$, $\alpha=1$ and $e_i=\pm1$ are included.
+The finite bound includes $c=1/200$; its zero-noise extension has
+value zero by exact quadratic interpolation as in Proposition
+12.5. All preceding results retain their original scopes.
+
+The intermediate tools are the classical signed support formula
+for absolute values, Taylor expansion with uniform reciprocal
+bounds, compactness and scalar projection. The interpolation and
+joint-error suppliers are (11.4), Lemma 11.2 and (11.17), in the
+original chronological experiment of Definitions 1.1--1.2.
+The equality-face exhaustion, inward clipping analysis and the
+complete-world family (13.13) give the clock-specific deduction.
+This is a repo-derived ordinary mathematical result, with no
+literature-priority or empirical-realization claim.
+
+The literature correspondence is limited to the shared hypotheses.
+Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+uses known-regressor bounded-error feasible strips. Here the
+regressors are $(i^2,i,1)$, the coefficient vector is
+$(A,2A\tau,A\tau^2+B)$, and the target is its nonlinear ratio
+$\tau=\theta_1/(2\theta_2)$. Coordinate orthotope bounds do
+not supply (13.12). Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2),
+studies continuous linear targets on convex Banach-space input
+classes and requires product measurability of randomized loss.
+Its comparison results do not instantiate this nonlinear target,
+chronological coordinate menu and per-world-only measurability.
+Neither source is used as a minimax or boundary-layer theorem
+for the present experiment. $\square$
+
+## 追加锚（本行以下为增补区）

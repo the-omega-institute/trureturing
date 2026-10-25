@@ -22,7 +22,19 @@ Attribution: the algebraic twisted lattice Fock construction and normalization f
 
 This is one exact algebraic energy-covariance milestone in the unchanged Monster moonshine to VOA/CFT, anomaly/fusion, string theory and AdS/CFT programme. It does not establish full Virasoro covariance, charged pair locality, twisted Jacobi, a full conformal twisted module, a completed VOA, analytic CFT, fusion or anomaly structures, geometric reconstruction, string dynamics or AdS/CFT. Those further endpoints remain open.
 
-**Theorem 1.1 (The original all-state charged L0 commutator).**
+**Theorem 1.1 (The original tensor current L0 law).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.tensor_current_L_zero_commutator`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.tensor_current_L_zero_commutator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original tensor current, the commutator with the exact actual inverse zero mode is minus frequency k times that current. The in-place private inverse laws and existing oscillator commutator prove it; ActualEnergyCovariance consumes it in the normal-word induction.
+
+**Theorem 1.2 (The original all-state charged L0 commutator).**
 
 $$\operatorname{L0}\left(D, hu\right)\operatorname{A}\left(a, e\right)-\operatorname{A}\left(a, e\right)\operatorname{L0}\left(D, hu\right)=\frac{e+\operatorname{B}\left(a, a\right)}{2}\operatorname{A}\left(a, e\right)$$
 
@@ -39,5 +51,6 @@ For all D:LatticeData, hu:IsUnit D.G.det, a:Charge D and e:Int, the displayed eq
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.charged_tensor_L_zero_commutator`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero.tensor_current_L_zero_commutator`
 - Dependency: [D5/S3/Quantum/Algebra/WeightedPolynomialSubstitution](../Quantum/Algebra/WeightedPolynomialSubstitution.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients](LatticeHalfFockChargedTensorCoefficients.md)

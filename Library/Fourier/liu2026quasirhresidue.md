@@ -5,7 +5,7 @@ year: 2026
 title: Joint mixed-Mobius estimates and the actual exceptional residue interface
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived conditional joint Mellin bounds pay the fifteen radial mixed-Mobius terms; fixed-cutoff polygonal localization pays the all-left and outer-face remainders of the original all-K scalar, retaining its fifteen coupled residue terms. A separately redesigned BPY Mellin cutoff pays the conditional constant-ray local branch with its same-budget errors; the original scalar and full signed J40 contraction remain unresolved.
+claim: Repo-derived conditional joint Mellin bounds pay the fifteen radial mixed-Mobius terms; fixed-cutoff polygonal localization pays the all-left and outer-face remainders of the original all-K scalar, retaining its fifteen coupled residue terms. A separately redesigned BPY Mellin cutoff and the actual bare-J4 finite-ray table pay the conditional local nonzero exceptional branch with one common budget; the original scalar, generalized angular factors and full signed J40 contraction remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -20,7 +20,7 @@ Xu–Sang. They reuse C37, C48 and C51–C76, without certifying the
 upstream main proof. In particular, $R_{7/8}$ is an explicit
 source-conditional premise, not a newly proved zero-free strip.
 The statements are paper mathematics, without Lean or CI certification.
-Labels R1–R42 belong only to this companion; C1–C76 retain their scope.
+Labels R1–R46 belong only to this companion; C1–C76 retain their scope.
 
 Keep $K=\mathbb Q(\sqrt{-3})$, its original finite bad set $S$, ideals
 counted once, $D=U^{1/2}$, $A=U^\alpha$, $0<\alpha<1/4$, and the
@@ -31,8 +31,9 @@ The four-way squarefree product, every coprimality puncture, raw
 sextic/cubic zero extension, profiles, signed coefficients and common
 beta remain those of C59. Here $P$ is a squarefree puncture outside
 $S$; in the frequency application it is $P_a$ of C58, not the
-product-squarepart parameter of J40. No nonprincipal inverse-Hecke
-hypothesis or new column coefficient is introduced.
+product-squarepart parameter of J40. R1–R42 introduce no nonprincipal
+inverse-Hecke premise; R43–R46 separately state the fixed finite-order
+suppliers for the bare-J4 residual. No new column coefficient is introduced.
 
 ## The joint estimate on each original nonempty subset
 
@@ -412,7 +413,8 @@ actual coefficient space and paid Type-I consumers. No such redesign
 or automatic full-$b$ cancellation is used here. R10 does not turn
 upper bounds into a same-realization cancellation identity.
 
-The twisted residual $\mathcal R_{\rm tw}$, the nonexceptional C68
+Outside the bare-J4 finite-table application R43–R46, the twisted
+residual $\mathcal R_{\rm tw}$ remains unpaid. The nonexceptional C68
 terms, other cores/gcds/bad duals, original common-e signed
 detector/rho recombination at the same beta, physical-row restoration
 and full J40 height/table aggregation remain unpaid. The original
@@ -1513,10 +1515,233 @@ $C_b=(3B_*+13/12)/4$, whose saving
 $(B_*-13/12)/4=0.000212607173676\ldots<1/3000$.
 It cannot be assigned to a selected signed radial mask. Accordingly
 R42 supplies neither an original-$W_0$ scalar bound nor a signed
-cutoff-change estimate. The nonconstant-ray/angular residual
-$\mathcal R_{\rm tw}$, C68 nonexceptional terms, other cores/gcds/bad
-duals, original common-beta signed detector/rho recombination,
-physical-row restoration and full J40 component/height aggregation
+cutoff-change estimate. R43–R46 below treat only the bare-J4 finite-ray
+residual. Generalized additional finite/angular factors, C68
+nonexceptional terms, other cores/gcds/bad duals, original common-beta
+signed detector/rho recombination, physical-row restoration and full
+J40 component/height aggregation
 remain unresolved. The BPY law and this application do not certify
 its conditional Type-I or $R_{7/8}$ suppliers, the upstream main proof,
 Robin or RH.
+
+## The finite-ray residual of the documented bare J4 diagonal
+
+This application concerns exactly R11's J4 diagonal, with $\zeta_i=1$,
+fixed total class $\sigma$, and no additional angular multiplier. Keep
+C58–C59's corefree/common-$e=1$, $C=1$, nonzero-exceptional realization,
+all original signs, masks, six units, $S$ exponents, frequencies and
+profiles. It uses finite character orthogonality and R3–R9's joint
+contours, not a new character estimate. The analytical premises are the
+pinned [primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`thm:main`, `lem:hecke-strip-growth` and `lem:logarithmic-control`:
+finite-order zero-freeness in $\Re s>\beta_H=7/8$, polynomial upper
+bounds on the $s$ strips, and polynomial reciprocal bounds on every
+smaller closed right strip. Both upper and reciprocal control are used.
+They are retained source premises, without an audit of their proofs or
+an assertion about nonzero infinity types. Principal upper bounds use
+the source's regularization $(s-1)\zeta_K(s)/(s+1)$; their pole is retained.
+
+**The actual finite table and its primitive inducers.** Let
+$H$ be the original fixed ideal-ray quotient, refined as in C58 to
+present R11's total-class selectors and fixed phases, and put $h=|H|$.
+Precisely, its class map is the surjection
+$I(\mathfrak m)/P_1(\mathfrak m)\twoheadrightarrow H$ for the original
+fixed ray modulus/refinement $\mathfrak m$, whose support is included
+in $S$. This is the ideal-ray convention of the primary's Introduction
+(lines 50–57), fixed-datum contract (590–603), and fixed-ray normalizer
+(7007); its fixed phase presentation is specified at 3327–3343.
+No element/unit-label enlargement, new modulus, or change of selector is
+being chosen. The units in C58 remain separate. A finite character
+$\chi\in\widehat H$ pulls back along this surjection to its original
+zero-extended finite-order Hecke presentation; write $\chi^*$ for its
+primitive inducer. Distinct $H$ characters have distinct primitive
+inducers: equal inducers give equal values on every ideal prime to
+$\mathfrak m$, hence equal characters of the quotient. In particular
+$\chi^*=1$ if and only if $\chi=1$. This uses the genuine ideal quotient,
+not equality of conductor norms. The complete defining-modulus zero
+extensions and the original $S$ deletions stay attached, including
+redundant deletion primes as in primary lines 590–603 and 4243–4256.
+
+Normalized finite orthogonality gives the concrete direct-character table
+
+$$
+\begin{aligned}
+\Omega_{\rm diag}(\mathbf g)
+ &=\mathbf1_{g_1g_2=\sigma}\mathbf1_{g_3g_4=\sigma}
+   =\sum_{\chi,\psi\in\widehat H}
+      a_{\chi,\psi}\chi(g_1)\chi(g_2)\psi(g_3)\psi(g_4),\\
+a_{\chi,\psi}&=h^{-2}\overline{\chi(\sigma)\psi(\sigma)},
+ \qquad\mathbf n=0,\qquad\eta=a_{1,1}=h^{-2},\\
+\sum_{\chi,\psi}|a_{\chi,\psi}|&=1,\qquad
+m_2=\frac{2(h-1)}{h^2},\qquad m_4=\frac{(h-1)^2}{h^2},
+ \qquad m_2+m_4=1-\eta.
+\end{aligned}
+\tag{R43}
+$$
+
+Here $m_2$ is the absolute Fourier mass with exactly one of $\chi,\psi$
+nontrivial, hence exactly two nonprincipal slots; $m_4$ has both
+nontrivial, hence four. Only $(1,1)$ is removed in $\Omega_{\rm diag}-\eta$.
+There is no angular support or statistical-independence assertion.
+For $h=1$ the residual is identically zero. Every original external
+component coefficient multiplies this table and retains its absolute
+cost in the common measure below; it is not absorbed into a new weight.
+
+**The literal joint product for all sixteen choices.** For any
+$M\subseteq[4]$, including $M=\varnothing$, use $\mu$ in $M$ and the
+actual $K_A$ in $T=[4]\setminus M$. For a mode of R43 put
+$(\chi_1,\ldots,\chi_4)=(\chi,\chi,\psi,\psi)$,
+$x_i=\chi_i^*(p)q_p^{-s_i}$ and $y_k=q_p^{-z_k}$. The same exclusive-prime
+mask in R3 gives
+
+$$
+\begin{aligned}
+F_{P,\boldsymbol\chi}(\mathbf s,\mathbf z)
+ &=\prod_{p\nmid SP}
+    \left(1-\sum_{i\in M}x_i+\sum_{k\in T}x_k(1-2y_k)\right)\\
+ &=H_{P,\boldsymbol\chi}(\mathbf s,\mathbf z)
+    \prod_{i\in M}L(s_i,\chi_i^*)^{-1}
+    \prod_{k\in T}L(s_k,\chi_k^*)L(s_k+z_k,\chi_k^*)^{-2},\\
+H_{P,\boldsymbol\chi,p}
+ &=\left(1-\sum_{i\in M}x_i+\sum_{k\in T}x_k(1-2y_k)\right)
+    \prod_{i\in M}(1-x_i)^{-1}
+    \prod_{k\in T}(1-x_k)(1-x_ky_k)^{-2}
+       \quad(p\nmid SP).
+\end{aligned}
+\tag{R44}
+$$
+
+At $p\mid SP$ replace only the displayed parenthesis by $1$, using
+the primitive local values, including zeros at ramified primes.
+Thus the full original deletions occur in $H$, not a second time in the
+$L$ factors. R4–R5 apply with unit character phases: the linear terms
+cancel, the good factors are $1+O(q_p^{-2a})$ for $a>1/2$, and the
+excluded factors cost $C_{H,S,\delta,\varepsilon}q_P^\varepsilon$.
+No local numerator is inverted, even when it vanishes. The conductor
+norms $Q_\chi$ form one fixed finite list; their upper-growth costs
+$Q_\chi^{3/5}$ and reciprocal constants are included once in $C_H$.
+They are not variable conductor losses hidden in $U^\varepsilon$.
+
+Apply exactly R6–R8's successive contours, with
+$0<\delta<1/80$ allocated inside the final loss. A $\mu$ slot ends at
+$\Re s_i=\beta_H+\delta$. A $K$ slot ends at $\Re s_i=1/2+\delta$,
+with $\Re z_i=\beta_H-1/2+2\delta$. A nonprincipal numerator $L$ is
+entire, so this move has no $s_i=1$ residue. A principal $K$ slot has
+exactly the ordinary simple residue of $\zeta_K(s_i)$; retain the joint
+$H$ and all other factors evaluated there, and move only that slot's
+$z_i$ to $\beta_H-1+\delta$. Its reciprocal square has a double zero
+at $z_i=0$, cancelling the sole cutoff pole as in R7. Nonprincipal
+boundary slots keep positive $\Re z_i$, so cross no cutoff pole.
+The reciprocal arguments remain strictly to the right of $7/8$;
+all joint correction arguments remain in R5. There is no additional
+angular reciprocal strip, mixed polar divisor, or principal residue
+assigned to a nonprincipal character.
+
+For each fixed tuple let $M$ have $m$ slots, let $r_0$ count its
+principal $K$ slots, and let $r_1$ count its nonprincipal $K$ slots.
+Apart from the common seminorm and the allocated losses, R8 therefore
+bounds that entire mixed term by
+
+$$
+D^{m\beta_H}
+ [DA^{-(1-\beta_H)}+D^{1/2}A^{\beta_H-1/2}]^{r_0}
+ [D^{1/2}A^{\beta_H-1/2}]^{r_1}.
+$$
+
+This includes all sixteen $\mu/K$ choices and every principal
+residue/boundary subset, with at most eight Mellin variables including
+the all-$K$ case. At the unchanged $A=U^{1/12}$ the three slot
+costs are $U^{42/96}$ for $\mu$, $U^{47/96}$ for a principal $K$
+residue, and $U^{27/96}$ for a $K$ boundary. With $v$ nonprincipal
+slots, the largest choice uses $\mu$ there and principal $K$ residues
+elsewhere. R9's full frequency count then gives
+$U^{(204-5v)/96+\varepsilon}$. The generic nontrivial tuple allows
+$v=1$, yielding $199/96$; the actual paired support has $v=2$ or $4$.
+Consequently, for the same signed C59 residual with only its bare J4
+table and for either $W_0$ or the redesigned $W_U$,
+
+$$
+|\mathcal R_{\rm fin,U}|
+ \ll_{H,\varepsilon}\widetilde{\mathcal N}_{{\rm base},J}
+ \left[m_2U^{97/48+\varepsilon}+m_4U^{23/12+\varepsilon}\right].
+\tag{R45}
+$$
+
+For $W_0$ omit the dilation enlargement on the envelope and the
+subscript $U$ on the residual. The original signs are retained before
+the triangle inequality; no cancellation between modes or subsets is
+assumed. R9's polynomial puncture range and its absolute divisor tail
+apply unchanged, since $|\chi_i(d_i)|\le1$ and
+$|K_{A;U}(d)|\le3^{\omega(d)}$ on squarefree ideals.
+
+**One measure and the same redesigned realization.** Here
+$\mathcal N_{{\rm base},J}$ is the original absolute component/profile/
+height envelope *before* the coefficients of R43, retaining the
+original unit/$S$ sums, signed external coefficient costs and
+$(1+z)^4$ shell seminorm. This is the common coefficient-measure premise
+of C59 and primary lines 9511–9524, not an independently chosen budget.
+Choose one finite $J$ at least R41's order and
+$J>L_H+8B_{H,\delta}+20$, taking the maximum growth degrees over the
+fixed primitive list. Original norm heights remain in the external
+profiles, with their polynomial derivative costs integrated against the
+original log-Fourier decay of sufficiently high fixed order. All
+original separated heights must satisfy this same absolute-measure
+contract. No derivative acts on $b_U$, and no allowance restarts for a
+mode, subset, shell or component.
+
+For $W_U$ use exactly R34–R42's fixed-$U$ coefficient $b_U$ and the
+four independent draws of the existing product law $\nu_U^4$.
+The $K$ residue and boundary powers of a dilation $x$ are
+$x^{-1/8+\delta}$ and $x^{3/8+2\delta}$, respectively; R35's real/log
+moments and the same R41 enlargement pay them uniformly. Thus take
+$\widetilde{\mathcal N}_{{\rm base},J}$ to be R41's one fixed moment
+factor times $\mathcal N_{{\rm base},J}$. There is no maximum-support
+factor $L^c$, new law, mode-dependent dilation, or extra height budget.
+The radial envelope is
+$\widetilde{\mathcal N}_{\eta,J}=h^{-2}
+\widetilde{\mathcal N}_{{\rm base},J}$ for this fixed table.
+If only that eta-weighted original envelope is supplied, the full
+Fourier envelope costs $h^2$ times it and the residual costs
+$(h^2-1)$ times it; R45's two separate costs are
+$2(h-1)$ and $(h-1)^2$ times it. These are fixed-source factors,
+not a silent promotion from eta mass to full mass.
+
+For precisely this $b_U$ on both parts of C59, the finite residual is
+all of $\mathcal R_{\rm tw,U}$. Combine R45 with the existing radial
+R42 on the same components and measure. The complete **local nonzero
+exceptional** sum then satisfies
+
+$$
+\begin{aligned}
+|\mathcal E_{\rm exc,U}|
+ &=|\mathcal E_{\rm rad,U}+\mathcal R_{\rm fin,U}|\\
+ &\ll_{H,\varepsilon}\widetilde{\mathcal N}_{{\rm base},J}
+ [h^{-2}U^{199/96+\varepsilon}
+       +m_2U^{97/48+\varepsilon}+m_4U^{23/12+\varepsilon}]\\
+ &\ll_{H,\varepsilon}\widetilde{\mathcal N}_{{\rm base},J}
+       U^{199/96+\varepsilon},\\
+D^{-2}|\mathcal E_{\rm exc,U}|
+ &\ll_{H,\varepsilon}\widetilde{\mathcal N}_{{\rm base},J}
+       U^{103/96+\varepsilon}.
+\end{aligned}
+\tag{R46}
+$$
+
+The same fixed or polylogarithmic envelope assumption and internal-loss
+allocation as R42 give its registered margin $1/3000$ below $1+B_*$
+(and below $B_*$ after restoring just $D^{-2}$). The $U^2=D^4$ from
+C60 is already counted. C56's planar measure, ideals counted once,
+six units, $S$ factors, $\bar C/6$ and $d_{\mathbf r}^{-1/6}$ remain in
+their original places; the finite Fourier coefficient creates no new
+area factor or unit division.
+
+R46 pays this conditional bare-J4 local branch only. The zero-frequency
+$k=0$ term, nonexceptional C68, extra generalized $\zeta_i$/angular
+factors and their component/height measure, other cores/common gcds,
+bad duals, full physical-row and detector/rho restoration at the same
+beta, and the full J40 contraction remain unpaid. R45 does not control
+the original-$W_0$ principal scalar; R46 uses the redesigned cutoff and
+supplies no signed cutoff-change estimate. No arbitrary replacement
+profile, statistical law or joint weight, principal lower bound,
+upstream-proof audit, originality claim, Lean certification, Robin
+restoration or RH conclusion follows.

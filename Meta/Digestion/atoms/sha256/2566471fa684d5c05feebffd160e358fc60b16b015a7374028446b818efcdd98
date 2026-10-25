@@ -1,0 +1,15 @@
+**Proposition 31.2 (attained exact traffic).** For every admitted run, the receiver counts are
+
+| Coordinate | Through native acquisition and predictor installation | Through actual preparation and passive $k=2N$ cut |
+| --- | --- | --- |
+| Returning Ticks | $4N-1$ | $7N-1$ |
+| Adds | $2$ | $N+2$ |
+| Reads | $2$ | $3$ |
+| Holds | $N+2$ | $3N+2$ |
+| Scalar returns | $4N+1$ | $7N+2$ |
+| Fixed acknowledgements | $N+4$ | $4N+4$ |
+| Calls and complete return frames | $5N+5$ | $11N+6$ |
+| Random bits | $0$ | $0$ |
+
+Proof. First-stage stopping uses $2N$ Ticks and $N$ pair Holds. The second stage uses $2N-1$ Ticks and its final Hold. Together they have two Adds, two Reads and the initial Hold. Preparation adds $N$ Ticks, $N$ Adds and $N$ Holds; passive entry adds an origin Read, $2N$ Ticks and $N$ Holds. Every Tick and Read emits a scalar, every Add and Hold an acknowledgement. The resulting sums are precisely §21.2's supplied schedule counts; the changed exceptional pulse changes literal input bits and subsequent rational widths, not command counts. $\square$
+

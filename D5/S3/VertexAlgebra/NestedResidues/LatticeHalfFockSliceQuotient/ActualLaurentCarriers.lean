@@ -63,7 +63,7 @@ def qField (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ M) : VertexOperator �
 
 end Residues
 
-private theorem current_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
+theorem current_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Fin D.rank) (b : Carrier D) (delta : ℤ) :
     (deltaEnd ^ (vectorFrequencyBound D b + 1))
       (FieldNormalProductLocality.commutator (targetCurrent D hu i) (targetSlice D hu b delta)) = 0 := by
@@ -127,7 +127,7 @@ private theorem current_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
   change ((deltaEnd ^ N) (FieldNormalProductLocality.commutator J B)) p q x = 0
   exact translate.symm.trans residueZero
 
-private theorem source_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
+theorem source_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) : ∃ order : ℕ, ∀ gamma delta : ℤ,
       (deltaEnd ^ order) (FieldNormalProductLocality.commutator (targetSlice D hu a gamma)
         (targetSlice D hu b delta)) = 0 := by
@@ -310,7 +310,7 @@ private theorem degree_order (n : ℕ) (sigma : Equiv.Perm (Fin n)) (e : Exponen
   change (∑ i, e (sigma i)) = ∑ i, e i
   exact Equiv.sum_comp sigma e
 
-private def slicePolynomial {n : ℕ} (F : Distribution n ℂ) (t : ℤ)
+def slicePolynomial {n : ℕ} (F : Distribution n ℂ) (t : ℤ)
     (finite : {e : Exponent n | totalExponent e = t ∧ F e ≠ 0}.Finite) :
     LabelledPolynomial ℂ n :=
   AddMonoidAlgebra.ofCoeff (Finsupp.ofSupportFinite
@@ -322,7 +322,7 @@ private def slicePolynomial {n : ℕ} (F : Distribution n ℂ) (t : ℤ)
       · exact ⟨ht, he⟩
       · contradiction))
 
-private theorem slicePolynomial_coeff {n : ℕ} (F : Distribution n ℂ) (t : ℤ)
+theorem slicePolynomial_coeff {n : ℕ} (F : Distribution n ℂ) (t : ℤ)
     (finite : {e : Exponent n | totalExponent e = t ∧ F e ≠ 0}.Finite)
     (e : Exponent n) :
     (slicePolynomial F t finite).coeff e = if totalExponent e = t then F e else 0 := rfl

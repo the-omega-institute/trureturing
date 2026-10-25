@@ -1,0 +1,4 @@
+**Convention 8.1 (traffic and source work).** Rational values use reduced signed numerator and positive denominator in binary, with self-delimiting framing. Commands, inputs, scalar returns and fixed acknowledgements have their own actual framing. A raw call is paid even if its return is redundant. No exact scalar is assigned unit bit cost independent of width.
+
+One concrete Hold schedule is: an initial Hold before the first Read; one Hold after the $2R$ free values; one after each of the $N$ post-pulse Tick pairs; one after each of the $N$ preparation Tick/Add pairs; and one after each of the $N$ final passive Tick pairs. The last Hold of startup covers predictor installation and the control solve. The last preparation Hold covers the new-origin Read. These Holds protect local processing without any silent Tick.
+

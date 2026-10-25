@@ -274,6 +274,38 @@ capture, or the Theorem A closed-copy prohibition. Problem 8.2 and
 the complete CH/Talagrand endpoint remain unresolved here, and no
 official acceptance is asserted.
 
+## Literal successor-coordinate constructor
+
+`D5.S3.Topology.InverseLimit.SignedSuccessorCoordinates.exists_successor_coordinates`
+takes every `a : Ordinal.{0}`, `H : SignedProperLimit.Prefix (succ a)` and
+closed cover `Y ∪ Z = univ` of `K := H.Space ⟨a, lt_succ a⟩`, including
+`a = 0`, overlapping sides and either empty side. Its
+`Nonempty (Result H Y Z)` supplies a closed nonempty literal carrier
+`C ⊆ SignedProperLimit.Cube (succ a)` and a homeomorphism
+`e : SignedSplitSuccessor.splitCarrier Y Z ≃ₜ C`. The carrier is exactly
+the insertion range: `e(k,b)` reads `k(i)` at every `i < a` and `b` at
+coordinate `a`; its inverse reads the literal restriction to `a` and
+coordinate `a`. The output `Prefix (succ (succ a))` retains every old
+carrier exactly and has top carrier `C`. Its compatibility and onto
+fields cover every pair of stages. For every `c ≤ a`, the proved
+restriction equation identifies restriction from `C` to `c` with
+restriction of the inverse's old component. Old pairs reuse `H`; onto
+from the new stage to any old stage uses `H.onto` to lift to `K`, then
+the actual cover projection to choose a sheet and insert it.
+
+The construction reuses the original `SignedProperLimit` coordinate
+core and `SignedSplitSuccessor.splitCarrier`. Pinned Mathlib's
+`Homeomorph.funSplitAt` and `Homeomorph.piCongrLeft` supply splitting and
+reindexing; compactness of the closed split and the Hausdorff cube give
+the closed range and range homeomorphism via
+`Continuous.isClosedEmbedding` and `Topology.IsEmbedding.toHomeomorph`.
+This repository-derived local topology supplier is not attributed to
+Kania–Kąkol as a new theorem. It leaves full-history assembly, the signed
+measure system and (A)–(G), CH bookkeeping and the final CH/Talagrand
+endpoints open. Its information registration remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21448; no
+`declared_validated` registration or solved-problem claim is made.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
@@ -288,3 +320,159 @@ Same-day bounded arXiv metadata searches found no CH answer within
 their stated Talagrand/Grothendieck scopes; this is not a global
 uniqueness or novelty certificate. No official solved receipt is
 asserted by this background formalization.
+
+## Classical subsequence splitting and weak extraction
+
+`D5.S3.Topology.Measures.L1RawSplitting.exists_raw_restriction_splitting`
+is the complete real L1 supplier. Its literal restriction operation is
+`L1Restriction.restrict`; `L1TailSelection`, `L1TailConcentration`,
+`L1Biting` and `L1Disjointization` construct the disjoint carriers.
+`L1WeakExtraction` and `L1UniformIntegrableWeak` supply genuine weak
+subsequence extraction, with every helper consumed by the full splitting.
+
+The real L1 subsequence splitting used in the signed-measure construction is
+classical Kadec–Pełczyński–Rosenthal mathematics. The required form uses literal
+restrictions to measurable, pairwise disjoint sets, a complementary remainder
+converging against every continuous real linear functional, and convergence
+of the disjoint-part norms. Uniform integrability alone is an intermediate
+property, not that weak convergence conclusion.
+
+A concrete disjointization construction appears in Dacunha-Castelle and
+Schreiber, Annales de l'Institut Henri Poincaré B 10 (1974), pp. 229–277,
+Definition 3.3.2 and Lemmas 3.3.3–3.3.4, pp. 263–266:
+https://www.numdam.org/item/AIHPB_1974__10_2_229_0/ . The inspected argument
+uses a nonatomic Lebesgue setting and additional Orlicz hypotheses. Those
+hypotheses cannot be silently transferred to arbitrary finite measure spaces.
+The classical subsequence splitting is also discussed in Peralta–Pfitzner,
+Studia Mathematica 227 (2015), pp. 77–95, DOI 10.4064/sm227-1-5,
+whose introduction cites Bourgain–Rosenthal, Israel Journal of Mathematics
+37 (1980), pp. 54–75, p. 68, DOI 10.1007/BF02762868. The latter page and
+Albiac–Kalton, Topics in Banach Space Theory, second edition, Lemma 5.2.7,
+are source leads; their proofs have not been acquired by the recorded access.
+
+The Hilbert approximation argument separates the weak-extraction obligation
+from the disjoint-carrier selection. All countably many hard truncations
+lie in a single closed separable Hilbert span, even when the original L2 is
+nonseparable. Compactness of the product of its weak dual balls supplies one
+common selector. A genuine bounded linear map from this span into L1 carries
+each weak limit to L1. Uniform norm errors then make these limits norm Cauchy
+by a Hahn–Banach norming functional of norm at most one; completeness and a
+three-term estimate give convergence against every L1 functional. This
+argument includes the zero space and requires no positive measure premise.
+It neither assumes nor proves the CH induction or the full signed endpoint.
+
+For the raw-restriction construction, choose the actual strongly measurable
+representative of each L1 class and use its integer hard-tail masses Q(n,k).
+A common scalar Hilbert subsequence makes these bounded masses converge for
+every k at once. Their limits c(k) decrease, and alpha is their infimum.
+At each recursive step a large cutoff makes c(k) close to alpha and makes
+its superlevel support have small integral for every input in the finite
+original prefix already passed. Markov's inequality controls that support's
+measure; uniform integrability of a finite family controls the old-input
+integrals. Selecting the next source index after these conditions are fixed
+makes its moving tail mass close to alpha. The effect of the ith support on
+every earlier selected input is at most 2 to the power minus i.
+
+Write A(i) for these actual measurable superlevel sets and let E(i) be A(i)
+minus the union of all later A(h). The E(i) are pairwise disjoint as sets.
+The countable-union integral inequality bounds the removed part by the
+geometric tail, at most 2 to the power minus i. Thus the norms of the literal
+restrictions to E(i) have the same limit alpha as the restrictions to A(i).
+For every positive fixed integer k below the moving cutoff, the k-tail mass
+of the literal complement of A(i) is exactly Q(i,k) minus the moving tail
+mass. Its limit is c(k) minus alpha. These limits vanish as k increases;
+a separate finite-prefix estimate gives uniform integrability of the entire
+complement sequence.
+
+The difference between the literal complements of E(i) and A(i) is exactly
+the restriction to A(i) intersected with the union of its later supports.
+Its L1 norm tends to zero by the same geometric bound. Apply the genuine
+weak-extraction argument to the complements of A(i), and transfer each
+continuous real functional across this norm-null difference. Passing to
+that final common subsequence preserves actual set disjointness, the
+indicator identities and the disjoint-norm limit. In particular, no input
+measure is corrected, no constant-norm assumption is inserted, and both
+summands are the literal restrictions of the same selected original L1
+class. Their sum and the sum of their norms equal the original class and
+its norm respectively. This is the classical analytic supplier only;
+the signed-measure transfer and full CH/Talagrand endpoint are separate.
+
+
+## Signed raw transfer and the sufficient diagonal criterion
+
+Let $K$ be any compact Hausdorff space with its Borel measurable structure,
+and put $D=C(K,\mathbb R)^*$. Regularity below means regularity of the actual
+total-variation measure, not an automatic property of arbitrary Borel measures.
+The project theorem
+`SignedGrothendieckCriterion.exists_signed_raw_restriction_splitting`
+transports the real L1 supplier to arbitrary regular signed inputs $s_n$
+with $\sup_n |s_n|(K)<\infty$.
+
+Set $\rho=\sum_n |s_n|$ and $\mu=\rho.\mathrm{toFinite}$. The sum is SFinite;
+no finiteness or regularity of the sum is used. Its finite equivalent $\mu$ includes the
+all-zero case. Each $s_n$ has a real integrable RN density $q_n$ with respect
+to $\mu$, and its actual L1 class satisfies $\|q_n\|_1=|s_n|(K)$.
+`SignedMeasure.absolutelyContinuous_ennreal_iff` supplies the vector absolute
+continuity needed for signed reconstruction. Indicator density integration
+identifies the L1 literal restrictions with the literal signed restrictions.
+
+The L1 splitting therefore gives a strictly increasing $j$, measurable sets
+$E_n$ pairwise disjoint as actual sets, a number $r\geq0$, and a regular
+signed measure $s_\infty$. With
+
+$$a_n=s_{j(n)}|_{E_n},\qquad b_n=s_{j(n)}|_{K\setminus E_n},$$
+
+both TVs are regular, and
+
+$$s_{j(n)}=a_n+b_n,\qquad |a_n|(K)+|b_n|(K)=|s_{j(n)}|(K),
+\qquad |a_n|(K)\longrightarrow r.$$
+
+For every $\Phi\in D^*$ one has
+$\Phi(Tb_n)\to\Phi(Ts_\infty)$, where $Ts$ is the signed integration
+functional. The actual bounded linear map
+$J:L^1(\mu)\to D$, $Jf(g)=\int fg\,d\mu$, comes from the L1–L-infinity
+pairing and the continuous-function inclusion. Its norm is at most one;
+injectivity, isometry and surjectivity are not used. Every $\Phi\circ J$
+is an L1 weak test. Signed RMK supplies a regular representative of $Jv$
+for the L1 weak limit $v$. The particular density measure $\mu v$ is not
+asserted regular. Regularity of the literal pieces instead follows from
+the original regular TV and `variation_restrict`.
+
+The public theorem
+`SignedGrothendieckCriterion.weak_of_disjoint_diagonal_variation`
+uses the following explicit sufficient hypothesis on $K$:
+
+$$\begin{gathered}
+\text{For every TV-bounded regular signed weak-star-null sequence }s_n,\\
+\text{and every pairwise disjoint measurable sequence }E_n,
+\quad \operatorname{TV}(s_n|_{E_n})(K)\longrightarrow0.
+\end{gathered}$$
+
+Here $\operatorname{TV}(s_n|_{E_n})$ denotes the TV of the literal signed restriction
+$s_n|_{E_n}$. The hypothesis is over all such signed sequences and sets.
+It is not a weak convergence or splitting premise. Under this hypothesis,
+for arbitrary $F_n,F_\infty\in D$,
+
+$$[\forall g\in C(K,\mathbb R),\ F_n(g)\to F_\infty(g)]
+\quad\Longrightarrow\quad
+[\forall\Phi\in D^*,\ \Phi(F_n)\to\Phi(F_\infty)].$$
+
+No norm bound is assumed in this final statement. Banach–Steinhaus on the
+complete space $C(K,\mathbb R)$ bounds $F_n-F_\infty$. Signed RMK chooses
+regular representatives with TV masses exactly those norms. For any
+selector $ns$ tending to infinity, the raw split applies to $s\circ ns$.
+The diagonal hypothesis makes its captured part norm-null. The complement
+is Banach-weak convergent; its continuous-function evaluations tend to
+zero by exact decomposition. The actual double-dual inclusion evaluates
+its weak limit at each continuous function, identifying that functional
+as zero. Additivity gives convergence along a further selector; the genuine
+`Filter.tendsto_of_subseq_tendsto` then gives the original sequence limit.
+Its API requires only that $ns$ tend to infinity, and that generality is
+retained. Adding the arbitrary limit completes the implication.
+
+These are repository compositions of the classical splitting supplier,
+signed RMK and uniform boundedness, with the parameter correspondence above;
+no new literature theorem is attributed to Kania–Kąkol. The sufficient
+hypothesis remains unproved for the proposed CH construction. Neither
+result supplies CH bookkeeping, the signed induction, capture/global
+obligations, the closed-copy prohibition or a solution of Problem 8.2.
