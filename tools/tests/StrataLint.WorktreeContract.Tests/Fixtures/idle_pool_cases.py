@@ -52,16 +52,31 @@ class IdlePoolCases:
         self.assertEqual("refs/heads/lane/math/next", result["task_branch"])
         self.assertEqual(allocated, self.g(self.main, "rev-parse", "lane/math/next").strip())
 
-    def pool_unused_return_refuses_task_commit_even_after_reset(self):
+    def pool_unused_return_refuses_task_tip(self):
         (self.tree / "owned").write_text("task commit\n")
         self.g(self.tree, "commit", "-am", "Task")
-        for reset in (False, True):
-            if reset:
-                self.g(self.tree, "reset", "--hard", self.base)
-            result = self.unused_return(expect=73)
-            self.assertIn("unused_task_commits_require_pr", result.stderr)
-            self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
-            self.assertTrue(self.tree.exists())
+        tip = self.g(self.tree, "rev-parse", "HEAD").strip()
+        result = self.unused_return(expect=73)
+        self.assertIn("unused_task_commits_require_pr", result.stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        self.assertEqual(tip, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertTrue(self.tree.exists())
+
+    def pool_unused_return_accepts_commit_then_reset(self):
+        (self.tree / "owned").write_text("task commit\n")
+        self.g(self.tree, "commit", "-am", "Task")
+        abandoned = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.g(self.tree, "reset", "--hard", self.base)
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        before = log.read_bytes()
+        result = json.loads(self.unused_return().stdout)
+        self.assertEqual("returned", result["status"])
+        self.assertEqual(self.base, result["allocation_base"])
+        self.assertEqual([], result["commits_not_in_dev"])
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual(before, log.read_bytes())
+        self.assertEqual("commit", self.g(self.main, "cat-file", "-t", abandoned).strip())
 
     def pool_unused_return_refuses_dirty_content(self):
         for kind in ("tracked", "staged", "untracked"):
@@ -110,14 +125,24 @@ class IdlePoolCases:
             dated(commit_age, "commit", "-am", "Task")
             dated(reset_age, "reset", "--hard", self.base)
 
-    def pool_unused_return_refuses_selectively_expired_task_history(self):
-        self.unused_history(40, 40, 40)
-        reference = "refs/heads/" + self.branch
-        self.g(self.tree, "reflog", "expire", reference)
-        rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
-        self.assertEqual(["branch: Created from " + self.base], rows)
-        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
-        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+    def pool_unused_return_accepts_selectively_expired_task_history(self):
+        for context, age in (("default", 40), ("main-worktree", 2)):
+            with self.subTest(context=context):
+                self.unused_history(age, age, age)
+                reference = "refs/heads/" + self.branch
+                if context == "main-worktree":
+                    self.g(self.main, "config", "extensions.worktreeConfig", "true")
+                    self.g(self.main, "config", "--worktree", "gc.reflogExpireUnreachable", "1 day ago")
+                    self.g(self.tree, "config", "--worktree", "gc.reflogExpireUnreachable", "30 days ago")
+                self.g(self.main, "reflog", "expire", reference)
+                rows = self.g(self.tree, "reflog", "show", "--format=%gs", reference).splitlines()
+                self.assertEqual(["branch: Created from " + self.base], rows)
+                result = self.run_owned_command([sys.executable, "-B", self.source_root /
+                    "tools/scripts/worktree/worktree_protocol.py", "return", "--writers-joined"],
+                    self.tree, phase="protocol", timeout=30, check=False)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual(self.base, json.loads(result.stdout)["allocation_base"])
+                self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
 
     def pool_unused_return_refuses_partially_expired_creation(self):
         self.unused_history(100, 100, 0)
@@ -128,11 +153,34 @@ class IdlePoolCases:
         self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
         self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
 
-    def pool_unused_return_refuses_discontinuous_history(self):
-        self.unused_history(0, 0, 0)
-        self.g(self.tree, "reflog", "delete", "refs/heads/" + self.branch + "@{1}")
+    def pool_unused_return_uses_creation_record_only(self):
+        for history in ("discontinuous", "malformed", "backward-clock"):
+            with self.subTest(history=history):
+                self.unused_history(0, 1 if history == "backward-clock" else 0, 0)
+                log = self.main / ".git/logs/refs/heads" / self.branch
+                if history == "discontinuous":
+                    self.g(self.tree, "reflog", "delete", "refs/heads/" + self.branch + "@{1}")
+                elif history == "malformed":
+                    with log.open("ab") as output:
+                        output.write(b"unreadable later transition\n")
+                before = log.read_bytes()
+                self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
+                self.assertEqual(before, log.read_bytes())
+
+    def pool_unused_return_refuses_invalid_creation_record(self):
+        log = self.main / ".git/logs/refs/heads" / self.branch
+        creation = log.read_bytes()
+        for record in (b"malformed\n", creation.rstrip(b"\n")):
+            with self.subTest(record=record):
+                log.write_bytes(record)
+                self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
+                self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        log.write_bytes(creation)
+        saved = log.with_name(log.name + "-saved")
+        log.rename(saved)
+        log.symlink_to(saved.name)
         self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
-        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        self.assertEqual(creation, saved.read_bytes())
 
     def pool_unused_return_refuses_already_idle_without_pr(self):
         self.unused_return()
@@ -140,28 +188,6 @@ class IdlePoolCases:
         self.assertIn("unused_return_already_idle", self.unused_return(expect=73).stderr)
         self.assertEqual(reference, self.g(self.tree, "symbolic-ref", "HEAD").strip())
         self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
-
-    def pool_unused_return_obeys_configured_expiry_bounds(self):
-        for key in ("gc.reflogExpireUnreachable", "gc.reflogExpire",
-                    "gc.refs/heads/lane/*.reflogExpireUnreachable",
-                    "gc.refs/heads/elsewhere/*.reflogExpireUnreachable"):
-            with self.subTest(key=key):
-                self.unused_history(2)
-                self.g(self.tree, "config", key, "1 day ago")
-                self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
-                self.g(self.tree, "config", "--unset", key)
-
-    def pool_unused_return_refuses_unresolvable_expiry(self):
-        self.g(self.tree, "config", "gc.refs/heads/*.reflogExpireUnreachable", "not-an-expiry")
-        self.assertIn("unused_allocation_unknown", self.unused_return(expect=73).stderr)
-
-    def pool_unused_return_accepts_disabled_expiry_settings(self):
-        for setting in ("never", "false"):
-            with self.subTest(setting=setting):
-                self.unused_history(2)
-                self.g(self.tree, "config", "gc.reflogExpireUnreachable", setting)
-                self.g(self.tree, "config", "gc.refs/heads/*.reflogExpireUnreachable", setting)
-                self.assertEqual("returned", json.loads(self.unused_return().stdout)["status"])
 
     def pool_unused_return_accepts_internal_cr_in_identity(self):
         with patch.dict(os.environ, GIT_COMMITTER_NAME="Protocol\rTests"):
