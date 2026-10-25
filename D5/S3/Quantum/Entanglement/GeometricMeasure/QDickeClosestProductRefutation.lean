@@ -76,7 +76,8 @@ private lemma overlap_four (a b c : EuclideanSpace ℂ (Fin 2)) :
   have hd : Real.sqrt (4 + 1 + (4 : ℝ)⁻¹) = Real.sqrt 21 / 2 := by
     rw [show 4 + 1 + (4 : ℝ)⁻¹ = 21 / 4 by norm_num, Real.sqrt_div (by norm_num)]
     norm_num
-  norm_num [dicke1, prod, PiLp.inner_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+  delta dicke1 prod
+  norm_num [PiLp.inner_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
     hd, RCLike.inner_apply, map_ofNat]
   ring
 
@@ -109,7 +110,7 @@ private lemma basis_attains :
       (EuclideanSpace.single 0 1) (EuclideanSpace.single 1 1))‖ ^ 2 = 16 / 21 := by
   have h := overlap_sq (EuclideanSpace.single 0 1) (EuclideanSpace.single 0 1)
     (EuclideanSpace.single 1 1)
-  norm_num [EuclideanSpace.single, PiLp.single_apply] at h ⊢
+  norm_num [PiLp.single_apply] at h ⊢
   linarith
 
 private lemma closest_coordinates (a b c : EuclideanSpace ℂ (Fin 2))
@@ -120,8 +121,8 @@ private lemma closest_coordinates (a b c : EuclideanSpace ℂ (Fin 2))
   have hb' := unit_coordinates b hb
   have hc' := unit_coordinates c hc
   have hl := hm (EuclideanSpace.single 0 1) (EuclideanSpace.single 0 1)
-    (EuclideanSpace.single 1 1) (by simp [EuclideanSpace.single])
-    (by simp [EuclideanSpace.single]) (by simp [EuclideanSpace.single])
+    (EuclideanSpace.single 1 1) (by simp only [PiLp.norm_single, norm_one])
+    (by simp only [PiLp.norm_single, norm_one]) (by simp only [PiLp.norm_single, norm_one])
   have hl' := (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).2 hl
   rw [basis_attains] at hl'
   have hu := overlap_bound a b c ha hb hc
@@ -156,10 +157,20 @@ private lemma span_relation (v : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2))
     apply Submodule.span_le.mpr
     intro w hw
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hw
-    rcases hw with rfl | rfl | rfl | rfl <;>
-      norm_num [LinearMap.mem_ker, f, dicke0, dicke1, dicke2, dicke3,
-        EuclideanSpace.single, PiLp.single_apply]
-    ring
+    rcases hw with rfl | rfl | rfl | rfl
+    · change dicke0 (0, 0, 1) - 2 * dicke0 (0, 1, 0) = 0
+      delta dicke0
+      norm_num [PiLp.single_apply]
+    · change dicke1 4 (0, 0, 1) - 2 * dicke1 4 (0, 1, 0) = 0
+      delta dicke1
+      norm_num
+      ring
+    · change dicke2 4 (0, 0, 1) - 2 * dicke2 4 (0, 1, 0) = 0
+      delta dicke2
+      norm_num
+    · change dicke3 (0, 0, 1) - 2 * dicke3 (0, 1, 0) = 0
+      delta dicke3
+      norm_num [PiLp.single_apply]
   exact sub_eq_zero.mp (hs hv)
 
 private lemma no_closest_in_span (a b c : EuclideanSpace ℂ (Fin 2))
