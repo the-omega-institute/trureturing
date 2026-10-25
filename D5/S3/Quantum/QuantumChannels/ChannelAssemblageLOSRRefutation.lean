@@ -36,8 +36,8 @@ open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (controlled)
 
 /-- Complete positivity at all finite amplifications, and trace preservation on all matrices. -/
 def IsCPTP {A B : Type} [Fintype A] [DecidableEq A] [Fintype B]
-    (Φ : MatrixMap A B ℂ) : Prop :=
-  Φ.IsCompletelyPositive ∧ ∀ X, (Φ X).trace = X.trace
+    (φ : MatrixMap A B ℂ) : Prop :=
+  φ.IsCompletelyPositive ∧ ∀ X, (φ X).trace = X.trace
 
 abbrev Assemblage := Fin 2 → Fin 2 → MatrixMap (Fin 2) (Fin 2) ℂ
 
