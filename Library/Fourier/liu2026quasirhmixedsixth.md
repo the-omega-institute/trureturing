@@ -21,6 +21,9 @@ mathematics. Analytic source proofs, their transports and availability of
 the original finite-order envelope remain named, unverified premises.
 There is no new analytic supplier, Lean certification or originality claim.
 
+The [finite-height application M41–M46](#a-larger-fixed-type-i-cutoff-from-finite-height-interpolation)
+uses the fixed cutoff $A=Q^{3/20}$ and specifies its complete unpaid remainder.
+
 ## Source correspondence and exact reuse
 
 The primary source used here is exactly
@@ -1270,3 +1273,297 @@ signed Möbius detector and $\rho$ aggregation, full physical-row
 restoration, full C68/J40, signed Robin and RH remain open. Citation and
 source-integrity checks do not independently certify any analytic source
 proof, original finite-order envelope or mathematical formalization.
+
+## A larger fixed Type-I cutoff from finite-height interpolation
+
+Retain M1's complete physical rows, original presentations and conjugates,
+both orientations, every original zero, finite unit/$S$ label and
+nonprincipal lower inducing order. Reuse C25–C26 and M31–M34 for the
+exact coefficient, quotient and Mellin representation, and C29 and
+C87–C94 for the finite local-contour interface. Those applications do
+not supply the following reflected local-window estimate for the
+mixed-sixth Type-I vector at this cutoff. The maximum principle and
+finite-height interpolation are classical methods; the additional
+application is their parameter bridge to this coefficient and the
+original physical-row counts, not a new general interpolation, sieve,
+counting or splitting result.
+
+All implications in this section are conditional on the same named
+analytic suppliers and owned transports retained above. In particular,
+the pinned primary's full finite-order Hecke `thm:main`,
+`lem:logarithmic-control`, `lem:hecke-strip-growth`, primitive functional
+equation, `lem:deleted-euler-factors`, `lem:buffered-bins`,
+`lem:detector-dyads` and original detector count remain unverified
+premises. A Dirichlet-only boundary would not suffice. Availability and
+fixed or polylogarithmic aggregate cost of the one original coupled
+envelope at the final required finite order remain additional retained
+premises, not a consequence of interpolation.
+
+**Buffered lines for every bin.** On M4 fix, once for every row,
+$A=Q^{3/20}$ in C25/M31. Since $3/20<r/2$ uniformly there,
+$2A<z=(b_VD)^{1/2}<a_VD$ eventually, so the existing exact split applies.
+Use the original common bins $(i,a)$ of the primary, with all presentations
+already in its fixed conjugation-closed group. The global boundary
+$\beta=7/8$ gives $a\le7/8$. Put
+
+$$
+\begin{aligned}
+ v&=2a-1,\qquad 0<e<10^{-3},\qquad T_1=Q^\tau,\quad 0<\tau\le1/100,\\
+ t_0&=7/16+8e,\qquad b=\max\{a,9/16\}+8e,\\
+ \ell&=1-b,\qquad w_0=b-t_0=\max\{a,9/16\}-7/16,\\
+ 1/8&\le w_0\le7/16,\qquad t_0-\ell=b+t_0-1\ge16e,\\
+ b&\ge a+8e,\qquad 2t_0=7/8+16e.
+\end{aligned}
+\tag{M41}
+$$
+
+Here $\tau$ denotes the row-scale height exponent. In the primary's
+notation $U=Z^d$, $Q=U$, the corresponding source exponent is $d\tau$;
+uniformly on its bounded $d$ range we also choose
+$d_{\max}\tau\le d_{\min}/100$. The interpolation rectangles
+lie in $[-1/10,11/10]$ in real part, with $\ell>0$.
+For every $a\le9/16$, including the floor, the same right line
+$b=9/16+8e$ is inside the supplied region $\Re s\ge a+6e$.
+Direct reflection from $1-t_0=9/16-8e$ would lack this premise when
+$9/16-14e<a\le9/16$; it is not used. The cutoff $A$ never depends
+on a bin or a presentation.
+
+**A finite Gaussian rectangle for the actual numerator.** Translate the
+original pure norm twist into the ordinate and let $\chi$ be the primitive
+finite-order inducer. Its conductor and the complete original deletion
+radical are $O(Q)$, as in M32. It is nonprincipal by the original
+good-prime ramification; the bounded $S$-supported principal exceptions
+keep their separate original treatment. The local bin bound, after
+removing the deleted factors, gives
+$|L(b+iz,\chi)|\ll Q^\eta$ for
+$|z|\le(3i+2)T_1$, with arbitrarily small $\eta>0$.
+The primitive functional equation uses the conjugate presentation at
+$b-iz$, in the same symmetric window, and gives
+$|L(\ell+iz,\chi)|\ll Q^{b-1/2+\eta}(3+T_1)^{C_0}$.
+Only an upper bound inside this strip is needed; numerator zeros are
+permitted.
+
+For $|y|\le(3i+3/2)T_1$, take $h=T_1/4$ and
+$\lambda=4\log Q/h^2$. On the closed rectangle
+$\ell\le\Re s\le b$, $|\Im s-y|\le h$, apply the maximum principle to
+
+$$
+ G(s)=L(s,\chi)Q^{(s-b)/2}\exp\bigl(\lambda(s-iy)^2\bigr).
+$$
+
+The two vertical sides have modulus at most
+$C Q^\eta(3+T_1)^{C_0}e^\lambda$: on the left the conductor powers
+cancel, since $b-1/2+(\ell-b)/2=0$.
+Every boundary ordinate has absolute value at most
+$(3i+7/4)T_1<(3i+2)T_1$.
+On the horizontal sides the source polynomial strip bound gives
+
+$$
+ |G(s)|\ll_e Q^{3/5+2\tau-4}e^\lambda=O_e(Q^{-3}).
+$$
+
+Indeed $Q^{(\Re s-b)/2}\le1$, $\lambda h^2=4\log Q$, and
+$\lambda\to0$ for the fixed positive $\tau$.
+At $s=t_0+iy$ the Gaussian has modulus $e^{\lambda t_0^2}\ge1$.
+Restoring the original deleted factors on this positive real line
+therefore yields
+
+$$
+ |L_{\rm orig}(t_0+iy,\psi_u)|
+ \ll_{e,\eta} Q^{(b-t_0)/2+\eta}(3+T_1)^{C_0},
+ \qquad |y|\le(3i+3/2)T_1.
+\tag{M42}
+$$
+
+The ordinate in this notation includes the translated original norm
+twist. The argument applies in fixed small real and imaginary
+neighborhoods needed for any prescribed finite Cauchy derivative order:
+$t_0$ has left margin at least $16e$, the reciprocal line $b$ has
+$2e$ beyond $a+6e$, and the squared-strip and correction-tube margins
+are positive multiples of $e$. For example radii below $e/4$ preserve
+all these strict inequalities and the unused height margin. Their
+conductor loss is $O(e)$; constants and derivative orders are fixed
+before choosing $\tau$. Equivalently, profile and norm-height
+derivatives insert the original smooth profiles and logarithmic
+weights. They do not create arbitrary row-dependent coefficients.
+
+**Finite inverse contours and a single height budget.** Use M34's exact
+integrand $\widehat W(w)\widehat V_M(t)A^wD^t
+\mathcal F_u(w+t,t)$. First move the whole $t$ line from $2$ to $t_0$
+while $\Re w=1$. Throughout this global move
+$\Re(w+t)>1$ and $\Re(2t)>7/8$, and M32's correction remains in
+its absolute-mass tube. The numerator is entire. The global Hecke
+reciprocal premise controls the squared character with its actual
+doubled norm twist, even if it is principal: its pole at $2t=1$
+is a zero of the reciprocal, so no residue is introduced. Global
+polynomial bounds and Mellin decay justify these global joins.
+
+On $\Re w=1$, $\Re t=t_0$, discard large added heights on these
+global lines. In the two-coordinate case one may retain
+$|\Im w|,|\Im t|\le T_1/16$. When other original separating
+coordinates occur, list all of them, including $w,t$, once in the
+primary's `eq:stage-height-allocation`: for the fixed argument matrix
+$(a_{jk})$ take $|v_k|\le c_kT_1$ with
+$c_k=[2n_{\rm coord}(1+\max_j|a_{jk}|)]^{-1}$, where $n_{\rm coord}$
+is the total number of listed coordinates. Thus each buffered argument receives
+total added height at most $T_1/2$, above its original pure-twist
+height at most $(3i+1)T_1$. The same allocation covers the plain
+slot and all original derivatives. No allowance is renewed.
+
+For each retained $t$, shift only the finite $w$ segment from $1$ to
+$w_0$. Its numerator has real part $t_0$ and ordinate in M42's range.
+Its original reciprocal has real part $\Re(w+t)\ge b\ge a+8e$,
+and both finite horizontal joins stay inside the same local window.
+The squared-character reciprocal stays on the global line
+$\Re(2t)=7/8+16e$; neither its doubled ordinate nor its character
+is assigned the original adaptive bin. On every segment,
+
+$$
+ \Re s\ge b>1/2,\qquad \Re t=t_0>0,\qquad
+ \Re(s+t)\ge b+t_0\ge1+16e,\qquad \Re w\ge w_0\ge1/8.
+$$
+
+Thus the full correction stays in its absolute-mass tube and
+$\widehat W$ never crosses its pole at zero. On a finite $w$ join,
+bound the numerator by the global polynomial bound, the squared
+reciprocal globally, the original reciprocal locally, and the
+correction by its absolute mass. The primary's pointwise Mellin
+bound on compact real intervals pays these joins; its integrated
+tail bound pays the discarded parts on global lines. For every fixed
+external order $N_{\rm tail}$ the errors are at most
+$p_{M,J}Q^B(1+H)^C T_1^{-N_{\rm tail}}$, with $B,C$ and the
+internal height degrees fixed independently of $N_{\rm tail}$.
+No locally shifted vertical contour is extended to infinite height.
+
+M42 and the two reciprocal bounds on the retained contour now give
+
+$$
+\begin{aligned}
+ |M_{\mathrm I,A}(u)|
+ &\ll Q^{(b-t_0)/2+\eta}
+        D^{t_0-1/2}A^{b-t_0}p_{M,J}(3+T_1)^{C_1}(1+H)^{C_2}
+        +\text{negligible tails},\\
+ |M_{\mathrm I,A}(u)|^2
+ &\ll Q^{(13/10)w_0-r/8+O(e)+\varepsilon}
+                           p_{M,J}^2(1+H)^C.
+\end{aligned}
+\tag{M43}
+$$
+
+The second line is after paying the internal height powers. Before
+other losses the real-line displacement contributes exactly $16er$.
+The constants and losses are uniform on M4. No witness selected from
+another row or presentation enters this pointwise estimate.
+
+**Actual-bin consumption and strict reserve.** On M4, $0<m<1/2$.
+The original `lem:detector-dyads` gives on the identical row and
+presentation $|S_u|^4\ll Q^{2vm+\varepsilon}$ with its original
+profile costs. For $v\ge1/8$ the nonfloor count is
+$Q^{R(v)+\varepsilon}$, where
+$R(v)=(15-16v)/(15-6v)$, and $v\le3/4$. Hence the high-bin
+exponent, and an upper exponent covering every low bin including the
+floor by the trivial $O(Q)$ count, are
+
+$$
+\begin{aligned}
+ F(v)&=R(v)+(2m+13/20)v+13/160-r/8,
+                                  &&1/8\le v\le3/4,\\
+ F'(v)&=2m+13/20-150/(15-6v)^2
+       >4/5+13/20-1/500-200/147
+        ={1607\over18375}>0,\\
+ E_{\rm hi}&=F(3/4)=2/7+91/160+3m/2-r/8,\\
+ E_{\rm low}&=1+13/80+m/4-r/8
+                         =93/80+m/4-r/8,\\
+ E_{\rm hi}-E_{\rm low}&=5m/4-69/224>0.
+\end{aligned}
+\tag{M44}
+$$
+
+For the derivative inequality use $\sqrt6>12/5$ and
+$m>\sqrt6/6-1/1000$; throughout the high interval
+$150/(15-6v)^2\le200/147$.
+For low bins M41 gives $w_0=1/8$ and $2vm\le m/4$.
+Also $5m/4>399/800>69/224$, proving the last comparison on all M4.
+Thus one high endpoint controls both branches, without a transition
+bin omission. At the center it is
+$957/1120+5\sqrt6/24$, with M4 variation at most $13/8000$;
+the low center is $93/80$ with variation at most $3/8000$.
+
+The remaining strict margin after the requested Type-I reserve has the
+following rational certificate:
+
+$$
+\begin{aligned}
+ \Delta&:=T_*-\left({957\over1120}+{5\sqrt6\over24}
+                         +{13\over8000}\right)-{1\over200}
+       ={5\sqrt6\over8}-{256663\over168000}>0,\\
+ 6\cdot105000^2-256663^2&=274104431>0,\\
+ \sum_u|M_{\mathrm I,A}(u)|^2|S_u|^4
+ &\ll Q^{T_*-1/200}\mathcal P_J^2(1+H)^C,
+                   \qquad A=Q^{3/20}.
+\end{aligned}
+\tag{M45}
+$$
+
+Both quantities compared by squaring are positive. To obtain the last
+line, fix a total loss strictly below $\Delta$ for the finite derivative
+and Sobolev orders required by the original application. Choose $e$
+and all preliminary source, deletion and counting powers sufficiently
+small for that allocation. Fix the resulting internal polynomial
+height degrees, including those for the plain estimate and any
+rowwise parameter choices; then choose one positive $\tau$ small
+enough to pay their sum and every original detector constraint.
+Only then choose $N_{\rm tail}$ large enough that
+$\tau N_{\rm tail}>B+10$ and all original external tails are
+negligible. Increasing that order differentiates untwisted profiles,
+not the translated pure twist, and does not increase an internal height
+degree already paid. Include the finitely many bins, dyads and
+polylogarithmic costs in the same total loss. Enlarge $J$ once for
+these external orders and all original labels and parameter derivatives.
+The final integration uses the one actual original coupled measure
+and its envelope $\mathcal P_J^2$ at that order. Its availability
+and stated aggregate cost are still required premises; this deduction
+does not construct it, nor assign an envelope per slot, contour or bin.
+
+**The complete remainder at this cutoff.** Denote by
+$\lambda_{\mathrm{II},A}$, $c_{\mathrm{II},A}$ and $A_{\mathrm{II},A}$
+exactly M31 and M37 with $A=Q^{3/20}$. The unpaid coefficient is
+
+$$
+ c_{R,A}(h)=
+ \left(\sum_{dn_1n_2=h}\lambda_{\mathrm{II},A}(d)
+       V_M(q_d/D)V_S(q_{n_1}/N)V_S(q_{n_2}/N)\right)
+ \mathbf1_{\nexists p\notin S:\ q_p\ge Q^{1/3},\ p^2\mid h},
+ \qquad A_{R,A,u}=L^{-1/2}\sum_hc_{R,A}(h)\psi_u(h).
+\tag{M46}
+$$
+
+The hypotheses of M38 are unchanged: this coefficient has the same
+annular support, $|\lambda_{\mathrm{II},A}|\le\tau_3$, the same
+$\tau_5$ envelope for its convolution, and the same profile stability
+from $M_{\mathrm{II},A}=M-M_{\mathrm I,A}$ without differentiating
+$z$. Reuse M38 for its whole collision term and M39–M40 for this
+same complete row space. In those formulas replace $A_R,E$ by
+$A_{R,A},E_A=A_{\mathrm I,A}+A_{\mathrm{II,hi},A}$.
+M45 implies the older, weaker Type-I payment needed there, so the
+combined bound retained from M39 is $Q^{T_*-1/400+\varepsilon}$
+with the common costs. This combined reserve is $1/400$; the
+$1/200$ in M45 belongs to Type-I alone.
+M40's original full-target equivalence and parameter reductions apply
+verbatim to this complete $A_{R,A}$, preserving the interference term
+and full derivative/height contract. They prove no saving for it.
+
+The support exclusion $q_{d_{\le z}}\le A$ from M31 still holds,
+but other Type-II coefficients also change. M9's squarefree four-prime
+test survives, since on M4
+$(r-m)/2>\sqrt6/12-1/1000>199/1000>3/20$.
+Thus its original $q_{p_1}>z>q_{p_2}>2A$ inequalities hold eventually,
+and M31's existing evaluation gives $\lambda_{\mathrm{II},A}(p_1p_2)=2$
+and $c_{R,A}(h)=4V$ as in M12. This reuses the coefficient obstruction;
+it is neither a remainder-moment lower bound nor a repeated obstruction
+proof. The original full mixed-sixth target H, equivalently a saving
+for the complete M46 remainder under M38–M40, remains unpaid. H0
+and M19–M30 retain their original conditional meaning. Full envelope
+availability, original-W0 C68/J40 branches and restoration, the signed
+Robin estimate and RH remain open. No source-proof audit, new analytic
+supplier, Lean, priority or full-remainder certification is asserted.
