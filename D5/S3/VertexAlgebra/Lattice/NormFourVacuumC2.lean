@@ -29,7 +29,7 @@ open scoped BigOperators VertexOperator
 
 open private word word_mem all_modes_closed
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumIrreducible
-open private full_field_closed translation_closed translation_axis vector_mem
+open private full_field_closed translation_closed translation_axis vector_mem finite_sum_mem
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumVertexAlgebra
 
 noncomputable section
@@ -92,13 +92,6 @@ private theorem higher_product_mem (D : LatticeData) (a : Charge D)
         Nat.cast_add, Nat.cast_one,
         show -((r : ℤ) + 2) - 1 = -(((r + 1 : ℕ) : ℤ) + 2) by omega]
         using recovered
-
-private theorem finite_sum_mem {ι V : Type*} [AddCommGroup V] [Module ℂ V]
-    (W : Submodule ℂ V) (f : ι → V) (hf : Function.HasFiniteSupport f)
-    (hm : ∀ i, f i ∈ W) : (∑ᶠ i, f i) ∈ W := by
-  classical
-  rw [finsum_eq_sum f hf]
-  exact W.sum_mem fun i _ => hm i
 
 /-- Actual L[-2] preserves C2. The complete integer commutator gives
 only coefficients -3-j in its correction; every natural j is covered. -/
