@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/OriginalLowerSelectorArithmetic
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/OriginalLowerSelectorArithmetic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Finset.Sort]
