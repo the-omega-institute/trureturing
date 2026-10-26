@@ -18,7 +18,7 @@ MatrixMap.kron supplies the amplification Phi tensor the identity on Fin r; kron
 
 **Theorem 1.2 (Coordinates of an identity amplification).**
 
-$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; \forall r \in \mathbb{N},\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), K\right),\; \forall a \in \operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(r\right),\; \forall b \in \operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(r\right),\; \operatorname{MatrixMap}.\operatorname{kron}\left(Phi, \operatorname{LinearMap}.\operatorname{id}:\operatorname{MatrixMap}\left(\operatorname{Fin}\left(r\right), \operatorname{Fin}\left(r\right), K\right)\right)\left(P\right)\left(a, b\right) = Phi\left((\operatorname{fun} (i: \operatorname{Fin}\left(n\right)) \mapsto \operatorname{fun} (j: \operatorname{Fin}\left(n\right)) \mapsto P\left((i, a.2), (j, b.2)\right))\right)\left(a.1, b.1\right)$$
+$$\forall (\mathbb{k}: \operatorname{Type}), [\operatorname{RCLike}\left(\mathbb{k}\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{k}\right) \to_{l[\mathbb{k}]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{k}\right),\; \forall r \in \mathbb{N},\; \forall P \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), \operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(r\right), \mathbb{k}\right),\; \forall a \in \operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(r\right),\; \forall b \in \operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(r\right),\; \operatorname{MatrixMap}.\operatorname{kron}\left(Phi, (\operatorname{LinearMap}.\operatorname{id}: \operatorname{MatrixMap}\left(\operatorname{Fin}\left(r\right), \operatorname{Fin}\left(r\right), \mathbb{k}\right))\right)\left(P, a, b\right) = Phi\left((\operatorname{fun} (i: \operatorname{Fin}\left(n\right)) \mapsto \operatorname{fun} (j: \operatorname{Fin}\left(n\right)) \mapsto P\left((i, a.2), (j, b.2)\right))\right)\left(a.1, b.1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.kron_id_apply` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \fo
 
 *Commentary.*
 
-Over every RCLike field K and all finite input, output and ancillary dimensions, amplifying a linear matrix map Phi by the identity applies Phi to each matrix slice with the ancillary indices fixed.
+Over every RCLike field 𝕜 and all finite input, output and ancillary dimensions, amplifying a linear matrix map Phi by the identity applies Phi to each matrix slice with the ancillary indices fixed.
 
 **Definition 1.3 (Complete positivity).**
 

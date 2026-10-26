@@ -6,7 +6,7 @@ Mutual unbiasedness is exactly orthogonality of the traceless diagonal planes.
 
 **Definition 1.1 (The two coordinate projectors).**
 
-$$\operatorname{coordinateProjectorTwo} = ![!![1,0;0,0],!![0,0;0,1]]$$
+$$(\operatorname{coordinateProjectorTwo}: \operatorname{Fin}\left(2\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)) = ![!![1,0;0,0],!![0,0;0,1]]$$
 
 *Formalization.* `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateProjectorTwo` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The two complex qubit coordinate projectors select the first and second basis ve
 
 **Definition 1.2 (The coordinate rank-one context).**
 
-$$\operatorname{RankOneContext}.\operatorname{projector}\left((\operatorname{coordinateContextTwo}:\operatorname{RankOneContext}(2))\right) = \operatorname{coordinateProjectorTwo}$$
+$$\operatorname{RankOneContext}.\operatorname{projector}\left((\operatorname{coordinateContextTwo}: \operatorname{RankOneContext}\left(2\right))\right) = \operatorname{coordinateProjectorTwo}$$
 
 *Formalization.* `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\operatorname{RankOneContext}.\operatorname{projector}\left((\operatorname{coo
 
 *Commentary.*
 
-The two coordinate projectors form a normalized rank-one context and sum to the identity.
+The context has coordinateProjectorTwo as its projector family. Each member is Hermitian, idempotent and trace one, and compresses every matrix X to trace(PX) times P. The two members sum to the identity. These properties supply the rankOne and resolvesIdentity fields of RankOneContext; its projector family determines the context because the other fields are proofs.
 
 **Theorem 1.3 (Mutually unbiased diagonal planes).**
 
