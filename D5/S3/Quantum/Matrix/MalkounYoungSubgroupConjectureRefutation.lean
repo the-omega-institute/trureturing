@@ -7,6 +7,8 @@
    digest: Fifteen Gram blocks refute the class-preserving permutation inequality. -/
 
 import D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 
 /-! # Conjecture D fails for class-preserving permutation groups -/
 
@@ -15,11 +17,9 @@ open scoped BigOperators ComplexOrder
 namespace D5.S3.Quantum.Matrix.MalkounYoungSubgroupConjectureRefutation
 
 open D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation (crossSum diagonal_product_eq_real)
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (gram)
 
 noncomputable section
-
-private theorem preserves_one {n : ℕ} (r : Setoid (Fin n)) :
-    ∀ i, r ((1 : Equiv.Perm (Fin n)) i) i := fun i => r.refl i
 
 private theorem preserves_mul {n : ℕ} (r : Setoid (Fin n))
     {σ τ : Equiv.Perm (Fin n)} (hσ : ∀ i, r (σ i) i) (hτ : ∀ i, r (τ i) i) :
@@ -35,7 +35,7 @@ private theorem preserves_inv {n : ℕ} (r : Setoid (Fin n))
 /-- The source's group of permutations preserving every equivalence class. -/
 def classPreserving {n : ℕ} (r : Setoid (Fin n)) : Subgroup (Equiv.Perm (Fin n)) where
   carrier := {σ | ∀ i, r (σ i) i}
-  one_mem' := preserves_one r
+  one_mem' := r.refl'
   mul_mem' := preserves_mul r
   inv_mem' := preserves_inv r
 
@@ -46,13 +46,8 @@ def claim : Prop :=
       (Nat.card ↥(classPreserving r₁ ⊓ classPreserving r₂) : ℝ) *
         (∏ i, (h i i).re) ≤ (crossSum (classPreserving r₁) (classPreserving r₂) h).re
 
-private def coords (m : ℕ) : Fin (m * 3) ≃ Fin m × Fin 3 := finProdFinEquiv.symm
-
-private def blockRelation (m : ℕ) (r : Setoid (Fin 3)) : Setoid (Fin (m * 3)) where
-  r i k := (coords m i).1 = (coords m k).1 ∧ r (coords m i).2 (coords m k).2
-  iseqv := ⟨fun _ => ⟨rfl, r.refl _⟩,
-    fun h => ⟨h.1.symm, r.symm h.2⟩,
-    fun h k => ⟨h.1.trans k.1, r.trans h.2 k.2⟩⟩
+private def blockRelation (m : ℕ) (r : Setoid (Fin 3)) : Setoid (Fin (m * 3)) :=
+  Setoid.comap (finProdFinEquiv (n := 3)).symm ((⊥ : Setoid (Fin m)).prod r)
 
 private def seedRelation (t : Fin 3) : Setoid (Fin 3) :=
   Setoid.ker (fun s : Fin 3 => s == t)
@@ -60,65 +55,66 @@ private def seedRelation (t : Fin 3) : Setoid (Fin 3) :=
 private def blockMatrix (m : ℕ) (a : Matrix (Fin 3) (Fin 3) ℂ) :
     Matrix (Fin (m * 3)) (Fin (m * 3)) ℂ :=
   (Matrix.blockDiagonal (fun _ : Fin m => a)).submatrix
-    (fun i => ((coords m i).2, (coords m i).1))
-    (fun i => ((coords m i).2, (coords m i).1))
+    (fun i => (((finProdFinEquiv (n := 3)).symm i).2, ((finProdFinEquiv (n := 3)).symm i).1))
+    (fun i => (((finProdFinEquiv (n := 3)).symm i).2, ((finProdFinEquiv (n := 3)).symm i).1))
 
 private def v : Matrix (Fin 2) (Fin 3) ℂ := !![1, 1, 1; 0, 1, Complex.I]
 
-private def seed : Matrix (Fin 3) (Fin 3) ℂ := v.conjTranspose * v
-
-private theorem block_posSemidef (m : ℕ) : (blockMatrix m seed).PosSemidef := by
-  rw [blockMatrix.eq_1, seed.eq_1]
-  rw [Matrix.blockDiagonal_mul, ← Matrix.blockDiagonal_conjTranspose]
-  exact (Matrix.posSemidef_conjTranspose_mul_self _).submatrix _
+private theorem block_posSemidef (m : ℕ) : (blockMatrix m (gram v)).PosSemidef := by
+  rw [blockMatrix.eq_1]
+  exact (D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.MatrixBlocks.blockDiagonal_psd
+    (fun _ : Fin m => gram v) (fun _ => Matrix.posSemidef_conjTranspose_mul_self v)).submatrix _
 
 private def blockPermutation (m : ℕ) (f : Fin m → Equiv.Perm (Fin 3)) :
     Equiv.Perm (Fin (m * 3)) :=
-  (coords m).symm.permCongr (Equiv.prodCongrRight f)
+  (finProdFinEquiv (n := 3)).permCongr (Equiv.prodCongrRight f)
 
 private def blockLift (m : ℕ) (r : Setoid (Fin 3)) (f : Fin m → classPreserving r) :
     classPreserving (blockRelation m r) :=
   ⟨blockPermutation m (fun j => (f j).val), by
     intro i
-    change (coords m _).1 = (coords m i).1 ∧ r (coords m _).2 (coords m i).2
+    change ((finProdFinEquiv (n := 3)).symm _).1 =
+        ((finProdFinEquiv (n := 3)).symm i).1 ∧
+      r ((finProdFinEquiv (n := 3)).symm _).2 ((finProdFinEquiv (n := 3)).symm i).2
     rw [blockPermutation.eq_1]
-    simp only [Equiv.permCongr_apply, Equiv.symm_symm,
-      Equiv.apply_symm_apply]
+    simp only [Equiv.permCongr_apply, Equiv.symm_apply_apply]
     exact ⟨rfl, (f _).property _⟩⟩
 
 private theorem blockLift_apply (m : ℕ) (r : Setoid (Fin 3))
     (f : Fin m → classPreserving r) (j : Fin m) (i : Fin 3) :
-    coords m ((blockLift m r f).val ((coords m).symm (j, i))) = (j, (f j).val i) := by
+    (finProdFinEquiv (n := 3)).symm
+        ((blockLift m r f).val (finProdFinEquiv (j, i))) = (j, (f j).val i) := by
   rw [blockLift.eq_1]
-  change coords m (blockPermutation m (fun j => (f j).val) ((coords m).symm (j, i))) = _
-  rw [blockPermutation.eq_1]
-  simp only [Equiv.permCongr_apply, Equiv.symm_symm,
-    Equiv.apply_symm_apply, Equiv.prodCongrRight_apply]
+  simpa only [blockPermutation, Equiv.permCongr_apply,
+    Equiv.symm_apply_apply] using
+      (Equiv.prodCongrRight_apply (fun j => (f j).val) j i)
 
 private def fiberPermutation (m : ℕ) (σ : Equiv.Perm (Fin (m * 3)))
-    (hσ : ∀ i, (coords m (σ i)).1 = (coords m i).1) (j : Fin m) :
+    (hσ : ∀ i, ((finProdFinEquiv (n := 3)).symm (σ i)).1 =
+      ((finProdFinEquiv (n := 3)).symm i).1) (j : Fin m) :
     Equiv.Perm (Fin 3) :=
-  Equiv.ofBijective (fun s => (coords m (σ ((coords m).symm (j, s)))).2) (by
+  Equiv.ofBijective
+    (fun s => ((finProdFinEquiv (n := 3)).symm (σ (finProdFinEquiv (j, s)))).2) (by
     constructor
     · intro a b hab
-      have he : coords m (σ ((coords m).symm (j, a))) =
-          coords m (σ ((coords m).symm (j, b))) := by
+      have he : (finProdFinEquiv (n := 3)).symm (σ ((finProdFinEquiv (n := 3)) (j, a))) =
+          (finProdFinEquiv (n := 3)).symm (σ ((finProdFinEquiv (n := 3)) (j, b))) := by
         apply Prod.ext
-        · simp only [hσ, Equiv.apply_symm_apply]
+        · simp only [hσ, Equiv.symm_apply_apply]
         · exact hab
-      exact congrArg Prod.snd ((coords m).symm.injective (σ.injective
-        ((coords m).injective he)))
+      exact congrArg Prod.snd ((finProdFinEquiv (n := 3)).injective (σ.injective
+        ((finProdFinEquiv (n := 3)).symm.injective he)))
     · intro b
-      let x := coords m (σ.symm ((coords m).symm (j, b)))
+      let x := (finProdFinEquiv (n := 3)).symm (σ.symm ((finProdFinEquiv (n := 3)) (j, b)))
       have hx : x.1 = j := by
-        have h := hσ (σ.symm ((coords m).symm (j, b)))
-        simpa only [Equiv.apply_symm_apply] using h.symm
+        have h := hσ (σ.symm ((finProdFinEquiv (n := 3)) (j, b)))
+        simpa only [Equiv.apply_symm_apply, Equiv.symm_apply_apply] using h.symm
       refine ⟨x.2, ?_⟩
-      have he : (coords m).symm (j, x.2) = σ.symm ((coords m).symm (j, b)) := by
-        apply (coords m).injective
-        simp only [Equiv.apply_symm_apply]
+      have he : finProdFinEquiv (j, x.2) = σ.symm (finProdFinEquiv (j, b)) := by
+        apply (finProdFinEquiv (n := 3)).symm.injective
+        simp only [Equiv.symm_apply_apply]
         exact Prod.ext hx.symm rfl
-      simp only [he, Equiv.apply_symm_apply])
+      simp only [he, Equiv.apply_symm_apply, Equiv.symm_apply_apply])
 
 private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
     (Fin m → classPreserving r) ≃ classPreserving (blockRelation m r) :=
@@ -129,26 +125,29 @@ private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
       apply Subtype.ext
       apply Equiv.ext
       intro i
-      have he := congrArg (fun σ => (coords m (σ.val ((coords m).symm (j, i)))).2) h
+      have he := congrArg (fun σ => ((finProdFinEquiv (n := 3)).symm
+        (σ.val (finProdFinEquiv (j, i)))).2) h
       simpa only [blockLift_apply] using he
     · intro σ
       let f : Fin m → classPreserving r := fun j =>
         ⟨fiberPermutation m σ.val (fun i => (σ.property i).1) j, by
           intro i
-          change r (coords m (σ.val ((coords m).symm (j, i)))).2 i
-          simpa only [Equiv.apply_symm_apply] using
-            (σ.property ((coords m).symm (j, i))).2⟩
+          change r ((finProdFinEquiv (n := 3)).symm (σ.val ((finProdFinEquiv (n := 3)) (j, i)))).2 i
+          simpa only [Equiv.symm_apply_apply] using
+            (σ.property ((finProdFinEquiv (n := 3)) (j, i))).2⟩
       refine ⟨f, ?_⟩
       apply Subtype.ext
       apply Equiv.ext
       intro i
-      apply (coords m).injective
-      have hi : (coords m).symm ((coords m i).1, (coords m i).2) = i :=
-        (coords m).symm_apply_apply i
+      apply (finProdFinEquiv (n := 3)).symm.injective
+      have hi : finProdFinEquiv (((finProdFinEquiv (n := 3)).symm i).1,
+          ((finProdFinEquiv (n := 3)).symm i).2) = i :=
+        (finProdFinEquiv (n := 3)).apply_symm_apply i
       rw [← hi, blockLift_apply]
       apply Prod.ext
-      · simpa only [Equiv.apply_symm_apply] using
-          ((σ.property ((coords m).symm ((coords m i).1, (coords m i).2))).1).symm
+      · simpa only [Equiv.symm_apply_apply] using
+          ((σ.property (finProdFinEquiv (((finProdFinEquiv (n := 3)).symm i).1,
+            ((finProdFinEquiv (n := 3)).symm i).2))).1).symm
       · rfl)
 
 private theorem block_factorization (m : ℕ) (r s : Setoid (Fin 3))
@@ -160,7 +159,7 @@ private theorem block_factorization (m : ℕ) (r s : Setoid (Fin 3))
   have hterm (f : Fin m → classPreserving r) (g : Fin m → classPreserving s) :
       (∏ i, blockMatrix m a ((blockLift m r f).val i) ((blockLift m s g).val i)) =
         ∏ j, ∏ i, a ((f j).val i) ((g j).val i) := by
-    rw [← (coords m).symm.prod_comp (fun i =>
+    rw [← (finProdFinEquiv (n := 3)).prod_comp (fun i =>
       blockMatrix m a ((blockLift m r f).val i) ((blockLift m s g).val i))]
     rw [Fintype.prod_prod_type]
     apply Finset.prod_congr rfl
@@ -219,7 +218,7 @@ private def seedEquiv (t : Fin 3) (p : Equiv.Perm (Fin 3))
       · exact ⟨true, Subtype.ext h.symm⟩)
 
 private theorem seed_crossSum :
-    crossSum (classPreserving (seedRelation 2)) (classPreserving (seedRelation 0)) seed =
+    crossSum (classPreserving (seedRelation 2)) (classPreserving (seedRelation 0)) (gram v) =
       9 - Complex.I := by
   classical
   have hp : ∀ i : Fin 3, seedRelation 2 (Equiv.swap 0 1 i) i := by
@@ -241,12 +240,12 @@ private theorem seed_crossSum :
   let e := seedEquiv 2 (Equiv.swap 0 1) hp hc (by decide)
   let f := seedEquiv 0 (Equiv.swap 1 2) hq hd (by decide)
   change (∑ σ : classPreserving (seedRelation 2),
-    ∑ τ : classPreserving (seedRelation 0), ∏ i, seed (σ.val i) (τ.val i)) = _
+    ∑ τ : classPreserving (seedRelation 0), ∏ i, (gram v) (σ.val i) (τ.val i)) = _
   rw [← e.sum_comp]
   simp_rw [← f.sum_comp]
-  change (∑ b : Bool, ∑ c : Bool, ∏ i, seed
+  change (∑ b : Bool, ∑ c : Bool, ∏ i, (gram v)
     ((if b then Equiv.swap 0 1 else 1) i) ((if c then Equiv.swap 1 2 else 1) i)) = _
-  rw [seed.eq_1, v.eq_1]
+  rw [gram, v.eq_1]
   norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fin.sum_univ_succ, Fin.prod_univ_succ, map_ofNat, Fintype.sum_bool, Equiv.swap_apply_def]
   apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im]
@@ -259,7 +258,7 @@ private theorem block_intersection (m : ℕ) :
   apply Subgroup.mem_bot.mpr
   apply Equiv.ext
   intro i
-  apply (coords m).injective
+  apply (finProdFinEquiv (n := 3)).symm.injective
   apply Prod.ext
   · exact (hσ.1 i).1
   · have hseed : ∀ a b : Fin 3, seedRelation 2 a b → seedRelation 0 a b → a = b := by
@@ -268,18 +267,18 @@ private theorem block_intersection (m : ℕ) :
     exact hseed _ _ (hσ.1 i).2 (hσ.2 i).2
 
 private theorem block_diagonal (m : ℕ) :
-    (∏ i, ((blockMatrix m seed) i i).re) = 4 ^ m := by
+    (∏ i, ((blockMatrix m (gram v)) i i).re) = 4 ^ m := by
   apply Complex.ofReal_injective
   rw [← diagonal_product_eq_real _ (block_posSemidef m).1]
-  have hp : (∏ i, (blockMatrix m seed) i i) = (∏ s, seed s s) ^ m := by
+  have hp : (∏ i, (blockMatrix m (gram v)) i i) = (∏ s, (gram v) s s) ^ m := by
     calc
-      _ = ∏ p : Fin m × Fin 3, seed p.2 p.2 := by
-        apply Fintype.prod_equiv (coords m)
+      _ = ∏ p : Fin m × Fin 3, (gram v) p.2 p.2 := by
+        apply Fintype.prod_equiv (finProdFinEquiv (n := 3)).symm
         intro i
         simp only [blockMatrix, Matrix.submatrix_apply, Matrix.blockDiagonal_apply, ite_true]
       _ = _ := by simp [Fintype.prod_prod_type]
   rw [hp]
-  norm_num [seed, v, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  norm_num [gram, v, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fin.sum_univ_succ, Fin.prod_univ_succ, map_ofNat]
 
 private theorem power_value : (9 - Complex.I) ^ 15 =
@@ -290,7 +289,7 @@ private theorem power_value : (9 - Complex.I) ^ 15 =
 theorem result : ¬ claim := by
   intro h
   have hb := h 45 (blockRelation 15 (seedRelation 2))
-    (blockRelation 15 (seedRelation 0)) (blockMatrix 15 seed)
+    (blockRelation 15 (seedRelation 0)) (blockMatrix 15 (gram v))
     (block_posSemidef 15).1 (block_posSemidef 15)
   rw [block_intersection 15, block_diagonal 15, block_factorization 15,
     seed_crossSum, power_value] at hb
