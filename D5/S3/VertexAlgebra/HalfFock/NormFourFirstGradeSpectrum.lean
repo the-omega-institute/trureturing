@@ -44,8 +44,8 @@ open scoped BigOperators TensorProduct VertexOperator
 
 noncomputable section
 
-/- First remove the potentially fatal trace hypothesis, in the actual quotient.
-   Evenness is supplied by the integral cocycle symmetrization theorem. -/
+/- Evenness forces nonzero mod-two reduction of a norm-four charge, and hence
+   nonzero charge in the actual quotient used by the ground representation. -/
 private theorem norm_four_reduction_ne_zero (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) : reduceCharge D a ≠ 0 := by
   classical
@@ -369,7 +369,7 @@ theorem actualZeroMode_transport (D : LatticeData) (hu : IsUnit D.G.det)
       (e (nativeL D hu a s (nativeBasis D hu (i, b))) : ActualTensor D hu)
     rw [nativeBasis_apply, nativeGradeEquiv_single_coe, nativeL_single,
       zeroMode_X D hu a ha s]
-    simp only [map_add, map_sub, map_smul, Submodule.coe_add, Submodule.coe_sub,
+    simp only [e, map_add, map_sub, map_smul, Submodule.coe_add, Submodule.coe_sub,
       Submodule.coe_smul, nativeGradeEquiv_single_coe, nativeGradeEquiv_charge_coe,
       TensorProduct.add_tmul, TensorProduct.sub_tmul, ← TensorProduct.smul_tmul',
       smul_add, smul_sub, smul_smul]
@@ -532,7 +532,7 @@ theorem actual_projectors_traces (D : LatticeData) (hu : IsUnit D.G.det)
       LinearMap.trace_tensorProduct', chargeProjector_trace D a ha,
       groundMinus_trace D hu a ha s, one_mul]
 
-/-- Desired integral multiplicities, without a division convention,
+/-- Integral multiplicities, without a division convention,
     for either sign s with s^2=1, on the COMPLETE actual first grade. -/
 theorem actual_first_grade_eigenspace_multiplicities
     (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
@@ -638,7 +638,8 @@ private theorem parity_minus_energy_two_physical_mode
     (parityMinusEnergyTwoZeroMode D hu h24 a ha s v : ActualTensor D hu) =
       (((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]])
         ⟨v, v.property.1⟩ : ActualTensor D hu) := by
-  exact (fixedParitySlice_zeroMode_coe D hu a s _).symm
+  change zeroMode D hu a s (v : ActualTensor D hu) = _
+  exact (fixedParitySlice_zeroMode_coe D hu a s ⟨v.val, v.property.1⟩).symm
 
 private def energyTwoEigenspaceEquiv
     (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
@@ -647,14 +648,18 @@ private def energyTwoEigenspaceEquiv
       (parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace lam where
   toFun v := ⟨⟨v.val.val,
     actual_grade_one_eq_parity_minus_energy_two D hu h24 ▸ v.val.property⟩, by
+    have he := Module.End.mem_eigenspace_iff.mp v.property
+    have he' := congrArg (fun x : actualGrade D hu 1 => (x : ActualTensor D hu)) he
     rw [Module.End.mem_eigenspace_iff]
     apply Subtype.ext
-    exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp v.property)⟩
+    exact he'⟩
   invFun v := ⟨⟨v.val.val,
     (actual_grade_one_eq_parity_minus_energy_two D hu h24).symm ▸ v.val.property⟩, by
+    have he := Module.End.mem_eigenspace_iff.mp v.property
+    have he' := congrArg (fun x : parityMinusEnergyTwo D hu => (x : ActualTensor D hu)) he
     rw [Module.End.mem_eigenspace_iff]
     apply Subtype.ext
-    exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp v.property)⟩
+    exact he'⟩
   left_inv v := rfl
   right_inv v := rfl
   map_add' v w := rfl
@@ -679,8 +684,7 @@ theorem actual_parity_minus_energy_two_multiplicities
   refine ⟨parity_minus_energy_two_physical_mode D hu h24 a ha s, ?_, ?_⟩
   · rw [← actual_grade_one_eq_parity_minus_energy_two D hu h24]
     exact (actual_rank24_grade_one_finrank_98304 D hu h24).2.1
-  ·
-    have dims := actual_first_grade_eigenspace_multiplicities D hu a ha s hs
+  · have dims := actual_first_grade_eigenspace_multiplicities D hu a ha s hs
     have transfer (lam : ℂ) :=
       (energyTwoEigenspaceEquiv D hu h24 a ha s lam).finrank_eq
     rw [transfer 0, transfer (1 / 16), transfer (1 / 2), h24] at dims
