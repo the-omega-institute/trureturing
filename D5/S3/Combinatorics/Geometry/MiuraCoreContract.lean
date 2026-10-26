@@ -20,9 +20,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreFrozenSlope
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreContract
 
-open MiuraHeightEnvelope
+open MiuraHeightEnvelope MiuraCoreColumns MiuraCoreFrozenSlope
 
 noncomputable section
 
@@ -241,4 +241,4 @@ theorem contractAt_isHeight (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreContract

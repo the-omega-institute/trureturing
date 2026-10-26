@@ -21,9 +21,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraStripRigidity
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreExtremum
 
-open MiuraHeightEnvelope
+open MiuraHeightEnvelope MiuraCoreColumns MiuraCoreFrozenSlope MiuraCoreContract MiuraCoreCellExpand
 
 noncomputable section
 
@@ -80,18 +80,18 @@ theorem contractAt_isSLM_of_h_max (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
   obtain ⟨hj0, hj1, hsym⟩ := hfrz
   intro q hqadj
   rcases adj_row_or_col hqadj with ⟨hp1eq, hb⟩ | ⟨hp2eq, ha⟩
-  · 
+  ·
     by_cases hbr : (p.2.val < j.val ∧ q.2.val < j.val) ∨ (¬ p.2.val < j.val ∧ ¬ q.2.val < j.val)
-    · 
+    ·
       have hdiff := contractAt_diff_same_branch h hm j ⟨hj0, hj1, hsym⟩ p q hbr
       have hexp_adj := cellExpand_adj_same_branch j hj0 hj1 p q hqadj hbr
       have hval := hmax _ hexp_adj
       linarith
-    · 
+    ·
       push_neg at hbr
       obtain ⟨hnAA, hnBB⟩ := hbr
       by_cases hpL : p.2.val < j.val
-      · 
+      ·
         have hqR : ¬ q.2.val < j.val := by
           have := hnAA hpL; omega
         have hqeq : q.2.val = p.2.val + 1 := by
@@ -102,7 +102,7 @@ theorem contractAt_isSLM_of_h_max (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hexp_adj := cellExpand_adj_frozenCell j hj0 hj1 p (Or.inl hpv)
         have hval := hmax (p.1, j) hexp_adj
         linarith
-      · 
+      ·
         push_neg at hpL
         have hqL : q.2.val < j.val := hnBB hpL
         have hpvv : p.2.val = q.2.val + 1 := by
@@ -113,7 +113,7 @@ theorem contractAt_isSLM_of_h_max (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hexp_adj := cellExpand_adj_frozenCell j hj0 hj1 p (Or.inr hpv)
         have hval := hmax (p.1, j) hexp_adj
         linarith
-  · 
+  ·
     have hp2v : p.2.val = q.2.val := by rw [hp2eq]
     have hbr : (p.2.val < j.val ∧ q.2.val < j.val) ∨ (¬ p.2.val < j.val ∧ ¬ q.2.val < j.val) := by
       by_cases hpL : p.2.val < j.val
@@ -421,4 +421,4 @@ theorem contractAt_numExtrema_eq (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreExtremum

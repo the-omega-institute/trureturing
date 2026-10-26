@@ -20,7 +20,7 @@ public import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreFrozenWalk
 
 open MiuraHeightEnvelope
 
@@ -183,4 +183,4 @@ theorem rainbow_dL_const
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreFrozenWalk

@@ -22,9 +22,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreFrozenWalk
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreFrozenSlope
 
-open MiuraHeightEnvelope
+open MiuraHeightEnvelope MiuraCoreColumns MiuraCoreFrozenWalk
 
 noncomputable section
 
@@ -42,13 +42,13 @@ theorem adj_interior_cases (i : Fin m) (j : Fin n) (hj0 : 0 < j.val)
   unfold adj gdist at hu
   have hu' : ((i.val : ℤ) - p).natAbs + ((j.val : ℤ) - q).natAbs = 1 := by exact_mod_cast hu
   by_cases hcol : q = j.val
-  · 
+  ·
     subst hcol
     have hrow : ((i.val : ℤ) - p).natAbs = 1 := by simpa using hu'
     rcases (Int.natAbs_eq_iff).mp hrow with hpi | hpi
     · left; exact ⟨by omega, by ext <;> simp <;> omega⟩
     · right; left; exact ⟨by omega, by ext <;> simp <;> omega⟩
-  · 
+  ·
     have hcz : ((j.val : ℤ) - q).natAbs = 1 ∧ ((i.val : ℤ) - p).natAbs = 0 := by
       constructor
       · by_contra hc
@@ -84,14 +84,14 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
   set e : ℕ → ℤ := fun k => v (k+1) - v k with hedef
   set dL : ℕ → ℤ := fun k => Lc k - v k with hdLdef
   set dR : ℕ → ℤ := fun k => Rc k - v k with hdRdef
-  
+
   have hev : ∀ k (hk1 : k + 1 < m), e k = h (⟨k+1, hk1⟩, j) - h (⟨k, by omega⟩, j) := by
     intro k hk1; simp only [hedef]; rw [hvk (k+1) hk1, hvk k (by omega)]
   have hdLv : ∀ k (hk : k < m), dL k = h (⟨k, hk⟩, jL) - h (⟨k, hk⟩, j) := by
     intro k hk; simp only [hdLdef]; rw [hLk k hk, hvk k hk]
   have hdRv : ∀ k (hk : k < m), dR k = h (⟨k, hk⟩, jR) - h (⟨k, hk⟩, j) := by
     intro k hk; simp only [hdRdef]; rw [hRk k hk, hvk k hk]
-  
+
   have he_pm : ∀ i, i < m - 1 → e i = 1 ∨ e i = -1 := by
     intro i hi
     rw [hev i (by omega)]
@@ -113,7 +113,7 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
       unfold adj gdist; simp only [hjRdef, Fin.val_mk]; omega
     have hv := hh _ _ hadj
     rcases abs_cases (h (⟨i, by omega⟩, j) - h (⟨i, by omega⟩, jR)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
-  
+
   have hLwalk : ∀ i, i < m - 1 →
       e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1 := by
     intro i hi
@@ -136,7 +136,7 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
       unfold adj gdist; simp only [hjRdef, Fin.val_mk]; omega
     have hv := hh _ _ hadj
     rcases abs_cases (h (⟨i+1, by omega⟩, jR) - h (⟨i, by omega⟩, jR)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
-  
+
   have hbridge : ∀ σ, (σ = 1 ∨ σ = -1) → ∀ i (hi' : i < m),
       alignedExt (m-1) e dL dR σ i → IsStrictLocalExtremum h (⟨i, hi'⟩, j) := by
     intro σ hσ i hi' hae
@@ -164,7 +164,7 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
       rw [hvk (i + 1) P, hvk i hi', hae_dn hlt] at hst
       omega
     rcases hσ with hσ1 | hσ1
-    · 
+    ·
       subst hσ1; right
       intro u hu
       rcases adj_interior_cases ⟨i, hi'⟩ j hj0 hj1 u hu with
@@ -173,7 +173,7 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
       · exact hdn_val (by have h2 : i + 1 < m := hdn; omega) hdn
       · exact hLval
       · exact hRval
-    · 
+    ·
       subst hσ1; left
       intro u hu
       rcases adj_interior_cases ⟨i, hi'⟩ j hj0 hj1 u hu with
@@ -182,13 +182,13 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
       · exact hdn_val (by have h2 : i + 1 < m := hdn; omega) hdn
       · exact hLval
       · exact hRval
-  
+
   have hef : ∀ σ, (σ = 1 ∨ σ = -1) → ∀ i, i ≤ m - 1 →
       ¬ alignedExt (m-1) e dL dR σ i := by
     intro σ hσ i hi hae
     have hi' : i < m := by omega
     exact hnact ⟨⟨i, hi'⟩, hbridge σ hσ i hi' hae⟩
-  
+
   have hrainbow := extremumFree_rainbow he_pm hdL_pm hdR_pm hLwalk hRwalk hef
   refine ⟨hj0, hj1, ?_⟩
   intro i
@@ -197,7 +197,7 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
   rw [hdLv i.val hi, hdRv i.val hi] at hr
   have hiv : (⟨i.val, hi⟩ : Fin m) = i := Fin.ext rfl
   rw [hiv] at hr
-  
+
   show h (i, jL) + h (i, jR) = 2 * h (i, j)
   omega
 
@@ -205,9 +205,6 @@ theorem frozenColumn_iff_inactive (h : Cell m n → ℤ) (hh : IsHeight h)
     (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 1 < n) (hm : 0 < m) :
     frozenColumn h j ↔ ¬ activeColumn h j :=
   ⟨frozenColumn_not_active h j, inactive_imp_frozenColumn h hh j hj0 hj1 hm⟩
-
-
-
 
 open MiuraHeightEnvelope Finset
 
@@ -305,4 +302,4 @@ theorem frozenColumn_dL_eq_row0 (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreFrozenSlope

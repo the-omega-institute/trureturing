@@ -20,9 +20,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreContract
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreCellExpand
 
-open MiuraHeightEnvelope
+open MiuraHeightEnvelope MiuraCoreColumns MiuraCoreFrozenSlope MiuraCoreContract
 
 noncomputable section
 
@@ -188,4 +188,4 @@ theorem contractAt_diff_seam_RtoL (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreCellExpand

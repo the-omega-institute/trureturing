@@ -25,7 +25,7 @@ public import Mathlib.Data.Fintype.Prod
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreColumns
 
 open MiuraHeightEnvelope
 
@@ -49,12 +49,8 @@ instance decStrictLocalExtremum (h : Cell m n → ℤ) (v : Cell m n) :
     Decidable (IsStrictLocalExtremum h v) := by
   unfold IsStrictLocalExtremum; infer_instance
 
-
-
 def numExtrema (h : Cell m n → ℤ) : ℕ :=
   (Finset.univ.filter (IsStrictLocalExtremum h)).card
-
-
 
 open MiuraHeightEnvelope Finset
 
@@ -156,9 +152,6 @@ theorem numFrozenRuns_lt_numExtrema (h : Cell m n → ℤ) (hn : 0 < n)
     numFrozenRuns h + 1 ≤ numExtrema h :=
   le_trans (numFrozenRuns_le h hn h0 hlast) (numActiveColumns_le_numExtrema h)
 
-
-
-
 open MiuraHeightEnvelope
 
 variable {m n : ℕ}
@@ -182,15 +175,15 @@ theorem frozenColumn_not_active (h : Cell m n → ℤ)
   have hsum : (h (i, jL) - h (i, j)) + (h (i, jR) - h (i, j)) = 0 := by
     have hs := hsym i; omega
   rcases hext with hmax | hmin
-  · 
+  ·
     have hL := hmax (i, jL) hadjL
     have hR := hmax (i, jR) hadjR
     omega
-  · 
+  ·
     have hL := hmin (i, jL) hadjL
     have hR := hmin (i, jR) hadjR
     omega
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreColumns

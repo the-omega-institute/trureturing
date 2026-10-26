@@ -14,9 +14,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraResidualCount
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreResidual
 
-open MiuraHeightEnvelope MiuraResidualCount
+open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreBoundary MiuraCoreContract MiuraCoreCellExpand MiuraCoreExtremum
 
 variable {m n : ℕ}
 
@@ -134,4 +134,4 @@ theorem contractAt_residual (a b : ℕ) (h : Cell m n → ℤ) (hm : 0 < m)
   · rintro ⟨sd, hsd⟩
     exact hr.2.2.2 ⟨sd, (contractAt_all_minima_side_iff h hr.1.1 hm j hfrz sd).mp hsd⟩
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreResidual

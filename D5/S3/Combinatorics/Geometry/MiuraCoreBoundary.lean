@@ -20,9 +20,9 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreColumns
 
 @[expose] public section
 
-namespace D5.S3.Combinatorics.Geometry.MiuraCore
+namespace D5.S3.Combinatorics.Geometry.MiuraCoreBoundary
 
-open MiuraHeightEnvelope
+open MiuraHeightEnvelope MiuraCoreColumns
 
 noncomputable section
 
@@ -259,4 +259,4 @@ theorem boundary_columns_active (h : Cell m n → ℤ) (hh : IsHeight h)
 
 end
 
-end D5.S3.Combinatorics.Geometry.MiuraCore
+end D5.S3.Combinatorics.Geometry.MiuraCoreBoundary
