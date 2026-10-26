@@ -6,7 +6,10 @@
    utility: none
    digest: A finite set has a common entangled state for all partitions in every frame. -/
 
-import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Weil.BurnolGram.QuantitativeMultiOrbitWeilNegativeCertificate
 
 /-! Finite grids of pure states and simultaneous entanglement in fixed tensor coordinates. -/
 
@@ -16,25 +19,26 @@ open scoped ComplexOrder
 namespace D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions
 
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Weil.BurnolGram.QuantitativeMultiOrbitWeilNegativeCertificate
+  (finiteComplexEnergy finiteComplexEnergy_pos)
 
 /-- Ordered factorizations into at least two factors, each of dimension at least two. -/
 def Partition (d : ℕ) :=
   {p : (Σ k : ℕ, Fin k → ℕ) //
     2 ≤ p.1 ∧ (∀ i, 2 ≤ p.2 i) ∧ ∏ i, p.2 i = d}
 
-private lemma partition_product {d : ℕ} (p : Partition d) : ∏ i, p.val.2 i = d :=
-  p.property.2.2
-
 /-- The fixed mixed-radix identification for an ordered factorization. -/
 def partitionEquiv {d : ℕ} (p : Partition d) :
     ((i : Fin p.val.1) → Fin (p.val.2 i)) ≃ Fin d :=
-  finPiFinEquiv.trans (finCongr (partition_product p))
+  finPiFinEquiv.trans (finCongr (p.property.2.2))
 
 /-- Tensor products of local matrices in the fixed coordinate identification. -/
 def productState {d : ℕ} (p : Partition d)
     (ρ : (i : Fin p.val.1) → Matrix (Fin (p.val.2 i)) (Fin (p.val.2 i)) ℂ) :
     Matrix (Fin d) (Fin d) ℂ :=
-  fun x y => ∏ i, ρ i (partitionEquiv p |>.symm x i) (partitionEquiv p |>.symm y i)
+  (D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap
+    (fun i => Fin (p.val.2 i)) ρ).submatrix
+    (partitionEquiv p).symm (partitionEquiv p).symm
 
 /-- Separable states are the real convex hull of products of local density matrices. -/
 def Separable {d : ℕ} (p : Partition d) (ρ : Matrix (Fin d) (Fin d) ℂ) : Prop :=
@@ -56,7 +60,8 @@ private def corner {d : ℕ} (p : Partition d) (x : Fin 2 × Fin 2) : Fin d :=
       split_ifs <;> omega⟩
 
 private def minor {d : ℕ} (c : Fin 2 × Fin 2 → Fin d) (v : Fin d → ℂ) : ℂ :=
-  v (c (0, 0)) * v (c (1, 1)) - v (c (0, 1)) * v (c (1, 0))
+  D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor
+    (fun i j => v (c (i, j))) 0 1 0 1
 
 private lemma corner_injective {d : ℕ} (p : Partition d) :
     Function.Injective (corner p) := by
@@ -74,7 +79,8 @@ private noncomputable def minorPolynomial {d : ℕ} (u : Matrix (Fin d) (Fin d) 
 private lemma minorPolynomial_eval {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (c : Fin 2 × Fin 2 ↪ Fin d) (v : Fin d → ℂ) :
     MvPolynomial.eval v (minorPolynomial u c) = minor c (u *ᵥ v) := by
-  dsimp only [minorPolynomial, minor]
+  dsimp only [minorPolynomial, minor,
+    D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor]
   simp only [map_sub, map_mul, map_sum, MvPolynomial.eval_C,
     MvPolynomial.eval_X, Matrix.mulVec, dotProduct]
 
@@ -88,7 +94,8 @@ private lemma minorPolynomial_nonzero {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
   intro hz
   have h := congrArg (MvPolynomial.eval (star u *ᵥ z)) hz
   rw [minorPolynomial_eval, Matrix.mulVec_mulVec, hu', Matrix.one_mulVec] at h
-  dsimp only [minor] at h
+  dsimp only [minor,
+    D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor] at h
   simp [z, c.injective.eq_iff] at h
 
 private lemma minorPolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
@@ -174,7 +181,8 @@ private lemma minors_force_nonzero {d : ℕ} (hd : 4 ≤ d)
   let c : Fin 2 × Fin 2 ↪ Fin d :=
     (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).toEmbedding.trans (Fin.castLEEmb hd)
   have hz := hc c
-  dsimp only [minor] at hz
+  dsimp only [minor,
+    D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor] at hz
   simp only [h, Matrix.mulVec_zero, Pi.zero_apply, mul_zero, sub_zero] at hz
   exact hz rfl
 
@@ -191,36 +199,26 @@ private lemma common_grid {d : ℕ} (hd : 4 ≤ d) (u : Matrix (Fin d) (Fin d) �
   change v ∈ (gridBox d (gridBound d)).filter (· ≠ 0)
   exact Finset.mem_filter.mpr ⟨hv, minors_force_nonzero hd u v hc⟩
 
-private def mass {d : ℕ} (v : Fin d → ℂ) : ℝ := ∑ i, Complex.normSq (v i)
-
 private noncomputable def pure {d : ℕ} (v : Fin d → ℂ) :
-    Matrix (Fin d) (Fin d) ℂ := (mass v)⁻¹ • rankOneDensity v
-
-private lemma mass_pos {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0) : 0 < mass v := by
-  obtain ⟨i, hi⟩ : ∃ i, v i ≠ 0 := by
-    by_contra! h
-    exact hv (funext h)
-  exact (Finset.single_le_sum (fun j _ => Complex.normSq_nonneg (v j))
-    (Finset.mem_univ i)).trans_lt' (Complex.normSq_pos.mpr hi)
+    Matrix (Fin d) (Fin d) ℂ := (finiteComplexEnergy v)⁻¹ • rankOneDensity v
 
 private lemma pure_density {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0) :
     (pure v).PosSemidef ∧ (pure v).trace = 1 := by
   refine ⟨(Matrix.posSemidef_vecMulVec_self_star v).smul (inv_nonneg.mpr
-    (mass_pos v hv).le), ?_⟩
-  have htr : (rankOneDensity v).trace = (mass v : ℂ) := by
-    dsimp only [mass]
-    simp only [rankOneDensity, Matrix.trace, Matrix.diag, Matrix.vecMulVec_apply,
+    (finiteComplexEnergy_pos hv).le), ?_⟩
+  have htr : (rankOneDensity v).trace = (finiteComplexEnergy v : ℂ) := by
+    rw [rankOneDensity, Matrix.trace_vecMulVec]
+    simp only [finiteComplexEnergy, dotProduct,
       Pi.star_apply, Complex.star_def, Complex.mul_conj, Complex.ofReal_sum]
   rw [pure, Matrix.trace_smul, htr, Complex.real_smul, ← Complex.ofReal_mul,
-    inv_mul_cancel₀ (mass_pos v hv).ne', Complex.ofReal_one]
+    inv_mul_cancel₀ (finiteComplexEnergy_pos hv).ne', Complex.ofReal_one]
 
 private lemma pure_transform {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ) (v : Fin d → ℂ) :
-    u * pure v * star u = (mass v)⁻¹ • rankOneDensity (u *ᵥ v) := by
+    u * pure v * star u = (finiteComplexEnergy v)⁻¹ • rankOneDensity (u *ᵥ v) := by
   rw [pure, Matrix.mul_smul, Matrix.smul_mul]
   congr 1
-  rw [rankOneDensity, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
-    Matrix.star_eq_conjTranspose, ← Matrix.star_mulVec]
-  rfl
+  exact D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment.conjugate_outer
+    u v
 
 private lemma productState_density {d : ℕ} (p : Partition d)
     (τ : (i : Fin p.val.1) → Matrix (Fin (p.val.2 i)) (Fin (p.val.2 i)) ℂ)
@@ -265,7 +263,11 @@ private lemma productState_column_minor {d : ℕ} (p : Partition d)
     (τ : (i : Fin p.val.1) → Matrix (Fin (p.val.2 i)) (Fin (p.val.2 i)) ℂ)
     (j : Fin d) : minor (corner p) (fun i => productState p τ i j) = 0 := by
   classical
-  dsimp only [minor, productState, corner]
+  change minor (corner p) (fun x => ∏ i,
+    τ i ((partitionEquiv p).symm x i) ((partitionEquiv p).symm j i)) = 0
+  dsimp only [minor,
+    D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor,
+    corner]
   simp only [Equiv.symm_apply_apply]
   apply sub_eq_zero.mpr
   rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
@@ -326,7 +328,8 @@ private lemma separable_pure_minor {d : ℕ} (p : Partition d) (v : Fin d → �
     minor (corner p) v = 0 := by
   classical
   by_cases hv : v = 0
-  · dsimp only [minor]
+  · dsimp only [minor,
+    D5.S3.Quantum.Entanglement.MoreauYosidaFormationSelectiveLoccRefutation.minor]
     simp only [hv, Pi.zero_apply, mul_zero, sub_zero]
   obtain ⟨ι, inst, w, a, hw, h1, ha, hsum⟩ := mem_convexHull_iff_exists_fintype.mp hs
   let := inst
@@ -356,9 +359,10 @@ private lemma separable_pure_minor {d : ℕ} (p : Partition d) (v : Fin d → �
     exact productState_column_minor p (τ j) k
   rw [hz] at hm
   have he : minor (corner p) (z • v) = z ^ 2 * minor (corner p) v := by
-    dsimp only [minor]
-    simp only [Pi.smul_apply, smul_eq_mul]
-    ring
+    let M : Matrix (Fin 2) (Fin 2) ℂ := fun i j => v (corner p (i, j))
+    have hdet := Matrix.det_smul M z
+    rw [Matrix.det_fin_two, Matrix.det_fin_two, Fintype.card_fin] at hdet
+    exact hdet
   rw [he] at hm
   exact (mul_eq_zero.mp hm).resolve_left (pow_ne_zero 2 hz0)
 
@@ -376,6 +380,6 @@ theorem result : claim := by
     intro p hs
     rw [pure_transform] at hs
     exact hminor ⟨corner p, corner_injective p⟩
-      (separable_pure_minor p (u *ᵥ v) (mass v)⁻¹ hs)
+      (separable_pure_minor p (u *ᵥ v) (finiteComplexEnergy v)⁻¹ hs)
 
 end D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions
