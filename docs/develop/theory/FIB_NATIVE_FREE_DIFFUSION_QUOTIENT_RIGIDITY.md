@@ -4059,7 +4059,7 @@ assumed or invoked here. The finite measures (20.2) follow directly
 from the original entrance/killed suppliers; no unverified bridge
 hypothesis or endpoint heat-kernel value is imported.
 
-The source-specific composite conclusion is (20.3)--(22.8): a finite
+The repo-derived source-specific composite conclusion is (20.3)--(22.8): a finite
 explicitly normalized source interface, exact scalar accounting for
 all omitted shapes' elapsed durations, same-time approximation of
 the unchanged full source, justified observation exits, and a Borel
