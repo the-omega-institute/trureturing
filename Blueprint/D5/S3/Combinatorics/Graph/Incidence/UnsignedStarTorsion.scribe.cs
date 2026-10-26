@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Incidence;
 
 internal sealed class UnsignedStarTorsionDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.Edges.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact unsigned integer star lattices: common remainders, order-two localization, and original-source coefficient-one recovery.",
