@@ -336,8 +336,8 @@ private lemma fourier_probability (d : ℕ) (hd : 2 ≤ d)
       conj (state d ij)) = _
     rw [Matrix.vecMulVec_mulVec]
     simp only [op_smul_eq_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, ← Finset.mul_sum]
-    rw [mul_comm]; congr 1; simp only [c, dotProduct, map_sum, map_mul, Pi.star_apply, Complex.star_def,
-      Complex.conj_conj, mul_comm]
+    rw [mul_comm]; congr 1; simp only [c, dotProduct, map_sum, map_mul, Pi.star_apply,
+      Complex.star_def, Complex.conj_conj, mul_comm]
   have hc : c = r a b / (Real.sqrt d : ℂ) := by
     change (∑ ij : Fin d × Fin d,
       conj (measuredBasis d x ij.1 a * measuredBasis d y ij.2 b) *
