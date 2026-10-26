@@ -8,7 +8,7 @@ lean/OAI/MathematicalPhysics/DefocusingNLS/Certificates/LaguerreOrthogonality.le
 The alpha=0 factorial moments and boundary identity are replaced by the actual
 alpha=7/2 Pochhammer moments and zero-boundary weighted IBP identity. The norm
 argument is new here, since the alpha=0 norm value does not match this parameter.
-Applicable upstream license: ../LICENSE-OAI (Apache-2.0).
+Applicable upstream license: LaguerreSevenHalfPolynomial.lean (Apache-2.0).
 -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfPolynomial
 import Mathlib.Data.Nat.Choose.Sum

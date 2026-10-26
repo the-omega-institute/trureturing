@@ -7,7 +7,7 @@ adc7f1241b42e322a6451854ab7e4b4c146bf78a,
 lean/OAI/MathematicalPhysics/DefocusingNLS/Certificates/LaguerreIntegral.lean.
 The alpha=0 complex integral is replaced by the real weighted alpha=7/2
 integral. All Gamma parameters and powers are re-proved here. No OAI imports.
-Applicable upstream license: ../LICENSE-OAI (Apache-2.0).
+Applicable upstream license: LaguerreSevenHalfPolynomial.lean (Apache-2.0).
 -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfMoment
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic

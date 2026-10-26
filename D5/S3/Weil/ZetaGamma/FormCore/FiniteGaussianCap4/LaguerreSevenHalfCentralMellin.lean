@@ -17,7 +17,7 @@ supplied LaguerreSevenHalfIntegral.lean (itself adapted from OAI commit
 adc7f1241b42e322a6451854ab7e4b4c146bf78a, Apache-2.0). The recurrence argument
 and the change to beta=9/4 and dilation 2 are new here. Upstream notices and
 licenses in the supplied modules remain applicable to those modules.
-The applicable Apache-2.0 license is retained at ../LICENSE-OAI.
+The applicable Apache-2.0 license is retained at LaguerreSevenHalfPolynomial.lean.
 -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfGenerating
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
