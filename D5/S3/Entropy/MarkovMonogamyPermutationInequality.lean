@@ -60,21 +60,38 @@ private theorem composed_self {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s : ℕ) (a b : α s) :
     composedTransition k s s (le_refl s) a b =
       @ite ℝ (a = b) (Classical.propDecidable _) 1 0 := by
-  sorry
+  classical
+  unfold composedTransition
+  rw [Nat.leRecOn_self]
 
 private theorem composed_step {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s t : ℕ) (h : s ≤ t)
     (a : α s) (b : α (t + 1)) :
     composedTransition k s (t + 1) (by omega) a b =
       ∑ c, composedTransition k s t h a c * k t c b := by
-  sorry
+  classical
+  unfold composedTransition
+  rw [Nat.leRecOn_succ h]
 
 private theorem composed_comp {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s u t : ℕ) (hsu : s ≤ u) (hut : u ≤ t)
     (a : α s) (b : α t) :
     composedTransition k s t (hsu.trans hut) a b =
       ∑ c, composedTransition k s u hsu a c * composedTransition k u t hut c b := by
-  sorry
+  classical
+  induction t, hut using Nat.le_induction with
+  | base =>
+    simp only [composed_self, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+      Finset.mem_univ, ite_true]
+  | succ t hut ih =>
+    rw [composed_step k s t (hsu.trans hut)]
+    simp_rw [ih, composed_step k u t hut, Finset.sum_mul, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro c _
+    apply Finset.sum_congr rfl
+    intro d _
+    ring
 
 private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s t : ℕ) (h : s ≤ t)
@@ -82,20 +99,57 @@ private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
       (∀ a b, 0 ≤ k u a b) ∧ ∀ a, ∑ b, k u a b = 1) :
     (∀ a b, 0 ≤ composedTransition k s t h a b) ∧
       ∀ a, ∑ b, composedTransition k s t h a b = 1 := by
-  sorry
+  classical
+  induction t, h using Nat.le_induction with
+  | base =>
+    constructor
+    · intro a b
+      rw [composed_self]
+      split_ifs <;> norm_num
+    · intro a
+      simp only [composed_self, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  | succ t h ih =>
+    have ht := hk t h (Nat.lt_succ_self t)
+    have hi := ih (fun u hsu hut => hk u hsu (Nat.lt_succ_of_lt hut))
+    constructor
+    · intro a b
+      rw [composed_step k s t h]
+      exact Finset.sum_nonneg fun c _ => mul_nonneg (hi.1 a c) (ht.1 c b)
+    · intro a
+      simp_rw [composed_step k s t h]
+      rw [Finset.sum_comm]
+      simp_rw [← Finset.mul_sum, ht.2, mul_one]
+      exact hi.2 a
 
 private theorem position_transport {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ)
     (s t : ℕ) (h : s ≤ t) (b : α t) :
     positionLaw p k t b = ∑ a, positionLaw p k s a * composedTransition k s t h a b := by
-  sorry
+  classical
+  unfold positionLaw
+  simp_rw [composed_comp k 0 s t (Nat.zero_le s) h, Finset.mul_sum, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a _
+  apply Finset.sum_congr rfl
+  intro c _
+  ring
 
 private theorem position_is_law {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ) (t : ℕ)
     (hp : (∀ a, 0 ≤ p a) ∧ ∑ a, p a = 1)
     (hk : ∀ u, u < t → (∀ a b, 0 ≤ k u a b) ∧ ∀ a, ∑ b, k u a b = 1) :
     (∀ a, 0 ≤ positionLaw p k t a) ∧ ∑ a, positionLaw p k t a = 1 := by
-  sorry
+  classical
+  have ht := composed_stochastic k 0 t (Nat.zero_le t) (fun u _ hu => hk u hu)
+  constructor
+  · intro a
+    unfold positionLaw
+    exact Finset.sum_nonneg fun b _ => mul_nonneg (hp.1 b) (ht.1 b a)
+  · unfold positionLaw
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.mul_sum, ht.2, mul_one]
+    exact hp.2
 
 private theorem four_point_rectangle {α β γ δ : Type*}
     [Fintype α] [Fintype β] [Fintype γ] [Fintype δ]
@@ -119,7 +173,17 @@ private theorem chain_rectangle {α : ℕ → Type*} [∀ t, Fintype (α t)]
       mutualInformation (pairLaw p k a d (by omega)) ≥
     mutualInformation (pairLaw p k b d (by omega)) +
       mutualInformation (pairLaw p k a c (by omega)) := by
-  sorry
+  have h := four_point_rectangle (positionLaw p k a)
+    (composedTransition k a b hab) (composedTransition k b c hbc)
+    (composedTransition k c d hcd)
+    (position_is_law p k a hp (fun u hu => hk u (by omega)))
+    (composed_stochastic k a b hab (fun u _ hu => hk u (by omega)))
+    (composed_stochastic k b c hbc (fun u _ hu => hk u (by omega)))
+    (composed_stochastic k c d hcd (fun u _ hu => hk u hu))
+  simp_rw [← composed_comp k b c d hbc hcd,
+    ← composed_comp k a b d hab (hbc.trans hcd),
+    ← composed_comp k a b c hab hbc, ← position_transport p k a b hab] at h
+  exact h
 
 private theorem monge_permutation (n : ℕ) (m : Fin n → Fin n → ℝ)
     (hm : ∀ i j a b, i < j → a < b → m i a + m j b ≥ m i b + m j a)
