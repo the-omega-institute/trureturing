@@ -181,7 +181,9 @@ theorem minimum_row_slab_exists {h : Cell m n → ℤ} (hh : IsHeight h)
     (minRowSlabs h).Nonempty := by
   classical
   let F : Finset (Fin m) := Finset.univ.filter (fun i => ¬ RowOccupied h i)
-  have hF : F.Nonempty := by simpa [F] using hf
+  have hF : F.Nonempty := by
+    obtain ⟨i, hi⟩ := hf
+    exact ⟨i, by simp [F, hi]⟩
   let P := F.filter (fun i => slope h hn i = 1)
   by_cases hP : P.Nonempty
   · let g := P.min' hP

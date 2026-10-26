@@ -98,7 +98,7 @@ theorem slab_card_eq_frozen_runs_add_one {h : Cell m n → ℤ} (hh : IsHeight h
     · intro I hI
       have hslab : IsRowSlab h I := (Finset.mem_filter.mp (Finset.mem_filter.mp hI).1).2
       simp only [frozenRowRunStarts, Finset.mem_filter, Finset.mem_univ, true_and]
-      refine ⟨hslab.2.2 _ rfl, Or.inr ⟨by omega, ?_⟩⟩
+      refine ⟨hslab.2.2 _ rfl, Or.inr ⟨by change 0 < I.last.val + 1; omega, ?_⟩⟩
       have he : (⟨I.last.val + 1 - 1, by have := I.last.isLt; omega⟩ : Fin m) = I.last :=
         Fin.ext (by change I.last.val + 1 - 1 = I.last.val; omega)
       rw [he]
@@ -187,9 +187,9 @@ theorem frozen_run_equality_incidence {h : Cell m n → ℤ} (hh : IsHeight h)
   refine ⟨hsupport, hneutral, ?_, ?_⟩
   · have hr' := Nat.sub_add_cancel hminR
     have hc' := Nat.sub_add_cancel hminC
-    nlinarith
+    nlinarith only [heqMin, hr', hc']
   · have hr' := Nat.sub_add_cancel hmaxR
     have hc' := Nat.sub_add_cancel hmaxC
-    nlinarith
+    nlinarith only [heqMax, hr', hc']
 
 end D5.S3.Combinatorics.Geometry.MiuraSlabRunBound

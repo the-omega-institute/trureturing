@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.Geometry.MiuraSlabExtrema
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Actual dependent-array audit evidence for matching rectangle minima. -/
+
 namespace Reg.D5.S3.Combinatorics.Geometry.MiuraSlabExtrema
 
 open _root_.D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
@@ -21,7 +23,7 @@ def actual : Realization signature := realize signature
   (fun (_ : Unit) (p : Parameter) v => p.2.2 v) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
-  (fun (_ : Unit) (_p : Parameter) _v => 0) (fun e => nomatch e)
+  (fun (_ : Unit) (_p : Parameter) _v => (0 : ℤ)) (fun e => nomatch e)
 
 /-- Retain the actual geometric premises and vary the ambient height readout
 in the extremum conclusion over the complete original dependent family. -/
@@ -71,8 +73,8 @@ def registration : Registration arena (type_of% (@matching_minimum)) := by
       simpa only [rectangle, Finset.mem_product, Interval.mem_rows] using hv
     have hzero : v = ((0, 0) : Cell 2 2) := by
       apply Prod.ext <;> apply Fin.ext
-      · have := hv'.1.2; change v.1.val ≤ 0 at this; omega
-      · have := hv'.2.2; change v.2.val ≤ 0 at this; omega
+      · exact Nat.eq_zero_of_le_zero hv'.1.2
+      · exact Nat.eq_zero_of_le_zero hv'.2.2
     subst v
     have he := hmin ((1, 0) : Cell 2 2) (by norm_num [adj, gdist])
     change (0 : ℤ) = 0 + 1 at he
