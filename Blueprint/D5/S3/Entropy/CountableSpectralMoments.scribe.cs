@@ -6,6 +6,8 @@ internal sealed class CountableSpectralMomentsDocument : IScribeDocumentDefiniti
         "Countable probability moments and the exact distinguished-coordinate identity.",
         H("Countable spectral moments"), Blocks(
             Paragraph(Text("For a nonnegative summable real sequence p, write m for its sum, q for the sum of its squares, and r for the sum of its cubes. The elementary symmetric moment e3 is the sum of p_i p_j p_k over i < j < k. There is no additional factorial in this convention. On subprobabilities every required series converges absolutely: squares and cubes are dominated by p, and the nonnegative partial triple sums are bounded by 1/6.")),
+            Node("absolute_triple_sum", "Absolute convergence of the unordered triple sum",
+                "The indicator of i < j < k is dominated by the summable threefold product of p with itself. Nonnegative product summability and Fubini identify the unordered sum with the finite-layer definition of e3. This argument requires no finite-support restriction and no mass bound."),
             Node("countable_newton", "Countable Newton identity",
                 "The finite increasing-triple recurrence gives 6 e3 = m^3 - 3 m q + 2 r. Taking limits of the summable series proves the same identity on the entire countable domain."),
             Node("third_nonneg", "Nonnegative elementary symmetric moment",

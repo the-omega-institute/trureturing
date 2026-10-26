@@ -199,26 +199,26 @@ theorem spectral_moments_at_mass {T : H →L[ℂ] H} (hT : 0 ≤ T)
   have hn : ∀ n, 0 ≤ p n := fun n => div_nonneg (spectrum_nonneg d n) ht.le
   have hm : mass p = 1 := by
     unfold mass p
-    rw [hsum.tsum_div_const]
+    rw [tsum_div_const]
     have hs : (∑' n, spectrum d n) = t := by
       simpa only [pow_one, hmass] using hs0.tsum_eq
     rw [hs, div_self ht.ne']
   have hq : purity p = powerTrace T hTC 1 / t ^ 2 := by
     unfold purity p
     simp only [div_pow]
-    rw [hs1.summable.tsum_div_const]
+    rw [tsum_div_const]
     exact congrArg (fun z : ℝ => z / t ^ 2) hs1.tsum_eq
   have hr : cubicMoment p = powerTrace T hTC 2 / t ^ 3 := by
     unfold cubicMoment p
     simp only [div_pow]
-    rw [hs2.summable.tsum_div_const]
+    rw [tsum_div_const]
     exact congrArg (fun z : ℝ => z / t ^ 3) hs2.tsum_eq
   have he : t ^ 3 * third p = operatorThird T hTC := by
     have h := countable_newton hp hn hm.le
     rw [hm, hq, hr] at h
     unfold operatorThird
     rw [hmass]
-    field_simp at h ⊢
+    field_simp [ht.ne'] at h ⊢
     nlinarith
   have hscale : third (spectrum d) = t ^ 3 * third p := by
     have hl (k : ℕ) : tripleLayer (spectrum d) k = t ^ 3 * tripleLayer p k := by
@@ -230,7 +230,8 @@ theorem spectral_moments_at_mass {T : H →L[ℂ] H} (hT : 0 ≤ T)
       apply Finset.sum_congr rfl
       intro i hi
       dsimp [p]
-      field_simp
+      field_simp [ht.ne']
+      <;> ring
     unfold third
     simp_rw [hl]
     exact tsum_mul_left

@@ -223,15 +223,19 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
     simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs, div_pow]
     rw [Real.sq_sqrt (by norm_num)]
     norm_num
-  by_cases h0 : p.2 = 0
-  · simp [differencePermutation, environment_coefficient, environmentWeight, h0,
+  rcases p with ⟨c, d⟩
+  by_cases h0 : d = 0
+  · subst d
+    simp [differencePermutation, environment_coefficient, environmentWeight,
       inner_self_eq_norm_sq_to_K, norm_mul, mul_pow, ha]
-  by_cases h2 : p.2 = 2
-  · simp [differencePermutation, environment_coefficient, environmentWeight, h2,
+  by_cases h2 : d = 2
+  · subst d
+    simp [differencePermutation, environment_coefficient, environmentWeight,
       inner_self_eq_norm_sq_to_K, norm_mul, mul_pow]
     ring
-  by_cases h4 : p.2 = 4
-  · simp [differencePermutation, environment_coefficient, environmentWeight, h4,
+  by_cases h4 : d = 4
+  · subst d
+    simp [differencePermutation, environment_coefficient, environmentWeight,
       inner_self_eq_norm_sq_to_K, norm_mul, mul_pow, ha]
   · simp [differencePermutation, environment_coefficient, environmentWeight,
       h0, h2, h4]
@@ -433,9 +437,8 @@ private theorem pair_map_norm (U : H2 ≃ₗᵢ[ℂ] H2) (x : FourModes) :
     ‖pairMap U x‖ = ‖x‖ := by
   apply UniformSpace.Completion.induction_on x (isClosed_eq (by fun_prop) (by fun_prop))
   intro t
-  change ‖((TensorProduct.mapL U.toContinuousLinearEquiv.toContinuousLinearMap
-    U.toContinuousLinearEquiv.toContinuousLinearMap t : H2 ⊗[ℂ] H2) : FourModes)‖ = _
-  simp only [UniformSpace.Completion.norm_coe]
+  simp only [pairMap, twoCopyMap, ContinuousLinearMap.completion_apply_coe,
+    UniformSpace.Completion.norm_coe]
   exact (TensorProduct.congrIsometry U U).norm_map t
 
 private def pairIsometry (U : H2 ≃ₗᵢ[ℂ] H2) : FourModes →ₗᵢ[ℂ] FourModes :=
@@ -606,9 +609,13 @@ private theorem reduced_square_gram (w : H2) :
   obtain ⟨b, hb⟩ := reindex_basis oneBasis e.symm
   have hdiag (i : Set.range oneBasis) : inner ℂ (b i) ((D ^ 2) (b i)) =
       (‖D (b i)‖ ^ 2 : ℂ) := by
-    have hi := hDs.isSymmetric (b i) (D (b i))
-    simpa only [pow_two, ContinuousLinearMap.mul_apply,
-      inner_self_eq_norm_sq_to_K, Complex.ofReal_pow] using hi.symm
+    have hadj : ContinuousLinearMap.adjoint D = D := hDs
+    calc
+      _ = inner ℂ (b i) (ContinuousLinearMap.adjoint D (D (b i))) := by
+        rw [hadj, pow_two, ContinuousLinearMap.mul_apply]
+      _ = inner ℂ (D (b i)) (D (b i)) :=
+        ContinuousLinearMap.adjoint_inner_right D _ _
+      _ = _ := by simp only [inner_self_eq_norm_sq_to_K, Complex.ofReal_pow]
   have hd := (summable_trace_diagonal_of_isTraceClass hD2 b).hasSum
   rw [← trace_eq_of_hilbertBasis hD2 b] at hd
   have hd' : HasSum (fun n : ℕ => (‖D (oneBasis n)‖ ^ 2 : ℂ)) (trace (D ^ 2) hD2) := by
