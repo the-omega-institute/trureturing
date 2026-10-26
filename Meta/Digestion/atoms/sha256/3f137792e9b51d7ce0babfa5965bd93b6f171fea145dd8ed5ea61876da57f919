@@ -1,0 +1,20 @@
+**Lemma 39.2 (why the one-scale test controls all smaller scales).** For each $\nu$, the following are equivalent:
+
+1. $\mathsf{Pass}_\nu(y,\delta)$ is true.
+2. For every $0<s<\varepsilon$, there is $0<x<s$ with $\Phi_\nu(x,s-x)$.
+3. There is a sequence $s_n\downarrow0$ and $0<x_n<s_n$ with $\Phi_\nu(x_n,s_n-x_n)$.
+
+More precisely, if (39.7) passes, a fixed basis $I$ and a continuous root section or a midpoint between two neighboring root sections can be used throughout $(0,\varepsilon)$, keeping $\Psi_{\nu,I}$ true.
+
+**Proof.** The leading coefficient of every $h$ is among the projection polynomials. Thus its specialized $x$ degree stays fixed on $(0,\varepsilon)$. The self-resultant in (39.3) ensures that all its complex roots are simple there, and the pairwise resultants ensure that two different factors have no common root. These implications follow from the elementary Sylvester common-root criterion, with no degree loss on this interval.
+
+For clarity, the needed real-root continuity can be proved directly on this interval. At any fixed $s_0>0$, a simple real root continues locally as a unique continuous root by the implicit function theorem. No additional real roots appear nearby: in a neighborhood of $s_0$ the leading coefficient is bounded away from zero, the other coefficients are bounded, and the elementary monic-polynomial root bound bounds all roots. A convergent subsequence of any purported additional real roots would give a root at $s_0$; simplicity and local uniqueness exclude it. Complex roots cannot become real without a multiple root. It follows that the number of real roots is locally constant, hence constant on the interval. Order the roots increasingly; their local continuations then join to global continuous sections. Pairwise nonintersection fixes the order of all sections from all factors.
+
+The boundary factors $x$ and $s-x$ are in the same list. Hence the sections $x=0$ and $x=s$ never cross an interior section. Between them, the number and ordering of sections and sectors are fixed for every $0<s<\varepsilon$. On each section, a factor is either identically zero or nowhere zero; on each open sector every factor is nowhere zero. These cells are connected, so each nowhere-zero factor has constant sign. The vertical factors $c_p(s)$ have constant nonzero sign too. The factorization (39.2) consequently makes the signs of all original members of $\mathscr F$ constant on each of these cells. An identically zero member has sign zero throughout.
+
+At $s_*$, (39.6) samples every interior section and every sector between the boundary sections. Thus each truth value of (38.4) found there persists on the corresponding entire cell, and every truth value at any other $s$ occurs at its matching sample. This proves the equivalence, including the sequence version. For a passing sample choose one passing basis $I$. If the sample is a root, follow that section; if it is a midpoint, use the midpoint of its two continuous boundary sections at each $s$. These choices stay in the same cell and keep every sign in $\Psi_{\nu,I}$ unchanged. $\square$
+
+The root-sign principle is standard; the argument above gives its hypotheses explicitly for this particular bivariate projection. Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition, Propositions 11.9 and 11.11, supply the general sign-invariant sampling and constant-fiber-sign framework. No assertion that a discriminant alone controls a degree-dropping or identically nullified family is used here. Primitive factorization, the vertical factors, the leading coefficients, and the boundary sections are all part of the construction.
+
+The determinant degree bounds of Theorem 38.2 concern the eliminated source certificates. Auxiliary projection degrees can be larger. For example the Sylvester construction gives the coarse bound $2D_*^2$ on the degrees in $s$ of the polynomials in (39.3): the matrix has at most $2D_*$ rows and each entry has degree at most $D_*$. This bound too is independent of $d$; the number of polynomials and bases need not be. No runtime or optimal degree assertion is made.
+

@@ -1,0 +1,24 @@
+**Proposition 20.2 (the actual closure and the fixed-offdiagonal correspondence).** In the coordinates
+
+$$
+ P(t,v)=\begin{pmatrix}1-t&b-t-v\\v&t\end{pmatrix},\qquad
+ F_b(t,v)=t^2-tv-v^2-t+bv,
+ \tag{20.5}
+$$
+
+let $\mathcal K_b$ be the closure of $\mathcal F_b$ in the ambient matrix space. For $b\ne1$ it is exactly the nonnegative algebraic fiber $F_b(t,v)=0$, $0\le t\le1$, $v\ge0$, $b-t-v\ge0$. For $b=1$ that algebraic fiber has the extra isolated point $\left(\begin{smallmatrix}0&0\\0&1\end{smallmatrix}\right)$, and $\mathcal K_1$ is the algebraic fiber with this point removed. In particular every $\mathcal K_b$ is compact, without adding any source to $\mathcal F_b$.
+
+The fixed-offdiagonal fibers of main §§23–32 are different fibers. Specifically, for their $x,\zeta>0$, normalizing $R_U(s)$ by $x$ and putting $t=s/x$, $a=\zeta/x$ gives
+
+$$
+ R_U(s)/x=\begin{pmatrix}1-t&t(1-t)/a\\a&t\end{pmatrix},\qquad
+ \operatorname{tr}(MR_U(s)/x)=a+t+\frac{t(1-t)}a.
+ \tag{20.6}
+$$
+
+For $R_V$ the off-diagonal entries are interchanged and the same last formula holds. The expression in (20.6) is nonconstant on $0<t<1$; fixing $b$ selects at most two of its parameters. Consequently their exact fixed-offdiagonal inverse moduli and action frontiers do not by normalization become whole-$\mathcal F_b$ results.
+
+**Proof.** Trace, $M$ trace, and determinant give (20.5), with $u=b-t-v$ and $uv=t(1-t)$. All entries lie between $0$ and $\max(1,b)$ on the nonnegative algebraic fiber, which is closed and bounded. At $0<t<1$, its equation forces $u,v>0$, so these points already belong to $\mathcal F_b$. At $t=0$ its two endpoints are $(u,v)=(b,0),(0,b)$. Near the first, the equation solves as $v=t/b+O(t^2)$, with positive $u,v$ for small positive $t$; transposition handles the other. At $t=1$, a point exists only if $b\ge1$, and $uv=0$, $u+v=b-1$. For $b>1$, near $(u,v)=(b-1,0)$ one has $v=(1-t)/(b-1)+O((1-t)^2)$, again giving positive approximants; transpose for the other endpoint. These expansions follow by solving the displayed quadratic, or by its nonzero partial derivative in $v$ at the indicated endpoint.
+
+For $b=1$, put $h=1-t$. Then $u+v=h$ and $uv=h(1-h)$. If $h>0$, $uv\le h^2/4$ forces $h\ge4/5$. Thus the point with $t=1$ is isolated and cannot be approached by positive sources; all remaining boundary points have the approximants already given. Removing an isolated point here leaves a closed bounded set. This proves exactly the claimed closure, including its exceptional point. Substitution of $s=xt$, $\zeta=ax$ in the main §23 formulas proves (20.6); its quadratic coefficient is $-1/a\ne0$. $\square$
+

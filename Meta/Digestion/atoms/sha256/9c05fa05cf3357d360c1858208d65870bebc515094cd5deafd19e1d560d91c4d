@@ -1,0 +1,53 @@
+**Definition 38.1 (finite determinant data).** Put $m=k+d+2$. Order the $2L$ labels $r=(i,\eta)$ by increasing $i$, with $\eta=+1$ followed by $\eta=-1$. For each chart define the row and the scalar
+
+$$
+ C_{\nu,i}=
+   \big((B_{\nu,i}i^j)_{j=0}^k,\ (i^j)_{j=0}^d\big),\qquad
+ R_{\nu,(i,\eta)}=\eta C_{\nu,i},\qquad
+ \lambda_{(i,\eta)}=\delta+\eta y_i.
+ \tag{38.1}
+$$
+
+As before $0^0=1$. The entire raw box is exactly
+
+$$
+ R_\nu w\le\lambda,\qquad
+ w=(q_0,\ldots,q_k,f_0,\ldots,f_d)^{\mathsf T}.
+ \tag{38.2}
+$$
+
+For each $m$-element subset $I$ of the ordered labels, retain its induced row order, write $R_{\nu,I}$ for the square submatrix, and form
+
+$$
+ \begin{aligned}
+ \Delta_{\nu,I}&=\det R_{\nu,I},\\
+ N_{\nu,I,\ell}&=
+    \det\big(R_{\nu,I}\text{ with column }\ell
+                                  \text{ replaced by }\lambda_I\big)
+                  &&(0\le\ell<m),\\
+ S_{\nu,I,r}&=
+    \det\begin{pmatrix}R_{\nu,I}&\lambda_I\\
+                       R_{\nu,r}&\lambda_r\end{pmatrix}
+                  &&(r=(i,\eta)).
+ \end{aligned}
+ \tag{38.3}
+$$
+
+All these are explicit polynomials in just $\alpha,\beta$. Their coefficients are fixed by the acquired $y,\delta$, the integer clocks and actual $A_i$. In particular their generation involves no unknown source, gain coefficient, drift coefficient, or error variable.
+
+For a fixed $I$, the **legal basis predicate** is
+
+$$
+ \begin{split}
+ \Psi_{\nu,I}(\alpha,\beta):\quad&
+ \Delta_{\nu,I}\ne0,\qquad
+ \operatorname{sgn} S_{\nu,I,r}
+       \in\{0,\operatorname{sgn}\Delta_{\nu,I}\}\quad\text{for every }r,\\
+ &\text{and }N_{\nu,I,j}\ne0
+                       \quad\text{for at least one }0\le j\le k.
+ \end{split}
+ \tag{38.4}
+$$
+
+Let $\Phi_\nu$ be the disjunction of these predicates over all $I$. Identically zero determinants can be omitted; any other identically zero polynomial retains sign zero. Signs in (38.4) are evaluated separately, so no multiplication of $\Delta$ and $S$ is required to express the test.
+
