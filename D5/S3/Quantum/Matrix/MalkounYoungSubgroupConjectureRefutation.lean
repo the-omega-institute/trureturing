@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import Mathlib.GroupTheory.Perm.DomMulAct
 
 /-! # Conjecture D fails for class-preserving permutation groups -/
 
@@ -21,23 +22,18 @@ open D5.S3.Quantum.Recovery.ProductPrefixRigidity (gram)
 
 noncomputable section
 
-private theorem preserves_mul {n : ℕ} (r : Setoid (Fin n))
-    {σ τ : Equiv.Perm (Fin n)} (hσ : ∀ i, r (σ i) i) (hτ : ∀ i, r (τ i) i) :
-    ∀ i, r ((σ * τ) i) i := fun i => r.trans (hσ _) (hτ i)
-
-private theorem preserves_inv {n : ℕ} (r : Setoid (Fin n))
-    {σ : Equiv.Perm (Fin n)} (hσ : ∀ i, r (σ i) i) : ∀ i, r (σ⁻¹ i) i := by
-  intro i
-  have h := r.symm (hσ (σ.symm i))
-  rw [σ.apply_symm_apply] at h
-  exact h
-
 /-- The source's group of permutations preserving every equivalence class. -/
-def classPreserving {n : ℕ} (r : Setoid (Fin n)) : Subgroup (Equiv.Perm (Fin n)) where
-  carrier := {σ | ∀ i, r (σ i) i}
-  one_mem' := r.refl'
-  mul_mem' := preserves_mul r
-  inv_mem' := preserves_inv r
+def classPreserving {n : ℕ} (r : Setoid (Fin n)) : Subgroup (Equiv.Perm (Fin n)) :=
+  (MulAction.stabilizer (DomMulAct (Equiv.Perm (Fin n))) (Quotient.mk r)).unop
+
+private theorem mem_classPreserving {n : ℕ} (r : Setoid (Fin n))
+    (σ : Equiv.Perm (Fin n)) : σ ∈ classPreserving r ↔ ∀ i, r (σ i) i := by
+  rw [classPreserving.eq_1]
+  change DomMulAct.mk σ ∈
+    MulAction.stabilizer (DomMulAct (Equiv.Perm (Fin n))) (Quotient.mk r) ↔ _
+  rw [DomMulAct.mem_stabilizer_iff]
+  change (Quotient.mk r ∘ σ = Quotient.mk r) ↔ _
+  simp only [funext_iff, Function.comp_apply, Quotient.eq]
 
 /-- Conjecture D for arbitrary dimension and both arbitrary equivalence relations. -/
 def claim : Prop :=
@@ -72,13 +68,14 @@ private def blockPermutation (m : ℕ) (f : Fin m → Equiv.Perm (Fin 3)) :
 private def blockLift (m : ℕ) (r : Setoid (Fin 3)) (f : Fin m → classPreserving r) :
     classPreserving (blockRelation m r) :=
   ⟨blockPermutation m (fun j => (f j).val), by
+    apply (mem_classPreserving _ _).mpr
     intro i
     change ((finProdFinEquiv (n := 3)).symm _).1 =
         ((finProdFinEquiv (n := 3)).symm i).1 ∧
       r ((finProdFinEquiv (n := 3)).symm _).2 ((finProdFinEquiv (n := 3)).symm i).2
     rw [blockPermutation.eq_1]
     simp only [Equiv.permCongr_apply, Equiv.symm_apply_apply]
-    exact ⟨rfl, (f _).property _⟩⟩
+    exact ⟨rfl, (mem_classPreserving _ _).mp (f _).property _⟩⟩
 
 private theorem blockLift_apply (m : ℕ) (r : Setoid (Fin 3))
     (f : Fin m → classPreserving r) (j : Fin m) (i : Fin 3) :
@@ -113,13 +110,15 @@ private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
         (σ.val (finProdFinEquiv (j, i)))).2) h
       simpa only [blockLift_apply] using he
     · intro σ
+      have hσ := (mem_classPreserving _ _).mp σ.property
       let f : Fin m → classPreserving r := fun j =>
-        ⟨fiberPermutation m σ.val (fun i => (σ.property i).1) j, by
+        ⟨fiberPermutation m σ.val (fun i => (hσ i).1) j, by
+          apply (mem_classPreserving _ _).mpr
           intro i
           rw [fiberPermutation.eq_1, Equiv.permCongr_apply, Equiv.Perm.subtypePerm_apply]
           change r ((finProdFinEquiv (n := 3)).symm (σ.val ((finProdFinEquiv (n := 3)) (j, i)))).2 i
           simpa only [Equiv.symm_apply_apply] using
-            (σ.property ((finProdFinEquiv (n := 3)) (j, i))).2⟩
+            (hσ ((finProdFinEquiv (n := 3)) (j, i))).2⟩
       refine ⟨f, ?_⟩
       apply Subtype.ext
       apply Equiv.ext
@@ -131,7 +130,7 @@ private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
       rw [← hi, blockLift_apply]
       apply Prod.ext
       · simpa only [Equiv.symm_apply_apply] using
-          ((σ.property (finProdFinEquiv (((finProdFinEquiv (n := 3)).symm i).1,
+          ((hσ (finProdFinEquiv (((finProdFinEquiv (n := 3)).symm i).1,
             ((finProdFinEquiv (n := 3)).symm i).2))).1).symm
       · rfl)
 
@@ -186,6 +185,7 @@ private def seedEquiv (t : Fin 3) (p : Equiv.Perm (Fin 3))
     (hclass : ∀ σ : Equiv.Perm (Fin 3), (∀ i, seedRelation t (σ i) i) → σ = 1 ∨ σ = p)
     (hne : p ≠ 1) : Bool ≃ classPreserving (seedRelation t) :=
   Equiv.ofBijective (fun b => ⟨if b then p else 1, by
+    apply (mem_classPreserving _ _).mpr
     cases b
     · exact fun i => (seedRelation t).refl i
     · exact hp⟩) (by
@@ -198,7 +198,7 @@ private def seedEquiv (t : Fin 3) (p : Equiv.Perm (Fin 3))
       · exact (hne hv).elim
       · rfl
     · intro σ
-      rcases hclass σ.val σ.property with h | h
+      rcases hclass σ.val ((mem_classPreserving _ _).mp σ.property) with h | h
       · exact ⟨false, Subtype.ext h.symm⟩
       · exact ⟨true, Subtype.ext h.symm⟩)
 
@@ -245,11 +245,12 @@ private theorem block_intersection (m : ℕ) :
   intro i
   apply (finProdFinEquiv (n := 3)).symm.injective
   apply Prod.ext
-  · exact (hσ.1 i).1
+  · exact ((mem_classPreserving _ _).mp hσ.1 i).1
   · have hseed : ∀ a b : Fin 3, seedRelation 2 a b → seedRelation 0 a b → a = b := by
       change ∀ a b : Fin 3, (a == 2) = (b == 2) → (a == 0) = (b == 0) → a = b
       decide
-    exact hseed _ _ (hσ.1 i).2 (hσ.2 i).2
+    exact hseed _ _ ((mem_classPreserving _ _).mp hσ.1 i).2
+      ((mem_classPreserving _ _).mp hσ.2 i).2
 
 private theorem block_diagonal (m : ℕ) :
     (∏ i, ((blockMatrix m (gram v)) i i).re) = 4 ^ m := by
