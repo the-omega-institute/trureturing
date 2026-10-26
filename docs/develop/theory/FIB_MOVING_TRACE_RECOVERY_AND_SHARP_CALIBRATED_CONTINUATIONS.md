@@ -1832,3 +1832,395 @@ The [trace-corridor theorem in *FIB Self-Calibrating Relation Mathematics IX*, �
 The exact results in §§2–19 and the exact-prefix/post-calibration-noise results in §§20–24 keep their own hypotheses and conclusions. Theorem 25.2 concerns the full original class; Theorem 26.2 gives an instancewise bound on that class; Theorem 27.1 gives a finite acquired certificate conditional on the original model; Theorem 28.2 gives uniform guarantees only on each expressly declared $\mathcal C_R$. No necessity or maximality of that class, source-local noisy-prefix optimum, unrestricted earlier-mixing optimum, optimal finite-noise constants, finite-bit arithmetic, physical realization, literature priority, or Lean certification is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Finite record limits of sources escaping to infinity
+
+**Definition 30.1 (compatible whole worlds and two limit spaces).** Fix any declared integers $k,d\ge0$ and exactly the $L=3k+d+5$ cumulative matrices and original clocks of (26.2). Retain the entire contract of Definition 25.1. For a legal whole world $W=(P,H,D)$ write its noiseless acquired vector as
+
+$$
+ Z(W)_i=H(i)\operatorname{tr}(A_iP)+D(i),\qquad 0\le i<L.
+$$
+
+For a received vector $y\in\mathbb R^L$ and a radius $\rho\ge0$, define
+
+$$
+ \mathcal W_\rho(y)=\{W\text{ legal}:\|Z(W)-y\|_\infty\le\rho\}.
+ \tag{30.1}
+$$
+
+Each member uses its one fixed source and two whole polynomials at all $L$ paid reads; the corresponding deterministic errors are exactly $y_i-Z(W)_i$. Bounded complete targets means boundedness of $P$ in the maximum entry norm and of both padded original-variable coefficient vectors in (25.2). Put
+
+$$
+ U_i=(A_i)_{21},\qquad V_i=(A_i)_{12},
+$$
+
+$$
+ \begin{aligned}
+ \mathcal E_{12}&=\{(U_iQ(i)+F(i))_{i=0}^{L-1}:
+                                  Q\in\Pi_k,\ F\in\Pi_d\},\\
+ \mathcal E_{21}&=\{(V_iQ(i)+F(i))_{i=0}^{L-1}:
+                                  Q\in\Pi_k,\ F\in\Pi_d\},\\
+ e(y)&=\min\{\operatorname{dist}_\infty(y,\mathcal E_{12}),
+             \operatorname{dist}_\infty(y,\mathcal E_{21})\}.
+ \end{aligned}
+ \tag{30.2}
+$$
+
+The subscripts name the escaping source entry: $\operatorname{tr}(A_iE_{12})=U_i$ and $\operatorname{tr}(A_iE_{21})=V_i$. In these auxiliary spaces $Q=0$ is allowed. This does not enlarge the actual-world contract, which still requires $H\ne0$.
+
+Both spaces are linear subspaces of the finite-dimensional record space and hence closed. Their distances are attained: a minimizing sequence of record vectors is bounded, has a convergent subsequence, and its limit is in the closed subspace. Each distance is the standard Chebyshev linear program
+
+$$
+ \min_{Q\in\Pi_k,\,F\in\Pi_d,\,r\ge0}r,
+ \qquad -r\le y_i-U_iQ(i)-F(i)\le r\quad(0\le i<L),
+ \tag{30.3}
+$$
+
+with $V$ replacing $U$ for the second space. Only coefficients and the scalar $r$ are optimization variables; no new read, source, or calibration is introduced. This is the ordinary real-arithmetic LP representation, not a finite-bit algorithm for arbitrary presented reals.
+
+**Theorem 30.2 (all finite record limits at unbounded source norm).** For every $k,d\ge0$, the set of vectors $z$ for which there exist legal whole worlds $W_n$ on (26.2) with
+
+$$
+ \|P_n\|_{\max}\longrightarrow\infty,
+ \qquad Z(W_n)\longrightarrow z
+ \tag{30.4}
+$$
+
+is exactly $\mathcal E_{12}\cup\mathcal E_{21}$.
+
+**Proof.** Write every actual source as
+
+$$
+ P=\begin{pmatrix}1-t&u\\v&t\end{pmatrix},\qquad
+ 0<t<1,\quad u,v>0,\quad uv=t(1-t)\le1/4,
+ \qquad b=t+u+v.
+ \tag{30.5}
+$$
+
+For a sequence in (30.4), $b_n\to\infty$. Applying the fixed prefix inverse (26.4) to the bounded noiseless vectors gives bounded coefficient vectors of $H_n$, $b_nH_n$, and $D_n$. Consequently $\operatorname{coeff}_kH_n\to0$. Pass to a subsequence on which the coefficients of $b_nH_n$ and $D_n$ converge to polynomials $Q\in\Pi_k$ and $F\in\Pi_d$, and on which either $u_n\ge v_n$ always or $v_n\ge u_n$ always. Such a subsequence exists by finite-dimensional boundedness and the two alternatives.
+
+In the first alternative $u_n\to\infty$, $v_n\le1/(4u_n)\to0$, and $u_n/b_n\to1$. For every acquired clock,
+
+$$
+ \frac{\operatorname{tr}(A_iP_n)}{b_n}
+ =U_i\frac{u_n}{b_n}+V_i\frac{v_n}{b_n}
+   +\frac{(A_i)_{11}(1-t_n)+(A_i)_{22}t_n}{b_n}
+ \longrightarrow U_i.
+ \tag{30.6}
+$$
+
+It follows that $z_i=U_iQ(i)+F(i)$. The other alternative gives $z_i=V_iQ(i)+F(i)$. Passing to a subsequence preserves the already specified limit $z$, so this proves necessity even for sequences alternating between the two source directions. In particular $Q$ can vanish: boundedness of $b_nH_n$ does not give a positive lower bound on it.
+
+Conversely, fix any $Q\in\Pi_k$ and $F\in\Pi_d$. For $x\ge1$ use
+
+$$
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},\qquad
+ D_x=F,\qquad
+ H_x=\begin{cases}Q/x,&Q\ne0,\\x^{-2},&Q=0.\end{cases}
+ \tag{30.7}
+$$
+
+Every source is strictly positive, rank one and trace one; every actual gain is a nonzero polynomial of the declared degree bound, including the $Q=0$ case. At each of the finitely many original clocks, direct substitution gives $Z(W_x)_i\to U_iQ(i)+F(i)$. Transposing $P_x$ gives every vector of $\mathcal E_{21}$ in the same way. Each parameter specifies one complete world across all paid reads, with no source or polynomial changed along its history. This proves sufficiency. $\square$
+
+## 31. A quantitative separation certificate on the acquired record
+
+**Definition 31.1 (a fixed residual constant).** At each original clock put $S_k(i)=\sum_{j=0}^k i^j$, with $0^0=1$, and define the degree-only constant
+
+$$
+ R_{k,d}=\max_{0\le i<L}S_k(i)
+ \left(\max\{|(A_i)_{11}|,|(A_i)_{22}|\}
+             +\frac12\max\{|(A_i)_{12}|,|(A_i)_{21}|\}\right).
+ \tag{31.1}
+$$
+
+This finite constant is at least one, because $A_0=I$. It is calculated from the already specified trajectory, not supplied source or gain information. The symbols $a,C_{k,d}$ below remain exactly the constants of §26.
+
+**Theorem 31.2 (strict separation bounds every compatible complete world).** Compute $(\widehat h,\widehat q,\widehat a)$ from the received prefix by (26.4). If
+
+$$
+ \gamma=e(y)-\rho>0,\qquad
+ \ell=\gamma/R_{k,d},\qquad B_\rho=\|\widehat q\|_\infty+a\rho,
+ \tag{31.2}
+$$
+
+then every $W\in\mathcal W_\rho(y)$ satisfies simultaneously
+
+$$
+ \begin{gathered}
+ \ell\le\|\operatorname{coeff}_kH\|_\infty
+                     \le\|\widehat h\|_\infty+a\rho,\qquad
+ \|\operatorname{coeff}_dD\|_\infty\le\|\widehat a\|_\infty+a\rho,\\
+ b\le b_{\rm sep}:=B_\rho/\ell,\qquad
+ \|P\|_{\max}\le1+b_{\rm sep},\qquad
+ \chi\le\chi_{\rm sep}:=\ell^{-1}+B_\rho\ell^{-2}.
+ \end{gathered}
+ \tag{31.3}
+$$
+
+Whenever $\mathcal W_\rho(y)\ne\varnothing$, the unchanged decoder (26.4), (26.10)–(26.11), used with radius $\rho$, is defined and has the simultaneous acquired-record bounds
+
+$$
+ \|\widehat P-P\|_{\max}\le C_{k,d}\chi_{\rm sep}\rho,
+ \qquad
+ \mathcal L\le\max\{a,C_{k,d}\chi_{\rm sep}\}\rho.
+ \tag{31.4}
+$$
+
+In particular the compatible complete targets are bounded. Any established lower bound on $e(y)$ exceeding $\rho$ can replace $e(y)$ in (31.2): this only decreases $\ell$ and enlarges the resulting upper bounds. All bounds are conditional on the original model and the declared raw radius. A failed strict inequality supplies no impossibility conclusion for an exact record.
+
+**Proof.** First consider any single legal world, without imposing a source bound. If $u\ge v$ in (30.5), then $v\le1/2$. The vector $w_i=U_i(uH)(i)+D(i)$ is in $\mathcal E_{12}$, and
+
+$$
+ \begin{aligned}
+ |Z(W)_i-w_i|
+ &=|H(i)|\left|(A_i)_{11}(1-t)+(A_i)_{22}t+V_iv\right|\\
+ &\le R_{k,d}\|\operatorname{coeff}_kH\|_\infty.
+ \end{aligned}
+ \tag{31.5}
+$$
+
+Here $|H(i)|\le S_k(i)\|\operatorname{coeff}_kH\|_\infty$ and the diagonal term is a convex combination of the two diagonal entries. If $v\ge u$, use $u\le1/2$ and $w_i=V_i(vH)(i)+D(i)$ in $\mathcal E_{21}$. Thus every actual world satisfies
+
+$$
+ \operatorname{dist}_\infty(Z(W),\mathcal E_{12}\cup\mathcal E_{21})
+          \le R_{k,d}\|\operatorname{coeff}_kH\|_\infty.
+ \tag{31.6}
+$$
+
+For a world compatible with $y$ at radius $\rho$, the triangle inequality now gives $e(y)\le\rho+R_{k,d}\|\operatorname{coeff}_kH\|_\infty$, proving the inferred lower bound $\ell$. The same fixed prefix inverse gives (26.9) with $\delta=\rho$, hence
+
+$$
+ b\|\operatorname{coeff}_kH\|_\infty\le B_\rho.
+$$
+
+This proves the bound on $b$, both coefficient upper bounds, and
+
+$$
+ \frac{1+b}{\|\operatorname{coeff}_kH\|_\infty}
+ \le\ell^{-1}+B_\rho\ell^{-2}.
+$$
+
+Use (26.13) for the source norm and Theorem 26.2 for the entire target. Its single decoder is the same function of $y,k,d,\rho$ in every compatible world. No independent prefix and tail realizations are combined. The coefficient lower bound is inferred; it asserts no lower bound on any particular sampled $H(i)$ and allows all actual gain roots. $\square$
+
+**Proposition 31.3 (the coefficient certificates imply separation).** With $m=\|\widehat h\|_\infty$ from (27.1),
+
+$$
+ e(y)\ge m/a.
+ \tag{31.7}
+$$
+
+Thus the positive margin $m-a\rho>0$ of Theorem 27.1 implies $e(y)>\rho$. For $k=d=0$ the positive margin of (29.4) also implies separation, since $e(y)\ge|y_2-y_1|/2$.
+
+**Proof.** On every pure-$M$ prefix clock, $U_i=V_i=g_i$. The prefix of every vector in either limit space is therefore $g_iQ(i)+F(i)$. The inverse $\mathsf V^{-1}$ returns $(0,\operatorname{coeff}_kQ,\operatorname{coeff}_dF)$ on it. Applying the $H$-coefficient block of this inverse to $y-w$ gives $m\le a\|y-w\|_\infty$. Take the infimum over the two spaces. For $k=d=0$, every limit vector has equal coordinates at clocks $1,2$, so $|y_2-y_1|\le2\|y-w\|_\infty$ directly. Neither implication has a converse, as §33 shows. $\square$
+
+## 32. Strict slack and the exact boundary for radius inflation
+
+**Theorem 32.1 (robust boundedness and genuine source escape).** Fix $y$ and $\delta\ge0$ on the acquired trajectory (26.2).
+
+1. If $e(y)>\delta$, every $0\le\eta<e(y)-\delta$ has bounded compatible complete targets in $\mathcal W_{\delta+\eta}(y)$, with the explicit bounds of Theorem 31.2 at $\rho=\delta+\eta$.
+2. If $e(y)<\delta$, the source projection of $\mathcal W_\delta(y)$ is unbounded. This is actual whole-world compatibility at every paid clock, not a failed sufficient certificate.
+3. There exists some $\eta>0$ for which $\mathcal W_{\delta+\eta}(y)$ has bounded complete targets if and only if $e(y)>\delta$. If $e(y)\le\delta$, its source projection is unbounded for every $\eta>0$.
+
+At $e(y)=\delta$, these assertions leave exact-radius boundedness undecided. Sections 34–35 give actual consumers with opposite exact-radius outcomes.
+
+**Proof.** The first assertion follows immediately from Theorem 31.2. For the second, choose a nearest vector $w$ in the union of the two limit spaces, so $\|y-w\|_\infty=e(y)$. Theorem 30.2 supplies legal whole worlds with $\|P_n\|_{\max}\to\infty$ and $Z(W_n)\to w$. Eventually
+
+$$
+ \|y-Z(W_n)\|_\infty
+ \le e(y)+\|w-Z(W_n)\|_\infty<\delta.
+ \tag{32.1}
+$$
+
+Every one of these worlds has the fixed deterministic raw errors $y_i-Z(W_n)_i$ within the declared radius at all reads. This proves genuine unboundedness. If instead $e(y)\le\delta$, the identical argument with $\delta+\eta$ in place of $\delta$ works for every $\eta>0$. Conversely a strict gap allows, for example, $\eta=(e(y)-\delta)/2>0$. This proves the equivalence.
+
+For any fixed finite $y,\rho$, the prefix inverse bounds both coefficient vectors of every member of $\mathcal W_\rho(y)$, independently of the source. Hence boundedness of its source projection is equivalent to boundedness of its complete targets. This equivalence of bounded sets does not imply a positive gain floor or a uniform linear-error recovery constant. An unbounded source projection, on the other hand, gives unbounded worst source error for any fixed finite ambient answer to that record. The proof makes no claim that mere equality permits the strict inequality in (32.1) at radius $\delta$. $\square$
+
+## 33. A legal record certified beyond both coefficient margins
+
+**Proposition 33.1 (five acquired reads with an inferred gain floor).** Let $k=d=0$, use exactly the five paid clocks and actions (29.1), and receive
+
+$$
+ y=(1,7/4,11/4,13/4,7/2),\qquad \delta=1/2.
+ \tag{33.1}
+$$
+
+This is a legal record: the fixed complete world
+
+$$
+ P=\begin{pmatrix}1/2&1/4\\1&1/2\end{pmatrix},\qquad H=1,\qquad D=0
+ \tag{33.2}
+$$
+
+has exactly these noiseless reports and zero errors at every paid read. Both earlier coefficient margins are inconclusive. Nevertheless
+
+$$
+ e(y)=3/4,\qquad e(y)-\delta=1/4,
+ \tag{33.3}
+$$
+
+and every compatible complete world has the explicit bounds
+
+$$
+ 3/10\le h\le2,\qquad |D|\le3/2,\qquad
+ b\le55/6,\qquad\|P\|_{\max}\le61/6,\qquad\chi\le305/9.
+ \tag{33.4}
+$$
+
+Thus the unchanged section-26 decoder has $\mathcal L\le\tfrac12\max\{3,(305/9)C_{0,0}\}$. The section-29 decoder also has $\mathcal L\le\tfrac12\max\{3,(3355/9)\sqrt5\}$. These are finite simultaneous bounds, not claims of small error or optimal constants.
+
+**Proof.** The source in (33.2) has positive entries, trace one and determinant zero. Formula (29.5) verifies all five reports. In this degree-zero case the prefix inverse is
+
+$$
+ \mathsf V^{-1}=\begin{pmatrix}0&-1&1\\-1&0&1\\1&1&-1\end{pmatrix},
+ \qquad a=3,
+$$
+
+and the acquired values are $\widehat h=1$, $\widehat q=7/4$, $\widehat a=0$. The §27 margin is $1-3/2=-1/2$, while the §29 margin is $1-2(1/2)=0$.
+
+The two limit spaces here are
+
+$$
+ \mathcal E_{12}=\operatorname{span}\{\mathbf1,(0,1,1,1,2)\},\qquad
+ \mathcal E_{21}=\operatorname{span}\{\mathbf1,(0,1,1,2,1)\}.
+ \tag{33.5}
+$$
+
+For the first space the contrast $y_3-y_1=3/2$ forces distance at least $3/4$. It is attained by $F=1,Q=3/2$, whose residual vector $y-(F+UQ)$ is $(0,-3/4,1/4,3/4,-1/2)$. For the second space the contrast $y_4-y_1=7/4$ forces distance at least $7/8$. It is attained by $F=7/4,Q=7/8$, whose residual is $(-3/4,-7/8,1/8,-1/4,7/8)$. This proves (33.3) by exact primal vectors and equal-coordinate lower bounds, without needing an optimizer implementation.
+
+To sharpen the finite bounds, take any actually compatible world and denote its noiseless reports by $z$. The contrasts in (29.5), with the same source and gain throughout, give
+
+$$
+ h(1+v-t)=z_3-z_1\ge1/2,\qquad
+ h(1+u+t)=z_4-z_1\ge3/4.
+ \tag{33.6}
+$$
+
+The first factor $1+v-t$ is positive, hence $h>0$. If $u\ge v$, then $v\le1/2$ and $1+v-t\le3/2$, giving $h\ge1/3$. If $v\ge u$, then $u\le1/2$ and $1+u+t\le5/2$, giving $h\ge3/10$. Thus $h\ge3/10$ in all cases. Formula (29.6) gives
+
+$$
+ bh\le|y_2-y_0|+2\delta=11/4,
+ \qquad h\le|y_2-y_1|+2\delta=2,\qquad |D|\le3\delta=3/2.
+$$
+
+Consequently $b\le55/6$ and $\chi=(1+b)/h\le305/9$. Equations (26.8) and (29.3) give the displayed complete-target bounds. No supplied gain floor, source bound or additional acquisition is used. $\square$
+
+## 34. Bounded exact-radius contact with escape under every inflation
+
+**Proposition 34.1 (a bounded complete-target contact consumer).** On the same five-read trajectory with $k=d=0$, take
+
+$$
+ y^{\rm B}=(0,2,0,0,0),\qquad \delta_{\rm B}=1.
+ \tag{34.1}
+$$
+
+Then $e(y^{\rm B})=1$, the exact-radius compatible set is nonempty, and every one of its whole worlds satisfies
+
+$$
+ b\le1,\qquad\|P\|_{\max}\le1,\qquad
+ -4\le h<0,\qquad |D-2|\le3.
+ \tag{34.2}
+$$
+
+Its complete targets are therefore bounded at exactly the declared radius, although both coefficient margins fail. For every $\eta>0$, $\mathcal W_{1+\eta}(y^{\rm B})$ has unbounded source projection.
+
+**Proof.** A legal complete witness is
+
+$$
+ P_* =\begin{pmatrix}9/10&3/10\\3/10&1/10\end{pmatrix},\qquad
+ h=-1,\qquad D=9/5.
+ \tag{34.3}
+$$
+
+It is strictly positive, trace one and rank one, and its five noiseless reports are $(4/5,11/10,1/10,-1/10,-3/10)$. The raw errors producing (34.1) are $(-4/5,9/10,-1/10,1/10,3/10)$, each of magnitude at most one. Every vector in either space (33.5) has equal coordinates $1,2$, whereas $y^{\rm B}_1-y^{\rm B}_2=2$. Thus both distances are at least one, and the constant vector $\mathbf1$ attains one in both spaces.
+
+Now consider any compatible whole world and its five exact reports $z$. Compatibility gives $z_1\ge1$, $z_2\le1$, and $z_0\le1$. The exact identities $h=z_2-z_1$ and $h\ne0$ imply $h<0$. Moreover
+
+$$
+ h(b-1)=z_1-z_0\ge0,
+$$
+
+so $b\le1$. Formula (30.5) then bounds every source entry by one. Also $z_1\le3$, $z_2\ge-1$ give $h\ge-4$, and $D=z_0-h\in[-1,5]$ gives (34.2). For this record $|y_2-y_1|-2\delta=0$ and $m-a\delta=2-3=-1$. Boundedness at contact did not require a successful coefficient certificate.
+
+For an explicit inflation family take $P_x$ from (30.7), let
+
+$$
+ b_x=x+1/2+1/(4x),\qquad H_x=b_x^{-2},\qquad D_x=1,
+ \qquad x\ge1.
+ \tag{34.4}
+$$
+
+All sources and gains are legal, and every parameter specifies a whole world at the same five original clocks. The five traces $r_i=\operatorname{tr}(A_iP_x)$ are positive and at most $2(1+b_x)$, directly from (29.5). Since $b_x\ge x\ge1$, their reports obey $z_i=1+r_i/b_x^2\to1$ simultaneously. More explicitly the clock-$1$ residual has magnitude
+
+$$
+ |y^{\rm B}_1-z_1|=|1-1/b_x|\le1,
+$$
+
+and at each of the other four paid clocks
+
+$$
+ |y^{\rm B}_i-z_i|=1+r_i/b_x^2
+       \le1+2(1+b_x)/b_x^2\le1+4/x.
+ \tag{34.5}
+$$
+
+Thus every $x\ge\max\{1,4/\eta\}$ belongs to $\mathcal W_{1+\eta}(y^{\rm B})$, with the displayed deterministic errors at every read, while $\|P_x\|_{\max}=x\to\infty$. Exact-radius boundedness is therefore strictly weaker than boundedness under some positive radius inflation. This statement is about a fixed record and its declared radii, not about pointwise small-noise recovery. $\square$
+
+## 35. Unbounded exact-radius contact from actual whole worlds
+
+**Proposition 35.1 (a contact consumer with a genuine unbounded family).** On the same five paid original-clock reads, receive
+
+$$
+ y^{\rm U}=(1,7/10,17/10,19/10,21/10).
+ \tag{35.1}
+$$
+
+The source $P_*$ in (34.3), with the whole $H=1,D=0$, gives exactly this record with zero actual errors. Its distances to the two spaces are $3/5$ and $7/10$, respectively, so $e(y^{\rm U})=3/5$.
+
+At radius $11/20$ both old coefficient margins are negative, but the new strict margin is $1/20$. Every compatible world has the explicit bounds
+
+$$
+ \|\operatorname{coeff}_0H\|_\infty\ge1/80,\qquad
+ b\le144,\qquad \|P\|_{\max}\le145,\qquad\chi\le11600,
+ \tag{35.2}
+$$
+
+and (26.11) has complete-target error at most $\tfrac{11}{20}\max\{3,11600C_{0,0}\}$. Boundedness persists for every radius inflation $0\le\eta<1/20$.
+
+At the contact radius $\delta_{\rm U}=3/5$, in contrast, the exact-radius compatible source projection is unbounded.
+
+**Proof.** Formula (29.5) applied to $P_*$, $h=1,D=0$ gives all five entries of (35.1). Equal coordinates $1,3$ in $\mathcal E_{12}$ force distance at least $|y^{\rm U}_3-y^{\rm U}_1|/2=3/5$. The approximant with $F=2/5,Q=9/10$ has residual $(3/5,-3/5,2/5,3/5,-1/10)$, proving equality. Equal coordinates $1,4$ in $\mathcal E_{21}$ force distance at least $7/10$; the constant approximant $F=7/5,Q=0$ has residual $(-2/5,-7/10,3/10,1/2,7/10)$, again proving equality. This displayed minimizing approximant uses the allowed zero auxiliary polynomial; every actual world still has nonzero gain.
+
+For the radius $11/20$, $\widehat h=1$ and $a=3$, so the §27 margin is $1-33/20=-13/20$ and the §29 margin is $1-22/20=-1/10$. In (31.1) the five terms are $(1,3/2,5/2,2,4)$, so $R_{0,0}=4$ and $\ell=(1/20)/4=1/80$. Using the sharper prefix inequality $b|h|\le|y_2-y_0|+2\delta=9/5$ from (29.6) in the proof of Theorem 31.2 gives $b\le144$ and $\chi\le80+(9/5)80^2=11600$. The entire-polynomial errors still satisfy (26.9); (26.8) gives the stated bound through the unchanged decoder. The inflation assertion is Theorem 32.1.
+
+To prove actual unboundedness at radius $3/5$, for every real $x\ge3$ take one whole world
+
+$$
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},\qquad
+ H_x=\frac9{10x},\qquad D_x=\frac25-\frac9{10x}.
+ \tag{35.3}
+$$
+
+All entries of $P_x$ are positive, its trace is one and determinant zero, and $H_x$ is a nonzero constant. Substituting this same triple into all five traces of (29.5) gives the exact residual vector $Z(W_x)-y^{\rm U}$
+
+$$
+ \left(-\frac35,
+ \ \frac35-\frac9{20x}+\frac9{40x^2},
+ \ -\frac25+\frac9{20x}+\frac9{40x^2},
+ \ -\frac35+\frac9{20x^2},
+ \ \frac1{10}+\frac9{10x}+\frac9{40x^2}\right).
+ \tag{35.4}
+$$
+
+For every $x\ge3$, the second entry is between $0$ and $3/5$, because $-9/(20x)+9/(40x^2)\le0$ and $9/(20x)\le3/20$. The third lies between $-2/5$ and $-9/40$, the fourth between $-3/5$ and $-11/20$, and the fifth between $1/10$ and $17/40$. The first has magnitude exactly $3/5$. These ordinary inequalities prove that every paid read satisfies the raw error bound, uniformly for all $x\ge3$, by taking errors to be the negatives of (35.4). Yet $\|P_x\|_{\max}=x\to\infty$. This is a genuine contact obstruction on a fixed received record, not an inference from an inconclusive margin. Together with Proposition 34.1 it proves that equality alone cannot settle exact-radius boundedness; it does not classify all contacts. $\square$
+
+## 36. Mathematical suppliers and scope of the acquired-record extension
+
+The prefix inverse is supplied by main Definition 39.1 and Theorem 39.2 in [*FIB Self-Calibrating Relation Mathematics*, §39](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复), instantiated with the same normalized source $R_0=P$, whole $H,D$, declared degrees, and consecutive original clocks as (26.2). Its fixed-known-node confluent interpolation ingredient is Batenkov–Yomdin, [*On the Accuracy of Solving Confluent Prony Systems*, §2B, the confluent Vandermonde definitions and determinant](https://arxiv.org/html/1106.1137v3#S2.SS2). Only that known-node linear fact is used, including arbitrary degree drops and vanishing modal coefficients; no unknown-node Prony stability hypothesis is imported. Lemma 3.2 supplies the moving-trace inverses; the fixed-node interpolation and regularized decoder remain precisely §§26–27. Their proofs and acquisition costs are suppliers, not new calibration services.
+
+The finite-dimensional norm-approximation and Chebyshev LP representation in (30.3) are standard tools: Stephen Boyd and Lieven Vandenberghe, [*Convex Optimization*, §6.1.1, “Basic norm approximation problem” and “Chebyshev or minimax approximation,” printed pp. 291–293](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf#page=305). Closedness of linear subspaces, finite-dimensional subsequence compactness, and the triangle inequality are the other ordinary tools. The source-specific content is the exhaustion of finite acquired-record limits by the two explicit spaces, the residual bridge (31.5)–(31.6), its quantitative common-world certificate and exact inflation boundary, and the three legal consumers. These are repository-derived deductions, not an external-priority claim or an exhaustive literature classification.
+
+The [exact-history source-escape theorem in *FIB Self-Calibrating Relation Mathematics IX*, §7](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md#7-任意末两读的精确源逃逸集合) conditions on its exact ancestor equations and a different six-read history. Its exact escape locus and its endpoint analysis do not classify noisy radius boxes around the full record (26.2). Its [§4 trace corridor](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md#4-固定或有界读数的整个迹走廊) also retains its declared positive finite corridor. The [affine six-read stability results, §§11–15](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md#11-norms-and-the-exact-six-read-stability-problem) retain their effective target, recorded-reading clock and conditioning domains. None of these different contracts is substituted for the original-clock all-raw model here.
+
+Strict separation is necessary and sufficient for bounded complete targets after some positive inflation of this record's error radius. At the exact radius it is sufficient, strict overlap is an obstruction, and contact requires further information: no general contact classification is given. Recordwise finite boundedness, robustness to radius inflation, pointwise recovery as noise tends to zero, and uniform recovery over world classes remain distinct assertions. Theorem 25.2 and all prior exact and noisy results keep their hypotheses and conclusions. The certificate neither tests the physical model nor supplies feasibility of an arbitrary received vector. No new reads, reset, source copy, skipped read, gain-root oracle, a priori source/gain floor, unrestricted acquisition optimum, optimal numerical constants, finite-bit arithmetic guarantee, physical realization, literature priority or kernel certification follows from these ordinary real-arithmetic results.
+
+## 追加锚（本行以下为增补区）

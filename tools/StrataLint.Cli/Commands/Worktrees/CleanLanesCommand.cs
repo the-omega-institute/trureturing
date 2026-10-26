@@ -127,6 +127,7 @@ internal static partial class CleanLanesCommand
                     head = item.Head,
                     action = item.Action,
                     reason = item.Reason,
+                    diagnostic = item.Diagnostic,
                     recovery_branch = item.RecoveryBranch,
                     recovery_branch_candidate = item.RecoveryBranchCandidate,
                     native_locks = item.NativeLocks,
@@ -251,11 +252,40 @@ internal static partial class CleanLanesCommand
             else incomplete = true;
         }
 
-        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, force, inventory, events, runner,
+        // Initial observations belong to the invocation, including idle paths.
+        // Pool observations may supplement them but cannot authorize mutation
+        // after this invocation failed to establish a tree's identity.
+        var failedPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in inventory.Where(item => item.IdentityFailure is not null))
+        {
+            incomplete = true;
+            failedPaths.Add(item.Path);
+            events.Add(QualificationEvent(item, new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
+        }
+        var poolForce = force && failedPaths.Count == 0;
+        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, poolForce, inventory, events, runner,
             CompleteRemoval, Observe);
+        var qualifications = QualifyLockedLanes(repositoryRoot, inventory.Where(item => item.Locked
+            && !poolPaths.Contains(item.Path) && !failedPaths.Contains(item.Path) && item.Path != inventory[0].Path
+            && item.GitDirectory is not null && item.GitDirectory != commonGitDirectory
+            && Directory.Exists(item.Path) && HasGitMarker(item.Path)).ToArray(), runner);
+        if (qualifications.TryGetValue(string.Empty, out var batchFailure))
+        {
+            incomplete = true;
+            events.Add(new CleanLaneEvent("worktree_qualification", null, null, null, "failed", batchFailure.Reason!));
+        }
+        // Account for every obtained failure before any later eligibility guard.
+        foreach (var item in inventory)
+        {
+            var failure = qualifications.GetValueOrDefault(item.Path);
+            if (failure?.Failed != true) continue;
+            incomplete = true;
+            failedPaths.Add(item.Path);
+            events.Add(QualificationEvent(item, failure));
+        }
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
-            if (poolPaths.Contains(item.Path)) continue;
+            if (poolPaths.Contains(item.Path) || failedPaths.Contains(item.Path)) continue;
             if (string.Equals(item.Path, inventory[0].Path, StringComparison.Ordinal)
                 || string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
             {
@@ -290,10 +320,10 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var reason = LockAgeBlockReason(item, now);
-            if (reason is not null)
+            var qualification = qualifications.GetValueOrDefault(item.Path);
+            if (qualification?.Reason is not null)
             {
-                events.Add(BlockedWorktree(item, reason));
+                events.Add(QualificationEvent(item, qualification));
                 continue;
             }
 
@@ -313,11 +343,10 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var preview = WorktreeProtocolCommand.Run(repositoryRoot,
-                ["remove", "--path", item.Path, "--preview"], runner, TimeSpan.FromSeconds(600));
-            if (!preview.Success)
+            var preview = qualification ?? PreviewLane(repositoryRoot, item, runner);
+            if (preview.Reason is not null)
             {
-                events.Add(BlockedWorktree(item, "identity_or_lock_refused"));
+                events.Add(QualificationEvent(item, preview));
                 incomplete = true;
                 continue;
             }
@@ -615,5 +644,6 @@ internal static partial class CleanLanesCommand
         string? RecoveryBranchCandidate = null,
         string? SelectionReason = null,
         string? SelectionDetail = null,
-        JsonElement? NativeLocks = null);
+        JsonElement? NativeLocks = null,
+        string? Diagnostic = null);
 }
