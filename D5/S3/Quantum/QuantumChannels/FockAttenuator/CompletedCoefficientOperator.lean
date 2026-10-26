@@ -12,7 +12,8 @@ import D5.S3.Quantum.Analysis.TraceClass.Spectral
 import Batteries.Tactic.OpenPrivate
 
 noncomputable section
-open scoped BigOperators InnerProductSpace ComplexOrder
+open scoped BigOperators InnerProductSpace ComplexOrder ENNReal NNReal
+set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
 open BeamSplitter DisplacementCovariance HilbertSchmidt
@@ -31,7 +32,7 @@ private theorem coefficient_data (w : H2) :
     ∃ C : H →L[ℂ] H, IsHilbertSchmidt C ∧
       ∀ n, C (occupationBasis n) = w n := by
   let e : ℕ ≃ Set.range occupationBasis :=
-    Equiv.ofInjective occupationBasis occupationBasis.orthonormal.injective
+    Equiv.ofInjective occupationBasis occupationBasis.orthonormal.linearIndependent.injective
   obtain ⟨b, hb⟩ := reindex_basis occupationBasis e.symm
   have hv : Summable (fun i : Set.range occupationBasis => ‖w (e.symm i)‖ ^ 2) :=
     e.symm.summable_iff.mpr (slice_square_sum w).summable
@@ -82,11 +83,12 @@ basis-independent Hilbert-Schmidt adjoint identity. -/
 theorem partial_trace_trace (w : H2) :
     trace (purePartialTrace w) (partial_trace_positive_traceClass w).2 = (‖w‖ ^ 2 : ℂ) := by
   let e : ℕ ≃ Set.range occupationBasis :=
-    Equiv.ofInjective occupationBasis occupationBasis.orthonormal.injective
+    Equiv.ofInjective occupationBasis occupationBasis.orthonormal.linearIndependent.injective
   obtain ⟨b, hb⟩ := reindex_basis occupationBasis e.symm
   have hv : HasSum (fun i : Set.range occupationBasis => ‖coefficientOperator w (b i)‖ ^ 2)
       (‖w‖ ^ 2) := by
-    simpa only [hb, coefficient_column] using e.symm.hasSum_iff.mpr (slice_square_sum w)
+    simpa only [hb, coefficient_column, Function.comp_apply] using
+      e.symm.hasSum_iff.mpr (slice_square_sum w)
   have hadj := hasSum_norm_sq_apply_eq_adjoint b b hv.summable
   rw [hv.tsum_eq] at hadj
   rw [trace_eq_of_hilbertBasis_of_nonneg (partial_trace_positive_traceClass w).1
@@ -102,7 +104,7 @@ theorem partial_trace_trace (w : H2) :
     simpa only [ContinuousLinearMap.adjoint_adjoint, inner_self_eq_norm_sq_to_K,
       Complex.ofReal_pow] using hi
   simp_rw [hdiag]
-  exact (Complex.hasSum_ofReal.mpr hadj).tsum_eq
+  simpa only [Complex.ofReal_pow] using (Complex.hasSum_ofReal.mpr hadj).tsum_eq
 
 /-- The physical balanced two-photon output is obtained from the published
 completed beam splitter, with no support restriction on the input. -/

@@ -9,7 +9,8 @@
 import D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
 
 noncomputable section
-open scoped BigOperators InnerProductSpace ComplexOrder
+open scoped BigOperators InnerProductSpace ComplexOrder ENNReal NNReal
+set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.TwoCopyEnvironment
 open BeamSplitter DisplacementCovariance CompletedCoefficientOperator

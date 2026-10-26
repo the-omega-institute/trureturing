@@ -13,7 +13,8 @@ import D5.S3.Quantum.Analysis.TraceClass.GeneralIdeal
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
 noncomputable section
-open scoped TensorProduct InnerProductSpace BigOperators
+open scoped TensorProduct InnerProductSpace BigOperators ENNReal NNReal
+set_option backward.isDefEq.respectTransparency false
 open Filter Topology
 
 namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedTwoCopySwap
@@ -24,6 +25,8 @@ open HilbertSchmidt
 open private coefficient_hs coefficient_column occupationBasis tensor_norm_sq from
   D5.S3.Quantum.QuantumChannels.FockAttenuator.CompletedCoefficientOperator
 open private reindex_basis from D5.S3.Quantum.Analysis.TraceClass.Spectral
+open private tensorHilbertBasis_repr_tmul from
+  D5.S3.Quantum.FermionicCorrelationalBound.CompletedTensorSlaterGeometry
 
 abbrev PairCompletion := UniformSpace.Completion (H ⊗[ℂ] H)
 abbrev FourModes := UniformSpace.Completion (H2 ⊗[ℂ] H2)
@@ -96,10 +99,7 @@ private theorem completed_pair_product (x y : H) :
   change (tensorHilbertBasis oneBasis oneBasis).repr
     ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) p =
       fockBasis.repr (tensor x y) p
-  rw [HilbertBasis.repr_apply_apply, tensorHilbertBasis_apply,
-    fock_basis_repr]
-  simp only [tensorBasisVector, UniformSpace.Completion.inner_coe,
-    TensorProduct.inner_tmul]
+  rw [tensorHilbertBasis_repr_tmul, fock_basis_repr]
   change x p.1 * y p.2 = (y p.2 • x) p.1
   simp [mul_comm]
 
@@ -109,12 +109,7 @@ private def fourBasis : HilbertBasis ((ℕ × ℕ) × (ℕ × ℕ)) ℂ FourMode
 private theorem four_basis_product (x y : H2) (p : (ℕ × ℕ) × (ℕ × ℕ)) :
     fourBasis.repr ((x ⊗ₜ[ℂ] y : H2 ⊗[ℂ] H2) : FourModes) p =
       fockBasis.repr x p.1 * fockBasis.repr y p.2 := by
-  rw [HilbertBasis.repr_apply_apply]
-  change inner ℂ (tensorHilbertBasis fockBasis fockBasis p)
-    ((x ⊗ₜ[ℂ] y : H2 ⊗[ℂ] H2) : FourModes) = _
-  rw [tensorHilbertBasis_apply]
-  simp only [tensorBasisVector, UniformSpace.Completion.inner_coe,
-    TensorProduct.inner_tmul, HilbertBasis.repr_apply_apply]
+  exact tensorHilbertBasis_repr_tmul fockBasis fockBasis x y p.1 p.2
 
 private def fourPermutation (e : Equiv.Perm ((ℕ × ℕ) × (ℕ × ℕ))) :
     FourModes ≃ₗᵢ[ℂ] FourModes :=
@@ -605,11 +600,13 @@ private theorem reduced_square_gram (w : H2) :
   have hD2 : IsTraceClass (D ^ 2) := by
     simpa only [pow_two, mul_one] using isTraceClass_mul_mul (A := D) (B := 1) hD
   have hDs : IsSelfAdjoint D := IsSelfAdjoint.of_nonneg (star_mul_self_nonneg C)
-  let e : ℕ ≃ Set.range oneBasis := Equiv.ofInjective oneBasis oneBasis.orthonormal.injective
+  let e : ℕ ≃ Set.range oneBasis :=
+    Equiv.ofInjective oneBasis oneBasis.orthonormal.linearIndependent.injective
   obtain ⟨b, hb⟩ := reindex_basis oneBasis e.symm
   have hdiag (i : Set.range oneBasis) : inner ℂ (b i) ((D ^ 2) (b i)) =
       (‖D (b i)‖ ^ 2 : ℂ) := by
-    have hadj : ContinuousLinearMap.adjoint D = D := hDs
+    have hadj : ContinuousLinearMap.adjoint D = D :=
+      (ContinuousLinearMap.star_eq_adjoint D).symm.trans hDs
     calc
       _ = inner ℂ (b i) (ContinuousLinearMap.adjoint D (D (b i))) := by
         rw [hadj, pow_two, ContinuousLinearMap.mul_apply]

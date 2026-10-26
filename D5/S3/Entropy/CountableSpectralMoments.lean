@@ -43,7 +43,9 @@ theorem absolute_triple_sum {p : ℕ → ℝ} (hp : Summable p)
   have hprod := hp.mul_of_nonneg hpair hn (fun t => mul_nonneg (hn t.1) (hn t.2))
   have hnonneg (t : ℕ × (ℕ × ℕ)) : 0 ≤ tripleTerm p t := by
     unfold tripleTerm
-    split_ifs <;> positivity
+    split_ifs
+    · exact mul_nonneg (mul_nonneg (hn _) (hn _)) (hn _)
+    · exact le_rfl
   have hsum : Summable (tripleTerm p) := by
     apply Summable.of_nonneg_of_le hnonneg _ hprod
     intro t
@@ -52,7 +54,7 @@ theorem absolute_triple_sum {p : ℕ → ℝ} (hp : Summable p)
     · apply le_of_eq
       ring
     · exact mul_nonneg (hn t.1) (mul_nonneg (hn t.2.1) (hn t.2.2))
-  refine ⟨hsum.norm, ?_⟩
+  refine ⟨hsum.congr (fun t => (Real.norm_of_nonneg (hnonneg t)).symm), ?_⟩
   rw [hsum.tsum_prod]
   unfold third
   apply tsum_congr
@@ -200,8 +202,8 @@ private theorem cubic_moment_lower {p : ℕ → ℝ} (hp : Summable p)
         intro i
         ring
       _ = _ := by
-        rw [tsum_add (hr.sub (hq.mul_left _)) (hp.mul_left _),
-          tsum_sub hr (hq.mul_left _), tsum_mul_left, tsum_mul_left]
+        rw [(hr.sub (hq.mul_left _)).tsum_add (hp.mul_left _),
+          hr.tsum_sub (hq.mul_left _), tsum_mul_left, tsum_mul_left]
         rfl
   rw [heq, hm] at hnonneg
   nlinarith
