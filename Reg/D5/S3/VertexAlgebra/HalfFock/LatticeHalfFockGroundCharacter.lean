@@ -72,7 +72,7 @@ private theorem ground_zero (D : LatticeData) (hu : IsUnit D.G.det) :
     groundAction D hu 0 = 1 := by
   unfold groundAction groundLift
   change groundRepresentation D hu (QuotientGroup.mk (1 :
-    LatticeTwistedGroundRealization.Extension D)) = 1
+    LatticeTwistedGroundRealization.SignQuotient.Extension D)) = 1
   rw [QuotientGroup.mk_one, map_one]
 
 private theorem vacuum_readout (D : LatticeData) (hu : IsUnit D.G.det)
@@ -92,7 +92,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h emptyLattice emptyUnit 0 0 0 probe
   change actualGroundInsert _ _ _ ((correctedField _ _ 0).coeff 0 probe) + probe = _ at he
-  simp only [map_zero, HVertexOperator.coeff_zero, LinearMap.zero_apply] at he
+  simp only [map_zero, LinearMap.zero_apply] at he
   exact probe_nonzero (by simpa using he)
 
 theorem actual_dependence : ObservationalDependence signature actual := by
