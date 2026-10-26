@@ -7,7 +7,6 @@
    digest: The signalling game has classical, quantum and no-signalling value 1/max(m,n). -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import D5.S3.Weil.ZetaLinear.RankTrace
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -79,7 +78,47 @@ def claim : Prop :=
 private lemma noSignalling_bound {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)
     {p : Fin n → Fin m → Fin m → Fin n → ℝ} (hp : IsNoSignalling p) :
     winProb p ≤ 1 / (max m n : ℝ) := by
-  sorry
+  obtain ⟨hpos, hnorm, ha, hb⟩ := hp
+  let xzero : Fin m := ⟨0, by omega⟩
+  let yzero : Fin n := ⟨0, by omega⟩
+  have hmarg : (∑ x, ∑ y, p y x x y) ≤ (m : ℝ) := by
+    calc
+      (∑ x, ∑ y, p y x x y) ≤ ∑ x, ∑ y, ∑ b, p y b x yzero := by
+        apply sum_le_sum
+        intro x hx
+        apply sum_le_sum
+        intro y hy
+        rw [← ha y x y yzero]
+        exact single_le_sum (fun b _ => hpos y b x y) (mem_univ x)
+      _ = m := by simp only [hnorm, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul,
+        mul_one]
+  have hnarg : (∑ x, ∑ y, p y x x y) ≤ (n : ℝ) := by
+    calc
+      (∑ x, ∑ y, p y x x y) = ∑ y, ∑ x, p y x x y := sum_comm
+      _ ≤ ∑ y, ∑ x, ∑ a, p a x xzero y := by
+        apply sum_le_sum
+        intro y hy
+        apply sum_le_sum
+        intro x hx
+        rw [← hb x x xzero y]
+        exact single_le_sum (fun a _ => hpos a x x y) (mem_univ y)
+      _ = n := by
+        have hs (y : Fin n) : (∑ x, ∑ a, p a x xzero y) = 1 := by
+          rw [sum_comm]
+          exact hnorm xzero y
+        simp only [hs, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  unfold winProb
+  rcases le_total m n with hmn | hnm
+  · rw [max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast hmn)]
+    calc
+      _ ≤ 1 / ((m : ℝ) * n) * m := mul_le_mul_of_nonneg_left hmarg (by positivity)
+      _ = 1 / (n : ℝ) := by field_simp
+  · rw [max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast hnm)]
+    calc
+      _ ≤ 1 / ((m : ℝ) * n) * n := mul_le_mul_of_nonneg_left hnarg (by positivity)
+      _ = 1 / (m : ℝ) := by field_simp
 
 private lemma quantum_noSignalling {m n da db : ℕ}
     (rho : Matrix (Fin da × Fin db) (Fin da × Fin db) ℂ)
