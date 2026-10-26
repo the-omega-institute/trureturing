@@ -97,8 +97,8 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
           H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs =
             H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs ∧
           H k t V < H k t W ∧
-          (let η := low - mass (s k t) R
-           let e := h + Y - P - mass (s k t) R
+          (let η := low - mass (s k t) R;
+           let e := h + Y - P - mass (s k t) R;
            -B ≤ η ∧ η ≤ 0 ∧ e = h + σ + η ∧
            mass (s k t) V = e ∧ 0 < e ∧ e < C k ∧
            remainingMass (s k t) V = -e))) := by
@@ -136,9 +136,8 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
   have hEweight := small_weights t E hEsmall
   have h2weight := small_weights t T2 h2small
   have hzLarge : Large k t z := by
-    have hh := neg_le_abs (f z)
     change Q k ≤ |f z|
-    omega
+    exact le_trans (show Q k ≤ -f z from hzlarge) (neg_le_abs (f z))
   have hRpen : largeUsed k t Rpen = 1 := by
     simp [Rpen, largeUsed_append, largeUsed_cons, largeWeight,
       hzLarge, h2weight.1, hEweight.1]
@@ -397,10 +396,9 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
       List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero]
     ring
   have hOldEnd : a2 + mass f E = h := by
-    simp only [a2, d2, B2, B1, d1, h, W, oldWord, x, mass,
+    simp only [a2, d2, B2, B1, h, W, oldWord, x, mass,
       List.map_append, List.map_cons, List.map_nil, List.sum_append,
       List.sum_cons, List.sum_nil, add_zero]
-    ring
   have hjoinE : a2 + η + mass f E0 = e := by omega
   have hcompatible (L : List (Fin k)) (hL : ∀ i ∈ L, |f i| < Q k) :
       ∀ i ∈ L, ∀ j ∈ L, 0 < f i → f j < 0 → f i - f j ≤ C k := by
@@ -485,6 +483,7 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
     have hSEc := hSE.count_eq i
     simp only [TE, List.count_append] at hKRc hSEc
     simp only [V, W, oldWord, x, List.count_append, List.count_cons, List.count_nil]
+    clear * - hKRc h01c h2c hEc hSEc
     omega
   have hI : [p, n].Nodup := by
     have hpn : p ≠ n := by intro he; have hv := congrArg f he; omega
@@ -535,20 +534,30 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
   have hG : G k t V = G k t W := by
     have hh := inv.largeBalance
     rw [hIlarge, hRetlarge] at hh
+    clear * - hh
     omega
   have hU : U V = U W + R.length := by
     have hh := inv.countBalance
     simp only [List.length_append, List.length_cons, List.length_nil] at hh
+    clear * - hh
     omega
   have hH : H k t V + 3 ^ (f x).natAbs + 3 ^ (f y).natAbs =
       H k t W + 3 ^ (f p).natAbs + 3 ^ (f n).natAbs := by
     have hh := inv.energyBalance
     rw [hRetenergy, hIenergy] at hh
+    clear * - hh
     omega
   have hHstrict : H k t V < H k t W := by
     have hh := geo.energy
     change 3 ^ (f p).natAbs + 3 ^ (f n).natAbs < 3 ^ (f x).natAbs at hh
-    omega
+    have hright := Nat.add_lt_add_left hh (H k t W)
+    have hleft : (H k t V + 3 ^ (f y).natAbs) + 3 ^ (f x).natAbs <
+        H k t W + 3 ^ (f x).natAbs := by
+      calc
+        _ = H k t W + (3 ^ (f p).natAbs + 3 ^ (f n).natAbs) := by
+          simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hH
+        _ < _ := hright
+    exact lt_of_le_of_lt (Nat.le_add_right _ _) (Nat.lt_of_add_lt_add_right hleft)
   have hJ : J k t V < J k t W := by
     apply Prod.Lex.toLex_lt_toLex.mpr
     exact Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hHstrict)⟩
@@ -597,6 +606,7 @@ theorem actualSource_threeNegative_upper_quarter_tail_exchange_full
     change mass f V + mass f ([x, y] ++ R) = h + mass f [p, n] at hh
     rw [hRetmass, hImass] at hh
     dsimp only [e]
+    clear * - hh hnative
     omega
   have hcomp : remainingMass f V = -e := by rw [inv.complementSum, hEnd]
   have hv : Legal k t V := legal_of_strip inv.nodup hsV
