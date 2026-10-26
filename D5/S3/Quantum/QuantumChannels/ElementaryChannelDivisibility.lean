@@ -161,7 +161,7 @@ private theorem hs_span_iff {ι : Type*} (K : ι → Matrix n n ℂ)
     | smul c H _ hH =>
       simp [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.trace_smul, hH]
 
-private theorem ketbra_star (u w : n → ℂ) : (ketbra u w)ᴴ = ketbra w u := by
+theorem ketbra_star (u w : n → ℂ) : (ketbra u w)ᴴ = ketbra w u := by
   ext i j
   simp [ketbra, Matrix.vecMulVec_apply, mul_comm]
 

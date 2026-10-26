@@ -1,0 +1,10 @@
+**Definition 70.1 (the two native growth coordinates).** Put
+
+$$
+C_0=\beta,\qquad C_{j+1}=\langle C_j,\alpha\rangle,
+\qquad t_{a,b}=\langle C_a,C_b\rangle\quad(a,b\in\mathbb N).
+\tag{70.1}
+$$
+
+Here $C_j$ denotes a logical comb, distinct from the material-encoding notation $C(t)$. From the owned known alpha, the actual calls $P_\varepsilon;S_\varepsilon;P_R$, with their whole Growth replies, prepare $t_{0,0}$. Define $H_L$ as follows. Start at address $q=L$ and issue $P_q$. On Refusal(branch), replace $q$ by $qL$ and repeat. On Refusal(wrong type), issue $S_q$, consume its whole Growth reply and return. Define $H_R$ with initial address $R$. These are guarded native procedures, not fixed-length native command words. They use the original paid address traversal and call framing; an unexpected different reply does not satisfy their declared source domain.
+
