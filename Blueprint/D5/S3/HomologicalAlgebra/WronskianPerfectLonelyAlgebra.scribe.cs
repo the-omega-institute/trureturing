@@ -124,7 +124,10 @@ internal sealed class WronskianPerfectLonelyAlgebraDocument : IScribeDocumentDef
                             + "other such natural k is at least two and contradicts the obstruction. "
                             + "When k = 1, the polynomial q supplies nonzeroness, homogeneity and "
                             + "perfectness, proving the converse."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kenins-kiselev-2026-wronskian-perfect-lonely-algebra"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
