@@ -47,13 +47,11 @@ private def idealAction {n : ℕ} : Gate n → State n → State n
       Function.update state target
         (if state control₁ && state control₂ then !state target else state target)
 
-private def stateWeight {n : ℕ} (state : State n) : ℕ := by
-  classical
-  exact (Finset.univ.filter (fun i => state i = true)).card
+private def stateWeight {n : ℕ} (state : State n) : ℕ :=
+  (Finset.univ.filter (fun i => state i = true)).card
 
-private def idealRun {n : ℕ} : List (Gate n) → State n → State n
-  | [], state => state
-  | gate :: circuit, state => idealAction gate (idealRun circuit state)
+private def idealRun {n : ℕ} (circuit : List (Gate n)) (state : State n) : State n :=
+  circuit.foldl (fun current gate => idealAction gate current) state
 
 /-- The ideal circuit clears all nominated output bits on all inputs of weight at most `e`. -/
 def IsPurification {n : ℕ} (circuit : List (Gate n)) (outputs : Finset (Fin n)) (e : ℕ) : Prop :=
@@ -132,13 +130,47 @@ def claim : Prop :=
         pT ≤ qT → p0 = q0 → pI = qI → pC = qC →
           pOut p0 pI pC pT circuit outputs ≤ pOut q0 qI qC qT circuit outputs)
 
+private lemma weight_ge_two {n : ℕ} (state : State n) (i j : Fin n)
+    (hij : i ≠ j) (hi : state i = true) (hj : state j = true) :
+    2 ≤ stateWeight state := by
+  classical
+  have hsub : ({i, j} : Finset (Fin n)) ⊆
+      Finset.univ.filter (fun x => state x = true) := by
+    intro x hx
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl
+    · simp [hi]
+    · simp [hj]
+  have hcard := Finset.card_le_card hsub
+  change 2 ≤ (Finset.univ.filter (fun x => state x = true)).card
+  simpa [hij] using hcard
+
 private lemma witness_purification :
     IsPurification
       ([Gate.cnot 0 1 (by decide), Gate.cnot 1 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.cnot 0 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.toffoli 1 2 0 (by decide) (by decide) (by decide)] :
           List (Gate 3)) {0} 1 := by
-  sorry
+  intro state hweight i hi
+  have hi0 : i = 0 := by simpa using hi
+  subst i
+  cases h0 : state 0 <;> cases h1 : state 1 <;> cases h2 : state 2
+  · norm_num [idealRun, idealAction, h0, h1, h2]
+  · norm_num [idealRun, idealAction, h0, h1, h2]
+  · norm_num [idealRun, idealAction, h0, h1, h2]
+  · have hbad := weight_ge_two state 1 2 (by decide) h1 h2
+    exfalso
+    exact Nat.not_lt_of_ge hbad (Nat.lt_succ_of_le hweight)
+  · norm_num [idealRun, idealAction, h0, h1, h2]
+  · have hbad := weight_ge_two state 0 2 (by decide) h0 h2
+    exfalso
+    exact Nat.not_lt_of_ge hbad (Nat.lt_succ_of_le hweight)
+  · have hbad := weight_ge_two state 0 1 (by decide) h0 h1
+    exfalso
+    exact Nat.not_lt_of_ge hbad (Nat.lt_succ_of_le hweight)
+  · have hbad := weight_ge_two state 0 1 (by decide) h0 h1
+    exfalso
+    exact Nat.not_lt_of_ge hbad (Nat.lt_succ_of_le hweight)
 
 private lemma witness_space :
     Finset.sum (Finset.range (1 + 1)) (fun j => Nat.choose 3 j) = 2 ^ (3 - 1) := by
