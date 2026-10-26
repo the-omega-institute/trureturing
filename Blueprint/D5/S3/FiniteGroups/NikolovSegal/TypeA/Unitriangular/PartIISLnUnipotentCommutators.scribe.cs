@@ -43,9 +43,10 @@ internal sealed class PartIISLnUnipotentCommutatorsDocument : IScribeDocumentDef
                 Call("fromBlocks", F.D(1), F.D(0), a, F.D(1))),
             FormulaLogicOperator.And,
             new Formula.Relation(Call("det", value), FormulaRelationOperator.Equal, F.D(1)));
-        return F.Disp(All("F", F.Id("Typeu"),
-            new Formula.Logic(Call("Field", field), FormulaLogicOperator.Implies,
-                All("n", F.Id("N"), All("A", matrix, body)))));
+        return F.Disp(F.Seq(F.Forall, F.Sp, F.Id("u"), F.Comma, F.Sp,
+            All("F", F.Seq(F.Operatorname, F.Grp(F.Id("Type")), F.Sp, F.Id("u")),
+                new Formula.Logic(Call("Field", field), FormulaLogicOperator.Implies,
+                    All("n", F.Seq(F.Mathbb, F.Grp(F.Id("N"))), All("A", matrix, body))))));
     }
 
     private static Formula All(string name, Formula domain, Formula body) =>
