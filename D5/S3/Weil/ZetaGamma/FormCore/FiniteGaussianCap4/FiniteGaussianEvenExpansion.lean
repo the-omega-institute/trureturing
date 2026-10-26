@@ -18,6 +18,8 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Tactic
 
+/-! Actual finite Gaussian expansion and odd coefficient cancellation. -/
+
 set_option autoImplicit false
 noncomputable section
 namespace FiniteGaussianCap4
@@ -91,7 +93,7 @@ private theorem finite_coefficient_parity {ι : Type*} [Fintype ι]
     (∑ i, c i * gaussianSiteAmplitude (site i) * gaussianSiteQ (site i) ^ n) =
         ∑ i, c (reflection i) * gaussianSiteAmplitude (site (reflection i)) *
           gaussianSiteQ (site (reflection i)) ^ n :=
-      (reflection.sum_comp _).symm
+      (Equiv.sum_comp reflection _).symm
     _ = ∑ i, (-1 : ℝ) ^ n *
         (c i * gaussianSiteAmplitude (site i) * gaussianSiteQ (site i) ^ n) := by
       apply Finset.sum_congr rfl
