@@ -9,7 +9,11 @@
 import D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation
 import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
 
-/-! Charge-sector normalization need not preserve majorization of diagonal density matrices. -/
+/-!
+Charge-sector normalization need not preserve majorization of diagonal density matrices.
+This is the sectorwise reading of the question in Arias, Di Giulio, Keski-Vakkuri and Tonni,
+arXiv:2301.02117, Section 7, with the normalized blocks of equation (6.1).
+-/
 
 set_option autoImplicit false
 
@@ -102,7 +106,9 @@ private lemma sector_spectra :
 private lemma sector_failure :
     ¬ Majorizes (sectorSpectrum r chargeData 0) (sectorSpectrum s chargeData 0) := by
   rw [sector_spectra.1, sector_spectra.2]
-  sorry
+  intro h
+  have hp := h.1 1 (by norm_num) (by norm_num)
+  norm_num at hp
 
 /-- Full-state majorization does not imply majorization of the normalized charge blocks. -/
 theorem result : ¬ claim := by
