@@ -19,8 +19,9 @@ open TwoOppositeLargeExchange ThreeLargePacketExchange CrossingAnchorOrdering
 open scoped BigOperators
 
 set_option maxHeartbeats 1800000 in
-/-- In the native q-unused, q<P, three-negative residual, the actual crossing
-anchor orders both retained negative LARGE and every SMALL occurrence.
+/-- In the native q≤P, D≤ZZ three-negative residual, the actual crossing
+anchor orders both retained negative LARGE and every SMALL occurrence,
+with arbitrary old q status and no q-to-zpen source edge.
 The theorem constructs the full word; it assumes no packet or new Legal word. -/
 theorem actualSource_threeNegative_crossingAnchor_exchange_full
     (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z a : Fin k)
@@ -31,15 +32,15 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
     (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
     (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hqunused : q ∉ oldWord p y zpen z A T0 T1 T2 E)
     (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
     (hylarge : Q k ≤ -s k t y)
     (hzpenlarge : Q k ≤ -s k t zpen)
     (hzlarge : Q k ≤ -s k t z)
     (hzupper : -s k t z ≤ |s k t (hit k 1 p)|)
     (ha : a ∈ smallWord T0 T1 T2 E) (hapositive : 0 < s k t a)
-    (hq : hit k 1 a = q) (hzp : hit k 1 q = zpen)
-    (hqsmaller : s k t q < s k t p)
+    (hq : hit k 1 a = q)
+    (hzpenlower : |s k t (hit k 1 p)| ≤ -s k t zpen)
+    (hqnobigger : s k t q ≤ s k t p)
     (hcrosslo : C k - s k t q < mass (s k t) (oldWord p y zpen z A T0 T1 T2 E))
     (hcrosshi : mass (s k t) (oldWord p y zpen z A T0 T1 T2 E) <
       s k t a - (-s k t zpen - |s k t (hit k 1 p)|))
@@ -66,7 +67,7 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
        H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t j).natAbs =
          H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs ∧
        H k t V < H k t W ∧ J k t V < J k t W ∧
-       q ∉ V ∧ mass (s k t) V = e0 ∧ 0 < e0 ∧ e0 < C k ∧
+       (q ∈ V ↔ q ∈ W ∨ q = p) ∧ mass (s k t) V = e0 ∧ 0 < e0 ∧ e0 < C k ∧
        remainingMass (s k t) V = -e0) := by
   classical
   dsimp only
@@ -130,7 +131,6 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     rw [abs_of_pos ha0] at hh
     exact hh
   have hqrot : finRotate k a = q := by simpa [hit] using hq
-  have hzprot : finRotate k q = zpen := by simpa [hit] using hzp
   have hcycle := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2
   have hqeq : qq = 2 * aa := by
     have hh := hcycle a
@@ -141,23 +141,10 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     omega
   have hqpos : 0 < qq := by omega
   have hZZQ : Q k ≤ ZZ := hzpenlarge
-  have hZZeq : ZZ = N k - 4 * aa := by
-    have hh := hcycle q
-    rw [hzprot] at hh
-    change 2 * qq - f zpen = N k *
-      (if N k < 4 * qq then 1 else if 4 * qq < -N k then -1 else 0) at hh
-    have hwrap : N k < 4 * qq := by
-      by_contra hn
-      rw [ite_eq_right hn, ite_eq_right (by omega)] at hh
-      dsimp only [ZZ] at hZZQ
-      omega
-    rw [ite_eq_left hwrap] at hh
-    dsimp only [ZZ]
-    omega
-  have hqP : qq < P := hqsmaller
-  have hδeq : δ = 2 * (P - 2 * aa) := by dsimp only [δ]; omega
-  have hδ : 0 < δ := by omega
-  have hZZD : D < ZZ := by dsimp only [δ] at hδ; omega
+  have hqP : qq ≤ P := hqnobigger
+  have hDaa : D ≤ N k - 4 * aa := by omega
+  have hZZD : D ≤ ZZ := hzpenlower
+  have hδ : 0 ≤ δ := by dsimp only [δ]; omega
   have hZQ : Q k ≤ Z := hzlarge
   have hZD : Z ≤ D := hzupper
   have hZZC : ZZ ≤ C k := le_trans (neg_le_abs _) (hbound zpen)
@@ -194,11 +181,12 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
   let e0 := h - f j - P
   have hMQ : Q k ≤ M := le_trans hv1.1 (le_max_left _ _)
   have hMC : M ≤ C k := max_le hv1.2 hv2.2
-  have htau : 4 * aa - 2 * Q k ≤ c := by
-    dsimp only [c, M]
+  have hZZupper : ZZ ≤ 2 * Q k - aa - 2 := by
+    dsimp only [δ] at haa3
     omega
   have hanchor : 0 < aa ∧ aa < c ∧ M < aa + c ∧ M < 2 * c := by
     change M ≤ ZZ at hM
+    dsimp only [c]
     omega
   have hjQ : Q k ≤ -f j := by
     simp only [List.mem_cons, List.not_mem_nil, or_false] at hj
@@ -366,18 +354,15 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     rw [inv.used]
     exact Finset.mem_union_left _ (Finset.mem_sdiff.mpr
       ⟨List.mem_toFinset.mpr hi, by simpa using hiR⟩)
-  have hqu : q ∉ V := by
-    have hqp : q ≠ p := by intro hh; have hv := congrArg f hh; omega
+  have hqstatus : q ∈ V ↔ q ∈ W ∨ q = p := by
+    have hqx : q ≠ x := by intro hh; have hv := congrArg f hh; omega
+    have hqj : q ≠ j := by intro hh; have hv := congrArg f hh; omega
     have hqn : q ≠ n := by intro hh; have hv := congrArg f hh; omega
-    have hqI : q ∉ [p, n] := by simp [hqp, hqn]
-    intro hqV
-    have hh := hperm.mem_iff.mp (List.mem_append_left _ hqV)
-    rcases List.mem_append.mp hh with hh | hh
-    · exact hqunused hh
-    · exact hqI hh
+    have hh : q ∈ V ++ [x, j] ↔ q ∈ W ++ [p, n] := hperm.mem_iff
+    simpa [hqx, hqj, hqn] using hh
   refine ⟨j, L, hj, hjmax, hLj, hSretained, legal_of_strip inv.nodup hsV,
     inv.nodup, hsV, ?_, inv, hperm, hretain, hG, hU, hSmall, hH, hHstrict, hJ,
-    hqu, hEnd, he0.1, he0.2, ?_⟩
+    hqstatus, hEnd, he0.1, he0.2, ?_⟩
   · intro d
     simpa only [mass, f, zero_add] using inStrip_prefix hsV d
   · rw [inv.complementSum, hEnd]
