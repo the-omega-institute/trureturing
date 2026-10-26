@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fresan-figueroa-goldfeder-lozano-2026-mutual-visibility-maximal-connectivity` (proved) by `D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fresan-figueroa-goldfeder-lozano-2026-mutual-visibility-maximal-connectivity","declaration_gid":"D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
