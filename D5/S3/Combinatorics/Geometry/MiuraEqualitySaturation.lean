@@ -8,6 +8,7 @@
 module
 public import D5.S3.Combinatorics.Geometry.MiuraSlabRunBound
 import all D5.S3.Combinatorics.Geometry.MiuraSlabBudget
+import all D5.S3.Combinatorics.Geometry.MiuraSlabClassification
 public import Mathlib.Data.Fintype.EquivFin
 
 /-! Equality saturates the actual matching-cell injection. -/
@@ -15,7 +16,7 @@ public import Mathlib.Data.Fintype.EquivFin
 @[expose] public section
 namespace D5.S3.Combinatorics.Geometry.MiuraEqualitySaturation
 open MiuraHeightEnvelope MiuraSlabExtrema MiuraSlabNeutral MiuraSlabIncidence
-open MiuraSlabBudget MiuraSlabRunBound MiuraSlabCover
+open MiuraSlabBudget MiuraSlabRunBound MiuraSlabCover MiuraSlabClassification
 variable {m n : ℕ}
 
 private abbrev Matching (h : Cell m n → ℤ) :=
@@ -142,5 +143,98 @@ theorem equality_nonneutral_extremum {h : Cell m n → ℤ} (hh : IsHeight h)
   | inr p =>
     exact Or.inr ⟨p.val.1, (Finset.mem_product.mp p.property).1,
       p.val.2, (Finset.mem_product.mp p.property).2, hvp⟩
+
+private theorem outside_neutral_of_outward {h : Cell m n → ℤ} (hh : IsHeight h)
+    (hm : 2 ≤ m) (hn : 0 < n)
+    (heq : (extrema h).card = (neutralRowSlabs h).card + (neutralColSlabs h).card +
+      (minRowSlabs h).card * (minColSlabs h).card +
+      (maxRowSlabs h).card * (maxColSlabs h).card)
+    (I : Interval m) (hI : IsRowSlab h I) (t : ℤ) (ht : t ≠ 0)
+    (hout : RowOutward h I t) (v : Cell m n) (hv : I.Contains v.1) :
+    v ∉ neutralSupport h := by
+  have hr := row_non_neutral hn I hI t ht hout v hv
+  have hs := (slab_budget_equality hh hm hn heq).1
+  simp only [neutralSupport, Finset.mem_union, not_or]
+  exact ⟨hr, fun hc => hr (hs.symm ▸ hc)⟩
+
+private theorem min_max_slab_distinct {h : Cell m n → ℤ} (hn : 0 < n)
+    (I J : Interval m) (hI : I ∈ minRowSlabs h) (hJ : J ∈ maxRowSlabs h) : I ≠ J := by
+  intro he; subst J
+  have hp := (Finset.mem_filter.mp hI).2
+  have hq := (Finset.mem_filter.mp hJ).2
+  have he := outward_sign_unique hn I hp.1 1 (-1) hp.2 hq.2
+  omega
+
+/-- At equality, a minimum-type slab contains no ambient maximum and a
+maximum-type slab contains no ambient minimum. No incidence is assumed. -/
+theorem equality_slab_extrema_sign {h : Cell m n → ℤ} (hh : IsHeight h)
+    (hm : 2 ≤ m) (hn : 0 < n)
+    (heq : (extrema h).card = (neutralRowSlabs h).card + (neutralColSlabs h).card +
+      (minRowSlabs h).card * (minColSlabs h).card +
+      (maxRowSlabs h).card * (maxColSlabs h).card) :
+    (∀ I ∈ minRowSlabs h, ∀ v : Cell m n, I.Contains v.1 → ¬ IsStrictLocalMax h v) ∧
+    (∀ I ∈ maxRowSlabs h, ∀ v : Cell m n, I.Contains v.1 → ¬ IsStrictLocalMin h v) := by
+  classical
+  constructor
+  · intro I hI v hv hmax
+    have hsI := (Finset.mem_filter.mp (Finset.mem_filter.mp hI).1).2
+    have hnot := outside_neutral_of_outward hh hm hn heq I hsI 1 (by norm_num)
+      (Finset.mem_filter.mp hI).2.2 v hv
+    have hev : v ∈ extrema h := by simp [extrema, hmax]
+    rcases equality_nonneutral_extremum hh hm hn heq v hev hnot with
+      ⟨J, hJ, K, hK, hvJ, hvK, hmin⟩ | ⟨J, hJ, K, hK, hvJ, hvK, _⟩
+    · exact minimum_maximum_distinct hm h v v hmin hmax rfl
+    · exact min_max_slab_distinct hn I J hI hJ
+        (row_slab_unique hsI (Finset.mem_filter.mp (Finset.mem_filter.mp hJ).1).2 v.1 hv hvJ)
+  · intro I hI v hv hmin
+    have hsI := (Finset.mem_filter.mp (Finset.mem_filter.mp hI).1).2
+    have hnot := outside_neutral_of_outward hh hm hn heq I hsI (-1) (by norm_num)
+      (Finset.mem_filter.mp hI).2.2 v hv
+    have hev : v ∈ extrema h := by simp [extrema, hmin]
+    rcases equality_nonneutral_extremum hh hm hn heq v hev hnot with
+      ⟨J, hJ, K, hK, hvJ, hvK, _⟩ | ⟨J, hJ, K, hK, hvJ, hvK, hmax⟩
+    · exact min_max_slab_distinct hn J I hJ hI
+        (row_slab_unique (Finset.mem_filter.mp (Finset.mem_filter.mp hJ).1).2 hsI v.1 hvJ hv)
+    · exact minimum_maximum_distinct hm h v v hmin hmax rfl
+
+/-- A maximum row slab has exactly one actual maximum when equality holds
+and there is exactly one maximum column slab. -/
+theorem equality_maximum_slab_unique {h : Cell m n → ℤ} (hh : IsHeight h)
+    (hm : 2 ≤ m) (hn : 0 < n)
+    (heq : (extrema h).card = (neutralRowSlabs h).card + (neutralColSlabs h).card +
+      (minRowSlabs h).card * (minColSlabs h).card +
+      (maxRowSlabs h).card * (maxColSlabs h).card)
+    (hc : (maxColSlabs h).card = 1) (I : Interval m) (hI : I ∈ maxRowSlabs h) :
+    ∃! v : Cell m n, I.Contains v.1 ∧ IsStrictLocalMax h v := by
+  classical
+  obtain ⟨J, hJset⟩ := Finset.card_eq_one.mp hc
+  have hJ : J ∈ maxColSlabs h := by rw [hJset]; simp
+  obtain ⟨f, hf⟩ := matching_equiv hh hm hn heq
+  let p : ↥((maxRowSlabs h) ×ˢ (maxColSlabs h)) := ⟨(I, J), Finset.mem_product.mpr ⟨hI, hJ⟩⟩
+  let v := (f (.inr p)).val
+  have hv := hf (.inr p)
+  refine ⟨v, ⟨hv.1, hv.2.2⟩, ?_⟩
+  intro u hu
+  have hsI := (Finset.mem_filter.mp (Finset.mem_filter.mp hI).1).2
+  have hnot := outside_neutral_of_outward hh hm hn heq I hsI (-1) (by norm_num)
+    (Finset.mem_filter.mp hI).2.2 u hu.1
+  have heu : u ∈ extrema h := by simp [extrema, hu.2]
+  obtain ⟨q, hq⟩ := f.surjective ⟨u, Finset.mem_sdiff.mpr ⟨heu, hnot⟩⟩
+  have he : (f q).val = u := congrArg Subtype.val hq
+  have hqu := hf q
+  rw [he] at hqu
+  cases q with
+  | inl q => exact (minimum_maximum_distinct hm h u u hqu.2.2 hu.2 rfl).elim
+  | inr q =>
+    have hqr : q.val.1 = I := row_slab_unique
+      (Finset.mem_filter.mp (Finset.mem_filter.mp (Finset.mem_product.mp q.property).1).1).2
+      hsI u.1 hqu.1 hu.1
+    have hqc : q.val.2 = J := by
+      have hcq := (Finset.mem_product.mp q.property).2
+      rw [hJset] at hcq
+      exact Finset.mem_singleton.mp hcq
+    have hqp : q = p := Subtype.ext (Prod.ext hqr hqc)
+    subst q
+    exact he.symm
 
 end D5.S3.Combinatorics.Geometry.MiuraEqualitySaturation
