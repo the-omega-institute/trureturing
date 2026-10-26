@@ -8,7 +8,7 @@
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Max
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Nat.Parity
+import Mathlib.Algebra.Ring.Parity
 import Mathlib.Logic.Relation
 import Mathlib.Tactic
 
@@ -295,5 +295,230 @@ private theorem defect_degree_two {l r : E → V} {C : Finset V}
   have := hmax _ hS'
   rw [card_insert_of_notMem hp.2.2.1] at this
   omega
+
+
+private theorem reach_induction {l r : E → V} {P : V → Prop} {x y : V}
+    (hx : P x) (hedge : ∀ e, P (l e) ↔ P (r e)) (h : Reach l r x y) : P y := by
+  have hi : ∀ a b, Reach l r a b → (P a ↔ P b) := by
+    intro a b hab
+    induction hab with
+    | rel a b hab =>
+      obtain ⟨e, rfl, rfl⟩ := hab
+      exact hedge e
+    | refl => rfl
+    | symm _ _ _ ih => exact ih.symm
+    | trans _ _ _ _ _ ih₁ ih₂ => exact ih₁.trans ih₂
+  exact (hi x y h).mp hx
+
+private theorem reachable_endpoints (l r : E → V) (x : V) (e : E) :
+    Reach l r x (l e) ↔ Reach l r x (r e) := by
+  have he : Reach l r (l e) (r e) := .rel _ _ ⟨e, rfl, rfl⟩
+  exact ⟨fun h => .trans _ _ _ h he,
+    fun h => .trans _ _ _ h (.symm _ _ he)⟩
+
+/- Transport preserves every defect other than the one being moved. Thus a
+component containing a defect contains exactly one, and all its vertices
+are constrained of degree two. -/
+private theorem defective_component {l r : E → V} {C : Finset V}
+    (hloop : ∀ e, l e ≠ r e) (hdeg : ∀ x ∈ C, 2 ≤ (star l r x).card)
+    {c : E → Bool} (hc : Optimal l r C c) {x : V}
+    (hx : x ∈ defects l r C c) :
+    ∀ y, Reach l r x y → y ∈ C ∧ (star l r y).card = 2 ∧
+      (y ∈ defects l r C c ↔ y = x) := by
+  classical
+  let F := (defects l r C c).erase x
+  let P : V → Prop := fun y => ∃ d, Optimal l r C d ∧
+    defects l r C d = insert y F ∧ y ∉ F
+  have hstart : P x := by
+    refine ⟨c, hc, ?_, by simp [F]⟩
+    exact (insert_erase hx).symm
+  have hstep : ∀ a b e, e ∈ star l r a → e ∈ star l r b → a ≠ b →
+      (∀ z, e ∈ star l r z → z = a ∨ z = b) → P a → P b := by
+    intro a b e hea heb hab hend ha
+    obtain ⟨d, hd, heq, haF⟩ := ha
+    have haD : a ∈ defects l r C d := by rw [heq]; simp
+    obtain ⟨hd', hbD, hbOld, heq'⟩ := transfer hdeg hd haD hea heb hab hend
+    refine ⟨flip d e, hd', ?_, ?_⟩
+    · rw [heq', heq, erase_insert haF]
+    · intro hbF
+      exact hbOld (heq.symm ▸ mem_insert_of_mem hbF)
+  have hedge : ∀ e, P (l e) ↔ P (r e) := by
+    intro e
+    have hl : e ∈ star l r (l e) := mem_star.mpr (Or.inl rfl)
+    have hr : e ∈ star l r (r e) := mem_star.mpr (Or.inr rfl)
+    have he : ∀ z, e ∈ star l r z → z = l e ∨ z = r e := by
+      intro z hz
+      exact (mem_star.mp hz).elim (fun h => Or.inl h.symm) (fun h => Or.inr h.symm)
+    exact ⟨hstep _ _ e hl hr (hloop e) he,
+      hstep _ _ e hr hl (hloop e).symm (fun z hz => (he z hz).symm)⟩
+  intro y hy
+  obtain ⟨d, hd, heq, hyF⟩ := reach_induction hstart hedge hy
+  have hyD : y ∈ defects l r C d := by rw [heq]; simp
+  refine ⟨(mem_defects.mp hyD).1, defect_degree_two hloop hdeg hd hyD, ?_⟩
+  constructor
+  · intro h
+    by_contra hyx
+    exact hyF (mem_erase.mpr ⟨hyx, h⟩)
+  · rintro rfl
+    exact hx
+
+private noncomputable def componentVertices (l r : E → V) (x : V) : Finset V := by
+  classical
+  exact univ.filter (Reach l r x)
+
+private theorem incidence_sum (l r : E → V) (hloop : ∀ e, l e ≠ r e)
+    (x : V) (P : E → Prop) :
+    ∑ y ∈ componentVertices l r x, ((star l r y).filter P).card =
+      2 * ((componentEdges l r x).filter P).card := by
+  classical
+  have hstar : ∀ y, ((star l r y).filter P).card =
+      ∑ e : E, if (l e = y ∨ r e = y) ∧ P e then 1 else 0 := by
+    intro y
+    simp [star, filter_filter, sum_boole]
+  simp_rw [hstar]
+  rw [sum_comm]
+  have hterm : ∀ e : E,
+      (∑ y ∈ componentVertices l r x,
+        if (l e = y ∨ r e = y) ∧ P e then 1 else 0) =
+      if Reach l r x (l e) ∧ P e then 2 else 0 := by
+    intro e
+    have hr := reachable_endpoints l r x e
+    have heq : ∀ y : V,
+        (if (l e = y ∨ r e = y) ∧ P e then 1 else 0 : ℕ) =
+        (if l e = y ∧ P e then 1 else 0) +
+        (if r e = y ∧ P e then 1 else 0) := by
+      intro y
+      by_cases hl : l e = y <;> by_cases hr : r e = y <;> by_cases hp : P e <;>
+        simp_all
+      exact (hloop e (hl.trans hr.symm)).elim
+    simp_rw [heq]
+    rw [sum_add_distrib]
+    by_cases hp : P e
+    · simp only [hp, and_true]
+      simp [componentVertices, hr]
+    · simp [hp]
+  simp_rw [hterm]
+  rw [show (∑ e : E, if Reach l r x (l e) ∧ P e then 2 else 0) =
+      2 * ∑ e : E, if Reach l r x (l e) ∧ P e then 1 else 0 by
+        rw [mul_sum]; apply sum_congr rfl; intro e _; split_ifs <;> rfl]
+  congr 1
+  simp [componentEdges, filter_filter, sum_boole]
+
+private theorem mixed_two_color_count {l r : E → V} {c : E → Bool} {y : V}
+    (hd : (star l r y).card = 2) (hm : Mixed l r c y) :
+    ((star l r y).filter fun e => c e = true).card = 1 := by
+  classical
+  obtain ⟨e, he, f, hf, hef⟩ := hm
+  have hne : e ≠ f := fun h => hef (congrArg c h)
+  have hstar : star l r y = {e, f} :=
+    (eq_of_subset_of_card_le (by simp [he, hf]) (by simp [hd, hne])).symm
+  rw [hstar]
+  cases hce : c e <;> cases hcf : c f <;> simp_all
+
+private theorem component_edge_card {l r : E → V} (hloop : ∀ e, l e ≠ r e)
+    {x : V} (hd : ∀ y, Reach l r x y → (star l r y).card = 2) :
+    (componentEdges l r x).card = (componentVertices l r x).card := by
+  classical
+  have hsum := incidence_sum l r hloop x (fun _ => True)
+  simp only [filter_true] at hsum
+  have heq : ∑ y ∈ componentVertices l r x, (star l r y).card =
+      2 * (componentVertices l r x).card := by
+    calc _ = ∑ _y ∈ componentVertices l r x, 2 := by
+          apply sum_congr rfl
+          intro y hy
+          exact hd y ((mem_filter.mp hy).2)
+      _ = _ := by simp [mul_comm]
+  omega
+
+
+private theorem mono_two_color_count {l r : E → V} {c : E → Bool} {y : V}
+    (hd : (star l r y).card = 2) (hm : ¬Mixed l r c y) :
+    ((star l r y).filter fun e => c e = true).card = 0 ∨
+      ((star l r y).filter fun e => c e = true).card = 2 := by
+  classical
+  by_cases h : ∃ e ∈ star l r y, c e = true
+  · obtain ⟨e, he, hc⟩ := h
+    right
+    rw [filter_eq_self.mpr (fun f hf => (mono hm hf he).trans hc), hd]
+  · left
+    rw [card_eq_zero, filter_eq_empty_iff]
+    intro e he hc
+    exact h ⟨e, he, hc⟩
+
+private theorem colouring_excludes_odd {l r : E → V} {C : Finset V}
+    (hloop : ∀ e, l e ≠ r e) {c : E → Bool}
+    (hc : ∀ y ∈ C, Mixed l r c y) : ¬OddComponent l r C := by
+  classical
+  rintro ⟨x, hcomp, hodd⟩
+  have heq := component_edge_card hloop (fun y hy => (hcomp y hy).2)
+  have hsum := incidence_sum l r hloop x (fun e => c e = true)
+  have hsum' : (∑ y ∈ componentVertices l r x,
+      ((star l r y).filter fun e => c e = true).card) =
+      (componentVertices l r x).card := by
+    calc _ = ∑ _y ∈ componentVertices l r x, 1 := by
+          apply sum_congr rfl
+          intro y hy
+          have hy' := hcomp y ((mem_filter.mp hy).2)
+          exact mixed_two_color_count hy'.2 (hc y hy'.1)
+      _ = _ := by simp
+  rw [hsum', ← heq] at hsum
+  exact (Nat.not_odd_iff_even.mpr ⟨_, by omega⟩) hodd
+
+private theorem defect_forces_odd {l r : E → V} {C : Finset V}
+    (hloop : ∀ e, l e ≠ r e) (hdeg : ∀ x ∈ C, 2 ≤ (star l r x).card)
+    {c : E → Bool} (hc : Optimal l r C c) {x : V}
+    (hx : x ∈ defects l r C c) : OddComponent l r C := by
+  classical
+  have hcomp := defective_component hloop hdeg hc hx
+  refine ⟨x, fun y hy => ⟨(hcomp y hy).1, (hcomp y hy).2.1⟩, ?_⟩
+  have heq := component_edge_card hloop (fun y hy => (hcomp y hy).2.1)
+  have hxS : x ∈ componentVertices l r x := by
+    simp only [componentVertices, mem_filter, mem_univ, true_and]
+    exact .refl _
+  have hsum := incidence_sum l r hloop x (fun e => c e = true)
+  have hothers : (∑ y ∈ (componentVertices l r x).erase x,
+      ((star l r y).filter fun e => c e = true).card) =
+      ((componentVertices l r x).erase x).card := by
+    calc _ = ∑ _y ∈ (componentVertices l r x).erase x, 1 := by
+          apply sum_congr rfl
+          intro y hy
+          obtain ⟨hyx, hyS⟩ := mem_erase.mp hy
+          have hyR := (mem_filter.mp hyS).2
+          have hm : Mixed l r c y := by
+            by_contra h
+            have hyD := mem_defects.mpr ⟨(hcomp y hyR).1, h⟩
+            exact hyx ((hcomp y hyR).2.2.mp hyD)
+          exact mixed_two_color_count (hcomp y hyR).2.1 hm
+      _ = _ := by simp
+  have hsplit := sum_erase_add (componentVertices l r x)
+    (fun y => ((star l r y).filter fun e => c e = true).card) hxS
+  have hcard := card_erase_add_one hxS
+  have hroot := mono_two_color_count (defect_degree_two hloop hdeg hc hx)
+    (mem_defects.mp hx).2
+  rw [hothers] at hsplit
+  rw [Nat.odd_iff]
+  rcases hroot with hroot | hroot <;> omega
+
+/-- A finite loopless multigraph admits a colouring of its ORIGINAL edge IDs
+with both colours at every constrained vertex exactly when it has no
+all-constrained degree-two component with odd original edge count.
+
+Unconstrained vertices impose no obligation, even if their degree is greater
+than one. In particular this includes arbitrary isolated free vertices and
+the free-leaf convention. Parallel edges and empty edge types are included. -/
+theorem exists_iff_no_odd_component (l r : E → V) (C : Finset V)
+    (hloop : ∀ e, l e ≠ r e) (hdeg : ∀ x ∈ C, 2 ≤ (star l r x).card) :
+    (∃ c : E → Bool, ∀ x ∈ C, Mixed l r c x) ↔ ¬OddComponent l r C := by
+  classical
+  constructor
+  · rintro ⟨c, hc⟩
+    exact colouring_excludes_odd hloop hc
+  · intro hno
+    obtain ⟨c, hc⟩ := optimal_exists l r C
+    refine ⟨c, fun x hx => ?_⟩
+    by_contra hm
+    exact hno (defect_forces_odd hloop hdeg hc (mem_defects.mpr ⟨hx, hm⟩))
+
+#print axioms exists_iff_no_odd_component
 
 end D5.S3.Combinatorics.Graph.EdgeColouring.TwoColours
