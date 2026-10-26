@@ -6,12 +6,13 @@
    utility: none
    digest: Intrinsic delayed semantics read only the canonical whole birth pack. -/
 
-import D5.S3.Topology.InverseLimit.SignedOrdinalHistoryBirth
+import D5.S3.Topology.InverseLimit.SignedOrdinalHistoryState
 
 /-! A natural task code addresses a pair of clopens of the original birth B. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 open Set Function Filter MeasureTheory TopologicalSpace
 open scoped Ordinal Cardinal Topology ENNReal
@@ -20,6 +21,7 @@ namespace D5.S3.Topology.InverseLimit.SignedOrdinalHistoryTask
 
 open SignedProperLimit SignedBirthEnumeration SignedOrdinalSuccessor
 open SignedOrdinalHistoryEvent SignedOrdinalHistoryBirth
+open SignedOrdinalHistoryState
 
 /-- This is the actual fixed codec, with its inverse supplied by mathlib. -/
 def decode : ℕ ≃ ℕ × ℕ := Nat.pairEquiv.symm
@@ -63,23 +65,47 @@ theorem local_semantics (bornB : OldClopens H ha)
     subst source
     subst target
     dsimp only at hA hB'
-    subst A
-    subst B
+    change A = bornB r hr (Nat.unpair k).1 at hA
+    change B = bornB r hr (Nat.unpair k).2 at hB'
+    clear hrow hs ht
+    rw [hA, hB'] at hdis
+    rw [hB'] at hinB
+    rw [hA] at hnull
     refine ⟨?_, hdis, y, hinV, hinB, hdirac, hnull⟩
     intro he
-    exact hne (Subtype.ext (congrArg Subtype.val he))
+    exact hne (Subtype.ext (congrArg (fun z : Label => z.1) he))
   · rintro ⟨hne, hdis, y, hinV, hinB, hdirac, hnull⟩
     have hne' : s ≠ t := by
       intro he
       apply hne
-      exact Subtype.ext (congrArg Subtype.val he)
+      exact Subtype.ext (congrArg (fun z : Coord a => z.1) he)
     let D : DelayedTask Q := {
       row := r, old := hr, source := s, target := t, distinct := hne'
       sourceSupport := bornB r hr (decode k).1
       targetSupport := bornB r hr (decode k).2
       disjoint := hdis, y := y, inSupport := hinV, inTarget := hinB
       dirac := hdirac, sourceNull := hnull }
-    refine ⟨⟨r.2.1, ?_, s.2, t.2⟩, D, rfl, rfl, rfl, rfl, rfl⟩
-    exact lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
+    have hrlt : r.1 < a := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
+    exact ⟨⟨r.2.1, hrlt, s.2, t.2⟩, D, rfl, rfl, rfl, rfl, rfl⟩
+
+private theorem intrinsic_cast {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (W : BirthPack C) (s t : Label) (k : ℕ) :
+    Intrinsic (BirthPack.cast h W) s t k ↔ Intrinsic W s t k := by
+  subst D
+  rfl
+
+/-- Stable semantics are derived from whole-birth coherence after the local
+event has been selected. They were not a premise of that event's executor. -/
+theorem stable_local {b c : Stage} (h : b < c) (X : State b) (Y : State c)
+    (hc : Coherent h X Y) (s t : Label) (hs : s.1 < ord c) (ht : t.1 < ord c)
+    (k : ℕ) :
+    LocalDelayed Y.event.Q Y.event.oldB b.1 s t k ↔ Intrinsic X.birth s t k := by
+  have he := local_semantics Y.event.Q Y.event.oldB Y.oldBonto
+    (oldRow h (newRow (ord b) b.2)) (oldRow_ne h _) ⟨s.1, hs⟩ ⟨t.1, ht⟩ k
+  rw [prepared_old_readback] at he
+  change LocalDelayed Y.event.Q Y.event.oldB b.1 s t k ↔
+    Intrinsic (Y.oldBirth (oldRow h (newRow (ord b) b.2)) (oldRow_ne h _)) s t k at he
+  rw [hc.birth] at he
+  exact he.trans (intrinsic_cast _ _ s t k)
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistoryTask

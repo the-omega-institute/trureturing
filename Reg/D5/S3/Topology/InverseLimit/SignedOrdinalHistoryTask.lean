@@ -15,4 +15,7 @@ open _root_.D5.S3.Topology.InverseLimit.SignedOrdinalHistoryTask
 abbrev local_semantics_scope := type_of% (@local_semantics)
 theorem local_semantics_source : local_semantics_scope := @local_semantics
 
+abbrev stable_local_scope := type_of% (@stable_local)
+theorem stable_local_source : stable_local_scope := @stable_local
+
 end Reg.D5.S3.Topology.InverseLimit.SignedOrdinalHistoryTask

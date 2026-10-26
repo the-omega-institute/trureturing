@@ -75,9 +75,9 @@ namespace State
 
 variable {a : Stage} (X : State a)
 
-abbrev birth : BirthPack (X.H.carrier (top (ord a))) := newborn X.event.Q
+noncomputable abbrev birth : BirthPack (X.H.carrier (top (ord a))) := newborn X.event.Q
 
-abbrev oldBirth (r : Rows (ord a)) (hr : r ≠ newRow (ord a) a.2) :=
+noncomputable abbrev oldBirth (r : Rows (ord a)) (hr : r ≠ newRow (ord a) a.2) :=
   predecessorPack (P := X.P) X.event.oldB X.oldBonto r hr
 
 end State
@@ -87,7 +87,8 @@ old whole births are read from the earlier canonical Q, and N from the one R
 at its unique outgoing max(row,label), whose arrival is the next stage. -/
 structure Coherent {b a : Stage} (h : b < a) (X : State b) (Y : State a) : Prop where
   carrier : ∀ c : Coord (Order.succ (ord b)),
-    Y.H.carrier ⟨c.1, c.2.trans_le (Order.succ_le_succ h.le)⟩ = X.H.carrier c
+    Y.H.carrier ⟨c.1, c.2.trans_le (Order.succ_le_succ (show ord b ≤ ord a from h.le))⟩ =
+      X.H.carrier c
   birth : Y.oldBirth (oldRow h (newRow (ord b) b.2)) (oldRow_ne h _) =
     BirthPack.cast (carrier (top (ord b))).symm X.birth
   arrival : ∀ (r d : Ordinal.{0}) (hr : ω ≤ r) (hm : max r d = ord b) (e : Fin 2),
@@ -97,6 +98,7 @@ structure Coherent {b a : Stage} (h : b < a) (X : State b) (Y : State a) : Prop 
   DI : ∀ (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2),
     AlmostSubset (Y.P.I (oldRow h r) (oldRow_ne h r)) (X.P.I r hr)
   DJ : ∀ (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) (d : Coord (ord b)),
-    AlmostSubset (Y.P.J (oldRow h r) (oldRow_ne h r) ⟨d.1, d.2.trans h⟩) (X.P.J r hr d)
+    AlmostSubset (Y.P.J (oldRow h r) (oldRow_ne h r)
+      ⟨d.1, d.2.trans (show ord b < ord a from h)⟩) (X.P.J r hr d)
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistoryState
