@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Full positive even lattice Sugawara eigenspace dimensions, absolute convergence and the ordinary theta over eta character. -/
+   digest: Actual full Sugawara dimensions and the convergent theta over eta character. -/
 
 import D5.S3.VertexAlgebra.Characters.LatticeThetaCharacter
 import D5.S3.Arith.Lattices.LatticeThetaTransformation
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
+
+/-! # The ordinary character of the full positive even lattice grading -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -93,23 +95,23 @@ private def fullFiberCutoffEquiv (D : LatticeData)
     dsimp [energy] at he
     omega⟩
   invFun a := ⟨a.1, a.2.2⟩
-  left_inv a := Subtype.ext rfl
-  right_inv a := Subtype.ext rfl
+  left_inv _a := Subtype.ext rfl
+  right_inv _a := Subtype.ext rfl
 
 private def naturalEnergyFiberEquiv (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (N : ℕ) :
     NaturalEnergyFiber D N ≃ EnergyFiber D (N : ℤ) where
   toFun a := ⟨a.1, (totalDegree_eq_iff D hD a.1 N).mp a.2⟩
   invFun a := ⟨a.1, (totalDegree_eq_iff D hD a.1 N).mpr a.2⟩
-  left_inv a := Subtype.ext rfl
-  right_inv a := Subtype.ext rfl
+  left_inv _a := Subtype.ext rfl
+  right_inv _a := Subtype.ext rfl
 
 /-- Finiteness is inherited from the canonical positive-energy fiber theorem,
 not from a growth assumption on a proposed character. -/
 theorem naturalEnergyFiber_finite (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (N : ℕ) :
     Finite (NaturalEnergyFiber D N) := by
-  letI := energyFiber_finite D hD (N : ℤ)
+  haveI := energyFiber_finite D hD (N : ℤ)
   exact Finite.of_injective (naturalEnergyFiberEquiv D hD N)
     (naturalEnergyFiberEquiv D hD N).injective
 
@@ -133,13 +135,18 @@ theorem actualOrdinaryCoefficient_eq_card (D : LatticeData)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (N : ℕ) :
     actualOrdinaryCoefficient D H N = Nat.card (EnergyFiber D (N : ℤ)) := by
-  letI := actualOrdinaryGrade_finiteDimensional D H hHG hGH hD N
+  haveI := actualOrdinaryGrade_finiteDimensional D H hHG hGH hD N
   have he := positive_full_grade_eq_cutoff D H hHG hGH hD (N : ℤ)
   simp only [Int.cast_natCast] at he
-  unfold actualOrdinaryCoefficient
-  rw [he, Module.finrank_eq_nat_card_basis
-    (cutoffBasis D H hHG hGH (positiveChargeCutoff D hD (N : ℤ)) (N : ℤ))]
-  exact Nat.card_congr (fullFiberCutoffEquiv D hD (N : ℤ)).symm
+  let b : Module.Basis (CutoffIndex D (positiveChargeCutoff D hD (N : ℤ)) (N : ℤ))
+      ℂ ((sugawaraMode D H 0).eigenspace (N : ℂ)) :=
+    (cutoffBasis D H hHG hGH (positiveChargeCutoff D hD (N : ℤ)) (N : ℤ)).map
+      (LinearEquiv.ofEq _ _ he).symm
+  have hc : actualOrdinaryCoefficient D H N =
+      Nat.card (CutoffIndex D (positiveChargeCutoff D hD (N : ℤ)) (N : ℤ)) := by
+    have h := congrArg Cardinal.toNat (Module.mk_finrank_eq_card_basis b)
+    simpa only [Cardinal.toNat_natCast] using h
+  exact hc.trans (Nat.card_congr (fullFiberCutoffEquiv D hD (N : ℤ)).symm)
 
 private theorem actualOrdinaryCoefficient_eq_naturalCard (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -277,9 +284,12 @@ theorem ordinary_label_series (D : LatticeData)
   have hc : Summable (fun a : Charge D => ‖q ^ (chargeEnergy D a).toNat‖) := by
     simpa only [q, charge_power_eq_exp D hD τ] using
       summable_norm_charge_exp D hD τ hτ
-  have ho := summable_norm_unsigned D (ordinary_q_norm τ hτ)
+  have ho : Summable (fun d : Exponent D => ‖q ^ oscillatorEnergy d‖) :=
+    summable_norm_unsigned D (ordinary_q_norm τ hτ)
   have hp : Summable (fun a : Label D =>
-      ‖q ^ (chargeEnergy D a.1).toNat * q ^ oscillatorEnergy a.2‖) := hc.mul_norm ho
+      ‖q ^ (chargeEnergy D a.1).toNat * q ^ oscillatorEnergy a.2‖) :=
+    Summable.mul_norm (f := fun a : Charge D => q ^ (chargeEnergy D a).toNat)
+      (g := fun d : Exponent D => q ^ oscillatorEnergy d) hc ho
   have hn : Summable (fun a : Label D => ‖q ^ totalDegree D a‖) := by
     apply hp.congr
     intro a
@@ -291,7 +301,9 @@ theorem ordinary_label_series (D : LatticeData)
       tsum_congr (fun a => by rw [totalDegree_add D hD a, pow_add])
     _ = (∑' a : Charge D, q ^ (chargeEnergy D a).toNat) *
         (∑' d : Exponent D, q ^ oscillatorEnergy d) :=
-      (tsum_mul_tsum_of_summable_norm hc ho).symm
+      (tsum_mul_tsum_of_summable_norm
+        (f := fun a : Charge D => q ^ (chargeEnergy D a).toNat)
+        (g := fun d : Exponent D => q ^ oscillatorEnergy d) hc ho).symm
     _ = latticeTheta D τ * (∑' d : Exponent D, q ^ oscillatorEnergy d) := by
       congr 1
       exact tsum_congr (charge_power_eq_exp D hD τ)
@@ -312,8 +324,8 @@ theorem actual_ordinary_series (D : LatticeData)
         (∑' d : Exponent D, exp (2 * Real.pi * I * τ) ^ oscillatorEnergy d)) := by
   classical
   let q := exp (2 * Real.pi * I * τ)
-  letI (N : ℕ) : Finite (NaturalEnergyFiber D N) := naturalEnergyFiber_finite D hD N
-  letI (N : ℕ) : Fintype (NaturalEnergyFiber D N) := Fintype.ofFinite _
+  haveI (N : ℕ) : Finite (NaturalEnergyFiber D N) := naturalEnergyFiber_finite D hD N
+  haveI (N : ℕ) : Fintype (NaturalEnergyFiber D N) := Fintype.ofFinite _
   have hfiber (N : ℕ) :
       (∑' a : NaturalEnergyFiber D N, q ^ totalDegree D a.1) =
         (actualOrdinaryCoefficient D H N : ℂ) * q ^ N := by
@@ -386,12 +398,16 @@ theorem actual_ordinary_character (D : LatticeData)
         mul_left_comm _ _ _
       _ = latticeTheta D τ * (1 / (ModularForm.eta τ) ^ D.rank) := by
         rw [normalized_unsigned_eq_eta D τ hτ]
-      _ = _ := by simp only [one_div, div_eq_mul_inv]
+      _ = _ := by simp only [div_eq_mul_inv, one_mul]
   have hsum' := hsum.mul_left c
   rw [heval] at hsum'
   refine ⟨hnorm', hsum', ?_⟩
   unfold actualOrdinaryCharacter
   rw [hsum.tsum_eq]
   exact heval
+
+#print axioms actualOrdinaryCoefficient_eq_card
+#print axioms actual_ordinary_series
+#print axioms actual_ordinary_character
 
 end D5.S3.VertexAlgebra.LatticeOrdinaryCharacter

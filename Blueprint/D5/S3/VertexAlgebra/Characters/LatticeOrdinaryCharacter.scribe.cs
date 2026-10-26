@@ -31,16 +31,20 @@ internal sealed class LatticeOrdinaryCharacterDocument : IScribeDocumentDefiniti
             Theorem("ordinary-character", "actual_ordinary_character", "Actual ordinary character equals theta over eta to the rank",
                 "For arbitrary LatticeData D, a complex inverse Gram matrix H satisfying both inverse equations, a positive definite real Gram matrix and tau in the upper half-plane, the vacuum-shifted series of literal Sugawara eigenspace finranks is absolutely summable, has sum latticeTheta D tau divided by eta(tau)^rank, and the defined actualOrdinaryCharacter has that value. The unsigned occupation Euler product and eta nonvanishing evaluate the oscillator factor."),
             Paragraph(Text("All natural energies including zero and every rank including zero are in scope. The unsigned occupation helpers hold for every norm q less than one, including q zero. Rootlessness, unimodularity, rank parity and positive rank are not hypotheses. The reflecting trace character in LatticeThetaCharacter is a separate insertion-dependent quantity.")),
-            Paragraph(Text("The ordinary lattice character formula is classical. Mathematical context is the lattice Fock construction of Frenkel-Lepowsky-Meurman, Vertex Operator Algebras and the Monster, and the lattice construction in Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1, section 4.1. This proof reuses the canonical actual Sugawara grading, Gaussian convergence, AnalyticIntegerOccupation majorant, AnalyticOddOccupation Euler expansion and Mathlib Dedekind eta product with their original attribution and licenses. No literature novelty is claimed.")),
+            Paragraph(Text("The ordinary lattice character formula is classical. Mathematical context is the lattice Fock construction of Frenkel-Lepowsky-Meurman, Vertex Operator Algebras and the Monster, and the lattice construction in Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1, section 4.1. The existing FLM Library note verifies the bibliographic identity; the book full text was not inspected. Bakalov-Kac section 4.1 is the construction context. This proof reuses the canonical actual Sugawara grading, Gaussian convergence, AnalyticIntegerOccupation majorant, AnalyticOddOccupation Euler expansion and Mathlib Dedekind eta product with their original attribution and licenses. No literature novelty is claimed.")),
             Paragraph(Text("This establishes the ordinary analytic character of the existing lattice algebra and grading. It does not establish a Monster action, orbifold, modular-object or cusp-holomorphy theorem, sewing, string theory or AdS/CFT.")))));
 
     private static DocumentBlock Theorem(string id, string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice"),
+                LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Definition(string id, string name, string title, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice"),
+                LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
