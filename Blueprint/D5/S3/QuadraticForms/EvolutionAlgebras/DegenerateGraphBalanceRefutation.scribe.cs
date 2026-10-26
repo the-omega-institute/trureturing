@@ -78,9 +78,11 @@ internal sealed class DegenerateGraphBalanceRefutationDocument : IScribeDocument
     private static Formula Generator(Formula ideal) => App(Seq(Name("Submodule"), Dot,
         Name("IsPrincipal"), Dot, Name("generator")), ideal);
     private static DocumentBlock.Describe Desc(string name, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     public DocumentDefinition Create()
     {
@@ -127,6 +129,8 @@ internal sealed class DegenerateGraphBalanceRefutationDocument : IScribeDocument
                     AssessedProvenance.FromLiterature(Survey)),
                 Desc("result", new Formula.Not(Parenthesized(WholeClaim)),
                     "In the first graph the arrows are 0→1, 1→0, 1→2 and 2→3. The heights (0,1,0,1) in ZMod 2 increase along every arrow; telescoping along every closed signed path forces even balance. The directed two-cycle has balance two, so the graph balance is two. The second graph adds 1→3. Its path 1→2→3←1 has balance one, so its graph balance is one. Both bases are natural over every field. Specializing to the rational field contradicts the universal equality. The mechanism is the shear through the annihilator, which changes square-support coordinates while preserving the mixed-product equations. This addresses the final assertion of Question 27.",
-                    AssessedProvenance.FromRepo(Survey, Balance), DescribeRole.Theorem))));
+                    AssessedProvenance.FromRepo(Survey, Balance), DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("kmv27-evobalance"),
+                        ResolutionKind.Refuted)))));
     }
 }

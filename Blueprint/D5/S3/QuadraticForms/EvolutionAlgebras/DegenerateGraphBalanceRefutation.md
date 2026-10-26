@@ -84,6 +84,10 @@ $$\neg (\forall (k : \operatorname{Type}), ([\operatorname{Field}\left(k\right)]
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/DegenerateGraphBalanceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kmv27-evobalance` (refuted) by `D5/S3/QuadraticForms/EvolutionAlgebras/DegenerateGraphBalanceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kmv27-evobalance","declaration_gid":"D5/S3/QuadraticForms/EvolutionAlgebras/DegenerateGraphBalanceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
