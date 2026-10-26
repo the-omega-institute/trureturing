@@ -22,9 +22,7 @@ internal sealed class IntegerLeechDocument : IScribeDocumentDefinition
             Node("claim-5", "pairing_integral", "The scaled pairing is integral",
                 "Polarization, the derived additive closure and divisibility of all three squared norms by sixteen imply divisibility of the coordinate dot product by eight.", DescribeRole.Theorem),
             Node("claim-6", "minimum_norm", "Exact minimum four from actual encoded Golay words",
-                "This theorem consumes the constructed Golay linear image and its proved double evenness and minimum weight. Twice the zero-one lift of its encoded octad is an admissible nonzero vector with square sum 32. Every nonzero admissible vector has square sum at least 32, so dividing by eight gives exact squared minimum four.", DescribeRole.Theorem),
-            Node("claim-7", "euclidean_scaling", "The specified Euclidean scaling",
-                "Coordinate division by the real square root of eight gives the same real squared norm as the rational square sum divided by eight. Rank, unimodularity, uniqueness and all VOA, CFT or Monster realization claims remain outside this result.", DescribeRole.Theorem))));
+                "This theorem consumes the constructed Golay linear image and its proved double evenness and minimum weight. Twice the zero-one lift of its encoded octad is an admissible nonzero vector with square sum 32. Every nonzero admissible vector has square sum at least 32, so dividing by eight gives exact squared minimum four. Coordinate division by the real square root of eight gives the same real squared norm as the rational square sum divided by eight. Rank, unimodularity, uniqueness and all VOA, CFT or Monster realization claims remain outside this result.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string declaration, string heading, string prose,
         DescribeRole role) => Describe.Lean(
