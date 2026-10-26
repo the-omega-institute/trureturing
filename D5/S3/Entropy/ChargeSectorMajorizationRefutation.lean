@@ -78,7 +78,9 @@ private lemma global_majorizes : Majorizes (desc r) (desc s) := by
 
 private lemma sector_weights :
     sectorWeight r chargeData 0 = 3/5 ∧ sectorWeight s chargeData 0 = 3/5 := by
-  sorry
+  constructor
+  · norm_num [sectorWeight, r, chargeData, Fin.sum_univ_succ]
+  · norm_num [sectorWeight, s, chargeData, Fin.sum_univ_succ]
 
 private lemma sector_spectra :
     sectorSpectrum r chargeData 0 = [1/2, 1/2] ∧
