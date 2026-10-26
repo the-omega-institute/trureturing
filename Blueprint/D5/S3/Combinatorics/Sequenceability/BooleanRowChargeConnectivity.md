@@ -1,0 +1,30 @@
+# Connectivity of original minimal zero supports
+
+## Abstract
+
+Two-torsion connects original minimal zero supports through nonterminal intersections.
+
+**Theorem 1.1 (A two-charge connectivity inference).**
+
+Lean statement: `D5/S3/Combinatorics/Sequenceability/BooleanRowChargeConnectivity.two_charge_supports_connected`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Sequenceability/BooleanRowChargeConnectivity.two_charge_supports_connected` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let Y be a finite set of original indices and let f label them in any additive commutative group. Let E contain exactly the proper subsets of Y that are inclusion-minimal nonempty coefficient-one zero supports for the original labels. The graph supportIntersectionGraph has every member of E as a vertex. Distinct vertices are adjacent exactly when they share an original index other than q. If f(q)+f(q)=0, any two vertices containing q have equal connected components. There is no finiteness assumption on the label group or ambient index type, and no injectivity, nonzero-label, incidence or fixed support-size hypothesis.
+
+Suppose the two components differ. Their supports can intersect only at q. Minimality gives a non-q index i in the second support: otherwise that support is contained in the first, forcing equality. Delete q from their union. Its two disjoint erased pieces have sums -f(q), so the union has sum zero. It is nonempty and proper in Y. Apply the original DisjointMinimalZeroOrdering.zero_decomposition to this set, preserving the original recursive proof. Its union cover supplies an original minimal zero support B containing i. Every such block is a proper subset of Y and hence a vertex of E. Sharing i joins B to the second support. Any intersection of B with the first would join the separated components. Thus B lies in the second support; minimality forces equality, contradicting the exclusion of q. Pairwise disjointness of the decomposition is not used.
+
+All vertices remain available along a path. In particular, with three indices, all labels one in ZMod 2, and Y the full index set, E consists of the three two-element supports. The two q-containing vertices connect through the third, q-free support. The induced graph on only the q-containing vertices is disconnected. The theorem therefore makes no induced-connectivity claim.
+
+For the original integer row lattice M, take f(i)=M.mkQ(Pi.single i 1). The sum of these labels over a support is M.mkQ of its coefficient-one Boolean row. Consequently the original Complete predicate and its inclusion-minimality yield exactly the original MinimalZeroSupport vertices, with no coordinate identifications. Membership of twice the singleton row at q in M gives f(q)+f(q)=0. Under the separate original incidence-at-most-two hypothesis, two distinct rows sharing a non-q index force its incidence to equal two; this intersection graph then equals the ordinary graph that records twice-occurring original indices. These are applications of the general inference, not additional retained specialization theorems.
+
+The support argument adapts Section 2 of the saved native single-ternary proof, SHA256 485b60f2f519cb1000e89ed96c65fe88c5667e689cb804c9d9ccf3838bf18740, as preserved in OriginalTwoChargeExclusion.lean, SHA256 228676b458e43ce51613181e7f39084f1f12e603f0408ee1b2a050c8dd8a4a16. The arbitrary-group formulation removes unnecessary draft hypotheses. Repository, pinned-mathlib and targeted external searches did not supply this complete inference; this is source attribution, not a literature novelty claim. The full-source four-slot escape registration is unfinished: the dependent component-map readout still lacks compiled source reconstruction, whole-family variation, sensitivity and observational-dependence evidence. This concrete gap is recorded in https://github.com/the-omega-institute/trureturing/issues/22244; no declared_validated registration is claimed. Full original Good, its unrestricted blocker, arbitrary-r residual and AM remain open.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Sequenceability/BooleanRowChargeConnectivity.two_charge_supports_connected`
+- Dependency: [D5/S3/Combinatorics/Sequenceability/DisjointMinimalZeroOrdering](DisjointMinimalZeroOrdering.md)
