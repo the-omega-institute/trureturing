@@ -4418,3 +4418,538 @@ and an eigenvalue-phase limit are not conclusions of these partial
 results; Application 24.6 remains a conditional implication.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Uniform opposite-weight correction of the original wall family
+
+**Definition 30.1 (unchanged premises and the auxiliary graph forms).**
+Assume exactly original Definition 18.1 at
+[d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+with C and V at 5cec4fa83ae7bbb4e787c42606525db4cd11ed48 as fixed
+in its Definition 1.1. Thus the analytic premises are the original-field
+formulas and locally uniform off-pole convergence of its Theorem 10.2,
+its full complex polar identity (12.12)--(12.13), V's closed natural
+angular form and compact embedding, natural-core approximation
+(13.6)--(13.8), complete-field scaling (14.9), and original closed form,
+compact smooth core and local estimates (15.9)--(15.12).
+Retain the identity unit source, raw measures, covariance-$2$ clock,
+complete time integral and whole unweighted omitted fibre in (26.1),
+with $\epsilon=1$, and precisely the original $U,V,Z$, $M_{n,1}$,
+$\mathcal H_1$, $q_{\rm orig}$ and Friedrichs realization in (26.2).
+The full integer angular domains are still $D_m$ in original (18.1).
+All conclusions of this section are ordinary conditional analysis
+under these premises.
+
+Fix any $n\ge2$ and $g\in(\lambda_n,g_n^{\rm iso})$.
+Use $J,c,A,C,h,\lambda_0,\kappa,V_{\rm ev},s,\psi$ of (27.1),
+with $C[\psi]=1$, and $W,\beta,\delta_W$ of Theorem 28.2.
+In particular $\|b\|_{\mathcal H_c}^2=A[b]+\|b\|_2^2$;
+unsubscripted angular pairings use unweighted $da$.
+Choose $0<\delta\le\delta_W$ with $\delta<1/2$ and
+$\delta^2<\kappa/4$. Choose the smooth weight of Definition 28.1
+at this $\delta$, and write $\sigma=e^{-\varphi}$, $\lambda=\log\sigma$.
+Thus $\sigma=e^{\delta x}$ on $x\le-2$, $\sigma=1$ on $x\ge2$,
+$|\lambda'|\le\delta$, and its needed derivatives are bounded.
+The injective comparison map in (28.3), (28.13)--(28.17) is exactly
+$Y\mapsto p_*(\sigma Y,\sigma^{-1}\,\cdot)$ at this allowed weight.
+
+Use the continuation (25.9): $\eta_L(\ell)=L+\chi(\ell-L)$,
+where $\chi=0$ on $(-\infty,0]$, $\chi(x)=x$ on $[1,\infty)$,
+$\chi\ge0$ and $|\chi'|\le H$. For sufficiently large fixed $L>0$, put
+
+$$
+\begin{aligned}
+t(\ell)&=e^{-2\eta_L(\ell)},& \widetilde B(\ell)&=B_n(\eta_L(\ell)),
+&S&=e^{-2L},\\
+0<t&\le S,& |t'|&\le2Ht,&
+\|\widetilde B\|_\infty+\|\widetilde B'\|_\infty&\le C_B't.
+\end{aligned}
+\tag{30.1}
+$$
+
+These are consequences of (27.3). Both coefficients agree with the
+original ones for $\ell\ge L+1$; the continuation below that radius
+is auxiliary. Set $t_T(x)=t(T+x)$, $B_T(x)=\widetilde B(T+x)$ and
+$D=\nu(\partial_x-1)+4c\partial_a$, $\nu=2\sin a$.
+Let $X_T$ be the completion of compact longitudinal finite natural
+tensors in the entire even angular space for the norm
+
+$$
+\|Y\|_{X_T}^2=\int_{\mathbb R}
+ \{C[Y_x]+A[Y]+t_T\|DY\|_2^2+e^{2x}\|Y\|_2^2\}\,dx.
+\tag{30.2}
+$$
+
+Write $X_*$ for the same completion with the central term omitted;
+its norm is equivalent to (28.2). On compact tensors define
+
+$$
+\begin{aligned}
+p_T(u,z)&=p_*(u,z)+\int\{t_T\langle Du,Dz\rangle
+                                  -g\langle B_Tu,z\rangle\}\,dx,\\
+b_T^+(Y,Z)&=p_T(\sigma^{-1}Y,\sigma Z),&
+b_T^-(Y,Z)&=p_T(\sigma Y,\sigma^{-1}Z).
+\end{aligned}
+\tag{30.3}
+$$
+
+The bounded polarized expansions define these maps on $X_T$:
+for $b_T^+$ the derivative pair is
+$(Y_x-\lambda'Y,Z_x+\lambda'Z)$ and the central pair is
+$(DY-\lambda'\nu Y,DZ+\lambda'\nu Z)$; for $b_T^-$ both
+signs reverse. The $h$, source and unweighted mass pairings are
+unchanged. All constants below may depend on the fixed $n,g,L$.
+
+**Proposition 30.2 (graph realization and the uniform compact remainder).**
+For sufficiently large $L$, (30.2) has an injective distributional
+realization, (30.3) is a uniformly bounded adjoint pair
+$X_T\to X_T^*$, and for both signs there are one bounded interval
+$I$ and $C_0$, independent of $T$, such that
+
+$$
+\|Y\|_{X_T}\le C_0\bigl(\|b_T^\pm Y\|_{X_T^*}
+                              +\|Y\|_{L^2(I;C)}\bigr).
+\tag{30.4}
+$$
+
+Restriction to $L^2(I;C)$ is compact on bounded sets of $X_*$.
+
+Proof. Closed angular and longitudinal derivatives identify limits
+in (30.2) distributionally. In particular $A$ controls unweighted
+$Y$ and $cY_a$. On every compact $x$ interval $t_T>0$ for fixed $T$;
+$\nu Y_x=DY-4cY_a+\nu Y$ then controls the unweighted longitudinal
+derivative near the angular endpoints, while $C[Y_x]$ controls it
+away from them. Thus a zero distribution has zero graph norm.
+Multiplication by a smooth longitudinal cutoff is bounded.
+For $Y=a\psi+v$, $a=C(Y,\psi)$, the $C$ projection is bounded:
+$a,a_x$ are controlled by $C[Y],C[Y_x]$, and
+$D(a\psi)=\nu\psi a_x+(4c\psi_a-\nu\psi)a$ has unweighted
+$L^2$ norm bounded by $|a_x|+|a|$, by (24.10).
+The central norm of this scalar part is $O(S)$ times its squared
+$H^1$ norm. Together with (28.7) at $\theta=1$, this gives uniform
+equivalence with scalar $H^1$ plus the full complementary graph
+norm, retaining the split and unsplit unweighted wall mass.
+Bounded $\lambda'$ gives uniform boundedness of the expansions.
+Hermiticity of $p_T$ gives $b_T^-(Y,Z)=\overline{b_T^+(Z,Y)}$.
+
+To prove (30.4), first omit the wall mass on the whole line and
+replace $\lambda'$ by either constant $\pm\delta$. Use the full space
+$H_T$ with squared norm $\int(C[Y_x]+A[Y]+t_T\|DY\|_2^2)$.
+The scalar unperturbed multiplier is
+$\xi^2\pm2i\delta\xi-\delta^2-s^2$. Its modulus divided by
+$1+\xi^2$ has positive infimum: a real zero would have $\xi=0$,
+where the real part is $-\delta^2-s^2$, and the quotient tends to
+one at infinity. Plancherel gives an $H^1\to H^{-1}$ isomorphism.
+The complementary block, including its entire central term, has
+real diagonal at least
+
+$$
+\int\left\{C[v_x]+
+ \left(\kappa-\delta^2-
+       \frac{(4\delta^2+gC_B')S}{\lambda_0}\right)A[v]
+                  +t_T\|Dv\|_2^2\right\}\,dx.
+\tag{30.5}
+$$
+
+For small $S$ this dominates the same expression with coefficient
+$\kappa/2$ before $A[v]$. The coercive Hilbert-space argument,
+with the identical adjoint estimate, gives a uniform inverse on
+the full complementary graph space. The scalar central/source
+self block has norm $O(S)$, and both scalar/complement cross
+blocks have norm $O(\sqrt S)$, using the displayed formula for
+$D(a\psi)$ and Cauchy--Schwarz in the central norm. A Neumann
+series therefore gives a uniform inverse of the whole no-mass left
+model on $H_T$. The unbounded central form has remained in the
+complementary diagonal throughout this argument.
+
+For the global forms the real diagonal is exactly
+
+$$
+\operatorname{Re}b_T^\pm(Y,Y)=\int\{C[Y_x]+h[Y]+t_T\|DY\|_2^2
+ +e^{2x}\|Y\|_2^2-(\lambda')^2(C[Y]+t_T\|\nu Y\|_2^2)
+                          -g\langle B_TY,Y\rangle\}\,dx.
+\tag{30.6}
+$$
+
+Coercivity on $V_{\rm ev}$ and small $S$ control all complementary
+terms. The remaining negative scalar term is absorbed by the
+positive unweighted mass on a fixed sufficiently remote right
+half-line, using (28.7). Hence for fixed large $R$,
+
+$$
+\|Y\|_{X_T}^2\le C\left(\operatorname{Re}b_T^\pm(Y,Y)
+                                      +\int_{x<R}|a|^2\,dx\right).
+\tag{30.7}
+$$
+
+Take a cutoff $\zeta$ equal to one on $x<-R-1$ and zero on $x>-R$,
+with $R>2$. Apply the left-model inverse to $\zeta Y$.
+On its support the omitted mass has norm $O(e^{-2R})$ on $H_T$
+and is absorbed. A cutoff $H_T$ test has uniformly bounded $X_T$
+norm. In the $C$ commutator integrate the term containing $Y_x$
+once onto the test; only $Y$ and the test's first derivative remain.
+For the central commutator use $D^*=-D$ in $dx\,da$:
+$(4c)_a=-2\nu$ gives this identity, and the endpoint term
+$4cY\overline Z$ vanishes first on the natural core and then by
+closure. Its derivative-on-test term and remainder have the form
+
+$$
+2\int t_T\zeta'\langle\nu Y,DZ\rangle\,dx
+       +\int t_T\langle K_T^\pm(x,a)Y,Z\rangle\,dx,
+\qquad \|K_T^\pm\|_\infty\le C,
+\tag{30.8}
+$$
+
+supported on a fixed compact interval: the coefficients use
+$t_T'/t_T$, $\zeta',\zeta''$, $\nu,\nu_a$ and $\lambda'$,
+all bounded. Thus the entire commutator is bounded by
+$C(\|Y\|_{L^2(I;C)}+\sqrt S\|Y\|_{L^2(I;da)})\|Z\|_{H_T}$,
+without a derivative of $Y$. Crucially, interpolation (24.9) gives,
+for any $\varepsilon>0$, a bound
+$\varepsilon\|Y\|_{X_T}+C_\varepsilon\|Y\|_{L^2(I;C)}$
+for its coefficient. The left inverse consequently bounds
+$\|\zeta Y\|_{H_T}$ by this expression plus
+$C\|b_T^\pm Y\|_{X_T^*}$. On the remaining bounded part of
+$x<R$, $|a|^2\le C[Y]$. Insert this bound in (30.7), use Young's
+inequality, and absorb the chosen $\varepsilon$ to obtain (30.4).
+Both signs have the same real diagonal and conjugate scalar
+multipliers, so the argument applies to each.
+
+Finally the finite spectral projections of Proposition 24.3's
+positively shifted weighted angular realization approximate the
+$C$ norm uniformly on bounded $A$ sets. Their longitudinal
+coefficients are bounded in $H^1(I)$ by $C[Y_x]$ and are compact
+in $L^2(I)$. The uniformly small angular remainder proves the
+claimed compact restriction. These projections serve only this
+compactness argument; every complementary mode remains in the
+forms. The intermediate Hilbert, Fourier and Neumann-series tools
+are those used in Theorem 28.2 (Folland, Chapters 5 and 8); local
+Rellich compactness is applied to the displayed finite coefficients.
+$\square$
+
+**Proposition 30.3 (the auxiliary adjoint lower bound and a real right inverse).**
+There exist $T_0,c_0>0$ such that for every $T>T_0$,
+
+$$
+\|b_T^-Z\|_{X_T^*}\ge c_0\|Z\|_{X_T}.
+\tag{30.9}
+$$
+
+Consequently $b_T^+$ has a real-preserving right inverse of norm
+at most $c_0^{-1}$. Its kernel is allowed.
+
+Proof. Failure of (30.9) gives $T_j\to\infty$ and
+$\|Z_j\|_{X_{T_j}}=1$, $\|b_{T_j}^-Z_j\|\to0$.
+By (30.4) their local $C$ norms are bounded below. They are bounded
+in the fixed space $X_*$; pass to a weak subsequence there and,
+by the compact restriction, a strong local $C$ subsequence.
+Its limit $Z$ is nonzero. On each fixed compact interval,
+$t_{T_j},B_{T_j}\to0$ uniformly. For any fixed compact natural
+tensor test, the central pairing tends to zero: its factor
+$\sqrt{t_{T_j}}DZ_j$ is bounded, while the weighted derivative
+factor of the fixed test tends to zero. The conjugated central
+lower-order terms satisfy the same estimate; the source term
+vanishes by (30.1). The base terms pass weakly to the limit.
+Thus $p_*(\sigma Z,\sigma^{-1}z)=0$ on the tensor core and,
+by boundedness and density, on $X_*$. This is exactly the
+injective map (28.3), (28.13)--(28.17), so $Z=0$, a contradiction.
+This argument proves the bound for all sufficiently large $T$.
+
+Identify the antidual with $X_T$ by its Riesz map, and call the
+operator representing $b_T^-$ $\mathcal A_T$. Then
+$\mathcal A_T^*\mathcal A_T\ge c_0^2I$, and
+
+$$
+\mathcal R_T=\mathcal A_T
+       (\mathcal A_T^*\mathcal A_T)^{-1},\qquad
+\mathcal A_T^*\mathcal R_T=I,\qquad
+\|\mathcal R_T\|\le c_0^{-1}.
+\tag{30.10}
+$$
+
+This is a right inverse for $b_T^+$ after the Riesz identification.
+Real coefficients, the real core and the real Riesz structure make
+it preserve real data. Only the auxiliary decaying-left map
+$b_T^-$ is bounded below. No inverse of an original exterior or
+Friedrichs operator is asserted; all its permitted kernels and
+zero-energy resonances remain allowed. No inner boundary condition
+is used in the artificial-left construction. $\square$
+
+**Proposition 30.4 (the weighted full residual and differentiated control).**
+The functional $F_T(Z)=-p_T(W,\sigma Z)$, initially on compact tests,
+extends to $X_T^*$ and, for fixed small $h_0>0$, satisfies
+
+$$
+\|F_T\|_{X_T^*}+
+ \sup_{0<|h|<h_0}\left\|\frac{\tau_hF_T-F_T}{h}\right\|_{X_T^*}
+                  \le C_L e^{-\delta T}.
+\tag{30.11}
+$$
+
+Here $\tau_hu(x)=u(x+h)$ and $(\tau_hF)(Z)=F(\tau_{-h}Z)$;
+translated graph norms are uniformly equivalent for $|h|<h_0$.
+
+Proof. First extract the needed regularity from the actual wall
+construction (28.18)--(28.20). Write its weighted correction as
+$Y_*$. Its explicit forcing $G$ has bounded translation derivatives
+through order two in $X_*^*$, indeed through every fixed order:
+the compact cutoff part is smooth, and its left mass part decays
+like $e^{(2-\delta_W)x}$. The conjugated base form has bounded
+first and second coefficient derivatives as $X_*\to X_*^*$;
+this includes the exact derivatives of $e^{2x}$.
+Theorem 28.2 gives $Y_*,Y_{*x}\in X_*$. Differentiating its
+equation once gives forcing $G_x-b_*'Y_*$, whose first difference
+quotients are bounded by $G_{xx}$, $b_*''Y_*$ and $b_*'Y_{*x}$.
+Apply (28.13)--(28.14) to the quotients of $Y_{*x}$.
+Their compact remainder is controlled by the local $C$ norm of
+$Y_{*xx}$, already contained in $\|Y_{*x}\|_{X_*}$.
+Weak compactness and distributional identification give
+$Y_{*xx}\in X_*$. Thus on the left, $W,W_x$ are their bounded
+standing parts plus $e^{\delta_Wx}$ remainders with values and
+first derivatives in $L^2(\mathcal H_c)$. On every finite right
+tail the corresponding quantities are in $L^2(\mathcal H_c)$.
+In particular $DW,DW_x$ have the required unweighted integrability,
+using (29.8). No angular derivative of the source was required.
+
+The comparison equation cancels the base terms, giving precisely
+the residual of (29.6) with the continuation coefficients:
+
+$$
+F_T(Z)=-\int\{t_T\langle DW,D(\sigma Z)\rangle
+                              -g\langle B_TW,\sigma Z\rangle\}\,dx.
+\tag{30.12}
+$$
+
+Since $D(\sigma Z)=\sigma(DZ+\lambda'\nu Z)$, Cauchy--Schwarz
+reduces its norm, and its differentiated norm, to the square roots
+of the following integrals, for $j=0,1$:
+
+$$
+\begin{aligned}
+&\int\sigma^2t_T
+ (\|D\partial_x^jW\|_2^2+\|\partial_x^jW\|_2^2)\,dx\\
+&\quad\le C e^{-2\delta T}\int_{\mathbb R}q_L(\ell)
+ (\|D\partial_x^jW(\ell-T)\|_2^2
+                         +\|\partial_x^jW(\ell-T)\|_2^2)\,d\ell,
+\qquad q_L(\ell)=t(\ell)e^{2\delta\ell}.
+\end{aligned}
+\tag{30.13}
+$$
+
+Here $\sigma(x)\le Ce^{\delta x}$. The function $q_L$ is bounded
+and integrable: it is $Se^{2\delta\ell}$ far left and
+$e^{-2(1-\delta)\ell}$ far right. The standing parts contribute
+at most a constant times $\int q_L$; the extracted left remainders
+contribute their $L^2$ norms times a bounded factor, and the
+right-tail terms contribute their $L^2$ norms times $\|q_L\|_\infty$.
+Thus the last integrals are uniformly bounded in $T$.
+The source pairing has $t_T^2$ in place of $t_T$, and $t_T\le S$.
+Differentiating (30.12) introduces only $W_x,DW_x$, bounded
+weight derivatives, $t_T'$ and $B_T'$, controlled by (30.1) and
+the same $j=1$ estimate. This proves the distributional derivative
+bound. Finally $t_T(x+h)/t_T(x)\le e^{2H|h|}$ and the wall-mass
+ratio is $e^{2h}$; translations are uniformly bounded in $X_T$.
+Integrating the derivative estimate along these translations proves
+(30.11), including its difference-quotient assertion. $\square$
+
+**Proposition 30.5 (exact correction and both continuous strong traces).**
+For every $T>T_0$ there is a real $Y_T$ such that, with
+$r_T=\sigma^{-1}Y_T$,
+
+$$
+\begin{aligned}
+b_T^+Y_T&=F_T,& p_T(W+r_T,z)&=0
+                    \quad\hbox{for every compact even natural test }z,\\
+\|Y_T\|_{X_T}+\|Y_{Tx}\|_{X_T}&\le C_L e^{-\delta T},\\
+\|r_T(x)\|_{\mathcal H_c}+\|r_{Tx}(x)\|_C
+ &\le C_L e^{-\delta(T+x)}\qquad(x\le-2).
+\end{aligned}
+\tag{30.14}
+$$
+
+Both correction traces have continuous representatives in the
+displayed slice spaces.
+
+Proof. Apply the real right inverse (30.10) to (30.11).
+For a compact $z$ use $Z=\sigma^{-1}z$ in (30.3) and (30.12)
+to obtain the exact equation. Translation of $b_T^+Y_T=F_T$ gives
+
+$$
+\left\|b_T^+\frac{\tau_hY_T-Y_T}{h}\right\|_{X_T^*}
+ \le C\|Y_T\|_{X_T}+C_L e^{-\delta T}.
+\tag{30.15}
+$$
+
+Indeed all coefficient errors are bounded on the actual graph
+space by (30.1), bounded weight derivatives and the derivative of
+$e^{2x}$. No central derivative is treated as a bounded base-space
+perturbation. Apply (30.4) to these quotients. Their compact term
+is at most $\|Y_{Tx}\|_{L^2(I+[-1,1];C)}$, already controlled
+by $\|Y_T\|_{X_T}$. Hence the quotients are uniformly
+$O(e^{-\delta T})$ in $X_T$. Their weak limits equal the
+distributional $Y_{Tx}$, proving its graph bound without assuming
+an inverse for $b_T^+$.
+
+It follows that $Y_T\in H^1(\mathbb R;\mathcal H_c)$ and
+$Y_{Tx}\in H^1(\mathbb R;L^2(J,c\,da))$, both with norm
+$O(e^{-\delta T})$. The Hilbert-valued norm-square identity and
+Cauchy--Schwarz, as in (25.21), give bounded continuous
+representatives with this same bound. On $x\le-2$,
+$r_T=e^{-\delta x}Y_T$ and
+$r_{Tx}=e^{-\delta x}(Y_{Tx}-\delta Y_T)$, proving (30.14).
+Smooth positive $\sigma$ gives local continuity on the remaining
+line as well. Thus neither strong trace is inferred merely from
+an averaged estimate. $\square$
+
+**Theorem 30.6 (one exact original family with the physical wall phase).**
+Under precisely Definition 30.1's original conditional premises,
+the joint exterior assertion in Definition 29.3 holds with
+$g_n^{\rm wall}=g_n^{\rm iso}$. More explicitly, for every integer
+$n\ge2$ this is a finite real number greater than $\lambda_n$;
+for every fixed real $g\in(\lambda_n,g_n^{\rm wall})$ there are
+one finite $R_0>1$, $E_0\in(0,1)$, one complex $\beta$ with
+$|\beta|=1$, and nonzero real axisymmetric $z$-even functions
+$f_E$ on $\Omega_{R_0}$ for every $0<E<E_0$, with all the following
+properties. The constants $R_0,E_0,\beta$ are independent of $E$.
+For every such $E$, every $\chi\in C_c^\infty(\Omega_{R_0})$
+satisfies $\chi f_E\in\mathcal H_1$, and
+
+$$
+q_{\rm orig}(f_E,\phi)+E\langle f_E,\phi\rangle_{L^2(d\xi)}=0
+\quad\bigl(\phi\in C_c^\infty(\Omega_{R_0};\mathbb C)\bigr).
+\tag{30.16}
+$$
+
+This includes all nonaxisymmetric original tests. For every finite
+$R_0<r_1<r_2$ and every smooth real radial cutoff $\eta$ on
+$\mathbb R^3$, $0\le\eta\le1$, equal to zero on $R_g\le r_1$
+and one on $R_g\ge r_2$, one has $\eta f_E\in\mathcal H_1$,
+including physical $L^2$ mass and all original $U,V,Z$ energies,
+with zero extension across the omitted boundary.
+No boundary value at $R_g=R_0$ is prescribed.
+
+In the actual coordinates (26.3), namely
+$R_g=((x^2+y^2)^2+16z^2)^{1/4}$,
+$\delta_r(x,y,z)=(rx,ry,r^2z)$ and
+$\omega(a,\theta)=(\sqrt{\cos a}\cos\theta,\sqrt{\cos a}\sin\theta,
+\sin a/4)$, set
+$w_E(\ell,a)=\sqrt{2\pi}e^\ell f_E(\delta_{e^\ell}\omega(a,\theta))$
+and $T_E=\tfrac12\log(1/E)$. There are continuous slice
+representatives of $w_E$ in $\mathcal H_c$ and its distributional
+longitudinal derivative in $L^2(J,c\,da)$. With the same $\beta$
+for every $E$, define
+
+$$
+\begin{aligned}
+\mathfrak r_E(\ell)&=
+ \|w_E(\ell)-2\operatorname{Re}(\beta e^{is(\ell-T_E)})\psi\|_{\mathcal H_c}\\
+ &\quad+\|\partial_\ell w_E(\ell)
+       -2\operatorname{Re}(is\beta e^{is(\ell-T_E)})\psi\|_C.
+\end{aligned}
+\tag{30.17}
+$$
+
+Then, with $K>\log R_0$ and the inner limit restricted to
+sufficiently small $E$ with $T_E>2K$,
+
+$$
+\lim_{K\to\infty}\limsup_{E\downarrow0}
+          \sup_{K\le\ell\le T_E-K}\mathfrak r_E(\ell)=0.
+\tag{30.18}
+$$
+
+Equivalently, for every $\varepsilon>0$ there is $K_0>\log R_0$
+such that for every $K\ge K_0$ there is
+$E_K\in(0,\min(E_0,e^{-4K}))$ for which every $0<E<E_K$ and
+every $\ell\in[K,T_E-K]$ satisfy $\mathfrak r_E(\ell)<\varepsilon$.
+The full even natural angular space, every higher even component,
+the complete source and the unweighted physical mass are retained.
+There is no genericity, exceptional-energy or resonance restriction,
+extra angular endpoint value or stronger original tail assumption.
+
+Proof. Choose $L$ satisfying Propositions 30.2--30.3 and put
+$R_0=e^{L+1}$. For $T_E>T_0$ define the same family throughout by
+
+$$
+w_E(\ell)=W(\ell-T_E)+r_{T_E}(\ell-T_E),\qquad
+f_E(\delta_{e^\ell}\omega)=\frac{e^{-\ell}}{\sqrt{2\pi}}w_E(\ell),
+\quad \ell>L+1.
+\tag{30.19}
+$$
+
+On this exterior the continuation equals $t=e^{-2\ell}$,
+$B=B_n(\ell)$, and $e^{2(\ell-T_E)}=Ee^{2\ell}$.
+Thus (30.14) is exactly the full original equation (27.2), with
+its central derivative, complete source and unweighted angular
+mass. Reality and the reducing symmetry are preserved.
+
+For each fixed $E$ and finite $b>L+1$, $\sigma^{-1}$ and its
+derivatives are bounded on $x\ge b-T_E$ and eventually equal
+one. The graph energies of $Y_{T_E}$ and (28.5), (29.8) give
+
+$$
+\int_b^\infty\{C[w_{E\ell}]+A[w_E]
+       +e^{-2\ell}\|Dw_E\|_2^2+e^{2\ell}\|w_E\|_2^2\}\,d\ell<\infty.
+\tag{30.20}
+$$
+
+For the last term use $e^{2\ell}=E^{-1}e^{2x}$: the finite
+fixed-$E$ factor is sufficient for physical membership, and the
+angular mass remains unweighted $da$. On compact intervals,
+$W+r_T$ is $H^1$ with values in $\mathcal H_c$, by (28.5) and
+(30.14). Approximate there by finite natural tensors and use
+original (13.6)--(13.8)'s angular core. Inequality (29.8), also
+applied to the approximating differences, controls the central
+term. The original-domain correspondence (24.14), (25.22) then
+gives compact smooth Cartesian free-norm approximants away from
+the axes and pole. Longitudinal truncations converge by all four
+positive integrals in (30.20). The original $U,V,Z$ product rules
+therefore give every stated radial tail and every compact exterior
+multiplier, with their full quantifiers.
+
+The cylinder images of compact axisymmetric even Cartesian tests
+belong to this local natural completion by the angular-core
+argument following (25.22). Thus (30.14) gives (30.16) for them.
+For an arbitrary complex compact exterior test, rotation averaging
+and then reflection averaging within $m=0$ preserve its pairing
+with $f_E$ and its support, by Proposition 24.4. This proves
+(30.16) for the whole original test class. The all-mode polar
+identities in V, (10.10)--(10.11), retain every original integer
+mode and natural endpoint; the reducing averages do not replace
+the full test class by a scalar operator.
+
+For $K\ge\max(2,L+1)$, $T_E>\max(T_0,2K)$ and
+$K\le\ell\le T_E-K$, (28.4) and (30.14) give
+
+$$
+\mathfrak r_E(\ell)\le Ce^{-\delta_WK}+C_Le^{-\delta\ell}
+                         \le (C+C_L)e^{-\delta K}.
+\tag{30.21}
+$$
+
+This proves exactly (30.18) and its eventual-all-small-$E$
+formulation; the continuous representatives follow from the two
+separate trace conclusions. To ensure nonzero for every small $E$,
+choose one fixed large $K$ with the last bound less than $1/2$,
+and shrink $E_0$ so every $0<E<E_0$ has
+$T_E>\max(T_0,2K+2\pi/s+1)$. The overlap contains a full period
+of the leading wave. At a point of leading amplitude two,
+$C[\psi]=1$ and (30.21) give $\|w_E\|_C>3/2$.
+Thus every member is nonzero, without passage to a subsequence.
+The choices $L,R_0,\beta,E_0$ depend only on the fixed $n,g$.
+They work for each pair throughout the entire open isolation
+interval, so $g_n^{\rm wall}=g_n^{\rm iso}$ is admissible.
+
+The source-specific correction (30.4)--(30.15) is a repository-derived
+deduction from (24.9), (27.1)--(27.3) and the comparison construction
+of Theorem 28.2. Its intermediate Riesz, adjoint, Fourier,
+compactness and difference-quotient tools are classical, as in
+Folland, *Real Analysis*, second edition, Chapters 5 and 8, and
+Evans, *Partial Differential Equations*, second edition, Chapter 5.
+Theorem 27.2's separate exact family is not identified with (30.19);
+(29.6)'s approximate residual is cancelled by the new correction.
+The functions in (30.19) are exterior functions: this theorem gives
+no extension through the original core, global operator-domain
+membership, graph-residual estimate, spectral exhaustion or
+eigenvalue-phase limit, and no uniformity in $n,g$. $\square$
+
+## 追加锚（本行以下为增补区）
