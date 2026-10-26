@@ -173,10 +173,13 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
   · intro i
     classical
     by_cases hi : d.value i = 0
-    · constructor
-      · simpa only [remainderSpectrum, dif_pos hi] using
+    · have hrem : remainderSpectrum d i = spectrum d := by
+        unfold remainderSpectrum
+        exact dif_pos hi
+      constructor
+      · simpa only [hrem] using
           (absolute_triple_sum hsum (spectrum_nonneg d)).1
-      · simp only [remainderSpectrum, dif_pos hi, hi, he]
+      · rw [hrem, hi, he]
         ring
     · have hj : spectrum d (d.embed ⟨i, hi⟩) = d.value i := by
         rw [spectrum, d.embed.injective.extend_apply]

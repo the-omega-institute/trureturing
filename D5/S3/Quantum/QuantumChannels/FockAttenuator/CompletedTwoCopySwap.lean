@@ -66,7 +66,7 @@ private theorem fock_pairs_total :
       (Submodule.subset_span ⟨(m, n), rfl⟩)
     change inner ℂ (fockPair m n) x = 0 at hi
     rw [fock_pair_single, lp.inner_single_left, lp.inner_single_left] at hi
-    simpa only [RCLike.inner_apply, map_one, one_mul] using hi
+    simpa only [RCLike.inner_apply, map_one, one_mul, mul_one] using hi
   have hz : x = 0 := by
     apply lp.ext
     funext n
@@ -127,8 +127,9 @@ private theorem four_permutation_repr
   simp only [fourPermutation, LinearIsometryEquiv.trans_apply,
     LinearIsometryEquiv.apply_symm_apply]
   change coordinateRename e.toEmbedding (fourBasis.repr x) p = _
-  simpa only [e.apply_symm_apply] using
-    coordinateRename_image e.toEmbedding (fourBasis.repr x) (e.symm p)
+  have h := coordinateRename_image e.toEmbedding (fourBasis.repr x) (e.symm p)
+  change coordinateRename e.toEmbedding (fourBasis.repr x) (e (e.symm p)) = _ at h
+  simpa only [e.apply_symm_apply] using h
 
 private def retainedPermutation : Equiv.Perm ((ℕ × ℕ) × (ℕ × ℕ)) where
   toFun p := ((p.2.1, p.1.2), (p.1.1, p.2.2))
@@ -217,6 +218,10 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
         environmentWeight p.2 * ‖fockBasis.repr v p‖ ^ 2 := by
   dsimp only
   simp only [differenceSwap, four_permutation_repr, four_basis_product]
+  change (∑' q : ℕ × ℕ, inner ℂ
+    (fockBasis.repr v p * fockBasis.repr TwoCopyEnvironment.rotatedEnvironment q)
+    (fockBasis.repr v (p.1, q.2) *
+      fockBasis.repr TwoCopyEnvironment.rotatedEnvironment (q.1, p.2))).re = _
   rw [tsum_eq_sum (s := ({(4, 0), (2, 2), (0, 4)} : Finset (ℕ × ℕ)))
     (fun q hq => by
       have h40 : q ≠ (4, 0) := fun h => hq (by simp [h])
@@ -231,30 +236,45 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
     Finset.sum_singleton]
   have hself (z a : ℂ) : (inner ℂ (z * a) (z * a)).re = ‖z‖ ^ 2 * ‖a‖ ^ 2 := by
     rw [inner_self_eq_norm_sq_to_K]
-    norm_cast
-    rw [norm_mul, mul_pow]
+    simp only [← Complex.ofReal_pow, Complex.ofReal_re, norm_mul, mul_pow]
+  have he4 (d : ℕ) : fockBasis.repr TwoCopyEnvironment.rotatedEnvironment (4, d) =
+      if d = 0 then ((Real.sqrt 6 / 4 : ℝ) : ℂ) else 0 := by
+    simp [environment_coefficient, Prod.mk.injEq]
+  have he2 (d : ℕ) : fockBasis.repr TwoCopyEnvironment.rotatedEnvironment (2, d) =
+      if d = 2 then (-1 / 2 : ℂ) else 0 := by
+    simp [environment_coefficient, Prod.mk.injEq]
+  have he0 (d : ℕ) : fockBasis.repr TwoCopyEnvironment.rotatedEnvironment (0, d) =
+      if d = 4 then ((Real.sqrt 6 / 4 : ℝ) : ℂ) else 0 := by
+    simp [environment_coefficient, Prod.mk.injEq]
+  simp only [he4, he2, he0]
+  have hb : ‖(-1 / 2 : ℂ)‖ ^ 2 = 1 / 4 := by norm_num [norm_div]
   rcases p with ⟨c, d⟩
   by_cases h0 : d = 0
   · subst d
-    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
-      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
-      hself, ha]
+    norm_num only [environmentWeight, ite_true, ite_false,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add]
+    change (inner ℂ (fockBasis.repr v (c, 0) * ((Real.sqrt 6 / 4 : ℝ) : ℂ))
+      (fockBasis.repr v (c, 0) * ((Real.sqrt 6 / 4 : ℝ) : ℂ))).re = _
+    rw [hself, ha]
     ring
   by_cases h2 : d = 2
   · subst d
-    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
-      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
-      hself, norm_div, norm_neg, norm_one, norm_ofNat]
+    norm_num only [environmentWeight, ite_true, ite_false,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add]
+    change (inner ℂ (fockBasis.repr v (c, 2) * (-1 / 2 : ℂ))
+      (fockBasis.repr v (c, 2) * (-1 / 2 : ℂ))).re = _
+    rw [hself, hb]
     ring
   by_cases h4 : d = 4
   · subst d
-    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
-      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
-      hself, ha]
+    norm_num only [environmentWeight, ite_true, ite_false,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add]
+    change (inner ℂ (fockBasis.repr v (c, 4) * ((Real.sqrt 6 / 4 : ℝ) : ℂ))
+      (fockBasis.repr v (c, 4) * ((Real.sqrt 6 / 4 : ℝ) : ℂ))).re = _
+    rw [hself, ha]
     ring
-  · simp only [differencePermutation, environment_coefficient, environmentWeight,
-      Prod.mk.injEq, h0, h2, h4, and_false, if_false, mul_zero,
-      inner_zero_right, add_zero, Complex.zero_re, zero_mul]
+  · norm_num only [environmentWeight, h0, h2, h4, ite_true, ite_false,
+      mul_zero, inner_zero_right, add_zero, zero_add, Complex.zero_re, zero_mul]
 
 /-- Completed-space swap compression against the actual rotated two-copy
 environment. Every center coordinate of v and every infinite tail is retained. -/
@@ -468,7 +488,8 @@ private theorem pair_map_norm (U : H2 ≃ₗᵢ[ℂ] H2) (x : FourModes) :
   intro t
   simp only [pairMap, twoCopyMap, ContinuousLinearMap.completion_apply_coe,
     UniformSpace.Completion.norm_coe]
-  exact (TensorProduct.congrIsometry U U).norm_map t
+  simpa only [TensorProduct.mapL_apply, TensorProduct.congrIsometry_apply,
+    TensorProduct.congr] using (TensorProduct.congrIsometry U U).norm_map t
 
 private def pairIsometry (U : H2 ≃ₗᵢ[ℂ] H2) : FourModes →ₗᵢ[ℂ] FourModes :=
   { (pairMap U).toLinearMap with norm_map' := pair_map_norm U }
@@ -620,16 +641,17 @@ theorem retained_swap_gram (w : H2) :
       dsimp only [F, x]
       rw [show retainedSwap = fourPermutation retainedPermutation from rfl,
         four_permutation_repr, four_basis_product, four_basis_product]
-      simp only [environmentFirst, retainedPermutation, fock_basis_repr,
-        RCLike.inner_apply, map_mul]
+      simp only [fock_basis_repr]
+      change inner ℂ (w jk.1 mn.1 * w jk.2 mn.2)
+        (w jk.1 mn.2 * w jk.2 mn.1) = _
+      simp only [RCLike.inner_apply, map_mul]
       ring
     simp_rw [hterm]
     rw [← hmul, hleft.tsum_eq, hright.tsum_eq]
-    rw [← inner_conj_symm (w jk.2) (w jk.1), RCLike.conj_mul]
+    rw [← inner_conj_symm (w jk.2) (w jk.1), RCLike.mul_conj]
   calc
     _ = ∑' p, F p := by
       rw [← fourBasis.repr.inner_map_map, lp.inner_eq_tsum]
-      rfl
     _ = ∑' p, F (environmentFirst.symm p) := (environmentFirst.symm.tsum_eq F).symm
     _ = ∑' jk, ∑' mn, F (environmentFirst.symm (jk, mn)) := hFr.tsum_prod
     _ = _ := tsum_congr hrow
@@ -670,12 +692,17 @@ private theorem reduced_square_gram (w : H2) :
   have hd := (summable_trace_diagonal_of_isTraceClass hD2 b).hasSum
   rw [← trace_eq_of_hilbertBasis hD2 b] at hd
   have hd' : HasSum (fun n : ℕ => (‖D (oneBasis n)‖ ^ 2 : ℂ)) (trace (D ^ 2) hD2) := by
-    have hn := e.hasSum_iff.mpr hd
-    simpa only [Function.comp_apply, hdiag, hb, Equiv.symm_apply_apply] using hn
+    apply HasSum.congr_fun (e.hasSum_iff.mpr hd)
+    intro n
+    change inner ℂ (b (e n)) ((D ^ 2) (b (e n))) = _
+    rw [hdiag, hb, Equiv.symm_apply_apply]
   have hnorm : Summable (fun n : ℕ => ‖D (oneBasis n)‖ ^ 2) := by
     have hn := e.summable_iff.mpr
       (summable_norm_sq_apply_of_hilbertBasis (Set.range oneBasis) b hDHS)
-    simpa only [Function.comp_apply, hb, Equiv.symm_apply_apply] using hn
+    apply hn.congr
+    intro n
+    change ‖D (b (e n))‖ ^ 2 = _
+    rw [hb, Equiv.symm_apply_apply]
   have hcol (n : ℕ) : C (oneBasis n) = w n := coefficient_column w n
   have hmatrix (n k : ℕ) : oneBasis.repr (D (oneBasis n)) k = inner ℂ (w k) (w n) := by
     rw [HilbertBasis.repr_apply_apply]
