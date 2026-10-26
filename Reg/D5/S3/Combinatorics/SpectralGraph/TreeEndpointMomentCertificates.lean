@@ -316,21 +316,22 @@ def family : Registration arena.{u,v} (type_of% (@tree_first_departure.{v,u})) w
       exact nomatch e
   dependence := dependence
 
-def registration.{v,u} :
+def registration.{rawV, rawK} :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
-      (@tree_first_departure.{v,u}) (Realization signature.{u,v}) Unit Unit where
+      (@tree_first_departure.{rawV,rawK}) (Realization signature.{rawK,rawV}) Unit Unit where
   unitName := `D5.S3.Combinatorics.SpectralGraph.TreeEndpointMomentCertificates.tree_first_departure.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.TreeEndpointMomentCertificates.Tree.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{rawK,rawV}⟩
+  objectArena := .source ⟨arena.{rawK,rawV}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{rawK,rawV} ⟨family.{rawK,rawV}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u,v} actual.readout actual.anchor)
+  readout := some (realize signature.{rawK,rawV} actual.{rawK,rawV}.readout
+    actual.{rawK,rawV}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
