@@ -16,6 +16,16 @@ internal sealed class OeisA347855BalaThirdIndexIntegralDocument : IScribeDocumen
                 "OEIS A347855, COMMENTS (unpaginated): \"The sequence is conjectured to be integral.\" Integrality means that for every natural index, including zero, the value is the cast of an integer.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("progression", All("n", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("progression" ,V("n")), RangeProd(V("n"), Add(V("n"), Mul(D(3), Add(V("k"), D(1))))))),
                 "The product of the n natural factors n+3(k+1), with k in Finset.range n.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("padic_finset_prod", All("iota", Named("Type"), All("p", Seq(Mathbb, Grp(F.Id("N"))), Seq(OpenBracket, Call("Fact", App(Q("Nat", "Prime"), V("p"))), CloseBracket, Comma, Sp,
+                All("S", Call("Finset", V("iota")), All("f", Seq(V("iota"), Sp, To, Sp, Mathbb, Grp(F.Id("N"))),
+                    Impl(All("i", V("iota"), Impl(Seq(V("i"), Sp, InMacro, Sp, V("S")), Seq(App(V("f"), V("i")), Sp, Neq, Sp, D(0)))),
+                        Eq(Call("padicValNat", V("p"), FinsetProd(V("S"), App(V("f"), V("i")))), FinsetSum(V("S"), Call("padicValNat", V("p"), App(V("f"), V("i"))))))))))),
+                "For a prime p and a finite family of nonzero natural factors, the valuation of the product is the sum of the valuations.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("padic_eq_card", All("p", Seq(Mathbb, Grp(F.Id("N"))), All("n", Seq(Mathbb, Grp(F.Id("N"))), All("b", Seq(Mathbb, Grp(F.Id("N"))), Seq(OpenBracket, Call("Fact", App(Q("Nat", "Prime"), V("p"))), CloseBracket, Comma, Sp,
+                Impl(Lt(D(0), V("n")), Impl(Lt(App(Q("Nat", "log"), V("p"), V("n")), V("b")),
+                    Eq(Call("padicValNat", V("p"), V("n")), App(Q("Finset", "card"), App(Q("Finset", "filter"),
+                        Lambda("k", Seq(Mathbb, Grp(F.Id("N"))), Dvd(new Formula.Power(V("p"), V("k")), V("n"))), App(Q("Finset", "Ico"), D(1), V("b"))))))))))),
+                "For positive n and b greater than Nat.log p n, the p-adic valuation counts the powers p^k dividing n with k in Finset.Ico 1 b.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("third_dvd", All("n", Seq(Mathbb, Grp(F.Id("N"))), Impl(Seq(Neg, Sp, Parenthesized(Dvd(D(3), V("n")))), Dvd(Mul(App(Q("Nat", "factorial"), Mul(D(2), V("n"))), Mul(App(Q("Nat", "factorial"), V("n")), Call("progression" ,V("n")))), App(Q("Nat", "factorial"), Mul(D(4), V("n")))))),
                 "When three does not divide n, the product of (2n)!, n! and progression n divides (4n)!. The prime three contributes no valuation to progression n; other primes are controlled by counts of divisible progression terms.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", ClaimBody(),
@@ -30,13 +40,17 @@ internal sealed class OeisA347855BalaThirdIndexIntegralDocument : IScribeDocumen
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
     private static Formula App(Formula f, params Formula[] args) => args.Length == 0 ? f : new Formula.Apply(f, [.. args]);
-    private static Formula Call(string name, params Formula[] args) => App(Named(name), args);
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Cast(Formula body, Formula type) => Parenthesized(Seq(body, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Ex(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Call(string name, params Formula[] args) => App(Named(name), args);
+    private static Formula Lambda(string variable, Formula type, Formula body) => Seq(Named("fun"), Sp, Parenthesized(Seq(V(variable), Colon, Sp, type)), Sp, Mapsto, Sp, body);
+    private static Formula FinsetProd(Formula set, Formula body) => Seq(new Formula.Subscript(Prod, Seq(V("i"), Sp, InMacro, Sp, set)), Sp, Parenthesized(body));
+    private static Formula FinsetSum(Formula set, Formula body) => Seq(new Formula.Subscript(Sum, Seq(V("i"), Sp, InMacro, Sp, set)), Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
 
     private static Formula Dvd(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);

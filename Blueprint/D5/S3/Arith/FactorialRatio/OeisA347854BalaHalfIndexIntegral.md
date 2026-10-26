@@ -240,7 +240,21 @@ $$\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; (0 < q) \implies (0 \l
 
 This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.
 
-**Theorem 1.20 (gamma_nat).**
+**Theorem 1.20 (gamma_shift_product).**
+
+$$\forall x \in \mathbb{R},\; (0 < x) \implies (\forall n \in \mathbb{N},\; \operatorname{Real}.\operatorname{Gamma}\left(x + (n: \mathbb{R})\right) = \operatorname{Real}.\operatorname{Gamma}\left(x\right) \cdot \prod_{k \in \operatorname{Finset}.\operatorname{range}\left(n\right)} (x + (k: \mathbb{R})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.gamma_shift_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
+
+*Commentary.*
+
+At every positive real x, shifting Gamma by a natural n multiplies Gamma x by the product of x+k for k in Finset.range n.
+
+**Theorem 1.21 (gamma_nat).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{Real}.\operatorname{Gamma}\left(1 + (n: \mathbb{R})\right) = (\operatorname{Nat}.\operatorname{factorial}\left(n\right): \mathbb{R})$$
 
@@ -254,7 +268,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{Real}.\operatorname{Gamma}\left(1 + 
 
 The Gamma value at one plus a natural number equals its factorial.
 
-**Theorem 1.21 (gamma_ratio_half).**
+**Theorem 1.22 (gamma_ratio_half).**
 
 $$\forall r \in \mathbb{N},\; \forall s \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{mod}\left(r, 2\right) = 1) \implies ((\operatorname{Nat}.\operatorname{mod}\left(s, 2\right) = 1) \implies ((r \le s) \implies (\frac{\operatorname{Real}.\operatorname{Gamma}\left(1 + \frac{(r: \mathbb{R})}{2}\right)}{\operatorname{Real}.\operatorname{Gamma}\left(1 + \frac{(s: \mathbb{R})}{2}\right)} = (2: \mathbb{R})^{s - r} \cdot \frac{(\operatorname{Nat}.\operatorname{factorial}\left(r\right): \mathbb{R}) \cdot (\operatorname{Nat}.\operatorname{factorial}\left(\operatorname{Nat}.\operatorname{div}\left(s, 2\right)\right): \mathbb{R})}{(\operatorname{Nat}.\operatorname{factorial}\left(s\right): \mathbb{R}) \cdot (\operatorname{Nat}.\operatorname{factorial}\left(\operatorname{Nat}.\operatorname{div}\left(r, 2\right)\right): \mathbb{R})})))$$
 
@@ -268,7 +282,7 @@ $$\forall r \in \mathbb{N},\; \forall s \in \mathbb{N},\; (\operatorname{Nat}.\o
 
 For odd natural r ≤ s, the quotient of the two half-integer Gamma values is a factorial ratio times 2 raised to s−r. Nat.div denotes natural floor division in the factorial arguments.
 
-**Theorem 1.22 (gamma_third_ratio).**
+**Theorem 1.23 (gamma_third_ratio).**
 
 $$\forall n \in \mathbb{N},\; \frac{\operatorname{Real}.\operatorname{Gamma}\left(1 + \frac{(n: \mathbb{R})}{3}\right)}{\operatorname{Real}.\operatorname{Gamma}\left(1 + \frac{4 \cdot (n: \mathbb{R})}{3}\right)} = \frac{(3: \mathbb{R})^{n}}{\prod_{k \in \operatorname{Finset}.\operatorname{range}\left(n\right)} ((n: \mathbb{R}) + 3 \cdot \left((k: \mathbb{R}) + 1\right))}$$
 
@@ -282,7 +296,7 @@ $$\forall n \in \mathbb{N},\; \frac{\operatorname{Real}.\operatorname{Gamma}\lef
 
 Applying the Gamma recurrence n times expresses the third-index quotient as 3 to the power n divided by a product of n positive linear factors.
 
-**Theorem 1.23 (even_dvd).**
+**Theorem 1.24 (even_dvd).**
 
 $$\forall m \in \mathbb{N},\; \operatorname{Nat}.\operatorname{factorial}\left(6 \cdot m\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(4 \cdot m\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(3 \cdot m\right) \mid \operatorname{Nat}.\operatorname{factorial}\left(12 \cdot m\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(1 \cdot m\right)$$
 
@@ -296,7 +310,7 @@ $$\forall m \in \mathbb{N},\; \operatorname{Nat}.\operatorname{factorial}\left(6
 
 The denominator of the even-index factorial expression divides its numerator. This supplies both the half-index sequence and the third-index sequence at multiples of three.
 
-**Theorem 1.24 (result).**
+**Theorem 1.25 (result).**
 
 $$\forall n \in \mathbb{N},\; \exists z \in \mathbb{Z},\; (z: \mathbb{R}) = \operatorname{a}\left(n\right)$$
 
@@ -323,6 +337,7 @@ Every natural index has an integer value. Reduction to factorial quotients and c
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.ffact`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.gamma_nat`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.gamma_ratio_half`
+- Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.gamma_shift_product`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.gamma_third_ratio`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.grid_floor`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.h856`

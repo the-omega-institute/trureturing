@@ -11,6 +11,7 @@ escape_witness: none
 admission_basis: open-problem-resolution (#18691; Proved)
 Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19874
+Published helper escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21712
 The fractional factorial and sequence definitions retain the source expressions.
 No finite computational declaration refutes the claim; utility is none.
 Declarations (all dependencies outside this delivery are pinned Mathlib):
@@ -192,7 +193,7 @@ private lemma progression_ne_zero (n : ℕ) : progression n ≠ 0 := by
     intro k hk
     omega
 
-private lemma padic_finset_prod {ι : Type*} (p : ℕ) [hp : Fact p.Prime] (S : Finset ι) (f : ι → ℕ)
+lemma padic_finset_prod {ι : Type*} (p : ℕ) [hp : Fact p.Prime] (S : Finset ι) (f : ι → ℕ)
     (hf : ∀ i ∈ S, f i ≠ 0) :
     padicValNat p (∏ i ∈ S, f i) = ∑ i ∈ S, padicValNat p (f i) := by
   have hh : (padicValNat p (∏ i ∈ S, f i) : ℕ∞) =
@@ -202,7 +203,7 @@ private lemma padic_finset_prod {ι : Type*} (p : ℕ) [hp : Fact p.Prime] (S : 
       (Finset.sum_congr rfl (fun i hi => (padicValNat_eq_emultiplicity (hf i hi)).symm))
   exact_mod_cast hh
 
-private lemma padic_eq_card (p n b : ℕ) [hp : Fact p.Prime] (hn : 0 < n) (hb : p.log n < b) :
+lemma padic_eq_card (p n b : ℕ) [hp : Fact p.Prime] (hn : 0 < n) (hb : p.log n < b) :
     padicValNat p n = ((Finset.Ico 1 b).filter (fun k => p^k ∣ n)).card := by
     exact_mod_cast ((padicValNat_eq_emultiplicity (p := p) hn.ne') ▸
       Nat.emultiplicity_eq_card_pow_dvd hp.out.ne_one hn hb)

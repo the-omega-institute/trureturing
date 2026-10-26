@@ -11,6 +11,7 @@ escape_witness: none
 admission_basis: open-problem-resolution (#18690; Proved)
 Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19874
+Published helper escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21712
 The fractional factorial and sequence definitions retain the source expressions.
 No finite computational declaration refutes the claim; utility is none.
 Declarations (all dependencies outside this delivery are pinned Mathlib):
@@ -412,7 +413,7 @@ lemma gamma_ratio_half (r s : ℕ) (hr : r % 2 = 1) (hs : s % 2 = 1) (hrs : r �
     rw [hp]
     field_simp <;> ring
 
-private lemma gamma_shift_product (x : ℝ) (hx : 0 < x) (n : ℕ) :
+lemma gamma_shift_product (x : ℝ) (hx : 0 < x) (n : ℕ) :
     Real.Gamma (x + n) = Real.Gamma x * ∏ k ∈ Finset.range n, (x + k) := by
   have hz (k : ℕ) : (x : ℂ) ≠ -(k : ℂ) := by
     intro he
