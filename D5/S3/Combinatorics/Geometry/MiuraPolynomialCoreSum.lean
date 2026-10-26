@@ -12,6 +12,8 @@ public import Mathlib.Data.Fintype.Sigma
 public import Mathlib.Basic.Finite.Sigma
 public import D5.S3.Combinatorics.Geometry.MiuraCoreNormal
 public import D5.S3.Combinatorics.Geometry.MiuraPolynomialRuns
+public import D5.S3.Combinatorics.Geometry.MiuraEqualityClassification
+import all D5.S3.Combinatorics.Geometry.MiuraCoreTranspose
 
 /-! The concrete finite-core polynomial candidate and its exact vector-sum evaluation. -/
 
@@ -20,6 +22,9 @@ namespace D5.S3.Combinatorics.Geometry.MiuraPolynomialCoreSum
 open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreResidual
   MiuraCoreFrozenWalk MiuraCoreBoundary MiuraCoreNormal MiuraSlabIncidence MiuraCoreTranspose
   MiuraRunCompositions MiuraPolynomialRuns
+open MiuraSlabNeutral MiuraSlabRunBound MiuraEqualityClassification
+open private transpose_min_iff transpose_max_iff
+  from D5.S3.Combinatorics.Geometry.MiuraCoreTranspose
 open scoped BigOperators
 
 /-- Every member is an individual normalized residual core with both run counts positive. -/
@@ -100,15 +105,51 @@ theorem core_polynomial_eval (a b m n : ℕ)
   exact joint_run_polynomial_eval _ _ _ _ m n hr hs
     ((core_budgets K).1.trans hm) ((core_budgets K).2.trans hn)
 
-/-- The finite maximum is taken over the actual two-axis run counts of the cores. -/
-theorem core_polynomial_degree_le (a b : ℕ) :
-    (corePolynomial a b).totalDegree ≤
-      Finset.univ.sup (fun K : Core a b => rowRuns K + colRuns K - 2) := by
+private theorem occupied_transpose_iff {M N : ℕ} (h : Cell M N → ℤ) (i : Fin M) :
+    activeColumn (transposeHeight h) i ↔ RowOccupied h i := by
+  simp only [activeColumn, IsStrictLocalExtremum, RowOccupied,
+    transpose_min_iff, transpose_max_iff]
+  exact exists_congr fun _ => or_comm
+
+private theorem run_count_eq {M N : ℕ} (h : Cell M N → ℤ) :
+    numFrozenRuns (transposeHeight h) = (frozenRowRunStarts h).card := by
+  classical
+  unfold numFrozenRuns frozenRowRunStarts
+  congr 1
+  ext i
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+    frozenRunStart, FrozenRowRunStart, occupied_transpose_iff]
+  aesop
+
+private theorem core_runs_strict {a b : ℕ} (K : Core a b) (hd : 5 ≤ a + b) :
+    rowRuns K + colRuns K ≤ a + b - 1 := by
+  classical
+  obtain ⟨hm, hn, hr, _, _, hrow, hcol⟩ := K.2.2.property
+  have hex : ∀ {M N : ℕ} (h : Cell M N → ℤ),
+      1 ≤ numFrozenRuns (transposeHeight h) → ∃ i, ¬ RowOccupied h i := by
+    intro M N h hp
+    rw [run_count_eq] at hp
+    obtain ⟨i, hi⟩ := Finset.card_pos.mp hp
+    exact ⟨i, (Finset.mem_filter.mp hi).2.1⟩
+  have hbound := residual_frozen_runs_strict hm hn hd rfl hr
+    (hex _ hrow) (hex (transposeHeight K.2.2.val) hcol)
+  change numFrozenRuns (transposeHeight K.2.2.val) + numFrozenRuns K.2.2.val ≤ _
+  have he : numFrozenRuns K.2.2.val =
+      (frozenRowRunStarts (transposeHeight K.2.2.val)).card :=
+    run_count_eq (transposeHeight K.2.2.val)
+  rw [run_count_eq K.2.2.val, he]
+  exact hbound
+
+/-- The strict actual geometry of these same residual cores gives the original degree bound. -/
+theorem core_polynomial_degree_le (a b : ℕ) (hd : 5 ≤ a + b) :
+    (corePolynomial a b).totalDegree ≤ a + b - 3 := by
   classical
   apply MvPolynomial.totalDegree_finsetSum_le
-  intro K hK
+  intro K _
   obtain ⟨_, _, _, _, _, hr, hs⟩ := K.2.2.property
-  exact (joint_run_polynomial_degree_le _ _ _ _ hr hs).trans
-    (Finset.le_sup (f := fun K : Core a b => rowRuns K + colRuns K - 2) hK)
+  have hb := core_runs_strict K hd
+  apply (joint_run_polynomial_degree_le _ _ _ _ hr hs).trans
+  change rowRuns K + colRuns K - 2 ≤ a + b - 3
+  omega
 
 end D5.S3.Combinatorics.Geometry.MiuraPolynomialCoreSum
