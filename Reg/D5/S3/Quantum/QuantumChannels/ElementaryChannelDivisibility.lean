@@ -35,11 +35,13 @@ def rejected : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law r := ∀ {n : Type u} [Fintype n] [DecidableEq n] (v w : n → ℂ), r.readout () ⟨n, v⟩ w = ketbra w v
+  Law r := ∀ {n : Type u} [Fintype n] [DecidableEq n] (v w : n → ℂ),
+    r.readout () ⟨n, v⟩ w = ketbra w v
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hh := @h (ULift.{u} Unit) inferInstance inferInstance (fun _ => 1) (fun _ => 1)
+  have hh := @h (ULift.{u} Unit) inferInstance inferInstance
+    (fun _ => 1) (fun _ => 1)
   have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) hh
   simp [rejected, realize, ketbra, Matrix.vecMulVec_apply] at he
 
@@ -48,7 +50,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   refine ⟨⟨ULift.{u} Unit, fun _ => 1⟩, (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
   have he := congrArg (fun M => M (ULift.up ()) (ULift.up ())) h
-  simp [actual, realize, ketbra, Matrix.vecMulVec_apply, Matrix.conjTranspose_apply] at he
+  simp [actual, realize, ketbra, Matrix.vecMulVec_apply] at he
 
 def source_registration : Registration arena.{u} (type_of% (@ketbra_star.{u})) where
   actual := actual
