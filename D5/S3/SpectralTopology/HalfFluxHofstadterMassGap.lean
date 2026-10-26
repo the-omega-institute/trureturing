@@ -9,6 +9,7 @@
 import D5.S3.Weil.Pick.InvertibleHermitianInertiaPullback
 import D5.S3.SpectralTopology.PointGapExactInertia
 import D5.S3.Quantum.Matrix.LinGProperty.ScalarPerturbation
+import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.PartIISLnUnipotentCommutators
 
 /-! A uniform mass gap for the four source Bloch bands. -/
 
@@ -17,16 +18,15 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 open Matrix Complex
+open NikolovSegal.PartIISLnUnipotentCommutators (lowerBlock)
 open scoped ComplexConjugate
 
 namespace D5.S3.SpectralTopology.HalfFluxHofstadterMassGap
 
 private theorem phase_conj (k : ℝ) :
     conj (exp (2 * I * k)) = exp (-(2 * I * k)) := by
-  rw [← Complex.exp_conj]
-  congr 1
-  simp only [map_mul, map_ofNat, conj_I, conj_ofReal]
-  ring
+  simpa only [map_mul, map_ofNat, conj_I, conj_ofReal, mul_neg, neg_mul]
+    using (Complex.exp_conj (2 * I * k)).symm
 
 private theorem phase_conj_neg (k : ℝ) :
     conj (exp (-(2 * I * k))) = exp (2 * I * k) := by
@@ -77,8 +77,8 @@ private theorem gapPolynomial_lower (y₁ y₂ m : ℝ)
     nlinarith [sq_nonneg m]
 
 private theorem phase_norm (k : ℝ) : ‖exp (2 * I * k)‖ = 1 := by
-  rw [Complex.norm_exp]
-  simp
+  simpa only [Complex.ofReal_mul, Complex.ofReal_ofNat, mul_assoc, mul_comm, mul_left_comm]
+    using Complex.norm_exp_I_mul_ofReal (2 * k)
 
 private def coupling (z₁ z₂ : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![-1 + I * z₁, -1 + I * z₂; -I - conj z₂, -1 + I * conj z₁]
@@ -174,23 +174,16 @@ private theorem schur_eq (z₁ z₂ : ℂ) (d : ℝ)
       Matrix.conjTranspose_apply, Complex.mul_re, Complex.mul_im, map_ofNat] <;>
     nlinarith [hz₁, hz₂]
 
-private def eliminator (z₁ z₂ : ℂ) :
-    Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℂ :=
-  fromBlocks 1 0 ((1 / 2 : ℂ) • (coupling z₁ z₂)ᴴ) 1
-
-private theorem eliminator_det (z₁ z₂ : ℂ) : (eliminator z₁ z₂).det = 1 := by
-  rw [eliminator.eq_1]
-  simp
-
 private theorem schur_congruence (k₁ k₂ m : ℝ) :
     let z₁ := exp (2 * I * k₁)
     let z₂ := exp (2 * I * k₂)
-    (eliminator z₁ z₂)ᴴ * blockMatrix k₁ k₂ m * eliminator z₁ z₂ =
+    (lowerBlock ((1 / 2 : ℂ) • (coupling z₁ z₂)ᴴ)).valᴴ * blockMatrix k₁ k₂ m *
+        (lowerBlock ((1 / 2 : ℂ) • (coupling z₁ z₂)ᴴ)).val =
       fromBlocks (schur z₁ z₂ (2 + m)) 0 0
         ((-2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) := by
   dsimp only
   rw [blockMatrix_eq]
-  simp only [eliminator, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_one,
+  simp only [lowerBlock, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_one,
     Matrix.conjTranspose_zero, Matrix.conjTranspose_smul,
     Matrix.conjTranspose_conjTranspose,
     Matrix.fromBlocks_multiply, Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul,
@@ -204,7 +197,7 @@ private theorem shifted_det (k₁ k₂ m : ℝ) :
     (shifted k₁ k₂ m).det =
       -4 * (gapPolynomial (exp (2 * I * k₁)).im (exp (2 * I * k₂)).im (2 + m) : ℂ) := by
   have h := congrArg Matrix.det (schur_congruence k₁ k₂ m)
-  simp only [Matrix.det_mul, Matrix.det_conjTranspose, eliminator_det,
+  simp only [Matrix.det_mul, Matrix.det_conjTranspose, SpecialLinearGroup.det_coe,
     star_one, one_mul, mul_one, Matrix.det_fromBlocks_zero₁₂,
     schur_det _ _ _ (phase_norm k₁) (phase_norm k₂), Matrix.det_smul,
     Fintype.card_fin, Matrix.det_one, blockMatrix, Matrix.det_reindex_self] at h
@@ -266,11 +259,12 @@ private theorem shifted_inertia (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm : m �
   classical
   have hq := gap_positive k₁ k₂ m hm₁ hm
   have ha : (blockMatrix k₁ k₂ m).IsHermitian := by
-    change (blockMatrix k₁ k₂ m)ᴴ = blockMatrix k₁ k₂ m
-    simp only [blockMatrix, Matrix.conjTranspose_reindex]
-    rw [show (shifted k₁ k₂ m)ᴴ = shifted k₁ k₂ m from shifted_isHermitian k₁ k₂ m]
-  have hp := Matrix.isHermitian_conjTranspose_mul_mul
-    (eliminator (exp (2 * I * k₁)) (exp (2 * I * k₂))) ha
+    unfold blockMatrix
+    apply Matrix.IsHermitian.reindex
+    exact (shifted_isHermitian k₁ k₂ m).reindex reorder
+  let e := lowerBlock ((1 / 2 : ℂ) •
+    (coupling (exp (2 * I * k₁)) (exp (2 * I * k₂)))ᴴ)
+  have hp := Matrix.isHermitian_conjTranspose_mul_mul e.val ha
   have he := schur_congruence k₁ k₂ m
   dsimp only at he
   have hd : (fromBlocks (schur (exp (2 * I * k₁)) (exp (2 * I * k₂)) (2 + m)) 0 0
@@ -279,8 +273,7 @@ private theorem shifted_inertia (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm : m �
     exact hp
   have hc := schur_positive_index _ _ (2 + m) (phase_norm k₁) (phase_norm k₂) hq hd
   have hi := D5.S3.Weil.Pick.InvertibleHermitianInertiaPullback.inertia_invariant_of_isUnit_det
-    ha (eliminator (exp (2 * I * k₁)) (exp (2 * I * k₂)))
-    (by rw [eliminator_det]; exact isUnit_one)
+    ha e.val (by rw [e.det_coe]; exact isUnit_one)
   have hc' : RHLinalg.posIndex hp = 1 := by
     rw [positive_roots_count hp, he, ← positive_roots_count hd]
     exact hc
@@ -322,7 +315,8 @@ private theorem row_bound (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm₂ : m ≤ 
     have h₄ := norm_add_le (-z) (-I)
     simp only [norm_one, norm_mul, Complex.norm_I, hz, one_mul, norm_neg] at *
     exact ⟨by linarith, by linarith, by linarith, by linarith⟩
-  have hn (k : ℝ) : ‖exp (-2 * I * k)‖ = 1 := by rw [Complex.norm_exp]; simp
+  have hn (k : ℝ) : ‖exp (-2 * I * k)‖ = 1 := by
+    simpa only [Complex.ofReal_neg, mul_neg, neg_mul] using phase_norm (-k)
   obtain ⟨h₁, h₂, h₃, h₄⟩ := hu _ (phase_norm k₁)
   obtain ⟨h₅, h₆, h₇, h₈⟩ := hu _ (phase_norm k₂)
   obtain ⟨h₉, h₁₀, h₁₁, h₁₂⟩ := hu _ (hn k₁)
