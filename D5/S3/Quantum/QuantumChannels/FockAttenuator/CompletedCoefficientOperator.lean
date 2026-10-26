@@ -87,8 +87,9 @@ theorem partial_trace_trace (w : H2) :
   obtain ⟨b, hb⟩ := reindex_basis occupationBasis e.symm
   have hv : HasSum (fun i : Set.range occupationBasis => ‖coefficientOperator w (b i)‖ ^ 2)
       (‖w‖ ^ 2) := by
-    simpa only [hb, coefficient_column, Function.comp_apply] using
-      e.symm.hasSum_iff.mpr (slice_square_sum w)
+    apply HasSum.congr_fun (e.symm.hasSum_iff.mpr (slice_square_sum w))
+    intro i
+    rw [Function.comp_apply, hb i, coefficient_column]
   have hadj := hasSum_norm_sq_apply_eq_adjoint b b hv.summable
   rw [hv.tsum_eq] at hadj
   rw [trace_eq_of_hilbertBasis_of_nonneg (partial_trace_positive_traceClass w).1
@@ -98,11 +99,14 @@ theorem partial_trace_trace (w : H2) :
       (‖ContinuousLinearMap.adjoint (coefficientOperator w) (b i)‖ ^ 2 : ℂ) := by
     rw [← coefficient_mul_adjoint, ContinuousLinearMap.mul_apply,
       ContinuousLinearMap.star_eq_adjoint]
-    have hi := ContinuousLinearMap.adjoint_inner_right
-      (ContinuousLinearMap.adjoint (coefficientOperator w)) (b i)
-      (ContinuousLinearMap.adjoint (coefficientOperator w) (b i))
-    simpa only [ContinuousLinearMap.adjoint_adjoint, inner_self_eq_norm_sq_to_K,
-      Complex.ofReal_pow] using hi
+    calc
+      _ = inner ℂ (ContinuousLinearMap.adjoint (coefficientOperator w) (b i))
+          (ContinuousLinearMap.adjoint (coefficientOperator w) (b i)) := by
+        simpa only [ContinuousLinearMap.adjoint_adjoint] using
+          ContinuousLinearMap.adjoint_inner_right
+            (ContinuousLinearMap.adjoint (coefficientOperator w)) (b i)
+            (ContinuousLinearMap.adjoint (coefficientOperator w) (b i))
+      _ = _ := by rw [inner_self_eq_norm_sq_to_K]; norm_cast
   simp_rw [hdiag]
   simpa only [Complex.ofReal_pow] using (Complex.hasSum_ofReal.mpr hadj).tsum_eq
 
@@ -120,8 +124,10 @@ private theorem tensor_norm_sq (v w : H) : ‖tensor v w‖ ^ 2 = ‖v‖ ^ 2 * 
   rw [ht]
   change (∑' n, ‖w n • v‖ ^ 2) = _
   simp only [norm_smul, mul_pow]
-  rw [(slice_square_sum w).summable.tsum_mul_right, (slice_square_sum w).tsum_eq,
-    mul_comm]
+  have hw : HasSum (fun n => ‖w n‖ ^ 2) (‖w‖ ^ 2) := by
+    simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
+      lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num) w
+  rw [hw.summable.tsum_mul_right, hw.tsum_eq, mul_comm]
 
 private theorem balanced_output_norm_sq (a : H) :
     ‖balancedFockTwoOutput a‖ ^ 2 = ‖a‖ ^ 2 := by

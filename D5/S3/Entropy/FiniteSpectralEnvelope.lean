@@ -279,7 +279,7 @@ private theorem minimizing_three_value {q : ℝ} {p : ι → ℝ}
   have hclower : 3 ≤ S.card := by
     by_contra h
     have hc2 : (S.card : ℝ) ≤ 2 := by exact_mod_cast (show S.card ≤ 2 by omega)
-    have hcs := Finset.sq_sum_le_card_mul_sum_sq (s := S) (f := p)
+    have hcs := sq_sum_le_card_mul_sum_sq (s := S) (f := p)
     rw [sum_over_support p hp.1.1 id rfl, hp.1.2,
       sum_over_support p hp.1.1 (fun z => z ^ 2) (by norm_num)] at hcs
     change 1 ^ 2 ≤ (S.card : ℝ) * finitePurity p at hcs

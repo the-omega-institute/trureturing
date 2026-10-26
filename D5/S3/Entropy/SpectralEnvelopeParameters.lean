@@ -51,7 +51,7 @@ private theorem three_third (x : ℝ) : third (threeSpectrum x) = x ^ 2 * (1 - 2
     simp [tripleLayer, threeSpectrum, show n ≠ 0 by omega,
       show n ≠ 1 by omega, show n ≠ 2 by omega])]
   norm_num [Finset.sum_range_succ, tripleLayer, threeSpectrum]
-  ring
+  ring_nf <;> simp
 
 private theorem coordinate_bounds {q : ℝ} (hq0 : 1 / 3 ≤ q) (hq1 : q ≤ 3 / 8) :
     1 / 3 ≤ upperCoordinate q ∧ upperCoordinate q ≤ 5 / 12 := by
