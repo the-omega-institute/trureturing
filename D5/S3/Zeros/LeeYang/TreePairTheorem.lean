@@ -6,7 +6,7 @@
    utility: none
    digest: The complete arbitrary finite tree physical pair coefficient theorem. -/
 import D5.S3.Zeros.LeeYang.TreePairSource
-import D5.S3.Zeros.LeeYang.TreePairPolynomial
+import D5.S3.Zeros.LeeYang.TreePairStability
 import D5.S3.Zeros.LeeYang.TreePairStability
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import D5.S3.Observer.AgencyHolonomy.NamedTreePhaseTransport

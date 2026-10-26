@@ -12,7 +12,7 @@ import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Tactic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Fintype.Basic
-import D5.S3.Zeros.LeeYang.TreePairPolynomial
+import D5.S3.Zeros.LeeYang.TreePairStability
 import Mathlib.Algebra.Polynomial.Homogenize
 
 set_option autoImplicit false
