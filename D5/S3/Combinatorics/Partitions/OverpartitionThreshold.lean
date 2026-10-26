@@ -70,12 +70,14 @@ private theorem corner_mem (d : YoungDiagram) (r : ℕ) (hr : r ∈ d.rowLens) :
   have rb : r ≤ d.rowLen 0 := he ▸ d.rowLen_anti 0 i (Nat.zero_le _)
   apply List.mem_map.mpr
   refine ⟨r - 1, ?_, ?_⟩
-  · simpa only [List.mem_range, YoungDiagram.colLen_transpose] using (show r - 1 < d.rowLen 0 by omega)
+  · simpa only [List.mem_range, YoungDiagram.colLen_transpose] using
+      (show r - 1 < d.rowLen 0 by omega)
   · exact YoungDiagram.rowLen_transpose d (r - 1)
 
 private def cornerEquiv (d : YoungDiagram) :
     ↥d.rowLens.toFinset ≃ ↥d.transpose.rowLens.toFinset where
-  toFun r := ⟨d.colLen (r.1 - 1), List.mem_toFinset.mpr (corner_mem d r.1 (List.mem_toFinset.mp r.2))⟩
+  toFun r := ⟨d.colLen (r.1 - 1),
+    List.mem_toFinset.mpr (corner_mem d r.1 (List.mem_toFinset.mp r.2))⟩
   invFun h := ⟨d.rowLen (h.1 - 1), by
     simpa using corner_mem d.transpose h.1 (List.mem_toFinset.mp h.2)⟩
   left_inv r := Subtype.ext (corner_inverse d r.1 (List.mem_toFinset.mp r.2))
@@ -117,7 +119,8 @@ private theorem conjugate_largest {n : ℕ} (p : Nat.Partition n) :
 private theorem sum_largest (n : ℕ) :
     (∑ o : Overpartition n, (largest o : ℤ)) = T n := by
   classical
-  rw [show T n = ∑ p : Nat.Partition n, weight p * (p.parts.card : ℤ) from by simpa only [T] using sum_marks (fun p => (p.parts.card : ℤ))]
+  rw [show T n = ∑ p : Nat.Partition n, weight p * (p.parts.card : ℤ) from by
+    simpa only [T] using sum_marks (fun p => (p.parts.card : ℤ))]
   change (∑ o : Overpartition n, ((o.1.parts.toFinset.sup id : ℕ) : ℤ)) = _
   rw [sum_marks (fun p : Nat.Partition n => ((p.parts.toFinset.sup id : ℕ) : ℤ))]
   let e : Nat.Partition n ≃ Nat.Partition n :=
@@ -145,7 +148,7 @@ private def shiftEquiv (n k r : ℕ) (hr : 0 < r) (hn : k * r ≤ n) :
     parts_sum := by
       have hle := Multiset.le_count_iff_replicate_le.mp p.2
       have he := congrArg Multiset.sum (tsub_add_cancel_of_le hle)
-      simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, p.1.parts_sum] at he
+      simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, Nat.cast_id, p.1.parts_sum] at he
       omega }
   invFun q := ⟨{
     parts := q.parts + Multiset.replicate k r
@@ -218,7 +221,7 @@ private theorem threshold_zero (k n r : ℕ) (hn : n < k * r) :
   have hb : p.parts.count r * r ≤ n := by
     have hle := Multiset.le_count_iff_replicate_le.mp (le_refl (p.parts.count r))
     have he := congrArg Multiset.sum (tsub_add_cancel_of_le hle)
-    simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, p.parts_sum] at he
+    simp only [Multiset.sum_add, Multiset.sum_replicate, nsmul_eq_mul, Nat.cast_id, p.parts_sum] at he
     omega
   have : ¬ k ≤ p.parts.count r := by nlinarith
   simp [this]
@@ -284,7 +287,8 @@ private theorem N_frequency (j n : ℕ) : N j n = ∑ p : Nat.Partition n, frequ
 
 private theorem frequency_absent {n : ℕ} (j : ℕ) (p : Nat.Partition n)
     (hj : j ∉ p.parts) : frequency j p = 0 := by
-  simp [frequency, Multiset.count_eq_zero.mpr hj, markTotal_absent p.parts.toFinset j (by simpa using hj)]
+  simp [frequency, Multiset.count_eq_zero.mpr hj,
+    markTotal_absent p.parts.toFinset j (by simpa using hj)]
 
 private theorem frequency_insert (j n : ℕ) (hj : 0 < j) (hn : j ≤ n)
     (q : Nat.Partition (n - j)) :
