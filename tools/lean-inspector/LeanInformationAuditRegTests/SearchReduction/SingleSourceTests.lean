@@ -78,6 +78,13 @@ run_elab do
     (← `(∀ n : Nat, ∀ i : Fin (n+1), i = i)) false
   legacyProbe memo index "foreign component not inferred"
     (← `(∀ P Q : Prop, P ∧ Q)) (← `(∀ P Q : Prop, P)) false
+  legacyProbe memo index "explicit telescope self conversion"
+    (← `(∀ n : Nat, n = n)) (← `(∀ n : Nat, n = n)) true
+  let explicitSize := (← memo.get).values.size
+  legacyProbe memo index "implicit telescope self conversion"
+    (← `(∀ {n : Nat}, n = n)) (← `(∀ {n : Nat}, n = n)) true
+  unless (← memo.get).values.size > explicitSize do
+    throwError "legacy memo erased telescope binder annotations"
   let target ← statement (← `(∀ n : Nat, ramp n = n+n+n))
   let source := (← getConstInfo ``legacy_bounds).type
   if (← singleSourceConversion target source).isSome then
@@ -96,11 +103,11 @@ run_elab do
   let state ← memo.get
   unless state.hits > 0 && state.misses > 0 do throwError "legacy memo was not exercised"
   for (key, value) in state.values.toList do
-    if key.hasFVar || key.hasMVar || key.hasLooseBVars ||
+    if key.val.hasFVar || key.val.hasMVar || key.val.hasLooseBVars ||
         value.hasFVar || value.hasMVar || value.hasLooseBVars then
       throwError "legacy memo leaked a local context"
-    let original ← withReducible <| reduce key (skipTypes := false)
-    unless original == value do throwError "memo differs from the pinned full reduction"
+    let original ← withReducible <| reduce key.val (skipTypes := false)
+    unless original.equal value do throwError "memo differs from the pinned full reduction"
   logInfo m!"legacy normalization memo: hits={state.hits}, misses={state.misses}, \
     closed-keys=true, original-normal-forms=true, legacy-only-copy=rejected"
 

@@ -11,7 +11,7 @@ environment. Closed lambda keys include the entire local telescope; no free
 variable or metavariable identity can escape its context. This memo is never
 serialized or used as evidence of a failed conversion. -/
 structure LegacyNormalizationMemo where
-  values : Std.HashMap Expr Expr := {}
+  values : ExprStructMap Expr := {}
   hits : Nat := 0
   misses : Nat := 0
 
@@ -21,14 +21,14 @@ private def legacyNormalize (memo? : Option (IO.Ref LegacyNormalizationMemo))
   let some memo := memo? | return ← normalize
   let key ← mkLambdaFVars xs e
   if key.hasFVar || key.hasMVar || key.hasLooseBVars then return ← normalize
-  if let some value := (← memo.get).values[key]? then
+  if let some value := (← memo.get).values[ExprStructEq.mk key]? then
     memo.modify fun state => {state with hits := state.hits + 1}
     return value.beta xs
   let result ← normalize
   let value ← mkLambdaFVars xs result
   unless value.hasFVar || value.hasMVar || value.hasLooseBVars do
     memo.modify fun state => {state with
-      values := state.values.insert key value, misses := state.misses + 1}
+      values := state.values.insert (ExprStructEq.mk key) value, misses := state.misses + 1}
   return result
 
 /-- Logical introduction/projection and the pinned `omega` procedure are the
