@@ -41,14 +41,18 @@ internal sealed class BadicaJaccardArbitraryLatticesDocument : IScribeDocumentDe
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Log-submodularity also suffices on every lattice", "result", ClaimBody(false),
                 "For positive values, log-submodularity gives f (X ⊔ Y) · f (X ⊓ Y) ≤ f X · f Y. Combined with supermodularity, this implies supermodularity of the reciprocal function. The preceding theorem therefore proves the triangle inequality under the hypotheses of the second question. Only the triangle inequality is asserted; separation, a MetricSpace instance and the symmetric-difference question remain outside these statements.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("badica-2026-jaccard-arbitrary-lattices"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(F.Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Scope(Formula body) => All("L", F.Id("Type"),

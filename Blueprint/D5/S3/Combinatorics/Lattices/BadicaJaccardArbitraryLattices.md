@@ -108,6 +108,10 @@ $$\forall L \in Type,\; [\operatorname{Lattice}\left(L\right)], \forall f \in L 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/badica-2026-jaccard-arbitrary-lattices` (proved) by `D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"badica-2026-jaccard-arbitrary-lattices","declaration_gid":"D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Bădică and A. Bădică (2026). *On the Triangle Inequality for the Jaccard Distance in Arbitrary Lattices*. DOI: [10.48550/arXiv.2608.18194](https://doi.org/10.48550/arXiv.2608.18194). URL: <https://arxiv.org/abs/2608.18194v1>.
