@@ -176,6 +176,14 @@ In a field of characteristic different from two, a determinant-one two-by-two ma
 
 Matrix.SpecialLinearGroup.mem_center_iff identifies the center of SL(2,F_5) with the identity and minus the identity. If the image of an arbitrary A in the native quotient PSL(2,F_5) is nonidentity with square one, then A squared lies in this center. A squared cannot be the identity, since the preceding classification would make A itself central. Hence A squared is minus the identity and A has order four. This conclusion applies to every lift of the given projective element.
 
+The original whole-face table also has a literal retained-quotient interpretation for every finite sheet type Omega with a right G action and arbitrary u,v. Each raw tetrahedron consists of four nonnegative real barycentric coordinates summing to one, with every coordinate at most 3/4. At a zero coordinate, the original face involution identifies the two points by the corresponding affine permutation of all four coordinates. The quotient carries the topology induced by this same generated raw relation. Converting the increasing face-slot order to the opposite-vertex order uses the existing chi permutations; this conversion preserves the stated facePair and slotMap corner data.
+
+For these same raw face maps, the directed local edges have a Boolean orientation preserved across every allowed face transition and reversed when the two edge endpoints are exchanged. Consequently no chain of original face transitions reverses an ordered edge. This argument applies to arbitrary actions, including actions with stabilizers and nonfaithful actions; generation and transitivity are not needed for this no-reversal conclusion.
+
+The original finite raw-pairing chart construction therefore applies to each such retained quotient. In its inherited quotient topology it is compact, Hausdorff and second countable, with boundary-adapted three-dimensional half-space charts. In every chart, a point has zero boundary coordinate exactly when it belongs to the actual image of the cap faces, where one original barycentric coordinate equals 3/4. The empty sheet type is allowed, giving the empty quotient.
+
+This application establishes the topological chart structure of the original finite group-action quotients. Connectedness from a specified transitive action, three-dimensional orientation, actual return-cycle degrees, the topology and genus of each individual link component, and a physical hyperbolic realization require their corresponding additional arguments.
+
 These algebraic relations supply the marked matrices, generation, central-lift orders and the actual corner return subgroup. Geometric realization, actual edge-cycle degrees, link-surface counts and genus require their corresponding face-pairing and topology arguments.
 
 ## References
