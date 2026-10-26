@@ -7,18 +7,11 @@
    digest: Actual reflected three-point Gaussian sources generate the weighted charge kernel. -/
 /-
 SPDX-License-Identifier: Apache-2.0
-E-only actual reflected Gaussian coefficient-core candidate, 2026-10-26.
-UNCOMPILED. No kernel, Reg, official-acceptance or RH claim.
+Actual reflected Gaussian coefficient core, 2026-10-26.
 
-Companion: WeightedGaussianCoefficientCore.lean in this same evidence folder.
-The import below is its proposed canonical destination, not an assertion that
-the module is already present in dev.
-
-REQUIRED EXISTING-SOURCE VISIBILITY MIGRATION:
-FiniteGaussianEvenExpansion.site_q_neg and site_amplitude_neg are private at
-fixed supplier b8f1b1a750fe3c7c26c752f1527b5891d5b513d3. This actual consumer
-needs them public with their existing proofs unchanged. Their statements are
-used below; no duplicate proof or guessed alternative theorem name is added.
+The generic weighted-charge core is imported from its analytic domain.
+The existing site_q_neg and site_amplitude_neg proofs in
+FiniteGaussianEvenExpansion have only been made public for this consumer.
 
 The physical Gaussian source is literally [1,1,-2] at [a,-a,0]. Its actual
 finiteGaussianNormalizedCoefficient and finite_gaussian_central_mass_zero
@@ -33,6 +26,8 @@ import D5.S3.Analytic.PowerSeries.WeightedChargeKernelCore
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.FiniteGaussianCentralMass
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic
+
+/-! The weighted coefficient core of the actual reflected three-point Gaussian source. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -198,7 +193,8 @@ theorem actual_reflected_gaussian_coefficient_core :
         f t n = coeffWeight n * actualReflectedCurveCoefficient t n) ∧
       positiveCurveSpan f (1 / 36) =
         (coeffCharge (gaussianChargeVector actualCentralZ actualCentralZ_abs_le_one)).ker := by
-  apply actual_scalar_tail_data_core actualCentralZ actualEvenInverseNormalization
+  apply weighted_charge_kernel_core_of_scalar_curve (r := 1 / 36)
+    actualCentralZ actualEvenInverseNormalization
     actualCentralZ_zero actualCentralZ_abs_le_one
     (fun n => one_div_ne_zero (centralNormalization_pos _).ne')
     (one_div_pos.mpr (centralNormalization_pos 0)).le inverse_normalization_even_growth

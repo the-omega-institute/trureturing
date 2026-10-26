@@ -7,10 +7,7 @@
    digest: Positive Gaussian coefficient curves generate the weighted central charge kernel. -/
 /-
 SPDX-License-Identifier: Apache-2.0
-RH constrained Gaussian coefficient core, source candidate, 2026-10-26.
-
-THIS FILE HAS NOT BEEN COMPILED. It is an E-only implementation candidate,
-not a Lean receipt, canonical D5 delivery, or claim of RH.
+Weighted central-charge coefficient core, 2026-10-26.
 
 Carrier: w_k = (k+1)^2 d_k in ordinary lp (fun _ : ℕ => ℝ) 2.
 Charge: a_k = z_k/(k+1)^2, L(w) = inner a w = sum z_k d_k.
@@ -24,7 +21,7 @@ ContinuousMultilinearMap.mkPiRing, FormalMultilinearSeries.sum_mem,
 FormalMultilinearSeries.le_radius_of_summable_norm, and the accepted
 RHGaussianDilationCore.powerSeries_coeff_mem_of_positive_values.
 
-Actual physical bridge still required after this candidate:
+The actual reflected Gaussian consumer supplies the following scalar data:
   z_k = normalizedCentralMellin(2k)/normalizedCentralMellin(0),
   z0=1, abs z_k<=1;
   c_k = 1/N_(2k), c_k != 0, abs c_k <= (1/N0)*(9/2)^k;
@@ -38,8 +35,8 @@ Cross-module use of existing private site_q_neg and site_amplitude_neg needs
 canonical visibility migration with their unchanged proofs, rather than
 reproof. No density or coefficient-membership assertion is assumed here.
 
-The candidate has full proof terms and no sorry/axiom placeholders, but its
-elaboration, scoped report, canonical registration and integration are pending.
+The final theorem constructs the weighted Hilbert carrier and proves the full
+charge-kernel core from scalar tail data, without any assumed density.
 -/
 
 import Mathlib.Analysis.InnerProductSpace.l2Space
@@ -49,11 +46,13 @@ import Mathlib.Analysis.Analytic.Basic
 import Mathlib.Analysis.SpecificLimits.Basic
 import D5.S3.Analytic.PowerSeries.PositiveParameterClosedSubmodule
 
+/-! Weighted Gaussian coefficient curves and the continuous central-charge kernel. -/
+
 set_option autoImplicit false
 noncomputable section
 
 open Filter Set
-open scoped Topology
+open scoped Topology NNReal ENNReal
 
 namespace RHGaussianDilationCore
 
@@ -116,7 +115,7 @@ private theorem repairedCoeffBasis_mem_ker (a : GaussianCoeffSpace)
 
 /-- Continuous repair of the standard coordinate expansion gives density of
 the charge-zero directions. The nonzero scalars allow actual normalizations. -/
-theorem closedSpan_scaled_repairedBasis_eq_ker
+private theorem closedSpan_scaled_repairedBasis_eq_ker
     (a : GaussianCoeffSpace) (ha : a 0 = 1)
     (b : ℕ → ℝ) (hb : ∀ n, b n ≠ 0) :
     (Submodule.span ℝ (Set.range (fun n => b n • repairedCoeffBasis a n))).topologicalClosure =
@@ -151,7 +150,7 @@ theorem closedSpan_scaled_repairedBasis_eq_ker
     intro n _
     have hsingle : lp.single 2 n (w n) = w n • coeffBasis n := by
       simpa only [coeffBasis, smul_eq_mul, mul_one] using
-        (lp.single_smul 2 n (w n) (1 : ℝ))
+        (lp.single_smul (E := fun _ : ℕ => ℝ) 2 n (w n) (1 : ℝ))
     have hPe : coeffRepair a (coeffBasis n) = repairedCoeffBasis a n := by
       simp [coeffRepair, repairedCoeffBasis]
     rw [hsingle, map_smul, hPe]
@@ -163,7 +162,7 @@ def positiveCurveSpan (f : ℝ → GaussianCoeffSpace) (r : ℝ) :
 
 /-- A vector-valued power series with these coefficients recovers the entire
 charge kernel from arbitrarily short positive parameter intervals. -/
-theorem positive_series_core_eq_ker
+private theorem positive_series_core_eq_ker
     (a : GaussianCoeffSpace) (ha : a 0 = 1)
     (b : ℕ → ℝ) (hb : ∀ n, b n ≠ 0)
     (p : FormalMultilinearSeries ℝ ℝ GaussianCoeffSpace)
@@ -187,7 +186,8 @@ theorem positive_series_core_eq_ker
     apply Submodule.topologicalClosure_minimal
     · apply Submodule.span_le.mpr
       rintro _ ⟨n, rfl⟩
-      rw [← hcoeff]
+      change b n • repairedCoeffBasis a n ∈ K
+      rw [← hcoeff n]
       exact powerSeries_coeff_mem_of_positive_values K hK
         (p.hasFPowerSeriesOnBall hrad).hasFPowerSeriesAt hr
         (fun t ht htr =>
@@ -240,7 +240,7 @@ private theorem gaussianCoeffDirection_norm_le (z : ℕ → ℝ)
     _ = coeffWeight n + |z n| := by
       simp only [norm_smul, he, mul_one, Real.norm_eq_abs,
         abs_of_pos (coeffWeight_pos n)]
-    _ ≤ coeffWeight n + 1 := add_le_add_left (hz n) _
+    _ ≤ coeffWeight n + 1 := add_le_add_right (hz n) _
     _ ≤ 2 * (4 : ℝ) ^ n := by linarith [coeffWeight_le_four_pow n]
 
 def gaussianCoeff (z c : ℕ → ℝ) (n : ℕ) : GaussianCoeffSpace :=
@@ -291,7 +291,7 @@ private theorem gaussianSeries_radius_ge (z c : ℕ → ℝ)
 
 /-- Complete coefficient-space core, with the exact atom identity left to its
 physical supplier. c_n=1/N_(2n), C=1/N0 give the actual normalization. -/
-theorem weighted_gaussian_coefficient_core
+private theorem weighted_gaussian_coefficient_core
     (z c : ℕ → ℝ) (hz0 : z 0 = 1) (hz : ∀ n, |z n| ≤ 1)
     (hc0 : ∀ n, c n ≠ 0) {C : ℝ} (hC : 0 ≤ C)
     (hc : ∀ n, |c n| ≤ C * (9 / 2 : ℝ) ^ n)
@@ -339,14 +339,15 @@ private theorem coeffCharge_eq_of_actual_hasSum
     (w : GaussianCoeffSpace) (hw : ∀ n, w n = coeffWeight n * d n)
     {M : ℝ} (hd : HasSum (fun n => z n * d n) M) :
     coeffCharge (gaussianChargeVector z hz) w = M := by
-  have hi := lp.hasSum_inner (gaussianChargeVector z hz) w
+  have hi := lp.hasSum_inner (𝕜 := ℝ) (gaussianChargeVector z hz) w
   have hinner : HasSum (fun n => z n * d n)
       (coeffCharge (gaussianChargeVector z hz) w) := by
     convert hi using 1
-    funext n
-    rw [Real.inner_apply, gaussianChargeVector_apply, hw]
-    field_simp [ne_of_gt (coeffWeight_pos n)]
-    <;> ring
+    · funext n
+      rw [Real.inner_apply, gaussianChargeVector_apply, hw]
+      field_simp [ne_of_gt (coeffWeight_pos n)]
+      <;> ring
+    · simp only [coeffCharge, innerSL_apply_apply]
   exact hinner.unique hd
 
 private theorem gaussianSeries_hasSum_small
@@ -373,15 +374,19 @@ private theorem gaussianSeries_tail_coordinate
     (gaussianSeries_hasSum_small z c hz hC hc ht htsmall)
   change HasSum (fun m => (gaussianSeries z c m (fun _ => t)) n)
     ((gaussianSeries z c).sum t n) at heval
+  have hterm (m : ℕ) : (gaussianSeries z c m (fun _ => t)) n =
+      t ^ m * (c m * (coeffWeight m * coeffBasis m n - z m * coeffBasis 0 n)) := by
+    simp only [gaussianSeries, ContinuousMultilinearMap.mkPiRing_apply,
+      Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+    rfl
   apply heval.unique
   convert hasSum_ite_eq n (coeffWeight n * (c n * t ^ n)) using 1
   funext m
+  rw [hterm m]
   by_cases hmn : m = n
   · subst m
-    simp [gaussianSeries, gaussianCoeff, gaussianCoeffDirection, coeffBasis,
-      Pi.single_apply, hn, mul_comm, mul_left_comm, mul_assoc]
-  · simp [gaussianSeries, gaussianCoeff, gaussianCoeffDirection, coeffBasis,
-      Pi.single_apply, hn, hmn, Ne.symm hmn]
+    simp [coeffBasis, Pi.single_apply, hn, mul_comm, mul_left_comm, mul_assoc]
+  · simp [coeffBasis, Pi.single_apply, hn, hmn, Ne.symm hmn]
 
 /-- Actual-curve bridge with a minimal physical supplier contract. The raw
 coefficient curve d is determined from the literal finite Gaussian source.
@@ -389,7 +394,7 @@ Only positive-index coefficient formulas and actual charge HasSum are needed;
 the zeroth-coordinate formula and analytic series identity are conclusions.
 There is no assumed density, basis completeness, or coefficient-membership
 premise. r<=1/36 is an explicit convergence condition. -/
-theorem actual_curve_core_of_tail_coefficients
+private theorem actual_curve_core_of_tail_coefficients
     (z c : ℕ → ℝ) (hz0 : z 0 = 1) (hz : ∀ n, |z n| ≤ 1)
     (hc0 : ∀ n, c n ≠ 0) {C : ℝ} (hC : 0 ≤ C)
     (hc : ∀ n, |c n| ≤ C * (9 / 2 : ℝ) ^ n)
@@ -439,7 +444,7 @@ there is no weighted-space membership assumption. The nonzero coordinates are
 the convergent series, and their single remaining coordinate is a finite-rank
 correction. The actual zero-charge HasSum removes that correction via the
 preceding identification theorem. -/
-theorem actual_scalar_tail_data_core
+theorem weighted_charge_kernel_core_of_scalar_curve
     (z c : ℕ → ℝ) (hz0 : z 0 = 1) (hz : ∀ n, |z n| ≤ 1)
     (hc0 : ∀ n, c n ≠ 0) {C : ℝ} (hC : 0 ≤ C)
     (hc : ∀ n, |c n| ≤ C * (9 / 2 : ℝ) ^ n)
@@ -457,7 +462,9 @@ theorem actual_scalar_tail_data_core
     intro t ht htr n
     by_cases hn : n = 0
     · subst n
-      simp [f, coeffBasis, coeffWeight]
+      change (gaussianSeries z c).sum t 0 +
+        (d t 0 - (gaussianSeries z c).sum t 0) * coeffBasis 0 0 = coeffWeight 0 * d t 0
+      simp [coeffBasis, coeffWeight]
       <;> ring
     · have hp := gaussianSeries_tail_coordinate z c hz hC hc ht
         (lt_of_lt_of_le htr hrsmall) n hn
