@@ -1,0 +1,16 @@
+**Definition 3.3 (controller, rights and accessible output).** Before preparation supply public integers $h,p,s\ge1$, an owned finite task word
+
+$$
+v\in\{\mathsf N,\mathsf J_g,\mathsf J_F\}^{\le h},
+\qquad \varepsilon=2^{-p},\quad\delta=2^{-s}.
+\tag{3.4}
+$$
+
+The installed finite program has bit reads/writes, Boolean tests, sequential cell allocation and cursor moves, and finite control jumps. Integer addition/comparison and the finite loops below are routines over these instructions, with their bit work charged. Integers, counters, records and outputs occupy growing finite storage. A binary increment scans through the trailing ones and writes the first zero; comparison scans lengths and then digits; fixed multiplication by 7 or 12 uses shifts and additions. The mismatch routine stores the first actual bit and sets a persistent Boolean on a later unequal bit. The fixed program and the actual variable inputs are installed and retained, with their own source-binding and owner references. No source-dependent seed or unknown-parameter input is available.
+
+The authorized owner may repeatedly call $\mathsf J,\mathsf N$, select either specified immediate read setting, write the returned bits, hold the current system and its reference without drift between these calls, and retire carriers as just specified. Owned storage is readable by this program and may actually supply its later tests and annotations. Source identity, carrier/readout calibration, reference identity and permissions stay fixed. Their finite encodings and physical backing, and the backing of the supplied untouched reference, are additional resources, not outputs inferred from the bit tape. Exact implementation of these primitives is a model premise; no physical precision, energy or duration bound is asserted.
+
+The complete accessible output includes every measured calibration bit in chronological order, the acquired test flag, all stored task inputs and fixed reference/rights data, every later measured bit and requested annotation, the actual live $QZ$ successor, and the controller's phase, cursor and work cells. Inconclusive runs return their actual state and record as well. The inaccessible disposal sink and the retired quantum carriers are not returned outputs or later callable references. Disposing of them does not erase them from a global physical completion, nor make their supply free. A claim with access to that sink would be a different output contract.
+
+### 3.1 A rate available from the installed matrices
+

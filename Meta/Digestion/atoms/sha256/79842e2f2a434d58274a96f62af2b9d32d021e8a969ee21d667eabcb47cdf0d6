@@ -1,0 +1,34 @@
+**Definition 106.1 (Five prescribed columns and ten-dimensional completions).**
+Keep every object and parameter of Definitions 91.1 and 101.1. In particular,
+$\rho_0$ is the sole system preparation, $0<d<1$,
+$\sin(2\theta)\ne0$, and the one installed $N$ satisfies
+$[N,P_\xi]\ne0$. Put $R=B\mathbb C^3\subset H$, and set
+
+$$
+\begin{gathered}
+\mathcal H=H\otimes R_{\rm env},\quad
+\mathcal C=H\otimes\operatorname{span}\{f_0\},\quad
+\mathcal T=R\otimes R_{\rm env},\quad \mathcal M=\mathcal VH,\\
+f_-=(f_0-f_1)/\sqrt2,\qquad
+\zeta=v_H\otimes f_-,\qquad
+F_1=P\otimes I_2, \quad F_0=I_{10}-F_1.
+\end{gathered}
+\tag{106.1}
+$$
+
+A completion is one fixed unitary $\mathsf J$ on all of $\mathcal H$ such
+that $\mathsf J(x\otimes f_0)=\mathcal Vx$ for every $x\in H$.
+Write $T:H\to\mathcal M^\perp$ for the unitary identification
+$Ty=\mathsf J(y\otimes f_1)$. Thus
+
+$$
+\mathsf J(x\otimes f_0+y\otimes f_1)=\mathcal Vx+Ty.
+\tag{106.2}
+$$
+
+Every unitary $T:H\to\mathcal M^\perp$ gives such a completion. This
+parametrizes fixed installations; it is not a menu of selectable unitaries.
+The five ready columns remain precisely (101.1), including those outside
+$R$. No restriction to an invariant six-dimensional interaction is made.
+The terminal is exactly the original two effects $F_1,F_0$.
+
