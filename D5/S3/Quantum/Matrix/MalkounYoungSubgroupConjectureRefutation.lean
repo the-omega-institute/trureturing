@@ -7,7 +7,6 @@
    digest: Fifteen Gram blocks refute the class-preserving permutation inequality. -/
 
 import D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation
-import Mathlib.Data.Matrix.Block
 
 /-! # Conjecture D fails for class-preserving permutation groups -/
 
