@@ -15,6 +15,17 @@ internal sealed class UnsignedStarTorsionDocument : IScribeDocumentDefinition
                 + "The exact integer linear map is f(a)(i)=a(left(i))+a(right(i)). Its image is not replaced by its saturation. "
                 + "graphAfterDeleting D first removes exactly the original indices in D, then uses existence of a remaining "
                 + "edge as the underlying simple adjacency. Thus deletion and support cardinalities never conflate parallel indices.")),
+            Describe.Lean(DescribeId.Create("integer-injectivity"),
+                DeclarationHandle.Create(Prefix + "starMap_injective"),
+                H("Consumed Integer Injectivity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a connected nonbipartite original graph, the exact integer star map is injective. "
+                    + "Apply the existing private nonbipartite_potential proof to the difference of two potentials with equal images. "
+                    + "Its constant has twice its value equal to zero, so it vanishes over the integers. "
+                    + "This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a consumed helper, "
+                    + "not a new generality claim or a new proof of the private potential theorem."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("bipartite-integral-recovery"),
                 DeclarationHandle.Create(Prefix + "integral_of_bipartite"),
                 H("Signed Root Normalization in a Bipartite Graph"),

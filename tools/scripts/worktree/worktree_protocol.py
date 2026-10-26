@@ -284,6 +284,8 @@ def path_scopes(stack, source, path, reads=(), writes=()):
 def git_scope(stack, source, path):
     metadata = value(path, "rev-parse", "--absolute-git-dir")
     result = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
+    if result.returncode not in (0, 1):
+        raise GitFailure(result.stderr.decode(errors="replace").strip() or "git failed")
     branch = os.fsdecode(result.stdout).strip() if result.returncode == 0 else "HEAD"
     for reference in sorted({metadata + ":HEAD", branch if branch != "HEAD" else metadata + ":HEAD"}):
         acquire(stack, source, "ref:" + reference, True)
