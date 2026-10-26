@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-computational-evidence)
    anchors: []
    utility: none
-   digest: Canonical labelled membership words connect original-host visibility to full periodic forbidden-factor avoidance. -/
+   digest: Canonical membership words identify visibility with full periodic factor avoidance. -/
 
 import D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai
 import D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiLanguage
@@ -21,7 +21,7 @@ open Andrasfai AndrasfaiLanguage
 private instance modulus_neZero (m : ℕ) : NeZero (3 * m + 2) := ⟨by omega⟩
 
 /-- Labels retain the original vertex names and the fixed origin. -/
-def membershipLabels (m : ℕ) (X : Finset (Vertex m)) (i : Fin (3*m+2)) : Bool :=
+def membershipLabels (m : ℕ) (X : Finset (Vertex m)) (i : Fin (3 * m + 2)) : Bool :=
   decide ((i.val : Vertex m) ∈ X)
 
 /-- The finite word lists the actual subset membership in increasing representative order. -/
@@ -29,21 +29,21 @@ def membershipWord (m : ℕ) (X : Finset (Vertex m)) : List Bool :=
   List.ofFn (membershipLabels m X)
 
 /-- Recover an actual vertex subset from its Boolean labels. -/
-def subsetOfLabels (m : ℕ) (b : Fin (3*m+2) → Bool) : Finset (Vertex m) :=
+def subsetOfLabels (m : ℕ) (b : Fin (3 * m + 2) → Bool) : Finset (Vertex m) :=
   Finset.univ.filter (fun v => b ⟨v.val, ZMod.val_lt v⟩ = true)
 
 private theorem subset_labels_inverse (m : ℕ) (X : Finset (Vertex m)) :
     subsetOfLabels m (membershipLabels m X) = X := by
   ext v
-  simp [subsetOfLabels, membershipLabels, ZMod.natCast_zmod_val]
+  simp [subsetOfLabels, membershipLabels]
 
-private theorem labels_subset_inverse (m : ℕ) (b : Fin (3*m+2) → Bool) :
+private theorem labels_subset_inverse (m : ℕ) (b : Fin (3 * m + 2) → Bool) :
     membershipLabels m (subsetOfLabels m b) = b := by
   funext i
   simp [membershipLabels, subsetOfLabels, ZMod.val_natCast_of_lt i.isLt]
 
 /-- A labelled subset and its full Boolean membership function are equivalent. -/
-def subsetLabelsEquiv (m : ℕ) : Finset (Vertex m) ≃ (Fin (3*m+2) → Bool) where
+def subsetLabelsEquiv (m : ℕ) : Finset (Vertex m) ≃ (Fin (3 * m + 2) → Bool) where
   toFun := membershipLabels m
   invFun := subsetOfLabels m
   left_inv := subset_labels_inverse m
@@ -51,7 +51,7 @@ def subsetLabelsEquiv (m : ℕ) : Finset (Vertex m) ≃ (Fin (3*m+2) → Bool) w
 
 /-- The membership word has the full original host order. -/
 theorem membership_word_length (m : ℕ) (X : Finset (Vertex m)) :
-    (membershipWord m X).length = 3*m+2 := by
+    (membershipWord m X).length = 3 * m + 2 := by
   simp [membershipWord]
 
 private theorem periodic_avoidance_replicate (w : List Bool) :
@@ -69,17 +69,18 @@ private theorem periodic_avoidance_replicate (w : List Bool) :
     rw [List.replicate_succ', List.flatten_append, ih]
     simp
 
+private def block (f : ℕ → Bool) (a n : ℕ) : List Bool :=
+  List.ofFn (fun i : Fin n => f (a + i.val))
+
 private theorem repeated_word (m : ℕ) (X : Finset (Vertex m)) (r : ℕ) :
     (List.replicate r (membershipWord m X)).flatten =
-      List.ofFn (fun i : Fin (r*(3*m+2)) => decide ((i.val : Vertex m) ∈ X)) := by
+      block (fun i => decide ((i : Vertex m) ∈ X)) 0 (r*(3 * m + 2)) := by
+  simp only [block, zero_add]
   rw [membershipWord, ← List.ofFn_fin_repeat]
   congr 1
   funext i
   simp [Fin.repeat, Fin.modNat, membershipLabels, ZMod.natCast_mod]
 
-
-private def block (f : ℕ → Bool) (a n : ℕ) : List Bool :=
-  List.ofFn (fun i : Fin n => f (a + i.val))
 
 private theorem block_append (f : ℕ → Bool) (a n l : ℕ) :
     block f a (n + l) = block f a n ++ block f (a + n) l := by
@@ -97,7 +98,6 @@ private theorem triples_block (f : ℕ → Bool) (a r : ℕ) :
     intro h
     rw [show 3*(r+1) = 3*r+3 by omega, block_append, block_three]
     have hh := h r (by omega)
-    rw [show a + 3*r + 2 = a + 3*r + 2 from rfl] at hh
     rw [hh]
     exact Triples.snoc (ih (fun j hj => h j (by omega))) _ _
 
@@ -130,7 +130,7 @@ private theorem forbidden_block_iff (f : ℕ → Bool) (n : ℕ) :
     have hget (i : ℕ) (hi : i < n) :
         (p ++ [true,true] ++ t ++ [true] ++ s)[i]? = some (f i) := by
       rw [← he]
-      simp [block, List.getElem?_ofFn, hi]
+      simp [block, hi]
     have hfirst := hget p.length (by omega)
     have hend := hget (p.length + 3*(r+1)-1) (by omega)
     have hleft : f p.length = true := by
@@ -165,7 +165,9 @@ private theorem forbidden_block_iff (f : ℕ → Bool) (n : ℕ) :
       apply triples_block
       intro j hj
       have hh := hall (j+1) (by omega)
-      convert hh using 1 <;> congr 1 <;> omega
+      convert hh using 1
+      congr 1
+      omega
     have htotal : n = a + (2 + (3*r + (1 + (n-(a+3*k))))) := by omega
     refine ⟨block f 0 a, block f (a+2) (3*r),
       block f (a+3*k) (n-(a+3*k)), htr, ?_⟩
@@ -189,12 +191,13 @@ private theorem factor_to_repetition (m : ℕ) (X : Finset (Vertex m))
   let f : ℕ → Bool := fun i => decide ((i : Vertex m) ∈ X)
   let a := u.val
   let r := a + 3*k
-  have hbound : a + 3*k ≤ r*(3*m+2) := by
+  have hk := hf.1
+  have hbound : a + 3*k ≤ r*(3 * m + 2) := by
     dsimp [r]
     exact Nat.le_mul_of_pos_right _ (by omega)
   refine ⟨r, ?_⟩
   rw [repeated_word]
-  change ContainsForbidden (block f 0 (r*(3*m+2)))
+  change ContainsForbidden (block f 0 (r*(3 * m + 2)))
   apply (forbidden_block_iff f _).mpr
   refine ⟨a, k, hf.1, hbound, ?_, ?_, ?_⟩
   · simpa [f, a] using hf.2.1
@@ -209,7 +212,7 @@ private theorem repetition_to_factor (m : ℕ) (X : Finset (Vertex m)) (r : ℕ)
     ∃ u k, ForbiddenFactor m X u k := by
   let f : ℕ → Bool := fun i => decide ((i : Vertex m) ∈ X)
   rw [repeated_word] at hf
-  change ContainsForbidden (block f 0 (r*(3*m+2))) at hf
+  change ContainsForbidden (block f 0 (r*(3 * m + 2))) at hf
   obtain ⟨a,k,hk,_,ha,hz,hall⟩ := (forbidden_block_iff f _).mp hf
   refine ⟨(a : Vertex m),k,hk,?_,?_,?_⟩
   · exact of_decide_eq_true ha
