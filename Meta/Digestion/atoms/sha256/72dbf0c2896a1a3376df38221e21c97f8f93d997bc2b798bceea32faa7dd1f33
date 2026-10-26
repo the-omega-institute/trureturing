@@ -1,0 +1,26 @@
+**Theorem 22.1 (all-word uniform and Lipschitz thresholds).** Fix $T\ge2$, $n\ge1$, put $S=T+n-1$, and retain all literal continuations $E_n\cdots E_1M^T$ with exactly $n$ actions and mandatory reads. There exists one whose terminal scalar has a uniformly continuous inverse on the entire $\mathcal F_b$ if and only if
+
+$$
+ b\notin I_S\quad\hbox{and}\quad b\ne1+F_{S-1}/F_S.
+ \tag{22.1}
+$$
+
+There exists one with a global Lipschitz inverse if and only if $b$ is strictly outside the closed interval $\overline I_S$. Both attained conditions use the actual chronological continuation $M^{n-1}J$. At the other endpoint $b=F_S/F_{S-1}$ it gives the sharp square-root inverse of Theorem 21.1. These statements concern the terminal scalar; they do not discard earlier useful observations in a whole-history problem.
+
+**Proof.** Sufficiency follows from Theorem 21.1 for the attained terminal matrix $JM^S$. The entire open interval is excluded by the all-word exact obstruction, Theorem 15.1. It remains to exclude uniform continuity at the collapsed endpoint and Lipschitz inversion at the tangent endpoint for every literal word, including noncanonical words.
+
+Write $A=\left(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix}\right)$ for an arbitrary such terminal matrix and set $e=\beta-\gamma$, $f=\delta-\alpha-\gamma$. Lemma 13.2 gives $|e|\le F_S$, at the literal length $S+1$. If $e=0$, transposed nonsymmetric sources give the exact collision of Lemma 14.1. If $e\ne0$, its scalar is the known constant $\alpha+\gamma b$ plus $e(v-\theta t)$ with $\theta=-f/e$. For $1<b<2$, Lemma 14.1 says that injectivity requires
+
+$$
+ \theta\in K_b\quad\hbox{or}\quad -1-\theta\in K_b.
+ \tag{22.2}
+$$
+
+Each of these rational numbers has reduced denominator at most $F_S$. Transposition exchanges them, up to a sign and a known scalar constant, and is an isometry of $\mathcal F_b$ in the matrix norm.
+
+Let $u=F_{S-2}/F_{S-1}$ and $v=F_{S-1}/F_S$. The Farey determinant and denominator calculation in Lemma 13.3 says that the only rationals in the closed interval with endpoints $u,v$ having denominator at most $F_S$ are its endpoints. No new word-bound induction is required. At $b_c=1+v$ and $S\ge3$, $K_{b_c}$ is the interval from $v$ to $1/(1+v)$; the second endpoint lies strictly inside the Farey interval from $u$ to $v$. Hence the only permitted value in (22.2) is $v$. Every injective terminal scalar is therefore a nonzero affine rescaling of $\ell_v$, possibly after transposition. Theorem 21.1 gives its positive-error discontinuity on the whole fiber. Noninjective scalars already fail uniform continuity.
+
+At $b_t=1/v=1+u$ and $S\ge3$, $K_{b_t}$ is the entire interval from $u$ to $v$. Thus an injective terminal scalar must, after the same possible transposition, use $\ell_v$ or $\ell_u$. The first has the square-root boundary at $b=1/v$; the second has the collapsed boundary at $b=1+u$. Neither has a Lipschitz inverse. This argument also supplies, for each injective candidate of tangent type, strictly positive pairs whose source distance is of order $t$ while their trace separation is of order $t^2$.
+
+There are two low-order endpoint issues. For $S=2$, necessarily $T=2,n=1$. The only terminal matrices are $M^3$, constant on $\mathcal F_b$, and $JM^2$. At $b_t=1$ use its actual closure $\mathcal K_1$, not the extra isolated algebraic point; Theorem 21.1 gives precisely the square-root inverse. At $b_c=2$ the same theorem gives the collapsed pair, so no other word repairs it. For $S=3$, the tangent endpoint is $b_t=2$, outside the strict range of Lemma 14.1. Its necessary condition (22.2) still holds at $b=2$: the positive-$\theta$ collision construction (14.5) for $\theta\notin[1/2,1]$ is unchanged; for $-1<\theta\le0$ its limiting row ratios are $x_0=-\theta<1$ and $y_0=1$, so the same small positive perturbation gives strictly positive collisions. The case $\theta=-1$ is the transpose of $\theta=0$, and $\theta<-1$ is again reduced by transposition. Thus the only permitted denominator-at-most-two slopes are $u=1$ and $v=1/2$, giving respectively the collapsed and tangent geometries just proved. The collapsed endpoint $b_c=3/2$ is already within the ordinary range. These cases exhaust $S\ge2$ and prove both necessary thresholds. $\square$
+

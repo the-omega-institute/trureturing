@@ -7,6 +7,10 @@ internal sealed class SignedOrdinalHistoryTaskDocument : IScribeDocumentDefiniti
     private const string Owner = "D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Intrinsic delayed semantics of the original birth", H("Intrinsic delayed semantics of the original birth"), Blocks(
+            Describe.Lean(DescribeId.Create("literal-intrinsic-cast"),
+                DeclarationHandle.Create(Owner + "intrinsic_cast"), H("Intrinsic semantics under literal equality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Intrinsic delayed validity is invariant under equality transport of the entire original birth pack. The final realization uses this equivalence to execute a delayed request on the same original Q."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signedordinalhistorytask-0"),
                 DeclarationHandle.Create(Owner + "local_semantics"), H("Local tasks and original whole birth tests"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(

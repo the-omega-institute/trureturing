@@ -1,0 +1,11 @@
+**Definition 31.1 (a fixed residual constant).** At each original clock put $S_k(i)=\sum_{j=0}^k i^j$, with $0^0=1$, and define the degree-only constant
+
+$$
+ R_{k,d}=\max_{0\le i<L}S_k(i)
+ \left(\max\{|(A_i)_{11}|,|(A_i)_{22}|\}
+             +\frac12\max\{|(A_i)_{12}|,|(A_i)_{21}|\}\right).
+ \tag{31.1}
+$$
+
+This finite constant is at least one, because $A_0=I$. It is calculated from the already specified trajectory, not supplied source or gain information. The symbols $a,C_{k,d}$ below remain exactly the constants of §26.
+

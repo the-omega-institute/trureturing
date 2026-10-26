@@ -2348,3 +2348,590 @@ $$
 因此完整量子起源问题仍要求说明哪些实际共同来源、参考、完整后继和复合原则能供应这些独立关系，或给出忠实反例；本处解决的是其中一个确定的条件桥：一个原态的固定同交互响应在所声明完整可重复类内锚定交叉关系，并使原非选择演化成为同一原记录载体的渐近纠缠准备。它既不是原生相位取得，也不是完整起源解答。这些命题只在所列模型前提和操作域内成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 106. The same emitted record and the full return interaction
+
+**Definition 106.1 (Five prescribed columns and ten-dimensional completions).**
+Keep every object and parameter of Definitions 91.1 and 101.1. In particular,
+$\rho_0$ is the sole system preparation, $0<d<1$,
+$\sin(2\theta)\ne0$, and the one installed $N$ satisfies
+$[N,P_\xi]\ne0$. Put $R=B\mathbb C^3\subset H$, and set
+
+$$
+\begin{gathered}
+\mathcal H=H\otimes R_{\rm env},\quad
+\mathcal C=H\otimes\operatorname{span}\{f_0\},\quad
+\mathcal T=R\otimes R_{\rm env},\quad \mathcal M=\mathcal VH,\\
+f_-=(f_0-f_1)/\sqrt2,\qquad
+\zeta=v_H\otimes f_-,\qquad
+F_1=P\otimes I_2, \quad F_0=I_{10}-F_1.
+\end{gathered}
+\tag{106.1}
+$$
+
+A completion is one fixed unitary $\mathsf J$ on all of $\mathcal H$ such
+that $\mathsf J(x\otimes f_0)=\mathcal Vx$ for every $x\in H$.
+Write $T:H\to\mathcal M^\perp$ for the unitary identification
+$Ty=\mathsf J(y\otimes f_1)$. Thus
+
+$$
+\mathsf J(x\otimes f_0+y\otimes f_1)=\mathcal Vx+Ty.
+\tag{106.2}
+$$
+
+Every unitary $T:H\to\mathcal M^\perp$ gives such a completion. This
+parametrizes fixed installations; it is not a menu of selectable unitaries.
+The five ready columns remain precisely (101.1), including those outside
+$R$. No restriction to an invariant six-dimensional interaction is made.
+The terminal is exactly the original two effects $F_1,F_0$.
+
+**Assumption 106.2 (Retention, spectator action and one forward return).**
+In addition to the original menu, the very emitted two-dimensional record
+can be held and returned once to the same forward interaction $\mathsf J$.
+During retention the old system operations act as their original maps
+on $H$ tensored with the identity on this record and every untouched
+reference. There is no extra record rotation, chosen record phase, inverse
+interaction, system reset, new system preparation or selectable label.
+The return is deterministic, at its specified position in the clock, and
+has no success selection. Its entire output remains in $\mathcal H$.
+
+Before return the retained-record map on the code is the member
+$\mathcal L_\gamma$, $|\gamma|\le1$, of the complete CP class (101.6).
+Here $\gamma$ is a fixed retention/leakage parameter, not an available
+control. Compare different values only with the same $\mathsf J$, the
+same original preparation, clocks and operations. In particular,
+$\gamma=1$ means coherent retention and $\gamma=0$ means complete
+dephasing in the original $g$ basis. A classical read of that record
+before return is not simultaneously available in the coherent context.
+Fresh records used by intervening original measured calls still have
+exactly their original ready, measurement and discard contract.
+
+On all five emission inputs the specified extension is
+
+$$
+\widehat{\mathcal L}_\gamma(Y)
+ =(\operatorname{id}_H\otimes\mathcal D_\gamma)
+       (\mathcal VY\mathcal V^\dagger),\qquad Y\in M_5,
+\tag{106.8}
+$$
+
+where $\mathcal D_\gamma$ is the record Schur channel defined after
+(101.6). Its restriction through $B$ is exactly $\mathcal L_\gamma$.
+Its original $g$-diagonal branches on every five-dimensional input and
+untouched reference equal those of the original instrument. This is a
+specified full-input leakage family, not a classification of all
+possible off-code leakage maps.
+
+These are extension premises. The old menu discards the emitted record;
+it supplies neither a wire for its return nor its coherent retention.
+Mathematical unitary-completion existence does not supply either action.
+
+**Theorem 106.3 (The completion variable seen by the original terminal).**
+Define the following fixed source constants and vectors on $\mathbb C^3$:
+
+$$
+\begin{gathered}
+\eta=\langle q,\ell\rangle=(\sqrt2+1)/\sqrt{12},\quad
+b=\eta^2=(3+2\sqrt2)/12,\quad
+\alpha=\langle f,Uq\rangle=\sqrt6/4,\\
+a_+=P_+Uq,\qquad t=\eta\alpha f,\qquad
+D=a_+a_+^\dagger+\alpha^2ff^\dagger,\\
+\kappa=T^\dagger\zeta\in H,\qquad h=B^\dagger\kappa\in\mathbb C^3.
+\end{gathered}
+\tag{106.3}
+$$
+
+Then $\|\kappa\|=1$, $\|h\|\le1$, and the compression of the returned
+terminal to $R\otimes\operatorname{span}\{f_0,f_1\}$, using $B$ on
+both system blocks, is exactly
+
+$$
+\left.\mathsf J^\dagger F_1\mathsf J\right|_{R\otimes R_{\rm env}}
+=\begin{pmatrix}D&th^\dagger\\ht^\dagger&bhh^\dagger\end{pmatrix}.
+\tag{106.4}
+$$
+
+Every $h$ in the closed complex unit ball occurs for a full completion.
+Formula (106.4) is a terminal compression only; it is not the full
+returned state or a permission to discard its off-code part.
+
+Proof. The five actual columns give
+
+$$
+\mathcal M=\operatorname{span}\{u_Hf_0,u_Hf_1,z_Hf_0,z_Hf_1,
+                                    v_H(f_0+f_1)/\sqrt2\},\qquad
+\mathcal M^\perp=\operatorname{span}\{\zeta\}\oplus\mathcal T^\perp.
+\tag{106.5}
+$$
+
+Tensor signs are suppressed only in this span formula. Since $F_1$
+annihilates $\mathcal T^\perp$, its compression to $\mathcal M^\perp$
+is $b\zeta\zeta^\dagger$. Thus the lower-right block in (106.4) is
+$bhh^\dagger$. The upper-left block is
+
+$$
+B^\dagger\mathcal V^\dagger F_1\mathcal VB
+ =\tfrac12(U^\dagger EU+WU^\dagger EUW)=D.
+\tag{106.6}
+$$
+
+For the cross block, the original $K_0,K_1$ give
+
+$$
+B^\dagger\mathcal V^\dagger F_1\zeta
+ =\frac\eta2(U^\dagger q-WU^\dagger q)
+ =\eta\alpha f=t.
+\tag{106.7}
+$$
+
+Here $U^\dagger=U$ and $W=I_3-2ff^\dagger$. This proves all four
+blocks. Conversely, for any $\|h\|\le1$ choose a unit $\kappa\in H$
+with $B^\dagger\kappa=h$, using the two-dimensional $R^\perp$ for
+the remaining norm. A unitary $T:H\to\mathcal M^\perp$ taking
+$\kappa$ to $\zeta$ exists by orthonormal-basis completion and satisfies
+$T^\dagger\zeta=\kappa$. Equations (106.2) and (106.5) then give a
+full completion with that $h$. Orthonormal completion is the standard
+finite-dimensional dilation step already used in Environment Record
+Memory, Theorem 2.2; the source-specific content here is its exact
+terminal dependence (106.3)–(106.7). $\square$
+
+## 107. Exact return masses, full successors and the visibility criterion
+
+**Definition 107.1 (Original histories around a retained emission).**
+Take a fixed original prefix schedule, with actual history $u$, and an
+original intermediate schedule, with actual history $w$, between the
+retained emission and its one return. Both schedules are externally fixed;
+no label selects a gate or changes the schedule. Write
+$r_u=A_u(\rho_0)$, $C_w=U_w$, $a_w=2^{-k(w)}$, and
+$\widetilde C_w=BC_wB^\dagger+(I_5-BB^\dagger)$.
+Define two maps $L_{wj}:\mathbb C^3\to\mathcal H$ by
+
+$$
+L_{wj}x=\mathsf J(BC_wV_jx\otimes g_j),\qquad j=0,1.
+\tag{107.1}
+$$
+
+For an arbitrary complex input $X$ on the code, define the full
+unnormalized returned operator
+
+$$
+\begin{aligned}
+\mathcal R_{\gamma,w}(X)=\frac{a_w}{2}\big(&L_{w0}XL_{w0}^\dagger
+ +L_{w1}XL_{w1}^\dagger\\
+ &+\gamma L_{w0}XL_{w1}^\dagger
+ +\bar\gamma L_{w1}XL_{w0}^\dagger\big).
+\end{aligned}
+\tag{107.2}
+$$
+
+All four terms are operators on the full ten-dimensional $\mathcal H$.
+The actual state on the archive event $(u,w)$ is
+$\mathcal R_{\gamma,w}(r_u)$, without dividing by its mass. The marked
+emission has no classical $g$ label in this context; its actual carrier
+is retained. All original labels before it and during retention are
+present in $(u,w)$.
+
+**Theorem 107.2 (Source-specific necessary and sufficient terminal test).**
+Put $c_\theta=\cos\theta$, $s_\theta=\sin\theta$ and
+
+$$
+\begin{aligned}
+K(h)&=s_\theta^2th^\dagger+c_\theta^2ht^\dagger
+       +i s_\theta c_\theta(D-bhh^\dagger),\\
+H_z(C,h)&=\operatorname{Herm}\bigl(z W V_0^\dagger C^\dagger
+                                      K(h)CV_0\bigr),\qquad
+\operatorname{Herm}(A)=(A+A^\dagger)/2.
+\end{aligned}
+\tag{107.3}
+$$
+
+For any two retention parameters $\gamma,\gamma'$, $z=\gamma-\gamma'$,
+any original histories $u,w$, and both original terminal outcomes, the
+exact unconditioned laws are
+
+$$
+\begin{aligned}
+p_\gamma(u,w,1)&=\operatorname{Tr}[F_1\mathcal R_{\gamma,w}(r_u)],\\
+p_\gamma(u,w,0)&=a_w\operatorname{Tr}r_u-p_\gamma(u,w,1),\\
+p_\gamma(u,w,1)-p_{\gamma'}(u,w,1)
+ &=a_w\operatorname{Tr}[r_uH_z(C_w,h)].
+\end{aligned}
+\tag{107.4}
+$$
+
+The outcome-$0$ difference is the negative of the outcome-$1$ difference.
+Thus this particular history and terminal distinguish the parameters
+if and only if the last scalar in (107.4) is nonzero. For the nine
+original prefix events $r_i$ of Definition 93.1, a specified collection
+$\mathcal W$ of intermediate histories is blind on every one of these
+events if and only if
+
+$$
+H_z(C_w,h)=0\qquad(w\in\mathcal W).
+\tag{107.5}
+$$
+
+All of (107.2) and the corresponding archive/reference outputs extend
+by tensoring with the identity on every finite untouched reference.
+No state after the original effects-only terminal is specified.
+
+For completeness the full five-input version of the returned map is
+also fixed. Let $\widehat K_{\theta,j}$ be the original five-dimensional
+Kraus operators (72.6), and define
+
+$$
+\widehat L_{wj}y
+ =\mathsf J(\widetilde C_w\widehat K_{\theta,j}y\otimes g_j).
+\tag{107.7}
+$$
+
+In (107.2), replacing $L_{wj}$ by $\widehat L_{wj}$ and the prefactor
+$a_w/2$ by $a_w$ gives $\widehat{\mathcal R}_{\gamma,w}(Y)$ on every
+$Y\in M_5$. It restricts to (107.2) on $Y=BXB^\dagger$ and includes
+every off-code output and untouched reference.
+
+Proof. The measured intermediate branches remain
+$a_w\operatorname{Ad}_{C_w}$ on the system even when the retained
+record is entangled with it. This is their original full-code and
+spectator contract. Applying (101.6), then these branches, then the
+same forward $\mathsf J$ gives (107.2). Each $L_{wj}$ is an isometry and
+$L_{w1}^\dagger L_{w0}=0$, since $g_1\perp g_0$ before the return.
+Consequently $\operatorname{Tr}\mathcal R_{\gamma,w}(X)
+=a_w\operatorname{Tr}X$, independently of $\gamma$.
+Complete positivity follows from the positive coefficient matrix
+$\left(\begin{smallmatrix}1&\gamma\\\bar\gamma&1\end{smallmatrix}\right)$;
+these facts also hold with an untouched reference.
+The range of each original $\widehat K_{\theta,j}$ is in $R$, so the
+intermediate branch identity applies also after every full five-input
+emission. Equation (106.8) then gives (107.7) and its stated full-input
+map without altering any ready column.
+
+Rotating the two record blocks of (106.4) into the original $g$ basis
+gives its row-$1$, column-$0$ block exactly as
+
+$$
+(i s_\theta,c_\theta)
+\begin{pmatrix}D&th^\dagger\\ht^\dagger&bhh^\dagger\end{pmatrix}
+\binom{c_\theta}{-i s_\theta}=K(h).
+\tag{107.6}
+$$
+
+Therefore $L_{w1}^\dagger F_1L_{w0}
+=V_1^\dagger C_w^\dagger K(h)C_wV_0$.
+Taking the trace of the two cross terms, and using $V_1=V_0W$,
+proves (107.4). The real trace against a Hermitian input is its pairing
+with $H_z$. Since the nine $r_i$ span $\operatorname{Herm}_3$, their
+pairings vanish exactly when that Hermitian matrix is zero.
+
+For any fixed pair of prefix and intermediate schedules, summing
+(107.4) over all their actual histories and both terminal outcomes gives
+one. The return contributes no rejection or discarded branch. Every
+original history, including those different from a chosen witness, is
+retained. On a reference $Z$, its unnormalized final visible output is
+$\operatorname{Tr}_{\mathcal H}[(F_b\otimes I_Z)
+(\mathcal R_{\gamma,w}\otimes\operatorname{id}_Z)(X)]$; this gives the
+terminal/archive/reference law without inventing a system successor for
+that terminal. $\square$
+
+## 108. No full completion hides retention from all original history probes
+
+**Theorem 108.1 (One return, uniformly finite history family).**
+Under Assumption 106.2, fix any allowed $d,\theta,N$ and any of its
+original nine-prefix bases. For every full completion $\mathsf J$ and
+every $\gamma\ne\gamma'$ in the closed disk, there are a prefix event
+$i\in\{1,\ldots,9\}$ and an actual intermediate history
+$w\in\{0,1,N\}^{\le17}$ such that the last line of (107.4) is nonzero.
+In particular the original binary terminal can distinguish coherent
+retention from dephasing after just one forward return, for every full
+completion, when this finite collection of original history contexts
+is allowed. No extra record effect is needed in this extension.
+
+More precisely, there is a constant $\varepsilon>0$ depending on the
+fixed $d,\theta,N$ and prefix basis, but independent of the completion
+and of $\gamma,\gamma'$, for which
+
+$$
+\max_{i,\ |w|\le17}
+ |p_\gamma(u_i,w,1)-p_{\gamma'}(u_i,w,1)|
+ \ge\varepsilon|\gamma-\gamma'|.
+\tag{108.1}
+$$
+
+The same completion is used on both sides. This does not compare two
+unknown devices with unrelated completions, and does not assert their
+joint identification from the terminal data.
+
+Proof. First $K(h)$ is never a scalar matrix, for any $\|h\|\le1$.
+Indeed its Hermitian part is
+$(th^\dagger+ht^\dagger)/2$, which has a zero direction in dimension
+three. If $K(h)=kI_3$, this forces $\operatorname{Re}k=0$ and
+$th^\dagger+ht^\dagger=0$. Since $t\ne0$, decomposing $h$ into its
+component parallel to $t$ and its orthogonal component shows that
+$h=i r t$ for some real $r$. Substitution gives
+
+$$
+K(h)=i\bigl[s_\theta c_\theta D+
+ (r\cos(2\theta)-s_\theta c_\theta b r^2)tt^\dagger\bigr].
+\tag{108.2}
+$$
+
+Here $a_+\perp f$, $t\parallel f$, and
+$\|a_+\|^2=1-\alpha^2=5/8$.
+A nonzero vector orthogonal to both $a_+$ and $f$ is killed by (108.2),
+so a scalar $K(h)$ would have to be zero. But its action on $a_+$ is
+$i s_\theta c_\theta(5/8)a_+\ne0$. This contradiction uses the actual
+source constants and $\sin(2\theta)\ne0$.
+
+Next suppose $H_z(C,h)=0$ for every $C\in U(3)$ and some $z\ne0$.
+As $CV_0$ ranges over all unitaries, this says
+
+$$
+\operatorname{Herm}(W Q^\dagger zK(h)Q)=0\qquad(Q\in U(3)).
+\tag{108.3}
+$$
+
+Fix a unit vector in the $+1$ eigenspace of $W$ and vary its image under
+$Q$. Its diagonal expectation in (108.3) proves
+$\operatorname{Herm}(zK(h))=0$. Write $zK(h)=iA$, $A=A^\dagger$.
+Equation (108.3) now says that $Q^\dagger A Q$ commutes with $W$ for
+every $Q$. An orthogonal pair with one vector in each eigenspace of
+$W$ can be mapped to any orthogonal pair. Thus every off-diagonal
+matrix element of $A$ in every orthonormal basis vanishes. Applying
+this to $(x+y)/\sqrt2,(x-y)/\sqrt2$ for orthonormal eigenvectors shows
+that all eigenvalues of $A$ are equal. Hence $A$ is scalar, forcing
+$K(h)$ to be scalar, a contradiction.
+
+V Theorem 95.1 supplies the dense positive-word conjugation orbit of
+the actual $V_0,V_1,N$, for every installed mixing $N$ in the present
+contract. The adjoint calculations here do not install inverse gates.
+Continuity and the nine-prefix span therefore show that at least one
+finite actual $w$ and one $i$ have a nonzero pairing in (107.4).
+To bound the length, apply the finite-span observation method already
+supplied by Coherent Reconstruction, Definition 28.1 and Application
+28.2, to the real vector space of complex $3\times3$ matrices. Start
+with $K(h)$ and close under conjugation by the three actual unitaries.
+Its real dimension is at most $18$, so the spans of the words of
+length at most $17$ already give the full orbit span: an earlier
+plateau is invariant, and otherwise dimension $18$ has been reached.
+The functional $K'\mapsto\operatorname{Tr}
+[r_i\operatorname{Herm}(zWV_0^\dagger K'V_0)]$ is real linear.
+It cannot vanish on all of this finite spanning set when some orbit
+pairing is nonzero. This proves the asserted length bound.
+
+Finally define $\varepsilon$ by the exact finite-dimensional expression
+
+$$
+\varepsilon=
+ \min_{\|h\|\le1,\ |z|=1}
+ \max_{i,\ |w|\le17}
+ a_w\left|\operatorname{Tr}[r_iH_z(C_w,h)]\right|.
+\tag{108.4}
+$$
+
+The maximum is continuous, and it is positive at every point by the
+proof just given. Compactness of the closed ball times the unit circle
+makes its minimum strictly positive. Real homogeneity in $z$ proves
+(108.1), including the zero-difference case. All masses in (108.4)
+retain both their prefix and intermediate factors. This uses a finite
+family of separate externally fixed contexts, not a preparation
+lottery or a gate chosen by a desired label. $\square$
+
+**Definition 108.2 (Scope of the finite-family statement).**
+The criterion (107.5) is exact also for a smaller allowed set of
+intermediate histories; blindness of that set is neither full-state
+equality nor impossibility for a larger menu. Theorem 108.1 states
+that the particular enlarged finite family cannot be blind under its
+premises. Its uniformity is over fixed-completion comparisons, at the
+fixed supplied source parameters. Equation (108.4) gives no evaluated
+constant, efficient selection procedure, small sample claim or bound
+uniform over varying $N,\theta,d$. The list of contexts need not be
+small. Exact distinguishability is a statement about probability laws;
+a finite noisy-data certification task needs its own model and bounds.
+
+## 109. A completely specified return with an original-state witness
+
+**Theorem 109.1 (Both terminal masses, and a blind single context).**
+Let $\theta=\pi/4$, take any originally allowed mixing $N$, and define
+
+$$
+u_-=(e_0-e_3)/\sqrt2,\qquad v_-=(e_1-e_4)/\sqrt2.
+\tag{109.1}
+$$
+
+Besides the five ready columns (101.1), specify the complementary
+unitary $T$ on the orthonormal basis $(u_H,v_H,z_H,u_-,v_-)$ of $H$ by
+
+$$
+\begin{aligned}
+Tu_H&=u_-\otimes f_0,& Tv_H&=u_-\otimes f_1,&
+Tz_H&=v_-\otimes f_0,\\
+Tu_-&=\zeta,& Tv_-&=v_-\otimes f_1.
+\end{aligned}
+\tag{109.2}
+$$
+
+This is one full ten-dimensional completion via (106.2), with $h=0$.
+For the actual sole preparation $\psi$, no prefix, no intermediate
+operation and one retained emission followed by its return, the two
+terminal masses are
+
+$$
+\begin{array}{c|cc}
+ &1&0\\ \hline
+\gamma=1&(6-5d)/32&1-(6-5d)/32\\
+\gamma=0&(18+d)/128&1-(18+d)/128.
+\end{array}
+\tag{109.3}
+$$
+
+At the allowed source value $d=2/3$ they are respectively
+$(1/12,11/12)$ and $(7/48,41/48)$, a terminal total-variation distance
+$1/16$. At the also allowed value $d=2/7$ both rows equal
+$(1/7,6/7)$, although the two full returned states differ. Thus a
+single terminal probability at this fixed timing need not reveal
+retention, even for this completely specified installation.
+
+The full returned successors, for every complex code input $X$, are
+explicitly
+
+$$
+\begin{gathered}
+L_0x=2^{-1/2}(\mathcal VB V_0x-iTBV_0x),\qquad
+L_1x=2^{-1/2}(-i\mathcal VB V_1x+TBV_1x),\\
+\mathcal R_{0,\varnothing}(X)
+ =\tfrac12(L_0XL_0^\dagger+L_1XL_1^\dagger),\\
+\mathcal R_{1,\varnothing}(X)=QXQ^\dagger,\qquad
+Qx=2^{-1/2}(\mathcal VB Ux+TBUWx)
+    =2^{-1/2}(L_0+L_1)x.
+\end{gathered}
+\tag{109.4}
+$$
+
+In particular both contexts have off-code mass exactly $1/2$ on the
+actual input. None of that mass is removed. These formulas and (109.2)
+specify all ten output dimensions and every untouched-reference action.
+
+Proof. The five vectors in (109.2) are an orthonormal basis of
+$\mathcal M^\perp$ by (106.5), so $T$ is unitary onto that complement
+and $T^\dagger\zeta=u_-$. Therefore $h=B^\dagger u_-=0$. Expanding
+$g_0=(f_0-if_1)/\sqrt2$, $g_1=(-if_0+f_1)/\sqrt2$ gives the two $L_j$.
+The original isometry satisfies
+
+$$
+\mathcal VB x=(BUx\otimes f_0+BUWx\otimes f_1)/\sqrt2.
+\tag{109.5}
+$$
+
+It follows either directly or from $V_0=Ue^{i\theta W}$,
+$V_1=V_0W$ that $(L_0+L_1)/\sqrt2=Q$. This proves (109.4).
+The $TB$ terms lie in $\mathcal T^\perp$ and the $\mathcal VB$ terms
+in $\mathcal M$. Hence both outputs have mass $1/2$ in
+$\mathcal T^\perp$, for every unit code vector, and all that mass
+contributes to outcome $0$ of the original terminal.
+
+For the probabilities put $A=U^\dagger DU$ and $\beta=1-d$.
+The $h=0$ terminal blocks and the $\theta=\pi/4$ dephasing give
+
+$$
+\begin{aligned}
+p_{\rm coh}&=\tfrac12\langle\psi,A\psi\rangle
+    =\tfrac12\bigl(d/16+3\beta/8\bigr),\\
+p_{\rm deph}&=\tfrac12\operatorname{Tr}
+ \left[A\frac{\rho_0+W\rho_0W}{2}\right].
+\end{aligned}
+\tag{109.6}
+$$
+
+Here both $p_{\rm coh}$ and $p_{\rm deph}$ denote terminal-$1$ masses
+in the two retention contexts. To evaluate their difference without any
+normalized selection, set $\psi_+=P_+\psi$ and $g_+=P_+Uf$.
+The actual source coordinates give
+
+$$
+\begin{gathered}
+q^\dagger Uq=1/4,\quad f^\dagger Uf=1/2,\quad
+(Uf)^\dagger Uq=0,\quad f^\dagger Uq=\alpha,\\
+P_+Af=-\alpha q/2+\alpha^2g_+,\qquad
+\psi_+=\sqrt d\,a_++i\sqrt\beta\,g_+,\\
+\langle P_+Af,a_+\rangle=-5\alpha/16,\qquad
+\langle P_+Af,g_+\rangle=3/32,\qquad
+\langle f,\psi\rangle=\alpha\sqrt d+i\sqrt\beta/2.
+\end{gathered}
+\tag{109.7}
+$$
+
+Consequently
+
+$$
+\operatorname{Re}\left(
+ \langle\psi_+,Af\rangle\langle f,\psi\rangle\right)
+ =\operatorname{Re}\left[
+ (-5\alpha\sqrt d/16-i3\sqrt\beta/32)
+ (\alpha\sqrt d+i\sqrt\beta/2)\right]
+ =\frac{6-21d}{128}.
+\tag{109.8}
+$$
+
+This is precisely $p_{\rm coh}-p_{\rm deph}$ in (109.6). It gives (109.3)
+and both specializations. Finally, for any unit $x$, $L_0x,L_1x$ are
+orthonormal. Thus the coherent output on $xx^\dagger$ is pure, while
+the dephased output has two eigenvalues $1/2$. Their trace distance is
+$1/2$ before the terminal, also when its probabilities happen to agree
+at $d=2/7$. This is a mathematical state comparison, not an extra
+installed measurement. $\square$
+
+## 110. Premises and the remaining origin relation
+
+**Definition 110.1 (Conditional application and preserved supplier domains).**
+The source-specific results (106.4), (107.4), (108.1) and (109.3) are
+repo-derived applications in ordinary finite-dimensional complex
+mathematics. Standard unitary dilation, conjugation observation spans
+and compactness are used as tools. Abbott et al., [*Communication
+Through Coherent Control of Quantum Channels*, §§4–5 and Appendix C](https://arxiv.org/html/1810.09826v3),
+provide the general implementation-dependence background. Their
+controlled-path transformation matrix is not the present same-record
+return and does not supply its wire. D'Alessandro, [*On Quantum State
+Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1),
+provides the established orbit-pairing observability principle under
+its controlled Lie-group premises. Here the dense orbit and nine
+weighted prefixes are instead the existing V §§92–95 suppliers, and
+the finite-span step is the existing Coherent Reconstruction §28 tool.
+The additional source calculation is that no full completion makes
+(107.3) scalar, and therefore none hides the retention parameter from
+this original-history family. No generic observability theorem or
+worldwide-priority claim is added.
+
+Coherent Reconstruction §§12–13, 25–34 and Self Generated Predictive
+Memory §§12–16 retain their separation between positive-kernel
+representation, physical comparison and operation-preserving
+compression. Their representation and compression premises do not
+supply Assumption 106.2. Conversely the latter assumption and the
+present visibility theorem do not construct a new compressed carrier,
+an arbitrary joint instrument or a positive field representation.
+The native Read/Tick acquisition and hidden-mode suppliers retain
+their original field, clocks, guards and successors; their Read and
+Tick commands have not become $\mathsf J$ or a retained quantum wire.
+The original endpoint ground-state/source-contact continuation retains
+its source law and domain, without a record-return map supplied here.
+The nonlinear native phase action of [Probability Phase Transport and
+Holonomy Continuation, §12](https://github.com/the-omega-institute/trureturing/blob/76ed03e123fd5c71932c85ca85999bbd078d372c/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY_CONTINUATION.md#12-one-original-phase-command-and-equal-full-density-barycenters)
+has source-law successors that need not factor through a common
+mixed density matrix. It therefore cannot be substituted for the
+common CP operations used in (107.2) merely by naming it a control.
+
+The independent inputs remain complex Hilbert/Born/CP composition,
+the original source and installed $N$, the complete fixed retention
+class, the spectator action during retention, and the callable forward
+return through the same full completion. The conditional consequence
+is terminal visibility using finite original-history contexts, with
+complete continuing states before the effects-only terminal.
+No reusable qutrit-only returned gate or postterminal instrument is
+obtained. A fixed-completion visibility theorem does not calibrate two
+unrelated unknown completions. Finite-sample certification, noisy or
+history-dependent leakage, acquisition of the retention/return service,
+and the origin of Hilbert/Born/CP themselves remain separate problems.
+The old full-word classical models continue on their original menu;
+the new return service is an additional shared relation, and no
+exclusion of every classical extension is asserted.
+
+## 追加锚（本行以下为增补区）
