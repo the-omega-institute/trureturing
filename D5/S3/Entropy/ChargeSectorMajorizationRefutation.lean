@@ -7,6 +7,7 @@
    digest: Majorization can fail after normalization within a common charge sector. -/
 
 import D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation
+import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
 
 /-! Charge-sector normalization need not preserve majorization of diagonal density matrices. -/
 
@@ -16,9 +17,7 @@ namespace D5.S3.Entropy.ChargeSectorMajorizationRefutation
 
 open D5.S3.Quantum.Matrix.LinDTIMajorizationRefutation (Majorizes)
 
-/-- Eigenvalues of a diagonal state, with multiplicity, in descending order. -/
-noncomputable def spectrum {n : ℕ} (r : Fin n → ℝ) : List ℝ :=
-  (List.ofFn r).mergeSort (fun a b => decide (b ≤ a))
+open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (desc)
 
 /-- The trace of the block on the charge-`q` eigenspace. -/
 noncomputable def sectorWeight {n : ℕ} (r : Fin n → ℝ) (charge : Fin n → ℤ)
@@ -38,7 +37,7 @@ def claim : Prop :=
   ∀ (n : ℕ) (charge : Fin n → ℤ) (r s : Fin n → ℝ),
     (∀ i, 0 ≤ r i) → (∑ i, r i = 1) →
     (∀ i, 0 ≤ s i) → (∑ i, s i = 1) →
-    Majorizes (spectrum r) (spectrum s) →
+    Majorizes (desc r) (desc s) →
     ∀ q : ℤ, 0 < sectorWeight r charge q → 0 < sectorWeight s charge q →
       Majorizes (sectorSpectrum r charge q) (sectorSpectrum s charge q)
 
@@ -47,17 +46,20 @@ private noncomputable def r : Fin 4 → ℝ := ![6/20, 6/20, 7/20, 1/20]
 private noncomputable def s : Fin 4 → ℝ := ![7/20, 5/20, 4/20, 4/20]
 
 private lemma r_state : (∀ i, 0 ≤ r i) ∧ (∑ i, r i = 1) := by
-  sorry
+  constructor
+  · intro i
+    fin_cases i <;> norm_num [r]
+  · norm_num [r, Fin.sum_univ_succ]
 
 private lemma s_state : (∀ i, 0 ≤ s i) ∧ (∑ i, s i = 1) := by
   sorry
 
 private lemma full_spectra :
-    spectrum r = [7/20, 6/20, 6/20, 1/20] ∧
-    spectrum s = [7/20, 5/20, 4/20, 4/20] := by
+    desc r = [7/20, 6/20, 6/20, 1/20] ∧
+    desc s = [7/20, 5/20, 4/20, 4/20] := by
   sorry
 
-private lemma global_majorizes : Majorizes (spectrum r) (spectrum s) := by
+private lemma global_majorizes : Majorizes (desc r) (desc s) := by
   rw [full_spectra.1, full_spectra.2]
   sorry
 
