@@ -20,6 +20,8 @@ import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Projection
 import Batteries.Tactic.OpenPrivate
 
+/-! Complete spectral projectors for the actual norm-four twisted field. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
@@ -51,7 +53,8 @@ private theorem norm_four_reduction_ne_zero (D : LatticeData) (a : Charge D)
   have he : ∀ i : Fin D.rank, Even (a i) := by
     intro i
     have hi := congrFun hz i
-    simpa only [reduceCharge, Pi.zero_apply, ZMod.intCast_eq_zero_iff_even] using hi
+    change (a i : ZMod 2) = 0 at hi
+    exact ZMod.intCast_eq_zero_iff_even.mp hi
   choose b hb using he
   have scaled : bilinear D a a = 4 * bilinear D b b := by
     unfold bilinear
@@ -109,7 +112,7 @@ private def firstMonomialEquiv (D : LatticeData) : Fin D.rank ≃ OddFiber D 1 :
     constructor
     · intro i j hij
       have h := congrArg Subtype.val hij
-      have h' : (i, 0 : Fin D.rank × ℕ) = (j, 0) :=
+      have h' : (i, (0 : ℕ)) = (j, 0) :=
         (Finsupp.single_left_inj (one_ne_zero : (1 : ℕ) ≠ 0)).mp h
       exact congrArg Prod.fst h'
     · rintro ⟨d, hd⟩
@@ -155,7 +158,7 @@ private theorem nativeGradeEquiv_single_coe (D : LatticeData) (hu : IsUnit D.G.d
     (nativeGradeEquiv D hu (Pi.single i (1 : ℂ) ⊗ₜ[ℂ] u) : ActualTensor D hu) =
       (X (i, 0) : Oscillator D) ⊗ₜ[ℂ] u := by
   classical
-  have expand : u = ∑ b, u b • Pi.single b (1 : ℂ) := by ext b; simp
+  have expand : u = ∑ b, u b • Pi.single b (1 : ℂ) := pi_eq_sum_univ' u
   calc
     _ = (nativeGradeEquiv D hu (Pi.single i (1 : ℂ) ⊗ₜ[ℂ]
         (∑ b, u b • Pi.single b (1 : ℂ))) : ActualTensor D hu) := by rw [← expand]
@@ -163,19 +166,20 @@ private theorem nativeGradeEquiv_single_coe (D : LatticeData) (hu : IsUnit D.G.d
       simp only [TensorProduct.tmul_sum, TensorProduct.tmul_smul, map_sum, map_smul,
         Submodule.coe_sum, Submodule.coe_smul, ← nativeBasis_apply,
         nativeGradeEquiv_basis, firstGradeBasis_coe]
-      rw [← TensorProduct.tmul_smul, ← TensorProduct.tmul_sum, ← expand]
+      simp_rw [← TensorProduct.tmul_smul]
+      rw [← TensorProduct.tmul_sum, ← expand]
 
 private theorem nativeGradeEquiv_tmul_coe (D : LatticeData) (hu : IsUnit D.G.det)
     (x : FirstOscillator D) (u : ActualGround D hu) :
     (nativeGradeEquiv D hu (x ⊗ₜ[ℂ] u) : ActualTensor D hu) =
       ∑ i : Fin D.rank, x i • ((X (i, 0) : Oscillator D) ⊗ₜ[ℂ] u) := by
   classical
-  have expand : x = ∑ i, x i • Pi.single i (1 : ℂ) := by ext i; simp
+  have expand : x = ∑ i, x i • Pi.single i (1 : ℂ) := pi_eq_sum_univ' x
   calc
     _ = (nativeGradeEquiv D hu ((∑ i, x i • Pi.single i (1 : ℂ)) ⊗ₜ[ℂ] u) :
         ActualTensor D hu) := by rw [← expand]
     _ = _ := by
-      simp only [TensorProduct.sum_tmul, TensorProduct.smul_tmul', map_sum, map_smul,
+      simp only [TensorProduct.sum_tmul, ← TensorProduct.smul_tmul', map_sum, map_smul,
         Submodule.coe_sum, Submodule.coe_smul, nativeGradeEquiv_single_coe]
 
 private def chargeCoordinates (D : LatticeData) (a : Charge D) : FirstOscillator D :=
@@ -187,7 +191,7 @@ private theorem nativeGradeEquiv_charge_coe (D : LatticeData) (hu : IsUnit D.G.d
       chargePolynomial D a ⊗ₜ[ℂ] u := by
   rw [nativeGradeEquiv_tmul_coe]
   simp only [chargeCoordinates, chargePolynomial, TensorProduct.sum_tmul,
-    TensorProduct.smul_tmul']
+    ← TensorProduct.smul_tmul']
 
 /- P(x)=B(a,x)a on the first oscillator space. P/4 is the charge-line
    projection. These are ordinary linear maps, not a new spectral framework. -/
@@ -220,7 +224,8 @@ private def chargeProjector (D : LatticeData) (a : Charge D) :
 private theorem chargeProjector_idempotent (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) : IsIdempotentElem (chargeProjector D a) := by
   change chargeProjector D a * chargeProjector D a = chargeProjector D a
-  ext x
+  apply LinearMap.ext
+  intro x
   simp only [Module.End.mul_apply, chargeProjector, chargeRankOne,
     LinearMap.smul_apply, LinearMap.smulRight_apply, map_smul,
     chargeFunctional_charge D a ha, smul_eq_mul, smul_smul]
@@ -244,7 +249,8 @@ private def groundMinus (D : LatticeData) (hu : IsUnit D.G.det)
 private theorem groundMinus_formula (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (s : ℂ) :
     groundMinus D hu a s = (1 / 2 : ℂ) • (1 - s • groundAction D hu a) := by
-  ext u
+  apply LinearMap.ext
+  intro u
   simp only [groundMinus, groundPlus, LinearMap.sub_apply, LinearMap.add_apply,
     LinearMap.smul_apply, Module.End.one_apply]
   module
@@ -261,7 +267,8 @@ private theorem groundPlus_idempotent (D : LatticeData) (hu : IsUnit D.G.det)
     exact LinearMap.congr_fun square u
   change ((1 / 2 : ℂ) • (1 + J)) * ((1 / 2 : ℂ) • (1 + J)) =
     ((1 / 2 : ℂ) • (1 + J))
-  ext u
+  apply LinearMap.ext
+  intro u
   simp only [Module.End.mul_apply, LinearMap.smul_apply, LinearMap.add_apply,
     Module.End.one_apply, map_add, map_smul, JJ]
   module
@@ -338,7 +345,7 @@ private theorem nativeL_single (D : LatticeData) (hu : IsUnit D.G.det)
     chargeProjector, chargeRankOne, LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, LinearMap.smulRight_apply, Module.End.one_apply,
     TensorProduct.map_tmul, chargeFunctional_single, TensorProduct.tmul_add,
-    TensorProduct.tmul_sub, TensorProduct.tmul_smul, TensorProduct.smul_tmul',
+    TensorProduct.tmul_sub, TensorProduct.tmul_smul, ← TensorProduct.smul_tmul',
     smul_add, smul_sub, smul_smul]
   module
 
@@ -364,10 +371,11 @@ theorem actualZeroMode_transport (D : LatticeData) (hu : IsUnit D.G.det)
       zeroMode_X D hu a ha s]
     simp only [map_add, map_sub, map_smul, Submodule.coe_add, Submodule.coe_sub,
       Submodule.coe_smul, nativeGradeEquiv_single_coe, nativeGradeEquiv_charge_coe,
-      TensorProduct.add_tmul, TensorProduct.sub_tmul, TensorProduct.smul_tmul',
+      TensorProduct.add_tmul, TensorProduct.sub_tmul, ← TensorProduct.smul_tmul',
       smul_add, smul_sub, smul_smul]
     module
-  ext v
+  apply LinearMap.ext
+  intro v
   obtain ⟨w, rfl⟩ := e.surjective v
   change actualGradeOneZeroMode D hu a ha s (e w) =
     e (nativeL D hu a s (e.symm (e w)))
@@ -419,17 +427,17 @@ private theorem actual_eigenrelations (D : LatticeData) (hu : IsUnit D.G.det)
    vanishings in the following actual IsProj proof. -/
 private theorem actual_projector_vanishes (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ)
-    (p : Module.End ℂ (actualGrade D hu 1)) (μ λ : ℂ)
+    (p : Module.End ℂ (actualGrade D hu 1)) (μ lam : ℂ)
     (hp : p * actualGradeOneZeroMode D hu a ha s = μ • p)
-    (hμλ : μ ≠ λ) (v : actualGrade D hu 1)
-    (hv : actualGradeOneZeroMode D hu a ha s v = λ • v) : p v = 0 := by
-  have h : μ • p v = λ • p v := by
+    (hμlam : μ ≠ lam) (v : actualGrade D hu 1)
+    (hv : actualGradeOneZeroMode D hu a ha s v = lam • v) : p v = 0 := by
+  have h : μ • p v = lam • p v := by
     calc
       _ = p (actualGradeOneZeroMode D hu a ha s v) :=
         (LinearMap.congr_fun hp v).symm
       _ = _ := by rw [hv, map_smul]
-  have hz : (μ - λ) • p v = 0 := by rw [sub_smul, h, sub_self]
-  exact (smul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hμλ)
+  have hz : (μ - lam) • p v = 0 := by rw [sub_smul, h, sub_self]
+  exact (smul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hμlam)
 
 /-- All three projectors project onto the full actual eigenspaces.
     IsProj supplies idempotence, range equality and trace=dimension. -/
@@ -545,7 +553,7 @@ theorem actual_first_grade_eigenspace_multiplicities
   rw [ph.trace] at th
   have hr : 1 ≤ D.rank := rank_pos D a ha
   have cast_sub : ((D.rank - 1 : ℕ) : ℂ) = (D.rank : ℂ) - 1 := by
-    exact Nat.cast_sub hr
+    simpa only [Nat.cast_one] using (Nat.cast_sub (R := ℂ) hr)
   refine ⟨?_, ?_, ?_⟩
   · have h : (2 : ℂ) * (Module.finrank ℂ
         (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) 0) : ℂ) =
@@ -592,19 +600,22 @@ theorem actual_grade_one_eq_parity_minus_energy_two
   · intro v hv
     refine ⟨?_, ?_⟩
     · have hp := actualParity_on_actualGrade D hu 1 ⟨v, hv⟩
-      simpa [paritySpace, LinearMap.mem_ker, LinearMap.sub_apply,
-        LinearMap.smul_apply, sub_eq_zero] using hp
+      change actualParity D hu v - (-1 : ℂ) • v = 0
+      rw [hp]
+      simp
     · change v ∈ (actualTensorL0 D hu).eigenspace (2 : ℂ)
       rw [Module.End.eigenspace_def]
       exact henergy ▸ hv
   · intro v hv
     rw [henergy]
-    exact hv.2
+    have he := hv.2
+    rw [Module.End.eigenspace_def] at he
+    exact he
 
 /-- Coefficient -4 is exactly physical mode 1 on the target parity minus space. -/
 private theorem fixedParitySlice_zeroMode_coe (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (s : ℂ) (v : paritySpace D hu (-1)) :
-    ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]] v :
+    (((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]) v :
       ActualTensor D hu) = zeroMode D hu a s (v : ActualTensor D hu) := by
   simp only [fixedParitySlice, VertexOperator.ncoeff_of_coeff]
   rfl
@@ -614,9 +625,9 @@ def parityMinusEnergyTwoZeroMode (D : LatticeData) (hu : IsUnit D.G.det)
     (h24 : D.rank = 24) (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) :
     Module.End ℂ (parityMinusEnergyTwo D hu) where
   toFun v := ⟨zeroMode D hu a s v, by
-    rw [← actual_grade_one_eq_parity_minus_energy_two D hu h24]
-    exact (actualGradeOneZeroMode D hu a ha s
-      ⟨v, (actual_grade_one_eq_parity_minus_energy_two D hu h24).symm ▸ v.property⟩).property⟩
+    have hgrade := (actual_grade_one_eq_parity_minus_energy_two D hu h24).ge v.property
+    exact (actual_grade_one_eq_parity_minus_energy_two D hu h24).le
+      (actualGradeOneZeroMode D hu a ha s ⟨v, hgrade⟩).property⟩
   map_add' v w := Subtype.ext (map_add (zeroMode D hu a s) v.val w.val)
   map_smul' c v := Subtype.ext (map_smul (zeroMode D hu a s) c v.val)
 
@@ -625,15 +636,15 @@ private theorem parity_minus_energy_two_physical_mode
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ)
     (v : parityMinusEnergyTwo D hu) :
     (parityMinusEnergyTwoZeroMode D hu h24 a ha s v : ActualTensor D hu) =
-      ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]
+      (((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]])
         ⟨v, v.property.1⟩ : ActualTensor D hu) := by
   exact (fixedParitySlice_zeroMode_coe D hu a s _).symm
 
 private def energyTwoEigenspaceEquiv
     (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
-    (a : Charge D) (ha : bilinear D a a = 4) (s λ : ℂ) :
-    (actualGradeOneZeroMode D hu a ha s).eigenspace λ ≃ₗ[ℂ]
-      (parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace λ where
+    (a : Charge D) (ha : bilinear D a a = 4) (s lam : ℂ) :
+    (actualGradeOneZeroMode D hu a ha s).eigenspace lam ≃ₗ[ℂ]
+      (parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace lam where
   toFun v := ⟨⟨v.val.val,
     actual_grade_one_eq_parity_minus_energy_two D hu h24 ▸ v.val.property⟩, by
     rw [Module.End.mem_eigenspace_iff]
@@ -656,7 +667,7 @@ theorem actual_parity_minus_energy_two_multiplicities
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     (∀ v : parityMinusEnergyTwo D hu,
       (parityMinusEnergyTwoZeroMode D hu h24 a ha s v : ActualTensor D hu) =
-        ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]
+        (((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]])
           ⟨v, v.property.1⟩ : ActualTensor D hu)) ∧
     Module.finrank ℂ (parityMinusEnergyTwo D hu) = 98304 ∧
     Module.finrank ℂ
@@ -670,8 +681,8 @@ theorem actual_parity_minus_energy_two_multiplicities
     exact (actual_rank24_grade_one_finrank_98304 D hu h24).2.1
   ·
     have dims := actual_first_grade_eigenspace_multiplicities D hu a ha s hs
-    have transfer (λ : ℂ) :=
-      (energyTwoEigenspaceEquiv D hu h24 a ha s λ).finrank_eq
+    have transfer (lam : ℂ) :=
+      (energyTwoEigenspaceEquiv D hu h24 a ha s lam).finrank_eq
     rw [transfer 0, transfer (1 / 16), transfer (1 / 2), h24] at dims
     norm_num at dims
     omega

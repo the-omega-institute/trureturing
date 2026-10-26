@@ -207,7 +207,7 @@ def law (r : Realization signature) : Prop :=
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1),
     (∀ v : parityMinusEnergyTwo D hu,
       ((r.readout () ⟨⟨⟨D, hu, a, ha, s⟩, hs⟩, h24⟩ ()).1 v : ActualTensor D hu) =
-        ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]
+        (((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]])
           ⟨v, v.property.1⟩ : ActualTensor D hu)) ∧
     (r.readout () ⟨⟨⟨D, hu, a, ha, s⟩, hs⟩, h24⟩ ()).2.1 = 98304 ∧
     (r.readout () ⟨⟨⟨D, hu, a, ha, s⟩, hs⟩, h24⟩ ()).2.2.1 = 47104 ∧
