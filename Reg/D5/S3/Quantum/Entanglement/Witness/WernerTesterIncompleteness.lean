@@ -44,7 +44,7 @@ abbrev arena : Arena where
         (e₁ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₁))
         (e₂ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₂)),
         (∀ x, ‖e₁ x‖ ≤ traceNorm x) → (∀ x, ‖e₂ x‖ ≤ traceNorm x) →
-          projNorm (testerImage e₁ e₂ (r.readout () d μ)) ≤ 1
+          ‖testerImage e₁ e₂ (r.readout () d μ)‖ ≤ 1
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -57,8 +57,8 @@ theorem dependence : ObservationalDependence signature actual := by
   refine ⟨1, 0, 1, ?_⟩
   change werner 1 0 ≠ werner 1 1
   intro h
-  have he := congrArg (fun M : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ =>
-    M (0, 0) (0, 0)) h
+  have he := congrArg (fun m : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ =>
+    m (0, 0) (0, 0)) h
   norm_num [werner, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply,
     Matrix.one_apply,
     _root_.D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply] at he
@@ -110,8 +110,6 @@ def registration :
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
-#print axioms registration
 
 end
 end Reg.D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness
