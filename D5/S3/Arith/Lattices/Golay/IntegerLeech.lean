@@ -28,7 +28,7 @@ def Admissible (C : Submodule F2 Word) (x : IntVector) : Prop :=
   ∃ m : ℤ, (m = 0 ∨ m = 1) ∧ (∀ i, x i % 2 = m) ∧
     red (fun i => (x i - m) / 2) ∈ C ∧ (∑ i, x i) % 8 = 4 * m
 
-private theorem representation (C : Submodule F2 Word) (x : IntVector) :
+theorem representation (C : Submodule F2 Word) (x : IntVector) :
     Admissible C x ↔ ∃ m : ℤ, (m = 0 ∨ m = 1) ∧ ∃ a : IntVector,
       (∀ i, x i = m + 2 * a i) ∧ red a ∈ C ∧ (∑ i, x i) % 8 = 4 * m := by
   constructor

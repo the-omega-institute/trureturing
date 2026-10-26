@@ -1,0 +1,40 @@
+**Lemma 78.2 (rigidity of every positive symmetric competitor).** Suppose
+a finite real symmetric positive-link Jacobi matrix $J$ has the same
+moments as (77.1) through index $2r$, where $r$ is from Lemma 78.1. Its
+order is at least $r$. Its first $r$ diagonals are $a$, and its first
+$r-1$ links are $c$. If its order is exactly $r$, then $h_r=0$. If its
+order is larger, its next link satisfies
+
+$$
+\gamma_{r-1}^2=c^2h_r.
+\tag{78.3}
+$$
+
+In particular $h_r=0$ forces order exactly $r$ and uniquely specifies $J$.
+
+**Proof.** Let $w_j=p_j(J)e_0$ and $w_{-1}=0$. Moment agreement and
+(77.4), (78.1) give orthonormal $w_0,\ldots,w_{r-1}$ and
+$\langle w_j,Jw_j\rangle=a$ for $j<r$. All these identities use indices
+at most $2r-1$. The squared norm of $w_r$ is $h_r$ by the last moment.
+
+Start with $w_0=e_0$. Its diagonal pairing fixes $\alpha_0=a$. If another
+unit polynomial vector is required, the recurrence gives
+$w_1=(\gamma_0/c)e_1$; an absent coordinate would give zero. Unit norm
+and $\gamma_0,c>0$ force $\gamma_0=c$ and $w_1=e_1$. Inductively, if
+$w_j=e_j$, the preceding links are $c$, and the preceding diagonals are
+$a$, its diagonal pairing fixes $\alpha_j=a$ and
+
+$$
+w_{j+1}=((J-aI)/c)e_j-e_{j-1}
+       =(\gamma_j/c)e_{j+1}.
+\tag{78.4}
+$$
+
+For $j=0$ the subtracted vector is zero. If $J$ ends at $j$, the right
+side means zero. Thus for $j+1<r$, the required unit norm forces the next
+coordinate, link $c$ and vector $e_{j+1}$. This proves the order bound
+and all preceding coefficients, including $\alpha_{r-1}=a$ using its
+own diagonal pairing. Applying (78.4) once more gives zero at order $r$
+or norm squared $\gamma_{r-1}^2/c^2$ at larger order. Positivity excludes
+a zero norm in the latter case. This proves every assertion. $\square$
+

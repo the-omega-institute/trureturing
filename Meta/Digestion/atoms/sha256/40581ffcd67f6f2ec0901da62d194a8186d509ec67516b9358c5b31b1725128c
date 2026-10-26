@@ -1,0 +1,73 @@
+**Theorem 75.2 (actual recovery and every finite Select continuation).** The installation of Definition 75.1 has an exact finite service for every valid finite adaptive sequence of Select requests, including repetitions. At its settled cuts it satisfies (75.2), recovers the native subset and hence its present Space, Boundary and causal Time, and returns the complete original native reply and actual native successor. A first successful selection of $i$ executes exactly
+
+$$
+\left\lfloor\frac{r(U)+2^i}{R}\right\rfloor
+ -\left\lfloor\frac{r(U)}R\right\rfloor
+\tag{75.3}
+$$
+
+zero pulses. A repeated selection executes none. Every full-subset execution has exactly $M_*$ post-entrance pulses and at most $R$ jointly selected auxiliary values. It therefore attains (74.1) in precisely those two coordinates.
+
+**Proof.** Initially $U=\varnothing$, $r=n=s=0$, and the preparations put the sources at $t_\varnothing,x_*$, as required. Suppose the invariant holds at a settled cut. Enter a busy phase and Hold the actual path. Its actual Read returns
+
+$$
+y=b^{\mathsf T}T^{2N+n}b=m_{2N+n}.
+\tag{75.4}
+$$
+
+For a nonzero $b$ and $0<T<I$, the passive moments strictly decrease:
+
+$$
+m_j-m_{j+1}=b^{\mathsf T}T^j(I-T)b>0\quad(j\ge0).
+\tag{75.5}
+$$
+
+Indeed, diagonalizing the real symmetric $T$ makes this a sum of nonnegative terms $c_\ell^2\lambda_\ell^j(1-\lambda_\ell)$, at least one strictly positive. This is the supplied passive-moment fact. Using the actually earned rational $T$, enumerate $n_0=0,\ldots,M_*$ and compute each rational $m_{2N+n_0}$ by finite exact matrix arithmetic until it equals the actually returned $y$. Existence follows from (75.2) and $n\le M_*$; uniqueness follows from (75.5). Thus this paid local procedure obtains the correct $n$, then $r=Rn+s$, then the unique $k$-bit subset $U$. It has no unearned passive epoch or response oracle. The number, sizes and cost of its arithmetic operations are paid busy work.
+
+Decode the valid request $i$ and issue the actual original $S_{p_i}$, consuming its entire framed response, End, local acknowledgement and Return. If $i\notin U$, Definition 73.1 gives Growth$(S,p_i)$ and source $t_{U'}$, $U'=U\cup\{i\}$. The recovered rank has zero $i$th bit, so $r'=r+2^i$ exactly, without a carry into other subset bits. Put $n'=\lfloor r'/R\rfloor$, $s'=r'-Rn'$. Then $n'\ge n$. Execute $n'-n$ complete zero pulses on the same path, consuming every returning Tick scalar, Add acknowledgement and Read scalar. They change $T^{2N+n}b$ to $T^{2N+n'}b$ and establish (75.2) for $U'$. Store $s'$. If $i\in U$, the actual response is Refusal(branch), both the subset and its rank stay unchanged, and execute no pulse. Thus both branches agree with the actual full native reply and successor, not just with a predicted Boolean success flag.
+
+A final Hold fixes the path while the controller completes its local commit, emits the buffered original native response and clears its temporary data under the supplied End/acknowledgement/Return convention. No later request is admitted until cleanup and commit have finished. The busy interval, including the interval after the native source has changed and before its path/residue update, is not exposed as a settled recovery cut. The fixed response frame is itself consumed or cleared before that cut; a surviving external archive, if later selected, is additional input. The invariant is restored. Induction covers every finite adaptive valid sequence, since equality of earlier complete replies allows the next request to be selected from exactly its actual prefix.
+
+For this restricted Select service, one may use fixed-format local request fields of width $\max(1,\lceil\log_2k\rceil)$ with a complete-message delimiter. A complete malformed or out-of-range local request returns a declared local rejection, leaves both sources and $s$ unchanged and executes no source call. A proper incomplete frame remains busy/pending until completed, rather than producing an original source refusal. Missing authority disables the actual source call. None of these local conventions adds an original native guard outcome or offers the full unrestricted $Q_A$ through a new tag. For valid selectors the actual addressed request sent to the source is exactly Definition 69.1's original $S$ frame.
+
+The rank is nondecreasing, and each successful step executes the difference of its two successive quotients. Telescoping from zero to $\lfloor(2^k-1)/R\rfloor$ gives exactly $M_*$ pulses, regardless of selection order or repeats. The final field depends only on $U$ at every settled cut, so canonicality holds. The residue has at most $R$ values; no other varying selected input survives by the installation's explicit clearing and fixed-capacity conditions. This proves attainment. If $R\ge2^k$, $M_*=0$ and the residue already holds the whole rank; that boundary case is included. Finally, the recovered subset specifies exactly the actual prepared source with its selected incomparable splits. Applying the original native inverses recovers its present support, terminal boundary and causal event order. Conversely, the support parses the present constructor at each $p_i$, which is a branch exactly for $i\in U$; the terminal boundary recovers that support by prefix closure; and the labelled causal order contains $S_{p_i}$ exactly for $i\in U$. Each of these independent native views therefore recovers $U$, and then the two Memory coordinates in (75.2) by (75.1), on the paired invariant image. These are mathematical recovery maps on the stated views; they do not add a geometric-read port or allocate a replacement source. The actual installed recovery procedure above uses only the original path root and the paid residue. None of these maps reconstructs the order of the independent selections or earlier emitted replies. $\square$
+
+**Resource statement 75.3 (actual calls, replies and widths).** Let $J\ge k$ be the number of valid Select requests on a full-subset execution, including repeats. Native preparation executes $k$ promotions and $k$ splits. Continuation executes $k$ successful splits and $J-k$ branch refusals. Its final support has $1+5k$ vertices. Preparation request/Growth payload is
+
+$$
+\sum_{j=0}^{k-1}2(4j+9)=4k^2+14k;
+\tag{75.6}
+$$
+
+successful continuation payload is
+
+$$
+\sum_{i=0}^{k-1}\bigl(4(i+1)+9\bigr)=2k^2+11k.
+\tag{75.7}
+$$
+
+Each repeated request at index $i$ additionally pays $2i+11$ addressed request/refusal bits. These equations exclude the separately paid End, acknowledgement, Return, local selector input/output, source navigation, assignments and local buffering.
+
+Choose exactly the initial Hold and recovery Read and final Hold of Theorem 75.2 on each valid call, with no other continuation Holds. Including the original unknown-size path acquisition, the actual original-menu counts are
+
+$$
+\begin{aligned}
+\#\mathrm{Tick}&=2N+M_*,&\#\mathrm{Add}&=M_*,\\
+\#\mathrm{Read}&=1+J+M_*,&\#\mathrm{Hold}&=N+1+2J.
+\end{aligned}
+\tag{75.8}
+$$
+
+Consequently mandatory scalar replies number $2N+1+J+2M_*$; Add/Hold acknowledgements number $M_*+N+1+2J$. An optional updated-root Add reply contributes another $M_*$ scalars. These are counts of actual calls and complete outputs, not unit-cost bounds for their payloads or arithmetic. All original native and path supports coexist with their two roots, original source and response ports, retained authorities, earned matrix and origin, fixed code/constants, selector input, residue encoding, current field encoding, cleared work arena and any external response/archive/backing that actually survives. A fixed-width residue implementation uses $\lceil\log_2R\rceil$ bits, permitting zero bits when $R=1$; its control and physical slot overhead is separate. If a backing, allocator, controller or external caller retains varying information accessible to recovery, it enlarges the joint alphabet and the two-coordinate assertion must be reevaluated with that actual alphabet.
+
+The enumeration and update require temporary $n,r,U$, rational powers, comparisons, buffered responses and loop counters; their widths and work are charged while busy, though their cleared contents are absent at the next settled cut. Adequate common capacity can be supplied for fixed finite $k,R,N,T$: there are finitely many possible subsets, valid inputs and intermediate arithmetic calculations in the stated bounded enumeration and at most $M_*$ pulses. Reserve their maximum required finite capacities in advance, with fixed allocation shape and complete clearing. This explains the finite existence of such backing without supplying it for free or imposing a uniform bound over all $k$.
+
+An authentic scalar example exposes the separate width cost. For $N=1,T=(1/2)$ the original acquisition ends at $x_*=1/4$. After $n$ zero pulses the field is $1/2^{n+2}$ and its reduced denominator needs $n+3$ binary digits. In particular the final field alone has denominator width $M_*+3$. The Tick and Read of pulse $s$, $1\le s\le M_*$, both return $1/2^{s+2}$; just the sum of their reduced-denominator digit lengths is
+
+$$
+2\sum_{s=1}^{M_*}(s+3)=M_*^2+7M_*.
+\tag{75.9}
+$$
+
+Phase-recovery Reads, entrance outputs, signs, numerators, frame syntax, acknowledgements and all temporary arithmetic add to this lower accounting. Thus sharpness of $(M_*,R)$ is not a peak-memory, total-bit, total-work or total-material optimum. The native source has been supplied alongside the path throughout; the construction is not a native realization by a path.
+

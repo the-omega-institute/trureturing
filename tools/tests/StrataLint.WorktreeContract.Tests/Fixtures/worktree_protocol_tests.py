@@ -24,6 +24,7 @@ from detached_recovery_cases import DetachedRecoveryCases
 from lock_recovery_cases import LockRecoveryCases
 from scoped_dotnet_cases import ScopedDotnetCases
 from qualification_cases import QualificationCases
+from git_scope_cases import GitScopeCases
 
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
@@ -32,7 +33,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):

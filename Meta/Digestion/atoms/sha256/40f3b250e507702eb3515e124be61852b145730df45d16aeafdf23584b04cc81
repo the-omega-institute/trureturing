@@ -1,0 +1,24 @@
+**Counterexample 42.2 (even complete endpoint behavior is not an arbitrary graph inverse).** Consider the rooted three-cell path
+
+$$
+T=\frac12 I+\frac18
+\begin{pmatrix}0&1&0\\1&0&1\\0&1&0\end{pmatrix},
+\quad
+Q=\begin{pmatrix}1&0&0\\0&4/5&-3/5\\0&3/5&4/5\end{pmatrix}.
+$$
+
+The rational symmetric matrix
+
+$$
+T'=QTQ^{\mathsf T}
+=\begin{pmatrix}
+1/2&1/10&3/40\\
+1/10&19/50&7/200\\
+3/40&7/200&31/50
+\end{pmatrix}
+$$
+
+has a triangle as its positive-link graph. Both matrices have eigenvalues $1/2$ and $1/2\pm\sqrt2/8$, so both satisfy $0<T<I$. Both are connected and root-cyclic; cyclicity of $T$ follows from Lemma 37.1 and is transported by $Q$. Thus the discrepancy is not a hidden disconnected component or a nonminimal realization.
+
+Since $Qe_0=e_0$, the state map $x\mapsto Qx$ preserves the authentic preparation, Read, Add and Hold, and intertwines Tick. It consequently preserves the full adaptive endpoint behavior, with matching outputs at every finite continuation. In particular the complete transfer functions and all moments agree. The native path and triangle are different actual graphs. The triangle lies outside the path-class premise, showing why neither the finite stopping transcript nor even all endpoint behavior certifies that premise. A minimal symmetric realization up to an orthogonal root-fixing map is weaker than arbitrary native graph identification.
+
