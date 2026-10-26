@@ -1,0 +1,219 @@
+**Theorem 16.2 (full path, complex domain and source response).**
+The map (16.1)--(16.2) is measurable, has continuous paths on $G$
+and infinite lifetime almost surely, and its law is exactly the
+original full source-start law $\mathbb P_e$. In particular, for
+$0<t_1<\cdots<t_j$ and bounded complex Borel $f_i$ on $G$,
+
+$$
+ \mathbb E\prod_{i=1}^j f_i(\mathsf Z_{t_i})
+  =\operatorname{tr}\left[
+       T_{t_1}\bigl(f_1T_{t_2-t_1}
+             (f_2\cdots T_{t_j-t_{j-1}}f_j)\bigr)\right].
+\tag{16.4}
+$$
+
+The trace in this formula is well defined by positive-time smoothing
+as in [S, Theorem 117.2]. The reconstructed transition family from
+other legitimate starts is obtained by running (15.1) until its
+first source contact and appending an independent copy of (16.2).
+It is the original full transition family, including its source.
+On the entire complex $L^2(G,m)$ its resolvent is
+
+$$
+ R_\lambda=R_\lambda^0+
+      \frac{|b_\lambda\rangle\langle b_\lambda|}
+                              {\lambda d_\lambda},
+ \qquad
+ R_\lambda f(e)=\frac{\int b_\lambda f\,dm}{\lambda d_\lambda}.
+\tag{16.5}
+$$
+
+Under $J_h$ its generator is exactly $H$, with the full domain
+
+$$
+\begin{gathered}
+ D(H)=\{u\in D(S_{\min}^*):A(u)=\rho_*C(u)\},
+ \qquad Hu=S_{\min}^*u,\\
+ D(K)=\{v\in\mathscr V:hv\in D(S_{\min}^*),
+                              A(hv)=\rho_*C(hv)\}.
+\end{gathered}
+\tag{16.6}
+$$
+
+These are the unchanged selector (112.5) and (7.2). Equality holds
+for the entire complex resolvent set as well, by equality of the
+selfadjoint operators. The exact original source coefficient response
+for $\phi\in L^2(G,\mu;\mathbb C)$ is
+
+$$
+ \frac{C((H+\lambda)^{-1}\phi)}{c_h}
+  =\frac{\langle h-\lambda(F+\lambda)^{-1}h,\phi\rangle}
+                              {\lambda d_\lambda}.
+\tag{16.7}
+$$
+
+Moreover $\mathsf L$ is the source PCAF normalized by Revuz measure
+$\delta_e$, and
+
+$$
+\begin{gathered}
+ \mathbb E e^{-\lambda\tau_\ell}
+       =e^{-\ell\lambda d_\lambda},\qquad
+ \mathbb E_e\int_0^\infty e^{-\lambda t}\,d\mathsf L_t
+       =\frac1{\lambda d_\lambda},\\
+ U_\lambda\delta_e(p)=\frac{b_\lambda(p)}{\lambda d_\lambda}.
+\end{gathered}
+\tag{16.8}
+$$
+
+The local clock is auxiliary; the process in (16.4)--(16.7) still
+uses elapsed time $t$.
+
+**Proof.** Since $\mathbf n\zeta=1$, the Poisson integral (16.1)
+is finite for every finite $\ell$, with expectation $\ell$.
+It is a driftless subordinator. Its Poisson exponential formula and
+(15.5) prove the first identity in (16.8). There is no killing
+term because $\varphi(0+)=0$. There is no linear drift term:
+(16.1) is a sum of jumps, and equivalently
+$\varphi(\lambda)/\lambda=d_\lambda\to0$ as
+$\lambda\to\infty$, by dominated convergence in (116.17).
+Infinite mark intensity makes $\tau$ strictly increasing almost
+surely. Indeed, every fixed positive label interval contains a mark
+with probability one, and a countable intersection over rational
+intervals suffices. Independent increments over unit label intervals
+are identically distributed, nonnegative, and have mean one.
+Their strong law implies $\tau_\ell\to\infty$. Thus the original
+elapsed-time half-line is covered by the excursion intervals and
+their complementary range, with no terminal death. The complement
+has zero Lebesgue measure, since the sum of excursion lengths up
+to $\tau_\ell$ is exactly $\tau_\ell$.
+
+Measurability can be made explicit without ordering infinitely many
+small marks by a first label. Exhaust mark space by
+$\{\zeta>1/k\}$. On a bounded label interval each restriction
+has finitely many atoms, which can be ordered measurably by label.
+Their duration sums increase to (16.1). The unique interval
+containing a fixed $t$ in its interior, if one exists, can then be
+identified by the countable family of atom inequalities
+$\tau_{\ell-}<t<\tau_\ell$. Evaluation of its continuous mark
+is measurable. Set the value to $e$ on the complement. This proves
+measurability of all time evaluations of (16.2).
+
+To verify continuity and the complete law, use exactly the recurrent
+excursion statement already checked in Theorem 15.2. Under the
+supplied law $\mathbb P_e$, the inverse of the Revuz-$\delta_e$
+PCAF and its excursion marks form the Poisson process of
+Fukushima--Tanaka (3.4)--(3.7). By Theorem 3.1 there, its intensity
+is $d\ell\,\mathbf n$, with all cylinders (15.3).
+Their (3.3) and §2.2 use this same Revuz normalization.
+The inverse has zero drift because ordinary residence at $e$ is
+zero, and no killing because recurrence gives infinite total local
+time. It is precisely the sum of its excursion durations.
+Reconstructing that reference path by (16.2) returns it at every
+time: away from $e$ it lies in its unique excursion, and on the
+remaining times its value is $e$ by continuity. This is an exact
+path identity, not merely an occupation identity.
+
+The same reference witness also verifies the small-mark condition
+needed for continuity of the new concatenation. For every
+$\delta>0$,
+
+$$
+ \mathbf n\{\sup_{v\le\zeta}|\omega(v)-e|>\delta\}<\infty.
+\tag{16.9}
+$$
+
+Indeed, on a bounded label interval the reference inverse time is
+finite almost surely. Uniform continuity of the reference diffusion
+on that finite elapsed-time interval implies that every excursion
+reaching distance greater than $\delta$ has duration at least a
+sample-dependent positive number. Only finitely many such disjoint
+intervals fit there. Were the measure in (16.9) infinite, its
+Poisson count on every positive label interval would instead be
+infinite almost surely, a contradiction. Thus on any bounded label
+interval of the new Poisson source there are only finitely many
+marks exceeding any fixed positive size. Within an excursion the
+new path is continuous. At a time in the complementary range,
+these finitely many large excursions approach their continuous
+endpoints, while all other excursions stay within $\delta$ of
+$e$. Let $\delta\downarrow0$ through a countable sequence. This
+proves continuity of (16.2) at all remaining times as well, on every
+finite elapsed horizon since $\tau_\ell\uparrow\infty$.
+Together with the measurable rational evaluations above it proves
+measurability into $C([0,\infty),G)$.
+
+Poisson random measures with the same sigma-finite intensity have
+the same law, as follows first from their joint counts on disjoint
+finite-intensity sets and then by exhaustion. Apply this measurable
+continuous-path map to our independently sampled measure and to the
+reference excursion measure. Their image laws coincide, and the
+latter is exactly $\mathbb P_e$. Thus (16.4) follows by the original
+Markov property, for all bounded complex tests. In this proof the
+given full process certifies existence, support and equality of
+laws; its trajectory is not an input supplied to the construction.
+The sampled input consists of the explicitly specified returning
+marks, including their nontrivial cylinder correlations.
+
+For a legitimate start $p\ne e$, the part process reaches the same
+$e$ almost surely by [S, (116.10)]. Its stopped path is the original
+path up to contact, and strong Markov gives an independent original
+source-start future. The just-proved source-start law therefore
+identifies the entire appended law. Splitting the potential there
+gives $R_\lambda^0 f(p)+b_\lambda(p)R_\lambda f(e)$.
+Alternatively compute the source potential directly from the new
+Poisson measure. Tonelli and its compensation formula give, for
+bounded nonnegative $f$,
+
+$$
+\begin{aligned}
+ \mathbb E\int_0^\infty e^{-\lambda t}f(\mathsf Z_t)dt
+ &=\int_0^\infty\mathbb E e^{-\lambda\tau_{\ell-}}d\ell\,
+       \mathbf n\left[\int_0^\zeta e^{-\lambda u}f(\omega(u))du\right]\\
+ &=\frac1{\varphi(\lambda)}
+                \int_0^\infty e^{-\lambda u}\int q_u f\,dm\,du
+  =\frac{\int b_\lambda f\,dm}{\lambda d_\lambda}.
+\end{aligned}
+\tag{16.10}
+$$
+
+The complementary range contributes no elapsed-time integral. A
+left-limit inverse is used in the compensation step because it is
+predictable; at each fixed label it has the same Laplace transform
+as $\tau_\ell$. Conservation bounds the integral of a bounded
+complex input by $\|f\|_\infty/\lambda$, so real and imaginary
+parts extend the identity. Together with the contact splitting this
+proves (16.5). Its $L^2$ extension is exactly the bounded rank-one
+formula of [S, (116.13)]. Equality of one positive resolvent of
+closed selfadjoint operators identifies both operator and domain;
+hence (16.6), (16.7) and the entire complex resolvent identification
+follow, with no Friedrichs substitution for $H$.
+
+For normalization of the clock, [S, (116.4)] gives
+
+$$
+ \mathscr E_\lambda\left[
+       \frac{b_\lambda}{\lambda d_\lambda},v\right]
+             =\operatorname{tr}v=\widetilde v(e).
+\tag{16.11}
+$$
+
+Thus $\delta_e$ is a finite-energy smooth measure, with potential
+$b_\lambda/(\lambda d_\lambda)$. The PCAF in the recurrent
+excursion theorem is its Revuz-$\delta_e$ PCAF, not a scalar
+multiple chosen from a Brownian convention. The joint law of
+(16.2)--(16.3) is the corresponding reference joint law, by the
+same measurable Poisson map. Directly, change variables for a
+continuous increasing function and its right-continuous inverse to
+obtain
+
+$$
+ \mathbb E\int_0^\infty e^{-\lambda t}d\mathsf L_t
+   =\int_0^\infty\mathbb E e^{-\lambda\tau_\ell}d\ell
+   =\frac1{\lambda d_\lambda}.
+\tag{16.12}
+$$
+
+This agrees with the trace-one normalization in (16.11). All
+normalizations are consequently fixed by the actual source capacity.
+No positive spectral gap was used. $\square$
+
