@@ -195,7 +195,7 @@ theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.P
     ext x <;> rfl
   simp [← Matrix.permMatrix_mul, h]
 
-private theorem traceSwap : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) = (Fintype.card n : ℂ) := by
+theorem traceSwap : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) = (Fintype.card n : ℂ) := by
   simp only [Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
   simp [Prod.ext_iff, eq_comm]
 
