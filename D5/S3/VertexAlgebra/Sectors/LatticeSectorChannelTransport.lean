@@ -218,7 +218,7 @@ def clearIterate {V : Type*} [AddCommGroup V] [Module ℂ V]
   ∑ h ∈ Finset.range (A + 1),
     (A.choose h : ℂ) • I (a - N - h) (b - B - A + h)
 
-private theorem iterate_borcherds (D : LatticeData) (α β γ : Charge D)
+theorem iterate_borcherds (D : LatticeData) (α β γ : Charge D)
     (u : Sector D α) (v : Sector D β) (w : Sector D γ)
     (N A B : ℕ)
     (hA : ∀ n : ℤ, (A : ℤ) ≤ n → canonical D α γ u n w = 0)
