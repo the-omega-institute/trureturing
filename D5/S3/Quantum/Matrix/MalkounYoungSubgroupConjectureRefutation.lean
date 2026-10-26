@@ -58,7 +58,7 @@ private def v : Matrix (Fin 2) (Fin 3) ℂ := !![1, 1, 1; 0, 1, Complex.I]
 private def seed : Matrix (Fin 3) (Fin 3) ℂ := v.conjTranspose * v
 
 private theorem block_posSemidef (m : ℕ) : (blockMatrix m seed).PosSemidef := by
-  unfold blockMatrix seed
+  rw [blockMatrix.eq_1, seed.eq_1]
   rw [Matrix.blockDiagonal_mul, ← Matrix.blockDiagonal_conjTranspose]
   exact (Matrix.posSemidef_conjTranspose_mul_self _).submatrix _
 
@@ -71,14 +71,18 @@ private def blockLift (m : ℕ) (r : Setoid (Fin 3)) (f : Fin m → classPreserv
   ⟨blockPermutation m (fun j => (f j).val), by
     intro i
     change (coords m _).1 = (coords m i).1 ∧ r (coords m _).2 (coords m i).2
-    simp only [blockPermutation, Equiv.permCongr_apply, Equiv.symm_symm,
+    rw [blockPermutation.eq_1]
+    simp only [Equiv.permCongr_apply, Equiv.symm_symm,
       Equiv.apply_symm_apply]
     exact ⟨rfl, (f _).property _⟩⟩
 
 private theorem blockLift_apply (m : ℕ) (r : Setoid (Fin 3))
     (f : Fin m → classPreserving r) (j : Fin m) (i : Fin 3) :
     coords m ((blockLift m r f).val ((coords m).symm (j, i))) = (j, (f j).val i) := by
-  simp only [blockLift, blockPermutation, Equiv.permCongr_apply, Equiv.symm_symm,
+  rw [blockLift.eq_1]
+  change coords m (blockPermutation m (fun j => (f j).val) ((coords m).symm (j, i))) = _
+  rw [blockPermutation.eq_1]
+  simp only [Equiv.permCongr_apply, Equiv.symm_symm,
     Equiv.apply_symm_apply, Equiv.prodCongrRight_apply]
 
 private def fiberPermutation (m : ℕ) (σ : Equiv.Perm (Fin (m * 3)))
@@ -232,7 +236,8 @@ private theorem seed_crossSum :
   simp_rw [← f.sum_comp]
   change (∑ b : Bool, ∑ c : Bool, ∏ i, seed
     ((if b then Equiv.swap 0 1 else 1) i) ((if c then Equiv.swap 1 2 else 1) i)) = _
-  norm_num [seed, v, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  rw [seed.eq_1, v.eq_1]
+  norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fin.sum_univ_succ, Fin.prod_univ_succ, map_ofNat, Fintype.sum_bool, Equiv.swap_apply_def]
   apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im]
 
