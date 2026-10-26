@@ -61,7 +61,7 @@ private theorem cyclicArc_card {m : ℕ} (i : Fin m) {k : ℕ} (hk : k ≤ m) :
   have hcard := congrArg Finset.card himage
   simpa [Finset.card_image_of_injective _ (cyclicRank_injective i)] using hcard
 
-theorem cyclicArc_full {m : ℕ} (i : Fin m) :
+private theorem cyclicArc_full {m : ℕ} (i : Fin m) :
     cyclicArc i m = Finset.univ := by
   ext x
   simp [cyclicArc, cyclicRank_lt]
@@ -170,7 +170,7 @@ private theorem mappedArc_unique_start {V : Type*} {m : ℕ} (e : Fin m ↪ V)
     (he : mappedArc e i k = mappedArc e j l) : i = j :=
   cyclicArc_unique_start hk hkm hl hlm (Finset.map_injective e he)
 
-theorem mappedArc_step {V : Type*} [DecidableEq V] {m : ℕ}
+private theorem mappedArc_step {V : Type*} [DecidableEq V] {m : ℕ}
     (H : SimpleGraph V) (e : Fin m ↪ V) (i : Fin m) {k : ℕ} (hk : k < m) :
     MixedMove H (mappedArc e i k) (mappedArc e i (k + 1)) := by
   obtain ⟨x, hx, he⟩ := cyclicArc_extend i hk

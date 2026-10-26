@@ -21,13 +21,16 @@ open scoped symmDiff
 
 variable {V : Type*} [Fintype V] [DecidableEq V] {H : SimpleGraph V}
 
+omit [Fintype V] in
 /-- Deleting labels between two nested feasible configurations meets the same actual cut. -/
-private theorem subset_cut_payment (C : Finset (Configuration H)) (s T U : Configuration H)
+private theorem subset_cut_payment [Finite V]
+    (C : Finset (Configuration H)) (s T U : Configuration H)
     (hUT : U.val ⊆ T.val)
     (hT : CutReach (reconfiguration H) C s T ∨ T ∈ C)
     (hU : ¬ CutReach (reconfiguration H) C s U) :
     ∃ Q ∈ C, U.val ⊆ Q.val ∧ Q.val ⊆ T.val := by
   classical
+  let : Fintype V := Fintype.ofFinite V
   rcases hT with hT | hTC
   · let E : Set (Configuration H) := {Q | U.val ⊆ Q.val ∧ Q.val ⊆ T.val ∧
         ¬ CutReach (reconfiguration H) C s Q}
@@ -36,7 +39,8 @@ private theorem subset_cut_payment (C : Finset (Configuration H)) (s T U : Confi
     have hne : Q.val ≠ T.val := by
       intro he
       exact hQ.2.2 (Subtype.ext he ▸ hT)
-    obtain ⟨x, hxT, hxQ⟩ := Finset.exists_of_ssubset (Finset.ssubset_iff_subset_ne.mpr ⟨hQ.2.1, hne⟩)
+    obtain ⟨x, hxT, hxQ⟩ := Finset.exists_of_ssubset
+      (Finset.ssubset_iff_subset_ne.mpr ⟨hQ.2.1, hne⟩)
     have hPvis : Visible H (insert x Q.val) :=
       visible_mono (Finset.insert_subset_iff.mpr ⟨hxT, hQ.2.1⟩) T.property
     let P : Configuration H := ⟨insert x Q.val, hPvis⟩
@@ -87,6 +91,7 @@ private theorem stranded_pair_labels (hH : H.Connected) (C : Finset (Configurati
     simpa [deletedLabels] using hC
   exact ⟨hlabel u v huv hr, hlabel v u huv.symm (by simpa [Finset.pair_comm] using hr)⟩
 
+omit [Fintype V] in
 private theorem outside_move_shape {S T : Finset V} {y : V}
     (hy : y ∉ S) (hyT : y ∈ T) (hsub : T ⊆ insert y S)
     (h : MixedMove H S T) :
@@ -167,8 +172,10 @@ private theorem sparse_local_neighbor_bound (S : Configuration H) {y : V}
   have ha0 : A.card = 0 := by rw [he]; simp
   omega
 
+omit [Fintype V] [DecidableEq V] in
 private theorem configuration_enumeration (S : Configuration H) :
     ∃ e : Fin S.val.card ↪ V, Finset.univ.map e = S.val := by
+  classical
   let e : Fin S.val.card ↪ V :=
     ⟨fun i => (S.val.equivFin.symm i).val,
       fun i j h => S.val.equivFin.symm.injective (Subtype.ext h)⟩
@@ -183,7 +190,8 @@ private theorem configuration_enumeration (S : Configuration H) :
     change ((S.val.equivFin.symm (S.val.equivFin ⟨z, hz⟩)).val) = z
     rw [Equiv.symm_apply_apply]
 
-private theorem extension_two_cuts (C : Finset (Configuration H)) (s S : Configuration H)
+omit [Fintype V] in
+private theorem extension_two_cuts [Finite V] (C : Finset (Configuration H)) (s S : Configuration H)
     (hm : 2 ≤ S.val.card) {y : V} (hy : y ∉ S.val)
     (hvis : Visible H (insert y S.val))
     (hr : CutReach (reconfiguration H) C s ⟨insert y S.val, hvis⟩)
@@ -191,6 +199,7 @@ private theorem extension_two_cuts (C : Finset (Configuration H)) (s S : Configu
       ¬ CutReach (reconfiguration H) C s T) :
     2 ≤ (localCutClass C S.val y).card := by
   classical
+  let : Fintype V := Fintype.ofFinite V
   obtain ⟨e, he⟩ := configuration_enumeration S
   have hy' : y ∉ Finset.univ.map e := by rwa [he]
   have hsub (i : Fin S.val.card) (k : ℕ) : mappedArc e i k ⊆ S.val := by
@@ -211,7 +220,8 @@ private theorem extension_two_cuts (C : Finset (Configuration H)) (s S : Configu
       have hstep := mappedArc_insert_step H e i (by omega : S.val.card - 1 < S.val.card) hy'
       have hfull : mappedArc e i (S.val.card - 1 + 1) = S.val := by
         rw [Nat.sub_add_cancel (by omega : 1 ≤ S.val.card)]
-        simp only [mappedArc, cyclicArc_full, he]
+        apply Finset.eq_of_subset_of_card_le (hsub i _)
+        rw [mappedArc_card e i le_rfl]
       rw [hfull] at hstep
       have hAdj : (reconfiguration H).Adj
           ⟨insert y (mappedArc e i (S.val.card - 1)), hv i hi⟩ ⟨insert y S.val, hvis⟩ := hstep
@@ -225,6 +235,7 @@ private theorem extension_two_cuts (C : Finset (Configuration H)) (s S : Configu
     exact Finset.mem_filter.mpr ⟨hTC, hyT, hTS⟩
   exact hm.trans (hb.trans (Finset.card_le_card hsubC))
 
+omit [Fintype V] in
 private theorem pair_to_singleton (T : Configuration H) {y : V}
     (hcard : T.val.card = 2) (hy : y ∈ T.val) :
     (reconfiguration H).Adj T ⟨{y}, visible_singleton H y⟩ := by
@@ -289,7 +300,8 @@ private theorem sparse_local_cut_bound (hH : H.Connected)
           exact hy (hxy ▸ hxS)
       obtain ⟨Q, hQ, hQY⟩ := hex
       have htwo : 2 ≤ CY.card := by
-        have hsub : ({Q, Y} : Finset (Configuration H)) ⊆ CY := by simp [Finset.insert_subset_iff, hQ, hY]
+        have hsub : ({Q, Y} : Finset (Configuration H)) ⊆ CY := by
+          simp [Finset.insert_subset_iff, hQ, hY]
         have hc := Finset.card_le_card hsub
         simpa [hQY] using hc
       exact hL.1.trans htwo
@@ -320,7 +332,8 @@ private theorem sparse_local_cut_bound (hH : H.Connected)
             have hTU : T.val ⊆ U.val := he ▸ hQU
             exact hUne (Finset.Subset.antisymm hUS hTU)
           have htwo : 2 ≤ CY.card := by
-            have hsub : ({Q, T} : Finset (Configuration H)) ⊆ CY := by simp [Finset.insert_subset_iff, hQ, hT]
+            have hsub : ({Q, T} : Finset (Configuration H)) ⊆ CY := by
+              simp [Finset.insert_subset_iff, hQ, hT]
             have hc := Finset.card_le_card hsub
             simpa [hQT] using hc
           exact hL.1.trans htwo
@@ -394,7 +407,7 @@ private theorem sparse_witness_degree (hH : H.Connected)
   simp only [Finset.card_empty, Nat.add_zero] at hbudget
   omega
 
-/-- In one actual cut below minimum degree, every pair stranded from a clean root is rooted-comparable. -/
+/-- A pair stranded from a clean root by an actual cut below minimum degree is comparable. -/
 theorem stranded_pair_comparable (hH : H.Connected)
     (C : Finset (Configuration H)) (s : Configuration H) {w u v : V}
     (hc : C.card < (reconfiguration H).minDegree) (hw : CleanRoot C w)
@@ -434,17 +447,17 @@ theorem stranded_pair_comparable (hH : H.Connected)
         ∃ x ∈ S.val, ¬ CutReach (reconfiguration H) C s ⟨{y, x}, visible_pair hH y x⟩ := by
       intro y hy hv hr
       by_contra hn
-      push_neg at hn
+      push Not at hn
       have hnew : (⟨insert y S.val, hv⟩ : Configuration H) ∈ E := by
         refine ⟨hr, hS.2.1.trans (Finset.subset_insert _ _), ?_⟩
         intro a ha b hb hab
-        rcases Finset.mem_insert.mp ha with rfl | ha
-        · rcases Finset.mem_insert.mp hb with rfl | hb
-          · exact (hab rfl).elim
-          · exact hn b hb
-        · rcases Finset.mem_insert.mp hb with rfl | hb
-          · simpa [Finset.pair_comm] using hn a ha
-          · exact hpair a ha b hb hab
+        rcases Finset.mem_insert.mp ha with hay | haS
+        · rcases Finset.mem_insert.mp hb with hby | hbS
+          · exact (hab (hay.trans hby.symm)).elim
+          · simpa only [hay] using hn b hbS
+        · rcases Finset.mem_insert.mp hb with hby | hbS
+          · simpa only [hby, Finset.pair_comm] using hn a haS
+          · exact hpair a haS b hbS hab
       have hb := hmaxcard _ hnew
       have hcard : (insert y S.val).card = S.val.card + 1 := Finset.card_insert_of_notMem hy
       change (insert y S.val).card ≤ S.val.card at hb
