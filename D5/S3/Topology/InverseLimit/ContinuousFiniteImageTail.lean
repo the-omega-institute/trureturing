@@ -229,9 +229,9 @@ theorem no_continuous_pool_separation
     (fun n hn hmem => hsplit.2 n hn ((htrace (x n)).mp hmem))
 
 private def properSlice (H : Prefix (ω₁ : Ordinal.{0})) (l : Label) : Prefix l.1 where
-  carrier a := H.carrier ⟨a.1, a.2.trans l.2⟩
-  closed a := H.closed ⟨a.1, a.2.trans l.2⟩
-  nonempty a := H.nonempty ⟨a.1, a.2.trans l.2⟩
+  carrier a := H.carrier ⟨a.1, lt_trans (α := Ordinal.{0}) a.2 l.2⟩
+  closed a := H.closed ⟨a.1, lt_trans (α := Ordinal.{0}) a.2 l.2⟩
+  nonempty a := H.nonempty ⟨a.1, lt_trans (α := Ordinal.{0}) a.2 l.2⟩
   compatible a b h x := H.compatible _ _ h x
   onto a b h y := H.onto _ _ h y
 
@@ -247,12 +247,15 @@ private theorem final_no_continuous_pool_separation
     (data : (l : Label) → (properSlice H l).Data)
     (laws : ∀ l, (properSlice H l).Laws (data l))
     (hnu : ∀ (l : Label) (r : Coord l.1) (d : Label) (n : ℕ),
-      ((data l).nu r d n).1 = (Qnu ⟨r.1, r.2.trans l.2⟩ d n).1)
+      ((data l).nu r d n).1 =
+        (Qnu ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ d n).1)
     (hJ : ∀ (l : Label) (r d b : Coord l.1),
-      (data l).J r d b = QJ ⟨r.1, r.2.trans l.2⟩
-        ⟨d.1, d.2.trans l.2⟩ ⟨b.1, b.2.trans l.2⟩)
+      (data l).J r d b = QJ ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩
+        ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩
+        ⟨b.1, lt_trans (α := Ordinal.{0}) b.2 l.2⟩)
     (hN : ∀ (l : Label) (r d : Coord l.1) (e : Bool),
-      (data l).N r d e = QN ⟨r.1, r.2.trans l.2⟩ ⟨d.1, d.2.trans l.2⟩ e)
+      (data l).N r d e = QN ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩
+        ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩ e)
     (r d b : Label) (hwr : ω ≤ r.1) (hrb : r < b) (hdb : d < b)
     (M : Bool → Set ℕ) (hM : ∀ e, M e ⊆ QN r d e)
     (hJb : QJ r d b = M false ∪ M true)
@@ -298,6 +301,12 @@ private theorem final_no_continuous_pool_separation
       (Measure.dirac ((properSlice H l).map r' c'
         (show r' ≤ c' from hrc.le) (H.projection c (x n).val))).toSignedMeasure := by
     rw [hnu]
+    have hprojection : (properSlice H l).map r' c'
+        (show r' ≤ c' from hrc.le) (H.projection c (x n).val) =
+        H.projection r (x n).val := by
+      ext i
+      rfl
+    rw [hprojection]
     exact hsource n
   exact proper_F_excludes_split_dirac_lifts (properSlice H l) (data l) (laws l)
     r' d' b' c' hwr hrb hdb hbc M hM' hJb'
