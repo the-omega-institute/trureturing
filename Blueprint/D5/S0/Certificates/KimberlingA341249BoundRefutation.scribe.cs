@@ -43,13 +43,17 @@ internal sealed class KimberlingA341249BoundRefutationDocument : IScribeDocument
                 "At n = 2, the inner floor is 2 and the outer floor is 6. "
                     + "The difference r*s*2 - a(2) is 4*sqrt(2) - 2, which exceeds 2 "
                     + "because sqrt(2) > 1. Thus the universal conjunction is false.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kimb341249-bound"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a341249-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SequenceFormula()
     {

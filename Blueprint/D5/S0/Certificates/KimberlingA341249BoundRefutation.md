@@ -58,6 +58,10 @@ $$\neg (\forall n \in \mathbb{N},\; 1 \le n \Rightarrow ((1 < r \cdot s \cdot (n
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KimberlingA341249BoundRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kimb341249-bound` (refuted) by `D5/S0/Certificates/KimberlingA341249BoundRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kimb341249-bound","declaration_gid":"D5/S0/Certificates/KimberlingA341249BoundRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling (2021). *OEIS A341249: a(n) = floor(r*floor(s*n)), where r = 2 + sqrt(2) and s = sqrt(2).*. URL: <https://oeis.org/A341249>.
