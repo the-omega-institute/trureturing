@@ -64,10 +64,10 @@ private def state (d : ℕ) : EuclideanSpace ℂ (Fin d × Fin d) :=
   WithLp.toLp 2 (fun ij =>
     (∑ m, transport d ij.1 m * transport d ij.2 m) / Real.sqrt d)
 private lemma omega_zero (d : ℕ) : omegaPow d 0 = 1 := by
-  simp only [omegaPow, Complex.ofReal_zero, mul_zero, zero_div, Complex.exp_zero]
+  unfold omegaPow; simp only [Complex.ofReal_zero, mul_zero, zero_div, Complex.exp_zero]
 private lemma omega_mul (d : ℕ) (s t : ℝ) :
     omegaPow d s * omegaPow d t = omegaPow d (s + t) := by
-  unfold omegaPow; rw [← Complex.exp_add]; congr 1; push_cast; ring
+  unfold omegaPow; rw [← Complex.exp_add]; congr 1; push_cast -congrConsts; ring
 private lemma omega_conj (d : ℕ) (t : ℝ) : conj (omegaPow d t) = omegaPow d (-t) := by
   unfold omegaPow; rw [← Complex.exp_conj]; congr 1
   simp only [map_div₀, map_mul, map_ofNat, Complex.conj_ofReal, Complex.conj_I,
@@ -94,7 +94,7 @@ private lemma fourier_unitary (d : ℕ) (hd : 2 ≤ d) (x : Fin 2) :
     rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => omegaPow d
       ((j : ℝ) * ((b.val : ℝ) - a.val))) d]
     convert exponential_sum_orthogonality d (by omega) b a using 1
-    apply Finset.sum_congr rfl; intro j hj; unfold omegaPow; congr 1; push_cast; ring
+    apply Finset.sum_congr rfl; intro j hj; unfold omegaPow; congr 1; push_cast -congrConsts; ring
   rw [he]
   by_cases hab : a = b
   · simp [hab, hd0]
@@ -115,7 +115,7 @@ private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
     conv_rhs => rw [← Complex.exp_pi_mul_I]
     apply Complex.exp_eq_exp_iff_exists_int.mpr
     refine ⟨(b.val : ℤ) - a.val, ?_⟩
-    dsimp only [δ]; push_cast; field_simp; ring
+    dsimp [δ]; push_cast -congrConsts; field_simp (disch := first | assumption | norm_num); ring
   have hq : omegaPow d δ ≠ 1 := by
     intro h; rw [h, one_pow] at hp
     norm_num at hp
@@ -125,14 +125,14 @@ private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
     rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => omegaPow d ((j : ℝ) * δ)) d]
     have hj (j : ℕ) : omegaPow d ((j : ℝ) * δ) = omegaPow d δ ^ j := by
       unfold omegaPow
-      rw [← Complex.exp_nat_mul]; congr 1; push_cast; ring
+      rw [← Complex.exp_nat_mul]; congr 1; push_cast -congrConsts; ring
     simp_rw [hj]
     rw [geom_sum_eq hq, hp]
     norm_num
   have hsin : 2 * (Real.sin θ : ℂ) =
       (omegaPow d (δ / 2) - omegaPow d (-δ / 2)) * I := by
     rw [Complex.ofReal_sin, Complex.two_sin]
-    congr 2 <;> unfold omegaPow <;> congr 1 <;> dsimp only [δ, θ] <;> push_cast <;> ring
+    congr 2 <;> unfold omegaPow <;> congr 1 <;> dsimp [δ, θ] <;> push_cast -congrConsts <;> ring
   have hm : omegaPow d δ * omegaPow d (-δ / 2) = omegaPow d (δ / 2) := by
     rw [omega_mul]
     congr 1; ring
@@ -152,13 +152,13 @@ private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
     apply (div_eq_div_iff (sub_ne_zero.mpr hq) hs0).mpr
     linear_combination -hden
   rw [Matrix.mul_apply]
-  simp only [gaugeD, gaugeF, Matrix.mul_diagonal, Matrix.diagonal_mul]
+  unfold gaugeD gaugeF; simp only [Matrix.mul_diagonal, Matrix.diagonal_mul]
   have ht (j : Fin d) : (fourierBasis d 0)ᴴ a j * fourierBasis d 1 j b =
       omegaPow d ((j.val : ℝ) * δ) / d := by
     change conj (omegaPow d _ / (Real.sqrt d : ℂ)) *
       (omegaPow d _ / (Real.sqrt d : ℂ)) = _
     rw [map_div₀, Complex.conj_ofReal, omega_conj, div_mul_div_comm, hs, omega_mul]; congr 2
-    norm_num [offset, δ]
+    unfold offset; dsimp only [δ]; norm_num
     ring
   simp_rw [ht]
   rw [← Finset.sum_div, hgeom, hv]
@@ -168,16 +168,15 @@ private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
   have hphase : omegaPow d ((a.val : ℝ) / 2) *
       omegaPow d (-((b.val : ℝ) + 1 / 2) / 2) = omegaPow d (-δ / 2) := by
     rw [omega_mul]; congr 1; dsimp only [δ]; ring
-  rw [← hphase]; field_simp
+  rw [← hphase]; field_simp (disch := first | assumption | norm_num)
 private lemma gauge_unitary (d : ℕ) : (gaugeD d)ᴴ * gaugeD d = 1 := by
   classical
-  ext a b; simp only [gaugeD, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+  ext a b; unfold gaugeD; simp only [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
     Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def, omega_conj]
   split_ifs with hab
   · rw [omega_mul, neg_add_cancel, omega_zero]
   · rfl
-private lemma transport_unitary (d : ℕ)
-    (hf : (fourierBasis d 0)ᴴ * fourierBasis d 0 = 1) :
+private lemma transport_unitary (d : ℕ) (hf : (fourierBasis d 0)ᴴ * fourierBasis d 0 = 1) :
     transport d * (transport d)ᴴ = 1 := by
   classical
   have hg := gauge_unitary d
@@ -202,8 +201,7 @@ private lemma state_swap (d : ℕ) : swap (state d) = state d := by
   change (∑ m, transport d ij.2 m * transport d ij.1 m) / (Real.sqrt d : ℂ) =
     (∑ m, transport d ij.1 m * transport d ij.2 m) / (Real.sqrt d : ℂ)
   simp only [mul_comm]
-private lemma state_reduced (d : ℕ)
-    (hl : transport d * (transport d)ᴴ = 1) :
+private lemma state_reduced (d : ℕ) (hl : transport d * (transport d)ᴴ = 1) :
     reducedState (state d) = (1 / (d : ℂ)) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
   classical
   have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
@@ -235,7 +233,7 @@ private lemma state_norm (d : ℕ) (hd : 2 ≤ d)
     calc
       _ = ∑ i : Fin d, reducedState (state d) i i := by
         apply Finset.sum_congr rfl; intro i hi
-        simp only [reducedState, Complex.mul_conj', Complex.ofReal_pow]
+        unfold reducedState; simp only [Complex.mul_conj', Complex.ofReal_pow]
       _ = 1 := by simp [hr, Matrix.smul_apply, hd0]
   have hn' : ‖state d‖ ^ 2 = 1 := by exact_mod_cast hn
   nlinarith [norm_nonneg (state d)]
@@ -246,7 +244,7 @@ private def settingPhase (d : ℕ) (x : Fin 2) (a : Fin d) : ℂ :=
   else -I * omegaPow d (-((a.val : ℝ) + 1 / 2) / 2)
 private lemma omega_norm (d : ℕ) (t : ℝ) : ‖omegaPow d t‖ = 1 := by
   unfold omegaPow; rw [show 2 * (Real.pi : ℂ) * I * (t : ℂ) / d =
-    ((2 * Real.pi * t / d : ℝ) : ℂ) * I by push_cast; ring]
+    ((2 * Real.pi * t / d : ℝ) : ℂ) * I by push_cast -congrConsts; ring]
   exact Complex.norm_exp_ofReal_mul_I _
 private lemma setting_phase_norm (d : ℕ) (x : Fin 2) (a : Fin d) :
     ‖settingPhase d x a‖ = 1 := by
@@ -256,15 +254,17 @@ private lemma measurement_rankone (d : ℕ) (x : Fin 2) (a : Fin d) :
     measurement d x a = Matrix.vecMulVec ((measuredBasis d x)ᵀ a)
       (star ((measuredBasis d x)ᵀ a)) := by
   classical
-  ext i j
-  fin_cases x
-  · by_cases hi : i = a <;> by_cases hj : j = a <;>
-      simp [measurement, measuredBasis, basisProjector, Matrix.vecMulVec_apply,
-        Matrix.one_apply, Pi.star_apply, hi, hj] <;> grind
-  · simp [measurement, measuredBasis, basisProjector, Matrix.mul_apply,
-      Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Pi.star_apply, ite_and]
-private lemma transport_readout (d : ℕ) (hd : 2 ≤ d)
-    (x : Fin 2) :
+  ext i j; fin_cases x
+  · change (if i = a ∧ j = a then (1 : ℂ) else 0) =
+      (if i = a then 1 else 0) * conj (if j = a then 1 else 0)
+    by_cases hi : i = a <;> by_cases hj : j = a <;> simp [hi, hj]
+  · change (twMatrix d * basisProjector d a * (twMatrix d)ᴴ) i j =
+      twMatrix d i a * conj (twMatrix d j a)
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    change (∑ l, (∑ k, twMatrix d i k * (if k = a ∧ l = a then (1 : ℂ) else 0)) *
+      conj (twMatrix d j l)) = _
+    simp [ite_and]
+private lemma transport_readout (d : ℕ) (hd : 2 ≤ d) (x : Fin 2) :
     (measuredBasis d x)ᴴ * transport d =
       Matrix.diagonal (settingPhase d x) * (fourierBasis d x)ᴴ := by
   classical
@@ -283,9 +283,9 @@ private lemma transport_readout (d : ℕ) (hd : 2 ≤ d)
       rw [Matrix.mul_assoc, hf 0, Matrix.mul_one, Matrix.one_mul]
       change Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
         (gaugeD d)ᴴ = Matrix.diagonal (settingPhase d 0)
-      simp only [gaugeD, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
+      unfold gaugeD; simp only [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
       congr 1; funext a
-      simp only [settingPhase, ↓reduceIte, Pi.star_apply,
+      unfold settingPhase; simp only [↓reduceIte, Pi.star_apply,
         Complex.star_def, omega_conj]
       congr 2; ring
     · change (Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
@@ -393,8 +393,8 @@ private lemma integer_sum (d : ℕ) (hd : 2 ≤ d) (n : ℤ) :
   have ht (a : Fin d) : omegaPow d ((a.val : ℝ) * n) =
       ZMod.stdAddChar (e a * (n : ZMod d)) := by
     rw [he, show (a.val : ZMod d) * (n : ZMod d) =
-      (((a.val : ℤ) * n : ℤ) : ZMod d) by push_cast; rfl, ZMod.stdAddChar_coe]
-    unfold omegaPow; congr 1; push_cast; ring
+      (((a.val : ℤ) * n : ℤ) : ZMod d) by push_cast -congrConsts; rfl, ZMod.stdAddChar_coe]
+    unfold omegaPow; congr 1; push_cast -congrConsts; ring
   simp_rw [ht]
   rw [Fintype.sum_equiv e.toEquiv (fun a => ZMod.stdAddChar (e a * (n : ZMod d)))
     (fun a => ZMod.stdAddChar (a * (n : ZMod d)))
@@ -494,7 +494,7 @@ private lemma fourier_correlator (d : ℕ) (hd : 2 ≤ d)
     simp only [map_sum, omega_conj, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl; intro j hj; apply Finset.sum_congr rfl; intro l hl
-    dsimp only [f, n, s]; simp only [omega_mul]; congr 1; push_cast; ring
+    dsimp only [f, n, s]; simp only [omega_mul]; congr 1; push_cast -congrConsts; ring
   calc
     correlator d (state d) x y k =
         (∑ ab : Fin d × Fin d, ∑ jl : Fin d × Fin d, f jl *
@@ -528,26 +528,26 @@ private lemma fourier_correlator (d : ℕ) (hd : 2 ≤ d)
       rw [hf]
       change (d : ℂ) ^ 2 * (((d : ℂ) - k) * omegaPow d ((k : ℝ) * s) +
         k * (omegaPow d ((k : ℝ) * s) * omegaPow d (-(d : ℝ) * s))) / (d : ℂ) ^ 3 = _
-      dsimp only [s]; field_simp
+      dsimp only [s]; field_simp (disch := first | assumption | norm_num)
 private lemma offset_phase (d : ℕ) (hd : 2 ≤ d) (x y : Fin 2) :
     omegaPow d (-(d : ℝ) * (offset x + offset y)) = if x = y then I else -I := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have h7 : omegaPow d (-(d : ℝ) * (7 / 4)) = I := by
-    unfold omegaPow
-    conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
+    unfold omegaPow; conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
     apply Complex.exp_eq_exp_iff_exists_int.mpr
-    refine ⟨-2, ?_⟩; push_cast; field_simp; ring
+    refine ⟨-2, ?_⟩; push_cast -congrConsts
+    field_simp (disch := first | assumption | norm_num); ring
   have h9 : omegaPow d (-(d : ℝ) * (9 / 4)) = -I := by
-    unfold omegaPow
-    conv_rhs => rw [← Complex.exp_neg_pi_div_two_mul_I]
+    unfold omegaPow; conv_rhs => rw [← Complex.exp_neg_pi_div_two_mul_I]
     apply Complex.exp_eq_exp_iff_exists_int.mpr
-    refine ⟨-2, ?_⟩; push_cast; field_simp; ring
+    refine ⟨-2, ?_⟩; push_cast -congrConsts
+    field_simp (disch := first | assumption | norm_num); ring
   have h11 : omegaPow d (-(d : ℝ) * (11 / 4)) = I := by
-    unfold omegaPow
-    conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
+    unfold omegaPow; conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
     apply Complex.exp_eq_exp_iff_exists_int.mpr
-    refine ⟨-3, ?_⟩; push_cast; field_simp; ring
-  fin_cases x <;> fin_cases y <;> norm_num [offset] <;>
+    refine ⟨-3, ?_⟩; push_cast -congrConsts
+    field_simp (disch := first | assumption | norm_num); ring
+  fin_cases x <;> fin_cases y <;> unfold offset <;> norm_num <;>
     first | simpa only [neg_mul] using h7 | simpa only [neg_mul] using h9 |
       simpa only [neg_mul] using h11
 private lemma satwap_sum (d : ℕ) (hd : 2 ≤ d) :
@@ -561,7 +561,7 @@ private lemma satwap_sum (d : ℕ) (hd : 2 ≤ d) :
       dsimp only
       rw [hc 0 0 k hk, hc 0 1 k hk, hc 1 0 k hk, hc 1 1 k hk]
       simp only [offset_phase d hd]
-      norm_num only [offset, Fin.isValue, ↓reduceIte, Fin.zero_eta, Fin.mk_one,
+      unfold offset; norm_num only [Fin.isValue, ↓reduceIte, Fin.zero_eta, Fin.mk_one,
         show (1 : Fin 2) ≠ 0 by decide, show (0 : Fin 2) ≠ 1 by decide]
       rw [map_mul, map_div₀, map_sub, map_one, Complex.conj_I, map_ofNat, omega_conj]
       have h0 : omegaPow d (-2 * (k : ℝ)) * omegaPow d ((k : ℝ) / 4) *
@@ -589,11 +589,10 @@ private lemma satwap_sum (d : ℕ) (hd : 2 ≤ d) :
           simp [Complex.I_sq]
     _ = 2 * ((d : ℂ) - 1) := by
       simp only [Finset.sum_const, nsmul_eq_mul, Nat.card_Icc]
-      rw [show d - 1 + 1 - 1 = d - 1 by omega, Nat.cast_sub (by omega : 1 ≤ d)]; push_cast; ring
+      rw [show d - 1 + 1 - 1 = d - 1 by omega, Nat.cast_sub (by omega : 1 ≤ d)]; ring
 theorem result : claim := by
   intro d hd
-  have hf := fourier_unitary d hd
-  have hl := transport_unitary d (hf 0)
+  have hl := transport_unitary d (fourier_unitary d hd 0)
   have hr := state_reduced d hl
   refine ⟨state d, state_norm d hd hr, state_swap d, hr, ?_⟩
   exact satwap_sum d hd
