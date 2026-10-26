@@ -35,6 +35,75 @@ private def probe (label : String) (t s : Syntax) (expected : Bool) : TermElabM 
   saved.restore
   logInfo m!"single-source {label}: expected={expected}, candidates={hits.length}, kernel-checked"
 
+private def legacyProbe (memo : IO.Ref LegacyNormalizationMemo) (index : FactIndex)
+    (label : String) (t s : Syntax) (expected : Bool) : TermElabM Unit := do
+  let target ← statement t
+  let source ← statement s
+  let saved ← saveState
+  let old ← restatementConversion target source index
+  unless old.isSome == expected do throwError "legacy fixture mismatch: {label}"
+  saved.restore
+  for _ in [:2] do
+    let conversion ← restatementConversion target source index (some memo)
+    unless conversion.isSome == old.isSome do
+      throwError "memo changed the legacy restatement relation: {label}"
+    if let some proof := conversion then
+      discard <| checkProof (← mkFreshUserName `_legacyMemoTest) []
+        (← mkArrow source target) proof
+    saved.restore
+  logInfo m!"legacy-restatement {label}: old={expected}, memo=cold-and-warm, kernel-checked"
+
+private theorem legacy_bounds (n : Nat) : ramp n ≤ n+n+n ∧ n+n+n ≤ ramp n := by
+  rw [ramp_value]
+  exact ⟨le_rfl, le_rfl⟩
+
+set_option maxHeartbeats 0 in
+run_elab do
+  let memo ← IO.mkRef ({} : LegacyNormalizationMemo)
+  let index : FactIndex := {}
+  legacyProbe memo index "joint arithmetic restatement"
+    (← `(∀ n m : Nat, n = m)) (← `(∀ n m : Nat, n ≤ m ∧ m ≤ n)) true
+  legacyProbe memo index "source packing and arithmetic"
+    (← `(∀ n : Nat, n+n = 2*n)) (← `(∀ n : Nat, True ∧ n*2 = n+n)) true
+  legacyProbe memo index "permuted conjunction"
+    (← `(∀ P Q : Prop, Q ∧ P)) (← `(∀ P Q : Prop, P ∧ Q)) true
+  legacyProbe memo index "full telescope Iff projection"
+    (← `(∀ P Q : Prop, P → Q)) (← `(∀ P Q : Prop, P ↔ Q)) true
+  legacyProbe memo index "added premise retained"
+    (← `(∀ n : Nat, n = n)) (← `(∀ n : Nat, n = 0 → n = n)) false
+  legacyProbe memo index "binder kind retained"
+    (← `(∀ n : Nat, n = n)) (← `(∀ {n : Nat}, n = n)) false
+  legacyProbe memo index "dependent domain retained"
+    (← `(∀ n : Nat, ∀ i : Fin n, i = i))
+    (← `(∀ n : Nat, ∀ i : Fin (n+1), i = i)) false
+  legacyProbe memo index "foreign component not inferred"
+    (← `(∀ P Q : Prop, P ∧ Q)) (← `(∀ P Q : Prop, P)) false
+  let target ← statement (← `(∀ n : Nat, ramp n = n+n+n))
+  let source := (← getConstInfo ``legacy_bounds).type
+  if (← singleSourceConversion target source).isSome then
+    throwError "legacy-only regression is already covered by the single-source guard"
+  let saved ← saveState
+  let rejected ← try
+    copyStructure (← getEnv) `_legacyPackingTarget target ``legacy_bounds index
+      (normalization? := some memo)
+    pure false
+    catch ex =>
+      let message ← ex.toMessageData.toString
+      unless message.startsWith "search.target_restatement:" do throw ex
+      pure true
+  saved.restore
+  unless rejected do throwError "legacy-only target packing escaped copyStructure"
+  let state ← memo.get
+  unless state.hits > 0 && state.misses > 0 do throwError "legacy memo was not exercised"
+  for (key, value) in state.values.toList do
+    if key.hasFVar || key.hasMVar || key.hasLooseBVars ||
+        value.hasFVar || value.hasMVar || value.hasLooseBVars then
+      throwError "legacy memo leaked a local context"
+    let original ← withReducible <| reduce key (skipTypes := false)
+    unless original == value do throwError "memo differs from the pinned full reduction"
+  logInfo m!"legacy normalization memo: hits={state.hits}, misses={state.misses}, \
+    closed-keys=true, original-normal-forms=true, legacy-only-copy=rejected"
+
 run_elab do
   probe "arithmetic alias" (← `(∀ n : Nat, ramp n = 3*n))
     (← `(∀ n : Nat, ramp n = n+n+n)) true
