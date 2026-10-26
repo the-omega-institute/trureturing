@@ -12,6 +12,9 @@ import Mathlib.Data.Quot
 import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.Tactic
 
+/-! Production lattice reflection on complete rootless low-energy spaces.
+The fixed basis uses unordered oscillator pairs and free integral charge orbits. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 4000000
@@ -53,6 +56,7 @@ private theorem normFourNeg_ne (D : LatticeData) (a : NormFour D) :
   intro h
   apply normFour_ne_zero D a
   funext i
+  change a.1 i = 0
   have hi := congrArg (fun b : NormFour D => b.1 i) h
   change -a.1 i = a.1 i at hi
   omega
@@ -180,7 +184,7 @@ def coordinateTheta (D : LatticeData) : Module.End ℂ (TwoConfig D → ℂ) whe
   map_add' f g := by funext j; exact mul_add _ _ _
   map_smul' c f := by
     funext j
-    simp only [Pi.smul_apply, smul_eq_mul]
+    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
     ring
 
 private def FixedCoordinates (D : LatticeData) : Submodule ℂ (TwoConfig D → ℂ) :=
@@ -275,7 +279,7 @@ private theorem gradeBasis_coe (D : LatticeData) (n : ℤ) (x : EnergyFiber D n)
     (gradeBasis D n x : Carrier D) = carrierBasis D x.1 := by
   classical
   change (carrierCoeffEquiv D).symm
-      (((Finsupp.supportedEquivFinsupp (R := ℂ)
+      (((Finsupp.supportedEquivFinsupp (R := ℂ) (M := ℂ)
         {a : Label D | energy D a = n}).symm (Finsupp.single x 1)) : Label D →₀ ℂ) = _
   rw [Finsupp.supportedEquivFinsupp_symm_single]
   rfl
@@ -332,8 +336,8 @@ private theorem gradeTwoBasis_charge_coe (D : LatticeData)
 /-- The mode index does not affect oscillator parity: a single oscillator
 is odd, including the mode-two neutral oscillator. -/
 private theorem theta_neutral_single_monomial (D : LatticeData) (x : Index D) :
-    theta D (Finsupp.single 0 (monomial (Finsupp.single x 1) 1)) =
-      -Finsupp.single 0 (monomial (Finsupp.single x 1) 1) := by
+    theta D (Finsupp.single 0 (monomial (Finsupp.single x 1) (1 : ℂ))) =
+      -Finsupp.single (0 : Charge D) (monomial (Finsupp.single x 1) (1 : ℂ)) := by
   change thetaLinear D _ = _
   rw [theta_single, sigma_monomial, occurrences_single_one]
   simp [← Finsupp.smul_single]
@@ -451,36 +455,36 @@ private def fixedGradeTwoCoordinateEquiv (D : LatticeData)
     (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) :
     FixedGrade D 2 ≃ₗ[ℂ] FixedCoordinates D := by
   let e := gradeTwoCoordinateEquiv D hD hroot
-  refine
-    { toFun := fun v => ⟨e ⟨v.1, v.2.2⟩, ?_⟩
-      invFun := fun f => ⟨(e.symm f.1 : Carrier D), ?_⟩
-      left_inv := ?_
-      right_inv := ?_
-      map_add' := ?_
-      map_smul' := ?_ }
-  · rw [mem_fixedCoordinates]
-    apply e.symm.injective
-    rw [LinearEquiv.symm_apply_apply]
-    apply Subtype.ext
-    exact (theta_gradeTwo_coordinate_transport D hD hroot ⟨v.1, v.2.2⟩).symm.trans
-      ((mem_fixedSpace D v.1).mp v.2.1)
-  · refine ⟨(mem_fixedSpace D _).mpr ?_, (e.symm f.1).2⟩
-    rw [theta_gradeTwo_coordinate_transport D hD hroot]
-    change (e.symm (coordinateTheta D (e (e.symm f.1))) : Carrier D) = _
-    rw [LinearEquiv.apply_symm_apply, (mem_fixedCoordinates D f.1).mp f.2]
-  · intro v
-    apply Subtype.ext
-    exact congrArg (fun w : grade D 2 => (w : Carrier D))
-      (e.symm_apply_apply ⟨v.1, v.2.2⟩)
-  · intro f
-    apply Subtype.ext
-    exact e.apply_symm_apply f.1
-  · intro v w
-    apply Subtype.ext
-    exact e.map_add ⟨v.1, v.2.2⟩ ⟨w.1, w.2.2⟩
-  · intro c v
-    apply Subtype.ext
-    exact e.map_smul c ⟨v.1, v.2.2⟩
+  exact
+    { toFun := fun v => ⟨e ⟨v.1, v.2.2⟩, by
+        rw [mem_fixedCoordinates]
+        apply e.symm.injective
+        rw [LinearEquiv.symm_apply_apply]
+        apply Subtype.ext
+        exact (theta_gradeTwo_coordinate_transport D hD hroot ⟨v.1, v.2.2⟩).symm.trans
+          ((mem_fixedSpace D v.1).mp v.2.1)⟩
+      invFun := fun f => ⟨(e.symm f.1 : Carrier D), by
+        refine ⟨(mem_fixedSpace D _).mpr ?_, (e.symm f.1).2⟩
+        rw [theta_gradeTwo_coordinate_transport D hD hroot]
+        change (e.symm (coordinateTheta D (e (e.symm f.1))) : Carrier D) = _
+        rw [LinearEquiv.apply_symm_apply, (mem_fixedCoordinates D f.1).mp f.2]⟩
+      left_inv := by
+        intro v
+        apply Subtype.ext
+        exact congrArg (fun w : grade D 2 => (w : Carrier D))
+          (e.symm_apply_apply ⟨v.1, v.2.2⟩)
+      right_inv := by
+        intro f
+        apply Subtype.ext
+        exact e.apply_symm_apply f.1
+      map_add' := by
+        intro v w
+        apply Subtype.ext
+        exact e.map_add ⟨v.1, v.2.2⟩ ⟨w.1, w.2.2⟩
+      map_smul' := by
+        intro c v
+        apply Subtype.ext
+        exact e.map_smul c ⟨v.1, v.2.2⟩ }
 
 /-- Exact fixed-space parametrization, with the real low-grade basis
 bijections and the production-theta conjugacy both on the proof path. -/
@@ -511,7 +515,8 @@ private def chargeOrbitFixedVector (D : LatticeData)
   let a := normFourOrbitRep D q
   refine ⟨(b (Sum.inr a) : Carrier D) +
     (b (Sum.inr (normFourNeg D a)) : Carrier D), ?_, ?_⟩
-  · rw [mem_fixedSpace, map_add]
+  · apply (mem_fixedSpace D _).mpr
+    rw [map_add]
     rw [theta_gradeTwoBasis_charge, theta_gradeTwoBasis_charge,
       normFourNeg_involutive]
     exact add_comm _ _
@@ -643,8 +648,8 @@ private theorem grade_zero_le_fixedSpace (D : LatticeData)
   apply Submodule.span_le.mpr
   intro v hv
   have hv' : v = vacuum D := Set.mem_singleton_iff.mp hv
-  rw [hv', mem_fixedSpace]
-  exact theta_vacuum D
+  rw [hv']
+  exact (mem_fixedSpace D _).mpr (theta_vacuum D)
 
 private theorem fixedGrade_zero_eq (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
@@ -719,14 +724,13 @@ private theorem canonicalFixedEnergy_eq_fixedGrade (D : LatticeData)
   have hH : (gramComplex D)⁻¹ = H := Matrix.inv_eq_left_inv hHG
   rw [hH, actualL0_eigenspace_eq_grade D H hHG hGH n]
 
-/-- The actual fixed-space intersection with the actual canonical L0
-energy-two eigenspace is isomorphic to the explicitly constructed pair
-coordinates. The target does not define or replace that eigenspace. -/
+/-- The basis of the literal fixed-space intersection with the canonical
+energy-two Sugawara eigenspace, indexed by neutral pairs and charge orbits. -/
 def actualFixedEnergyTwoBasis (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) :
     Module.Basis (FixedTwoIndex D) ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)) :=
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)) :=
   (fixedGradeTwoBasis D hD hroot).map
     (LinearEquiv.ofEq _ _ (canonicalFixedEnergy_eq_fixedGrade D hD 2)).symm
 
@@ -751,30 +755,30 @@ theorem actualFixedEnergyTwoBasis_neutral_coe (D : LatticeData)
 and rootlessness of the supplied even LatticeData. These are the literal
 fixedSpace intersections in the production actual fixed vertex algebra.
 No trace, fixed dimension, orbit count, shell count or degree-classification
-conclusion is assumed. The accepted low-grade basis supplier is consumed
-through energyZeroEquiv, energyOneEquiv and gradeTwoBasis. -/
+conclusion is assumed. The low-grade basis supplies energyZeroEquiv,
+energyOneEquiv and gradeTwoBasis. -/
 theorem actual_theta_fixed_rootless_low_spectrum (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) :
     Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 0) = 1 ∧
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 0) = 1 ∧
     Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 1) = 0 ∧
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 1) = 0 ∧
     Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 2) =
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace 2) =
         Nat.choose (D.rank + 1) 2 +
           Nat.card {a : Charge D // bilinear D a a = 4} / 2 := by
   refine ⟨?_, ?_, ?_⟩
   · change Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((0 : ℤ) : ℂ)) = 1
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((0 : ℤ) : ℂ)) = 1
     rw [canonicalFixedEnergy_eq_fixedGrade D hD 0]
     exact fixedGrade_zero_finrank D hD
   · change Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((1 : ℤ) : ℂ)) = 0
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((1 : ℤ) : ℂ)) = 0
     rw [canonicalFixedEnergy_eq_fixedGrade D hD 1]
     exact fixedGrade_one_finrank D hD hroot
   · change Module.finrank ℂ
-      (fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((2 : ℤ) : ℂ)) = _
+      ↥(fixedSpace D ⊓ (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace ((2 : ℤ) : ℂ)) = _
     rw [canonicalFixedEnergy_eq_fixedGrade D hD 2]
     exact fixedGrade_two_finrank D hD hroot
 
