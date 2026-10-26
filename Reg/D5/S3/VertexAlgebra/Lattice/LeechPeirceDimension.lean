@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.VertexAlgebra.Lattice.LeechPeirceDimension
 
+/-! Source-bound registrations for the whole-space dimension formula and actual Leech multiplicity. -/
+
 set_option autoImplicit false
 noncomputable section
 open LeanInformationAudit
@@ -35,8 +37,8 @@ namespace Fiber
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (hroot : ∀ c : Charge D, bilinear D c c ≠ 2)
+    (_hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (_hroot : ∀ c : Charge D, bilinear D c c ≠ 2)
     (a : Charge D), bilinear D a a = 4 →
       R.readout () ()
         (Module.finrank ℂ ↥((fixedSpace D ⊓
@@ -80,8 +82,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.Lattice.LeechPeirceDimension
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -104,7 +110,8 @@ abbrev arena : Arena where
         (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)) ⊓
         (mode D a 1 0).eigenspace (1 / 16 : ℂ))) 47104
 
-private theorem bridge : (type_of% (@actual_leech_one_sixteenth_dimension)) ↔ arena.Law actual := Iff.rfl
+private theorem bridge :
+    (type_of% (@actual_leech_one_sixteenth_dimension)) ↔ arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨D, e, a, _, _, _, _, _, _, _, h⟩
@@ -140,8 +147,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+      path := #["arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg",
+        "arg", "arg", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
