@@ -67,7 +67,7 @@ theorem frozen_after_left_deletion (h : Cell m n → ℤ) (hh : IsHeight h) (hm 
     show k.val - 1 + 1 + 1 = k.val + 1 by omega,
     show k.val - 1 + 1 = k.val by omega]
   have hs := hk.2.2 i
-  change _ = 2 * (h (i, k) - _) 
+  change _ = 2 * (h (i, k) - _)
   linarith
 
 /-- A frozen column to the left keeps its original index. -/
