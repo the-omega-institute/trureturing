@@ -14,6 +14,7 @@ import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.Permutation
 
 open scoped BigOperators ComplexOrder
+open Matrix
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant
 
@@ -65,6 +66,7 @@ def claim : Prop :=
       (e₂ : Matrix (Fin d₂) (Fin d₂) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₂)),
       IsTester e₁ ∧ IsTester e₂ ∧ 1 < projNorm (testerImage e₁ e₂ ρ)
 
+set_option maxHeartbeats 2000000 in
 private theorem witness_pos : (werner 3 (1 / 3)).PosSemidef := by
   let f := Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin 3) (Fin 3))
   have h : werner 3 (1 / 3) =
@@ -90,9 +92,11 @@ private theorem flip_product_trace {d : ℕ} (a b : Matrix (Fin d) (Fin d) ℂ) 
   simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
     Fintype.sum_prod_type, replicaSwap_apply, Prod.swap_prod_mk, Prod.mk.injEq,
     Matrix.kroneckerMap_apply]
-  simp only [ite_and, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ,
-    ↓reduceIte]
-  exact Finset.sum_comm
+  simp only [ite_and, ite_mul, one_mul, zero_mul, Finset.sum_ite_irrel,
+    Finset.sum_const_zero, Finset.sum_ite_eq', Finset.sum_ite_eq,
+    Finset.mem_univ, ↓reduceIte]
+  exact Finset.sum_comm (s := Finset.univ) (t := Finset.univ)
+    (f := fun i j : Fin d => a j i * b i j)
 
 private def flipReadout (d : ℕ) :
     Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →ₗ[ℝ] ℝ where
