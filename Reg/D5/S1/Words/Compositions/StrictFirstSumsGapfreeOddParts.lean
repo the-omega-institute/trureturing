@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts
+import Mathlib.Combinatorics.Enumerative.Partition.YoungDiagram
 
 /-! Source-bound audit of the positive-height transpose criterion. -/
 
@@ -54,8 +55,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   have no : ¬ actual.readout role d 2 := by
     intro h
     have := (height_mem_iff d 2 (by decide)).mpr h
-    simpa [hd] using this
-  exact no (he ▸ yes)
+    simp [hd] at this
+  exact no (Eq.mp he yes)
 
 def familyRegistration : Registration arena (type_of% (@height_mem_iff)) where
   actual := actual
@@ -74,7 +75,8 @@ def familyRegistration : Registration arena (type_of% (@height_mem_iff)) where
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@height_mem_iff) (type_of% (realize signature actual.readout actual.anchor))
     Type Unit where
-  unitName := `D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts.height_mem_iff.__information_unit
+  unitName :=
+    `D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts.height_mem_iff.__information_unit
   realizationName := `Reg.D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts.familyRegistration
   realizationSource := none
   generated := false

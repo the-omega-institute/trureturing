@@ -50,10 +50,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨2, 0, 1, ?_⟩
   change (T 0 - 2 * ∑ j ∈ Finset.Icc 2 0, (-1 : ℤ) ^ (j - 2) * N j 0) ≠
     (T 1 - 2 * ∑ j ∈ Finset.Icc 2 1, (-1 : ℤ) ^ (j - 2) * N j 1)
-  rw [← result 2 0 (by decide), ← result 2 1 (by decide)]
-  norm_num [U, largest,
-    @_root_.D5.S3.Combinatorics.Partitions.OverpartitionThreshold.multiplicity,
-    Fintype.sum_sigma]
+  norm_num [T, Fintype.sum_sigma]
 
 def familyRegistration : Registration arena (type_of% (@result)) where
   actual := actual
