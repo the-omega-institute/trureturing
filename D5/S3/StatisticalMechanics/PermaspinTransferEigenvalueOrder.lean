@@ -59,7 +59,8 @@ private theorem cubic_at_comparison_neg (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
 
 private theorem roots_bddAbove (c d : ℝ) :
     BddAbove {x : ℝ | (dukesCubic c d).eval x = 0} := by
-  sorry
+  have hdeg : 0 < (dukesCubic c d).degree := by rw [(cubic_data c d).1]; norm_num
+  exact (finite_setOfPred_isRoot (ne_zero_of_degree_gt hdeg)).bddAbove
 
 private theorem root_above_comparison (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     ∃ r : ℝ, c * (1 + d) ^ 2 < r ∧ (dukesCubic c d).eval r = 0 := by
