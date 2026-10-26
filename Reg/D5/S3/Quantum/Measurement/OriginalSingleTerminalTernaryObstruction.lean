@@ -111,34 +111,8 @@ def familyOfNonemptySource (hSource : Nonempty Source) : Registration arena
 
 #print axioms familyOfNonemptySource
 
-/-- A source-family registration with explicit nonemptiness input. Source
-occurrence selection and a closed nonemptiness witness are not supplied here. -/
-def auditOfNonemptySource (hSource : Nonempty Source) :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@complete_original_single_terminal_ternary_obstruction)
-      (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.OriginalSingleTerminalTernaryObstruction.unit
-  realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.OriginalSingleTerminalTernaryObstruction.familyOfNonemptySource
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨familyOfNonemptySource hSource⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ word => alpha word) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-#print axioms auditOfNonemptySource
+/- The audit remains unfinished: a closed Source nonemptiness witness, source
+occurrence selection and current typed binding evidence are absent.
+https://github.com/the-omega-institute/trureturing/issues/22279 -/
 
 end Reg.D5.S3.Quantum.Measurement.OriginalSingleTerminalTernaryObstruction
