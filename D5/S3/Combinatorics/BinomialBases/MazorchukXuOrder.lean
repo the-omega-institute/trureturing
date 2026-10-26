@@ -133,6 +133,57 @@ theorem incident_ordinary_mono {E : ℕ → ℕ → Prop} (h : Rules E)
     · right
       exact h.propagate hk hgs (Nat.zero_le g) hgk hks
 
+/-- Every exceptional vertex has one unique cutoff, including empty ordinary lists. -/
+theorem exists_unique_ordinary_cutoff {E : ℕ → ℕ → Prop} (h : Rules E)
+    {s M : ℕ} (hs : ¬ E 0 s) (g : Fin M → ℕ) (hg : StrictMono g)
+    (ho : ∀ r, E 0 (g r)) :
+    ∃! c : ℕ, c ≤ M ∧ ∀ r : Fin M, Incident E s (g r) ↔ c ≤ r.val := by
+  classical
+  let S := (Finset.univ.filter (fun r : Fin M => Incident E s (g r))).image Fin.val
+  let S' := insert M S
+  have hnonempty : S'.Nonempty := by simp [S']
+  let c := S'.min' hnonempty
+  have hcM : c ≤ M := Finset.min'_le S' M (by simp [S'])
+  have hcut : ∀ r : Fin M, Incident E s (g r) ↔ c ≤ r.val := by
+    intro r
+    constructor
+    · intro hr
+      apply Finset.min'_le
+      apply Finset.mem_insert_of_mem
+      refine Finset.mem_image.mpr ⟨r, ?_, rfl⟩
+      exact Finset.mem_filter.mpr ⟨Finset.mem_univ r, hr⟩
+    · intro hcr
+      have hcS : c ∈ S := by
+        have hm : c ∈ S' := Finset.min'_mem S' hnonempty
+        have hcne : c ≠ M := by have := r.isLt; omega
+        exact (Finset.mem_insert.mp hm).resolve_left hcne
+      obtain ⟨j, hj, hjc⟩ := Finset.mem_image.mp hcS
+      have hjselected : Incident E s (g j) := (Finset.mem_filter.mp hj).2
+      by_cases hjr : j = r
+      · simpa only [hjr] using hjselected
+      · have hjr' : j < r := by
+          apply Fin.lt_def.mpr
+          have hne : j.val ≠ r.val := fun heq => hjr (Fin.ext heq)
+          omega
+        exact incident_ordinary_mono h hs (ho j) (ho r) (hg hjr') hjselected
+  refine ⟨c, ⟨hcM, hcut⟩, ?_⟩
+  intro d hd
+  obtain ⟨hdM, hdcut⟩ := hd
+  suffices c = d from this.symm
+  apply le_antisymm
+  · by_contra hdc
+    have hdM : d < M := by omega
+    have hi := (hdcut ⟨d, hdM⟩).mpr le_rfl
+    have := (hcut ⟨d, hdM⟩).mp hi
+    change c ≤ d at this
+    omega
+  · by_contra hcd
+    have hcM' : c < M := by omega
+    have hi := (hcut ⟨c, hcM'⟩).mpr le_rfl
+    have := (hdcut ⟨c, hcM'⟩).mp hi
+    change d ≤ c at this
+    omega
+
 /-- Symmetric threshold edges on an ordered set. -/
 def thresholdEdges (x y : α → ℚ) (a b : α) : Prop :=
   a < b ∧ y a < x b ∧ y b < x a
@@ -156,5 +207,49 @@ theorem rules_thresholdEdges (x y : α → ℚ) (hx : Monotone x) :
         exact heg.2.2.trans_le (hx (le_max_right c e))
       · rw [max_eq_left hgd]
         exact hcd.2.2.trans_le (hx (le_max_left c e))
+
+/-- Truncate at t and make t adjacent to every smaller vertex. -/
+def adjoinGreatest (E : α → α → Prop) (t a b : α) : Prop :=
+  a < b ∧ b ≤ t ∧ (b = t ∨ E a b)
+
+/-- Adjoining or deleting a greatest universal vertex preserves exactly the old rules. -/
+theorem rules_adjoinGreatest_iff {E : α → α → Prop} (t : α)
+    (hbound : ∀ {a b}, E a b → a < b ∧ b < t) :
+    Rules (adjoinGreatest E t) ↔ Rules E := by
+  constructor
+  · intro h
+    have lift {a b : α} (hab : E a b) : adjoinGreatest E t a b :=
+      ⟨(hbound hab).1, (hbound hab).2.le, Or.inr hab⟩
+    have unlift {a b : α} (hab : adjoinGreatest E t a b) (hb : b < t) : E a b :=
+      hab.2.2.resolve_left (ne_of_lt hb)
+    refine ⟨fun hab => (hbound hab).1, ?_, ?_⟩
+    · intro a b c d hab hcd hac hcb hbd
+      exact unlift (h.propagate (lift hab) (lift hcd) hac hcb hbd) (hbound hcd).2
+    · intro a b c d e f hab hcd hef hac hcb hae heb hbd hbf
+      exact unlift (h.join (lift hab) (lift hcd) (lift hef) hac hcb hae heb hbd hbf)
+        (max_lt (hbound hcd).2 (hbound hef).2)
+  · intro h
+    refine ⟨fun hab => hab.1, ?_, ?_⟩
+    · intro a b c d hab hcd hac hcb hbd
+      refine ⟨hbd, hcd.2.1, ?_⟩
+      by_cases hd : d = t
+      · exact Or.inl hd
+      · right
+        have hb : b ≠ t := ne_of_lt (hbd.trans_le hcd.2.1)
+        exact h.propagate (hab.2.2.resolve_left hb) (hcd.2.2.resolve_left hd) hac hcb hbd
+    · intro a b c d e f hab hcd hef hac hcb hae heb hbd hbf
+      have hout : max c e < max d f :=
+        lt_of_lt_of_le (max_lt hcb heb) (hbd.trans (le_max_left d f))
+      refine ⟨hout, max_le hcd.2.1 hef.2.1, ?_⟩
+      by_cases hf' : max d f = t
+      · exact Or.inl hf'
+      · right
+        have hlt : max d f < t :=
+          lt_of_le_of_ne (max_le hcd.2.1 hef.2.1) hf'
+        have hd : d ≠ t := ne_of_lt ((le_max_left d f).trans_lt hlt)
+        have hf : f ≠ t := ne_of_lt ((le_max_right d f).trans_lt hlt)
+        have hb : b ≠ t := ne_of_lt (hbd.trans_lt ((le_max_left d f).trans_lt hlt))
+        exact h.join (hab.2.2.resolve_left hb) (hcd.2.2.resolve_left hd)
+          (hef.2.2.resolve_left hf) hac hcb hae heb hbd hbf
 
 end D5.S3.Combinatorics.MazorchukXu

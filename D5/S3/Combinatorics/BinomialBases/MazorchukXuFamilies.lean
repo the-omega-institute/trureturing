@@ -49,13 +49,13 @@ private theorem mem_edgeTriangle {n a b : ℕ} :
   omega
 
 private theorem pointSet_edgeSet (Y : Finset (ℕ × ℕ)) : pointSet (edgeSet Y) = Y := by
-  simp [pointSet, edgeSet, Finset.image_image]
+  simp [pointSet, edgeSet, Finset.image_image, Function.comp_def]
 
 private theorem edgeSet_pointSet {A : Finset (ℕ × ℕ)}
     (hA : ∀ {a b}, (a, b) ∈ A → a < b) : edgeSet (pointSet A) = A := by
   unfold edgeSet pointSet
   rw [Finset.image_image]
-  conv_rhs => rw [← Finset.image_id A]
+  conv_rhs => rw [← Finset.image_id (s := A)]
   apply Finset.image_congr
   rintro ⟨a, b⟩ hp
   simp only [Function.comp_apply, Prod.mk.injEq, true_and, id_eq]
