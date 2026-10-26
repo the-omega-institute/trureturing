@@ -58,20 +58,15 @@ private theorem cubic_at_comparison_neg (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
 private theorem roots_bddAbove (c d : ℝ) :
     BddAbove {x : ℝ | (dukesCubic c d).eval x = 0} := by
   have hdeg : 0 < (dukesCubic c d).degree := by rw [(cubic_data c d).1]; norm_num
-  exact (finite_setOfPred_isRoot (ne_zero_of_degree_gt hdeg)).bddAbove
+  exact (dukesCubic c d).exists_max_root (ne_zero_of_degree_gt hdeg)
 
 private theorem root_above_comparison (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     ∃ r : ℝ, c * (1 + d) ^ 2 < r ∧ (dukesCubic c d).eval r = 0 := by
   have hdeg : 0 < (dukesCubic c d).degree := by rw [(cubic_data c d).1]; norm_num
   have hlc : 0 ≤ (dukesCubic c d).leadingCoeff := by rw [(cubic_data c d).2]; norm_num
-  have hlim := (dukesCubic c d).tendsto_atTop_of_leadingCoeff_nonneg hdeg hlc
-  have hneg := cubic_at_comparison_neg c d hc hd
-  have hz : (0 : ℝ) ∈ Set.Ici ((dukesCubic c d).eval (c * (1 + d) ^ 2)) := hneg.le
-  obtain ⟨r, hr, hroot⟩ :=
-    intermediate_value_Ici (dukesCubic c d).continuous.continuousOn hlim hz
-  refine ⟨r, lt_of_le_of_ne hr ?_, hroot⟩
-  intro heq
-  exact (ne_of_lt hneg) (heq ▸ hroot)
+  exact intermediate_value_Ioi (dukesCubic c d).continuous.continuousOn
+    ((dukesCubic c d).tendsto_atTop_of_leadingCoeff_nonneg hdeg hlc)
+    (cubic_at_comparison_neg c d hc hd)
 
 private theorem comparison_gaps (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     c * (1 - d) ^ 2 < c * (1 + d) ^ 2 ∧
