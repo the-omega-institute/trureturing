@@ -12,6 +12,8 @@ import D5.S3.Weil.ZetaLinear.Sylvester
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Topology.Instances.Matrix
 
+/-! Full positive-axis resolvent energy controlled by actual support-aware entropy loss. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -90,7 +92,7 @@ private theorem continuousAt_shift_inverse {ι : Type*} [Fintype ι] [DecidableE
   have hInv : ContinuousAt (fun X : Matrix ι ι ℂ => X⁻¹) H :=
     continuousAt_matrix_inv H (by
       simpa only [Ring.inverse_eq_inv'] using (continuousAt_inv₀ hdet))
-  exact hInv.comp t
+  exact hInv.comp
     (continuous_const.add (continuous_id.smul continuous_const)).continuousAt
 
 private theorem norm_form {ι : Type*} [Fintype ι] (x : ι → ℂ) :
