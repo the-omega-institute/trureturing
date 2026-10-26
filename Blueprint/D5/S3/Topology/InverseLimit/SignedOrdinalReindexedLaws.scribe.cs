@@ -31,5 +31,5 @@ internal sealed class SignedOrdinalReindexedLawsDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Owner + "nu_reindexBirth"), H("Compatibility with generic whole-birth reindexing"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For any delayed support on the same actual carrier, the concrete proper Data nu agrees at every label and natural index with reindexBirth of that same wholeBirth. Its nu is independent of delayedSupport."))), DescribeRole.Theorem),
-            Paragraph(Text("This is the proper-stage adapter required by the parent same-eta theorem. The actual global eta, delayed support launch, G and cofinality and the final endpoints remain separate obligations; no full Problem 8.2 solution is asserted. Four-slot information audit evidence remains unfinished under issue 21750.")))));
+            Paragraph(Text("The proper-stage adapter uses the same actual finalPrefix and whole-birth measures as SignedOrdinalActualReindex and SignedOrdinalActualG. Its full signed F laws and all-natural-index measure readback can therefore be used with that fixed global eta, universal support launch and successor G.")))));
 }

@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws and concrete RawHistory now constructed; the original uniform same-eta correspondence and joint endpoints remain open.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws, concrete RawHistory, uniform same-eta whole-birth reindexing and proper-stage A-G composition are now constructed; the joint signed endpoints and full Problem 8.2 conclusion remain open.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -877,12 +877,25 @@ that construction.
 
 These results complete the final-space and proper-slice construction layer.
 Ordinary and delayed treatment cofinality, and support-launch cofinality, are
-proved on the actual run. The original paper uses one eta for both launch
-support and quantitative G; this exact uniform same-eta correspondence is
-still a separate obligation here, and is not inferred by equating the two
-existing schedules. The joint Banach-space and topological endpoints also
-remain separate. This delivery does not solve Problem 8.2; FullCHLeanSolved
-and officialSolved remain zero.
+proved on the actual run. `SignedOrdinalActualReindex` supplies one eta for
+the actual whole-birth measure and every support launch, including self-row
+events and rejected reservations. Its new labels decode to original measure
+labels no larger than themselves. `SignedOrdinalReindexedLaws` therefore
+retains all original A-F laws on every proper cutoff, including every-choice
+signed F and the regular reference measure of norm at most one. Every new
+label reads the same actual whole-birth measure at every natural index.
+
+`SignedOrdinalActualG` transports the unchanged selected Result to the literal
+successor carrier. A single clopen and strictly increasing column sequence,
+fixed before the signed lifts, give both the infinite evaluations at least
+one sixth and the infinite exact zero evaluations for every complete signed
+norm-one lift sequence. No positivity restriction is added. The private
+`actual_scheme` composition in `TalagrandTopologicalConsequences` combines
+these statements on the same finalPrefix, retaining the initial cube and
+literal onto restrictions. Its targeted Lean build has passed. The joint
+Banach-space endpoints and public total theorem remain separate obligations.
+Problem 8.2 is not declared solved; FullCHLeanSolved and officialSolved remain
+zero.
 
 The information audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
