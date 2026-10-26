@@ -8,6 +8,8 @@
 
 import D5.S3.Topology.Measures.SignedBallReduction
 import D5.S3.Topology.InverseLimit.SignedOrdinalRealization
+import D5.S3.Topology.InverseLimit.SignedOrdinalReindexedLaws
+import D5.S3.Topology.InverseLimit.SignedOrdinalActualG
 import Mathlib.Topology.Category.Profinite.Basic
 import Mathlib.Topology.Metrizable.Basic
 import Mathlib.Topology.Sequences
@@ -117,5 +119,132 @@ private theorem actual_point_space_consequences
   exact point_space_size_of_surjection_no_sequences _
     (fun x => SignedProperLimit.restrict Ordinal.omega0_lt_omega_one.le x.1)
     (SignedOrdinalRealization.initial_onto hCH) hseq
+
+open Set Function Filter MeasureTheory TopologicalSpace
+open scoped Ordinal Cardinal ENNReal Topology
+open SignedProperLimit SignedBirthEnumeration
+open SignedOrdinalHistoryBirth SignedOrdinalHistoryState
+
+private theorem actual_scheme
+    (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    let H := SignedOrdinalRealization.finalPrefix hCH
+    let K := H.LimitSpace
+    let W := SignedOrdinalActualReindex.actualBirth hCH
+    let ρ := SignedOrdinalActualReindex.eventRow hCH
+    let η := SignedOrdinalActualReindex.eta hCH
+    let Z := SignedOrdinalActualG.clopen hCH
+    let k := SignedOrdinalActualG.column hCH
+    -- The old stages and both kinds of maps are literal coordinate restrictions.
+    ((∀ c : Label, IsClosed (H.carrier c) ∧ (H.carrier c).Nonempty) ∧
+      (∀ (a b : Label) (hab : a ≤ b) (x : H.Space b),
+        (H.map a b hab x).1 = restrict hab x.1) ∧
+      (∀ (a b : Label) (hab : a ≤ b), Surjective (H.map a b hab)) ∧
+      (∀ (a : Label) (x : K),
+        (H.projection a x).1 = restrict (le_of_lt a.2) x.1)) ∧
+    -- Every initial carrier, including omega, is the original complete cube.
+    ((∀ (c : Label), c.1 ≤ ω → H.carrier c = univ) ∧
+      Surjective (fun x : K => restrict
+        (show (ω : Ordinal.{0}) ≤ ω₁ from Ordinal.omega0_lt_omega_one.le) x.1)) ∧
+    -- The one actual final set, its topology, cone, and all onto projections.
+    (IsClosed H.limitCarrier ∧ Nonempty K ∧ CompactSpace K ∧ T2Space K ∧
+      ZeroDimensionalSpace K ∧
+      Nonempty (CategoryTheory.Limits.IsLimit H.cone) ∧
+      ∀ a : Label, Surjective (H.projection a)) ∧
+    -- Complete whole enumerations; B and V stay those of the original run.
+    (∀ θ : Stage, Surjective (W θ).U ∧ Surjective (W θ).B ∧
+      Surjective (W θ).nu ∧
+      (W θ).B = (SignedOrdinalRealization.wholeBirth hCH θ).B ∧
+      (W θ).V = (SignedOrdinalRealization.wholeBirth hCH θ).V ∧
+      ∀ (δ : Label) (n : ℕ),
+        Measure.Regular ((W θ).measure δ n).toJordanDecomposition.posPart ∧
+        Measure.Regular ((W θ).measure δ n).toJordanDecomposition.negPart ∧
+        ((W θ).measure δ n).totalVariation univ = 1 ∧
+        ((W θ).measure δ n).totalVariation ((W θ).V.clopen n : Set _)ᶜ = 0 ∧
+        (1 / 2 : ℝ≥0∞) ≤ ((W θ).measure δ n).toJordanDecomposition.posPart univ) ∧
+    -- Every proper cutoff retains the full original Laws, including every-choice
+    -- signed F and its regular reference of totalVariation.real univ <= 1.
+    -- Its nu reads THIS W, at every Label and every natural index.
+    (∀ (l : Ordinal.{0}) (hl : l < ω₁),
+      let P := SignedOrdinalRealization.properSlice hCH hl
+      let D := SignedOrdinalReindexedLaws.properData hCH hl
+      (∀ c : Coord l, P.carrier c = H.carrier ⟨c.1, c.2.trans hl⟩) ∧
+      P.Laws D ∧
+      ∀ (c : Coord l) (hc : ω ≤ c.1) (δ : Label) (n : ℕ),
+        (D.nu c δ n).1 = (W ⟨⟨c.1, c.2.trans hl⟩, hc⟩).measure δ n) ∧
+    -- The SAME eta is used for launch and all-signed-lift G on literal succ(a).
+    -- Z and k are fixed before the arbitrary complete lift sequence is supplied.
+    (∀ a : Stage, ∃ hra : ρ a ≤ a, η a ≤ a.1 ∧
+      (∀ n : ℕ,
+        ((W a).V.clopen n : Set (H.Space a.1)) =
+          H.map (ρ a).1 a.1 hra ⁻¹'
+            (((W (ρ a)).U (η a)).clopen n : Set _)) ∧
+      StrictMono (k a) ∧
+      ∀ (s : ℕ → SignedMeasure (H.Space (nextStage a).1))
+        (hmap : ∀ n, (s n).map
+          (H.map (ρ a).1 (nextStage a).1
+            (hra.trans (Order.le_succ (ord a)))) =
+          (W (ρ a)).measure (η a) n)
+        (hmass : ∀ n, (s n).totalVariation univ = 1),
+        (∀ q : ℕ,
+          (q % 2 = 0 → (1 : ℝ) / 6 < s (k a q) (Z a)) ∧
+          (q % 2 ≠ 0 → s (k a q) (Z a) = 0)) ∧
+        ({n | (1 : ℝ) / 6 ≤ s n (Z a)}.Infinite ∧
+          {n | s n (Z a) = 0}.Infinite)) ∧
+    -- Every row and every NEW whole label is actually treated cofinally.
+    (∀ (θ : Stage) (δ base : Label),
+      ∃ a : Stage, base < a.1 ∧ θ < a ∧ ρ a = θ ∧ η a = δ) := by
+  let H := SignedOrdinalRealization.finalPrefix hCH
+  let K := H.LimitSpace
+  let W := SignedOrdinalActualReindex.actualBirth hCH
+  let ρ := SignedOrdinalActualReindex.eventRow hCH
+  let η := SignedOrdinalActualReindex.eta hCH
+  let Z := SignedOrdinalActualG.clopen hCH
+  let k := SignedOrdinalActualG.column hCH
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · refine ⟨?_, ?_, ?_, ?_⟩
+    · intro c
+      exact ⟨H.closed c, H.nonempty c⟩
+    · intro a b hab x
+      rfl
+    · intro a b hab y
+      obtain ⟨x, hx⟩ := H.onto a b hab y
+      exact ⟨x, Subtype.ext hx⟩
+    · intro a x
+      rfl
+  · exact ⟨SignedOrdinalRealization.initial_carrier hCH,
+      SignedOrdinalRealization.initial_onto hCH⟩
+  · have hcompact : IsCompact H.limitCarrier :=
+      isCompact_iff_compactSpace.mpr
+        (inferInstance : CompactSpace H.LimitSpace)
+    refine ⟨hcompact.isClosed, ?_, inferInstance, inferInstance, inferInstance,
+      ⟨H.coneIsLimit (Cardinal.isSuccLimit_omega 1)⟩,
+      H.projection_surjective (Cardinal.isSuccLimit_omega 1)⟩
+    obtain ⟨x, hx⟩ := SignedOrdinalRealization.initial_onto hCH (fun _ => false)
+    exact ⟨x⟩
+  · intro θ
+    refine ⟨(W θ).Uonto, (W θ).Bonto, (W θ).nuonto, rfl, rfl, ?_⟩
+    intro δ n
+    let b := (W θ).nu δ
+    have hb := b.2 n
+    exact ⟨(b.1 n).2.1, (b.1 n).2.2, hb.1, hb.2.1, hb.2.2⟩
+  · intro l hl
+    refine ⟨?_, SignedOrdinalReindexedLaws.properLaws hCH hl, ?_⟩
+    · intro c
+      rfl
+    · intro c hc δ n
+      exact SignedOrdinalReindexedLaws.nu_reindexBirth hCH hl c hc δ n
+        (SignedOrdinalActualReindex.actualDelayedSupport hCH
+          ⟨⟨c.1, c.2.trans hl⟩, hc⟩)
+  · intro a
+    refine ⟨SignedOrdinalActualReindex.eventRow_le hCH a,
+      SignedOrdinalActualReindex.eta_le hCH a, ?_,
+      SignedOrdinalActualG.column_strictMono hCH a, ?_⟩
+    · intro n
+      exact SignedOrdinalActualReindex.universal_launch hCH a n
+    · intro s hmap hmass
+      exact ⟨fun q => SignedOrdinalActualG.quantitative_g hCH a s hmap hmass q,
+        SignedOrdinalActualG.infinite_values hCH a s hmap hmass⟩
+  · exact SignedOrdinalActualReindex.actual_cofinal hCH
+
 
 end D5.S3.Topology.InverseLimit.TalagrandTopologicalConsequences
