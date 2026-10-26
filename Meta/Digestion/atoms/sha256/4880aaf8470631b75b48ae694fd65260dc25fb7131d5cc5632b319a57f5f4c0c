@@ -1,0 +1,53 @@
+**Definition 3.2 (source, supplied controls and full branches).** On $Q=\mathbb C^3$ set
+
+$$
+\begin{gathered}
+U=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\qquad
+D=\operatorname{diag}(1,1,-1),\qquad N=DU,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\quad q=(\xi+e)/\sqrt2,\\
+\psi=\sqrt d\,Uq+i\sqrt{1-d}\,Uf,\qquad
+\rho_0=\psi\psi^\dagger,\qquad 0<d<1,\\
+V_0=Ue^{i\pi W/4},\qquad V_1=V_0W,\qquad
+P_y=(I+yW)/2\quad(y\in\{+1,-1\}).
+\end{gathered}
+\tag{3.1}
+$$
+
+The preparation is performed once. The controller is independent of $d$ and never requests its value. The one installed deterministic control is $N$; the formulas for $D,U$ do not grant separate calls to them. Indeed $N\xi=D\xi$ is not proportional to $\xi$, so this installation satisfies CPW V's mixing condition. The angle is fixed at $\pi/4$.
+
+Use the genuine original outgoing record basis $g_0,g_1$ of CPW VI (101.2), and abbreviate it by $|0\rangle,|1\rangle$ only within this section. For one unknown fixed $\gamma\in\mathbb C$, $|\gamma|\le1$, each source call $\mathsf J$ has the complete CPTP action
+
+$$
+\begin{aligned}
+\mathcal L_\gamma(X)=\tfrac12[&V_0XV_0^\dagger\otimes|0\rangle\langle0|
+ +V_1XV_1^\dagger\otimes|1\rangle\langle1|\\
+ &+\gamma V_0XV_1^\dagger\otimes|0\rangle\langle1|
+ +\bar\gamma V_1XV_0^\dagger\otimes|1\rangle\langle0|].
+\end{aligned}
+\tag{3.2}
+$$
+
+This is the parametrization supplied by CPW VI Theorem 101.3 of its entire structural class (101.4), not an inferred law for an unrestricted unknown instrument. Each call has the same $\gamma$, a fresh ready two-dimensional outgoing carrier, and no persistent hidden state affecting later calls. Every earlier retained classical cell and every untouched finite reference $Z$ sees the identity map. Tensoring the following formulas with $\operatorname{id}_Z$ is part of the premise, including when the current $Q$ is correlated with $Z$.
+
+The authorized record-only read settings are the original $g$ setting and the fixed $F$ setting with vectors $(|0\rangle\pm|1\rangle)/\sqrt2$. A read returns its actual bit, copies it to owned classical storage and retires the measured carrier. Its **complete returned-system** branches are supplied to be
+
+$$
+\begin{aligned}
+A_j(X)&=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\\
+C_y^\gamma(X)&=\tfrac14V_0
+ [X+WXW+y\gamma XW+y\bar\gamma WX]V_0^\dagger,\\
+\Lambda&=A_0+A_1=C_+^\gamma+C_-^\gamma
+ =\operatorname{Ad}_U\circ\mathcal P,\qquad
+\mathcal P=(\operatorname{id}+\operatorname{Ad}_W)/2,\\
+\Theta&=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2.
+\end{aligned}
+\tag{3.3}
+$$
+
+Thus effects alone are not the readout contract. The sum of the two branches is trace preserving, and both branches are completely positive by (3.2). A wash block realizes $\Theta$ by the chronological word $\mathsf J\mathsf J\mathsf N\mathsf J\mathsf J$, leaving its four outgoing carriers unread and disposing of them outside the accessible interface. Neither their labels nor a coherent copy is returned. The call $\mathsf N$ realizes $\operatorname{Ad}_N$ on the current system. There is no reset, inverse, additional preparation, forced outcome, arbitrary record unitary, return wire or archive decoder.
+
+For physical source placement take $H=\mathbb C^5$, $u_H=(e_0+e_3)/\sqrt2$, $v_H=(e_1+e_4)/\sqrt2$, $z_H=e_2$ and $B=(u_H,v_H,z_H)$. The actual initial state is $B\rho_0B^\dagger$, the control is $\widetilde N=BNB^\dagger+I_5-BB^\dagger$, and the port is the same outgoing carrier as in CPW VI (101.1)–(101.3). The lift and read branches are transported by $B$ on this code. This is the original preparation's code realization from CPW V Proposition 91.3; arbitrary mathematical input matrices below do not supply preparations of them.
+

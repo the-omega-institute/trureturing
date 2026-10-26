@@ -83,7 +83,7 @@ private lemma cutRow_zero_above {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
       _ ≤ _ := Real.rpow_le_rpow (Real.rpow_nonneg hB.le _) hd (by norm_num)
   by_cases hz : kernel t x = 0
   · simp [cutRow, hz]
-  have hk : 0 < kernel t x := lt_of_le_of_ne ((rowSupplier% kernel_nonneg) ht4) (Ne.symm hz)
+  have hk : 0 < kernel t x := lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg ht4) (Ne.symm hz)
   have hx := ((rowSupplier% kernel_pos_iff) ht4).mp hk
   have hK := (rowSupplier% windowMass_pos_of_kernel_pos) (by linarith : 4 ≤ ell) horder ht hk
   have hlate : (rowSupplier% afterMass) ell R d x = 0 := by
@@ -177,11 +177,11 @@ private lemma cutRow_zero_below {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
     have hτ1 : (1 : ℝ) ≤ (d : ℝ) ^ (500 / 151 : ℝ) :=
       Real.one_le_rpow hd1 (by norm_num)
     have hu1 : (1 : ℝ) ≤ lowerClock t := by linarith [hu.2.1]
-    exact ((rowSupplier% endpoint_strictMonoOn).monotoneOn hτ1 hu1 hτ).trans
+    exact (OriginalMovingCutRow.endpoint_strictMonoOn.monotoneOn hτ1 hu1 hτ).trans
       (lowerClock_endpoint_le (hell.trans ht.1))
   by_cases hz : kernel t x = 0
   · simp [cutRow, hz]
-  have hk : 0 < kernel t x := lt_of_le_of_ne ((rowSupplier% kernel_nonneg) ht4) (Ne.symm hz)
+  have hk : 0 < kernel t x := lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg ht4) (Ne.symm hz)
   have hx := ((rowSupplier% kernel_pos_iff) ht4).mp hk
   have hlate : beforeMass ell R d x = 0 := by
     apply setIntegral_eq_zero_of_forall_eq_zero
@@ -194,7 +194,7 @@ private lemma cutRow_zero_below {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
     have hτ1 : (1 : ℝ) ≤ (d : ℝ) ^ (500 / 151 : ℝ) :=
       Real.one_le_rpow hd1 (by norm_num)
     have hse : endpoint s ≤ endpoint ((d : ℝ) ^ (500 / 151 : ℝ)) :=
-      (rowSupplier% endpoint_strictMonoOn).monotoneOn hs1 hτ1 (le_of_lt hsτ)
+      OriginalMovingCutRow.endpoint_strictMonoOn.monotoneOn hs1 hτ1 (le_of_lt hsτ)
     exact (hse.trans_lt (hclock.trans_lt hx.1)).le
   have hratio : beforeRatio ell R d x = 0 := by
     unfold beforeRatio

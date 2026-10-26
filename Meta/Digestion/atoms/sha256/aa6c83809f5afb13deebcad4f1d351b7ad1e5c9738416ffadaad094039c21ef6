@@ -1,0 +1,27 @@
+**定义 91.2（完整记录接受效果与数学扩张）。** 对一个时序 $s$，给每个完整输出一个系数 $a(w,b)\in[0,1]$，定义
+
+$$
+F_{s,a}=\sum_{w\in\mathcal W_s}2^{-k}
+ \big[a(w,1)R_w+a(w,0)(I_3-R_w)\big].
+\tag{91.4}
+$$
+
+系数为 $0$ 或 $1$ 时，这是原完整记录的二元事件效果。任意 $[0,1]$ 系数只扩大比较域；其概率随机化是否可物理取得不作前提。由 $\sum_{w,b}A_w^*(E_b)=I_3$，有 $0\preceq F_{s,a}\preceq I_3$，且原始接受质量为
+
+$$
+\operatorname{Tr}(F_{s,a}\rho_0)
+ =\sum_{w,b}a(w,b)p_s(w,b).
+\tag{91.5}
+$$
+
+再定义数学比较集
+
+$$
+\mathcal B_N=
+\overline{\operatorname{conv}\{F_{s,a}:s\text{ 为上述有限时序},\ 0\le a(w,b)\le1\}}
+ ^{\|\cdot\|_\infty},
+\tag{91.6}
+$$
+
+其中 $\theta$ 和原 $E$ 已固定，$\|\cdot\|_\infty$ 为算子范数。凸组合和范数闭包是比较集的数学扩张，不供应时序彩票、无限时序或极限操作。每个 $F_{s,a}$ 的两种二元质量仍来自同一完整分布：接受使用 $a$，拒绝使用 $1-a$；任何记录都未被删除或重新归一化。可取得次归一化片段与其归一化对象的区别，见 Selby 等，[Accessible fragments of generalized probabilistic theories, cone equivalence, and applications to witnessing nonclassicality，2112.04521v3](https://arxiv.org/html/2112.04521v3)，§§I、III；这些区别不预先决定本源 $\mathcal B_N$ 的大小。
+

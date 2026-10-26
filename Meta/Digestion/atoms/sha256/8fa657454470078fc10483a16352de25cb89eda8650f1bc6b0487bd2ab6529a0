@@ -1,0 +1,21 @@
+**Definition 6.2 (scope of the conclusion).** The classification concerns
+only free analytic diffusion on this fixed interior cylinder and this
+fixed native quotient. It makes no assertion about Green-potential energy,
+attraction, stability thresholds, an amplitude memory space or a limit of
+covariances. Equality of projected laws is not a preparation or acquisition
+procedure. The stochastic covariance, density and time parameter are
+additional analytic structure; they are not consequences of the original
+finite-variation command law, and the proof constructs no CPTP
+implementation of that nonlinear law.
+
+The quantities retained from the source have different meanings:
+
+| Quantity | Meaning in this contract |
+| --- | --- |
+| $3$ | Dimension of the full current-ray manifold $J\times\mathbb T^2$. |
+| $2$ | Rank of the two direct native fields. |
+| $(2,3)$ | Growth vector from their first nonzero bracket. |
+| $4$ | Local bracket-weighted volume exponent, not the base dimension. |
+| $2$ | Dimension of the bottom behavioral base $J\times\mathbb T$. |
+| Persistent predictive information | Depends on the observation task: the hidden phase remains available to the middle-reference menu, and failures in §4 make it relevant to added free-law prediction even for a bottom quotient. |
+| Physical axes | Require a separate source-to-space realization, measure, domain and clock correspondence absent from these hypotheses. |

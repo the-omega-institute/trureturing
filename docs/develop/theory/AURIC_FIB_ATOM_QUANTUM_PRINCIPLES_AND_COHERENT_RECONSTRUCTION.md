@@ -4646,3 +4646,272 @@ $$
 这三问分别要求新操作资源、原生过滤机制及保全未来关系的翻译，不由一般稳定、循环向量或三根可见轴替代。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 符号相位效果的普适障碍与共同原生区分
+
+**定义 35.1（有序识别下的两个实结构）。** 沿用定义 30.1 的 $B,U,f,q,g=Uf,a=Uq,S_\pm$ 和 $E_y$。
+另作字面有序识别：将该仪器的物理基 $(e_0,\ldots,e_4)$ 逐项对应定义 20.1 的 $(e_N,e_2,e_3,e_5,e_{25})$，即[预测波 §5](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)的位置标签 $m=(0,1,2,3,13)$。
+这是两个数学载体的对应前提，不供应物理端口映射或 $S_\pm$ 的安装。
+取定义 20.1 的固定 $K=\mathsf K$、$D=\operatorname{diag}(1,i,i,i,1)$，以 $V(s)=e^{-isK}$ 表示五维等待；$U$ 仍是三维置换，不是 $V$。
+
+允许输入为任意复密度矩阵 $\rho\in M_5(\mathbb C)$。
+原生菜单仅有 $s\ge0$ 的 $V(s)$、完整秩一读取 $\mathcal J_j(X)=P_jXP_j$（$P_j=e_je_j^\dagger$）、Stop、有限记录反馈及输入无关的可测经典随机化。
+每条记录保留全部读取标签及最终 Stop；失败事件若由记录命名，其质量仍计入总质量。
+经典合并记录不改成保持粗块相干的 Lüders 读取；不增加量子辅助、参考、复制、独立相位或任意正交控制，也不授予输入制备。
+
+物理坐标实效果与 $D$ 帧实效果分别指 $F=\overline F$ 与 $D^\dagger FD=\overline{D^\dagger FD}$，二者不同。
+§30 的擦除 Kraus 菜单使用前者；本原生菜单使用后者。
+固定基实操作的约定见 [Wu 等的文献说明](../../../Library/Quantum/wu2021imaginarity.md)及其[伴随论文 §III](https://arxiv.org/abs/2103.01805v1)；允许全部实 Kraus 操作的资源理论不把这些操作加入这里的固定菜单。
+
+为给出本源的精确参数对应，置
+
+$$
+x=\frac{\sqrt2+1}{\sqrt{12}},\qquad y=\frac{\sqrt2-2}{\sqrt{12}},\qquad
+G=Bg=\begin{pmatrix}1/2\\0\\-1/\sqrt2\\1/2\\0\end{pmatrix},\qquad
+H=Ba=\begin{pmatrix}x/\sqrt2\\y/\sqrt2\\x\\x/\sqrt2\\y/\sqrt2\end{pmatrix}.
+\tag{35.1}
+$$
+
+由预测波 §17.1 的 $B=((e_0+e_3)/\sqrt2,(e_1+e_4)/\sqrt2,e_2)$ 和 $U$ 交换末两坐标，得到 (35.1)，且 $G^\dagger G=H^\dagger H=1$、$G^\dagger H=0$。
+依定义 30.1 及应用 30.2，在 $0<t<1$、$\alpha_t=\sqrt{1-t^2}$ 下，
+
+$$
+\rho_{t,\pm}:=S_\pm(ff^\dagger)=\psi_{t,\pm}\psi_{t,\pm}^\dagger,
+\qquad\psi_{t,\pm}=\alpha_tG\pm itH,\qquad
+E_y=\tfrac12(G+iH)(G+iH)^\dagger.
+\tag{35.2}
+$$
+
+**命题 35.2（同一源的普适实现障碍和参数无关测试）。** 在定义 35.1 的识别及菜单下：
+
+1. 不存在一个许可有限协议及其记录事件，能对全部复密度输入 $\rho$ 给出 $\operatorname{Tr}(E_y\rho)$。
+2. 同一个协议“等待 $\tau=1/100$，完整读取五标签，随后 Stop”，以记录 $(0,\mathrm{Stop})$ 为事件，对每个 $0<t<1$ 都满足
+
+$$
+p_{0,+}(\tau)-p_{0,-}(\tau)>
+\frac3{250}\,t\sqrt{1-t^2}>0.
+\tag{35.3}
+$$
+
+这里等待、事件和控制均与 $t$ 及未知符号无关。全部终端记录恰为 $r_j=(m_j,\mathrm{Stop})$、$0\le j\le4$，其质量为
+
+$$
+p_{j,\pm}(\tau)=|e_j^\dagger V(\tau)\psi_{t,\pm}|^2\ge0,
+\qquad\sum_{j=0}^4p_{j,\pm}(\tau)=1.
+\tag{35.4}
+$$
+
+其余四标签保留为补事件，质量 $1-p_{0,\pm}$；停止总质量为一，失败质量为零，不作后选择。
+
+证明。普适障碍使用命题 11.7 及[静态相融纤维 §9.3](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)的完整记录闭合结果：所有许可事件效果在 $D$ 帧实对称，Stop 及完整失败事件、输入无关随机混合也保持此性质。
+其首读后缀为输入无关的归一概率核；零质量前缀直接乘零，无须条件化。
+本源的具体残差为
+
+$$
+(D^\dagger E_yD)_{01}
+=\frac{\sqrt3-\sqrt6}{24}-i\frac{\sqrt2}{48}.
+\tag{35.5}
+$$
+
+例如取 $\eta_\pm=(e_0\pm ie_1)/\sqrt2$、$\sigma_\pm=D\eta_\pm\eta_\pm^\dagger D^\dagger$。
+二者均为合法密度输入，$\operatorname{Re}(D^\dagger\sigma_+D)=\operatorname{Re}(D^\dagger\sigma_-D)$，所以全部许可记录及随机事件同律；但 (35.5) 给
+
+$$
+\operatorname{Tr}\bigl[E_y(\sigma_+-\sigma_-)\bigr]=\frac{\sqrt2}{24}\ne0.
+\tag{35.6}
+$$
+
+故不能在全部复输入上实现该效果。这里的全输入量词并未被限制为实态或这两个见证态。
+
+对第二条，采用实际固定等待，而不将效果的线性张成当作可执行效果。其被动生成元为
+
+$$
+A=D^\dagger(-iK)D=
+\begin{pmatrix}
+0&1&1&1&0\\-1&0&0&0&-1\\-1&0&0&0&0\\-1&0&0&0&-1\\0&1&0&1&0
+\end{pmatrix},\qquad O(s)=e^{sA}=D^\dagger V(s)D.
+\tag{35.7}
+$$
+
+$A^{\mathsf T}=-A$，故 $O(s)$ 实正交。令
+
+$$
+M=2i(HG^{\mathsf T}-GH^{\mathsf T}),\qquad
+C_0=\operatorname{Re}(D^\dagger MD),\qquad
+d(s)=(O(s)C_0O(s)^{\mathsf T})_{00}.
+\tag{35.8}
+$$
+
+由 (35.2)，$\rho_{t,+}-\rho_{t,-}=t\alpha_tM$，故 $p_{0,+}(s)-p_{0,-}(s)=t\alpha_td(s)$。
+将 (35.1) 代入得到
+
+$$
+(C_0)_{00}=(C_0)_{03}=0,\qquad
+(C_0)_{01}=\frac{\sqrt3-\sqrt6}{6},\qquad
+(C_0)_{02}=\frac{\sqrt3+\sqrt6}{3},
+$$
+
+$$
+d(0)=0,\qquad d'(0)=(AC_0-C_0A)_{00}
+=\sqrt3+\frac{\sqrt6}{3}>2.
+\tag{35.9}
+$$
+
+$M$ 的非零本征值为 $2,-2$，所以 $\|M\|_1=4$。
+记 $X=D^\dagger MD$，则 $C_0=(X+\overline X)/2$，迹范数的凸性和酉不变性给 $\|C_0\|_1\le4$。
+又 $\|A\|_{\mathrm{op}}^2\le\|A\|_{\mathrm F}^2=10$，从而
+
+$$
+|d''(s)|\le\|[A,[A,C_0]]\|_1
+\le4\|A\|_{\mathrm{op}}^2\|C_0\|_1\le160.
+$$
+
+Taylor 余项对同一个 $\tau=1/100$ 给
+
+$$
+d(\tau)\ge\tau d'(0)-80\tau^2
+>\frac2{100}-\frac{80}{10000}=\frac3{250}.
+\tag{35.10}
+$$
+
+因 $t\alpha_t>0$ 得 (35.3)。$V(\tau)$ 酉且 $\psi_{t,\pm}$ 单位化，故完整五标签质量和为一，得到 (35.4)。∎
+
+本命题只将既有实帧闭合与符号世界应用于这些固定矩阵，未将一般实操作理论重立为新定理。
+$\rho_{t,+}$ 与 $\rho_{t,-}$ 在物理坐标中实部相同，但其 $D$ 帧实部之差为 $t\alpha_tC_0\ne0$；因此两菜单的区分能力不同。
+§30 的坐标实菜单同律结论仍成立；§34 的 $E_y$ 取得问题在这个指定菜单上的普适精确实现由第一条排除，指定符号对的统计区分则由第二条给出。
+概率差不等于有限样本必定判对，且下界在 $t\downarrow0$ 或 $t\uparrow1$ 趋零，不供应全参数统一正间隙。
+
+这两个数学结论均不提供 $ff^\dagger$ 或输出态的原生制备、物理 $S_\pm$、端口对应、重复样本、时钟精度或资源成本；$\tau$ 仍为无量纲等待参数。
+固定 $D$ 只改坐标，不授予独立相位参考。要越过第一条须改变其操作或输入合同，并另证获得的资源；第二条仅在同一已识别载体且给定相应输入时成立。
+定义 34.1 的强正性、共同组合与参考相容性仍是量子重建的前提，不由这一对状态的区分推出。
+
+## 追加锚（本行以下为增补区）
+
+## 36. 同一被动等待的极分解与完整原生读取的不相容
+
+**定义 36.1（物理载体、极支撑与操作下降）。** 固定定义 20.1、35.1 的同一个 $K,D,A$，物理载体仍为 $\mathcal H_{\rm phys}=\mathbb C^5$，标签顺序仍为 $(N,2,3,5,25)$。在 $D$ 帧记 $V=\mathbb R^5$，其物理像 $DV$ 是实五维子空间；物理载体的全实化 $(\mathcal H_{\rm phys})_{\mathbb R}$ 则是实十维，两者不同。只用原来的非负等待、完整读取、Stop、有限记录反馈和输入无关随机化，不增加制备、相位参考、辅助或控制。
+置
+
+$$
+z=\frac{e_2-e_5}{\sqrt2},\qquad R_0=zz^T,\qquad P=I-R_0,\qquad
+E=z^\perp\subset V,\qquad E_{\mathbb C}=E+iE\subset\mathbb C^5.
+\tag{36.1}
+$$
+
+这里 $E_{\mathbb C}$ 使用物理表示已经供应的复数域；它不等于在实四维 $E$ 上另选 $J^2=-I_E$ 所得的内部复二维空间 $E_J$。内部射线识别单位向量 $u$ 与 $e^{\theta J}u$。若以 $E_J$ 表示同一系统，全部保留记录的概率必须在这些射线上恒定，实际分支还须保持所声明的支撑。实线性控制作为复线性控制须与 $J$ 交换；这些要求不能由等待独自保持 $J$ 替代。物理全实化已有的复结构 $J_0\psi=i\psi$ 也不等于 $V$ 上的一个算子。
+
+**命题 36.2（实际极射线的记录分离及读后零模质量）。** 在定义 36.1 的对象与菜单中成立以下三项。
+
+1. $\ker A=\mathbb Rz$，$A$ 的规范极分解为 $A=\widetilde J_p|A|$，其中
+
+$$
+\begin{aligned}
+n&=\sqrt{5+2\sqrt2},\\
+\widetilde J_p&=\frac{A\bigl((5+\sqrt2)I+A^2\bigr)}{\sqrt2\,n},\\
+\widetilde J_pz&=0,\qquad \widetilde J_p^T=-\widetilde J_p,\qquad
+\widetilde J_p^2=-P,\qquad [\widetilde J_p,A]=0.
+\end{aligned}
+\tag{36.2}
+$$
+
+故 $J_p=\widetilde J_p|_E=A|_E(-A^2|_E)^{-1/2}$ 是 $E$ 上的正交复结构，所有等待 $O(t)|_E$ 都与之交换。它不是全 $V$ 上的复结构。若改在物理全实化上对 $-iK$ 作规范极分解，其极因子是 $D\widetilde J_pD^\dagger$ 的物理复线性延拓，核为复线 $D\mathbb Cz$，支撑为 $DE_{\mathbb C}$；该支撑实八维，作为内部复空间是四维，仍非 $E_{J_p}$。
+
+2. 取两个明确物理输入 $Dx,Dy$，其中
+
+$$
+x=e_N,\qquad y=J_px=-\frac{e_2+(1+\sqrt2)e_3+e_5}{n}.
+\tag{36.3}
+$$
+
+$x,y$ 均为 $E$ 中的单位向量，在 $E_{J_p}$ 中属于同一复射线，而在原物理载体中为正交输入。协议“立即完整读取，然后 Stop”的全部记录为 $r_j=(j,\mathrm{Stop})$，其两个分布按原标签顺序恰为
+
+$$
+p_x=(1,0,0,0,0),\qquad
+p_y=\frac{(0,1,(1+\sqrt2)^2,1,0)}{5+2\sqrt2},\qquad
+\operatorname{TV}(p_x,p_y)=1.
+\tag{36.4}
+$$
+
+每个分布总质量为一，Stop 质量为一，失败质量为零，零概率标签也保留。任何给这条内部复射线指定同一个完整记录律 $q$ 的模型均满足
+
+$$
+\max\{\operatorname{TV}(p_x,q),\operatorname{TV}(p_y,q)\}\ge\frac12.
+\tag{36.5}
+$$
+
+效果层面更精确地，令 $w_j\in[0,1]$ 为一次完整读后对结果 $j$ 接受某事件的经典概率。在 $E$ 上压缩的实对称效果为 $F_w=P\operatorname{diag}(w)P|_E$。其概率下降到 $E_{J_p}$ 的复射线，当且仅当
+
+$$
+[F_w,J_p]=0
+\quad\Longleftrightarrow\quad
+w_N=w_3=w_{25}=\frac{w_2+w_5}{2}=:\lambda.
+\tag{36.6}
+$$
+
+此时 $F_w=\lambda I_E$，概率与输入无关。特别地，五个单标签效果都不下降；确定性合并标签时，只有空事件及全事件下降。先作任何固定等待再读，(36.6) 的判据不变。
+
+3. 对任意物理密度输入，以 $\widehat\rho=D^\dagger\rho D$ 表示，在同一帧的非选择完整读为 $\Phi(\widehat\rho)=\sum_jP_j\widehat\rho P_j$。其物理暗线质量恰为
+
+$$
+\operatorname{Tr}\bigl(R_0\Phi(\widehat\rho)\bigr)
+=\frac{\widehat\rho_{2,2}+\widehat\rho_{5,5}}2\in[0,1/2].
+\tag{36.7}
+$$
+
+即使输入支撑满足 $P\widehat\rho P=\widehat\rho$，上端点仍可达到：取 $f=(e_2+e_5)/\sqrt2\in E$、$\widehat\rho=ff^T$，初始暗线质量为零，而
+
+$$
+\Phi(ff^T)=\tfrac12(P_2+P_5),\qquad
+\operatorname{Tr}\bigl(R_0\Phi(ff^T)\bigr)=\tfrac12,\qquad
+\operatorname{Tr}\bigl(P\Phi(ff^T)P\bigr)=\tfrac12.
+\tag{36.8}
+$$
+
+两个实际分支各以概率 $1/2$ 输出 $e_2$ 或 $e_5$，均离开 $E$，也离开 $E_{\mathbb C}$。原读没有质量损失；事后投回极支撑会丢掉质量 $1/2$，不是同一个完整仪器。因此删除等待的零模不能使原完整读成为极支撑内的仪器。
+
+证明。暗线与旋转频率复用[SecondOrder 定理 63.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)、[静态相融纤维命题 44](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)及[Measurement Relative Quantum Boundary 定理 4.1 的证明](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)：$V$ 为暗线与两条正交旋转平面的直和，频率平方为 $(5\pm\sqrt{17})/2$。以下计算把该既有分解接到本源的完整读取，不另立谱或控制定理。
+只为计算按 $(N,25)\oplus(2,3,5)$ 重排，仍有
+
+$$
+A=\begin{pmatrix}0&B\\-B^T&0\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+C=BB^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+$$
+
+$\det C=2>0$、$C_{11}=3>0$，故 $C>0$。由 $C^2-5C+2I=0$ 得
+
+$$
+C^{1/2}=\frac{C+\sqrt2 I}{n},\qquad
+C^{-1/2}=\frac1{\sqrt2 n}
+\begin{pmatrix}2+\sqrt2&-2\\-2&3+\sqrt2\end{pmatrix},\qquad
+Q=C^{-1/2}B=\frac1n
+\begin{pmatrix}1&1+\sqrt2&1\\1+\sqrt2/2&-\sqrt2&1+\sqrt2/2\end{pmatrix}.
+\tag{36.9}
+$$
+
+第一式的右端正定且平方为 $C$，第二式为其逆。于是 $QQ^T=I_2$，$Q^TQ$ 是 $(e_2-e_5)^\perp$ 在三坐标块内的投影。令
+
+$$
+\widetilde J_p=\begin{pmatrix}0&Q\\-Q^T&0\end{pmatrix},\qquad
+H=\begin{pmatrix}C^{1/2}&0\\0&B^TC^{-1/2}B\end{pmatrix}.
+$$
+
+$H\ge0$，$H^2=-A^2$，$\widetilde J_pH=A$，且极因子在核上为零，故 $H=|A|$。代入 (36.9) 得 (36.2) 的多项式公式及其余恒等式。这里使用的是成熟极分解工具：[Moretti–Oppio，Theorem 2.18、Proposition 2.19](https://arxiv.org/html/1611.09029v4)明确保留核，只有单射时极因子才是酉的反自伴随算子；其复线性交换判据见 Proposition 2.23。物理全实化的结论由同一个等式的物理复线性延拓得到；原 $J_0$ 保持全部物理复线性读与等待，与把此极因子当作新标量作用是不同的命题。
+
+由 (36.9) 第一行得到 (36.3)，$\|y\|^2=(2+(1+\sqrt2)^2)/n^2=1$，$y_2=y_5$，且 $x^Ty=0$。物理输入的读概率为 $|e_j^\dagger Du|^2=|u_j|^2$，故得 (36.4)。内部乘法 $iu=J_pu$ 却识别 $x,y$，于是三角不等式给 $1\le\operatorname{TV}(p_x,q)+\operatorname{TV}(q,p_y)$，即 (36.5)。这也在物理全实化的极支撑上给出同一射线识别的反例。
+
+对实对称 $F$，射线不变性等价于 $e^{-\theta J_p}Fe^{\theta J_p}=F$，在零点微分得 $[F,J_p]=0$，反向由指数成立。单标签压缩均为非零实秩一效果；非零秩一实对称算子不能与正交复结构交换的既有论证见 [Measurement Relative Quantum Boundary，Corollary 25.1 的证明](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)。本源的加权判据还可直接计算：在 $(N,25)$ 块 $F_w$ 为 $\operatorname{diag}(w_N,w_{25})$，在 $(f,e_3)$ 块为 $\operatorname{diag}((w_2+w_5)/2,w_3)$。这两个块之间的极映射为
+
+$$
+Q_E=\frac1n\begin{pmatrix}\sqrt2&1+\sqrt2\\1+\sqrt2&-\sqrt2\end{pmatrix}.
+$$
+
+$Q_E$ 的四项均非零，故两个对角块与它交织当且仅当四个对角值相等，得到 (36.6)。等待与 $J_p$ 交换，等待后效果为 $(O(t)|_E)^TF_w(O(t)|_E)$，故交换判据不变。此处只检验原生效果；没有以效果的线性张成授予额外测量。
+
+最后 $R_0$ 仅在模式 $2,5$ 有对角元 $1/2$。完整读消去非对角项，直接给 (36.7)；正性和迹一给其区间。$f\perp z$，而 $|\langle z,e_2\rangle|^2=|\langle z,e_5\rangle|^2=1/2$，逐分支求和得 (36.8)。这些是给定合法输入的结论，不是这些输入已由原菜单制备的结论。
+
+本命题的 `repo-derived` 承重点是同一个五模式极因子与原生效果、完整记录及读后质量的联合对应。奇数实维障碍已由本卷命题 4.7、定义 20.2 给出；[静态相融纤维 Native57/58/64](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)及 §§19–21 的独立翻转、固定相位控制仍各按其原合同，本命题不重证也不借用那些扩大的权限。§35 的符号态对与普适 $E_y$ 障碍保持原量词；(36.3) 是另一对输入，所检验的是新极射线识别。
+
+因此此极构造供应了等待相容性，但未供应定义 20.2、34.1 所需的共同状态—效果—仪器—组合关系。若采用定义 4.4、定理 4.5 及命题 4.6 的正向路线，还须在同一个操作表示中供应非零事件角、相融矩阵单位、局部复单位及保持它的运输。Moretti–Oppio Theorem 4.3 另要求强连续、不可约且局部忠实的 Poincaré 表示及非负质量平方；两条旋转平面上的本等待没有实例化这些前提。另一条成熟充分路线 [Niestegge，§5 Definition 1、Theorem 1、Corollary 1](https://arxiv.org/html/1402.0158v2)要求在其论文的实有序可观察量空间及乘法合同上，对每个可观察量 $a$ 线性指定 skew order derivation $D_a$，满足 $[D_a,D_b]=-[R_a,R_b]$、$D_aa=0$，再以平方正性取得复 $C^*$ 表示；一只作用在向量上的 $A$ 不是这个对应。概率标定、全参考与并置的其余前提仍按定义 20.2、34.1 保留；[Symplectic 假设 35.3](SYMPLECTIC_PREDICTIVE_COMPLETION.md)的振幅及辛尺度也仍为所给前提。这里排除的是所声明的同系统极射线下降，不排除原物理 $\mathbb C^5$，也不判定另行改变编码、载体或操作合同的表示。∎
+
+## 追加锚（本行以下为增补区）

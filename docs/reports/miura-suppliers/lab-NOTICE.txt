@@ -1,0 +1,11 @@
+Chakshu Gupta, One construction for the Miura-ori flip-graph degree sequence.
+Source: https://github.com/ChakshuGupta13/lab/tree/0bf8c67f7f5a2e8d44fb88c19fb80337221bbc11/math/gupta2026degseq/lean
+Source subtree: 8beb89d4466cb8551abc92d0405972edc2edf116.
+License: Creative Commons Attribution 4.0 International.
+License source: repository-root LICENSE, blob da6ab6cc8f333d7e89a99812866df8f24374d47c.
+License URL: https://creativecommons.org/licenses/by/4.0/
+The copied finite declarations retain their mathematical statements and proofs.
+Namespaces, selected declaration boundaries, comments and imports are adapted for
+this project. Local additions are identified in their source modules.
+No endorsement by the original author is implied.
+The full license is in lab-LICENSE.txt in this directory.
