@@ -94,6 +94,10 @@ $$\forall (A: Type), [Finite\left(A\right)] \forall (M: Matroid\left(A\right)), 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/JohnsonWakefieldRankThreeMoebius.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/johnson-wakefield-2022-rank-three-moebius-question-6-19` (proved) by `D5/S3/Combinatorics/Matroids/JohnsonWakefieldRankThreeMoebius.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"johnson-wakefield-2022-rank-three-moebius-question-6-19","declaration_gid":"D5/S3/Combinatorics/Matroids/JohnsonWakefieldRankThreeMoebius.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John Johnson; Max Wakefield (2024). *A non-associative incidence near-ring with a generalized Möbius function*. DOI: [10.26493/1855-3974.2894.b07](https://doi.org/10.26493/1855-3974.2894.b07). URL: <https://arxiv.org/abs/2204.07158v1>.

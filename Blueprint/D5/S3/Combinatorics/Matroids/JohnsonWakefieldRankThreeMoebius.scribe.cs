@@ -36,12 +36,15 @@ internal sealed class JohnsonWakefieldRankThreeMoebiusDocument : IScribeDocument
             Node("claim", IffFormula(V("claim"), ClaimBody()), AssessedProvenance.FromLiterature(Source),
                 "Page 20, Question 6.19: “Is there a rank 3 non-modular connected matroid M such that M(M, −1) = 0?” The proposition is its negative answer for finite matroids: every function satisfying Definition 5.1 has nonzero evaluation. The carrier is a finite Type, and rank three is M.eRank = 3.", DescribeRole.Definition),
             Node("result", ClaimBody(), AssessedProvenance.FromRepo(Source),
-                "The identity at minus one is twice the difference between the numbers of rank-two and rank-one flats. A nonmodular rank-three matroid has two lines whose intersection has rank zero. The finite configuration theorem gives at least as many lines as points. Its equality case forces every pair of distinct lines to meet in a point, contradicting the rank-zero intersection; therefore there are strictly more lines than points. The J function exists as the product of ordinary Möbius values and is unique on flags. Connectedness is unnecessary. No assertion about the classification in arbitrary rank is made.", DescribeRole.Theorem))));
+                "The identity at minus one is twice the difference between the numbers of rank-two and rank-one flats. A nonmodular rank-three matroid has two lines whose intersection has rank zero. The finite configuration theorem gives at least as many lines as points. Its equality case forces every pair of distinct lines to meet in a point, contradicting the rank-zero intersection; therefore there are strictly more lines than points. The J function exists as the product of ordinary Möbius values and is unique on flags. Connectedness is unnecessary. No assertion about the classification in arbitrary rank is made.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("johnson-wakefield-2022-rank-three-moebius-question-6-19"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, Formula formula, AssessedProvenance provenance, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, Formula formula, AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/JohnsonWakefieldRankThreeMoebius." + name),
-            H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula ConnectedBody()
     {
         var circuit = Some("C", Call("Set", V("A")), And(App(Q("M", "IsCircuit"), V("C")), And(Member(V("e"), V("C")), Member(V("f"), V("C")))));
