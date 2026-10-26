@@ -1,6 +1,6 @@
-/- GID: D5 / S1 / Recurrence / Interpolation / PositiveJJExclusion
+/- GID: D5/S1/Recurrence/Interpolation/PositiveJJExclusion
    generality: I
-   mirror-B: D5 / B / S1 / Recurrence / Interpolation / PositiveJJExclusion
+   mirror-B: D5/B/S1/Recurrence/Interpolation/PositiveJJExclusion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
