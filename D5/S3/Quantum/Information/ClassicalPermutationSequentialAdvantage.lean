@@ -89,8 +89,24 @@ private lemma fixed_input_bound
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4))
     (x : Fin 6 × Fin 6) :
     ∑ i, (δ x (channels i x.1, channels i x.2)).weights i ≤ 3 := by
-  have hc := transcript_collision x
-  sorry
+  have h₀ := (δ x (channels 0 x.1, channels 0 x.2)).weights_apply_le_one 0
+  have h₁ := (δ x (channels 1 x.1, channels 1 x.2)).weights_apply_le_one 1
+  have h₂ := (δ x (channels 2 x.1, channels 2 x.2)).weights_apply_le_one 2
+  have h₃ := (δ x (channels 3 x.1, channels 3 x.2)).weights_apply_le_one 3
+  rw [Fin.sum_univ_four]
+  rcases transcript_collision x with h | h | h
+  · have hp := two_weights_le_one (δ x (channels 0 x.1, channels 0 x.2)) 0 1 (by decide)
+    rw [h] at hp
+    rw [h]
+    linarith
+  · have hp := two_weights_le_one (δ x (channels 0 x.1, channels 0 x.2)) 0 2 (by decide)
+    rw [h] at hp
+    rw [h]
+    linarith
+  · have hp := two_weights_le_one (δ x (channels 2 x.1, channels 2 x.2)) 2 3 (by decide)
+    rw [h] at hp
+    rw [h]
+    linarith
 
 private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4)) :
