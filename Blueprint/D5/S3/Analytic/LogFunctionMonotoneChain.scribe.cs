@@ -134,7 +134,10 @@ internal sealed class LogFunctionMonotoneChainDocument : IScribeDocumentDefiniti
                         + "and the given degree bound supplies the remaining condition "
                         + "for membership. Combining this equivalence with the inclusions "
                         + "proves both assertions for each n."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ma-weigert-2025-log-function-monotone-chain"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LogFunctionDefinition() => All("p", Polynomials(),
         All("x", Reals(), Equal(LocalCall("logFunction", X("p"), X("x")),
