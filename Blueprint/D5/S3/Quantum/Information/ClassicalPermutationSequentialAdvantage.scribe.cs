@@ -87,7 +87,10 @@ internal sealed class ClassicalPermutationSequentialAdvantageDocument : IScribeD
                         + "Nonnegativity of each q weight preserves the bound 3/4, and the weights of q sum to 1. "
                         + "Hence every randomized parallel strategy has success at most 3/4. "
                         + "Choose c = 3/4. The sequential success is 1 and 3/4 < 1, giving the asserted strict advantage."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bavaresco-murao-quintino-2022-classical-permutation-sequential-advantage"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ParallelFormula()
     {
