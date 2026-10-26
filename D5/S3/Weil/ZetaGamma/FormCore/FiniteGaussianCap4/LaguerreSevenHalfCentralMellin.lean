@@ -76,9 +76,11 @@ theorem centralMoment_X_mul (p : ℝ[X]) :
   | monomial j a =>
       cases j with
       | zero =>
-          simp [Polynomial.monomial_zero_left, Polynomial.X_mul_C,
-            Polynomial.C_mul_X_eq_monomial, centralPochhammer_succ]
-          <;> ring
+          simp only [Polynomial.monomial_zero_left, Polynomial.derivative_C,
+            mul_zero, map_zero, zero_mul, zero_add, centralMoment_C]
+          rw [Polynomial.X_mul_C, Polynomial.C_mul_X_eq_monomial,
+            centralMoment_monomial]
+          norm_num [centralPochhammer_succ] <;> ring
       | succ j =>
           simp only [Polynomial.derivative_monomial_succ,
             Polynomial.X_mul_monomial, centralMoment_monomial,
@@ -105,7 +107,8 @@ theorem centralMoment_laguerre_step (n : ℕ) :
   have hl := congrArg (fun p : ℝ[X] => centralMoment p) (lowering n)
   have ht := congrArg (fun p : ℝ[X] => centralMoment p) (X_laguerre_succ n)
   simp only [map_sub, centralMoment_C_mul] at hl
-  simp only [neg_mul, map_sub, map_add, map_neg, centralMoment_C_mul] at ht
+  simp only [← Polynomial.C_add, neg_mul, map_sub, map_add, map_neg,
+    centralMoment_C_mul] at ht
   linear_combination ht - hx - 2 * hl
 
 /-- Exact even scalar coefficient, proved and consumed by the integral below. -/
@@ -184,6 +187,7 @@ theorem integrable_central_polynomial (p : ℝ[X]) :
       funext x
       simp only [Polynomial.eval_add, mul_add, Pi.add_apply]
   | monomial n a =>
+      change Integrable _ (volume.restrict (Ioi 0))
       convert (integrable_central_monomial n).const_mul (a * 2 ^ n) using 1
       funext x
       simp only [Polynomial.eval_monomial, mul_pow]
@@ -208,6 +212,7 @@ theorem integral_central_polynomial (p : ℝ[X]) :
             (a * 2 ^ n) * (Real.exp (-x) * x ^ (5 / 4 : ℝ) * x ^ n) := by
           apply setIntegral_congr_fun measurableSet_Ioi
           intro x hx
+          dsimp only
           rw [mul_pow]
           ring
         _ = (a * 2 ^ n) * (Real.Gamma (9 / 4) * centralPochhammer n) := by
