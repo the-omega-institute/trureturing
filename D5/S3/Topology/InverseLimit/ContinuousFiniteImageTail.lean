@@ -4,11 +4,12 @@
    mirror-E: none(waiver:implementation-flight)
    anchors: []
    utility: none
-   digest: Original whole Dirac capture and proper-stage finite-image obstruction. -/
+   digest: CH finite continuous images and copy obstructions on the identical actual limit. -/
 
-/- Same-path private tail preparation; no event or history existence is asserted. -/
+/- Continuous finite-image obstructions on the literal CH limit. -/
 import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
-import D5.S3.Topology.InverseLimit.SignedOrdinalHistory
+import D5.S3.Topology.InverseLimit.SignedOrdinalRealizationEvents
+import D5.S3.Topology.InverseLimit.ContinuousFiniteImageCapture
 import D5.S3.Topology.InverseLimit.CountableClopenReflection
 import D5.S3.Topology.Separation.DisjointCopyTower
 import Mathlib.Topology.InductiveDimension.Classes
@@ -17,6 +18,7 @@ import Mathlib.Topology.InductiveDimension.Classes
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 open Set Filter Function MeasureTheory CategoryTheory CategoryTheory.Limits Opposite
 open scoped Topology Ordinal
@@ -240,7 +242,7 @@ private def properSlice (H : Prefix (ω₁ : Ordinal.{0})) (l : Label) : Prefix 
 /-- Internal final-carrier consumer: the same original whole Dirac sequence
 is read in a proper slice after one ambient clopen has been reflected. The
 reservoirs remain the actual input pools; no delayed event is manufactured.
-The raw-history connection and actual producer selection are still WIP. -/
+Only eligible row and historical-set readbacks are required. -/
 private theorem final_no_continuous_pool_separation
     (H : Prefix (ω₁ : Ordinal.{0}))
     (Qnu : (r : Label) → Label → ℕ → RegularSigned (H.Space r))
@@ -248,14 +250,14 @@ private theorem final_no_continuous_pool_separation
     (QN : Label → Label → Bool → Set ℕ)
     (data : (l : Label) → (properSlice H l).Data)
     (laws : ∀ l, (properSlice H l).Laws (data l))
-    (hnu : ∀ (l : Label) (r : Coord l.1) (d : Label) (n : ℕ),
+    (hnu : ∀ (l : Label) (r : Coord l.1), ω ≤ r.1 → ∀ (d : Label) (n : ℕ),
       ((data l).nu r d n).1 =
         (Qnu ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ d n).1)
-    (hJ : ∀ (l : Label) (r d b : Coord l.1),
+    (hJ : ∀ (l : Label) (r d b : Coord l.1), ω ≤ r.1 → r < b → d < b →
       (data l).J r d b = QJ ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩
         ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩
         ⟨b.1, lt_trans (α := Ordinal.{0}) b.2 l.2⟩)
-    (hN : ∀ (l : Label) (r d : Coord l.1) (e : Bool),
+    (hN : ∀ (l : Label) (r d : Coord l.1), ω ≤ r.1 → ∀ (e : Bool),
       (data l).N r d e = QN ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩
         ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩ e)
     (r d b : Label) (hwr : ω ≤ r.1) (hrb : r < b) (hdb : d < b)
@@ -293,16 +295,16 @@ private theorem final_no_continuous_pool_separation
   let b' : Coord l.1 := ⟨b.1, lt_of_le_of_lt (show b.1 ≤ c.1 from hbc) (Order.lt_succ c.1)⟩
   let c' : Coord l.1 := ⟨c.1, Order.lt_succ c.1⟩
   have hM' (e : Bool) : M e ⊆ (data l).N r' d' e := by
-    rw [hN]
+    rw [hN l r' d' hwr]
     exact hM e
   have hJb' : (data l).J r' d' b' = M false ∪ M true := by
-    rw [hJ]
+    rw [hJ l r' d' b' hwr hrb hdb]
     exact hJb
   have hsource' (n : ℕ) :
       ((data l).nu r' ⟨d'.1, d'.2.trans (data l).proper⟩ n).1 =
       (Measure.dirac ((properSlice H l).map r' c'
         (show r' ≤ c' from hrc.le) (H.projection c (x n).val))).toSignedMeasure := by
-    rw [hnu]
+    rw [hnu l r' hwr]
     have hprojection : (properSlice H l).map r' c'
         (show r' ≤ c' from hrc.le) (H.projection c (x n).val) =
         H.projection r (x n).val := by
@@ -428,5 +430,296 @@ private theorem whole_birth_delayed_cofinal
     hselected, hmatches, ?_, ?_⟩
   · exact hsource.trans (heq_of_eq hC0)
   · exact htarget.trans (heq_of_eq hC1)
+
+
+open SignedOrdinalHistoryState SignedOrdinalHistoryBirth SignedOrdinalHistoryEvent
+    SignedOrdinalHistoryTask SignedOrdinalSuccessor
+
+local instance carrierMeasurable {a : Ordinal.{0}} (C : Set (Cube a)) :
+    MeasurableSpace C := borel C
+local instance carrierBorel {a : Ordinal.{0}} (C : Set (Cube a)) :
+    BorelSpace C := ⟨rfl⟩
+
+private theorem cast_V_mem {a : Ordinal.{0}} {C D : Set (Cube a)}
+    (h : C = D) (W : BirthPack C) (n : ℕ) (x : D) :
+    x ∈ (BirthPack.cast h W).V.clopen n ↔
+      Homeomorph.setCongr h.symm x ∈ W.V.clopen n := by
+  subst D
+  rfl
+
+private theorem cast_U_mem {a : Ordinal.{0}} {C D : Set (Cube a)}
+    (h : C = D) (W : BirthPack C) (i : Label) (n : ℕ) (x : D) :
+    x ∈ ((BirthPack.cast h W).U i).clopen n ↔
+      Homeomorph.setCongr h.symm x ∈ (W.U i).clopen n := by
+  subst D
+  rfl
+
+private theorem cast_measure_dirac {a : Ordinal.{0}} {C D : Set (Cube a)}
+    (h : C = D) (W : BirthPack C) (d : Label) (n : ℕ) (y : D)
+    (hm : (BirthPack.cast h W).measure d n = (Measure.dirac y).toSignedMeasure) :
+    W.measure d n = (Measure.dirac (Homeomorph.setCongr h.symm y)).toSignedMeasure := by
+  subst D
+  exact hm
+
+private theorem cast_measure_null {a : Ordinal.{0}} {C D : Set (Cube a)}
+    (h : C = D) (W : BirthPack C) (d : Label) (n : ℕ)
+    (B : TopologicalSpace.Clopens D)
+    (hm : ((BirthPack.cast h W).measure d n).totalVariation (B : Set D)ᶜ = 0) :
+    (W.measure d n).totalVariation
+      (Homeomorph.setCongr h ⁻¹' (B : Set D))ᶜ = 0 := by
+  subst D
+  exact hm
+
+private theorem measure_read_dirac {a : Ordinal.{0}} {C D : Set (Cube a)}
+    (h : C = D) (mu : SignedMeasure D) (nu : SignedMeasure C) (y : C)
+    (hm : HEq mu nu) (hy : nu = (Measure.dirac y).toSignedMeasure) :
+    mu = (Measure.dirac (Homeomorph.setCongr h y)).toSignedMeasure := by
+  subst D
+  exact (eq_of_heq hm).trans hy
+
+private theorem prepared_launch_readback {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} {P : Predecessor H ha} {launch : Launch a}
+    (Q : Prepared H ha P launch) (r : Rows a) (i : Label)
+    (hr : r ≠ newRow a ha) (hl : launch = ⟨r, i⟩) (n : ℕ) :
+    ((Q.V (newRow a ha)).clopen n : Set (K H)) =
+      (projection H r) ⁻¹' ((P.U r hr i).clopen n : Set (Base H r)) := by
+  subst launch
+  have h := congrArg (fun f : ℕ → TopologicalSpace.Clopens (K H) =>
+    (f n : Set (K H))) Q.launch_eq
+  simpa only [dite_eq_right hr, TopologicalSpace.Clopens.coe_mk] using h
+
+private theorem oldN_congr {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} (P : Predecessor H ha) {r r' : Rows a}
+    {hr : r ≠ newRow a ha} {hr' : r' ≠ newRow a ha} {d d' : Coord a}
+    (hrow : r = r') (hcol : d = d') (e : Fin 2) :
+    P.oldN r hr d e = P.oldN r' hr' d' e := by
+  subst r'
+  subst d'
+  rfl
+
+/-- Every ordinary reservation, not just a separately chosen cofinal witness,
+launches the original support family on the literal final carrier. -/
+private theorem actual_launch_readback
+    (hCH : Cardinal.continuum.{0} = Cardinal.aleph 1)
+    (b i a : Label) (hwb : ω ≤ b.1) (hba : b < a) (hi : i < a)
+    (he : (CofinalTaskSchedule.reservation a).1 = .inl (b, i)) :
+    (SignedOrdinalRealization.wholeBirth hCH ⟨a, hwb.trans hba.le⟩).V =
+      ((SignedOrdinalRealization.wholeBirth hCH ⟨b, hwb⟩).U i).pullback
+        ((SignedOrdinalRealization.finalPrefix hCH).map b a hba.le)
+        (fun y => by
+          obtain ⟨x, hx⟩ := (SignedOrdinalRealization.finalPrefix hCH).onto b a hba.le y
+          exact ⟨x, Subtype.ext hx⟩) := by
+  classical
+  let θ : Stage := ⟨b, hwb⟩
+  let A : Stage := ⟨a, hwb.trans hba.le⟩
+  let X := SignedOrdinalHistory.run hCH A
+  let r := oldRow (show θ < A from hba) (newRow (ord θ) θ.2)
+  let hr := oldRow_ne (show θ < A from hba) (newRow (ord θ) θ.2)
+  have hv : CofinalTaskSchedule.OrdinaryValid a b i := ⟨hwb, hba.le, hi.le⟩
+  have hex : CofinalTaskSchedule.execute a (fun _ _ _ _ => False) = (b, i) := by
+    simp only [CofinalTaskSchedule.execute, he, ite_eq_left hv]
+  have hlaunch : scheduledLaunch X.H A.2 X.P = ⟨r, i⟩ := by
+    have hrow : (scheduledLaunch X.H A.2 X.P).row = r := by
+      simp only [scheduledLaunch, hex, r, oldRow, θ, A, ord]
+    have hindex : (scheduledLaunch X.H A.2 X.P).supportIndex = i := by
+      simp only [scheduledLaunch, hex, A]
+    exact congrArg₂ (fun r i => (⟨r, i⟩ : Launch (ord A))) hrow hindex
+  have hs := prepared_launch_readback X.event.Q r i hr hlaunch
+  have hclopen (n : ℕ) :
+      (SignedOrdinalRealization.wholeBirth hCH A).V.clopen n =
+      ((((SignedOrdinalRealization.wholeBirth hCH θ).U i).pullback
+        ((SignedOrdinalRealization.finalPrefix hCH).map b a hba.le)
+        (fun y => by
+          obtain ⟨x, hx⟩ := (SignedOrdinalRealization.finalPrefix hCH).onto b a hba.le y
+          exact ⟨x, Subtype.ext hx⟩)).clopen n) := by
+    apply SetLike.coe_injective
+    ext x
+    change (x ∈ (SignedOrdinalRealization.wholeBirth hCH A).V.clopen n) ↔
+      (SignedOrdinalRealization.finalPrefix hCH).map b a hba.le x ∈
+        ((SignedOrdinalRealization.wholeBirth hCH θ).U i).clopen n
+    unfold SignedOrdinalRealization.wholeBirth
+    rw [cast_V_mem, cast_U_mem]
+    have hlocal := eq_iff_iff.mp (congrArg (fun S : Set (K X.H) =>
+      Homeomorph.setCongr (SignedOrdinalRealization.top_read hCH A) x ∈ S) (hs n))
+    change _ ↔ projection X.H r _ ∈ ((X.oldBirth r hr).U i).clopen n at hlocal
+    rw [(SignedOrdinalHistory.coherent hCH θ A hba).birth] at hlocal
+    rw [cast_U_mem] at hlocal
+    exact hlocal
+  have hfun := funext hclopen
+  generalize (SignedOrdinalRealization.wholeBirth hCH A).V = V at hfun ⊢
+  generalize (((SignedOrdinalRealization.wholeBirth hCH θ).U i).pullback
+    ((SignedOrdinalRealization.finalPrefix hCH).map b a hba.le) _) = W at hfun ⊢
+  cases V
+  cases W
+  cases hfun
+  rfl
+
+/-- The original capture and the very same delayed result force finite image
+on the actual omega-one limit, using only CH. -/
+private theorem actual_continuous_finite_image
+    (hCH : Cardinal.continuum.{0} = Cardinal.aleph 1)
+    (A : Set (SignedOrdinalRealization.finalPrefix hCH).LimitSpace) (hA : IsClosed A)
+    (f : A → (SignedOrdinalRealization.finalPrefix hCH).LimitSpace) (hf : Continuous f)
+    (hdisj : Disjoint A (range f)) : (range f).Finite := by
+  classical
+  let H := SignedOrdinalRealization.finalPrefix hCH
+  let W := SignedOrdinalRealization.wholeBirth hCH
+  by_contra hinf
+  obtain ⟨b0, i, theta, _, hwb, hbt, _, _, x, s, t, k0,
+    hdis, hsource, htarget, hin, hnull, _⟩ :=
+    ContinuousFiniteImageCapture.exists_original_dirac_capture H
+      (fun b hb => (W ⟨b, hb⟩).U) (fun b hb => (W ⟨b, hb⟩).Uonto)
+      (fun b hb => (W ⟨b, hb⟩).V) (fun b hb => (W ⟨b, hb⟩).nu)
+      (fun b hb => (W ⟨b, hb⟩).nuonto)
+      (fun b hb => (W ⟨b, hb⟩).B) (fun b hb => (W ⟨b, hb⟩).Bonto)
+      decode (actual_launch_readback hCH) initialStage.1 A hA f hf hinf hdisj
+  let θ : Stage := ⟨theta, hwb.trans hbt.le⟩
+  have hwt : ω ≤ theta.1 := θ.2
+  let e := Homeomorph.setCongr (SignedOrdinalRealization.top_read hCH θ)
+  let C0 := (W θ).B (decode k0).1
+  let C1 := (W θ).B (decode k0).2
+  let C0r : TopologicalSpace.Clopens (K (SignedOrdinalHistory.run hCH θ).H) :=
+    ⟨e.symm ⁻¹' (C0 : Set _), C0.isClopen.preimage e.symm.continuous⟩
+  let C1r : TopologicalSpace.Clopens (K (SignedOrdinalHistory.run hCH θ).H) :=
+    ⟨e.symm ⁻¹' (C1 : Set _), C1.isClopen.preimage e.symm.continuous⟩
+  let y := fun n => H.projection theta (f (x n))
+  have hdisr : Disjoint (C0r : Set (K (SignedOrdinalHistory.run hCH θ).H))
+      (C1r : Set (K (SignedOrdinalHistory.run hCH θ).H)) := hdis.preimage e.symm
+  have hVr (n : ℕ) : e (y n) ∈ (SignedOrdinalHistory.run hCH θ).birth.V.clopen n :=
+    (cast_V_mem (SignedOrdinalRealization.top_read hCH θ).symm _ n (y n)).mp (hin n).1
+  have hC1r (n : ℕ) : e (y n) ∈ C1r := by
+    change e.symm (e (y n)) ∈ C1
+    simpa using (hin n).2
+  have htr (n : ℕ) : (SignedOrdinalHistory.run hCH θ).birth.measure t n =
+      (Measure.dirac (e (y n))).toSignedMeasure :=
+    cast_measure_dirac (SignedOrdinalRealization.top_read hCH θ).symm _ t n (y n) (htarget n)
+  have hnr (n : ℕ) : ((SignedOrdinalHistory.run hCH θ).birth.measure s n).totalVariation
+      (C0r : Set _)ᶜ = 0 :=
+    cast_measure_null (SignedOrdinalRealization.top_read hCH θ).symm _ s n C0 (hnull n)
+  obtain ⟨k, _, _, a, _, hθ, hs, ht, _, D, R, hc, hselected, hm, _, _⟩ :=
+    whole_birth_delayed_cofinal hCH θ s t theta C0r C1r hdisr (fun n => e (y n))
+      hVr hC1r htr hnr
+  have hrow : D.row = oldRow hθ (newRow (ord θ) θ.2) := Subtype.ext hm.1
+  have hsourceCol : D.source = ⟨s.1, hs⟩ := Subtype.ext hm.2.1
+  have htargetCol : oldCol D.target = ⟨t.1, ht.le⟩ := Subtype.ext hm.2.2.1
+  have htargetRead (n : ℕ) :
+      (SignedOrdinalHistory.run hCH a).event.Q.measure D.row (oldCol D.target) n =
+        (Measure.dirac (Homeomorph.setCongr
+          (SignedOrdinalRealization.carrier_read hCH a (rowIndex D.row))
+          (H.projection ⟨D.row.1, D.row.2.2.trans_lt a.1.2⟩ (f (x n))))).toSignedMeasure := by
+    rw [hrow, htargetCol]
+    exact measure_read_dirac (SignedOrdinalRealization.carrier_read hCH a
+      (rowIndex (oldRow hθ (newRow (ord θ) θ.2)))) _ _ _
+      (SignedOrdinalRealizationEvents.prepared_measure_read hCH θ a hθ t ht.le n)
+      (htarget n)
+  have hy (n : ℕ) : D.y n = Homeomorph.setCongr
+      (SignedOrdinalRealization.carrier_read hCH a (rowIndex D.row))
+      (H.projection ⟨D.row.1, D.row.2.2.trans_lt a.1.2⟩ (f (x n))) :=
+    MeasureTheory.injective_dirac (Measure.toSignedMeasure_eq_toSignedMeasure_iff.mp
+      ((D.dirac n).symm.trans (htargetRead n)))
+  obtain ⟨M, hJM, _, hMN, ⟨C, hC0, hC1⟩, _⟩ := hc
+  have hcarrier : (SignedOrdinalHistory.run hCH a).event.result.coordinates.carrier =
+      R.coordinates.carrier := by
+    change (Selected.result (SignedOrdinalHistory.run hCH a).event.selected).coordinates.carrier = _
+    rw [hselected]
+    rfl
+  let ep := (SignedOrdinalRealization.successorHomeomorph hCH a).trans
+    (Homeomorph.setCongr hcarrier)
+  let p : C(H.LimitSpace, R.coordinates.carrier) :=
+    (⟨ep, ep.continuous⟩ : C(H.Space (nextStage a).1, R.coordinates.carrier)).comp
+      (H.projection (nextStage a).1)
+  let Cf : Set H.LimitSpace := p ⁻¹' (C : Set _)
+  have hCf : IsClopen Cf := C.isClopen.preimage p.continuous
+  have hrestrict (n : ℕ) :
+      restrict (D.row.2.2.trans (Order.le_succ (ord a))) (p (f (x n))).1 = (D.y n).1 := by
+    have hp := congrArg Subtype.val
+      (SignedOrdinalRealizationEvents.selected_projection hCH a D.row (f (x n)))
+    rw [← hy n] at hp
+    have hv := (SignedOrdinalHistory.run hCH a).event.result.coordinates.restrict_inverse
+      D.row.1 D.row.2.2
+      (SignedOrdinalRealization.successorHomeomorph hCH a
+        (H.projection (nextStage a).1 (f (x n))))
+    exact hv.trans hp
+  let Qnu : (r : Label) → Label → ℕ → RegularSigned (H.Space r) := fun r d n =>
+    if hr : ω ≤ r.1 then ((W ⟨r, hr⟩).nu d).1 n
+    else ⟨0, by
+      simp only [SignedMeasure.toJordanDecomposition_zero,
+        JordanDecomposition.zero_posPart, JordanDecomposition.zero_negPart]
+      exact ⟨inferInstance, inferInstance⟩⟩
+  let QJ : Label → Label → Label → Set ℕ := fun r d b =>
+    if hr : ω ≤ r.1 then
+      if hb : max r d < b then SignedOrdinalRealization.historicalJ hCH ⟨r, hr⟩ d ⟨b, hb⟩
+      else ∅
+    else ∅
+  let QN : Label → Label → Bool → Set ℕ := fun r d e =>
+    if hr : ω ≤ r.1 then SignedOrdinalRealization.reservoir hCH ⟨r, hr⟩ d e else ∅
+  have hnuRead (l : Label) (r : Coord l.1) (hr : ω ≤ r.1) (d : Label) (n : ℕ) :
+      ((SignedOrdinalRealization.properData hCH l.2).nu r d n).1 =
+        (Qnu ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ d n).1 := by
+    simpa only [Qnu, dite_eq_left hr, W, BirthPack.measure] using SignedOrdinalRealization.slice_nu hCH l.2 r hr d n
+  have hJRead (l : Label) (r d b : Coord l.1) (hr : ω ≤ r.1)
+      (hrb : r < b) (hdb : d < b) :
+      (SignedOrdinalRealization.properData hCH l.2).J r d b =
+        QJ ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩ ⟨b.1, lt_trans (α := Ordinal.{0}) b.2 l.2⟩ := by
+    have helig : max (⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ : Label) ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩ <
+        ⟨b.1, lt_trans (α := Ordinal.{0}) b.2 l.2⟩ := max_lt hrb hdb
+    simp only [QJ, dif_pos hr, dif_pos helig]
+    exact SignedOrdinalRealization.slice_J hCH l.2
+      ⟨⟨b.1, lt_trans (α := Ordinal.{0}) b.2 l.2⟩, hr.trans hrb.le⟩ b.2
+      ⟨r.1, hr, hrb.le⟩ (by
+        intro he
+        exact (ne_of_lt (show r.1 < b.1 from hrb))
+          (congrArg (fun q : Rows b.1 => q.1) he)) ⟨d.1, hdb⟩
+  have hNRead (l : Label) (r d : Coord l.1) (hr : ω ≤ r.1) (e : Bool) :
+      (SignedOrdinalRealization.properData hCH l.2).N r d e =
+        QN ⟨r.1, lt_trans (α := Ordinal.{0}) r.2 l.2⟩ ⟨d.1, lt_trans (α := Ordinal.{0}) d.2 l.2⟩ e := by
+    simpa only [QN, dif_pos hr] using SignedOrdinalRealization.slice_N hCH l.2 r d hr e
+  let Mb : Bool → Set ℕ := fun e => M (if e then 1 else 0)
+  have hMb (e : Bool) : Mb e ⊆ QN theta s e := by
+    intro n hn
+    have hnN := (hMN (if e then 1 else 0) hn).2
+    rw [oldN_congr (SignedOrdinalHistory.run hCH a).P
+      (hr' := oldRow_ne hθ _) hrow hsourceCol (if e then 1 else 0)] at hnN
+    have hN := SignedOrdinalRealization.reservoir_incoming hCH θ s a hθ hs e
+    simp only [QN, dite_eq_left hwt]
+    change n ∈ SignedOrdinalRealization.reservoir hCH θ s e
+    rw [hN]
+    exact hnN
+  have hJb : QJ theta s (nextStage a).1 = Mb false ∪ Mb true := by
+    have helig : max theta s < (nextStage a).1 :=
+      (max_le (show ord θ ≤ ord a from hθ.le) hs.le).trans_lt (Order.lt_succ _)
+    simp only [QJ, dite_eq_left hwt, dif_pos helig]
+    have hj := SignedOrdinalRealizationEvents.successor_J hCH a θ hθ.le s hs.le
+    change SignedOrdinalRealization.historicalJ hCH θ s _ =
+      (Selected.result (SignedOrdinalHistory.run hCH a).event.selected).J _ _ at hj
+    rw [hselected] at hj
+    rw [hj]
+    have hrow' : D.row = ⟨ord θ, θ.2, hθ.le⟩ := Subtype.ext hm.1
+    have hsource' : oldCol D.source = ⟨s.1, hs.le⟩ := Subtype.ext hm.2.1
+    change R.J ⟨ord θ, θ.2, hθ.le⟩ ⟨s.1, hs.le⟩ = Mb false ∪ Mb true
+    exact (congrArg₂ (fun r d => R.J r d) hrow' hsource').symm.trans hJM
+  exact final_no_continuous_pool_separation H Qnu QJ QN
+    (fun l => SignedOrdinalRealization.properData hCH l.2)
+    (fun l => SignedOrdinalRealization.properLaws hCH l.2)
+    hnuRead hJRead hNRead theta s (nextStage a).1 θ.2
+    ((show theta.1 < ord a from hθ).trans (Order.lt_succ (ord a)))
+    (hs.trans (Order.lt_succ (ord a))) Mb hMb hJb A hA x
+    (fun n => by simpa only [Qnu, dite_eq_left hwt] using hsource n)
+    f hf Cf hCf ⟨fun n hn => hC0 n hn (p (f (x n))) (hrestrict n),
+      fun n hn => hC1 n hn (p (f (x n))) (hrestrict n)⟩
+
+/-- CH alone gives all three obstructions on the identical constructed limit. -/
+theorem actual_CH_finite_image_and_copy_obstructions
+    (hCH : Cardinal.continuum.{0} = Cardinal.aleph 1) :
+    let K := (SignedOrdinalRealization.finalPrefix hCH).LimitSpace
+    (∀ (A : Set K), IsClosed A → ∀ (f : A → K), Continuous f →
+      Disjoint A (range f) → (range f).Finite) ∧
+    (∀ (A B : Set K), IsClosed A → (A ≃ₜ B) → Disjoint A B → A.Finite ∧ B.Finite) ∧
+    (∀ (T : ℕ → Set K), (∀ n, IsCompact (T n)) → (∀ n, (T n).Nonempty) →
+      (∀ n, ∃ A B : Set K, A ⊆ T n ∧ B ⊆ T n ∧ Disjoint A B ∧
+        Nonempty (T (n + 1) ≃ₜ A) ∧ Nonempty (T (n + 1) ≃ₜ B)) → False) := by
+  have hFI := actual_continuous_finite_image hCH
+  exact ⟨hFI, finite_disjoint_homeomorphic_of_finite_image hFI,
+    no_compact_binary_copy_tower_of_finite_image hFI⟩
 
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
