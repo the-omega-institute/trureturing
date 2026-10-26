@@ -603,44 +603,6 @@ private theorem fixedGradeTwoBasis_charge_coe (D : LatticeData)
     rw [fixedGradeTwoBasis_coordinates, fixedGradeTwoEquiv_chargeOrbitFixedVector]
   rw [h, chargeOrbitFixedVector_coe]
 
-private def neutralPairFixedVector (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (hroot : ∀ a : Charge D, bilinear D a a ≠ 2)
-    (s : Sym (Fin D.rank) 2) : FixedGrade D 2 :=
-  ⟨(gradeTwoBasis D hD hroot (Sum.inl (Sum.inr s)) : Carrier D),
-    (mem_fixedSpace D _).mpr (theta_gradeTwoBasis_even D hD hroot s),
-    (gradeTwoBasis D hD hroot (Sum.inl (Sum.inr s))).2⟩
-
-private theorem fixedGradeTwoEquiv_neutralPairFixedVector (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) (s : Sym (Fin D.rank) 2) :
-    fixedGradeTwoEquiv D hD hroot (neutralPairFixedVector D hD hroot s) =
-      Pi.single (Sum.inl s) 1 := by
-  classical
-  funext j
-  rcases j with t | q
-  · change gradeTwoCoordinateEquiv D hD hroot
-      (gradeTwoBasis D hD hroot (Sum.inl (Sum.inr s))) (Sum.inl (Sum.inr t)) = _
-    rw [gradeTwoCoordinateEquiv_basis]
-    simp [Pi.single_apply]
-  · change gradeTwoCoordinateEquiv D hD hroot
-      (gradeTwoBasis D hD hroot (Sum.inl (Sum.inr s)))
-        (Sum.inr (normFourOrbitRep D q)) = _
-    rw [gradeTwoCoordinateEquiv_basis]
-    simp [Pi.single_apply]
-
-private theorem fixedGradeTwoBasis_neutral_coe (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) (s : Sym (Fin D.rank) 2) :
-    (fixedGradeTwoBasis D hD hroot (Sum.inl s) : Carrier D) =
-      Finsupp.single 0 (monomial (pairOccupation D s) 1) := by
-  have h : fixedGradeTwoBasis D hD hroot (Sum.inl s) =
-      neutralPairFixedVector D hD hroot s := by
-    apply (fixedGradeTwoEquiv D hD hroot).injective
-    rw [fixedGradeTwoBasis_coordinates, fixedGradeTwoEquiv_neutralPairFixedVector]
-  rw [h]
-  exact gradeTwoBasis_even_coe D hD hroot s
-
 /-! Energy zero and one: actual vacuum and actual odd neutral sector. -/
 
 private theorem grade_zero_le_fixedSpace (D : LatticeData)
@@ -745,14 +707,6 @@ theorem actualFixedEnergyTwoBasis_charge_coe (D : LatticeData)
         Finsupp.single (-(normFourOrbitRep D q).1) 1 := by
   exact fixedGradeTwoBasis_charge_coe D hD hroot q
 
-/-- The neutral basis vector in the literal canonical L0 eigenspace. -/
-theorem actualFixedEnergyTwoBasis_neutral_coe (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) (s : Sym (Fin D.rank) 2) :
-    (actualFixedEnergyTwoBasis D hD hroot (Sum.inl s) : Carrier D) =
-      Finsupp.single 0 (monomial (pairOccupation D s) 1) := by
-  exact fixedGradeTwoBasis_neutral_coe D hD hroot s
-
 /-- Arbitrary rank, including rank zero. The only premises are positivity
 and rootlessness of the supplied even LatticeData. These are the literal
 fixedSpace intersections in the production actual fixed vertex algebra.
@@ -788,7 +742,6 @@ theorem actual_theta_fixed_rootless_low_spectrum (D : LatticeData)
 #print axioms theta_gradeTwo_coordinate_transport
 #print axioms actualFixedEnergyTwoBasis
 #print axioms actualFixedEnergyTwoBasis_charge_coe
-#print axioms actualFixedEnergyTwoBasis_neutral_coe
 #print axioms actual_theta_fixed_rootless_low_spectrum
 
 end D5.S3.VertexAlgebra.Lattice.InvolutionRootlessLowGrades
