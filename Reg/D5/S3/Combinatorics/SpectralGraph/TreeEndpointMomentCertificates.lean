@@ -316,7 +316,7 @@ def family : Registration arena.{u,v} (type_of% (@tree_first_departure.{v,u})) w
       exact nomatch e
   dependence := dependence
 
-def registration :
+def registration.{v,u} :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
       (@tree_first_departure.{v,u}) (Realization signature.{u,v}) Unit Unit where
   unitName := `D5.S3.Combinatorics.SpectralGraph.TreeEndpointMomentCertificates.tree_first_departure.__information_unit
