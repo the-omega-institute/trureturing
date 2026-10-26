@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Matrix/ZhangThreeOperatorClarksonRefutation
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/ZhangThreeOperatorClarksonRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -7,7 +7,6 @@
    digest: Three matrices refute Zhang's three-operator Schatten inequality. -/
 
 import D5.S3.Quantum.Schatten.Holder
-import D5.S3.Quantum.Matrix.NormalModulusTriangleConstant
 import D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes
 import D5.S3.Quantum.QubitWitnesses
 
@@ -27,7 +26,6 @@ noncomputable section
 set_option linter.style.longLine false
 
 open Matrix
-open D5.S3.Quantum.Matrix.NormalModulusTriangleConstant (A)
 open D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes (coordinateProjectorTwo)
 open D5.S3.Quantum.QubitWitnesses (equalSuperpositionDensity)
 open scoped BigOperators
@@ -68,8 +66,8 @@ private lemma power_of_gram_charpoly (x : Matrix (Fin 2) (Fin 2) ℂ)
       exact (Real.rpow_div_two_eq_sqrt p (hd i)).symm
 
 private lemma left_side {p : ℝ} (hp : 0 < p) :
-    schattenNorm (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p +
-      schattenNorm A p ^ p + schattenNorm (coordinateProjectorTwo 1) p ^ p +
+    schattenNorm (coordinateProjectorTwo 0 + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p +
+      schattenNorm (coordinateProjectorTwo 0) p ^ p + schattenNorm (coordinateProjectorTwo 1) p ^ p +
       schattenNorm (-equalSuperpositionDensity) p ^ p = 4 := by
   have hd : ∀ i, 0 ≤ (![1, 0] : Fin 2 → ℝ) i := by
     intro i
@@ -80,10 +78,9 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
       schattenNorm x p ^ p = 1 := by
     rw [power_of_gram_charpoly x ![1, 0] hd hx hp]
     simp [Fin.sum_univ_two, Real.zero_rpow (by linarith : p / 2 ≠ 0)]
-  have ha : schattenNorm A p ^ p = 1 := h A (by
-    rw [A.eq_1]
+  have ha : schattenNorm (coordinateProjectorTwo 0) p ^ p = 1 := h (coordinateProjectorTwo 0) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, A, diagonal_apply])
+      Fin.sum_univ_two, coordinateProjectorTwo, diagonal_apply])
   have hb : schattenNorm (coordinateProjectorTwo 1) p ^ p = 1 := h (coordinateProjectorTwo 1) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
       Fin.sum_univ_two, coordinateProjectorTwo, diagonal_apply])
@@ -91,23 +88,23 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
       Fin.sum_univ_two, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
-  have hs : schattenNorm (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p = 1 :=
-      h (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) (by
+  have hs : schattenNorm (coordinateProjectorTwo 0 + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p = 1 :=
+      h (coordinateProjectorTwo 0 + coordinateProjectorTwo 1 + -equalSuperpositionDensity) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, A, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
+      Fin.sum_univ_two, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   rw [ha, hb, hc, hs]
   norm_num
 
 private lemma right_side {p : ℝ} (hp : 0 < p) :
-    schattenNorm (A + coordinateProjectorTwo 1) p ^ p +
+    schattenNorm (coordinateProjectorTwo 0 + coordinateProjectorTwo 1) p ^ p +
       schattenNorm (coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p +
-      schattenNorm (-equalSuperpositionDensity + A) p ^ p = 2 + (2 : ℝ) ^ (2 - p / 2) := by
-  have hab : schattenNorm (A + coordinateProjectorTwo 1) p ^ p = 2 := by
-    rw [power_of_gram_charpoly (A + coordinateProjectorTwo 1) (fun _ => 1)
+      schattenNorm (-equalSuperpositionDensity + coordinateProjectorTwo 0) p ^ p = 2 + (2 : ℝ) ^ (2 - p / 2) := by
+  have hab : schattenNorm (coordinateProjectorTwo 0 + coordinateProjectorTwo 1) p ^ p = 2 := by
+    rw [power_of_gram_charpoly (coordinateProjectorTwo 0 + coordinateProjectorTwo 1) (fun _ => 1)
       (by intro i; norm_num) (by
         norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-          conjTranspose_apply, Fin.sum_univ_two, A, coordinateProjectorTwo, diagonal_apply]) hp]
+          conjTranspose_apply, Fin.sum_univ_two, coordinateProjectorTwo, diagonal_apply]) hp]
     norm_num [Fin.sum_univ_two]
   have h (x : Matrix (Fin 2) (Fin 2) ℂ)
       (hx : (xᴴ * x).charpoly =
@@ -120,10 +117,10 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
       conjTranspose_apply, Fin.sum_univ_two, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
-  have hca : schattenNorm (-equalSuperpositionDensity + A) p ^ p =
-      2 * (1 / 2 : ℝ) ^ (p / 2) := h (-equalSuperpositionDensity + A) (by
+  have hca : schattenNorm (-equalSuperpositionDensity + coordinateProjectorTwo 0) p ^ p =
+      2 * (1 / 2 : ℝ) ^ (p / 2) := h (-equalSuperpositionDensity + coordinateProjectorTwo 0) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-      conjTranspose_apply, Fin.sum_univ_two, A, equalSuperpositionDensity, diagonal_apply]
+      conjTranspose_apply, Fin.sum_univ_two, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   have he : (2 : ℝ) ^ (2 - p / 2) = 4 * (1 / 2 : ℝ) ^ (p / 2) := by
     rw [Real.rpow_sub (by norm_num), Real.div_rpow (by norm_num) (by norm_num)]
@@ -177,7 +174,7 @@ private lemma certified_bound :
 
 theorem result : ¬ claim := by
   intro h
-  have hw := h (9 / 4) (by norm_num) 2 A (coordinateProjectorTwo 1) (-equalSuperpositionDensity)
+  have hw := h (9 / 4) (by norm_num) 2 (coordinateProjectorTwo 0) (coordinateProjectorTwo 1) (-equalSuperpositionDensity)
   rw [left_side (by norm_num), right_side (by norm_num)] at hw
   exact (not_le_of_gt certified_bound) hw
 

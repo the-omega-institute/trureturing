@@ -49,7 +49,7 @@ internal sealed class ZhangThreeOperatorClarksonRefutationDocument : IScribeDocu
                             + "sum by this permutation and using nonnegativity of d shows that, for every "
                             + "p>0, the pth power of the Schatten norm of x is the sum of d(i)^(p/2).")),
                     Paragraph(Text(
-                        "Take A=diag(1,0), B=diag(0,1), and C=−(1/2)[[1,1],[1,1]]. "
+                        "Take A=coordinateProjectorTwo 0=diag(1,0), B=diag(0,1), and C=−(1/2)[[1,1],[1,1]]. "
                             + "Then A+B+C=(1/2)[[1,−1],[−1,1]]. The Gram matrices of A, B, C and "
                             + "A+B+C each have the characteristic polynomial of diag(1,0). Applying the "
                             + "preceding calculation with d=(1,0) shows that each of these four matrices "
