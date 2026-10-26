@@ -740,39 +740,3 @@ theorem result : claim := by
   exact sub_le_sub_left h 1
 
 end D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
-
-open Lean in
-run_cmd do
-  let env ← getEnv
-  let ns := `D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
-  let owned : List (Name × ConstantInfo) := env.constants.toList.filter fun entry => ns.isPrefixOf (privateToUserName entry.1)
-  let mut pending := #[Name.str ns "result", Name.str ns "claim"]
-  let mut seen : NameSet := {}
-  while !pending.isEmpty do
-    let n := pending.back!
-    pending := pending.pop
-    if !seen.contains n then
-      seen := seen.insert n
-      if let some ci := env.find? n then
-        for d in (ConstantInfo.getUsedConstantsAsSet ci).toArray do
-          if ns.isPrefixOf (privateToUserName d) then pending := pending.push d
-  let rows := owned.toArray.map fun (entry : Name × ConstantInfo) =>
-    let n := entry.1
-    let deps := ConstantInfo.getUsedConstantsAsSet entry.2
-    let consumers := owned.filterMap fun (item : Name × ConstantInfo) =>
-      if (ConstantInfo.getUsedConstantsAsSet item.2).contains n then
-        some (privateToUserName item.1).toString else none
-    Json.mkObj [
-      ("name", toJson (privateToUserName n).toString),
-      ("kernel_name", toJson n.toString),
-      ("public", toJson (!isPrivateName n)),
-      ("in_closure", toJson (seen.contains n)),
-      ("dependencies", toJson (owned.filterMap fun (item : Name × ConstantInfo) =>
-        if deps.contains item.1 then some (privateToUserName item.1).toString else none)),
-      ("consumers", toJson consumers)]
-  let ar ← collectAxioms (Name.str ns "result")
-  let ac ← collectAxioms (Name.str ns "claim")
-  logInfo m!"WALK_AUDIT {(Json.mkObj [
-    ("declarations", toJson rows),
-    ("axioms_result", toJson (ar.map Name.toString)),
-    ("axioms_claim", toJson (ac.map Name.toString))]).compress}"
