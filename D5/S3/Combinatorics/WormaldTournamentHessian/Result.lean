@@ -21,9 +21,13 @@ Helper consumers:
   shiftedDetPureImaginary -> imaginaryShiftIntegral
   imaginaryShiftIntegral -> algebraicRatioRational
   algebraicRatioRational -> algebraicSquareIdentity
+  regularDegree -> regularOdd, determinantAtBase
   regularOdd -> regularAlgebraicSquare
   algebraicSquareIdentity -> regularAlgebraicSquare
-  regularAlgebraicSquare -> none (unfinished analytic bridge).
+  regularAlgebraicSquare -> none (unfinished analytic bridge)
+  determinantAtBase -> localSolutionOfInvertible
+  polynomialSmooth -> localSolutionOfInvertible
+  localSolutionOfInvertible -> none (nonzero derivative not yet proved).
 This is a staged source checkpoint, not an admissible completed settlement.
 -/
 
@@ -38,7 +42,7 @@ public import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 
 public section
 
-open scoped Topology
+open scoped Topology ContDiff
 open Matrix Filter
 
 namespace D5.S3.Combinatorics.WormaldTournamentHessian.Result
@@ -204,8 +208,8 @@ private theorem algebraicRatioRational {d : ℕ} (A : Fin d → Fin d → Bool) 
   push_cast
   rw [mul_div_cancel_right₀ _ Complex.I_ne_zero]
 
-private theorem regularOdd {d : ℕ} (A : Fin d → Fin d → Bool)
-    (hd : 3 ≤ d) (hA : IsRegularTournament A) : Odd d := by
+private theorem regularDegree {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hd : 3 ≤ d) (hA : IsRegularTournament A) : ∃ r : ℕ, d = 2 * r + 1 ∧ ∀ i, ∑ j, adjacency A i j = (r : ℤ) := by
   obtain ⟨hdiag, hdir, r, hr⟩ := hA
   have hpair : ∀ i j, adjacency A i j + adjacency A j i =
       (if i = j then 0 else 1 : ℤ) := by
@@ -246,9 +250,14 @@ private theorem regularOdd {d : ℕ} (A : Fin d → Fin d → Bool)
   have heq : (d : ℤ) = 2 * r + 1 := by
     have hpos : (0 : ℤ) < d := by omega
     nlinarith
-  refine ⟨r, ?_⟩
+  refine ⟨r, ?_, hrow⟩
   exact_mod_cast heq
 
+
+private theorem regularOdd {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hd : 3 ≤ d) (hA : IsRegularTournament A) : Odd d := by
+  obtain ⟨r, hdr, _⟩ := regularDegree A hd hA
+  exact ⟨r, hdr⟩
 
 private theorem algebraicSquareIdentity {d : ℕ} (A : Fin d → Fin d → Bool)
     (hd : Odd d) :
@@ -312,4 +321,62 @@ private theorem regularAlgebraicSquare {d : ℕ} (A : Fin d → Fin d → Bool)
           (skewAdjacency A).map (Int.castRingHom ℂ)).det) = (q : ℂ)^2 :=
   algebraicSquareIdentity A (regularOdd A hd hA)
 
+private theorem determinantAtBase {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hd : 3 ≤ d) (hA : IsRegularTournament A) : K A (fun _ => z d) = 0 := by
+  obtain ⟨r, hdr, hr⟩ := regularDegree A hd hA
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have hrow : ∀ i, ∑ j, ((adjacency A i j : ℤ) : ℂ) = r := by
+    intro i
+    exact_mod_cast hr i
+  have hker : (1 - ((1 / 2 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) +
+      (adjacency A).map (Int.castRingHom ℂ)) * diagonal (fun _ => z d)) *ᵥ
+        (fun _ => (1 : ℂ)) = 0 := by
+    ext i
+    simp only [Matrix.mulVec, dotProduct, Matrix.sub_apply, Matrix.mul_diagonal,
+      Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, mul_one,
+      Finset.sum_sub_distrib, ← Finset.sum_mul, Finset.sum_add_distrib,
+      ← Finset.mul_sum, Matrix.map_apply, Pi.zero_apply]
+    have hrow' : (∑ j, (Int.castRingHom ℂ) (adjacency A i j)) = (r : ℂ) := hrow i
+    simp only [hrow']
+    simp only [Matrix.one_apply, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    unfold z
+    have hdc : (d : ℂ) = 2 * r + 1 := by exact_mod_cast hdr
+    field_simp
+    linear_combination hdc
+  exact Matrix.det_eq_zero_of_mulVec_eq_zero_of_mem_nonZeroDivisors hker
+    (i := ⟨0, by omega⟩) (by simp)
+
+private theorem polynomialSmooth {d : ℕ} (A : Fin d → Fin d → Bool) :
+    ContDiff ℂ 2 (K A) := by
+  classical
+  unfold K
+  simp only [Matrix.det_apply, Matrix.sub_apply, Matrix.mul_diagonal]
+  fun_prop
+
+private theorem localSolutionOfInvertible {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hd : 3 ≤ d) (hA : IsRegularTournament A)
+    (hi : (fderiv ℂ
+      (fun p : (Fin (d-1) → ℂ) × ℂ => K A (appendLast p.1 p.2))
+      ((fun _ => z d), z d) ∘L
+        ContinuousLinearMap.inr ℂ (Fin (d-1) → ℂ) ℂ).IsInvertible) :
+    ∃ h, IsLocalSolution A h := by
+  have happ : appendLast (fun _ : Fin (d-1) => z d) (z d) = (fun _ => z d) := by
+    funext i
+    simp [appendLast, Fin.snoc]
+  have hK : K A (appendLast (fun _ => z d) (z d)) = 0 := by
+    rw [happ]
+    exact determinantAtBase A hd hA
+  have hc : ContDiffAt ℂ 2
+      (fun p : (Fin (d-1) → ℂ) × ℂ => K A (appendLast p.1 p.2))
+      ((fun _ => z d), z d) := by
+    apply (polynomialSmooth A).contDiffAt.comp
+    apply contDiffAt_pi.2
+    intro i
+    unfold appendLast Fin.snoc
+    split_ifs <;> simp only [cast_eq] <;> fun_prop
+  have hn : (2 : ℕ∞ω) ≠ 0 := by norm_num
+  refine ⟨hc.implicitFunction hn hi, hc.implicitFunction_apply_self hn hi,
+    hc.contDiffAt_implicitFunction hn hi, ?_⟩
+  have he := hc.eventually_apply_implicitFunction hn hi
+  simpa only [hK] using he
 end D5.S3.Combinatorics.WormaldTournamentHessian.Result
