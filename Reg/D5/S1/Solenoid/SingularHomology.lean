@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Solenoid.SingularHomology
 import Reg.Support.DependentFamily
 
+/-! # Source-bound audits for source lifting and positive singular homology -/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -116,7 +118,7 @@ abbrev liftActual : Realization liftSignature :=
 abbrev liftRejected : Realization liftSignature :=
   realize liftSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-def liftArena : Arena where
+abbrev liftArena : Arena where
   signature := liftSignature
   Law obs := ∀ {A : Type u} [TopologicalSpace A] [SimplyConnectedSpace A]
     [LocallyPathConnectedSpace A] (f : C(A, UniversalSolenoid)) (a₀ : A),
