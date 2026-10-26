@@ -1,0 +1,4 @@
+**Proposition 65.3 (the two cuts and diagnostic provenance).** At the returned held cut, Space and live Memory refer to $x_{\rm now}$; the stored Boundary list in (65.1) starts at $x_{\rm hist}$. Both endpoints are retained as distinct records if both are needed. There is no rollback. Numerically $x_{\rm now}=X(u0^{N-1})$, but the diagnostic suffix is not an actual zero-pulse suffix and is not part of the recovered pulse Time.
+
+**Proof.** The zero-input affine updates multiply by $T$, giving the numerical identity. An actual zero pulse additionally executes Add$(0)$ and Read and has their complete outputs and returns; the diagnostic only executes the stated returning Ticks after its initial Read. Hence equality of numeric endpoints does not identify command lists or emitted outputs. Equation (65.1) gives the actual advance and determines which record the live invariant must use. $\square$
+

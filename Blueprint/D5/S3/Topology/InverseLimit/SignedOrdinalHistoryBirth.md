@@ -16,8 +16,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryBirth.prepared_
 
 A BirthPack contains the support enumeration U, natural clopen enumeration B, chosen support family V and complete BornData enumeration nu on every Label. Preparation preserves every older whole pack through oldV and oldNu, including labels that are not yet eligible for J. B is read from the original birth. Literal carrier equality changes neither labels nor enumeration indices; permanent N arrivals are a separate object.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 ## References
 
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryBirth.prepared_old_readback`

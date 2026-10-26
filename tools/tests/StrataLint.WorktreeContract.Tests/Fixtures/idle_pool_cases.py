@@ -593,9 +593,13 @@ class IdlePoolCases:
                 self.assertEqual(reference, removed["recovery_branch"])
                 self.assertEqual(head, removed["checkpoint"]["commit"])
                 failed = next(row for row in result["items"] if row["path"] == str(newer))
-                self.assertEqual("sweep_failed", failed["outcome"])
                 self.assertEqual("revalidate", failed["stage"])
                 self.assertIn(str(error), failed["error"])
+                if type(error) is protocol.Refused:
+                    self.assertEqual("retained", failed["outcome"])
+                    self.assertEqual(str(error), failed["reason"])
+                else:
+                    self.assertEqual("sweep_failed", failed["outcome"])
                 self.assertTrue(newer.exists())
                 self.g(self.main, "worktree", "remove", newer)
 

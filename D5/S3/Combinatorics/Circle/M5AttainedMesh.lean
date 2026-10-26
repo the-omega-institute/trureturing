@@ -82,9 +82,9 @@ private theorem half_many_T_coefficients (D : Arithmetic) (hF : D.F = D.H / 2)
       (D.u - D.z) / 2 ≤ D.n - (c : ℤ) * (2 * D.b - D.w) - (f : ℤ) * (D.u - D.b) ∧
       D.n - (c : ℤ) * (2 * D.b - D.w) - (f : ℤ) * (D.u - D.b) ≤
         D.u - (D.z + 1) / 2 := by
-  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, _, hwb, hzmax⟩ := arithmetic_geometry D
+  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, _, hwb, hzmax⟩ := arithmetic_geometry D.toPrefixArithmetic
   obtain ⟨huz, hHu, hnδ, hnH, hb1n, hbu, hBu, hBuW⟩ := half_source_bounds D hF
-  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D
+  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D.toPrefixArithmetic
   have hH := D.H_eight
   have hH4 := D.H_four
   have hδ := D.delta_two
@@ -157,7 +157,7 @@ private theorem half_one_geometry (D : Arithmetic) (hF : D.F = D.H / 2)
     D.H * (D.w - D.b) = D.n + D.u ∧
       D.H * (D.w - D.n) = D.H ^ 2 * D.Δ + D.n + D.u ∧
       2 * D.n < D.H * (D.w - D.b) := by
-  obtain ⟨_, _, _, _, _, _, _, _, _, _, _⟩ := arithmetic_geometry D
+  obtain ⟨_, _, _, _, _, _, _, _, _, _, _⟩ := arithmetic_geometry D.toPrefixArithmetic
   have hq := congrArg (fun q : ℤ => q * D.w) D.H_q
   have hn := D.N_b
   have hs := D.u_source
@@ -179,7 +179,7 @@ private theorem half_one_canonical_bounds (D : Arithmetic) (hF : D.F = D.H / 2)
     (hnext : D.n + D.Δ + 1 ≤ 2 * (D.w - D.n) * A) :
     6 * (A - 1) < D.H ∧ A ≤ D.r ∧
       D.z < 2 * (D.z - A * D.H * D.Δ) := by
-  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D
+  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D.toPrefixArithmetic
   obtain ⟨huz, hHu, hnδ, hnH, hb1n, hbu, hBu, hBuW⟩ := half_source_bounds D hF
   obtain ⟨hB, hK, hBn⟩ := half_one_geometry D hF he
   have hH := D.H_eight
@@ -292,11 +292,11 @@ private theorem half_one_borrow_endpoint (D : Arithmetic) (hF : D.F = D.H / 2)
     (hspan : (D.H / 4 - A) * (D.w - D.b) < (D.u - D.z) / 2) :
     D.z - A * D.H * D.Δ - min A (D.H / 4 - 1) * (D.u - D.b) ≤
       D.u - (D.z + 1) / 2 := by
-  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D
+  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D.toPrefixArithmetic
   obtain ⟨huz, hHu, hnδ, hnH, hb1n, hbu, hBu, hBuW⟩ := half_source_bounds D hF
   obtain ⟨hB, hK, hBn⟩ := half_one_geometry D hF he
   obtain ⟨hsmall, hAr, hlow⟩ := half_one_canonical_bounds D hF he A hA hprev hnext
-  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D
+  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D.toPrefixArithmetic
   have hH := D.H_eight
   have hH4 := D.H_four
   have hδ := D.delta_two
@@ -408,32 +408,32 @@ private theorem supported_multiple_crossing (u : ℕ) (S : Finset (Fin u))
       ((∑ j ∈ J, (2 : ℕ) ^ j.val : ℕ) : ℤ) by omega) (le_of_lt hB)
     nlinarith only [hm, hprev, hgap, hwidth]
 
-private def weight {u : ℕ} (S : Finset (Fin u)) : ℤ := ∑ j ∈ S, (2 : ℤ) ^ j.val
+def weight {u : ℕ} (S : Finset (Fin u)) : ℤ := ∑ j ∈ S, (2 : ℤ) ^ j.val
 
-private theorem weight_nat {u : ℕ} (S : Finset (Fin u)) :
+theorem weight_nat {u : ℕ} (S : Finset (Fin u)) :
     weight S = ((∑ j ∈ S, (2 : ℕ) ^ j.val : ℕ) : ℤ) := by
   simp only [weight, Nat.cast_sum, Nat.cast_pow, Nat.cast_ofNat]
 
-private theorem weight_full (u : ℕ) : weight (Finset.univ : Finset (Fin u)) = (2 : ℤ) ^ u - 1 := by
+theorem weight_full (u : ℕ) : weight (Finset.univ : Finset (Fin u)) = (2 : ℤ) ^ u - 1 := by
   simp only [weight, Fin.sum_univ_eq_sum_range]
   have h := geom_sum_mul (2 : ℤ) u
   norm_num at h
   linarith only [h]
 
-private theorem weight_compl {u : ℕ} (S : Finset (Fin u)) :
+theorem weight_compl {u : ℕ} (S : Finset (Fin u)) :
     weight Sᶜ = (2 : ℤ) ^ u - 1 - weight S := by
   have hh := Finset.sum_compl_add_sum S (fun j : Fin u => (2 : ℤ) ^ j.val)
   have hf := weight_full u
   dsimp only [weight] at hf ⊢
   omega
 
-private theorem weight_nonneg {u : ℕ} (S : Finset (Fin u)) : 0 ≤ weight S := by
+theorem weight_nonneg {u : ℕ} (S : Finset (Fin u)) : 0 ≤ weight S := by
   exact Finset.sum_nonneg (fun _ _ => by positivity)
 
-private theorem weight_mono {u : ℕ} {S T : Finset (Fin u)} (h : S ⊆ T) : weight S ≤ weight T := by
+theorem weight_mono {u : ℕ} {S T : Finset (Fin u)} (h : S ⊆ T) : weight S ≤ weight T := by
   exact Finset.sum_le_sum_of_subset_of_nonneg h (fun _ _ _ => by positivity)
 
-private theorem mask_exists (u : ℕ) (c : ℤ) (hc : 0 ≤ c) (hcu : c < (2 : ℤ) ^ u) :
+theorem mask_exists (u : ℕ) (c : ℤ) (hc : 0 ≤ c) (hcu : c < (2 : ℤ) ^ u) :
     ∃ S : Finset (Fin u), weight S = c := by
   have hcast : (c.toNat : ℤ) = c := Int.toNat_of_nonneg hc
   have hnat : c.toNat < (2 : ℕ) ^ u := by

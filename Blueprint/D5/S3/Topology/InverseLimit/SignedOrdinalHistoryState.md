@@ -16,8 +16,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryState.State`
 
 A proper stage state contains its literal Prefix, actual Predecessor, incoming initial, successor or limit evidence, regular bounded F, and one selected outgoing event. A limit incoming record retains the entire actual Extension, not merely its resulting predecessor. Coherence compares exact earlier carriers, whole birth packs, permanent max(row,label) arrivals and eligible almost inclusions of I and J. The initial finite and omega carriers remain the full coordinate cubes. This state type by itself asserts no global existence.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 ## References
 
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryState.State`

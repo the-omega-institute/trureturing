@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, without the CH induction or the final collision premise.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws and concrete RawHistory now constructed; the original uniform same-eta correspondence and joint endpoints remain open.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -607,6 +607,13 @@ O remains a separate conditional hypothesis. No formal CH instance of O,
 full signed-ball endpoint, anti-homeomorphism result or official solution of
 Problem 8.2 is established by this criterion.
 
+`SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation`
+also proves, under exactly O, that every convergent point sequence is
+eventually equal to its limit. It requires no metric, first-countability or
+injectivity assumption. The repository-derived proof uses actual signed
+Dirac measures and the finite/infinite range distinction; it supplies no
+CH instance of O or completed global CH construction.
+
 ## The full signed-ball analytic reduction
 
 Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
@@ -731,8 +738,12 @@ to the literal new-coordinate clopen. One fixed StrictMono target index
 works for every norm-one signed lift of the original treated sequence:
 even positions have value strictly greater than one sixth and odd
 positions have value zero. Historical G is separate from A–F. The regular
-common every-choice F certificate is retained on the split presentation;
-transport of F to the literal cube presentation is not asserted here.
+common every-choice F certificate is transported to the literal cube by
+`Result.literal_f`: for every row and label, one fixed regular reference
+measure of variation at most one works for every norm-one lift of the
+original whole signed sequence. The same coordinate equivalence pushes the
+reference forward and pulls every arbitrary lift back. `Result.literal_e`
+covers every old coordinate and the new sheet, with the original I/J sets.
 
 This is a repository-derived composition and birth-readback construction,
 not a literature novelty claim or a full CH realization. Delayed execution
@@ -742,3 +753,120 @@ proper-limit integration, the final omega-one Prefix and the full problem's
 functional-analytic endpoints remain separate obligations. The final
 omega-one Prefix is used only for its carrier, cone and projections;
 `Prefix.Data` and `Prefix.Laws` remain on proper slices.
+
+## Actual initial ordinal prefix
+
+`SignedOrdinalInitial.H0` constructs the entire Boolean cube at every
+finite stage and at omega. Its literal restrictions are onto by extending
+each Boolean function with false outside the smaller coordinate domain.
+`SignedOrdinalInitial.predecessor` constructs the first predecessor at
+omega without CH or an assumed predecessor. Old rows and earlier arrival
+births have empty exact ordinal domains, so their obligations are eliminated
+by proved contradictions. This supplies the actual initial input to the
+transfinite construction; it does not establish the global CH recursion.
+
+## Executed result to the next predecessor
+
+`SignedOrdinalPredecessor.nextP` consumes the same executed successor
+`Result` and constructs a predecessor on its literal extended Prefix.
+It preserves the original Label-indexed U/V/nu families and onto proofs,
+reads permanent reservoirs from the same arrival archive, and proves the
+next A/B/C/E/F from the actual I/J and literal E/F certificates. No next
+predecessor or complete-history assumption supplies the construction.
+The global recursion must still retain the original whole Q/R packages:
+nextP stores only current I/J and its weaker predecessor F interface,
+not all historical DI/DJ, the bounded regular F reference, or Q.B.
+
+A bounded arXiv check on 26 October 2026 found the primary paper still at
+v2. The newest title/abstract query for "Talagrand compacta" or "2DCP"
+returned this paper and the earlier mathematical paper 2606.27568v1,
+alongside three unrelated materials-science matches. No later CH answer
+was identified within that search; this is not a proof of global novelty.
+
+
+## Literal proper-limit predecessor
+
+`SignedOrdinalLimit.construct` takes an actual strict `Prefix l`, with
+`omega < l < omega-one` and `IsSuccLimit l`, an archive of the original
+whole born U/V/nu families and their onto proofs, the permanent birth
+archive, historical I/J, the genuine earlier omega-stage base invariant,
+and exactly `H.Laws A.data`. It constructs the literal `Prefix (succ l)`
+and its actual `SignedOrdinalSuccessor.Predecessor`. Every old carrier is
+unchanged, the new top is `H.limitCarrier`, and all maps are literal
+coordinate restrictions with proved onto fields.
+
+The entire dependent U/V/nu pack is cast once along the old-carrier
+equality, preserving every original Label and its onto proof. Permanent
+N reads the same arrival entry at `succ(max(row,label))`; the limit
+introduces no new birth. `Result.extension` retains the very same proper-
+limit Extension chosen by the construction. Its DI/DJ and regular
+norm-at-most-one F remain available, with exact predecessor I/J readbacks.
+The weaker predecessor F accepts arbitrary original signed-measure
+sequences: proper compact metrizability supplies regularity internally.
+
+This is the local proper-limit step for the ordinal recursion, not the
+global well-founded history or a solution of Problem 8.2. Its authored
+public additions are data structures and construction definitions; the
+transport proofs are private and consumed. The inherited information
+audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750.
+
+
+## Actual coherent history from CH
+
+`SignedOrdinalHistory.run` now constructs one coherent family of actual
+countable-stage states from `continuum = aleph-one` alone. A strict-past
+well-founded fixpoint proves totality and pairwise coherence, then recovers
+the canonical present values. The run unfolds to its own actual advancement:
+the initial predecessor, the same selected successor Q/R, or the literal
+proper-limit extension of its own strict archive. No complete-history or
+step-supplier hypothesis provides the run.
+
+Whole original U/B/V/nu birth families, their onto proofs and every original
+Label are preserved by exact transports. Permanent reservoirs are read from
+the same outgoing event at max(row,label). Proper F retains regular signed
+limits of total variation at most one for arbitrary original norm-one lifts.
+Cofinal ordinary, delayed and launch treatments refer to the same selected
+Q/R and the original birth clopen codec; local delayed eligibility is proved
+stable after construction without consulting a future final space.
+
+This closes the coherent-history construction step, not Problem 8.2. The
+literal final omega-one Prefix, post-run Data/Laws, concrete RawHistory and
+joint signed-ball/Grothendieck/anti-homeomorphism endpoints remain separate
+obligations. FullCHLeanSolved and officialSolved remain zero. The four-slot
+information audit is unfinished under issue 21750; the compiled Reg modules
+currently reconstruct the exact source statements and do not claim
+`declared_validated` registration.
+
+
+## Literal final space and every proper slice
+
+`SignedOrdinalRealization.finalPrefix` constructs the literal omega-one
+Prefix from the same canonical coherent `SignedOrdinalHistory.run`, without
+an assumed completed history. Its final space is the actual compatible-thread
+subset of the Boolean cube. The initial omega cube remains an onto image.
+Every proper cutoff, including zero, finite cutoffs, omega and successor last
+rows, has concrete `properData` and the original `properLaws`. No Data, metric
+or countable-stage F is asserted at the final omega-one cutoff.
+
+Whole U/B/V/nu families and all original Label-by-Nat measures are read from
+the same actual birth through equality of literal carriers. Successor
+carriers, projections, permanent reservoirs, historical J and prepared
+measures read the identical selected Q/R. `SignedOrdinalRawHistory.rawHistory`
+is the concrete raw history of this run; no raw-history supplier remains in
+that construction.
+
+These results complete the final-space and proper-slice construction layer.
+Ordinary and delayed treatment cofinality, and support-launch cofinality, are
+proved on the actual run. The original paper uses one eta for both launch
+support and quantitative G; this exact uniform same-eta correspondence is
+still a separate obligation here, and is not inferred by equating the two
+existing schedules. The joint Banach-space and topological endpoints also
+remain separate. This delivery does not solve Problem 8.2; FullCHLeanSolved
+and officialSolved remain zero.
+
+The information audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
+Reg modules check exact source reconstruction, including the public transport
+and proper-slice statements; this does not constitute a declared_validated
+four-slot registration.

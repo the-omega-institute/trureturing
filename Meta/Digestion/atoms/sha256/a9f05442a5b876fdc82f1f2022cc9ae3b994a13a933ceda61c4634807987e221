@@ -1,0 +1,68 @@
+**Theorem 71.2 (route or collision, with every zero-Tick case).** For every source of Definition 69.1 and every pair of blocks of Definition 71.1, define
+
+$$
+\Delta=(T^n-I)c-(T^m-I)d.
+\tag{71.2}
+$$
+
+A route-independent field representation on all $\mathbb N^2$ exists if and only if $\Delta=0$. If $\Delta\ne0$, the legal native routes $LR$ and $RL$ reach the same native source and path fields differing by $\Delta$. If $\Delta=0$, the following is the complete equality classification, and in every case $E$ fails to be injective.
+
+1. If $m,n>0$, there is a common rational point
+
+$$
+z=(I-T^m)^{-1}c=(I-T^n)^{-1}d,
+\qquad E(a,b)=z+T^{ma+nb}(x_*-z).
+\tag{71.3}
+$$
+
+If $x_*=z$, all fields agree. Otherwise
+
+$$
+E(a,b)=E(a',b')\quad\Longleftrightarrow\quad ma+nb=ma'+nb'.
+\tag{71.4}
+$$
+
+In particular, for $g=\gcd(m,n)$, the distinct pairs $(n/g,0)$ and $(0,m/g)$ collide.
+
+2. If $m=0<n$, then $c=0$, $F=I$, and, with $z=(I-T^n)^{-1}d$,
+
+$$
+E(a,b)=z+T^{nb}(x_*-z).
+\tag{71.5}
+$$
+
+It is constant when $x_*=z$; otherwise equality holds exactly when $b=b'$, so the entire first coordinate is lost. If $n=0<m$, the symmetric assertion holds: $d=0$, and nonconstant equality is exactly $a=a'$.
+
+3. If $m=n=0$, there are rational $r,s$ with $c=rb$, $d=sb$, and
+
+$$
+E(a,b)=x_*+(ra+sb)b,
+\qquad E(a,b)=E(a',b')\Longleftrightarrow
+r(a-a')+s(b-b')=0.
+\tag{71.6}
+$$
+
+This map also has a collision between distinct nonnegative pairs, including when either or both coefficients vanish.
+
+**Proof.** Applying the individual command effects proves (71.1) by induction through each block. Direct composition gives
+
+$$
+G(F(x))-F(G(x))=T^n c+d-T^m d-c=\Delta.
+\tag{71.7}
+$$
+
+The two legal routes in Proposition 70.2 therefore prove necessity. If $\Delta=0$, the affine maps commute on every field. Any two finite selector words with the same multiplicities are related by adjacent interchanges of $LR$ and $RL$: move the first required letter leftward, and continue inductively on the remaining suffix. Each interchange preserves the field by (71.7). Consequently the endpoint depends only on $(a,b)$, proving sufficiency without restricting later routes.
+
+The eigenvalues of $T$ lie in $(0,1)$. Hence $T^j$ and $I-T^j$ are invertible for every positive $j$. Their rational inverses exist because their matrices are rational and have nonzero determinants. In the first case, $\Delta=0$ says $(I-T^n)c=(I-T^m)d$. The two invertible polynomial matrices commute with each other and with their inverses. Multiplication gives the equality defining $z$. Both affine maps then fix $z$; induction gives (71.3). If exponents $p<q$ produced equal nonconstant fields, then
+
+$$
+0=T^p(I-T^{q-p})(x_*-z),
+\tag{71.8}
+$$
+
+whose invertible factors would imply $x_*=z$. Equal exponents suffice, proving (71.4). The displayed distinct pairs have common exponent $mn/g$.
+
+If $m=0<n$, (71.2) reduces to $(T^n-I)c=0$, so $c=0$. Centering $G$ at its unique fixed point proves (71.5), and (71.8) proves its exact equality classification. Exchanging the blocks proves the other case.
+
+If neither block has a Tick, its Adds only sum scalar multiples of the same $b$, proving (71.6). If $r=0$, varying $a$ gives a collision; if $s=0$, varying $b$ does. Otherwise choose a positive common denominator $D$ and integers $A=Dr$, $B=Ds$. The nonzero integer vector $(B,-A)$ satisfies the kernel equation. Writing it as its coordinatewise positive part minus its negative part gives two distinct pairs in $\mathbb N^2$ with the same image. This also treats opposite signs without assuming positive translations. The alternatives exhaust all nonnegative $m,n$. $\square$
+
