@@ -21,14 +21,18 @@ internal sealed class KotesovecA022629Document : IScribeDocumentDefinition
             Node("all_exponents", "Every fixed positive natural exponent", FamilyBody(), false, false,
                 "For every fixed natural exponent r at least one, the degree-n coefficient of the displayed polynomial product has the same ratio limit, with an additional factor r in the denominator. This theorem also supplies the limits for exponents two, three, four and five."),
             Node("result", "The proved logarithmic limit", ClaimBody(), false, false,
-                "A distinct partition whose parts are almost the first M positive integers contributes at least the r-th power of M factorial, where M is the largest index with M(M+1)/2 at most n. Every individual partition has controlled product, and the logarithm of the number of distinct partitions is at most twice the square root of n. The resulting two-sided estimates differ from r times the square root of 2n times (the logarithm of that square root minus one) by at most a constant depending on r times the square root of n. Dividing by the displayed denominator proves the ratio limit. This does not identify an additive second term or a coefficient prefactor."))));
+                "A distinct partition whose parts are almost the first M positive integers contributes at least the r-th power of M factorial, where M is the largest index with M(M+1)/2 at most n. Every individual partition has controlled product, and the logarithm of the number of distinct partitions is at most twice the square root of n. The resulting two-sided estimates differ from r times the square root of 2n times (the logarithm of that square root minus one) by at most a constant depending on r times the square root of n. Dividing by the displayed denominator proves the ratio limit. This does not identify an additive second term or a coefficient prefactor.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kotdp-weighteddistinct"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        bool definition, bool literature, string prose) => Describe.Lean(
+        bool definition, bool literature, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("kotesoveca022629-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula NatType() => Seq(Mathbb, Grp(V("N")));

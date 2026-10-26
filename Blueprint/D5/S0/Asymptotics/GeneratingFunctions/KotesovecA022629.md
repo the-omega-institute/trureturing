@@ -48,6 +48,10 @@ $$\operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac
 
 *Proof.* Machine-checked in Lean as `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kotdp-weighteddistinct` (proved) by `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kotdp-weighteddistinct","declaration_gid":"D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* OEIS Foundation Inc.; Vaclav Kotesovec (2018). *OEIS A022629 and the weighted distinct-partition logarithmic conjectures*. URL: <https://oeis.org/A022629>.
