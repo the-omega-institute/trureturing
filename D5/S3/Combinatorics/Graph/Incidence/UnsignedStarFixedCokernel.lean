@@ -108,7 +108,7 @@ namespace IndexedAction
 
 variable {Γ : Type*} [Group Γ] {g : Edges V X} (ρ : IndexedAction g Γ)
 
-private theorem starMap_equivariant (γ : Γ) (a : V → ℤ) :
+theorem starMap_equivariant (γ : Γ) (a : V → ℤ) :
     g.starMap (coordinateRep ρ.vertexPerm γ a) =
       coordinateRep ρ.edgePerm γ (g.starMap a) := by
   funext i

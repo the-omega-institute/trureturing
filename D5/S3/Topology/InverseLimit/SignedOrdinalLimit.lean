@@ -279,6 +279,21 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
         (projection (literalPrefix H E) r) (fun _ => rfl)
         (A.oldPack E r hr) (A.oldPack_heq E r hr)
 
+private theorem savedRow_readbacks {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (W : SavedRow C) (W' : SavedRow D) (he : HEq W W') :
+    HEq W.U W'.U ∧ HEq W.V W'.V ∧ HEq W.nu W'.nu := by
+  subst D
+  cases eq_of_heq he
+  exact ⟨HEq.rfl, HEq.rfl, HEq.rfl⟩
+
+/-- Whole old labels are the same archive labels on the unchanged literal carrier. -/
+theorem predecessor_whole_readback (r : Rows l) (hr : r ≠ newRow l hw.le) :
+    HEq ((A.predecessor E).U r hr) (A.U (bornRow hw r hr)) ∧
+    HEq ((A.predecessor E).V r hr) (A.V (bornRow hw r hr)) ∧
+    HEq ((A.predecessor E).nu r hr) (A.nu (bornRow hw r hr)) := by
+  exact savedRow_readbacks (carrier_old H r.1 (bornRow hw r hr).1.2 _)
+    (A.oldPack E r hr) (A.savedRow (bornRow hw r hr)) (A.oldPack_heq E r hr)
+
 end Archive
 
 /-- The event retains the exact extension, including DI/DJ and regular bounded F. -/
