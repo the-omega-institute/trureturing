@@ -94,6 +94,18 @@ Lean statement: `D5/S3/Observer/Linear/GainRayIdenticalRows.identical_row_annihi
 
 For every d>=1, word w, fixed matrix C with RowUniversallyCollinear(d,w,C), suppose either false is absent from w or there exist k and tail with w=J repeated k followed by M followed by tail and length(tail)+1<d+1. Then for every legal 0<theta<1, every nonzero beta:Coeff d and every real drift delta, C applied to the actual readings of rowWorld(d,theta,beta,delta) is zero and Succeeds(rowWorld,w,C) is false. This includes every legal continuation of every allowed short suffix. The gain may have any actual degree at most d, either coefficient signs and sampled roots; success requires a nonzero scalar of either sign.
 
+**Theorem 1.8 (Exact original identical-row observation vector).**
+
+Lean statement: `D5/S3/Observer/Linear/GainRayIdenticalRows.row_readings_affine`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/GainRayIdenticalRows.row_readings_affine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual read at each original clock is its whole gain sample times rowBase plus theta times rowSlope, with the arbitrary constant drift added.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/GainRayIdenticalRows.identical_row_annihilation`
@@ -103,4 +115,5 @@ For every d>=1, word w, fixed matrix C with RowUniversallyCollinear(d,w,C), supp
 - Truth anchor: `D5/S3/Observer/Linear/GainRayIdenticalRows.identical_row_slope_support`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayIdenticalRows.identical_row_suffix_annihilation`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayIdenticalRows.identical_row_trace`
-- Dependency: [D5/S3/Observer/Linear/GainRaySources](GainRaySources.md)
+- Truth anchor: `D5/S3/Observer/Linear/GainRayIdenticalRows.row_readings_affine`
+- Dependency: [D5/S3/Observer/Linear/GainRayHistory](GainRayHistory.md)

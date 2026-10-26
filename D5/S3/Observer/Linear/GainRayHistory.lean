@@ -34,40 +34,6 @@ structure World (d : ℕ) where
   nonzero : coeff ≠ 0
   drift : ℝ
 
-structure PolynomialWorld (d : ℕ) where
-  source : Mat
-  legal : LegalSource source
-  polynomial : Polynomial ℝ
-  degree_le : polynomial.natDegree ≤ d
-  nonzero : polynomial ≠ 0
-  drift : ℝ
-
-/-- Ordinary coefficients, with no actual-degree or root promise. -/
-def coefficientEquiv (d : ℕ) : Coeff d ≃ {p : Polynomial ℝ // p.natDegree ≤ d} where
-  toFun β := ⟨gain d β, Nat.le_of_lt_succ (Polynomial.ofFn_natDegree_lt (by omega) β)⟩
-  invFun p := Polynomial.toFn (d + 1) p.1
-  left_inv β := Polynomial.toFn_comp_ofFn_eq_id _ β
-  right_inv p := Subtype.ext
-    (Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt (by omega : p.1.natDegree < d + 1))
-
-def worldEquiv (d : ℕ) : World d ≃ PolynomialWorld d where
-  toFun W := ⟨W.source, W.legal, gain d W.coeff, (coefficientEquiv d W.coeff).2,
-    fun h => W.nonzero ((Polynomial.injective_ofFn (d + 1)) (h.trans (by simp))), W.drift⟩
-  invFun W := ⟨W.source, W.legal, Polynomial.toFn (d + 1) W.polynomial,
-    by
-      intro h
-      have hp := Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt
-        (Nat.lt_succ_of_le W.degree_le : W.polynomial.natDegree < d + 1)
-      rw [h, map_zero] at hp
-      exact W.nonzero hp.symm,
-    W.drift⟩
-  left_inv W := by cases W; simp [gain, Polynomial.toFn_comp_ofFn_eq_id]
-  right_inv W := by
-    have hp := Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt
-      (Nat.lt_succ_of_le W.degree_le : W.polynomial.natDegree < d + 1)
-    cases W
-    simp_all [gain]
-
 /-- The full positive chart of normalized sources. -/
 def sourceChart (x r : ℝ) : Mat := (1 + x * r)⁻¹ • !![1, r; x, x * r]
 

@@ -7,16 +7,8 @@ internal sealed class GainRayHistoryDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Whole worlds and literal acquisition histories", H("Whole worlds and literal acquisition histories"), Blocks(
 Paragraph(Text("For any declared natural maximum degree d, Coeff d is the real vector space indexed by Fin(d+1). The polynomial gain d beta is Polynomial.ofFn(d+1,beta), with ascending ordinary coefficients. World d contains a strictly entrywise positive real 2 by 2 source of matrix rank one and trace one, a nonzero coefficient vector, and an arbitrary real drift. No individual coefficient, sampled value, root multiplicity, sign, or actual degree is constrained. Statements about the adaptive threshold additionally require d>=1.")),
-            Paragraph(Text("PolynomialWorld d instead stores the same source and drift together with a nonzero real polynomial whose natural degree is at most d. coefficientEquiv reconstructs every such bounded polynomial from its ordinary coefficients. worldEquiv is an equivalence with both inverse laws, preserving the source and drift. Its nonzero condition concerns the whole polynomial.")),
+            Paragraph(Text("Every nonzero real polynomial g of natural degree at most d has the unique vector of its first d+1 coefficients. Polynomial.toFn_comp_ofFn_eq_id and Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt give the exact two inverse laws; injective_ofFn identifies the nonzero predicates. Thus this coefficient domain covers exactly the original whole-polynomial domain, preserving the source and drift.")),
             Paragraph(Text("The sourceChart(x,r) is the matrix [1,r;x,xr] divided by 1+xr. For x,r>0 it is strictly positive, rank one, and trace one. Every legal original source is exactly one such matrix, with recovered coordinates x=P10/P00 and r=P01/P00. The denominator is strictly positive. No auxiliary source restriction is introduced.")),
-            Describe.Lean(DescribeId.Create("gain-ray-gainrayworld-coefficientequiv"),
-                DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.coefficientEquiv"),
-                H("Ordinary coefficient equivalence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural d, coefficientEquiv d is an equivalence from Coeff d to the subtype of real polynomials p with p.natDegree<=d. Its forward map is gain d and its inverse takes the first d+1 coefficients."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("gain-ray-gainrayworld-worldequiv"),
-                DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.worldEquiv"),
-                H("Exact whole-world equivalence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural d, worldEquiv d is an equivalence from World d to PolynomialWorld d. It preserves source and drift and sends the coefficient vector to its whole polynomial. Both nonzero predicates and both inverse identities are proved."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gain-ray-gainrayworld-source-chart-legal"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.source_chart_legal"),
                 H("Legality of every positive chart point"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

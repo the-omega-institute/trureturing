@@ -92,5 +92,5 @@ For every natural d and every original W:World d, exactBetaReadout(d) multiplied
 - Truth anchor: `D5/S3/Observer/Linear/GainRayJets.jets_root_dvd`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayJets.jets_vanish_iff`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayJets.pureM_exact_beta`
-- Dependency: [D5/S3/Observer/Linear/GainRayEvaluation](GainRayEvaluation.md)
+- Dependency: [D5/S3/Observer/Linear/GainRayHistory](GainRayHistory.md)
 - Dependency: [D5/S3/Observer/Linear/GainRaySpectral](GainRaySpectral.md)

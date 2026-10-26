@@ -63,4 +63,4 @@ For every natural d, original W:World d and natural n,i with i<=n, readAt W (rep
 - Truth anchor: `D5/S3/Observer/Linear/GainRaySpectral.pureM_spectral`
 - Truth anchor: `D5/S3/Observer/Linear/GainRaySpectral.spectral_basis_weights`
 - Dependency: [D5/S0/Observation/MatrixTracePowerSum](../../../S0/Observation/MatrixTracePowerSum.md)
-- Dependency: [D5/S3/Observer/Linear/GainRaySources](GainRaySources.md)
+- Dependency: [D5/S3/Observer/Linear/GainRayHistory](GainRayHistory.md)
