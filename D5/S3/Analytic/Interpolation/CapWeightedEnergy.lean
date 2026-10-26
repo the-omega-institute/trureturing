@@ -49,9 +49,12 @@ theorem power_integral_tail (alpha a : ℝ) (halpha : 0 < alpha) (ha : 0 < a) :
       (∫ t in Ioi a, t ^ (-2 * alpha - 1)) = a ^ (-2 * alpha) / (2 * alpha) := by
   refine ⟨integrableOn_Ioi_rpow_of_lt (by linarith) ha, ?_⟩
   have h := integral_Ioi_rpow_of_lt (a := -2 * alpha - 1) (by linarith) ha
-  rw [show -2 * alpha - 1 + 1 = -(2 * alpha) by ring,
-    show -(2 * alpha) = -2 * alpha by ring] at h
-  simpa only [neg_div, div_neg, neg_neg] using h
+  rw [show -2 * alpha - 1 + 1 = -2 * alpha by ring] at h
+  calc
+    (∫ t in Ioi a, t ^ (-2 * alpha - 1)) = -a ^ (-2 * alpha) / (-2 * alpha) := h
+    _ = a ^ (-2 * alpha) / (2 * alpha) := by
+      field_simp [halpha.ne']
+      ring
 
 /-- The capped profile has an exactly integrable linear energy near zero. -/
 theorem linear_integral_near (a : ℝ) (ha : 0 < a) :
@@ -63,9 +66,10 @@ theorem linear_integral_near (a : ℝ) (ha : 0 < a) :
   rw [intervalIntegrable_iff_integrableOn_Ioc_of_le ha.le] at hi
   refine ⟨hi, ?_⟩
   rw [← intervalIntegral.integral_of_le ha.le]
-  simpa only [Real.rpow_one, Real.rpow_two, zero_pow (by norm_num : 2 ≠ 0),
-    sub_zero] using (integral_rpow (a := (0 : ℝ)) (b := a) (r := (1 : ℝ))
-      (Or.inl (by norm_num)))
+  have h := integral_rpow (a := (0 : ℝ)) (b := a) (r := (1 : ℝ))
+    (Or.inl (by norm_num))
+  norm_num [Real.rpow_two] at h
+  exact h
 
 private theorem quadratic_cap_bound (p q B x : ℝ)
     (hq : 0 ≤ q) (hxB : x ≤ B) (hp : 2 * q * B ≤ p) :
@@ -314,7 +318,7 @@ theorem norm_integral_le_sharp_cap_energy
       filter_upwards [hcap] with t ht
       have hwt : w t = 0 := norm_eq_zero.mp (le_antisymm (hB0 ▸ ht) (norm_nonneg _))
       simp only [hwt, smul_zero, Pi.zero_apply]
-    refine ⟨(integrable_zero (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
+    refine ⟨(integrable_zero ℝ E (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
     rw [integral_congr_ae hz]
     simp [hB0, Real.zero_rpow halpha0.ne']
   by_cases hdelta0 : delta = 0
@@ -326,7 +330,7 @@ theorem norm_integral_le_sharp_cap_energy
       have hnorm : ‖w t‖ ^ 2 = 0 := (mul_eq_zero.mp hzt).resolve_left ht.ne'
       have hwt : w t = 0 := norm_eq_zero.mp (sq_eq_zero_iff.mp hnorm)
       simp only [hwt, smul_zero, Pi.zero_apply]
-    refine ⟨(integrable_zero (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
+    refine ⟨(integrable_zero ℝ E (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
     rw [integral_congr_ae hz]
     simp [hdelta0, Real.zero_rpow (by linarith : (1 - alpha) / 2 ≠ 0)]
   have hBpos : 0 < B := lt_of_le_of_ne hB (Ne.symm hB0)
