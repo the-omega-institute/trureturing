@@ -123,7 +123,10 @@ internal sealed class QDickeClosestProductRefutationDocument : IScribeDocumentDe
                         + "a(0)b(0)c(1) = 2 a(0)b(1)c(0) = 0, contradicting the nonzero product "
                         + "just obtained. Finally, the asserted universal existence at positive q "
                         + "would supply such a maximizing product in the span at q = 4, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ballesteros-et-al-2025-qdicke-closest-product"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula DickeFormula(bool two)
     {
