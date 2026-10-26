@@ -1,0 +1,2 @@
+**Definition 38.3 (literal root Sample).** At an actual binary-image field $x_w$, execute Hold; Read, then $N-1$ rounds Tick; Add$(0)$; Hold; Read. Store the literal ordered scalar window $y_0,\ldots,y_{N-1}$. Decode its pre-window vector using $K_n^{-\mathsf T}$ and then apply Theorem 38.2. Sample returns all inner replies, the window and the decoded pre-window chain and length, with every exported copy charged. The local predictor is installed at the actual final field, not at the reconstructed pre-window field.
+

@@ -66,7 +66,21 @@ $$\forall (dA: \mathbb{N}), (\forall (dB: \mathbb{N}), ((2 \le dA) \Rightarrow (
 
 Conjecture 1 states that for local dimensions at least two, every pair of SIC families, every pair of complete MUB families, and every positive semidefinite trace-one bipartite operator, the complete-MUB trace norm equals the SIC trace norm multiplied by the two dimension factors.
 
-**Theorem 1.6 (The equality follows from two frames and an isometry).**
+**Theorem 1.6 (Trace pairings on a spanning family).**
+
+$$\forall (d: \mathbb{N}), (\forall (\iota: Type), (\forall (P: (\iota \to Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right))), ((\operatorname{Submodule.span}\left(\mathbb{C}, \operatorname{Set.range}\left(P\right)\right) = \operatorname{Top.top}) \Rightarrow (\forall (X: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), (\forall (Y: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), ((\forall (i: \iota), (trace\left(X \cdot P\left(i\right)\right) = trace\left(Y \cdot P\left(i\right)\right))) \Rightarrow (X = Y)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.trace_pairing_ext` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Armin Tavakoli; Simon Morelli (2024). *Enhanced Schmidt number criteria based on correlation trace norms*. DOI: [10.1103/PhysRevA.110.062417](https://doi.org/10.1103/PhysRevA.110.062417). URL: <https://arxiv.org/abs/2402.09972v2>.
+
+*Commentary.*
+
+Two complex square matrices are equal when their trace pairings agree on a family whose complex linear span is the full matrix space.
+
+**Theorem 1.7 (The equality follows from two frames and an isometry).**
 
 $$claim$$
 
@@ -96,5 +110,6 @@ For the dimensions, families, and operator in claim, correlation_transition expr
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.result`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.sicCorrelation`
 - Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.sicEffect`
+- Truth anchor: `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.trace_pairing_ext`
 - Dependency: [D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB](../Quantum/Entanglement/TavakoliMorelliIncompleteMUB.md)
 - Dependency: [D5/S3/Quantum/Tomography/CompleteContextTomography](../Quantum/Tomography/CompleteContextTomography.md)

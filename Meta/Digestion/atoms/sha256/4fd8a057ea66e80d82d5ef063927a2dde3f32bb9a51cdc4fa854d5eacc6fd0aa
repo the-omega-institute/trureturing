@@ -1,0 +1,13 @@
+**Definition 65.1 (one endpoint window on the same specimen).** After any actual pulse word on the authentic source, let $x_{\rm hist}=X(u)$ be its endpoint. Execute the original diagnostic of Theorem 56.1: Read once, perform $N-1$ returning Ticks, then Hold. The literal scalar list and the actual held field are
+
+$$
+\begin{aligned}
+y&=(b^{\mathsf T}T^j x_{\rm hist})_{j=0}^{N-1}
+   =\mathcal O_Nx_{\rm hist},\qquad \mathcal O_N=K^{\mathsf T},\\
+x_{\rm now}&=T^{N-1}x_{\rm hist}.
+\end{aligned}
+\tag{65.1}
+$$
+
+The inverse $\mathcal O_N^{-1}$ and native $T$ are earned suppliers from §§37, 40 and 56. The decoder takes their finite encodings and this actually acquired $y$. It does not receive a full response oracle. It computes $x_{\rm hist}=\mathcal O_N^{-1}y$, then applies §§63–64 during the actual Hold. It installs its live record at $x_{\rm now}$ in (65.1). The diagnostic metadata says that exactly $N-1$ observation Ticks have occurred; it is independent of the erased $L$.
+

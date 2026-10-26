@@ -226,6 +226,45 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("git_scope_rejects_operational_symbolic_ref_errors")]
+    [InlineData("git_scope_symbolic_ref_failure_retains_removal")]
+    [InlineData("git_scope_symbolic_ref_failure_fails_pool_inspection")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_pool_claim")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_pool_return")]
+    [InlineData("git_scope_symbolic_ref_failure_stops_commands")]
+    [InlineData("test_clean_detached_recovery")]
+    [InlineData("test_dirty_detached_recovery")]
+    public void GitScopeClassifiesSymbolicRefFailures(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("qualification_intentional_lock_metadata_races")]
+    [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
+    [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
+    [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
+    [InlineData("pool_final_qualification_defers_later_candidates")]
+    [InlineData("pool_return_final_qualification_defers_later_candidates")]
+    [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
+    [InlineData("pool_scope_operational_failure_is_failed")]
+    [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
+    [InlineData("qualification_native_identity_races_are_refused")]
+    [InlineData("native_identity_races_are_refused")]
+    [InlineData("qualification_stream_preserves_completed_and_defers_unreached")]
+    [InlineData("runlocal_final_qualification_refusal")]
+    [InlineData("runlocal_final_qualification_failure")]
+    [InlineData("batch_qualification_preserves_each_reason_and_tree")]
+    [InlineData("batch_qualification_reports_errors_without_hiding_other_results")]
     [InlineData("recovery_resolved_conflict_does_not_veto_removal")]
     [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
     [InlineData("recovery_local_repository_is_not_a_remote")]
@@ -351,6 +390,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("live_initializer_is_retained")]
     [InlineData("native_clearance_keeps_dead_initializer_exclusive_until_removal")]
     [InlineData("failed_initialization_recovers_in_place_idempotently")]
+    [InlineData("large_initialization_checkout_preserves_partial_bytes")]
     [InlineData("owned_unregistered_branch_can_resume")]
     [InlineData("ordinary_recovery_routing_keeps_shared_reuse_and_base_protection")]
     [InlineData("partial_registration_repairs_worktree_head_in_its_own_ref_store")]
