@@ -39,7 +39,7 @@ def actualSuzukiBProfile (F : ℝ → ℂ) (t : ℝ) : ℂ :=
 def actualSuzukiEvenBProfile (F : ℝ → ℂ) (r : ℝ) : ℂ :=
   actualSuzukiBProfile F (2 * |r|)
 
-private theorem physical_h6_weighted_l1
+theorem physical_h6_weighted_l1
     (U : ℝ → ℂ) (hU : originalPhysicalH6 U)
     (β : ℝ) (hβ : β < 5 / 2) :
     IntegrableOn (fun x : ℝ => ((x ^ β : ℝ) : ℂ) * U x) (Ioi Real.pi) := by
@@ -130,7 +130,7 @@ private theorem physical_log_coordinate_l1_mass
       simp only [Complex.real_smul, smul_eq_mul, Complex.ofReal_inv]
       rw [← mul_assoc, mul_inv_cancel₀ (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero), one_mul]
 
-private theorem actual_profile_l1_and_physical_moments
+theorem actual_profile_l1_and_physical_moments
     (F : ℝ → ℂ) (hF : originalPhysicalH6 F) :
     IntegrableOn (actualGammaProfile F) (Ioi (0 : ℝ)) ∧
     (∫ t : ℝ in Ioi 0, actualGammaProfile F t) =
@@ -193,7 +193,7 @@ private theorem actual_profile_l1_and_physical_moments
       rw [h0.2]
       simp only [Real.rpow_zero, Complex.ofReal_one, one_mul]
 
-private theorem even_double_l1_mass
+theorem even_double_l1_mass
     (b : ℝ → ℂ) (hb : IntegrableOn b (Ioi (0 : ℝ))) :
     Integrable (fun r : ℝ => b (2 * |r|)) volume ∧
     (∫ r : ℝ, b (2 * |r|)) = ∫ t : ℝ in Ioi 0, b t := by
