@@ -1,5 +1,5 @@
 /- GID: D5/S3/QuantumBounds/EnergyConstrainedDeterministicViolation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/QuantumBounds/EnergyConstrainedDeterministicViolation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
