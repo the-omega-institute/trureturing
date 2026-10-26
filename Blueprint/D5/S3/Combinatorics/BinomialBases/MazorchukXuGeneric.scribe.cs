@@ -84,7 +84,9 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
             Node("Generic","exceptional_label_eq_position_add_index","Positions reconstruct the labels",LabelFormula(),
                 "Let the injective ordinary list and increasing exceptional list cover all positive vertices up to N, and let p record ordinary positions. The vertices below the j-th exception split into zero, p(j) ordinary vertices and j preceding exceptions. Taking finite cardinalities gives s(j)=p(j)+j+1. The two prefix images are disjoint by the position conditions. The formula includes p(j)=0, adjacent exceptions and an empty ordinary list.",DescribeRole.Theorem),
             Node("Generic","exists_coordinate_encoding","Extraction of positions and cutoffs",EncodingFormula(),
-                "Given an increasing list of anchor neighbors and an increasing list of missing anchor neighbors covering the positive vertices, every graph satisfying the rules yields a monotone position list and one cutoff for each exception. Prefix cardinality supplies each position; monotonicity follows because an ordinary vertex cannot lie before an earlier exception and after a later one. The cutoff theorem supplies the incidence data, and prefix partitioning reconstructs the original natural labels. This extracts the coordinates but does not yet identify their compression classes or enumerate them.",DescribeRole.Theorem)), []));
+                "Given an increasing list of anchor neighbors and an increasing list of missing anchor neighbors covering the positive vertices, every graph satisfying the rules yields a monotone position list and one cutoff for each exception. Prefix cardinality supplies each position; monotonicity follows because an ordinary vertex cannot lie before an earlier exception and after a later one. The cutoff theorem supplies the incidence data, and prefix partitioning reconstructs the original natural labels. This extracts the coordinates but does not yet identify their compression classes or enumerate them.",DescribeRole.Theorem),
+            Node("Generic","edgeFamily_has_coordinates","Coordinates of the literal finite family",SourceEncodingFormula(),
+                "For every natural n and every deficit i at most n+1, a member of edgeFamily with n+1-i anchor edges has an increasing ordinary list of length n+1-i and an increasing exceptional list of length i. Sort the actual anchor-neighbor set and its complement in one through n+1. Their cardinalities give the two list lengths. The lists cover the entire positive vertex interval; position and cutoff extraction then gives all the displayed coordinates and exact exceptional labels. The point-to-edge counted equivalence identifies this with the literal source family. This supplies extraction for every valid source parameter, including i=n+1; a two-way compressed-pattern bijection and its cardinality are still needed.",DescribeRole.Theorem)), []));
 
     private static Formula PositionFormula()
     {
@@ -194,6 +196,25 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
                 Fn("Position",V("g"),Fn("s",j),Fn("p",j))),Cutoffs(E),Labels())));
         return Many("N M i",N,All("E",Rel(N),All("g",Map(Fn("Fin",M),N),
             All("s",Map(Fn("Fin",i),N),Imp(hypothesis,conclusion)))));
+    }
+
+    private static Formula SourceEncodingFormula()
+    {
+        var n=V("n");var i=V("i");var A=V("A");var a=V("a");var j=V("j");
+        var g=V("g");var s=V("s");var p=V("p");var c=V("c");
+        var Nn=Plus(n,D(1));var M=Sub(Nn,i);var si=Fn("s",j);
+        var cover=All("a",N,Imp(And(Lt(D(0),a),Le(a,Nn)),Or(
+            Ex("r",Fn("Fin",M),Eq(Fn("g",V("r")),a)),
+            Ex("j",Fn("Fin",i),Eq(si,a)))));
+        var anchor=All("a",N,Iff(Mem(Pair(D(0),a),A),Ex("r",Fn("Fin",M),Eq(Fn("g",V("r")),a))));
+        var missing=All("j",Fn("Fin",i),And(Not(Mem(Pair(D(0),si),A)),Lt(D(0),si),Le(si,Nn)));
+        var positions=All("j",Fn("Fin",i),Fn("Position",g,si,Fn("p",j)));
+        var cutoffs=All("j",Fn("Fin",i),Fn("Cutoff",Fn("pairMembership",A),g,si,Fn("c",j)));
+        var conclusion=And(Fn("StrictMono",g),Fn("StrictMono",s),Fn("Monotone",p),anchor,missing,
+            cover,positions,cutoffs,Labels());
+        var exists=Ex("g",Map(Fn("Fin",M),N),Ex("s",Map(Fn("Fin",i),N),
+            Ex("p",Map(Fn("Fin",i),N),Ex("c",Map(Fn("Fin",i),N),conclusion))));
+        return Many("n i",N,All("A",Points,Imp(And(Le(i,Nn),Mem(A,Fn("edgeFamily",n,M))),exists)));
     }
 
 }

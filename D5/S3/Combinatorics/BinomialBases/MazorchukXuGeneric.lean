@@ -7,6 +7,8 @@
    digest: Generic positions and cutoffs uniquely force exceptional edges. -/
 
 import D5.S3.Combinatorics.BinomialBases.MazorchukXuOrder
+import D5.S3.Combinatorics.BinomialBases.MazorchukXuFamilies
+import Mathlib.Data.Finset.Sort
 
 /-! Exceptional edges in a generic position/cutoff pattern are forced. -/
 
@@ -87,23 +89,30 @@ private def integerThreshold (N : ℕ) (h : ℕ → ℕ) (a b : ℕ) : Prop :=
 
 private theorem rules_integerThreshold (N : ℕ) (h : ℕ → ℕ) :
     Rules (integerThreshold N h) := by
-  refine ⟨fun he => he.1, ?_, ?_⟩
+  let T := thresholdEdges (fun a : ℕ => (a : ℚ)) (fun a => (h a : ℚ) - 1 / 2)
+  have hT : Rules T := rules_thresholdEdges _ _ (fun a b hab => Nat.cast_le.mpr hab)
+  have hhalf (a b : ℕ) : (h a : ℚ) - 1 / 2 < (b : ℚ) ↔ h a ≤ b := by
+    constructor
+    · intro he
+      by_contra hb
+      have hn : b + 1 ≤ h a := by omega
+      have hr : (b : ℚ) + 1 ≤ (h a : ℚ) := by exact_mod_cast hn
+      linarith
+    · intro he
+      have hr : (h a : ℚ) ≤ (b : ℚ) := by exact_mod_cast he
+      linarith
+  have hrel : integerThreshold N h = fun a b => T a b ∧ b ≤ N := by
+    funext a b
+    apply propext
+    simp only [integerThreshold, T, thresholdEdges, hhalf]
+    tauto
+  rw [hrel]
+  refine ⟨fun he => hT.ordered he.1, ?_, ?_⟩
   · intro a b c d hab hcd hac hcb hbd
-    exact ⟨hbd, hcd.2.1, hab.2.2.2.trans (hac.trans (hcb.le.trans hbd.le)),
-      hcd.2.2.2.trans hcb.le⟩
+    exact ⟨hT.propagate hab.1 hcd.1 hac hcb hbd, hcd.2⟩
   · intro a b c d e f hab hcd hef hac hcb hae heb hbd hbf
-    refine ⟨lt_of_lt_of_le (max_lt hcb heb) (hbd.trans (le_max_left d f)),
-      max_le hcd.2.1 hef.2.1, ?_, ?_⟩
-    · rcases le_total c e with hce | hec
-      · rw [max_eq_right hce]
-        exact hef.2.2.1.trans (le_max_right d f)
-      · rw [max_eq_left hec]
-        exact hcd.2.2.1.trans (le_max_left d f)
-    · rcases le_total d f with hdf | hfd
-      · rw [max_eq_right hdf]
-        exact hef.2.2.2.trans (le_max_right c e)
-      · rw [max_eq_left hfd]
-        exact hcd.2.2.2.trans (le_max_left c e)
+    exact ⟨hT.join hab.1 hcd.1 hef.1 hac hcb hae heb hbd hbf,
+      max_le hcd.2 hef.2⟩
 
 /-- Arbitrary position/cutoff values admit a completion, with precisely the prescribed
 anchor, ordinary incidences, and exceptional-edge criterion. -/
@@ -412,5 +421,97 @@ theorem exists_coordinate_encoding {N M i : ℕ} {E : ℕ → ℕ → Prop}
     omega
   exact ⟨p, c, hpm, hp, hc, exceptional_label_eq_position_add_index g s p
     hg.injective hs (fun r => hE.ordered (ho r)) hsp hsb hp hcover⟩
+
+private def ordinaryVertices (A : Finset (ℕ × ℕ)) : Finset ℕ :=
+  (A.filter (fun z => z.1 = 0)).image Prod.snd
+
+private theorem mem_ordinaryVertices {A : Finset (ℕ × ℕ)} {a : ℕ} :
+    a ∈ ordinaryVertices A ↔ (0, a) ∈ A := by
+  simp only [ordinaryVertices, Finset.mem_image, Finset.mem_filter]
+  constructor
+  · rintro ⟨⟨b, c⟩, ⟨hbc, hb⟩, hc⟩
+    change b = 0 at hb
+    change c = a at hc
+    simpa only [hb, hc] using hbc
+  · intro ha
+    exact ⟨(0, a), ⟨ha, rfl⟩, rfl⟩
+
+private theorem ordinaryVertices_card (A : Finset (ℕ × ℕ)) :
+    (ordinaryVertices A).card = firstColumnCard A := by
+  classical
+  unfold ordinaryVertices firstColumnCard
+  apply Finset.card_image_of_injOn
+  intro x hx y hy hxy
+  have hx0 := (Finset.mem_filter.mp hx).2
+  have hy0 := (Finset.mem_filter.mp hy).2
+  exact Prod.ext (hx0.trans hy0.symm) hxy
+
+/-- Every member of the literal bounded edge family admits finite position/cutoff
+coordinates with exactly i exceptions, including the zero-ordinary case. -/
+theorem edgeFamily_has_coordinates {n i : ℕ} (hi : i ≤ n + 1)
+    {A : Finset (ℕ × ℕ)} (hA : A ∈ edgeFamily n (n + 1 - i)) :
+    ∃ (g : Fin (n + 1 - i) → ℕ) (s : Fin i → ℕ) (p c : Fin i → ℕ),
+      StrictMono g ∧ StrictMono s ∧ Monotone p ∧
+      (∀ a, (0, a) ∈ A ↔ ∃ r, g r = a) ∧
+      (∀ j, (0, s j) ∉ A ∧ 0 < s j ∧ s j ≤ n + 1) ∧
+      (∀ a, 0 < a → a ≤ n + 1 → (∃ r, g r = a) ∨ (∃ j, s j = a)) ∧
+      (∀ j, Position g (s j) (p j)) ∧
+      (∀ j, Cutoff (fun a b => (a, b) ∈ A) g (s j) (c j)) ∧
+      (∀ j, s j = p j + j.val + 1) := by
+  classical
+  obtain ⟨hsubset, hE, hk⟩ := Finset.mem_filter.mp hA
+  have hsub := Finset.mem_powerset.mp hsubset
+  have hbound {a b : ℕ} (hab : (a, b) ∈ A) : b ≤ n + 1 := by
+    have hm := Finset.mem_filter.mp (hsub hab)
+    have hb := Finset.mem_range.mp (Finset.mem_product.mp hm.1).2
+    omega
+  let O := ordinaryVertices A
+  have hOcard : O.card = n + 1 - i := (ordinaryVertices_card A).trans hk
+  have hOsub : O ⊆ Finset.Icc 1 (n + 1) := by
+    intro a ha
+    have he : (0, a) ∈ A := mem_ordinaryVertices.mp ha
+    exact Finset.mem_Icc.mpr ⟨hE.ordered he, hbound he⟩
+  let S := Finset.Icc 1 (n + 1) \ O
+  have hScard : S.card = i := by
+    dsimp [S]
+    rw [Finset.card_sdiff_of_subset hOsub, Nat.card_Icc, hOcard]
+    omega
+  let g : Fin (n + 1 - i) → ℕ := O.orderEmbOfFin hOcard
+  let s : Fin i → ℕ := S.orderEmbOfFin hScard
+  have hg : StrictMono g := (O.orderEmbOfFin hOcard).strictMono
+  have hs : StrictMono s := (S.orderEmbOfFin hScard).strictMono
+  have hOmem : ∀ r, g r ∈ O := O.orderEmbOfFin_mem hOcard
+  have hSmem : ∀ j, s j ∈ S := S.orderEmbOfFin_mem hScard
+  have hanchor : ∀ a, (0, a) ∈ A ↔ ∃ r, g r = a := by
+    intro a
+    rw [← mem_ordinaryVertices]
+    change a ∈ O ↔ ∃ r, g r = a
+    constructor
+    · intro ha
+      obtain ⟨r, hr⟩ := (O.orderIsoOfFin hOcard).surjective ⟨a, ha⟩
+      exact ⟨r, congrArg Subtype.val hr⟩
+    · rintro ⟨r, rfl⟩
+      exact hOmem r
+  have ho : ∀ r, (0, g r) ∈ A := fun r => mem_ordinaryVertices.mp (hOmem r)
+  have hmissing : ∀ j, (0, s j) ∉ A := by
+    intro j he
+    exact (Finset.mem_sdiff.mp (hSmem j)).2 (mem_ordinaryVertices.mpr he)
+  have hsp : ∀ j, 0 < s j := fun j =>
+    (Finset.mem_Icc.mp (Finset.mem_sdiff.mp (hSmem j)).1).1
+  have hsb : ∀ j, s j ≤ n + 1 := fun j =>
+    (Finset.mem_Icc.mp (Finset.mem_sdiff.mp (hSmem j)).1).2
+  have hcover : ∀ a, 0 < a → a ≤ n + 1 → (∃ r, g r = a) ∨ (∃ j, s j = a) := by
+    intro a hap hab
+    by_cases haO : a ∈ O
+    · left
+      exact (hanchor a).mp (mem_ordinaryVertices.mp haO)
+    · right
+      have haS : a ∈ S := Finset.mem_sdiff.mpr ⟨Finset.mem_Icc.mpr ⟨hap, hab⟩, haO⟩
+      obtain ⟨j, hj⟩ := (S.orderIsoOfFin hScard).surjective ⟨a, haS⟩
+      exact ⟨j, congrArg Subtype.val hj⟩
+  obtain ⟨p, c, hpm, hp, hc, hlabels⟩ :=
+    exists_coordinate_encoding hE g s hg hs ho hmissing hsp hsb hcover
+  exact ⟨g, s, p, c, hg, hs, hpm, hanchor,
+    fun j => ⟨hmissing j, hsp j, hsb j⟩, hcover, hp, hc, hlabels⟩
 
 end D5.S3.Combinatorics.MazorchukXu

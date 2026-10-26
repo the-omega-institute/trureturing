@@ -60,7 +60,9 @@ edge rules. Monotone clique-fiber expansion preserves these rules; an increasing
 section gives the converse. Exceptional-to-ordinary incidence has a unique
 cutoff, including an empty ordinary list, and monotone threshold graphs satisfy
 both rules. Arbitrary cutoff data admit a bounded threshold completion;
-fully generic data have a unique completion. Agreement of the anchor edges,
+fully generic data have a unique completion. Sorting the actual anchor-neighbor set and its complement extracts position and
+cutoff data from every valid member of the literal finite family, with precisely
+i exceptions and s(j)=p(j)+j+1. Agreement of the anchor edges,
 cutoffs and exceptional-edge bits determines the entire labelled graph.
 
 These structural results do not establish the conjecture. The finite

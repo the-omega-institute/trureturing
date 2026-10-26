@@ -46,8 +46,19 @@ noncomputable def family_registration : Registration arena (type_of% (@count_eq_
       ext ⟨a, b⟩
       simp only [mem_triangle, Finset.mem_singleton, Prod.mk.injEq]
       omega
-    norm_num [count, family, htriangle, D5.S3.Combinatorics.MazorchukXu.Star,
-      firstColumnCard, Finset.powerset_insert]
+    have hempty : (∅ : Finset (ℕ × ℕ)) ∈ family 0 0 := by
+      simp [family, D5.S3.Combinatorics.MazorchukXu.Star, firstColumnCard]
+    have hpos : 0 < count 0 0 := Finset.card_pos.mpr ⟨∅, hempty⟩
+    have hnone : family 0 2 = ∅ := by
+      apply Finset.eq_empty_iff_forall_not_mem.mpr
+      intro Y hY
+      obtain ⟨hsub, _, hk⟩ := mem_family_iff.mp hY
+      have hcard := Finset.card_le_card hsub
+      rw [htriangle, Finset.card_singleton] at hcard
+      have hfilter : firstColumnCard Y ≤ Y.card := Finset.card_filter_le _ _
+      omega
+    have hzero : count 0 2 = 0 := by simp [count, hnone]
+    omega
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@count_eq_edgeFamily_card) (Realization signature) Type Unit := {
