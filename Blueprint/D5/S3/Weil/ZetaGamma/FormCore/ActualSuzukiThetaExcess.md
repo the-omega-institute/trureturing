@@ -4,6 +4,10 @@
 
 The original physical H6 condition supplies almost everywhere convergence of the complete physical theta series, preservation of H6 and control of the normalized sixth-moment excess for the same source.
 
+The same original H6 estimates also support the classical Mobius inverse on this actual physical space. Put T(F)=fullTheta(F), S(F)(x)=sum_(n>=1) mobius(n)*n^4*F(n^2*x), and C=sum_(n>=1) n^(-3). For every originalPhysicalH6 source F, S(F) is again original H6. With M(F)=integral_(x>pi) (x/pi)^6*norm(F(x))^2, it satisfies M(S(F))<=C^2*M(F). Also T(S(F))=F and S(T(F))=F almost everywhere on x>pi. Both sides use the literal source series.
+
+In the exact application, the weighted-L2 norm of the double mode D_m D_n F=D_(mn) F is bounded by m^(-3)*n^(-3) times the source norm. The absolutely convergent L2 double family supplies almost-everywhere unconditional summability before any rearrangement. Grouping by mn then consumes the finite Mobius divisor identity from Mathlib and leaves only the first physical mode. The current Lean check pays these convergence and original-domain premises; they are not assumptions of the application. This reuses the existing dilation estimates and classical inversion, and adds no separate mathematical declaration. Its scope is the original sixth-moment space; full Gamma form domains and complete-energy positivity remain separate obligations.
+
 **Theorem 1.1 (The full theta transform preserves H6 and bounds the sixth-moment excess).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiThetaExcess.actual_h6_fullTheta_excess_bound`
