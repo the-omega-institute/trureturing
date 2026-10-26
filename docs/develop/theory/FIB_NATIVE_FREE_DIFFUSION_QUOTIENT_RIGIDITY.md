@@ -4395,8 +4395,15 @@ old. Hence $|\mathsf Z_t-e|_\infty\le\Omega_T(\mathsf Z;\epsilon)$.
 Unannounced earlier small excursions need not be identified.
 At every release the new value is exactly $\mathsf Z_t$.
 This proves (25.2), including all waiting intervals and endpoints.
-Finiteness is (24.6). No small-duration total, Poisson label or
-complete excursion is acquired by this rule. $\square$
+Finiteness is (24.6). No Poisson label or complete excursion is
+supplied, and no small-duration total or list is supplied separately
+or in advance. At a type $\mathrm E$ release time $R$ for a
+source-mode request begun at the known time $c$, Theorem 24.3 gives
+$R-c-\epsilon=\mathsf D^\epsilon_{E-}$. This retrospective total of
+the preceding small-excursion durations in that episode is measurable
+from the released prefix, hence belongs to
+$\mathcal G_R\subseteq\mathcal F_R^{\mathsf Z}$.
+The consumer of §26 does not use this total. $\square$
 
 ## 26. Prospective execution by actual original native histories
 
@@ -4716,9 +4723,12 @@ original-clock timestamps, are Assumption 25.1. Finite exact real
 computation and original two-control execution are Assumption 26.1.
 These are explicit analytic model additions. Deriving their joint
 law and filtration coupling is not deriving their availability from
-bare FIB. In particular no pending sample, seed, future lifetime,
-Poisson label, scalar omitted-gap total, complete mark, full source
-path, target exit or target modulus is available to execution.
+bare FIB. No omitted-gap total or list is supplied separately or in
+advance; at entrance arrival the preceding small-duration total is
+retrospectively inferable as in the proof of Theorem 25.2, but is not
+used by the consumer. No pending sample, seed, future lifetime,
+Poisson label, complete mark, full source path, target exit or target
+modulus is available to execution.
 A full path is only the coupling witness; the acquired finite
 record is exactly (25.1). All decisions use its released prefix.
 
