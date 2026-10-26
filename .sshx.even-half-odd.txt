@@ -1,0 +1,127 @@
+/-- An actual odd negative with an unused inverse parent supplies a literal
+three-LARGE prefix improvement. The old y gate supplies the required valley. -/
+theorem actualSource_odd_parent_uniform_prefix_exchange
+    (k t : ℕ) (hk : 3 ≤ k) (p y : Fin k) (F R : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (F ++ [y] ++ R))
+    (hpunused : p ∉ F ++ [y] ++ R)
+    (hnunused : hit k 1 p ∉ F ++ [y] ++ R)
+    (hbunused : (finRotate k).symm y ∉ F ++ [y] ++ R)
+    (hyhigh : s k t p < -s k t y)
+    (hyodd : (-s k t y) % 2 = 1)
+    (hreturn : largeUsed k t R ≤ 2)
+    (hthreshold : 6 * s k t p - N k ≤ 3 * (-s k t y)) :
+    let n := hit k 1 p
+    let b := (finRotate k).symm y
+    let W := F ++ [y] ++ R
+    let V := (F ++ [y]) ++ [p, n, b]
+    2 * s k t b = N k + s k t y ∧ Large k t b ∧
+    0 ≤ mass (s k t) (F ++ [y]) ∧
+    mass (s k t) (F ++ [y]) ≤ C k + s k t y ∧
+    Legal k t V ∧ V.Nodup ∧ InStrip (s k t) (C k) 0 V ∧
+    (∀ d : ℕ, 0 ≤ mass (s k t) (V.take d) ∧ mass (s k t) (V.take d) ≤ C k) ∧
+    Inventory k t W V [p, n, b] R ∧
+    (V ++ R).Perm (W ++ [p, n, b]) ∧
+    G k t V + 3 = G k t W + largeUsed k t R ∧
+    G k t V < G k t W ∧ J k t V < J k t W := by
+  classical
+  dsimp only
+  let f := s k t
+  let n := hit k 1 p
+  let b := (finRotate k).symm y
+  let P := f p
+  let D := |f n|
+  let Y := -f y
+  let L := f b
+  let v := mass f (F ++ [y])
+  have geo := native_geometry hk t p hnlarge hexpand
+  obtain ⟨hQ, hN, hC, hNp, hNo⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change N k = 4 * Q k - 1 at hN
+  change C k = 2 * Q k - 1 at hC
+  have hp : 0 < P := hpositive
+  have hn : f n = -D := by
+    simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
+  have hd : D < P := by simpa [f, n, D, abs_of_pos hpositive] using geo.strictOrder.1
+  have hd0 : 0 ≤ D := abs_nonneg _
+  have heq : D = N k - 2 * P := by
+    simpa [f, n, D, P, abs_of_pos hpositive] using geo.firstEquation
+  have hy : f y < 0 := by change P < Y at hyhigh; dsimp only [Y] at hyhigh; omega
+  have hparent := negative_parent k t hk y hy
+  have hb : 2 * L = N k - Y ∧ Q k ≤ L := by
+    rcases hparent with he | ho
+    · omega
+    · exact ⟨ho.2.1, ho.2.2⟩
+  have hyb := centered_bounds hNp hNo ((2 : ℤ) ^ y.val * t)
+  change -C k ≤ f y ∧ f y ≤ C k at hyb
+  have hLpos : 0 < L := by omega
+  have hLP : L < P := by change P < Y at hyhigh; omega
+  have hsold := strip_of_legal hW
+  have hsF := (strip_split F ([y] ++ R) (by simpa only [List.append_assoc] using hsold)).2
+  have hdeparture : 0 ≤ mass f F ∧ mass f F ≤ C k := by
+    simpa [f, mass] using inStrip_prefix hsF 0
+  have hsPrefix := (strip_split (F ++ [y]) R hsold).1
+  have hv : 0 ≤ v ∧ v ≤ C k := by
+    simpa [v, f, mass] using inStrip_prefix hsPrefix (F ++ [y]).length
+  have hval : v = mass f F - Y := by simp [v, Y, mass]; ring
+  have hvalley : v ≤ C k - Y := by omega
+  have hgate : 0 ≤ v + P ∧ v + P ≤ C k ∧
+      0 ≤ v + P - D ∧ v + P - D ≤ C k ∧
+      0 ≤ v + P - D + L ∧ v + P - D + L ≤ C k := by
+    change 6 * P - N k ≤ 3 * Y at hthreshold
+    change P < Y at hyhigh
+    constructor <;> [omega; skip]
+    constructor <;> [omega; skip]
+    constructor <;> [omega; skip]
+    constructor <;> [omega; skip]
+    constructor <;> omega
+  have hsI : InStrip f (C k) v [p, n, b] := by
+    change 0 ≤ v ∧ v ≤ C k ∧ 0 ≤ v + f p ∧ v + f p ≤ C k ∧
+      0 ≤ v + f p + f n ∧ v + f p + f n ≤ C k ∧
+      0 ≤ v + f p + f n + f b ∧ v + f p + f n + f b ≤ C k
+    rw [hn]
+    exact ⟨hv.1, hv.2, hgate.1, hgate.2.1, hgate.2.2.1,
+      hgate.2.2.2.1, hgate.2.2.2.2.1, hgate.2.2.2.2.2⟩
+  have hsV := inStrip_append hsPrefix (show InStrip f (C k)
+      (0 + ((F ++ [y]).map f).sum) [p, n, b] by simpa [v, mass] using hsI)
+  have hI : ([p, n, b] : List (Fin k)).Nodup := by
+    have hpn : p ≠ n := by intro he; have hh := congrArg f he; omega
+    have hpb : p ≠ b := by intro he; have hh := congrArg f he; omega
+    have hnb : n ≠ b := by intro he; have hh := congrArg f he; omega
+    simp [hpn, hpb, hnb]
+  have hIL (i : Fin k) (hi : i ∈ [p, n, b]) : Large k t i := by
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+    rcases hi with rfl | rfl | rfl
+    · exact geo.pLarge
+    · exact geo.nLarge
+    · change Q k ≤ |f b|
+      rw [abs_of_pos hLpos]; exact hb.2
+  have hIW (i : Fin k) (hi : i ∈ [p, n, b]) : i ∉ F ++ [y] ++ R := by
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+    rcases hi with rfl | rfl | rfl
+    · exact hpunused
+    · exact hnunused
+    · exact hbunused
+  have hperm : (((F ++ [y]) ++ [p, n, b]) ++ R).Perm
+      ((F ++ [y] ++ R) ++ [p, n, b]) := by
+    simpa only [List.append_assoc] using
+      (List.perm_append_comm : ([p, n, b] ++ R).Perm (R ++ [p, n, b])).append_left (F ++ [y])
+  have inv := inventory_of_perm hk t (F ++ [y] ++ R) ((F ++ [y]) ++ [p, n, b])
+    [p, n, b] R hW.1 hI hIW (by intro i hi; simp [hi]) hIL hperm
+  have hcount : largeUsed k t [p, n, b] = 3 := by
+    have hpL := hIL p (by simp)
+    have hnL := hIL n (by simp)
+    have hbL := hIL b (by simp)
+    simp [largeUsed, mass, largeWeight, hpL, hnL, hbL]
+  have hg := inv.largeBalance
+  rw [hcount] at hg
+  have hstrict : G k t ((F ++ [y]) ++ [p, n, b]) < G k t (F ++ [y] ++ R) := by omega
+  refine ⟨by change 2 * L = N k + f y; dsimp only [Y] at hb; omega,
+    hIL b (by simp), hv.1, ?_, legal_of_strip inv.nodup hsV, inv.nodup,
+    hsV, ?_, inv, hperm, hg, hstrict, ?_⟩
+  · change v ≤ C k + f y; dsimp only [Y] at hvalley; omega
+  · intro d; simpa [f, mass] using inStrip_prefix hsV d
+  · exact Prod.Lex.toLex_lt_toLex.mpr (Or.inl hstrict)
+
