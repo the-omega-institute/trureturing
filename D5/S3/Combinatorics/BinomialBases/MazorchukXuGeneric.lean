@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-generic-pattern-edge-proof)
    anchors: [mathlib/module/Mathlib.Data.Fin.Basic]
    utility: none
-   digest: Generic positions and cutoffs uniquely force exceptional edges. -/
+   digest: Finite source coordinates, labelled reconstruction and generic completions. -/
 
 import D5.S3.Combinatorics.BinomialBases.MazorchukXuOrder
 import D5.S3.Combinatorics.BinomialBases.MazorchukXuFamilies
@@ -34,8 +34,6 @@ theorem generic_exceptional_edge {E : ℕ → ℕ → Prop} (h : Rules E)
     (hcspt : cs ≠ pt) (hctps : ct ≠ ps) :
     E s t ↔ cs < pt ∧ ct < ps := by
   have hpsM : ps < M := hpst.trans_le hpost.1
-  have hptM : pt ≤ M := hpost.1
-  have hptpos : 0 < pt := hps.trans hpst
   have hst : s < t := by
     let r : Fin M := ⟨ps, hpsM⟩
     exact ((hposs.2 r).2.mpr le_rfl).trans ((hpost.2 r).1.mpr hpst)

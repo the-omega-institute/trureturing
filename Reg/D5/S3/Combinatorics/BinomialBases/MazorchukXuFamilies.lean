@@ -50,7 +50,7 @@ noncomputable def family_registration : Registration arena (type_of% (@count_eq_
       simp [family, D5.S3.Combinatorics.MazorchukXu.Star, firstColumnCard]
     have hpos : 0 < count 0 0 := Finset.card_pos.mpr ⟨∅, hempty⟩
     have hnone : family 0 2 = ∅ := by
-      apply Finset.eq_empty_iff_forall_not_mem.mpr
+      apply Finset.eq_empty_iff_forall_notMem.mpr
       intro Y hY
       obtain ⟨hsub, _, hk⟩ := mem_family_iff.mp hY
       have hcard := Finset.card_le_card hsub
