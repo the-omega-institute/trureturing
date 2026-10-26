@@ -74,7 +74,7 @@ private theorem current_F {a : Ordinal.{0}} {H : Prefix (Order.succ a)} {ha : ω
     exact hm'.trans (eq_of_heq (hnu n))
   · exact hn
 
-variable {l : Ordinal.{0}} (proper : l < ω₁)
+variable {l : Ordinal.{0}} (proper : l ≤ ω₁)
   (past : ∀ b : Stage, ord b < l → State b)
   (coherent : ∀ b c (hb : ord b < l) (hc : ord c < l) (hbc : b < c),
     Coherent hbc (past b hb) (past c hc))
@@ -82,7 +82,7 @@ variable {l : Ordinal.{0}} (proper : l < ω₁)
 noncomputable def pastCarrier (c : Coord l) : Set (Cube c.1) := by
   classical
   exact if hω : ω ≤ c.1 then
-    (past ⟨⟨c.1, c.2.trans proper⟩, hω⟩ c.2).H.carrier (top c.1)
+    (past ⟨⟨c.1, c.2.trans_le proper⟩, hω⟩ c.2).H.carrier (top c.1)
   else univ
 
 theorem carrier_read
@@ -94,7 +94,7 @@ theorem carrier_read
       (past b hb).H.carrier c := by
   classical
   by_cases hω : ω ≤ c.1
-  · let cb : Stage := ⟨⟨c.1, ((Order.le_of_lt_succ c.2).trans_lt hb).trans proper⟩, hω⟩
+  · let cb : Stage := ⟨⟨c.1, ((Order.le_of_lt_succ c.2).trans_lt hb).trans_le proper⟩, hω⟩
     simp only [pastCarrier, dite_eq_left hω]
     change (past cb _).H.carrier (top (ord cb)) = _
     by_cases he : c.1 = ord b
@@ -122,7 +122,7 @@ noncomputable def strictPrefix
     intro c
     by_cases hω : ω ≤ c.1
     · simpa only [pastCarrier, dite_eq_left hω] using
-        (past ⟨⟨c.1, c.2.trans proper⟩, hω⟩ c.2).H.closed (top c.1)
+        (past ⟨⟨c.1, c.2.trans_le proper⟩, hω⟩ c.2).H.closed (top c.1)
     · simp only [pastCarrier, dite_eq_right hω]
       exact isClosed_univ
   nonempty := by
@@ -130,13 +130,13 @@ noncomputable def strictPrefix
     intro c
     by_cases hω : ω ≤ c.1
     · simpa only [pastCarrier, dite_eq_left hω] using
-        (past ⟨⟨c.1, c.2.trans proper⟩, hω⟩ c.2).H.nonempty (top c.1)
+        (past ⟨⟨c.1, c.2.trans_le proper⟩, hω⟩ c.2).H.nonempty (top c.1)
     · exact ⟨fun _ => false, by simp only [pastCarrier, dite_eq_right hω, mem_univ]⟩
   compatible := by
     classical
     intro c d h x
     by_cases hω : ω ≤ d.1
-    · let db : Stage := ⟨⟨d.1, d.2.trans proper⟩, hω⟩
+    · let db : Stage := ⟨⟨d.1, d.2.trans_le proper⟩, hω⟩
       let ci : Coord (Order.succ d.1) :=
         ⟨c.1, (show c.1 ≤ d.1 from h).trans_lt (Order.lt_succ d.1)⟩
       have hc := carrier_read proper past coherent db d.2 ci
@@ -150,7 +150,7 @@ noncomputable def strictPrefix
     classical
     intro c d h y
     by_cases hω : ω ≤ d.1
-    · let db : Stage := ⟨⟨d.1, d.2.trans proper⟩, hω⟩
+    · let db : Stage := ⟨⟨d.1, d.2.trans_le proper⟩, hω⟩
       let ci : Coord (Order.succ d.1) :=
         ⟨c.1, (show c.1 ≤ d.1 from h).trans_lt (Order.lt_succ d.1)⟩
       have hc := carrier_read proper past coherent db d.2 ci
@@ -169,7 +169,12 @@ noncomputable def bornPack (r : Coord l) (hr : ω ≤ r.1) :
     BirthPack ((strictPrefix proper past coherent).carrier r) := by
   classical
   exact BirthPack.cast (by simp only [strictPrefix, pastCarrier, dite_eq_left hr])
-    (past ⟨⟨r.1, r.2.trans proper⟩, hr⟩ r.2).birth
+    (past ⟨⟨r.1, r.2.trans_le proper⟩, hr⟩ r.2).birth
+
+variable {l : Ordinal.{0}} (proper : l < ω₁)
+  (past : ∀ b : Stage, ord b < l → State b)
+  (coherent : ∀ b c (hb : ord b < l) (hc : ord c < l) (hbc : b < c),
+    Coherent hbc (past b hb) (past c hc))
 
 private def stageAt (c : Coord l) (hc : ω ≤ c.1) : Stage :=
   ⟨⟨c.1, c.2.trans proper⟩, hc⟩
@@ -183,8 +188,8 @@ private theorem rowAt_ne (r c : Coord l) (hr : ω ≤ r.1) (hrc : r < c) :
   exact (ne_of_lt (show r.1 < c.1 from hrc))
     (congrArg (fun z : Rows c.1 => z.1) he)
 
-private theorem bornPack_read (r c : Coord l) (hr : ω ≤ r.1) (hrc : r < c) :
-    HEq (bornPack proper past coherent r hr)
+theorem bornPack_read (r c : Coord l) (hr : ω ≤ r.1) (hrc : r < c) :
+    HEq (bornPack proper.le past coherent r hr)
       ((past (stageAt proper c (hr.trans hrc.le)) c.2).oldBirth
         (rowAt r c hr hrc) (rowAt_ne r c hr hrc)) := by
   have hb := (coherent (stageAt proper r hr)
@@ -212,16 +217,16 @@ private noncomputable def historicalJ (r d c : Coord l) : Set ℕ := by
     else ∅
   else ∅
 
-/-- Only arrivals E_(succ m) strictly below l may be read by recursive limit
-Data. IsSuccLimit l supplies that strict inequality for every m<l. -/
-private noncomputable def historicalN (hl : Order.IsSuccLimit l)
+/-- Reservoirs are read at their unique actual outgoing max(row,label).
+At recursive limits its arrival is strictly earlier; a post-run slice may
+also read the outgoing event at its last row. -/
+private noncomputable def historicalN
     (r d : Coord l) (e : Bool) : Set ℕ := by
   classical
   exact if hr : ω ≤ r.1 then
     let m : Stage := ⟨⟨max r.1 d.1, (max_lt r.2 d.2).trans proper⟩,
       hr.trans (le_max_left _ _)⟩
-    let arrival_before : Order.succ (ord m) < l := hl.succ_lt (max_lt r.2 d.2)
-    (past m ((Order.lt_succ (ord m)).trans arrival_before)).event.result.N
+    (past m (max_lt r.2 d.2)).event.result.N
       ⟨r.1, hr, le_max_left _ _⟩ ⟨d.1, le_max_right _ _⟩ (if e then 1 else 0)
   else ∅
 
@@ -231,81 +236,81 @@ private def zeroRegular (X : Type*) [TopologicalSpace X] [MeasurableSpace X] :
         JordanDecomposition.zero_posPart, JordanDecomposition.zero_negPart]
       exact ⟨inferInstance, inferInstance⟩⟩
 
-/-- Proper-limit Data use only exact strict-past births and incoming I/J.
-There is no Data at omega-one and no artificial arrival at the limit. -/
-noncomputable def strictData (hl : Order.IsSuccLimit l) :
-    (strictPrefix proper past coherent).Data where
+/-- Post-run Data at every proper cutoff retain whole row births, including
+its last row, and exact incoming I/J. No Data is formed at omega-one. -/
+noncomputable def postData :
+    (strictPrefix proper.le past coherent).Data where
   proper := proper
   I := historicalI proper past
   J := historicalJ proper past
-  N := historicalN proper past hl
+  N := historicalN proper past
   V := fun r n => if hr : ω ≤ r.1 then
-    ((bornPack proper past coherent r hr).V.clopen n : Set _)
+    ((bornPack proper.le past coherent r hr).V.clopen n : Set _)
     else ∅
   Vclopen := by
     classical
     intro r n
     split
-    · exact ((bornPack proper past coherent r _).V.clopen n).isClopen
+    · exact ((bornPack proper.le past coherent r _).V.clopen n).isClopen
     · exact isClopen_empty
   nu := fun r d n => if hr : ω ≤ r.1 then
-    ((bornPack proper past coherent r hr).nu d).1 n
+    ((bornPack proper.le past coherent r hr).nu d).1 n
     else zeroRegular _
   mass := by
     classical
     intro r d n hr
     simp only [dite_eq_left hr]
-    exact ((bornPack proper past coherent r hr).nu d).2 n |>.1
+    exact ((bornPack proper.le past coherent r hr).nu d).2 n |>.1
 
-theorem I_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+theorem postI_read (b : Stage) (hb : ord b < l)
     (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) :
-    (strictData proper past coherent hl).I
+    (postData proper past coherent).I
       ⟨r.1, r.2.2.trans_lt hb⟩ ⟨ord b, hb⟩ = (past b hb).P.I r hr := by
   classical
   have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
   have hrc' : (⟨r.1, r.2.2.trans_lt hb⟩ : Coord l) < ⟨ord b, hb⟩ := hrc
-  simp only [strictData, historicalI, dite_eq_left r.2.1, dite_eq_left hrc',
+  simp only [postData, historicalI, dite_eq_left r.2.1, dite_eq_left hrc',
     stageAt, rowAt]
 
-theorem J_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+theorem postJ_read (b : Stage) (hb : ord b < l)
     (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) (d : Coord (ord b)) :
-    (strictData proper past coherent hl).J
+    (postData proper past coherent).J
       ⟨r.1, r.2.2.trans_lt hb⟩ ⟨d.1, d.2.trans hb⟩ ⟨ord b, hb⟩ =
         (past b hb).P.J r hr d := by
   classical
   have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
   have hrc' : (⟨r.1, r.2.2.trans_lt hb⟩ : Coord l) < ⟨ord b, hb⟩ := hrc
   have hdc' : (⟨d.1, d.2.trans hb⟩ : Coord l) < ⟨ord b, hb⟩ := d.2
-  simp only [strictData, historicalJ, dite_eq_left r.2.1, dite_eq_left hrc',
+  simp only [postData, historicalJ, dite_eq_left r.2.1, dite_eq_left hrc',
     dite_eq_left hdc', stageAt, rowAt]
 
-private theorem strict_A (hl : Order.IsSuccLimit l) (r d c : Coord l)
+private theorem strict_A (r d c : Coord l)
     (hr : ω ≤ r.1) (hrc : r < c) (hdc : d < c) :
-    (strictData proper past coherent hl).J r d c ⊆
-      (strictData proper past coherent hl).I r c := by
+    (postData proper past coherent).J r d c ⊆
+      (postData proper past coherent).I r c := by
   classical
-  simpa only [strictData, historicalI, historicalJ, dite_eq_left hr,
+  simpa only [postData, historicalI, historicalJ, dite_eq_left hr,
     dite_eq_left hrc, dite_eq_left hdc] using
     (past (stageAt proper c (hr.trans hrc.le)) c.2).P.A
       (rowAt r c hr hrc) (rowAt_ne r c hr hrc) ⟨d.1, hdc⟩
 
-private theorem strict_B (hl : Order.IsSuccLimit l) (r d : Coord l)
+private theorem strict_B (r d : Coord l)
     (hr : ω ≤ r.1) :
-    Disjoint ((strictData proper past coherent hl).N r d false)
-      ((strictData proper past coherent hl).N r d true) := by
+    Disjoint ((postData proper past coherent).N r d false)
+      ((postData proper past coherent).N r d true) := by
   classical
   let m : Stage := ⟨⟨max r.1 d.1, (max_lt r.2 d.2).trans proper⟩,
     hr.trans (le_max_left _ _)⟩
-  let hm : ord m < l := (Order.lt_succ (ord m)).trans (hl.succ_lt (max_lt r.2 d.2))
-  simpa [strictData, historicalN, hr, m, hm] using
+  let hm : ord m < l := max_lt r.2 d.2
+  simpa [postData, historicalN, hr, m, hm] using
     (past m hm).event.result.B ⟨r.1, hr, le_max_left _ _⟩ ⟨d.1, le_max_right _ _⟩
 
-private theorem N_read
+theorem postN_read
     (coherent : ∀ (b c : Stage) (hb : ord b < l) (hc : ord c < l) (hbc : b < c),
       Coherent hbc (past b hb) (past c hc))
-    (hl : Order.IsSuccLimit l) (r d c : Coord l)
+    (r d c : Coord l)
     (hr : ω ≤ r.1) (hrc : r < c) (hdc : d < c) (e : Bool) :
-    historicalN proper past hl r d e =
+    historicalN proper past r d e =
       (past (stageAt proper c (hr.trans hrc.le)) c.2).P.oldN
         (rowAt r c hr hrc) (rowAt_ne r c hr hrc) ⟨d.1, hdc⟩ (if e then 1 else 0) := by
   classical
@@ -316,111 +321,133 @@ private theorem N_read
   exact ((coherent m (stageAt proper c (hr.trans hrc.le)) _ c.2 hmc).arrival
     r.1 d.1 hr rfl (if e then 1 else 0)).symm
 
-private theorem strict_C (hl : Order.IsSuccLimit l) (r d c : Coord l) (e : Bool)
+private theorem strict_C (r d c : Coord l) (e : Bool)
     (hr : ω ≤ r.1) (hrc : r < c) (hdc : d < c) :
-    ((strictData proper past coherent hl).J r d c ∩
-      (strictData proper past coherent hl).N r d e).Infinite := by
-  change (historicalJ proper past r d c ∩ historicalN proper past hl r d e).Infinite
-  rw [N_read proper past coherent hl r d c hr hrc hdc e]
+    ((postData proper past coherent).J r d c ∩
+      (postData proper past coherent).N r d e).Infinite := by
+  change (historicalJ proper past r d c ∩ historicalN proper past r d e).Infinite
+  rw [postN_read proper past coherent r d c hr hrc hdc e]
   simpa only [historicalJ, Predecessor.oldN, dite_eq_left hr,
     dite_eq_left hrc, dite_eq_left hdc] using
     (past (stageAt proper c (hr.trans hrc.le)) c.2).P.C
       (rowAt r c hr hrc) (rowAt_ne r c hr hrc) ⟨d.1, hdc⟩ (if e then 1 else 0)
 
-private theorem strict_DI (hl : Order.IsSuccLimit l) (r a b : Coord l)
+private theorem strict_DI (r a b : Coord l)
     (hr : ω ≤ r.1) (hra : r < a) (hab : a ≤ b) :
-    AlmostSubset ((strictData proper past coherent hl).I r b)
-      ((strictData proper past coherent hl).I r a) := by
+    AlmostSubset ((postData proper past coherent).I r b)
+      ((postData proper past coherent).I r a) := by
   rcases hab.eq_or_lt with he | hab
   · subst b
     exact Filter.Eventually.of_forall (fun _ hn => hn)
   · have hrb := hra.trans hab
-    simpa only [strictData, historicalI, oldRow, rowAt, stageAt, dite_eq_left hr, dite_eq_left hra,
+    simpa only [postData, historicalI, oldRow, rowAt, stageAt, dite_eq_left hr, dite_eq_left hra,
       dite_eq_left hrb] using
       (coherent (stageAt proper a (hr.trans hra.le))
         (stageAt proper b (hr.trans hrb.le)) a.2 b.2 hab).DI
         (rowAt r a hr hra) (rowAt_ne r a hr hra)
 
-private theorem strict_DJ (hl : Order.IsSuccLimit l) (r d a b : Coord l)
+private theorem strict_DJ (r d a b : Coord l)
     (hr : ω ≤ r.1) (hra : r < a) (hda : d < a) (hab : a ≤ b) :
-    AlmostSubset ((strictData proper past coherent hl).J r d b)
-      ((strictData proper past coherent hl).J r d a) := by
+    AlmostSubset ((postData proper past coherent).J r d b)
+      ((postData proper past coherent).J r d a) := by
   rcases hab.eq_or_lt with he | hab
   · subst b
     exact Filter.Eventually.of_forall (fun _ hn => hn)
   · have hrb := hra.trans hab
     have hdb := hda.trans hab
-    simpa only [strictData, historicalJ, oldRow, rowAt, stageAt, dite_eq_left hr, dite_eq_left hra,
+    simpa only [postData, historicalJ, oldRow, rowAt, stageAt, dite_eq_left hr, dite_eq_left hra,
       dite_eq_left hrb, dite_eq_left hda, dite_eq_left hdb] using
       (coherent (stageAt proper a (hr.trans hra.le))
         (stageAt proper b (hr.trans hrb.le)) a.2 b.2 hab).DJ
         (rowAt r a hr hra) (rowAt_ne r a hr hra) ⟨d.1, hda⟩
 
-private theorem strict_E (hl : Order.IsSuccLimit l) (r c : Coord l) (hrc : r < c)
+private theorem strict_E (r c : Coord l) (hrc : r < c)
     (xi : Coord c.1) (hr : ω ≤ r.1) (_ : r.1 ≤ xi.1) :
-    ∀ᶠ n in along ((strictData proper past coherent hl).I r c),
-      ∀ x y : (strictPrefix proper past coherent).Space c,
-      (strictPrefix proper past coherent).map r c hrc.le x ∈
-        (strictData proper past coherent hl).V r n →
-      (strictPrefix proper past coherent).map r c hrc.le y ∈
-        (strictData proper past coherent hl).V r n →
-      (strictPrefix proper past coherent).map r c hrc.le x =
-        (strictPrefix proper past coherent).map r c hrc.le y → x.1 xi = y.1 xi := by
+    ∀ᶠ n in along ((postData proper past coherent).I r c),
+      ∀ x y : (strictPrefix proper.le past coherent).Space c,
+      (strictPrefix proper.le past coherent).map r c hrc.le x ∈
+        (postData proper past coherent).V r n →
+      (strictPrefix proper.le past coherent).map r c hrc.le y ∈
+        (postData proper past coherent).V r n →
+      (strictPrefix proper.le past coherent).map r c hrc.le x =
+        (strictPrefix proper.le past coherent).map r c hrc.le y → x.1 xi = y.1 xi := by
   classical
   let cb := stageAt proper c (hr.trans hrc.le)
   let X := past cb c.2
   let rr := rowAt r c hr hrc
   let hrr := rowAt_ne r c hr hrc
-  have hC := carrier_read proper past coherent cb c.2 (top c.1)
-  have hD := carrier_read proper past coherent cb c.2 (rowIndex rr)
+  have hC := carrier_read proper.le past coherent cb c.2 (top c.1)
+  have hD := carrier_read proper.le past coherent cb c.2 (rowIndex rr)
   have hV := BirthPack.heq_V hD _ _ (bornPack_read proper past coherent r c hr hrc)
   have he := current_E X.P rr hrr
-    (C := (strictPrefix proper past coherent).Space c)
-    (D := (strictPrefix proper past coherent).Space r)
-    hC hD (bornPack proper past coherent r hr) hV
-    ((strictPrefix proper past coherent).map r c hrc.le) (fun _ => rfl) xi
-  simpa only [SetLike.mem_coe, X, rr, hrr, cb, strictData, historicalI,
+    (C := (strictPrefix proper.le past coherent).Space c)
+    (D := (strictPrefix proper.le past coherent).Space r)
+    hC hD (bornPack proper.le past coherent r hr) hV
+    ((strictPrefix proper.le past coherent).map r c hrc.le) (fun _ => rfl) xi
+  simpa only [SetLike.mem_coe, X, rr, hrr, cb, postData, historicalI,
     dite_eq_left hr, dite_eq_left hrc] using he
 
-private theorem strict_F (hl : Order.IsSuccLimit l) (r d c : Coord l) (hrc : r < c)
+private theorem strict_F (r d c : Coord l) (hrc : r < c)
     (hr : ω ≤ r.1) (hdc : d < c)
-    (s : ℕ → RegularSigned ((strictPrefix proper past coherent).Space c))
-    (hs : ∀ n, (strictPrefix proper past coherent).OldClass
-      (strictData proper past coherent hl) r d c hrc.le n (s n)) :
-    ∃ mu : RegularSigned ((strictPrefix proper past coherent).Space c),
+    (s : ℕ → RegularSigned ((strictPrefix proper.le past coherent).Space c))
+    (hs : ∀ n, (strictPrefix proper.le past coherent).OldClass
+      (postData proper past coherent) r d c hrc.le n (s n)) :
+    ∃ mu : RegularSigned ((strictPrefix proper.le past coherent).Space c),
       mu.1.totalVariation.real univ ≤ 1 ∧ Tendsto
         (fun n => (NormPreservingLifts.signedFunctional (s n).1).toWeakDual)
-        (along ((strictData proper past coherent hl).J r d c))
+        (along ((postData proper past coherent).J r d c))
         (𝓝 (NormPreservingLifts.signedFunctional mu.1).toWeakDual) := by
   classical
   let cb := stageAt proper c (hr.trans hrc.le)
   let X := past cb c.2
   let rr := rowAt r c hr hrc
   let hrr := rowAt_ne r c hr hrc
-  have hC := carrier_read proper past coherent cb c.2 (top c.1)
-  have hD := carrier_read proper past coherent cb c.2 (rowIndex rr)
+  have hC := carrier_read proper.le past coherent cb c.2 (top c.1)
+  have hD := carrier_read proper.le past coherent cb c.2 (rowIndex rr)
   have hnu := fun n => BirthPack.heq_measure hD _ _
     (bornPack_read proper past coherent r c hr hrc) ⟨d.1, d.2.trans proper⟩ n
   have hf := current_F X.P X.regular rr hrr ⟨d.1, hdc⟩
-    (C := (strictPrefix proper past coherent).Space c)
-    (D := (strictPrefix proper past coherent).Space r) hC hD
-    (bornPack proper past coherent r hr) hnu
-    ((strictPrefix proper past coherent).map r c hrc.le) (fun _ => rfl) s
-    (fun n => by simpa only [Prefix.OldClass, strictData, BirthPack.measure,
+    (C := (strictPrefix proper.le past coherent).Space c)
+    (D := (strictPrefix proper.le past coherent).Space r) hC hD
+    (bornPack proper.le past coherent r hr) hnu
+    ((strictPrefix proper.le past coherent).map r c hrc.le) (fun _ => rfl) s
+    (fun n => by simpa only [Prefix.OldClass, postData, BirthPack.measure,
       dite_eq_left hr] using (hs n).2)
     (fun n => (hs n).1)
-  simpa only [X, rr, hrr, cb, strictData, historicalJ, dite_eq_left hr, dite_eq_left hrc,
+  simpa only [X, rr, hrr, cb, postData, historicalJ, dite_eq_left hr, dite_eq_left hrc,
     dite_eq_left hdc] using hf
 
 /-- All original eligible laws hold on this exact strict-past prefix. -/
+theorem postLaws :
+    (strictPrefix proper.le past coherent).Laws (postData proper past coherent) where
+  A := strict_A proper past coherent
+  B := strict_B proper past coherent
+  C := strict_C proper past coherent
+  DI := strict_DI proper past coherent
+  DJ := strict_DJ proper past coherent
+  E := strict_E proper past coherent
+  F := strict_F proper past coherent
+
+/-- The recursive proper-limit view is the same post-run Data on its strict
+past; the limit hypothesis ensures all outgoing arrivals are earlier. -/
+noncomputable abbrev strictData (_hl : Order.IsSuccLimit l) :=
+  postData proper past coherent
+
+theorem I_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+    (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) :
+    (strictData proper past coherent hl).I
+      ⟨r.1, r.2.2.trans_lt hb⟩ ⟨ord b, hb⟩ = (past b hb).P.I r hr :=
+  postI_read proper past coherent b hb r hr
+
+theorem J_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+    (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) (d : Coord (ord b)) :
+    (strictData proper past coherent hl).J
+      ⟨r.1, r.2.2.trans_lt hb⟩ ⟨d.1, d.2.trans hb⟩ ⟨ord b, hb⟩ =
+        (past b hb).P.J r hr d :=
+  postJ_read proper past coherent b hb r hr d
+
 theorem strictLaws (hl : Order.IsSuccLimit l) :
-    (strictPrefix proper past coherent).Laws (strictData proper past coherent hl) where
-  A := strict_A proper past coherent hl
-  B := strict_B proper past coherent hl
-  C := strict_C proper past coherent hl
-  DI := strict_DI proper past coherent hl
-  DJ := strict_DJ proper past coherent hl
-  E := strict_E proper past coherent hl
-  F := strict_F proper past coherent hl
+    (strictPrefix proper.le past coherent).Laws (strictData proper past coherent hl) :=
+  postLaws proper past coherent
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistoryPast
