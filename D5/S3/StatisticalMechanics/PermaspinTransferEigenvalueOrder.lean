@@ -43,7 +43,8 @@ private theorem cubic_data (c d : ℝ) :
 private theorem cubic_at_comparison (c d : ℝ) :
     (dukesCubic c d).eval (c * (1 + d) ^ 2) =
       -4 * c ^ 2 * d ^ 2 * (d + 1) * ((d + 1) * (c - 1) ^ 2 + 4 * c * d) := by
-  simp only [dukesCubic, eval_add, eval_mul, eval_pow, eval_C, eval_X]
+  rw [dukesCubic.eq_1]
+  simp only [eval_add, eval_mul, eval_pow, eval_C, eval_X]
   ring
 
 private theorem cubic_at_comparison_neg (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
