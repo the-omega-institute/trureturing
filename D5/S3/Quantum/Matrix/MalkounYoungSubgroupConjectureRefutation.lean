@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation
 import Mathlib.Data.Matrix.Block
-import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-! # Conjecture D fails for class-preserving permutation groups -/
 
