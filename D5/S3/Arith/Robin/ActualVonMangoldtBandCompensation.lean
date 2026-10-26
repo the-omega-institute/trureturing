@@ -305,7 +305,7 @@ private theorem weightedPrefix_const (q R : ℝ) :
   rw [prefix_psi]
   ring
 
-private theorem supported_prefix {a b : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤ a) (hb : 0 < b)
+theorem supported_prefix {a b : ℝ} {f r : ℝ → ℝ} (ha : 0 ≤ a) (hb : 0 < b)
     (hab : a ≤ b) (hr : ∀ t : ℝ, r t = if a < t ∧ t ≤ b then f t else 0) :
     weightedPrefix r b = weightedPrefix f b - weightedPrefix f a := by
   let N := ⌈b⌉₊
@@ -358,7 +358,7 @@ private theorem reciprocalLog_FTC {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
   have h := intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
   linarith
 
-private theorem band_mass_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab : a ≤ b)
+theorem band_mass_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab : a ≤ b)
     (hz : ∀ t ∈ Icc a b, 0 < Real.log (t / c)) :
     weightedPrefix (fun t => reciprocalLog c t - reciprocalLog c b) b -
       weightedPrefix (fun t => reciprocalLog c t - reciprocalLog c b) a =
@@ -415,7 +415,7 @@ private theorem band_mass_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
     reciprocalLog_FTC hc ha hab hz] at hfor
   linarith
 
-private theorem triangle_volume_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab : a ≤ b)
+theorem triangle_volume_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab : a ≤ b)
     (hz : ∀ t ∈ Icc a b, 0 < Real.log (t / c)) :
     (∫ t in a..b, reciprocalLog c t - reciprocalLog c b) =
       ∫ t in a..b, bandDerivative c t * (t - a) := by
