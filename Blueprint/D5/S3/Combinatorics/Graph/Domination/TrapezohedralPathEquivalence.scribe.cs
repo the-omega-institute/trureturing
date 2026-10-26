@@ -25,11 +25,6 @@ internal sealed class TrapezohedralPathEquivalenceDocument : IScribeDocumentDefi
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
-    private static Formula Pow(Formula a, int n) => Seq(Par(a), Caret, Grp(D(n)));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }

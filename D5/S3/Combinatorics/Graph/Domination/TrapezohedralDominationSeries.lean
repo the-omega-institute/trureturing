@@ -37,8 +37,7 @@ private theorem F_identity : F * (1 - X^2 - X^3) = 1 + X + X^2 := by
     have h2 : k + 3 - 2 = k + 1 := by omega
     have h3 : k + 3 - 3 = k := by omega
     rw [h2, h3, hc]
-    simp [coeff_one, coeff_X, coeff_X_pow, show k + 3 ≠ 0 by omega,
-      show k + 3 ≠ 1 by omega, show k + 3 ≠ 2 by omega]
+    simp [coeff_one, coeff_X, coeff_X_pow, show k + 3 ≠ 1 by omega, show k + 3 ≠ 2 by omega]
 
 private theorem R_from_F :
     R = (1 - X^4) * F - 1 - X - 2 * X^2 - X^3 := by
@@ -57,12 +56,10 @@ private theorem R_from_F :
     have hc : (restrictedCount (k + 4) : ℚ) + count k = count (k + 4) := by
       exact_mod_cast h
     simp only [show 4 ≤ k + 4 by omega, ↓reduceIte, Nat.add_sub_cancel]
-    have hz0 : k + 4 ≠ 0 := by omega
     have hz1 : k + 4 ≠ 1 := by omega
     have hz2 : k + 4 ≠ 2 := by omega
     have hz3 : k + 4 ≠ 3 := by omega
-    simp [coeff_one, coeff_X, coeff_X_pow, hz0, hz1, hz2, hz3,
-      coeff_mul_X_pow']
+    simp [coeff_one, coeff_X, coeff_X_pow, hz1, hz2, hz3]
     linarith
 
 private theorem R_identity : R * (1 - X^2 - X^3) = X^3 + 2*X^4 + 2*X^5 := by
@@ -78,7 +75,7 @@ private theorem series_derivative : actualSeries = 2 * X * (PowerSeries.derivati
   | zero => simp [actualSeries, actual_count, mul_assoc, coeff_zero_X_mul, restricted_initial.1]
   | succ n =>
     rw [mul_assoc]
-    simp only [map_ofNat, coeff_ofNat_mul, coeff_succ_X_mul, coeff_derivative,
+    simp only [coeff_ofNat_mul, coeff_succ_X_mul, coeff_derivative,
       R, coeff_mk, actualSeries]
     rw [actual_count]
     push_cast
@@ -90,9 +87,9 @@ theorem actual_series :
       -2 * X^3 * (4*X^5 + 8*X^4 + 4*X^3 - 9*X^2 - 8*X - 3) *
         ((X^3 + X^2 - 1)^2)⁻¹ := by
   have hd := congrArg ((PowerSeries.derivative (R := ℚ))) R_identity
-  simp only [map_sub, map_add, 
+  simp only [map_sub, map_add,
     Derivation.leibniz, Derivation.leibniz_pow, derivative_X,
-    derivative_one, Derivation.map_natCast, mul_one, smul_eq_mul] at hd
+    derivative_one, mul_one, smul_eq_mul] at hd
   have hd2 : (PowerSeries.derivative (R := ℚ)) (2 : PowerSeries ℚ) = 0 :=
     (PowerSeries.derivative (R := ℚ)).map_natCast 2
   rw [hd2] at hd

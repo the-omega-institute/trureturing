@@ -58,13 +58,11 @@ internal sealed class TrapezohedralMinimalDominationDocument : IScribeDocumentDe
     private static Formula Par(Formula a) => Seq(Open, a, Close);
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) => Seq(Exists, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
     private static Formula Or(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Or, Par(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
-    private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, V(name), Sp, Colon, Sp, type, Sp, Mid, Sp, body, CloseBrace);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }
