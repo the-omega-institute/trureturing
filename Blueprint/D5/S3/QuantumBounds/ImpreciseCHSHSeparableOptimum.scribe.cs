@@ -91,7 +91,7 @@ internal sealed class ImpreciseCHSHSeparableOptimumDocument : IScribeDocumentDef
 
     private static Formula WitnessFormula()
     {
-        Formula rho = F.Id("rho"), a1 = A(1), a2 = A(2), b1 = B(1), b2 = B(2);
+        Formula rho = Rho, a1 = A(1), a2 = A(2), b1 = B(1), b2 = B(2);
         Formula chsh = Sub(Add(Add(Kron(a1, b1), Kron(a1, b2)), Kron(a2, b1)), Kron(a2, b2));
         Formula body = Eq(LocalCall("witness", rho, a1, a2, b1, b2),
             RealPart(Trace(Mul(rho, chsh))));
@@ -133,7 +133,7 @@ internal sealed class ImpreciseCHSHSeparableOptimumDocument : IScribeDocumentDef
     private static Formula ClaimBody()
     {
         Formula epsilon = Epsilon(), w = F.Id("w");
-        Formula rho = F.Id("rho"), a1 = A(1), a2 = A(2), b1 = B(1), b2 = B(2);
+        Formula rho = Rho, a1 = A(1), a2 = A(2), b1 = B(1), b2 = B(2);
         Formula witnesses = SetBuilder(w, Reals(),
             Some(rho, StateType(), Some(a1, QubitMatrixType(), Some(a2, QubitMatrixType(),
                 Some(b1, QubitMatrixType(), Some(b2, QubitMatrixType(),
