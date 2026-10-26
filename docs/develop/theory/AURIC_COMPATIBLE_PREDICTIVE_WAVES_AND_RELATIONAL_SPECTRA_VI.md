@@ -2348,3 +2348,195 @@ $$
 因此完整量子起源问题仍要求说明哪些实际共同来源、参考、完整后继和复合原则能供应这些独立关系，或给出忠实反例；本处解决的是其中一个确定的条件桥：一个原态的固定同交互响应在所声明完整可重复类内锚定交叉关系，并使原非选择演化成为同一原记录载体的渐近纠缠准备。它既不是原生相位取得，也不是完整起源解答。这些命题只在所列模型前提和操作域内成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 106. 原固定块的交换子与定量收缩
+
+**定义 106.1（原块的复无迹范数与安装偏离量）。** 沿用定义 72.1、103.1 的原 $U,W,\xi$、$P_\xi=\xi\xi^\dagger$ 和 $\Lambda$。在复 Hilbert–Schmidt 空间上取
+
+$$
+\langle X,Y\rangle_2=\operatorname{Tr}(X^\dagger Y),\qquad
+\mathcal H_0=\{X\in M_3(\mathbb C):\operatorname{Tr}X=0\}.
+\tag{106.1}
+$$
+
+对每个 $N\in U(3)$，仍取原块 $\Theta_N=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2$，并记
+
+$$
+\delta_N=\|NP_\xi-P_\xi N\|_2^2,\qquad
+r_N=\|\Theta_N|_{\mathcal H_0}\|_{2\to2}.
+\tag{106.2}
+$$
+
+这里 $\operatorname{Ad}_N(X)=NXN^\dagger$，$r_N$ 与 (103.1) 是同一个算子范数，其定义域包含全部复无迹矩阵。将这个代数定义取在全部 $U(3)$ 上，包括交换安装；原制备及其消费者仍使用定义 91.1 的原允许安装。
+
+**定理 106.2（原交换子控制整个复无迹块的收缩亏量）。** 对定义 106.1 的每个 $N\in U(3)$，有
+
+$$
+\frac{\delta_N}{8}\le1-r_N^2\le\frac32\delta_N.
+\tag{106.3}
+$$
+
+证明。先在整个 $M_3(\mathbb C)$ 上取算子
+
+$$
+\begin{gathered}
+\mathsf a=\operatorname{Ad}_W,\qquad
+\mathsf b=\operatorname{Ad}_{UWU},\qquad
+\mathsf P=\frac{\mathrm{Id}+\mathsf a}{2},\qquad
+\mathsf Q=\frac{\mathrm{Id}+\mathsf b}{2},\\
+\mathsf A=\Lambda^2=\mathsf Q\mathsf P.
+\end{gathered}
+\tag{106.4}
+$$
+
+最后一个等式由 (103.6)、$U^2=I_3$ 及 $\mathsf P=D_W$ 得到：$\operatorname{Ad}_U\mathsf P\operatorname{Ad}_U=\mathsf Q$。原 $W=(01)$、$UWU=(02)$，所以 $\mathsf a,\mathsf b$ 是酉且自伴的对合，$\mathsf P,\mathsf Q$ 是正交投影。其乘积 $\mathsf A$ 保留原来的次序，不将它另换成一个投影。
+
+这两个换位生成 $S_3$；相应的有限群平均为
+
+$$
+\Pi=\frac{\mathrm{Id}+\mathsf a+\mathsf b+
+\mathsf a\mathsf b+\mathsf b\mathsf a+\mathsf a\mathsf b\mathsf a}{6}.
+\tag{106.5}
+$$
+
+有限群平均是 Reynolds 构造，参见 [Designolle–Vértesi–Pokutta，2310.20677v3，式 (26)–(27)](https://arxiv.org/abs/2310.20677v3)；此处使用原坐标置换的共轭表示。群乘法重排平均中的各项，故 $\Pi^2=\Pi$，逐项取逆又给 $\Pi^*=\Pi$。其值域是该表示的共同固定空间，即 (103.8) 的 $\mathscr F=\operatorname{span}_{\mathbb C}\{I_3,P_\xi\}$：同时置换两个矩阵指标使全部对角元相同、全部非对角元相同。因而 $\mathsf P\Pi=\Pi\mathsf P=\mathsf Q\Pi=\Pi\mathsf Q=\Pi$。
+
+用 $\mathsf a^2=\mathsf b^2=\mathrm{Id}$ 及 $S_3$ 的关系展开，得到原乘积的精确恒等式
+
+$$
+\begin{aligned}
+\mathsf A^*\mathsf A
+&=\mathsf P\mathsf Q\mathsf P\\
+&=\frac{2\mathrm{Id}+2\mathsf a+\mathsf b+
+\mathsf a\mathsf b+\mathsf b\mathsf a+\mathsf a\mathsf b\mathsf a}{8}\\
+&=\frac14\mathsf P+\frac34\Pi
+=\Pi+\frac14(\mathsf P-\Pi).
+\end{aligned}
+\tag{106.6}
+$$
+
+$\mathsf A$ 与 $\mathsf A^*$ 均逐点固定 $\mathscr F$ 并保持 $\mathscr F^\perp$。对任意复矩阵 $Y\in\mathscr F^\perp$，(106.6) 给
+
+$$
+\|\mathsf AY\|_2^2=\frac14\|\mathsf PY\|_2^2
+\le\frac14\|Y\|_2^2.
+\tag{106.7}
+$$
+
+$\mathsf A$ 及其伴随都保持迹，故保持 $\mathcal H_0$。令
+
+$$
+D_\xi=P_\xi-I_3/3,\qquad
+v=\frac{D_\xi}{\sqrt{2/3}},\qquad
+T=\mathsf A|_{\mathcal H_0},\qquad
+R=\operatorname{Ad}_N|_{\mathcal H_0}.
+\tag{106.8}
+$$
+
+由 $\|D_\xi\|_2^2=2/3$，$v$ 为单位向量，且 $\mathscr F\cap\mathcal H_0=\mathbb Cv$。于是 $Tv=T^*v=v$，$T$ 在 $v^\perp\subset\mathcal H_0$ 上的范数至多 $1/2$；$R$ 在这个复 Hilbert 空间上酉，$TRT=\Theta_N|_{\mathcal H_0}$。
+
+为估计这个具体夹积，记 $p_v$ 为到 $\mathbb Cv$ 的正交投影，并令
+
+$$
+\eta^2=1-|\langle v,Rv\rangle_2|^2.
+\tag{106.9}
+$$
+
+以下只用正交分解、Pythagoras 和 Cauchy–Schwarz 的标准内积工具（参见 [Axler，Linear Algebra Done Right，第四版](https://linear.axler.net/)）。因 $T^*v=v$，$T$ 保持 $v^\perp$；任意 $w$ 因而满足
+
+$$
+\|w\|_2^2-\|Tw\|_2^2
+\ge\frac34\|(I-p_v)w\|_2^2.
+\tag{106.10}
+$$
+
+取任意单位 $x=\alpha v+y$，其中 $y\perp v$，记 $h=\|y\|_2$、$z=Tx=\alpha v+Ty$、$\beta=\|(I-p_v)Rz\|_2$。由 $R$ 酉，两次 $T$ 的损失相加为
+
+$$
+\begin{aligned}
+1-\|TRTx\|_2^2
+&=(\|x\|_2^2-\|Tx\|_2^2)
+ +(\|RTx\|_2^2-\|TRTx\|_2^2)\\
+&\ge\frac34(h^2+\beta^2).
+\end{aligned}
+\tag{106.11}
+$$
+
+另一方面，$Rz=\alpha Rv+RTy$ 给
+
+$$
+|\alpha|\eta
+\le\beta+\|(I-p_v)RTy\|_2
+\le\beta+\frac h2,
+\qquad
+|\alpha|^2\eta^2\le\frac54(h^2+\beta^2).
+\tag{106.12}
+$$
+
+后一式是对 $(\beta,h)$ 与 $(1,1/2)$ 的 Cauchy–Schwarz。再由 $0\le\eta^2\le1$ 和 $|\alpha|^2+h^2=1$，
+
+$$
+\eta^2=|\alpha|^2\eta^2+h^2\eta^2
+\le\frac54(h^2+\beta^2)+h^2
+\le\frac94(h^2+\beta^2).
+\tag{106.13}
+$$
+
+代回 (106.11)，每个单位 $x$ 的损失至少为 $\eta^2/3$；对单位向量取算子范数的上确界得 $1-\|TRT\|_{2\to2}^2\ge\eta^2/3$。反向取 $x=v$，由 $Tv=v$、$T^*v=v$ 有
+
+$$
+\|TRTv\|_2^2=\|TRv\|_2^2
+\ge|\langle v,TRv\rangle_2|^2
+=|\langle v,Rv\rangle_2|^2.
+$$
+
+故两个方向合为
+
+$$
+\frac{\eta^2}{3}\le1-r_N^2\le\eta^2.
+\tag{106.14}
+$$
+
+这个估计不需要选择一个达到算子范数的向量，也包括 $\eta=0$。
+
+最后直接计算原酉矩阵与原投影的交换子。置 $s=|\xi^\dagger N\xi|^2\in[0,1]$，则
+
+$$
+\begin{aligned}
+\delta_N
+&=\operatorname{Tr}\big[(NP_\xi-P_\xi N)^\dagger
+ (NP_\xi-P_\xi N)\big]\\
+&=1+1-s-s=2(1-s),\\
+\langle D_\xi,ND_\xi N^\dagger\rangle_2
+&=s-\frac13,\\
+t:=\langle v,Rv\rangle_2
+&=\frac{3s-1}{2}=1-\frac34\delta_N\in[-1/2,1].
+\end{aligned}
+\tag{106.15}
+$$
+
+这里两项正迹各为一，两个交叉迹各为 $s$，计算的正是 $NP_\xi-P_\xi N$。因此
+
+$$
+0\le\delta_N\le2,\qquad
+\eta^2=1-t^2
+=\frac{3\delta_N}{4}\left(2-\frac{3\delta_N}{4}\right),\qquad
+\frac38\delta_N\le\eta^2\le\frac32\delta_N.
+\tag{106.16}
+$$
+
+将 (106.16) 代入 (106.14) 即得 (106.3)。若 $[N,P_\xi]=0$，则 $\delta_N=0$、$r_N=1$；若 $N\xi\perp\xi$，则 $s=0$、$\delta_N=2$、$t=-1/2$、$\eta^2=3/4$，同一证明仍适用。全部恒等式和估计都在复矩阵空间上成立，没有缩为 Hermitian 子空间，也没有将算子范数改成谱半径。原参数 $d,\theta$ 未进入该估计，原允许的 $d=2/3$ 亦保留。
+
+作为同一结论的直接后果，对每个固定原允许安装及每个整数 $n\ge0$，
+
+$$
+r_N^n\le\left(1-\frac{\delta_N}{8}\right)^{n/2}
+\le\exp\left(-\frac{n\delta_N}{16}\right).
+\tag{106.17}
+$$
+
+于是 (103.3)–(103.5) 和 (104.2) 中的 $r_N^n$ 可沿原消费者链用 (106.17) 的上包络替代；一般原始通道的混合背景仍由定理 103.2 所引 [Sanz–Pérez-García–Wolf–Cirac，0909.5347，§II、Proposition 3](https://arxiv.org/abs/0909.5347) 供应。(103.3) 的边缘估计只消费原 $\Theta_N$；(103.4)–(103.5) 的同源纯态与纠缠结论继续以假设 101.2、精确律 (101.5)、同一无记忆提升和实际原载体的相干保存／访问为条件，(104.2) 再以假设 104.1 的双侧对齐及完整晚测装置为条件。原唯一准备、全部原历史及非选择块均不变，每块仍为四次原仪器、一次同一个 $N$ 和四个原记录载体，$n$ 块的档案维数仍为 $2^{4n}$。
+
+(106.3) 的下界是整个 $\mathcal H_0$ 上算子范数亏量的下界；它给 (106.17) 的衰减上包络，不给特定原 $\rho_0$ 的误差下界或单制备所需时间下界。上包络对固定 $\delta_N>0$ 衰减，而允许安装的 $\delta_N$ 可任意趋于零，故此上包络不提供跨全部安装的统一有限费用；原制备的非统一人口结论仍限于定理 103.3 所列 $d\ne2/3$ 的条件。装置取得、标定、相干保存、档案对齐与晚测合成的费用仍是定义 105.3 的额外取得问题；上述矩阵估计不增加操作权利，也不补足那里要求的原生共同实现映射。∎
+
+## 追加锚（本行以下为增补区）
