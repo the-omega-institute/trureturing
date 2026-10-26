@@ -28,7 +28,7 @@ internal sealed class OkadaDiscriminantRefutationDocument : IScribeDocumentDefin
                 "RingQuot takes the algebra quotient imposing the three presentation relations; the carrier is the actual presented algebra, rather than a matrix chosen to stand in for it.", true),
             Node("generator", "Quotient generators", GeneratorFormula(),
                 "The generator is the image of the corresponding free-algebra generator under the quotient algebra homomorphism. Paper E_i is generator(i-1).", true),
-            Node("lexmin", "Lexicographically minimal word", And(IotaFormula(), LexminFormula()),
+            Node("lexmin", "Lexicographically minimal word", LexminFormula(),
                 "Definition 3.3, pages 10–11: \"The code of a permutation σ ∈ S_N is the N-tuple code(σ) = (c₁, …, c_N) where c_i := #{k < i | σ⁻¹(k) > σ⁻¹(i)}.\" Finset.card is cardinality, filter retains precisely the elements satisfying its predicate, and symm is the inverse permutation. The code coordinate c_i is exactly Liang–Sagan iota(σ,i). Page 11: \"It is well known that the product ∏_(i=1)^n s_{i−1}s_{i−2} ··· s_{i−c_i} is the lexicographically minimal reduced factorization of the permutations σ. We denote the associated index word by LexMin(σ).\" finRange lists Fin elements increasingly. Each block is reversed and filtered to the last iota(σ,i) entries, then converted to generator indices. flatMap concatenates the blocks in increasing i order.", true),
             Node("lexElement", "Lexmin algebra elements", LexElementFormula(),
                 "Definition 3.4, page 11: \"Fix a family of generators (g_i) of a monoid or an algebra. To a permutation σ we associate the element g_σ defined by g_σ := g_LexMin(σ) = ∏_(i=1)^n g_{i−1}g_{i−2} ··· g_{i−c_i}, where (c₁, …, c_N) = code(σ), and the product is increasing with i.\" prod of a list is its ordered product, including the unit for the empty word.", true),
@@ -154,12 +154,6 @@ internal sealed class OkadaDiscriminantRefutationDocument : IScribeDocumentDefin
     {
         Formula i = F.Id("i");
         return General(All(i, GenLabel, Eq(Call("generator", N, K, X, Y, i), Apply(Call("mkAlgHom", K, Call("Relations", N, K, X, Y)), Call("iota", K, i)))));
-    }
-    private static Formula IotaFormula()
-    {
-        Formula p = F.Id("sigma"), i = F.Id("i"), k = F.Id("k");
-        Formula filtered = Call("filter", Parenthesized(Lam(k, Label, And(Lt(k, i), Lt(Apply(Call("symm", p), i), Apply(Call("symm", p), k))))), Call("univ", Label));
-        return All(N, Nat, All(p, Call("Perm", Label), All(i, Label, Eq(Apply(Named("LiangSaganPinnacle.Result.iota"), p, i), Call("card", filtered)))));
     }
     private static Formula LexminFormula()
     {
