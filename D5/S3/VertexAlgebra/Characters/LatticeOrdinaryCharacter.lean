@@ -145,7 +145,7 @@ theorem actualOrdinaryCoefficient_eq_card (D : LatticeData)
   have hc : actualOrdinaryCoefficient D H N =
       Nat.card (CutoffIndex D (positiveChargeCutoff D hD (N : ℤ)) (N : ℤ)) := by
     have h := congrArg Cardinal.toNat (Module.mk_finrank_eq_card_basis b)
-    simpa only [Cardinal.toNat_natCast] using h
+    simpa only [actualOrdinaryCoefficient, Nat.card, Cardinal.toNat_natCast] using h
   exact hc.trans (Nat.card_congr (fullFiberCutoffEquiv D hD (N : ℤ)).symm)
 
 private theorem actualOrdinaryCoefficient_eq_naturalCard (D : LatticeData)
