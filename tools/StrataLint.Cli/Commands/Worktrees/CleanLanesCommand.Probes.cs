@@ -7,20 +7,27 @@ namespace StrataLint.Cli;
 
 internal static partial class CleanLanesCommand
 {
-    internal static string? TryResolveRegisteredGitDirectory(
+    internal static (string? GitDirectory, string? Failure) ObserveRegisteredGitDirectory(
         string path,
         IWorktreeProcessRunner runner)
     {
-        if (!Directory.Exists(path) || !HasGitMarker(path)) return null;
+        if (!Directory.Exists(path) || !HasGitMarker(path)) return (null, null);
         try
         {
-            return TryResolveGitDirectory(path, runner);
+            var directory = Decode(RunGit(path, ["rev-parse", "--absolute-git-dir"], runner,
+                "could not read worktree Git directory").StandardOutput).Trim();
+            if (directory.Length == 0) throw new InvalidOperationException("empty worktree Git directory");
+            return (directory, null);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return null;
+            return (null, Directory.Exists(path) && HasGitMarker(path) ? IdentityFailure(exception) : null);
         }
     }
+
+    private static string IdentityFailure(Exception exception) =>
+        "qualification_failed:identity:" + (exception is TimeoutException ? "timeout:" : "")
+        + exception.GetType().Name + ":" + BoundedDiagnostic(exception.Message);
 
     private static bool? IsAncestor(
         string repositoryRoot,

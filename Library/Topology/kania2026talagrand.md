@@ -700,3 +700,78 @@ new results attributed to Kania–Kąkol. Establishing SignedClopenCollision
 for the intended CH compactum, the transfinite construction, signed
 induction and global capture remains outside this analytic reduction.
 The reduction alone is not a solution of Problem 8.2.
+
+## Ordinary ordinal successor and arrival readback
+
+`D5.S3.Topology.InverseLimit.SignedOrdinalSuccessor.exists_successor`
+constructs an ordinary successor from a valid partial predecessor through a
+proper ordinal `a >= omega`. The input is one literal cube Prefix, its onto
+base restriction, all previously launched support and legal signed
+enumerations, permanent birth entries, and the strict old I/J laws. It does
+not assume a complete history or an extension theorem. CH supplies the
+current exhaustive clopen/support enumerations; the launch support is
+pulled back along the actual restriction and its entire signed enumeration
+is constructed before whole-sequence treatment. Support launch indices and
+signed measure labels have separate types and fields.
+
+The actual local supplier is
+`SignedSplitSuccessor.exists_measured_dynamic_split`. The row index is the
+ordinal interval `[omega,a]`, the new row is `a`, old signed labels are
+strictly below `a`, and the residual label is `a`. The new row restriction
+is the identity on the actual current carrier. The supplier's same executed
+split supplies all four reservoir cases. Literal insertion reuses
+`SignedSuccessorCoordinates.exists_successor_coordinates`, preserving the
+whole earlier Prefix. The enlarged birth pack reads each reservoir at its
+unique arrival stage `succ(max(row,label))` and retains every earlier entry.
+The arrival pack is additional through-stage data; a strict prefix is not
+silently completed with an unborn row.
+
+`Result.quantitative_g` transfers the same split's quantitative certificate
+to the literal new-coordinate clopen. One fixed StrictMono target index
+works for every norm-one signed lift of the original treated sequence:
+even positions have value strictly greater than one sixth and odd
+positions have value zero. Historical G is separate from A–F. The regular
+common every-choice F certificate is transported to the literal cube by
+`Result.literal_f`: for every row and label, one fixed regular reference
+measure of variation at most one works for every norm-one lift of the
+original whole signed sequence. The same coordinate equivalence pushes the
+reference forward and pulls every arbitrary lift back. `Result.literal_e`
+covers every old coordinate and the new sheet, with the original I/J sets.
+
+This is a repository-derived composition and birth-readback construction,
+not a literature novelty claim or a full CH realization. Delayed execution
+with an exposed strictly increasing target index, fixed cofinal launch and
+treatment reservations, well-founded existence and validity induction,
+proper-limit integration, the final omega-one Prefix and the full problem's
+functional-analytic endpoints remain separate obligations. The final
+omega-one Prefix is used only for its carrier, cone and projections;
+`Prefix.Data` and `Prefix.Laws` remain on proper slices.
+
+## Actual initial ordinal prefix
+
+`SignedOrdinalInitial.H0` constructs the entire Boolean cube at every
+finite stage and at omega. Its literal restrictions are onto by extending
+each Boolean function with false outside the smaller coordinate domain.
+`SignedOrdinalInitial.predecessor` constructs the first predecessor at
+omega without CH or an assumed predecessor. Old rows and earlier arrival
+births have empty exact ordinal domains, so their obligations are eliminated
+by proved contradictions. This supplies the actual initial input to the
+transfinite construction; it does not establish the global CH recursion.
+
+## Executed result to the next predecessor
+
+`SignedOrdinalPredecessor.nextP` consumes the same executed successor
+`Result` and constructs a predecessor on its literal extended Prefix.
+It preserves the original Label-indexed U/V/nu families and onto proofs,
+reads permanent reservoirs from the same arrival archive, and proves the
+next A/B/C/E/F from the actual I/J and literal E/F certificates. No next
+predecessor or complete-history assumption supplies the construction.
+The global recursion must still retain the original whole Q/R packages:
+nextP stores only current I/J and its weaker predecessor F interface,
+not all historical DI/DJ, the bounded regular F reference, or Q.B.
+
+A bounded arXiv check on 26 October 2026 found the primary paper still at
+v2. The newest title/abstract query for "Talagrand compacta" or "2DCP"
+returned this paper and the earlier mathematical paper 2606.27568v1,
+alongside three unrelated materials-science matches. No later CH answer
+was identified within that search; this is not a proof of global novelty.

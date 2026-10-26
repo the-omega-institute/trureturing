@@ -1,0 +1,20 @@
+**Theorem 37.2 (unknown-size actual acquisition).** There is one exact endpoint protocol, independent of $N$ and of the unknown coefficients, that on every promised source terminates after exactly $2N$ actual Ticks and $2N+1$ scalar outputs. It determines $N$, the full native rooted matrix $T$ and its complete impulse law $(m_j)_{j\ge0}$. It uses no order advice, response oracle or source-size side channel.
+
+**Proof.** Hold the prepared source and Read $m_0$. At stage $r=1,2,\ldots$, execute two source Ticks, recording their returned $m_{2r-1},m_{2r}$. Hold the source while constructing $H_r$ and testing singularity by exact rational elimination. Continue precisely when it is nonsingular. By Lemma 37.1 the first singular block is $H_N$. The observed prefix at that point is exactly $(m_0,\ldots,m_{2N})$ and the actual state is $T^{2N}e_0$.
+
+The stopping block is a positive semidefinite Hankel extension with
+
+$$
+\operatorname{rank}H_N=\operatorname{rank}H_{N-1}=N,
+\qquad H_{N-1}>0.
+$$
+
+Its shifted block also satisfies
+
+$$
+S_{N-1}=(m_{i+j+1})_{0\le i,j<N}
+=K_{N-1}^{\mathsf T}T K_{N-1}>0.
+$$
+
+These are all the ordinary even-flatness and shifted-positivity hypotheses of [Main §137.13](RECURSIVE_RELATIONAL_OBSERVATION.md). Its flat-prefix uniqueness result applies to the actual symmetric positive-moment realization: use its scalar input space $U=\mathbb R$, truncation index $r=N$, input map $J(c)=ce_0$, normalization $m_0=1$, and the displayed blocks. It supplies the all-future moment uniqueness; we reuse that result. The explicit native reconstruction, which is stronger than a realization only up to a change of basis, is given in Proposition 37.3. It completes this protocol's output specification. All moment entries used were obtained along this single actual passive trajectory. $\square$
+

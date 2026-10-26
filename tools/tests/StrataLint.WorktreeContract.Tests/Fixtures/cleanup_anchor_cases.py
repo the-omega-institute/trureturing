@@ -25,6 +25,12 @@ class CleanupAnchorCases:
     def runlocal_policy_refusal(self):
         self.runlocal_anchor("locked")
 
+    def runlocal_final_qualification_refusal(self):
+        self.runlocal_anchor("final_refused")
+
+    def runlocal_final_qualification_failure(self):
+        self.runlocal_anchor("final_failed")
+
     def runlocal_anchor(self, mode):
         ROOT = self.source_root
         root = self.workspace("runlocal-anchor-", "/tmp")
@@ -45,6 +51,19 @@ class CleanupAnchorCases:
                 shutil.copytree(source, target, ignore=shutil.ignore_patterns("__pycache__"))
             else:
                 shutil.copy2(source, target)
+        if mode in ("final_refused", "final_failed"):
+            adapter = first / "tools/scripts/worktree/worktree_preservation.py"
+            with adapter.open("a") as stream:
+                stream.write('''
+_original_qualify = qualify
+_qualification_calls = {}
+def qualify(source, target, *args, **kwargs):
+    _qualification_calls[target] = _qualification_calls.get(target, 0) + 1
+    if target.name == "second tree" and _qualification_calls[target] == 2:
+        raise ''' + ('Refused("observed_identity_changed")' if mode == "final_refused"
+                     else 'GitFailure("fatal: final qualification broke")') + '''
+    return _original_qualify(source, target, *args, **kwargs)
+''')
         artifact.write_text("ordinary artifact\n")
         cwd = first if mode == "self" else root
         relative = lambda path: os.path.relpath(path, cwd)
@@ -86,12 +105,12 @@ exec {shlex.quote(native)} "$@"
                    "--source", relative(first), "--delete"]
         result = self.run_owned_command(command, cwd, phase="runlocal-anchor", timeout=30,
                                         check=False, env=environment)
-        self.assertEqual(74 if mode in ("inventory", "commit") else 0, result.returncode,
+        self.assertEqual(74 if mode in ("inventory", "commit", "final_failed") else 0, result.returncode,
                          result.stdout + result.stderr)
         entries = json.loads(result.stdout)["entries"]
         expected = (['removed', 'error', 'error'] if mode == "inventory" else
-                    ['removed', 'error', 'removed'] if mode == "commit" else
-                    ['removed', 'kept', 'removed'] if mode == "locked" else
+                    ['removed', 'error', 'removed'] if mode in ("commit", "final_failed") else
+                    ['removed', 'kept', 'removed'] if mode in ("locked", "final_refused") else
                     ['removed', 'removed', 'removed'])
         self.assertEqual(expected, [item["state"] for item in entries], entries)
         self.assertEqual(paths, [item["path"] for item in entries])
@@ -101,6 +120,12 @@ exec {shlex.quote(native)} "$@"
             self.assertIn("checkpoint-denied", entries[1]["reason"])
         elif mode == "locked":
             self.assertEqual("locked_recent", entries[1]["reason"])
+        elif mode == "final_refused":
+            self.assertEqual("observed_identity_changed", entries[1]["reason"])
+            self.assertFalse(entries[1]["eligible"])
+            self.assertNotIn(paths[1], json.loads(result.stdout)["removed"])
+        elif mode == "final_failed":
+            self.assertIn("fatal: final qualification broke", entries[1]["reason"])
         for target, branch, entry in zip((first, second), ("anchor-first", "anchor-second"), entries):
             if entry["state"] == "removed":
                 self.assertFalse(target.exists())

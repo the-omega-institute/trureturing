@@ -136,16 +136,31 @@ def sweep_locked(source, dev, force=False):
                     preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
                                                                branch=observed["branch"]))]))
                 for removal in result["items"]:
-                    outcomes.append(dict(observed, **removal, reason=reason))
+                    row = dict(observed, **dict(removal,
+                        outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
+                        reason=removal.get("reason", reason)))
+                    if removal["outcome"] not in ("removed", "would_remove"):
+                        row.setdefault("stage", stage)
+                    if removal["outcome"] == "refused":
+                        row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+                        receipt["status"] = "failed"
+                    outcomes.append(row)
                     if removal["outcome"] in ("removed", "would_remove"):
                         remaining -= 1
-                if result["status"] == "failed":
+                if result["status"] in ("failed", "refused"):
                     receipt["status"] = "failed"
+                    break
                 stage = "release"
     except Exception as error:
         # This is the batch receipt boundary, including pressure reads and scope
         # release. The common remover retains its own checkpoint/recovery fields.
-        sweep_failure(receipt, observed, stage, error)
+        if stage in ("revalidate", "remove") and isinstance(error, Refused) and not isinstance(error, GitFailure):
+            outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
+                                 error=str(error), error_type=type(error).__name__))
+            receipt["status"] = "failed"
+        else:
+            sweep_failure(receipt, observed, stage, error)
+    if receipt["status"] == "failed":
         reported = {row["path"] for row in outcomes}
         outcomes.extend(dict(row, outcome="retained", reason="idle_sweep_deferred")
                         for row in rows if row["path"] not in reported)
@@ -160,7 +175,7 @@ def sweep(source, dev, force=False):
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
         receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
-                                  outcome="refused" if isinstance(error, Refused) else "failed",
+                                  outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
                                   error=str(error), error_type=type(error).__name__)
         receipt["status"] = "failed"
     return receipt
@@ -391,9 +406,9 @@ def claim(options):
             except (Refused, OSError, ValueError) as error:
                 # A failure after attaching a task branch has allocated material;
                 # never try another candidate or create another tree afterward.
+                if isinstance(error, GitFailure) or not isinstance(error, Refused):
+                    raise
                 attached = git(candidate, "symbolic-ref", "--quiet", "HEAD", check=False)
                 if options.path or allocated_branch or attached.stdout.strip() == reference.encode():
-                    raise
-                if not isinstance(error, Refused):
                     raise
         return dict(event="worktree_init", status="no_idle")
