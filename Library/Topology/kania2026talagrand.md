@@ -306,6 +306,106 @@ endpoints open. Its information registration remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21448; no
 `declared_validated` registration or solved-problem claim is made.
 
+## Delayed whole-fibre signed splitting
+
+The construction-specific sources `SignedDelayedSplit` and
+`SignedDelayedSuccessor` in `D5.S3.Topology.Measures` implement the local
+delayed common-row step in the proposed CH construction. Their role is
+in the signed induction associated with the paper's conditions (A)–(G).
+The local refinement combines compact metric selection, norm-preserving
+signed lifting, ordered columns and signed reference convergence. No
+literature novelty claim is made for this assembled proof.
+
+`exists_delayed_fibre_pools` starts with the actual continuous onto
+predecessor projection, original supports V(n), target points y(n) in
+V(n) and Q, and both infinite original intersections J with N(e).
+It chooses infinite subsets of those exact intersections and cluster
+points z(e). Eventual coordinate E on the whole original supports
+transfers convergence of selected points to every point of the fibre:
+every clopen neighborhood of z(e) eventually contains the entire fibre
+over y(n). No old fibre is assumed to be a singleton.
+
+`exists_delayed_pool_plan` resolves the equal and distinct cluster cases
+internally. Equal points retain the two original parity pools as target
+column pools. Distinct points give an old clopen separator. Finite
+thinning separates the entire target fibres; an independent infinite
+target reserve is split from one source pool, while each source set
+stays in its original N(e). Both target column parities use this reserve.
+Target auxiliary parity and source reservoir parity therefore have
+separate meanings in this branch.
+
+`exists_parity_ordered_split` is the consumed finite-construction core.
+The finite earlier exclusion R is fixed first. Whole target-fibre
+convergence and auxiliary-support avoidance of the selected point let
+the next target be chosen in its prescribed column pool. The clopen
+is literally H = p inverse-image (V(n) intersect Q) minus R. Its finite
+Boolean tests are fixed next, and only then are auxiliary indices
+chosen. All norm-preserving signed lifts satisfy the finite signed
+marginal bound; the other rows are never replaced by positive measures.
+The prescribed Dirac target gives mass one on H. Thus the finite strict
+thirteen-forty-eighths and one-sixth bounds hold. Closure of the even
+H's gives one split with onto old projection, whole-support fibre E,
+and the scheduled signed G estimates.
+
+`exists_internal_delayed_split` consumes both cluster branches and the
+core, selecting its own target reference and pools. It returns infinite
+M(e) inside the original source J and N(e), and one clopen of the same
+split separating the entire fibres over y(n) on M(0) and M(1). In the
+distinct case these source indices avoid every chosen target support,
+so the new coordinate is false on their whole original supports.
+Every target slice lies above Q. If the original source signed measures
+are carried by a disjoint clopen P, the true sheet is absent above P.
+Projection therefore transfers old source F without singleton fibres.
+A genuine successor lift supplies one regular source reference; whole
+support E gives that same reference to every selection. Its quantifier
+order is one reference followed by all lift selections.
+
+`SignedDelayedSuccessor.exists_delayed_successor` starts from actual
+born signed data and the original old laws. Old I, J and N exist only
+on genuinely old rows. Every row has signed sequences for the old labels
+and the residual label, with norm one, support-nullity, regular Jordan
+parts and positive Jordan mass at least one half. The target row is old;
+its target sequence is prescribed Dirac data. The new row uses its own
+internally chosen signed birth clusters. It has no invented old J or N.
+
+For auxiliary columns c(q), its final sets have the exact formulas:
+
+- I(r) contains the indices c(q).m(r) with code(r) < q; on the actual
+  target row it additionally contains M(0) union M(1).
+- J at the actual source pair is exactly M(0) union M(1); every other
+  old-label J is its fixed-label auxiliary range.
+- Every genuinely born old N is preserved. New-row old-label N(e) is
+  the corresponding fixed-label auxiliary parity range.
+
+These sets satisfy A–C, exact one-step I/J refinement sufficient for the
+inherited almost-inclusion D, whole-support E, and common every-choice
+signed F. Residual selection occurs only after the final I is fixed:
+compact metric weak-star compactness selects its residual J on that I,
+then splits J into two infinite reservoirs. Whole-support E transfers
+its regular reference to every signed lift selection. This includes
+old/old, new-row/old-label, old-row/residual and doubly new cases. The
+scheduled G witnesses are merely two infinite index sets, without an
+extra membership requirement in the updated I. The same output also
+retains each even column's strict 13/48 and 1/6 bounds and each odd
+column's zero true-sheet mass. Actual norm-preserving lift classes are
+inhabited for every old and residual label.
+
+The result is a local compact metric split supplier. Literal ordinal
+successor insertion and readback, once-born raw I/J/N, stage-local delayed
+eligibility, compatible well-founded raw-history recursion, and the final
+omega-one cube construction remain further obligations. The local
+supplier proves neither anti-homeomorphism, the Grothendieck endpoint nor
+the entire signed dual-ball endpoint. Problem 8.2, full CH Lean completion
+and official acceptance remain open.
+
+The owning Reg mirrors preserve the unabridged source telescopes and
+actual proof applications. Four-slot information registration remains
+unfinished under https://github.com/the-omega-institute/trureturing/issues/21750:
+full realization and source reconstruction, lawful enrolled readout,
+whole-family variation and sensitivity, and observational dependence
+are still missing. These source bindings are not `declared_validated`
+registrations.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
@@ -476,6 +576,36 @@ no new literature theorem is attributed to Kania–Kąkol. The sufficient
 hypothesis remains unproved for the proposed CH construction. Neither
 result supplies CH bookkeeping, the signed induction, capture/global
 obligations, the closed-copy prohibition or a solution of Problem 8.2.
+
+
+## Quantitative signed clopen oscillation criterion
+
+On an arbitrary-universe compact Hausdorff zero-dimensional Borel space K,
+`SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation` assumes the
+following explicit property O. Every regular signed norm-one sequence carried
+in total variation by pairwise disjoint nonempty clopens, with positive Jordan
+mass at least one half, has a single clopen Z at which the evaluations are at
+least one sixth infinitely often and zero infinitely often. Under O, arbitrary
+weak-star-convergent sequences in the full real continuous dual of C(K,Real)
+converge under every continuous double-dual test. Uniform boundedness is
+derived, and no positivity or nonemptiness premise is added.
+
+The analytic argument combines the unconditional raw signed restriction split
+with signed clopen disjointization at parameter 1/96. The latter gives one
+constant sign and fixed TV error below 1/48. On the oscillating clopen, the
+selected original evaluations exceed 7/48 infinitely often and have absolute
+value below 1/48 infinitely often, excluding a real limit. A positive raw
+captured-mass limit would yield a norm-one disjointly carried weak-star
+convergent normalized tail by reciprocal continuity, so the mass limit must
+be zero. The small captured part, the weak complementary part and the
+all-subsequence criterion give the full dual implication.
+
+This is a synthesis of classical analytic mechanisms, not a claim of global
+mathematical novelty or attribution of this exact quantitative formulation
+to Kania and Kakol. The cited article supplies the Talagrand-scheme context;
+O remains a separate conditional hypothesis. No formal CH instance of O,
+full signed-ball endpoint, anti-homeomorphism result or official solution of
+Problem 8.2 is established by this criterion.
 
 ## The full signed-ball analytic reduction
 

@@ -16,85 +16,24 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.M5FullWordConsumer
 
-open SourceWidth
+open SourceWidth SourcePrefixInventory
 open Fin.NatCast
 open scoped BigOperators
 
-private def tSmall {D : Arithmetic} (R : RowData D)
-    {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : Finset (Occ R.len) :=
-  (bank R Sn Sw \ K.keep) ∪ rowMask R.len 6 K.pay
-
-private def tUsed {D : Arithmetic} (R : RowData D)
-    {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : Finset (Occ R.len) :=
-  insert (Sum.inl 6) (wjUsed R Sn Sw ∪ tSmall R K)
-
-private def tHeight {D : Arithmetic} (R : RowData D)
-    {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : ℤ :=
-  -(∑ o ∈ K.keep, R.f o) - weight K.pay * D.u - (D.u - D.z) / 2 + R.f (Sum.inl 6)
-
-private theorem t_extension {D : Arithmetic} (R : RowData D) (A f : ℤ)
-    (heq : 2 * f = D.n + D.w + D.Δ - 2 * A * (D.w - D.n))
-    (Sn : Finset (Fin (R.len 2))) (Sw : Finset (Fin (R.len 4)))
-    (hSn : weight Sn = A) (hSw : weight Sw = D.H / 4 - A)
-    (pre : Prefix R.f D.C (Sum.inl 0) (wjUsed R Sn Sw) (wjHeight R f))
-    (K : TSelection R Sn Sw) :
-    Nonempty (Prefix R.f D.C (Sum.inl 0) (tUsed R K) (tHeight R K)) := by
-  classical
-  obtain ⟨hell0, hW0, hell, hhi, hW, hwidth⟩ := gate_limits D
-  have h2C : 2 * D.C = D.N - 1 := by have hN := D.N_quarter; have hC := D.C_quarter; omega
-  have hWle : (D.u - 1) / 2 ≤ D.C := by have hu := D.u_bound; omega
-  have hdis : Disjoint (wjUsed R Sn Sw) (tSmall R K) := by
-    apply Finset.disjoint_union_right.mpr
-    exact ⟨(bank_wj_disjoint R Sn Sw).symm.mono_right Finset.sdiff_subset,
-      (row6_wj_disjoint R Sn Sw K.pay).symm⟩
-  have hsmall : ∀ o ∈ tSmall R K, |R.f o| ≤ D.Q - 1 := by
-    intro o ho
-    rcases Finset.mem_union.mp ho with ho | ho
-    · exact bank_small R Sn Sw o (Finset.mem_sdiff.mp ho).1
-    · exact row_small R 6 K.pay o ho
-  have hsum : (∑ o ∈ tSmall R K, R.f o) =
-      (∑ o ∈ bank R Sn Sw, R.f o) - (∑ o ∈ K.keep, R.f o) - weight K.pay * D.u := by
-    rw [tSmall, Finset.sum_union ((bank_row6_disjoint R Sn Sw K.pay).mono_left Finset.sdiff_subset),
-      row_sum, R.base6]
-    have hh := Finset.sum_sdiff K.available (f := R.f)
-    linarith only [hh]
-  have hend : wjHeight R f + ∑ o ∈ tSmall R K, R.f o =
-      -(∑ o ∈ K.keep, R.f o) - weight K.pay * D.u - (D.u - D.z) / 2 := by
-    have hh := bank_charge R A f heq Sn Sw hSn hSw
-    linarith only [hh, hsum, hell]
-  have hbefore : 0 ≤ wjHeight R f + ∑ o ∈ tSmall R K, R.f o ∧
-      wjHeight R f + ∑ o ∈ tSmall R K, R.f o ≤ (D.u - 1) / 2 := by
-    rw [hend]
-    constructor <;> linarith only [K.gate.1, K.gate.2, hwidth]
-  obtain ⟨preS⟩ := prefix_batch pre (tSmall R K) (D.Q - 1)
-    (by have hh := D.Q_positive; omega) (by have hh := D.C_quarter; omega)
-    hdis hsmall ⟨hbefore.1, hbefore.2.trans hWle⟩
-  have hpos : 0 ≤ R.f (Sum.inl 6) := by
-    have hu := D.u_bound
-    nlinarith only [R.large6, h2C, hu, D.Q_positive, D.C_quarter]
-  obtain ⟨preT⟩ := prefix_large preS (Sum.inl 6)
-    (by simp (disch := decide) [wjUsed, firstParents, initialSmall, tSmall, bank, fullRow])
-    (by constructor <;> nlinarith only [hbefore.1, hbefore.2, hpos, R.large6, h2C, hW])
-  simpa only [tUsed, tHeight, hend] using
-    (show Nonempty (Prefix R.f D.C (Sum.inl 0) _ _) from ⟨preT⟩)
-
 private def retainedTail {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : Finset (Occ R.len) :=
-  K.keep ∪ rowMask R.len 6 K.payᶜ ∪ fullRow R 7
+    (K : TSelection R.toRowData Sn Sw) : Finset (Occ R.len) :=
+  K.keep ∪ rowMask R.len 6 K.payᶜ ∪ fullRow R.toRowData 7
 
 private theorem bank_row7_disjoint {D : Arithmetic} (R : RowData D)
     (Sn : Finset (Fin (R.len 2))) (Sw : Finset (Fin (R.len 4))) :
-    Disjoint (bank R Sn Sw) (fullRow R 7) := by
+    Disjoint (bank R.toRowData Sn Sw) (fullRow R.toRowData 7) := by
   simp only [bank, fullRow, Finset.disjoint_union_left]
   refine ⟨⟨⟨⟨?_, ?_⟩, ?_⟩, ?_⟩, ?_⟩ <;> apply rowMask_disjoint <;> decide
 
 private theorem row7_wj_disjoint {D : Arithmetic} (R : RowData D)
     (Sn : Finset (Fin (R.len 2))) (Sw : Finset (Fin (R.len 4))) :
-    Disjoint (fullRow R 7) (wjUsed R Sn Sw) := by
+    Disjoint (fullRow R.toRowData 7) (wjUsed R.toRowData Sn Sw) := by
   classical
   simp only [wjUsed, firstParents, initialSmall, fullRow,
     Finset.disjoint_union_right, Finset.disjoint_insert_right,
@@ -104,7 +43,7 @@ private theorem row7_wj_disjoint {D : Arithmetic} (R : RowData D)
 
 private theorem tail_disjoint {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : Disjoint (tUsed R K) (retainedTail R K) := by
+    (K : TSelection R.toRowData Sn Sw) : Disjoint (tUsed R.toRowData K) (retainedTail R K) := by
   classical
   apply Finset.disjoint_left.mpr
   intro o ht hs
@@ -114,14 +53,14 @@ private theorem tail_disjoint {D : Arithmetic} (R : RowData D)
       simp only [tUsed, tSmall, Finset.mem_insert, Finset.mem_union, Finset.mem_sdiff] at ht
       rcases ht with rfl | hw | ⟨_, hn⟩ | hr
       · simpa [bank, fullRow] using hb
-      · exact Finset.disjoint_left.mp (bank_wj_disjoint R Sn Sw) hb hw
+      · exact Finset.disjoint_left.mp (bank_wj_disjoint R.toRowData Sn Sw) hb hw
       · exact hn hs
-      · exact Finset.disjoint_left.mp (bank_row6_disjoint R Sn Sw K.pay) hb hr
+      · exact Finset.disjoint_left.mp (bank_row6_disjoint R.toRowData Sn Sw K.pay) hb hr
     · simp only [tUsed, tSmall, Finset.mem_insert, Finset.mem_union, Finset.mem_sdiff] at ht
       rcases ht with rfl | hw | ⟨hb, _⟩ | hr
       · exact inl_not_rowMask R.len 6 6 K.payᶜ hs
-      · exact Finset.disjoint_left.mp (row6_wj_disjoint R Sn Sw K.payᶜ) hs hw
-      · exact Finset.disjoint_left.mp (bank_row6_disjoint R Sn Sw K.payᶜ) hb hs
+      · exact Finset.disjoint_left.mp (row6_wj_disjoint R.toRowData Sn Sw K.payᶜ) hs hw
+      · exact Finset.disjoint_left.mp (bank_row6_disjoint R.toRowData Sn Sw K.payᶜ) hb hs
       · have hd : Disjoint (rowMask R.len 6 K.pay) (rowMask R.len 6 K.payᶜ) :=
           (Finset.disjoint_map _).mpr disjoint_compl_right
         exact Finset.disjoint_left.mp hd hr hs
@@ -134,42 +73,43 @@ private theorem tail_disjoint {D : Arithmetic} (R : RowData D)
 
 private theorem retained_sum {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) :
+    (K : TSelection R.toRowData Sn Sw) :
     ∑ o ∈ retainedTail R K, R.f o = (∑ o ∈ K.keep, R.f o) -
       ((2 : ℤ) ^ R.len 6 - 1 - weight K.pay) * D.u +
       ((2 : ℤ) ^ R.len 7 - 1) * D.y := by
-  have hd6 := (bank_row6_disjoint R Sn Sw K.payᶜ).mono_left K.available
-  have hd7 : Disjoint (K.keep ∪ rowMask R.len 6 K.payᶜ) (fullRow R 7) :=
+  have hd6 := (bank_row6_disjoint R.toRowData Sn Sw K.payᶜ).mono_left K.available
+  change Disjoint K.keep (rowMask R.len 6 K.payᶜ) at hd6
+  have hd7 : Disjoint (K.keep ∪ rowMask R.len 6 K.payᶜ) (fullRow R.toRowData 7) :=
     Finset.disjoint_union_left.mpr ⟨(bank_row7_disjoint R Sn Sw).mono_left K.available,
       rowMask_disjoint R.len 6 7 K.payᶜ Finset.univ (by decide)⟩
   rw [retainedTail, Finset.sum_union hd7, Finset.sum_union hd6,
-    row_sum, fullRow_sum, weight_compl, R.base6, R.base7]
+    row_sum, fullRow_sum, weight_compl, (show R.base 6 = -D.u from R.base6), R.base7]
   ring
 
 private def uvUsed {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : Finset (Occ R.len) :=
-  insert (Sum.inl 8) (insert (Sum.inl 7) (tUsed R K ∪ retainedTail R K))
+    (K : TSelection R.toRowData Sn Sw) : Finset (Occ R.len) :=
+  insert (Sum.inl 8) (insert (Sum.inl 7) (tUsed R.toRowData K ∪ retainedTail R K))
 
 private theorem uv_extension {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw)
-    (pre : Prefix R.f D.C (Sum.inl 0) (tUsed R K) (tHeight R K)) :
+    (K : TSelection R.toRowData Sn Sw)
+    (pre : Prefix R.f D.C (Sum.inl 0) (tUsed R.toRowData K) (tHeight R.toRowData K)) :
     Nonempty (Prefix R.f D.C (Sum.inl 0) (uvUsed R K)
       ((D.z - D.a0) / 2 + R.f (Sum.inl 8))) := by
   classical
-  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D
-  obtain ⟨hell0, hW0, hell, hhi, hW, hwidth⟩ := gate_limits D
+  obtain ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP, hq, hHw, hwb, hzmax⟩ := arithmetic_geometry D.toPrefixArithmetic
+  obtain ⟨hell0, hW0, hell, hhi, hW, hwidth⟩ := gate_limits D.toPrefixArithmetic
   have h2C : 2 * D.C = D.N - 1 := by have hN := D.N_quarter; have hC := D.C_quarter; omega
   have hhalf : 2 * ((D.z - D.a0) / 2) = D.z - D.a0 := by
     have hz := D.odd_z; have ha := D.odd_a0; omega
-  have hend : tHeight R K + ∑ o ∈ retainedTail R K, R.f o =
+  have hend : tHeight R.toRowData K + ∑ o ∈ retainedTail R K, R.f o =
       -R.f (Sum.inl 7) + (D.z - D.a0) / 2 := by
     rw [retained_sum]
     dsimp only [tHeight]
-    have hpu := congrArg (fun v : ℤ => v * D.u) R.pow6
+    have hpu := congrArg (fun v : ℤ => v * D.u) (show 2 * (2 : ℤ) ^ R.len 6 = D.F from R.pow6)
     nlinarith only [R.next7, hpu, R.large6, R.large7, D.y_source, hell, hhalf]
-  have hpostU : tHeight R K + (∑ o ∈ retainedTail R K, R.f o) +
+  have hpostU : tHeight R.toRowData K + (∑ o ∈ retainedTail R K, R.f o) +
       R.f (Sum.inl 7) = (D.z - D.a0) / 2 := by omega
   have hUneg : R.f (Sum.inl 7) < 0 := by
     nlinarith only [R.large7, mul_pos (show 0 < D.F by have hh := D.F_two; omega) hu0]
@@ -183,9 +123,9 @@ private theorem uv_extension {D : Arithmetic} (R : RowData D)
     intro o ho
     rcases Finset.mem_union.mp ho with ho | ho
     · rcases Finset.mem_union.mp ho with ho | ho
-      · exact bank_small R Sn Sw o (K.available ho)
-      · exact row_small R 6 K.payᶜ o ho
-    · exact row_small R 7 Finset.univ o ho
+      · exact bank_small R.toRowData Sn Sw o (K.available ho)
+      · exact row_small R.toRowData 6 K.payᶜ o ho
+    · exact row_small R.toRowData 7 Finset.univ o ho
   obtain ⟨preS⟩ := prefix_batch pre (retainedTail R K) (D.Q - 1)
     (by have hh := D.Q_positive; omega) (by have hh := D.C_quarter; omega)
     (tail_disjoint R K) hsmall (by simpa only [hend] using hbefore)
@@ -213,11 +153,11 @@ private theorem uv_extension {D : Arithmetic} (R : RowData D)
     (show Nonempty (Prefix R.f D.C (Sum.inl 0) _ _) from ⟨preV⟩)
 
 private def terminal {D : Arithmetic} (R : RowData D) : Finset (Occ R.len) :=
-  {Sum.inl 9} ∪ fullRow R 8 ∪ fullRow R 9
+  {Sum.inl 9} ∪ fullRow R.toRowData 8 ∪ fullRow R.toRowData 9
 
 private theorem terminal_complement {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw) : (uvUsed R K)ᶜ = terminal R := by
+    (K : TSelection R.toRowData Sn Sw) : (uvUsed R K)ᶜ = terminal R := by
   classical
   have hkeep (i : Fin 10) : Sum.inl i ∉ K.keep := by
     intro hi; have hb := K.available hi; simpa (disch := decide) [bank, fullRow] using hb
@@ -230,17 +170,9 @@ private theorem terminal_complement {D : Arithmetic} (R : RowData D)
       simp (disch := decide) [uvUsed, tUsed, tSmall, retainedTail, wjUsed,
         firstParents, initialSmall, bank, fullRow, terminal, hk] at * <;> tauto
 
-private theorem inStrip_map {α β : Type*} (g : α → β) (s : β → ℤ)
-    (C h : ℤ) (word : List α) :
-    InStrip s C h (word.map g) ↔ InStrip (fun a => s (g a)) C h word := by
-  induction word generalizing h with
-  | nil => rfl
-  | cons a word ih => simpa only [List.map_cons, InStrip] using
-      (and_congr_right (fun _ => and_congr_right (fun _ => ih (h + s (g a)))))
-
 private theorem complete_occurrences {D : Arithmetic} (R : RowData D)
     {Sn : Finset (Fin (R.len 2))} {Sw : Finset (Fin (R.len 4))}
-    (K : TSelection R Sn Sw)
+    (K : TSelection R.toRowData Sn Sw)
     (pre : Prefix R.f D.C (Sum.inl 0) (uvUsed R K)
       ((D.z - D.a0) / 2 + R.f (Sum.inl 8))) :
     Nonempty (Prefix R.f D.C (Sum.inl 0) Finset.univ 0) := by
@@ -283,8 +215,8 @@ private theorem complete_occurrences {D : Arithmetic} (R : RowData D)
       · have heq := Finset.mem_singleton.mp hm
         simp only [s, heq]
         exact R.bound 9
-      · exact (row_small R 8 Finset.univ _ hm).trans (by have hh := D.C_quarter; have hq := D.Q_positive; omega)
-    · exact (row_small R 9 Finset.univ _ hm).trans (by have hh := D.C_quarter; have hq := D.Q_positive; omega)
+      · exact (row_small R.toRowData 8 Finset.univ _ hm).trans (by have hh := D.C_quarter; have hq := D.Q_positive; omega)
+    · exact (row_small R.toRowData 9 Finset.univ _ hm).trans (by have hh := D.C_quarter; have hq := D.Q_positive; omega)
   have hs : ∀ j ∈ rem, 2 * s j ≤ D.C := by
     intro j hj
     have hm := (hmem j).mp hj
@@ -296,10 +228,10 @@ private theorem complete_occurrences {D : Arithmetic} (R : RowData D)
         rw [heq]
         have hq := D.Q_positive; have hc := D.C_quarter
         omega
-      · have hh := abs_le.mp (row_small R 8 Finset.univ _ hm)
+      · have hh := abs_le.mp (row_small R.toRowData 8 Finset.univ _ hm)
         have hc := D.C_quarter
         dsimp only [s]; omega
-    · have hh := abs_le.mp (row_small R 9 Finset.univ _ hm)
+    · have hh := abs_le.mp (row_small R.toRowData 9 Finset.univ _ hm)
       have hc := D.C_quarter
       dsimp only [s]; omega
   have hn : ∀ j ∈ rem, ∀ l ∈ rem,
@@ -310,11 +242,11 @@ private theorem complete_occurrences {D : Arithmetic} (R : RowData D)
       rcases Finset.mem_union.mp hm with hm | hm
       · rcases Finset.mem_union.mp hm with hm | hm
         · exact Finset.mem_singleton.mp hm
-        · have hh := abs_le.mp (row_small R 8 Finset.univ _ hm)
+        · have hh := abs_le.mp (row_small R.toRowData 8 Finset.univ _ hm)
           have hc := D.C_quarter
           dsimp only [s] at hjl
           omega
-      · have hh := abs_le.mp (row_small R 9 Finset.univ _ hm)
+      · have hh := abs_le.mp (row_small R.toRowData 9 Finset.univ _ hm)
         have hc := D.C_quarter
         dsimp only [s] at hjl
         omega
