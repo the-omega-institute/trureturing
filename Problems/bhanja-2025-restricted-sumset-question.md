@@ -15,6 +15,11 @@ url: https://arxiv.org/abs/2307.03977v2
 J. Bhanja, *Sumsets with a minimum number of distinct terms*, Integers 25
 (2025), A12, arXiv:2307.03977v2, §4 “Further Remarks”, printed p. 11:
 
+> Another sumset that may come immediately to the reader’s mind is the sumset
+> h(≤r) A, which contains those elements of the group G that are the sum of h elements
+> of A with at most r distinct elements. The sumset hA is a special case of h(≤r) A
+> for r = h.
+
 > Question 1. Is it always the case that the minimum size of both the sumsets hA
 > and h(≤r) A are the same in any abelian group G, where the minimum runs over the
 > subsets of G of size (say) k?
