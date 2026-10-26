@@ -6,6 +6,7 @@
    utility: none
    digest: Exact original-edge two-colouring and odd-component obstruction. -/
 import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Max
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
