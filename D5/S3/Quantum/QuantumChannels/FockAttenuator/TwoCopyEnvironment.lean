@@ -99,17 +99,19 @@ theorem environment_marginal :
   rw [Finset.sum_insert (by decide : (0 : ℕ) ∉ ({2, 4} : Finset ℕ)),
     Finset.sum_insert (by decide : (2 : ℕ) ∉ ({4} : Finset ℕ)),
     Finset.sum_singleton]
-  simp only [environment_slice, if_pos rfl,
-    if_neg (by decide : (2 : ℕ) ≠ 0), if_neg (by decide : (4 : ℕ) ≠ 0),
-    if_neg (by decide : (4 : ℕ) ≠ 2)]
-  rw [show (-1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
-  simp only [real_scaled_rankOne]
-  have hs : (Real.sqrt (6 : ℝ) : ℂ) ^ 2 = 6 := by
-    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)
-  push_cast
-  match_scalars <;> ring_nf
-  all_goals simp_all only [hs]
-  all_goals norm_num
+  have h0 : rotatedEnvironment 0 = ((Real.sqrt 6 / 4 : ℝ) : ℂ) • e 4 := by
+    simp [environment_slice]
+  have h2 : rotatedEnvironment 2 = ((-1 / 2 : ℝ) : ℂ) • e 2 := by
+    norm_num [environment_slice]
+  have h4 : rotatedEnvironment 4 = ((Real.sqrt 6 / 4 : ℝ) : ℂ) • e 0 := by
+    simp [environment_slice]
+  have hc : (Real.sqrt 6 / 4 : ℝ) ^ 2 = 3 / 8 := by
+    rw [div_pow, Real.sq_sqrt (by norm_num)]
+    norm_num
+  rw [h0, h2, h4, real_scaled_rankOne, real_scaled_rankOne,
+    real_scaled_rankOne, hc]
+  norm_num
+  abel
 
 /-- The compression bound is an operator inequality on the whole completed
 one-mode space. The three occupied modes do not impose an input cutoff. -/

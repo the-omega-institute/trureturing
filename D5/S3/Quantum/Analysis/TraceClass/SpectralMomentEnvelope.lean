@@ -38,7 +38,7 @@ private def spectralData {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
   obtain ⟨w, b, s, hn, he, hs, _⟩ :=
     TraceClassSpectral.exists_nonneg_trace_spectral_data hT hTC
   letI : Countable (Function.support s) := hs.countable_support.to_subtype
-  letI : Encodable (Function.support s) := Countable.toEncodable _
+  letI : Encodable (Function.support s) := Encodable.ofCountable _
   exact ⟨⟨w, b, s, hn, he, ⟨Encodable.encode, Encodable.encode_injective⟩⟩⟩
 
 def spectrum {T : H →L[ℂ] H} (d : CountableSpectralData T) : ℕ → ℝ :=
@@ -108,10 +108,12 @@ private theorem spectrum_power_hasSum {T : H →L[ℂ] H} (d : CountableSpectral
   have hext : (fun k => spectrum d k ^ (n + 1)) =
       Function.extend d.embed (fun i : Function.support d.value => d.value i ^ (n + 1)) 0 := by
     funext k
-    simpa only [spectrum, Function.comp_def, Pi.zero_apply,
-      zero_pow (by omega : n + 1 ≠ 0)] using
-      Function.apply_extend (g := fun i : Function.support d.value => d.value i)
-        (fun z : ℝ => z ^ (n + 1)) d.embed 0 k
+    by_cases hk : ∃ i, d.embed i = k
+    · obtain ⟨i, rfl⟩ := hk
+      rw [spectrum, d.embed.injective.extend_apply, d.embed.injective.extend_apply]
+    · rw [spectrum, Function.extend_apply' _ _ _ hk,
+        Function.extend_apply' _ _ _ hk]
+      exact zero_pow (by omega : n + 1 ≠ 0)
   rw [hext]
   exact (hasSum_extend_zero d.embed.injective).mpr hs
 
