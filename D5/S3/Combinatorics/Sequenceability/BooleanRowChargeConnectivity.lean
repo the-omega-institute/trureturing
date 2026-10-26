@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected]
    utility: none
-   digest: Two-torsion labels connect original minimal zero supports through shared nonterminal indices. -/
+   digest: Two-torsion connects original minimal zero supports through nonterminal intersections. -/
 
 import D5.S3.Combinatorics.Sequenceability.DisjointMinimalZeroOrdering
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -25,7 +25,7 @@ namespace D5.S3.Combinatorics.Sequenceability.BooleanRowChargeConnectivity
 open scoped BigOperators
 open DisjointMinimalZeroOrdering (MinimalZeroSupport zero_decomposition)
 universe u v
-variable {α : Type u} [DecidableEq α] {G : Type v} [AddCommGroup G]
+variable {α : Type u} {G : Type v} [AddCommGroup G]
 
 /-- All original support vertices are retained, including those omitting q.
 Distinct vertices are adjacent when they share an original index other than q. -/
@@ -94,11 +94,11 @@ theorem two_charge_supports_connected
       ⟨(Finset.mem_erase.mp hju).2, (Finset.mem_erase.mp hjt).2⟩
   have hsumu : (∑ j ∈ u.val.erase q, f j) = - f q := by
     apply eq_neg_iff_add_eq_zero.mpr
-    rw [Finset.sum_erase_add _ hqu]
+    rw [Finset.sum_erase_add _ _ hqu]
     exact hu.2.1
   have hsumt : (∑ j ∈ t.val.erase q, f j) = - f q := by
     apply eq_neg_iff_add_eq_zero.mpr
-    rw [Finset.sum_erase_add _ hqt]
+    rw [Finset.sum_erase_add _ _ hqt]
     exact ht.2.1
   have hAz : (∑ j ∈ A, f j) = 0 := by
     calc
