@@ -17,16 +17,14 @@ M. A. Jivulescu, C. Lancien and I. Nechita, *Multipartite Entanglement Detection
 > The main question that remains unanswered at this point is whether our family of entanglement criteria is complete, without allowing for permutation of indices before applying the testers. Concretely, we would like to know if, for any entangled state $\rho$ on $\mathbb C^{d_1}\otimes\cdots\otimes\mathbb C^{d_m}$, there exist testers $\mathcal E_i:S_1^{d_i}\to\ell_2^{n_i}$, $1\leq i\leq m$, such that $\|\mathcal E_1\otimes\cdots\otimes\mathcal E_m(\rho)\|_{\ell_2^{n_1}\otimes_\pi\cdots\otimes_\pi\ell_2^{n_m}}>1$. Even for bipartite states we are only able to show a weaker version of this statement (see Section \ref{sec:completeness}).
 
 The source defines the projective tensor norm by the infimum of the sums of products of factor norms (Definition, `main.tex`, lines 234–238), the trace norm by $\|X\|_1=\operatorname{Tr}\sqrt{X^*X}$ (`main.tex`, lines 288–290), and a complex tester as a complex-linear map of norm exactly one from the Schatten-1 space to the Euclidean space (`main.tex`, lines 340–352). Its Werner state is
-\[
-\sigma_\mu=\mu\frac{I+F}{d(d+1)}+(1-\mu)\frac{I-F}{d(d-1)},\qquad 0\leq\mu\leq1
-\]
+$\sigma_\mu=\mu\frac{I+F}{d(d+1)}+(1-\mu)\frac{I-F}{d(d-1)},\qquad 0\leq\mu\leq1$
 (`main.tex`, line 946).
 
-The Lean declaration `claim` is the bipartite instance. For every $d_1,d_2$, every matrix $\rho$ on $(\operatorname{Fin}d_1\times\operatorname{Fin}d_2)$ that is positive semidefinite, has trace $1$, and is not `Separable`, it requires natural output dimensions and complex-linear maps $e_1,e_2$ such that each `IsTester` holds and
-\[
-1<\operatorname{projNorm}(\operatorname{testerImage}(e_1,e_2,\rho)).
-\]
-Here `IsTester e` is exactly the conjunction $\forall x,\ \|e x\|\leq\operatorname{traceNorm}(x)$ and $\exists x,\ x\neq0\land\|e x\|=\operatorname{traceNorm}(x)$. The formal `Separable` predicate is membership in the real convex hull of tensor products of positive semidefinite trace-one matrices, and `projNorm` is the displayed $sInf$ over finite matrix decompositions in the module.
+The Lean declaration `claim : Prop` is the bipartite instance. For every $d_1,d_2:\mathbb N$ and every $\rho:\operatorname{Matrix}(\operatorname{Fin}d_1\times\operatorname{Fin}d_2)(\operatorname{Fin}d_1\times\operatorname{Fin}d_2)\,\mathbb C$, its hypotheses are `ρ.PosSemidef`, `ρ.trace = 1`, and `¬ Separable ρ`; its conclusion requires $n_1,n_2:\mathbb N$ and complex-linear maps $e_i:\operatorname{Matrix}(\operatorname{Fin}d_i)(\operatorname{Fin}d_i)\,\mathbb C\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n_i)$ satisfying `IsTester e₁ ∧ IsTester e₂ ∧ 1 < ‖testerImage e₁ e₂ ρ‖`.
+
+Here `IsTester e` is exactly the conjunction $\forall x,\ \|e x\|\leq\operatorname{traceNorm}(x)$ and $\exists x,\ x\neq0\land\|e x\|=\operatorname{traceNorm}(x)$. The formal `Separable` predicate is membership in the real convex hull of matrices `Matrix.kroneckerMap (· * ·) ρ₁ ρ₂`, where each factor is positive semidefinite with trace $1$.
+
+The output of `testerImage` has type `⨂[ℂ] s : Bool, EuclideanSpace ℂ (Fin (cond s n₂ n₁))`: the `false` factor is the first Euclidean output space and the `true` factor is the second. Its norm $\|\cdot\|$ is Mathlib's bundled `PiTensorProduct.projectiveSeminorm` on this tensor product. This represents the source's $\ell_2^{n_1}\otimes_\pi\ell_2^{n_2}$ norm from `main.tex`, lines 234–238: the two factors carry their Euclidean norms, and each finite pure-tensor expansion has cost equal to the sum of the products of those factor norms. Mathlib permits explicit complex scalar coefficients in these expansions; absorbing each coefficient into either factor gives the source's convention, with the same cost. The tensor norm notation and application of `PiTensorProduct.projectiveSeminorm` are definitionally equal.
 
 The settlement is the negation of this bipartite claim. The source's universal multipartite question is therefore already false at two parties.
 
@@ -36,7 +34,7 @@ The paper presents testers as a way to turn mixed-state entanglement detection i
 
 ## Gap
 
-The preregistration issue [#22210](https://github.com/the-omega-institute/trureturing/issues/22210) records a Tier 1 literature check before formalization. It read the arXiv v1 source, the eight citing works listed by Semantic Scholar, the 2024 IHP talk abstract, a web search, and the MathDB entry for the completeness question. No answer was found in that searched scope, and no repository module, Library note, or dossier had settled the question.
+The bounded Tier 1 literature check in issue [#22210](https://github.com/the-omega-institute/trureturing/issues/22210) covers the arXiv v1 source, the eight citing works listed by Semantic Scholar, the IHP talk abstract, a web search, and the MathDB entry for the completeness question. It identifies no answer within that scope; this is not an exhaustive novelty claim.
 
 The formal gap is the universal claim above: a single entangled density matrix for which every pair of trace-norm contractions has projective image norm at most $1$ is enough to refute it.
 
@@ -44,28 +42,34 @@ The formal gap is the universal claim above: a single entangled density matrix f
 
 The module follows a finite fourth-root design and a swap witness.
 
-1. **Formal objects.** `IsTester`, `testerImage`, `projNorm`, `Separable`, `werner`, and `claim` are the definitions used by `result`. The `projNorm` infimum is handled by `projective_decomposition_bound`, whose hypotheses are a finite index type, two vector families, and the bounds $\sum_t\|a_t\|^2\leq1$ and $\sum_t\|b_t\|^2\leq1$; it constructs a finite decomposition and proves its nonnegative cost is at most $1$.
+1. **Formal objects and the tensor estimate.** The public definitions are `IsTester`, `tensorPair`, `testerImage`, `Separable`, `werner`, and `claim`. For arbitrary $n_1,n_2:\mathbb N$, `tensorPair` is complex-linear in each of its two Euclidean arguments and returns `PiTensorProduct.tprod ℂ (Bool.rec a b)`. For arbitrary $d_1,d_2,n_1,n_2:\mathbb N$, maps $e_1,e_2$ of the types in `claim`, and a matrix $\rho$ of the corresponding product dimension, `testerImage e₁ e₂ ρ` is the tensor
+   $\sum_{i,j,k,l}\rho_{(i,j),(k,l)}\,\operatorname{tensorPair}(e_1(\operatorname{Matrix.single}\ i\ k\ 1),e_2(\operatorname{Matrix.single}\ j\ l\ 1))$.
+   The public `werner (d : ℕ) (μ : ℝ)` is the symmetric/antisymmetric mixture displayed in `Problem`, using the coordinate-swap permutation matrix for $F$; its definition imposes no range hypotheses.
 
-2. **The design.** For `hd : 0 < d`, `design_weight_sum hd` proves that the design weights sum to $1$, `design_density hd t` proves positivity and trace one for each design projector, `design_second_entry hd i j k l` proves the weighted second-entry identity for every $i,j,k,l:\operatorname{Fin}d$, and `design_first hd` proves the weighted mean is `designAverage d`. The theorem `design_second_moment` assumes `hd : 0 < d`, a complex-linear map $e$, and `h : \forall x, \|e x\|\leq\operatorname{traceNorm}(x)`; it concludes
-\[
-\|e(\operatorname{designAverage}d)\|^2+
-\sum_t\operatorname{designWeight}(d,t)\|e(\operatorname{designCentered}(d,t))\|^2\leq1.
-\]
-The theorem `werner_decomposition` assumes only `hd : 1 < d` and expresses `werner d μ` as the mean tensor square minus `correlation d μ` times the weighted centered tensor squares.
+   The private `tester_image_decomposition` has parameters `{d₁ d₂ n₁ n₂ : ℕ} {ι : Type*} [Fintype ι]`, the two complex-linear maps $e_1,e_2$, and matrix families $a:\iota\to\operatorname{Matrix}(\operatorname{Fin}d_1)(\operatorname{Fin}d_1)\,\mathbb C$ and $b:\iota\to\operatorname{Matrix}(\operatorname{Fin}d_2)(\operatorname{Fin}d_2)\,\mathbb C$. Without contraction hypotheses, it concludes
+   $\operatorname{testerImage}(e_1,e_2,\sum_t\operatorname{Matrix.kroneckerMap}(\cdot*\cdot)(a_t)(b_t))=\sum_t\operatorname{tensorPair}(e_1(a_t),e_2(b_t))$.
 
-3. **The range and the contraction bound.** `correlation_range` assumes `hd : 1 < d`, `hμ₀ : 1 / (d : ℝ) ≤ μ`, and `hμ₁ : μ < 1 / 2`; it proves $0\leq\operatorname{correlation}(d,\mu)\leq1$. `werner_bound` has the same three hypotheses and, for arbitrary $n_1,n_2$, arbitrary complex-linear maps $e_1,e_2$, and contraction hypotheses `h₁ : \forall x, ‖e₁ x‖ ≤ traceNorm x` and `h₂ : \forall x, ‖e₂ x‖ ≤ traceNorm x`, proves
-\[
-\operatorname{projNorm}(\operatorname{testerImage}(e_1,e_2,\operatorname{werner}(d,\mu)))\leq1.
-\]
-Its proof applies `tester_image_decomposition` and `projective_decomposition_bound` to the finite design decomposition. The contraction hypotheses are deliberately weaker than `IsTester`, so the bound also covers every tester.
+   The private `projective_decomposition_bound` has parameters `{n₁ n₂ : ℕ} {ι : Type*} [Fintype ι]`, Euclidean vector families $a:\iota\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n_1)$ and $b:\iota\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n_2)$, and hypotheses `ha : ∑ t, ‖a t‖ ^ 2 ≤ 1` and `hb : ∑ t, ‖b t‖ ^ 2 ≤ 1`. Its conclusion is exactly `‖∑ t, tensorPair (a t) (b t)‖ ≤ 1`. Cauchy–Schwarz bounds the sum of products of norms; the triangle inequality and `PiTensorProduct.projectiveSeminorm_tprod_le` bound the tensor norm by that sum. The Mathlib theorem applies to a family $m$ in finitely many seminormed spaces over a normed field, each a normed space over that field, and concludes $\|\bigotimes_i m_i\|\leq\prod_i\|m_i\|$; here the field is $\mathbb C$ and the index type is `Bool`.
 
-4. **Density and entanglement.** `werner_density` assumes `hd : 1 < d`, `hμ₀ : 0 ≤ μ`, and `hμ₁ : μ ≤ 1`; it proves that `werner d μ` is positive semidefinite and has trace $1$. `separable_flip_nonneg` assumes `h : Separable ρ` for a matrix $\rho$ of equal local dimension $d$ and proves $0\leq\operatorname{flipReadout}(d,\rho)$. With `hd : 1 < d`, `werner_readout` computes the readout of `werner d μ` as $2\mu-1$. Consequently, `werner_entangled` assumes `hd : 1 < d` and `hμ : μ < 1 / 2` and proves $\neg\operatorname{Separable}(\operatorname{werner}(d,\mu))$.
+2. **The design.** All the design declarations and the decomposition theorem in this item are private. `DesignIndex (d : ℕ)` abbreviates `Fin d ⊕ (Fin d → Fin 4)`. Write $w_t=\operatorname{designWeight}\ d\ t$, $P_t=\operatorname{designProjector}\ d\ t$, $m=\operatorname{designAverage}\ d$, and $C_t=\operatorname{designCentered}\ d\ t$. The weights are $1/(d(d+1))$ on the basis indices and $d/((d+1)4^d)$ on the phase indices; the projectors are the corresponding basis projectors and $d^{-1}$ times the outer products of fourth-root phase vectors. The definitions give $m=d^{-1}I$ and $C_t=P_t-m$.
 
-5. **Family theorem and refutation.** `werner_family` assumes `hd : 3 ≤ d`, `hμ₀ : 1 / (d : ℝ) ≤ μ`, and `hμ₁ : μ < 1 / 2`; it returns positivity, trace one, nonseparability, and the uniform projective bound for every pair of maps satisfying the two contraction hypotheses. `result` applies this theorem at $d=3$ and $\mu=1/3$. If `claim` supplied two `IsTester` maps for that state, their contraction conjuncts would give a projective norm at most $1$, contradicting the strict inequality required by `claim`.
+   For arbitrary `d : ℕ` and `t : DesignIndex d`, `design_weight_nonneg d t` concludes `0 ≤ designWeight d t`. With `{d : ℕ}` and `hd : 0 < d`, `design_weight_sum hd` concludes $\sum_t w_t=1$, `design_density hd t` concludes `(designProjector d t).PosSemidef ∧ (designProjector d t).trace = 1` for each `t : DesignIndex d`, and `design_first hd` concludes $\sum_t w_t\,P_t=m$. Under the same `hd`, for every `i j k l : Fin d`, `design_second_entry hd i j k l` concludes
+   $\sum_t(w_t:\mathbb C)(P_t)_{ik}(P_t)_{jl}=\frac{1}{(d:\mathbb C)(d+1)}\bigl(\mathbf1_{i=k\,\land\,j=l}+\mathbf1_{i=l\,\land\,j=k}\bigr)$.
+
+   The private `design_second_moment` has parameters `{d n : ℕ}`, `hd : 0 < d`, a complex-linear map $e:\operatorname{Matrix}(\operatorname{Fin}d)(\operatorname{Fin}d)\,\mathbb C\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n)$, and `h : ∀ x, ‖e x‖ ≤ traceNorm x`. Its conclusion is $\|e(m)\|^2+\sum_t w_t\|e(C_t)\|^2\leq1$.
+
+   The private `correlation (d : ℕ) (μ : ℝ)` is $c=(d+1-2\mu d)/(d-1)$. The private `werner_decomposition` has parameters `{d : ℕ}`, `hd : 1 < d`, and arbitrary `μ : ℝ`; its conclusion is
+   $\operatorname{werner}\ d\ \mu=\operatorname{Matrix.kroneckerMap}(\cdot*\cdot)(m)(m)-c\,\sum_t w_t\,\operatorname{Matrix.kroneckerMap}(\cdot*\cdot)(C_t)(C_t)$.
+
+3. **The range and the contraction bound.** The private `correlation_range` has parameters `{d : ℕ} {μ : ℝ}` and hypotheses `hd : 1 < d`, `hμ₀ : 1 / (d : ℝ) ≤ μ`, and `hμ₁ : μ < 1 / 2`; its conclusion is `0 ≤ correlation d μ ∧ correlation d μ ≤ 1`. The private `werner_bound` has parameters `{d n₁ n₂ : ℕ} {μ : ℝ}`, the same three hypotheses, arbitrary complex-linear maps $e_i:\operatorname{Matrix}(\operatorname{Fin}d)(\operatorname{Fin}d)\,\mathbb C\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n_i)$, and `h₁ : ∀ x, ‖e₁ x‖ ≤ traceNorm x` and `h₂ : ∀ x, ‖e₂ x‖ ≤ traceNorm x`. Its conclusion is exactly `‖testerImage e₁ e₂ (werner d μ)‖ ≤ 1`. Its proof applies `tester_image_decomposition` and `projective_decomposition_bound` to the finite design decomposition. The contraction hypotheses follow from the first conjunct of each `IsTester` assumption, so the bound covers every tester.
+
+4. **Density and entanglement.** The declarations in this item are private. For `{d : ℕ} {μ : ℝ}`, `werner_density` assumes `hd : 1 < d`, `hμ₀ : 0 ≤ μ`, and `hμ₁ : μ ≤ 1` and concludes `(werner d μ).PosSemidef ∧ (werner d μ).trace = 1`. The real-linear map `flipReadout (d : ℕ)` sends a matrix $\rho$ on `Fin d × Fin d` to $\operatorname{Re}\operatorname{Tr}(F\rho)$. With `{d : ℕ}`, such a matrix $\rho$, and `h : Separable ρ`, `separable_flip_nonneg ρ h` concludes `0 ≤ flipReadout d ρ`. With `{d : ℕ}`, `hd : 1 < d`, and arbitrary `μ : ℝ`, `werner_readout hd μ` concludes `flipReadout d (werner d μ) = 2 * μ - 1`. Finally, for `{d : ℕ} {μ : ℝ}`, `werner_entangled` assumes `hd : 1 < d` and `hμ : μ < 1 / 2` and concludes `¬ Separable (werner d μ)`.
+
+5. **Family theorem and refutation.** The public `werner_family (d : ℕ) (μ : ℝ)` assumes `hd : 3 ≤ d`, `hμ₀ : 1 / (d : ℝ) ≤ μ`, and `hμ₁ : μ < 1 / 2`. Its conclusion is `(werner d μ).PosSemidef ∧ (werner d μ).trace = 1 ∧ ¬ Separable (werner d μ) ∧` the following universal bound: for every `n₁ n₂ : ℕ` and every complex-linear $e_i:\operatorname{Matrix}(\operatorname{Fin}d)(\operatorname{Fin}d)\,\mathbb C\to\operatorname{EuclideanSpace}\,\mathbb C\,(\operatorname{Fin}n_i)$, the hypotheses `∀ x, ‖e₁ x‖ ≤ traceNorm x` and `∀ x, ‖e₂ x‖ ≤ traceNorm x` imply `‖testerImage e₁ e₂ (werner d μ)‖ ≤ 1`. The public `result : ¬ claim` has no hypotheses. Its proof applies `werner_family` at $d=3$ and $\mu=1/3$; the contraction conjuncts of the two testers supplied by `claim` would contradict its required strict norm inequality.
 
 ## Falsifier
 
-The refutation would not match the source question if any of the following formal identifications changed: `IsTester` would have to cease expressing a trace-norm contraction attaining equality at a nonzero matrix; `testerImage` would have to differ from the tensor-product coordinate expansion of the two maps; `projNorm` would have to use a different finite-decomposition infimum; `Separable` would have to use a different real convex hull of product density matrices; or `werner` would have to differ from the symmetric/antisymmetric mixture above. It would also fail to refute the claim if `result` did not have the exact type $\neg\,\mathrm{claim}$.
+The source identification requires `IsTester` to express a trace-norm contraction attaining equality at a nonzero matrix; `tensorPair` to form the pure tensor of the two Euclidean outputs; `testerImage` to apply the two maps through the matrix-unit expansion into that `PiTensorProduct`; its bundled `PiTensorProduct.projectiveSeminorm`, written $\|\cdot\|$, to represent the source's Euclidean projective tensor norm; `Separable` to be the real convex hull of product density matrices; and `werner` to be the symmetric/antisymmetric mixture above. A mismatch in any of these identifications would invalidate the interpretation as a refutation of the source question. The compiled conclusion must be exactly `result : ¬ claim`; a norm estimate for a different tensor space or a different class of maps would not suffice.
 
 ## Evidence
 
@@ -80,22 +84,20 @@ Declaration statements:
 
 ## Triage
 
-Tier 1 open question of the 2022 journal article, preregistered in issue #22210 before any Lean.
+Tier 1 open question of the cited journal article; literature scope is given in issue #22210.
 `theorem`; resolution `refuted`.
 
-The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; the per-declaration proof shapes are listed in the delivery PR. There is no digestion atom.
+The module uses the open-problem-resolution basis of CLAUDE.md §3.2. There is no digestion atom.
 
 ### What the settlement shows
 
-**Proved by `result`:** `claim` is false. In exact terms, it is false that for every pair of natural local dimensions and every positive semidefinite trace-one matrix that is not `Separable`, there exist natural output dimensions and complex-linear maps satisfying `IsTester` on both sides and having
-\[
-1<\operatorname{projNorm}(\operatorname{testerImage}(e_1,e_2,\rho)).
-\]
+**Proved by `result : ¬ claim`:** it is false that for every pair of natural local dimensions and every positive semidefinite trace-one matrix that is not `Separable`, there exist natural output dimensions and complex-linear maps satisfying `IsTester` on both sides and having $1<\|\operatorname{testerImage}(e_1,e_2,\rho)\|$ in the `Bool`-indexed tensor product of their Euclidean output spaces, with Mathlib's bundled projective norm.
 
-**Computed, not formalized.** The preregistration issue's orchestrator report records that the upper bound is attained by trace maps, so the supremum over testers is exactly $1$ for every $d\ge3$ and $\mu\in[1/d,1/2)$.
+**Computed, not formalized.** Issue #22210 reports trace-map attainment and an exact supremum over testers of $1$ for every $d\ge3$ and $\mu\in[1/d,1/2)$.
 
 **Argued, not formalized.**
-- **Mechanism of failure.** The supporting theorem `werner_family` identifies the missing structure: on the interval $1/d\leq\mu<1/2$, the Werner matrix is entangled while every pair of trace-norm contractions has image projective norm at most $1$. The finite fourth-root design supplies a common centered second-moment decomposition, and the weighted Cauchy–Schwarz estimate controls both output families. This explains why choosing larger output dimensions or requiring exact norm attainment cannot rescue the unpermuted criterion for this family.
+
+- **Mechanism of failure.** The supporting theorem `werner_family` identifies the missing structure: for $d\ge3$ and $1/d\leq\mu<1/2$, the Werner matrix is positive semidefinite with trace $1$ and is not `Separable`, while every pair of complex-linear maps satisfying the trace-norm contraction hypotheses has image projective norm at most $1$. The finite fourth-root design supplies a common centered second-moment decomposition, and the weighted Cauchy–Schwarz estimate controls both output families. This explains why choosing larger output dimensions or requiring exact norm attainment cannot rescue the unpermuted criterion for this family.
 - **Nearby statements.** The formal refutation uses the qutrit instance $(d,\mu)=(3,1/3)$; the supporting theorem covers all $d\ge3$ and $1/d\leq\mu<1/2$. It does not settle completeness after an index permutation, the source's separate statements about realignment or SIC POVM testers, or restricted variants of the tester class.
 - **Effect on the source.** The source's positive result that every entangled bipartite mixed state can be detected after a permutation of indices, and its results for pure states and the named symmetric testers, do not assert `claim` and are unaffected. The unpermuted bipartite question is answered negatively, so the source's universal multipartite question is also false under its stated quantifiers because its two-party instance already fails. No theorem in the source is obtained here from assuming completeness.
 
