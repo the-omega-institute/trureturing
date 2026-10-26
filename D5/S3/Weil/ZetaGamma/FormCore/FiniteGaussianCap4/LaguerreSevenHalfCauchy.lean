@@ -44,13 +44,13 @@ theorem one_sub_mem_slitPlane {z : ℂ} (hz : ‖z‖ < 1) :
 theorem generating_differentiableAt (x : ℝ) {z : ℂ} (hz : ‖z‖ < 1) :
     DifferentiableAt ℂ (generating x) z := by
   have hd : DifferentiableAt ℂ (fun w : ℂ => 1 - w) z :=
-    differentiableAt_const.sub differentiableAt_id
+    (differentiableAt_const (1 : ℂ)).sub differentiableAt_id
   have hne : (1 : ℂ) - z ≠ 0 :=
     Complex.slitPlane_ne_zero (one_sub_mem_slitPlane hz)
   have he : DifferentiableAt ℂ
       (fun w : ℂ => -(x : ℂ) * (1 + w) / (1 - w)) z :=
-    (differentiableAt_const.mul
-      (differentiableAt_const.add differentiableAt_id)).div hd hne
+    ((differentiableAt_const (-(x : ℂ))).mul
+      ((differentiableAt_const (1 : ℂ)).add differentiableAt_id)).div hd hne
   exact (hd.cpow_const (one_sub_mem_slitPlane hz)).mul he.cexp
 
 /-- Cauchy's hypotheses hold on every smaller closed disk. -/
@@ -136,7 +136,7 @@ theorem phi_coefficient_bound (x : ℝ) (hx : 0 ≤ x) {r : ℝ}
     Complex.norm_real, Real.norm_eq_abs] at hc
   have hfact : 0 < (n.factorial : ℝ) := by positivity
   have hquot : |phi x n| ≤ C / r ^ n := by
-    apply (mul_le_mul_left hfact).mp
+    apply (mul_le_mul_iff_right₀ hfact).mp
     simpa only [mul_div_assoc] using hc
   calc
     |phi x n| ≤ C / r ^ n := hquot

@@ -287,9 +287,9 @@ theorem generating_hasFPowerSeriesAt (x : ℝ) :
   · intro z hz
     have hz' : ‖z‖ < 1 := by
       have : ‖z‖ < (1 / 2 : ℝ) := by
-        rw [show ((1 / 2 : NNReal) : ENNReal) =
-          ENNReal.ofReal (1 / 2 : ℝ) by norm_num, Metric.eball_ofReal] at hz
-        simpa using hz
+        have hnn : ‖z‖₊ < (1 / 2 : NNReal) :=
+          ENNReal.coe_lt_coe.mp (by simpa [enorm_eq_nnnorm] using hz)
+        exact_mod_cast hnn
       linarith
     simpa [p, FormalMultilinearSeries.ofScalars] using phi_hasSum_complex x z hz'
 
