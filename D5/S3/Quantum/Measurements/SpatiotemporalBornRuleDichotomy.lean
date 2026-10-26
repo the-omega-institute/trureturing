@@ -8,12 +8,12 @@
 
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import Mathlib.Analysis.Matrix.Spectrum
+import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 
 /-! Universal sequential Born representations and their channel dichotomy. -/
 
 noncomputable section
-open scoped BigOperators Kronecker
+open scoped BigOperators Kronecker ComplexOrder
 open Matrix
 
 namespace D5.S3.Quantum.Measurements.SpatiotemporalBornRuleDichotomy
@@ -48,7 +48,8 @@ private lemma proj_single {d : ℕ} (i : Fin d) :
     IsProj (single i i (1 : ℂ)) := by
   constructor
   · simp only [single_mul_single_same, mul_one]
-  · simp only [IsHermitian, conjTranspose_single, star_one]
+  · change (single i i (1 : ℂ)).conjTranspose = single i i 1
+    rw [conjTranspose_single, star_one]
 
 private lemma proj_conj {d : ℕ} (u : unitary (Matrix (Fin d) (Fin d) ℂ))
     (p : Matrix (Fin d) (Fin d) ℂ) (hp : IsProj p) :
@@ -201,7 +202,8 @@ private lemma two_ray_equation {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
       ((a : ℂ) * b * star z) • outer u v + ((a : ℂ) * b * z) • outer v u := by
     rw [outer_combination]
     simp only [star_mul, Complex.star_def, Complex.conj_ofReal]
-    match_scalars <;> ring_nf <;> linear_combination (b : ℂ)^2 * hz
+    match_scalars <;> ring_nf
+    linear_combination (b : ℂ)^2 * hz
   have ht : outer w w * ρ * outer w w =
       ((r : ℂ) * (a : ℂ)^2 + s * (b : ℂ)^2) • outer w w := by
     rw [outer_sandwich]
@@ -270,12 +272,163 @@ private lemma two_eigenvector {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
         linear_combination ht - Complex.I * hs)).resolve_left (by norm_num)
     first | exact hz | linear_combination hs - hz
 
+private lemma outer_trace {d : ℕ} (u v : Fin d → ℂ) :
+    (outer u v).trace = star v ⬝ᵥ u := by
+  rw [outer, trace_vecMulVec, dotProduct_comm]
+
+private lemma degenerate_offdiag {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
+    (hρ : ρ.IsHermitian) (ε : MatrixMap (Fin d) (Fin e) ℂ)
+    (hid : ∀ p, IsProj p → ε (p * ρ + ρ * p) = (2 : ℂ) • ε (p * ρ * p))
+    (v : Fin d → Fin d → ℂ) (r : Fin d → ℝ)
+    (hon : ∀ i j, star (v i) ⬝ᵥ v j = if i = j then 1 else 0)
+    (heig : ∀ i, ρ *ᵥ v i = (r i : ℂ) • v i)
+    (σ : Matrix (Fin e) (Fin e) ℂ) (hdiag : ∀ i, ε (outer (v i) (v i)) = σ)
+    (i j k : Fin d) (hij : i ≠ j) (hr : r i = r j) (hk : r i ≠ r k) :
+    ε (outer (v i) (v j)) = 0 := by
+  have hki : k ≠ i := fun h => hk (congrArg r h.symm)
+  have hkj : k ≠ j := fun h => hk (hr.trans (congrArg r h.symm))
+  let a : ℂ := (Real.sqrt 2 : ℂ)⁻¹
+  have haa : a * a = (1 / 2 : ℂ) := by
+    simpa only [one_div] using
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
+  have ha : star a = a := by simp only [a, star_inv₀, Complex.star_def, Complex.conj_ofReal]
+  have hmix (z : ℂ) (hz : star z * z = 1) :
+      star z • ε (outer (v i) (v j)) + z • ε (outer (v j) (v i)) = 0 := by
+    let w := a • v i + (a * z) • v j
+    have hm : outer w w = (1 / 2 : ℂ) •
+        (outer (v i) (v i) + outer (v j) (v j) +
+          star z • outer (v i) (v j) + z • outer (v j) (v i)) := by
+      rw [outer_combination]
+      simp only [star_mul, ha]
+      match_scalars <;> first
+      | (solve | linear_combination haa)
+      | (solve | linear_combination star z * haa)
+      | (solve | linear_combination z * haa)
+      | linear_combination (a * a) * hz + haa
+    have hn : star w ⬝ᵥ w = 1 := by
+      rw [← outer_trace w w, hm]
+      norm_num [trace_smul, trace_add, outer_trace, hon, hij, hij.symm]
+    have he : ρ *ᵥ w = (r i : ℂ) • w := by
+      simp only [w, mulVec_add, mulVec_smul, heig, ← hr, smul_smul]
+      module
+    have hwk : star w ⬝ᵥ v k = 0 := by
+      simp [w, star_add, star_smul, add_dotProduct, smul_dotProduct, hon,
+        hki.symm, hkj.symm]
+    have hkw : star (v k) ⬝ᵥ w = 0 := by
+      simp [w, dotProduct_add, dotProduct_smul, hon, hki, hkj]
+    have hh := ((two_eigenvector ρ hρ ε hid w (v k) (r i) (r k) hk he
+      (heig k) hn (by simpa using hon k k) hwk hkw).1).trans (hdiag k)
+    rw [hm, map_smul, map_add, map_add, map_add, map_smul, map_smul,
+      hdiag i, hdiag j] at hh
+    ext b c
+    change _ = (0 : ℂ)
+    have hh' := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x b c) hh
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] at hh' ⊢
+    linear_combination 2 * hh'
+  have hs := hmix 1 (by simp)
+  have ht := hmix Complex.I (by simp)
+  ext b c
+  change _ = (0 : ℂ)
+  have hs' := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x b c) hs
+  have ht' := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x b c) ht
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, star_one, one_mul,
+    Complex.star_def, Complex.conj_I, Matrix.zero_apply] at hs' ht'
+  exact (mul_eq_zero.mp (show (-2 * Complex.I) * ε (outer (v i) (v j)) b c = 0 by
+    linear_combination ht' - Complex.I * hs')).resolve_left (by norm_num)
+
 private lemma eigenbasis_assembly {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (ε : MatrixMap (Fin d) (Fin e) ℂ) (hρ : IsDensity ρ) (hε : IsCPTP ε)
     (hd : 1 ≤ d)
     (hid : ∀ p, IsProj p → ε (p * ρ + ρ * p) = (2 : ℂ) • ε (p * ρ * p)) :
     ρ = (1 / (d : ℂ)) • 1 ∨ DiscardPrepare ε := by
-  sorry
+  classical
+  let b := hρ.1.isHermitian.eigenvectorBasis
+  let v : Fin d → Fin d → ℂ := fun i => (b i).ofLp
+  let r := hρ.1.isHermitian.eigenvalues
+  have heig (i) : ρ *ᵥ v i = (r i : ℂ) • v i := by
+    ext j
+    have h := congrFun (hρ.1.isHermitian.mulVec_eigenvectorBasis i) j
+    simpa only [v, b, r, Pi.smul_apply, RCLike.real_smul_eq_coe_mul (K := ℂ),
+      smul_eq_mul] using! h
+  have hon (i j) : star (v i) ⬝ᵥ v j = if i = j then 1 else 0 := by
+    rw [dotProduct_comm]
+    exact orthonormal_iff_ite.mp b.orthonormal i j
+  by_cases heq : ∀ i j, r i = r j
+  · left
+    let i₀ : Fin d := ⟨0, by omega⟩
+    have hdg : diagonal (fun i => (r i : ℂ)) = (r i₀ : ℂ) • 1 := by
+      ext i j
+      by_cases hij : i = j
+      · subst j
+        simp only [diagonal_apply_eq, Matrix.smul_apply, Matrix.one_apply_eq,
+          smul_eq_mul, mul_one]
+        exact congrArg Complex.ofReal (heq i i₀)
+      · simp [diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
+    have hs : ρ = (r i₀ : ℂ) • 1 := by
+      rw [hρ.1.isHermitian.spectral_theorem]
+      change Unitary.conjStarAlgAut ℂ _ hρ.1.isHermitian.eigenvectorUnitary
+        (diagonal (fun i => (r i : ℂ))) = _
+      rw [hdg, map_smul, map_one]
+    have ht := congrArg Matrix.trace hs
+    rw [hρ.2, trace_smul, trace_one, Fintype.card_fin, smul_eq_mul] at ht
+    have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+    have hr : (r i₀ : ℂ) = 1 / (d : ℂ) := (eq_div_iff hd').mpr ht.symm
+    rw [hs, hr]
+  · push Not at heq
+    obtain ⟨i₀, j₀, hr⟩ := heq
+    have hpairs (i j) (h : r i ≠ r j) := two_eigenvector ρ hρ.1.isHermitian ε hid
+      (v i) (v j) (r i) (r j) h (heig i) (heig j)
+      (by simpa using hon i i) (by simpa using hon j j)
+      (by rw [hon, ite_eq_right (show i ≠ j from fun hij => h (congrArg r hij))])
+      (by rw [hon, ite_eq_right (show j ≠ i from fun hji => h (congrArg r hji.symm))])
+    let σ := ε (outer (v i₀) (v i₀))
+    have hdiag (i) : ε (outer (v i) (v i)) = σ := by
+      by_cases hi : r i = r i₀
+      · exact (hpairs i j₀ (fun h => hr (hi.symm.trans h))).1.trans
+          (hpairs i₀ j₀ hr).1.symm
+      · exact (hpairs i i₀ hi).1
+    have hzero (i j) (hij : i ≠ j) : ε (outer (v i) (v j)) = 0 := by
+      by_cases h : r i = r j
+      · obtain ⟨k, hk⟩ : ∃ k, r i ≠ r k := by
+          by_cases hi : r i = r i₀
+          · exact ⟨j₀, fun h => hr (hi.symm.trans h)⟩
+          · exact ⟨i₀, hi⟩
+        exact degenerate_offdiag ρ hρ.1.isHermitian ε hid v r hon heig σ hdiag i j k hij h hk
+      · exact (hpairs i j h).2.1
+    have hunit (i j) : ε (outer (v i) (v j)) = if i = j then σ else 0 := by
+      by_cases h : i = j
+      · subst j; simpa using hdiag i
+      · simpa [h] using hzero i j h
+    have hsum : (∑ i, outer (v i) (v i)) = 1 := by
+      ext i j
+      have h := congrArg (fun x : Matrix (Fin d) (Fin d) ℂ => x i j)
+        (Unitary.coe_mul_star_self hρ.1.isHermitian.eigenvectorUnitary)
+      simpa only [Matrix.sum_apply, outer, vecMulVec_apply, Pi.star_apply,
+        Matrix.mul_apply, Unitary.coe_star, star_eq_conjTranspose, conjTranspose_apply,
+        Matrix.IsHermitian.eigenvectorUnitary_apply, v, b] using h
+    have hex (x : Matrix (Fin d) (Fin d) ℂ) : x =
+        ∑ i, ∑ j, (star (v i) ⬝ᵥ (x *ᵥ v j)) • outer (v i) (v j) := by
+      calc
+        x = 1 * x * 1 := by simp only [one_mul, mul_one]
+        _ = (∑ i, outer (v i) (v i)) * x * (∑ j, outer (v j) (v j)) := by rw [hsum]
+        _ = _ := by
+          simp only [Finset.sum_mul, Finset.mul_sum, outer_sandwich]
+          rw [Finset.sum_comm]
+    right
+    refine ⟨σ, ⟨?_, ?_⟩, ?_⟩
+    · exact MatrixMap.IsCompletelyPositive.IsPositive hε.1
+        (posSemidef_vecMulVec_self_star (v i₀))
+    · rw [hε.2, outer_trace, hon]
+      simp
+    · intro x
+      have ht : x.trace = ∑ i, star (v i) ⬝ᵥ (x *ᵥ v i) := by
+        conv_lhs => rw [hex x]
+        simp [trace_sum, trace_smul, outer_trace, hon]
+      calc
+        ε x = ε (∑ i, ∑ j, (star (v i) ⬝ᵥ (x *ᵥ v j)) • outer (v i) (v j)) :=
+          congrArg ε (hex x)
+        _ = ∑ i, (star (v i) ⬝ᵥ (x *ᵥ v i)) • σ := by simp [hunit]
+        _ = x.trace • σ := by rw [← Finset.sum_smul, ← ht]
 
 private lemma born_of_discard {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (ε : MatrixMap (Fin d) (Fin e) ℂ) (h : DiscardPrepare ε) :
