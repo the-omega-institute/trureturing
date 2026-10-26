@@ -12,19 +12,19 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 abbrev signature : Signature where
-  Params := ℕ × Finset Bool
-  State p := Fin p.1 → Finset Window
+  Params := Σ L : ℕ, Σ _ : Fin L → Finset Window, Σ _ : Finset Bool, Fin (L + 1)
+  State _ := Bool
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := List (ℕ × ℕ)
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ p A => decodeTable p.1 (records p.2 (List.ofFn A))) (fun e => nomatch e)
+  (fun _ p s => entry (counts p.2.2.1 ((List.ofFn p.2.1).drop p.2.2.2.val)) s) (fun e => nomatch e)
 def alternate : Realization signature := realize signature
-  (fun _ _ _ => []) (fun e => nomatch e)
+  (fun _ _ _ => 0) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
@@ -32,10 +32,10 @@ def arena : Arena where
     let as := List.ofFn A
     (input B as).length = 2 + 5 * L ∧
     (records B as).length = (L + 1) * (6 * L + 5) ∧
-    R.readout () (L, B) A = table B as ∧
+    decodeTable L (records B as) = table B as ∧
     (∀ (t : Fin (L + 1)) (s : Bool),
       (decodeTable L (records B as))[t.val]? = some (counts B (as.drop t.val)) ∧
-      entry (counts B (as.drop t.val)) s = (completions B (as.drop t.val) s).card ∧
+      R.readout () ⟨L, A, B, t⟩ s = (completions B (as.drop t.val) s).card ∧
       entry (counts B (as.drop t.val)) s ≤ 5 ^ (L - t.val)) ∧
     ∃ time tape, time ≤ 2097152 * (L + 1) ^ 4 ∧
       Complexity.runInput binaryMachine time (input B as) = some (true, tape) ∧
@@ -45,22 +45,14 @@ private theorem faithful : arena.Law actual := native_binary_table
 
 private theorem alternate_fails : ¬ arena.Law alternate := by
   intro h
-  have hc := (h 0 (fun _ => ∅) ∅).2.2.1
-  simp [alternate, realize, table] at hc
+  have hc := ((h 0 (fun i => Fin.elim0 i) {false}).2.2.2.1 0 false).2.1
+  norm_num [alternate, realize, completions] at hc
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  let A0 : Fin 1 → Finset Window := fun _ => ∅
-  let A1 : Fin 1 → Finset Window := fun _ => {Window.zero}
-  refine ⟨(1, {false}), A0, A1, ?_⟩
-  change decodeTable 1 (records {false} (List.ofFn A0)) ≠
-    decodeTable 1 (records {false} (List.ofFn A1))
-  rw [(native_binary_table 1 A0 {false}).2.2.1,
-    (native_binary_table 1 A1 {false}).2.2.1]
-  norm_num [A0, A1, List.ofFn_succ, table, counts,
-    NativeContinuation.Acquisition.NativeSuffixAcquisition.advance,
-    NativeContinuation.Acquisition.NativeSuffixAcquisition.terminal,
-    entry, LiteralWindowEnd.first, LiteralWindowEnd.last]
+  refine ⟨⟨0, (fun i => Fin.elim0 i), {false}, 0⟩, false, true, ?_⟩
+  norm_num [actual, realize, counts, table,
+    NativeContinuation.Acquisition.NativeSuffixAcquisition.terminal, entry]
 
 def family : Registration arena (type_of% native_binary_table) where
   actual := actual
@@ -89,7 +81,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by trivial)
   readout := some (realize signature
-    (fun _ p A => decodeTable p.1 (records p.2 (List.ofFn A))) (fun e => nomatch e))
+    (fun _ p s => entry (counts p.2.2.1 ((List.ofFn p.2.1).drop p.2.2.2.val)) s) (fun e => nomatch e))
   variation := .evidence ⟨(by trivial : True)⟩ (by trivial)
   sensitivity := .evidence ⟨(by trivial : True)⟩ (by trivial)
   partialSensitivity := none
@@ -97,9 +89,10 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, 
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable
     definition := none
-    coordinates := #[0, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
-                    stateBinder := 1
+    coordinates := #[0, 1, 2, 4]
+    readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg",
+                      "body", "body", "arg", "fn", "arg", "fn", "arg"]
+                    stateBinder := 5
                     functionOperand := false
                     stateOperand := none
                     booleanPredicate := false }] }

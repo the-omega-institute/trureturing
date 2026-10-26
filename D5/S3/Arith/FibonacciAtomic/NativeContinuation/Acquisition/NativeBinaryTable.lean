@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-execution)
    anchors: []
    utility: none
-   digest: A fixed binary program initPrograms and retains every original suffix count. -/
+   digest: A fixed binary program initializes and retains every original suffix count. -/
 
 import D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryRow
 import D5.S0.Computability.BinaryMachine.StackFrame

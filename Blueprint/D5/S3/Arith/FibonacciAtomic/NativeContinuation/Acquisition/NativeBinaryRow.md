@@ -216,7 +216,79 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/Nati
 
 binaryMachine is the supplied StackCompile compilation of stackMachine into the original single-tape machine, including input initialization and physical tape output.
 
-**Theorem 1.18 (Exact native row computation in quadratic bit time).**
+**Theorem 1.18 (Serialized row length).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.serialize_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.serialize_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every xs : List Column, (serialize xs).length = 2 * xs.length.
+
+**Theorem 1.19 (Exact paired decoding).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.parse_serialize`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.parse_serialize` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every xs : List Column, parse (serialize xs) = xs.
+
+**Theorem 1.20 (Output column width).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.columns_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.columns_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a : Finset Window, c : Carry and xs : List Column, (columns a c xs).length = xs.length + 3.
+
+**Definition 1.21 (Two row registers).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.registers`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.registers` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all src and dst : List Bool and j : Fin 2, registers src dst j is src when j = 0 and dst otherwise.
+
+**Definition 1.22 (A permission bit).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.insertBit`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.insertBit` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a : Finset Window, b : Window and v : Bool, insertBit a b v is insert b a when v is true and a otherwise.
+
+**Theorem 1.23 (Exact instruction execution).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.exec_program`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.exec_program` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a : Finset Window and xs : List Column, Exec program program.start (registers (input a xs) []) (8 * xs.length + 28) (true, registers (serialize (columns a (0,0) xs)) []). The complete original two-register execution is available for register-frame composition.
+
+**Theorem 1.24 (Exact native row computation in quadratic bit time).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.native_binary_row`
 
@@ -237,17 +309,23 @@ Simultaneous carry induction proves that both output values equal the correspond
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.Control`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.binaryMachine`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.columns`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.columns_length`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.controlEncoding`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.decode`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.drain`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.encoding`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.exec_program`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.input`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.insertBit`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.native_binary_row`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.parse`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.parse_serialize`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.program`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.registers`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.round`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.scanProgram`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.serialize`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.serialize_length`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.stackMachine`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/NativeContinuation/Acquisition/NativeBinaryRow.value`
 - Dependency: [D5/S0/Computability/BinaryMachine/StackCompile](../../../../../S0/Computability/BinaryMachine/StackCompile.md)

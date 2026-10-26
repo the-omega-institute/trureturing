@@ -243,7 +243,7 @@ end Exposed_parse_serialize
 namespace Exposed_columns_length
 
 abbrev signature : Signature where
-  Params := Finset Window × Carry
+  Params := Σ _ : Finset Window, Carry
   State _ := List Column
   Role := Unit
   finiteRole := inferInstance
@@ -257,11 +257,11 @@ def alternate : Realization signature := realize signature (fun _ _ _ => 0) (fun
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ (a : Finset Window) (c : Carry) (xs : List Column), R.readout () (a, c) xs = xs.length + 3
+  Law R := ∀ (a : Finset Window) (c : Carry) (xs : List Column), R.readout () ⟨a, c⟩ xs = xs.length + 3
 
 private theorem faithful : arena.Law actual := by intro a c xs; exact columns_length a c xs
 private theorem alternate_fails : ¬ arena.Law alternate := by intro h; have hc := h ∅ (0, 0) []; norm_num [realize, alternate] at hc
-private theorem dependence : ObservationalDependence signature actual := by intro role; exact ⟨(∅, (0, 0)), [], [(false, false)], by simp [actual, realize, columns_length]⟩
+private theorem dependence : ObservationalDependence signature actual := by intro role; exact ⟨⟨∅, (0, 0)⟩, [], [(false, false)], by simp [actual, realize, columns_length]⟩
 
 def family : Registration arena (type_of% columns_length) where
   actual := actual
