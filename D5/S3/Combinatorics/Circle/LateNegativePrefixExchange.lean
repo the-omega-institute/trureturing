@@ -10,10 +10,9 @@ public import D5.S3.Combinatorics.Circle.FirstNegativeShiftExchange
 
 /-! # Pull a late negative reserve across one negative LARGE, then truncate
 
-SOURCE-ONLY DRAFT: not elaborated or kernel checked. The original physical
-prefix F is arbitrary, with unrestricted signs and LARGE count. The entire
-old suffix is returned, except for the actual reserve when it is pulled forward.
-Full Circle C3.1 remains open. -/
+The original physical prefix F is arbitrary, with unrestricted signs and LARGE
+count. The entire old suffix is returned, except for the actual reserve when it
+is pulled forward. Full Circle C3.1 remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
