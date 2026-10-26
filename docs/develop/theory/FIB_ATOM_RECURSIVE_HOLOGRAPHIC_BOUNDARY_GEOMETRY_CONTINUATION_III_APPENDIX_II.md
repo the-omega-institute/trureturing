@@ -513,3 +513,264 @@ Its source behavior is determined by (115.15) and (115.17), not by extending thi
 A native legal transport realization of this endpoint would additionally require an actual admissible source and native evolution, a specified representation and observation map, and proofs that this same source, raw units, clock, full generator including its source domain, and observation law intertwine with that native evolution. In particular the conservative probability dynamics $T_t$ on $L^2(h^2d\mu)$, the original positive Schrödinger heat on $L^2(d\mu)$, signed or complex amplitudes, and any proposed finite positive network have different state and observation contracts until those maps are supplied. Theorems 115.2--115.3 settle the three endpoint questions for the exact original selector; they do not supply that native realization or assert positivity of any finite-$\sigma>2$ regulator. The native source/operator/readout correspondence remains unproved.
 
 ## 追加锚（本行以下为增补区）
+
+## 116. The original source capacity, contact law and conservative continuation
+
+**Definition 116.1 (the same source and the original clock).** Use exactly the original $G=H^1\times\mathbb R$, product, raw Haar measure, unit-source $\Gamma$, $a,\eta>0$, $g_c=16\sqrt{a\eta}$, $H=H_{\rm end}$ and selector (112.5) of Definition 115.1. Retain the coefficient-positive normalized $h$, $c_h=C(h)>0$, $\rho=A(h)/C(h)$, $F$, $G_r=(F+r)^{-1}$, $n_r=h-rG_rh$, $d_r=\langle h,n_r\rangle$, $U_h$ and $K$ of §115. Write $m=m_h=h^2\mu$, $M=G\setminus\{e\}$ and
+
+$$
+\begin{gathered}
+\operatorname{tr}(v_0+c)=c
+ \quad(v_0\in\mathscr V_0,\ c\in\mathbb C),\qquad
+\mathscr E_r[v,z]=\mathscr E[v,z]+r\langle v,z\rangle_{L^2(m)},\\
+b_r=U_h^{-1}n_r=1-rh^{-1}G_rh,\qquad r>0.
+\end{gathered}
+\tag{116.1}
+$$
+
+All pairings are antilinear in the first slot. Forms and operators are on the entire original complex spaces; probability statements use their real Dirichlet forms. A tilde denotes a quasi-continuous representative for $(\mathscr E,\mathscr V)$. For the compact singleton use the usual shifted capacity
+
+$$
+\operatorname{Cap}_r(\{e\})
+ =\inf\{\mathscr E_r[v]:v\in\mathscr V\text{ real},
+                              \ \widetilde v\ge1
+                                  \text{ quasi-everywhere on }\{e\}\}.
+\tag{116.2}
+$$
+
+This is the outer Dirichlet-form capacity, expressed by its quasi-continuous constraint on a compact set. Its null sets are independent of $r>0$, since the shifted form norms are equivalent. The form in (115.15) fixes its normalization; no factor $1/2$ or change of time is inserted.
+
+**Theorem 116.2 (the source trace and its exact capacity).** The original point $e$ is nonpolar, and every $v\in\mathscr V$ satisfies
+
+$$
+\widetilde v(e)=\operatorname{tr}v,\qquad
+\mathscr V_0=\{v\in\mathscr V:\widetilde v(e)=0\}.
+\tag{116.3}
+$$
+
+In particular $\mathscr V_0$ is exactly the part-form domain on $M$. For every $r>0$, $b_r\in\mathscr V$ is the equilibrium potential of $\{e\}$, $0\le\widetilde b_r\le1$ quasi-everywhere, and
+
+$$
+\begin{gathered}
+\operatorname{tr}b_r=1,\qquad
+\mathscr E_r[b_r,v]=r d_r\,\operatorname{tr}v
+                              \quad(v\in\mathscr V),\\
+\operatorname{Cap}_r(\{e\})=\mathscr E_r[b_r]=r d_r,\qquad
+|\widetilde v(e)|^2\le\frac{\mathscr E_r[v]}{r d_r}
+                              \quad(v\in\mathscr V).
+\end{gathered}
+\tag{116.4}
+$$
+
+Equality in the last inequality holds exactly for complex multiples of $b_r$. The corresponding equilibrium measure is $r d_r\delta_e$, with $\delta_e$ the unit point mass at the original identity. The original boundary coefficients give the additional exact normalization
+
+$$
+\begin{gathered}
+C(n_r)=c_h,\qquad
+A(n_r)=\rho c_h-rA(G_rh),\qquad
+d_r=a c_h A(G_rh),\\
+r d_r=a c_h\bigl(\rho C(n_r)-A(n_r)\bigr).
+\end{gathered}
+\tag{116.5}
+$$
+
+Here $A,C$ are evaluated only on the displayed maximal-domain vectors. For $v\in D(K)$ the source value also equals $C(hv)/c_h$, as in (115.20); no such maximal-domain coefficient is assigned to a general form vector.
+
+**Proof.** We first identify the point without assuming that a measure-zero set is polar. Theorem 115.3 supplies regularity on all of $G$, the continuous functional $\operatorname{tr}$, and the form core
+$\mathcal A=\mathbb C\chi+C_c^\infty(M;\mathbb C)$, where $\chi\in C_c^\infty(G)$ equals one near $e$ and $\chi-1\in\mathscr V_0$. On this core, $\operatorname{tr}v=v(e)$.
+
+The standard part-form theorem identifies its domain on the open set $M$ with the form-norm closure of $\mathscr V\cap C_c(M)$, and also with the vectors vanishing quasi-everywhere on $G\setminus M$. This is the part-process correspondence stated in Chen--Fukushima--Ying, [*Traces of symmetric Markov processes and their characterizations*, arXiv:math/0606784v1, §2, (2.2)--(2.3)](https://arxiv.org/pdf/math/0606784v1). The open-set part theorem itself requires regularity, not transience or a spectral gap. In the present form, every member of $\mathscr V\cap C_c(M)$ can be approximated by $C_c^\infty(M)$ in form norm: on a compact punctured neighborhood of its support, $h$ is smooth and bounded above and below by positive constants, and the principal matrix (115.10) is uniformly positive. The integral norm (115.15) is therefore equivalent there to the ordinary $H^1$ norm. A punctured smooth cutoff and local mollification give the approximation. Thus this closure is exactly $\mathscr V_0$. If $\{e\}$ were polar, the part theorem would make the same closure all of $\mathscr V$. This contradicts the closed direct sum in (115.15), since $\operatorname{tr}1=1$. Hence $\{e\}$ has positive capacity.
+
+For $v\in\mathscr V$, take a form-convergent sequence $v_j\in\mathcal A$. The usual capacity estimate for a form-convergent sequence gives a subsequence converging quasi-everywhere to $\widetilde v$: choose a subsequence with $\|v_{j+1}-v_j\|_{\mathscr E_1}\le2^{-2j}$, where $\|u\|_{\mathscr E_1}^2=\mathscr E_1[u]$. The capacity estimate gives $\operatorname{Cap}_1(\{|\widetilde v_{j+1}-\widetilde v_j|>2^{-j}\})\le2^{-2j}$. Outside the capacity-zero limsup set the differences are eventually summable; outside the unions of the tails the convergence is uniform. This yields the quasi-continuous version of the form limit. No polar exceptional set can contain $e$. Consequently
+$\widetilde v(e)=\lim_jv_j(e)=\lim_j\operatorname{tr}v_j=\operatorname{tr}v$.
+This proves (116.3). It asserts a quasi-continuous value, not an ordinary limit along arbitrary points approaching $e$.
+
+Since $G_rh\in D(F)\subset\mathcal Q_c$, (115.15) gives $b_r\in1+\mathscr V_0$. Put $y=G_rh$. The spectral resolvent equation gives $Fy=n_r$. For any $z\in\mathscr V_0$, write $w=hz\in\mathcal Q_c$. The form identity and closed-form representation for $F$ give
+
+$$
+\begin{aligned}
+\mathscr E_r[b_r,z]
+ &=-r\,\overline q_c[y,w]+r\langle n_r,w\rangle_{\mathcal H}\\
+ &=-r\langle Fy,w\rangle_{\mathcal H}
+                       +r\langle n_r,w\rangle_{\mathcal H}=0,\\
+\mathscr E_r[b_r,1]&=r\langle n_r,h\rangle_{\mathcal H}=r d_r.
+\end{aligned}
+\tag{116.6}
+$$
+
+The identity with the constant uses $\mathscr E[b_r,1]=0$ and the reality of $d_r$. Decomposing $v$ first in $\mathscr V_0+\mathbb C1$ proves the pairing in (116.4). Decomposing instead as
+$v=(\operatorname{tr}v)b_r+z$, $z\in\mathscr V_0$, proves the orthogonal identity
+
+$$
+\mathscr E_r[v]=r d_r|\operatorname{tr}v|^2+\mathscr E_r[z].
+\tag{116.7}
+$$
+
+The supplied $d_r>0$ makes $b_r$ the unique minimizer among real vectors with trace one, and (116.7) makes it the unique minimizer with trace at least one. This proves the capacity, sharp inequality and equality condition. Truncation to $[0,1]$ preserves the value one at $e$ and cannot increase either energy or squared norm; uniqueness of the minimizer proves $0\le\widetilde b_r\le1$. The pairing in (116.4) identifies its equilibrium measure as $r d_r\delta_e$, and proves directly that evaluation at $e$ has finite shifted energy. These variational and equilibrium-measure identifications are the standard equilibrium construction applied to this particular form.
+
+Finally $C(y)=0$, $C(h)=c_h$, $A(h)=\rho c_h$ and $S^*h=0$. Applying exactly (112.3) to $h,y$ gives
+$\langle h,Fy\rangle=a c_h A(y)$.
+Its left side is $d_r$, and the coefficients of $n_r=h-ry$ give all of (116.5). In particular $n_r$ has boundary defect
+$A(n_r)-\rho C(n_r)=-r d_r/(a c_h)$; it is not a vector in the actual operator domain $D(H)$. The form argument has not imposed the selector on an equilibrium potential. $\square$
+
+**Theorem 116.3 (contact in the original clock and the exact killed operator).** Let $Z=(Z_t,\mathbb P_x)$ be the conservative $m$-symmetric diffusion properly associated with the full form of §115. There is a properly exceptional set $N$ with $e\notin N$ on whose complement the following process statements are understood. In particular they hold for quasi-every starting point in $M$, with the source start retained. Define
+
+$$
+\tau_e=\inf\{t\ge0:Z_t=e\},\qquad
+\sigma_e=\inf\{t>0:Z_t=e\},\qquad \inf\varnothing=\infty.
+\tag{116.8}
+$$
+
+Then $e$ is regular for itself: $\mathbb P_e(\sigma_e=0)=1$. For every $r>0$ and $t\ge0$,
+
+$$
+\begin{gathered}
+\mathbb E_x[e^{-r\tau_e};\tau_e<\infty]=\widetilde b_r(x),\\
+\mathbb P_x(\tau_e>t)=P_t^0 1(x)
+       =\bigl[h^{-1}e^{-tF}h\bigr](x)\quad(x\in M\setminus N),\\
+P_t^0=U_h^{-1}e^{-tF}U_h,\qquad
+R_r^0=U_h^{-1}G_rU_h,\qquad
+\int_0^\infty e^{-rt}P_t^0 1\,dt
+        =h^{-1}G_rh=\frac{1-b_r}{r}.
+\end{gathered}
+\tag{116.9}
+$$
+
+The first line includes $x=e$, where $\tau_e=0$ and $\widetilde b_r(e)=1$. For the killed process the source-start convention is immediate killing, so its survival is zero for $x=e$, including $t=0$; on $M$ it is one at $t=0$. The functions in the second line are taken in the part-process versions, not by assigning an ordinary value to $h(e)$. The same choice of process versions gives the formulas for all the indicated parameters. Moreover,
+
+$$
+\mathbb P_x(\tau_e<\infty)=1\qquad(x\in G\setminus N).
+\tag{116.10}
+$$
+
+The entire killed form is $(\mathscr E|_{\mathscr V_0},\mathscr V_0)$ on $L^2(M,m)$, which is the same Hilbert space as $L^2(G,m)$. Its nonnegative self-adjoint operator is exactly
+
+$$
+\begin{gathered}
+K^0=U_h^{-1}FU_h,\qquad
+D(K^0)=\{v:hv\in D(F)\}
+      =\{v:hv\in D(S^*),\ C(hv)=0\},\\
+D(K)\cap\mathscr V_0
+ =\{v:hv\in D(S^*),\ A(hv)=C(hv)=0\}
+ =U_h^{-1}D(\overline S)
+ \ \subsetneq\ D(K^0).
+\end{gathered}
+\tag{116.11}
+$$
+
+Thus the source-killed operator is not obtained merely by restricting $D(K)$ to its zero-source vectors while keeping both boundary equations.
+
+**Proof.** The space $G$ is locally compact, separable and metrizable, and $m$ is a full-support Radon probability measure. Theorem 115.3 gives a regular, symmetric, strongly local Dirichlet form, hence a properly associated diffusion outside a properly exceptional set. Its lifetime is infinite quasi-everywhere: $T_t1=1$ gives the resolvent $R_r1=1/r$, whose quasi-continuous version is the constant. The process resolvent therefore gives
+$\mathbb E_x\int_0^\zeta e^{-rt}dt=1/r$ quasi-everywhere, forcing $\zeta=\infty$. Since $e$ is nonpolar, it cannot be removed in the exceptional set.
+
+For completeness the irreducibility used in the cited symmetric hitting theory holds here. A zero-energy vector has all its local weak derivatives zero on connected $M$, by $a,\eta>0$ and (115.15), so is constant $m$-a.e. An invariant measurable set for a conservative symmetric semigroup on this finite measure space has its indicator fixed by the semigroup, hence in the zero-energy kernel. Its indicator must therefore be constant almost everywhere. This excludes nontrivial invariant sets. No positive spectral gap follows.
+
+The closed singleton is finely closed. The standard symmetric-process fact that the irregular points of a finely closed set form a polar subset is used in Chen--Fukushima--Ying, §4 preceding (4.1). Applied to $\{e\}$, its nonpolarity forces its only point to be regular for itself. Equivalently, this is the positive-capacity-singleton regularity argument in the proof of Chen's [RIMS lectures, Theorem 1.2.2](https://sites.math.washington.edu/~zchen/RIMS_lecture.pdf); only that general symmetric-form fact is used, not the Brownian model there.
+
+The part-process theorem cited in Theorem 116.2 now says that killing $Z$ at $\tau_e$ on $M$ has form domain exactly $\mathscr V_0$. Its full energy is already (115.15), so unitary multiplication by $h$ identifies it with $(\overline q_c,\mathcal Q_c)$ and its operator with $F$. This proves the survival and resolvent assertions in (116.9), including all $t\ge0$ by the killed transition function.
+
+The standard hitting projection theorem identifies the $r$-equilibrium potential of a closed set with its discounted hitting probability. Its projection characterization is recalled in Chen's RIMS lectures, §1.2, in the paragraph before Theorem 1.2.1 and in the proof of Theorem 1.2.3; the general hitting kernels are specified in Chen--Fukushima--Ying, §2 immediately before (2.14). Here the ambient form is $(\mathscr E,\mathscr V)$, the closed set is $\{e\}$, the part domain is $\mathscr V_0$, and the projection is in the inner product $\mathscr E_r$. The input function is $1\in\mathscr V$. Its projected remainder is exactly $b_r$, since $1-b_r\in\mathscr V_0$ and (116.6) is the required orthogonality. This verifies the full parameter correspondence and proves the first line of (116.9). Alternatively, integrating the killed survival gives
+$\mathbb E_x\int_0^{\tau_e}e^{-rt}dt=R_r^0 1(x)$ and the same identity follows from $1-rR_r^0 1=b_r$. Quasi-continuous versions give these statements quasi-everywhere, including the regular source. One may fix common versions using the diffusion transition functions and its hitting time; rational parameters followed by their right-continuity in time and continuity of Laplace transforms retain all $t$ and $r$, rather than asserting identities only for separately chosen almost-everywhere representatives.
+
+An $L^2$ limit alone would not establish (116.10) for the legitimate starting points. Here there is a stronger limit. Let $\nu(B)=\langle h,E_F(B)h\rangle$, a probability measure with $\nu(\{0\})=0$. The exact form correspondence gives
+
+$$
+\begin{aligned}
+\|1-b_r\|_{L^2(m)}^2
+ &=\int_{[0,\infty)}
+          \frac{r^2}{(\lambda+r)^2}\,d\nu(\lambda)\longrightarrow0,\\
+\mathscr E[1-b_r]
+ &=\int_{[0,\infty)}
+          \frac{r^2\lambda}{(\lambda+r)^2}\,d\nu(\lambda)
+       \le\frac r4\longrightarrow0.
+\end{aligned}
+\tag{116.12}
+$$
+
+Dominated convergence proves the first limit using $\ker F=\{0\}$; the second uses the maximum of the displayed multiplier. Thus $b_r\to1$ in the full form norm as $r\downarrow0$. Choose a decreasing sequence $r_j\downarrow0$ and a subsequence converging quasi-everywhere. The hitting representation and monotone convergence give
+$\widetilde b_{r_j}(x)\uparrow\mathbb P_x(\tau_e<\infty)$; the form-norm subsequence forces this limit to be one quasi-everywhere. Absorb the resulting polar set into a properly exceptional $N$, which still cannot contain $e$. This proves (116.10).
+
+The operator-domain formulas in (116.11) follow from $U_h\mathscr V_0=\mathcal Q_c$, (112.3) and the actual selector (115.17). The strict inclusion is witnessed by
+$v=h^{-1}G_rh$: its product by $h$ lies in $D(F)$, while
+$A(G_rh)=d_r/(a c_h)>0$ and $C(G_rh)=0$.
+It is therefore in $D(K^0)$ and outside $D(K)$. Restricting the actual operator to the two zero coefficients gives the transformed closed minimal operator, rather than the self-adjoint part operator. $\square$
+
+**Theorem 116.4 (the source-start response and zero residence).** On the entire complex $L^2(G,m)$, let $R_r=(K+r)^{-1}$. For every $r>0$,
+
+$$
+\begin{gathered}
+R_r=R_r^0+\frac{|b_r\rangle\langle b_r|}{r d_r},\qquad
+\widetilde{R_rf}(e)=\frac{\langle b_r,f\rangle_{L^2(m)}}{r d_r}
+                                  \quad(f\in L^2(G,m;\mathbb C)),\\
+\frac{C((H+r)^{-1}\phi)}{c_h}
+   =\frac{\langle n_r,\phi\rangle_{\mathcal H}}{r d_r}
+                                  \quad(\phi\in\mathcal H).
+\end{gathered}
+\tag{116.13}
+$$
+
+For bounded complex Borel $f$, the exact source-start occupation response is
+
+$$
+\mathbb E_e\int_0^\infty e^{-rt}f(Z_t)\,dt
+ =\frac1{r d_r}\int_G b_r f\,dm,\qquad
+R_r(e,dy)=\frac{b_r(y)}{r d_r}\,m(dy).
+\tag{116.14}
+$$
+
+The full process continues conservatively after source contact. For every legitimate starting point, including $e$, it has zero ordinary residence time there:
+
+$$
+\mathbb P_x\left(
+  \int_0^T\mathbf1_{\{e\}}(Z_s)\,ds=0
+                   \text{ for every finite }T\ge0\right)=1
+                 \quad(x\in G\setminus N).
+\tag{116.15}
+$$
+
+In contrast with positive shifted capacity, the zero-order variational infimum is zero, even with compactly supported admissible vectors:
+
+$$
+\begin{gathered}
+\inf\{\mathscr E[v]:v\in\mathscr V\text{ real},
+                                      \widetilde v(e)\ge1\}=0,\\
+\inf\{\mathscr E[v]:v\in\mathscr V\cap C_c(G;\mathbb R),
+                                      v(e)\ge1\}=0,\\
+0<\operatorname{Cap}_r(\{e\})=r d_r<r,\qquad
+\lim_{r\downarrow0}
+          \frac{\operatorname{Cap}_r(\{e\})}{r}=1.
+\end{gathered}
+\tag{116.16}
+$$
+
+These zero-order infima do not make the source polar.
+
+**Proof.** Conjugating exactly the supplied rank-one formula (115.5) by $U_h$ gives the first identity in (116.13). The first summand maps into $\mathscr V_0$ and $b_r$ has trace one. Applying (116.3) gives the source-start trace on every complex $L^2$ input. On the original space $(H+r)^{-1}\phi\in D(H)$, so (115.20) applies legitimately and gives the last identity. There is no division by a pointwise value of $h$ at $e$, and no claim that a general input has boundary coefficients.
+
+The properly associated resolvent identifies $\widetilde{R_rf}$ with the expected discounted occupation for bounded Borel inputs, outside a properly exceptional set. Its trace value at the nonpolar source is therefore precisely (116.14). The density is positive and integrable, with
+$\int b_r\,dm=\langle h,n_r\rangle=d_r$; its total mass is $1/r$, as required by conservation. This also checks the normalization against the original clock. For an $L^2$ input the formula for the trace in (116.13) remains finite by Cauchy--Schwarz; the bounded-Borel formula extends to Borel $L^2$ representatives by truncation, applied first to $|f|$, and then to real and imaginary parts. In particular it is insensitive to modifications on $m$-null sets.
+
+Since $m(\{e\})=0$, the bounded Borel function $\mathbf1_{\{e\}}$ is zero as an $L^2(m)$ element. Its resolvent has quasi-continuous representative zero, so for quasi-every $x$,
+$\mathbb E_x\int_0^\infty e^{-rs}\mathbf1_{\{e\}}(Z_s)\,ds=0$.
+The integrand is nonnegative. Outside a properly exceptional set the integral is consequently zero almost surely; it bounds $e^{-rT}$ times the unweighted integral up to each finite $T$. Taking integer $T$ proves (116.15) simultaneously for all finite $T$. Nonpolarity again prevents exclusion of $e$. This argument uses occupation potentials, rather than inferring polarity or path avoidance from zero measure.
+
+Conservation gives infinite lifetime, and (116.10) gives finite contact. Continuity of the diffusion paths puts the contact at the same original point $e$. The strong Markov property at $\tau_e$ makes the subsequent law the source-start law $\mathbb P_e$, for which infinite lifetime and (116.15) hold. Thus contact is followed by conservative continuation, with no interval of ordinary holding at the source. Its self-regularity concerns immediate returns and is compatible with zero time spent there.
+
+Finally the constant $1$ is admissible with zero energy. It also supplies the usual recurrence criterion, $1\in\mathscr V\subset\mathscr V_e$ with $\mathscr E[1]=0$, for the full form. For the compactly supported infimum use the $\chi_R$ of (115.23), equal to one near $e$, whose energies tend to zero. For the shifted statements use (115.11):
+
+$$
+d_r=\int_{(0,\infty)}\frac{\lambda}{\lambda+r}\,d\nu(\lambda),
+\qquad 0<d_r<1,\qquad d_r\longrightarrow1
+                                  \quad(r\downarrow0).
+\tag{116.17}
+$$
+
+The probability normalization of $\nu$ and its zero mass at zero justify all three assertions. The zero-order infimum is therefore distinct from the positive shifted capacity which detects polarity in this recurrent conservative setting. $\square$
+
+**Definition 116.5 (source-specific correspondence and the unpaid native realization).** The equilibrium projection, part process, quasi-continuity, regularity of a nonpolar singleton and hitting-potential correspondence used above are established symmetric Dirichlet-form theory, with the cited Chen--Fukushima--Ying §2/§4 and Chen RIMS §1.2 supplying their meanings. Their ambient hypotheses hold here by Theorem 115.3 and the irreducibility argument in Theorem 116.3; their set is the original $\{e\}$, their measure is $h^2d\mu$, their discount is the original $r$, and their energy is exactly (115.15). The Brownian $1/2$ normalization in examples in those sources is not imported. The full form is conservative and recurrent; no transient zero-order theorem is applied to it. The proofs use only shifted projections and the original $F$ with $\ker F=\{0\}$, not a positive lower spectral bound.
+
+The [native spatial-cap volume, Proposition 5.2](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md#5-the-natural-logarithmic-source-form-and-positive-point-capacity) already identifies a continuous source trace and positive logarithmic point capacity on its different inherited-wall carrier. Its weight $H_\eta$, its interpolation, its inherited outer killing and its native boundary coefficients are not the normalized global $h$, full conservative form and original $A,C$ here; its parameter $\eta$ is not identified with the fixed central coefficient of (115.1). No capacity value or contact law is transferred from that model. The source-specific additions here are (116.3)--(116.5), the original-clock formulas (116.9)--(116.14), and the full-versus-killed domain distinction (116.11), deduced from the actual endpoint suppliers of §§112--115. They are ordinary mathematical deductions for this endpoint, not a new general potential theory or a worldwide-priority assertion.
+
+A faithful native source/evolution/representation/readout correspondence for this endpoint must preserve the source functional $\operatorname{tr}$ and the actual selector, the shifted energies and capacities $r d_r$ in the same clock, the contact transforms $b_r$ and all-time killed survival, conservative continuation and zero ordinary residence, and the source-start response (116.14). More precisely, any proposed identification of native states with this process that preserves its source, time and transition laws must carry the native first-source-contact stopping time to $\tau_e$, its stopped transitions to $P_t^0$, and its discounted source-start observation laws to (116.14); a form-preserving identification must also carry source evaluation and the shifted minimization (116.2) to (116.4). These requirements follow by applying the identification to the displayed stopping times, expectations and variational constraints. Agreement only with the off-source differential expression (115.24), or with the two-zero-coefficient restriction of the actual operator, does not supply these identities. No such native maps are constructed here. The complete native legal-source/evolution/representation/readout correspondence remains unpaid, and no conclusion about physical spatial dimension follows.
+
+## 追加锚（本行以下为增补区）
