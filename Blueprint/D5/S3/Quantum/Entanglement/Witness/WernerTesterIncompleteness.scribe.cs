@@ -19,18 +19,19 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
                     + "that attains equality at a nonzero matrix. This expresses operator norm exactly one. "
                     + "The source defines complex testers in main.tex, lines 340–352, and the trace norm in lines 288–290.",
                 "IsTester", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("tester-image", "The tensor product image in coordinates", TesterImageFormula(),
+            Node("tensor-pair", "Pure tensors of Euclidean outputs", TensorPairFormula(),
+                "The two Euclidean vectors form a pure tensor in the Bool-indexed PiTensorProduct. "
+                    + "The false factor has dimension n₁ and the true factor has dimension n₂. "
+                    + "Bool.rec selects the first or second vector accordingly. "
+                    + "This tensor space carries the bundled projective norm.",
+                "tensorPair", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("tester-image", "The tensor product image", TesterImageFormula(),
                 "Expand the input in tensor products of matrix units and apply the two linear maps to the respective factors. "
-                    + "The output is the coefficient matrix in the two Euclidean coordinate bases. "
-                    + "WithLp.ofLp displays the conversion from a Euclidean vector to its coordinate function; "
+                    + "Sum the resulting pure tensors with the input entries as complex scalar coefficients. "
+                    + "The output belongs to the Bool-indexed PiTensorProduct of the two Euclidean spaces. "
                     + "DFunLike.coe displays evaluation of a linear map as a function. "
                     + "This is the bipartite tensor product action described in main.tex, lines 377–380.",
                 "testerImage", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("projective-norm", "The projective tensor norm", ProjNormFormula(),
-                "Take the infimum of the sums of products of Euclidean norms over all finite decompositions "
-                    + "of the coefficient matrix into elementary tensors. The length k may be zero. "
-                    + "This is the two-factor case of the projective norm in main.tex, lines 234–238.",
-                "projNorm", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("separable", "Separable density matrices", SeparableFormula(),
                 "A matrix is separable when it lies in the real convex hull of tensor products of positive semidefinite "
                     + "matrices of trace one. The factors may have different dimensions. "
@@ -78,11 +79,11 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
                 + "This real linear functional remains nonnegative on the convex hull of product density matrices, "
                 + "hence on every separable matrix.")),
         Paragraph(DefinitionDsl.Text(
-            "The tensor product image of any finite sum of product matrices is the sum of the outer products of their images. "
+            "The tensor product image of any finite sum of product matrices is the sum of the pure tensors of their images. "
                 + "If the two families of image vectors each have sum of squared norms at most one, "
                 + "Cauchy–Schwarz bounds the sum of the products of their norms by one. "
-                + "All such decomposition costs are nonnegative. Reindexing the finite family by Fin of its cardinality "
-                + "therefore gives an admissible cost for the defining infimum, proving the projective norm bound.")),
+                + "The triangle inequality and the projective seminorm bound on each pure tensor "
+                + "then bound the bundled norm of the sum by one.")),
         Paragraph(DefinitionDsl.Text(
             "For positive d, use a finite ensemble of rank-one projectors P indexed by the computational basis "
                 + "and by all d-tuples of fourth roots of unity. Each basis projector has weight 1/(d(d + 1)); "
@@ -131,33 +132,27 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
             Equal(LocalCall("IsTester", X("e")), condition))));
     }
 
+    private static Formula TensorPairFormula()
+    {
+        Formula pure = At(Qualified("PiTensorProduct", "tprod"), Complexes(),
+            At(Qualified("Bool", "rec"), X("a"), X("b")));
+        return All("n₁", Naturals(), All("n₂", Naturals(),
+            All("a", Euclidean(X("n₁")), All("b", Euclidean(X("n₂")),
+                Equal(LocalCall("tensorPair", X("a"), X("b")), pure)))));
+    }
+
     private static Formula TesterImageFormula()
     {
-        Formula entry = Multiply(Multiply(
+        Formula entry = Smul(
             At(X("ρ"), Pair(X("i"), X("j")), Pair(X("k"), X("l"))),
-            Coordinate(Evaluate(X("e₁"), At(Qualified("Matrix", "single"), X("i"), X("k"), Typed(D(1), Complexes()))), X("p"))),
-            Coordinate(Evaluate(X("e₂"), At(Qualified("Matrix", "single"), X("j"), X("l"), Typed(D(1), Complexes()))), X("q")));
+            LocalCall("tensorPair",
+                Evaluate(X("e₁"), At(Qualified("Matrix", "single"), X("i"), X("k"), Typed(D(1), Complexes()))),
+                Evaluate(X("e₂"), At(Qualified("Matrix", "single"), X("j"), X("l"), Typed(D(1), Complexes())))));
         Formula sum = SumOver("i", FinOf(X("d₁")), SumOver("j", FinOf(X("d₂")),
             SumOver("k", FinOf(X("d₁")), SumOver("l", FinOf(X("d₂")), entry))));
         return Dimensions(All("e₁", LinearType(X("d₁"), X("n₁")),
             All("e₂", LinearType(X("d₂"), X("n₂")), All("ρ", Bipartite(X("d₁"), X("d₂")),
-                All("p", FinOf(X("n₁")), All("q", FinOf(X("n₂")),
-                    Equal(At(LocalCall("testerImage", X("e₁"), X("e₂"), X("ρ")), X("p"), X("q")), sum)))))));
-    }
-
-    private static Formula ProjNormFormula()
-    {
-        Formula product = At(Qualified("Matrix", "of"), LambdaOf("p", FinOf(X("n₁")),
-            LambdaOf("q", FinOf(X("n₂")), Multiply(Coordinate(At(X("a"), X("t")), X("p")),
-                Coordinate(At(X("b"), X("t")), X("q"))))));
-        Formula cost = SumOver("t", FinOf(X("k")),
-            Multiply(Norm(At(X("a"), X("t"))), Norm(At(X("b"), X("t")))));
-        Formula decompositions = SetOf("r", Reals(), Some("k", Naturals(),
-            Some("a", Arrow(FinOf(X("k")), Euclidean(X("n₁"))),
-                Some("b", Arrow(FinOf(X("k")), Euclidean(X("n₂"))),
-                    And(Equal(X("m"), SumOver("t", FinOf(X("k")), product)), Equal(X("r"), cost))))));
-        return All("n₁", Naturals(), All("n₂", Naturals(), All("m", MatrixOf(FinOf(X("n₁")), FinOf(X("n₂"))),
-            Equal(LocalCall("projNorm", X("m")), At(Qualified("InfSet", "sInf"), decompositions)))));
+                Equal(LocalCall("testerImage", X("e₁"), X("e₂"), X("ρ")), sum)))));
     }
 
     private static Formula SeparableFormula()
@@ -190,7 +185,7 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
         Formula detection = Some("n₁", Naturals(), Some("n₂", Naturals(),
             Some("e₁", LinearType(X("d₁"), X("n₁")), Some("e₂", LinearType(X("d₂"), X("n₂")),
                 And(LocalCall("IsTester", X("e₁")), And(LocalCall("IsTester", X("e₂")),
-                    Less(Typed(D(1), Reals()), LocalCall("projNorm", LocalCall("testerImage", X("e₁"), X("e₂"), X("ρ"))))))))));
+                    Less(Typed(D(1), Reals()), Norm(LocalCall("testerImage", X("e₁"), X("e₂"), X("ρ"))))))))));
         return Equal(Local("claim"), All("d₁", Naturals(), All("d₂", Naturals(),
             All("ρ", Bipartite(X("d₁"), X("d₂")), Imp(Positive(X("ρ")),
                 Imp(Equal(Trace(X("ρ")), Typed(D(1), Complexes())),
@@ -203,7 +198,7 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
         Formula bound = All("n₁", Naturals(), All("n₂", Naturals(),
             All("e₁", LinearType(X("d"), X("n₁")), All("e₂", LinearType(X("d"), X("n₂")),
                 Imp(Contraction(X("e₁"), X("d")), Imp(Contraction(X("e₂"), X("d")),
-                    LE(LocalCall("projNorm", LocalCall("testerImage", X("e₁"), X("e₂"), state)), Typed(D(1), Reals()))))))));
+                    LE(Norm(LocalCall("testerImage", X("e₁"), X("e₂"), state)), Typed(D(1), Reals()))))))));
         return All("d", Naturals(), All("μ", Reals(), Imp(LE(Typed(D(3), Naturals()), X("d")),
             Imp(LE(Div(Typed(D(1), Reals()), NatToReal(X("d"))), X("μ")),
                 Imp(Less(X("μ"), Div(Typed(D(1), Reals()), Typed(D(2), Reals()))),
@@ -228,7 +223,6 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
         Qualified("D5", "S3", "Quantum", "Foundation", "FiniteTraceDistance", "traceNorm"), value);
     private static Formula Positive(Formula value) => At(Qualified("Matrix", "PosSemidef"), value);
     private static Formula Evaluate(Formula e, Formula x) => At(At(Qualified("DFunLike", "coe"), e), x);
-    private static Formula Coordinate(Formula vector, Formula index) => At(At(Qualified("WithLp", "ofLp"), vector), index);
     private static Formula Norm(Formula value) => new Formula.Norm(value);
     private static Formula NatToReal(Formula value) => Typed(At(Qualified("Nat", "cast"), value), Reals());
     private static Formula Local(string name) => Qualified("D5", "S3", "Quantum", "Entanglement", "Witness", "WernerTesterIncompleteness", name);
@@ -271,7 +265,6 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
     private static Formula LambdaOf(string name, Formula type, Formula body) => Seq(LambdaLower, Sp, Typed(X(name), type), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, Typed(X(name), type), Sp, Mid, Sp, Parenthesized(body), CloseBrace);
     private static Formula SumOver(string name, Formula type, Formula body) => Seq(new Formula.Subscript(Sum, Seq(X(name), Colon, Sp, type)), Sp, Parenthesized(body));
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
     private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula NotEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
