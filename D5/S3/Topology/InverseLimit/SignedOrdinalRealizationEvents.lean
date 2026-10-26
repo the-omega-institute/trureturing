@@ -26,6 +26,15 @@ open D5.S3.Topology.Measures
 
 variable (hCH : Cardinal.continuum.{0} = ℵ₁)
 
+private theorem oldN_congr {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} (P : Predecessor H ha) {r r' : Rows a}
+    {hr : r ≠ newRow a ha} {hr' : r' ≠ newRow a ha} {d d' : Coord a}
+    (hrow : r = r') (hcol : d = d') (e : Fin 2) :
+    P.oldN r hr d e = P.oldN r' hr' d' e := by
+  subst r'
+  subst d'
+  rfl
+
 /-- The actual split projection and the final restriction read the same coordinates. -/
 theorem selected_projection (a : Stage) (r : Rows (ord a))
     (x : (finalPrefix hCH).LimitSpace) :
@@ -145,11 +154,13 @@ theorem delayed_cofinal (θ : Stage) (s t base : Label) (k : ℕ)
     rw [hrow, htarget]
     exact prepared_measure_read hCH θ a hθ t ht.le n
   · intro e
+    have hrow : D.row = oldRow hθ (newRow (ord θ) θ.2) := Subtype.ext hmatch.1
+    have hsource : D.source = ⟨s.1, hs⟩ := Subtype.ext hmatch.2.1
     have hr := R.oldN D.row D.old D.source e
-    refine hr.trans ?_
+    refine hr.trans ((oldN_congr (SignedOrdinalHistory.run hCH a).P
+      (hr' := oldRow_ne hθ _) hrow hsource e).trans ?_)
     have hn := reservoir_incoming hCH θ s a hθ hs (decide (e = 1))
-    fin_cases e <;>
-      simpa [Predecessor.oldN, oldRow, newRow, hmatch.1, hmatch.2.1] using hn.symm
+    fin_cases e <;> simpa using hn.symm
   · refine ⟨(max_le (show ord θ ≤ ord a from hθ.le) hs.le).trans_lt
       (Order.lt_succ (ord a)), ?_⟩
     have hrow : D.row = ⟨ord θ, θ.2, hθ.le⟩ := Subtype.ext hmatch.1
