@@ -139,10 +139,12 @@ def registration :
       path := #[] }
     coordinates := #[]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
+        "arg", "arg", "body", "body", "body", "body", "body", "body", "domain",
+        "fn", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
