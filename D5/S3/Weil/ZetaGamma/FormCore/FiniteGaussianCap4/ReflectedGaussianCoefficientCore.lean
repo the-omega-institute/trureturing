@@ -45,7 +45,9 @@ def actualEvenInverseNormalization (n : ℕ) : ℝ :=
   1 / centralNormalization (2 * n)
 
 private theorem actualCentralZ_zero : actualCentralZ 0 = 1 := by
-  simp [actualCentralZ, (normalizedCentralMellin_even_pos 0).ne']
+  have h0 : normalizedCentralMellin 0 ≠ 0 := by
+    simpa only [Nat.mul_zero] using (normalizedCentralMellin_even_pos 0).ne'
+  simp [actualCentralZ, h0]
 
 private theorem actualCentralZ_abs_le_one (n : ℕ) : |actualCentralZ n| ≤ 1 := by
   have hweight : ∀ n : ℕ, FiniteGaussianCap4.weight n ≤ 1 := by
@@ -69,6 +71,10 @@ private theorem actualCentralZ_abs_le_one (n : ℕ) : |actualCentralZ n| ≤ 1 :
   rw [abs_of_pos hzpos]
   exact (sq_le_sq₀ hzpos.le (by norm_num : (0 : ℝ) ≤ 1)).mp (by simpa using hzsq)
 
+/-- The actual continuous central-charge covector in the weighted coordinates. -/
+def actualCentralChargeVector : GaussianCoeffSpace :=
+  gaussianChargeVector actualCentralZ actualCentralZ_abs_le_one
+
 private theorem inverse_normalization_even_growth (n : ℕ) :
     |actualEvenInverseNormalization n| ≤
       (1 / centralNormalization 0) * (9 / 2 : ℝ) ^ n := by
@@ -88,7 +94,8 @@ private theorem inverse_normalization_even_growth (n : ℕ) :
     have h1 := hstep (2 * k)
     have h2 := hstep (2 * k + 1)
     rw [show 2 * k + 1 + 1 = 2 * (k + 1) by omega] at h2
-    apply (sq_le_sq₀ (centralNormalization_pos _).le (by positivity)).mp
+    apply (sq_le_sq₀ (centralNormalization_pos _).le
+      (mul_nonneg (by norm_num) (centralNormalization_pos _).le)).mp
     nlinarith
   have hinv : ∀ k : ℕ, 1 / centralNormalization (2 * (k + 1)) ≤
       (9 / 2 : ℝ) * (1 / centralNormalization (2 * k)) := by
@@ -192,7 +199,7 @@ theorem actual_reflected_gaussian_coefficient_core :
       (∀ t : ℝ, 0 < t → t < 1 / 36 → ∀ n : ℕ,
         f t n = coeffWeight n * actualReflectedCurveCoefficient t n) ∧
       positiveCurveSpan f (1 / 36) =
-        (coeffCharge (gaussianChargeVector actualCentralZ actualCentralZ_abs_le_one)).ker := by
+        (coeffCharge actualCentralChargeVector).ker := by
   apply weighted_charge_kernel_core_of_scalar_curve (r := 1 / 36)
     actualCentralZ actualEvenInverseNormalization
     actualCentralZ_zero actualCentralZ_abs_le_one
