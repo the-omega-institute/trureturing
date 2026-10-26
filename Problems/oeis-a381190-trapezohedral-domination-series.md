@@ -45,7 +45,7 @@ An authenticated `n >= 3` with an exact actual labelled-subset count differing f
 - `D5/S3/Combinatorics/Graph/Domination/TrapezohedralPathEquivalence.actual_count` gives the all-order actual count.
 - `D5/S3/Combinatorics/Graph/Domination/TrapezohedralDominationSeries.actual_series` proves the complete literal rational identity.
 
-The endpoint statement IDs are `sha256:54000bdc1e949deaa94cf3f40889d49353f627ac654492c1ed6267215637e9c5` for `actual_series` and `sha256:8fcdbbc3c13b3bf2333f9b538a5a36983c335356476bfaab6ec2c465e66c` for `actual_count`. The current scoped report has axiom union `{Classical.choice, Quot.sound, propext}`.
+The endpoint statement IDs are `sha256:54000bdc1e949deaa94cf3f40889d49353f627ac654492c1ed6267215637e9c5` for `actual_series` and `sha256:8fcdbbc3c13b3bf2333f9b538a5a369a56983c335356476bfaab6ec2c465e66c` for `actual_count`. The current scoped report has axiom union `{Classical.choice, Quot.sound, propext}`.
 
 ## Triage
 
