@@ -10,14 +10,6 @@ public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 
 /-! # Opposite actual source values give full completion
 
-SOURCE-ONLY DRAFT: UNELABORATED. No Lean invocation, kernel check, axiom report,
-Scribe emission, registration, freeze, or acceptance is claimed for this file.
-The native interface was read at main commit
-87da4068c8a1822794d8b6f25b24f93be94d526a; mathlib interfaces at its manifest pin
-56a005855ea17e0b0958f73ec801ae140b0a1679. The scientific input is section 6 of
-the completed old-legal-three-to-two-research/source-proof.txt. Its exact finite
-checks are HAND evidence, not evidence of elaboration of the present source.
-
 This is full completion for a source subdomain, not a conditional exchange:
 the only additional source condition is existence of two nonzero opposite
 actual values. In particular there is no value-injectivity, coprimality,
@@ -34,10 +26,6 @@ Capacity is exactly TwoOppositeLargeExchange.C = ExpandingSourcePath.half,
 never SourceWidth.capacity. All natural prefixes are included. The main
 theorem also returns endpoint zero, actual Legal, Nodup, and exhaustive univ.
 
-Audit #22063 remains OPEN/unfinished as disclosed in the task context. This
-draft supplies no standalone Reg/audit wrapper and no completed audit claim.
-The remaining exact-original-telescope audit must preserve arbitrary k,t,
-the existential physical opposite pair, and the entire completion conclusion.
 Full C3.1 outside this source subdomain remains open.
 -/
 
@@ -194,7 +182,7 @@ private theorem complete_from_sign_reversal {k : ℕ} (f : Fin k → ℤ)
 /-- Full actual-source completion from any nonzero opposite-value pair.
 All source labels, including repeated-valued physical occurrences, are used.
 The conclusion is at C k and contains every natural zero-start prefix bound,
-endpoint zero, and the existing native Legal predicate. UNELABORATED draft. -/
+endpoint zero, and the existing native Legal predicate. -/
 theorem actualSource_opposite_full_completion
     {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     (hopposite : ∃ i j : Fin k, s k t i ≠ 0 ∧ s k t j = -s k t i) :
