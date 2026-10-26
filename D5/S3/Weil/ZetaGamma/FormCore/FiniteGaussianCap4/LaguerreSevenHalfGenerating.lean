@@ -226,9 +226,15 @@ theorem laguerre_hasSum_complex (x : ℝ) (z : ℂ) (hz : ‖z‖ < 1) :
   have hd (n : ℕ) : HasSum
       (fun p : Finset.antidiagonal n => gaussianTerm x z p.1.1 p.1.2)
       ((((laguerre n).eval (2 * x) : ℝ) : ℂ) * z ^ n) := by
-    simpa only [Finset.sum_coe_sort, gaussianTerm_antidiagonal] using
-      (hasSum_fintype
-        (fun p : Finset.antidiagonal n => gaussianTerm x z p.1.1 p.1.2))
+    have hf := hasSum_fintype
+      (fun p : Finset.antidiagonal n => gaussianTerm x z p.1.1 p.1.2)
+    have he : (∑ p : Finset.antidiagonal n, gaussianTerm x z p.1.1 p.1.2) =
+        (((laguerre n).eval (2 * x) : ℝ) : ℂ) * z ^ n :=
+      (Finset.sum_coe_sort (Finset.antidiagonal n)
+        (fun p : ℕ × ℕ => gaussianTerm x z p.1 p.2)).trans
+          (gaussianTerm_antidiagonal x z n)
+    rw [he] at hf
+    exact hf
   exact hs.sigma hd
 
 /-- The requested complex generating equality. In fact positivity of `x` is unnecessary. -/
@@ -281,7 +287,9 @@ theorem generating_hasFPowerSeriesAt (x : ℝ) :
   · intro z hz
     have hz' : ‖z‖ < 1 := by
       have : ‖z‖ < (1 / 2 : ℝ) := by
-        simpa [enorm_eq_nnnorm] using! hz
+        rw [show ((1 / 2 : NNReal) : ENNReal) =
+          ENNReal.ofReal (1 / 2 : ℝ) by norm_num, Metric.eball_ofReal] at hz
+        simpa using hz
       linarith
     simpa [p, FormalMultilinearSeries.ofScalars] using phi_hasSum_complex x z hz'
 
