@@ -8,6 +8,7 @@
 
 /- Same-path private tail preparation; no event or history existence is asserted. -/
 import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
+import D5.S3.Topology.InverseLimit.SignedOrdinalHistory
 import D5.S3.Topology.InverseLimit.CountableClopenReflection
 import D5.S3.Topology.Separation.DisjointCopyTower
 import Mathlib.Topology.InductiveDimension.Classes
@@ -374,5 +375,58 @@ private theorem whole_dirac_source_target_labels_ne {X : Type u}
     Measure.dirac_apply' _ C.isClopen.isClosed.measurableSet.compl,
     Set.indicator_of_mem hyC] at hnull
   exact one_ne_zero hnull
+
+open SignedOrdinalHistoryState SignedOrdinalHistoryEvent SignedOrdinalHistoryTask
+    SignedOrdinalSuccessor in
+/-- Original whole-birth data fix one pair code and force arbitrarily late
+execution with the same selected result, certificate and original supports. -/
+private theorem whole_birth_delayed_cofinal
+    (hCH : Cardinal.continuum.{0} = Cardinal.aleph 1)
+    (θ : Stage) (s t base : Label)
+    (C0 C1 : TopologicalSpace.Clopens (K (SignedOrdinalHistory.run hCH θ).H))
+    (hdis : Disjoint (C0 : Set (K (SignedOrdinalHistory.run hCH θ).H))
+      (C1 : Set (K (SignedOrdinalHistory.run hCH θ).H)))
+    (y : ℕ → K (SignedOrdinalHistory.run hCH θ).H)
+    (hinV : ∀ n, y n ∈ (SignedOrdinalHistory.run hCH θ).birth.V.clopen n)
+    (hinC1 : ∀ n, y n ∈ C1)
+    (targetDirac : ∀ n, (SignedOrdinalHistory.run hCH θ).birth.measure t n =
+      (Measure.dirac (y n)).toSignedMeasure)
+    (sourceNull : ∀ n, ((SignedOrdinalHistory.run hCH θ).birth.measure s n).totalVariation
+      (C0 : Set (K (SignedOrdinalHistory.run hCH θ).H))ᶜ = 0) :
+    let f := SignedOrdinalHistory.run hCH
+    ∃ k : ℕ, (f θ).birth.B (decode k).1 = C0 ∧
+      (f θ).birth.B (decode k).2 = C1 ∧
+      ∃ a : Stage, base < a.1 ∧ θ < a ∧ s.1 < ord a ∧ t.1 < ord a ∧
+        (CofinalTaskSchedule.reservation a.1).1 = .inr (θ.1, s, t, k) ∧
+        ∃ (D : DelayedTask (f a).event.Q)
+          (R : Result (f a).H a.2 (f a).P
+            (scheduledLaunch (f a).H a.2 (f a).P) (f a).event.Q ⟨D.row, oldCol D.target⟩)
+          (hc : DelayedCertificate (f a).event.Q D R),
+          (f a).event.selected = .delayed D R hc ∧
+            Matches (f a).event.Q (f a).event.oldB θ.1 s t k D ∧
+            HEq D.sourceSupport C0 ∧ HEq D.targetSupport C1 := by
+  classical
+  let f := SignedOrdinalHistory.run hCH
+  obtain ⟨j, hj⟩ := (f θ).birth.Bonto C0
+  obtain ⟨l, hl⟩ := (f θ).birth.Bonto C1
+  let k := decode.symm (j, l)
+  have hdecode : decode k = (j, l) := decode.apply_symm_apply (j, l)
+  have hC0 : (f θ).birth.B (decode k).1 = C0 := by
+    simpa only [hdecode] using hj
+  have hC1 : (f θ).birth.B (decode k).2 = C1 := by
+    simpa only [hdecode] using hl
+  have hne : s ≠ t := whole_dirac_source_target_labels_ne
+    (f θ).birth.measure s t C0 C1 hdis y hinC1 targetDirac sourceNull
+  have valid : Intrinsic (f θ).birth s t k := by
+    refine ⟨hne, ?_, y, hinV, ?_, targetDirac, ?_⟩
+    · simpa only [hC0, hC1] using hdis
+    · simpa only [hC1] using hinC1
+    · simpa only [hC0] using sourceNull
+  obtain ⟨a, hbase, hθ, hs, ht, hres, D, R, hc, hselected, hmatches, hsource, htarget⟩ :=
+    SignedOrdinalHistory.delayed_cofinal hCH θ s t base k valid
+  refine ⟨k, hC0, hC1, a, hbase, hθ, hs, ht, hres, D, R, hc,
+    hselected, hmatches, ?_, ?_⟩
+  · exact hsource.trans (heq_of_eq hC0)
+  · exact htarget.trans (heq_of_eq hC1)
 
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
