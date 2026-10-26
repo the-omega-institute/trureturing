@@ -86,7 +86,10 @@ internal sealed class ImpreciseCHSHSeparableOptimumDocument : IScribeDocumentDef
                         + "equalities hold. In the large-epsilon branch the scalar CHSH bound is two; four observables with "
                         + "vector (1 over square root of two, 0, 1 over square root of two) and their corresponding product "
                         + "state attain two. The two cases establish both greatestness and attainment for every epsilon."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("morelli-yamasaki-huber-tavakoli-2022-imprecise-chsh-optimum"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula WitnessFormula()
