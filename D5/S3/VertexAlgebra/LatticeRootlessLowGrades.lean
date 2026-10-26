@@ -45,7 +45,7 @@ private theorem oscillator_add (D : LatticeData) (d e : Exponent D) :
 
 private theorem oscillator_single (D : LatticeData) (x : Index D) (m : ℕ) :
     oscillatorEnergy (Finsupp.single x m : Exponent D) = m * (x.2 + 1) := by
-  simp only [oscillatorEnergy, Finsupp.weight_single, nsmul_eq_mul]
+  simp [oscillatorEnergy, Finsupp.weight_single, nsmul_eq_mul]
 
 /-- Removing an actual occupied oscillator proves the entire degree-one
 classification, including the empty-colour case. -/
@@ -71,14 +71,14 @@ theorem oscillator_one_iff (D : LatticeData) (d : Exponent D) :
     rw [hz, zero_add] at hr
     exact ⟨i, hr.symm⟩
   · rintro ⟨i, rfl⟩
-    rw [oscillator_single]
+    simp [oscillator_single]
 
 /-- A bijection with literal degree-one oscillator monomials. -/
 def oscillatorOneEquiv (D : LatticeData) :
     OscillatorFiber D 1 ≃ Fin D.rank := by
   classical
   let f : Fin D.rank → OscillatorFiber D 1 := fun i =>
-    ⟨Finsupp.single (i, 0) 1, by rw [oscillator_single]⟩
+    ⟨Finsupp.single (i, 0) 1, by simp [oscillator_single]⟩
   have hf : Function.Bijective f := by
     constructor
     · intro i j h
@@ -135,7 +135,7 @@ private theorem pairOccupation_energy (D : LatticeData) (s : Sym (Fin D.rank) 2)
     oscillatorEnergy (pairOccupation D s) = 2 := by
   rcases s with ⟨s, hs⟩
   obtain ⟨i, j, rfl⟩ := Multiset.card_eq_two.mp hs
-  rw [pairOccupation_pair, oscillator_add, oscillator_single, oscillator_single]
+  simp [pairOccupation_pair, oscillator_add, oscillator_single]
 
 private theorem pairOccupation_injective (D : LatticeData) :
     Function.Injective (pairOccupation D) := by
@@ -160,7 +160,7 @@ private theorem pairOccupation_mode_two (D : LatticeData)
 configurations to the exact energy-two fiber. -/
 def oscillatorTwoDecode (D : LatticeData) :
     Fin D.rank ⊕ Sym (Fin D.rank) 2 → OscillatorFiber D 2
-  | Sum.inl i => ⟨Finsupp.single (i, 1) 1, by rw [oscillator_single]⟩
+  | Sum.inl i => ⟨Finsupp.single (i, 1) 1, by simp [oscillator_single]⟩
   | Sum.inr s => ⟨pairOccupation D s, pairOccupation_energy D s⟩
 
 private theorem oscillatorTwoDecode_bijective (D : LatticeData) :
@@ -392,7 +392,7 @@ theorem grade_two_finrank (D : LatticeData)
     (hroot : ∀ a : Charge D, bilinear D a a ≠ 2) :
     Module.finrank ℂ (grade D 2) =
       D.rank + Nat.choose (D.rank + 1) 2 + Nat.card (NormFour D) := by
-  letI : Finite (NormFour D) := normFour_finite D hD
+  haveI : Finite (NormFour D) := normFour_finite D hD
   rw [Module.finrank_eq_nat_card_basis (gradeTwoBasis D hD hroot), Nat.card_sum]
   rw [← Nat.card_congr (oscillatorTwoEquiv D), neutral_energy_two_card]
 
@@ -422,12 +422,14 @@ theorem actual_rootless_low_spectrum (D : LatticeData)
     rw [actualL0_eigenspace_eq_grade D H hHG hGH n]
     exact Module.finrank_eq_nat_card_basis (gradeBasis D n)
   refine ⟨hfinite, ?_, ?_, ?_⟩
-  · change Module.finrank ℂ ((sugawaraMode D H 0).eigenspace ((0 : ℤ) : ℂ)) = 1
-    rw [hcard, Nat.card_congr (energyZeroEquiv D hD)]
-    simp
-  · change Module.finrank ℂ ((sugawaraMode D H 0).eigenspace ((1 : ℤ) : ℂ)) = D.rank
-    rw [hcard, Nat.card_congr (energyOneEquiv D hD hroot)]
-    simp only [Nat.card_eq_fintype_card, Fintype.card_fin]
+  · have hc : Nat.card (EnergyFiber D 0) = 1 := by
+      rw [Nat.card_congr (energyZeroEquiv D hD)]
+      simp
+    simpa only [Int.cast_zero] using (hcard 0).trans hc
+  · have hc : Nat.card (EnergyFiber D 1) = D.rank := by
+      rw [Nat.card_congr (energyOneEquiv D hD hroot)]
+      simp only [Nat.card_eq_fintype_card, Fintype.card_fin]
+    simpa only [Int.cast_one] using (hcard 1).trans hc
   · change Module.finrank ℂ ((sugawaraMode D H 0).eigenspace ((2 : ℤ) : ℂ)) = _
     rw [actualL0_eigenspace_eq_grade D H hHG hGH 2]
     exact grade_two_finrank D hD hroot
