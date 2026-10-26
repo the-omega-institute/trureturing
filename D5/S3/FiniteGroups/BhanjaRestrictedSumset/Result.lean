@@ -10,16 +10,15 @@
 admission_basis: open-problem-resolution (#22373; Refuted).
 Direct frozen D5 dependencies: none (pinned Mathlib imports only).
 Per declaration: name | proof_shape | escape_witness | consumers.
-  hSumset | bind-only (definition) | none | elementary_two_group_gap, elementary_two_group_minima, largeIterated, memH, minSize
+  hSumset | bind-only (definition) | none | elementary_two_group_gap, elementary_two_group_minima, largeIterated, minSize
   restrictedSumset | bind-only (definition) | none | elementary_two_group_gap, elementary_two_group_minima, memR, minRestrictedSize, restrictedOdd
-  memH | bind-only | none | largeIterated
   memR | bind-only | none | restrictedOdd
   doubleZero | bind-only | none | oddSmul, pairSum
   oddSmul | bind-only | none | restrictedOdd
   pairSum | bind-only | none | restrictedOdd
   restrictedOdd | content | restrictedOdd | elementary_two_group_gap
   largeDouble | bind-only | none | largeIterated
-  largeIterated | content | largeIterated | elementary_two_group_gap
+  largeIterated | bind-only | none | elementary_two_group_gap
   elementary_two_group_gap | content | elementary_two_group_gap | elementary_two_group_minima
   minSize | bind-only (definition) | none | claim, elementary_two_group_minima, result
   minRestrictedSize | bind-only (definition) | none | claim, elementary_two_group_minima, result
@@ -27,10 +26,16 @@ Per declaration: name | proof_shape | escape_witness | consumers.
   uniformMinimum | bind-only | none | elementary_two_group_minima
   elementary_two_group_minima | content | elementary_two_group_gap | result
   result | content | elementary_two_group_gap | settling result
-The sumset equality restrictedOdd constructs both inclusions from functions
-whose images have cardinality at most two. The padding construction in
-largeIterated supplies h summands for every target. The general family,
-not a finite table, supplies the strict gap used by result.
+The content witness restrictedOdd constructs both inclusions by resolving a
+nonempty function image of cardinality at most two into a singleton or pair,
+then reducing the corresponding multiplicities by parity in exponent two.
+The scalar parity calculation pairSum itself is normalization, not a witness.
+The function-image reduction is not a direct upstream instantiation or scalar
+normalization. It remains on the live path through elementary_two_group_gap
+and elementary_two_group_minima to result. In contrast, largeIterated binds
+largeDouble and Finset.card_nsmul_mono: the cardinalities of 2 • A and h • A
+are squeezed against the group order. It supplies no escape witness.
+The general family, not a finite table, supplies the strict gap used by result.
 The certified instance at m=2, k=h=3, r=2 refutes the closed claim.
 -/
 
@@ -47,16 +52,6 @@ def restrictedSumset {G : Type*} [AddCommGroup G] [DecidableEq G]
     (h r : ℕ) (A : Finset G) : Finset G :=
   ((Fintype.piFinset fun _ : Fin h => A).filter
     fun f => (univ.image f).card ≤ r).image fun f => ∑ i, f i
-
-private lemma memH {G : Type*} [AddCommGroup G] [DecidableEq G]
-    (h : ℕ) (A : Finset G) (x : G) :
-    x ∈ hSumset h A ↔ ∃ f : Fin h → G, (∀ i, f i ∈ A) ∧ ∑ i, f i = x := by
-  rw [hSumset, Finset.mem_nsmul]
-  constructor
-  · rintro ⟨f, hf⟩
-    exact ⟨fun i => f i, fun i => (f i).property, by simpa [List.sum_ofFn] using hf⟩
-  · rintro ⟨f, hf, hx⟩
-    exact ⟨fun i => ⟨f i, hf i⟩, by simpa [List.sum_ofFn] using hx⟩
 
 private lemma memR {G : Type*} [AddCommGroup G] [DecidableEq G]
     (h r : ℕ) (A : Finset G) (x : G) :
@@ -156,17 +151,12 @@ private lemma largeIterated {G : Type*} [AddCommGroup G] [DecidableEq G] [Fintyp
     (h : ℕ) (hh : 2 ≤ h) (A : Finset G) (hc : Fintype.card G < 2 * A.card) :
     hSumset h A = univ := by
   classical
-  have hA : A.Nonempty := card_pos.mp (by have := Fintype.card_pos (α := G); omega)
-  obtain ⟨a, ha⟩ := hA
-  apply eq_univ_iff_forall.mpr
-  intro g
-  have he : g - (h - 2) • a ∈ A + A := by rw [largeDouble A hc]; exact mem_univ _
-  have hn : (h - 2) • a ∈ (h - 2) • A := by
-    apply (memH (h - 2) A _).mpr
-    exact ⟨fun _ => a, fun _ => ha, by simp⟩
   unfold hSumset
-  rw [show h = 2 + (h - 2) by omega, add_nsmul, two_nsmul]
-  exact mem_add.mpr ⟨g - (h - 2) • a, he, (h - 2) • a, hn, sub_add_cancel _ _⟩
+  apply Finset.eq_univ_of_card
+  apply le_antisymm (Finset.card_le_univ _)
+  calc
+    Fintype.card G = (2 • A).card := by rw [two_nsmul, largeDouble A hc, card_univ]
+    _ ≤ (h • A).card := Finset.card_nsmul_mono (by decide : 2 ≠ 0) hh
 
 theorem elementary_two_group_gap (m : ℕ) (hm : 2 ≤ m) (h : ℕ)
     (hodd : Odd h) (h3 : 3 ≤ h) (A : Finset (Fin m → ZMod 2))

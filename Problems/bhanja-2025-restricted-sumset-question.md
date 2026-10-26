@@ -83,8 +83,8 @@ minima. `result` states exactly $\neg\mathrm{claim}$.
 The immutable [experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/5175832e77ae14b93bc0075f43bd8126f57bddfc/experiments/bhanja-restricted-sumset-question)
 contains `bhanja-q1.py`, SHA-256
 `4c041a3988bd92a78819b081d13dfded6cdf3dda78b8988221311271e576220a`.
-Command: `python3 bhanja-q1.py`; exit code 0. It exhausts all nonempty
-subset cardinalities for the groups in the following survey at $h=3$,
+Command: `python3 bhanja-q1.py`; exit code 0. It tests every nonempty
+proper-subset cardinality $1\le k<|G|$ for the groups in the following survey at $h=3$,
 $r=2$, and checks the elementary 2-group identities for $m=2,3$,
 $h=3,5$ in the strict half-to-full range.
 
@@ -114,9 +114,14 @@ arXiv:2603.04572, concerns all-distinct summands, a different restriction.
   The first number is the restricted minimum. Evidence is the exhaustive
   experiment above, with its pinned program, command, exit code and hash.
 - **COMPUTED.** In the same survey the minima agree for every nonempty
-  subset cardinality in $\mathbb Z/3$, $\mathbb Z/4$, $\mathbb Z/5$,
+  proper-subset cardinality $1\le k<|G|$ in $\mathbb Z/3$, $\mathbb Z/4$, $\mathbb Z/5$,
   $\mathbb Z/6$, $\mathbb Z/10$ and $\mathbb Z/3\times\mathbb Z/3$.
   This is finite computational evidence, with the same experiment entry.
+- **PROVED (prose argument).** For the endpoint $k=|G|$ in a finite
+  abelian group, the only subset is $A=G$. At $h=3,r=2$, every $g\in G$
+  is $g+0+0$, using at most two distinct values from $A$. Thus both
+  sumsets equal $G$, and both minima equal $|G|$. This endpoint is a
+  prose argument, separate from the computed survey.
 - **PROVED (mechanism).** Parity cancellation in exponent two is the
   mechanism of `elementary_two_group_gap`. The cyclic survey shows that
   failure is not confined to exponent two. For $\mathbb Z/7$,

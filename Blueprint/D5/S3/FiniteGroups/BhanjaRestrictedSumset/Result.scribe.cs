@@ -17,7 +17,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "hSumset"),
                 H("Ordinary h-fold sumset"), StatementSource.FromAuthor(Disp(Group(All("h", N, All("A", FS(G), Eq(Call("hSumset", h, A), Smul(h, A))))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The ordinary sumset is the existing pointwise natural scalar action on finsets. The function characterization below checks that it has exactly h summands."))),
+                Blocks(Paragraph(Text("The ordinary sumset is the existing pointwise natural scalar action on finsets. Finset.mem_nsmul characterizes it by h choices in the subtype of A, and List.sum_ofFn identifies their sum with a sum indexed by Fin h."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("restricted-sumset"),
                 DeclarationHandle.Create(Owner + "restrictedSumset"),
@@ -25,12 +25,6 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("§4, “Further Remarks”, printed p. 11: “Another sumset that may come immediately to the reader’s mind is the sumset h(≤r) A, which contains those elements of the group G that are the sum of h elements of A with at most r distinct elements.” The superscript appears as (≤r) in the text extraction. The finite image counts different values, allowing repetitions and allowing fewer than r values. Functions are enumerated by Fintype.piFinset, filtered by that cardinality and mapped to their sums."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("ordinary-membership"),
-                DeclarationHandle.Create(Owner + "memH"),
-                H("Function characterization of ordinary sums"), StatementSource.FromAuthor(Disp(Group(All("h", N, All("A", FS(G), All("x", G, MemHBody())))))),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Finset.mem_nsmul supplies a function into the subtype of A. List.sum_ofFn converts its sum to the sum indexed by Fin h. This identifies the ordinary sumset with exactly h choices from A."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("restricted-membership"),
                 DeclarationHandle.Create(Owner + "memR"),
                 H("Function characterization of restricted sums"), StatementSource.FromAuthor(Disp(Group(All("h", N, All("r", N, All("A", FS(G), All("x", G, MemRBody()))))))),
@@ -69,9 +63,9 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("large-iterated"),
                 DeclarationHandle.Create(Owner + "largeIterated"),
-                H("Padding pair sums gives all longer sumsets"), StatementSource.FromAuthor(Disp(Group(All("h", N, Imp(Le(D(2), h), All("A", FS(G), Imp(Lt(Call("Fintype.card", G), Mul(D(2), Card(A))), Eq(Call("hSumset", h, A), U))))), true))),
+                H("Cardinality growth gives all longer sumsets"), StatementSource.FromAuthor(Disp(Group(All("h", N, Imp(Le(D(2), h), All("A", FS(G), Imp(Lt(Call("Fintype.card", G), Mul(D(2), Card(A))), Eq(Call("hSumset", h, A), U))))), true))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Choose a member a of A. Represent g−(h−2)•a by two members of A, then add h−2 copies of a. The function characterization memH supplies the repeated summands and the pointwise add_nsmul identity combines them."))),
+                Blocks(Paragraph(Text("The pair sumset is the whole group. For h≥2, Finset.card_nsmul_mono bounds its cardinality by that of h•A, while Finset.card_le_univ bounds the latter by the group order. Finset.eq_univ_of_card gives the equality."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("elementary-gap"),
                 DeclarationHandle.Create(Owner + "elementary_two_group_gap"),
@@ -167,12 +161,10 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula RestrictedDefinition() => Eq(Call("restrictedSumset", h, r, A),
         Call("Finset.image", Lam("f", Arrow(Fin(h), G), SumF()),
             Call("Finset.filter", Lam("f", Arrow(Fin(h), G), Le(ImageCard(), r)),
-                Call("Fintype.piFinset", Lam("i", Fin(h), A)))));
+                Call("Fintype.piFinset", Call("Function.const", Fin(h), A)))));
     private static Formula SumF() => Seq(new Formula.Subscript(Sum, Seq(V("i"), Colon, Sp, Fin(h))), Sp, App(f, V("i")));
     private static Formula ImageCard() => Card(Call("Finset.image", f, U));
     private static Formula AllValues() => All("i", Fin(h), Mem(App(f, V("i")), A));
-    private static Formula MemHBody() => Iff(Mem(V("x"), Call("hSumset", h, A)),
-        Ex("f", Arrow(Fin(h), G), And(AllValues(), Eq(SumF(), V("x")))));
     private static Formula MemRBody() => Iff(Mem(V("x"), Call("restrictedSumset", h, r, A)),
         Ex("f", Arrow(Fin(h), G), And(AllValues(), And(Le(ImageCard(), r), Eq(SumF(), V("x"))))));
     private static Formula Builder(Formula body) => Seq(OpenBrace, V("n"), Colon, Sp, N, Sp, Bar, Sp, P(body), CloseBrace);
