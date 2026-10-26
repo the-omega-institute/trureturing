@@ -56,8 +56,8 @@ private def sigma (s r q : ℝ) := Matrix.vecMulVec (psi s r q) (star (psi s r q
 
 private def kraus (s r q a h : ℝ) (x k : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   if x = 0 then if k = 0 then 1 else 0 else
-    if k = 0 then !![-(a : ℂ) / s, 0; (h : ℂ)^2 / (s*q), (r : ℂ) / q]
-    else !![-(h : ℂ)*r / (s*q), (h : ℂ) / q; 0, 0]
+    if k = 0 then !![-(a : ℂ) / s, 0; (h : ℂ) ^ 2 / (s * q), (r : ℂ) / q]
+    else !![-(h : ℂ) * r / (s * q), (h : ℂ) / q; 0, 0]
 
 private def channel (s r q a h : ℝ) (x : Fin 2) :=
   MatrixMap.of_kraus (kraus s r q a h x) (kraus s r q a h x)
@@ -69,78 +69,79 @@ private def hamiltonian : Matrix (Fin 2) (Fin 2) ℂ := !![0, 0; 0, 1]
 
 private def ground : Fin 2 → ℂ := ![1, 0]
 
-private lemma parameters (ω : ℝ) (hω : 0 < ω) (hω' : ω < 1/2) :
+private lemma parameters (ω : ℝ) (hω : 0 < ω) (hω' : ω < 1 / 2) :
     ∃ s r q a h : ℝ, 0 < s ∧ 0 < r ∧ 0 < q ∧ 0 < a ∧ 0 < h ∧
-      s^2 = 1-ω ∧ r^2 + q^2 = ω ∧ q^2-r^2 = h^2 ∧
-      a^2 + h^2 = s^2 ∧ (s*a-2*r*q)^2 < (1-2*ω)^2 := by
-  let t : ℝ := (1-2*ω)/8
-  have ht : 0 < t ∧ t < 1/8 := by dsimp [t]; constructor <;> linarith
-  have hsarg : 0 < 1-ω := by linarith
-  have hrarg : 0 < ω*(1/2-t) := mul_pos hω (by linarith)
-  have hqarg : 0 < ω*(1/2+t) := mul_pos hω (by linarith)
-  have haarg : 0 < 1-ω-2*ω*t := by nlinarith [mul_pos hω (by linarith : 0 < 1/2-t)]
-  have hharg : 0 < 2*ω*t := mul_pos (by linarith) ht.1
-  let s := Real.sqrt (1-ω)
-  let r := Real.sqrt (ω*(1/2-t))
-  let q := Real.sqrt (ω*(1/2+t))
-  let a := Real.sqrt (1-ω-2*ω*t)
-  let h := Real.sqrt (2*ω*t)
+      s ^ 2 = 1 - ω ∧ r ^ 2 + q ^ 2 = ω ∧ q ^ 2 - r ^ 2 = h ^ 2 ∧
+      a ^ 2 + h ^ 2 = s ^ 2 ∧ (s * a - 2 * r * q) ^ 2 < (1 - 2 * ω) ^ 2 := by
+  let t : ℝ := (1 - 2 * ω) / 8
+  have ht : 0 < t ∧ t < 1 / 8 := by dsimp [t]; constructor <;> linarith
+  have hsarg : 0 < 1 - ω := by linarith
+  have hrarg : 0 < ω * (1 / 2 - t) := mul_pos hω (by linarith)
+  have hqarg : 0 < ω * (1 / 2 + t) := mul_pos hω (by linarith)
+  have haarg : 0 < 1 - ω - 2 * ω * t := by nlinarith [mul_pos hω (by linarith : 0 < 1 / 2 - t)]
+  have hharg : 0 < 2 * ω * t := mul_pos (by linarith) ht.1
+  let s := Real.sqrt (1 - ω)
+  let r := Real.sqrt (ω * (1 / 2 - t))
+  let q := Real.sqrt (ω * (1 / 2 + t))
+  let a := Real.sqrt (1 - ω - 2 * ω * t)
+  let h := Real.sqrt (2 * ω * t)
   have hs : 0 < s := Real.sqrt_pos.2 hsarg
   have hr : 0 < r := Real.sqrt_pos.2 hrarg
   have hq : 0 < q := Real.sqrt_pos.2 hqarg
   have ha : 0 < a := Real.sqrt_pos.2 haarg
   have hh : 0 < h := Real.sqrt_pos.2 hharg
-  have hs2 : s^2 = 1-ω := Real.sq_sqrt hsarg.le
-  have hr2 : r^2 = ω*(1/2-t) := Real.sq_sqrt hrarg.le
-  have hq2 : q^2 = ω*(1/2+t) := Real.sq_sqrt hqarg.le
-  have ha2 : a^2 = 1-ω-2*ω*t := Real.sq_sqrt haarg.le
-  have hh2 : h^2 = 2*ω*t := Real.sq_sqrt hharg.le
+  have hs2 : s ^ 2 = 1 - ω := Real.sq_sqrt hsarg.le
+  have hr2 : r ^ 2 = ω * (1 / 2 - t) := Real.sq_sqrt hrarg.le
+  have hq2 : q ^ 2 = ω * (1 / 2 + t) := Real.sq_sqrt hqarg.le
+  have ha2 : a ^ 2 = 1 - ω - 2 * ω * t := Real.sq_sqrt haarg.le
+  have hh2 : h ^ 2 = 2 * ω * t := Real.sq_sqrt hharg.le
   refine ⟨s, r, q, a, h, hs, hr, hq, ha, hh, hs2, ?_, ?_, ?_, ?_⟩
   · nlinarith
   · nlinarith
   · nlinarith
-  · let x := s*a
-    let y := 2*r*q
+  · let x := s * a
+    let y := 2 * r * q
     have hx : 0 < x := mul_pos hs ha
     have hy : 0 < y := mul_pos (mul_pos (by norm_num) hr) hq
-    have hx2 : x^2 = (1-ω)*(1-ω-2*ω*t) := by
+    have hx2 : x ^ 2 = (1 - ω) * (1 - ω - 2 * ω * t) := by
       dsimp [x]; rw [mul_pow, hs2, ha2]
-    have hy2 : y^2 = ω^2*(1-4*t^2) := by
+    have hy2 : y ^ 2 = ω ^ 2 * (1 - 4 * t ^ 2) := by
       dsimp [y]; rw [mul_pow, mul_pow, hr2, hq2]; ring
-    have hxb : 1-ω-2*ω*t ≤ x := by
-      have : (1-ω-2*ω*t)^2 ≤ x^2 := by
+    have hxb : 1 - ω - 2 * ω * t ≤ x := by
+      have : (1 - ω - 2 * ω * t) ^ 2 ≤ x ^ 2 := by
         nlinarith only [hx2, mul_nonneg (mul_nonneg hω.le ht.1.le) haarg.le]
       exact (sq_le_sq₀ haarg.le hx.le).mp this
     have hyu : y ≤ ω := by
       apply (sq_le_sq₀ hy.le hω.le).mp
-      nlinarith only [hy2, sq_nonneg (2*ω*t)]
-    have hxc : x < 1-ω-ω*t := by
-      have hc : 0 < 1-ω-ω*t := by nlinarith only [haarg, mul_pos hω ht.1]
+      nlinarith only [hy2, sq_nonneg (2 * ω * t)]
+    have hxc : x < 1 - ω - ω * t := by
+      have hc : 0 < 1 - ω - ω * t := by nlinarith only [haarg, mul_pos hω ht.1]
       apply (sq_lt_sq₀ hx.le hc.le).mp
       nlinarith only [hx2, sq_pos_of_pos (mul_pos hω ht.1)]
-    have hyd : ω*(1-4*t^2) ≤ y := by
-      have hd : 0 < 1-4*t^2 := by nlinarith only [ht.1, ht.2]
+    have hyd : ω * (1 - 4 * t ^ 2) ≤ y := by
+      have hd : 0 < 1 - 4 * t ^ 2 := by nlinarith only [ht.1, ht.2]
       apply (sq_le_sq₀ (mul_nonneg hω.le hd.le) hy.le).mp
-      nlinarith only [hy2, mul_nonneg (sq_nonneg (2*ω*t)) hd.le]
-    have hxy : 0 < x-y := by
-      have : 0 < (1-2*ω)*(1-ω/4) := mul_pos (by linarith) (by linarith)
+      nlinarith only [hy2, mul_nonneg (sq_nonneg (2 * ω * t)) hd.le]
+    have hxy : 0 < x - y := by
+      have : 0 < (1 - 2 * ω) * (1 - ω / 4) := mul_pos (by linarith) (by linarith)
       dsimp [t] at hxb
       nlinarith only [hxb, hyu, this]
-    have hxy' : x-y < 1-2*ω := by
-      have : 0 < ω*t*(1-4*t) := mul_pos (mul_pos hω ht.1) (by linarith)
+    have hxy' : x - y < 1 - 2 * ω := by
+      have : 0 < ω * t * (1 - 4 * t) := mul_pos (mul_pos hω ht.1) (by linarith)
       nlinarith only [hxc, hyd, this]
-    change (x-y)^2 < (1-2*ω)^2
-    exact (sq_lt_sq₀ hxy.le (by linarith)).2 hxy' 
+    change (x - y) ^ 2 < (1 - 2 * ω) ^ 2
+    exact (sq_lt_sq₀ hxy.le (by linarith)).2 hxy'
 
-private lemma state_measurement (s r q : ℝ) (hs : s^2+r^2+q^2=1) :
+private lemma state_measurement (s r q : ℝ) (hs : s ^ 2 + r ^ 2 + q ^ 2 = 1) :
     (sigma s r q).PosSemidef ∧ (sigma s r q).trace = 1 ∧
       (∀ b, (measurement s r q b).PosSemidef) ∧
       measurement s r q 0 + measurement s r q 1 = 1 := by
   have hn : psi s r q ⬝ᵥ star (psi s r q) = 1 := by
+    delta psi
     unfold dotProduct
-    suffices (s : ℂ)*(s : ℂ)+((r : ℂ)*(r : ℂ)+(q : ℂ)*(q : ℂ))=1 by
-      simpa [psi, Fintype.sum_prod_type, Fin.sum_univ_two] using this
-    exact_mod_cast (by nlinarith [hs] : s*s+(r*r+q*q)=1)
+    suffices (s : ℂ) * (s : ℂ) + ((r : ℂ) * (r : ℂ) + (q : ℂ) * (q : ℂ)) = 1 by
+      simpa [Fintype.sum_prod_type, Fin.sum_univ_two] using this
+    exact_mod_cast (by nlinarith [hs] : s * s + (r * r + q * q) = 1)
   have hp := Matrix.posSemidef_vecMulVec_self_star (psi s r q)
   have htrace : (sigma s r q).trace = 1 := by
     rw [sigma, Matrix.trace_vecMulVec, hn]
@@ -149,36 +150,39 @@ private lemma state_measurement (s r q : ℝ) (hs : s^2+r^2+q^2=1) :
     rw [Matrix.vecMulVec_mul_vecMulVec, dotProduct_comm, hn]
     simp
   have hherm : (sigma s r q).conjTranspose = sigma s r q := hp.isHermitian
-  have heq : (1-sigma s r q).conjTranspose * (1-sigma s r q) = 1-sigma s r q := by
+  have heq : (1 - sigma s r q).conjTranspose * (1 - sigma s r q) = 1 - sigma s r q := by
     rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hherm]
     simp [Matrix.sub_mul, Matrix.mul_sub, hsq]
   refine ⟨hp, htrace, ?_, ?_⟩
   · intro b
+    delta measurement
     fin_cases b
     · exact hp
-    · change (1-sigma s r q).PosSemidef
+    · change (1 - sigma s r q).PosSemidef
       rw [← heq]
       exact Matrix.posSemidef_conjTranspose_mul_self _
-  · simp [measurement]
+  · delta measurement
+    simp
 
 private lemma kraus_complete (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
-    (hqr : q^2-r^2=h^2) (ha : a^2+h^2=s^2) (x : Fin 2) :
+    (hqr : q ^ 2 - r ^ 2 = h ^ 2) (ha : a ^ 2 + h ^ 2 = s ^ 2) (x : Fin 2) :
     (∑ k, (kraus s r q a h x k).conjTranspose * kraus s r q a h x k) = 1 := by
   have hs' : (s : ℂ) ≠ 0 := by exact_mod_cast hs
   have hq' : (q : ℂ) ≠ 0 := by exact_mod_cast hq
-  have hqr' : (q : ℂ)^2-(r : ℂ)^2=(h : ℂ)^2 := by exact_mod_cast hqr
-  have ha' : (a : ℂ)^2+(h : ℂ)^2=(s : ℂ)^2 := by exact_mod_cast ha
+  have hqr' : (q : ℂ) ^ 2 - (r : ℂ) ^ 2 = (h : ℂ) ^ 2 := by exact_mod_cast hqr
+  have ha' : (a : ℂ) ^ 2 + (h : ℂ) ^ 2 = (s : ℂ) ^ 2 := by exact_mod_cast ha
+  delta kraus
   ext i j
   fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    simp [kraus, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
+    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
       Fin.sum_univ_two, -Matrix.cons_mul] <;>
-    field_simp [hs', hq'] <;> ring_nf <;>
-    first | linear_combination (q : ℂ)^2 * ha' - (h : ℂ)^2 * hqr'
+    field_simp (disch := assumption) <;> ring_nf <;>
+    first | linear_combination (q : ℂ) ^ 2 * ha' - (h : ℂ) ^ 2 * hqr'
           | linear_combination -hqr'
           | ring
 
 private lemma channels (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
-    (hqr : q^2-r^2=h^2) (ha : a^2+h^2=s^2) (x : Fin 2) :
+    (hqr : q ^ 2 - r ^ 2 = h ^ 2) (ha : a ^ 2 + h ^ 2 = s ^ 2) (x : Fin 2) :
     (channel s r q a h x).IsCompletelyPositive ∧
       ∀ rho, (channel s r q a h x rho).trace = rho.trace := by
   refine ⟨MatrixMap.of_kraus_isCompletelyPositive (kraus s r q a h x), ?_⟩
@@ -195,42 +199,47 @@ private lemma ground_energy : hamiltonian.IsHermitian ∧ star ground ⬝ᵥ gro
     hamiltonian *ᵥ ground = 0 ∧
     (hamiltonian - (1 - Matrix.vecMulVec ground (star ground))).PosSemidef := by
   have hh : hamiltonian.IsHermitian := by
+    delta hamiltonian
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [hamiltonian, Matrix.conjTranspose_apply]
+    fin_cases i <;> fin_cases j <;> norm_num [Matrix.conjTranspose_apply]
   have hz : hamiltonian *ᵥ ground = 0 := by
     ext i
     change (∑ j, hamiltonian i j * ground j) = 0
-    fin_cases i <;> norm_num [hamiltonian, ground, Fin.sum_univ_two]
+    delta hamiltonian ground
+    fin_cases i <;> norm_num [Fin.sum_univ_two]
   have hp : hamiltonian - (1 - Matrix.vecMulVec ground (star ground)) = 0 := by
     ext i j
     change hamiltonian i j - ((1 : Matrix (Fin 2) (Fin 2) ℂ) i j -
       ground i * star (ground j)) = 0
+    delta hamiltonian ground
     fin_cases i <;> fin_cases j <;>
-      norm_num [hamiltonian, ground, Matrix.one_apply]
+      norm_num [Matrix.one_apply]
   refine ⟨hh, ?_, hz, ?_⟩
-  · unfold dotProduct
-    norm_num [ground, Fin.sum_univ_two]
+  · delta ground
+    unfold dotProduct
+    norm_num [Fin.sum_univ_two]
   · rw [hp]; exact Matrix.PosSemidef.zero
 
 private lemma energies (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
-    (hqr : q^2-r^2=h^2) (x : Fin 2) :
+    (hqr : q ^ 2 - r ^ 2 = h ^ 2) (x : Fin 2) :
     (Matrix.trace (hamiltonian * channel s r q a h x
-      (partialTraceRight (sigma s r q)))).re = r^2+q^2 := by
+      (partialTraceRight (sigma s r q)))).re = r ^ 2 + q ^ 2 := by
   have hs' : (s : ℂ) ≠ 0 := by exact_mod_cast hs
   have hq' : (q : ℂ) ≠ 0 := by exact_mod_cast hq
-  have hqr' : (h : ℂ)^2 = (q : ℂ)^2-(r : ℂ)^2 := by exact_mod_cast hqr.symm
+  have hqr' : (h : ℂ) ^ 2 = (q : ℂ) ^ 2 - (r : ℂ) ^ 2 := by exact_mod_cast hqr.symm
   have hc : Matrix.trace (hamiltonian * channel s r q a h x
-      (partialTraceRight (sigma s r q))) = ((r^2+q^2 : ℝ) : ℂ) := by
+      (partialTraceRight (sigma s r q))) = ((r ^ 2 + q ^ 2 : ℝ) : ℂ) := by
     unfold channel MatrixMap.of_kraus
     simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
     unfold Matrix.trace partialTraceRight
     simp only [Matrix.diag_apply, Matrix.mul_apply, Matrix.sum_apply,
       Matrix.conjTranspose_apply, Fintype.sum_prod_type, Fin.sum_univ_two]
+    delta hamiltonian kraus sigma psi
     fin_cases x <;>
-      simp [hamiltonian, kraus, sigma, psi, Matrix.vecMulVec_apply,
+      simp [Matrix.vecMulVec_apply,
         Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply, Fin.sum_univ_two,
         -Matrix.cons_mul] <;>
-      push_cast <;> (try simp only [hqr']) <;> field_simp [hs', hq'] <;> ring
+      push_cast <;> (try simp only [hqr']) <;> field_simp (disch := assumption) <;> ring
   rw [hc]
   exact Complex.ofReal_re _
 
@@ -238,61 +247,64 @@ private lemma local_action {dp ds dm : ℕ}
     (lam : MatrixMap (Fin dp) (Fin ds) ℂ)
     (rho : Matrix (Fin dp × Fin dm) (Fin dp × Fin dm) ℂ)
     (i j : Fin ds) (k l : Fin dm) :
-    MatrixMap.kron lam LinearMap.id rho (i,k) (j,l) =
-      lam (fun u v => rho (u,k) (v,l)) i j := by
+    MatrixMap.kron lam LinearMap.id rho (i, k) (j, l) =
+      lam (fun u v => rho (u, k) (v, l)) i j := by
   let z : CStarMatrix (Fin dm) (Fin dm) (CStarMatrix (Fin dp) (Fin dp) ℂ) :=
-    CStarMatrix.ofMatrix fun k l => CStarMatrix.ofMatrix fun u v => rho (u,k) (v,l)
+    CStarMatrix.ofMatrix fun k l => CStarMatrix.ofMatrix fun u v => rho (u, k) (v, l)
   exact congrArg (fun m : CStarMatrix (Fin ds × Fin dm) (Fin ds × Fin dm) ℂ =>
-    m (i,k) (j,l)) (flatten_intertwines lam dm z).symm
+    m (i, k) (j, l)) (flatten_intertwines lam dm z).symm
 
 private lemma joint_output (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
-    (hqr : q^2-r^2=h^2) (x : Fin 2) :
+    (hqr : q ^ 2 - r ^ 2 = h ^ 2) (x : Fin 2) :
     MatrixMap.kron (channel s r q a h x) LinearMap.id (sigma s r q) =
       if x = 0 then sigma s r q else
-        sigma (-a) q r + Matrix.single (0,1) (0,1) ((h : ℂ)^2) := by
+        sigma (-a) q r + Matrix.single (0, 1) (0, 1) ((h : ℂ) ^ 2) := by
   have hs' : (s : ℂ) ≠ 0 := by exact_mod_cast hs
   have hq' : (q : ℂ) ≠ 0 := by exact_mod_cast hq
-  have hh : (h : ℂ)^2 = (q : ℂ)^2-(r : ℂ)^2 := by exact_mod_cast hqr.symm
-  ext ⟨i,k⟩ ⟨j,l⟩
+  have hh : (h : ℂ) ^ 2 = (q : ℂ) ^ 2 - (r : ℂ) ^ 2 := by exact_mod_cast hqr.symm
+  ext ⟨i, k⟩ ⟨j, l⟩
   rw [local_action]
   unfold channel MatrixMap.of_kraus
   simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  delta kraus sigma psi
   fin_cases x <;> fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
-    simp [kraus, sigma, psi, Matrix.vecMulVec_apply, Matrix.single_apply,
+    simp [Matrix.vecMulVec_apply, Matrix.single_apply,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
       Fin.sum_univ_two, -Matrix.cons_mul] <;>
-    (try simp only [hh]) <;> field_simp [hs', hq'] <;>
+    (try simp only [hh]) <;> field_simp (disch := assumption) <;>
     first | assumption | (simp; done) | ring
 
 private lemma probabilities (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
-    (hn : s^2+r^2+q^2=1) (hqr : q^2-r^2=h^2) (ha : a^2+h^2=s^2) :
+    (hn : s ^ 2 + r ^ 2 + q ^ 2 = 1) (hqr : q ^ 2 - r ^ 2 = h ^ 2) (ha : a ^ 2 + h ^ 2 = s ^ 2) :
     probability (sigma s r q) (channel s r q a h) (measurement s r q) 0 0 = 1 ∧
     probability (sigma s r q) (channel s r q a h) (measurement s r q) 0 1 =
-      (s*a-2*r*q)^2 ∧
+      (s * a - 2 * r * q) ^ 2 ∧
     probability (sigma s r q) (channel s r q a h) (measurement s r q) 1 1 =
-      1-(s*a-2*r*q)^2 := by
-  have hn' : (s : ℂ)^2+(r : ℂ)^2+(q : ℂ)^2=1 := by exact_mod_cast hn
-  have ha' : (a : ℂ)^2+(h : ℂ)^2=(s : ℂ)^2 := by exact_mod_cast ha
+      1 - (s * a - 2 * r * q) ^ 2 := by
+  have hn' : (s : ℂ) ^ 2 + (r : ℂ) ^ 2 + (q : ℂ) ^ 2 = 1 := by exact_mod_cast hn
+  have ha' : (a : ℂ) ^ 2 + (h : ℂ) ^ 2 = (s : ℂ) ^ 2 := by exact_mod_cast ha
   have hp (b x : Fin 2) :
       Matrix.trace (measurement s r q b * MatrixMap.kron (channel s r q a h x)
         LinearMap.id (sigma s r q)) =
       if x = 0 then (if b = 0 then 1 else 0) else
-        if b = 0 then ((s*a-2*r*q)^2 : ℝ) else (1-(s*a-2*r*q)^2 : ℝ) := by
+        if b = 0 then ((s * a - 2 * r * q) ^ 2 : ℝ) else (1 - (s * a - 2 * r * q) ^ 2 : ℝ) := by
     rw [joint_output s r q a h hs hq hqr]
     unfold Matrix.trace
+    delta measurement sigma psi
     fin_cases b <;> fin_cases x <;>
-      simp [measurement, sigma, psi, Matrix.vecMulVec_apply, Matrix.single_apply,
+      simp [Matrix.vecMulVec_apply, Matrix.single_apply,
         Matrix.mul_apply, Matrix.one_apply, Fintype.sum_prod_type,
         Fin.sum_univ_two] <;> push_cast <;>
-      first | linear_combination ((s : ℂ)^2+(r : ℂ)^2+(q : ℂ)^2+1)*hn'
-            | linear_combination -((s : ℂ)^2+(r : ℂ)^2+(q : ℂ)^2)*hn'
+      first | linear_combination ((s : ℂ) ^ 2 + (r : ℂ) ^ 2 + (q : ℂ) ^ 2 + 1) * hn'
+            | linear_combination -((s : ℂ) ^ 2 + (r : ℂ) ^ 2 + (q : ℂ) ^ 2) * hn'
             | linear_combination hn' + ha'
             | linear_combination hn'
             | ring
   have hp00 := congrArg Complex.re (hp 0 0)
   have hp01 := congrArg Complex.re (hp 0 1)
   have hp11 := congrArg Complex.re (hp 1 1)
-  simpa only [probability, ↓reduceIte, zero_ne_one, one_ne_zero, Complex.one_re,
+  delta probability
+  simpa only [↓reduceIte, one_ne_zero, Complex.one_re,
     Complex.ofReal_re] using And.intro hp00 (And.intro hp01 hp11)
 
 /-- Qubit channels attain the strict violation for every energy budget in the open interval. -/
@@ -300,7 +312,7 @@ theorem result : claim := by
   intro ω hω hω'
   obtain ⟨s, r, q, a, h, hs, hr, hq, ha, hh, hs2, hrq, hqr, has, hv⟩ :=
     parameters ω hω hω'
-  have hn : s^2+r^2+q^2=1 := by linarith
+  have hn : s ^ 2 + r ^ 2 + q ^ 2 = 1 := by linarith
   obtain ⟨hd, ht, hp, hm⟩ := state_measurement s r q hn
   obtain ⟨he, hg, hzero, hgap⟩ := ground_energy
   obtain ⟨hp0, hp1, hp2⟩ := probabilities s r q a h hs.ne' hq.ne' hn hqr has
