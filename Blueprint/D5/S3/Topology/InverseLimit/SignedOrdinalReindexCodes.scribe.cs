@@ -8,7 +8,7 @@ internal sealed class SignedOrdinalReindexCodesDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Birth-local first-reservation codes and cofinal hole colors", H("Birth-local reservation coding"), Blocks(
             Paragraph(Text("Tags consist of all ordinary labels and precisely the delayed triples valid on one whole birth pack. The code uses the fixed ordinal reservation bijection and this birth alone. It does not consult a later history state. Ordinary zero remains zero; every other tag uses its first syntactically valid reservation. The second reservation supplies cofinal colors for the labels omitted by the code image.")),
-            Describe.Lean(DescribeId.Create("taskSyntax-injective"),
+            Describe.Lean(DescribeId.Create("task-syntax-injective"),
                 DeclarationHandle.Create(Owner + "taskSyntax_injective"), H("Distinct tags have distinct task syntax"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Ordinary labels and intrinsically valid delayed triples have distinct fixed task reservations. The validity proof in a delayed tag does not distinguish tags with the same triple."))), DescribeRole.Theorem),
@@ -48,7 +48,7 @@ internal sealed class SignedOrdinalReindexCodesDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(Owner + "double_reservation_cofinal"), H("Two nested reservation tasks are cofinal"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Given two tasks and any bound, there is a later stage whose first reservation task is the outer task and whose residual ordinal has the inner task. The nested inverse reservation map is injective; a bound would inject all countable ordinals into a countable initial segment."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("ordinaryIndex-le"),
+            Describe.Lean(DescribeId.Create("ordinary-index-le"),
                 DeclarationHandle.Create(Owner + "ordinaryIndex_le"), H("Colored ordinary indices stay within the stage"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("An ordinary zero event uses its second reservation color only when that color lies within the stage and is zero or outside the code image. Other ordinary labels use their first codes. Every valid ordinary occurrence therefore receives an index at most its stage."))), DescribeRole.Theorem),
