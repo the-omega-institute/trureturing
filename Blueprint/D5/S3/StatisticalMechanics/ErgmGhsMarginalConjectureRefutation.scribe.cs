@@ -98,7 +98,10 @@ internal sealed class ErgmGhsMarginalConjectureRefutationDocument : IScribeDocum
                             + "n = 3 and k = 1 therefore makes the third Ursell function nonpositive at "
                             + "the three distinct edges. This contradicts 7/729 > 0. Hence the marginal "
                             + "lower bounds do not suffice for GHS in this general family."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bianchi-collet-magnanini-2022-ergm-ghs-marginal"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) =>
