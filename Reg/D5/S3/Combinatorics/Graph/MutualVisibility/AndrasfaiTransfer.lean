@@ -31,7 +31,8 @@ def seriesActual : Realization seriesSignature :=
 noncomputable abbrev seriesArena : Arena where
   signature := seriesSignature
   Law r :=
-    X * PowerSeries.mk (fun j => Matrix.trace ((r.readout () ())^(3*j+2))) + X =
+    let M : Matrix (Fin 4) (Fin 4) ℚ := r.readout () ()
+    X * PowerSeries.mk (fun j => Matrix.trace (M^(3*j+2))) + X =
       (X*(4-19*X+33*X^2-40*X^3+8*X^4)) * denominator⁻¹
 
 theorem series_source_bridge : seriesScope ↔ seriesArena.Law seriesActual := by

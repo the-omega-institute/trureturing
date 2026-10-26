@@ -329,14 +329,22 @@ private theorem periodic_has_closed_run (w : List Bool) (hp : PeriodicAvoidance 
       change machine.evalFrom (machine.eval w) w = 1 at heval
       rwa [h1] at heval
 
-/-- Every periodically admissible word of length not divisible by three has
-exactly one nonrejecting closed lift, with its labelled starting position fixed. -/
-theorem exists_unique_closed_run (w : List Bool) (hlen : w.length % 3 ≠ 0)
-    (hp : PeriodicAvoidance w) :
-    ∃! q : Fin 5, q ≠ 4 ∧ machine.evalFrom q w = q := by
-  obtain ⟨q,hq,hqc⟩ := periodic_has_closed_run w hp
-  refine ⟨q,⟨hq,hqc⟩,?_⟩
-  intro r hr
-  exact closed_run_unique w hlen r q hr.1 hq hr.2 hqc
+/-- Periodic avoidance is equivalent to a unique nonrejecting closed lift
+when the period length is not divisible by three; the labelled origin is fixed. -/
+theorem exists_unique_closed_run (w : List Bool) (hlen : w.length % 3 ≠ 0) :
+    PeriodicAvoidance w ↔ ∃! q : Fin 5, q ≠ 4 ∧ machine.evalFrom q w = q := by
+  constructor
+  · intro hp
+    obtain ⟨q,hq,hqc⟩ := periodic_has_closed_run w hp
+    refine ⟨q,⟨hq,hqc⟩,?_⟩
+    intro r hr
+    exact closed_run_unique w hlen r q hr.1 hq hr.2 hqc
+  · rintro ⟨q,⟨hq,hqc⟩,_⟩
+    have hc (k : ℕ) : machine.evalFrom q (copies w k) = q := by
+      induction k with
+      | zero => rfl
+      | succ k ih => rw [copies,DFA.evalFrom_of_append,ih,hqc]
+    intro k hk
+    exact hq ((hc k).symm.trans (forbidden_rejected _ hk q))
 
 end D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiLanguage

@@ -58,8 +58,8 @@ abbrev uniqueArena : Arena where
 
 abbrev existenceArena : Arena where
   signature := runSignature
-  Law r := ∀ w, w.length % 3 ≠ 0 → PeriodicAvoidance w →
-    ∃! q : Fin 5, q ≠ 4 ∧ r.readout () w q = q
+  Law r := ∀ w, w.length % 3 ≠ 0 →
+    (PeriodicAvoidance w ↔ ∃! q : Fin 5, q ≠ 4 ∧ r.readout () w q = q)
 
 theorem unique_source_bridge : uniqueScope ↔ uniqueArena.Law runActual := Iff.rfl
 
