@@ -112,8 +112,8 @@ private theorem exec_saveScan (xs src saved scratch history : List Bool) :
         cases b <;> simp [StackProgram.step, saveScan, regs, regs_set4]
       have hh := Exec.next h0 (Exec.next h1 (Exec.next h2
         (Exec.next (by simp [StackProgram.step, saveScan, regs, regs_set4]) ht)))
-      convert hh using 1 <;>
-        simp [pack, List.reverse_cons, List.flatMap_append, List.append_assoc] <;> omega
+      convert hh using 1
+      simp [pack, List.reverse_cons, List.flatMap_append, List.append_assoc]
 
 private theorem exec_save (src xs saved history : List Bool) :
     Exec save save.start (regs src xs saved [] history) (6 * xs.length + 5)
@@ -158,85 +158,56 @@ private theorem exec_advance (a : Finset Window) (xs : List Column)
         have h := congrFun ho 1
         simpa [StackFrame.pull, rowRegister, NativeBinaryRow.registers, regs] using h
       · rw [hf j]
-        · simp [regs, h0, h2]
+        · simp [regs, h0]
         · intro i; fin_cases i <;> simpa [rowRegister] using (show j ≠ _ from by assumption)
   simpa only [advanceProgram, StackFrame.lift, hout] using he
 
-/-- Finite parser labels contain a permission subset and positions below six only. -/
-inductive MaskControl where
-  | load (n : Fin 6) (a : Finset Window)
-  | saveBit (n : Fin 5) (a : Finset Window) (b : Bool)
-  | put (n : Fin 6) (a : Finset Window)
-  | done
-  deriving DecidableEq
+private def putLabel (n : ℕ) (hn : n < 6) (a : Finset Window) : NativeBinaryRow.Control :=
+  .scan a (⟨n % 5, Nat.mod_lt _ (by decide)⟩, ⟨n / 5, by omega⟩)
 
-def loadMask : Program 6 MaskControl where
+/-- The existing finite row labels also encode the permission loader. -/
+def loadMask : Program 6 NativeBinaryRow.Control where
   start := .load 0 ∅
   code q := match q with
     | .load n a => if h : n.val < 5 then
-        .pop 1 .done (.saveBit ⟨n.val, h⟩ a false) (.saveBit ⟨n.val, h⟩ a true)
-      else .goto (.put 5 a)
-    | .saveBit n a b => .push 6 b
-        (.load ⟨n.val + 1, by have := n.isLt; omega⟩
-          (NativeBinaryRow.insertBit a (modes[n.val]'(by simp [modes]; have := n.isLt; omega)) b))
-    | .put n a => if h : n.val = 0 then .halt true
-      else .push 0 (decide ((modes[n.val - 1]'(by simp [modes]; have := n.isLt; omega)) ∈ a))
-        (.put ⟨n.val - 1, by have := n.isLt; omega⟩ a)
-    | .done => .halt false
-
-private def maskEncoding : Encoding (Finset Window) where
-  states := NativeBinaryRow.controlEncoding.states
-  encode a := NativeBinaryRow.controlEncoding.encode (.load 0 a)
-  decode q := match NativeBinaryRow.controlEncoding.decode q with
-    | .load _ a => a
-    | _ => ∅
-  decode_encode a := by rw [NativeBinaryRow.controlEncoding.decode_encode]
-
-private abbrev MaskSum := Sum (Fin 6 × Finset Window)
-  (Sum (Fin 5 × (Finset Window × Bool)) (Sum (Fin 6 × Finset Window) Unit))
-
-private def maskSum : MaskControl → MaskSum
-  | .load n a => .inl (n, a)
-  | .saveBit n a b => .inr (.inl (n, (a, b)))
-  | .put n a => .inr (.inr (.inl (n, a)))
-  | .done => .inr (.inr (.inr ()))
-
-private def fromMaskSum : MaskSum → MaskControl
-  | .inl (n, a) => .load n a
-  | .inr (.inl (n, a, b)) => .saveBit n a b
-  | .inr (.inr (.inl (n, a))) => .put n a
-  | .inr (.inr (.inr _)) => .done
-
-private def maskSumEncoding := ((Encoding.fin 5).prod maskEncoding).sum
-  (((Encoding.fin 4).prod (maskEncoding.prod Encoding.bool)).sum
-    (((Encoding.fin 5).prod maskEncoding).sum Encoding.unit))
-
-def loadEncoding : Encoding MaskControl where
-  states := maskSumEncoding.states
-  encode q := maskSumEncoding.encode (maskSum q)
-  decode q := fromMaskSum (maskSumEncoding.decode q)
-  decode_encode q := by rw [maskSumEncoding.decode_encode]; cases q <;> rfl
+        .pop 1 .fail (.second a (⟨n.val, h⟩, 0) false) (.second a (⟨n.val, h⟩, 0) true)
+      else .goto (putLabel 5 (by decide) a)
+    | .second a c b => .push 6 b
+        (.load ⟨c.1.val + 1, by have := c.1.isLt; omega⟩
+          (NativeBinaryRow.insertBit a (modes[c.1.val]'(by simpa [modes] using c.1.isLt)) b))
+    | .scan a c =>
+        let n := c.1.val + 5 * c.2.val
+        if h : n < 6 then
+          if hz : n = 0 then .halt true
+          else .push 0 (decide ((modes[n - 1]'(by simp [modes]; omega)) ∈ a))
+            (putLabel (n - 1) (by omega) a)
+        else .halt false
+    | _ => .halt false
 
 def body := seq loadMask (seq advanceProgram save)
-def bodyEncoding := loadEncoding.sum (NativeBinaryRow.encoding.sum saveEncoding)
+def bodyEncoding := NativeBinaryRow.controlEncoding.sum (NativeBinaryRow.encoding.sum saveEncoding)
 
 private theorem exec_put (n : ℕ) (hn : n < 6) (a : Finset Window)
     (src cur saved history : List Bool) :
-    Exec loadMask (.put ⟨n, hn⟩ a) (regs src cur saved [] history) (n + 1)
+    Exec loadMask (putLabel n hn a) (regs src cur saved [] history) (n + 1)
       (true, regs src ((mask a).take n ++ cur) saved [] history) := by
   induction n generalizing cur with
-  | zero => exact .halt (by simp [StackProgram.step, loadMask])
+  | zero => exact .halt (by simp [StackProgram.step, loadMask, putLabel])
   | succ n ih =>
       have hn5 : n < 5 := by omega
       have hm : n < (mask a).length := by simp [mask, modes]; omega
       have ht := ih (by omega) ((mask a)[n] :: cur)
-      apply Exec.next (q' := .put ⟨n, by omega⟩ a)
+      apply Exec.next (q' := putLabel n (by omega) a)
         (r' := regs src ((mask a)[n] :: cur) saved [] history)
-      · simp [StackProgram.step, loadMask, regs, regs_set0, mask, List.getElem_map]
-      · convert ht using 1
-        have hp := List.take_concat_get' (mask a) n hm
-        rw [← hp]
-        simp
+      · simp only [StackProgram.step, loadMask, putLabel, Nat.mod_add_div]
+        simp [hn, regs, regs_set0, mask, List.getElem_map]
+      · have hp := List.take_concat_get' (mask a) n hm
+        have hlist : (mask a).take n ++ (mask a)[n] :: cur = (mask a).take (n + 1) ++ cur := by
+          calc
+            _ = ((mask a).take n ++ [(mask a)[n]]) ++ cur :=
+              (List.append_assoc _ _ _).symm
+            _ = _ := congrArg (fun bs : List Bool => bs ++ cur) hp
+        simpa only [hlist] using ht
 
 private theorem exec_load_next (n : ℕ) (hn : n < 5) (a : Finset Window)
     (v : Bool) (src cur saved history : List Bool) (t : ℕ)
@@ -247,7 +218,7 @@ private theorem exec_load_next (n : ℕ) (hn : n < 5) (a : Finset Window)
       (regs src cur saved [] (v :: history)) t out) :
     Exec loadMask (.load ⟨n, by omega⟩ a)
       (regs (v :: src) cur saved [] history) (t + 2) out := by
-  apply Exec.next (q' := .saveBit ⟨n, hn⟩ a v)
+  apply Exec.next (q' := .second a (⟨n, hn⟩, 0) v)
     (r' := regs src cur saved [] history)
   · cases v <;> simp [StackProgram.step, loadMask, hn, regs, branch, regs_set1]
   apply Exec.next (rest := h)
@@ -276,7 +247,9 @@ private theorem exec_load (a : Finset Window) (src cur saved history : List Bool
       (regs src cur saved [] (v4 :: v3 :: v2 :: v1 :: v0 :: history)) 7
       (true, regs src (mask a ++ cur) saved [] ((mask a).reverse ++ history)) := by
     rw [ha]
-    apply Exec.next (by simp [StackProgram.step, loadMask])
+    apply Exec.next (q' := putLabel 5 (by decide) a)
+      (r' := regs src cur saved [] (v4 :: v3 :: v2 :: v1 :: v0 :: history))
+    · simp [StackProgram.step, loadMask]
     simpa [mask, modes, v0, v1, v2, v3, v4] using hp
   have h4 := exec_load_next 4 (by decide) a4 v4 _ _ _ _ _ _ h5
   have h3 := exec_load_next 3 (by decide) a3 v3 _ _ _ _ _ _ h4
@@ -288,7 +261,7 @@ private theorem exec_load (a : Finset Window) (src cur saved history : List Bool
 private theorem exec_load_empty (cur saved history : List Bool) :
     Exec loadMask loadMask.start (regs [] cur saved [] history) 2
       (false, regs [] cur saved [] history) := by
-  apply Exec.next (q' := .done) (r' := regs [] cur saved [] history)
+  apply Exec.next (q' := .fail) (r' := regs [] cur saved [] history)
   · simp [StackProgram.step, loadMask, regs, branch, regs_set1]
   exact .halt rfl
 
@@ -324,26 +297,18 @@ private theorem row_value (B : Finset Bool) (as : List (Finset Window)) :
       simp [row, terminalColumns, value, Lax51Proofs.RamToTM.bitsValue,
         NativeSuffixAcquisition.counts, table, NativeSuffixAcquisition.terminal,
         Nat.bit_val]
-      split_ifs <;> rfl
+      split_ifs <;> simp_all
   | cons a as ih =>
       have h := (NativeBinaryRow.native_binary_row a (row B as)).2.2.1
       simpa [NativeBinaryRow.decode, NativeBinaryRow.parse_serialize, ih,
         row, NativeSuffixAcquisition.counts, table] using h
-
-private theorem rows_value (B : Finset Bool) (as : List (Finset Window)) :
-    (rows B as).map value = table B as := by
-  induction as with
-  | nil => simp [rows, row_value, NativeSuffixAcquisition.counts, table]
-  | cons a as ih =>
-      simp only [rows, List.map_cons, ih, row_value]
-      rfl
 
 private theorem records_cons (B : Finset Bool) (a : Finset Window)
     (as : List (Finset Window)) :
     records B (a :: as) = pack (serialize (row B (a :: as))) ++ records B as := rfl
 
 private theorem pack_length (bs : List Bool) : (pack bs).length = 1 + 2 * bs.length := by
-  simp [pack, List.length_flatMap, List.sum_map_mul_right]
+  simp [pack, List.length_flatMap, Nat.mul_comm, Nat.add_comm]
 
 private theorem records_length (B : Finset Bool) (as : List (Finset Window)) :
     (records B as).length = (as.length + 1) * (6 * as.length + 5) := by
@@ -375,10 +340,12 @@ private theorem exec_body (a : Finset Window) (B : Finset Bool)
     (records B as) ((mask a).reverse ++ history)
   have hh := exec_seq loadMask (seq advanceProgram save) h0
     (exec_seq advanceProgram save (by simpa [NativeBinaryRow.input, mask] using h1) h2)
-  convert hh using 1
-  · simp [NativeBinaryRow.serialize_length, NativeBinaryRow.columns_length, row_length]
+  have hc : 17 + (8 * (row B as).length + 28 +
+      (6 * (serialize (columns a (0, 0) (row B as))).length + 5)) = 106 + 60 * as.length := by
+    rw [NativeBinaryRow.serialize_length, NativeBinaryRow.columns_length, row_length]
     ring
-  · rfl
+  rw [hc] at hh
+  exact hh
 
 private def loopCost (n k : ℕ) : ℕ := 2 + 76 * n + 60 * n * k + 30 * n * n
 
@@ -398,10 +365,13 @@ private theorem exec_iterations (pending suffix : List (Finset Window))
       have hb := exec_body a B suffix (pending.flatMap mask) history
       have ht := ih (a :: suffix) ((mask a).reverse ++ history)
       have hh := exec_loop_next body hb ht
-      convert hh using 1
-      · simp only [List.length_cons, loopCost]
+      have hc : 106 + 60 * suffix.length + loopCost pending.length (a :: suffix).length =
+          loopCost (a :: pending).length suffix.length := by
+        simp only [List.length_cons, loopCost]
         ring
-      · simp [List.reverse_cons, List.flatMap_cons, List.reverse_append, List.append_assoc]
+      rw [hc] at hh
+      simpa only [StackProgram.loop, List.flatMap_cons, List.reverse_cons, List.reverse_append,
+        List.append_assoc, List.singleton_append] using hh
 
 private theorem exec_initProgram (B : Finset Bool) (src : List Bool) :
     Exec initProgram initProgram.start
@@ -422,17 +392,16 @@ private theorem exec_initProgram (B : Finset Bool) (src : List Bool) :
 
 private theorem exec_table (B : Finset Bool) (as : List (Finset Window)) :
     ∃ fuel out, fuel ≤ 256 * (as.length + 1) ^ 2 ∧
-      Exec program program.start (StackMachine.initial stackMachine (input B as)).registers
+      Exec program program.start (regs [] (input B as) [] [] [])
         fuel (true, out) ∧ out 0 = records B as := by
   let n := as.length
   have hin : (input B as).length = 2 + 5 * n := by
-    simp [input, masks_length, n]
-  have hr : (StackMachine.initial stackMachine (input B as)).registers =
-      regs [] (input B as) [] [] [] := by
-    funext j; simp [StackMachine.initial, regs]; split_ifs <;> simp_all
+    simp only [input, List.length_append, List.length_cons, List.length_nil,
+      masks_length, List.length_reverse]
+    omega
   have h0 := StackControl.exec_moveWord (k := 6) 0 1 5 (by decide) (by decide) (by decide)
     (regs [] (input B as) [] [] []) rfl
-  have h0' : Exec (StackControl.moveWord (k := 6) 0 1 5) _
+  have h0' : Exec (StackControl.moveWord (k := 6) 0 1 5) (StackControl.moveWord (k := 6) 0 1 5).start
       (regs [] (input B as) [] [] []) (4 * (input B as).length + 6)
       (true, regs (input B as) [] [] [] []) := by
     simpa [regs, regs_set0, regs_set1] using h0
@@ -441,23 +410,128 @@ private theorem exec_table (B : Finset Bool) (as : List (Finset Window)) :
   have h3 := exec_iterations as.reverse [] B []
   have h4 := StackControl.exec_moveWord (k := 6) 4 0 5 (by decide) (by decide) (by decide)
     (regs [] (serialize (row B as)) (records B as) [] ((as.reverse.flatMap mask).reverse)) rfl
-  have h4' : Exec (StackControl.moveWord (k := 6) 4 0 5) _
+  have h4' : Exec (StackControl.moveWord (k := 6) 4 0 5) (StackControl.moveWord (k := 6) 4 0 5).start
       (regs [] (serialize (row B as)) (records B as) [] ((as.reverse.flatMap mask).reverse))
       ((serialize (row B as)).length + 4 * (records B as).length + 6)
       (true, regs [] (records B as) [] [] ((as.reverse.flatMap mask).reverse)) := by
     simpa [regs, regs_set4, regs_set0] using h4
   have hh := exec_seq _ _ h0' (exec_seq _ _ h1
     (exec_seq _ _ (by simpa [records, rows, row] using h2)
-      (exec_seq _ _ (by simpa using h3) h4')))
-  refine ⟨_, _, ?_, ?_, rfl⟩
+      (exec_seq _ _ (by simpa [records, rows, row] using h3) h4')))
+  refine ⟨_, _, ?_, hh, by simp [regs]⟩
   · change 4 * (input B as).length + 6 + (5 +
         ((6 * (serialize (terminalColumns B)).length + 5) +
-        (loopCost as.reverse.length 0 +
+        (loopCost as.length 0 +
         ((serialize (row B as)).length + 4 * (records B as).length + 6)))) ≤ _
-    rw [hin, records_length, NativeBinaryRow.serialize_length, row_length]
-    simp [terminalColumns, serialize, loopCost, n, pow_two]
+    simp only [hin, records_length, NativeBinaryRow.serialize_length, row_length,
+      terminalColumns, List.length_cons, List.length_nil, loopCost, n, pow_two]
     nlinarith
-  · rw [hr]
-    exact hh
+
+/-- Read the bits at one explicitly addressed, known-width row in the retained table. -/
+def read (w : ℕ) (bs : List Bool) : NativeSuffixAcquisition.Row :=
+  NativeBinaryRow.decode ((NativeBinaryRow.parse ((bs.drop 1).take (2 * w))).map Prod.snd).reverse
+
+/-- Successive row widths are determined by the finite horizon, not by an oracle. -/
+def decodeTable : ℕ → List Bool → List NativeSuffixAcquisition.Row
+  | 0, bs => [read 2 bs]
+  | n + 1, bs => read (2 * (1 + 3 * (n + 1))) bs ::
+      decodeTable n (bs.drop (1 + 4 * (1 + 3 * (n + 1))))
+
+private theorem marked_length (bs : List Bool) :
+    (bs.flatMap (fun b => [true, b])).length = 2 * bs.length := by
+  simp [List.length_flatMap, Nat.mul_comm]
+
+private theorem marked_serialize (bs : List Bool) :
+    bs.flatMap (fun b => [true, b]) = serialize (bs.map (fun b => (true, b))) := by
+  simp [serialize, List.flatMap_map]
+
+private theorem read_pack (bs rest : List Bool) :
+    read bs.length (pack bs ++ rest) = NativeBinaryRow.decode bs := by
+  simp only [read, pack, List.cons_append, List.drop_succ_cons, List.drop_zero]
+  have hw : (bs.reverse.flatMap (fun b => [true, b])).length = 2 * bs.length := by
+    rw [marked_length, List.length_reverse]
+  rw [← hw]
+  rw [List.take_left, marked_serialize, NativeBinaryRow.parse_serialize]
+  simp
+
+private theorem decode_records (B : Finset Bool) (as : List (Finset Window)) :
+    decodeTable as.length (records B as) = table B as := by
+  have hc : ∀ xs : List Column, NativeBinaryRow.decode (serialize xs) = value xs := by
+    intro xs; simp [NativeBinaryRow.decode, NativeBinaryRow.parse_serialize]
+  induction as with
+  | nil =>
+      change [read 2 (pack (serialize (row B [])) ++ [])] = _
+      have hw : (serialize (row B [])).length = 2 := by
+        rw [NativeBinaryRow.serialize_length, row_length]; rfl
+      rw [← hw, read_pack, hc, row_value]
+      rfl
+  | cons a as ih =>
+      have hw : (serialize (row B (a :: as))).length = 2 * (1 + 3 * (as.length + 1)) := by
+        rw [NativeBinaryRow.serialize_length, row_length]; rfl
+      have hp : (pack (serialize (row B (a :: as)))).length =
+          1 + 4 * (1 + 3 * (as.length + 1)) := by rw [pack_length, hw]; ring
+      simp only [List.length_cons, decodeTable, records_cons]
+      rw [← hw, read_pack, hc, row_value, ← hp, List.drop_left, ih]
+      rfl
+
+/-- Full deterministic initialization and binary acquisition of all suffix rows.
+The output is the retained table itself; successful-word output is a separate obligation. -/
+theorem native_binary_table (L : ℕ) (A : Fin L → Finset Window) (B : Finset Bool) :
+    let as := List.ofFn A
+    (input B as).length = 2 + 5 * L ∧
+    (records B as).length = (L + 1) * (6 * L + 5) ∧
+    decodeTable L (records B as) = table B as ∧
+    (∀ (t : Fin (L + 1)) (s : Bool),
+      (decodeTable L (records B as))[t.val]? = some (counts B (as.drop t.val)) ∧
+      entry (counts B (as.drop t.val)) s = (completions B (as.drop t.val) s).card ∧
+      entry (counts B (as.drop t.val)) s ≤ 5 ^ (L - t.val)) ∧
+    ∃ time tape, time ≤ 2097152 * (L + 1) ^ 4 ∧
+      Complexity.runInput binaryMachine time (input B as) = some (true, tape) ∧
+      tape.output = records B as := by
+  dsimp only
+  let as := List.ofFn A
+  have hl : as.length = L := List.length_ofFn
+  have hin : (input B as).length = 2 + 5 * L := by
+    simp only [input, List.length_append, List.length_cons, List.length_nil,
+      masks_length, List.length_reverse, hl]
+  have hd : decodeTable L (records B as) = table B as := hl ▸ decode_records B as
+  refine ⟨hin, by simpa [hl] using records_length B as, hd, ?_, ?_⟩
+  · intro t s
+    have h := (NativeSuffixAcquisition.native_suffix_acquisition L A B).2.1 t s
+    rw [hd]
+    exact ⟨h.1, h.2.1, h.2.2.1⟩
+  · obtain ⟨fuel, out, hf, he, ho⟩ := exec_table B as
+    have hr : StackMachine.runInput stackMachine fuel (input B as) = some (true, out) := by
+      change StackMachine.run stackMachine fuel (StackMachine.initial stackMachine _) = _
+      have hx := StackProgram.compile_exec encoding he
+      have hir : regs [] (input B as) [] [] [] =
+          (fun j : Fin 7 => if j = 0 then input B as else []) := by
+        funext j
+        simp only [regs]
+        split_ifs <;> rfl
+      rw [hir] at hx
+      exact hx
+    obtain ⟨time, tape, ht, hrun, hout⟩ := StackCompile.simulate stackMachine fuel
+      (input B as) (true, out) hr
+    refine ⟨time, tape, ht.trans ?_, hrun, hout.trans ho⟩
+    let m := (L + 1) ^ 2
+    have hm : 1 ≤ m := by dsimp [m]; nlinarith
+    have hn : (input B as).length ≤ 7 * m := by rw [hin]; dsimp [m]; nlinarith
+    have hfu : fuel ≤ 256 * m := by simpa only [hl] using hf
+    have hi : StackInit.initBudget stackMachine.stacks (input B as).length ≤ 35 * m := by
+      change 2 * (input B as).length + 2 * 6 + 9 ≤ _
+      omega
+    have hs : StackSimulation.instructionBudget stackMachine
+        ((input B as).length + fuel) ≤ 7409 * m := by
+      change 4 * (7 * ((input B as).length + fuel + 1) + 1) + 13 ≤ _
+      omega
+    have hp := Nat.mul_le_mul hfu hs
+    change StackInit.initBudget stackMachine.stacks (input B as).length +
+      fuel * StackSimulation.instructionBudget stackMachine ((input B as).length + fuel) ≤ _
+    have hpow : (L + 1) ^ 4 = m * m := by dsimp [m]; ring
+    rw [hpow]
+    nlinarith
+
+#print axioms native_binary_table
 
 end D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryTable
