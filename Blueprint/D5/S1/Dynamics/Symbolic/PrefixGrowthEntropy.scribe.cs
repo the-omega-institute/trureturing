@@ -51,7 +51,7 @@ internal sealed class PrefixGrowthEntropyDocument : IScribeDocumentDefinition
                 + "Finite alphabet cardinality gives prefixCount(S,n) at most card(A)^n, and forward invariance lets a realized prefix of length m+n split into realized prefixes of lengths m and n."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("prefix-growth-entropy"), DeclarationHandle.Create(Owner + "prefix_growth_entropy"),
             H("The real growth limit computes covering entropy"), StatementSource.FromAuthor(St(
-                All("A", Id("Type")), Seq(Instance("Fintype"), Sp, Instance("UniformSpace"), Sp,
+                All("A", Id("Type")), Seq(Grp(), Instance("Fintype"), Sp, Instance("UniformSpace"), Sp,
                     Instance("DiscreteUniformity"), Comma),
                 All("S", Call("Set", Sequences)),
                 Seq(Call("Nonempty", Id("S")), Sp, Land, Sp, Call("MapsTo", Shift, Id("S"), Id("S")), Sp, Rightarrow),
