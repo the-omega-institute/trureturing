@@ -109,12 +109,6 @@ private theorem swap_signed {R : Type*} [CommRing R] [Algebra ℂ R]
 def balancedArguments (R : Type*) [CommRing R] : Fin 3 → MvPowerSeries (Fin 3) R :=
   ![MvPowerSeries.X 0 + MvPowerSeries.X 1, MvPowerSeries.X 1, MvPowerSeries.X 2]
 
-private theorem balanced_hasSubst (R : Type*) [CommRing R] :
-    MvPowerSeries.HasSubst (balancedArguments R) := by
-  apply MvPowerSeries.hasSubst_of_constantCoeff_zero
-  intro i
-  fin_cases i <;> simp [balancedArguments]
-
 def balancedCollision {R : Type*} [CommRing R] (P : MvPowerSeries (Fin 3) R) :
     MvPowerSeries (Fin 3) R := MvPowerSeries.subst (balancedArguments R) P
 
