@@ -146,10 +146,10 @@ theorem inactive_internal (h : Cell m n → ℤ) (hn : 0 < n)
   constructor
   · by_contra h
     have he : j = ⟨0, hn⟩ := Fin.ext (by omega)
-    exact hj (he ▸ hends.1)
+    exact hj (he.symm ▸ hends.1)
   · by_contra h
     have he : j = ⟨n - 1, by omega⟩ := Fin.ext (by omega)
-    exact hj (he ▸ hends.2)
+    exact hj (he.symm ▸ hends.2)
 
 /-- Beyond the core width bound, two consecutive columns are genuinely frozen. -/
 theorem exists_adjacent_frozen_of_width (h : Cell m n → ℤ) (hh : IsHeight h)

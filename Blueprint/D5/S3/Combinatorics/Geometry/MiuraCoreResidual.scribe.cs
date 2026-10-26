@@ -36,5 +36,10 @@ internal sealed class MiuraCoreResidualDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("miuracoreresidual-6"),
                 DeclarationHandle.Create(Prefix + "contractAt_residual"), H("The exact residual class is preserved"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every split a,b and every actual normalized residual height array, deleting an internal frozen column preserves normalization, both exact extremum counts, and the absence of one common side containing all minima."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every split a,b and every actual normalized residual height array, deleting an internal frozen column preserves normalization, both exact extremum counts, and the absence of one common side containing all minima."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("miura-residual-width-reduction"),
+                DeclarationHandle.Create(Prefix + "residual_width_reduction"),
+                H("Delete inside an oversized frozen run"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every nonempty row axis and at least two columns, a residual height array of split a,b with width greater than 2(a+b)-1 has two consecutive genuinely frozen columns. One can delete the first with its actual uniform signed slope and retain exactly the original residual class. The existence argument counts the occupied columns and maximal unoccupied runs in this same array; if no two unoccupied columns were consecutive, every unoccupied column would start a run, contradicting the width bound."))), DescribeRole.Theorem))));
 }
