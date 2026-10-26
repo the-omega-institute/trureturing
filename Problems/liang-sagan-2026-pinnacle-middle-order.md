@@ -84,10 +84,9 @@ value shift or inversion-top convention would invalidate the argument.
 
 ## Evidence
 
-**PROVED in prose.** The argument in Route establishes the obstruction for
-every n≥6 and refutes the universal assertion. The corresponding Lean
-statements are `no_common_upper_bound` and `result`; their formal
-verification is not yet established.
+**PROVED in Lean.** `no_common_upper_bound` establishes the obstruction
+for every n≥6. `result : ¬ claim` refutes the universal assertion. Both
+statements are checked by the Lean kernel.
 
 **COMPUTED.** The immutable
 [experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/c6b13bb3bbd40e157987f64ddb02e18d280b296f/experiments/liang-sagan-pinnacle-middle-order)
@@ -106,8 +105,8 @@ that scope. This does not establish exhaustive coverage or priority.
 
 ### What the settlement shows
 
-- **PROVED in prose.** By the argument in Route, for every n≥6, the class with
-  σ=(n−2,n) contains two elements with no common upper bound.
+- **PROVED in Lean.** `no_common_upper_bound`: for every n≥6, the class
+  with σ=(n−2,n) contains two elements with no common upper bound.
 - **PROVED in prose.** A large non-pinnacle value forced before every
   smaller value must lie at the front: it precedes the first pinnacle,
   which precedes the maximum, so it precedes every other value.
