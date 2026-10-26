@@ -24,7 +24,7 @@ open TwoOppositeLargeExchange ThreeLargePacketExchange
 open scoped BigOperators
 
 /-- Inverse rotation keeps physical labels; source parity selects its value. -/
-private theorem negative_parent (k t : ℕ) (hk : 3 ≤ k) (y : Fin k)
+theorem negative_parent (k t : ℕ) (hk : 3 ≤ k) (y : Fin k)
     (hy : s k t y < 0) :
     let b := (finRotate k).symm y
     let Y := -s k t y

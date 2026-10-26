@@ -1,0 +1,130 @@
+**Theorem 109.1 (Both terminal masses, and a blind single context).**
+Let $\theta=\pi/4$, take any originally allowed mixing $N$, and define
+
+$$
+u_-=(e_0-e_3)/\sqrt2,\qquad v_-=(e_1-e_4)/\sqrt2.
+\tag{109.1}
+$$
+
+Besides the five ready columns (101.1), specify the complementary
+unitary $T$ on the orthonormal basis $(u_H,v_H,z_H,u_-,v_-)$ of $H$ by
+
+$$
+\begin{aligned}
+Tu_H&=u_-\otimes f_0,& Tv_H&=u_-\otimes f_1,&
+Tz_H&=v_-\otimes f_0,\\
+Tu_-&=\zeta,& Tv_-&=v_-\otimes f_1.
+\end{aligned}
+\tag{109.2}
+$$
+
+This is one full ten-dimensional completion via (106.2), with $h=0$.
+For the actual sole preparation $\psi$, no prefix, no intermediate
+operation and one retained emission followed by its return, the two
+terminal masses are
+
+$$
+\begin{array}{c|cc}
+ &1&0\\ \hline
+\gamma=1&(6-5d)/32&1-(6-5d)/32\\
+\gamma=0&(18+d)/128&1-(18+d)/128.
+\end{array}
+\tag{109.3}
+$$
+
+At the allowed source value $d=2/3$ they are respectively
+$(1/12,11/12)$ and $(7/48,41/48)$, a terminal total-variation distance
+$1/16$. At the also allowed value $d=2/7$ both rows equal
+$(1/7,6/7)$, although the two full returned states differ. Thus a
+single terminal probability at this fixed timing need not reveal
+retention, even for this completely specified installation.
+
+The full returned successors, for every complex code input $X$, are
+explicitly
+
+$$
+\begin{gathered}
+L_0x=2^{-1/2}(\mathcal VB V_0x-iTBV_0x),\qquad
+L_1x=2^{-1/2}(-i\mathcal VB V_1x+TBV_1x),\\
+\mathcal R_{0,\varnothing}(X)
+ =\tfrac12(L_0XL_0^\dagger+L_1XL_1^\dagger),\\
+\mathcal R_{1,\varnothing}(X)=QXQ^\dagger,\qquad
+Qx=2^{-1/2}(\mathcal VB Ux+TBUWx)
+    =2^{-1/2}(L_0+L_1)x.
+\end{gathered}
+\tag{109.4}
+$$
+
+In particular both contexts have off-code mass exactly $1/2$ on the
+actual input. None of that mass is removed. These formulas and (109.2)
+specify all ten output dimensions and every untouched-reference action.
+
+Proof. The five vectors in (109.2) are an orthonormal basis of
+$\mathcal M^\perp$ by (106.5), so $T$ is unitary onto that complement
+and $T^\dagger\zeta=u_-$. Therefore $h=B^\dagger u_-=0$. Expanding
+$g_0=(f_0-if_1)/\sqrt2$, $g_1=(-if_0+f_1)/\sqrt2$ gives the two $L_j$.
+The original isometry satisfies
+
+$$
+\mathcal VB x=(BUx\otimes f_0+BUWx\otimes f_1)/\sqrt2.
+\tag{109.5}
+$$
+
+It follows either directly or from $V_0=Ue^{i\theta W}$,
+$V_1=V_0W$ that $(L_0+L_1)/\sqrt2=Q$. This proves (109.4).
+The $TB$ terms lie in $\mathcal T^\perp$ and the $\mathcal VB$ terms
+in $\mathcal M$. Hence both outputs have mass $1/2$ in
+$\mathcal T^\perp$, for every unit code vector, and all that mass
+contributes to outcome $0$ of the original terminal.
+
+For the probabilities put $A=U^\dagger DU$ and $\beta=1-d$.
+The $h=0$ terminal blocks and the $\theta=\pi/4$ dephasing give
+
+$$
+\begin{aligned}
+p_{\rm coh}&=\tfrac12\langle\psi,A\psi\rangle
+    =\tfrac12\bigl(d/16+3\beta/8\bigr),\\
+p_{\rm deph}&=\tfrac12\operatorname{Tr}
+ \left[A\frac{\rho_0+W\rho_0W}{2}\right].
+\end{aligned}
+\tag{109.6}
+$$
+
+Here both $p_{\rm coh}$ and $p_{\rm deph}$ denote terminal-$1$ masses
+in the two retention contexts. To evaluate their difference without any
+normalized selection, set $\psi_+=P_+\psi$ and $g_+=P_+Uf$.
+The actual source coordinates give
+
+$$
+\begin{gathered}
+q^\dagger Uq=1/4,\quad f^\dagger Uf=1/2,\quad
+(Uf)^\dagger Uq=0,\quad f^\dagger Uq=\alpha,\\
+P_+Af=-\alpha q/2+\alpha^2g_+,\qquad
+\psi_+=\sqrt d\,a_++i\sqrt\beta\,g_+,\\
+\langle P_+Af,a_+\rangle=-5\alpha/16,\qquad
+\langle P_+Af,g_+\rangle=3/32,\qquad
+\langle f,\psi\rangle=\alpha\sqrt d+i\sqrt\beta/2.
+\end{gathered}
+\tag{109.7}
+$$
+
+Consequently
+
+$$
+\operatorname{Re}\left(
+ \langle\psi_+,Af\rangle\langle f,\psi\rangle\right)
+ =\operatorname{Re}\left[
+ (-5\alpha\sqrt d/16-i3\sqrt\beta/32)
+ (\alpha\sqrt d+i\sqrt\beta/2)\right]
+ =\frac{6-21d}{128}.
+\tag{109.8}
+$$
+
+This is precisely $p_{\rm coh}-p_{\rm deph}$ in (109.6). It gives (109.3)
+and both specializations. Finally, for any unit $x$, $L_0x,L_1x$ are
+orthonormal. Thus the coherent output on $xx^\dagger$ is pure, while
+the dephased output has two eigenvalues $1/2$. Their trace distance is
+$1/2$ before the terminal, also when its probabilities happen to agree
+at $d=2/7$. This is a mathematical state comparison, not an extra
+installed measurement. $\square$
+
