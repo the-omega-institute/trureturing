@@ -14,16 +14,22 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
             N("append", "Append one real mask", "Append drops the first symbol, appends the supplied real mask, and encodes the resulting four columns in the next appropriate state block."),
             T("append_injective", "Distinct appended masks", "For every full state s, append s is injective on Fin 8. Thus distinct appended masks do not create edge multiplicity."),
             T("columns_append", "Literal column shift", "For every state s, real mask m and i in Fin 4, the i-th column of append s m is the (i+1)-th column of s when i<3, and is m when i=3. This includes all three state blocks."),
+            N("maskEquiv", "Exact binary masks", "The positional-base equivalence finFunctionFinEquiv, composed with finTwoEquiv at every row, identifies all Fin 8 masks with Fin 3 → Bool."),
+            T("maskEquiv_apply", "Little-endian row bits", "For every m in Fin 8 and row r in Fin 3, maskEquiv m r is exactly Nat.testBit m.val r.val. All 24 entries are kernel checked."),
+            N("symbol", "Present and absent symbols", "An absent Option mask is encoded by 8. A present mask is encoded by its inverse under maskEquiv and therefore has value less than 8, including the present empty mask 0."),
+            N("paddedWindow", "Actual signed column coordinates", "For every actual word w of width n and real centre c, the five symbols encode the padded columns c+i−2 for i in Fin 5."),
             N("present", "Existing vertices", "A vertex exists in the five-column window exactly when its column symbol is less than 8. The real empty symbol 0 still has all three vertices."),
             N("selected", "Selected vertices", "A vertex is selected exactly when it exists and the corresponding row bit in its column symbol is set. An absent symbol never selects a vertex."),
             N("Local", "Boolean witness existence", "Each of the three middle-column vertices has a selected closed neighbour. Every selected middle vertex has an existing closed-neighbour witness whose selected closed neighbourhood contains only that vertex. Candidate witnesses and selected vertices exclude absent columns. Witnesses are existential propositions and are not path choices."),
+            T("local_paddedWindow_iff", "Exact finite-window fidelity", "For every width n, word w and actual centre c, Local (paddedWindow w c) is equivalent to ColumnTest (decode w) c. Signed-coordinate transport preserves every existing selected vertex, Manhattan distance, witness existence and uniqueness, including both open ends."),
+            T("validWord_iff_local", "Every real centre", "For every width n and word w, ValidWord w is equivalent to Local (paddedWindow w c) at every c in Fin n. This follows through the actual-grid column criterion."),
             N("accepts", "The executable finite predicate", "accepts is the Boolean decision of Local over the finite five-column vertex domain."),
             N("window", "Append a fifth symbol", "The four state columns followed by the supplied symbol form the tested window."),
             N("Edge", "Admitted directed edges", "An edge from s to t means that some real mask appends to t and the resulting five-column window is accepted."),
             N("transition", "Unit edge weights", "The integer matrix entry is 1 for an admitted edge and 0 otherwise."),
             N("initial", "All two-column starts", "The initial weight is 1 at all 64 states in the first block and 0 elsewhere. This includes every labelled pair of real masks, without symmetry reduction."),
             N("terminal", "Both open-end checks", "A terminal state must accept its four columns followed by 8, and must also accept its last three columns followed by 8,8. These check the final two real columns."),
-            Paragraph(Text("The all-length bijection between actual accepted mask words and successful full-state paths remains unproved here. The identification of the Boolean Local predicate with the actual-grid ColumnTest, the separate width-one count, the full-state quotient certificate and the original generating-series endpoint also remain open formal interfaces. No actual-count or quotient equality is assumed."))),
+            Paragraph(Text("The all-length bijection between actual accepted mask words and successful full-state paths remains unproved here. The separate width-one count, the full-state quotient certificate and the original generating-series endpoint also remain open formal interfaces. No actual-count or quotient equality is assumed."))),
         []));
 
     private static DocumentBlock N(string name, string title, string prose) => Node(name, title, prose, DescribeRole.Definition);
