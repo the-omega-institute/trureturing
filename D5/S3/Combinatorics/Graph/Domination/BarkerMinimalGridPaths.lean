@@ -7,7 +7,6 @@
    digest: Accepted appended-mask words are unambiguously counted by the full open-grid transfer. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
-import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Logic.Equiv.Fin.Basic
 
 set_option autoImplicit false
@@ -15,7 +14,7 @@ set_option maxRecDepth 10000
 
 namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
 
-open scoped BigOperators Matrix
+open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
@@ -55,56 +54,6 @@ theorem sum_runWeight (k : ℕ) (s : State) :
     apply Finset.sum_congr rfl
     intro m _
     split <;> simp_all
-
-/-- Injectivity of append turns the mask sum into the unit-edge matrix row. -/
-theorem fullStep_eq_mulVec (v : State → ℤ) : fullStep v = transition.mulVec v := by
-  funext s
-  let masks : Finset (Fin 8) := Finset.univ.filter fun m =>
-    accepts (window s ⟨m.val, by omega⟩) = true
-  have himage : masks.image (append s) = Finset.univ.filter (Edge s) := by
-    ext t
-    simp only [Finset.mem_image, Finset.mem_filter, Finset.mem_univ, true_and, masks, Edge]
-    aesop
-  calc
-    fullStep v s = ∑ m ∈ masks, v (append s m) := by
-      simp [fullStep, masks, Finset.sum_filter]
-    _ = ∑ t ∈ masks.image (append s), v t := by
-      rw [Finset.sum_image]
-      exact fun a _ b _ h => append_injective s h
-    _ = transition.mulVec v s := by
-      rw [himage]
-      simp [Matrix.mulVec, dotProduct, transition, Finset.sum_filter, ite_mul]
-
-/-- The all-length transfer orbit is the ordinary matrix power action. -/
-theorem fullOrbit_matrix (k : ℕ) : fullOrbit k = (transition ^ k).mulVec terminal := by
-  induction k with
-  | zero => simp [fullOrbit]
-  | succ k ih =>
-    rw [fullOrbit, fullStep_eq_mulVec, ih, Matrix.mulVec_mulVec, ← pow_succ']
-
-/-- Each supplied state and appended-mask word determines one state path. -/
-def trace : (k : ℕ) → State → (Fin k → Fin 8) → (Fin (k + 1) → State)
-  | 0, s, _ => fun _ => s
-  | k + 1, s, w => Fin.cons s (trace k (append s (w 0)) (fun i => w i.succ))
-
-/-- A path with the prescribed start and appended masks is uniquely determined. -/
-theorem trace_unique (k : ℕ) (s : State) (w : Fin k → Fin 8)
-    (p : Fin (k + 1) → State) (h₀ : p 0 = s)
-    (hstep : ∀ i : Fin k, p i.succ = append (p i.castSucc) (w i)) :
-    p = trace k s w := by
-  induction k generalizing s with
-  | zero => funext i; fin_cases i; exact h₀
-  | succ k ih =>
-    have ht : (fun i : Fin (k + 1) => p i.succ) =
-        trace k (append s (w 0)) (fun i => w i.succ) := by
-      apply ih
-      · simpa [h₀] using hstep 0
-      · intro i
-        simpa only [Fin.castSucc_succ] using hstep i.succ
-    funext i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · simpa [trace] using h₀
-    · simpa only [trace, Fin.cons_succ] using congrFun ht j
 
 /-- Four history symbols, followed by the real suffix and then open-end absence.
 The history coordinates are -2,-1,0,1. -/

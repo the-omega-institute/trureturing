@@ -7,6 +7,7 @@
    digest: The full literal Barker numerator follows from the exact quotient annihilator and initial convolutions. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
+import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
@@ -45,8 +46,8 @@ private theorem expanded_row_sum (es : List (Fin 59 × ℤ))
   induction es with
   | nil => simp [rowEval]
   | cons e es ih =>
-    have he := ((List.forall_cons _ _ _).mp h).1
-    have ht := ((List.forall_cons _ _ _).mp h).2
+    have he := h.1
+    have ht := h.2
     simp only [List.flatMap_cons, List.map_append, List.sum_append,
       List.map_replicate, List.sum_replicate, rowEval]
     rw [ih ht]
