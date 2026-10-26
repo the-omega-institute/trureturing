@@ -28,7 +28,7 @@ abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
   Params (fun p => paritySpace p.D p.hu p.s) (fun p => paritySpace p.D p.hu p.s)
 
 def actual : Realization signature := realize signature
-  (fun _ p x => (fixedParitySlice p.D p.hu p.s p.source)[[p.n]] x)
+  (fun _ p x => ((fixedParitySlice p.D p.hu p.s p.source)[[p.n]]) x)
   (fun empty => nomatch empty)
 
 def arena : Arena where
