@@ -84,6 +84,7 @@ theorem compactMomentMatrix_integral (i j : Fin 16) :
   congr 1
   apply intervalIntegral.integral_congr
   intro x _
+  dsimp only
   rw [evenProductQ_eval]
   ring
 

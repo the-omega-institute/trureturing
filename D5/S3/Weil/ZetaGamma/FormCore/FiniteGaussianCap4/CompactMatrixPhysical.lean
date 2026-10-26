@@ -94,10 +94,14 @@ theorem centralHead_compact_quadratic (u : Fin 16 → ℝ) :
     intro j _
     ring
   have hinner (i : Fin 16) : IntervalIntegrable (fun x => ∑ j, f i j x) volume 0 6 := by
-    simpa only [Finset.sum_apply] using IntervalIntegrable.sum Finset.univ (fun j _ => hf i j)
+    convert IntervalIntegrable.sum Finset.univ (fun j _ => hf i j) using 1
+    ext x
+    simp only [Finset.sum_apply]
   constructor
   · rw [heq]
-    simpa only [Finset.sum_apply] using IntervalIntegrable.sum Finset.univ (fun i _ => hinner i)
+    convert IntervalIntegrable.sum Finset.univ (fun i _ => hinner i) using 1
+    ext x
+    simp only [Finset.sum_apply]
   · rw [heq, intervalIntegral.integral_finsetSum (fun i _ => hinner i)]
     apply Finset.sum_congr rfl
     intro i _
