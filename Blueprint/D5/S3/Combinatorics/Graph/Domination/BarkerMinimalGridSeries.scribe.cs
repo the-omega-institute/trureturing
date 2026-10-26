@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 
-internal sealed class BarkerMinimalGridSeriesdocument : IScribeDocumentDefinition
+internal sealed class BarkerMinimalGridSeriesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

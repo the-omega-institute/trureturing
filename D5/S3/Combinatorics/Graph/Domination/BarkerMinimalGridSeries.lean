@@ -45,8 +45,8 @@ private theorem expanded_row_sum (es : List (Fin 59 × ℤ))
   induction es with
   | nil => simp [rowEval]
   | cons e es ih =>
-    have he := (List.forall_cons.mp h).1
-    have ht := (List.forall_cons.mp h).2
+    have he := ((List.forall_cons _ _ _).mp h).1
+    have ht := ((List.forall_cons _ _ _).mp h).2
     simp only [List.flatMap_cons, List.map_append, List.sum_append,
       List.map_replicate, List.sum_replicate, rowEval]
     rw [ih ht]
@@ -81,7 +81,7 @@ theorem initial_sum (v : Vector) :
       simp [initialClasses, List.map_map, Fin.sum_univ_def]
     _ = (alphaClasses.map v).sum := (initial_certificate.map v).sum_eq
     _ = ∑ i : Fin 59, alpha i * v i := by
-      simp only [alphaClasses, List.map_flatMap, List.sum_flatMap, List.map_replicate,
+      simp only [alphaClasses, List.flatMap_def, List.map_flatten, List.sum_flatten, List.map_map, List.map_replicate,
         List.sum_replicate, nsmul_eq_mul, Int.toNat_of_nonneg (alpha_nonneg _)]
       exact (Fin.sum_univ_def _).symm
 
