@@ -8,7 +8,6 @@
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalOneGap
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPayment
-import D5.S3.Estimation.SequentialDecisionRisk.CriticalRenewalStoppedDrift
 import Mathlib.Probability.ConditionalExpectation
 
 /-! Complete block histories and the literal counted bit execution. -/

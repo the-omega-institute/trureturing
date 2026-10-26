@@ -4,11 +4,136 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized critical renewal terminal rewards and signed adjacent-grid evidence. -/
+   digest: Actual one-gap coin traces, normalized terminal rewards and signed adjacent-grid evidence. -/
 
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.CriticalRenewalSource
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalTable
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPaths
 
+section
+/-! Full finite coin traces and their same-source renewal product law. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+open Classical MeasureTheory ProbabilityTheory Finset
+open scoped NNReal ENNReal BigOperators
+
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalFreshBlocks
+open CriticalRenewalTable CriticalRenewalPaths
+
+instance : MeasurableSpace Block := ⊤
+instance : MeasurableSingletonClass Block := ⟨fun _ => trivial⟩
+
+/-- A new zero samples its own row coin and appends just its outcome to a proof trace. -/
+def zeroTraceLaw (J : ℕ) : ℕ → PMF (List Bool × Phase.T J)
+  | 0 => PMF.pure ([],Phase.first J)
+  | k+1 => (zeroTraceLaw J k).bind fun v =>
+      (Phase.coin v.2).map fun b => (v.1 ++ [b],Phase.step v.2 b)
+
+private lemma phaseAt_append (J : ℕ) (xs : List Bool) (b d : Bool)
+    (k : ℕ) (hk : k ≤ xs.length) :
+    phaseAt J ⟨xs ++ [b],d⟩ k = phaseAt J ⟨xs,false⟩ k := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    have hlt : k < xs.length := by omega
+    simp only [phaseAt, ih (by omega), List.getElem?_append_left hlt]
+
+private lemma phaseAt_append_last (J : ℕ) (xs : List Bool) (b d : Bool) :
+    phaseAt J ⟨xs ++ [b],d⟩ (xs.length+1) =
+      Phase.step (phaseAt J ⟨xs,false⟩ xs.length) b := by
+  rw [phaseAt, phaseAt_append J xs b d xs.length le_rfl]
+  simp
+
+private theorem zero_trace_support (J k : ℕ) (v : List Bool × Phase.T J)
+    (hv : v ∈ (zeroTraceLaw J k).support) :
+    v.1.length = k ∧ phaseAt J ⟨v.1,false⟩ k = v.2 := by
+  induction k generalizing v with
+  | zero =>
+    have hh : v = ([],Phase.first J) := by simpa [zeroTraceLaw] using hv
+    subst v
+    simp [phaseAt]
+  | succ k ih =>
+    obtain ⟨w,hw,hv⟩ := (PMF.mem_support_bind_iff _ _ _).mp hv
+    obtain ⟨b,hb,hv⟩ := (PMF.mem_support_map_iff _ _ _).mp hv
+    subst v
+    obtain ⟨hlen,hphase⟩ := ih w hw
+    constructor
+    · simp [hlen]
+    · dsimp only
+      rw [← hlen, phaseAt_append_last, hlen, hphase]
+
+private theorem zero_trace_phase (J k : ℕ) :
+    (zeroTraceLaw J k).map Prod.snd = GeometricPhaseOccupation.finiteCappedLaw J k := by
+  induction k with
+  | zero => simp [zeroTraceLaw, GeometricPhaseOccupation.finiteCappedLaw,
+      PMF.pure_map, Phase.first]
+  | succ k ih =>
+    simp only [zeroTraceLaw, PMF.map_bind, PMF.map_comp, Function.comp_def]
+    have hh : (fun v : List Bool × Phase.T J =>
+        (Phase.coin v.2).map (Phase.step v.2)) =
+        fun v => GeometricPhaseOccupation.finiteCappedRow J v.2 := by
+      funext v; exact phase_coin_row J v.2
+    rw [hh]
+    change (zeroTraceLaw J k).bind ((GeometricPhaseOccupation.finiteCappedRow J) ∘ Prod.snd) = _
+    rw [← PMF.bind_map, ih]
+    rfl
+
+private lemma bind_support_congr {α β : Type} (p : PMF α) (f g : α → PMF β)
+    (h : ∀ x ∈ p.support, f x = g x) : p.bind f = p.bind g := by
+  apply PMF.ext
+  intro y
+  simp only [PMF.bind_apply]
+  apply tsum_congr
+  intro x
+  by_cases hx : x ∈ p.support
+  · rw [h x hx]
+  · have hz : p x = 0 := by simpa only [PMF.mem_support_iff, not_not] using hx
+    simp [hz]
+
+/-- Conditional on a duration, all its actual zero coins and the terminal tick
+    coin are sampled in order. -/
+def markedTraceLaw (J : ℕ) (t : Tick J) (k : ℕ) : PMF Block :=
+  (zeroTraceLaw J k).bind fun v => (t.coin v.2).map fun b => ⟨v.1,b⟩
+
+def blockLaw {J : ℕ} (f : PMF ℕ) (t : Tick J) : PMF Block :=
+  f.bind (markedTraceLaw J t)
+
+/-- The pathwise duration and mark from these very coins have the specified
+    joint law. No product of their two marginals is substituted. -/
+theorem block_pair_law {J : ℕ} (f : PMF ℕ) (t : Tick J) :
+    (blockLaw f t).map (fun b => (b.zeros.length,increment t b)) = pairLaw f t := by
+  simp only [blockLaw, pairLaw, PMF.map_bind]
+  congr 1
+  funext k
+  simp only [markedTraceLaw, PMF.map_bind, PMF.map_comp, Function.comp_def]
+  have he : (zeroTraceLaw J k).bind (fun v => (t.coin v.2).map
+      (fun b => ((v.1.length),increment t ⟨v.1,b⟩))) =
+      (zeroTraceLaw J k).bind (fun v => (t.coin v.2).map
+        (fun b => (k,t.increment v.2 b))) := by
+    apply bind_support_congr
+    intro v hv
+    obtain ⟨hlen,hphase⟩ := zero_trace_support J k v hv
+    congr 1
+    funext b
+    dsimp [increment]
+    have hh : phaseAt J ⟨v.1,b⟩ v.1.length = v.2 := by
+      rw [hlen]
+      have htick (m : ℕ) : phaseAt J ⟨v.1,b⟩ m = phaseAt J ⟨v.1,false⟩ m := by
+        induction m with
+        | zero => rfl
+        | succ m ih => simp only [phaseAt, ih]
+      exact (htick k).trans hphase
+    rw [hh, hlen]
+  rw [he]
+  rw [← zero_trace_phase J k]
+  simp only [PMF.bind_map, Function.comp_def]
+
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalFreshBlocks
+
+end
+end
+
+section
 /-! Source-normalized terminal phase statistics and their adjacent-grid evidence. -/
 
 set_option autoImplicit false
@@ -826,3 +951,6 @@ theorem uniform_one_gap (r : ℕ) (hr : 1 ≤ r) (c : ℝ) (hc : 0 < c) :
     · exact hsecond.2.trans (by nlinarith only [hceni.1,hnoise])
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalOneGap
+
+end
+end
