@@ -39,7 +39,7 @@ def budgetFamily : Registration ⟨momentSignature, budgetLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity budgetLaw actual zeroReadout budgetRejected
   dependence := actualDependence
 
-def budgetRegistration : Contract.Registration
+def budgetRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Entropy.SpectralEnvelope.countable_budget_envelope)
     (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.SpectralEnvelope.budgetUnit
@@ -96,7 +96,7 @@ def uniformFamily : Registration ⟨momentSignature, uniformLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity uniformLaw actual zeroReadout uniformRejected
   dependence := actualDependence
 
-def uniformRegistration : Contract.Registration
+def uniformRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Entropy.SpectralEnvelope.third_lower_of_purity_le_three_eighths)
     (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.SpectralEnvelope.uniformUnit
@@ -153,7 +153,7 @@ def thresholdFamily : Registration ⟨momentSignature, thresholdLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity thresholdLaw actual zeroReadout thresholdRejected
   dependence := actualDependence
 
-def thresholdRegistration : Contract.Registration
+def thresholdRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Entropy.SpectralEnvelope.third_lower_of_purity_le_threshold)
     (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.SpectralEnvelope.thresholdUnit

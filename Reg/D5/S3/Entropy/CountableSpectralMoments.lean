@@ -73,7 +73,7 @@ def newtonFamily : Registration newtonArena
 -- The telescope has p, summability, nonnegativity and the mass bound.
 -- The selected operand is precisely `third p` in the left side of the equality.
 -- Source-path/binding acceptance is pending the current compiled report.
-def newtonRegistration : Contract.Registration
+def newtonRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.countable_newton)
     (type_of% (realize momentSignature (fun _ _ p => third p) (fun a => nomatch a)))
     Unit Unit where
@@ -138,7 +138,7 @@ def absoluteFamily : Registration ⟨momentSignature, absoluteLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity absoluteLaw actual rejected absoluteRejected
   dependence := actualDependence
 
-def absoluteRegistration : Contract.Registration
+def absoluteRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.absolute_triple_sum) (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.CountableSpectralMoments.absoluteUnit
   realizationName := `Reg.D5.S3.Entropy.CountableSpectralMoments.absoluteFamily
@@ -191,7 +191,7 @@ def nonnegativeFamily : Registration ⟨momentSignature, nonnegativeLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity nonnegativeLaw actual negative nonnegativeRejected
   dependence := actualDependence
 
-def nonnegativeRegistration : Contract.Registration
+def nonnegativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.third_nonneg) (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.CountableSpectralMoments.nonnegativeUnit
   realizationName := `Reg.D5.S3.Entropy.CountableSpectralMoments.nonnegativeFamily
@@ -249,7 +249,7 @@ def lowPurityFamily : Registration ⟨momentSignature, lowPurityLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity lowPurityLaw actual zeroReadout lowPurityRejected
   dependence := actualDependence
 
-def lowPurityRegistration : Contract.Registration
+def lowPurityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.third_lower_of_purity_le_third) (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.CountableSpectralMoments.lowPurityUnit
   realizationName := `Reg.D5.S3.Entropy.CountableSpectralMoments.lowPurityFamily
@@ -313,7 +313,7 @@ def distinguishedFamily : Registration ⟨momentSignature, distinguishedLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity distinguishedLaw actual rejected distinguishedRejected
   dependence := actualDependence
 
-def distinguishedRegistration : Contract.Registration
+def distinguishedRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.distinguished_identity) (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.CountableSpectralMoments.distinguishedUnit
   realizationName := `Reg.D5.S3.Entropy.CountableSpectralMoments.distinguishedFamily
@@ -369,7 +369,7 @@ def halfFamily : Registration ⟨momentSignature, halfLaw⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity halfLaw actual zeroReadout halfRejected
   dependence := actualDependence
 
-def halfRegistration : Contract.Registration
+def halfRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Entropy.CountableSpectralMoments.third_lower_of_distinguished_ge_half) (Realization momentSignature) Unit Unit where
   unitName := `Reg.D5.S3.Entropy.CountableSpectralMoments.halfUnit
   realizationName := `Reg.D5.S3.Entropy.CountableSpectralMoments.halfFamily
