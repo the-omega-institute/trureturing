@@ -127,6 +127,7 @@ theorem finiteGaussian_weighted_square_error_convergence {ι : Type*} [Fintype �
       (((continuous_finiteGaussianPartialSum c site N).sub
         (continuous_gaussianFeature_actual c site)).abs.pow 2))
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
+    change ‖x ^ s * |finiteGaussianPartialSum c site N x - gaussianFeature c site x| ^ 2‖ ≤ B N x
     rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg
       (Real.rpow_nonneg hx.le s) (sq_nonneg _))]
     exact hdom N x hx
@@ -134,7 +135,8 @@ theorem finiteGaussian_weighted_square_error_convergence {ι : Type*} [Fintype �
       (Fintype.card ι : ℝ) * ∑ i, c i ^ 2 *
         (∫ x in Ioi (0 : ℝ), x ^ s * |gaussianPartialSum (site i) N x -
           LaguerreSevenHalf.gaussianAtom (site i) x| ^ 2) := by
-    rw [B, integral_const_mul, integral_finsetSum _ (fun i _ =>
+    dsimp only [B]
+    rw [integral_const_mul, integral_finsetSum _ (fun i _ =>
       ((gaussian_weighted_square_error_convergence (site i) s hs).1 N).const_mul _)]
     simp only [integral_const_mul]
   have hBlim : Tendsto (fun N => ∫ x in Ioi (0 : ℝ), B N x) atTop (𝓝 (0 : ℝ)) := by
@@ -202,8 +204,9 @@ theorem finiteGaussian_weighted_centered_energy_convergence {ι : Type*} [Fintyp
         mul_le_mul_of_nonneg_left (finite_real_square_bound _) (Real.rpow_nonneg hx.le s)
       _ ≤ x ^ s * ((Fintype.card ι : ℝ) * ∑ i,
           (2 * c i * K i) ^ 2 * Real.exp (-(2 * rate i) * x)) := by
-        gcongr with i
-        exact hsq i
+        apply mul_le_mul_of_nonneg_left _ (Real.rpow_nonneg hx.le s)
+        apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg (α := ℝ) (Fintype.card ι))
+        exact Finset.sum_le_sum (fun i _ => hsq i)
       _ = B x := by
         simp only [B, Finset.mul_sum]
         apply Finset.sum_congr rfl

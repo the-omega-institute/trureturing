@@ -43,7 +43,8 @@ theorem normalization_upper (n : ℕ) :
     jacobiUpper n * centralNormalization (n + 1) =
       (((n : ℝ) + 1) / 2) * centralNormalization n := by
   apply (sq_eq_sq₀ (mul_nonneg (jacobiUpper_nonneg n)
-    (centralNormalization_pos _).le) (by positivity)).1
+    (centralNormalization_pos _).le)
+    (mul_nonneg (by positivity) (centralNormalization_pos _).le)).1
   rw [mul_pow, jacobiUpper_sq, centralNormalization_sq_step]
   field_simp [show (n : ℝ) + 9 / 2 ≠ 0 by positivity]
   <;> ring
@@ -52,7 +53,8 @@ theorem normalization_lower (n : ℕ) :
     jacobiUpper n * centralNormalization n =
       (((n : ℝ) + 9 / 2) / 2) * centralNormalization (n + 1) := by
   apply (sq_eq_sq₀ (mul_nonneg (jacobiUpper_nonneg n)
-    (centralNormalization_pos _).le) (by positivity)).1
+    (centralNormalization_pos _).le)
+    (mul_nonneg (by positivity) (centralNormalization_pos _).le)).1
   rw [mul_pow, jacobiUpper_sq, mul_pow, centralNormalization_sq_step]
   field_simp [show (n : ℝ) + 9 / 2 ≠ 0 by positivity]
   <;> ring
@@ -91,7 +93,7 @@ theorem physicalX_psi_zero :
     physicalX (psiPolynomial 0) =
       C (9 / 4 : ℝ) * psiPolynomial 0 - C (jacobiUpper 0) * psiPolynomial 1 := by
   have hN : jacobiUpper 0 * centralNormalization 1 = centralNormalization 0 / 2 := by
-    simpa only [Nat.cast_zero, zero_add, one_div, div_eq_mul_inv, mul_comm] using normalization_upper 0
+    simpa only [Nat.cast_zero, zero_add, one_div, div_eq_mul_inv, mul_comm, one_mul] using normalization_upper 0
   have hM : (centralNormalization 0 / 2) * (9 / 2 : ℝ) = (9 / 4 : ℝ) * centralNormalization 0 := by
     ring
   calc
@@ -131,6 +133,7 @@ theorem physicalX_psi_succ (n : ℕ) :
           C ((n : ℝ) + 9 / 2) * laguerre n) := by rw [X_laguerre_succ]
     _ = _ := by
       simp only [psiPolynomial, mul_add, mul_sub, mul_neg, ← mul_assoc, ← Polynomial.C_mul]
+      simp only [mul_add, ← mul_assoc] at hu hl hm
       rw [hu, hl, hm]
       ring
 
@@ -229,8 +232,12 @@ theorem integrable_physical_product (p q : ℝ[X]) :
     (fun x : ℝ => Real.exp (-x) * x ^ (7 / 2 : ℝ) * (p * q).eval x)
     0 (by norm_num : (0 : ℝ) < 2)).2
       (by simpa using integrable_weighted_polynomial (p * q))
-  refine (hg.const_mul (1 / (2 : ℝ) ^ (7 / 2 : ℝ))).congr_fun ?_ measurableSet_Ioi
+  have hscaled : IntegrableOn (fun x : ℝ => (1 / (2 : ℝ) ^ (7 / 2 : ℝ)) *
+      (Real.exp (-(2 * x)) * (2 * x) ^ (7 / 2 : ℝ) * (p * q).eval (2 * x))) (Ioi 0) :=
+    hg.const_mul (1 / (2 : ℝ) ^ (7 / 2 : ℝ))
+  refine hscaled.congr_fun ?_ measurableSet_Ioi
   intro x hx
+  dsimp only
   rw [← weighted_scaled_polynomial (p * q) x hx]
   simp only [physicalPolynomial, Polynomial.eval_mul]
   ring
@@ -246,12 +253,15 @@ theorem integral_physical_product (p q : ℝ[X]) :
         (Real.exp (-(2 * x)) * (2 * x) ^ (7 / 2 : ℝ) * (p * q).eval (2 * x)) := by
       apply setIntegral_congr_fun measurableSet_Ioi
       intro x hx
+      dsimp only
       rw [← weighted_scaled_polynomial (p * q) x hx]
       simp only [physicalPolynomial, Polynomial.eval_mul]
       ring
     _ = (1 / (2 : ℝ) ^ (7 / 2 : ℝ)) *
         ((2 : ℝ)⁻¹ * (Real.Gamma (9 / 2) * moment (p * q))) := by
-      rw [integral_const_mul, integral_comp_mul_left_Ioi _ 0 (by norm_num : (0 : ℝ) < 2)]
+      rw [integral_const_mul, integral_comp_mul_left_Ioi
+        (fun y : ℝ => Real.exp (-y) * y ^ (7 / 2 : ℝ) * (p * q).eval y)
+        0 (by norm_num : (0 : ℝ) < 2)]
       simp only [mul_zero, smul_eq_mul, integral_weighted_polynomial]
     _ = _ := by
       rw [polynomialPair, he]
@@ -327,7 +337,8 @@ theorem centralCharge_normalization_transport (a : ℕ → ℝ)
     _ = (centralNormalization 0 ^ 2 * centralMellinIntegral 0 * a k) /
         (centralNormalization 0 * centralMellinIntegral 0) := by rw [ht]
     _ = _ := by
-      field_simp [(centralNormalization_pos 0).ne', (centralMellinIntegral_even_pos 0).ne']
+      have hJ0 : centralMellinIntegral 0 ≠ 0 := (centralMellinIntegral_even_pos 0).ne'
+      field_simp [(centralNormalization_pos 0).ne', hJ0]
       <;> ring
 
 /-- The exact base normalization needed by the finite matrix certificate. -/
@@ -339,7 +350,7 @@ theorem centralNormalization_zero_sq_exact :
     linarith
   have hpow : (2 : ℝ) ^ (9 / 2 : ℝ) = 16 * Real.sqrt 2 := by
     rw [show (9 / 2 : ℝ) = 4 + 1 / 2 by norm_num,
-      Real.rpow_add (by norm_num), Real.rpow_natCast, ← Real.sqrt_eq_rpow]
+      Real.rpow_add (by norm_num), ← Real.sqrt_eq_rpow]
     norm_num
   rw [centralNormalization_sq]
   simp only [Nat.cast_zero, zero_add, Nat.factorial_zero, Nat.cast_one, mul_one]
