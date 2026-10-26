@@ -144,6 +144,10 @@ $$\forall p \in \mathbb{N},\; \operatorname{Nat}.\operatorname{Prime}\left(p\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/BourasA363347PrimeMultiplicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bouras` (proved) by `D5/S3/Arith/Congruence/BourasA363347PrimeMultiplicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bouras","declaration_gid":"D5/S3/Arith/Congruence/BourasA363347PrimeMultiplicity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Bouras (2023). *OEIS A363347 and A363102, prime multiplicities of continued-fraction denominators*. URL: <https://oeis.org/A363347>.

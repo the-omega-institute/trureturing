@@ -30,12 +30,14 @@ internal sealed class BourasA363102PrimeMultiplicityDocument : IScribeDocumentDe
                 "The roots of n squared equal to two in ZMod p give exactly two indices below p, paired by n mapping to p-n. "
                 + "Every further index must satisfy n squared equal to twice p squared plus two, which permits at most one natural index. "
                 + "Thus the full occurrence set is a pair or a triple. The converse from a solution of that equation to a further occurrence is not asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bouras-a363102"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("bouras102-" + name), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner)), Dot, Operatorname, Grp(V(name)));
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
