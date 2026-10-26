@@ -354,4 +354,25 @@ private theorem no_compact_binary_copy_tower_of_finite_image {X : Type u}
     Separation.DisjointCopyTower.exists_disjoint_infinite_closed_copies K hcompact hne hcopies
   exact hBi (finite_disjoint_homeomorphic_of_finite_image hFI A B hA e hdisj).2
 
+/-- Whole signed sequences supported on disjoint clopens have distinct original
+labels when the target sequence consists of Dirac measures. -/
+private theorem whole_dirac_source_target_labels_ne {X : Type u}
+    [TopologicalSpace X] [MeasurableSpace X] [BorelSpace X]
+    (nu : Label → ℕ → SignedMeasure X) (s t : Label)
+    (C D : TopologicalSpace.Clopens X) (hCD : Disjoint (C : Set X) (D : Set X))
+    (y : ℕ → X) (hy : ∀ n, y n ∈ D)
+    (targetDirac : ∀ n, nu t n = (Measure.dirac (y n)).toSignedMeasure)
+    (sourceNull : ∀ n, (nu s n).totalVariation (C : Set X)ᶜ = 0) :
+    s ≠ t := by
+  intro hst
+  have hyC : y 0 ∈ (C : Set X)ᶜ := by
+    intro hyC
+    exact Set.disjoint_left.mp hCD hyC (hy 0)
+  have hnull := sourceNull 0
+  rw [hst, targetDirac 0, SignedMeasure.totalVariation_eq_variation,
+    Measure.variation_toSignedMeasure,
+    Measure.dirac_apply' _ C.isClopen.isClosed.measurableSet.compl,
+    Set.indicator_of_mem hyC] at hnull
+  exact one_ne_zero hnull
+
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
