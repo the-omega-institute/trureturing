@@ -131,7 +131,7 @@ theorem code_card : Nat.card code = 4096 := by
 /-- All 4096 ordinary twelve-bit messages, without discarding leading zeroes. -/
 def message (n : ℕ) : Message := fun i => if n.testBit i.val then 1 else 0
 
-theorem message_injective : Function.Injective (fun n : Fin 4096 => message n.val) := by
+private theorem message_injective : Function.Injective (fun n : Fin 4096 => message n.val) := by
   intro n m h
   apply Fin.ext
   apply Nat.eq_of_testBit_eq
@@ -148,7 +148,7 @@ theorem message_injective : Function.Injective (fun n : Fin 4096 => message n.va
     rw [Nat.testBit_eq_false_of_lt (lt_of_lt_of_le n.isLt hp),
       Nat.testBit_eq_false_of_lt (lt_of_lt_of_le m.isLt hp)]
 
-theorem message_surjective : Function.Surjective (fun n : Fin 4096 => message n.val) := by
+private theorem message_surjective : Function.Surjective (fun n : Fin 4096 => message n.val) := by
   apply ((Fintype.bijective_iff_injective_and_card _).2 ⟨message_injective, ?_⟩).2
   simp [Fintype.card_pi, ZMod.card]
 

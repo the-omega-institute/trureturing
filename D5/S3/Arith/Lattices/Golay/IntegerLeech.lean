@@ -307,16 +307,6 @@ theorem minimum_norm :
       norm_num [squareSum] at this
     · norm_num [scaledSquare, shortest_squareSum]
 
-/-- At the specified Euclidean scaling the rational norm is the usual real squared norm. -/
-theorem euclidean_scaling (x : IntVector) :
-    (∑ i, ((x i : ℝ) / Real.sqrt 8)^2) = (scaledSquare x : ℝ) := by
-  have hs : (Real.sqrt 8)^2 = (8:ℝ) := Real.sq_sqrt (by norm_num)
-  calc
-    _ = (∑ i, (x i : ℝ)^2) / 8 := by
-      simp_rw [div_pow, hs]
-      simp only [div_eq_mul_inv, Finset.sum_mul]
-    _ = _ := by simp [scaledSquare, squareSum]
-
 #print axioms minimum_norm
 #print axioms pairing_integral
 end D5.S3.Arith.Lattices.Golay.IntegerLeech
