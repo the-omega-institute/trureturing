@@ -16,6 +16,7 @@ All imported attribution and license notices remain applicable.
 -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.FiniteGaussianCentralMass
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfGaussianWeightedConvergence
+import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfJacobi
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 set_option autoImplicit false
@@ -243,5 +244,121 @@ theorem finiteGaussian_weighted_energy_convergence {ι : Type*} [Fintype ι]
     simp [finiteGaussianPartialSum, gaussianPartialSum]
   simpa only [hzero, sub_zero] using
     finiteGaussian_weighted_centered_energy_convergence c site 0 s hs
+
+private theorem graph_sum_range_two_blocks (f : ℕ → ℝ) (N : ℕ) :
+    (∑ n ∈ Finset.range (2 * N), f n) =
+      ∑ k ∈ Finset.range N, (f (2 * k) + f (2 * k + 1)) := by
+  induction N with
+  | zero => simp
+  | succ N ih =>
+      rw [show 2 * (N + 1) = (2 * N + 1) + 1 by omega,
+        Finset.sum_range_succ, Finset.sum_range_succ, ih, Finset.sum_range_succ]
+      ring
+
+private theorem graph_even_prefix_realization {ι : Type*} [Fintype ι]
+    (c site : ι → ℝ) (reflection : Equiv.Perm ι)
+    (hc : ∀ i, c (reflection i) = c i)
+    (hs : ∀ i, site (reflection i) = -site i) (N : ℕ) (x : ℝ) :
+    physicalPolynomial (∑ k ∈ Finset.range N,
+      Polynomial.C (finiteGaussianNormalizedCoefficient c site (2 * k)) *
+        psiPolynomial (2 * k)) x = finiteGaussianPartialSum c site (2 * N) x := by
+  rw [finiteGaussianPartialSum_eq_modes, graph_sum_range_two_blocks]
+  simp only [physicalPolynomial, Polynomial.eval_finsetSum, Polynomial.eval_mul,
+    Polynomial.eval_C, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro k hk
+  rw [finite_gaussian_odd_coefficient_zero c site reflection hc hs (2 * k + 1)
+    (by exact ⟨k, by omega⟩), zero_mul, add_zero]
+  simp only [psiPolynomial, Polynomial.eval_mul, Polynomial.eval_C,
+    finiteGaussianNormalizedCoefficient, phi]
+  field_simp [(centralNormalization_pos (2 * k)).ne']
+  <;> ring
+
+private theorem graph_even_prefix_pair (d : ℕ → ℝ) (N M : ℕ) (hNM : N ≤ M) :
+    polynomialPair
+      (∑ k ∈ Finset.range N, Polynomial.C (d k) * psiPolynomial (2 * k))
+      (∑ k ∈ Finset.range M, Polynomial.C (d k) * psiPolynomial (2 * k)) =
+        ∑ k ∈ Finset.range N, d k ^ 2 := by
+  classical
+  have hinner (k : ℕ) (hk : k < M) :
+      polynomialPair (psiPolynomial (2 * k))
+        (∑ j ∈ Finset.range M, Polynomial.C (d j) * psiPolynomial (2 * j)) = d k := by
+    rw [polynomialPair_comm, polynomialPair_sum_left]
+    simp only [polynomialPair_C_left, polynomialPair_psi]
+    have hindex (j : ℕ) : (2 * j = 2 * k) ↔ j = k := by omega
+    simp_rw [hindex]
+    simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+      if_pos (Finset.mem_range.mpr hk)]
+  rw [polynomialPair_sum_left]
+  apply Finset.sum_congr rfl
+  intro k hk
+  rw [polynomialPair_C_left, hinner k (lt_of_lt_of_le (Finset.mem_range.mp hk) hNM)]
+  ring
+
+/-- The exact physical norm of a block of actual even prefixes. -/
+theorem finiteGaussian_even_prefix_difference_norm {ι : Type*} [Fintype ι]
+    (c site : ι → ℝ) (reflection : Equiv.Perm ι)
+    (hc : ∀ i, c (reflection i) = c i)
+    (hs : ∀ i, site (reflection i) = -site i) (N M : ℕ) :
+    (∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
+      (finiteGaussianPartialSum c site (2 * (N + M)) x -
+        finiteGaussianPartialSum c site (2 * N) x) ^ 2) =
+      ∑ i ∈ Finset.range M, finiteGaussianNormalizedCoefficient c site (2 * (N + i)) ^ 2 := by
+  classical
+  let d : ℕ → ℝ := fun k => finiteGaussianNormalizedCoefficient c site (2 * k)
+  let P (L : ℕ) : Polynomial ℝ :=
+    ∑ k ∈ Finset.range L, Polynomial.C (d k) * psiPolynomial (2 * k)
+  have hpair (K L : ℕ) (hKL : K ≤ L) :
+      polynomialPair (P K) (P L) = ∑ k ∈ Finset.range K, d k ^ 2 :=
+    graph_even_prefix_pair d K L hKL
+  have hreal (L : ℕ) (x : ℝ) :
+      physicalPolynomial (P L) x = finiteGaussianPartialSum c site (2 * L) x :=
+    graph_even_prefix_realization c site reflection hc hs L x
+  calc
+    _ = ∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
+        physicalPolynomial (P (N + M) - P N) x *
+          physicalPolynomial (P (N + M) - P N) x := by
+      apply setIntegral_congr_fun measurableSet_Ioi
+      intro x hx
+      dsimp only
+      simp only [physicalPolynomial_sub, hreal]
+      ring
+    _ = polynomialPair (P (N + M) - P N) (P (N + M) - P N) :=
+      integral_physical_product _ _
+    _ = (∑ k ∈ Finset.range (N + M), d k ^ 2) -
+        ∑ k ∈ Finset.range N, d k ^ 2 := by
+      simp only [polynomialPair_sub_left, polynomialPair_sub_right]
+      rw [hpair (N + M) (N + M) le_rfl, hpair N N le_rfl,
+        hpair N (N + M) (by omega),
+        polynomialPair_comm (P (N + M)) (P N), hpair N (N + M) (by omega)]
+      ring
+    _ = _ := by
+      rw [Finset.sum_range_add]
+      ring
+
+/-- Actual H Parseval and every fixed-prefix remainder norm, without a basis
+completeness assumption. At N=0 this is the complete H-energy HasSum. -/
+theorem finiteGaussian_actual_remainder_norm {ι : Type*} [Fintype ι]
+    (c site : ι → ℝ) (reflection : Equiv.Perm ι)
+    (hc : ∀ i, c (reflection i) = c i)
+    (hs : ∀ i, site (reflection i) = -site i) (N : ℕ) :
+    IntegrableOn (fun x : ℝ => x ^ (7 / 2 : ℝ) *
+      (gaussianFeature c site x - finiteGaussianPartialSum c site (2 * N) x) ^ 2) (Ioi 0) ∧
+    HasSum (fun i : ℕ => finiteGaussianNormalizedCoefficient c site (2 * (N + i)) ^ 2)
+      (∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
+        (gaussianFeature c site x - finiteGaussianPartialSum c site (2 * N) x) ^ 2) := by
+  have h := finiteGaussian_weighted_centered_energy_convergence c site (2 * N) (7 / 2)
+    (by norm_num)
+  refine ⟨h.2.1, ?_⟩
+  have hindex : Tendsto (fun M : ℕ => 2 * (N + M)) atTop atTop :=
+    tendsto_atTop_mono (fun M => by dsimp only; omega) tendsto_id
+  have hl : Tendsto (fun M : ℕ => ∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
+      (finiteGaussianPartialSum c site (2 * (N + M)) x -
+        finiteGaussianPartialSum c site (2 * N) x) ^ 2) atTop
+      (𝓝 (∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) *
+        (gaussianFeature c site x - finiteGaussianPartialSum c site (2 * N) x) ^ 2)) :=
+    h.2.2.comp hindex
+  simp_rw [finiteGaussian_even_prefix_difference_norm c site reflection hc hs N] at hl
+  exact (hasSum_iff_tendsto_nat_of_nonneg (fun i => sq_nonneg _) _).2 hl
 
 end FiniteGaussianCap4
