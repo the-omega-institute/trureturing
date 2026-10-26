@@ -1288,3 +1288,1038 @@ rights and outputs. These finite results leave the full sustained
 space/time/boundary/memory programme open.
 
 ## 追加锚（本行以下为增补区）
+
+## 87. Repairing an arbitrary inherited observation mask
+
+**Definition 87.1 (one earned specimen, three acquisition domains).**
+Retain Definition 75.1's entire original installation. Fix an earned
+branching term $u\in\mathcal D$, its $N$ actual material cells, $b\ge3$
+terminals, symmetric unit adjacency $A$, authentic root/orientation,
+exhaustive raw/canonical table and current/fresh grants. At a held entrance
+the field ranges over all $x\in\mathbb Q^N$. Every accessible receiver
+record, selector input, program, reference byte and observable resource
+attribute is independent of $x$. Dependent provider information is actually
+cleared or isolated. There is no numerical channel through timing,
+allocation, capacity, refusals or acknowledgements. Section 93 specifies
+one paid preparation on this same specimen.
+
+An inherited mask $\mathcal O$ is a field-independent subset of the $b$
+initial raw labels. Write $k=|\mathcal O|$ and $S_0$ for the other old
+terminal coordinates. During the acquisition and restoration below,
+neither Read nor Add uses a label in $\mathcal O$. This policy follows
+the label's actual moved binding after growth. It does not revoke the
+original future right. Newly supplied labels have genuine grants and are
+available. The entry-report task owes the original $x$; the current-only
+task owes the complete actual final field and its self-contained full
+predictor. Physical old-cell restoration is an additional task, with an
+additional bill. These tasks are not identified.
+
+Section 89 instead restricts acquisition to one designated fresh sensor
+per original leaf and performs no acquisition Add. Sections 91–92 fix a
+special guarded family and its own mask. Their different growth, sensors,
+entrance images and endpoints remain distinct.
+
+**Definition 87.2 (an adequate subset and its actual replacement).**
+Use zero forcing in its usual sense: a colored vertex with exactly one
+uncolored neighbor may color that neighbor. Choose $Z\subseteq\mathcal O$
+such that $S_0\cup Z$ zero-forces the original material tree, identifying
+each initial label with its original physical terminal. Let $q=|Z|$ and
+let $a_Z$ count its alpha logical leaves. Adequacy is a sufficient
+combinatorial certificate, not a necessary condition for observing one
+fixed adjacency matrix. A certificate can be found by finite enumeration
+of subsets and forcing orders using the earned graph.
+
+For each selected beta owner $p$, actually execute
+$S_p;S_{pL}$. The second target is the beta made logical by the first
+split, rather than an attempt to split an unconverted material marker.
+For a selected alpha $p$, first execute $P_p$, then these two splits.
+Process selected original leaves in fixed address order, without any
+Tick, Add or Read. Distinct original logical leaves have disjoint cones.
+In either case the resulting local edges, besides the old parent edge,
+are
+
+$$
+p-pL-pLL-pLLL,\qquad p-pR,\qquad pL-pLR.
+\tag{87.1}
+$$
+
+The inherited masked label ends at $pLLL$. The two new readable labels
+are really bound at $pR,pLR$. All old cells, values and edges persist;
+every fresh value is zero. Let $E:\mathbb Q^N\to\mathbb Q^M$ be this
+literal inclusion, $B$ the actual grown adjacency, and $C$ restriction
+to all current labels outside the inherited mask. If $s$ is their count,
+then
+
+$$
+M=N+4q+a_Z,\qquad s=b-k+2q,\qquad
+E^{\mathsf T}E=I_N,\qquad E^{\mathsf T}BE=A.
+\tag{87.2}
+$$
+
+**Theorem 87.3 (native forcing transfer for every adequate subset).**
+The $s$ allowed terminals zero-force the entire grown tree. In particular
+$s>0$, and, with $F=M-s$, the rational stack
+
+$$
+O_F=\begin{bmatrix}C\\CB\\\vdots\\CB^F\end{bmatrix}
+\tag{87.3}
+$$
+
+has column rank $M$. The columns $B^j e_v$, for allowed terminals $v$
+and $0\le j\le F$, span $\mathbb Q^M$ as well. The actual replacement
+uses $a_Z$ promotions, $2q$ splits, $4q+a_Z$ fresh cells and $2q$
+fresh labels.
+
+**Proof.** The guards and incidence in (87.1) follow successively from
+Definition 75.1. In a beta cone the first split adds $pLL,pR$; the
+second adds $pLLL,pLR$. An alpha first adds $pL$. This proves all
+counts and zero-extension assertions in (87.2).
+
+Start with all allowed terminals colored. In each replaced cone use
+
+$$
+pR\longrightarrow p,\qquad pLR\longrightarrow pL,\qquad
+pL\longrightarrow pLL,\qquad pLL\longrightarrow pLLL.
+\tag{87.4}
+$$
+
+Each forcing vertex has exactly the indicated remaining uncolored
+neighbor when its turn is reached. Thus every fresh coordinate and every
+selected original terminal is colored. Extra old coordinates, such as a
+beta owner, may also have become colored. Replay a forcing order for
+$S_0\cup Z$ on the old tree, skipping targets already colored. The only
+extra neighbors of old vertices are now colored. Every old force whose
+target is still uncolored therefore remains legal. All old vertices,
+hence all vertices, are reached.
+
+Apply the polynomial-coordinate construction of NLBA §28.1 and
+Convention 75.2 to this very forcing order. A sensor coordinate starts
+at degree zero; at a force $v\to w$ use
+$e_w=B e_v-\sum_{z\sim v,\ z\ne w}e_z$. There are $M-s$ targets,
+so degrees at most $F$ suffice. Symmetry transposes the resulting
+coordinate identities to (87.3). This is the existing forcing/Krylov
+supplier on the newly proved native incidence, rather than a new
+general observability principle. $\square$
+
+**Corollary 87.4 (a uniform leave-one recipe).** For $k=0$ take
+$Z=\varnothing$. For $k\ge1$ one may leave any one masked label
+unreplaced and replace the other $k-1$. Thus
+
+$$
+q=\max(k-1,0),\qquad M\le N+5\max(k-1,0).
+\tag{87.5}
+$$
+
+Indeed all but one leaves of a finite tree zero-force it, by the
+stalled-forest proof in NLBA Theorem 28.1. Here those initial leaves
+are exactly $S_0\cup Z$. With $k\ge1$ this recipe gives
+$s=b+k-2$ and $F=N-b+3k-2+a_Z$. Leaving an alpha unedited when
+one is present saves one promotion within this recipe. No global
+birth, cell or sensor minimum follows. The sharper zero-, one- and
+two-mask suppliers in §§79–84 retain their own conclusions.
+
+## 88. Actual acquisition and return under the repaired mask
+
+**Theorem 88.1 (entry acquisition, optional return and the actual bill).**
+Fix Definition 87.2's repair and deterministic rational pivot order.
+Choose $N$ independent rows of $O_FE$, ordered by epoch then allowed
+terminal. Let $R_e$ be their square matrix, with row labels $(j_i,v_i)$,
+and $H=\max_i j_i\le F$. An actual acquisition has
+
+$$
+y_i=e_{v_i}^{\mathsf T}B^{j_i}Ex,\qquad
+y=R_e x,\qquad x=R_e^{-1}y,\qquad d=B^HEx.
+\tag{88.1}
+$$
+
+It uses exactly $N$ Reads, $H$ Ticks and $H+1$ Holds, with no Add.
+It reports $x$ and installs the full predictor at $d$, its actual
+endpoint. If physical old-cell restoration is requested, a further
+$M$ allowed-terminal Adds, $L\le F$ Ticks and $L+1$ Holds end at
+$Ex$. Through restored handoff the counts are therefore
+
+$$
+(\operatorname{Read},\operatorname{Add},\operatorname{Tick},
+\operatorname{Hold})=(N,M,H+L,H+L+2),
+\tag{88.2}
+$$
+
+besides Definition 87.2's growth. No omitted label or Reset is used.
+Every exact arbitrary-entry reporter in this cleared installation needs
+at least $N$ scalar Reads on each terminating transcript, even with
+adaptive original growth and rational controls.
+
+**Proof.** Full rank of $O_F$ and injectivity of $E$ give rank $N$
+for $O_FE$. Geometry-only exact elimination therefore finds $R_e$.
+Actually Hold and Read the selected epoch-zero sites, then for each
+epoch $1,\ldots,H$ actually Tick; Hold and perform precisely its
+selected Reads. Read is nondestructive. The complete scalar replies
+are (88.1), and the plant really advances to $d$. Solve and install
+that current field while held, consuming every entire scalar and
+acknowledgement/Return transaction.
+
+For return select $M$ independent columns $B^{j_t}e_{v_t}$ from
+Theorem 87.3, form their invertible matrix $K$, and put
+
+$$
+L=\max_t j_t,\qquad c=K^{-1}(Ex-B^L d).
+\tag{88.3}
+$$
+
+At stage $a=0,\ldots,L$, actually Add every $c_t$ whose exponent
+is $j_t=L-a$, in a fixed order including zero operands; Hold; then
+Tick if $a<L$. Each injected operand undergoes exactly $j_t$ later
+Ticks. The real endpoint is
+
+$$
+B^Ld+\sum_t B^{j_t}e_{v_t}c_t=B^Ld+Kc=Ex.
+\tag{88.4}
+$$
+
+This is §84.2's existing forward-control procedure with the newly
+proved allowed set and horizon. It restores old physical values and
+puts zero on fresh cells; it undoes neither topology nor moved bindings.
+
+For scalar necessity use the frozen-affine-transcript argument of
+§§77.3,84.1 and NLBAII §61.2. On a terminating path with fewer than
+$N$ scalar replies, its homogeneous entry rows have nonzero rational
+common kernel $\eta$. Entries $x,x+\eta$ follow that same complete
+path: prior whole replies fix every next selector, operand, structural
+guard, frame and stopping decision. Adds are common translations;
+Ticks and zero-inclusions are linear. The required original reports
+differ. This is a contradiction for an exact reporter, independently
+of its final-current rank. Thus the $N$-Read coordinate is attained;
+no other optimum is inferred. $\square$
+
+**Theorem 88.2 (a separate current-only acquisition).** On a new run
+from Definition 87.1's original $x$, let $r=\operatorname{rank}A$,
+and let $U_0$ be a rational basis matrix of $\operatorname{im}A$.
+First Tick on the old graph, then perform the same chosen repair, then
+Tick on the grown graph and Hold. Write
+
+$$
+Ax=U_0c,\qquad U=BEU_0.
+\tag{88.5}
+$$
+
+Choose $r$ independent rows of $O_FU$, forming $R_c$ with largest
+epoch $H_c\le F$. Perform their selected assay at this held field,
+with the epoch-zero Reads and then $H_c$ Tick; Hold rounds. The
+actual replies and endpoint are
+
+$$
+y_c=R_c c,\qquad
+w=D_c c,\qquad D_c=B^{H_c}U,
+\qquad w=B^{H_c+1}EAx.
+\tag{88.6}
+$$
+
+Both $R_c$ and $D_c$ have column rank $r$. This run uses $r$ Reads,
+$H_c+2$ Ticks and $H_c+1$ Holds, zero Adds, and its own repair.
+Its entry kernel is exactly $\ker A$. Its $r$-Read coordinate is the
+existing arbitrary-current minimum, not an original-entry inverse.
+
+**Proof.** If $z\in\operatorname{im}A$ and $BEz=0$, (87.2) gives
+$Az=0$. For $z=Av$, symmetry gives
+$z^{\mathsf T}z=v^{\mathsf T}Az=0$, hence $z=0$. Thus $U$ has
+rank $r$, and lies in $\operatorname{im}B$. Full rank of $O_F$
+gives the selected $R_c$. Symmetric $B$ is injective on its image,
+by the same sum-of-squares argument, so every $B^{H_c}U$ still has
+rank $r$. Actual sampling proves (88.6). The only discarded old
+differences are those killed by the first real old-graph Tick.
+NLBAII Theorems 60.2 and 61.2 supply the $r$ lower bound even for
+adaptive growth. The present permitted-policy protocol attains it.
+Its first Tick costs an old-size update; all later Ticks cost grown-size
+updates. Neither its endpoint nor its call savings replace (88.1) or
+(88.4). $\square$
+
+**Proposition 88.3 (independent restored and current expressions).**
+For the restored experiment fix its earned geometry, mask, repair,
+pivots, genuine callable context and completed phase. Use these meanings:
+
+| Expression | Content at restored handoff |
+| --- | --- |
+| Space | The rooted ordered grown unit material graph and its actual field $Ex$ |
+| Time | The actual labelled constructor birth/lifecycle partial order, fixed executed repair/assay/return template and the $N$ performed triples $(j_i,v_i,y_i)$ |
+| Boundary | Complete earned ordered terminal metric with authentic root/orientation context, and the computed present allowed germ $O_FEx$ |
+| Memory | The installed complete current predictor, exhaustive actual table and genuine parser/reference/grant context |
+
+Time is a finite measured acquisition record, not an arbitrary old
+preparation or service journal. Boundary's germ and metric are paid
+computed/exported outputs of the earned law and current state, not
+additional unperformed Read experiments. A metric's points do not
+create dispatcher references or rights. Fixed common context is not
+purportedly recovered from rational numbers.
+
+These expressions recover one another on their exact restored images.
+Space and Memory decode $x$ by old-cell restriction; Time decodes it
+by $R_e^{-1}$; Boundary uses a rational left inverse of $O_F$ and
+then old-cell restriction. Conversely $x$ constructs exactly $Ex$,
+$R_ex$, $O_FEx$ and the fixed structural/causal contents. Thus both
+image identities hold, and every conversion is encoding after decoding
+through this same $x$. All routes and round trips agree. The image is
+attained for every rational $x$ by the paid preparation and (88.4).
+Equality of any expression is exactly equality of original entry,
+actual current and full canonical future service in this fixed context,
+by Convention 75.2. This is the §85.2 supplier applied with the
+specific matrices proved above, not a new generic four-view theorem.
+
+For the distinct current-only experiment replace $Ex,R_ex,O_FEx$
+by $D_cc,R_cc,O_FD_cc$, and use its actual old-Tick/repair/new-Tick
+template and selected measured triples. Their total Tick epochs are
+$j_i+2$, with the first update on $A$ and all others on $B$.
+Space/Memory invert $D_c$ on its image, Time inverts $R_c$, and
+Boundary inverts $O_FD_c$. Each has rank $r$ by Theorems 87.3 and
+88.2. Re-encoding from $c$ proves both identities and route agreement;
+every $c$ has an actual original preimage under $A$. Their common
+kernel is equality of $Ax$, exactly the current-service kernel on
+this image. They do not recover a general original $x$ modulo nothing.
+
+**Proposition 88.4 (actual selected use and its precise transport).**
+At a restored cut choose an old physical terminal $a$ and a different
+allowed current terminal $v$. If the mask is nonempty, $a$ may be
+chosen from it. Such $v$ exists: if it is old unmasked then it differs
+from a masked $a$, and otherwise a fresh allowed terminal differs from
+every old coordinate. With empty mask choose two different old leaves.
+Compute $q_*=x_a$ from the acquired record and actually execute
+Add$(v,q_*)$; Hold; Read$(v)$ through its earned raw binding. Put
+
+$$
+G=I_M+e_v e_a^{\mathsf T},\qquad
+G^{-1}=I_M-e_v e_a^{\mathsf T}.
+\tag{88.7}
+$$
+
+The actual successor and entire scalar reply are
+
+$$
+w_+=GEx,\qquad \operatorname{reply}=(Ex)_v+x_a.
+\tag{88.8}
+$$
+
+This adds one Add, Hold and Read, including two field ACKs and the
+scalar transaction. No direct observation of the masked label occurs.
+
+On the corresponding post-use image Space exposes $GEx$, Boundary
+exposes $O_FGEx$, Memory is updated there, and Time retains its
+performed old samples and appends these actual calls and reply. Space
+and Memory decode by $E^{\mathsf T}G^{-1}$; Boundary first uses the
+left inverse of $O_F$; Time still uses $R_e^{-1}$. Conversely $x$
+constructs exactly the stated post-use contents. The identity in
+(88.7) holds because $a\ne v$, so all inverse identities survive and
+the actual action squares commute through the same $x$. In particular
+no $R_e$-samples at the new field are labelled measured. This is a
+new declared post-use image, which need not be $E\mathbb Q^N$.
+
+For a current-only cut the same construction can use an acquired
+current coordinate $w_a$ at a terminal different from an allowed $v$.
+The successor is $GD_cc$. Replace the above inverse by a left inverse
+of $D_c$ after $G^{-1}$; Boundary uses full rank of $O_F$ first.
+Time retains $R_cc$ and the actual use. This proves the corresponding
+post-use route and dynamics identities on that distinct image as well.
+Arbitrary later operations are governed by complete current service,
+without a claim that these particular historical charts remain valid.
+
+## 89. Fresh-only sensing retains the actual entrance through every Tick
+
+**Definition 89.1 (one fresh sensor for each original leaf).** Start
+again from Definition 87.1's earned $u,x$, with $a$ alpha and $c$
+beta leaves, $b=a+c$. During this assay no old inherited label is
+Read or Add, no nondesignated fresh label is Read, and no Add occurs.
+Process every original leaf before any Tick. At alpha $p$ execute
+$P_p;S_p$ and designate the fresh terminal $f_p=pR$. Its local
+edges are $p-pL-pLL$ and $p-pR$. At beta $p$ execute
+$S_p;S_{pL}$ and designate $f_p=pLR$. Its local edges are (87.1),
+but the other fresh terminal $pR$ is not a sensor. All original
+labels are followed through their actual moves and remain unobserved.
+
+Let $E$ again include the old cells, $B$ be this construction's
+adjacency, $C$ restrict to the $b$ designated fresh sensors, and
+$J^{\mathsf T}$ restrict the old field to all $b$ original terminals,
+in the matching leaf order. Direct incidence gives
+
+$$
+\begin{gathered}
+M=N+3a+4c,\qquad E^{\mathsf T}BE=A,\qquad
+CE=0,\qquad CBE=J^{\mathsf T},\\
+O=\begin{bmatrix}C\\CB\\\vdots\\CB^{M-1}\end{bmatrix},\qquad
+L_h=B^hE,\qquad K_h=OB^hE\quad(h\ge0).
+\end{gathered}
+\tag{89.1}
+$$
+
+Actual initialization is $Ex$: every fresh cell is zero. The
+construction uses $a$ promotions and $a+2c$ splits, hence $2b$
+successful births, $3a+4c$ fresh cells and $a+2c$ new labels. The
+final label count is $2a+3c$. The sensor set and grown graph differ
+from those of Theorem 87.3.
+
+**Theorem 89.2 (entrance sensing and all advanced present germs).**
+For every such original tree and every integer $h\ge0$,
+
+$$
+\operatorname{rank}_{\mathbb Q}(OE)
+=\operatorname{rank}_{\mathbb Q}L_h
+=\operatorname{rank}_{\mathbb Q}K_h=N.
+\tag{89.2}
+$$
+
+Thus the whole current field and the designated-sensor present germ
+each determine the original entry on every actual Tick-advanced image
+$B^hE\mathbb Q^N$. No full-grown-space rank is asserted.
+
+**Proof of entrance sensing.** Suppose
+$z(t)=B^tE\eta$ satisfies $Cz(t)=0$ for every $t\ge0$.
+At an alpha cone the sensor equation
+$z_{pR}(t+1)=z_p(t)$ forces old $p$ to be zero at every time.
+The unobserved fresh two-cell tail $(pL,pLL)$ starts at zero and
+is driven only by this zero $p$; its two recurrence equations prove
+it remains zero by induction.
+
+At a beta cone the sensor equation forces old $pL$ zero at every
+time. Its fresh tail $(pLL,pLLL)$ likewise starts and stays zero.
+The equation
+
+$$
+z_{pL}(t+1)=z_p(t)+z_{pLL}(t)+z_{pLR}(t)
+\tag{89.3}
+$$
+
+then forces old $p$ zero. The fresh unmeasured $pR$ starts zero and
+its update is $z_p(t)$, so it too stays zero. This deals with all
+fresh coordinates in all disjoint cones. Only after this step may
+the old projection be identified with $A^t\eta$: all fresh feedback
+has been shown zero. Every old terminal trajectory is zero. The
+all-leaf forcing supplier therefore gives $\eta=0$.
+
+Cayley–Hamilton, equivalently the ambient finite-kernel saturation
+supplier specified in §93.3, reduces all $t\ge0$ to $0\le t<M$.
+Hence $OE$ has rank $N$. The subspace $E\mathbb Q^N$ need not
+be $B$-invariant; no saturation theorem on that subspace was used.
+
+**Proof of persistence.** Work first over $\mathbb R$. Put
+$W=\ker O=\bigcap_{t\ge0}\ker(CB^t)$. It is $B$-invariant,
+and symmetry makes $W^\perp$ invariant. For $h\ge1$, suppose
+$OB^hE\eta=0$, and decompose $E\eta=w+v$ with
+$w\in W$, $v\in W^\perp$. Then $B^hv$ belongs to both
+subspaces, and is zero. A symmetric matrix has
+$\ker B^h=\ker B$ for all $h\ge1$, so $Bv=0$.
+By $CE=0$ and $Cw=0$, also $Cv=0$. Thus every $CB^tv$
+vanishes, including $t=0$, and $v\in W$. Therefore $v=0$.
+Now $E\eta\in W$ and entrance sensing force $\eta=0$.
+The $h=0$ case is already established. Hence $K_h$ is injective
+for every $h$; so is $L_h$, since $K_h=OL_h$. Ranks of rational
+matrices agree over $\mathbb Q$ and $\mathbb R$ by nonzero
+minors. This proves (89.2) over the stated field.
+
+For a direct check of the field-retention mechanism,
+$BE\eta=0$ would give $A\eta=0$ by compression and
+$J^{\mathsf T}\eta=0$ by the first-sensor identity in (89.1).
+The old all-leaf window would then vanish, forcing $\eta=0$.
+Thus the very first new Tick already retains all entry distinctions;
+symmetry protects them from later powers. This does not assert a
+physical inverse Tick. $\square$
+
+**Proposition 89.3 (the ambient extension is false).** Take
+$u=\langle\langle\beta,\beta\rangle,
+\langle\beta,\beta\rangle\rangle$ and perform Definition 89.1's
+beta constructions. There is a nonzero rational $h_*$ such that
+
+$$
+Bh_*=0,\qquad Ch_*=0,\qquad h_*\notin\operatorname{im}E.
+\tag{89.4}
+$$
+
+**Proof.** Give the two old branch children $L,R$ values $1,-1$,
+respectively. Give every other old coordinate value zero. For each
+original beta owner $p\in\{LL,LR,RL,RR\}$, put
+$(h_*)_{pR}=-(h_*)_{\operatorname{parent}(p)}$ at its first fresh
+right leaf. Put zero at every other fresh cell, including all selected
+$pLR$ sensors. The original root's neighbor sum is $1-1=0$.
+At each old beta owner its parent value cancels its fresh $pR$.
+At each old branch, old marker, other fresh chain cell and either kind
+of fresh leaf, every remaining neighbor value is zero. Thus all rows
+of $Bh_*$ vanish, while $h_*$ is nonzero and has nonzero fresh
+coordinates. This proves (89.4). $\square$
+
+In particular $O$ need not observe an arbitrary grown field, and its
+transpose need not control that whole space. Indeed
+$h_*^{\mathsf T}B^jC^{\mathsf T}=0$ for every $j$, so Adds at
+these sensors cannot change its nonzero pairing with $h_*$. Starting
+from zero, such controls cannot reach $h_*$. The actual fresh-zero
+entrance in Theorem 89.2 is therefore essential. Failure on this
+ambient field is not a physical or universal impossibility claim.
+
+## 90. Fresh-only performed records, retention and actual dynamics
+
+**Theorem 90.1 (a paid assay with no restorative actuation).** Choose
+$N$ independent rows of $OE$ by geometry-only rational pivots in
+epoch/sensor order. Let their invertible matrix be $R$ and their
+largest epoch $H\le M-1$. Actually Hold; perform the selected
+epoch-zero Reads, then $H$ rounds Tick; Hold with precisely the
+selected designated-sensor Reads at each epoch. The real result is
+
+$$
+y=Rx,\qquad x=R^{-1}y,\qquad w=B^HEx=L_Hx.
+\tag{90.1}
+$$
+
+All epoch-zero candidate rows are zero by $CE=0$, so none is in the
+selected independent list; the initial Hold is nevertheless real.
+The assay uses $N$ Reads, $H$ Ticks, $H+1$ Holds and zero Adds,
+besides Definition 89.1's construction. Install the complete predictor
+at this actual $w$. The $N$ scalar coordinate is the arbitrary-entry
+necessity already used in Theorem 88.1; it is not a current-only,
+birth, sensor or total-cost minimum.
+
+**Proof.** Theorem 89.2 gives rank $N$ for $OE$, hence the selector
+terminates. The physical field at epoch $j$ is $B^jEx$, so its
+selected literal replies are exactly $Rx$. Held finite exact solving
+earns the original entry and its actual advanced field. No local
+inverse calculation moves the source or restores old physical values.
+The complete-return and current-service supplier applies at this
+proved endpoint. $\square$
+
+**Definition 90.2 (independent phase-$t$ meanings).** After (90.1)
+perform exactly $t\ge0$ further Tick; Hold pairs, tracking their
+completed count in a retained integer. Put $h=H+t$. Fix this phase,
+the earned installation and deterministic templates as common context.
+The attained numerical family is $\{L_hx:x\in\mathbb Q^N\}$.
+
+| Expression | Content at this actual phase |
+| --- | --- |
+| Space | The grown rooted ordered unit material graph and actual whole current field $L_hx$ |
+| Time | Actual labelled birth/lifecycle partial order, the executed construction/assay template, its $N$ measured triples carrying $Rx$, and the $t$ completed subsequent Tick/Hold pairs |
+| Boundary | Complete earned ordered terminal metric with authentic root/orientation context and the computed designated-sensor present germ $K_hx$ |
+| Memory | The synchronized full current predictor, exhaustive raw table, parser and genuine callable context |
+
+The measured triples in Time stay at their original sample epochs.
+The current germ is a paid calculation/export of $OL_hx$ from the
+earned state and law; it is not $bM$ newly performed scalar Reads.
+The phase counter is stored and updated, not an unknown free clock.
+Neither view encodes every earlier intervention or a total hidden
+generation chronology. The constructor partial order has AA Theorem
+17.2's existing causal meaning.
+
+**Theorem 90.3 (every inverse, route and Tick square on the attained
+phases).** Choose rational left inverses $D_hL_h=I_N$ and
+$Q_hK_h=I_N$, available by Theorem 89.2. Space/Memory decode
+$x=D_hw$, Time decodes $x=R^{-1}y$, and Boundary decodes
+$x=Q_hg$. Conversely $x$ constructs the exact contents
+$L_hx,Rx,K_hx$ and their stated structural/causal data. Thus decoding
+after encoding and encoding after decoding are identities on each
+of these four images. Every route agrees through this same $x$.
+
+All images are actual: every rational $x$ has the paid original
+preparation, the real assay, and the $t$ further pairs. Different
+$x$ give different actual currents by (89.2); a full future all-leaf
+continuation distinguishes them by Convention 75.2. Equal $x$ gives
+identical complete current service in the common authentic context.
+Consequently entry equality, present-field equality, view equality and
+the full continuation kernel coincide on this family.
+
+One more actual Tick; Hold advances $L_hx$ to $L_{h+1}x$ and
+increments $t$. Time appends the completed calls; Boundary recomputes
+$K_{h+1}x$; Memory applies $B$. For every pair of views, converting
+before this actual update or after it gives the same expression at
+phase $t+1$, since both routes decode the unchanged $x$ and encode
+the new phase. This proves the dynamics squares, with their two
+actual calls/ACKs and paid local updates. A left inverse is a rational
+calculation on its image, never an inverse physical action or an
+authentication of recorded provenance.
+
+**Proposition 90.4 (real selected use and off-image boundary).** Fix
+an old terminal $a_0$ and one genuinely designated fresh sensor $f$.
+Decode $q=x_{a_0}$ from the acquired record and actually execute
+Add$(f,q)$; Hold; Read$(f)$. The real successor is
+$L_hx+q e_f$, the entire reply is $(L_hx)_f+q$, and the full
+predictor is updated there. This adds one Add, Hold and Read with
+all operand/selector/return traffic. Such a successor need not lie
+in $L_h\mathbb Q^N$; no continuation of the historical four-way
+inverse on arbitrary controlled fields follows. Proposition 89.3
+already disproves a full-grown-space germ inverse. Complete current
+service remains valid by the synchronized predictor, with the actual
+new field and law, rather than by pretending a fresh assay occurred.
+
+## 91. Exact partial-repair kernels on a guarded native family
+
+**Definition 91.1 (all subsets of a fixed repair family).** For $k\ge1$
+put
+
+$$
+C_0=\langle\beta,\beta\rangle,\qquad
+G_0=\langle\beta,C_0\rangle,\qquad
+U_0=\alpha,\qquad U_j=\langle G_0,U_{j-1}\rangle.
+\tag{91.1}
+$$
+
+Take $u=U_k$ with the earned installation of Definition 87.1 and
+arbitrary $x\in\mathbb Q^N$. For $1\le i\le k$ name actual
+addresses
+
+$$
+\begin{aligned}
+q_i&=R^{i-1},&h_i&=q_iL,&g_i&=h_iL,&c_i&=h_iR,\\
+\ell_i&=c_iL,&r_i&=c_iR,&m_i&=\ell_iL,&n_i&=r_iL,
+\qquad z=R^k.
+\end{aligned}
+\tag{91.2}
+$$
+
+Here $g_i$ is a guard beta owner with readable marker $g_iL$;
+$c_i$ is a cherry branch with two beta owners $\ell_i,r_i$.
+Mask exactly the $2k$ inherited labels at $m_i,n_i$. The tail
+$z$ and every guard marker are readable, as are all newly created
+labels. The domain is birth-legal: every left logical leaf is beta,
+and the only alpha is the right tail. There are $3k$ beta leaves,
+$3k+1$ total terminals and $N=9k+1$ cells.
+
+For each $J\subseteq\{1,\ldots,k\}$, actually split $\ell_i$
+once for every $i\in J$, in increasing order, before any Tick.
+Let $E_J$ be the old-cell inclusion, $B_J$ the resulting adjacency,
+and $C_J$ restriction to all allowed current terminals. A repaired
+cherry has fresh readable $f_i=\ell_iR$ and fresh inherited masked
+endpoint $e_i=\ell_iLL$; old $m_i=\ell_iL$ is now internal.
+Its new edges are $\ell_i-f_i$ and $m_i-e_i$. Thus
+
+$$
+M_J=N+2|J|,\qquad
+W_J=\bigcap_{t\ge0}\ker(C_JB_J^t),\qquad
+O_J=\begin{bmatrix}C_J\\C_JB_J\\\vdots\\C_JB_J^{M_J-1}\end{bmatrix}.
+\tag{91.3}
+$$
+
+The kernel is defined on the whole grown space, allowing arbitrary
+fresh values in this algebraic question. Its restriction by $E_J$
+will separately describe the actually zero-extended entrance.
+
+**Theorem 91.2 (the entire hidden space, not just examples).** Put
+$v_i=e_{\ell_i}-e_{r_i}$ and $w_i=e_{m_i}-e_{n_i}$ in old
+coordinates. Then, for every $k\ge1$ and every subset $J$,
+
+$$
+\begin{aligned}
+W_J=\ker O_J
+ &=\bigoplus_{i\notin J}E_J\operatorname{span}_{\mathbb Q}\{v_i,w_i\},\\
+\dim W_J&=2(k-|J|),\\
+\operatorname{rank}O_J&=M_J-2(k-|J|),\\
+\operatorname{rank}(O_JE_J)&=N-2(k-|J|).
+\end{aligned}
+\tag{91.4}
+$$
+
+On each surviving pair $B_J$ swaps $E_Jv_i,E_Jw_i$. Its hidden
+eigenvectors have eigenvalues $+1,-1$, and no finite number of Ticks
+erases a nonzero hidden vector.
+
+**Proof of exhaustion.** Let $a(t)=B_J^t a(0)$ be invisible at all
+times. Every allowed terminal coordinate is zero for every $t\ge0$.
+If a coordinate is always zero and all but one of its neighbors are
+always zero, its next-time equation forces that remaining neighbor
+always zero. Apply this rule at each readable guard marker, forcing
+$g_i=0$, and then at $g_i$, forcing $h_i=0$.
+
+The readable tail $z=0$ forces $q_k=0$. If $k>1$, the equation at
+$q_k$, with zero $h_k$ and $z$, forces $q_{k-1}=0$. Continue
+backward along the right spine. At every step its side $h_i$ is
+already zero, so all $q_i$ vanish. This also covers $k=1$ directly.
+The equation at $h_i$, whose neighbors are $q_i,g_i,c_i$, now
+forces $c_i=0$ for every module.
+
+In a repaired module $i\in J$, the fresh readable $f_i$ forces
+$\ell_i=0$. The equation at $c_i$, with zero $h_i,\ell_i$,
+forces $r_i=0$. At $r_i$ it forces $n_i=0$; at $\ell_i$,
+with zero $c_i,f_i$, it forces old $m_i=0$; and at $m_i$ it
+forces new $e_i=0$. Every coordinate in that module has vanished.
+
+In an unrepaired module $i\notin J$, the equation at $c_i$ gives
+$a_{\ell_i}(t)+a_{r_i}(t)=0$. Apply this at time $t+1$ and
+use the equations at the two owners. Their sums are
+$2a_{c_i}(t)+a_{m_i}(t)+a_{n_i}(t)$, so also
+$a_{m_i}(t)+a_{n_i}(t)=0$. At $t=0$ the only remaining coordinates
+are therefore a multiple of $v_i$ plus a multiple of $w_i$ in each
+unrepaired module. This proves containment in the displayed sum and
+excludes additional guard, spine or fresh-coordinate modes.
+
+**Proof of sufficiency and ranks.** Direct neighbor sums give, for
+each unrepaired $i$,
+
+$$
+B_JE_Jv_i=E_Jw_i,\qquad B_JE_Jw_i=E_Jv_i.
+\tag{91.5}
+$$
+
+The two owner contributions cancel at $c_i$, all other exterior
+coordinates are zero, and both terminal supports are masked. Hence
+this whole invariant two-dimensional subspace is invisible. Different
+modules have disjoint supports, proving the direct sum. The finite
+kernel equality in (91.3) is the ambient saturation supplier at
+dimension $M_J$. Rank-nullity gives the full-grown rank. Every
+vector in the displayed hidden space is an old-cell vector, so
+$\ker(O_JE_J)=\bigoplus_{i\notin J}\operatorname{span}\{v_i,w_i\}$,
+which gives its stated entry rank. Finally $v_i+w_i$ and $v_i-w_i$
+have eigenvalues $1,-1$; (91.5) squares to the identity on their
+direct sum. This proves persistence at every finite horizon. $\square$
+
+## 92. A sharp adaptive split price and its actual attainment
+
+**Theorem 92.1 (each cherry must be split on every exact path).**
+Start from Definition 91.1's arbitrary original entry and cleared
+receiver, with all original no-Reset actions and adaptive choices
+permitted, subject to the inherited Read mask. For this lower bound
+even arbitrary terminal Adds, including masked-label Adds, may be
+allowed. A deterministic pointwise-terminating exact original-entry
+reporter, whole-final-current reporter, or self-contained full future
+predictor must make at least $k$ successful splits and allocate at
+least $2k$ fresh cells on every terminating transcript. No fixed
+final graph, stopping time or nonadaptive schedule is assumed.
+
+**Proof.** If some original cherry has not been edited internally on
+a terminating path, put $\eta=v_i+w_i$ on that cherry. Initially
+$A\eta=\eta$ by direct neighbor sums. Any growth outside the
+two beta-owner cones retains this vector by zero extension and
+preserves its eigenvalue one. Such growth touches only vertices with
+zero difference, so its fresh zero coordinates have zero neighbor
+contribution; no old edge at a supported vertex has changed. A Tick
+therefore keeps the nonzero difference unchanged on its persistent
+support. A common Add cancels, and Hold, Read and identity refusals
+preserve it. Every permitted Read misses its only terminal support,
+the two still-unmoved masked markers.
+
+Compare the actual entry $x$ with $x+\eta$. Induction on the
+whole completed replies makes them follow that same adaptive path,
+including addresses, operands, frames, label/grant updates, guards,
+refusals and stop. They have different old entries and different
+actual final fields. In the predictor case a legal subsequent Read
+at either still-unmoved masked marker distinguishes them; those
+original future rights were not removed. The common installed
+self-contained predictor cannot be exact for both. Thus an exact
+path cannot leave any original cherry unedited.
+
+The branch $c_i$ is not an enabled growth target. Its markers are
+material only until an owner split converts one to a logical beta;
+both original owners are beta, so a promotion there is wrong-type.
+The first successful internal edit must therefore be $S_{\ell_i}$
+or $S_{r_i}$. The $k$ cones are disjoint, and one call cannot be the
+first split of two. Every split appends two persistent cells. This
+proves both lower bounds. The argument extends the credited cherry
+symmetry method of NLBAII §49.2 to arbitrary full fields, terminal
+masking and persistent final-current distinctions; the exact
+all-subset kernel is Theorem 91.2. $\square$
+
+**Theorem 92.2 (joint attained split and entry-Read coordinates).**
+Take $J=\{1,\ldots,k\}$. Exactly these $k$ splits produce
+$M=11k+1$ cells and a full allowed observation stack. The same
+specimen admits an actual entry assay and physical old-cell return
+using
+
+$$
+\begin{gathered}
+\operatorname{split}=k,\qquad \text{fresh cells}=2k,\qquad
+\operatorname{Read}=N=9k+1,\qquad\operatorname{Add}=M=11k+1,\\
+\operatorname{Tick}=H+L,\qquad
+\operatorname{Hold}=H+L+2,
+\qquad H,L\le9k.
+\end{gathered}
+\tag{92.1}
+$$
+
+Its actual final field is $Ex$, with the installed full predictor.
+The split/cell bounds of Theorem 92.1 and the original-entry Read
+bound of Theorem 88.1 are attained jointly. The $N$-Read statement
+is not a current-only Read lower bound.
+
+**Proof.** With every module repaired, the elimination order in
+Theorem 91.2 is literally a zero-forcing order: guards color their
+owners and $h_i$; the tail and zero side vertices force the spine;
+the $h_i$ force $c_i$; fresh $f_i$ force $\ell_i$; then
+$c_i,r_i,\ell_i,m_i$ force the remaining coordinates. The allowed
+set has $k$ guards, one tail and $k$ fresh right leaves, hence
+$s=2k+1$. The existing forcing-coordinate construction supplies
+full rank through $F=M-s=9k$.
+
+Apply exactly (88.1), (88.3) and (88.4) with this earned graph,
+its own $E,C$ and this forcing horizon. The row matrix $R_e$
+recovers the arbitrary old $x$ from $N$ performed allowed Reads;
+the $M$ selected allowed control columns return its actual advanced
+field to $Ex$. All Adds avoid the inherited mask and include zero
+operands. This proves the endpoint and every count in (92.1),
+without invoking the larger arbitrary-mask replacement or borrowing
+its different material. $\square$
+
+**Proposition 92.3 (exact views and a selected shear).** At this
+restored family use Proposition 88.3's independently specified
+Space, Time, Boundary and Memory, with the actual one-split-per-module
+birth order, its $R_e$-sample triples and its allowed germ through
+$9k$. The proof there applies: all inverse identities and routes
+hold on $\{Ex:x\in\mathbb Q^{9k+1}\}$ and its common full-service
+kernel is equality of $x$.
+
+For an explicit subsequent action use $a=n_1$ and $v=z=R^k$.
+The acquired predictor supplies $q=x_{n_1}$, although this old
+terminal was never Read. Actually Add$(z,q)$; Hold; Read$(z)$.
+Its actual successor and reply are
+
+$$
+EF_1x,\qquad x_z+x_{n_1},\qquad
+F_1=I_N+e_z e_{n_1}^{\mathsf T},\qquad
+F_1^{-1}=I_N-e_z e_{n_1}^{\mathsf T}.
+\tag{92.2}
+$$
+
+Indeed $z,n_1$ are different untouched old coordinates and
+$E e_z$ is the actual allowed tail. Thus (92.2) follows from
+the executed translation, and the inverse follows from the square-zero
+rank-one term. This adds one Add, Hold and Read.
+
+On the post-use image Space/Memory expose $EF_1x$, Boundary its
+computed allowed present germ, and Time retains the old measured
+$R_ex$ and appends this actual action and reply. The former views
+recover $F_1x$, then $x$; Time recovers $x$ from its original
+samples. Conversely $x$ constructs precisely all these contents.
+Thus both inverse identities and the before/after action squares
+commute, without declaring any unperformed $R_eF_1x$ samples to be
+measurements. This particular action stays in the restored numerical
+subspace, while its Time image has the appended actual call. General
+later operations need only preserve complete current prediction.
+
+## 93. Same-source costs, exact suppliers and remaining recovery boundaries
+
+**Proposition 93.1 (join one receiver to one paid entrance).** Use
+NLBAII Construction 62.3 on the chosen original $u$. From allocated
+known-zero alpha, build it using $c$ promotions and $b-1$ splits,
+creating $N-1$ cells and earning its actual exhaustive map. Receive
+an owned arbitrary rational target $x$. Using the full-terminal
+forcing/control supplier, prepare it with $I=N-b$ Ticks,
+$b(I+1)$ Adds including zeros, then one Hold. The actual endpoint
+is $x$. Actually overwrite or isolate every dependent input, control,
+predictor, advice, unused buffer suffix and reply/transport copy
+before receiver attachment. All input reception, solves, initialization,
+clearing writes, retained isolated capacities, authentic bindings and
+grants are paid. This is a conditional actual preparation, not a
+numerically inferred unknown seed or a freely accessible target oracle.
+
+Add its call vector to exactly one row below; the row starts at that
+cleared held original entrance. Its growth is the specified actual
+receiver growth, not preparation reused without charge.
+
+| Receiver | Promotions | Splits | Reads | Adds | Ticks | Holds |
+| --- | --- | --- | --- | --- | --- | --- |
+| Adequate-mask entry report, §88.1 | $a_Z$ | $2q$ | $N$ | $0$ | $H$ | $H+1$ |
+| Same entry plus physical return | $a_Z$ | $2q$ | $N$ | $M$ | $H+L$ | $H+L+2$ |
+| Separate adequate-mask current assay, §88.2 | $a_Z$ | $2q$ | $r$ | $0$ | $H_c+2$ | $H_c+1$ |
+| Fresh-only retained entrance, §90.1 | $a$ | $a+2c$ | $N$ | $0$ | $H$ | $H+1$ |
+| Fully repaired guarded family, §92.2 | $0$ | $k$ | $9k+1$ | $11k+1$ | $H+L$ | $H+L+2$ |
+
+The $M,H,L$ in different rows belong to their own graphs and
+selectors. Reset is absent in every row. Each subsequent Tick/Hold
+pair in §90 adds one of each. Each selected Add/Hold/Read use adds
+one of each. All growth replies, scalar returns and Add/Tick/Hold
+ACKs, including zeros, are complete actual transactions.
+
+For the fresh-only run the joined constructor counts are $P=b$,
+$S=2a+3c-1$; joined field counts are
+Read $N$, Add $b(I+1)$, Tick $I+H$, Hold $H+2$.
+For the guarded family, original preparation has $3k$ promotions,
+$3k$ splits, $I=6k$ Ticks and $(3k+1)(6k+1)$ Adds, then Hold.
+Through its actual restored handoff, joined counts are
+
+$$
+\begin{gathered}
+P=3k,\quad S=4k,\quad\operatorname{Read}=9k+1,\\
+\operatorname{Add}=(3k+1)(6k+1)+11k+1,\quad
+\operatorname{Tick}=6k+H+L,\quad
+\operatorname{Hold}=H+L+3.
+\end{gathered}
+\tag{93.1}
+$$
+
+These sums are on one preparation and chosen receiver. They do
+not combine favorable coordinates from the fresh-only, current-only
+or a separately commissioned weighted-law installation.
+
+**Convention 93.2 (actual computation, traffic and retention).**
+All subset/forcing searches, graph traversals, row and column choices,
+inverse calculations, phase counters and operands are constructed
+from earned finite data by local exact routines. A finite exhaustive
+adequacy search is allowed and paid; no polynomial bound for finding
+an optimal subset is asserted. Once a sufficient graph is chosen,
+the dense construction in §86.2 provides a conservative
+$O(M^4)$ rational-operation and $O(M^3)$ rational-slot implementation
+of the needed stacks, pivots and solves. Form at most $M$ sparse
+adjacency powers; there are $O(M^2)$ candidate rows, and rank tests
+against at most $M$ pivots give this bound. The fresh-only
+left inverses at a later phase also pay the actual propagation to
+that phase, rational elimination and export work. No constant-time
+inverse or free selector is hidden in a rank equality.
+
+For each actual size-$m$ source Tick, initialize $m$ update slots
+and perform $2(m-1)$ directed neighbor additions; count the separate
+predictor computation and its writes. Section 88.2 pays its first
+update at $N$ and subsequent ones at $M$. Every other displayed
+receiver Tick is on its own grown graph. Literal traffic is exactly
+the actual sum prescribed by NLBAII §65 and Convention 81.1 over
+rational operands/replies, selectors, growth addresses, tags, frames,
+ACKs, End, local acknowledgement, Return, navigation and all inner
+and outward exports/copies. Computed metrics, germs, records and
+reports have their full finite output cost. No zero number is an
+empty packet, and no source ACK is an extra field measurement.
+
+The source old/new field, retained predictor old/new field, graph,
+raw/canonical maps, genuine references/grants, parser and pending
+request/reply, sample triples, original/target/current vectors while
+live, row/column matrices, solve scratch, output copies, phase
+counters and isolated provider buffers coexist when used. Count
+distinct physical copies distinctly and actually shared allocations
+once. Clearing writes do not erase retained capacity from the bill.
+All rationals, including determinants and intermediate pivots, pay
+their actual numerator/denominator widths. Arbitrary rational $x$
+has no dimension-only width bound; repeated phases can increase
+widths. Neither finite code nor finite termination per input gives a
+uniform lifetime store, bit-cost, energy, conditioning or total-resource
+optimum.
+
+The installed current controller really retains the attained whole
+field, graph and exhaustive binding, and updates all of them under
+NLBAII Theorem 64.1. Enabled $P/S$ retain old values, append the
+correct zeros and move/add actual labels with their lifecycle;
+Tick uses the current adjacency and returns only ACK; Add translates
+its genuinely bound terminal; Read returns its full rational; Hold
+preserves it. Absent, branch and wrong-type refusals remain distinct
+identities. Out-of-roster integer Add/Read gives RangeRefusal;
+complete malformed frames, including Reset, give BadFrame. Proper
+incomplete frames retain actual pending bytes and parser state without
+a completed action/reply. Missing rights disable dispatch. The
+controller consumes full output, End, acknowledgement and Return,
+and synchronizes before the next settled cut. One-step equality
+then inducts over every common sufficiently backed finite adaptive
+continuation, with the same future selector inputs. Lost, inaccessible
+or stale predictors do not meet this retained/callable premise.
+
+**Supplier correspondence 93.3 (what is added and what is reused).**
+The additions are the native arbitrary-mask incidence transfer in
+§87 and its separate current application; the fresh-only,
+fresh-zero entrance and every advanced-germ injectivity theorem in
+§89, with the ambient counterexample; and the exact all-subset
+guard/cherry kernel and adaptive terminal-mask price in §§91–92.
+The actual view applications, performed selection and legal controls
+are included to establish their recovery domains on one process.
+They do not claim a new generic quotient, forcing, observability,
+rank, control or four-view theorem.
+
+AA Definitions 17.1,17.3 and Theorem 17.2 supply the birth condition,
+persistent material and labelled causal-order interpretation. NLBA
+§28.1 and NLBAIII Convention 75.2 supply all-but-one-leaf forcing
+and polynomial coordinates. NLBAII §§60–62 supply surviving rank,
+adaptive scalar bounds and paid arbitrary-field preparation; §64
+supplies complete service and its fixed-context kernel; §65 supplies
+literal accounting. NLBAIII §§83–85 already repair two inherited
+omissions and provide selected assays, optional physical return and
+their image inverses. The new arbitrary mask is not another claim
+of those two-label minima. NLBAII §§45–50, especially §49.2, already
+use asymmetric cherry splitting in a root-Read, restricted-amplitude
+family. Theorem 91.2 adds the entire partial-repair kernel on its
+different guarded family; Theorem 92.1 needs the stated arbitrary-field
+terminal policy and persistent final-current argument.
+
+`D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.lean`,
+`all_future_kernel_eq_finrank_kernel`, and its owning Blueprint
+Scribe give the exact finite-kernel supplier: take $K=\mathbb Q$,
+$V=\mathbb Q^M$, update $B$ and the actual restriction $C$.
+Intersect the first $M$ kernels, then precompose with $E$ when
+needed. Its separate traceless-Hermitian specialization is not used.
+The proof reduces powers modulo the characteristic polynomial;
+the pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+`Mathlib/LinearAlgebra/Charpoly/Basic.lean`,
+`LinearMap.pow_eq_aeval_mod_charpoly`, supplies that reduction.
+`D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean` and
+its owning Scribe supply kernel/full-rank/positive-Gram equivalence
+for finite-dimensional **real** inner-product spaces. Here its
+matching realization is $\mathbb R^M$, actual sensor-output
+$\mathbb R^s$, update $B$ and the displayed horizon. Rational
+rank comparisons use nonzero minors. No rational Gram instance,
+compiled application, physical assay or new Lean certification is
+inferred from these source correspondences.
+
+The complete material graph/ordered metric and causal interpretation
+are the existing §75.2 suppliers. Authentic root/orientation and
+earned geometry are fixed common context here; no new unknown-root
+or raw-map acquisition is asserted. The finite original-root
+recognition declaration `NativeMaterialRootRecognition.effective_inverse`
+retains its full terminal-order, $\mathcal D$ and at-least-three-leaf
+hypotheses; it grants no source reference or right.
+
+**References 93.4 (literature and distinct operational suppliers).**
+D. Burgarth, D. D'Alessandro, L. Hogben, S. Severini and M. Young,
+*Zero forcing, linear and quantum controllability for systems evolving
+on networks*, [arXiv:1111.1475v1](https://arxiv.org/html/1111.1475v1),
+Theorem 4.1 and Corollary 4.2, attest the mature symmetric-network
+forcing/control connection. Its Example 4.3 has full walk rank at
+vertex 2 of the four-vertex path, although that singleton is not a
+zero-forcing set. Thus adequacy in Definition 87.2 is sufficient,
+and failure of a forcing search is not a necessary obstruction for
+this one fixed unit law. The local native replacements and the exact
+kernel exhaustion above are proved explicitly; no general zero-forcing
+necessity is invoked. This is repository-derived synthesis using
+literature-attested linear mechanisms, without a worldwide-priority
+claim or an absence theorem from unsuccessful source searches.
+
+The public [Measurement Relative Quantum Boundary Continuation I,
+§3](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md#3-one-fixed-du-installation-acquired-finite-acceptance-and-paid-current-state-use)
+already supplies fixed-DU finite calibration, paid refresh, full
+returned-system/reference comparison and an installed finite classical
+prefix consumer. That acquisition and callable-use result is credited
+in its supplied structural quantum class. It neither supplies a native
+rational terminal nor claims a four-view inverse; no part is renamed
+as new here. The native results here assume a known unit law and
+earned source/label context, rather than deriving those premises from
+that finite quantum test.
+
+NCR, PVC, PR57, Process Geometry §37 and the Structural/Callable
+Atlas retain the distinct source, acquired-entrance, paid tape/record,
+Ready, exponent/image, permission and callable-context conditions
+identified in §§81.4,86.3 and AGAIII §16.2. The concrete increment
+here is repair and acquisition under the declared inherited or fresh-only
+terminal policies, with exact attained endpoints and, on the guarded
+family, exact residual kernels and split price. Their existing positive
+suppliers are not obstructions to these conditional models, and these
+models do not discharge their original fixed-apparatus tasks.
+
+**Boundary 93.5 (incomparable domains and the continuing problem).**
+The arbitrary-mask construction gives full grown-space observation
+and allowed control. The fresh-only construction can fail that
+property, as (89.4) proves, yet retains every actual fresh-zero
+entrance through arbitrary finite Tick phases without restoration.
+The guarded-family theorem gives a sharp price on its own trees and
+masks, not on every native tree. For $2k$ omissions the universal
+leave-one recipe would use $4k-2$ splits, whereas the guarded family
+uses $k$ on its different repaired graph. This is a comparison of
+specified constructions on that entrance, not a global cost order.
+The fresh-only and arbitrary-mask graphs/sensors also differ; their
+resource coordinates and inverse domains cannot be exchanged.
+
+Physical conformance, actual zero initialization, isolation and
+authentic rights remain Definition 75.1's explicit
+**ASSUMED-UNVERIFIED** installation premises. Ordinary proofs of
+view identities do not authenticate them. The images above recover
+the declared entry/current task and particular performed finite Time,
+not arbitrary erased journals, unknown elapsed phase, reference bytes
+or off-image histories. Numeric equality or an isomorphism cannot
+manufacture a reference, a permission, a source control or an old
+measurement. No universal generator or alpha/beta minimality,
+physical spatial dimension or total-resource optimum is established.
+
+AGAIII Open problem 16.3's actual native/original-path/quantum/continuous
+correspondence remains: one preparation, legal selectors and actions,
+complete outputs/refusals/pending behavior and successors, references,
+grants, retained records and simultaneous costs must be matched on
+one realization. Separate optima, common terminology, algebraic
+inverses and finite classical completion do not supply that bridge.
+Every fixed-$G_{gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, final-no-Ready and other prior model-specific
+statement keeps its exact scope. These finite ordinary mathematical
+results neither complete nor pause the sustained four-expression
+programme.
+
+## 追加锚（本行以下为增补区）
