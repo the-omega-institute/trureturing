@@ -31,7 +31,7 @@ private def inversePowerKernel (alpha lambda t : ℝ) : ℝ :=
   t ^ (-alpha) / (lambda + t)
 
 /-- Evaluate the normalizer already present in Mathlib's positive-power formula. -/
-private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
+theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
     (∫ t in Ioi (0 : ℝ), Real.rpowIntegrand₀₁ p t 1) =
       Real.pi / Real.sin (Real.pi * p) := by
   let phi : ℝ → ℝ := fun x => x / (1 - x)
