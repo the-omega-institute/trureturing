@@ -92,8 +92,10 @@ have also passed the targeted Lean 4.35 build. These checks alone are not
 complete delivery acceptance.
 The verified scoped report contains 66 modules and 2,138 declarations; every
 axiom closure lies within the same standard three-axiom set. Canonical Scribe
-emission passed. Required CI and independent statement/proof review remain
-delivery obligations.
+emission passed. Three independent fixed-source reviews approved. Required CI and merge
+evidence are tracked in [PR #22319](https://github.com/the-omega-institute/trureturing/pull/22319),
+separately from the kernel evidence above. The oracle seat used its documented
+Codex fallback after login expiry; no model-family diversity is claimed.
 
 The source-faithful four-slot information registration is unfinished under
 [#21750](https://github.com/the-omega-institute/trureturing/issues/21750).

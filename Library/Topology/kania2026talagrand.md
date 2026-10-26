@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether Theorem A can be obtained from CH in place of diamond(S); actual_CH_Talagrand_scheme_and_endpoints now has a successful targeted Lean 4.35 build proving the full literal scheme, A-G, finite disjoint images and closed copies, no 2DCP, full signed dual-ball exclusion, Grothendieck convergence and point-space consequences on exactly one actual finalPrefix; independent review, scoped axiom inspection and required CI are delivery obligations, and no official acceptance is claimed.
+claim: Problem 8.2 asks whether Theorem A can be obtained from CH in place of diamond(S); actual_CH_Talagrand_scheme_and_endpoints now has a successful targeted Lean 4.35 build proving the full literal scheme, A-G, finite disjoint images and closed copies, no 2DCP, full signed dual-ball exclusion, Grothendieck convergence and point-space consequences on exactly one actual finalPrefix; scoped axiom inspection and three independent reviews have passed; PR 22319 tracks delivery CI, and no official acceptance is claimed.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -931,7 +931,9 @@ first combined compilation. The Problems dossier
 `kania-kakol-2026-problem-8-2-ch-talagrand` records the exact statement bridge
 and bounded literature search. The scoped report and canonical Scribe emission have passed: 66 modules and
 2,138 declarations, with only propext, Classical.choice and Quot.sound.
-Independent review and required CI remain delivery obligations at this checkpoint.
+Three independent fixed-source reviews approved; PR 22319 tracks the separate
+required CI and merge evidence. The unavailable oracle seat used its documented
+Codex fallback, without a model-family diversity claim.
 Official acceptance and worldwide uniqueness are not claimed; officialSolved
 remains zero. Problem 8.1 and the full Cp metrizable quotient problem remain
 outside this theorem. The information registration remains unfinished under
