@@ -18,7 +18,7 @@ open scoped BigOperators
 open D5.S1.Ledger.BoundedTimeSlice
 open D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates
 
-/** The law obtained by assigning equal mass to the five head modes. */
+/-- The law obtained by assigning equal mass to the five head modes. -/
 def uniformLaw5040 : Fin 5 → ℝ := fun _ => (1 : ℝ) / 5
 
 theorem uniformLaw5040_mem_openSimplex : uniformLaw5040 ∈ openSimplex := by
@@ -28,7 +28,7 @@ theorem uniformLaw5040_mem_openSimplex : uniformLaw5040 ∈ openSimplex := by
   · rw [Fin.sum_univ_succ]
     norm_num [uniformLaw5040]
 
-/** At the central time, every bounded tail state has one head completion. */
+/-- At the central time, every bounded tail state has one head completion. -/
 theorem central_5040_has_five_head_modes :
     timeSlice5040Count 4 = 12 ∧
       ∀ b : TailBox tailCapacities5040,
@@ -36,13 +36,14 @@ theorem central_5040_has_five_head_modes :
   exact ⟨(time_slice_5040_unique_maximum 4).2.mpr rfl,
     time_slice_5040_tail_extension⟩
 
-/** The uniform five-mode Fisher form is exactly five times Euclidean pairing. */
+/-- The uniform five-mode Fisher form is exactly five times Euclidean pairing. -/
 theorem fisher_uniformLaw5040 (u v : Fin 5 → ℝ) :
     fisher uniformLaw5040 u v = 5 * ∑ s, u s * v s := by
   unfold fisher uniformLaw5040
+  norm_num [div_eq_mul_inv]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro s _hs
-  norm_num
   ring
 
 theorem fisher_uniformLaw5040_pos (u : Fin 5 → ℝ) (hu : u ≠ 0) :
