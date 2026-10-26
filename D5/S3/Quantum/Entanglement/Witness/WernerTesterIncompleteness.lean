@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Convex.Hull
@@ -119,7 +120,7 @@ private theorem tester_image_decomposition {d₁ d₂ n₁ n₂ : ℕ} {ι : Typ
     have he' := congrArg (fun u : EuclideanSpace ℂ (Fin n) => u p) he
     simpa only [WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply, smul_eq_mul] using he'
   ext p q
-  simp only [testerImage, Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.of_apply]
+  simp only [testerImage.eq_1, Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.of_apply]
   conv_rhs =>
     arg 2
     ext t
@@ -182,7 +183,8 @@ private def designCentered (d : ℕ) (t : DesignIndex d) : Matrix (Fin d) (Fin d
   designProjector d t - designAverage d
 
 private theorem design_weight_nonneg (d : ℕ) (t : DesignIndex d) : 0 ≤ designWeight d t := by
-  cases t <;> dsimp [designWeight] <;> positivity
+  rw [designWeight.eq_1]
+  cases t <;> dsimp <;> positivity
 
 private theorem design_weight_sum {d : ℕ} (hd : 0 < d) : ∑ t, designWeight d t = 1 := by
   have hd' : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
@@ -194,6 +196,7 @@ private theorem design_weight_sum {d : ℕ} (hd : 0 < d) : ∑ t, designWeight d
 private theorem design_density {d : ℕ} (hd : 0 < d) (t : DesignIndex d) :
     (designProjector d t).PosSemidef ∧ (designProjector d t).trace = 1 := by
   classical
+  simp only [designProjector.eq_1]
   cases t with
   | inl a =>
     constructor
@@ -261,7 +264,7 @@ private theorem design_second_entry {d : ℕ} (hd : 0 < d) (i j k l : Fin d) :
       simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
         Complex.real_smul]
       push_cast
-      field_simp
+      field_simp (discharger := first | assumption | norm_num)
       <;> simp only [starRingEnd_apply]
       <;> ring
     · apply Finset.sum_congr rfl
@@ -269,12 +272,12 @@ private theorem design_second_entry {d : ℕ} (hd : 0 < d) (i j k l : Fin d) :
       dsimp [designWeight, designProjector, c]
       simp only [Matrix.vecMulVec_apply, Pi.star_apply]
       push_cast
-      field_simp
+      field_simp (discharger := first | assumption | norm_num)
       <;> simp only [starRingEnd_apply]
       <;> ring
   rw [he, design_four]
   dsimp [c]
-  field_simp
+  field_simp (discharger := first | assumption | norm_num)
   <;> ring
 
 private theorem design_first {d : ℕ} (hd : 0 < d) :
@@ -299,7 +302,7 @@ private theorem design_first {d : ℕ} (hd : 0 < d) :
         simp_rw [design_second_entry hd]
         by_cases hik : i = k
         · subst k
-          simp [designAverage, Matrix.one_apply, eq_comm, mul_add,
+          simp [designAverage.eq_1, Matrix.one_apply, eq_comm, mul_add,
             Finset.sum_add_distrib, Complex.real_smul]
           field_simp
           <;> ring
@@ -314,15 +317,8 @@ private theorem flip_facts (d : ℕ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).IsHermitian ∧
       Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
         Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) = 1 := by
-  constructor
-  · change (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)))ᴴ = _
-    rw [Matrix.conjTranspose_permMatrix]
-    rfl
-  · rw [← Matrix.permMatrix_mul]
-    have he : (Equiv.prodComm (Fin d) (Fin d) : Equiv.Perm (Fin d × Fin d)) *
-        Equiv.prodComm (Fin d) (Fin d) = 1 := by
-      ext ⟨i, j⟩ <;> rfl
-    rw [he, Matrix.permMatrix_one]
+  exact ⟨D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian,
+    D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare⟩
 
 private theorem flip_trace (d : ℕ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).trace = (d : ℂ) := by
@@ -363,7 +359,7 @@ private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
   · have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
     have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
     have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
-    simp only [werner, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
+    simp only [werner.eq_1, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
       flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
     push_cast
@@ -377,7 +373,7 @@ private theorem werner_readout {d : ℕ} (hd : 1 < d) (μ : ℝ) :
   have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
   have ht : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
       werner d μ).trace = ((2 * μ - 1 : ℝ) : ℂ) := by
-    simp only [werner, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_sub, Matrix.mul_one,
+    simp only [werner.eq_1, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_sub, Matrix.mul_one,
       (flip_facts d).2, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
       flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
@@ -430,7 +426,7 @@ private theorem werner_decomposition {d : ℕ} (hd : 1 < d) (μ : ℝ) :
       (designWeight d t : ℂ) * designAverage d i k * designAverage d j l := by ring
   simp_rw [he, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.sum_mul,
     hfirst, hmass, one_mul, design_second_entry hd₀]
-  simp only [werner, designAverage, Matrix.add_apply, Matrix.sub_apply,
+  simp only [werner.eq_1, designAverage, Matrix.add_apply, Matrix.sub_apply,
     Matrix.smul_apply, Matrix.one_apply, replicaSwap_apply, Prod.swap_prod_mk,
     Prod.mk.injEq, Complex.real_smul, correlation]
   push_cast
@@ -481,6 +477,7 @@ private theorem design_second_moment {d n : ℕ} (hd : 0 < d)
 private theorem correlation_range {d : ℕ} {μ : ℝ} (hd : 1 < d)
     (hμ₀ : 1 / (d : ℝ) ≤ μ) (hμ₁ : μ < 1 / 2) :
     0 ≤ correlation d μ ∧ correlation d μ ≤ 1 := by
+  rw [correlation.eq_1]
   have hdℝ : (1 : ℝ) < d := by exact_mod_cast hd
   have hd₀ : (0 : ℝ) < d := by linarith
   have hdm : (0 : ℝ) < d - 1 := by linarith
