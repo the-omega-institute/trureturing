@@ -746,3 +746,32 @@ proper-limit integration, the final omega-one Prefix and the full problem's
 functional-analytic endpoints remain separate obligations. The final
 omega-one Prefix is used only for its carrier, cone and projections;
 `Prefix.Data` and `Prefix.Laws` remain on proper slices.
+
+## Actual initial ordinal prefix
+
+`SignedOrdinalInitial.H0` constructs the entire Boolean cube at every
+finite stage and at omega. Its literal restrictions are onto by extending
+each Boolean function with false outside the smaller coordinate domain.
+`SignedOrdinalInitial.predecessor` constructs the first predecessor at
+omega without CH or an assumed predecessor. Old rows and earlier arrival
+births have empty exact ordinal domains, so their obligations are eliminated
+by proved contradictions. This supplies the actual initial input to the
+transfinite construction; it does not establish the global CH recursion.
+
+## Executed result to the next predecessor
+
+`SignedOrdinalPredecessor.nextP` consumes the same executed successor
+`Result` and constructs a predecessor on its literal extended Prefix.
+It preserves the original Label-indexed U/V/nu families and onto proofs,
+reads permanent reservoirs from the same arrival archive, and proves the
+next A/B/C/E/F from the actual I/J and literal E/F certificates. No next
+predecessor or complete-history assumption supplies the construction.
+The global recursion must still retain the original whole Q/R packages:
+nextP stores only current I/J and its weaker predecessor F interface,
+not all historical DI/DJ, the bounded regular F reference, or Q.B.
+
+A bounded arXiv check on 26 October 2026 found the primary paper still at
+v2. The newest title/abstract query for "Talagrand compacta" or "2DCP"
+returned this paper and the earlier mathematical paper 2606.27568v1,
+alongside three unrelated materials-science matches. No later CH answer
+was identified within that search; this is not a proof of global novelty.
