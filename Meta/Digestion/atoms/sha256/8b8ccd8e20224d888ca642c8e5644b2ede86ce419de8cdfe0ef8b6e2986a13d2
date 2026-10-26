@@ -1,0 +1,32 @@
+**Definition 18.1 (completed gaps and spectral normalization).**
+For the exact original source-start ten-output path $O^I$ define its
+contact set before observation exit by $\{t<\theta:O_t^I=v_0\}$.
+Use the height from (11.6) to determine $\theta$, as in (12.1).
+For $t\ge0$ and $\epsilon>0$ let $C_\epsilon^I(t)$ be the number
+of connected gaps $(g,d)$ away from the preparation output for
+which
+
+$$
+ 0\le g<d<\theta,\qquad d\le t,\qquad d-g>\epsilon.
+\tag{18.1}
+$$
+
+Both endpoints must be genuine contacts; $g=0$ is permitted only
+when it is such an endpoint. A gap still open at $t$, a gap cut by
+observation exit, and the held post-exit segment are excluded. In
+particular its partial observed length is never substituted for a
+completed duration. These gaps and their counts are Borel functions
+of the exact continuous output history through $t$ (and, when exit
+has occurred, its observed exit). They can be enumerated by taking
+the component containing each rational noncontact time and retaining
+its first rational representative. For this enumeration, endpoints
+are infima or suprema of the closed zero set of
+$|O^I-v_0|$ before exit, which are Borel functionals. Completed gaps
+longer than $\epsilon$ are disjoint and fit in $[0,t]$, so there
+are finitely many.
+
+Use exactly the denominator $\kappa(\epsilon)$ of (15.2), rather
+than a Brownian power or an unnormalized count. It is continuous
+and strictly decreasing from infinity to zero as
+$\epsilon$ runs from zero to infinity.
+

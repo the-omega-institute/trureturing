@@ -1,0 +1,40 @@
+**Definition 22.1 (finite-data stopping and connector partition).**
+Compute $\widehat S$ from the finite polygon of Definition 21.1,
+using its linear height segments, and hold its coordinate triple
+
+$$
+ (A_t,B_t,W_t)=(x,y,w)(\widehat{\mathsf Z}_{t\wedge\widehat S})
+                  \quad(0\le t\le T).
+\tag{22.1}
+$$
+
+This is the approximating polygon's own exit, computed from the
+acquired data. It is not the original target's $S$.
+Let $K_I=\max(|l-k_0|,|u-k_0|)$ and
+$0<\rho\le(u-l)/4$. Partition $[0,\widehat S]$ at every polygon
+vertex. For each of its positive-length linear cells with total
+increments $(\Delta A,\Delta B,\Delta W)$ subdivide into $m$ equal
+time cells, where
+
+$$
+ m=\max\left(1,
+ \left\lceil\frac{|\Delta A|}{\rho}\right\rceil,
+ \left\lceil\frac{|\Delta B|}{\rho}\right\rceil,
+ \left\lceil\frac{|\Delta W|+K_I|\Delta B|}{\rho^2}
+                                                \right\rceil\right).
+\tag{22.2}
+$$
+
+At every resulting cell $[s,t]$, set
+$X=A_t-A_s$, $Y=B_t-B_s$, $C=W_t-W_s-A_sY$.
+Execute the already supplied original six-leg inward connector
+(17.4), with start height $k_0+A_s$, relative endpoint $(X,Y,C)$,
+and exactly $(t-s)/6$ original time for each leg. Translate its
+two controls by $(A_s,B_s)$, concatenate, and hold from
+$\widehat S$ to $T$. Denote these actual controls by
+$(a_{\epsilon,\delta,\Lambda,\rho},
+  b_{\epsilon,\delta,\Lambda,\rho})$, and their actual integral
+by $J=\int a\,db$. These definitions use only the finite list and
+deterministic parameters. Hidden $z$ is discarded at this stage;
+neither $w$ nor $z$ is commanded directly.
+
