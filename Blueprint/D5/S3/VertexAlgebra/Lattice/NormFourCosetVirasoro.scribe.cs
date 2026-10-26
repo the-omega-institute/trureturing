@@ -55,6 +55,5 @@ internal sealed class NormFourCosetVirasoroDocument : IScribeDocumentDefinition
                 + "Bakalov-Kac, math/0402315, section 4.1. Imported Carnahan and Kytola sources retain "
                 + "their licenses and attribution. The mixed calculation and concrete complement here "
                 + "establish commuting Virasoro actions, without asserting a whole commutant VOA, "
-                + "Baby Monster VOA, Ising simplicity, fusion rules or Monster completion. "
-                + "The wider programme remains active and incomplete.")))));
+                + "Baby Monster VOA, Ising simplicity, fusion rules or Monster completion.")))));
 }

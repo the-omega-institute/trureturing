@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
 import D5.S3.VertexAlgebra.LatticeActualConformalWard
+import D5.S3.VertexAlgebra.LatticeActualVertexAlgebra
 
 /-!
 The norm-four state is the classical formula recorded by Shimakura,
@@ -219,13 +220,6 @@ private theorem mixed_commutator (D : LatticeData)
   push_cast
   module
 
-private theorem creation_translation (D : LatticeData) (v : Carrier D) :
-    ((Y D v)[[-2]]) (vacuum D) = translation D v := by
-  have h := LinearMap.congr_fun (stateField_covariance D v (-1)) (vacuum D)
-  simpa only [LinearMap.sub_apply, Module.End.mul_apply, stateField_creation,
-    translation_kills_vacuum, map_zero, sub_zero, Int.cast_neg, Int.cast_one,
-    neg_neg, one_smul, LinearMap.smul_apply, show (-1 : ℤ) - 1 = -2 by omega] using h.symm
-
 private theorem reverse_action (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
@@ -291,7 +285,7 @@ theorem mixed_products (D : LatticeData)
     rw [reverse_action D H hHG hGH a ha s (j - 1) (by omega)]
     by_cases z : j = 0
     · subst j
-      norm_num [mode, creation_translation]
+      norm_num [mode, ← LatticeActualVertexAlgebra.translation_as_mode]
     · by_cases o : j = 1
       · subst j
         norm_num [mode, stateField_creation]
