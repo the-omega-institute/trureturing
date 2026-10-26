@@ -123,9 +123,9 @@ set_option relaxedAutoImplicit false
 noncomputable section
 universe u
 
-/-- Retain the index type and the equality decision used by the identity matrix. -/
+/-- Observe the subtraction in the positivity conclusion at its identity operand. -/
 abbrev signature : Signature where
-  Params := Σ m : Type u, DecidableEq m
+  Params := Σ m : Type u, Matrix m m ℂ
   State p := Matrix p.1 p.1 ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -135,20 +135,17 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p A =>
-    letI : DecidableEq p.1 := p.2
-    1 - A) (fun e => nomatch e)
+  realize signature (fun _ p X => X - p.2) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
-  realize signature (fun _ p _ =>
-    letI : DecidableEq p.1 := p.2
-    (-1 : Matrix p.1 p.1 ℂ)) (fun e => nomatch e)
+def rejected : Realization signature.{u} := by
+  classical
+  exact realize signature (fun _ p _ => (-1 : Matrix p.1 p.1 ℂ)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {m : Type u} [Fintype m] [de : DecidableEq m]
+  Law R := ∀ {m : Type u} [Fintype m] [DecidableEq m]
     (A : Matrix m m ℂ), A.IsHermitian → A ^ 2 = 1 →
-      (R.readout () ⟨m, de⟩ A).PosSemidef ∧ (1 + A).PosSemidef
+      (R.readout () ⟨m, A⟩ 1).PosSemidef ∧ (1 + A).PosSemidef
 
 theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
@@ -168,12 +165,12 @@ def source_registration : Registration arena.{u} (type_of% @involution_binary.{u
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Unit, inferInstance⟩, 0, 1, ?_⟩
+    refine ⟨⟨ULift.{u} Unit, 0⟩, 0, 1, ?_⟩
     intro h
     have he := congrArg (fun X : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ =>
       X ⟨()⟩ ⟨()⟩) h
     norm_num [actual, realize, Matrix.sub_apply, Matrix.one_apply, Matrix.zero_apply] at he
-    exact one_ne_zero he
+    exact zero_ne_one he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@involution_binary.{u}) (Realization signature.{u}) Unit Unit := {
@@ -189,9 +186,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p A =>
-    letI : DecidableEq p.1 := p.2
-    1 - A) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p X => X - p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -199,12 +194,12 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
     definition := none
-    coordinates := #[0, 2]
+    coordinates := #[0, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 3
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
