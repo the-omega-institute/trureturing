@@ -109,7 +109,7 @@ theorem identical_prefix_firstM {d : ℕ} (P : Protocol d) (W W' : World d)
   obtain ⟨hr', hdecision⟩ := identical_prefix_transfer P W W' _ hr he
   exact .step hr' (hdecision.symm.trans hd)
 
-private theorem reaches_take {d : ℕ} (P : Protocol d) (W : World d)
+theorem reaches_take {d : ℕ} (P : Protocol d) (W : World d)
     {w : List Bool} (hr : Reaches P W w) (k : ℕ) (hk : k ≤ w.length) :
     Reaches P W (w.take k) := by
   induction hr with

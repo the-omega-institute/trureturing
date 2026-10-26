@@ -91,7 +91,7 @@ theorem eval_chart_wedge (d : ℕ) (w : List Bool) (C : Readout d w)
   simp_rw [← mul_assoc, mul_comm _ (1+x*r), mul_assoc, ← Finset.mul_sum]
   ring
 
-private theorem collinear_of_wedges {d : ℕ} (β v : Coeff d) (hn : β ≠ 0)
+theorem collinear_of_wedges {d : ℕ} (β v : Coeff d) (hn : β ≠ 0)
     (h : ∀ j k, β j * v k - β k * v j = 0) : Collinear β v := by
   have hex : ∃ j, β j ≠ 0 := by
     by_contra hh

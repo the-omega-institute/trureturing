@@ -118,7 +118,7 @@ def RowUniversallyCollinear (d : ℕ) (w : List Bool) (C : Readout d w) : Prop :
   ∀ (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1) (β : Coeff d) (hβ : β ≠ 0) (δ : ℝ),
     Collinear β (C.mulVec (readings (rowWorld d θ hθ hθ' β hβ δ) w))
 
-private theorem row_readings_affine (d : ℕ) (w : List Bool)
+theorem row_readings_affine (d : ℕ) (w : List Bool)
     (θ : ℝ) (hθ : 0 < θ) (hθ' : θ < 1) (β : Coeff d) (hβ : β ≠ 0) (δ : ℝ) :
     readings (rowWorld d θ hθ hθ' β hβ δ) w =
       (fun i => (rowBase w i + θ * rowSlope w i) *
