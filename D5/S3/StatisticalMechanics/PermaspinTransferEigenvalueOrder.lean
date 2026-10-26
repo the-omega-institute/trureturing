@@ -64,7 +64,16 @@ private theorem roots_bddAbove (c d : ℝ) :
 
 private theorem root_above_comparison (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     ∃ r : ℝ, c * (1 + d) ^ 2 < r ∧ (dukesCubic c d).eval r = 0 := by
-  sorry
+  have hdeg : 0 < (dukesCubic c d).degree := by rw [(cubic_data c d).1]; norm_num
+  have hlc : 0 ≤ (dukesCubic c d).leadingCoeff := by rw [(cubic_data c d).2]; norm_num
+  have hlim := (dukesCubic c d).tendsto_atTop_of_leadingCoeff_nonneg hdeg hlc
+  have hneg := cubic_at_comparison_neg c d hc hd
+  have hz : (0 : ℝ) ∈ Set.Ici ((dukesCubic c d).eval (c * (1 + d) ^ 2)) := hneg.le
+  obtain ⟨r, hr, hroot⟩ :=
+    intermediate_value_Ici (dukesCubic c d).continuous.continuousOn hlim hz
+  refine ⟨r, lt_of_le_of_ne hr ?_, hroot⟩
+  intro heq
+  exact (ne_of_lt hneg) (heq ▸ hroot)
 
 private theorem comparison_gaps (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     c * (1 - d) ^ 2 < c * (1 + d) ^ 2 ∧
