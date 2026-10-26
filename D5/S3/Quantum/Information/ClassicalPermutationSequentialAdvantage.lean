@@ -7,7 +7,7 @@
    digest: Two adaptive queries distinguish permutations beyond every parallel strategy. -/
 
 import Mathlib.Basic.Real.Basic
-import Mathlib.Geometry.Convex.ConvexSpace.Defs
+import Mathlib.Geometry.Convex.ConvexSpace.Barycenter
 import Mathlib.Tactic.Linarith
 
 /-! Randomized two-use strategies for finite classical permutation ensembles. -/
@@ -45,16 +45,9 @@ def claim : Prop :=
       (d : (Fin n × Fin n) → (Fin n × Fin n) → StdSimplex ℝ (Fin m)),
       parallelSuccess p π q d ≤ c) ∧ c < sequentialSuccess p π q₁ q₂ δ
 
-private noncomputable def prior : StdSimplex ℝ (Fin 4) where
-  weights := Finsupp.equivFunOnFinite.symm (fun _ => 1 / 4)
-  nonneg := by intro i; norm_num
-  total := by norm_num [Finsupp.sum_fintype, Fin.sum_univ_succ]
-
 private def channels (i : Fin 4) : Equiv.Perm (Fin 6) :=
   if i = 0 then 1 else if i = 1 then Equiv.swap 2 3 else
     if i = 2 then Equiv.swap 0 1 else Equiv.swap 0 1 * Equiv.swap 4 5
-
-private noncomputable def firstInput : StdSimplex ℝ (Fin 6) := .single 0
 
 private noncomputable def secondInput (_ y : Fin 6) : StdSimplex ℝ (Fin 6) :=
   .single (if y = 0 then 2 else 4)
@@ -63,13 +56,10 @@ private noncomputable def decoder (_ y₁ _ y₂ : Fin 6) : StdSimplex ℝ (Fin 
   .single (if y₁ = 0 then if y₂ = 2 then 0 else 1 else if y₂ = 4 then 2 else 3)
 
 private lemma sequential_perfect :
-    sequentialSuccess prior channels firstInput secondInput decoder = 1 := by
-  change (∑ i : Fin 4, prior.weights i * ∑ x₁, firstInput.weights x₁ *
-    ∑ x₂, (secondInput x₁ (channels i x₁)).weights x₂ *
-      (decoder x₁ (channels i x₁) x₂ (channels i x₂)).weights i) = 1
-  delta prior firstInput secondInput decoder channels
-  norm_num [Fin.sum_univ_succ, StdSimplex.weights_single, Finsupp.single_apply,
-    Equiv.swap_apply_def]
+    sequentialSuccess StdSimplex.barycenter channels (.single 0) secondInput decoder = 1 := by
+  unfold sequentialSuccess secondInput decoder channels
+  norm_num [Fin.sum_univ_succ, StdSimplex.weights_barycenter_apply,
+    StdSimplex.weights_single, Finsupp.single_apply, Equiv.swap_apply_def]
 
 private lemma transcript_collision (x : Fin 6 × Fin 6) :
     (channels 0 x.1, channels 0 x.2) = (channels 1 x.1, channels 1 x.2) ∨
@@ -80,12 +70,9 @@ private lemma transcript_collision (x : Fin 6 × Fin 6) :
 
 private lemma two_weights_le_one {m : ℕ} (d : StdSimplex ℝ (Fin m))
     (a b : Fin m) (h : a ≠ b) : d.weights a + d.weights b ≤ 1 := by
-  calc
-    d.weights a + d.weights b = ∑ i ∈ ({a, b} : Finset (Fin m)), d.weights i := by
-      simp [h]
-    _ ≤ ∑ i, d.weights i := Finset.sum_le_sum_of_subset_of_nonneg
-      (Finset.subset_univ _) (fun i _ _ => d.weights_nonneg i)
-    _ = 1 := d.total_of_fintype
+  simpa only [d.total_of_fintype] using
+    (Finset.add_le_sum (s := Finset.univ) (fun i _ => d.weights_nonneg i)
+      (Finset.mem_univ a) (Finset.mem_univ b) h)
 
 private lemma fixed_input_bound
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4))
@@ -112,15 +99,13 @@ private lemma fixed_input_bound
 
 private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4)) :
-    parallelSuccess prior channels q δ ≤ 3 / 4 := by
+    parallelSuccess StdSimplex.barycenter channels q δ ≤ 3 / 4 := by
   calc
-    parallelSuccess prior channels q δ =
+    parallelSuccess StdSimplex.barycenter channels q δ =
         ∑ x, q.weights x * (1 / 4 *
           ∑ i, (δ x (channels i x.1, channels i x.2)).weights i) := by
-      change (∑ i, prior.weights i *
-        ∑ x, q.weights x * (δ x (channels i x.1, channels i x.2)).weights i) = _
-      delta prior
-      simp only [Finsupp.coe_equivFunOnFinite_symm]
+      unfold parallelSuccess
+      simp only [StdSimplex.weights_barycenter_apply, Fintype.card_fin, Nat.cast_ofNat, one_div]
       simp_rw [Finset.mul_sum]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
@@ -140,7 +125,7 @@ private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
 /-- Sequential strategies can strictly outperform all parallel strategies for classical
 permutation channels, even with only two uses of the same unknown channel. -/
 theorem result : claim := by
-  refine ⟨6, 4, prior, channels, firstInput, secondInput, decoder, 3 / 4,
+  refine ⟨6, 4, StdSimplex.barycenter, channels, .single 0, secondInput, decoder, 3 / 4,
     parallel_bound, ?_⟩
   rw [sequential_perfect]
   norm_num
