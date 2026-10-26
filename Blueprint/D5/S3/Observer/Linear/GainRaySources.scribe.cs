@@ -13,7 +13,7 @@ internal sealed class GainRaySourcesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRaySources.source_chart_pureJ"),
                 H("Pure J factors on every legal source chart"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every positive real x,r and natural n, trace(acquisition(J repeated n) sourceChart(x,r)) equals one when n mod 2 is zero, and equals (x+r)/(1+xr) otherwise. Both factors are strictly positive on the positive chart. The equality uses the literal native power interface and J squared equal to the identity."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("gain-ray-gainraysources-normalized-readAt"),
+            Describe.Lean(DescribeId.Create("gain-ray-gainraysources-normalized-readat"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRaySources.normalized_readAt"),
                 H("Every unnormalized original-clock read is preserved"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every d, UnnormalizedWorld W, chronological word w and natural clock i, readAt(normalizeWorld W,w,i) equals gain(d,W.coeff)(i) trace(acquisition(take i w) W.source)+W.drift. The same single source and whole polynomial are used at every clock."))), DescribeRole.Theorem),

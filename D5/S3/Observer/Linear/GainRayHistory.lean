@@ -109,13 +109,5 @@ theorem identical_prefix_firstM {d : ℕ} (P : Protocol d) (W W' : World d)
   obtain ⟨hr', hdecision⟩ := identical_prefix_transfer P W W' _ hr he
   exact .step hr' (hdecision.symm.trans hd)
 
-/-- A terminal history transfers its very same fixed matrix selection. -/
-theorem identical_terminal_transfer {d : ℕ} (P : Protocol d) (W W' : World d)
-    (w : List Bool) (C : {C : Readout d w // C ∈ P.palette w})
-    (ht : Terminates P W w C) (he : readings W w = readings W' w) :
-    Terminates P W' w C := by
-  obtain ⟨hr, hd⟩ := identical_prefix_transfer P W W' w ht.1 he
-  exact ⟨hr, hd.symm.trans ht.2⟩
-
 #print axioms identical_prefix_firstM
 end D5.S3.Observer.Linear.GainRay

@@ -17,7 +17,7 @@ internal sealed class GainRayEvaluationDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayEvaluation.evaluation_surjective"),
                 H("Every short vector of prescribed values occurs"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural d,n and injective t:Fin n to the reals, n<=d+1 implies surjectivity of evaluate d n t. Lagrange interpolation supplies a polynomial of degree less than n; its first d+1 coefficients give the witness. For n=0 the unique empty vector is attained by zero."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("gain-ray-gainrayevaluation-pureJ-history-surjective"),
+            Describe.Lean(DescribeId.Create("gain-ray-gainrayevaluation-purej-history-surjective"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayEvaluation.pureJ_history_surjective"),
                 H("Coefficient-and-drift history extension is onto"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural d,n with n<=d+1, the map from Coeff d times the reals to real Fin n vectors, sending (beta,delta) to the vector gain(d,beta)(clocks n i)+delta, is surjective. The witness may take drift zero. This is the extension to the full coefficient space; it does not claim nonzero-gain fiber completion."))), DescribeRole.Theorem))));

@@ -23,12 +23,8 @@ internal sealed class GainRayHistoryDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.identical_prefix_transfer"),
                 H("Actual prefixes transfer through arbitrary decisions"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural d, protocol P, worlds W and Wprime, and word w, if Reaches P W w and readings W w=readings Wprime w, then Reaches P Wprime w and P.decide w gives the same decision on these two histories. The proof restricts the final equal history to each prior word and inducts through the actual execution."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("gain-ray-gainrayhistory-identical-prefix-firstM"),
+            Describe.Lean(DescribeId.Create("gain-ray-gainrayhistory-identical-prefix-firstm"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.identical_prefix_firstM"),
                 H("The same first M is actually executed"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every d,P,W,Wprime and natural n, suppose P actually reaches the word of n copies of J on W, the two worlds have identical readings on that word, and its next decision on W is M. Then P actually reaches J repeated n followed by M on Wprime. The transferred M is at original clock n+1. This includes n=0 and imposes no equality of subsequent histories or terminal words."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("gain-ray-gainrayhistory-identical-terminal-transfer"),
-                DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayHistory.identical_terminal_transfer"),
-                H("A selected terminal matrix transfers with the history"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every d,P,W,Wprime,w and fixed palette member C, Terminates P W w C and identical readings on w imply Terminates P Wprime w C. The actual terminal decision selects exactly the same fixed matrix."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every d,P,W,Wprime and natural n, suppose P actually reaches the word of n copies of J on W, the two worlds have identical readings on that word, and its next decision on W is M. Then P actually reaches J repeated n followed by M on Wprime. The transferred M is at original clock n+1. This includes n=0 and imposes no equality of subsequent histories or terminal words."))), DescribeRole.Theorem))));
 }
