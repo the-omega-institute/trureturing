@@ -520,6 +520,148 @@ def quantitativeClopen : Clopens R.coordinates.carrier :=
       ((continuous_apply (⟨a, Order.lt_succ a⟩ : Coord (Order.succ a))).comp
         continuous_subtype_val)⟩
 
+private theorem variation_homeomorph {X X' : Type*}
+    [TopologicalSpace X] [MeasurableSpace X] [BorelSpace X]
+    [TopologicalSpace X'] [MeasurableSpace X'] [BorelSpace X']
+    (e : X ≃ₜ X') (s : SignedMeasure X) :
+    SignedMeasure.totalVariation (s.map e) = s.totalVariation.map e := by
+  simpa only [SignedMeasure.totalVariation_eq_variation] using
+    e.measurableEmbedding.variation_map (μ := s)
+
+private theorem jordan_homeomorph {X X' : Type*}
+    [TopologicalSpace X] [MeasurableSpace X] [BorelSpace X]
+    [TopologicalSpace X'] [MeasurableSpace X'] [BorelSpace X']
+    (e : X ≃ₜ X') (s : SignedMeasure X) :
+    SignedMeasure.toJordanDecomposition (s.map e) =
+      { posPart := s.toJordanDecomposition.posPart.map e
+        negPart := s.toJordanDecomposition.negPart.map e
+        mutuallySingular := e.toMeasurableEquiv.measurableEmbedding.mutuallySingular_map
+          s.toJordanDecomposition.mutuallySingular } := by
+  apply SignedMeasure.toJordanDecomposition_eq
+  apply VectorMeasure.ext
+  intro A hA
+  rw [VectorMeasure.map_apply _ e.continuous.measurable hA,
+    SignedMeasure.apply_eq_posPart_real_sub_negPart_real s (e.continuous.measurable hA),
+    JordanDecomposition.toSignedMeasure, Measure.toSignedMeasure_sub_apply hA]
+  simp only [Measure.real, Measure.map_apply e.continuous.measurable hA]
+
+private theorem functional_homeomorph {X X' : Type*}
+    [TopologicalSpace X] [MeasurableSpace X] [BorelSpace X] [CompactSpace X]
+    [TopologicalSpace X'] [MeasurableSpace X'] [BorelSpace X'] [CompactSpace X']
+    (e : X ≃ₜ X') (s : SignedMeasure X) (f : C(X', ℝ)) :
+    NormPreservingLifts.signedFunctional (s.map e) f =
+      NormPreservingLifts.signedFunctional s (f.comp ⟨e, e.continuous⟩) := by
+  change (∫ᵛ y, f y ∂•(s.map e)) = ∫ᵛ x, f (e x) ∂•s
+  exact e.toMeasurableEquiv.measurableEmbedding.integral_map_vectorMeasure
+
+set_option backward.isDefEq.respectTransparency false in
+/-- On the actual literal successor, one regular norm-bounded reference measure
+is chosen before every sequence of norm-one lifts of the original measures. -/
+theorem literal_f :
+    letI : CompactSpace R.coordinates.carrier :=
+      isCompact_iff_compactSpace.mp R.coordinates.closed.isCompact
+    ∀ r d, ∃ mu : SignedMeasure R.coordinates.carrier,
+      mu.totalVariation.real univ ≤ 1 ∧
+      Measure.Regular mu.toJordanDecomposition.posPart ∧
+      Measure.Regular mu.toJordanDecomposition.negPart ∧
+      ∀ sigma : ℕ → SignedMeasure R.coordinates.carrier,
+        (∀ n, (sigma n).map (R.literalProjection r) = Q.measure r d n) →
+        (∀ n, (sigma n).totalVariation univ = 1) →
+        Tendsto (fun n => (NormPreservingLifts.signedFunctional (sigma n)).toWeakDual)
+          (along (R.J r d)) (𝓝 (NormPreservingLifts.signedFunctional mu).toWeakDual) := by
+  with_unfolding_all
+    letI : CompactSpace R.coordinates.carrier :=
+      isCompact_iff_compactSpace.mp R.coordinates.closed.isCompact
+    letI : CompactSpace (splitCarrier R.Y R.Z) :=
+      isCompact_iff_compactSpace.mp R.closed.isCompact
+    let E : splitCarrier R.Y R.Z ≃ₜ R.coordinates.carrier := R.coordinates.equiv
+    intro r d
+    obtain ⟨mu, hb, hp, hn, hconv⟩ := R.F r d
+    refine ⟨mu.map E, ?_, ?_, ?_, ?_⟩
+    · simpa only [Measure.real, variation_homeomorph, Measure.map_apply E.continuous.measurable
+        MeasurableSet.univ, preimage_univ] using hb
+    · rw [jordan_homeomorph]
+      letI := hp
+      exact Measure.Regular.map E
+    · rw [jordan_homeomorph]
+      letI := hn
+      exact Measure.Regular.map E
+    · intro sigma hmap hmass
+      let tau : ℕ → SignedMeasure (splitCarrier R.Y R.Z) := fun n => (sigma n).map E.symm
+      have hm (n : ℕ) :
+          (tau n).map (fun x => projection H r x.1.1) = Q.measure r d n := by
+        refine Eq.trans ?_ (hmap n)
+        apply VectorMeasure.ext
+        intro A hA
+        let p : C(splitCarrier R.Y R.Z, Base H r) :=
+          ⟨fun x => projection H r x.1.1,
+            (projection H r).continuous.comp (continuous_fst.comp continuous_subtype_val)⟩
+        calc
+          (tau n).map p A = tau n (p ⁻¹' A) :=
+            VectorMeasure.map_apply _ p.continuous.measurable hA
+          _ = sigma n (E.symm ⁻¹' (p ⁻¹' A)) :=
+            VectorMeasure.map_apply _ E.symm.continuous.measurable
+              (p.continuous.measurable hA)
+          _ = (sigma n).map (R.literalProjection r) A :=
+            (VectorMeasure.map_apply _ (R.literalProjection r).continuous.measurable hA).symm
+      have ht (n : ℕ) : (tau n).totalVariation univ = 1 := by
+        rw [variation_homeomorph, Measure.map_apply E.symm.continuous.measurable
+          MeasurableSet.univ, preimage_univ]
+        exact hmass n
+      have hc := hconv tau hm ht
+      apply tendsto_iff_forall_eval_tendsto_topDualPairing.mpr
+      intro f
+      have hf := (tendsto_iff_forall_eval_tendsto_topDualPairing.mp hc)
+        (f.comp ⟨E, E.continuous⟩)
+      change Tendsto (fun n => NormPreservingLifts.signedFunctional (sigma n) f)
+        (along (R.J r d)) (𝓝 (NormPreservingLifts.signedFunctional (mu.map E) f))
+      have he (n : ℕ) :
+          NormPreservingLifts.signedFunctional (tau n) (f.comp ⟨E, E.continuous⟩) =
+            NormPreservingLifts.signedFunctional (sigma n) f := by
+        rw [functional_homeomorph]
+        congr 1
+        ext x
+        exact congrArg f (E.apply_symm_apply x)
+      change Tendsto
+        (fun n => NormPreservingLifts.signedFunctional (tau n) (f.comp ⟨E, E.continuous⟩))
+        (along (R.J r d))
+        (𝓝 (NormPreservingLifts.signedFunctional mu (f.comp ⟨E, E.continuous⟩))) at hf
+      rw [functional_homeomorph]
+      simpa only [he] using hf
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Every literal successor coordinate is eventually constant on each original
+support fibre, including the newly inserted sheet coordinate. -/
+theorem literal_e (r : Rows a) (c : Coord (Order.succ a)) :
+    ∀ᶠ n in along (R.I r), ∀ x y : R.coordinates.carrier,
+      R.literalProjection r x ∈ (Q.V r).clopen n →
+      R.literalProjection r y ∈ (Q.V r).clopen n →
+      R.literalProjection r x = R.literalProjection r y → x.1 c = y.1 c := by
+  with_unfolding_all
+    by_cases hc : c.1 < a
+    · let A : Set (K H) := {x | x.1 ⟨c.1, hc⟩ = true}
+      have hA : IsClopen A := (isClopen_discrete ({true} : Set Bool)).preimage
+        ((continuous_apply (⟨c.1, hc⟩ : Coord a)).comp continuous_subtype_val)
+      filter_upwards [R.E r A hA] with n hn x y hx hy hxy
+      have h := (hn (R.coordinates.equiv.symm x) (R.coordinates.equiv.symm y) hx hy hxy).1
+      have hxread := R.coordinates.insert (R.coordinates.equiv.symm x) c
+      have hyread := R.coordinates.insert (R.coordinates.equiv.symm y) c
+      simp only [Homeomorph.apply_symm_apply, dite_eq_left hc] at hxread hyread
+      change ((R.coordinates.equiv.symm x).1.1.1 ⟨c.1, hc⟩ = true ↔
+        (R.coordinates.equiv.symm y).1.1.1 ⟨c.1, hc⟩ = true) at h
+      rw [← hxread, ← hyread] at h
+      exact Bool.eq_iff_iff.mpr h
+    · have he : c = top a := Subtype.ext
+        (le_antisymm (Order.le_of_lt_succ c.2) (le_of_not_gt hc))
+      subst c
+      filter_upwards [R.E r univ isClopen_univ] with n hn x y hx hy hxy
+      have h := (hn (R.coordinates.equiv.symm x) (R.coordinates.equiv.symm y) hx hy hxy).2
+      calc
+        x.1 (top a) = (R.coordinates.equiv.symm x).1.2 := by
+          rw [R.coordinates.inverse_sheet]; rfl
+        _ = (R.coordinates.equiv.symm y).1.2 := h
+        _ = y.1 (top a) := by rw [R.coordinates.inverse_sheet]; rfl
+
 set_option backward.isDefEq.respectTransparency false in
 /-- Quantitative G is retained on the actual cube carrier with one fixed
 strictly increasing sequence, for every original signed norm-one lift. -/

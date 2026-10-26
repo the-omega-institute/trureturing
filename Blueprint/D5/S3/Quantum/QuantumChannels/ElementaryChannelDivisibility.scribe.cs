@@ -35,6 +35,10 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
                 Context(All("u", V, All("v", V, EqTo(App("ketbra", Uv, Wv),
                     App("vecMulVec", Uv, App("star", Wv)))))),
                 "The operator ketbra(u,v) sends z to u⟨v,z⟩.", DescribeRole.Definition, true),
+            Node("ketbrastar", "Adjoint of a rank one operator", "ketbra_star",
+                KetbraStarFormula(),
+                "Taking the adjoint exchanges the two vectors of the rank one operator.",
+                DescribeRole.Theorem, false),
             Node("elementaryk", "First elementary Kraus operator", "elementaryK",
                 Context(All("t", RealType(), All("x", V, EqTo(App("elementaryK", T, Xv),
                     Filter(SquareRoot(Subtract(D(1), T)), Xv))))),
@@ -81,6 +85,17 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
                 "In input-first Choi coordinates let A = C(Φ) and Z = (|y⟩⟨x|)ᵀ ⊗ I. Hilbert–Schmidt orthogonality identifies the tests with ker A ⊆ ker(ZA Z*). If this inclusion holds, square roots factor as √B = C√A for B = ZA Z*. The operator norm bound gives B ≤ ‖C‖²A, and t = 1/(2(‖C‖²+1)) gives A−tB ≥ 0, including singular A. The exact Choi matrix of the residual is D(A−tB)D*, where D = Rᵀ ⊗ I and R is the inverse filter. Its congruence is invertible for 0 < t < 1.",
                 "For distinct basis vectors eᵣ,eₛ, take Φ = elementary(15/16,eᵣ,eₛ) and Q = elementary(3/4,eᵣ,eₛ). Direct Kraus algebra gives Q∘Q = Φ, hence Φ∘Q⁻¹ = Q. For any unit u, the diagonal sufficient test fails: the Hilbert–Schmidt tests Eᵣᵢ for i ≠ r force either uᵣ = 0 or all other coordinates to vanish, while a diagonal orthogonal test gives 1−|I||uᵣ|² = 0. Both alternatives contradict normalization when |I| ≥ 2. The intrinsic kernel criterion transfers this obstruction to every finite Kraus representation. These are finite-dimensional conclusions; no dimension-one pair or infinite-dimensional domination statement is included.")
         )));
+
+    private static Formula KetbraStarFormula()
+    {
+        Formula n = Named("n"), u = Named("u"), w = Named("w");
+        Formula vector = Parenthesized(Seq(n, To, ComplexType()));
+        return All("n", Named("Type"),
+            Seq(Forall, Sp, OpenBracket, App("Fintype", n), CloseBracket,
+                OpenBracket, App("DecidableEq", n), CloseBracket, Comma, Sp,
+                All("u", vector, All("w", vector,
+                    EqTo(Adj(App("ketbra", u, w)), App("ketbra", w, u))))));
+    }
 
     private static Formula KrausExistence() => All("Phi", Map,
         Implies(App("CPTP", Phi), Some("K", Parenthesized(Seq(Parenthesized(Seq(I, Times, I)), To, M)),
@@ -174,7 +189,7 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula ComplexType() => Seq(Mathbb, Grp(F.Id("C")));
-    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula Parenthesized(Formula x) => new Formula.LatexSequence([Open, x, Close]);
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, DescribeRole role, bool literature, params string[] remaining)
     {
