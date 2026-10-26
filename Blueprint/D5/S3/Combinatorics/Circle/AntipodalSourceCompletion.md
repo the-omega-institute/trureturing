@@ -2,7 +2,7 @@
 
 ## Abstract
 
-An actual nonzero opposite-value pair forces a complete physical source order at the conjectured capacity.
+One actual opposite-value pair forces a complete physical source order at the conjectured capacity, including the all-zero row.
 
 For arbitrary natural k,t with k>=3, use the original physical labels Fin(k), N=2^k-1, s(i)=SourceWidth.actualSource(k,t,i)=centered(N,2^i*t), and C=TwoOppositeLargeExchange.C(k)=ExpandingSourcePath.half(k)=N/2=2^(k-1)-1. The capacity in every conclusion below is exactly C. SourceWidth.capacity is the larger support bound and is not used. Equal numerical values on different labels remain different occurrences.
 
@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/AntipodalSourceCompletion.actualSour
 
 *Commentary.*
 
-For arbitrary k,t with k>=3, assume there exist physical i,j:Fin(k) such that s(i) is nonzero and s(j)=-s(i). Then there exists L:List(Fin(k)) with L.Perm(List.ofFn(id)), L.Nodup, L.toFinset=univ, SourceWidth.InStrip(s,C,0,L), mass(s,L)=0, and TwoOppositeLargeExchange.Legal(k,t,L). The statement additionally displays every natural zero-start prefix bound: for every n:N, 0<=mass(s,L.take(n))<=C, including n=0, n=L.length and n>L.length. No proposed legal word, opposite-fiber matching, unused return resource or conditional exchange is supplied as a premise.
+For arbitrary k,t with k>=3, assume there exist physical i,j:Fin(k) such that s(j)=-s(i). Then there exists L:List(Fin(k)) with L.Perm(List.ofFn(id)), L.Nodup, L.toFinset=univ, SourceWidth.InStrip(s,C,0,L), mass(s,L)=0, and TwoOppositeLargeExchange.Legal(k,t,L). The statement additionally displays every natural zero-start prefix bound: for every n:N, 0<=mass(s,L.take(n))<=C, including n=0, n=L.length and n>L.length. No proposed legal word, opposite-fiber matching, unused return resource or conditional exchange is supplied as a premise.
 
 Let R=finCycle(j-i), and let P enumerate the finite set of all positive physical labels. Let Z enumerate all zero physical labels. The propagated relation s(R(p))=-s(p) maps P injectively into the negative physical labels. It maps onto them: for any negative label q, the actual inverse label R^-1(q) has positive value because s(q)=-s(R^-1(q)). Consequently the lists P and P.map(R) enumerate the entire positive and negative fibers once each. In particular every nonzero value fiber has the same physical cardinality as its opposite fiber. No counting of distinct numerical values replaces counting of occurrences.
 
@@ -40,9 +40,11 @@ Take L=P.flatMap(p=>[p,R(p)]) ++ Z. Only positive labels are pair heads. Positiv
 
 Each block [p,R(p)] has heights 0,s(p),0. Centered_bounds gives 0<s(p)<=C. The pair_blocks proof inducts directly over P and proves both zero mass and InStrip. The zero tail has mass zero and is handled by SourceWidth.inStrip_nonpos; SourceWidth.inStrip_append joins the zero-total pair blocks and the tail. The native legal_of_strip theorem supplies actual Legal, whose definition includes Nodup and all natural prefix bounds. Every repeated-valued occurrence and every zero is retained, and the final mass is exactly zero.
 
-Under this same actual-source opposite-pair hypothesis, a genuine global J minimum among all Legal physical words must be complete. The full word has G=0 and U=0. If an alleged minimum had G>0, its J would exceed the full word's J. If G=0, every actual LARGE is already used, so H equals the full LARGE energy; if any label were still unused then U>0 and the full word would again be strictly better. This consequence uses the original lexicographic J and physical occurrences, without zero-charge assertions for proper subsets.
+The pair need not be nonzero and its labels need not be distinct. If its value is zero, the actual source successor equation propagates zero around the whole physical cycle, so the row is all zero. In that case P is empty, Z contains every physical label once, and every prefix has height zero. Thus the all-zero row is included with the same exact capacity and conclusions.
 
-The exact extra premise is existence of a nonzero opposite pair anywhere in the actual row. There are no LARGE/SMALL restrictions on the pair and no value injectivity, coprimality, full numerical period or involutive rotation assumptions. This is full physical completion within that source subdomain. It does not establish that every source contains an opposite pair, that every legal prefix extends, or that a particular return resource is available in the remaining branch. Full original-quantifier Circle Conjecture 3.1 stays open.
+Under any actual-source opposite-pair hypothesis, including the all-zero row, a genuine global J minimum among all Legal physical words must be complete. The full word has G=0 and U=0. If an alleged minimum had G>0, its J would exceed the full word's J. If G=0, every actual LARGE is already used, so H equals the full LARGE energy; if any label were still unused then U>0 and the full word would again be strictly better. This consequence uses the original lexicographic J and physical occurrences, without zero-charge assertions for proper subsets.
+
+The exact extra premise is one actual opposite-value pair anywhere in the row. There are no nonzero or LARGE/SMALL restrictions on the pair and no value injectivity, coprimality, full numerical period or involutive rotation assumptions. This is full physical completion within that source subdomain. It does not establish that every source contains an opposite pair, that every legal prefix extends, or that a particular return resource is available in the remaining branch. Full original-quantifier Circle Conjecture 3.1 stays open.
 
 The source context is Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. The completion result applies to the stated opposite-pair subdomain.
 
