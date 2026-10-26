@@ -6,7 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.shifted_annihilator; premises=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.power_steps,D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.initial_vector,D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridQuotient.finite_annihilator
    digest: The exact 59-coordinate terminal-vector certificate propagates to every shift. -/
 
-import Mathlib.Data.Matrix.Notation
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.Tactic
 
