@@ -25,8 +25,15 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- A constructive decision of the source dimension condition. -/
+def dimensionDecision (d : ℕ) : Decidable (2 ≤ d) :=
+  match d with
+  | 0 => .isFalse (by omega)
+  | 1 => .isFalse (by omega)
+  | _ + 2 => .isTrue (by omega)
+
 def actual : Realization signature :=
-  realize signature (fun _ _ d => @decide (2 ≤ d) (Classical.propDecidable _))
+  realize signature (fun _ _ d => @decide (2 ≤ d) (dimensionDecision d))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -61,7 +68,7 @@ def source_registration : Registration arena claim where
   variation := ⟨by
     intro K _ _ d k hd hk
     exact result K d k
-      (@of_decide_eq_true (2 ≤ d) (Classical.propDecidable _) hd) hk,
+      (@of_decide_eq_true (2 ≤ d) (dimensionDecision d) hd) hk,
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -88,7 +95,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ _ d => @decide (2 ≤ d) (Classical.propDecidable _))
+    (realize signature (fun _ _ d => @decide (2 ≤ d) (dimensionDecision d))
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
