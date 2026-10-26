@@ -6,6 +6,7 @@
    utility: none
    digest: Coordinate axis distribution on the actual unbounded integer Leech minimum sphere. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Arith.Lattices.Golay.LeechMinimalCount
 import D5.S3.Arith.Lattices.Golay.GolayOctadIncidence
 
@@ -21,12 +22,8 @@ open GolayEncoder IntegerLeech GolayOctadCount LeechSignedSupport LeechMinimalCo
 attribute [local instance] Classical.propDecidable
 attribute [local instance 10] Fintype.ofFinite
 
-private theorem bit_cases (a : F2) : a = 0 ∨ a = 1 := by
-  have h := ZMod.val_lt a
-  have hh : a.val = 0 ∨ a.val = 1 := by omega
-  rcases hh with h | h
-  · left; apply ZMod.val_injective 2; simpa using h
-  · right; apply ZMod.val_injective 2; change a.val = 1; exact h
+open private bit_cases from D5.S3.Arith.Lattices.Golay.GolayOctadCount
+open private twoSupportEquiv from D5.S3.Arith.Lattices.Golay.LeechMinimalCount
 
 private theorem sum_bits (f : F2 → ℕ) : ∑ b, f b = f 0 + f 1 := by
   have hu : (Finset.univ : Finset F2) = {0, 1} := by
@@ -190,24 +187,18 @@ private theorem occupancy_sum {A : Type*} [Fintype A] (S : A → Finset I)
   simp_rw [he]
   simp only [Finset.sum_add_distrib, ← Finset.sum_filter, Finset.sum_const, smul_eq_mul]
 
-private def supportEquiv : TwoSupport ≃ ↥(Finset.univ.powersetCard 2 : Finset (Finset I)) where
-  toFun S := ⟨S.val, by simp [S.property]⟩
-  invFun S := ⟨S.val, (Finset.mem_powersetCard.mp S.property).2⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
-
 private theorem two_support_incidence (i j : I) (hij : i ≠ j) :
     (Finset.univ.filter fun S : TwoSupport => i ∈ S.val ∧ j ∈ S.val).card = 1 ∧
     (Finset.univ.filter fun S : TwoSupport =>
       (i ∈ S.val ∧ j ∉ S.val) ∨ (i ∉ S.val ∧ j ∈ S.val)).card = 44 ∧
     (Finset.univ.filter fun S : TwoSupport => i ∉ S.val ∧ j ∉ S.val).card = 231 := by
   have hc : Fintype.card TwoSupport = 276 := by
-    rw [Fintype.card_congr supportEquiv, Fintype.card_coe, Finset.card_powersetCard]
+    rw [Fintype.card_congr twoSupportEquiv, Fintype.card_coe, Finset.card_powersetCard]
     norm_num [Nat.choose_two_right]
   have count (T : Finset I) (hT : T.card ≤ 2) :
       (Finset.univ.filter fun S : TwoSupport => T ⊆ S.val).card =
         Nat.choose (24 - T.card) (2 - T.card) := by
-    have he := supportEquiv.sum_comp
+    have he := twoSupportEquiv.sum_comp
       (fun S => if T ⊆ S.val then (1 : ℕ) else 0)
     change (∑ S : TwoSupport, if T ⊆ S.val then (1 : ℕ) else 0) =
       ∑ S : ↥(Finset.univ.powersetCard 2 : Finset (Finset I)),
