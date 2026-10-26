@@ -7,6 +7,9 @@
    digest: The signalling game has classical, quantum and no-signalling value 1/max(m,n). -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+import D5.S3.Resource.CompositeConeDuality
+import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 
 /-! The players guess one another's uniformly drawn questions using local correlations. -/
 
@@ -21,6 +24,10 @@ open Finset Matrix
 open scoped BigOperators Kronecker ComplexOrder
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
   (IsPOVM diagonal_povm)
+open D5.S3.Quantum.FiniteDimensional (bornProbability)
+open D5.S3.Resource.CompositeConeDuality (kronecker_sum_sum)
+open D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift (labelKernel)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
 /-- Nonnegative normalized conditional probabilities with both no-signalling marginals.
 The argument order is Alice's answer, Bob's answer, Alice's question, Bob's question. -/
@@ -37,7 +44,7 @@ def winProb {m n : ℕ} (p : Fin n → Fin m → Fin m → Fin n → ℝ) : ℝ 
 /-- The product of the two deterministic local response distributions. -/
 def deterministicBox {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin n → Fin m)
     (a : Fin n) (b : Fin m) (x : Fin m) (y : Fin n) : ℝ :=
-  (if a = fa x then 1 else 0) * (if b = fb y then 1 else 0)
+  labelKernel fa x a * labelKernel fb y b
 
 /-- All winning probabilities of deterministic classical strategies. -/
 def classicalValues (m n : ℕ) : Set ℝ :=
@@ -49,7 +56,7 @@ def IsQuantumStrategy {m n da db : ℕ}
     (rho : Matrix (Fin da × Fin db) (Fin da × Fin db) ℂ)
     (a : Fin m → Fin n → Matrix (Fin da) (Fin da) ℂ)
     (b : Fin n → Fin m → Matrix (Fin db) (Fin db) ℂ) : Prop :=
-  rho.PosSemidef ∧ trace rho = 1 ∧ (∀ x, IsPOVM (a x)) ∧ (∀ y, IsPOVM (b y))
+  IsDensity rho ∧ (∀ x, IsPOVM (a x)) ∧ (∀ y, IsPOVM (b y))
 
 /-- Born's rule for local measurements of a shared bipartite state. -/
 def quantumBox {m n da db : ℕ}
@@ -57,7 +64,7 @@ def quantumBox {m n da db : ℕ}
     (a : Fin m → Fin n → Matrix (Fin da) (Fin da) ℂ)
     (b : Fin n → Fin m → Matrix (Fin db) (Fin db) ℂ)
     (u : Fin n) (v : Fin m) (x : Fin m) (y : Fin n) : ℝ :=
-  (trace (rho * (a x u ⊗ₖ b y v))).re
+  (bornProbability rho (a x u ⊗ₖ b y v)).re
 
 /-- All winning probabilities over all finite local dimensions, states and local POVMs. -/
 def quantumValues (m n : ℕ) : Set ℝ :=
@@ -128,27 +135,27 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     (a : Fin m → Fin n → Matrix (Fin da) (Fin da) ℂ)
     (b : Fin n → Fin m → Matrix (Fin db) (Fin db) ℂ)
     (hs : IsQuantumStrategy rho a b) : IsNoSignalling (quantumBox rho a b) := by
-  obtain ⟨hrho, htrace, ha, hb⟩ := hs
+  obtain ⟨⟨hrho, htrace⟩, ha, hb⟩ := hs
   have right (u : Fin n) (x : Fin m) (y : Fin n) :
       (∑ v, quantumBox rho a b u v x y) =
         (trace (rho * (a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)))).re := by
-    simp only [quantumBox.eq_1, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    simp only [quantumBox.eq_1, bornProbability, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
     have he : (∑ v, a x u ⊗ₖ b y v) = a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
       calc
         _ = a x u ⊗ₖ (∑ v, b y v) := by
-          ext ⟨i, j⟩ ⟨k, l⟩
-          simp only [Matrix.sum_apply, kroneckerMap_apply, mul_sum]
+          simpa only [Fin.sum_univ_one] using
+            (kronecker_sum_sum (fun _ : Fin 1 => a x u) (b y)).symm
         _ = _ := by rw [(hb y).2]
     rw [he]
   have left (v : Fin m) (x : Fin m) (y : Fin n) :
       (∑ u, quantumBox rho a b u v x y) =
         (trace (rho * ((1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v))).re := by
-    simp only [quantumBox.eq_1, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    simp only [quantumBox.eq_1, bornProbability, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
     have he : (∑ u, a x u ⊗ₖ b y v) = (1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v := by
       calc
         _ = (∑ u, a x u) ⊗ₖ b y v := by
-          ext ⟨i, j⟩ ⟨k, l⟩
-          simp only [Matrix.sum_apply, kroneckerMap_apply, sum_mul]
+          simpa only [Fin.sum_univ_one] using
+            (kronecker_sum_sum (a x) (fun _ : Fin 1 => b y v)).symm
         _ = _ := by rw [(ha x).2]
     rw [he]
   refine ⟨?_, ?_, ?_, ?_⟩
@@ -160,8 +167,9 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     have he : (∑ u, a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)) = 1 := by
       calc
         _ = (∑ u, a x u) ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
-          ext ⟨i, j⟩ ⟨k, l⟩
-          simp only [Matrix.sum_apply, kroneckerMap_apply, sum_mul]
+          simpa only [Fin.sum_univ_one] using
+            (kronecker_sum_sum (a x)
+              (fun _ : Fin 1 => (1 : Matrix (Fin db) (Fin db) ℂ))).symm
         _ = 1 := by rw [(ha x).2, one_kronecker_one]
     rw [he, Matrix.mul_one, htrace, Complex.one_re]
   · intro u x y z
@@ -175,20 +183,22 @@ private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin
       (b : Fin n → Fin m → Matrix (Fin 1) (Fin 1) ℂ),
       IsQuantumStrategy rho a b ∧ quantumBox rho a b = deterministicBox fa fb := by
   let a : Fin m → Fin n → Matrix (Fin 1) (Fin 1) ℂ :=
-    fun x u => diagonal (fun _ => ((if u = fa x then 1 else 0 : ℝ) : ℂ))
+    fun x u => diagonal (fun _ => (labelKernel fa x u : ℂ))
   let b : Fin n → Fin m → Matrix (Fin 1) (Fin 1) ℂ :=
-    fun y v => diagonal (fun _ => ((if v = fb y then 1 else 0 : ℝ) : ℂ))
-  refine ⟨1, a, b, ⟨Matrix.PosSemidef.one, ?_, ?_, ?_⟩, ?_⟩
+    fun y v => diagonal (fun _ => (labelKernel fb y v : ℂ))
+  refine ⟨1, a, b, ⟨⟨Matrix.PosSemidef.one, ?_⟩, ?_, ?_⟩, ?_⟩
   · simp only [trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_one, one_mul]
   · intro x
-    exact diagonal_povm (fun u _ => if u = fa x then 1 else 0)
-      (fun u _ => by split_ifs <;> norm_num) (fun _ => by simp)
+    exact diagonal_povm (fun u _ => labelKernel fa x u)
+      (fun u _ => by unfold labelKernel; split_ifs <;> norm_num)
+      (fun _ => by simp [labelKernel])
   · intro y
-    exact diagonal_povm (fun v _ => if v = fb y then 1 else 0)
-      (fun v _ => by split_ifs <;> norm_num) (fun _ => by simp)
+    exact diagonal_povm (fun v _ => labelKernel fb y v)
+      (fun v _ => by unfold labelKernel; split_ifs <;> norm_num)
+      (fun _ => by simp [labelKernel])
   · funext u v x y
     by_cases hu : u = fa x <;> by_cases hv : v = fb y <;>
-      simp only [quantumBox.eq_1, deterministicBox.eq_1, a, b, hu, hv, ite_true, ite_false,
+      simp only [quantumBox.eq_1, bornProbability, deterministicBox.eq_1, labelKernel, eq_comm, a, b, hu, hv, ite_true, ite_false,
         Complex.ofReal_one, Complex.ofReal_zero, diagonal_one, diagonal_zero,
         one_kronecker_one, zero_kronecker, kronecker_zero,
         trace_one, trace_zero, Fintype.card_prod, Fintype.card_fin, Nat.cast_one,
@@ -197,8 +207,8 @@ private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin
 private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
     ∃ (fa : Fin m → Fin n) (fb : Fin n → Fin m),
       winProb (deterministicBox fa fb) = 1 / (max m n : ℝ) := by
-  let fa : Fin m → Fin n := fun x => ⟨x.val % n, Nat.mod_lt _ (by omega)⟩
-  let fb : Fin n → Fin m := fun y => ⟨y.val % m, Nat.mod_lt _ (by omega)⟩
+  let fa : Fin m → Fin n := fun x => @Fin.ofNat n ⟨by omega⟩ x.val
+  let fb : Fin n → Fin m := fun y => @Fin.ofNat m ⟨by omega⟩ y.val
   refine ⟨fa, fb, ?_⟩
   have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
   have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
@@ -207,19 +217,21 @@ private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
   · have hi (x : Fin m) : fb (fa x) = x := by
       apply Fin.ext
       dsimp only [fa, fb]
+      simp only [Fin.val_ofNat]
       rw [Nat.mod_eq_of_lt (lt_of_lt_of_le x.isLt hmn), Nat.mod_eq_of_lt x.isLt]
     have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (m : ℝ) := by
-      simp only [deterministicBox.eq_1, ite_mul, one_mul, zero_mul]
+      simp only [deterministicBox.eq_1, labelKernel, eq_comm, ite_mul, one_mul, zero_mul]
       simp [hi]
     rw [hs, max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast hmn)]
     field_simp
   · have hi (y : Fin n) : fa (fb y) = y := by
       apply Fin.ext
       dsimp only [fa, fb]
+      simp only [Fin.val_ofNat]
       rw [Nat.mod_eq_of_lt (lt_of_lt_of_le y.isLt hnm), Nat.mod_eq_of_lt y.isLt]
     have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (n : ℝ) := by
       rw [sum_comm]
-      simp only [deterministicBox.eq_1, mul_ite, mul_one, mul_zero]
+      simp only [deterministicBox.eq_1, labelKernel, eq_comm, mul_ite, mul_one, mul_zero]
       simp [hi]
     rw [hs, max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast hnm)]
     field_simp
