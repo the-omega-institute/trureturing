@@ -16,7 +16,7 @@ clause for real exponents at least two is asserted by `claim`.
 
 Source: T. Zhang, arXiv:2410.21961v4, Conjecture `conj:sharp-inequality`.
 Preregistration: https://github.com/the-omega-institute/trureturing/issues/22304
-Admission basis: external open-problem resolution.
+admission_basis: open-problem-resolution
 -/
 
 noncomputable section
@@ -80,12 +80,15 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
     rw [power_of_gram_charpoly x ![1, 0] hd hx hp]
     simp [Fin.sum_univ_two, Real.zero_rpow (by linarith : p / 2 ≠ 0)]
   have ha : schattenNorm a p ^ p = 1 := h a (by
+    rw [a.eq_1]
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
       Fin.sum_univ_two, a, diagonal_apply])
   have hb : schattenNorm b p ^ p = 1 := h b (by
+    rw [b.eq_1]
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
       Fin.sum_univ_two, b, diagonal_apply])
   have hc : schattenNorm c p ^ p = 1 := h c (by
+    rw [c.eq_1]
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
       Fin.sum_univ_two, c, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
@@ -109,7 +112,7 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
         (diagonal (fun _ : Fin 2 => ((1 / 2 : ℝ) : ℂ))).charpoly) :
       schattenNorm x p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := by
     rw [power_of_gram_charpoly x (fun _ => 1 / 2) (by intro i; norm_num) hx hp]
-    simp [Fin.sum_univ_two, two_mul]
+    simp [two_mul]
   have hbc : schattenNorm (b + c) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (b + c) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
       conjTranspose_apply, Fin.sum_univ_two, b, c, diagonal_apply]
