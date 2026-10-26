@@ -56,7 +56,11 @@ noncomputable def data : H.Data where
     · simpa only [dite_eq_left hr] using ((A.V ⟨r, hr⟩).clopen n).isClopen
     · simp only [dite_eq_right hr]; exact isClopen_empty
   nu r d n := if hr : ω ≤ r.1 then (A.nu ⟨r, hr⟩ d).1 n else
-    ⟨0, by simp only [SignedMeasure.toJordanDecomposition_zero]; change Measure.Regular (0 : Measure (H.Space r)) ∧ Measure.Regular (0 : Measure (H.Space r)); exact ⟨inferInstance, inferInstance⟩⟩
+    ⟨0, by
+      simp only [SignedMeasure.toJordanDecomposition_zero]
+      change Measure.Regular (0 : Measure (H.Space r)) ∧
+        Measure.Regular (0 : Measure (H.Space r))
+      exact ⟨inferInstance, inferInstance⟩⟩
   mass r d n hr := by
     classical
     simpa [hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
@@ -160,13 +164,70 @@ private structure SavedRow {b : Ordinal.{0}} (C : Set (Cube b)) where
   nu : Label → @BornData C _ (borel C) V
   nuonto : Surjective nu
 
+private def savedRow (r : BornRows l) : SavedRow (H.carrier r.1) :=
+  ⟨A.U r, A.Uonto r, A.V r, A.nu r, A.nuonto r⟩
+
 private noncomputable def oldPack (r : Rows l) (hr : r ≠ newRow l hw.le) :
     SavedRow ((literalPrefix H E).carrier (rowIndex r)) := by
   have hrl : r.1 < l := (bornRow hw r hr).1.2
   change SavedRow (enlargedCarrier H (rowIndex r))
   rw [carrier_old H r.1 hrl _]
-  exact ⟨A.U (bornRow hw r hr), A.Uonto (bornRow hw r hr),
-    A.V (bornRow hw r hr), A.nu (bornRow hw r hr), A.nuonto (bornRow hw r hr)⟩
+  exact A.savedRow (bornRow hw r hr)
+
+private theorem oldPack_heq (r : Rows l) (hr : r ≠ newRow l hw.le) :
+    HEq (A.oldPack E r hr) (A.savedRow (bornRow hw r hr)) := by
+  unfold oldPack
+  exact cast_heq _ _
+
+private theorem limit_e (r : BornRows l) (c : Coord l) (hc : r.1.1 ≤ c.1)
+    {C : Set (Cube l)} {B : Set (Cube r.1.1)}
+    (hC : C = H.limitCarrier) (hB : B = H.carrier r.1)
+    (p : C(C, B)) (hp : ∀ x, (p x).1 = restrict r.1.2.le x.1)
+    (Q : SavedRow B) (hQ : HEq Q (A.savedRow r)) :
+    ∀ᶠ n in along (E.I r.1), ∀ x y : C,
+      p x ∈ Q.V.clopen n → p y ∈ Q.V.clopen n → p x = p y → x.1 c = y.1 c := by
+  subst C
+  subst B
+  have hQ' := eq_of_heq hQ
+  subst Q
+  have hp' : p = H.projection r.1 := by
+    apply ContinuousMap.ext
+    intro x
+    exact Subtype.ext (hp x)
+  subst p
+  simpa [data, savedRow, r.2] using E.E r.1 c r.2 hc
+
+private theorem limit_f (r : BornRows l) (d : Coord l)
+    {C : Set (Cube l)} [CompactSpace C] {B : Set (Cube r.1.1)}
+    (hC : C = H.limitCarrier) (hB : B = H.carrier r.1)
+    (p : C(C, B)) (hp : ∀ x, (p x).1 = restrict r.1.2.le x.1)
+    (Q : SavedRow B) (hQ : HEq Q (A.savedRow r)) :
+    letI : MeasurableSpace C := borel C
+    letI : BorelSpace C := ⟨rfl⟩
+    letI : MeasurableSpace B := borel B
+    ∀ (s : ℕ → SignedMeasure C),
+      (∀ n, (s n).map p = ((Q.nu ⟨d.1, d.2.trans A.proper⟩).1 n).1) →
+      (∀ n, (s n).totalVariation univ = 1) →
+      ∃ mu : SignedMeasure C, Tendsto
+        (fun n => (NormPreservingLifts.signedFunctional (s n)).toWeakDual)
+        (along (E.J r.1 d)) (𝓝 (NormPreservingLifts.signedFunctional mu).toWeakDual) := by
+  subst C
+  subst B
+  have hQ' := eq_of_heq hQ
+  subst Q
+  have hp' : p = H.projection r.1 := by
+    apply ContinuousMap.ext
+    intro x
+    exact Subtype.ext (hp x)
+  subst p
+  intro s hm hn
+  letI : MetricSpace H.LimitSpace := H.properMetric A.proper
+  let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
+  have ht : ∀ n, H.NewClass A.data r.1 d n (t n) := by
+    intro n
+    exact ⟨hn n, by simpa [data, savedRow, r.2] using hm n⟩
+  obtain ⟨mu, _, hconv⟩ := E.F r.1 d r.2 t ht
+  exact ⟨mu.1, hconv⟩
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The actual limit predecessor: every old whole enumeration and birth is retained. -/
@@ -198,35 +259,23 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
     · intro r hr d
       simpa [data, bornRow, r.2.1] using E.B (bornRow hw r hr).1 d r.2.1
     · intro r hr d e
-      have h := E.C (bornRow hw r hr).1 d (e == 1) r.2.1
-      have he : (if (e == 1) then (1 : Fin 2) else 0) = e := by fin_cases e <;> rfl
-      simpa [data, bornRow, r.2.1, he] using h
+      fin_cases e
+      · simpa [data, bornRow, r.2.1] using E.C (bornRow hw r hr).1 d false r.2.1
+      · simpa [data, bornRow, r.2.1] using E.C (bornRow hw r hr).1 d true r.2.1
     · intro r hr c
-      have hrl : r.1 < l := (bornRow hw r hr).1.2
       by_cases hc : c.1 < r.1
       · apply Eventually.of_forall
         intro n x y _ _ hxy
         exact congrArg (fun z => z.1 ⟨c.1, hc⟩) hxy
-      · have h := E.E (bornRow hw r hr).1 c r.2.1 (le_of_not_gt hc)
-        simpa [oldPack, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-          kMeasurable, baseMeasurable, Prefix.spaceMeasurable,
-          rowIndex, index, top, enlargedCarrier, bornRow, hrl, data, r.2.1] using h
+      · exact A.limit_e E (bornRow hw r hr) c (le_of_not_gt hc)
+          (carrier_top H _) (carrier_old H r.1 (bornRow hw r hr).1.2 _)
+          (projection (literalPrefix H E) r) (fun _ => rfl)
+          (A.oldPack E r hr) (A.oldPack_heq E r hr)
     · intro r hr d
-      have hrl : r.1 < l := (bornRow hw r hr).1.2
-      dsimp only [K, Prefix.Space, literalPrefix, kMeasurable, baseMeasurable,
-        Prefix.spaceMeasurable, projection, Prefix.map]
-      rw [carrier_top H (Order.lt_succ l)]
-      simp [oldPack, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-          kMeasurable, baseMeasurable, Prefix.spaceMeasurable,
-        rowIndex, index, top, enlargedCarrier, bornRow, hrl]
-      intro s hm hn
-      letI : MetricSpace H.LimitSpace := H.properMetric A.proper
-      let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
-      have ht : ∀ n, H.NewClass A.data (bornRow hw r hr).1 d n (t n) := by
-        intro n
-        exact ⟨hn n, by simpa [data, bornRow, r.2.1] using hm n⟩
-      obtain ⟨mu, _, hconv⟩ := E.F (bornRow hw r hr).1 d r.2.1 t ht
-      exact ⟨mu.1, hconv⟩
+      exact A.limit_f E (bornRow hw r hr) d
+        (carrier_top H _) (carrier_old H r.1 (bornRow hw r hr).1.2 _)
+        (projection (literalPrefix H E) r) (fun _ => rfl)
+        (A.oldPack E r hr) (A.oldPack_heq E r hr)
 
 end Archive
 
