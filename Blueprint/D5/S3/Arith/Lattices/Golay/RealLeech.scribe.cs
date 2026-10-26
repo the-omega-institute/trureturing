@@ -10,7 +10,7 @@ internal sealed class RealLeechDocument : IScribeDocumentDefinition
         "The actual Golay construction as a positive even unimodular real lattice", H("The actual Golay construction as a positive even unimodular real lattice"),
         Blocks(
             Node("claim-1", "lattice", "The exact real image of the original integer subgroup",
-                "The lattice is the image under coordinate inclusion of IntegerLeech.integerLattice for the explicit GolayEncoder.code. The form is the real coordinate dot product divided by eight. This is the same normalization as the already proved Euclidean scaling by the square root of eight.", DescribeRole.Definition),
+                "The lattice is the image under coordinate inclusion of IntegerLeech.integerLattice for the explicit GolayEncoder.code. The form is the real coordinate dot product divided by eight. The dot-over-eight form has the same normalization as the real coordinate dot product after coordinate division by the square root of eight.", DescribeRole.Definition),
             Node("claim-2", "mem_lattice", "Membership preserves the actual construction",
                 "Every real member has an integer representative satisfying the original Admissible predicate, and every such representative lies in the image.", DescribeRole.Theorem),
             Node("claim-3", "even_norm", "Actual norms are even",
