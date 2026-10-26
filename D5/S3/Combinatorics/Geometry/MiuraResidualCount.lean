@@ -2,11 +2,18 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/MiuraResidualCount
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: The Miura residual count retains exact extrema and one common side. -/
 
-import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
+module
+
+public import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
+public import Mathlib.Algebra.MvPolynomial.Degrees
+
+/-! Exact split counts and the full residual polynomial assertion. -/
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraResidualCount
 
@@ -68,7 +75,7 @@ end Count
 
 /-- The full statement of arXiv:2607.05567v3, Conjecture 8.3 and Lemma 8.2. -/
 def claim : Prop :=
-  ∀ d a b : ℕ, 5 ≤ d → 1 ≤ a → 1 ≤ b → a + b = d → a ≤ b →
+  ∀ d a b : ℕ, ∀ hd : 5 ≤ d, 1 ≤ a → 1 ≤ b → a + b = d → a ≤ b →
     ∃ p : MvPolynomial (Fin 2) ℚ, p.totalDegree ≤ d - 3 ∧
       ∀ m n : ℕ, ∀ hm : 2 * d - 1 ≤ m, ∀ hn : 2 * d - 1 ≤ n,
         MvPolynomial.eval (fun i : Fin 2 => if i = 0 then (m : ℚ) else (n : ℚ)) p =

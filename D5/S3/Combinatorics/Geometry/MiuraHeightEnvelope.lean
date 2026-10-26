@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/MiuraHeightEnvelope
    mirror-E: none(waiver:non-computational)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Finite unit-edge integer grids admit attained extremum envelopes. -/
 
@@ -19,7 +19,21 @@ unit-edge grid envelope and normalized-height finiteness declarations, using tho
 pinned declarations directly in the consumers.
 -/
 
-import Mathlib
+module
+
+public import Mathlib.Data.Fintype.Lattice
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Tauto
+
+/-! Finite attained envelopes and finiteness of normalized integer heights. -/
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
 
@@ -68,28 +82,24 @@ lemma exists_step_toward {p q : Cell m n} (hpq : p ≠ q) :
     ∃ p', adj p p' ∧ gdist p' q = gdist p q - 1 := by
   have hcoord : p.1.val ≠ q.1.val ∨ p.2.val ≠ q.2.val := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact hpq (Prod.ext_iff.2 ⟨Fin.ext h.1, Fin.ext h.2⟩)
   rcases hcoord with hrow | hcol
   · rcases lt_or_gt_of_ne hrow with hlt | hgt
-    ·
-      have hb : p.1.val + 1 < m := by have := q.1.isLt; omega
+    · have hb : p.1.val + 1 < m := by have := q.1.isLt; omega
       refine ⟨(⟨p.1.val + 1, hb⟩, p.2), ?_, ?_⟩
       · simp only [adj, gdist]; omega
       · simp only [gdist]; omega
-    ·
-      have hb : p.1.val - 1 < m := by have := p.1.isLt; omega
+    · have hb : p.1.val - 1 < m := by have := p.1.isLt; omega
       refine ⟨(⟨p.1.val - 1, hb⟩, p.2), ?_, ?_⟩
       · simp only [adj, gdist]; omega
       · simp only [gdist]; omega
   · rcases lt_or_gt_of_ne hcol with hlt | hgt
-    ·
-      have hb : p.2.val + 1 < n := by have := q.2.isLt; omega
+    · have hb : p.2.val + 1 < n := by have := q.2.isLt; omega
       refine ⟨(p.1, ⟨p.2.val + 1, hb⟩), ?_, ?_⟩
       · simp only [adj, gdist]; omega
       · simp only [gdist]; omega
-    ·
-      have hb : p.2.val - 1 < n := by have := p.2.isLt; omega
+    · have hb : p.2.val - 1 < n := by have := p.2.isLt; omega
       refine ⟨(p.1, ⟨p.2.val - 1, hb⟩), ?_, ?_⟩
       · simp only [adj, gdist]; omega
       · simp only [gdist]; omega
@@ -118,7 +128,7 @@ lemma height_lipschitz {h : Cell m n → ℤ} (hh : IsHeight h) :
 
 lemma exists_descent_to_min {h : Cell m n → ℤ} (hh : IsHeight h) (v : Cell m n) :
     ∃ p, IsStrictLocalMin h p ∧ h v = h p + gdist p v := by
-  haveI : Nonempty (Cell m n) := ⟨v⟩
+  have : Nonempty (Cell m n) := ⟨v⟩
   obtain ⟨w0, hw0⟩ := Finite.exists_min h
 
   suffices key : ∀ (k : ℕ) (v : Cell m n), (h v - h w0).toNat ≤ k →
@@ -139,8 +149,7 @@ lemma exists_descent_to_min {h : Cell m n → ℤ} (hh : IsHeight h) (v : Cell m
     intro v hk
     by_cases hvmin : IsStrictLocalMin h v
     · exact ⟨v, hvmin, by simp [gdist_self]⟩
-    ·
-      simp only [IsStrictLocalMin, not_forall] at hvmin
+    · simp only [IsStrictLocalMin, not_forall] at hvmin
       obtain ⟨u, hu⟩ := hvmin
       have hadj : adj v u := by tauto
       have hune : h u ≠ h v + 1 := by tauto
@@ -189,11 +198,11 @@ theorem envelope_max {h : Cell m n → ℤ} (hh : IsHeight h) (v : Cell m n) :
   constructor
   · refine ⟨p, ?_, ?_⟩
     · intro u hu
-      have := hpmin u hu; simp only at this; linarith
-    · have := hpeq; simp only at this; linarith
+      have := hpmin u hu; linarith
+    · have := hpeq; linarith
   · intro q hq
     have hq' : IsStrictLocalMin (fun w => -h w) q := by
-      intro u hu; have := hq u hu; simp only; linarith
+      intro u hu; have := hq u hu; linarith
     have := hple q hq'; linarith
 
 def IsCanonicalHeight (h : Cell m n → ℤ) : Prop :=
@@ -221,7 +230,7 @@ theorem CanonicalHeights_finite (hm : 1 ≤ m) (hn : 1 ≤ n) :
   have hp1 : p.1.val ≤ m - 1 := Nat.le_sub_one_of_lt p.1.isLt
   have hp2 : p.2.val ≤ n - 1 := Nat.le_sub_one_of_lt p.2.isLt
   have h_gdist_bound : gdist origin p ≤ (B : ℤ) := by
-    show (((((⟨0, hm⟩ : Fin m)).val : ℤ) - (p.1.val : ℤ)).natAbs
+    change (((((⟨0, hm⟩ : Fin m)).val : ℤ) - (p.1.val : ℤ)).natAbs
           + (((⟨0, hn⟩ : Fin n).val : ℤ) - (p.2.val : ℤ)).natAbs : ℕ) ≤ (B : ℤ)
     have hn1 : ((((⟨0, hm⟩ : Fin m)).val : ℤ) - (p.1.val : ℤ)).natAbs = p.1.val := by
       simp

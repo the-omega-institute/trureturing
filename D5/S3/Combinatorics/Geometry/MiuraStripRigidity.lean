@@ -2,11 +2,17 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/MiuraStripRigidity
    mirror-E: none(waiver:non-computational)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: A finite strip with one uphill exit is a vertical extrusion. -/
 
-import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
+module
+
+public import D5.S3.Combinatorics.Geometry.MiuraHeightEnvelope
+
+/-! Rigidity from the finite extremum envelope on an actual rectangular strip. -/
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraStripRigidity
 
