@@ -9,7 +9,9 @@
 import D5.S3.Quantum.QuantumChannels.OriginalQutritGap
 import D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 import D5.S3.Quantum.Tomography.PurityPythagorasDecomposition
-import Mathlib.Tactic
+
+/-! The fixed control mixes the invariant centered line into its contracting complement.
+All norms in the statement are transported complex Hilbert--Schmidt norms. -/
 
 noncomputable section
 open Matrix
@@ -52,11 +54,11 @@ private theorem lambda_trace (X : Mat) : (lambda X).trace = X.trace := by
   norm_num
   ring
 
-/-- Uniform complex Hilbert--Schmidt contraction, all natural iterates, and the
-original centered density prefactor for the installed DU wash. -/
 set_option maxHeartbeats 8000000 in
 set_option maxRecDepth 4000 in
 set_option synthInstance.maxHeartbeats 100000 in
+/-- Uniform complex Hilbert--Schmidt contraction, all natural iterates, and the
+original centered density prefactor for the installed DU wash. -/
 theorem explicit_wash_bound :
     (∀ X : Mat, X.trace = 0 →
       ‖vectorize 3 (wash X)‖ ^ 2 ≤ (5/12 : ℝ) * ‖vectorize 3 X‖ ^ 2 ∧
@@ -94,9 +96,11 @@ theorem explicit_wash_bound :
     change (lambda (lambda ((vectorize 3).symm x))).trace = _
     rw [lambda_trace, lambda_trace]
     rfl
+  have hnleft : (N : Mat)ᴴ * (N : Mat) = 1 := Unitary.star_mul_self_of_mem N.property
+  have hnright : (N : Mat) * (N : Mat)ᴴ = 1 := Unitary.mul_star_self_of_mem N.property
   have htR (x : HS) : traceHS (R x) = traceHS x := by
     change ((N : Mat) * (vectorize 3).symm x * (N : Mat)ᴴ).trace = _
-    rw [Matrix.trace_mul_cycle, Unitary.star_mul_self_of_mem N.property, Matrix.one_mul]
+    rw [Matrix.trace_mul_cycle, hnleft, Matrix.one_mul]
     rfl
   have hav : A v = v := by
     change vectorize 3 (lambda (lambda M)) = vectorize 3 M
@@ -175,16 +179,19 @@ theorem explicit_wash_bound :
   have hnval : (N : Mat) = !![1,0,0; 0,0,1; 0,-1,0] := by
     ext i j
     fin_cases i <;> fin_cases j <;> norm_num [N, D, U, Matrix.mul_apply, Fin.sum_univ_succ]
+  have hs6sq : (Real.sqrt 6 : ℂ) ^ 2 = 6 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)
   have hoverlap : inner ℂ v (R v) = (-1/3 : ℂ) := by
     change inner ℂ (vectorize 3 M) (vectorize 3 ((N : Mat) * M * (N : Mat)ᴴ)) = _
     rw [matrix_pairing, hnval]
     norm_num [M, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_succ]
     field_simp
-    norm_cast
-    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)]
+    linear_combination hs6sq
   let w : HS := vectorize 3 ((N : Mat)ᴴ * M * (N : Mat)) + (1/3 : ℂ) • v
   have hw2 : ‖w‖ ^ 2 = (8/9 : ℝ) := by
+    change ‖vectorize 3 ((N : Mat)ᴴ * M * (N : Mat)) +
+      (1/3 : ℂ) • vectorize 3 M‖ ^ 2 = _
     rw [← map_smul, ← map_add, vectorize_norm_sq, frobSq_eq_sum]
     rw [hnval]
     norm_num [M, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
@@ -197,6 +204,9 @@ theorem explicit_wash_bound :
     simp only [w, inner_add_left, inner_smul_left, hz, mul_zero, add_zero]
     rw [matrix_pairing, matrix_pairing]
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+    simp only [← Matrix.mul_assoc]
+    rw [Matrix.trace_mul_cycle]
+    simp only [Matrix.mul_assoc]
     rw [Matrix.trace_mul_cycle]
     simp only [Matrix.mul_assoc]
   have hbound (X : Mat) (ht : X.trace = 0) :
@@ -217,8 +227,10 @@ theorem explicit_wash_bound :
         A x = A (a • v + q x) := congrArg A hx
         _ = _ := by rw [map_add, map_smul, hav]
     have hnorm : ‖A x‖ ^ 2 = ‖a‖ ^ 2 + ‖z‖ ^ 2 := by
-      rw [hdec, norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero
-        (𝕜 := ℂ) _ _ (by simp [inner_smul_left, hz]), norm_smul, hv, mul_one]
+      have hh := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero
+        (𝕜 := ℂ) (a • v) z (by simp [inner_smul_left, hz])
+      rw [hdec]
+      simpa only [pow_two, norm_smul, hv, mul_one] using hh
     have hc : ‖inner ℂ v (R z)‖ ^ 2 ≤ (8/9 : ℝ) * ‖z‖ ^ 2 := by
       rw [hwinner z hz]
       have hh := (sq_le_sq₀ (norm_nonneg _) (by positivity)).mpr
@@ -232,7 +244,7 @@ theorem explicit_wash_bound :
       rw [hinner]
       have ht := norm_add_le (-a/3) (inner ℂ v (R z))
       have hs := (sq_le_sq₀ (norm_nonneg _) (by positivity)).mpr ht
-      norm_num only [norm_div, norm_neg, norm_ofNat, div_pow] at hs
+      norm_num [norm_div, norm_neg] at hs
       nlinarith [sq_nonneg (‖a‖/3 - ‖inner ℂ v (R z)‖)]
     have he := henergy (R (A x)) (by rw [htR, htA]; exact htx)
     rw [hr, hnorm] at he
@@ -248,7 +260,7 @@ theorem explicit_wash_bound :
     change (lambda (lambda (conjugation N (lambda (lambda X))))).trace = _
     simp only [lambda_trace]
     change ((N : Mat) * lambda (lambda X) * (N : Mat)ᴴ).trace = _
-    rw [Matrix.trace_mul_cycle, Unitary.star_mul_self_of_mem N.property,
+    rw [Matrix.trace_mul_cycle, hnleft,
       Matrix.one_mul, lambda_trace, lambda_trace]
   have hunit : wash (1 : Mat) = 1 := by
     have hl : lambda (1 : Mat) = 1 := by
@@ -258,7 +270,7 @@ theorem explicit_wash_bound :
     change lambda (lambda (conjugation N (lambda (lambda (1 : Mat))))) = 1
     rw [hl, hl]
     change lambda (lambda ((N : Mat) * 1 * (N : Mat)ᴴ)) = 1
-    rw [Matrix.mul_one, Unitary.mul_star_self_of_mem N.property, hl, hl]
+    rw [Matrix.mul_one, hnright, hl, hl]
   have hstep (X : Mat) (ht : X.trace = 0) :
       ‖vectorize 3 (wash X)‖ ≤ (2/3 : ℝ) * ‖vectorize 3 X‖ := by
     have hh := hbound X ht
@@ -306,8 +318,8 @@ theorem explicit_wash_bound :
     have hh := D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.centered_hermitian_norm_sq
       σ hpos.isHermitian
     have hp : RHLinalg.frobSq σ ≤ 1 := by
-      rw [frobSq_eq_sum]
-      simpa only [Complex.normSq_eq_norm_sq, Finset.sum_comm] using hpur
+      rw [frobSq_eq_sum, Finset.sum_comm]
+      simpa only [Complex.normSq_eq_norm_sq] using hpur
     have hps : (σ * σ).trace.re ≤ 1 := by
       change (σᴴ * σ).trace.re ≤ 1 at hp
       rwa [hpos.isHermitian.eq] at hp
