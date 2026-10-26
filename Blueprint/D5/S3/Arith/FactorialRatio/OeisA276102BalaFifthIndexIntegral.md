@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; \exists z \in \mathbb{Z},\; \operatorname{a}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/OeisA276102BalaFifthIndexIntegral.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bfrac-fracfactorial` (proved) by `D5/S3/Arith/FactorialRatio/OeisA276102BalaFifthIndexIntegral.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bfrac-fracfactorial","declaration_gid":"D5/S3/Arith/FactorialRatio/OeisA276102BalaFifthIndexIntegral.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2016). *Some integer ratios of factorials*. URL: <https://oeis.org/A276098/a276098.pdf>.

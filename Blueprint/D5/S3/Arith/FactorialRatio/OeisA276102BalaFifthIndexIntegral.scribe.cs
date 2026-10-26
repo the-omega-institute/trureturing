@@ -15,11 +15,11 @@ internal sealed class OeisA276102BalaFifthIndexIntegralDocument : IScribeDocumen
             Node("claim", Eq(Call("claim"), Parenthesized(ClaimBody())),
                 "OEIS A276102, COMMENTS (unpaginated): \"This is only conjecturally an integer sequence.\" Bala, page 5: \"are also integral for n ≥ 0.\" Naturals include zero, and integrality means equality to the real cast of an integer.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", ClaimBody(),
-                "Every natural index gives the real cast of an integer. Gamma recurrence and prime valuations prove the assertion for fifth indices, including zero.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Every natural index gives the real cast of an integer. Gamma recurrence and prime valuations prove the assertion for fifth indices, including zero.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("bfrac-fracfactorial"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
