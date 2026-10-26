@@ -746,3 +746,14 @@ proper-limit integration, the final omega-one Prefix and the full problem's
 functional-analytic endpoints remain separate obligations. The final
 omega-one Prefix is used only for its carrier, cone and projections;
 `Prefix.Data` and `Prefix.Laws` remain on proper slices.
+
+## Actual initial ordinal prefix
+
+`SignedOrdinalInitial.H0` constructs the entire Boolean cube at every
+finite stage and at omega. Its literal restrictions are onto by extending
+each Boolean function with false outside the smaller coordinate domain.
+`SignedOrdinalInitial.predecessor` constructs the first predecessor at
+omega without CH or an assumed predecessor. Old rows and earlier arrival
+births have empty exact ordinal domains, so their obligations are eliminated
+by proved contradictions. This supplies the actual initial input to the
+transfinite construction; it does not establish the global CH recursion.
