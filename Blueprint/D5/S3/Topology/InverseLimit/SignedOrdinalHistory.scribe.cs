@@ -8,6 +8,10 @@ internal sealed class SignedOrdinalHistoryDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "One actual coherent well-founded CH history", H("One actual coherent well-founded CH history"), Blocks(
             Paragraph(Text("The only mathematical premise is continuum=aleph-one. Stages are the countable ordinals from omega onward. Each State retains a literal Prefix through its own stage, the actual predecessor, the complete incoming initial/successor/limit evidence, incoming regular bounded F, and one whole outgoing Q with the same selected ordinary or delayed R. The entire U/B/V/nu and all original labels remain tied to their canonical births. The construction supplies no final omega-one Data, final metric, final measure, common final subsequence, or AH endpoint.")),
+            Describe.Lean(DescribeId.Create("literal-cast-B-eval"),
+                DeclarationHandle.Create(Owner + "cast_B_eval"), H("Whole birth B evaluation under literal equality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Transporting a whole birth across equality of literal carriers preserves each original natural-indexed B clopen. This identifies the delayed source and target supports on the final realization."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-history-advance"),
                 DeclarationHandle.Create(Owner + "advance"), H("Concrete advancement of one exact past"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
