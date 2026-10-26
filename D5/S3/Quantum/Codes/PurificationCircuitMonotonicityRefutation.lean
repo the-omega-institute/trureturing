@@ -7,14 +7,17 @@
    digest: A tight noisy purification circuit reverses preparation-error monotonicity. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Range
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -108,6 +111,45 @@ def pOut {n : ℕ} (p0 pI pC pT : ℝ) (circuit : List (Gate n))
 private def admissible (p0 pI pC pT : ℝ) : Prop :=
   0 ≤ p0 ∧ p0 < 1 / 2 ∧ 0 ≤ pI ∧ pI ≤ 1 ∧ 0 ≤ pC ∧ pC ≤ 1 ∧ 0 ≤ pT ∧ pT ≤ 1
 
+private lemma depolarize_zero {n : ℕ} (qubits : Finset (Fin n))
+    (distribution : ProbabilityVector n) : depolarize qubits 0 distribution = distribution := by
+  funext state
+  simp [depolarize]
+
+private lemma idle_zero {n : ℕ} (qubits : List (Fin n))
+    (distribution : ProbabilityVector n) : idleNoise qubits 0 distribution = distribution := by
+  induction qubits with
+  | nil => rfl
+  | cons qubit qubits ih =>
+      simp [idleNoise, depolarize_zero, ih]
+
+private lemma state_eq_values (state : State 3) :
+    state = ![state 0, state 1, state 2] := by
+  funext j
+  fin_cases j <;> rfl
+
+private lemma state_univ_three :
+    (Finset.univ : Finset (State 3)) =
+      {![false, false, false], ![false, false, true], ![false, true, false],
+        ![false, true, true], ![true, false, false], ![true, false, true],
+        ![true, true, false], ![true, true, true]} := by
+  ext state
+  simp only [Finset.mem_univ, true_iff, Finset.mem_insert, Finset.mem_singleton]
+  cases h0 : state 0 <;> cases h1 : state 1 <;> cases h2 : state 2
+  all_goals
+    have hs := state_eq_values state
+    rw [hs]
+    simp [h0, h1, h2]
+
+private lemma sum_state_three (f : State 3 → ℝ) :
+    Finset.sum Finset.univ f =
+      f ![false, false, false] + f ![false, false, true] + f ![false, true, false] +
+        f ![false, true, true] + f ![true, false, false] + f ![true, false, true] +
+        f ![true, true, false] + f ![true, true, true] := by
+  rw [state_univ_three]
+  simp
+  ring
+
 /-- The source question's coordinatewise monotonicity assertion. -/
 def claim : Prop :=
   ∀ (n k e : ℕ) (circuit : List (Gate n)) (outputs : Finset (Fin n)),
@@ -176,13 +218,16 @@ private lemma witness_space :
     Finset.sum (Finset.range (1 + 1)) (fun j => Nat.choose 3 j) = 2 ^ (3 - 1) := by
   norm_num [Finset.sum_range_succ, Nat.choose]
 
+set_option maxHeartbeats 4000000 in
 private lemma witness_evaluation_zero :
     pOut 0 0 (1 / 4) 0
       ([Gate.cnot 0 1 (by decide), Gate.cnot 1 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.cnot 0 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.toffoli 1 2 0 (by decide) (by decide) (by decide)] :
           List (Gate 3)) {0} = 1481 / 4096 := by
-  sorry
+  norm_num (config := { maxSteps := 1000000 }) [pOut, noisyRun, noisyStep, depolarize, permute,
+    initialDistribution, idealAction, gateSet, idle_zero, sum_state_three, state_univ_three,
+    Fin.forall_fin_succ, Fin.prod_univ_succ, Finset.sum_filter, Function.update_apply]
 
 private lemma witness_evaluation_small :
     pOut (1 / 100) 0 (1 / 4) 0
