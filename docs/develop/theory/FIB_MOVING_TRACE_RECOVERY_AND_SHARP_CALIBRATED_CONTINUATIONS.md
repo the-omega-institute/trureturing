@@ -2224,3 +2224,458 @@ The [exact-history source-escape theorem in *FIB Self-Calibrating Relation Mathe
 Strict separation is necessary and sufficient for bounded complete targets after some positive inflation of this record's error radius. At the exact radius it is sufficient, strict overlap is an obstruction, and contact requires further information: no general contact classification is given. Recordwise finite boundedness, robustness to radius inflation, pointwise recovery as noise tends to zero, and uniform recovery over world classes remain distinct assertions. Theorem 25.2 and all prior exact and noisy results keep their hypotheses and conclusions. The certificate neither tests the physical model nor supplies feasibility of an arbitrary received vector. No new reads, reset, source copy, skipped read, gain-root oracle, a priori source/gain floor, unrestricted acquisition optimum, optimal numerical constants, finite-bit arithmetic guarantee, physical realization, literature priority or kernel certification follows from these ordinary real-arithmetic results.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Two source parameters with the whole gain and drift still linear
+
+Throughout §§37–43, fix arbitrary $k,d\ge0$, the exact $L=3k+d+5$ original clocks and matrices of (26.2), a received $y\in\mathbb R^L$, and $\delta\ge0$. Compatibility means exactly $\mathcal W_\delta(y)$ in Definition 30.1. In particular every actual world has one strictly positive rank-one trace-one $P$, one whole $0\ne H\in\Pi_k$, and one whole $D\in\Pi_d$; every paid read has its raw error bounded by $\delta$. The construction below decides source boundedness at that very radius, including $e(y)=\delta$.
+
+**Definition 37.1 (two charts and their quadratic trace numerators).** For $\alpha,\beta>0$ put $s=\alpha+\beta$ and
+
+$$
+ X_{12}(\alpha,\beta)=
+ \begin{pmatrix}\alpha&1\\\alpha\beta&\beta\end{pmatrix},
+ \qquad
+ X_{21}(\alpha,\beta)=
+ \begin{pmatrix}\alpha&\alpha\beta\\1&\beta\end{pmatrix},
+ \qquad P_\nu=X_\nu/s,\quad \nu\in\{12,21\}.
+ \tag{37.1}
+$$
+
+Both matrices $P_\nu$ are strictly positive, rank one, and trace one. In the first chart $(P_{12})_{12}=1/s$, and in the second $(P_{21})_{21}=1/s$. With $U_i,V_i$ as in (30.2), define
+
+$$
+ \begin{aligned}
+ B_{12,i}&=U_i+(A_i)_{11}\alpha+(A_i)_{22}\beta+V_i\alpha\beta,\\
+ B_{21,i}&=V_i+(A_i)_{11}\alpha+(A_i)_{22}\beta+U_i\alpha\beta.
+ \end{aligned}
+ \tag{37.2}
+$$
+
+For whole polynomials $Q(\tau)=\sum_{j=0}^kq_j\tau^j$ and $F(\tau)=\sum_{j=0}^df_j\tau^j$, set $H=sQ$, $D=F$. Then at every original clock, simultaneously,
+
+$$
+ H(i)\operatorname{tr}(A_iP_\nu)+D(i)
+       =B_{\nu,i}(\alpha,\beta)Q(i)+F(i).
+ \tag{37.3}
+$$
+
+Here $\tau$ denotes the original polynomial variable; $s$ is a parameter indexing different whole worlds, not a rescaled acquisition clock. The identity is exact, including all clocks where $Q(i)=0$. Actual legality is $q\ne0$; no sign or sampled-value restriction is imposed on $Q$.
+
+**Lemma 37.2 (exhaustion and bounded coefficient fibers).** Each chart parametrizes every allowed source. For fixed $\alpha,\beta>0$, the linear map
+
+$$
+ (q,f)\longmapsto
+       \big(B_{\nu,i}Q(i)+F(i)\big)_{i=0}^{L-1}
+ \tag{37.4}
+$$
+
+is injective. Consequently its inverse image of the closed radius-$\delta$ box around $y$ is either empty or a compact polytope in $\mathbb R^{k+d+2}$. This includes lower-dimensional polytopes and $\delta=0$.
+
+**Proof.** For any allowed source $P$, use $\alpha=P_{11}/P_{12}$ and $\beta=P_{22}/P_{12}$ in the first chart. Trace one gives $\alpha+\beta=1/P_{12}$; determinant zero gives the remaining entry in (37.1). Division by $P_{21}$ gives the second chart in the same way. Conversely (37.1) verifies all source conditions directly, since $\det X_\nu=0$ and its trace is $s>0$.
+
+To prove injectivity, suppose (37.4) vanishes. Interpret it by (37.3) with the fixed source $P_\nu$. On the first $N=2k+d+3$ clocks, the fixed inverse from main §39, already instantiated in (26.3)–(26.4), returns the coefficient vectors of $sQ$, $b sQ$, and $F$, where $b=\operatorname{tr}(MP_\nu)$. Its input is zero, so $sQ=0$ and $F=0$. Since $s>0$, both coefficient vectors vanish. An injective linear map between finite-dimensional normed spaces has a bounded inverse on its image. The inverse image of a bounded box is therefore bounded; it is closed and described by finitely many linear inequalities. This proves the compact-polytope assertion without any uniform-in-$s$ inverse estimate. $\square$
+
+No endpoint of the original source fiber is removed by these coordinates. In the notation of (30.5), in chart $12$,
+
+$$
+ u=1/s,\qquad t=\beta/s,\qquad
+ v=\alpha\beta/s=s\,t(1-t).
+ \tag{37.5}
+$$
+
+Thus $t\to0$ or $t\to1$ at arbitrary rates is retained by $\alpha,\beta>0$ and $s\downarrow0$. At the limiting corner $B_{12,i}(0,0)=U_i$ and $B_{21,i}(0,0)=V_i$, but none of the actual-world tests below is performed at that corner.
+
+## 38. Exact coefficient elimination by signed bases
+
+**Definition 38.1 (finite determinant data).** Put $m=k+d+2$. Order the $2L$ labels $r=(i,\eta)$ by increasing $i$, with $\eta=+1$ followed by $\eta=-1$. For each chart define the row and the scalar
+
+$$
+ C_{\nu,i}=
+   \big((B_{\nu,i}i^j)_{j=0}^k,\ (i^j)_{j=0}^d\big),\qquad
+ R_{\nu,(i,\eta)}=\eta C_{\nu,i},\qquad
+ \lambda_{(i,\eta)}=\delta+\eta y_i.
+ \tag{38.1}
+$$
+
+As before $0^0=1$. The entire raw box is exactly
+
+$$
+ R_\nu w\le\lambda,\qquad
+ w=(q_0,\ldots,q_k,f_0,\ldots,f_d)^{\mathsf T}.
+ \tag{38.2}
+$$
+
+For each $m$-element subset $I$ of the ordered labels, retain its induced row order, write $R_{\nu,I}$ for the square submatrix, and form
+
+$$
+ \begin{aligned}
+ \Delta_{\nu,I}&=\det R_{\nu,I},\\
+ N_{\nu,I,\ell}&=
+    \det\big(R_{\nu,I}\text{ with column }\ell
+                                  \text{ replaced by }\lambda_I\big)
+                  &&(0\le\ell<m),\\
+ S_{\nu,I,r}&=
+    \det\begin{pmatrix}R_{\nu,I}&\lambda_I\\
+                       R_{\nu,r}&\lambda_r\end{pmatrix}
+                  &&(r=(i,\eta)).
+ \end{aligned}
+ \tag{38.3}
+$$
+
+All these are explicit polynomials in just $\alpha,\beta$. Their coefficients are fixed by the acquired $y,\delta$, the integer clocks and actual $A_i$. In particular their generation involves no unknown source, gain coefficient, drift coefficient, or error variable.
+
+For a fixed $I$, the **legal basis predicate** is
+
+$$
+ \begin{split}
+ \Psi_{\nu,I}(\alpha,\beta):\quad&
+ \Delta_{\nu,I}\ne0,\qquad
+ \operatorname{sgn} S_{\nu,I,r}
+       \in\{0,\operatorname{sgn}\Delta_{\nu,I}\}\quad\text{for every }r,\\
+ &\text{and }N_{\nu,I,j}\ne0
+                       \quad\text{for at least one }0\le j\le k.
+ \end{split}
+ \tag{38.4}
+$$
+
+Let $\Phi_\nu$ be the disjunction of these predicates over all $I$. Identically zero determinants can be omitted; any other identically zero polynomial retains sign zero. Signs in (38.4) are evaluated separately, so no multiplication of $\Delta$ and $S$ is required to express the test.
+
+**Theorem 38.2 (exact elimination and degree control).** For every $\alpha,\beta>0$, $\Phi_\nu(\alpha,\beta)$ holds if and only if there is a whole legal world in $\mathcal W_\delta(y)$ with source $P_\nu(\alpha,\beta)$. If $\Psi_{\nu,I}$ holds, one such whole world is explicitly
+
+$$
+ \begin{aligned}
+ P&=X_\nu/(\alpha+\beta),\\
+ H(\tau)&=(\alpha+\beta)
+              \sum_{j=0}^k\frac{N_{\nu,I,j}}{\Delta_{\nu,I}}\tau^j,\\
+ D(\tau)&=\sum_{j=0}^d
+              \frac{N_{\nu,I,k+1+j}}{\Delta_{\nu,I}}\tau^j,\qquad
+ \xi_i=y_i-B_{\nu,i}Q(i)-D(i).
+ \end{aligned}
+ \tag{38.5}
+$$
+
+The degrees below are total degrees in the two source parameters:
+
+| Data | Degree bound |
+|---|---:|
+| Gain columns of $R_\nu$ | $2$ |
+| Drift columns and $\lambda$ | $0$ |
+| $\Delta_{\nu,I}$, every $S_{\nu,I,r}$, and every drift numerator $N_{\nu,I,k+1+j}$ | $2(k+1)$ |
+| Every gain-legality numerator $N_{\nu,I,j}$, $0\le j\le k$ | $2k$ |
+
+There are at most
+
+$$
+                    2\binom{2L}{k+d+2}
+ \tag{38.6}
+$$
+
+bases in the two charts together. This counts bases, not arithmetic operations or root samples.
+
+**Proof.** At a nonsingular basis, Cramer's rule gives $w_\ell=N_\ell/\Delta$. The bordered determinant identity gives, for every signed raw constraint,
+
+$$
+ S_r=\Delta\lambda_r-R_r\operatorname{adj}(R_I)\lambda_I
+     =\Delta(\lambda_r-R_rw).
+ \tag{38.7}
+$$
+
+Thus (38.4) says exactly that this Cramer point satisfies every inequality in (38.2) and has a nonzero gain coefficient. Its source is legal by (37.1), and $(\alpha+\beta)Q\ne0$. Equations (37.3) and (38.7) verify each of the errors in (38.5) in the same whole world.
+
+For the converse, Lemma 37.2 makes the feasible coefficient set a compact polytope. A nonempty compact polytope is the convex hull of its vertices, and at each vertex $m$ linearly independent active constraint normals can be chosen. These standard facts apply also when the polytope has smaller affine dimension. If a feasible point has $q\ne0$, at least one vertex has $q\ne0$: otherwise every convex combination of vertices would have zero gain block. Choose the independent active rows at such a vertex. Their determinant is nonzero and Cramer's rule and (38.7) give precisely (38.4). This proves necessity without replacing the strict condition $H\ne0$ by its closure. The polyhedral suppliers used here are Kaibel, *Basic Polyhedral Theory*, Theorems 2, 13 and 15, with the bounded-polyhedron specialization of the Weyl–Minkowski description; their role is the vertex/Cramer step, not the source parametrization or its escape interpretation.
+
+For the degree statements, there are exactly $k+1$ columns depending on $\alpha,\beta$, each of degree at most two. All drift columns and the right-hand-side column are constant in these parameters. In each determinant monomial, each column occurs once. Hence $\deg\Delta\le2(k+1)$. Replacing a gain column leaves only $k$ quadratic columns, proving $\deg N_j\le2k$; replacing a drift column leaves $k+1$. The bordered determinant defining $S_r$ also has only $k+1$ quadratic columns, proving the same bound $2(k+1)$ for its degree. Estimating the two terms of (38.7) separately is unnecessary and would obscure this bound. Increasing $d$ adds only parameter-independent columns and more candidate row sets. Finally each chart has at most $\binom{2L}{m}$ choices of $I$. $\square$
+
+Theorem 38.2 eliminates the entire original-variable coefficient vectors, rather than allowing separate values of $H$ or $D$ at different reads. It allows degree drops, gain signs, all sampled gain roots and all exact active raw equalities. It imposes no positive lower bound on the Cramer gain block. In particular along passing worlds $Q$ may tend to zero, so the $Q=0$ auxiliary limits in (30.2) are retained; only an identically zero gain in an actual positive-scale world is excluded.
+
+## 39. A finite root-sign test at one sufficiently small scale
+
+This section specifies the finite sign evaluation used for the determinant data. It supplies an evaluated-fiber criterion, with a proof of its uniform positive-scale meaning. No quantifier-elimination existence assertion is needed.
+
+**Definition 39.1 (projection polynomials and the sample scale).** Collect the polynomials $\Delta_{\nu,I},N_{\nu,I,j}$ for $0\le j\le k$, and $S_{\nu,I,r}$ from both charts, including those needed in (38.4). Substitute
+
+$$
+                    \alpha=x,\qquad \beta=s-x,
+ \tag{39.1}
+$$
+
+and adjoin the two boundary polynomials $x,s-x$. Call this finite family $\mathscr F\subset\mathbb R[s,x]$, keeping zero members as fixed zero signs. Its nonzero members have total degree at most $D_*=2(k+1)$.
+
+Factor each nonzero member, over $\mathbb R[s,x]$, in the form
+
+$$
+                p(s,x)=c_p(s)\prod_{h\in\mathscr H}h(s,x)^{e(p,h)}.
+ \tag{39.2}
+$$
+
+Here $c_p$ is a nonzero polynomial in $s$, the distinct $h$ that actually occur form one common list $\mathscr H$, and each $h$ is irreducible, primitive as a polynomial in $x$ over $\mathbb R[s]$, and of positive $x$ degree. Constant real factors are absorbed into $c_p$; fix any exact normalization of the factors. This is an algebraic specification with the given real coefficients, not a bit-computability assumption.
+
+Form the finite univariate family $\mathscr P\subset\mathbb R[s]$ consisting of all $c_p$, all nonzero coefficients of each $h$ as a polynomial in $x$, and
+
+$$
+ \operatorname{Res}_x(h,\partial_xh),\qquad
+ \operatorname{Res}_x(h,\widetilde h)
+                         \quad(h\ne\widetilde h\text{ in }\mathscr H).
+ \tag{39.3}
+$$
+
+Use the ordinary Sylvester determinants for these resultants. None of the displayed resultants is the zero polynomial: over the characteristic-zero field $\mathbb R(s)$, irreducible positive-degree $h$ is squarefree, and two distinct primitive factors are coprime. Zero coefficient polynomials are not included in $\mathscr P$. Constant nonzero polynomials have no roots.
+
+The following positive numbers are determined by this finite data:
+
+$$
+ \zeta=\min\big(\{1\}\cup
+       \{r>0:p(r)=0\text{ for some }p\in\mathscr P\}\big),\qquad
+ \varepsilon=\zeta/2,\qquad s_*=\zeta/4.
+ \tag{39.4}
+$$
+
+The root set is finite, so $\zeta>0$. In particular no member of $\mathscr P$ vanishes on $(0,\varepsilon)$. Roots at $s=0$ are harmless and are not included in the positive-root set.
+
+At the one scale $s_*$, let
+
+$$
+             0=r_0<r_1<\cdots<r_a<r_{a+1}=s_*
+ \tag{39.5}
+$$
+
+be the distinct roots in $(0,s_*)$ of $\prod_{h\in\mathscr H}h(s_*,x)$, together with the displayed endpoints. Take the finite sample set
+
+$$
+ \mathscr T=
+       \{r_1,\ldots,r_a\}\ \cup\
+       \{(r_j+r_{j+1})/2:0\le j\le a\}.
+ \tag{39.6}
+$$
+
+For each chart define the Boolean number
+
+$$
+ \mathsf{Pass}_\nu(y,\delta)=
+       \bigvee_{x_*\in\mathscr T}\Phi_\nu(x_*,s_*-x_*).
+ \tag{39.7}
+$$
+
+Thus (39.7) requires only finitely many signs of the specified determinant polynomials at finitely many roots and intervening samples of univariate polynomials. The disjunction includes root samples as well as open intervals. In particular an exactly active equality can be the only passing possibility.
+
+**Lemma 39.2 (why the one-scale test controls all smaller scales).** For each $\nu$, the following are equivalent:
+
+1. $\mathsf{Pass}_\nu(y,\delta)$ is true.
+2. For every $0<s<\varepsilon$, there is $0<x<s$ with $\Phi_\nu(x,s-x)$.
+3. There is a sequence $s_n\downarrow0$ and $0<x_n<s_n$ with $\Phi_\nu(x_n,s_n-x_n)$.
+
+More precisely, if (39.7) passes, a fixed basis $I$ and a continuous root section or a midpoint between two neighboring root sections can be used throughout $(0,\varepsilon)$, keeping $\Psi_{\nu,I}$ true.
+
+**Proof.** The leading coefficient of every $h$ is among the projection polynomials. Thus its specialized $x$ degree stays fixed on $(0,\varepsilon)$. The self-resultant in (39.3) ensures that all its complex roots are simple there, and the pairwise resultants ensure that two different factors have no common root. These implications follow from the elementary Sylvester common-root criterion, with no degree loss on this interval.
+
+For clarity, the needed real-root continuity can be proved directly on this interval. At any fixed $s_0>0$, a simple real root continues locally as a unique continuous root by the implicit function theorem. No additional real roots appear nearby: in a neighborhood of $s_0$ the leading coefficient is bounded away from zero, the other coefficients are bounded, and the elementary monic-polynomial root bound bounds all roots. A convergent subsequence of any purported additional real roots would give a root at $s_0$; simplicity and local uniqueness exclude it. Complex roots cannot become real without a multiple root. It follows that the number of real roots is locally constant, hence constant on the interval. Order the roots increasingly; their local continuations then join to global continuous sections. Pairwise nonintersection fixes the order of all sections from all factors.
+
+The boundary factors $x$ and $s-x$ are in the same list. Hence the sections $x=0$ and $x=s$ never cross an interior section. Between them, the number and ordering of sections and sectors are fixed for every $0<s<\varepsilon$. On each section, a factor is either identically zero or nowhere zero; on each open sector every factor is nowhere zero. These cells are connected, so each nowhere-zero factor has constant sign. The vertical factors $c_p(s)$ have constant nonzero sign too. The factorization (39.2) consequently makes the signs of all original members of $\mathscr F$ constant on each of these cells. An identically zero member has sign zero throughout.
+
+At $s_*$, (39.6) samples every interior section and every sector between the boundary sections. Thus each truth value of (38.4) found there persists on the corresponding entire cell, and every truth value at any other $s$ occurs at its matching sample. This proves the equivalence, including the sequence version. For a passing sample choose one passing basis $I$. If the sample is a root, follow that section; if it is a midpoint, use the midpoint of its two continuous boundary sections at each $s$. These choices stay in the same cell and keep every sign in $\Psi_{\nu,I}$ unchanged. $\square$
+
+The root-sign principle is standard; the argument above gives its hypotheses explicitly for this particular bivariate projection. Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition, Propositions 11.9 and 11.11, supply the general sign-invariant sampling and constant-fiber-sign framework. No assertion that a discriminant alone controls a degree-dropping or identically nullified family is used here. Primitive factorization, the vertical factors, the leading coefficients, and the boundary sections are all part of the construction.
+
+The determinant degree bounds of Theorem 38.2 concern the eliminated source certificates. Auxiliary projection degrees can be larger. For example the Sylvester construction gives the coarse bound $2D_*^2$ on the degrees in $s$ of the polynomials in (39.3): the matrix has at most $2D_*$ rows and each entry has degree at most $D_*$. This bound too is independent of $d$; the number of polynomials and bases need not be. No runtime or optimal degree assertion is made.
+
+## 40. Necessary and sufficient finite acquired-record criterion
+
+**Theorem 40.1 (finite signs are equivalent to actual source escape).** Use Definitions 38.1 and 39.1 for the actual $y,\delta,k,d$ on (26.2). Then:
+
+1. The $P_{12}$ projection of $\mathcal W_\delta(y)$ is unbounded if and only if $\mathsf{Pass}_{12}(y,\delta)$ is true. The corresponding equivalence holds for $P_{21}$ and $\mathsf{Pass}_{21}$.
+2. The source projection is unbounded if and only if at least one of the two finite tests passes. A passing test constructs whole legal worlds at every $0<s<\varepsilon$, with the selected escaping entry exactly $1/s$, by the fixed-basis formulas (38.5).
+3. If the $12$ test fails, every compatible world has $P_{12}\le1/\varepsilon$. If the $21$ test fails, every compatible world has $P_{21}\le1/\varepsilon$. If both fail, all compatible complete targets satisfy
+
+$$
+ \begin{aligned}
+ \|P\|_{\max}&\le\max\{1,\varepsilon^{-1}\},\\
+ \|\operatorname{coeff}_kH\|_\infty
+                    &\le\|\widehat h\|_\infty+a\delta,\\
+ \|\operatorname{coeff}_dD\|_\infty
+                    &\le\|\widehat a\|_\infty+a\delta,
+ \end{aligned}
+ \tag{40.1}
+$$
+
+where $a,\widehat h,\widehat a$ are the unchanged original-clock prefix quantities of (26.4). Empty compatibility sets satisfy these bounds vacuously.
+
+**Proof.** Suppose the $12$ test passes. Lemma 39.2 supplies positive $\alpha(s)=x(s)$, $\beta(s)=s-x(s)$ and one basis whose complete sign predicate holds for every $0<s<\varepsilon$. Theorem 38.2 then gives the single source and the two whole polynomials in (38.5), together with all $L$ legal raw errors, at each such $s$. Every $H$ is genuinely nonzero, since at least one of its gain Cramer numerators is nonzero at that positive scale. The source has $P_{12}=1/s$, so its projection is unbounded. In the other direction, from compatible worlds with $P_{12}\to\infty$ use their exact first-chart coordinates from Lemma 37.2. Then $s=1/P_{12}\to0$. Necessity in Theorem 38.2 gives $\Phi_{12}$ at these points, so Lemma 39.2 makes the finite test pass. The proof for $21$ is identical with the second chart.
+
+All diagonal entries lie strictly between zero and one. Thus an unbounded set of allowed sources has an unbounded off-diagonal coordinate, and a subsequence in one of the two directions proves assertion 2. If a failed test admitted a compatible $P_{12}>1/\varepsilon$, its chart would have $0<s<\varepsilon$ and a true $\Phi_{12}$, contradicting Lemma 39.2. This proves the directional bounds, and both together give the first line of (40.1). Finally (26.9) is valid for every whole world with this same received prefix and raw radius; its $H,D$ bounds give the remaining lines. No gain lower bound is needed for boundedness of these two coefficient blocks. $\square$
+
+This is a source-specific necessary-and-sufficient acquired-record criterion at the original radius, with all gain and drift coefficients eliminated before the two-variable sign problem. Its inputs are precisely the finite raw vector, the declared degrees, and the declared radius. Passing evidence is a whole-world formula, not independent prefix and tail feasibility. Negative evidence in both directions gives a finite source bound and the existing prefix bounds give complete-target boundedness. The finite test makes no claim that a failed record has a positive gain floor, a small recovery radius, or boundedness after any radius inflation.
+
+**Corollary 40.2 (contact and the existing five-read consumers).** At $e(y)=\delta$, either truth value of each test in (39.7) is permitted; their disjunction settles exact-radius unboundedness. At $e(y)>\delta$ both tests fail, and at $e(y)<\delta$ at least one passes. These last two statements follow from Theorems 31.2 and 32.1 combined with Theorem 40.1.
+
+For the very same five reads with $k=d=0$, Proposition 34.1 supplies
+
+$$
+ y^{\rm B}=(0,2,0,0,0),\qquad\delta=1:
+                  \quad(\mathsf{Pass}_{12},\mathsf{Pass}_{21})
+                                      =(\mathrm{false},\mathrm{false}).
+ \tag{40.2}
+$$
+
+Proposition 35.1 supplies
+
+$$
+ y^{\rm U}=(1,7/10,17/10,19/10,21/10),\qquad\delta=3/5:
+                  \quad(\mathsf{Pass}_{12},\mathsf{Pass}_{21})
+                                      =(\mathrm{true},\mathrm{false}).
+ \tag{40.3}
+$$
+
+These are applications of their existing proofs, without repeating their world constructions. The $12$ assertion in (40.3) uses its actual family (35.3). For the negative $21$ assertion, an unbounded $P_{21}$ subsequence would, by the corresponding half of the proof of Theorem 30.2, have a finite record limit in $\mathcal E_{21}$ inside the closed radius-$3/5$ box. Its distance is $7/10>3/5$, which excludes that subsequence. Thus the finite criterion consumes both opposite exact-radius examples, including the zero auxiliary polynomial allowed in their limit spaces.
+
+## 41. Nonempty bounded contact with nonzero auxiliary gains
+
+**Proposition 41.1.** On exactly (29.1), let $k=d=0$ and
+
+$$
+               y^{\rm E}=(0,5/2,3/2,1/2,3/2),\qquad\delta=1.
+ \tag{41.1}
+$$
+
+Then $\mathcal W_1(y^{\rm E})$ is nonempty,
+
+$$
+ \operatorname{dist}_\infty(y^{\rm E},\mathcal E_{12})=1,\qquad
+ \operatorname{dist}_\infty(y^{\rm E},\mathcal E_{21})=9/8.
+ \tag{41.2}
+$$
+
+Every approximant in $\mathcal E_{12}$ within radius one has
+
+$$
+                F\in[1/2,1],\qquad Q=3/2-F\in[1/2,1].
+ \tag{41.3}
+$$
+
+Nevertheless every actual compatible source is bounded. More explicitly, for all compatible whole worlds,
+
+$$
+ b\le5/6,\qquad \|P\|_{\max}\le1,\qquad
+                  -3\le h\le-1/2,\qquad -1/2\le D\le4.
+ \tag{41.4}
+$$
+
+Both finite tests of Theorem 40.1 therefore fail.
+
+**Proof.** Nonemptiness is witnessed by
+
+$$
+ P=\begin{pmatrix}99/100&9/100\\11/100&1/100\end{pmatrix},
+                  \qquad H=-1,\qquad D=2.
+ \tag{41.5}
+$$
+
+The source is strictly positive, trace one and determinant zero. Using the same triple at all five original clocks, (29.5) gives the noiseless vector
+
+$$
+                  z=(1,179/100,79/100,69/100,69/100).
+$$
+
+The errors $y^{\rm E}-z=(-1,71/100,71/100,-19/100,81/100)$ all have magnitude at most one.
+
+For $\mathcal E_{12}$, coordinates $1$ and $3$ of every approximant are equal. Their received difference is two, proving the lower bound one. At radius one their common value must be $3/2$, hence $F+Q=3/2$. The clock-$0$ constraint gives $F\in[-1,1]$, and the clock-$4$ constraint gives $3-F\in[1/2,5/2]$. These are exactly $F\in[1/2,1]$; the clock-$2$ constraint is then automatic. This proves attainability and the entire nonzero contact-gain interval (41.3).
+
+For $\mathcal E_{21}$ every approximant $w$ satisfies $2w_1-w_0-w_3=0$. Its value on $y^{\rm E}$ is $9/2$, and the sum of the absolute coefficients of this functional is four, giving distance at least $9/8$. The choice $F=9/8,Q=1/4$ has residual
+
+$$
+ y^{\rm E}-(F+VQ)=(-9/8,9/8,1/8,-9/8,1/8),
+$$
+
+and attains the bound.
+
+For actual compatibility, use $P$ as in (30.5) and one whole $h\ne0,D$. The constraints give $z_3\le3/2\le z_1$. But the exact same-source contrast in (29.5) is
+
+$$
+                 z_3-z_1=h(1+v-t).
+ \tag{41.6}
+$$
+
+Its factor is strictly positive, so $h<0$. Also $z_1-z_0\ge1/2$, whence
+
+$$
+                (-h)(1-b)=h(b-1)=z_1-z_0\ge1/2.
+ \tag{41.7}
+$$
+
+Since $b>0$ and $h=z_2-z_1\ge(1/2)-(7/2)=-3$, it follows that $-h\ge1/2$ and $1-b\ge1/6$. This proves the stated gain and $b$ bounds. The diagonal entries are below one and both off-diagonal entries are below $b$, giving the source bound. Finally $D=z_0-h$, $z_0\in[-1,1]$, gives its interval in (41.4). This nonempty bounded contact does not rely on an auxiliary contact gain vanishing. $\square$
+
+## 42. Arbitrarily late positive violation on legal escaping worlds
+
+**Proposition 42.1 (exact remainder beyond every prescribed weak Taylor depth).** Retain the single record $y^{\rm E}$ and radius one of (41.1). For each integer $n\ge0$, put $m=\max\{1,n\}$. There is a family of legal whole worlds, at the same five original clocks, indexed by $0<r\le1/8$, with $\|P_r\|_{\max}=1/r$, such that the only violated raw constraint is at clock $3$ and its exact excess over radius one is
+
+$$
+       \eta_m(r)=\frac34 r^{m+1}(1+r-r^{m+1})>0.
+ \tag{42.1}
+$$
+
+In particular every signed raw slack has a Taylor expansion at $r=0$ whose first nonzero coefficient through order $n$, if there is one, is nonnegative. The clock-$3$ slack vanishes through order $n$, yet is strictly negative at every positive $r$. All the worlds are compatible at radius $1+\eta_m(r)$, and none is compatible at radius one.
+
+**Proof.** Set
+
+$$
+ \begin{gathered}
+ t_r=1-r^m,\qquad u_r=r^{-1},\qquad
+ v_r=r\,t_r(1-t_r),\\
+ P_r=\begin{pmatrix}1-t_r&u_r\\v_r&t_r\end{pmatrix},\qquad
+ h_r=\frac34r,\qquad b_r=u_r+v_r+t_r,\qquad
+ D_r=\frac32-h_rb_r.
+ \end{gathered}
+ \tag{42.2}
+$$
+
+For every positive parameter in the stated interval, all source entries are positive, the trace is one, and $u_rv_r=t_r(1-t_r)$ gives determinant zero. Its largest entry is $1/r$. The one whole constant gain $h_r$ is nonzero and the one whole constant drift is $D_r$. Substitution into all five reports, without a truncated expansion, gives
+
+$$
+ \begin{aligned}
+ z_0&=\frac34+\frac34r^{m+1}
+                         -\frac34r^{m+2}(1-r^m),\\
+ z_1&=\frac32,\\
+ z_2&=\frac32+\frac34r,\\
+ z_3&=\frac32+\frac34r^{m+1}(1+r-r^{m+1}),\\
+ z_4&=\frac94+\frac34r(2-r^m).
+ \end{aligned}
+ \tag{42.3}
+$$
+
+Here $z_3-z_1=h_r(1+v_r-t_r)$ is the same exact contrast as (41.6). For $r\le1/8$, $3/4\le z_0\le3/4+3/256<1$, $z_2\in[3/2,51/32]$, and $9/4\le z_4\le39/16<5/2$. These prove all raw constraints except clock $3$; clock $1$ is exactly active with $y_1-z_1=1$. At clock $3$, $z_3-y_3=1+\eta_m(r)$, where the factor in (42.1) is positive. The remaining signed constraint at that clock has slack $2+\eta_m(r)>0$.
+
+The reports and their signed slacks are polynomials in $r$ and extend to $r=0$. Every slack except the active clock-$1$ slack and the violating clock-$3$ slack has a strictly positive constant term. The clock-$1$ active slack is identically zero; the violating clock-$3$ slack is exactly
+
+$$
+ 1-(z_3-y_3)
+       =-\frac34r^{m+1}
+        -\frac34r^{m+2}
+        +\frac34r^{2m+2}
+       =-\frac34r^{m+1}+O(r^{m+2}).
+ \tag{42.4}
+$$
+
+Thus its coefficients through the prescribed depth $n\le m$ are all zero, with a strictly negative leading coefficient at the next displayed order. Formula (42.4), together with the positive exact factor in (42.1), specifies both the remainder and its sign for the whole positive interval; it is not a claim inferred from a finite truncation. This proves every assertion. $\square$
+
+The auxiliary $12$ gain in this family is $u_rh_r=3/4$, and $D_r\to3/4$, an interior point of (41.3). In chart (37.1) its exact source parameters are
+
+$$
+              \alpha=r^{m+1},\qquad
+              \beta=r-r^{m+1},\qquad s=r.
+ \tag{42.5}
+$$
+
+The endpoint ratio $t_r=\beta/s$ therefore approaches one at an arbitrary prescribed polynomial rate, while the escaping entry is always $1/r$. This exhibits why weak nonnegative finite jets along a proposed family cannot by themselves certify exact-radius compatibility: a strictly negative slack can first appear beyond that chosen depth even with nonzero limiting auxiliary gain. It does not contradict effective finite-order bounds obtained using the full polynomial system and correctly selected algebraic cells. Theorem 40.1 uses that full system and exact signs; it does not promote the weak jets of these deliberately chosen arcs into passing evidence.
+
+## 43. Mathematical suppliers and the precise scope of the finite criterion
+
+The source contract and paid trajectory remain Definitions 25.1, 26.1 and 30.1. Main [*FIB Self-Calibrating Relation Mathematics*, Definition 39.1 and Theorem 39.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复), through the already instantiated inverse (26.4), supply coefficient-fiber injectivity and the two complete-target coefficient bounds. The existing moving-trace identities (29.5) supply the exact five-read contrasts. Propositions 34.1 and 35.1 supply the two previously established contact consumers. None of their proofs or acquisition budgets is replaced.
+
+Volker Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorems 2, 8, 13 and 15](https://arxiv.org/abs/1001.2161v1), supplies Cramer's rule, finite polyhedral descriptions, the independent-active-row description of vertices and the convex-hull description for bounded polyhedra used in Theorem 38.2. These standard tools do not supply (37.1)–(37.3), the gain-only degree accounting, or the same-world equivalence.
+
+Saugata Basu, Richard Pollack and Marie-Françoise Roy, [*Algorithms in Real Algebraic Geometry*, second edition, Propositions 11.9 and 11.11, printed pp. 417 and 419](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), supply the mature sign-invariant sampling framework. Marc Moreno Maza's university notes, [*The resultant*, Definition 4 and Propositions 5–6](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html), supply the Sylvester determinant and coprimality criterion used in (39.3). Lemma 39.2 explicitly checks the squarefreeness, specialization, boundary and nonintersection hypotheses needed here and proves the resulting root-section argument. No weakened delineability hypothesis is assumed. The abstract real-algebraic decision policy in *FIB Self-Calibrating Relation Mathematics IV*, Corollary 9.4, is not counted as new mathematical content.
+
+The additional source-specific content is the exact two-parameter polynomial chart with the whole gain and drift still linear; elimination to the signed basis family (38.3)–(38.4); degree bounds depending on gain degree alone; the explicit one-scale sign construction with its legal-whole-world reconstruction and two-direction negative bound; and the nonzero-gain bounded contact with its arbitrarily delayed exact violation family. These are deductions for the given source and acquired-record model using the credited intermediate tools, without an external priority claim.
+
+The criterion covers every declared $k,d\ge0$, every received real vector and nonnegative radius, and in particular the full exact-radius contact set. It neither changes the reading contract nor strengthens the world class. It keeps zero auxiliary limits, genuine nonzero actual gains, roots and degree drops, exact active equalities and endpoint ratios at arbitrary rates. It does not substitute the exact-ancestor/corridor contracts in volume IX or the affine six-read recorded-clock contracts for this all-raw original-clock model. Finite real sign and root data do not assert finite-bit computability for arbitrary real presentations, an acquisition root oracle, runtime efficiency, optimal complexity or constants, physical realization, literature priority, or Lean kernel certification. Boundedness at the exact radius and boundedness after positive inflation remain different properties.
+
+## 追加锚（本行以下为增补区）
