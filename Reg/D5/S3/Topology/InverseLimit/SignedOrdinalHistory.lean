@@ -33,4 +33,7 @@ theorem delayed_cofinal_source : delayed_cofinal_scope := @delayed_cofinal
 abbrev launch_cofinal_scope := type_of% (@launch_cofinal)
 theorem launch_cofinal_source : launch_cofinal_scope := @launch_cofinal
 
+abbrev cast_B_eval_scope := type_of% (@cast_B_eval)
+theorem cast_B_eval_source : cast_B_eval_scope := @cast_B_eval
+
 end Reg.D5.S3.Topology.InverseLimit.SignedOrdinalHistory
