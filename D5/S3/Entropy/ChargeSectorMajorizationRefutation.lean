@@ -52,14 +52,18 @@ private noncomputable def s : Fin 4 → ℝ := ![7/20, 5/20, 4/20, 4/20]
 private lemma r_state : (∀ i, 0 ≤ r i) ∧ (∑ i, r i = 1) := by
   constructor
   · intro i
-    fin_cases i <;> norm_num [r]
-  · norm_num [r, Fin.sum_univ_succ]
+    rw [r.eq_1]
+    fin_cases i <;> norm_num
+  · rw [r.eq_1]
+    norm_num [Fin.sum_univ_succ]
 
 private lemma s_state : (∀ i, 0 ≤ s i) ∧ (∑ i, s i = 1) := by
   constructor
   · intro i
-    fin_cases i <;> norm_num [s]
-  · norm_num [s, Fin.sum_univ_succ]
+    rw [s.eq_1]
+    fin_cases i <;> norm_num
+  · rw [s.eq_1]
+    norm_num [Fin.sum_univ_succ]
 
 private lemma full_spectra :
     desc r = [7/20, 6/20, 6/20, 1/20] ∧
@@ -83,8 +87,12 @@ private lemma global_majorizes : Majorizes (desc r) (desc s) := by
 private lemma sector_weights :
     sectorWeight r chargeData 0 = 3/5 ∧ sectorWeight s chargeData 0 = 3/5 := by
   constructor
-  · norm_num [sectorWeight, r, chargeData, Fin.sum_univ_succ]
-  · norm_num [sectorWeight, s, chargeData, Fin.sum_univ_succ]
+  · rw [sectorWeight.eq_1]
+    simp_rw [chargeData.eq_1]
+    norm_num [r, Fin.sum_univ_succ]
+  · rw [sectorWeight.eq_1]
+    simp_rw [chargeData.eq_1]
+    norm_num [s, Fin.sum_univ_succ]
 
 private lemma sector_spectra :
     sectorSpectrum r chargeData 0 = [1/2, 1/2] ∧
