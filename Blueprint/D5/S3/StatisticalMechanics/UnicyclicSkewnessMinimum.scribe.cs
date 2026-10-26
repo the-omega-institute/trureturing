@@ -121,7 +121,10 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
                         + "and apply the closed-simplex lower bound. Hence minimumValue n ≤ s, "
                         + "which proves IsLeast. The conclusion concerns the finite-n skewness "
                         + "minimum for positive rates on unidirectional cycles."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptaszynski-2022-unicyclic-skewness-minimum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SkewnessFormula()
     {
