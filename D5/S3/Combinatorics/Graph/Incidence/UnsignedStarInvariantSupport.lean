@@ -245,7 +245,7 @@ theorem attained_invariant_support_maxcut [Fintype V] [Fintype X]
   · rintro n ⟨z, hzi, hπz, rfl⟩
     exact hmin z hzi hπz
   · exact ⟨Function.support (representative g (colorPotential c)),
-      ⟨c, hci, by rw [color_support g c]; exact Set.Subset.rfl⟩, rfl⟩
+      ⟨c, hci, by rw [color_support g c]⟩, rfl⟩
   · rintro n ⟨D, ⟨d, hd, hs⟩, rfl⟩
     exact (hlow d hd).trans (Set.ncard_mono hs)
   · rintro n ⟨d, hd, rfl⟩
@@ -264,12 +264,18 @@ theorem invariantCore_subset {I : Type*} (σ : Γ →* Equiv.Perm I) (D : Set I)
 theorem invariantCore_invariant {I : Type*} (σ : Γ →* Equiv.Perm I)
     (D : Set I) (γ : Γ) (i : I) :
     σ γ i ∈ invariantCore σ D ↔ i ∈ invariantCore σ D := by
+  change (∀ δ, σ δ (σ γ i) ∈ D) ↔ ∀ δ, σ δ i ∈ D
+  have action_mul (a b : Γ) (j : I) : σ a (σ b j) = σ (a * b) j := by
+    change (σ a * σ b) j = σ (a * b) j
+    rw [map_mul]
   constructor
   · intro h δ
     have he := h (δ * γ⁻¹)
-    simpa only [map_mul, map_inv, Equiv.Perm.mul_apply, Equiv.symm_apply_apply] using he
+    rw [action_mul, inv_mul_cancel_right] at he
+    exact he
   · intro h δ
-    simpa only [map_mul, Equiv.Perm.mul_apply] using h (δ * γ)
+    rw [action_mul]
+    exact h (δ * γ)
 
 /-- Universal property of the largest invariant subset of D. -/
 theorem subset_invariantCore_iff {I : Type*} (σ : Γ →* Equiv.Perm I)

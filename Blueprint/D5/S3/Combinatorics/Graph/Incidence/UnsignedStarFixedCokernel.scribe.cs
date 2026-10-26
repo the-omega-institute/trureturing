@@ -11,7 +11,7 @@ internal sealed class UnsignedStarFixedCokernelDocument : IScribeDocumentDefinit
         H("Integral Fixed Unsigned-Star Cokernels"),
         Blocks(
             Describe.Lean(DescribeId.Create("star-equivariance"),
-                DeclarationHandle.Create(Prefix + "IndexedAction.starMap_equivariant"), H("Equivariance of the Original Integer Star Map"),
+                DeclarationHandle.Create(Prefix + "starMap_equivariant"), H("Equivariance of the Original Integer Star Map"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The existing equivariance proof is exposed unchanged for invariant-support consumers. Independent endpoint swaps remain allowed; no fixed-cokernel lifting or comparison theorem is assumed by those consumers."))), DescribeRole.Theorem),
             Paragraph(Text("V and X are the finite original vertex and edge-ID types. "

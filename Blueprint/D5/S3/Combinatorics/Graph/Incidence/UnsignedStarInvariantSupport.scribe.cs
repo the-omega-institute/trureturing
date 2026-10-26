@@ -1,6 +1,3 @@
-// Pending real Lean/action interface and statement-projection adaptation.
-// Intended placement: Blueprint/D5/S3/Combinatorics/Graph/Incidence/UnsignedStarInvariantSupport.scribe.cs.
-// Handles below are proposed future bindings, not compiled typed anchors; FromRepo records derivation provenance only.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Incidence;
@@ -14,7 +11,7 @@ internal sealed class UnsignedStarInvariantSupportDocument : IScribeDocumentDefi
         H("Invariant Integer Support and Original Indexed Cuts"),
         Blocks(
             Paragraph(Text("Let Gamma be an arbitrary, possibly infinite group. The existing loopless Edges V X retains every original edge ID, including parallel IDs. "
-                + "The proposed IndexedAction supplies vertexPerm, edgePerm and unordered endpoint preservation; orientations may swap. "
+                + "The reviewed IndexedAction supplies vertexPerm, edgePerm and unordered endpoint preservation; orientations may swap. "
                 + "Write F=g.starMap, pi=F.range.mkQ, t=pi(1_X), R(b)=representative g b=1_X+F(b), "
                 + "K(c)=cutEdges g c and U(c)=K(c)'s complement. The integer colorPotential c is -1 on true and 0 on false. "
                 + "The quotient uses the actual integer range. Except for the explicitly general transport/core helpers, the fixed-fiber results assume "
