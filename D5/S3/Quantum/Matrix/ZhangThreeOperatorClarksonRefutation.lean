@@ -21,6 +21,8 @@ Admission basis: external open-problem resolution.
 
 noncomputable section
 
+set_option linter.style.longLine false
+
 open Matrix
 open scoped BigOperators
 
@@ -43,7 +45,27 @@ private lemma power_of_gram_charpoly (x : Matrix (Fin 2) (Fin 2) ℂ)
     (hc : (xᴴ * x).charpoly = (diagonal (fun i => (d i : ℂ))).charpoly)
     {p : ℝ} (hp : 0 < p) :
     schattenNorm x p ^ p = ∑ i, d i ^ (p / 2) := by
-  sorry
+  classical
+  let hg := isHermitian_mul_conjTranspose_self xᴴ
+  have hh : IsHermitian (diagonal (fun i => (d i : ℂ))) := by
+    apply isHermitian_diagonal_iff.mpr
+    intro i
+    simp [isSelfAdjoint_iff]
+  have he : hg.eigenvalues = hh.eigenvalues :=
+    (hg.eigenvalues_eq_eigenvalues_iff (hB := hh)).mpr (by simpa using hc)
+  obtain ⟨σ, hσ⟩ := hh.eigenvalues_eq_of_unitary_similarity_diagonal
+    (U := (1 : Matrix (Fin 2) (Fin 2) ℂ)) (by simp) (f := d) (by simp)
+  rw [schattenNorm_rpow_eq_sum_singularValues x hp]
+  calc
+    _ = ∑ i, singularValues x (σ i) ^ p := (Equiv.sum_comp σ _).symm
+    _ = ∑ i, d i ^ (p / 2) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      change Real.sqrt (hg.eigenvalues (σ i)) ^ p = _
+      rw [he, show hh.eigenvalues (σ i) = d i from congrFun hσ i,
+        Real.sqrt_eq_rpow, ← Real.rpow_mul (hd i)]
+      congr 1
+      ring
 
 private lemma left_side {p : ℝ} (hp : 0 < p) :
     schattenNorm (a + b + c) p ^ p + schattenNorm a p ^ p +
