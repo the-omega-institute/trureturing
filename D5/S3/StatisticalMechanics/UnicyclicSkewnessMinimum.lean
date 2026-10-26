@@ -44,7 +44,7 @@ def claim : Prop :=
 private def simplexFunctional {n : ℕ} (x : Fin n → ℝ) : ℝ :=
   3 * (∑ i, x i ^ 2) ^ 2 - 2 * ∑ i, x i ^ 3
 
-private lemma normalized_simplex {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)
+private lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
     (fun i => (k i)⁻¹ / waitingPowerSum k 1) ∈ stdSimplex ℝ (Fin n) := by
   have hz : (fun i => (k i)⁻¹) ≠ (0 : Fin n → ℝ) := by
@@ -229,6 +229,6 @@ theorem result : claim := by
   refine ⟨attaining_rates n hn, ?_⟩
   rintro s ⟨k, hk, rfl⟩
   rw [skewness_normalized]
-  exact simplex_lower_bound hn _ (normalized_simplex hn k hk)
+  exact simplex_lower_bound hn _ (normalized_simplex (by omega) k hk)
 
 end D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum
