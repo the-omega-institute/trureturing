@@ -208,7 +208,7 @@ $$\forall (n : \mathbb{N}), \forall (S : \operatorname{Finset}\left(\operatornam
 
 A witness is at column distance at most one, and every selected neighbour of it is at distance at most two by the natural-distance triangle inequality. This proves that the five-column restriction retains the complete proper-subset condition, including widths one and two.
 
-The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, its vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint.
+The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, the connection to the proved vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint.
 
 ## References
 

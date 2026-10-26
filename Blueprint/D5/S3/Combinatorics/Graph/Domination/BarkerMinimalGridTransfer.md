@@ -160,18 +160,6 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.
 
 A terminal state must accept its four columns followed by 8, and must also accept its last three columns followed by 8,8. These check the final two real columns.
 
-**Theorem 1.14 (One mask for an edge).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.edge_unique_mask`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.edge_unique_mask` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every admitted edge has exactly one appended-real-mask witness. This uniqueness concerns the appended mask and does not choose any private-neighbour witness.
-
 The all-length bijection between actual accepted mask words and successful full-state paths remains unproved here. The identification of the Boolean Local predicate with the actual-grid ColumnTest, the separate width-one count, the full-state quotient certificate and the original generating-series endpoint also remain open formal interfaces. No actual-count or quotient equality is assumed.
 
 ## References
@@ -183,7 +171,6 @@ The all-length bijection between actual accepted mask words and successful full-
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.append_injective`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.columns`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.columns_append`
-- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.edge_unique_mask`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.initial`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.present`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.selected`
