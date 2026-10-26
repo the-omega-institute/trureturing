@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.LinearAlgebra.Pi
 
 /-! The unpruned 4672-state model uses all 64 two-column starts and two absent
 terminal checks. No actual-count equality or quotient compatibility is assumed. -/
