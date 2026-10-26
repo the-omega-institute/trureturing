@@ -116,7 +116,8 @@ def fingerprint_inventory(path, root_stat):
                     yield candidate, info
 
 
-def tree_fingerprint(path, memo, updated, counts=None):
+def tree_fingerprint(path, memo, updated, counts=None, *, tree_memo=None,
+                     trees=None, file_only=False):
     base = os.path.abspath(path)
     result = hashlib.sha256()
     result.update(base.encode())
@@ -125,18 +126,38 @@ def tree_fingerprint(path, memo, updated, counts=None):
     except FileNotFoundError:
         result.update(b"filemissing")
         return result.hexdigest()
+    if file_only and stat.S_ISDIR(root_stat.st_mode):
+        raise ValueError("invalid mathematical input file")
     result.update(b"directory" if stat.S_ISDIR(root_stat.st_mode) else b"file")
+    members = []
+    checksums = []
+    unchanged = True
     for name, info in fingerprint_inventory(base, root_stat):
         stamp = [info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns]
         prior = memo.get(name)
         reused = prior and prior[0] == stamp
         checksum = prior[1] if reused else digest(name)
+        unchanged = unchanged and bool(reused)
         if counts is not None:
             counts["checked"] += 1
             counts["hashed"] += not bool(reused)
         updated[name] = [stamp, checksum]
-        result.update(canonical([name[len(base) + 1:] if name != base else "", checksum]))
-    return result.hexdigest()
+        members.append(name)
+        checksums.append(checksum)
+    # The signed aggregate saves per-member JSON encoding and hash updates,
+    # after the full current population and every change stamp are checked.
+    prior_tree = (tree_memo or {}).get(base)
+    if (unchanged and prior_tree and prior_tree["members"] == members
+            and prior_tree.get("checksums") == checksums):
+        checksum = prior_tree["digest"]
+    else:
+        for name in members:
+            checksum = updated[name][1]
+            result.update(canonical([name[len(base) + 1:] if name != base else "", checksum]))
+        checksum = result.hexdigest()
+    if trees is not None:
+        trees[base] = {"members": members, "checksums": checksums, "digest": checksum}
+    return checksum
 
 
 def input_identity(request, root, key):
@@ -146,8 +167,14 @@ def input_identity(request, root, key):
         memo = read_signed(memo_path, key)
     except (OSError, ValueError, TypeError, KeyError):
         memo = {}
+    tree_path = root / "fingerprint-trees.json"
+    try:
+        tree_memo = read_signed(tree_path, key)
+    except (OSError, ValueError, TypeError, KeyError):
+        tree_memo = {}
     wall_phase("fingerprint/memo-read-end")
     updated = {}
+    trees = {}
     # These are request/data populations and explicit dependency pins. Judge
     # source, build configuration and compiled programs are not reuse inputs.
     # Lean additionally compares current target declarations and their complete
@@ -166,12 +193,15 @@ def input_identity(request, root, key):
     counts = {"checked": 0, "hashed": 0}
     for path in inputs:
         wall_phase(f"fingerprint/tree-start path={path}")
-        fingerprint.append((str(path), tree_fingerprint(path, memo, updated, counts)))
+        fingerprint.append((str(path), tree_fingerprint(
+            path, memo, updated, counts, tree_memo=tree_memo, trees=trees)))
         wall_phase(f"fingerprint/tree-end path={path}")
     if updated != memo:
         wall_phase("fingerprint/memo-write-start")
         write_signed(memo_path, updated, key)
         wall_phase("fingerprint/memo-write-end")
+    if trees != tree_memo:
+        write_signed(tree_path, trees, key)
     wall_phase(f"fingerprint/inventory checked={counts['checked']} hashed={counts['hashed']} memo_changed={updated != memo}")
     # Profiling/telemetry paths do not change mathematical inputs. Unknown
     # SEARCH_REDUCTION options are conservative cache invalidators.
@@ -207,9 +237,9 @@ def source_data_fingerprints(paths, root, key):
     fingerprints = {}
     for name in paths:
         path = Path(name)
-        if not path.is_absolute() or path.is_dir():
+        if not path.is_absolute():
             raise ValueError("invalid mathematical input file")
-        fingerprints[name] = tree_fingerprint(path, memo, updated)
+        fingerprints[name] = tree_fingerprint(path, memo, updated, file_only=True)
     if updated != memo:
         write_signed(memo_path, updated, key)
     return fingerprints

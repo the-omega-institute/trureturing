@@ -68,6 +68,92 @@ class ProbeCacheTests(unittest.TestCase):
             cache.tree_fingerprint(tree, {}, {})
         self.assertEqual(reads, [str(member)])
 
+    def test_hot_tree_reuses_aggregate_only_after_complete_stamp_scan(self):
+        tree = self.directory / "input"
+        tree.mkdir()
+        members = [tree / f"source-{i}.olean" for i in range(3)]
+        for member in members:
+            member.write_bytes(b"source")
+        memo, trees = {}, {}
+        first = cache.tree_fingerprint(tree, {}, memo, tree_memo={}, trees=trees)
+        updated, next_trees = {}, {}
+        ordinary_stat, ordinary_canonical = cache.os.stat, cache.canonical
+        reads, leaf_encodings = [], []
+
+        def counted(path, *args, **kwargs):
+            reads.append(str(path))
+            return ordinary_stat(path, *args, **kwargs)
+
+        def encoded(value):
+            if isinstance(value, list) and len(value) == 2:
+                leaf_encodings.append(value)
+            return ordinary_canonical(value)
+
+        with patch.object(cache.os, "stat", side_effect=counted), \
+                patch.object(cache, "canonical", side_effect=encoded):
+            self.assertEqual(first, cache.tree_fingerprint(
+                tree, memo, updated, tree_memo=trees, trees=next_trees))
+        self.assertEqual(set(reads), {str(tree), *(str(p) for p in members)})
+        self.assertEqual(len(reads), 4)
+        self.assertEqual(leaf_encodings, [])
+        self.assertEqual(memo, updated)
+        self.assertEqual(trees, next_trees)
+        added = tree / "added.olean"
+        added.write_bytes(b"new population member")
+        self.assertNotEqual(first, cache.tree_fingerprint(
+            tree, memo, {}, tree_memo=trees, trees={}))
+        members[0].write_bytes(b"changed source")
+        new_memo = {}
+        changed = cache.tree_fingerprint(tree, memo, new_memo)
+        self.assertNotEqual(first, changed)
+        # A crash between publishing the file memo and the aggregate memo
+        # must not authorize an old aggregate against current file hashes.
+        self.assertEqual(changed, cache.tree_fingerprint(
+            tree, new_memo, {}, tree_memo=trees, trees={}))
+
+    def test_hot_identity_avoids_per_member_serialization(self):
+        root = self.directory / "cache"
+        root.mkdir()
+        request = self.directory / "request.lean"
+        request.write_text("request")
+        source = self.directory / "D5/Target.lean"
+        source.parent.mkdir()
+        source.write_text("target")
+        ordinary_canonical = cache.canonical
+        encoded_leaves = []
+
+        def encoded(value):
+            if isinstance(value, list) and len(value) == 2:
+                encoded_leaves.append(value)
+            return ordinary_canonical(value)
+
+        before_cwd = Path.cwd()
+        try:
+            os.chdir(self.directory)
+            with patch.dict(os.environ, {}, clear=True):
+                first = cache.input_identity(request, root, self.key)
+                with patch.object(cache, "canonical", side_effect=encoded):
+                    self.assertEqual(first, cache.input_identity(request, root, self.key))
+        finally:
+            os.chdir(before_cwd)
+        self.assertEqual(encoded_leaves, [])
+
+    def test_selected_source_file_reads_its_stamp_once(self):
+        source = self.directory / "Target.olean"
+        source.write_bytes(b"source")
+        ordinary_stat = cache.os.stat
+        reads = []
+
+        def counted(path, *args, **kwargs):
+            if str(path) == str(source):
+                reads.append(str(path))
+            return ordinary_stat(path, *args, **kwargs)
+
+        with patch.object(cache.os, "stat", side_effect=counted), \
+                patch.object(cache.Path, "stat", new=counted):
+            cache.source_data_fingerprints([str(source)], self.directory, self.key)
+        self.assertEqual(reads, [str(source)])
+
     def test_each_semantic_input_invalidates_old_result(self):
         files = ["request.lean", "D5/Target.lean", "Golden/Frozen/state/Target.json",
                  "index/page.json", "library/Source.olean", "lake-manifest.json",
