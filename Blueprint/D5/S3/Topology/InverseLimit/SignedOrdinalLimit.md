@@ -34,7 +34,19 @@ The output has type SignedOrdinalSuccessor.Predecessor(literalPrefix(H,E),omega<
 
 For every arbitrary sequence of SignedMeasure on the actual top carrier, properMetric makes the compact limit space metrizable because the coordinate ordinal is countable. The finite positive and negative Jordan parts are automatically regular. Package each original signed measure unchanged as RegularSigned, apply E.F, and forget only the regularity and norm clauses required by the predecessor API. The base restriction is onto by composing E.onto at the genuine stage omega with the archive's earlier base invariant. No common limit before all sequences is asserted: the quantifiers are forall s exists mu.
 
-**Definition 1.3 (Retain the actual limit event).**
+**Theorem 1.3 (Unchanged whole archive labels).**
+
+Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.predecessor_whole_readback`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.predecessor_whole_readback` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every old row of the actual limit predecessor, its entire U, V and nu are heterogeneously equal to the same archive row's U, V and nu on the unchanged literal carrier. All labels are retained, including labels not yet eligible for J.
+
+**Definition 1.4 (Retain the actual limit event).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.construct`
 
@@ -53,4 +65,5 @@ This is a local construction for the well-founded ordinal recursion. It invents 
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.construct`
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.data`
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.literalPrefix`
+- Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.predecessor_whole_readback`
 - Dependency: [D5/S3/Topology/InverseLimit/SignedOrdinalSuccessor](SignedOrdinalSuccessor.md)
