@@ -107,7 +107,7 @@ theorem centralMoment_laguerre_step (n : ℕ) :
   have hl := congrArg (fun p : ℝ[X] => centralMoment p) (lowering n)
   have ht := congrArg (fun p : ℝ[X] => centralMoment p) (X_laguerre_succ n)
   simp only [map_sub, centralMoment_C_mul] at hl
-  simp only [← Polynomial.C_add, neg_mul, map_sub, map_add, map_neg,
+  simp only [add_mul, neg_mul, map_sub, map_add, map_neg,
     centralMoment_C_mul] at ht
   linear_combination ht - hx - 2 * hl
 
