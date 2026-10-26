@@ -7,6 +7,7 @@
    digest: Ordered clique-fiber expansion preserves the cokernel closure rules. -/
 
 import D5.S3.Combinatorics.BinomialBases.MazorchukXuClosure
+import Mathlib.Data.Fintype.Fin
 
 /-! Clique-fiber expansion and its converse along an increasing section. -/
 
@@ -139,33 +140,22 @@ theorem exists_unique_ordinary_cutoff {E : ℕ → ℕ → Prop} (h : Rules E)
     (ho : ∀ r, E 0 (g r)) :
     ∃! c : ℕ, c ≤ M ∧ ∀ r : Fin M, Incident E s (g r) ↔ c ≤ r.val := by
   classical
-  let S := (Finset.univ.filter (fun r : Fin M => Incident E s (g r))).image Fin.val
-  let S' := insert M S
-  have hnonempty : S'.Nonempty := by simp [S']
-  let c := S'.min' hnonempty
-  have hcM : c ≤ M := Finset.min'_le S' M (by simp [S'])
+  let c := (Finset.univ.filter (fun r : Fin M => ¬ Incident E s (g r))).card
+  have hcM : c ≤ M := by
+    simpa only [Finset.card_univ, Fintype.card_fin] using
+      (Finset.card_filter_le (Finset.univ : Finset (Fin M))
+        (fun r => ¬ Incident E s (g r)))
+  have hdown : ∀ i j : Fin M, j ≤ i → ¬ Incident E s (g i) → ¬ Incident E s (g j) := by
+    intro i j hji hi hj
+    by_cases hij : j = i
+    · exact hi (hij ▸ hj)
+    · have hji' : j < i := lt_of_le_of_ne hji hij
+      exact hi (incident_ordinary_mono h hs (ho j) (ho i) (hg hji') hj)
   have hcut : ∀ r : Fin M, Incident E s (g r) ↔ c ≤ r.val := by
     intro r
-    constructor
-    · intro hr
-      apply Finset.min'_le
-      apply Finset.mem_insert_of_mem
-      refine Finset.mem_image.mpr ⟨r, ?_, rfl⟩
-      exact Finset.mem_filter.mpr ⟨Finset.mem_univ r, hr⟩
-    · intro hcr
-      have hcS : c ∈ S := by
-        have hm : c ∈ S' := Finset.min'_mem S' hnonempty
-        have hcne : c ≠ M := by have := r.isLt; omega
-        exact (Finset.mem_insert.mp hm).resolve_left hcne
-      obtain ⟨j, hj, hjc⟩ := Finset.mem_image.mp hcS
-      have hjselected : Incident E s (g j) := (Finset.mem_filter.mp hj).2
-      by_cases hjr : j = r
-      · simpa only [hjr] using hjselected
-      · have hjr' : j < r := by
-          apply Fin.lt_def.mpr
-          have hne : j.val ≠ r.val := fun heq => hjr (Fin.ext heq)
-          omega
-        exact incident_ordinary_mono h hs (ho j) (ho r) (hg hjr') hjselected
+    have hi : r.val < c ↔ ¬ Incident E s (g r) :=
+      Fin.lt_card_filter_univ_iff_apply_of_imp (fun j => ¬ Incident E s (g j)) hdown
+    exact (not_iff_not.mp (by simpa only [not_lt] using hi)).symm
   refine ⟨c, ⟨hcM, hcut⟩, ?_⟩
   intro d hd
   obtain ⟨hdM, hdcut⟩ := hd

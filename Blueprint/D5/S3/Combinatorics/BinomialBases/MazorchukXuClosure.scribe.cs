@@ -1,3 +1,4 @@
+using System.Linq;
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -7,14 +8,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.BinomialBases;
 
 internal static class MazorchukXuNotation
 {
-    internal static Formula N => Call("Nat");
-    internal static Formula Q => Call("Rat");
-    internal static Formula Prop => Call("Prop");
-    internal static Formula Type => Call("Type");
-    internal static Formula Pairs => Call("Prod", N, N);
-    internal static Formula Points => Call("Finset", Pairs);
+    internal static Formula N => Fn("Nat");
+    internal static Formula Q => Fn("Rat");
+    internal static Formula Prop => Fn("Prop");
+    internal static Formula Ty => Fn("Type");
+    internal static Formula Pairs => Fn("Prod", N, N);
+    internal static Formula Points => Fn("Finset", Pairs);
     internal static Formula V(string name) => F.Id(name);
-    internal static Formula Call(string name, params Formula[] args) =>
+    internal static Formula Fn(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     internal static Formula Apply(Formula fn, params Formula[] args) =>
         Seq(fn, Open, new Formula.LatexSequence([.. args.SelectMany((a, i) =>
@@ -42,7 +43,7 @@ internal static class MazorchukXuNotation
     internal static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     internal static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     internal static Formula Subset(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.SubsetOf, b);
-    internal static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    internal static Formula Plus(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     internal static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     internal static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     internal static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, Sp, b, Close);
@@ -51,7 +52,7 @@ internal static class MazorchukXuNotation
     internal static Formula Rel(Formula a) => new Formula.TypeArrow(a, new Formula.TypeArrow(a, Prop));
     internal static Formula Map(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     internal static Formula Ordered(string name, Formula body) =>
-        All(name, Type, Seq(OpenBracket, Call("LinearOrder", V(name)), CloseBracket, Sp, body));
+        All(name, Ty, Seq(OpenBracket, Fn("LinearOrder", V(name)), CloseBracket, Sp, body));
     internal static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/mazorchukxu2026cokernel");
     internal static DocumentBlock Node(string module, string name, string title, Formula formula,
         string prose, DescribeRole role, bool literature = false) =>
@@ -76,55 +77,55 @@ internal sealed class MazorchukXuClosureDocument : IScribeDocumentDefinition
                 "Only points whose first coordinate is zero are counted.", DescribeRole.Definition, true),
             Node("Closure", "family", "The finite family R(n,k)", Family(),
                 "All subsets of the triangle are tested. Empty subsets and empty rows remain in the domain.", DescribeRole.Definition, true),
-            Node("Closure", "count", "The cardinal r(n,k)", Many("n k", N, Eq(Call("count", V("n"), V("k")), Call("card", Call("family", V("n"), V("k"))))),
+            Node("Closure", "count", "The cardinal r(n,k)", Many("n k", N, Eq(Fn("count", V("n"), V("k")), Fn("card", Fn("family", V("n"), V("k"))))),
                 "The first argument is a natural number. This definition introduces no recurrence value at minus one.", DescribeRole.Definition, true),
             Node("Closure", "Conjecture", "The complete polynomiality question", ConjectureFormula(),
                 "For each deficit one rational polynomial must work at every valid natural rank, with exact degree and leading coefficient. Rational coefficients embed into real numerical values. This is the question's statement; no proof of this proposition is asserted here. Deficits zero through three are prior source results.", DescribeRole.Definition, true),
             Node("Closure", "pointEdges", "Point-to-edge relation", All("Y", Points, Many("a b", N,
-                Iff(Call("pointEdges", V("Y"), V("a"), V("b")), And(Lt(V("a"), V("b")), Mem(Pair(V("a"), Sub(V("b"), D(1))), V("Y")))))),
+                Iff(Fn("pointEdges", V("Y"), V("a"), V("b")), And(Lt(V("a"), V("b")), Mem(Pair(V("a"), Sub(V("b"), D(1))), V("Y")))))),
                 "The source point (a,b) becomes the strict edge (a,b+1). Natural subtraction appears only after strict endpoint order has ensured a positive upper endpoint.", DescribeRole.Definition),
             Node("Closure", "Rules", "The rules P and J", RulesFormula(),
                 "P propagates an overlapping pair to its upper-right edge. J joins the two lower endpoints and the two upper endpoints by maxima. Ordered edges are strict.", DescribeRole.Definition),
             Node("Closure", "mem_triangle", "Triangle membership", Many("n a b", N,
-                Iff(Mem(Pair(V("a"), V("b")), Call("triangle", V("n"))), And(Le(V("a"), V("b")), Le(V("b"), V("n")))))),
+                Iff(Mem(Pair(V("a"), V("b")), Fn("triangle", V("n"))), And(Le(V("a"), V("b")), Le(V("b"), V("n"))))),
                 "The finite range construction is exactly a less-than-or-equal b less-than-or-equal n.", DescribeRole.Theorem),
             Node("Closure", "star_iff_rules", "Literal source equivalence", All("Y", Points,
-                Imp(OrderedPoints(V("Y")), Iff(Call("Star", V("Y")), Call("Rules", Call("pointEdges", V("Y"))))))),
+                Imp(OrderedPoints(V("Y")), Iff(Fn("Star", V("Y")), Fn("Rules", Fn("pointEdges", V("Y")))))),
                 "Repeating the second source point gives P. J is the source's maximum conclusion. Conversely P, applied to the premise with the smaller upper endpoint, recovers the entire successor/minimum conclusion. This proves both directions for every triangular subset, including repetitions and empty subsets.", DescribeRole.Theorem),
             Node("Closure", "mem_family_iff", "Exact finite-family membership", Many("n k", N, All("Y", Points,
-                Iff(Mem(V("Y"), Call("family", V("n"), V("k"))), And(Subset(V("Y"), Call("triangle", V("n"))), Call("Rules", Call("pointEdges", V("Y"))), Eq(Call("firstColumnCard", V("Y")), V("k"))))))),
+                Iff(Mem(V("Y"), Fn("family", V("n"), V("k"))), And(Subset(V("Y"), Fn("triangle", V("n"))), Fn("Rules", Fn("pointEdges", V("Y"))), Eq(Fn("firstColumnCard", V("Y")), V("k")))))),
                 "The source-family test retains the triangle bound, both ordered-edge rules and the exact first-column statistic.", DescribeRole.Theorem)), []));
 
     private static Formula OrderedPoints(Formula y) => Many("a b", N,
         Imp(Mem(Pair(V("a"), V("b")), y), Le(V("a"), V("b"))));
-    private static Formula Triangle() => All("n", N, Eq(Call("triangle", V("n")),
-        Set("p", Pairs, And(Le(Call("fst", V("p")), Call("snd", V("p"))), Le(Call("snd", V("p")), V("n")))));
-    private static Formula FirstColumn() => All("Y", Points, Eq(Call("firstColumnCard", V("Y")),
-        Call("card", Set("p", V("Y"), Eq(Call("fst", V("p")), D(0)))));
-    private static Formula Family() => Many("n k", N, Eq(Call("family", V("n"), V("k")),
-        Set("Y", Points, And(Subset(V("Y"), Call("triangle", V("n"))), Call("Star", V("Y")), Eq(Call("firstColumnCard", V("Y")), V("k")))));
+    private static Formula Triangle() => All("n", N, Eq(Fn("triangle", V("n")),
+        Set("p", Pairs, And(Le(Fn("fst", V("p")), Fn("snd", V("p"))), Le(Fn("snd", V("p")), V("n"))))));
+    private static Formula FirstColumn() => All("Y", Points, Eq(Fn("firstColumnCard", V("Y")),
+        Fn("card", Set("p", V("Y"), Eq(Fn("fst", V("p")), D(0))))));
+    private static Formula Family() => Many("n k", N, Eq(Fn("family", V("n"), V("k")),
+        Set("Y", Points, And(Subset(V("Y"), Fn("triangle", V("n"))), Fn("Star", V("Y")), Eq(Fn("firstColumnCard", V("Y")), V("k"))))));
     private static Formula StarFormula()
     {
         var a = V("a"); var b = V("b"); var c = V("c"); var d = V("d"); var e = V("e"); var f = V("f"); var y = V("Y");
-        return All("Y", Points, Iff(Call("Star", y), Many("a b c d e f", N,
+        return All("Y", Points, Iff(Fn("Star", y), Many("a b c d e f", N,
             Imp(And(Mem(Pair(a,b),y),Mem(Pair(c,d),y),Mem(Pair(e,f),y),Le(a,c),Le(c,b),Le(a,e),Le(e,b),Le(b,d),Le(b,f)),
-                And(Mem(Pair(Call("max",c,e),Call("max",d,f)),y),
-                    Imp(Lt(b,Call("min",d,f)),Mem(Pair(Add(b,D(1)),Call("min",d,f)),y)))))));
+                And(Mem(Pair(Fn("max",c,e),Fn("max",d,f)),y),
+                    Imp(Lt(b,Fn("min",d,f)),Mem(Pair(Plus(b,D(1)),Fn("min",d,f)),y)))))));
     }
     private static Formula ConjectureFormula()
     {
         var i=V("i");var p=V("p");var n=V("n");
-        return Iff(Call("Conjecture"),All("i",N,Ex("p",Call("Polynomial",Q),And(
-            Eq(Call("natDegree",p),Mul(D(2),i)),Eq(Call("leadingCoeff",p),Call("inv",Call("castRat",Call("factorial",i)))),
-            All("n",N,Imp(Le(i,Add(n,D(1))),Eq(Call("eval",p,Call("castRat",n)),Call("castRat",Call("count",n,Sub(Add(n,D(1)),i))))))))));
+        return Iff(Fn("Conjecture"),All("i",N,Ex("p",Fn("Polynomial",Q),And(
+            Eq(Fn("natDegree",p),Mul(D(2),i)),Eq(Fn("leadingCoeff",p),Fn("inv",Fn("castRat",Fn("factorial",i)))),
+            All("n",N,Imp(Le(i,Plus(n,D(1))),Eq(Fn("eval",p,Fn("castRat",n)),Fn("castRat",Fn("count",n,Sub(Plus(n,D(1)),i))))))))));
     }
     private static Formula RulesFormula()
     {
         var a=V("a");var b=V("b");var c=V("c");var d=V("d");var e=V("e");var f=V("f");var A=V("A");
-        Formula E(Formula u,Formula v)=>Call("E",u,v);
+        Formula E(Formula u,Formula v)=>Fn("E",u,v);
         var ordered=Many("a b",A,Imp(E(a,b),Lt(a,b)));
         var propagation=Many("a b c d",A,Imp(And(E(a,b),E(c,d),Le(a,c),Lt(c,b),Lt(b,d)),E(b,d)));
-        var join=Many("a b c d e f",A,Imp(And(E(a,b),E(c,d),E(e,f),Le(a,c),Lt(c,b),Le(a,e),Lt(e,b),Le(b,d),Le(b,f)),E(Call("max",c,e),Call("max",d,f))));
-        return Ordered("A",All("E",Rel(A),Iff(Call("Rules",V("E")),And(ordered,propagation,join))));
+        var join=Many("a b c d e f",A,Imp(And(E(a,b),E(c,d),E(e,f),Le(a,c),Lt(c,b),Le(a,e),Lt(e,b),Le(b,d),Le(b,f)),E(Fn("max",c,e),Fn("max",d,f))));
+        return Ordered("A",All("E",Rel(A),Iff(Fn("Rules",V("E")),And(ordered,propagation,join))));
     }
 }
