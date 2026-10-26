@@ -48,7 +48,17 @@ private theorem integral_X {k : Type*} [Field k] (a : Subalgebra k (Polynomial k
 private theorem finite_of_integral_X {k : Type*} [Field k]
     (a : Subalgebra k (Polynomial k)) (h : IsIntegral a (X : Polynomial k)) :
     Module.Finite a (Polynomial k) := by
-  sorry
+  have ht : Algebra.adjoin a {(X : Polynomial k)} = ⊤ := by
+    apply Subalgebra.restrictScalars_injective k
+    rw [Subalgebra.restrictScalars_top]
+    apply top_unique
+    rw [← Polynomial.adjoin_X]
+    apply Algebra.adjoin_le
+    intro x hx
+    obtain rfl := Set.mem_singleton_iff.mp hx
+    exact Algebra.subset_adjoin (R := a) (s := {(X : Polynomial k)}) rfl
+  exact Module.Finite.of_fg_top (by
+    simpa only [ht, Algebra.top_toSubmodule] using h.fg_adjoin_singleton)
 
 private theorem fg_of_finite {k : Type*} [Field k] (a : Subalgebra k (Polynomial k))
     (h : Module.Finite a (Polynomial k)) : a.FG := by
