@@ -3539,3 +3539,882 @@ parameter-uniform estimate, global $L^2$ or operator-domain status
 for $f_0$, physical realization or literature priority.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 27. Exact positive-energy exterior solutions without a phase prescription
+
+**Definition 27.1 (inherited data and the positive-energy exterior form).**
+Assume precisely Definition 18.1 of the
+[original source at revision d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+with suppliers C and V at
+5cec4fa83ae7bbb4e787c42606525db4cd11ed48 as fixed in its Definition 1.1.
+These are exactly the analytic hypotheses of Definitions 24.1, 25.1
+and 26.1. All assertions in Sections 27--29 are ordinary conditional
+analysis under them. Fix any integer $n\ge2$ and any real
+$g\in(\lambda_n,g_n^{\rm iso})$, where the finite
+$g_n^{\rm iso}>\lambda_n$ is supplied by Lemma 24.2.
+Constants may depend on this fixed pair; no uniformity in $n,g$ is
+assumed or asserted.
+
+Retain the identity unit source, raw measures, covariance-$2$ heat
+clock, full time integral and whole unweighted omitted fibre in
+(26.1), with $\epsilon=1$. Retain the original fields $U,V,Z$, free
+closure $\mathcal H_1$, form $q_{\rm orig}=T_1-gW_{n,1}$ and
+Friedrichs operator of (26.2). There is no new source, boundary
+realization or tail hypothesis. The actual gauge $R_g$, dilation,
+angular parametrization, raw Jacobian and normalized cylinder image
+$w_f$ are exactly (26.3).
+
+Use $J,c,q_n,\mathcal H_c,A,C,Q,h$ from (25.1), with all forms
+linear in the first argument. Unless a $C$ subscript is displayed,
+angular inner products and norms use unweighted $L^2(J,da)$.
+In particular $\|b\|_{\mathcal H_c}^2=A[b]+\|b\|_2^2$ and
+$\|b\|_C^2=C[b]$. Reuse, without reproving, the positive real even
+$\psi$ and $s=2\pi L_{n,g}>0$ of Proposition 24.3, together with
+(25.8) and (26.5):
+
+$$
+\begin{aligned}
+C[\psi]&=1,& h(\psi,b)&=-s^2C(\psi,b)\quad(b\in\mathcal H_c),\\
+V_{\rm ev}&=\{b\in\mathcal H_c:b(-a)=b(a),\ C(b,\psi)=0\},\\
+A[b]&\ge\lambda_0\|b\|_2^2\quad(b\in\mathcal H_c),&
+h[v]&\ge\kappa A[v]\quad(v\in V_{\rm ev}),\qquad\lambda_0,\kappa>0.
+\end{aligned}
+\tag{27.1}
+$$
+
+The space $V_{\rm ev}$ is the entire even natural complement.
+No endpoint value is imposed on it or on $\mathcal H_c$.
+All integer angular sectors of the original operator retain the
+natural domains in (18.1); the symmetry used below is precisely
+Proposition 24.4's reducing axisymmetric $z$-even sector $\mathcal S$.
+
+For $f=e^{-\ell}w/\sqrt{2\pi}$ and
+$f_z=e^{-\ell}z/\sqrt{2\pi}$ in this sector, adding the physical
+mass pairing to (25.7) gives the exact identity
+
+$$
+\begin{aligned}
+4\{q_{\rm orig}(f,f_z)+E\langle f,f_z\rangle_{L^2(d\xi)}\}
+ &=P_E(w,z)\\
+ &=\int\bigl\{C(w_\ell,z_\ell)+h(w,z)
+       +e^{-2\ell}\langle Dw,Dz\rangle
+       -g\langle B_n(\ell)w,z\rangle
+       +Ee^{2\ell}\langle w,z\rangle\bigr\}\,d\ell,\\
+D&=\nu(\partial_\ell-1)+4c\partial_a,\qquad\nu=2\sin a,\\
+4\|f\|_{L^2(d\xi)}^2&=\int e^{2\ell}\|w(\ell)\|_2^2\,d\ell.
+\end{aligned}
+\tag{27.2}
+$$
+
+The identity is initially on compact longitudinal natural tensors;
+its local free-form extensions are those of (25.22).
+The central, source and mass brackets in (27.2) are unweighted.
+Here $B_n$ is the complete-source error of (20.18) and (25.2).
+Corollary 20.3 and Proposition 25.2 already give, on a sufficiently
+remote exterior and uniformly through both angular endpoints,
+
+$$
+\|B_n(\ell)\|_\infty+
+ \|\partial_\ell B_n(\ell)\|_\infty\le C_Be^{-2\ell}.
+\tag{27.3}
+$$
+
+Thus (27.3) is a reused conclusion for the complete time and fibre
+integrals, rather than an additional assumption.
+For $0<E<1$, put $T_E=\tfrac12\log(1/E)$ and $x=\ell-T_E$.
+In these actual coordinates the mass coefficient becomes $e^{2x}$,
+the central coefficient becomes $Ee^{-2x}$, and
+$B_n(T_E+x)=O(Ee^{-2x})$ on its original exterior range.
+The resulting comparison wall form is
+
+$$
+p_*(u,z)=\int_{\mathbb R}
+ \{C(u_x,z_x)+h(u,z)+e^{2x}\langle u,z\rangle\}\,dx.
+\tag{27.4}
+$$
+
+Its mass is the identity in unweighted $da$; the $C$-orthogonal
+channel decomposition does not diagonalize that mass.
+Equation (27.4) defines a comparison equation and does not replace
+(27.2).
+
+**Theorem 27.2 (exact exterior physical-free-tail family).**
+Under Definition 27.1, for every fixed $R_0>1$ and every $E>0$
+there is a nonzero real $f_E\in\mathcal S$ on
+$\Omega_{R_0}=\{\xi:R_g(\xi)>R_0\}$ such that
+$\chi f_E\in\mathcal H_1$ for every
+$\chi\in C_c^\infty(\Omega_{R_0})$, and
+
+$$
+q_{\rm orig}(f_E,\phi)+E\langle f_E,\phi\rangle_{L^2(d\xi)}=0
+\quad\bigl(\phi\in C_c^\infty(\Omega_{R_0};\mathbb C)\bigr).
+\tag{27.5}
+$$
+
+Tests include every nonaxisymmetric original compact smooth test.
+For every finite $R_0<r_1<r_2$ and every smooth real radial
+$\eta$ on $\mathbb R^3$ with $0\le\eta\le1$,
+$\eta=0$ on $R_g\le r_1$ and $\eta=1$ on $R_g\ge r_2$,
+
+$$
+\eta f_E\in\mathcal H_1.
+\tag{27.6}
+$$
+
+The same $R_0$ works for all $E>0$. No boundary value at $R_0$,
+nonzero channel coefficient, common phase or strong overlap estimate
+is part of this assertion.
+
+Proof. Let $V_D$ be the original-free-norm closure of
+$C_c^\infty(\Omega_{R_0};\mathbb C)$ in the sector $\mathcal S$.
+Its zero extensions belong to $\mathcal H_1$. Rotation averaging,
+then $z$ reflection averaging inside $m=0$, preserve this core,
+its free norm and the original form by Proposition 24.4.
+The auxiliary zero-extension space is used to construct exterior
+solutions; it prescribes no boundary condition in the theorem.
+
+For fixed $E>0$, the positive form
+$T_1(u,v)+E\langle u,v\rangle$ is a Hilbert inner product on $V_D$,
+equivalent to the original free norm with constants allowed to
+depend on $E$. Riesz representation gives an isomorphism from
+$V_D$ to its antidual. Multiplication by $\sqrt{M_{n,1}}$ is compact
+from $V_D$ to $L^2(d\xi)$. Indeed, the zero extensions have the
+original free norm, the potential is bounded off the omitted pole,
+and original (15.8)--(15.9) give Euclidean $H^1$ control on bounded
+annuli. Local Rellich compactness therefore gives compactness on
+such annuli. Original (15.7) gives
+$\sup_{R_g>r}M_{n,1}\le C r^{-2}$, so the remaining tail has
+operator norm tending to zero. This is also the restriction of
+original (15.13)'s compact multiplication map.
+Consequently
+
+$$
+\mathcal B_E(u,v)=q_{\rm orig}(u,v)+E\langle u,v\rangle
+\tag{27.7}
+$$
+
+is the Riesz isomorphism minus a compact Hermitian map, and is
+Fredholm of index zero. The Riesz/adjoint framework is the classical
+Hilbert-space framework of Folland, *Real Analysis*, second edition,
+Chapter 5; the compact-perturbation and Fredholm-alternative step is
+Kato, *Perturbation Theory for Linear Operators*, Chapter IV,
+Section 5, applied to this bounded map $V_D\to V_D^*$.
+The local trace and Rellich uses concern the Euclidean $H^1$
+realization furnished by original (15.8)--(15.13), not a global
+identification of $\mathcal H_1$ with isotropic $H^1$.
+
+If $\ker\mathcal B_E\ne0$, choose a nonzero real kernel vector
+$u$ and set $f_E=u$ on the exterior. Such a real vector exists
+because coefficients, core and sector are conjugation invariant.
+This branch has zero extension in $\mathcal H_1$.
+
+If $\ker\mathcal B_E=0$, the index-zero Fredholm alternative gives
+a bounded inverse $V_D^*\to V_D$. Choose a real smooth radial
+collar lift $F$, equal to one near the smooth compact surface
+$R_g=R_0$ and zero for sufficiently large $R_g$, restricted to
+the exterior. Its ordinary boundary trace is one. Local original
+free energy controls ordinary $H^1$ on this collar by (15.8),
+and the continuous $H^1$ trace of every member of $V_D$ is zero.
+Hence $F\notin V_D$. Its compact collar support, finite original
+derivatives and the bounded collar potential make
+$z\mapsto-\mathcal B_E(F,z)$ a bounded antidual functional.
+Solve $\mathcal B_E(u,z)=-\mathcal B_E(F,z)$ in $V_D$ and put
+$f_E=F+u$. It is real, solves the equation on sector tests and
+is nonzero because its trace is one. There is no energy exception:
+the first branch handles every nontrivial kernel.
+
+For an arbitrary complex original compact exterior test, average
+first over rotations and then over $z$ reflection within the
+axisymmetric image. Both averages preserve compact exterior support
+and the pairing with $f_E$, by Proposition 24.4. The averaged test
+is a sector test, proving (27.5) for all original tests. No test
+on the omitted boundary has been used.
+
+The original product rules extend by compact-core closure to bounded
+smooth multipliers whose $U,V,Z$ derivatives are bounded and supported
+on a compact annulus. The zero-extension part $u$ already lies in
+$\mathcal H_1$. The collar lift has a smooth compact extension,
+and every stated $\eta$ vanishes in a neighborhood of the omitted
+boundary. Multiplying either part by $\eta$ and extending across
+that boundary therefore gives an element of $\mathcal H_1$.
+The same argument applies to each compact exterior multiplier $\chi$.
+This proves actual physical $L^2$ membership and all three original
+$U,V,Z$ tail energies in (27.6). Choosing the indicated branch for
+each $E>0$ gives a family on one exterior. The construction relates
+neither the oscillatory amplitudes nor their phases at different
+energies. $\square$
+
+## 28. The full coupled comparison wall and both strong left traces
+
+**Definition 28.1 (wall energy, mass homotopy and opposite weights).**
+Continue with Definition 27.1's arbitrary fixed $n,g$.
+For $u=\alpha(x)\psi+v(x)$, $v(x)\in V_{\rm ev}$, put
+$m=\|\psi\|_2^2$ and $d=\|c\psi\|_2^2$.
+Both are finite and positive, and $md\ge1$ by $C[\psi]=1$.
+Let $M_\theta$ be the Hermitian polarization of
+
+$$
+M_\theta[u]=m|\alpha|^2+\|v\|_2^2
+       +2\theta\operatorname{Re}\langle\alpha\psi,v\rangle,
+\qquad 0\le\theta\le1.
+\tag{28.1}
+$$
+
+Define $X$ as the completion of compact longitudinal finite natural
+tensors in the even angular domain, with squared norm
+
+$$
+\|u\|_X^2=\int_{\mathbb R}
+ \bigl\{|\alpha_x|^2+|\alpha|^2+C[v_x]+A[v]
+              +e^{2x}(m|\alpha|^2+\|v\|_2^2)\bigr\}\,dx.
+\tag{28.2}
+$$
+
+The completion has its distributional realization by the closed
+angular and longitudinal derivatives. It retains every component
+of $V_{\rm ev}$ and the original natural endpoints.
+Let $p_\theta$ be (27.4) with $M_\theta(u,z)$ in place of
+$\langle u,z\rangle$. Choose
+$0<\delta<\min(1/2,\sqrt\kappa/2)$ and a smooth nonnegative $\varphi$
+with $\varphi(x)=-\delta x$ for $x\le-2$, $\varphi(x)=0$ for
+$x\ge2$, and $|\varphi_x|\le\delta$. Its transition can be chosen
+with all derivatives used below bounded. Put $\rho=e^\varphi$.
+Initially on compact tensors, the opposite-weight conjugation is
+
+$$
+\begin{aligned}
+b_\theta(Y,Z)&=p_\theta(\rho^{-1}Y,\rho Z)\\
+ &=\int_{\mathbb R}\bigl\{
+ C(Y_x-\varphi_xY,Z_x+\varphi_xZ)+h(Y,Z)
+                   +e^{2x}M_\theta(Y,Z)\bigr\}\,dx.
+\end{aligned}
+\tag{28.3}
+$$
+
+This formula defines its bounded extension $X\to X^*$.
+The auxiliary homotopy is used only to calculate the index;
+$p_1=p_*$ has exactly the physical unweighted angular mass.
+
+**Theorem 28.2 (normalized standing solution of the coupled wall).**
+There exist a nonzero real even solution $W$ of
+$p_*(W,z)=0$ for every compact natural test, a complex number
+$\beta$ with $|\beta|=1$, and $C<\infty$, $\delta>0$ as in
+Definition 28.1 such that, for every $x\le-2$,
+
+$$
+\begin{aligned}
+&\|W(x)-2\operatorname{Re}(\beta e^{isx})\psi\|_{\mathcal H_c}\\
+&\qquad+
+ \|W_x(x)-2\operatorname{Re}(is\beta e^{isx})\psi\|_C
+                         \le Ce^{\delta x}.
+\end{aligned}
+\tag{28.4}
+$$
+
+Both slice representatives are continuous in their displayed spaces.
+For every finite $x_0$,
+
+$$
+\begin{aligned}
+\int_{x_0}^\infty
+ \{C[W_x]+A[W]+e^{2x}\|W\|_2^2\}\,dx&<\infty,\\
+W_x&\in L^2((x_0,\infty);\mathcal H_c).
+\end{aligned}
+\tag{28.5}
+$$
+
+The equation retains the full even natural angular space and
+unweighted physical mass. It is a conclusion for the comparison
+wall (27.4).
+
+Proof. First establish positivity of the entire mass homotopy.
+Since $C(v,\psi)=0$, the unweighted vector $v$ is orthogonal to
+$c\psi$. Projecting $\psi$ onto that orthogonal complement gives
+
+$$
+|\langle\psi,v\rangle|
+ \le\sqrt{m-1/d}\,\|v\|_2.
+\tag{28.6}
+$$
+
+Thus $r=\sqrt{1-1/(md)}<1$ and
+
+$$
+(1-r)(m|\alpha|^2+\|v\|_2^2)
+ \le M_\theta[u]\le
+(1+r)(m|\alpha|^2+\|v\|_2^2).
+\tag{28.7}
+$$
+
+Indeed the absolute cross term is at most
+$2r\sqrt m|\alpha|\|v\|_2$ and
+$2\sqrt m|\alpha|\|v\|_2\le m|\alpha|^2+\|v\|_2^2$.
+At $\theta=1$, $M_1[u]=\|u\|_2^2$ exactly.
+At $\theta=0$ only the cross mass is removed; every complementary
+angular component remains.
+
+The $C$ projection onto $\psi$ is bounded in $\mathcal H_c$,
+and $C$ orthogonality diagonalizes the longitudinal derivative.
+Together with $A\ge\lambda_0\|\cdot\|_2^2$ and (28.7), this
+proves equivalence of (28.2) with
+$\int(C[u_x]+A[u]+e^{2x}\|u\|_2^2)\,dx$ and boundedness of
+(28.3). It also gives an injective distributional realization:
+Cauchy sequences have compatible local distributional limits for
+$u,u_x$ and the angular derivative, so a zero distribution has
+zero norm.
+
+The real diagonal of (28.3) loses only
+$(\varphi_x)^2C[Y]$. On the complement, $C[v]\le A[v]$ gives
+
+$$
+h[v]-(\varphi_x)^2C[v]\ge(\kappa-\delta^2)A[v].
+\tag{28.8}
+$$
+
+The scalar part is bounded below by
+$-(s^2+\delta^2)|\alpha|^2$. The uniformly positive mass in
+(28.7) absorbs this scalar loss on a sufficiently remote right
+half-line. Hence, for fixed sufficiently large $R$,
+
+$$
+\|Y\|_X^2\le C\left(
+ \operatorname{Re}b_\theta(Y,Y)+\int_{x<R}|\alpha(x)|^2\,dx\right),
+\tag{28.9}
+$$
+
+uniformly for $\theta\in[0,1]$.
+
+We next control the left half-line without losing high angular
+modes. On $x<-R$ the weight derivative is $-\delta$.
+After dropping the exponentially small mass, use the block diagonal
+constant-coefficient form on
+
+$$
+H=H^1(\mathbb R)\psi\mathbin{\dotplus}
+ \overline{\{\text{finite natural }V_{\rm ev}\text{ tensors}\}}
+ ^{\left(\int(C[v_x]+A[v])\,dx\right)^{1/2}}.
+\tag{28.10}
+$$
+
+Its complementary block has coercive real part at least
+$\int(C[v_x]+(\kappa-\delta^2)A[v])\,dx$.
+Riesz representation and the same estimate for its adjoint give
+an inverse to the full complementary block. The scalar Fourier
+multiplier is
+
+$$
+\xi^2-2i\delta\xi-\delta^2-s^2,
+\qquad
+\inf_{\xi\in\mathbb R}
+ \frac{|\xi^2-2i\delta\xi-\delta^2-s^2|}{1+\xi^2}>0.
+\tag{28.11}
+$$
+
+Its imaginary part vanishes only at zero, where its real part
+is negative; the quotient tends to one at infinity.
+Plancherel therefore gives a bounded scalar isomorphism
+$H^1\to H^{-1}$. These are the classical Hilbert and whole-line
+Fourier arguments of Folland, Chapters 5 and 8, applied to
+(28.10); they assert no additional angular endpoint regularity.
+
+Let $\chi_-$ be one on $x<-R-1$ and zero on $x>-R$.
+Multiplying $b_\theta Y$ by this cutoff gives a bounded element
+of $H^*$, since on this left support the $X$ norm of a cut-off
+$H$ test is bounded by its $H$ norm. The omitted mass has norm
+$O(e^{-2R})$ on $H$ and is absorbed after increasing $R$.
+In the cutoff commutator, integrate the term involving $Y_x$
+once onto the test. The resulting terms pair only $Y$ with a
+test or its first longitudinal derivative on the fixed transition
+interval, and are bounded by the local $L^2(C)$ norm of $Y$.
+The inverse just constructed gives, for a fixed compact interval $I$,
+
+$$
+\|\chi_-Y\|_H\le C\bigl(
+ \|b_\theta Y\|_{X^*}+\|Y\|_{L^2(I;C)}\bigr).
+\tag{28.12}
+$$
+
+The scalar integral in (28.9) on the remaining bounded interval
+is controlled by the same local $C$ norm, since
+$|C(Y,\psi)|^2\le C[Y]$. Insert (28.12) into (28.9) and use
+Young's inequality to obtain
+
+$$
+\|Y\|_X\le C\bigl(
+ \|b_\theta Y\|_{X^*}+\|Y\|_{L^2(I;C)}\bigr).
+\tag{28.13}
+$$
+
+The adjoint has the same real diagonal, the conjugate nonvanishing
+scalar multiplier, and the same cutoff commutator estimate; it
+satisfies (28.13) too.
+
+The restriction $X\to L^2(I;C)$ is compact. To see this on the
+entire angular space, use Proposition 24.3's compact-resolvent
+weighted angular realization after a positive shift.
+Its finite spectral projections approximate the $C$ norm uniformly
+on bounded angular form-energy sets. Each projected longitudinal
+coefficient is bounded in $H^1(I)$ because $C[Y_x]$ is controlled.
+Finite-dimensional one-dimensional Rellich compactness applies to
+these coefficients, and the high-mode tail tends uniformly to zero.
+The projections prove compactness only; no projection replaces the
+operator or the solution.
+
+Estimate (28.13) and this compactness give finite kernel dimension
+and closed range. In detail, on the orthogonal complement of the
+kernel, failure of a lower bound would give normalized vectors
+whose images tend to zero. Compact restriction followed by (28.13)
+gives an $X$-convergent subsequence with a nonzero limit in the
+kernel and its orthogonal complement, a contradiction.
+The same reasoning for the adjoint gives a finite-dimensional
+cokernel. Thus every $b_\theta$ is Fredholm. Its operator-norm
+continuity in $\theta$ follows directly from the bounded mass
+cross form, so the index is constant along $[0,1]$.
+This uses the index-continuity theorem for bounded Fredholm maps
+in Kato, Chapter IV, Section 5, in the displayed completed spaces.
+
+The following regularity argument justifies exclusion of a kernel
+for this comparison problem. Write $T_hY(x)=Y(x+h)$.
+Translations are uniformly bounded on $X$ for bounded $h$; the
+mass weight changes by a factor bounded by $e^{2|h|}$.
+If $b_\theta Y=F$ and translation difference quotients of $F$
+are bounded in $X^*$, the exact translated equation gives
+
+$$
+\left\|b_\theta\frac{T_hY-Y}{h}\right\|_{X^*}
+ \le C\|Y\|_X+C_F\qquad(0<|h|\text{ sufficiently small}).
+\tag{28.14}
+$$
+
+Indeed coefficient differences of $\varphi_x$ and its derivatives
+are bounded by $C|h|$, and
+$|e^{2h}-1|/|h|$ stays bounded. Every resulting term is controlled
+by the norm (28.2). The compact term in (28.13) for these
+difference quotients is at most
+$\|Y_x\|_{L^2(I+[-1,1];C)}$, already controlled by $X$.
+Thus the difference quotients are bounded in $X$; weak compactness
+and their distributional limit imply $Y_x\in X$.
+No derivative in the natural angular norm was presumed.
+
+For a kernel vector set $u=\rho^{-1}Y$.
+The bounded multipliers $\rho^{-1}$ and their derivatives give
+$u,u_x\in X$. In particular
+$u\in H^1(\mathbb R;\mathcal H_c)$,
+$u_x\in H^1(\mathbb R;L^2(J,c\,da))$, and
+$e^xu,e^xu_x\in L^2(dx\,da)$.
+The weak equation $p_\theta(u,z)=0$ extends by density to the
+test $z=u_x$. The real derivative and $h$ terms integrate to
+zero: their energy densities are $W^{1,1}$ functions with zero
+end limits. For the mass term, the displayed integrability
+justifies integration by parts and gives
+
+$$
+\operatorname{Re}\int e^{2x}M_\theta(u,u_x)\,dx
+              =-\int e^{2x}M_\theta[u]\,dx.
+\tag{28.15}
+$$
+
+Therefore $p_\theta(u,u_x)=0$ forces the rightmost integral to
+vanish. Positivity (28.7) gives $u=0$, hence
+$\ker b_\theta=0$. This conclusion concerns only the limiting
+comparison wall; it excludes no original decaying mode or resonance.
+
+To calculate the index, take $\theta=0$.
+The entire complementary block is coercive, including its full
+$e^{2x}\|v\|_2^2$ mass, and is invertible. The scalar block is
+the conjugation of
+
+$$
+-a_{xx}-s^2a+me^{2x}a=0.
+\tag{28.16}
+$$
+
+Choose a remote right half-line on which $me^{2x}-s^2\ge1$.
+Minimizing
+$\int(|a_x|^2+(me^{2x}-s^2)|a|^2)\,dx$ there with boundary
+value one gives a nonzero finite-energy solution, unique for that
+boundary value by strict coercivity. The ordinary nonsingular ODE
+extends it through every finite $x$. The right finite-energy
+solution space is one-dimensional: the Wronskian of any two
+solutions is constant and tends to zero along a sequence at
+infinity, because their values and derivatives are square integrable.
+A zero Wronskian gives linear dependence.
+
+On the left, rotate the first-order vector $(a,a_x/s)$ by the free
+sine/cosine fundamental matrix. The resulting coefficient matrix is
+$O(e^{2x})$, integrable at negative infinity. Gronwall's inequality
+and integration give a finite limiting vector. The transformed
+fundamental matrix has constant nonzero determinant, since its
+system has trace zero, so its limit is invertible. Thus every
+nonzero scalar solution has a nonzero limiting sine/cosine pair,
+and bounded value and derivative on the left.
+A scalar kernel vector of $b_0$ would have $\rho a\in X$,
+which is impossible for a nonzero oscillatory left pair.
+For the adjoint the opposite conjugation gives $\rho^{-1}a$,
+which is $e^{\delta x}$ times a bounded oscillatory function on
+the left and belongs to $X$. On the right $\rho=1$, so the
+right one-dimensionality supplies exactly one adjoint kernel vector.
+The scalar index is $-1$. Consequently
+
+$$
+\operatorname{ind}b_0=\operatorname{ind}b_1=-1,\qquad
+\ker b_1=0,\qquad\dim\operatorname{coker}b_1=1.
+\tag{28.17}
+$$
+
+It remains to construct a standing profile of the full equation.
+Take a real smooth $\chi$ equal to one on $x\le-2$ and zero
+on $x\ge-1$, and let $p_0(x)=\cos(sx)$, $p_1(x)=\sin(sx)$,
+$u_j=\chi p_j\psi$. Their weighted residuals $G_j=\rho L_*u_j$
+are antidual functionals on $X$. Explicitly,
+
+$$
+G_j(Z)=\int\rho\left\{
+ -(\chi_{xx}p_j+2\chi_x(p_j)_x)C(\psi,Z)
+           +e^{2x}\chi p_j\langle\psi,Z\rangle\right\}\,dx.
+\tag{28.18}
+$$
+
+Here $L_*$ denotes the distributional operator of $p_*$.
+The homogeneous channel terms cancel by (27.1).
+The first term has compact support; the second decays like
+$e^{(2-\delta)x}$ at negative infinity. Since $\delta<2$ and
+$A$ controls unweighted $L^2$, both $G_j$ and their translation
+derivatives are bounded in $X^*$.
+
+Conjugation invariance makes the one-dimensional cokernel a
+one-dimensional real space on real data. Choose a nonzero real
+adjoint generator. There is a real pair $(c_0,c_1)\ne(0,0)$ whose
+combination $c_0G_0+c_1G_1$ annihilates that generator.
+The closed-range characterization and (28.17) give a unique $Y\in X$
+with
+
+$$
+b_1Y=-(c_0G_0+c_1G_1).
+\tag{28.19}
+$$
+
+Reality and injectivity give real $Y$. The difference-quotient
+argument (28.14) applies to this forcing, so $Y_x\in X$.
+Thus $u=c_0u_0+c_1u_1+\rho^{-1}Y$ solves the full wall equation.
+Put $R_c=\sqrt{c_0^2+c_1^2}$ and
+
+$$
+W=\frac{2u}{R_c},\qquad
+\beta=\frac{c_0-ic_1}{R_c},\qquad |\beta|=1.
+\tag{28.20}
+$$
+
+For $x\le-2$ the remainder after the leading term in (28.4)
+is $2e^{\delta x}Y/R_c$.
+From $Y,Y_x\in X$ one has
+$Y\in H^1(\mathbb R;\mathcal H_c)$ and
+$Y_x\in H^1(\mathbb R;L^2(J,c\,da))$.
+Hilbert-valued $H^1$ functions have bounded continuous
+representatives: integrate the derivative of their squared norm
+and use Cauchy--Schwarz, as in (25.21).
+Apply this separately to $Y$ in $\mathcal H_c$ and to
+$Y_x+\delta Y$ in the $C$ space. It gives both errors in (28.4),
+including the derivative error, with continuous representatives.
+The nonzero leading oscillatory pair also proves $W\ne0$.
+
+On $x\ge-1$ the cutoff waves vanish, and $\rho^{-1}$ and its
+derivatives are bounded; on $x\ge2$ one has $\rho=1$ exactly.
+Thus $W,W_x$ have the indicated $X$ energies on every finite
+right tail, proving (28.5). The wall coefficients $c,q_n$ are even,
+so taking the even part of any compact natural angular test preserves
+its pairing with $W$; the equation holds for all such tests.
+All complement estimates, the Fredholm
+argument, correction and traces have retained $V_{\rm ev}$ in full.
+The homotopy ends at $\theta=1$, so the resulting equation has the
+unweighted mass in (27.4). $\square$
+
+## 29. Shifted normalized original-form profiles with a retained residual
+
+**Definition 29.1 (one exterior and the approximate family).**
+Under Definition 27.1, take $W,\beta,\delta$ from Theorem 28.2.
+Choose one sufficiently remote
+$\ell_0>\max(0,\ell_n)$ on which (27.3) holds, and put
+$R_0=e^{\ell_0}$. For $0<E<1$, in exactly the coordinates (26.3),
+define on $\Omega_{R_0}$
+
+$$
+\begin{aligned}
+w_E^{\rm app}(\ell,a)&=W(\ell-T_E,a),\qquad
+T_E=\tfrac12\log(1/E),\\
+\Phi_E(\delta_{e^\ell}\omega(a,\theta))
+ &=\frac{e^{-\ell}}{\sqrt{2\pi}}W(\ell-T_E,a).
+\end{aligned}
+\tag{29.1}
+$$
+
+The angular mass, source, clock, fields and free closure are those
+of Definition 27.1. The superscript denotes an approximate original
+solution; the original equation retains the residual below.
+
+**Theorem 29.2 (physical free tails, ordered strong overlap and residual bounds).**
+There is $E_0\in(0,1)$ such that, for every $0<E<E_0$, $\Phi_E$
+is nonzero, real, axisymmetric and even in $z$.
+Every compact smooth exterior multiplier gives
+$\chi\Phi_E\in\mathcal H_1$, and every tail cutoff with the exact
+quantifiers in Theorem 27.2 gives $\eta\Phi_E\in\mathcal H_1$.
+The slices of $w_E^{\rm app}$ in $\mathcal H_c$ and of its
+distributional longitudinal derivative in $L^2(J,c\,da)$ have
+continuous representatives. With the same unit $\beta$ for all $E$,
+put
+
+$$
+\begin{aligned}
+r_E^{\rm app}(\ell)
+ &=\|w_E^{\rm app}(\ell)
+       -2\operatorname{Re}(\beta e^{is(\ell-T_E)})\psi\|_{\mathcal H_c}\\
+ &\quad+
+ \|\partial_\ell w_E^{\rm app}(\ell)
+       -2\operatorname{Re}(is\beta e^{is(\ell-T_E)})\psi\|_C.
+\end{aligned}
+\tag{29.2}
+$$
+
+For $K\ge\max(2,\ell_0)$ and $T_E>2K$,
+
+$$
+\sup_{K\le\ell\le T_E-K}r_E^{\rm app}(\ell)\le Ce^{-\delta K}.
+\tag{29.3}
+$$
+
+In particular the exact ordered limit is
+
+$$
+\lim_{K\to\infty}\limsup_{E\downarrow0}
+       \sup_{K\le\ell\le T_E-K}r_E^{\rm app}(\ell)=0.
+\tag{29.4}
+$$
+
+Here $K>\ell_0$ and the inner limit uses sufficiently small $E$
+with $T_E>2K$. Equivalently, for every $\varepsilon>0$ there is
+$K_0>\ell_0$ such that for every $K\ge K_0$ there is
+$E_K\in(0,\min(E_0,e^{-4K}))$ for which every $0<E<E_K$ and
+every $\ell\in[K,T_E-K]$ have $r_E^{\rm app}(\ell)<\varepsilon$.
+The radius $R_0$, energy bound $E_0$ and $\beta$ are independent
+of $E$.
+
+For compact natural even tests $z$ supported in $\ell>K$, use
+$D$ from (27.2) and define
+
+$$
+\mathcal N_{E,K}(z)^2=\int_K^\infty
+ \{C[z_\ell]+A[z]+e^{-2\ell}\|Dz\|_2^2
+                         +Ee^{2\ell}\|z\|_2^2\}\,d\ell.
+\tag{29.5}
+$$
+
+The tests include finite tensors in the entire even natural domain
+and their compactly supported limits in this norm.
+With $f_z=e^{-\ell}z/\sqrt{2\pi}$, the exact original residual is
+
+$$
+\begin{aligned}
+\mathcal R_E(z)
+ &:=4\{q_{\rm orig}(\Phi_E,f_z)
+                     +E\langle\Phi_E,f_z\rangle_{L^2(d\xi)}\}\\
+ &=\int_K^\infty\left\{
+ e^{-2\ell}\langle Dw_E^{\rm app},Dz\rangle
+               -g\langle B_n(\ell)w_E^{\rm app},z\rangle\right\}\,d\ell.
+\end{aligned}
+\tag{29.6}
+$$
+
+There are constants $C_1,C_2<\infty$, independent of $E,K$ for
+$T_E\ge K\ge\max(2,\ell_0)$, such that
+
+$$
+\begin{aligned}
+\int_K^\infty e^{-2\ell}
+ \bigl(\|Dw_E^{\rm app}\|_2^2+\|w_E^{\rm app}\|_2^2\bigr)\,d\ell
+ &\le C_1e^{-2K},\\
+|\mathcal R_E(z)|
+ &\le C_2(e^{-K}+e^{-2K})\mathcal N_{E,K}(z).
+\end{aligned}
+\tag{29.7}
+$$
+
+They may depend on the fixed $n,g,\delta$, normalized $W$,
+$C_B$ and $\lambda_0$. Identity (29.6), with integration over
+the support of the test, also describes every original compact
+complex test after the form-preserving averages of Proposition 24.4.
+Neither exact vanishing nor nonvanishing of the residual for every
+$E$ is asserted.
+
+Proof. Choose $A_0\ge2$ so that the left $C$ error in (28.4)
+is less than one for $x\le-A_0$. Choose a common $E_0\in(0,1)$
+so small that
+$T_E>\ell_0+A_0+2\pi/s$ whenever $0<E<E_0$.
+There is then a full oscillatory period above $\ell_0-T_E$ and
+below $-A_0$. At a point of that period the leading channel has
+$C$ norm two, since $C[\psi]=1$ and $|\beta|=1$.
+The error is less than one, so the restricted profile cannot vanish.
+This proves nonzero $\Phi_E$ for every such $E$.
+Reality and the symmetries follow directly from $W$.
+
+If $K\ge\max(2,\ell_0)$, $T_E>2K$ and
+$K\le\ell\le T_E-K$, then $x=\ell-T_E\le-K$.
+Apply (28.4) at each such $x$ to obtain (29.3), with constants
+independent of $E,K$. It gives (29.4) and its stated eventual-all-$E$
+quantifiers. Continuity of both slices follows from Theorem 28.2.
+No subsequence or energy-dependent phase is used.
+
+We next verify the actual original free closure, including its
+central derivative. The identity $c^2\le c$ and the definition of
+$D$ give
+
+$$
+\|DW\|_2^2\le C\bigl(\|W_x\|_2^2+A[W]\bigr),
+\tag{29.8}
+$$
+
+where $\partial_\ell W(\ell-T_E)=W_x(\ell-T_E)$.
+For fixed $E$ and every finite $L>\ell_0$, (28.5) therefore yields
+
+$$
+\int_L^\infty\bigl\{
+ C[(w_E^{\rm app})_\ell]+A[w_E^{\rm app}]
+ +e^{-2\ell}\|Dw_E^{\rm app}\|_2^2
+ +e^{2\ell}\|w_E^{\rm app}\|_2^2\bigr\}\,d\ell<\infty.
+\tag{29.9}
+$$
+
+For the mass use $e^{2\ell}=E^{-1}e^{2x}$; the finite factor
+$E^{-1}$ is permitted for this fixed-$E$ membership assertion.
+For the central term the unweighted derivative on the right is
+controlled by $W_x\in L^2(\mathcal H_c)$ in (28.5).
+All terms are finite on the remaining bounded longitudinal
+segments because $W$ is locally $H^1$ with values in $\mathcal H_c$.
+
+Approximate first in longitudinal $H^1(\mathcal H_c)$ on a fixed
+compact interval by finite natural tensors, and then approximate
+their angular coefficients by original (13.6)--(13.8)'s compact
+angular core. Bound (29.8) gives convergence of the central term
+as well as of the homogeneous and physical mass terms.
+Undoing the actual coordinates gives compact smooth Cartesian
+approximants away from the axes and pole, exactly the free-norm
+correspondence in (24.14) and (25.22).
+Longitudinal truncations at infinity converge by the positive
+integrals (29.9); their derivative errors tend to zero by the same
+integrable norms. Multiplication by a stated radial tail cutoff,
+which vanishes near the omitted boundary, thus gives an element
+of the original $\mathcal H_1$.
+For any compact exterior multiplier, choose a compact radial
+multiplier equal to one on its support and use the original
+$U,V,Z$ product rules. The same product rules handle every
+permitted tail cutoff, whose transition derivatives have compact
+annular support. This proves all asserted free multipliers and
+physical free tails without adding angular endpoint data.
+
+By the exact wall equation, translating $x=\ell-T_E$ cancels
+$C(w_\ell,z_\ell)+h(w,z)+Ee^{2\ell}\langle w,z\rangle$ in
+(27.2). The terms left over are precisely (29.6).
+To prove its uniform bound, first establish the first line of
+(29.7). On $x\le-2$, write the normalized profile as its bounded
+standing part plus $e^{\delta x}\widetilde Y$, where
+$\widetilde Y,\widetilde Y_x\in L^2(\mathbb R;\mathcal H_c)$ by
+(28.19)--(28.20). The standing part and its unweighted derivative
+are uniformly bounded, so their $e^{-2\ell}$ integral is
+$O(e^{-2K})$.
+For the correction, use (29.8) and, when $T_E\ge K$,
+
+$$
+\begin{aligned}
+&e^{-2T_E}\int_{K-T_E}^{0}
+ e^{(2\delta-2)x}
+ \bigl(\|\widetilde Y\|_{\mathcal H_c}^2
+             +\|\widetilde Y_x\|_{\mathcal H_c}^2\bigr)\,dx\\
+&\quad\le C e^{-2T_E}e^{(2\delta-2)(K-T_E)}
+ =C e^{-2\delta T_E}e^{-2(1-\delta)K}
+ \le C e^{-2K}.
+\end{aligned}
+\tag{29.10}
+$$
+
+Here $\delta<1$. Restricting this calculation to $x\le-2$
+only decreases the positive integral. The fixed transition
+interval $[-2,0]$ contributes $O(e^{-2T_E})$, and on $x>0$
+(28.5) and (29.8) give the same bound. Since $T_E\ge K$,
+these contributions are $O(e^{-2K})$.
+This proves the first line of (29.7) for all higher components
+as well as the channel.
+
+Cauchy--Schwarz now bounds the central term of (29.6) by
+$C e^{-K}\mathcal N_{E,K}(z)$.
+For the source term, (27.3) and $A[z]\ge\lambda_0\|z\|_2^2$
+give
+
+$$
+\begin{aligned}
+\left|g\int_K^\infty\langle B_nw_E^{\rm app},z\rangle\,d\ell\right|
+ &\le gC_B\left(\int_K^\infty e^{-2\ell}
+                         \|w_E^{\rm app}\|_2^2\,d\ell\right)^{1/2}
+             \left(\int_K^\infty e^{-2\ell}\|z\|_2^2\,d\ell\right)^{1/2}\\
+ &\le C e^{-2K}\mathcal N_{E,K}(z).
+\end{aligned}
+\tag{29.11}
+$$
+
+Together these prove the second line of (29.7).
+For an arbitrary original compact complex exterior test, rotate
+and then reflect its axisymmetric image. Proposition 24.4 preserves
+its pairing with $\Phi_E$, as well as its compact exterior support.
+The cylinder image of the averaged test belongs to the natural
+local completion by (25.22) and its angular-core argument.
+Thus (29.6) applies to that image. This retains all original tests,
+including nonaxisymmetric ones, rather than restricting the
+original weak equation's test space. $\square$
+
+**Definition 29.3 (the joint exact-family boundary).**
+Theorem 27.2 supplies exact original positive-energy exterior
+solutions with every physical free tail, without a channel-phase
+prescription. Theorem 28.2 supplies the coupled comparison wall and
+both strong left traces. Theorem 29.2 supplies a separately defined
+normalized approximate original family with all the ordered overlap
+and physical-free-tail properties and with residual (29.6).
+These are distinct families and equations. Their separate existential
+statements do not assert a single exact family having all properties.
+
+The unresolved joint assertion retains every original quantifier:
+for each $n\ge2$, a finite immediate interval
+$\lambda_n<g_n^{\rm wall}\le g_n^{\rm iso}$, every fixed
+$g\in(\lambda_n,g_n^{\rm wall})$, and one finite $R_0>1$,
+$E_0\in(0,1)$ and unit $\beta$, all independent of $E$.
+On that fixed exterior it requires a nonzero real
+axisymmetric $z$-even exact original family at every $0<E<E_0$
+with every original compact test, every compact free multiplier,
+every physical tail in (27.6), both continuous slice representatives
+and the ordered overlap limit (29.4) for that same exact family.
+No such joint threshold or exact family is established by
+Theorems 27.2--29.2.
+
+For the shifted construction, the remaining mathematical obligation
+is to solve the full original exterior inhomogeneous equation for a
+correction to $\Phi_E$, preserving the physical free tail and making
+the correction tend to zero in both strong slice norms on
+$[K,T_E-K]$ in the ordered $\lim_K\limsup_E\sup$ limit, for
+every sufficiently small $E$. The shifted left endpoint tends to
+negative infinity. An inverse or compatible alternative construction
+with this uniform control has not been obtained here; every allowed
+original kernel or resonance must be handled without exclusion.
+An alternative exact construction with the identical joint
+quantifiers would also suffice.
+
+The remote-exterior antidual estimate (29.7) supplies neither exact
+cancellation nor such a correction estimate. It also supplies no
+claim that the residual is nonzero for every $E$, and no graph-residual
+$o(E)$ statement. The kernel exclusion in (28.15) applies only to
+the comparison wall. No genericity, resonance exclusion, stronger
+tail, finite angular substitution, endpoint value, source change or
+clock change is added to Definition 18.1. The zero-energy original
+core datum of Theorem 26.2 remains separate and unchanged.
+Global operator-domain extensions, quasimodes, multiplicity exhaustion
+and an eigenvalue-phase limit are not conclusions of these partial
+results; Application 24.6 remains a conditional implication.
+
+## 追加锚（本行以下为增补区）
