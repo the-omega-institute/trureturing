@@ -2,12 +2,16 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/NegativeSuffixCountExchange
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.List]
+   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
-   digest: An actual negative-LARGE count surplus constructs a full physical exchange retaining every SMALL. -/
+   digest: Actual negative-LARGE count surplus gives a full exchange retaining every SMALL. -/
 module
 public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 public import D5.S3.Combinatorics.Circle.CountSurplusOrdering
+
+/-! # Count-controlled physical exchange with a negative LARGE suffix
+
+The paired count-surplus order retains every actual SMALL occurrence. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -63,7 +67,7 @@ private theorem count_filter_decide {α : Type*} [DecidableEq α]
     (X.filter (fun j => decide (P j))).count i = if P i then X.count i else 0 := by
   by_cases hi : P i
   · simp [hi]
-  · rw [if_neg hi]
+  · rw [ite_eq_right hi]
     exact List.count_eq_zero_of_not_mem (by simp [hi])
 
 /-- Exact physical partition, valid also in the presence of zero weights. -/
@@ -84,7 +88,7 @@ def smallTail (k t : ℕ) (Btail : List (Fin k)) : List (Fin k) :=
 def negativeLargeTail (k t : ℕ) (Btail : List (Fin k)) : List (Fin k) :=
   Btail.filter (fun i => decide (Q k ≤ -s k t i))
 
-private theorem tail_partition {k t : ℕ} (hk : 3 ≤ k) (Btail : List (Fin k))
+private theorem tail_partition {k t : ℕ} (Btail : List (Fin k))
     (hnegative : ∀ i ∈ Btail, Q k ≤ |s k t i| → s k t i < 0) :
     (smallTail k t Btail ++ negativeLargeTail k t Btail).Perm Btail := by
   have heq : Btail.filter (fun i => !decide (|s k t i| < Q k)) =
@@ -221,12 +225,8 @@ theorem actualSource_negativeSuffix_count_exchange_full
     have hh : i ∈ Btail ∧ |f i| < Q k := by
       simpa only [T, smallTail, List.mem_filter, decide_eq_true_eq, f] using hi
     exact hh.2
-  have hpart := tail_partition hk Btail hnegative
+  have hpart := tail_partition Btail hnegative
   change (T ++ Neg).Perm Btail at hpart
-  have hBnd : Btail.Nodup := (List.nodup_append.mp hW.1).2.1
-  have hTNnd : (T ++ Neg).Nodup := hpart.nodup_iff.mpr hBnd
-  have hTnd : T.Nodup := (List.nodup_append.mp hTNnd).1
-  have hNegnd : Neg.Nodup := (List.nodup_append.mp hTNnd).2.1
   have hZlen : Z.length + 1 = Neg.length := List.length_erase_add_one hj
   have hmax0 : 0 ≤ Lmax := negativeMax_nonneg f Z
   have hmaxC : Lmax ≤ C k := negativeMax_le f Z (C k) (by omega)
@@ -263,7 +263,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
     have hz : mass f Z + f j = mass f Neg := by
       simpa only [mass, List.map_append, List.sum_append, List.map_cons,
         List.map_nil, List.sum_cons, List.sum_nil, add_zero] using (hNegpart.map f).sum_eq
-    have hw : h = a0 + r + mass f Btail := by simp [h, W, a0, mass, hxval]
+    have hw : h = a0 + r + mass f Btail := by simp [h, W, a0, mass, hxval, add_assoc]
     dsimp only [b, e0]
     omega
   let F := Bad.take 1
@@ -339,7 +339,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
       dsimp only [c] at hv
       omega
   have hEcount : K.countP E = (Bad.drop 1).length := by
-    have hBadE : ∀ i ∈ Bad.drop 1, E i = true := by intro i hi; simp [E, hi]
+    have hBadE : ∀ i ∈ Bad.drop 1, E i = true := by intro i hi; exact decide_eq_true hi
     have hGoodE : ∀ i ∈ Good, E i = false := by
       intro i hi
       have hg := (hGoodentry i hi).2.2
@@ -347,7 +347,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
         intro hh
         have hb := (hBadentry i ((List.drop_sublist 1 Bad).subset hh)).2
         omega
-      simp [E, hn]
+      exact decide_eq_false hn
     have hNonE : ∀ i ∈ Nonpos, E i = false := by
       intro i hi
       have hn := (hNonposentry i hi).2
@@ -355,7 +355,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
         intro hh
         have hb := (hBadentry i ((List.drop_sublist 1 Bad).subset hh)).2
         omega
-      simp [E, he]
+      exact decide_eq_false he
     have hZE : ∀ i ∈ Z, E i = false := by
       intro i hi
       have hn := (hZentry i hi).1
@@ -363,10 +363,10 @@ theorem actualSource_negativeSuffix_count_exchange_full
         intro hh
         have hb := (hBadentry i ((List.drop_sublist 1 Bad).subset hh)).2
         omega
-      simp [E, he]
+      exact decide_eq_false he
     simp only [K, List.countP_append]
-    rw [List.countP_eq_length.mpr hBadE, List.countP_eq_zero.mpr hGoodE,
-      List.countP_eq_zero.mpr hNonE, List.countP_eq_zero.mpr hZE]
+    rw [List.countP_eq_length.mpr hBadE, List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hGoodE i hi)),
+      List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hNonE i hi)), List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hZE i hi))]
     omega
   have hNcount : K.countP (fun i => decide (f i ≤ -Q k)) = Z.length := by
     have hTnot (i : Fin k) (hi : i ∈ T) : decide (f i ≤ -Q k) = false := by
@@ -386,8 +386,8 @@ theorem actualSource_negativeSuffix_count_exchange_full
       simp only [decide_eq_true_eq]
       omega
     simp only [K, List.countP_append]
-    rw [List.countP_eq_zero.mpr hBadN, List.countP_eq_zero.mpr hGoodN,
-      List.countP_eq_zero.mpr hNonN, List.countP_eq_length.mpr hZN]
+    rw [List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hBadN i hi)), List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hGoodN i hi)),
+      List.countP_eq_zero.mpr (fun i hi => Bool.eq_false_iff.mp (hNonN i hi)), List.countP_eq_length.mpr hZN]
     omega
   have hsurplus : K.countP E ≠ 0 → K.countP E + 1 ≤
       K.countP (fun i => decide (f i ≤ -Q k)) := by
@@ -418,7 +418,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
     · exact List.mem_append_left _ hi
     · apply List.mem_append_right
       apply hL.mem_iff.mpr
-      simp [K, hi]
+      exact List.mem_append_left _ (List.mem_append_left _ (List.mem_append_left _ hi))
   have hsPN : InStrip f (C k) a0 [p, n] := by
     change 0 ≤ a0 ∧ a0 ≤ C k ∧ 0 ≤ a0 + f p ∧ a0 + f p ≤ C k ∧
       0 ≤ a0 + f p + f n ∧ a0 + f p + f n ≤ C k
@@ -449,7 +449,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
     change InStrip f (C k) (0 + mass f (A ++ [p, n] ++ F)) L
     rw [zero_add, hpre]
     exact hsL
-  have hEnd : mass f V  = e0 := by
+  have hEnd : mass f V = e0 := by
     have hm : mass f V = mass f (A ++ [p, n]) + mass f F + mass f L := by
       simp only [V, mass, List.map_append, List.sum_append]
     rw [hm, hAPN, hmassL]
@@ -492,10 +492,11 @@ theorem actualSource_negativeSuffix_count_exchange_full
     simp [Ret, largeUsed, mass, largeWeight, hxLarge, hjLarge]
   have hRetenergy : H k t Ret = 3 ^ (f x).natAbs + 3 ^ (f j).natAbs := by
     simp [Ret, H, mass, energyWeight, hxLarge, hjLarge, f, s]
+  have hnLarge : Large k t n := geo.nLarge
   have hIlarge : largeUsed k t [p, n] = 2 := by
-    simp [largeUsed, mass, largeWeight, geo.pLarge, geo.nLarge]
+    simp [largeUsed, mass, largeWeight, geo.pLarge, hnLarge]
   have hIenergy : H k t [p, n] = 3 ^ (f p).natAbs + 3 ^ (f n).natAbs := by
-    simp [H, mass, energyWeight, geo.pLarge, geo.nLarge, f, s]
+    simp [H, mass, energyWeight, geo.pLarge, hnLarge, f, s]
   have hG : G k t V = G k t W := by
     have hh := inv.largeBalance
     rw [hRetlarge, hIlarge] at hh
@@ -512,7 +513,15 @@ theorem actualSource_negativeSuffix_count_exchange_full
   have hHstrict : H k t V < H k t W := by
     have henergy := geo.energy
     change 3 ^ (f p).natAbs + 3 ^ (f n).natAbs < 3 ^ (f x).natAbs at henergy
-    omega
+    have hle : H k t V + 3 ^ (f x).natAbs ≤
+        H k t W + (3 ^ (f p).natAbs + 3 ^ (f n).natAbs) := by
+      calc
+        H k t V + 3 ^ (f x).natAbs ≤
+            H k t V + 3 ^ (f x).natAbs + 3 ^ (f j).natAbs := Nat.le_add_right _ _
+        _ = H k t W + (3 ^ (f p).natAbs + 3 ^ (f n).natAbs) := by
+          simpa only [Nat.add_assoc] using hH
+    exact Nat.lt_of_add_lt_add_right
+      (lt_of_le_of_lt hle (Nat.add_lt_add_left henergy (H k t W)))
   have hJ : J k t V < J k t W := by
     apply Prod.Lex.toLex_lt_toLex.mpr
     exact Or.inr ⟨hG, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hHstrict)⟩
@@ -529,7 +538,7 @@ theorem actualSource_negativeSuffix_count_exchange_full
   refine ⟨L, hL, hFLj, hFlen, hFbad, hBadretained, legal_of_strip inv.nodup hsV,
     hsV, ?_, inv, hG, hU, hH, hHstrict, hJ, hc0, he0.1, he0.2, hEnd, ?_, hsmallPart⟩
   · intro a
-    simpa only [mass, f] using inStrip_prefix hsV a
+    simpa only [mass, zero_add] using inStrip_prefix hsV a
   · rw [inv.complementSum, hEnd]
 
 end D5.S3.Combinatorics.Circle.NegativeSuffixCountExchange

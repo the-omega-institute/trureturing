@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/CountSurplusOrdering
    generality: I
-   mirror-E: none(waiver:audit-open-22063)
    mirror-B: D5/B/S3/Combinatorics/Circle/CountSurplusOrdering
+   mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.List]
    utility: none
    digest: A surplus of actual negative LARGE occurrences orders bounded exceptional positives. -/
