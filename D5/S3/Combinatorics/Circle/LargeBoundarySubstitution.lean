@@ -7,6 +7,7 @@
    digest: Whole-suffix LARGE boundaries support positive substitution and a compatible negative prefix pair exchange. -/
 module
 public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
+public import D5.S3.Combinatorics.Circle.LargeSkeletonOrdering
 
 /-! # Whole-suffix LARGE boundary exchanges
 
@@ -25,11 +26,10 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.LargeBoundarySubstitution
 open SourceWidth ExpandingSourcePath MixedSuffixEnergy SmallStepOrdering TwoOppositeLargeExchange
 
-/-- Scan to the next LARGE, carrying the entire intervening SMALL batch T.
-At a LARGE, order T between its proved shifted endpoints, keep that LARGE,
-and restart with an empty batch. Structural induction on B permits arbitrarily
-many LARGE of either sign. The empty-B case orders the complete final batch.
-No old SMALL prefix is required to survive the downward shift. -/
+/-- Derive both retained LARGE boundaries after the downward shift, then use
+LargeSkeletonOrdering's single complete-SMALL-batch scan. The old strip bounds
+supply the upper bounds; the sign-specific boundary hypothesis and LARGE
+magnitude supply both lower bounds. No shifted old SMALL prefix is required. -/
 private theorem reconstruct_suffix
     (k t : ℕ) (hk : 3 ≤ k) (δ : ℤ) (hδ : 0 ≤ δ) (hδQ : δ < Q k)
     (B T : List (Fin k)) (h : ℤ)
@@ -50,126 +50,43 @@ private theorem reconstruct_suffix
   obtain ⟨hQ, _, hC, _, _⟩ := source_geometry hk
   change 2 ≤ Q k at hQ
   change C k = 2 * Q k - 1 at hC
-  have compatible (L : List (Fin k)) (hL : ∀ i ∈ L, |s k t i| < Q k) :
-      ∀ p ∈ L, ∀ n ∈ L, 0 < s k t p → s k t n < 0 →
-        s k t p - s k t n ≤ C k := by
-    intro p hp n hn hp0 hn0
-    have hpQ := hL p hp
-    have hnQ := hL n hn
-    rw [abs_of_pos hp0] at hpQ
-    rw [abs_of_neg hn0] at hnQ
-    omega
-  have filterSmall (L : List (Fin k)) (hL : ∀ i ∈ L, |s k t i| < Q k) :
-      L.filter (fun i => decide (Large k t i)) = [] := by
-    apply List.filter_eq_nil_iff.mpr
-    intro i hi
-    intro hdecide
-    exact (not_le.mpr (hL i hi)) (of_decide_eq_true hdecide)
-  induction B generalizing T h with
-  | nil =>
-    have hend' : 0 ≤ (h - δ) + mass (s k t) T ∧
-        (h - δ) + mass (s k t) T ≤ C k := by
-      simp only [List.append_nil] at hend
-      constructor <;> omega
-    obtain ⟨E, hE, hsE⟩ := exists_order_between (s k t) T (C k) (h - δ)
-      hstart hend' (compatible T hT)
-    have hEsmall : ∀ i ∈ E, |s k t i| < Q k :=
-      fun i hi => hT i (hE.mem_iff.mp hi)
-    refine ⟨E, by simpa using hE, ?_, hsE⟩
-    simp only [List.append_nil, filterSmall E hEsmall, filterSmall T hT]
-  | cons i B ih =>
-    by_cases hi : Large k t i
-    · -- The next LARGE closes the complete accumulated SMALL batch.
-      obtain ⟨_, hsTail⟩ := strip_split T (i :: B) hold
-      have hdep : 0 ≤ h + mass (s k t) T ∧
-          h + mass (s k t) T ≤ C k := by
-        simpa only [List.take_zero, List.map_nil, List.sum_nil, add_zero]
-          using inStrip_prefix hsTail 0
-      have harr : 0 ≤ h + mass (s k t) T + s k t i ∧
-          h + mass (s k t) T + s k t i ≤ C k := by
-        simpa only [List.take_succ_cons, List.take_zero, List.map_cons,
-          List.map_nil, List.sum_cons, List.sum_nil, add_zero]
-          using inStrip_prefix hsTail 1
-      have hlow := hboundary T i B
-        (by simp only [List.append_assoc, List.cons_append, List.nil_append]) hi
-      have hmag : Q k ≤ |s k t i| := hi
-      have hshift :
-          (0 ≤ h + mass (s k t) T - δ ∧ h + mass (s k t) T - δ ≤ C k) ∧
-          (0 ≤ h + mass (s k t) T + s k t i - δ ∧
-            h + mass (s k t) T + s k t i - δ ≤ C k) := by
-        by_cases hn : s k t i < 0
-        · have hm : Q k ≤ -s k t i := by
-            simpa only [abs_of_neg hn] using hmag
-          have hl := hlow.1 hn
-          exact ⟨⟨by omega, by omega⟩, ⟨by omega, by omega⟩⟩
-        · have hp : 0 < s k t i := by
-            rw [abs_of_nonneg (by omega)] at hmag
-            omega
-          have hl := hlow.2 hp
-          exact ⟨⟨by omega, by omega⟩, ⟨by omega, by omega⟩⟩
-      have hbatchEnd : 0 ≤ (h - δ) + mass (s k t) T ∧
-          (h - δ) + mass (s k t) T ≤ C k := by
-        constructor <;> omega
-      obtain ⟨E, hE, hsE⟩ := exists_order_between (s k t) T (C k) (h - δ)
-        hstart hbatchEnd (compatible T hT)
-      have hmE : mass (s k t) E = mass (s k t) T := (hE.map (s k t)).sum_eq
-      have hend' :
-          0 ≤ (h + mass (s k t) T + s k t i) + mass (s k t) ([] ++ B) - δ ∧
-          (h + mass (s k t) T + s k t i) + mass (s k t) ([] ++ B) - δ ≤ C k := by
-        simpa only [List.nil_append, mass, List.map_append, List.map_cons,
-          List.sum_append, List.sum_cons, add_assoc] using hend
-      have hboundary' :
-          ∀ (B0 : List (Fin k)) (j : Fin k) (B1 : List (Fin k)),
-          [] ++ B = B0 ++ [j] ++ B1 → Large k t j →
-          (s k t j < 0 →
-            δ ≤ (h + mass (s k t) T + s k t i) + mass (s k t) B0 + s k t j) ∧
-          (0 < s k t j →
-            δ ≤ (h + mass (s k t) T + s k t i) + mass (s k t) B0) := by
-        intro B0 j B1 hsplit hj
-        have hsplit' : B = B0 ++ [j] ++ B1 := by simpa using hsplit
-        have hb := hboundary (T ++ [i] ++ B0) j B1 (by
-          rw [hsplit']
-          simp only [List.append_assoc, List.cons_append, List.nil_append]) hj
-        simpa only [mass, List.map_append, List.map_cons, List.map_nil,
-          List.sum_append, List.sum_cons, List.sum_nil, add_zero, add_assoc] using hb
-      obtain ⟨R, hR, hRf, hsR⟩ := ih [] (h + mass (s k t) T + s k t i)
-        (by simp) (by simpa only [List.nil_append] using hsTail.2.2)
-        hshift.2 hend' hboundary'
-      have hR' : R.Perm B := by simpa only [List.nil_append] using hR
-      have hRf' : R.filter (fun j => decide (Large k t j)) =
-          B.filter (fun j => decide (Large k t j)) := by
-        simpa only [List.nil_append] using hRf
-      have hEsmall : ∀ j ∈ E, |s k t j| < Q k :=
-        fun j hj => hT j (hE.mem_iff.mp hj)
-      have hsGate : InStrip (s k t) (C k)
-          ((h - δ) + mass (s k t) E) (i :: R) := by
-        rw [hmE]
-        change 0 ≤ (h - δ) + mass (s k t) T ∧
-          (h - δ) + mass (s k t) T ≤ C k ∧
-          InStrip (s k t) (C k) ((h - δ) + mass (s k t) T + s k t i) R
-        refine ⟨by omega, by omega, ?_⟩
-        have heq : (h - δ) + mass (s k t) T + s k t i =
-            h + mass (s k t) T + s k t i - δ := by ring
-        rw [heq]
-        exact hsR
-      refine ⟨E ++ i :: R, hE.append (hR'.cons i), ?_, inStrip_append hsE hsGate⟩
-      simp [List.filter_append, filterSmall E hEsmall, filterSmall T hT, hi, hRf']
-    · -- Accumulate SMALL until the next LARGE; do not demand shifted old gates.
-      have hiSmall : |s k t i| < Q k := lt_of_not_ge hi
-      have hT' : ∀ j ∈ T ++ [i], |s k t j| < Q k := by
-        intro j hj
-        rcases List.mem_append.mp hj with hj | hj
-        · exact hT j hj
-        · simpa only [List.mem_singleton.mp hj] using hiSmall
-      have heq : T ++ i :: B = (T ++ [i]) ++ B := by
-        simp only [List.append_assoc, List.cons_append, List.nil_append]
-      obtain ⟨E, hE, hEf, hsE⟩ := ih (T ++ [i]) h hT'
-        (by simpa only [← heq] using hold) hstart
-        (by simpa only [← heq] using hend) (by
-          intro B0 j B1 hsplit hj
-          exact hboundary B0 j B1 (heq.trans hsplit) hj)
-      exact ⟨E, by simpa only [← heq] using hE,
-        by simpa only [← heq] using hEf, hsE⟩
+  have hshifted : ∀ (B0 : List (Fin k)) (i : Fin k) (B1 : List (Fin k)),
+      T ++ B = B0 ++ [i] ++ B1 → Q k ≤ |s k t i| →
+      (0 ≤ (h - δ) + mass (s k t) B0 ∧
+        (h - δ) + mass (s k t) B0 ≤ C k) ∧
+      (0 ≤ (h - δ) + mass (s k t) B0 + s k t i ∧
+        (h - δ) + mass (s k t) B0 + s k t i ≤ C k) := by
+    intro B0 i B1 hsplit hi
+    obtain ⟨_, hsTail⟩ := strip_split B0 ([i] ++ B1)
+      (by simpa only [hsplit, List.append_assoc] using hold)
+    have hsTail' : InStrip (s k t) (C k) (h + mass (s k t) B0) (i :: B1) := by
+      simpa only [List.cons_append, List.nil_append] using hsTail
+    have hdep : 0 ≤ h + mass (s k t) B0 ∧
+        h + mass (s k t) B0 ≤ C k := by
+      simpa only [List.take_zero, List.map_nil, List.sum_nil, add_zero]
+        using inStrip_prefix hsTail' 0
+    have harr : 0 ≤ h + mass (s k t) B0 + s k t i ∧
+        h + mass (s k t) B0 + s k t i ≤ C k := by
+      simpa only [List.take_succ_cons, List.take_zero, List.map_cons,
+        List.map_nil, List.sum_cons, List.sum_nil, add_zero]
+        using inStrip_prefix hsTail' 1
+    have hlow := hboundary B0 i B1 hsplit hi
+    by_cases hn : s k t i < 0
+    · have hm : Q k ≤ -s k t i := by
+        simpa only [abs_of_neg hn] using hi
+      have hl := hlow.1 hn
+      exact ⟨⟨by omega, by omega⟩, ⟨by omega, by omega⟩⟩
+    · have hp : 0 < s k t i := by
+        rw [abs_of_nonneg (by omega)] at hi
+        omega
+      have hl := hlow.2 hp
+      exact ⟨⟨by omega, by omega⟩, ⟨by omega, by omega⟩⟩
+  apply LargeSkeletonOrdering.exists_order_preserving_large (s k t) (Q k) (C k)
+    (by omega) (by omega) (T ++ B) (h - δ) hstart
+  · change 0 ≤ (h - δ) + mass (s k t) (T ++ B) ∧
+      (h - δ) + mass (s k t) (T ++ B) ≤ C k
+    constructor <;> omega
+  · exact hshifted
 
 /-- One-for-one physical substitution with arbitrary mixed LARGE suffix.
 Each boundary premise measures the ORIGINAL zero-start word at that literal
