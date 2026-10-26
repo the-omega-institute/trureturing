@@ -21,7 +21,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} := realize signature
-  (fun _ _ Q => Set.PairwiseDisjoint (↑Q) id) (fun e => nomatch e)
+  (fun _ α Q => Set.PairwiseDisjoint (Q : Set (Finset α)) id) (fun e => nomatch e)
 def rejected : Realization signature.{u} := realize signature
   (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where

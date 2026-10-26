@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Order.Minimal]
    utility: none
-   digest: Disjoint minimal zero-support decompositions and unconditional original-occurrence Good orders. -/
+   digest: Disjoint minimal zero decompositions and original-occurrence Good orders. -/
 
 import D5.S3.Combinatorics.Sequenceability.PairedZeroSubsetSpectrum
 import Mathlib.Data.List.FinRange
@@ -94,7 +94,7 @@ theorem zero_decomposition_pairwise_disjoint (f : α → G) (X C : Finset α)
     (hCX : C ⊆ X) (hz : (∑ x ∈ C, f x) = 0) :
     ∃ Q : Finset (Finset α),
       (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧
-      Set.PairwiseDisjoint (↑Q) id ∧ C = Q.biUnion id := by
+      Set.PairwiseDisjoint (Q : Set (Finset α)) id ∧ C = Q.biUnion id := by
   classical
   revert hCX hz
   refine Finset.strongInductionOn C ?_
@@ -133,13 +133,16 @@ theorem zero_decomposition_pairwise_disjoint (f : α → G) (X C : Finset α)
     · exact ⟨hBC.trans hCX, hmin⟩
     · exact hQ D hD
   · intro D hD E hE hDE
-    rcases Finset.mem_insert.mp hD with rfl | hD
-    · rcases Finset.mem_insert.mp hE with rfl | hE
-      · exact (hDE rfl).elim
-      · exact hBdis hE
-    · rcases Finset.mem_insert.mp hE with rfl | hE
-      · exact (hBdis hD).symm
-      · exact hdis hD hE hDE
+    change Disjoint D E
+    rcases Finset.mem_insert.mp hD with hDB | hDQ
+    · rcases Finset.mem_insert.mp hE with hEB | hEQ
+      · exact (hDE (hDB.trans hEB.symm)).elim
+      · rw [hDB]
+        exact hBdis hEQ
+    · rcases Finset.mem_insert.mp hE with hEB | hEQ
+      · rw [hEB]
+        exact (hBdis hDQ).symm
+      · exact hdis hDQ hEQ hDE
   · rw [Finset.biUnion_insert, ← hcover]
     exact (Finset.union_sdiff_of_subset hBC).symm
 
