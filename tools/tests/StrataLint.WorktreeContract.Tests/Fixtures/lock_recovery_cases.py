@@ -193,6 +193,38 @@ class LockRecoveryCases:
         self.assertTrue(any(self.g(self.main, "show", ref + ":owned") ==
                             "bytes from interrupted checkout\n" for ref in references))
 
+    def test_large_initialization_checkout_preserves_partial_bytes(self):
+        import worktree_publication as publication
+        target, branch, token = self.owned_initialization()
+        (target / "owned").write_text("bytes from interrupted large checkout\n")
+        native_git = publication.git
+        large_calls = []
+        refresh_results = []
+        def slow_git(path, *arguments, **options):
+            if arguments[0] in ("add", "checkout-index", "update-index"):
+                large_calls.append(arguments[0])
+                if options.get("timeout", 300) < 600:
+                    raise subprocess.TimeoutExpired(["git", *arguments], options.get("timeout", 300))
+            result = native_git(path, *arguments, **options)
+            if arguments[0] == "update-index":
+                refresh_results.append(result.returncode)
+            return result
+        options = argparse.Namespace(source=self.main, path=target, branch=branch,
+                                     base=self.base, skip_restore=True)
+        with patch.object(publication, "git", side_effect=slow_git):
+            publication.recover_initialization(options)
+        self.assertIn("add", large_calls)
+        self.assertIn("checkout-index", large_calls)
+        self.assertIn("update-index", large_calls)
+        self.assertEqual([1], refresh_results)
+        self.assertEqual("bytes from interrupted large checkout\n", (target / "owned").read_text())
+        self.assertTrue((target / "other").is_file())
+        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.g(target, "rev-parse", "HEAD^{tree}"),
+                         self.g(target, "write-tree"))
+        metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        self.assertFalse((metadata / "locked").exists())
+
     def test_owned_unregistered_branch_can_resume(self):
         target, branch, token = self.owned_initialization(registered=False)
         (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.2\n")
