@@ -16,6 +16,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 4000000
 
 open private P P_neg alongPartial_P E Ei Atom Atom.value Atom.frequency Atom.degree
+  Atom.one Atom.x1 Atom.x1sq Atom.x2 Atom.x1x2 Atom.x1four Atom.x1x3 Atom.x2sq
   Atom.coefficient rawPolynomial currentPolynomial quadraticPolynomial A A_atom atom tri S
   phase_same phase_zero phase_neg_left phase_neg_same
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumNullCalculus
@@ -44,13 +45,13 @@ private theorem bilinear_right_zero (D : LatticeData) (a : Charge D) :
 -- The full raw and normal-ordering sums have already been reduced above.
 private theorem A2_z_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a 0 .one) =
+    A D a s 2 (atom D a 0 Atom.one) =
     tri D a
       (720 * (P D a 0) ^ 2)
       (2880 * (S D s))
       (2880 * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 2 (by omega) .one
+  rw [A_atom D a 0 s 2 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -73,13 +74,13 @@ private theorem A2_z_one (D : LatticeData) (a : Charge D)
 
 private theorem A3_z_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 3 (atom D a 0 .one) =
+    A D a s 3 (atom D a 0 Atom.one) =
     tri D a
       (1440 * (P D a 0) * (P D a 1))
       (2880 * (P D a 0) * (S D s))
       (-2880 * (P D a 0) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 3 (by omega) .one
+  rw [A_atom D a 0 s 3 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -102,13 +103,13 @@ private theorem A3_z_one (D : LatticeData) (a : Charge D)
 
 private theorem A6_z_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 6 (atom D a 0 .one) =
+    A D a s 6 (atom D a 0 Atom.one) =
     tri D a
       (1440 * (P D a 0) * (P D a 4) + 1440 * (P D a 1) * (P D a 3) + 720 * (P D a 2) ^ 2)
       (120 * (P D a 0) ^ 4 * (S D s) + 720 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 960 * (P D a 0) * (P D a 2) * (S D s) + 360 * (P D a 1) ^ 2 * (S D s) + 720 * (P D a 3) * (S D s))
       (120 * (P D a 0) ^ 4 * (S D s) - 720 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 960 * (P D a 0) * (P D a 2) * (S D s) + 360 * (P D a 1) ^ 2 * (S D s) - 720 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 6 (by omega) .one
+  rw [A_atom D a 0 s 6 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -131,13 +132,13 @@ private theorem A6_z_one (D : LatticeData) (a : Charge D)
 
 private theorem A2_z_x1sq (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a 0 .x1sq) =
+    A D a s 2 (atom D a 0 Atom.x1sq) =
     tri D a
       (720 * (P D a 0) ^ 4 + 11520 * (P D a 0) * (P D a 2))
       (2880 * (P D a 0) ^ 2 * (S D s) + 23040 * (P D a 1) * (S D s))
       (2880 * (P D a 0) ^ 2 * (S D s) - 23040 * (P D a 1) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 2 (by omega) .x1sq
+  rw [A_atom D a 0 s 2 (by omega) Atom.x1sq
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -160,13 +161,13 @@ private theorem A2_z_x1sq (D : LatticeData) (a : Charge D)
 
 private theorem A2_p_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a a .one) =
+    A D a s 2 (atom D a a Atom.one) =
     tri D a
       (120 * (P D a 0) ^ 4 * (S D s) - 720 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 960 * (P D a 0) * (P D a 2) * (S D s) + 360 * (P D a 1) ^ 2 * (S D s) - 720 * (P D a 3) * (S D s))
       (720 * (P D a 0) ^ 2 + 5760 * (P D a 1))
       (0) := by
   unfold atom
-  rw [A_atom D a a s 2 (by omega) .one
+  rw [A_atom D a a s 2 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -189,13 +190,13 @@ private theorem A2_p_one (D : LatticeData) (a : Charge D)
 
 private theorem A2_n_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a (-a) .one) =
+    A D a s 2 (atom D a (-a) Atom.one) =
     tri D a
       (120 * (P D a 0) ^ 4 * (S D s) + 720 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 960 * (P D a 0) * (P D a 2) * (S D s) + 360 * (P D a 1) ^ 2 * (S D s) + 720 * (P D a 3) * (S D s))
       (0)
       (720 * (P D a 0) ^ 2 - 5760 * (P D a 1)) := by
   unfold atom
-  rw [A_atom D a (-a) s 2 (by omega) .one
+  rw [A_atom D a (-a) s 2 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -218,13 +219,13 @@ private theorem A2_n_one (D : LatticeData) (a : Charge D)
 
 private theorem A2_z_x1four (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a 0 .x1four) =
+    A D a s 2 (atom D a 0 Atom.x1four) =
     tri D a
       (720 * (P D a 0) ^ 6 + 23040 * (P D a 0) ^ 3 * (P D a 2))
       (2880 * (P D a 0) ^ 4 * (S D s) - 46080 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 92160 * (P D a 1) ^ 2 * (S D s) + 184320 * (P D a 3) * (S D s))
       (2880 * (P D a 0) ^ 4 * (S D s) + 46080 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 92160 * (P D a 1) ^ 2 * (S D s) - 184320 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 2 (by omega) .x1four
+  rw [A_atom D a 0 s 2 (by omega) Atom.x1four
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -247,13 +248,13 @@ private theorem A2_z_x1four (D : LatticeData) (a : Charge D)
 
 private theorem A2_z_x1x3 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a 0 .x1x3) =
+    A D a s 2 (atom D a 0 Atom.x1x3) =
     tri D a
       (720 * (P D a 0) ^ 3 * (P D a 2) + 17280 * (P D a 0) * (P D a 4) + 5760 * (P D a 2) ^ 2)
       (5760 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 2880 * (P D a 0) * (P D a 2) * (S D s) + 5760 * (P D a 1) ^ 2 * (S D s) + 11520 * (P D a 3) * (S D s))
       (-5760 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 2880 * (P D a 0) * (P D a 2) * (S D s) + 5760 * (P D a 1) ^ 2 * (S D s) - 11520 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 2 (by omega) .x1x3
+  rw [A_atom D a 0 s 2 (by omega) Atom.x1x3
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -276,13 +277,13 @@ private theorem A2_z_x1x3 (D : LatticeData) (a : Charge D)
 
 private theorem A2_z_x2sq (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a 0 .x2sq) =
+    A D a s 2 (atom D a 0 Atom.x2sq) =
     tri D a
       (720 * (P D a 0) ^ 2 * (P D a 1) ^ 2 + 23040 * (P D a 1) * (P D a 3))
       (1920 * (P D a 0) ^ 4 * (S D s) + 15360 * (P D a 0) * (P D a 2) * (S D s) - 2880 * (P D a 1) ^ 2 * (S D s) + 11520 * (P D a 3) * (S D s))
       (1920 * (P D a 0) ^ 4 * (S D s) + 15360 * (P D a 0) * (P D a 2) * (S D s) - 2880 * (P D a 1) ^ 2 * (S D s) - 11520 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 2 (by omega) .x2sq
+  rw [A_atom D a 0 s 2 (by omega) Atom.x2sq
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -305,13 +306,13 @@ private theorem A2_z_x2sq (D : LatticeData) (a : Charge D)
 
 private theorem A2_p_x1sq (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a a .x1sq) =
+    A D a s 2 (atom D a a Atom.x1sq) =
     tri D a
       (-8 * (P D a 0) ^ 6 * (S D s) + 240 * (P D a 0) ^ 4 * (P D a 1) * (S D s) - 320 * (P D a 0) ^ 3 * (P D a 2) * (S D s) + 360 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) - 720 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 3840 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 4608 * (P D a 0) * (P D a 4) * (S D s) - 960 * (P D a 1) ^ 3 * (S D s) + 5760 * (P D a 1) * (P D a 3) * (S D s) + 2560 * (P D a 2) ^ 2 * (S D s) - 7680 * (P D a 5) * (S D s))
       (720 * (P D a 0) ^ 4 + 5760 * (P D a 0) ^ 2 * (P D a 1) + 11520 * (P D a 0) * (P D a 2))
       (0) := by
   unfold atom
-  rw [A_atom D a a s 2 (by omega) .x1sq
+  rw [A_atom D a a s 2 (by omega) Atom.x1sq
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -334,13 +335,13 @@ private theorem A2_p_x1sq (D : LatticeData) (a : Charge D)
 
 private theorem A2_n_x1sq (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a (-a) .x1sq) =
+    A D a s 2 (atom D a (-a) Atom.x1sq) =
     tri D a
       (-8 * (P D a 0) ^ 6 * (S D s) - 240 * (P D a 0) ^ 4 * (P D a 1) * (S D s) - 320 * (P D a 0) ^ 3 * (P D a 2) * (S D s) + 360 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) + 720 * (P D a 0) ^ 2 * (P D a 3) * (S D s) + 3840 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 4608 * (P D a 0) * (P D a 4) * (S D s) + 960 * (P D a 1) ^ 3 * (S D s) + 5760 * (P D a 1) * (P D a 3) * (S D s) + 2560 * (P D a 2) ^ 2 * (S D s) + 7680 * (P D a 5) * (S D s))
       (0)
       (720 * (P D a 0) ^ 4 - 5760 * (P D a 0) ^ 2 * (P D a 1) + 11520 * (P D a 0) * (P D a 2)) := by
   unfold atom
-  rw [A_atom D a (-a) s 2 (by omega) .x1sq
+  rw [A_atom D a (-a) s 2 (by omega) Atom.x1sq
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -363,13 +364,13 @@ private theorem A2_n_x1sq (D : LatticeData) (a : Charge D)
 
 private theorem A2_p_x2 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a a .x2) =
+    A D a s 2 (atom D a a Atom.x2) =
     tri D a
       (16 * (P D a 0) ^ 6 * (S D s) - 120 * (P D a 0) ^ 4 * (P D a 1) * (S D s) + 640 * (P D a 0) ^ 3 * (P D a 2) * (S D s) - 1440 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 960 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 2304 * (P D a 0) * (P D a 4) * (S D s) + 120 * (P D a 1) ^ 3 * (S D s) + 720 * (P D a 1) * (P D a 3) * (S D s) + 640 * (P D a 2) ^ 2 * (S D s) - 1920 * (P D a 5) * (S D s))
       (720 * (P D a 0) ^ 2 * (P D a 1) + 5760 * (P D a 1) ^ 2 + 11520 * (P D a 3))
       (0) := by
   unfold atom
-  rw [A_atom D a a s 2 (by omega) .x2
+  rw [A_atom D a a s 2 (by omega) Atom.x2
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -392,13 +393,13 @@ private theorem A2_p_x2 (D : LatticeData) (a : Charge D)
 
 private theorem A2_n_x2 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 2 (atom D a (-a) .x2) =
+    A D a s 2 (atom D a (-a) Atom.x2) =
     tri D a
       (-16 * (P D a 0) ^ 6 * (S D s) - 120 * (P D a 0) ^ 4 * (P D a 1) * (S D s) - 640 * (P D a 0) ^ 3 * (P D a 2) * (S D s) - 1440 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 960 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) - 2304 * (P D a 0) * (P D a 4) * (S D s) + 120 * (P D a 1) ^ 3 * (S D s) - 720 * (P D a 1) * (P D a 3) * (S D s) - 640 * (P D a 2) ^ 2 * (S D s) - 1920 * (P D a 5) * (S D s))
       (0)
       (720 * (P D a 0) ^ 2 * (P D a 1) - 5760 * (P D a 1) ^ 2 + 11520 * (P D a 3)) := by
   unfold atom
-  rw [A_atom D a (-a) s 2 (by omega) .x2
+  rw [A_atom D a (-a) s 2 (by omega) Atom.x2
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -421,13 +422,13 @@ private theorem A2_n_x2 (D : LatticeData) (a : Charge D)
 
 private theorem A3_z_x1x2 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 3 (atom D a 0 .x1x2) =
+    A D a s 3 (atom D a 0 Atom.x1x2) =
     tri D a
       (1440 * (P D a 0) ^ 2 * (P D a 1) ^ 2 + 11520 * (P D a 0) * (P D a 4) + 5760 * (P D a 1) * (P D a 3))
       (2880 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 11520 * (P D a 0) * (P D a 2) * (S D s) + 11520 * (P D a 3) * (S D s))
       (-2880 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 11520 * (P D a 0) * (P D a 2) * (S D s) - 11520 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 3 (by omega) .x1x2
+  rw [A_atom D a 0 s 3 (by omega) Atom.x1x2
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -450,13 +451,13 @@ private theorem A3_z_x1x2 (D : LatticeData) (a : Charge D)
 
 private theorem A3_p_x1 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 3 (atom D a a .x1) =
+    A D a s 3 (atom D a a Atom.x1) =
     tri D a
       (-8 * (P D a 0) ^ 6 * (S D s) + 160 * (P D a 0) ^ 3 * (P D a 2) * (S D s) + 360 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) - 720 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 1440 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 1728 * (P D a 0) * (P D a 4) * (S D s) - 240 * (P D a 1) ^ 3 * (S D s) + 1440 * (P D a 1) * (P D a 3) * (S D s) + 640 * (P D a 2) ^ 2 * (S D s) - 1920 * (P D a 5) * (S D s))
       (1440 * (P D a 0) ^ 2 * (P D a 1) + 5760 * (P D a 0) * (P D a 2) + 5760 * (P D a 3))
       (0) := by
   unfold atom
-  rw [A_atom D a a s 3 (by omega) .x1
+  rw [A_atom D a a s 3 (by omega) Atom.x1
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -479,13 +480,13 @@ private theorem A3_p_x1 (D : LatticeData) (a : Charge D)
 
 private theorem A3_n_x1 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 3 (atom D a (-a) .x1) =
+    A D a s 3 (atom D a (-a) Atom.x1) =
     tri D a
       (8 * (P D a 0) ^ 6 * (S D s) - 160 * (P D a 0) ^ 3 * (P D a 2) * (S D s) - 360 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) - 720 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 1440 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) - 1728 * (P D a 0) * (P D a 4) * (S D s) - 240 * (P D a 1) ^ 3 * (S D s) - 1440 * (P D a 1) * (P D a 3) * (S D s) - 640 * (P D a 2) ^ 2 * (S D s) - 1920 * (P D a 5) * (S D s))
       (0)
       (1440 * (P D a 0) ^ 2 * (P D a 1) - 5760 * (P D a 0) * (P D a 2) + 5760 * (P D a 3)) := by
   unfold atom
-  rw [A_atom D a (-a) s 3 (by omega) .x1
+  rw [A_atom D a (-a) s 3 (by omega) Atom.x1
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -508,13 +509,13 @@ private theorem A3_n_x1 (D : LatticeData) (a : Charge D)
 
 private theorem A4_z_x1sq (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 4 (atom D a 0 .x1sq) =
+    A D a s 4 (atom D a 0 Atom.x1sq) =
     tri D a
       (1440 * (P D a 0) ^ 3 * (P D a 2) + 720 * (P D a 0) ^ 2 * (P D a 1) ^ 2 + 11520 * (P D a 0) * (P D a 4))
       (-480 * (P D a 0) ^ 4 * (S D s) + 1440 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 7680 * (P D a 0) * (P D a 2) * (S D s) + 5760 * (P D a 1) ^ 2 * (S D s) + 11520 * (P D a 3) * (S D s))
       (-480 * (P D a 0) ^ 4 * (S D s) - 1440 * (P D a 0) ^ 2 * (P D a 1) * (S D s) + 7680 * (P D a 0) * (P D a 2) * (S D s) + 5760 * (P D a 1) ^ 2 * (S D s) - 11520 * (P D a 3) * (S D s)) := by
   unfold atom
-  rw [A_atom D a 0 s 4 (by omega) .x1sq
+  rw [A_atom D a 0 s 4 (by omega) Atom.x1sq
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -537,13 +538,13 @@ private theorem A4_z_x1sq (D : LatticeData) (a : Charge D)
 
 private theorem A4_p_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 4 (atom D a a .one) =
+    A D a s 4 (atom D a a Atom.one) =
     tri D a
       (4 * (P D a 0) ^ 6 * (S D s) - 60 * (P D a 0) ^ 4 * (P D a 1) * (S D s) + 160 * (P D a 0) ^ 3 * (P D a 2) * (S D s) + 180 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) - 360 * (P D a 0) ^ 2 * (P D a 3) * (S D s) - 480 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 576 * (P D a 0) * (P D a 4) * (S D s) - 60 * (P D a 1) ^ 3 * (S D s) + 360 * (P D a 1) * (P D a 3) * (S D s) + 160 * (P D a 2) ^ 2 * (S D s) - 480 * (P D a 5) * (S D s))
       (1440 * (P D a 0) * (P D a 2) + 720 * (P D a 1) ^ 2 + 5760 * (P D a 3))
       (0) := by
   unfold atom
-  rw [A_atom D a a s 4 (by omega) .one
+  rw [A_atom D a a s 4 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -566,13 +567,13 @@ private theorem A4_p_one (D : LatticeData) (a : Charge D)
 
 private theorem A4_n_one (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) :
-    A D a s 4 (atom D a (-a) .one) =
+    A D a s 4 (atom D a (-a) Atom.one) =
     tri D a
       (4 * (P D a 0) ^ 6 * (S D s) + 60 * (P D a 0) ^ 4 * (P D a 1) * (S D s) + 160 * (P D a 0) ^ 3 * (P D a 2) * (S D s) + 180 * (P D a 0) ^ 2 * (P D a 1) ^ 2 * (S D s) + 360 * (P D a 0) ^ 2 * (P D a 3) * (S D s) + 480 * (P D a 0) * (P D a 1) * (P D a 2) * (S D s) + 576 * (P D a 0) * (P D a 4) * (S D s) + 60 * (P D a 1) ^ 3 * (S D s) + 360 * (P D a 1) * (P D a 3) * (S D s) + 160 * (P D a 2) ^ 2 * (S D s) + 480 * (P D a 5) * (S D s))
       (0)
       (1440 * (P D a 0) * (P D a 2) + 720 * (P D a 1) ^ 2 - 5760 * (P D a 3)) := by
   unfold atom
-  rw [A_atom D a (-a) s 4 (by omega) .one
+  rw [A_atom D a (-a) s 4 (by omega) Atom.one
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
       bilinear_right_zero, ha])
     (by norm_num [Atom.degree, bilinear_neg_left, bilinear_neg_right,
@@ -594,18 +595,18 @@ private theorem A4_n_one (D : LatticeData) (a : Charge D)
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private def V2 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
-  atom D a 0 .x1sq + (4 * s) • atom D a a .one +
-    (4 * s) • atom D a (-a) .one
+  atom D a 0 Atom.x1sq + (4 * s) • atom D a a Atom.one +
+    (4 * s) • atom D a (-a) Atom.one
 
 private def V3 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
-  atom D a 0 .x1x2 + (2 * s) • atom D a a .x1 -
-    (2 * s) • atom D a (-a) .x1
+  atom D a 0 Atom.x1x2 + (2 * s) • atom D a a Atom.x1 -
+    (2 * s) • atom D a (-a) Atom.x1
 
 private def V4 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
-  (7 : ℂ) • atom D a 0 .x1four + (80 : ℂ) • atom D a 0 .x1x3 +
-    (12 : ℂ) • atom D a 0 .x2sq +
-    (24 * s) • atom D a a .x1sq + (192 * s) • atom D a a .x2 +
-    (24 * s) • atom D a (-a) .x1sq - (192 * s) • atom D a (-a) .x2
+  (7 : ℂ) • atom D a 0 Atom.x1four + (80 : ℂ) • atom D a 0 Atom.x1x3 +
+    (12 : ℂ) • atom D a 0 Atom.x2sq +
+    (24 * s) • atom D a a Atom.x1sq + (192 * s) • atom D a a Atom.x2 +
+    (24 * s) • atom D a (-a) Atom.x1sq - (192 * s) • atom D a (-a) Atom.x2
 
 private def V222 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
   tri D a
@@ -634,7 +635,7 @@ private def V6 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
 private theorem A2_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     A D a s 2 (vacuum D) = (720 : ℂ) • V2 D a s := by
-  change A D a s 2 (atom D a 0 .one) = _
+  change A D a s 2 (atom D a 0 Atom.one) = _
   rw [A2_z_one D a ha s]
   have hS : (S D s) ^ 2 = 1 := by
     change (MvPolynomial.C s : Oscillator D) ^ 2 = 1
@@ -653,7 +654,7 @@ private theorem A2_vacuum (D : LatticeData) (a : Charge D)
 private theorem A3_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     A D a s 3 (vacuum D) = (1440 : ℂ) • V3 D a s := by
-  change A D a s 3 (atom D a 0 .one) = _
+  change A D a s 3 (atom D a 0 Atom.one) = _
   rw [A3_z_one D a ha s]
   have hS : (S D s) ^ 2 = 1 := by
     change (MvPolynomial.C s : Oscillator D) ^ 2 = 1
@@ -672,7 +673,7 @@ private theorem A3_vacuum (D : LatticeData) (a : Charge D)
 private theorem A6_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     A D a s 6 (vacuum D) = (120 : ℂ) • V6 D a s := by
-  change A D a s 6 (atom D a 0 .one) = _
+  change A D a s 6 (atom D a 0 Atom.one) = _
   rw [A6_z_one D a ha s]
   have hS : (S D s) ^ 2 = 1 := by
     change (MvPolynomial.C s : Oscillator D) ^ 2 = 1
