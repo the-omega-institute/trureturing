@@ -13,7 +13,7 @@ import D5.S3.Quantum.Analysis.TraceClass.GeneralIdeal
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
 noncomputable section
-open scoped TensorProduct InnerProductSpace BigOperators ENNReal NNReal
+open scoped TensorProduct InnerProductSpace BigOperators ENNReal NNReal ComplexOrder
 set_option backward.isDefEq.respectTransparency false
 open Filter Topology
 
@@ -95,7 +95,8 @@ def completedPair : PairCompletion ≃ₗᵢ[ℂ] H2 :=
 private theorem completed_pair_product (x y : H) :
     completedPair ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) = tensor x y := by
   apply fockBasis.repr.injective
-  ext p
+  apply lp.ext
+  funext p
   change (tensorHilbertBasis oneBasis oneBasis).repr
     ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) p =
       fockBasis.repr (tensor x y) p
@@ -148,7 +149,8 @@ private theorem regroup_product (a e b f : H) :
     regroup ((tensor a e ⊗ₜ[ℂ] tensor b f : H2 ⊗[ℂ] H2) : FourModes) =
       ((tensor a b ⊗ₜ[ℂ] tensor e f : H2 ⊗[ℂ] H2) : FourModes) := by
   apply fourBasis.repr.injective
-  ext p
+  apply lp.ext
+  funext p
   rw [show regroup = fourPermutation regroupPermutation from rfl,
     four_permutation_repr, four_basis_product, four_basis_product]
   simp only [fock_basis_repr]
@@ -377,7 +379,8 @@ private theorem four_clm_ext (T U : FourModes →L[ℂ] FourModes)
         rintro _ ⟨z, rfl⟩
         exact hx z y)
     exact congrArg (fun L : H2 →L[ℂ] FourModes => L x) heq
-  ext x
+  apply ContinuousLinearMap.ext
+  intro x
   apply UniformSpace.Completion.induction_on x (isClosed_eq (by fun_prop) (by fun_prop))
   intro t
   induction t using TensorProduct.induction_on with
@@ -389,7 +392,8 @@ private theorem retained_swap_product (a e b f : H) :
     retainedSwap ((tensor a e ⊗ₜ[ℂ] tensor b f : H2 ⊗[ℂ] H2) : FourModes) =
       ((tensor b e ⊗ₜ[ℂ] tensor a f : H2 ⊗[ℂ] H2) : FourModes) := by
   apply fourBasis.repr.injective
-  ext p
+  apply lp.ext
+  funext p
   rw [show retainedSwap = fourPermutation retainedPermutation from rfl,
     four_permutation_repr, four_basis_product, four_basis_product]
   simp only [fock_basis_repr]
@@ -401,7 +405,8 @@ private theorem difference_swap_product (a e b f : H) :
     differenceSwap ((tensor a e ⊗ₜ[ℂ] tensor b f : H2 ⊗[ℂ] H2) : FourModes) =
       ((tensor a f ⊗ₜ[ℂ] tensor b e : H2 ⊗[ℂ] H2) : FourModes) := by
   apply fourBasis.repr.injective
-  ext p
+  apply lp.ext
+  funext p
   rw [show differenceSwap = fourPermutation differencePermutation from rfl,
     four_permutation_repr, four_basis_product, four_basis_product]
   simp only [fock_basis_repr]

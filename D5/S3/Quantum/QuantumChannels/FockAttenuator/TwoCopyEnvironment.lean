@@ -90,7 +90,8 @@ theorem environment_marginal :
       (3 / 8 : ℂ) • InnerProductSpace.rankOne ℂ (e 0) (e 0) +
       (1 / 4 : ℂ) • InnerProductSpace.rankOne ℂ (e 2) (e 2) +
       (3 / 8 : ℂ) • InnerProductSpace.rankOne ℂ (e 4) (e 4) := by
-  unfold purePartialTrace mixture
+  change (∑' n : ℕ, InnerProductSpace.rankOne ℂ
+    (rotatedEnvironment n) (rotatedEnvironment n)) = _
   rw [tsum_eq_sum (s := ({0, 2, 4} : Finset ℕ)) (fun n hn => by
     have h0 : n ≠ 0 := fun h => hn (by simp [h])
     have h2 : n ≠ 2 := fun h => hn (by simp [h])
