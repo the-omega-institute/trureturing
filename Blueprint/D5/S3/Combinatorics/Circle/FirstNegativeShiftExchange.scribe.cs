@@ -8,6 +8,13 @@ internal sealed class FirstNegativeShiftExchangeDocument : IScribeDocumentDefini
         "Native prefix truncation, actual even-half insertion or relocation, and odd-parent prefix insertion construct full physical strict J competitors in complementary first-negative regions.",
         H("First negative omission and actual inverse-parent exchanges"),
         Blocks(
+            Describe.Lean(DescribeId.Create("native-negative-parent-parity"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent"),
+                H("Physical inverse-parent parity formula"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For arbitrary natural k,t with k>=3 and a physical y:Fin k with s(k,t,y)<0, put b=rho^(-1)(y), Y=-s(k,t,y), Q=2^(k-2), N=4Q-1 and rho=finRotate k. Exactly the stated parity alternative holds: either Y mod 2=0, 2s(b)=-Y, abs(s(b))<Q and s(b)<0; or Y mod 2=1, 2s(b)=N-Y and Q<=s(b). The source-cycle carry equation at the actual b, including the seam rho(b)=y, and centered bounds exclude the negative wrap. The positive wrap yields the odd branch and the zero wrap yields the even branch. Equal numerical values at different physical labels remain distinct. This formula determines the parent used in the even-half, odd uniform-prefix and odd two-generation exchanges."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("native-three-negative-first-negative-shift-exchange"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full"),
                 H("Full physical exchange retaining every SMALL occurrence"),

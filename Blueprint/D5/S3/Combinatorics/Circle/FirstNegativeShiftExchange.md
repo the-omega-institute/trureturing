@@ -4,7 +4,19 @@
 
 Native prefix truncation, actual even-half insertion or relocation, and odd-parent prefix insertion construct full physical strict J competitors in complementary first-negative regions.
 
-**Theorem 1.1 (Full physical exchange retaining every SMALL occurrence).**
+**Theorem 1.1 (Physical inverse-parent parity formula).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary natural k,t with k>=3 and a physical y:Fin k with s(k,t,y)<0, put b=rho^(-1)(y), Y=-s(k,t,y), Q=2^(k-2), N=4Q-1 and rho=finRotate k. Exactly the stated parity alternative holds: either Y mod 2=0, 2s(b)=-Y, abs(s(b))<Q and s(b)<0; or Y mod 2=1, 2s(b)=N-Y and Q<=s(b). The source-cycle carry equation at the actual b, including the seam rho(b)=y, and centered bounds exclude the negative wrap. The positive wrap yields the odd branch and the zero wrap yields the even branch. Equal numerical values at different physical labels remain distinct. This formula determines the parent used in the even-half, odd uniform-prefix and odd two-generation exchanges.
+
+**Theorem 1.2 (Full physical exchange retaining every SMALL occurrence).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full`
 
@@ -32,7 +44,7 @@ Both inserted p,n and returned x,y are LARGE. Thus G(V)=G(W), U(V)=U(W), and rem
 
 This remains the dedicated all-SMALL-retaining branch result. The arrival-free theorem below handles low old arrivals by literal prefix truncations with strict G descent, and invokes this theorem only when both actual arrivals exceed C-P. It does not assert uniform SMALL retention for those truncations. Numerical ties remain distinct physical labels. The even-half and odd-parent results below cover further first-Y>P regions; the remaining placements and full original-quantifier Circle C3.1 remain open.
 
-**Theorem 1.2 (Consumed native low-prefix pair construction).**
+**Theorem 1.3 (Consumed native low-prefix pair construction).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_prefix_pair_truncation`
 
@@ -48,7 +60,7 @@ native_geometry gives s(n)=-D, D<P and both inserted labels LARGE. strip_split r
 
 This is a native physical prefix construction, with no assumed replacement Legal word and no duplicated inventory engine. No claim that every old SMALL survives truncation is made.
 
-**Theorem 1.3 (Full physical strict J competitor without arrival assumptions).**
+**Theorem 1.4 (Full physical strict J competitor without arrival assumptions).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full`
 
@@ -68,7 +80,7 @@ Branch 3: both actual old arrivals exceed C-P, which supplies the two non-strict
 
 At a genuine GLOBAL J minimum W over all Legal physical words for these same k,t, assume all source hypotheses above except Y<=P. If Y<=P held, instantiate the arrival-free theorem with the exact same p,y,zpen,z,A,T0,T1,T2,E. Its witness V is Legal and has J(V)<J(W), contradicting the global condition that J(W)<=J(V) for every Legal V. Linear order therefore gives P<Y for this native three-negative source configuration. This is a necessary exclusion of the Y<=P region at a global minimum; it supplies neither a competitor in the remaining Y>P region nor full Circle C3.1.
 
-**Theorem 1.4 (Actual even half, fresh or in the terminal SMALL batch).**
+**Theorem 1.5 (Actual even half, fresh or in the terminal SMALL batch).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
 
@@ -92,7 +104,7 @@ For fresh b, Extra=[b], e=h+mu-P lies in [0,C). The lower endpoint may be zero a
 
 In both rich cases H(V)+3^abs(s(x))+3^abs(s(y))=H(W)+3^abs(s(p))+3^abs(s(n)). Extra has zero LARGE weight and energy; native geometry gives 3^P+3^D<3^r, hence strict H and J descent. The complement identity is remainingMass(V)=-e for the full physical source. At a genuine global J minimum over all zero-start Legal words, the theorem contradicts either available status. Under its even Y>P and Y>=r-1 source hypotheses, b must therefore already be used and lie outside terminal E. It may lie in A,T0,T1 or T2; no stronger placement is asserted.
 
-**Theorem 1.5 (An odd first negative supplies a uniform three-LARGE prefix competitor).**
+**Theorem 1.6 (An odd first negative supplies a uniform three-LARGE prefix competitor).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_odd_parent_uniform_prefix_exchange`
 
@@ -131,4 +143,5 @@ The upper terminal gap remains: when 3Y>4P and c is used in E, δ>0 can overflow
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_even_half_arrival_free_exchange_full`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_arrival_free_exchange_full`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.actualSource_threeNegative_firstNegative_shift_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/FirstNegativeShiftExchange.negative_parent`
 - Dependency: [D5/S3/Combinatorics/Circle/FirstNegativeShiftCore](FirstNegativeShiftCore.md)
