@@ -42,7 +42,7 @@ theorem minimal_iff_closed_private {V : Type} [Finite V]
     MinimalDominating G S ↔ G.IsDominating (S : Set V) ∧
       ∀ v ∈ S, ∃ z, ClosedPrivate G S v z := by
   classical
-  letI := Fintype.ofFinite V
+  let := Fintype.ofFinite V
   constructor
   · intro h
     refine ⟨h.1, fun v hv => ?_⟩
@@ -194,7 +194,7 @@ theorem minimal_iff_column_tests {n : ℕ} (S : Finset (Vertex n)) :
     · intro v
       obtain ⟨u, hu, hclosed⟩ := (h v.2).1 v.1
       rcases hclosed with heq | hadj
-      · exact Or.inl (heq ▸ hu)
+      · exact Or.inl (by simpa only [← heq] using hu)
       · exact Or.inr ⟨u, hu, hadj⟩
     · intro v hv
       obtain ⟨z, hz, huniq⟩ := (h v.2).2 v.1 hv
