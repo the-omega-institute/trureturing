@@ -11,6 +11,8 @@ import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.Critical
 import D5.S3.Estimation.SequentialDecisionRisk.CriticalRenewalStoppedDrift
 import Mathlib.Probability.ConditionalExpectation
 
+/-! Complete block histories and the literal counted bit execution. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -20,7 +22,7 @@ open scoped ENNReal BigOperators
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalController
 open CriticalRenewalTable CriticalRenewalPaths CriticalRenewalFreshBlocks
 open CriticalRenewalOneGap
-namespace Stop := D5.S3.Estimation.SequentialDecisionRisk.CriticalRenewalStoppedDrift
+open D5.S3.Estimation.SequentialDecisionRisk.CriticalRenewalStoppedDrift
 
 abbrev Sample := ℕ × (ℕ → Block)
 
@@ -107,12 +109,120 @@ private lemma score_adapted {J : ℕ} (δ : ℝ) (t : Tick J) :
   have hF : Measurable F := measurable_of_countable _
   have he : (fun ω : Sample => score δ t ω.2 n) = F ∘ history n := by
     funext ω
-    simp [F,score,history,Fin.sum_univ_eq_sum_range]
+    change (∑ k ∈ range n, (increment t (ω.2 k) : ℝ)*δ) =
+      ∑ k : Fin n, (increment t (ω.2 k) : ℝ)*δ
+    exact (Fin.sum_univ_eq_sum_range (fun k => (increment t (ω.2 k) : ℝ)*δ) n).symm
+  change StronglyMeasurable[filtration n] (fun ω : Sample => score δ t ω.2 n)
   rw [he]
   exact (hF.comp (comap_measurable _)).stronglyMeasurable
 
 private lemma score_step {J : ℕ} (δ : ℝ) (t : Tick J) (n : ℕ) (ω : Sample) :
     score δ t ω.2 (n+1) - score δ t ω.2 n = (increment t (ω.2 n) : ℝ)*δ := by
   simp [score,sum_range_succ]
+
+private lemma conditional_pair {J : ℕ} (w f : PMF ℕ) (t : Tick J)
+    (n : ℕ) (a : ℕ × ℤ → ℝ) :
+    (sourceLaw w f t)[fun ω : Sample =>
+      a ((ω.2 n).zeros.length,increment t (ω.2 n)) | filtration n]
+      =ᵐ[sourceLaw w f t] fun _ => ∫ ku, a ku ∂(pairLaw f t).toMeasure := by
+  have h := next_block_conditional w f t n
+    (fun b => a (b.zeros.length,increment t b))
+  have he : (∫ b, a (b.zeros.length,increment t b) ∂(blockLaw f t).toMeasure) =
+      ∫ ku, a ku ∂(pairLaw f t).toMeasure := by
+    rw [← block_pair_law f t, ← PMF.toMeasure_map _ _ (measurable_of_countable _),
+      integral_map (by fun_prop) (measurable_of_countable a).aestronglyMeasurable]
+  simpa only [he] using h
+
+private lemma score_evidence {J : ℕ} (δ : ℝ) (t : Tick J)
+    (bs : ℕ → Block) (n : ℕ) :
+    score δ t bs n = (evidence t bs n : ℝ)*δ := by
+  simp only [score,evidence,Int.cast_sum,Finset.sum_mul]
+
+private lemma outside_score {H J : ℕ} (δ : ℝ) (hδ : 0 < δ)
+    (t : Tick J) (bs : ℕ → Block) (n : ℕ) :
+    ¬ inside H (evidence t bs n) ↔ (H : ℝ)*δ ≤ |score δ t bs n| := by
+  rw [score_evidence,abs_mul,abs_of_pos hδ,
+    mul_le_mul_iff_left₀ hδ,le_abs]
+  simp only [inside,not_and_or,not_lt]
+  constructor
+  · rintro (h | h)
+    · right
+      have hh : (evidence t bs n : ℝ) ≤ -(H : ℝ) := by exact_mod_cast h
+      linarith
+    · left
+      exact_mod_cast h
+  · rintro (h | h)
+    · right
+      exact_mod_cast h
+    · left
+      have hh : (evidence t bs n : ℝ) ≤ -(H : ℝ) := by linarith
+      exact_mod_cast hh
+
+private lemma exit_eq_gapStop {H J : ℕ} (hH : 0 < H) (δ : ℝ) (hδ : 0 < δ)
+    (t : Tick J) (ω : Sample) :
+    exitTime (fun n (ω : Sample) => score δ t ω.2 n) ((H : ℝ)*δ) ω =
+      gapStop H t ω.2 := by
+  have hcond (n : ℕ) :
+      (1 ≤ n ∧ (H : ℝ)*δ ≤ |score δ t ω.2 n|) ↔
+        ¬ inside H (evidence t ω.2 n) := by
+    rw [← outside_score δ hδ]
+    constructor
+    · exact And.right
+    · intro h
+      refine ⟨?_,h⟩
+      by_contra hn
+      have hn0 : n = 0 := by omega
+      subst n
+      simp [inside,evidence] at h
+      omega
+  unfold exitTime hittingAfter gapStop
+  simp only [Set.mem_ofPred_eq,hcond]
+  split_ifs with h
+  · congr 1
+    rw [Nat.sInf_def (s := {j | ¬ inside H (evidence t ω.2 j)}) h]
+    congr 1
+  · rfl
+
+private lemma score_conditional_mean {J : ℕ} (w f : PMF ℕ) (δ : ℝ) (t : Tick J)
+    (n : ℕ) :
+    (sourceLaw w f t)[fun ω : Sample =>
+      score δ t ω.2 (n+1)-score δ t ω.2 n | filtration n]
+      =ᵐ[sourceLaw w f t] fun _ =>
+        ∫ ku : ℕ × ℤ, (ku.2 : ℝ)*δ ∂(pairLaw f t).toMeasure := by
+  simpa only [score_step] using conditional_pair w f t n
+    (fun ku : ℕ × ℤ => (ku.2 : ℝ)*δ)
+
+private lemma score_conditional_second {J : ℕ} (w f : PMF ℕ) (δ : ℝ) (t : Tick J)
+    (n : ℕ) :
+    (sourceLaw w f t)[fun ω : Sample =>
+      (score δ t ω.2 (n+1)-score δ t ω.2 n)^2 | filtration n]
+      =ᵐ[sourceLaw w f t] fun _ =>
+        ∫ ku : ℕ × ℤ, ((ku.2 : ℝ)*δ)^2 ∂(pairLaw f t).toMeasure := by
+  simpa only [score_step] using conditional_pair w f t n
+    (fun ku : ℕ × ℤ => ((ku.2 : ℝ)*δ)^2)
+
+private lemma finite_gap_path {H J : ℕ} (hH : 0 < H) (t : Tick J)
+    (ω : Sample) (hf : gapStop H t ω.2 ≠ ⊤) :
+    let g := (gapStop H t ω.2).toNat
+    gapStop H t ω.2 = (g : ℕ∞) ∧
+    paidStop hH t ω.1 ω.2 = (clock ω.1 ω.2 g : ℕ∞) ∧
+    run hH t ω.1 ω.2 (clock ω.1 ω.2 g) = target H J (evidence t ω.2 g) ∧
+    (run hH t ω.1 ω.2 (clock ω.1 ω.2 g) = label true ↔
+      (H : ℤ) ≤ evidence t ω.2 g) ∧
+    (run hH t ω.1 ω.2 (clock ω.1 ω.2 g) = label false ↔
+      evidence t ω.2 g ≤ -(H : ℤ)) := by
+  have hex : ∃ n, ¬ inside H (evidence t ω.2 n) := by
+    by_contra hn
+    simp [gapStop,hn] at hf
+  have hprev : ∀ n < Nat.find hex, inside H (evidence t ω.2 n) := by
+    intro n hn
+    exact not_not.mp (Nat.find_min hex hn)
+  have hp := stopped_prefix_payment hH t ω.1 ω.2 (Nat.find hex)
+    (Nat.find_spec hex) hprev
+  have hg : (gapStop H t ω.2).toNat = Nat.find hex := by rw [hp.1]; simp
+  dsimp only
+  rw [hg]
+  refine ⟨hp.1,?_,hp.2.2.1,hp.2.2.2.2.2.2.1,hp.2.2.2.2.2.2.2.1⟩
+  simpa only [clock,Nat.add_comm 1 ω.1] using hp.2.1
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalController
