@@ -111,7 +111,10 @@ internal sealed class EnergyConstrainedDeterministicViolationDocument : IScribeD
                         + "less than 2(1 − 2ω)² − 1 by the square-root estimate. The construction "
                         + "therefore supplies the required dimensions and objects for every "
                         + "energy budget in the open interval."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("davino-et-al-2025-energy-constrained-deterministic-violation"),
+                    ResolutionKind.Proved)))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));
