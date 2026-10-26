@@ -110,7 +110,10 @@ internal sealed class SymmetricSatwapMaximalViolationDocument : IScribeDocumentD
                         + "The two equal-setting terms each have coefficient (1−i)/2 and numerator d−k+ki; the two mixed-setting terms "
                         + "together have coefficient 1+i and numerator d−k−ki. Dividing by d and using i²=−1 gives exactly two. "
                         + "The interval from one to d−1 has d−1 elements, so its sum is 2(d−1). The vector ψ thus satisfies all four required identities."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hsu-et-al-2026-symmetric-satwap-maximal-violation"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
