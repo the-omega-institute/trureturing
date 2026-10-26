@@ -51,7 +51,11 @@ private theorem cubic_at_comparison (c d : ℝ) :
 
 private theorem cubic_at_comparison_neg (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     (dukesCubic c d).eval (c * (1 + d) ^ 2) < 0 := by
-  sorry
+  rw [cubic_at_comparison]
+  have hinner : 0 < (d + 1) * (c - 1) ^ 2 + 4 * c * d := by positivity
+  have hpos : 0 < 4 * c ^ 2 * d ^ 2 * (d + 1) *
+      ((d + 1) * (c - 1) ^ 2 + 4 * c * d) := by positivity
+  nlinarith only [hpos]
 
 private theorem roots_bddAbove (c d : ℝ) :
     BddAbove {x : ℝ | (dukesCubic c d).eval x = 0} := by
