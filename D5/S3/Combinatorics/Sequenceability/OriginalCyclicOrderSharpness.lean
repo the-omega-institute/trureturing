@@ -99,7 +99,7 @@ private lemma residue_pos (m : ℕ) (hm : 2 ≤ m) (x : Coordinate m) (hx : x �
 private lemma reduction_label (m : ℕ) (hm : 2 ≤ m) (x : Coordinate m) :
     reduction m (label m x) = (residue m x : ZMod (block m)) := by
   rcases x with (_ | j) | (_ | j)
-  · simp [label, residue, map_natCast, ZMod.natCast_self]
+  · simp [label, residue, map_natCast]
   · simp only [label, residue, map_natCast]
   · simp only [label, residue, map_natCast]
   · have hd : 2 ^ j.val ≤ block m := by
@@ -108,7 +108,7 @@ private lemma reduction_label (m : ℕ) (hm : 2 ≤ m) (x : Coordinate m) :
       omega
     simp only [label, residue, map_sub, map_neg, map_natCast]
     rw [Nat.cast_sub hd]
-    simp [ZMod.natCast_self]
+    simp
 
 private lemma residue_injective (m : ℕ) (hm : 2 ≤ m) : Function.Injective (residue m) := by
   have hL := block_eq_twice m hm
@@ -290,8 +290,8 @@ private lemma left_code_lt (m : ℕ) (hm : 2 ≤ m) (C : Finset (Coordinate m)) 
   apply Nat.geomSum_lt (by decide)
   intro i hi
   by_cases hp : p m ∈ C
-  · simp [leftDigits, hp] at hi
-    rcases hi with rfl | hi
+  · have hi' : i = m - 1 ∨ i ∈ aDigits m C := by simpa [leftDigits, hp] using hi
+    rcases hi' with rfl | hi
     · omega
     · have := aDigits_lt m C i hi
       omega
@@ -324,7 +324,7 @@ private lemma sum_label (m : ℕ) (C : Finset (Coordinate m)) :
         ((chosenB m C).card : WitnessGroup m) * (block m : ℕ) := by
     calc
       _ = ∑ _j ∈ chosenB m C, ((block m : ℕ) : WitnessGroup m) := by
-        simp [chosenB, Finset.sum_filter]
+        simp only [chosenB, Finset.sum_filter]
       _ = _ := by simp [nsmul_eq_mul]
   have hneg : (∑ j : Index m,
       if b m j ∈ C then
@@ -461,7 +461,7 @@ private lemma zero_support_iff (m : ℕ) (hm : 2 ≤ m) (C : Finset (Coordinate 
   · rintro ⟨j, rfl⟩
     refine ⟨⟨q m, by simp [triple]⟩, ?_⟩
     simp [triple, q, a, b, label]
-    <;> ring
+    ring
 
 end D5.S3.Combinatorics.Sequenceability.OriginalCyclicOrderSharpness
 
@@ -560,12 +560,21 @@ theorem sharpness (m : ℕ) (hm : 2 ≤ m) :
     simpa only [label_order m hm] using addOrderOf_nsmul_eq_zero (label m (q m))
   -- Genuine direct application to THIS cyclic label group and ALL-support
   -- family. The existing upper-bound proof is neither restated nor duplicated.
-  have hupper :=
+  have hcanonical :=
     q_containing_component_card_lt (α := Coordinate m) (G := WitnessGroup m)
       (label m) (full m) (supports m) hmem (q m) m hm hmzero
+  have hupper :
+      (((Finset.univ : Finset (supports m)).filter (fun B : supports m => q m ∈ B.val)).image
+        (supportIntersectionGraph (supports m) (q m)).connectedComponentMk).card < m := by
+    refine lt_of_eq_of_lt ?_ hcanonical
+    congr 1
+    ext c
+    simp only [Finset.mem_image, Finset.mem_filter, Finset.mem_univ, true_and]
   have hcount := Nat.le_antisymm (Nat.le_sub_one_of_lt hupper) hlower
-  exact ⟨hfinite, hcyclic, label_injective m hm, label_nonzero m hm,
+  refine ⟨hfinite, hcyclic, label_injective m hm, label_nonzero m hm,
     Finset.mem_univ _, label_order m hm, zero_support_iff m hm, hmem,
-    hcard, hq, hdis, hcount⟩
+    hcard, hq, hdis, ?_⟩
+  refine Eq.trans ?_ hcount
+  congr 1
 
 end D5.S3.Combinatorics.Sequenceability.OriginalCyclicOrderSharpness
