@@ -1,0 +1,8 @@
+**位置无歧义**只要求某个选定的 $z_0$ 满足
+
+$$
+T_\gamma(z_0)=z_0
+\qquad\text{for every closed }\gamma.
+\tag{243.4}
+$$
+

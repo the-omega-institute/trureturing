@@ -1,0 +1,134 @@
+**Theorem 11.8 (Blowup on the broader common-child carrier).** There are two analytic strict complete branches $W_r(p),W_s(p)\in C(p,v_J(p))$ through the mirrors in (11.28). Write
+
+$$
+\beta=(b_s-b_r)'(24),\qquad \mu=(m_s-m_r)'(24).
+$$
+
+Then
+
+$$
+\frac1{600}<-\beta<\frac1{250},\qquad
+\frac1{10}<\mu<\frac14,\qquad
+-65<\frac\mu\beta<-61.
+\tag{11.29}
+$$
+
+For $p\ne24$ sufficiently close to $24$, order these two branches by $b_y>b_x$ and set
+
+$$
+h=b_y-b_x,\qquad
+\sigma=\frac{r_y/b_y-r_x/b_x}{h}.
+\tag{11.30}
+$$
+
+They satisfy
+
+$$
+\frac h{|p-24|}\longrightarrow-\beta>0,\qquad
+|\sigma|\longrightarrow\infty,\qquad
+\frac{m_y-m_x}{h}\longrightarrow\frac\mu\beta\in(-65,-61).
+\tag{11.31}
+$$
+
+These branches have unequal $m$ at every sufficiently close off-$24$ parameter. Thus they rule out an $h$ floor or a slope cap on the broader carrier of distinct companions matching only $(p,v_J(p))$.
+
+*Proof.* Use the full-parent chart from O, Lemma 16.2 and SII, (27.4). At every K source the dependent coordinate $b=b(r,e)$ exists analytically because the derivative of the parent with respect to $b$ is $448/25$. It obeys
+
+$$
+b(r,0)=1/8,\quad b_r(r,0)=0,\quad
+b_e(r,0)=-25\Lambda(r,1/8)/448.
+\tag{11.32}
+$$
+
+This chart includes singular source parameters. Let $k=m-32v/5$. On K, $p_r=k_r=0$ and $v_r=24n'(r)$, with $n'(r)=9-16r$. The derivatives in the $e$ direction are the full-parent derivatives of SII, (27.5), explicitly
+
+$$
+\begin{aligned}
+\Lambda&=107/15-4/j-4/n,& b_e&=-25\Lambda/448,\\
+\gamma_5&=(-256+85/j+190/n)/21,&
+\gamma_6&=(-185+48/j+160/n)/7,\\
+\gamma_7&=-48+10/j+45/n,&
+\alpha:=p_e&=1+(n+5/4)\gamma_5,\\
+\eta:=k_e&=-27/5+(15/4+2n)\gamma_7
+ -(32/5)(5/2+n)\gamma_6-(768/5)b_e.
+\end{aligned}
+\tag{11.33}
+$$
+
+They follow by differentiating the same four gain samples: their $e$ derivatives in this chart are $(-1,-1/j,-\theta/T,-1/n)$, where $T=9/8$ and $\theta=1+(24/5)b_e$. Apply the three fixed-node rows, then differentiate the response traces. The terms involving $n_e$ cancel from $k_e$ because $2(384/5)-(32/5)24=0$. This yields (11.33), so no drift or gain parameter was independently reselected.
+
+For an indeterminate $n$ define
+
+$$
+\begin{aligned}
+P(n)={}&16777216n^6-13631488n^5-53190656n^4+34142752n^3
+ +41464676n^2-21500400n-225625,\\
+B(n)={}&716n^2+31n-900,\\
+R(n)={}&-8192n^3+119952n^2-12320n-57875.
+\end{aligned}
+\tag{11.34}
+$$
+
+Substitute $r=9/16-\Delta/2$, $s=9/16+\Delta/2$, $j_r=n-r$, $j_s=n-s$ into (11.33). Rational collection using $\Delta^2=(85/32-n)/2$ gives
+
+$$
+\begin{aligned}
+\alpha(r)\alpha(s)&=\frac{P(n)}{1764n^2(64n^2-64n-1)},\\
+\frac{b_e(s)}{\alpha(s)}-\frac{b_e(r)}{\alpha(r)}
+ &=-\frac{175nB(n)\Delta}{P(n)},\\
+\frac{\eta(s)}{\alpha(s)}-\frac{\eta(r)}{\alpha(r)}
+ &=\frac{336nR(n)\Delta}{5P(n)}.
+\end{aligned}
+\tag{11.35}
+$$
+
+The quadratic $B$ is the polynomial denoted $D(n)$ in SIII, Lemma 14.2; the cubic $R$ is SII, (28.1). Their use in the normalized derivative differences is through (11.35). These are exact identities in the quadratic rational algebra with the displayed relation for $\Delta^2$: clear denominators, replace each even power of $\Delta$ by the corresponding power of $(85/32-n)/2$, and compare the constant and linear coefficients. Formulae (11.33)–(11.35) therefore specify every coefficient of the derivative calculation.
+
+Using (11.24) on $n\in[47/24,2]$ gives the finite bounds
+
+$$
+\begin{array}{c|c|c|c}
+f&\text{degree}&\min_k\mathcal B_k(f)&\max_k\mathcal B_k(f)\\ \hline
+P&6&842710954799/5832&182258007\\
+B&2&274553/144&2026\\
+R&3&34181767/108&331757\\
+48R-61\cdot125B&3&476086&31388821/48\\
+65\cdot125B-48R&3&43110037/144&536914.
+\end{array}
+\tag{11.36}
+$$
+
+In particular $P>0$ and $64n^2-64n-1>0$ on this interval. Thus both $\alpha(r_0),\alpha(s_0)$ are nonzero. Also $n'(r_0)=8\Delta$ and $n'(s_0)=-8\Delta$ are nonzero. The $(e,r)$ Jacobian determinant of $(p,v)$ is $24\alpha n'$, since $p_r=0$. The analytic implicit-function theorem applied separately at the two mirrors gives the asserted branches for the same prescribed analytic $v_J(p)$. Strictness persists in a neighbourhood, and the whole-gain reconstruction gives actual complete worlds on both branches.
+
+Differentiating $p(W_i(p))=p$ gives $e_i'=1/\alpha_i$ at $24$. Since $b_r=k_r=0$ there,
+
+$$
+b_i'(24)=b_{e,i}/\alpha_i,\qquad
+m_i'(24)=\frac{32}{5}v_J'(24)+\eta_i/\alpha_i.
+$$
+
+The common $v_J'$ term cancels in their difference. Equations (11.35) at $n=n_0$ prove
+
+$$
+\beta=-175n_0B(n_0)\Delta/P(n_0),\qquad
+\mu=336n_0R(n_0)\Delta/(5P(n_0)),\qquad
+\mu/\beta=-48R(n_0)/(125B(n_0)).
+\tag{11.37}
+$$
+
+For explicit numerical bounds, $57/100<\Delta<3/5$, since $(57/100)^2<21/64$ and $67/192<(3/5)^2$. Applying the positive bounds in (11.36) to (11.37) gives the enclosing intervals
+
+$$
+\begin{aligned}
+\frac{1716230803}{839844896256}
+ &<-\beta<\frac{354468960}{120387279257},\\
+\frac{213670225517}{1640322063000}
+ &<\mu<\frac{557224365312}{3009681981425}.
+\end{aligned}
+\tag{11.38}
+$$
+
+These imply the first two bounds in (11.29); positivity of the last two rows of (11.36) implies the ratio bounds.
+
+Finally $b_s-b_r=\beta(p-24)+o(|p-24|)$, $m_s-m_r=\mu(p-24)+o(|p-24|)$, whereas $r_s/b_s-r_r/b_r\to8\Delta\ne0$. Sorting by $b$ gives $h=|b_s-b_r|$, proving the first two limits in (11.31). For either sorting, $(m_y-m_x)/h=(m_s-m_r)/(b_s-b_r)$, proving the third. Since $\mu\ne0$, the unsorted $m$ difference is nonzero for every sufficiently close off-$24$ parameter. These are companion branches in a common acquired child, with an actual $J$ pair also present, but they are not $M$ collisions off $24$. ∎
+

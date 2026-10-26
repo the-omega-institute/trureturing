@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12ddf7f2fcc29f06ceaf6f89ae9d7ad9890d982d7ee64ec306e65c057ed42ae7
+  normalized_sha256: sha256:12ddf7f2fcc29f06ceaf6f89ae9d7ad9890d982d7ee64ec306e65c057ed42ae7
+cas_ref: sha256:12ddf7f2fcc29f06ceaf6f89ae9d7ad9890d982d7ee64ec306e65c057ed42ae7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: A supplied face-pairing data tuple; the manifold and permutation assertions are separate claims.'
+    previous_atom_id: c4ebd80c36d648936e98c5a7cb54bc167ca4e30f40ae9a3ae6735d9f18980090
+    next_atom_id: 99ce7f186dbec0800b5ef264631075b25174e35edf99e5c4b6c7ee69b96b1697

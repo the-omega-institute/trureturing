@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea7d1599568916abdf0cc42ffaf0b012410c2ede8059923e15958c182aef9ed4
+  normalized_sha256: sha256:ea7d1599568916abdf0cc42ffaf0b012410c2ede8059923e15958c182aef9ed4
+cas_ref: sha256:ea7d1599568916abdf0cc42ffaf0b012410c2ede8059923e15958c182aef9ed4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 来源审计的捕获量证书字段。
+    previous_atom_id: 2f380702c352a4b8e7acee8fcbbf98e224fa92deb1e0422dab82ddccf649db13
+    next_atom_id: af5208d59634300d9755036e54be5b6469acaf7bad85b0df0f5c83836b39db46

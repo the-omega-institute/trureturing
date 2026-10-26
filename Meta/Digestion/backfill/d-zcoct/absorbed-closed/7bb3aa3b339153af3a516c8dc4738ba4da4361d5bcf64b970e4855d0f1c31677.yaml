@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7bb3aa3b339153af3a516c8dc4738ba4da4361d5bcf64b970e4855d0f1c31677
+  normalized_sha256: sha256:7bb3aa3b339153af3a516c8dc4738ba4da4361d5bcf64b970e4855d0f1c31677
+cas_ref: sha256:7bb3aa3b339153af3a516c8dc4738ba4da4361d5bcf64b970e4855d0f1c31677
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/RiemannGlobalRelativeSplit.riemann_hypothesis_iff_global_even_and_one_observer
+    target_statement_id: sha256:094fa78e705dc91949885292f335d8572e8a78e89384e33f4a5079458f8364a1
+receipts:
+  unresolved_subitems: []

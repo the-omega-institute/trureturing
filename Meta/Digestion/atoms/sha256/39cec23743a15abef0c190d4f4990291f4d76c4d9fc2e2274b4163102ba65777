@@ -1,0 +1,53 @@
+**Definition 31.1 (Ordered two-source coefficients).** Retain the entire
+parent $\mathcal H$, complete children $C(p,v)$ and terminal responses
+of Definition 1.1. For a world set
+
+$$
+\begin{gathered}
+c=\frac{r(1-r)}b,\qquad j=b+c,\qquad n=j+r,\\
+T=1+b>1,\qquad U=1+2b=2T-1>0,\qquad x=\frac nU>0.
+\end{gathered}
+\tag{31.1}
+$$
+
+For a fixed real drift $d$ write $e=d-24$, $z=d-147/5$ and define
+
+$$
+\begin{aligned}
+\mathsf A_d(T)&=\frac{dT+429-18d+5z/T}{2},\\
+\mathsf B_d(T)&=2dT+\frac{3456}{5}-28d+\frac{9z}{T},\\
+\mathsf C_d(T)&=5dT+\frac{7749}{5}-62d+\frac{21z}{T}.
+\end{aligned}
+\tag{31.2}
+$$
+
+The letters in (31.2) denote response coefficients, distinct from the
+source polynomials $A,C$ of (2.1), (3.1). For an ordered pair of worlds
+with this same drift and $b_1\ne b_2$ put
+
+$$
+\begin{gathered}
+T_i=1+b_i,\quad U_i=2T_i-1,\quad x_i=n_i/U_i,\\
+h=T_1-T_2\ne0,\quad \sigma=T_1+T_2,\quad \pi=T_1T_2>1,
+\quad k=\frac z\pi,\\
+A_i=\mathsf A_d(T_i),\quad B_i=\mathsf B_d(T_i),
+\quad C_i=\mathsf C_d(T_i),\\
+\Delta=316d^2-\frac{33627}{5}d
+ +\frac{k}{2}(26775-1442d-91d\sigma),\\
+Q=\frac{50d^2-347dk+525k^2}{2},\qquad
+\mathsf H=
+\begin{pmatrix}
+A_1&-A_2&5e\\
+B_1&-B_2&32e\\
+2C_1&-2C_2&105e
+\end{pmatrix}.
+\end{gathered}
+\tag{31.3}
+$$
+
+The order in $\mathsf H$ is the clock-five, clock-six, terminal-$M$
+row order and the $(x_1,x_2,w)$ column order used below. Interchanging
+the two source labels changes $h$ and $\det\mathsf H$ by the same sign.
+The $h$ here is a difference of the two $T$ coordinates; it is not the
+positive-width parameter of (10.2) with that chart's labeling.
+

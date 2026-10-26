@@ -120,7 +120,21 @@ $$\forall j \in \operatorname{Fin}\left(3\right),\; \operatorname{Matrix}.\opera
 
 Every observable in the Pauli triple is Hermitian.
 
-**Definition 1.10 (overlap).**
+**Theorem 1.10 (ptrace2_left).**
+
+$$\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall P \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \mathbb{C}\right),\; \operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceRight}\left(((\operatorname{Matrix}.\operatorname{kronecker}\left(U, 1\right)) \cdot (P)) \cdot (\operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{Matrix}.\operatorname{kronecker}\left(U, 1\right)\right))\right) = ((U) \cdot (\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceRight}\left(P\right))) \cdot (\operatorname{Matrix}.\operatorname{conjTranspose}\left(U\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.ptrace2_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* G. Bunth; J. Pitrik; T. Titkos; D. Virosztek (2024). *On the metric property of quantum Wasserstein divergences*. DOI: [10.1103/PhysRevA.110.022211](https://doi.org/10.1103/PhysRevA.110.022211). URL: <https://arxiv.org/abs/2402.13150v4>.
+
+*Commentary.*
+
+Conjugating a two-qubit operator by a local matrix on the first factor conjugates its second-factor partial trace by that matrix.
+
+**Definition 1.11 (overlap).**
 
 $$\forall P \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \mathbb{C}\right),\; \operatorname{overlap}\left(P\right) = \operatorname{Complex}.\operatorname{re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{Function}.\operatorname{uncurry}\left((1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right)\right), \operatorname{Matrix}.\operatorname{mulVec}\left(P, \operatorname{Function}.\operatorname{uncurry}\left((1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right)\right)\right)\right)$$
 
@@ -134,7 +148,7 @@ $$\forall P \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatornam
 
 The unnormalized Bell overlap is the quadratic form of P on Function.uncurry of the identity matrix.
 
-**Theorem 1.11 (pauli_cost).**
+**Theorem 1.12 (pauli_cost).**
 
 $$\forall P \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \mathbb{C}\right),\; \operatorname{cost}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, P\right) = (8) \cdot (\operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(P\right)\right)) - (4) \cdot (\operatorname{overlap}\left(P\right))$$
 
@@ -148,7 +162,7 @@ $$\forall P \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatornam
 
 The Pauli cost operator is 8 times the identity minus 4 times the unnormalized Bell rank-one operator, equivalently 8 times the difference of the identity and the normalized Bell projector.
 
-**Theorem 1.12 (CW_bddAbove).**
+**Theorem 1.13 (CW_bddAbove).**
 
 $$\forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall A \in \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall Phi \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right),\; (\forall j \in \operatorname{Fin}\left(k\right),\; \operatorname{Matrix}.\operatorname{IsHermitian}\left(A\left(j\right)\right)) \Rightarrow (\operatorname{BddAbove}\left(\{x : \mathbb{R} | \exists rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(rho\right)) \land (x = \operatorname{dA}\left(A, rho, Phi\left(rho\right)\right))\}\right))$$
 
@@ -162,7 +176,7 @@ $$\forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall A \in \operato
 
 The complexity value set is bounded above, including the empty zero-dimensional domain.
 
-**Definition 1.13 (pureCoupling).**
+**Definition 1.14 (pureCoupling).**
 
 $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{pureCoupling}\left(S\right) = \operatorname{PureStateHandshake}.\operatorname{rankOneDensity}\left(\operatorname{Function}.\operatorname{uncurry}\left(S\right)\right)$$
 
@@ -176,7 +190,7 @@ $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operator
 
 The square-root coupling reuses the frozen rank-one density construction on the vectorized matrix.
 
-**Theorem 1.14 (pureCoupling_psd).**
+**Theorem 1.15 (pureCoupling_psd).**
 
 $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{pureCoupling}\left(S\right)\right)$$
 
@@ -190,7 +204,7 @@ $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operator
 
 A vectorized outer product is positive semidefinite.
 
-**Theorem 1.15 (ptrace2_pure).**
+**Theorem 1.16 (ptrace2_pure).**
 
 $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceRight}\left(\operatorname{pureCoupling}\left(S\right)\right) = (S) \cdot (\operatorname{Matrix}.\operatorname{conjTranspose}\left(S\right))$$
 
@@ -204,7 +218,7 @@ $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operator
 
 The second-factor trace of the vectorized coupling is S times S conjugate transpose.
 
-**Theorem 1.16 (ptrace1_pure).**
+**Theorem 1.17 (ptrace1_pure).**
 
 $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceLeft}\left(\operatorname{pureCoupling}\left(S\right)\right) = \operatorname{Matrix}.\operatorname{transpose}\left((\operatorname{Matrix}.\operatorname{conjTranspose}\left(S\right)) \cdot (S)\right)$$
 
@@ -218,7 +232,7 @@ $$\forall d \in \mathbb{N},\; \forall S \in \operatorname{Matrix}\left(\operator
 
 The first-factor trace is the transpose of S conjugate transpose times S.
 
-**Theorem 1.17 (overlap_pure).**
+**Theorem 1.18 (overlap_pure).**
 
 $$\forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{overlap}\left(\operatorname{pureCoupling}\left(S\right)\right) = \operatorname{Complex}.\operatorname{normSq}\left(\operatorname{Matrix}.\operatorname{trace}\left(S\right)\right)$$
 
@@ -232,7 +246,7 @@ $$\forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 The Bell overlap of the vectorized coupling is the squared complex norm of its trace.
 
-**Theorem 1.18 (diagState_isState).**
+**Theorem 1.19 (diagState_isState).**
 
 $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; (0 \le a) \Rightarrow ((0 \le b) \Rightarrow ((a + b = 1) \Rightarrow (\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(\operatorname{ProjectedUnistochasticDynamics}.\operatorname{diagonalState}\left(![a, b]\right)\right))))$$
 
@@ -246,7 +260,7 @@ $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; (0 \le a) \Rightarrow 
 
 Nonnegative diagonal entries summing to one give a density state.
 
-**Theorem 1.19 (diag_self_cost).**
+**Theorem 1.20 (diag_self_cost).**
 
 $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; (0 \le a) \Rightarrow ((0 \le b) \Rightarrow ((a + b = 1) \Rightarrow (\operatorname{D2}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, \operatorname{ProjectedUnistochasticDynamics}.\operatorname{diagonalState}\left(![a, b]\right), \operatorname{ProjectedUnistochasticDynamics}.\operatorname{diagonalState}\left(![a, b]\right)\right) = 8 - (4) \cdot ((\operatorname{Real}.\operatorname{sqrt}\left(a\right) + \operatorname{Real}.\operatorname{sqrt}\left(b\right))^{2}))))$$
 
@@ -260,7 +274,7 @@ $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; (0 \le a) \Rightarrow 
 
 The diagonal optimum is attained by the vectorized square root; the principal-minor bound gives the matching lower bound.
 
-**Theorem 1.20 (rotate_isState).**
+**Theorem 1.21 (rotate_isState).**
 
 $$\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; ((\operatorname{Matrix}.\operatorname{conjTranspose}\left(U\right)) \cdot (U) = 1) \Rightarrow ((\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(rho\right)) \Rightarrow (\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(\operatorname{ProjectedUnistochasticDynamics}.\operatorname{unitaryEvolution}\left(U, rho\right)\right)))$$
 
@@ -274,7 +288,7 @@ $$\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 Unitary conjugation preserves density states.
 
-**Theorem 1.21 (D2_rotate).**
+**Theorem 1.22 (D2_rotate).**
 
 $$\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall omega \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; ((\operatorname{Matrix}.\operatorname{conjTranspose}\left(U\right)) \cdot (U) = 1) \Rightarrow (((U) \cdot (\operatorname{Matrix}.\operatorname{conjTranspose}\left(U\right)) = 1) \Rightarrow ((\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(rho\right)) \Rightarrow ((\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(omega\right)) \Rightarrow (\operatorname{D2}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, \operatorname{ProjectedUnistochasticDynamics}.\operatorname{unitaryEvolution}\left(U, rho\right), \operatorname{ProjectedUnistochasticDynamics}.\operatorname{unitaryEvolution}\left(U, omega\right)\right) = \operatorname{D2}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, rho, omega\right)))))$$
 
@@ -288,7 +302,7 @@ $$\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 The Pauli infimum is invariant under simultaneous unitary conjugation, by transporting couplings through U tensor conjugate U.
 
-**Theorem 1.22 (self_cost_spectral).**
+**Theorem 1.23 (self_cost_spectral).**
 
 $$\forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(rho\right)) \Rightarrow (\exists a \in \mathbb{R},\; \exists b \in \mathbb{R},\; (0 \le a) \land ((0 \le b) \land ((a + b = 1) \land ((\operatorname{D2}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, rho, rho\right) = 8 - (4) \cdot ((\operatorname{Real}.\operatorname{sqrt}\left(a\right) + \operatorname{Real}.\operatorname{sqrt}\left(b\right))^{2})) \land (\operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(\operatorname{CFC}.\operatorname{sqrt}\left(rho\right)\right)\right) = \operatorname{Real}.\operatorname{sqrt}\left(a\right) + \operatorname{Real}.\operatorname{sqrt}\left(b\right))))))$$
 
@@ -302,7 +316,7 @@ $$\forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \
 
 Spectral reduction supplies nonnegative eigenvalues summing to one, the exact self cost and the real trace of the positive square root.
 
-**Theorem 1.23 (self_cost).**
+**Theorem 1.24 (self_cost).**
 
 $$\forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{CoPRelativeQuantumnessRefutation}.\operatorname{IsDensity}\left(rho\right)) \Rightarrow (\operatorname{D2}\left(\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}, rho, rho\right) = 8 - (4) \cdot ((\operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(\operatorname{CFC}.\operatorname{sqrt}\left(rho\right)\right)\right))^{2}))$$
 
@@ -333,6 +347,7 @@ Section 4.1, Proposition 3, equation (35), states D²(ρ,ρ)=4(1−√(1−|bρ|
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.pauli_hermitian`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.product_coupling`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.ptrace1_pure`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.ptrace2_left`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.ptrace2_pure`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.pureCoupling`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings.pureCoupling_psd`

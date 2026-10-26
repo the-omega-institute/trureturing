@@ -1,0 +1,12 @@
+## 5. The nonzero exceptional drift
+
+At the target parent, the fixed-drift exclusion at $d=24$ is the direct consequence of Theorem 2.2 in [FIB common-parent geometry and two exact mixed children](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md). That theorem gives $b=1/8$ and
+
+$$
+g(t)=\frac85(t-1)(t-3)(t-5).
+$$
+
+Consequently $g(7)=384/5\ne0$. Thus the fixed-drift, zero-terminal-gain class is empty at $d=24$. This cited exclusion is used as stated; no additional companion condition is introduced.
+
+Combining this exclusion with Theorem 4.1 and Theorem 3.1 yields the complete fixed-drift classification for the route: the class is empty at $d=0$ and $d=24$, and is given by (3.1) for every $d\in\mathbb R\setminus\{0,24\}$ and every $p,v\in\mathbb R$.
+

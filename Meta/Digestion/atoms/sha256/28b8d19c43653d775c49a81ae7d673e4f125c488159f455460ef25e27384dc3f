@@ -1,0 +1,4 @@
+**Corollary 9.2 (zero and lower-degree strata).** The ambient inverse includes lower actual degrees of any entry or the drift, repeated roots, zero entries at any sampled clock, identically zero entry polynomials and $Z\equiv0$. No polynomial coefficient or value of an unknown polynomial is a denominator. In particular $Z\equiv0$ with arbitrary polynomial drift is still uniquely recovered in the ambient model.
+
+**Proof.** Every division in Theorem 7.2 is by a fixed determinant or by one of the fixed nonzero numbers $\mu^mK_{12},\lambda^mK_{21}$. The observation matrix itself is independent of all unknowns. Its bijectivity therefore applies to each named stratum and their intersections, including the zero matrix polynomial. No selection of nonzero samples or root positions is involved. ∎
+

@@ -1,0 +1,11 @@
+**定理 3.1（扩张残余分解）。** 若 $C$ 是 $\mathfrak M$ 的完整失败证书，则
+
+$$
+\boxed{
+\rho_{\mathfrak N}(C)
+ =\tau\bigl(\{F_A:A\in\mathfrak A, C\cap F_A=\varnothing\}\bigr).
+}
+$$
+
+**证明。** 因为 $C$ 排空 $\mathfrak M$，$\mathfrak N$ 中仍属于 $\mathfrak M$ 的候选不在 $V_{\mathfrak N}(C)$。因此残余族恰为 $\mathfrak A$ 中满足 $C\cap F_A=\varnothing$ 的候选。应用定理 2.1。证毕。
+

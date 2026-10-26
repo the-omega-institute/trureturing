@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e35ebf008af6930237cf66fffef5c685ad96040147005fe715f8efe7a17a87b3
+  normalized_sha256: sha256:e35ebf008af6930237cf66fffef5c685ad96040147005fe715f8efe7a17a87b3
+cas_ref: sha256:e35ebf008af6930237cf66fffef5c685ad96040147005fe715f8efe7a17a87b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 候选计算方法 rational covariance extension 的名称。'
+    previous_atom_id: ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+    next_atom_id: 197090d2720998a84e6f9fdb05a9c3671a9baa20b1839e4563bd7bd58cdd6914

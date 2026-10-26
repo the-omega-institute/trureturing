@@ -1,0 +1,21 @@
+**所用中间事实及证明。** 在以上精确历史语义中，$\Pi_n(m)$ 的元素恰为从 $m$ 出发、对全部实际结果保证合同成立的深度至多 $n$ 的确定性策略树。深度零只有合法 Stop；正深度或先 Stop，或先作一个统一合法动作，并在每个实际结果下接上一棵较浅成功树。对深度归纳即得双向对应。因而对 $n\ge1$，可作为第一项非终止动作的集合是
+
+$$
+\mathcal A_{\mathrm{viable},n}(m)=
+\left\{a\in\mathcal A_{\mathrm{safe}}(m):
+\forall b\in B(m,a),\ \Pi_{n-1}(m_{a,b})\ne\varnothing\right\},
+\qquad \mathcal A_{\mathrm{viable},0}(m)=\varnothing.
+\tag{VI.3}
+$$
+
+其基数 $\chi_n^{\mathrm{run}}(m)$ 只计第一动作，不计 Stop，也不计后续树的多重性。即使 $\chi_n^{\mathrm{run}}(m)=1$，同一个第一动作仍可接多个成功后续；$\chi_n^{\mathrm{run}}(m)=0$ 且 $\mathcal T(m)\ne\varnothing$ 则是可直接完成，而不是死端。对上述带标记树，有限积给出
+
+$$
+|\Pi_{n+1}(m)|=|\mathcal T(m)|+
+\sum_{a\in\mathcal A_{\mathrm{safe}}(m)}
+\prod_{b\in B(m,a)}|\Pi_n(m_{a,b})|.
+\tag{VI.4}
+$$
+
+这套递归是有限时限后向归纳的中间工具，不构成一个新的博弈定理。知识状态及非空知识后继的标准来源是 Chatterjee–Doyen–Henzinger–Raskin，*Algorithms for Omega-Regular Games with Imperfect Information*，[arXiv:0706.2619v3](https://arxiv.org/html/0706.2619v3)，§§3.1–3.2；其 sure-winning 的全分支要求与 almost-sure winning 应分别使用。这里另行把 Stop、资源及精确候选更新纳入有限时限合同。
+

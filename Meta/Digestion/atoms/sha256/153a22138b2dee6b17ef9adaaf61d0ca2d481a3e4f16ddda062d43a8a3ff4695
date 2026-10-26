@@ -1,0 +1,15 @@
+**Definition 1.2 (Strict same-child pairs).** The sets $D_J,D_M$ are those of
+[S, Definition 1.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md):
+
+$$
+\begin{aligned}
+(p,v)\in D_J&\iff\exists W_0\ne W_1\in C(p,v):\ a(W_0)=a(W_1),\\
+(p,v)\in D_M&\iff\exists W_2\ne W_3\in C(p,v):\ m(W_2)=m(W_3).
+\end{aligned}
+$$
+
+Both within-pair distinctness conditions are retained. All four labels belong
+to the same entire actual $C(p,v)$; cross-pair reuse is permitted, and the two
+common terminal values need not coincide. In particular, a possible $J$ pair
+need not contain either endpoint of a selected $M$ pair.
+

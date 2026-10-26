@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98e4f203f2b3b6fc69cb0bff2b1654cdeb78642a7b63fa4f8eb58e38302f5db5
+  normalized_sha256: sha256:98e4f203f2b3b6fc69cb0bff2b1654cdeb78642a7b63fa4f8eb58e38302f5db5
+cas_ref: sha256:98e4f203f2b3b6fc69cb0bff2b1654cdeb78642a7b63fa4f8eb58e38302f5db5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the editorial category model and its interpretive boundary.
+    previous_atom_id: 0eae0aa5b6da195070891a5d869bcf1cce8fad02935917ff187080e32f68522c
+    next_atom_id: de16159a54262572cfcc8f8218cb84539937e2469e781a7b6ab06c36856ed9bf

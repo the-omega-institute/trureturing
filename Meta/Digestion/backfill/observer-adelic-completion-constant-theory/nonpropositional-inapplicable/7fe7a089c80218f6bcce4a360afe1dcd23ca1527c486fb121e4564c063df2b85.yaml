@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fe7a089c80218f6bcce4a360afe1dcd23ca1527c486fb121e4564c063df2b85
+  normalized_sha256: sha256:7fe7a089c80218f6bcce4a360afe1dcd23ca1527c486fb121e4564c063df2b85
+cas_ref: sha256:7fe7a089c80218f6bcce4a360afe1dcd23ca1527c486fb121e4564c063df2b85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names positive Hankel moments as a proposed target, without asserting their positivity.
+    previous_atom_id: 76334131a320f61e07fba3c2952f5c882d4a26adb5fb3d7e3718707cea78813c
+    next_atom_id: 902395a7f4041e3010974dc11fccf0ea2b1718b9e7852afa91610a9079c95e21

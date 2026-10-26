@@ -1,0 +1,14 @@
+**Theorem 1.2.** There is an exact M-collision point $(p_*,v_*)$ in the
+interior of $\mathcal Q$ with one source width $3/25$. Its entire child
+has the three worlds of Theorem 1.1, and its only unordered M-colliding
+pair is $\{W_2,W_3\}$. It has no J-colliding pair.
+There is a real analytic M-collision branch through this point with the
+first width allowed to vary. On a sufficiently short open segment,
+every entire acquired child of that branch still has exactly three
+worlds and an injective terminal-J reading.
+
+The independent J/M quartet sought in the original problem cannot occur
+anywhere over $\mathcal Q$. Its existence for some other $p\ne24,v$
+remains unresolved. The two required pairs need not coincide or share a
+terminal value; the obstruction here excludes every possible J pair.
+

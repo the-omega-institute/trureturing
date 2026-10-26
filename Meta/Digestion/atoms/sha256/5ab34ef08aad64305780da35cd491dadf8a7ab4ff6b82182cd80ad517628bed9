@@ -1,0 +1,66 @@
+## 27. Exactly two simple positive roots at every diagonal coordinate
+
+For a polynomial $f(x)=\sum_{i=0}^n f_i x^i$, its degree-$n$
+Bernstein coefficients on $[0,1]$ are
+
+$$
+\mathcal B_j(f)=\sum_{i=0}^j
+       \frac{\binom ji}{\binom ni}f_i,\qquad 0\le j\le n.
+$$
+
+The Bernstein basis is nonnegative and sums to one. Positive
+coefficients therefore prove strict positivity on the whole interval.
+
+For $c_3/r$, the degree-three coefficient vectors after substituting
+$r=x/2$ and $r=(1+x)/2$ are respectively
+
+$$
+(375,421/3,235/4,149/4),\qquad
+(149/4,63/4,163/3,60).
+$$
+
+Thus $c_3>0$ for $0<r<1$. The degree-three vector for $c_4$ is
+$(130,343,15,362)$, the degree-two vector for $c_5$ is
+$(465,451/2,442)$, and the degree-one vector for $c_6$ is
+$(746,122)$. In particular all $c_3,\ldots,c_7$ are positive.
+Also $c_0>0,c_1<0$, while $c_2$ needs no sign restriction.
+In descending powers the nonzero coefficient signs therefore have
+exactly two changes, whether $c_2$ is positive, negative or zero.
+Descartes' rule bounds the number of positive roots, counted with
+multiplicity, by two.
+
+Write $t=r(1-r)/2$. Exact substitution gives
+
+$$
+\frac{F(r,t)}{r^3(1-r)^3}
+=\frac1{32}\bigl(18r^8+240r^7-745r^6-1840r^5
+ +3168r^4+5884r^3-2293r^2-4272r-496\bigr). \tag{27.1}
+$$
+
+The complete degree-eight Bernstein vector of this quotient is
+
+$$
+\left(-\frac{31}2,-\frac{515}{16},-\frac{46085}{896},
+-\frac{62681}{896},-\frac{186047}{2240},-\frac{38371}{448},
+-\frac{16603}{224},-\frac{3077}{64},-\frac{21}2\right).
+$$
+
+Hence $F(r,t)<0$ on $0<r<1$. On the other hand the degree-six
+Bernstein vector of $F(r,1/2)$ is
+
+$$
+(279/8,3241/64,5631/160,3117/320,967/80,2089/64,1485/32),
+$$
+
+so $F(r,1/2)>0$. Since $F(r,0)>0$ and $0<t\le1/8<1/2$, the
+intermediate value theorem gives one positive root in $(0,t)$ and
+one in $(t,1/2)$. They exhaust the Descartes bound and both are simple.
+There are no other positive roots at any width.
+
+The analytic implicit-function theorem applies since $F_b\ne0$ at
+both roots. The two ordering intervals label the roots uniquely, so
+the local analytic graphs patch into $b_-,b_+$ on the connected
+interval $(0,1)$. This proves the root assertions of Theorem 25.1.
+
+
+

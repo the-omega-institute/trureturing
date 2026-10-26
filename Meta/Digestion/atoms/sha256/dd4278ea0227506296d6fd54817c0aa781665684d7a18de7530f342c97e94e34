@@ -1,0 +1,11 @@
+**Corollary 153.3 (class optimum and its boundary).** The existing actual family and whole-output recovery in the phase-gain volume, Theorem 4.1 and (P.11)--(P.16), attain $1-\sqrt{1-\beta}$ for every positive $\beta$. Combining that existing upper certificate with Theorem 153.2 gives the exact original-real-class value
+
+$$
+\inf_{N\ \mathrm{in\ the\ original\ real\ class}}\ \inf_{R\ \mathrm{CPTP}}
+\|RN-\operatorname{id}_{M_3}\|_\diamond
+=1-\sqrt{1-\beta}.
+\tag{U.241}
+$$
+
+This is a class statement. It does not assert an individual optimum for every encoder, a result for the broader complex encoder class, or any physical, quantum-field or gravitational consequence.
+

@@ -36,7 +36,7 @@ def orderActual : Realization relationSignature :=
 def rejected : Realization relationSignature :=
   realize relationSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 
-private theorem equality_dependence : ObservationalDependence relationSignature equalityActual := by
+theorem equality_dependence : ObservationalDependence relationSignature equalityActual := by
   intro i
   refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
   intro he

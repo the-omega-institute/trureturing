@@ -1,0 +1,9 @@
+**定义 81.1（全联合来源的瞬时自治纤维）。** 令 $\mathcal H_A=\mathbb C^2$、$\mathcal H_E$ 为非零有限维环境，$H$ 是 $\mathcal H_A\otimes\mathcal H_E$ 上固定 Hermitian 矩阵。闭演化满足 $\dot\varrho=-i[H,\varrho]$。称局部瞬时变化只依赖当前局部态，若对任意两个联合密度算子 $\varrho,\sigma$，只要 $\operatorname{Tr}_E\varrho=\operatorname{Tr}_E\sigma$，便有
+
+$$
+\operatorname{Tr}_E\bigl(-i[H,\varrho]\bigr)
+=\operatorname{Tr}_E\bigl(-i[H,\sigma]\bigr).
+$$
+
+量词包含所有初始关联，没有预设乘积制备、固定环境态或环境重置。
+

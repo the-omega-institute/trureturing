@@ -1,0 +1,101 @@
+**Lemma 56.3 (Zero-safe interpolation and the spatial identity).**
+For $W\in\mathcal Z$ set
+
+$$
+z_6=y_6-d,\qquad z_8=d-y_8,\qquad
+z_{10}=(d-y_{10})/3,
+$$
+
+and define the quadratic
+
+$$
+H(t)=z_6\frac{(t-8)(t-10)}8
+-z_8\frac{(t-6)(t-10)}4
++z_{10}\frac{(t-6)(t-8)}8.
+$$
+
+Then $H=\tau h$ for $g(t)=(7-t)h(t)$, $\deg h\le2$, and
+
+$$
+\begin{aligned}
+L&=H(0)=10z_6-15z_8+6z_{10},\\
+A&=5H(2)=30z_6-40z_8+15z_{10},\\
+B&=3H(4)=9z_6-9z_8+3z_{10}
+\end{aligned}
+$$
+
+satisfy
+
+$$
+-7L=\tau d,\qquad A=\tau g(2),\qquad B=\tau g(4).
+$$
+
+Define
+
+$$
+D_c=d(A^2+4B^2),
+$$
+
+$$
+N_c=-7L\left[A\left(147/5-d\right)+2B(18-d)\right]
+-d(A^2+2B^2).
+$$
+
+Then
+
+$$
+N_c=bD_c,\qquad
+(16N_c-D_c)D_c=(16b-1)D_c^2,
+$$
+
+and $D_c\ne0$ on $\mathcal Z$.
+
+**Proof.**
+The condition $g(7)=0$ gives the factorization $g=(7-t)h$.
+Lemma 56.2 gives $z_6=\tau h(6)$, $z_8=\tau h(8)$ and
+$z_{10}=\tau h(10)$.  The displayed expression is the Lagrange
+interpolant at the distinct nodes $6,8,10$, so it equals $\tau h$ without
+dividing by a sampled gain.  Evaluating it at $0,2,4$ gives the three
+stated linear forms.  The clock-zero row gives $-7L=\tau d$; the factors
+$5$ and $3$ in $A,B$ match $g(2)=5h(2)$ and $g(4)=3h(4)$.
+
+The even original rows give
+
+$$
+\tau(147/5-d)=AT,\qquad \tau(18-d)=BU.
+$$
+
+Substitute these and $-7L=\tau d$ into $N_c$:
+
+$$
+N_c=d\{A^2(T-1)+2B^2(U-1)\}=bd(A^2+4B^2)=bD_c.
+$$
+
+It remains to justify the denominator guard.  The zero-drift
+classification, Theorem 4.1 of
+[FIB_ZERO_TERMINAL_GAIN_FIXED_DRIFT_QUARTIC_CLASSIFICATION.md], gives,
+with $u=1+2b$,
+
+$$
+j=\frac{400u(u+1)}{3(269u-25)},\quad
+n=\frac{200u(u+1)}{3(123u+25)},\quad
+r=\frac{200u(u+1)(23u-75)}
+ {3(123u+25)(269u-25)}.
+$$
+
+If $d=0$, positivity gives $u>75/23$; the last expression and $r<1$
+give $u<27$.  Then
+
+$$
+c=\frac{-7u^2+1682u-75}{6(269u-25)}>245/269,
+\qquad b=(u-1)/2>26/23,
+$$
+
+so $bc>6370/6187>1$, contrary to $bc=r(1-r)\le1/4$.
+Thus $d\ne0$.  If $d=24$, Common Parent Theorem 2.2 forces
+$b=1/8$ and $g(t)=(8/5)(t-1)(t-3)(t-5)$, whose value at seven is
+$384/5$, contrary to the promise.  Finally $A=B=0$ would force
+$d=147/5$ and $d=18$ from the two even rows.  Hence $D_c\ne0$.
+No leading coefficient, discriminant, root separation, or sampled
+$g(6),g(8),g(10)$ was divided out. ∎
+

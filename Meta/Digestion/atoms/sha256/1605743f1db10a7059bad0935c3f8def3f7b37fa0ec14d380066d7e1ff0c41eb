@@ -1,0 +1,66 @@
+**定理 2.2（关系格的辛对偶与完整正域商）。**
+采用 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 及
+$\omega_{\rm FS}=\sum_s d\theta_s\wedge dp_s$ 的规范。
+在全正振幅域固定矩均值 $b$，再商去共同相位与
+$\theta_s\mapsto\theta_s+v_s\cdot t$，所得空间有全局坐标
+
+$$
+(q,\chi)\in\mathcal Q_b\times T^k,\qquad
+ \chi=D^{\mathsf T}\theta\pmod{2\pi}.
+$$
+
+约化辛形式为
+
+$$
+\omega_{\rm rel}=\sum_{j=1}^k d\chi_j\wedge dq_j.
+$$
+
+因此每个独立仿射概率关系恰有一个共轭关系角；
+正域的实维数为 $2k$。
+
+**证明。**
+
+由于 $A:\mathbb Z^N\to\mathbb Z^{m+1}$ 满射，选择每个标准基向量的
+整数原像并排成矩阵 $S$，则 $AS=I$。每个 $u\in\mathbb Z^N$ 唯一分解为
+
+$$
+u=Dz+SAu,\qquad z\in\mathbb Z^k.
+$$
+
+确实，$u-SAu\in\ker A$，由 $D$ 是整数基得到存在和唯一性。
+所以矩阵 $[D\ S]$ 为整数可逆矩阵。其对偶给出整数格的正合列
+
+$$
+0\longrightarrow\mathbb Z^{m+1}
+ \overset{A^{\mathsf T}}{\longrightarrow}\mathbb Z^N
+ \overset{D^{\mathsf T}}{\longrightarrow}\mathbb Z^k
+ \longrightarrow0.
+$$
+
+这里最后一个映射满射也可直接由 $[D\ S]^{\mathsf T}$ 的整数逆看出。
+在环面上，$D^{\mathsf T}:T^N\to T^k$ 的核正好是
+$A^{\mathsf T}T^{m+1}$，没有额外有限分支。
+因此 $\chi$ 完整标记相位商，而不只给局部坐标。
+
+概率方程的全部实解为 $p^0+\ker_{\mathbb R}A=p^0+Dq$，
+且非负约束在正域恰给 $\mathcal Q_b$。相位商不作用于概率，
+所以商空间是所列乘积。固定矩层上 $dp=D\,dq$，于是
+
+$$
+\sum_s d\theta_s\wedge dp_s
+ =\sum_j d(D^{\mathsf T}\theta)_j\wedge dq_j.
+$$
+
+右式只依商坐标并且非退化，因此给出所述约化辛形式。
+
+证毕。
+
+若只假定实仿射满秩，局部辛公式仍成立。
+若整数权差不生成全部 $\mathbb Z^m$，名义占位环面具有有限无效核；
+要把作用表述为自由主环面作用，应先采用有效环面。
+使用完整整数关系格的基时，相位商本身仍可由上述关系角完整标记；
+不能用非本原关系生成元代替完整关系格的基。
+本定理也只覆盖全正部分；零振幅处哪些角塌缩需要另行分析。
+
+<a id="thm-general-metric"></a>
+

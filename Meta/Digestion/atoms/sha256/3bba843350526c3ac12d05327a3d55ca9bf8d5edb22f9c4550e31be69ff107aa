@@ -1,0 +1,11 @@
+**例 5.4（五模式相位）。** 取 $J_{12}=E_{12}-E_{21}$，
+$\rho_a=I_5/5+iaJ_{12}$，$|a|\le1/5$。单拷贝实统计与 $a$ 无关。令
+$\Phi=(|1,1\rangle+|2,2\rangle)/\sqrt2$，则
+
+$$
+\operatorname{tr}(|\Phi\rangle\langle\Phi|\rho_a^{\otimes2})=1/25-a^2.
+$$
+
+已知 $\sigma_b=I_5/5+ibJ_{12}$ 时，同一设置给 $1/25-ab$，因而第二拷贝只给平方，
+校准参考给出符号。
+

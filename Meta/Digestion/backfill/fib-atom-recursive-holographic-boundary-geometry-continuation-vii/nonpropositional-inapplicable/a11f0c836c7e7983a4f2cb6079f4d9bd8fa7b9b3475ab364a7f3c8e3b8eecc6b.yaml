@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a11f0c836c7e7983a4f2cb6079f4d9bd8fa7b9b3475ab364a7f3c8e3b8eecc6b
+  normalized_sha256: sha256:a11f0c836c7e7983a4f2cb6079f4d9bd8fa7b9b3475ab364a7f3c8e3b8eecc6b
+cas_ref: sha256:a11f0c836c7e7983a4f2cb6079f4d9bd8fa7b9b3475ab364a7f3c8e3b8eecc6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是来源合同、应用定位和非原创性说明，没有陈述支持卷定理或新增数学断言。
+    previous_atom_id: b6c50f46ffa864a3c0deec37a15100808d6554f7b7d54466b24a39f99296b039
+    next_atom_id: 1223d17fc0cf90928dd2eae64039958641eaa408311230b7acd12971a1c00c5b

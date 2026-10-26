@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:2b8a6c87071e6e5caba7c7ee9933a4d666bddeca78cde4da14607af40374a238
+  normalized_sha256: sha256:2b8a6c87071e6e5caba7c7ee9933a4d666bddeca78cde4da14607af40374a238
+cas_ref: sha256:2b8a6c87071e6e5caba7c7ee9933a4d666bddeca78cde4da14607af40374a238
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_forward_formula
+    target_statement_id: sha256:13b6c107afcfdcbfed30b156f28e70105de49802b44cc5b81738adc3bf67199f
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_forward_window
+    target_statement_id: sha256:7d011bad3d120797f40610f8aec2d569cc48264025c597d8cd0083ab0a750dad
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_group
+    target_statement_id: sha256:8cf8f45935ed92e5adc7ced7483c6f3c4ba2f528b09b771b637700592f029670
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_inverse_formula
+    target_statement_id: sha256:776e6e2b9f10bb8521082870684add02ee8136360860b3189ac091900e2d1b16
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_inverse_window
+    target_statement_id: sha256:54f4a40b2d2c5584ecd38eeaf97140e88e02f3570a7c55bf734d183ab6a8e97c
+  - gid: D5/S3/ConceptDynamics/Coding/OrderedGroupChainHistories.chain_time
+    target_statement_id: sha256:6d4d28151e160595daa0da26c7e05b5ad7d38a55b71b966050fe03baff42f621
+receipts:
+  unresolved_subitems: []

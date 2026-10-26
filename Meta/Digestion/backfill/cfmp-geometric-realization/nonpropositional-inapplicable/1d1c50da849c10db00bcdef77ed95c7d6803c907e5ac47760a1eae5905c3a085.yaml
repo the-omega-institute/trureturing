@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d1c50da849c10db00bcdef77ed95c7d6803c907e5ac47760a1eae5905c3a085
+  normalized_sha256: sha256:1d1c50da849c10db00bcdef77ed95c7d6803c907e5ac47760a1eae5905c3a085
+cas_ref: sha256:1d1c50da849c10db00bcdef77ed95c7d6803c907e5ac47760a1eae5905c3a085
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Defines the high-edge class and assigns the endpoint b_e values under the stated degree partition.'
+    previous_atom_id: 71e5664f8e0f90b95ed93c9c348b41f3ed13ad9fd595f39ac48b70490b6f540f
+    next_atom_id: f187814ab93e76e4e379cb27575eaa1d326077fb8e432cb49f5b9b80a254ba53

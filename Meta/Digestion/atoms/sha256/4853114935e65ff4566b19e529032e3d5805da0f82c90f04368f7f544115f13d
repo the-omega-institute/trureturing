@@ -1,0 +1,42 @@
+**Theorem 29.1 (native acquisition at the true advanced cut).** Continue on this same specimen from Theorem 28.1's held cut, where the field is $T^{2N}b$. Execute Add$(1)$; Read, then $2N-1$ returning Ticks and a final Hold. Denote these $2N$ actual scalar returns by $v_0,\ldots,v_{2N-1}$. There is an effective exact rational construction of the native $T$, its impulse law and the actual field at this final cut, without reconstructing the producer word or $h$.
+
+Proof. The acquired recurrence extends the first response locally through $y_{4N-1}$. Put $w=T^{2N}b+e_0$, the actual post-second-pulse field. The free/forced identity (UFS.3), with Add and Tick kept as separate actual operations, gives
+
+$$
+v_j=e_0^{\mathsf T}T^jw=y_{2N+j}+m_j,\qquad
+m_j=v_j-y_{2N+j}\quad(0\le j\le2N-1).
+\tag{UFS.69}
+$$
+
+Consequently the subtraction yields the true native impulse moments $m_j=e_0^{\mathsf T}T^je_0$, not the signed weighted moments $y_j$ or their normalization. The $v_j$ are paid observations; the extended $y_j$ are computations from the earned recurrence. Neither is a response-query oracle.
+
+Apply [P Proposition 37.3][P] to these moments with the now-earned order $N$. Its monic moment-orthogonal polynomials $P_j$, $0\le j<N$, have the exact native correspondence
+
+$$
+P_j(T)e_0=\beta_je_j,\quad h_j=\langle P_j,P_j\rangle_m=\beta_j^2,\quad
+a_j=\frac{\langle XP_j,P_j\rangle_m}{h_j},\quad
+b_j=\sqrt{h_{j+1}/h_j}>0.
+\tag{UFS.70}
+$$
+
+The moment pairing is the ordinary Euclidean pairing of polynomial vectors on this actual source. The smaller native impulse Gram matrices are positive because their native Krylov columns are independent; this positivity is not asserted for the first signed response. The diagonal formulas need only moments through $2N-1$, and the link norms through $2N-2$. P's additional moment $m_{2N}$ was an unknown-order stopping certificate; here Theorem 28.1 has already earned the order. Each positive root in (UFS.70) is rational by the source promise. Integer roots of the reduced numerator and denominator, with exact squaring checks, compute it without a real-root oracle. Positive links fix the native orientation. Thus this is an application of the supplied native inverse, not a new moment/Jacobi theorem.
+
+Form the observability matrix $\mathcal O_N=K_{N-1}^{\mathsf T}$ using the recovered $T$, and solve
+
+$$
+\mathcal O_N w=(v_0,\ldots,v_{N-1})^{\mathsf T},\qquad
+x_*=T^{2N-1}w
+=T^{4N-1}(x^{\rm in}+p^{-1}e_0)+T^{2N-1}e_0.
+\tag{UFS.71}
+$$
+
+Native triangularity makes this solve nonsingular. The right-hand side consists of actual returns from $w$, and there really have been $2N-1$ Ticks since that field. Hence $x_*$ is the actual present field, rather than a reset or handover field. At $N=1$ all formulas still apply: the second stage has one Tick, one diagonal and no link-root extraction. The acquired $q$ and true moments also give the supplied uncancelled transfer
+
+$$
+F_T(z)=e_0^{\mathsf T}(zI-T)^{-1}e_0
+=\sum_{j\ge0}m_jz^{-j-1},
+\tag{UFS.72}
+$$
+
+as finite rational polynomial data, by [P Proposition 37.4][P]. $\square$
+

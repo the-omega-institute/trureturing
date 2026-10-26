@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:062169f27e30f856f0c398f86b01fdd0da7df9175d8cdf569f6d70d3f2da0c2b
+  normalized_sha256: sha256:062169f27e30f856f0c398f86b01fdd0da7df9175d8cdf569f6d70d3f2da0c2b
+cas_ref: sha256:062169f27e30f856f0c398f86b01fdd0da7df9175d8cdf569f6d70d3f2da0c2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chapter roadmap distinguishing the hypotheses used by later results; no formula or mathematical consequence is asserted.
+    previous_atom_id: a65f73192aca78a7ad8ab08ceb2ef55d261736815c0dc5242e696a9db784666f
+    next_atom_id: bccf4dcf3bdbc31a14fb7d84cd1fb83fc08ea8d56d56c1c4aeaae84f625416f4

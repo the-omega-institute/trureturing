@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3b7bb6c2833d5eb1db6e69fb35220e7fc819c3408b62c8ace0f15e6456d93c4
+  normalized_sha256: sha256:b3b7bb6c2833d5eb1db6e69fb35220e7fc819c3408b62c8ace0f15e6456d93c4
+cas_ref: sha256:b3b7bb6c2833d5eb1db6e69fb35220e7fc819c3408b62c8ace0f15e6456d93c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure definition of the reflection defect.
+    previous_atom_id: 0cfed88493247adaea7d0516099af6409233fe2e9a682484e0a77e2922241fbc
+    next_atom_id: f25834291142be5b2d4bc37f6d60971fe67429ce2df7f71bada3245e4a0bdc14

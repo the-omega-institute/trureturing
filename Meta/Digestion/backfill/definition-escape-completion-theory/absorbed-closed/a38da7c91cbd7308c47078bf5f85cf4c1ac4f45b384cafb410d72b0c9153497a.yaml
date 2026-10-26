@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:a38da7c91cbd7308c47078bf5f85cf4c1ac4f45b384cafb410d72b0c9153497a
+  normalized_sha256: sha256:a38da7c91cbd7308c47078bf5f85cf4c1ac4f45b384cafb410d72b0c9153497a
+cas_ref: sha256:a38da7c91cbd7308c47078bf5f85cf4c1ac4f45b384cafb410d72b0c9153497a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.conceptKernel
+    target_statement_id: sha256:58f4ad4fa102eebd6d9ecd14144bfa40fbcf5ecdf7b4642daf611c7ce402f2e0
+  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.jointKernel
+    target_statement_id: sha256:f18c02e08afda597e78589b853b186cf18359904cb6677280325f3c335cff64e
+  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.jointReadout
+    target_statement_id: sha256:93e00017c50010496b1e86dcb951f54881d1947268b0ac34356b0b74e4f0e6d4
+  - gid: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
+    target_statement_id: sha256:410a18915874469254a738a6d25e7be1dd97b7f4f721e0a1a04b7f8ceca5af18
+  - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.defectRelation
+    target_statement_id: sha256:5a16551a1bc776eed85d7eec6cac44373a3c66c5362948d527e7ad8dcc8ef349
+receipts:
+  unresolved_subitems: []

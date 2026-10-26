@@ -1,0 +1,75 @@
+**定义 9.1（六读前缀、源坐标与漂移余项）。** 本章至第 11 章均取定义 1.1 的完整域，固定 $a_0=0$、$A=24$，而 $C,z,Y,p$ 为任意实数。令 $\mathcal A=\{J,M\}$，写
+
+$$
+H_3(C,z)=(0,J,A,M,C,J,z),\qquad
+H_4=(H_3(C,z),M,Y),\qquad H_5^F(p)=(H_4,F,p),\quad F\in\mathcal A.
+\tag{9.1}
+$$
+
+每个严格源唯一由 $x=(r,b)$ 表示为
+
+$$
+\Omega=\{(r,b):0<r<1,\ b>0\},\qquad
+c=\frac{r(1-r)}b,\qquad
+P(x)=\begin{pmatrix}r&b\\c&1-r\end{pmatrix}.
+\tag{9.2}
+$$
+
+这里 $b,c$ 均无上界。令
+
+$$
+\begin{gathered}
+j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\\
+V_J=n+r,\qquad V_M=n+U,\qquad L=jTn.
+\end{gathered}
+\tag{9.3}
+$$
+
+定义 1.3 的实际左乘积给原时钟 $0,\ldots,5$ 的正迹
+
+$$
+(\tau_0,\ldots,\tau_5)=(1,j,T,n,U,V_F),\qquad
+Q_5^J=\begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad
+Q_5^M=\begin{pmatrix}2&1\\3&1\end{pmatrix}.
+\tag{9.4}
+$$
+
+世界仍只有一个整个非零实多项式 $g$、$\deg g\le3$，以及一个固定实漂移 $d$，实际响应始终为 $y_i=d+\tau_i g(i)$。各次动作后立即读取，初读计入，原时钟零至七不改动；没有重置、复制、跳读、空动作或额外端口。互择动作的函数值不构成同时取得的读数。
+
+对源 $x$ 定义
+
+$$
+\begin{aligned}
+a_4&=1+U\left(1-\frac4j+\frac6T-\frac4n\right),
+&k_4&=U\left(\frac{4A}j-\frac{6C}T+\frac{4z}n\right),\\
+a_{5,F}&=1+V_F\left(4-\frac{15}j+\frac{20}T-\frac{10}n\right),
+&k_{5,F}&=V_F\left(\frac{15A}j-\frac{20C}T+\frac{10z}n\right).
+\end{aligned}
+\tag{9.5}
+$$
+
+为给出无分式的全域证书，另置整数多项式
+
+$$
+X=b^2+r-r^2=bj,\qquad N=X+br=bn,\qquad
+W_J=X+2br=bV_J,\qquad W_M=N+bU=bV_M,
+\tag{9.6}
+$$
+
+以及
+
+$$
+\begin{aligned}
+N_4&=2(b^2+8b+4)XN-4bTU(X+N),\\
+N_{5,F}&=bTXN+W_F\bigl(4(b+6)XN-5bT(3N+2X)\bigr).
+\end{aligned}
+\tag{9.7}
+$$
+
+所有式子在同一个 $(r,b)$ 上取值。直接乘开式 (9.5) 的正分母，利用 $X=bj,N=bn,W_F=bV_F$，得到
+
+$$
+N_4=b^2La_4,\qquad N_{5,F}=b^3La_{5,F}.
+\tag{9.8}
+$$
+

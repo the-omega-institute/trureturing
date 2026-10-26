@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:182f8d2d90671a584ec25c02bd5346283017ae3de77f16f89936b9ba90aa9ef3
+  normalized_sha256: sha256:182f8d2d90671a584ec25c02bd5346283017ae3de77f16f89936b9ba90aa9ef3
+cas_ref: sha256:182f8d2d90671a584ec25c02bd5346283017ae3de77f16f89936b9ba90aa9ef3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：属于同一研究方向清单：twined Weil forms，没有正性断言。
+    previous_atom_id: 0fc868845abc51f88ed44362579b9998de6e3e3e52619f3250728c76265b459c
+    next_atom_id: b484ff6b8c25c7f2310d935f793c4aae06b5b8ef57bed8fa45dafd5c9deea4bb

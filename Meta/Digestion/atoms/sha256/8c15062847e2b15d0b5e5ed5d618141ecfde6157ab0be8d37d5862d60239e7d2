@@ -1,0 +1,17 @@
+**Lemma 2.4 (finite original installation).** This construction reaches
+first Ready by finite paid work under the stated canonical finite supply.
+It has no bound on later growth and no description fixed-point premise.
+
+Proof. All new helpers are finite static word programs; their call graph
+has Definition 2.1's order, and every loop returns to a fixed finite
+label. Hygienic expansion therefore determines finite $r_{\mathrm{gc}}$
+and a finite native graph. Definition 2.2's data are generated afterwards
+from that graph. Changing their digit lengths neither creates another
+static call nor adds an executable literal of those digits. RCA's finite
+serializer and the two actual bootstraps supply the corresponding finite
+words. The capture program needs no initialized word bank. The main
+prelude initializes every expanded field, so its subsequent imports are
+not circular. ARC Proposition 4.4 and GCA Theorem 2.5 apply to these
+explicitly matching strings and fields. No future input numeral occurs
+in their construction. ∎
+

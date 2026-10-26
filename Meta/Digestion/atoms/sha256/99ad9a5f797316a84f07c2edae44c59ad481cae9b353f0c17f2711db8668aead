@@ -1,0 +1,16 @@
+**Proposition 212.4 (A rational $q_3$-only branch).** Take
+
+$$
+ t={1\over10},\qquad v=(0,1,0),\qquad
+ w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Substitution in (202.5) and (208.4)–(208.6) gives
+$q_0=0,q_3=81/40$, and $k_3=(0,1)$ gives
+
+$$
+ (a_3,B_3,m_3)=\left({40\over40000},{121\over40000},{81\over40000}\right),\quad
+ Z={121\over50},\quad P_3={161\over117128},\quad
+ \lambda_{\min}=-{41\over322},\quad P_3\mathcal N={41\over234256}.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:feaa4970392812e636f0f87ea17c015cb9986932b349425fdc74183c47c676a2
+  normalized_sha256: sha256:feaa4970392812e636f0f87ea17c015cb9986932b349425fdc74183c47c676a2
+cas_ref: sha256:feaa4970392812e636f0f87ea17c015cb9986932b349425fdc74183c47c676a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅点名“将 finite holonomy energy 与 zero-side 离线奇谱能量建立忠实支配”为尚待完成的研究工作，不断言该支配已成立。
+    previous_atom_id: ca7a4a0c284e19b949ac6f0e17e367ece3c68dd9237f2b760fac1691694d69e4
+    next_atom_id: d3fb2d093bc09b04f27fe79c489102bc2ef64d5755df387ff86a4d7cafd711fe

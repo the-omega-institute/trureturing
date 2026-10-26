@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:adcf3814565b6f0599fa90aa264e972c202bfd791964476905e893dfb6f51441
+  normalized_sha256: sha256:adcf3814565b6f0599fa90aa264e972c202bfd791964476905e893dfb6f51441
+cas_ref: sha256:adcf3814565b6f0599fa90aa264e972c202bfd791964476905e893dfb6f51441
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Prescribes rational endpoint operations, polynomial evaluation order, padding and denominator-guard conventions; no enclosure or certificate-success assertion.
+    previous_atom_id: ea6d7e7d688a9f3b031e4cca769a28a910ced50d8bf7ccde971ce524af2292b4
+    next_atom_id: afa307b2954d13031db4193f546bb7235a838b2bf85692e0b65d9f48e9e04be7

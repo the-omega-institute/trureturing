@@ -1,0 +1,69 @@
+**Theorem 136.1 (Phase orbit and no genuinely mixed maximizers).** For
+$\rho\in\mathsf D_3$,
+
+$$
+\frac12\|\rho-\mathcal R_*\Phi(\rho)\|_1=L_*
+\quad\Longleftrightarrow\quad
+\rho=|\psi_{\alpha,\beta}\rangle\langle\psi_{\alpha,\beta}|
+\text{ for some }\alpha,\beta\in\mathbb R,
+\tag{136.1}
+$$
+
+where
+
+$$
+|\psi_{\alpha,\beta}\rangle=
+\sqrt{p_*}|0\rangle+e^{i\alpha}\sqrt{x_*}|1\rangle
+                          +e^{i\beta}\sqrt{y_*}|2\rangle.
+\tag{136.2}
+$$
+
+In particular every density of rank at least two has strict error
+below $L_*$ for this decoder. Every pure edge or vertex input also
+has strict error below $L_*$.
+
+*Proof.* For a pure input, (130.5) identifies equality at $L>0$ with
+$N=0$. By (132.2), its populations must be exactly $(p_*,x_*,y_*)$.
+Covariance then gives precisely (136.2). The boundary bounds already
+give strict inequality on all edges and vertices.
+
+At the contact the recovered density $Q$ in (130.3) is positive
+definite. Its $01$ block has first diagonal entry $p>0$ and determinant
+
+$$
+r^2p(v_1-x/16)=\frac{r^2p(9x+6y)}{16}>0.
+\tag{136.3}
+$$
+
+Its $22$ entry equals $(1-r^2)v_1+v_2>0$. Thus $A=P-Q$ is strictly
+negative on the two-dimensional subspace $z^\perp$ and has the positive
+eigenvalue $L$. Its inertia is exactly one positive and two negative
+eigenvalues. There is no zero eigenvalue. The maximizing effect in
+the trace-distance variational formula is consequently unique, namely
+$T$; on the negative spectral subspace an attaining effect must be
+zero and on the positive subspace it must be the identity.
+These assertions persist under diagonal phase conjugation.
+
+Now suppose a mixed density $\rho=\sum_i t_iP_i$, with positive
+weights, attains $L$. Choose an effect $E$ attaining the variational
+maximum for its error. Then
+
+$$
+L=\sum_i t_i\operatorname{Tr}\{E[P_i-\mathcal R_*\Phi(P_i)]\}
+\le\sum_i t_i\frac12\|P_i-\mathcal R_*\Phi(P_i)\|_1\le L.
+\tag{136.4}
+$$
+
+Every $P_i$ must be a pure contact, and $E$ must be its unique effect.
+A vector spanning the range of $T$ has all three components nonzero,
+because $T_{ii}>0$. If two phase conjugates of $T$ agree, the relative
+diagonal unitary acts on that vector by a scalar. Its three diagonal
+phases must therefore coincide. The corresponding input projectors
+in (136.2) are the same. All $P_i$ in (136.4) are consequently
+identical, so $\rho$ is pure. This proves both directions of (136.1).
+$\square$
+
+The equality statement is quantified over inputs for the particular
+map $\mathcal R_*$ of (128.4). It does not identify the input equality
+sets of every other optimal decoder.
+

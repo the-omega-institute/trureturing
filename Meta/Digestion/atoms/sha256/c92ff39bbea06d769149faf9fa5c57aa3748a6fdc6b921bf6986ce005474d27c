@@ -1,0 +1,112 @@
+**Proposition 5.2 (domain, capacity and source condition).**
+The completion in Definition 5.1 is the full finite weighted-energy
+space with the inherited outer condition. It has a continuous scalar
+source trace. The point has positive capacity for this log-squared
+weight, and
+
+$$
+D(q_\eta)=\mathcal Q\dotplus
+       \operatorname{span}\{\chi h(-\log R+\eta)\},
+\tag{5.2}
+$$
+
+where $\chi=1$ near zero is a smooth chart cutoff.
+The zero-trace subspace is exactly $\mathcal Q$ after multiplication
+by $H_\eta$. The form is closed, semibounded, compactly embedded in
+$L^2(\mu)$, and independent of the positive interpolation.
+Its represented operator, denoted $F_\eta$, is the inherited-wall
+critical realization
+
+$$
+D(F_\eta)=\{u\in D(S_{D,\max}):
+                         \mathcal A(u)+\eta\mathcal B(u)=0\}.
+\tag{5.3}
+$$
+
+Proof. Write $w=-t+\eta$ near the source. For a finite-energy quotient
+$v$, its $c\phi^2$ mean $p_v$ has $\int w^2|p_v'|^2dt<\infty$.
+Since
+$\int_{-\infty}^T w^{-2}dt=(-T+\eta)^{-1}$ is finite, its scalar
+trace $p_v(-\infty)$ exists. More precisely,
+
+$$
+|p_v(t)-p_v(-\infty)|^2
+\le\frac1{-t+\eta}\int_{-\infty}^t(-s+\eta)^2|p_v'(s)|^2ds.
+\tag{5.4}
+$$
+
+The outer trace estimate and this inequality bound the source trace
+by the weighted energy plus $L^2$ norm. A quotient constant one near
+the point has nonzero trace and finite norm. Continuity therefore
+gives a strictly positive lower bound for its squared norm among all
+such quotients. This is positive point capacity. Closing only
+punctured quotients would impose zero source trace and discard a
+genuine direction.
+
+We verify density in the full finite-energy space. Write
+$v=p_v+v^\perp$ on the inner cylinder. The all-angular collar
+Poincaré inequality of Native Green stability, (17.10), controls the
+entire mean-zero remainder. Multiply by the log-squared weight, which
+is comparable on each enlarged collar. Cut $v^\perp$ to zero for
+$t<-2T$ and join on $[-2T,-T]$. Its derivative error is bounded by
+the weighted energy tail, using the collar inequality and the
+$O(T^{-1})$ cutoff derivative, and tends to zero.
+Cut $p_v$ instead to $p_v(-\infty)$ on that interval. Equation (5.4)
+bounds the new derivative cost by a constant times
+$\int_{-\infty}^{-T}w^2|p_v'|^2$, which tends to zero.
+Norm and potential tails vanish by (4.12).
+Ordinary local approximation away from the point completes the
+density proof, while retaining the original outer condition.
+
+For trace zero, (5.4) implies $w|p_v|^2\to0$. The remainder has the
+same vanishing boundary contribution in the collar approximation.
+Expanding the critical weighted energy of $wv$ gives, in its radial
+part,
+
+$$
+|(wv)'|^2=w^2|v'|^2-(w|v|^2)'.
+\tag{5.5}
+$$
+
+The angular and mixed terms obey the same product identity because
+$w$ depends only on $t$; the native lower-order terms agree by the
+full ground transform. The source term in (5.5) vanishes for trace
+zero. Thus these quotients multiply precisely into the critical
+completion $\mathcal Q$. Conversely, the punctured core is dense in
+$\mathcal Q$; its two product identities agree, so the zero-trace
+approximation and trace continuity put every $\mathcal Q$ vector
+in that subspace. Subtracting the scalar trace times $\chi$ proves
+(5.2), with a genuinely direct sum.
+
+Weighted kinetic energy is closable: test weak derivative limits on
+compact sets away from the point, where its density is smooth and
+positive, then use that the point has measure zero. Equations
+(4.10)–(4.12) make $W_\eta$ infinitesimally form bounded. The usual
+closed-form perturbation and representation theorems, with these
+specific bounds, give closedness and semiboundedness. The same tails
+and actual local free compactness give compact embedding.
+Changing the positive interpolation is multiplication of quotients
+by a smooth positive ratio equal to one near the point. It preserves
+the dense natural domain, and the product identities agree there.
+Closedness proves independence of interpolation.
+
+For a finite-energy operator solution let $u/h=A+B t+O(R^\gamma)$.
+Then
+
+$$
+\partial_t(u/H_\eta)=\frac{A+\eta B}{(-t+\eta)^2}
+                                    +O(R^\gamma)
+\tag{5.6}
+$$
+
+with harmless logarithmic improvements in the error. Its full source
+conormal is $K(A+\eta B)$ in the convention (1.6).
+Testing (5.1) against a quotient constant near zero forces this to
+vanish. Conversely this condition cancels the source pairing.
+For general operator vectors the identical conclusion follows by
+graph approximation and the graph-continuous pair in (1.6); a uniform
+pointwise trace on the whole maximal domain is unnecessary.
+The inherited-wall domain theorem then identifies (5.3).
+Thus the source condition is derived from the natural form, not
+selected in advance. $\square$
+

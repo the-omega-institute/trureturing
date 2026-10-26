@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8863d5774494ed9bf0ef440fc1eeb5068491cc416fdffcace718feeeff344e4
+  normalized_sha256: sha256:a8863d5774494ed9bf0ef440fc1eeb5068491cc416fdffcace718feeeff344e4
+cas_ref: sha256:a8863d5774494ed9bf0ef440fc1eeb5068491cc416fdffcace718feeeff344e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is the initial fragment of a proposed numerical test program. The finite sum and threshold specify what to compute, and convergence exponent is a requested validation target, not a result.
+    previous_atom_id: c90cfe9f7c0d38f779da44718074eb5e7095e10aaf21b8b684246073e12e1903
+    next_atom_id: e247c5493ad971538b7f91d626f8eb8ebebf3f76ef9c1dadea5a6210f54b7d96

@@ -1,0 +1,81 @@
+**Definition 4.2 (Fixed degree-(2,4) pole determinant).** In
+$\mathcal A=\mathbb Q[t]/(Q_8)$ substitute $x=-P_B/P_A$ in (4.1).
+The inverse exists by Definition 3.6. Write
+
+$$
+f_c=f_2d^2+f_1d+f_0,\qquad
+K_{sc}=g_4d^4+g_3d^3+g_2d^2+g_1d+g_0,
+$$
+
+and set
+
+$$
+R=\det\begin{pmatrix}
+f_2&f_1&f_0&0&0&0\\
+0&f_2&f_1&f_0&0&0\\
+0&0&f_2&f_1&f_0&0\\
+0&0&0&f_2&f_1&f_0\\
+g_4&g_3&g_2&g_1&g_0&0\\
+0&g_4&g_3&g_2&g_1&g_0
+\end{pmatrix}.
+\tag{4.2}
+$$
+
+This matrix is fixed before specialization. A finite common root $d$
+annihilates its nonzero column $(d^5,d^4,d^3,d^2,d,1)^{\mathsf T}$,
+including at any specialized degree drop.
+
+The following expressions are all in $\mathbb F_{101}[t]$. Its monic
+modulus and the substituted $x$ are
+
+$$
+\begin{aligned}
+\bar Q&=t^8-29t^7+43t^6-5t^5-13t^4+41t^3-39t^2+23t-14,\\
+\bar x&=12t^7+46t^6-7t^5-34t^4+43t^3-45t^2-35t+32.
+\end{aligned}
+\tag{4.3}
+$$
+
+The ascending $d$ coefficient lists of (4.1), after reduction by
+$\bar Q$ and substitution of $\bar x$, are as follows. Each row is
+an entire polynomial in $t$.
+
+$$
+\begin{aligned}
+f_0&=19t^7+39t^6+12t^5-44t^4-27t^3-11t^2-47t+9,\\
+f_1&=36t^7-47t^6+11t^5-38t^4-4t^3-43t^2-3t-41,\\
+f_2&=3t^7+10t^6+46t^5+26t^4+15t^3-4t^2+43t+28,\\
+g_0&=15t^7-18t^6-36t^5-23t^4-11t^3-10t^2+16t+50,\\
+g_1&=46t^7+10t^6+50t^5+16t^4-t^3+13t^2+8t-7,\\
+g_2&=-31t^7+22t^6-46t^5+17t^4-40t^3-33t^2+46t-17,\\
+g_3&=-22t^7-17t^6-49t^5+41t^4-28t^3+28t^2+42t+22,\\
+g_4&=6t^7-6t^6+47t^5+43t^4+23t^3+21t^2-45t+39.
+\end{aligned}
+\tag{4.4}
+$$
+
+In this display only, $f_i,g_i$ denote their reduced residues. Taking
+(4.2) by determinant expansion and reducing its entries and products
+modulo $\bar Q$ gives
+
+$$
+\bar R=-28t^7-9t^6+17t^5+32t^4+34t^3+19t^2+45t-49.
+\tag{4.5}
+$$
+
+A polynomial Bézout certificate, before taking any quotient, is
+
+$$
+\begin{aligned}
+u&=-28t^6+48t^5+25t^4+22t^3-27t^2-10t+16,\\
+w&=-t^7+13t^6+8t^5-36t^4-23t^3-11t^2+43t+49,\\
+u\bar Q+w\bar R&=1\quad\text{in }\mathbb F_{101}[t].
+\end{aligned}
+\tag{4.6}
+$$
+
+The multiplication determinants (3.7) provide the further exact values
+
+| Element in $\mathbb F_{101}[t]/(\bar Q)$ | $P_A$ | $q$ | $D(\bar x)$ | $f_2$ | $g_4$ | $\bar R$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Norm | $71$ | $85$ | $52$ | $68$ | $23$ | $73$ |

@@ -1,0 +1,29 @@
+**Definition 9.2 (one fixed free and attractive analytic realization).**
+Fix $\varepsilon>0$ and a lifted pole
+$o=(k_o,A_o,B_o)$. Let
+
+$$
+\begin{aligned}
+\widetilde T[f]&=\int_{\widetilde\Omega}
+  (\varepsilon^2|Pf|^2+|Qf|^2)\,d\widetilde\mu,\\
+\widetilde{\mathcal F}&=
+ \overline{C_c^\infty(\widetilde\Omega)}^{(\|\cdot\|_2^2+\widetilde T)^{1/2}},
+ \qquad \widetilde L=-(\varepsilon^2P^2+Q^2)_{F,\widetilde\Omega},\\
+\widetilde G_o(q)&=\int_0^\infty\widetilde p_t(o,q)\,dt,\qquad
+\widetilde V[f]=\int_{\widetilde\Omega}\widetilde G_o|f|^2\,d\widetilde\mu,
+ \qquad \widetilde q_g=\widetilde T-g\widetilde V .
+\end{aligned}
+\tag{9.4}
+$$
+
+The free operator is the operator represented by the closed free form:
+$f\in D(\widetilde L)$ exactly when $f\in\widetilde{\mathcal F}$ and
+$\widetilde T(f,v)=\langle F,v\rangle$ for some $F\in L^2$ and every
+$v\in\widetilde{\mathcal F}$, in which case $\widetilde Lf=F$.
+This specifies height Dirichlet killing and no phase boundary.
+The semigroup clock is $e^{-t\widetilde L}$, with control covariance
+$2\operatorname{diag}(\varepsilon^2,1)\,dt$. The field in (9.4) is the
+full unshifted Green field of this free operator, with unit source
+relative to $d\widetilde\mu$. No threshold shift is made in its definition.
+The closed horizontal form domain, rather than isotropic $H^1_0$, is used.
+

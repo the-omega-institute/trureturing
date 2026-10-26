@@ -1,0 +1,23 @@
+**Definition 10.3 (The actual cut and complete inventory).** Put $S_U=\{((e,j),b):e\in U\}$. Let $r_a$ fix $S_U$ pointwise and equal the band map with signs $a$ on its complement. Write $Q_a=s_\rho r_a$. For every $e\in U$, label its actual endpoints by
+
+$$
+ \lambda(e,0)=((e,0),0),\quad
+ \lambda(e,1)=((e,0),1),\quad
+ \lambda(e,2)=((e,1),1),\quad
+ \lambda(e,3)=((e,1),0).
+ \tag{10.6}
+$$
+
+Let $J_0=(0\ 2)(1\ 3)$ and $J_1=(0\ 3)(1\ 2)$. For $\xi\in\mathbb F_2^U$, let $J_\xi$ use $J_{\xi_e}$ on the four labels at $e$, and let $\widetilde J_\xi$ extend it by the identity outside $S_U$.
+
+For a finite permutation $f$, let $p_f(x)$ be its least positive period and set
+
+$$
+ I_f(Z)=\sum_{x\in X}\frac{Z^{p_f(x)}}{p_f(x)}.
+ \tag{10.7}
+$$
+
+Each cycle contributes one monomial, including singleton cycles. This is the inventory of permutation cycles. For the two free matchings an unoriented combinatorial boundary has two opposite oriented cycles; (10.7) does not silently divide by two.
+
+The vertex-gauge normalization is the switch of Section 6. The proof combines the established four-endpoint band-cut correspondence, actual endpoint returns, the binary cut/cycle criterion and spanning-forest counts, and complete first-return segmentation. These are inherited mathematical ingredients. The application here couples them to the conditional law of normalized signs for simultaneous graph cuts and to the complete inventory; Section 11 supplies an observable separation.
+

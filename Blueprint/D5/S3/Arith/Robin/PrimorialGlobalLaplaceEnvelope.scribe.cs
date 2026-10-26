@@ -33,6 +33,8 @@ internal sealed class PrimorialGlobalLaplaceEnvelopeDocument : IScribeDocumentDe
                         + "There is no upper cutoff on v, and v=0 is included.")),
                     Paragraph(Text(
                         "The literal cumulative first-Mertens estimate is consumed by Abel summation. "
+                        + "The primeCutoff definition and prime_filter_Icc lemma in LogarithmBounds "
+                        + "identify the prime filters over the natural intervals starting at zero. "
                         + "For the decreasing logarithmic exponential weight f, the integral error costs "
                         + "at most K*(1-f(z)); its endpoint costs at most K*f(z), so the combined cost is exactly K. "
                         + "The finite Euler logarithmic derivative is calculated from every factor. "

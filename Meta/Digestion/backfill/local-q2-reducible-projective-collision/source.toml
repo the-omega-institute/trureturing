@@ -1,0 +1,5 @@
+source_id = "local-q2-reducible-projective-collision"
+path = "docs/develop/theory/LOCAL_Q2_REDUCIBLE_PROJECTIVE_COLLISION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

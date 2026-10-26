@@ -1,0 +1,13 @@
+**Theorem 5.6.2 (Independent M-pair decomposition).** The original target is equivalent to nonemptiness of
+
+$$
+(D_J^=\cap D_M)\cup(D_J^{\ne}\cap D_M).
+\tag{5.6.3}
+$$
+
+**Proof.** The two distinct J endpoints either have equal $x$ or they do not, so their projection lies in at least one of $D_J^=$ and $D_J^{\ne}$. The independently chosen distinct M pair lies in $D_M$ by the full inverse in `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md`; the overlap strata and unrelated terminal values are those of `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_XI.md`. Conversely, a point in either intersection supplies the two J endpoints and the two M endpoints in the same entire $C(p,v)$ with the required within-pair inequalities. ∎
+
+The first term now has the explicit cubic law (5.6.1), with no J endpoint source or drift left free once $(p,v,x)$ is fixed. X supplies the M endpoints at the same $p$ and $v$. Cross-pair overlap is not prohibited. The second term remains fully present: it requires two independent $x$ values for the J endpoints and is not excluded by the cubic law. The four-endpoint meaning and overlap alternatives remain those of XI.
+
+The resulting relation is a projected collision relation and a real guard that can be intersected with the projected M relation in the **same** response plane. It is not an assertion that either intersection is nonempty and not a substitution of equal-ratio J endpoints for the original goal.
+

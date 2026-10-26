@@ -1,0 +1,27 @@
+## 24. Every positive source location, and four complete lifts
+
+The root indices in this section have the local meaning fixed in
+Section 23. At each of the eight positive roots first enclose the
+polynomials $\alpha_r,\zeta_r,A,k_4$ by their translations (23.1).
+For a real-centred disk and real parameters, a polynomial $P$ lies in
+
+$$
+T_{000}(P;c_i)+[-s_i(P),s_i(P)],\qquad
+s_i(P)=\sum_{a+b+c>0}|T_{abc}(P;c_i)|
+ \rho_i^a\epsilon^{b+c}.
+\tag{24.1}
+$$
+
+Use $\alpha=32D^3\alpha_r$ for its unreduced value. The resulting
+strict unit bounds are
+
+| i | $\lvert\alpha\rvert>$ | $\lvert A\rvert>$ | $\lvert k_4\rvert>$ | $\lvert H_1\rvert>$ |
+| --- | --- | --- | --- | --- |
+| 8 | 10^15 | 10^3 | 10^5 | 10^1 |
+| 9 | 10^14 | 10^2 | 10^2 | 10^1 |
+| 12 | 10^17 | 10^3 | 10^6 | 10^1 |
+| 13 | 10^17 | 10^3 | 10^6 | 10^0 |
+| 14 | 10^16 | 10^3 | 10^7 | 10^1 |
+| 15 | 10^17 | 10^3 | 10^7 | 10^0 |
+| 16 | 10^27 | 10^5 | 10^10 | 10^-1 |
+| 17 | 10^27 | 10^5 | 10^10 | 10^-1 |

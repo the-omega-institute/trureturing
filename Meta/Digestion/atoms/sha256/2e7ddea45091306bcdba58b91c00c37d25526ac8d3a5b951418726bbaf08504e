@@ -1,0 +1,2 @@
+**定义 49.1（独立欧氏合同）。** 在实内积空间中取 $u,v$，记 $a=\|u\|,b=\|v\|$。仅当 $ab>0$ 时定义 $\theta\in[0,\pi]$ 为 $\cos\theta=\langle u,v\rangle/(ab)$；Cauchy–Schwarz 保证右端在 $[-1,1]$。本章使用的欧氏对象不是将非负整数树组成自动指定为位移。来源与共同接缝仍沿用 [FIB 关系延拓几何，定义 1.1、5.2](https://github.com/the-omega-institute/trureturing/blob/6ab753e55d418380512deda9fc5fc9b8990892cc/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。
+

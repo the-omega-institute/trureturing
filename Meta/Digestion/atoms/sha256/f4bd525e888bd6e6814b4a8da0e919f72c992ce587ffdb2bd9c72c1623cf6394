@@ -1,0 +1,29 @@
+## 3. Exact signs on unbounded source strips
+
+Subscripts on polynomials below denote partial derivatives. Define
+
+$$
+\begin{aligned}
+R&=(N_p)_rH-N_pH_r,\\
+B&=(N_p)_bH-N_pH_b,\\
+E&=\{(N_p)_r(N_v)_b-(N_p)_b(N_v)_r\}H\\
+ &\quad-\{(N_p)_rN_v-N_p(N_v)_r\}H_b\\
+ &\quad+\{(N_p)_bN_v-N_p(N_v)_b\}H_r,\\
+A&=5N_p+216H,\\
+L&=N_v-5N_p+9H,\\
+C&=N_v-6N_p.
+\end{aligned}
+\tag{3.1}
+$$
+
+These are finite integer polynomials specified entirely by (2.1).
+Their relevant degree bounds and strict signs are
+
+| Polynomial | Degree in $r$ | Degree in $b$ | Source strip | Sign |
+| --- | ---: | ---: | --- | --- |
+| $R$ | 9 | 13 | $0\le r\le1,\ b\ge4$ | positive |
+| $B$ | 10 | 12 | $0\le r\le1,\ b\ge4$ | positive |
+| $E$ | 15 | 18 | $0\le r\le1,\ b\ge8$ | positive |
+| $A$ | 6 | 6 | $0\le r\le1,\ b\ge4$ | negative |
+| $L$ | 6 | 6 | $0\le r\le1,\ b\ge4$ | negative |
+| $C$ | 6 | 7 | $0\le r\le1,\ b\ge4$ | positive |

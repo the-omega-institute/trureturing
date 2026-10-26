@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dca4586f1949124c590057d38b5ed2bc0d0715af6f40e62857c1f1275e0ef632
+  normalized_sha256: sha256:dca4586f1949124c590057d38b5ed2bc0d0715af6f40e62857c1f1275e0ef632
+cas_ref: sha256:dca4586f1949124c590057d38b5ed2bc0d0715af6f40e62857c1f1275e0ef632
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅定义局部化商代数、其中的元素和进一步局部化商；不声称实点对应、重构合法性或长度上界。
+    previous_atom_id: 148108c5daa05a65c0cb00b44e0c51e880e5f94a6a4dc0f29d5a73623d15aa42
+    next_atom_id: 0346d0466dd5f1984a803ee12d4b811a2f83de317cbeaaec39d2e31a40374e0c

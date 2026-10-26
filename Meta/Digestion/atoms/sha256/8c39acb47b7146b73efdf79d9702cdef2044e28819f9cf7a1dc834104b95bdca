@@ -1,0 +1,79 @@
+**Lemma 10.12 (Exact finite specialization).** In the coefficient
+ring of Lemma 10.8, specialize modulo $179$ at $t=7,p=1$, so
+$v=123$. The monic image of $\mathscr R$ is
+
+$$
+\begin{aligned}
+R_*={}&x^{18}+88x^{17}+31x^{16}+80x^{15}+33x^{14}+57x^{13}\\
+&+74x^{12}-37x^{11}-85x^{10}-19x^9+60x^8-20x^7\\
+&-61x^6+42x^5-81x^4+39x^3+44x^2+57x-24.
+\end{aligned}
+\tag{10.31}
+$$
+
+Using the specialized $H,Z_0,\ell_i,D$, the following five monic
+gcds in $\mathbb F_{179}[x]$ are one:
+
+$$
+\begin{aligned}
+\gcd(R_*,R_*')&=1,&\gcd(\ell_1,R_*H)&=1,\\
+\gcd(R_*,HD)&=1,&\gcd(H,Z_0)&=1,&\gcd(H,D)&=1.
+\end{aligned}
+\tag{10.32}
+$$
+
+In $\mathbb F_{179}[x]/(R_*)$ define
+
+$$
+d_*=-\ell_0/\ell_1,\qquad
+M_*=d_*+(3+2x)N_7(x,d_*)/D.
+\tag{10.33}
+$$
+
+The characteristic polynomial of multiplication by $M_*$ is
+
+$$
+\begin{aligned}
+Q_*={}&Y^{18}+84Y^{17}-9Y^{16}+38Y^{15}+28Y^{14}+18Y^{13}\\
+&+33Y^{12}+40Y^{11}+57Y^{10}+53Y^9-29Y^8-30Y^7\\
+&-33Y^6-33Y^5-71Y^4-32Y^3+29Y^2-44Y+7,
+\end{aligned}
+\tag{10.34}
+$$
+
+and $\gcd(Q_*,Q_*')=1$.
+
+Proof. Substitute $p=1,v=123$ directly in (10.11) and (10.17),
+reduce coefficients modulo $179$, and form the fixed degree-$(2,4)$
+Sylvester determinant. Exact division by $D^8H^2$ and division
+by its nonzero leading coefficient give the eighteen-degree polynomial
+(10.31), coefficient by coefficient. The same substitution in the
+four-by-five matrix (10.29) specifies $\ell_0,\ell_1$ without
+any unspecified choice of subresultant normalization.
+For clarity the specialized polynomial $H$ is
+
+$$
+H_*=85x^3+78x^2-85x+65.
+\tag{10.35}
+$$
+
+Polynomial Euclidean division of the five pairs in (10.32), with
+these definitions, gives constant final nonzero remainders; taking
+their monic associates gives the five displayed ones. In particular
+$H_*(0),H_*(-1),H_*(-2)$ are the reductions of
+$960,-36,-2460$, namely $65,143,46$, so the last gcd also follows
+immediately from the three distinct roots of $D$.
+These are identities in a finite polynomial ring, not claims that
+any finite-field root lifts to a strict real world.
+
+The second and third gcds justify both inverses in (10.33). An
+explicit matrix definition supplies all the arithmetic for (10.34):
+in the basis $1,x,\ldots,x^{17}$, column $k+1$, for $0\le k\le17$,
+is the coefficient vector of the remainder of $x^kM_*$ on division
+by $R_*$. Its determinant $\det(YI-\mu_{M_*})$ is precisely
+(10.34). Euclidean division of $Q_*$ and its formal derivative
+gives gcd one. The displayed input formulas, the two full coefficient
+lists, the determinant definitions and the polynomial divisions
+specify the finite algebra entirely. No external certificate is a
+hypothesis of these equalities. ∎
+

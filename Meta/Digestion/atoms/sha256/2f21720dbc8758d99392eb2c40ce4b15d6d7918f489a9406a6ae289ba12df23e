@@ -1,0 +1,314 @@
+**Theorem 2.1 (Five original labels attained by one complete source execution).** Under Assumption 1.2, all constants of Definition 1.3 exist, and $q,b>0$. The five complete worlds
+
+$$
+W_1=W_2=W_L(a_*),\qquad W_3=W_L(c_*),\qquad
+W_4=W_5=W_L(d_*)
+\tag{2.1}
+$$
+
+belong to the actual $K_J$ in (1.5). Let $I$ have the uniform prior on the five original labels, with one common initialization
+
+$$
+\Omega=\frac15\sum_{i=1}^5|i\rangle\langle i|
+\otimes\rho_{W_i}\otimes(|k_1\rangle\langle k_1|)^{\otimes8}
+\otimes\rho_{\rm ctl}.
+\tag{2.2}
+$$
+
+The label register is inaccessible to the controller. Its initial state $\rho_{\rm ctl}$, the executed word (1.9), the couplings, meter settings and $\sigma=1$ are the same for every label and independent of all outcomes. Then the entire actual acquired record $R=(R_0,\ldots,R_6)$ satisfies
+
+$$
+R\mid(I=i)\sim\mathcal N_7(y(p_i),C_7),\qquad
+(p_1,p_2,p_3,p_4,p_5)=(a_*,a_*,c_*,d_*,d_*).
+\tag{2.3}
+$$
+
+For the single public invertible map (1.17), write $Y=\mathcal F(R)=(Y^{(2)},N)$, with $N\in\mathbb R^5$. Its exact joint law is
+
+$$
+\mathbb P(I=i,Y^{(2)}\in dx,N\in dz)
+=\frac15\,\mathcal N_2(\mu_i,I_2)(dx)\,\mathcal N_5(0,I_5)(dz),
+\tag{2.4}
+$$
+
+where
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0).
+\tag{2.5}
+$$
+
+In particular every nuisance coordinate is standard Gaussian, the five nuisance coordinates are independent, and their vector is independent of the joint pair $(I,Y^{(2)})$. The original five-label prior is preserved; the three distinct preparation clusters have weights $2/5,1/5,2/5$.
+
+The map preserves the complete relevant instrument, including its selective system successors and its nonselective channel. More precisely, let $\mathcal I_w$ be G's seven-acquisition instrument on the system and define $\mathcal I_w^{\mathcal F}(E)=\mathcal I_w(\mathcal F^{-1}E)$ for Borel $E\subseteq\mathbb R^7$. With
+
+$$
+\begin{aligned}
+\mathsf K_w(r)
+&=K_6(r_6)U_{A_{E_6}}\cdots K_1(r_1)U_{A_{E_1}}K_0(r_0),\\
+K_j(r_j)&=k_1(r_j-\ell_j^Tq),\qquad D_{\mathcal F}=OS,
+\end{aligned}
+\tag{2.6}
+$$
+
+its density in transformed coordinates is
+
+$$
+\widetilde{\mathsf K}(s)
+=|\det D_{\mathcal F}|^{-1/2}\mathsf K_w(\mathcal F^{-1}s).
+\tag{2.7}
+$$
+
+Thus, for every trace-class system input $\rho$, the complete CP output is the pushforward of the original CP output, and normalized selective states at $r$ and $\mathcal F(r)$ coincide whenever their outcome density is positive. No acquisition, posterior factor or relevant quantum successor is replaced by the two-coordinate marginal. The unused eighth probe remains in its original independent state.
+
+This theorem establishes one actual preparation-to-complete-acquired-law interface, with an exact all-record representation of C, Definition 13.1. It does not assert that every $q,b>0$, any prescribed critical path, a shortest word or an optimal total cost is attained.
+
+**Proof.** First consider the actual complete-world equations. On each selected lower source, III, (16.12) gives $0<r<1$, $\beta>0$ and $\Lambda>0$. The matrix has $c=r(1-r)/\beta>0$, trace one and determinant zero. To verify the gain correspondence directly, $j=\beta+c$ and $n=j+r$ are positive, and the first four readouts from (1.2) are
+
+$$
+d+G_0=0,\quad d+jG_1=24,\quad
+d+TG_2=147/5,\quad d+nG_3=24.
+\tag{2.8}
+$$
+
+Lagrange extrapolation gives $G_4=-G_0+4G_1-6G_2+4G_3$. Hence
+
+$$
+G_4=24-\frac{162}{5T}+e(\Lambda-1/U),\qquad
+d+UG_4=24+24U-\frac{162U}{5T}+U\eta=18.
+\tag{2.9}
+$$
+
+The last equality follows from the identity
+
+$$
+\eta=\frac{162}{5T}-24-\frac6U,
+\tag{2.10}
+$$
+
+which is (1.1) after multiplication by the positive denominator $TU$. Equations (2.8)–(2.9) are the original whole parent history $H_4$, with one fixed drift and one entire polynomial. That polynomial is nonzero because otherwise all five values would equal $d$, contradicting $0\ne24$. The formulas for $G_5,G_6,G_7$ are evaluations of this same polynomial. The four equations defining $z_J(p)$ then give $p(t_L,\beta_L)=p$ and $V(t_L,\beta_L)=v_J(p)$, as well as equality with the other actual source in the clock-seven $J$ response. This is precisely the lifting of III, Theorem 16.4. It proves $W_L(p)\in K_J$ for all $p\in[10,34]$, without dividing by any sampled gain or imposing regular-source conditions on other members of $K_J$. In particular each world retains both values $a(t_L,\beta_L)$ and $m(t_L,\beta_L)$ of (1.2) as its original alternative responses.
+
+We next prove that $f$ is not affine on $[15,32]$ using the exact historical source, rather than a rounded drawing of the arc. At $p=15,25,32$, the lower coordinates of the respective centre maps in III, (16.7) are the following rational pairs; each entry is divided by $10^{20}$:
+
+| $p$ | Centre $t$ numerator | Centre $\beta$ numerator |
+| --- | --- | --- |
+| $15$ | $210788533712955551542$ | $4532053336144848092$ |
+| $25$ | $219625886685223990790$ | $13475282226511291486$ |
+| $32$ | $221845194568232864125$ | $20494322221751046893$ |
+
+Call these pairs $C_{15},C_{25},C_{32}$. The contraction bounds of III, (16.11), together with its proof's estimate $\|z_J(p)-\widehat z(p)\|_\infty\le\eta_{\rm con}/(1-q_{\rm con})$, give respectively
+
+$$
+\|(t_L(p),\beta_L(p))-C_p\|_\infty
+<\frac1{300000},\quad\frac1{2000000},\quad\frac1{4000000}.
+\tag{2.11}
+$$
+
+Indeed the three upper quotients are $(19/10^7)/(1-2/5)$, $(41/10^8)/(1-17/100)$ and $(2/10^7)/(1-3/100)$. The centre and the entire segment to the actual root lie in
+
+$$
+\mathcal D=[2,9/4]\times[1/25,21/100].
+\tag{2.12}
+$$
+
+For clarity, the rational response and its error bound can be estimated without the large numerator arrays of III. On $\mathcal D$,
+
+$$
+\begin{gathered}
+j\ge137/100,\qquad n\ge179/100,\qquad
+T\ge26/25,\qquad U\ge27/25,\\
+\Lambda\ge1+600/121+50/71-400/137-400/179>3/2,\\
+0<\kappa<22/5,\qquad |e|<6/5.
+\end{gathered}
+\tag{2.13}
+$$
+
+For example $j_t=1-2t\beta>0$ and $n_t=1+\beta(1-2t)>0$ on this rectangle, whereas $j_\beta=1-t^2<0$ and $n_\beta=1+t-t^2<0$; these signs give the displayed lower bounds for $j,n$. The $T,U$ upper endpoints give the positive terms in the lower bound for $\Lambda$. The estimate for $e$ follows from $|\beta-1/8|\le17/200$, $\Lambda>3/2$ and the bound on $\kappa$.
+
+Write the stable sixth-gain formula as
+
+$$
+\begin{gathered}
+k_6=240-243/T,\qquad h_6=10-36/j+45/T-20/n,\\
+G_6=k_6+eh_6,\qquad V=24+e+(2U+n)G_6.
+\end{gathered}
+\tag{2.14}
+$$
+
+All entries in the following table are exact rational endpoints, with finite decimals denoting rationals. Direct substitution of the three rational pairs into (1.1) and (2.14) gives these strict enclosures:
+
+| Centre | $e$ | $k_6$ | $h_6$ | $2U+n$ |
+| --- | --- | --- | --- | --- |
+| $C_{15}$ | $(.4088,.4090)$ | $(7.535,7.536)$ | $(24.835,24.838)$ | $(4.2286,4.2287)$ |
+| $C_{25}$ | $(-.0651,-.0650)$ | $(25.856,25.857)$ | $(18.123,18.126)$ | $(4.5159,4.5161)$ |
+| $C_{32}$ | $(-.7937,-.7936)$ | $(38.330,38.332)$ | $(11.201,11.203)$ | $(4.6891,4.6893)$ |
+
+These are rational inequalities: for the first $e$ entry, for example, substitute the first pair to obtain $.4088\Lambda<\eta<.4090\Lambda$; for $k_6$, multiply the two asserted inequalities by $T$; for $h_6$, multiply by $jnT$; and for $2U+n$, substitute its polynomial expression. The same positive-denominator operations apply in all three rows, so no root approximation is used in this table. Multiplication of its signed intervals in (2.14) yields
+
+$$
+\begin{array}{c|c}
+p&V(C_p)\\\hline
+15&(99.1,99.3)\\
+25&(135.3,135.5)\\
+32&(161.2,161.3).
+\end{array}
+\tag{2.15}
+$$
+
+Here is an explicit derivative bound for passing from those rational centres to the actual sources. On $\mathcal D$, $|j_t|,|n_t|\le1$, $|j_\beta|\le65/16$ and $|n_\beta|\le29/16$. Differentiating (1.1), using (2.13), gives
+
+$$
+|\Lambda_t|<17/5,\quad |\Lambda_\beta|<91/5,\quad
+|e_t|<68/25,\quad |e_\beta|<313/10.
+\tag{2.16}
+$$
+
+For the last inequality one may use $|\kappa_\beta|<6/(26/25)^2$, then
+$|\eta_\beta|\le(24/5)(22/5+(17/200)6/(26/25)^2)$ and
+$|e_\beta|\le(|\eta_\beta|+|e|\,|\Lambda_\beta|)/\Lambda$.
+Likewise $e_t=-e\Lambda_t/\Lambda$. The other two bounds follow from
+
+$$
+\begin{aligned}
+|\Lambda_t|&\le4/(137/100)^2+4/(179/100)^2,\\
+|\Lambda_\beta|&\le6/(26/25)^2+2/(27/25)^2
++4(65/16)/(137/100)^2+4(29/16)/(179/100)^2.
+\end{aligned}
+\tag{2.17}
+$$
+
+The same denominators in (2.14) give $|k_6|<40$, $|h_6|<91$, $|(h_6)_t|<26$ and $|(h_6)_\beta|<131$. It follows that
+
+$$
+|G_6|<150,\qquad |(G_6)_t|<280,\qquad |(G_6)_\beta|<3240.
+\tag{2.18}
+$$
+
+For example the derivative bounds follow from $(68/25)91+(6/5)26<280$ and $243/(26/25)^2+(313/10)91+(6/5)131<3240$. Finally $2U+n\le509/100$, $|(2U+n)_t|\le1$ and $|(2U+n)_\beta|\le3$. Differentiating $V$ in (2.14) gives
+
+$$
+|V_t|<3000,\qquad |V_\beta|<20000.
+\tag{2.19}
+$$
+
+Consequently $|V(x)-V(x')|<23000\|x-x'\|_\infty$ for distinct points of $\mathcal D$. Equations (2.11) and (2.15) bound the three errors by $23/300$, $23/2000$ and $23/4000$, respectively, and hence also by $.08,.012,.006$. Therefore
+
+$$
+\begin{aligned}
+f(32)-\tfrac{17}{10}f(25)+\tfrac7{10}f(15)
+&>161.2-\tfrac{17}{10}135.5+\tfrac7{10}99.1
+-.006-\tfrac{17}{10}.012-\tfrac7{10}.08\\
+&=.1376>0.
+\end{aligned}
+\tag{2.20}
+$$
+
+An affine function would make this expression zero since $32=(17/10)25-(7/10)15$. Thus $f$ is not affine on $[15,32]$. Its continuity follows from the analytic arc in III, Lemma 16.3.
+
+If (1.13) failed for every dyadic interval, induction over the dyadic subdivisions would put every dyadic value of $f$ on the endpoint chord from $15$ to $32$. Continuity and density of those grid points would make $f$ affine throughout that interval, contradicting (2.20). The first pair in (1.13) therefore exists. Since $S$ is invertible and the sixth coordinate of $y(p)$ is $p$, $A\ne D$. Moreover
+
+$$
+H(a_*)=-\|D-A\|^2<0<\|D-A\|^2=H(d_*).
+\tag{2.21}
+$$
+
+The intermediate value theorem gives a zero; the zero set is a nonempty compact subset of $[a_*,d_*]$, so its least member $c_*$ exists and lies in the interior. Expanding $H(c_*)=0$ gives
+
+$$
+(D-A)^T(B-Z)=0.
+\tag{2.22}
+$$
+
+If $B=Z$, applying $S^{-1}$ first forces $c_*=(a_*+d_*)/2$ from the $p$ coordinate, and then forces $f(c_*)=(f(a_*)+f(d_*))/2$ from the last coordinate. This contradicts (1.13). Thus $q,b>0$, and (2.22) makes $u,v$ orthonormal. Gram–Schmidt completes them as specified, since the standard basis spans the remaining orthogonal complement. This proves every existence assertion in Definition 1.3, not only a conditional geometry statement.
+
+We now identify the actual acquisition. The chronological matrix products, calculated from the original $J,M$, are
+
+$$
+\begin{gathered}
+Q_0=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad
+Q_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Q_2=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+Q_3=\begin{pmatrix}1&1\\1&0\end{pmatrix},\\
+Q_4=\begin{pmatrix}1&0\\2&1\end{pmatrix},\quad
+Q_5=\begin{pmatrix}2&1\\3&1\end{pmatrix},\quad
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix}.
+\end{gathered}
+\tag{2.23}
+$$
+
+Their traces against $P$ are $1,j,T,n,U,U+n,2U+n$. G, Theorem 3.2 therefore gives $L_jm_W=d+g(j)\operatorname{tr}(Q_jP)$, and (2.8)–(2.9) and the defining arc equations give $Lm_{W_L(p)}=y(p)$. These are original response means, not a replacement of random acquisitions by deterministic history values.
+
+G, Theorems 4.2 and 5.1 apply to this same input and word. In particular their complete all-factor identity is
+
+$$
+\mathsf K_w(r)=U_{T_6}\prod_{j=0}^6k_1(r_j-L_jq),
+\tag{2.24}
+$$
+
+with every factor acting on the same initial position vector. For $m_i=m_{W_i}$ the actual conditional record density is consequently
+
+$$
+p_i(r)=\int_{\mathbb R^{17}}\pi^{-17/2}e^{-\|x-m_i\|^2}
+\prod_{j=0}^6\frac{e^{-(r_j-L_jx)^2/2}}{\sqrt{2\pi}}\,dx.
+\tag{2.25}
+$$
+
+Every one of the seven acquisitions appears in (2.24)–(2.25); the shared fifth read is not dropped from the consecutive $M$ actions. Tonelli and normalization of each factor give total mass one. The same theorem identifies (2.25) with the law of $LX+\epsilon$, where $X\mid I=i\sim\mathcal N_{17}(m_i,I_{17}/2)$ and $\epsilon\sim\mathcal N_7(0,I_7)$ is independent of that common $X$. This latent expression follows from the instrument density; it is not a separately supplied sampler or a coupling inferred from separately attainable marginals. It proves (2.3).
+
+The Gaussian supplier can also be expressed in the observation notation of [GaussianObservationLaw](../../../D5/S3/Observer/Linear/GaussianObservationLaw.lean): centre by $m_i$, use observation matrix $L$, prior precision $2$ and noise precision $1$, and translate the observation by $Lm_i$. This is exactly the parameter correspondence in G, Definition 5.2. Affine transformation and independence of Gaussian blocks are the usual finite-dimensional Gaussian facts; for instance they are represented in Mathlib's [HasGaussianLaw independence results](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Probability/Distributions/Gaussian/HasGaussianLaw/Independence.lean). No new Gaussian observation or classification theorem is needed here.
+
+By (1.17), $\operatorname{Cov}(Y\mid I=i)=OSC_7SO^T=I_7$. Its three distinct means are
+
+$$
+O(A-Z)=(-q,0,0,0,0,0,0)^T,\quad
+O(B-Z)=(0,b,0,0,0,0,0)^T,\quad
+O(D-Z)=(q,0,0,0,0,0,0)^T.
+\tag{2.26}
+$$
+
+Here all subsequent rows of $O$ annihilate both $D-A$ and $B-Z$. The conditional Gaussian density therefore factors into the asserted two-dimensional law and the same five-dimensional standard Gaussian density for every original label. Multiplication by the unchanged prior $1/5$ proves (2.4), including independence from the joint object $(I,Y^{(2)})$, rather than only conditional independence given $I$.
+
+For completeness, fix any trace-class input $\rho$. G's normal instrument defines its output by trace pairings, so the ordinary change of variables $s=\mathcal F(r)$ gives
+
+$$
+\begin{aligned}
+\mathcal I_w^{\mathcal F}(E)(\rho)
+&=\int_{\mathcal F^{-1}E}\mathsf K_w(r)\rho\mathsf K_w(r)^\dagger\,dr\\
+&=\int_E\widetilde{\mathsf K}(s)\rho\widetilde{\mathsf K}(s)^\dagger\,ds.
+\end{aligned}
+\tag{2.27}
+$$
+
+For positive inputs Tonelli applies to positive trace pairings; general trace-class inputs follow by linearity. This establishes the CP-output equality for all such inputs, not only equality of five probabilities. Taking $E=\mathbb R^7$ preserves the entire nonselective channel. At corresponding outcomes the Jacobian scalar in (2.7) cancels on normalization. In particular (2.25) is everywhere positive and the full normalized selective pure state for label $i$ is
+
+$$
+\Psi_{i,r}
+=\frac{U_{T_6}\left[\psi_{W_i}(x)\prod_{j=0}^6k_1(r_j-L_jx)\right]}{\sqrt{p_i(r)}}.
+\tag{2.28}
+$$
+
+This wavefunction, not just its position marginal, is identical at $r$ and at the relabelled record $s=\mathcal F(r)$. The unused probe contributes the unchanged tensor factor $|k_1\rangle\langle k_1|$. Any auxiliary output retained in a chosen dilation can likewise be left untouched by the outcome relabelling; (2.27) changes only the classical outcome coordinates.
+
+G, Proposition 5.3 directly supplies the initial-coordinate position posterior of (2.28):
+
+$$
+B_{\rm pos}=(2I_{17}+L^TL)^{-1},\qquad
+\mu_{i,r}=m_i+B_{\rm pos}L^T(r-Lm_i),
+\tag{2.29}
+$$
+
+followed by the actual $U_{T_6}$ on the quantum branch. In particular the corresponding final position covariance is $T_6B_{\rm pos}T_6^T$. Formula (2.28) retains the rest of the state as well. If the label is unobserved, its selective system state is the same Bayes mixture on both sides of (2.27), with weights $p_i(r)/\sum_h p_h(r)$; these weights are an identity for the supplied ensemble, not access to a label port.
+
+Since (1.17) recovers every $R_j$, any already supplied lawful continuation controlled by the full record can be expressed in the new coordinates by substituting $r=\mathcal F^{-1}(s)$ and applying the same system action to the same successor. In particular an available original seventh-clock $J$ or $M$ instrument keeps its full conditional and nonselective response after this substitution. This conditional correspondence does not install a new controller or change the admissible action family. Independence of $N$ from the label and first pair in (2.4) gives no independence of $N$ from (2.28), and licenses no erasure for all later quantum continuations. Thus the complete relevant outputs, successors and records are retained.
+
+Finally the first two coordinates of (2.4) are exactly C, Definition 13.1. C, Theorem 13.3 may be applied directly, with the present $q,b$, to the optional later common Borel rule
+
+$$
+Q_{q,b}(u,v)=\mathbf1\left\{v>
+\frac{\ln4-q^2/2+\ln\cosh(qu)+b^2/2}{b}\right\}.
+\tag{2.30}
+$$
+
+Its singleton Bayes gain is the already defined $B(q,b)>0$. The nuisance factor in (2.4) cancels in the posterior likelihood ratio. This decision application introduces neither a new classifier nor a claim that (2.30) is an installed finite-precision action or that the full retained record has been replaced by that bit. $\square$
+

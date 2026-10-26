@@ -1,0 +1,9 @@
+**定义 97.1（有向正交基架群）。** 固定正交基 $e_1,e_2,e_3$，考虑全部
+
+$$
+Qe_i=\epsilon_i e_{\sigma(i)},\qquad
+\epsilon_i\in\{\pm1\},\quad \sigma\in S_3,\quad \det Q=1.
+$$
+
+忘掉轴向符号得到群映射 $\pi(Q)=\sigma$。
+

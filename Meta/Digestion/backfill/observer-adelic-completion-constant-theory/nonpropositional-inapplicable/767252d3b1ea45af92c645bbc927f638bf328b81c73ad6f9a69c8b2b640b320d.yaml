@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:767252d3b1ea45af92c645bbc927f638bf328b81c73ad6f9a69c8b2b640b320d
+  normalized_sha256: sha256:767252d3b1ea45af92c645bbc927f638bf328b81c73ad6f9a69c8b2b640b320d
+cas_ref: sha256:767252d3b1ea45af92c645bbc927f638bf328b81c73ad6f9a69c8b2b640b320d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：在 refined-observer 数据清单中给群字段命名 G^X，无群同构或阶数断言。
+    previous_atom_id: e8eabc21bd648f72fb1a08f43af07431a4e254d2dcfe392d18c8fdfabb93ab61
+    next_atom_id: 0cb671337e87c83bdc144277f603b1333d8e5a43c9f13e53061ece9a9742c2f4

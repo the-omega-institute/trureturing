@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:32026502cb3e2b183eac692735e16b482f8567701b9b2188278d2c4c1ce7b62c
+  normalized_sha256: sha256:32026502cb3e2b183eac692735e16b482f8567701b9b2188278d2c4c1ce7b62c
+cas_ref: sha256:32026502cb3e2b183eac692735e16b482f8567701b9b2188278d2c4c1ce7b62c
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+    target_statement_id: sha256:f4f66b8b9f4fa8fc635547dd1f3e004b1691c34d221e1e136847edb12d266727
+receipts:
+  unresolved_subitems: []

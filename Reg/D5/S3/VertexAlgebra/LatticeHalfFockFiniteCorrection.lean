@@ -1,3 +1,5 @@
+import Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrectionL1Scalar
+import Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrectionPositiveConvolution
 import Reg.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrectionReadout
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily

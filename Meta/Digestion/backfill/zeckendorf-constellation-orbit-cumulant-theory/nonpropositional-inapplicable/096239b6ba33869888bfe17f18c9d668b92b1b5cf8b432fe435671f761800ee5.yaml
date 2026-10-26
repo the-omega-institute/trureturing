@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:096239b6ba33869888bfe17f18c9d668b92b1b5cf8b432fe435671f761800ee5
+  normalized_sha256: sha256:096239b6ba33869888bfe17f18c9d668b92b1b5cf8b432fe435671f761800ee5
+cas_ref: sha256:096239b6ba33869888bfe17f18c9d668b92b1b5cf8b432fe435671f761800ee5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-phrase example naming non-Hermitian response; no response model or spectral assertion is given.
+    previous_atom_id: 97ff0f594368ce117a5827049442e60139816ca92265acfe9468c51af102f287
+    next_atom_id: 6ab0bf718cee5c42b3ce3331fce4dab51beeb9128712d225df3f2f782138f358

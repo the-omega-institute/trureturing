@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60e7946ce2efe118c240a93d5d228163e9e714a406947d3b18d1e64b2635f228
+  normalized_sha256: sha256:60e7946ce2efe118c240a93d5d228163e9e714a406947d3b18d1e64b2635f228
+cas_ref: sha256:60e7946ce2efe118c240a93d5d228163e9e714a406947d3b18d1e64b2635f228
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 保留《哥林多前书》一体多肢的神学来源与不同功能，是经文解释。
+    previous_atom_id: 24b3f3d9007f5c341623cb0480b918bfc982c2842e548ebf34c241a17585227a
+    next_atom_id: ae13e1216e0d270ae358dc3dd0b58666d8ce2c5bada992962c067e8087d3056d

@@ -4,7 +4,23 @@
 
 The completed-zeta Archimedean term is its mass contribution plus a nonnegative continuous translation energy.
 
-**Theorem 1.1 (Actual jump density as a positive rate series).**
+**Theorem 1.1 (Retain the zero term and bound the complete tail).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real t with |t|<=2, Re digamma(1/4+i*t/2)-Re digamma(1/4)<=6. The proof uses the summable digamma-increment series in ArchimedeanJumpDecomposition.
+
+Put y=t/2 and b_n=n+1/4. The existing increment equals y^2/(b_n*(b_n^2+y^2)) and is nonnegative. Since y^2<=1, its n=0 term is <=64/17. For n>=0 the term indexed n+1 is <= 2/((n+1)*(n+2))=2/(n+1)-2/(n+2). Finite range sums telescope to at most 2, and the nonnegative real tsum bound controls the entire tail. The existing summable series splits into its zero term and tail, giving <=98/17<6. This proof uses no compact supremum and no finite sampling of digamma values. This compact-frequency estimate is one input for a comparison with logarithmic frequency weights; an all-frequency comparison requires further estimates.
+
+The result is a uniform estimate on the full closed frequency interval, including both endpoints and zero.
+
+**Theorem 1.2 (Actual jump density as a positive rate series).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
 
@@ -16,7 +32,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_
 
 For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). This is the original density-series proof used by the Levy decomposition; the extended periodic comparison consumes the same declaration directly.
 
-**Theorem 1.2 (Archimedean jump decomposition).**
+**Theorem 1.3 (Archimedean jump decomposition).**
 
 $$\forall f\in \mathcal{W}, hArch: \operatorname{ArchimedeanConvergent}(\operatorname{convolutionSquare}\left(f\right)) \Rightarrow \operatorname{archimedeanTerm}\left(\operatorname{convolutionSquare}\left(f\right), hArch\right) = \operatorname{archimedeanConstant} \cdot \operatorname{l2Mass}\left(f\right) + \operatorname{archimedeanJumpEnergy}\left(f\right) \land 0 \le \operatorname{archimedeanJumpEnergy}\left(f\right)$$
 
@@ -31,6 +47,54 @@ The test function lies in the canonical carrier of even smooth compactly support
 The jump density is exp(-x/2)/(1-exp(-2x)) on positive scales, and the jump energy integrates the squared displacement of f by translation against that density. The proof derives its Levy representation from the frozen digamma series and applies Fourier inversion and Tonelli.
 
 The first public conjunct is the exact complex identity. The second public conjunct records positivity of the independently constructed continuous jump energy.
+
+**Theorem 1.4 (Nonnegative actual density owner).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_nonnegative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_nonnegative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual density exp(-x/2)/(1-exp(-2*x)) is nonnegative for positive x; this is the original owner used by all spectral consumers.
+
+**Theorem 1.5 (Levy integral and digamma owner).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma_increment`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma_increment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real z, the integral over positive x of 2*rho(x)*(1-cos(z*x)) equals Re digamma(1/4+i*z/2)-Re digamma(1/4). This original owner determines the spectral multiplier of the periodic and whole-line translation energies.
+
+**Theorem 1.6 (Integrable Levy kernel owner).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_kernel_integrableOn`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_kernel_integrableOn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real z, 2*rho(x)*(1-cos(z*x)) is integrable on the positive half-line. The original owner includes z=0 and uses the actual density.
+
+**Theorem 1.7 (Nonnegative digamma increment owner).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_nonnegative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_nonnegative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real frequency z, Re digamma(1/4+i*z/2)-Re digamma(1/4) is nonnegative by the original Levy-integral owner.
 
 The same density has an exact interval L2 application. Let a>0, d=2*a, I=(-a,a], and u be complex-valued with MemLp(u,2,dx restricted to I). Write z=1_I*u for its zero extension and v for its d-periodic extension obtained from AddCircle.liftIoc at base point -a. For s>0, set rho(s)=exp(-s/2)/(1-exp(-2*s)), F0(s)=rho(s)*integral_R |z(x)-z(x-s)|^2 dx, and Fp(s)=rho(s)*integral_I |u(x)-v(x-s)|^2 dx. These use Lebesgue measure and the original half-open interval; no pointwise agreement of the two outer endpoints is assumed.
 
@@ -55,5 +119,10 @@ These interval and Fourier conclusions apply the existing Gamma density and Levy
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_nonnegative`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_nonnegative`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma_increment`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_kernel_integrableOn`
 - Dependency: [D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity](../TestFunctions/ConvolutionSquarePositivity.md)

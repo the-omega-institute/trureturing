@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a64a1eb2dd5d1cb8bfd1a7b2732bbe09aa2329e3e0615642526930d64b44fac
+  normalized_sha256: sha256:8a64a1eb2dd5d1cb8bfd1a7b2732bbe09aa2329e3e0615642526930d64b44fac
+cas_ref: sha256:8a64a1eb2dd5d1cb8bfd1a7b2732bbe09aa2329e3e0615642526930d64b44fac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explanation of classical-choice use and an implementation requirement for algorithms.
+    previous_atom_id: 3af263970b00e5f8119a04ace71241f85b45a0252cea5cc727bdf23d24016d1a
+    next_atom_id: ed4b68dbdbb73bfceb637f1f21dfb41ffc1ae272d9391b64f7e0b9a2300943e4

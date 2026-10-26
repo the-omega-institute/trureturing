@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9365e34c57e6bf59b8bfcac5fc49715923ed7e45a312b6d675ce923aec55e213
+  normalized_sha256: sha256:9365e34c57e6bf59b8bfcac5fc49715923ed7e45a312b6d675ce923aec55e213
+cas_ref: sha256:9365e34c57e6bf59b8bfcac5fc49715923ed7e45a312b6d675ce923aec55e213
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibSquareclassRigidity.fibonacci_squareclass_pairs
+    target_statement_id: sha256:7384a3df97907eb73f851f7da2d0b28920cea866d48f5d1decc2f3883f0fe6d5
+receipts:
+  unresolved_subitems: []

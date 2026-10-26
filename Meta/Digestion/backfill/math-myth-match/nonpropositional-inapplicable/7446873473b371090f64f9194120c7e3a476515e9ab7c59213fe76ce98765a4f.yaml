@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7446873473b371090f64f9194120c7e3a476515e9ab7c59213fe76ce98765a4f
+  normalized_sha256: sha256:7446873473b371090f64f9194120c7e3a476515e9ab7c59213fe76ce98765a4f
+cas_ref: sha256:7446873473b371090f64f9194120c7e3a476515e9ab7c59213fe76ce98765a4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只限定 V.3.9—17、V.4.1—2 的哲学解释和跨传统来源边界，没有数学定理断言。
+    previous_atom_id: 251b5ed52d45db7baf42d5b577a520f14a8ac377281be28547771aee49a996c6
+    next_atom_id: 91a301f2f1f69244c674461cb3c3082061cd3b1e0d04c050d4bb044052bf5007

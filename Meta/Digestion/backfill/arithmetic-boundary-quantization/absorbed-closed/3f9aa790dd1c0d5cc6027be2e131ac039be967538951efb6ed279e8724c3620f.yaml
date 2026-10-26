@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f
+  normalized_sha256: sha256:3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f
+cas_ref: sha256:3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f
+coverage_gids:
+  - gid: D5/S3/ArithSums/TwoPointSlabSupport.corner_estimate
+    target_statement_id: sha256:97d9bfee2d19d7120ccdf01971bc4a4c773c144c8be804c5de373afb6034b814
+receipts:
+  unresolved_subitems: []

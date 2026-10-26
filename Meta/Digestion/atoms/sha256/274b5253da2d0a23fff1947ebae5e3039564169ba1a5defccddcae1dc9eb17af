@@ -1,0 +1,99 @@
+**Theorem 22.3 (actual interior response for arbitrary angular trace).**
+On $B=\{R<1\}$ let $\mathcal H=W_H^{1,2}(B)$,
+$\mathcal H_0=\overline{C_c^\infty(B)}^{\mathcal H}$ and
+$\mathcal X=\mathcal H/\mathcal H_0$ with its quotient norm. Put
+
+$$
+\begin{gathered}
+m_\epsilon(x)=m(\delta_\epsilon x),\quad
+C_\epsilon(x)=C(\delta_\epsilon x),\quad
+V_\epsilon(x)=\epsilon^2\Gamma_\epsilon
+                 (\Psi^{-1}\delta_\epsilon x)/c_G,\\
+b_{\epsilon,\gamma,\eta}[u,v]
+ =\int_B\frac{m_\epsilon}{m_0}
+ \{\langle C_\epsilon\nabla_Hu,\nabla_Hv\rangle
+                 -\gamma V_\epsilon u\overline v-\eta u\overline v\}dq.
+\end{gathered}
+\tag{22.12}
+$$
+
+For $\gamma$ near $\lambda_0$ and $|\eta|$ small, the zero-trace problem
+is uniformly coercive. Its harmonic extension and physical variational
+conormal maps satisfy
+
+$$
+\|\mathcal H_{\epsilon,\gamma,\eta}-\mathcal H_{0,\gamma,0}\|_{
+                    \mathcal X\to\mathcal H}
++\|\mathcal N_{\epsilon,\gamma,\eta}-\mathcal N_{0,\gamma,0}\|_{
+                    \mathcal X\to\mathcal X^*}
+ \le C_1(\epsilon+|\eta|).
+\tag{22.13}
+$$
+
+For compact $B_2\Subset\{R<1/2\}$, including zero, the extension
+difference has $C^j(B_2)$ norm at most
+$C_{B_2,j}(\epsilon+|\eta|)\|\text{trace}\|_{\mathcal X}$.
+These are estimates relative to arbitrary actual trace, with no
+normalization of that trace. For the actual eigenstate set
+$\gamma=\lambda_0(1+\lambda/L^2)$, $\eta=\epsilon^2E_\epsilon$.
+Uniformly on compact real $\lambda$ sets,
+
+$$
+\epsilon^2E_*-\lambda_0\lambda_+/L^2
+ \le\eta\le\epsilon^2T_A[\psi],
+\qquad \eta\longrightarrow0,
+\tag{22.14}
+$$
+
+where $\psi$ is any one fixed normalized smooth free-domain test.
+Thus the actual interior error is $O(\epsilon+L^{-2})$, and is
+$O(\epsilon)$ for $\lambda\le0$. Constants concern one fixed model.
+
+Proof. Equations (11.1), (11.3) and the literal minimum give
+$\|m_\epsilon/m_0-1\|_\infty+
+\|C_\epsilon-I\|_\infty+\|V_\epsilon-1\|_\infty\le C_1\epsilon$
+on $B$. The last potential is exactly one on $R<1/2$; on its remaining
+collar the uncapped value is $R^{-2}+O(\epsilon/R)\ge1-C_1\epsilon$.
+The resulting form difference is bounded by
+$C_1(\epsilon+|\eta|)\|u\|_{\mathcal H}\|v\|_{\mathcal H}$ for all
+angular functions. The first Dirichlet eigenvalue of $-\Delta_H$ on $B$
+is attained by zero extension, local subelliptic compactness and min-max.
+For its nonzero minimizer the full Hardy inequality gives
+
+$$
+\int_B|\nabla_Hv|^2\ge\lambda_0\int_BR^{-2}|v|^2
+                           >\lambda_0\int_B|v|^2.
+\tag{22.15}
+$$
+
+This strict gap proves the required coercivity and its stability under
+the small form perturbation. Lift the quotient trace by its minimal
+$\mathcal H$-norm representative, and correct in $\mathcal H_0$ using
+Lax–Milgram. Subtracting the two variational equations gives the
+extension bound. The definition
+$\langle\mathcal Nf,g\rangle=b[\mathcal Hf,\mathcal Hg]$ then gives
+the conormal bound and is independent of trace representatives.
+No noncharacteristic boundary trace theorem is required.
+On $B_2$ all scaled coefficients are smoothly $O(\epsilon)$ from their
+frozen values and the potential is constant. Interior estimates applied
+to the difference equations prove the $C^j$ bound, including zero.
+
+On the original free domain the exact form identity is
+
+$$
+q_{\epsilon,\lambda}[f]
+=\overline q_{\mathrm c}[f]+\int D_\epsilon|f|^2d\mu
+ -\frac{\lambda}{L^2}g_{\mathrm c}\int\Gamma_\epsilon|f|^2d\mu.
+\tag{22.16}
+$$
+
+Use $\overline q_{\mathrm c}\ge E_*\|f\|^2$,
+$D_\epsilon\ge0$ and
+$g_{\mathrm c}\Gamma_\epsilon\le\lambda_0\epsilon^{-2}$ for the lower
+bound, and eventual positive coupling for the test upper bound.
+For the unamplified pullback $u(x)=f(\Psi^{-1}\delta_\epsilon x)$,
+original local energy minus $E$ times local norm is exactly
+$\epsilon^2m_0 b_{\epsilon,\gamma,\epsilon^2E}[u,u]$.
+The Jacobian is $\epsilon^4$ and each horizontal derivative contributes
+$\epsilon^{-1}$, fixing the density and clock factors. $\square$
+

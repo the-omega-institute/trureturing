@@ -1,0 +1,96 @@
+## 162. The passive $\Gamma(U(3))$ orbit
+
+For $U\in U(3)$, let
+
+$$
+\Gamma(U)=\bigoplus_{j=0}^3\wedge^jU
+\tag{162.1}
+$$
+
+be its fermionic exterior-power lift.  Since $H_{UV}=UH_VU^*$, the
+second-quantized covariance gives
+
+$$
+\Gamma(U)\rho_V(\beta)\Gamma(U)^*=\rho_{UV}(\beta).
+\tag{162.2}
+$$
+
+The group $U(3)$ acts transitively on the unit sphere of $\mathbb C^3$.
+Consequently the mathematical passive orbit is exactly
+
+$$
+\mathcal P_\beta(V)
+=\{\rho_W(\beta):W\in\mathbb C^3,\ \|W\|_2=1\}.
+\tag{162.3}
+$$
+
+This is an orbit equality for the specified Hamiltonian family.  It does
+not say that every $W$ is in the image of a native construction $q\mapsto
+V(q)$.
+
+Let $p=|W_\ell|^2$.  For $p>0$ choose the representative
+$\widetilde W=(\overline{W_\ell}/|W_\ell|)W$; for $p=0$ put
+$\widetilde W=W$.  Then $\widetilde W_\ell=\sqrt p$ and
+$\widetilde W\widetilde W^*=WW^*$, so $H_{\widetilde W}=H_W$ and
+$\rho_{\widetilde W}(\beta)=\rho_W(\beta)$.  This is a choice of phase
+representative, not a physical local operation.
+
+Choose $U_B\in U(2)$ sending the $B$ component $\widetilde W_B$ to
+$\sqrt{1-p}\,e_b$.  At $p=0$ this aligns a unit vector in $B$; at $p=1$
+we already have $\widetilde W=e_\ell$, so any $U_B$ suffices.  With
+$L=1_A\oplus U_B$ and $v_p=\sqrt p\,e_\ell+\sqrt{1-p}\,e_b$,
+
+$$
+L\widetilde W=v_p,\qquad LWW^*L^*=v_pv_p^*.
+$$
+
+By (162.2) and §142, the even, number-preserving lift
+$\Gamma(L)=I_A\otimes\Gamma(U_B)$ is local for the declared occupation
+tensor product and conjugates $\rho_W(\beta)$ to $\rho_{v_p}(\beta)$.
+The orthogonal $B$-mode is a spectator, so the factorization from §142 is
+
+$$
+\rho_W(\beta)\simeq_{\rm local}\sigma_\beta(p)\otimes\tau_\beta,
+\qquad
+\tau_\beta=\frac{\operatorname{diag}(1,t)}{1+t},
+\tag{162.4}
+$$
+
+with
+
+$$
+\sigma_\beta(p)=\frac1{2(1+t)}
+\begin{pmatrix}
+1&0&0&0\\
+0&1-(1-t)p&(1-t)\sqrt{p(1-p)}&0\\
+0&(1-t)\sqrt{p(1-p)}&t+(1-t)p&0\\
+0&0&0&t
+\end{pmatrix}.
+\tag{162.5}
+$$
+
+The partial transpose of (162.5) has a $2\times2$ corner whose
+determinant has the sign of
+
+$$
+t-(1-t)^2p(1-p).
+\tag{162.6}
+$$
+
+The PPT criterion is sufficient here because (162.5) is a two-qubit state
+and the spectator in (162.4) is a local product factor.  Thus
+
+$$
+\boxed{
+\rho_W(\beta)\text{ is NPT}
+\Longleftrightarrow
+(1-t)^2p(1-p)>t
+\Longleftrightarrow
+4\sinh^2(\beta/2)p(1-p)>1.
+}
+\tag{162.7}
+$$
+
+Equality in (162.7) is PPT and separable.  No arbitrary $2\times4$ PPT
+sufficiency is used.
+

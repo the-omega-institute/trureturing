@@ -1,0 +1,22 @@
+**Definition 22.1 (The upper actual response order).** Retain the literal
+$H_4=(0,J,24,M,147/5,J,24,M,18)$, complete worlds of Section 1,
+$\mathsf A$ of (14.2), $I=[686/25,549/20]$ of Definition 18.1,
+and $K=[p_c-10^{-40},p_c+10^{-40}]$ of (14.1). In particular
+$p_J$ is the original exact algebraic parameter specified in Definition
+14.1, and $p_J\in K\subset I$; $p_c$ is only a rational centre.
+Write $u_+(r,p)$ and $m_+(r,p)$ for the actual clock-six $M$ and
+clock-seven $M$ responses of $W_+(r,p)$ in (19.1). Define
+
+$$
+\begin{gathered}
+\Psi(x,y)=366y^2+331y^3-269x+501xy^2-539x^2-141x^2y-334x^3,\\
+\Theta_+(r,p)=\Psi\left(\frac{u_+(r,p)-144}{20},
+                \frac{m_+(r,p)-6u_+(r,p)+216}{20}\right).
+\end{gathered}
+\tag{22.1}
+$$
+
+The quantities in this definition use the one entire gain and fixed drift
+of each original world. The polynomial $\Psi$ is a function of its two
+actual responses, with no additional observation.
+

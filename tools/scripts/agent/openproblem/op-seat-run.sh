@@ -83,7 +83,7 @@ CWD=$(cat "$D/cwd.txt" 2>/dev/null || echo "$WORKTREE_DEFAULT")
 [ -d "$CWD" ] || { echo "NO_WORKTREE $CWD" >&2; exit 9; }
 
 # Seats build, so a seat on a worktree of a second clone silently grows a second cache.
-bash "$(dirname "$0")/op-require-base.sh" "$CWD" "${OP_BASE_GIT:-$HOME/Desktop/omega/trureturing/.git}" \
+bash "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)/op-require-base.sh" "$CWD" "${OP_BASE_GIT:-}" \
   || { echo "SEAT_FOREIGN_CLONE $CWD" >&2; exit 7; }
 
 rm -f "$D/result.json" "$D/DONE"

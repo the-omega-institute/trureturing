@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:693952758ef982246e82bd18be7f2095d079f742ebc8e2fec0f5094c47e8c854
+  normalized_sha256: sha256:693952758ef982246e82bd18be7f2095d079f742ebc8e2fec0f5094c47e8c854
+cas_ref: sha256:693952758ef982246e82bd18be7f2095d079f742ebc8e2fec0f5094c47e8c854
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅是追加区标题与排版分隔符，没有数学断言。
+    previous_atom_id: ce2a688931d495ab4f4ef4d0daef59928454c5411e0078c6b695a714cd7de40d
+    next_atom_id: 501c1b7be75283111bec21fccfda33f2ffc6b21e4022fd4578544418e9b50339

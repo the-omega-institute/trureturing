@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d5b5fa923eb50d3ff7d1914a7bda4350acae978a122d42b696c1930ea47b5a44
+  normalized_sha256: sha256:d5b5fa923eb50d3ff7d1914a7bda4350acae978a122d42b696c1930ea47b5a44
+cas_ref: sha256:d5b5fa923eb50d3ff7d1914a7bda4350acae978a122d42b696c1930ea47b5a44
+coverage_gids:
+  - gid: D5/S0/Diagonal/Equivariance/TransitiveEscapeRate.transitive_equivariant_escape_rate_package
+    target_statement_id: sha256:c426a0f07cf149c207efadef25a1f4295e7e21c004375d10df2df0efd86eb2bd
+  - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
+    target_statement_id: sha256:23d423d7bdcd1cd179c77d60719a27944de6c8638ec4542329a2da65b96fdfca
+  - gid: D5/S0/Diagonal/Naturality/RelativeDiagonalEscape.relative_diagonal_escape
+    target_statement_id: sha256:1786834610ae6c385f9344317e5f1a0dbe5839d2955b2812b8c091d42f767880
+  - gid: D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
+    target_statement_id: sha256:137fab7f22d0584b19ba2c6711695fedacfd3e5ed646cb94240a834866f92093
+receipts:
+  unresolved_subitems: []

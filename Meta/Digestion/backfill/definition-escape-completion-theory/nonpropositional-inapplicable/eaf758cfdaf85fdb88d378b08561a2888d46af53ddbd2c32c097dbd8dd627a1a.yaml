@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eaf758cfdaf85fdb88d378b08561a2888d46af53ddbd2c32c097dbd8dd627a1a
+  normalized_sha256: sha256:eaf758cfdaf85fdb88d378b08561a2888d46af53ddbd2c32c097dbd8dd627a1a
+cas_ref: sha256:eaf758cfdaf85fdb88d378b08561a2888d46af53ddbd2c32c097dbd8dd627a1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: v1.2 增补主题目录中的名词性条目，只标识已讨论的对象或接口，不独立断言相应数学命题。'
+    previous_atom_id: d72ace4962dd00fe37e17bee42c4ad97b2994fdae73f68c11b8bf0fc49797231
+    next_atom_id: 0266db7649d020287c997dfc495863dd387173d5f6a098af601794e5d14afeba

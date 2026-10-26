@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0
+  normalized_sha256: sha256:4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0
+cas_ref: sha256:4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is solely an evidence-status and scope label for the following construction. It does not itself state the universal rule or a counterexample, and asserts no mathematical proposition.
+    previous_atom_id: 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2
+    next_atom_id: a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb

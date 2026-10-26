@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e5f111f419822b68dcbaed85b6d24375af1e5de7e55219926a16c5d0dfbfbf7
+  normalized_sha256: sha256:3e5f111f419822b68dcbaed85b6d24375af1e5de7e55219926a16c5d0dfbfbf7
+cas_ref: sha256:3e5f111f419822b68dcbaed85b6d24375af1e5de7e55219926a16c5d0dfbfbf7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阐释王弼的治理与修养语境，说明词句比较不能代替实践效果证据。
+    previous_atom_id: 4741995574c4c1660cd6ab294702fbddf7d80e746e89b7f0ed02c2adf8072721
+    next_atom_id: 0721c8742a1e6c5ba4e1be0022a6b3f8b1b909a946abf6f9914e3d45f202b59a

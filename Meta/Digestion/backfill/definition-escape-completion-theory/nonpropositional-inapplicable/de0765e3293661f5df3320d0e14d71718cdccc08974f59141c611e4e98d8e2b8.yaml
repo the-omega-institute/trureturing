@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de0765e3293661f5df3320d0e14d71718cdccc08974f59141c611e4e98d8e2b8
+  normalized_sha256: sha256:de0765e3293661f5df3320d0e14d71718cdccc08974f59141c611e4e98d8e2b8
+cas_ref: sha256:de0765e3293661f5df3320d0e14d71718cdccc08974f59141c611e4e98d8e2b8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 时间块累积这一证书字段或工作项。
+    previous_atom_id: fe7615c4ef8b0fd9fe47cd2f50ab30ada7690b7f490f83157abdfc9ab2e3e69e
+    next_atom_id: ecbbf138e348d20570f5d041d0f0cb05482797875edd8edffb20a9bcb6c41934

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:30a325a463693b96bc2fba501d466faeacd9ccfe28cca7b02017e3c1cb8c21d0
+  normalized_sha256: sha256:30a325a463693b96bc2fba501d466faeacd9ccfe28cca7b02017e3c1cb8c21d0
+cas_ref: sha256:30a325a463693b96bc2fba501d466faeacd9ccfe28cca7b02017e3c1cb8c21d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 审计字段、记录格式和计数政策；不声称任何具体 residual 已改善。'
+    previous_atom_id: e9f114cd8149361947c9cb5df677b6e7d935214b2492b31025c0e8c95ba0c52d
+    next_atom_id: 909fd7fbce9f2e723c8154be2fb514f14308f6c512102e12eda9eb72c3e4f963

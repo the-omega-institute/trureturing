@@ -1,0 +1,2 @@
+**Definition 1.1 (Element-conjugacy and projective irreducibility).** For a finite group $G$, two homomorphisms $\rho_1,\rho_2:G\to PGL_3(\mathbb C)$ are element-conjugate if, for every $g\in G$, their values at that same $g$ are conjugate in $PGL_3(\mathbb C)$. A homomorphism is projectively irreducible if the inverse image of its image in $GL_3(\mathbb C)$ preserves no nonzero proper complex subspace of $\mathbb C^3$. Write $T$ for the diagonal torus of $PGL_3(\mathbb C)$ and $\mu_3$ for the scalar kernel of $SL_3(\mathbb C)\to PGL_3(\mathbb C)$.
+

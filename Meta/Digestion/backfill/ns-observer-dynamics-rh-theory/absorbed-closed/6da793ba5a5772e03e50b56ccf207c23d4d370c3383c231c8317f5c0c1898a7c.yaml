@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:6da793ba5a5772e03e50b56ccf207c23d4d370c3383c231c8317f5c0c1898a7c
+  normalized_sha256: sha256:6da793ba5a5772e03e50b56ccf207c23d4d370c3383c231c8317f5c0c1898a7c
+cas_ref: sha256:6da793ba5a5772e03e50b56ccf207c23d4d370c3383c231c8317f5c0c1898a7c
+coverage_gids:
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.fixedPart_idempotent
+    target_statement_id: sha256:4c7ec9947f20ca5e2873b3ecbda736689e0304d2a6c0972b9737ed370944002b
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.fixedPart_in_observation_kernel
+    target_statement_id: sha256:87e1b1d5fcfbf0a1ad05a0916e8283b48c30e8e6ccf178e420a4b943d8242b2a
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.hidden_idempotent_unique
+    target_statement_id: sha256:5cb5f14143d5856c37b231fc2cf033ff21cd584b84ce0eda9390eb4a70f8c73e
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.visibleReflection_spec
+    target_statement_id: sha256:38945c215347e898b1b07a7f396ccf7cb17053ce911944321230d3354caa7556
+  - gid: D5/S3/Observer/Reversal/VisibleNegationLifts.visible_negation_iff_hidden_idempotent
+    target_statement_id: sha256:386b78e8fb5d5caa579b631cdf8f3fe67ba40b4cbe43bb95eb9ad27b79b42c79
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,19 @@
+**Definition 1.2 (Actual responses).** Put
+
+$$
+j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad V=U+n.
+\tag{1.4}
+$$
+
+The parent traces at clocks $0,1,2,3,4$ are $1,j,T,n,U$. The subsequent
+traces, with words in chronological order, are
+
+| Word | Trace against $P$ |
+| --- | --- |
+| $JMJMM$ | $V$ |
+| $JMJMMJ$ | $T+j+2r$ |
+| $JMJMMM$ | $2U+n$ |
+| $JMJMMJJ$ | $V$ |
+| $JMJMMJM$ | $2U+j$ |
+| $JMJMMMJ$ | $T+2j+4r$ |
+| $JMJMMMM$ | $3U+2n$ |

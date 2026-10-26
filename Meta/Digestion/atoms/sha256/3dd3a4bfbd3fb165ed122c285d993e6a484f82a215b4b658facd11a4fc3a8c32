@@ -1,0 +1,3 @@
+### 命题 251.3　严格 equal-M 见证与 whole-child J 注入性的翻译
+令 $K=[56,58]\times[304,305]$。支持卷 V 定理 1.1 对每个 $\beta\in K$ 的整个 $C_\beta$ 给出 $R_J(\beta)=\varnothing$，故 $E_K(O_J;T_{\rm src})=\varnothing$，且任意完整世界上的确定性目标 $T$ 都满足 $E_K(O_J;T)=\varnothing$；这不只是所选 witness 子集的注入性。定理 1.2 又给出 $\beta_*\in K$ 及 $W_A\ne W_B\in C_{\beta_*}$，满足 $m(W_A)=m(W_B)$；前述整个 child 的 J 注入性强制 $a(W_A)\ne a(W_B)$。于是 $(\beta_*,W_A,W_B)\in E_K(O_M;a)\cap E_K(O_M;T_{\rm src})\cap E_K(O_M;(a,m))$，且 $E_K(O_q;a)\ne\varnothing$，但同一对不属于 $E_K(O_M;m)$。证明只将两条来源结论代入定义；得到的是 $\beta_*\in D_M(K)\setminus D_J(K)$ 和指定观察、目标、区域下的逃逸，不结算全局 $D_J\cap D_M$。
+

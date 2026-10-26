@@ -1,0 +1,16 @@
+**定理 11.1（同一正相干输入、全部输入及参考的分类）。** Let $\gamma$ and
+$\widetilde\gamma$ be two controls of §9 at the same $b,a,T$. The following
+conditions are equivalent.
+
+1. Their complete terminal classical–quantum output measures agree on one
+   common coherent pure input with diagonal $p(a)$ and positive middle
+   amplitude. Equality includes the unnormalized success density and every
+   Borel failure-time event in every original mode.
+2. They agree on every paired same input of (OC.10), for all
+   $\beta\in\mathbb R$ and signed $m\in\mathbb Z$.
+3. They have the same $k(t)$ for every $t$ and the same two terminal
+   characters $z_+=e^{-iH_+(T)}$, $z_-=e^{-iH_-(T)}$.
+4. Their instruments are equal as CP-valued measures on every live input,
+   and on the supplied six-dimensional stopped extension, including after
+   adjoining any finite-dimensional external quantum reference.
+

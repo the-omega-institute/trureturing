@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8172eb2fd3cf399c4c374fefe518fbbc939421571eed6d06833a118d8e44fb3
+  normalized_sha256: sha256:c8172eb2fd3cf399c4c374fefe518fbbc939421571eed6d06833a118d8e44fb3
+cas_ref: sha256:c8172eb2fd3cf399c4c374fefe518fbbc939421571eed6d06833a118d8e44fb3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 申明有形而不穷尽的比较立场，明确模型不裁定整个人生或信仰。
+    previous_atom_id: 9c3cebb97de6cacc3ae65aedd494207f32a56766ca7a3006068d9b5dfecdb1e3
+    next_atom_id: 11e9030a789c1751dec1a5e26b67f7399f2b7d20e6e265ab2e52fc3fb333f4d9

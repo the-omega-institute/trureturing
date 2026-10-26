@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cf0f39d4acbe86d1328c38ce04e41c1f598534409a40343f9c2ea6aa80e9bace
+  normalized_sha256: sha256:cf0f39d4acbe86d1328c38ce04e41c1f598534409a40343f9c2ea6aa80e9bace
+cas_ref: sha256:cf0f39d4acbe86d1328c38ce04e41c1f598534409a40343f9c2ea6aa80e9bace
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.coprime_two_frequency_cosine_obstruction
+    target_statement_id: sha256:8449bac7a78349d020a926a2c1ec5de4782164286af3431a022e76b095825a82
+receipts:
+  unresolved_subitems: []

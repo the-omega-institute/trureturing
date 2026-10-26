@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea0cbda802eb7cb77420f4da5869d78861a45e9dce2afb79718d44923cdd0643
+  normalized_sha256: sha256:ea0cbda802eb7cb77420f4da5869d78861a45e9dce2afb79718d44923cdd0643
+cas_ref: sha256:ea0cbda802eb7cb77420f4da5869d78861a45e9dce2afb79718d44923cdd0643
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非零曲率机制候选列表中的类型扩张项。
+    previous_atom_id: b7596a8f2a8ba55598e244739a1591e38b3093bfd0f31867bd96ba3f788deff8
+    next_atom_id: dfa7fbfeb8d509258089daf3994e5887b8b70dbf32503a61cc422efe87e20f0d

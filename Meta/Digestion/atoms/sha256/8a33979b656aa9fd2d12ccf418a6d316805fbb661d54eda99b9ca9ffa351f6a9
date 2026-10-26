@@ -1,0 +1,49 @@
+**Proposition 216.1 (exact image and inverse realization).** The image of this
+scalar family in the $(\lambda,w)$ plane is exactly
+
+$$
+\boxed{
+\{(0,w):1/2\le w<1\}
+\ \cup\
+\{(\lambda,w):0<\lambda<1,\ (2-\lambda)^{-1}<w<1\}.}
+\tag{216.3}
+$$
+
+For every point in the second set an inverse realization is
+
+$$
+\begin{gathered}
+h=\frac{1-w}{w(1-\lambda)},\\
+t=\frac{h(1-h)(1-\lambda)}{(1-h)(1-\lambda)+2\lambda},
+\qquad p=\frac{h-t}{1-t}.
+\end{gathered}
+\tag{216.4}
+$$
+
+Proof. If $\lambda>0$, then $u>0$, so $0<t<h<1$ and
+$0<\lambda<1$. Since $h\in(0,1)$, the displayed expression for $w$
+gives $(2-\lambda)^{-1}<w<1$. Conversely, these strict inequalities
+give $0<h<1$. The denominator defining $t$ is positive and strictly
+larger than $(1-h)(1-\lambda)$, so $0<t<h<1$. It follows that
+$0<p<1$. The equation for $t$ is precisely
+
+$$
+(h-t)(1-h)=\frac{2t\lambda}{1-\lambda}.
+\tag{216.5}
+$$
+
+Thus the constructed $p,t$ reproduce $u/(2t+u)=\lambda$ and the
+prescribed $w$. All corresponding inverse temperatures $-\log t$ are
+finite and nonnegative.
+
+If $\lambda=0$, then $u=0$. For $p=0$ one has $h=t$ and
+$w=1/(1+t)$, covering $[1/2,1)$ as $t\in(0,1]$. For $p=1$,
+$h=1$ and $w=1/2$; $t=1$ gives $(\lambda,w)=(0,1/2)$ for every
+$p$. These cases exhaust $u=0$. This proves both necessity and realization.
+
+In particular, finite scalar parameters always have $w\ge1/2$. For positive
+$\lambda$, the lower curve $w=(2-\lambda)^{-1}$ is excluded; $w=1$
+and $\lambda=1$ are excluded everywhere. The abstract rectangular parameter
+range of the filtering proof must not be substituted for this native scalar
+image.
+

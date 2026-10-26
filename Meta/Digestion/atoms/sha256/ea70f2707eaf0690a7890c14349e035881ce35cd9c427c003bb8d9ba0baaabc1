@@ -1,0 +1,90 @@
+**定理 6.4（组成投影的全部纤维及维数下降）。** 对任意 $`(U,V)\in\mathcal{\text{𝒟}}`$，令 $`Y=y_0`$、$`p_{13}=\kappa`$。全部相容概率恰为
+
+<table><tbody><tr><td>
+
+```math
+\begin{aligned}
+p_{\varnothing}&=1-U-V+y_0+\kappa,\\
+p_1&=U-y_0-\kappa,\\
+p_2&=V-y_0,\\
+p_3&=y_0-\kappa,\\
+p_{13}&=\kappa,
+\end{aligned}
+```
+
+</td></tr></tbody></table>
+
+其完整合法范围为
+
+<table><tbody><tr><td>
+
+```math
+\max\left(0,\frac{U+V-1}{2}\right)
+\le y_0\le\min(U,V),
+```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
+
+```math
+\max(0,U+V-y_0-1)
+\le\kappa\le\min(U-y_0,y_0).
+```
+
+</td></tr></tbody></table>
+
+梯形内部的纤维为二维；上边 $`V=1,\ 0\lt U\lt2`$ 的纤维为一维；其余三条边以及四个顶点的纤维为单点。
+
+证明。$`X=U-y_0`$、$`Z=V-y_0`$，代入定理 6.2 即得反解。非负性要求 $`y_0\le V`$，以及
+
+```math
+\kappa\ge0,\quad \kappa\ge U+V-y_0-1,\quad
+\kappa\le U-y_0,\quad \kappa\le y_0.
+```
+
+上下端相容等价于 $`0\le y_0\le U`$、$`V\le1`$ 和 $`2y_0\ge U+V-1`$，给所列两个闭区间。反向在区间内代入，五项非负且和为一，故没有漏掉端点。
+
+若 $`0\lt V\lt1`$ 且 $`0\lt U\lt1+V`$，第一段的下端严格小于上端；选其内点 $`y_0`$ 后，第二段也可取严格内点，使五概率都正。两参数的独立差因此给二维纤维。
+
+上边 $`V=1`$ 强制 $`p_{\varnothing}=p_1=0`$，于是 $`\kappa=U-y_0`$，其范围化为
+
+```math
+U/2\le y_0\le\min(U,1).
+```
+
+对 $`0\lt U\lt2`$ 这是非退化线段，两个端点 $`U=0,2`$ 则唯一。其余边直接由非负概率给
+
+| 边界 | $`(p_{\varnothing},p_1,p_2,p_3,p_{13})`$ |
+| --- | --- |
+| $`V=0`$ | $`(1-U,U,0,0,0)`$ |
+| $`U=0`$ | $`(1-V,0,V,0,0)`$ |
+| $`U=1+V`$ | $`(0,1-V,0,0,V)`$ |
+
+故均为单点，四角也包含在这些公式内。∎
+
+该闭纤维沿用双曲卷定理 7.5；本卷固定概率顺序后，两条独立不可见方向为
+
+<table><tbody><tr><td>
+
+```math
+g_{\square}=(1,-1,0,-1,1),\qquad
+g_{\mathrm{fib}}=(1,-1,-1,1,0).
+```
+
+</td></tr></tbody></table>
+
+归一化、$`U`$、$`V`$ 的约束矩阵在空、第一、第二模式三列上已秩三，故其核恰为二维；上述两个向量独立，遂穷尽线性核。参数增量是 $`\delta y_0\,g_{\mathrm{fib}}+\delta\kappa\,g_{\square}`$，非负性再把它截成上述闭纤维。全维关系为
+
+<table><tbody><tr><td>
+
+```math
+\text{完整概率体：四自由参数}
+\longrightarrow\text{占位金字塔：三均值}
+\longrightarrow\text{组成梯形：两均值}.
+```
+
+</td></tr></tbody></table>
+
+它说明读出逐步合并来源分配，不意味着物理空间维数消失；“恰好两项关联参数”指完整仿射核和一般内部纤维，退化边界的实际自由度按本定理下降。
+

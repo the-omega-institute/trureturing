@@ -1,0 +1,70 @@
+**Theorem 57.3 (Native source support and the boundary functional).**
+For every $z\in D(F)$,
+
+$$
+K\mathcal A(z)=\langle H_0z,g\rangle. \tag{57.1}
+$$
+
+For each distinct eigenvalue $\lambda$ of $F$, let $P_\lambda$ be its
+orthogonal eigenspace projection. Then
+
+$$
+\mathcal A(z)=\frac{\lambda-E_0}{K}\langle z,P_\lambda g\rangle
+\quad(z\in\ker(F-\lambda)). \tag{57.2}
+$$
+
+Consequently $P_\lambda g\ne0$ exactly when the genuine source trace
+is nonzero on that eigenspace. There are infinitely many such distinct
+eigenvalues. They can be enumerated so that
+
+$$
+\mu_j=\lambda_j-E_0>0,\quad
+\mu_1<\mu_2<\cdots\longrightarrow\infty,\quad
+v_j=P_{\lambda_j}g\ne0,\quad g=\sum_{j\ge1}v_j
+\text{ in }\mathscr H. \tag{57.3}
+$$
+
+Within an active eigenspace the visible space is exactly the single
+line $\mathbb Rv_j$; its orthogonal complement is the kernel of
+$\mathcal A$ on that eigenspace. An inactive eigenspace is entirely
+invisible to this functional.
+
+**Proof.**
+The resolvent term defining $g$ is in $D(F)$, hence in $D(S_{\max})$
+with trace $\mathcal B=0$. Applying $S_{\max}-E_0$ to the definition
+cancels its two terms, and $\mathcal B(-\zeta)=-1$. Thus $g$ has the
+stated equation and trace. Uniqueness with this trace follows because
+a difference would lie in $D(F)$ and be an eigenvector below $E_*$.
+In particular
+
+$$
+g\notin D(F), \tag{57.4}
+$$
+
+by $D(F)=\ker\mathcal B$. Applying the Green identity to $z,g$ gives
+$\langle Fz,g\rangle-E_0\langle z,g\rangle=K\mathcal A(z)$,
+with the positive sign in (57.1). Equation (57.2) follows immediately.
+
+Since $H_0\ge(E_*-E_0)I>0$, $H_0^{-1}$ is compact, selfadjoint,
+positive and injective, with dense range. The compact selfadjoint
+spectral theorem gives a complete orthogonal sum of finite-dimensional
+eigenspaces. Its nonzero eigenvalues can accumulate only at zero;
+therefore the eigenvalues of $H_0$ have finite multiplicity and no
+finite accumulation. If $g$ had only finitely many nonzero distinct
+spectral projections, it would be a finite sum of vectors in $D(F)$,
+contradicting (57.4). This proves (57.3). On each eigenspace (57.2)
+identifies the trace's Riesz vector and its kernel, including
+multiplicities. ∎
+
+The compact spectral theorem is a classical supplier; its relevant
+completeness and finite-multiplicity statements also appear as
+`ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot` and
+`ContinuousLinearMap.finite_dimensional_eigenspace` in pinned
+[mathlib Spectrum](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/InnerProductSpace/Spectrum.lean).
+The abstract graph-boundary framework is literature-attested in
+[math/0610299v1, §§4.1 and 7.1](https://arxiv.org/abs/math/0610299v1).
+The native content of (57.1)–(57.4) is the identification of its actual
+source vector and boundary functional on this completed cylinder,
+and the resulting infinite active support. Neither an abstract boundary
+pair nor a generic spectral theorem alone identifies that source.
+

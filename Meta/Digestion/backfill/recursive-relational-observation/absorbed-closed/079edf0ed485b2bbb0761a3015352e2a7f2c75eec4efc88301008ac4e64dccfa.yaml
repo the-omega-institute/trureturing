@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:079edf0ed485b2bbb0761a3015352e2a7f2c75eec4efc88301008ac4e64dccfa
+  normalized_sha256: sha256:079edf0ed485b2bbb0761a3015352e2a7f2c75eec4efc88301008ac4e64dccfa
+cas_ref: sha256:079edf0ed485b2bbb0761a3015352e2a7f2c75eec4efc88301008ac4e64dccfa
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/HistoryDecoderRepresentativeAsymmetry.no_exact_history_decoder
+    target_statement_id: sha256:41725c6a9ae39c4eda6a8ff54ea6c8889bafc8dc1e6027d242643c97b53c0a7a
+receipts:
+  unresolved_subitems: []

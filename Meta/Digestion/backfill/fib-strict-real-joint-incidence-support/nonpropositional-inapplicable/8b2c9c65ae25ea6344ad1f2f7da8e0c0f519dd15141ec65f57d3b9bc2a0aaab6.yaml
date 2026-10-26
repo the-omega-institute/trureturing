@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b2c9c65ae25ea6344ad1f2f7da8e0c0f519dd15141ec65f57d3b9bc2a0aaab6
+  normalized_sha256: sha256:8b2c9c65ae25ea6344ad1f2f7da8e0c0f519dd15141ec65f57d3b9bc2a0aaab6
+cas_ref: sha256:8b2c9c65ae25ea6344ad1f2f7da8e0c0f519dd15141ec65f57d3b9bc2a0aaab6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the critical-value locus as the image of the rank-deficient points of the declared projection; the final sentence identifies which differential the definition uses and asserts no rank or critical-value theorem.
+    previous_atom_id: c79fe8791151f979a43c780f28e856fdb28c502c62188a33ae14b20af5c88466
+    next_atom_id: 6d00e0a2f13a8c2d6a08eba898e077c1a2dcf2326bfe98425930d97c3eb10853

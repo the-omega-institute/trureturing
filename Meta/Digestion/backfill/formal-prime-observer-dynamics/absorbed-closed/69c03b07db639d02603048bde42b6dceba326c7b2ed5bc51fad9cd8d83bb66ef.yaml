@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:69c03b07db639d02603048bde42b6dceba326c7b2ed5bc51fad9cd8d83bb66ef
+  normalized_sha256: sha256:69c03b07db639d02603048bde42b6dceba326c7b2ed5bc51fad9cd8d83bb66ef
+cas_ref: sha256:69c03b07db639d02603048bde42b6dceba326c7b2ed5bc51fad9cd8d83bb66ef
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterCodeDuality.character_code_eq_relation_space_orthogonal
+    target_statement_id: sha256:88718e2da760f19b401a288bd5a0a123c5bc1e59421fd070e6bbbc335721ffc2
+receipts:
+  unresolved_subitems: []

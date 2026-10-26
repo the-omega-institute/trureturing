@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b56d5e231cf7126ad21e6ae54251adb50a83f5807ef108c2c3a2862ac60181f
+  normalized_sha256: sha256:4b56d5e231cf7126ad21e6ae54251adb50a83f5807ef108c2c3a2862ac60181f
+cas_ref: sha256:4b56d5e231cf7126ad21e6ae54251adb50a83f5807ef108c2c3a2862ac60181f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces state and action carriers under a section heading.
+    previous_atom_id: 80df27ac47e371f7010fd4505cdeb6e713918c240e19503a30006e59a0af6b62
+    next_atom_id: 2e2a2d6008831ef052aa41ccf15cfd9dda8aec5b1b443c5ee22ffdcf48d968d4

@@ -1,0 +1,63 @@
+**Definition 158.1 (first births and the common birth Hilbert space).**
+Fix one finite source $u\in\mathcal T$ of Definition 127.1 and its uncapped
+accepted history. Put
+
+$$
+b_e=|\mathcal P_e|,\qquad |B_e|=2b_e,\qquad
+\eta(u)=\min\{e\ge0:b_e>0\}.
+\tag{158.1}
+$$
+
+Here $B_e$ is born in the step $e\to e+1$, rather than already being present
+at epoch $e$. Every finite source has at least one terminal leaf, so
+$\eta(u)=0$ if it has a beta leaf and $\eta(u)=1$ otherwise. The latter
+initial step is an accepted empty birth. A beta always has a beta left
+child, so $b_e>0$ at every $e\ge\eta(u)$; in particular there are infinitely
+many nonempty birth blocks. This also follows from Proposition 128.3.
+Its $h(u)$ additionally requires an existing branch: $\eta(\beta)=0$ and
+$h(\beta)=1$, whereas $\eta(\alpha)=1$ and $h(\alpha)=2$. Thus the
+first-birth offset below is $e-\eta(u)$, without dropping either singleton's
+first birth or any accepted empty epoch.
+
+Start with $G_0=I$ and $Q_0=-L_0$. Fix
+
+$$
+r>1,\qquad C>\max_{p\in V_0}s_0(p),\qquad
+s_0(p)=-Q_0(p,p),\qquad C>0.
+\tag{158.2}
+$$
+
+At every nonempty birth choose the parameters of Proposition 127.2 to be
+
+$$
+q_e=0,\qquad \lambda_e=C r^{e-\eta(u)},\qquad
+K_e=\lambda_e I_{2b_e},\qquad
+G_{e+1}=W_e^{-\mathsf T}
+ \operatorname{diag}(G_e,\lambda_e^{-1}I_{2b_e})W_e^{-1}.
+\tag{158.3}
+$$
+
+At an empty birth retain $G_{e+1}=G_e$, $Q_{e+1}=Q_e$ and the identity
+embedding. The original $V_e,E_e,L_e,T_e$ and the initial norm are fixed;
+the compatible successor norms are allowed to depend on $r$. The same
+comparison parameter $t$ is used at every step, without an epoch-dependent
+change of clock.
+
+For each such lift write $S_e=G_e^{1/2}$,
+$H_e=S_e^{-1}L_eS_e^{-1}$ and $V_e^{\rm iso}=S_{e+1}T_eS_e^{-1}$.
+These $V_e^{\rm iso}$ are the normalized isometric embeddings called $V$
+in Definition 135.1; they are not the occurrence sets $V_e$.
+The common abstract birth space is
+
+$$
+\mathscr H_u=\mathbb C^{V_0}\mathbin{\oplus}
+ \bigoplus_{e\ge\eta(u)}\mathbb C^{B_e}.
+\tag{158.4}
+$$
+
+The finite initial summand includes all accepted empty steps before the
+first birth. Identifications with the normalized finite spaces use the
+orthogonal birth charts of Proposition 135.3. The dimensions and labels of
+(158.4) are independent of $r$, although those identifications depend on
+the chosen norms.
+

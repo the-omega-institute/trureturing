@@ -1,0 +1,30 @@
+## 135. Native orthogonal birth coordinates
+
+The next statements use one actual accepted step from §§127--130. Write
+$n=|V_e|$, $k=|B_e|$, and suppress the epoch subscript. Thus $P$ is the
+actual parent selector, $T=[\,I_n;P\,]$, $W=[\,I_n\ 0;P\ I_k\,]$, and
+
+$$
+L_+=\begin{pmatrix}L+P^{\mathsf T}P&-P^{\mathsf T}\\-P&I_k\end{pmatrix},\qquad
+W^{\mathsf T}L_+W=\operatorname{diag}(L,I_k).
+$$
+
+The coherent metric in residual coordinates is the matrix already supplied by
+(127.3), namely
+
+$$
+{\mathscr G}:=W^{\mathsf T}G_+W
+ =\begin{pmatrix}G&gq^{\mathsf T}\\qg^{\mathsf T}&K^{-1}+hqq^{\mathsf T}\end{pmatrix},\qquad
+g=G\mathbf 1_n,\quad h=\mathbf 1_n^{\mathsf T}G\mathbf 1_n,\quad K=K^{\mathsf T}\succ0.
+$$
+
+Let $S=G^{1/2}$ and $S_+=G_+^{1/2}$ denote the symmetric positive square
+roots. The normalized one-particle operators are
+
+$$
+H=S^{-1}LS^{-1},\qquad H_+=S_+^{-1}L_+S_+^{-1}.
+$$
+
+These are finite real symmetric matrices; complex Hilbert spaces below mean the
+complexifications of the displayed real spaces.
+

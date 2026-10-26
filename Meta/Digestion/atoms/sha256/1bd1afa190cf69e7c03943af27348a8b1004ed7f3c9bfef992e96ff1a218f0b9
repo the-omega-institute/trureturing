@@ -1,0 +1,18 @@
+### 定义 3.2（见证提升合同）
+
+称协议对满足见证提升合同（witness lifting），如果对每个组件、每个根对和每个长度 $n$：
+
+$$
+C_1^n(x,x')\Longrightarrow S_2^n(y,y')
+\quad\text{对所有 }y,y',
+$$
+
+以及
+
+$$
+C_2^n(y,y')\Longrightarrow S_1^n(x,x')
+\quad\text{对所有 }x,x'.
+$$
+
+它只要求能够提升实际存在的逃逸见证，不要求无关长度的终端表全部非空。
+

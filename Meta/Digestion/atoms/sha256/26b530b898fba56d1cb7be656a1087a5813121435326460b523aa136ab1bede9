@@ -1,0 +1,68 @@
+### 定义 1.1（分层根协议）
+
+对 $i\in\{1,2\}$，取有限、非空的 occurrence 协议
+
+$$
+\mathcal P_i=(H_i,H_{i,\circ},E_i,\delta_i,\ell_i,R_i,\operatorname{Term}_i,t_i).
+$$
+
+$H_i$ 是隐藏历史，$H_{i,\circ}$ 是非空根集，$E_i$ 是公开事件字母表，$\delta_i$ 是确定的部分后继，$\ell_i(h)$ 是从根到 $h$ 的公开词，$R_i$ 是终端记录集，
+
+$$
+\operatorname{Term}_i\subseteq H_i\times R_i
+$$
+
+是合法终端对，且
+
+$$
+t_i:\operatorname{Term}_i\to Y_i
+$$
+
+给出组件任务读数。每个历史由声明的根和公开转移实际到达；同一 occurrence tree 内公开词唯一决定节点。记
+
+$$
+|h|:=|\ell_i(h)|
+$$
+
+为历史层数。
+
+对长度为 $n$ 的公开词 $w\in E_i^n$，用 $\delta_{i,w}(h)$ 表示按顺序运行后的节点。定义根对 $x,x'\in H_{i,\circ}$ 的两种层级关系：
+
+$$
+S_i^n(x,x')
+$$
+
+成立，当且仅当存在 $w\in E_i^n$ 和 $r\in R_i$，使得两个后继都定义，且
+
+$$
+(\delta_{i,w}(x),r),\;(\delta_{i,w}(x'),r)\in\operatorname{Term}_i.
+$$
+
+称 $S_i^n$ 为同长度共同终端支持。
+
+$$
+C_i^n(x,x')
+$$
+
+成立，当且仅当存在上述同一个形式的 $w,r$，并且
+
+$$
+t_i(\delta_{i,w}(x),r)\ne t_i(\delta_{i,w}(x'),r).
+$$
+
+称 $C_i^n$ 为长度 $n$ 的冲突（逃逸）关系。显然
+
+$$
+C_i^n(x,x')\Longrightarrow S_i^n(x,x').
+$$
+
+把所有层合并得到边缘根冲突图 $G_i$：
+
+$$
+\{x,x'\}\in E(G_i)
+\quad\Longleftrightarrow\quad
+\exists n\;C_i^n(x,x').
+$$
+
+这里的 $G_i$ 丢弃了见证长度；本卷的第一项结果正是说明在同步产品中这个丢弃不能过早进行。
+

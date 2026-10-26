@@ -50,3 +50,33 @@ Definitions 2.1--2.4 are on printed/PDF p.3. Definition 3.3 is on p.5;
 Corollary 3.5, Remark 3.6 and the literal product-metric open question are on
 printed/PDF p.6. The supplied primary PDF has SHA-256
 `9e30b597eee45fb3cb1fb1e1612a9042c13ef13ef2fa6f6b23bf08d933c01494`.
+
+## Quantitative boundary supplied by the repository
+
+`HeadWeightedLipschitz` gives the exact equivalence between Lipschitz shadowing
+for the raw head-weight metric and a single C>0 satisfying
+`weight(s,n) <= C * weight(t,n-1)` for all heads s,t and n>=1. The weights are
+positive, nonincreasing in depth and normalized to one at depth zero. No
+uniform lower bound, common vanishing upper envelope, continuity assumption
+or product uniformity is added to the raw tracing predicate.
+
+Sufficiency uses the infinite diagonal-mismatch telescope. For necessity,
+proposed positive controls L,c give C=max(2L,max(2/c,1)). A violating ratio
+has C*weight(t,n-1)<1, so its doubled edge error is already below c. The
+existing single-defect infinite pseudo-orbit then excludes every full tracer
+at the proposed Lipschitz radius. This replaces the earlier finite-depth
+cutoff argument and removes its UniformBounds hypothesis.
+
+When UniformBounds are available, the product-uniform metric has exactly
+the same distance, so the theorem supplies the original product-compatible
+classification as an exact application. The constant weight family is also
+covered: it gives the discrete metric and has no uniformly vanishing upper
+envelope. This is repository-derived, not attributed to the source and not
+another count of the already proved unrestricted metric counterexample.
+The separately scoped locally compact problem and arbitrary compatible-metric
+classification remain outside this statement.
+
+The unversioned primary arXiv page was read back on 2026-10-21: submission
+history still lists only v1 (3 March 2026), and its abstract still describes
+arbitrary uniform-metric product-model stability as unclear. This primary
+version check does not certify that no other publication has answered it.

@@ -1,0 +1,34 @@
+**Mathematical citation 15.2 (primary literature and nontransfer).** The
+following directly available primary texts identify classical ingredients
+and hypotheses that cannot replace the native quantitative proof.
+
+| Primary reference | Supplied framework and exact limit of the correspondence |
+| --- | --- |
+| Y. de Castro and F. Gamboa, *Exact Reconstruction using Beurling Minimal Extrapolation*, [arXiv:1103.4951v2](https://arxiv.org/pdf/1103.4951v2), p.3, (GME) | Total-variation minimization of a signed measure under finitely many generalized moment constraints is classical. Here $\mu(E)=\int_{\{t:k(t)\in E\}}db(t)$ has $\|\mu\|_{\rm TV}\le\operatorname{TV}(b)$ and moments $(A_\kappa,B_\kappa,\kappa g_\kappa)$. Equality of this relaxed measure cost with executed fuel is not assumed: cancellations and height travel are separate, and (13.11)--(13.13) verify the actual finite witness. No reconstruction or measure-optimizer theorem is imported. |
+| F. Jean, *Control of Nonholonomic Systems and Sub-Riemannian Geometry*, [arXiv:1209.4387v2](https://arxiv.org/pdf/1209.4387v2), Theorem 2.2, p.12, and Theorem 3.5/Corollary 3.6, pp.29--30 | Chow reachability and privileged-coordinate Ball--Box estimates give fixed-structure accessibility and local distances. They do not provide a uniform sharp coefficient for a fixed transverse target as this source loses a reachable direction. Native finite synthesis is already supplied by [N]; (13.7) and the executed correction supply the missing uniform bound. |
+| G. Antonelli, E. Le Donne and S. Nicolussi Golo, *Lipschitz Carnot--Carathéodory structures and their limits*, [arXiv:2111.06789v1](https://arxiv.org/pdf/2111.06789v1), Definition 1.3 and Theorem 1.4, p.4 | Distance convergence requires an essentially nonholonomic limit structure. On the common four-coordinate ambient leaf the limit fields preserve $D$, so their flow endpoints lie in a codimension-one set and that hypothesis fails. Restricting instead to the three-coordinate limit leaf removes the prescribed transverse target. This theorem therefore supplies no shortcut to (13.3). |
+| P. Cannarsa, P. Martinez and J. Vancostenoble, *The cost of controlling strongly degenerate parabolic equations*, [arXiv:1801.01380v1](https://arxiv.org/pdf/1801.01380v1), abstract and §1.1 | Parameter-degenerate controllability costs can have exponential rates for parabolic boundary/distributed controls. Those PDE states, actuators, norms and null targets are not (12.2)--(12.6). The present inverse powers are derived from the native coefficients and cannot be presumed from degeneracy alone. |
+| R. Zeier and T. Schulte-Herbrüggen, *Symmetry Principles in Quantum Systems Theory*, [arXiv:1012.5256v3](https://arxiv.org/pdf/1012.5256v3), abstract and §§3,5 | Symmetry constrains Hamiltonian-system controllability. Hamiltonian operations in that framework are not the original probability-phase transport controls. No quantitative actuation-cost or symmetry-breaking theorem is transferred without that missing operation correspondence. |
+
+**Mathematical contribution 15.3 (the uncovered quantitative contract).**
+The matched native result is the bounded winding correction preserving
+an exact hidden lift, combined with an actual charged height tour and
+its fixed-clock execution, yielding the joint sharp limits (13.3).
+It is a repository-derived quantitative application. The inverse-gap
+floor, finite reachability, original observability, ordinary moment
+language and Green classification are reused and are not counted as
+new mathematics. Comparison with the cited public and private native
+bodies, their Blueprint applications, the pinned library sources and
+these primary control references supplies the overlap map above; it
+is not a semantic absence proof or a worldwide originality claim.
+
+The result closes the stated fixed-$\chi$, fixed-guard, fixed-clock
+asymptotic resource question for both signs, with no restriction of its
+full winding class. Existence of fixed-$\kappa$ minimizers, exact
+subleading or arithmetic corrections, joint limits with vanishing
+$\chi$ or changing guard, acquisition costs, physical calibration and a
+map to an analytic spectral resource restriction remain outside the
+proved endpoint. No claim of independent priors or model diversity
+underwrites the proof. The assertions in §§12--15 are ordinary proofs;
+no Lean/kernel status is claimed.
+

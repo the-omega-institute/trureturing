@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7e8fd056ffd2329658fe664da9c583fc9d0c4a858567078408c9ee2c1207b58
+  normalized_sha256: sha256:d7e8fd056ffd2329658fe664da9c583fc9d0c4a858567078408c9ee2c1207b58
+cas_ref: sha256:d7e8fd056ffd2329658fe664da9c583fc9d0c4a858567078408c9ee2c1207b58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Conceptual conclusion and requirements for justifying reconstruction; no new quantified mathematical theorem.
+    previous_atom_id: fa1cef664a63e3eb0ca9d074cb7914d659f2e84fd0107ff37f2d1e19b7e41de5
+    next_atom_id: 185b33b8abec97dfcdb6cbade5c471c620119e937b23432871e9ba572aafb69a

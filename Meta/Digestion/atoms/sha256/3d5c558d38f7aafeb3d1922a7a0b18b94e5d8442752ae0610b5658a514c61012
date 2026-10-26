@@ -1,0 +1,15 @@
+**定义 13.1（有序树替换与计数影像）。**
+令 $\mathfrak T$ 为由叶符号 $\alpha,\beta$
+和有序二叉构造 $\langle T,U\rangle$ 生成的自由代数。
+定义替换同态
+
+$$
+\rho(\alpha)=\beta,\qquad
+ \rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+ \rho(\langle T,U\rangle)=\langle\rho(T),\rho(U)\rangle.
+$$
+
+令 $c(T)=(n_\alpha(T),n_\beta(T))^{\mathsf T}$ 为叶计数。
+
+<a id="thm-arithmetic"></a>
+

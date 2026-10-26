@@ -1,0 +1,43 @@
+**Theorem 12.3 (All finite nonproper values relative to $Y$).** The
+nonproper-value set of $\pi:X\to Y$ is exactly
+
+$$
+\mathcal B_\partial\ \cup\ \{q_\infty\},\qquad
+q_\infty=(-216/5,-225).
+$$
+
+**Proof.** Let an escaping sequence have a finite base limit in $Y$.
+An unbounded subsequence of $b$ forces that limit to be $q_\infty$
+by Definition 7.1. Otherwise $b$ and $p$ are bounded, so Theorem 12.1
+bounds $c,d$ and all gain coefficients. Extract a convergent tuple.
+A strict limiting source would give all original clock equations by
+continuity. Its gain cannot be zero, since the original readings zero
+and $24$ differ. Its limiting $p$ is off $24$, so it is a point of $X$,
+contrary to escape.
+
+The remaining limiting sources are exactly the four faces and the two
+corners. On an open face a zero of $\Lambda$ has nonzero parent
+numerator $-(24/5)(b-1/8)\kappa$ and hence no finite-drift lift.
+Solving the parent equation at every other face point gives exactly
+the table in Definition 12.2. At the lower corner,
+
+$$
+\frac rj=\frac{bc}{(1-r)(b+c)}\longrightarrow0,\quad
+\frac nj\longrightarrow1,\quad
+j\Lambda\longrightarrow-8,\quad e/j\longrightarrow-3/10.
+$$
+
+At the upper corner $n\to1$, $j\Lambda\to-4$ and
+$e/j\to-3/5$. The four samples and the prescribed traces give precisely
+the two corner vectors. This proves exhaustion.
+
+Conversely, approach a $c=0$ face with fixed $b=t$ and strict $r$
+tending to the indicated endpoint. Approach a $b=0$ face with fixed
+$c=t$, $b\downarrow0$, using the lower or upper root of
+$r(1-r)=bt$. The nonzero $\Lambda$ guards give regular parent lifts
+converging to the table. If the limiting $p$ is off $24$, all nearby
+bases are off $24$. The corners are approached by $b=c\downarrow0$
+on the two rank-one branches. All these sequences leave every compact
+subset of the strict source domain. Finally $r=1/2,b\to\infty$
+supplies $q_\infty$ by Theorem 7.4 and Corollary 7.5. ∎
+

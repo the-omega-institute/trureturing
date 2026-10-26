@@ -1,0 +1,10 @@
+**定义 40.1（信息纤维与动作）。** 固定母结构 $\Omega$ 中的完整配置集为 $X$，配置包含相关量子端口、控制器、实际记录和资源条件，不是给不相容测量预填答案的经典表。令 $r:X\to M$，并取 $M=r(X)$，只在实际可达到的记录上定义选择器。置
+
+$$
+\mathcal F_m=r^{-1}(m),\qquad
+\operatorname{Adm}(x)\subseteq\mathcal A,\qquad
+\mathcal A_{\mathrm{safe}}(m)=\bigcap_{x\in\mathcal F_m}\operatorname{Adm}(x).
+$$
+
+动作合法性同时包含类型、已安装接口、资源及所声明约束。一次原生查询的 $\mathsf{absent}$ 可以是合法且被计数的回复，不等于调用非法或未发生。以下取有限 $M,\mathcal A$；若要把选择器延拓到未达到的记录，还须 $\mathcal A\ne\varnothing$ 并在那些记录指定任意默认动作。
+

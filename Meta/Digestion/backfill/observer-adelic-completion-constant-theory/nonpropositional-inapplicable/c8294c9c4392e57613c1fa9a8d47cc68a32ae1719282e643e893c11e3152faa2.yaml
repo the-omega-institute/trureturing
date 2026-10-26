@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8294c9c4392e57613c1fa9a8d47cc68a32ae1719282e643e893c11e3152faa2
+  normalized_sha256: sha256:c8294c9c4392e57613c1fa9a8d47cc68a32ae1719282e643e893c11e3152faa2
+cas_ref: sha256:c8294c9c4392e57613c1fa9a8d47cc68a32ae1719282e643e893c11e3152faa2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概念表中符号 M 的解释，不包含独立数学性质。
+    previous_atom_id: fdb5811cbfe6cf5cfe87103201a8e9ef2c40134e5dcb7f24dd9cd382f310ce63
+    next_atom_id: 783193b419a0c43bd614ef2c494ccc8275c1a79d404436c71f34134d6698df2b

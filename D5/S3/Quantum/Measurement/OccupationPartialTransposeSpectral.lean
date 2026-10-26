@@ -56,6 +56,7 @@ proof_shape: GlobalBound.gap_decomposition: bind-only; consumer: GlobalBound.glo
 -/
 import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import D5.S3.Quantum.Entanglement.SequentialOccupationHistory
+import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -778,7 +779,7 @@ universe u v w
 open scoped BigOperators Matrix ComplexOrder MatrixOrder
 variable {σ : Type w} {ι : Type u} {κ : Type v} [Fintype σ] [Fintype ι] [Fintype κ]
   [DecidableEq σ] [DecidableEq ι] [DecidableEq κ]
-private theorem blockDiagonal_psd (B : σ → Matrix ι ι ℂ) (hB : ∀ s, (B s).PosSemidef) :
+theorem blockDiagonal_psd (B : σ → Matrix ι ι ℂ) (hB : ∀ s, (B s).PosSemidef) :
     (Matrix.blockDiagonal B).PosSemidef := by
   have h := D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace.positiveBlockDiagonal B hB
   have he : (Matrix.blockDiagonal' B).submatrix ((Equiv.sigmaEquivProd σ ι).trans (Equiv.prodComm σ ι)).symm

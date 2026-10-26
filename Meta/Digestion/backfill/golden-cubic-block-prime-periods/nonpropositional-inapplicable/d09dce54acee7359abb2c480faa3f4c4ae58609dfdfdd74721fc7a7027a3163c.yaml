@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d09dce54acee7359abb2c480faa3f4c4ae58609dfdfdd74721fc7a7027a3163c
+  normalized_sha256: sha256:d09dce54acee7359abb2c480faa3f4c4ae58609dfdfdd74721fc7a7027a3163c
+cas_ref: sha256:d09dce54acee7359abb2c480faa3f4c4ae58609dfdfdd74721fc7a7027a3163c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and abbreviation f_j for the Fibonacci value at the retained index. No property of the point or of that value is asserted.
+    previous_atom_id: c2a9b8672002fc374a08c9b26ec3bdea1a8f1a8416d6c685da4db37e0070904e
+    next_atom_id: 3f01f5c6b9c8a6dc1624654671ff0d5c8cc713d910aed6d1ce82991c523e9b53

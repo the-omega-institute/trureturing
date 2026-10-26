@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:146e0c43f938ae9879f733a1fe873418c1ecbb90e206105e7b50572f6f61a3d7
+  normalized_sha256: sha256:146e0c43f938ae9879f733a1fe873418c1ecbb90e206105e7b50572f6f61a3d7
+cas_ref: sha256:146e0c43f938ae9879f733a1fe873418c1ecbb90e206105e7b50572f6f61a3d7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 承接第 32 节“本批没有声称”，列出未宣称的经典约化到任意量子相干性外推；不主张该外推或其否定为已证定理。
+    previous_atom_id: 7640a2835a7e787c7e0c48b23139229a562636a37f426daf31102f51420904e5
+    next_atom_id: bedc7b3266dd21f84b42dd77e3af3013e9c9e66a6d92f29e43de2f3a8891ec53

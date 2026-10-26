@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+  normalized_sha256: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+cas_ref: sha256:8f7a821172eaf97e08f12a84bd462bdc3195a442e258fc1d81d2dfb985093565
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅把 prime-order commutator 列作诊断候选，不断言非零或其存在性结论。
+    previous_atom_id: 028496d2001d0e0fc4417ac94f4330b5ff26c1eaac20ee742f4073abc7b4e8aa
+    next_atom_id: f3d0eeb5b28a17020caa2cc617769a38fc789071cee02094ae01f1ab0f9bbf86

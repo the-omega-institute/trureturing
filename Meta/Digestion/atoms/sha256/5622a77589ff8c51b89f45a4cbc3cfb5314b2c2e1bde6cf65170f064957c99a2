@@ -1,0 +1,32 @@
+**定义 6.2（原生树与已供应的全树读出）。** 保留自由有序树
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad \rho\alpha=\beta,
+\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+置 $q_B\alpha=a$、$q_B\beta=b$、$q_B\langle s,t\rangle=B(q_Bs,q_Bt)$。这是 [FIB] §7.2 的纯方向读出，区别于 [STABLE] §7 的含标量四元数乘法读出。令 $Ra=b,Rb=c,Rc=a$。在基 $(a,b,c)$ 上 $R$ 是三循环置换矩阵，其列正交、行列式为一，$R^3=I$ 且 $R\ne I$，故真正三阶。上述乘法表在循环置换下不变，双线性展开给
+
+$$
+B(Ru,Rv)=RB(u,v)\qquad(u,v\in K).
+$$
+
+所消费全树结果的证明为：两叶分别满足 $q_B(\rho\alpha)=b=Ra$ 和 $q_B(\rho\beta)=B(b,a)=c=Rb$。若子树 $s,t$ 满足，则
+
+$$
+q_B(\rho\langle s,t\rangle)
+=B(Rq_Bs,Rq_Bt)=Rq_B\langle s,t\rangle.
+$$
+
+结构归纳处理任意有序树，包括平行输入产生零的情形，得到 $q_B\rho=Rq_B$。
+
+实际原生像恰为
+
+$$
+q_B(\mathcal T)=\{0,\pm a,\pm b,\pm c\}.
+$$
+
+包含关系由乘法表封闭与结构归纳给出。反向，叶实现 $a,b$，$\langle\beta,\alpha\rangle$ 实现 $c$，反序实现 $-c$，$\langle\beta,\langle\beta,\alpha\rangle\rangle$ 实现 $-a$，$\langle\langle\beta,\alpha\rangle,\alpha\rangle$ 实现 $-b$，$\langle\alpha,\alpha\rangle$ 实现零。其线性张成为 $K$，但七值像不是整个连续 $K$，全域输入、任意线性组合或连续旋转不因此成为原生操作权限。
+

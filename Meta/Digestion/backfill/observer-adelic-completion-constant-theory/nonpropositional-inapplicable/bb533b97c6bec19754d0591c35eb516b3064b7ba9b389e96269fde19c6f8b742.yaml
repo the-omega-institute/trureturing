@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb533b97c6bec19754d0591c35eb516b3064b7ba9b389e96269fde19c6f8b742
+  normalized_sha256: sha256:bb533b97c6bec19754d0591c35eb516b3064b7ba9b389e96269fde19c6f8b742
+cas_ref: sha256:bb533b97c6bec19754d0591c35eb516b3064b7ba9b389e96269fde19c6f8b742
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 将无限缺陷记号归类为度量工具；未重述收敛或零点判据。'
+    previous_atom_id: 253859e1c86b63103c4a3bd58f8e0982725ae964408bf9b0d5d9821bc2e72924
+    next_atom_id: e9bb15cb07a3967d51c4b91e7286bc155bd433f0c222bf2a3f51fe0db9df8467

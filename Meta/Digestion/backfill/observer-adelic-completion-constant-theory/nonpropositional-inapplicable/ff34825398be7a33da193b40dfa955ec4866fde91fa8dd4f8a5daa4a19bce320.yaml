@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff34825398be7a33da193b40dfa955ec4866fde91fa8dd4f8a5daa4a19bce320
+  normalized_sha256: sha256:ff34825398be7a33da193b40dfa955ec4866fde91fa8dd4f8a5daa4a19bce320
+cas_ref: sha256:ff34825398be7a33da193b40dfa955ec4866fde91fa8dd4f8a5daa4a19bce320
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only proposition: the triangular profile max(delta - abs(y - 1/2), 0) at y=1/2 equals delta for delta>0, by sub_self, abs_zero, sub_zero and max_eq_left (le_of_lt hd). Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. D5 search scope: all D5/**/*.lean, including private statements; searches for triangular/pulse/tent, max with absolute value and half-center, and min-profile shapes. BodeWidthCriterion and private triangular_pulse_integral supply area/integrability, not this center-height statement; checked_expression_encloses is a bounded rational-expression enclosure and cutoff_first_nonstrict is a prediction cutoff, neither supplies a required center-height subgoal. No applicable frozen declaration GID was identified.'
+    previous_atom_id: 0325b4812d20662883f14902382a65e8e602625b19c9f15e8aaddec60fc7c2fe
+    next_atom_id: 3511c5d1aeefcfbb6ee25914a3d8cdb69c36532309210792831ea3dcd9118060

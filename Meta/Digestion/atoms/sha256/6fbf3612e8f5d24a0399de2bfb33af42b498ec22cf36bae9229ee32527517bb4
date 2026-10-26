@@ -1,0 +1,49 @@
+**Theorem 11.2 (Both terminal maps separate the opposite-offdiagonal
+collar).** There is $C_1>0$ such that, for each $E\in\{J,M\}$, the
+map $W\mapsto(p(W),v(W),f_{ME}(W))$ is injective among all complete
+parent worlds with $c>C_1$.
+
+**Proof.** Define the following rational combinations of the indicated
+response functions:
+
+$$
+\begin{gathered}
+h=-\frac{24}{5p},\qquad Y=45p+16v,\\
+Z_J=a+6p-\frac{32}{5}v+\frac{147}{10},\qquad
+Z_M=m+6p-\frac{32}{5}v+\frac{147}{10},\\
+T_M=\frac{Z_M}{h}+\frac{239}{1712}Y.
+\end{gathered}
+$$
+
+These are analytic across $t=0$: $h=t+O(t^2)$, and the identically
+vanishing constant term of $Z_M$ supplies its factor $t$. Exact
+substitution gives
+
+$$
+\begin{gathered}
+Y(0,r)=1680+3852r(1-r),\qquad
+Z_J(0,r)=\frac{576}{5}(r-1),\\
+\left.\frac{Z_M}{t}\right|_{t=0}
+=\frac3{100}(17925r^2-17921r+28),\qquad
+T_M(0,r)=\frac3{25}r+\frac{629622}{2675}.
+\end{gathered}
+$$
+
+Since $h_t(0,r)=1$ uniformly, a common sufficiently small positive
+$h$ interval admits a unique analytic $t=t(h,r)$ for every
+$r\in[0,1]$. This follows either from the implicit-function theorem
+and compactness, or from $h_t>1/2$ on a fixed smaller strip and
+strict monotonicity in $t$. On a still smaller strip,
+
+$$
+\partial_r Z_J(t(h,r),r)>0,\qquad
+\partial_r T_M(t(h,r),r)>0,
+$$
+
+because their limiting derivatives are $576/5$ and $3/25$.
+Equality of $(p,v,a)$ fixes $h,Z_J$; equality of $(p,v,m)$ fixes
+$h,Y,T_M$. In either case monotonicity fixes $r$, and then $t$.
+The sources coincide. Here $\Lambda$ remains near eight, so the
+parent converse fixes the drift and every coefficient of the one whole
+gain as well. No separation from $r=1/2$ or from $r=0,1$ was assumed. ∎
+

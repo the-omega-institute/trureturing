@@ -1,0 +1,28 @@
+**Definition 241.1 (uniform metric-doubling occurrence bridge).** Retain the
+occurrence sets $V_n=V_{T_n}$, their counts $N_n=2F_{n+1}-1$ and heights
+$n-1$ for $n\ge1$ from
+[Continuation VI, Proposition 114.2(5), equation (114.7)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md#114-a-finite-depth-source-to-carrier-certificate-and-its-first-failures). Let
+$\iota_n:V_n\hookrightarrow X$ map every task-distinct occurrence into one
+metric space $(X,\rho)$. Assume that, for fixed $\delta>0$ and fixed
+$A,B>0$,
+
+$$
+\rho(\iota_n(x),\iota_n(y))\ge\delta\quad(x\ne y),
+\qquad
+\rho(o,\iota_n(x))\le A(n-1)+B.
+\tag{241.1}
+$$
+
+Assume also that every closed ball at every center and radius used below is
+covered by at most $K\ge2$ closed balls of half its radius, with the same
+finite $K$ at every level. Put
+
+$$
+R_n=A(n-1)+B,
+\qquad q=\log_2K.
+\tag{241.2}
+$$
+
+No measure, Green kernel, generator, or spatial dimension is part of this
+definition.
+

@@ -1,0 +1,27 @@
+**Definition 120.3 (cycle residue and increment memory).** Fix an integer
+$m\ge3$. Define $q:\mathcal P\to C_m$ and an auxiliary integer-valued
+state $\delta:\mathcal P\to\{-1,0,+1\}$ by
+$q(o)=0$, $\delta(o)=0$, and the ordered recursion
+
+$$
+\begin{array}{c|cc}
+\delta(p)&\delta(pL)&\delta(pR)\\ \hline
+0&+1&-1\\
++1&0&+1\\
+-1&-1&0
+\end{array}
+\qquad
+q(p\sigma)=q(p)+\delta(p\sigma)\pmod m,
+\quad \sigma\in\{L,R\}.
+\tag{120.12}
+$$
+
+For a nonroot vertex, $\delta(p)$ records its incoming increment, with
+the displayed root convention. It is distinct from the retained colour
+residue $q(p)$. The recursion retains the pair $(q,\delta)$, with at most
+$3m$ possible pairs, rather than computing the colour with only three
+states. Both are fixed functions of the literal finite address,
+independent of source leaf labels or substitution stage. This $q$ is a
+different map from the seed-dependent cube maps of Definition 119.1.
+Write $Uf=f\circ q$ on bounded complex observables.
+

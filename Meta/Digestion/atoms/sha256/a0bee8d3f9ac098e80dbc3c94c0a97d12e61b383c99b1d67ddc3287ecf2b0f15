@@ -1,0 +1,68 @@
+**Theorem 11.6 (Explicit mirror-tube exclusion).** On the source tube
+
+$$
+\begin{gathered}
+267/1000\le r\le277/1000,\qquad |s+r-9/8|\le10^{-5},\\
+|b_1-1/8|\le10^{-5},\qquad |b_2-1/8|\le10^{-5},
+\end{gathered}
+\tag{11.22}
+$$
+
+one has $F>1/40$. Hence no pair of companions at common $(p,v)$ with $p\ne24$ and equal $m$ has a labeling satisfying (11.22). The same exclusion holds for the reversed labeling.
+
+*Proof.* On the central segment $s=9/8-r$, $b_1=b_2=1/8$, exact expansion of (11.16)–(11.18) gives
+
+$$
+\begin{aligned}
+F_0(r)=\frac{21(16r-9)(64r^2-72r-1)}{68719476736}
+\bigl(&16777216r^6-56623104r^5+93622272r^4\\
+&-91210752r^3+37316032r^2+622224r-230227\bigr).
+\end{aligned}
+\tag{11.23}
+$$
+
+Here is the exact Bernstein convention for all coefficient bounds in this section. If a degree-$q$ polynomial $f$ has $f(a+(b-a)x)=\sum_{i=0}^q c_ix^i$, its Bernstein coefficients on $[a,b]$ are
+
+$$
+\mathcal B_k(f;a,b)=\sum_{i=0}^k c_i\frac{\binom{k}{i}}{\binom{q}{i}},
+\qquad 0\le k\le q.
+\tag{11.24}
+$$
+
+Expansion in $\binom qk x^k(1-x)^{q-k}$ proves this formula by coefficient comparison. These basis functions are nonnegative and sum to one on $[0,1]$, so their coefficient minimum is a lower bound for $f$. For the degree-nine polynomial (11.23), $a=267/1000$, $b=277/1000$, the ten rational coefficients (11.24) have their minimum at $k=0$, namely
+
+$$
+\frac{14656469065762145135535204561}
+{512000000000000000000000000000}>\frac1{35}.
+\tag{11.25}
+$$
+
+For the perturbation, use the rectangular intervals
+
+$$
+R=[267/1000,277/1000],\quad
+S_0=[9/8-277/1000-10^{-5},9/8-267/1000+10^{-5}],\quad
+B=[1/8-10^{-5},1/8+10^{-5}].
+$$
+
+For any of $\mathscr H,C_*$ or their derivatives, expand in powers of $r,b$, pad the coefficient matrix to indices $0\le i,j\le6$, and evaluate descending $b$ Horner inside descending $r$ Horner. Use the exact interval operations specified after (11.4). Denote these enclosures on $(R,B)$ by $H_1,C_1,H_{1b},C_{1b}$ and on $(S_0,B)$ by $H_2,C_2,H_{2b},C_{2b},H_{2s},C_{2s}$. Product-rule enclosures are
+
+$$
+\begin{aligned}
+F_{b_1}&\in C_2H_{1b}-C_{1b}H_2\subset(-11,19),\\
+F_{b_2}&\in C_{2b}H_1-C_1H_{2b}\subset(-24,19),\\
+F_s&\in C_{2s}H_1-C_1H_{2s}\subset(-62,58).
+\end{aligned}
+\tag{11.26}
+$$
+
+All inclusions follow by rational multiplication and addition of the explicitly defined coefficient matrices; in particular they imply $|F_{b_1}|<20$, $|F_{b_2}|<25$, $|F_s|<65$. For a point of (11.22), hold $r$ fixed and join it to $(r,9/8-r,1/8,1/8)$. The segment stays in the rectangle, and each of its three varying coordinates changes by at most $10^{-5}$. The mean-value formula gives
+
+$$
+F>\frac1{35}-(20+25+65)10^{-5}
+=\frac{1923}{70000}>\frac1{40}.
+\tag{11.27}
+$$
+
+Lemma 11.5 excludes an off-$24$ collision. Reversing labels changes the sign of the comparator and transports the stated tube to its reversed image; nonvanishing is preserved. ∎
+

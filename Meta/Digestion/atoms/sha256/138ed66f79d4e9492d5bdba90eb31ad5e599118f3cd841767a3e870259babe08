@@ -1,0 +1,117 @@
+**Theorem 131.1 (Unique best coefficient within the two-parameter
+family).** On the parameter domain
+
+$$
+\mathcal D=\{(u,\eta):0<u<1,\ 0<\eta\le h(u)\},\qquad
+h(u)=\sqrt{(1-u)/2},
+\tag{131.1}
+$$
+
+let $\kappa(u,\eta)$ be the fixed-decoder coefficient in
+(108.10)–(109.1). Then
+
+$$
+\boxed{\displaystyle
+\max_{(u,\eta)\in\mathcal D}\kappa(u,\eta)=\frac1{12},\qquad
+\operatorname*{argmax}_{\mathcal D}\kappa
+ =\{(1/2,1/2)\}.}
+\tag{131.2}
+$$
+
+More precisely, put $u_0=(\sqrt{33}-1)/16$. For fixed $u$, the maximum
+$g(u)=\max_{0<\eta\le h(u)}\kappa(u,\eta)$ and its complete equality
+conditions are
+
+$$
+\begin{aligned}
+g(u)&=\begin{cases}
+2u/9,&0<u\le u_0,\\[2pt]
+h(u)(4u-h(u))/(18u),&u_0<u<1,
+\end{cases}\\
+\operatorname*{argmax}_{0<\eta\le h(u)}\kappa(u,\eta)
+ &=\begin{cases}
+[2u,h(u)],&0<u<u_0,\\
+\{2u_0\},&u=u_0,\\
+\{h(u)\},&u_0<u<1.
+\end{cases}
+\end{aligned}
+\tag{131.3}
+$$
+
+This is an optimization of the coefficient of the family (108.2),
+with each pair fixed as $q\downarrow0$. It is not an optimization over
+all CPTP maps.
+
+*Proof.* The interval minimization in (108.9) is obtained by completing
+the square. Its vertex is $x=1/3-\eta/(6u)$, which belongs to
+$[0,2/3]$ exactly when $\eta\le2u$; for $\eta\ge2u$ the minimum is at
+$x=0$. Thus the two branches already computed in (108.11) are
+
+$$
+\kappa(u,\eta)=\begin{cases}
+\eta(4u-\eta)/(18u),&0<\eta\le2u,\\[2pt]
+2u/9,&\eta\ge2u.
+\end{cases}
+\tag{131.4}
+$$
+
+They agree at $\eta=2u$. For fixed $u>0$, the derivative in the first
+branch is $(2u-\eta)/(9u)$: the coefficient is strictly increasing up
+to $2u$ and constant thereafter. Since both sides are nonnegative,
+
+$$
+h(u)\ge2u
+\iff 8u^2+u-1\le0
+\iff 0<u\le u_0.
+\tag{131.5}
+$$
+
+The positive root is $u_0$, and $0<u_0<1/2$. These observations give
+both the formula and all fixed-$u$ equality cases in (131.3).
+In particular a plateau at fixed $u<u_0$ cannot be replaced by a
+claim of a unique maximizing $\eta$ there.
+
+On $(0,u_0]$, $g(u)=2u/9$ is strictly increasing. On $(u_0,1)$,
+$h^2=(1-u)/2$ and $h'=-1/(4h)$ give
+
+$$
+g(u)=\frac{2h(u)}9-\frac{1-u}{36u},\qquad
+g'(u)=\frac{h(u)-2u^2}{36h(u)u^2}.
+\tag{131.6}
+$$
+
+All denominators here are positive. The numerator has the sign of
+$h(u)^2-4u^4$, since $h(u)+2u^2>0$. Its exact factorization is
+
+$$
+h(u)^2-4u^4
+ =\frac{1-u-8u^4}{2}
+ =\frac{(1/2-u)(8u^3+4u^2+2u+2)}2.
+\tag{131.7}
+$$
+
+The cubic factor is positive for $0<u<1$. Consequently $g$ is
+strictly increasing up to $u=1/2$ and strictly decreasing thereafter;
+the two formulas in (131.3) agree at $u_0$. The unique global maximizing
+$u$ is therefore $1/2$. At that point $h(1/2)=1/2<2u$, so its unique
+maximizing $\eta$ is $1/2$, and substitution into (131.4) gives $1/12$.
+
+The open endpoints introduce no additional equality cases. For every
+admissible pair $0<\kappa(u,\eta)\le g(u)$, and
+$g(u)\to0$ both as $u\downarrow0$ and as $u\uparrow1$.
+For an interior fixed $u$, $\kappa(u,\eta)\to0$ as $\eta\downarrow0$.
+If the domain is closed by allowing these boundary parameters, the
+original minimum (108.10), rather than a formula dividing by $u$, is
+well-defined: at $u=0$ it is zero by $x=0$, and at $\eta=0$ it is zero
+by $x=1/3$. At $u=1$ the constraint forces $\eta=0$.
+None of these boundary values is $1/12$. $\square$
+
+The earlier pair in (109.9) is exactly $(u_0,2u_0)$, at the junction of
+the two fixed-$u$ regimes. Its coefficient
+$(\sqrt{33}-1)/72$ is strictly smaller than $1/12$, since
+$\sqrt{33}<7$. Its fixed-decoder expansion and existential threshold
+remain valid. For the unique coefficient-maximizing pair, Theorem 128.1
+strengthens the expansion to an exact error on the full closed interval
+$0\le q\le1/2$. Theorem 131.1 makes no assertion that this pair minimizes
+the finite error even within the family at each nonzero $q$.
+

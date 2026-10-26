@@ -1,0 +1,38 @@
+### 241.3 Why an upper measure bound alone is insufficient
+
+Replacing the doubling condition by an upper estimate on ball masses loses
+the packing conclusion unless a uniform lower mass or a direct covering
+bound is also supplied. A concrete countermodel is the infinite rooted
+binary occurrence tree with unit graph metric. Give a vertex at depth $h$
+the mass
+
+$$
+\mu(v)=Z^{-1}4^{-h},
+\qquad
+Z=\sum_v4^{-\operatorname{depth}(v)}.
+\tag{241.9}
+$$
+
+Since there are at most $2^h$ vertices at depth $h$, $1\le Z\le2$.
+Every occurrence remains separated by one unit and the prefix of height
+$n-1$ lies in a ball of radius $n$. Nevertheless, for any fixed $d>0$ and
+any $t\ge1/3$,
+
+$$
+\mu(B(z,t))\le1\le 3^d t^d.
+\tag{241.10}
+$$
+
+Thus the required upper $t^d$ estimate at the macroscopic radii can hold
+while exponentially many occurrences still fit in radius $n$. At radius
+$1/3$, the ball about a vertex contains only that vertex and its mass tends
+to zero along any infinite spine. There is no uniform lower mass and no
+metric-doubling packing control.
+
+This countermodel does not assert an upper estimate at arbitrarily small
+radii; it isolates exactly the missing hypothesis. Therefore a
+measure-based packing proof may be replaced by Theorem 241.2 only after a
+metric-doubling or direct packing property has been established. Neither
+route supplies the still-missing occurrence-to-physical-carrier metric,
+transport, clock, observation, or dimension-sensitive invariant.
+

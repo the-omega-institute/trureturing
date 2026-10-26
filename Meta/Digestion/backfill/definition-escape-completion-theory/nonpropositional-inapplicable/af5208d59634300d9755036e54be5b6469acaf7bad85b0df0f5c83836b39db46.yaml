@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af5208d59634300d9755036e54be5b6469acaf7bad85b0df0f5c83836b39db46
+  normalized_sha256: sha256:af5208d59634300d9755036e54be5b6469acaf7bad85b0df0f5c83836b39db46
+cas_ref: sha256:af5208d59634300d9755036e54be5b6469acaf7bad85b0df0f5c83836b39db46
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 可审计定义证书的数据格式和 Witness/Capture 字段要求；没有声称一个证书存在或其字段已证。
+    previous_atom_id: ea7d1599568916abdf0cc42ffaf0b012410c2ede8059923e15958c182aef9ed4
+    next_atom_id: 1de1f5e8cb5128da590428532a9ded407cb393477d8021afe09b15945e338c52

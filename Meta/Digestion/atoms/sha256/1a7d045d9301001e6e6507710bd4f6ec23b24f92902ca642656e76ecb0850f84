@@ -1,0 +1,49 @@
+**Proposition 31.2 (Every one fixed scalar fails on the two-parameter family at $\sigma=2$).**
+For each nonzero real $c$, there are two strictly positive noise pairs, using the same $W$ and
+apparatus, with identical full old-plus-$Y_c$ laws and opposite entanglement statuses.
+
+*Proof.* At $r=1/16$ the boundary is the curved locus
+
+$$
+F(a,b)=(a+2)(b+1/16)-1=0,\qquad
+a=\frac{7/8-2b}{b+1/16},\quad0<b<7/16.
+\tag{31.2}
+$$
+
+Here $a,b$ denote noise values, not the program coefficients in (24.1). Put $\alpha=c_A^2$,
+$\beta=(c_A-c_B)^2$ as in (30.2); both are nonnegative and $\alpha+\beta>0$. Choose the interior
+boundary point
+
+$$
+(a_0,b_0)=\begin{cases}(6,1/16),&\beta\ne64\alpha,\\
+(2,3/16),&\beta=64\alpha.\end{cases}\qquad
+d_c=\beta(b_0+1/16)-\alpha(a_0+2)\ne0.
+\tag{31.3}
+$$
+
+In the first case $d_c=\beta/8-8\alpha\ne0$. In the second, $\alpha>0$ and $d_c=12\alpha$. The
+direction $(\beta,-\alpha)$ preserves the only noise-dependent scalar in (30.3). Choose $t>0$
+small enough that $t\beta<a_0$, $t\alpha<b_0$ and $t\alpha\beta<|d_c|$, and set
+
+$$
+(a_\pm,b_\pm)=(a_0\pm t\beta,b_0\mp t\alpha),\qquad
+F(a_\pm,b_\pm)=\pm t d_c-t^2\alpha\beta.
+\tag{31.4}
+$$
+
+Both pairs are admissible and strictly positive, and these two values have opposite signs. This
+also covers $\alpha=0$ or $\beta=0$. Their values of $\alpha a+\beta b$ coincide, so (30.3)
+proves equality of the complete augmented laws, not just their variances. Every original
+fixed-word law also coincides by (25.5). Proposition 27.1 classifies their actual pre-read pair
+states with opposite answers. This proves the quantified target-specific failure for every fixed
+$c\ne0$, rather than relying on general tomography incompleteness. $\square$
+
+Two elementary exact pairs from the same family make the obstruction concrete. In each row pair
+keep any one allowed $W$ fixed:
+
+| Added scalar | Noise pair $(\eta_A,\eta_B)$ | $F_{1/16}$ | Added-pointer variance |
+| --- | --- | --- | --- |
+| Bob, $c=(0,1)$ | $(0,0)$ | $-7/8$ | $9/16+\tau^2$ |
+| Bob, $c=(0,1)$ | $(15,0)$ | $1/16$ | $9/16+\tau^2$ |
+| Alice, $c=(1,0)$ | $(1,0)$ | $-13/16$ | $97/16+\tau^2$ |
+| Alice, $c=(1,0)$ | $(0,1)$ | $9/8$ | $97/16+\tau^2$ |

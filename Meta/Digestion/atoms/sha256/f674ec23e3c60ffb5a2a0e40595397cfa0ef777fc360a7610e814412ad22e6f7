@@ -1,0 +1,97 @@
+**Definition 25.1 (Ambient children and the inherited singular lines).**
+For every real $p,v$, including $p=24$, write
+
+$$
+\widehat C(p,v)=\{W\in\mathcal H:p(W)=p,\ v(W)=v\}.
+\tag{25.1}
+$$
+
+For $p\ne24$ this is exactly the entire child $C(p,v)$ of Definition
+1.1. Retain the actual singular locus $\mathcal S$ of Definition 14.1.
+Use the two simple roots $r_-,r_+$ of Proposition 11.1, without a new
+source-classification hypothesis. For $\rho\in\{r_-,r_+\}$ put
+
+$$
+\begin{gathered}
+j_\rho=\frac18+8\rho(1-\rho),\qquad n_\rho=j_\rho+\rho,
+\qquad q_\rho=\frac98+2j_\rho+4\rho,\\
+P(\rho)=\begin{pmatrix}\rho&1/8\\8\rho(1-\rho)&1-\rho\end{pmatrix},\\
+G_{\rho,e}=\left(-24-e,-\frac e{j_\rho},
+                   \frac{24}{5}-\frac{8e}{9},-\frac e{n_\rho}\right),\\
+g_{\rho,e}(s)=\sum_{i=0}^3(G_{\rho,e})_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},
+\qquad W_\rho(e)=(P(\rho),g_{\rho,e},24+e).
+\end{gathered}
+\tag{25.2}
+$$
+
+O, Theorem 2.1, and Proposition 11.1 identify $\mathcal S$ with
+precisely these worlds for every $e\in\mathbb R$. The matrix has
+strictly positive entries, trace one and determinant zero. The gain
+in (25.2) is the one entire polynomial, with zero leading coefficients
+allowed. Its first five responses are the original
+$(0,24,147/5,24,18)$; it cannot be identically zero because the first
+two responses differ. These are the reused whole-world lift and
+classification, rather than additional results about the source set.
+
+For compact response notation put
+
+$$
+\begin{aligned}
+h_{5,\rho}&=\frac{71}{18}-\frac5{j_\rho},&
+h_{6,\rho}&=\frac{43}{3}-\frac{16}{j_\rho},&
+h_{7,\rho}&=\frac{129}{4}-\frac{35}{j_\rho},\\
+P_\rho&=1+(5/4+n_\rho)h_{5,\rho},&
+V_\rho&=1+(5/2+n_\rho)h_{6,\rho},\\
+M_\rho&=1+(15/4+2n_\rho)h_{7,\rho},&
+A_\rho&=1+q_\rho h_{7,\rho}.
+\end{aligned}
+\tag{25.3}
+$$
+
+Here $P_\rho$ is a scalar coefficient, distinct from the source matrix
+$P(\rho)$. Subscripts $-$ and $+$ on these scalars mean evaluation at
+$r_-$ and $r_+$. The same sign convention applies to the worlds
+and response functions in (25.2) and (25.4).
+
+The response interface of Lemma 14.2, with the terminal-$J$ trace of
+(1.10), gives
+
+$$
+\begin{aligned}
+p_\rho(e)&=24+P_\rho e,\\
+v_\rho(e)&=84+24n_\rho+V_\rho e,\\
+m_\rho(e)&=312+\frac{768}{5}n_\rho+M_\rho e,\\
+a_\rho(e)&=24+\frac{384}{5}q_\rho+A_\rho e.
+\end{aligned}
+\tag{25.4}
+$$
+
+To spell out the correspondence, at $b=1/8$ the singular equation is
+
+$$
+\frac1{j_\rho}+\frac1{n_\rho}=\frac{107}{60}.
+\tag{25.5}
+$$
+
+Thus the three $h$ coefficients in (25.3) are respectively
+$5/n_\rho-179/36$, $16/n_\rho-71/5$ and
+$35/n_\rho-181/6$. They are exactly the gain slopes in (14.4), so
+$P_\rho=A(n_\rho)$, $V_\rho=B(n_\rho)$ and
+$M_\rho=C(n_\rho)$ in (14.3). In particular
+
+$$
+g_{\rho,e}(5)=e h_{5,\rho},\qquad
+ g_{\rho,e}(6)=24+e h_{6,\rho},\qquad
+ g_{\rho,e}(7)=\frac{384}{5}+e h_{7,\rho}.
+\tag{25.6}
+$$
+
+The original left products have traces $U+n_\rho$, $2U+n_\rho$,
+$q_\rho$ and $3U+2n_\rho$ for $p,v,a,m$, respectively, with
+$U=5/4$. Substitution of (25.6) proves all four expressions (25.4),
+including the constant terms of both clock-seven alternatives.
+Only $j_\rho,n_\rho,T=9/8,U=5/4$ and fixed interpolation-node
+differences occur as divisors. No drift, gain sample, leading
+coefficient or difference of gain roots is cancelled.
+

@@ -1,0 +1,29 @@
+**Proposition 10.1 (The fixed EPR witness).** For the nonselective pair in Definition 8.1 put
+
+$$
+u=q_B-q_A,\qquad v=p_A+p_B.
+$$
+
+Then
+
+$$
+u=Q_B,\qquad v=P_A-8\eta_2,\qquad
+\operatorname{Var}(u)=\tfrac12,\qquad
+\operatorname{Var}(v)=\tfrac12+64r_\sigma,
+$$
+
+and hence
+
+$$
+\operatorname{Var}(u)+\operatorname{Var}(v)
+=1+64r_\sigma=1+\frac{16}{\sigma^2}.
+$$
+
+The $\eta_1$ terms cancel exactly in $v$, while remaining visible in the full covariance of Proposition 9.2. This cancellation is not removal of read one.
+
+For the mature separability criterion use L.-M. Duan, G. Giedke, J. I. Cirac and P. Zoller, *Inseparability criterion for continuous variable systems*, [quant-ph/9908056v2](https://arxiv.org/pdf/quant-ph/9908056v2), PDF p. 1, Eqs. (2a)–(2b), and pp. 1–2, Theorem 1, Eq. (3); published in *Physical Review Letters* **84**, 2722, [DOI:10.1103/PhysRevLett.84.2722](https://doi.org/10.1103/PhysRevLett.84.2722). Apply its $a=1$ case to mode 1 $(x_1,p_1)=(q_B,p_B)$ and mode 2 $(x_2,p_2)=(-q_A,-p_A)$. The second choice is local parity on A and preserves the canonical commutator. The paper's $u=x_1+x_2$ and $v=p_1-p_2$ are exactly the pair above, so every separable state with these finite variances obeys their sum $\ge2$.
+
+The displayed sum is less than two precisely when $\sigma>4$. Thus this witness proves entanglement for every fixed $W$ when $\sigma>4$. At or below four this particular witness supplies no separability conclusion.
+
+Proof. Subtract and add the quadratures in Proposition 9.1, use their input moments, and apply the cited variance criterion with the stated local canonical choices. $\square$
+

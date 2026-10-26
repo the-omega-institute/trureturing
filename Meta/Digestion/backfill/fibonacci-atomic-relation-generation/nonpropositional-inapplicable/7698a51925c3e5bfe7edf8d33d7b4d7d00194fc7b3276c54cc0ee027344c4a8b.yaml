@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7698a51925c3e5bfe7edf8d33d7b4d7d00194fc7b3276c54cc0ee027344c4a8b
+  normalized_sha256: sha256:7698a51925c3e5bfe7edf8d33d7b4d7d00194fc7b3276c54cc0ee027344c4a8b
+cas_ref: sha256:7698a51925c3e5bfe7edf8d33d7b4d7d00194fc7b3276c54cc0ee027344c4a8b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义两次观察的矩阵、Delta 多项式及“整数无损”的命名条件；本条没有断言行列式判据或可逆性成立。
+    previous_atom_id: d9ab3897cd53734483de2efd80105e97cb933e61c49255bf4e6d836a7403c51a
+    next_atom_id: d243620eab770bd3941fe2322df380077365f9e97b80c92a93d954369258c65d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52bda146277df72ebabe4a979cc1db5aa146abac84d57a268a4c0f7929f9a5e0
+  normalized_sha256: sha256:52bda146277df72ebabe4a979cc1db5aa146abac84d57a268a4c0f7929f9a5e0
+cas_ref: sha256:52bda146277df72ebabe4a979cc1db5aa146abac84d57a268a4c0f7929f9a5e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 说明给定状态、记录和预算是可达集的定义输入，并限定自由意志解释，未新增可达性定理。'
+    previous_atom_id: 853dc71812d9376aa2b3bb9c36d0137452122feda64603e121cbb39a8e5fb78c
+    next_atom_id: 5e5734f453bb632e8d7d825f9c1d5f26aa38257a24dcc92dc36b4bdd5dc51a2c

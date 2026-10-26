@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8eae53fa40488dfcd8fa34db93e577b2678ab382ced5d8a36a1142113dd17f89
+  normalized_sha256: sha256:8eae53fa40488dfcd8fa34db93e577b2678ab382ced5d8a36a1142113dd17f89
+cas_ref: sha256:8eae53fa40488dfcd8fa34db93e577b2678ab382ced5d8a36a1142113dd17f89
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Eq.rec, congrArg. The causal-preservation hypothesis applied to the supplied comparable pair gives R(q(e),q(f)). Equality substitution q(e)=q(f) produces R(q(e),q(e)), contradicted by the supplied irreflexivity. This is equality elimination and implication application; the integer-time hypotheses need no stronger consequence. Searched all D5 sources including private declarations by relation-collapse/irreflexivity, square-zero block and integer-power, rank-one trace and polarization shapes; read the relevant QuadraticForms, Observer, ObserverMemory and S0/Observation owners. No frozen declaration was found supplying an actual subgoal at the full stated commutative-ring or arbitrary-relation scope. Gerzon field-only weighted symmetric-form trace helpers do not cover arbitrary alternating rank-one maps over every commutative ring; MatrixTracePowerSum is size two, not the general block formula.'
+    previous_atom_id: 84354f5deb94b33242393d993ee70dfe9132912c597664ec4a400b2d2dd1d248
+    next_atom_id: c6169029ffb66d91ae7fd0c41051c39053b0d6742e19dc04854d66bbd34680c3

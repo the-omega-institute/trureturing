@@ -1,0 +1,194 @@
+**定理 4.1（实际模式的加权平均谱）。** 在约定 1.4 的实帧中，取按 $(N,2,3,5,25)$ 排列的权重
+
+$$
+(w_s)=(0,1/5,0,1/5,3/5),\qquad a_s=5w_s.
+$$
+
+在复矩阵空间上使用 Hilbert–Schmidt 内积 $\langle X,Y\rangle_{\mathrm{HS}}=\operatorname{tr}(X^\dagger Y)$。以下 Cesàro 极限存在：
+
+$$
+\mathcal M(X)=\lim_{L\to\infty}\frac1L
+\int_0^L\sum_sa_s\operatorname{tr}(Q_s(t)X)Q_s(t)\,dt.
+\tag{4.1}
+$$
+
+它正、自伴随且 $\mathcal M(I_5)=I_5$；在 $I_5$ 的 Hilbert–Schmidt 正交补上的最大特征值为 $33/68$。因而对任意复矩阵 $C$，
+
+$$
+\langle C,\mathcal M(C)\rangle_{\mathrm{HS}}
+\le\frac{33}{68}\|C\|_{\mathrm{HS}}^2
++\frac{35}{68}\frac{|\operatorname{tr}C|^2}{5}.
+\tag{4.2}
+$$
+
+式 (4.1) 是同一实际等待轨道的数学平均，不是一个无限协议或额外相位控制。
+
+证明。只为计算而将坐标分成 $(N,25)$ 与 $(2,3,5)$，得
+
+$$
+A=\begin{pmatrix}0&B\\-B^T&0\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+BB^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+$$
+
+置 $r=\sqrt{17}$，$\omega_\pm^2=(5\pm r)/2$。若 $u_\pm$ 是 $BB^T$ 的单位正交特征向量，则 $v_\pm=B^Tu_\pm/\omega_\pm$ 是对应单位右奇异向量。于是有两条正交实旋转平面 $L_\pm=\operatorname{span}\{u_\pm,v_\pm\}$，频率分别为 $\omega_\pm$，以及固定暗线
+
+$$
+L_0=\mathbb R z,\qquad z=(e_2-e_5)/\sqrt2.
+$$
+
+记这些子空间的正交投影为 $R_0,R_+,R_-$，秩依次为 $1,2,2$。因为
+
+$$
+\frac{\omega_+^2}{\omega_-^2}=\frac{21+5\sqrt{17}}4
+$$
+
+无理，$\omega_+/\omega_-$ 也无理。对任何非零整数对 $(m,n)$，$c=m\omega_++n\omega_-\ne0$，而
+
+$$
+\frac1L\int_0^Le^{ict}\,dt=\frac{e^{icL}-1}{icL}\longrightarrow0.
+$$
+
+式 (4.1) 的每个矩阵项是两个旋转角的有限 Fourier 多项式，因此其非负时间 Cesàro 平均恰为两个角各自均匀积分的平均。该等式只求原轨道上的极限，未授予独立选择两角的操作。
+
+设 $r_{sj}=\|R_je_s\|^2$。左部的谱投影为
+
+$$
+G_+=\frac{BB^T-\omega_-^2I_2}{r},\qquad G_-=I_2-G_+;
+$$
+
+右部的两个平面投影分别为 $B^TG_\pm B/\omega_\pm^2$，剩余投影为 $zz^T$。将 $B$ 的三列 $(1,1)^T,(1,0)^T,(1,1)^T$ 代入，即得完整平方长度表：
+
+$$
+\begin{array}{c|ccc}
+s&r_{s0}&r_{s+}&r_{s-}\\\hline
+N&0&(1+1/r)/2&(1-1/r)/2\\
+2&1/2&(1+3/r)/4&(1-3/r)/4\\
+3&0&(1-3/r)/2&(1+3/r)/2\\
+5&1/2&(1+3/r)/4&(1-3/r)/4\\
+25&0&(1-1/r)/2&(1+1/r)/2
+\end{array}
+\tag{4.3}
+$$
+
+按所选 $a_s=(0,1,0,1,3)$ 求和，得到
+
+$$
+\sum_sa_sr_{s0}=1,\qquad
+\sum_sa_sr_{s+}=\sum_sa_sr_{s-}=2.
+\tag{4.4}
+$$
+
+旋转平均后每个平面分量为 $r_{s\pm}R_\pm/2$，暗线分量为 $r_{s0}R_0$。所以 $\sum_sa_s\overline{Q_s}=I_5$，即 $\mathcal M(I_5)=I_5$；等价地，该加权纯输入族的平均态为 $I_5/5$。
+
+二阶长度和记为 $S_{ij}=\sum_sa_sr_{si}r_{sj}$。表 (4.3) 给
+
+$$
+\begin{gathered}
+S_{00}=\frac12,\quad
+S_{0+}=\frac{1+3/r}{4},\quad S_{0-}=\frac{1-3/r}{4},\\
+S_{++}=\frac{67}{68}-\frac{3}{4r},\quad
+S_{--}=\frac{67}{68}+\frac{3}{4r},\quad
+S_{+-}=\frac{13}{17}.
+\end{gathered}
+\tag{4.5}
+$$
+
+例如
+
+$$
+\begin{aligned}
+S_{++}
+&=2\left(\frac{r+3}{4r}\right)^2
++3\left(\frac{r-1}{2r}\right)^2
+=\frac{7r^2-6r+15}{8r^2}
+=\frac{67}{68}-\frac{3}{4r},\\
+S_{+-}
+&=2\frac{r^2-9}{16r^2}+3\frac{r^2-1}{4r^2}
+=\frac{13}{17}.
+\end{aligned}
+$$
+
+正性及自伴随性来自每个积分项是带非负权的 Hilbert–Schmidt 秩一算子。以下给出整个谱，包含任意复 Kraus 矩阵会用到的全部方向。
+
+在实对称矩阵空间的旋转不变部分，取正交单位基
+
+$$
+H_0=R_0,\qquad H_+=R_+/\sqrt2,\qquad H_-=R_-/\sqrt2.
+$$
+
+$Q_s$ 的零频率坐标为 $(r_{s0},r_{s+}/\sqrt2,r_{s-}/\sqrt2)$，故此三维块的矩阵为
+
+$$
+M_0=\begin{pmatrix}
+1/2&(1+3/r)/(4\sqrt2)&(1-3/r)/(4\sqrt2)\\
+(1+3/r)/(4\sqrt2)&67/136-3/(8r)&13/34\\
+(1-3/r)/(4\sqrt2)&13/34&67/136+3/(8r)
+\end{pmatrix}.
+$$
+
+单位恒等方向的坐标为 $(1,\sqrt2,\sqrt2)/\sqrt5$，特征值为一。其正交补取
+
+$$
+u=(0,1,-1)/\sqrt2,\qquad
+v=(-2,1/\sqrt2,1/\sqrt2)/\sqrt5.
+$$
+
+由上述矩阵乘法，该补空间块为
+
+$$
+\begin{pmatrix}
+15/136&-15/(8\sqrt{85})\\
+-15/(8\sqrt{85})&3/8
+\end{pmatrix}.
+\tag{4.6}
+$$
+
+其迹为 $33/68$，行列式为
+
+$$
+\frac{45}{1088}-\frac{225}{64\cdot85}=0,
+$$
+
+所以另外两个特征值为零及 $33/68$。
+
+其他实对称方向分成六个二维旋转子空间：暗线与两平面的交叉项，两个平面内的无迹对称项，以及两平面的角和、角差交叉项。频率分别为
+
+$$
+\omega_+,\ \omega_-,\ 2\omega_+,\ 2\omega_-,\
+\omega_++\omega_-,\ \omega_+-\omega_-.
+$$
+
+它们的整数频率对彼此不同，也不互为相反数；无理频率比使不同块的交叉平均为零。可直接从平方长度求各块的平均外积：在二维旋转空间中，一个旋转向量的外积平均为其平方长度的一半乘单位。
+
+具体地，将 $O(t)^Te_s$ 在三个子空间上的分量写作 $x_0,x_+,x_-$。暗线与某平面的对称交叉矩阵 $x_0x_\pm^T+x_\pm x_0^T$ 的平方 Hilbert–Schmidt 范数为 $2r_{s0}r_{s\pm}$；对应平均特征值为 $S_{0\pm}$。平面内 $x_\pm x_\pm^T$ 减去 $(r_{s\pm}/2)R_\pm$ 后的平方范数为 $r_{s\pm}^2/2$，故平均特征值为 $S_{\pm\pm}/4$。
+
+两平面的对称交叉块平方范数为 $2r_{s+}r_{s-}$。取两平面单位基 $u_+,v_+$ 与 $u_-,v_-$，令 $F(a,b)=(ab^T+ba^T)/\sqrt2$。以下两对分别张成角差与角和空间：
+
+$$
+\begin{gathered}
+\frac{F(u_+,u_-)+F(v_+,v_-)}{\sqrt2},\qquad
+\frac{F(v_+,u_-)-F(u_+,v_-)}{\sqrt2},\\
+\frac{F(u_+,u_-)-F(v_+,v_-)}{\sqrt2},\qquad
+\frac{F(v_+,u_-)+F(u_+,v_-)}{\sqrt2}.
+\end{gathered}
+$$
+
+若两平面分量的极角为 $\theta_+,\theta_-$，它们在这两对上的坐标长度均为 $\sqrt{r_{s+}r_{s-}}$，角分别为 $\theta_+-\theta_-$ 和 $\theta_++\theta_-$。因此两个二维块的平均特征值均为 $S_{+-}/2$。这也验证了交叉范数的等分，无须对起始向量额外假设。
+
+由式 (4.5)，六块的特征值依次为
+
+$$
+\frac{1+3/r}{4},\quad\frac{1-3/r}{4},\quad
+\frac{67}{272}-\frac{3}{16r},\quad
+\frac{67}{272}+\frac{3}{16r},\quad
+\frac{13}{34},\quad\frac{13}{34},
+\tag{4.7}
+$$
+
+各有重数二。三维不变块加这十二维穷尽实对称空间。对复转置反对称矩阵 $X^T=-X$，$\operatorname{tr}(Q_s(t)X)=0$，所以其十维复子空间上 $\mathcal M=0$。将实对称空间复化不改变以上谱；两部分正交并穷尽二十五维复矩阵空间。
+
+式 (4.7) 中最大的暗线交叉值不超过 $33/68$，等价于 $16r\ge51$，由 $256\cdot17>51^2$ 得到。较大的平面内值小于 $67/272+3/64<33/68$，因为 $r>4$；$13/34<33/68$。故恒等方向之外最大特征值确为 $33/68$。
+
+最后写 $C=(\operatorname{tr}C/5)I_5+C_0$，$\operatorname{tr}C_0=0$。恒等方向的平方范数为 $|\operatorname{tr}C|^2/5$，且 $\mathcal M$ 在两正交部分间没有交叉项。对 $C_0$ 用上述谱界即得式 (4.2)，包含任意复 $C$，未假设它实、Hermitian 或可逆。$\square$
+

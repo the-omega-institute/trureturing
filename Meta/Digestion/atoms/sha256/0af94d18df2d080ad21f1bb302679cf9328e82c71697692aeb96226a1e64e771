@@ -1,0 +1,43 @@
+**Proposition 5.3 (finite exact extremum and geometric overlap).** Let
+
+$$
+f_m=2(1-u)\theta^m-(1-v)-(v-u)u^m,\qquad
+M=\min\{m\ge0:f_m\le0\}.
+$$
+
+Then $M\ge1$ is finite and $\alpha_{\mathrm{tail}}=(1-u^M)/(2-v^M)$. If $f_M=0$, the indices $M$ and $M+1$ tie. Also, for
+
+$$
+n_0=\min\{n\ge0:h_u(n)\le h_v(n)\},\qquad
+\rho=\operatorname{TV}(h_u,h_v),\qquad C_{\mathrm{ov}}=2-\rho,
+$$
+
+one has
+
+$$
+\rho=v^{n_0}-u^{n_0}=\max_{m\ge0}(v^m-u^m),\qquad
+1<C_{\mathrm{ov}}<C_{\mathrm{tail}}<2.
+$$
+
+The geometric overlap is $1-\rho=\sum_n\min(h_u(n),h_v(n))$. These constants have distinct roles: $\alpha_{\mathrm{tail}}$ is the exact radius factor, $C_{\mathrm{tail}}$ its reciprocal cutoff multiplier, and $C_{\mathrm{ov}}$ a simpler sufficient cutoff multiplier.
+
+**Proof (5.3).** Cross-multiplication shows that the sign of the difference between successive ratios $(1-u^m)/(2-v^m)$ is the sign of $f_m$. Moreover $f_0=1-u>0$, $f_m\to-(1-v)<0$, and
+
+$$
+f_{m+1}-f_m=(1-u)(v-u)\left(u^m-\frac{2\theta^m}{v}\right)<0.
+$$
+
+Thus the ratios increase until $M$, and decrease thereafter, with the stated adjacent tie when the difference vanishes. All definitions use exact comparisons.
+
+The likelihood ratio $h_u(n)/h_v(n)=((1-u)/(1-v))\theta^n$ decreases from greater than one to zero. Summing the positive part through the crossing gives $\rho=v^{n_0}-u^{n_0}$. The cumulative difference before any index $m$ is $v^m-u^m$, and its maximum is the same value. At an exact crossing $h_u(n_0)=h_v(n_0)$, the adjacent cumulative indices $n_0,n_0+1$ give the same value. Distinct strictly positive normalized geometric laws have $0<\rho<1$.
+
+For each $m\ge1$,
+
+$$
+(2-v^m)-(2-\rho)(1-u^m)
+=\rho+(2-\rho)u^m-v^m
+\ge(1-\rho)u^m>0.
+$$
+
+Take the attained finite minimum defining $C_{\mathrm{tail}}$ to conclude $C_{\mathrm{tail}}>2-\rho$. Finally the overlap identity gives $1-\rho$; equivalently its geometric sums give $1-v^{n_0}+u^{n_0}$. $\square$
+

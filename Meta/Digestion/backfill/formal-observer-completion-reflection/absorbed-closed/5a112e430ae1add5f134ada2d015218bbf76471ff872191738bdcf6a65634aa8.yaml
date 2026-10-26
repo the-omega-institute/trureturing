@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5a112e430ae1add5f134ada2d015218bbf76471ff872191738bdcf6a65634aa8
+  normalized_sha256: sha256:5a112e430ae1add5f134ada2d015218bbf76471ff872191738bdcf6a65634aa8
+cas_ref: sha256:5a112e430ae1add5f134ada2d015218bbf76471ff872191738bdcf6a65634aa8
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/DiscountedObservabilityEnergyIdentity.discounted_observability_energy_identity
+    target_statement_id: sha256:49696ded650245f3179e7488dd0270e8626b5c7323cbcc707cfe641c21b2a54f
+receipts:
+  unresolved_subitems: []

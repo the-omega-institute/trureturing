@@ -1,0 +1,25 @@
+**Theorem 24.1 (Upper-branch joint-response injectivity).** For every
+$p\in K$ and $0<r<s<1$,
+
+$$
+ \Theta_+(s,p)-\Theta_+(r,p)
+       >\frac{2116359}{10^6}(s-r)>2(s-r)>0.
+\tag{24.1}
+$$
+
+Consequently, for every $r,s\in(0,1)$,
+
+$$
+ u_+(r,p)=u_+(s,p),\quad m_+(r,p)=m_+(s,p)
+       \quad\Longrightarrow\quad r=s.
+\tag{24.2}
+$$
+
+Proof. The mean value theorem on $[r,s]\subset(0,1)$ and Lemma
+23.4 give (24.1). If both actual responses were equal at two
+parameters, both arguments of $\Psi$ in (22.1) would be equal,
+and hence their $\Theta_+$ values would be equal. For unequal
+parameters, order them and apply (24.1), obtaining a contradiction.
+This proves (24.2). The proof is uniform in $K$, and therefore
+applies to the original exact $p_J$ without replacing it by $p_c$. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e104a20c82609b7ec1d1bcd3497143054e94f525f2f6ba0bb07066df4b9718c9
+  normalized_sha256: sha256:e104a20c82609b7ec1d1bcd3497143054e94f525f2f6ba0bb07066df4b9718c9
+cas_ref: sha256:e104a20c82609b7ec1d1bcd3497143054e94f525f2f6ba0bb07066df4b9718c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This introductory sentence states the interpretive distinction motivating the following configuration-coordinate definition. It supplies no dimension bound or existence statement; those are separate subsequent atoms.
+    previous_atom_id: 5f14944d7f50da3d6be024d6839030b8f7478f455c478432821e2faf843f315e
+    next_atom_id: 9d89b1f047c57bc241d8b72c00983f302c731ba1091e99421e11dbca3393823d

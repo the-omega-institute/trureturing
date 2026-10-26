@@ -1,0 +1,32 @@
+## 223. Restricted white-noise merging comparison and parameter boundaries
+
+Consider the particular deterministic channel that identifies both Bob sectors
+with the output code while leaving Alice unchanged and leaving the spectator
+logical state maximally mixed. In terms of the two sector identifications,
+its Bob Kraus operators are $J_a^*$ and $J_{\mathrm{sp}}^*$; its effect
+sum is $\Pi_{\mathrm{act}}+\Pi_{\mathrm{sp}}=I_4$. With the active
+orientation chosen as above, its output is
+
+$$
+wW_\lambda+(1-w)I_4/4=W_{w\lambda},\qquad
+N=\frac{(3w\lambda-1)_+}{4}.
+\tag{223.1}
+$$
+
+At the benchmark $w\lambda=2/7$, this output is $W_{2/7}$ and is
+separable. The communicated, spectator-conditioned reset instead retains
+$1/56$ in the common encoded output. The comparison concerns exactly this
+white-noise-preserving sector-identification channel at $s=1$. It does not
+bound every flag-erasing channel, every local channel, every no-communication
+protocol, or every choice of separable padding. In particular, Theorem 214.1
+already gives a flag-erasing channel that saturates the true allowed frontier.
+
+The analytic proof and attainer extend algebraically to the closed rectangle
+$w,\lambda\in[0,1]$. At $w=0$, reset the product input and accept with
+an $s$ coin, obtaining zero negativity. At $w=1$, keep $W_\lambda$
+and accept with an independent $s$ coin. At $\lambda=1$ the active block
+is a singlet, and $N_{\max}(s)=\tfrac12\min\{1,w/s\}$. These are
+abstract extensions, not additional finite-native realizability statements.
+At $s=0$ there is no normalized successful output and no frontier value is
+assigned by the conditional definition.
+

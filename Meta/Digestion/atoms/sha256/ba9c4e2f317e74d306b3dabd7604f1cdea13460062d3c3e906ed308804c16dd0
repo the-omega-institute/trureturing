@@ -1,0 +1,137 @@
+## 7. Small-b elimination without losing exceptional strata
+
+For $0<b<5/2$ one has
+
+$$
+\frac{k_3}3=b^2(12511-1289b)+66211b+38698>0.
+\tag{7.1}
+$$
+
+Put $G=45TU^2$ and define integer polynomials $a_b,c_b,h_b$ by
+
+$$
+\begin{aligned}
+Ga_b&=5LL_k+3Ak_0k_3,\\
+Gc_b&=-10TUL_k-3Ak_0k_1,\\
+Gh_b&=10TUL_k.
+\end{aligned}
+\tag{7.2}
+$$
+
+These divisions are exact in $\mathbb Z[b]$. Explicitly,
+their ascending coefficient arrays are
+
+$$
+\begin{aligned}
+a_b:\;&(-295618904,-3183073656,-4122449598,-2456556092,\\
+&\hspace{12mm}-2576400048,-551951598,30831591),\\
+c_b:\;&(102647520,1893726508,4989328358,4971697312,\\
+&\hspace{12mm}3818639378,2825126907,512931546,-27574000),\\
+h_b:\;&(-196646328,-1512430508,-2458058540,-1838580134,\\
+&\hspace{12mm}-1369955312,-633012864,-83795176,5156000).
+\end{aligned}
+\tag{7.3}
+$$
+
+For either member of a hypothetical collision, substitute (5.12) into
+the undivided parent. Exact collection gives
+
+$$
+j(a_bn+c_b)=h_bn.
+\tag{7.4}
+$$
+
+More explicitly, after that substitution the ambient residual obeys
+
+$$
+\frac{5TU k_0(k_3n-k_1)j}{2}\mathcal P
+=G\bigl[j(a_bn+c_b)-h_bn\bigr].
+\tag{7.5}
+$$
+
+The multipliers used here are nonzero by Section 5 and strict source
+positivity. Also $L_k\ne0$ implies $h_b\ne0$, so (7.4), with $n>0$,
+forces $a_bn+c_b\ne0$. The original source relation gives the exact identity
+
+$$
+j^2+(1+b-2n)j+n^2-n-b^2=0.
+\tag{7.6}
+$$
+
+Indeed substitute $r=n-j$ into $b(j-b)=r(1-r)$. Multiply (7.6) by
+$(a_bn+c_b)^2$ and use (7.4). Both $n_1,n_2$ are roots of
+
+$$
+\begin{aligned}
+Q_b(n)={}&(h_bn)^2+(1+b-2n)(h_bn)(a_bn+c_b)\\
+&+(n^2-n-b^2)(a_bn+c_b)^2
+=\sum_{j=0}^4Q_j(b)n^j.
+\end{aligned}
+\tag{7.7}
+$$
+
+This is a necessary equation on actual worlds; no claim that every root
+lifts to a strict source is needed.
+
+Set
+
+$$
+u_i=k_i/3\quad(i=1,2,3),\qquad
+\Delta=u_1^2-u_2u_3=-L_k/9\ne0.
+$$
+
+By (7.1), $u_3>0$. For $w=u_3n_1-u_1$ the involution gives
+
+$$
+w\ne0,\qquad u_3n_2-u_1=\Delta/w,\qquad w\ne\Delta/w.
+\tag{7.8}
+$$
+
+The last inequality is exactly the already established $n_1\ne n_2$.
+Define
+
+$$
+q_i=\sum_{j=i}^4\binom ji Q_j u_1^{j-i}u_3^{4-j},\qquad
+q(w)=\sum_{i=0}^4q_iw^i
+=u_3^4Q_b\bigl((w+u_1)/u_3\bigr).
+\tag{7.9}
+$$
+
+Thus $q(w)=q(\Delta/w)=0$. Write
+
+$$
+\begin{aligned}
+B&=q_4\Delta^2-q_0,&D_q&=q_3\Delta^2-q_1\Delta,\\
+E&=q_4\Delta^2+q_0,&C_q&=q_3\Delta^2+q_1\Delta,\\
+F_q&=2q_2\Delta^2.
+\end{aligned}
+\tag{7.10}
+$$
+
+Divide the two root equations only by their respective nonzero roots
+squared. Subtract and add the resulting equations after multiplying by
+$\Delta^2$. With $s_*=w+\Delta/w$, the subtraction, divided by the
+nonzero $w-\Delta/w$, and the addition give
+
+$$
+Bs_*+D_q=0,\qquad
+E(s_*^2-2\Delta)+C_qs_*+F_q=0.
+\tag{7.11}
+$$
+
+Multiplying the second equation by $B^2$, and replacing $Bs_*$ by $-D_q$,
+gives the necessary polynomial condition
+
+$$
+R_0=E(D_q^2-2\Delta B^2)-C_qD_qB+F_qB^2=0.
+\tag{7.12}
+$$
+
+This final operation does not divide by $B$. If $B=0$, (7.11) also gives
+$D_q=0$, and (7.12) remains necessary. It does not divide by $q_4$, or by
+any other coefficient of $q$ or $Q_b$. Quartic-to-cubic and all further
+leading-degree drops are therefore included. The only divisions in this
+part use source-positive quantities or quantities forced nonzero by the
+hypothetical distinct collision. In particular no division by a coefficient
+of the original gain, a gain sample, drift, $\Lambda$, or $D$ occurs.
+

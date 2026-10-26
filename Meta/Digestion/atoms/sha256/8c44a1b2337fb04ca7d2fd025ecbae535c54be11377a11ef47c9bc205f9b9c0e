@@ -1,0 +1,45 @@
+**Lemma 7.2 (Guarded response intervals for every retained category).**
+For the four possible regular categories, the following bounds
+hold on the entire indicated $r,b$ boxes. The columns for the
+$b$ input interval and $D_m$ guard are divided by $10^6$.
+
+| $\sigma$ | $k$ | $b$ input interval numerators | $D_m$ guard numerators | Strict interval for $N_m/D_m$ |
+| --- | --- | --- | --- | --- |
+| $-$ | $1$ | $[189704,189705]$ | $[-65867,-65864]$ | $(487,488)$ |
+| $+$ | $1$ | $[223805,223806]$ | $[-29605,-29595]$ | $(601,603)$ |
+| $+$ | $2$ | $[161056,161057]$ | $[67164,67174]$ | $(621,623)$ |
+| $+$ | $4$ | $[247293,247294]$ | $[-157947,-157782]$ | $(611,613)$ |
+
+On the entire $J_\sigma\times K$, the singular expression (7.1)
+satisfies
+
+$$
+m_s(J_-,K)\subset(510,512),\qquad
+m_s(J_+,K)\subset(624,626).
+\tag{7.2}
+$$
+
+Proof. For each regular row expand the exact inherited $N_m,D_m$
+after the polynomial division by $T$ in O (27.1). Evaluate them
+in the $b$-inside-$r$ Horner order of Definition 2.2 on the
+closed box $I_{\sigma,k}\times[B_L,B_U]/10^6$ from the row.
+The resulting $D_m$ interval is contained in its displayed guard,
+which excludes zero. Divide the uncoarsened numerator and
+denominator intervals only after this check. The quotient has
+lower endpoint strictly above the displayed lower response bound
+and upper endpoint strictly below the upper bound. This specifies
+all four rational range calculations from O (27.1) and the
+displayed input endpoints.
+
+For each singular row compute $j,n,A_5,e$ on $J_\sigma\times K$
+in the order (2.4), with the nonzero guards of Lemma 2.4 preceding
+division. Compute $a_7$ and then (7.1) by (2.2). The resulting
+lower and upper endpoints are strictly inside the two intervals
+(7.2). Thus these are whole-box inclusions for the exact
+expressions, with all inversions guarded.
+
+For actual retained regular worlds, O, Theorem 27.2, makes these
+quotients their actual $f_{MM}$. For the actual singular lift,
+Definition 7.1 gives the same conclusion. All responses therefore
+come from the original clock-seven reading of a complete world. ∎
+

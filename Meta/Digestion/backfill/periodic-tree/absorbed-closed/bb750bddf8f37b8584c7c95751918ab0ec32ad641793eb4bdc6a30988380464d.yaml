@@ -1,0 +1,42 @@
+fingerprints:
+  raw_sha256: sha256:bb750bddf8f37b8584c7c95751918ab0ec32ad641793eb4bdc6a30988380464d
+  normalized_sha256: sha256:bb750bddf8f37b8584c7c95751918ab0ec32ad641793eb4bdc6a30988380464d
+cas_ref: sha256:bb750bddf8f37b8584c7c95751918ab0ec32ad641793eb4bdc6a30988380464d
+coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.instZeroGoldenInt
+    target_statement_id: sha256:b80ff23c10068b0299f642bfaecf599f149899eb1dfd7857a0aa71d7a067563c
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
+  - gid: D5/S1/Scale/Embedding.embedding_eq_zero_iff
+    target_statement_id: sha256:2938fb3cfbaa24c22f6b543c0e0992d4a1813991f2ec42d174b87114d3d3c6de
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.atomicBlock
+    target_statement_id: sha256:a71189ce89190d43a5c3431ba093d059257f258ef75c9d54cb732534fd8d91c9
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.blockMatrix
+    target_statement_id: sha256:7344da66c4033074dc95c92fcf5dc9977fc3769e93378c0cec4d4242ffb0a32e
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.matrixM
+    target_statement_id: sha256:c765fee63929f7ba00c8b244942c6e26af9b0c9e598c6f2b08a16aa6e77585d8
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.result
+    target_statement_id: sha256:211e4ff73740f8149478aa6c6772bce1f698874719b56d689c5724d2efa055a6
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.step
+    target_statement_id: sha256:abd1497f7c6dd19d79eb07033d7697ada8db81677041e77acfe8c3b896948d5d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 32622de74f8aa9d9ba76140f5ec2c1d63ca924fa88587ce19f3de58ccedff7a6
+    - 1c7ed81d1a653c897b9e104651a5671c03285bcbe1865b0219946cecd5f25c9b
+    - 5fec0becb79ccd96555b0cc269147aad2316b7df51b6a7388239212145dc424b
+    - 6b091e3e03bb5f5f2b3a74016621d92b28385b2af484ebfe336429c8940e328c
+    - b0e113b845752b892c6d143fcc85eb1d5130850181d0f2e1ad19bfeab6dbab1e
+    - bbec4a020612dcfe7d0a58e86d87f61460eb74eb7242db832828e286e4dab9fe
+    - d81a23736d8f253aa22eb7d21d7321d4c8064346e38cd7f8e3d1f30fc3e6c72f
+    - e87e1897e8cc1603810a28be6f62342b33219167f9539779cbc5f53f0e33d990
+    - 4930ba2037d2ce1a69f4c9d1caf41a9af7ef09c559adaf5931fb0272d1d58576
+    - 79d45912432dcbfe6de906123331c9f42fca88a7e3e8147f8dc782d159539d05
+    - d7ee7bca66c4b5265d98028a4b4c4bad060c1a98e58049cb5ba60875a413f9ed
+    - cd31f84d40aa5b171d67c949f0c03acecbffddb4191499c19b9e3006510c7581

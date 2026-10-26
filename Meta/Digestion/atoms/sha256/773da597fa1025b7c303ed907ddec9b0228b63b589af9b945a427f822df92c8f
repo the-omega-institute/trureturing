@@ -1,0 +1,10 @@
+## 110. A uniform gap from stabilized terminal recovery
+
+Use exactly $\delta_n$ of (93.8): a reference may participate in the
+input test and remains untouched, while the decoder still acts only on
+the terminal qutrit. This differs from (105.1) in its input test, not in
+the decoder's available registers. The stabilized trace-norm convention
+is the one cited in §93 from [Watrous, Chapter 3][TQI3]. Its operational
+channel-comparison setting, with auxiliary input systems and CPTP
+composition, is also developed in [Jenčová][JC-COMP].
+

@@ -50,7 +50,7 @@ def ReadoutActsFactorwise {k : Nat} {X : Fin k → Type*} {O : Fin k → Type*}
     (q : ProductState X → ProductState O) : Prop :=
   ∃ locals : ∀ i, X i → O i, ∀ x i, q x i = locals i (x i)
 
-private theorem coordinateUpdate_iterate_apply
+theorem coordinateUpdate_iterate_apply
     {k : Nat} {X : Fin k → Type*} (F : ∀ i, X i → X i)
     (n : Nat) (x : ProductState X) (i : Fin k) :
     ((coordinateUpdate F)^[n]) x i = ((F i)^[n]) (x i) := by

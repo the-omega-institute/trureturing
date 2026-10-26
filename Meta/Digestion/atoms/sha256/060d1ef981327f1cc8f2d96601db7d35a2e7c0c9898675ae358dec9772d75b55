@@ -1,0 +1,80 @@
+**Theorem 119.1 (target-side diagonal-clock no-go).** Let \(B_e\ne\varnothing\),
+let \(S_Qf=(f,Qf)\) be top-fixed, and require edge-form preservation
+
+$$
+S_Q^*L_{e+1}S_Q=L_e.
+\tag{119.2}
+$$
+
+If \(C_e^*L_e\ne0\), there are no strictly positive diagonal mass matrices in
+(119.1) and no strictly positive diagonal output clock
+
+$$
+\Lambda_{e+1}=\operatorname{diag}(\Lambda_o,\Lambda_c),
+\qquad\text{all diagonal entries \(>0\)}
+$$
+
+such that the full target-side equation
+
+$$
+\boxed{\mathcal L_{e+1}S_Q
+       =\Lambda_{e+1}S_Q\mathcal L_e}
+\tag{119.3}
+$$
+
+holds. Here \(\Lambda_{e+1}\) is target-side: equivalently
+\(\Lambda_{e+1}^{-1}\mathcal L_{e+1}S_Q=S_Q\mathcal L_e\).
+A domain-side clock equation such as
+\(\mathcal L_{e+1}S_Q=S_Q\Lambda_e\mathcal L_e\) is a different,
+unanalysed contract. The displayed target clock has strictly positive diagonal
+blocks, so it is invertible. The theorem applies to this block-diagonal class;
+block-mixing, non-diagonal block clocks, or singular clocks and non-diagonal
+state metrics are outside its scope. For the raw unweighted occurrence object
+\(\mathcal O_e\) of (112.4), set
+\(\mathsf G_e=\mathsf G_{e+1}=I\); the same requirement is literally
+
+$$
+\boxed{L_{e+1}S_Q=\Lambda_{e+1}S_QL_e}.
+\tag{119.3a}
+$$
+
+The mass-weighted equation (119.3) and this raw special case have the same
+child-block obstruction.
+
+A connected nontrivial old tree with a nonempty beta-parent set is a
+sufficient condition for the nonzero hypothesis \(C_e^*L_e\ne0\): each
+beta-parent row of its tree Laplacian is nonzero, and \(C_e^*\) duplicates that
+row on its two children.
+
+**Proof.** By (119.2), the parent-copy uniqueness of Theorem 115.2 gives
+\(Q=C_e^*\) and \(S_Q=T_e\). Reuse its exact identity
+
+$$
+A_e:=D_e^*D_e=L_e,\qquad
+A_{e+1}T_e=J_eA_e
+\quad\text{equivalently}\quad
+L_{e+1}T_e=J_eL_e.
+\tag{119.4}
+$$
+
+Taking the old and child blocks of (119.3), with
+\(\mathsf G_{e+1}=\operatorname{diag}(\mathsf G_o,\mathsf G_c)\), gives
+
+$$
+\begin{pmatrix}\mathsf G_o^{-1}L_e\\0\end{pmatrix}
+=
+\begin{pmatrix}
+\Lambda_o\mathcal L_e\\
+\Lambda_cC_e^*\mathcal L_e
+\end{pmatrix}.
+\tag{119.5}
+$$
+
+The child block forces
+\(\Lambda_cC_e^*\mathcal L_e=0\). Positivity makes \(\Lambda_c\) invertible,
+while multiplication by the strictly positive diagonal \(\mathsf G_e^{-1}\) only
+rescales each duplicated parent row. Hence \(C_e^*\mathcal L_e=0\) is
+equivalent to \(C_e^*L_e=0\), contradicting the hypothesis. No node-norm
+condition (N) is used; retaining (N) therefore gives only an a fortiori
+stronger impossibility. \(\square\)
+

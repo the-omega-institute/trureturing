@@ -1,0 +1,56 @@
+**Theorem 2.3 (stronger complete marked-law-TV inverse estimate).** Under
+the same fixed source, time and matched-input hypotheses and terminal
+survival floors, if $d_{\mathrm{mark}}\leq\varepsilon$, then
+
+$$
+\|k-\widetilde k\|_\infty\leq\frac{\varepsilon}{2\sigma}.
+\tag{IS.12}
+$$
+
+In particular this holds with $\varepsilon=d_{\mathrm{op}}$, or with
+$\varepsilon=D_\rho$ for any matched source-family input, by (IS.8).
+It is a height estimate, not an approximate phase-lifting theorem.
+
+Proof. Fix $t$ and put $x=\widetilde k(t)$. In the *same* record space
+$\Omega_T$ define disjoint events
+
+$$
+\begin{aligned}
+A_t&=(0,t]\times\{0,4\},\\
+B_t&=\{\mathsf s\}\sqcup((t,T]\times\{0,1,2,3,4\}).
+\end{aligned}
+$$
+
+Thus $\mu(A_t)=2a-2S(t)k(t)$ and $\mu(B_t)=S(t)$.
+The bounded function $h_t=\frac12\mathbf1_{A_t}+x\mathbf1_{B_t}$ takes
+values in $[0,1/2]$, because $0<x<c<1/2$. For two probability laws,
+
+$$
+\left|\int h\,d(\mu-\widetilde\mu)\right|
+\leq (\sup h-\inf h)\,\sup_E|\mu(E)-\widetilde\mu(E)|.
+\tag{IS.13}
+$$
+
+For completeness, subtract $\inf h$ since the signed measure has total mass
+zero, and integrate its level sets; each level-set difference is bounded by
+the event supremum. Apply this to $h_t$. Substitution from (IS.10) gives
+
+$$
+S(t)(k(t)-x)=-\int h_t\,d(\mu_\gamma-\mu_{\widetilde\gamma}),
+$$
+
+whose absolute value is at most $\varepsilon/2$. Divide by the floor and
+take the supremum. The events contain actual retained failure labels and
+survival beyond the cut; no independent marginal laws were combined.
+$\square$
+
+The constants in (IS.11) are $1$ and $c/Z$ before division by $\sigma$;
+the constant in (IS.12) is $1/2$. These are the proved constants, without a
+claim of optimal minimax constants. If only a common marked-TV error
+$\varepsilon$ is known, it implies each CDF error is at most $\varepsilon$;
+using (IS.11) then gives $(1+c/Z)\varepsilon/\sigma$, whereas (IS.12)
+uses the joint law to give $\varepsilon/(2\sigma)$. Two supplied CDF error
+bounds do not themselves certify marked TV or quantum operational distance.
+Uniform CDF error controls intervals, whereas TV tests all measurable time
+sets. Thus the stronger estimate requires stronger error data.
+

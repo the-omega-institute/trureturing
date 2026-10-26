@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f380702c352a4b8e7acee8fcbbf98e224fa92deb1e0422dab82ddccf649db13
+  normalized_sha256: sha256:2f380702c352a4b8e7acee8fcbbf98e224fa92deb1e0422dab82ddccf649db13
+cas_ref: sha256:2f380702c352a4b8e7acee8fcbbf98e224fa92deb1e0422dab82ddccf649db13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义来源审计所需的非冗余见证字段。
+    previous_atom_id: ee8ec9facc2776f916d3837ea8feaee6aa7702da27802780345928e99d26bad2
+    next_atom_id: ea7d1599568916abdf0cc42ffaf0b012410c2ede8059923e15958c182aef9ed4

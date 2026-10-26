@@ -1,0 +1,22 @@
+**定义 1.2（实际矩阵和全部末端）。** 令
+
+$$
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+U=JL=\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+N=MU=\begin{pmatrix}1&0\\2&1\end{pmatrix}.
+$$
+
+时钟 $0,\ldots,4$ 的矩阵是 $I,J,L,U,N$，迹是 $1,j,\ell,T,V$。第五动作和后续矩阵如下；表中后三个字母从 $H_4$ 起按时间排列。
+
+$$
+Q_J=JN=\begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad
+Q_M=MN=\begin{pmatrix}2&1\\3&1\end{pmatrix}.
+\tag{1.4}
+$$
+
+| 第五、第六动作 $\alpha$ | $B_\alpha=A_6$ | $\tau_\alpha=\operatorname{tr}(B_\alpha P)$ | $\tau_{\alpha,J}$ | $\tau_{\alpha,M}$ |
+| --- | --- | --- | --- | --- |
+| $JJ$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ | $2r+b+c$ | $1+r+3b+c$ |
+| $JM$ | $\left(\begin{smallmatrix}1&0\\3&1\end{smallmatrix}\right)$ | $1+3b$ | $3r+b+c$ | $1+2r+4b+c$ |
+| $MJ$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $1+2r+2b+c$ | $1+r+3b+c$ | $2+5b+c$ |
+| $MM$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $2+r+5b+c$ | $1+4r+3b+2c$ | $3+2r+8b+2c$ |

@@ -1,0 +1,74 @@
+**Theorem 4.1 (All $b=\beta$ worlds after fifth M).** For fixed
+$\beta>0$, let $v_r$ interpolate
+
+$$
+v_r(0)=-1,\qquad v_r(1)=-1/j,\qquad
+v_r(2)=-1/T,\qquad v_r(3)=-1/n,
+\quad b=\beta.
+\tag{4.1}
+$$
+
+Set
+
+$$
+\begin{aligned}
+A_4(r)&=1+Uv_r(4)=U\Lambda,\\
+A_5(r)&=1+(n+U)v_r(5),\\
+v_r(4)&=1-4/j+6/T-4/n,\\
+v_r(5)&=4-15/j+20/T-10/n.
+\end{aligned}
+\tag{4.2}
+$$
+
+The fixed-width parent is exactly
+$(P(r,\beta),h+\epsilon v_r,24+\epsilon)$ with
+$\epsilon A_4(r)=0$. Its fifth-M response is $24+\epsilon A_5(r)$.
+For every real $p$ the complete slice
+
+$$
+S_p=\mathcal F(H_{4,\beta},M,p)\cap\{b=\beta\}
+\tag{4.3}
+$$
+
+is $K_\beta$ when $p=24$. When $p\ne24$, it has one complete world for
+each strict root $r\in(0,1)$ of $A_4(r)=0$, with
+$\epsilon=(p-24)/A_5(r)$, and no other worlds. There are at most two such
+roots.
+
+Proof. Theorem 2.1 gives the fixed-width parent and (4.2) gives its fifth
+response. On the entire domain $b>0$, $0<r<1$, the pair $(A_4,A_5)$ has no
+common zero: this is exactly the M case of
+[the terminal-zero-plane volume](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md),
+Theorem 9.2, equations (9.5)–(9.14), with the same $j,n,T,U$ and
+$V_M=n+U$. That supplier imposes neither a chamber nor a gain or drift
+condition and includes unbounded positive $b,c$. It therefore applies to
+every fixed positive $\beta$ here. If $p=24$,
+$\epsilon A_4=\epsilon A_5=0$ implies $\epsilon=0$. If $p\ne24$,
+$\epsilon\ne0$, so $A_4=0$ and the displayed reconstruction is both
+necessary and sufficient.
+
+For the root bound, at fixed $b$ one has $j''=n''=-2/b$ and
+
+$$
+(1/j)''=\frac{2(j')^2}{j^3}+\frac{2}{bj^2}>0,
+\qquad
+(1/n)''=\frac{2(n')^2}{n^3}+\frac{2}{bn^2}>0.
+\tag{4.4}
+$$
+
+Thus $A_4''=-4U\{(1/j)''+(1/n)''\}<0$. Three distinct zeros would
+contradict strict concavity, so there are at most two. Original gain
+zeros and degree drops do not affect this argument, and the original
+rows exclude an identically zero gain for every reconstructed world. ∎
+
+For completeness, the supplier's relevant obstruction is an exact
+Sylvester resultant of its $N_4,N_{5,M}$:
+$256b^{14}T^4U^2P_M(b)$. Its highest three terms are
+$b^{14}(27b^2+198b-24294)$, negative for $0<b<4$, and all remaining
+coefficients are negative. For $b\ge4$, $j,n>b$ instead give
+$A_4>1+U(b^2-b-8)/(bT)>0$. These are the supplier's two exhaustive
+ranges, not an assumption that the fixed-width roots are regular in any
+other chart. Its Theorem 9.3 also supplies the already known same-source
+uniqueness at $(H_{4,\beta},M,p)$: the sixth original row fixes the drift
+even at a singular five-row source.
+

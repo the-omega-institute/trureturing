@@ -1,0 +1,95 @@
+## 18. An actual remote regular branch over the third rectangle
+
+Use the regular circuit of this volume, Lemma 2.2, (2.3)--(2.5), with
+\(t=r/b\), and write
+\[
+ F(r,b)=\left(N_0(r/b,b)/D(r/b,b),\ N_1(r/b,b)/D(r/b,b)\right).
+\tag{18.1}
+\]
+Here \(D,N_0,N_1\) are exactly the integer polynomials in (2.3), after
+the indicated substitution; the identities (2.4)--(2.5), including
+\(D=(5/2)TUjn\Lambda\), \(d=-C_0/D\), and the whole interpolant
+\(g(i)=C_i/D\) are retained.  Put
+\[
+ x_0=(0.048472239114,0.046421593505),\qquad
+ R=\{x:\|x-x_0\|_\infty\le10^{-8}\}.
+\tag{18.2}
+\]
+The inverse preconditioner and its determinant are
+\[
+ Y=\begin{pmatrix}
+-0.009735466305&0.004818667927\\
+-0.009305738900&0.004566737839
+\end{pmatrix},\qquad
+ \det Y={76388643822649081\over200000000000000000000000}\ne0.
+\tag{18.3}
+\]
+
+For a polynomial \(Q(r,b)\), define its exact Taylor enclosure on a square of
+radius \(\rho\) by
+\[
+ q_{ij}(Q)={1\over i!j!}\partial_r^i\partial_b^jQ(x_0),\qquad
+ \mathcal T_\rho(Q)=q_{00}(Q)+[-S_\rho(Q),S_\rho(Q)],
+\quad
+ S_\rho(Q)=\sum_{i+j>0}|q_{ij}(Q)|\rho^{i+j}.
+\tag{18.4}
+\]
+For \(E_{kl}=\delta_{kl}L^2-\sum_iY_{ki}((\partial_lP_i)L-P_i\partial_lL)\),
+where \(L=b^3D\) and \(P_i=b^3N_i\), the identity
+\[
+ I-YDF=E/L^2
+\tag{18.5}
+\]
+holds.  The finite sums (18.4), followed by rational interval division by
+\(\mathcal T_{10^{-8}}(L)^2\), give
+\[
+10^9(I-YDF(R))\subset
+\begin{pmatrix}
+[-61299,61307]&[-65343,65335]\\
+[-102136,102111]&[-108449,108475]
+\end{pmatrix},
+\quad
+\|I-YDF(R)\|_\infty<211/10^6<1/1000.
+\tag{18.6}
+\]
+The same exact Taylor rule applied to \(Y(F(x_0)-y)\), uniformly for
+\(y\in K_3\), gives
+\[
+10^{15}Y(F(x_0)-y)\in[-7506636,7047499]\times[-7162674,6709804].
+\tag{18.7}
+\]
+Thus the contraction image radius is less than
+\(8.01\cdot10^{-9}<10^{-8}\).  On the enlarged open rectangle
+\[
+ \widehat K_3=(7.283036-10^{-7},7.283037+10^{-7})
+ \times(61.494372-10^{-7},61.494373+10^{-7}),
+\tag{18.8}
+\]
+the same finite Taylor calculation gives the sharper uniform image radius
+\[
+ 896415551941/10^{20}<10^{-8}.
+\tag{18.9}
+\]
+
+The source and parent guards on \(R\) have the exact outward enclosures
+\[
+\begin{gathered}
+ r\in[0.048472229114,0.048472249114],\quad
+ b\in[0.046421583505,0.046421603505],\\
+ c\in[0.99356049,0.99356135],\quad
+ D\in[0.41331626,0.41333581],\\
+ \Lambda\in[0.127714779,0.127721037].
+\end{gathered}
+\tag{18.10}
+\]
+In particular the source is strict and regular throughout \(R\).  The
+corresponding complete-world drift, alternative readings, and a whole gain
+sample are bounded by
+\[
+ d\in[35.527142,35.529885],\quad
+ a\in[220.955521,220.976926],\quad
+ m\in[340.198640,340.231979],\quad
+ g(0)=-d\ne0.
+\tag{18.11}
+\]
+

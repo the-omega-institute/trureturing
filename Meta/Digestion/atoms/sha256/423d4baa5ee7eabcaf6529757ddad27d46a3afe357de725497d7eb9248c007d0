@@ -1,0 +1,19 @@
+**Definition 19.5 (Residual original equations).** The unresolved
+joint question is the existence statement (19.6), with all four
+parameters in the full fibre (19.4). A terminal-M pair still
+requires both $\mathcal U(x)=\mathcal U(y)$ and
+$\mathcal M(x)=\mathcal M(y)$ with $x\ne y$. Equality of
+terminal-M images alone is an equality in the parent and does
+not place the worlds in one acquired child.
+
+Corollary 17.1 removes only equal-$r$ terminal-M pairs in
+$R_{\rm loc}$. All unequal-$r$ pairs, and all equal-$r$ pairs
+outside that interval, retain their original equations. The
+entire singular-child and strip exclusions remain those supplied
+in Definition 17.2 by $S$ and $E$; $Q(p_J,v)=0$ remains the
+necessary condition of Theorem 11.2 for a regular terminal-M pair.
+The global representation (19.5) supplies neither an enumeration
+of terminal-M pairs nor an additional excluded root of $Q$,
+and does not decide compatibility of the two distinct pairs
+inside one entire $\mathcal C_v$.
+

@@ -1,0 +1,42 @@
+**命题 78.2（三循环的 SU(2) 提升）。** 有
+
+$$
+B(Y_P,X_P)=-Z_P,\quad B(-Z_P,Y_P)=X_P,\quad
+B(X_P,-Z_P)=Y_P.
+$$
+
+令
+
+$$
+S=X_P+Y_P-Z_P,\qquad V=\frac{P+iS}{2}.
+$$
+
+则 $V^\dagger V=VV^\dagger=P$，且
+
+$$
+VX_PV^\dagger=Y_P,\qquad
+VY_PV^\dagger=-Z_P,\qquad
+V(-Z_P)V^\dagger=X_P,\qquad V^3=-P.
+$$
+
+局部密度算子的共轭三次为恒等。
+
+证明（78.2）。第 76.3 条的 Pauli 乘法与反序符号直接给三条括号式。不同 Pauli 反交换，故 $S^2=3P$，于是
+
+$$
+V^\dagger V=(P-iS)(P+iS)/4=P,
+\quad V^2=(-P+iS)/2,\quad V^3=-P.
+$$
+
+为明确共轭方向，写 $n=(1,1,-1)$、$S=n\cdot\sigma_P$。Pauli 乘法给
+
+$$
+S\sigma_{P,i}S=2n_iS-3\sigma_{P,i},\qquad
+V\sigma_{P,i}V^\dagger
+=\frac14\bigl(\sigma_{P,i}+i[S,\sigma_{P,i}]+S\sigma_{P,i}S\bigr).
+$$
+
+分别代入 $X_P,Y_P,Z_P$，所得为 $Y_P,-Z_P,-X_P$，即所列方向。$V^3=-P$ 在块内仅为标量相位，故其对局部密度算子的三次共轭恒等。$\square$
+
+酉共轭保持上述括号；在两个叶上已经有 $q\rho=\operatorname{Ad}_Vq$，对二叉节点用括号相容性作结构归纳，得到该式对全树成立。因此有限表示可有三周期，但原生树并未被商掉。对 $T_j=\rho^j(\alpha)$，原生结构递推 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 使叶数满足初值 $1,1$ 的 Fibonacci 递推，所以叶数 $F_{j+1}$ 无界增长；有限表示周期不恢复这些来源。例如 $q(\langle\alpha,\alpha\rangle)=0$ 也已证明表示不忠实。这里的 $V$ 是附加候选门，不是由原生替换取得的酉实现。
+

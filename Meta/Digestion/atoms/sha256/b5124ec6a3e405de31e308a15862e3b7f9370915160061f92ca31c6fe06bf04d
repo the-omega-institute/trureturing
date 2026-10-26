@@ -1,0 +1,45 @@
+**Theorem 11.7 (A nonempty strict rational child outside the cover).**
+At the exact real base
+
+$$
+ p_0=9918/121,\qquad v_0=1068459/2420,
+\tag{11.14}
+$$
+
+the entire child $C(p_0,v_0)$ is nonempty, and both $a$ and $m$
+are injective on that entire child.
+
+Proof. Use the strict complete world
+
+$$
+ b=1,\quad r=1/2,\quad d=3933/121,\qquad
+ g(s)=(1199s^3-9783s^2+24133s-19665)/605.
+\tag{11.15}
+$$
+
+This is the same world as X, Proposition 6.2; no new collision or
+new world construction is asserted. Its traces at clocks zero through
+six are $(1,5/4,2,7/4,3,19/4,31/4)$. Its gain samples at clocks
+zero through seven are
+
+$$
+(-3933/121,-4116/605,-939/605,-588/121,-585/121,
+1260/121,31929/605,81156/605).
+\tag{11.16}
+$$
+
+Multiplication by those traces and addition of the same fixed drift
+gives exactly $(0,24,147/5,24,18,p_0,v_0)$. Its terminal values are
+$a=547179/605$ and $m=206823/121$. The source is strict and
+$p_0\ne24$.
+
+The rational base reduces to $(8,79)$ modulo $179$; the denominators
+$121,2420$ are units in $\mathbb Z_{(179)}$. The finite arithmetic
+of Lemma 11.3 at this base gives $c=121$, and the following ascending
+coefficient lists:
+
+| Polynomial | Coefficients from constant through degree eighteen |
+| --- | --- |
+| $\widehat R_0$ | $(60,80,75,117,7,80,111,72,82,113,28,29,138,113,37,154,31,172,1)$ |
+| $Q_{J,0}$ | $(82,147,41,113,96,92,8,130,155,55,2,49,15,16,129,5,141,142,1)$ |
+| $Q_{M,0}$ | $(109,42,37,123,90,133,68,17,111,172,146,103,117,136,176,6,92,0,1)$ |

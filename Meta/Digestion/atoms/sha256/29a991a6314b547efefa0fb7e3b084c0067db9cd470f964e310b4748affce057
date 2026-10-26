@@ -1,0 +1,89 @@
+**Theorem 18.2 (Four complete common-history worlds).** For every real
+$p\in\mathcal P$, (18.6) has exactly one zero $z(p)$ in $\mathcal B$;
+it is interior. Its four sources reconstruct four different complete
+worlds at $H_4$, all with $b>1/8$ and $d\ne24$. At $p=p_J$ write these
+worlds as $A,B,C,D$ and define exactly
+
+$$
+v_\star=u(A)\quad\text{at }z(p_J).
+\tag{18.8}
+$$
+
+Then
+
+$$
+\begin{gathered}
+p(A)=p(B)=p(C)=p(D)=p_J,\\
+u(A)=u(B)=u(C)=u(D)=v_\star,\qquad f_J(A)=f_J(B).
+\end{gathered}
+\tag{18.9}
+$$
+
+These assertions concern four actual worlds. Exhaustion of their
+acquired child is a separate assertion in Theorem 23.1.
+
+Proof. Use exact rational interval arithmetic (14.12) and reciprocal
+only after exclusion of zero, with the derivative rules (7.5). In this
+proof the expression order is (18.2)–(18.6): compute $c,j,n,T,U,V$,
+then $\Lambda$ and $B_{\rm coef}=6/T-2/U$, then
+$\epsilon=(-(24/5)(b-1/8)B_{\rm coef})/\Lambda$, then (18.3),
+(18.4), (18.5). Sums and matrix products are in increasing index order.
+This fixes the rational inclusion calculation, without rounding or
+algebraic refitting of the expressions.
+
+The following enclosures hold throughout the full coordinate boxes.
+Each numerator interval in the table is divided by $10^6$.
+
+| World | $\Lambda$ | $d$ | $j$ | $n$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $[-1165902,-1165901]$ | $[26663105,26663107]$ | $[823526,823527]$ | $[1621817,1621818]$ |
+| $B$ | $[2369401,2369402]$ | $[23746741,23746742]$ | $[1593573,1593574]$ | $[1946293,1946295]$ |
+| $C$ | $[-381012,-381011]$ | $[29640372,29640375]$ | $[1048078,1048079]$ | $[1328904,1328905]$ |
+| $D$ | $[1403279,1403280]$ | $[23680135,23680136]$ | $[1132489,1132491]$ | $[1952291,1952292]$ |
+
+The coordinate bounds in (18.7) give $0<r<1$, $b>1/8$, $T>1$ and
+$U>1$ before division. Thus $b,j,n,T,U$ are positive and every
+$\Lambda$ interval excludes zero. Also
+$B_{\rm coef}=2(2+5b)/(TU)>0$. All four entries of each $P$ are
+positive, its trace is one and its determinant is zero, so it has
+rank exactly one. The four $r$ boxes are pairwise disjoint. This
+establishes all six complete-world distinctness guards.
+
+Use the exact preconditioner
+
+$$
+\mathsf C=10^{-8}\begin{pmatrix}
+4921360&-3810382&0&0&-1407759&0&0&152411\\
+-2423216&2748351&0&0&1015388&0&0&-109931\\
+2063758&289613&0&0&-230496&0&0&-132042\\
+-54555&1067305&0&0&6093&0&0&3491\\
+1268991&2029850&-2607294&0&749935&-891665&0&-81192\\
+852351&1363401&-1387346&0&503713&-598910&0&-54534\\
+-2253154&-3604094&0&4951388&-1331545&0&1583194&144160\\
+229692&367410&0&142330&135741&0&-161394&-14696
+\end{pmatrix}.
+\tag{18.10}
+$$
+
+Let $E=I-\mathsf CDF_p(\mathcal B)$ be the interval matrix obtained
+by (7.5). For every $p\in\mathcal P$ the following exact bounds hold:
+
+$$
+\sum_{j=1}^8|E_{ij}|_{\max}<q_i,\qquad
+ |(\mathsf CF_p(m))_i|<\eta_i.
+\tag{18.11}
+$$
+
+The table specifies $q_i$ and $\eta_i$ in the coordinate order (18.7).
+Both bounds concern the unscaled ordered equations (18.6).
+
+| $i$ | $10^8q_i$ | $10^{24}\eta_i$ |
+| --- | --- | --- |
+| $1$ | $11111$ | $436587100487845$ |
+| $2$ | $7118$ | $258578350306137$ |
+| $3$ | $4419$ | $117668550203950$ |
+| $4$ | $1347$ | $56093000299099$ |
+| $5$ | $111278$ | $295306750456129$ |
+| $6$ | $68422$ | $180154900172247$ |
+| $7$ | $17725$ | $540431800271175$ |
+| $8$ | $2207$ | $36971600370067$ |

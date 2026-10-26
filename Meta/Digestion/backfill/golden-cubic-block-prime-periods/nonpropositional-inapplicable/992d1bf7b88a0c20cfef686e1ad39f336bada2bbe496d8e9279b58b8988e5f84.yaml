@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:992d1bf7b88a0c20cfef686e1ad39f336bada2bbe496d8e9279b58b8988e5f84
+  normalized_sha256: sha256:992d1bf7b88a0c20cfef686e1ad39f336bada2bbe496d8e9279b58b8988e5f84
+cas_ref: sha256:992d1bf7b88a0c20cfef686e1ad39f336bada2bbe496d8e9279b58b8988e5f84
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and definitions of Y_Q and L(Y) on the declared input range. No inequality or cutoff theorem is asserted.
+    previous_atom_id: 291d1314d7882692d24cee8d42350d0e74d003edf57daab91b4a05bdac3869bf
+    next_atom_id: 655accbdea6a0b84e45912d5ce5bfe734696725085debfd96d811dab6a1c04d6

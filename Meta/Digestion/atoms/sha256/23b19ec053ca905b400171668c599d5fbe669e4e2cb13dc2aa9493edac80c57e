@@ -1,0 +1,42 @@
+**Definition 93.1 (Actual fair chronological channel).** Let $A=\mathbb C^3$
+and $M_3=\mathcal B(A)$. Use the actual matrices and chronological law of
+[Purity arithmetic, Definition 87.1, (87.1)–(87.3)][PA] and
+[Environment record memory, Definition 27.1, (27.3)][ENV]. In the original
+coordinates set
+
+$$
+|0\rangle=\xi=\frac{(1,1,1)^{\mathsf T}}{\sqrt3},\qquad
+|1\rangle=e=\frac{(1,1,-2)^{\mathsf T}}{\sqrt6},\qquad
+|2\rangle=f=\frac{(1,-1,0)^{\mathsf T}}{\sqrt2}.
+\tag{93.1}
+$$
+
+These vectors form the ordered orthonormal basis used for all matrix and
+tensor coordinates below. In this basis the actual matrices are
+
+$$
+W=\operatorname{diag}(1,1,-1),\qquad
+U_0=1\oplus\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},
+\qquad U_1=U_0W.
+\tag{93.2}
+$$
+
+For any real $\theta$, the chronological letters are
+$V_0(\theta)=U_0e^{i\theta W}$ and $V_1(\theta)=V_0(\theta)W$.
+The actual law assigns every word
+$V_{h_n}\cdots V_{h_1}$ probability $2^{-n}$. Write
+$\operatorname{Ad}_U(X)=UXU^\dagger$ and put
+
+$$
+\Delta_W=\tfrac12(\operatorname{id}+\operatorname{Ad}_W),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}),\qquad
+\mathcal N_n=F^n\quad(n\ge0).
+\tag{93.3}
+$$
+
+The cited identities identify this $F^n$ with the actual erased-history
+channel at every angle. In particular $F^0=\operatorname{id}_{M_3}$.
+The input and output are the whole complex qutrit; the history is not
+an output register.
+

@@ -1,0 +1,18 @@
+**定义 99.2（有限层三维谱证书）。** 一列 FIB 图实现具有窗口
+$[r_-,r_+]\times[t_-,t_+]$ 的三维谱证书，如果存在 $\epsilon_j\to0$，
+使得对所有声明的体点和窗口端点：
+
+$$
+\begin{aligned}
+\left|\widehat d_{V,j}-3\right|&\le\epsilon_j,\\
+\left|\widehat d_{s,j}-3\right|&\le\epsilon_j,\\
+\left|\frac{2\widehat d_{V,j}}{\widehat d_{s,j}}-2\right|&\le\epsilon_j,
+\end{aligned}
+\tag{99.5}
+$$
+
+并且边界影响满足：把 $x$ 限制在距 $\partial V_j$ 至少 $R_j$ 的区域时，
+球体积和返回概率的相对误差趋于零；$R_j$ 覆盖所声明的整个窗口。该
+证书还必须和 (B1)--(B4) 的来源、运输和回路条件联合，而不能只提交三条
+数值斜率。
+

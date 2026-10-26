@@ -18,8 +18,6 @@ internal sealed class GHZMeasureBiseparableBoundDocument : IScribeDocumentDefini
         H("The sharp A|BC constant of the GHZ measure"),
         Blocks(
             Paragraph(Text("Fin k denotes the k computational labels, indexed from zero. QubitMatrix is Matrix (Fin 2) (Fin 2) Complex and TwoQubitMatrix is Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) Complex. The three-qubit matrix index is Fin 2 × (Fin 2 × Fin 2). Real triples use the Euclidean dotProduct(a,b) = sum over i : Fin 3 of a(i)b(i), not the supremum norm of functions. toLp(2,a) puts the coordinates a into EuclideanSpace Real (Fin 3); vecCons(a,vecCons(b,vecEmpty)) is the two-vector family indexed by Fin 2. Orthonormal Real requires both squared Euclidean lengths to be one and their dot product to vanish. blochMatrix is D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix; at trace parameter zero and coordinates toLp(2, fun i => 2*n(i)), it has entries n(2), n(0) - I*n(1), n(0) + I*n(1), -n(2), read by rows, the Pauli spin expression in equation (1). The symbols a1,a2,b1,b2,c1,c2 represent Lean's subscripted direction names. ofReal explicitly embeds a real scalar into Complex, smul is scalar multiplication, kronecker is Matrix.kroneckerMap with scalar multiplication, trace is the complex matrix trace, re is the real part and sSup is the real supremum. Anonymous square brackets display Lean typeclass assumptions. All formulas bind every parameter; fixed imported operators are named constants.")),
-            Node("IsDensity", "Arbitrary density matrices", DensityFormula(),
-                "A density matrix is positive semidefinite with complex trace one. The finite index type n is arbitrary, so both single-qubit and two-qubit mixed states are included."),
             Node("expect", "Real trace expectation", ExpectFormula(),
                 "Section I, printed page 2: “" + SpinQuote + "” The real part is explicit in Lean; for the Hermitian observables and density matrices in the bound, the imaginary part is zero."),
             Node("observable", "The three-qubit tensor observable", ObservableFormula(),
@@ -76,12 +74,6 @@ internal sealed class GHZMeasureBiseparableBoundDocument : IScribeDocumentDefini
     private static Formula OrthonormalExpression(Formula a, Formula b) =>
         Call("Orthonormal", N("Real"), Call("vecCons", Call("toLp", D(2), a),
             Call("vecCons", Call("toLp", D(2), b), N("vecEmpty"))));
-    private static Formula DensityFormula()
-    {
-        var n = N("n"); var rho = N("rho");
-        return All("n", N("Type"), Seq(Instance("Fintype", n), All("rho", Mat(n),
-            IffTo(Call("IsDensity", rho), And(Call("PosSemidef", rho), Eqn(Call("trace", rho), D(1)))))));
-    }
     private static Formula ExpectFormula()
     {
         var n = N("n"); var rho = N("rho"); var a = N("A");

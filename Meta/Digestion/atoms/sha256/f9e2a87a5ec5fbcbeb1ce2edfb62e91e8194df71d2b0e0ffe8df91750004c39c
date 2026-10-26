@@ -1,0 +1,49 @@
+**Theorem 54.1 (All-world same-run acquisition and callable retention).**
+Under Hypothesis 53.1 and Definition 53.2, for every $W\in\mathcal D$
+and every authorized local request sequence, seven completed
+$\mathrm{Tick}$ calls, possibly interspersed with other idle local
+requests, acquire the spatial predicate and actually set retained
+memory. At the resulting acquired cut,
+
+$$
+\begin{gathered}
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+Q_7=MQ_6=\begin{pmatrix}5&2\\8&3\end{pmatrix},\\
+(i,H,g,d)=(7,Q_7P(W),g(W),d(W)),\\
+\eta=h_\theta\bigl(d(W)+g(W)(7)\operatorname{tr}(Q_7P(W))\bigr)
+     =h_\theta(m(W))=\sigma(P(W)).
+\end{gathered}
+\tag{54.1}
+$$
+
+Every subsequent authorized $\mathrm{Recall}$ returns this correct
+bit with the same retained state. Any finite number of continued
+local requests leaves the source at this original clock-seven state.
+This conclusion needs no $q$, regularity flag or endpoint-selection
+label as receiver input.
+
+Proof. At initialization the raw zero-clock report comes from this
+same $W$, not an installed constant standing in for a read. Suppose
+$i$ advances have completed. Induction in (53.1) gives
+$H=Q_iP(W)$, unchanged whole $g,d$, and exactly the original
+read $y_i(W)$ at each source clock. Interspersed local responses
+leave this source state and the relevant ready phase unchanged.
+For $i<6$ the latch remains $\bot$. Thus all six literal acquired
+readings, including the actual $p(q),v(q)$ for any witness of domain
+membership, occur on this run. No reconstruction is used to replace
+one of those readings.
+
+The seventh advance is $M$. Multiplication gives the two matrices in
+(54.1) and $\operatorname{tr}(Q_7P)=3U+2n$. Consequently its
+captured scalar is exactly $m(W)$. The enabled comparison reads this
+input cell, and the enabled latch write stores its comparison value
+before clearing. It follows that the retained $\eta$ actually equals
+$h_\theta(m(W))$, rather than merely being recoverable from an
+unretained number. Theorem 52.2 identifies it with the independently
+defined spatial predicate for every compatible original world.
+Every acquired-state request has an identity joint successor by
+Definition 53.2. Induction on the length of a local suffix proves
+both continued correctness and the unchanged source, latch and rights.
+A finite prefix with fewer advances is not asserted to have acquired
+the bit; its Recall status is exactly the one declared. ∎
+

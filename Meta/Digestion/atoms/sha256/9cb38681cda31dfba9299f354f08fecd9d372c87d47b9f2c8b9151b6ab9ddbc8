@@ -1,0 +1,24 @@
+**Library and literature correspondence.** The direct D5/owning-Scribe
+interfaces are NativeSerialMachine's operational/reached replay
+and actual register execution; NativeFullSourceProducer's finite producer
+with its private traverse, production_reads and stationary helpers;
+NativeSerialEffective's OriginalCodeRealization, code-service simulation
+and private evaluator/erasure helpers; TypedFiniteViewKernel,
+PredictiveMemoryMinimalQuotient and RealizedImageKernelFactorization.
+Their hypotheses supply runs, realizations or readout/update factors.
+They neither grant the tape74 right nor install this loader or receiver.
+The historical mathlib StateTransition/Encoding at
+db584cd6d46c92f209a44c0f1c829460d327499d and the separately pinned
+56a005855ea17e0b0958f73ec801ae140b0a1679 copies supply only their stated
+simulation and encode/decode laws; no cross-version identification or
+compilation is asserted.
+
+Rushby's [Noninterference, Transitivity, and Channel-Control Security
+Policies](https://www.csl.sri.com/papers/csl-92-2/csl-92-2.pdf),
+Chapter2's machine/run and local-consistency development, is
+literature-attested background for proving trace claims by individual
+actions. Its noninterference theorem is not instantiated here: these
+views and acquisition rights require the separate proofs above.
+The construction in §21 is repo-derived, not a world's-first claim or
+a conclusion that a bounded source search exhausts alternative methods.
+

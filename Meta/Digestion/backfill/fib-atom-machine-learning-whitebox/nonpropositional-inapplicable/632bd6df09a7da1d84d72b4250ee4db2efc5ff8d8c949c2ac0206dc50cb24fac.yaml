@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:632bd6df09a7da1d84d72b4250ee4db2efc5ff8d8c949c2ac0206dc50cb24fac
+  normalized_sha256: sha256:632bd6df09a7da1d84d72b4250ee4db2efc5ff8d8c949c2ac0206dc50cb24fac
+cas_ref: sha256:632bd6df09a7da1d84d72b4250ee4db2efc5ff8d8c949c2ac0206dc50cb24fac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅规定五窗特征、参数模型、训练点、平方损失和基向量；没有断言训练核、可识别性或风险值。
+    previous_atom_id: a4068e533a32d97138ffb1d1eea785708c59a9fa615e09e46a2870bd601364e7
+    next_atom_id: 86ef44a4e0e80fe5f3921cfb88dadbf9ac011fea9760a3fc1fccb9b71e3dc2db

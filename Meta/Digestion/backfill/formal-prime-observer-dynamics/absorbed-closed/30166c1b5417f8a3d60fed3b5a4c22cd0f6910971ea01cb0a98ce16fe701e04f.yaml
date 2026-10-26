@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:30166c1b5417f8a3d60fed3b5a4c22cd0f6910971ea01cb0a98ce16fe701e04f
+  normalized_sha256: sha256:30166c1b5417f8a3d60fed3b5a4c22cd0f6910971ea01cb0a98ce16fe701e04f
+cas_ref: sha256:30166c1b5417f8a3d60fed3b5a4c22cd0f6910971ea01cb0a98ce16fe701e04f
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/ThreeCompletionOrthogonality.future_behavior_quotient_merges_micro_identity
+    target_statement_id: sha256:43513643dc0c48e34244fce749c8ea372f1afd2e2915f618471c5db8b7386282
+receipts:
+  unresolved_subitems: []

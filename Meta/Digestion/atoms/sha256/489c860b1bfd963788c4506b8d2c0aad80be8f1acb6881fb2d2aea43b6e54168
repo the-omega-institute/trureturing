@@ -1,0 +1,34 @@
+**Proposition 83.3 (singular Levi-zero source with a reachable higher bracket).** On $\mathbb R^4$ with coordinates $(x,y,z,w)$ and ordinary density $dx\,dy\,dz\,dw$, take
+$$
+X_1=\partial_x+\frac{y^2}{2}\partial_z,\qquad
+X_2=\partial_y,\qquad X_3=\partial_w,\qquad o=(0,0,0,0).
+\tag{83.15}
+$$
+This supplies a constant-rank-three smooth carrier with strong Hörmander generation everywhere, but at $o$ the entire pointwise Levi form of §22.1 vanishes. Its flag at $o$ has dimensions $(3,3,4)$, with weights $(1,1,1,3)$ on $(x,y,w,z)$ and $Q(o)=6$. It is not equiregular on any neighbourhood of $o$ and its horizontal structure is not a transitive Carnot-group structure. Nevertheless every sufficiently small domain as in Definition 83.1 supplies the same actual Dirichlet Green and punctured energy contract, for which normalized energies are unbounded below.
+
+Proof. The $x,y,w$ components of the three fields form the identity matrix, proving rank three at all points, and
+$$
+[X_2,X_1]=y\partial_z,\qquad
+[X_2,[X_2,X_1]]=\partial_z.
+\tag{83.16}
+$$
+At $o$, all frame-pair brackets vanish. The $C^\infty$ bilinearity of the Levi form established in §22.3 then gives $\mathcal F_o=0$ for all pairs of horizontal vectors. The third bracket in (83.16) is transverse and, together with the frame, spans the full tangent space everywhere. The coordinates $x,y,w$ have nonholonomic order one. All horizontal derivatives of $z$ of orders one and two vanish at $o$, while $X_2^2X_1z(o)=1$, so $z$ has order three. These are privileged coordinates at $o$, and
+$$
+\delta_r(x,y,z,w)=(rx,ry,r^3z,rw)
+$$
+makes each field homogeneous of degree $-1$ and the density homogeneous of degree six. At $y\ne0$ the second bracket already spans the missing direction, so the nearby growth vector is $(3,4)$ and its weight sum is five. This changing growth vector prevents a transitive Carnot-group identification; homogeneity at this source does not restore equiregularity or identify a neighbourhood Hausdorff dimension.
+
+The transverse direction is also a literal flow displacement, rather than only a formal bracket symbol. Apply the four short local flows $X_2$ for time $b$, $X_1$ for time $a$, $X_2$ for time $-b$, and $X_1$ for time $-a$. Starting at $o$, their successive points are
+$$
+(0,b,0,0),\quad(a,b,ab^2/2,0),\quad(a,0,ab^2/2,0),\quad(0,0,ab^2/2,0).
+\tag{83.17}
+$$
+Thus arbitrarily small such loops return all three coordinates $(x,y,w)$ and change $z$ at cubic order. Signed $a$ gives either transverse sign. This mathematical flow statement applies to an execution contract only when these forward and reverse flows are permitted. If $z$ is readable and is a target, the unchanged triple is insufficient for that target, exactly the transport distinction in §22.2. On every neighbourhood of $o$ there are $y\ne0$ points with nonzero Levi form; hence the neighbourhood involutivity hypothesis of §22.3 fails, although $\mathcal F_o=0$.
+
+All three fields have zero divergence in the declared density, so the free interior operator is $-\sum_iX_i^2$. A flow box for $X_1$ is given by $(s,\eta)=(x,(y,z-xy^2/2,w))$, and a small smooth domain with closure in it satisfies (83.8). Theorem 83.2 therefore uses its full finite off-source Green field and genuine tests (83.12) with
+$$
+q_{\Omega,o}[u_r]\le aCr^{-2}-gc r^{-4}\longrightarrow-\infty.
+\tag{83.18}
+$$
+The structure is the classical Martinet-type horizontal model with an extra independent direction; the project-specific discriminator is its Levi-zero fixed source in the same matched stability and target contract. $\square$
+

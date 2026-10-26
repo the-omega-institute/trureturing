@@ -1,0 +1,18 @@
+Consequently:
+
+1. every old vertex outside \(M_e\) has \(\lambda_e(p)=1\);
+2. every beta parent \(p\in M_e\) must satisfy
+
+   $$
+   m_{pL}+m_{pR}<m_e(p),
+   \qquad
+   \lambda_e(p)
+   =
+   \frac{m_e(p)}
+        {m_e(p)-m_{pL}-m_{pR}},
+   \tag{118.3}
+   $$
+
+   where \(m_e(p)=\mathsf G_e(p,p)\) and
+   \(m_{p\sigma}=\mathsf G_c(p\sigma,p\sigma)\).
+

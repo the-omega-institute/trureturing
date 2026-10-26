@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec5195044f2c3d220700ee80eb34992f7b9f4a8f4e996118bd4932074bf0324e
+  normalized_sha256: sha256:ec5195044f2c3d220700ee80eb34992f7b9f4a8f4e996118bd4932074bf0324e
+cas_ref: sha256:ec5195044f2c3d220700ee80eb34992f7b9f4a8f4e996118bd4932074bf0324e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定有限后继博弈、可读状态及代表真实系统所需的忠实实现与闭合性条件，没有宣称安全判据成立。'
+    previous_atom_id: 6a64fb61cfc3b3b97749ac49783d955fb28348afd39268c959b50549413a54f2
+    next_atom_id: 194f37eae43f06b9fd3833790df35a34d5e98744832ea17ce0d08790f13a4db5

@@ -1,0 +1,98 @@
+**Definition 22.1 (Integer circuit, with fixed normalization).** In
+$\mathbb Z[x,p,v,d]$ set
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\\
+z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\quad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+ a_2=4z_3-6z_4+4z_5-z_6,\\
+z_*=xa_1-D(24-d),\\
+f=5dDa_2+a_0\{(294-10d)D-5a_2\},\\
+K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\{dD+(1-2x)a_0\}a_1^2,\\
+F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{gathered}
+\tag{22.2}
+$$
+
+Here $a_i=DH_i$ for $i=0,1,2$. Write
+$f=Ad^2+B_fd+C_f$ and $K=\sum_{i=0}^4k_id^i$, with coefficients
+in $\mathbb Z[x,p,v]$. The symbols $A,B_f,C_f,k_i$ denote exactly
+these coefficient extractions, not a primitive-part normalization. Put
+
+$$
+\begin{aligned}
+\alpha={}&k_4(-B_f^3+2AB_fC_f)
+ +k_3A(B_f^2-AC_f)-k_2A^2B_f+k_1A^3,\\
+\zeta={}&k_4(-B_f^2C_f+AC_f^2)
+ +k_3AB_fC_f-k_2A^2C_f+k_0A^3,\\
+Q_2={}&k_4(A^2d^2-AB_fd+B_f^2-AC_f)
+ +k_3A(Ad-B_f)+k_2A^2.
+\end{aligned}
+\tag{22.3}
+$$
+
+The exact polynomial identities and quotients specifying the carrier are
+
+$$
+\begin{gathered}
+A^3K-(\alpha d+\zeta)=fQ_2,\\
+E=\frac{A\zeta^2-B_f\alpha\zeta+C_f\alpha^2}{A^3},\qquad
+R=\frac{E}{256D^8F_0^2},\\
+A\zeta^2-B_f\alpha\zeta+C_f\alpha^2
+ =A^3\,256D^8F_0^2R.
+\end{gathered}
+\tag{22.4}
+$$
+
+Both quotients in this display are exact in the polynomial ring; their
+meaning does not involve division at an individual zero of $A,D$ or
+$F_0$. They give $R\in\mathbb Z[x,p,v]$ with $512$ nonzero monomials
+and coordinate degrees $(18,6,6)$. Thus (22.2)–(22.4), including the
+coefficient extractions, specify every coefficient used below.
+
+For the fixed six by six Sylvester matrix $\mathsf S$ with rows
+$d^3f,d^2f,df,f,dK,K$ and descending columns $d^5,\ldots,1$,
+
+$$
+\operatorname{Res}_d(f,K)=\det\mathsf S
+ =E=256D^8F_0^2R.
+\tag{22.5}
+$$
+
+The determinant is retained at this fixed size under specialization.
+This is precisely F31's carrier: the present $K=4k$ multiplies its last
+two rows by four and its factor $16$ by sixteen. For a check on the
+remaining scalar normalization,
+
+$$
+[x^0]R=10^6(32p-5v-366)^2
+(120p^2-38pv-3360p+3v^2+522v+23112)^2.
+\tag{22.6}
+$$
+
+A direct way to verify (22.4) is to reduce $d^2,d^3,d^4$ using the
+quadratic $f$, multiplying through by $A^3$. Their remainders give
+exactly (22.3); the quotient is the displayed $Q_2$. At generic $A\ne0$
+the quadratic norm of $\alpha d+\zeta$ gives the numerator defining
+$E$, with the factor $A^3$ in the denominator. Equivalently expansion
+of the fixed determinant gives the same polynomial $E$. Exact
+polynomial division then gives $R$ and (22.6). These identities are
+identities before any specialization or cancellation of a source guard.
+
+For smaller coefficient evaluations define the exact polynomial quotients
+
+$$
+\alpha_r=\frac{\alpha}{32D^3},\qquad
+\zeta_r=\frac{\zeta}{32D^3}.
+\tag{22.7}
+$$
+
+They have respectively $220$ and $315$ nonzero monomials; the
+unreduced $\alpha,\zeta$ have $280$ and $405$. Only the displayed
+constant and $D$ factors have been removed. In particular no
+actual-world equation is divided by $F_0$.
+

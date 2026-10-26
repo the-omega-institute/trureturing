@@ -1,0 +1,30 @@
+**Definition 8.1 (Affine response coefficients).** For a strict source use
+$\eta,\Lambda,e$ from Definition 7.1 and set
+
+$$
+\begin{aligned}
+A_5&=1+(U+n)(4-15/j+20/T-10/n),\\
+A_6&=1+(2U+n)(10-36/j+45/T-20/n),\\
+A_7&=1+(3U+2n)(20-70/j+84/T-35/n),\\
+K_5&=(U+n)(96-108/T),\\
+K_6&=(2U+n)(240-243/T),\\
+K_7&=(3U+2n)(480-2268/(5T)).
+\end{aligned}
+$$
+
+The original-node interpolant of Definition 7.1 gives exactly
+
+$$
+(p,v,m)=24+(K_5,K_6,K_7)+e(A_5,A_6,A_7).
+$$
+
+For example the extrapolation weights at clock five are
+$(-4,15,-20,10)$; substitution of the four gain samples yields the first
+coordinate, and the clock-six and clock-seven weights yield the others.
+These are responses of one whole gain and fixed drift, not three
+independently chosen samples. Write $\mathcal S=\{\Lambda=0\}$ and
+$\mathcal O=C\setminus E$ when a child is fixed. A singular source is
+$(\theta,1/8)$ for one of the two strict roots of the $\Phi$ in Section 3.
+At it $K_{5s}=0$, $K_{6s}=24(2U_s+n_s)$, and $A_{5s}\ne0$ by O,
+Theorems 4.2 and 29.2. A subscript $s$ means evaluation at this source.
+

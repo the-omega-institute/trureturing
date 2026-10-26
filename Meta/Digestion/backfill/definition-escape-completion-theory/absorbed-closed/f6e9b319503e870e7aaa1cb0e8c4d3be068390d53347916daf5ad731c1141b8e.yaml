@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:f6e9b319503e870e7aaa1cb0e8c4d3be068390d53347916daf5ad731c1141b8e
+  normalized_sha256: sha256:f6e9b319503e870e7aaa1cb0e8c4d3be068390d53347916daf5ad731c1141b8e
+cas_ref: sha256:f6e9b319503e870e7aaa1cb0e8c4d3be068390d53347916daf5ad731c1141b8e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.freeze_visible_iff_post_arrival_under_exact_bridge
+    target_statement_id: sha256:0db81062327959d4ddffb216e5a186198d9921c96f19c8e01f58ea700d51bc65
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.report_timestamp_not_required_by_boxed_criterion
+    target_statement_id: sha256:e99cdbace578c9a9b348d60a84428ab925763231bbfc2f254e8b15cff3352054
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.same_verdict_target_laundering
+    target_statement_id: sha256:0ff0b8736143fd1f91ac1e10e172b300df9a461cbfd9ef39d44865d7bab9117b
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.simultaneous_arrival_separates_source_formulations
+    target_statement_id: sha256:160cce128a1ddc21fe3ef12d26be0efdef755da8407533a937ae9fca001376e4
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.target_laundering_sketch_criterion
+    target_statement_id: sha256:a1b0b2c2917d0837d730dd7e42866bcd9755b9053f9f084b55e0a512d7a6afa1
+receipts:
+  unresolved_subitems: []

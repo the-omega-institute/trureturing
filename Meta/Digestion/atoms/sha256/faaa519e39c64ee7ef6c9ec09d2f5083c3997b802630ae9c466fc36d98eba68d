@@ -1,0 +1,18 @@
+**Definition 4.1 (actual segmented representation).** Put $L(K)=4K-2$.
+The initial record and successful reservation records describe an ordered
+list of port-16 intervals $(b_a,d_a)$ with $d_a>0$ and
+$\sum_a d_a=L(K)$. The first interval is exactly $(b_0,L_0)$ from the original
+private ingress. Define, for $0\le i<L(K)$,
+
+$$
+\phi_K(i)=b_a+i-\sum_{c<a}d_c
+\quad\hbox{when}\quad
+\sum_{c<a}d_c\le i<\sum_{c\le a}d_c.
+$$
+
+The source invariant says that the bits at these actual cells, in that order,
+are preorder tokens of the current $t$, followed by PAD=00 to $2K-1$ tokens.
+At a source-write busy cut this is instead the actual raw bit word, without
+requiring it to decode to a tree. All physical intervals between source
+segments are other actual arena data; none is silently part of the source.
+

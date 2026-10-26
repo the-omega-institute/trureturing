@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:383b6e545c66cdbe7d7482e15c00996e125d9607ed6e0307316c89d1016bf072
+  normalized_sha256: sha256:383b6e545c66cdbe7d7482e15c00996e125d9607ed6e0307316c89d1016bf072
+cas_ref: sha256:383b6e545c66cdbe7d7482e15c00996e125d9607ed6e0307316c89d1016bf072
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该条仅是固定参数 47、模 3/5/15 的有界算术反例；其有限计算由钉版 Lean decide/norm_num 闭合，仓内无可用冻结 GID，按上游结算。
+    previous_atom_id: 1097b4f4dba75db31f7561ea65d2be23dd747ad9914f23ebe6f317915989ecd3
+    next_atom_id: 925e0a811734a9657e56a0b44e9b1f7577e9f901e3629e688c0a2c77de33eb03

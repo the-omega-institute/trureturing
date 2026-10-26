@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0cda7b8848ad50294dc3bf7fc5807618e74b1148d072c76290bb6755b5763bf
+  normalized_sha256: sha256:b0cda7b8848ad50294dc3bf7fc5807618e74b1148d072c76290bb6755b5763bf
+cas_ref: sha256:b0cda7b8848ad50294dc3bf7fc5807618e74b1148d072c76290bb6755b5763bf
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
+    target_statement_id: sha256:78e92a33352a77543701ac4de19a1fba8717ec08003964d4c885c551ba6bd6e6
+  - gid: D5/S3/PrimeForms/PellFamilies/GlobalPellUnboundedness.global_unboundedness_and_prime_power_local_periodicity
+    target_statement_id: sha256:2c6c18d2a3d11c1766d6b4dc8fb6895eac8c25a9ed5e6b1f8413b2c41d9285ad
+receipts:
+  unresolved_subitems: []

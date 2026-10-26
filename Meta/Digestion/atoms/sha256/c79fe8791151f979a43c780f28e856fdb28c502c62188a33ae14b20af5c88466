@@ -1,0 +1,33 @@
+**Proposition 13.3 (Exact cross-chart terminal obstruction).** Two valid
+opposite-chart boundary parameters cannot have both the same limiting
+acquired base and equal limiting response for either terminal action.
+Same-chart acquired-base equality forces equal limiting parameters;
+it does not decide tangent lifts of a diagonal limit.
+
+**Proof.** Retain $P,V$ from Theorem 13.2. The vanishing numerators
+for the two cross-chart terminal differences are, up to nonzero rational
+scalars,
+
+$$
+\begin{aligned}
+F_J={}&768t^2s^2-384t^2-768ts^3-2304ts^2+464ts+1333t\\
+&\quad+768s^3+1532s^2-464s-947,\\
+F_M={}&768t^2s^2-384t^2-768ts^3-1536ts^2+464ts+949t\\
+&\quad+768s^3+760s^2-464s-561.
+\end{aligned}
+$$
+
+In the lexicographic order $s>t$ each of the ideals
+$\langle P,V,F_J\rangle$ and $\langle P,V,F_M\rangle$ has
+the Gröbner basis
+
+$$
+\{2s^2-1,\ t-1\}.
+$$
+
+Its only common zeros are forbidden chart poles. The same-chart claim
+is Theorem 13.1. These conclusions concern finite nondegenerate ray
+parameters. Ratios tending to zero or infinity, higher-order diagonal
+lifts, and a boundary endpoint meeting a finite-$b$ world require their
+own conditions; they are not excluded by this calculation. ∎
+

@@ -1,0 +1,24 @@
+**Proposition 11.5 (a retained but canonically undecoded target).** At
+the authentic raw first Ready $P_1$, the mathematical inverse of Theorem
+11.4 recovers $c_p=1$. The unchanged canonical reconstruction of
+Definition 4.2 instead returns $W(P_0)$, with $c_p=0$. Consequently the
+full endpoint check of $D_S,D_B$ in Definition 6.1 fails on the true
+S/B bodies of $P_1$, and $D_M$'s full reselection check fails on its
+true $M_{\rm ret}$ body. These are failures of the indicated checks
+whenever evaluated; a binding check rejecting earlier does not repair
+them. No current delivery of these target bodies is presumed.
+
+Proof. First Ready has no post-Ready variable input. Its seed, capture,
+other fixed words and receipt count are those of $P_0$ by Proposition
+11.2. Definition 4.2 explicitly supplies canonical $w_0$ at its first
+bootstrap sites, even when its endpoint data contain $w_1$. Its counted
+reconstruction is therefore the canonical $P_0$ history. The recovered
+raw slot $c_p$ differs from the actual target slot. S/B raw endpoint
+equality must compare this location, and memory reselection must compare
+its family1 entry. Each equality is false. In contrast Theorem 11.4
+uses that existing entry as its first-bootstrap input and recovers $P_1$.
+Thus the same authentic target separates retained mathematical recovery
+from this installed canonical decoding rule. Support and boundary also
+distinguish the targets at the finite socket for $c_p$; this is not merely
+two descriptions of one raw endpoint. ∎
+

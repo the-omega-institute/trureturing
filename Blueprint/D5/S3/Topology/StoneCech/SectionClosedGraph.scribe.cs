@@ -137,12 +137,21 @@ internal sealed class SectionClosedGraphDocument : IScribeDocumentDefinition
                         + "Nat.card_fin gives exactly b+1. For requested n take b=n and use n <= n+1. "
                         + "The endpoint supplies Y and fibreGraph, while T2Space(principalExtension Y) is inherited by the subspace instance. "
                         + "These blocks of sizes 1,2,... merely reindex the nonempty blocks of the paper's size-n partition. "
-                        + "This is the parameter mapping of the transient exact application check; the exact compiled original application is still pending. "
-                        + "It introduces no retained named application theorem or separate Describe.")),
+                        + "For any proposed natural bound N, take the supplied clique K of size N+1. Its finiteness and K.ncard=N+1 contradict K.ncard <= N. "
+                        + "Thus this actual X is countably compact, Hausdorff and T1, and its symmetric irreflexive relation is closed in the entire product, "
+                        + "has every clique finite and has no uniform finite clique bound. These are exactly the clauses of Question 1. "
+                        + "The parameter discharge and the explicit no-bound inference passed a transient exact Lean application through the canonical targeted build and scoped statement/axiom report. "
+                        + "Its axiom closure contains only Classical.choice, Quot.sound and propext; the existing generic module completed canonical FirstFreeze. "
+                        + "This is an application of the existing theorem; it introduces no retained named application theorem or separate Describe.")),
                     Paragraph(Text("The classical method sources have narrower statements: Frolik's Lemma 2.8 requires no accumulation point in the "
                         + "separable metrizable base P, and Lemma 2.9 gives avoidance and omega1 closing-off; Ginsburg-Saks Theorem 2.12 concerns "
                         + "one fixed free-ultrafilter D and completely regular spaces. They are not sources for the exact arbitrary-q selector or this endpoint. "
                         + "The canonical notes distinguish these methods from repository-derived proof composition. "
-                        + "This owning exposition does not settle compiler, kernel, axiom, source-audit, projection, freeze, admission or required-CI obligations, "
-                        + "and does not claim resolution of Q1 or global priority from its open status in version 1."))), DescribeRole.Theorem))));
+                        + "The countable finite-block application supplies an affirmative mathematical answer to Question 1; "
+                        + "it neither attributes this exact selector construction to the method papers nor addresses Questions 2 and 3. "
+                        + "The primary-source status and source-fidelity boundaries are recorded in the Library note and Problems dossier. "
+                        + "Open status in the inspected sources does not establish worldwide absence, publication priority or official acceptance."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("feldman-wilce-countably-compact-unbounded-cliques"),
+                    ResolutionKind.Proved)))));
 }

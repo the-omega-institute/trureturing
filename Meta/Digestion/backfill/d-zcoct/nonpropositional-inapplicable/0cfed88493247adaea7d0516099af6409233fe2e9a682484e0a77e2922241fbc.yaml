@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0cfed88493247adaea7d0516099af6409233fe2e9a682484e0a77e2922241fbc
+  normalized_sha256: sha256:0cfed88493247adaea7d0516099af6409233fe2e9a682484e0a77e2922241fbc
+cas_ref: sha256:0cfed88493247adaea7d0516099af6409233fe2e9a682484e0a77e2922241fbc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure definition of the configuration jet defect in the specified half-plane.
+    previous_atom_id: 9e4e4a82fe697f28306ab0c3fa17a46d4835e5916aa7ceea273fcf208d03c155
+    next_atom_id: b3b7bb6c2833d5eb1db6e69fb35220e7fc819c3408b62c8ace0f15e6456d93c4

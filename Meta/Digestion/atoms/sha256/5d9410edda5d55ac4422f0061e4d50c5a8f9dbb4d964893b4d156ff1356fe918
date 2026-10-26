@@ -1,0 +1,50 @@
+**Theorem 35.4 (sharp affine predictive-carrier lower bound).** Suppose a
+common state map
+
+$$
+z:\mathcal W\longrightarrow\mathbb R^k
+$$
+
+is supplied, with no linearity or measurability assumption on $z$. Suppose
+that for every $w\in\mathcal A_5$ there are fixed $A_w$ and $c_w$ such that
+
+$$
+y_w(W)=c_w+A_wz(W)
+\qquad\text{for every }W\in\mathcal W.
+$$
+
+Then
+
+$$
+\boxed{k\ge17.}
+$$
+
+The bound is attained by $z(W)=m_W$, $A_w=L_w$ and $c_w=0$. For the final
+law statement, assume that each candidate readout uses the same
+$W$-independent covariance $\Sigma_w$ as Theorem 5.1 for that fixed word
+$w$ (the covariance may depend on $w$). Under this shared-covariance
+Gaussian contract, seventeen is also the minimum dimension of a common
+state whose fixed affine readouts preserve all complete record laws
+through horizon five.
+
+**Proof.** Stack the means over $\mathcal A_5$ and write
+
+$$
+Y(W)=\mathcal L_5m_W=C+Az(W).
+$$
+
+By Lemma 35.3 and Proposition 35.2,
+
+$$
+\dim\operatorname{aff}\{Y(W):W\in\mathcal W\}
+ =\operatorname{rank}\mathcal L_5=17.
+$$
+
+The right-hand representation is contained in the affine image of
+$\mathbb R^k$, whose dimension is at most $\operatorname{rank}A\le k$.
+Thus $k\ge17$. The stated choice $z=m_W$ is exactly the program already
+used in Theorem 5.1, so it attains the bound. Finally, two Gaussian laws
+with the same positive covariance are equal exactly when their means are
+equal; hence preserving all the displayed means is equivalent to preserving
+the complete law family under the stated $\Sigma_w$ contract. $\square$
+

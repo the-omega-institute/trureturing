@@ -1,0 +1,11 @@
+**定理 70.1（同一联合作用区分相同局部态）。** 在固定 $A,B$ 两级载体中，Bell 态 $\Phi^+=(00+11)/\sqrt2$ 与 $\Psi^+=(01+10)/\sqrt2$ 的两个局部态都为 $I_2/2$。同一个以 $B$ 为控制、$A$ 为目标的 CNOT 后，$Z_A$ 可完全区分它们。
+
+证明（70.1）。对任一 Bell 投影偏迹，两个对角项给 $|0\rangle\langle0|/2+|1\rangle\langle1|/2$，交叉项因另一侧正交消去；两侧都得到 $I_2/2$，局部 Bloch 为零。固定基顺序为 $|a\rangle_A|b\rangle_B$，定义共同 map 为 $|a,b\rangle\mapsto|a\oplus b,b\rangle$。逐项得
+
+$$
+\Phi^+\longmapsto|0\rangle_A|+\rangle_B,\qquad
+\Psi^+\longmapsto|1\rangle_A|+\rangle_B.
+$$
+
+随后相同 $Z_A$ 测量给相反确定结果。输入的联合相关不同，所以这不是同一局部 CPTP map 从同一局部输入产生不同输出，也不是局部不信号原则的违反；实际进行了跨界相互作用。关联增加不提供第四个空间轴。$\square$
+

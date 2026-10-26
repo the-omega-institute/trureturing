@@ -131,7 +131,7 @@ private theorem convolution_X_one (D : LatticeData) (left right : Charge D)
       pairConvolution D left right first (second + degree) polynomial := by
   exact bivariateCoefficientConvolution_X_one _ _ _ _ _ _
 
-private theorem kernel_expansion (D : LatticeData) (left right : Charge D)
+theorem kernel_expansion (D : LatticeData) (left right : Charge D)
     (first second : ℤ) (polynomial : Oscillator D) :
     commonKernel D left right first second polynomial =
       ∑ exponent ∈ (pairTranslation D left right polynomial).support,

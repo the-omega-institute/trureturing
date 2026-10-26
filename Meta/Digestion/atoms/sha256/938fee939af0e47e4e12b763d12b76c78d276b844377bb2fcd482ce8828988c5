@@ -1,0 +1,38 @@
+## 47. All-width terminal-M obstruction over a local acquired rectangle
+
+A world is a triple $(P(r,b),g,d)$, where
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad \deg g\le3.
+\tag{47.1}
+$$
+
+Put $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left, in chronological order $J,M,J,M,M,M$.
+Explicitly, the products and readings of a fixed world are
+
+$$
+Q_0=I,\qquad Q_i=E_iQ_{i-1},\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{47.2}
+$$
+
+The acquired readings at clocks $0,\ldots,6$ are
+$(0,24,147/5,24,18,p,v)$. The terminal alternatives $a$ and $m$
+are respectively the J and M readings at clock seven, using the same
+whole polynomial and fixed drift as all acquired readings.
+The set $C(p,v)$ includes every such world, over all positive widths
+$b>0$. The parameter restriction below is on acquired readings $(p,v)$,
+not on the widths of worlds in the child.
+
+All finite decimals below denote exact rational numbers. Define
+
+$$
+\mathcal U=[-10.891256858561706,-10.891256858561705]
+\times[-8.154074713130907,-8.154074713130906].
+\tag{47.3}
+$$
+

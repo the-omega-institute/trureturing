@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e65b7da16865a25ad3a69ec7bb8f951e8561369a728ff32c68aa02483e7a4348
+  normalized_sha256: sha256:e65b7da16865a25ad3a69ec7bb8f951e8561369a728ff32c68aa02483e7a4348
+cas_ref: sha256:e65b7da16865a25ad3a69ec7bb8f951e8561369a728ff32c68aa02483e7a4348
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 终态一致与历史性自主问题的文献讨论；引用前文模型作为类比而非新形式命题。
+    previous_atom_id: b17e1fd98e04aece576a27f11e637a5fce6755c559ae222ff91977edeeedd542
+    next_atom_id: bfd5dbbed26053b8a865c5b62886cc53c145e7f0e7bd6c5a5c0b45bfac98cc5a

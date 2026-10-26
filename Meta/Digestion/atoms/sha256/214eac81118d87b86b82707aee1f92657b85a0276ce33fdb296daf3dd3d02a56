@@ -1,0 +1,19 @@
+**Corollary 14.2 (Entire child at the actual negative J seed).** Let
+$W_0,W_1,v_*$ be the exact worlds and common acquired value of Theorem 9.1.
+Then $(-11,v_*)$ is strictly inside $\mathcal B_-$ and
+
+$$
+C(-11,v_*)=\{W_0,W_1\}.
+\tag{14.4}
+$$
+
+These worlds have labels $15,13$, respectively, equal terminal $J$ responses
+and unequal terminal $M$ responses as in (9.1). This seed child has exactly
+two worlds and no distinct equal-$M$ pair, including any independently
+selected or overlapping pair. Exact-two cardinality is asserted here at
+this certified seed, not throughout the rectangle.
+
+Sections 15–18 prove the theorem; Section 19 proves containment and
+exhaustion at the seed. Section 20 specifies the finite coefficient
+relations and rational interval calculations used in these proofs.
+

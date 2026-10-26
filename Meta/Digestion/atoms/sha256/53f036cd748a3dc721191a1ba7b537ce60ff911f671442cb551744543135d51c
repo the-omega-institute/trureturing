@@ -1,0 +1,38 @@
+**Lemma 20.3 (Actual separator signs over the exceptional projections).**
+For every $p\in I$ and $r\in\bigcup_{k=1}^5J_k$,
+
+$$
+F_-(r,p)>0,\qquad F_+(r,p)<0.
+\tag{20.11}
+$$
+
+**Proof.** For the row labelled $(k,i)$ below, set
+$B_{ki}=[\ell,h]/10^4$ and use the displayed sign $\chi$.
+The roots $b_i(r,p)$ lie strictly in $B_{ki}$ for every
+$(r,p)\in J_k\times I$. The four last columns are positive lower
+bounds, in units of $10^{-6}$, for the following Bernstein minima:
+
+$$
+\begin{array}{c|c|c}
+\text{column}&\text{polynomial and box}&\text{degrees}\\ \hline
+a_\ell&\theta_i\mathsf A(r,\ell/10^4,p),\quad J_k\times I&(6,1)\\
+a_h&-\theta_i\mathsf A(r,h/10^4,p),\quad J_k\times I&(6,1)\\
+c&\chi C_5(r,b),\quad J_k\times B_{ki}&(6,7)\\
+q&\theta_i\chi Q_{\rm sep}(r,b,p),\quad J_k\times B_{ki}\times I&(8,8,1),
+\end{array}
+\qquad \theta_-=1,\quad\theta_+=-1.
+\tag{20.12}
+$$
+
+| $k$ | $i$ | $\ell$ | $h$ | $\chi$ | $a_\ell$ | $a_h$ | $c$ | $q$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $1$ | $-$ | $1249$ | $1251$ | $-1$ | $136$ | $54$ | $2346$ | $11591$ |
+| $1$ | $+$ | $1859$ | $1863$ | $-1$ | $216$ | $369$ | $104809$ | $1088563$ |
+| $2$ | $-$ | $1513$ | $1516$ | $1$ | $538$ | $962$ | $116104$ | $835618$ |
+| $2$ | $+$ | $3113$ | $3117$ | $-1$ | $1695$ | $2713$ | $869515$ | $12702390$ |
+| $3$ | $-$ | $1435$ | $1462$ | $1$ | $670$ | $788$ | $16582$ | $87556$ |
+| $3$ | $+$ | $2689$ | $2781$ | $-1$ | $2102$ | $2532$ | $583642$ | $4334862$ |
+| $4$ | $-$ | $1411$ | $1414$ | $1$ | $354$ | $486$ | $9114$ | $51412$ |
+| $4$ | $+$ | $2615$ | $2621$ | $-1$ | $1826$ | $1471$ | $586149$ | $4081916$ |
+| $5$ | $-$ | $1249$ | $1251$ | $-1$ | $148$ | $149$ | $16247$ | $82453$ |
+| $5$ | $+$ | $2349$ | $2355$ | $-1$ | $1025$ | $980$ | $470037$ | $2115789$ |

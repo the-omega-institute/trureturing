@@ -1,0 +1,78 @@
+**定义 28.1（十二变量、固定整个世界及联合方程）。** 按下列次序取实坐标：
+
+$$
+x=(b_1,D_1,r_2,b_2,D_2,r_3,b_3,D_3,r_4,b_4,D_4,Z),
+\qquad r_1=\frac3{10},\quad d_i=100D_i,\quad z=100Z.
+\tag{28.1}
+$$
+
+对 $i=1,2,3,4$ 置
+
+$$
+c_i=\frac{r_i(1-r_i)}{b_i},\qquad j_i=b_i+c_i,\qquad
+P_i=\begin{pmatrix}r_i&b_i\\c_i&1-r_i\end{pmatrix}.
+\tag{28.2}
+$$
+
+在 $b_i>0,0<r_i<1$ 的域内，四个原时钟样本定义为
+
+$$
+q_{i0}=-d_i,\quad q_{i1}=\frac{24-d_i}{j_i},\quad
+q_{i2}=\frac{48-d_i}{1+b_i},\quad q_{i3}=\frac{z-d_i}{r_i+j_i}.
+\tag{28.3}
+$$
+
+令 $g_i$ 是通过这些样本的唯一三次及以下多项式，即
+
+$$
+\begin{aligned}
+g_i(t)&=\sum_{h=0}^3q_{ih}\ell_h(t),\\
+\ell_0(t)&=-\frac{(t-1)(t-2)(t-3)}6,&
+\ell_1(t)&=\frac{t(t-2)(t-3)}2,\\
+\ell_2(t)&=-\frac{t(t-1)(t-3)}2,&
+\ell_3(t)&=\frac{t(t-1)(t-2)}6.
+\end{aligned}
+\tag{28.4}
+$$
+
+整个 $g_i$ 只在此定义一次。记 $h_{in}=g_i(n)$；原时钟四至七的全部样本为
+
+$$
+\begin{pmatrix}h_{i4}\\h_{i5}\\h_{i6}\\h_{i7}\end{pmatrix}
+=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}q_{i0}\\q_{i1}\\q_{i2}\\q_{i3}\end{pmatrix}.
+\tag{28.5}
+$$
+
+定义八个响应函数：上标 $J,M$ 指第六动作，$A,B$ 分别指最终动作 $J,M$。
+
+$$
+\begin{aligned}
+Y_i&=d_i+(1+2b_i)h_{i4},&p_i&=d_i+(2r_i+j_i)h_{i5},\\
+u_i&=d_i+(1+2b_i)h_{i6},&m_i&=d_i+(1+3b_i)h_{i6},\\
+A_i^J&=d_i+(2r_i+j_i)h_{i7},&
+B_i^J&=d_i+(1+r_i+c_i+3b_i)h_{i7},\\
+A_i^M&=d_i+(3r_i+j_i)h_{i7},&
+B_i^M&=d_i+(1+2r_i+c_i+4b_i)h_{i7}.
+\end{aligned}
+\tag{28.6}
+$$
+
+联合映射 $F:\mathbb R^{12}\supset\operatorname{dom}F\to\mathbb R^{12}$ 的行次序固定为
+
+$$
+F(x)=\frac1{100}\begin{pmatrix}
+Y_2-Y_1\\p_2-p_1\\u_2-u_1\\A_2^J-A_1^J\\B_2^J-B_1^J\\
+Y_4-Y_3\\p_4-p_3\\m_4-m_3\\A_4^M-A_3^M\\B_4^M-B_3^M\\
+Y_3-Y_1\\p_3-p_1
+\end{pmatrix}.
+\tag{28.7}
+$$
+
+最后两行是两对世界之间的历史约束，不能由各对内部的十个等式替代。
+

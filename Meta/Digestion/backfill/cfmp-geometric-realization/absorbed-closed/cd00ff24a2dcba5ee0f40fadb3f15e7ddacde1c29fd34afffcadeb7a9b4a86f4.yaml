@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cd00ff24a2dcba5ee0f40fadb3f15e7ddacde1c29fd34afffcadeb7a9b4a86f4
+  normalized_sha256: sha256:cd00ff24a2dcba5ee0f40fadb3f15e7ddacde1c29fd34afffcadeb7a9b4a86f4
+cas_ref: sha256:cd00ff24a2dcba5ee0f40fadb3f15e7ddacde1c29fd34afffcadeb7a9b4a86f4
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/RegularDegreeAngleStructure.regular_degree_angle_structure
+    target_statement_id: sha256:2786a41f89ddde1d136de7edb887edb3c6347c33fd1ce4b9bc2c7ce1715c46a9
+receipts:
+  unresolved_subitems: []

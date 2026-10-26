@@ -1,0 +1,76 @@
+**Lemma 129.2 (Exactly one root in the rational box).** There is
+exactly one zero of $\mathcal F$ in $\mathcal B$. It lies in the
+interior of that box and satisfies
+
+$$
+9/10<r_*<93/100,\qquad L_*>3/5,\qquad
+p_*,x_*,y_*>0.
+\tag{129.3}
+$$
+
+*Proof.* Here is a finite rational recipe for every arithmetic
+inequality used in the isolation. For $\nu\in\mathbb N^4$, expand
+$\mathcal F_i=\sum_\nu f_{i\nu}z^\nu$ from the preceding table and put
+
+$$
+J_{ij}=\sum_{\nu:\nu_j>0}\nu_j f_{i\nu}c^{\nu-e_j},\qquad
+f_i=\sum_\nu f_{i\nu}c^\nu.
+\tag{129.4}
+$$
+
+Here $J=D\mathcal F(c)$, and indices of matrices start at zero.
+Let $q$ be the least common multiple of the positive reduced
+denominators of all $J_{ij}$, set $V=qJ$, and define
+
+$$
+\begin{aligned}
+\delta&=\sum_{\pi\in S_4}\operatorname{sgn}(\pi)
+                      \prod_{i=0}^3V_{i,\pi(i)},\\
+C_{ij}&=(-1)^{i+j}\det V[\widehat i\mid\widehat j].
+\end{aligned}
+\tag{129.5}
+$$
+
+The three-by-three determinants use the same permutation formula.
+Let $m$ be the least common multiple of the positive reduced
+denominators of $f_i$ and let $u_i=mf_i$. These definitions specify
+integers $V,\delta,C,u$ and positive integers $q,m$ solely from the
+finite rational data above. Substitution and integer arithmetic give
+
+$$
+\begin{aligned}
+&\delta^2\ge1,\qquad
+q\max_i\sum_j|C_{ji}|<2|\delta|,\\
+&10^{39}\max_i|u_i|<m,\\
+&10^{39}q\max_i\left|\sum_jC_{ji}u_j\right|<m|\delta|.
+\end{aligned}
+\tag{129.6}
+$$
+
+In particular, no zero denominator is used in
+
+$$
+M=J^{-1}=\frac q\delta C^{\mathsf T},\qquad
+\|M\|_\infty<2,\qquad
+\|\mathcal F(c)\|_\infty<10^{-39},\qquad
+\|M\mathcal F(c)\|_\infty<10^{-39}.
+\tag{129.7}
+$$
+
+For readable outer checks of the same rational calculations,
+$1.9231<\|M\|_\infty<1.9232$,
+$10^{-40}<\|\mathcal F(c)\|_\infty<2\cdot10^{-40}$ and
+$4\cdot10^{-41}<\|M\mathcal F(c)\|_\infty<5\cdot10^{-41}$.
+The definitions (129.1)–(129.5), rather than decimal inverses, specify
+the arithmetic in (129.6).
+
+For a polynomial $h$, let $\|h\|_{\rm coeff,1}$ be the sum of the
+absolute values of its expanded monomial coefficients. Direct
+differentiation of (129.2) gives the following exact row sums:
+
+| Entry | $\sum_{j,k=0}^3\|\partial_j\partial_k\mathcal F_i\|_{\rm coeff,1}$ |
+| --- | --- |
+| $\mathcal F_0=N$ | $345/2$ |
+| $\mathcal F_1=N_p$ | $3441/32$ |
+| $\mathcal F_2=N_x$ | $5311/64$ |
+| $\mathcal F_3=N_r$ | $3499/16$ |

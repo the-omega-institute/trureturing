@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1b8be634b0e11a3398e3868af604e161f8d8d360ded7ae13d86832a8b7dba5c
+  normalized_sha256: sha256:d1b8be634b0e11a3398e3868af604e161f8d8d360ded7ae13d86832a8b7dba5c
+cas_ref: sha256:d1b8be634b0e11a3398e3868af604e161f8d8d360ded7ae13d86832a8b7dba5c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Evidence-provenance discipline; no mathematical independence claim.
+    previous_atom_id: 8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7
+    next_atom_id: 5bb6bee315735c777b0d389dc7f25e41f934f9d4c9e8f4c3ff4ba0875e7c5cfd

@@ -1,0 +1,61 @@
+**Theorem 18.1 (All off-$24$ terminal-$M$ pairs with a singular endpoint).**
+Use $\theta=\theta_+$, let $x_*$ be the unique $Q_{14}$ root in $I_*$,
+and define the exact algebraic quantities
+
+$$
+t_*=-\frac{\beta_t(x_*)}{\alpha_t(x_*)},\qquad
+q_*=(p_*,v_*)=
+\bigl(24+A_{5s}t_*,\ 24+K_{6s}+A_{6s}t_*\bigr).
+$$
+
+Then $q_*$ is precisely Theorem 8.2's base $(p^*,v^*)$ and
+$t_*\ne0$. For every real $p\ne24,v$ and every distinct pair of
+complete worlds $W,W'\in C(p,v)$,
+
+$$
+\bigl[f_{MM}(W)=f_{MM}(W')\ \text{and}\
+       \Lambda(W)\Lambda(W')=0\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[(p,v)=q_*\ \text{and}\ \{W,W'\}=\{S_1,O_1\}\bigr],
+$$
+
+where $S_1,O_1$ are the exact whole worlds of Theorem 8.2.
+In particular
+
+$$
+\mathcal B_{\mathcal S,M}=\{q_*\}.
+$$
+
+This equality concerns the actual guarded set, with no assertion that
+the unfiltered outer projection of Theorem 8.4 is a singleton.
+
+**Proof.** Choose a singular endpoint of any pair on the left. O,
+Theorem 29.2, and Definition 17.1 put it on exactly one of the two
+strict singular lines, at $t=(p-24)/A_{5s}\ne0$. Any actual companion
+of any source type has finite real $x>0,d$ satisfying the unscaled
+equations of Definition 17.2. Lemma 17.4 excludes $\ell=0$ and
+$x=x_s$ for a distinct pair. At every other actual label
+$D\ell(x-x_s)\ne0$, so $F_s=G_s=0$. Their fixed resultant vanishes,
+and the exact factorization in Lemma 17.5 leaves $W_2=0$ or
+$Q_{14}=0$. Lemma 17.6 excludes the former. Lemmas 17.7–17.8 exhaust
+both strict embeddings and all roots of the latter, leaving exactly
+$\theta_+,x_*$. Their unit certificates make $t=t_*$ and
+$d=-(N_0+N_1t_*)/\ell$ unique, and hence fix the acquired base $q_*$.
+
+Lemma 17.9 identifies Theorem 8.2's actual distinct pair with that
+same root and embedding. The uniquely fixed $t$ identifies its singular
+world by O's singular-line converse; the uniquely fixed companion
+$(x,d)$ identifies its whole world by F, Lemma 30.2. Thus the original
+pair is exactly $\{S_1,O_1\}$ and its base is Theorem 8.2's base.
+That base is off $24$, so $t_*\ne0$. Conversely the supplied pair
+satisfies all the equations and guards and has equal terminal-$M$
+responses, proving the reverse implication and actual nonemptiness.
+
+No gain coefficient, drift, or sampled value has been cancelled.
+Candidate-dependent denominators have each been handled:
+$D>0$ on actual worlds, $\ell=0$ by Lemma 17.4, $x=x_s$ by the self
+case, $\alpha_t\ne0$ on both residual factors by Lemma 17.5, and
+$H_1,C_0\ne0$ on every positive residual box by Lemma 17.8.
+This proves the statement over all real off-$24$ bases, rather than a
+bounded strip or a generic set of bases. ∎
+

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:961e7460a99f61c8509e5b5cb8ad2d9ac5902f136fa900b66bdbaefc9b9d86d6
+  normalized_sha256: sha256:961e7460a99f61c8509e5b5cb8ad2d9ac5902f136fa900b66bdbaefc9b9d86d6
+cas_ref: sha256:961e7460a99f61c8509e5b5cb8ad2d9ac5902f136fa900b66bdbaefc9b9d86d6
+coverage_gids:
+  - gid: D5/S0/Tower/DBonacci/Names.DBonacciAdmissible
+    target_statement_id: sha256:da4afea478535ba5f84418f595de62365247b94e5136ca263d62e359ef8b45fb
+  - gid: D5/S0/Tower/DBonacci/Names.dbonacci
+    target_statement_id: sha256:de23fa00c948476b35f69bfb486c076e35c412a7954f6df7ee5de995a951ca49
+  - gid: D5/S0/Tower/DBonacci/Names.dbonacci_add_two_of_le
+    target_statement_id: sha256:7c6f659df6ba7f060d3edc21c730980107cdbb97c8c998ea429851d40e282878
+  - gid: D5/S0/Tower/DBonacci/Names.dbonacci_add_two_of_lt
+    target_statement_id: sha256:ce6e096a764a3177ad0b6d4b8a8b3dcc15c62373552b9a1adfcf223fa9f98a59
+  - gid: D5/S0/Tower/DBonacci/Names.dbonacci_name_card
+    target_statement_id: sha256:fd0644d26c90e5e76b025df63624e00390c2142a6b2a1b4e01b1054c4108794f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a35d7c3e6f0b130addb4f9319bcc100997314ca31ed58dc1c14b7d68a4f9a1de
+  normalized_sha256: sha256:a35d7c3e6f0b130addb4f9319bcc100997314ca31ed58dc1c14b7d68a4f9a1de
+cas_ref: sha256:a35d7c3e6f0b130addb4f9319bcc100997314ca31ed58dc1c14b7d68a4f9a1de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: “距离”名词列表项。'
+    previous_atom_id: fdbb5b9f93c3453636bd8fe4ccee2d5e4c445165dfd141551afeea3d0f3f0ba1
+    next_atom_id: 86b87f7ffb207465972bc895e593fd98a97055fba48da4c3ba55ea943c35a560

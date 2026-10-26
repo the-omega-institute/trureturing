@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d480c068466c649d44438a292ea8494dd69003b868a14479ec966b8fa264eed5
+  normalized_sha256: sha256:d480c068466c649d44438a292ea8494dd69003b868a14479ec966b8fa264eed5
+cas_ref: sha256:d480c068466c649d44438a292ea8494dd69003b868a14479ec966b8fa264eed5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分莱布尼茨相互表达和物理消息传递，保留其预定和谐与神学前提。
+    previous_atom_id: 1dcc56f613687c02d0ae7d492ab9c4a94c898c0e6087d742d91729709ad204e4
+    next_atom_id: 492429c2322e9b70aab659c29eee537ad077c4c3bea02df7649a4ac9218a2582

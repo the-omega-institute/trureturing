@@ -1,0 +1,45 @@
+**Notation 178.1 (Schur data from Continuation VI §170).** The common-factor
+construction uses the exact PPT criterion (170.1)–(170.5) of VI. In the
+notation (178.1), its scalar quantities are
+
+$$
+\begin{aligned}
+q_0&=f^*E^{-1}f
+=\frac{s^2x}{t}\left((1-x)+\frac{sz}{t+sy}\right),\\
+q_3&=\frac{g^*D^{-1}g}{t^2}
+=\frac{s^2y}{t}\left((1-y)-\frac{sz}{t+s(1-x)}\right).
+\end{aligned}
+\tag{178.4}
+$$
+
+Thus $\rho^{T_A}\succeq0$ if and only if $q_0\le1$ and $q_3\le1$,
+including equality. The same published block reduction has singleton
+entries $c$ on $|1b_0\rangle$ and $b$ on $|0b_{12}\rangle$, and blocks
+
+$$
+M_0=\begin{pmatrix}1&f^*\\f&E\end{pmatrix}
+\quad\text{on }(0b_0,1b_1,1b_2),\qquad
+M_3=\begin{pmatrix}t^2&g^*\\g&D\end{pmatrix}
+\quad\text{on }(1b_{12},0b_1,0b_2).
+\tag{178.5}
+$$
+
+The published bounds $D\succeq tI_2$ and $E\succeq t^2I_2$ ensure
+invertibility. For the endpoint calculations in the common-factor identity,
+the rank-one inverse formulas are
+
+$$
+\begin{aligned}
+D^{-1}&=\frac1t\left(I_2-
+ \frac{s}{t+s(1-x)}uu^*\right),\\
+E^{-1}&=\frac1t\left(I_2+
+ \frac{s}{t+sy}hh^*\right).
+\end{aligned}
+\tag{178.6}
+$$
+
+Here $1-s\|h\|^2=t+sy$ and $t+s\|u\|^2=t+s(1-x)$ are
+strictly positive. The Schur residuals $1-q_0$ and $t^2(1-q_3)$
+from VI §170 enter the new product identity (180.1); the inverses in
+(178.6) also give its original-state endpoint residuals (180.5).
+

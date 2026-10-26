@@ -1,0 +1,39 @@
+**命题 75.1（同谱充分性与实际正密度见证）。** 对任意降序非负五元组 $\lambda$
+及 $a\geq b\geq0$，存在实对称 $R_0\succeq0$ 和实反对称 $C_0$，
+使 $\operatorname{spec}R_0=\lambda$、
+$R_0\pm iC_0\succeq0$、
+$\operatorname{spec}(2iC_0)=(a,b,0,-b,-a)$，
+当且仅当 (XI.2) 成立。若 $\sum_j\lambda_j=1$，两算子都是密度矩阵。
+
+**证明。** 必要性为命题 73.2 的同谱论证，未用指定对角。
+充分性在引理 74.1 中取
+
+$$
+A=\operatorname{diag}(\sqrt{\lambda_1},\sqrt{\lambda_3}),\qquad
+B=\operatorname{diag}(\sqrt{\lambda_2},\sqrt{\lambda_4}),\qquad
+(c,d)=(a/2,b/2).
+\tag{XI.12}
+$$
+
+(XI.2) 正好给出 (XI.6) 的全部条件，得到 $X=ATB$。
+在分组坐标 $(1,3\mid2,4\mid5)$ 中置
+
+$$
+\begin{aligned}
+R_0&=\operatorname{diag}(A^2,B^2,\lambda_5),&
+C_0&=\begin{pmatrix}0&X\\-X^T&0\end{pmatrix}\oplus0,\\
+R_0+iC_0
+ &=\operatorname{diag}(A,B)
+       \begin{pmatrix}I&iT\\-iT^T&I\end{pmatrix}
+       \operatorname{diag}(A,B)\ \oplus\lambda_5.
+\end{aligned}
+\tag{XI.13}
+$$
+
+中间 Hermitian 块的特征值为 $1\pm s_j(T)$：对 $T$ 作实奇异值分解，
+即可分成两个这样的二维块。因此它半正；换 $i$ 为 $-i$ 同样半正。
+即使 $A,B$ 奇异，这个无逆的因子式仍成立。
+$C_0$ 的奇异值为 $c,c,d,d,0$，所以 $2iC_0$ 有指定差谱。
+因 $C_0$ 对角为零，$R_0\pm iC_0$ 的迹均为 $\sum_j\lambda_j$。构造的 $X$ 允许交叉项，
+没有要求实部特征轴与反对称标准平面同时对齐。$\square$
+

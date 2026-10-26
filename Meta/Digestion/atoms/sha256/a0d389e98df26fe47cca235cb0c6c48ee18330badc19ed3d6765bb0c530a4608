@@ -1,0 +1,252 @@
+**Theorem 248.2 (A finite native approximation with exact original cost).**
+Under Definition 248.1, for every integer $m\ge1$ and integer $b\ge0$
+there is a finite $q$-independent instrument $\mathcal E\in\mathcal H_{3m}$
+using exactly $6m$ original full-Gibbs preparations and $3m$ original
+filters, with
+
+$$
+\begin{gathered}
+s_{\mathcal E}(q)=1\quad(q\in D),\qquad
+e_{3m}(\mathcal E)\le\frac{C}{\sqrt m}+\frac{2^{-b}}4,
+\qquad C=\frac32+\frac{\sqrt2}{4},\\
+r_-^{3m}\le P_q^{3m}\le r_+^{3m},\qquad
+r_-:=\frac{t}{(1+t)^3}>0,\qquad
+r_+:=\frac{5t}{2(1+t)^4}<1.
+\end{gathered}
+\tag{248.5}
+$$
+
+All histories and residuals are erased, the fixed output retains one
+existing selected particle per party, and local residual charge before
+discard is $3m+n_{\mathrm{aux}}-1$. In particular, for $0<\epsilon<1$ the
+sufficient choice
+
+$$
+m=\left\lceil(2C/\epsilon)^2\right\rceil,\qquad
+b=\left\lceil\log_2(1/\epsilon)\right\rceil,\qquad k=3m
+\tag{248.6}
+$$
+
+gives $e_k(\mathcal E)\le3\epsilon/4$ and original success exactly $P_q^k$,
+but uniformly
+
+$$
+P_q^k\le\exp(-c_0/\epsilon^2),\qquad
+c_0=12C^2|\log r_+|>0.
+\tag{248.7}
+$$
+
+Consequently this sufficient schedule does not satisfy (248.4).
+It is not a necessary accuracy cost, a sharp rate, or an obstruction for
+the full class $\mathcal H_k$.
+
+Proof. Put $Q_F=2t+g+2th$, $w=(2t+g)/Q_F$ and $\eta=g/Q_F$.
+The spatial trace of the same supplied $\rho_q$ is $W_\eta$, and
+$\eta=w\lambda$, as in VII (237.2)–(237.4). Its other marginal is
+
+$$
+\sigma_S:=\operatorname{Tr}_{A,C}\rho_q
+=wU_q+(1-w)(I_2-U_q).
+\tag{248.8}
+$$
+
+Indeed the active and spectator traces in (240.4) are respectively
+$4t+2g$ and $4th$, with total $2Q_F$. These two marginals are obtained
+from one and the same native state, not independently selectable inputs.
+Since $0<p<1$ and $t<1$, one has $h<1$ and $2t+g>2th$, so $w>1/2$.
+The native vector is real and has unit norm, hence $U_q$ is a real rank-one
+projector in the fixed spatial basis. Let $\sigma_x,\sigma_y,\sigma_z$
+be the Pauli matrices in each stipulated two-dimensional register, and set
+
+$$
+\beta=(\operatorname{Tr}(\sigma_S\sigma_x),
+       \operatorname{Tr}(\sigma_S\sigma_z)),\qquad
+r=\|\beta\|_2.
+\tag{248.9}
+$$
+
+The Bloch vector of $U_q$ lies in the $x,z$ plane and has norm one.
+Equation (248.8) therefore gives $r=2w-1$, and
+
+$$
+\lambda=\frac{2\eta}{1+r}.
+\tag{248.10}
+$$
+
+This identity removes the unknown spatial direction without aligning to
+it; its denominator is at least one. The critical identity
+$(1-t)^2=4t$ gives $0<g\le t$ and $0<\lambda\le1/3$.
+
+Take $k=3m$, prepare the prescribed $2k$ full-Gibbs states and apply the
+$k$ original filters to their prescribed disjoint pairs. Stop on any
+rejection. Conditional on all passes, divide $\rho_q^{\otimes k}$ into
+three groups of $m$ independent blocks. In the first group Alice measures
+$\sigma_z$ on $A_i$ and Bob measures $\sigma_z$ on $C_i$, with identity
+on $S_i$. Communicate the two signs and let $\widehat\eta$ be minus the
+average of their products. The fixed singlet convention gives
+$\operatorname{Tr}(W_\eta\,\sigma_z\otimes\sigma_z)=-\eta$, so
+$\mathbb E_q\widehat\eta=\eta$. In the second group Bob measures
+$\sigma_x$ on $S_i$, with identity on $C_i$, obtaining average
+$\widehat x$. In the third he measures $\sigma_z$ on $S_i$, obtaining
+$\widehat z$. Thus $\mathbb E_q(\widehat x,\widehat z)=\beta$.
+Here and below $\mathbb E_q$ averages actual measurement and coin histories
+conditional on all original passes. Bob's operators act through $J$ on
+his selected four-dimensional one-particle space. No full-Fock tensor
+factorization is used.
+
+For a real interval $I$, write $\operatorname{clip}_I$ for nearest-point
+projection onto $I$. Define the finite count table
+
+$$
+\widehat r=\min\{1,\sqrt{\widehat x^2+\widehat z^2}\},\qquad
+\widehat\lambda=\operatorname{clip}_{[0,1/3]}
+          \left(\frac{2\widehat\eta}{1+\widehat r}\right).
+\tag{248.11}
+$$
+
+For fixed $m$ all three counts range over finite sets. For each joint
+measurement history $h_0$ put
+
+$$
+a_{h_0}=2^{-b}\left\lfloor2^b\,3\widehat\lambda(h_0)\right\rfloor.
+\tag{248.12}
+$$
+
+Then $0\le a_{h_0}\le1$ and
+$0\le\widehat\lambda(h_0)-a_{h_0}/3\le2^{-b}/3$.
+This is a fixed finite history-to-operation table independent of $q$.
+The distribution of histories depends on $q$; the table itself does not.
+Neither a known source parameter nor an unknown-probability coin is
+supplied by (248.11)–(248.12).
+
+For an explicit fixed-fair-bit realization of the already separable
+endpoint $W_{1/3}$ of VII §194, let
+
+$$
+\begin{gathered}
+n_1=(1,1,1)/\sqrt3,\quad n_2=(1,-1,-1)/\sqrt3,\\
+n_3=(-1,1,-1)/\sqrt3,\quad n_4=(-1,-1,1)/\sqrt3,\qquad
+\tau_n=(I_2+n\cdot\sigma)/2.
+\end{gathered}
+\tag{248.13}
+$$
+
+Two fixed fair bits choose $j\in\{1,2,3,4\}$ uniformly; communicate $j$
+and prepare $\tau_{n_j}$ and $\tau_{-n_j}$ locally in the fixed output
+rails. Each is a fixed pure one-particle state. Since
+$\frac14\sum_j n_j=0$ and $\frac14\sum_jn_jn_j^{\mathsf T}=I_3/3$,
+expansion gives
+
+$$
+\frac14\sum_{j=1}^4\tau_{n_j}\otimes\tau_{-n_j}
+=\frac{I_4}{4}-\frac1{12}\sum_{a=x,y,z}\sigma_a\otimes\sigma_a
+=W_{1/3}.
+\tag{248.14}
+$$
+
+This four-state realization is used as a fixed preparation, not as an
+additional separability assertion. After history $h_0$, use $b$ fixed
+fair bits to choose a uniform integer $L\in\{0,\ldots,2^b-1\}$.
+Prepare (248.14) if $L<2^b a_{h_0}$, and otherwise prepare $I_4/4$
+using local fair-bit choices of basis states. The threshold is an integer
+in the fixed table. This produces
+
+$$
+(1-a_{h_0})I_4/4+a_{h_0}W_{1/3}=W_{a_{h_0}/3}.
+\tag{248.15}
+$$
+
+For $b=0$ the integer $L$ has the single value zero, so the same rule
+still applies. Runtime coins all have the fixed probability $1/2$.
+This finite instrument always succeeds after all original passes.
+
+The measurements have projective dilations recording their basis labels
+in neutral memories. Local fixed-state preparation uses one of each
+party's existing selected particles. The reset dilation VII (219.8)
+maps $|i\rangle|\mathrm{ready}\rangle_M$ to
+$|\mathrm{target}\rangle|i\rangle_M$ on an orthonormal basis of the
+one-particle input sector, with orthogonal neutral memory states.
+It is an isometry, extends to a unitary in that total-number sector,
+and has block-diagonal extensions on other sectors. For Bob it includes
+the old copy and spatial label and places the retained particle in the
+fixed output rails. Thus earlier measurements do not require a fresh
+output particle. The other $k-1$ selected particles at each party remain
+residual. Neutral auxiliaries leave residual charge $k-1$; fixed auxiliary
+charge $n_{\mathrm{aux}}$ remains residual and gives
+$k+n_{\mathrm{aux}}-1$. All residual particles, memory labels and coin
+records are traced out. Relative phases of the prescribed one-particle
+states stay within a fixed-number sector and add no external
+particle-number phase reference. This constructs a finite LOCC tree in
+the stipulated ideal menu directly, without a separable-CP-to-LOCC
+converse.
+
+Independence of the all-pass blocks and the variance bound for a sign
+variable give
+
+$$
+\begin{aligned}
+\mathbb E_q|\widehat\eta-\eta|&\le m^{-1/2},\\
+\mathbb E_q\|(\widehat x,\widehat z)-\beta\|_2
+&\le\left(\mathbb E_q[(\widehat x-\beta_x)^2+
+                          (\widehat z-\beta_z)^2]\right)^{1/2}
+\le\sqrt{2/m}.
+\end{aligned}
+\tag{248.16}
+$$
+
+Because $r\in[0,1]$, clipping the estimated norm cannot increase its
+distance from $r$. The reverse triangle inequality yields
+$\mathbb E_q|\widehat r-r|\le\sqrt{2/m}$. By (248.10), before clipping,
+
+$$
+\left|\frac{2\widehat\eta}{1+\widehat r}-\lambda\right|
+\le2|\widehat\eta-\eta|
+ +\frac{\lambda}{1+\widehat r}|\widehat r-r|
+\le2|\widehat\eta-\eta|+\frac13|\widehat r-r|.
+\tag{248.17}
+$$
+
+Projection onto $[0,1/3]$ cannot increase the distance to $\lambda$.
+Consequently
+$\mathbb E_q|\widehat\lambda-\lambda|\le(2+\sqrt2/3)/\sqrt m$.
+The eigenvalues of $P_--I_4/4$ are $3/4,-1/4,-1/4,-1/4$, so
+
+$$
+\frac12\|W_v-W_z\|_1=\frac34|v-z|.
+\tag{248.18}
+$$
+
+In particular the actual erased output, rather than a state selected by
+an accurate-history flag, is
+
+$$
+\mathcal E(\rho_q^{\otimes k})
+=\sum_{h_0}\Pr_q(h_0)W_{a_{h_0}/3}.
+\tag{248.19}
+$$
+
+Affineness of the Werner line, the triangle inequality and (248.12) give
+
+$$
+\frac12\|\mathcal E(\rho_q^{\otimes k})-W_q\|_1
+\le\frac34\mathbb E_q|\widehat\lambda-\lambda|+\frac{2^{-b}}4
+\le\frac{C}{\sqrt m}+\frac{2^{-b}}4.
+\tag{248.20}
+$$
+
+Every bound holds with the same constants for every actual $q\in D$,
+so it also bounds the supremum in (248.2). No per-history accuracy or
+conditional-accuracy-only replacement is used.
+
+For (248.6), the terms in (248.20) are at most $\epsilon/2$ and
+$\epsilon/4$. Conditional success is one, so the three original
+probabilities are exactly $1-P_q^k,P_q^k,0$. There is no variable stopping,
+retry or recycling. From (240.5), $h\ge t$ and $g\ge0$ give
+$P_q\ge t/(1+t)^3=r_-$. The bounds $g\le t$ and $h\le1$ give
+$P_q\le5t/[2(1+t)^4]=r_+<1$. This proves (248.5). The schedule has
+$3m\ge12C^2/\epsilon^2$, which proves (248.7). For any fixed
+$A,\gamma>0$, $\exp(-c_0/\epsilon^2)/(A\epsilon^\gamma)\to0$ as
+$\epsilon\downarrow0$, so this schedule cannot witness $\mathsf Q$.
+Its sufficient choice of $m$ proves no necessary cost or optimality
+statement for this protocol or for other native instruments. ∎
+

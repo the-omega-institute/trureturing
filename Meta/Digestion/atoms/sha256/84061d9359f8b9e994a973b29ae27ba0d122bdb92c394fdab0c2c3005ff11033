@@ -1,0 +1,42 @@
+**推论 12.4（same-exponential-scale error budgets with their leading constants）。** Fix $q$ as in Definition 12.1, and suppose the comparison laws of Theorem 12.3 are supplied for small $b>0$ with
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b,
+ \qquad e_b=d\,b^\beta E_b,\qquad d>0,\quad\beta\in\mathbb R,
+\tag{12.14}
+$$
+
+where $d,\beta$ are fixed independently of $b$. With $C=C(q)$ from (12.2),
+
+$$
+ \frac{e_b}{B(q,b)}=\frac dC b^{\beta-4}(1+o(1)),\qquad
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|
+ \le\frac{e_b}{B(q,b)}.
+\tag{12.15}
+$$
+
+If $\beta>4$, this certificate tends to zero, so $B'_{Q_b}/B(q,b)\to1$. If $\beta=4$, the certificate tends to $d/C$, and
+
+$$
+ \limsup_{b\downarrow0}
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|\le\frac dC,
+ \qquad
+ \liminf_{b\downarrow0}\frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac dC\right\}.
+\tag{12.16}
+$$
+
+In particular, $d<C$ certifies a positive limiting lower fraction; every fixed $0<\theta<1-d/C$ is retained for all sufficiently small $b$. If $\beta<4$, the right-hand certificate in (12.15) diverges and gives neither a vanishing relative-error certificate nor a positive retained fraction. A nonvanishing or diverging upper budget does not prove any actual degradation, and $d\ge C$ at $\beta=4$ does not imply that the gain is lost.
+
+Proof. Divide (12.14)'s budget by the positive asymptotic (12.2) to obtain the first equality in (12.15); its second inequality is (12.12) divided by $B(q,b)>0$. A constant nonsingleton decision remains available for every $\mathcal J'_b$ with this prior, so $B'_{Q_b}\ge0$. Thus the additive certificate gives
+
+$$
+ \frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac{e_b}{B(q,b)}\right\}.
+\tag{12.17}
+$$
+
+For $\beta>4$, the budget ratio tends to zero; for $\beta=4$, it tends to $d/C$, proving (12.16) and the eventual bound for each strictly smaller $\theta$. For $\beta<4$, it tends to infinity, leaving (12.17) with only zero as a lower certificate. In all regimes the choice $\mathcal J'_b=\mathcal J_b$ satisfies the budget while its actual risk discrepancy is zero. Hence the size of an upper bound alone cannot establish approximation failure or an attained loss. The pointwise asymptotic supplies no numerical finite-$b$ cutoff for any of these eventual statements without a quantitative remainder estimate.
+
+These are consequences for the explicit known-law readout and supplied comparison laws. They neither identify a projected-input law with a Gaussian law nor assert a native preparation realizing these means. There is no endpoint or $q$-uniform estimate, physical-cost model, unknown-law training guarantee, empirical gain or out-of-distribution conclusion. $\square$
+

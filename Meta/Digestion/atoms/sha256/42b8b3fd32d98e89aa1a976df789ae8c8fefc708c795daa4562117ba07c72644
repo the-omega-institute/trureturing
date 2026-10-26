@@ -1,0 +1,16 @@
+**定义 12.1（fixed-law notation）。** Retain exactly Assumption 11.1: one complete two-dimensional observation, uniform prior on the five original labels, covariance $I_2$, means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$, and fixed $0<q<\sqrt{2\ln4}$ while $b\downarrow0$. Write
+
+$$
+\begin{aligned}
+ c&=c(q)=\ln4-q^2/2>0,\\
+ L(u)&=c+\ln\cosh(qu),\\
+ \phi(x)&=(2\pi)^{-1/2}e^{-x^2/2},\qquad
+ \overline\Phi(x)=\int_x^\infty\phi(v)\,dv,\\
+ E_b&=\exp\!\left(-\frac{c^2}{2b^2}\right),\qquad
+ B(q,b)=\frac15-r_0(q,b).
+\end{aligned}
+\tag{12.1}
+$$
+
+The quantities $r_0$ and $B$ concern the known-law binary decision of label $3$ versus its complement. The five Gaussian labels here are the labels of this observation experiment; their specification does not construct a native recursive FIB classification or its preparations.
+

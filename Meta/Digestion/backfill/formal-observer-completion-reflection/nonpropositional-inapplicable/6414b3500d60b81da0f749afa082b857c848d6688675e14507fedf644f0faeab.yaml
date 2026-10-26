@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6414b3500d60b81da0f749afa082b857c848d6688675e14507fedf644f0faeab
+  normalized_sha256: sha256:6414b3500d60b81da0f749afa082b857c848d6688675e14507fedf644f0faeab
+cas_ref: sha256:6414b3500d60b81da0f749afa082b857c848d6688675e14507fedf644f0faeab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 设定两动力学 F、G。不另主张独立数学命题。
+    previous_atom_id: 484a81ce65369279ae8630142a489a4b41b050cbed65b124443bb6327a0d0b42
+    next_atom_id: fd9d570d39d4056adf19d90d0af448ebec1ac9a1a624663d2a04a01e9e6ca4e5

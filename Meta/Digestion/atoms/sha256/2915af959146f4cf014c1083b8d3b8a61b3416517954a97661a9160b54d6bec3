@@ -1,0 +1,48 @@
+**Proposition 78.10 (failure of full-number norm convergence).** The half-number conclusion cannot be replaced by
+$\|(\mathsf n+I)\Delta_\varepsilon(-\sigma)\|\to0$.
+In fact, for every fixed commission in this chapter with nonzero auxiliary space, either installation and either complete field prescription, there is a bank eigenvalue $f>0$ such that for every $\varepsilon$
+
+$$
+\|(\mathsf n+I)\Delta_\varepsilon(-\sigma)\|
+                         \ge\frac1{\Omega f}.
+\tag{78.49}
+$$
+
+Here the product is an everywhere bounded operator for each fixed $\varepsilon$; its norm nevertheless fails to vanish. This is a boundary within the declared apparatus model, not a physical impossibility statement.
+
+**Proof.** Work in the one-position sector, where the actual and ambient particle spaces agree. The raw one-position isometry has a nonzero proper-range complement, for example a mean-zero nonconstant chamber function. Choose a unit vector $v$ in this complement and a unit auxiliary vector. Choose a unit eigenvector of $\widehat F_D^\diamond$ with eigenvalue $f>0$, and let $\xi_j$ be its normalized $j$-boson number vector. Set $v_j=v\otimes\xi_j$ with that auxiliary vector. Since $\ell_\varepsilon^*v_j=0$, the entire lifted coupled target resolvent annihilates $v_j$.
+
+Let $R=R_\varepsilon$ on this sector, $V=V_\varepsilon$, and $C=\mathcal R_\varepsilon(-\sigma)$. The free operator on $v_j$ is the one-position particle resolvent at $\sigma+\Omega f j$. The particle spectral theorem gives
+
+$$
+(j+1)\langle v_j,Rv_j\rangle\longrightarrow(\Omega f)^{-1}
+                    \quad(j\to\infty).
+\tag{78.50}
+$$
+
+For the coupled correction, $V_{\varepsilon,0}$ preserves number and the charge changes it by exactly one. For $j\ge2$, therefore,
+
+$$
+\|RVRv_j\|
+ \le\frac{M_0+2\sqrt2 k_f\sqrt{j+1}}
+              {(\sigma+c(j-1))(\sigma+\Omega f j)}
+ =O(j^{-3/2}).
+\tag{78.51}
+$$
+
+Indeed the rightmost resolvent preserves number $j$, the middle output is in the orthogonal sum of number sectors $j-1,j,j+1$, and the leftmost resolvent has norm at most $(\sigma+c(j-1))^{-1}$ there. All constants may be held fixed for this commission. The inverse bound of78.6 and
+$C-R=-(I+\overline{RV})^{-1}RVR$
+give $\|(C-R)v_j\|=O(j^{-3/2})$. Thus(78.50) remains true with $C$ in place of $R$.
+
+By(78.13) each actual and target resolvent maps into $\operatorname{Dom}\mathsf n$. The operators $(\mathsf n+I)C$ and $(\mathsf n+I)\mathcal S_\varepsilon(-\sigma)$ are bounded by the closed graph theorem. On the unit vector $v_j$,
+
+$$
+\left|\left\langle v_j,
+       (\mathsf n+I)\Delta_\varepsilon(-\sigma)v_j\right\rangle\right|
+ =(j+1)|\langle v_j,Cv_j\rangle|
+                   \longrightarrow(\Omega f)^{-1}.
+\tag{78.52}
+$$
+
+Taking the supremum proves(78.49). This uses arbitrarily large number states; it is consistent both with the half-number estimate and with78.9's fixed-vector conclusion. $\square$
+

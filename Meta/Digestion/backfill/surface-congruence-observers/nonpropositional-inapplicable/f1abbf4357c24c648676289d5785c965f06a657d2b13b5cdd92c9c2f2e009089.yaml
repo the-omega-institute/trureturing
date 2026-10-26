@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1abbf4357c24c648676289d5785c965f06a657d2b13b5cdd92c9c2f2e009089
+  normalized_sha256: sha256:f1abbf4357c24c648676289d5785c965f06a657d2b13b5cdd92c9c2f2e009089
+cas_ref: sha256:f1abbf4357c24c648676289d5785c965f06a657d2b13b5cdd92c9c2f2e009089
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: introduces notation for the two kernels, 1-cocycles, 1-coboundaries and their quotient. The equations are definitions of the named objects, not an assertion of a kernel inclusion, injection, vanishing, or factorization.'
+    previous_atom_id: d4cd950bf72214606dbd5cb868bdbd4c5744c5c2b7a624ae352a2bbc10cf52ad
+    next_atom_id: 51c21655e1f9294ce638953b986b46ca9e9370a8e63c11db4f93d5fc01b2b83c

@@ -1,0 +1,22 @@
+**Theorem 201.3 (Finite two-copy extraction equivalence).** Under
+Definition 201.1 and Assumption 201.2, the normalized common-twirled
+resource $\Omega$ defined in (203.2) satisfies
+
+$$
+ \boxed{
+ \Omega\text{ has an allowed positive-probability encoded NPT branch}
+ \iff q_0>1\ \text{or}\ q_3>1.
+ }
+$$
+
+This is exactly the ordinary one-copy NPT region of Theorem 181.1,
+which also identifies ordinary one-copy PPT with separability for
+this exact family. The complete common-twirled
+state is PPT exactly when $q_0\leq1$ and $q_3\leq1$. The sector
+$(N_A,N_B)=(1,2)$ has criterion $q_0q_3>1$, and therefore supplies no
+additional activation region.
+
+Proof. The signed charge reduction in §§203–206 and the local-filter
+congruence in §207 give necessity. The explicit positive-probability
+outer branches in §208 give sufficiency; §210 combines them.
+

@@ -76,7 +76,19 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.wordToCo
 
 A finite word uses the frozen one-hole Generator and strictStep interpreter. Reification folds the generators in execution order, wrapping the previous tree in the selected slot and placing the fixed parameter in the other slot. Its type is CopyTerm 1, including for the empty word. Its exact Option denotation is the frozen contextDenote.
 
-**Definition 1.7 (Compile each independent occurrence into a fixed word).**
+**Theorem 1.7 (Reification preserves exact optional values).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.word_to_copy_denote`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.word_to_copy_denote` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every native word and every balanced input, diagonal evaluation of its single-occurrence reification is exactly the original strict one-hole denotation. Success values and failure both agree.
+
+**Definition 1.8 (Compile each independent occurrence into a fixed word).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.foldedSlice`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.foldedSl
 
 The occurrence path retains one input. Every sibling subtree folds to its successful complete value at the actual empty history balancedSection 3 0. The slice is a fixed temporal-free word whose reification is this exact folded tree. Independent evaluation assigns an arbitrary history to the chosen occurrence and the empty history to every other occurrence.
 
-**Theorem 1.8 (Full exact normalization and all zero slices).**
+**Theorem 1.9 (Full exact normalization and all zero slices).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_copy_normalization`
 
@@ -102,7 +114,7 @@ Every finite positive-count diagonally total copy tree admits a temporal-free no
 
 Normalization constructs the relation and the guarded evaluation equality. Course-of-values induction on the relation supplies temporal-freedom of its target, which guarantees totality for every independent assignment and the complete zero values used in the slices.
 
-Exact anonymous Def16 derivation using the private bridge in this owner:
+Exact anonymous Def16 derivation using the exact denotation bridge:
 
 ```lean
 
@@ -154,6 +166,7 @@ example (w : List (Generator nativeSignature))
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.sourceAttributeEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_copy_normalization`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.wordToCopy`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.word_to_copy_denote`
 - Dependency: [D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts](../Observation/StrictOneHoleContexts.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/ComplementFibers](ComplementFibers.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout](LeafSquareReadout.md)

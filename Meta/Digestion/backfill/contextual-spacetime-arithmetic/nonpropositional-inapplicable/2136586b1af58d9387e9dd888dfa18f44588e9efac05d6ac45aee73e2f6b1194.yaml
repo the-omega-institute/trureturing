@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2136586b1af58d9387e9dd888dfa18f44588e9efac05d6ac45aee73e2f6b1194
+  normalized_sha256: sha256:2136586b1af58d9387e9dd888dfa18f44588e9efac05d6ac45aee73e2f6b1194
+cas_ref: sha256:2136586b1af58d9387e9dd888dfa18f44588e9efac05d6ac45aee73e2f6b1194
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream theorem ContextualUpstreamProbe.class_universal_self_membership was accepted by Lean; D5 and frozen declaration search found no repository GID for this exact proposition. Mathlib pinned by lake-manifest.json was searched; no stronger in-repository supplier exists.
+    previous_atom_id: c19c0848d7cdfe5b518008bbd9dfa736f360df4f6eb49b1eb987756c91cc6731
+    next_atom_id: 31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026
+  chain_atoms:
+    - 3b9e3b133aebee78b6a9ba925b0606217ff533a80ddefbe6a2a889078b507557
+    - 28cd3c5dce8da48b9ee2ceba1c3a689c68e73c7e25e6995c792a286987ed385b
+    - b22116f40cdc74cc093dc2167715b48d0ebc8654adcf65616df8ebef09d91aaa
+    - d53156ae05090ecbb9308e9b4786bdfa42afaaa3f1b598ae7bfc79082f972e99

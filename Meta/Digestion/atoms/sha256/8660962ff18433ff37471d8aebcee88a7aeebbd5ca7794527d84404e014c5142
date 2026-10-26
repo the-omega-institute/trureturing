@@ -1,0 +1,41 @@
+**Hypothesis 53.1 (Initialization, accessible inputs and installed rights).**
+There is one actual unknown complete world $W\in\mathcal D$ and one
+specimen at original clock zero. Membership in $\mathcal D$ is a
+mathematical domain condition. It supplies no procedure for preparing
+such a specimen or testing domain membership. The source is initialized
+at $(0,P(W),g(W),d(W))$ with its original zero-clock reading. There is
+no reset or second copy of a previously acquired specimen.
+
+A receiver is installed before this initialization with the same finite
+control, original ordered-basis convention, named source endpoint
+$\epsilon$, public comparison reference $\theta$, empty transient
+storage, and task latch $\eta=\bot$ for every $W$. Installation and
+provisioning of that endpoint and its rights are explicit resources.
+They contain no $q$, source inverse, source coordinates, gain or drift,
+unknown seed, future-response table, task bit or branch label. The
+receiver's accessible source-dependent inputs are only the immediate
+raw reports from this endpoint on its actual run. The source parameters
+and mathematical source state below are not accessible registers.
+
+The endpoint has the original $J,M$ move-and-immediate-read law through
+clock seven. At any clock $i<7$, both source moves $E\in\{J,M\}$
+are legal for an authorized source invocation. Such an invocation
+advances to $i+1$ on the same specimen and supplies its one actual
+raw report. At clock seven this receiver has no further source move or
+read right. There is no free reread, reset, copy, extra port or clock
+shift. The installed selector invokes only the literal word
+$(J,M,J,M,M,M,M)$. In particular the original seventh $J$ is a legal
+unselected alternative at clock six, not a second acquisition in this
+run. The receiver exports no direct source-action port to its local
+caller.
+
+The receiver has total ideal primitives for capturing the current exact
+real report, comparing that scalar with its stored exact rational
+$\theta$, writing a Boolean latch and clearing transient storage. A
+comparison and a write finish before another request is accepted. Each
+is charged local work and uses its declared transient storage; they
+advance no source clock. There is no finite-word or physical realization
+assumption for these ideal real primitives. All local calls require an
+installed invocation right. No additional hidden source-dependent
+failure is present in these stipulated primitives.
+

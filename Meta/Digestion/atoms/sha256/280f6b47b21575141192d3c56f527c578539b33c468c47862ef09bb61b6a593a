@@ -1,0 +1,11 @@
+**Theorem 1.2 (A strict M point).** There is a base $(p_*,v_*)\in K$ and distinct
+$W_A,W_B\in C(p_*,v_*)$ such that $m(W_A)=m(W_B)$. Thus
+
+$$
+(p_*,v_*)\in D_M\setminus D_J.
+$$
+
+The point is certified below by a rational contraction argument. This is a regional
+component only and is not a global witness or a global exclusion for the original
+joint objective.
+

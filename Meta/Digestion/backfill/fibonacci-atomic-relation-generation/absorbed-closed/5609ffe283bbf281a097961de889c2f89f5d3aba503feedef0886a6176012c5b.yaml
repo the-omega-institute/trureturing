@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:5609ffe283bbf281a097961de889c2f89f5d3aba503feedef0886a6176012c5b
+  normalized_sha256: sha256:5609ffe283bbf281a097961de889c2f89f5d3aba503feedef0886a6176012c5b
+cas_ref: sha256:5609ffe283bbf281a097961de889c2f89f5d3aba503feedef0886a6176012c5b
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenLayerMarginalDecay.golden_layer_marginal_lt_of_le
+    target_statement_id: sha256:f5751f69061c3c031b50d8b79e65ea91d9d0e77693a7f4ea25ba5b452e026061
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount.positive_layers_eq_count_interval
+    target_statement_id: sha256:1ff1fcc35de275e7cbc0784e0bccecddcb3289b03646c17e20a44217bca8f82b
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount.positive_part_sum_finite_support
+    target_statement_id: sha256:3adf87bc2f0b759f5a7dcd34942b0ba059c6074c968ef5ed592f666710c61d8c
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceSupremum.golden_resource_objective_eq_of_layer_price
+    target_statement_id: sha256:028573a81c83702463826e852d583c79221ae7962d83c9a20573aa9aeb993506
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceSupremum.golden_resource_supremum_eq_positive_part_sum
+    target_statement_id: sha256:358fcddacfd9debb06a88687b9cdf67c502ec72a8418ee257800522b3a690e71
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceSupremum.local_eq_layer_sum
+    target_statement_id: sha256:198f5980e8635dc5159f9b95fc76fbfa6f8edbd789a36c4c9ec058ab33822ce5
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_layer_strict_decrease
+    target_statement_id: sha256:9d8941787111a851e94e533ca3af5d55a035c6126f5e7bf0b0eada28871085e0
+receipts:
+  unresolved_subitems: []

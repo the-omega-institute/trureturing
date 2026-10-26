@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f8d3b1e5ad4ec83366a3c1f545237aa535930a44b4d1f960866c4b25aa522a8
+  normalized_sha256: sha256:1f8d3b1e5ad4ec83366a3c1f545237aa535930a44b4d1f960866c4b25aa522a8
+cas_ref: sha256:1f8d3b1e5ad4ec83366a3c1f545237aa535930a44b4d1f960866c4b25aa522a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明所考察强经典答案模型须为含单位复代数 character；没有声称该 character 存在或不存在。
+    previous_atom_id: e989c5d5eb01f880046ac1d741905daa254267c3280fc9bdd8ed23308c7405b3
+    next_atom_id: 14578782191a5d36d57f18362c6d3a4d78d23fb1b9df7f7e0179afb36663b59e

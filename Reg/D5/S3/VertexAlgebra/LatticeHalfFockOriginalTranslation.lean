@@ -23,6 +23,19 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
+/- Exact source-type mirrors for the consumed APIs. These
+   exact source mirrors are not four-slot registrations; the missing
+   realization/readout evidence is reported with this delivery. -/
+abbrev sourceScope_shiftField_coeff :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coeff)
+theorem source_actual_shiftField_coeff : sourceScope_shiftField_coeff :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coeff
+
+abbrev sourceScope_native_jet_successor :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor)
+theorem source_actual_native_jet_successor : sourceScope_native_jet_successor :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor
+
 def hyperbolic : LatticeData where
   rank := 2
   G := !![0, 1; 1, 0]
@@ -231,6 +244,109 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   catalog := Lean.Name.anonymous
   localNames := false
   realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end ShiftCoefficient
+
+namespace NativeJetSuccessor
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  ℕ (fun _ => ℤ) (fun _ => ℂ)
+def actual : Realization signature := realize signature
+  (fun _ order mode => jetScalar order mode) (fun empty => nomatch empty)
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => 1) (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (order : ℕ) (mode : ℤ),
+    (order + 1 : ℂ) * readout.readout () (order + 1) mode =
+      (-(mode : ℂ) - 3 / 2 - (order : ℂ)) * readout.readout () order mode
+theorem source_bridge : (type_of% (@native_jet_successor)) ↔ arena.Law actual := Iff.rfl
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law 0 0
+  norm_num [rejected, realize] at bad
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨1, 0, 1, ?_⟩
+  norm_num [actual, realize, jetScalar, Finset.prod_range_succ]
+def familyRegistration : Registration arena (type_of% (@native_jet_successor)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp native_jet_successor, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.native_jet_successor "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.NativeJetSuccessor.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end NativeJetSuccessor
+
+namespace ShiftCoefficient
+def checkpointAliasFamilyRegistration : Registration arena (type_of% (@shiftField_coeff)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp shiftField_coeff, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def checkpointAliasRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shiftField_coeff) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField.shiftField_coeff "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.ShiftCoefficient.checkpointAliasFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨checkpointAliasFamilyRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature actual.readout actual.anchor)

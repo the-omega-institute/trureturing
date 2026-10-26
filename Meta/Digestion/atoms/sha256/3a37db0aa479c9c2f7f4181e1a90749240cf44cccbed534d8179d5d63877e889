@@ -1,0 +1,20 @@
+**Definition 1.2 (Complete-world guards).** Let $\mathcal F(H)$ contain all
+complete worlds realizing the literal history $H$. For any finite or
+infinite $S\subseteq\mathcal F(H)$ retain the original recursion
+
+$$
+\begin{aligned}
+L_0(S,H)&\iff |S|\ge2,\\
+L_{k+1}(S,H)&\iff |S|\ge2\ \land
+\bigwedge_{E\in\{J,M\}}\exists u\in\mathbb R:\quad
+L_k(S\cap\mathcal F(H,E,u),(H,E,u)).
+\end{aligned}
+\tag{1.5}
+$$
+
+Cardinality counts different complete triples. An empty or singleton
+support fails every guard. Different terminal pairs are permitted, but
+both terminal actions below an acquired child must use that child's one
+acquired response. In particular a fifth-M $L_2$ has one shared fifth
+response $p$ for both sixth actions.
+

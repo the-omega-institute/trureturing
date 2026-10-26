@@ -1,0 +1,44 @@
+**Definition 3.1 (isolating box).** Fix the first source coordinate $r_A=1/8$. For
+
+$$
+\begin{aligned}
+z&=(\xi,\tau,\zeta)=(b_A,r_B,b_B),\\
+F(z)&=\Psi\left(\frac18,\xi\right)-\Psi(\tau,\zeta),
+\end{aligned}
+\tag{6}
+$$
+
+let
+
+$$
+z_0=\frac1{10^{18}}
+\begin{pmatrix}
+23987140659295483\\
+893793132424690909\\
+25022873150407289
+\end{pmatrix},\qquad
+\rho=\frac1{10^{12}},\qquad
+X=z_0+[-\rho,\rho]^3.
+\tag{7}
+$$
+
+All entries in (7) are exact rationals. Let $C$ be the rational matrix
+
+$$
+C=\frac1{10^{12}}
+\begin{pmatrix}
+5243562804458&-4374555673860&717669526134\\
+3964915631058&-3296878123863&541497661837\\
+5775627325121&-4821015492245&790827420333
+\end{pmatrix}.
+\tag{8}
+$$
+
+Its determinant is
+
+$$
+det C=\frac{70263682584632593638580103231}{20000000000000000000000000000000000},
+$$
+
+which lies strictly between $3/10^6$ and $4/10^6$.
+

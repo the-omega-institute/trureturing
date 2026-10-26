@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:f9deb607bd637ea696fb59813230c55ce22fb57ca88a0df9846c75737d026cc6
+  normalized_sha256: sha256:f9deb607bd637ea696fb59813230c55ce22fb57ca88a0df9846c75737d026cc6
+cas_ref: sha256:f9deb607bd637ea696fb59813230c55ce22fb57ca88a0df9846c75737d026cc6
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.endpointEstimator
+    target_statement_id: sha256:8841b240832cdb9d66f6a282b97f0aed87c0bce6e46688b337061b7f8e3012f4
+  - gid: D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.finite_power_extrapolation_risk
+    target_statement_id: sha256:35766434f7fac5411ccc8ba16f7b6ed21be675ca1012d2c0272b89c8ff477bab
+  - gid: D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.minimaxRisk
+    target_statement_id: sha256:9310e5df6bd633084e52169923834c1c367c08e0de9f74ad82a06478c5d0c5ab
+  - gid: D5/S3/Estimation/DecisionRisk/FinitePowerExtrapolationRisk.risk
+    target_statement_id: sha256:e5533bafb25a9d942a42e64bacf7aff960eef19e92c48c2131150fe9fb78db0e
+  - gid: D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.rank_one_infinite_horizon_risk
+    target_statement_id: sha256:73109fc45e6bc47206cc54725802782492195e5a20b81242f3dc8de656046ab6
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b65e57a813f1c98d34a64086b7763b994f5b7ce6b056d9987d0a041bc17e095f
+    - 66fcdd54d9073905a837be6f69fad971b8896b75a698feb5d08af644e0c278ef

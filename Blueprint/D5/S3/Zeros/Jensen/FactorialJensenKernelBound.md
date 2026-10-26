@@ -4,7 +4,31 @@
 
 A degree-uniform factorial Jensen polynomial kernel bound.
 
-**Theorem 1.1 (The complete finite polynomial kernel in every degree).**
+**Definition 1.1 (The nonnegative even-factorial partial sum).**
+
+$$\forall n \in \mathbb{N},\; \forall M \in \mathbb{R},\; S\left(n, M\right)=\sum_{k< n} \frac{M^{k}}{(2\cdot k)!}$$
+
+*Formalization.* `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.evenFactorialSum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum is over the natural indices from zero through n-1, with the empty sum at n=0.
+
+**Lemma 1.2 (Comparison with the full cosh series).**
+
+$$\forall n \in \mathbb{N},\; \forall M \in \mathbb{R},\; 0\le M\Rightarrow S\left(n, M\right)\le cosh\left(\sqrt{M}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.even_sum_le_cosh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For nonnegative M, all series terms are nonnegative, so every finite initial sum is at most cosh(sqrt(M)). At n=2 this supplies the quadratic lower bound for cosh used by the Gaussian positive-part local integral estimate.
+
+**Theorem 1.3 (The complete finite polynomial kernel in every degree).**
 
 Lean statement: `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.factorial_jensen_kernel_uniform_bound`
 
@@ -28,5 +52,7 @@ This theorem bounds the complete finite polynomial amplification used in the act
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.evenFactorialSum`
+- Truth anchor: `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.even_sum_le_cosh`
 - Truth anchor: `D5/S3/Zeros/Jensen/FactorialJensenKernelBound.factorial_jensen_kernel_uniform_bound`
 - Dependency: [D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering](NormalizedJensenDegreeLowering.md)

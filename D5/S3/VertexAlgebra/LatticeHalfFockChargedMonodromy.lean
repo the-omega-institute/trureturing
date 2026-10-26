@@ -22,7 +22,7 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
-private theorem ground_neg (D : LatticeData) (hu : IsUnit D.G.det) (charge : Charge D) :
+theorem ground_neg (D : LatticeData) (hu : IsUnit D.G.det) (charge : Charge D) :
     groundAction D hu (-charge) = groundAction D hu charge := by
   unfold groundAction
   apply congrArg (groundRepresentation D hu)
@@ -36,11 +36,11 @@ private theorem ground_neg (D : LatticeData) (hu : IsUnit D.G.det) (charge : Cha
     change ((-charge index : ℤ) : F₂) = (charge index : F₂)
     simp only [Int.cast_neg, CharTwo.neg_eq]
 
-private theorem norm_neg (D : LatticeData) (charge : Charge D) :
+theorem norm_neg (D : LatticeData) (charge : Charge D) :
     chargeNorm D (-charge) = chargeNorm D charge := by
   simp [chargeNorm, bilinear]
 
-private theorem norm_even (D : LatticeData) (charge : Charge D) :
+theorem norm_even (D : LatticeData) (charge : Charge D) :
     Even (chargeNorm D charge) := by
   have symmetrization := integral_cocycle_symmetrization D charge charge
   exact ⟨lowerCocycleExponent D charge charge, symmetrization.symm⟩
@@ -77,7 +77,7 @@ private theorem creation_neg_nat (D : LatticeData) (charge : Charge D) (degree :
       (map_pow (MvPolynomial.C : ℂ →+* Oscillator D) (-1 : ℂ) degree).symm
   rw [coefficientSign, MvPolynomial.C_mul']
 
-private theorem creation_neg (D : LatticeData) (charge : Charge D) (degree : ℤ) :
+theorem creation_neg (D : LatticeData) (charge : Charge D) (degree : ℤ) :
     halfCreationCoeff D (-charge) degree =
       ((-1 : ℂ) ^ degree) • halfCreationCoeff D charge degree := by
   by_cases negative : degree < 0

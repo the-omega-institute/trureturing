@@ -1,0 +1,20 @@
+### 定理 5.2（窗口逃逸谱）
+
+对任意有限 $W$，预测所有未来证书的最小加性损失恰为
+
+$$
+\boxed{
+\inf_{\widehat F_W:Q\to2^{D_W}}
+\sum_s\mu(s)\sum_{(\alpha,d)}
+\omega_W(\alpha,d)
+\mathbf1[(\alpha,d)\in F_W(s)\triangle\widehat F_W(q(s))]
+=
+\mathsf E_{\omega_W,W}(q;F,\mu).
+}
+\tag{5.2}
+$$
+
+#### 证明
+
+将 $D_W$ 视为一个新的有限观察域，把 $F_W$ 视为新的失败边函数，直接应用定理 2.1。证毕。
+

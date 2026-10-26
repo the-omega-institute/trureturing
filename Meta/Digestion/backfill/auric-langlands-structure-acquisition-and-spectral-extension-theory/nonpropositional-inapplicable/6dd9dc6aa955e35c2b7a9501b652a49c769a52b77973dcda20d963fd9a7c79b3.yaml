@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6dd9dc6aa955e35c2b7a9501b652a49c769a52b77973dcda20d963fd9a7c79b3
+  normalized_sha256: sha256:6dd9dc6aa955e35c2b7a9501b652a49c769a52b77973dcda20d963fd9a7c79b3
+cas_ref: sha256:6dd9dc6aa955e35c2b7a9501b652a49c769a52b77973dcda20d963fd9a7c79b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition only: stipulates the ordered-pair domain P, readout cuts D_j, union cardinality C(S), normalized loss e(S), and separate labels. Displayed equalities define notation, not derived claims.'
+    previous_atom_id: 4fd523e69699609cf70799b97a07a48d5c802f9581e81598f984772799ed58ac
+    next_atom_id: 6dc8f0bcc2fbad429c7512b602ce2af234a59aaea8311c21143a87a6fa1b9c62

@@ -1,0 +1,13 @@
+**Definition 121.1 (Markov and original-edge support).** In the original
+occurrence coordinates, a conservative Markov rate matrix is
+$Q=-\mathcal A$ with $Q\mathbf1=0$ and $Q_{xy}\ge0$ for $x\ne y$.
+It acts on column vectors of functions; row distributions evolve by
+$\pi(t)=\pi(0)e^{tQ}$. Original-edge support means $Q_{xy}=0$ whenever
+$x\ne y$ and $\{x,y\}\notin E_{e+1}$; rates on some original edges
+may vanish. Irreducibility means that the directed graph of strictly
+positive off-diagonal rates is strongly connected. For any such finite
+$Q$, choosing $r\ge\max_x(-Q_{xx})$ makes $Q+rI$ entrywise
+nonnegative, so $e^{tQ}=e^{-rt}e^{t(Q+rI)}$ is nonnegative and has
+row sums one. Thus the sign convention specifies actual finite Markov
+semigroups, not just conservation of constants.
+

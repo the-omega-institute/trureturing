@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c0ad0180eaa07d7ef6ed288fb8a3b82c094695137ea07422dbc294a430278a05
+  normalized_sha256: sha256:c0ad0180eaa07d7ef6ed288fb8a3b82c094695137ea07422dbc294a430278a05
+cas_ref: sha256:c0ad0180eaa07d7ef6ed288fb8a3b82c094695137ea07422dbc294a430278a05
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterProfileRankCardinality.binary_character_profile_rank_cardinality
+    target_statement_id: sha256:6bd821764c33b81516221fbaa7c341219b9ac0dc4f1a770fb2a261cf2e753c2d
+receipts:
+  unresolved_subitems: []

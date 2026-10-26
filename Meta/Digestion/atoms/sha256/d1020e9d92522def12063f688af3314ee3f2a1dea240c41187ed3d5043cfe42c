@@ -1,0 +1,134 @@
+**Theorem 2.1 (spatial, diffusion and actual finite-command ranges).** For
+every fixed model of Definition 1.1 and every real $p>0$,
+
+$$
+\begin{aligned}
+\int_\Omega\Gamma^p\,d\mu<\infty
+&\quad\Longleftrightarrow\quad p<2,\\
+\mathbb E_o\int_0^\tau\Gamma(Q_t)^p\,dt
+=\int_\Omega\Gamma^{p+1}\,d\mu<\infty
+&\quad\Longleftrightarrow\quad p<1.
+\end{aligned}
+\tag{2.1}
+$$
+
+There is $n_0$ such that, for every $n\ge n_0$, every realization of the
+original finite command has
+
+$$
+\int_0^{\zeta_n}\Gamma(\bar q_n(t))^p\,dt<\infty
+\quad\Longleftrightarrow\quad p<\tfrac12.
+\tag{2.2}
+$$
+
+The same equivalence holds for its expectation $\nu_n(\Gamma^p)$.
+For every $n\ge1$, without a fine-mesh restriction, that integral is
+infinite on every realization when $p\ge1/2$. More precisely, at any
+fixed $n$, a realization with no positive-time hold at $o$ has exactly
+the range $p<1/2$; one with such a hold has no positive integrability
+range. The fine-mesh restriction excludes all zero-velocity random
+chords uniformly for the fixed coefficients.
+
+The spatial endpoint $p=2$ and the diffusion-mean endpoint $p=1$ are
+logarithmic. In fact, for every sufficiently small fixed chart radius $b$,
+
+$$
+\int_{\epsilon<R<b}\Gamma^2\,d\mu
+=\frac{1}{8m_0}\log(b/\epsilon)+O(1)
+\quad(\epsilon\downarrow0).
+\tag{2.3}
+$$
+
+The finite-command endpoint $p=1/2$ is logarithmic in elapsed distance
+from its initial departure from $o$, unless it holds there, in which
+case divergence already occurs on the hold. Finite diffusion expectation
+in (2.1) implies almost sure finiteness for $p<1$. No almost sure
+divergence assertion for the diffusion is made for $p\ge1$.
+
+Proof. Equation (1.6) bounds the spatial integral near $o$ above and
+below by positive constants times $\int_0^bR^{3-2p}dR$. Away from $o$
+the full field is bounded and $\mu(\Omega)<\infty$. This proves the
+first equivalence, including failure at equality. More precisely, its
+polar integrand after angular integration is
+
+$$
+\frac{\pi^2}{2}m_0c_G^pR^{3-2p}(1+O(R))\,dR.
+\tag{2.4}
+$$
+
+At $p=2$ the error is integrable and
+$(\pi^2/2)m_0c_G^2=1/(8m_0)$, proving (2.3). For $p>2$ the leading
+divergence is
+$(\pi^2/2)m_0c_G^p\epsilon^{4-2p}/(2p-4)$; for $0<p<2$ the integral
+over $R<\epsilon$ is asymptotic to
+$(\pi^2/2)m_0c_G^p\epsilon^{4-2p}/(4-2p)$.
+
+The classical degree $2-Q$ heat-integral kernel and homogeneous-gauge
+calculus underlying (1.6) are described in Ciatti–Cowling–Ricci,
+[*Hardy and uncertainty inequalities on stratified Lie groups*, §2,
+(2.1)–(2.6)](https://arxiv.org/html/1308.2373v1), with $Q=4$ and Riesz
+order $2$. They are intermediate tools here; the full variable-coefficient
+killed source normalization and its remainder are those of G, §§10–11,
+and have not been replaced by a homogeneous global model.
+
+For any nonnegative Borel $W$, Tonelli applied twice to the original
+killed heat density gives, with infinity allowed,
+
+$$
+\mathbb E_o\int_0^\tau W(Q_t)\,dt
+=\int_0^\infty\int_\Omega p_t^\Omega(o,q)W(q)\,d\mu(q)dt
+=\nu(W).
+\tag{2.5}
+$$
+
+This is the usual expected-occupation identity; the same Tonelli proof
+is given for killed Brownian heat densities in Mörters–Peres,
+[*Brownian Motion*, public draft, Definition 3.30 and Theorem 3.31,
+p.83](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf).
+Here the density is the native $p_t^\Omega$ relative to raw $\mu$;
+no Euclidean Brownian kernel or its normalization is substituted.
+Taking $W=\Gamma^p$ proves the second equivalence by the first one at
+exponent $p+1$. The nonnegative integral is almost surely finite when its
+mean is finite. Infinite mean alone gives no converse pathwise assertion.
+
+It remains to examine the actual commands. On any nonzero constant-control
+chord passing through $o$ at time $t_*$, choose the continuous phase
+representatives about that contact. If its control velocity is $w$, the
+native flow equations give exactly
+
+$$
+(x,y,z)=(s w^1,s w^2,\tfrac12s^2w^1w^2),\qquad
+\upsilon=0,\qquad R=|Bw|\,|s|,\quad s=t-t_*.
+\tag{2.6}
+$$
+
+This also holds on either available side of an endpoint contact. Thus
+(1.6) makes the time integrand comparable to $|t-t_*|^{-2p}$.
+Each nonzero chord has only finitely many contacts with the actual
+source: if $w^1\ne0$, its height can equal $k_o$ at most once; if
+$w^1=0$ and $w^2\ne0$, its lifted $\alpha$ is nonconstant affine and
+hits the source residue class only finitely often on a finite interval.
+The finite torus windings do not change this argument. On the remaining
+closed portions the field is bounded; the same off-source bound applies
+towards a killed face. A stationary chord away from $o$ is harmless.
+There are finitely many chords, and the terminal height leg is nonzero
+until killing. This proves the claimed classification for an individual
+realization with or without a source hold. In particular its first chord
+either holds at $o$ for positive time or has a positive initial interval
+of the form (2.6). It forces divergence for every $p\ge1/2$, at every $n$.
+
+Finally let $s_*>0$ be the minimum singular value of $\Sigma$ on the
+closed cylinder, and let $D=\sup|d|$. Every random increment satisfies
+
+$$
+|v_i|\ge2s_*\sqrt{\delta_n}-D\delta_n>0
+\tag{2.7}
+$$
+
+for all sufficiently large $n$, uniformly in its node and signs.
+There is consequently no source hold before death at these meshes.
+For a fixed $n$ the law has finite support, at most $4^{m_n}$ commands.
+When $p<1/2$, finiteness on each command therefore implies finiteness
+of the expectation. The logarithmic assertion follows from
+$\int_\epsilon^c s^{-1}ds$. $\square$
+

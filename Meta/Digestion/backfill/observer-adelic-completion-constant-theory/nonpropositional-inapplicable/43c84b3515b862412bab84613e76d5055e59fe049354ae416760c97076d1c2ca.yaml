@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43c84b3515b862412bab84613e76d5055e59fe049354ae416760c97076d1c2ca
+  normalized_sha256: sha256:43c84b3515b862412bab84613e76d5055e59fe049354ae416760c97076d1c2ca
+cas_ref: sha256:43c84b3515b862412bab84613e76d5055e59fe049354ae416760c97076d1c2ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 拟输出 PSD 或 infeasibility certificate 的字段名称，没有断言任一结论。
+    previous_atom_id: 12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20
+    next_atom_id: b64b438a158a61c849f34305403c6a77330adc08ae807e50f24e99f5267ef57c

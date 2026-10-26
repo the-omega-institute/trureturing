@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:03d279daebfce235ccc0646c911ade0d4957bd81e07e11518f1d45a7c5a6f819
+  normalized_sha256: sha256:03d279daebfce235ccc0646c911ade0d4957bd81e07e11518f1d45a7c5a6f819
+cas_ref: sha256:03d279daebfce235ccc0646c911ade0d4957bd81e07e11518f1d45a7c5a6f819
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.decode_wdigits
+    target_statement_id: sha256:6d2a39606fefb80f159dfd0824e770116148025e1a8420a62d36b2120fc0a7b2
+  - gid: D5/S0/Conventions/WDigits.wdigits_isCanonical
+    target_statement_id: sha256:3cb605330e5e08d1497edc3e8a53692dfe62c788bd43944893a436ae9307332f
+  - gid: D5/S0/Conventions/WDigits.wdigits_unique
+    target_statement_id: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+    target_statement_id: sha256:ae93a63b1116d0bc027007a29de8c654d4f2d4e60a65c4d7cb1781451573572e
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.divisor_5040_golden_equiv
+    target_statement_id: sha256:f3dd5ff71359c08945559efb764170be30bacdab68c758eaf946dd9adb63d462
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_5040
+    target_statement_id: sha256:1b12d70b228721873c95b20291f72555c412a8a77f790104efadeca5a0804415
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a052e081825551ac49765904bf8fa1e197fd01d475057705b9a064fe94006e4
+  normalized_sha256: sha256:5a052e081825551ac49765904bf8fa1e197fd01d475057705b9a064fe94006e4
+cas_ref: sha256:5a052e081825551ac49765904bf8fa1e197fd01d475057705b9a064fe94006e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proposed Lean interface declarations and a list of theorems to prove, not established mathematical results.
+    previous_atom_id: b2f26b3769e0adf90c1a64ab1e0c1ceed4461bca903e11c439436f52c9e042d0
+    next_atom_id: 6f21dda5f98417c2751d79e5eaf1caa412fdf460ad6083393877c3d5813800f3

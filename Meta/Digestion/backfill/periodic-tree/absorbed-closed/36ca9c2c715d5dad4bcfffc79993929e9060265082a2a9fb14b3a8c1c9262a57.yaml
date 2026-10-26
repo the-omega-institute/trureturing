@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:36ca9c2c715d5dad4bcfffc79993929e9060265082a2a9fb14b3a8c1c9262a57
+  normalized_sha256: sha256:36ca9c2c715d5dad4bcfffc79993929e9060265082a2a9fb14b3a8c1c9262a57
+cas_ref: sha256:36ca9c2c715d5dad4bcfffc79993929e9060265082a2a9fb14b3a8c1c9262a57
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
+    target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
+    target_statement_id: sha256:c8ae7c793983ac85ff158ba276ee97b9df81d50768609863072c6b2d348ddbc1
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.const
+    target_statement_id: sha256:883830ed15e01b32856f92ae231290e494d5fd04397feef656ceb5c5a7c99beb
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.input
+    target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
+    target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
+receipts:
+  unresolved_subitems: []

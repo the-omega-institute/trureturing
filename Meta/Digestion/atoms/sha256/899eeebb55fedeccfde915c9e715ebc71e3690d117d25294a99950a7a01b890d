@@ -1,0 +1,29 @@
+**Corollary 211.1 (One-copy obstruction and the minimum in the declared menu).**
+In the region $q_0>1$ or $q_3>1$, the minimum number of
+compatible preparations for the declared encoded-NPT extraction is
+exactly two.
+
+Proof. For one copy, the local-number twirl is
+
+$$
+ {1\over Z}\bigl(|0\rangle\langle0|\otimes A_0
+ +|1\rangle\langle1|\otimes A_1\bigr). \tag{211.1}
+$$
+
+Each Alice fixed-number sector is one-dimensional. A number-preserving local
+instrument cannot turn the positive product sum (211.1) into an encoded
+entangled subsystem. Thus ordinary NPT of the untwirled one-copy matrix does
+not constitute one-copy SSR-accessible entanglement.
+
+If $q_0>1$ or $q_3>1$, one copy is impossible and §§208--209 give a
+positive-probability two-copy branch, so the minimum copy number in this menu is
+exactly two. If $q_0,q_3\leq1$, neither one nor two copies yields encoded NPT.
+No claim about three or more copies is made.
+
+The common untwirled preparation is essential. If each input is independently
+number-twirled first, its $C$ block is removed before tensoring. Every term
+in (203.4) then vanishes, and a later common twirl of the product remains a
+positive sum of Alice--Bob product blocks. The compatible-preparation and
+common-phase assumptions are resource premises, not conclusions about physical
+availability.
+

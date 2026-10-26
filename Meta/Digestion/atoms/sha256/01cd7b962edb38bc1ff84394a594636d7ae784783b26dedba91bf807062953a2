@@ -1,0 +1,16 @@
+**Assumption 213.2 (Applicability of the finite extraction statement).**
+Every assertion concerns Definition 201.1 with $0<t\le1$, two compatible
+independent untwirled preparations, the stated creation convention,
+one common local-number twirl and the fixed-charge coherent filters of
+Assumption 201.2. The enlarged global sector orbit is a premise distinct
+from passive $\Gamma(U(3))$, native reachability and the local operation
+class. The physical availability of the preparations and filters is a
+separate premise. Independent pre-twirling specifies a different resource.
+No cloning or external phase reference is inferred. Theorem 181.1
+classifies ordinary one-copy separability; Theorem 201.3 and Corollary
+211.1 concern the finite two-copy encoded-NPT task. They supply no
+all-copy theorem, asymptotic rate, global filter optimum, physical
+implementation or resource advantage. Full-state negativity, selected
+conditional negativity and the flagged success-weighted sum in §210
+remain distinct quantities.
+

@@ -1,0 +1,5 @@
+source_id = "fib-atom-quantitative-escape-spectrum-whitebox"
+path = "docs/develop/theory/FIB_ATOM_QUANTITATIVE_ESCAPE_SPECTRUM_WHITEBOX.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

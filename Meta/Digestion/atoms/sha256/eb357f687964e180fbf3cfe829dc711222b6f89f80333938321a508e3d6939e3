@@ -1,0 +1,19 @@
+**Theorem 163.1 (Exact incidence correspondence).** For every such pair,
+
+$$
+\Gamma\subseteq\beta(D)\iff D\subseteq\alpha(\Gamma).
+$$
+
+Both maps reverse inclusion. The maps $\beta\alpha$ on task families
+and $\alpha\beta$ on decoder families are extensive, monotone and
+idempotent. In particular
+$\alpha\beta\alpha=\alpha$ and $\beta\alpha\beta=\beta$.
+
+*Proof.* Both sides of the equivalence state
+$\forall t\in\Gamma\ \forall\mathcal R\in D:\mathcal R\in F_t$.
+The definitions give antitonicity and
+$\Gamma\subseteq\beta\alpha\Gamma$, $D\subseteq\alpha\beta D$.
+Applying antitonicity to these inclusions, and extensiveness to their
+images, gives both triple identities. They imply idempotence;
+composition of two inclusion reversals gives monotonicity. $\square$
+

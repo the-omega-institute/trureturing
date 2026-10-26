@@ -1,0 +1,5 @@
+**引理 6（repo-derived）。** 对任意有限族 $C_1,\ldots,C_r$，其中每个 $C_i$ 都是定义 16 的 $\Sigma_{{\rm cau},t}$ 总单孔上下文，存在共同整数 $c\le0$，使
+\[
+\forall p\in\mathbb Z^3\ \forall t,t'<c\ \exists X_t,X_{t'}\in\mathcal B\quad
+\forall i\in\{1,\ldots,r\}:\quad q(C_i(X_t))=q(C_i(X_{t'})).
+\]

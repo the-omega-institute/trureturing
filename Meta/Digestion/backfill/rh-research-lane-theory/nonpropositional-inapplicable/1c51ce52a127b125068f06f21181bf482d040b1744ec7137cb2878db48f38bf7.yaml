@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c51ce52a127b125068f06f21181bf482d040b1744ec7137cb2878db48f38bf7
+  normalized_sha256: sha256:1c51ce52a127b125068f06f21181bf482d040b1744ec7137cb2878db48f38bf7
+cas_ref: sha256:1c51ce52a127b125068f06f21181bf482d040b1744ec7137cb2878db48f38bf7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Hardy 载体段仅规定半平面空间的范数约定，没有断言函数属于其闭包。'
+    previous_atom_id: 653d22f45062c7e5b74b6a0dc5ccb4f5d1d941d0bb2c1d9410eb5e312e3d5167
+    next_atom_id: 2f6b1030a661da3acdc5ad4f2f48697b0c37dd6fbc9560f2cd2cebdf99b18ac0

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e189e0f18d31e795932a3cd1b0e4ea213a76a6049fc67ae289024168056d1ce5
+  normalized_sha256: sha256:e189e0f18d31e795932a3cd1b0e4ea213a76a6049fc67ae289024168056d1ce5
+cas_ref: sha256:e189e0f18d31e795932a3cd1b0e4ea213a76a6049fc67ae289024168056d1ce5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definitions only: stipulates covariance, its optimization domain, measured-qubit Hilbert-Schmidt discord, measurement map, negativity and positive-part notation. The displayed expressions define the quantities; no bound or evaluation is asserted.'
+    previous_atom_id: 0ea5467768793c57fdf8465cd56d245bb93de3bb18ee92bc74d2f88cabd0d721
+    next_atom_id: fc4239b0d8410f5246cadcc271052e0a2cf5c66f32ea6fac3e35d87be36cc837

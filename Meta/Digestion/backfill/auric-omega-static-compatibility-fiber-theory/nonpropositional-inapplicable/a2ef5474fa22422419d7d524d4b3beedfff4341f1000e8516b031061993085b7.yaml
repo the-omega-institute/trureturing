@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2ef5474fa22422419d7d524d4b3beedfff4341f1000e8516b031061993085b7
+  normalized_sha256: sha256:a2ef5474fa22422419d7d524d4b3beedfff4341f1000e8516b031061993085b7
+cas_ref: sha256:a2ef5474fa22422419d7d524d4b3beedfff4341f1000e8516b031061993085b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 定义固定字面观察表、条件来源域及扩展同源联合关系；空表和重复字面是定义约定。'
+    previous_atom_id: afc78aa157d65b8845c1ca3bab00a21a5b1501cb6bdf568e50a118cd725a9bcf
+    next_atom_id: b365a284a8e942529a0377b5310c4e903e0da02ef99a571d886fdb7ec8dc3845

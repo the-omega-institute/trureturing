@@ -1,0 +1,9 @@
+**定义 4.2（残余逃逸打包）。** 若 $N_1,\ldots,N_r\in\operatorname{Res}_{\mathfrak N}(C)$ 且其失败集均非空并两两不交：
+
+$$
+F_{N_i}\cap F_{N_j}=\varnothing
+\qquad(i\ne j),
+$$
+
+则称它们为大小 $r$ 的残余逃逸打包。
+

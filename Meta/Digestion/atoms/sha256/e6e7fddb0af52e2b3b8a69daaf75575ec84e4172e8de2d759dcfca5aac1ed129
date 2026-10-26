@@ -1,0 +1,15 @@
+## 8. Extension toward the D5 topology subtree
+
+The existing D5 binary endpoint-differential and simple-cycle-space theorem supplies the graph-algebra root. The next actual content is a finite signed-ribbon model with its involutions, physical boundary components, and edge types. The natural branch is:
+
+1. Existing SimpleGraphCycleSpace / binary character duality
+2. Flag involutions and face-orbit pairing; vertex-gauge equivalence
+3. Automorphism transport of signed rotations and boundary classification
+4. Equivariant-marginal denominator theorem
+5. K4 exact-expectation refutation
+6. General local twist involution: good-singular and regular events have equal probabilities
+
+The last node is proved in Section 7; it supplies a valid replacement identity, without implying thirds or any CDC theorem. Formalizing the actual rotation/flag carrier, rather than merely calling an unrelated cycle-space kernel “homology”, is the substantive outward bridge.
+
+The classical Cycle Double Cover conjecture is not treated here as an unresolved leaf: Sang-il Oum's arXiv:2607.16356v3 (2026-08-01) presents an announced July 2026 proof. This note has not independently verified that proof. The random-embedding exact-expectation claim is a separate statement; the counterexample above concerns only the explicit source model and does not depend on the CDC proof.
+

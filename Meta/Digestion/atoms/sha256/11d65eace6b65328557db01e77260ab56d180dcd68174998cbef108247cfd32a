@@ -1,0 +1,19 @@
+**Proposition 212.1 (Finite endpoint and vanishing-coupling cases).**
+The sector laws and extraction criteria include all finite endpoints
+and all vanishing couplings of Definition 201.1.
+
+Proof. At $t=1$, $s=0$, $f=g=0$, $R=I_8$, and
+$\Omega=I_{64}/64$. The table (204.1) reduces to the binomial charge
+multiplicities; no NPT branch exists. The endpoint $t=0$ is excluded.
+
+If $f=0$ or $g=0$, the corresponding $q$ is zero and its inverse filter
+is simply unused. Formula (202.5) is regular at $x,y\in\{0,1\}$: an
+endpoint component forces the associated coupling to vanish. Repeated,
+collinear, orthogonal, or otherwise nonaligned unit $v,w$ require no change;
+no division by $\|u\|$, $\|h\|$, or $z$ occurs. Strict activation itself
+ensures the inverse direction being used is nonzero.
+
+At $q_0=1$, $q_3=1$, or $q_0q_3=1$, the corresponding partial-transpose
+block has a zero eigenvalue and is PPT, not NPT. If one outer parameter is
+strictly greater than one, the other equality does not suppress that branch.
+

@@ -1,0 +1,39 @@
+**Definition 4.2 (mathematical attribution and applicability).**
+The trace, closure, constant mode, polar decomposition and finite-source
+comparison in Definition 1.1 are reused from IV, §§98, 99 and 111.
+The contribution of Theorems 2.1 and 3.1 is their source-specific global
+counting and its consumers, with no exhaustive novelty claim.
+The following references specify the established background and its
+applicability boundaries.
+
+Wolfgang Woess, [*On the duality between jump processes on ultrametric
+spaces and random walks on trees*, arXiv:1211.7216v1, §3.B,
+(3.19)–(3.24), Theorem 3.23, and §4](https://arxiv.org/pdf/1211.7216v1),
+constructs tree boundary forms using the harmonic reference measure
+$\nu_o$ of a transient nearest-neighbour random walk. This is primary
+trace-form background, already used in IV. For the unit-conductance
+binary tree the harmonic law has first-cylinder probabilities
+$1/2,1/2$, whereas (1.1) has $a,b$. Its harmonic-law formulas are
+not substitutions for $C$ or $M$ here; the required biased conditional
+trace identity is (2.7)–(2.8).
+
+The precise spectral variational supply used in Theorem 2.1 is Teschl's
+Theorem 4.10, including its explicit permission to use the quadratic
+form domain, and Theorem 4.12(i), cited in that proof. Here the inherited
+closed nonnegative form supplies the form domain, (2.3) supplies compact
+resolvent, and (2.10) supplies the actual finite-dimensional trial
+inequality. No estimate for a different tree Hardy operator is used
+as an exact specialization to $C$.
+
+Alexander Bendikov, Alexander Grigor'yan, Eryan Hu and Jiaxin Hu,
+[*Heat kernels and non-local Dirichlet forms on ultrametric spaces*,
+Ann. Sc. Norm. Super. Pisa Cl. Sci. (5) XXII (2021), 399–461,
+Theorem 2.8](https://doi.org/10.2422/2036-2145.201901_011), assume a
+proper ultrametric space and their volume condition (V), jump-tail
+condition (TJ) and Poincaré condition (PI) to obtain their pointwise
+heat-kernel estimates. Under (V) and (TJ) their stated equivalence
+still requires (PI). Theorems 2.1 and 3.1 do not instantiate those
+hypotheses for the actual biased form. That primary pointwise theorem
+is therefore background delimiting a separate problem, not a supplier
+for the global trace proof (3.5)–(3.6).
+

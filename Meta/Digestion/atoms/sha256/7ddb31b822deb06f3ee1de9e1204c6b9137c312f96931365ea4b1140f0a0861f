@@ -1,0 +1,32 @@
+**Definition 8.1 (A fixed-world nonselective marginal).** Fix any $W\in\mathcal W$ and any $\sigma>0$, with exactly the preparations and apparatus of Assumptions 2.1 and 4.1. Execute the original prefix
+
+$$
+\mathrm{read}_0,\ J,\ \mathrm{read}_1,\ M,\ \mathrm{read}_2.
+$$
+
+All three acquisitions are made and retained. The state considered here is the final system marginal after averaging their actual records, followed by tracing out fifteen system modes. It is not a state selected by a numeric history. In the column vectorization of Definition 3.1, choose
+
+$$
+q_A=X_{3,11}=q_{14},\quad q_B=X_{3,21}=q_{15},\qquad
+p_A=\pi_{14},\quad p_B=\pi_{15},\qquad [q_j,p_k]=i\delta_{jk}.
+$$
+
+Thus $\mathcal H=\mathcal H_{AB}\otimes\mathcal H_{\rm rest}$ with $\mathcal H_{AB}=L^2(\mathbb R^2)$. Write $\mathcal U_E(\rho)=U_{A_E}\rho U_{A_E}^\dagger$ and retain the whole-outcome channels $\mathcal D_i$ of Proposition 4.3. The pair state is
+
+$$
+\rho_{AB}^{W,\sigma}
+=\operatorname{Tr}_{\rm rest}
+\bigl(\mathcal D_2\circ\mathcal U_M\circ\mathcal D_1
+\circ\mathcal U_J\circ\mathcal D_0\bigr)(\rho_W).
+$$
+
+Equivalently, if $\mathsf K_{JM}(z)=K_2(z_2)U_{A_M}K_1(z_1)U_{A_J}K_0(z_0)$ is the retained-record Kraus density from Theorem 5.1, this is
+
+$$
+\rho_{AB}^{W,\sigma}
+=\operatorname{Tr}_{\rm rest}\int_{\mathbb R^3}
+\mathsf K_{JM}(z)\rho_W\mathsf K_{JM}(z)^\dagger\,d^3z.
+$$
+
+The integral is the normal-instrument integral of Theorem 4.2. It marginalizes a retained record; it does not omit an acquisition, reset a probe or divide by a selected-event probability. The other five supplied probes are unused in this prefix and can be traced out in their independent input states.
+

@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:4fa3ac5d7cf337c7ed0b9e91a1e6d8ae3d86176da11b43671a7b43fa6da74a5c
+  normalized_sha256: sha256:4fa3ac5d7cf337c7ed0b9e91a1e6d8ae3d86176da11b43671a7b43fa6da74a5c
+cas_ref: sha256:4fa3ac5d7cf337c7ed0b9e91a1e6d8ae3d86176da11b43671a7b43fa6da74a5c
+coverage_gids:
+  - gid: D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule
+    target_statement_id: sha256:a3d61c1341ad61a0a89ed8a2f7e31289b122796e238d295a5890dd610b630452
+  - gid: D5/S3/Entropy/MutualInformationEntropy.mutual_information_eq_entropy_sub
+    target_statement_id: sha256:98ab32347056de7fdcca6963b5de51deedc923c1a62a59098952f17fb0f946a5
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_eq_entropy_defect
+    target_statement_id: sha256:f49a777c4725ed85c0ff757cbace9f26cc066a61708c0faea402233bf7b0f6d0
+  - gid: D5/S3/TotalVariation/Pinsker.binary_pinsker
+    target_statement_id: sha256:6a6f538f144e3749273dc24bf1d00822e12bbf355af873c5f7d7b639b111afd0
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - be95b428cc7cb65c8ba5d4de55215747a27921ebee0400e344416888ce3f7dfa
+    - 12b2ba90da65fce610dbe6449649bb6ba917273d2b7d9c8572656f9e9bda3771

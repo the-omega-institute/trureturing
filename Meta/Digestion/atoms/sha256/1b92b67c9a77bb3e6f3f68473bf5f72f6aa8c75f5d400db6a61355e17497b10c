@@ -1,0 +1,63 @@
+**Lemma 133.1 (Phase averaging and the finite certificate).** Let
+$T=\operatorname{diag}(t_0,t_1,t_2)$ range over the diagonal unitary torus and
+set
+
+$$
+\overline{\mathcal R}=\int \operatorname{Ad}_{T^\dagger}\circ
+\mathcal R\circ\operatorname{Ad}_{T}\,dT.
+\tag{133.1}
+$$
+
+Then $e_{-q}(\overline{\mathcal R})\le e_{-q}(\mathcal R)$. Moreover
+
+$$
+\overline{\mathcal R}(E_{jj})=\sum_i c_{ij}E_{ii},\qquad
+\overline{\mathcal R}(E_{ij})=\xi_{ij}E_{ij}\ (i\ne j),
+\tag{133.2}
+$$
+
+where $C=(c_{ij})$ is entrywise nonnegative and column-stochastic. The
+coherence Choi block is positive semidefinite, so in particular
+$|\xi_{01}|^2\le c_{00}c_{11}$.
+
+*Proof.* The covariance
+$\Phi_{-q}\operatorname{Ad}_T=\operatorname{Ad}_T\Phi_{-q}$, invariance of
+the full density set, convexity of trace norm, and unitary invariance give
+the stated inequality after integrating the unitary conjugates of each
+error. Twirling separates the characters of the torus, giving (133.2).
+Complete positivity of the diagonal Choi blocks gives $C\ge0$ and positivity
+of the coherence block; trace preservation gives the column sums and its
+$(0,1)$ principal minor gives the last inequality. Put
+
+$$
+a=-\operatorname{Re}\xi_{01},\quad w=C(1,1,1)^{\mathsf T},\quad
+D=C_{\cdot2}-C_{\cdot1},\quad \Delta=D_1-D_2,\quad
+L=2a+\min(0,\Delta).
+\tag{133.3}
+$$
+
+For $-2/3\le r\le2/3$, let
+$p_r=(1/3,1/3+r/2,1/3-r/2)$ and
+$z_r=(\sqrt{p_{r,0}},\sqrt{p_{r,1}},\sqrt{p_{r,2}})^{\mathsf T}$. Direct
+substitution in (118.1) and (133.2) gives
+
+$$
+\langle z_r|\overline{\mathcal R}\Phi_{-q}(|z_r\rangle\langle z_r|)|z_r\rangle
+=\frac13+\frac{2qa}{9}
++\frac r6(w_1-w_2+2qa)+\frac{q\Delta r^2}{4}.
+\tag{133.4}
+$$
+
+Since $d(P,\tau)\ge1-\operatorname{Tr}(P\tau)$ for a pure $P$, the $r=0$
+probe and the average of the two endpoint probes yield, for every CPTP
+$\mathcal R$ and every $0\le q\le1/2$,
+
+$$
+e_{-q}(\mathcal R)\ge e_{-q}(\overline{\mathcal R})
+\ge\frac23-\frac q9L(\overline{\mathcal R}).
+\tag{133.5}
+$$
+
+This is an exact finite inequality and uses no unitality assumption.
+$\square$
+

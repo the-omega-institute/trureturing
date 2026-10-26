@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bf8613a31e7fc2cb20fc92a9a8dcd5d6ac3eba1c3a5bc846a22ae24eb5edd0a
+  normalized_sha256: sha256:4bf8613a31e7fc2cb20fc92a9a8dcd5d6ac3eba1c3a5bc846a22ae24eb5edd0a
+cas_ref: sha256:4bf8613a31e7fc2cb20fc92a9a8dcd5d6ac3eba1c3a5bc846a22ae24eb5edd0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正锥被归入名系的用语约定；没有锥的存在、闭性或正性定理。
+    previous_atom_id: fdd6af0fb14b590bb2294533bf5f4c606f51d7675f1183ced23053b02444caf5
+    next_atom_id: d1d44454e43ea24e8dfbca7d710765f2f78e5e37c3ae6ede55ea7510d8efa45b

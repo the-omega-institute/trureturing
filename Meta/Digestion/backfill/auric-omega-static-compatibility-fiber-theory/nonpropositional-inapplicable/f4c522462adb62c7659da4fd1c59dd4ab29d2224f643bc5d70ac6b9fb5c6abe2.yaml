@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4c522462adb62c7659da4fd1c59dd4ab29d2224f643bc5d70ac6b9fb5c6abe2
+  normalized_sha256: sha256:f4c522462adb62c7659da4fd1c59dd4ab29d2224f643bc5d70ac6b9fb5c6abe2
+cas_ref: sha256:f4c522462adb62c7659da4fd1c59dd4ab29d2224f643bc5d70ac6b9fb5c6abe2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定追加边、有限路径、局部记录、记录依赖条件及加权时钟的定义和取值合同，没有推导单调性。'
+    previous_atom_id: fdc4458ab8e54f6408c59dd3b559b6b34cb6204288d7237c925878a491140208
+    next_atom_id: 395c7dff64b080eeaa7553958a844149f50487acf191713a18d933f627b7d8e2

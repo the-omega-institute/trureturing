@@ -1,0 +1,28 @@
+### 7.1 The recursive five-class readout
+
+For the three-position FIB window, the legal syntax has the five labels `null`, `2`, `3`, `2 5`, and `5`. The information bridge is applied to each label as a separate task coordinate $d$, with its own binary readout $Y_d$, mass $\mu$, and feature family $Q_A$. Thus one obtains five pairs
+
+$$
+(e_d(A),I_d(A))\quad(d\in\{\texttt{null},\texttt{2},\texttt{3},\texttt{2 5},\texttt{5}\}).
+$$
+
+The label `2 5` may carry genuine joint information even when the singleton coordinates `2` and `5` have zero information about that task, exactly as the parity witness in Section 6. The recursive five-class syntax supplies the candidate coordinates and their legal compositions; it does not identify the joint task law, the deployment mass, or a common vector mutual information. In particular,
+
+$$
+\sum_d I_d(A)\;\text{need not equal}\; I((Y_d)_d;Q_A).
+$$
+
+The two sides can coincide under extra structure, but equality cannot be assumed without an independence or joint-distribution argument.
+
+The correct white-box report is therefore a five-row task table, each row carrying its signed fibre, risk, information, and higher-order witnesses.
+
+The useful replacement for the slogan “more information means a better model” is the following bounded claim:
+
+$$
+\boxed{
+\text{Task information is a budget; signed posterior geometry decides whether that budget crosses the task boundary.}
+}
+$$
+
+The previously known finite escape-risk lattice supplies the geometry. This volume supplies its sharp binary information envelope, its equal-information separation, and its incremental budget law.
+

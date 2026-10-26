@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4322c08715eaae70e1e0c2f0cdc99d604a8cd41c5a050e81121c53605196e8de
+  normalized_sha256: sha256:4322c08715eaae70e1e0c2f0cdc99d604a8cd41c5a050e81121c53605196e8de
+cas_ref: sha256:4322c08715eaae70e1e0c2f0cdc99d604a8cd41c5a050e81121c53605196e8de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading, retained notation, definition of primary and cubic-residue-symbol conventions, and bibliographic scope. The ring relation specifies the Eisenstein carrier; no reciprocity theorem is stated here.
+    previous_atom_id: 8bbc465524f4b44e28f91d6392357c3bd080559688b9e3b56a8af74d64085a56
+    next_atom_id: 1c84eb63649b93f48bb98a165310bb53bba3ce0a445b4448c341d637c466ecaf

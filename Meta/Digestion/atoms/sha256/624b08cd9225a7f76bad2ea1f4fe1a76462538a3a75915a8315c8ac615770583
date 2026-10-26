@@ -1,0 +1,43 @@
+**Theorem 126.3 (no single finite range on uncapped coherent Markov transport).**
+For every coherent compatible conservative Markov family on an uncapped FIB
+iteration that reaches a branch epoch,
+
+$$
+\sup_{e\ge0}\operatorname{jr}(Q_e)=+\infty.
+\tag{126.2}
+$$
+
+The conclusion is universal over the family; it does not depend on the
+particular Markov choice (125.3). A finite stopped or capped history has a
+finite maximum range because it has finitely many epochs. The singleton
+sources are included after their first nonempty branch epoch: $\alpha$ first
+has the empty-birth step, $\beta$ first has the two-child step. Thus the
+statement does not assert a bound for a history that stops before that
+branch is accepted.
+
+**Proof.** If (126.2) failed, a finite $R$ would bound all epochs. At the first branch
+epoch the current source has two terminal leaf cones, and each singleton
+reaches such an epoch after finitely many accepted steps. Lemma 126.2
+contradicts that bound.
+Empty births and refused or stopped suffixes contribute no additional epoch
+and are covered by the finite-prefix statement. $\square$
+
+The first repaired successor can therefore leave the narrower old diagonal
+class while retaining exact finite coherence. Theorem 121.2 remains a
+conditional statement for a diagonal old norm at one branch step; it is not a
+classification of the matrices $M_e$ in (124.5). Markov positivity in
+(125.1), irreducibility, original-edge support, occurrence-distance range,
+fixed-form realization, finite-stage coherence, and an infinite-process
+realization are distinct properties. The construction above supplies the
+first, fixed-form finite coherence, and the explicit range witness; it does
+not supply irreducibility or original-edge support at all branch epochs, and
+it does not install a physical spatial geometry or an infinite-dimensional
+operator.
+
+No new literature theorem is used in §§124--126. The only external matrix
+fact already cited in VI §120 is the SPD Schur-complement identity; the
+remaining steps are finite congruence, Markov sign, rank, and the accepted
+FIB ancestry relations. The all-state physical locality added in DEV
+753b783b035 concerns finite-difference annihilation of corrected-field
+commutators and has no occurrence-distance generator-range assertion.
+

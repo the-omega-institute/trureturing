@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f3127beecef6acb1f36177444166766d7be047bba4eb180830cf0a016fc304c1
+  normalized_sha256: sha256:f3127beecef6acb1f36177444166766d7be047bba4eb180830cf0a016fc304c1
+cas_ref: sha256:f3127beecef6acb1f36177444166766d7be047bba4eb180830cf0a016fc304c1
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/FlatCandidateAcyclicity.flat_candidate_cycle_exclusion
+    target_statement_id: sha256:7629a9764b0c2e86384711015232f764d851ef690f9c1d651052c7079ce848e9
+receipts:
+  unresolved_subitems: []

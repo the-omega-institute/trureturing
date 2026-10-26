@@ -1,0 +1,18 @@
+**Definition 2.1 (Parameter and response boxes).** Use exactly the
+parameter interval of O, Definition 26.1:
+
+$$
+\begin{gathered}
+p_c=\frac{2744214237392974691433531179656369993836520133001835}{10^{50}},
+\qquad h_p=10^{-40},\qquad K=[p_c-h_p,p_c+h_p],\\
+h_v=10^{-32},\qquad V_\sigma=[v_{c,\sigma}-h_v,v_{c,\sigma}+h_v].
+\end{gathered}
+\tag{2.1}
+$$
+
+The centers $v_{c,\sigma}$ are the following exact rational numbers.
+
+| $\sigma$ | Numerator of $v_{c,\sigma}$, denominator $10^{40}$ |
+| --- | --- |
+| $-$ | $1198704988209101765516388199570039880582574$ |
+| $+$ | $1387528570305159695377932790043712687263296$ |

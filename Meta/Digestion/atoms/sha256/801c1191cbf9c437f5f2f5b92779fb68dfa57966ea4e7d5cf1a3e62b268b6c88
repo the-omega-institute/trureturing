@@ -1,0 +1,12 @@
+**推论 26.1（活动关系的闭合与剩余桥梁）。** 对每个满足定理22.1计数条件的固定先验，在实际活动第四段域内，$D_h$、$W(h)$、$\mathscr L_h$ 与 $(a,A,B)$ 互相确定，其中先验和源模型均为固定共同输入。该对应保持原合法续接及分支质量；原 $C_0$ 的历史字段另行保持。对全支持几何先验，这种精确对应同时具有命题25.1的前向有限精度界和定理24.1的统一逆模失败。它没有给出已发生生成树、完整空间记录、原字母次序或物理时长与这些坐标的互相恢复，也没有延伸到其他阶段或消除 terminal 的信息损失。
+
+证明。定理21.2给完整长度律和转录律的对应，定理22.1在固定实际后验像上把它缩至两项窗口，并在指定支持条件下恢复取得计数；定理23.1验证更新交换及 Stop 边界，定理24.1、命题25.1分别承担两个不同方向的精度结论，命题25.2提供不能回补的正质量纤维。尤其前向近似不会改变实际像上的逆模反例，时间读数、条件律和已经保持的过去记录不能互相冒充。证毕。
+
+本推论的供应是源特定的：本卷 §§9–20 给同源取得过滤、从零计数、原相位、特殊先验恢复及终局律和残余律的区别；Boundary Dynamics §§96.1–96.3、97.1–97.4、100.1–100.2、105.1 给停止词、不同实际节点、同一个 $K$ 的停止层乘积、原付费种子和 Stop；Full E1 Scope Extension §2 与 Spatial Records Chronology 给原记录取得、第三写入完成后锁存及保持。Fibonacci Atomic Relation Generation §2只供应原 $\alpha,\beta$ 语法，不供应普遍不可约性。Boundary Dynamics §§87–88的另一个 Read/PairRead 交接和 Process Geometry §27的双臂来源均未被移入本合同；Process Geometry §§28–29、39–44的共同来源、联合核、实际路径与视图纤维之区分在此由上述具体公式承担，没有增加动作。
+
+[FiniteVandermondeTomography](../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的 `finite_moment_readout_injective`、`finite_moments_eq_iff` 供应已有有限节点矩辨识视角，不供应固定可数先验实际后验像上的两矩结论；后者由定理22.1的符号变化证明承担。[CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 供应实际像因子化视角，[ConditionalProbabilityProfileMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean) 的有限域假设未被移入无界历史域。读取这些声明不是本应用的 Lean 编译证据。
+
+Finite Start Predictive Memory §§10–11研究无参数先验的字面五模式持久 Markov 来源及其条件更新；其无限未来校准分离不是这里的同一付费停止段。Joint Moment Fibers §48在全部有序树形状上计纯替换入口开销，不是隐藏深度的付费取得后验。两个结果均不供应或重复本推论的两项实际律窗口与同书签离散-TV反演反例。
+
+文献范围为：紧支撑矩确定性是上述 Schmüdgen 来源中的成熟中间步骤；本附录的承重结论是 `repo-derived` 的普通源特定数学推导，没有新 Lean 核验、冻结或文献原创性主张。Hausdorff 矩逆问题的 $L^2/\ell^2$ 不稳定性不能替代这里由同一 $2^{-k}$ 先验有限可达历史证明的离散-TV结论。这里也没有解决 §20保留的几何先验标量终局概率单射问题；两项长度窗口与完整长度律不是那个标量。没有最小实标量维数、固定宽度精确存储、相等已付费长度强化、点态不连续、平均风险不可能或总资源最优结论；空间、时间、边界和记忆的全域互相恢复与持久研究目标仍有未解桥梁。
+

@@ -1,0 +1,27 @@
+**定理 14.1（四角方向被完全消去的准确条件）。** 对任意共同加性噪声概率律，$\mathcal L_\kappa(R)$ 与 $\kappa$ 无关，当且仅当 $u=0$ 或 $v=0$。若 $u,v\ne0$，任意两个不同可行参数给出不同的记录律。
+
+证明。记噪声特征函数为 $\widehat\nu(t)$。记录律对参数的有符号变化具有特征函数
+
+$$
+\widehat\nu(t)\left(1-e^{it^{\mathsf T}u}\right)
+\left(1-e^{it^{\mathsf T}v}\right).
+\tag{14.1}
+$$
+
+任一方向为零即使其恒零。反之，两个真超平面不能覆盖 $\mathbb R^D$，可取 $a$ 使 $a^{\mathsf T}u,a^{\mathsf T}v$ 均非零。由 $\widehat\nu(0)=1$ 及连续性，它在零的一个邻域不为零；对足够小的非零 $s$，取 $t=sa$，两个括号也非零。特征函数的唯一性使有符号变化非零。记录律对 $\kappa$ 仿射，故不同参数的差等于这个非零变化乘以参数差。此论证不要求噪声有矩，也不要求其特征函数在整个空间非零。$\square$
+
+若噪声零均值且有有限二阶矩，则直接按五模式求和给
+
+$$
+\mathbb E_\kappa R=Xu+Yv+Zw,\qquad
+\partial_\kappa\mathbb E_\kappa RR^{\mathsf T}
+=\partial_\kappa\operatorname{Cov}_\kappa R
+=uv^{\mathsf T}+vu^{\mathsf T}.
+\tag{14.2}
+$$
+
+这是定理14.1在有限二阶矩模型中的显式读口：同一个 $a$ 满足
+$\partial_\kappa\mathbb E(a^{\mathsf T}R)^2=2(a^{\mathsf T}u)(a^{\mathsf T}v)\ne0$，尽管一阶均值恒盲。完整分布的可识别不等于从有限随机样本精确恢复参数。
+
+共同来源身份也能决定这个二阶读口是否合法。另供 $R_x=x+\xi$、$R_y=y+\eta$，噪声相互独立、零均值且独立于标签，并有可积乘积。各边缘分别仅依赖 $X,Y$。若来自同一标签，$\mathbb E R_xR_y=\mathbb E xy=\kappa$；若分别抽取独立标签，则 $\mathbb E R_xR_y=XY$。因此两个各自失明的完整边缘报告，只有在保留配对来源时才能通过交叉矩读取四角关系。这与 §5 的共同来源条件相接，不把任意两份边缘事后拼成同一来源。
+

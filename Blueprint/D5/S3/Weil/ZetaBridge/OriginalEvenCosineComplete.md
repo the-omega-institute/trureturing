@@ -52,9 +52,21 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTranspor
 
 *Commentary.*
 
-With a>0, the Ioc lift gives an L2 class on AddCircle(2*a) for normalized Haar measure. Multiplication by sqrt(2*a) compensates for the dx/Haar mass ratio. The following two theorems record both the norm scale and the coefficient scale of this concrete construction.
+With a>0, the Ioc lift gives an L2 class on AddCircle(2*a) for normalized Haar measure. Multiplication by sqrt(2*a) compensates for the dx/Haar mass ratio. The transport norm and coefficient theorems below record both scales of this concrete construction.
 
-**Theorem 1.5 (The transported squared norm is the physical squared norm).**
+**Theorem 1.5 (Squared L2 norm as integral energy).**
+
+Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.l2_energy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.l2_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any measurable space alpha, any measure mu and any complex L2 class u, the squared norm equals the integral of the pointwise squared norm with respect to mu. This identity applies both to the physical window and normalized Haar transport below, and to physical Lebesgue measure for the displaced signed modes.
+
+**Theorem 1.6 (The transported squared norm is the physical squared norm).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTransport_norm_sq`
 
@@ -66,7 +78,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTranspor
 
 For every u and a>0, the unscaled lift has energy (2*a)^(-1) times the original energy. The square-root multiplier exactly restores the window L2 squared norm, using the original Ioc interval integral and the Haar integration identity.
 
-**Theorem 1.6 (The transported Fourier coefficient has the required scale).**
+**Theorem 1.7 (The transported Fourier coefficient has the required scale).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTransport_fourierCoeff`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTranspor
 
 For a>0 and every integer k, the Fourier coefficient of circleTransport equals sqrt(2*a) times fourierCoeffOn of the original representative. Together with the interval coefficient identity, this is the physical moment divided by sqrt(2*a). Equality of representatives is used almost everywhere on the circle.
 
-**Theorem 1.7 (Vanishing cosine coefficients determine the original even class).**
+**Theorem 1.8 (Vanishing cosine coefficients determine the original even class).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.even_eq_zero_of_mode_inner_eq_zero`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.even_eq_zero_o
 
 Assume a>0, u is originally AE-even, and its inner product with every natural cosine mode is zero. The nonzero amplitudes kill all nonnegative Fourier moments, and evenness supplies the negative indices. The proof then applies Mathlib's interval Parseval theorem tsum_sq_fourierCoeffOn directly to the original MemLp representative. All Fourier coefficients zero imply zero physical energy and hence u=0. Completeness is obtained from Parseval, rather than included in the definition of evenness or assumed as a basis hypothesis.
 
-**Theorem 1.8 (The full original even sector is the closed complex cosine span).**
+**Theorem 1.9 (The full original even sector is the closed complex cosine span).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.originalEven_eq_cosineClosure`
 
@@ -112,6 +124,7 @@ The argument uses standard Fourier characters, interval Parseval and Hilbert-spa
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.even_eq_zero_of_mode_inner_eq_zero`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.even_mode_inner_eq_moment`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.fourierCoeffOn_eq_moment`
+- Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.l2_energy`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.moment`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.originalEven_eq_cosineClosure`
 - Dependency: [D5/S3/Weil/ZetaBridge/OriginalWindowEven](OriginalWindowEven.md)

@@ -1,0 +1,48 @@
+**约定 80.1（来源、结果范围与未解量）。** 实 Schur–Horn 是经典 Horn 结论；
+Carlen–Lieb，*Short proofs of theorems of Mirsky and Horn on diagonals and eigenvalues of matrices*，
+[arXiv:0904.0734v3](https://arxiv.org/pdf/0904.0734v3)，
+开篇的 Horn 陈述明确允许实正交矩阵，文内随后给出 Horn 的归纳证明。
+其 Theorem 1.2 属于 Mirsky，不能用该编号归属实 Schur–Horn。
+定理 76.1 的证明在复用这一经典接口时，完整给出有限维实归纳及零值、重根边界，
+与 (X.11) 所引 Kaftal–Weiss Theorem 1.1(ii) 的 orthostochastic 接口一致。
+
+Wu 等，[arXiv:2103.01805v1，式 (36)–(37)](https://arxiv.org/pdf/2103.01805v1)，
+供应实对称／实反对称分解及实正交标准块；本文差权重是 $\operatorname{Im}\tau=C$
+块权重的两倍。支撑收缩的块正性背景沿用 (X.8) 所引
+Moslehian–Kian–Xu Theorem 5.11，实际奇异支撑桥梁见 (XI.3) 的证明。
+Gil，*Entropic and Geometric Population-Coherence Complementarity in Finite-Dimensional Quantum States*，
+[DOI 10.3390/e28080877](https://doi.org/10.3390/e28080877)，
+§§2.1、2.3 和式 (3)、(7)–(9) 的相关参数是实部特征值、支撑伪逆归一化及实反对称收缩；
+其 intrinsic populations 对应这里的 $\lambda$，不等于指定帧的 $\zeta$。
+这里只采用上述接口的自足支撑证明，不使用该文 §2.2 的纯态人口断言。
+
+固定非退化辛形式的谱结论有不同前提：
+Bhatia–Jain，[arXiv:1803.04647v1，Theorem 11](https://arxiv.org/pdf/1803.04647v1)，
+处理偶维实正定矩阵；
+Son–Stykel，[arXiv:2208.05291v1，Proposition 2.2、Theorem 3.1](https://arxiv.org/pdf/2208.05291v1)，
+半正定 Williamson 形式要求固定偶维辛空间中的核为辛子空间。
+这些结果不自动适用于这里的任意奇异五维实部和可变收缩 $K$。
+(XI.4)–(XI.13) 的奇异值、第四外幂及实二维夹乘给出本题所需桥梁。
+未取得完整证明的 Ren 等 DOI 10.1016/j.physleta.2025.130677、
+未认证的 Hypnos Math 说明文稿及未定位的 Mathias 引文均不作为前提；
+它们与本结果的全证明重合范围及优先权未核对。
+
+(XI.15) 的共同四谱充要性、(XI.22) 的固定总距离连续填充、
+(XI.27)–(XI.33) 的精确反例与包络点，
+以及 (XI.35) 对原有限字读口的应用，是此处的综合推导，
+不作全球原创性或优先权断言。
+本结论为普通数学源文证明；没有 Lean/kernel 核验、冻结或消化覆盖主张，
+也不以有限数值检验代替全称证明。
+
+三个辅助谱坐标尚未全部消去为只含人口与 $s$ 的最短分段代数式；
+这项显式化仍待解决，完整可行性、每个切片与达到由 (XI.15)–(XI.22) 给出。
+例如人口 (X.30) 的整段 $H_z(s)$ 可以继续求分支：
+每一候选分支须同时给合格 $r(s)$ 的达到和覆盖全部 $E_z(s)$ 的上界。
+人口固定于输入，不是控制中逐时守恒条件；
+正人口也不要求密度态满秩。
+实际来源支撑、制备、历史相融运输、完整仪器与硬件供应仍需各自的实现桥梁。
+本五维固定人口接口没有结算其他链长、其他相位角、全部替代方案、
+全部来源或 minimax 采样的目标；
+原 U7、全预算／全对比／全替代／来源／minimax／原生 programme 仍保留其未完成部分，
+时钟、经验本体或物理资源结论也不由这个输入存在定理取得。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1cfb5f88f6a5a8ef554b590c30f330cfda7cbfb867570cf9cd8482ef1248cb00
+  normalized_sha256: sha256:1cfb5f88f6a5a8ef554b590c30f330cfda7cbfb867570cf9cd8482ef1248cb00
+cas_ref: sha256:1cfb5f88f6a5a8ef554b590c30f330cfda7cbfb867570cf9cd8482ef1248cb00
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-list item Cayley phase measure in an interpretive list of possible names; no mathematical property or existence claim.
+    previous_atom_id: 9555b67663190a7de0e63d464df4e956dc247d8e7d4c31796f89c84c416ad9e2
+    next_atom_id: aca048895b2617d6d71daebc38b63573edd345ed565012ba26877085632a242f

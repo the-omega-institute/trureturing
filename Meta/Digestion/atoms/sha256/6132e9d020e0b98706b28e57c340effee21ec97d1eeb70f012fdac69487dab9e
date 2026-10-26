@@ -1,0 +1,187 @@
+**Theorem 115.1 (All zero-parameter optimizers).** Among all CPTP maps
+$\mathcal R:M_3\to M_3$, without a covariance restriction,
+
+$$
+\boxed{\begin{aligned}
+\mathcal Z_0
+&:=\operatorname*{argmin}_{\mathcal R\ {\rm CPTP}}e_0(\mathcal R)\\
+&=\left\{\mathcal R\ {\rm CPTP}:\quad
+\mathcal R(I)=I,\quad
+\mathcal R(E_{00})=
+ \operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\quad\frac13\le v\le1\right\}.
+\end{aligned}}
+\tag{115.1}
+$$
+
+Equivalently, $e_0(\mathcal R)=2/3$ holds exactly under the conditions
+on the right. For each such map put $k=(3v-1)/2$. If $v=1/3$, then
+$\mathcal R\Phi_0$ is the constant $I/3$ channel and every pure input
+maximizes its error. If $v>1/3$, its pure maximizing inputs are exactly
+
+$$
+P_z=|z\rangle\langle z|,\qquad
+\|z\|=1,\quad |z_0|^2=\frac13,
+\tag{115.2}
+$$
+
+with arbitrary complex phases and arbitrary lower-coordinate direction.
+
+*Proof.* The common minimum $\mu(0)=2/3$ is (107.4). Suppose first that
+an arbitrary CPTP $\mathcal R$ satisfies $e_0(\mathcal R)\le2/3$.
+For the three complex Fourier states $P_j$ of (106.1),
+$\Phi_0(P_j)=I/3$. Put $\tau=\mathcal R(I/3)$. The effect bound gives
+
+$$
+1-\langle\psi_j|\tau|\psi_j\rangle
+ \le d(P_j,\tau)\le\frac23.
+\tag{115.3}
+$$
+
+The three expectations sum to $\operatorname{Tr}\tau=1$, so each equals
+$1/3$. The Hermitian matrix $A_j=P_j-\tau$ has largest eigenvalue at
+most $2/3$, while its Rayleigh value on $\psi_j$ is $2/3$. Equality in
+the Rayleigh bound forces
+
+$$
+A_j\psi_j=\frac23\psi_j,\qquad
+\tau\psi_j=\frac13\psi_j.
+\tag{115.4}
+$$
+
+Because the Fourier vectors form a basis, $\tau=I/3$ and
+$\mathcal R(I)=I$. This conclusion concerns the original untwirled map.
+
+Write $\sigma=\mathcal R(E_{00})$ and $H=(3\sigma-I)/2$. For a pure
+input $z$ with $t=|z_0|^2$, unitality alone gives
+
+$$
+\begin{aligned}
+h(t):=\mathcal R\Phi_0(P_z)
+ &=t\sigma+\frac{1-t}{2}(I-\sigma)\\
+ &=\frac I3+\left(t-\frac13\right)H.
+\end{aligned}
+\tag{115.5}
+$$
+
+For every complex unit $u\in\operatorname{span}\{|1\rangle,|2\rangle\}$,
+consider the analytic path near $t_0=1/3$
+
+$$
+z(t)=\sqrt t\,|0\rangle+\sqrt{1-t}\,u,\qquad
+A(t)=P_{z(t)}-h(t).
+\tag{115.6}
+$$
+
+At $t_0$, $A(t_0)=P_{z(t_0)}-I/3$ has simple largest eigenvalue $2/3$
+and normalized eigenvector $z(t_0)$. The simple-eigenvalue derivative
+formula of [Greenbaum–Li–Overton, Assumption 1 and Theorem 1][GLO-EIG]
+applies to this analytic Hermitian path. Its largest eigenvalue is at
+most the input error and hence at most $2/3$ for every nearby $t$.
+It therefore has derivative zero at the interior point $t_0$. Since
+normalization gives
+$\langle z(t_0)|P'_{z(t_0)}|z(t_0)\rangle=0$, the formula yields
+
+$$
+0=-\langle z(t_0)|H|z(t_0)\rangle.
+\tag{115.7}
+$$
+
+Let $H_L$ denote the lower $2\times2$ block. Expanding this identity
+for every complex unit $u$ gives
+
+$$
+H_{00}+2\langle u|H_L|u\rangle
+       +2\sqrt2\operatorname{Re}\langle0|H|u\rangle=0.
+\tag{115.8}
+$$
+
+Replacing $u$ by $e^{i\alpha}u$ for every real $\alpha$ forces
+$\langle0|H|u\rangle=0$. Thus both cross blocks of $H$ vanish.
+The remaining identity says that $\langle u|H_L|u\rangle=-H_{00}/2$
+for every complex unit $u$. It forces $H_L=-H_{00}I_2/2$: the choices
+$u=|1\rangle,|2\rangle$ fix its diagonal, and
+$u=(|1\rangle+|2\rangle)/\sqrt2$ and
+$u=(|1\rangle+i|2\rangle)/\sqrt2$ fix both parts of its off-diagonal
+entry. Hence
+
+$$
+H=\operatorname{diag}(k,-k/2,-k/2),\qquad
+\sigma=\operatorname{diag}\!\left(v,\frac{1-v}{2},\frac{1-v}{2}\right),
+\qquad k=\frac{3v-1}{2}.
+\tag{115.9}
+$$
+
+Positivity of the state $\sigma$ initially gives $0\le v\le1$, or
+$-1/2\le k\le1$. No phase covariance has been imposed on $\mathcal R$.
+
+It remains to find the exact permitted range and prove sufficiency.
+For any unital CPTP map with (115.9), set
+$t=|z_0|^2$ and $\delta=t-1/3$. Equation (115.5) becomes
+
+$$
+h(t)=\operatorname{diag}\!\left(
+\frac13+k\delta,\frac13-\frac{k\delta}{2},
+                         \frac13-\frac{k\delta}{2}\right).
+\tag{115.10}
+$$
+
+The Hermitian matrix $A=P_z-h(t)$ is traceless and has at most one
+positive eigenvalue. Indeed its quadratic form on $z^\perp$ is
+$-\langle y|h(t)|y\rangle\le0$, so a positive eigenspace cannot have
+dimension two. Consequently
+
+$$
+d(P_z,h(t))=\lambda_{\max}(P_z-h(t)).
+\tag{115.11}
+$$
+
+This pure-versus-diagonal spectral reduction is also the one in
+[Chen–Grogan–Johnston–Li–Plosker, Proposition 2][CGJLP-COH]; its
+unhalved trace norm is twice the distance $d$ here. The quadratic-form
+argument includes the diagonal and boundary inputs as well.
+
+Put $B=h(t)+(2/3)I$. Its diagonal entries are
+$1+k\delta,1-k\delta/2,1-k\delta/2$. Since
+$-1/2\le k\le1$ and $-1/3\le\delta\le2/3$, each is at least $2/3$.
+Thus $B$ is positive definite, including when $h(t)$ is singular.
+The exact rank-one congruence gives
+
+$$
+\begin{aligned}
+\lambda_{\max}(P_z-h(t))\le\frac23
+&\iff B-P_z\succeq0\\
+&\iff I-|B^{-1/2}z\rangle\langle B^{-1/2}z|\succeq0\\
+&\iff f_k(t):=\frac{t}{1+k\delta}
+                  +\frac{1-t}{1-k\delta/2}\le1.
+\end{aligned}
+\tag{115.12}
+$$
+
+Putting the fractions over their common denominator yields
+
+$$
+\boxed{\displaystyle
+1-f_k(t)=
+\frac{k(3-k)\delta^2}
+ {2(1+k\delta)(1-k\delta/2)}.}
+\tag{115.13}
+$$
+
+If $k<0$, the right side is negative for every $t\ne1/3$, so the error
+exceeds $2/3$ at every such pure input. Necessity therefore requires
+$k\ge0$, equivalently $v\ge1/3$.
+
+Conversely, if $0\le k\le1$, the right side of (115.13) is nonnegative
+for every $t$. Equations (115.11)–(115.12) bound every complex pure input
+error by $2/3$, and convexity bounds every mixed input error by $2/3$.
+At $t=1/3$ the output is $I/3$, so equality is attained. This proves
+(115.1).
+
+For $k=0$, (115.5) gives $\mathcal R\Phi_0(X)=\operatorname{Tr}(X)I/3$
+on every matrix, and every pure input has error $2/3$. For $k>0$,
+(115.13) is strictly positive when $t\ne1/3$. Then $f_k(t)<1$, so the
+congruent matrix in (115.12) is positive definite and
+$\lambda_{\max}(P_z-h(t))<2/3$. When $t=1/3$, equality holds as above.
+This proves the complete pure maximizing set (115.2). $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1fd87084e061ff0fd1e4675d5f4d5229bbc5996f22343591b166a4fb895ef969
+  normalized_sha256: sha256:1fd87084e061ff0fd1e4675d5f4d5229bbc5996f22343591b166a4fb895ef969
+cas_ref: sha256:1fd87084e061ff0fd1e4675d5f4d5229bbc5996f22343591b166a4fb895ef969
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the configuration grade k and names the source variables in the displayed derivative; no derivative identity or existence claim.
+    previous_atom_id: fa6ef4f26b08dae2a4bbce4ef2e35f22b00a33ebd572c2100d2e9991a8f43358
+    next_atom_id: 0d00756d6113ccccd9dddf5bd1f315605bfc028cd9f566fe766b73237d8bc904

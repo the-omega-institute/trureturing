@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:100c348339752148a74ce98fdec025fd822bc6807720c86cf7511b36beeff1d9
+  normalized_sha256: sha256:100c348339752148a74ce98fdec025fd822bc6807720c86cf7511b36beeff1d9
+cas_ref: sha256:100c348339752148a74ce98fdec025fd822bc6807720c86cf7511b36beeff1d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Suggested Lean file/module roadmap only; no theorem statement or existence claim.
+    previous_atom_id: 7f1e0d025f4998a3ec6abea4d55043b102247da4429c6dbdbafd24ab2ff92d34
+    next_atom_id: 4dc16185971becdd5f5567b0d70f3c8abae836538c0601d2aaf6a47ea48ff318

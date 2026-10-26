@@ -1,0 +1,25 @@
+## 5. Exact positive-root and original-guard intervals
+
+For a rational polynomial $P(t)$ define its sign-preserving primitive
+Sturm chain by $P_0=\operatorname{pp}_+(P)$,
+$P_1=\operatorname{pp}_+(P_0')$ and
+
+$$
+P_{i+1}=\operatorname{pp}_+\big(-\operatorname{rem}(P_{i-1},P_i)\big).
+\tag{5.1}
+$$
+
+Here $\operatorname{pp}_+$ multiplies by the positive least common
+multiple of coefficient denominators and divides by the positive
+integer coefficient gcd; it never changes sign to make a leading
+coefficient positive. Stop at zero remainder. Let $V_P(s)$ count
+sign changes after zeros are deleted. At $+\infty$ use leading
+coefficient signs, and at zero use constant coefficients. This specifies
+all chain coefficients directly from the public polynomials. The chains
+for $Q_7,Q_{41}$ have respectively $8,42$ entries and end in nonzero
+constants. Their variations are
+
+| Polynomial | $V(0)$ | $V(+\infty)$ | Number of positive roots |
+| --- | --- | --- | --- |
+| $Q_7$ | $2$ | $2$ | $0$ |
+| $Q_{41}$ | $16$ | $11$ | $5$ |

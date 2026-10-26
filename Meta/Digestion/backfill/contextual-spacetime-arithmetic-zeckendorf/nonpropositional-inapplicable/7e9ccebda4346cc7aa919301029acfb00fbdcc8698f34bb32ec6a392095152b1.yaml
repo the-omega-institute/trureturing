@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e9ccebda4346cc7aa919301029acfb00fbdcc8698f34bb32ec6a392095152b1
+  normalized_sha256: sha256:7e9ccebda4346cc7aa919301029acfb00fbdcc8698f34bb32ec6a392095152b1
+cas_ref: sha256:7e9ccebda4346cc7aa919301029acfb00fbdcc8698f34bb32ec6a392095152b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 88 固定复制项的语法、严格求值约定与输入条件，并定义 Tail 和表达性谓词；末句限定签名中允许的原语，不断言分类定理。
+    previous_atom_id: 45a9675365fc0a6f9993f2e0d38c3a7cd13429fc9541fa852c6ad5219cc81a36
+    next_atom_id: f7e5a24167d7e9d3e31fb1239a25b7ee7a2d3f7ff299fe463793cf567ca5fbb3

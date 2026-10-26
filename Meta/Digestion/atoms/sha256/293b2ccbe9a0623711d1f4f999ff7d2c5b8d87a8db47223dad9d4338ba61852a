@@ -1,0 +1,33 @@
+**Definition 13.1 (Four algebraic complete worlds).** For
+
+$$
+(q_1,q_2,q_3,q_4)=(845744,4228383,12758053,88676283)
+\tag{13.1}
+$$
+
+let $b_i$ be the unique root of $F$ in
+$I_i=(q_i/10^8,(q_i+1)/10^8)$, as isolated in Lemma 5.2. Set
+
+$$
+r_i=-c(b_i)/a(b_i),\qquad t_i=r_i/b_i.
+\tag{13.2}
+$$
+
+Using the polynomials $C_0,\ldots,C_3,D$ of Lemma 2.2 at $(t_i,b_i)$,
+define
+
+$$
+\begin{aligned}
+P_i&=\begin{pmatrix}t_ib_i&b_i\\t_i(1-t_ib_i)&1-t_ib_i\end{pmatrix},
+&d_i&=-C_0(t_i,b_i)/D(t_i,b_i),\\
+g_i(s)&=\frac1{D(t_i,b_i)}\sum_{k=0}^3 C_k(t_i,b_i)
+               \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},
+&W_i&=(P_i,g_i,d_i).
+\end{aligned}
+\tag{13.3}
+$$
+
+Write $p_i=p(W_i)$, $v_i=v(W_i)$, $m_i=m(W_i)$, $a_i=a(W_i)$.
+These are definitions by polynomial equations, rational functions and
+isolating intervals, rather than by approximate coordinates.
+

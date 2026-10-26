@@ -1,0 +1,54 @@
+**定理 7.2（全部平均目标的精确展开）。** 对每个 $`p\in\Delta_4`$，
+
+<table><tbody><tr><td>
+
+```math
+\begin{aligned}
+\mathbb{\text{𝔼}}_p[f]
+={}&f_{\varnothing}
++(f_1-f_{\varnothing})U
++(f_2-f_{\varnothing})V\\
+&+\Gamma_fY+\Lambda_f\kappa,
+\qquad \kappa=p_{13}.
+\end{aligned}
+```
+
+</td></tr></tbody></table>
+
+存在一个仅以 $`U,V`$ 为输入、对全部归一化五模式律正确的平均目标读出，当且仅当
+
+<table><tbody><tr><td>
+
+```math
+\Gamma_f=\Lambda_f=0.
+```
+
+</td></tr></tbody></table>
+
+证明。把定理 6.4 的五概率代入 $`\sum_Ip_If_I`$ 并逐项整理，得到展开式。若两系数为零，右边显然仅依赖 $`U,V`$。
+
+必要性分别使用两对合法律：
+
+```math
+\frac12(\delta_{\varnothing}+\delta_3),\qquad
+\frac12(\delta_1+\delta_2),
+```
+
+```math
+\frac12(\delta_{\varnothing}+\delta_{13}),\qquad
+\frac12(\delta_1+\delta_3).
+```
+
+第一对的组成均值均为 $`(1/2,1/2)`$，平均目标之差为 $`\Gamma_f/2`$；第二对的组成均值均为 $`(1,1/2)`$，差为 $`\Lambda_f/2`$。若目标对所有同组成均值的律都相同，两差必须为零。∎
+
+这是基础卷 §七的目标差分接到双曲卷组成纤维后的分解。它让应保存的关系逐目标判断，而非只凭图形维数判断。按占位均值展开的同一等式为
+
+```math
+\mathbb{\text{𝔼}}_p[f]=f_{\varnothing}
++(f_1-f_{\varnothing})X
++(f_3-f_{\varnothing})Y
++(f_2-f_{\varnothing})Z+\Lambda_f\kappa.
+```
+
+故三占位均值对全体律足够的条件仅是 $`\Lambda_f=0`$；再压成组成均值时才增加 $`\Gamma_f=0`$。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:306f201156b700bce290bd5439304ba0343b3b54b7905ac2f8ca0cfc5242671a
+  normalized_sha256: sha256:306f201156b700bce290bd5439304ba0343b3b54b7905ac2f8ca0cfc5242671a
+cas_ref: sha256:306f201156b700bce290bd5439304ba0343b3b54b7905ac2f8ca0cfc5242671a
+coverage_gids:
+  - gid: D5/S1/Solenoid/HiddenMotionRigidity.prime_adic_hidden_motion_rigidity
+    target_statement_id: sha256:f20c4e98cb8ea2b23ce9641045b619aa47059593df2b63ca5277c8a7eb94e878
+receipts:
+  unresolved_subitems: []

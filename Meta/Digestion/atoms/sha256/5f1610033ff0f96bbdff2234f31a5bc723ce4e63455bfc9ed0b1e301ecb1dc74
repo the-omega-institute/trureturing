@@ -1,0 +1,80 @@
+## 14. Every finite drift branch and the complete strict-world count
+
+Disks strictly outside the positive real axis cannot contain an actual
+$x$. For every remaining real disk use its entire real diameter $X$.
+On $X\times B_i$, direct rational interval evaluation of (12.3) gives
+$A<0$ and $B_f^2-4AC_f>0$. Both real roots
+
+$$
+ d_- =\frac{-B_f-\sqrt{B_f^2-4AC_f}}{2A},\qquad
+ d_+ =\frac{-B_f+\sqrt{B_f^2-4AC_f}}{2A} \tag{14.1}
+$$
+
+are tested in (12.1). The symbols order the displayed signs; since
+$A<0$, $d_-$ is the larger drift. The exhaustive outcome table uses
+$B$ for $b<0$, $R_-$ for $r<0$, $R_+$ for $r>1$, $Q$ for a nonzero
+rank residual $j-b-r(1-r)/b$, and $W$ for a remaining strict candidate.
+All stated exclusions are strict interval inequalities over the whole
+closed rectangle and whole projected diameter. Every reciprocal is used
+only after its interval excludes zero. In particular the inverse tests
+retain the $H_1$ and $\chi$ guards in (12.2); every $W$ entry has
+$U>1$, $0<r<1$ and $d\notin\{0,24\}$ on its entire tested range.
+
+| Base | Disk | $d_-$ outcome | $d_+$ outcome |
+| --- | --- | --- | --- |
+| 1 | 7 | R_+ | B |
+| 1 | 8 | R_- | B |
+| 1 | 11 | B | W |
+| 1 | 12 | B | W |
+| 1 | 13 | B | Q |
+| 1 | 14 | B | W |
+| 1 | 15 | B | W |
+| 1 | 16 | B | B |
+| 2 | 8 | R_+ | B |
+| 2 | 9 | R_- | R_+ |
+| 2 | 12 | B | W |
+| 2 | 13 | B | Q |
+| 2 | 14 | B | W |
+| 2 | 15 | B | W |
+| 2 | 16 | B | W |
+| 3 | 8 | R_+ | B |
+| 3 | 9 | R_+ | B |
+| 3 | 12 | B | W |
+| 3 | 13 | B | Q |
+| 3 | 14 | B | W |
+| 3 | 15 | B | W |
+| 3 | 16 | B | W |
+| 4 | 8 | R_+ | B |
+| 4 | 9 | R_+ | B |
+| 4 | 12 | B | W |
+| 4 | 13 | B | W |
+| 4 | 14 | B | R_+ |
+| 4 | 15 | B | W |
+| 4 | 16 | B | W |
+
+No division by $\alpha$ or $\zeta$ occurs in this enumeration. In
+particular the count-two disk at each exceptional H projection retains
+both finite drift lifts. Its larger-drift candidate has $b<0$; its
+smaller-drift strict candidate is retained. Every other positive
+projection, including companions unrelated to H or L, is also tested.
+
+For each count-one disk with a $W$ entry, its other quadratic root has
+$K\ne0$ throughout the same interval computation. Since the disk has
+real center and coefficients are real, its unique root is real. The
+quadratic norm identity (12.4), with $A\ne0$, ensures at least one finite
+root of $f$ has $K=0$ there. Thus the $W$ entry is that common root.
+Its strict guards and (12.9) construct a world. There is at most one
+world at this root, by (12.1). This argument remains valid if $K$ drops
+degree, and uses neither a simple gain root nor a gain-degree condition.
+
+The count-two disk requires a separate source uniqueness check; its two
+projected roots must not be counted as two strict worlds. All its
+possible strict inverse images lie in the following real source box
+$Z_i=c_i+[-10^{-9},10^{-9}]^2$, in coordinates $(t,b)$.
+
+| $i$ | $t$ center | $b$ center |
+| --- | --- | --- |
+| 1 | 2.237094047898706004509299 | 0.3169968078628325686668279 |
+| 2 | 2.386268684745047877481215 | 0.3111428632879131311838321 |
+| 3 | 2.538458199033905374929073 | 0.3613378454133272842553356 |
+| 4 | 2.544306514546261835618193 | 0.3835832476982872218685900 |

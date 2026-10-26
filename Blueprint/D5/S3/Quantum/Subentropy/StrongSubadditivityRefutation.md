@@ -10,7 +10,19 @@ A similarly question can be asked for the strong subadditivity of subentropy: Q(
 
 The formal conjecture quantifies over all three finite subsystem types and every positive trace-one joint density. Its AB marginal traces out C; its B marginal then traces out A. Its BC marginal uses only the associativity bijection of product labels before tracing out A.
 
-**Definition 1.1 (Reassociating subsystem labels).**
+**Definition 1.1 (A density state from a probability vector).**
+
+$$\forall (n: \operatorname{Type}), ([\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] (\forall (p: n \to \mathbb{R}), (\forall (hp: \forall (i: n), (0 \le p\left(i\right))), (\forall (hs: \sum_{i: n} p\left(i\right) = 1), (\operatorname{val}\left((\operatorname{diagonalState}\left(p, hp, hs\right): \operatorname{DensityState}\left(n\right))\right) = \operatorname{CStarMatrix}.\operatorname{ofMatrix}\left(\operatorname{Matrix}.\operatorname{diagonal}\left((\operatorname{fun} i\mapsto (p\left(i\right): \mathbb{C}))\right)\right))))))$$
+
+*Formalization.* `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.diagonalState` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonnegative real vector p with sum one, diagonalState is the density state whose underlying CStarMatrix is ofMatrix (Matrix.diagonal (fun i => (p i : ℂ))). The subtype proofs use positivity of a diagonal matrix and its trace, the sum of its diagonal entries.
+
+**Definition 1.2 (Reassociating subsystem labels).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.reassocState`
 
@@ -22,7 +34,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.reassocS
 
 The canonical product associativity equivalence sends ((a,b),c) to (a,(b,c)). The existing InputInformationBalance.relabel applied to the inverse equivalence changes only these labels, allowing the existing bipartite partial trace to produce the BC marginal.
 
-**Definition 1.2 (The maximally mixed qubit).**
+**Definition 1.3 (The maximally mixed qubit).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.uniformTwo`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.uniformT
 
 The matrix is diagonal on Fin 2 with both diagonal entries equal to one half. It is packaged directly in the canonical density-state carrier.
 
-**Definition 1.3 (The canonical Bell density as a density state).**
+**Definition 1.4 (The canonical Bell density as a density state).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.bellState`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.bellStat
 
 The state wraps the existing CHSHWitness.bellDensity, the outer product of its normalized Bell vector with its conjugate. Positivity and trace one are reused from bell_density_is_state; the existing Bell pure-state theorem supplies normalization and the maximally mixed marginal.
 
-**Definition 1.4 (The three-qubit witness).**
+**Definition 1.5 (The three-qubit witness).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.witness`
 
@@ -58,7 +70,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.witness`
 
 The joint state is productState bellState uniformTwo. Thus A and B form a Bell pair, while C is an independent maximally mixed qubit. The construction uses the existing Kronecker-product density-state operation.
 
-**Definition 1.5 (The paper's spectral functional family).**
+**Definition 1.6 (The paper's spectral functional family).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.SubentropyLike`
 
@@ -74,7 +86,7 @@ The consumed private identification theorem diagonalizes each density matrix and
 
 canonicalSubentropy constructs an inhabitant from the determinant integral: its continuity uses DensityKernel, its unitary invariance uses isometric embedding, and its diagonal values use SpectralFormula. The result consumes this inhabitant and the identification theorem, so the quantified hypothesis set is nonempty.
 
-**Definition 1.6 (The strong-subadditivity question).**
+**Definition 1.7 (The strong-subadditivity question).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture`
 
@@ -86,7 +98,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjectu
 
 For every SubentropyLike family Q and every finite tripartite density rho, assert Q(rho)+Q(rho_B)≤Q(rho_AB)+Q(rho_BC). Every marginal is constructed from that same joint density with the repository's partial-trace API. The BC reassociation is a pure relabelling, with no replacement state or additional assumption.
 
-**Theorem 1.7 (Strong subadditivity fails with gap one twelfth).**
+**Theorem 1.8 (Strong subadditivity fails with gap one twelfth).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.result`
 
@@ -113,14 +125,21 @@ Using log 4=2 log 2 gives Q(rho)+Q(rho_B)−Q(rho_AB)−Q(rho_BC)=1/12. This pos
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.SubentropyLike`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.bellState`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture`
+- Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.diagonalState`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.reassocState`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.uniformTwo`
 - Truth anchor: `D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.witness`
+- Dependency: [D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition](../Divergence/QuantumRelativeEntropyDefectComposition.md)
 - Dependency: [D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal](../Entanglement/BellPureStateMixedMarginal.md)
+- Dependency: [D5/S3/Quantum/EnvironmentRecords](../EnvironmentRecords.md)
+- Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/Information/InputInformationBalance](../Information/InputInformationBalance.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
+- Dependency: [D5/S3/Quantum/QubitWitnesses](../QubitWitnesses.md)
+- Dependency: [D5/S3/Quantum/Subentropy/Basic](Basic.md)
 - Dependency: [D5/S3/Quantum/Subentropy/DensityKernel](DensityKernel.md)
 - Dependency: [D5/S3/Quantum/Subentropy/SpectralFormula](SpectralFormula.md)
 - Dependency: [D5/S3/Quantum/Subentropy/UniformValues](UniformValues.md)
+- Dependency: [D5/S3/QuantumBounds/CHSHWitness](../../QuantumBounds/CHSHWitness.md)

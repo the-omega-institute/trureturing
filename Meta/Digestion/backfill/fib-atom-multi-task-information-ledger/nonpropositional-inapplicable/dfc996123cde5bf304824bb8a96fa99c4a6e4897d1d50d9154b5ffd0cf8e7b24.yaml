@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfc996123cde5bf304824bb8a96fa99c4a6e4897d1d50d9154b5ffd0cf8e7b24
+  normalized_sha256: sha256:dfc996123cde5bf304824bb8a96fa99c4a6e4897d1d50d9154b5ffd0cf8e7b24
+cas_ref: sha256:dfc996123cde5bf304824bb8a96fa99c4a6e4897d1d50d9154b5ffd0cf8e7b24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines five indicator tasks, their labels, priors and Bayes-error notation; no further bound or equality beyond these definitions.
+    previous_atom_id: f99dde88551a063abc44b821f0892cc93c9cc8cf30cc941bc0d3611050b2b17f
+    next_atom_id: f5509440e35df337938847afea3ce88d1084b09d55bd634988802a77e26401d3

@@ -1,0 +1,32 @@
+**Definition 101.1 (Scope of the terminal conclusion).** The quantifier
+pattern of Theorem 94.2 is one $D_n$ for each horizon and every unknown
+qutrit input and untouched finite reference at that horizon. It does not
+assert a single decoder attaining all horizons simultaneously. Its
+parameter set is (93.6), with the empty horizon treated separately.
+The formulas and certificates cover $n=1$, the exceptional $n=2$, all
+later odd and even horizons, and the limiting channel. No classification
+of all attaining decoders or recovery phase diagram on the other real
+values of $s$ is part of the statement.
+
+The actual channel identity, basis and angular independence are the
+reused results in Purity arithmetic Definition 87.1 and (87.7), and
+Environment record memory Definition 27.1 and (27.3). The restricted
+iteration, invariant sectors and EB limit are the reused results in
+Five-window quantum memory §§18–20, transported by the isometry in
+Purity arithmetic Definition 87.1. The all-reference common-test and
+CPTP-residual methods already occur in Purity arithmetic Theorem 66.2
+and §§69–78, especially Theorem 72.1. Its six-record horizon-three
+optimization permits record-dependent decoders and has a different
+channel from the erased-history $F^3$ used here. These prior results
+are used with their stated hypotheses; the actual $n\ge2$ terminal
+values and the limiting recovery value follow from the parameter and
+probe calculations in §§95–100.
+
+Haar averaging, stochastic population constraints, Choi positivity,
+positive-semidefinite Cauchy–Schwarz, Kraus factorization and stabilized
+trace norms are general mathematical suppliers inside those calculations.
+The Singh–Nechita citation supplies the CDUC terminology and channel
+criteria. The cited Watrous results supply the norm and channel
+representation interfaces. No exact value for this actual sequence is
+attributed to those general results, and no literature priority is asserted.
+

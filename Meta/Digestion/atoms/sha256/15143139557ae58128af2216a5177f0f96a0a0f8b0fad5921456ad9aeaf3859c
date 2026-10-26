@@ -1,0 +1,222 @@
+**Theorem 17.2 (the sharp gap and all-mode logarithmic profile).** For
+every fixed model in Definition 14.1,
+
+$$
+L(E_\epsilon-E_*)\longrightarrow
+\mathsf K=a_*^2\frac{\pi m_0}{2}C_\phi.
+\tag{17.3}
+$$
+
+The mean has strong endpoint control:
+
+$$
+p_\epsilon(\log\epsilon+sL)\longrightarrow s
+\quad\hbox{in }H^1(0,1).
+\tag{17.4}
+$$
+
+For the full, unrestricted angular state,
+
+$$
+\frac{f_\epsilon(\Psi^{-1}(\epsilon e^{sL},a,\theta))}
+ {h(\epsilon e^{sL},a,\theta)}
+\longrightarrow a_*s
+\quad\hbox{in }L^2((0,1)\times J\times\mathbb T,
+                         \phi^2\,ds\,da\,d\theta).
+\tag{17.5}
+$$
+
+For $0<\eta<1/2$, a fixed compact Cartesian annulus $K$, and each fixed
+$j$, the convergence on intermediate scales also satisfies
+
+$$
+\sup_{\eta\le s\le1-\eta}
+\left\|
+ \frac{f_\epsilon(\Psi^{-1}\delta_{\epsilon e^{sL}}\,\cdot)}
+ {h(\delta_{\epsilon e^{sL}}\,\cdot)}-a_*s
+\right\|_{C^j(K)}\longrightarrow0.
+\tag{17.6}
+$$
+
+These assertions include every angular mode, without imposing symmetry
+on the actual coefficients or ground states.
+
+Proof. Write $d_\epsilon=E_\epsilon-E_*$ and use the exact transform
+(15.6). The normalized eigenstate obeys
+
+$$
+\mathscr A[u_\epsilon]
+ +\int D_\epsilon u_\epsilon^2d\nu_*=d_\epsilon,
+\qquad \|u_\epsilon\|_{L^2(\nu_*)}=1,
+\qquad u_\epsilon\to1\text{ in }L^2(\nu_*).
+\tag{17.7}
+$$
+
+Locally away from the source the last convergence is smooth. From
+(10.2), (16.1) and (16.2), the local density and matrix of $\mathscr A$
+are
+
+$$
+f_*^2mC=a_*^2m_0h^2\{I+O(R^\gamma)\}.
+\tag{17.8}
+$$
+
+The exponent may be decreased to be below one. This is a matrix estimate,
+so it controls arbitrary angular derivatives and cross terms.
+
+Here are the two elementary angular facts used in the proof. For a real
+chart function $u$, let $p$ be its mean (17.2) and $w=u-p(\log R)$.
+Formula (12.8) gives the exact orthogonal decomposition on any logarithmic
+interval $I_t$:
+
+$$
+\mathcal E_0[u;I_t]
+ =k_\phi\int_{I_t}|p'(t)|^2dt+\mathcal E_0[w;I_t].
+\tag{17.9}
+$$
+
+Indeed $\int c\phi^2w=0$ on each slice, and the integral of the
+$\theta$ derivative in the cross term is zero. No estimate discards a
+mode. There is also a constant independent of $t$ such that
+
+$$
+\int_t^{t+1}\int_{J\times\mathbb T}\phi^2|w|^2
+ \le C\mathcal E_0[w;(t-1,t+2)].
+\tag{17.10}
+$$
+
+To justify (17.10), dilate to the fixed compact annulus
+$1\le R\le e$ inside $e^{-1}<R<e^2$. Cover it by a finite connected
+chain of horizontal metric balls compactly contained in the larger
+annulus. The usual local horizontal Poincaré inequality on those balls,
+and comparison of their smooth positive weights with $h^2$, bound the
+squared norm on the middle annulus modulo a constant by the energy on
+the larger annulus. The zero $c\phi^2$ mean on every slice removes that
+constant: integrate that mean over the middle annulus and apply
+Cauchy–Schwarz to $w$ minus the constant. On this fixed annulus the
+polar integral in (17.10) is comparable with the Cartesian volume
+integral. Dilation gives the same constant at every $t$. This argument
+covers the central axis in ordinary Cartesian balls; it uses neither
+a boundary condition at $a=\pm\pi/2$ nor a zeroth-mode restriction.
+The local Poincaré inequality here is the standard smooth Hörmander
+one; the source singularity is outside every ball where it is applied.
+
+For an upper bound choose a trial quotient which is zero for $R\le2\epsilon$,
+is $\log(R/(2\epsilon))/\log(b/(2\epsilon))$ between $2\epsilon$ and $b$,
+and equals one outside $R<b$. Its product with $f_*$ belongs to
+$\mathcal F_A$, by localization of (12.3), and its deficit term vanishes
+by (14.2). Corners may be approximated in the free norm. For a radial
+quotient the exact frozen energy is $k_\phi\int|u_t|^2dt$.
+In (17.8), the integral of the error along this interval is bounded by
+$C\int_0^bR^\gamma dR/R<\infty$. Its actual energy is consequently
+$\mathsf K/L+O(L^{-2})$. Its squared norm is $1+O(L^{-1})$, because
+
+$$
+\int_{R<b}\log(b/R)\,d\nu_*<\infty,
+\qquad \nu_*(R<2\epsilon)=O(\epsilon^2).
+$$
+
+The ground transform and normalization give
+
+$$
+0<d_\epsilon\le\mathsf K/L+O(L^{-2}).
+\tag{17.11}
+$$
+
+For the converse bound note first that, on $R<\epsilon/2$,
+$D_\epsilon\ge c_1R^{-2}$ for all small $\epsilon$, by (11.1).
+Equations (17.7)–(17.8) therefore imply
+
+$$
+\int_{\log(\epsilon/4)}^{\log(\epsilon/2)}
+ \int\phi^2u_\epsilon^2\le C d_\epsilon,
+\qquad
+\int_{\log(\epsilon/4)}^{\log\epsilon}
+ |p_\epsilon'|^2\le C d_\epsilon.
+\tag{17.12}
+$$
+
+Cauchy–Schwarz, first for the mean and then along this interval, gives
+$|p_\epsilon(\log\epsilon)|\le C\sqrt{d_\epsilon}=o(1)$.
+For every fixed small $d>0$,
+$p_\epsilon(\log d)\to1$ by Theorem 15.1. If
+$\eta_d\downarrow0$ bounds the relative matrix error in (17.8) on
+$R<d$, then (17.7), (17.9), and the one-dimensional Cauchy–Schwarz
+inequality give
+
+$$
+d_\epsilon\ge a_*^2m_0(1-\eta_d)k_\phi
+ \frac{(p_\epsilon(\log d)-p_\epsilon(\log\epsilon))^2}
+ {\log(d/\epsilon)}.
+\tag{17.13}
+$$
+
+Let $\epsilon\downarrow0$, then $d\downarrow0$. Together with (17.11)
+this proves (17.3). The trial function alone was only its upper half;
+(17.12)–(17.13) supply the lower half for the actual eigenstates.
+
+The same inequalities imply saturation and localization of their energy.
+For every fixed source radius $d$, the $\mathscr A$ energy outside that
+ball is $o(L^{-1})$. Indeed apply (17.13) at any smaller fixed radius
+$d'<d$; its liminf consumes at least
+$(1-\eta_{d'})\mathsf K$ of the total rescaled energy, and then let
+$d'\downarrow0$. The identical argument gives
+
+$$
+L\mathscr A[u_\epsilon;R<\epsilon]\to0,
+\qquad
+L\int D_\epsilon u_\epsilon^2d\nu_*\to0.
+\tag{17.14}
+$$
+
+To compare the remaining annular energy with its frozen value, split
+(17.8) at $R=d$. On the inner part its error is at most $\eta_d$ times
+the energy; on the outer part the energy is $o(L^{-1})$. Thus
+
+$$
+L\mathcal E_0[u_\epsilon;
+                 \log\epsilon<t<\log b]\longrightarrow k_\phi.
+\tag{17.15}
+$$
+
+Set $P_\epsilon(s)=p_\epsilon(\log\epsilon+sL)$. Its endpoint values
+tend to zero and one by (17.12) and smooth convergence at $R=b$.
+Equations (17.9) and (17.15) give
+$\limsup\int_0^1|P_\epsilon'|^2\le1$. The endpoint difference tends to
+one, so the reverse bound and equality case of Cauchy–Schwarz imply
+$P_\epsilon'\to1$ in $L^2$ and $P_\epsilon\to s$ in $H^1$.
+This proves (17.4).
+
+Sum (17.10) over the interval from $\log\epsilon$ to $\log b$.
+Only boundedly overlapping enlarged intervals occur. On the slightly
+larger chart interval the energy is $O(L^{-1})$, by (17.7)–(17.8), and
+(17.9) bounds the energy of $w$ by that of $u$. Consequently
+
+$$
+\frac1L\int_{\log\epsilon}^{\log b}
+ \int\phi^2|u_\epsilon-p_\epsilon|^2
+ =O(L^{-2}).
+\tag{17.16}
+$$
+
+Together with (17.4) this proves full-angular $L^2$ convergence of the
+quotient $u_\epsilon$ to $s$. Multiplication by
+$f_*/h=a_*+O(R^\gamma)$ proves (17.5): the error tends to zero at every
+$s<1$, is uniformly bounded, and $P_\epsilon$ is uniformly bounded by
+its $H^1$ norm. The nonconstant remainder is controlled by (17.16).
+Thus the integration includes both ends of the growing annulus.
+
+For (17.6), any unit-sized logarithmic annulus about
+$R=\epsilon e^{sL}$, $\eta\le s\le1-\eta$, stays away from the changed
+set and shrinks to the source. Its quotient solves
+$\mathscr B_*u_\epsilon=d_\epsilon u_\epsilon$, with
+$\mathscr B_*=-(mf_*^2)^{-1}\operatorname{div}_H(mf_*^2C\nabla_H)$.
+After dilation its smooth coefficients are uniformly controlled by
+(16.2), and the right side has the extra factor $R^2$.
+The local version of (17.10), (17.16), and the uniform convergence of
+$P_\epsilon$ show $L^2$ convergence to the constant $s$ on every such
+rescaled annulus. Interior subelliptic estimates upgrade it to each
+$C^j$ norm on a smaller annulus. If uniformity in $s$ failed, the same
+argument along a failing sequence of scales would give a contradiction.
+This proves (17.6). $\square$
+

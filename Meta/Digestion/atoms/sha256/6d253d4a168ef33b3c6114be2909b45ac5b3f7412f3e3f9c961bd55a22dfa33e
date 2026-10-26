@@ -1,0 +1,79 @@
+**Proposition 14.1 (orbit ambiguity and arbitrary off-image readouts).**
+For real skew $A,B$ put
+
+$$
+d_\pm(A,B)=\min\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\},
+\qquad
+D_\pm(A,B)=\max\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\}.
+\tag{14.1}
+$$
+
+With $K_F=c_F^{-1}=40310784000$, one has
+
+$$
+d_\pm D_\pm\le K_F\|Q_F(A)-Q_F(B)\|_2.
+\tag{14.2}
+$$
+
+More explicitly, let $(S,A),(T,B)\in\mathcal L$, and let
+$y\in\mathbb R^{50}$ and a real symmetric $\widehat S$ be arbitrary
+readouts, not necessarily in the lawful image. Suppose known bounds are
+
+$$
+\begin{aligned}
+\|Q_F(A)-y\|_2&\le\varepsilon_Q,&
+\|Q_F(B)-y\|_2&\le r_Q,\\
+\|S-\widehat S\|_{\mathrm F}&\le\varepsilon_S,&
+\|T-\widehat S\|_{\mathrm F}&\le r_S.
+\end{aligned}
+\tag{14.3}
+$$
+
+All four bounds are nonnegative. Then
+
+$$
+\begin{aligned}
+d_\pm D_\pm&\le40310784000(\varepsilon_Q+r_Q),\\
+d_\pm&\le\sqrt{40310784000(\varepsilon_Q+r_Q)},\\
+\|S-T\|_{\mathrm F}&\le\varepsilon_S+r_S,\\
+\min_{\sigma\in\{-1,1\}}
+\|(S+iA)-(T+i\sigma B)\|_{\mathrm F}
+&\le\sqrt{(\varepsilon_S+r_S)^2+
+                     80621568000(\varepsilon_Q+r_Q)}.
+\end{aligned}
+\tag{14.4}
+$$
+
+If $D_\pm\ge r>0$, the second line may be replaced by the linear
+bound $d_\pm\le40310784000(\varepsilon_Q+r_Q)/r$.
+Any two lawful candidates whose quadratic residuals about the same $y$
+are at most $\varepsilon_Q$ obey
+$d_\pm D_\pm\le80621568000\varepsilon_Q$.
+
+Proof. The product-distance implication is Zhuang's Theorem 2.3/(2.3)
+with the evaluated lower bound (13.17). In the present conventions its
+polarization identity is exactly
+
+$$
+Q_F(A)-Q_F(B)=B_F(a(A)-a(B),a(A)+a(B)).
+\tag{14.5}
+$$
+
+Thus its distance product is $d_\pm D_\pm$, with no extra factor.
+The triangle inequality gives the first and third lines of (14.4).
+Since $D_\pm\ge d_\pm$, the first line bounds $d_\pm^2$.
+Finally the squared complex Frobenius norm is
+$\|S-T\|_{\mathrm F}^2+2\|A-\sigma B\|_{\mathrm{sk}}^2$;
+minimize over the one common sign. Division by the declared positive
+$r$ gives the local bound. The two-candidate assertion uses the same
+triangle inequality. $\square$
+
+In particular the global bound has a square root in readout error;
+it covers $A=0$, singular densities and repeated-spectrum strata.
+A lower bound on $D_\pm$ is a separate condition, not a genericity
+assumption silently imposed on this global statement. The readout
+premises do not construct a lawful candidate. A finite-arithmetic
+residual certificate must include its evaluation error in $r_Q,r_S$;
+substituting unbounded numerical residual approximations would not
+verify (14.3).
+

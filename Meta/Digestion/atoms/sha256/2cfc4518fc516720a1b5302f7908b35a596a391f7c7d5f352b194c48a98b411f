@@ -1,0 +1,74 @@
+**Theorem 5.2 (exact radius with dominant holding fixed).** Define the reciprocal constants
+
+$$
+\alpha_{\mathrm{tail}}
+=\max_{m\ge1}\frac{1-u^m}{2-v^m},\qquad
+C_{\mathrm{tail}}=\frac1{\alpha_{\mathrm{tail}}}
+=\min_{m\ge1}\frac{2-v^m}{1-u^m}.
+$$
+
+Both extrema are attained at finite indices, and
+
+$$
+\frac12<\alpha_{\mathrm{tail}}<1,\qquad1<C_{\mathrm{tail}}<2.
+$$
+
+For every $D\in(0,1/2]$, the exact minimax radius within the stated fixed-holding family is
+
+$$
+\min_{0\le\beta\le1}\ \sup_{0\le x\le D}d(G_x,Q_{v,\beta})
+=\alpha_{\mathrm{tail}}D=\frac{D}{C_{\mathrm{tail}}},
+$$
+
+attained at $\beta=\alpha_{\mathrm{tail}}D$. This is a family optimum, not an optimum over all finite observers or all one-state holding probabilities.
+
+**Proof (5.2).** Lemma 2.2 applies because the two compared laws have the same continuation $F_j$ after each exit. At horizon $H$ their TV is
+
+$$
+\frac12\left[
+x(v^H-u^H)+|x-\beta|(1-v^H)
++\sum_{n=0}^{H-1}|x h_u(n)-\beta h_v(n)|
+\right].
+$$
+
+The first term is the survivor difference, the second sums dominant exits, and the last sums minority exits. Taking the increasing-horizon limit gives
+
+$$
+d(G_x,Q_{v,\beta})
+=\frac12\left[|x-\beta|+\sum_{n\ge0}|x h_u(n)-\beta h_v(n)|\right].
+$$
+
+This is convex in $x$, so its maximum on $[0,D]$ is the larger endpoint distance. At $x=0$ the distance is $\beta$. For $0\le\beta\le D$, the ratio $D h_u(n)/(\beta h_v(n))$, when $\beta>0$, decreases strictly from a value greater than one to zero. The negative part of $D h_u-\beta h_v$ is a terminal tail. Its mass is
+
+$$
+\sup_{m\ge0}(\beta v^m-Du^m),
+$$
+
+including limiting value zero. The same formula holds when $\beta=0$. Since the total signed mass is $D-\beta$,
+
+$$
+\begin{aligned}
+d(G_D,Q_{v,\beta})
+&=D-\beta+\sup_{m\ge0}(\beta v^m-Du^m)\\
+&=\sup_{m\ge0}\bigl[D(1-u^m)-\beta(1-v^m)\bigr].
+\end{aligned}
+$$
+
+The ratios defining $\alpha_{\mathrm{tail}}$ tend to $1/2$ and exceed $1/2$ whenever $\theta^m<1/2$. One such value separates the eventual ratios from a candidate maximum, so a finite index attains the maximum. Every ratio is strictly less than one since $1+u^m-v^m>0$; a finite maximum is therefore less than one. This proves the ranges and reciprocal identities.
+
+At $\beta=\alpha_{\mathrm{tail}}D$, the defining inequality
+
+$$
+D(1-u^m)\le\beta(2-v^m)
+$$
+
+holds for all $m\ge1$, with equality at a maximizing index. The $m=0$ expression is zero. The last supremum is therefore exactly $\beta$, as is the other endpoint distance. Convexity proves the claimed radius on the entire interval.
+
+Conversely, $\beta>D$ already has endpoint error $\beta>D>\alpha_{\mathrm{tail}}D$. For $\beta\le D$, if the maximum endpoint error is $R$, then $\beta\le R$ and
+
+$$
+D(1-u^m)\le R+\beta(1-v^m)\le R(2-v^m).
+$$
+
+Taking the supremum of reciprocal ratios gives $R\ge\alpha_{\mathrm{tail}}D$. This proves optimality within the precise family. $\square$
+

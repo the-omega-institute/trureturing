@@ -1,0 +1,10 @@
+## 29. A vanishing drift coefficient and a multiple carrier root
+
+Use exactly the integer polynomials $f,K,F_0,\alpha,\zeta,R$ and the
+fixed Sylvester matrix of [(22.1)–(22.5)](#22-exact-coefficient-circuit-and-its-original-world-interpretation).
+In particular $f=Ad^2+B_fd+C_f$ uses the literal coefficient
+extractions of Definition 22.1 and $K=4k$ in the normalization of
+[F, Sections 31–32](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+Put $x_*=x_H(z_*)=x_G(z_*)$ and $v_*=v_J(p_*)$, with the exact point
+of Theorem 28.2.
+

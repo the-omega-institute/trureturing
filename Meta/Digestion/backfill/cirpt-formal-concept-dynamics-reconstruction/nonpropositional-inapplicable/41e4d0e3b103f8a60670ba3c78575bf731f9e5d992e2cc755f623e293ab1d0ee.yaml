@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:41e4d0e3b103f8a60670ba3c78575bf731f9e5d992e2cc755f623e293ab1d0ee
+  normalized_sha256: sha256:41e4d0e3b103f8a60670ba3c78575bf731f9e5d992e2cc755f623e293ab1d0ee
+cas_ref: sha256:41e4d0e3b103f8a60670ba3c78575bf731f9e5d992e2cc755f623e293ab1d0ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阶段字段说明把 Gamma 命名为当前定义语言，不断言语言的完备性。
+    previous_atom_id: 50ea957f4f7f99b98a8721f4a8f47ab5afebd14a5ff55c1b60cb3b3f00a4ac56
+    next_atom_id: 16e13d573d4a2c1cb52607b4d27ce8a0fe19584b5be4989d2034e84268b8c79c

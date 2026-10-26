@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90767c87031e87deaa486c6995925fd4a99223052626f788ae77a65bbdddfd7f
+  normalized_sha256: sha256:90767c87031e87deaa486c6995925fd4a99223052626f788ae77a65bbdddfd7f
+cas_ref: sha256:90767c87031e87deaa486c6995925fd4a99223052626f788ae77a65bbdddfd7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This occurrence is a scope and provenance convention only: it records continuation numbering, source paths, and the absence of a new Lean statement or physical identification; it contains no mathematical assertion to cover.'
+    previous_atom_id: null
+    next_atom_id: ae9d3f584d36455617b6823d509cff57cee71e01c376cbd9d06d7607a57eb533

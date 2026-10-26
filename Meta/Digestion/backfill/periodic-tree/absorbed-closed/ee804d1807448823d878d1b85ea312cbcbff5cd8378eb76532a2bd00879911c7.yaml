@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7
+  normalized_sha256: sha256:ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7
+cas_ref: sha256:ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+receipts:
+  unresolved_subitems: []

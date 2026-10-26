@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:23063083f9eb79509ac406195df2ac57a09ff677e00511c0e97b65caebe03a2d
+  normalized_sha256: sha256:23063083f9eb79509ac406195df2ac57a09ff677e00511c0e97b65caebe03a2d
+cas_ref: sha256:23063083f9eb79509ac406195df2ac57a09ff677e00511c0e97b65caebe03a2d
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/FiniteLocalResidueBlockingCriterion.finite_local_residue_blocking_criterion
+    target_statement_id: sha256:69ac8700a97090498f051b7aef1db3d88e0579df3f11dd273040197f23af26fb
+receipts:
+  unresolved_subitems: []

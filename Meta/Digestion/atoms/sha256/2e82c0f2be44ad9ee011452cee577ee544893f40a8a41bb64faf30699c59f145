@@ -1,0 +1,20 @@
+## 15. Finite closed cover of the second rectangle
+
+For a polynomial of degree $n$ on $[l,h]$, use the exact power-to-Bernstein
+conversion
+
+$$
+T_{ik}(l,h;n)=\sum_{j=0}^{\min(i,k)}
+ {k\choose j}l^{\,k-j}(h-l)^j
+ \frac{{i\choose j}}{{n\choose j}},
+\qquad 0\le i,k\le n.
+\tag{15.1}
+$$
+
+Apply (15.1) in each variable, padding with zero coefficients to the actual
+coordinate degree.  A tensor Bernstein polynomial with coefficients of one
+strict sign has that sign on its closed box, by the nonnegative tensor basis and
+partition of unity.  Every subdivision below is the exact midpoint de Casteljau
+subdivision, with rational arithmetic; a retained cell is closed, and adjacent
+cells share their endpoints.
+

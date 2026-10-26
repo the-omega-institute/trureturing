@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3da16d110a766c2773243e5392855af0f957b971a7a82df2f9a6b1fbb8272c66
+  normalized_sha256: sha256:3da16d110a766c2773243e5392855af0f957b971a7a82df2f9a6b1fbb8272c66
+cas_ref: sha256:3da16d110a766c2773243e5392855af0f957b971a7a82df2f9a6b1fbb8272c66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 逐语法构造规定公式翻译及量词相对化；末句说明类谓词的用法，不断言翻译正确性。
+    previous_atom_id: e28d4af95ca36586651813761f9a916a48eb9d14d1d31f7c3ae33c5de6dcfc67
+    next_atom_id: ee2d8f5d612de563609544f74e9575e78f2608e71c0de079d5afd9dedbf18a63

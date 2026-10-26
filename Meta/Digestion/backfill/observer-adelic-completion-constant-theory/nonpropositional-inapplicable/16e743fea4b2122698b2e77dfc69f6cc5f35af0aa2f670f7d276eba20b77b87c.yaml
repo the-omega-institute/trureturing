@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16e743fea4b2122698b2e77dfc69f6cc5f35af0aa2f670f7d276eba20b77b87c
+  normalized_sha256: sha256:16e743fea4b2122698b2e77dfc69f6cc5f35af0aa2f670f7d276eba20b77b87c
+cas_ref: sha256:16e743fea4b2122698b2e77dfc69f6cc5f35af0aa2f670f7d276eba20b77b87c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bare algebraic topic label in an expository list, with no trace identity or other mathematical assertion.
+    previous_atom_id: 3854a43e3bce14b87c704b55683ec314ff482b2f49483cbaff26acfabd690997
+    next_atom_id: f6e825c2417857058eda2541e3fda7e8977a1f86da237357bf698cc8da67f817

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff163f7f4f447d120e35a4f7e5124f5fa8586bacb86ffc5a1a51f38b10b6a005
+  normalized_sha256: sha256:ff163f7f4f447d120e35a4f7e5124f5fa8586bacb86ffc5a1a51f38b10b6a005
+cas_ref: sha256:ff163f7f4f447d120e35a4f7e5124f5fa8586bacb86ffc5a1a51f38b10b6a005
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 锚点表引入与列标题。不另主张独立数学命题。
+    previous_atom_id: c7557c386d7cbc3366bd0c4c1e170da0e62466d5c2612e3f8ae6ac09b809186e
+    next_atom_id: adb31a1e0607118b61591a038c1c5a68c20631a97ce11f8b9141570c70cbeafa

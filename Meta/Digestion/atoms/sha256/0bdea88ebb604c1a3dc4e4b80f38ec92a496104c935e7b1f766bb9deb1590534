@@ -1,0 +1,194 @@
+**Theorem 21.2 (uniform comparison estimates and original field height).**
+There is a single $\kappa_*>0$ such that all the following assertions
+hold for $|\kappa|\le\kappa_*$. For every fixed $t_0>0$, the kernels
+$p^{(\ell)}_\kappa(t_0,y,z)$ are bounded on the original height cylinder
+by one finite constant independent of $\kappa$ and of every $\ell\ge4$.
+For the real-$x$ cover,
+
+$$
+\widetilde p_\kappa\longrightarrow\widetilde p_0
+\quad\hbox{locally uniformly on }
+(0,\infty)\times
+ (I\times\mathbb T^2\times\mathbb R)^2.
+\tag{21.4}
+$$
+
+Its limiting kernel is strictly positive there. Consequently, for each
+fixed $\tau>0$ there is $C_\tau<\infty$ such that, for every
+$0<|\kappa|\le\kappa_*$ and every original point $y$,
+
+$$
+0<V_{\kappa,\tau}(y)\le\frac{C_\tau}{|\kappa|}.
+\tag{21.5}
+$$
+
+For each nonempty compact $K\subset I\times\mathbb T^2\times\mathbb R$ there
+are $c_{\tau,K}>0$ and $\kappa_K>0$ such that, on its injective image
+$D=\kappa x$ and for either sign $0<|\kappa|\le\kappa_K$,
+
+$$
+V_{\kappa,\tau}(k,\theta,v,\kappa x)
+ \ge\frac{c_{\tau,K}}{|\kappa|}
+\quad\hbox{for almost every }(k,\theta,v,x)\in K.
+\tag{21.6}
+$$
+
+The constants fix $I,k_0,Z,\varepsilon,\tau$; no joint limit of these
+data is asserted.
+
+Proof. Choose a slightly larger height interval
+$I'=(l',u')$ with $0<l'<l<u<u'<H$. Shrink the two-sided parameter
+interval so that the probabilities and coefficients are smooth on a
+neighbourhood of $\overline I'$, with common positive margins.
+Writing $a_\kappa(k)=(A_\kappa(k),B_\kappa(k),b_\kappa(k))$ for this
+proof only, (12.8) and (16.7) give
+
+$$
+a_0(k)=\left(\frac{H-k}{2H},-\frac{k}{2H},\frac1k-\frac1H\right),
+\qquad
+\det(a_0,a_0',a_0'')=-\frac1{2Hk^3}.
+\tag{21.7}
+$$
+
+Thus $\widetilde P,\widetilde Q_\kappa,
+[\widetilde P,\widetilde Q_\kappa],
+[\widetilde P,[\widetilde P,\widetilde Q_\kappa]]$ form a uniformly
+nondegenerate frame on the compact parameter-height rectangle after a
+further shrink. All coefficient derivatives are uniformly bounded.
+Multiplying $\widetilde P$ by the fixed $\varepsilon>0$ retains these
+properties. The local uniform strong Hörmander condition has step three,
+including at the comparison value $\kappa=0$.
+
+Here is a local argument for the asserted bound that does not assume a
+uniform sum of cover tails or a compact space of bounded total volume.
+On the larger cylinder with height $I'$, for each finite $\ell\ge4$,
+take its free Friedrichs heat kernel $h_{\kappa,\ell}$. Its semigroup is
+symmetric and sub-Markov, by integration by parts and the contraction
+chain rule exactly as in Proposition 2.1. The same local Hörmander
+argument gives a smooth interior kernel. On fixed-size coordinate
+patches $U_1,U_2$ and a fixed compact positive-time interval $J$, positivity
+and the sub-Markov property give the uniform initialization
+
+$$
+\int_J\int_{U_1}\int_{U_2}
+ h_{\kappa,\ell}(t,y,z)\,d\nu(z)\,d\nu(y)\,dt
+ \le |J|\,\nu(U_1).
+\tag{21.8}
+$$
+
+The patches and their nested enlargements have bounded volume and fixed
+margins independent of $\ell$. In the $x$ direction they can be chosen
+inside intervals of length less than $4$; phase translations identify
+all such charts. The visible torus needs only a fixed finite collection
+of charts. Heights in $\overline I$ have a fixed distance from
+$\partial I'$. All local coefficients on translated charts are identical.
+A compactly supported measure of bounded mass in these space-time-pair
+charts is bounded in $H^{-s}$ for any fixed sufficiently large $s$.
+This follows directly by dual Sobolev embedding into the continuous
+functions. Apply it to (21.8).
+
+The kernel satisfies the homogeneous equation
+
+$$
+\left(\partial_t-\tfrac12\Delta_{\kappa,y}
+                     -\tfrac12\Delta_{\kappa,z}\right)h_{\kappa,\ell}=0,
+\qquad \Delta_\kappa=\varepsilon^2\partial_k^2+
+ \widetilde Q_\kappa^2.
+\tag{21.9}
+$$
+
+The separate spatial fields in $y$ and $z$, together with the time
+field, satisfy the uniform weak Hörmander hypothesis for this operator.
+The uniform local subelliptic estimate [H, Theorem B.1, pp.953--955]
+applied with nested cutoffs therefore increases the initial negative
+Sobolev order by a fixed positive amount at every iteration. Iteration
+and Sobolev embedding give a uniform $C^0$ bound on smaller charts, and
+also bounds for any fixed finite number of derivatives. This is the
+local smoothing argument of [H, Corollary B.3]; (21.8) supplies its
+initialization independently of the circle length. The estimate applies
+to distributional solutions by smooth approximation in its local
+Sobolev norms. Only the fixed charts, coefficient bounds, bracket lower
+bound, and positive-time margins enter its constants. No factor equal
+to the number of $x$ charts enters a pointwise supremum. This proves a
+uniform bound for the larger-cylinder kernel at any fixed positive
+time. Killing at $l,u$ earlier gives the claimed bound for
+$p^{(\ell)}_\kappa$ by domain domination.
+
+The same comparison fields on the real-$x$ cover are divergence free
+and have selfadjoint contraction realizations on one common open
+cylinder for all $\kappa$, including zero. Their coefficients depend
+smoothly on $\kappa$ and satisfy (21.7). They meet the hypotheses of
+[H, §3.2.2, Theorem 3.5, pp.922--923]: fixed open manifold and boundary
+conditions, smooth parameter-dependent fields and positive measure,
+uniform strong Hörmander generation, zero potential, and uniform
+$L^2$ semigroup norm at most one. It gives (21.4), in fact with all
+interior derivatives on compact positive-time sets. One can also
+identify its semigroup limit directly: drive all parameters by the
+same $K$ and independent $B^2$, integrate
+$\sqrt2(A_\kappa,B_\kappa,b_\kappa)(K_s)dB_s^2$, wrap only the first
+two phase coordinates, and kill at the same $\zeta$. Uniform convergence
+of the coefficients gives convergence in probability of these finite-time
+increments; local smoothing upgrades the resulting weak kernel limit.
+
+For completeness, strict heat positivity holds also on this cover.
+The three coefficient vectors at a suitable three interior heights are
+independent, by (21.7). Height travel and signed phase legs there realize
+any three real phase displacements. They stay inside $I$ and can be
+traversed in any prescribed positive time. This is the same
+bracket-accessibility and positive free-heat principle used in
+Proposition 2.1, now before wrapping $x$. The connected cover is one
+accessible component; its smooth killed kernel is strictly positive.
+
+Projecting this very killed process by $x\mapsto[x]_{\ell}$ gives its
+quotient process, with exactly the same death time. Hence its transition
+measure is the pushforward of the cover measure. Relative to $\nu$ this
+means
+
+$$
+p^{(\ell)}_\kappa(t,\widetilde o,(k,\theta,v,[x]_{\ell}))
+ =\sum_{n\in\mathbb Z}
+ \widetilde p_\kappa(t,\widetilde o,(k,\theta,v,x+n\ell))
+\quad\hbox{almost everywhere}.
+\tag{21.10}
+$$
+
+This is a nonnegative sum, justified by testing against nonnegative
+functions on a fundamental cell. It requires no exchange of a signed
+series or convergence of differentiated series. The original-circle
+version follows using (21.3). This reuses the covering method of
+(10.2), not its double-wall group formula for the different fields here.
+
+For the upper Green bound use the uniform diagonal estimate just proved
+at time $2\delta$, where $\delta=\tau/4$. Height Poincaré gives the same
+$\lambda_D$ on every quotient, irrespective of $\ell$. The semigroup
+calculation (20.10), now in measure $\nu$, gives
+
+$$
+p^{(\ell)}_\kappa(t,y,z)
+ \le C_{\tau/2}e^{-\lambda_D(t-\tau/2)}
+ \qquad(t\ge\tau,\ \ell\ge4).
+\tag{21.11}
+$$
+
+Its integral is bounded by one finite $C_\tau$.
+Ensure $\ell_\kappa\ge4$ by shrinking $\kappa_*$ if needed.
+The exact Jacobian (21.3) proves (21.5) on the whole original cylinder,
+including uniformly as a point approaches a height face.
+
+For the lower bound, positivity and continuity give
+
+$$
+m_{\tau,K}:=
+ \min_{\substack{\tau\le t\le\tau+1\\z\in K}}
+ \widetilde p_0(t,\widetilde o,z)>0.
+\tag{21.12}
+$$
+
+By (21.4), the corresponding kernels for both small signs are at least
+$m_{\tau,K}/2$ on this compact set. The $n=0$ summand of (21.10), (21.3)
+and integration over this fixed original-time interval imply (21.6),
+with $c_{\tau,K}=m_{\tau,K}/2$. A compact $K$ has bounded $x$, so its
+image lies in the injective chart $|D|<\pi$ for all small $a$.
+The lower bound uses only a positive portion of the full field; the
+field itself remains the entire integral in (20.5). $\square$
+

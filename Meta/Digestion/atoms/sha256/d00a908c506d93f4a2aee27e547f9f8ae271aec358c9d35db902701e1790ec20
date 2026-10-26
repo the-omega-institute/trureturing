@@ -1,0 +1,30 @@
+**Definition 11.1 (Full-domain assumptions and reused correspondence).**
+Throughout this section the worlds, matrices, clocks, readings, entire
+children and independent-pair predicate are exactly (10.1)–(10.6).
+In particular the target remains
+
+$$
+\exists p,v\in\mathbb R:\quad p\ne24,\quad\mathfrak I(p,v).
+\tag{11.1}
+$$
+
+There is no relation between the two common terminal values. The two
+within-pair inequalities are inequalities of complete worlds. The
+four drifts are arbitrary and independently selected. Every world uses
+one entire nonzero real polynomial of degree at most three, including
+lower degrees, zeros at sampled clocks and repeated roots.
+
+Use $D,N_i,F,G,H,Z_0,\ell_1,\ell_0$ from (10.11), (10.17),
+(10.23) and (10.29), now with $p,v$ algebraically independent.
+The identities and degree bound in Lemmas 10.9 and 10.11 hold before
+restriction to a singular line. Write
+
+$$
+R=\mathscr R=\operatorname{Res}_d(F,G)/(D^8H^2),\qquad
+c=[x^{18}]R,\qquad K=\mathbb Q(p,v).
+\tag{11.2}
+$$
+
+The carrier is a necessary carrier, not an enumeration of realizable
+worlds. The exact inverse and all its guards remain Lemma 10.5.
+

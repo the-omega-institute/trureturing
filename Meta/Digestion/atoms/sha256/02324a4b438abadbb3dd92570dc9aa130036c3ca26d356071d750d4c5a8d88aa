@@ -1,0 +1,17 @@
+**Definition 30.1 (The enlarged measurement menu and target time).** After all three original JM
+reads, supply a fresh independent real Gaussian pointer of position variance $\tau^2>0$,
+momentum variance $1/(4\tau^2)$, and zero means. For a known real pair $c=(c_A,c_B)\ne0$, apply
+and read
+
+$$
+m_c=c_Ap_A+c_Bp_B,\qquad
+U_c=e^{-im_c\otimes\Pi_c},\qquad\text{pointer }Q_c.
+\tag{30.1}
+$$
+
+The target remains the entanglement of (26.1) before this added coupling. The coupling is a new
+measurement assumption, beyond the original outward acquisition menu. Its pointer is
+$U_c^\dagger Q_cU_c=Q_c+m_c$; it preserves the system momenta and changes positions by
+$U_c^\dagger q_jU_c=q_j+c_j\Pi_c$. It therefore need not preserve the state after the added
+measurement.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:868eab971e7f42bb2502f08d761071113dc46daa68e9ebf6e3c8719e6269df03
+  normalized_sha256: sha256:868eab971e7f42bb2502f08d761071113dc46daa68e9ebf6e3c8719e6269df03
+cas_ref: sha256:868eab971e7f42bb2502f08d761071113dc46daa68e9ebf6e3c8719e6269df03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 下一节的结构解释引言，没有给出或断言完成函子的数学等式。
+    previous_atom_id: b3b7bf5a60491ed45fee4f5c1777d195ab24560353c05717c7e2f0dea3e918bb
+    next_atom_id: 0c0ab97bb2611e0dd4321a3b9d1e8b8b610bbcfb53e1ff0474bd89a4c6ca2557

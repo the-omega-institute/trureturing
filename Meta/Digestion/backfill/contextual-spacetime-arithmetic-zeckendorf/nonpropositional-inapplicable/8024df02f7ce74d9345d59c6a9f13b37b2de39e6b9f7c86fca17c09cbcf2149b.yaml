@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8024df02f7ce74d9345d59c6a9f13b37b2de39e6b9f7c86fca17c09cbcf2149b
+  normalized_sha256: sha256:8024df02f7ce74d9345d59c6a9f13b37b2de39e6b9f7c86fca17c09cbcf2149b
+cas_ref: sha256:8024df02f7ce74d9345d59c6a9f13b37b2de39e6b9f7c86fca17c09cbcf2149b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 139 规定有限支撑行、加权值以及容量域内的逐行规范化部分映射；不变的标签位置来自公式中的参数位置，未断言归一化定理。
+    previous_atom_id: 790b7fbcd44db2f2c579698f987621bf7c5d27e626f24dc2906dd18ccdb8a2c9
+    next_atom_id: 56fb7fef2b4f045f208f6418c4fb59795f8e4d2f35f0fa5249e72e1db281445c

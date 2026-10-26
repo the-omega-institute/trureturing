@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9fb27b6c82516b3e7cc43e0aae46d3c36b6e143d85cdb67af63b352eb5f48ee
+  normalized_sha256: sha256:f9fb27b6c82516b3e7cc43e0aae46d3c36b6e143d85cdb67af63b352eb5f48ee
+cas_ref: sha256:f9fb27b6c82516b3e7cc43e0aae46d3c36b6e143d85cdb67af63b352eb5f48ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 正文级与草图级名称及显式时间桥的使用纪律。'
+    previous_atom_id: be6b39a4a076fd10579d6d2d80d709ce368446c9c07c867ff4be826176e2ff71
+    next_atom_id: f2ad83f0e62e64fc30e018c64707e0ff5bb6261c17f05262809f62967a2c434d

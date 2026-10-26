@@ -1,0 +1,87 @@
+**Lemma 36.1 (Finite rational comparisons).** On $B$,
+
+$$
+(F_{-534})_t\ge10962,\qquad
+(F_{-457})_t\ge9422,\qquad20\le D_t<23.
+\tag{36.7}
+$$
+
+The following uniform strict bounds hold for $0\le b\le1/10$:
+
+| Polynomial | Lower bound | Upper bound |
+| --- | --- | --- |
+| $F_{-534}(\theta-\epsilon,b)$ | $-113/100$ | $-7/10$ |
+| $F_{-457}(\theta-\epsilon,b)$ | $-145/100$ | $-119/100$ |
+| $F_{-534}(\theta+\epsilon,b)$ | $133/100$ | $3/2$ |
+| $F_{-457}(\theta+\epsilon,b)$ | $44/100$ | $93/100$ |
+| $D(\theta-\epsilon,b)$ | $9/10000$ | $1/100$ |
+| $D(\theta+\epsilon,b)$ | $1/200$ | $7/500$ |
+
+On the whole set $R$,
+
+$$
+36<A<121,\qquad12<\mathcal J<56.
+\tag{36.8}
+$$
+
+*Proof.* All the comparisons are finite rational coefficient
+comparisons, with the following explicit prescription.
+For a polynomial $V(y_1,\ldots,y_s)$ on a rational rectangle
+$\prod_i[\ell_i,u_i]$, first expand
+
+$$
+V(\ell_1+(u_1-\ell_1)w_1,\ldots,
+  \ell_s+(u_s-\ell_s)w_s)=\sum_\alpha c_\alpha w^\alpha.
+$$
+
+If $n_i$ is its degree in $w_i$, form every coefficient
+
+$$
+\beta_k=\sum_{\alpha_i\le k_i\ \forall i}
+ c_\alpha\prod_{i=1}^s
+ \frac{\binom{k_i}{\alpha_i}}{\binom{n_i}{\alpha_i}},
+\qquad0\le k_i\le n_i.
+\tag{36.9}
+$$
+
+These are exact rational sums, with missing monomials treated as zero.
+The tensor Bernstein expansion is
+
+$$
+\sum_k\beta_k\prod_i
+ \binom{n_i}{k_i}w_i^{k_i}(1-w_i)^{n_i-k_i}.
+\tag{36.10}
+$$
+
+Its weights are nonnegative and sum to one on the closed unit cube.
+Consequently the smallest and largest $\beta_k$ enclose every value
+of $V$ on the original rectangle.
+
+For (36.7), apply (36.9) to the displayed derivatives on $B$.
+Their coordinate degrees, in the order $(t,b)$, are $(5,4),(5,4)$
+and $(3,4)$. The minimum coefficients for the first two are exactly
+$10962,9422$; their maximum coefficients are less than $12621,10861$,
+respectively. The minimum coefficient for $D_t$ is $20$, and its
+maximum is less than $23$.
+
+For the six table rows substitute (36.4) and the indicated sign of
+$\epsilon$ into (35.3), expand, and use (36.9) on $b\in[0,1/10]$.
+The four $F$ polynomials have degree $28$; the two $D$ polynomials
+have degree $20$. Every resulting coefficient lies strictly between
+the rational bounds in its row.
+
+Finally substitute $t=\theta(b)+z$ in $A,\mathcal J$ and use (36.9) on
+$[0,1/10]\times[-\epsilon,\epsilon]$ in the variable order $(b,z)$.
+The degrees and coefficient comparisons are
+
+| Polynomial after substitution | Coordinate degrees | Number of coefficients | Lower bound for every coefficient | Upper bound for every coefficient |
+| --- | --- | --- | --- | --- |
+| $A(\theta(b)+z,b)$ | $(44,9)$ | $450$ | $36$ | $121$ |
+| $\mathcal J(\theta(b)+z,b)$ | $(70,15)$ | $1136$ | $12$ | $56$ |
+
+Equations (35.3), (36.1)–(36.4) and (36.9) specify every entry by
+rational addition, multiplication, differentiation and binomial
+coefficients. No numerical root or sampled derivative enters these
+coefficient comparisons. The convex combination (36.10) proves all
+the asserted whole-set bounds. ∎
+

@@ -1,0 +1,51 @@
+At $W_{\rm entry}$ the following entry relation holds. The producer holds
+all twelve word-port tokens, its original tokens for 0 and 13–23, and
+the dispatcher holds the available source-service token. Every prior row,
+dependency, channel check and ACK is complete. Port 13 is at its actual R;
+17 is a complete native descriptor stream at R. Directory, counter and
+journal streams have their original completed-boundary invariants, with
+$1\le H_0\le h\le K$ and the actual source represented by $\phi_K$.
+No wrapper work word or latch carries a live return value. The parked
+24–27 bytes, heads and owners are unchanged. Other heads/latches are their
+actual retained values; each helper positions its own inputs before reading.
+Only the fixed wrapper successor is enabled during activation preparation,
+not a second source or actor call. The activation graph is the following.
+
+1. Base(13;$a$) constructs the actual $U(a)$ and leaves 13 at R. Execute
+   IN(5); EX(13); WR(13,latch5); MR(13), then Append(13,sep) and
+   Append(13,0). Thus the payload bit is at $a$, sep at $a+1$ and its
+   initialized unavailable status at $a+2$. Input latch 5 is not touched
+   between IN and WR. The unconsumed-input and acquired-but-unwritten cuts
+   are distinct ordinary states.
+2. Using §§3.1–3.3 and 6.1, construct all ten source field words and run
+   WriteDescriptor on 17. Its unchanged tag is `00`, followed in order by
+   $U(\mathrm{producer}),U(13),U(a),U(1),U(c)$, the fixed `activation`
+   type, initialized flag 1, post-seal mutable flag 0, $U(a+2)$, and the
+   empty original-origin word. Every field has its physical sep, including
+   the empty origin, and the record has its final seal. The one-based $c$
+   is obtained by the paid complete-stream count, not supplied as an
+   address. This is exactly the ten-field native grammar of §6.1.
+3. Retain only the complete base/status words after that writer; its other
+   field roles are dead. At(13,status); WR(13,1); CTL seals the bit block.
+   At(13,base); RD(13,6) acquires the now-sealed bit into branch latch 6.
+   Tail(13), using test latch 4, restores R without overwriting latch 6;
+   17 is already at R. One CTL branches on latch 6. No value in latch 4
+   is retained across a positioning call. At this branch no wrapper word
+   must survive either callee.
+4. For bit 0 the CTL enters $F^W$ at its original header Base/setup
+   prelude, before the first header IN. All its entry tokens are those
+   just listed; it acquires its own complete frame and takes the source
+   token only at the original admission point. For any
+   completed canonical frame, the final ACK, source TOK and idle CTL
+   reach $W_{\rm return}$, hence $W_{\rm entry}$, before any next IN.
+   No frame header bit is consumed as an activation or conversely. A
+   malformed frame takes the original retained `frame-fault` branch;
+   an unfinished length/payload stays in its original ingress phase.
+5. For bit 1 the CTL enters the producer-to-actor loan prelude. Execute
+   the twelve TOKs of §2.2, then its CTL entering $C$'s already initialized
+   `Local` state on 25. The source-service token remains at the dispatcher
+   during this actor-local phase. No actor helper starts during the
+   partial loan. The actor has its own 24–31 and the twelve public word
+   ports, its acquired seed on 26 and no private source/producer-descriptor
+   read right. This is precisely the actual table entry of §8.1.
+

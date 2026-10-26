@@ -1,0 +1,45 @@
+**Definition 264.1 (complete fibres, induced masses and the unchanged clock).** Let $T=(V,E)$ be a nonempty finite tree, let $r\ge1$, and let $H$ be any real symmetric operator on $\mathcal V=\bigoplus_{x\in V}\mathbb R^r$ with counting inner product. Its diagonal blocks are arbitrary symmetric matrices; its edge blocks are arbitrary real matrices, including zero and singular matrices; all nonedge off-diagonal blocks vanish. No positivity or invertibility is imposed on $H$. Fix a surjection $\pi:V\to B$ and orthogonal matrices $R_x\in O(r)$. Put
+
+$$
+V_b=\pi^{-1}(b),\qquad n_b=|V_b|>0,\qquad
+\mathcal F=\bigoplus_{b\in B}\mathbb R^r,
+\qquad \langle f,h\rangle_n=\sum_b n_b f_b^{\mathsf T}h_b.
+\tag{264.1}
+$$
+
+The collective inclusion, its Hilbert adjoint, and its orthogonal projection are
+
+$$
+(Uf)(x)=R_x f_{\pi(x)},\qquad
+(U^*v)_b=\frac1{n_b}\sum_{x\in V_b}R_x^{\mathsf T}v_x,
+\qquad P=UU^*.
+\tag{264.2}
+$$
+
+Thus $U$ is an isometry from the mass inner product, not generally from an unweighted coarse inner product. Define
+
+$$
+A=U^*HU,\qquad D=(I-P)HU=HU-UA.
+\tag{264.3}
+$$
+
+The unitary coordinate map $J:\mathcal F\to\mathbb R^{r|B|}$ is $(Jf)_b=\sqrt{n_b}f_b$. Write
+
+$$
+\widehat U=UJ^{-1},\qquad
+\widehat A=JAJ^{-1}=\widehat U^*H\widehat U,\qquad
+\widehat D=DJ^{-1},
+\qquad \|D\|=\|\widehat D\|.
+\tag{264.4}
+$$
+
+All block norms below refer to the orthonormal coordinates of $\widehat A$. In particular
+
+$$
+\widehat A_{ab}=\frac1{\sqrt{n_an_b}}
+ \sum_{x\in V_a,\,y\in V_b}R_x^{\mathsf T}H_{xy}R_y.
+\tag{264.5}
+$$
+
+The loop-free support graph has vertices $B$ and an edge $ab$ exactly when $a\ne b$ and $\widehat A_{ab}\ne0$. Symmetry makes this undirected. Its cycles mean simple cycles of length at least three. The heat parameter and the unitary parameter in the following statements are the supplied evolution time of this fixed $H$; neither is a substitution count or a rescaled clock.
+

@@ -1,0 +1,7 @@
+**Open problem 8.1 (Corrected algebra).** Determine the elimination geometry
+of the trace-saturated two-world $M$ subsystem, or of $I_{\rm tr}$.
+Specifically, determine its elimination ideal in $\mathbb Q[p,v]$,
+including whether it is zero and whether a corrected component has dense
+base projection. The raw family of Section 3 has $n=0$ and therefore
+does not give a lift to the pointwise corrected system.
+

@@ -1,0 +1,25 @@
+**命题 98.1（三个维数不可混同）。** 对局部 qutrit 有：
+
+$$
+\dim_{\mathbb C}\mathcal H_{\rm loc}=3,
+\qquad
+\dim_{\mathbb R}\mathbb {CP}^{2}=4.
+\tag{98.2}
+$$
+
+对双 qutrit 的纯态射影空间则有：
+
+$$
+\dim_{\mathbb C}(\mathcal H_A\otimes\mathcal H_B)=9,
+\qquad
+\dim_{\mathbb R}\mathbb {CP}^{8}=16.
+\tag{98.3}
+$$
+
+**证明。** $\mathbb {CP}^{d-1}$ 的实维数为 $2(d-1)$；代入 $d=3$ 与
+$d=9$ 即得。□
+
+因此同一段理论中至少同时出现 Hilbert 维数、纯态流形维数和上下文图的
+组合规模。它们都可以出现数字 3 的幂或因子，但没有同构映射时不能互相
+替代。
+

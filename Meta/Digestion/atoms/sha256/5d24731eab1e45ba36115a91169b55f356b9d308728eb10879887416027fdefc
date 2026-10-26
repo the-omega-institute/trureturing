@@ -1,0 +1,45 @@
+**Theorem 128.1 (full-source finite realization).** For every
+$u\in\mathcal T$, every finite actual history with $m\ge0$ accepted
+updates, every SPD initial metric $G_0$ on $\mathbb R^{V_0(u)}$, and every
+choice of SPD $K_e$ on each nonempty $B_e$, the native parent-copy maps
+admit SPD metrics through all epochs $0,\ldots,m$ satisfying exact form
+and norm preservation and full same-clock generator intertwining.
+This includes arbitrary initial branches, $u=\alpha$, $u=\beta$,
+empty births, and prefixes stopped or capped at any finite epoch.
+
+**Proof.** Let $\mathcal W_m$ be the reconstruction map of (124.2), now
+with the source quantifier of Definition 127.1. Its residual at stage $e$
+is the actual child value minus its parent's value. It is invertible by
+successive reconstruction at each finite step, and (127.2) inductively
+gives (124.3) for every $u\in\mathcal T$. Define
+
+$$
+G_m=\mathcal W_m^{-\mathsf T}
+ \operatorname{diag}(G_0,K_0^{-1},\ldots,K_{m-1}^{-1})
+ \mathcal W_m^{-1},
+\tag{128.1}
+$$
+
+with each empty block omitted, and use the corresponding prefixes for
+$G_e$. Equivalently at each single step,
+$W_e^{\mathsf T}G_{e+1}W_e=\operatorname{diag}(G_e,K_e^{-1})$.
+This is the $q_e=0$ case of (127.3), with the inherited actual-coordinate
+$G_e$; it is not a claim that $G_e$ is diagonal. Hence, for every $e<m$,
+
+$$
+\begin{aligned}
+T_e^{\mathsf T}L_{e+1}T_e&=L_e,&
+T_e^{\mathsf T}G_{e+1}T_e&=G_e,\\
+A_{e+1}T_e&=T_eA_e,&
+e^{-tA_{e+1}}T_e&=T_ee^{-tA_e}\quad(t\ge0).
+\end{aligned}
+\tag{128.2}
+$$
+
+The last equality follows term by term from the finite matrix exponential
+series. Each metric is SPD by congruence. For $m=0$ there is no extension
+condition. For $B_e=\varnothing$ the chart is the identity and
+$G_{e+1}=G_e$, $A_{e+1}=A_e$. These observations also cover a final
+accepted empty step. No future epoch is required for a finite prefix.
+$\square$
+

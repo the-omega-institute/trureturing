@@ -1,0 +1,134 @@
+**Theorem 23.1 (the unique positive frozen decaying profile).** On the
+punctured full frozen group there is a unique positive $L^2(dq)$ solution
+$W_\infty$ of
+
+$$
+(-\Delta_H-\lambda_0R^{-2})W_\infty=-W_\infty,
+\qquad
+W_\infty/h=-\log R+\kappa_\infty+O(R^\gamma).
+\tag{23.1}
+$$
+
+The logarithmic coefficient fixes its normalization. The error is uniform
+in all directions, with rescaled smooth derivatives. Every nonzero
+nonnegative punctured $L^2$ solution of this equation is a positive
+multiple of $W_\infty$. For every smooth compact cutoff $\chi=1$ near
+zero, $W_\infty+\chi h\log R$ belongs to the full frozen critical
+Friedrichs form domain. This remainder property follows from positivity
+and $L^2$ decay; it is not an assumed angular or extension restriction.
+The solution is rotationally invariant, but $W_\infty/h$ is not a
+function of $\log R$ alone. For $0<a_1<1$,
+$e^{a_1R}W_\infty$ and $e^{a_1R}\nabla_HW_\infty$ are exterior $L^2$.
+Its exact norm and smooth-test charge are
+
+$$
+\begin{gathered}
+\int W_\infty^2dq=N=k/2,\qquad
+\int hW_\infty dq=k,\\
+\int h^2\nabla_H(W_\infty/h)\cdot\nabla_H\eta\,dq
+ +\int hW_\infty\eta\,dq=k\eta(0),
+\quad \eta\in C_c^\infty(\mathbb R^3).
+\end{gathered}
+\tag{23.2}
+$$
+
+The last pairing is absolutely convergent, but is not a finite-energy
+point-evaluation assertion: $W_\infty/h$ has infinite transformed
+energy at zero. The separate original kinetic and inverse-square costs
+of $W_\infty$ also diverge there. Its normalized vector in measure
+$m_0dq$ is $W_\infty/\sqrt{m_0N}$.
+
+Proof. Let $A_F$ be the nonnegative Friedrichs operator of
+$\mathcal A_0=-\Delta_H-\lambda_0R^{-2}$ on the full Cartesian punctured
+core. The ground identity in §12 identifies its form with the closure
+of $\mathcal E_0[v]=\int h^2|\nabla_Hv|^2dq$ in $L^2(h^2dq)$.
+Choose $P=-\chi h\log R$. It is $L^2$ and
+$\mathcal A_0(h\log R)=0$ off zero by (20.3). The off-source function
+$F_0=(\mathcal A_0+1)P$ is $L^2$: it equals $P$ near zero, with the
+other terms supported on a smooth annulus. Set
+$U_0=(A_F+1)^{-1}F_0$ and $W_\infty=P-U_0$.
+This constructs an $L^2$ punctured solution with the stated form
+remainder, independently of a choice of selfadjoint source extension.
+
+Write $u=U_0/h$. Near zero
+$(\mathscr B_0+1)u=-\log R$, with $\mathscr B_0$ from (18.10).
+The signed $R^\delta b_\delta$ barriers and local positive-part
+comparison of §13 bound $u$ through the zero-capacity point.
+Its harmonic replacement on $R<d$ has error at most
+$Cd^2(1+|\log d|)$. The annular contraction in §16 gives
+$u=u(0)+O(R^\gamma)$, with annular derivatives. This proves (23.1).
+The negative part of $W_\infty$ vanishes near zero and is in the global
+critical form domain. Testing its equation against that negative part
+forces it to vanish. Annular positivity gives $W_\infty>0$.
+Exterior Caccioppoli estimates and the Agmon identity with weight
+$a_1R$, using $|\nabla_HR|^2=c\le1$, give the exterior exponential
+bounds for every $a_1<1$.
+
+Here is a positivity argument that supplies uniqueness among all
+nonnegative $L^2$ solutions, rather than only among vectors already
+having a prescribed form remainder. Let $F_1$ be such a nonzero
+solution, $v=F_1/h$, and
+$p(t)=(2\pi C)^{-1}\int c\phi^2v\,da\,d\theta$.
+Annular Harnack bounds the full $v$ by $C_1p$ near zero. Integrating the
+full divergence equation, with periodic $\theta$ and Cartesian axis
+regularity, gives
+
+$$
+Cp''(t)=e^{2t}\int_J\phi^2\left(\frac1{2\pi}
+                         \int_0^{2\pi}v\,d\theta\right)da,
+\qquad 0\le p''\le C_2e^{2t}p.
+\tag{23.3}
+$$
+
+The backward Volterra formula, divided by $1+|t|$, has integrable kernel
+$C(1+|t|)e^{2t}$. Gronwall gives $p=O(1+|t|)$, hence the same
+all-angular bound for $v$. In a small weighted ball solve
+$\mathscr B_0p_0=-v$ with zero outer data. Coercivity gives existence;
+comparison gives $p_0\le0$, and the preceding barriers give boundedness
+and a scalar trace for $p_0$. Now $z=v-p_0>0$ is weighted harmonic and
+its mean is exactly $\beta t+\alpha_1$.
+
+For $w=z-(\beta t+\alpha_1)$, retain the entire energy in (18.12).
+Writing $H_w=\int c\phi^2w^2$, the identities (18.13) give
+$H_w''=8e_w\ge0$ and
+$\int_t^{t+1}H_w\le C\int_{t-1}^{t+2}e_w$.
+Apply their convexity argument after reversing $t$ at the negative end.
+Polynomial growth excludes the exponentially growing convex
+alternative; the decreasing alternative has limit zero and finite tail
+energy. The annular inequality and interior estimates give $w=o(1)$ in
+all directions. Thus
+$v=\beta\log R+\alpha_2+o(1)$, $\beta\le0$, with
+$v-\beta\log R$ in the full local weighted form domain.
+If $\beta=0$, zero capacity extends the equation through zero, and
+exterior Caccioppoli puts $F_1$ in the global Friedrichs form domain.
+Its eigenvalue $-1$ would contradict $A_F\ge0$.
+Hence $\beta<0$. The difference $F_1-(-\beta)W_\infty$ is in that
+form domain globally, is killed by $A_F+1$, and is zero.
+This proves the claimed uniqueness; it makes no uniqueness claim for
+sign-changing maximal-domain functions.
+
+Rotation preserves the problem and logarithmic normalization, so
+uniqueness gives rotational invariance. A quotient depending only on
+$t$ would require $c(a)v_{tt}=e^{2t}v$ at every angle, impossible for
+nonzero $v$ because $c$ is nonconstant. The angular rearrangement is
+therefore real even though no $\theta$ dependence remains.
+
+For the constants, put $W_j(q)=jW_\infty(\delta_jq)$, $j>0$.
+Its energy is $-j^2$ and its constant trace is
+$\kappa_\infty-\log j$. The full Green identity, with the source
+orientation of §21 and exponential exterior decay, is
+
+$$
+(l^2-j^2)\int W_jW_l\,dq=k\log(l/j).
+\tag{23.4}
+$$
+
+Let $l\to j$ using strong $L^2$ continuity of dilation to obtain
+$\int W_j^2=k/(2j^2)$. The outward small-sphere flux of
+$h^2\nabla_H(W_\infty/h)$ tends to $-k$. Integrating its divergence
+$hW_\infty$ between two spheres and letting the exterior sphere tend
+to infinity gives the second integral in (23.2). The same computation
+against a smooth compact $\eta$ gives the charge formula. This uses
+$\pi C/2$, the full angle and the polar factor $1/4$; no scalar Bessel
+normalization is substituted. $\square$
+

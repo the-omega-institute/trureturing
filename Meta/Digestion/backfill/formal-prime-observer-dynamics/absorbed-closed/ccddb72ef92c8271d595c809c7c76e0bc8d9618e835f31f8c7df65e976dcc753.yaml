@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ccddb72ef92c8271d595c809c7c76e0bc8d9618e835f31f8c7df65e976dcc753
+  normalized_sha256: sha256:ccddb72ef92c8271d595c809c7c76e0bc8d9618e835f31f8c7df65e976dcc753
+cas_ref: sha256:ccddb72ef92c8271d595c809c7c76e0bc8d9618e835f31f8c7df65e976dcc753
+coverage_gids:
+  - gid: D5/S3/Estimation/ExperimentCost/MinimumCostRoleBasis.greedy_role_scan_is_minimum_cost_basis
+    target_statement_id: sha256:4debc8898102e484c0aa789cca28cb064e11fc67d13ff476986126cd1a63b2ae
+  - gid: D5/S3/Estimation/ExperimentCost/MinimumCostRoleBasis.linearRoleMatroid_isBase_iff
+    target_statement_id: sha256:af6330a627fea5edff1a62c4ceb40517bc53eaa7f5f783e5817ddf073ebfca03
+  - gid: D5/S3/Fourier/BinaryCharacterBasisMinimality.binary_character_basis_minimality
+    target_statement_id: sha256:f43061b09cd56907479b4990d9f3429b7d802f8e9dc8075eb46de9d8d800de51
+receipts:
+  unresolved_subitems: []

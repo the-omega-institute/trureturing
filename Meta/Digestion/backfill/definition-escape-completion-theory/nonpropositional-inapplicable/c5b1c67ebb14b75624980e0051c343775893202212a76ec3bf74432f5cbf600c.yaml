@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5b1c67ebb14b75624980e0051c343775893202212a76ec3bf74432f5cbf600c
+  normalized_sha256: sha256:c5b1c67ebb14b75624980e0051c343775893202212a76ec3bf74432f5cbf600c
+cas_ref: sha256:c5b1c67ebb14b75624980e0051c343775893202212a76ec3bf74432f5cbf600c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义逃逸系统的标题及记号引导语。
+    previous_atom_id: c7ff75c3d8c264ecfbbd147808359de8724af56999ab652fc86a2de3468bcda3
+    next_atom_id: 5b254f9f95334b6adafa138438234b25d795a41a6c1406077a9ef5205e0111bb

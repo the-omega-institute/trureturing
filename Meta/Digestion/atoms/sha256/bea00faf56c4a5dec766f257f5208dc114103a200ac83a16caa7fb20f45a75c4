@@ -1,0 +1,29 @@
+**Proposition 20.2 (serial image amplification and the round horizon).** Every
+protocol of Definition 20.1 satisfies
+
+$$
+\begin{aligned}
+s_j&\ge137^j s_0+\frac{279(137^j-1)}{136},\\
+W_j&\ge(137^j-1)\left(s_0+\frac{279}{136}\right).
+\end{aligned}
+\tag{C.20.1}
+$$
+
+If $s_j\le N$, then
+
+$$
+j\le
+\frac{\ln((136N+279)/(136s_0+279))}{\ln137}.
+\tag{C.20.2}
+$$
+
+Proof. Corollary 18.4, applied to the actual call with $k_i=s_i$, gives a
+completion ordinal at least $137s_i+279$. Seriality therefore implies
+$s_{i+1}\ge137s_i+279$. Set $b=279/136$; then
+$s_{i+1}+b\ge137(s_i+b)$. Induction gives
+$s_j+b\ge137^j(s_0+b)$, and subtracting $s_0+b$ gives the work bound.
+For the horizon bound, $137^j(136s_0+279)\le136N+279$, whose positive terms
+permit taking logarithms. The mechanism and constants are derived from the
+actual source codec and body counts, not from a general theorem about all
+self-representations. $\square$
+

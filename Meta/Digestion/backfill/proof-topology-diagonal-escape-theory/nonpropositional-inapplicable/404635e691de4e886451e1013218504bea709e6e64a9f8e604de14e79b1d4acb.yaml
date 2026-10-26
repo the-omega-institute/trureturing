@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:404635e691de4e886451e1013218504bea709e6e64a9f8e604de14e79b1d4acb
+  normalized_sha256: sha256:404635e691de4e886451e1013218504bea709e6e64a9f8e604de14e79b1d4acb
+cas_ref: sha256:404635e691de4e886451e1013218504bea709e6e64a9f8e604de14e79b1d4acb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PB.4 最短分离、完全分离与混合词类数；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 38c17878db01c4062950e45c1ac674de799de2aa5474a12484e15e318dbf7f7a
+    next_atom_id: e5d38e654bfc1834d780a338a78e2fa517ff43e7c5112c1c588ca3819399410d

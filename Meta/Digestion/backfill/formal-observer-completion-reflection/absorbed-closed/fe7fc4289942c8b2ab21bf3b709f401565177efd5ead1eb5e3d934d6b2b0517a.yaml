@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fe7fc4289942c8b2ab21bf3b709f401565177efd5ead1eb5e3d934d6b2b0517a
+  normalized_sha256: sha256:fe7fc4289942c8b2ab21bf3b709f401565177efd5ead1eb5e3d934d6b2b0517a
+cas_ref: sha256:fe7fc4289942c8b2ab21bf3b709f401565177efd5ead1eb5e3d934d6b2b0517a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ControlledCompletion/LeastStableRefinement.controlled_completion_is_least_stable_refinement
+    target_statement_id: sha256:7c7184e3de2920481e0118ffc505b0ed064e6bf77d6236fb3e9594d7f57d2475
+receipts:
+  unresolved_subitems: []

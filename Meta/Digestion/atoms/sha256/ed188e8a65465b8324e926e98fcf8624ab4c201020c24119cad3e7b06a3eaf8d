@@ -1,0 +1,11 @@
+**Definition 28.3 (Derivative numerator).** Set
+
+$$
+\mathcal A(r,t)=
+\frac{(P_rB-PB_r)G_t-(P_tB-PB_t)G_r}{t}.
+\tag{28.12}
+$$
+
+The numerator in (28.12) is divisible by $t$ in $\mathbb Z[r,t]$;
+$\mathcal A$ has bidegree $(19,19)$ and 159 nonzero monomials.
+

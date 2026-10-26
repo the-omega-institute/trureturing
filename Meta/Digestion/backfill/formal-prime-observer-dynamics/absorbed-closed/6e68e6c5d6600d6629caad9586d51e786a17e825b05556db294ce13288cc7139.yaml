@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6e68e6c5d6600d6629caad9586d51e786a17e825b05556db294ce13288cc7139
+  normalized_sha256: sha256:6e68e6c5d6600d6629caad9586d51e786a17e825b05556db294ce13288cc7139
+cas_ref: sha256:6e68e6c5d6600d6629caad9586d51e786a17e825b05556db294ce13288cc7139
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SensorFamilies/SensorFamilyKernelIntersection.joint_readout_kernel_eq_iInter
+    target_statement_id: sha256:31dffb949e7976e23d4f528406b54016f581dc8fda8090f21117bf858c5cf158
+receipts:
+  unresolved_subitems: []

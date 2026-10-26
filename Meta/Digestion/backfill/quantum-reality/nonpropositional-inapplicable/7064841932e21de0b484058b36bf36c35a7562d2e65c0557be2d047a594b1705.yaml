@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7064841932e21de0b484058b36bf36c35a7562d2e65c0557be2d047a594b1705
+  normalized_sha256: sha256:7064841932e21de0b484058b36bf36c35a7562d2e65c0557be2d047a594b1705
+cas_ref: sha256:7064841932e21de0b484058b36bf36c35a7562d2e65c0557be2d047a594b1705
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行列出自主量子实现所需的历史、优先级、反作用与资源证书要求，未陈述这些证书存在。
+    previous_atom_id: 16f052f9b472faf0e5fe26b571a845fc0677304fd48c759f3f58f0702506b9dc
+    next_atom_id: 37b5af6baf90c41897a1f63852500a551955a56346698bcdb1d1502254409271

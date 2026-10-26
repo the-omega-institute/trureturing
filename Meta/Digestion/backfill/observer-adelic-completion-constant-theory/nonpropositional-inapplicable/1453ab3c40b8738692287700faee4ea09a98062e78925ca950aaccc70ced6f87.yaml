@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1453ab3c40b8738692287700faee4ea09a98062e78925ca950aaccc70ced6f87
+  normalized_sha256: sha256:1453ab3c40b8738692287700faee4ea09a98062e78925ca950aaccc70ced6f87
+cas_ref: sha256:1453ab3c40b8738692287700faee4ea09a98062e78925ca950aaccc70ced6f87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义归一化 Li 曲率与 Toeplitz 矩阵；末尾为对先前定理的未完成引导句，没有新结论。
+    previous_atom_id: dbed901a52e3eacad351e2f7ce4f41ea9b7d9a2d8461ed09d5afbbb0cf308664
+    next_atom_id: 5e4df99134d30fa633c6b67846cea1849523fa8310c50e424fba1a8d6a44cc55

@@ -1,0 +1,50 @@
+**Proposition 119.1 (feasible cancellation with a true target bound).** Consider the exact feasible point
+
+$$
+P=\operatorname{diag}(c,1-c),\qquad s=\frac25,\qquad
+\sigma=(\sqrt2-1)s,\qquad
+V_0=\operatorname{diag}(\sigma,-s),\qquad V_1=0.
+\tag{U.59}
+$$
+
+It satisfies the strict scalar localization $p\in(p_-,p_+)$, $s_2^2<\delta_*$, $\tau+\zeta<\varepsilon_*$, and $0<s_1<1$. It fails both the scaled-neighborhood hypothesis (U.57) and the sufficient angle certificate (U.55), whereas $\mathcal S<c/2$ and $\Theta<r$ hold.
+
+Proof. Its Gram is $G=\operatorname{diag}(\sigma^2,s^2)\preceq I_2$. Use the actual SVD with top $u=e_2$, $\ell=-e_2$ in the first copy, and second $u_\perp=e_1$, $k=e_1$ in that copy. Since $a/b=1+\sqrt2$, $a\sigma-bs=0$, so $\tau=0$. The separate top and second singular-component traces are $-bs$ and $a\sigma$, both nonzero; their cancellation is exact. Also $m=q$ and $\alpha=1$.
+
+The actual residual and the top-only residual have the same smaller eigenvalue $q(1-s^2)$. Indeed their first diagonal entries are respectively $p(1-\sigma^2)$ and $p$, both strictly above $q(1-s^2)$, since $p>q$ and $\sigma<s$. Thus
+
+$$
+\lambda=\lambda_{\mathrm{top}}=q\eta^2,\qquad
+\delta=\zeta=\mu=0,\qquad \eta=\frac{\sqrt{21}}5.
+\tag{U.60}
+$$
+
+The scalar localization is strict. At $p=c$, (U.45) gives $L=2a+2b+2\sqrt2a$, so $2a+b-k_*=3-b-2\sqrt2a>0$: indeed $ab=1/(2\sqrt2)$ and $(b+2\sqrt2a)^2=3+7c=(26+7\sqrt2)/4<9$, since $7\sqrt2<10$. Hence $p_-<c<p_+$. Also
+
+$$
+\sigma^2=\frac{4(3-2\sqrt2)}{25}<\frac7{250}<\frac1{25}<\delta_*.
+$$
+
+For a direct rational verification of the final comparison, $\sqrt2<141422/100000$ implies $L<52263/10000$, hence $k_*<22263/10000$ and $\delta_*>5-(22263/10000)^2>1/25$; all these positive comparisons are checked by squaring. The first comparison follows from $\sqrt2>707/500$. Furthermore $\varepsilon_*>0$ follows from $L<3+\sqrt5$, so $\mu=0<\varepsilon_*$. The neighborhood fails because $\chi_{\mathrm{err}}=\sigma=(\sqrt2-1)s>s/5000$.
+
+The root difference in (U.55) is zero, while
+
+$$
+E=\frac{a(1-\sqrt{21}/5)}{2\sqrt2}>\frac3{125},\qquad
+r-\sqrt{c-1/9000}<\frac1{10000}.
+\tag{U.61}
+$$
+
+For the first strict bound, $a>9/10$ and $\sqrt{21}/5<23/25$ give $E>9/(250\sqrt2)>3/125$. For the second, rationalize the difference; $c>17/20$ ensures both roots exceed $9/10$, so their sum exceeds $9/5$ and the difference is less than $1/16200$. Since $s^2/1440=1/9000$, (U.61) proves strict failure of the sufficient certificate.
+
+Nevertheless $G$ commutes with $P$, and the residual has top eigenvector $e_1$. Moreover $p=c>4/(4+\sqrt2)$, as follows by multiplying by the positive denominator. Thus the high-spectrum calculation (U.24) applies. Its matrix (U.25) is positive definite because $pq>0$ and its determinant is $2pq(\sqrt2-1)>0$. The pair $(a_0,d_0)=(\sigma,-s)$ is nonzero, so that part of the negative quadratic is strictly negative; all other parts here vanish. Consequently $16(\mathcal S-\lambda_0)<0$, and (U.27) gives $\Theta<r$.
+
+For completeness the actual root value, without the comparison error, is
+
+$$
+\Theta=\frac{a\bigl(1+\sqrt{1-\sigma^2}\bigr)+b(1+\eta)}{4\sqrt2}
++\frac12\sqrt{1-q\eta^2}.
+$$
+
+The preceding strict quadratic proof bounds this expression; no numerical approximation is needed. This point is excluded by the commuting theorem and is not a point satisfying the noncommutation condition of (U.28). It proves that the scalar localization alone does not force the angle certificate. It supplies no counterexample to (U.4), (U.5), or a physical recovery target. $\square$
+

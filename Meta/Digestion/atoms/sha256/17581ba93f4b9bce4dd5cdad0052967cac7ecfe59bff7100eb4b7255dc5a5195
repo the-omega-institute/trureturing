@@ -1,0 +1,72 @@
+## 16. Finite rational arithmetic and the unchanged global boundary
+
+The displayed integer circuits, rational centers, radii and finite
+inequalities specify all arithmetic inputs. In particular, if
+$R(x,p,v)=\sum r_{abc}x^ap^bv^c$, the coefficient in Section 13 is
+
+$$
+a_{\ell jk}=\sum_{a\ge\ell,\ b\ge j,\ c\ge k}
+r_{abc}\binom a\ell\binom bj\binom ck
+c_x^{a-\ell}p_c^{b-j}v_c^{c-k},
+\tag{16.1}
+$$
+
+where $c_x$ is that disk's Gaussian-rational center. This is an exact
+finite binomial expansion, including every parameter term. Polynomial
+shifts and (13.1) are evaluated exactly over Gaussian rationals. For real interval
+calculations one may use the following wholly rational directed grid:
+$h=10^{-70}$; enclose each rational input by $[h\lfloor x/h\rfloor,
+ h\lceil x/h\rceil]$. After each addition, subtraction, multiplication
+or reciprocal take exact endpoint bounds and round outwards to this
+grid. For $0\le a\le b$, bound the square root by $[hL,hU]$,
+where $L$ is the greatest nonnegative integer with $h^2L^2\le a$
+and $U$ is the least nonnegative integer with $h^2U^2\ge b$.
+After clearing rational denominators these are integer comparisons.
+Matrix
+products use their exact finite sums with these outward operations.
+Derivatives of the source responses are determined by ordinary
+polynomial differentiation and the quotient rules. For $N/D_s$, with
+subscripts denoting source coordinates, these are
+
+$$
+\begin{aligned}
+(N/D_s)_j&=N_j/D_s-N(D_s)_j/D_s^2,\\
+(N/D_s)_{jk}&=N_{jk}/D_s
+-\{N_j(D_s)_k+N_k(D_s)_j+N(D_s)_{jk}\}/D_s^2\\
+&\qquad+2N(D_s)_j(D_s)_k/D_s^3.
+\end{aligned} \tag{16.2}
+$$
+
+Exact rational matrix inversion at the displayed centers defines the
+preconditioners. Matrix infinity norms mean maximum absolute row sums.
+The finite comparisons include all inequalities (13.1), both drift
+roots on every positive disk, all exclusion tags, the wrong-branch $K\ne0$ tests,
+(14.2), source-image separation, every displayed M interval, and the
+arc identification and containment checks in Section 15. The exact
+polynomial identities (12.4), (12.7)–(12.8) are finite coefficient
+identities. Their coefficients are specified by (12.3)–(12.5), so
+coefficient convolution and exact polynomial division suffice to
+establish them. The strict
+inequalities are ordinary rational comparisons under the stated
+outward operations; their meaning is independent of an implementation.
+
+Sampled zeros, lower-degree gains, repeated gain roots, zero drift,
+singular sources, unbounded positive source offdiagonals, and unused
+companions all belong to the source domain at the start of the proof.
+The interpolation argument does not remove any of them. Strict inverse
+and exclusion inequalities characterize what is actually present in
+these four children; they are conclusions, not replacement hypotheses.
+The global complex zero set of the raw undivided system is not asserted
+to be finite. Finiteness of the relevant projected roots on these four
+rectangles was proved first by the explicit degree and disk checks.
+
+The original joint problem remains **OPEN**. This theorem excludes
+only the four displayed parameter windows of the actual J arc. It
+neither covers the remainder of $[10,34]\setminus\{24\}$ nor every
+other possible J pair in the original domain. The remaining actual-arc
+obligation is to find or exclude independently selected distinct worlds
+$W_2,W_3\in C(p,v_J(p))$ with $m(W_2)=m(W_3)$ at parameters outside
+these windows. A global solution still requires an actual original
+joint witness or an all-original-world exclusion. No numerical absence
+or common-drift restriction substitutes for either obligation.
+

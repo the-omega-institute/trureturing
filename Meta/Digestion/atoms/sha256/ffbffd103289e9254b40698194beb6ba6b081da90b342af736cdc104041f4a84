@@ -1,0 +1,71 @@
+**定理 8.4（有限稳定化、全未来等价与最小仿射摘要）。**
+令 $r_0=\dim W_0$、$r=\dim W_\infty$。则：
+
+1. 对每个 $n$，
+
+   $$
+   W_n=\operatorname{span}_{\mathbb R}
+    \{\Phi_h^*(G):|h|\le n,\ G\in\mathcal G\}.
+   $$
+
+   且 $W_\infty=W_{d^2-r_0}$。
+
+2. 对任意 $\rho,\sigma\in\mathcal D(H)$，
+
+   $$
+   \rho\sim\sigma\quad\Longleftrightarrow\quad \rho-\sigma\in N.
+   $$
+
+   此条件也保证任意共同的有限反馈策略有相同的完整输出记录律。
+
+3. 令 $W^0=W_\infty\cap V_0$，以 $\pi:V_0\to W^0$ 表示正交投影。摘要
+
+   $$
+   q(\rho)=\pi(\rho-I/d)
+   $$
+
+   未来充分，且其物理可达像的仿射维数为 $r-1$。
+
+4. 若某仿射摘要 $s(\rho)=L(\rho-I/d)+b$，其中 $L:V_0\to\mathbb R^k$ 线性，并对全部密度态满足
+
+   $$
+   s(\rho)=s(\sigma)\Longrightarrow\rho\sim\sigma,
+   $$
+
+   则存在唯一满射线性映射 $F:\operatorname{ran}L\to W^0$，使 $\pi=F\circ L$。特别地，
+
+   $$
+   \operatorname{rank}L\ge r-1.
+   $$
+
+**证明。**
+
+第一项的词表示对 $n$ 归纳。$n=0$ 时即定义。给一个词效果再作用 $`\Phi_{a,o}^*`$，对应在该历史之前插入动作--输出对 $(a,o)$；所有增加一位的历史都以此方式得到。因此递推恰好张成长度不超过 $n+1$ 的全部词效果。
+
+若某级 $W_{n+1}=W_n$，定义立即给 $`\Phi_{a,o}^*W_n\subseteq W_n`$，对每个分支都成立；于是所有后续级仍等于 $W_n$。若尚未稳定，每级维数至少增加一。由于 $\dim_{\mathbb R}V=d^2$，从维数 $r_0$ 开始，至多 $d^2-r_0$ 次增加便达到稳定。这证明所给统一词长界。
+
+第二项由迹对偶直接得到：全部词概率差为零，当且仅当 $\rho-\sigma$ 与每个词效果正交，当且仅当与它们的线性张成 $W_\infty$ 正交。对固定反馈策略，每个具体输出前缀确定相同动作序列；其概率是上述某个词概率。逐个前缀的概率相同，故整个记录律相同。策略可以在共同前缀处停止，结论仍成立。
+
+因 $I\in W_\infty$，有正交分解
+
+$$
+W_\infty=\mathbb R I\mathbin{\oplus^{\perp}}W^0,
+ \qquad \dim W^0=r-1.
+$$
+
+对迹零差 $X$，$\pi X=0$ 等价于 $X\in N$。这既证明 $q$ 充分，也证明其坐标没有遗漏任何本模型能分辨的方向。$\mathcal D(H)-I/d$ 在 $V_0$ 内含零的开邻域：若 $\|X\|_{\rm op}<1/d$，则 $I/d+X$ 正定。正交投影把这个邻域映到 $W^0$ 中零的一个邻域，故物理摘要像的仿射包络就是 $W^0$，维数为 $r-1$。
+
+最后取 $X\in\ker L$。选择足够小的 $\varepsilon>0$，使 $\rho_\pm=I/d\pm\varepsilon X$ 都是密度态。其摘要相同，所以由假设和第二项，$2\varepsilon X\in N$，从而 $\pi X=0$。因此 $\ker L\subseteq\ker\pi$。定义
+
+$$
+F(LX)=\pi X.
+$$
+
+若 $LX=LY$，则 $X-Y\in\ker L\subseteq\ker\pi$，故定义与代表元无关。它线性，且对 $Y\in W^0$ 有 $F(LY)=Y$，故满射。任何满足 $\pi=F\circ L$ 的映射都在每个 $LX$ 上被强制为这个值，故唯一。满射给出秩下界。
+
+这里使用了全部密度态含相对开集的事实。若来源只允许一个较小子集，最后的必要性和维数下界须在其实际仿射包络内重新核对。
+
+证毕。
+
+<a id="obs-prop-average"></a>
+

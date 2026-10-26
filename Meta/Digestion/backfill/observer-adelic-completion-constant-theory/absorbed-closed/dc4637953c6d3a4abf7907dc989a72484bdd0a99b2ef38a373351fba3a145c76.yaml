@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc4637953c6d3a4abf7907dc989a72484bdd0a99b2ef38a373351fba3a145c76
+  normalized_sha256: sha256:dc4637953c6d3a4abf7907dc989a72484bdd0a99b2ef38a373351fba3a145c76
+cas_ref: sha256:dc4637953c6d3a4abf7907dc989a72484bdd0a99b2ef38a373351fba3a145c76
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity.fourierLaplace_convolutionSquare_real
+    target_statement_id: sha256:0d9535f5fb58dd90bc62535d15441075f54084d162a21a26de3e96911d1667a3
+  - gid: D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity.fourierLaplace_convolutionSquare_real_nonnegative
+    target_statement_id: sha256:03a57d8b1898191d4ed82e18bfb04152df2e8d2d05fdce013c0d4de771d94b91
+receipts:
+  unresolved_subitems: []

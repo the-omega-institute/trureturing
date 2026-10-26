@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:219ae55fd0ebf5871b50285d3d6abfe4b970e1ab394cd3208acabb8dbb91ec22
+  normalized_sha256: sha256:219ae55fd0ebf5871b50285d3d6abfe4b970e1ab394cd3208acabb8dbb91ec22
+cas_ref: sha256:219ae55fd0ebf5871b50285d3d6abfe4b970e1ab394cd3208acabb8dbb91ec22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines a category of finite theorem statements; it does not assert any particular theorem.
+    previous_atom_id: 2bc8e8fe56640af7ab137403c4825bec85afdd959f74aa8f1cd1ac900b1668c4
+    next_atom_id: 0eae0aa5b6da195070891a5d869bcf1cce8fad02935917ff187080e32f68522c

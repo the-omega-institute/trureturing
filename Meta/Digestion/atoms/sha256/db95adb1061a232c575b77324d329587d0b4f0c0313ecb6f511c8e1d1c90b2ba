@@ -1,0 +1,44 @@
+**Definition 21.1 (Bounded source coordinate and nonlinear response).**
+Retain the interval $K=[p_c-10^{-40},p_c+10^{-40}]$ of (14.1),
+the complete worlds of Definition 19.1 and their actual responses
+$u_i(r,p),m_i(r,p)$ of (20.1). Set
+
+$$
+\begin{gathered}
+q=r(1-r),\qquad z=b/q,\qquad b=qz,\qquad c=1/z,\\
+J_0=1+qz^2,\qquad N_0=J_0+rz,\qquad
+j=J_0/z,\quad n=N_0/z,\quad T=1+qz,\quad U=1+2qz,\quad V=U+n,\\
+B=6/T-2/U,\qquad \Lambda=1+6/T+1/U-4/j-4/n,\\
+A_5=1+V(4-15/j+20/T-10/n),\qquad
+K_5=96(b-1/8)V/T,\\
+\alpha=-(24/5)(b-1/8)B,\qquad
+\beta=p-24-K_5,\qquad E=\alpha A_5-\beta\Lambda,\\
+P_*(w)=\frac{13w}{2}+\frac{21(w-144)^2}{1600}
+                  -\frac{31(w-144)^3}{48000},\\
+H_-(r,p)=m_-(r,p)-P_*(u_-(r,p)).
+\end{gathered}
+\tag{21.1}
+$$
+
+All expressions on the first four lines extend rationally to
+$0\le r\le1$, $z>0$. Polynomial quotients below are cancelled
+before evaluation at $r=0$ or $r=1$. Write
+
+$$
+\widetilde A(r,z,p)=\frac{\mathsf A(r,qz,p)}{q^3}.
+\tag{21.2}
+$$
+
+This is a polynomial of coordinate degrees $(8,7,1)$. Direct
+substitution in (14.2) gives the identity
+
+$$
+E=-\frac{2\widetilde A}{5zTUJ_0N_0}.
+\tag{21.3}
+$$
+
+In particular, on $0<r<1$, $z>0$, its zeros are exactly the
+original source zeros. The lower label is characterized by
+$4qz^2<1$, using Theorem 18.4. The zero-safe parent equations
+are $\epsilon\Lambda=\alpha$ and $\epsilon A_5=\beta$.
+

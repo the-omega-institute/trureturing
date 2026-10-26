@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+  normalized_sha256: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+cas_ref: sha256:07d755b37a8d80a5e45dc5655c19ac7f1d248398eec4b3d0bb1780b563644e0f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Proposed compiler inputs, outputs and a nonzero-determinant verification obligation; no claim that the obligation has been discharged.'
+    previous_atom_id: 237c0636b3ff66d69c665e11538458b7b5249b007bff80772e7e7f47ce3ec842
+    next_atom_id: 38e35c06dee8118a55ddb5e47d094664c40d07e7f5e17249f37a0b98a10b175d

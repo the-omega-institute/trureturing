@@ -1,0 +1,74 @@
+**Definition 55.2 (Resources and mathematical scope of the correspondence).**
+The task-latch count in Theorem 55.1 is separate from the coexisting
+resources in Hypothesis 53.1: source provisioning and the original
+analog source, endpoint and rights, fixed basis and rational reference,
+finite phase and selector control, transient exact-real capture and
+transmission, comparison storage, initialization, clearing and output
+handling. Control checks and updates, all local requests including
+executed errors, and any retained external archive also incur their
+own work and storage. During capture and latch writing, the analog
+input, comparison cell and latch can coexist; the count is not the
+maximum storage of the entire joint system. Ideal scalar storage and
+comparison have no asserted finite bit complexity. Arbitrarily many
+Recall calls use arbitrarily much local work while the original source
+clock remains seven. Installation of these operations is a model
+hypothesis, distinct from the observational factorization (52.5).
+
+The independently meaningful spatial view is the original fixed-basis
+matrix predicate $b>1/16$. The temporal view here exposes original
+source clocks and chronological action order. The boundary view
+contains actual endpoint/action/clock/status/scalar reports. Memory
+exposes only the acquired task bit through Recall. Equations
+(52.5) and (54.1)–(54.3) prove the stated spatial-task recovery,
+actual acquisition and continued local use on one common run. They
+claim no recovery of raw scalar reports, $q$, full $P,g,d$, full source
+state, time or all boundary behavior from that bit. The comparison
+reference and ordered basis are indispensable parts of this declared
+coordinate task, not basis-free observations or a whole-source decoder.
+
+The new source-specific content is the full-singular projection
+inequality (51.6), used with the exact closed-base suppliers to justify
+the all-compatible-world acquisition and retained-consumer
+correspondence (54.1). CommonParent's classification and rational root
+isolations, StrictReal III's response formulas, and StrictReal X's
+regular inventory and simultaneous bands are reused ordinary
+mathematics. StrictReal base Section 18 and X Theorem 12.1 already
+exclude the relevant terminal-$M$ pairs in these children; III
+Theorem 14.3 already proves terminal-$M$ injectivity on the singular
+locus. Those exclusions by themselves do not remove unused singular
+companions. IX Section 12 also supplies an all-world necessary carrier;
+composing it with X's denominator-free drift and source filters gives
+another route to an inventory bound. No inventory, injectivity,
+recurrence, rank bound or independent-pair exclusion is credited here
+as a new general result.
+
+The generic comparator and retained-target distinction are supplied by
+[retained row-depth recovery, Section 7](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md),
+and [fixed-offset precision payload, Section 11](RECURSIVE_RELATIONAL_OBSERVATION_FIXED_OFFSET_PRECISION_PAYLOAD.md).
+The formal suppliers
+`TargetRecoveryCriterion.target_recovery_criterion`,
+`PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`
+and `TypedFiniteViewKernel.typed_finite_view_kernel`, with their owning
+Scribes, supply fiber constancy and the separate readout, update,
+legality, label and successor obligations.
+[PG, Section 19](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+supplies the corresponding joint partial-action and selector distinctions. None of
+these generic interfaces acquires this source's $m(W)$ or writes this
+receiver's latch; that bridge is Definition 53.2 and Theorem 54.1.
+This is repository-derived ordinary theory synthesis. Unavailable
+literature locator entries furnish no premise or priority conclusion;
+no literature-wide novelty or new formal certification is asserted.
+
+The original seventh-$J$ run of Sections 45–50 remains an alternative
+with its original prediction obstruction. The present source action
+horizon ends at seven, without acquiring both terminal alternatives.
+The exact closed $Q$ is not enlarged to other branches, other children,
+other continuations or arbitrary original worlds outside $\mathcal D$.
+No preparation method, finite-input digitizer, physical conformance,
+whole-source inverse, full mutual recovery of space/time/boundary/memory,
+universal alpha/beta reduction or global cost optimum is supplied.
+The broader original-$Q$, fixed-$G_{gc}$, native, parked-consumer and
+unchanged-initialization obligations retain their own exact conditions.
+This bounded correspondence does not complete those obligations or the
+sustained four-expression objective.
+

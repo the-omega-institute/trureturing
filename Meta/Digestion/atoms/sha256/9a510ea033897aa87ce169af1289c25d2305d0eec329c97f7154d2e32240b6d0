@@ -1,0 +1,18 @@
+**Definition 1.4 (Original simultaneous-pair predicate).** For a real
+$v$, let $\mathfrak W(v)$ mean
+
+$$
+\begin{gathered}
+\exists W_0,W_1,W_2,W_3\in\mathcal C_v:\qquad
+W_0\ne W_1,\quad W_2\ne W_3,\\
+f_{MJ}(W_0)=f_{MJ}(W_1),\qquad
+f_{MM}(W_2)=f_{MM}(W_3).
+\end{gathered}
+\tag{1.8}
+$$
+
+Labels in different pairs may coincide. This is the complete-world
+same-child obligation of O (32.1), with the two within-pair
+distinctness guards retained. The original existence question is
+$\exists v\in\mathbb R:\mathfrak W(v)$.
+

@@ -136,5 +136,17 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
 
+abbrev ground_neg_scope := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.ground_neg)
+theorem ground_neg_source : ground_neg_scope := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.ground_neg
+
+abbrev norm_neg_scope := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.norm_neg)
+theorem norm_neg_source : norm_neg_scope := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.norm_neg
+
+abbrev norm_even_scope := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.norm_even)
+theorem norm_even_source : norm_even_scope := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.norm_even
+
+abbrev creation_neg_scope := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.creation_neg)
+theorem creation_neg_source : creation_neg_scope := @_root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy.creation_neg
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedMonodromy

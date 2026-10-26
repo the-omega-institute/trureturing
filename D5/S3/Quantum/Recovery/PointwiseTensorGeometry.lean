@@ -67,7 +67,8 @@ theorem matrix_unit_pointwise_tensor
         E0.subtype.comp Theta.toLinearMap
        ∀ T : Matrix d d ℂ,
          (NX T).toEuclideanLin =
-         (U.comp (TensorProduct.map sigma T.toEuclideanLin)).comp (LinearMap.adjoint (𝕜 := ℂ) (E := K0 ⊗[ℂ] EuclideanSpace ℂ d) (F := EuclideanSpace ℂ n) U)) := by
+         (U.comp (TensorProduct.map sigma T.toEuclideanLin)).comp (LinearMap.adjoint (𝕜 := ℂ) (E := K0 ⊗[ℂ] EuclideanSpace ℂ d) (F := EuclideanSpace ℂ n) U)) ∧
+      (∀ w : K0, (sigmaInv w : EuclideanSpace ℂ n) = R.toEuclideanLin w) := by
   let E0 := LinearMap.range P.toEuclideanLin
   let K0 := LinearMap.range (F v v)
   let : NormedAddCommGroup (K0 ⊗[ℂ] EuclideanSpace ℂ d) :=
@@ -444,7 +445,7 @@ theorem matrix_unit_pointwise_tensor
         simpa only [LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply] using h.symm
   refine ⟨Theta, B, sigma, sigmaInv, ?_, ?_, hB, hAdjTheta,
     hEleft, hEright, hKleft, hKright, hSigma, hSigmaPositive, hStrict,
-    hInvRight, hInvLeft, hTrace, ?_, hFactor⟩
+    hInvRight, hInvLeft, hTrace, ?_, hFactor, hSigmaInv⟩
   · intro w i
     rw [show Theta (w ⊗ₜ[ℂ] EuclideanSpace.single i 1) =
       theta (w ⊗ₜ[ℂ] EuclideanSpace.single i 1) from rfl, htheta, hcolApply]

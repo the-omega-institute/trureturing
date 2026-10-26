@@ -1,0 +1,9 @@
+**定义 16.1（底面乘法相等的严格正子语言）。** Retain the complete rational tables, ordered actual-variable scopes, permitted repetitions, finite hidden sums and global normalization of Definition 15.1. Let $W_{\mathrm{res}}$ be the sublanguage of $W_+$ in which every factor additionally satisfies
+
+$$
+ f(000)f(110)=f(100)f(010).
+\tag{16.1}
+$$
+
+Thus every local table is normalized, strictly positive at each of the five tuples of $A$ in (15.1), and zero at the other three tuples. Equation (16.1) concerns the complete table even when its scope identifies variables and never visits some entries. All operations and the rational coefficient field remain those of Definition 15.1.
+

@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:b233fc7f75f86122e8715d6df4f026a06564cae5d4eee89d2cb406f2a62f3769
+  normalized_sha256: sha256:b233fc7f75f86122e8715d6df4f026a06564cae5d4eee89d2cb406f2a62f3769
+cas_ref: sha256:b233fc7f75f86122e8715d6df4f026a06564cae5d4eee89d2cb406f2a62f3769
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.boundary
+    target_statement_id: sha256:ca1543b937bd3a358f2ce2d3f93b532377cdf8e36b2797cdb155ae54c057cb02
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.bracket
+    target_statement_id: sha256:a207d961e9c770afc07aae70d3f43796c989cad3011544e740da4a6ffb0ca42e
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.extraWord
+    target_statement_id: sha256:7d0b2098eaeb2f3373189ed4131237b463d71435701872729b0726cbbf628ffa
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.finite_characteristic_twist_detector
+    target_statement_id: sha256:3dce188a3615b020f249625e6aebc8eddbb45120bf4ae786b7d40d91245698f9
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.generator
+    target_statement_id: sha256:dd6dd0404a4b9b3efd99970e456d50e3587e4899943375b64fd1f5b328884e3b
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.surfaceRelator
+    target_statement_id: sha256:3051bd2094695908e9fbfa5c74f66e74cb2cfeaccc10bfdedc807d8bf43da054
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.twistHom
+    target_statement_id: sha256:e7bcdae10058d7db25b703b4170c5765ac3d4e730a0b793d09a490abe53e75f7
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.twistImages
+    target_statement_id: sha256:5f215337e263fcee3637e0457ac4c803bd58331613a156c4b828bd0984f2b42f
+receipts:
+  unresolved_subitems: []

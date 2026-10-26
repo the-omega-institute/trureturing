@@ -1,0 +1,169 @@
+**定义 7.1（直线核与第三源方程）。** 本节变量次序固定为 $x=(k,\theta,\psi,r,b)$。使用前卷定义 19.1 的整数多项式
+
+$$
+f(k)=2104+1520k-14654k^2+1108k^3+27037k^4
+-8977k^5-13559k^6+6408k^7.
+\tag{7.1}
+$$
+
+以下数组逐字给出 $u_0,u_1,u_2,u_3,v_0,v_1,v_2,v_3$ 的 $k$ 升幂系数，缺省高次系数为零。它们复用前卷式 (19.3) 的核，不复用前卷矩形 (19.5) 的任何界。
+
+```json
+[
+  [
+    12624,
+    12528,
+    -61716,
+    -53004,
+    100062,
+    63696,
+    -70146,
+    -23340,
+    18918
+  ],
+  [
+    -1664,
+    -232,
+    8240,
+    14792,
+    -21500,
+    -27295,
+    24225,
+    12935,
+    -9060
+  ],
+  [
+    1248,
+    -4560,
+    -3240,
+    13509,
+    1578,
+    -14739,
+    2238,
+    5361,
+    -1962
+  ],
+  [
+    -208,
+    760,
+    484,
+    -2699,
+    212,
+    3400,
+    -1089,
+    -1370,
+    636
+  ],
+  [
+    12624,
+    1632,
+    -45312,
+    20400,
+    50046,
+    -33378,
+    -18486,
+    12600
+  ],
+  [
+    -1664,
+    -6976,
+    -14310,
+    11770,
+    35638,
+    -15028,
+    -18364,
+    8640
+  ],
+  [
+    1248,
+    1200,
+    2748,
+    -1731,
+    -9432,
+    3498,
+    5241,
+    -2394
+  ],
+  [
+    -208,
+    16,
+    114,
+    -253,
+    344,
+    94,
+    -263,
+    72
+  ]
+]
+```
+
+置 $U_k(s)=\sum_{a=0}^3u_a(k)s^a$、$V_k(s)=\sum_{a=0}^3v_a(k)s^a$。$s$ 是原时钟，系数多项式的高次不改变增益关于 $s$ 的至多三次条件。令
+
+$$
+R_k(q)=\begin{pmatrix}q&kq\\(1-q)/k&1-q\end{pmatrix},\qquad
+A_Q=\beta+ek,\quad B_Q=-\beta+(a-e)k+\gamma k^2
+\quad\left(Q=\begin{pmatrix}a&\beta\\\gamma&e\end{pmatrix}\right).
+\tag{7.2}
+$$
+
+于是 $\operatorname{tr}(QR_k(q))=(A_Q+B_Qq)/k$。对表 6.1 的标签 $i\in\{1,2,3,4,5,6J,7JJ,7JM\}$，以该行的原时钟 $t_i$ 定义
+
+$$
+N_i=(A_{Q_i}+B_{Q_i}(\theta+\psi))V_k(t_i)
+-B_{Q_i}\theta\psi U_k(t_i)-kV_k(0).
+\tag{7.3}
+$$
+
+对 $i\in\{6M,7MJ,7MM\}$，定义
+
+$$
+O_i=k(-V_k(0)+\psi U_k(0))
++(A_{Q_i}+B_{Q_i}\theta)(V_k(t_i)-\psi U_k(t_i)).
+\tag{7.4}
+$$
+
+这些都是五变量整数多项式。第三源使用 $X=b^2+r-r^2$、$Z=X+br$、$T=1+b$、$U_{\rm tr}=1+2b$，定义
+
+$$
+\begin{aligned}
+D={}&TXZ+U_{\rm tr}(TXZ-4bTZ+6XZ-4bXT),\\
+\widetilde B={}&N_4TXZ-U_{\rm tr}(4N_1bTZ-6N_2XZ+4N_3bXT),\\
+\widetilde V_0={}&-\widetilde B,\\
+\widetilde V_1={}&(N_1-N_4)bTZ
++U_{\rm tr}(N_1bTZ+6(N_1-N_2)bZ+4(N_3-N_1)b^2T),\\
+\widetilde V_2={}&(N_2-N_4)XZ
++U_{\rm tr}(N_2XZ+4(N_1-N_2)bZ+4(N_3-N_2)bX),\\
+\widetilde V_3={}&(N_3-N_4)bXT
++U_{\rm tr}(N_3bXT+4(N_1-N_3)b^2T+6(N_3-N_2)bX).
+\end{aligned}
+\tag{7.5}
+$$
+
+再置
+
+$$
+\begin{aligned}
+G_5&=-4\widetilde V_0+15\widetilde V_1-20\widetilde V_2+10\widetilde V_3,\\
+G_6&=-10\widetilde V_0+36\widetilde V_1-45\widetilde V_2+20\widetilde V_3,\\
+G_7&=-20\widetilde V_0+70\widetilde V_1-84\widetilde V_2+35\widetilde V_3,\\
+R_5&=b(1+r+3b)+r(1-r),\\
+R_{6M}&=b(2+r+5b)+r(1-r),\\
+R_{7MJ}&=b(1+4r+3b)+2r(1-r),\\
+R_{7MM}&=b(3+2r+8b)+2r(1-r).
+\end{aligned}
+\tag{7.6}
+$$
+
+根方程是以下字面整数多项式，不作行缩放、primitive-part 归一或饱和：
+
+$$
+\begin{aligned}
+E_0&=f(k),\\
+E_1&=b\widetilde B+R_5G_5-bDN_5,\\
+E_2&=b\widetilde B+R_{6M}G_6-bDO_{6M},\\
+E_3&=b\widetilde B+R_{7MJ}G_7-bDO_{7MJ},\\
+E_4&=b\widetilde B+R_{7MM}G_7-bDO_{7MM}.
+\end{aligned}
+\tag{7.7}
+$$
+

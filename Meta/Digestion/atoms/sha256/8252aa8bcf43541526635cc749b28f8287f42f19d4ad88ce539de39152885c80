@@ -1,0 +1,111 @@
+**定理 4.1（全未知双墙族的成功 Kraus 刚性）。**
+Fix $k,l\in(0,c)$.  Let a trace-nonincreasing CP success operation have
+successful output exactly $\Psi_{l,\beta,m}$ for every $\beta\in\mathbb R$ and
+every $m\in\mathbb Z$, with no history-correlated input other than the state
+(OC.10).  Precisely, its unnormalized output is
+$s(\beta,m)|\Psi_{l,\beta,m}\rangle\langle\Psi_{l,\beta,m}|$ with
+$s(\beta,m)\ge0$, allowing a zero-probability success event.
+Then every successful Kraus operator $K_j$ restricted to the active
+span $\operatorname{span}\{U_+,U_-,e_2\}$ has the form
+
+$$
+K_j=\lambda_jD_{k,l},\qquad
+D_{k,l}U_+=\sqrt{\frac lk}U_+,\quad
+D_{k,l}U_- =\sqrt{\frac{c-l}{c-k}}U_-,\quad
+D_{k,l}e_2=e_2.
+\tag{OC.11}
+$$
+
+Consequently the success probability is independent of $\beta$ and $m$ and
+satisfies the sharp bound
+
+$$
+s\le s_*(k,l):=\min\left\{1,\frac{k}{l},\frac{c-k}{c-l}\right\}.
+\tag{OC.12}
+$$
+
+The bound is attained by an explicit complete two-outcome instrument.  A
+deterministic uniform phase-preserving operation exists exactly when $l=k$.
+Every retained successful record is independent of $\beta$ and $m$; failure
+records are not constrained to be blind and must remain part of the response
+law.
+
+**证明。** Write $d=\sqrt Z e_2$,
+$v_\epsilon(k)=\sqrt{2k}U_++\epsilon\sqrt{2(c-k)}U_-$, and
+$z=e^{-i\beta}$.  Purity of the specified conditional output implies, for
+each successful Kraus operator, a scalar $a_\epsilon(z)$ with
+
+$$
+K_j(d+zv_\epsilon(k))=a_\epsilon(z)(d+zv_\epsilon(l)).
+$$
+
+Equivalently, the wedge product of the two sides is zero.  Its coefficients
+in $z$ are
+
+$$
+K_jd\wedge d=0,\quad
+K_jd\wedge v_\epsilon(l)+K_jv_\epsilon(k)\wedge d=0,\quad
+K_jv_\epsilon(k)\wedge v_\epsilon(l)=0.
+$$
+
+The vector-valued polynomial vanishes at every $z$ on the unit circle, so
+all its coefficients vanish.  The first equation gives $K_jd=\lambda_jd$.
+The second says that the
+bottom-space component of $K_jv_\epsilon(k)$ is
+$\lambda_jv_\epsilon(l)$; the last equation removes its possible $e_2$
+component.  The same $\lambda_j$ occurs for both signs because the vector
+$d$ is common.  Adding and subtracting the $\epsilon=\pm1$ equations gives
+(OC.11) on the whole active span.  This argument also covers
+$\lambda_j=0$.
+
+The trace-nonincreasing condition is
+$\sum_jK_j^*K_j\le I$.  Restricting it to the three orthogonal active
+directions gives
+
+$$
+\sum_j|\lambda_j|^2\frac lk\le1,\qquad
+\sum_j|\lambda_j|^2\frac{c-l}{c-k}\le1,\qquad
+\sum_j|\lambda_j|^2\le1,
+$$
+
+which is exactly (OC.12), with $s=\sum_j|\lambda_j|^2$.  Equality is
+attained by taking one successful Kraus operator
+
+$$
+K_s=\operatorname{diag}_{i=0,1,2,3,4}
+ \left(\sqrt{s_*\,p_b(l)_i/p_b(k)_i}\right)
+$$
+
+in the original mode basis and
+$K_f=(I-K_s^*K_s)^{1/2}$.  The two CP maps
+$\rho\mapsto K_s\rho K_s^*\otimes|s\rangle\langle s|$ and
+$\rho\mapsto K_f\rho K_f^*\otimes|f\rangle\langle f|$ form a complete
+instrument.  A known diagonal phase increment is inserted by multiplying
+$K_s$ by its fixed diagonal unitary; it does not change (OC.12).
+
+In a Stinespring dilation, each successful Kraus label has amplitude
+$\lambda_j$ independent of $\beta,m$.  Hence any retained successful flag,
+or any processing of those flags, has a law independent of the hidden phase
+and parity.  More strongly, a nonzero normalized successful dilation factors as
+
+$$
+\Psi_{l,\beta,m}\otimes
+       \frac{1}{\sqrt s}\sum_j\lambda_j|j\rangle.
+\tag{OC.11a}
+$$
+
+Purify any history-independent ancillary input and include every retained
+output component in the dilation record.  The same factorization proves
+blindness of the entire successful ancillary state, including coherent
+records retained for feedback.  This rules out hidden assistance at the next
+cut, as well as an acquired phase or parity readout.
+The filter is an exact mathematical instrument; calibrated
+hardware, matrix precision, monitoring, and a permission to execute it are
+additional resources.  This proves the theorem.  $\square$
+
+The amplitude-filter form is consistent with the mature support-matching
+filter results in Chiribella and Yang, *Optimal quantum operations at zero
+energy cost*, arXiv:1502.00259, Proposition 5.  Their energy premise is not
+imported here; (OC.11) proves the form for this full unknown orbit without an
+energy-conservation assumption.
+

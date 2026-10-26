@@ -1,0 +1,108 @@
+**定理 467.1（同一完整原卷积的物理余数核截断）。** 沿用定理 458.1 的原始卷积、完整零延拓、固定有限 Fourier 表示和物理行，取原平衡尺度 $K=U$、$D=N=\sqrt U$，$U\ge2$。复用[三次与二次大筛的既有族接口](../../../Library/Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks)，以及[原稿](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex) lem:hecke-strip-growth 证明中的 primitive Hecke 函数方程与 lem:plain 的 ordinary reflection。共同费用 $\mathcal C$ 一次控制这些输入、原 profiles 及所需有限阶导数、固定有限 ray/物理分区和 smooth/Sobolev 恢复的实际乘积。Profiles 与 norm-twist 高度固定，或使该共同费用满足原 polylog 合同；不扩大原高度范围。
+
+固定物理标签 $j$，令 $v$ 为行的 good 非单位 sixth-power-free 理想部分。用其原始素估值唯一分解
+
+$$
+v=a_2r_2^2=a_3r_3^3,\qquad
+ a_2\text{ squarefree},\quad r_2\text{ cubefree},\qquad
+ a_3\text{ cubefree},\quad r_3\text{ squarefree}.
+\tag{467.1}
+$$
+
+不要求 $a_m,r_m$ 互素；$a_2,a_3$ 分别保留原素估值模二、模三的余数。这里分解的是物理行，不是列 $h=dn$ 或列对的比值。对 $1\le A_2,A_3\le U$，把原完整正行能量限制到 $q_{a_2}\le A_2$ 或 $q_{a_3}\le A_3$，分别记为 $Q^{[2]}_{\le A_2}(b),Q^{[3]}_{\le A_3}(b)$，包括全部原有限标签。则在所列解析输入及共同费用条件下，对每个 $\varepsilon>0$，
+
+$$
+\begin{aligned}
+Q^{[2]}_{\le A_2}(b)
+&\ll_\varepsilon \mathcal C^2U^\varepsilon
+ \left\{U^{3/2}A_2+U^{3/2}A_2^{3/2}
+              +U^{5/3}A_2^{7/6}\right\},\\
+Q^{[3]}_{\le A_3}(b)
+&\ll_\varepsilon \mathcal C^2U^\varepsilon
+ \left\{U^{7/6}A_3^{4/3}+U^{4/3}A_3^{5/3}\right\}.
+\end{aligned}
+\tag{467.2}
+$$
+
+因此，$A_2\le U^{2/7}$ 与 $A_3\le U^{2/5}$ 时，两份能量及其行并集的能量均为 $O_\varepsilon(\mathcal C^2U^{2+\varepsilon})$。更精确地，若 $0\le\nu_2\le2/7$、$0\le\nu_3\le2/5$，则
+
+$$
+\begin{aligned}
+Q^{[2]}_{\le U^{2/7-\nu_2}}(b)
+ &\ll_\varepsilon\mathcal C^2U^{2-7\nu_2/6+\varepsilon},\\
+Q^{[3]}_{\le U^{2/5-\nu_3}}(b)
+ &\ll_\varepsilon\mathcal C^2U^{2-5\nu_3/3+\varepsilon}.
+\end{aligned}
+\tag{467.3}
+$$
+
+对固定正的 $\nu_m$，若共同费用为次幂且最终 $\varepsilon$ 足够小，（467.3）给出严格低于 $U^2$ 的幂次预算；$\nu_m=0$ 仅给出体积预算。这是同一个完整原卷积在指定行上的上界，含其全部列和列间干涉；不允许用任意列乘子替换原系数后仍直接使用结论。
+
+证明。固定一个原有限 Fourier 分量 $\xi$。记未归一化的原因子为
+
+$$
+\mathsf M_\xi(v)=\sum_d\mu(d)V(q_d/D)\xi(d)\chi_d^{\rm raw}(v),\qquad
+\mathsf S_\xi(v)=\sum_nW(q_n/N)\xi(n)\chi_n^{\rm raw}(v).
+\tag{467.4}
+$$
+
+原乘法性给出该完整原列多项式恰为 $\mathsf M_\xi(v)\mathsf S_\xi(v)$。两因子使用同一个字符、所有原零值和固定过滤；负 orientation 整体共轭。
+
+首先按实际导子估计 plain 因子。设 $\mathfrak f_v$ 是 $\xi\chi^{\rm raw}_{(\cdot)}(v)$ 的 primitive inducing conductor，$F_v=q_{\mathfrak f_v}$。Good 素数处的行估值为 $1,\ldots,5$，故每个这样的素数均保留非平凡局部 Kummer 分歧；固定 $\xi$ 不能消去 $S$ 外的分歧。该字符非主。所有额外固定 $S$ 零值按原有限 Euler 因子保留，且
+
+$$
+F_v\ll_S q_{\operatorname{rad}v}\le q_{a_m}q_{r_m},\qquad m=2,3.
+\tag{467.5}
+$$
+
+已有 primitive Hecke 函数方程及 entireness 给出所用普通平滑字符和界
+
+$$
+|\mathsf S_\xi(v)|\ll_\delta
+ C_{\xi,\mathrm{ref}}F_v^{1/2+\delta},\qquad \delta>0.
+\tag{467.6}
+$$
+
+具体地，在原 Mellin 公式中移到 $\Re s=-\delta$，不穿过极点；函数方程把 $L(-\delta+it)$ 控制为 $O_\delta(F_v^{1/2+\delta}(3+|t|)^{1+2\delta})$，而对偶 $L(1+\delta-it)$ 由绝对 Euler 收敛控制。$N^{-\delta}\le1$，原紧支撑 profile 的 Mellin 衰减支付积分。固定坏素的删除因子只改变固定常数。纯 norm twist 及所需有限 profile 导数按照同一函数方程与 gamma 商的多项式高度费用纳入 $C_{\xi,\mathrm{ref}}$；该费用不按行或 $a_m$ 重选。此处复用普通函数方程与平滑和方法，不将其另列为新定理。
+
+在一个 $q_{a_2}\asymp A$ 的 dyadic 块上，$q_{r_2}\asymp R=(U/A)^{1/2}$。固定实际 $a_2$ 后，零延拓下的精确恒等式为
+
+$$
+\chi_d^{\rm raw}(a_2r_2^2)
+ =\chi_d^{\rm raw}(a_2)\chi_d^{(3),\rm raw}(r_2).
+\tag{467.7}
+$$
+
+把 $\xi(d)\chi_d^{\rm raw}(a_2)$ 留在原 Möbius 列系数中。它与行 $r_2$ 无关，模长至多一；移动 $a_2$ 的导子没有被当作筛常数。非零 $\mu(d)$ 已使列 $d$ squarefree，从而 cubefree。行 $r_2$ cubefree，原 row selector、$a_2,r_2$ 重叠及其零值保留；只在正行范数中扩大允许的 $r_2$。按第 466 节复用的固定有限族接口和三阶筛，
+
+$$
+\sum_{r_2}\Omega\left|\mathsf M_\xi(a_2r_2^2)\right|^2
+ \ll_\delta C_{\xi,M}^2(UD)^\delta
+ D\{R+D+(RD)^{2/3}\}.
+\tag{467.8}
+$$
+
+（467.5）—（467.6）在同一块上给出 $|\mathsf S_\xi|^2\ll C_{\xi,\mathrm{ref}}^2(AR)^{1+\delta}$，重新命名内部 $\delta$。该块至多有 $O(A)$ 个 $a_2$，所以其完整原乘积能量为
+
+$$
+\ll_\delta\mathcal C^2U^\delta
+ A^2RD\{R+D+(RD)^{2/3}\}
+=\mathcal C^2U^\delta
+ \{AUD+U^{1/2}A^{3/2}D^2+U^{5/6}A^{7/6}D^{5/3}\}.
+\tag{467.9}
+$$
+
+这里利用 $A,R,D$ 都在固定多项式范围，将所有内部小幂统一纳入最终损失。再代入 $D=\sqrt U$，沿 $A\le A_2$ 的 dyadic 块正求和，得到（467.2）第一式。$a_2=1$ 单独作为长度一块处理。
+
+同样，在 $q_{a_3}\asymp A$ 的块上，$R=(U/A)^{1/3}$，$r_3$ squarefree，且
+$\chi_d^{\rm raw}(a_3r_3^3)=\chi_d^{\rm raw}(a_3)\chi_d^{(2),\rm raw}(r_3)$。保留原 Möbius 列的 squarefree 支撑，使用既有二阶筛与（467.6），得到同一原乘积块的能量
+
+$$
+\ll_\delta\mathcal C^2U^\delta A^2RD(R+D)
+=\mathcal C^2U^\delta
+ \{U^{2/3}A^{4/3}D+U^{1/3}A^{5/3}D^2\}.
+\tag{467.10}
+$$
+
+代入 $D=\sqrt U$ 并正求和，给出第二式。所有原有限 Fourier 分量、物理标签及有限 smooth 参数用同一个实际乘积成本包络恢复。取内部损失小于所给最终 $\varepsilon$，便得（467.2）。代入两个阈值，并逐项比较幂次，得到（467.3）。行并集的能量不超过两份正能量之和，交集只计一次。证毕。
+

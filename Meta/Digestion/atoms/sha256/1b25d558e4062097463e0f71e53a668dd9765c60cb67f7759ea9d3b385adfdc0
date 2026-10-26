@@ -1,0 +1,42 @@
+## 41. Singular sources and the incidence equations
+
+Since $6/T-2/U=2(2+5b)/(TU)>0$, an actual parent with $\Lambda=0$
+must have $b=1/8$. At that width,
+
+$$
+j=1/8+8r-8r^2,\qquad n=1/8+9r-8r^2,
+\qquad 960jn\Lambda=\Phi(r),
+$$
+
+where
+
+$$
+\Phi(X)=438272X^4-931328X^3+540800X^2-50728X-853.
+\tag{41.1}
+$$
+
+Thus every strict zero $x$ of $\Phi$ gives a singular parent for every
+real $e_s$, through (40.1). Superscript $s$ denotes evaluation at $(x,1/8)$.
+On the regular chart put
+
+$$
+e_r=-D_0/\Lambda,\quad
+P_*=c_5+e_rk_5,\quad V_*=c_6+e_rk_6,\quad A_*=c_J+e_rk_J.
+$$
+
+For $k_5^s\ne0$, define the rational map in coordinates $(x,r,b)$
+
+$$
+H(x,r,b)=\begin{pmatrix}
+\Phi(x)/100000\\
+(V_*-c_6^s-k_6^sP_*/k_5^s)/100\\
+(A_*-c_J^s-k_J^sP_*/k_5^s)/1000
+\end{pmatrix}.
+\tag{41.2}
+$$
+
+A zero of (41.2) with strict sources and $\Lambda\ne0$ supplies the
+singular drift parameter $e_s=P_*/k_5^s$.
+Equations (40.3) and (40.6) then prove equality of all acquired readings and
+the terminal J reading. This is an equivalence on this chart.
+

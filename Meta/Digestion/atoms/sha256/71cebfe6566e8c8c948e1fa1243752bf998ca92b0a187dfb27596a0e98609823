@@ -1,0 +1,75 @@
+**Theorem 33.2 (simultaneous intermediate equivalent and endpoints).**
+On every path $\kappa\to0$, $t\to\infty$, $a^2t\to0$, with either sign,
+
+$$
+Z_\kappa(t)\sim
+ e^{-\lambda t}\frac{\sqrt{\pi/\beta}}{a\sqrt t}.
+\tag{33.4}
+$$
+
+The limiting cover expression and theta function have endpoints
+
+$$
+\begin{aligned}
+F(t)&\sim C_7t^{-7/2} &&(t\downarrow0),\\
+F(t)&\sim e^{-\lambda t}\sqrt{\pi/\beta}\,t^{-1/2}
+                                                    &&(t\to\infty),\\
+\Theta_\beta(z)&\sim\sqrt{\pi/(\beta z)} &&(z\downarrow0),\\
+\Theta_\beta(z)&=1+2e^{-\beta z}+O(e^{-4\beta z}) &&(z\to\infty).
+\end{aligned}
+\tag{33.5}
+$$
+
+Proof. Put $r=a\sqrt t\to0$. The nonzero visible part times
+$r e^{\lambda t}$ tends to zero by (33.3), independently of the
+relative rates. In the remaining blocks put $x_j=rj$, so
+$q^2=x_j^2/t$. On $|x_j|\le R$, (33.2) gives, uniformly,
+
+$$
+t(\Lambda_\kappa(\kappa j)-\lambda)
+ =\beta_\kappa x_j^2+O(R^4/t)\longrightarrow\beta x_j^2.
+\tag{33.6}
+$$
+
+The compensated sum of all heights above the first on this set is
+at most $C e^{-3\lambda t}$ per $j$, using
+$E_h\ge\lambda h^2$; its $r$-weighted sum tends to zero.
+Since $r$ times the number of these lattice points is bounded,
+(33.6) reduces the central sum to the Gaussian Riemann sum.
+For $|x_j|>R$ and $a|j|\le1$, (31.5) bounds the $r$-weighted
+trace by the lattice Gaussian tail $Cr\sum_{|rj|>R}e^{-c(rj)^2}$,
+which is uniformly small as $R\to\infty$, along $r\to0$.
+For $a|j|>1$, integral comparison bounds the remaining sum by
+
+$$
+Cr e^{-ct}+C\sqrt t\int_1^\infty e^{-ct x^{2/3}}dx\longrightarrow0.
+\tag{33.7}
+$$
+
+Thus $r e^{\lambda t}Z_\kappa(t)\to
+\int_{\mathbb R}e^{-\beta x^2}dx=\sqrt{\pi/\beta}$, proving (33.4)
+with its simultaneous quantifiers and every height retained.
+For the large-$t$ law of $F$, the same argument uses the continuous
+variable $x=\sqrt t\,\xi$ at $\kappa=0$; (31.5) gives exactly the
+same tails and visible suppression. Its small-$t$ law was proved
+in Theorem 32.1. Finally elementary Fourier coefficients of the
+periodized Gaussian give
+
+$$
+\Theta_\beta(z)=\sqrt{\frac\pi{\beta z}}
+       \sum_{h\in\mathbb Z}e^{-\pi^2h^2/(\beta z)}.
+\tag{33.8}
+$$
+
+This proves the small-$z$ endpoint, with exponentially small relative
+error; the original theta series gives the large-$z$ endpoint.
+In particular substituting $z=a^2t$ matches the intermediate
+coefficient but does not prove (33.4); its uniform tail proof above
+does. Positive-time parameter continuity alone also does not supply
+these joint limits: [H, the remark following Theorem 3.5] gives the
+explicit elliptic-to-contact counterexample with different short-time
+powers. Here the resolved fields remain uniformly of step three,
+and (32.6)--(32.10) and (33.3)--(33.7) supply the additional global
+controls. All displayed large-time equivalents retain the height death
+factor $e^{-\lambda t}$. $\square$
+

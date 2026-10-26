@@ -1,0 +1,19 @@
+**Proposition 6.1 (a sufficient preparation-to-retention account).** At
+$\theta=\log7$ for the base source, a sufficient conversion run uses the
+following macro-resources, on every charge outcome:
+
+| Resource or operation | Sufficient count and condition |
+| --- | --- |
+| Full three-mode source preparations | 2, with the same known $q$ and modal convention |
+| Fresh fair-bit preparations and reads | 14 of each; disjoint bits for the two copies |
+| Initially blank source modes | 6 |
+| Initially occupied reservoir modes | 6 available; at most 6 conditional fills |
+| Coin logic | Four three-bit conjunctions and six occupation-controlled fill decisions |
+| Known three-mode preparation rotations | 2 applications of $\Gamma_-(M_q)$ |
+| B alignments and spectator discards | 2 of each, as in VI142.5 |
+| Initially blank memory modes and local transfers | 4 of each |
+| Blank neutral qutrits | 2 |
+| Controlled-count gates | 2 |
+| Pointer reads and flag writes | 2 of each, with local trit records |
+| Release and storage isolation | Actual producer withdrawal and the specified switch to (QSSR.22) |
+| Initial retained consumer material | Four fermionic modes and two trits |

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b25c356ff837d75c4ea619b5a5df84adae6f4fecd64b563480afbd7717bc418
+  normalized_sha256: sha256:3b25c356ff837d75c4ea619b5a5df84adae6f4fecd64b563480afbd7717bc418
+cas_ref: sha256:3b25c356ff837d75c4ea619b5a5df84adae6f4fecd64b563480afbd7717bc418
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic locator for definitions and zero-safe reconstruction in the named external volume; no mathematical statement or inference is asserted.
+    previous_atom_id: 7c48156fe99f638019506adbbf23f8bbb08c0fdf4c368b57c2e8e1e099220e67
+    next_atom_id: 558a5be61cbf5acdef002b28d8acb1d9fade6e455062e3dfa5c7d735c48525ea

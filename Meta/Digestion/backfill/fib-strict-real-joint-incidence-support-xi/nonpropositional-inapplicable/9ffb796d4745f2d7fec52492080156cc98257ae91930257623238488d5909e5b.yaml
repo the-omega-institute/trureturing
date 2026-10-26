@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ffb796d4745f2d7fec52492080156cc98257ae91930257623238488d5909e5b
+  normalized_sha256: sha256:9ffb796d4745f2d7fec52492080156cc98257ae91930257623238488d5909e5b
+cas_ref: sha256:9ffb796d4745f2d7fec52492080156cc98257ae91930257623238488d5909e5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项在给定精确源点和固定方向参数下定义各阶导数组合及系数名称；所有展示等式均为定义赋值，不断言逆矩阵存在、系数数值或解支性质。
+    previous_atom_id: ecbb35e7a32eede68c0401a49cc193e5e640bb97bb5ee000a44fbde6dafb27c0
+    next_atom_id: 56ec35ba0af5d3a455397f7aaea6a42f1782bb7c1c85beb4ce4ec22405e47405

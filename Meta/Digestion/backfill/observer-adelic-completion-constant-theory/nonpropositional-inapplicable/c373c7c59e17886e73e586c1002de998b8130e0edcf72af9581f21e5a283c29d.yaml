@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+  normalized_sha256: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+cas_ref: sha256:c373c7c59e17886e73e586c1002de998b8130e0edcf72af9581f21e5a283c29d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Innovation workflow with choices of new observations, an assigned Schur scalar and requested outputs; no guarantee that an arbitrary new observer lowers the floor.'
+    previous_atom_id: a57c74ce8fcbfa6cf62f4e3292e77843b4368b7fd6ac109b006b4ede14745a17
+    next_atom_id: 99117727ce3333804659ec354b71d87d6f2fd7577ecda9f75e35c0c42a0fec09
+  chain_atoms:
+    - 48112fadf6af78629c1ec1cbe881a52188293de1c9d3cbe9e66fd3a0f4984567
+    - e3b3ef5109a0413f6176c4b1395d9338742e1fe74df2df8fe45b49b96ea6c868
+    - e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af

@@ -1,0 +1,37 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.CubicGain;
+
+internal sealed class OriginalWorldDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "OriginalWorld stores (r,b,d,c₀,c₁,c₂,c₃) with the ordinary coefficients of one polynomial g=Polynomial",
+        H("OriginalWorld"),
+        Blocks(
+        Paragraph(Text("OriginalWorld stores (r,b,d,c₀,c₁,c₂,c₃) with the ordinary coefficients of one polynomial g=Polynomial.ofFn 4 c. Its readings use the literal source matrix P(r,b), chronological left products and d+g(i)tr(QᵢP). OriginalParent includes every original history row and requires only the strict source and a nonzero whole polynomial.")),
+        Paragraph(Text("The coefficient vector of samples a is [a₀,-11a₀/6+3a₁-3a₂/2+a₃/3,a₀-5a₁/2+2a₂-a₃/2,-a₀/6+a₁/2-a₂/2+a₃/6]. It represents precisely the same polynomial. Decoding evaluates that entire polynomial at the original four nodes. Mathlib’s interpolation uniqueness and coefficient-vector reconstruction supply both inverses for all polynomials of degree at most three.")),
+        Paragraph(Text("The original parent and the full parent coordinates correspond in both directions, including the unchanged gain, drift and chronological response. The coefficient transform is linear and continuous; the inverse parent coordinates are (r,b,d-24). Positivity of b,j,n,T makes reconstruction continuous at every strict source. Hence originalParentHomeomorph is a homeomorphism for the original ordinary coefficient topology.")),
+        Paragraph(Text("The source matrix parametrization also preserves topology: r=P₀₀ and b=P₀₁ recover its coordinates continuously, while P(r,b) is continuous on b>0. This gives the same source topology if worlds are written as (P,g,d). No source normalization or quotient is taken.")),
+        Paragraph(Text("The bounded-response estimate is for the actual drift d and all four ordinary coefficients, not only for gain samples. The fixed coefficient transform gives the explicit bound 10 max(G,0) from a bound G on the samples, while |d|≤24+max(D,0) follows from |ε|≤D. The map includes zero drift, zero gain samples, lower degrees and repeated roots; only the identically zero gain is excluded by the literal history.")),
+        Describe.Lean(
+            DescribeId.Create("cubic-gain-originalparenthomeomorph"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.originalParentHomeomorph"),
+            H("originalParentHomeomorph"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The map originalParentHomeomorph is a homeomorphism from ParentOverOpen to OriginalOverOpen in ordinary polynomial coefficient topology. It preserves the source, drift, whole polynomial and actual response in both directions."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("cubic-gain-original-coordinates"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.original_coordinates"),
+            H("original coordinates"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every original parent W, decoding gives strict parent coordinates, encoding their reconstructed parent world returns W, and their response equals originalResponse W."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("cubic-gain-bounded-response-coefficients"),
+            DeclarationHandle.Create("D5/S3/Observer/CubicGain/OriginalWorld.bounded_response_coefficients"),
+            H("bounded response coefficients"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every real M there are bounds D,G such that every original parent with |P₅|≤M has |d|≤D and all four ordinary polynomial coefficients bounded in absolute value by G."))),
+            DescribeRole.Theorem))));
+}

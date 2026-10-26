@@ -1,0 +1,24 @@
+**定义 1.1（完整原域与实际读数）。** 沿用《[FIB 双末根平面的完整逆与第四 J 精确对腔室](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md)》（下称前卷）定义 1.1、9.1 的模型。一个完整世界是三元组 $W=(P,g,d)$，其中
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},
+$$
+
+$$
+0<r<1,\qquad b,c>0,\qquad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\qquad d\in\mathbb R.
+\tag{1.1}
+$$
+
+正非对角元起初无上界。每个世界只有一个整个增益多项式和一个固定常漂移；不同世界之间不要求增益或漂移相同。全部符号、采样零、非采样零、重根与次数下降均属于此域。原读数为
+
+$$
+Q_0=I,\qquad Q_i=E_iQ_{i-1},\qquad
+y_i(W)=d+g(i)\operatorname{tr}(Q_iP),\qquad E_i\in\{J,M\}.
+\tag{1.2}
+$$
+
+初读计数，每个单独动作后立即读取，原时钟为 $0,\ldots,7$。一条轨迹不重置、不复制、不跳读、不加空动作、不重编号、不增加端口。互择动作的响应函数比较同一个已经固定的世界，不表示同时取得两种读数。完整目标始终是 $W$。
+

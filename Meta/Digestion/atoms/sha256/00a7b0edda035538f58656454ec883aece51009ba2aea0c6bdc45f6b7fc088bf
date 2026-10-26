@@ -1,0 +1,32 @@
+**Theorem 4.1 (Complete-world injectivity at fixed b).** Let $W_1,W_2$ be any
+two actual strict parent worlds. If
+
+$$
+b(W_1)=b(W_2),\qquad
+p(W_1)=p(W_2)\ne24,\qquad
+v(W_1)=v(W_2),\qquad m(W_1)=m(W_2),
+\tag{4.1}
+$$
+
+then $W_1=W_2$ as complete triples.
+
+Consequently every distinct actual terminal-$M$ pair in an off-24 child has
+different $b$ coordinates. The theorem is global in $b>0$ and $0<r<1$; it
+requires neither regularity nor fixed gain degree, nonzero drift, gain
+positivity, nonzero gain samples, simple roots, or endpoint separation.
+Its proof occupies Sections 5–8.
+
+The condition $p\ne24$ is essential. Reuse the mirror family of O,
+Definition 16.1: take $b=1/8$, $r_1=1/4$, $r_2=7/8$,
+$d_1=d_2=24$, and
+
+$$
+g_1(s)=g_2(s)=\frac85(s-1)(s-3)(s-5).
+\tag{4.2}
+$$
+
+Both complete worlds have exact readings
+$(0,24,147/5,24,18,24,129)$ and terminal $M=600$. They are distinct,
+strict, and have the same $b$. This is a reused $p=24$ counterexample,
+not a witness for (1.2).
+

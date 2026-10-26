@@ -1,0 +1,58 @@
+**Definition 17.2 (Determinants, fixed factors and linear coordinate).**
+Use the fixed coefficient-minor convention of Definition 3.2 for
+$\operatorname{Subres}_k(G,F)$ with nominal degrees $(13,6)$, and for
+$\operatorname{Subres}_k(K,N)$ with nominal degrees $(4,4)$. In particular
+the index-zero member is the fixed Sylvester determinant, without
+specializing or trimming degrees first. Define $Q_9,Q_{12}$ by their
+descending coefficient lists:
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(Q_9)=(&2248108288,
+12765068132,-8911595079,55889179310,\\
+&-127755649252,367729251274,709892709460,\\
+&482515359696,207188455720,32969082600),\\[2mm]
+\operatorname{coeff}_{\downarrow}(Q_{12})=(&3523306032,
+14115530736,35825657643,-25329237978,\\
+&-354487843712,-1131571865850,-2280936182284,\\
+&-2531589902408,-2219920526928,-344577128440,\\
+&71276236896,9034745760,-782114304).
+\end{aligned}
+\tag{17.3}
+$$
+
+Here $Q_4$ is (16.7). Define the degree-fifty-five polynomial by the
+exact quotient
+
+$$
+Q_{55}=\frac{\operatorname{Res}_x(G,F)}
+ {331776Q_4^3Q_9^2Q_{12}^8}.
+\tag{17.4}
+$$
+
+This is an integer polynomial, with its normalization and sign fixed
+by the displayed quotient. Define
+
+$$
+\begin{gathered}
+S_1=\operatorname{Subres}_1(G,F)=\alpha(t)x+\beta(t),\\
+S_2=\operatorname{Subres}_2(G,F)=c_2x^2+c_1x+c_0,\\
+\ell=\operatorname{Subres}_1(K,N)=\pi_a(t)x+\pi_b(t).
+\end{gathered}
+\tag{17.5}
+$$
+
+Divide $S_1$ by the monic gcd of $\alpha,\beta$ in $\mathbb Q[t]$;
+clear coefficient denominators by their positive least common multiple;
+then divide by the positive integer coefficient gcd. The resulting
+polynomial is
+
+$$
+L=A(t)x+C(t),\qquad \deg_t L=123.
+\tag{17.6}
+$$
+
+Thus no sign is changed merely to make a leading coefficient positive.
+All these polynomials are specified by integer arithmetic from
+(15.1), (16.5), (17.1)–(17.5), without a supplementary coefficient table.
+

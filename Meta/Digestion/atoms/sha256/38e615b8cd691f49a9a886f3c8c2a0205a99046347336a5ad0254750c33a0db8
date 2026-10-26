@@ -1,0 +1,30 @@
+**Definition 4.1 (Determinants with no specialization convention).**
+For two polynomials of fixed $r$ degree $15$, their Sylvester matrix
+has rows the coefficient vectors of
+
+$$
+r^{14}E_0,\ldots,E_0,\quad r^{14}E_k,\ldots,E_k
+\tag{4.1}
+$$
+
+in columns $r^{29},\ldots,1$. Define $R_k(b)$ as its determinant
+for $k=1,2$. The degrees remain fixed in this definition even when a
+specialized leading coefficient vanishes.
+
+For the linear subresultant take the $28$ rows
+$r^{13}E_0,\ldots,E_0,r^{13}E_1,\ldots,E_1$ in columns
+$r^{28},\ldots,1$. Retain the first $27$ columns and append either
+the $r$ column or the constant column. Their determinants, in that
+order, are $a_0(b)$ and $c_0(b)$. Thus
+
+$$
+L(r,b)=a_0(b)r+c_0(b).
+\tag{4.2}
+$$
+
+For a nonzero rational polynomial, $\operatorname{pp}_+$ means its
+primitive integer associate with positive leading coefficient. Put
+$h=\operatorname{pp}_+(\gcd(a_0,c_0))$, $a=a_0/h$, $c=c_0/h$.
+These divisions are exact in $\mathbb Q[b]$; the actual coefficients
+in this normalization are integers.
+

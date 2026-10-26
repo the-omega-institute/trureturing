@@ -1,0 +1,21 @@
+**Assumption 1.3 (Separately stipulated endpoint corrections).**
+When a result allows a real correction, assume the additional availability
+of precisely
+
+$$
+G_{\mathbb R}=D_3SO(5)D_3^\dagger
+$$
+
+on $V$. Each such correction preserves $V$. One-sided correction means one
+element before or after a single $H$ pulse; two-sided correction means one
+element on each side. The elements and pulse times are independent of the
+unknown input density. This assumption grants neither interleaving controls
+within the pulse nor other preparation, reset, replication, reference,
+encoding, decoding or measurement operations.
+
+The native independent-flip closure in Static Compatibility–Fiber Theory,
+Proposition 45, explains this real frame, but depends on that volume's
+additional Assumption 45.1. A group closure in a different control model
+does not supply an exact correction for this bosonic model. Here full
+$G_{\mathbb R}$ availability is an explicit separate premise.
+

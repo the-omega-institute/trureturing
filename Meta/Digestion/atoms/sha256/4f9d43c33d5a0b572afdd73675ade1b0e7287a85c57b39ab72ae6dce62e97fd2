@@ -1,0 +1,76 @@
+**Theorem 18.3 (Q12 pole exclusion).** No complex specialization over
+a $Q_{12}$ root satisfies the two original pole source equations.
+In particular no finite real drift, including zero, gives an actual
+companion there.
+
+Proof. Use the monic polynomial $\overline Q_{12}$ over
+$\mathbb Z_{(101)}$. Its leading coefficient before normalization is
+$14$ modulo $101$. Norms in its rank-twelve algebra are
+
+| Element | $\pi_a$ | $q_d$ | $D$ | $f_2$ |
+| --- | --- | --- | --- | --- |
+| Norm modulo $101$ | $81$ | $70$ | $4$ | $21$ |
+
+Thus all inverses defining the pole coordinate and the monic quadratic
+$d^2+(f_1/f_2)d+f_0^{\flat}/f_2$ exist over this local base. In the
+rank-twenty-four algebra
+
+$$
+\mathcal B=
+\mathbb Z_{(101)}[t,d]\big/
+\left(\overline Q_{12},\ d^2+(f_1/f_2)d+f_0^{\flat}/f_2\right)
+\tag{18.4}
+$$
+
+use the ordered basis
+$(1,t,\ldots,t^{11},d,dt,\ldots,dt^{11})$.
+Multiplication by $\widetilde K_s$ has determinant congruent to $5$
+modulo $101$. The following smaller description specifies its entire
+reduced matrix, including column order. Over $\mathbb F_{101}$ let
+$T$ be multiplication by $t$ in the power basis of the monic reduction
+of $Q_{12}$, and put $\mathcal T=\operatorname{diag}(T,T)$. The matrix is
+
+$$
+\mathcal M=(u,\mathcal Tu,\ldots,\mathcal T^{11}u,
+             w,\mathcal Tw,\ldots,\mathcal T^{11}w),
+\qquad \det\mathcal M=5\ \text{in }\mathbb F_{101},
+\tag{18.5}
+$$
+
+where the columns $u,w$ are specified by their upper and lower halves:
+
+$$
+\begin{aligned}
+u_{0:11}&=(100,33,77,31,64,11,16,34,89,76,79,21)^{\mathsf T},\\
+u_{12:23}&=(35,68,22,57,83,56,23,18,55,30,28,43)^{\mathsf T},\\
+w_{0:11}&=(80,62,79,69,16,36,10,20,10,23,77,19)^{\mathsf T},\\
+w_{12:23}&=(43,68,85,16,3,72,80,55,94,4,2,85)^{\mathsf T}.
+\end{aligned}
+\tag{18.6}
+$$
+
+For direct polynomial reduction, the ascending coefficients of the
+pole coordinate modulo $101$ are
+
+$$
+x=(89,69,78,37,13,28,56,10,63,2,14,1)_{\uparrow}.
+\tag{18.7}
+$$
+
+Equations (18.1)–(18.2), reduction of $d^2$ by (18.4), and this power
+basis give the columns (18.6). Multiplication by $t$ gives all remaining
+columns, so (18.5) is a determinant of an explicitly specified finite
+matrix. The norm of the primitive pole slope is $88$ modulo $101$;
+the raw slope $\pi_a$ used here retains scalar content $1296$, and
+$1296^{12}\cdot88=81$ in $\mathbb F_{101}$. This accounts for both
+normalizations without changing the pole root.
+
+Since its reduction is nonzero, the characteristic-zero determinant
+of multiplication by $\widetilde K_s$ is nonzero. This element is
+therefore a unit in $\mathcal B\otimes\mathbb Q$. A simultaneous root
+of $Q_{12},\widetilde f,\widetilde K_s$ would define an evaluation of
+this algebra into $\mathbb C$ sending a unit to zero, which is
+impossible. The finite field is used only to prove rational
+nonvanishing; no ordering or positivity assertion is transferred from
+it. ∎
+

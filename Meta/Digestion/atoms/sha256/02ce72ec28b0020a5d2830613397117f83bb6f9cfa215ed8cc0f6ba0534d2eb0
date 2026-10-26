@@ -1,0 +1,16 @@
+**Definition 9.1 (Enlarged base and inherited worlds).** Retain exactly the
+complete worlds, literal history, entire children, and independently selected
+pairs of Section 1. Put
+
+$$
+K_+=[56,58]\times[304,306],\qquad
+R=[3/10,1]\times[13/20,1].
+\tag{9.1}
+$$
+
+Thus each world still has one strict rank-one trace-one source, one fixed real
+drift, and one whole nonzero real gain of degree at most three. All original
+clocks, lower degrees, sampled gain zeros, repeated roots, zero drift, and
+companions unused by a selected pair remain in the domain. In particular no
+regularity condition is added to $C(p,v)$.
+

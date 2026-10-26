@@ -1,0 +1,107 @@
+**定理 473.1（原 F4 完整正和的稳定行预算）。** 沿用第 472 节的原物理行分解、实际 primitive 导子、完整 normalized Möbius／plain 反射、有限 Fourier／ray 数据、零延拓和同一解析费用合同，以及 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的实际原系数分解。原长度满足 $1\le D,N\le U^C$，$K=DN$；$D$ 始终是原 Möbius 长度。令
+
+$$
+\begin{aligned}
+a(v)&=q_{R_1},&g(v)&=q_{R_2R_3R_4R_5},&f(v)&=a(v)g(v),\\
+\mathscr H^{\rm sf}_1(v;D)&=g(v)\Psi_6(a(v),Df(v)),\\
+\mathcal R_T&=\{v:\mathscr H^{\rm sf}_1(v;D)\le T\},
+&1\le T&\le C_0U.
+\end{aligned}
+\tag{473.1}
+$$
+
+这里 $\Psi_6$ 是（472.4）的同一四项筛预算。对每个实际 $c$、$a_{\rm col}\mid\operatorname{rad}c$、$b=c/a_{\rm col}$，记 $D_a=D/q_{a_{\rm col}}$、$N_b=N/q_b$、$X=K/q_c=D_aN_b$。令 $\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}$ 为 F4 的同一个完整包能量，仅将原非负行权乘以 $\mathbf1_{\mathcal R_T}$。特别地，保留 $x$ 平方自由、$(x,c)=1$、原有限类、全部零值和包内交叉项。定义完整正和
+
+$$
+M^{F4}_{\mathcal R_T}
+=Z_s|\mathcal T|
+\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+q_c^s\tau(\operatorname{rad}c)
+\sum_{a_{\rm col}\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}.
+\tag{473.2}
+$$
+
+对每个最终 $\varepsilon>0$，按 F4 选择 $s=1/2+\eta$ 并分配内部损失。在所引解析合同下，同一共同包络 $\mathcal C\ge1$ 给出
+
+$$
+\begin{aligned}
+\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}
+&\ll_{\varepsilon,C,C_0}\mathcal C^2(UK)^\varepsilon TX,\\
+M^{F4}_{\mathcal R_T}
+&\ll_{\varepsilon,C,C_0}\mathcal C^2(UK)^\varepsilon KT.
+\end{aligned}
+\tag{473.3}
+$$
+
+$\mathcal C$ 一次包含第 472 节的全部解析、完整 Euler、profile、尺度与 Sobolev 成本，以及第 464 节实际有限类恢复所需的费用，不按 $c,a_{\rm col}$、投影除子或物理行重新配置。高度仍固定，或满足原共同费用为次幂的 polylog 合同；没有扩张 growing-height allowance。结论覆盖（473.2）的全部实际包，包括 $c=a_{\rm col}=1$，不要求 $D_a\le U^{1/3}$ 或 $N_b$ 满足第 465 节的短长度条件。
+
+证明。关键是让第 472 节的完整乘积估计对所有实际展开项使用同一物理行集，而不把它直接套到投影系数上。记 $B(D',N';v)$ 为（464.5）的未掩码原乘积。若一个展开项非空，则紧 annular 支撑使 $D',N'$ 均有固定正下界；低于一的长度按第 464 节的固定 annular enlargement 归入一，并运输 profiles。只要 $D'\ll D$，就有
+
+$$
+\max\{1,D'f(v)/N'\}\ll Df(v),\qquad
+\mathscr H_{1;D',N'}(v)\ll\mathscr H^{\rm sf}_1(v;D).
+\tag{473.4}
+$$
+
+使用 $D,f\ge1$ 和 $\Psi_6$ 的逐项单调性即可；enlargement 只改变固定常数及一致有界的有限 seminorms。每个非空项的长度仍在原固定幂范围内。因此（472.2）对同一个 $\mathcal R_T$ 给出原始未归一化范数界
+
+$$
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,B(D',N')\|_2
+\ll\mathcal C(UK)^\delta\sqrt{TD'N'}.
+\tag{473.5}
+$$
+
+这里将 $T$ 乘固定常数，只是使用（472.2）中另一个固定 $C_0$。原始范数的外因子是 $D'N'$，不是反射后的卷积长度；annular tails、subunit clipping 和实际导子尺度恢复全部复用第 472 节的合同。对行集的进一步零限制可在此正范数内保留或扩大。
+
+下面直接消费（464.9）—（464.12）的精确恒等式。对零掩码 $A,B$ 的每个非空 Euler 展开项，未掩码长度为 $D_0/q_m,N_0/q_e$，故逆长度不超过 $D_0$，乘积长度为 $D_0N_0/(q_mq_e)$。先在同一正行范数内处理 $\psi_v(me)$，再用（473.5）和同一 Euler 乘积质量，得到
+
+$$
+\begin{aligned}
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,B_{A,B}(D_0,N_0)\|_2
+&\ll\mathcal C(UK)^\delta\sqrt{TD_0N_0}
+\prod_{p\mid A}(1-q_p^{-1/2})^{-1}
+\prod_{p\mid B}(1+q_p^{-1/2})\\
+&\ll_\theta\mathcal C(UK)^\delta(q_Aq_B)^\theta\sqrt{TD_0N_0},
+\qquad D_0\ll D.
+\end{aligned}
+\tag{473.6}
+$$
+
+该步骤没有在绝对 $L$ 值中删除因子，也没有把移动掩码改成固定 conductor 常数。
+
+对实际平方自由 F3 包 $P_c$，（464.12）中的项具有
+
+$$
+D_0=D_a/q_g\le D,\qquad
+N_0=N_bq_g/q_r^2,\qquad
+D_0N_0=X/q_r^2,
+\qquad g\mid r,\quad q_r\ll\sqrt X.
+\tag{473.7}
+$$
+
+由于 $q_g\le q_r$，亦有 $N_0\le N_b\le N$。式（473.4）同时覆盖这些项和其后的全部 Euler 缩短项；不要求保持 $D_0/N_0\le D/N$。在（473.6）中取 $A=cr,B=c$，复用第 464 节的 Minkowski 与除数质量，得到
+
+$$
+\begin{aligned}
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,P_c\|_2
+&\ll\mathcal C(UK)^\delta q_c^{2\theta}\sqrt{TX}
+\sum_{q_r\ll\sqrt X}\tau(r)q_r^{-1+\theta}\\
+&\ll_\theta\mathcal C(UK)^\delta q_c^{2\theta}X^\theta\sqrt{TX}.
+\end{aligned}
+\tag{473.8}
+$$
+
+有限 Fourier 类在 $h=r^2d'n'$ 下按原规则运输；所需有限次导数的固定阶对数损失纳入同一小幂。包内原有零值未被删去，所有交叉项由 Minkowski 控制，不声称不同展开项正交。选择 $\delta,\theta$ 再平方，便得（473.3）的第一式。
+
+F4 的加权 Cauchy 在取平方范数以前即可使用行权 $\Omega\mathbf1_{\mathcal R_T}$，所以（473.2）仍是同一个原行限制的正 majorant。把（473.3）第一式代入，复用（464.14）及同一有限类数，数值总和为
+
+$$
+TK\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+\tau(c)^2q_c^{-1/2+\eta}
+\ll_{\eta,\delta'}TK^{1+\eta+\delta'}.
+\tag{473.9}
+$$
+
+按一个最终 $\varepsilon$ 分配所有内部损失，得到第二式。这里直接估计整份正和，没有从原未投影能量的上界反推其各个正展开包。证毕。
+

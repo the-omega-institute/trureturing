@@ -24,7 +24,7 @@ $$\forall (M : \mathbb{N}) , \forall (\gamma : \mathbb{R}) , \forall (p : (Fin M
 
 *Formalization.* `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.weight` (`✓ std3`).
 
-*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235>.
+*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall (M : \mathbb{N}) , \forall (\gamma : \mathbb{R}) , \forall (p : (Fin M
 
 *Formalization.* `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.tauW` (`✓ std3`).
 
-*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235>.
+*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235v1>.
 
 *Commentary.*
 
@@ -192,7 +192,7 @@ $$\forall (M : \mathbb{N}) , \forall (\gamma : \mathbb{R}) , law M \gamma = (let
 
 *Formalization.* `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.law` (`✓ std3`).
 
-*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235>.
+*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235v1>.
 
 *Commentary.*
 
@@ -360,7 +360,7 @@ $$\forall (M : \mathbb{N}) , \forall (n : \mathbb{N}) , \forall (\gamma : \mathb
 
 *Formalization.* `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.kappa` (`✓ std3`).
 
-*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235>.
+*Citation.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235v1>.
 
 *Commentary.*
 
@@ -558,6 +558,18 @@ $$\forall (M : \mathbb{N}) , \forall (\gamma : \mathbb{R}) , \forall (n : \mathb
 
 The displayed identity or estimate is used in the moment and density expansions.
 
+**Theorem 1.47 (inverseSlope_deriv).**
+
+$$\forall (d : (\mathbb{R})) , ((deriv (inverseSlope d) = fun t \mapsto (d)^{-1} \cdot ((inverseSlope d t))^{2}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.inverseSlope_deriv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.FirstOrder`
@@ -575,6 +587,7 @@ The displayed identity or estimate is used in the moment and density expansions.
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.gammaCGF_iterated`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.integrable_power_exp`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.inverseSlope`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.inverseSlope_deriv`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.kappa`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.kappa_rescaled`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/Foundations.law`

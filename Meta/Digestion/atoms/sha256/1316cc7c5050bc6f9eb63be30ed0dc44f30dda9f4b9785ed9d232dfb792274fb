@@ -1,0 +1,28 @@
+From $P_*$ execute the following installed path for each $x$.
+
+1. Acquire outer1, transfer its invocation slot, and separately acquire
+   HistoryMode1 by GCA Definition 3.1. Acquire the **whole** frame $w_x$
+   on70: three header bits, its terminating unary length, and exactly
+   $L$ payload bits. Complete its F/seal, measured length, actual
+   descriptor and F-bounded import. The mode is neither a header bit
+   nor a bit inferred from the frame.
+2. Execute Recover: freeze the predecessor $M$ of $P_*$, run Boundary,
+   append the immutable cover, and Publish CoverRef. Complete its
+   actual sender71/mailbox72/receiver73 setup, copies, completion
+   records, print, check, ACK and mailbox return. Transfer to
+   ClientCover; position73 before bank work, import/check the received
+   CoverRef, retain its acquired $c$, and transfer the invocation to Bind.
+3. Bind resolves that authentic cover and tests the retained mode-one
+   selector. GCA Definition 3.2 requires tag111; tag000 takes its
+   first-detecting MalformedRecovery reason0000. Execute the complete
+   GCA Definition 6.3 rejection route: Publish Rejection, print,
+   transfer to ClientImage's rejection branch, positioned receiver
+   import, reason/raw-request check, ACK, mailbox return, five-field
+   completed-item append, invocation return, and the actual Ready CTL.
+   Call the resulting history $R_x$.
+4. Actually acquire outer01, including its seal/descriptor/import and
+   dispatch. Execute the unchanged original header Base/setup of
+   $F^A$. At its first original IN5 supply0. Write $h_x$ for the cut
+   immediately after this IN and before its matching EX13, and $h_x^+$
+   for the actual successor of that EX13.
+

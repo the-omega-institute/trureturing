@@ -1,0 +1,48 @@
+**Proposition 85.4 (actual central Green kernel and normalized field bound).** Set
+$$
+\mathcal G(\xi,s)=\Gamma(x,y,z,s+xy/2).
+$$
+For $\xi\ne0$ the unnormalized central transform of this actual field is the strictly positive even kernel
+$$
+\begin{aligned}
+K_\xi(\eta)&=\int_0^\infty B_t(\xi,\eta)dt,\\
+B_t(\xi,\eta)&=
+ \frac{|\eta|}{4\pi\sinh(|\eta|t)}
+ \exp\!\left(-\frac{|\eta|\coth(|\eta|t)}4r_\perp^2\right)
+ (4\pi t)^{-1/2}e^{-z^2/(4t)},\\
+B_t(\xi,0)&=(4\pi t)^{-3/2}e^{-R^2/(4t)}.
+\end{aligned}
+\tag{85.12}
+$$
+In particular
+$$
+0<K_\xi(\eta)\le K_\xi(0)=\frac1{4\pi R},\qquad
+\mathcal G(\xi,s)=\frac1{2\pi}\int_{\mathbb R}e^{i\eta s}K_\xi(\eta)d\eta,
+\qquad
+0<\mathcal G(\xi,s)\le\frac1{8R^3}.
+\tag{85.13}
+$$
+The inverse integral is absolutely convergent for $R>0$; no finite kernel value is assigned at the exceptional fibre $\xi=0$.
+
+Proof. The mature Heisenberg heat supplier is Krötz--Thangavelu--Xu, *The heat kernel transform for the Heisenberg group*, [arXiv:math/0401243v2](https://arxiv.org/abs/math/0401243v2), §4.1, equation (4.1.2), with $n=1$. Its product law is exactly the symmetric law in (85.1), its Haar measure is Lebesgue, and its partial transform uses $e^{+i\eta s}$. Replacing its parameter by $-\eta$ matches (85.2); the displayed radial coefficient is even. Its heat generator is the horizontal sum of squares. The additional $z$ direction here contributes the independent $(4\pi t)^{-1/2}e^{-z^2/(4t)}$ factor. In particular its §2 full Laplacian, which also includes the central second derivative and the factor $e^{-t\eta^2}$, is not the supplier for this problem.
+
+The inverse central transform contributes $1/(2\pi)$, independently of the $(4\pi)^{-1}$ in (4.1.2). At $\eta=0$ formula (85.12) gives the actual marginal heat density (82.9), checking both mass and the literal $e^{-tL}$ clock. The heat representation of the actual unit-source Green field, its positivity and decay are those of Folland's Theorem 3.1, Proposition 3.17 at $\alpha=2$, and §§82.4, 84.1. Thus this parameter match gives the transform of that field, rather than a replacement potential.
+
+For $u>0$, $u/\sinh u\le1$ and $u\coth u\ge1$. They imply $B_t(\xi,\eta)\le B_t(\xi,0)$. Integration proves the upper bound for $K$ and its value at zero; positivity of every integrand proves strict positivity. To justify the inverse and its bound, use also
+$$
+\int_{\mathbb R}\frac{|\eta|}{4\pi\sinh(|\eta|t)}d\eta
+ =\frac{\pi}{8t^2},
+\qquad
+\int_0^\infty\frac{u}{\sinh u}du=\frac{\pi^2}{4}.
+$$
+The latter identity follows from the positive expansion $1/\sinh u=2\sum_{j\ge0}e^{-(2j+1)u}$. Tonelli now gives
+$$
+\begin{aligned}
+\frac1{2\pi}\int_{\mathbb R}K_\xi(\eta)d\eta
+ &\le\frac1{32\sqrt\pi}\int_0^\infty t^{-5/2}e^{-R^2/(4t)}dt
+ =\frac1{8R^3}.
+\end{aligned}
+\tag{85.14}
+$$
+For $R>0$, the heat inverse and its time integral can therefore be interchanged absolutely. This identifies $K$ as the Fourier transform of $\mathcal G$ as well as proving (85.13), since $\mathcal G\ge0$ and the modulus of its inverse is bounded by (85.14). All constants concern the fixed Haar normalization and source of §82. $\square$
+

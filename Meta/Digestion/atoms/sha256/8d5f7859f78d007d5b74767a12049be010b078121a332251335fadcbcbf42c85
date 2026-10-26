@@ -1,0 +1,31 @@
+**命题 8.1（状态数与认证宽度的条件性分离）。** 对每个 $k\ge6$，令
+$$
+m_k=\max\{m\ge3:m\text{ 为奇数且 }2m\le k\}.
+$$
+
+对每个 $k\ge6$，选取一个 R2 硬实例 $(D^{\mathrm{R2}}_{m_k},t^{\mathrm{R2}}_{m_k})$；下文的 $(D_{m_k},t_{m_k})$ 均为该选定实例的简记。
+
+下述“存在一族任务”中的对象按如下类型理解：对每个 $k\ge6$，$D_k$ 是有限词集，$t_k:D_k\to\{0,1\}$；每个候选 $M\in\mathfrak M_k$ 都是第 8 节形式的有限确定性状态模型 $M=(S,s_0,\Sigma,\delta,o)$，其中 $S$ 与 $\Sigma$ 有限，$D_k\subseteq\Sigma^\ast$，$\delta:S\times\Sigma\to S$，$o:S\to\{0,1\}$，并记其在任务域上的读出为 $M_{D_k}:D_k\to\{0,1\}$。
+
+若存在一族任务 $(D_k,t_k,\mathfrak M_k)$，其中每个候选族 $\mathfrak M_k$ 为有限集，并存在角色分离编码 $e_k:D_{m_k}\to D_k$ 且 $e_k$ 为注入，满足 $D_k=e_k[D_{m_k}]$，$(D_{m_k},t_{m_k})$ 是使用 $\mathrm{Fin}\,m_k\oplus\mathrm{Fin}\,m_k$ 的 R2 硬实例，每个候选实现的可达行为状态数不超过 $2$，且编码保持目标读数 $t_k\circ e_k=t_{m_k}$，并相对于全体至多两状态的确定性原生总 DFAO 满足
+$$
+\forall E\subseteq D_{m_k},\quad
+\left(
+t_{m_k}|_E\in\mathcal C_2(\mathrm{Fin}\,m_k\oplus\mathrm{Fin}\,m_k;E)
+\quad\Longleftrightarrow\quad
+\exists M\in\mathfrak M_k,\ \forall v\in e_k[E],\ M_{D_k}(v)=t_k(v)
+\right).
+$$
+则
+$$
+\omega(D_k,t_k;\mathfrak M_k)
+\ge
+\frac{m_k-1}{2}
+=
+\left\lfloor\frac{k-2}{4}\right\rfloor.
+$$
+
+**证明。** 这是 R2 奇环的失败超图横截下界，经编码保持条件逐实例传递。证毕。
+
+所以状态数的常数上界本身不推出共同认证宽度的常数上界；这里的“随关系通道增长”只在通道到角色分离字母的保持映射存在时成立。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba2d0f914736f7206ded15778d59b3ee5bdd3ab12d91fc0e1cc6001044c484ae
+  normalized_sha256: sha256:ba2d0f914736f7206ded15778d59b3ee5bdd3ab12d91fc0e1cc6001044c484ae
+cas_ref: sha256:ba2d0f914736f7206ded15778d59b3ee5bdd3ab12d91fc0e1cc6001044c484ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 用存在有限零残差预算定义有限闭合型，不主张任意语言均闭合。
+    previous_atom_id: 3acd68cdc065d419a8de931b090ddb3410b58aa1bcb6dceaf01e9c785ed5036e
+    next_atom_id: 39969d0121adc19e2c7fac475be0049ac467e338ad2c3ccf94653f0e987d0669

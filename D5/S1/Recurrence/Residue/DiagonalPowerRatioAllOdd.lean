@@ -6,6 +6,8 @@
    utility: none
    digest: Diagonal coefficient cancellation and Lucas parity prove Hanna's A397241 conjecture. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19951. -/
+
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.Data.Nat.Choose.Lucas
 import Mathlib.Tactic.LinearCombination
@@ -37,7 +39,7 @@ private theorem leading_mul {n : ℕ} {U : PowerSeries R}
   rw [hc, hc, map_mul]
 
 -- The first coefficient where two unit series differ enters the m-th power with multiplier m.
-private theorem diagonal_multiplier {n : ℕ} {A B : PowerSeries R}
+theorem diagonal_multiplier {n : ℕ} {A B : PowerSeries R}
     (hA : constantCoeff A = 1) (hB : constantCoeff B = 1)
     (h : Agree n A B) (m : ℕ) :
     coeff n (A ^ m) - coeff n (B ^ m) =
@@ -214,10 +216,5 @@ theorem hanna_conjecture (n : ℕ) : Odd (a n) := by
   have h := congrArg (coeff n) mod_two_identity
   simpa [coeff_map, generatingSeries] using h
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms central_binom_even
-#print axioms mod_two_identity
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd

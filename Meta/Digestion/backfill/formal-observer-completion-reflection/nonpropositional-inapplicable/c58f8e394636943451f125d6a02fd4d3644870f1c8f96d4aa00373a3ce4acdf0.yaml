@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c58f8e394636943451f125d6a02fd4d3644870f1c8f96d4aa00373a3ce4acdf0
+  normalized_sha256: sha256:c58f8e394636943451f125d6a02fd4d3644870f1c8f96d4aa00373a3ce4acdf0
+cas_ref: sha256:c58f8e394636943451f125d6a02fd4d3644870f1c8f96d4aa00373a3ce4acdf0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 拉回可观测量与 Koopman 算子的定义。不另主张独立数学命题。
+    previous_atom_id: 8017ec5e106271032a0aab504dfddc41914a15dd5dcd65bf59b8c57ace3871d1
+    next_atom_id: a0d1163a41c7c162088a0bc04b90e149ff6f8e22d5fbc05b71381ceade633c6f

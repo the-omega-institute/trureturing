@@ -1,0 +1,15 @@
+### 5. Source filtering, existence and the three terminal values
+
+Apply (4.1) to $A,B$ on each narrow width cell times $\mathcal Q$,
+and divide the resulting intervals to enclose $-B/A$. This gives the
+following deliberately widened rational bounds.
+
+| Index | Strict lower bound for $\lvert A\rvert$ | Enclosure of $-B/A$ |
+| --- | --- | --- |
+| 1 | $4.35029\cdot10^{15}$ | $(0.0484941718,0.0484941724)$ |
+| 2 | $1.23788\cdot10^{17}$ | $(0.906190874,0.906190912)$ |
+| 3 | $2.66859\cdot10^{17}$ | $(0.894638116,0.894638162)$ |
+| 4 | $4.35916\cdot10^{17}$ | $(2.97302,2.97304)$ |
+| 5 | $3.63120\cdot10^{18}$ | $(-1.29225,-1.29224)$ |
+| 6 | $3.98752\cdot10^{28}$ | $(4.31166,4.31167)$ |
+| 7 | $5.18478\cdot10^{34}$ | $(-6.89968,-6.89967)$ |

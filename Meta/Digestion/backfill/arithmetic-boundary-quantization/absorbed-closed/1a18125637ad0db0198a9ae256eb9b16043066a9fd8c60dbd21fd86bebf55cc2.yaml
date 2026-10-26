@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2
+  normalized_sha256: sha256:1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2
+cas_ref: sha256:1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_quadratic_sum
+    target_statement_id: sha256:8f82a20eac1c651faab2fa8298552aaa7b2e138f9144cc988fd7d102a262fd5c
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.center_eq_zero_iff_constant
+    target_statement_id: sha256:3f71ba73ca7d12562578cc8c30fe54f03b681f680cbf3b5ba419c6d1a17d2607
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_le_of_pointwise_le
+    target_statement_id: sha256:4558a65345337f181cb666140889e6449107594d7392604503801958e8a3e563
+  - gid: D5/S3/ArithSums/TwoPointSlabSupport.pair_distance_spec
+    target_statement_id: sha256:b1bb2656403a31a2ecf70018b9daffc4863b9a17477d18df6d044c3625f2c74e
+receipts:
+  unresolved_subitems: []

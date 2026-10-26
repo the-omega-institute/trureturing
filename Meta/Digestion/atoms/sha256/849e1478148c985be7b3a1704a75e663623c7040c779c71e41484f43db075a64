@@ -1,0 +1,53 @@
+## 34. Primary interfaces and the scope of the combined relation
+
+The underlying apparatus is the one specified in §§1–11, at the [immutable source
+revision](https://github.com/the-omega-institute/trureturing/blob/e6292015298ba29e2fce1208e9eb543698c5e92e/docs/develop/theory/FIB_SHARED_GAUSSIAN_RECORD_LAWS.md).
+Theorem 5.1 supplies the actual all-read Kraus factorization and full fixed-word law. Definition
+8.1 and Proposition 8.2 fix the selected modes, record averaging and common-probe reduction;
+Propositions 9.1–9.2 supply the chronological quadratures and their normal Gaussian moment
+interface. The isotropic preparation of §§17–23 is a comparison for the selected covariance
+only, as explained after (24.5); its full preparation and energy are distinct.
+
+The reused primary mathematical conditions are the following.
+
+1. Arvind, Dutta, Mukunda and Simon, *The real symplectic groups in
+   quantum mechanics and optics*,
+   [quant-ph/9509002v3](https://arxiv.org/pdf/quant-ph/9509002v3),
+   Eq. (2.8), PDF p. 6; Eq. (4.7), p. 13; Eq. (6.6a), p. 23.
+   Their canonical orientation, $GL$ cotangent embedding
+   $\operatorname{diag}(A,A^{-T})$ and exact half-density pullback
+   are used with the concrete real invertible FIB matrices.
+2. R. Simon, *Peres-Horodecki Separability Criterion for Continuous
+   Variable Systems*,
+   [quant-ph/9909044v1](https://arxiv.org/pdf/quant-ph/9909044v1),
+   Eqs. (3), (6)–(7), PDF p. 2; Eq. (16), p. 3; Eq. (19) and
+   the following theorem, p. 4. The commutator is $[q,p]=i$,
+   covariance is the half anticommutator, and uncertainty is
+   $V+i\Omega/2\ge0$. Partial transpose reverses $p_B$. Gaussianity,
+   physicality and one mode on each side are the conditions used in
+   (27.2)–(27.4), including separability at equality.
+3. M. Ozawa, *Universally valid reformulation of the Heisenberg
+   uncertainty principle on noise and disturbance in measurement*,
+   [quant-ph/0210044v2](https://arxiv.org/pdf/quant-ph/0210044v2),
+   §VI, Eqs. (36)–(38), PDF p. 4. Its scalar coupling
+   $e^{-iQ\otimes P_0}$ gives pointer $Q+Q_0$ and conjugate
+   momentum $P-P_0$. The substitutions $Q=\ell_i^Tq$ and $Q=m_c$
+   fix the signs here. The full chronological independence in
+   (30.3) is derived from the actual dilation, not from those scalar
+   source equations alone.
+
+The coefficients $65=1+8^2$, $64=8^2$ and $63=65-2$ arise from the specified JM control and
+actual probe rows. They are source-specific coefficients, not universal constants. The combined
+result is the explicit connection of invariant record effects, correlated product displacement
+noise, a two-mode reciprocal separability constraint, sharp initial-expectation allocation and
+target-dependent supplementary observation. It asserts no new generic separability theorem,
+literature priority or kernel verification.
+
+All statements retain finite $W$, finite nonnegative noises and positive finite pointer widths.
+The added preparation and momentum measurement menus are model assumptions, not established
+physical procedures, SSR permissions or resource advantages. The state classification is
+pointwise in $W$ and record-averaged before the extra read; arbitrary world mixtures,
+conditional branches and the full seventeen-mode separability problem remain outside it. The
+original fixed-word horizon remains seven, and the positive-noise literal-history obstruction of
+§7 persists.
+

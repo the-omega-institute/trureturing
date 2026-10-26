@@ -1,0 +1,37 @@
+**Definition 83.1 (supplied smooth carrier and matched local field).** Fix a point $o$ in a smooth manifold $M$ of topological dimension $n$, a smooth positive density $\mu$, and smooth vector fields $X_1,X_2,X_3$ that are linearly independent throughout a neighbourhood $U$ of $o$. Declare them orthonormal for the horizontal metric on $D=\operatorname{span}(X_1,X_2,X_3)$. Assume the strong Hörmander condition there: their iterated brackets span $T_pM$ at every $p\in U$. Choose a connected smooth relatively compact domain $\Omega\ni o$ whose closure lies in $U$ and in a flow box for $X_1$. Shrink $U$ if necessary so that finitely many brackets of a common bounded length span on $\overline\Omega$. Such a choice follows already from a finite bracket basis at $o$ and continuity; it does not require constant bracket ranks.
+
+With formal adjoints taken in this supplied density, set
+$$
+X_i^*=-X_i-\operatorname{div}_\mu X_i,\qquad
+T_\Omega[u]=\sum_{i=1}^3\int_\Omega|X_i u|^2\,d\mu,
+\qquad L_\Omega=\left(\sum_{i=1}^3X_i^*X_i\right)_{\mathrm{F},\Omega}.
+\tag{83.1}
+$$
+Here $L_\Omega$ is the nonnegative Friedrichs operator associated with the closure of $T_\Omega$ initially on $C_c^\infty(\Omega)$; this fixes the Dirichlet boundary convention. Let $p_t^\Omega(p,q)$ be the density of $e^{-tL_\Omega}$ with respect to $\mu$, in the single clock $t$. Define the extended nonnegative integral
+$$
+\Gamma_{\Omega,o}(p)=\int_0^\infty p_t^\Omega(o,p)\,dt.
+\tag{83.2}
+$$
+For fixed $a,g>0$ the matched point-source energy is
+$$
+\begin{aligned}
+\mathcal D_{\Omega,o}&=C_c^\infty(\Omega\setminus\{o\}),\\
+q_{\Omega,o}[u]&=aT_\Omega[u]-g\int_\Omega\Gamma_{\Omega,o}|u|^2\,d\mu.
+\end{aligned}
+\tag{83.3}
+$$
+The stability requirement is one finite lower bound for all normalized states in this entire punctured test domain. The kinetic form and the full field (83.2) use the same free operator, density, boundary condition and clock. In particular the free heat generator is
+$$
+-L_\Omega=\sum_iX_i^2+X_0,
+\qquad X_0=\sum_i(\operatorname{div}_\mu X_i)X_i\in\Gamma(D)
+\tag{83.4}
+$$
+in the interior, with zero smooth potential. The singular multiplier in (83.3) is not inserted into that heat generator.
+
+At the fixed point $o$, let $D_o^j$ be the span of brackets of length at most $j$, let $d_j(o)=\dim D_o^j$, and choose weights $w_1(o),\ldots,w_n(o)$ with $d_j(o)-d_{j-1}(o)$ entries equal to $j$. Put
+$$
+Q(o)=\sum_{k=1}^n w_k(o)=\sum_{j\ge1}j\bigl(d_j(o)-d_{j-1}(o)\bigr),\qquad d_0(o)=0.
+\tag{83.5}
+$$
+This is a pointwise flag weight sum. Horizontal rank three, ambient dimension $n$ and $Q(o)$ are distinct quantities; no neighbourhood Hausdorff dimension is identified with (83.5).
+

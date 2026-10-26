@@ -1,0 +1,37 @@
+**Theorem 16.2 (Strict interior $M$ diagonal limits).** Suppose
+$W_n,W'_n\in\mathcal H$ are complete worlds satisfying
+
+$$
+\begin{gathered}
+W_n\ne W'_n,\qquad
+\Psi_M(W_n)=\Psi_M(W'_n),\qquad p(W_n)\ne24,\\
+W_n\longrightarrow W,\qquad W'_n\longrightarrow W,
+\qquad W\in\mathcal H,\qquad p(W)\ne24.
+\end{gathered}
+\tag{16.3}
+$$
+
+Then $W$ is one of $W_1,W_2,W_3,W_4$. Conversely every one of
+these four worlds occurs as such a limit. The same necessary
+conclusion applies when the $M$ pair is selected from a sequence
+of original joint configurations, without any assumption on the
+limits of their independently selected $J$ endpoints.
+
+*Proof.* If $D\Psi_M(W)$ had rank two, a two-coordinate output
+submap would have invertible differential on a full-parent chart
+at $W$. The inverse-function theorem would make $\Psi_M$
+injective on a neighbourhood of $W$. Both endpoints in (16.3)
+would eventually lie there, contradicting their distinctness and
+equal augmented output. Thus $W$ is critical, and Theorem 13.3
+identifies it. This argument uses the smooth full-parent surface,
+including at singular worlds, as supplied by III, Lemma 11.2 and
+Theorem 13.1. The converse is Theorem 15.1. The selected-pair
+assertion follows because its $M$ endpoints satisfy the same
+hypotheses, regardless of any cross-pair overlap.
+
+The convergence and the strict off-$24$ limit are hypotheses of
+this statement. No compactness, source collar, nonzero gain sample
+or additional control of $J$ endpoints is used. In particular the
+conclusion classifies common interior limits of the $M$ endpoints;
+it places no restriction on a pair with two distinct limits. ∎
+

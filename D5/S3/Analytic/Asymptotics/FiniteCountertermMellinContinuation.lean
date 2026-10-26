@@ -29,7 +29,7 @@ namespace D5.S3.Analytic.Asymptotics.FiniteCountertermMellinContinuation
 
 noncomputable section
 
-private theorem hasMellin_finset_sum
+theorem hasMellin_finset_sum
     {ι : Type*} {u : Finset ι} {f : ι → ℝ → ℂ} {value : ι → ℂ} {s : ℂ}
     (h : ∀ i ∈ u, HasMellin (f i) s (value i)) :
     HasMellin (fun t => ∑ i ∈ u, f i t) s (∑ i ∈ u, value i) := by

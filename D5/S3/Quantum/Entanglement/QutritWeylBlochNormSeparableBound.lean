@@ -6,6 +6,7 @@
    utility: none
    digest: Two-qutrit Weyl–Bloch ℓ1 norm has sharp separable bound 25. -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -26,7 +27,7 @@ open scoped Kronecker ComplexOrder
 
 namespace D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.QuantumContext.HesseSicCertificate (omega omega_pow_four)
 
 def W (k l : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=

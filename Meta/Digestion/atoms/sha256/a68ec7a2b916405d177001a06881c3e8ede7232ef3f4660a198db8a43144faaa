@@ -1,0 +1,50 @@
+**定理 261.1（树上正交规范与块范数障碍）。** 固定任意整数 $r\ge1$。在定义 257.2 的树上，把在位标量 $H_{xx}$ 替换为 $H_{xx}I_r$，边块替换为
+
+$$
+\mathcal H_{xy}=-c_{xy}O_{xy},\qquad
+O_{xy}\in O(r),\qquad O_{yx}=O_{xy}^{\mathsf T}.
+\tag{261.1}
+$$
+
+其余块为零，谱参数为 $zI_r$。假设消去内点的整个块
+$\mathcal K=\mathcal H_{II}-zI_{r|I|}>0$，保留与接地仍按实际顶点进行。定义
+$\mathcal S_B=\mathcal H_{BB}-zI_{r|B|}-\mathcal H_{BI}\mathcal K^{-1}\mathcal H_{IB}$，
+并取其所选四顶点主块为 $\mathcal S_4$。所得响应 $\mathcal S_4$ 的六个数
+
+$$
+\omega_{ij}=\| (\mathcal S_4)_{ij}\|_{\rm op}\quad(i\ne j)
+$$
+
+服从 (258.1) 的相同最小值重合律。相对固定块目标 $S(u,v)\otimes I_r$，
+
+$$
+\max_{i\ne j}
+\| (\mathcal S_4)_{ij}-S(u,v)_{ij}I_r\|_{\rm op}
+\ge\frac{u-v}{2}.
+\tag{261.2}
+$$
+
+允许定理 259.3 的可变权自由 Laplacian 时，对所有 $r$ 都有达到例，包括 $r=3$。
+
+证明。树上任选根和 $G_o\in O(r)$。对每条父子边 $x\to y$，递归取 $G_y=O_{xy}^{\mathsf T}G_x$。唯一路径使定义相容，并有 $G_x^{\mathsf T}O_{xy}G_y=I_r$。于是块对角正交变换 $G=\operatorname{diag}(G_x)$ 给出
+
+$$
+G^{\mathsf T}(\mathcal H-zI)G=(H-zI)\otimes I_r.
+$$
+
+因此整个内块正定当且仅当标量 $K>0$。变换保留逐顶点切分及零电势条件，Schur 消元与之相容，故
+
+$$
+(\mathcal S_4)_{ij}=G_i(S_4)_{ij}I_rG_j^{\mathsf T},\qquad
+\omega_{ij}=|(S_4)_{ij}|=w_{ij}.
+$$
+
+定理 258.1 给出块范数乘积律。算子范数的反三角不等式还给出
+
+$$
+|\omega_{ij}-|S(u,v)_{ij}||
+\le\|(\mathcal S_4)_{ij}-S(u,v)_{ij}I_r\|_{\rm op}.
+$$
+
+若右端六项的最大值小于 $(u-v)/2$，便与定理 259.3 证明中的相同区间比较矛盾。最后取所有 $O_{xy}=I_r$，将 (259.6) 张量 $I_r$ 即达到误差下界。□
+

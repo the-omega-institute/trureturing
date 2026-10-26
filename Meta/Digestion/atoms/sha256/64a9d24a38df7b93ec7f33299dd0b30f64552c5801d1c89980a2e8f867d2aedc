@@ -1,0 +1,34 @@
+### 2.1. Scalar normalization and character multiplicities
+
+First, characters of any finite abelian group $F$ satisfy
+
+$$
+\frac1{|F|}\sum_{x\in F}\rho(x)\tau(x)^{-1}
+=\begin{cases}1&\rho=\tau,\\0&\rho\ne\tau.\end{cases}
+\tag{2.1}
+$$
+
+To see this, the sum $S$ of a nontrivial character $\kappa$ obeys $S=\kappa(y)S$ after translation by any $y$. Choose $y$ with $\kappa(y)\ne1$ to obtain $S=0$. The trivial-character sum is $|F|$. Consequently, equality of sums of characters on every element gives equality of their multiplicities: multiply the equality by $\rho^{-1}$, sum, and apply (2.1). In particular, equal sums of two triples give one fixed permutation matching their characters, even when characters repeat.
+
+On a group $P$ of exponent $2^b$, pointwise projective scalars can be removed by a character twist. Here is a determinant-one version needed for restriction detection. Choose an integer $r$ with
+
+$$
+3r+1\equiv0\pmod{2^b}.
+$$
+
+For $\theta=\chi,\psi$, define characters of $P\times O$ by
+
+$$
+c_\theta(po)=\left(\prod_{i=1}^3\theta_i(p)\right)^r,
+\qquad
+X_i=c_\chi\chi_i,\quad Y_i=c_\psi\psi_i.
+\tag{2.2}
+$$
+
+Then $\prod_iX_i(p)=\prod_iY_i(p)=1$ on $P$. Any pointwise scalar at $p$ is a ratio of $2^b$th roots of unity, so lies in $\mu_{2^b}$; taking determinants gives its cube equal to $1$. Since $\gcd(3,2^b)=1$, the scalar is $1$. Thus the multisets $\{X_i(p)\}$ and $\{Y_i(p)\}$ agree for every $p$. Equation (2.1) gives a single permutation $\sigma$ with
+
+$$
+Y_i|_P=X_{\sigma(i)}|_P.
+\tag{2.3}
+$$
+

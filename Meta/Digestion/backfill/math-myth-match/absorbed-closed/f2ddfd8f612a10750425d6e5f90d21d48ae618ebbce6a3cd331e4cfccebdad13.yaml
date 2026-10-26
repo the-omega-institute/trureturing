@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f2ddfd8f612a10750425d6e5f90d21d48ae618ebbce6a3cd331e4cfccebdad13
+  normalized_sha256: sha256:f2ddfd8f612a10750425d6e5f90d21d48ae618ebbce6a3cd331e4cfccebdad13
+cas_ref: sha256:f2ddfd8f612a10750425d6e5f90d21d48ae618ebbce6a3cd331e4cfccebdad13
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage.weightedGain_add_uncoveredWeight
+    target_statement_id: sha256:6ddbaa78d0b77a80e6f2b91cd017b6bb737686c16e90386ef895a5832f52b6c1
+receipts:
+  unresolved_subitems: []

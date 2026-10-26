@@ -1,0 +1,20 @@
+**Corollary 133.2 (clipped pointwise comparison).** At the actual minimum eigenvector used in (U.135), set
+
+$$
+L_k=\left[\frac{m-\lambda}{\mu_k}-k\tau\right]_+,
+\qquad [x]_+=\max\{x,0\}.
+\qquad 0\leq L_k\leq H\leq2\alpha.
+\tag{U.138}
+$$
+
+Then
+
+$$
+\Theta\leq
+\frac{\beta+\alpha\sqrt{1-L_k/(2\alpha)}}{2\sqrt2}
++\frac12\sqrt{1-\lambda-\tau}.
+\tag{U.139}
+$$
+
+Proof. Rearranging (U.135) gives the unclipped lower bound on $H$; clipping preserves it since $H\geq0$. The function on the right of (U.113) is decreasing in $H$, so substitution gives (U.139). All roots are defined by (U.138) and the actual $R\geq0$. At $k=0$ one has $M_{0,u}=mP^{-1/2}\succ0$ and the same argument applies. No division by $m-\lambda$, $H$, $\tau$, $R$, a singular value, or an eigengap occurs. These inverse-$P$ formulas are stated only for $q>0$. $\square$
+

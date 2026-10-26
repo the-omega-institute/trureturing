@@ -1,0 +1,15 @@
+**Definition 102.1 (Restricted terminal value).** For a finite horizon or the
+limiting channel, let
+
+$$
+\delta_n^{\mathrm u}=
+ \min_{\substack{D\ \mathrm{CPTP}\\D(I_3)=I_3}}
+ \frac12\lVert D\mathcal N_n-\operatorname{id}_{M_3}\rVert_\diamond .
+\tag{102.1}
+$$
+
+For $n\ge1$ use the bijection (93.10), and write
+$\mathcal C=\mathcal R\Phi_s$. Since conjugation by $U_0$ is a unitary
+channel, $D$ is unital exactly when $\mathcal R(I_3)=I_3$. Thus the
+restricted problem can be studied entirely in the reduced frame.
+

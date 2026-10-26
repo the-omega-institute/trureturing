@@ -1,0 +1,34 @@
+**Theorem 104.2 (Exact horizon set and minimal witness).** There exists a
+single terminal decoder attaining the individual optimum of every rank-one
+task exactly at the empty horizon and at the one-step horizon, and at no
+other actual finite horizon. The same failure holds at the actual limiting
+channel. The witness $T=\{P_0,P_2,Q\}$ is inclusion-minimal: every proper
+subset has a common attainer, while (104.3) holds for all
+$s\in\mathcal S_{\rm late}$.
+
+*Proof.* Proposition 103.2 proves existence at $n=0,1$. If a decoder were
+optimal for every rank-one task at a later horizon or at the limit, it would
+be optimal simultaneously for the three tasks in $T$, contradicting
+Theorem 104.1. Proposition 103.1 and (103.4)--(103.5) show that every
+proper pair, and hence every proper subset, has a common individual-optimum
+attainer. Thus the exact finite set is $\{0,1\}$, with the actual limit
+excluded as well. The claim is only inclusion-minimality of this particular
+triple; it does not assert that all pairs are compatible or that three is a
+global minimum obstruction size. $\square$
+
+The effect formulation (103.2) is the standard worst-state/operator-norm
+interface used in the task definition; see [Janssens, §2][JAN]. His
+convention for completely positive maps includes unitality, as holds for
+the adjoint of every CPTP decoder here. For a unital completely positive
+map, the multiplicative-domain criterion uses both Schwarz equalities; see
+[Choi--Johnston--Kribs, Theorem 8][CJK]. No multiplicative-domain
+classification is needed for the displayed pair constructions or for the
+PSD obstruction. The Choi positivity and trace-preservation interfaces are
+those recorded in [Watrous, Chapter 2, Theorems 2.22 and 2.26][TQI2].
+
+[HSR]: https://arxiv.org/pdf/quant-ph/0302031v2 "M. Horodecki, P. W. Shor and M. B. Ruskai, Entanglement Breaking Channels"
+[CJK]: https://arxiv.org/pdf/0811.0947v1 "M.-D. Choi, K. Johnston and D. W. Kribs, The Multiplicative Domain in Quantum Error Correction"
+[JAN]: https://arxiv.org/pdf/quant-ph/0606093v1 "G. Janssens, Unifying Decoherence and the Heisenberg Principle"
+[SHA]: https://arxiv.org/abs/2104.06062 "Shahbeigi et al., Journal of Physics A 54, 345301 (2021)"
+[BKK]: https://arxiv.org/pdf/0705.1574 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables"
+

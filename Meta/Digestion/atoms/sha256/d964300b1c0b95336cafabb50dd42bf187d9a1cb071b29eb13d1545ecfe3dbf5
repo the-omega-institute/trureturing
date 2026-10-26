@@ -1,0 +1,64 @@
+### 5. Source filtering, existence and the three terminal values
+
+Apply (4.1) to $A,B$ on each narrow width cell times $\mathcal Q$,
+and divide the resulting intervals to enclose $-B/A$. This gives the
+following deliberately widened rational bounds.
+
+| Index | Strict lower bound for $\lvert A\rvert$ | Enclosure of $-B/A$ |
+| --- | --- | --- |
+| 1 | $4.35029\cdot10^{15}$ | $(0.0484941718,0.0484941724)$ |
+| 2 | $1.23788\cdot10^{17}$ | $(0.906190874,0.906190912)$ |
+| 3 | $2.66859\cdot10^{17}$ | $(0.894638116,0.894638162)$ |
+| 4 | $4.35916\cdot10^{17}$ | $(2.97302,2.97304)$ |
+| 5 | $3.63120\cdot10^{18}$ | $(-1.29225,-1.29224)$ |
+| 6 | $3.98752\cdot10^{28}$ | $(4.31166,4.31167)$ |
+| 7 | $5.18478\cdot10^{34}$ | $(-6.89968,-6.89967)$ |
+
+The last four rows are not strict sources. For the first three rows,
+retain the unrounded rational ratio intervals from $-B/A$ and evaluate
+(2.1), (2.3), (2.5) by rational interval addition, multiplication and
+division. Multiplication uses the minimum and maximum of all four
+endpoint products; division is used only when zero is excluded.
+The resulting widened bounds are
+
+| Index | $\Lambda$ | $e=d-24$ | $a$ | $m$ |
+| --- | --- | --- | --- | --- |
+| 1 | $(0.1275887,0.1275889)$ | $(11.53692,11.53694)$ | $(220.965,220.971)$ | $(340.209,340.217)$ |
+| 2 | $(0.0290460,0.0290484)$ | $(3.09352,3.09378)$ | $(315.408,315.725)$ | $(350.881,351.236)$ |
+| 3 | $(-0.0534120,-0.0534094)$ | $(3.44342,3.44359)$ | $(311.432,311.632)$ | $(350.945,351.173)$ |
+
+The rounded displayed $r$ intervals are for presentation; using them
+instead of the unrounded ratio intervals is not part of this arithmetic
+prescription. Every denominator is separated from zero on the actual
+intervals used.
+
+**Proof of Theorem 1.1.** Lemma 3.1 and the all-width count force every
+complete world into one of the seven narrow cells. The nonzero $A$
+fixes $r=-B/A$ uniquely at a given width. The last four rows fail
+$0<r<1$. In each remaining row, $\Lambda\ne0$ fixes the drift and
+(2.3) fixes the whole gain. There is therefore at most one complete
+world in each of the first three cells.
+
+For existence, fix any $(p,v)\in\mathcal Q$ and any one of its first
+three width roots. It is not $1/8$, so both leading coefficients
+(3.5) are nonzero. Since $\mathcal W=0$, the resultant vanishes and
+the two degree-six polynomials $F,G$ have a common complex root $z$.
+The first subresultant, which is a polynomial combination of $F,G$,
+vanishes at $z$. The removed factor (3.7) is nonzero at this width,
+and $A\ne0$, so $z=-B/A$. Thus this common root is real and belongs
+to the strict source interval in the table. Its $\Lambda$ is nonzero,
+so $D\ne0$. Equations $F=G=0$, (3.3) and the original-row identities
+(3.4) now lift it to a complete world in the specified child. This
+proves existence as well as uniqueness in all three cells.
+
+Each width root is simple, since its coarse cell has exactly one root
+counting multiplicity. The implicit-function theorem makes its width
+a real analytic function locally in $(p,v)$. Uniqueness in the fixed
+disjoint cells glues these functions throughout the interior of
+$\mathcal Q$. The nonzero-denominator ratios and interpolation above
+then give analytic sources, drifts and whole gains.
+
+The terminal bounds prove (1.3)--(1.4). The three J intervals are
+pairwise disjoint, and the first M interval is disjoint from both
+others. This proves all assertions of Theorem 1.1. $\square$
+

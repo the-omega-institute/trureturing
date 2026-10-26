@@ -1,0 +1,176 @@
+## 4. A positive native reference at equality and uniform weighted tails
+
+At $\lambda=\lambda_D$, (1.9) gives
+
+$$
+q_L=\sqrt{z_L}=\pi/L+\beta_{\rm ang}\pi^3/L^3+O(L^{-5}),\qquad
+q_LL=\pi+\beta_{\rm ang}\pi^3/L^2+O(L^{-4}).
+\tag{4.1}
+$$
+
+The first zero of the auxiliary $Z_{z_L}$ has physical radius tending to
+$be^{-\kappa_{\rm cap}}$, by Native Green stability, Corollary 22.2.
+Choose a fixed $2d$ strictly below this radius and inside the source
+chart. On $R<2d$ the function $\Xi_\epsilon$ from (3.6) is positive.
+Extend it by a fixed positive annular interpolation to one, and denote
+the global reference by $H_\epsilon$. This is only a comparison
+function on the original cylinder; the ball introduces no wall or hole.
+On fixed punctured compact sets,
+
+$$
+H_\epsilon\longrightarrow H_{\eta_b},\qquad
+\eta_b=\log b-\kappa_{\rm cap},\qquad
+H_{\eta_b}=h(-\log R+\eta_b)\quad(R<d).
+\tag{4.2}
+$$
+
+The limiting reference uses the same positive interpolation outside.
+
+On rescaled cap balls the potential is bounded and locally Hölder,
+uniformly in the scaled variables. Harnack and interior horizontal
+estimates give
+
+$$
+|XH_\epsilon|\le C H_\epsilon/R,\qquad
+|X_iX_jH_\epsilon|\le C H_\epsilon/R^2.
+\tag{4.3}
+$$
+
+In the inner core these follow from the sharper $\epsilon$-scaled
+bounds; outside use the exact slow wave and its complementary
+estimates only on their permitted exterior annuli. Across the cap
+the frozen function is weakly matched. There is no interface delta
+and no assertion of smoothness of every order across that surface.
+
+In chart variables write
+$\mathcal R=L_A-(-\Delta_H)$ and $G_1=\Gamma-c_GR^{-2}$.
+The second-order coefficients of $\mathcal R$ are $O(R)$, its
+first-order coefficients are $O(1)$, and $G_1=O(R^{-1})$ with the
+annular derivative bounds of Native Green stability, §11.
+The minimum map is Lipschitz, so
+
+$$
+|\Gamma_\epsilon-c_G\min(R^{-2},\epsilon^{-2})|\le C/R.
+\tag{4.4}
+$$
+
+The frozen detuned capped equation for $\Xi_\epsilon$ cancels exactly.
+Equations (4.3)–(4.4), including the density drift in $\mathcal R$,
+therefore prove
+
+$$
+W_\epsilon=H_\epsilon^{-1}
+            (L_A-g_{\epsilon,\lambda_D}\Gamma_\epsilon)H_\epsilon,
+\qquad |W_\epsilon|\le C/R
+\tag{4.5}
+$$
+
+near zero, uniformly in $\epsilon$; it is uniformly bounded elsewhere.
+On the original finite-resolution domain the exact product identity is
+
+$$
+\begin{aligned}
+q_{\epsilon,\lambda_D}[H_\epsilon v]
+ &=\mathcal E_\epsilon[v]
+                     +\int W_\epsilon H_\epsilon^2|v|^2d\mu,\\
+\mathcal E_\epsilon[v]
+ &=\int H_\epsilon^2\langle AXv,Xv\rangle d\mu .
+\end{aligned}
+\tag{4.6}
+$$
+
+It follows first for smooth tests by weak integration by parts, then by
+free-form approximation. For fixed $\epsilon$, $H_\epsilon$ is positive
+and source-regular, so multiplication identifies the appropriate
+quotient domain with the original $\mathcal F_A$. The same local
+cancellation proves the inner residual estimate used in §3, without
+requiring a normalized actual-state trace.
+
+We prove uniform tail bounds for all quotient directions. Put
+$t=\log R$, $t_\epsilon=\log\epsilon$. Up to fixed positive angular
+factors, $H_\epsilon/h$ is comparable to the scalar weight
+
+$$
+w_\epsilon(t)\asymp
+\begin{cases}
+e^{t-t_\epsilon},&t\le t_\epsilon,\\
+\min(1+t-t_\epsilon,-t+\eta_b),&t_\epsilon\le t\le\log d.
+\end{cases}
+\tag{4.7}
+$$
+
+The positive core proves this on its first collars. Beyond them the
+exact sine, whose phase runs from near zero to below $\pi$, is
+comparable to the minimum of its distances from the two zeros.
+The exponential complement preserves the comparison, including
+the polar endpoints. In particular
+
+$$
+\frac{w_\epsilon(t)}{w_\epsilon(s)}\le C(1+s-t),
+\qquad t\le s\le\log d.
+\tag{4.8}
+$$
+
+The constant is independent of the resolution. The limiting weight
+$w(t)=-t+\eta_b$ has the same property.
+
+For a quotient with zero outer cutoff let
+$F_v(t,a)=(\int_0^{2\pi}|v|^2d\theta)^{1/2}$.
+The full-angular diamagnetic inequality of Native Green stability,
+(12.9), and comparability give control of
+
+$$
+\int w_\epsilon^2 c\phi^2
+                         (|(F_v)_t|^2+4|(F_v)_a|^2)\,dt\,da
+\tag{4.9}
+$$
+
+by $\mathcal E_\epsilon[v]$, with a fixed constant. This norm includes
+every angular direction. For $T\le\log d$ use
+$F_v(t)=-\int_t^T(F_v)_sds$ and (4.8). After multiplying by
+$e^{pt/2}w_\epsilon(t)$, Young's inequality with the integrable kernel
+$(1+u)e^{-pu/2}$ gives
+
+$$
+\int_{-\infty}^T e^{pt}w_\epsilon^2 c\phi^2F_v^2\,dt\,da
+\le C_pe^{pT}\int_{-\infty}^T
+                   w_\epsilon^2c\phi^2|(F_v)_t|^2\,dt\,da,\qquad p>0.
+\tag{4.10}
+$$
+
+The endpoint inequality (12.10) of Native Green stability supplies the
+unweighted angular norm: apply it at each $t$ and bound its derivative
+term using $e^{pt}\le e^{pT}$. Localization and $p=1,2$ yield the
+uniform counterparts of its (12.7). In particular $|W_\epsilon|$ is
+uniformly infinitesimally form bounded, and for a fixed sufficiently
+large shift the actual form norm is equivalent to
+
+$$
+\mathfrak N_\epsilon(H_\epsilon v)^2
+                 =\mathcal E_\epsilon[v]+\|H_\epsilon v\|_2^2.
+\tag{4.11}
+$$
+
+There is also a useful quantitative tail. Anchor $F_v$ at a fixed outer
+trace and integrate its derivative by Cauchy–Schwarz. Equation (4.8)
+implies
+$w_\epsilon(t)\|\sqrt c\,\phi F_v(t)\|
+\le C(1+|t|)^{3/2}\mathfrak N_\epsilon(H_\epsilon v)$.
+Integrate this bound with $e^{pt}$ and apply the angular endpoint
+inequality to the derivative part as in (4.10). For $p=1,2$,
+
+$$
+\int_{R<r}R^{p-2}|H_\epsilon v|^2d\mu
+\le Cr^p(1+|\log r|)^3
+              \{\mathcal E_\epsilon[v]+\|H_\epsilon v\|_2^2\}.
+\tag{4.12}
+$$
+
+The same estimates hold for $H_{\eta_b}$, and locally uniformly for
+nearby $\eta$. Thus both the source $L^2$ mass and the $R^{-1}$
+potential tail vanish uniformly on bounded shifted sublevels.
+Away from the source those sublevels are bounded in the actual local
+free form, with its compact embedding. This proves collective $L^2$
+compactness without scalar finite-energy separation or any estimate
+on an uncapped complex trace of a capped state.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:412846391dca3687d889fb9411a4161e3e74449f8b147a84dd39e8023c218afc
+  normalized_sha256: sha256:412846391dca3687d889fb9411a4161e3e74449f8b147a84dd39e8023c218afc
+cas_ref: sha256:412846391dca3687d889fb9411a4161e3e74449f8b147a84dd39e8023c218afc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《克拉底鲁篇》恒常与流变的开放结尾及本体论比较边界；没有数学刚性新断言。
+    previous_atom_id: ddcce082555ccf55942e306bd1047920a0ee898445fb15a78a31565bf783b8db
+    next_atom_id: d301706b93da873db2732557990dfd8cae4aa9065a307884bb71787aeeff8cb3

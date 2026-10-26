@@ -1,0 +1,28 @@
+**Corollary 32.2 (No uncovered parameter or unguarded zero).** The zero
+classification in Theorem 30.3 holds on the entire closed interval,
+and hence also on $[10,34]\setminus\{24\}$. Each $p_i$ is equivalently
+the unique parameter in $I_i$ for which
+
+$$
+F(z,p)=0,\qquad \mathcal T(t_H,b_H)=0,\qquad
+\|z-\widehat z(p)\|_\infty<10^{-5}.
+\tag{32.12}
+$$
+
+Here $F=0$ may be replaced by its four source-denominator-cleared
+polynomial equations, with the same guards and uniqueness ball.
+
+Proof. The cells (31.1) are closed and cover all three closed blocks.
+Their common cell endpoints have not been removed. Every remaining
+cell endpoint has a nonzero sign in (32.1), and every excluded cell
+has an enclosure excluding zero even at its endpoints. The seams
+$20,30$, the external endpoints $10,34$ and $24$ belong to excluded
+closed cells. SIII's seam identification joins the actual root
+functions across the two block seams; neither centre discrepancy
+creates an additional branch. The pointwise uniqueness balls in
+SIII, Lemma 16.3, identify any guarded solution of (32.12) with
+$z_J(p)$. Lemma 32.1 then proves uniqueness of its parameter.
+Lemma 31.2 guards every denominator used in (30.6), so no zero is
+hidden by clearing denominators or by the squared factor
+$\mathcal S^2$. ∎
+

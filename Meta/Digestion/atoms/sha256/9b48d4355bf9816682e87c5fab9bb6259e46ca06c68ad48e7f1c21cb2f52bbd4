@@ -1,0 +1,26 @@
+**引理 15.2（有限菜单恢复带标签的二阶张量）。** 若菜单证书的第 1 项成立，则每个 $T_{ab}$ 在每个连通纤维上为常数。若 $F_y$ 连通，则在给定锚之后存在唯一的光滑向量场 $\overline X_a$、$a=1,\ldots,m$，使
+
+$$
+d\Pi\,X_a=(\overline X_a\circ\Pi)\quad\text{在 }S\text{ 上}.
+\tag{15.4}
+$$
+
+证明。对基本函数 $f=\varphi\circ\Pi$、$g=\psi\circ\Pi$，由 (15.1) 和第 1 项，$\Gamma_{Q^\ell}(f,g)$ 在 $F_y$ 上为常数。其值是
+
+$$
+\sum_{a,b}Q^\ell_{ab}\,d\varphi(T_{ab})d\psi.
+\tag{15.5}
+$$
+
+由 (15.2) 和对称矩阵的线性独立性，所有 $T_{ab}$ 在纤维上为常数。现在用一个初等事实：若实向量组 $(u_a)$、$(w_a)$ 满足
+
+$$
+\operatorname{sym}(u_a\otimes u_b)=
+\operatorname{sym}(w_a\otimes w_b)\quad\text{对所有 }a,b,
+\tag{15.6}
+$$
+
+则或者两组都全为零，或者存在一个 $\epsilon\in\{+1,-1\}$ 使 $w_a=\epsilon u_a$ 对所有 $a$ 成立。事实上，选 $u_{a_*}\ne0$；对 $a=b=a_*$，秩一张量给 $w_{a_*}=\epsilon u_{a_*}$。映射 $z\mapsto\operatorname{sym}(u_{a_*}\otimes z)$ 是单射，故交叉项给 $w_b=\epsilon u_b$。若没有非零向量，结论显然。
+
+把这个事实应用于纤维中的两个点。$T_{ab}$ 常数，所以它们之间的符号只能是一个共同的 $\epsilon$；在非零区域它随点连续，连通性使其在整个 $F_y$ 上恒定。条件 2 的带符号锚取 $\epsilon=+1$，并用 (15.6) 恢复每个其余标签。重叠锚的一致性使所得场光滑；在全为零的开集上令相应场为零，并由锚的重叠延拓。于是 (15.4) 成立且唯一。证毕。
+

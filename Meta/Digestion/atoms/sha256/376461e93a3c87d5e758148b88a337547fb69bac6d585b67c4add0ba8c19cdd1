@@ -1,0 +1,36 @@
+**命题 37.2（可见损失对隐藏关系的精确保留）。** 设 $\ell$ 光滑，$L(p)=\ell(X,Y,Z)$。
+完整 Fisher 负梯度流在正域上保持 $\tau$。
+令 $a_s=\ell_Xx_s+\ell_Yy_s+\ell_Zz_s$，每步在当前点计算该分数，则任意有限步长 $\epsilon$ 的更新
+
+$$
+p_s^+=\frac{p_se^{-\epsilon a_s}}{\sum_u p_ue^{-\epsilon a_u}}
+$$
+
+也精确保留 $\tau$。对量子损失 $L([\psi])=\ell(\langle N_x\rangle,\langle N_y\rangle,\langle N_z\rangle)$，
+完整射影负梯度流保持复坐标 $\zeta$。
+
+证明。归一化切向量 $v$ 满足
+
+$$
+d\tau(v)=\sum_s\frac{\nu_sv_s}{p_s}=g^F(\nu,v),\qquad dL(\nu)=0.
+$$
+
+因此 $d\tau(-\operatorname{grad}_{g^F}L)=-dL(\nu)=0$。
+这具体消费 [信息逃逸动力学定理 14.2](AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)
+的 Fisher 水平分布；该卷坐标次序 $(X,Z,Y)$ 在此换为 $(X,Y,Z)$，该卷的对数优势比对应这里的 $\tau$，不是相位 $\chi$。
+离散更新的四角对数中归一化常数抵消，而且 $a_0-a_1-a_3+a_{13}=0$，故对数优势比不变。
+
+量子部分令 $K=\ell_XN_x+\ell_YN_y+\ell_ZN_z$。由
+$dL(v)=2\operatorname{Re}\langle v,K\psi\rangle$，所选度量下的水平负梯度是
+
+$$
+\dot\psi=-(K-\langle K\rangle)\psi.
+$$
+
+在四角振幅非零时对 $\zeta$ 取对数导数，四个 $K$ 特征值的混合差分为零，归一化项亦抵消，故 $\dot\zeta=0$。
+概率满足 $\dot p_s=-2p_s(a_s-\sum_up_ua_u)$，即经典 Fisher 流的两倍速度；两种时钟不混用。证毕。
+
+数学引文。自然梯度与量子几何张量的标准定义见 [Stokes 等](../../../Library/QuantumContext/stokes2020naturalgradient.md)。
+这里的新增推导是该流在指定五模式上的 $\tau,\zeta$ 不变量，不是自然梯度方法的提出。
+结论限定于所列完整度量流与指数更新；任意优化器、Euler 步进或参数受限流均须另验。
+

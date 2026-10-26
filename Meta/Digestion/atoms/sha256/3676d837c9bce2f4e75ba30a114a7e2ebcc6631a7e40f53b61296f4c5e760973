@@ -1,0 +1,32 @@
+**定理 92.3（已验证的原生缺陷族具有增长的内在方向秩）。** 对 $n\ge3$，令
+
+$$
+\mathcal S_n=\operatorname{sourceFamily}(T_n),\qquad
+\mathcal A_n=\operatorname{normalizedAreaFamily}(n).
+\tag{92.3}
+$$
+
+D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube.normalized_cube_diameter
+给出以下同一层级的事实：
+
+$$
+\begin{aligned}
+|\mathcal S_n|&=2^{F_{n-2}},\\
+\operatorname{diam}(\mathcal A_n)
+&=\frac{\sqrt{2F_{n-2}}}{\binom{F_{n+1}}2},\\
+\operatorname{diam}(\mathcal A_n)&\longrightarrow0.
+\end{aligned}
+\tag{92.4}
+$$
+
+同一模块的 native_area_cube 还给出：由这些来源差异张成的内在方向空间满足
+
+$$
+\operatorname{finrank}_{\mathbb R}\operatorname{directionSpan}(T_n)=F_{n-2}.
+\tag{92.5}
+$$
+
+这里的 $F_k$ 是项目中的 Fibonacci 数列。式 (92.4) 的直径是归一化面积坐标的直径；式 (92.5) 是未把这些独立差异压成三根方向所得的内在线性秩。两者分别测量压缩后的尺度和保留差异所需的方向数，不能互相替代。
+
+**证明。** 这是两个已声明结果的直接合取：normalized_cube_diameter 的逐 $n$ 分支给出前两式及极限，native_area_cube 的方向分支给出式 (92.5)。本节不把这些声明改写成新的专门化定理。证毕。
+

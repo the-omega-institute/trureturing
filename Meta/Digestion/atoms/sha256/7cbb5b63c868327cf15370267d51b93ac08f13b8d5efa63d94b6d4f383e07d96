@@ -1,0 +1,120 @@
+## 26. Source correspondence, attribution and the remaining response problem
+
+The constants above retain every normalization in (10.2), (10.6),
+(10.9) and Definition 14.1. In particular the inverse native Jacobian
+is $1/(2r)$, the graded covariance change contributes $\det A(o)$,
+the angular period is $2\pi$, the polar Jacobian is $1/4$, and
+$m_0c_G=1/(2\pi)$. The full killed unit-source Green field is used at
+all times; the cap changes a multiplier, not the source or the domain.
+Auxiliary gauge balls and annuli are matching surfaces, not new killed
+walls or holes. The frozen rotational solutions are comparison and
+limit objects; no rotational restriction is imposed on the actual
+smooth density, SPD matrix or normalized states.
+
+Under $\rho\mapsto c_1\rho$, $c_1>0$, the covariance rule of §19 gives
+$m_0\mapsto c_1m_0$, $a_*\mapsto c_1^{-1/2}a_*$,
+$\Gamma\mapsto\Gamma/c_1$, $g_{\mathrm c}\mapsto c_1g_{\mathrm c}$.
+The operators, energies, kinetic costs and
+$\mathsf K,\mathsf D,R_b,B_3,b_{\rm bal}$ are invariant.
+Raw and capped attraction costs acquire the inverse density factor.
+The source Green-pairing coefficient $K$ itself scales by $c_1$, as
+its vectors were normalized by $h$ rather than by global $L^2$ mass.
+All scales refer to the original clock with covariance $2A\,dt$.
+There is no uniformity claim over different $\rho,A$, moving sources,
+changing chart radii or spectral resonances. The compact-parameter
+uniformities in §§22–24 and the auxiliary subthreshold gap in §25 have
+their explicitly narrower scopes.
+
+The sharp original-domain classification in §§10–13 and the exactly
+critical selection, trace and cap/resource laws in §§14–19 are reused.
+The different temporal family in
+[Critical cutoff, Definition 31.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md)
+varies moving-time multipliers and a carrier parameter. The interaction
+in [Weak binding, Definition 70.1 and Proposition
+70.2](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md) is on the real cover,
+with changed threshold source $SW_\tau=F(\tau;\cdot)$ and different
+behaviour at infinity. [Continuation III, Specification 82.7 and Theorem
+87.4](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+gives an elementary bounded-cap bound and a different added-kinetic-law
+completion. These are useful neighbouring results, with different
+source/operator/domain contracts. The finite normalized-law, binary-task,
+zero-one-loss setting of
+[Task information and Bayes risk](FIB_ATOM_TASK_INFORMATION_BAYES_RISK_GEOMETRY.md)
+supplies no Green or resource theorem for (20.1); its information and risk
+quantities are distinct.
+
+For primary attribution, Derkach–Hassi–Malamud–de Snoo,
+[§4.1 and Proposition 4.2](https://arxiv.org/html/math/0610299v1),
+supplies the abstract ordinary boundary-triplet and intermediate-extension
+resolvent machinery. Theorem 21.1 proves its native hypotheses:
+closed symmetry, equal defects, graph-bounded maps, full range and Green
+identity. Its convention here is $\Gamma_0=\mathcal B$,
+$\Gamma_1=-K\mathcal A$, reference operator $F$, and boundary relation
+$\Theta=-K\kappa$. The resolvent formula applies at a reference
+resolvent point where $\Theta-M(z)$ is invertible. Their Theorem 7.2
+has its stated Weyl/gamma-field and generalized-resolvent conditions;
+it does not compute this model's Weyl function or select the cap limit.
+
+Dereziński–Richard,
+[§§2.2–2.3 and Theorem 5.5](https://arxiv.org/html/1604.03340v2), treats
+scalar half-line inverse-square operators with specified boundary
+families. Camblong–Epele–Fanchiotti–García Canal,
+[equation (1)](https://arxiv.org/html/hep-th/0003014v2),
+Braaten–Phillips, [equation (4)](https://arxiv.org/html/hep-th/0403168v1),
+and Bouaziz–Bawin, [the medium-to-weak radial
+setting](https://arxiv.org/html/1402.5325v1), concern Euclidean radial
+reductions and their cutoff/extension prescriptions. Their Bessel
+constants and endpoint parameters are not imported into the finite-energy
+angular equation (22.17). D'Arca–Fanelli–Franceschi–Prandi,
+[Theorem 1.2](https://arxiv.org/html/2603.04086v1), provides the
+unweighted Hardy lower bounds already attributed in §10, rather than
+the exact cap phase or its global response.
+
+Vázquez–Zographopoulos,
+[the critical weighted-completion setting](https://arxiv.org/html/1102.5661),
+and Felli–Ferrero,
+[Theorem 2.1 and Corollaries 2.2–2.3](https://arxiv.org/html/1209.4852v1),
+provide Euclidean critical-Hardy and cylindrical context.
+Abatangelo–Felli–Hillairet–Léna,
+[Theorems 1.4, 1.7 and Appendix A](https://arxiv.org/html/1611.06750v1),
+and Abatangelo–Bonnaillie-Noël–Léna–Musolino,
+[Theorems 1.1 and 6.2](https://arxiv.org/html/1911.06686), study
+Euclidean Dirichlet holes and eigenfunction capacity; the latter
+Theorem 6.2 includes its positive vanishing-order hypothesis.
+Their spectral approximation motivates comparison, but neither its
+domain nor its capacity coefficients replace the form residual and gap
+argument (25.18)–(25.20). The native deductions here are supported by
+the displayed source identities, variational arguments and ordinary
+proofs, with no exhaustive literature or priority assertion.
+
+The remaining mathematical interface is the actual cap-to-global
+finite-energy response on the original killed cylinder. The local domain
+classification lists possible source realizations; it does not choose
+one. The frozen phase describes an auxiliary zero-energy response;
+Theorem 22.3 estimates an interior map relative to arbitrary actual trace.
+Neither selects the full finite-energy trace returned by the outer
+cylinder. Proposition 22.4 explains why scalar separation cannot supply
+that missing map. At $\lambda_D$, boundedness from Proposition 24.2 is
+not convergence: the limiting energy, selected realization, normalized
+state and separate resources, including any additional necessary scale
+or global data, remain to be determined.
+
+A complete all-real-$\lambda$ finite-parameter operator classification
+must also control all exceptional or resonant values and the remaining
+spectral subspace above the first threshold. In the triplet of §21,
+for $z\in\rho(F)$ the native Weyl solution has a global ratio
+$m_{\mathcal A}(z)=\mathcal A/\mathcal B$.
+For a specified line $\mathcal A=\kappa\mathcal B$, its rank-one
+resolvent denominator is proportional to $m_{\mathcal A}(z)-\kappa$;
+real poles of the reference realization require their own spectral
+bookkeeping. The uncomputed cap-selected ratio and the global Weyl
+response cannot be replaced by $\kappa_{\rm cap}$ or by the frozen
+nodal radius. The positive ground-profile theorem and the sharp collapse
+laws in §24 do not establish convergence of the whole resolvent.
+Sharp actual state and separate-resource laws outside the regimes proved
+here, with their necessary compact-parameter uniformity, remain part of
+that same unchanged problem. The exactly critical case remains supplied
+by §§14–19. The current-ray dimension, direct rank, growth and homogeneous
+volume exponent keep their distinct meanings from §2; none of these
+analytical results identifies a physical Euclidean dimension.
+

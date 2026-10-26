@@ -1,0 +1,41 @@
+**Definition 3.2 (Determinantal conventions).** For polynomials $P,Q$
+in $x$, with nominal degrees $m\ge n$, define $\operatorname{Subres}_k(P,Q)$
+as follows. Make the $(m+n-2k)$ by $(m+n-k)$ coefficient matrix of
+
+$$
+x^{n-k-1}P,\ldots,P,\quad x^{m-k-1}Q,\ldots,Q
+$$
+
+in descending powers $x^{m+n-k-1},\ldots,1$ (the last column is the
+constant coefficient). If $N_k=m+n-2k$, its $x^j$ coefficient, for
+$0\le j\le k$, is the determinant of the first $N_k-1$ columns
+followed by column $N_k+k-1-j$, with columns indexed from zero.
+For $k=0$ this is the ordinary Sylvester determinant. For $(F,G)$
+use $(P,Q)=(G,F)$, nominal degrees $(13,6)$. For $(\phi,3L)$ use
+that order and nominal degrees $(4,4)$. These conventions specify
+polynomial combinations of the two inputs and remain fixed under
+specialization, including degree drops.
+
+For an explicit finite-root justification, if $\xi$ is a common root,
+all rows of this coefficient matrix evaluate to zero at $x=\xi$.
+The value of its minor polynomial at $\xi$ is the determinant whose
+last column is the sum of the degree-$j$ columns times $\xi^j$ for
+$0\le j\le k$. The vanishing row evaluations identify that column
+with a linear combination of the first $N_k-1$ columns. Its determinant
+is therefore zero. This proves the finite-common-root implication for
+every specialization directly, without division by a leading coefficient.
+
+Write
+
+$$
+S_1=A_1(t)x+B_1(t),\quad
+S_2=c_2(t)x^2+c_1(t)x+c_0(t),\quad
+T_1=\operatorname{Subres}_1(\phi,3L).
+\tag{3.2}
+$$
+
+Here $S_i=\operatorname{Subres}_i(G,F)$. The nonzero subresultant
+sequence has $x$ degrees $13,6,5,4,3,2,1,0$. The sign of
+$\operatorname{Res}_x(F,G)$ equals that of
+$\operatorname{Res}_x(G,F)$ because $6\cdot13$ is even.
+

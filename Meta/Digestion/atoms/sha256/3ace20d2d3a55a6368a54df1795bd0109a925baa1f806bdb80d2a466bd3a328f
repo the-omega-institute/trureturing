@@ -1,0 +1,54 @@
+**Theorem 6.7.2 (Strict finite original J pair).** There is a unique zero $(R_0,B_0,k_0)$ of $S_F(\,\cdot\,,1/1000)$ in $X_0$. Define its exact endpoints by
+
+$$
+r_\pm=R_0\pm1/1000,\qquad b_\pm=B_0\pm k_0/1000,
+\qquad W_\pm=W(r_\pm,b_\pm).
+\tag{6.7.3}
+$$
+
+Each endpoint uses its own whole gain and drift from (6.2.2). These worlds have equal exact p, v and a, and the following strict enclosures:
+
+| Quantity | Plus world | Minus world |
+|---|---|---|
+| $r$ | $(0.900530919795779878,0.900530919795779881)$ | $(0.898530919795779878,0.898530919795779881)$ |
+| $b$ | $(0.127347540709676511,0.127347540709676514)$ | $(0.129785423307317203,0.129785423307317206)$ |
+| $d$ | $(30.765383329012990998,30.765383329012991002)$ | $(30.846249957719705455,30.846249957719705460)$ |
+| $D$ | $(-0.031581090465,-0.031581090464)$ | $(-0.064012570271,-0.064012570270)$ |
+| $x$ | $(1.379832002062135673,1.379832002062135677)$ | $(1.374124732145660566,1.374124732145660570)$ |
+| $m$ | $(104.508734223405322671,104.508734223405322675)$ | $(104.666534446288672599,104.666534446288672603)$ |
+
+Their common acquired and terminal J responses satisfy
+
+$$
+\begin{aligned}
+-10.890483419191447750&<p<-10.890483419191447745,\\
+-8.153641304213516424&<v<-8.153641304213516418,\\
+95.981162469139639674&<a<95.981162469139639680.
+\end{aligned}
+\tag{6.7.4}
+$$
+
+In particular the sources are strict and regular, $p\ne24$, $r_+-r_-=1/500$ exactly, $x_+>x_-$ and $m_+<m_-$. This is an actual original-world J pair, whose selected endpoints do not form an equal-M pair. Its existence and box uniqueness do not identify it with a point of the local germ of Theorem 6.6.1.
+
+Proof. The finite inclusion (6.4.11) supplies the unique exact zero in $X_0$. Evaluating the affine endpoints (6.7.3), followed by (6.2.1)–(6.2.2), with the exact interval rules (6.4.6) gives the endpoint table and (6.7.4). The nonzero D intervals permit every division in the source circuit. The strict r and b intervals put both endpoints in the original source domain. At the exact zero, the defining divided secant has nonzero denominator $2h_0$, so its zero means equality of p, v and a themselves, not merely overlap of their displayed intervals. The p interval excludes 24, and the exact r separation proves that the complete worlds are different.
+
+To give each entire gain also in Newton form, put $q_i=C_i/D$ at its own endpoint. Then
+
+$$
+\begin{aligned}
+g(s)={}&q_0+(q_1-q_0)s
+ +\frac{q_2-2q_1+q_0}{2}s(s-1)\\
+ &+\frac{q_3-3q_2+3q_1-q_0}{6}s(s-1)(s-2),\qquad d=-q_0.
+\end{aligned}
+\tag{6.7.5}
+$$
+
+This is the same unique polynomial as (6.2.2), by its values at $0,1,2,3$; compare Berrut–Trefethen, Section 2, equation (2.4). The identities (6.2.3) give the entire acquired history and both terminal alternatives, with this one polynomial and its fixed drift at each endpoint. The unequal first two readings again show that neither whole gain is zero. Finally, subtraction of the two strict x intervals gives $x_+>x_-$, and subtraction of the two strict M intervals gives, more explicitly,
+
+$$
+-0.157800222883349932<m_+-m_-<-0.157800222883349924<0.
+\tag{6.7.6}
+$$
+
+These establish all the guards and the M inequality for the selected pair. The proof uses the finite box inclusion alone; no continuation from $h=0$ to $h=1/1000$ is asserted. ∎
+

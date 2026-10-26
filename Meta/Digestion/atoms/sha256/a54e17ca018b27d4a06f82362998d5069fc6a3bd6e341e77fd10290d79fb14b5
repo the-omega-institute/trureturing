@@ -1,0 +1,27 @@
+**Theorem 5.6.1 (Exact equal-x J projection).** The equal-x J-collision projection is exactly
+
+$$
+\boxed{
+(p,v)\in D_J^=
+\iff
+p\ne24\ \land\ \exists x>0:\quad
+\delta>0,\quad
+\mathcal H(p,v;x,d_+),\quad\mathcal H(p,v;x,d_-),\quad
+\mathcal T(x;p,v)=0.
+}
+\tag{5.6.1}
+$$
+
+**Proof.** A pair supplies two different drift roots by Theorems 5.3.1 and 5.4.1, so it supplies the right-hand side by Theorem 5.5.1. Conversely, the two guarded roots reconstruct two original complete worlds with different drifts, hence different worlds, in the same entire $C(p,v)$. Theorem 5.5.1 gives their actual J equality. ∎
+
+Necessary response-plane filters in this description are
+
+$$
+\delta>0,\qquad L\ne0,\qquad B>0,\qquad \mathcal T=0.
+\tag{5.6.2}
+$$
+
+They are **not sufficient** without both $\mathcal G=0$ equations and all the strict guards in (5.3.4). In particular the cubic's real zeros are not automatically original-source points. Equation (5.6.1), rather than the naked cubic, is the incidence relation.
+
+For the independently chosen M pair, use exactly X's full inverse $\mathcal R(p,v,m)\sqcup\mathcal E(p,v,m)$, its strict guards, and two distinct reconstructed worlds. Its common $m$ is independent of the J value computed from (5.5.1).
+

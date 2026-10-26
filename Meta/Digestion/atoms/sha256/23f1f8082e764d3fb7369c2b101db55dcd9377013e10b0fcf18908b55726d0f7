@@ -1,0 +1,45 @@
+## 160. The exposed support face and the nonface optimizer family
+
+On the CPTP set $\operatorname{Tr}(SJ)\ge0$, so
+
+$$
+F_S=\{J\succeq0:\operatorname{Tr}_{\rm out}J=I,
+\ \operatorname{Tr}(SJ)=0\}
+\tag{160.1}
+$$
+
+is an exposed face. The zero trace condition is equivalent to $SJ=0$,
+so §155 describes its whole supported TP section. The dimension
+calculation and $H_*>0$ in §158 give $\dim_{\mathbb R}F_S=16$.
+It is the smallest CPTP face containing $J_*$, and hence containing
+the optimizer set. Indeed, for any $J\in F_S$, sufficiently small
+$0<\lambda<1$ makes $J_*-\lambda J\succeq0$: in supported
+coordinates this is $H_*-\lambda H\succeq0$. Then
+
+$$
+J_*=\lambda J+(1-\lambda)
+\frac{J_*-\lambda J}{1-\lambda}
+\tag{160.2}
+$$
+
+is a convex decomposition into CPTP elements of $F_S$. Every CPTP
+face containing $J_*$ must contain $J$. Since all optimizers lie in
+$F_S$ and include $J_*$, this proves the assertion.
+
+The optimizer family is convex by (153.5)–(153.6), but is not a
+CPTP face. For $\epsilon=1/100$ define
+
+$$
+H_\pm=\operatorname{diag}
+(a\pm\epsilon,\ 1-a\mp\epsilon,\ 1-b\mp k^2\epsilon,\ c,\ 1-c).
+\tag{160.3}
+$$
+
+The weakest corresponding entries are positive by (159.3):
+$a-\epsilon>89/100$, $1-a-\epsilon>1/25$,
+$1-b-k^2\epsilon>134/225$, $c>2/5$, $1-c>1/2$.
+Thus $J_\pm=BH_\pm B^\dagger$ are CPTP, supported, and have
+midpoint $J_*$. Their recovered $00$ entries are
+$(a\pm\epsilon)x_{00}$, different from (156.5), so neither is
+optimal. Their optimal midpoint disproves the face property.
+

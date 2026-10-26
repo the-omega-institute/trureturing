@@ -1,0 +1,16 @@
+**Corollary 84.5 (restricted quantifier and continuing exact-energy defect).** The supplied fixed cap changes the state-and-scale quantifier of (82.3), while retaining its literal source field. It makes (84.7) a certificate from $m_\psi$, $T[\psi]$ and independently supplied $M$, but those data, even together with all projected free heat laws, do not determine exact $V$ or $q$ on $\mathcal C_M$.
+
+Proof. Under the original normalized dilation $\psi_r(p)=r^{-5/2}\psi(\delta_{1/r}p)$,
+$$
+m_{\psi_r}(\xi)=r^{-3}m_\psi(\xi/r),\qquad
+\rho_{\psi_r}(w\mid\xi)=r^{-2}\rho_\psi(w/r^2\mid\xi/r)
+\tag{84.24}
+$$
+on positive marginal fibres. If $M_\psi$ is the essential supremum of the conditional density over those fibres, then a capped normalized state has $0<M_\psi\le M$, and $M_{\psi_r}=r^{-2}M_\psi$. Thus each such fixed state eventually leaves $\mathcal C_M$ as $r\downarrow0$. The unrestricted concentrating core family of §82.2 is not a family at fixed $M$. This restriction changes neither $\Gamma$ nor the proof or conclusion of the all-core collapse contract.
+
+For exact nonrecovery, reuse the central-translation mechanism of §82.5 with the normalized compact product inhabitant from 84.2. For $c\in\mathbb R$ set
+$$
+\psi^c(\xi,w)=u(\xi)h_R(w-c).
+$$
+Central translation preserves the measure, all $X_i$, the marginal, the kinetic value and the bound $|h_R|^2\le M$. Hence every $\psi^c$ belongs to the same $\mathcal C_M$ and has the same reader $\mathscr R$ of §82.5. The unchanged positive field gives $V[\psi^0]>0$. Its decay off the identity, already supplied in §82.4, is uniform on the translated compact support as $|c|\to\infty$; consequently $V[\psi^c]\to0$. A sufficiently large finite $c$ therefore gives distinct actual energies with identical $m,T,M$ and projected free heat observations. This is the existing translation defect with cap membership checked, not a new unrestricted escape theorem. The interval certifies the actual expectation in (82.16) but does not decode it. $\square$
+

@@ -1,0 +1,26 @@
+**Proposition 10.1 (A necessary algebraic restriction for the joint
+problem).** Every actual base in $D_M$, and therefore every base in
+$D_J\cap D_M$, lies in $\mathcal B_M\cap\mathbb R^2$. In particular
+the original strict-real joint incidence has a proper algebraic base
+restriction. This does not identify the strict-real liftable part of
+$\mathcal B_M$.
+
+Proof. For an actual distinct $M$ pair, Proposition 2.4 supplies
+the real inverse source-distance guard. Proposition 2.3 supplies
+the square slacks and has $Q_M>0$, and $p\ne24$ supplies
+the other inverse. Hence it defines a point of $\mathcal Z_M$.
+Its base belongs to $\mathcal B_M$, and Theorem 9.2 makes this
+a proper algebraic subset of the plane.
+
+A complex square slack proves nonvanishing of its source factor,
+not its ordered positivity. The finite-field norms prove generic
+complex source reconstruction and nonidentity of rational functions,
+not real inequalities. Likewise a point of the saturation variety
+may have $Q_M=0$: (8.2) describes a closure, while $hQ_M-1=0$
+would impose pointwise nonvanishing. Finally the carrier and base
+curve are algebraic necessary conditions. Their real points must
+still satisfy the original strict source inequalities, all original
+clock equations, the entire-gain degree bound, and both within-pair
+distinctness guards before they yield the original joint event.
+Thus none of these algebraic facts supplies that missing real lift. ∎
+

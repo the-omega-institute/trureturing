@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:512c54a9befac42e307a1d0d8e6075924a6848e8ff4963e715ac177c4ac51c3c
+  normalized_sha256: sha256:512c54a9befac42e307a1d0d8e6075924a6848e8ff4963e715ac177c4ac51c3c
+cas_ref: sha256:512c54a9befac42e307a1d0d8e6075924a6848e8ff4963e715ac177c4ac51c3c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 引入二变量 Hilbert Theta 的记号、求和表达式和参数域；本 atom 不含后续各观察限制的等式或收敛断言。
+    previous_atom_id: e51cfec425b4af40c012a60c5407c955e3098ea37ca03f4211314dc646e98f5d
+    next_atom_id: b729a40fcf37b69ea77183db3f8045571208df088ed0f78642a8e3e1d9dccafe

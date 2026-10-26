@@ -1,0 +1,36 @@
+**Proposition 13.6 (local costs on that invocation).** Measured on its one
+actual native run, from $c_0$ to $c_z$,
+
+$$
+\Delta T=5z,\qquad \Delta F=10z,\qquad
+\Delta A=z,\qquad \Delta n=5z,\qquad \Delta S=48z.
+$$
+
+Here $A$ and $n$ use Theorem 7.2's nonmeter ordinary-cell and primitive
+receipt conventions. No finite-bit location is constructed in this loop;
+finite control values can change. From $c_0$ through the final bound test,
+the loop uses $5d+1$ primitives and $d$ new source payload cells. Its
+following delimiter costs three more primitives and one more ordinary
+cell; setup, publication, fences, journals, copies and ACK are additional.
+For the first $R$ completed doubling invocations of Corollary 13.4 the
+Zero bodies alone, including each final test, contribute exactly
+
+$$
+\sum_{r=0}^{R-1}(5(4\cdot2^r)+1)=20(2^R-1)+R
+$$
+
+primitives and $4(2^R-1)$ source payload cells. These are lower bounds on
+whole-prefix time and total construction, not a complete-operation saving.
+
+Proof. Count the displayed five rows per successful iteration. Only EX
+constructs a nonmeter cell; each of the five rows constructs its one
+receipt. Theorem 7.2 gives $8z+8(5z)=48z$ additional modeled storage.
+The terminal RD adds a receipt but no payload. Append(sep) is EX; WR; MR
+and is outside the displayed sum. The geometric sum gives the last two
+expressions. Entire-run resource accounting still uses §7 or Proposition
+11.4 on that very execution, including all input acquisition, allocation,
+directory/source addressing, row writers/readers, local copies, checking,
+return and retained dead material. The selector bit count is not a
+pointer-length bound, an executable decoder price, physical memory bound
+or proof of total-resource optimality. $\square$
+

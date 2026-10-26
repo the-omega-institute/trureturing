@@ -1,0 +1,28 @@
+**Theorem 14.2 (no literal common initialized descriptor/bank entry).**
+Under this unchanged-entry hypothesis no physical state satisfies both
+original ready-stream invariants. If the separate owner tokens are kept,
+CAP has no right to read the RCA-owned lane. Identifying those tokens does
+not repair the stream grammar.
+
+Proof. CAP Definition 6.1's ReadDescriptor begins Home; MR. Its first RD
+recognizes terminal R or the first tag bit. Every nonempty valid descriptor
+stream starts with the literal tag `00` followed by sep, ten bit-word
+fields each followed by sep, then seal. Hence at this origin the first
+symbol after L is R for an empty stream or 0 for a nonempty one. There is
+no leading-F branch. RCA initializes bank B by appending F; later bank
+versions are appended and no old sentinel is overwritten. Its first
+ordinary symbol at that same origin is therefore F, including when B has
+no completed version yet. The supplier alphabet has distinct symbols
+F, R and 0. The two ready invariants are disjoint.
+
+Ownership gives an additional interface distinction: RCA's installation
+transfers the lane token to its compiler owner. With that token retained,
+a CAP verifier read is unexecuted for lack of permission. If a proposed
+literal identification instead makes the token available, the original
+CAP tag reader encounters F, which is neither terminal R nor the first
+bit of `00`; its specified wrong-kind test takes metadata-fault. This is
+a conditional prediction from the impossible common-entry hypothesis,
+not a report that any combined runtime has been installed or executed.
+A different paid placement, origin or translation may avoid the conflict;
+none is supplied by calling the two tapes the same port. $\square$
+

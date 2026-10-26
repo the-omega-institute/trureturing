@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:956f35fe5909ca4d50d2f82100d9aa77c5e578913924f8c7a2bc725113273cb7
+  normalized_sha256: sha256:956f35fe5909ca4d50d2f82100d9aa77c5e578913924f8c7a2bc725113273cb7
+cas_ref: sha256:956f35fe5909ca4d50d2f82100d9aa77c5e578913924f8c7a2bc725113273cb7
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_constant_hidden_drift
+    target_statement_id: sha256:2de6d5f6e6eba134d37cd42c93580fcbb6188f42da5827c9fb6688a2d6e4f052
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_error_and_recursions
+    target_statement_id: sha256:16cda93fd175d8d6005b7e0933b616a25707ff4ea86feaf43c44e9328d865c40
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_inverse_data
+    target_statement_id: sha256:4729219371f6d168ae0d89ef63104f1315403495f5b10a3bbcd68a3ab25ff357
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.finite_power_bound
+    target_statement_id: sha256:66b5eb1a43ef0288a7847e4c1f246227b6cde26a1f8bcf6e6ad5269dc2857766
+receipts:
+  unresolved_subitems: []

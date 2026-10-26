@@ -1,0 +1,78 @@
+**Definition 1.3 (One word and exact public constants).** Fix the chronological word
+
+$$
+w=JMJMMM,
+\tag{1.9}
+$$
+
+with reads $0,\ldots,6$. Put $Q_0=I_2$, $Q_j=E_j\cdots E_1$, $T_j=A_{E_j}\cdots A_{E_1}$, and stack the seven rows
+
+$$
+L_j=\ell_j^TT_j
+=(1,\operatorname{vec}(Q_j^T)^T,j\operatorname{vec}(Q_j^T)^T,
+j^2\operatorname{vec}(Q_j^T)^T,j^3\operatorname{vec}(Q_j^T)^T)
+\tag{1.10}
+$$
+
+into $L\in\mathbb R^{7\times17}$. Define
+
+$$
+\begin{gathered}
+C_7=I_7+\tfrac12LL^T,\qquad S=C_7^{-1/2},\\
+y(p)=(0,24,147/5,24,18,p,f(p))^T,\qquad
+\gamma(p)=Sy(p).
+\end{gathered}
+\tag{1.11}
+$$
+
+Here the square root is the positive definite square root; $C_7$ is positive definite because $x^TC_7x=\|x\|^2+\|L^Tx\|^2/2>0$ for $x\ne0$.
+
+For $n\ge0$ and $0\le k<2^n$, let
+
+$$
+a_{nk}=15+\frac{17k}{2^n},\qquad d_{nk}=15+\frac{17(k+1)}{2^n}.
+\tag{1.12}
+$$
+
+Order these pairs first by $n$ and then by $k$. Choose the first pair for which
+
+$$
+f\left(\frac{a_{nk}+d_{nk}}2\right)
+\ne\frac{f(a_{nk})+f(d_{nk})}2,
+\tag{1.13}
+$$
+
+and call its endpoints $a_*,d_*$. Put
+
+$$
+A=\gamma(a_*),\qquad D=\gamma(d_*),\qquad Z=(A+D)/2,
+\tag{1.14}
+$$
+
+and let $c_*$ be the least zero on $[a_*,d_*]$ of
+
+$$
+H(p)=\|\gamma(p)-A\|^2-\|\gamma(p)-D\|^2.
+\tag{1.15}
+$$
+
+Finally set
+
+$$
+\begin{gathered}
+B=\gamma(c_*),\qquad q=\tfrac12\|D-A\|,\qquad b=\|B-Z\|,\\
+u=(D-A)/(2q),\qquad v=(B-Z)/b.
+\end{gathered}
+\tag{1.16}
+$$
+
+Complete $u,v$ to an orthonormal basis of $\mathbb R^7$ by Gram–Schmidt on the standard basis in its usual order, omitting each zero residual. Let $O$ have these basis vectors as rows, beginning with $u^T,v^T$, and define the whole-record affine map
+
+$$
+\mathcal F(r)=O(Sr-Z),\qquad
+\mathcal F^{-1}(s)=C_7^{1/2}(O^Ts+Z).
+\tag{1.17}
+$$
+
+The existence of the chosen pair and root, and $q,b>0$, are conclusions of Theorem 2.1. These selection rules define mathematical constants. They do not posit a decision procedure for equality of real numbers, an arithmetic acquisition bound or a bounded-precision implementation.
+

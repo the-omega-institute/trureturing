@@ -1,0 +1,51 @@
+**Lemma 10.2 (Exact full-parent correspondence).** The zero set
+$\{H=0\}\subset\Omega$ is in analytic one-to-one correspondence with
+the entire strict parent $\mathcal H$ by
+
+$$
+(r,b,e)\longmapsto
+\left(\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ g_{r,b,e},24+e\right).
+\tag{10.6}
+$$
+
+This correspondence uses the coefficients of the whole polynomial,
+including zero leading coefficients, and (10.5) gives all four later
+responses without changing the original observations.
+
+Proof. This is the converse of Definition 1.2, equivalently O,
+Theorem 2.1, in the present notation. Its original-row verification can
+also be read directly from (10.2). At clocks $0,1,2,3$, the traces
+$(1,j,T,n)$ give $0,24,147/5,24$. Interpolation gives
+
+$$
+g_{r,b,e}(4)=-G_0+4G_1-6G_2+4G_3,
+\qquad
+g_{r,b,e}(4)-\frac{18-(24+e)}U=H.
+\tag{10.7}
+$$
+
+For the constant term of the second identity one uses
+
+$$
+24-\frac{162}{5T}+\frac6U
+=\frac{24}{5}(b-1/8)\kappa.
+$$
+
+Consequently the original fourth-clock response is $18$ precisely on
+$H=0$. The other responses follow from (1.10) and (10.4). If the
+constructed gain were identically zero, the original readings at clocks
+zero and one would both be $d$, contradicting $0\ne24$. Thus its
+nonzeroness follows from the original data and imposes no sample or
+leading-coefficient condition. Conversely every complete parent world
+fixes $(r,b,e)$ and all four entries (10.2), which uniquely determine
+its entire gain by (10.3).
+
+All rational denominators $b,j,n,T,U$ are positive on $\Omega$.
+Interpolation uses only the nonzero differences of the fixed nodes
+$0,1,2,3$. Hence (10.6), with four padded gain coefficients, is
+analytic; its inverse reads $r,b$ from $P$ and $e=d-24$. This also
+identifies the local parent topology and its tangent spaces with those
+of $H=0$. No division by $e$, $d$, $\Lambda$, a gain sample, a gain
+coefficient or a root difference is involved. ∎
+

@@ -1,0 +1,51 @@
+**Theorem 229.1 (full image, attainment and monotone inverse).** The images
+of the declared native family and its closed extension are exactly
+
+$$
+p(D)=(m,M),\qquad p(\Delta)=[m,M],\qquad
+p(\partial\Delta)=[m,M].
+\tag{229.1}
+$$
+
+The endpoint $m$ is attained only at $(0,1)$ and $M$ only at $(1,0)$.
+Every other value is attained both in $D$ and on $\partial\Delta$.
+The third vertex has the previously established value $p(0,0)=1/6$,
+strictly between the endpoints.
+
+For $y\in[m,M]$, the boundary inverse is the unique solution of
+
+$$
+p(s,1-s)=y,\qquad 0\le s\le1.
+\tag{229.2}
+$$
+
+For $m<y<M$, choose any integer $n\ge2$ large enough that, with
+$\varepsilon=1/n$,
+
+$$
+p(0,1-\varepsilon)<y<p(1-\varepsilon,0).
+\tag{229.3}
+$$
+
+Then an interior inverse is the unique $s\in(0,1)$ satisfying
+
+$$
+p\big((1-\varepsilon)s,(1-\varepsilon)(1-s)\big)=y.
+\tag{229.4}
+$$
+
+Proof. Positive-root continuity and (228.9) make $p(s,1-s)$ continuous
+and strictly increasing from $m$ to $M$. This proves boundary coverage
+and uniqueness in (229.2). Endpoint uniqueness in Theorem 228.1 excludes
+both endpoints from $D$.
+
+Continuity at the two child vertices guarantees an $n$ satisfying
+(229.3). Along the segment in (229.4), the derivative is a positive
+multiple of $\partial_u p-\partial_v p$, so it is strictly positive.
+The intermediate value theorem gives a unique $s\in(0,1)$. Both
+coordinates are positive and their sum is $1-\varepsilon<1$, proving
+interior realization. These scalar inversions use the unique root in
+(227.4); they do not choose an arbitrary square-root branch. The endpoint
+formulas and interior inverses establish both exclusion and coverage.
+The claim at $(0,0)$ follows from VI §140 and the unique extrema.
+

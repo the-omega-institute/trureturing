@@ -1,0 +1,38 @@
+**Proposition 82.2 (semibounded point-source stability forces zero Levi leakage).** Under the positive-Green contract, semiboundedness of $q_0$ forces the Levi image $[V_1,V_1]=V_2$ to vanish. In this stratified class, a nonabelian group has $V_2\ne0$ and hence $Q\ge3+2=5$. Choose a nonzero normalized $\psi\in\mathcal D_0$ supported in a compact homogeneous annulus away from $e$, and set
+$$
+\psi_r(p)=r^{-Q/2}\psi(\delta_{1/r}p),\qquad 0<r<1.
+$$
+Then
+$$
+\|\psi_r\|_2=1,\qquad T[\psi_r]=r^{-2}T[\psi],\qquad
+V[\psi_r]=r^{2-Q}V[\psi].
+\tag{82.2}
+$$
+Since $V[\psi]>0$, for $Q\ge5$,
+$$
+q_0[\psi_r]=aT[\psi]r^{-2}-gV[\psi]r^{2-Q}\longrightarrow-\infty.
+\tag{82.3}
+$$
+Thus no semibounded closed extension agreeing with $q_0$ on this core exists. Conversely, if the Levi image vanishes, the stratification relations force all higher layers to vanish, so $G$ is abelian; in the rank-three simply connected case it is $\mathbb R^3$. This conclusion excludes transverse brackets inside the declared contract and does not turn a local three-dimensional leaf into an ambient space. In the existing §22.3 scope, the zero-Levi case supplies only the corresponding local Frobenius leaves; it supplies neither unrestricted flow execution nor a spatial realization.
+
+Proof. The stratification gives $V_j=[V_1,V_{j-1}]=0$ for $j\ge2$ once $V_2=0$. Under dilation, $X_i$ has degree one and $\Gamma$ degree $2-Q$, so the displayed identities follow by change of variables. If $V_2\ne0$, at least one second-layer direction contributes weight two and $Q\ge5$; the negative term in (82.3) has strictly larger order than $r^{-2}$. The core values are therefore unbounded below, which rules out every semibounded closed form agreeing on that core. $\square$
+
+The abelian intermediate is the classical Coulomb form, not a new theorem of this appendix. For this intermediate choose coordinates orthonormal for the horizontal inner product and Lebesgue Haar normalization $d\mu=dx$, so $L=-\Delta$. Put $\Gamma_3(x)=(4\pi|x|)^{-1}$, $b=g/(4\pi)$ and $\kappa=b/(2a)=g/(8\pi a)$. On $H^1(\mathbb R^3)$, Hardy/KLMN form theory and integration by parts give
+$$
+q_0[u]+a\kappa^2\|u\|_2^2
+ =a\left\|\nabla u+\kappa\frac{x}{|x|}u\right\|_2^2.
+\tag{82.4}
+$$
+The form bound is $q_0[u]\ge -a\kappa^2\|u\|_2^2$; for normalized states the lower energy is $-a\kappa^2=-b^2/(4a)$, attained in the full $H^1$ form domain by
+$$
+ u_0(x)=\left(\frac{\kappa^3}{\pi}\right)^{1/2}e^{-\kappa|x|}.
+$$
+For another fixed Haar normalization $d\mu=c\,dx$, $c>0$, the same unit point source requires $\Gamma_3(x)=(4\pi c|x|)^{-1}$; the finite attained negative ground-state conclusion holds with $b=g/(4\pi c)$, $\kappa=b/(2a)$ and $u_0(x)=(\kappa^3/(c\pi))^{1/2}e^{-\kappa|x|}$. This minimizer is not in the punctured compactly supported core; (82.4) is used only as a mature intermediate in excluding the nonabelian branch. The critical Hardy weight and $\Gamma$ itself are different objects; see Kombe, *Sharp Hardy type inequalities on the Carnot Group*, [arXiv:math/0501522](https://arxiv.org/abs/math/0501522), §2 and Theorem 4.1. Bureš--Siegl, *Hydrogen atom in space with a compactified extra dimension and potential defined by Gauss' law*, [arXiv:1409.8530](https://arxiv.org/abs/1409.8530), §2 treats a Euclidean four-dimensional inverse-square threshold and a different compactified domain; it does not identify topological dimension four or $Q=5$ with (82.4).
+
+The exterior gradient integral does not discriminate this class. On a fixed homogeneous annulus $A$ away from $e$, $\nabla_H\Gamma$ has degree $1-Q$, so
+$$
+\int_{\delta_R A}|\nabla_H\Gamma|^2d\mu
+ =R^{2-Q}\int_A|\nabla_H\Gamma|^2d\mu.
+$$
+The dyadic sum over exterior annuli is finite for $Q>2$. This concerns only the exterior of the identity, not point-source self-energy, and it does not alter (82.3).
+

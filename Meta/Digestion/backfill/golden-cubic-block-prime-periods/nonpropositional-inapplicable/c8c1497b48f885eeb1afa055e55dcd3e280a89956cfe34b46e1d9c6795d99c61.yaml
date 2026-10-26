@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8c1497b48f885eeb1afa055e55dcd3e280a89956cfe34b46e1d9c6795d99c61
+  normalized_sha256: sha256:c8c1497b48f885eeb1afa055e55dcd3e280a89956cfe34b46e1d9c6795d99c61
+cas_ref: sha256:c8c1497b48f885eeb1afa055e55dcd3e280a89956cfe34b46e1d9c6795d99c61
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and retained entry-rank and lcm notation. No ternary bound is asserted.
+    previous_atom_id: 49abf416a249c07571b8a9d3d88740ec6cc99649b0bbaa7ec6cd671b07b8eb8a
+    next_atom_id: 1c93a83117045295f70149fad0da3ac2450864060d7c503f4c22ecab8317adb2

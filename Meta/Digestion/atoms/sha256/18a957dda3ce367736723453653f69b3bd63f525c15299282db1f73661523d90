@@ -1,0 +1,44 @@
+**定理 93.2（统一双 Lipschitz 桥不能落入固定 $\mathbb R^3$）。** 不存在满足定义 93.1 的统一双 Lipschitz 桥。
+
+**证明。** native_area_cube 的平方距离分支给出，对 $A\ne B$，
+
+$$
+\|a_{n,A}-a_{n,B}\|^2
+=
+\frac{2\,|A\mathbin\triangle B|}{C_n^2}.
+\tag{93.3}
+$$
+
+因此不同点的最小距离为
+
+$$
+\lambda_n=\frac{\sqrt2}{C_n},
+$$
+
+而 normalized_cube_diameter 给出直径
+
+$$
+D_n=\frac{\sqrt{2K_n}}{C_n}.
+$$
+
+由下界，半径 $c\lambda_n/2$ 的三维球在各个 $\Phi_n(A)$ 周围两两不交。固定一个标签 $A_0$，由上界它们都包含在半径
+
+$$
+CD_n+\frac{c\lambda_n}{2}
+$$
+
+的球内。比较三维体积并约去 $(c\lambda_n/2)^3$，得到
+
+$$
+2^{K_n}
+\le
+\left(1+2\frac Cc\frac{D_n}{\lambda_n}\right)^3
+=
+\left(1+2\frac Cc\sqrt{K_n}\right)^3.
+\tag{93.4}
+$$
+
+但 $K_n=F_{n-2}$ 无界，左侧按 $2^{K_n}$ 增长，右侧仅按 $K_n^{3/2}$ 增长，故对充分大的 $n$ 矛盾。证毕。
+
+这个结论的对象和量词必须保留：它针对归一化面积顶点、固定欧氏三维目标、跨所有 $n$ 的统一失真常数。它不声称单个有限族不能注入 $\mathbb R^3$，也不声称任意非线性桥都不存在。
+

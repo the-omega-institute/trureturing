@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:186128cc0a1795465063093b8aa00ea8ccdeec8279dc6eb81c493684f983d8ab
+  normalized_sha256: sha256:186128cc0a1795465063093b8aa00ea8ccdeec8279dc6eb81c493684f983d8ab
+cas_ref: sha256:186128cc0a1795465063093b8aa00ea8ccdeec8279dc6eb81c493684f983d8ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces notation L and a and assumes c>1 and an error envelope; asserts no conclusion or existence of that envelope.
+    previous_atom_id: 699bc3561251f22acf9bec91187536bcc0cbf92c27b7c022e3ebab2ca2a52f10
+    next_atom_id: bf940730e6fd36b0cecc4e3622fc328d68c16aef7544c535fa448b2b99795c26

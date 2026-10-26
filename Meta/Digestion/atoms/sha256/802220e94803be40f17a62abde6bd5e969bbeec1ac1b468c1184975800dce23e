@@ -1,0 +1,22 @@
+**Definition 1.3 (causal policies and finite transcripts).** Let $\omega$ be
+an independent common-law seed in a standard Borel probability space
+$(\Omega_0,\lambda)$. A policy $\pi$ is a measurable causal map whose input at
+step $n$ is
+
+$$
+h_{n-1}=(Z,\omega,(c_1,\tau_1,Y_1),\ldots,(c_{n-1},\tau_{n-1},Y_{n-1})).
+$$
+
+It either stops and emits a report in $\{\mathsf E,\mathsf S\}$, or selects
+$(c_n(h_{n-1}),\tau_n(h_{n-1}))$ in the menu of Definition 1.2. The same
+measurable map is used for every $W$ and every $\boldsymbol\eta$; $Z$ and the
+previous retained values are inputs, not hidden parameter values. A finite
+$N$-step transcript retains the first $N$ selected settings and outputs,
+padding a stopped branch by a cemetery symbol $\dagger$. Policies that stop
+earlier pay only their executed steps; a policy advertised with bound $N$
+must still provision the corresponding finite menu.
+
+Every measurable policy is an information relaxation containing any installed
+finite controller. It does not assert that an arbitrary measurable map is
+computable, calibrated, or physically implemented.
+

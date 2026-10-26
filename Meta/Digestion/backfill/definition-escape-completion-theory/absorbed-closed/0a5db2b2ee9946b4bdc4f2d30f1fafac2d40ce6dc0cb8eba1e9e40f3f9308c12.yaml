@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0a5db2b2ee9946b4bdc4f2d30f1fafac2d40ce6dc0cb8eba1e9e40f3f9308c12
+  normalized_sha256: sha256:0a5db2b2ee9946b4bdc4f2d30f1fafac2d40ce6dc0cb8eba1e9e40f3f9308c12
+cas_ref: sha256:0a5db2b2ee9946b4bdc4f2d30f1fafac2d40ce6dc0cb8eba1e9e40f3f9308c12
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transport/OverreachWithoutLicense.overreach_without_license
+    target_statement_id: sha256:2fede70f1f99cffe0924132a41c6f62afc7c64e73b2e10427706582f20b46f6e
+  - gid: D5/S3/ConceptDynamics/Transport/TransportCertificateValidity.receipt_matches_original_coordinates
+    target_statement_id: sha256:180cf98fca503198cf65d12d4483ba57629e066a8b7d80b7e13d7918f5d9ad17
+  - gid: D5/S3/ConceptDynamics/Transport/TransportCertificateValidity.valid_transport_cert_criterion
+    target_statement_id: sha256:f6e284c62c2da0016f8a6ff4ea58b9c8844ee37ed981117150b609276d01508a
+receipts:
+  unresolved_subitems: []

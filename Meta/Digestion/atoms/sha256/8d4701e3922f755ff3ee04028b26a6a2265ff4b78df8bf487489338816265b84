@@ -1,0 +1,127 @@
+**Definition 28.1 (The exhaustive proportional chart).** Put
+
+$$
+q=r(1-r),\qquad t=\frac{b}{q},\qquad b=qt,
+$$
+
+on $0<r<1$, $b>0$. Define
+
+$$
+\begin{aligned}
+J_0&=1+qt^2,&N_0&=J_0+rt,&U&=1+2qt,\\
+T&=1+qt,&V_0&=N_0+tU,&Z&=J_0N_0V_0.
+\end{aligned}
+$$
+
+Then
+
+$$
+j=\frac{J_0}{t},\qquad n=\frac{N_0}{t},\qquad V=\frac{V_0}{t}.
+\tag{28.1}
+$$
+
+The change of coordinates is a bijection from the entire strict positive
+source domain to $(r,t)\in(0,1)\times(0,\infty)$; its inverse is
+$b=r(1-r)t$ and $r(1-r)/b=1/t$.
+
+The polynomial equation for the external branch in these coordinates is
+
+$$
+\begin{aligned}
+G(r,t)={}&14q^3t^6+(95-73r)q^2t^5+(47r^2-39r+30)qt^4\\
+&+r(147r^2-232r+105)t^3\\
+&+2(44r^2-55r+15)t^2-64rt-32.
+\end{aligned}
+\tag{28.2}
+$$
+
+Direct expansion gives
+
+$$
+H(r,qt)=q^3G(r,t).
+\tag{28.3}
+$$
+
+For the whole-gain lift set
+
+$$
+\delta=8qt-1,
+$$
+
+and define
+
+$$
+\begin{aligned}
+D={}&20Z+T(4Z-15tN_0V_0-10tJ_0V_0+tJ_0N_0),\\
+A_6={}&4Z-9tN_0V_0+10tJ_0V_0-9tJ_0N_0,\\
+A_7={}&16Z-35tN_0V_0+35tJ_0V_0-21tJ_0N_0,\\
+D_0&=24D-12\delta Z,\\
+G_6&=24D-3\delta A_6,\\
+G_7&=384D-12\delta A_7,\\
+S_6&=2tU+N_0,&S_7&=3tU+2N_0.
+\end{aligned}
+$$
+
+Let $h(s)=\frac85(s-1)(s-3)(s-5)$ and let $v$ be the cubic of O,
+Definition 13.1, with values $(-1,-1/j,-1/n,-1/V)$ at the nodes
+$0,1,3,5$. On every strict zero of $G$ the complete world supplied by
+O, Theorem 13.2, is exactly
+
+$$
+\epsilon=-\frac{12\delta Z}{D},\qquad d=24+\epsilon,\qquad
+g=h+\epsilon v.
+\tag{28.4}
+$$
+
+Indeed, O (13.2) gives $E_2=1+Tv(2)$ and direct substitution gives
+
+$$
+D=20J_0N_0V_0E_2.
+\tag{28.5}
+$$
+
+Thus $D\ne0$ on the strict graph by O, Theorem 13.2. The same
+substitution gives
+
+$$
+v(6)=\frac{A_6}{4Z},\qquad v(7)=\frac{A_7}{5Z},\qquad
+g(6)=\frac{G_6}{D},\qquad g(7)=\frac{G_7}{5D}.
+\tag{28.6}
+$$
+
+The actual sixth-M and seventh-M responses in (25.1)--(25.2) therefore
+are
+
+$$
+u=\frac{tD_0+S_6G_6}{tD},\qquad
+m=\frac{5tD_0+S_7G_7}{5tD}.
+\tag{28.7}
+$$
+
+Define the integer polynomials
+
+$$
+\begin{aligned}
+P={}&2(8N_0-19t)D\\
+&+\delta\{19tZ+6S_6A_6-S_7A_7\},\qquad B=tD.
+\end{aligned}
+\tag{28.8}
+$$
+
+The cleared numerator identity is
+
+$$
+5tD_0+S_7G_7-24(tD_0+S_6G_6)=12P.
+	ag{28.9a}
+$$
+
+so expansion of (28.7) gives the actual-response identity
+
+$$
+m-\frac{24}{5}u=\frac{12}{5}\frac{P}{B}.
+\tag{28.9}
+$$
+
+No gain sample, drift, leading coefficient, gain root, source label or
+unobserved ratio is divided out in (28.4)--(28.9).
+

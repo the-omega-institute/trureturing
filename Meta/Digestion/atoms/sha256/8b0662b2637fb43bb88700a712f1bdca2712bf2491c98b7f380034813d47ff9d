@@ -1,0 +1,113 @@
+## 35. Completion of the singular exclusion and the regular remainder
+
+Proof of Theorem 31.2, completion. An actual unequal-width pair with
+shared $p,v,m,d$ satisfies (32.22). If $\Delta=0$, then $Q=0$.
+The $d=0$ possibility was explicitly contradicted before taking a
+ratio in Lemma 33.1. For $d\ne0$ that lemma treated both roots
+$\kappa_\pm$, including the impossible denominator
+$1-\kappa\pi=0$, and forced one actual endpoint into the open
+rectangle (33.1). Lemma 34.1 excludes even its closed rectangle.
+Therefore $\Delta\ne0$. The actual off-$24$ guard (32.8)–(32.9)
+gives $e\ne0$, and unequal widths give $h\ne0$. The ordered
+factorization (32.16) now proves (31.4). ∎
+
+The resulting restriction can be expressed without discarding the
+remaining actual-world obligations. In the regular response branch,
+(32.22) and (32.20) necessarily give
+
+$$
+\begin{gathered}
+L_*=-\frac Q\Delta,\\
+\left(8(18-d)+\frac{91(d-24)}{x_1x_2}\right)L_*
+=11d-51k,
+\end{gathered}
+\tag{35.1}
+$$
+
+because the defining reciprocal relation gives
+
+$$
+R_*=-\frac{L_*}{x_1x_2},\qquad
+w x_1x_2=x_2-x_1,\qquad x_1,x_2>0.
+\tag{35.2}
+$$
+
+Invertibility of $\mathsf H$ gives a unique vector solving its
+linear response equations for specified ordered $T_1,T_2,d$.
+An algebraic solution of those equations need not satisfy (35.2),
+and neither condition by itself supplies actual source endpoints.
+For each endpoint the exact lift must still have
+
+$$
+\begin{gathered}
+b_i=T_i-1>0,\qquad n_i=x_i(2T_i-1),\\
+0<r_i<1,\qquad
+r_i^2-(b_i+1)r_i+b_i(n_i-b_i)=0,\\
+j_i=n_i-r_i>0,\qquad
+(d-24)\Lambda_i+
+\frac{6(8b_i-1)(5b_i+2)}{5T_iU_i}=0.
+\end{gathered}
+\tag{35.3}
+$$
+
+The whole polynomial for that endpoint is (32.5), with its one drift
+$d$, and its actual original responses must realize the proposed
+shared $p,v,m$ via (32.4). These conditions are sufficient as well as
+necessary for the proposed actual pair: (32.1)–(32.2) identify the
+strict source, (32.5)–(32.7) supply its complete parent world, and the
+remaining original response equalities place both worlds in the same
+child with the same terminal $M$ value. Unequal widths ensure that
+the two complete triples are distinct. Neither a complex solution, a
+boundary source nor a projected eliminant root can replace these
+requirements. No solution of all these conditions is supplied here,
+and their incompatibility on $\Delta\ne0$ remains unproved.
+
+The fixed-width assertion needed for a distinct-pair conclusion is
+already Theorem 4.1 and is reused directly. Together with Theorem 31.2
+it implies that every distinct equal-$M$ pair in an off-$24$ child
+whose two drifts agree has unequal widths and belongs to this
+regular ordered response branch. Fixed-drift injectivity remains
+open; no assertion that all equal-$M$ pairs have distinct drifts
+follows.
+
+The theorem applies to every entire $C(p,v)$ with $p\ne24$, without
+a source or companion box, a pair-distance floor or a bound on an
+auxiliary chart slope. It therefore applies unchanged to same-drift
+$M$ pairs anywhere in the entire children over any specified actual
+$J$ arc of (10.1), including every parameter of such an arc in
+$[10,34]\setminus\{24\}$. This use of universal quantification does
+not supply $M$ injectivity on that arc: the regular $\Delta\ne0$
+branch remains unresolved there as well.
+
+Neither individual $\Lambda_i$ was divided out. The original model
+continues to admit sampled zeros, gain degree drops, repeated gain
+roots and zero drift; the $d=0$ contradiction concerns only
+compatible ordered response singular pairs. No assumption has been
+added to unused companions. The original problem (1.2) still asks
+for two independently selected distinct pairs in one entire child,
+one with equal terminal $J$ values and the other with equal terminal
+$M$ values. The pairs may overlap or be disjoint, and their two
+common terminal values are independent. Theorem 31.2 supplies no
+actual $M$ pair, no joint witness and no full-domain exclusion.
+The original joint question remains open.
+
+The complete-world semantics and undivided parent correspondence used
+in this proof are those of
+[O, Definitions 1.1–1.3 and Theorems 2.1–2.2](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+specialized to $\beta=1/8$. The response reductions reuse
+[SIV, Theorem 8.2](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md)
+and this volume's (5.3), without importing SIV's regional estimates
+as global hypotheses. This volume's Theorem 4.1 supplies the separate
+fixed-width injectivity result. These same statements occur at the
+immutable [SVII source](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md).
+Fixed-node interpolation is the classical formula of J.-P. Berrut
+and L. N. Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review
+46, 501–517, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+Only this interpolation tool is attributed to that reference.
+The source-specific contribution is the compatible singular-parameter
+classification, the original-clock closed-rectangle exclusion and
+the resulting ordered determinant nonvanishing. It is a deduction
+from the displayed source and response equations, with no assertion
+of literature priority or a general singular-matrix exclusion theorem.
+

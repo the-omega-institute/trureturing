@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:164bd5d80f8db82482001e73fa67b56468bca1ff64421a5f6b1d192fd0a1bf9f
+  normalized_sha256: sha256:164bd5d80f8db82482001e73fa67b56468bca1ff64421a5f6b1d192fd0a1bf9f
+cas_ref: sha256:164bd5d80f8db82482001e73fa67b56468bca1ff64421a5f6b1d192fd0a1bf9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列已有推导所用前提与解释范围，不断言这些前提之外的新数学性质。
+    previous_atom_id: 1b726609cb1a1fd525795642a7a7e9121278afc366b97a5b5dd1e46c5d8604b7
+    next_atom_id: e9f84cac04175cd3aa92cf3ab43132589ba8fc43abbf96f2f1492b60ffd0bd29

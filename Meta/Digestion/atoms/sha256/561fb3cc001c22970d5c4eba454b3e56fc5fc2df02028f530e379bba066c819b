@@ -1,0 +1,20 @@
+**定义 7.1（参数化实际碰撞方程）。** 设
+
+$$
+F_\lambda(b_0,r_1,b_1)=
+\begin{pmatrix}
+ p(\lambda,b_0)-p(r_1,b_1)\\
+ v(\lambda,b_0)-v(r_1,b_1)\\
+ m(\lambda,b_0)-m(r_1,b_1)
+\end{pmatrix}.
+$$
+
+项目在有理盒 $X$ 和有理矩阵 $C_0$ 上证明
+
+$$
+\sup_{x\in X}\|I-C_0D_xF_{\lambda _0}(x)\|_\infty
+\le576\cdot10^{-32}<1,
+$$
+
+以及严格自映射和全部来源守卫。
+

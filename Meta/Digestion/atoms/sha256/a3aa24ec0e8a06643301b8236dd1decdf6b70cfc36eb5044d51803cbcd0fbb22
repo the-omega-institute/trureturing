@@ -1,0 +1,26 @@
+## 17. A finite rational interval proof of separation
+
+Every finite decimal in this section denotes its exact rational value.
+For intervals, addition and multiplication use exact endpoints, taking
+the minimum and maximum of all four endpoint products. If $0$ is
+excluded, $[x_-,x_+]^{-1}=[1/x_+,1/x_-]$. These are inclusion
+operations over the reals [7]; they require no floating-point rounding.
+
+Here is an explicit evaluation prescription and its rational inputs.
+For each interval $[l,u]$ in (15.3), set
+
+$$
+\begin{aligned}
+j_l&=1/8+8l(1-u),&j_u&=1/8+8u(1-l),\\
+n_l&=j_l+l,&n_u&=j_u+u.
+\end{aligned}
+\tag{17.1}
+$$
+
+The exact numerators of these endpoints, over the common denominator
+$10^{12}$, are
+
+| Root interval | $10^{12}j_l$ | $10^{12}j_u$ | $10^{12}n_l$ | $10^{12}n_u$ |
+| --- | ---: | ---: | ---: | ---: |
+| $r_-$ | $1058118247680$ | $1058126247680$ | $1192933247680$ | $1192942247680$ |
+| $r_+$ | $829271199600$ | $829279199600$ | $1731720199600$ | $1731729199600$ |

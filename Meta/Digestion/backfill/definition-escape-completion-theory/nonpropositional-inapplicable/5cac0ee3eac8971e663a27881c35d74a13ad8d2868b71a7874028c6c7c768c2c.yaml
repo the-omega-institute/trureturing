@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cac0ee3eac8971e663a27881c35d74a13ad8d2868b71a7874028c6c7c768c2c
+  normalized_sha256: sha256:5cac0ee3eac8971e663a27881c35d74a13ad8d2868b71a7874028c6c7c768c2c
+cas_ref: sha256:5cac0ee3eac8971e663a27881c35d74a13ad8d2868b71a7874028c6c7c768c2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题、版本状态、写入纪律和主张边界，非数学命题。
+    previous_atom_id: null
+    next_atom_id: 4feb09db7f45eb3d96d105a59bb89997dd0823013f2c93dc87953681e930d5b2

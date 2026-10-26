@@ -15,6 +15,9 @@ proof_shape: subst_inner_agree: bind-only; consumer: D5.S1.Recurrence.Invariants
 proof_shape: subst_constant: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19951. -/
+
+/- Escape audit unfinished for mersenne_zero, mersenne_step: https://github.com/the-omega-institute/trureturing/issues/19834. -/
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.FieldTheory.Finite.Basic
@@ -247,7 +250,7 @@ theorem generating_unique (f : PowerSeries ℤ)
   rw [step_unique (hb.trans normalized_constant.symm) hf normalized_fixed]
   rfl
 
-private theorem square_subst (f : PowerSeries (ZMod 2)) :
+theorem square_subst (f : PowerSeries (ZMod 2)) :
     f ^ 2 = f.subst (X ^ 2) := by
   have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod 2)
     2 (by decide) (f := f)
@@ -310,14 +313,14 @@ theorem mod_two_fixed :
   change f = X + X * f.subst (X ^ 2)
   exact hfixed.trans (by rw [hsquare, mul_add, mul_one, square_subst f])
 
-private theorem mersenne_zero : ¬ ∃ k : ℕ, 1 ≤ k ∧ 0 = 2 ^ k - 1 := by
+theorem mersenne_zero : ¬ ∃ k : ℕ, 1 ≤ k ∧ 0 = 2 ^ k - 1 := by
   rintro ⟨k, hk, he⟩
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   have hp : 0 < 2 ^ j := pow_pos (by omega) _
   rw [pow_succ] at he
   omega
 
-private theorem mersenne_step (n : ℕ) (hn : 0 < n) :
+theorem mersenne_step (n : ℕ) (hn : 0 < n) :
     (∃ k : ℕ, 1 ≤ k ∧ n + 1 = 2 ^ k - 1) ↔
       2 ∣ n ∧ ∃ k : ℕ, 1 ≤ k ∧ n / 2 = 2 ^ k - 1 := by
   constructor
@@ -340,7 +343,7 @@ private theorem mersenne_step (n : ℕ) (hn : 0 < n) :
     rw [pow_succ]
     omega
 
-private theorem lacunary_coeff (f : PowerSeries (ZMod 2))
+theorem lacunary_coeff (f : PowerSeries (ZMod 2))
     (h0 : constantCoeff f = 0) (h1 : coeff 1 f = 1)
     (hf : f = X + X * f.subst (X ^ 2)) (n : ℕ) :
     coeff n f = 1 ↔ ∃ k : ℕ, 1 ≤ k ∧ n = 2 ^ k - 1 := by

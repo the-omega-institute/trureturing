@@ -9,6 +9,18 @@ internal sealed class OccupationPartialTransposeSpectralDocument : IScribeDocume
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal occupation operators and the exact qudit partial-estimation frontier.",
         H("OccupationPartialTransposeSpectral"), Blocks(
+            Describe.Lean(DescribeId.Create("occupationpartialtransposespectral-blockdiagonal-psd"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.blockDiagonal_psd"),
+                H("MatrixBlocks.blockDiagonal_psd"),
+                StatementSource.FromAuthor(Disp(
+                    All("s", Q("Type"), All("i", Q("Type"),
+                        Instances(Id("s"), Instances(Id("i"),
+                            All("B", Arrow(Id("s"), Q("Matrix", Id("i"), Id("i"), ComplexType)),
+                                Implies(All("x", Id("s"), Q("Matrix.PosSemidef", App(Id("B"), Id("x")))),
+                                    Q("Matrix.PosSemidef", Q("Matrix.blockDiagonal", Id("B"))))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A block diagonal matrix is positive semidefinite whenever every block is positive semidefinite. The blocks and their common matrix indices range over arbitrary finite types."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("occupationpartialtransposespectral-occfintype"),
                 DeclarationHandle.Create("D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral.occFintype"),
                 H("occFintype"), StatementSource.FromAuthor(Disp(All("N", NatType, All("d", NatType, Equal(Q("occFintype", Id("N"), Id("d")), Q("Fintype.ofEquiv", Q("Sym", Q("Fin", Id("d")), Id("N")), Q("Sym.equivNatSumOfFintype", Q("Fin", Id("d")), Id("N")))))))),

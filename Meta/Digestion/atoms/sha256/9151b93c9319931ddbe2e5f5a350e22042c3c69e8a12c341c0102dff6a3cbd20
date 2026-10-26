@@ -1,0 +1,66 @@
+## 23. Measurement interface, reused criteria and applicability
+
+The informational restriction can also be stated directly at the
+Gaussian-observable interface. Fourier-transforming the full
+record effect in (18.2), for $h\in\mathbb R^{t+1}$, gives
+
+$$
+\widehat{\mathsf E}_w(h)
+:=\int e^{ih^Tz}\,\mathsf E_w(dz)
+=e^{-\sigma^2\|h\|^2/2}e^{i(L_w^Th)\cdot q}.
+\tag{23.1}
+$$
+
+Kiukas–Schultz, *Informationally complete sets of Gaussian
+measurements*, [arXiv:1308.2083v1](https://arxiv.org/pdf/1308.2083v1),
+§V, Eq. (9) and Theorem 1 (PDF pp. 4–5), characterize informational
+completeness by density of the union of Weyl sampling subspaces in
+the full phase space. Their convention is
+$W(x)=e^{-ix^T\Omega_{17}\xi}$, where
+$\Omega_{17}=\bigoplus_{j=1}^{17}J_2$ and
+$\xi=(q_1,\pi_1,\ldots,q_{17},\pi_{17})$.
+For (23.1), their matrix $A_0$ has odd rows zero and even rows
+$L_w^T$, their noise matrix is $B_0=2\sigma^2I_{t+1}$, and their
+offset $v_0=0$. Their covariance convention is twice the
+half-anticommutator convention used here.
+
+Every sampling vector $A_0h$ therefore lies in the same closed
+seventeen-dimensional subspace of $\mathbb R^{34}$, corresponding
+to characteristic functions of positions alone. The union is not
+dense in full phase space, so this fixed-word measurement family
+is not informationally complete on unrestricted normal states.
+That general statement alone would not establish failure to
+identify a particular entanglement property. The actual
+entangled/separable pair in §21 supplies that stronger conclusion
+on the stated preparation family.
+
+The reused interfaces are precise: Theorem 5.1 and Definition 14.1
+supply the input-independent normal joint effect; Proposition 8.2
+supplies common-probe pair reduction; Proposition 9.1 supplies the
+chronological quadrature identities. Simon's physical two-mode
+Gaussian criterion supplies the separability equivalence, and
+Duan's variance inequality supplies only its stated sufficient
+witness. The momentum-noise kernel, its invariant complete effects,
+the resulting covariance substitution, the explicit separating pair
+and the sharp uniform constant are their source-specific
+composition for this FIB apparatus. No new general separability or
+tomography theorem is asserted.
+
+The exact Gaussian classification here uses (17.1), not the Fock
+projections $\rho_{W,N}$ of §§12–16. Their trace-distance and
+record-law approximation does not transfer this covariance or
+separability classification to their generally non-Gaussian inputs.
+All world quantifiers above are pointwise in the complete original
+$W$; no arbitrary mixture over world labels is classified. The
+state conclusion concerns only (19.1), not conditional branches,
+other pairs or separability of the full seventeen-mode output.
+The record conclusion retains only externally fixed words through
+the original seventh clock.
+
+The preparation and ideal apparatus remain explicit availability
+assumptions. These results supply no physical implementation,
+unknown-carrier encoding, quantum advantage or resource equivalence.
+The positive-noise literal-history obstruction of §§7 and 15
+remains. The proofs in this appendix are ordinary analytic proofs,
+without a kernel-verification claim.
+

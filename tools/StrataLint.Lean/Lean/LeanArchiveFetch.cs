@@ -45,7 +45,8 @@ internal static class LeanArchiveFetch
     internal static LeanArchiveAttempt Run(
         string worktreeRoot,
         IWorktreeProcessRunner runner,
-        TimeSpan budget, LeanCacheWriterGuard? writerGuard = null, bool refreshStale = false)
+        Func<TimeSpan> budget,
+        LeanCacheWriterGuard? writerGuard = null, bool refreshStale = false)
     {
         writerGuard?.RequireOwnershipOf(Path.Combine(worktreeRoot, ".lake"));
         var script = ScriptPath(worktreeRoot);
@@ -63,11 +64,12 @@ internal static class LeanArchiveFetch
         ProcessOutput output;
         try
         {
+            var enclosingBudget = budget();
             output = runner.Run(
                 "/bin/bash",
                 [script, "fetch", "--repository", worktreeRoot, .. (refreshStale ? new[] { "--refresh-stale" } : Array.Empty<string>()), .. (writerGuard is null ? Array.Empty<string>() : new[] { "--writer-owned" })],
                 worktreeRoot,
-                budget);
+                enclosingBudget);
         }
         catch (Exception exception) when (exception is IOException
             or UnauthorizedAccessException

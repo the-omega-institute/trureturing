@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e89cfc1295bc548de38fbf7266c773287e76298224fde3616b2b201376e32eb
+  normalized_sha256: sha256:9e89cfc1295bc548de38fbf7266c773287e76298224fde3616b2b201376e32eb
+cas_ref: sha256:9e89cfc1295bc548de38fbf7266c773287e76298224fde3616b2b201376e32eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional upper-face notation: defines B1, C1, qB, fC and qC and identifies the existing complete auxiliary labels. The equalities qC=q and qd=5qC are definitional aliases of (15.1), not new factorization or nonvanishing claims.'
+    previous_atom_id: 29bdcfc65841e9883ae492eb351546c37fe418be0c099eec74bf75de712b1901
+    next_atom_id: 0a02e2158beaeacd13271f144afe3db9ea555c45308659d6d06fabc37c8b2899

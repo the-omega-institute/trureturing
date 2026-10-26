@@ -1,0 +1,31 @@
+**Theorem 91.4 (all-depth response ambiguity).** For every $h\geq0$,
+
+$$
+g_h(t_{\mathrm{bal}})=f^h\!\left(\frac5{12}\right),\qquad
+g_h(t_{\mathrm{comb}})=f^h\!\left(\frac{62614}{136883}\right),
+\tag{91.11}
+$$
+
+and the second value is strictly larger. Hence every scalar estimator depending only
+on $p_h$ has two-source worst-case error at least
+
+$$
+\frac12\left[f^h\!\left(\frac{62614}{136883}\right)-
+f^h\!\left(\frac5{12}\right)\right]>0.
+\tag{91.12}
+$$
+
+**Proof.** If a rooted tree has response $g$, attaching one parent seam changes the
+child-root response to $g/(1+g)$ by the rank-one Schur complement. In
+$W_{h+1}$, the other child is a leaf with attached response $1/2$, while the new
+root diagonal of $L+I$ is $3$. Therefore
+
+$$
+g_{h+1}=\frac1{3-g_h/(1+g_h)-1/2}=f(g_h).
+$$
+
+The initial values are exactly §52.21–§52.22. Since
+$f'(g)=4/(5+3g)^2>0$, strict inequality persists under every iterate. Any common
+$p_h$-based estimate has the same output on the pair in (91.9); the elementary
+two-point midpoint bound gives (91.12). $\square$
+

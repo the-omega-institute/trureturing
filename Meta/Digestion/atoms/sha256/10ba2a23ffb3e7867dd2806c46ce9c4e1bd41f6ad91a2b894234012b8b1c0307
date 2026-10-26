@@ -1,0 +1,19 @@
+**Definition 20.5 (static exterior calibration).** Supply a Schwarzschild
+vacuum exterior with source mass $M(n)>0$, constants $G,c>0$, and a test
+apparatus held at fixed areal radius $R(n)>2GM(n)/c^2$. Its reference $t$ is
+normalized at infinity. Backreaction, rotation, free fall and additional
+kinematic time dilation are excluded. Supply the proper-duration bounds
+of (C.20.4) for the actual native intervals; they are not consequences of
+the metric. Let $a(n)$ be the proper acceleration required to remain
+static. Assume bounds on numerical values in fixed units,
+
+$$
+M(n)\le M_0P(n),\qquad a(n)\le a_0Q(n),
+\tag{C.20.7}
+$$
+
+for fixed polynomials $P,Q\ge1$. These assumptions do not assert that a
+physical suspension or its construction has been supplied at polynomial
+cost. The source mass $M$ is not the observer's record length and is not
+the bottom probability mass of the five-state pyramid.
+

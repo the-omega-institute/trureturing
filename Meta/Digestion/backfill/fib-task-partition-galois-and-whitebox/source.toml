@@ -1,0 +1,5 @@
+source_id = "fib-task-partition-galois-and-whitebox"
+path = "docs/develop/theory/FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16a4bc8c00075995b34cd95e9ee065ac69610d89df84d5bfe43f614a0ffa74dd
+  normalized_sha256: sha256:16a4bc8c00075995b34cd95e9ee065ac69610d89df84d5bfe43f614a0ffa74dd
+cas_ref: sha256:16a4bc8c00075995b34cd95e9ee065ac69610d89df84d5bfe43f614a0ffa74dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explicit list of currently open research goals, expressed as construction/proof tasks; no listed relation is asserted proved.
+    previous_atom_id: 8b34f5390ae5a3186a5f5f625e0adcfee3e95623154e9fcf72b45314f436321c
+    next_atom_id: 1d3b89c1d1b9583aa2f78aa122f7564d36744090ed5516f6db507d16778219fc

@@ -1,0 +1,65 @@
+**Corollary 144.1 (All maximizing densities for every optimal decoder).**
+For $q\in I$, $|z|\le1$ and $\rho\in\mathsf D_3$,
+
+$$
+\frac12\|\rho-\mathcal R_z(q)\Phi_q(\rho)\|_1=L(q)
+\quad\Longleftrightarrow\quad
+\rho=|\psi_{\alpha,\beta}(q)\rangle
+       \langle\psi_{\alpha,\beta}(q)|
+\quad\text{for some }\alpha,\beta\in\mathbb R,
+\tag{144.1}
+$$
+
+where
+
+$$
+|\psi_{\alpha,\beta}(q)\rangle
+=\sqrt{p(q)}|0\rangle+e^{i\alpha}\sqrt{x(q)}|1\rangle
+                    +e^{i\beta}\sqrt{y(q)}|2\rangle.
+\tag{144.2}
+$$
+
+Thus no density of rank at least two maximizes, and every pure edge
+or vertex has strict error below $L(q)$.
+
+*Proof.* The composites are identical by (143.9), so it suffices to
+consider $\mathcal R_0(q)$. For pure inputs, (142.7)–(142.8) and
+diagonal covariance give exactly the populations and phases in
+(144.2). At a contact the recovered density $Q=\mathcal C_q(P)$ is
+positive definite. Its $01$ block has first diagonal entry $p>0$ and
+
+$$
+\begin{aligned}
+\det Q[0,1]&=pr^2(v_1-q^2x)>0,\\
+v_1-q^2x&=\frac{(1-q)(1+2q)}2x+\frac{1-q}{2}y>0,\\
+Q_{22}&=(1-r^2)v_1+v_2>0.
+\end{aligned}
+\tag{144.3}
+$$
+
+Therefore $A=P-Q$ is strictly negative on the two-dimensional
+orthogonal complement of the input vector. Since it also has the
+positive eigenvalue $L$, it has one positive and two strictly negative
+eigenvalues. Its maximizing effect is uniquely its positive spectral
+projector $T$. This conclusion is invariant under all the diagonal
+phases. The entries in (143.2) show that a spanning vector of $T$
+has all three coordinates nonzero.
+
+If a density $\rho=\sum_i t_iP_i$, $t_i>0$, attained $L$, an effect
+$E$ attaining its variational trace-distance maximum would satisfy
+
+$$
+L=\sum_i t_i\operatorname{Tr}\{E[P_i-\mathcal C_q(P_i)]\}
+\le\sum_i t_i\frac12\|P_i-\mathcal C_q(P_i)\|_1\le L.
+\tag{144.4}
+$$
+
+Every $P_i$ must be a pure contact and must have the same unique
+maximizing effect $E$. If two phase-conjugated contact effects agree,
+their relative diagonal unitary is scalar on a vector with all three
+coordinates nonzero. Its three phases must coincide, so the two
+underlying contact input projectors agree as well. All $P_i$ are
+therefore identical, and $\rho$ is pure. This proves both directions
+of (144.1), extending the equality argument of Theorem 136.1 to the
+entire optimizer disk and its local branch. $\square$
+

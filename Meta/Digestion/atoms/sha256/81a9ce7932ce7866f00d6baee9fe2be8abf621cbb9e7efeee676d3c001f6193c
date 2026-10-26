@@ -1,0 +1,120 @@
+**Theorem 20.2 (Complete finite-positive C1 classification).** For
+every finite $t>0$ with $q(t)\ne0$ and $p_1(t)\ne24$, and for every
+actual strict complete world in the entire child,
+
+$$
+W\in C(p_1(t),v_1(t)),\qquad
+m(W)=m_1(t)\quad\Longleftrightarrow\quad
+t=t_*\ \hbox{and}\ W=W_*.
+\tag{20.3}
+$$
+
+The tuple $W_*$ is an actual world. Its gain is one nonzero polynomial
+of degree at most three, and all of its original readings, including
+the terminal $M$ reading, are
+
+$$
+(0,24,147/5,24,18,p_*,v_*,m_*).
+\tag{20.4}
+$$
+
+Proof. First take any actual companion in the stated domain. The owning
+interface in Assumption 16.2 and Theorem 16.4 give the zero-safe source
+equations and $N-Bd=0$.
+Corollary 18.4 excludes $K=0$, and Theorem 16.4 excludes $h=0$ when
+$K\ne0$. Hence $B,D,h\ne0$ and $d=N/B$ is now justified. Under this
+substitution $A_i=Ba_i$, and (17.2) gives
+
+$$
+F=-\frac{B^2f_0}{90D^2h},\qquad
+G=\frac{B^4K_0}{324D^4h}.
+\tag{20.5}
+$$
+
+Thus $F=G=0$ at the actual coordinate. The fixed resultant vanishes
+even under any specialization or degree drop. Its factorization
+leaves $Q_4,Q_9,Q_{12},Q_{55}$.
+
+The first congruence in (17.8), with the unit slope $\alpha$, implies
+that any common root over $Q_4$ has $h=0$. It is already excluded.
+Over $Q_{12}$ the next two congruences and the units $c_2,\pi_a$ give
+
+$$
+S_2=c_2\left(x+\frac{\pi_b}{\pi_a}\right)^2.
+\tag{20.6}
+$$
+
+A common root of $F,G$ annihilates $S_2$, so it has
+$x=-\pi_b/\pi_a$. The last two congruences in (17.8) then give
+$K=N=0$, again already excluded. Theorem 19.2 excludes positive
+$Q_9$ roots. It follows that $Q_{55}(t)=0$.
+
+The preserved degrees and the unit slope of $S_1$ force
+$x=-\beta/\alpha=-C/A$. Theorem 19.2 puts $t$ in one of the eight
+intervals, and Theorem 19.3 excludes all but row $4$ by necessary
+strict guards. Hence $t=t_*$ and $x=x_*,d=d_*$. The faithful
+projection (15.8) then fixes the source and the entire gain uniquely,
+so $W=W_*$.
+
+For existence, at $t_*$ the resultant is zero and the leading
+coefficients of $F,G$ are nonzero. The classical resultant criterion
+therefore gives a finite common complex root. Its linear subresultant
+has nonzero slope, so every common root is the real number $x_*$.
+In particular $F(t_*,x_*)=G(t_*,x_*)=0$. Theorem 19.3 gives
+$B,D,h\ne0$, so (20.5) reverses to $f_0=K_0=0$.
+
+In this row $d_*\ne0$ is a consequence of the rational bounds, not
+a restriction imposed on the original domain. From (16.1),
+
+$$
+f_0=5D^2(dH_2+B_0H_0)=0.
+\tag{20.7}
+$$
+
+Consequently $H_2=-B_0H_0/d$ and the projection gives
+$U=-H_0/d$, hence $dU=-H_0$ and $B_0U=H_2$. Now
+
+$$
+K_0=(dD)^2\mathcal Q(U,1)=0.
+\tag{20.8}
+$$
+
+The nonzero $a_1=DH_1$ and identity (16.4), used with the projected
+$j,r,b$, imply $b(j-b)=r(1-r)$. The bounds $U>1$ and $0<r<1$
+give $b>0$ and $c=r(1-r)/b>0$, as well as $j=b+c$. Thus the
+constructed source is strict and has determinant zero.
+
+The retained source equations can also be expressed without replacing
+the original form $K_s$. Their universal polynomial identity is
+
+$$
+\begin{aligned}
+d^2D^2K_s-(25d^2D^2+b_s^2)K_0
+=f_0\{A_s(5dDa_2-a_0b_s)+E_sdDb_s\}.
+\end{aligned}
+\tag{20.9}
+$$
+
+It follows by expansion of (16.1). Since $dD\ne0$ in this row,
+(20.7)–(20.8) imply the original $K_s=0$ as well.
+
+Set $g=H/U$, $T=(U+1)/2$ and $n=xU=j+r$.
+The clock-zero reading is zero because $dU=-H_0$, and clock one is
+$24$ by $jH_1/U=24-d$. The clock-two reading is
+
+$$
+d+\frac{TH_2}{U}
+=d+\frac{H_2+B_0}{2}=\frac{147}{5}.
+\tag{20.10}
+$$
+
+The four interpolation samples give successively
+$d+xH_3=24$, $d+H_4=18$, $d+(x+1)H_5=p_*$ and
+$d+(x+2)H_6=v_*$. Finally $d=N/B$ in (16.6) gives
+$d+(2x+3)H_7=m_*$. These are exactly the original trace readings,
+not a changed set of nodes. The polynomial $g$ has degree at most
+three and cannot be zero because its first two readings differ.
+This proves (20.4) and actual existence. The preceding necessity
+proves uniqueness in the entire original child and the equivalence
+(20.3). ∎
+

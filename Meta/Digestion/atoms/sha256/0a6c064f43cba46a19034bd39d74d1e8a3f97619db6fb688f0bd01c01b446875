@@ -1,0 +1,76 @@
+**命题 481.1（原核的 Mellin 留数）。** 假设 RH，并使用其经典 von Koch 界 $E(t)=O(\sqrt t\log^2t)$。对任意固定 $x_0\ge3$，最初在 $\Re s>1/2$ 定义
+
+$$
+\mathcal F(s)=\int_{x_0}^\infty\mathcal T(x)x^{-s-1}\,dx.
+$$
+
+则存在在 $\Re s>-1/5$ 全纯的 $R_{x_0}(s)$，使
+
+$$
+\mathcal F(s)
+=-\frac12\frac{\zeta'}{\zeta}(s+1/2)
+-\frac1{2(s-1/2)}+R_{x_0}(s).
+\tag{481.3}
+$$
+
+右边在 $s=1/2$ 的奇点可去。它在 $\Re s>0$ 全纯，并在 $s=0$ 全纯。每个重数为 $m$ 的非平凡零点 $1/2+i\gamma$ 在 $s=i\gamma$ 给出留数 $-m/2$。
+
+证明。最初在 $\Re s>1/2$ 对 (481.2) 作绝对 Fubini 交换，所得伴随核为
+
+$$
+q_s(t)=\int_{\substack{x\ge x_0\\x<t\le x+x^{4/5}}}
+\frac{x^{-s-1/2}[\lambda(t)-\lambda(x+x^{4/5})]}
+ {w(x)x^{8/5}}\,dx.
+\tag{481.4}
+$$
+
+写 $a=4/5$。在 $t\ge x_0+x_0^a$ 时，以 $t=x+zx^a$ 定义 $x=x(t,z)$，其中 $0\le z\le1$。这个正解唯一，且
+
+$$
+D=1+azx^{a-1},\qquad x_t=D^{-1},\qquad x_z=-x^aD^{-1}.
+$$
+
+于是 (481.4) 恰为
+
+$$
+q_s(t)=\int_0^1 x(t,z)^{-s-1/2}
+\frac{\displaystyle\int_z^1w(x+ux^a)/w(x)\,du}
+ {1+azx^{a-1}}\,dz.
+\tag{481.5}
+$$
+
+令 $\epsilon_t=t^{-1/5}$。对 $s$ 的每个固定紧集 $K\subset\mathbb C$，一致地有
+
+$$
+\begin{gathered}
+q_s(t)=\tfrac12t^{-s-1/2}+r_s(t),\\
+|r_s(t)|\le C_Kt^{-\Re s-1/2}\epsilon_t,\qquad
+|\partial_t r_s(t)|\le C_Kt^{-\Re s-3/2}\epsilon_t.
+\end{gathered}
+\tag{481.6}
+$$
+
+确切系数来自 $\int_0^1(1-z)\,dz=1/2$。为核对余项与其导数，使用 $x/t=1+O(\epsilon_t)$、$D=1+O(\epsilon_t)$ 以及
+
+$$
+(\log w)'(x)=-\frac2x+rac1{x(1+\log x)}-rac2{x\log x},
+\qquad (\log w)''(x)=O(x^{-2}).
+$$
+
+由此 $w(x+ux^a)/w(x)=1+O(\epsilon_t)$；沿 $t$ 对这个相关比值求导为 $O(\epsilon_t/t)$，同时 $\partial_t(x/t)=O(\epsilon_t/t)$、$\partial_t(x^{a-1})=O(\epsilon_t/t)$。代入 (481.5)，先抽出 $t^{-s-1/2}$ 再求导，给出 (481.6)；不是对未减主项的导数误报较小阶。
+
+RH 下，对 $\int r_s\,dE$ 作分部积分，其无穷端边界为
+
+$$
+O_K(t^{-\Re s-1/5}\log^2t),
+$$
+
+导数积分在 $\Re s>-1/5$ 的每个紧集上一致绝对收敛。因此余项全纯。核在有限区间 $[x_0,x_0+x_0^a]$ 的修正，以及移除 $[1,x_0]$，只产生整函数项。主项最初满足
+
+$$
+\frac12\int_1^\infty t^{-s-1/2}\,dE(t)
+=-\frac12\frac{\zeta'}{\zeta}(s+1/2)-\frac1{2(s-1/2)},
+$$
+
+得 (481.3)。$\zeta$ 在 $1$ 的极点使两个显式项的奇点相消；实区间 $(0,1)$ 无零点，故 $s=0$ 正则。其余临界零点的对数导数留数为 $m$，给出所示 $-m/2$。这里没有先假设原积分在整个 $\Re s>0$ 收敛；直接的 RH 点值界只先保证其在 $\Re s>1/5$ 绝对收敛。证毕。
+

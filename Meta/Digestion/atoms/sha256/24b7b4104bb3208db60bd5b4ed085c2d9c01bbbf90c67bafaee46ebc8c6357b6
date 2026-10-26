@@ -1,0 +1,17 @@
+**Definition 124.1 (the endpoint matrix).** For a real unit $u$, let $m,M_u$ be (U.65), and on $17/20\leq p\leq7/8$ put
+
+$$
+\begin{gathered}
+C_u(x)=(m-x)I_2-a(x)M_u,\qquad
+b=\frac{a(q/2)}h=\frac{2(p+2g-\sqrt2)}{1+2g},
+\qquad\widetilde M_u=hM_u,\\
+T_0=\frac1g+\frac43,\qquad
+E_0=\frac{1/g+4}{3},\qquad F_0=\frac{2g}{3},\\
+A_0=1-bT_0+b^2E_0,\qquad
+B_0=\frac q2(bT_0-2)+b^2F_0.
+\end{gathered}
+\tag{U.81}
+$$
+
+The scalar $T_0$ in this section is not a physical encoder, and the scalar $F_0$ here is not the zero-contraction calibration function of volume II. For fixed $u,P$, $C_u(x)$ is affine in $x$.
+

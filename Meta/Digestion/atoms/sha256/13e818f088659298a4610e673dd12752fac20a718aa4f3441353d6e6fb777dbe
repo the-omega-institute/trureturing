@@ -1,0 +1,6 @@
+**推论 2.2（持久性判据）。** 下列命题等价：
+
+1. $\rho_{\mathfrak N}(C)=0$；
+2. $\operatorname{Res}_{\mathfrak N}(C)=\varnothing$；
+3. $C$ 本身仍是 $\mathfrak N$ 的完整失败证书。
+

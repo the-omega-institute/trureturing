@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1da437e751080fb2b4769c7ffe8a8bb9a4b9b078810794cc9a3cefb7717122a
+  normalized_sha256: sha256:c1da437e751080fb2b4769c7ffe8a8bb9a4b9b078810794cc9a3cefb7717122a
+cas_ref: sha256:c1da437e751080fb2b4769c7ffe8a8bb9a4b9b078810794cc9a3cefb7717122a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the complete-world model, acquired child, independent-pair target and the zero-base scope; no witness, source classification, or exclusion is asserted in this child atom.
+    previous_atom_id: df1cde03cf60a924549961d7b74a1ce6e30dde95ba161def8d54e81ae05eec83
+    next_atom_id: 5f8c5facd1ba092cb06a4e7a86a354db61f7c4769a3c48e0b9dd5d1ca44ad8d7

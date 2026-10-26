@@ -1,0 +1,87 @@
+**Theorem 5.1 (Injectivity and immersion of the full boundary map).**
+$A_5$ is nonzero throughout $\mathcal Z$, and $R_J$ is injective and
+has nonzero tangent at every point of both closed arcs, including all
+four face endpoints. On the upper arc $A_5>0,\theta<-5$; on the
+lower arc $A_5<0,\theta>-5$. The function $\theta$ is strictly
+increasing in $r$ on each closed arc.
+
+Proof. On $\Lambda=0$, (2.8) identifies $A_i$ with their tilded
+expressions. On the upper arc $D\ge1320>0$, so
+
+$$
+A_5=\frac{D}{2b^2TUn}>0,\qquad
+\theta=\frac ND<-5,
+\tag{5.1}
+$$
+
+where the last inequality follows from $N+5D\le-1128$.
+On the lower arc substitute $b=qt$ before continuing to the endpoints:
+
+$$
+A_5=\frac{D_L}{2t^2TUn}<0,\qquad
+\theta=\frac{N_L}{D_L}>-5.
+\tag{5.2}
+$$
+
+All denominators here are positive on the entire lower closed arc:
+$t>0,T,U>0,n>0$. The inequalities follow from
+$D_L\le-2$ and $N_L+5D_L\le-2$, with the reversal caused by
+$D_L<0$. Continuity proves the formula also at $r=0,1$.
+Thus the two arc images under $R_J$ are disjoint.
+
+Along the upper graph, implicit differentiation gives
+
+$$
+\frac{d\theta}{dr}=\frac{J_U}{D^2\mathscr P_b}>0.
+\tag{5.3}
+$$
+
+The denominator is positive by Theorem 4.1, and Lemma 3.4 supplies the
+strict numerator sign at every root, endpoints included. Along the
+lower graph, $z'=-H_r/H_z$, whence
+
+$$
+\frac{d\theta}{dr}
+=\frac{\mathcal B}{D_L^2H_z}
+=\frac{rJ_L}{D_L^2H_z}.
+\tag{5.4}
+$$
+
+It is positive for $r>0$ by Lemmas 3.2–3.3 and zero at $r=0$.
+For any $0\le r_0<r_1\le1$, the derivative is positive on the
+nonempty interval $(r_0,r_1)$, so the lower function is strictly
+increasing on the full closed interval as well. Equality of $R_J$
+first fixes the arc by (5.1)–(5.2), then fixes $r$ by strict order,
+then fixes the source by Theorem 4.1. This proves global injectivity.
+
+The nonzero $\theta$ derivatives already prove immersion except at
+the lower endpoint $s_0=(0,0,1)$. There use source coordinates $(r,c)$
+with $b=r(1-r)/c$. Direct differentiation of the original rational
+functions gives the following exact endpoint data along $\Lambda=0$:
+
+$$
+\begin{gathered}
+\Lambda_c(s_0)=8,\quad \Lambda_r(s_0)=4,\quad c'(0)=-1/2,\\
+(A_5,A_6,A_J)(s_0)=(-1,-2,-2),\\
+(A_5',A_6',A_J')(s_0)=(3/2,7/2,9/2),\\
+\left(\frac{A_6}{A_5}\right)(s_0)=2,\qquad
+\left(\frac{A_6}{A_5}\right)'(s_0)=-1/2,\qquad
+\theta(s_0)=-4,\quad\theta'(s_0)=0.
+\end{gathered}
+\tag{5.5}
+$$
+
+To obtain these numbers directly, $b'=1,c'=-1/2$ gives
+$j'=1/2,n'=3/2,T'=1,U'=2$ at $s_0$; substitution in (2.5) and
+(2.3) gives the three displayed $A_i'$ values. The quotient rule then
+gives $-1/2$. Thus the first coordinate of $R_J$ has nonzero tangent
+there. At the other lower endpoint the useful exact values are
+
+$$
+\Lambda_c(1,0,1/\sqrt2)=16(2-\sqrt2)>0,\qquad
+\theta(1)=\frac{67}{28}-\frac{5\sqrt2}{56}.
+\tag{5.6}
+$$
+
+All four endpoint labels are retained. ∎
+

@@ -1,0 +1,42 @@
+**Theorem 16.5 (Same-source injectivity and the guarded common-child interface).** In each actual child $\mathcal F(H_6^E)$, including $z=A$ and arbitrary $A$, equal source matrices imply equal complete worlds. For its atlas world the two terminal response functions are
+
+$$
+f_{EJ}=d+\frac{G_7}{K}(j+kr),\qquad
+f_{EM}=d+\frac{G_7}{K}\bigl(V+j+(k-1)r\bigr).
+\tag{16.12}
+$$
+
+Fix one fourth parent, one fifth-J response $p$, and a prescribed finite or infinite $\mathcal K\subseteq\mathcal F(H_4^A)$. Let $\mathcal A_E(p,v)$ denote the atlas union over all $b>0$ at that literal child, restricted to $\mathcal K$. Then
+
+$$
+\begin{aligned}
+&L_2\bigl(\mathcal K\cap\mathcal F(H_{5J}^A),H_{5J}^A\bigr)\\
+&\quad\Longleftrightarrow\quad
+\bigwedge_{E\in\{J,M\}}\exists v_E\in\mathbb R\
+\bigwedge_{G\in\{J,M\}}\exists W_{EG0},W_{EG1}\in\mathcal A_E(p,v_E):\\
+&\hspace{40mm}(r_{EG0}-r_{EG1})^2+(b_{EG0}-b_{EG1})^2>0,\\
+&\hspace{40mm}f_{EG}(W_{EG0})=f_{EG}(W_{EG1}).
+\end{aligned}
+\tag{16.13}
+$$
+
+At a parent whose fifth-M arm already has an actual $L_2$ response, existence of a $p$ satisfying (16.13) for the full parent fiber is equivalent to $L_3$ there. In particular this conditional equivalence applies separately to $H_4^{[3]}$ and $H_4^{[4]}$.
+
+Proof. Suppose two worlds in one child have the same $P$, hence the same $b,j,r$. If their drifts coincide, their four even gain samples coincide, so their entire polynomials coincide. Otherwise subtract their three odd equations and divide by their nonzero drift difference. Since the $G_i$ are affine in $d$, this gives
+
+$$
+\alpha_1j=-K,\qquad \alpha_3(j+r)=-K,\qquad
+\alpha_5(j+2r)=-K.
+\tag{16.14}
+$$
+
+Multiply these equations respectively by $\alpha_3\alpha_5$, $-2\alpha_1\alpha_5$, $\alpha_1\alpha_3$ and add. The left side is zero; the right side is $KL_E(b)>0$ by (16.6), (16.9), a contradiction. No $\alpha_i$ or gain sample was divided out. Hence complete-world distinction in this child is equivalent to source distinction, which is exactly the strict squared-coordinate condition in (16.13). This equivalence is justified for these actual children, rather than substituted for the complete-world guard at arbitrary histories.
+
+Formula (16.12) follows from (10.4) and $g(7)=G_7/K$. If $G_7=0$, both terminal functions correctly equal $d$. They are alternatives on the same fixed world.
+
+For necessity in (16.13), the recursive definition first selects $v_E$ under the already fixed $p$, then selects a terminal response for each $G$, and only in that actual $L_0$ leaf selects two distinct complete worlds. The atlas contains exactly those worlds. Same-source injectivity supplies the strict source condition.
+
+For sufficiency fix all selected complete worlds first and take their finite union. For each $E,G$ its pair lies in a single terminal leaf. Both pairs for that $E$ share the acquired $v_E$, so they provide the two terminal clauses and the non-singleton guard of $L_1$. The two sixth children share $p$ and give $L_2$ with its guard. Every used ancestor contains a distinct descendant pair. Containment in a larger compatible set preserves $L_s$ by induction on its defining recursion, so extra worlds and infinite $\mathcal K$ cause no problem.
+
+Finally, a realized M arm and the J system at the **same** fourth parent supply the two fifth clauses of $L_3$; the converse follows from the same recursion. Fifth responses for different actions may differ. Different terminal slots may use different $b,g,d$, but every slot is one complete fixed triple satisfying all its acquired and alternative rows. Refitting a world's gain or drift between rows is not allowed. At the two inherited parents $z\ne24$, so Theorem 16.3 also applies at each fixed $b$. Neither the cubic nor the interface proves existence of any missing pair. ∎
+

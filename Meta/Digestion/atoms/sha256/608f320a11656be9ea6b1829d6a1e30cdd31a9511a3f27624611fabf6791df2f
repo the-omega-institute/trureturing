@@ -1,0 +1,69 @@
+## 2. The zero-safe source interface
+
+Retain $j,n,T,U,V,X,N,H$ and the scalar source equation of
+Definitions 12.1--12.3 of the owning volume:
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\quad V=U+n,\\
+H(r,b)={}
+14b^6+(95-73r)b^5+(47r^2-39r+30)b^4\\
+\qquad+r(147r^2-232r+105)b^3
+ +2r(1-r)(44r^2-55r+15)b^2\\
+\qquad-64r^3(1-r)^2b-32r^3(1-r)^3,\\
+N_4=2(b^2+8b+4)XN-4bTU(X+N),\\
+\mathsf S_p(r,b)=5b(p-24)N_4+6(8b-1)H(r,b).
+\end{gathered}
+$$
+
+The symbols $j,n,U,V$ above have exactly the rational expressions in
+(1.6) and (12.1) of the owning volume; they are recalled only to fix
+the interface.  Theorem 12.3 there is zero-safe: a strict source lifts
+to a complete world in $\mathcal F(H_4,M,p)$ if and only if
+$\mathsf S_p(r,b)=0$, and the lift is unique.  Its drift and its whole
+gain are reconstructed from (12.5)--(12.6), with
+$\Lambda^2+A_5^2>0$.  No division by $\Lambda$, by a gain sample, or
+by the drift is made in that theorem.  This is why the present source
+count includes the singular stratum $\Lambda=0$, degree drops, sampled
+zeros, repeated roots, and zero drift.
+
+For arbitrary real $p,v$, use the integer polynomials of Definition
+20.1:
+
+$$
+\begin{gathered}
+D_\Lambda=(b^2+8b+4)XN-2bTU(X+N),\\
+K_\Lambda=(8b-1)(2+5b),\qquad Z_6=N+2bU,\\
+G_{6,\Lambda}=(10T+45)XN-bT(36N+20X),\\
+\mathsf A(r,b,p)=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\\
+\mathsf N_u(r,b)=
+\frac{120bTD_\Lambda+15Z_6D_\Lambda(80b-1)
+       -3K_\Lambda(bTXN+Z_6G_{6,\Lambda})}{T},\\
+\mathsf B(r,b,v)=5bD_\Lambda v-\mathsf N_u(r,b).
+\end{gathered}
+$$
+
+The displayed numerator for $\mathsf N_u$ is divisible by $T=1+b$
+in $\mathbb Z[r,b]$, so $\mathsf A,\mathsf B$ are polynomials.  The
+published Theorem 20.2 gives, for every nonsingular complete world,
+
+$$
+\Lambda\ne0\quad\Longrightarrow\quad
+\mathsf A(r,b,p)=\mathsf B(r,b,v)=0.
+$$
+
+At the singular branch, the zero-safe parent equation gives $b=1/8$,
+and the published identity
+$\Lambda=\Phi(r)/(960jn)$ gives a root of
+
+$$
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+$$
+
+Exact substitution of $b=1/8$ into the two source polynomials gives
+$\mathsf A(r,1/8,p)\equiv0$ and
+$\mathsf B(r,1/8,v)\equiv0$ modulo $\Phi(r)$.  Consequently every
+singular complete world also lies in the affine common zero set of
+$\mathsf A,\mathsf B$.  This substitution is an identity modulo
+$\Phi$, not a numerical check at either of its roots.
+

@@ -32,6 +32,9 @@ internal sealed class HannaHalfIterateCubicModThreeDocument : IScribeDocumentDef
                 + "has integer coefficients. The exponent n ranges over all natural numbers. "
                 + "No nonvanishing assertion at powers of three is included.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("half_unique", "Uniqueness of normalized compositional square roots", HalfUnique(),
+                "Over a commutative ring with no zero divisors in which two is nonzero, two series with zero constant coefficient and linear coefficient one are equal whenever their compositional squares equal the same series.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Integrality and the congruence at every degree", Disp(ClaimBody()),
                 "Correct successive degrees of an integer series beginning with X. A series of "
                 + "the form X + 2B has compositional residual divisible by four, so each correction "
@@ -49,7 +52,7 @@ internal sealed class HannaHalfIterateCubicModThreeDocument : IScribeDocumentDef
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("hanna-half-iterate-" + name.ToLowerInvariant()),
+        DescribeId.Create("hanna-half-iterate-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -80,6 +83,22 @@ internal sealed class HannaHalfIterateCubicModThreeDocument : IScribeDocumentDef
         And(Equal(Call("coeff", D(1), a), D(1)),
             Equal(App(Qualified("PowerSeries", "subst"), a, a),
                 Add(F.Id("X"), Mul(D(4), Pow(F.Id("X"), D(3)))))));
+    private static Formula HalfUnique()
+    {
+        var r = F.Id("R"); var f = F.Id("f"); var g = F.Id("g"); var t = F.Id("t");
+        var ps = Call("PowerSeries", r);
+        Formula Comp(Formula a) => App(Qualified("PowerSeries", "subst"), a, a);
+        Formula body = Arrow(Seq(Parenthesized(Seq(D(2), Colon, Sp, r)), Sp, Neq, Sp, D(0)),
+            All("f", ps, All("g", ps, All("t", ps,
+                Arrow(Equal(Call("constantCoeff", f), D(0)),
+                Arrow(Equal(Call("constantCoeff", g), D(0)),
+                Arrow(Equal(Call("coeff", D(1), f), D(1)),
+                Arrow(Equal(Call("coeff", D(1), g), D(1)),
+                Arrow(Equal(Comp(f), t), Arrow(Equal(Comp(g), t), Equal(f, g)))))))))));
+        return Disp(All("R", Named("Type"), Seq(
+            OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            OpenBracket, Call("NoZeroDivisors", r), CloseBracket, Comma, Sp, body)));
+    }
     private static Formula ClaimBody()
     {
         var a = F.Id("A");

@@ -1,0 +1,38 @@
+**Definition 17.4 (The terminal-affine companion equations).** Put
+
+$$
+\begin{gathered}
+\lambda(x)=-8x^4-29x^3-18x^2+15x+6,\\
+N(x;p,v,m)=(2x+3)a_7(x,0,p,v)-mD,\\
+F_M=\lambda^2 f(x,-N/\lambda,p,v)/D^2,\qquad
+G_M=\lambda^4 K_{\rm s}(x,-N/\lambda,p,v)/D^4.
+\end{gathered}
+\tag{17.8}
+$$
+
+The letter $\lambda(x)$ here denotes the terminal drift slope; it is
+not the fold constant in (9.3). The terminal equation is exactly
+$\lambda d+N=0$. Both $F_M,G_M$ are polynomials: the divisions in
+(17.8) have zero remainder after homogeneous substitution. Define
+
+$$
+\begin{aligned}
+F(x,t)&=\frac{q^2F_M(x;P/q,V/q,M_t/q)}{90(x-t)},\\
+G(x,t)&=\frac{q^4G_M(x;P/q,V/q,M_t/q)}{8100(x-t)}.
+\end{aligned}
+\tag{17.9}
+$$
+
+These are integer polynomials of coordinate degrees $(\deg_x,\deg_t)$
+$(6,3)$ and $(13,7)$. Equations (5.1), (17.4), (17.8)–(17.9)
+are algorithmic definitions of every coefficient. Equivalently set
+$L=q\lambda$, $\nu=-qN(x;P/q,V/q,M_t/q)$ and substitute $d=\nu/L$
+in $L^2f/[90D^2(x-t)]$ and $L^4K_{\rm s}/[8100D^4(x-t)]$.
+Each indicated polynomial division has zero remainder.
+
+If an actual companion has $x=t$ and $\lambda(t)\ne0$, the terminal
+equation gives $d=24+3t/[10(t-1)]$. Reconstruction gives $U=1$,
+the auxiliary face itself, violating (17.6). Thus dividing out $x-t$
+removes no strict companion in the $\lambda\ne0$ sector. The entire
+$\lambda=0$ sector is treated in Lemma 19.1.
+

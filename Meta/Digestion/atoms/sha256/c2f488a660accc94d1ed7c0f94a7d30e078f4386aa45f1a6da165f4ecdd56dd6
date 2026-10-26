@@ -1,0 +1,34 @@
+### 定理 10.2（定理 1.2、1.4、2.2、2.3 的任意集合版本）
+
+在定义 10.1 下，定理 1.2 的 Galois 等价、定理 1.4 的全部闭包律、定理 2.2 的读数因子分解及基数下界、定理 2.3 的规范满射与复合律均成立，不要求状态或输出有限。具体地，
+
+$$
+\Gamma\subseteq\mathcal T_R\iff R\subseteq R_\Gamma,
+\qquad
+R_{\mathcal T_{R_\Gamma}}=R_\Gamma,
+\qquad
+\mathcal T_{R_{\mathcal T_R}}=\mathcal T_R.
+\tag{10.1}
+$$
+
+命题 2.4 在任意 $S$ 上的精确分离条件为
+
+$$
+\operatorname{cl}_{\mathrm{rel}}(R)=R
+\iff
+\forall s,s'\in S,\quad
+s\not R s'\Longrightarrow
+\exists f\in\mathcal T_R,\ f(s)\ne f(s').
+\tag{10.2}
+$$
+
+特别地，若每个 $R$-类的指示函数都属于 $\mathcal T$，则此闭包等式成立。有限 $S$ 时，类指示函数可由单点指示函数作有限并得到，故保留命题 2.4 的有限情形；任意 $S$ 上不把有限单点组合自动视为所有类的指示函数。
+
+**证明。** 定理 1.2 的证明逐项展开全称量词，没有使用有限性，故得到 (10.1) 的第一个等价。由 $\Gamma\subseteq\mathcal T_{R_\Gamma}$ 得 $R_{\mathcal T_{R_\Gamma}}\subseteq R_\Gamma$，反向包含由 $\mathcal T_{R_\Gamma}$ 的定义成立。对任意 $R$，有 $R\subseteq R_{\mathcal T_R}$，故 $\mathcal T_{R_{\mathcal T_R}}\subseteq\mathcal T_R$；而每个 $f\in\mathcal T_R$ 的核都包含 $R_{\mathcal T_R}$，给出反向包含。两种映射均反变，因而两侧闭包单调；以上等式又给出幂等性，包含自身的性质来自定义。这补全定理 1.4 在任意集合上的全部闭包律。
+
+对 $q:S\to Q$，条件 $\ker q\subseteq R_\Gamma$ 恰使规则 $\bar f(q(s))=f(s)$ 在 $q(S)$ 上良定义；反向由因子分解立即成立。规则 $h(q(s))=[s]_{R_\Gamma}$ 同样良定义、唯一且满射，故有定理 2.2 的基数下界，且规范商达到该下界。定理 2.3 的代表元规则只用 $R_\Lambda\subseteq R_\Gamma$：它仍良定义、满射，恒等与复合律仍在每个代表元上成立。
+
+最后，$R_{\mathcal T_R}$ 包含 $R$，而它排除一对 $(s,s')$ 当且仅当某个 $f\in\mathcal T_R$ 区分该对，这正是 (10.2)。类指示函数在 $R$ 上恒定并区分不同类，给出充分条件。
+
+定义 10.1 所列动态判据的扩展也直接复用其原证明：定理 3.2 只用核的交集及有限动作词归纳，定理 3.4 只用任务并集对应核的交集，定理 6.2 只用读数和更新的良定义性；它们均未用状态有限。推论 3.3 的次数界则使用有限等价类计数，故该有限性条件保留。证毕。
+

@@ -1,0 +1,77 @@
+**Definition 1.1 (Literal complete worlds).** Write
+[O](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md) for the common-parent
+volume, [F](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md) for the all-response
+finite-fibre volume, [S](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md) for the
+first strict-real support volume, and
+[SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md) for its continuation.
+The complete worlds are exactly those of O, Definitions 1.1–1.3:
+
+$$
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+The gain is one entire polynomial and the drift is one fixed number.
+The actions, products and readings are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{1.2}
+$$
+
+The acquired word is $J,M,J,M,M,M$, with the literal readings
+
+$$
+(y_0,y_1,y_2,y_3,y_4,y_5,y_6)
+=(0,24,147/5,24,18,p,v).
+\tag{1.3}
+$$
+
+Let $\mathcal H=\mathcal F(H_4)$, where
+$H_4=(0,J,24,M,147/5,J,24,M,18)$. For real $p\ne24,v$ let
+$C(p,v)=\mathcal F(H_4,M,p,M,v)$ be the entire actual child.
+At the original clock seven put
+
+$$
+a(W)=d+g(7)\operatorname{tr}(JQ_6P),\qquad
+m(W)=d+g(7)\operatorname{tr}(MQ_6P).
+\tag{1.4}
+$$
+
+These are counterfactual alternatives on the same world. There is no
+reset, copy, skipped reading, shifted clock, rebase or additional port.
+All lower gain degrees, sampled or repeated gain roots, zero drift,
+singular sources and worlds unused by a selected pair remain in the
+domain. Cardinality and distinctness refer to complete triples.
+
+Define the actual pair images, as in S, Definition 1.2, by
+
+$$
+\begin{aligned}
+D_J&=\{(p,v):p\ne24,\ \exists W\ne W'\in C(p,v),\ a(W)=a(W')\},\\
+D_M&=\{(p,v):p\ne24,\ \exists W\ne W'\in C(p,v),\ m(W)=m(W')\}.
+\end{aligned}
+\tag{1.5}
+$$
+
+The original joint relation is $D_J\cap D_M$. Its selected labels obey
+
+$$
+\begin{gathered}
+W_i\in C(p,v)\ (0\le i\le3),\qquad
+W_0\ne W_1,\quad a(W_0)=a(W_1),\\
+W_2\ne W_3,\quad m(W_2)=m(W_3).
+\end{gathered}
+\tag{1.6}
+$$
+
+The pairs may overlap or be disjoint; their two common terminal values
+may differ. Both pairs use the same acquired $p,v$ and the same entire
+child. A boundary label or an equal-world limit is not an actual pair.
+

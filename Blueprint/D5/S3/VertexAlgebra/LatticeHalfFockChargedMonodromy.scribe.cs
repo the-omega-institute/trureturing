@@ -28,5 +28,21 @@ internal sealed class LatticeHalfFockChargedMonodromyDocument : IScribeDocumentD
                         + "hence U_(-a)=U_a. No replacement of U_(-a) by U_a inverse is made: the square of U_a "
                         + "retains the half-norm sign of the actual representation. This is coordinate monodromy "
                         + "for z=x^2, not an all-state twisted Jacobi or reconstruction theorem. Classical provenance, "
-                        + "zero novelty claim. Full moonshine, orbifold, fusion, string and AdS/CFT realization remain open."))), DescribeRole.Theorem))));
+                        + "zero novelty claim. Full moonshine, orbifold, fusion, string and AdS/CFT realization remain open."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("charged-ground-reflection"),
+                DeclarationHandle.Create(Prefix + "ground_neg"), H("Ground reflection in the actual quotient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The actual ground-action endomorphisms for a and -a are equal because their mod-two quotient lifts agree."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("charged-norm-reflection"),
+                DeclarationHandle.Create(Prefix + "norm_neg"), H("Norm reflection"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The integral lattice norm is unchanged under charge negation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("charged-norm-even"),
+                DeclarationHandle.Create(Prefix + "norm_even"), H("Even lattice norm"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("Every integral charge has even norm for the given symmetric even-diagonal Gram matrix."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("charged-creation-reflection"),
+                DeclarationHandle.Create(Prefix + "creation_neg"), H("Creation coefficient reflection"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every signed creation degree e, charge negation multiplies its oscillator coefficient by (-1)^e. Negative degrees remain zero. These identities give the exact coordinate characters used in the reflected charged residue kernels."))), DescribeRole.Theorem))));
 }

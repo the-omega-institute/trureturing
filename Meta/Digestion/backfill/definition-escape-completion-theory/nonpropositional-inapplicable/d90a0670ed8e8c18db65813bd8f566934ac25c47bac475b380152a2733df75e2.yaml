@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d90a0670ed8e8c18db65813bd8f566934ac25c47bac475b380152a2733df75e2
+  normalized_sha256: sha256:d90a0670ed8e8c18db65813bd8f566934ac25c47bac475b380152a2733df75e2
+cas_ref: sha256:d90a0670ed8e8c18db65813bd8f566934ac25c47bac475b380152a2733df75e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 增订范围、已有接口复用与初等工具目录。'
+    previous_atom_id: c0da100f5b42fdf86da4bd4f29d180f41617adb37257325fad6f68e0a5f4f66b
+    next_atom_id: 9eac510464e02dd5863c49325be1f94c879d81be37da8a78dfd957096d0eb551

@@ -1,0 +1,25 @@
+**定理 18.3（正射线的 Bloch 截面及其 Klein 度量）。** 对上述行列式一 $H$，置
+
+$$
+\rho=H/\operatorname{tr}H=\frac12(I+r\cdot\sigma),\qquad
+r=\frac{(x,y,z)}t,\qquad \|r\|<1.
+$$
+
+迹一正定截面与行列式一截面参数化同一族正射线。将行列式一形状度量经此对应搬到开球，得到
+
+$$
+g_{\mathrm{Klein}}=
+\frac{\|dr\|^2}{1-\|r\|^2}+
+\frac{(r\cdot dr)^2}{(1-\|r\|^2)^2}.
+$$
+
+证明。任一正射线有唯一迹一代表，也有唯一行列式一代表。由约束，$t=(1-\|r\|^2)^{-1/2}$、$(x,y,z)=tr$。因此
+
+$$
+dt=t^3(r\cdot dr),\qquad d\mathbf q=t\,dr+r\,dt.
+$$
+
+代入 $\|d\mathbf q\|^2-dt^2$ 并合并交叉项，恰得所列形式。这是标准 Klein 球坐标的双曲度量，不是通常欧氏球度量，也不是 Poincaré 球坐标的表达式；这里搬运的是正射线的行列式一形状度量，不能与在整个正锥上直接限制到迹一超平面的度量混同。van Oostrum，[*Bures–Wasserstein geometry for positive-definite Hermitian matrices and their trace-one subset*](https://arxiv.org/abs/2001.08056) 研究另一个度量，不能据其迹一坐标推出本条的 Klein 形式。
+
+三参数的实正二阶矩包括一维规模，而此复行列式一模型的三参数全是形状方向。第九章的纯迹一态位于球面，秩一且不正定，不属于这里的双曲内部；混合正定态才能遍历开球。$\square$
+

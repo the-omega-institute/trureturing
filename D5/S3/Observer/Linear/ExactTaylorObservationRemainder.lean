@@ -22,7 +22,7 @@ namespace D5.S3.Observer.Linear.ExactTaylorObservationRemainder
 open MeasureTheory Finset
 open scoped BigOperators
 
-private theorem exp_tail_le {𝕜 A : Type*} [RCLike 𝕜]
+theorem exp_tail_le {𝕜 A : Type*} [RCLike 𝕜]
     [NormedRing A] [NormedAlgebra 𝕜 A]
     [CompleteSpace A] [NormOneClass A] (z : A) (r : ℝ) (n : ℕ)
     (hr : 0 ≤ r) (hz : ‖z‖ ≤ r) :

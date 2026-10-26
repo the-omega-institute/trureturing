@@ -1,0 +1,41 @@
+**Proposition 268.5 (complete leakage matrix for the second observation).** An orthonormal hidden basis for (268.8) is
+
+$$
+h_0=(e_{LL}-e_{LR})/\sqrt2,\quad
+h_a=(e_{LL}+e_{LR}-2e_{RR})/\sqrt6,\quad
+h_c=(e_o-e_{RL})/\sqrt2.
+$$
+
+The $h_0$ row of $\widehat D_7$ is zero; the other two rows are
+
+$$
+E_7=\begin{pmatrix}
+0&-\sqrt{2/3}\,a_0&0&\sqrt{2/3}\,a_0\\
+0&-a_0/\sqrt2&-a_0/2-3g/8&0
+\end{pmatrix}.
+\tag{268.12}
+$$
+
+For every normalized coarse coordinate vector $\xi=(\xi_a,\xi_b,\xi_c,\xi_d)$,
+
+$$
+\|D_7J^{-1}\xi\|^2
+=\tfrac23a_0^2|\xi_d-\xi_b|^2
+ +\left|\tfrac{a_0}{\sqrt2}\xi_b+
+                (\tfrac{a_0}{2}+\tfrac{3g}{8})\xi_c\right|^2.
+\tag{268.13}
+$$
+
+In particular the unitary leakage for $f_b$ is $7a_0^2t^2/6+O(t^3)$, and its compressed second-order scalar discrepancy is
+
+$$
+\langle e_b,(\widehat F_z(t)-e^{-zt\widehat A_7})e_b\rangle
+=\frac{7z^2a_0^2}{12}t^2+O(t^3),
+\quad z\in\{1,i\}.
+\tag{268.14}
+$$
+
+Here $\widehat F_z=JF_zJ^{-1}$. These are fixed-source, full-parameter formulas; $D_7J^{-1}e_a=0$ is a genuine exceptional input, so a positive coefficient for every input would be false.
+
+Proof. The hidden dimension is $7-4=3$ and the displayed class contrasts are orthonormal. The $h_0$ row vanishes because $LL,LR$ have equal diagonals and the same parent. At $h_a$ only the $b,d$ columns contribute: their address values are $(-a_0,-a_0,0)$ and $(0,0,-a_0)$ on $(LL,LR,RR)$, giving the first row. At $h_c$, the $b$ column has values $(-a_0,0)$ on $(o,RL)$. The normalized $c$ column has values $(2a_0-g)/\sqrt2$ and $(3a_0-g/4)/\sqrt2$; taking the contrast gives $-a_0/2-3g/8$. The $d$ column gives $(-a_0,-a_0)$ and hence no contrast, and the $a$ column vanishes on both sites. This proves (268.12) entry by entry, then (268.13) by squaring. Equations (265.2) and (265.4) prove (268.14) and the leakage assertion. □
+

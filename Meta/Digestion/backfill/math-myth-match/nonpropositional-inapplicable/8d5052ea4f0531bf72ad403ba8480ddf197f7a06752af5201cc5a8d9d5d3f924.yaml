@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d5052ea4f0531bf72ad403ba8480ddf197f7a06752af5201cc5a8d9d5d3f924
+  normalized_sha256: sha256:8d5052ea4f0531bf72ad403ba8480ddf197f7a06752af5201cc5a8d9d5d3f924
+cas_ref: sha256:8d5052ea4f0531bf72ad403ba8480ddf197f7a06752af5201cc5a8d9d5d3f924
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：提出组合包表示需要核对的成本、可行性和效果义务；没有声称某个具体映射已完成这些义务。
+    previous_atom_id: 19db7cda66f9007b78bc1f68dc781d701cf72a834f8b963ef85ab37e39f613db
+    next_atom_id: f224a2693ab7fd28606076fe053e8235d6f0fd6fb5b1d40e49eb070533c79df2

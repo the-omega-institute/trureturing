@@ -65,7 +65,7 @@ theorem a_window_iff (x y z : Bool) :
   cases x <;> cases y <;> cases z <;>
     simp only [A] <;> decide
 
-private theorem n_iff_nor (x y z : Bool) :
+theorem n_iff_nor (x y z : Bool) :
     N ![x, y, z] ↔ z = !(x || y) := by
   cases x <;> cases y <;> cases z <;>
     simp only [N, A] <;> decide

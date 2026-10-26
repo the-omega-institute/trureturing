@@ -1,0 +1,32 @@
+**Definition 9.1 (Source derivatives at the exact zero).** Put
+$t^*=r_A^*$ and let
+
+$$
+\mathcal M(r_A,b_A,r_B,b_B)=(p_A-p_B,v_A-v_B,m_A-m_B),\qquad
+\mathscr D=\left.\frac{\partial\mathcal M}{\partial(b_A,r_B,b_B)}\right|_{z^*}.
+\tag{9.1}
+$$
+
+Define the exact common-base derivatives by solving
+
+$$
+\begin{pmatrix}b_A'\\r_B'\\b_B'\end{pmatrix}
+=-\mathscr D^{-1}\frac{\partial\mathcal M}{\partial r_A},\qquad
+p_M'=p_{A,r}+p_{A,b}b_A',\quad
+v_M'=v_{A,r}+v_{A,b}b_A'.
+\tag{9.2}
+$$
+
+At $C^*$ put
+
+$$
+\begin{gathered}
+k=-p_r/p_b,\qquad w=(1,k),\qquad
+\beta=w^{\mathsf T}\left(D^2v-\frac{v_b}{p_b}D^2p\right)w,\\
+\eta=v_M'-\left(\frac{v_b}{p_b}\right)_{C^*}p_M',\qquad
+a_s=a_r+ka_b,\quad m_s=m_r+km_b,\quad x_s=x_r+kx_b,\\
+\lambda=\sqrt{-2\eta/\beta}>0.
+\end{gathered}
+\tag{9.3}
+$$
+

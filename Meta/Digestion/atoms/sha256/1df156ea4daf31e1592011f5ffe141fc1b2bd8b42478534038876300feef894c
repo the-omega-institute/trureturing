@@ -1,0 +1,56 @@
+**Proposition 11.1 (Three parallel edges distinguish the laws).** Let $G$ have two vertices, called $0,1$, and three parallel edges $i\in\mathbb Z/3\mathbb Z$. At each vertex use reference rotation $i\mapsto i+1$. In Definition 10.2 take $\tau=0$. Then uniform rotations alone ($B=\varnothing$) and uniform independent signs at the reference rotation have different full inventory laws:
+
+$$
+ \begin{array}{c|cc}
+ \text{inventory}&\text{rotations alone}&\text{independent signs}\\\hline
+ 2Z^6&1/2&1/2\\
+ 2Z^2+2Z^4&0&3/8\\
+ 6Z^2&1/2&1/8
+ \end{array}
+ \tag{11.1}
+$$
+
+More sharply, take $B=\{0\}$ and leave $U=\{1\}$ unresolved after normalization. Each normalized sign is marginally fair. Conditional on $\sigma_0=\sigma_2=1$, an event of probability $1/4$, the actual inventory is deterministically $6Z^2$. Replacing the unresolved sign by an independent fair bit would instead give $6Z^2$ and $2Z^2+2Z^4$ with probability $1/2$ each. In this comparison the untouched inventory is exactly $2Z^2$ on both sides.
+
+*Proof.* Write a flag as $(v,i,b)$. Formula (10.1) gives
+
+$$
+ f_{\rho,t}(v,i,b)=\bigl(1-v,\ i+(-1)^{b+t_i},\ b+t_i\bigr).
+ \tag{11.2}
+$$
+
+Let $A_t(i,b)=(i+(-1)^{b+t_i},b+t_i)$. A cycle of $A_t$ of even length $k$ lifts to two $k$-cycles of $f$; one of odd length $k$ lifts to one $2k$-cycle, because the vertex coordinate flips at every step. For $t=000$, $A_t$ has the two 3-cycles given by the two sides. For $t=100$ it has the single cycle
+
+$$
+ (0,0),(2,1),(1,1),(0,1),(1,0),(2,0).
+$$
+
+For $t=110$ its cycles are
+
+$$
+ ((0,0),(2,1),(1,1),(2,0)),\qquad ((0,1),(1,0)).
+$$
+
+For $t=111$ it has the three 2-cycles $((i,0),(i-1,1))$. Cyclically relabelling the three edges covers all states of weight one or two. Consequently signs of weights zero and one give $2Z^6$, weight two gives $2Z^2+2Z^4$, and weight three gives $6Z^2$. Independent signs have the eight equally likely vectors. With rotations alone, $\delta q$ is either $000$ or $111$, each with probability $1/2$. This proves (11.1).
+
+For $B=\{0\}$, the normalized support is exactly
+
+$$
+ \{000,100,011,111\},
+$$
+
+uniformly. Every coordinate is fair, but $\sigma_1=\sigma_2$ always. The outside condition selects only $111$ and has probability $1/4$. A hypothetical fair unresolved sign would also allow $101$, whose inventory is the weight-two case above.
+
+To verify the untouched term directly, cut edge $1$ while keeping $t_0=t_2=1$. The two cycles
+
+$$
+ (v,0,0)\longleftrightarrow(1-v,2,1),\qquad v=0,1,
+ \tag{11.3}
+$$
+
+avoid every flag of edge $1$ and are untouched. The remaining four nonendpoint flags $(v,0,1),(v,2,0)$ each belong to a return segment from an edge-$1$ endpoint; hence (11.3) is the complete untouched set. The cut return from $(v,1,b)$ has length two and endpoint $(1-v,1,b)$. At sign one the attachment also interchanges $v$ while preserving $b$, so the return successor is the identity on the four endpoints. The touched inventory is $4Z^2$. At sign zero the attachment changes both $v$ and $b$, so the return successor has two 2-cycles, each with total length four. The touched inventory is $2Z^4$. Adding the same untouched $2Z^2$ proves the final assertion directly from the actual cut, rather than from a sign-vector count alone. ∎
+
+The vertex switch and binary cycle criterion are established mathematics. The application here identifies the exact normalized conditional sampler supplied to simultaneous actual graph cuts and to their complete weighted-return inventory. Proposition 11.1 gives an explicit inventory separation with the untouched term retained. The original all-edge fair-sign sampler remains uniform after normalization; this obstruction concerns omitting some of its independent signs. No graph-independent inventory probabilities, exact-thirds statement, cycle-double-cover conclusion, or external priority for the standard ingredients is asserted.
+
+Mathematical references: [Ghanbari–Šámal, *Facial diagrams and cycle double cover*, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); [Archdeacon, *Topological Graph Theory: A Survey*, §2.5](https://www.math.u-szeged.hu/~hajnal/courses/PhD_Specialis/Archdeacon.pdf); [Zaslavsky, *Glossary of Signed and Gain Graphs and Allied Areas*, “balance”, “Harary bipartition”, and “potential function”](https://people.math.binghamton.edu/zaslav/Bsg/glossary.html). These supply the standard switching and balance background. The conditional-inventory formula combines the switching, cycle-space and first-return ingredients on the same labelled flag carrier.
+

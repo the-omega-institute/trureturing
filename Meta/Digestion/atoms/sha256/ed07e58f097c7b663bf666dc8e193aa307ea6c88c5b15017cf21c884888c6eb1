@@ -1,0 +1,12 @@
+**Definition 11.1 (Sources and output region).** Retain the complete worlds of Definition 1.1, the zero-safe parent and whole-gain reconstruction of Definition 2.1, and the actual analytic $J$ arc $v_J$ of [III], Theorem 16.4. Write $e=d-24$, $c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$ and $U=1+2b$. Define
+
+$$
+\mathcal Q=\left\{(p,v):10\le p\le34,\quad 0\le v\le200,\quad
+v\ge\frac{37p+426}{10}\right\}.
+\tag{11.1}
+$$
+
+The quantifier over a companion means every complete world in $C(p,v)$, including worlds unused by a selected pair. Singular sources, zero drift $d=0$, $e=0$, sampled gain zeros and all gain degrees at most three remain in this quantifier. Write SIII for [III] of Definition 1.2. In addition to those suppliers, use [SIV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md), Theorems 8.2–8.3 and 9.1 for the universal response algebra and coefficient separation, and [SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Section 3 for the zero-safe interval-cover method. SIV's particular rectangle is not substituted for $\mathcal Q$.
+
+### 11.1. A quantitative collar for every companion
+

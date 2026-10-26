@@ -1,0 +1,240 @@
+**Theorem 18.1 (unique inner profile and the actual source amplitude).**
+There is exactly one positive real function $Z$ on the frozen group which
+is a weak solution of
+
+$$
+(-\Delta_H-\lambda_0\min\{R^{-2},1\})Z=0
+\quad\hbox{on }\mathbb R^3,
+\tag{18.1}
+$$
+
+is smooth at the source, and has logarithmic coefficient one at infinity.
+More precisely, it is smooth on $R<1$ and on $R>1$, belongs to
+$W^{1,2}_{H,\mathrm{loc}}(\mathbb R^3)$, is continuous and positive
+everywhere, and for one real $\kappa_{\rm cap}$ satisfies
+
+$$
+\frac{Z(q)}{h(q)}=\log R(q)+\kappa_{\rm cap}+o(1)
+\quad(R\to\infty).
+\tag{18.2}
+$$
+
+The error is uniform over all angular directions. On compact rescaled
+annuli it tends to zero with every smooth derivative after subtracting
+$\log R+\kappa_{\rm cap}$. The function $Z$ is invariant under rotations
+of $(\xi,\eta)$; this invariance is a conclusion about the frozen core,
+not a restriction on the original model.
+
+For the actual normalized eigenstates,
+
+$$
+F_\epsilon(q):=\epsilon L
+ f_\epsilon(\Psi^{-1}\delta_\epsilon q)
+ \longrightarrow a_*Z(q).
+\tag{18.3}
+$$
+
+Convergence holds locally uniformly and strongly in
+$W^{1,2}_{H,\mathrm{loc}}$, and in every $C^j$ norm on compact subsets
+of $R<1$ or $R>1$. In particular it includes the source:
+
+$$
+\epsilon L f_\epsilon(o)\longrightarrow a_*Z(0)>0.
+\tag{18.4}
+$$
+
+The normalization of $Z$ is equivalently the exact flux condition
+
+$$
+\lambda_0\int_{R<1}(R^{-2}-1)hZ\,dq=k_\phi.
+\tag{18.5}
+$$
+
+Proof. A linear charge identity fixes the inner amplitude more strongly
+than the quadratic energy estimate (17.7). The finite-resolution
+quotient satisfies, weakly on its actual transformed domain,
+
+$$
+\mathscr B_*u_\epsilon+D_\epsilon u_\epsilon
+ =d_\epsilon u_\epsilon.
+$$
+
+Test it with the logarithmic source cutoffs approaching the constant one.
+Their products with $f_*$ belong to $\mathcal F_A$; outside the source
+chart this follows directly from (12.3). The $\mathscr A$ energy of
+these cutoffs tends to zero by (13.1) and (12.13). The kinetic pairing
+therefore vanishes in the limit. The potential pairing is absolutely
+integrable: near zero $f_\epsilon$ is smooth, because its potential is
+constant on an entire source neighbourhood, whereas $f_*=O(R^{-1})$;
+thus $D_\epsilon f_\epsilon f_*d\mu=O(R^{-3})dq$ for each fixed
+$\epsilon$. Dominated convergence gives the exact identity
+
+$$
+Q_\epsilon:=\int D_\epsilon u_\epsilon d\nu_*
+ =d_\epsilon\int u_\epsilon d\nu_*.
+\tag{18.6}
+$$
+
+Since $\nu_*$ is a probability measure and $u_\epsilon\to1$ in its
+$L^2$ norm, (17.3) implies
+
+$$
+LQ_\epsilon\longrightarrow a_*^2m_0k_\phi.
+\tag{18.7}
+$$
+
+This identity tests the original eigenproblem; it adds no counterterm or
+source condition to the approximating operators.
+
+Rescale (18.6) in the source chart, using (14.2), (16.1), and
+$g_{\mathrm c}c_G=\lambda_0$. On $R<2$ its expression is
+
+$$
+LQ_\epsilon
+ =a_*m_0\lambda_0\int
+ \big(R^{-2}-1+e_\epsilon(q)\big)_+
+ h(q)F_\epsilon(q)\{1+O(\epsilon^\gamma R^\gamma)+O(\epsilon R)\}\,dq,
+\quad |e_\epsilon(q)|\le C\epsilon/R.
+\tag{18.8}
+$$
+
+The integral vanishes outside $R<1+C\epsilon$. On the fixed annulus
+$1/4<R<1/2$ its kernel has a uniform strictly positive lower bound.
+The rescaled equation for $F_\epsilon$ has smooth uniformly converging
+horizontal coefficients and bounded potential, converging locally
+uniformly to that in (18.1). This includes zero by (14.3). Uniform local
+Hörmander Harnack inequalities connect that annulus to every fixed
+compact set. Hence the bounded charge (18.7) bounds $F_\epsilon$ on
+every such set. Local Hölder and energy estimates give compactness
+locally uniformly and weakly in $W_H^{1,2}$. On $R<1$ and $R>1$,
+(16.8) and the rescaled equation give smooth compactness. Differences
+of the weak equations, tested with a compactly supported cutoff times
+the difference of the functions, upgrade local horizontal energy
+convergence to strong convergence: the coefficients converge smoothly,
+the potentials converge uniformly, and the functions converge uniformly.
+This last argument works across $R=1$ as well and asserts only the
+stated weak and first-derivative regularity there.
+
+Let $F$ be any subsequential limit. It is smooth at zero, solves (18.1),
+and is nonnegative. The kernel in (18.8) is bounded by a constant times
+$(R^{-2}+1)h=O(R^{-3}+R^{-1})$, integrable on $R<2$. Compact uniform
+bounds thus allow passage to the limit, including zero and the moving
+cap boundary. Equations (18.7)–(18.8) give
+
+$$
+\lambda_0\int_{R<1}(R^{-2}-1)hF\,dq=a_*k_\phi.
+\tag{18.9}
+$$
+
+It is positive. The strong maximum principle makes $F$ positive
+everywhere. It remains to prove that this charge selects a unique
+positive entire profile, and that its coefficient at infinity is the
+one claimed. This is an all-angular assertion.
+
+For any positive entire source-regular solution $F$ of (18.1), set
+$v=F/h$ and $P_0=\lambda_0(R^{-2}-1)_+$. The frozen ground transform
+says
+
+$$
+\mathscr B_0v+P_0v=0,\qquad
+\mathscr B_0=-h^{-2}\operatorname{div}_H(h^2\nabla_H).
+\tag{18.10}
+$$
+
+Near zero $v=O(R)$ and its transformed energy is finite. Integrating
+(18.10) over a ball, or first testing with radial cutoffs, gives for
+$R>1$ the constant outward flux
+
+$$
+k_\phi p'(\log R)
+ =\int_{R<1}P_0hF\,dq,
+\qquad
+p(t)=\frac1{2\pi C_\phi}\int c\phi^2v(t,a,\theta)\,da d\theta.
+\tag{18.11}
+$$
+
+There is no inner flux: source regularity makes it tend to zero like
+$O(R)$ as the inner radius tends to zero. Consequently
+$p(t)=\beta t+\alpha$ for $t>0$, with
+$\beta=k_\phi^{-1}\int P_0hF>0$. Uniform Harnack on a fixed rescaled
+annulus gives $\sup_{R=e^t}v\le C p(t)$ for $t\ge1$, so $v=O(1+t)$.
+
+The angular decay needed here has a direct energy proof. Put
+$w=v-(\beta t+\alpha)$; it has zero $c\phi^2$ mean on every slice
+and solves $\mathscr B_0w=0$ for $t>0$. Define
+
+$$
+\begin{aligned}
+H_w(t)&=\int c\phi^2w^2\,da d\theta,\\
+e_w(t)&=\frac14\int\phi^2
+ \{c|w_t+\tan a\,w_\theta|^2
+          +4c|w_a+\tfrac12w_\theta|^2\}\,da d\theta.
+\end{aligned}
+\tag{18.12}
+$$
+
+Differentiating twice and using the divergence equation gives
+
+$$
+H_w''(t)=8e_w(t)\ge0,
+\qquad
+\int_t^{t+1}H_w\le C\int_{t-1}^{t+2}e_w.
+\tag{18.13}
+$$
+
+The second inequality follows from (17.10). In the first calculation,
+solving the divergence equation for $cw_{tt}$ and integrating its
+$w_{t\theta}$ term by parts gives the cross term
+$4\int c\phi^2\tan a\,w_\theta w_t$ in $H_w''$.
+The remaining terms are
+$2\int c\phi^2(w_t^2+\tan^2a\,w_\theta^2)
+ +8\int c\phi^2(w_a+w_\theta/2)^2$, which give exactly $8e_w$.
+One may perform the integrations on Cartesian annuli and then use
+(10.9); the collapsed angular coordinates create no axis boundary terms.
+
+Here $H_w(t)=O((1+t)^2)$. A convex nonnegative function with this growth
+and (18.13) must decrease to zero. Indeed, if its derivative is ever
+positive, it stays positive. For all later $t$, (18.13) and convexity
+then give
+
+$$
+H_w(t)\le C_1\{H_w'(t+2)-H_w'(t-1)\}
+ \le C_1\{H_w(t+3)-H_w(t)\}.
+$$
+
+Iteration forces exponential growth, a contradiction. Thus its
+derivative is nonpositive and tends to zero. Integrating (18.13) to
+infinity now gives $\int_T^\infty H_w<\infty$; its decreasing limit is
+zero. Also $\int_{t-1}^{t+2}e_w\to0$. The full weighted squared norm
+of $w$ on each middle annulus tends to zero by (17.10), and interior
+estimates for $\mathscr B_0$ turn this into smooth convergence on
+rescaled compact annuli. It follows that
+
+$$
+F/h=\beta\log R+\alpha+o(1)
+\tag{18.14}
+$$
+
+in the asserted all-angular sense.
+
+Two positive source-regular solutions with the same $\beta$ have a
+difference whose quotient by $h$ is bounded at infinity by (18.14) and
+is $O(R)$ at zero. Test its equation (18.10) with its quotient times
+the square of a cutoff equal to one on $R<e^T$, zero on $R>e^{2T}$,
+and affine in $\log R$ between. Cauchy–Schwarz bounds the cutoff error
+by $C/T$, since the quotient is bounded and the frozen energy of that
+cutoff is $k_\phi/T$. Inner cutoffs have vanishing error by the $O(R)$
+source behavior. Let $T\to\infty$. The nonnegative transformed energy
+and $\int P_0h^2v^2$ both vanish. The quotient is constant, and the
+latter integral forces that constant to be zero. This proves uniqueness
+for each positive logarithmic coefficient.
+
+Applied to (18.9), this proves $F=a_*Z$, with (18.2) and (18.5).
+It also proves existence of $Z$ without assuming an exterior scattering
+theorem. Every subsequence has that same limit, so (18.3) holds for the
+whole family. Rotating $Z$ in the horizontal plane preserves (18.1),
+source regularity, positivity, and coefficient one. Uniqueness proves
+its rotational invariance. The common logarithmic coefficient in
+(17.5) and (18.2) is fixed by the exact charge (18.6). This completes
+the matching and proves (18.4). $\square$
+

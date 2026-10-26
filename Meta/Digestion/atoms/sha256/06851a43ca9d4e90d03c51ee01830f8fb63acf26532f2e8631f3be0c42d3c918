@@ -1,0 +1,9 @@
+**Theorem 6.5.2 (Evaluated second-source opening coefficients).** The matrix in (6.5.1) is invertible, and its determinant and the coefficients in (6.5.3) satisfy all the following strict bounds:
+
+| Quantity | Strict lower bound | Strict upper bound |
+|---|---:|---:|
+| $\det A$ | $2.0346787949\cdot10^{14}$ | $2.0346787951\cdot10^{14}$ |
+| $P_2$ | $-102.407582$ | $-102.407581$ |
+| $V_2$ | $-57.385139$ | $-57.385138$ |
+| $L_x$ | $2.853626$ | $2.853627$ |
+| $L_m$ | $-78.900271$ | $-78.900270$ |

@@ -1,0 +1,29 @@
+**Theorem 144.1 (a common half-endpoint lemma).** For $t\in J_1$ and either
+$(\nu,\kappa)=(7/11,123/200)$ or $(2/3,31/50)$, every real unit direction satisfies
+
+$$
+C_{\nu,\kappa t/(1+t)}(q/2)\succ0.
+\tag{U.193}
+$$
+
+Proof. Set $b=\kappa t/(1+t)$ and $z=m/q\geq1$. The bounds $t\leq5/8$, $\nu\geq7/11$, $\kappa\leq31/50$ and $t/(1+t)\geq2/7$ give
+
+$$
+\begin{gathered}
+bT_\nu=\kappa\left[(1+t)-\frac{\nu t}{1+t}\right]
+\leq\frac{31}{50}\left(\frac{13}{8}-\frac2{11}\right)
+=\frac{3937}{4400}<1,\\
+A_0=1-bT_\nu+b^2E_\nu>0,\qquad
+\frac{\operatorname{Tr}C_{\nu,b}(q/2)}q
+=(2-bT_\nu)z-1\geq1-bT_\nu>0.
+\end{gathered}
+\tag{U.194}
+$$
+
+At $m=q$ use $u=\pm e_2$. The two eigenvalues divided by $q$ are
+$1/2-\kappa t$ and $1/2-\kappa[1+(1-\nu)t]/(1+t)$. The first is at least $9/80$. The second has the following exact forms:
+
+| Parameters | Second normalized eigenvalue | Numerator at $t=21/50$ |
+| --- | --- | --- |
+| $\nu=7/11,\ \kappa=123/200$ | $(608t-253)/(2200(1+t))$ | $59/25$ |
+| $\nu=2/3,\ \kappa=31/50$ | $(22t-9)/(75(1+t))$ | $6/25$ |

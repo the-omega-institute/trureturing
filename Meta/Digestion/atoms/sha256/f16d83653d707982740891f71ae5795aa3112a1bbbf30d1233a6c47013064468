@@ -1,0 +1,68 @@
+**Theorem 85.7 (finite-band variational boundary and negative-infimum attainment).** For fixed $a,g,\Lambda>0$ define
+$$
+\begin{aligned}
+E_\Lambda(a,g)&=\inf\{q_\Lambda[\psi]:\psi\in\mathcal F_\Lambda,\ \|\psi\|_2=1\},\\
+C_\Lambda&=\sup_{0\ne\psi\in\mathcal F_\Lambda}\frac{V[\psi]}{T[\psi]}.
+\end{aligned}
+\tag{85.22}
+$$
+Then $0<C_\Lambda\le\sqrt\Lambda/(\sqrt2\pi)$, $C_\Lambda=\sqrt\Lambda C_1$, and
+$$
+\begin{gathered}
+-\frac{g^2\Lambda^2}{64\pi^4a}\le E_\Lambda(a,g)\le0,\\
+E_\Lambda(a,g)=0\quad\Longleftrightarrow\quad gC_\Lambda\le a,\qquad
+E_\Lambda(a,g)<0\quad\Longleftrightarrow\quad gC_\Lambda>a.
+\end{gathered}
+\tag{85.23}
+$$
+In particular $g\sqrt\Lambda\le\sqrt2\pi a$ is a sufficient no-negative-energy region. If $E_\Lambda(a,g)<0$, the infimum is attained by a normalized state in $\mathcal F_\Lambda$, which is an eigenvector of $A_\Lambda$ with eigenvalue $E_\Lambda(a,g)$. The numerical value of $C_1$ and attainment at the critical coupling $g=a/C_\Lambda$ are not determined here.
+
+Proof. The conditional expectation on a positive-marginal fibre is bounded both by (85.9)'s pointwise cap estimate and by the actual-field supremum (85.13). Therefore
+$$
+V[\psi]\le\int m_\psi(\xi)
+ \min\left\{\frac{\Lambda}{4\pi^2R},\frac1{8R^3}\right\}d\xi
+ \le\frac{\sqrt\Lambda}{4\sqrt2\pi}\int\frac{m_\psi(\xi)}{R^2}d\xi
+ \le\frac{\sqrt\Lambda}{\sqrt2\pi}T[\psi].
+\tag{85.24}
+$$
+For the middle inequality, $\min(AR,B/R)\le\sqrt{AB}$ with $A=\Lambda/(4\pi^2)$, $B=1/8$. The final step uses the classical three-dimensional Hardy inequality $\int|f|^2/R^2\le4\|\nabla f\|_2^2$ on the actual $f=\sqrt{m_\psi}$ supplied by (84.5). Thus the stated constant is a sufficient estimate; no sharpness at fixed bandwidth is asserted. Also $T[\psi]=0$ forces $\nabla f=0$ and then $f=0$ because $f\in L^2(\mathbb R^3)$, so the ratios in (85.22) have nonzero denominators. Positivity of $\Gamma$ and an inhabitant of $\mathcal F_\Lambda$ prove $C_\Lambda>0$.
+
+Use the same normalized dilation as §82,
+$$
+(U_\rho\psi)(p)=\rho^{-5/2}\psi(\delta_{1/\rho}p),\qquad
+U_\rho\mathcal F_\Lambda=\mathcal F_{\Lambda/\rho^2},\qquad
+T[U_\rho\psi]=\rho^{-2}T[\psi],\qquad
+V[U_\rho\psi]=\rho^{-3}V[\psi].
+\tag{85.25}
+$$
+Central Fourier scaling proves the sector identity, and the last two identities use the actual kinetic degree and actual Green homogeneity. Taking $\rho=\Lambda^{-1/2}$ maps $\mathcal F_1$ onto $\mathcal F_\Lambda$ and proves $C_\Lambda=\sqrt\Lambda C_1$. Taking $\rho\to\infty$ on any fixed normalized band inhabitant keeps it in $\mathcal F_\Lambda$ and gives $q_\Lambda[U_\rho\psi]\to0$. Hence $E_\Lambda\le0$. The definition of the supremum now proves both alternatives in (85.23), including equality at the threshold; (85.8) supplies the lower bound. For strictly subcritical $gC_\Lambda<a$, every nonzero state's form value is positive, so the zero infimum is not attained. At critical coupling this argument does not decide attainment.
+
+For the negative case the required compactness concerns the actual full field. We prove that
+$$
+\mathcal F_\Lambda\longrightarrow L^2(G,\Gamma d\mu),\qquad\psi\longmapsto\psi,
+\quad\text{is compact for the norm }(\|\psi\|_2^2+T[\psi])^{1/2}.
+\tag{85.26}
+$$
+First, $\|\partial_w\psi\|_2\le\Lambda\|\psi\|_2$ by the band restriction. In the original coordinates $\partial_x=X_1$, $\partial_z=X_3$, and $\partial_y=X_2-x\partial_w$. A form-bounded sequence is consequently bounded in ordinary $H^1$ on every relatively compact coordinate box, after multiplication by a smooth compact cutoff. The classical Rellich--Kondrachov theorem, applied to these cutoffs on bounded smooth coordinate balls in dimension four with $H^1$ boundedness and target $L^2$, gives a diagonal subsequence converging strongly in local $L^2$; the weak form limit identifies that limit.
+
+Second, uniformly for all $\phi\in\mathcal F_\Lambda$, the singular central cylinder is small in the weighted norm:
+$$
+\int_{R<\delta}\Gamma|\phi|^2d\mu
+ \le\frac{\Lambda}{4\pi^2}\int_{R<\delta}\frac{m_\phi}{R}d\xi
+ \le\frac{\Lambda\delta}{\pi^2}T[\phi].
+\tag{85.27}
+$$
+This uses the marginal cap and Hardy, and covers the entire infinite central fibre, not merely a small Euclidean neighbourhood of the source. Third let $N(\xi,s)=(R^4+s^2)^{1/4}$. Folland's smoothness and homogeneous degree $-3$ on the compact unit $N$ sphere give $\mathcal G(\xi,s)\le C N^{-3}$. Consequently
+$$
+\int_{N>K}\Gamma|\phi|^2d\mu\le CK^{-3}\|\phi\|_2^2.
+\tag{85.28}
+$$
+The remaining region $\{R\ge\delta,N\le K\}$ is compact, and its potential is bounded by $1/(8\delta^3)$. Local strong $L^2$ convergence controls the weighted norm there. Apply (85.27)--(85.28) to differences of the convergent subsequence, first making $\delta$ small and $K$ large and then using local convergence. This proves weighted Cauchy convergence; local identification gives its weighted limit as the weak form limit. Thus (85.26) is a compact embedding with the actual $\Gamma$, including its singularity and its full central tail.
+
+Now let $\|\psi_n\|_2=1$ and $q_\Lambda[\psi_n]\to E=E_\Lambda(a,g)<0$. Estimate (85.10) with $\varepsilon=a/2$ bounds $T[\psi_n]$. Pass to a weakly convergent subsequence in $\mathcal F_\Lambda$ with limit $\psi$. Weighted compactness gives $V[\psi_n]\to V[\psi]$, and weak lower semicontinuity gives $q_\Lambda[\psi]\le E$. Set $m=\|\psi\|_2^2\le1$. Homogeneity and the definition of $E$ give $q_\Lambda[\psi]\ge Em$, also when $m=0$. Hence
+$$
+E\ge q_\Lambda[\psi]\ge Em\ge E.
+\tag{85.29}
+$$
+Since $E<0$, equality forces $m=1$ and $q_\Lambda[\psi]=E$. This supplies the missing norm/mass conclusion as well as attainment. Constrained variation of the Hermitian form gives $q_\Lambda(\phi,\psi)=E\langle\phi,\psi\rangle$ for every $\phi\in\mathcal F_\Lambda$. The representation characterization (85.11) yields the asserted eigenvector. Semiboundedness alone was used for neither negativity nor attainment. $\square$
+

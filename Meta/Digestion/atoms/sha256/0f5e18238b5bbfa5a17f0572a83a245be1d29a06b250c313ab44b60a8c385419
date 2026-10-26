@@ -1,0 +1,27 @@
+**Proposition 159.2 (Lipschitz dimension obstruction).** Let \(Y\) contain
+a compact set \(K\) of Hausdorff dimension three; in particular this holds
+for a compact ball in a \(3\)-Ahlfors regular local carrier. There is no
+Lipschitz map
+
+$$
+F:(\Omega,d_\varphi)\longrightarrow Y
+$$
+
+whose image contains \(K\). In particular, no uniformly bi-Lipschitz
+identification of the native boundary with a three-dimensional carrier
+exists.
+
+**Proof.** Lipschitz maps do not increase Hausdorff dimension, so
+
+$$
+\dim_H F(\Omega)\le\dim_H\Omega=1.
+$$
+
+The compactness of \(\Omega\) makes \(F(\Omega)\) compact and therefore
+closed. It cannot contain \(K\) of dimension three. A bi-Lipschitz map is
+Lipschitz, so the stronger assertion follows. \(\square\)
+
+This is a statement about retaining the native cylinder scale. It does not
+exclude a non-Lipschitz coding, a hidden transverse coordinate, or a new
+transport metric.
+

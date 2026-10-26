@@ -22,7 +22,7 @@ Let finite complex Kraus families E_a: C^d -> C^n and A_b: C^n -> C^d satisfy su
 
 Define N(T) = sum_a E_a T E_a*, Q = N(identity), P = spectralSupport(Q), W = spectralInverseSqrt(Q), pi(T) = W N(T) W and F(i,j) = pi(e_ij). The inverse square root has its actual value zero on the kernel. Put E0 = range(P) and K0 = range(F(v,v)). All subspace, tensor and adjoint structures are the canonical complex structures.
 
-The whole statement produces Theta: K0 tensor C^d -> E0 as an isometric linear equivalence, B: C^n -> (d -> K0), and endomorphisms sigma and sigmaInv of K0. Its sixteen conclusions are recorded below.
+The whole statement produces Theta: K0 tensor C^d -> E0 as an isometric linear equivalence, B: C^n -> (d -> K0), and endomorphisms sigma and sigmaInv of K0. Its seventeen conclusions are recorded below.
 
 (1) Theta(w tensor e_i) = F(i,v)w in C^n. (2) Theta inverse applied to x in E0 is sum_i B(x)_i tensor e_i. (3) B(y)_i = F(v,i)y in C^n. (4) Theta* is Theta inverse.
 
@@ -30,7 +30,7 @@ The whole statement produces Theta: K0 tensor C^d -> E0 as an isometric linear e
 
 (9) sigma(w) = Qw as an ambient vector. (10) sigma is positive. (11) Re inner(w,sigma(w)) > 0 for every nonzero w. (12) sigma sigmaInv = identity and (13) sigmaInv sigma = identity. (14) trace(sigma) = 1.
 
-(15) Q Theta(z) = Theta((sigma tensor identity)z). (16) For U = jE Theta and every complex matrix T, N(T) = U (sigma tensor T) U*. The last clause includes all complex matrices, with no positivity or self-adjointness restriction on T.
+(15) Q Theta(z) = Theta((sigma tensor identity)z). (16) For U = jE Theta and every complex matrix T, N(T) = U (sigma tensor T) U*. This factorization includes all complex matrices, with no positivity or self-adjointness restriction on T. (17) sigmaInv(w) = (W W)w in the ambient Euclidean space.
 
 The derivation begins with Y(T) = sum_b A_b* T A_b. Scalarity of composite Kraus operators of the identity channel gives Y(T) E_a = E_a T. Conjugate transpose gives E_a* Y(T) = T E_a*. Thus Q Y(T) = Y(T) Q = N(T). Functional calculus makes Y(T) commute with W, and the actual spectral sandwich W Q W = P yields pi(T) = P Y(T). Support acts identically on each E_a and on N(T). These are the shared identities from SpectralRecoveryCorrectness.kraus_left_inverse_spectral_relations.
 

@@ -1,0 +1,80 @@
+**Theorem 4.1 (freezing error and a direct same-signature comparison).**
+For every finite $T\ge0$, every $h\ge0$ and every deterministic start,
+put
+
+$$
+b_h(T)=\mathbf P\{\operatorname{Pois}(3T)>h\}
+      =e^{-3T}\sum_{k=h+1}^\infty\frac{(3T)^k}{k!}.
+\tag{4.1}
+$$
+
+Then
+
+$$
+\|\mathsf L_p^T-\mathsf F_{h,p}^T\|_{\mathrm{TV}}\le b_h(T).
+\tag{4.2}
+$$
+
+For any two starts with $S_h(p)=S_h(p')$ there is also the direct bound
+
+$$
+\|\mathsf L_p^T-\mathsf L_{p'}^T\|_{\mathrm{TV}}\le b_h(T).
+\tag{4.3}
+$$
+
+In particular (4.3) has no factor two.
+
+**Proof.** Couple $X$ with its own frozen display (1.4). If there
+have been at most $h$ actual jumps by $T$, the two observed paths
+agree throughout $[0,T]$. Under the rate-three construction their
+actual jump count is no larger than the Poisson event count, so
+the probability of disagreement is at most (4.1). For any event
+$A$ in path space, a coupling $(U,V)$ gives
+
+$$
+|\mathbf P\{U\in A\}-\mathbf P\{V\in A\}|
+ \le\mathbf P\{U\ne V\}.
+\tag{4.4}
+$$
+
+Taking the supremum proves (4.2). The strict tail is essential:
+the display includes the $h$th actual jump; possible disagreement
+requires an $(h+1)$st actual jump. Root virtual holds count only
+towards the dominating Poisson count.
+
+For (4.3), use one rate-three clock for both full source processes.
+At a nonroot whose signatures agree with positive remaining
+budget, choose the same parent/left/right option in the two rows.
+Equation (2.2) makes the next signatures agree with one less
+budget. If both are at the root, choose the same child or virtual
+hold in the two rows. A child move has the same property, and on
+a hold the states remain the root, so their signatures agree at
+every budget. Reduce the comparison budget by one for each
+Poisson event, including a virtual hold; this can only discard
+information.
+
+Starting at budget $h$, induction gives identical observations
+at and between the first $h$ Poisson events. At zero remaining
+budget the observations still agree; any subsequent evolution
+can be coupled using the correct source rows. Thus if the common
+clock has at most $h$ events by $T$, the complete observations
+agree up to $T$. Apply (4.4). This proves the single-tail bound
+directly, without adding two errors from (4.2). At $h=0$ only
+the no-Poisson-event event is used; at $T=0$ both bounds vanish.
+The construction always retains the actual root row. $\square$
+
+The Poisson construction in this proof is the specialization already
+supplied by V Proposition 120.4. In
+[Rao--Teh, Fast MCMC Sampling for Markov Jump Processes and Extensions,
+JMLR 14 (2013), §3.1, Proposition 1](https://jmlr.org/papers/volume14/rao13a/rao13a.pdf),
+their dominating rate $\Omega$ is three and their
+$B=I+A/\Omega$ corresponds to $R_\infty$ after transposing their
+column convention to the present backward row convention. Their
+finite-state presentation is not used to infer an unproved
+countable-source extension: the bounded-rate construction above
+and in V 120.4 gives that extension explicitly. Their virtual jumps
+correspond here only to the root's hold in the source row, not to
+an actual same-colour seam. The source-specific increment table
+and (2.2) supply the comparison, rather than a new uniformization
+result.
+

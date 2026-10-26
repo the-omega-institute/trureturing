@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd
+  normalized_sha256: sha256:19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd
+cas_ref: sha256:19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimeLogIndependence.prime_log_indep
+    target_statement_id: sha256:366db20aa72f96a99551b7c9454ec3da58afe689a712f11a6bc53972e20ec151
+  - gid: D5/S3/Fourier/TorusOrbitClosure.result
+    target_statement_id: sha256:caf0494154aac8e0e431192bd01a4b6b70a6325fb74ca65873470e5c2843bcb7
+receipts:
+  unresolved_subitems: []

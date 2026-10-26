@@ -1,0 +1,197 @@
+**Theorem 32.1 (joint wall and short-time trace).**
+For every simultaneous $\kappa\to0$, $t\downarrow0$, without any
+relation between $a$ and $t$, and for both signs,
+
+$$
+a t^{7/2}Z_\kappa(t)\longrightarrow C_7.
+\tag{32.1}
+$$
+
+Moreover $t^{7/2}F(t)\to C_7$ as $t\downarrow0$.
+
+Proof. Choose fixed intervals $\overline I\subset J\Subset(0,H)$
+with positive margins, and a closed two-sided parameter interval so
+all original probabilities remain positive on $\overline J$.
+By (21.7), after shrinking that parameter interval once,
+
+$$
+D_\kappa(s)=\det(c_\kappa(s),c_\kappa'(s),c_\kappa''(s)),\qquad
+\inf_{\kappa,s\in\overline J}|D_\kappa(s)|>0,
+\quad D_\kappa(s)=-\frac{H^2-\kappa^2}
+ {2H^3(s-\alpha_\kappa)^3},
+\quad D_0(s)=-\frac1{2Hs^3}.
+\tag{32.2}
+$$
+
+For the determinant formula, put the three coefficients over the common
+denominator $2H(s-\alpha_\kappa)$. The determinant of their constant,
+linear and quadratic coefficient rows is $-2(H^2-\kappa^2)$;
+differentiating twice gives the additional factor two, while the
+derivatives of the common denominator cancel in the alternating
+determinant. All derivatives are bounded on a slightly larger rectangle.
+Unwrap all
+three resolved phase coordinates, writing $q\in\mathbb R^3$, and let
+$g_\kappa^U(t;s,s';q)$ be the killed kernel on $U\times\mathbb R^3$
+for $U=I,J$, with raw $ds\,dq$, generator
+$\varepsilon^2\partial_s^2+(c_\kappa(s)\cdot\partial_q)^2$.
+We first establish the uniform local estimate actually needed:
+
+$$
+t^{7/2}g_\kappa^J(t;s,s;0)\longrightarrow
+ \frac{c_E}{\varepsilon^4|D_\kappa(s)|}
+\quad\text{uniformly for }(\kappa,s)\in[-\kappa_*,\kappa_*]\times[l,u].
+\tag{32.3}
+$$
+
+Here is a parameter-uniform justification, rather than an appeal to
+positive-time continuity in unscaled coordinates. Put $h=\sqrt t$ and,
+centering the pole at $(s,0)$, make the linear privileged change
+
+$$
+s'=s+\varepsilon h r,\qquad
+q=h c_\kappa(s)y+\varepsilon h^2c_\kappa'(s)z
+                       +\varepsilon^2h^3c_\kappa''(s)w.
+\tag{32.4}
+$$
+
+Its absolute Jacobian is $\varepsilon^4|D_\kappa(s)|h^7$.
+The rescaled generator is $\partial_r^2+(v_{\kappa,s,h}(r)
+\cdot\partial_{y,z,w})^2$, where Taylor expansion in this basis gives
+
+$$
+v_{\kappa,s,h}(r)\longrightarrow(1,r,r^2/2)
+\quad\text{in }C^\infty\text{ on every bounded }r\text{ interval},
+\tag{32.5}
+$$
+
+uniformly in $(\kappa,s)$. The inverse basis matrices are uniformly
+bounded by (32.2). The rescaled height is $\sqrt2 B^1$ and the three
+rescaled phase increments are $\sqrt2\int v_{\kappa,s,h}
+(\sqrt2B^1_\tau)dB^2_\tau$, in unit rescaled time.
+Stop first when $|\sqrt2B^1_\tau|$ reaches $R$. The stopped stochastic
+integrals converge uniformly in probability, by the Itô isometry and
+(32.5). The complementary probability is the ordinary Brownian
+supremum tail, uniformly in the parameters. Killing at $\partial J$
+has probability tending to zero because its rescaled height distance
+is at least a fixed positive constant divided by $h$. Thus the
+rescaled transition measures converge weakly to the canonical ones,
+for every convergent parameter sequence and every fixed positive time.
+
+To upgrade this statement to densities at unit time, use
+Colin de Verdière--Hillairet--Trélat, *Small-time asymptotics of
+hypoelliptic heat kernels near the diagonal, nilpotentization and
+related results*, [DOI 10.5802/ahl.93](https://doi.org/10.5802/ahl.93),
+[H, Theorem B.1 and Corollary B.3] on fixed rescaled space-time boxes. The limiting
+fields $\partial_r$, $\partial_y+r\partial_z+(r^2/2)\partial_w$ and
+their brackets have determinant one. By (32.5) the fields on every
+such box satisfy one uniform strong Hörmander condition of step three,
+with bounded coefficient derivatives. They are divergence free, have
+zero potential and drift, smooth constant positive density, and
+selfadjoint sub-Markov realizations. Their kernel measures have total
+mass at most one. On a compact positive-time box this bounds the
+initial distribution in a fixed negative Sobolev norm, by dual Sobolev
+embedding. The local parabolic subelliptic estimate, with nested
+cutoffs, iterates to uniform bounds on all derivatives on smaller
+boxes, exactly the smoothing argument of (21.8)--(21.9).
+Weak convergence and compactness in these norms identify the unique
+smooth limit as $p_{\mathcal E}$. At unit time and the origin this
+proves (32.3), including uniformity: any contrary parameter sequence
+has a convergent subsequence and the same limiting argument.
+This is the leading nilpotent mechanism of [H, Theorem B], with the
+compact parameters and rescaled mass initialization explicitly retained.
+
+For $s$ in any fixed closed subinterval of $I$, the identical argument
+applies to $g_\kappa^I$. For all $s\in I$, domain domination and (32.3)
+on the larger interval give instead the uniform bound
+
+$$
+0\le g_\kappa^I(t;s,s;0)\le g_\kappa^J(t;s,s;0)
+                                  \le C t^{-7/2}\quad(0<t\le t_0).
+\tag{32.6}
+$$
+
+Both endpoints are therefore controlled even though a local interior
+expansion is not asserted uniformly at the absorbing faces.
+Alternatively their interior agreement follows from the uniform
+localization theorem [H, Theorem 3.2, p.921]: common smooth fields and density,
+uniform brackets, fixed interior margins, and selfadjoint contraction
+semigroups are its hypotheses here. No boundary asymptotic is imported.
+
+It remains to control every winding, including visible windings.
+Condition on a height Brownian bridge from $s$ to $s$ in time $t$,
+and retain its event of survival in $U$. The phase law is centered
+Gaussian with covariance $2M$, where
+
+$$
+M=\int_0^t c_\kappa(K_\tau)c_\kappa(K_\tau)^{\mathsf T}d\tau,
+\qquad 0<M\le M_0t\,\mathrm{Id}.
+\tag{32.7}
+$$
+
+It is positive definite almost surely: the bridge is nonconstant,
+its range contains an interval, and (26.7) forbids a nonzero linear
+combination of $c_\kappa$ vanishing on an interval. Its Gaussian density
+is $(4\pi)^{-3/2}(\det M)^{-1/2}e^{-q^{\mathsf T}M^{-1}q/4}$.
+The upper covariance bound holds on the same survived path, so taking
+bridge expectations gives the exact useful comparison
+
+$$
+0\le g_\kappa^U(t;s,s;q)\le
+ e^{-|q|^2/(4M_0t)}g_\kappa^U(t;s,s;0).
+\tag{32.8}
+$$
+
+These formulas hold first as Gaussian-mixture densities; smoothness
+identifies them pointwise. Finite inverse-determinant expectation at
+$q=0$ follows as well from the finite smooth kernel: Gaussian mixtures
+are bounded above by their value at zero, and Fatou along points tending
+to zero bounds that value by the continuous kernel's value.
+
+Projecting the same killed process onto periods $(2\pi,2\pi,2\pi/a)$
+now gives, by nonnegative periodization and the exact unitary (21.3),
+
+$$
+aZ_\kappa(t)=(2\pi)^3\int_I
+ \sum_{n,m,j\in\mathbb Z}
+ g_\kappa^I(t;s,s;(2\pi n,2\pi m,2\pi j/a))\,ds.
+\tag{32.9}
+$$
+
+For $0<a\le1$, every nonzero lattice vector here has length at least
+$2\pi$, and (32.8) bounds the sum of its exponentials by
+$Ce^{-c/t}$ for $t\le t_0$, independently of $a$. Equations
+(32.6)--(32.9) therefore control the entire winding sum, not a finite
+truncation. In particular its nonzero part, multiplied by $t^{7/2}$,
+is uniformly $O(e^{-c/t})$ after height integration.
+
+For a fixed $\delta>0$, integrate the uniform local limit on
+$[l+\delta,u-\delta]$. The two remaining height strips have total
+contribution at most $C\delta$ by (32.6), also after periodization;
+the limiting integrand has the same bound by (32.2). Let $t\downarrow0$
+and then $\delta\downarrow0$. This proves the stronger uniform estimate
+
+$$
+\sup_{0<|\kappa|\le\kappa_*}
+\left|a t^{7/2}Z_\kappa(t)
+ -(2\pi)^3c_E\varepsilon^{-4}\int_l^u\frac{ds}{|D_\kappa(s)|}
+\right|\longrightarrow0.
+\tag{32.10}
+$$
+
+Continuity of the determinant and (32.2) give (32.1), since
+$\int_l^u2Hs^3ds=H(u^4-l^4)/2$.
+For $F$, Fourier inversion in Theorem 31.2 gives
+
+$$
+F(t)=(2\pi)^3\int_I\sum_{n,m\in\mathbb Z}
+                          g_0^I(t;s,s;(2\pi n,2\pi m,0))\,ds.
+\tag{32.11}
+$$
+
+The same proof applies, with only the two visible winding indices.
+Thus its small-time coefficient is exactly $C_7$. Neither conclusion
+uses an exchange of an ordered wall limit with a short-time limit.
+All covariances in this proof are twice the form coefficients; the
+factor $\varepsilon^4$, the three raw $2\pi$ factors and the original
+clock are fixed by (32.4), (32.7), and (32.9). $\square$
+

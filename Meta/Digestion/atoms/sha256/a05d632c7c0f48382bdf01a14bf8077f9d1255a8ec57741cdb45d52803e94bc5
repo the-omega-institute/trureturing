@@ -1,0 +1,49 @@
+**Proposition 90.13 (what source counting does and does not force).** Fix
+$h$. A finite-valued code from which a deterministic decoder recovers the
+source or $V_Q$ on $\mathcal F_h$, using only that code and common
+parameters, has at least $2^m$ code values. If those values are stored
+as a fixed $p$-bit word, then $p\ge m$. The same holds for a retained
+state that is the decoder's sole source-bearing input. For the $R_Q$,
+$q$ or $(R_Q,q)$ task on this family, one output value suffices.
+
+Proof. If two different sources gave the same code or sole retained
+state, the decoder would return the same answer for them. Source
+identity and (90.5) distinguish them, so the map must be injective.
+Proposition 90.5 counts its domain and proves that each of the three
+other tasks is constant. This argument counts output or sole-state
+values; it asserts no lower bound on working memory when other input
+access, streamed output or externally retained data is allowed. $\square$
+
+A consumer independently supplied the already acquired original tree
+can compute $V_Q$, $R_Q$ or an encoding locally with **zero additional raw
+reads**. A consumer independently supplied (90.12) can decode the original
+labelled tree from its preorder reads and then do the same, again with
+zero new raw reads. These are different input contracts from receiving
+only $I$. Their acquisition and retention costs are not refunded. Even
+for raw acquisition, on the separately promised epoch-zero $\mathcal F_h$
+with known $h$, the $m$ reads at $LLp_1,\ldots,LLp_m$ suffice to reconstruct
+$X$ and then the whole source (90.7). Consequently the producer's
+$52m+2t+3$ reads, its frame-stack bound and the radix-specific sufficient
+precision in (90.22) cannot be transferred to arbitrary source consumers.
+
+The mathematical epoch-zero producer comparison is separate from the
+actual CE handoff. NativeFullSourceProducer has the same initialControl
+in every run, but each immutable register is initialized to its own
+$\nu_{h,\omega}$ and remains at that source and epoch zero. It terminates
+with the acquired tree and complete trace at an absorbing Stop. Its theorem
+supplies neither entry into a later task nor a post-Stop handoff right.
+
+ARH Proposition 2.1 and Proposition 23.2 supply a different paid
+acquisition contract: acquire original descriptions and the specified
+literals, execute real updates on the same register, acquire the required
+epoch-one and epoch-two endpoint descriptions, compare them while retained,
+reach the common certified $N$, then impose the complete access cut.
+The resulting accessible state has exactly fiber (90.2) and the physical
+register is $\rho^N u$. The original descriptions and traversal are no
+longer accessible. The sourcewise function $u\mapsto E(u)$ is not an
+archive inside that state, and its coding theorem is not an instruction
+to rerun an epoch-zero producer there. Neither source continuity nor
+certified $N$ gives a reset, inverse, clone, source identity port or
+old-version access. Alternative mathematical sources in the family are
+not live modifications of one register.
+

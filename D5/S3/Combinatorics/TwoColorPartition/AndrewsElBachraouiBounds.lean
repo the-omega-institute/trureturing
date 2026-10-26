@@ -86,6 +86,100 @@ theorem odd_divisors_card_le (M : ℕ) (hM : Odd M) : M.divisors.card ≤ Nat.sq
 
 set_option maxHeartbeats 3000000 in
 set_option maxRecDepth 4096 in
+/-- A parity-compatible triangular pair set is bounded by its square-root row sums. -/
+theorem gauss_pair_count_le_sqrt_sum (n : ℕ) (s : Finset (ℕ × ℕ))
+    (hs : ∀ p ∈ s, (p.1 + 1).choose 2 + (p.2 + 1).choose 2 ≤ n ∧
+  ((p.1 + 1).choose 2 + (p.2 + 1).choose 2) % 2 = n % 2) :
+  (s.card : ℝ) ≤ ∑ a ∈ range (⌊Real.sqrt (2 * (n : ℝ) + 1 / 2) + 1 / 2⌋₊),
+    (Real.sqrt ((Real.sqrt (2 * (n : ℝ) + 1 / 2)) ^ 2 -
+      ((a : ℝ) + 1 / 2) ^ 2) / 2 + 3 / 4) := by
+  classical
+  have htriN (a : ℕ) : 2 * (a + 1).choose 2 = a * (a + 1) := by
+    rw [Nat.choose_two_right, Nat.add_sub_cancel]
+    have hd : 2 ∣ a * (a + 1) := even_iff_two_dvd.mp (Nat.even_mul_succ_self a)
+    simpa only [Nat.mul_comm] using Nat.mul_div_cancel' hd
+  have htriR (a : ℕ) : 2 * ((a + 1).choose 2 : ℝ) = (a : ℝ) * (a + 1) := by
+    exact_mod_cast htriN a
+  have hparity (b c : ℕ) (hq : b / 2 = c / 2)
+      (hp : ((b + 1).choose 2) % 2 = ((c + 1).choose 2) % 2) : b = c := by
+    have hstep (a : ℕ) : (a + 2).choose 2 = (a + 1).choose 2 + a + 1 := by
+      simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
+        Nat.choose_succ_succ' (a + 1) 1
+    have hadj : b = c ∨ b + 1 = c ∨ c + 1 = b := by omega
+    rcases hadj with h | h | h
+    · exact h
+    · have hs := hstep b
+      rw [← h, show b + 1 + 1 = b + 2 by omega] at hp
+      omega
+    · have hs := hstep c
+      rw [← h, show c + 1 + 1 = c + 2 by omega] at hp
+      omega
+  let R : ℝ := Real.sqrt (2 * (n : ℝ) + 1 / 2)
+  let r : ℕ := ⌊R + 1 / 2⌋₊
+  have hR0 : 0 ≤ R := Real.sqrt_nonneg _
+  have hR2 : R ^ 2 = 2 * (n : ℝ) + 1 / 2 := Real.sq_sqrt (by positivity)
+  have hab (p : ℕ × ℕ) (hp : p ∈ s) :
+      ((p.1 : ℝ) + 1 / 2) ^ 2 + ((p.2 : ℝ) + 1 / 2) ^ 2 ≤ R ^ 2 := by
+    have hsum : ((p.1 + 1).choose 2 : ℝ) + ((p.2 + 1).choose 2 : ℝ) ≤ n := by
+      exact_mod_cast (hs p hp).1
+    have ha := htriR p.1
+    have hb := htriR p.2
+    nlinarith
+  have hrow (p : ℕ × ℕ) (hp : p ∈ s) : p.1 < r := by
+    have hpR : (p.1 : ℝ) + 1 / 2 ≤ R := by
+      have h := hab p hp
+      nlinarith [sq_nonneg ((p.2 : ℝ) + 1 / 2)]
+    have hp1 : ((p.1 + 1 : ℕ) : ℝ) ≤ R + 1 / 2 := by push_cast; linarith
+    have hfloor := (Nat.le_floor_iff (by positivity : 0 ≤ R + 1 / 2)).mpr hp1
+    dsimp [r]; omega
+  have hfiber : s.card = ∑ a ∈ range r, (s.filter (fun p => p.1 = a)).card := by
+    exact Finset.card_eq_sum_card_fiberwise fun p hp => Finset.mem_range.mpr (hrow p hp)
+  have hbound (a : ℕ) (ha : a ∈ range r) :
+      ((s.filter (fun p => p.1 = a)).card : ℝ) ≤
+        Real.sqrt (R ^ 2 - ((a : ℝ) + 1 / 2) ^ 2) / 2 + 3 / 4 := by
+    let H : ℝ := Real.sqrt (R ^ 2 - ((a : ℝ) + 1 / 2) ^ 2)
+    let L : ℕ := ⌊H + 1 / 2⌋₊
+    have hH0 : 0 ≤ H := Real.sqrt_nonneg _
+    have hsize (p : ℕ × ℕ) (hp : p ∈ s.filter (fun p => p.1 = a)) : p.2 < L := by
+      obtain ⟨hp, hpa⟩ := Finset.mem_filter.mp hp
+      have habp := hab p hp
+      rw [hpa] at habp
+      have hbH : (p.2 : ℝ) + 1 / 2 ≤ H := by
+        apply Real.le_sqrt_of_sq_le; nlinarith
+      have hb1 : ((p.2 + 1 : ℕ) : ℝ) ≤ H + 1 / 2 := by push_cast; linarith
+      have hfloor := (Nat.le_floor_iff (by positivity : 0 ≤ H + 1 / 2)).mpr hb1
+      dsimp [L]; omega
+    have hmap : Set.MapsTo (fun p : ℕ × ℕ => p.2 / 2)
+        (s.filter (fun p => p.1 = a)) (range ((L + 1) / 2)) := by
+      intro p hp; apply Finset.mem_range.mpr
+      have hpL := hsize p hp
+      change p.2 / 2 < (L + 1) / 2; omega
+    have hinj : ((s.filter (fun p => p.1 = a)) : Set (ℕ × ℕ)).InjOn
+        (fun p => p.2 / 2) := by
+      intro p hp q hq hpq
+      obtain ⟨hp, hpa⟩ := Finset.mem_filter.mp hp
+      obtain ⟨hq, hqa⟩ := Finset.mem_filter.mp hq
+      apply Prod.ext
+      · omega
+      · apply hparity _ _ hpq
+        have hpp := (hs p hp).2
+        have hqp := (hs q hq).2
+        rw [hpa] at hpp; rw [hqa] at hqp; omega
+    have hcard := Finset.card_le_card_of_injOn (fun p : ℕ × ℕ => p.2 / 2) hmap hinj
+    rw [Finset.card_range] at hcard
+    have hdiv : 2 * ((L + 1) / 2) ≤ L + 1 := Nat.mul_div_le _ _
+    have hdivR : 2 * (((L + 1) / 2 : ℕ) : ℝ) ≤ (L : ℝ) + 1 := by exact_mod_cast hdiv
+    have hcardR : ((s.filter (fun p => p.1 = a)).card : ℝ) ≤ ((L + 1) / 2 : ℕ) := by
+      exact_mod_cast hcard
+    have hLR : (L : ℝ) ≤ H + 1 / 2 := Nat.floor_le (by positivity)
+    change _ ≤ H / 2 + 3 / 4
+    linarith
+  have hfiberR : (s.card : ℝ) =
+      ∑ a ∈ range r, ((s.filter (fun p => p.1 = a)).card : ℝ) := by exact_mod_cast hfiber
+  rw [hfiberR]; exact Finset.sum_le_sum hbound
+
+set_option maxHeartbeats 3000000 in
+set_option maxRecDepth 4096 in
 /-- The Gauss quotient counts parity-compatible triangular pairs and has a uniform upper bound.
 The coefficientwise transformation elaborates nested finite sums. -/
 theorem gauss_product_coefficient_count_bound (n : ℕ) :
@@ -577,94 +671,7 @@ theorem gauss_product_coefficient_count_bound (n : ℕ) :
       ((p.1 + 1).choose 2 + (p.2 + 1).choose 2) % 2 = n % 2) :
     (s.card : ℝ) ≤ 97 / 120 * (n : ℝ) +
       27 / 32 * Real.sqrt (2 * (n : ℝ) + 1 / 2) + 13 / 25 := by
-    have hcount :
-      (s.card : ℝ) ≤ ∑ a ∈ range (⌊Real.sqrt (2 * (n : ℝ) + 1 / 2) + 1 / 2⌋₊),
-        (Real.sqrt ((Real.sqrt (2 * (n : ℝ) + 1 / 2)) ^ 2 -
-          ((a : ℝ) + 1 / 2) ^ 2) / 2 + 3 / 4) := by
-      classical
-      have htriN (a : ℕ) : 2 * (a + 1).choose 2 = a * (a + 1) := by
-        rw [Nat.choose_two_right, Nat.add_sub_cancel]
-        have hd : 2 ∣ a * (a + 1) := even_iff_two_dvd.mp (Nat.even_mul_succ_self a)
-        simpa only [Nat.mul_comm] using Nat.mul_div_cancel' hd
-      have htriR (a : ℕ) : 2 * ((a + 1).choose 2 : ℝ) = (a : ℝ) * (a + 1) := by
-        exact_mod_cast htriN a
-      have hparity (b c : ℕ) (hq : b / 2 = c / 2)
-          (hp : ((b + 1).choose 2) % 2 = ((c + 1).choose 2) % 2) : b = c := by
-        have hstep (a : ℕ) : (a + 2).choose 2 = (a + 1).choose 2 + a + 1 := by
-          simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-            Nat.choose_succ_succ' (a + 1) 1
-        have hadj : b = c ∨ b + 1 = c ∨ c + 1 = b := by omega
-        rcases hadj with h | h | h
-        · exact h
-        · have hs := hstep b
-          rw [← h, show b + 1 + 1 = b + 2 by omega] at hp
-          omega
-        · have hs := hstep c
-          rw [← h, show c + 1 + 1 = c + 2 by omega] at hp
-          omega
-      let R : ℝ := Real.sqrt (2 * (n : ℝ) + 1 / 2)
-      let r : ℕ := ⌊R + 1 / 2⌋₊
-      have hR0 : 0 ≤ R := Real.sqrt_nonneg _
-      have hR2 : R ^ 2 = 2 * (n : ℝ) + 1 / 2 := Real.sq_sqrt (by positivity)
-      have hab (p : ℕ × ℕ) (hp : p ∈ s) :
-          ((p.1 : ℝ) + 1 / 2) ^ 2 + ((p.2 : ℝ) + 1 / 2) ^ 2 ≤ R ^ 2 := by
-        have hsum : ((p.1 + 1).choose 2 : ℝ) + ((p.2 + 1).choose 2 : ℝ) ≤ n := by
-          exact_mod_cast (hs p hp).1
-        have ha := htriR p.1
-        have hb := htriR p.2
-        nlinarith
-      have hrow (p : ℕ × ℕ) (hp : p ∈ s) : p.1 < r := by
-        have hpR : (p.1 : ℝ) + 1 / 2 ≤ R := by
-          have h := hab p hp
-          nlinarith [sq_nonneg ((p.2 : ℝ) + 1 / 2)]
-        have hp1 : ((p.1 + 1 : ℕ) : ℝ) ≤ R + 1 / 2 := by push_cast; linarith
-        have hfloor := (Nat.le_floor_iff (by positivity : 0 ≤ R + 1 / 2)).mpr hp1
-        dsimp [r]; omega
-      have hfiber : s.card = ∑ a ∈ range r, (s.filter (fun p => p.1 = a)).card := by
-        exact Finset.card_eq_sum_card_fiberwise fun p hp => Finset.mem_range.mpr (hrow p hp)
-      have hbound (a : ℕ) (ha : a ∈ range r) :
-          ((s.filter (fun p => p.1 = a)).card : ℝ) ≤
-            Real.sqrt (R ^ 2 - ((a : ℝ) + 1 / 2) ^ 2) / 2 + 3 / 4 := by
-        let H : ℝ := Real.sqrt (R ^ 2 - ((a : ℝ) + 1 / 2) ^ 2)
-        let L : ℕ := ⌊H + 1 / 2⌋₊
-        have hH0 : 0 ≤ H := Real.sqrt_nonneg _
-        have hsize (p : ℕ × ℕ) (hp : p ∈ s.filter (fun p => p.1 = a)) : p.2 < L := by
-          obtain ⟨hp, hpa⟩ := Finset.mem_filter.mp hp
-          have habp := hab p hp
-          rw [hpa] at habp
-          have hbH : (p.2 : ℝ) + 1 / 2 ≤ H := by
-            apply Real.le_sqrt_of_sq_le; nlinarith
-          have hb1 : ((p.2 + 1 : ℕ) : ℝ) ≤ H + 1 / 2 := by push_cast; linarith
-          have hfloor := (Nat.le_floor_iff (by positivity : 0 ≤ H + 1 / 2)).mpr hb1
-          dsimp [L]; omega
-        have hmap : Set.MapsTo (fun p : ℕ × ℕ => p.2 / 2)
-            (s.filter (fun p => p.1 = a)) (range ((L + 1) / 2)) := by
-          intro p hp; apply Finset.mem_range.mpr
-          have hpL := hsize p hp
-          change p.2 / 2 < (L + 1) / 2; omega
-        have hinj : ((s.filter (fun p => p.1 = a)) : Set (ℕ × ℕ)).InjOn
-            (fun p => p.2 / 2) := by
-          intro p hp q hq hpq
-          obtain ⟨hp, hpa⟩ := Finset.mem_filter.mp hp
-          obtain ⟨hq, hqa⟩ := Finset.mem_filter.mp hq
-          apply Prod.ext
-          · omega
-          · apply hparity _ _ hpq
-            have hpp := (hs p hp).2
-            have hqp := (hs q hq).2
-            rw [hpa] at hpp; rw [hqa] at hqp; omega
-        have hcard := Finset.card_le_card_of_injOn (fun p : ℕ × ℕ => p.2 / 2) hmap hinj
-        rw [Finset.card_range] at hcard
-        have hdiv : 2 * ((L + 1) / 2) ≤ L + 1 := Nat.mul_div_le _ _
-        have hdivR : 2 * (((L + 1) / 2 : ℕ) : ℝ) ≤ (L : ℝ) + 1 := by exact_mod_cast hdiv
-        have hcardR : ((s.filter (fun p => p.1 = a)).card : ℝ) ≤ ((L + 1) / 2 : ℕ) := by
-          exact_mod_cast hcard
-        have hLR : (L : ℝ) ≤ H + 1 / 2 := Nat.floor_le (by positivity)
-        change _ ≤ H / 2 + 3 / 4
-        linarith
-      have hfiberR : (s.card : ℝ) =
-          ∑ a ∈ range r, ((s.filter (fun p => p.1 = a)).card : ℝ) := by exact_mod_cast hfiber
-      rw [hfiberR]; exact Finset.sum_le_sum hbound
+    have hcount := gauss_pair_count_le_sqrt_sum n s hs
     have hpoly (R : ℝ) (hR : 3 ≤ R) (r : ℕ) (hr : (r : ℝ) ≤ R + 1 / 2) :
       (∑ a ∈ range r, (Real.sqrt (R ^ 2 - ((a : ℝ) + 1 / 2) ^ 2) / 2 + 3 / 4)) ≤
         97 / 240 * R ^ 2 + 27 / 32 * R + 5 / 16 + 1 / (480 * R ^ 2) := by

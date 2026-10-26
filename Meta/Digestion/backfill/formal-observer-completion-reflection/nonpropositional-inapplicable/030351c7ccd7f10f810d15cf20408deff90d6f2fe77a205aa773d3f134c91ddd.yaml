@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:030351c7ccd7f10f810d15cf20408deff90d6f2fe77a205aa773d3f134c91ddd
+  normalized_sha256: sha256:030351c7ccd7f10f810d15cf20408deff90d6f2fe77a205aa773d3f134c91ddd
+cas_ref: sha256:030351c7ccd7f10f810d15cf20408deff90d6f2fe77a205aa773d3f134c91ddd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proposes four normative certificate requirements; none is asserted established.
+    previous_atom_id: 07cb6bddc1673d080f0728aa2f5a402a751065e309f96f1c0447d43241d8fb17
+    next_atom_id: 0fae7cf456f0c26881934d0ff4a1a941324baa3ef0a6eeff57f6385594a7eac9

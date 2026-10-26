@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f68320b13b8d9eea2cee45b7935ee1682404213b6ec3dfb3cabc76dae25a2f8d
+  normalized_sha256: sha256:f68320b13b8d9eea2cee45b7935ee1682404213b6ec3dfb3cabc76dae25a2f8d
+cas_ref: sha256:f68320b13b8d9eea2cee45b7935ee1682404213b6ec3dfb3cabc76dae25a2f8d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive prohibition on attributing consciousness to prime-indexed interfaces.
+    previous_atom_id: 2fe6dfb4e99e26c9baa1db9ac97b3b6e92345eab49c92b436849e84e7417f91b
+    next_atom_id: 70dd20c4fcf9f4c2831ee522c2e0faf31bd1e4921aa74459c3edc59766406a1b

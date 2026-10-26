@@ -1,0 +1,143 @@
+## 26. Exact source boxes and evaluated differential units
+
+Here is a polynomial version of (2.5), in original source coordinates.
+It also fixes the normalization for all differential evaluations below:
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\\
+L=b^2+8b+4,\quad A=(8b-1)(5b+2),\\
+\Delta=5\{LXN-2bTU(X+N)\},\qquad \ell=b\Delta,\\
+\bar C_0=-24\Delta+3AXN,\quad
+\bar C_1=3ANb,\\
+\bar C_2=3(49b+34)XN-54Ub(X+N),\quad
+\bar C_3=3AXb,\\
+\bar B_5=-4\bar C_0+15\bar C_1-20\bar C_2+10\bar C_3,\\
+\bar B_6=-10\bar C_0+36\bar C_1-45\bar C_2+20\bar C_3,\\
+\bar B_7=-20\bar C_0+70\bar C_1-84\bar C_2+35\bar C_3,\\
+P=-b\bar C_0+(Ub+N)\bar B_5,\quad
+V=-b\bar C_0+(2Ub+N)\bar B_6,\\
+A_J=-b\bar C_0+(Tb+2X+4rb)\bar B_7,\quad
+M_M=-b\bar C_0+(3Ub+2N)\bar B_7.
+\end{gathered}
+\tag{26.1}
+$$
+
+The letters $P,V,A_J,M_M$ in this circuit are polynomials; $P$ here is
+not the source matrix. Precisely,
+$\Delta=b^2D(r/b,b)$ and $\bar C_k=b^2C_k(r/b,b)$. Thus
+
+$$
+(p,v,a,m)=(P,V,A_J,M_M)/\ell,\qquad
+ d=-\bar C_0/\Delta,\qquad g(k)=\bar C_k/\Delta\quad(0\le k\le3).
+\tag{26.2}
+$$
+
+The gain is the same fixed-node interpolant (2.2). These are whole-world
+identities with the original clocks, rather than a change of model.
+For a numerator $F$ define
+$L_{F,r}=\ell F_r-F\ell_r$ and $L_{F,b}=\ell F_b-F\ell_b$.
+For the ordered pairs $(P,V),(P,A_J),(V,A_J)$ the coefficient identities
+are
+
+$$
+L_{F,r}L_{G,b}-L_{F,b}L_{G,r}
+ =45b^2\Delta E_{fh}(r,b),
+\quad (f,h)=(p,v),(p,a),(v,a),
+\tag{26.3}
+$$
+
+with exactly the $E_{fh}$ of (21.7), including signs and scalars.
+Indeed the determinant on the left is $\ell^4$ times the corresponding
+rational Jacobian minor; substituting (21.10) and
+$D=\Delta/b^2$ gives (26.3). Each $E_{fh}$ has the $134$ terms and
+degrees (21.9). Formula (26.3) or (21.7), with convolution (21.8),
+is a finite coefficient specification, not an additional eliminant.
+
+All finite decimals in the following source and root tables denote
+exact rational numbers. Define $\widehat z_i=(\widehat r_i,\widehat b_i)$
+by the complete entries in this table:
+
+| $i$ | $\widehat r_i$ | $\widehat b_i$ |
+| --- | --- | --- |
+| 1 | $0.0474991739156158648087872696795839340094732632129244067254357987$ | $0.04632607241297142362371158699116141188135188088603214209272150218$ |
+| 2 | $0.8995316741215982684097269764207819803504111050038539630302674411$ | $0.12856673030826475721724380187978394414949243099439809190709327953$ |
+
+Set $h=10^{-55}$ and
+$K_i=\widehat z_i+[-h,h]^2$. The following interval convention specifies
+all remaining finite calculations. For $H=10^{120}$ let
+
+$$
+\mathcal E([l,u])=
+ [\lfloor Hl\rfloor/H,\lceil Hu\rceil/H].
+\tag{26.4}
+$$
+
+Enclose an input rational by $\mathcal E([t,t])$. After every elementary
+addition, subtraction, multiplication or reciprocal, apply $\mathcal E$
+to the ordinary endpoint interval. Multiplication uses the minimum and
+maximum of the four endpoint products. A reciprocal is formed only
+when zero is excluded, and uses $[1/u,1/l]$; division means
+multiplication by this reciprocal. Negation is endpoint reversal.
+All these operations contain the exact real operation.
+
+For a sparse polynomial in a specified variable order, form each power
+table from power zero upward by successive multiplication. Sum nonzero
+monomials in increasing lexicographic exponent order, starting from
+zero; for each monomial multiply its coefficient by the powers in
+variable order. Use order $(r,b)$ for (26.1), $E_{fh}$ and their
+polynomial derivatives, order $(x,p,v)$ for the carrier and drift
+polynomials, and order $(p,v)$ for a fixed $x$ coefficient. All quotient
+rule expressions use their displayed polynomial derivatives before
+interval evaluation. This removes any ambiguity from cancellation or
+choice of evaluation order.
+
+Put $E=(E_{pv},E_{pa})^{\mathsf T}$. Compute the rational matrix
+$J_i=DE(\widehat z_i)$ exactly, and set
+
+$$
+(Y_i)_{uv}=10^{-90}\lfloor10^{90}(J_i^{-1})_{uv}\rfloor,
+\quad
+\eta_i=\|Y_iE(\widehat z_i)\|_\infty,\quad
+\theta_i=\sup_{z\in K_i}\|I-Y_iDE(z)\|_\infty.
+\tag{26.5}
+$$
+
+Here an upper bound for $\eta_i$ uses (26.4) and the polynomial rule;
+an upper bound for $\theta_i$ is the largest row sum of the component
+absolute interval bounds for $I-Y_iDE(K_i)$. The inverse defining $Y_i$
+is the exact two-by-two rational inverse before downward rounding.
+Both $\det J_i$ and $\det Y_i$ are nonzero. The finite bounds are
+
+| $i$ | Upper bound for $\eta_i$ | Upper bound for $\theta_i$ | Sign of $\ell(K_i)$ |
+| --- | --- | --- | --- |
+| 1 | $2943\,10^{-69}$ | $2\,10^{-45}$ | $+$ |
+| 2 | $223\,10^{-68}$ | $10^{-40}$ | $-$ |
+
+All upper comparisons in this and subsequent bound tables are strict.
+In particular
+
+$$
+\eta_i+\theta_i h<h,\qquad
+\frac{\eta_i}{1-\theta_i}<3\,10^{-66}.
+\tag{26.6}
+$$
+
+For reproducible differential bounds, evaluate
+
+$$
+p_r=\frac{L_{P,r}}{\ell^2},\qquad
+k=(-p_b,p_r),\qquad \kappa=dx(k),\qquad
+\mu=p_rm_b-p_bm_r,\qquad x=\frac{N}{bU}.
+\tag{26.7}
+$$
+
+The derivatives of $x$ are obtained from this last rational formula.
+The following enclosures hold on the entire $K_i$; thus they hold at
+the exact source as well.
+
+| $i$ | $p_r$ | $\kappa$ | $\mu=\det D_{(r,b)}(p,m)$ |
+| --- | --- | --- | --- |
+| 1 | $(32013849,32013850)$ | $(-12774005,-12774004)$ | $(2250469535,2250469536)$ |
+| 2 | $(160908,160909)$ | $(-376697,-376696)$ | $(10415315,10415316)$ |
+

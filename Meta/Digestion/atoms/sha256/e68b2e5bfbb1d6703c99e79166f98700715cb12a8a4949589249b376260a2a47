@@ -1,0 +1,9 @@
+**定义 6.1（支撑违反概率）。** For a finite readout on the uniform five-label source, let
+
+$$
+\alpha=\sum_{q:\operatorname{supp}v(q)\text{ is neither a singleton nor an edge of }G}\lambda_q.
+\tag{6.1}
+$$
+
+This is the probability of outputs violating (1.3), not the probability of an illegal source window or an illegal toggle.
+

@@ -1,0 +1,33 @@
+**Corollary 27.2 (Necessary selected endpoints in the original joint
+relation).** Suppose the four actual labels satisfy exactly (1.6) with
+$p\ne24$. Put $\chi_i=n(W_i)/U(W_i)$. Then
+
+$$
+\begin{gathered}
+\Lambda(W_0)\ne0\ \hbox{or}\ \Lambda(W_1)\ne0,\\
+\Lambda(W_2)\ne0,\qquad\Lambda(W_3)\ne0,\\
+\chi_2\ne\chi_3,\qquad b(W_2)\ne b(W_3).
+\end{gathered}
+\tag{27.2}
+$$
+
+*Proof.* If both selected $J$ endpoints were singular, their common
+$p,v,a$ would contradict Theorem 27.1 and $W_0\ne W_1$.
+The two regular selected $M$ endpoints are the already established
+conclusion of S, Corollary 18.2, based on S, Theorem 18.1, with the
+independent actual $J$ pair in the same entire child. The earlier
+singular-$M$ injectivity Theorem 14.3 and Corollary 14.4 are reused;
+they alone would only exclude two singular $M$ endpoints.
+
+For equal $\chi_2,\chi_3$, F, Theorem 26.4, using its entire
+exceptional-source Theorem 26.3, would give identical worlds or one of
+its reflected pairs at $p=24$. Here F's $u$ is the present $v$,
+its $\chi=n/U$ is unchanged, and it uses the same original clocks,
+whole cubic gain bound and fixed real drift. The reflected alternative
+is excluded by $p\ne24$, and equality by $W_2\ne W_3$.
+Finally [SVII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md),
+Theorem 4.1, already excludes equal $b$ for such an off-$24$ actual
+$M$ pair. These three $M$ restrictions are applications of those
+existing exclusions. No additional equal-ratio or singular-$M$
+classification is required. ∎
+

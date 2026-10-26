@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2
+  normalized_sha256: sha256:a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2
+cas_ref: sha256:a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Solver input choice: known Li moments.'
+    previous_atom_id: 4a4cc2c15f99f5610ed9a527fdcf041ea8c38b7632aabbfbdf69a0b15a50d49d
+    next_atom_id: 6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112

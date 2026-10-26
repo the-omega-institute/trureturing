@@ -7,6 +7,18 @@ internal sealed class SinhLogIntegralDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Logarithmic cosine integrals for normalized hyperbolic sine.",
         H("The hyperbolic sine density"), Blocks(
+            Describe.Lean(DescribeId.Create("sinh-density-exponential"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.h_exp"),
+                H("Exponential density formula"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all real a and s, h(a,s) equals exp(-(pi/a)s)/(1-exp(-(pi/a)s)), with Lean real division at singular parameters. This algebraic identity supplies the geometric representation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sinh-density-rate"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.rate"),
+                H("Exponential rates"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The n-th rate at scale a is pi(n+1)/a."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("sinh-density-geometric-expansion"),
+                DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.hasSum_h"),
+                H("Geometric expansion of the density"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive a and s, the sum of exp(-rate(a,n)s) over natural n is h(a,s). Specializing a to pi gives the reciprocal exp(s)-1 moment used by ExpRatioCM."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sinh-density-positive"),
                 DeclarationHandle.Create("D5/S3/Analytic/Fourier/SinhLogIntegral.h_pos"),
                 H("Positive density"), StatementSource.WithoutFormula(),

@@ -1,0 +1,15 @@
+**Proposition 13.3 (a legal five-cut instance).** After the actual acquired
+beta entrance with $H_0=h=K=1$, supply Reserve(2). Its five Zero-test cuts
+have ordinals
+$n_0,n_0+5,n_0+10,n_0+15,n_0+20$. All preserve that old acquired material.
+Their next RD successors have pairwise different receipt lengths. A
+fixed-width binary discriminator needs at least three bits.
+
+Proof. Theorem 5.2 applies to this same finite source; no update or guard
+raise is necessary. Here $d=4$, so Theorem 13.2 gives the five cuts, their
+ordinals, unchanged old acquired material and distinct successor receipt
+lengths. Its bound gives $b_{\rm sel}\ge\lceil\log_2 5\rceil=3$. This witness
+uses legal states of one source, rather than two inconsistent packet
+interpretations or arbitrary supplied pointers.
+$\square$
+

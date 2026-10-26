@@ -1,0 +1,150 @@
+**Theorem 11.2 (All-companion source collar).** Every complete world with $(p,v)\in\mathcal Q$ satisfies
+
+$$
+\begin{gathered}
+10^{-6}\le r\le1-10^{-6},\qquad b\ge10^{-6},\qquad c\ge10^{-6},\\
+b<30,\qquad c<10,\qquad \frac1{1024}<j<40,\qquad
+|e|<643520<655000.
+\end{gathered}
+\tag{11.2}
+$$
+
+*Proof.* The first two exclusion arguments in SIV, Theorem 8.3, apply to every parent world with $p\ge0$: $b\ge30$ forces $p<0$, and $c\ge10$ forces $p<-7/2$. Thus $b<30$, $c<10$, $j<40$, $n<41$ and $U<61$. These conclusions precede any lower bound on a source coordinate.
+
+For the drift bound use the coefficients of SIV, (9.1), here denoted $A^{\mathrm{IV}},B^{\mathrm{IV}},P_0^{\mathrm{IV}},V_0^{\mathrm{IV}}$ to distinguish them from the coefficients below. Their undivided identities and universal separation give
+
+$$
+p-24=P_0^{\mathrm{IV}}+eA^{\mathrm{IV}},\qquad
+v-24=V_0^{\mathrm{IV}}+eB^{\mathrm{IV}},\qquad
+\max(|A^{\mathrm{IV}}|,|B^{\mathrm{IV}}|)>1/100.
+$$
+
+The same source bounds give $|P_0^{\mathrm{IV}}|<1224$ and $|V_0^{\mathrm{IV}}|<31296/5$. Since $|p-24|\le14$ and $|v-24|\le176$,
+
+$$
+|e|<100\max\{14+1224,176+31296/5\}=643520.
+\tag{11.3}
+$$
+
+To prove the lower bound for $j$, suppose $0<z=j\le1/1024$. The rank relation gives $r(1-r)=bc\le z^2/4$. If $r\le1/2$, then $u=r/z\in[0,z/2]$; if $r\ge1/2$, then $a=1-r\in[0,z^2/2]$. Put
+
+$$
+q=-\frac{6(8b-1)(5b+2)}{5TU},\qquad e=zw.
+$$
+
+Multiplying the parent equation by $z$ gives the following two exact forms:
+
+$$
+\begin{array}{c|c|c|c}
+ &n&w&(G_0,G_1,G_2,G_3)\\ \hline
+r\le1/2&z(1+u)&\displaystyle\frac q{z(1+6/T+1/U)-4-4/(1+u)}
+&(-24-e,-w,(27/5-e)/T,-w/(1+u))\\
+r\ge1/2&z+1-a&\displaystyle\frac q{z(1+6/T+1/U)-4-4z/n}
+&(-24-e,-w,(27/5-e)/T,-zw/n).
+\end{array}
+\tag{11.4}
+$$
+
+For clarity, the exact interval arithmetic in this proof uses $[a,b]+[c,d]=[a+c,b+d]$, negation $-[a,b]=[-b,-a]$, the minimum and maximum of the four endpoint products for multiplication, and reciprocal $[1/b,1/a]$ only when $0\notin[a,b]$. Every rational input is a point interval. Powers mean repeated multiplication. Horner evaluation starts at zero and visits every descending coefficient, including zeros. There is no rounding.
+
+Evaluate (11.4) on $b,z\in[0,1/1024]$, with respectively $u\in[0,1/2048]$ and $a\in[0,1/(2\cdot1024^2)]$. The two denominator intervals are
+
+$$
+[-8,-2095615/262272],\qquad
+[-8396796/2097151,-511/128].
+\tag{11.5}
+$$
+
+In particular both divisions are legal, including on these enlarged closed boxes. Set $g_5=-4G_0+15G_1-20G_2+10G_3$ and $g_6=-10G_0+36G_1-45G_2+20G_3$, as in Lemma 2.2, and set $p=24+e+(U+n)g_5$, $v=24+e+(2U+n)g_6$. Interval evaluation in the displayed order gives
+
+$$
+\begin{array}{c|c}
+ &\text{upper endpoint for }v-37p/10-213/5\\ \hline
+r\le1/2&-816054840064061222792519/13140085367094902784000\\
+r\ge1/2&-18851570816816384430377401873/689085087558387648823296000.
+\end{array}
+\tag{11.6}
+$$
+
+Both endpoints are less than $-20$, contradicting (11.1). Thus $j>1/1024$.
+
+It remains to prove the four source collars. The following finite rational tree specifies the certificate completely. Its root is the box
+
+$$
+B_\varnothing=[0,1]_r\times[0,30]_b\times[1/1024,40]_j,
+\qquad \delta=1/10^6.
+\tag{11.7}
+$$
+
+For a node $B=R\times B_b\times J_0$, first mark it interior if
+
+$$
+\inf R\ge\delta,\quad \sup R\le1-\delta,\quad
+\inf B_b\ge\delta,\quad \inf J_0-\sup B_b\ge\delta.
+\tag{11.8}
+$$
+
+An interior node is a terminal node. Otherwise form the exact range $Q_R$ of $r(1-r)$ on $R$: its lower endpoint is the smaller endpoint value, and its upper endpoint is $1/4$ if $1/2\in R$, or the larger endpoint value otherwise. Form successively
+
+$$
+J=J_0\cap(B_b+[0,10]),\qquad
+J\leftarrow J\cap(B_b+Q_R/B_b)\quad\hbox{if }\inf B_b>0.
+\tag{11.9}
+$$
+
+An empty intersection marks an excluded terminal node. Next exclude the node if $0\notin B_b(J-B_b)-Q_R$. In all remaining interval expressions use $r\in R$, $b\in B_b$, $j\in J$, $n=J+R$, $T=1+B_b$, $U=1+2B_b$, and the circuits
+
+$$
+\begin{aligned}
+\Lambda&=1+6/T+1/U-4/J-4/n,&
+ d_b&=6(8B_b-1)(5B_b+2)/(5TU),\\
+p_0&=24+(U+n)(96-108/T),&
+ A_p&=1+(U+n)(4-15/J+20/T-10/n),\\
+v_0&=24+(2U+n)(240-243/T),&
+ A_v&=1+(2U+n)(10-36/J+45/T-20/n).
+\end{aligned}
+\tag{11.10}
+$$
+
+Here an integer denotes a point interval. The exact parent and reading equations are $\Lambda e=-d_b$, $A_pe=p-p_0$, $A_ve=v-v_0$. Start with $E=[-655000,655000]$. In the order
+
+$$
+(\Lambda,-d_b),\quad(A_p,[10,34]-p_0),\quad(A_v,[0,200]-v_0),
+\tag{11.11}
+$$
+
+replace $E$ by $E\cap H/A$ for a pair $(A,H)$ only when $0\notin A$. An empty intersection excludes the node. With the resulting common $E$, exclude the node if any of the three intervals $AE-H$ excludes zero. Finally exclude it if the upper endpoint of
+
+$$
+v_0-\frac{37}{10}p_0-\frac{213}{5}
++\left(A_v-\frac{37}{10}A_p\right)E
+\tag{11.12}
+$$
+
+is negative. If no terminal condition applies, split the original box $B$, not its contraction, at the rational midpoint of its coordinate of greatest normalized width
+
+$$
+\bigl(\operatorname{wid}R,\operatorname{wid}B_b/3,
+\operatorname{wid}J_0/4\bigr).
+\tag{11.13}
+$$
+
+Ties use the first coordinate in this displayed order. Both closed midpoint halves are children. These rules determine every node without choices. Their finite rational data are
+
+| Node or terminal condition | Count |
+| --- | ---: |
+| All nodes | 169103 |
+| Binary splits | 84551 |
+| Interior terminal nodes | 31787 |
+| Empty first intersection in (11.9) | 4724 |
+| Empty second intersection in (11.9) | 4901 |
+| Rank residual excluding zero | 14136 |
+| Empty common-$e$ intersection | 27652 |
+| Common-$e$ residual excluding zero | 128 |
+| Negative barrier (11.12) | 1224 |
+| Nonterminal nodes at depth 49 | 0 |
+
+The maximum node depth is $49$. Thus there are $52765$ excluded terminal nodes and $31787$ interior terminal nodes, and $169103=2(52765+31787)-1$. The table is obtained by the rational endpoint rules (11.7)–(11.13); these rules are also a finite definition of every leaf and every rational inequality represented by the counts.
+
+Every contraction contains every actual source in its original node: (11.9) follows from $c\in(0,10)$ and $bc=r(1-r)$, and (11.11) uses the same actual $e$ in all equations. All $J,n,T,U$ intervals have positive lower endpoints. Coefficient intervals containing zero are never divided. Every excluded node contradicts a necessary equation or (11.1), whereas (11.8) gives all four collars on every interior node, since $c=j-b$. Closed midpoint children cover their parent. The finite tree therefore covers the root with precisely these two types of terminal node and proves the four collars. Neither a nonzero drift nor regularity nor a nonzero gain sample has entered the argument. ∎
+

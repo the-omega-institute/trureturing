@@ -164,7 +164,7 @@ private theorem weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
   unfold weight
   have := Real.log_pos ht
   positivity
-private theorem weight_le {x t : ℝ} (hx : 1 < x) (hxt : x ≤ t) : weight t ≤ weightEnvelope x / t ^ 2 := by
+theorem weight_le {x t : ℝ} (hx : 1 < x) (hxt : x ≤ t) : weight t ≤ weightEnvelope x / t ^ 2 := by
   have hxlog : 0 < Real.log x := Real.log_pos hx
   have htlog : 0 < Real.log t := Real.log_pos (hx.trans_le hxt)
   have hlog : Real.log x ≤ Real.log t := Real.log_le_log (by linarith) hxt

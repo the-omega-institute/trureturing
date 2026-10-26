@@ -22,3 +22,10 @@ $$
 $$
 
 In particular it is one exactly when $p\equiv\pm1\pmod 5$; for $p\equiv\pm2\pmod 5$ the repair factor is nontrivial. This is a local congruence statement about the Fibonacci sequence, not a divisor-sum estimate and not a Robin criterion.
+
+## Verified locator
+
+https://arxiv.org/abs/2609.24544v1
+
+Theorem 2.4 gives the Fibonacci repair factor. Section 4, PDF page 11,
+prints the tribonacci and four-Bonacci good-prime observations.

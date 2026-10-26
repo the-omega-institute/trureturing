@@ -78,7 +78,7 @@ internal sealed class PrecessionUniversalThresholdRefutationDocument : IScribeDo
         new Formula.Subscript(Sum, Bound(F.Id(variable), domain)), Sp, body);
     private static Formula Ands(params Formula[] items) => And(System.Array.ConvertAll(items, Parenthesized));
     private static Formula NJ(Formula body) => All("N", Nat(), All("j", Arrow(Call("Fin", n), Nat()), body));
-    private static Formula Density(Formula a) => Call(Q("GHZMeasureBiseparableBound", "IsDensity"), a);
+    private static Formula Density(Formula a) => Call(Q("SLDSpectralEnergy", "IsDensity"), a);
     private static Formula Eqv(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, Parenthesized(b));
 
     private static Formula SiteFormula()

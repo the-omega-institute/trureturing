@@ -434,6 +434,38 @@ $|\mathcal P(t+h)-\mathcal P(t-h)|^2\le4\mathcal P(t)\mathcal P(2h)$
 in a proof of RH. The source's adaptive window has additive scale
 $\sqrt q\log q$, rather than an independently chosen coarse interval.
 
+For the exact target, take the same actual event $t=\tau_q$ and
+$0<h<t$. Let $T_\triangle(t,h)$ be the signed odd-triangular
+sum minus smooth forcing defined in (8.35), with
+$F=\mathcal P/4+k$. The central event is excluded and endpoint
+events have zero weight. Proposition 21, (8.38), pp.25–26, states
+that, under the inherited cone
+$\mathcal P(t)>0$, $|\mathcal P'(t^-)|<Q(t)$, the post-event
+cone condition is equivalent to
+
+$$
+\mathcal P(t+h)-\mathcal P(t-h)+T_\triangle(t,h)
+                  +2hQ(t)-hJ_q>0.
+$$
+
+The secant and signed discrepancy must be controlled jointly.
+The source's (8.48)–(8.49), p.27, exhibits the obstruction to
+using a small triangular discrepancy alone: for a fixed nonzero
+exponential mode $f_\mu(t)=e^{\mu t}$,
+
+$$
+T_\mu(t,h)=2e^{\mu t}(\mu h-\sinh(\mu h)),\qquad
+\frac{T_\mu(t,h)}{2hf'_\mu(t)}=O_\mu(h^2)\longrightarrow0
+\quad(h\to0),
+$$
+
+including when $\operatorname{Re}\mu>0$. This is a source-given
+mode obstruction, not an actual arithmetic counterexample or an
+RH disproof. Relative decay of the triangular remainder leaves
+the growing secant uncontrolled. Proving that decay, or first
+assuming Proposition 22's RH-conditional secant bound, does not
+supply the combined unconditional event inequality.
+
 The separate energy audit makes the missing joint quantity explicit.
 For $r\ge0$, $\epsilon_r=(1+t)^{-r}$ and
 $E_r=(1-\epsilon_r/2)\widehat B^2+2\epsilon_r\widehat B'^2$,
@@ -1950,6 +1982,178 @@ in (X2) is still present; the finite interval cannot be extrapolated
 to all clocks. This is a paper-level application of existing results,
 without a mathematical originality claim or Lean certification.
 
+## A uniform obstruction for adaptive positive-law absolute budgets
+
+The [GAK/GAD whole-law transport](../ArithSums/nicolas2025comparison.md#project-application-density-weighted-order-nine-transport-reaches-3e47)
+explains why a fixed positive-variance law has a growing transport
+allowance. The following application also covers arbitrary laws chosen
+anew at each clock. It concerns the existing certificate that multiplies
+one common tail-damping bound by a whole zero-mass allowance, then adds
+a nonnegative variance allowance. It does not lower-bound the actual
+signed response or the actual transport.
+
+The suppliers are the classical convexity and logarithm bounds, the
+global cosine inequality, the existing FV4 actual-zero count and the
+GAK23/GAD2 certificate. The cosine inequality is already available as
+[`Real.one_sub_sq_div_two_le_cos`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean).
+Their proofs are not reconstructed as new general theorems. This is an
+ordinary application of those results, without a literature-priority
+claim or Lean certification of the application.
+
+### One fixed actual zero constrains every admissible positive law
+
+Keep $H=3\cdot10^{12}$ and put $a_0=99/100$, $b_0=101/100$.
+For each $A$, allow any positive probability law $\mu_A$ with
+$a_0\le C\le b_0$ and $\mathbb E C=1$. Write
+
+$$
+V_A=\mathbb E(C-1)^2,\qquad
+H_{\mu_A}(s)=\mathbb E C^{s-1},\qquad
+q_A\ge\sup_{\substack{\rho\text{ actual}\\|\Im\rho|>H}}
+                   |H_{\mu_A}(\rho)|.
+\tag{VDB1}
+$$
+
+All actual nontrivial zeros are retained, with their original real
+parts. No regularity of $A\mapsto\mu_A$ or $A\mapsto q_A$ is needed.
+In particular $q_A$ need only dominate the actual discrete zero set;
+no continuum of fictitious zero locations is substituted for it.
+
+To choose one fixed member of that set, reuse
+[FV3–FV4's existing zero-count application](../Zeros/lagarias2007li.md#an-explicit-positive-budget-above-c).
+Take the least Fibonacci number $c>H$. Its predecessor is at most $H$,
+so $c\le2H$, and $c$ is the sum of two adjacent positive Fibonacci
+numbers. Thus the original Fibonacci-cut hypotheses are preserved.
+FV4 supplies $N_+(2c)-N_+(c)>0$, hence an actual nontrivial zero
+$\rho_*=\beta_*+i\gamma_*$ with
+
+$$
+H<c<\gamma_*\le2c\le4H,\qquad 0<\beta_*<1.
+\tag{VDB2}
+$$
+
+This uses the same Hasanalizade–Shen–Wong counting premise, not a new
+zero computation. The zero is fixed before choosing any of the laws;
+no assumption that it is off the critical line is made.
+
+Convexity and the exact mean give $\mathbb E C^{\beta_*-1}\ge1$.
+On the full support,
+$|\log C|\le|C-1|/a_0$ and $C^{\beta_*-1}\le a_0^{-1}$.
+Apply $\cos x\ge1-x^2/2$ inside this same expectation:
+
+$$
+\begin{aligned}
+\Re H_{\mu_A}(\rho_*)
+&\ge\mathbb E C^{\beta_*-1}
+ -\frac{\gamma_*^2}{2}
+       \mathbb E[C^{\beta_*-1}(\log C)^2]\\
+&\ge1-\frac{\gamma_*^2}{2a_0^3}V_A.
+\end{aligned}
+$$
+
+Every integral exists on the compact positive support. Norm
+nonnegativity and (VDB1) therefore imply
+
+$$
+q_A\ge(1-K_*V_A)_+,\qquad
+K_*:=\frac{\gamma_*^2}{2a_0^3}>0.
+\tag{VDB3}
+$$
+
+The same positive law supplies both its variance and its response at
+this actual zero. Multiplicity does not alter this pointwise constraint.
+
+### Minimize the complete certificate jointly in damping and variance
+
+Let $\mathcal M(A)\ge0$ be the retained whole-tail mass allowance.
+Suppose the sufficient certificate keeps the GAK23 nonnegative costs,
+so in particular its numerical upper allowance obeys
+
+$$
+\mathcal U_A(\mu_A,q_A)
+\ge\mathcal M(A)q_A+\frac{13}{25}\sqrt A\,V_A.
+\tag{VDB4}
+$$
+
+The coefficient $13/25$ is the existing $.52$ transport coefficient;
+its additional $2\eta_0(A)$, the head, coefficient-remainder factors
+and elementary allowances are nonnegative. They may be retained or
+increased without weakening this lower bound on the certificate.
+
+Put $z=K_*V_A$ and $D_A=(13/25)\sqrt A/K_*$. For $0\le z\le1$,
+the right side of (VDB4) is at least
+$\mathcal M(A)(1-z)+D_Az$, a convex combination of its two endpoints.
+For $z\ge1$ it is at least $D_Az\ge D_A$. Hence, for every law and
+every certified $q_A$ simultaneously,
+
+$$
+\mathcal U_A(\mu_A,q_A)
+\ge\min\left\{\mathcal M(A),
+          \frac{26a_0^3}{25\gamma_*^2}\sqrt A\right\}
+\ge\min\left\{\mathcal M(A),
+          \frac{13a_0^3}{200H^2}\sqrt A\right\}.
+\tag{VDB5}
+$$
+
+Thus whenever the fixed-$H$ mass allowance $\mathcal M(A)$ tends
+to infinity, the infimum of this complete certificate over all the
+admissible positive laws also tends to infinity. This includes laws
+whose variance tends to zero and laws whose certified damping changes
+with $A$; it is not only a statement about a fixed convolution order.
+
+### An explicit restriction for the rationalized GAD allowance
+
+For a concrete consumer take the rationalized GAD2 supplier, with
+$L=\log A$, $h=\log H$ and $\alpha(\sigma)=(1+\sigma)/(2-\sigma)$:
+
+$$
+\begin{aligned}
+\mathcal M_H(A)={}&
+2\frac{37}{25\cdot10^{12}}A^{1/4}
+ +144Lh^4\int_{3/4}^{1}
+       A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma\\
+&+30000H^{-2}(\sqrt A-A^{1/4}).
+\end{aligned}
+\tag{VDB6}
+$$
+
+This is the existing full density upper envelope after replacing
+$S_2(H)$ by its cited rational upper bound. Its explicit positive
+baseline is part of the chosen allowance, not a lower bound for the
+actual mass $B_2(A)$. The original (W5) baseline instead uses
+$Q_A(3/4)S_2(H)$; it is not assigned this rational numerical floor.
+
+For $A\ge256H^4=20736\cdot10^{48}$, all terms in (VDB6) are
+nonnegative and
+
+$$
+\mathcal M_H(A)\ge\frac{888}{25},\qquad
+\frac{13a_0^3}{200H^2}\sqrt A
+\ge\frac{26}{25}\left(\frac{99}{100}\right)^3
+=\frac{12613887}{12500000}>1.
+$$
+
+Consequently every certificate satisfying this specified contract has
+
+$$
+\mathcal U_A(\mu_A,q_A)>1>Q_R
+\qquad(A\ge256H^4),
+\tag{VDB7}
+$$
+
+where $Q_R$ is the unchanged GAK37 common reserve. Arbitrarily changing
+the narrow positive law cannot make the sufficient test
+$\mathcal U_A<Q_R$ hold on an unbounded range under this contract.
+
+This conclusion does not reverse GAK23's directed transport inequality.
+It lower-bounds the retained upper-allowance expression, not the actual
+transport, signed zero sum or Robin margin. It does not restrict a
+sharper mass supplier, a changing height, frequency-dependent joint
+weights, a signed or broad-support law, or an estimate coupled to the
+same integer's actual defect. The already paid GPP higher-power transport
+and BPY xi-law constructions remain available. The unpaid root-scale
+same-source signed estimate and RH remain open.
+
 ## A finite log-free density row lowers the complete upper envelope
 
 Chiara Bellotti, *An explicit log-free zero density estimate for the
@@ -2036,3 +2240,630 @@ Robin margin, new source-clock exclusion or uniform bound as
 $A\to\infty$. The complete selected-source signed target and RH
 remain unproved. This reuses Bellotti and (W2), (W5), (W7), without
 reproving a density theorem or claiming Lean verification.
+
+## A seven-eighths ceiling in the complete positive-law Robin transport
+
+The [Nicolas comparison's GAD application](../ArithSums/nicolas2025comparison.md#project-application-density-weighted-order-nine-transport-reaches-3e47)
+already pays the complete signed response on
+$8\cdot10^{46}<A\le3\cdot10^{47}$. Its density integral extends to
+real part one. The following application adds the separately recorded
+[ASC1 seven-eighths ceiling](../ArithSums/nicolas2025comparison.md#project-application-a-seven-eighths-ceiling-lowers-the-actual-sample-cut)
+to that whole-law transport. The changed input removes real-part layers
+above $7/8$, permitting a lower-variance order-seven law. Under these
+inputs the new all-integer slab is
+
+$$
+3\cdot10^{47}<A=\log n\le6\cdot10^{47}.
+\tag{CDR1}
+$$
+
+The premises are all five primary analytic inputs in
+[GAK section 1](../ArithSums/nicolas2025comparison.md#1-exact-theorem-and-premises),
+the same unrestricted reserve and response identities GAK36–GAK39,
+the Chourasiya–Simonič density rows supplying (W1), and the additional
+condition
+
+$$
+\beta\le7/8\qquad\text{for every actual nontrivial zeta zero}.
+\tag{CDR2}
+$$
+
+The pinned supplier for (CDR2) is
+[`OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean).
+It is an external analytic premise: its complete transitive proof closure
+has not been compiled or independently certified here. The project and
+upstream Lean toolchains remain distinct. GAK's five primary inputs and
+the density bound alone do not supply (CDR2). No primary proof, finite
+zero computation or density theorem is repeated. This is a source-
+conditional ordinary application, without Lean certification or a
+literature-priority claim.
+
+### Truncate the actual real-part population before bounding it
+
+Keep $H=3\cdot10^{12}$, $h=\log H$, $s=\log(Hh)$, $L=\log A$,
+$\alpha(\sigma)=(1+\sigma)/(2-\sigma)$ and the same positive-
+ordinate mass $B_2(A)$ from (W5), including analytic multiplicities.
+Reflection gives $\beta\ge1/8$ from (CDR2). Hence the actual reflected
+count $F_2(\sigma)$ in (W2) is zero for $\sigma>7/8$.
+Zeros on $\beta=7/8$ or $1/8$ remain included: their layers below the
+endpoint are retained, and a single integration endpoint has zero
+measure. Tonelli's existing nonnegative layer identity (W5), followed
+by (X1), therefore gives
+
+$$
+\begin{aligned}
+B_2(A)<{}&2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^{7/8}
+    A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma\\
+&+30000H^{-2}(A^{3/8}-A^{1/4}).
+\end{aligned}
+\tag{CDR3}
+$$
+
+The last term is truncated along with the principal density term.
+This uses the same actual zero population at all heights above $H$;
+it does not extend the finite-height critical-line verification.
+
+For $f(\sigma)=L(\sigma-1/2)-s\alpha(\sigma)$,
+
+$$
+f'(\sigma)=L-\frac{3s}{(2-\sigma)^2}
+ \ge L-\frac{64}{27}s>0\qquad(3/4\le\sigma\le7/8).
+$$
+
+Reuse GAD's rational logarithm bounds $L>107$, $28<h<29$ and
+$s<32.1$; the larger lower endpoint in (CDR1) preserves them. Integrating
+the derivative bound toward $7/8$ gives
+
+$$
+\int_{3/4}^{7/8}e^{f(\sigma)}d\sigma
+ <\frac{A^{3/8}(Hh)^{-5/3}}{L-(64/27)s},\qquad
+\frac{L}{L-(64/27)s}<\frac{45}{13}<\frac72.
+\tag{CDR4}
+$$
+
+For uniform rational enclosures put $r=8\cdot10^{23}$. Then
+$r^2>6\cdot10^{47}$ and $A^{1/4}<10^{12}$. The exact power
+comparisons
+
+$$
+r^3<(8.5\cdot10^{17})^4,\qquad
+(84\cdot10^{12})^5>(1.6\cdot10^{23})^3
+$$
+
+give $A^{3/8}<8.5\cdot10^{17}$ and
+$(Hh)^{5/3}>1.6\cdot10^{23}$. Inserting these and the reused
+$S_2(H)<37/(25\cdot10^{12})$ into (CDR3) yields
+
+$$
+\begin{aligned}
+B_2(A)&<\frac{74}{25}
+ +144\frac72\,29^4\frac{8.5\cdot10^{17}}{1.6\cdot10^{23}}
+ +\frac{30000(8.5\cdot10^{17})}{H^2}\\
+&=\frac{2276049253}{1200000}<1900.
+\end{aligned}
+\tag{CDR5}
+$$
+
+The GAD5 reflection/conjugation identity is unchanged:
+$B_2(A)=\sum_{|\gamma|>H}m_\rho A^{\beta-1/2}/\gamma^2$.
+It already pays both ordinate signs. There is no further factor of two.
+
+### Consume the smaller mass with the complete order-seven law
+
+Use the existing GAK finite equal-width log-uniform construction with
+$k=7$ and width $\delta=51/(20H)$, keeping its exact whole-law
+normalization $\mathbb EC=1$. Put
+
+$$
+x=\delta^2,\qquad M_*=(1-14x)^{-1},\qquad
+V_*=\frac{7x}{3-10x},\qquad q=\frac{219}{1000}.
+\tag{CDR6}
+$$
+
+GAK3–GAK6 give positive denominators, full support in $(.99,1.01)$,
+$\mathbb EC^{-1}\le M_*$ and $\operatorname{Var}C\le V_*$.
+GAK41/GAK47's normalized scalar base is independent of $k$:
+
+$$
+q_*:=\frac{7/32+(20/51)\delta/(1-x)}{1-x}<q.
+$$
+
+Consequently the actual complex response satisfies
+$|H_C(\rho)|<q^7$ throughout $|\gamma|>H$, for all actual real
+parts. The head retains its bound $M_*$. The full integrated
+coefficient $F_A$, its GAK12 remainder and the absolute exchange
+in GAK15 are retained. In particular the tail needs no extra $M_*$.
+
+The complete allowances, using the same remainder factors as GAD6, are
+
+$$
+\begin{aligned}
+U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+U_t&=\frac{108}{107}\frac{10001}{10000}q^7(1900),\\
+U_v&=\frac{260001}{500000}rV_*,\qquad
+U_e=\frac{5M_*}{10^{23}}.
+\end{aligned}
+\tag{CDR7}
+$$
+
+The GAK26 estimate $\eta_0(A)<10^{-6}$ and $\sqrt A>10^{23}$
+hold on the entire slab. Thus GAK23 gives the original signed integral,
+with its cutoff atoms, directed transport and full elementary response,
+
+$$
+-T_AI_\psi(A)<U_h+U_t+U_v+U_e<\frac{161}{200},
+\qquad T_A=\sqrt A L.
+\tag{CDR8}
+$$
+
+Sufficient exact rational comparisons are
+$U_h<.0532$, $U_t<.0464$, $U_v<.7014$ and
+$U_e<6\cdot10^{-23}$; their sum is less than $161/200$.
+The gain in high-zero mass is used to reduce smoothing order and hence
+variance cost. No zero-phase cancellation or favorable sample is assumed.
+
+### Keep the unrestricted reserve and each integer's own defect
+
+For every integer in (CDR1), take its own $A=\log n$ and
+$\lambda=1/(AL)$. Reuse exactly GAK37 and GAK39, including its
+nonnegative unrestricted-price defect $d_A(n)$ and
+$Q_R=67838284064811/83593750000000$. Since
+$Q_R-161/200>1/200$, (CDR8) implies, under all stated premises,
+
+$$
+T_A\left[\gamma+\log L-\log\frac{\sigma(n)}n\right]
+ >\frac1{200}+\frac{L}{(L+2)^3}+T_Ad_A(n)>0.
+\tag{CDR9}
+$$
+
+Here $\gamma$ denotes Euler's constant, not a zero ordinate. This is
+the strict Robin inequality for each integer in the slab. No CA or
+maximizer selection is required and no defect is set to zero. The earlier
+GAD slab is reused at its original scope; (CDR9) does not establish Robin
+for every smaller integer or give a least-counterexample bound.
+
+For this fixed $H$ and positive-variance law, the transport allowance
+still grows with $\sqrt A$. The additional strip premise therefore
+does not close the unbounded signed estimate or prove RH.
+
+The [existing rational certificate, extended with the capped scenario](https://github.com/the-omega-institute/trureturing-experiments/tree/a0f4aeb56177d88284985f07f51cf4c32d2f19b3/experiments/robin-density-transport-3e47)
+checks the logarithm and power enclosures, support, normalization and
+complete numerical allowances. Its baseline numerical result is preserved.
+These finite checks do not certify the external analytic premises or the
+complete inference in Lean.
+
+
+## Fixed-degree transport retains a positive complete first-layer budget
+
+The named inputs XLR, GPC, KTO, HLD, GMW and CPW below refer to
+the existing [Nicolas comparison card](../ArithSums/nicolas2025comparison.md)
+and its response, transport and localization applications.
+
+This application keeps the single degree $k=1$ in GPC, KTO and HLD.
+It reuses their full-response and root-tail estimates before their
+moving-degree limits. The delivered consumer retains the nonzero
+higher-layer term and the same original integer. No new xi-law,
+prime-distribution theorem, literature priority or Lean certification
+is claimed.
+
+Keep $A=\log n$, $L=\log A$, $T_A=\sqrt A L$ and the BPY law $\mu$
+from XLR1. Write
+
+$$
+m=\pi/3,\qquad h(s)=2m^{1-s}\xi(s),\qquad
+Q(z)=(1-z)(1-z/m),
+$$
+
+$$
+\nu_*=(1+1/m)\mu-\mu^{*2}/m,\qquad
+b=h(1/2),\qquad q_*=Q(b),\qquad H_*=1-q_*.
+\tag{FDW1}
+$$
+
+This is exactly GPC1 at $k=1$. Its mass, first clock moment and
+inverse first moment are one, and its Mellin transform vanishes at
+every actual nontrivial zero. Every fixed real absolute moment is
+finite by GPC2. Keep the same clamp, two correction atoms and KTO
+observation kernel:
+
+$$
+\chi_A(c)=\max\{c,e/A\},\qquad
+\delta_A=\int c^{-1}\,d(\chi_A)_\#\nu_*(c)-1,
+$$
+
+$$
+\eta_A=(\chi_A)_\#\nu_*-2\delta_A(\delta_1-\delta_2),\qquad
+\omega_A(E)=\int\kappa_{A,c}(E)\,d\eta_A(c).
+\tag{FDW2}
+$$
+
+For large $A$, KTO3 gives $\delta_A=O(A^{-3})$. KTO7--KTO8
+therefore retain exact mass and exact price mean
+$\int\lambda(Av)d\omega_A=\lambda(A)$, where
+$\lambda(x)=1/(x\log x)$. GPC5 applies to this fixed degree, since
+its first assertion is uniform over $1\le k\le\kappa\log A$.
+The finite-cutoff estimates in its proof, with fixed moments, give
+$T_A|J_{\nu_*}^\psi(A)|=O(A^{-1/2})$; the bounded responses at the
+two correction atoms cost $O(A^{-5/2}L)$. Thus the complete transported
+$\psi$ response is $o(1/T_A)$, with no zero-height or clock tail omitted.
+
+The quantitative transport in KTO9--KTO10 and HLD5 now has bounded
+weighted logarithmic moments. Their $O(L^{-3/4})$ allowances become
+$O(L^{-1})$: on $c\ge A^{-1/2}$ the error is the same
+$L^{-1}c^{-1/2}(1+|\log c|)$ times a fixed absolute moment; below
+that cut the full bounded, clamped integrand costs $O(A^{-3/2}L)$
+after root normalization. Consequently, before discarding any term,
+
+$$
+T_A\int R(Av)\,d\omega_A(v)=c_RH_*+O(L^{-1}),\qquad
+c_R=2(\sqrt2-1),
+$$
+
+$$
+T_A\mathcal J_2(A)=2\sqrt2q_*+O(L^{-1}).
+\tag{FDW3}
+$$
+
+Here $\mathcal J_2$ is HLD6's complete actual higher-pressure gap.
+It is not $o(1/T_A)$ for a fixed degree when $q_*\ne0$.
+Absolute integration and the entire kernel tail are the same as in
+KTO and HLD; no positive-power moment is assigned to $\omega_A$.
+
+Let $D_{1,A}(n)$ be the $\omega_A$ average of the complete actual
+first-layer defect, including occupied and absent primes at all primes.
+Let $G_{2,A}(n)=d_2(n,\lambda(A))\ge0$ be the original integer's
+complete higher-layer defect at its own price, as in HLD7.
+Exact mass and price give $D_{2,A}(n)=G_{2,A}(n)+\mathcal J_2(A)$.
+KTO's same-integer account, with FDW3 retained, yields
+
+$$
+\boxed{\displaystyle
+T_A\Delta(n)=T_A[D_{1,A}(n)+G_{2,A}(n)]
++c_*+O(L^{-1}),\qquad c_*=c_R+2q_*.}
+\tag{FDW4}
+$$
+
+The remainder is uniform over original integers at their own $A$.
+The coefficient $2q_*$ combines the higher-layer gap with the
+transported reserve: $c_R(1-q_*)+2\sqrt2q_*=c_R+2q_*$.
+It would be incorrect to retain the reserve gain while deleting the
+higher-layer contribution.
+
+XLR2 gives $1\le b\le\sqrt m$. The elementary quadratic minimum
+and $1<m<22/21$ give
+
+$$
+-\frac1{1848}<q_*\le0,\qquad
+c_*>\frac{207}{250}-\frac1{924}>\frac{33}{40}>0.
+\tag{FDW5}
+$$
+
+The rational square comparison $(707/500)^2<2$ pays the bound on
+$\sqrt2$. This positive constant is a complete fixed-degree budget,
+not a lower bound for the signed first-layer defect in FDW4.
+
+
+### A polylogarithmic window for the unpaid first-prime account
+
+Use the uniform real-order constant $C_m\ge1$ already supplied by
+GMW1, and put, for sufficiently large $A$,
+
+$$
+B_*=8(C_m+1),\qquad
+Y_A=\frac{A}{(L+2)^{B_*}},\qquad
+P_A=A(\log L+2)^{B_*}.
+\tag{FDW6}
+$$
+
+These are exactly CPW1 and GMW2 with the fixed degree $k=1$.
+The source, clamp and observer remain FDW1--FDW2. Define
+$G_{\mathrm{low},A}(n)$ by CPW7 at the new $Y_A$; it is the
+nonnegative own-price cost of the same integer's missing primes
+$p\le Y_A$. Define $C_A(n)$ and $D_{\mathrm{far},A}(n)$ by
+averaging the complete actual first-layer defect on, respectively,
+$Y_A<p\le P_A$ and $p>P_A$. Both occupied and absent primes are
+included, with the original occupation pattern.
+
+The order-$L$ negative-moment calculation CPW3--CPW6 gives
+
+$$
+D_{\mathrm{low},A}(n)=G_{\mathrm{low},A}(n)+O(\rho_A),\qquad
+\rho_A=4e^{-(3C_m+4)L\log(L+2)},\qquad
+T_A\rho_A=o(L^{-1}).
+\tag{FDW7}
+$$
+
+All low primes lie above their original-price activation, by CPW4.
+For source clocks below $2Y_A/A$, CPW5 pays the inverse-price factor;
+for every other source clock the entire low-prime hinge integral is
+zero. Thus this estimate includes the clamped clocks and the complete
+infinite observation-kernel tail, not just a source mass bound.
+
+For the upper cut, use GMW3 at the growing real order $t=\log L$.
+Its whole weighted clock-tail allowance, including GMW5's
+additional factor, is
+$O((1+\log L)\exp[-(C_m+2)(\log L)\log(\log L+2)])
+=o(L^{-1})$.
+The actual activation formula JPT5 and the complete prime-tail
+calculation GMW4--GMW8 therefore give
+
+$$
+U_A:=\int\sum_{p>P_A}\log p\,(r_p-\lambda(Av))_+
+       \,d\omega_A(v)
+=\frac{\beta_1}{L}(1+o(1))>0,
+\qquad r_p=\frac{\log(1+1/p)}{\log p}.
+\tag{FDW8}
+$$
+
+Here $\beta_1>0$ is ACP3's fixed node-$1$ slope. The Gamma comparison
+uses $k=1$, $Z=\log P_A=L+O(\log\log L)$ and $\Gamma(1)=1$.
+The effective-PNT and activation errors are $o(L^{-1})$; no claim
+that this far-sector error is root-small is made.
+The scalar hinge identity and exact mass and price keep the actual
+occupied-prime correction:
+
+$$
+D_{\mathrm{far},A}(n)=U_A+
+ \sum_{\substack{p>P_A\\p\mid n}}(\lambda(A)-r_p)\log p
+\ge U_A.
+\tag{FDW9}
+$$
+
+Each correction is nonnegative because $p>P_A>A$ and
+$r_p<\lambda(p)<\lambda(A)$. All infinite prime sums after
+observation are absolutely integrable by JPT3's complete-pressure
+majorant; the same proof uses only fixed source moments here.
+
+Substitute the exact disjoint decomposition
+$D_{1,A}=D_{\mathrm{low},A}+C_A+D_{\mathrm{far},A}$ into FDW4.
+The resulting full original-integer account is
+
+$$
+\boxed{\begin{aligned}
+T_A\Delta(n)={}&T_A\bigl[C_A(n)+D_{\mathrm{far},A}(n)
+ +G_{\mathrm{low},A}(n)+G_{2,A}(n)\bigr]\\
+&+c_*+O(L^{-1}).
+\end{aligned}}
+\tag{FDW10}
+$$
+
+No actual higher layer, low-prime baseline or occupied far prime is
+omitted. The undecided first-prime window has endpoints
+$A/(\log A+2)^{B_*}$ and $A(\log\log A+2)^{B_*}$, with a fixed
+exponent $B_*$. This is narrower than the growing-degree window;
+it does not assert that either endpoint divided by $A$ tends to one.
+There is no numerical common threshold because $C_m$ and the reused
+asymptotic inputs have not been made jointly effective here.
+
+A sufficient still-unproved joint estimate is
+$T_A[C_A(n)+D_{\mathrm{far},A}(n)]\ge-33/40$ eventually for all
+original integers. FDW5, FDW10 and the two nonnegative baselines would
+then give strict eventual Robin; lower finite scales would still need
+their own coverage. The exact far account in this condition cannot be
+replaced by its leading term with an $o(L^{-1})$ error: that allowance
+is larger than the required root scale. ACC's actual-integer
+cancellation obstruction must still be respected.
+
+For any actual own-price zero-defect source, all scalar nonnegative
+baseline defects vanish. Combining FDW10 with the original
+$\Delta(n)=I_\psi(A)+R(A)$ then gives
+
+$$
+T_A[C_A(n)+D_{\mathrm{far},A}(n)]
+=T_AI_\psi(A)-2q_*+O(L^{-1}).
+\tag{FDW11}
+$$
+
+Thus the changed root constant is compensated in the same signed
+first-layer account. It is not an additional physical reserve or a
+proved bound for that account. A FIB address may supply this same
+integer and its verified arithmetic data; the address alone supplies
+no sign in FDW10. The complete joint comparison and RH remain open.
+
+## Actual strict CA sources have a root-small own-price higher baseline
+
+This application continues the fixed-degree account FDW1--FDW11 on
+one specified actual integer family. It reuses the complete higher
+inventory and defect in [HLD1--HLD8](../ArithSums/nicolas2025comparison.md#a-root-small-debit-for-the-complete-actual-higher-layer-defect),
+the actual strict products in ACC, and their unconditional own-clock
+comparison [NP0](../ArithSums/erdosnicolas1975repartition.md#actual-strict-ca-products-at-their-own-size-price).
+The added consumer bounds this family's nonnegative higher baseline,
+which FDW10 retained without an upper estimate. No new prime theorem,
+literature priority, Lean certification or Robin sign is claimed.
+
+For sufficiently large real $x$, keep the actual strict product
+
+$$
+N_x=\prod_p p^{a_p(x)},\qquad
+ a_p(x)=\#\{j\ge1:r_{p,j}>\lambda(x)\},\qquad
+A=\log N_x,\quad L=\log A,\quad T_A=\sqrt A L,
+$$
+
+$$
+\lambda(u)=\frac1{u\log u},\qquad
+K(u)=-\lambda'(u),\qquad
+\varepsilon_x=\frac{|A-x|}{x}
+=O(e^{-a\sqrt{\log x}})=o(1)
+\tag{HCB1}
+$$
+
+for the same positive constant $a$ as NP0. Every layer and every
+simultaneous activation is retained; equality layers are excluded in
+$N_x$. In particular $A\in[x/2,2x]$ eventually. No CA optimizer is
+substituted for an arbitrary integer: this paragraph concerns the
+literal family $n=N_x$.
+
+Write $\mathcal A_2(u)$ for HLD1's complete active mass over $j\ge2$.
+HLD3 and its actual second-cutoff input give
+$\mathcal A_2(u)=O(\sqrt x)$ uniformly on $u\in[x/2,2x]$.
+The higher layers of $N_x$ already optimize the higher pressure at
+$\lambda(x)$, including the zero cost of any equality layer. Thus
+$d_2(N_x,\lambda(x))=0$ and $L_2(N_x)=\mathcal A_2(x)$ in HLD7.
+
+On this compact price interval only finitely many actual layers can
+activate. Apply the finite pressure differentiation already used in
+[NPC5](../ArithSums/erdosnicolas1975repartition.md#keep-the-exact-inventory-between-both-prices)
+to HLD1's higher pressure. It gives, in either endpoint ordering,
+
+$$
+\begin{aligned}
+G_{2,A}(N_x)&=d_2(N_x,\lambda(A))\\
+ &=\int_x^A[\mathcal A_2(u)-\mathcal A_2(x)]K(u)\,du\\
+ &=\int_{\min(x,A)}^{\max(x,A)}
+       |\mathcal A_2(u)-\mathcal A_2(x)|K(u)\,du\ge0.
+\end{aligned}
+\tag{HCB2}
+$$
+
+The strict endpoint convention changes neither the pressure integral
+nor a layer's zero benefit at equality. Monotonicity of the complete
+inventory justifies the absolute-value expression. Its integrand
+contains all higher exponent layers, rather than only the square layer.
+The uniform inventory bound and
+$K(u)=O(1/(x^2\log x))$ on this interval imply
+
+$$
+0\le G_{2,A}(N_x)\le
+\frac{C|A-x|}{x^{3/2}\log x},\qquad
+\boxed{\quad 0\le T_AG_{2,A}(N_x)\le C'\varepsilon_x=o(1).\quad}
+\tag{HCB3}
+$$
+
+These constants are uniform over all sufficiently large real $x$,
+including activation events. The conclusion requires only $A\sim x$,
+not NPC2's stronger $|A-x|=o(x^{3/4})$. It does not bound the
+complete own-price defect, whose first-layer part can remain larger.
+
+Retain precisely the fixed source and observation FDW1--FDW2.
+FDW3 and exact mass and price give the actual observed higher part
+
+$$
+T_AD_{2,A}(N_x)=2\sqrt2q_*+
+ O(L^{-1}+\varepsilon_x).
+\tag{HCB4}
+$$
+
+The nonzero signed higher-pressure term is still present. HCB3
+controls the original nonnegative baseline; it does not make the
+signed observer positive or turn HCB4 into an $o(1)$ assertion.
+
+The BPY law is nondegenerate: its mean is one and its inverse first moment
+is $m>1$. Strict convexity therefore gives
+$b=\mathbb E C^{-1/2}>1$, while XLR2 gives $b\le\sqrt m<m$.
+Consequently $q_*=(1-b)(1-b/m)<0$, and HCB4 implies
+$T_AD_{2,A}(N_x)\to2\sqrt2q_*<0$ over the whole strict CA family.
+This is a negative signed average of the actual nonnegative
+higher-defect integrands. It determines neither the full signed
+defect nor the Robin margin.
+
+### The generating-price account retains the complete tangent compensation
+
+Use the unchanged FDW6 cuts at the original source's own $A=\log N_x$.
+Since $A\sim x$, eventually $2Y_A<x<P_A$.
+CPW4's actual activation inequality puts every $p\le Y_A$ in $N_x$.
+Every prime factor of $N_x$ is less than $x$, by ACC's first-layer
+activation bracket. Hence, for this same integer and observer,
+
+$$
+G_{\mathrm{low},A}(N_x)=0,\qquad
+D_{\mathrm{far},A}(N_x)=U_A.
+\tag{HCB5}
+$$
+
+The second equality retains FDW8's exact infinite pressure integral;
+its occupied-prime correction is zero because $P_A>x$.
+Combining FDW10, HCB3 and HCB5 gives the full central-plus-far account
+
+$$
+T_A\Delta(N_x)=T_A[C_A(N_x)+U_A]+c_*+
+ O(L^{-1}+\varepsilon_x),\qquad c_*=c_R+2q_*.
+\tag{HCB6}
+$$
+
+This is a consequence for the whole unconditional strict CA family,
+not merely for the own-price zero-defect sources of FDW11.
+No low baseline, occupied far prime or actual higher layer is left
+unaccounted for.
+
+The [existing generating-price identity](../ArithSums/nicolas2025comparison.md#project-application-actual-monotone-layers-at-a-shorter-successor)
+uses the nonnegative tangent loss
+
+$$
+\Gamma_x(A)=\log\log x+\lambda(x)(A-x)-\log\log A\ge0,
+$$
+
+$$
+\Delta(N_x)=I_\psi(x)+R(x)-\Gamma_x(A).
+\tag{HCB7}
+$$
+
+This is the same concavity term as
+[TC.4](../ArithSums/erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host),
+with opposite sign to its $\kappa_x(A)$; it is not a new pressure
+identity. Keep it exact even when its root normalization is large.
+KTO1 and $A/x=1+O(\varepsilon_x)$ give
+$T_AR(x)=c_R+O(L^{-1}+\varepsilon_x)$.
+Consequently HCB6--HCB7 imply
+
+$$
+\boxed{\displaystyle
+T_A[C_A(N_x)+U_A]
+=T_A[I_\psi(x)-\Gamma_x(A)]-2q_*
+ +O(L^{-1}+\varepsilon_x).}
+\tag{HCB8}
+$$
+
+In particular the changed fixed-degree constant is compensated on
+all these actual integers, even when their own-price defects do not
+vanish. The far integral cannot be replaced here by
+$\beta_1/L(1+o(1))$: that relative error is not root-small.
+The signed prime integral and the exact tangent loss still need a
+joint estimate.
+
+For the root-scale comparison, suppose on a specified unbounded
+family that $|A-x|/x^{3/4}\to\ell<\infty$.
+The existing curvature of $\log\log x$ in TC.4 gives
+$T_A\Gamma_x(A)\to\ell^2/2$.
+Together with the owned own-price coefficient NPC9--NPC11,
+$T_A d_A(N_x)\to\ell^2/2$, the exact two margin accounts yield
+
+$$
+\begin{aligned}
+T_A[I_\psi(A)-I_\psi(x)]&=-\ell^2+o(1),\\
+T_A\Delta(N_x)&=T_AI_\psi(x)+c_R-\ell^2/2+o(1),\\
+T_A[C_A(N_x)+U_A]&=T_AI_\psi(x)-\ell^2/2-2q_*+o(1).
+\end{aligned}
+\tag{HCB9}
+$$
+
+Indeed subtract the accounts at $A$ and $x$; the difference of their
+root-normalized reserves tends to zero. The positive own-price
+coefficient and the negative generating-price coefficient therefore
+belong to compatible observations of the same source. Keeping the
+positive defect while leaving the prime integral unchanged would
+miss the full $-\ell^2$ transport.
+
+A sufficient signed premise on this specified family is
+$\liminf T_AI_\psi(x)>-c_R+\ell^2/2$; it would imply eventual
+strict Robin there. Neither that premise, a uniform full-family
+root bound, nor the central-plus-exact-far lower bound is supplied.
+The formula with finite $\ell$ does not cover larger displacements;
+HCB8 retains their exact tangent loss. RH and strict Robin for every
+integer above 5040 remain unresolved. These are paper applications
+of the cited inventory, pressure, curvature and prime-count inputs,
+with no Lean certification or literature-priority claim.
+
+
+## A truncated Fourier law in the same complete finite consumer
+
+The [truncated Fourier-law application](../Estimation/trureturing2026bandlimitedrobin.md),
+BFR1--BFR10, reuses GAK's original five analytic premises and unrestricted
+reserve. Its positive mean-normalized law has a second-moment allowance
+near $10/H^2$ and complete complex tail response below $10^{-26}$ at
+$H=3\cdot10^{12}$. The same full transport then pays strict Robin for
+each integer in $8\cdot10^{46}<\log n\le17\cdot10^{47}$, retaining its
+own nonnegative price defect. This extends the finite slab without
+CDR2's additional $7/8$ ceiling or a new density premise. It is a
+paper-level conditional application, not a new zero verification,
+Lean certification, least-counterexample bound or unbounded RH estimate.

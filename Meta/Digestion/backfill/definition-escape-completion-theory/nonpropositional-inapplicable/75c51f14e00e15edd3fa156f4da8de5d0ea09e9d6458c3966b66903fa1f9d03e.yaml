@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75c51f14e00e15edd3fa156f4da8de5d0ea09e9d6458c3966b66903fa1f9d03e
+  normalized_sha256: sha256:75c51f14e00e15edd3fa156f4da8de5d0ea09e9d6458c3966b66903fa1f9d03e
+cas_ref: sha256:75c51f14e00e15edd3fa156f4da8de5d0ea09e9d6458c3966b66903fa1f9d03e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 章节参照、工具目录或实现与假设范围纪律；未给出一个需要证明的独立数学断言。'
+    previous_atom_id: 423c0db69ab89f731995fbff3cfb2e9dd1b19aed61929577ffc7df06ea82e8c5
+    next_atom_id: e6124aebbf1b536fb2329a8e9b13a05277d6842283320674937211488e5044b4

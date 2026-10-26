@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bc75c0c923c5ce5b4d3cffe9411e005ab56e044480e9b57d2cd911d3987cc8f4
+  normalized_sha256: sha256:bc75c0c923c5ce5b4d3cffe9411e005ab56e044480e9b57d2cd911d3987cc8f4
+cas_ref: sha256:bc75c0c923c5ce5b4d3cffe9411e005ab56e044480e9b57d2cd911d3987cc8f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是询问 prime-Archimedean 算子如何生成 H_Xi 的研究问题，不陈述已有生成定理。
+    previous_atom_id: 32084ee01d53b22d856550e854bcd602f11e442f7d7c5fe42f1e40d07be80622
+    next_atom_id: 7a4f4fcdb2d398dab1b1188f6797ac177da83ead43d7a2ff647378df6b7e8061

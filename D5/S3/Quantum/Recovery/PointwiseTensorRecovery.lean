@@ -67,7 +67,8 @@ theorem whole_pointwise_core_attempt (E : s → Matrix n d ℂ)
         E0.subtype.comp Theta.toLinearMap
        ∀ T : Matrix d d ℂ,
          (∑ a, E a * T * (E a)ᴴ).toEuclideanLin =
-         (U.comp (TensorProduct.map sigma T.toEuclideanLin)).comp (LinearMap.adjoint (𝕜 := ℂ) (E := K0 ⊗[ℂ] EuclideanSpace ℂ d) (F := EuclideanSpace ℂ n) U)) := by
+         (U.comp (TensorProduct.map sigma T.toEuclideanLin)).comp (LinearMap.adjoint (𝕜 := ℂ) (E := K0 ⊗[ℂ] EuclideanSpace ℂ d) (F := EuclideanSpace ℂ n) U)) ∧
+      (∀ w : K0, (sigmaInv w : EuclideanSpace ℂ n) = (W * W).toEuclideanLin w) := by
   let Q := ∑ a, E a * (E a)ᴴ
   let P := spectralSupport Q
   let W := spectralInverseSqrt Q

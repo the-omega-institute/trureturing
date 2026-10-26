@@ -1,0 +1,70 @@
+**Lemma 2.1.** Every strict source with $b\ge4$ has $D>0$ and
+admits exactly one complete world realizing the first five prescribed
+readings. It is (2.2), and its next two literal readings are the displayed
+$p,v$.
+
+**Proof.** Put $j=\mathcal J/b$ and $n=\mathcal N/b$. Multiplication
+of the original action matrices gives successive traces
+
+$$
+1,\quad j,\quad T,\quad n,\quad U,\quad U+n,\quad 2U+n.
+\tag{2.3}
+$$
+
+In particular no clock or source transformation is involved. Write
+$e=d-24$. The first four prescribed readings require
+
+$$
+(g(0),g(1),g(2),g(3))=
+(-24-e,-e/j,(27/5-e)/T,-e/n).
+\tag{2.4}
+$$
+
+A polynomial of degree at most three is determined by these four samples.
+Its value at four is the combination with weights $(-1,4,-6,4)$.
+Imposing $d+Ug(4)=18$ therefore gives
+
+$$
+\begin{gathered}
+\Lambda=1+6/T+1/U-4/j-4/n
+       =\frac{2D}{5TU\mathcal J\mathcal N},\\
+e\Lambda=-\frac{6S}{5TU}.
+\end{gathered}
+\tag{2.5}
+$$
+
+Since $j,n\ge b$, for $b\ge4$ one has
+
+$$
+\Lambda\ge1+6/T+1/U-8/b
+ =\frac{2(b^3-8b-4)}{bTU}>0.
+\tag{2.6}
+$$
+
+The numerator is positive at four and has positive derivative for
+$b\ge4$. Thus $D>0$, and (2.5) gives the unique value
+$e=-3S\mathcal J\mathcal N/D$. Substitution into (2.4) gives
+$g(i)=C_i/D$ for $i=0,1,2,3$ and $d=-C_0/D$.
+For the sample at two one uses
+$T(49b+34)-S=9(b^2+8b+4)$.
+
+The polynomial identities checking the remaining prescribed rows are
+
+$$
+\begin{aligned}
+-bC_0+\mathcal JC_1&=24bD,\\
+-C_0+TC_2&=(147/5)D,\\
+-bC_0+\mathcal NC_3&=24bD,\\
+-C_0+U(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{2.7}
+$$
+
+They follow by substitution into (2.1). The zero-clock identity is
+$d+g(0)=0$. Interpolation at five and six gives $B_5/D$ and $B_6/D$,
+so (2.3) yields $N_p/H$ and $N_v/H$. If this entire gain were zero,
+clocks zero and one would have equal readings, contrary to $0\ne24$.
+This proves the assertions, including uniqueness of the entire gain
+and drift. No gain sample or gain coefficient has been divided out.
+$\square$
+

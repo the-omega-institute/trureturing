@@ -146,7 +146,7 @@ private theorem offset_ge_log_two (e : Fin 3 → Bool)
         split <;> first | exact log_widths_bounds.1.le.trans (log_widths_bounds.2 j) | rfl)
         (Finset.mem_univ i)
 
-private theorem corner_estimate (T M₀ M₁ : ℝ) (c d x : Fin 3 → ℝ)
+theorem corner_estimate (T M₀ M₁ : ℝ) (c d x : Fin 3 → ℝ)
     (hc : ∀ i, T ≤ c i) (hd : ∀ i, T ≤ d i)
     (hx : IsCorner c d x) (hb : (∑ i, x i) ∈ Icc M₀ M₁) :
     let m := (∑ i, x i) / 3

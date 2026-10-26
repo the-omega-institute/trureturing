@@ -41,6 +41,21 @@ internal sealed class QuadraticEdgeLoadDocument : IScribeDocumentDefinition
                     "Kappa is the infimum of actual maximum loads over feasible allocations. "
                     + "The following minimum-attainment statement identifies it with a minimum."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("half-feasible"), DeclarationHandle.Create(Prefix + "half_feasible"),
+                H("Equal shares are feasible"), StatementSource.FromAuthor(HalfFeasibleFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Assigning one half to every ordered pair satisfies the share bounds and the complementary-share equation on every edge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("load-le-maximum"), DeclarationHandle.Create(Prefix + "load_le_maxLoad"),
+                H("Every vertex load is bounded by the maximum"), StatementSource.FromAuthor(LoadBoundFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every allocation and every vertex, its load is at most the maximum over the full nonempty vertex set."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("kappa-le-maximum"), DeclarationHandle.Create(Prefix + "kappa_le"),
+                H("Every feasible allocation bounds the infimum"), StatementSource.FromAuthor(KappaBoundFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "The maximum load of any feasible allocation is an upper bound for kappa."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("minimum-attained"),
                 DeclarationHandle.Create(Prefix + "minimum_attained"),
                 H("An actual minimum"), StatementSource.FromAuthor(MinimumFormula()),
@@ -143,6 +158,28 @@ internal sealed class QuadraticEdgeLoadDocument : IScribeDocumentDefinition
         Formula values = Seq(OpenBrace, r, Sp, Colon, Sp, Real(), Sp, Bar, Sp,
             Some("a", Shares(), And(Feasible(a), Eq(Maximum(a), r))), CloseBrace);
         return Disp(FiniteGraph(Eq(Kappa(), Call("sInf", values))));
+    }
+
+    private static Formula HalfFeasibleFormula()
+    {
+        Formula half = Seq(Open, LambdaLower, Sp, Underscore, Colon, Sp, V(), Comma, Sp,
+            LambdaLower, Sp, Underscore, Colon, Sp, V(), Comma, Sp,
+            new Formula.Fraction(D(1), D(2)), Close);
+        return Disp(All("V", Call("Type"), All("G", Call("SimpleGraph", V()), Feasible(half))));
+    }
+
+    private static Formula LoadBoundFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b");
+        return Disp(FiniteGraph(All("a", Shares(), All("b", V(),
+            Rel(Load(a, b), FormulaRelationOperator.LessThanOrEqual, Maximum(a))))));
+    }
+
+    private static Formula KappaBoundFormula()
+    {
+        Formula a = F.Id("a");
+        return Disp(FiniteGraph(All("a", Shares(), Imp(Feasible(a),
+            Rel(Kappa(), FormulaRelationOperator.LessThanOrEqual, Maximum(a))))));
     }
 
     private static Formula MinimumFormula() => Disp(FiniteGraph(Some("a", Shares(),

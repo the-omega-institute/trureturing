@@ -46,7 +46,19 @@ $$\forall z \in \mathbb{C},\; P\left(0, z\right)=1$$
 
 At index zero the empty product is one. The compact-majorant consumer uses this companion on its finite-prefix continuity path.
 
-**Theorem 1.4 (An explicit disk bound).**
+**Theorem 1.4 (Finite inverse-square bound).**
+
+Lean statement: `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.inverse_square_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.inverse_square_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural k, the sum of reciprocal squares from one through k is at most two. This shared bound controls both normalized Pochhammer products and elliptic tail derivatives.
+
+**Theorem 1.5 (An explicit disk bound).**
 
 $$\forall R \in \mathbb{R},\; \forall k \in \mathbb{N},\; \forall z \in \mathbb{C},\; 0\le R\land 1\le k\land \left\lVert z \right\rVert\le R\Rightarrow \left\lVert P\left(k, z\right) \right\rVert\le exp\left(R+R^{2}\right) k^{-Re\left(z\right)}$$
 
@@ -62,6 +74,7 @@ For every nonnegative real radius R, every natural k at least one and every comp
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.inverse_square_sum`
 - Truth anchor: `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.normalizedPochhammer`
 - Truth anchor: `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.normalized_pochhammer_eq_prod`
 - Truth anchor: `D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds.normalized_pochhammer_norm_le`

@@ -1,0 +1,53 @@
+**Definition 2.1 (A rational regular label chart).** Put $\tau=r/b$, so
+$r=\tau b$, and define
+
+$$
+j=\tau+b(1-\tau^2),\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b.
+$$
+
+Whenever $j,n,T,U,\Lambda$ are nonzero, put
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\kappa=\frac6T-\frac2U,\qquad
+\varepsilon=-\frac{24(b-1/8)\kappa}{5\Lambda},\qquad d=24+\varepsilon.
+$$
+
+Let $g$ be the unique polynomial of degree at most three whose first four
+samples are
+
+$$
+\gamma_0=-d,\qquad \gamma_1=-\frac\varepsilon j,\qquad
+\gamma_2=\frac{27/5-\varepsilon}{T},\qquad\gamma_3=-\frac\varepsilon n.
+$$
+
+The extrapolation values are
+
+$$
+g_5=-4\gamma_0+15\gamma_1-20\gamma_2+10\gamma_3,\quad
+ g_6=-10\gamma_0+36\gamma_1-45\gamma_2+20\gamma_3,\quad
+ g_7=-20\gamma_0+70\gamma_1-84\gamma_2+35\gamma_3.
+$$
+
+Define the response map
+
+$$
+\Psi(\tau,b)=(p,v,a,m)
+=\bigl(d+(U+n)g_5, d+(2U+n)g_6,
+ d+(T+2j+4r)g_7, d+(3U+2n)g_7\bigr).
+$$
+
+The inequalities $b>0$ and $0<\tau b<1$, together with the displayed
+nonzero denominators, are the legal part of this chart. Extending the
+rational formula beyond them creates algebraic labels, not worlds.
+
+For $z=(\tau_0,b_0,\tau_1,b_1,\tau_2,b_2)$, write
+$\Psi_i=(p_i,v_i,a_i,m_i)$ and set
+
+$$
+G(z)=(p_0-p_2,p_1-p_2,v_0-v_2,v_1-v_2,a_0-a_2,m_1-m_2).
+$$
+
+The first and third labels are the proposed terminal-$J$ pair; the second
+and third are the proposed terminal-$M$ pair.
+

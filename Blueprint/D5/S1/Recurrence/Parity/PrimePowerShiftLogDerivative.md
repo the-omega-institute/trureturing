@@ -20,7 +20,19 @@ $$\forall n: \mathbb{N}, \operatorname{prime}\left(n\right) = \operatorname{nth}
 
 Mathlib's nth operator uses a zero-based index, so prime(n) is Nat.nth Nat.Prime (n-1). The subtraction convention also defines prime(0).
 
-**Theorem 1.2 (The prime exceeds its positive index).**
+**Theorem 1.2 (Every indexed value is prime).**
+
+$$\forall n: \mathbb{N}, \operatorname{Nat}.\operatorname{Prime}\left(\operatorname{prime}\left(n\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.prime_is_prime` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Nat.prime_nth_prime proves primality at every natural index, including zero. The coefficient divisibility and uniqueness arguments use this primality.
+
+**Theorem 1.3 (The prime exceeds its positive index).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies (n < \operatorname{prime}\left(n\right))$$
 
@@ -32,7 +44,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies (n < \operatorname{prime}\left(n\rig
 
 Mathlib's bound k+2 <= Nat.nth Nat.Prime k, with k=n-1, gives the strict inequality.
 
-**Definition 1.3 (The integral coefficient construction).**
+**Definition 1.4 (The integral coefficient construction).**
 
 $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{P}\left(n\right)\right)\\\operatorname{P}\left(0\right) = 1\\\forall k: \mathbb{N}, \operatorname{P}\left(k + 1\right) = \operatorname{P}\left(k\right) + \operatorname{C}\left(\operatorname{div}\left((\operatorname{prime}\left(k + 1\right) \cdot \operatorname{coeff}\left(k + 1 - 1, (\operatorname{P}\left(k\right))^{\operatorname{prime}\left(k + 1\right)}\right) - \operatorname{coeff}\left(k + 1, (\operatorname{P}\left(k\right))^{\operatorname{prime}\left(k + 1\right)}\right)), \operatorname{prime}\left(k + 1\right)\right)\right) \cdot (X)^{k + 1}\end{aligned}$$
 
@@ -44,7 +56,7 @@ $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operat
 
 Write P(k) for the private approximation(k). Starting from P(0)=1, the displayed correction changes only degree k+1. In the binomial expansion of B^p=(1+(B-1))^p, the interior binomial coefficients are divisible by p and the pth power of B-1 has no coefficient below p. This proves exact divisibility of the correction numerator. Later approximations preserve every earlier coefficient.
 
-**Definition 1.4 (The generating series).**
+**Definition 1.5 (The generating series).**
 
 $$F = \operatorname{mk}\left(\operatorname{a}\right)$$
 
@@ -56,7 +68,7 @@ $$F = \operatorname{mk}\left(\operatorname{a}\right)$$
 
 The series F is mk(a), the formal integer series with coefficient a(n) at degree n.
 
-**Theorem 1.5 (The complete defining equations).**
+**Theorem 1.6 (The complete defining equations).**
 
 $$(\operatorname{constantCoeff}\left(F\right) = 1) \land (\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{coeff}\left(n, (F)^{\operatorname{prime}\left(n\right)}\right) = \operatorname{prime}\left(n\right) \cdot \operatorname{coeff}\left(n - 1, (F)^{\operatorname{prime}\left(n\right)}\right)))$$
 
@@ -68,7 +80,7 @@ $$(\operatorname{constantCoeff}\left(F\right) = 1) \land (\forall n: \mathbb{N},
 
 If two unit-constant series agree below degree n, the difference of their nth coefficients after taking the pth power is p times their original nth-coefficient difference. Factoring the difference of powers proves this identity. The exact correction therefore enforces the nth equation; coefficient stability transfers it to F.
 
-**Theorem 1.6 (Uniqueness among integer series).**
+**Theorem 1.7 (Uniqueness among integer series).**
 
 $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(B\right) = 1) \implies ((\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{coeff}\left(n, (B)^{\operatorname{prime}\left(n\right)}\right) = \operatorname{prime}\left(n\right) \cdot \operatorname{coeff}\left(n - 1, (B)^{\operatorname{prime}\left(n\right)}\right))) \implies (B = F))$$
 
@@ -80,7 +92,7 @@ $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 Strong induction compares B and F below each degree n. Their defining equations and the difference-of-powers coefficient identity imply prime(n) times the coefficient difference is zero. Cancellation of this nonzero integer proves equality at degree n.
 
-**Theorem 1.7 (Low coefficients of a prime power).**
+**Theorem 1.8 (Low coefficients of a prime power).**
 
 $$\forall n: \mathbb{N}, \forall j: \mathbb{N}, (1 \le j) \implies ((j < \operatorname{prime}\left(n\right)) \implies (\operatorname{prime}\left(n\right) \mid \operatorname{coeff}\left(j, (F)^{\operatorname{prime}\left(n\right)}\right)))$$
 
@@ -92,7 +104,7 @@ $$\forall n: \mathbb{N}, \forall j: \mathbb{N}, (1 \le j) \implies ((j < \operat
 
 Apply the binomial divisibility argument to F itself. The bound 1 <= j < prime(n) excludes both exceptional binomial terms.
 
-**Definition 1.8 (The logarithmic derivative).**
+**Definition 1.9 (The logarithmic derivative).**
 
 $$L = \operatorname{derivative}\left(\mathbb{Z}, F\right) \cdot \operatorname{invOfUnit}\left(F, 1\right)$$
 
@@ -104,7 +116,7 @@ $$L = \operatorname{derivative}\left(\mathbb{Z}, F\right) \cdot \operatorname{in
 
 Since F has constant coefficient one, multiplication by its formal unit inverse defines L=F'/F over the integers.
 
-**Definition 1.9 (The sequence indexing).**
+**Definition 1.10 (The sequence indexing).**
 
 $$\forall n: \mathbb{N}, \operatorname{a393867}\left(n\right) = \operatorname{coeff}\left(n - 1, L\right)$$
 
@@ -116,7 +128,7 @@ $$\forall n: \mathbb{N}, \operatorname{a393867}\left(n\right) = \operatorname{co
 
 A393867 starts at index one: its nth term is the coefficient of degree n-1 in L. Natural subtraction also specifies the value at zero.
 
-**Theorem 1.10 (Differentiating every power).**
+**Theorem 1.11 (Differentiating every power).**
 
 $$\forall n: \mathbb{N}, X \cdot \operatorname{derivative}\left(\mathbb{Z}, (F)^{n}\right) = \operatorname{C}\left(n\right) \cdot (X \cdot L) \cdot (F)^{n}$$
 
@@ -128,7 +140,7 @@ $$\forall n: \mathbb{N}, X \cdot \operatorname{derivative}\left(\mathbb{Z}, (F)^
 
 The formal power rule and L times F equals F' give the displayed identity, including exponent zero.
 
-**Theorem 1.11 (Hanna's divisibility conjecture).**
+**Theorem 1.12 (Hanna's divisibility conjecture).**
 
 $$\forall n: \mathbb{N}, (1 < n) \implies (\operatorname{prime}\left(n\right) \mid \operatorname{a393867}\left(n\right))$$
 
@@ -144,7 +156,7 @@ $$\forall n: \mathbb{N}, (1 < n) \implies (\operatorname{prime}\left(n\right) \m
 
 Let p=prime(n) and h(j) be the coefficient of degree j in F^p. Coefficient extraction from the power rule, followed by h(n)=p h(n-1) and cancellation of p, gives n h(n-1)=[x^(n-1)](L F^p). For n>1, the left side is divisible by p. In the convolution on the right, every term except [x^(n-1)]L times h(0) has a positive coefficient index below p in F^p and is divisible by p. Since h(0)=1, the remaining term proves the conjecture.
 
-**Theorem 1.12 (The shifted printed formula is false).**
+**Theorem 1.13 (The shifted printed formula is false).**
 
 $$\neg (\forall n: \mathbb{N}, (1 < n) \implies (\operatorname{prime}\left(n\right) \mid \operatorname{coeff}\left(n, L\right)))$$
 
@@ -169,4 +181,5 @@ This companion concerns formula (2) of A393866, whose printed coefficient index 
 - Truth anchor: `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lt_prime`
 - Truth anchor: `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.prime`
 - Truth anchor: `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.prime_dvd_coeff_pow`
+- Truth anchor: `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.prime_is_prime`
 - Truth anchor: `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.printed_formula_false`

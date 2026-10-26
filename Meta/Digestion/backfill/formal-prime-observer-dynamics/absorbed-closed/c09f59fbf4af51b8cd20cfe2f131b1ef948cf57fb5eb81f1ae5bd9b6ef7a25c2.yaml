@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c09f59fbf4af51b8cd20cfe2f131b1ef948cf57fb5eb81f1ae5bd9b6ef7a25c2
+  normalized_sha256: sha256:c09f59fbf4af51b8cd20cfe2f131b1ef948cf57fb5eb81f1ae5bd9b6ef7a25c2
+cas_ref: sha256:c09f59fbf4af51b8cd20cfe2f131b1ef948cf57fb5eb81f1ae5bd9b6ef7a25c2
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+    target_statement_id: sha256:21ccc90ac6460735fea019b3d313e2e63d85d801ab4ec568467ad780c2806be3
+receipts:
+  unresolved_subitems: []

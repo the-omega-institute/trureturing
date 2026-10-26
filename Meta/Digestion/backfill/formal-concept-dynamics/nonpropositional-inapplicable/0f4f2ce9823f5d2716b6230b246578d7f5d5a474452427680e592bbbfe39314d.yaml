@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f4f2ce9823f5d2716b6230b246578d7f5d5a474452427680e592bbbfe39314d
+  normalized_sha256: sha256:0f4f2ce9823f5d2716b6230b246578d7f5d5a474452427680e592bbbfe39314d
+cas_ref: sha256:0f4f2ce9823f5d2716b6230b246578d7f5d5a474452427680e592bbbfe39314d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于“真正代表”和 gauge 的解释性原则，没有定义额外数学意义的规范截面或新等价定理。
+    previous_atom_id: dc3932c8759b738916583cb47f4523237e789d97d55e776024f19c9ff7c80f6a
+    next_atom_id: 10975d98344becddfc0759c34def0f3796b1339d8d8b31217e39de96f65387b8

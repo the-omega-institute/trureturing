@@ -4,7 +4,19 @@
 
 A positive integer whose divisor count divides its squarefree kernel has those two quantities equal.
 
-**Theorem 1.1 (Divisibility forces equality).**
+**Theorem 1.1 (Distinct prime factors bound the prime factors of the divisor count).**
+
+$$\forall k \in \mathbb{N},\ k \neq 0 \Rightarrow \operatorname{card}\left(\operatorname{primeFactors}\left(k\right)\right) \le \operatorname{ArithmeticFunction}.\operatorname{cardFactors}(\operatorname{card}\left(\operatorname{divisors}\left(k\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/DivisorCountRadicalCoincidence.primeFactors_card_le_cardFactors_card_divisors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero natural number k, the number of its distinct prime factors is at most the number of prime factors of its divisor count, counted with multiplicity. Each positive exponent contributes a factor greater than one to the prime-exponent product for the divisor count.
+
+**Theorem 1.2 (Divisibility forces equality).**
 
 $$\forall k \in \mathbb{N},\ 1 \le k \Rightarrow \operatorname{card}\left(\operatorname{divisors}\left(k\right)\right) \mid \operatorname{radical}\left(k\right) \Rightarrow \operatorname{radical}\left(k\right) = \operatorname{card}\left(\operatorname{divisors}\left(k\right)\right)$$
 
@@ -18,4 +30,5 @@ The radical is squarefree, so every divisor of it is squarefree. The prime-expon
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/DivisorCountRadicalCoincidence.primeFactors_card_le_cardFactors_card_divisors`
 - Truth anchor: `D5/S3/Arith/DivisorCountRadicalCoincidence.radical_eq_card_divisors_of_dvd`

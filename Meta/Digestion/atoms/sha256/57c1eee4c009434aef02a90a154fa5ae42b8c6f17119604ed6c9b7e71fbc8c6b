@@ -1,0 +1,4 @@
+**Corollary 4.1 (degree and root degeneracies).** Theorem 3.1 includes every nonzero gain of degree at most three, with no prescribed sample or prescribed coefficient required to be nonzero.
+
+**Proof.** Its only gain-dependent division is by the recovered $h_k\ne0$. Such a coefficient exists whenever the whole polynomial is nonzero. Consequently degree drop, repeated roots and zero gain at any specified clocks allowed by a nonzero cubic cause no exceptional denominator. For nonzero constant gain, $k=0$. A nonzero polynomial of degree at most three has at most three distinct roots: each distinct root contributes a distinct linear factor by the factor theorem. In particular its seventeen sampled gain values cannot all vanish. ∎
+

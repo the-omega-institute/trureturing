@@ -20,6 +20,15 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
             Node("pauli", "The Pauli matrices", PauliFormula(),
                 "The three Pauli matrices sigma_x, sigma_y, sigma_z indexed by Fin 3. They are the Pauli matrices pauliMatrix of StabilizerPairLocalUnitaryInequivalence at the labels X, Y, Z: pauliMatrix X = qubitX = [[0, 1], [1, 0]], pauliMatrix Y = i qubitX qubitZ = [[0, -i], [i, 0]] and pauliMatrix Z = qubitZ = [[1, 0], [0, -1]]. Since Fin 3 has exactly the elements 0, 1, 2, the three displayed equations are the whole definition.",
                 "pauli", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("pauli-zero", "The first Pauli matrix", PauliZeroFormula(),
+                "The Pauli matrix at index zero is the two-by-two matrix with zero diagonal entries and off-diagonal entries one.",
+                "pauli_zero", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("pauli-one", "The second Pauli matrix", PauliOneFormula(),
+                "The Pauli matrix at index one has zero diagonal entries, upper-right entry minus the imaginary unit and lower-left entry the imaginary unit.",
+                "pauli_one", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("pauli-two", "The third Pauli matrix", PauliTwoFormula(),
+                "The Pauli matrix at index two is diagonal with entries one and minus one.",
+                "pauli_two", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("bloch-a", "Alice's Bloch vector", BlochAFormula(),
                 "A two-qubit operator is a complex matrix indexed by pairs of qubit indices, the first entry of the pair belonging to Alice and the second to Bob. Following the companion paper, Theta_{mu nu} = tr(rho sigma_mu tensor sigma_nu): Alice's Bloch vector has components a_i = Re tr(rho (sigma_i tensor 1)), where kronecker is the Kronecker product and 1 the two-by-two identity.",
                 "blochA", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -53,6 +62,9 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
             Node("vlen-eq-norm", "Euclidean length as a norm", VlenEqNormFormula(),
                 "The length vlen of a real three-vector equals the norm of that vector in EuclideanSpace, with WithLp.toLp 2 identifying the coordinate function with its Euclidean vector.",
                 "vlen_eq_norm", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("vlen-nonneg", "Euclidean length is nonnegative", VlenNonnegFormula(),
+                "Every real three-vector has nonnegative Euclidean length, since its length is a real square root.",
+                "vlen_nonneg", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("trace-mul-kron-one", "Tracing an Alice observable", TraceMulKronOneFormula(),
                 "The trace of rho times A tensor the identity equals the trace of Alice's reduced operator times A. This identity holds for arbitrary complex operators, without positivity or normalization assumptions.",
                 "trace_mul_kron_one", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -163,6 +175,8 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
     private static Formula QTr(Formula matrix) => QCall("Matrix", "trace", matrix);
     private static Formula QKron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
     private static Formula QLength(Formula vector) => QCall(Owner, "vlen", vector);
+    private static Formula VlenNonnegFormula() => Disp(All("v", Arrow(Fin(3), Real()),
+        AtMost(D(0), QLength(F.Id("v")))));
     private static Formula BobMarginal(Formula matrix) => QCall(PartialTrace, "partialTraceLeft", matrix);
 
     private static Formula BlochVecFormula()
@@ -258,6 +272,20 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
         return Disp(All("sigma", Operators(),
             Implies(Equal(BobMarginal(sigma), Scaled(Half(), D(1))), Equal(QTr(sigma), D(1)))));
     }
+
+    private static Formula MatrixTwo(Formula a, Formula b, Formula c, Formula d) =>
+        Seq(Begin, Grp(F.Id("pmatrix")), a, Amp, b, RowBreak,
+            c, Amp, d, End, Grp(F.Id("pmatrix")));
+
+    private static Formula PauliZeroFormula() => Disp(Equal(
+        QCall(Owner, "pauli", D(0)), MatrixTwo(D(0), D(1), D(1), D(0))));
+
+    private static Formula PauliOneFormula() => Disp(Equal(
+        QCall(Owner, "pauli", D(1)), MatrixTwo(D(0),
+            Seq(Minus, Qualified("Complex", "I")), Qualified("Complex", "I"), D(0))));
+
+    private static Formula PauliTwoFormula() => Disp(Equal(
+        QCall(Owner, "pauli", D(2)), MatrixTwo(D(1), D(0), D(0), Seq(Minus, D(1)))));
 
     private static Formula PauliFormula() => Disp(And(
         Equal(Call("pauli", D(0)), Call("pauliMatrix", Name("X"))),

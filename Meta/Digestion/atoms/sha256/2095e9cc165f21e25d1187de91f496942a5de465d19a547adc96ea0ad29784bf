@@ -1,0 +1,270 @@
+## 32. Whole-world lifts and division-free response compatibility
+
+Proof of Theorem 31.2, the correspondence and compatibility steps.
+The original source equations are
+
+$$
+b(j-b)=r(1-r),\qquad n=j+r,
+\tag{32.1}
+$$
+
+equivalently
+
+$$
+r^2-(b+1)r+b(n-b)=0,\qquad j=n-r.
+\tag{32.2}
+$$
+
+An actual source has $0<r<1$, $b>0$ and therefore $n>j>0$.
+These strict inequalities remain part of every use of (32.2).
+The original successive left products at clocks zero through six are
+
+$$
+\begin{gathered}
+I,\quad J,\quad
+\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+\begin{pmatrix}1&0\\2&1\end{pmatrix},\quad
+\begin{pmatrix}2&1\\3&1\end{pmatrix},\quad
+\begin{pmatrix}3&1\\5&2\end{pmatrix}.
+\end{gathered}
+\tag{32.3}
+$$
+
+Their traces against $P$, followed by the alternative terminal $M$
+trace at clock seven, are
+
+$$
+(1,j,T,n,U,U+n,2U+n,3U+2n).
+\tag{32.4}
+$$
+
+The alternative terminal $J$ trace is $T+2j+4r$. Thus (32.3)–(32.4)
+use the acquired word $J,M,J,M,M,M$ at its original clocks and the
+original two clock-seven alternatives.
+
+Here is the full-parent correspondence of (2.1)–(2.4) in the present
+notation. The first four readings fix the entire polynomial as
+
+$$
+\begin{gathered}
+(q_0,q_1,q_2,q_3)=
+\left(-d,\frac{24-d}{j},\frac{147/5-d}{T},\frac{24-d}{n}\right),\\
+g(s)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le l\le3\\l\ne i}}\frac{s-l}{i-l}.
+\end{gathered}
+\tag{32.5}
+$$
+
+The remaining parent equation is exactly the original clock-four row
+
+$$
+g(4)=d+\frac{4(24-d)}j-\frac{6(147/5-d)}T
+             +\frac{4(24-d)}n=\frac{18-d}{U}.
+\tag{32.6}
+$$
+
+Its undivided form is
+
+$$
+\begin{gathered}
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\\
+g(4)-\frac{18-d}{U}
+=e\Lambda+\frac{6(8b-1)(5b+2)}{5TU}=0.
+\end{gathered}
+\tag{32.7}
+$$
+
+For clarity, the sufficiency in this inherited correspondence is
+literal: strict $b,r$ determine $j,n,T,U$, (32.5) supplies the first
+four original readings, and (32.6) supplies the fifth. The interpolant
+has degree at most three and cannot be the zero polynomial, since that
+would make both readings zero and twenty-four equal to $d$. Conversely,
+every complete parent world has these four samples and hence this
+entire polynomial. All divisors used are positive source factors or
+fixed nonzero differences of interpolation nodes. No division by
+$\Lambda$, a gain sample or a gain coefficient is involved.
+
+The inherited off-$24$ drift guard can also be checked within these
+rows. If $d=24$, then $g(1)=g(3)=0$ and $g(0)=-24$. Since
+$\deg g\le3$, including every possible degree drop, there is a real
+$\alpha$ such that
+
+$$
+g(s)=(s-1)(s-3)(\alpha s-8),\qquad
+\alpha=4-\frac{27}{10T}.
+\tag{32.8}
+$$
+
+The value of $\alpha$ follows from clock two. Clock four gives
+
+$$
+0=Ug(4)+6=\frac{6(8T-9)(5T-3)}{5T}.
+\tag{32.9}
+$$
+
+Since $T>1$, this forces $T=9/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$. In particular $g(5)=0$ and $p=24$.
+Thus every world in the theorem has $e\ne0$.
+
+Next evaluate this same entire gain at the late clocks. On the parent
+one may interpolate it at nodes $0,2,3,4$ with values
+
+$$
+\left(-d,-\frac zT,-\frac en,\frac{18-d}{U}\right).
+$$
+
+The cardinal interpolation polynomials at these distinct fixed nodes
+give the rows
+
+$$
+\begin{array}{c|rrrr}
+&0&2&3&4\\ \hline
+5&-1/4&5/2&-5&15/4\\
+6&-1&9&-16&9\\
+7&-5/2&21&-35&35/2
+\end{array}.
+\tag{32.10}
+$$
+
+For example each coefficient is
+$\prod_{l\in\{0,2,3,4\}\setminus\{i\}}(q-l)/(i-l)$ at the row's
+clock $q$ and column's node $i$. This establishes the displayed rows
+without an exact-degree or nonzero-sample assumption. Substitution,
+using $n=xU$ and $U=2T-1$, yields
+
+$$
+\begin{aligned}
+Ug(5)&=\mathsf A_d(T)+5e/x,\\
+Ug(6)&=\mathsf B_d(T)+16e/x,\\
+Ug(7)&=\mathsf C_d(T)+35e/x.
+\end{aligned}
+\tag{32.11}
+$$
+
+Multiplying by the original traces in (32.4), and adding the same
+fixed drift $d$, now gives
+
+$$
+\begin{aligned}
+p-24-6e&=\mathsf A_d(T)(1+x)+5e/x,\\
+v-24-17e&=\mathsf B_d(T)(2+x)+32e/x,\\
+m-24-71e&=\mathsf C_d(T)(3+2x)+105e/x.
+\end{aligned}
+\tag{32.12}
+$$
+
+These are the undivided response reductions of (5.3) in the
+normalization (31.2). The interpolation argument supplies them for the
+whole parent, including $\Lambda=0$. From (31.2) one also has
+
+$$
+\mathsf C_d(T)=4\mathsf B_d(T)-6\mathsf A_d(T)+4(18-d).
+\tag{32.13}
+$$
+
+Because $p,v,m,d$ are shared, subtracting (32.12) in the order first
+world minus second world gives the actual response system
+
+$$
+\mathsf H
+\begin{pmatrix}x_1\\x_2\\w\end{pmatrix}
+=\begin{pmatrix}
+-(A_1-A_2)\\-2(B_1-B_2)\\-3(C_1-C_2)
+\end{pmatrix},\qquad
+w=\frac1{x_1}-\frac1{x_2}.
+\tag{32.14}
+$$
+
+Replace row three by row three plus twelve times row one minus eight
+times row two. By (32.13) the new coefficient row is
+
+$$
+\bigl(8(18-d),-8(18-d),-91e\bigr).
+\tag{32.15}
+$$
+
+Expansion in the fixed row and column order of Definition 31.1 gives
+
+$$
+\begin{aligned}
+\det\mathsf H
+={}&e(T_1-T_2)
+\left(316d^2-\frac{33627}{5}d
+ +\frac{z}{2T_1T_2}(26775-1442d-91d(T_1+T_2))\right)\\
+={}&eh\Delta.
+\end{aligned}
+\tag{32.16}
+$$
+
+To retain all compatible singular strata, set
+
+$$
+\begin{aligned}
+\mathfrak a&=\frac{A_1-A_2}{h}=\frac{d-5k}{2},&
+\mathfrak b&=\frac{B_1-B_2}{h}=2d-9k,\\
+Z&=5\mathfrak b-32\mathfrak a=-6d+35k,&
+D_*&=6\mathfrak a+4\mathfrak b=11d-51k,\\
+L_*&=\frac{x_1-x_2}{h},&R_*&=\frac wh.
+\end{aligned}
+\tag{32.17}
+$$
+
+The starred symbols distinguish these quantities from the unrelated
+$D,L$ in Section 2. Only the known nonzero width difference $h$ has
+been divided out. Dividing the first two rows of (32.14) by $h$ gives
+
+$$
+\begin{aligned}
+A_1L_*+5eR_*&=-\mathfrak a(1+x_2),\\
+B_1L_*+32eR_*&=-\mathfrak b(2+x_2).
+\end{aligned}
+\tag{32.18}
+$$
+
+Multiplying the first by $\mathfrak b$ and subtracting
+$\mathfrak a$ times the second gives
+
+$$
+(\mathfrak bA_1-\mathfrak aB_1)L_*+eZR_*
+=\mathfrak a\mathfrak b.
+\tag{32.19}
+$$
+
+The right side of the row operation (32.15), divided by $h$, is
+
+$$
+-3(4\mathfrak b-6\mathfrak a)-12\mathfrak a+16\mathfrak b
+=D_*.
+$$
+
+Hence its equation is
+
+$$
+8(18-d)L_*-91eR_*=D_*.
+\tag{32.20}
+$$
+
+The two coefficient identities needed to eliminate $R_*$ are
+
+$$
+\begin{aligned}
+91(\mathfrak bA_1-\mathfrak aB_1)+8(18-d)Z&=-\Delta,\\
+91\mathfrak a\mathfrak b+ZD_*&=Q.
+\end{aligned}
+\tag{32.21}
+$$
+
+They follow by expanding the definitions, using
+$z=kT_1T_2$ and $T_1+T_2=\sigma$. Adding ninety-one times
+(32.19) to $Z$ times (32.20) proves the division-free relation
+
+$$
+-\Delta L_*=Q.
+\tag{32.22}
+$$
+
+In particular compatibility on $\Delta=0$ forces $Q=0$.
+No step divided by $e,\mathfrak a,\mathfrak b,Z,D_*,L_*,R_*,Q$
+or $\Delta$. Their zero cases have all been retained.
+

@@ -1,0 +1,44 @@
+**Lemma 141.2 (Nonsingularity at the specified root).** The Jacobian
+$D_uF(q_0;u_*)$ is nonsingular. The following rational outer enclosure
+holds on the entire box $\mathcal B$ of (128.2):
+
+$$
+\begin{aligned}
+1.6294931870268401569269244
+&\ \le\det D_uF(q_0;u)\\
+&\ \le1.6294931870268401607302784
+\qquad(u\in\mathcal B).
+\end{aligned}
+\tag{141.5}
+$$
+
+*Proof.* Nonsingularity already follows directly from the finite
+root-isolation data, without relying on a rounded determinant. Let
+$M=D\mathcal F(c)^{-1}$ be the rational matrix (129.5)–(129.7).
+The Hessian bound and (129.8) give
+
+$$
+\sup_{u\in\mathcal B}\|I-MD_uF(q_0;u)\|_\infty
+ <\frac{3499}{8}\,10^{-20}<1.
+\tag{141.6}
+$$
+
+The Neumann series makes $MD_uF(q_0;u)$ invertible at every such $u$,
+so $D_uF(q_0;u_*)$ is invertible. The determinant enclosure (141.5)
+uses only the same finite rational specification: obtain the entries
+in (141.4) by differentiating the nine coefficients (129.1)–(129.2),
+and evaluate the determinant by
+
+$$
+\det D_uF=\sum_{\pi\in S_4}\operatorname{sgn}(\pi)
+              \prod_{i=0}^3(D_uF)_{i,\pi(i)}.
+\tag{141.7}
+$$
+
+Interval evaluation on $[c_j-10^{-20},c_j+10^{-20}]$, with the
+operations of Convention 129.3, gives the stated rational outer
+bounds. All their finite decimal endpoints are rational numbers;
+they are enclosures on the box, not evaluations at an approximate
+zero. In particular the nonsingularity needed below is at the
+isolated root itself. $\square$
+

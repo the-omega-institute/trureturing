@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a24b7db4074095b233f083cf9ebef30064098095d0fcb021e55fc532cf86c739
+  normalized_sha256: sha256:a24b7db4074095b233f083cf9ebef30064098095d0fcb021e55fc532cf86c739
+cas_ref: sha256:a24b7db4074095b233f083cf9ebef30064098095d0fcb021e55fc532cf86c739
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope boundary separating real-parameter probability normalization from the Riemann hypothesis; no new number-theoretic implication is asserted.
+    previous_atom_id: ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
+    next_atom_id: 917f4964a774dcfe8118fd67a508577952f9ec899042b34ea4fdd3c9eea5e807

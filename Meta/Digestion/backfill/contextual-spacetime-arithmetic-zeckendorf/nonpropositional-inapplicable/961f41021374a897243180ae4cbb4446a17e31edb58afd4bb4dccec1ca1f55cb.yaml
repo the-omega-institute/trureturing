@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:961f41021374a897243180ae4cbb4446a17e31edb58afd4bb4dccec1ca1f55cb
+  normalized_sha256: sha256:961f41021374a897243180ae4cbb4446a17e31edb58afd4bb4dccec1ca1f55cb
+cas_ref: sha256:961f41021374a897243180ae4cbb4446a17e31edb58afd4bb4dccec1ca1f55cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 95 给出 Prime_Z 谓词、标签集以及按 val 重索引的函数公式；各位置的说明属于参数与类型约定，不声称素数等价或重索引双射。
+    previous_atom_id: 4afb8b21408251352ee139fbd8dd9062fb56456a24d3f9d361857a62c7e75536
+    next_atom_id: d3f5ec140dbac9d433f423a9683939ea5b5c9e914c090ff38e3b96e066aeb883

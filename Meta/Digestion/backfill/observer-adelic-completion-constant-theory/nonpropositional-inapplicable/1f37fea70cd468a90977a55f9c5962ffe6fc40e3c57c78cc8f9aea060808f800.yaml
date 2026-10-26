@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f37fea70cd468a90977a55f9c5962ffe6fc40e3c57c78cc8f9aea060808f800
+  normalized_sha256: sha256:1f37fea70cd468a90977a55f9c5962ffe6fc40e3c57c78cc8f9aea060808f800
+cas_ref: sha256:1f37fea70cd468a90977a55f9c5962ffe6fc40e3c57c78cc8f9aea060808f800
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (* 谱变换； 这些强统一结构。 问题是尚未找到足够强、同时又保持正性的那一个。 ---); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: 812770bea7ff1ec726d1e974533682af871323c61ba61923d53c1e9b01c2dae1
+    next_atom_id: 72e6d5d8ee40bcfeda208c811e8b3c494af56a8ed852a18ffc094c77cf210cfd

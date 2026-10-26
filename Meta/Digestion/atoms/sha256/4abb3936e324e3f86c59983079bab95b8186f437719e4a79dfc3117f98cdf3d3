@@ -1,0 +1,18 @@
+**定义 95.1（局部边缘与联合谱目标）。** 令 $V\cong\mathbb C^3$ 为
+实际 qutrit 接口，令 $\omega_n\in\mathcal D(V\otimes V)$ 是最新 DEV
+§87 的归一化 Choi 状态。定义局部边界读出
+
+$$
+\lambda(\omega)=\bigl(\operatorname{Tr}_2\omega,
+\operatorname{Tr}_1\omega\bigr),
+$$
+
+并把联合谱目标取为
+
+$$
+\mathfrak J(\omega)=\bigl(N(\omega),\operatorname{SN}(\omega)\bigr),
+$$
+
+其中 $N$ 是部分转置负性，$\operatorname{SN}$ 是 Schmidt number。这里
+第二个张量因子是参考/输入副本；它不是把三维接口误写成第六维空间。
+

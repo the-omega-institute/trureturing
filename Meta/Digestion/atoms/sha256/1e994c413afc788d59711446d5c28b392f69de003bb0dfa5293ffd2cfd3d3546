@@ -1,0 +1,93 @@
+**Theorem 24.3 (shared success dilation and support-mass inequality).**
+Under Definitions 24.1–24.2 there are linear maps $A_j:S_j\to E$ such that
+
+$$
+W(q\otimes u)=D_jq\otimes A_ju
+\quad(q\in V,\ u\in S_j),\qquad
+A_j^\dagger A_j\leq s_jI_{S_j}.
+\tag{OC.75}
+$$
+
+The probabilities in (OC.74) are consequently constants
+$p_j=\operatorname{tr}(\tau_jA_j^\dagger A_j)$, independent of
+$\beta,m$. For $j\ne k$ let $P_{jk}$ be the orthogonal projection
+onto $S_j\cap S_k$, regarded as a subspace of $H$. Then
+
+$$
+\begin{aligned}
+W\bigl(V\otimes(S_j\cap S_k)\bigr)&=0,\\
+p_j&\leq s_j\bigl(1-\operatorname{tr}(P_{jk}\tau_j)\bigr).
+\end{aligned}
+\tag{OC.76}
+$$
+
+In particular, identical supports at two distinct heights force zero exact
+success at both, even when their density operators differ. No commutativity,
+classical decoder or unambiguous measurement of the programmes is assumed.
+
+Proof. Fix $j,\beta,m$. Spectrally decompose $\tau_j$ on $S_j$.
+Project each corresponding successful dilation vector onto the specimen
+space perpendicular to $\psi_{x_j+d,\beta,m}$. By (OC.74), the sum
+of its squared projected norms, weighted by the strictly positive
+eigenvalues, is zero. Every projected vector is therefore zero. By
+linearity this holds for every $u\in S_j$, including when the success
+probability is zero. Hence
+
+$$
+W(\psi_{x_j,\beta,m}\otimes u)
+ =\psi_{x_j+d,\beta,m}\otimes r_\epsilon(z,u),
+\quad z=e^{-i\beta},\quad\epsilon=(-1)^m.
+\tag{OC.77}
+$$
+
+Here $r_\epsilon$ is uniquely determined by the $|2\rangle$ component,
+since $Z>0$. The left side is affine in $z$, so this component makes
+$r_\epsilon(z,u)=r_0(u)+z r_{1,\epsilon}(u)$ on the unit circle.
+The constant $r_0(u)$ comes from the same input
+$\sqrt Z|2\rangle\otimes u$ for both signs. The $|+\rangle$
+component of the right side is
+$z\sqrt{2(x_j+d)}(r_0(u)+zr_{1,\epsilon}(u))$.
+The left side has degree at most one. Comparing polynomial coefficients
+on the whole unit circle gives $r_{1,\epsilon}(u)=0$.
+Vector-valued coefficient comparison is justified by applying arbitrary
+continuous linear functionals; a scalar polynomial with infinitely many
+zeros is zero.
+
+Comparing the remaining constant and linear coefficients in (OC.77)
+now gives
+$W(|2\rangle\otimes u)=|2\rangle\otimes r_0(u)$ and
+
+$$
+W\left((\sqrt{2x_j}|+\rangle+
+ \epsilon\sqrt{2(c-x_j)}|-\rangle)\otimes u\right)
+=\left(\sqrt{2(x_j+d)}|+\rangle+
+ \epsilon\sqrt{2(c-x_j-d)}|-\rangle\right)\otimes r_0(u).
+$$
+
+The two signs both occur among actual signed histories. Adding and
+subtracting their identities gives (OC.75), with $A_ju=r_0(u)$.
+This depends linearly on $u$, as is also immediate from the $|2\rangle$
+component of $W$. These basis-vector evaluations are algebraic consequences
+for the same linear map, not additional preparations or observation access.
+Evaluation of contractivity on
+$|+\rangle\otimes u$ yields
+$\|A_ju\|^2/s_j\leq\|u\|^2$. Since $D_j$ sends each normalized
+input to its normalized target, taking the actual $\tau_j$ trace gives
+the probability formula and its independence.
+
+For $u\in S_j\cap S_k$, the common $|2\rangle$ image gives
+$A_ju=A_ku$. The common $|+\rangle$ image gives
+$A_ju/a_j=A_ku/a_k$. The numbers $a_j,a_k$ differ: if $x<y$ then
+
+$$
+\frac{y}{y+d}-\frac{x}{x+d}
+ =\frac{d(y-x)}{(x+d)(y+d)}>0.
+$$
+
+Thus $A_ju=A_ku=0$, proving the first part of (OC.76).
+On $S_j$, $A_j=A_j(I-P_{jk})$, so (OC.75) implies
+$A_j^\dagger A_j\leq s_j(I_{S_j}-P_{jk}|_{S_j})$.
+Tracing against $\tau_j$ proves the second part. This trace step uses
+positivity and does not require $P_{jk}$ to commute with $\tau_j$.
+$\square$
+

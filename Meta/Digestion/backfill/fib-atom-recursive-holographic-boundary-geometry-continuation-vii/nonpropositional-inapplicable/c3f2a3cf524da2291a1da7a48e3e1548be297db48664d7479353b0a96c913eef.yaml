@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3f2a3cf524da2291a1da7a48e3e1548be297db48664d7479353b0a96c913eef
+  normalized_sha256: sha256:c3f2a3cf524da2291a1da7a48e3e1548be297db48664d7479353b0a96c913eef
+cas_ref: sha256:c3f2a3cf524da2291a1da7a48e3e1548be297db48664d7479353b0a96c913eef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是欧氏 packing 章节的方法说明，提出后续使用体积比检查的路线，没有陈述 packing 不等式。
+    previous_atom_id: 15452ecaafaa3735fdc10afc36be6d1ffdc70451ba4834bd5596af4314a3e775
+    next_atom_id: 9c13612038fd9e1826e220267e2400a4b0c02305b76813fc6f887c187dc287d9

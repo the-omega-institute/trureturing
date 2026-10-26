@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:051f9c269b0d1721f612529438856337e6fb15760402332e3717515568c88a7e
+  normalized_sha256: sha256:051f9c269b0d1721f612529438856337e6fb15760402332e3717515568c88a7e
+cas_ref: sha256:051f9c269b0d1721f612529438856337e6fb15760402332e3717515568c88a7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 摘要“同时使用”清单中只列 StructuralNovelty 模块路径，未陈述该模块的定理或一个实例。
+    previous_atom_id: f5e5c084ea276215d10c8a65912d1212ac98009479c8fd60ffa5f9333e6fbea0
+    next_atom_id: 2f5527727d0b27df562805c8eb537cf0156fb3cb9674e2bc781ce07d996bb4a9

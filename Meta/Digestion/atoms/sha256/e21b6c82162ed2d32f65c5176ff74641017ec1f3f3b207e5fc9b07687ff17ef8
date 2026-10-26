@@ -1,0 +1,60 @@
+**Theorem 192.1 (Complete complex-operator covariance).**
+For the states of Definition 190.1, $C_E=\lambda$ and
+$C_F=\eta=w\lambda$, including $g=0$.
+
+Proof. Let $\sigma_1,\sigma_2,\sigma_3$ be the Pauli matrices and embed them on
+Bob's active sector as $S_j=\sigma_j\oplus0_{B_{\mathrm{sp}}}$. The singlet
+identity gives
+
+$$
+\rho_F-(\rho_F)_A\otimes(\rho_F)_B
+ =-\frac\eta4\sum_{j=1}^3\sigma_j\otimes S_j.
+$$
+
+For E replace $(\eta,S_j)$ by $(\lambda,\sigma_j)$. This also shows that
+the connected $3\times3$ tensor in the displayed active coordinates is
+$-\eta I_3$ for F, and $-\lambda I_3$ for E.
+
+Take arbitrary complex $X\in M_2$ and $Y\in M_4$ of operator norm one.
+Compress $Y$ to $B_{\mathrm{act}}$, obtaining a contraction $B$ even if
+$Y$ mixes the flag sectors. Write
+
+$$
+X=\alpha_0I+\sum_j\alpha_j\sigma_j,\qquad
+B=\gamma_0I+\sum_j\gamma_j\sigma_j.
+$$
+
+All coefficients may be complex. Pauli orthogonality and $X^\dagger X\le I$,
+$B^\dagger B\le I$ imply
+
+$$
+|\alpha_0|^2+\sum_j|\alpha_j|^2=\frac12\operatorname{Tr}(X^*X)\le1,
+\qquad
+|\gamma_0|^2+\sum_j|\gamma_j|^2=\frac12\operatorname{Tr}(B^*B)\le1.
+$$
+
+The connected operator pairs only with this compression. Scalar and spectator
+terms cancel against the product of local expectations, while off-diagonal
+flag blocks have zero trace pairing. Therefore
+
+$$
+\begin{aligned}
+|\operatorname{Cov}_{\rho_F}(X,Y)|
+ &=\eta\left|\sum_j\alpha_j\gamma_j\right|\\
+ &\le\eta\left(\sum_j|\alpha_j|^2\right)^{1/2}
+              \left(\sum_j|\gamma_j|^2\right)^{1/2}\le\eta.
+\end{aligned}
+$$
+
+The pairing is bilinear, not Hermitian; the absolute-value inequality follows
+from complex Cauchy--Schwarz applied after conjugating one vector. The
+norm-one matrices $X=\sigma_3$ and $Y=\sigma_3\oplus0$ give covariance
+$-\eta$, so the bound is attained. Omitting spectators gives the same
+argument for E with $X=Y=\sigma_3$. Thus
+
+$$
+\boxed{C_E=\lambda,\qquad C_F=\eta=w\lambda.}
+$$
+
+Neither non-Hermitian matrices nor flag mixing can increase these values.
+

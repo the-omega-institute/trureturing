@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4bd239cc5ff505e06808157bec0408e434380adf291ee39e6a123686b4e6f51e
+  normalized_sha256: sha256:4bd239cc5ff505e06808157bec0408e434380adf291ee39e6a123686b4e6f51e
+cas_ref: sha256:4bd239cc5ff505e06808157bec0408e434380adf291ee39e6a123686b4e6f51e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional model hypothesis: stipulates the installed ten-clock receiver, its primitive capabilities, source and local rights, execution order, comparison/write/clearing protocol and illegal-call behavior. The ten-clock/four-added-J schedule is part of this specified protocol; it does not assert that the comparator is correct or that the ideal primitives can be physically implemented. Those consequences remain in Theorems 56.4 and 56.7.'
+    previous_atom_id: e540c582da9eca195d51277ee2d90c6e5129e9d0d01b60f0edc6faed8eae1e28
+    next_atom_id: f62f37ab55a3784185e28256c78e1d347a1f3b7c1c89907373f3dc15861ae360

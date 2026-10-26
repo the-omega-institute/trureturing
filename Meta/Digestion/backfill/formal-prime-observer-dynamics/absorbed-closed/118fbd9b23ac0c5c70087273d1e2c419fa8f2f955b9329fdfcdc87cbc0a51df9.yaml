@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:118fbd9b23ac0c5c70087273d1e2c419fa8f2f955b9329fdfcdc87cbc0a51df9
+  normalized_sha256: sha256:118fbd9b23ac0c5c70087273d1e2c419fa8f2f955b9329fdfcdc87cbc0a51df9
+cas_ref: sha256:118fbd9b23ac0c5c70087273d1e2c419fa8f2f955b9329fdfcdc87cbc0a51df9
+coverage_gids:
+  - gid: D5/S1/Solenoid/ExactSequence.congruence_solenoid_short_exact
+    target_statement_id: sha256:0a9bf8bcb0b7e0f35a9126b6880ab8524982944507b03c62e61f70a756fd897e
+  - gid: D5/S1/Solenoid/HiddenMotionRigidity.prime_adic_hidden_motion_rigidity
+    target_statement_id: sha256:f20c4e98cb8ea2b23ce9641045b619aa47059593df2b63ca5277c8a7eb94e878
+  - gid: D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline
+    target_statement_id: sha256:b826302d32f91498f632f9e1276e253798a2860875ed148106473ef4a4c7159d
+  - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+    target_statement_id: sha256:21ccc90ac6460735fea019b3d313e2e63d85d801ab4ec568467ad780c2806be3
+  - gid: D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition
+    target_statement_id: sha256:8f301d927f1768d0e0ec79da3c1e81d98d7e3f2203bb36f8cc767c739bd08525
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 332a447007d8dc15f6447918f1ad4669f5d6b01b0eeca8ca0c2c2e3faae06233
+    - a42f1bf9e28421eea2511f1d5bcd5e19deac1698e455b59688324c186a9b5a95
+    - 5ede17bd0e04ad7b4f17a2562491b878e5475fdf50f61677117f8330c4b0cce4
+    - 306f201156b700bce290bd5439304ba0343b3b54b7905ac2f8ca0cfc5242671a
+    - d5c22fd77b978052dca26d10cd028bc463aaff7ae1445c62d08dec5b867f0d4d

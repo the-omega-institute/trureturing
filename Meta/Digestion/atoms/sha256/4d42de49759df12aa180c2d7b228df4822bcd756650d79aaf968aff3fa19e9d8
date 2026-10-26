@@ -1,0 +1,31 @@
+**定义 474.1（完成函数的归一化滤波平均）。** 取标准完成函数 $\Xi(t)=\xi(1/2+it)$ 及 Hardy 实函数 $Z(t)$，并令
+
+$$
+A(t)=\frac12\left(t^2+\frac14\right)\pi^{-1/4}
+ \left|\Gamma\left(\frac14+\frac{it}{2}\right)\right|>0,
+\qquad \Xi(t)=-A(t)Z(t),\quad t\in\mathbb R.
+\tag{474.1}
+$$
+
+对标准普通导数 $\mathsf D=d/dt$，沿用经典广义 Laguerre 形式
+
+$$
+\mathcal L_p[f](t)=\sum_{j=0}^{2p}
+ \frac{(-1)^{j+p}}{j!(2p-j)!}f^{(j)}(t)f^{(2p-j)}(t).
+\tag{474.2}
+$$
+
+固定非负非零 $w\in C_c^\infty((0,1))$，记 $L=\log T$、$w_{X,H}(t)=w((t-X)/H)$。对实多项式 $P$ 定义
+
+$$
+\begin{aligned}
+J_Z(P)&=\int_{\mathbb R}w_{X,H}(t)
+ \mathcal L_p[Z](t)[P(\mathsf D/L)Z(t)]^2\,dt,\\
+J_\Xi(P)&=\int_{\mathbb R}w_{X,H}(t)A(t)^{-4}
+ \mathcal L_p[\Xi](t)[P(\mathsf D/L)\Xi(t)]^2\,dt.
+\end{aligned}
+\tag{474.3}
+$$
+
+这里 $\mathcal L_p$ 与 $P(\mathsf D/L)$ 均使用 $\Xi$ 的普通导数；没有以 $\mathsf D-A'/A$ 取代它们。因子 $A(t)^{-4}$ 是指定平均的一部分，不能省略。
+

@@ -1,0 +1,42 @@
+**Proposition 11.1 (Target contraction and containment).** The literal
+data above give
+
+$$
+\|Y_*F(c_*)\|_\infty<10^{-85},\qquad
+\sup_{X_*}\|I-Y_*DF\|_\infty<10^{-45}.
+\tag{11.2}
+$$
+
+Throughout $X_*$ one has $0<r<1$, $b>0$, $t>1$ and $D\ne0$.
+Thus (10.5) is well-defined and its strict source gives a complete
+world with exact original $(p,v,a)=(p_B,v_B,a_B)(t_*)$.
+
+The base rectangle is
+
+$$
+\begin{aligned}
+p_c&=\frac{894700529903320808475410711061329702914773370179062}{10^{50}},\\
+v_c&=\frac{7849734436733537437471326878376706014015012078412063}{10^{50}},\\
+\delta&=10^{-35},\qquad
+\mathcal B=[p_c-\delta,p_c+\delta]\times[v_c-\delta,v_c+\delta].
+\end{aligned}
+\tag{11.3}
+$$
+
+Evaluation of $p_B,v_B$ on $[c_t-10^{-55},c_t+10^{-55}]$ lies
+strictly inside the respective intervals in (11.3), so
+$y_*\in\operatorname{int}\mathcal B$. Every point of $\mathcal B$
+has $p\ne24$.
+
+Proof. Each bound is an endpoint rational comparison from the
+coefficient table and displayed circuits under the specified rule.
+For the cube self-map use
+$10^{-85}+10^{-45}\rho_*<\rho_*$. The map
+$w\mapsto w-Y_*F(w)$ is a strict contraction. Also $Y_*DF$ is
+within distance less than one of $I$, so is invertible, making
+$Y_*$ nonsingular. Banach's contraction theorem gives exactly one
+fixed point, which is exactly a zero of $F$. Strictness, the source
+denominator and the rectangle inclusion are direct evaluations.
+The equalities follow from the polynomial equations, not overlap
+of rounded response intervals. ∎
+

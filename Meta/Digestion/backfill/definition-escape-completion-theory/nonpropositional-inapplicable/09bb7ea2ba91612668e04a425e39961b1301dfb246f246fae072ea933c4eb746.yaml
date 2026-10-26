@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09bb7ea2ba91612668e04a425e39961b1301dfb246f246fae072ea933c4eb746
+  normalized_sha256: sha256:09bb7ea2ba91612668e04a425e39961b1301dfb246f246fae072ea933c4eb746
+cas_ref: sha256:09bb7ea2ba91612668e04a425e39961b1301dfb246f246fae072ea933c4eb746
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 用有限未来读数元组定义 T_N；末句只引入下一个定义。
+    previous_atom_id: acb0922956a3f62fe2b7343fdcb52376d37dbf1c0401409fd94859e99d8d90cb
+    next_atom_id: 01a5d2c451334a702b8ae30142cb3a31f04fe31565b3144fc1f56f2fc35a22c8

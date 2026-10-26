@@ -1,0 +1,65 @@
+## 169. The fixed charge cut and the complete number-preserving orbit
+
+Use the A-first creation order $(\ell,r,R)$ and the occupation tensor
+identification
+$$
+ |n_A,n_r,n_R\rangle=(a_\ell^\dagger)^{n_A}
+ (a_r^\dagger)^{n_r}(a_R^\dagger)^{n_R}|\Omega\rangle
+ =|n_A\rangle\otimes|n_r,n_R\rangle_B .
+$$
+The Bob basis is
+$$
+ b_0=|00\rangle,\quad b_1=|01\rangle\;(R),\quad
+ b_2=|10\rangle\;(r),\quad b_{12}=|11\rangle,
+$$
+where $b_{12}=a_r^\dagger a_R^\dagger|\Omega_B\rangle$.  The
+product-coordinate order is
+$$
+(0b_0,0b_1,0b_2,0b_{12},1b_0,1b_1,1b_2,1b_{12}).
+$$
+The $N=1$ basis is $(\ell,R,r)$.  In the two-particle sector the corresponding exterior basis is
+$$
+(r\wedge R,\ \ell\wedge R,\ \ell\wedge r).
+$$
+This fixes every sign in the ordinary partial transpose and in the
+exterior-power formulas below.
+
+Let
+$$
+ t=e^{-\beta}\in(0,1],\qquad s=1-t,\qquad Z=2(1+t)^2,
+$$
+for finite $\beta\geq0$.  The supplied Gibbs operator, before division
+by $Z$, has sector spectra
+$$
+ N=0:(1),\qquad N=1:(1,t,t),\qquad N=2:(t,t,t^2),
+ \qquad N=3:(t^2).
+\tag{169.1}
+$$
+The commutant of total number is
+$$
+ \mathcal U_N=\{W:[W,N]=0\}=U(1)\oplus U(3)\oplus U(3)\oplus U(1).
+$$
+Consequently every member of the specified orbit is
+$$
+ R(v,w)=1\oplus\bigl(tI_3+s|v\rangle\langle v|\bigr)
+ \oplus\bigl(tI_3-ts|w\rangle\langle w|\bigr)\oplus t^2,
+ \qquad \rho(v,w)=R(v,w)/Z,
+\tag{169.2}
+$$
+where $v,w\in\mathbb C^3$ are independent unit vectors.  Conversely,
+independent unitaries in the $N=1$ and $N=2$ sectors send the two
+simple eigenlines of the reference state to any prescribed $v,w$, so
+(169.2) is the whole orbit.  For $0<t<1$ its parameters are
+$([v],[w])\in\mathbb{CP}^2\times\mathbb{CP}^2$; at $t=1$ the orbit is
+the singleton $I_8/8$ and these rays are redundant.  The placement of
+the four sector spectra in (169.1) is part of the assertion.
+
+Write
+$$
+ v=(\alpha,u),\qquad w=(\gamma,h),\qquad
+ x=|\alpha|^2,\quad y=|\gamma|^2,
+$$
+with $u,h\in\mathbb C^2$, $\|u\|^2=1-x$, and
+$\|h\|^2=1-y$.  The vectors are independent; put
+$z=|u^*h|^2$, so $0\le z\le(1-x)(1-y)$.
+

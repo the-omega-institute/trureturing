@@ -1,0 +1,77 @@
+**Definition 114.6 (acquiring the witness without source advice).**
+Use the authentic branch entry and complete access cut of Definition
+112.1: the supplied pre-entry record is one actual root Read with reply
+branch, the old root-cut row is constant, and the initial fiber is all
+branch sources. No count, tree name or beta mask is supplied at entry.
+Conditional on that authentic stationary epoch-zero register, reuse the
+reply-driven acquisition phase and report-only restoration of §112.5
+and Proposition 113.9. Its supplier is
+`ActualTreeReadoutAcquisition`, with its own immutable four-valued queries,
+distinct-address charge and original Boolean task unchanged; this is a
+different consumer of its acquired description.
+
+On the actual witness the root-first phase reads
+$\varepsilon,L,R$ and obtains branch, alpha, beta. It does not know
+in advance that the size will be three: actual branch replies enqueue
+children and actual leaf replies enqueue none. From this acquired ordered
+description the controller may calculate the sizes, beta mask, matrices
+and source-indexed candidate maps locally. Such calculation grants neither
+an actual Apply nor a signed-field operation. The sufficient phase
+coordinates, inherited rather than optimized here, are
+
+$$
+(q,a,\ell,k_{\rm phase})=(3,0,2,3).
+\tag{114.18}
+$$
+
+Here $q$ counts raw native Read invocations, $a$ counts Apply attempts,
+$\ell$ sums literal Read-address lengths and $k_{\rm phase}$ counts
+distinct addresses in this empty supplier phase. Retaining the pre-entry
+root event as well gives four raw Reads, total literal length two, and
+three cumulative distinct addresses on one immutable-source ledger.
+The post-entry distinct increment on that ledger is two. Separate empty
+phase ledgers instead have charges one and three. The root was called
+twice; these are different raw and distinct-address coordinates, not a
+free-call or cache-reset promise.
+
+Issue one actual Apply attempt after this acquisition. Under the native
+contract it is accepted, so $a=1$, $e=1$ and the register becomes exactly
+(114.3). For a guarded contract this continuation is conditional on
+observed acceptance. An observed refusal keeps the three-node register
+and $e=0$; it does not install the five-node candidate. A Stop after
+either outcome is absorbing. The guard may depend on the preceding
+acquired replies, so acquiring the source does not force it to accept.
+
+Computing $\rho u$ from the retained old description uses no additional
+Read, but is not fresh acquisition or an actual new-version event. If
+the successor is instead actually reacquired by the same root-first
+frontier, its five native invocations are at
+$\varepsilon,L,R,RL,RR$, with replies in (114.4). Its fresh phase
+coordinates are $(q,a,\ell,k_{\rm phase})=(5,0,6,5)$.
+Combining pre-entry, old-phase, accepted Apply and successor-phase
+chronologies yields nine raw Reads, one Apply attempt, one accepted
+update and literal Read length eight. A separately declared lifetime
+address-only union contains five addresses; an epoch-address union
+contains eight pairs, three at epoch zero and five at epoch one.
+Separate empty Read-phase ledgers have charges one, three and five.
+The successor repeats three old addresses as fresh invocations with
+possibly changed replies. Old-version cached reports are not fresh
+successor replies. None of these ledger conventions specifies a tariff,
+refund, memory price or physical duration.
+
+The full INITIAL target is still (112.2), here
+
+$$
+R_{\{L,R\}}(u)=
+\bigl((L,R),\langle\square_1,\square_2\rangle,
+\{\{1\},\{2\}\}\bigr),
+\tag{114.19}
+$$
+
+since the two entire original subtrees are alpha and beta. Both numbered
+holes and the exterior are retained. It is a value on INITIAL, not a heat
+output or a row evaluated on the substituted register. The same inherited
+full acquisition route can recover the whole INITIAL row on every branch
+source; the witness's small bill is not a uniform price or an acquired
+size promise for that full domain.
+

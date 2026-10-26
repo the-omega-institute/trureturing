@@ -1,0 +1,79 @@
+**Proposition 14.3 (Source-specific rational certificate).** Every
+Bernstein coefficient of the indicated polynomial satisfies the
+following strict bounds. For $a_k(r(x),p(z))$, use degree $(6,1)$:
+
+| $k$ | Lower bound | Upper bound |
+| --- | --- | --- |
+| $0$ | $1$ | $2$ |
+| $1$ | $1$ | $2$ |
+| $2$ | $-47$ | $-46$ |
+| $3$ | $-72$ | $-71$ |
+| $4$ | $119$ | $120$ |
+| $5$ | $370$ | $371$ |
+| $6$ | $1089$ | $1090$ |
+| $7$ | $353$ | $354$ |
+
+For $F_{i,\sigma}$ use degree $(7,1)$. The next bounds are for
+$10^{10}\beta_j^{(7,1)}(F_{i,\sigma})$:
+
+| $i$ | $\sigma$ | Lower bound | Upper bound |
+| --- | --- | --- | --- |
+| $0$ | $-1$ | $148$ | $158$ |
+| $0$ | $1$ | $-149$ | $-140$ |
+| $1$ | $-1$ | $-8851$ | $-5851$ |
+| $1$ | $1$ | $2851$ | $5853$ |
+
+Put $s_0=1$, $s_1=-1$ and
+
+$$
+(m_0^-,m_0^+)=(7058/10,7059/10),\qquad
+(m_1^-,m_1^+)=(673,6731/10),\qquad
+(v^-,v^+)=(15145/100,15147/100).
+\tag{14.7}
+$$
+
+For the following rows use degree $(7,7)$ and the transform
+$\widehat C_i$ of (14.6). Each row means
+$L<10^d\beta_j^{(7,7)}(\widehat C_i)<U$ for every $j$:
+
+| $i$ | $C$ | $d$ | $L$ | $U$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $D_m$ | $4$ | $1368$ | $1369$ |
+| $1$ | $D_m$ | $4$ | $-3468$ | $-3467$ |
+| $0$ | $s_0(N_m-m_0^-D_m)$ | $6$ | $115$ | $2237$ |
+| $0$ | $s_0(m_0^+D_m-N_m)$ | $6$ | $11450$ | $13568$ |
+| $1$ | $s_1(N_m-m_1^-D_m)$ | $6$ | $12515$ | $19154$ |
+| $1$ | $s_1(m_1^+D_m-N_m)$ | $6$ | $15521$ | $22164$ |
+| $0$ | $s_0(N_u-v^-D_m)$ | $6$ | $553$ | $878$ |
+| $0$ | $s_0(v^+D_m-N_u)$ | $6$ | $1860$ | $2183$ |
+| $1$ | $s_1(N_u-v^-D_m)$ | $6$ | $1033$ | $2503$ |
+| $1$ | $s_1(v^+D_m-N_u)$ | $6$ | $4432$ | $5903$ |
+
+Proof. Expand the exact polynomials (14.2)–(14.3) and $N_u,D_m$
+from Section 2, performing the two exact divisions by $1+b$ first.
+Their total source degrees are at most seven, and
+$[b^7]\mathsf A=5p+216$. Substitution in the coefficient rows gives
+degrees at most $(6,1)$; substitution in the faces gives degrees at
+most $(7,1)$; the tube transforms have degrees at most $(7,7)$.
+Apply (14.4) with precisely these padded degrees.
+
+More explicitly, each table row with scale $10^d$ is the finite
+set of rational inequalities
+
+$$
+L<10^d\sum_{\alpha\le j}
+ [x^\alpha]F\prod_k
+ \frac{\binom{j_k}{\alpha_k}}{\binom{n_k}{\alpha_k}}<U,
+\qquad 0\le j_k\le n_k,
+\tag{14.8}
+$$
+
+where $F,n,L,U,d$ are fixed by that row and (14.1)–(14.7), and
+$d=0$ for the first table. Substitution of the displayed rational
+constants gives the listed bounds by integer cross multiplication.
+Thus the first table consists of $8\cdot14$ coefficient bounds,
+the face table of $4\cdot16$, and the tube table of $10\cdot64$.
+Equation (14.8), the fixed degree bounds and the rational affine
+substitutions specify every coefficient and comparison; no numerical
+root locations or unlisted cell choices enter the certificate. ∎
+

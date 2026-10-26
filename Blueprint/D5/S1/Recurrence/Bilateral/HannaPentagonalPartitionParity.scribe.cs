@@ -54,6 +54,8 @@ internal sealed class HannaPentagonalPartitionParityDocument : IScribeDocumentDe
                 + "Nat.Partition.hasProd_powerSeriesMk_card_restricted is applied at predicate "
                 + "True. Euler's pentagonal product and the geometric-factor inverse prove "
                 + "that this series is the reciprocal of pentagonalSeries over the integers.", DescribeRole.Definition),
+            Node("partition_reciprocal", "The partition series is the pentagonal reciprocal",
+                "Euler's product and the geometric factors show that pentagonalSeries over the integers multiplied by the ordinary partition series is one.", DescribeRole.Theorem),
             Node("a", "The integer-index coefficients", "At a nonnegative integer n this reads "
                 + "the coefficient at n.toNat. Negative indices are zero; the stated parity "
                 + "range starts at one.", DescribeRole.Definition),
@@ -168,6 +170,7 @@ internal sealed class HannaPentagonalPartitionParityDocument : IScribeDocumentDe
             "partitionCount" => Disp(All("n", Naturals(), Eqn(Call("partitionCount", n), Call("card", Call("NatPartition", n))))),
             "partitionSeries" => Disp(Eqn(Named("partitionSeries"), Call("mk", Lambda("n", Naturals(),
                 Call("intCast", Call("partitionCount", n)))))),
+            "partition_reciprocal" => Disp(Eqn(Mul(Call("pentagonalSeries", Integers()), Named("partitionSeries")), D(1))),
             "a" => Disp(All("n", Integers(), Eqn(Call("a", n), Call("ifThenElse", Leq(D(0), n),
                 Coeff(Call("toNat", n), Call("generatingSeries", Integers())), D(0))))),
             "LiteralResolution" => Disp(Seq(Named("LiteralResolution"), Sp, Iff, Sp, Par(Body()))),

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+  normalized_sha256: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+cas_ref: sha256:dba3249627bfeef003fb63bdc0bb4d477cdaaac23aecbfe77360626eb7538384
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the outcome-record variable.
+    previous_atom_id: f4fc2d420187867e6dd0e7be0b72f00b99eead046a645424c8058d1a16293796
+    next_atom_id: 4706f5e636d641507a2b201b308dcb3a922f10de4fdb8f6ae18323088076ce0f

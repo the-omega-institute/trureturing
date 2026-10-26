@@ -1,0 +1,54 @@
+**定义 7.1（输运--读出数据）。**
+设 $M$ 为光滑、仿紧流形，$\pi:\mathcal H\to M$ 为秩 $d\geq 2$
+的复 Hermitian 向量丛。在局部酉标架下，过渡函数
+$g_{\alpha\beta}:U_\alpha\cap U_\beta\to U(d)$ 满足
+$g_{\alpha\beta}g_{\beta\gamma}g_{\gamma\alpha}=I$。
+度量相容联络 $\nabla$ 的局部矩阵 $A_\alpha$ 为反 Hermitian
+矩阵值一形式，并满足
+
+$$
+A_\beta=g_{\alpha\beta}^{-1}A_\alpha g_{\alpha\beta}
+              +g_{\alpha\beta}^{-1}dg_{\alpha\beta},
+ \qquad
+ F_\alpha=dA_\alpha+A_\alpha\wedge A_\alpha.
+$$
+
+每条分段光滑路径 $\gamma:b\to c$ 给出酉平行输运
+$U_\gamma:\mathcal H_b\to\mathcal H_c$。
+
+定义实向量丛
+
+$$
+\mathcal V=\operatorname{Herm}_0(\mathcal H),\qquad
+ \mathcal V_b=\{X=X^\dagger:\operatorname{Tr}X=0\},
+ \qquad
+ \langle X,Y\rangle=\operatorname{Tr}(XY).
+$$
+
+其秩为 $d^2-1$，诱导联络记为 $D$；局部表达为
+$DX=dX+[A,X]$，平行输运为
+
+$$
+T_\gamma(X)=U_\gamma XU_\gamma^\dagger.
+$$
+
+读出为光滑实线性丛映射
+$L:\mathcal V\to M\times\mathbb R^k$。
+记 $K_b=\ker L_b$。对密度矩阵 $\rho$，实际的仿射读出为
+$L_b(\rho-I/d)$，已知的常数读出可以另行附加。
+
+这里的 $\mathcal V$ 是实的算符丛，不是复的态振幅丛。
+固定读出对应的合法状态集合
+
+$$
+\mathcal C_{b,y}
+ =\{\rho\geq0:\operatorname{Tr}\rho=1,\
+                 L_b(\rho-I/d)=y\}
+$$
+
+一般是仿射空间与正半定锥的截面。
+因此，兼容集合 $\mathcal C_{b,y}$ 本身通常不是向量空间；
+其不可辨差方向才由 $K_b$ 描述。
+
+<a id="thm-kernel-bundle"></a>
+

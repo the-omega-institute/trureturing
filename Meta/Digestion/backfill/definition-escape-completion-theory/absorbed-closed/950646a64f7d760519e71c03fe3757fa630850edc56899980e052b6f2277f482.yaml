@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+  normalized_sha256: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+cas_ref: sha256:950646a64f7d760519e71c03fe3757fa630850edc56899980e052b6f2277f482
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/CoordinateWitnessBundle.has_closed_coordinate_witness_bundle_iff_ne
+    target_statement_id: sha256:3c580375ed500e478cfd0537e2db0c8d65af959b181b219cd201a59b3f8a104a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,42 @@
+**定理 9.1（累计损失与参数化高度的精确逆）。** For every control above,
+every common input just specified and every $0\le t\le T$,
+
+$$
+\begin{aligned}
+F_i(t)&=p_i(a)-S(t)p_i(k(t)),\\
+S(t)&=1-\sum_iF_i(t)=1-F_2(t)/Z,\\
+k(t)&=\frac{a-F_0(t)}{1-F_2(t)/Z}.
+\end{aligned}
+\tag{OC.30}
+$$
+
+Every $F_i$ is absolutely continuous and nondecreasing. In particular the
+entire marked failure law identifies the height on its original time axis,
+including waits and turning points, without differentiating that law.
+It is independent of the unknown input phases on the declared input family.
+
+Proof. Put $q_i(t)=S(t)p_i(k(t))$. Compact strict positivity and absolute
+continuity make $\log p_i(k)$, $S$ and $q_i$ absolutely continuous, with
+$S>0$ throughout. For the nonnegative rate
+$\gamma_i=\lambda-(\log p_i(k))'$ of §5.2 the product rule gives
+
+$$
+q_i'=-\gamma_iq_i\quad\text{almost everywhere}.
+\tag{OC.31}
+$$
+
+The rank-one jump in (OC.19b) has on a general live input $\rho$ the density
+
+$$
+J_i(t;0)\rho J_i(t;0)^*
+ =\frac{\gamma_i(t)q_i(t)}{p_i(a)}\rho_{ii}|f\rangle\langle f|.
+\tag{OC.32}
+$$
+
+Its scalar phase cancels. Substituting $\rho_{ii}=p_i(a)$ and integrating
+(OC.31) proves the first identity at every time. Summing uses
+$\sum_i p_i=1$; using the fixed positive middle probability $Z$ gives the
+second identity, and mode $0$ gives the last. At zero duration the measures
+are empty, $S=1$ and $k(0)=a$. Absolute continuity excludes hidden endpoint
+atoms. $\square$
+

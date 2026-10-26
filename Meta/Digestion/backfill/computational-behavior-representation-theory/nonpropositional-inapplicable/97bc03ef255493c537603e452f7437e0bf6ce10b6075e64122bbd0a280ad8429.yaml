@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97bc03ef255493c537603e452f7437e0bf6ce10b6075e64122bbd0a280ad8429
+  normalized_sha256: sha256:97bc03ef255493c537603e452f7437e0bf6ce10b6075e64122bbd0a280ad8429
+cas_ref: sha256:97bc03ef255493c537603e452f7437e0bf6ce10b6075e64122bbd0a280ad8429
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Proof-status convention only: identifies paper proofs and explicitly withholds Lean proof status; warns against replacing universal quantifiers by finite checks.'
+    previous_atom_id: 21da54c0df8fd94ad0cda01d90413a0de29c2afc66523298aa93f80d2f0ecb9c
+    next_atom_id: b340b72ab51e5ed5b2a07a711ba146b5981072cf5f0aec8cc57192d5c4b7422a

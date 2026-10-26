@@ -1,0 +1,64 @@
+## 50. Uniform positive-width root certificate
+
+The following table gives intervals with exactly one positive root of
+$\mathcal W$ for every $(p,v)\in\mathcal U$. Every complementary
+interval in $(0,\infty)$ contains no root.
+
+| Index | Coarse root interval | Narrow root interval |
+| --- | --- | --- |
+| 1 | $(0.124999,0.125001)$ | $(0.1249999999,0.1250000001)$ |
+| 2 | $(0.132128,0.132131)$ | $(0.1321292133,0.1321292137)$ |
+| 3 | $(0.836879,0.836883)$ | $(0.8368806577,0.8368806582)$ |
+| 4 | $(0.870315,0.870320)$ | $(0.8703170917,0.8703170923)$ |
+| 5 | $(5.415480,5.415490)$ | $(5.4154833506,5.4154833514)$ |
+| 6 | $(11.444650,11.444670)$ | $(11.4446595190,11.4446595200)$ |
+
+Here is an exact rational certificate and its arithmetic prescription.
+Write $\mathcal W(b;p,v)=\sum_{i=0}^{18}w_i(p,v)b^i$.
+Evaluate each expanded $w_i$ by termwise rational interval arithmetic
+on the two closed parameter intervals (47.3), retaining the signs of the
+integer coefficients. For a finite positive interval $(a,z)$ form
+
+$$
+T_{a,z}(t)=(1+t)^{18}\mathcal W((a+zt)/(1+t);p,v).
+\tag{50.1}
+$$
+
+Its coefficient of $t^k$ is evaluated from
+
+$$
+\sum_{i=0}^{18}\sum_{\substack{0\le j\le i\\0\le k-j\le18-i}}
+ w_i\binom ij a^{i-j}z^j\binom{18-i}{k-j}.
+\tag{50.2}
+$$
+
+For the last interval $(a,\infty)$ use $\mathcal W(a+t;p,v)$,
+whose $t^k$ coefficient is
+$\sum_{i=k}^{18}w_i\binom ik a^{i-k}$.
+All interval coefficient signs in these thirteen coarse cells are
+separated from zero. In increasing order of cells their sign variations
+are exactly
+
+$$
+0,1,0,1,0,1,0,1,0,1,0,1,0.
+\tag{50.3}
+$$
+
+The thirteen cells are the six coarse intervals and the seven intervening
+complementary intervals, starting at zero and ending at infinity.
+Descartes' rule proves their exact root counts, including multiplicity.
+
+For each narrow interval, first substitute its exact endpoint into
+$\mathcal W$, expand in $p,v$, and then perform the same termwise
+interval evaluation. The endpoint signs are opposite in all six cases.
+Together with the unique coarse root, this puts that root in its narrow
+interval. Endpoint substitution before interval evaluation is material;
+it preserves cancellations needed for the first narrow interval.
+No root count at one rounded value of $(p,v)$ is being substituted for
+these uniform parameter bounds.
+
+The leading coefficient and the endpoint values at zero are separated
+from zero in this arithmetic. In particular the polynomial remains of
+degree eighteen throughout $\mathcal U$; no root at infinity or zero
+is omitted.
+

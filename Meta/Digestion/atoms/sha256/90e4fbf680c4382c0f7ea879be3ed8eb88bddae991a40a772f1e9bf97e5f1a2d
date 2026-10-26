@@ -1,0 +1,84 @@
+**Proposition 267.1 (actual $T_4$, four masses and the full source operator).** Use the source and added geometry of Definitions 257.1 and 55.1–55.2 in the [first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). Initialize at $\alpha$ and perform four accepted whole substitutions at fixed leaf cap $\mathrm{cap}_H\ge5$. The actual tree is
+
+$$
+T_4=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                  \langle\beta,\alpha\rangle\rangle.
+\tag{267.1}
+$$
+
+Its addresses, in a fixed order, are
+
+$$
+(o,L,R,LL,LR,RL,RR,LLL,LLR),\qquad o=\varepsilon.
+\tag{267.2}
+$$
+
+Define four collective classes, without identifying actual vertices of the source,
+
+$$
+\begin{aligned}
+V_a&=\{LLL,LLR,RL,RR\},& V_b&=\{LL,LR\},\\
+V_c&=\{o,R\},& V_d&=\{L\}.
+\end{aligned}
+\tag{267.3}
+$$
+
+With $R_x=1$ the induced mass matrix is $N_9=\operatorname{diag}(4,2,2,1)$. For every native $a_0,g>0$ retain
+
+$$
+H_9=a_0L_{D_4(\alpha)}-g\Phi_9,
+\qquad
+\Phi_9=\operatorname{diag}(1,\tfrac12,\tfrac12,
+ \tfrac14,\tfrac14,\tfrac14,\tfrac14,\tfrac18,\tfrac18).
+\tag{267.4}
+$$
+
+The diagonal of $L_D$ is $(2,3,3,3,3,3,3,3,3)$ and its off-diagonal is $-1$ exactly on
+
+$$
+(o,L),\ (o,R),\ (L,LL),\ (L,LR),\ (R,RL),\ (R,RR),\ (LL,LLL),\ (LL,LLR).
+\tag{267.5}
+$$
+
+All other off-diagonal entries vanish. In coarse value coordinates the restricted kinetic and potential forms are
+
+$$
+S_9=\begin{pmatrix}
+12&-2&-2&0\\-2&6&0&-2\\-2&0&3&-1\\0&-2&-1&3
+\end{pmatrix},
+\qquad V_9=\operatorname{diag}(\tfrac34,\tfrac12,\tfrac32,\tfrac12).
+\tag{267.6}
+$$
+
+Thus
+
+$$
+A_9=N_9^{-1}(a_0S_9-gV_9),\qquad
+\widehat A_9=N_9^{-1/2}(a_0S_9-gV_9)N_9^{-1/2}.
+\tag{267.7}
+$$
+
+The collective conductances are $c_{ab}=c_{ac}=c_{bd}=2$, $c_{cd}=1$, and zero for the other distinct pairs. The inherited kinetic killing conductances are $(8,2,0,0)$, not zero. The support is the four-cycle $a,b,d,c,a$ with
+
+$$
+\eta_9=a_0/\sqrt2,\qquad n_{\max}=4,\qquad
+\|D_9\|\ge a_0/(2\sqrt2).
+\tag{267.8}
+$$
+
+Proof. Successive actual sources have leaf counts $1,1,2,3,5$. Each complete candidate therefore passes a fixed leaf-count cap at least five. This is a legal finite prefix from immutable INITIAL $\alpha$, provided no Stop has occurred. The substitutions and addressed shape agree with Proposition 260.1; no complete ball has replaced this irregular domain.
+
+The field values in (267.4) are exactly $2^{-|p|}$ at these addresses. The source kinetic law gives root diagonal two and every other diagonal three, together with (267.5). The current leaves are $LR,RL,RR,LLL,LLR$, each retaining its two absent-child seams. For collective values $(u_a,u_b,u_c,u_d)$, the internal edge $oR$ contributes zero, and the remaining difference terms plus all absent-child terms give
+
+$$
+\begin{aligned}
+\langle Uu,L_DUu\rangle={}&
+2|u_a-u_b|^2+2|u_a-u_c|^2
++2|u_b-u_d|^2+|u_c-u_d|^2\\
+&+8|u_a|^2+2|u_b|^2.
+\end{aligned}
+\tag{267.9}
+$$
+
+Expanding gives $S_9$. Summing the actual common field over each class gives $V_9$: in $a$ the sum is $1/8+1/8+1/4+1/4=3/4$, in $b$ it is $1/2$, in $c$ it is $1+1/2=3/2$, and in $d$ it is $1/2$. Since $U^*U=I$ in the mass norm, (267.7) follows. The four nonzero normalized off-diagonal magnitudes are $a_0/\sqrt2,a_0/\sqrt2,\sqrt2a_0,a_0/\sqrt2$. Theorem 264.2 gives (267.8). Negative potential changes no off-diagonal edge or source killing seam. □
+

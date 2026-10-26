@@ -1,0 +1,14 @@
+## 50. Uniform positive-width root certificate
+
+The following table gives intervals with exactly one positive root of
+$\mathcal W$ for every $(p,v)\in\mathcal U$. Every complementary
+interval in $(0,\infty)$ contains no root.
+
+| Index | Coarse root interval | Narrow root interval |
+| --- | --- | --- |
+| 1 | $(0.124999,0.125001)$ | $(0.1249999999,0.1250000001)$ |
+| 2 | $(0.132128,0.132131)$ | $(0.1321292133,0.1321292137)$ |
+| 3 | $(0.836879,0.836883)$ | $(0.8368806577,0.8368806582)$ |
+| 4 | $(0.870315,0.870320)$ | $(0.8703170917,0.8703170923)$ |
+| 5 | $(5.415480,5.415490)$ | $(5.4154833506,5.4154833514)$ |
+| 6 | $(11.444650,11.444670)$ | $(11.4446595190,11.4446595200)$ |

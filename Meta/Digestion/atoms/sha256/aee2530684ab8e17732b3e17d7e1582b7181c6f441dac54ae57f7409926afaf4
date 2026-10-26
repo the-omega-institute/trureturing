@@ -1,0 +1,15 @@
+**Assumption 91.6 (conditional prefix supply).** A certified even epoch $N=2k\geq2$
+may supply $p_h(t)$ through the original-root, same-source ordered support/address
+service of [ABT §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+with its source/version authentication, epoch certification, refusal and absorbing
+Stop rules. Under the paid presence-only service of [FFM §§10–11](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md), the supplied prefix has
+
+$$
+q\leq2(2^{h+1}-1),\qquad \max|a|\leq h+k+1,\qquad a_{\mathrm{post}}=0.
+\tag{91.14}
+$$
+
+These are premises of the cited services, not consequences of a numerical response
+catalog, old $q/c/\text{word}$ replies, a CE post-cut state or mathematical existence
+of a decoder.
+

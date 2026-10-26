@@ -1,0 +1,4 @@
+**推论 16.6（既有正噪声平台律的受限同律表示）。** For every rational $0<\eta\le1$, the five-visible-bit encoding (15.14) of $J_{H,\eta}$ has a finite rational $W_{\mathrm{res}}$ representation with exactly the same joint distribution. Consequently its posteriors and decision risks already established in Corollary 15.4 are unchanged.
+
+**Proof.** Corollary 15.4 supplies the finite rational $W_+$ representation of precisely this encoded joint law. Apply Theorem 16.4 to that network. Equation (16.18) preserves the entire visible distribution, and decoding by the same bijections (15.14) gives exactly $J_{H,\eta}$. Equality of these joint laws preserves their posteriors at positive-mass outputs and their decision risks; the posterior and risk calculations are those already used in Corollary 15.4. Each rational $\eta$ may use its own finite network, with the operations and interpretation of Definition 15.1 and the boundaries of Corollary 15.4. $\square$
+

@@ -1,0 +1,21 @@
+**Proposition 17.2 (an actual stopping witness).** There is a finite source
+instance satisfying the original task in which the final stopping flight has
+positive output, verification and return work after the last Ready cut. Take
+$H_0=1$, $u=\beta$, $D=\mathcal T_1$, the private packet for $\beta$, and the
+finite controller that constructs the original $q_1(\beta)$ proposal, performs
+`Reserve(2)`, `Raise(2)`, one genuine $\rho$, and then stops. The source packets
+are $10$, then $100000$ after reservation, and $111001$ after the accepted
+update, representing $\langle\beta,\alpha\rangle$.
+
+**Proof.** The first packet is the supplied private source, so its origin and
+owner are those of the original preparation. `Reserve(2)` is strict from
+$K=1$ and `Raise(2)` is valid after it; the guarded $\rho$ accepts the displayed
+finite successor. The original target is $q_1(\beta)=(0,B,1)$, and truthful
+acquisition identifies $\beta$ in $\mathcal T_1$. CAP's verifier therefore
+accepts the original binding. Row delivery, snapshot and descriptor checks,
+consumer output, `OUT`, `ACK` and the final halt control are all finite under
+the declared reached-local completion and supplied-input premises. In
+particular, output/check/return work is completed before the distinct final
+halt edge, so the last Ready is followed by a nonempty terminal suffix.
+$\square$
+

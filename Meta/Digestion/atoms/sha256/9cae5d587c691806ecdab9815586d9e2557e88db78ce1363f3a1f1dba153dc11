@@ -1,0 +1,49 @@
+**Proposition 5.1 (Noncollapse for every response specialization).** For
+every complex triple $(p,v,m)$, the polynomial $F(x;p,v,m)$ in (3.1)
+is not identically zero. The exact polynomial divisibility identity is
+
+$$
+K\ \bigm|\ \Delta^2F-5N^2\mathscr H
+\qquad\text{in }\mathbb Q[p,v,m][x].
+\tag{5.1}
+$$
+
+If $N(\kappa;p,v,m)=0$, then $(x-\kappa)^2$ divides the specialized
+$F$ over $\mathbb C[x]$.
+
+Proof. Since $\gcd(K,\Delta)=1$, calculations modulo $K$ may use
+$\Delta^{-1}$. The definitions give, modulo $K$,
+
+$$
+Z_0\equiv-\frac{NM_0}{\Delta},\qquad
+Z_2\equiv-\frac{NM_2}{\Delta},\qquad
+B_*\equiv5N\left(2-\frac{M_2}{\Delta}\right).
+\tag{5.2}
+$$
+
+Substitution in $F$ gives (5.1). These are congruences of the exact
+polynomials (3.1), so (5.1) remains true under every specialization.
+Let $\lambda$ be any complex root of $K$. By Proposition 4.1 and
+(3.4), $\mathscr H(\lambda)\Delta(\lambda)\ne0$; hence
+
+$$
+F(\lambda)=\frac{5N(\lambda)^2\mathscr H(\lambda)}{\Delta(\lambda)^2}.
+\tag{5.3}
+$$
+
+If a specialization made $F$ identically zero, then $N$ would vanish
+at all four distinct complex roots of $K$. The factor theorem in
+characteristic zero would give $K\mid N$. But $[x^4]N=144$ and
+$[x^4]K=8$, so necessarily $N=18K$. Their constant terms contradict
+this: $N(0)=-144$, whereas $18K(0)=-108$. Thus $F$ never collapses.
+The finite-field computation in Proposition 4.1 supplies rational
+coprimality; the argument (5.3) takes place in characteristic zero
+and does not infer real positivity from reduction modulo $5$.
+
+Finally suppose $N(\kappa)=0$. Since $K(\kappa)=0$ and all tail
+denominators are nonzero, each $f_i(\kappa)=0$. Consequently each
+$Z_i$, as well as $N$ and $B_*$, vanishes at $\kappa$. Both products
+in $F=Z_0B_*-5NZ_2$ have at least two factors $x-\kappa$.
+This proves the asserted double factor, without asserting simplicity
+of any other root of $F$. ∎
+

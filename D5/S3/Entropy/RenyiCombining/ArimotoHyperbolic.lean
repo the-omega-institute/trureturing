@@ -27,7 +27,7 @@ def elasticity (b s : ℝ) : ℝ :=
     (Real.sinh (b * s) * Real.cosh ((b + 1) * s))
 
 def f (s r : ℝ) : ℝ := r * Real.cosh (r * s) / Real.sinh (r * s)
-private def g (s r : ℝ) : ℝ := r * Real.sinh (r * s) / Real.cosh (r * s)
+def g (s r : ℝ) : ℝ := r * Real.sinh (r * s) / Real.cosh (r * s)
 private def L (b s : ℝ) : ℝ :=
   Real.cosh s / Real.sinh s + 2 * Real.sinh s / Real.cosh s - f s b - g s (b + 1)
 
@@ -73,7 +73,7 @@ private lemma f_strictMonoOn {s : ℝ} (hs : 0 < s) : StrictMonoOn (f s) (Ioi 0)
   exact div_pos (sinh_cosh_sub_pos (mul_pos hr' hs))
     (sq_pos_of_pos (Real.sinh_pos_iff.mpr (mul_pos hr' hs)))
 
-private lemma g_strictMonoOn {s : ℝ} (hs : 0 < s) : StrictMonoOn (g s) (Ioi 0) := by
+lemma g_strictMonoOn {s : ℝ} (hs : 0 < s) : StrictMonoOn (g s) (Ioi 0) := by
   apply strictMonoOn_of_deriv_pos (convex_Ioi _)
     (fun r _ => (g_hasDerivAt s r).continuousAt.continuousWithinAt)
   intro r hr

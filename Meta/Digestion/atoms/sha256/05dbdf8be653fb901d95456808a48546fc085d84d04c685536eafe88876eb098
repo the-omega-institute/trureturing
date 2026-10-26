@@ -1,0 +1,45 @@
+**Proposition 84.3 (same-cap invariance for the free probability-density heat law).** Let
+$$
+\mathcal P_M=\{p\in L^1(G):\ p\ge0,\ \int_Gp\,d\mu=1,
+\quad p(\xi,w)\le M m_p(\xi)\ \text{almost everywhere}\},\qquad
+m_p(\xi)=\int_{\mathbb R}p(\xi,w)dw.
+\tag{84.12}
+$$
+For $p_0\in\mathcal P_M$, the actual free Markov density $p_t=H_tp_0$ has mass one and satisfies
+$$
+m_{p_t}=P_tm_{p_0}\quad\text{almost everywhere},\qquad
+p_t\le M(m_{p_t}\circ\pi),\qquad P_t=e^{t\Delta_3},\qquad t\ge0.
+\tag{84.13}
+$$
+In particular $H_t\mathcal P_M\subseteq\mathcal P_M$ with the same $M$, including unbounded initial marginals and infinite Haar fibres.
+
+Proof. Reuse the bounded-Borel factor (82.7), writing $Uf=f\circ\pi$. Folland's Theorem 3.1 supplies the nonnegative mass-one symmetric heat kernel. Let $K_t(p,q)$ be that kernel for $H_t$ relative to $d\mu$, so $K_t(p,q)=K_t(q,p)$ and each variable has integral one. Extend its action to every nonnegative measurable $F$ by
+$$
+\widetilde H_tF(p)=\int_GK_t(p,q)F(q)d\mu(q)\in[0,\infty],\qquad t>0.
+$$
+Choose a finite nonnegative Borel representative of $m_0=m_{p_0}$ outside its null exceptional set. The bounded truncations $m_0\wedge n$, (82.7), and monotone convergence give
+$$
+\widetilde H_t(Um_0)
+ =\lim_{n\to\infty}H_t(U(m_0\wedge n))
+ =\lim_{n\to\infty}U(P_t(m_0\wedge n))
+ =U(P_tm_0).
+\tag{84.14}
+$$
+This is a positive-kernel extension, requiring no $L^1$ or $L^2$ membership of the pullback $Um_0$ on the infinite fibres. Since $\|m_0\|_1=1$, for positive time its Euclidean heat marginal has a representative satisfying
+$$
+0<P_tm_0(\xi)\le(4\pi t)^{-3/2}\qquad\text{for every }\xi.
+\tag{84.15}
+$$
+Positivity now yields $p_t\le M U(P_tm_0)$. To identify the true marginal rather than only a dominating function, test with any bounded Borel $f$ on $\mathbb R^3$. Kernel symmetry, integrability against $p_0$, (82.7), and Euclidean heat symmetry give
+$$
+\begin{aligned}
+\int f\,m_{p_t}\,d\xi
+ &=\int_G(Uf)H_tp_0\,d\mu
+  =\int_GH_t(Uf)p_0\,d\mu\\
+ &=\int(P_tf)m_0\,d\xi
+  =\int f(P_tm_0)\,d\xi.
+\end{aligned}
+\tag{84.16}
+$$
+Thus $m_{p_t}=P_tm_0$ almost everywhere. The mass-one kernel preserves $\int p_t=1$, and the dominance proves (84.13). Time zero is the defining inequality, including zero fibres. This is evolution of a probability density. It supplies no identity between $H_t|\psi|^2$ and the squared modulus of a wave evolution, and no invariance assertion for an interacting Schrödinger law. $\square$
+

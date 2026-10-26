@@ -1,0 +1,18 @@
+## 14. A closed negative-base rectangle with no actual M collision
+
+Retain exactly the complete worlds, acquired history and terminal responses of
+Definition 1.1. Define the closed rectangle
+
+$$
+\mathcal B_-=
+\left\{(p,v)\in\mathbb R^2:
+ |p+11|\le10^{-5},\quad
+ \left|v+\frac{8215077071969}{10^{12}}\right|\le10^{-5}\right\}.
+\tag{14.1}
+$$
+
+All its bases have $p\ne24$. For any actual world put
+$x=(j+r)/(1+2b)=n/U>0$. The root labels below refer to the exact rational
+centres in Section 17. They are mathematical coordinates, with no additional
+acquired observation.
+

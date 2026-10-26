@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8106173cd88546256b2945168b809889284d2da7ed514c7f7fecc7da8cb8e7bc
+  normalized_sha256: sha256:8106173cd88546256b2945168b809889284d2da7ed514c7f7fecc7da8cb8e7bc
+cas_ref: sha256:8106173cd88546256b2945168b809889284d2da7ed514c7f7fecc7da8cb8e7bc
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature.secondMagnusSwapKernel
+    target_statement_id: sha256:34c0fa0218c0f7e9f9b64a3e013918836e4601996b6fdcbcb869dbb0ed8468cc
+  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples
+    target_statement_id: sha256:991f4a5d08afd2e0c9e75307e406a845c893f5a27a5fd9afeeadd20d615f8bb8
+receipts:
+  unresolved_subitems: []

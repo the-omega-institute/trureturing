@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+  normalized_sha256: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+cas_ref: sha256:2b6eddfd815a0cdd7fcd32d79ec9cbdc4b9d8b3fcbf93507e058fccc20ab6ac2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Propositional upstream-only closure under CLAUDE.md section 3.2: epsilon_T is the assigned L2 operator norm of inverse(A) * E * adjoint(inverse(A)); its displayed bound follows by two applications of Matrix.l2_opNorm_mul, Matrix.l2_opNorm_conjTranspose, mul_le_mul_of_nonneg_right, norm_nonneg and ring normalization. Pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679 (v4.35.0). All D5/**/*.lean including private declarations, searched for transformed/congruence Gram error, operator norm of products, norm_mul_le, l2_opNorm_mul, conjugate transpose norms; inspected UniformResolventRemainder, PointGapFiniteScaleStability, HermitianEigenvaluePerturbation and the generic RationalIntervalExpression/cutoff_first_nonstrict checkers. No frozen result supplying an actual subgoal of this generic complex-matrix triple-product bound was identified. The exact arbitrary-size complex-matrix inequality was compiled by make lean in temporary YD42NormProbe; no D5 declaration is added.'
+    previous_atom_id: f60a1f154fb4121397053c144cc2dcc5243b5339e32c54a2d0570272c60cd732
+    next_atom_id: b9881fb60476e36f07197c0b5e01cfa3cbaf325a11ebc6b1c2b8aacb484721de

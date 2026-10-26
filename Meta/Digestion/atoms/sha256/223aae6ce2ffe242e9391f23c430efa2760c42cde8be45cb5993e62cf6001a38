@@ -1,0 +1,9 @@
+## 3. The attained instrument, including every charge outcome
+
+Let $\mathcal H_{j,n}$ be the charge-$n$ subspace of the two modes at
+party $j\in\{A,B\}$. Their dimensions are $(1,2,1)$ for $n=0,1,2$.
+Write $\Pi^j_n$ for their projectors, $I_{j,1}$ for the identity on
+$\mathcal H_{j,1}$, and $P^j_0=|00\rangle\langle00|$,
+$P^j_2=|11\rangle\langle11|$. Put
+$\Pi_{nm}=\Pi^A_n\otimes\Pi^B_m$.
+

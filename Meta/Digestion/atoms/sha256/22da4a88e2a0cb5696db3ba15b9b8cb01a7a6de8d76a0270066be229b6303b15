@@ -1,0 +1,38 @@
+## 1. Finite task readouts and signed fibres
+
+Let $S$ be a finite state space with mass $\mu$, let $Y:S\to\{0,1\}$ be a binary task, and let $Q_A:S\to U_A$ be the deterministic readout carried by an observed feature set $A$. Write
+
+$$
+M_A^+(u)=\sum_{Q_A(s)=u,\,Y(s)=1}\mu(s),\qquad
+M_A^-(u)=\sum_{Q_A(s)=u,\,Y(s)=0}\mu(s),
+$$
+
+$$
+m_A(u)=M_A^+(u)+M_A^-(u),\qquad
+\sigma_A(u)=M_A^+(u)-M_A^-(u).
+$$
+
+Zero-mass fibres are omitted from conditional expressions. On every positive-mass fibre,
+
+$$
+\eta_A(u)=\Pr(Y=1\mid Q_A=u)
+=\frac{M_A^+(u)}{m_A(u)}
+=\frac{1}{2}\left(1+\frac{\sigma_A(u)}{m_A(u)}\right).
+$$
+
+The Bayes risk and task mutual information are
+
+$$
+ e(A)=\sum_u\min\{M_A^+(u),M_A^-(u)},
+$$
+
+$$
+ I(A)=I(Y;Q_A)=H_2(p)-\sum_{m_A(u)>0}m_A(u)h_2(\eta_A(u)),
+$$
+
+where $p=\Pr(Y=1)$, $H_2(p)=h_2(p)$ is the prior binary entropy, and
+
+$$
+h_2(t)=-t\log_2 t-(1-t)\log_2(1-t),\qquad 0\log_2 0:=0.
+$$
+

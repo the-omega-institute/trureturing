@@ -1,0 +1,21 @@
+**Definition 115.1 (the parent-copy extension).** In the old/new decomposition
+of (112.7), define
+
+$$
+T_e:\ell^2(V_e)\longrightarrow\ell^2(V_{e+1}),
+\qquad
+T_ef=\begin{pmatrix}f\\ C_e^*f\end{pmatrix},
+\tag{115.1}
+$$
+
+so every newly born child receives the value of its parent. Let $J_e$ retain
+only the old coordinates, as in (112.8). More generally, write a top-fixed
+linear extension as
+
+$$
+S_Qf=\begin{pmatrix}f\\Qf\end{pmatrix},
+\tag{115.2}
+$$
+
+where $Q:\ell^2(V_e)\to\ell^2(B_e)$ is arbitrary.
+

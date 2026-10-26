@@ -1,0 +1,33 @@
+The resulting contrast concerns full finite fermionic Gibbs states and
+ordinary tensor separability at that cut, with the SSR limit (145.1).
+Neither the accepted epoch nor inverse temperature is thereby identified
+with a physical clock. The locality interface of §§131--134 still requires
+its own physical realization and uniform comparison hypotheses; this finite
+stopped example supplies no such bridge. No continuum or infinite-Fock
+limit, Bell violation, SSR operational advantage, literature priority,
+Lean kernel certificate or completion of a broader quantum programme is
+asserted. The external Fock and two-qubit criteria below are reused
+established results; their finite source-parameter application is what the
+displayed calculations specify.
+
+- **[N] Native source.** This volume, Definition 127.1, Proposition 127.2,
+  Corollary 127.3, Proposition 128.3 and Definition 130.1:
+  [immutable native metric source](https://github.com/the-omega-institute/trureturing/blob/28e2ace3ee3cb91ebd90e1c7da0bec381b109e52/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  The realization limits are §§131--134 in the
+  [immutable locality source](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+- **[F] Fermionic Fock ingredients.** Jan Dereziński,
+  [qft-lectures](https://www.fuw.edu.pl/~derezins/qft-lectures.pdf),
+  §§5.7 and 5.9, Theorem 5.3. Used for fermionic Fock, second quantization
+  and the exponential/direct-sum laws, with the finite occupations and CAR
+  locality displayed in §§141--142.
+- **[P] Ordinary two-qubit separability.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8; DOI
+  [10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2).
+  PPT sufficiency is used only on the effective $2\times2$ state.
+- **[S] SSR resource context.** H. M. Wiseman and J. A. Vaccaro,
+  [quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+  Eqs. (12)--(14) and Table I. The explicit single-copy mixed-state twirl
+  (145.1)--(145.2) carries the SSR conclusion used here.
+

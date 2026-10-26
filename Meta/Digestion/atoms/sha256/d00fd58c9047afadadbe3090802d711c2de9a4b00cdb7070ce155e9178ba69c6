@@ -1,0 +1,44 @@
+**Proposition 5.2 (availability of punctured tests and phase-constant
+states).** On the double-wall cylinder,
+$C_c^\infty(\Omega\setminus\{o\})$ is a core for $T_\varepsilon$ and for
+every form in Theorem 5.1. If $\phi\in H^1_0(I)$, then
+$f(k,\alpha,\beta)=\phi(k)/(2\pi)$ belongs to
+$\mathcal F_\varepsilon$, has norm $\|\phi\|_{L^2(I)}$, and
+
+$$
+T_\varepsilon[f]=\varepsilon^2\int_I|\phi'(k)|^2\,dk.
+\tag{5.4}
+$$
+
+These are analytic admissibility statements and not native state-preparation
+statements.
+
+**Proof.** In the scaled group chart choose a smooth cutoff $\eta_s$ equal
+to one on a dilated neighbourhood of zero and supported in a slightly
+larger dilation of size $s$. Group homogeneity and (4.3) give, for fixed
+$\varepsilon$,
+
+$$
+\|\eta_s\|_2^2=O_\varepsilon(s^4),\qquad
+T_\varepsilon[\eta_s]=O_\varepsilon(s^2).
+\tag{5.5}
+$$
+
+For each compact smooth $f$, the product rule bounds
+$T_\varepsilon[f\eta_s]$ by a constant times
+$\|f\|_\infty^2T_\varepsilon[\eta_s]$ plus the energy of $f$ on the
+shrinking support. Both tend to zero, as does the $L^2$ norm.
+Thus $f(1-\eta_s)$ approximates $f$ in the free form norm, avoids the
+source, and remains compactly supported. Density followed by a diagonal
+choice proves the first free-core assertion. Equivalent form norms in
+Theorem 5.1 prove the perturbed-core assertion. This also explains why
+removing one point imposes no extra boundary condition in this strict
+regime; it does not decide any critical extension problem.
+
+Approximate $\phi$ in $H^1_0(I)$ by compactly supported smooth height
+functions. Their phase-constant lifts are smooth compactly supported on
+$I\times\mathbb T^2$, and $Qf=0$, $Pf=\phi'/(2\pi)$.
+The exact phase area is $(2\pi)^2$, proving the norm and (5.4) by passage
+to the form limit. Proposition 4.3 gives finite potential energy for the
+same states, including ones nonzero at the source. $\square$
+

@@ -1,0 +1,14 @@
+**定义 1.2（正历史与内生时钟）。** 有限配置间的基本边为
+
+$$
+C\xrightarrow{e}C\cup\{e\},\qquad e\notin C,\quad C\cup\{e\}\in\operatorname{Conf}_{\mathrm{fin}}.
+$$
+
+历史是基本边组成的有限路径，长度为边数。观察者 $o$ 的事件支撑为 $E_o\subseteq E$，其局部记录为 $O_o(C)=C\cap\downarrow E_o$。局部读数 $q_o$ 满足 $O_o(C)=O_o(D)\Rightarrow q_o(C)=q_o(D)$，选择规则 $\kappa_o:Y_o\to\mathcal P(\Sigma)$ 只依赖该记录。给每个计数事件严格正权重 $\omega(e)>0$，定义
+
+$$
+\tau_o(C)=\sum_{e\in C\cap E_o}\omega(e).
+$$
+
+对无限配置，这个和按有限部分和的上确界取值于 $[0,+\infty]$；若只使用实值时钟，就限于有限配置，或另加可求和条件。历史长度、这个加权时钟及等待参数是不同的量。
+

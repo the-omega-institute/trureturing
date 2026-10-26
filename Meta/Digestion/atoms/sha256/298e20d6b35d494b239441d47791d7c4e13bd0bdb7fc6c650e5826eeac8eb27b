@@ -1,0 +1,10 @@
+**Definition 11.3 (Four affine polynomial-source tubes).** The
+centres $m_i$ have the following integer numerators, each with
+denominator $10^{12}$:
+
+| $i$ | $(m_i)_r$ numerator | $(m_i)_b$ numerator |
+| --- | --- | --- |
+| $0$ | $137255688262$ | $186017503303$ |
+| $1$ | $166072995880$ | $146057648221$ |
+| $2$ | $872912893446$ | $-368334211937$ |
+| $3$ | $888398398627$ | $-595719530583$ |

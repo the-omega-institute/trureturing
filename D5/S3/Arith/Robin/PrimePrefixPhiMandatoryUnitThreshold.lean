@@ -301,7 +301,7 @@ private theorem atom_kernel_integrable (τ w v : ℝ) :
     integrable_dirac (by finiteness)
   exact h.smul_measure ENNReal.ofReal_ne_top
 
-private theorem atom_kernel_integral {τ w : ℝ} (hw : 0 ≤ w) (v : ℝ) :
+theorem atom_kernel_integral {τ w : ℝ} (hw : 0 ≤ w) (v : ℝ) :
     (∫ t : ℝ, Real.exp (-v*t) ∂(ENNReal.ofReal w • Measure.dirac τ)) =
       w*Real.exp (-v*τ) := by
   simp only [integral_smul_measure, integral_dirac,

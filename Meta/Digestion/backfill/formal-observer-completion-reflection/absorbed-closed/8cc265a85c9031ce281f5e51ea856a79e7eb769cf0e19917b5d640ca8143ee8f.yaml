@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8cc265a85c9031ce281f5e51ea856a79e7eb769cf0e19917b5d640ca8143ee8f
+  normalized_sha256: sha256:8cc265a85c9031ce281f5e51ea856a79e7eb769cf0e19917b5d640ca8143ee8f
+cas_ref: sha256:8cc265a85c9031ce281f5e51ea856a79e7eb769cf0e19917b5d640ca8143ee8f
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.hamiltonian_effect_completion_generator
+    target_statement_id: sha256:06dc1a3137c497ac232713bf2e5d51c625092a1b2bbc1e0384f31895450daa82
+  - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+    target_statement_id: sha256:ef7525d1f2fb1786fbc892dad4f2aa5eea6ad6d739404a96b119e5ea549fb187
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+**定义 2.1（有限失败证书）。** 若 $V(D)=\varnothing$，定义
+
+$$
+\omega(D,t;\mathfrak M)
+=
+\min\{|C|:C\subseteq D,\ V(C)=\varnothing\}.
+$$
+
+若 $V(D)\ne\varnothing$，置 $\omega(D,t;\mathfrak M)=\infty$。因此 $\omega$ 测量的是：在声明的候选族中，证明“没有候选能完整实现目标”所需的最少原始观察数。
+

@@ -1,0 +1,52 @@
+## 160. The full-unitary boundary and equality
+
+Let
+
+$$
+F(t)=t^2+2t^{3/2},\qquad 0<t\le1.
+\tag{160.1}
+$$
+
+Then
+
+$$
+F'(t)=2t+3\sqrt t>0,\qquad
+F(1/2)=\frac14+\frac1{\sqrt2}<1,\qquad
+F(9/16)=\frac{297}{256}>1.
+\tag{160.2}
+$$
+
+There is a unique $t_*\in(1/2,9/16)$ satisfying
+
+$$
+t_*^2+2t_*^{3/2}=1.
+\tag{160.3}
+$$
+
+If $x_*=\sqrt{t_*}$, this is $x_*^4+2x_*^3-1=0$.  Define
+
+$$
+\beta_*=-\log t_*,
+\qquad
+\log(16/9)<\beta_*<\log2.
+\tag{160.4}
+$$
+
+Because $t=e^{-\beta}$ decreases with $\beta$,
+
+$$
+\boxed{
+0\le\beta\le\beta_*
+\Longleftrightarrow
+\operatorname{AS}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+\operatorname{APPT}_{2:4}(\rho_V(\beta)).
+}
+\tag{160.5}
+$$
+
+At $\beta=\beta_*$ every global-unitary placement is PPT and separable.
+For $\beta>\beta_*$ the spectrum is outside the absolute-separability
+region; the consequence used below is existence of an NPT placement, not
+NPT of the specified native member.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d347a9ff4edda589a59213b532121f536deb8648ff2aafc58c35151a0f7ae6b5
+  normalized_sha256: sha256:d347a9ff4edda589a59213b532121f536deb8648ff2aafc58c35151a0f7ae6b5
+cas_ref: sha256:d347a9ff4edda589a59213b532121f536deb8648ff2aafc58c35151a0f7ae6b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Stipulates the two recursive evaluations, their codomains and the distinction from native quantity and window evaluation; it does not assert surjectivity, equivariance or phase accessibility.'
+    previous_atom_id: a689eb009a3e7d94a9609870eaa74ebec6e63bd320ad322acb5c446248539281
+    next_atom_id: 3350cac387eeb2aa751f079dfe00032b1d7f3321d93885db98453d7550319b15

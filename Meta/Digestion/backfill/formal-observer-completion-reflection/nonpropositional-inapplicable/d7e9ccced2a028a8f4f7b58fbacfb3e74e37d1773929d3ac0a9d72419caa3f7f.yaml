@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7e9ccced2a028a8f4f7b58fbacfb3e74e37d1773929d3ac0a9d72419caa3f7f
+  normalized_sha256: sha256:d7e9ccced2a028a8f4f7b58fbacfb3e74e37d1773929d3ac0a9d72419caa3f7f
+cas_ref: sha256:d7e9ccced2a028a8f4f7b58fbacfb3e74e37d1773929d3ac0a9d72419caa3f7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定分支字母、词、Schrodinger 复合与 Heisenberg word effect；没有概率或递推等价断言。
+    previous_atom_id: c18b3883dd4b6517d95cec09d5f99d3343b9424ffd1ab6bfd2a3cb6f4992fe85
+    next_atom_id: f7db7159527733c8a1f6f162c8bed1b7d98d787039c549be5111543c32d26df0

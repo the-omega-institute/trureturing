@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d20b855826874f36b8b71b3e35b44b84fc015cac0ad0fff2057355ea5190c82
+  normalized_sha256: sha256:8d20b855826874f36b8b71b3e35b44b84fc015cac0ad0fff2057355ea5190c82
+cas_ref: sha256:8d20b855826874f36b8b71b3e35b44b84fc015cac0ad0fff2057355ea5190c82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义循环面配对数据、排列、阶与 gcd 记号；未声称连通性、流形性或亏格公式。
+    previous_atom_id: a4f524726cfe8ba7cb0ae30fc973b00c3b6710a3295ff632f03021761db0b477
+    next_atom_id: b6784678b7eb889e8eda95e83fc8d01336c4ac184cfe94817c7c996ee65686e0

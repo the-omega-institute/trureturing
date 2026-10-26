@@ -157,7 +157,7 @@ end ControlledChain
 /- This is the data refinement of finite_response_chain, using its same
    responseIndex and actual U/V formulas. The product identities and uniform
    inequalities are supplied together by ResponseControl, not reproved. -/
-private noncomputable def controlled_response_chain {p : ℕ} {A : CountMat p p}
+noncomputable def controlled_response_chain {p : ℕ} {A : CountMat p p}
     {Q : Type} [Fintype Q] (L : IncomingLift A Q) {q M : ℕ}
     (controls : ResponseControl L q M) (start length : ℕ) :
     ControlledChain q M (finiteResponseMatrix L start)

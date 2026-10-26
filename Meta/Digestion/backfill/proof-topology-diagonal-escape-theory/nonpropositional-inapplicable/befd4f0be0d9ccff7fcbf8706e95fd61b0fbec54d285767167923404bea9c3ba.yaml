@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:befd4f0be0d9ccff7fcbf8706e95fd61b0fbec54d285767167923404bea9c3ba
+  normalized_sha256: sha256:befd4f0be0d9ccff7fcbf8706e95fd61b0fbec54d285767167923404bea9c3ba
+cas_ref: sha256:befd4f0be0d9ccff7fcbf8706e95fd61b0fbec54d285767167923404bea9c3ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PB.1 的编码约定：把给定指数元组解释为对应素数幂乘积，未断言该编码单射、保成本或与运行相容。
+    previous_atom_id: 9947ab4e7f1d74ed304002ad55610d1a25d7ca61f9707f949416e24fcc35ca89
+    next_atom_id: 9ebb073838d192762b9d578731a085f8d1a7a140474f8b2c3d9a5ff515445349

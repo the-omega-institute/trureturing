@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d54dc9b53862b1ea2d0b9164b96eb22ed9f5679df08b0be1db0b54331d838283
+  normalized_sha256: sha256:d54dc9b53862b1ea2d0b9164b96eb22ed9f5679df08b0be1db0b54331d838283
+cas_ref: sha256:d54dc9b53862b1ea2d0b9164b96eb22ed9f5679df08b0be1db0b54331d838283
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Numbering convention for local edge slots and complete appearance indices.'
+    previous_atom_id: 22bfa23d92aee46d6c2b4d1eaf05b411e374bd10a383fc27b8484c63f7afbfca
+    next_atom_id: a201094deda0931daa5d7226299ef50524b6b7e2fca8966eec34158c3188b0c5
