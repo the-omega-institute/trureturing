@@ -54,7 +54,6 @@ theorem power_integral_tail (alpha a : ℝ) (halpha : 0 < alpha) (ha : 0 < a) :
     (∫ t in Ioi a, t ^ (-2 * alpha - 1)) = -a ^ (-2 * alpha) / (-2 * alpha) := h
     _ = a ^ (-2 * alpha) / (2 * alpha) := by
       field_simp [halpha.ne']
-      ring
 
 /-- The capped profile has an exactly integrable linear energy near zero. -/
 theorem linear_integral_near (a : ℝ) (ha : 0 < a) :
@@ -66,10 +65,7 @@ theorem linear_integral_near (a : ℝ) (ha : 0 < a) :
   rw [intervalIntegrable_iff_integrableOn_Ioc_of_le ha.le] at hi
   refine ⟨hi, ?_⟩
   rw [← intervalIntegral.integral_of_le ha.le]
-  have h := integral_rpow (a := (0 : ℝ)) (b := a) (r := (1 : ℝ))
-    (Or.inl (by norm_num))
-  norm_num [Real.rpow_two] at h
-  exact h
+  simpa using (integral_id (a := (0 : ℝ)) (b := a))
 
 private theorem quadratic_cap_bound (p q B x : ℝ)
     (hq : 0 ≤ q) (hxB : x ≤ B) (hp : 2 * q * B ≤ p) :

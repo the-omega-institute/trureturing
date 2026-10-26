@@ -39,7 +39,8 @@ private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
     · rintro ⟨x, hx, rfl⟩
       exact div_pos hx.1 (sub_pos.mpr hx.2)
     · intro ht
-      have hden : 0 < 1 + t := by linarith
+      have ht0 : 0 < t := ht
+      have hden : 0 < 1 + t := add_pos zero_lt_one ht0
       have hx0 : 0 < t / (1 + t) := div_pos ht hden
       have hx1 : t / (1 + t) < 1 := (div_lt_one hden).2 (by linarith)
       refine ⟨t / (1 + t), ⟨hx0, hx1⟩, ?_⟩
@@ -56,7 +57,7 @@ private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
       HasDerivWithinAt phi (((1 - x) ^ (2 : Nat))⁻¹) (Ioo 0 1) x := by
     have h := (hasDerivAt_id x).div ((hasDerivAt_id x).const_sub 1)
       (sub_pos.mpr hx.2).ne'
-    convert h.hasDerivWithinAt using 1 <;> dsimp only [phi] <;> ring
+    convert h.hasDerivWithinAt using 1 <;> simp only [phi] <;> ring
   have hpoint (x : ℝ) (hx : x ∈ Ioo (0 : ℝ) 1) :
       |((1 - x) ^ (2 : Nat))⁻¹| • g (phi x) =
         x ^ (p - 1) * (1 - x) ^ (-p) := by
@@ -82,6 +83,7 @@ private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
       integral_Ioc_eq_integral_Ioo, ← integral_complex_ofReal]
     apply setIntegral_congr_fun measurableSet_Ioo
     intro x hx
+    dsimp only
     rw [Complex.ofReal_mul, Complex.ofReal_cpow hx.1.le,
       Complex.ofReal_cpow (sub_nonneg.mpr hx.2.le)]
     push_cast
@@ -98,6 +100,7 @@ private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
       ∫ t in Ioi (0 : ℝ), g t := by
     apply setIntegral_congr_fun measurableSet_Ioi
     intro t ht
+    change Real.rpowIntegrand₀₁ p t 1 = g t
     rw [Real.rpowIntegrand₀₁_eq_pow_div hp ht.le zero_le_one]
     simp only [g, mul_one, add_comm]
   apply Complex.ofReal_injective
@@ -114,6 +117,8 @@ private theorem scalar_inverse_power_integral (alpha : ℝ) (halpha : alpha ∈ 
       (fun t => lambda⁻¹ * Real.rpowIntegrand₀₁ (1 - alpha) t lambda)
       (inversePowerKernel alpha lambda) (Ioi (0 : ℝ)) := by
     intro t ht
+    change lambda⁻¹ * Real.rpowIntegrand₀₁ (1 - alpha) t lambda =
+      inversePowerKernel alpha lambda t
     rw [Real.rpowIntegrand₀₁_eq_pow_div hp ht.le hlambda.le]
     dsimp only [inversePowerKernel]
     rw [show (1 - alpha) - 1 = -alpha by ring]
@@ -122,7 +127,7 @@ private theorem scalar_inverse_power_integral (alpha : ℝ) (halpha : alpha ∈ 
     <;> ring
   have hraw := Real.integrableOn_rpowIntegrand₀₁_Ioi hp hlambda.le
   have hi : IntegrableOn (inversePowerKernel alpha lambda) (Ioi (0 : ℝ)) :=
-    (hraw.const_mul lambda⁻¹).congr_fun hkernel measurableSet_Ioi
+    IntegrableOn.congr_fun (hraw.const_mul lambda⁻¹) hkernel measurableSet_Ioi
   have hsin : 0 < Real.sin (Real.pi * alpha) :=
     Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos halpha.1)
       (by simpa using mul_lt_mul_of_pos_left halpha.2 Real.pi_pos)
