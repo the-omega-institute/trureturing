@@ -13,11 +13,13 @@ import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Range
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FinCases
+
+/-! The source error model admits a finite circuit whose output error decreases with preparation error. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
