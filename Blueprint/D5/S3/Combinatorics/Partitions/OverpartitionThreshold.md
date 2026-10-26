@@ -36,9 +36,7 @@ $$\forall n \in Nat,\; \forall o \in \operatorname{Overpartition}\left(n\right),
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/OverpartitionThreshold.largest` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Subhash Chand Bhoria, Pramod Eyyunni, Subhrangsu Santra (2026). *On the number of missing integers in partitions*. DOI: [10.48550/arXiv.2604.12557](https://doi.org/10.48550/arXiv.2604.12557). URL: <https://arxiv.org/abs/2604.12557v1>.
+*Citation.* Subhash Chand Bhoria, Pramod Eyyunni, Subhrangsu Santra (2026). *On the number of missing integers in partitions*. DOI: [10.48550/arXiv.2604.12557](https://doi.org/10.48550/arXiv.2604.12557). URL: <https://arxiv.org/abs/2604.12557v1>.
 
 *Commentary.*
 
@@ -50,9 +48,7 @@ $$\forall k \in Nat,\; \forall n \in Nat,\; \operatorname{U}\left(k, n\right) = 
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/OverpartitionThreshold.U` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Subhash Chand Bhoria, Pramod Eyyunni, Subhrangsu Santra (2026). *On the number of missing integers in partitions*. DOI: [10.48550/arXiv.2604.12557](https://doi.org/10.48550/arXiv.2604.12557). URL: <https://arxiv.org/abs/2604.12557v1>.
+*Citation.* Subhash Chand Bhoria, Pramod Eyyunni, Subhrangsu Santra (2026). *On the number of missing integers in partitions*. DOI: [10.48550/arXiv.2604.12557](https://doi.org/10.48550/arXiv.2604.12557). URL: <https://arxiv.org/abs/2604.12557v1>.
 
 *Commentary.*
 
