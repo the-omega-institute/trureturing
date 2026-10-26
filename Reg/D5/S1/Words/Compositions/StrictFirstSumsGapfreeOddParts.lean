@@ -74,7 +74,7 @@ def familyRegistration : Registration arena (type_of% (@height_mem_iff)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@height_mem_iff) (type_of% (realize signature actual.readout actual.anchor))
-    Type Unit where
+    Unit Unit where
   unitName :=
     `D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts.height_mem_iff.__information_unit
   realizationName := `Reg.D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts.familyRegistration
@@ -91,7 +91,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts
     definition := none

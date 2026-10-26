@@ -68,7 +68,7 @@ def familyRegistration : Registration arena (type_of% (@result)) where
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@result) (type_of% (realize signature actual.readout actual.anchor))
-    Type Unit where
+    Unit Unit where
   unitName := `D5.S3.Combinatorics.Partitions.OverpartitionThreshold.result.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.OverpartitionThreshold.familyRegistration
   realizationSource := none
@@ -84,7 +84,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.OverpartitionThreshold
     definition := none
