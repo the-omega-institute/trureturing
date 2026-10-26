@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, without the CH induction or the final collision premise.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws and concrete RawHistory now constructed; the original uniform same-eta correspondence and joint endpoints remain open.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -810,3 +810,63 @@ public additions are data structures and construction definitions; the
 transport proofs are private and consumed. The inherited information
 audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750.
+
+
+## Actual coherent history from CH
+
+`SignedOrdinalHistory.run` now constructs one coherent family of actual
+countable-stage states from `continuum = aleph-one` alone. A strict-past
+well-founded fixpoint proves totality and pairwise coherence, then recovers
+the canonical present values. The run unfolds to its own actual advancement:
+the initial predecessor, the same selected successor Q/R, or the literal
+proper-limit extension of its own strict archive. No complete-history or
+step-supplier hypothesis provides the run.
+
+Whole original U/B/V/nu birth families, their onto proofs and every original
+Label are preserved by exact transports. Permanent reservoirs are read from
+the same outgoing event at max(row,label). Proper F retains regular signed
+limits of total variation at most one for arbitrary original norm-one lifts.
+Cofinal ordinary, delayed and launch treatments refer to the same selected
+Q/R and the original birth clopen codec; local delayed eligibility is proved
+stable after construction without consulting a future final space.
+
+This closes the coherent-history construction step, not Problem 8.2. The
+literal final omega-one Prefix, post-run Data/Laws, concrete RawHistory and
+joint signed-ball/Grothendieck/anti-homeomorphism endpoints remain separate
+obligations. FullCHLeanSolved and officialSolved remain zero. The four-slot
+information audit is unfinished under issue 21750; the compiled Reg modules
+currently reconstruct the exact source statements and do not claim
+`declared_validated` registration.
+
+
+## Literal final space and every proper slice
+
+`SignedOrdinalRealization.finalPrefix` constructs the literal omega-one
+Prefix from the same canonical coherent `SignedOrdinalHistory.run`, without
+an assumed completed history. Its final space is the actual compatible-thread
+subset of the Boolean cube. The initial omega cube remains an onto image.
+Every proper cutoff, including zero, finite cutoffs, omega and successor last
+rows, has concrete `properData` and the original `properLaws`. No Data, metric
+or countable-stage F is asserted at the final omega-one cutoff.
+
+Whole U/B/V/nu families and all original Label-by-Nat measures are read from
+the same actual birth through equality of literal carriers. Successor
+carriers, projections, permanent reservoirs, historical J and prepared
+measures read the identical selected Q/R. `SignedOrdinalRawHistory.rawHistory`
+is the concrete raw history of this run; no raw-history supplier remains in
+that construction.
+
+These results complete the final-space and proper-slice construction layer.
+Ordinary and delayed treatment cofinality, and support-launch cofinality, are
+proved on the actual run. The original paper uses one eta for both launch
+support and quantitative G; this exact uniform same-eta correspondence is
+still a separate obligation here, and is not inferred by equating the two
+existing schedules. The joint Banach-space and topological endpoints also
+remain separate. This delivery does not solve Problem 8.2; FullCHLeanSolved
+and officialSolved remain zero.
+
+The information audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
+Reg modules check exact source reconstruction, including the public transport
+and proper-slice statements; this does not constitute a declared_validated
+four-slot registration.

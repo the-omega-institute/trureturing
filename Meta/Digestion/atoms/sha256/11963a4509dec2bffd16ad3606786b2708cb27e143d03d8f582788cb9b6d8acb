@@ -1,0 +1,22 @@
+**Corollary 40.2 (contact and the existing five-read consumers).** At $e(y)=\delta$, either truth value of each test in (39.7) is permitted; their disjunction settles exact-radius unboundedness. At $e(y)>\delta$ both tests fail, and at $e(y)<\delta$ at least one passes. These last two statements follow from Theorems 31.2 and 32.1 combined with Theorem 40.1.
+
+For the very same five reads with $k=d=0$, Proposition 34.1 supplies
+
+$$
+ y^{\rm B}=(0,2,0,0,0),\qquad\delta=1:
+                  \quad(\mathsf{Pass}_{12},\mathsf{Pass}_{21})
+                                      =(\mathrm{false},\mathrm{false}).
+ \tag{40.2}
+$$
+
+Proposition 35.1 supplies
+
+$$
+ y^{\rm U}=(1,7/10,17/10,19/10,21/10),\qquad\delta=3/5:
+                  \quad(\mathsf{Pass}_{12},\mathsf{Pass}_{21})
+                                      =(\mathrm{true},\mathrm{false}).
+ \tag{40.3}
+$$
+
+These are applications of their existing proofs, without repeating their world constructions. The $12$ assertion in (40.3) uses its actual family (35.3). For the negative $21$ assertion, an unbounded $P_{21}$ subsequence would, by the corresponding half of the proof of Theorem 30.2, have a finite record limit in $\mathcal E_{21}$ inside the closed radius-$3/5$ box. Its distance is $7/10>3/5$, which excludes that subsequence. Thus the finite criterion consumes both opposite exact-radius examples, including the zero auxiliary polynomial allowed in their limit spaces.
+

@@ -4,6 +4,10 @@ internal sealed class LatticeSectorChannelTransportDocument : IScribeDocumentDef
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "LatticeSectorChannelTransport", H("Actual ordinary-sector collision transport"), Blocks(
+            Describe.Lean(DescribeId.Create("latticesectorchanneltransport-iterate-borcherds"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorChannelTransport.iterate_borcherds"),
+                H("iterate_borcherds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original all-integer canonical Borcherds identity, with the first state truncated on the original third state, gives the cleared iterate as a finite-support signed binomial residue."))), DescribeRole.Theorem),
             Paragraph(Text("For arbitrary integral symmetric even lattice data, charges and descendant states, the actual state-field locality and statewise truncation bounds give a common vector power series P. The clearing exponent N is independent of the third state. The product and reverse product have cleared coefficients P; original Borcherds with p=A identifies the cleared iterate with P(t+y,y), retaining signed integer binomial coefficients. Supported finite inverse expansions recover the ordered product and iterate in their respective chambers. The canonical field keeps its original lattice cocycle. FullIO transport uses the two existing fullUniversal equivalences and charge reassociation, and is consumed by the supported equation for every lawful finite-target field, including repeated target charges. Only this classification consumer requires a two-sided complex Gram inverse. No sewing law, positivity, homogeneity or finite descendant cutoff is assumed. These coefficient theorems make no braided-category, pentagon, Monster, anomaly, CFT, string-theory or AdS/CFT realization claim.")),
             Describe.Lean(
                 DescribeId.Create("latticesectorchanneltransport-product"),

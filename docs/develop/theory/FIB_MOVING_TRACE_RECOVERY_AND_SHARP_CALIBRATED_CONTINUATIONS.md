@@ -3160,3 +3160,349 @@ The additional mathematical synthesis is repo-derived: the exact weighted drift 
 These are real-arithmetic mathematical statements for arbitrary received reals and nonnegative radius. Their certificate counts do not assert efficient enumeration, stable numerical evaluation, finite-bit computability for arbitrary real presentations, physical realization, literature novelty, optimal counts or Lean/kernel verification. No source bound, gain floor, gain normalization, sign choice, root exclusion or discarded paid read is introduced. Every successful reconstruction contains one actual legal $P,H,D$ and all original raw errors. Exact-radius boundedness and boundedness after positive radius inflation retain their different meanings.
 
 ## 追加锚（本行以下为增补区）
+
+## 49. Rational records, paid-clock heights, and the size of the joint certificates
+
+**Definition 49.1 (finite input and common algebraic output).** Fix $k,d\ge0$, $p=k+1$, $r=3k+4$, and exactly the history (26.2), with $L=3k+d+5$. A world and its errors have exactly the real domains in Definitions 25.1 and 30.1. Only the received $y_0,\ldots,y_{L-1}$ and the radius $\delta\ge0$ are now required to be rational. For a reduced rational $a/b$, $b>0$, charge
+
+$$
+ \ell(a/b)=1+\lceil\log_2(1+|a|)\rceil
+                 +\lceil\log_2(1+b)\rceil.
+ \tag{49.1}
+$$
+
+The integer degrees are binary encoded, the record is the ordered list at all $L$ original clocks, and put
+
+$$
+ \tau=2+\ell(k)+\ell(d)+\ell(\delta)
+                         +\sum_{i=0}^{L-1}\ell(y_i).
+ \tag{49.2}
+$$
+
+Here an integer in $\ell$ has denominator one. Parsing and checking the declared length and the sign of $\delta$ are charged. No real source coefficient is part of the input. A positive rational threshold $B$ has additional length $b=\ell(B)$; put $b=0$ when no threshold is requested.
+
+A common real-algebraic representation of a whole world means a squarefree $F\in\mathbb Z[T]$, a rational open interval isolating one real root $\theta$ of $F$ (a specified rational root may instead be given as a rational point), a positive integer $a$, and integer polynomials $G_j$ of degree less than $\deg F$. Every output scalar is $G_j(\theta)/a$, using this same $\theta,a$. The scalar list consists of the four entries of $P$, all $p$ coefficients of the one whole $H$, all $d+1$ coefficients of the one whole $D$, and the $L$ original errors. Leading zero coefficients are retained. The algebraic degree of this representation is $\deg F$, not the number of output coordinates. It is not required that $F$ be irreducible. Purely rational worlds may be encoded using a degree-one $F$. Output length charges every integer coefficient, interval endpoint and list entry. All costs below are deterministic Turing bit operations; integer multiplication may be schoolbook multiplication.
+
+**Theorem 49.2 (source-specific height control before real-root computation).** Use all complete certificates of §§44–46, with their original rational coefficients, and substitute $\alpha=x$, $\beta=s-x$. Retain identically zero polynomials as fixed zero signs. Write $\mathcal N$ for (46.3), and set
+
+$$
+ \begin{aligned}
+ D_0&=2p,& a_0&=p+r+10,\\
+ h&=2^{16a_0^2}
+       \bigl(\tau+L^2\lceil\log_2(2L)\rceil+2\bigr).
+ \end{aligned}
+ \tag{49.3}
+$$
+
+The family of at most $\mathcal N$ source polynomials, including $x,s-x$, can be written as integer polynomials of total degree at most $D_0$ and coefficient bit length at most $h$, each obtained by multiplying its original rational polynomial by a known positive rational. All constant signs $c_T$ can also be computed exactly with numerator and denominator lengths at most $h$. Generation of these data, their labels and their raw sign vectors is possible in
+
+$$
+ O\!\left(2^{16a_0^2}(L+\mathcal N+1)^6(h+1)^2\right)
+ \tag{49.4}
+$$
+
+bit operations. For a selected complete label the reconstruction in (45.7), including all coefficients of $D$, has rational-function descriptions whose numerator and denominator coefficient lengths are at most $h$ and whose source degrees are bounded by $D_0+2$. These descriptions can be generated within (49.4). They describe one common error lift, not independent error allowances for the moment coordinates.
+
+**Proof.** The degree and label counts, and the exact equivalence of these certificates with the original fiber, are Theorems 45.2 and 46.1; they are used without new elimination of the original worlds. The height estimates and bit costs below are repo-derived for this paid history and its joint raw-error lift. Interpolation, determinant identities and the real-algebraic algorithms cited in the proofs remain their mature suppliers.
+
+Let $q_y$ be the product of the positive input denominators of $\delta,y_0,\ldots,y_{L-1}$, and let
+
+$$
+             m_0=(L-1)!,\qquad R_0=m_0q_y.
+ \tag{49.5}
+$$
+
+Then $\log_2 q_y\le\tau$ and $\log_2 m_0\le L\log_2 L$. All entries of $W$ have denominator dividing $m_0$, because
+
+$$
+ m_0\omega_i=(-1)^{L-1-i}\binom{L-1}{i}.
+ \tag{49.6}
+$$
+
+Their numerator lengths are at most $L+r\lceil\log_2(2L)\rceil+2$. Every cumulative matrix $A_i$ is an integer matrix with entries of absolute value at most $2^i$: multiplication by either original atom $M,J$ increases the maximum row sum by at most a factor two. Constructing the entire consecutive history by $L-1$ such multiplications uses $O(L^3)$ bit operations, including storage. Powers of the clocks up to $d+r+p$ have at most $(d+r+p)\lceil\log_2(2L)\rceil+1$ bits and can be generated by repeated integer multiplication. In particular growing clock indices and Fibonacci matrix entries are not unit-cost constants.
+
+The coefficients of $\rho_J$ have absolute value at most $(L+1)^{r-1}$. Combining this bound with (49.6), each sum defining $C_\nu,b,h_J,v_t,A_{\nu,\ell},\lambda_\ell$ has denominator dividing $R_0$ and numerator length bounded by
+
+$$
+ t_0=16a_0\bigl(\tau+L\lceil\log_2(2L)\rceil
+                         +a_0\lceil\log_2(2a_0)\rceil+2\bigr).
+ \tag{49.7}
+$$
+
+This includes the absolute values in $h_J$: they are signs of known rational integers at the original clocks. No algebraic sign service is needed for them. Computing the $F$ facet rows and $V$ vertices takes at most $O((F+V)L(r+p+1)^2)$ rational additions and multiplications of these bounded descriptions, in addition to generating the clock powers. The lists are exactly (44.7) and (44.10), rather than all $2^L$ box corners.
+
+A determinant with $n$ columns, polynomial entries of degree at most two and entry numerator length $t_0$, has common denominator $R_0^n$. Expansion into its $n!$ products bounds every numerator coefficient length by
+
+$$
+ n t_0+\lceil\log_2(n!)\rceil
+                     +n\lceil\log_2 6\rceil+2.
+ \tag{49.8}
+$$
+
+The relevant orders are at most $p+1$ for reduced bases and slacks and $r+1$ for the error simplex. In $M_a$ the replaced column has denominator dividing $R_0^{p+1}$ and the other $r$ columns have denominators dividing $R_0$. Thus a common denominator $R_0^{a_0}$ clears every certificate polynomial and every $c_T$. All these powers are positive. Products by $\alpha+\beta$ and the substitution $\beta=s-x$ add at most $D_0+2$ bits per monomial expansion, up to the monomial-count logarithm. Equations (49.7)–(49.8), applied also to $u=\Delta b-CN$, are smaller than (49.3).
+
+For the drift, interpolation of the $d+1$ residual values at $0,\ldots,d$ uses
+
+$$
+ D(\tau')=\sum_{i=0}^d R_i
+       \frac{\prod_{0\le j\le d,\,j\ne i}(\tau'-j)}
+                    {(-1)^{d-i}i!(d-i)!}.
+ \tag{49.9}
+$$
+
+The denominators divide $d!$, and numerator coefficients have length $O(d\log(2d))$. Applying this linear expression to the common rational-function residuals (46.4) adds only $O(L^2\log(2L))$ to a coefficient-length bound. The common source denominator is $\alpha+\beta$; the other nonconstant denominators are $\Delta$ and $c_T\Delta$. The degree estimates in §46 and these expressions give the asserted conservative $D_0+2$ bound. The constant factorial denominators are charged in $h$. Formula (49.9) is the same fixed-node Lagrange input already credited to Berrut–Trefethen in §48; it is not a new interpolation theorem.
+
+For cost, generate subsets in their specified order and evaluate the displayed determinant expansions with exact integers and known denominators. Their largest order is bounded by $a_0$. The number of reduced bases, complete labels and constant simplices is bounded by the quantities in (46.1)–(46.3); the additional loops over raw clocks, monomials and output coefficients have at most a fixed power of $L+\mathcal N+1$. The factors $a_0!$, the bounded-degree polynomial multiplications and all their monomial counts are less than $2^{16a_0^2}$. Schoolbook integer operations on the lengths just bounded, with sequential summation using common denominators, give (49.4). This also accounts for enumerating the labels that are subsequently rejected as singular. The calculation uses integer/rational arithmetic only. $\square$
+
+## 50. Exact finite-bit decisions with exceptional fibers included
+
+**Definition 50.1 (quantitative parameters for the same received record).** For the integer source family of Theorem 49.2 put
+
+$$
+ \begin{aligned}
+ E&=8(D_0+1)^2,& A&=E^2D_0,\\
+ J&=(2D_0+2)^8(h+1),&
+ M_0&=10(\mathcal N+1)^2(D_0+1)^4,\\
+ K_0&=(2A+2)^{100(A+1)^2},&
+ \eta&=2^{-(J+3)},\qquad U=2^{J+3}.
+ \end{aligned}
+ \tag{50.1}
+$$
+
+These deliberately coarse integer parameters are computable from the finite input. $J$ is a coefficient-length bound, not an uncharged precision oracle. Writing the dyadic $\eta$ or the integer $U$ in ordinary binary charges $J+O(1)$ bits.
+
+**Theorem 50.2 (full real-world semantics and polynomial bit decision).** There is a deterministic finite-bit algorithm for every $k,d\ge0$ and every input of Definition 49.1 which returns separately:
+
+1. whether $\mathcal W_\delta(y)$ is nonempty;
+2. for each $\nu\in\{12,21\}$, whether its original source entry is unbounded on $\mathcal W_\delta(y)$;
+3. for each failed direction, the valid finite bound $P_\nu\le U$ for every original compatible real world. If the class is empty, it instead reports emptiness and may return the vacuous bound zero.
+
+Here $P_\nu$ denotes $P_{12}$ or $P_{21}$, as appropriate. A nonempty compatibility answer can also return one whole world in the common representation of Definition 49.1, with degree at most $A$. The algorithm, including that optional world, costs at most
+
+$$
+ O\!\left(K_0(L+\mathcal N+1)^{12}(h+1)^{12}\right).
+ \tag{50.2}
+$$
+
+The constants in $O$ are absolute. All roots, zeros, signs, projections and reconstructions are included. In particular this is a polynomial bit bound in $d$ and actual input length for every fixed $k$, rather than a polynomial certificate count or an invocation of an uncosted real decision procedure.
+
+**Proof.** Use the following mature projection input inside the source-specific decision. Apply Basu–Pollack–Roy, [*Algorithms in Real Algebraic Geometry*, second edition, Theorem 5.16 and Algorithm 11.1, printed pp. 165–166 and 403–405](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), eliminating only $x$ from the integer family in $(s,x)$. Their ordered integral domain is $\mathbb Z$, contained in the real closed field $\mathbb R$. Their truncations, leading coefficients and signed principal subresultant coefficients are all retained. Adjoin $s$ and all nonzero coefficient polynomials in $s$ of the input family. Constants may be retained; identically zero projection polynomials are removed by integer coefficient inspection.
+
+For specificity, the truncations are every initial segment $\sum_{j=0}^t f_j(s)x^j$ of each $f$. The projection uses their leading coefficients, their signed principal subresultant coefficients with their own $x$ derivatives, and those of each pair of truncations. The equal-degree pair is first reduced by the leading-coefficient combination specified in Algorithm 11.1. Thus degree drops are covered before specializing $s$; a single discriminant is not substituted for this projection. This is a direct use of the supplier, not a new projection algorithm.
+
+The enlarged projection has at most $M_0$ members, degree at most $E$, and integer coefficient length at most $J$. Indeed there are at most $\mathcal N(D_0+1)$ truncations and $O(\mathcal N^2(D_0+1)^3)$ principal coefficients. Each is a determinant of order at most $2D_0$ with entries consisting of original coefficients, their derivative multiples, or the leading-coefficient combination of two original polynomials. Those entries have $s$ degree at most $2D_0$ and length at most $2h+O(\log(D_0+1))$. Expanding each determinant bounds its degree by $4D_0^2$ and its coefficient length by $O(D_0(h+D_0\log(D_0+1)))$. The larger explicit $E,J,M_0$ in (50.1) dominate these bounds. They also dominate the added coefficients and $s$. Generation by determinant expansion has bit cost bounded by a fixed polynomial in $\mathcal N,h+1$ times $(2D_0+2)^{O(D_0)}$, which is absorbed by (50.2). No factorization over $\mathbb R$, $\mathbb R(s)$ or $\mathbb Q(s)$ is required.
+
+The supplier's conclusion is used as follows. Over each open interval of $s$ on which no nonzero projection member vanishes, all real roots of all nonzero specialized input polynomials have continuous ordered sections, with fixed incidences and multiplicities. Every original polynomial has constant sign on each section and each intervening band. A polynomial identically zero on such a cylinder keeps sign zero. The two boundary polynomials $x,s-x$ are in the input family, so these statements also hold after restricting to $0<x<s$. They include repeated roots and shared factors. At a projection root the algorithm below samples the specialized fiber itself; no assertion of generic degree or non-nullification is made there.
+
+Here are the finite-bit sampling details, including the exceptional algebraic fibers. The univariate integer operations used are Basu–Pollack–Roy Algorithms 10.4 and 10.6–10.8, printed pp. 372–382: squarefree real-root isolation, signs at roots, comparison and univariate sample points. On $n$ polynomials of degree at most $q$ and coefficient length at most $t$, their bound is $O(n^2q^5(t+\log(q+1))^2)$, using maxima over every polynomial whose sign or root is tested. They return actual real algebraic roots and rational sector samples. No infinitesimal specialization is used. The following reduction to those integer routines supplies the binary lifting estimate that is not asserted by the general lifting discussion in the supplier's §11.1.2.
+
+First isolate and order the roots of all projection members using these integer routines. Sample every positive projection root and every open subinterval of $(0,\infty)$ cut out by those roots, including the final unbounded interval. Open-interval samples can be rational dyadics, chosen from the isolating intervals; the outer root bound supplies the final one. There are at most $2M_0E+1$ such base samples. A base sample $s_0$ is either rational, or is represented by a squarefree $u\in\mathbb Z[S]$ of degree $e\le E$ and an isolating rational interval. For a rational sample use a linear $u$. Its coefficient and interval lengths are bounded by $(2E+2)^{10}(J+1)$; this follows either from the isolation bounds just quoted or from the elementary root-separation estimate below.
+
+At this selected $s_0$, test every coefficient of every $f(S,X)$ for zero by the integer univariate sign routine at $s_0$. A specialized polynomial all of whose coefficients vanish is recorded as the zero polynomial. For any other $f$, form
+
+$$
+ \begin{aligned}
+ g_f&=\gcd\bigl(u,f_0,\ldots,f_{D_0}\bigr),
+       &u_f&=u/g_f,\\
+ R_f(X)&=\operatorname{Res}_S(u_f(S),f(S,X)).
+ \end{aligned}
+ \tag{50.3}
+$$
+
+Zero coefficients may be omitted from the gcd, and rational denominators are cleared positively. The chosen $s_0$ remains a root of $u_f$, since $f(s_0,X)$ was not zero. Moreover $R_f$ is a nonzero integer polynomial: $u_f$ is squarefree and no one of its complex roots annihilates every coefficient of $f$. Equivalently the product of the nonzero conjugate specialized polynomials, times its known leading factor, is not zero. Its degree is at most $eD_0$ and it vanishes at every actual root of $f(s_0,X)$. The resultant determinant has order at most $E+D_0$, so its coefficient lengths are bounded by a power of $2E+2$ times $h+J+1$. Gcd and resultant computations here use only integer polynomial arithmetic; signed subresultants or determinant expansions give these bounds directly.
+
+Isolate the roots of all the nonzero $R_f$, merge these lists exactly, and take their real roots and rational points between consecutive roots, also including the two outer intervals. These are a superset of all necessary fiber samples. Extraneous roots arising from other conjugates of $s_0$ merely subdivide an actual sector. They cannot omit a root or change a sign between actual roots. There are at most $2\mathcal N ED_0+1$ fiber samples. Include all roots, even multiple or exactly active ones, after squarefree isolation; no strict inequality is substituted for an equality. To finish, evaluate all original $f(s_0,x_0)$ signs at each candidate, discard those failing $0<x_0<s_0$, and evaluate the complete predicates.
+
+For completeness, those bivariate sign evaluations have the following bounded integer construction. Let $u$ and $v$ be the squarefree integer polynomials isolating $s_0,x_0$, of degrees $e\le E$ and $m\le ED_0$. Put $n=em\le A$. In the rational algebra
+
+$$
+             \mathcal A=\mathbb Q[S,X]/(u(S),v(X))
+ \tag{50.4}
+$$
+
+use the $n$ monomials $S^iX^j$, $i<e,j<m$. This is a product of $n$ distinct complex points after extending scalars. Among the integers
+
+$$
+                   1\le c\le\binom n2+1
+ \tag{50.5}
+$$
+
+one makes $T=S+cX$ have distinct values at all these points. Each pair of distinct points rules out at most one $c$, since equality with identical $X$ and different $S$ rules out none. Compute the multiplication matrix of $S+cX$ and its characteristic polynomial, clearing a positive rational denominator to obtain $F_c\in\mathbb Z[T]$. Its squarefreeness, decided by $\gcd(F_c,F_c')=1$, is precisely the separating condition. Thus the finite enumeration (50.5) finds a separating $c$ without a primitive-element oracle. The powers $1,T,\ldots,T^{n-1}$ then form a basis: after extending scalars their value matrix is an invertible Vandermonde matrix. Rational linear systems therefore express $S,X$ as polynomials in $T$ of degree less than $n$. All these matrices have rational entries, and common denominators and determinant bounds control their sizes. This is the standard separating-element form of a rational univariate representation, as in Basu–Pollack–Roy §12.4 and Proposition 12.16, used here only on the explicitly bounded product algebra (50.4).
+
+The root $\theta=s_0+cx_0$ is selected by refining the two given isolating intervals and isolating $F_c$. Reduction of $f(S,X)$ using the two coordinate polynomials gives a rational polynomial in $\theta$. Clear its rational denominator positively and use Algorithm 10.6 to obtain its exact sign, including zero. This also provides a common representation of $s_0,x_0$, of degree at most $A$. It is harmless that (50.4) may contain other embeddings: the selected real root and its recovered two coordinates specify precisely the chosen pair.
+
+Here are explicit height and termination controls for the refinements and linear algebra. A squarefree integer polynomial of degree $q$ and coefficient length $t$ has roots of modulus at most $2^{t+1}$ and distinct roots at distance greater than
+
+$$
+                         2^{-2q^2(t+2)}.
+ \tag{50.6}
+$$
+
+For the first bound use the usual geometric-series root bound. For the second use its nonzero integer discriminant: the leading-coefficient power is at most $2^{(2q-2)t}$, every root difference other than a chosen closest pair is at most $2^{t+2}$, and the discriminant's absolute value is at least one. These inequalities imply (50.6), with room in the exponent. To compare roots of two polynomials use the squarefree part of their product; gcd first distinguishes equality. Factor coefficient heights for this squarefree part are bounded by the original height plus $O(q+\log(q+1))$, by the ordinary integer factor bound, also given in Basu–Pollack–Roy Corollary 10.12. Thus separation requires only polynomially many bits in these degrees and heights, not a numerical positive-gap promise.
+
+In (50.3) the degrees are at most $ED_0$. In (50.4) the dimension is at most $A$; at most $\binom A2+1$ separating integers are tried. Reduction of monomials, characteristic determinants, and Cramer's rule for the coordinate basis have orders and degrees bounded by powers of $A+1$. Expanding them bounds every coefficient length by $(2A+2)^{20(A+1)}$ times the input height at this step. The isolating refinements needed to identify $s_0+cx_0$ are bounded by (50.6) for $F_c$, together with $O(\log(A+1))$ bits for $c$. Exact zero is settled by gcd/sign computation before refinement for a nonzero sign. Consequently all operations on one such pair, including every sign of the input family, have bit cost bounded by
+
+$$
+ O\!\left((2A+2)^{60(A+1)^2}
+           (\mathcal N+1)^2(h+J+1)^6\right).
+ \tag{50.7}
+$$
+
+This estimate follows just by the determinant expansions, schoolbook rational arithmetic and the quoted integer isolation bounds; no unit-cost operation in an algebraic coefficient field is hidden in it. Denominator clearing in the $A$-dimensional matrices and all coefficient products are included. Rational sector samples use a linear $v$ and satisfy the same estimate. The number of base samples is $O(M_0E)$, the number of fiber samples per base is $O(\mathcal N ED_0)$, and scanning the complete labels and their signed constraints costs at most a further $O((L+\mathcal N+1)^2)$ per sample. Substitution of $M_0,J$ and enlargement to $K_0$ give (50.2), including Theorem 49.2. These bounds are intentionally larger than the individual arithmetic costs.
+
+A passing sample for either chart is now equivalent to nonempty compatibility. Sufficiency is the whole-world reconstruction in Theorem 45.2. For necessity take any original compatible real world, use its own chart parameters and its original whole gain, drift and all errors in (44.4), and then Theorem 45.2. The corresponding source point lies over either a projection root or an open base interval. In the former case its specialized fiber was sampled, including nullified polynomials; in the latter the credited sign-invariant sections and bands transfer its complete sign predicate to the chosen base sample. Thus some sampled predicate passes. This proves the separate nonemptiness answer, even for isolated sources, lower-dimensional coefficient fibers and zero radius. The algorithm need not enumerate the continuum of possible original worlds to retain this equivalence.
+
+It remains to decide unboundedness and prove the numerical bound. For each nonzero projection polynomial divide out its power of $s$ conceptually. Its nonzero constant coefficient has absolute value at least one and its coefficients have absolute value at most $2^J$. Applying the root bound to its reversed polynomial gives, for every nonzero root $z$,
+
+$$
+                  |z|\ge\frac1{1+2^J}>2^{-(J+1)}.
+ \tag{50.8}
+$$
+
+Thus the whole interval $(0,\eta)$ contains no positive projection root, regardless of how many projection members vanish at zero. Sample the single rational scale $s_*=\eta/2$ and its fibers by the same finite-bit procedure. Define a directional pass by the existence of a passing complete label in that fiber. The sign-invariant sections and bands, with the boundary sections $x=0,s$, show that such a label exists at every scale $0<s<\eta$ if it exists at one; if there is none at $s_*$ there is none throughout this interval. This is the same positive-scale implication proved in Lemma 39.2, now using the supplier's truncation/subresultant projection rather than the real factorization in (39.2).
+
+A directional pass gives compatible original worlds at every such positive scale, with the selected source entry exactly $1/s$, by (37.1) and Theorem 45.2. Conversely, if that original entry is unbounded, its own chart has a sequence $s=1/P_\nu\downarrow0$. Its complete predicates must pass at those points, so sign invariance forces the directional test to pass. If the test fails, any compatible real world with $P_\nu>U=1/\eta$ would have $0<s<\eta$ and a passing predicate, a contradiction. The weak bound $P_\nu\le U$ includes equality. Empty classes are distinguished by the preceding independent feasibility answer. Reconstruction and the common-output height estimate are completed in Theorem 51.1; they use only a selected passing sample and are included in the cost already allowed in (50.2). $\square$
+
+## 51. Whole algebraic worlds beyond every rational threshold
+
+**Theorem 51.1 (threshold witnesses and output length).** For the same finite input, suppose the directional test of Theorem 50.2 passes. For every rational $B>0$ there is a deterministic construction returning one actual world and all original errors in the common representation of Definition 49.1, such that
+
+$$
+ \begin{gathered}
+ P_{ab}>0,\quad \det P=0,\quad\operatorname{tr}P=1,
+ \qquad 0\ne H\in\Pi_k,\quad D\in\Pi_d,\\
+ y_i=H(i)\operatorname{tr}(A_iP)+D(i)+\xi_i,
+       \qquad |\xi_i|\le\delta\quad(0\le i<L),
+       \qquad P_\nu>B.
+ \end{gathered}
+ \tag{51.1}
+$$
+
+For either a nonemptiness witness or a threshold witness, the representation degree is at most $A$ of (50.1). The lengths of each integer coefficient and each isolating endpoint, including a common output denominator, are at most
+
+$$
+                K_0(L+1)^4(h+b+1)^4.
+ \tag{51.2}
+$$
+
+The number of output scalars is $4+p+(d+1)+L$, each with fewer than $A$ coefficient slots. Complete decision and threshold construction, including writing the output, cost at most
+
+$$
+ O\!\left(K_0(L+\mathcal N+1)^{12}(h+b+1)^{12}\right).
+ \tag{51.3}
+$$
+
+In particular, writing $e_0=(r-1)(p+r+1)=12k^2+30k+18$, this is also bounded by
+
+$$
+       O_k\!\left((d+\tau+b+2)^{12e_0+36}\right).
+ \tag{51.4}
+$$
+
+No bound on the actual real source or nuisance coefficients is supplied to the construction.
+
+**Proof.** Choose the rational dyadic scale
+
+$$
+                s_B=2^{-(J+4+b)}.
+ \tag{51.5}
+$$
+
+It belongs to $(0,\eta)$, and $1/s_B>B$, since $B<2^b$. The passing-direction equivalence in Theorem 50.2 guarantees a complete passing label at this scale. Compute fiber samples and signs there, and select any such label $(\nu,I,T)$. At the selected $0<x_B<s_B$, set $\alpha=x_B$, $\beta=s_B-x_B$ and use exactly (45.7). No limit world or coefficientwise approximant is used: $P$, the whole $H=(\alpha+\beta)Q$, the whole interpolated $D$, and all errors come from the one selected pair and label.
+
+In detail, $\Delta\ne0$, $c_T\ne0$, and some $N_j\ne0$. The $q_j=N_j/\Delta$ give a nonzero whole polynomial $Q$. The weights $\mu_a=M_a/(c_T\Delta)$ are nonnegative and sum to $\delta$; hence the same errors $\xi_i=\sum_a\mu_a\sigma_i^{t_a}$ have $|\xi_i|\le\delta$ and satisfy $W\xi=b-Cq$. Formula (49.9) therefore gives the unique $D$ agreeing with all $L$ residuals, by (44.13). The source chart gives strict entrywise positivity, rank one, trace one, and $P_\nu=1/s_B$. These are precisely the reconstruction facts of Theorem 45.2, used on the same original clocks and box. When $\delta=0$ the nonnegative weights all vanish, and every original error is zero. There is no division by $\delta$ or by an unknown sampled gain.
+
+At this rational scale each specialized integer polynomial has degree at most $D_0$ in $x$ and coefficient length at most
+
+$$
+                   h+D_0(J+4+b)+O(\log(D_0+1)).
+ \tag{51.6}
+$$
+
+The integer isolation and sign routines therefore produce actual algebraic $x_B$, or a rational sector sample, with polynomially bounded coefficient and isolation lengths. The common field for a threshold witness can in fact be obtained using just this one algebraic $x_B$ and the rational $s_B$. For a general feasibility witness, use the common $\theta$ of degree at most $A$ constructed from its selected base and fiber sample in (50.4)–(50.5). Both cases satisfy the same bound $A$, without assuming a stronger primitive degree assertion for arbitrary fibers.
+
+Here is the remaining common-denominator step, including the possibility that the representation polynomial has irrelevant conjugate factors. Express $s,x$ by the coordinate polynomials in $\theta$. Substitute these in the selected rational-function descriptions from Theorem 49.2 and reduce modulo the squarefree $F$ of the selected representation. All nonconstant divisors are products of $s,\Delta,c_T$, none of which vanishes at the selected root. Form one product $V(T)$ containing these divisors, and compute $G=\gcd(F,V)$. The selected root is not a root of $G$, as already decided by its exact signs. Replace $F$ by $F/G$, retain its isolating interval and reduce the coordinate polynomials again. Now $V$ is invertible modulo $F$ by the extended Euclidean algorithm. Thus every output scalar becomes a polynomial in $\theta$ with rational coefficients. This removes zero divisors at other embeddings without discarding the actual chosen world. Multiplying all positive rational coefficient denominators gives one positive integer $a$ and the integer $G_j$ of Definition 49.1.
+
+The dimension never exceeds $A$. Resultant, coordinate-basis and inverse computations use matrices or polynomial Euclidean computations of order bounded by powers of $A+1$. Equations (49.8), (50.6) and (51.6) bound their intermediate and final coefficient lengths by a constant depending explicitly on $A$ times $h+J+b+1$. Formula (49.9) adds at most $O(L^2\log(2L))$ bits to each unreduced drift coefficient. There are $O(L+p+1)$ output scalars and at most $A$ rational coefficients per scalar. Taking the product of their denominators increases length by at most the sum of these lengths, rather than an exponential in their number. These estimates are smaller than (51.2), using $J=(2D_0+2)^8(h+1)$ and the deliberately larger $K_0$. The same bounds cover the isolating intervals after the gcd restriction.
+
+For cost, compute only the selected world's $q,\mu,\xi$ and drift coefficients. Horner evaluation, polynomial reduction and common-denominator arithmetic in dimension at most $A$ have polynomial bit cost in the lengths just bounded. Fixed-node interpolation can be performed by the displayed $d+1$ Lagrange products, using a polynomial number of operations in $L$. Every one of the $L$ raw equations can also be evaluated in this representation with the same charged lengths; their validity here follows universally from the same-world reconstruction, rather than from a numerical tolerance. This reconstruction, its output storage and the extra fiber sampling at $s_B$ fit in (51.3). The nonemptiness witness in Theorem 50.2 uses the same reconstruction with $b=0$, so its asserted cost and degree are also established without circular dependence on the decision.
+
+Finally Theorem 46.1 gives $\mathcal N=O_k(L^{e_0})$; this counts all lift numerators as well as the reduced predicates. Also $L\le(3k+5)(d+1)$ and (49.3) gives $h=O_k((d+\tau+b+2)^3)$. Substituting these inequalities in (51.3) proves (51.4). The bit bound is not an optimality statement.
+
+All world quantifiers remain over the original real domains. The original-world-to-certificate implication in Theorem 45.2 starts with the world's own $P,H,D,\xi$; it does not rationalize its coefficients or change any one of its errors. The global feasibility test specializes exceptional fibers before sampling them and retains zero polynomials. The directional test instead works on the full interval $0<s<\eta$ and uses exact sections and sectors, including their zero signs. A sequence with any endpoint rate enters this interval and is covered by the same sign-invariant decomposition: neither $x/s$ nor its complement is bounded away from zero. The reconstructed actual gain is nonzero because $s>0$, $\Delta\ne0$ and some $N_j\ne0$ at the chosen point; its coefficients and its limiting auxiliary gain need not have a positive uniform lower bound along other scales. Thus empty and lower-dimensional fibers, exact contacts, gain roots, either gain sign and all degree drops remain included. These facts use the same whole world rather than separately chosen marginal fits. The conclusions concern exact mathematics under the stated model and radius; they assert no empirical validation of those premises, physical realization, literature priority or formal kernel verification. $\square$
+
+## 52. A five-read height boundary for finite source bounds
+
+**Proposition 52.1 (fixed certificate counts do not bound numerical source size).** Use the original five-read history (29.1), $k=d=0$, and the fixed rational record
+
+$$
+             y^{\rm U}=(1,7/10,17/10,19/10,21/10).
+ \tag{52.1}
+$$
+
+For every rational $x\ge4$ put
+
+$$
+ \delta_x=\frac35-\frac1{10x},\qquad
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},\qquad
+ H_x=\frac9{10x},\qquad D_x=\frac25-\frac4{5x}.
+ \tag{52.2}
+$$
+
+Then $\mathcal W_{\delta_x}(y^{\rm U})$ is nonempty and both escape directions fail. Nevertheless it contains this whole world with $P_{12}=x$. In particular, for $x=2^n$, $n\ge2$, the total rational input length is $O(n)$, both directional bounds are finite, and every valid $12$ bound is at least $2^n$. The label and projection count bounds depending only on $k,d$ are constant throughout this family. At the limiting rational radius $3/5$ the $12$ direction passes. Consequently a classifier receiving only a radius interval of prescribed positive width cannot always determine $12$ escape correctly, even when the exact record is supplied and every promised exact radius is rational with a nonempty compatibility class.
+
+**Proof.** Strict source legality and nonzero constant gain follow directly from (52.2). This uses the source and gain in (35.3), but increases its single whole drift by $1/(10x)$. Thus its residual $z-y^{\rm U}$ at the five original clocks is exactly
+
+$$
+ \begin{aligned}
+ r_0&=-\frac35+\frac1{10x}=-\delta_x,\\
+ r_1&=\frac35-\frac7{20x}+\frac9{40x^2},\\
+ r_2&=-\frac25+\frac{11}{20x}+\frac9{40x^2},\\
+ r_3&=-\frac35+\frac1{10x}+\frac9{20x^2},\\
+ r_4&=\frac1{10}+\frac1x+\frac9{40x^2}.
+ \end{aligned}
+ \tag{52.3}
+$$
+
+For $x\ge4$, $r_1>0$ and
+
+$$
+ \delta_x-r_1=\frac1{4x}-\frac9{40x^2}>0.
+ \tag{52.4}
+$$
+
+For the middle coordinate,
+
+$$
+ r_2+\delta_x=\frac15+\frac9{20x}+\frac9{40x^2}>0,
+ \qquad
+ \delta_x-r_2=1-\frac{13}{20x}-\frac9{40x^2}>0.
+ \tag{52.5}
+$$
+
+Also $r_3=-\delta_x+9/(20x^2)$, with $0<9/(20x^2)<2\delta_x$, and $r_4>0$ with
+
+$$
+             \delta_x-r_4=
+                \frac12-\frac{11}{10x}-\frac9{40x^2}>0.
+ \tag{52.6}
+$$
+
+The final strict inequality follows by evaluating the two decreasing positive subtracted terms at $x=4$. Taking all five original errors to be $\xi_i=-r_i$ proves compatibility, including exact contact at clock zero. The only change from the supplied family is the one common drift; no per-read gain or independently chosen residual is used.
+
+The supplier Proposition 35.1 gives
+
+$$
+ \operatorname{dist}_\infty(y^{\rm U},\mathcal E_{12})=3/5,
+ \qquad
+ \operatorname{dist}_\infty(y^{\rm U},\mathcal E_{21})=7/10.
+ \tag{52.7}
+$$
+
+Since $\delta_x<3/5$, the existing finite-record limit theorem, Theorem 30.2, excludes an unbounded source subsequence in either direction: such a subsequence would give a point of the corresponding $\mathcal E_\nu$ inside this very closed radius-$\delta_x$ box, contradicting (52.7). Thus both directions fail, while the displayed world forces every valid $12$ bound to be at least $x$. For $x=2^n$ the reduced numerator and denominator of $\delta_x=(6\cdot2^n-1)/(10\cdot2^n)$ have $O(n)$ bits, and the other input data are fixed. Any nonnegative rational upper bound at least $2^n$ has a numerator with at least $n+1$ binary bits. This proves the encoding and numerical-height assertion. At radius $3/5$ the original family (35.3) proves actual $12$ escape, as already used in (40.3).
+
+For the interval assertion, given any $\epsilon>0$, choose $n\ge2$ with $1/(10\cdot2^n)<\epsilon$. Both $\delta_{2^n}$ and $3/5$ lie in the interval $[3/5-\epsilon,3/5]$. The preceding proof gives nonemptiness and a failed $12$ direction at the former rational input, and a passing $12$ direction at the latter. The same radius interval and exact received record therefore admit two different correct Boolean answers. A rule using only that interval must be wrong on one of them. Exact finite-bit rational input distinguishes them by their encoded denominators, and Theorems 50.2–51.1 charge this height and the necessary algebraic operations. This is an information obstruction for the interval-only replacement, not a lower bound on optimal Turing running time.
+
+The new content of this consumer is the inward-radius whole-world family (52.2), together with its finite but necessarily growing directional bounds. Its inputs are the existing same-history contact example and limit-space exclusions, not a new general root-separation theorem. It shows why the height parameters and binary output lengths in §§49–51 carry mathematical information absent from a count of certificate labels. $\square$
+
+## 追加锚（本行以下为增补区）
