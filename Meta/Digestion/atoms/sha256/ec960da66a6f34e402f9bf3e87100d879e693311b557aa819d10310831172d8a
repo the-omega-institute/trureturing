@@ -1,0 +1,12 @@
+**Definition 9.1 (an identical-row source family).** With $m=d+1\ge2$, put
+
+$$
+P_\theta=\begin{pmatrix}1-\theta&\theta\\1-\theta&\theta\end{pmatrix},
+\qquad 0<\theta<1,
+\qquad
+\Xi_d=(0,1)\times(\mathbb R^m\setminus\{0\})\times\mathbb R.
+\tag{9.1}
+$$
+
+A point $(\theta,\beta,\delta)\in\Xi_d$ represents the world $(P_\theta,g,\delta)$ of Definition 1.1, with the same whole polynomial $g(t)=\sum_{j=0}^{m-1}\beta_jt^j$. These sources are strictly positive, have rank one and trace one, and satisfy $JP_\theta=P_\theta$. Hence every pure-$J$ prefix has reads $g(i)+\delta$ at its original clocks. No restriction on $\beta$ or $\delta$ is added by this source family.
+
