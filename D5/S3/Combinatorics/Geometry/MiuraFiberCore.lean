@@ -19,6 +19,31 @@ open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreBoundary
   MiuraFiberJoint MiuraPolynomialCoreSum MiuraRunCompositions
 open scoped BigOperators
 
+private abbrev AtSide {m n : ℕ} (h : Cell m n → ℤ) (sd : Side) : Prop :=
+  AllOnSide (fun v : Cell m n => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+    (minima h) (m : ℤ) (n : ℤ) sd
+
+private theorem joint_sides {m n M N : ℕ} {h : Cell m n → ℤ} {g : Cell M N → ℤ}
+    (red : JointReduction h g) : IsHeight h → ∀ sd, AtSide h sd ↔ AtSide g sd := by
+  induction red with
+  | refl h => intro _ _; rfl
+  | column h hm j k hj hk hjk tail ih =>
+    intro hh sd
+    exact (contractAt_all_minima_side_iff h hh hm j hj sd).symm.trans
+      (ih (MiuraCoreContract.contractAt_isHeight h hh hm j hj) sd)
+  | row h hn i k hi hk hik tail ih =>
+    intro hh sd
+    let f := MiuraCoreContract.contractAt (transposeHeight h) hn i hi
+    have htf : AtSide (contractRow h hn i hi) sd ↔ AtSide f (transposeSide sd) :=
+      transpose_all_minima_side_iff f sd
+    have hth : AtSide (transposeHeight h) (transposeSide sd) ↔ AtSide h sd := by
+      cases sd <;> exact transpose_all_minima_side_iff h _
+    have hc := contractAt_all_minima_side_iff (transposeHeight h)
+      (transpose_isHeight hh) hn i hi (transposeSide sd)
+    exact hth.symm.trans (hc.symm.trans (htf.symm.trans
+      (ih (transpose_isHeight (MiuraCoreContract.contractAt_isHeight
+        (transposeHeight h) (transpose_isHeight hh) hn i hi)) sd)))
+
 private theorem inactive_run_card {m n : ℕ} (h : Cell m n → ℤ)
     (hh : IsHeight h) (hm : 0 < m) (hn : 2 ≤ n) (hno : NoAdjacentFrozen h) :
     Fintype.card {j : Fin n // ¬ activeColumn h j} = numFrozenRuns h := by
@@ -45,7 +70,7 @@ private theorem active_inactive_dimension {m n : ℕ} (h : Cell m n → ℤ) :
     numActiveColumns h + Fintype.card {j : Fin n // ¬ activeColumn h j} = n := by
   classical
   rw [Fintype.card_subtype]
-  exact (Finset.card_filter_add_card_filter_not (activeColumn h) Finset.univ).trans
+  exact (Finset.card_filter_add_card_filter_not (s := Finset.univ) (activeColumn h)).trans
     (by simp)
 
 private theorem positive_extras {m n W : ℕ} (h : Cell m n → ℤ)
@@ -102,8 +127,15 @@ theorem core_positive_vectors_inject (a b m n : ℕ) (K : Core a b)
     (hm : 2*(a+b)-1 ≤ m) (hn : 2*(a+b)-1 ≤ n) :
     ∃ F : (PositiveLengths (m-rowOccupied K) (rowRuns K) ×
       PositiveLengths (n-colOccupied K) (colRuns K)) →
-        {g : Cell m n → ℤ // Residual a b g ∧ JointReduction g K.2.2.val},
-      Function.Injective F := by
+        {g : Cell m n → ℤ // Residual a b g ∧ JointReduction g K.2.2.val ∧
+          ∀ sd, AllOnSide (fun v : Cell m n => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+            (minima g) (m : ℤ) (n : ℤ) sd ↔
+          AllOnSide (fun v : Cell K.1.val K.2.1.val => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+            (minima K.2.2.val) (K.1.val : ℤ) (K.2.1.val : ℤ) sd},
+      Function.Injective F ∧
+        Nat.card (PositiveLengths (m-rowOccupied K) (rowRuns K) ×
+          PositiveLengths (n-colOccupied K) (colRuns K)) ≤
+        Nat.card {g : Cell m n → ℤ // Residual a b g} := by
   classical
   obtain ⟨hM,hN,hr,hcno,hrno,_,_⟩ := K.2.2.property
   have hMbound : K.1.val ≤ m := by have := K.1.isLt; omega
@@ -124,32 +156,47 @@ theorem core_positive_vectors_inject (a b m n : ℕ) (K : Core a b)
     intro x
     obtain ⟨r,hrs,hrm,hrr⟩ := her x.1
     obtain ⟨c,hcs,hcn,hcc⟩ := hec x.2
-    obtain ⟨g,hg,hred,he⟩ := indexed_joint_expansion a b K.2.2.val hM hN hr r c hrs hcs
-    rw [hrm,hcn] at g hg hred he
+    have H := indexed_joint_expansion a b K.2.2.val hM hN hr r c hrs hcs
+    rw [hrm,hcn] at H
+    obtain ⟨g,hg,hred,he⟩ := H
     exact ⟨r,c,g,hrs,hcs,hrm,hcn,hrr,hcc,hg,hred,he⟩
   choose r c g hp using hex
-  refine ⟨fun x => ⟨g x,(hp x).2.2.2.2.2.2.1,(hp x).2.2.2.2.2.2.2.1⟩,?_⟩
-  intro x y hxy
-  have heq : g x = g y := congrArg Subtype.val hxy
-  obtain ⟨hrs,hcs,hrm,hcn,hrr,hcc,hg,hred,he⟩ := hp x
-  obtain ⟨hrs',hcs',hrm',hcn',hrr',hcc',hg',hred',he'⟩ := hp y
-  have huw := indexed_joint_weights_unique K.2.2.val hr.1.1 hM hN hrno hcno
-    (r x) (r y) (c x) (c y) hrs hrs' hcs hcs' (g x)
-    hrm.symm hrm'.symm hcn.symm hcn'.symm he (heq.symm ▸ he')
-  apply Prod.ext <;> apply Subtype.ext
-  · funext i
-    obtain ⟨j,hj⟩ := er.surjective i
-    have ha := hrr j.val j.property
-    have hb := hrr' j.val j.property
-    rw [hj] at ha hb
-    rw [huw.1] at ha
-    omega
-  · funext i
-    obtain ⟨j,hj⟩ := ec.surjective i
-    have ha := hcc j.val j.property
-    have hb := hcc' j.val j.property
-    rw [hj] at ha hb
-    rw [huw.2] at ha
-    omega
+  let F : V → {g : Cell m n → ℤ // Residual a b g ∧ JointReduction g K.2.2.val ∧
+      ∀ sd, AtSide g sd ↔ AtSide K.2.2.val sd} :=
+    fun x => ⟨g x,(hp x).2.2.2.2.2.2.1,(hp x).2.2.2.2.2.2.2.1,
+      joint_sides (hp x).2.2.2.2.2.2.2.1 (hp x).2.2.2.2.2.2.1.1.1⟩
+  have hinj : Function.Injective F := by
+    intro x y hxy
+    have heq : g x = g y := congrArg Subtype.val hxy
+    obtain ⟨hrs,hcs,hrm,hcn,hrr,hcc,hg,hred,he⟩ := hp x
+    obtain ⟨hrs',hcs',hrm',hcn',hrr',hcc',hg',hred',he'⟩ := hp y
+    have huw := indexed_joint_weights_unique K.2.2.val hr.1.1 hM hN hrno hcno
+      (r x) (r y) (c x) (c y) hrs hrs' hcs hcs' (g x)
+      hrm.symm hrm'.symm hcn.symm hcn'.symm he (heq.symm ▸ he')
+    apply Prod.ext <;> apply Subtype.ext
+    · funext i
+      obtain ⟨j,hj⟩ := er.surjective i
+      have ha := hrr j.val j.property
+      have hb := hrr' j.val j.property
+      rw [hj] at ha hb
+      rw [huw.1] at ha
+      omega
+    · funext i
+      obtain ⟨j,hj⟩ := ec.surjective i
+      have ha := hcc j.val j.property
+      have hb := hcc' j.val j.property
+      rw [hj] at ha hb
+      rw [huw.2] at ha
+      omega
+  refine ⟨F,hinj,?_⟩
+  have hmpos : 1 ≤ m := by have := K.1.isLt; omega
+  have hnpos : 1 ≤ n := by have := K.2.1.isLt; omega
+  letI : Fintype {g : Cell m n → ℤ // Residual a b g} :=
+    (residual_finite a b hmpos hnpos).fintype
+  apply Nat.card_le_card_of_injective
+    (fun x : V => (⟨(F x).val,(F x).property.1⟩ : {g : Cell m n → ℤ // Residual a b g}))
+  intro x y he
+  apply hinj
+  exact Subtype.ext (congrArg Subtype.val he)
 
 end D5.S3.Combinatorics.Geometry.MiuraFiberCore
