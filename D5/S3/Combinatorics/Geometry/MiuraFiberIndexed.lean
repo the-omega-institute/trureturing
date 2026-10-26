@@ -8,6 +8,7 @@
 
 module
 public import D5.S3.Combinatorics.Geometry.MiuraCoreStretch
+import all D5.S3.Combinatorics.Geometry.MiuraCoreStretch
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /-! Indexed insertions into the actual array, with exact extremum positions. -/
@@ -16,6 +17,7 @@ namespace D5.S3.Combinatorics.Geometry.MiuraFiberIndexed
 open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreContract
   MiuraCoreCellExpand MiuraCoreExtremum MiuraCoreResidual MiuraCoreReduction
   MiuraCoreRestore MiuraCoreStretch MiuraCoreFrozenSlope MiuraSlabIncidence
+open private column_trans from D5.S3.Combinatorics.Geometry.MiuraCoreStretch
 open scoped BigOperators
 variable {m n : ℕ}
 
@@ -152,28 +154,21 @@ private theorem increment_cell {N : ℕ} (w v : Fin n → ℕ) (j : Fin n)
     (hkj : k.val = columnPosition v j) (p : Cell m n) (r : Cell m N)
     (hr : r.1 = p.1 ∧ r.2.val = columnPosition v p.2) :
     let k' : Fin (N+1) := ⟨k.val, by have := k.isLt; omega⟩
-    (cellExpand k' r hk0 (by simp only [Fin.val_mk]; omega)).1 = p.1 ∧
-      (cellExpand k' r hk0 (by simp only [Fin.val_mk]; omega)).2.val = columnPosition w p.2 := by
+    (cellExpand k' r hk0 (by change k.val + 1 < N + 1; omega)).1 = p.1 ∧
+      (cellExpand k' r hk0 (by change k.val + 1 < N + 1; omega)).2.val = columnPosition w p.2 := by
   dsimp only
   rw [increment_position w v j p.2 hw]
   by_cases hp : p.2 < j
   · have hpos := position_strict v hp
     have hlt : r.2.val < k.val := by omega
     have hnle : ¬ j ≤ p.2 := not_le.mpr hp
-    simp only [cellExpand, Fin.val_mk, hlt, dite_true, hnle, ite_false, add_zero]
+    simp only [cellExpand, Fin.val_mk, hlt, ite_true, hnle, ite_false, add_zero]
     exact hr
   · have hle : j ≤ p.2 := le_of_not_gt hp
     have hpos := (position_strict v).monotone hle
     have hnlt : ¬ r.2.val < k.val := by omega
-    simp only [cellExpand, Fin.val_mk, hnlt, dite_false, hle, ite_true]
+    simp only [cellExpand, Fin.val_mk, hnlt, ite_false, hle, ite_true]
     exact ⟨hr.1, by omega⟩
-
-private theorem column_trans {N P Q : ℕ} {f : Cell m N → ℤ}
-    {g : Cell m P → ℤ} {h : Cell m Q → ℤ}
-    (hf : ColumnReduction f g) (hg : ColumnReduction g h) : ColumnReduction f h := by
-  induction hf with
-  | refl _ => exact hg
-  | step f hm j k hj hk hjk tail ih => exact .step f hm j k hj hk hjk (ih hg)
 
 /-- Every coordinate of the entire finite extra-length vector is simultaneously realized
 by one actual normalized array, with exact individual extremum positions. -/
@@ -183,9 +178,9 @@ theorem indexed_column_expansion (a b : ℕ) (h : Cell m n → ℤ)
     ∃ g : Cell m (n + ∑ j, w j) → ℤ,
       Residual a b g ∧ ColumnReduction g h ∧ ColumnExtremaExpansion h w g := by
   classical
-  have go : ∀ S (w : Fin n → ℕ), (∑ j, w j) = S →
+  have go : ∀ (S : ℕ) (w : Fin n → ℕ), (∑ j, w j) = S →
       (∀ j, 0 < w j → frozenColumn h j) →
-      ∃ N (g : Cell m N → ℤ), N = n + ∑ j, w j ∧
+      ∃ (N : ℕ) (g : Cell m N → ℤ), N = n + (∑ j, w j) ∧
         Residual a b g ∧ ColumnReduction g h ∧ ColumnExtremaExpansion h w g := by
     intro S
     induction S using Nat.strong_induction_on with
@@ -213,8 +208,8 @@ theorem indexed_column_expansion (a b : ℕ) (h : Cell m n → ℤ)
         have hw : ∀ l, w l = v l + if l = j then 1 else 0 := by
           intro l
           by_cases hl : l = j
-          · subst l; simp only [v, Function.update_same, ite_true]; omega
-          · simp [v, Function.update_noteq hl, hl]
+          · subst l; simp only [v, Function.update_self, ite_true]; omega
+          · simp [v, Function.update_of_ne hl, hl]
         have ht := increment_total w v j hw
         have hvs : (∑ l, v l) < S := by omega
         have hv : ∀ l, 0 < v l → frozenColumn h l := by
@@ -226,7 +221,7 @@ theorem indexed_column_expansion (a b : ℕ) (h : Cell m n → ℤ)
         let f := stretchColumn g hm k hk
         have hN' : N + 1 = n + ∑ l, w l := by omega
         have hi := insertion_extrema g hg.1.1 hm k hk
-        have hinc := increment_cell w v j hw k hk.1 hk.2.1 hkj
+        have hinc := increment_cell (m := m) w v j hw k hk.1 hk.2.1 hkj
         have hposlt : ∀ p : Cell m n, columnPosition v p.2 < N := by
           intro p; rw [hN]; exact position_lt v p.2
         refine ⟨N+1, f, hN', stretchColumn_residual a b g hm k hk hg,
