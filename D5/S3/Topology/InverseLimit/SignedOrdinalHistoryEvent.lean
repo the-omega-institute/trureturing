@@ -200,9 +200,6 @@ theorem next_regular : RegularCurrent E.result.coordinates.extended
     SignedOrdinalPredecessor.next_regular_f E.result r hr d (fun n => (s n).1) hm hn
   exact ⟨⟨mu, hp, hneg⟩, hb, hc⟩
 
-/-- The canonical born B is retained alongside the entire prepared pack. -/
-abbrev bornB : ℕ → Clopens (K H) := E.Q.B
-
 end Event
 
 noncomputable def execute (H : Prefix (Order.succ a)) (ha : ω ≤ a)
@@ -224,13 +221,5 @@ noncomputable def scheduledLaunch (H : Prefix (Order.succ a)) (ha : ω ≤ a)
   let rd := CofinalTaskSchedule.execute ⟨a, P.proper⟩ (fun _ _ _ _ => False)
   have hv := CofinalTaskSchedule.execute_valid ⟨a, P.proper⟩ ha (fun _ _ _ _ => False)
   exact ⟨⟨rd.1.1, hv.1, hv.2.1⟩, rd.2⟩
-
-private theorem initial_delayed_false (launch : Launch (ω : Ordinal.{0}))
-    (Q : Prepared SignedOrdinalInitial.H0 (le_refl (ω : Ordinal.{0}))
-      SignedOrdinalInitial.predecessor launch)
-    (bornB : OldClopens SignedOrdinalInitial.H0 (le_refl (ω : Ordinal.{0})))
-    (θ s t : Label) (k : ℕ) : ¬ LocalDelayed Q bornB θ s t k := by
-  rintro ⟨hv, _⟩
-  exact (not_lt_of_ge hv.1) hv.2.1
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistoryEvent

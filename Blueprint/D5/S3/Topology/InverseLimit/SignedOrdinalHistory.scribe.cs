@@ -36,6 +36,10 @@ internal sealed class SignedOrdinalHistoryDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "limit_execution"), H("The same actual proper-limit Extension"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every proper successor-limit a above omega, the canonical run equals limitState of result on this same canonical strict past and its coherence proof. That result's Extension is retained whole: its I/J, DI/DJ and every-choice regular bounded F are read from the actual event. The archive contains only arrivals strictly before a and no dummy limit birth."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-history-proper-F"),
+                DeclarationHandle.Create(Owner + "proper_f"), H("Actual regular bounded proper F"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("At every countable carrier stage a, every strictly older row, eligible label and original norm-one lift sequence has a regular signed limit of total variation at most one along the actual incoming J, evaluated at each continuous real test. The same incoming event supplies regular bounded F; the weaker nextP.F is not used to recover discarded information. A metric is chosen only on the proper countable carrier to package its finite Jordan parts as regular. Regularity of the sum gives total variation regularity, finite total variation converts the real bound through ENNReal.toReal_le_toReal, and weak-dual convergence is evaluated test by test. No final metric or common final limit is asserted."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-history-ordinary-cofinal"),
                 DeclarationHandle.Create(Owner + "ordinary_cofinal"), H("Actual ordinary treatments cofinally often"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(

@@ -161,6 +161,14 @@ private noncomputable def successor_advance (hCH : Cardinal.continuum.{0} = ℵ�
   · subst c
     exact next_coherent (past b hb) hCH
 
+private noncomputable def successor_at (hCH : Cardinal.continuum.{0} = ℵ₁)
+    (a b : Stage) (he : nextStage b = a)
+    (past : ∀ c : Stage, c < a → State c)
+    (hc : ∀ c d hc hd hcd, Coherent hcd (past c hc) (past d hd)) :
+    {X : State a // ∀ c hc, Coherent hc (past c hc) X} := by
+  subst a
+  exact successor_advance hCH b past hc
+
 /-- One concrete advancement from this exact strict past. The initial,
 successor and proper-limit branches execute their actual constructors. -/
 noncomputable def advance (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
@@ -172,10 +180,7 @@ noncomputable def advance (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
   · subst a
     exact initial_advance hCH past
   by_cases hs : ∃ b : Stage, nextStage b = a
-  · let b := Classical.choose hs
-    have he : a = nextStage b := (Classical.choose_spec hs).symm
-    subst a
-    exact successor_advance hCH b past coherent
+  · exact successor_at hCH a (Classical.choose hs) (Classical.choose_spec hs) past coherent
   have hw : ω < ord a := lt_of_le_of_ne a.2
     (fun he => h0 (Subtype.ext (Subtype.ext he.symm)))
   have hl : Order.IsSuccLimit (ord a) := by
@@ -184,7 +189,10 @@ noncomputable def advance (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
     have hbω : ω ≤ b := by
       by_contra hn
       have hlt := Ordinal.isSuccLimit_omega0.succ_lt (lt_of_not_ge hn)
-      exact (not_lt_of_ge a.2) (he ▸ hlt)
+      apply (not_lt_of_ge a.2)
+      change ord a < ω
+      rw [← he]
+      exact hlt
     have hba : b < ord a := (Order.lt_succ b).trans_eq he
     let B : Stage := ⟨⟨b, hba.trans a.1.2⟩, hbω⟩
     exact hs ⟨B, Subtype.ext (Subtype.ext he)⟩
@@ -218,6 +226,16 @@ private theorem nextStage_injective : Injective nextStage := by
   intro b c he
   exact Subtype.ext (Subtype.ext (Order.succ_injective (congrArg ord he)))
 
+private theorem successor_at_readback (hCH : Cardinal.continuum.{0} = ℵ₁)
+    (b c : Stage) (he : nextStage c = nextStage b)
+    (past : ∀ d : Stage, d < nextStage b → State d)
+    (hc : ∀ d e hd he hde, Coherent hde (past d hd) (past e he)) :
+    (successor_at hCH (nextStage b) c he past hc).1 =
+      nextState (past b (show b < nextStage b from Order.lt_succ (ord b))) hCH := by
+  have hcb : c = b := nextStage_injective he
+  subst c
+  rfl
+
 private theorem advance_successor (hCH : Cardinal.continuum.{0} = ℵ₁) (b : Stage)
     (past : ∀ c : Stage, c < nextStage b → State c)
     (hc : ∀ c d hc hd hcd, Coherent hcd (past c hc) (past d hd)) :
@@ -228,14 +246,14 @@ private theorem advance_successor (hCH : Cardinal.continuum.{0} = ℵ₁) (b : S
     intro he
     exact (ne_of_gt (b.2.trans_lt (Order.lt_succ (ord b)))) (congrArg ord he)
   have hs : ∃ c : Stage, nextStage c = nextStage b := ⟨b, rfl⟩
-  have he : Classical.choose hs = b := nextStage_injective (Classical.choose_spec hs)
-  simp only [advance, dite_eq_right hn, dite_eq_left hs, he, successor_advance]
+  simp only [advance, dite_eq_right hn, dite_eq_left hs]
+  exact successor_at_readback hCH b (Classical.choose hs) (Classical.choose_spec hs) past hc
 
 /-- The first state is the actual executed initial prefix. -/
 theorem initial_execution (hCH : Cardinal.continuum.{0} = ℵ₁) :
     run hCH initialStage = initialState hCH := by
   rw [execution]
-  simp only [advance, dite_eq_left rfl, initial_advance]
+  simp [advance, initial_advance]
 
 /-- The next carrier and incoming event are those of this same selected R. -/
 theorem successor_execution (hCH : Cardinal.continuum.{0} = ℵ₁) (b : Stage) :
@@ -260,6 +278,41 @@ theorem limit_execution (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
   rw [execution]
   simp only [advance, dite_eq_right hn, dite_eq_right hs]
 
+/-- Proper F is read from the actual incoming event, retaining regularity
+and the norm bound, and evaluated separately at every continuous test. -/
+theorem proper_f (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
+    (r : Rows (ord a)) (hr : r ≠ newRow (ord a) a.2) (d : Coord (ord a))
+    (s : ℕ → SignedMeasure (K (run hCH a).H))
+    (hm : ∀ n, (s n).map (projection (run hCH a).H r) =
+      (((run hCH a).P.nu r hr ⟨d.1, (show d.1 < ord a from d.2).trans
+        (show ord a < ω₁ from a.1.2)⟩).1 n).1)
+    (hn : ∀ n, (s n).totalVariation univ = 1) :
+    ∃ mu : SignedMeasure (K (run hCH a).H), mu.totalVariation.Regular ∧
+      mu.totalVariation univ ≤ 1 ∧ ∀ g : C(K (run hCH a).H, ℝ),
+        Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
+          (cofinite ⊓ 𝓟 ((run hCH a).P.J r hr d))
+          (𝓝 (NormPreservingLifts.signedFunctional mu g)) := by
+  letI : Countable (Coord (ord a)) :=
+    (Cardinal.countable_Iio_of_lt_omega_one (show ord a < ω₁ from a.1.2)).to_subtype
+  letI : MetricSpace (K (run hCH a).H) :=
+    TopologicalSpace.metrizableSpaceMetric (K (run hCH a).H)
+  let seq : ℕ → RegularSigned (K (run hCH a).H) :=
+    fun n => ⟨s n, inferInstance, inferInstance⟩
+  obtain ⟨mu, hb, hc⟩ := (run hCH a).regular r hr d seq hm hn
+  letI : mu.1.toJordanDecomposition.posPart.Regular := mu.2.1
+  letI : mu.1.toJordanDecomposition.negPart.Regular := mu.2.2
+  refine ⟨mu.1, ?_, ?_, ?_⟩
+  · change (mu.1.toJordanDecomposition.posPart + mu.1.toJordanDecomposition.negPart).Regular
+    infer_instance
+  · exact (ENNReal.toReal_le_toReal (measure_ne_top _ _) (by norm_num)).mp
+      (by simpa only [Measure.real, ENNReal.toReal_one] using hb)
+  · intro g
+    have hg := (tendsto_iff_forall_eval_tendsto_topDualPairing.mp hc) g
+    change Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
+      (along ((run hCH a).P.J r hr d))
+      (𝓝 (NormPreservingLifts.signedFunctional mu.1 g)) at hg
+    simpa only [along, Nat.cofinite_eq_atTop] using hg
+
 section ExecutedReadback
 
 variable (run : ∀ a : Stage, State a)
@@ -273,6 +326,16 @@ private theorem prepared_measure_congr {a : Ordinal.{0}} {H : Prefix (Order.succ
   subst r'
   subst d'
   rfl
+
+private theorem prepared_launch_readback {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} {P : Predecessor H ha} {launch : Launch a}
+    (Q : Prepared H ha P launch) (r : Rows a) (i : Label)
+    (hr : r ≠ newRow a ha) (hl : launch = ⟨r, i⟩) (n : ℕ) :
+    ((Q.V (newRow a ha)).clopen n : Set (K H)) =
+      (projection H r) ⁻¹' ((P.U r hr i).clopen n : Set (Base H r)) := by
+  subst launch
+  have h := congrArg (fun f : ℕ → Clopens (K H) => (f n : Set (K H))) Q.launch_eq
+  simpa only [dite_eq_right hr, Clopens.coe_mk] using h
 
 include coherent in
 private theorem ordinary_cofinal_readback (θ : Stage) (d base : Label) :
@@ -318,6 +381,19 @@ private theorem ordinary_cofinal_readback (θ : Stage) (d base : Label) :
 private def runSemantic (θ s t : Label) (k : ℕ) : Prop :=
   ∃ hθ : ω ≤ θ.1, Intrinsic (run ⟨θ, hθ⟩).birth s t k
 
+private theorem oldB_eval_congr {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} (B : OldClopens H ha) (r r' : Rows a)
+    (hr : r ≠ newRow a ha) (hr' : r' ≠ newRow a ha) (he : r = r') (n : ℕ) :
+    HEq (B r hr n) (B r' hr' n) := by
+  subst r'
+  rfl
+
+private theorem cast_B_eval {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (W : BirthPack C) (n : ℕ) :
+    HEq ((BirthPack.cast h W).B n) (W.B n) := by
+  subst D
+  rfl
+
 include coherent in
 private theorem delayed_cofinal_readback (θ : Stage) (s t base : Label) (k : ℕ)
     (valid : Intrinsic (run θ).birth s t k) :
@@ -328,7 +404,9 @@ private theorem delayed_cofinal_readback (θ : Stage) (s t base : Label) (k : �
           (scheduledLaunch (run a).H a.2 (run a).P) (run a).event.Q ⟨D.row, oldCol D.target⟩)
         (hc : DelayedCertificate (run a).event.Q D R),
         (run a).event.selected = .delayed D R hc ∧
-          Matches (run a).event.Q (run a).event.oldB θ.1 s t k D := by
+          Matches (run a).event.Q (run a).event.oldB θ.1 s t k D ∧
+          HEq D.sourceSupport ((run θ).birth.B (decode k).1) ∧
+          HEq D.targetSupport ((run θ).birth.B (decode k).2) := by
   classical
   have hv0 : runSemantic run θ.1 s t k := ⟨θ.2, valid⟩
   obtain ⟨a, ha, hv, he, _⟩ := CofinalTaskSchedule.delayed_cofinal θ.1 s t base k θ.2
@@ -339,7 +417,17 @@ private theorem delayed_cofinal_readback (θ : Stage) (s t base : Label) (k : �
     (stable_local hθ (run θ) (run A) (coherent θ A hθ)
       s t hv.2.2.1 hv.2.2.2 k).mpr valid
   obtain ⟨D, R, hc, hselected, hm⟩ := (run A).event.delayed_run θ.1 s t k he hlocal
-  exact ⟨A, ha, hθ, hv.2.2.1, hv.2.2.2, he, D, R, hc, hselected, hm⟩
+  let r := oldRow hθ (newRow (ord θ) θ.2)
+  let hr := oldRow_ne hθ (newRow (ord θ) θ.2)
+  have hrow : D.row = r := Subtype.ext hm.1
+  have hB (n : ℕ) : HEq (((run A).oldBirth r hr).B n) ((run θ).birth.B n) := by
+    rw [(coherent θ A hθ).birth]
+    exact cast_B_eval _ _ n
+  refine ⟨A, ha, hθ, hv.2.2.1, hv.2.2.2, he, D, R, hc, hselected, hm, ?_, ?_⟩
+  · exact (heq_of_eq hm.2.2.2.1).trans
+      ((oldB_eval_congr (run A).event.oldB _ _ _ _ hrow (decode k).1).trans (hB _))
+  · exact (heq_of_eq hm.2.2.2.2).trans
+      ((oldB_eval_congr (run A).event.oldB _ _ _ _ hrow (decode k).2).trans (hB _))
 
 private theorem cast_support_mem {b : Ordinal.{0}} {C D : Set (Cube b)}
     (h : C = D) (W : BirthPack C) (i : Label) (n : ℕ) (x : D) :
@@ -364,16 +452,15 @@ private theorem launch_cofinal_readback (θ : Stage) (i base : Label) :
   have hex : CofinalTaskSchedule.execute a.1 (fun _ _ _ _ => False) = (θ.1, i) := by
     simp only [CofinalTaskSchedule.execute, he, ite_eq_left hv]
   have hrow : (scheduledLaunch (run a).H a.2 (run a).P).row = r := by
-    simpa only [scheduledLaunch, hex, r, oldRow, newRow]
+    simp only [scheduledLaunch, hex, r, oldRow]
   have hindex : (scheduledLaunch (run a).H a.2 (run a).P).supportIndex = i := by
     simp only [scheduledLaunch, hex]
-  have hl := (run a).event.Q.launch_eq
-  have hs (n : ℕ) := congrArg
-    (fun f : ℕ → Clopens (K (run a).H) => (f n : Set (K (run a).H))) hl
-  simp only [hrow, hindex, dite_eq_right hr] at hs
+  have hlaunch : scheduledLaunch (run a).H a.2 (run a).P = ⟨r, i⟩ :=
+    congrArg₂ (fun r i => (⟨r, i⟩ : Launch (ord a))) hrow hindex
+  have hs := prepared_launch_readback (run a).event.Q r i hr hlaunch
   refine ⟨a, hθ, hb, he, ?_⟩
   intro n
-  change (((run a).event.Q.V (newRow (ord a) a.2)).clopen n : Set _) = _
+  change (((run a).event.Q.V (newRow (ord a) a.2)).clopen n : Set (K (run a).H)) = _
   rw [hs n]
   ext x
   change projection (run a).H r x ∈ (((run a).oldBirth r hr).U i).clopen n ↔ _
@@ -408,7 +495,9 @@ theorem delayed_cofinal (hCH : Cardinal.continuum.{0} = ℵ₁)
           (scheduledLaunch (f a).H a.2 (f a).P) (f a).event.Q ⟨D.row, oldCol D.target⟩)
         (hc : DelayedCertificate (f a).event.Q D R),
         (f a).event.selected = .delayed D R hc ∧
-          Matches (f a).event.Q (f a).event.oldB θ.1 s t k D :=
+          Matches (f a).event.Q (f a).event.oldB θ.1 s t k D ∧
+          HEq D.sourceSupport ((f θ).birth.B (decode k).1) ∧
+          HEq D.targetSupport ((f θ).birth.B (decode k).2) :=
   delayed_cofinal_readback (run hCH) (coherent hCH) θ s t base k valid
 
 /-- Support launch and measure labels remain distinct; the new support row

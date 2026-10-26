@@ -37,7 +37,8 @@ variable (a : Stage) (past : ∀ b : Stage, b < a → State b)
 /-- Every entry is the one selected result at its unique outgoing birth index.
 At this proper limit its arrival is strictly earlier than the new stage. -/
 private noncomputable def strictBirths : PastBirths (ord a) := fun b r d hr hm =>
-  let B : Stage := ⟨⟨b.1, b.2.trans a.1.2⟩,
+  let B : Stage := ⟨⟨b.1, (show b.1 < ord a from b.2).trans
+      (show ord a < ω₁ from a.1.2)⟩,
     hr.trans ((le_max_left r d).trans hm.le)⟩
   let before : Order.succ (ord B) < ord a := hl.succ_lt b.2
   (past B ((Order.lt_succ (ord B)).trans before)).event.result.N
@@ -52,9 +53,10 @@ noncomputable def archive : SignedOrdinalLimit.Archive
     intro y
     refine ⟨⟨y, ?_⟩, rfl⟩
     change y ∈ pastCarrier a.1.2 past ⟨ω, hw⟩
-    simp only [pastCarrier, dite_eq_left (le_refl (ω : Ordinal.{0}))]
-    rw [(past initialStage hw).initial_carriers (top ω) le_rfl]
-    exact mem_univ y
+    have hc : pastCarrier a.1.2 past ⟨ω, hw⟩ = univ := by
+      simp only [pastCarrier, dite_eq_left (le_refl (ω : Ordinal.{0}))]
+      exact (past initialStage (show initialStage < a from hw)).initial_carriers (top ω) le_rfl
+    exact hc.symm ▸ mem_univ y
   pastBirths := strictBirths a past hl
   U := fun r => (bornPack a.1.2 past coherent r.1 r.2).U
   Uonto := fun r => (bornPack a.1.2 past coherent r.1 r.2).Uonto
@@ -124,9 +126,11 @@ private theorem extension_regular_f {l : Ordinal.{0}} {H : Prefix l} {hw : ω < 
   apply E.F r.1 d r.2 s
   intro n
   refine ⟨hn n, ?_⟩
+  have hm0 : (s n).1.map (H.projection r.1) = nu n := by
+    simpa only [hmap] using hm n
   have hm' : (s n).1.map (H.projection r.1) =
       ((A.nu r ⟨d.1, d.2.trans A.proper⟩).1 n).1 :=
-    (by simpa only [hmap] using hm n).trans (eq_of_heq (hnu n))
+    hm0.trans (eq_of_heq (hnu n))
   simpa only [Prefix.NewClass, SignedOrdinalLimit.Archive.data, dite_eq_left r.2] using hm'
 
 private theorem regular : RegularCurrent R.extended a.2 R.predecessor := by
@@ -137,13 +141,19 @@ private theorem regular : RegularCurrent R.extended a.2 R.predecessor := by
     (heq_of_eq (oldPack_readback R r hr)).trans (BirthPack.cast_heq _ _)
   have hnu := fun n => BirthPack.heq_measure
     (R.old_carrier (SignedOrdinalLimit.bornRow hw r hr).1) _ _ hpack
-      ⟨d.1, d.2.trans a.1.2⟩ n
+      ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩ n
   have hf := extension_regular_f (archive a past coherent hw hl) R.extension
     (SignedOrdinalLimit.bornRow hw r hr) d R.top_carrier
     (R.old_carrier (SignedOrdinalLimit.bornRow hw r hr).1)
-    (fun n => ((R.predecessor.nu r hr ⟨d.1, d.2.trans a.1.2⟩).1 n).1) hnu
+    (fun n => ((R.predecessor.nu r hr
+      ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩).1 n).1) hnu
     (projection R.extended r) (fun _ => rfl) s hm hn
-  simpa only [R.J_eq] using hf
+  obtain ⟨mu, hb, hconv⟩ := hf
+  refine ⟨mu, hb, ?_⟩
+  change Tendsto (fun n => (NormPreservingLifts.signedFunctional (s n).1).toWeakDual)
+    (along (R.extension.J (SignedOrdinalLimit.bornRow hw r hr).1 d))
+    (𝓝 (NormPreservingLifts.signedFunctional mu.1).toWeakDual)
+  exact hconv
 
 variable (hCH : Cardinal.continuum.{0} = ℵ₁)
 
@@ -173,7 +183,8 @@ noncomputable def limitState : State a where
 theorem limit_coherent (b : Stage) (hb : b < a) :
     Coherent hb (past b hb) (limitState R hCH) where
   carrier := fun c => (R.old_carrier
-    ⟨c.1, (Order.le_of_lt_succ c.2).trans_lt hb⟩).trans
+    ⟨c.1, (show c.1 ≤ ord b from Order.le_of_lt_succ c.2).trans_lt
+      (show ord b < ord a from hb)⟩).trans
       (carrier_read a.1.2 past coherent b hb c)
   birth := by
     change predecessorPack (P := R.predecessor) (oldB R) _ _ _ = _
@@ -187,15 +198,24 @@ theorem limit_coherent (b : Stage) (hb : b < a) :
   DI := by
     intro r hr
     have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
-    have hd := R.extension.DI ⟨r.1, r.2.2.trans_lt hb⟩ ⟨ord b, hb⟩ r.2.1 hrc
-    rw [archive_data, I_read] at hd
-    simpa only [limitState, R.I_eq, SignedOrdinalLimit.bornRow, oldRow] using hd
+    have hd := R.extension.DI
+      ⟨r.1, r.2.2.trans_lt (show ord b < ord a from hb)⟩ ⟨ord b, hb⟩ r.2.1 hrc
+    change AlmostSubset (R.extension.I _)
+      ((strictData a.1.2 past coherent hl).I _ _) at hd
+    rw [I_read a.1.2 past coherent hl b hb r hr] at hd
+    simpa only [limitState, SignedOrdinalLimit.Result.predecessor,
+      SignedOrdinalLimit.Archive.predecessor, SignedOrdinalLimit.bornRow, oldRow] using hd
   DJ := by
     intro r hr d
     have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
-    have hd := R.extension.DJ ⟨r.1, r.2.2.trans_lt hb⟩
-      ⟨d.1, d.2.trans hb⟩ ⟨ord b, hb⟩ r.2.1 hrc d.2
-    rw [archive_data, J_read] at hd
-    simpa only [limitState, R.J_eq, SignedOrdinalLimit.bornRow, oldRow] using hd
+    have hd := R.extension.DJ
+      ⟨r.1, r.2.2.trans_lt (show ord b < ord a from hb)⟩
+      ⟨d.1, (show d.1 < ord b from d.2).trans (show ord b < ord a from hb)⟩
+      ⟨ord b, hb⟩ r.2.1 hrc d.2
+    change AlmostSubset (R.extension.J _ _)
+      ((strictData a.1.2 past coherent hl).J _ _ _) at hd
+    rw [J_read a.1.2 past coherent hl b hb r hr d] at hd
+    simpa only [limitState, SignedOrdinalLimit.Result.predecessor,
+      SignedOrdinalLimit.Archive.predecessor, SignedOrdinalLimit.bornRow, oldRow] using hd
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistoryLimit
