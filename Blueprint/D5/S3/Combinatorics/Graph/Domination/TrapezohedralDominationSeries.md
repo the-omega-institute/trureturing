@@ -12,7 +12,7 @@ $$\forall (n : \mathbb{N}), \operatorname{coeff}\left(n, \operatorname{actualSer
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TrapezohedralDominationSeries.actualSeries` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Eric W. Weisstein; Joerg Arndt; Peter Luschny; Emily Egolf; Veronika Furst (2026). *OEIS A381190, connected minimal dominating sets in the n-trapezohedral graph*. URL: <https://oeis.org/A381190>.
 
 *Commentary.*
 
@@ -24,7 +24,13 @@ $$\operatorname{actualSeries}\left(\right) = \frac{-2 \cdot (\operatorname{X}\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TrapezohedralDominationSeries.actual_series` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a381190-trapezohedral-domination-series` (proved) by `D5/S3/Combinatorics/Graph/Domination/TrapezohedralDominationSeries.actual_series`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a381190-trapezohedral-domination-series","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/TrapezohedralDominationSeries.actual_series","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Eric W. Weisstein; Joerg Arndt; Peter Luschny; Emily Egolf; Veronika Furst (2026). *OEIS A381190, connected minimal dominating sets in the n-trapezohedral graph*. URL: <https://oeis.org/A381190>.
 
 *Commentary.*
 
