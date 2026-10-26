@@ -44,7 +44,31 @@ private noncomputable def derivativePolynomial (p : Polynomial ℝ) (j : ℕ) : 
 private lemma signed_derivative_formula (p : Polynomial ℝ) (j : ℕ) {x : ℝ} (hx : 0 < x) :
     (-1 : ℝ) ^ j * iteratedDeriv j (logFunction p) x =
       x⁻¹ ^ (j + 1) * (derivativePolynomial p j).eval (Real.log x) := by
-  sorry
+  induction j generalizing x with
+  | zero => simp [logFunction, derivativePolynomial, div_eq_mul_inv, mul_comm]
+  | succ j ih =>
+    have he : (fun y => (-1 : ℝ) ^ j * iteratedDeriv j (logFunction p) y) =ᶠ[𝓝 x]
+        (fun y => y⁻¹ ^ (j + 1) * (derivativePolynomial p j).eval (Real.log y)) := by
+      filter_upwards [Ioi_mem_nhds hx] with y hy
+      exact ih hy
+    have hd := ((hasDerivAt_inv hx.ne').pow (j + 1)).mul
+      (((derivativePolynomial p j).hasDerivAt (Real.log x)).comp x
+        (Real.hasDerivAt_log hx.ne'))
+    change HasDerivAt
+      (fun y => y⁻¹ ^ (j + 1) * (derivativePolynomial p j).eval (Real.log y)) _ x at hd
+    have hh := he.deriv_eq
+    rw [deriv_const_mul_field, hd.deriv] at hh
+    simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one,
+      Function.comp_apply, Pi.pow_apply] at hh
+    have hrec : derivativePolynomial p (j + 1) =
+        (j + 1 : ℝ) • derivativePolynomial p j - (derivativePolynomial p j).derivative := rfl
+    rw [iteratedDeriv_succ, pow_succ, hrec, eval_sub, smul_eq_C_mul, eval_mul, eval_C]
+    rw [pow_succ]
+    rw [show (-1 : ℝ) ^ j * -1 * deriv (iteratedDeriv j (logFunction p)) x =
+      -((-1 : ℝ) ^ j * deriv (iteratedDeriv j (logFunction p)) x) by ring, hh]
+    simp only [inv_pow, pow_succ]
+    field_simp [hx.ne']
+    <;> ring
 
 private lemma sign_transfer (p : Polynomial ℝ) (n j : ℕ) :
     p ∈ derivativeRegion n j ↔
