@@ -6,6 +6,31 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic
 open LeanInformationAudit.SearchReduction (Run Failure)
 
+/-- Normal forms are shared only within one monotonically extended isolation
+environment. Closed lambda keys include the entire local telescope; no free
+variable or metavariable identity can escape its context. This memo is never
+serialized or used as evidence of a failed conversion. -/
+structure LegacyNormalizationMemo where
+  values : Std.HashMap Expr Expr := {}
+  hits : Nat := 0
+  misses : Nat := 0
+
+private def legacyNormalize (memo? : Option (IO.Ref LegacyNormalizationMemo))
+    (xs : Array Expr) (e : Expr) : MetaM Expr := do
+  let normalize := withReducible <| reduce e (skipTypes := false)
+  let some memo := memo? | return ← normalize
+  let key ← mkLambdaFVars xs e
+  if key.hasFVar || key.hasMVar || key.hasLooseBVars then return ← normalize
+  if let some value := (← memo.get).values[key]? then
+    memo.modify fun state => {state with hits := state.hits + 1}
+    return value.beta xs
+  let result ← normalize
+  let value ← mkLambdaFVars xs result
+  unless value.hasFVar || value.hasMVar || value.hasLooseBVars do
+    memo.modify fun state => {state with
+      values := state.values.insert key value, misses := state.misses + 1}
+  return result
+
 /-- Logical introduction/projection and the pinned `omega` procedure are the
 finite presentation rules. Opaque arithmetic subterms remain atoms. -/
 private partial def closePresentation (index : FactIndex)
@@ -39,7 +64,8 @@ private partial def closePresentation (index : FactIndex)
 /-- Match every binder, its kind and its dependent domain before certifying the
 terminal equivalence. No premise, parameter or universe is silently erased. -/
 private partial def equivalent (index : FactIndex)
-    (left right : Expr) (xs : Array Expr := #[]) : MetaM (Option Expr) := do
+    (left right : Expr) (xs : Array Expr := #[])
+    (memo? : Option (IO.Ref LegacyNormalizationMemo) := none) : MetaM (Option Expr) := do
   let left ← withTransparency .reducible <| whnf left
   let right ← withTransparency .reducible <| whnf right
   match left, right with
@@ -48,12 +74,13 @@ private partial def equivalent (index : FactIndex)
     unless ← withTransparency .reducible <| isDefEq domain domain' do return none
     withLocalDecl name kind domain fun x =>
       equivalent index (body.instantiate1 x) (body'.instantiate1 x) (xs.push x)
+        memo?
   | .forallE .., _ | _, .forallE .. => return none
   | _, _ =>
     -- Delta-reduce explicit subterms as well as the proposition's head.
     -- This uses definitional equality without any simp extension or theorem.
-    let left ← withReducible <| reduce left (skipTypes := false)
-    let right ← withReducible <| reduce right (skipTypes := false)
+    let left ← legacyNormalize memo? xs left
+    let right ← legacyNormalize memo? xs right
     let type ← mkAppM ``Iff #[left, right]
     let goal ← mkFreshExprMVar type
     let withTruth ← goal.mvarId!.assert `_presentationTruth (mkConst ``True) (mkConst ``True.intro)
@@ -82,10 +109,11 @@ private partial def compatibleBinders (target source : Expr) : MetaM Bool := do
   return !(← withTransparency .reducible <| whnf target).isForall
 
 partial def restatementConversion (target source : Expr) (index : FactIndex := {})
+    (memo? : Option (IO.Ref LegacyNormalizationMemo) := none)
     : MetaM (Option Expr) := do
   unless ← compatibleBinders target source do return none
   let saved ← saveState
-  if let some equivalence ← equivalent index target source then
+  if let some equivalence ← equivalent index target source (memo? := memo?) then
     return ← withLocalDeclD `_source source fun h =>
       forallTelescopeReducing target fun xs _ => do
         let proof ← mkAppM ``Iff.mpr #[mkAppN equivalence xs, mkAppN h xs]
@@ -102,7 +130,7 @@ partial def restatementConversion (target source : Expr) (index : FactIndex := {
         let value ← mkAppM projection #[mkAppN h xs]
         let type ← mkForallFVars xs (← inferType value)
         pure type
-      if let some conversion ← restatementConversion target projected index then
+      if let some conversion ← restatementConversion target projected index memo? then
         return ← withLocalDeclD `_source source fun h => do
           let value ← mkAppM projection #[mkAppN h xs]
           let value ← mkLambdaFVars xs value
@@ -111,8 +139,9 @@ partial def restatementConversion (target source : Expr) (index : FactIndex := {
     return none
 
 /-- The wide structure exclusion retains the legacy conversion relation. -/
-def certifiedRestatement (target source : Expr) (index : FactIndex := {}) : MetaM Bool := do
-  return (← restatementConversion target source index).isSome
+def certifiedRestatement (target source : Expr) (index : FactIndex := {})
+    (memo? : Option (IO.Ref LegacyNormalizationMemo) := none) : MetaM Bool := do
+  return (← restatementConversion target source index memo?).isSome
 
 private def rawBinderCount : Expr → Nat
   | .forallE _ _ body _ => 1 + rawBinderCount body

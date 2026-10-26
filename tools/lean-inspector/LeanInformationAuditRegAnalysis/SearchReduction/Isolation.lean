@@ -34,7 +34,8 @@ private def checkedSource (source : Environment) (n : Name) : MetaM ConstantInfo
 on either. Conjunction packaging is inspected before the structure is copied. -/
 partial def copyStructure (source : Environment) (target : Name) (targetType : Expr)
     (n : Name) (index : FactIndex) (visiting : NameSet := {})
-    (phase? : Option (IO.Ref String) := none) : MetaM Unit := do
+    (phase? : Option (IO.Ref String) := none)
+    (normalization? : Option (IO.Ref LegacyNormalizationMemo) := none) : MetaM Unit := do
   let mark := fun step => phase?.mapM fun phase => phase.set s!"structure-copy:{n}:{step}"
   discard <| mark "source-check"
   if n == target then throwError "search.target_leak: {n}"
@@ -48,7 +49,7 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   discard <| mark "single-source"
   let single := (← singleSourceConversion targetType type).isSome
   discard <| mark "legacy-restatement"
-  if single || (← certifiedRestatement targetType type index) then
+  if single || (← certifiedRestatement targetType type index normalization?) then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   discard <| mark "dependencies"
@@ -56,7 +57,7 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
     if (← getEnv).contains dep then continue
     let depInfo ← sourceInfo source dep
     if ← withEnv source (isProp depInfo.type) then
-      copyStructure source target targetType dep index (visiting.insert n) phase?
+      copyStructure source target targetType dep index (visiting.insert n) phase? normalization?
     else
       throwError "search.structure_vocabulary_not_reconstructed: {dep}"
   discard <| mark "kernel-install"
@@ -225,9 +226,13 @@ def prepare (source base : Environment) (request : Request)
               {ctx with initHeartbeats := ctx.initHeartbeats + extraSearch}) do
             phase.set "collection-leak"
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
+            let normalization ← IO.mkRef ({} : LegacyNormalizationMemo)
             for n in request.additions do
               phase.set s!"structure-copy:{n}"
               copyStructure source request.target target.type n index (phase? := some phase)
+                (normalization? := some normalization)
+            let normalization ← normalization.get
+            IO.eprintln s!"legacy normalization: hits={normalization.hits}, misses={normalization.misses}"
       return (← getEnv, target, none)
   try
     let context : Core.Context := {
