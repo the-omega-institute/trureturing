@@ -19,6 +19,9 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             OwnerNode("kron", "D5/S3/Quantum/Foundation/FiniteKrausChannel.kron", "Amplification", Amplification(),
                 "MatrixMap.kron supplies the amplification Phi tensor the identity on Fin r; kron_id_apply gives the displayed coordinate expression. The scalar K represents the Lean parameter 𝕜 with its RCLike instance. All indices use Fin; ordered pairs put the map's factor first. This is the coordinate encoding of Section 8, PDF p. 18.",
                 DescribeRole.Definition, Lit()),
+            Node("kron_id_apply", "Coordinates of an identity amplification", KronIdApply(),
+                "Over every RCLike field K and all finite input, output and ancillary dimensions, amplifying a linear matrix map Phi by the identity applies Phi to each matrix slice with the ancillary indices fixed.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             OwnerNode("cp", "D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive", "Complete positivity", PositivePredicate(false),
                 "MatrixMap.IsCompletelyPositive states that a map is completely positive when every amplification preserves positive semidefiniteness. Matrix.PosSemidef is the pinned matrix predicate. Quantification includes r = 0; that case contains only the empty matrix.",
                 DescribeRole.Definition, Lit()),
@@ -195,6 +198,17 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Fun("b", ProdOf(FinOf(V("m")), FinOf(V("r"))), App(App(V("Phi"), Parenthesized(slice)), a1, b1)));
         return Disp(Generic(All("Phi", MapOf(V("K")), All("r", N, All("P", TensorMatrix("n", "r"),
             EqTo(Amplified(V("Phi"), V("r"), V("P")), body))))));
+    }
+
+    private static Formula KronIdApply()
+    {
+        Formula indices = ProdOf(FinOf(V("m")), FinOf(V("r")));
+        Formula slice = Fun("i", FinOf(V("n")), Fun("j", FinOf(V("n")),
+            App(V("P"), Pair(V("i"), Component("a", 2)), Pair(V("j"), Component("b", 2)))));
+        return Disp(Generic(All("Phi", MapOf(V("K")), All("r", N,
+            All("P", TensorMatrix("n", "r"), All("a", indices, All("b", indices,
+                EqTo(App(Amplified(V("Phi"), V("r"), V("P")), V("a"), V("b")),
+                    App(App(V("Phi"), Parenthesized(slice)), Component("a", 1), Component("b", 1))))))))));
     }
 
     private static Formula PositivePredicate(bool breaking)

@@ -11,6 +11,40 @@ internal sealed class MutuallyUnbiasedDiagonalPlanesDocument : IScribeDocumentDe
         H("Mutually Unbiased Diagonal Planes"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("mutually-unbiased-coordinate-projector-two"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateProjectorTwo"),
+                H("The two coordinate projectors"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Seq(Operatorname, Grp(F.Id("coordinateProjectorTwo"))),
+                    FormulaRelationOperator.Equal,
+                    Seq(Bang, OpenBracket,
+                        Seq(Bang, Bang, OpenBracket, D(1), Comma, D(0), Semi,
+                            D(0), Comma, D(0), CloseBracket), Comma,
+                        Seq(Bang, Bang, OpenBracket, D(0), Comma, D(0), Semi,
+                            D(0), Comma, D(1), CloseBracket), CloseBracket)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The two complex qubit coordinate projectors select the first and second basis vectors."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mutually-unbiased-coordinate-context-two"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo"),
+                H("The coordinate rank-one context"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    new Formula.Apply(
+                        Seq(Operatorname, Grp(F.Id("RankOneContext")), Dot,
+                            Operatorname, Grp(F.Id("projector"))),
+                        [Seq(Open, Seq(Operatorname, Grp(F.Id("coordinateContextTwo"))), Colon,
+                            Apply("RankOneContext", D(2)), Close)]),
+                    FormulaRelationOperator.Equal,
+                    Seq(Operatorname, Grp(F.Id("coordinateProjectorTwo")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The two coordinate projectors form a normalized rank-one context and sum to the identity."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("mutually-unbiased-diagonal-planes"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes."

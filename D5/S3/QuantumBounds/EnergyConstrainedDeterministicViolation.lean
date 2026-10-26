@@ -6,8 +6,10 @@
    utility: none
    digest: Deterministic entangled devices strictly violate the separable energy bound. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Analytic.Adelic.ReflectedPairCurvatureRayleighIntertwiner
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
+import D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes
 
 /-! Qubit constructions for the energy-constrained prepare-and-measure scenario. -/
 
@@ -21,6 +23,11 @@ open scoped BigOperators ComplexOrder MatrixOrder Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
+open D5.S3.Analytic.Adelic.ReflectedPairCurvatureRayleighIntertwiner (evenChannelState)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity pure_state_handshake)
+open D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes (coordinateProjectorTwo)
+open D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+  (trace_projector_overlap)
 
 namespace D5.S3.QuantumBounds.EnergyConstrainedDeterministicViolation
 
@@ -30,7 +37,8 @@ def probability {dp ds dm : ℕ}
     (lam : Fin 2 → MatrixMap (Fin dp) (Fin ds) ℂ)
     (povm : Fin 2 → Matrix (Fin ds × Fin dm) (Fin ds × Fin dm) ℂ)
     (b x : Fin 2) : ℝ :=
-  (Matrix.trace (povm b * MatrixMap.kron (lam x) LinearMap.id sigma)).re
+  (D5.S3.Quantum.FiniteDimensional.bornProbability (povm b)
+    (MatrixMap.kron (lam x) LinearMap.id sigma)).re
 
 /-- Every positive energy budget below one half admits a deterministic-input violation. -/
 def claim : Prop :=
@@ -52,7 +60,7 @@ def claim : Prop :=
 private def psi (s r q : ℝ) (i : Fin 2 × Fin 2) : ℂ :=
   if i.1 = 0 then if i.2 = 0 then s else 0 else if i.2 = 0 then r else q
 
-private def sigma (s r q : ℝ) := Matrix.vecMulVec (psi s r q) (star (psi s r q))
+private def sigma (s r q : ℝ) := rankOneDensity (psi s r q)
 
 private def kraus (s r q a h : ℝ) (x k : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   if x = 0 then if k = 0 then 1 else 0 else
@@ -64,10 +72,6 @@ private def channel (s r q a h : ℝ) (x : Fin 2) :=
 
 private def measurement (s r q : ℝ) (b : Fin 2) :=
   if b = 0 then sigma s r q else 1 - sigma s r q
-
-private def hamiltonian : Matrix (Fin 2) (Fin 2) ℂ := !![0, 0; 0, 1]
-
-private def ground : Fin 2 → ℂ := ![1, 0]
 
 private lemma parameters (ω : ℝ) (hω : 0 < ω) (hω' : ω < 1 / 2) :
     ∃ s r q a h : ℝ, 0 < s ∧ 0 < r ∧ 0 < q ∧ 0 < a ∧ 0 < h ∧
@@ -144,23 +148,18 @@ private lemma state_measurement (s r q : ℝ) (hs : s ^ 2 + r ^ 2 + q ^ 2 = 1) :
     exact_mod_cast (by nlinarith [hs] : s * s + (r * r + q * q) = 1)
   have hp := Matrix.posSemidef_vecMulVec_self_star (psi s r q)
   have htrace : (sigma s r q).trace = 1 := by
-    rw [sigma, Matrix.trace_vecMulVec, hn]
+    rw [sigma, rankOneDensity, Matrix.trace_vecMulVec, hn]
   have hsq : sigma s r q * sigma s r q = sigma s r q := by
-    unfold sigma
-    rw [Matrix.vecMulVec_mul_vecMulVec, dotProduct_comm, hn]
-    simp
-  have hherm : (sigma s r q).conjTranspose = sigma s r q := hp.isHermitian
-  have heq : (1 - sigma s r q).conjTranspose * (1 - sigma s r q) = 1 - sigma s r q := by
-    rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hherm]
-    simp [Matrix.sub_mul, Matrix.mul_sub, hsq]
+    exact (pure_state_handshake (psi s r q) (by rwa [dotProduct_comm]) 1).1
   refine ⟨hp, htrace, ?_, ?_⟩
   · intro b
     delta measurement
     fin_cases b
     · exact hp
     · change (1 - sigma s r q).PosSemidef
-      rw [← heq]
-      exact Matrix.posSemidef_conjTranspose_mul_self _
+      exact Matrix.nonneg_iff_posSemidef.mp
+        (show IsStarProjection (sigma s r q) from
+          ⟨hsq, hp.isHermitian.isSelfAdjoint⟩).one_sub_nonneg
   · delta measurement
     simp
 
@@ -195,46 +194,45 @@ private lemma channels (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
   rw [← hc rho]
   exact c.trace_preserving (CStarMatrix.ofMatrix rho)
 
-private lemma ground_energy : hamiltonian.IsHermitian ∧ star ground ⬝ᵥ ground = 1 ∧
-    hamiltonian *ᵥ ground = 0 ∧
-    (hamiltonian - (1 - Matrix.vecMulVec ground (star ground))).PosSemidef := by
-  have hh : hamiltonian.IsHermitian := by
-    delta hamiltonian
-    ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [Matrix.conjTranspose_apply]
-  have hz : hamiltonian *ᵥ ground = 0 := by
+private lemma ground_energy : (coordinateProjectorTwo 1).IsHermitian ∧
+    star evenChannelState ⬝ᵥ evenChannelState = 1 ∧
+    (coordinateProjectorTwo 1) *ᵥ evenChannelState = 0 ∧
+    ((coordinateProjectorTwo 1) -
+      (1 - Matrix.vecMulVec evenChannelState (star evenChannelState))).PosSemidef := by
+  have hh : (coordinateProjectorTwo 1).IsHermitian :=
+    (D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo.rankOne 1).1
+  have hz : (coordinateProjectorTwo 1) *ᵥ evenChannelState = 0 := by
     ext i
-    change (∑ j, hamiltonian i j * ground j) = 0
-    delta hamiltonian ground
+    change (∑ j, (coordinateProjectorTwo 1) i j * evenChannelState j) = 0
+    delta coordinateProjectorTwo evenChannelState
     fin_cases i <;> norm_num [Fin.sum_univ_two]
-  have hp : hamiltonian - (1 - Matrix.vecMulVec ground (star ground)) = 0 := by
+  have hp : (coordinateProjectorTwo 1) -
+      (1 - Matrix.vecMulVec evenChannelState (star evenChannelState)) = 0 := by
     ext i j
-    change hamiltonian i j - ((1 : Matrix (Fin 2) (Fin 2) ℂ) i j -
-      ground i * star (ground j)) = 0
-    delta hamiltonian ground
+    change (coordinateProjectorTwo 1) i j - ((1 : Matrix (Fin 2) (Fin 2) ℂ) i j -
+      evenChannelState i * star (evenChannelState j)) = 0
+    delta coordinateProjectorTwo evenChannelState
     fin_cases i <;> fin_cases j <;>
       norm_num [Matrix.one_apply]
   refine ⟨hh, ?_, hz, ?_⟩
-  · delta ground
-    unfold dotProduct
-    norm_num [Fin.sum_univ_two]
+  · exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.unit_e0
   · rw [hp]; exact Matrix.PosSemidef.zero
 
 private lemma energies (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
     (hqr : q ^ 2 - r ^ 2 = h ^ 2) (x : Fin 2) :
-    (Matrix.trace (hamiltonian * channel s r q a h x
+    (Matrix.trace ((coordinateProjectorTwo 1) * channel s r q a h x
       (partialTraceRight (sigma s r q)))).re = r ^ 2 + q ^ 2 := by
   have hs' : (s : ℂ) ≠ 0 := by exact_mod_cast hs
   have hq' : (q : ℂ) ≠ 0 := by exact_mod_cast hq
   have hqr' : (h : ℂ) ^ 2 = (q : ℂ) ^ 2 - (r : ℂ) ^ 2 := by exact_mod_cast hqr.symm
-  have hc : Matrix.trace (hamiltonian * channel s r q a h x
+  have hc : Matrix.trace ((coordinateProjectorTwo 1) * channel s r q a h x
       (partialTraceRight (sigma s r q))) = ((r ^ 2 + q ^ 2 : ℝ) : ℂ) := by
     unfold channel MatrixMap.of_kraus
     simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
     unfold Matrix.trace partialTraceRight
     simp only [Matrix.diag_apply, Matrix.mul_apply, Matrix.sum_apply,
       Matrix.conjTranspose_apply, Fintype.sum_prod_type, Fin.sum_univ_two]
-    delta hamiltonian kraus sigma psi
+    delta coordinateProjectorTwo kraus sigma rankOneDensity psi
     fin_cases x <;>
       simp [Matrix.vecMulVec_apply,
         Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply, Fin.sum_univ_two,
@@ -249,10 +247,8 @@ private lemma local_action {dp ds dm : ℕ}
     (i j : Fin ds) (k l : Fin dm) :
     MatrixMap.kron lam LinearMap.id rho (i, k) (j, l) =
       lam (fun u v => rho (u, k) (v, l)) i j := by
-  let z : CStarMatrix (Fin dm) (Fin dm) (CStarMatrix (Fin dp) (Fin dp) ℂ) :=
-    CStarMatrix.ofMatrix fun k l => CStarMatrix.ofMatrix fun u v => rho (u, k) (v, l)
-  exact congrArg (fun m : CStarMatrix (Fin ds × Fin dm) (Fin ds × Fin dm) ℂ =>
-    m (i, k) (j, l)) (flatten_intertwines lam dm z).symm
+  exact D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.kron_id_apply
+    lam dm rho (i, k) (j, l)
 
 private lemma joint_output (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
     (hqr : q ^ 2 - r ^ 2 = h ^ 2) (x : Fin 2) :
@@ -266,7 +262,7 @@ private lemma joint_output (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
   rw [local_action]
   unfold channel MatrixMap.of_kraus
   simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
-  delta kraus sigma psi
+  delta kraus sigma rankOneDensity psi
   fin_cases x <;> fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
     simp [Matrix.vecMulVec_apply, Matrix.single_apply,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply,
@@ -289,10 +285,13 @@ private lemma probabilities (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
       if x = 0 then (if b = 0 then 1 else 0) else
         if b = 0 then ((s * a - 2 * r * q) ^ 2 : ℝ) else (1 - (s * a - 2 * r * q) ^ 2 : ℝ) := by
     rw [joint_output s r q a h hs hq hqr]
-    unfold Matrix.trace
-    delta measurement sigma psi
+    delta measurement
     fin_cases b <;> fin_cases x <;>
-      simp [Matrix.vecMulVec_apply, Matrix.single_apply,
+      simp only [Fin.isValue, ↓reduceIte, one_ne_zero, Matrix.sub_mul, Matrix.mul_add,
+        Matrix.one_mul, Matrix.trace_add, Matrix.trace_sub, sigma, trace_projector_overlap] <;>
+      unfold rankOneDensity Matrix.trace <;>
+      delta psi <;>
+      simp [dotProduct, Complex.normSq_apply, Matrix.vecMulVec_apply, Matrix.single_apply,
         Matrix.mul_apply, Matrix.one_apply, Fintype.sum_prod_type,
         Fin.sum_univ_two] <;> push_cast <;>
       first | linear_combination ((s : ℂ) ^ 2 + (r : ℂ) ^ 2 + (q : ℂ) ^ 2 + 1) * hn'
@@ -303,7 +302,7 @@ private lemma probabilities (s r q a h : ℝ) (hs : s ≠ 0) (hq : q ≠ 0)
   have hp00 := congrArg Complex.re (hp 0 0)
   have hp01 := congrArg Complex.re (hp 0 1)
   have hp11 := congrArg Complex.re (hp 1 1)
-  delta probability
+  delta probability D5.S3.Quantum.FiniteDimensional.bornProbability
   simpa only [↓reduceIte, one_ne_zero, Complex.one_re,
     Complex.ofReal_re] using And.intro hp00 (And.intro hp01 hp11)
 
@@ -316,7 +315,7 @@ theorem result : claim := by
   obtain ⟨hd, ht, hp, hm⟩ := state_measurement s r q hn
   obtain ⟨he, hg, hzero, hgap⟩ := ground_energy
   obtain ⟨hp0, hp1, hp2⟩ := probabilities s r q a h hs.ne' hq.ne' hn hqr has
-  refine ⟨2, 2, 2, sigma s r q, channel s r q a h, hamiltonian, ground,
+  refine ⟨2, 2, 2, sigma s r q, channel s r q a h, (coordinateProjectorTwo 1), evenChannelState,
     measurement s r q, hd, ht, channels s r q a h hs.ne' hq.ne' hqr has,
     he, hg, hzero, hgap, hp, hm, ?_, hp0, ?_⟩
   · intro x
