@@ -38,7 +38,10 @@ theorem rotated_environment_expansion :
   rw [beamUnitary_fock]
   norm_num [fockExpansion, Fin.sum_univ_succ, Nat.choose]
   have h2 : (Real.sqrt (1 / 2 : ℝ) : ℂ) ^ 2 = 1 / 2 := by
-    exact_mod_cast balanced_square
+    calc
+      _ = ((Real.sqrt (1 / 2 : ℝ) ^ 2 : ℝ) : ℂ) := (Complex.ofReal_pow _ _).symm
+      _ = ((1 / 2 : ℝ) : ℂ) := congrArg Complex.ofReal balanced_square
+      _ = _ := by norm_num
   have hf2 : (Real.sqrt (2 : ℝ) : ℂ) ^ 2 = 2 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   have hfne : (Real.sqrt (2 : ℝ) : ℂ) ≠ 0 := by
@@ -62,7 +65,7 @@ private theorem environment_slice (n : ℕ) :
     simp [fockPair, tensor, e, lp.single_apply]
   by_cases h2 : n = 2
   · subst n
-    simp [fockPair, tensor, e, lp.single_apply]
+    simp [fockPair, tensor, e, lp.single_apply, ← neg_smul, neg_div]
   by_cases h4 : n = 4
   · subst n
     simp [fockPair, tensor, e, lp.single_apply]
@@ -71,11 +74,13 @@ private theorem environment_slice (n : ℕ) :
 private theorem real_scaled_rankOne (c : ℝ) (v : H) :
     InnerProductSpace.rankOne ℂ ((c : ℂ) • v) ((c : ℂ) • v) =
       ((c ^ 2 : ℝ) : ℂ) • InnerProductSpace.rankOne ℂ v v := by
-  ext x
+  apply ContinuousLinearMap.ext
+  intro x
   simp only [InnerProductSpace.rankOne_apply, inner_smul_left,
-    Complex.conj_ofReal, ContinuousLinearMap.smul_apply, smul_smul,
-    ← Complex.ofReal_pow]
-  module
+    RCLike.conj_ofReal, ContinuousLinearMap.smul_apply, smul_smul,
+    Complex.ofReal_pow]
+  congr 1
+  ring
 
 /-- The actual center marginal has precisely the three weights used by the
 two-copy swap compression. There is no input vector in this computation. -/
@@ -90,9 +95,10 @@ theorem environment_marginal :
     have h2 : n ≠ 2 := fun h => hn (by simp [h])
     have h4 : n ≠ 4 := fun h => hn (by simp [h])
     simp [environment_slice, h0, h2, h4])]
-  norm_num only [Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
-    Finset.sum_singleton, environment_slice, ite_true, ite_false]
-  rw [show (-1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
+  simp only [Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    Finset.sum_singleton, environment_slice]
+  norm_num only
+  rw [show -(1 / 2 : ℂ) = ((-1 / 2 : ℝ) : ℂ) by norm_num]
   simp only [real_scaled_rankOne]
   have hs : (Real.sqrt (6 : ℝ) : ℂ) ^ 2 = 6 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)
@@ -127,16 +133,16 @@ theorem environment_marginal_le :
       inner_sub_left, inner_add_left, inner_smul_left, hdiag,
       inner_self_eq_norm_sq_to_K]
     push_cast
-    norm_num
+    norm_num [map_div₀, map_ofNat]
     ring
   rw [hform]
+  simp only [RCLike.ofReal_re]
   have hb := lp.sum_rpow_le_norm_rpow (p := (2 : ℝ≥0∞))
     (by norm_num) x ({0, 2, 4} : Finset ℕ)
   norm_num [ENNReal.toReal_ofNat, Real.rpow_two] at hb
   constructor
-  · simp
-  · simp only [Complex.ofReal_re]
-    nlinarith [sq_nonneg ‖x 2‖]
+  · rfl
+  · nlinarith [sq_nonneg ‖x 2‖]
 
 #print axioms rotated_environment_expansion
 #print axioms environment_marginal

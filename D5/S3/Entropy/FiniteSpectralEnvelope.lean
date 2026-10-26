@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.SpectralEnvelopeParameters
 import Mathlib.Analysis.Convex.StdSimplex
+import Mathlib.Algebra.Order.Chebyshev
 import Batteries.Tactic.OpenPrivate
 
 noncomputable section
@@ -139,9 +140,9 @@ private theorem minimizing_triple {q : ℝ} {p : ι → ℝ}
     by_cases hk : l = k
     · simp [hk, hc.le]
     by_cases hj : l = j
-    · simp [hk, hj, hb.le]
+    · simp [hj, hjk, hb.le]
     by_cases hi' : l = i
-    · simp [hk, hj, hi', ha.le]
+    · simp [hi', hik, hij, ha.le]
     simp [hk, hj, hi', hp.1.1 l]
   have hs := sum_map_replace3 id p i j k hij hik hjk a b c
   simp only [id_eq] at hs
@@ -160,8 +161,9 @@ private theorem minimizing_triple {q : ℝ} {p : ι → ℝ}
     change (∑ l, replace3 p i j k a b c l ^ 3) < ∑ l, p l ^ 3
     rw [hr]
     linarith
-  have hv : v ∈ feasible q := ⟨⟨hv0, hvsum⟩, hvq ▸ hp.2⟩
-  have hle := hmin hv
+  have hvbudget : finitePurity v ≤ q := by rw [hvq]; exact hp.2
+  have hv : v ∈ feasible q := ⟨⟨hv0, hvsum⟩, hvbudget⟩
+  have hle : finiteThird p ≤ finiteThird v := hmin hv
   unfold finiteThird at hle
   rw [hvsum, hp.1.2, hvq] at hle
   linarith
@@ -227,7 +229,9 @@ private theorem purity_le_third_of_four_positive {q : ℝ} {p : ι → ℝ}
     simp
   have hm : p i + (R.card : ℝ) * p j = 1 := by
     have hs := Finset.sum_erase_add S p hi
-    rw [show S.erase i = R from rfl, hsumR, sum_over_support p hp.1.1 id rfl, hp.1.2] at hs
+    have hsupport : (∑ x ∈ S, p x) = 1 := by
+      simpa only [id_eq, hp.1.2] using sum_over_support p hp.1.1 id rfl
+    rw [show S.erase i = R from rfl, hsumR, hsupport] at hs
     linarith
   have hq : finitePurity p = p i ^ 2 + (R.card : ℝ) * p j ^ 2 := by
     have hs := Finset.sum_erase_add S (fun k => p k ^ 2) hi
@@ -280,8 +284,11 @@ private theorem minimizing_three_value {q : ℝ} {p : ι → ℝ}
     by_contra h
     have hc2 : (S.card : ℝ) ≤ 2 := by exact_mod_cast (show S.card ≤ 2 by omega)
     have hcs := sq_sum_le_card_mul_sum_sq (s := S) (f := p)
-    rw [sum_over_support p hp.1.1 id rfl, hp.1.2,
-      sum_over_support p hp.1.1 (fun z => z ^ 2) (by norm_num)] at hcs
+    have hmass : (∑ x ∈ S, p x) = 1 := by
+      simpa only [id_eq, hp.1.2] using sum_over_support p hp.1.1 id rfl
+    have hsquare : (∑ x ∈ S, p x ^ 2) = finitePurity p :=
+      sum_over_support p hp.1.1 (fun z => z ^ 2) (by norm_num)
+    rw [hmass, hsquare] at hcs
     change 1 ^ 2 ≤ (S.card : ℝ) * finitePurity p at hcs
     have hbound := hp.2.trans hqu
     nlinarith [mul_nonneg (sub_nonneg.mpr hc2) hq0]
@@ -305,7 +312,9 @@ private theorem minimizing_three_value {q : ℝ} {p : ι → ℝ}
         hi0 (hleast k hkS) hgt)
   have hS : S = {i, j, k} := by rw [← Finset.insert_erase hi, hR]
   have sums (f : ℝ → ℝ) (hf : f 0 = 0) : (∑ l, f (p l)) = f (p i) + 2 * f (p j) := by
-    rw [← sum_over_support p hp.1.1 f hf, hS]
+    rw [← sum_over_support p hp.1.1 f hf]
+    change (∑ l ∈ S, f (p l)) = f (p i) + 2 * f (p j)
+    rw [hS]
     simp [hji.symm, hki.symm, hjk, ← hx]
     ring
   have hm : p i + 2 * p j = 1 := by simpa using (sums id rfl).symm.trans hp.1.2
@@ -335,13 +344,14 @@ theorem finite_budget_envelope (p : ι → ℝ) (hn : ∀ i, 0 ≤ p i)
     (hpq : finitePurity p ≤ q) : envelope q ≤ finiteThird p := by
   have hp : p ∈ feasible q := ⟨⟨hn, hm⟩, hpq⟩
   obtain ⟨v, hv, hmin⟩ := exists_minimizer hp
-  have hminp := hmin hp
+  have hminp : finiteThird v ≤ finiteThird p := hmin hp
   suffices envelope q ≤ finiteThird v by linarith
   by_cases hqv : finitePurity v ≤ 1 / 3
   · have hcoarse := finite_coarse hv.1.1 hv.1.2 hqv
     have henv := envelope_antitone (a := 1 / 3) (b := q) le_rfl hq0
-    norm_num [envelope] at henv
-    linarith
+    have hendpoint : envelope (1 / 3) = 1 / 27 := by norm_num [envelope]
+    rw [hendpoint] at henv
+    exact henv.trans hcoarse
   · rw [minimizing_three_value hv hmin (lt_of_not_ge hqv) hq1]
     exact envelope_antitone (lt_of_not_ge hqv).le hv.2
 
