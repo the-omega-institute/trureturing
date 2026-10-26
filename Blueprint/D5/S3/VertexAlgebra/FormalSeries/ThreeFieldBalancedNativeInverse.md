@@ -60,3 +60,4 @@ The inverse expression has the uniform s cutoff -k and, at each fixed s, the z c
 - Truth anchor: `D5/S3/VertexAlgebra/FormalSeries/ThreeFieldBalancedNativeInverse.raw_balanced_support`
 - Dependency: [D5/S3/VertexAlgebra/FormalSeries/ThreeFieldBalancedPolynomial](ThreeFieldBalancedPolynomial.md)
 - Dependency: [D5/S3/VertexAlgebra/FormalSeries/ThreeFieldFinalLaurentAction](ThreeFieldFinalLaurentAction.md)
+- Dependency: [D5/S3/VertexAlgebra/FormalSeries/ThreeFieldInnerNativeInverse](ThreeFieldInnerNativeInverse.md)
