@@ -10,15 +10,15 @@ import D5.S3.VertexAlgebra.Lattice.NormFourTensorCommutantModes
 import Mathlib.Algebra.Module.Submodule.Equiv
 
 /-!
-UNCOMPILED SOURCE PREPARATION. No kernel or source acceptance is asserted.
-
-Supplier source: immutable trureturing commit
-cd07828fbf47eeef4a922d2bb5521eff6244e9d1, in particular
-NormFourTensorEmbedding, NormFourTensorCommutantModes,
-NormFourVacuumVertexAlgebra, NormFourCommutant and LatticeActualVertexAlgebra.
-The range proof uses both complete families of the actual residue iterate.
+The literal range of NormFourTensorEmbedding.tensorMap is closed under the
+actual vacuum, every integer field coefficient and actual translation. The
+range proof uses both complete finite-support families of the residue iterate,
+NormFourTensorEmbedding.actual_tensor_embedding and
+NormFourTensorCommutantModes.actual_commutant_mode_intertwining.
 The coefficient inheritance adapts the literal subtype constructions in
-NormFourVacuumVertexAlgebra and NormFourCommutant at that commit.
+NormFourVacuumVertexAlgebra and NormFourCommutant. LinearEquiv.ofInjective
+transports the resulting LatticeActualVertexAlgebra.StateFieldVertexAlgebra
+onto the literal tensor product, preserving all states and all integer modes.
 
 The norm-four construction retains the Dong--Mason--Zhu and Shimakura
 attribution. Actual lattice fields retain Bakalov--Kac attribution; residue,
@@ -48,7 +48,7 @@ noncomputable section
 -- range inclusion and for its actual linear-equivalence pullback. The Hahn
 -- operators are constructed separately; no vertex-algebra laws are assumed
 -- on the source, and all three Borcherds supports are transported explicitly.
-private def inheritCoefficients {V W : Type*}
+private def inheritCoefficients {V W : Type}
     [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     (A : StateFieldVertexAlgebra W) (f : V →ₗ[ℂ] W) (hf : Function.Injective f)
     (fields : V →ₗ[ℂ] VertexOperator ℂ V) (vac : V) (T : Module.End ℂ V)
@@ -57,13 +57,13 @@ private def inheritCoefficients {V W : Type*}
     (hv : f vac = A.vacuum)
     (ht : ∀ v : V, f (T v) = A.translation (f v)) : StateFieldVertexAlgebra V := by
   classical
-  have finite_lift {ι : Type*} (g : ι → V)
+  have finite_lift {ι : Type} (g : ι → V)
       (hg : Function.HasFiniteSupport (fun i => f (g i))) :
       Function.HasFiniteSupport g := by
     apply hg.subset
     intro i hi hz
     exact hi (hf (hz.trans (map_zero f).symm))
-  have sum_map {ι : Type*} (g : ι → V) :
+  have sum_map {ι : Type} (g : ι → V) :
       f (∑ᶠ i, g i) = ∑ᶠ i, f (g i) :=
     f.toAddMonoidHom.map_finsum_of_injective hf g
   have delta_map
@@ -177,12 +177,13 @@ private theorem pure_field_mem (u : S) (b : C) (n : ℤ) (z : TensorState) :
     mu D (F (u ⊗ₜ[ℂ] b)) n (F z) ∈ R := by
   have it := stateField_iterate D b.val u.val (F z) (-1) n
   dsimp only at it
-  change mu D (mu D b.val (-1) u.val) n (F z) ∈ R
+  change ((Y D (((Y D b.val)[[-1]]) u.val))[[n]]) (F z) ∈ R
   rw [it.2.2]
   apply (R).sub_mem
   · apply finite_sum_mem R _ it.1
     intro i
     apply (R).smul_mem
+    change mu D b.val (-1-i) (mu D u.val (n+i) (F z)) ∈ R
     obtain ⟨z', hz'⟩ := s_coefficient_mem D a ha s hs u (n+i) z
     rw [← hz']
     exact c_coefficient_mem D a s b (-1-i) z'
@@ -190,6 +191,7 @@ private theorem pure_field_mem (u : S) (b : C) (n : ℤ) (z : TensorState) :
     apply finite_sum_mem R _ it.2.1
     intro i
     apply (R).smul_mem
+    change mu D u.val (-1+n-i) (mu D b.val i (F z)) ∈ R
     obtain ⟨z', hz'⟩ := c_coefficient_mem D a s b i z
     rw [← hz']
     exact s_coefficient_mem D a ha s hs u (-1+n-i) z'
@@ -235,7 +237,7 @@ private def rangeVacuum : R := ⟨vacuum D, range_vacuum_mem D a ha s hs⟩
 private def rangeRawCoefficient (u : R) (j : ℤ) : Module.End ℂ R :=
   (HVertexOperator.coeff (Y D u.val) j).restrict (by
     intro v hv
-    simpa only [VertexOperator.coeff_eq_ncoeff] using
+    simpa only [VertexOperator.coeff_eq_ncoeff, mu] using
       range_field_closed D a ha s hs u.val v u.property hv (-j-1))
 
 private theorem range_raw_support (u v : R) :
