@@ -45,7 +45,8 @@ private theorem sigma_face (P : RawFacePairing T) (x : T × Fin 4) :
   change (frame (P.facePair x).2)
     ((frame (P.facePair x).2).symm
       ((Equiv.optionCongr (P.faceMap x)) (frame x.2 x.2))) = _
-  simpa only [Equiv.apply_symm_apply, frame_at]
+  simp only [Equiv.apply_symm_apply, frame_at]
+  rfl
 
 private theorem sigma_inverse (P : RawFacePairing T) (x : T × Fin 4) :
     sigma P (P.facePair x) = (sigma P x).symm := by
