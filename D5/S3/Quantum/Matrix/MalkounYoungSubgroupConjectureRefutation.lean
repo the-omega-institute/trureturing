@@ -98,10 +98,7 @@ private def fiberPermutation (m : ℕ) (σ : Equiv.Perm (Fin (m * 3)))
       (Equiv.prodSubtypeFstEquivSubtypeProd.trans
         (@Equiv.uniqueProd (Fin 3) {k : Fin m // k = j}
           { default := ⟨j, rfl⟩, uniq := fun k => Subtype.ext k.property }))
-  e.permCongr (σ.subtypePerm (fun x => by
-    change ((finProdFinEquiv (n := 3)).symm (σ x)).1 = j ↔
-      ((finProdFinEquiv (n := 3)).symm x).1 = j
-    rw [hσ x]))
+  e.permCongr (σ.subtypePerm (fun x => by rw [hσ x]))
 
 private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
     (Fin m → classPreserving r) ≃ classPreserving (blockRelation m r) :=
