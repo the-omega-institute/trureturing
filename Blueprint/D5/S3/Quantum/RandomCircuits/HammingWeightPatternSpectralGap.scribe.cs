@@ -94,7 +94,10 @@ internal sealed class HammingWeightPatternSpectralGapDocument : IScribeDocumentD
                             + "2J²N² ≤ 2(↑(max c 1) : ℝ)²(↑n : ℝ)^(2a + 2k). "
                             + "Taking reciprocals of positive quantities gives the required estimate with d = 1/(2(↑(max c 1) : ℝ)²) > 0 and b = 2a + 2k. "
                             + "These choices depend only on k, c and a, so the same estimate holds for every n and every eigenvector specified in the statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("monbroussou-et-al-2025-hamming-weight-pattern-spectral-gap"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>
