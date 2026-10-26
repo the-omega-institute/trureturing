@@ -20,7 +20,7 @@ internal sealed class BarkerMinimalGridQuotientDocument : IScribeDocumentDefinit
             T("finite_annihilator", "Check all residual coordinates", "For every i in Fin 59, the sum over j in Fin 49 of denominator(j) times values(48-j)(i) is zero. Every one of the 59 coordinates is kernel checked."),
             N("orbit", "The unrestricted matrix orbit", "orbit(0) = terminal and orbit(k+1) = step(orbit(k)) for every natural k."),
             T("shifted_annihilator", "Every shift", "For every natural k, the vector sum over j in Fin 49 of denominator(j) scalar-multiplying orbit(k+48-j) is zero. Induction applies the linear map to the previous zero residual; the conclusion is not extrapolated from finite agreement."),
-            Paragraph(Text("The supplied numerical certificate has SHA-256 ab0c5370648ec80cad7798774a9ce6ad7cf62b7d34f296441e3a897715f0701c. The transfer partition identities TR=RB, f=Rg and betaR=alpha are separate unproved interfaces here. This module does not identify orbit values with actual minimal dominating subset counts, check the initial numerator convolution or prove the whole original generating function."))),
+            Paragraph(Text("The supplied numerical certificate has SHA-256 ab0c5370648ec80cad7798774a9ce6ad7cf62b7d34f296441e3a897715f0701c. The total transfer partition identifies the full and quotient orbits through TR=RB, f=Rg and betaR=alpha. Evaluation against alpha then transports this vector annihilator to the actual subset counts; the complete initial numerator convolutions fix every remaining coefficient."))),
         []));
 
     private static DocumentBlock N(string name, string title, string prose) => Node(name, title, prose, DescribeRole.Definition);

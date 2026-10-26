@@ -3,13 +3,12 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer
    mirror-E: none(waiver:internal-stage-a)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity; premises=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.maskEquiv_apply,D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer.actualCount_one
    digest: The full open-grid frontier model distinguishes absent columns and real empty masks. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Matrix.Basic
 
 /-! The unpruned 4672-state model uses all 64 two-column starts and two absent
 terminal checks. No actual-count equality or quotient compatibility is assumed. -/
@@ -48,14 +47,6 @@ def append (s : State) (m : Fin 8) : State :=
   else
     ⟨576 + ((s.val - 576) / 64 % 8) * 512 + ((s.val - 576) / 8 % 8) * 64 +
       ((s.val - 576) % 8) * 8 + m.val, by omega⟩
-
-/-- Different appended real masks are different full successors. -/
-theorem append_injective (s : State) : Function.Injective (append s) := by
-  intro a b hab
-  have h := congrArg Fin.val hab
-  apply Fin.ext
-  by_cases h₀ : s.val < 64 <;> by_cases h₁ : s.val < 576 <;>
-    simp [append, h₀, h₁] at h <;> omega
 
 /-- The state encoding performs the literal left shift of its four columns. -/
 theorem columns_append (s : State) (m : Fin 8) (i : Fin 4) :
@@ -339,20 +330,6 @@ def accepts (w : Window) : Bool := decide (Local w)
 
 /-- The window checked when a fifth symbol is appended. -/
 def window (s : State) (a : Symbol) : Window := Fin.snoc (columns s) a
-
-/-- The unambiguous directed transition relation on every full state. -/
-def Edge (s t : State) : Prop :=
-  ∃ m : Fin 8, append s m = t ∧ accepts (window s ⟨m.val, by omega⟩) = true
-
-instance edgeDecidable (s t : State) : Decidable (Edge s t) := by
-  unfold Edge
-  infer_instance
-
-/-- Each admitted edge has weight one; all other matrix entries are zero. -/
-def transition : Matrix State State ℤ := fun s t => if Edge s t then 1 else 0
-
-/-- All and only the 64 two-real-column starts have initial weight one. -/
-def initial : State → ℤ := fun s => if s.val < 64 then 1 else 0
 
 /-- Two absent-column checks finish the last two real columns. -/
 def terminal : State → ℤ := fun s =>

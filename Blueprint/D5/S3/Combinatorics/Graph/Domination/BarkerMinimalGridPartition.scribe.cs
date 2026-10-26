@@ -5,7 +5,7 @@ internal sealed class BarkerMinimalGridPartitionDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridPartition.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal partition covers every full state and carries terminal vectors and all 64 starts to the exact 59-class quotient.", H("The total transfer partition"), Blocks(
-            N("classOf", "The total partition", "Every one of the 4672 full states maps to its literal class in Fin 59, using the literal array indexed by all 4672 state values. Unreachable states remain included.", DescribeRole.Definition),
+            N("classOf", "The total partition", "Every one of the 4672 full states maps to its literal class in Fin 59, using 73 literal pages of 64 entries indexed by all 4672 state values. Unreachable states remain included.", DescribeRole.Definition),
             N("successors", "Every admitted successor", "The list contains the class of append s m once for every accepted real mask m.", DescribeRole.Definition),
             N("quotientSuccessors", "Expanded quotient rows", "The sparse integer weight of each quotient row entry is expanded into that many copies of its destination class.", DescribeRole.Definition),
             N("row_certificate", "Every full row", "For every full state s, the complete admitted-successor class list is a permutation of its expanded quotient row. This verifies all destinations and multiplicities without restricting to reachable states.", DescribeRole.Theorem),

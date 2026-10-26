@@ -29,7 +29,7 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             N("minimalWordEquiv", "Restrict the bijection", "Restrict subsetWordEquiv to the actual minimal dominating subsets and accepted words."),
             N("ColumnTest", "Five-column criterion", "Every centre vertex is closed-dominated. Every selected centre vertex has an actual closed-neighbour witness; uniqueness is tested among selected vertices at column distance at most two. Actual finite-grid vertex types exclude absent witnesses."),
             T("minimal_iff_column_tests", "Every real centre at every width", ColumnFormula(), "A witness is at column distance at most one, and every selected neighbour of it is at distance at most two by the natural-distance triangle inequality. This proves that the five-column restriction retains the complete proper-subset condition, including widths one and two."),
-            Paragraph(Text("The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, the connection to the proved vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint."))),
+            Paragraph(Text("The actual subset family is the source of the count throughout the transfer construction. The column criterion supplies the local tests, and the subset-word equivalence preserves every labelled choice without counting existential witnesses."))),
         []));
 
     private static DocumentBlock N(string name, string title, string prose,

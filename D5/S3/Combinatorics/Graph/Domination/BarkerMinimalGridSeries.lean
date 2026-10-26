@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries
    mirror-E: none(waiver:internal-stage-a)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity; premises=D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.initial_convolutions
    digest: The full literal Barker numerator follows from the exact quotient annihilator and initial convolutions. -/
 
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
@@ -46,8 +46,8 @@ private theorem expanded_row_sum (es : List (Fin 59 × ℤ))
   induction es with
   | nil => simp [rowEval]
   | cons e es ih =>
-    have he := h.1
-    have ht := h.2
+    have he := ((List.forall_cons _ _ _).mp h).1
+    have ht := ((List.forall_cons _ _ _).mp h).2
     simp only [List.flatMap_cons, List.map_append, List.sum_append,
       List.map_replicate, List.sum_replicate, rowEval]
     rw [ih ht]

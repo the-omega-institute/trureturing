@@ -12,7 +12,6 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
         Blocks(
             N("columns", "All states", "State is Fin 4672. The first 64 states are (8,8,a,b), the next 512 are (8,a,b,c), and the final 4096 are (a,b,c,d), with real masks in lexicographic order. Real masks are 0 through 7; the absent symbol is 8."),
             N("append", "Append one real mask", "Append drops the first symbol, appends the supplied real mask, and encodes the resulting four columns in the next appropriate state block."),
-            T("append_injective", "Distinct appended masks", "For every full state s, append s is injective on Fin 8. Thus distinct appended masks do not create edge multiplicity."),
             T("columns_append", "Literal column shift", "For every state s, real mask m and i in Fin 4, the i-th column of append s m is the (i+1)-th column of s when i<3, and is m when i=3. This includes all three state blocks."),
             N("maskEquiv", "Exact binary masks", "The positional-base equivalence finFunctionFinEquiv, composed with finTwoEquiv at every row, identifies all Fin 8 masks with Fin 3 → Bool."),
             T("maskEquiv_apply", "Little-endian row bits", "For every m in Fin 8 and row r in Fin 3, maskEquiv m r is exactly Nat.testBit m.val r.val. All 24 entries are kernel checked."),
@@ -28,13 +27,10 @@ internal sealed class BarkerMinimalGridTransferDocument : IScribeDocumentDefinit
             T("actualCount_one", "The original first coefficient", "The actual width-one minimal dominating subset count is exactly 2. The proof transports to all eight numeric masks and checks the actual local predicate; the two subsets are the middle singleton and the pair of ends."),
             N("accepts", "The executable finite predicate", "accepts is the Boolean decision of Local over the finite five-column vertex domain."),
             N("window", "Append a fifth symbol", "The four state columns followed by the supplied symbol form the tested window."),
-            N("Edge", "Admitted directed edges", "An edge from s to t means that some real mask appends to t and the resulting five-column window is accepted."),
-            N("transition", "Unit edge weights", "The integer matrix entry is 1 for an admitted edge and 0 otherwise."),
-            N("initial", "All two-column starts", "The initial weight is 1 at all 64 states in the first block and 0 elsewhere. This includes every labelled pair of real masks, without symmetry reduction."),
             N("terminal", "Both open-end checks", "A terminal state must accept its four columns followed by 8, and must also accept its last three columns followed by 8,8. These check the final two real columns."),
             N("fullStep", "Backward transfer", "For every integer state vector v and full state s, fullStep v s sums v(append s m) over precisely the accepted real masks m. Each mask contributes once."),
             N("fullOrbit", "All-length backward orbit", "fullOrbit 0 is the full terminal vector and fullOrbit(k+1) is fullStep(fullOrbit k). This is defined independently of actualCount."),
-            Paragraph(Text("The all-length bijection between actual accepted mask words and successful full-state paths remains unproved here. The full-state quotient certificate and the original generating-series endpoint also remain open formal interfaces. No actual-count or quotient equality is assumed."))),
+            Paragraph(Text("The full transfer sums contributions from accepted mask words. The two terminal tests enforce the same open boundaries as the actual graph. The all-length counting correspondence and the total quotient then connect these local predicates to the actual subset series."))),
         []));
 
     private static DocumentBlock N(string name, string title, string prose) => Node(name, title, prose, DescribeRole.Definition);
