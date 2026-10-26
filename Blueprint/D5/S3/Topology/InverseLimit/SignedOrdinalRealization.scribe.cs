@@ -75,5 +75,5 @@ internal sealed class SignedOrdinalRealizationDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(Owner + "launch"), H("Actual cofinal support launches"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Each original support index is launched arbitrarily late. The newborn V at outgoing row a is the exact pullback of the original U along the same final Prefix restriction. Its archive is available at succ(a); support indices remain distinct from whole measure labels."))), DescribeRole.Theorem),
-            Paragraph(Text("Four-slot escape audits remain unfinished under issue 21750. Reg checks exact source reconstruction only; no declared_validated registration or final endpoint is asserted.")))));
+            Paragraph(Text("No final endpoint is asserted.")))));
 }
