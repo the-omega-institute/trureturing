@@ -28,7 +28,7 @@ def CoreState (a b M N : ℕ) :=
     NoAdjacentFrozen h ∧ NoAdjacentFrozen (transposeHeight h) ∧
       1 ≤ numFrozenRuns (transposeHeight h) ∧ 1 ≤ numFrozenRuns h}
 
-private instance core_state_finite (a b M N : ℕ) : Finite (CoreState a b M N) := by
+instance core_state_finite (a b M N : ℕ) : Finite (CoreState a b M N) := by
   classical
   by_cases hm : 2 ≤ M
   · by_cases hn : 2 ≤ N
@@ -47,7 +47,10 @@ def Core (a b : ℕ) :=
 
 noncomputable instance core_fintype (a b : ℕ) : Fintype (Core a b) := by
   unfold Core
-  exact Fintype.ofFinite _
+  exact @Sigma.instFintype _ _
+    (fun M => @Sigma.instFintype _ _
+      (fun N => @Fintype.ofFinite _ (core_state_finite a b M.val N.val)) inferInstance)
+    inferInstance
 
 noncomputable def rowOccupied {a b : ℕ} (K : Core a b) : ℕ :=
   numActiveColumns (transposeHeight K.2.2.val)
