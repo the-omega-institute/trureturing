@@ -208,7 +208,7 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalRealization.launch`
 
 Each original support index is launched arbitrarily late. The newborn V at outgoing row a is the exact pullback of the original U along the same final Prefix restriction. Its archive is available at succ(a); support indices remain distinct from whole measure labels.
 
-Four-slot escape audits remain unfinished under issue 21750. Reg checks exact source reconstruction only; no declared_validated registration or final endpoint is asserted.
+No final endpoint is asserted.
 
 ## References
 

@@ -40,8 +40,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryLimit.limit_coh
 
 The constructed limit State extends every state of its own strict past: exact carriers and canonical whole births agree, permanent N equals the unique earlier R arrival, and incoming I/J almost refine every eligible old set. Regular bounded F is obtained from that same Extension.F before the weaker predecessor interface can discard its output regularity and bound.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 ## References
 
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryLimit.archive`
