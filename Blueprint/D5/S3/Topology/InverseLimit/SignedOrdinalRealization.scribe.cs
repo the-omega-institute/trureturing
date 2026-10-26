@@ -7,15 +7,15 @@ internal sealed class SignedOrdinalRealizationDocument : IScribeDocumentDefiniti
     private const string Owner = "D5/S3/Topology/InverseLimit/SignedOrdinalRealization.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "SignedOrdinalRealization", H("One literal omega-one prefix"), Blocks(
-            Describe.Lean(DescribeId.Create("signedordinalrealization-finalPrefix"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-final-prefix"),
                 DeclarationHandle.Create(Owner + "finalPrefix"), H("One literal omega-one prefix"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The final Prefix reads each carrier from the same canonical well-founded run under CH. Below omega the carriers are full Boolean cubes. Closedness, nonemptiness, compatibility and onto restrictions are inherited from the actual later state and its coherence. There is no second recursion."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("signedordinalrealization-properData"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-proper-data"),
                 DeclarationHandle.Create(Owner + "properData"), H("Data at every proper cutoff"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Only proper countable cutoffs carry Data. Whole U, V and nu are read at the original row birth. Incoming I and J are read at their carrier stage. Permanent reservoirs are read from the original outgoing R at max(row,label), including at the last row of a successor slice."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("signedordinalrealization-properLaws"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-proper-laws"),
                 DeclarationHandle.Create(Owner + "properLaws"), H("Original laws on all proper slices"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("All eligible A through F and DI/DJ hold at every proper cutoff, including successors. F uses the regular bounded incoming evidence retained by the actual state, from the previous outgoing R or the actual limit Extension."))), DescribeRole.Theorem),
@@ -35,7 +35,7 @@ internal sealed class SignedOrdinalRealizationDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(Owner + "initial_carrier"), H("The original initial cubes"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("At every coordinate at most omega the carrier is the full Boolean function space."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("signedordinalrealization-wholeBirth-read"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-whole-birth-read"),
                 DeclarationHandle.Create(Owner + "wholeBirth_read"), H("The identical whole birth"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The final whole birth is the actual newborn Q, transported solely across equality of the literal carrier."))), DescribeRole.Theorem),
@@ -47,7 +47,7 @@ internal sealed class SignedOrdinalRealizationDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(Owner + "slice_nu"), H("Slice measures retain whole labels"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The signed measure in every proper slice equals the original whole birth measure. Labels need not be eligible at the cutoff to be preserved."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("signedordinalrealization-slice-J"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-slice-j"),
                 DeclarationHandle.Create(Owner + "slice_J"), H("Actual incoming J"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For eligible old rows and labels the proper Data J is exactly the actual incoming predecessor J at that carrier."))), DescribeRole.Theorem),
@@ -63,7 +63,7 @@ internal sealed class SignedOrdinalRealizationDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create(Owner + "initial_onto"), H("Onto the initial countable cube"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The same final cube maps onto the full Boolean cube on omega by its original coordinate restriction. Compact inverse-limit lifting supplies a point above every initial function."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("signedordinalrealization-slice-N"),
+            Describe.Lean(DescribeId.Create("signedordinalrealization-slice-n"),
                 DeclarationHandle.Create(Owner + "slice_N"), H("Permanent slice reservoirs"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Every born row and label pair in any proper slice reads the original permanent reservoir at their unique outgoing maximum."))), DescribeRole.Theorem),

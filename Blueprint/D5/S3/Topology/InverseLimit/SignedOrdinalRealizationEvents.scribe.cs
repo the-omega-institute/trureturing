@@ -15,7 +15,7 @@ internal sealed class SignedOrdinalRealizationEventsDocument : IScribeDocumentDe
                 DeclarationHandle.Create(Owner + "selected_projection"), H("The actual selected projection"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The actual selected R literal projection, after final projection to succ(a), equals final projection to the original row transported only across literal carrier equality. The same split and coordinate restriction are used."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("actual-event-successor-J"),
+            Describe.Lean(DescribeId.Create("actual-event-successor-j"),
                 DeclarationHandle.Create(Owner + "successor_J"), H("Same outgoing and incoming J"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("At succ(a), original eligible J is exactly the same selected R.J at a. The outgoing R carrier belongs to succ(a), while its J becomes incoming at that stage."))), DescribeRole.Theorem),

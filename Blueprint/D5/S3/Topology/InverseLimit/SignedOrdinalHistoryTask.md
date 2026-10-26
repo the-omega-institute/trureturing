@@ -4,7 +4,19 @@
 
 Intrinsic delayed semantics of the original birth
 
-**Theorem 1.1 (Local tasks and original whole birth tests).**
+**Theorem 1.1 (Intrinsic semantics under literal equality).**
+
+Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.intrinsic_cast`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.intrinsic_cast` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Intrinsic delayed validity is invariant under equality transport of the entire original birth pack. The final realization uses this equivalence to execute a delayed request on the same original Q.
+
+**Theorem 1.2 (Local tasks and original whole birth tests).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.local_semantics`
 
@@ -18,7 +30,7 @@ The natural code uses the fixed mathlib equivalence from naturals to pairs of na
 
 The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
 
-**Theorem 1.2 (Stability from canonical whole birth coherence).**
+**Theorem 1.3 (Stability from canonical whole birth coherence).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.stable_local`
 
@@ -34,6 +46,7 @@ The four-slot escape registration remains unfinished under issue 21750; no decla
 
 ## References
 
+- Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.intrinsic_cast`
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.local_semantics`
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalHistoryTask.stable_local`
 - Dependency: [D5/S3/Topology/InverseLimit/SignedOrdinalHistoryState](SignedOrdinalHistoryState.md)

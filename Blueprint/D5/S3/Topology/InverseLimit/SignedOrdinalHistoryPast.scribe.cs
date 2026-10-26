@@ -12,23 +12,23 @@ internal sealed class SignedOrdinalHistoryPastDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For cutoffs at most omega-one, every carrier of an actual earlier state equals the strict prefix carrier at that same coordinate. Coordinates at most omega use the actual initial invariant; later coordinates use pairwise same-run coherence.")),
                     Paragraph(Text("The four-slot escape audit is unfinished under issue 21750; only exact source reconstruction is claimed."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("post-run-bornPack-read"),
+            Describe.Lean(DescribeId.Create("post-run-born-pack-read"),
                 DeclarationHandle.Create(Owner + "bornPack_read"), H("Canonical whole old birth"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Each whole birth is the original Q at its row and equals the transported old birth in every later actual state."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("post-run-postI-read"),
+            Describe.Lean(DescribeId.Create("post-run-post-i-read"),
                 DeclarationHandle.Create(Owner + "postI_read"), H("Post-run incoming I"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("At any proper cutoff the eligible I equals the actual incoming state I."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("post-run-postJ-read"),
+            Describe.Lean(DescribeId.Create("post-run-post-j-read"),
                 DeclarationHandle.Create(Owner + "postJ_read"), H("Post-run incoming J"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("At any proper cutoff the eligible J equals the actual incoming state J."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("post-run-postN-read"),
+            Describe.Lean(DescribeId.Create("post-run-post-n-read"),
                 DeclarationHandle.Create(Owner + "postN_read"), H("Post-run permanent N"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The original outgoing maximum reservoir equals each eligible incoming oldN. At a successor cutoff the outgoing last-row event is read only after the run is complete."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("post-run-postLaws"),
+            Describe.Lean(DescribeId.Create("post-run-post-laws"),
                 DeclarationHandle.Create(Owner + "postLaws"), H("Every proper post-run slice"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Original A through F and DI/DJ hold at every proper cutoff. The last row retains its actual whole birth and disjoint reservoirs even though E and F have strictly older row domains."))), DescribeRole.Theorem),
