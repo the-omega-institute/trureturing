@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Graph.DominatingSetAverageBoundNonstem
 import Mathlib.Data.Nat.Dist
 import Mathlib.Data.Fintype.Powerset
 
+/-! Exact actual-subset and column-word interfaces for the open three-row grid. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
@@ -35,11 +37,12 @@ def ClosedPrivate {V : Type} (G : SimpleGraph V) (S : Finset V) (v z : V) : Prop
 vertex and private-neighbour suppliers discharge its two alternatives. This is
 Gangloff--Talon, arXiv:1906.10779v2, Proposition 1, in closed-neighbour notation;
 the domination premise is retained. -/
-theorem minimal_iff_closed_private {V : Type} [Fintype V] [DecidableEq V]
+theorem minimal_iff_closed_private {V : Type} [Finite V]
     (G : SimpleGraph V) (S : Finset V) :
     MinimalDominating G S ↔ G.IsDominating (S : Set V) ∧
       ∀ v ∈ S, ∃ z, ClosedPrivate G S v z := by
   classical
+  letI := Fintype.ofFinite V
   constructor
   · intro h
     refine ⟨h.1, fun v hv => ?_⟩
@@ -82,8 +85,8 @@ abbrev Vertex (n : ℕ) := Fin 3 × Fin n
 /-- Ordinary open grid, with adjacency exactly at Manhattan distance one. -/
 def grid (n : ℕ) : SimpleGraph (Vertex n) where
   Adj u v := Nat.dist u.1.val v.1.val + Nat.dist u.2.val v.2.val = 1
-  symm := by intro u v; simp only [Nat.dist_comm]
-  loopless := by intro v; simp
+  symm := ⟨by intro u v h; simpa only [Nat.dist_comm] using h⟩
+  loopless := ⟨by intro v; simp⟩
 
 /-- A mask has one selection bit for each of the three labelled rows. -/
 abbrev Mask := Fin 3 → Bool
@@ -141,6 +144,71 @@ noncomputable def minimalWordEquiv (n : ℕ) :
     {S : Finset (Vertex n) // MinimalDominating (grid n) S} ≃
       {w : Word n // ValidWord w} :=
   (subsetWordEquiv n).subtypeEquiv fun S => by
-    simpa [subsetWordEquiv] using (validWord_iff (encode S)).symm
+    change MinimalDominating (grid n) S ↔ ValidWord (encode S)
+    have hd : decode (encode S) = S := (subsetWordEquiv n).left_inv S
+    rw [validWord_iff, hd]
+
+/-- Every closed neighbour is at column distance at most one. -/
+private theorem closed_column_dist {n : ℕ} {u v : Vertex n}
+    (h : Closed (grid n) u v) : Nat.dist u.2.val v.2.val ≤ 1 := by
+  rcases h with rfl | h
+  · simp
+  · change Nat.dist u.1.val v.1.val + Nat.dist u.2.val v.2.val = 1 at h
+    omega
+
+/-- A neighbour of a possible private witness lies in the five-column window. -/
+private theorem private_window_bound {n : ℕ} {v z u : Vertex n}
+    (hz : Closed (grid n) z v) (hu : Closed (grid n) z u) :
+    Nat.dist u.2.val v.2.val ≤ 2 := by
+  have h₁ := closed_column_dist hz
+  have h₂ := closed_column_dist hu
+  have ht := Nat.dist.triangle_inequality u.2.val z.2.val v.2.val
+  rw [Nat.dist_comm u.2.val z.2.val] at ht
+  omega
+
+/-- The column test only inspects selected vertices within two columns of its
+centre. Candidate witnesses are actual vertices, so absent columns supply none. -/
+def ColumnTest {n : ℕ} (S : Finset (Vertex n)) (c : Fin n) : Prop :=
+  (∀ r : Fin 3, ∃ v ∈ S, Closed (grid n) (r, c) v) ∧
+    ∀ r : Fin 3, (r, c) ∈ S → ∃ z : Vertex n,
+      Closed (grid n) z (r, c) ∧
+        ∀ v ∈ S, Nat.dist v.2.val c.val ≤ 2 → Closed (grid n) z v → v = (r, c)
+
+/-- The entire original proper-subset condition is equivalent to the five-column
+closed-private-witness test at every real column, for every width. -/
+theorem minimal_iff_column_tests {n : ℕ} (S : Finset (Vertex n)) :
+    MinimalDominating (grid n) S ↔ ∀ c, ColumnTest S c := by
+  rw [minimal_iff_closed_private]
+  constructor
+  · rintro ⟨hd, hp⟩ c
+    constructor
+    · intro r
+      rcases hd (r, c) with h | ⟨v, hv, hadj⟩
+      · exact ⟨(r, c), h, Or.inl rfl⟩
+      · exact ⟨v, hv, Or.inr hadj⟩
+    · intro r hr
+      obtain ⟨z, hz, huniq⟩ := hp (r, c) hr
+      exact ⟨z, hz, fun v hv _ h => huniq v hv h⟩
+  · intro h
+    constructor
+    · intro v
+      obtain ⟨u, hu, hclosed⟩ := (h v.2).1 v.1
+      rcases hclosed with heq | hadj
+      · exact Or.inl (heq ▸ hu)
+      · exact Or.inr ⟨u, hu, hadj⟩
+    · intro v hv
+      obtain ⟨z, hz, huniq⟩ := (h v.2).2 v.1 hv
+      exact ⟨z, hz, fun u hu hzu => huniq u hu (private_window_bound hz hzu) hzu⟩
+
+/-- The actual count is transported by a proved bijection; word counts are not
+substituted as a new definition of the external sequence. -/
+theorem actualCount_eq_word_card (n : ℕ) :
+    actualCount n = Nat.card {w : Word n // ValidWord w} := by
+  classical
+  calc
+    actualCount n = Fintype.card {S : Finset (Vertex n) // MinimalDominating (grid n) S} := by
+      simp [actualCount, minimalSets, Fintype.card_subtype]
+    _ = Fintype.card {w : Word n // ValidWord w} := Fintype.card_congr (minimalWordEquiv n)
+    _ = _ := Nat.card_eq_fintype_card.symm
 
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
