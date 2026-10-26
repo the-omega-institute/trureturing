@@ -127,8 +127,8 @@ theorem pi_machin_bounds : (piLowerQ : ℝ) ≤ Real.pi ∧ Real.pi ≤ (piUpper
     sub_le_sub (mul_le_mul_of_nonneg_left h5.2 (by norm_num))
       (mul_le_mul_of_nonneg_left h239.1 (by norm_num))⟩
 
-/-- Exact rational width; this is much smaller than 10^-250. -/
 set_option exponentiation.threshold 1024 in
+/-- Exact rational width; this is much smaller than 10^-250. -/
 theorem pi_machin_width : piUpperQ - piLowerQ < (1 : ℚ) / 10 ^ 320 := by
   have hw : piUpperQ - piLowerQ =
       16 * ((1 / 5 : ℚ) ^ 461 / 461) + 4 * ((1 / 239 : ℚ) ^ 461 / 461) := by
@@ -137,9 +137,9 @@ theorem pi_machin_width : piUpperQ - piLowerQ < (1 : ℚ) / 10 ^ 320 := by
   rw [hw]
   norm_num
 
+set_option exponentiation.threshold 1024 in
 /-- Coarse admissibility of the exact Machin endpoints, independent of the
 optional closed-value evaluations and 250-place rounding proofs. -/
-set_option exponentiation.threshold 1024 in
 private theorem machin_endpoints_range :
     (0 : ℝ) ≤ (piLowerQ : ℝ) ∧ (piUpperQ : ℝ) < 8 := by
   have hpi := pi_machin_bounds
