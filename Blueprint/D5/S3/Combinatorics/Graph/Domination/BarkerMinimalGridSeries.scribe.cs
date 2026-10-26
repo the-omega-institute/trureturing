@@ -5,6 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 internal sealed class BarkerMinimalGridSeriesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/barker2017a286848");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete Barker series for actual minimal dominating subsets", H("The complete Barker series for actual minimal dominating subsets"), Blocks(
             N("lift", "lift", "A quotient integer vector is lifted to every full state by its literal class.", DescribeRole.Definition),
@@ -25,11 +28,15 @@ internal sealed class BarkerMinimalGridSeriesDocument : IScribeDocumentDefinitio
             N("quotientSeries_identity", "quotientSeries identity", "The quotient-orbit series equals P*Q inverse. This theorem alone does not identify the quotient coefficients with actual subset counts.", DescribeRole.Theorem),
             N("actualCount_quotient", "Every actual positive-width count", "For every natural k, the actual labelled inclusion-minimal dominating subset count of the open grid of width k+2, cast to the integers, equals evaluate(orbit k). The proof uses the all-length actual word count and the total partition certificates, with no assumed recurrence or count relation.", DescribeRole.Theorem),
             N("actualSeries", "The actual-subset series", "The rational formal power series has coefficient zero 0 and coefficient actualCount n at every positive n. The actual empty-grid count is not changed.", DescribeRole.Definition),
-            N("whole_identity", "The entire Colin Barker identity", "actualSeries equals P times the inverse of Q in rational formal power series. P and Q contain every literal coefficient of Colin Barker's complete OEIS A286848 expression, including the leading x, both degree-48 terms, and denominator constant 1. All actual labelled inclusion-minimal dominating subsets are counted once for every width n at least 1.", DescribeRole.Theorem),
+            N("whole_identity", "The entire Colin Barker identity", "actualSeries equals P times the inverse of Q in rational formal power series. P and Q contain every literal coefficient of Colin Barker's complete OEIS A286848 expression, including the leading x, both degree-48 terms, and denominator constant 1. All actual labelled inclusion-minimal dominating subsets are counted once for every width n at least 1.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a286848-barker-minimal-dominating-three-row-grids"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The initial finite range and the shifted annihilator cover disjoint, exhaustive coefficient ranges. The denominator has constant term one, so its formal inverse exists over the rationals. Together with the actual-subset counting correspondence, this identifies every coefficient of the complete expression."))), []));
 
-    private static DocumentBlock N(string name, string title, string prose, DescribeRole role) =>
+    private static DocumentBlock N(string name, string title, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bs-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 }
