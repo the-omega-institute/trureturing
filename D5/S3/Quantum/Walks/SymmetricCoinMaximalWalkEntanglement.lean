@@ -588,7 +588,7 @@ private lemma walk_reflection (p n : ℕ) :
         fin_cases b <;> by_cases hx : x = 0 <;> delta walkState <;> simp [hx]
       · intro x
         delta walkState
-        simp [neg_eq_zero]
+        simp
   | succ n ih =>
       have hu (j : Fin 2 × ZMod p) : (walkState p n ![1, 0] j).im = 0 := (ih.1 j).1
       have hw (j : Fin 2 × ZMod p) : (walkState p n ![0, 1] j).im = 0 := (ih.1 j).2
@@ -611,12 +611,12 @@ private lemma walk_reflection (p n : ℕ) :
         constructor
         · simp only [walk_succ]
           delta hadamardStep
-          rw [if_neg (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), if_pos rfl]
+          rw [ite_eq_right (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), ite_eq_left rfl]
           rw [hn, (hback (x + 1)).1, (ih.2 (x + 1)).1, pow_succ]
           ring
         · simp only [walk_succ]
           delta hadamardStep
-          rw [if_neg (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), if_pos rfl]
+          rw [ite_eq_right (show (1 : Fin 2) ≠ 0 from Ne.symm Fin.zero_ne_one), ite_eq_left rfl]
           rw [hn, (hback (x + 1)).2, (ih.2 (x + 1)).2, pow_succ]
           ring
 
