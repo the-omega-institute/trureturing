@@ -1362,3 +1362,485 @@ $$
 这些要求不附加区间收缩、泛型性、共振排除、能量子列、标量约化或更强尾部条件。条件应用 24.6 保持原有作用，其他满足同一原全谱目标的路线仍然允许；上述结果既未证明也未反驳原目标 C，不增加全算子核、余核或负谱穷尽断言。
 
 ## 追加锚（本行以下为增补区）
+## 35. 实际慢共振输入、有限相容修正与修正后的物理质量
+
+**定义 35.1（原对象、物理配对与供应关系）。** 固定任意整数 $n\ge2$，以及整个原自然隔离区间中的任意固定 $g\in(\lambda_n,g_n^{\rm iso})$；不要求 $n,g$ 一致性。解析条件恰为原定义 18.1（修订 [d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md)），其定义 1.1 的供应者 C、V 固定于 5cec4fa83ae7bbb4e787c42606525db4cd11ed48。沿用定义 31.1--31.2、33.1--33.2、34.1 及其原条件下的结论；本节所用本卷第 31、33、34 节及 $G$ 第 24、26、28、30 节的文本固定于 [c4e346266d26ad884d034fd81e94f269df61a965](https://github.com/the-omega-institute/trureturing/blob/c4e346266d26ad884d034fd81e94f269df61a965/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md)。
+
+具体地，原父算子与完整源仍为
+
+$$
+\begin{aligned}
+U_k&=\partial_{x_k}-\tfrac12y_k\partial_z,
+&V_k&=\partial_{y_k}+\tfrac12x_k\partial_z,
+&Z&=\partial_z,\\
+L_{n,\epsilon}&=-\sum_{k=1}^n(U_k^2+V_k^2)-\epsilon^2Z^2,\\
+M_{n,\epsilon}(x,y,z)
+ &=\int_0^\infty\int_{\mathbb R^{2n-2}}
+ (e^{-tL_{n,\epsilon}}\delta_0)(x,y,W,z)\,dW\,dt.
+\end{aligned}
+$$
+
+$\delta_0$ 是恒等单位源，水平热时钟 covariance 为 $2$，中央 covariance 为 $2\epsilon^2$；时间积分和遗漏坐标边缘完整且无权。固定 $\epsilon=1$，保留原场与单位，置 $P=M_{n,1}$、$d\xi=dx\,dy\,dz$。在保留的三维空间中，$U=\partial_x-(y/2)\partial_z$、$V=\partial_y+(x/2)\partial_z$。原自由闭包和形式为
+
+$$
+\begin{aligned}
+\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,\|\cdot\|_{\rm free}},
+&\|u\|_{\rm free}^2&=\|u\|_2^2+
+             \sum_{X\in\{U,V,Z\}}\|Xu\|_2^2,\\
+q(u,v)&=\sum_{X\in\{U,V,Z\}}\langle Xu,Xv\rangle
+          -g\int P u\overline v\,d\xi,
+&D(q)&=\mathcal H_1.
+\end{aligned}
+$$
+
+所有内积第一变量线性。$\mathscr A=A_{n,1,g}$ 是此下半有界形式的完整复 Friedrichs 算子，包含原极点；其域恰为 (31.3)：$u\in\mathcal H_1$ 且存在 $a\in L^2(d\xi)$，使 $q(u,v)=\langle a,v\rangle$ 对全部 $v\in\mathcal H_1$ 成立，此时 $\mathscr Au=a$。不以穿孔闭包或各向同性 Sobolev 域替换它。
+
+取原坐标
+
+$$
+\begin{aligned}
+R&=((x^2+y^2)^2+16z^2)^{1/4},&\ell&=\log R,
+&J&=(-\pi/2,\pi/2),&c&=\cos a,\\
+\omega(a,\varphi)&=(\sqrt c\cos\varphi,\sqrt c\sin\varphi,\sin a/4),
+&d\xi&=\tfrac14 e^{4\ell}\,d\ell\,da\,d\varphi,\\
+\delta_r(x,y,z)&=(rx,ry,r^2z),
+&w_f(\ell,a)&=\sqrt{2\pi}\,e^\ell
+ f(\delta_{e^\ell}\omega(a,\varphi)).
+\end{aligned}
+$$
+
+最后一式用于轴对称 $f$，其精确物理配对为
+
+$$
+4\langle f,h\rangle_{L^2(d\xi)}
+ =\int e^{2\ell}\langle w_f(\ell),w_h(\ell)\rangle_{L^2(J,da)}\,d\ell.
+\tag{35.1}
+$$
+
+原自然角域为
+
+$$
+\mathcal H_c=\{b\in L^2(J,da):b\in AC_{\rm loc}(J),\
+                         \sqrt c\,b'\in L^2(J,da)\},
+$$
+
+没有额外端点迹条件。沿用角形式
+
+$$
+\begin{aligned}
+A[b]&=\int_J(4c|b'|^2+c|b|^2)\,da,
+&C[b]&=\int_Jc|b|^2\,da,\\
+I_n&=\int_0^{\pi/2}\sin^{n-2}t\,dt,
+&q_n(a)&=I_n^{-1}\int_0^1
+       u^{n-2}(1-u^2\sin^2a)^{-1/2}\,du,\\
+Q_n[b]&=\int_Jq_n|b|^2\,da,
+&h&=A-\frac{g}{2\pi}Q_n.
+\end{aligned}
+$$
+
+$H_{n,g}(\sigma,m)$ 是 $h[b]+\int c(\sigma+m\tan a)^2|b|^2\,da$ 的原自然复自伴表示。$m$ 遍历全部整数；$m=0$ 的域为 $\mathcal H_c$，$m\ne0$ 时另要求 $\int(\sin^2a/c)|b|^2\,da<\infty$。保留原复重数和全部角模定义
+
+$$
+L=L_{n,g}=\frac1{4\pi}\sum_{m\in\mathbb Z}\int_{\mathbb R}
+       \operatorname{rank}_{\mathbb C}
+       \mathbf1_{(-\infty,0)}(H_{n,g}(\sigma,m))\,d\sigma.
+$$
+
+$g_n^{\rm iso}>\lambda_n$、$L>0$ 以及 $s=2\pi L>0$ 由 $G$ 的引理 24.2、命题 24.3 推出，不是新增假设。
+
+下面的 $K,N,Z$ 仅定义在实际约化扇区 $\mathcal S$，即完整复轴对称、$z$ 偶扇区；不删除原算子的其他角模。$\mathsf K_g$ 是 $h$ 在偶 $L^2(J,c\,da)$ 中的自然表示，其唯一负本征值为 $-s^2$，相应 $\psi$ 实、正、偶且 $C[\psi]=1$；正本征值记作 $\nu^2$，相应自然复偶本征空间为 $E_\nu$。物理角质量仍是无权 $da$。
+
+加权空间取 (33.1) 的同一完成空间：内区范数为原自由范数，外部图能量为
+
+$$
+\int\{C[w_\ell]+A[w]+e^{-2\ell}\|Dw\|_{L^2(da)}^2\}\,d\ell,
+\qquad D=2\sin a\,(\partial_\ell-1)+4c\partial_a.
+$$
+
+$H_\sigma$ 由 $e^{\sigma\rho}$、$\rho=(\ell-L_*)_+$ 共轭定义。选择原供应者允许的固定小 $d>0$，使 $d<1/2$ 且小于最小正角指数。令
+
+$$
+\begin{aligned}
+P_d &:H_d\longrightarrow(H_{-d})^*,&(P_df)(z)&=4q(f,z),\\
+K&=\ker P_d,&N&=\ker\mathscr A\cap\mathcal S,\\
+Z&=\{z\in H_{-d}:q(f,z)=0\ \text{对每个 }f\in H_d\}.
+\end{aligned}
+$$
+
+这里反对偶及原自由闭包 $\mathcal H_1$ 的含义均与定义 33.1 相同；辅助指数一空间不被识别为 $\mathcal H_1$。直接复用 (33.3) 与定理 34.2：$K$ 有限维，$Z=K\oplus\mathbb C f_0$，$f_0$ 是原全局局部自由形式零能解，存在 $b\ne0$ 使
+
+$$
+w_{f_0}(\ell)=(be^{is\ell}+\overline b e^{-is\ell})\psi+r_0(\ell),
+\qquad
+\int_{b_*}^{\infty}e^{2d\ell}\|r_0(\ell)\|_{L^2(da)}^2\,d\ell<\infty.
+\tag{35.2}
+$$
+
+$b_*$ 为固定充分大对数半径。令 $\Sigma=\{\nu\in(0,1]:\nu^2\in\sigma(\mathsf K_g)\}$，允许为空。唯一复线性系数映射 $\mathsf A_\nu:K\to E_\nu$ 满足
+
+$$
+w_v(\ell)=\sum_{\nu\in\Sigma}e^{-\nu\ell}\mathsf A_\nu(v)+r_v(\ell),
+\tag{35.3}
+$$
+
+其中余项具有 (34.5) 的完整 $\delta$ 加权图界，固定 $\delta>1$ 满足 (34.3)。余项映射有界，包含原中央场和全部高阶偶角分量；$N=\ker(\mathsf A_\nu)_\nu=K\cap L^2(d\xi)$。不要求系数映射满射，其像和各系数均允许为零。这些均为定理 34.2 的供应结论。
+
+取定义 33.2 的同一原外解 $F_E$、固定内截断 $\eta$，以及 $U_E=\eta F_E$、$C_E=(\mathscr A+E)U_E$。对每个充分小的 $E>0$，$U_E\in D(\mathscr A)$，$C_E$ 是固定紧环带上的实际 $L^2$ 函数。令 $T=\tfrac12\log(1/E)$、$x=\ell-T$。完整耦合 wall 的同一实解 $W$ 满足
+
+$$
+W(x)=(\beta e^{isx}+\overline\beta e^{-isx})\psi
+                 +O_{\mathcal H_c}(e^{d_0x})\quad(x\to-\infty),
+\qquad |\beta|=1.
+$$
+
+(33.4) 给出 $w_{F_E}(T+x)=W(x)+r_T(x)$、$r_T=\sigma^{-1}Y_T$、$\|Y_T\|_{X_T}\le Ce^{-dT}$，其中 $\sigma=e^{dx}$ 于左端、右端为一；$X_T$ 范数含 $\int A[Y_T]$ 和 $\int e^{2x}\|Y_T\|_{L^2(da)}^2\,dx$。右端原外解与 $W$ 保有 (33.9) 的一致指数物理质量界。直接复用 (33.10)--(33.11)、(34.18) 及定理 34.4 证明中的弱收敛：
+
+$$
+\begin{aligned}
+\langle C_E,v\rangle&=E\langle U_E,v\rangle&& (v\in K),\\
+\langle C_E,f_0\rangle
+ &=-s\operatorname{Im}(\overline\beta b e^{isT})+o(1),
+\end{aligned}
+\tag{35.4}
+$$
+
+$$
+m_W=\frac14\int e^{2x}\|W(x)\|_{L^2(da)}^2\,dx\in(0,\infty),
+\qquad E\|U_E\|_2^2\longrightarrow m_W,
+\qquad \sqrt E\,U_E\rightharpoonup0\ \text{于 }L^2(d\xi).
+\tag{35.5}
+$$
+
+所有配对均使用原物理测度。这里的 $Z$ 不被断言为全算子余核。
+
+**命题 35.2（完整 wall 给出的实际慢共振输入）。** 对每个 $\nu\in\Sigma$ 及 $\alpha\in E_\nu$，定义反线性泛函
+
+$$
+J_\nu(\alpha)=\frac14\int_{\mathbb R}e^{(2-\nu)x}
+                 \langle W(x),\alpha\rangle_{L^2(da)}\,dx.
+\tag{35.6}
+$$
+
+积分绝对收敛。令 $K_{\ge\nu}=\{v\in K:\mathsf A_\mu(v)=0\ \text{当 }\mu<\nu\}$。在 $K_{\ge\nu}$ 的 $H_d$ 单位球上一致地，有
+
+$$
+E^{-\nu/2}\langle C_E,v\rangle
+       \longrightarrow J_\nu(\mathsf A_\nu(v))\qquad(E\downarrow0).
+\tag{35.7}
+$$
+
+在 $N$ 的 $H_d$ 单位球上一致地，$E^{-1/2}\langle C_E,z\rangle\to0$。若 (35.7) 右端为零，结论仅为相应 little-o，不断言系数非零。
+
+证明。左端 $W$ 在 $\mathcal H_c$ 中有界，$2-\nu\ge1$，故 (35.6) 的左半线绝对可积；右端由 (33.9) 的指数质量界和 Cauchy--Schwarz 不等式可积。
+
+先对每个 $\nu\in\Sigma$ 证明实际向量矩收敛：
+
+$$
+\int e^{(2-\nu)x}w_{U_E}(T+x)\,dx
+       \longrightarrow\int e^{(2-\nu)x}W(x)\,dx
+                 \quad\text{于 }L^2(J,da).
+\tag{35.8}
+$$
+
+在 $x\le-2$，$\|Y_T\|_{X_T}$ 的 $A$ 部分控制无权角 $L^2$ 范数，且
+
+$$
+\begin{aligned}
+&\int_{b_*-T}^{-2}e^{(2-\nu)x}\|r_T(x)\|_{L^2(da)}\,dx\\
+&\quad\le\left(\int_{-\infty}^{-2}e^{2(2-\nu-d)x}\,dx\right)^{1/2}
+             \|Y_T\|_{L^2(dx\,da)}
+ \le Ce^{-dT}.
+\end{aligned}
+$$
+
+这里 $2-\nu-d>0$。固定有限 $x$ 区间的误差同样趋零。右端 $x\ge R$ 的向量矩尾由外解与 $W$ 的一致指数质量界控制为随 $R\to\infty$ 趋零的函数，且对 $E$ 一致；先固定 $R$，再令 $E\downarrow0$，最后令 $R\to\infty$，得到 (35.8)。固定内截断 $\eta$ 与原外解起点遗漏的 $W$ 左尾亦趋零，没有取能量子列。
+
+取固定外部光滑截断 $\zeta$，在充分远端为一。由 (35.3) 和 $\delta>1$，可写
+
+$$
+v=\sum_{\mu\in\Sigma}v_\mu^{\rm model}+R_v,
+\qquad
+w_{v_\mu^{\rm model}}(\ell)
+ =\zeta(\ell)e^{-\mu\ell}\mathsf A_\mu(v),
+\qquad R_v\in L^2(d\xi).
+$$
+
+映射 $v\mapsto R_v$ 在有限维 $K$ 上有界；内区由局部自由形式身份保证 $L^2$。利用 (35.5) 的弱收敛与有限维一致性，余项配对为
+
+$$
+E\langle U_E,R_v\rangle
+ =\sqrt E\,\langle\sqrt E\,U_E,R_v\rangle
+ =o(\sqrt E)\|v\|_{H_d}.
+\tag{35.9}
+$$
+
+由 (35.1)，慢尾模型的贡献除以 $e^{-\mu T}$ 后，恰为 (35.8) 与 $\mathsf A_\mu(v)$ 的角配对再除以 $4$，外加固定 $\zeta$ 过渡区的 $o(1)$，故该贡献为
+
+$$
+e^{-\mu T}\{J_\mu(\mathsf A_\mu(v))+o(1)\|v\|_{H_d}\}.
+$$
+
+对 $v\in K_{\ge\nu}$，$\mu<\nu$ 的各项为零，$\mu>\nu$ 的各项除以 $e^{-\nu T}$ 后趋零；(35.9) 除以 $e^{-\nu T}$ 也趋零。临界 $\nu=1$ 使用 (35.9) 的 little-o。有限维一致性给出 (35.7)；对 $N$，所有慢系数为零，直接使用 (35.9)。$\square$
+
+命题 35.2 确定了 (33.20)--(33.21) 的实际 $C_E$ 慢共振系数，不以正能量逆估计为前提，也未用 $C$ 正交性删除物理质量交叉项。
+
+**定义 35.3（有限物理质量相容矩阵与显式修正）。** 选 $0<a<b_c<\infty$ 和 $\theta\in C^\infty([0,\infty);[0,1])$，使 $\theta=1$ 于 $[0,a]$、$\theta=0$ 于 $[b_c,\infty)$；令 $\chi=\theta^2$。取 $b_c$ 充分小，使
+
+$$
+\frac14\int_{x>\log b_c}e^{2x}\|W(x)\|_{L^2(da)}^2\,dx
+                                      >m_W/2.
+\tag{35.10}
+$$
+
+因 $m_W>0$ 且左端质量可积，总能如此选择。选择可依赖固定 $n,g$，不改变其允许区间。记 $\theta_T=\theta(e^{-T}R)$、$\chi_T=\chi(e^{-T}R)$。
+
+选 $K$ 的实适配基 $(z_\alpha,r_i)$：$z_\alpha$ 为 $N$ 的实基；$r_i$ 为 $K/N$ 依最小非零指数 $\nu_i$ 的适配基代表，$\alpha_i=\mathsf A_{\nu_i}(r_i)\ne0$，同指数首系数独立。原系数和空间在复共轭下不变，故这些实基的复线性包恰为原完整复 $K$，不缩小复重数。所有相关指标集合及各块均允许为空，实际系数像允许为零。
+
+用 $v_i$ 统一表示该基，并设
+
+$$
+\kappa_\alpha(E)=\sqrt E\quad(z_\alpha\in N),
+\qquad
+\kappa_i(E)=
+\begin{cases}
+E^{\nu_i/2},&\nu_i<1,\\
+\sqrt{ET},&\nu_i=1.
+\end{cases}
+$$
+
+定义
+
+$$
+\begin{aligned}
+\Gamma_{ij}(E)&=E\langle\theta_Tv_i,\theta_Tv_j\rangle
+               =E\langle\chi_Tv_i,v_j\rangle,\\
+M_{ij}(E)&=\Gamma_{ij}(E)/(\kappa_i\kappa_j).
+\end{aligned}
+\tag{35.11}
+$$
+
+直接复用定理 34.3 的物理 Gram 结论，将其固定截断取为 $\theta$ 并作常数径向缩放，得到
+
+$$
+\begin{aligned}
+M(E)&\longrightarrow
+ \operatorname{diag}(G_N,G_{\rm pow},G_{\rm log})=:G,\\
+G_{N,\alpha\beta}&=\langle z_\alpha,z_\beta\rangle_{L^2(d\xi)},\\
+G_{{\rm pow},ij}
+ &=\tfrac14\langle\alpha_i,\alpha_j\rangle_{L^2(da)}
+       \int_0^{b_c}\theta(r)^2r^{1-\nu_i-\nu_j}\,dr
+                    &&(\nu_i,\nu_j<1),\\
+G_{{\rm log},ij}&=\tfrac14\langle\alpha_i,\alpha_j\rangle_{L^2(da)}
+                    &&(\nu_i=\nu_j=1).
+\end{aligned}
+\tag{35.12}
+$$
+
+每个非空块正定，跨块极限为零；幂块保留不同指数之间的全部无权 $da$ 交叉项。该结论由既有定理直接提供。$\Gamma(E)$ 只是明确写出的有限物理质量相容矩阵，不是 $\mathscr A+E$ 的补空间压缩或 Schur 补。
+
+定义实向量 $B_j(E)=\langle C_E,v_j\rangle/\kappa_j$。命题 35.2 给出
+
+$$
+B(E)\longrightarrow
+ B_*=(0,(J_{\nu_i}(\alpha_i))_{\nu_i<1},0).
+\tag{35.13}
+$$
+
+由 (35.12)，$M(E)$ 对每个充分小 $E$ 正定可逆。置
+
+$$
+d(E)=-M(E)^{-1}B(E),
+\qquad
+h_E=\sum_i d_i(E)\kappa_i(E)^{-1}\chi_Tv_i.
+\tag{35.14}
+$$
+
+$K=0$ 时为空和 $h_E=0$；零维逆均采用唯一空映射。
+
+**命题 35.4（原完整复 $K$ 的实际有限相容修正）。** 定义 35.3 的构造对每个充分小 $E$ 满足
+
+$$
+h_E\in D(\mathscr A),\qquad
+\|h_E\|_2=O(E^{-1/2}),\qquad
+E\langle h_E,v\rangle=-\langle C_E,v\rangle\quad(v\in K).
+\tag{35.15}
+$$
+
+$h_E$ 紧支撑。令 $R_E=(\mathscr A+E)(U_E+h_E)$，则 $R_E$ 是紧支撑的实际 $L^2$ 函数，且
+
+$$
+\langle R_E,v\rangle=0\qquad(v\in K).
+\tag{35.16}
+$$
+
+归一化系数的精确极限为
+
+$$
+d(E)\longrightarrow d_*=(0,-G_{\rm pow}^{-1}J_{\rm pow},0),
+\qquad J_{\rm pow}=(J_{\nu_i}(\alpha_i))_{\nu_i<1}.
+\tag{35.17}
+$$
+
+非空真零、幂、临界块的对角反演尺度分别为 $E^{-1}$、$E^{-\nu_i}$、$(ET)^{-1}$；混合幂由整个 $G_{\rm pow}$ 控制，不能逐指数丢弃物理交叉项。
+
+证明。定理 34.3 的原场乘法与表示定理结论给出每个 $\chi_Tv_i\in D(\mathscr A)$；$\chi$ 在极点附近恒为一，故不改变原极点闭包。有限和给出 $h_E\in D(\mathscr A)$。矩阵恒等式为
+
+$$
+\Gamma=\operatorname{diag}(\kappa)M\operatorname{diag}(\kappa).
+$$
+
+实基使这些矩阵实对称，(35.14) 因而给出
+
+$$
+E\langle h_E,v_j\rangle/\kappa_j
+       =\sum_i d_iM_{ij}=-B_j.
+$$
+
+按第二变量的复反线性延拓，方程对原完整复 $K$ 成立。反演尺度来自此加权矩阵恒等式及有限维逆的连续性，不是原预解式界；(35.12)--(35.13) 亦直接给出 (35.17)。
+
+对 $\chi_Tv_i$ 的质量再次应用定理 34.3，此时其截断取为 $\chi$，得到这些向量除以 $\kappa_i$ 后的物理 Gram 乘 $E$ 有界。$d(E)$ 有界，故 $\|h_E\|_2=O(E^{-1/2})$。
+
+每个 $v\in K$ 是原全测试局部形式零能解。$h_E$ 是紧支撑原自由形式向量，可由原紧光滑 core 在固定更大紧集上逼近，故 $q(h_E,v)=0$。其原算子像由 (34.15) 的环带乘法公式给出，是紧支撑 $L^2$ 函数，于是 $\langle\mathscr Ah_E,v\rangle=0$。结合 (35.4)、(35.15)，
+
+$$
+\langle R_E,v\rangle
+ =\langle C_E,v\rangle+\langle\mathscr Ah_E,v\rangle
+                            +E\langle h_E,v\rangle=0.
+$$
+
+$C_E$、$h_E$、$\mathscr Ah_E$ 均紧支撑，所写残差配对均为普通局部物理 $L^2$ 配对。$\square$
+
+(35.15) 针对真实右端给出有限相容修正，不是假定未知解存在；它未给出 $\|R_E\|_2=o(\sqrt E)$。
+
+**命题 35.5（修正的正物理主质量与剩余标量相位）。** 在定义 35.3 下，令
+
+$$
+H(x)=\sum_{\nu_i<1}d_{i,*}\chi(e^x)e^{-\nu_i x}\alpha_i
+       \quad\text{于 }L^2(\mathbb R,e^{2x}dx;L^2(J,da)).
+\tag{35.18}
+$$
+
+幂块为空时 $H=0$。置
+
+$$
+J_H=\frac12\int_{\mathbb R}e^{(2+is)x}
+                       \langle H(x),\psi\rangle_{L^2(da)}\,dx,
+\qquad \Lambda=is\overline\beta+J_H.
+\tag{35.19}
+$$
+
+$H$ 实，支撑于 $x\le\log b_c$，且各指数 $\nu_i<1$，所以这些积分绝对收敛。令 $u_E=U_E+h_E$。对每个充分小 $E$，$u_E\in D(\mathscr A)$，并有
+
+$$
+E\|u_E\|_2^2\longrightarrow
+ m_{\rm corr}=\frac14\int e^{2x}
+          \|W(x)+H(x)\|_{L^2(da)}^2\,dx>m_W/2,
+\tag{35.20}
+$$
+
+$$
+\langle R_E,f_0\rangle=\operatorname{Re}(b\Lambda e^{isT})+o(1).
+\tag{35.21}
+$$
+
+若 $\Lambda\ne0$，取任意 $\arg(b\Lambda)$，令
+
+$$
+T_*=(\pi/2-\arg(b\Lambda))/s,
+\qquad D_{\rm comp}=e^{-2T_*}.
+$$
+
+若 $\Lambda=0$，任取固定 $D_{\rm comp}>0$。两种情形下，$E_j=D_{\rm comp}e^{-j/L}$ 对每个充分大整数 $j$ 都给出非零原域向量 $u_{E_j}$，满足 (35.16) 以及
+
+$$
+\langle R_{E_j},f_0\rangle\longrightarrow0,
+\qquad
+\|\langle R_{E_j},\cdot\rangle|_Z\|_{Z^*}\longrightarrow0.
+\tag{35.22}
+$$
+
+$Z$ 上使用定义 33.1 的有限维范数。$D_{\rm comp}$ 仅为此有限相容构造的标量相位常数，未被识别为 (33.22) 所需的最终谱相位常数。
+
+证明。由 (33.13)、固定内截断以及 $W$ 左端质量可积，
+
+$$
+w_{U_E}(T+\cdot)\longrightarrow W
+                   \quad\text{于 }L^2(e^{2x}dx\,da).
+\tag{35.23}
+$$
+
+对 $\nu_i<1$，(35.3)、(35.1) 给出
+
+$$
+w_{\kappa_i^{-1}\chi_Tr_i}(T+\cdot)
+       \longrightarrow\chi(e^x)e^{-\nu_i x}\alpha_i
+                   \quad\text{于同一加权 }L^2\text{ 空间}.
+\tag{35.24}
+$$
+
+具体地，$\mu>\nu_i$ 且 $\mu<1$ 的高慢项带有额外因子 $e^{-(\mu-\nu_i)T}$；$\mu=1$ 的临界项至多多出 $\sqrt T$，仍由 $e^{-(1-\nu_i)T}$ 消去。物理 $L^2$ 余项的相应范数由 $Ce^{-(1-\nu_i)T}$ 控制而趋零，固定内区亦然。所处理高项是真实原向量中的项，未通过删除高项更换原算子。
+
+真零和临界归一化向量在此加权物理范数中有界，其系数由 (35.17) 满足 $d_i(E)\to0$，故总贡献趋零。由 (35.17)、(35.23)--(35.24)，
+
+$$
+w_{u_E}(T+\cdot)\longrightarrow W+H
+                           \quad\text{于 }L^2(e^{2x}dx\,da).
+$$
+
+(35.1) 给出 (35.20) 的极限。$H$ 在 $x>\log b_c$ 为零，故 (35.10) 给出 $m_{\rm corr}>m_W/2$，并证明 $u_E$ 对每个充分小 $E$ 非零；不需排除允许共振或假定任何块非空。
+
+$h_E$ 紧支撑，原 $f_0$ 的全测试零能方程给出 $q(h_E,f_0)=0$，故
+
+$$
+\langle R_E,f_0\rangle
+       =\langle C_E,f_0\rangle+E\langle h_E,f_0\rangle.
+\tag{35.25}
+$$
+
+在 $x\le\log b_c$ 上，(35.2) 的移位余项在 $e^{2x}$ 物理范数中趋零：外部余项的平方积分至多为 $Ce^{-2dT}$，固定内区至多为 $Ce^{-2T}$。该区域内的站波 $G_{be^{isT}}(x)$ 的同一范数一致有界。因此 (35.24) 和消失的真零、临界贡献可用于 (35.25) 的质量配对，得到
+
+$$
+\begin{aligned}
+E\langle h_E,f_0\rangle
+ &=\frac14\int e^{2x}\Big\langle H(x),
+       (be^{is(T+x)}+\overline b e^{-is(T+x)})\psi
+                         \Big\rangle_{L^2(da)}\,dx+o(1)\\
+ &=\operatorname{Re}(be^{isT}J_H)+o(1).
+\end{aligned}
+$$
+
+结合 (35.4) 以及 $-s\operatorname{Im}z=\operatorname{Re}(isz)$，恰得 (35.21)。若 $\Lambda\ne0$，$T_j=T_*+\pi j/s$ 使 $\operatorname{Re}(b\Lambda e^{isT_j})=0$。因 $s=2\pi L$，$e^{-2T_j}=D_{\rm comp}e^{-j/L}$；若 $\Lambda=0$，(35.21) 对任意趋零 $E$ 均为 $o(1)$。$K$ 配对已由 (35.16) 精确消去，$Z=K\oplus\mathbb C f_0$ 且有限维，故得 (35.22)。$\square$
+
+**注记 35.6（实际消费者与未得出的全残差结论）。** 命题 35.2、35.4、35.5 共同服务问题 33.4 的 (33.20)--(33.22)，特别是 (33.21) 的实际 $K$ 相容数据：命题 35.2 给出实际 $C_E$ 对每个实际慢共振首系数的能量尺度及完整 wall 系数；命题 35.4 以紧支撑原域向量消掉全部 $K$ 相容数据并给出其物理放大；命题 35.5 给出修正后的非零主质量及剩余 $f_0$ 相位。$\Gamma(E)$ 的非空块正定性直接来自定理 34.3。
+
+所构造的是有限相容修正；尚无
+
+$$
+(\mathscr A+E)h_E=-C_E+\rho_E,
+\qquad \|\rho_E\|_2=o(\sqrt E)
+$$
+
+的范数结论。实际残差为 $R_E=C_E+(\mathscr A+E)h_E$，固定内环带上的 $C_E$ 不会仅因有限相容方程而得到小范数估计。这里没有消去原补空间后的有效 Schur 矩阵估计，也未控制该消元的误差放大；未来补空间修正若改变右端，仍须在同一原物理尺度重新处理相容数据，不能直接沿用本 $\Gamma(E)$ 为最终有效矩阵。
+
+原目标 (33.22) 仍要求：对每个整数 $n\ge2$、整个原隔离区间的每个固定 $g$，以某个固定 $D>0$，在每个充分大整数层级 $E_j=De^{-j/L}$ 构造非零原域向量，满足
+
+$$
+\frac{\|(\mathscr A+E_j)u_j\|_{L^2(d\xi)}}
+ {E_j\|u_j\|_{L^2(d\xi)}}\longrightarrow0.
+$$
+
+(35.20)、(35.22) 未给出该全物理 $L^2$ 残差结论；对已构造且质量为 $E^{-1/2}$ 阶的向量，仍缺 $\|R_E\|_2=o(\sqrt E)$。有限 $K$ 精确消去和 $Z^*$ 小量既不证明也不反驳原目标。定理 31.4 保持原域与残差用途；(31.16)、(32.3) 仅是其特定构造的充分条件，不是原目标必要条件。条件应用 24.6，尤其其 (24.18)，保持原条件角色，未由上述配对小量支付其前件。
+
+这里没有缩小原隔离区间、选取能量子列、排除核或共振、假定标量约化、加强源尾部或替换自然端点，也不增加负谱穷尽、简单性或全算子余核义务；满足同一原目标的其他路线仍然允许。$\Sigma,K,N$ 及各块允许为空，实际系数像以及 $J,H,\Lambda$ 允许为零。结论限于所述原模型的条件数学分析，不涉及物理实现。命题 35.2、35.4、35.5 是对既有原模型结果的具体综合推导；有限维正定矩阵反演、弱收敛的有限维一致性、Cauchy--Schwarz 不等式及移位质量积分均为其中复用的经典方法，不单列为新结果，也不作全局文献优先权判断。
+
+**数学引文 35.7（版本、参数对应与适用界限）。**
+
+1. [原边界响应卷](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md)，修订 d6d829c43b0ed4f127a09666bc40088b6f440b94，定义 18.1 及定义 1.1 的解析供应者固定。
+2. [本卷第 31、33、34 节](https://github.com/the-omega-institute/trureturing/blob/c4e346266d26ad884d034fd81e94f269df61a965/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md)，修订 c4e346266d26ad884d034fd81e94f269df61a965；本节直接复用其慢尾、原域截断、Gram、物理零模和 wall 质量结论。
+3. [完整 Green 边缘续篇](https://github.com/the-omega-institute/trureturing/blob/c4e346266d26ad884d034fd81e94f269df61a965/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md)，同一修订，第 24、26、28、30 节；条件结论按本卷原接口使用。
+4. [变量系数 Green 稳定性卷](https://github.com/the-omega-institute/trureturing/blob/5cec4fa83ae7bbb4e787c42606525db4cd11ed48/docs/develop/theory/FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md)，修订 5cec4fa83ae7bbb4e787c42606525db4cd11ed48，第 10 节；供应原自然角闭域、坐标与测度规范。
+5. Colin Guillarmou and Andrew Hassell, *Resolvent at low energy and Riesz transform for Schrödinger operators on asymptotically conic manifolds. II*, Ann. Inst. Fourier 59(4), 1553--1610 (2009)，DOI [10.5802/aif.2471](https://doi.org/10.5802/aif.2471)，[PDF](https://aif.centre-mersenne.org/item/10.5802/aif.2471.pdf) 页 1--5（封面、印刷页 1553--1556），第 1 节。其光滑 scattering metric、$V=O(x^l)$（$l\ge3$）及物理空间 $L^2(M,dg)$ 是具体适用条件。原 $E$ 对应其 $k^2$、原 $R$ 对应 $1/x$ 仅对应能量量纲；原非零 $-gq_n/(2\pi)R^{-2}$ 主势不满足其三阶消失条件，原自然退化角域与完整各向异性场的度量、域对应亦未建立。因缺完整假设、域和测度对应，这里的证明不调用其预解式定理，该文不是原目标的现成逆供应者。
+6. 钉版 mathlib [56a005855ea17e0b0958f73ec801ae140b0a1679 的 FredholmAlternative](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Normed/Operator/Compact/FredholmAlternative.lean) 中，有界紧算子非零谱值的 Fredholm 二择一不提供本原非有界 $\mathscr A$ 的低能有权参数逆；本仓 `D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.lean` 的正矩阵行列式极限定理亦不提供该逆。这两项与原问题的上述界限不构成对本节结论的形式化认证。
+
+## 追加锚（本行以下为增补区）

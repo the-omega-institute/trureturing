@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected]
    utility: none
-   digest: Two-torsion connects original minimal zero supports through nonterminal intersections. -/
+   digest: Separated original minimal supports have nonzero designated-coordinate charge sums. -/
 
 import D5.S3.Combinatorics.Sequenceability.DisjointMinimalZeroOrdering
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
@@ -40,6 +40,128 @@ def supportIntersectionGraph (E : Finset (Finset α)) (q : α) : SimpleGraph E w
     constructor
     intro B h
     exact h.1 rfl
+
+/-- Graph on ALL original support vertices, including Q-free and exception-only
+vertices. Distinct supports are adjacent exactly when they share an original
+coordinate outside the finite designated set Q. -/
+def supportIntersectionGraphOutside (E : Finset (Finset α)) (Q : Finset α) :
+    SimpleGraph E where
+  Adj B D := B ≠ D ∧ ∃ i : α, i ∉ Q ∧ i ∈ B.val ∧ i ∈ D.val
+  symm := by
+    constructor
+    rintro B D ⟨hne, i, hiQ, hiB, hiD⟩
+    exact ⟨hne.symm, i, hiQ, hiD, hiB⟩
+  loopless := by
+    constructor
+    intro B h
+    exact h.1 rfl
+
+/-- Consumed by the finite-order component bound: the general graph has exactly
+the established singleton graph, with its original vertex IDs and paths. -/
+theorem supportIntersectionGraphOutside_singleton
+    (E : Finset (Finset α)) (q : α) :
+    supportIntersectionGraphOutside E {q} = supportIntersectionGraph E q := by
+  classical
+  ext B D
+  simp only [supportIntersectionGraphOutside, supportIntersectionGraph,
+    Finset.mem_singleton]
+
+open scoped Classical in
+/-- Let E be exactly ALL proper nonempty original minimal zero supports.
+For a nonempty finite family U in pairwise distinct components of the ALL-E
+graph, if every selected support meets Q and has a nonempty puncture outside Q,
+the sum of its designated-coordinate charges is nonzero.
+
+There is no incidence, finite-group, injectivity, or nonzero-label hypothesis.
+Exception-only supports remain graph vertices, but cannot satisfy hport.
+Applying this theorem to any nonempty subfamily of U gives the corresponding
+nonzero subsum, without assuming any zero-sum-free premise. -/
+theorem separated_component_charge_sum_ne_zero
+    (f : α → G) (Y : Finset α) (E : Finset (Finset α))
+    (hE : ∀ B : Finset α,
+      B ∈ E ↔ B ⊆ Y ∧ B ≠ Y ∧ MinimalZeroSupport f B)
+    (Q : Finset α) (U : Finset E) (hU : U.Nonempty)
+    (hmeet : ∀ B ∈ U, (B.val ∩ Q).Nonempty)
+    (hport : ∀ B ∈ U, (B.val \ Q).Nonempty)
+    (hsep : ∀ B ∈ U, ∀ D ∈ U, B ≠ D →
+      (supportIntersectionGraphOutside E Q).connectedComponentMk B ≠
+        (supportIntersectionGraphOutside E Q).connectedComponentMk D) :
+    (∑ B ∈ U, ∑ i ∈ B.val ∩ Q, f i) ≠ 0 := by
+  classical
+  let Γ := supportIntersectionGraphOutside E Q
+  have data (B : E) : B.val ⊆ Y ∧ B.val ≠ Y ∧ MinimalZeroSupport f B.val :=
+    (hE _).mp B.property
+  have shared_component {B D : E} {i : α} (hiQ : i ∉ Q)
+      (hiB : i ∈ B.val) (hiD : i ∈ D.val) :
+      Γ.connectedComponentMk B = Γ.connectedComponentMk D := by
+    by_cases hBD : B = D
+    · exact congrArg Γ.connectedComponentMk hBD
+    · exact SimpleGraph.ConnectedComponent.connectedComponentMk_eq_of_adj
+        (show Γ.Adj B D from ⟨hBD, i, hiQ, hiB, hiD⟩)
+  have hdis : Set.PairwiseDisjoint (↑U : Set E) (fun B : E => B.val \ Q) := by
+    intro B hB D hD hBD
+    apply Finset.disjoint_left.mpr
+    intro i hiB hiD
+    exact hsep B hB D hD hBD
+      (shared_component (Finset.mem_sdiff.mp hiB).2
+        (Finset.mem_sdiff.mp hiB).1 (Finset.mem_sdiff.mp hiD).1)
+  obtain ⟨a, ha⟩ := hU
+  obtain ⟨i, hi⟩ := hport a ha
+  obtain ⟨q, hq⟩ := hmeet a ha
+  have hqa : q ∈ a.val := (Finset.mem_inter.mp hq).1
+  have hqQ : q ∈ Q := (Finset.mem_inter.mp hq).2
+  let A : Finset α := U.biUnion (fun B : E => B.val \ Q)
+  have hiA : i ∈ A := Finset.mem_biUnion.mpr ⟨a, ha, hi⟩
+  have outside {j : α} (hj : j ∈ A) : j ∉ Q := by
+    obtain ⟨B, _, hjB⟩ := Finset.mem_biUnion.mp hj
+    exact (Finset.mem_sdiff.mp hjB).2
+  have hqA : q ∉ A := fun h => outside h hqQ
+  have hAY : A ⊆ Y := by
+    intro j hj
+    obtain ⟨B, _, hjB⟩ := Finset.mem_biUnion.mp hj
+    exact (data B).1 (Finset.mem_sdiff.mp hjB).1
+  have hsum : (∑ j ∈ A, f j) = -(∑ B ∈ U, ∑ j ∈ B.val ∩ Q, f j) := by
+    calc
+      (∑ j ∈ A, f j) = ∑ B ∈ U, ∑ j ∈ B.val \ Q, f j :=
+        Finset.sum_biUnion hdis
+      _ = ∑ B ∈ U, -(∑ j ∈ B.val ∩ Q, f j) := by
+        apply Finset.sum_congr rfl
+        intro B hB
+        apply eq_neg_iff_add_eq_zero.mpr
+        calc
+          (∑ j ∈ B.val \ Q, f j) + (∑ j ∈ B.val ∩ Q, f j) =
+              ∑ j ∈ (B.val \ Q) ∪ (B.val ∩ Q), f j :=
+            (Finset.sum_union (Finset.disjoint_sdiff_inter B.val Q)).symm
+          _ = ∑ j ∈ B.val, f j := by rw [Finset.sdiff_union_inter]
+          _ = 0 := (data B).2.2.2.1
+      _ = -(∑ B ∈ U, ∑ j ∈ B.val ∩ Q, f j) :=
+        Finset.sum_neg_distrib _
+  intro hzero
+  have hAz : (∑ j ∈ A, f j) = 0 := by rw [hsum, hzero, neg_zero]
+  -- The union projection supplies an original minimal block through the port.
+  obtain ⟨P, hP, hcover⟩ :=
+    zero_decomposition f A A Finset.Subset.rfl hAz
+  obtain ⟨D, hDP, hiD⟩ := Finset.mem_biUnion.mp (hcover ▸ hiA)
+  have hDA : D ⊆ A := (hP D hDP).1
+  have hDE : D ∈ E := (hE D).mpr ⟨hDA.trans hAY, by
+    intro he
+    exact hqA (hDA (he.symm ▸ (data a).1 hqa)), (hP D hDP).2⟩
+  let d : E := ⟨D, hDE⟩
+  have hda : Γ.connectedComponentMk d = Γ.connectedComponentMk a :=
+    shared_component (Finset.mem_sdiff.mp hi).2 hiD (Finset.mem_sdiff.mp hi).1
+  -- Component separation forces the entire block into its representative.
+  have hDa : D ⊆ a.val := by
+    intro j hjD
+    obtain ⟨B, hB, hjB⟩ := Finset.mem_biUnion.mp (hDA hjD)
+    have hdB : Γ.connectedComponentMk d = Γ.connectedComponentMk B :=
+      shared_component (Finset.mem_sdiff.mp hjB).2 hjD (Finset.mem_sdiff.mp hjB).1
+    have hBa : B = a := by
+      by_contra hne
+      exact hsep B hB a ha hne (hdB.symm.trans hda)
+    exact hBa ▸ (Finset.mem_sdiff.mp hjB).1
+  have hDeq : D = a.val :=
+    (data a).2.2.2.2 D hDa (hP D hDP).2.1 (hP D hDP).2.2.1
+  exact hqA (hDA (hDeq.symm ▸ hqa))
 
 /-- A two-torsion label puts all original proper minimal zero supports containing
 q in one component of the graph on ALL original proper minimal zero supports.

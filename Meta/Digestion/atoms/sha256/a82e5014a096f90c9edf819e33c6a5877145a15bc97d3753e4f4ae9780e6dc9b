@@ -1,0 +1,180 @@
+**Theorem 9.1 (no source-anchored fiber-kernel intertwining).** For every
+actual original $0<Z<1$, every fixed preparation in Definition 7.1 and
+every fixed original $a,\eta>0$, there is no candidate in Definition
+7.3. This excludes arbitrary Borel probability kernels supported on
+these central fibers, with no smoothness, finite-support, affine or
+canonical-kernel hypothesis. It concerns the original conservative
+full endpoint and its original clock.
+
+Proof. Assume a candidate exists. Proposition 8.1 first supplies the
+Hilbert-space structures that were not assumed for that candidate.
+The pullback is an isometry
+$U:L^2(\mathcal B_\ell,\nu;\mathbb C)\to L^2(G,m;\mathbb C)$;
+its closed range $\mathcal H_\ell$ consists of basic functions. Jensen's
+inequality and $\nu\Lambda=m$ make
+$\Lambda:L^2(m)\to L^2(\nu)$ a contraction. For bounded inputs,
+fiber support and (8.1) give
+
+$$
+\langle Uf,F_1\rangle_m=\langle f,\Lambda F_1\rangle_\nu,
+\qquad U^*=\Lambda,\qquad \Pi=UU^*.
+\tag{9.1}
+$$
+
+Density extends these statements to the displayed Hilbert spaces;
+$\Lambda$ in (9.1) means its almost-everywhere operator class. For
+any properly exceptional set $N$ of [S], $m(N)=0$ and $e\notin N$.
+Equation (8.1) gives $\Lambda_b(N)=0$ for $\nu$-almost every $b$.
+Thus the Hilbert argument uses only legitimate transition versions,
+while (8.8) uses the legitimate source start. For each bounded base $f$,
+
+$$
+\nu Q_t f=\nu\Lambda T_tUf=mT_tUf=mUf=\nu f.
+\tag{9.2}
+$$
+
+Hence $Q_t$ is an $L^2(\nu)$ contraction by Jensen, and the bounded-Borel
+intertwining extends to these $L^2$ spaces. Multiplying it by $U$ gives
+
+$$
+Q_t=U^*T_tU=Q_t^*,\qquad
+U^*T_t=Q_tU^*,\qquad T_tU=UQ_t.
+\tag{9.3}
+$$
+
+The last equality is the Hilbert adjoint of the middle one, using the
+first and the supplied selfadjointness of $T_t$. Strong continuity of
+$Q_t$ also follows from its compression formula. Thus $\mathcal H_\ell$
+and $\mathcal H_\ell^\perp$ reduce the actual $T_t$ and its generator
+$K$. This is the adjoint argument of Proposition 5.4; its canonical
+premise has now been proved from the source, rather than presumed.
+The cylinder coefficient classification of Theorem 3.1 is not being
+transferred to this different carrier or domain.
+
+We next test this reduction by vectors genuinely in the full domain
+(7.2). Write $Dq=qd_1$ and take any
+$q\in G\setminus\{e,d_{-1}\}$. Choose a relatively compact open
+coordinate box $O$ about $q$, small enough that $\pi_\ell$ is injective
+on $O$, $O$ and $DO$ are disjoint, and both closures avoid $e$.
+For any real $\varphi\in C_c^\infty(O)$ define a function on $G$ by
+
+$$
+W(p)=\frac{\varphi(p)}{h(p)^2}\quad(p\in O),\qquad
+W(Dp)=-\frac{\varphi(p)}{h(Dp)^2}\quad(p\in O),
+\qquad W=0\text{ elsewhere}.
+\tag{9.4}
+$$
+
+Compact support of $\varphi$ makes these prescriptions smooth across
+the boundaries of the two boxes. Positivity of $h$ there gives
+$W\in C_c^\infty(G\setminus\{e\})$. More specifically,
+$hW\in C_c^\infty(G\setminus\{e\})\subset D(H)$ with
+$A(hW)=C(hW)=0$. Thus $W\in D(K)$ for the actual selector (7.2).
+This is a test in the full operator, not a claim that its domain is
+the Friedrichs domain or the punctured core alone.
+
+For every bounded basic $Uf$, the contributions of the two boxes to
+$\langle Uf,W\rangle_m$ cancel exactly: raw Haar measure is unchanged
+by $D$ and $Uf(Dp)=Uf(p)$. Density gives $W\in\mathcal H_\ell^\perp$.
+Reduction and $W\in D(K)$ give $KW\in\mathcal H_\ell^\perp$.
+For example, this follows by taking the $L^2$ limit of
+$(I-T_t)W/t$ inside that closed orthogonal complement. Therefore
+
+$$
+\langle Uf,KW\rangle_m=0
+\tag{9.5}
+$$
+
+for every bounded base $f$, without a generator-domain assumption on
+its periodic pullback.
+
+On either compact box the actual generator applied to $W$ is
+$K W=-\mathcal D_h W$, where the supplied ground-transform formula is
+
+$$
+\mathcal D_h v
+ =a\sum_{i=1}^3 X_i^2v+\eta\partial_w^2v
+   +2a\sum_{i=1}^3(X_i\log h)X_iv
+   +2\eta(\partial_w\log h)\partial_wv.
+\tag{9.6}
+$$
+
+Choose now $f\in C_c^\infty(\mathcal B_\ell;\mathbb R)$, smooth on
+the quotient manifold. Its pullback is smooth and bounded, although
+it need not be in $D(K)$ or have compact support on $G$. All uses of
+integration by parts below are on the compact support of $W$ away
+from $e$. Local weighted divergence symmetry of (9.6), or its direct
+product-rule expansion, gives from (9.5)
+
+$$
+0=\int_G (Uf)KW\,dm
+ =-\int_O\varphi(p)
+       \{\mathcal D_h(Uf)(p)-\mathcal D_h(Uf)(Dp)\}\,d\mu(p).
+\tag{9.7}
+$$
+
+There is no source or infinity boundary term. In particular (9.7) is
+deduced from full-domain semigroup reduction and a valid $D(K)$ test;
+it is not differentiation of an unverified global periodic test in
+the generator domain. Since $\varphi$ is arbitrary and the difference
+is smooth, (9.7) proves equality of the two generator expressions
+pointwise on $O$ for every such $f$.
+
+All second-order coefficients in (9.6) are already invariant under
+$D$. There is no symbol-rank comparison here. Put
+
+$$
+\Delta_i(p)=(X_i\log h)(p)-(X_i\log h)(Dp),\qquad
+\Delta_w(p)=(\partial_w\log h)(p)-(\partial_w\log h)(Dp).
+$$
+
+On the common quotient chart choose cutoff base tests with any
+prescribed first derivatives at $\pi_\ell(p)$. Subtracting (9.6) in
+(9.7) makes their coefficients
+
+$$
+2a\Delta_1,\quad 2a\Delta_2,\quad 2a\Delta_3,
+       \quad 2ax\Delta_2+2\eta\Delta_w
+\tag{9.8}
+$$
+
+in coordinate order $(x,y,z,w)$. Their vanishing, with $a,\eta>0$,
+forces every $\Delta_i$ and $\Delta_w$ to be zero. Since
+$\partial_y=X_2-x\partial_w$, this says
+
+$$
+\nabla\{\log h(Dp)-\log h(p)\}=0
+\qquad(p\in G\setminus\{e,d_{-1}\}).
+\tag{9.9}
+$$
+
+That punctured space is connected: its underlying manifold is
+$\mathbb R^4$ with two points removed. Both logarithms are smooth
+there. Thus a single constant $c>0$ satisfies
+
+$$
+h(Dp)=c\,h(p)\quad(p\ne e,d_{-1}).
+\tag{9.10}
+$$
+
+Even a nonunit constant cannot coexist with the supplied $L^2(\mu)$
+normalization. Choose a bounded box $E$ of positive measure with its
+$w$ coordinate strictly between $0$ and $\ell$, away from $e$.
+Its translates $D^nE$ are disjoint. Iterating (9.10), ignoring the
+irrelevant countable source orbit if necessary, gives
+
+$$
+0<\int_E h^2\,d\mu<\infty,\qquad
+\int_{D^nE}h^2\,d\mu
+   =c^{2n}\int_Eh^2\,d\mu\quad(n\in\mathbb Z).
+\tag{9.11}
+$$
+
+The bilateral sum $\sum_{n\in\mathbb Z}c^{2n}$ diverges for every
+$c>0$, contradicting $\|h\|_2^2=1$. This is the familiar repeated-cell
+$L^2$ argument, used already in [G, Proposition 11.1], with its
+necessary constant-multiplier variant included. The new step leading
+to it was the forced conditional law from one legitimate source and
+the full-domain paired tests, not a new periodic-amplitude obstruction.
+This contradiction proves the theorem. $\square$
+
