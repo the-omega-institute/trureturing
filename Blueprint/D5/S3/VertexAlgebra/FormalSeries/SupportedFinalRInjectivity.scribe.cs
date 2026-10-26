@@ -14,7 +14,7 @@ internal sealed class SupportedFinalRInjectivityDocument : IScribeDocumentDefini
                 H("A separate second-coordinate cutoff on each first-coordinate row"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A three-variable distribution has a uniform lower cutoff x>=-U. For each fixed x it has its own lower cutoff y>=-B(x), uniform over z. There is no z lower bound and no common y cutoff over all x."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("finalR-injective"),
+            Describe.Lean(DescribeId.Create("finalr-injective"),
                 DeclarationHandle.Create(Prefix + "finalR_injective"),
                 H("Cancellation of the exact six-factor multiplier"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
