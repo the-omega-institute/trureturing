@@ -958,4 +958,21 @@ theorem actual_phi_radial_curvature_and_square_concavity :
       actual_fullJet_eq_phi_iterated_all 2] at hg
     simpa only [iteratedDeriv_zero] using hg
   · simpa only [ell0,actual_fullJet_zero_eq_phi_all] using h.2
+
+/-! The finite-mode and full-tail certificate above is internal to the
+    construction.  This corollary exposes its analytic conclusion directly
+    in terms of the original theta kernel and its ordinary jets. -/
+theorem romikPhi_fourth_log_numerator_negative {x : ℝ} (hx : 0 ≤ x) :
+    (romikPhi x)^3 * iteratedDeriv 4 romikPhi x -
+        4 * (romikPhi x)^2 * iteratedDeriv 1 romikPhi x * iteratedDeriv 3 romikPhi x -
+        3 * (romikPhi x)^2 * (iteratedDeriv 2 romikPhi x)^2 +
+        12 * romikPhi x * (iteratedDeriv 1 romikPhi x)^2 * iteratedDeriv 2 romikPhi x -
+        6 * (iteratedDeriv 1 romikPhi x)^4 < 0 := by
+  have h := actual_fullJet_fourthNumerator_negative hx
+  rw [actual_fullJet_eq_phi_iterated_all 0 x,
+    actual_fullJet_eq_phi_iterated_all 1 x,
+    actual_fullJet_eq_phi_iterated_all 2 x,
+    actual_fullJet_eq_phi_iterated_all 3 x,
+    actual_fullJet_eq_phi_iterated_all 4 x] at h
+  simpa only [fourthNumerator, iteratedDeriv_zero] using h
 end D5.S3.Analytic.Fourier.ThetaRadialCurvature
