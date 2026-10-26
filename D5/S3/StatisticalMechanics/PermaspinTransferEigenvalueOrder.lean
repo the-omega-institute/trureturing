@@ -41,7 +41,7 @@ def claim : Prop :=
 
 private theorem cubic_data (c d : ℝ) :
     (dukesCubic c d).degree = 3 ∧ (dukesCubic c d).leadingCoeff = 1 := by
-  sorry
+  exact ⟨degree_cubic (by norm_num), leadingCoeff_cubic (by norm_num)⟩
 
 private theorem cubic_at_comparison (c d : ℝ) :
     (dukesCubic c d).eval (c * (1 + d) ^ 2) =
