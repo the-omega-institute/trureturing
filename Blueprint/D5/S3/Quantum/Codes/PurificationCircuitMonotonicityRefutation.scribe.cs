@@ -91,7 +91,10 @@ internal sealed class PurificationCircuitMonotonicityRefutationDocument : IScrib
                             + "gives 9639/32000000 > 0, a contradiction. Thus the full coordinatewise assertion "
                             + "fails already in the preparation coordinate. This conclusion imposes no claim "
                             + "about monotonicity in the other three coordinates or about shortest circuits."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barber-gillespie-taylor-2023-purification-monotonicity"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
