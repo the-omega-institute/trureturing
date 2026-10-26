@@ -4,13 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual supported quantum entropy loss controls the quartic resolvent intertwining error. -/
+   digest: Supported quantum entropy loss controls quartic resolvent intertwining error. -/
 
 import D5.S3.Quantum.Divergence.CanonicalRelativeModularModel
 import D5.S3.Quantum.Divergence.ResolventFunctionalRigidity
 import D5.S3.Weil.ZetaLinear.Sylvester
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+/-! Finite logarithmic calculus gives a quantitative bound on the actual supported model. -/
 
 noncomputable section
 universe u v
@@ -115,7 +117,9 @@ private theorem finite_log_resolvent_bound {ι κ : Type*} [Fintype ι] [Fintype
     have h := ((hd s (ht.le.trans hs)).sub
       (((hasDerivAt_id s).sub_const t).const_mul (G t))).add
       ((((hasDerivAt_id s).sub_const t).pow 2).div_const (t ^ 2))
-    convert h using 1 <;> simp [H] <;> ring
+    convert h using 1
+    · rfl
+    · simp
   have hmH : MonotoneOn H (Set.Ici t) :=
     monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici t)
       (fun s hs => (hdH s hs).continuousAt.continuousWithinAt)
@@ -126,12 +130,15 @@ private theorem finite_log_resolvent_bound {ι κ : Type*} [Fintype ι] [Fintype
         simp only [interior_Ici, Set.mem_Ioi] at hs
         have h := hlower s hs.le
         have hn : 0 ≤ (s - t) / t ^ 2 := div_nonneg (by linarith) ht2.le
-        linarith)
+        rw [mul_div_assoc]
+        linarith only [h, hn])
   have hGt : 0 ≤ G t := hnonneg t ht
   let h : ℝ := G t * t ^ 2 / 2
   have hh : 0 ≤ h := by dsimp [h]; positivity
-  have hstep := hmH (show t ∈ Set.Ici t from le_rfl)
-    (show t + h ∈ Set.Ici t from le_add_of_nonneg_right hh)
+  have hstep := hmH (show t ∈ Set.Ici t from by simp)
+    (show t + h ∈ Set.Ici t from by
+      simp only [Set.mem_Ici]
+      exact le_add_of_nonneg_right hh)
     (le_add_of_nonneg_right hh)
   have hend := hhi (t + h) (by linarith)
   have hcancel : h ^ 2 / t ^ 2 = (G t) ^ 2 * t ^ 2 / 4 := by
@@ -176,8 +183,10 @@ theorem entropy_defect_resolvent_stability
   let ξ := M.data.ξ
   let η := M.data.η
   let V := M.data.V
-  let u := fun i => ‖(star (M.hA.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ ξ) i‖ ^ 2
-  let v := fun j => ‖(star (M.hB.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ η) j‖ ^ 2
+  let n := M.data.J × M.data.I
+  let m := M.data.L × M.data.K
+  let u : n → ℝ := fun i => ‖(star (M.hA.1.eigenvectorUnitary : Matrix n n ℂ) *ᵥ ξ) i‖ ^ 2
+  let v : m → ℝ := fun j => ‖(star (M.hB.1.eigenvectorUnitary : Matrix m m ℂ) *ᵥ η) j‖ ^ 2
   have expansionA (g : ℝ → ℝ) :
       (star ξ ⬝ᵥ (cfc g A *ᵥ ξ)).re = ∑ i, g (M.hA.1.eigenvalues i) * u i := by
     have hs : cfc g A = RHLinalg.specMap M.hA.1 g := by rw [M.hA.1.cfc_eq]; rfl
@@ -189,11 +198,11 @@ theorem entropy_defect_resolvent_stability
     rw [hs]
     exact RHLinalg.hermForm_specMap M.hB.1 g η
   have hu : ∑ i, u i = 1 := by
-    change (∑ i, ‖(star (M.hA.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ ξ) i‖ ^ 2) = 1
+    change (∑ i, ‖(star (M.hA.1.eigenvectorUnitary : Matrix n n ℂ) *ᵥ ξ) i‖ ^ 2) = 1
     rw [RHLinalg.sum_normSq_unitary_mulVec M.hA.1 ξ]
     exact M.normξ
   have hv : ∑ j, v j = 1 := by
-    change (∑ j, ‖(star (M.hB.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ η) j‖ ^ 2) = 1
+    change (∑ j, ‖(star (M.hB.1.eigenvectorUnitary : Matrix m m ℂ) *ᵥ η) j‖ ^ 2) = 1
     rw [RHLinalg.sum_normSq_unitary_mulVec M.hB.1 η]
     exact M.normη
   have saturation : (star (V *ᵥ η) ⬝ᵥ (V *ᵥ η)).re = (star η ⬝ᵥ η).re := by
