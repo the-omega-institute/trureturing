@@ -68,6 +68,55 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
                 Imp(Call("Natural", Mu, V("b")), Imp(Call("Natural", Nu, V("c")),
                     Imp(Call("Perfect", Nu), All("f", Call("LinearEquiv", K, X, Y),
                         Imp(Preserves, MonomialConclusion)))))))))));
+    private static Formula Mul(Formula x, Formula y) =>
+        new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+    private static Formula FinM => Call("Fin", V("m"));
+    private static Formula IndexedBasis(Formula size, Formula scalarField, Formula carrier) =>
+        Call("Basis", size, scalarField, carrier);
+    private static Formula Coefficient(Formula product, Formula basis, Formula i, Formula j) =>
+        Call("structureCoefficient", product, basis, i, j);
+    private static Formula ComparisonConclusion(Formula scalarField, Formula source, Formula target,
+        Formula sourceBasis, Formula targetBasis, bool scalarExtension)
+    {
+        var i = V("i"); var j = V("j");
+        var ai = Coefficient(source, sourceBasis, i, j);
+        var bi = Coefficient(target, targetBasis, Call("e", i), Call("e", j));
+        if (scalarExtension)
+        {
+            ai = Call("algebraMap", Rat, scalarField, ai);
+            bi = Call("algebraMap", Rat, scalarField, bi);
+        }
+        var di = Call("Value", Call("d", i));
+        var dj = Call("Value", Call("d", j));
+        return Some("e", Call("Equiv", Fin, FinM),
+            Some("d", Arrow(Fin, Call("Units", scalarField)),
+                All("i", Fin, All("j", Fin,
+                    Eq(Mul(ai, dj), Mul(Mul(di, di), bi))))));
+    }
+    private static Formula ComparisonStatement => TwoSpaces(All("n", Nat, All("m", Nat,
+        All("mu", Prod(K, X), All("nu", Prod(K, Y),
+            All("b", IndexedBasis(Fin, K, X), All("c", IndexedBasis(FinM, K, Y),
+                Imp(Call("Natural", Mu, V("b")), Imp(Call("Natural", Nu, V("c")),
+                    Imp(Call("Perfect", Nu), Iff(Call("Isomorphic", Mu, Nu),
+                        ComparisonConclusion(K, Mu, Nu, V("b"), V("c"), false))))))))))));
+    private static Formula ScalarComparisonStatement
+    {
+        get
+        {
+            var scalarField = V("F");
+            var source = Call("multiplication", V("A"));
+            var target = Call("multiplication", V("B"));
+            var body = Imp(Call("Natural", source, V("b")),
+                Imp(Call("Natural", target, V("c")), Imp(Call("Perfect", target),
+                    Iff(Call("IsomorphicOver", scalarField, V("A"), V("B")),
+                        ComparisonConclusion(scalarField, source, target, V("b"), V("c"), true)))));
+            body = All("b", IndexedBasis(Fin, Rat, Call("Carrier", V("A"))),
+                All("c", IndexedBasis(FinM, Rat, Call("Carrier", V("B"))), body));
+            body = All("A", Bundle, All("B", Bundle, All("n", Nat, All("m", Nat, body))));
+            return All("F", V("Type"), Instance(Call("Field", scalarField),
+                Instance(Call("Algebra", Rat, scalarField), body)));
+        }
+    }
     private static Formula ClaimFormula => Some("A", Bundle, Some("B", Bundle,
         And(Call("Perfect", Call("multiplication", V("A"))),
             And(Call("Perfect", Call("multiplication", V("B"))),
@@ -84,7 +133,7 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Rational evolution products, actual tensor scalar extension, and monomiality of full algebra isomorphisms.",
+        "Rational evolution products, actual tensor scalar extension, and two-way monomial coefficient comparisons for full algebra isomorphisms.",
         H("Rational evolution algebras and scalar extension"), Blocks(
             Paragraph(Text("Multiplication is bilinear and may be nonassociative and nonunital. "
                 + "A natural basis is defined over the stated ground field. All finite dimensions, "
@@ -142,5 +191,39 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
                     + "may be different. The proof uses all pair products to show injectivity of the "
                     + "target structure map, then constructs the permutation from the unique nonzero "
                     + "entry in each row. It covers the zero-dimensional case without an extra hypothesis.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Desc("structureCoefficient", "Square structure coefficients", OneSpace(All("n", Nat,
+                All("mu", Prod(K, X), All("b", Basis(X), All("i", Fin, All("j", Fin,
+                    Eq(Coefficient(Mu, V("b"), V("i"), V("j")),
+                        Call("Coordinate", V("b"), Apply(Mu, Call("b", V("i")),
+                            Call("b", V("i"))), V("j"))))))))),
+                "The coefficient a(mu,b,i,j) is the j-th coordinate of mu(b(i),b(i)) in b. "
+                    + "The first index selects the squared basis vector and the second its output coordinate."),
+            Desc("isomorphic_iff_monomial_equations", "Full isomorphisms and monomial equations",
+                ComparisonStatement,
+                "Let b and c be natural bases indexed independently by Fin(n) and Fin(m) over any field K, "
+                    + "with perfect target multiplication nu. An arbitrary multiplicative linear equivalence "
+                    + "exists exactly when there are a bijection e:Fin(n) to Fin(m) and units d(i) such that "
+                    + "a(mu,b,i,j)d(j)=d(i)^2 a(nu,c,e(i),e(j)) for every i,j. The corresponding map sends "
+                    + "b(i) to d(i)c(e(i)). A given linear equivalence forces n=m by preservation of finrank; "
+                    + "monomiality then gives e as the inverse of its target-row permutation. Comparing "
+                    + "the image of each square in coordinate e(j) gives the displayed orientation. Conversely, "
+                    + "reindexing and scaling c by units constructs a linear bijection. The equations prove "
+                    + "square preservation, and naturality proves preservation of every mixed basis product. "
+                    + "Bilinear extensionality extends this to all vectors. No source perfection, positive "
+                    + "dimension, connected support, or prescribed permutation is required.", DescribeRole.Theorem),
+            Desc("isomorphic_over_iff_monomial_equations", "The comparison on tensor scalar extensions",
+                ScalarComparisonStatement,
+                "For any field F with a rational algebra structure, take rational natural bases b,c of A,B "
+                    + "with independent finite sizes and perfect rational target B. The actual relation "
+                    + "IsomorphicOver(F,A,B) is equivalent to the same monomial equations with every rational "
+                    + "structure coefficient mapped to F. The bases are b.baseChange(F), c.baseChange(F), "
+                    + "whose vectors are 1 tensor b(i) and 1 tensor c(j). Their products use precisely "
+                    + "LinearMap.BilinMap.baseChange, so their square coefficients are the scalar images "
+                    + "of the rational coefficients. Perfection ascends because tensors of rational pair "
+                    + "products are pair products after extension and their F-span is the whole tensor space. "
+                    + "Local perfection is therefore a consequence, rather than an additional assumption. "
+                    + "This applies to the real field and to Q_p for every prime, including zero-dimensional "
+                    + "algebras and disconnected supports. These equivalences do not establish the arithmetic "
+                    + "local-to-global implication or settle Conjecture 7.", DescribeRole.Theorem))));
 }
