@@ -1,0 +1,33 @@
+**Lemma 82.1 (every adaptive scalar uses only earned-age moments).** In
+Definition 80.1, start at full zero. At a completed cut let $t$ be the
+number of Ticks since the most recent Reset, and let Add$(u_\ell)$ have
+occurred at its Tick epochs $s_\ell\le t$. If there has been no Reset,
+use the initial zero cut. Then the actual state and scalar are
+
+$$
+x=\sum_\ell u_\ell T^{t-s_\ell}e_o,\qquad
+e_o^{\mathsf T}x=\sum_\ell u_\ell m_{t-s_\ell}.
+\tag{82.1}
+$$
+
+Consequently two actual installations with the same public $a,c$, matched
+opaque context and moment prefix through $K$ have identical complete
+observations and adaptive command choices until more than $K$ total
+Ticks have been executed, starting from their respective zero fields.
+
+**Proof.** Zero has the empty sum. Add appends the exponent-zero term,
+Tick increases all ages by one, Read and Hold preserve every term, and
+Reset removes all terms and restarts the local epoch. Complete rejections
+do nothing and incomplete frames make no completed change. Induction on
+actual calls proves (82.1) separately on each actual source. Every age
+is at most the total Ticks on that run, even with repeated Resets.
+
+For identical command and input prefixes, (82.1) gives identical scalar
+replies within the stated moment prefix. All other complete replies are
+fixed. Inductively identical prior observations give identical adaptive
+choices, local records and stopping decisions. This includes arbitrary
+finite rational amplitudes, repeated Reads, local computation and a
+common source-independent random tape. No fields from different
+installations are added together; the sums in (82.1) are the jointly
+realized pulses of one actual run. $\square$
+
