@@ -7,7 +7,7 @@ meta import all Lean.Elab.Deriving.DecEq
 meta import all Lean.Elab.Deriving.BEq
 meta import all Lean.Elab.Deriving.Ord
 
-/-! The allowlist calls only the pinned Lean handlers, never a registry extended
+/-! The allowlist calls only the pinned Lean and Mathlib handlers, never a registry extended
 by an imported delivery. -/
 public meta section
 namespace LeanInformationAudit.SearchReduction

@@ -608,7 +608,7 @@ private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM 
     vocabulary := vocabulary.push (name, info.type, info.value? (allowOpaque := true))
     for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
   let root := graph.vertices.find? (·.id == graph.root)
-  let identity := reprStr (localConfiguration,
+  let identity := reprStr (lookupExecutionVersion, localConfiguration,
     table.disk?.map (fun d =>
       ((toJson d.header).compress, (toJson d.membership?).compress, d.excluded)),
     table.complete, table.enabled, table.environment.header.moduleNames, table.implicationModules?,

@@ -204,6 +204,7 @@ def terminationDetails (r : Observation) : Array String := Id.run do
 /-- A human-readable projection. No code reads it back for classification. -/
 def computationalJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
   ("reference", toJson "R_lookup"),
+  ("execution_version", toJson lookupExecutionVersion),
   ("configuration", toJson (if r.graph?.any (fun g => !g.lookupEnabled) then
     "R_loc-decl/analytic-cut-k2/200000;lookup-ablation" else r.configuration)),
   ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),

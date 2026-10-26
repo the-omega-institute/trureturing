@@ -26,6 +26,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
 abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa"
+abbrev lookupExecutionVersion : String := "execution-stops-v1"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -352,7 +353,7 @@ private def checkpointIdentity : IO String := do
   if let some identity ← lookupCheckpointIdentity.get then return identity
   let request ← IO.getEnv "SEARCH_REDUCTION_REQUESTS"
   let requestBytes ← request.mapM IO.FS.readFile
-  let identity := reprStr (lookupVersion, request, requestBytes,
+  let identity := reprStr (lookupExecutionVersion, lookupVersion, request, requestBytes,
     ← IO.getEnv "SEARCH_REDUCTION_SOURCE_LIBRARY", ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
   lookupCheckpointIdentity.set (some identity)
   return identity
