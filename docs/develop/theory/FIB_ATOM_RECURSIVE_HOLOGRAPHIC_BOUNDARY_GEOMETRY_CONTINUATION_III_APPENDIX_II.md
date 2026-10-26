@@ -774,3 +774,209 @@ The [native spatial-cap volume, Proposition 5.2](FIB_NATIVE_SPATIAL_CAP_RETAINED
 A faithful native source/evolution/representation/readout correspondence for this endpoint must preserve the source functional $\operatorname{tr}$ and the actual selector, the shifted energies and capacities $r d_r$ in the same clock, the contact transforms $b_r$ and all-time killed survival, conservative continuation and zero ordinary residence, and the source-start response (116.14). More precisely, any proposed identification of native states with this process that preserves its source, time and transition laws must carry the native first-source-contact stopping time to $\tau_e$, its stopped transitions to $P_t^0$, and its discounted source-start observation laws to (116.14); a form-preserving identification must also carry source evaluation and the shifted minimization (116.2) to (116.4). These requirements follow by applying the identification to the displayed stopping times, expectations and variational constraints. Agreement only with the off-source differential expression (115.24), or with the two-zero-coefficient restriction of the actual operator, does not supply these identities. No such native maps are constructed here. The complete native legal-source/evolution/representation/readout correspondence remains unpaid, and no conclusion about physical spatial dimension follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 117. Deterministic-time entrance from the original source and a forbidden passive record
+
+**Definition 117.1 (the retained endpoint and the source evaluation).** Fix arbitrary original $a,\eta>0$. Retain exactly $G$, $e$, $\mu$, the unit source $\Gamma$, the actual selector $A(u)=\rho C(u)$, $H$, the coefficient-positive normalized $h$, $m=h^2\mu$, $U_h$, $K=U_h^{-1}HU_h$ and $T_t=e^{-tK}$ of §§115–116. In particular $m(G)=1$, $m(\{e\})=0$ and $K\ge0$. Use the entire complex $L^2(G,m)$ with
+
+$$
+\langle u,v\rangle_m=\int_G\overline u v\,dm.
+\tag{117.1}
+$$
+
+The source trace, form domain and shifted energy are precisely $\operatorname{tr}$, $\mathscr V$ and $\mathscr E_r$ of (116.1). The parameter $r>0$ below is a resolvent discount, with $b_r,d_r$ unchanged from (116.1) and (116.4); it is not a native transition probability. Let $Z$ be the conservative diffusion properly associated with this full form as in Theorem 116.3, and use its actual source-start law $\mathbb P_e$. All positive times refer to the original clock. No killed process, invariant initial distribution, pointwise value of $h$ at $e$, or change of selector is substituted.
+
+**Theorem 117.2 (the actual source has a strictly positive deterministic-time entrance density).** For every $t>0$ there is a unique real nonnegative $g_t\in L^2(G,m)$ such that, for every bounded complex Borel function $f$ on $G$,
+
+$$
+\begin{gathered}
+\mathbb E_e[f(Z_t)]
+ =\operatorname{tr}(T_t[f])
+ =\langle g_t,[f]\rangle_m
+ =\int_G g_t f\,dm,\\
+\mathbb P_e(Z_t\in dy)=g_t(y)m(dy),\qquad
+\int_Gg_t\,dm=1,\qquad g_t>0\quad m\text{-a.e.}
+\end{gathered}
+\tag{117.2}
+$$
+
+Here $[f]$ is the $L^2(m)$ class of the given Borel function. The density is unique as an $L^2$ class; strict positivity is asserted almost everywhere for each fixed $t>0$. For every $r>0$ the complex-linear functional $\ell_t(v)=\operatorname{tr}(T_tv)$ on the full complex space satisfies
+
+$$
+\begin{gathered}
+|\ell_t(v)|^2
+ \le \frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r}\,\|v\|_{L^2(m)}^2,\qquad
+\|g_t\|_{L^2(m)}^2
+ \le \frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r},\\
+g_{t+s}=T_sg_t\quad(t>0,\ s\ge0).
+\end{gathered}
+\tag{117.3}
+$$
+
+The expectation identity extends to every Borel representative of a complex $L^2(m)$ vector, with absolute integrability at each positive time. In particular it is insensitive to all Borel $m$-null modifications at such a time, including modifications at the nonpolar source itself. No density is asserted at time zero, when the actual law is $\delta_e$.
+
+**Proof.** Spectral smoothing gives $T_tv\in D(K^{1/2})=\mathscr V$ for $t>0$ and every complex $v\in L^2(m)$. If $E_K$ is the spectral resolution of $K$, then the original trace bound (116.4) gives
+
+$$
+\begin{aligned}
+|\operatorname{tr}(T_tv)|^2
+ &\le\frac{\mathscr E_r[T_tv]}{r d_r}\\
+ &=\frac1{r d_r}\int_{[0,\infty)}
+       (\lambda+r)e^{-2t\lambda}\,d\langle v,E_K(\lambda)v\rangle_m\\
+ &\le\frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r}\,\|v\|_2^2.
+\end{aligned}
+\tag{117.4}
+$$
+
+The supremum is finite, for example it is at most $r+(2\mathrm e t)^{-1}$, and $r d_r>0$ by (116.4). The complex Hilbert-space Riesz theorem therefore supplies a unique vector $g_t$ with $\ell_t(v)=\langle g_t,v\rangle_m$. The order of the pairing follows from its antilinear first slot and the linearity of $\ell_t$; no restriction to a real subspace is made in this construction. The operator-norm bound for the functional is exactly the bound for $\|g_t\|_2$ in (117.3).
+
+For real $v\ge0$ almost everywhere, the Markov property gives $T_tv\ge0$ almost everywhere. Its quasi-continuous form representative is nonnegative quasi-everywhere: its negative part is the zero form vector and thus has quasi-continuous version zero. Since $e$ is nonpolar, (116.3) implies $\operatorname{tr}(T_tv)\ge0$. Real inputs also have real trace. Testing the Riesz identity on all real vectors first makes $g_t$ real, and testing on its negative part gives
+$0\le\ell_t((g_t)_-)=-\|(g_t)_-\|_2^2$. Hence $g_t\ge0$. Conservation and the unchanged source trace give
+$\int g_t\,dm=\ell_t(1)=\operatorname{tr}1=1$. This proves positivity and mass without assigning a value to an arbitrary $L^2$ representative at $e$.
+
+We next identify the functional with the actual deterministic-time process law. Proper association is used in its semigroup sense: for each $t>0$ and each bounded real Borel $f$, the function
+$x\mapsto\mathbb E_x[f(Z_t)]$, on the complement of the properly exceptional set of the process, is a quasi-continuous version of $T_t[f]$. Two quasi-continuous versions of this form vector agree quasi-everywhere. Both that exceptional set and the set on which the versions could differ have zero capacity; neither can contain the positive-capacity singleton $\{e\}$. Consequently, for this very $t$ and this given Borel representative,
+
+$$
+\mathbb E_e[f(Z_t)]
+ =\widetilde{T_t[f]}(e)
+ =\operatorname{tr}(T_t[f])
+ =\langle g_t,[f]\rangle_m.
+\tag{117.5}
+$$
+
+This is an evaluation of the properly associated transition function, rather than an inference from equality of Laplace transforms or equality for almost every time. The argument applies separately to every fixed $t>0$ and every bounded Borel $f$, and never requires an uncountable union of exceptional sets to avoid $e$: no individual polar set can contain $e$. Real and imaginary parts prove the bounded complex identity. In particular, applying it to $f=\mathbf1_A$ for an arbitrary Borel $m$-null set $A$ proves $\mathbb P_e(Z_t\in A)=0$. Thus even null sets of positive capacity cause no representative ambiguity in the positive-time law. Applying bounded truncations to the absolute value of a Borel $L^2$ representative and using
+$\int g_t|v|\,dm\le\|g_t\|_2\|v\|_2$ proves absolute integrability and extends (117.5) to that representative. Uniqueness of the density also follows from these bounded Borel tests.
+
+For every complex $v\in L^2(m)$, the semigroup identity and self-adjointness give
+
+$$
+\langle g_{t+s},v\rangle_m
+ =\operatorname{tr}(T_tT_sv)
+ =\langle g_t,T_sv\rangle_m
+ =\langle T_sg_t,v\rangle_m.
+\tag{117.6}
+$$
+
+Riesz uniqueness proves the last line of (117.3). To obtain strict positivity, use precisely the irreducibility argument of Theorem 116.3: a semigroup-invariant indicator is a zero-energy vector, and the full integral energy forces such a vector to be constant on connected $M$. Hence there is no invariant set with both it and its complement of positive $m$-measure. The standard equivalence between this irreducibility and positivity improvement is [Lenz–Stollmann–Veselić, *The Allegretto–Piepenbrink Theorem for Strongly local forms*, arXiv:0811.2135v1, §1, Theorem 1.1](https://arxiv.org/html/0811.2135v1#S1.Thmtheorem1). Its form $\mathfrak h$ is here the densely defined closed nonnegative $\mathscr E$ on $L^2(G,m)$, its operator is $K$, and its positivity-preserving semigroup is the actual $T_t$. These are the hypotheses of that equivalence; no Harnack principle, pointwise heat-kernel regularity or spectral gap is required. It gives $T_su>0$ almost everywhere whenever $s>0$ and $u\ge0$ is nonzero. Since $g_{t/2}$ has mass one,
+
+$$
+g_t=T_{t/2}g_{t/2}>0\quad m\text{-a.e.}
+\tag{117.7}
+$$
+
+This proves (117.2) for the source-start process itself.
+
+There is also an exact consistency check with the original source resolvent. For bounded complex Borel $f$, (117.2) and (116.14) imply
+
+$$
+\int_0^\infty e^{-rt}\left(\int_Gg_t f\,dm\right)dt
+ =\mathbb E_e\int_0^\infty e^{-rt}f(Z_t)\,dt
+ =\frac1{r d_r}\int_Gb_r f\,dm.
+\tag{117.8}
+$$
+
+Both iterated expectation integrals are justified by the absolute bound $\|f\|_\infty/r$ and conservation. The left integrand is measurable by its equality with the actual transition expectation; no jointly pointwise choice of the $L^2$ densities is needed. Thus (116.14) is the Laplace-time average of the deterministic-time laws already identified in (117.5), with the same discount and clock. It is not substituted for those laws. $\square$
+
+**Definition 117.3 (fixed-gap, time-homogeneous nondisturbing emission).** A candidate in this class uses exactly the process $Z$ of Definition 117.1 started at $e$, a fixed deterministic $\Delta>0$ in its original time units, and Borel functions
+
+$$
+f_y:G\longrightarrow[0,1],\qquad
+\sum_{y\in\mathcal A}f_y(x)=1\quad(x\in G),\qquad
+\mathcal A=\{0,1,3,B\}.
+\tag{117.9}
+$$
+
+Conditional on the entire source path, the read at time $n\Delta$, $n=0,1,\ldots$, produces $\widehat Y_n=y$ with probability $f_y(Z_{n\Delta})$, and the read noises at distinct epochs are independent and fresh. The functions are the same at every epoch. A read leaves the actual source state and all its subsequent transition rules unchanged: after the read the source still evolves by $Z$ with transition semigroup $T_t$. There is no additional retained controller, shared read-noise memory, or emission depending on past records. The emitted labels are outcomes, not selectable operations. All four outcomes and their unconditional probabilities count; no failure branch or unwanted record is discarded.
+
+This specifies a complete candidate passive record law, not just one-time emission marginals. A Borel partition $G=\bigsqcup_{y\in\mathcal A}A_y$, with $f_y=\mathbf1_{A_y}$, is its deterministic coarse-graining special case. The value $f_y(e)$ matters for the time-zero read; at positive sampled epochs Theorem 117.2 determines the law for every Borel choice, including changes on $m$-null sets. One may instead declare a fixed lead-in $t_*>0$ and read at $t_*+n\Delta$, retaining the same source start at original time zero and the same evolution throughout the lead-in. This variant adds no preparation at $t_*$.
+
+**Definition 117.4 (the complete original passive target).** The target is exactly [Self Generated Predictive Memory, Assumption 1.1](RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md#1-the-source-and-the-continuing-decoder-contract). To separate its parameters from the source coefficients and the resolvent discount, write
+
+$$
+\begin{gathered}
+p_{\rm N},q_{\rm N},r_{\rm N}>0,\qquad
+p_{\rm N}+q_{\rm N}+r_{\rm N}<1,\\
+s_{\rm N}=p_{\rm N}+q_{\rm N},\qquad
+a_{\rm N}=1-s_{\rm N},\qquad b_{\rm N}=1-r_{\rm N},\qquad
+c_{\rm N}=1-s_{\rm N}-r_{\rm N},\\
+P_{\rm N}=\begin{pmatrix}
+c_{\rm N}&p_{\rm N}&0&q_{\rm N}&r_{\rm N}\\
+q_{\rm N}&a_{\rm N}&p_{\rm N}&0&0\\
+0&q_{\rm N}&a_{\rm N}&p_{\rm N}&0\\
+p_{\rm N}&0&q_{\rm N}&a_{\rm N}&0\\
+r_{\rm N}&0&0&0&b_{\rm N}
+\end{pmatrix},\qquad
+\pi=\tfrac15(1,1,1,1,1).
+\end{gathered}
+\tag{117.10}
+$$
+
+Its rows and columns are indexed by $0,1,2,3,4$, with rows denoting departure states. The hidden chain has $X_0\sim\pi$ and this exact transition matrix, and its only records are
+
+$$
+Y_n=\chi(X_n),\qquad
+\chi(0)=0,\quad\chi(1)=1,\quad\chi(3)=3,\quad
+\chi(2)=\chi(4)=B.
+\tag{117.11}
+$$
+
+The parameters in (117.10) have no presumed identification with $a,\eta,r$ of the endpoint. Equalities $p_{\rm N}=q_{\rm N}$ or $r_{\rm N}=s_{\rm N}$ remain allowed. Exact realization requires equality of the complete unconditional finite-record laws of $(\widehat Y_n)$ and $(Y_n)$ at their corresponding indices, with the same subsequent reads and their chronological successors. It does not give the observer access to $X_n$, source resets, selected output labels, or a supplied past. In the endpoint candidate the actual initial state is $e$, not a sample from $m$; only its emitted records are required to have the stationary target law.
+
+**Theorem 117.5 (the actual endpoint cannot realize this passive law by the declared emissions).** For every original $a,\eta>0$, every fixed $\Delta>0$, every choice of the native parameters in (117.10), and every emission kernel of Definition 117.3, the candidate complete record law differs from the target of Definition 117.4. This holds also for every fixed positive lead-in and for every deterministic coarse graining in that class. If the positive one-letter target marginals for symbols $1$ and $3$ are matched at a positive sampled epoch, then for every corresponding adjacent pair whose first time $t$ is positive,
+
+$$
+\begin{aligned}
+\mathbb P_e(\widehat Y_n=1,\widehat Y_{n+1}=3)
+ &=\int_Gg_t f_1\,T_\Delta f_3\,dm>0,\\
+\mathbb P(Y_n=1,Y_{n+1}=3)
+ &=\tfrac15(P_{\rm N})_{13}=0,
+\end{aligned}
+\qquad
+\begin{cases}
+t=n\Delta>0,&\text{without lead-in},\\
+t=t_*+n\Delta>0,&\text{with lead-in}.
+\end{cases}
+\tag{117.12}
+$$
+
+Thus matching the complete law fails already at this two-record marginal once those one-letter marginals are matched.
+
+**Proof.** Each column sum of $P_{\rm N}$ is one: the first is $c_{\rm N}+q_{\rm N}+p_{\rm N}+r_{\rm N}$, the next three are $a_{\rm N}+p_{\rm N}+q_{\rm N}$, and the last is $r_{\rm N}+b_{\rm N}$. Hence $\pi P_{\rm N}=\pi$. At every native epoch the four one-letter probabilities in order $(0,1,3,B)$ are therefore $(1/5,1/5,1/5,2/5)$. Because $\chi^{-1}(1)=\{1\}$ and $\chi^{-1}(3)=\{3\}$, the target adjacent event in (117.12) is exactly $\{X_n=1,X_{n+1}=3\}$, of probability $(P_{\rm N})_{13}/5=0$. This calculation uses the actual indexed matrix, including its forbidden entry, rather than a different five-state or quantum instrument.
+
+For any positive sampled time $u$, Theorem 117.2 and the emission rule give
+
+$$
+\mathbb P_e(\widehat Y_j=y)=\int_G g_u f_y\,dm.
+\tag{117.13}
+$$
+
+If the $1$ and $3$ marginals are matched there, both integrals are $1/5$. Since $0\le f_y\le1$ and $m$ is a probability, $f_1,f_3\in L^2(m)$; neither is the zero $L^2$ vector. In particular the Borel set $\{f_1>0\}$ has positive $m$-measure. This conclusion would already follow from any positive values for those two marginals, and does not depend on how small their supports are.
+
+Conditional independence of the read noises given the path first gives
+
+$$
+\begin{aligned}
+\mathbb P_e(\widehat Y_n=1,\widehat Y_{n+1}=3)
+ &=\mathbb E_e[f_1(Z_t)f_3(Z_{t+\Delta})]\\
+ &=\int_Gg_t(x)f_1(x)\,(T_\Delta f_3)(x)\,m(dx).
+\end{aligned}
+\tag{117.14}
+$$
+
+The second line is the ordinary Markov conditional-expectation formula in the same source process and original clock. Proper association identifies its transition expectation with $T_\Delta[f_3]$ $m$-a.e.; the law $g_t m$ from (117.2) makes that representative equality sufficient in this integral. The read has not intervened in the transition to $t+\Delta$. Since $\Delta>0$ and $f_3$ is nonnegative and nonzero, the positivity improvement used in (117.7) gives $T_\Delta f_3>0$ $m$-a.e. Also $g_t>0$ $m$-a.e. The integrand is therefore strictly positive almost everywhere on $\{f_1>0\}$, a set of positive measure, so its integral is strictly positive. It is finite because $0\le T_\Delta f_3\le1$ and $\int g_t\,dm=1$.
+
+If either positive one-letter marginal is not matched, the complete record law already differs on one record. If both are matched, (117.12) proves a difference on two records. With sampling from time zero, take $n=1$, so $t=\Delta>0$; no assertion about a density at $e$ at time zero is used. With a positive lead-in, $n=0$ already suffices. Indicator emissions satisfy every hypothesis, proving the coarse-graining case. No stationarity of the endpoint source-start distribution has been imposed. $\square$
+
+**Definition 117.6 (attribution and the exact correspondence excluded).** Spectral smoothing, the complex Riesz representation theorem, quasi-continuity and proper association, the irreducibility/positivity-improvement equivalence, and the Markov multiplication formula in (117.14) are established suppliers. Theorem 117.2 applies them to the specific trace with capacity $r d_r$, the actual non-Friedrichs selector and the nonpolar original source of §§115–116. Theorem 117.5 consumes that deterministic-time source law against the exact forbidden entry in Self Generated Predictive Memory, Assumption 1.1. These are source-specific deductions, not new general positivity or reconstruction theorems and not claims of worldwide priority. The capacity/contact result on the different inherited-wall carrier cited in Definition 116.5 does not replace this source-start construction.
+
+The excluded correspondence is one complete common-source, clock and readout proposal: start the actual endpoint at $e$, preserve its full transition law and genuine successors, associate one native step with the fixed positive elapsed time $\Delta$, and use only the nondisturbing memoryless emission kernel (117.9), including every record without conditioning away failures. Positivity of $K$ or existence of a positive spectral representation alone does not identify a native record law. It is proper association at the nonpolar source, followed by positivity improvement and the shared-path joint formula, that makes the contradiction with (117.10) follow.
+
+This class excludes contact/event sampling, interventions that change the source successor, instruments with retained state, past-dependent emissions, arbitrary shared memory, and real-time unitary dynamics. The theorem places no obstruction on those other proposals, on all classical extensions, or on the original C5/qutrit instrument. The distinctions between a positive kernel, an operational coherent comparison and purification in [Coherent Reconstruction, §§12–13, 25–34](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md) and [Self Generated Predictive Memory, §§12–16](RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md) retain their separate hypotheses. No coherent comparison service is supplied here, and classical joint records are not asserted to exhaust coherent retained memory. Conservative contact continuation in Theorem 116.4 is a source-start Markov law, not by itself a coherent-record return interface.
+
+The strict inequality in (117.12) is an exact obstruction for each declared candidate. Its positive value depends on the source, sampling gap, epoch and emissions; the argument supplies no parameter-uniform separation, quantitative noise tolerance or sample bound. No pointwise heat kernel at $e$, spectral gap, physical Hilbert/Born/composition acquisition, or completion of quantum origin follows. The construction or exclusion of faithful native coherent operations remains a separate mathematical obligation. The conclusions here are ordinary mathematical consequences of the stated source and readout premises.
+
+## 追加锚（本行以下为增补区）
