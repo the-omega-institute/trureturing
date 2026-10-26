@@ -15,10 +15,8 @@ import Mathlib.RepresentationTheory.Invariants
 import Mathlib.LinearAlgebra.Isomorphisms
 
 /-!
-UNCOMPILED SOURCE PREPARATION. This file has not been elaborated or kernel checked.
-Future canonical placement: D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.lean.
-Requires the adjacent minimal supplier patch adding Edges.starMap_injective.
-The existing broad nonbipartite_potential theorem and its proof stay private.
+The consumed supplier corollary Edges.starMap_injective reuses its owning
+module's private nonbipartite_potential theorem and preserves its proof.
 
 Mathematical source: approved native proof P1/P6, SHA256
 ed356c4b82a313d22d45def66d4fa89932c0fa9bb212867b5a25bb3f503cca81.
@@ -39,7 +37,6 @@ integer injectivity corollary, quotient representations, invariant submodules,
 finite-set APIs, attained maxima and the first isomorphism theorem. The exact
 invariant-image kernel and original quotient forward map are preserved.
 No external novelty, canonical splitting, support control, or bipartite claim.
-All declarations below remain proposals pending canonical admission and checks.
 -/
 
 set_option autoImplicit false
