@@ -197,6 +197,8 @@ theorem core_positive_vectors_inject (a b m n : ℕ) (K : Core a b)
     (fun x : V => (⟨(F x).val,(F x).property.1⟩ : {g : Cell m n → ℤ // Residual a b g}))
   intro x y he
   apply hinj
-  exact Subtype.ext (congrArg Subtype.val he)
+  have hev : (F x).val = (F y).val :=
+    congrArg (fun z : {g : Cell m n → ℤ // Residual a b g} => z.val) he
+  exact Subtype.ext hev
 
 end D5.S3.Combinatorics.Geometry.MiuraFiberCore
