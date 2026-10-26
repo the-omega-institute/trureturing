@@ -243,6 +243,21 @@ private lemma witness_evaluation_small :
     Fin.forall_fin_succ, Fin.prod_univ_succ, Finset.sum_filter, Function.update_apply]
 
 theorem result : ¬ claim := by
-  sorry
+  intro hclaim
+  have hmono :=
+    (hclaim 3 1 1
+      ([Gate.cnot 0 1 (by decide), Gate.cnot 1 2 (by decide),
+        Gate.cnot 1 0 (by decide), Gate.cnot 0 2 (by decide),
+        Gate.cnot 1 0 (by decide), Gate.toffoli 1 2 0 (by decide) (by decide) (by decide)] :
+          List (Gate 3)) {0}
+      (by norm_num) (by norm_num) (by norm_num) witness_purification witness_space).1
+  have hzero : admissible (0 : ℝ) 0 (1 / 4) 0 := by
+    norm_num [admissible]
+  have hsmall : admissible (1 / 100 : ℝ) 0 (1 / 4) 0 := by
+    norm_num [admissible]
+  have hineq := hmono 0 0 (1 / 4) 0 (1 / 100) 0 (1 / 4) 0
+    hzero hsmall (by norm_num) rfl rfl rfl
+  rw [witness_evaluation_zero, witness_evaluation_small] at hineq
+  norm_num at hineq
 
 end D5.S3.Quantum.Codes.PurificationCircuitMonotonicityRefutation
