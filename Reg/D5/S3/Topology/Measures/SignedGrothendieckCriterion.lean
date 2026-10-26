@@ -353,4 +353,118 @@ def oscillationRegistration :
   familyRecord := none
   options := #[]
 
+@[reducible] def pointSignature : DependentFamily.Signature where
+  Params := Type u
+  State := fun K => K
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ K => K → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def pointActual : DependentFamily.Realization pointSignature.{u} :=
+  DependentFamily.realize pointSignature (fun _ _ a b => a = b) (fun a => nomatch a)
+
+def pointLaw (R : DependentFamily.Realization pointSignature) : Prop :=
+  ∀ {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
+    [MeasurableSpace K] [BorelSpace K],
+  ∀ [ZeroDimensionalSpace K],
+  ∀ (O : ∀ t : ℕ → SignedMeasure K, ∀ W : ℕ → Set K,
+    (∀ n, (t n).totalVariation.Regular) →
+    (∀ n, IsClopen (W n) ∧ (W n).Nonempty) →
+    Pairwise (fun i n => Disjoint (W i) (W n)) →
+    (∀ n, (t n).totalVariation.real univ = 1) →
+    (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+    (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
+    ∃ Z : Set K, IsClopen Z ∧
+      {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite)
+    (x : ℕ → K) (p : K) (hlim : Tendsto x atTop (𝓝 p)),
+    ∀ᶠ n in atTop, R.readout () K (x n) p
+
+@[reducible] def pointArena : DependentFamily.Arena where
+  signature := pointSignature.{u}
+  Law := pointLaw.{u}
+abbrev pointScope := type_of% (@eventually_eq_of_signed_clopen_oscillation.{u})
+theorem pointBridge : pointScope.{u} ↔ pointArena.{u}.Law pointActual := Iff.rfl
+
+def pointRejected : DependentFamily.Realization pointSignature.{u} :=
+  DependentFamily.realize pointSignature (fun _ _ _ _ => False) (fun a => nomatch a)
+
+theorem pointPositive : pointArena.{u}.Law pointActual :=
+  pointBridge.mp (@eventually_eq_of_signed_clopen_oscillation.{u})
+
+theorem pointNegative : ¬ pointArena.{u}.Law pointRejected := by
+  intro h
+  have Ounit : ∀ t : ℕ → SignedMeasure (ULift.{u} Unit),
+      ∀ W : ℕ → Set (ULift.{u} Unit),
+      (∀ n, (t n).totalVariation.Regular) →
+      (∀ n, IsClopen (W n) ∧ (W n).Nonempty) →
+      Pairwise (fun i n => Disjoint (W i) (W n)) →
+      (∀ n, (t n).totalVariation.real univ = 1) →
+      (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+      (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
+      ∃ Z : Set (ULift.{u} Unit), IsClopen Z ∧
+        {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite := by
+    intro t W ht hW hd hn hp hc
+    obtain ⟨a, ha⟩ := (hW 0).2
+    obtain ⟨b, hb⟩ := (hW 1).2
+    exact ((disjoint_left.mp (hd Nat.zero_ne_one)) ha
+      (by simpa only [Subsingleton.elim b a] using hb)).elim
+  have ht := h (K := ULift.{u} Unit) Ounit (fun _ => ⟨()⟩) ⟨()⟩ tendsto_const_nhds
+  have hf : ∀ᶠ _ : ℕ in atTop, False := ht
+  obtain ⟨n, hn⟩ := hf.exists
+  exact hn
+
+def pointFamily : DependentFamily.Registration pointArena.{u} pointScope.{u} where
+  actual := pointActual
+  bridge := pointBridge
+  variation := ⟨pointPositive, pointRejected, pointNegative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨pointRejected, ?_, rfl, pointNegative⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨ULift.{u} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
+    intro he
+    have he' := congrFun he ⟨false⟩
+    have ht : (ULift.up true : ULift.{u} Bool) = ULift.up false := by
+      exact Eq.mp he' rfl
+    cases congrArg ULift.down ht
+
+def pointRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@eventually_eq_of_signed_clopen_oscillation.{u})
+      (DependentFamily.Realization pointSignature.{u}) Type Unit where
+  unitName := `D5.S3.Topology.Measures.SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation.__information_unit
+  realizationName := `Reg.D5.S3.Topology.Measures.SignedGrothendieckCriterion.pointFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pointArena.{u}⟩
+  objectArena := .source ⟨pointArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pointArena.{u} ⟨pointFamily.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize pointSignature.{u}
+    (fun _ _ a b => a = b) (fun a => nomatch a))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Topology.Measures.SignedGrothendieckCriterion

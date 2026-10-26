@@ -554,6 +554,54 @@ private lemma disjoint_norm_one_no_limit
     have hb := (abs_lt.mp ht).1
     linarith
 
+private lemma injective_no_point_limit (x : ℕ → K) (p : K)
+    (hx : Function.Injective x) (hlim : Tendsto x atTop (𝓝 p)) : False := by
+  have hreg (a : K) : (Measure.dirac a).Regular := by
+    letI : ((Measure.dirac ()).map (fun _ : Unit => a)).InnerRegular :=
+      Measure.InnerRegular.map_of_continuous continuous_const
+    have hr : ((Measure.dirac ()).map (fun _ : Unit => a)).Regular := inferInstance
+    simpa only [Measure.map_dirac' measurable_const] using hr
+  have heval (a : K) (g : C(K, ℝ)) :
+      NormPreservingLifts.signedFunctional (Measure.dirac a).toSignedMeasure g = g a := by
+    simpa using NormPreservingLifts.signedFunctional_sub_toSignedMeasure
+      (Measure.dirac a) 0 g
+  apply disjoint_norm_one_no_limit O (fun n => (Measure.dirac (x n)).toSignedMeasure)
+    (fun n => by
+      rw [SignedMeasure.totalVariation_eq_variation, Measure.variation_toSignedMeasure]
+      exact hreg (x n))
+    (fun n => by simp [SignedMeasure.totalVariation_eq_variation, Measure.real])
+    (fun n => {x n}) (fun n => measurableSet_singleton (x n))
+    (fun i j hij => by simpa only [disjoint_singleton] using hx.ne hij)
+    (fun n => by simp [SignedMeasure.totalVariation_eq_variation])
+    (NormPreservingLifts.signedFunctional (Measure.dirac p).toSignedMeasure)
+  intro g
+  simpa only [heval, Function.comp_apply] using g.continuous.continuousAt.tendsto.comp hlim
+
+/-- Signed clopen oscillation forces every convergent point sequence to be
+eventually equal to its limit. -/
+theorem eventually_eq_of_signed_clopen_oscillation (x : ℕ → K) (p : K)
+    (hlim : Tendsto x atTop (𝓝 p)) : ∀ᶠ n in atTop, x n = p := by
+  classical
+  have hfinite : (range x).Finite := by
+    by_contra hinfinite
+    let e : ℕ ↪ range x := Set.Infinite.natEmbedding (range x) hinfinite
+    choose f hf using fun n => (e n).property
+    have hxf : Function.Injective (x ∘ f) := by
+      intro i j hij
+      apply e.injective
+      apply Subtype.ext
+      simpa only [Function.comp_apply, hf] using hij
+    have hfi : Function.Injective f := by
+      intro i j hij
+      apply hxf
+      exact congrArg x hij
+    exact injective_no_point_limit O (x ∘ f) p hxf (hlim.comp hfi.nat_tendsto_atTop)
+  have hclosed : IsClosed (range x \ {p}) := hfinite.sdiff.isClosed
+  have hp : p ∈ (range x \ {p})ᶜ := by simp
+  filter_upwards [hlim (hclosed.isOpen_compl.mem_nhds hp)] with n hn
+  by_contra hne
+  exact hn ⟨mem_range_self n, hne⟩
+
 private lemma disjoint_mass_limit_zero
     (a : ℕ → SignedMeasure K) (ha : ∀ n, (a n).totalVariation.Regular)
     (E : ℕ → Set K) (hE : ∀ n, MeasurableSet (E n))
@@ -665,6 +713,8 @@ theorem weak_of_signed_clopen_oscillation
   simpa only [map_sub, sub_add_cancel, zero_add] using hc.add_const (Φ FInf)
 
 #print axioms weak_of_signed_clopen_oscillation
+#print axioms eventually_eq_of_signed_clopen_oscillation
+#check @eventually_eq_of_signed_clopen_oscillation
 #check @weak_of_signed_clopen_oscillation
 end Oscillation
 
