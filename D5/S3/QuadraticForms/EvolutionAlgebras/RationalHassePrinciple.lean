@@ -17,6 +17,7 @@ public import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 public import Mathlib.LinearAlgebra.Matrix.Basis
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.Tactic
 
 /-! Rational evolution products and their unrestricted multiplication isomorphisms. -/
@@ -241,6 +242,77 @@ private theorem monomial_map_coordinate {n m : ℕ}
     simp [e.injective.ne hij]
   · simp
 
+private theorem isomorphism_basis_equations {n m : ℕ}
+    (μ : Product K V) (ν : Product K W)
+    (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c) (hp : Perfect ν)
+    (f : V ≃ₗ[K] W) (hf : ∀ x y, f (μ x y) = ν (f x) (f y)) :
+    ∃ e : Fin n ≃ Fin m, ∃ d : Fin n → Kˣ,
+      (∀ i, f (b i) = (d i : K) • c (e i)) ∧
+      ∀ i j, structureCoefficient μ b i j * (d j : K) =
+        (d i : K) ^ 2 * structureCoefficient ν c (e i) (e j) := by
+  classical
+  have hnm : n = m := by
+    have hdim := f.finrank_eq
+    rw [Module.finrank_eq_card_basis b, Module.finrank_eq_card_basis c] at hdim
+    simpa using hdim
+  subst m
+  obtain ⟨σ, t, ht, hcoord⟩ := isomorphism_monomial μ ν b c hb hc hp f hf
+  let e : Fin n ≃ Fin n := σ.symm
+  let d : Fin n → Kˣ := fun i => Units.mk0 (t (e i)) (ht (e i))
+  have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
+    apply c.equivFun.injective
+    ext j
+    simp only [hcoord, map_smul, Pi.smul_apply, smul_eq_mul, c.equivFun_self]
+    change (if σ j = i then t j else 0) = t (σ.symm i) *
+      (if σ.symm i = j then 1 else 0)
+    by_cases h : j = σ.symm i
+    · subst j
+      simp
+    · have h' : σ j ≠ i := by
+        intro h'
+        exact h (σ.injective (by simpa using h'))
+      simp [h', Ne.symm h]
+  refine ⟨e, d, hfb, ?_⟩
+  intro i j
+  have h := congrArg (fun z => c.equivFun z (e j)) (hf (b i) (b i))
+  rw [monomial_map_coordinate b c e d f hfb] at h
+  simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
+    smul_smul, mul_assoc] using h
+
+private theorem monomial_equations_realize {n m : ℕ}
+    (μ : Product K V) (ν : Product K W)
+    (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c)
+    (e : Fin n ≃ Fin m) (d : Fin n → Kˣ)
+    (heq : ∀ i j, structureCoefficient μ b i j * (d j : K) =
+      (d i : K) ^ 2 * structureCoefficient ν c (e i) (e j)) :
+    ∃ f : V ≃ₗ[K] W, (∀ i, f (b i) = (d i : K) • c (e i)) ∧
+      ∀ x y, f (μ x y) = ν (f x) (f y) := by
+  classical
+  let c' : Basis (Fin n) K W := (c.reindex e.symm).unitsSMul d
+  let f : V ≃ₗ[K] W := b.equiv c' (Equiv.refl _)
+  have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
+    simp [f, c', Basis.unitsSMul_apply, Units.smul_def]
+  have hsquare (i : Fin n) : f (μ (b i) (b i)) = ν (f (b i)) (f (b i)) := by
+    apply c.equivFun.injective
+    ext k
+    obtain ⟨j, rfl⟩ := e.surjective k
+    rw [monomial_map_coordinate b c e d f hfb]
+    simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
+      smul_smul, mul_assoc] using heq i j
+  have hmaps : μ.compr₂ f.toLinearMap = ν.compl₁₂ f.toLinearMap f.toLinearMap := by
+    apply LinearMap.ext_basis b b
+    intro i j
+    change f (μ (b i) (b j)) = ν (f (b i)) (f (b j))
+    by_cases hij : i = j
+    · subst j
+      exact hsquare i
+    · rw [hb i j hij, map_zero, hfb, hfb]
+      simp [hc (e i) (e j) (e.injective.ne hij)]
+  exact ⟨f, hfb, fun x y => congrArg (fun M : V →ₗ[K] V →ₗ[K] W => M x y) hmaps⟩
+
+
 /-- Arbitrary multiplication-preserving linear bijections are exactly the monomial
 solutions of the square-coefficient equations. The two finite dimensions are independent. -/
 theorem isomorphic_iff_monomial_equations {n m : ℕ}
@@ -253,56 +325,11 @@ theorem isomorphic_iff_monomial_equations {n m : ℕ}
   classical
   constructor
   · rintro ⟨f, hf⟩
-    have hnm : n = m := by
-      have hdim := f.finrank_eq
-      rw [Module.finrank_eq_card_basis b, Module.finrank_eq_card_basis c] at hdim
-      simpa using hdim
-    subst m
-    obtain ⟨σ, t, ht, hcoord⟩ := isomorphism_monomial μ ν b c hb hc hp f hf
-    let e : Fin n ≃ Fin n := σ.symm
-    let d : Fin n → Kˣ := fun i => Units.mk0 (t (e i)) (ht (e i))
-    have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
-      apply c.equivFun.injective
-      ext j
-      simp only [hcoord, map_smul, Pi.smul_apply, smul_eq_mul, c.equivFun_self]
-      change (if σ j = i then t j else 0) = t (σ.symm i) *
-        (if σ.symm i = j then 1 else 0)
-      by_cases h : j = σ.symm i
-      · subst j
-        simp
-      · have h' : σ j ≠ i := by
-          intro h'
-          exact h (σ.injective (by simpa using h'))
-        simp [h', Ne.symm h]
-    refine ⟨e, d, ?_⟩
-    intro i j
-    have h := congrArg (fun z => c.equivFun z (e j)) (hf (b i) (b i))
-    rw [monomial_map_coordinate b c e d f hfb] at h
-    simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
-      smul_smul, mul_assoc] using h
+    obtain ⟨e, d, _, heq⟩ := isomorphism_basis_equations μ ν b c hb hc hp f hf
+    exact ⟨e, d, heq⟩
   · rintro ⟨e, d, heq⟩
-    let c' : Basis (Fin n) K W := (c.reindex e.symm).unitsSMul d
-    let f : V ≃ₗ[K] W := b.equiv c' (Equiv.refl _)
-    have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
-      simp [f, c', Basis.unitsSMul_apply, Units.smul_def]
-    have hsquare (i : Fin n) : f (μ (b i) (b i)) = ν (f (b i)) (f (b i)) := by
-      apply c.equivFun.injective
-      ext k
-      obtain ⟨j, rfl⟩ := e.surjective k
-      rw [monomial_map_coordinate b c e d f hfb]
-      simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
-        smul_smul, mul_assoc] using heq i j
-    have hmaps : μ.compr₂ f.toLinearMap = ν.compl₁₂ f.toLinearMap f.toLinearMap := by
-      apply LinearMap.ext_basis b b
-      intro i j
-      change f (μ (b i) (b j)) = ν (f (b i)) (f (b j))
-      by_cases hij : i = j
-      · subst j
-        exact hsquare i
-      · rw [hb i j hij, map_zero, hfb, hfb]
-        simp [hc (e i) (e j) (e.injective.ne hij)]
-    exact ⟨f, fun x y => congrArg (fun M : V →ₗ[K] V →ₗ[K] W => M x y) hmaps⟩
-
+    obtain ⟨f, _, hf⟩ := monomial_equations_realize μ ν b c hb hc e d heq
+    exact ⟨f, hf⟩
 
 private theorem natural_baseChange (F : Type*) [Field F] [Algebra K F]
     {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b) :
@@ -576,6 +603,11 @@ private theorem coordinateSpace_perfect {n : ℕ} {Q : Type*}
 abbrev componentSpace {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
     (q : WeakComponent μ b) := coordinateSpace b (componentIndex μ b) q
 
+private theorem componentSpace_eq_span {n : ℕ} (μ : Product K V)
+    (b : Basis (Fin n) K V) (q : WeakComponent μ b) :
+    componentSpace μ b q = Submodule.span K (b '' {i | componentIndex μ b i = q}) :=
+  coordinateSpace_eq_span b _ q
+
 /-- Multiplication on a weak support component, inherited from the original product. -/
 def componentProduct {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
     (hb : Natural μ b) (q : WeakComponent μ b) : Product K (componentSpace μ b q) :=
@@ -603,6 +635,188 @@ theorem component_ideals_perfect {n : ℕ} (μ : Product K V) (b : Basis (Fin n)
   · intro q r hqr x y
     exact coordinateSpace_cross μ b hb _
       (fun _ _ h => componentIndex_of_coefficient μ b h) hqr x y
+
+
+private noncomputable def coordinateDecomposition {n : ℕ} {Q : Type*} [Fintype Q]
+    (b : Basis (Fin n) K V) (π : Fin n → Q) :
+    V ≃ₗ[K] (∀ q : Q, coordinateSpace b π q) where
+  toFun x q := ⟨coordinateProjection b π q x, coordinateProjection_mem b π q x⟩
+  invFun z := ∑ q, (z q : V)
+  left_inv x := by
+    apply b.equivFun.injective
+    ext i
+    simp only [map_sum, Finset.sum_apply, coordinateProjection_repr]
+    simp [eq_comm]
+  right_inv z := by
+    funext q
+    apply Subtype.ext
+    change coordinateProjection b π q (∑ r, (z r : V)) = (z q : V)
+    rw [map_sum]
+    rw [Finset.sum_eq_single q]
+    · exact coordinateProjection_fixed b π q (z q)
+    · intro r hr hrq
+      exact coordinateProjection_other b π (Ne.symm hrq) (z r)
+    · simp
+  map_add' x y := by ext q; exact map_add (coordinateProjection b π q) x y
+  map_smul' a x := by ext q; exact map_smul (coordinateProjection b π q) a x
+
+private theorem coordinateDecomposition_mul {n : ℕ} {Q : Type*} [Fintype Q]
+    (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (π : Fin n → Q)
+    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
+    (x y : V) (q : Q) :
+    coordinateDecomposition b π (μ x y) q =
+      restrictedProduct μ (coordinateSpace b π q) (coordinateSpace_left μ b hb π hπ q)
+        (coordinateDecomposition b π x q) (coordinateDecomposition b π y q) := by
+  apply Subtype.ext
+  exact coordinateProjection_mul μ b hb π hπ q x y
+
+/-- Multiplicative linear bijections on matched component ideals reconstruct an
+unrestricted multiplicative linear bijection of the original products. -/
+theorem isomorphic_of_component_matching {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c)
+    (e : WeakComponent μ b ≃ WeakComponent ν c)
+    (h : ∀ q, Isomorphic (componentProduct μ b hb q) (componentProduct ν c hc (e q))) :
+    Isomorphic μ ν := by
+  classical
+  letI : Fintype (WeakComponent μ b) := Fintype.ofFinite _
+  letI : Fintype (WeakComponent ν c) := Fintype.ofFinite _
+  let f : ∀ q, componentSpace μ b q ≃ₗ[K] componentSpace ν c (e q) :=
+    fun q => Classical.choose (h q)
+  have hf (q) (x y : componentSpace μ b q) :
+      f q (componentProduct μ b hb q x y) =
+        componentProduct ν c hc (e q) (f q x) (f q y) := Classical.choose_spec (h q) x y
+  let D := coordinateDecomposition b (componentIndex μ b)
+  let E := coordinateDecomposition c (componentIndex ν c)
+  let R := LinearEquiv.piCongrLeft K (fun q => componentSpace ν c q) e
+  let g : V ≃ₗ[K] W := ((D.trans (LinearEquiv.piCongrRight f)).trans R).trans E.symm
+  have hg (x : V) (q : WeakComponent μ b) : E (g x) (e q) = f q (D x q) := by
+    have hr : (R (LinearEquiv.piCongrRight f (D x))) (e q) = f q (D x q) :=
+      congr_fun (R.symm_apply_apply (LinearEquiv.piCongrRight f (D x))) q
+    simpa only [g, LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply] using hr
+  refine ⟨g, ?_⟩
+  intro x y
+  apply E.injective
+  funext r
+  obtain ⟨q, rfl⟩ := e.surjective r
+  rw [hg, coordinateDecomposition_mul ν c hc _
+    (fun _ _ h => componentIndex_of_coefficient ν c h), hg, hg]
+  exact (congrArg (f q) (coordinateDecomposition_mul μ b hb _
+    (fun _ _ h => componentIndex_of_coefficient μ b h) x y q)).trans (hf q _ _)
+
+
+private theorem eqvGen_map {I J : Type*} {R : I → I → Prop} {S : J → J → Prop}
+    (f : I → J) (hf : ∀ i j, R i j → S (f i) (f j)) {i j : I}
+    (h : Relation.EqvGen R i j) : Relation.EqvGen S (f i) (f j) := by
+  induction h with
+  | rel i j h => exact Relation.EqvGen.rel _ _ (hf i j h)
+  | refl i => exact Relation.EqvGen.refl _
+  | symm i j _ ih => exact Relation.EqvGen.symm _ _ ih
+  | trans i j k _ _ hij hjk => exact Relation.EqvGen.trans _ _ _ hij hjk
+
+private def supportComponentEquiv {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (e : Fin n ≃ Fin m)
+    (he : ∀ i j, structureCoefficient μ b i j ≠ 0 ↔
+      structureCoefficient ν c (e i) (e j) ≠ 0) :
+    WeakComponent μ b ≃ WeakComponent ν c :=
+  Quotient.congr e (by
+    intro i j
+    change Relation.EqvGen (fun i j => structureCoefficient μ b i j ≠ 0) i j ↔
+      Relation.EqvGen (fun i j => structureCoefficient ν c i j ≠ 0) (e i) (e j)
+    constructor
+    · exact eqvGen_map e (fun i j h => (he i j).mp h)
+    · intro h
+      have hh := eqvGen_map
+        (R := fun i j => structureCoefficient ν c i j ≠ 0)
+        (S := fun i j => structureCoefficient μ b i j ≠ 0) e.symm (fun i j h =>
+        (he (e.symm i) (e.symm j)).mpr (by simpa using h)) h
+      simpa using hh)
+
+private theorem monomial_support_iff {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (e : Fin n ≃ Fin m) (d : Fin n → Kˣ)
+    (heq : ∀ i j, structureCoefficient μ b i j * (d j : K) =
+      (d i : K) ^ 2 * structureCoefficient ν c (e i) (e j)) (i j : Fin n) :
+    structureCoefficient μ b i j ≠ 0 ↔ structureCoefficient ν c (e i) (e j) ≠ 0 := by
+  apply not_congr
+  constructor
+  · intro hi
+    have hh := heq i j
+    rw [hi, zero_mul] at hh
+    exact (mul_eq_zero.mp hh.symm).resolve_left (pow_ne_zero _ (d i).ne_zero)
+  · intro hi
+    have hh := heq i j
+    rw [hi, mul_zero] at hh
+    exact (mul_eq_zero.mp hh).resolve_right (d j).ne_zero
+
+private theorem monomial_component_map {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (e : Fin n ≃ Fin m) (d : Fin n → Kˣ)
+    (he : ∀ i j, structureCoefficient μ b i j ≠ 0 ↔
+      structureCoefficient ν c (e i) (e j) ≠ 0)
+    (f : V ≃ₗ[K] W) (hfb : ∀ i, f (b i) = (d i : K) • c (e i))
+    (q : WeakComponent μ b) :
+    (componentSpace μ b q).map f.toLinearMap =
+      componentSpace ν c (supportComponentEquiv μ ν b c e he q) := by
+  let E := supportComponentEquiv μ ν b c e he
+  have hE (i : Fin n) : E (componentIndex μ b i) = componentIndex ν c (e i) := rfl
+  have hmem (i : Fin n) (hi : componentIndex μ b i = q) :
+      c (e i) ∈ componentSpace ν c (E q) := by
+    rw [componentSpace_eq_span]
+    exact Submodule.subset_span ⟨e i, (hE i).symm.trans (congrArg E hi), rfl⟩
+  apply le_antisymm
+  · rw [Submodule.map_le_iff_le_comap, componentSpace_eq_span]
+    apply Submodule.span_le.mpr
+    rintro x ⟨i, hi, rfl⟩
+    change f (b i) ∈ componentSpace ν c (E q)
+    rw [hfb]
+    exact Submodule.smul_mem _ _ (hmem i hi)
+  · rw [componentSpace_eq_span]
+    apply Submodule.span_le.mpr
+    rintro y ⟨j, hj, rfl⟩
+    obtain ⟨i, rfl⟩ := e.surjective j
+    have hi : componentIndex μ b i = q := E.injective ((hE i).trans hj)
+    apply Submodule.mem_map.mpr
+    refine ⟨(↑((d i)⁻¹) : K) • b i, ?_, ?_⟩
+    · apply Submodule.smul_mem
+      rw [componentSpace_eq_span]
+      exact Submodule.subset_span ⟨i, hi, rfl⟩
+    · simp [hfb, Units.smul_def, smul_smul]
+
+private theorem component_matching_of_monomial {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c)
+    (e : Fin n ≃ Fin m) (d : Fin n → Kˣ)
+    (heq : ∀ i j, structureCoefficient μ b i j * (d j : K) =
+      (d i : K) ^ 2 * structureCoefficient ν c (e i) (e j))
+    (f : V ≃ₗ[K] W) (hfb : ∀ i, f (b i) = (d i : K) • c (e i))
+    (hf : ∀ x y, f (μ x y) = ν (f x) (f y)) :
+    ∃ E : WeakComponent μ b ≃ WeakComponent ν c,
+      (∀ q, (componentSpace μ b q).map f.toLinearMap = componentSpace ν c (E q)) ∧
+      ∀ q, Isomorphic (componentProduct μ b hb q) (componentProduct ν c hc (E q)) := by
+  let he := monomial_support_iff μ ν b c e d heq
+  let E := supportComponentEquiv μ ν b c e he
+  have hmap := monomial_component_map μ ν b c e d he f hfb
+  refine ⟨E, hmap, ?_⟩
+  intro q
+  refine ⟨f.ofSubmodules _ _ (hmap q), ?_⟩
+  intro x y
+  apply Subtype.ext
+  exact hf x y
+
+/-- Every unrestricted isomorphism of perfect-target evolution products matches
+weak component ideals and restricts to unrestricted isomorphisms on them. -/
+theorem isomorphism_matches_components {n m : ℕ}
+    (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c) (hp : Perfect ν)
+    (f : V ≃ₗ[K] W) (hf : ∀ x y, f (μ x y) = ν (f x) (f y)) :
+    ∃ E : WeakComponent μ b ≃ WeakComponent ν c,
+      (∀ q, (componentSpace μ b q).map f.toLinearMap = componentSpace ν c (E q)) ∧
+      ∀ q, Isomorphic (componentProduct μ b hb q) (componentProduct ν c hc (E q)) := by
+  obtain ⟨e, d, hfb, heq⟩ := isomorphism_basis_equations μ ν b c hb hc hp f hf
+  exact component_matching_of_monomial μ ν b c hb hc e d heq f hfb hf
 
 end Components
 
