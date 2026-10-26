@@ -71,48 +71,8 @@ identities give the equivalent expression $\log((217+\sqrt{21489})/360)$.
 The axiom closure is exactly `propext`, `Classical.choice` and `Quot.sound`;
 there is no `sorry` or `native_decide`.
 
-## Triage
 
-Tier 1: a named conjecture, preregistered in #16068. Admission basis:
-`open-problem-resolution`; resolution: `Refuted`; `result` has
-`proof_shape: bind-only` under normalization, with external open-problem admission.
-
-### What the refutation shows
-
-- **Proved (Lean):** the three-qubit state with classical $B$ refutes Conjecture 1
-  under complete dephasing of $A$ at $\alpha=2$,
-  $0\to\log((217+\sqrt{21489})/360)>0$. The explicit block factorizations
-  also show that the state is faithful; strict positivity of the input state and
-  the closed-form logarithm equality are algebraic consequences, while Lean
-  certifies the positive semidefinite state and the strict increase.
-- **Reasoning:** for positive definite $S_{AE}$ and a POVM $\{E_b\}$ on $E$,
-  blocks $X_b=\sqrt S E_b\sqrt S$ give $I_2=0$. Here
-  $E_0=\operatorname{diag}(3/4,1/4)$ and
-  $E_1=\operatorname{diag}(1/4,3/4)$. An $A$-channel does not preserve this
-  square-root factorization. The input has positive von Neumann CMI and is
-  not a quantum Markov chain; the failure is specific to the Rényi formula.
-- **Computed:** a rank-four variant with projective $E_b$ gives
-  $0\to\log(10/9)$; numerical violations also occur at $\alpha=1.5$.
-- **Reasoning:** the optimised sandwiched quantity of arXiv:1403.6102,
-  Definition 19 and Remark 25, fails at $\alpha=1/2$ for this state,
-  $0\to\log(648/(388+13(\sqrt{195}+\sqrt{35})))$.
-  This quantity is not proved here.
-- **Consequences (reasoning):** results that assume Conjecture 1, including
-  LOCC monotonicity of this Rényi squashed entanglement and Consequences 3–4,
-  lose that hypothesis. The $B$-side monotonicity proved in arXiv:1403.6102
-  is unaffected.
-- **Open:** whether a modified Rényi CMI, such as the log-Euclidean quantities
-  of Rubboli–Arqand–Wilde, arXiv:2609.34699, is the right replacement lies
-  outside this settlement.
-
-## ASSUMED-UNVERIFIED
-
-Worldwide novelty and priority are not conclusions of the formal refutation.
-The numerical variants and the optimised sandwiched quantity are distinct
-from the theorem's CFC expression and remain outside its proof scope.
-
-
-## The registered low-alpha continuation
+### The registered low-alpha continuation
 
 Issue [#17673](https://github.com/the-omega-institute/trureturing/issues/17673)
 registers the remaining assertion with exactly $0<\alpha<1$ and the same
@@ -167,7 +127,7 @@ and positivity assumptions. The fixed $x=2^{-60}$ is in this interval.
 After the exact matrix evaluations have been verified, $Z_{\rm out}>0$
 and strict logarithm monotonicity give a strict increase in CMI.
 
-### Native verification boundary for the continuation
+#### Native verification boundary for the continuation
 
 The complete low-alpha source has passed native Lean compilation against the
 actual frozen imported module. This checks the state and channel certificates,
@@ -184,3 +144,44 @@ acceptance. Until those gates pass, this continuation is a natively verified
 candidate awaiting canonical admission.
 The already accepted alpha-two result above is separate. The log-Euclidean,
 dual-J and other optimized quantities are not substitutions for this target.
+
+## Triage
+
+Tier 1: a named conjecture, preregistered in #16068. Admission basis:
+`open-problem-resolution`; resolution: `Refuted`; `result` has
+`proof_shape: bind-only` under normalization, with external open-problem admission.
+
+### What the refutation shows
+
+- **Proved (Lean):** the three-qubit state with classical $B$ refutes Conjecture 1
+  under complete dephasing of $A$ at $\alpha=2$,
+  $0\to\log((217+\sqrt{21489})/360)>0$. The explicit block factorizations
+  also show that the state is faithful; strict positivity of the input state and
+  the closed-form logarithm equality are algebraic consequences, while Lean
+  certifies the positive semidefinite state and the strict increase.
+- **Reasoning:** for positive definite $S_{AE}$ and a POVM $\{E_b\}$ on $E$,
+  blocks $X_b=\sqrt S E_b\sqrt S$ give $I_2=0$. Here
+  $E_0=\operatorname{diag}(3/4,1/4)$ and
+  $E_1=\operatorname{diag}(1/4,3/4)$. An $A$-channel does not preserve this
+  square-root factorization. The input has positive von Neumann CMI and is
+  not a quantum Markov chain; the failure is specific to the Rényi formula.
+- **Computed:** a rank-four variant with projective $E_b$ gives
+  $0\to\log(10/9)$; numerical violations also occur at $\alpha=1.5$.
+- **Reasoning:** the optimised sandwiched quantity of arXiv:1403.6102,
+  Definition 19 and Remark 25, fails at $\alpha=1/2$ for this state,
+  $0\to\log(648/(388+13(\sqrt{195}+\sqrt{35})))$.
+  This quantity is not proved here.
+- **Consequences (reasoning):** results that assume Conjecture 1, including
+  LOCC monotonicity of this Rényi squashed entanglement and Consequences 3–4,
+  lose that hypothesis. The $B$-side monotonicity proved in arXiv:1403.6102
+  is unaffected.
+- **Open:** whether a modified Rényi CMI, such as the log-Euclidean quantities
+  of Rubboli–Arqand–Wilde, arXiv:2609.34699, is the right replacement lies
+  outside this settlement.
+
+## ASSUMED-UNVERIFIED
+
+Worldwide novelty and priority are not conclusions of the formal refutation.
+The numerical variants and the optimised sandwiched quantity are distinct
+from the theorem's CFC expression and remain outside its proof scope.
+
