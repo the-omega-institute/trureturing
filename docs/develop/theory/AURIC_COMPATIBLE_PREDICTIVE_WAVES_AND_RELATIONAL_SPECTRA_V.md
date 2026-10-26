@@ -3104,3 +3104,1564 @@ $$
 若目标还包括固定共同酉坐标或共轭方向，新增关系须相应打破该共同等价，例如经实际供应的相干参考及其联合校准；只是宣称有共同来源或可以写出一个复坐标并不完成它。紧闭包、Haar 平均、群逆和正过滤在证明中约束全部精确兼容实现，始终不增加控制、选支、独立副本、环境或相位访问。精确概率等式亦不等于有限实验已取得这些实数。原全参数最小最大、有限噪声和取得问题保持各自原目标与量词，不能被此三维分类替换。
 
 ## 追加锚（本行以下为增补区）
+
+## 91. 单个原纯制备与固定混合控制的比较合同
+
+**定义 91.1（固定源、时间词与一个控制类型）。** 保留 (54.1) 的五维 $H$、等距 $B$、$U,W,\xi,e,f,q,r$ 及 $E=qq^\dagger$。在本节以后，$N$ 专指一个酉矩阵，不指 (54.1) 的子空间 $\ell^\perp$。固定
+
+$$
+\begin{gathered}
+0<d<1,\qquad c=d/2,\qquad \sin(2\theta)\ne0,\qquad P_\xi=\xi\xi^\dagger,\\
+a=Uq,\quad g=Uf,\quad
+\psi=\sqrt d\,a+\mathrm i\sqrt{1-d}\,g,\quad
+\rho_0=\psi\psi^\dagger,\\
+V_j=U\exp(\mathrm i\theta W)W^j,\qquad
+A_j=\tfrac12\operatorname{Ad}_{V_j}\quad(j=0,1),\\
+N\in U(3),\qquad [N,P_\xi]\ne0,\qquad A_N=\operatorname{Ad}_N.
+\end{gathered}
+\tag{91.1}
+$$
+
+这里 $A_j$ 是 qutrit 上的 CP 分支映射；(54.7) 的五维 Kraus 算子在本增补中记为 $\widehat K_{\theta,j}$，避免把算子与超算子混同。$N$ 是额外给定、已安装且可重复的同一个确定性控制类型；其存在和取得是合同前提。两个原生随机分支仍是原来的同一个仪器，角度始终固定。
+
+对字母表 $\{0,1,N\}$ 上的时间词 $w=b_1\cdots b_n$，最左字母最早作用，置
+
+$$
+\begin{gathered}
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\qquad
+U_w=U_{b_n}\cdots U_{b_1},\\
+A_w=A_{b_n}\cdots A_{b_1}
+=2^{-k(w)}\operatorname{Ad}_{U_w},\qquad
+k(w)=\#\{t:b_t\in\{0,1\}\},\\
+p(w,1)=\operatorname{Tr}(EA_w\rho_0),\qquad
+p(w,0)=\operatorname{Tr}((I_3-E)A_w\rho_0).
+\end{gathered}
+\tag{91.2}
+$$
+
+空词的 $U_\varnothing=I_3$、$A_\varnothing=\mathrm{id}$、$k(\varnothing)=0$。每个词的原始总质量为
+
+$$
+p(w,0)+p(w,1)=2^{-k(w)}.
+\tag{91.3}
+$$
+
+词中的 $0,1$ 指预定仪器时序中实际保留的标签事件，不是可强迫发生的操作。某个位置的 $N$ 在该次仪器使用数之后固定执行，与此前出现的随机标签无关；比较一个词的坐标不丢弃同一时序中的其他历史。
+
+**假设 91.2（唯一竞争制备和完整矩阵域的合法性）。** 竞争者只已知其载体为 $\mathbb C^3$，由一个任意密度矩阵 $\sigma_0$、一个固定效果 $F$ 和三个固定复线性映射组成：
+
+$$
+\begin{gathered}
+\sigma_0\succeq0,\quad \operatorname{Tr}\sigma_0=1,\qquad
+0\preceq F\preceq I_3,\\
+B_0,B_1:M_3(\mathbb C)\longrightarrow M_3(\mathbb C)\ \text{CP},
+\qquad B_0+B_1\ \text{TP},\\
+B_N:M_3(\mathbb C)\longrightarrow M_3(\mathbb C)\ \text{CPTP}.
+\end{gathered}
+\tag{91.4}
+$$
+
+这些条件从一开始作用于全部矩阵域。每个时间词使用同一组映射，$B_w=B_{b_n}\cdots B_{b_1}$，竞争联合概率为
+
+$$
+\widetilde p(w,1)=\operatorname{Tr}(FB_w\sigma_0),\qquad
+\widetilde p(w,0)=\operatorname{Tr}((I_3-F)B_w\sigma_0).
+\tag{91.5}
+$$
+
+不假设 $\sigma_0$ 纯、$F$ 投影、可达或效果信息完备、逐支公平、分支酉、逆为 CP、表示之间有正合同，亦不给整个 $\mathcal K_d$ 指派任何竞争制备。精确概率等式是数学前提，不是有限样本已获得精确实数的断言。已知复维数、Born 迹配对、CP 合法性和固定时间齐次组合均保留为前提。
+
+**命题 91.3（这一制备的原五维提升及完整矩映射）。** (91.1) 只用一个原相容纯后继；其原域 CPTP 提升可以取 (55.5)、(88.1) 在 $A=\rho_0,D=0$ 时的构造。该提升保留第一卷 (35.3) 的完整源矩映射，并与 $S_{\rho_0}$ 在全部复矩阵及任意有限未触动参考上一致。
+
+证明。$a,g$ 正交归一，$U\xi=\xi$，且
+
+$$
+\langle \xi,a\rangle=1/\sqrt2,\quad
+\langle \xi,g\rangle=0,\quad
+\langle q,a\rangle=1/4,\quad
+\langle q,g\rangle=\sqrt6/4.
+$$
+
+所以 $\rho_0$ 纯且迹一，$a^\dagger\rho_0a=d$，并有
+
+$$
+\operatorname{Tr}(P_\xi\rho_0)=c,\qquad
+\operatorname{Tr}(C\rho_0)=d,\qquad
+\operatorname{Tr}(E\rho_0)=\frac{6-5d}{16}=e_d,
+\quad C=2P_\xi.
+\tag{91.6}
+$$
+
+最后一个等式使用实重叠与 $\mathrm i$ 的相对相位，交叉实部为零。故 $A=\rho_0,D=0$ 满足 (54.2) 的全部条件；这仅证明这一点有原域来源。
+
+令 $D_+$ 为 (55.5) 的原 $3\times5$ 余等距，置
+
+$$
+\eta=D_+^\dagger\psi,\qquad
+\omega=\eta\eta^\dagger,\qquad
+\mathcal T_0(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega.
+\tag{91.7}
+$$
+
+$D_+D_+^\dagger=I_3$ 使 $\|\eta\|=1$。两项的 Kraus 算子 $BP_+$、$\eta f^\dagger$ 的伴随平方和为 $P_++ff^\dagger=I_3$，因此 $\mathcal T_0$ 是原 $M_3\to M_5$ CPTP 映射。(88.2) 的假设正是本处的正分解及 (91.6)，所以在输入基 $(q,r,f)$ 中，其原完整响应是
+
+$$
+\begin{aligned}
+\mathcal T_0^*(J_0)&=\operatorname{diag}(1,0,d),\\
+\mathcal T_0^*(J_1)&=\frac1{16}
+ \begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\\
+\mathcal T_0^*(J_2)&=\frac1{32}
+ \begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix}.
+\end{aligned}
+\tag{91.8}
+$$
+
+这里 $J_0=P=BEB^\dagger$，$J_j=(\mathcal G^*)^j(P)$，$\mathcal G(Y)=\sum_{j=0}^1K_jYK_j^\dagger$；$K_j$ 是 (54.1) 的原 Kraus 算子。原递推 $J_{j+2}=(J_j+J_{j+1})/2$、$j\ge1$ 使 (91.8) 延伸到全部原深度。因此没有用单个输入的三个标量替代源的完整矩映射。
+
+由 $D_+B=UP_+$、$D_-B=UP_-$、$D_-D_+^\dagger=0$，直接对任意 $X\in M_3(\mathbb C)$ 得
+
+$$
+\mathcal G\mathcal T_0(X)
+=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho_0]B^\dagger
+=S_{\rho_0}(X).
+\tag{91.9}
+$$
+
+对任意 $r\ge1$ 和 $X\in M_r\otimes M_3$，令
+$X_{ff}=(I_r\otimes f^\dagger)X(I_r\otimes f)$。其完整参考形式为
+
+$$
+\begin{aligned}
+(\mathrm{id}_{M_r}\otimes S_{\rho_0})(X)
+={}&(I_r\otimes BUP_+)X(I_r\otimes P_+U^\dagger B^\dagger)\\
+&+X_{ff}\otimes B\rho_0B^\dagger .
+\end{aligned}
+\tag{91.10}
+$$
+
+这是所有复矩阵上的恒等式，故包括纠缠参考，不要求参考为独立副本。第二卷 (39.5) 给
+$\widehat K_{\theta,h}B=2^{-|h|/2}BV_h$。对于给定 $N$，数学上的五维角块延伸
+$\widetilde N=BNB^\dagger+(I_5-BB^\dagger)$ 是酉且满足 $\widetilde NB=BN$。逐次复合于是保留 (91.2) 的两种终端结果、联合权重及未触动参考对应。这个延伸公式只说明给定控制的表示相容性；它不从原无控制菜单推出 $N$ 已被取得。后面的辨识只使用合同所给的一个 $\rho_0$、原随机仪器及已安装 $N$，不使用整个 $\mathcal K_d$ 的制备或仿射编码。∎
+
+## 92. 实际单态的八维原生跨度和每个混合控制的第九列
+
+**定理 92.1（全角度原生跨度及有限达到深度）。** 对 (91.1) 的源，定义
+
+$$
+\mathscr S_c=\{X\in\operatorname{Herm}_3:
+ \operatorname{Tr}(P_\xi X)=c\operatorname{Tr}X\},\qquad
+\mathscr R_\ell=\operatorname{span}_{\mathbb R}
+ \{A_u\rho_0:u\in\{0,1\}^*,\ |u|\le\ell\}.
+\tag{92.1}
+$$
+
+则原生有限词列的完整实跨度恰为八维 $\mathscr S_c$，且 $\mathscr R_7=\mathscr S_c$。可以选出 $u_1,\ldots,u_8$，各长至多七，令 $u_1=\varnothing$，使 $r_i=A_{u_i}\rho_0$ 成为其基。
+
+证明。在 $(\xi,e,f)$ 中去掉每个 $V_j$ 的共同标量相位后，
+
+$$
+\begin{gathered}
+V'_0=1\oplus B_z,\qquad V'_1=V'_0(1\oplus J),\qquad
+z=e^{-2\mathrm i\theta},\\
+B_z=L D_z,\quad
+L=\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\quad
+D_z=\operatorname{diag}(1,z),\quad J=\operatorname{diag}(1,-1).
+\end{gathered}
+\tag{92.2}
+$$
+
+这与引理 63.1 的 $R,D_\theta,Z$ 分别对应为 $L,D_z,J$，而不是另一个全族分类的表示。其假设恰为 $z\notin\{1,-1\}$。引理 63.1 因而给实际 $1\oplus SU(2)$ 位于原生正词闭包内；对有理 $\theta/\pi$ 同样成立。该引理的有限投影群排除使用代数整数的域范数，(55.7)–(55.8) 给相同源矩阵的迹／行列式障碍；这里不以无理角论证替代有理角情形。
+
+每个原生酉与 $P_\xi$ 交换，故每个 $r_u$ 都在 $\mathscr S_c$。由 (91.6) 可将
+$\psi=\sqrt c\,\xi+\eta_0$，其中 $\eta_0\perp\xi$、$\|\eta_0\|^2=1-c$。$SU(2)$ 在 $\mathbb C^2$ 单位球面上传递，所以原生纯态轨道闭包包含
+
+$$
+Q(v)=|\sqrt c\,\xi+\sqrt{1-c}\,v\rangle
+       \langle\sqrt c\,\xi+\sqrt{1-c}\,v|,
+\qquad v\perp\xi,\quad \|v\|=1.
+\tag{92.3}
+$$
+
+有限词的实线性跨度在有限维中是闭的；$A_u\rho_0$ 与
+$U_u\rho_0U_u^\dagger$ 只差非零标量，故这些轨道极限也在同一跨度内。
+
+$Q(v)-Q(-v)$ 等于
+$2\sqrt{c(1-c)}(\xi v^\dagger+v\xi^\dagger)$。令 $v$ 依次取 $e,\mathrm i e,f,\mathrm i f$，得到四个独立交叉方向。又
+
+$$
+Q(v)+Q(-v)=2cP_\xi+2(1-c)vv^\dagger .
+\tag{92.4}
+$$
+
+对下块的两条正交单位向量求和，得到非零迹方向
+$H_c=\operatorname{diag}(c,(1-c)/2,(1-c)/2)$。将 (92.4) 减去 $2H_c$，下块为
+$2(1-c)(vv^\dagger-I_2/2)$；取 Pauli 三个轴的纯投影给下块全部三个无迹 Hermitian 方向。四个交叉方向、三个下块无迹方向及 $H_c$ 独立，共八维，恰张成 (92.1) 的超平面。
+
+最后，
+
+$$
+\mathscr R_{\ell+1}
+=\mathscr R_\ell+A_0\mathscr R_\ell+A_1\mathscr R_\ell.
+\tag{92.5}
+$$
+
+若某一步在维数八以前停滞，则该空间已对两个生成元不变，以后永不再增长，与刚证得的完整跨度矛盾。从 $\dim\mathscr R_0=1$ 开始，至多七次严格增长即达到八。因此可以在深度七内从空词起扩充成基。∎
+
+**定理 92.2（每个混合 $N$ 都使任意原生基逃逸）。** 对定理 92.1 的任意上述基，总有 $k\in\{1,\ldots,8\}$ 使
+
+$$
+r_9=Nr_kN^\dagger\notin\mathscr S_c.
+\tag{92.6}
+$$
+
+置 $u_9=u_kN$，则 $r_i=A_{u_i}\rho_0$、$1\le i\le9$ 是 $\operatorname{Herm}_3$ 的基，$|u_9|\le8$。结论包括 $d=2/3$ 和 $N\xi$ 完全位于下双态空间的情形。
+
+证明。$\mathscr S_c$ 的迹配对法向量为 $D_c=P_\xi-cI_3$。若
+$\operatorname{Ad}_N\mathscr S_c\subseteq\mathscr S_c$，维数相同使二者相等，取正交补得到
+
+$$
+N^\dagger D_cN=\lambda D_c,\qquad
+\lambda\in\mathbb R\setminus\{0\}.
+\tag{92.7}
+$$
+
+但
+
+$$
+\det D_c=(1-c)(-c)^2=c^2(1-c)>0,
+$$
+
+故取行列式给 $\lambda^3=1$，实数 $\lambda$ 必为一。于是
+$N^\dagger P_\xi N=P_\xi$，与混合假设矛盾。若八个基向量都不逃逸，整个 $\mathscr S_c$ 会满足上述包含，故至少一个逃逸。添加该列使秩为九。
+
+此证明不除以 $\operatorname{Tr}D_c=1-3c$；在 $c=1/3$ 即 $d=2/3$ 仍有非零行列式。它也没有对 $\langle\xi,N\xi\rangle$ 的非零性或大小作假设。∎
+
+## 93. 四张有限加权表与全矩阵迹保持相似
+
+**定义 93.1（原生效果行、插入块与精确标量）。** 固定按定理 92.1–92.2 选择的九个前缀，仍保留 $u_1=\varnothing$。八个后缀按以下顺序固定：
+
+$$
+(h_1,\ldots,h_8)=(\varnothing,0,1,00,10,000,010,100).
+\tag{93.1}
+$$
+
+置
+
+$$
+e_0=I_3,\qquad
+e_m=Z_{h_m}=2^{-|h_m|}V_{h_m}^\dagger EV_{h_m}\quad(1\le m\le8).
+\tag{93.2}
+$$
+
+定义四个 $9\times9$ 实矩阵，行标 $m=0,\ldots,8$、列标 $i=1,\ldots,9$：
+
+$$
+H_{mi}=\operatorname{Tr}(e_mr_i),\qquad
+H^a_{mi}=\operatorname{Tr}(e_mA_a(r_i)),
+\quad a=0,1,N.
+\tag{93.3}
+$$
+
+非迹行的条目恰为原事件
+
+$$
+H_{mi}=p(u_i h_m,1),\qquad
+H^a_{mi}=p(u_i a h_m,1)\quad(m\ge1).
+\tag{93.4}
+$$
+
+迹行的条目则是没有后缀的两个终端结果之和：
+
+$$
+\begin{aligned}
+H_{0i}&=p(u_i,0)+p(u_i,1),\\
+H^a_{0i}&=p(u_i a,0)+p(u_i a,1).
+\end{aligned}
+\tag{93.5}
+$$
+
+例如 $u_kN$ 的列是先执行 $u_k$ 再执行 $N$；绝不是先在 $\rho_0$ 上执行 $N$。竞争表 $\widetilde H,\widetilde H^a$ 用同一时序和 (91.5) 定义。其非迹行包括完整的竞争后缀映射 $B_{h_m}$，没有假设其公平性。
+
+**定理 93.2（有限表强制的完整相似接口）。** 在假设 91.2 下，只要求四张有限表逐项相等：
+
+$$
+\widetilde H=H,\qquad
+\widetilde H^a=H^a\quad(a=0,1,N).
+\tag{93.6}
+$$
+
+则存在唯一可逆实线性 $T:\operatorname{Herm}_3\to\operatorname{Herm}_3$，满足
+
+$$
+\begin{gathered}
+\operatorname{Tr}(TX)=\operatorname{Tr}X,\qquad
+T\rho_0=\sigma_0,\qquad T^*F=E,\\
+B_jT=TA_j=\tfrac12T\operatorname{Ad}_{V_j}\quad(j=0,1),\qquad
+B_NT=T\operatorname{Ad}_N.
+\end{gathered}
+\tag{93.7}
+$$
+
+所有恒等式作用于全部 $\operatorname{Herm}_3$，并通过唯一复线性延伸作用于全部 $M_3(\mathbb C)$。$T^{-1}$ 也保迹。此阶段不预设或断言 $T$ 正、CP 或保单位。
+
+证明。先按第二卷定理 40.1 使用确切的效果基，其假设映射为同一 $U,W,E$、同一 $\theta$、同一最早标签在左的 $V_h$ 和 (93.1) 的词序。对于实坐标
+
+$$
+x(X)=(X_{00},X_{11},X_{22},
+ \Re X_{01},\Re X_{02},\Re X_{12},
+ \Im X_{01},\Im X_{02},\Im X_{12})^{\mathsf T},
+\tag{93.8}
+$$
+
+以 $x(e_0),\ldots,x(e_8)$ 为列的矩阵 $\mathcal E$ 满足
+
+$$
+\det\mathcal E=\frac{6561}{2^{36}}\sin^7(2\theta)\ne0.
+\tag{93.9}
+$$
+
+供应 (40.4) 的权重没有删掉；八个词长之和为十五，故相对于不加权效果的 (40.12)，行列式恰多 $2^{-15}$。迹配对不是 (93.8) 的普通点积，而是
+
+$$
+\operatorname{Tr}(XY)=x(X)^{\mathsf T}J_{\rm tr}x(Y),\qquad
+J_{\rm tr}=\operatorname{diag}(1,1,1,2,2,2,2,2,2).
+\tag{93.10}
+$$
+
+因此实际行泛函矩阵为 $\mathcal E^{\mathsf T}J_{\rm tr}$，其行列式为
+$64\det\mathcal E\ne0$。坐标行列式与真实迹配对的度量因子在此分别保留。
+
+用无坐标形式定义四个线性映射
+
+$$
+\begin{aligned}
+R:\mathbb R^9\to\operatorname{Herm}_3,\quad&R\delta_i=r_i,\\
+L:\operatorname{Herm}_3\to\mathbb R^9,\quad&(LX)_m=\operatorname{Tr}(e_mX),\\
+S:\mathbb R^9\to\operatorname{Herm}_3,\quad&S\delta_i=s_i:=B_{u_i}\sigma_0,\\
+M:\operatorname{Herm}_3\to\mathbb R^9,\quad&
+(MX)_0=\operatorname{Tr}X,\quad
+(MX)_m=\operatorname{Tr}(F B_{h_m}(X))\ (m\ge1).
+\end{aligned}
+\tag{93.11}
+$$
+
+定理 92.2 使 $R$ 可逆，(93.9)–(93.10) 使 $L$ 可逆。由 (93.6) 和完整时间顺序，
+
+$$
+LR=H=MS.
+\tag{93.12}
+$$
+
+故 $\operatorname{rank}H=9$。竞争 Hermitian 空间也恰为九维，因此 $M,S$ 均可逆；竞争的可达性与可观察性由此推出，不能作为额外承诺输入。取
+
+$$
+T=SR^{-1},\qquad MT=L.
+\tag{93.13}
+$$
+
+插入块的等式给
+
+$$
+MB_aS=H^a=LA_aR,\qquad a=0,1,N.
+\tag{93.14}
+$$
+
+将 $S=TR$、$L=MT$ 代入并消去可逆的 $M,R$，得到三个完整空间的交织恒等式。$MT=L$ 的迹行给 $\operatorname{Tr}(TX)=\operatorname{Tr}X$；$h_1=\varnothing$ 的行给 $T^*F=E$；$u_1=\varnothing$ 的列给 $T\rho_0=\sigma_0$。$R$ 是基，故满足这些列匹配的 $T$ 唯一。
+
+每个复矩阵唯一写成 $X+\mathrm iY$、$X,Y$ Hermitian。定义
+$T(X+\mathrm iY)=TX+\mathrm iTY$，得到可逆复线性、保持伴随的延伸；全部恒等式随之延伸。由 $T$ 可逆且保迹，令 $Y=TX$ 便得 $\operatorname{Tr}(T^{-1}Y)=\operatorname{Tr}Y$。
+
+(93.12)–(93.14) 使用成熟的有限 Hankel／最小线性实现相似方法；可达／零观察商及最小实现相似的文献背景见 Monras–Winter，[*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*](https://arxiv.org/html/1412.3634v1)，§4、定理 9。该文的平稳过程合同不是本题的单制备、外定时序和双终端合同；这里有限四表的推导由 (93.11)–(93.14) 直接承担，没有从该一般背景借入平稳性、全词已知或额外控制。九个列是一个制备的次归一化历史事件，也没有成为九个独立可制备状态。∎
+
+## 94. 插入质量、全域 CPTP 逆与固定映射的全词后果
+
+**定理 94.1（有限表强制公平、可逆酉分支和所有数学词）。** 在定理 93.2 的条件下，
+
+$$
+C_0=2B_0,\qquad C_1=2B_1,\qquad C_N=B_N
+\tag{94.1}
+$$
+
+都是完整 $M_3(\mathbb C)$ 上的 CPTP 映射，并各有完整 CPTP 逆，因而各自为酉共轭。它们通过同一个 $T$ 满足
+
+$$
+C_a=T\operatorname{Ad}_{U_a}T^{-1},\qquad
+C_w=T\operatorname{Ad}_{U_w}T^{-1},\qquad
+B_w=2^{-k(w)}C_w
+\tag{94.2}
+$$
+
+对每个字母和每个有限正向词成立。这尚未选定三个酉代表的共同坐标；该共同性由后面的单态／单效果论证确定。
+
+证明。插入质量行逐列给
+
+$$
+\operatorname{Tr}(B_js_i)
+=H^j_{0i}
+=\operatorname{Tr}(A_jr_i)
+=\tfrac12\operatorname{Tr}r_i
+=\tfrac12\operatorname{Tr}s_i,\qquad j=0,1.
+\tag{94.3}
+$$
+
+$s_i$ 是整个竞争 Hermitian 空间的基，故
+$B_j^*(I_3)=I_3/2$ 在全矩阵域成立。CP 由假设 91.2 给出，故 $2B_j$ CPTP。$C_N$ 的全域 CPTP 性本来就是前提。这一步使用插入的质量和秩九；原先只假设 $B_0+B_1$ TP 并不能推出逐支公平。因子二是证明中映射的代数缩放，没有对实验分支条件化或给予强迫标签的操作。
+
+由 (93.7) 立即得字母层的 (94.2)，然后按实际时间顺序复合得每个词的恒等式。固定映射在所有词上复用是前提；这里不把有限数据拟合到任意时间相关竞争者。
+
+对每个 $a$，$\operatorname{Ad}_{U_a}$ 属于紧酉共轭群。有限个本征相位的同时回归给 $n_\nu\to\infty$，且
+
+$$
+\operatorname{Ad}_{U_a}^{\,n_\nu}\longrightarrow\mathrm{id},\qquad
+C_a^{\,n_\nu-1}\longrightarrow
+T\operatorname{Ad}_{U_a}^{-1}T^{-1}=C_a^{-1}.
+\tag{94.4}
+$$
+
+可选 $n_\nu\ge2$；若阶有限，则取其阶的正倍数。每个 $C_a^{n_\nu-1}$ 都是全域 CPTP。有限维中 Choi 正锥及 TP 线性约束均闭，故其超算子极限 $C_a^{-1}$ 也是全域 CPTP。这在使用任何逆分类以前，已经给出
+$C_a^{-1}C_a=\mathrm{id}$ 对所有复矩阵成立，特别包括所有密度矩阵，而不只包括已制备轨道。
+
+此时才应用 Nayak–Sen，[*Invertible Quantum Operations and Perfect Encryption of Quantum States*](https://arxiv.org/html/quant-ph/0605041v4)，定理 2.1：其输入为 CPTP
+$\mathcal E:M_p\to M_q$ 及 CPTP 左逆 $\mathcal D$，满足
+$\mathcal D\mathcal E(\rho)=\rho$ 对每个输入密度矩阵成立。本处
+$\mathcal E=C_a$、$\mathcal D=C_a^{-1}$、$p=q=3$，辅助维数
+$\lfloor q/p\rfloor=1$，所以 $C_a$ 为酉共轭。实线性可逆、预测商可逆或一个轨道上的逆均不足以单独调用该结果；(94.4) 补足的正是完整矩阵逆条件。
+
+(93.7) 与 (94.2) 还直接给
+
+$$
+\begin{aligned}
+T(\operatorname{Ad}_{U_w}\rho_0)&=C_w\sigma_0,\\
+C_w^*F&=(T^{-1})^*(U_w^\dagger EU_w).
+\end{aligned}
+\tag{94.5}
+$$
+
+因此对所有有限词，
+
+$$
+\operatorname{Tr}(FB_w\sigma_0)=\operatorname{Tr}(EA_w\rho_0),\qquad
+\operatorname{Tr}(B_w\sigma_0)=2^{-k(w)}.
+\tag{94.6}
+$$
+
+相减给补终端结果也相等。这些未测词等式是固定全域模型和有限秩九数据的数学后果，不是额外假定已观测的无限表。(94.4) 中的极限、归一化证明映射及逆均不授予新的物理控制。∎
+
+## 95. 任意一个混合控制把实际原生闭包扩到 PU(3)
+
+**定理 95.1（无一般位置例外的实际控制闭包）。** 对 (91.1) 的每个允许角度和每个 $[N,P_\xi]\ne0$，实际三个酉共轭的正词闭包恰为 $\operatorname{Ad}(PU(3))$。这包括 $\langle\xi,N\xi\rangle=0$；不要求 $N$ 接近恒等或单态／双态之间的重叠非零。
+
+证明。由 (92.2) 和引理 63.1，去公共相位的原生酉闭群包含
+$K=\{1\oplus u:u\in SU(2)\}$。令 $G\subseteq U(3)$ 为这些代表和 $N$ 生成的闭群，$\mathfrak g$ 为其 Lie 代数；它包含
+$\mathfrak k=0\oplus\mathfrak{su}(2)$。闭矩阵群的 Lie 结构及连通分支由指数生成的事实，按引理 63.1 已列明的 Hall 定理 3.23 使用。单位分支在 $G$ 中正规，因此即使 $N$ 不在单位分支，也有
+
+$$
+N\mathfrak kN^\dagger\subseteq\mathfrak g.
+\tag{95.1}
+$$
+
+以下直接验证其中一定存在交叉块，包含完全送入下双态的边界。写
+
+$$
+N^\dagger\xi=\alpha\xi+b,\qquad b\perp\xi,\qquad
+s=\|b\|^2=1-|\langle\xi,N\xi\rangle|^2\in(0,1].
+\tag{95.2}
+$$
+
+$s>0$ 与混合条件等价。令 $\sigma_1,\sigma_2,\sigma_3$ 为下双态标准 Pauli 矩阵，
+$A_i=0\oplus\mathrm i\sigma_i\in\mathfrak k$，
+$X_i=NA_iN^\dagger\in\mathfrak g$。则
+
+$$
+\begin{aligned}
+\|(I_3-P_\xi)X_i\xi\|^2
+&=\|A_iN^\dagger\xi\|^2
+ -|\xi^\dagger X_i\xi|^2\\
+&=s-|b^\dagger\sigma_i b|^2.
+\end{aligned}
+\tag{95.3}
+$$
+
+若 $b=(b_1,b_2)^{\mathsf T}$，三个实数
+$b^\dagger\sigma_i b$ 为
+$2\Re(\bar b_1b_2)$、$2\Im(\bar b_1b_2)$、
+$|b_1|^2-|b_2|^2$，所以其平方和为
+$(|b_1|^2+|b_2|^2)^2=s^2$。于是
+
+$$
+\sum_{i=1}^3\|(I_3-P_\xi)X_i\xi\|^2
+=3s-s^2>0.
+\tag{95.4}
+$$
+
+故有某个 $X\in\mathfrak g$ 的交叉块非零；当 $N\xi$ 完全在下双态空间时 $s=1$，右端为二，仍严格非零。
+
+$Q=\operatorname{diag}(1,-1,-1)\in K$，$\mathfrak g$ 对其共轭不变。因此
+$(X-QXQ)/2\in\mathfrak g$ 提取出纯交叉块
+
+$$
+K(z)=\begin{pmatrix}0&-z^\dagger\\z&0_{2\times2}\end{pmatrix},
+\qquad 0\ne z\in\mathbb C^2.
+\tag{95.5}
+$$
+
+$K$ 的共轭把 $K(z)$ 送到 $K(uz)$。$SU(2)$ 在该复二维球面上传递，球面的实跨度是整个 $\mathbb C^2$，故 $\mathfrak g$ 包含所有四个实交叉方向
+$K(e_1),K(\mathrm i e_1),K(e_2),K(\mathrm i e_2)$。又
+
+$$
+[K(e_1),K(\mathrm i e_1)]
+=\operatorname{diag}(-2\mathrm i,2\mathrm i,0).
+\tag{95.6}
+$$
+
+此方向不在 $\mathfrak k$ 中。它与 $\mathfrak k$ 的三个方向及四个交叉方向共同给出八个独立无迹反 Hermitian 矩阵，恰为 $\mathfrak{su}(3)$。所以
+$\mathfrak{su}(3)\subseteq\mathfrak g$，从指数生成和 $SU(3)$ 连通性得
+$SU(3)\subseteq G$。所有酉共轭的像都在 $PU(3)$ 中，其像又包含整个 $PU(3)$，故共轭闭包恰为该群；无需主张额外标量 $U(1)$ 相位也被生成。
+
+最后，在紧酉群中每个生成元的逆都是其正幂的极限，正词半群闭包因而等于所生成群的闭包。去掉公共标量相位从未改变任何共轭。故结论适用于实际三个正向映射，不需要安装逆，也不把闭包中的任意酉当成可在有限时间精确调用的控制。∎
+
+## 96. 单态和单效果的两个锥约束及共同表示
+
+**定理 96.1（有限单制备数据的同时酉／共同共轭分类）。** 对每个 (91.1) 的源及每个假设 91.2 的竞争者，四表等式 (93.6) 当且仅当存在一个固定 $R_0\in U(3)$ 和一个共同选择
+$\kappa\in\{\mathrm{id},\text{逐项复共轭}\}$，使
+
+$$
+\begin{gathered}
+\sigma_0=R_0\kappa(\rho_0)R_0^\dagger,\qquad
+F=R_0\kappa(E)R_0^\dagger,\\
+B_j=\tfrac12\operatorname{Ad}_{R_0\kappa(V_j)R_0^\dagger}\quad(j=0,1),
+\qquad
+B_N=\operatorname{Ad}_{R_0\kappa(N)R_0^\dagger}.
+\end{gathered}
+\tag{96.1}
+$$
+
+各分支恒等式作用于全部 $M_3(\mathbb C)$。同一个 $R_0$ 和同一个 $\kappa$ 同时作用于制备、效果及全部标签映射，不允许逐映射独立换基、独立共轭或交换标签。此时所有有限正向历史、两种终端结果及其完整联合质量均相等。$\sigma_0$ 的纯性、$F$ 的投影性及分支的公平／酉性均为结论。
+
+证明。必要性先由定理 93.2、94.1 给一个可逆保迹 $T$、状态／效果恒等式及 (94.5)。到此还没有赋予 $T$ 或 $T^{-1}$ 正性。现分别使用源的一个纯制备和一个纯效果。
+
+由竞争者的 $\sigma_0\succeq0$ 和每个正向 $C_w$ 的 CP 性，
+
+$$
+T(U_w\rho_0U_w^\dagger)=C_w\sigma_0\succeq0.
+\tag{96.2}
+$$
+
+定理 95.1 使左端输入的闭包包含每个秩一投影：$PU(3)$ 在完整纯态射线空间上传递，且 $\rho_0$ 本身秩一。$T$ 有限维连续、正锥闭，故 $T(P)\succeq0$ 对每个秩一投影 $P$ 成立。任意正矩阵是这些投影的非负谱和，所以 $T$ 在整个正锥上为正。这里没有新给任何其他制备；轨道和极限只用于限制一个固定线性映射。
+
+另由竞争效果 $F\succeq0$，(94.5) 独立给
+
+$$
+(T^{-1})^*(U_w^\dagger EU_w)=C_w^*F\succeq0.
+\tag{96.3}
+$$
+
+正向群闭包为全部 $PU(3)$，取逆是紧群的同胚，故
+$\{U_w^\dagger EU_w\}$ 的闭包也包含每个秩一投影。$E$ 的秩一性在此是源前提；竞争 $F$ 无此先验承诺。连续性和谱和给
+$(T^{-1})^*$ 在全部正锥上为正。对任意 $X,Y\succeq0$，
+
+$$
+\operatorname{Tr}(Y T^{-1}X)
+=\operatorname{Tr}(((T^{-1})^*Y)X)\ge0.
+\tag{96.4}
+$$
+
+Hermitian 正锥对迹配对自对偶，故 $T^{-1}X\succeq0$。自对偶性也可直接看出：若某个 Hermitian 矩阵有负本征值，取该本征向量的秩一投影配对即为负。至此 $T$ 和 $T^{-1}$ 都全局正且保迹。
+
+因此 $T$ 是整个 qutrit 密度矩阵凸集的仿射双射，双射地映射极端点，即完整纯态投影集合。它也保持所有 Hermitian 差的迹范数。确实，写谱分解
+$X=X_+-X_-$，正性及保迹性给
+
+$$
+\|TX\|_1
+\le\|TX_+\|_1+\|TX_-\|_1
+=\operatorname{Tr}X_++\operatorname{Tr}X_-=\|X\|_1.
+\tag{96.5}
+$$
+
+对 $T^{-1}$ 应用同一不等式，得到反向不等式，故恒有等号。这是全局迹距离保持，并非只在有限制备对上的数值保持。
+
+对任意秩一投影 $P,Q$，$P-Q$ 的非零本征值为
+$\pm\sqrt{1-\operatorname{Tr}(PQ)}$：在它们的至多二维张成内，迹为零，平方迹为
+$2(1-\operatorname{Tr}(PQ))$；正交补上为零。重合和正交端点也符合该公式。于是 (96.5) 给
+
+$$
+\operatorname{Tr}(T(P)T(Q))=\operatorname{Tr}(PQ)
+\quad\text{对全部纯态对 }P,Q.
+\tag{96.6}
+$$
+
+现在恰满足 Wigner 定理的完整假设：复维数三的全部射线空间上，一个一一且满的映射，保持每一对射线的转移概率。所用明确版本见 Simon–Mukunda–Chaturvedi–Srinivasan，
+[*Two elementary proofs of the Wigner theorem on symmetry in quantum mechanics*](https://arxiv.org/html/0808.0779v2)，§II 式 (8) 及其后的定理陈述。故有一个固定酉 $R_0$，使所有纯态投影同时满足
+
+$$
+T(P)=R_0PR_0^\dagger
+\quad\text{或同时满足}\quad
+T(P)=R_0P^{\mathsf T}R_0^\dagger.
+\tag{96.7}
+$$
+
+纯态投影实张成 $\operatorname{Herm}_3$，所以同一公式延伸到整个 $T$。在 Hermitian 矩阵上转置就是逐项复共轭；其在全部复矩阵上的复线性延伸仍为转置，不是反线性映射 $X\mapsto\bar X$。
+
+(96.7) 的两种映射都保持 Hermitian 迹配对，故 $T^*=T^{-1}$。由
+$T^*F=E$、$T\rho_0=\sigma_0$ 得 $F=T(E)$ 和第一行 (96.1)。将同一个 $T$ 代入
+
+$$
+B_a=TA_aT^{-1}
+\tag{96.8}
+$$
+
+得其余公式；在转置情形，$\mathsf t\operatorname{Ad}_V\mathsf t=\operatorname{Ad}_{\bar V}$，故每个酉代表都使用同一个复共轭选择。Nayak–Sen 已给出的各自酉性在此被提升为全部资料的同一坐标关系。
+
+反之，共同酉变换保持 Born 迹，整体共轭把每个实概率变为自身。将 (96.1) 按时间顺序复合，保留每个 $1/2$ 权重，便得所有词的两种终端概率相等，特别给 (93.6)。每个酉代表的标量相位不可由共轭通道辨认；这是相位代表的自由，不是独立的物理转置通道。定理既未假设也未取得这样一个转置 CP 操作。∎
+
+## 97. 非混合边界上的直接合法单态反模型
+
+**命题 97.1（保留原分支而改变效果效率）。** 保持 (91.1) 的 $d,\theta,\rho_0,E,V_j$，将 $N$ 的条件改为 $[N,P_\xi]=0$。对每个
+
+$$
+c<p<1/2,\qquad
+G_p=\sqrt{p/c}\,P_\xi+
+       \sqrt{(1-p)/(1-c)}\,(I_3-P_\xi)
+\tag{97.1}
+$$
+
+有一个满足假设 91.2 全部合法性条件的单制备竞争者
+
+$$
+\sigma_0^{(p)}=G_p\rho_0G_p,\qquad
+F^{(p)}=G_p^{-1}EG_p^{-1},\qquad
+B_j^{(p)}=A_j,\qquad B_N^{(p)}=\operatorname{Ad}_N.
+\tag{97.2}
+$$
+
+它匹配所有有限历史、两种终端结果及精确质量，但不存在将整个源同时送到它的酉或反酉共同规范。此结论是单态直接构造，不使用定理 82.2 的全族分类。
+
+证明。$G_p$ 正且可逆，与两个实际 $V_j$ 以及此处的 $N$ 都交换。$\rho_0$ 的 $P_\xi$ 人口为 $c$，所以 $\sigma_0^{(p)}$ 正、秩一，且
+
+$$
+\operatorname{Tr}(G_p\rho_0G_p)
+=(p/c)c+\frac{1-p}{1-c}(1-c)=1.
+\tag{97.3}
+$$
+
+$F^{(p)}$ 是正秩一矩阵，其唯一非零本征值为
+$\|G_p^{-1}q\|^2$。由 $q=(\xi+e)/\sqrt2$ 得
+
+$$
+\lambda_p=\frac{c}{2p}+\frac{1-c}{2(1-p)},\qquad
+\lambda_p-1=\frac{(p-c)(p-1/2)}{p(1-p)}<0.
+\tag{97.4}
+$$
+
+因此 $0\preceq F^{(p)}\preceq I_3$，其支撑上的效果效率严格小于一。未改变的两个 $A_j$ 仍是 CP 且其和 TP；$B_N^{(p)}$ 仍是 CPTP。合法性都作用于完整矩阵域，无须把 $G_p$ 本身解释为全域 TP 通道。
+
+对每个含 $N$ 的时间词，由交换性，
+
+$$
+B_w^{(p)}\sigma_0^{(p)}
+=2^{-k(w)}G_pU_w\rho_0U_w^\dagger G_p.
+\tag{97.5}
+$$
+
+全部 $U_w$ 保持 $P_\xi$ 人口 $c$，故 (97.3) 同样给此式的迹恰为 $2^{-k(w)}$。迹循环性消去两个 $G_p^{-1}$：
+
+$$
+\operatorname{Tr}(F^{(p)}B_w^{(p)}\sigma_0^{(p)})
+=2^{-k(w)}\operatorname{Tr}(EU_w\rho_0U_w^\dagger).
+\tag{97.6}
+$$
+
+总质量相同，因而补终端概率也相同，且所有标签和联合权重保留。原 $E$ 的唯一非零本征值为一，$F^{(p)}$ 的为 $\lambda_p<1$；酉或反酉不改变该谱，所以共同规范不可能存在。
+
+例如 $d=2/3$、$c=1/3$、$p=5/12$ 给 $\lambda_p=34/35$。任意固定下双态酉都可作这里的非混合 $N$。这同时显示该反模型没有在 $d=2/3$ 失效。源原生列和其非混合 $N$ 后继仍留在八维 $\mathscr S_c$，故并不满足定理 92.2 的第九列条件。∎
+
+## 98. 有限标量数、时序及全族前提的准确替换
+
+**定理 98.1（单制备辨识的精确有限资源界）。** 对每个指定的允许源和每个指定混合 $N$，存在定义 93.1 的前缀选择，使恰好四张 $9\times9$ 表的 $324$ 个索引标量足以推出定理 96.1。这 $324$ 个位置由 $36$ 个粗粒化质量事件和 $288$ 个选定是事件条目组成；所用时序深度至多十二，每个时序至多使用两次同一个 $N$ 类型，不使用逆、第二种新增控制或可调角度。
+
+证明。每张表有九列、一个迹行和八个实际后缀行。故四张表共
+
+$$
+4\cdot9\cdot9=324,\qquad
+4\cdot9=36\ \text{个质量位置},\qquad
+4\cdot9\cdot8=288\ \text{个是条目}.
+\tag{98.1}
+$$
+
+质量位置按 (93.5) 加总两个终端结果；其中没有对保留标签求条件概率。非迹条目由 (93.4) 的真实联合事件给出。八个原生前缀各长至多七，第九个为 $u_kN$，长至多八；插入块再用一个字母；后缀长至多三。因此最大时序深度为
+
+$$
+8+1+3=12.
+\tag{98.2}
+$$
+
+$N$ 只可能出现于第九前缀末尾和插入字母 $a=N$，后缀全部原生，故至多两次，且都是同一个已给控制。迹行用较短的无后缀时序。定理 93.2–96.1 此后只作固定映射的数学推论，不需要再测轨道极限、逆、其他制备或无限多词。
+
+量词是“对每个指定源和 $N$，存在这些前缀”，因为定理 92.1 的基及定理 92.2 的逃逸下标可依赖源参数。它不是一个对未知 $d,\theta,N$ 都使用同一组前缀的通用设计。每个 $0,1$ 仍选取实际标签事件；$u_kN$ 的 $N$ 安排在固定的第 $|u_k|$ 次原生使用之后，对其他标签历史也执行相同安排。所有其他历史和两个终端结果仍属于完整记录，没有反馈授权。
+
+(98.1) 计数的是带表位置的选定标量。不同位置可以是相同事件、同值概率或重叠时序；一个质量标量又是两个终端事件的和。故这不是 $324$ 个原始是／否结果格、互异概率值、样本、实验次数或总记录数的断言，也不声称这些实数已被有限实验精确取得。此界没有使用全族问题的任何更少原始格归约。∎
+
+**定义 98.2（与全族校准分类的逻辑关系）。** 定理 82.2 的合同包含整个原 $\mathcal K_d$ 上同一个仿射制备映射。定理 96.1 的合同只给一个真实纯 $\rho_0$ 和一个任意竞争密度 $\sigma_0$，没有该映射，亦不假设未知制备与凸组合的对应；同时它明确额外供应一个固定、可重复、混合 $P_\xi$ 的 $N$。
+
+这个替换有两个不同作用：实际单制备的原生轨道先给八维跨度，一次 $N$ 后继给第九列，有限质量／效果／插入数据由此确定全局线性相似；同一个 $N$ 又使真实正词共轭闭包成为 $PU(3)$，让一个纯制备和一个纯效果分别约束正锥的两侧。正性没有从全族仿射制备继承，而是在 (96.2)–(96.4) 中推出。
+
+定理 97.1 在非混合边界直接实现仍存的合法过滤，不借全族分类反向添加已去掉的前提。定理 96.1 也不由既有全族加控制分类的结论代入：它的全矩阵相似、两侧锥约束和共同规范由这里的有限单态合同独立承担。原全族分类在其原域内仍有自己的用途；两者均是额外量子与取得前提下的条件识别。
+
+## 99. 本源定理的供应、量子前提和未决关系
+
+**定义 99.1（数学归属及成熟中间工具的参数域）。** §§91–98 的内容为源特定的 repo-derived 条件综合：实际原纯制备的深度七基、任意混合 $N$ 的深度八第九列、原权重的四张有限表、全域公平／CP 逆、任意混合边界的 $PU(3)$ 闭包，以及只用一个制备和一个效果得到的共同规范。它不主张文献优先权，也不把一般最小实现相似、可逆量子通道或 Wigner 定理列为新的一般结果。
+
+精确供应与使用域为：第一卷定理 35.2、35.4 及本卷 (55.5)、(88.1)–(88.2) 给 (91.7)–(91.10) 的原输入、五维输出、完整源矩映射和任意有限未触动参考；第二卷定理 39.3–39.4 给时间顺序和两个终端的完整联合权重；第二卷定理 40.1、(40.4)、(40.12) 给同一八后缀的加权效果行列式；本卷引理 63.1 给实际原生 $1\oplus SU(2)$，其全角度域包含非例外有理角。这些供应分别只在上述明确域内使用，§§82–90 的全族仿射分类不属于单态主定理的前提。
+
+一般实现背景按定理 93.2 所引 Monras–Winter §4 使用，但四张有限表的非平稳、双终端、外定时序合同由 (93.11)–(93.14) 自身证明。Nayak–Sen 定理 2.1 只在 (94.4) 已有完整 CPTP 逆之后，以 $p=q=3$ 使用。闭矩阵群及指数生成按引理 63.1 所引 Hall 的原假设用于已取闭的紧酉群；(95.3)–(95.6) 承担本源每个混合 $N$ 的具体 Lie 代数扩张。Wigner 的射线双射与所有转移概率假设逐项由 (96.2)–(96.6) 建立，再按所引主文献应用。谱分解、正锥自对偶和有限维闭性只作为这些新应用中的成熟中间步骤。
+
+**定义 99.2（参数边界、取得边界和剩余目标）。** 定理 96.1 的参数域保持 $0<d<1$、$\sin(2\theta)\ne0$ 和 $[N,P_\xi]\ne0$。$d=2/3$ 及完全送入下双态的混合控制均在域内。$d=0,1$ 不在此合同内；$\sin(2\theta)=0$ 时所用效果行列式为零，不能用此四表证明；非混合 $N$ 有定理 97.1 的全词合法反模型。没有用“几乎处处”排除内部特殊值，也没有把被排除边界的分类当成已完成。
+
+所去掉的是实际整个制备族的仿射对应前提；仍承重的是已知复维数三、Born 配对、完整复 CP、固定时间齐次组合、精确数据、所指定真实纯态与真实秩一效果，以及一个已取得的固定混合酉控制。竞争者更大维数、一般正锥、非复载体、时间相关映射、混合真实制备或内部真实效果均不属于这一定理的结论域。结论中的转置是共同表示关系，不是原生物理通道。
+
+原五维／qutrit 桥和任意有限未触动参考等式不增添可复制制备、独立副本、相干环境访问、相位参考、主动反馈或新测量。固定一个实角度的已知值不供应其标定或可调控制；紧群闭包和全矩阵逆的存在不供应其精确有限实现。$324$ 个索引标量的精确等式也没有给有限样本恢复、非零噪声容忍、统一条件数或有限精度辨识保证；接近例外角度、非混合控制或源端点时，精确秩不提供统计资源界。
+
+这仍是条件校准识别，不是量子起源推导，也不是一般锥重建。原擦除菜单的全 $d$ 精确最小最大中心、有限噪声完整记录的记忆问题、控制与概率的实际取得、共同来源和独立复合的物理桥均保留原目标。具体的下一层关系问题是：由原环境就绪、固定随机仪器和终端任务，哪些可取得且可认证的操作条件能够供应这里的一个混合控制及其精确比较接口，并在有限噪声下仍给有效识别？本定理把这些条件留在前提侧，没有从预测表的数学唯一性中推出它们。共同酉坐标、共同共轭方向和不可见的标量相位也仍各受实际参考资源所限。
+
+## 追加锚（本行以下为增补区）
+
+## 100. 同一个单制备源的一般实有序竞争类
+
+**定义 100.1（指定真实源及其有限供应）。** 本节固定定义 91.1 的同一个源。
+记 $Q=\operatorname{Herm}_3(\mathbb C)$，将它视为九维实向量空间，
+以 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 为实非退化配对，
+并记 $\mathrm{PSD}_3=\{X\in Q:X\succeq0\}$。
+在原正交基 $(\xi,e,f)$ 中，源矩阵和一个制备为
+
+$$
+\begin{gathered}
+U=\begin{pmatrix}1&0&0\\0&-1/2&\sqrt3/2\\0&\sqrt3/2&1/2\end{pmatrix},
+\qquad W=\operatorname{diag}(1,1,-1),\qquad q=(\xi+e)/\sqrt2,\\
+0<d<1,\quad c=d/2,\quad \sin(2\theta)\ne0,\quad
+P_\xi=\xi\xi^\dagger,\quad E=qq^\dagger,\\
+\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf,
+\qquad \rho_0=\psi\psi^\dagger,\\
+V_j=U\exp(\mathrm i\theta W)W^j,\qquad
+A_j(X)=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\\
+N\in U(3),\qquad [N,P_\xi]\ne0,\qquad A_N(X)=NXN^\dagger.
+\end{gathered}
+\tag{100.1}
+$$
+
+$\rho_0$ 是所指定的纯迹一矩阵，$E$ 是所指定的秩一投影，
+且 $\operatorname{Tr}(E\rho_0)=(6-5d)/16$，见命题 91.3。
+这些是目标侧的具体性质。$N$ 仍为一个已给定、可重复的确定性控制类型。
+对时间词 $w=a_1\cdots a_n$，最左字母最早作用，置
+
+$$
+\begin{gathered}
+\mathcal W=\{0,1,N\}^{*},\qquad
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\\
+U_w=U_{a_n}\cdots U_{a_1},\qquad
+A_w=A_{a_n}\cdots A_{a_1}=\alpha_w\operatorname{Ad}_{U_w},\\
+\alpha_w=2^{-n_{\rm nat}(w)}>0,\qquad
+n_{\rm nat}(w)=\#\{t:a_t\in\{0,1\}\}.
+\end{gathered}
+\tag{100.2}
+$$
+
+空词取恒等映射和权重一。时间拼接满足 $A_{vw}=A_wA_v$。
+原二元仪器的两个标签仍为随机记录事件；所比较的量为未条件化联合权重。
+目标的两种终端权重分别为 $\operatorname{Tr}(EA_w\rho_0)$ 和
+$\operatorname{Tr}((I_3-E)A_w\rho_0)$，总质量为 $\alpha_w$。
+第二卷定理 39.3–39.4 及本卷 (91.7)–(91.10) 给它们与同一原五维源的对应。
+此处只使用这个 $\rho_0$，没有给出整个 $\mathcal K_d$ 的制备映射。
+
+本源的两个供应按其原量词使用：定理 92.1–92.2 给深度七的八个原生基列及
+一次 $N$ 后的第九列；定理 95.1 给
+
+$$
+\overline{\{\operatorname{Ad}_{U_w}:w\in\mathcal W\}}
+=\operatorname{Ad}(PU(3)).
+\tag{100.3}
+$$
+
+两项对每个允许的 $d,\theta$ 和每一个混合 $N$ 成立。
+引理 63.1 的实际原生 $1\oplus SU(2)$ 闭包是这些供应的同源前提，
+其中非例外有理角、$d=2/3$ 和 $\langle\xi,N\xi\rangle=0$ 均按原结果保留。
+(100.3) 是正向词共轭的数学闭包，不指定额外可执行的逆或连续控制。
+
+**假设 100.2（任意实有序载体上的固定模型）。** 竞争者由
+
+$$
+(V,K,u,s_0,e,B_0,B_1,B_N)
+\tag{100.4}
+$$
+
+组成，其中 $V$ 是实向量空间，$\dim_{\mathbb R}V\le9$；
+$K\subset V$ 是闭凸锥，满足 $K\cap(-K)=\{0\}$ 和 $K-K=V$。
+$u\in V^{*}$ 在 $K\setminus\{0\}$ 上严格为正，归一化基
+
+$$
+\mathcal B_K=\{x\in K:u(x)=1\}
+\tag{100.5}
+$$
+
+紧致。一个固定制备满足 $s_0\in K$、$u(s_0)=1$。
+一个固定二元效果满足 $e\in V^{*}$ 和 $0\le e(x)\le u(x)$ 对所有 $x\in K$。
+三个固定实线性映射在整个 $V$ 上定义，并满足
+
+$$
+B_a(K)\subseteq K\quad(a=0,1,N),\qquad
+u\circ(B_0+B_1)=u,\qquad u\circ B_N=u.
+\tag{100.6}
+$$
+
+(100.6) 的归一化等式意味着 $u(B_0x)+u(B_1x)=u(x)$ 对每个 $x\in V$ 成立。
+每个有限时间词使用同一组三个映射，$B_w=B_{a_n}\cdots B_{a_1}$。
+竞争权重为 $e(B_ws_0)$、$(u-e)(B_ws_0)$，质量为 $u(B_ws_0)$。
+
+$V$ 上没有预置复 Hilbert 空间、Born 配对、CP、纯性、酉性、
+自对偶、全部数学效果可取得、逆操作或张量结构。
+全域固定实线性正映射、维数上限、合法性与精确比较数据是保留的条件。
+此类与假设 91.2 的区别在竞争者侧；指定真实目标仍是 (100.1)。
+
+## 101. 原来的四块多输出有限数据
+
+**定义 101.1（列、行及同一事件表）。** 按定理 92.1 任取
+$p_1,\ldots,p_8\in\{0,1\}^{*}$，各长至多七，$p_1=\varnothing$，
+使 $r_i=A_{p_i}\rho_0$ 为下列八维空间的基：
+
+$$
+\mathscr S_c=\{X\in Q:\operatorname{Tr}(P_\xi X)=c\operatorname{Tr}X\}.
+\tag{101.1}
+$$
+
+按定理 92.2 选择任意一个使 $A_Nr_k\notin\mathscr S_c$ 的 $k$，
+置 $p_9=p_kN$、$r_9=A_Nr_k$。
+于是 $r_1,\ldots,r_9$ 为整个 $Q$ 的基，$|p_9|\le8$。
+这些选择可依赖指定的真实源和 $N$。
+固定第二卷定理 40.1 的八个实际原生后缀
+
+$$
+(h_1,\ldots,h_8)=(\varnothing,0,1,00,10,000,010,100).
+\tag{101.2}
+$$
+
+定义九个目标读出及九个竞争读出
+
+$$
+\begin{aligned}
+\ell_0(X)&=\operatorname{Tr}X,&m_0(x)&=u(x),\\
+\ell_m(X)&=\operatorname{Tr}(EA_{h_m}X),&
+m_m(x)&=e(B_{h_m}x)\quad(1\le m\le8),\\
+x_i&=B_{p_i}s_0&& (1\le i\le9).
+\end{aligned}
+\tag{101.3}
+$$
+
+$h_1=\varnothing$ 给 $\ell_1(X)=\operatorname{Tr}(EX)$、$m_1=e$。
+第零行是质量，与八个是读出共同构成多输出系统；
+它不是第九个是后缀。目标的四个实矩阵为
+
+$$
+H_{mi}=\ell_m(r_i),\qquad
+H^a_{mi}=\ell_m(A_ar_i),\quad a=0,1,N,
+\quad 0\le m\le8,\quad1\le i\le9.
+\tag{101.4}
+$$
+
+假设的精确比较只有同样四块：
+
+$$
+m_m(x_i)=H_{mi},\qquad m_m(B_ax_i)=H^a_{mi}
+\quad\text{对所有上述 }m,i,a.
+\tag{101.5}
+$$
+
+对 $m\ge1$，时间顺序分别是 $p_i h_m$ 和 $p_i a h_m$，例如
+
+$$
+H^a_{mi}=\operatorname{Tr}(EA_{h_m}A_aA_{p_i}\rho_0),\qquad
+m_m(B_ax_i)=e(B_{h_m}B_aB_{p_i}s_0).
+\tag{101.6}
+$$
+
+质量行分别为
+
+$$
+\begin{aligned}
+H_{0i}&=\operatorname{Tr}(EA_{p_i}\rho_0)
+       +\operatorname{Tr}((I_3-E)A_{p_i}\rho_0),\\
+H^a_{0i}&=\operatorname{Tr}(EA_aA_{p_i}\rho_0)
+       +\operatorname{Tr}((I_3-E)A_aA_{p_i}\rho_0),\\
+m_0(x_i)&=e(x_i)+(u-e)(x_i),\\
+m_0(B_ax_i)&=e(B_ax_i)+(u-e)(B_ax_i).
+\end{aligned}
+\tag{101.7}
+$$
+
+所以质量来自同一空后缀的两个终端结果；没有把其一省略。
+$N$ 在时序中是替代控制，$0,1$ 是一次原生仪器的互斥结果。
+对选定标签词取联合事件，不把 $0$ 或 $1$ 改成可强迫发生的门。
+对同一预定时序中的其他随机标签历史，控制位置仍相同。
+
+第二卷 (40.4) 与本卷 (93.8)–(93.10) 给九个 $\ell_m$ 独立。
+具体地，$Z_h=2^{-|h|}U_h^\dagger EU_h$；按原坐标，
+以 $I_3,Z_{h_1},\ldots,Z_{h_8}$ 为列的矩阵 $\mathcal E$ 满足
+
+$$
+\det\mathcal E=\frac{6561}{2^{36}}\sin^7(2\theta)\ne0.
+\tag{101.8}
+$$
+
+真实迹配对的坐标度量为
+$J_{\rm tr}=\operatorname{diag}(1,1,1,2,2,2,2,2,2)$，
+故泛函矩阵为 $\mathcal E^{\mathsf T}J_{\rm tr}$，也可逆。
+这个供应保留了后缀的全部 $2^{-|h|}$ 权重。
+它与九个 $r_i$ 的独立性都是指定目标的事实，不是竞争者的先验承诺。
+
+## 102. 有限单源数据强制完整有序坐标的应用定理
+
+**定理 102.1（原四表在任意实九维上限类中的完整锥识别）。**
+对每个 (100.1) 的 $d,\theta$、每一个混合 $N$，
+以及定义 101.1 的每一种合法前缀选择，
+任意满足假设 100.2 的竞争者满足 (101.5)，当且仅当它是目标的一个
+共同的实线性有序坐标副本。具体地，必要性方向有 $\dim_{\mathbb R}V=9$，
+存在一个实线性双射 $S:V\to Q$，使
+
+$$
+\begin{gathered}
+S(K)=\mathrm{PSD}_3,\qquad S(s_0)=\rho_0,\\
+u(x)=\operatorname{Tr}(Sx),\qquad e(x)=\operatorname{Tr}(ESx)
+\quad(x\in V),\\
+S(B_ax)=A_a(Sx)\quad(a=0,1,N,\ x\in V).
+\end{gathered}
+\tag{102.1}
+$$
+
+$S$ 与 $S^{-1}$ 对各自完整锥均为正，且是同一个归一化保持的有序同构。
+它同时运输唯一给定制备、唯一给定二元效果、归一化及全部三个标签映射；
+映射等式作用于每个 $x\in V$，不只作用于已到达向量或归一化切片。
+
+这样的共同标号运输在固定竞争模型上唯一。
+完整数学对偶锥还满足
+
+$$
+\begin{gathered}
+K^{*}=S^{*}(\mathrm{PSD}_3),\qquad
+(S^{*}Y)(x)=\operatorname{Tr}(YSx),\\
+\forall f\in V^{*},\quad f\in K^{*}
+\ \Longleftrightarrow\ 
+\exists!Y\in\mathrm{PSD}_3\ 
+\forall x\in V,\ f(x)=\operatorname{Tr}(YSx).
+\end{gathered}
+\tag{102.2}
+$$
+
+同一 $S$ 进一步给每个有限 $w\in\mathcal W$ 的未测权重
+
+$$
+\begin{aligned}
+u(B_ws_0)&=\alpha_w,\\
+e(B_ws_0)&=\operatorname{Tr}(EA_w\rho_0),\\
+(u-e)(B_ws_0)&=\alpha_w-\operatorname{Tr}(EA_w\rho_0).
+\end{aligned}
+\tag{102.3}
+$$
+
+这仅从四表和固定全域映射推出，
+没有再假设所有词已被观测。
+反向构造对每个九维实载体和每个到 $Q$ 的实线性双射成立，见 §107。
+
+定理所要求的原选定量恰为 $324$ 个索引标量，
+其中 $36$ 个质量、$288$ 个是条目，深度至多十二、每个时序至多两次 $N$，
+只用一种给定新增控制类型。索引标量不等于样本、原始结果格或互异时序。
+量词是指定源的前缀选择，不是未知源的统一可取得方案。
+这些精确条件以及更大维数与非闭锥的边界分别在 §§108–110 保留。
+
+证明由 §§103–107 给出。其新增结论是对 (100.1) 的原单源、原四表，
+把竞争类从假设 91.2 扩到假设 100.2 后，仍识别整个载体与整个有序锥。
+定理 92.1–92.2、95.1、第二卷定理 40.1 为目标侧供应；
+一般线性实现与不变锥方法只作为这个源特定结论的中间步骤。
+
+## 103. 定理 102.1 的秩九饱和与一个全域运输
+
+证明（有限载体部分）。用 $\delta_i$ 表示 $\mathbb R^9$ 的列标准基，定义
+
+$$
+\begin{aligned}
+R:\mathbb R^9\to Q,&\quad R\delta_i=r_i,\\
+L:Q\to\mathbb R^9,&\quad (LX)_m=\ell_m(X),\\
+P:\mathbb R^9\to V,&\quad P\delta_i=x_i,\\
+M:V\to\mathbb R^9,&\quad (Mx)_m=m_m(x).
+\end{aligned}
+\tag{103.1}
+$$
+
+这里 $P$ 是列映射，不是原终端投影；$S$ 专指即将构造的 $V\to Q$。
+目标的基列和泛函基使 $R,L$ 均为同构。
+(101.4)–(101.6) 的实际因子分解为
+
+$$
+\begin{gathered}
+H=LR=MP,\\
+H^0=LA_0R=MB_0P,\qquad
+H^1=LA_1R=MB_1P,\\
+H^N=LA_NR=MB_NP.
+\end{gathered}
+\tag{103.2}
+$$
+
+四块共同使用同一个 $M$ 和同一个 $P$。
+首先 $H$ 可逆、秩为九，而
+
+$$
+9=\operatorname{rank}(MP)\le\dim_{\mathbb R}V\le9.
+\tag{103.3}
+$$
+
+故 $\dim_{\mathbb R}V=9$。
+$\operatorname{rank}P\ge9$ 与 $\operatorname{rank}M\ge9$，
+两者源域和目标域均九维，所以 $P$ 和 $M$ 分别都是同构。
+这同时证明已到达的九个 $x_i$ 张成全部 $V$，及九个读出分离全部 $V$。
+没有在合同中预置可达性、可观察性或竞争者的任何 Hilbert 结构。
+
+定义唯一候选运输
+
+$$
+S=RP^{-1}:V\longrightarrow Q.
+\tag{103.4}
+$$
+
+由 $MP=LR$ 得
+
+$$
+M=LRP^{-1}=LS.
+\tag{103.5}
+$$
+
+对于每个 $a=0,1,N$，插入块给
+
+$$
+LSB_aP=MB_aP=LA_aR=LA_aSP.
+\tag{103.6}
+$$
+
+消去左边可逆 $L$ 和右边可逆 $P$，即有
+
+$$
+SB_a=A_aS\quad\text{在整个 }V\text{ 上成立}.
+\tag{103.7}
+$$
+
+$M=LS$ 的第零行给 $u=\operatorname{Tr}\circ S$；
+第一是行因 $h_1=\varnothing$ 给 $e(x)=\operatorname{Tr}(ESx)$ 对所有 $x$。
+$p_1=\varnothing$ 给 $x_1=s_0$、$r_1=\rho_0$，所以 $Ss_0=\rho_0$。
+至此 (102.1) 除锥等式外的每个恒等式均由同一个 $S$ 给出。
+此时尚未证明 $S(K)=\mathrm{PSD}_3$，也未假设 $S$ 或其逆正。
+
+§93 的相似方法在已知复三维竞争者上有其原应用；
+这里 (103.3) 把同样的有限因子分解用于任意实 $V$，
+通过维数上限取得完整载体的两个同构。
+它不调用 §94 的完整 CP 逆或 §96 的 Wigner 论证。
+
+## 104. 定理 102.1 的时间列坐标与所有未测词
+
+证明（固定映射及实现对应）。(103.2) 还直接给每个字母的列坐标
+
+$$
+G_a=H^{-1}H^a
+=P^{-1}B_aP=R^{-1}A_aR,\qquad a=0,1,N.
+\tag{104.1}
+$$
+
+例如 $(MP)^{-1}(MB_aP)=P^{-1}B_aP$，这里必须使用 $M$ 的同构性。
+初始列为 $P^{-1}s_0=\delta_1$，因为 $p_1=\varnothing$。
+若 $w=a_1\cdots a_n$ 按实际时间排列，令
+
+$$
+G_w=G_{a_n}\cdots G_{a_1},\qquad G_\varnothing=I_9.
+\tag{104.2}
+$$
+
+于是所有词的质量、是权重和否权重分别为
+
+$$
+(HG_w\delta_1)_0,\qquad
+(HG_w\delta_1)_1,\qquad
+(HG_w\delta_1)_0-(HG_w\delta_1)_1.
+\tag{104.3}
+$$
+
+质量行和第一是行的含义由 $m_0=u$、$h_1=\varnothing$ 保证。
+这不是九个是后缀的标量 Hankel 块。
+
+所用一般实现所有者为
+[WordHankelRealization](../../../D5/S3/Observer/Hankel/WordHankelRealization.lean)。
+其中 `residualSpace` 是一个标量响应 $f$ 的全部有限词残差的跨度；
+`finite_hankel_realization` 给有限全残差维数与矩阵实现及其最小维数关系。
+`recoveredRealization`、`full_rank_block_recovery` 的实际前提包含
+$r>0$、整个标量残差空间的有限维性，以及
+$\operatorname{finrank}(\operatorname{residualSpace}f)=r$，
+然后才对可逆的 $r\times r$ 前缀／后缀块给全词恢复。
+单个有限块可逆本身不替代这个全残差秩前提。
+
+该所有者使用前缀行、后缀列和行状态的左到右矩阵乘积。
+与本处列状态约定的代数转换为
+
+$$
+H_{\rm row}=H^{\mathsf T},\quad
+H^a_{\rm row}=(H^a)^{\mathsf T},\quad
+H^a_{\rm row}H_{\rm row}^{-1}=G_a^{\mathsf T},\quad
+G_{a_1}^{\mathsf T}\cdots G_{a_n}^{\mathsf T}=G_w^{\mathsf T}.
+\tag{104.4}
+$$
+
+转置说明乘积方向，并不把本题的质量加八是多输出块变成该标量定理的直接实例。
+这里所需的推断由 (103.2)–(104.1) 在有限载体上直接承担。
+若定义多输出残差映射
+
+$$
+J:V\longrightarrow\mathbb R^{\mathcal W\times\{0,\ldots,8\}},
+\qquad J(x)(w,m)=m_m(B_wx),
+\tag{104.5}
+$$
+
+则它因子通过九维 $V$；空词评价就是同构 $M$，故 $J$ 单射。
+又 $x_i$ 张成 $V$，故全部前缀的多输出残差跨度恰为九维。
+这个全多输出秩是有限载体和四表的后果，不是新观察前提。
+
+由 (103.7) 对词长归纳，$SB_w=A_wS$ 对所有 $w$、所有 $x\in V$ 成立。
+配合 $Ss_0=\rho_0$、$u=\operatorname{Tr}\circ S$ 与效果恒等式，
+即得 (102.3)，包括两个终端及完整质量。
+还对每个 $x\in V$ 有
+
+$$
+u(B_jx)=\tfrac12u(x)\quad(j=0,1),\qquad u(B_Nx)=u(x).
+\tag{104.6}
+$$
+
+所以 $2B_0,2B_1,B_N$ 在数学上为保持 $u$ 的正映射。
+这些等式不是只在 $s_0$ 的轨道上成立。
+因子二的代数缩放没有改变原记录的权重，也没有供给可选择的随机分支。
+所有未测词的结论依赖固定全域映射复用；时间相关或非线性替代模型不在此合同中。
+
+## 105. 定理 102.1 的完整运输锥及两侧约束
+
+证明（整个锥的夹逼）。令
+
+$$
+C=S(K)\subset Q,\qquad
+C^{*}=\{Y\in Q:\operatorname{Tr}(YX)\ge0\ \text{对所有 }X\in C\}.
+\tag{105.1}
+$$
+
+实线性双射在有限维中是同胚，故 $C$ 是闭、尖、生成的凸锥。
+$\operatorname{Tr}$ 在其非零元素上严格为正，迹一基紧致，
+$\rho_0\in C$，且 $0\le\operatorname{Tr}(EX)\le\operatorname{Tr}X$ 对所有 $X\in C$。
+特别地 $E\in C^{*}$，并由 (103.7) 得
+
+$$
+A_a(C)\subseteq C\quad(a=0,1,N),\qquad
+A_w(C)\subseteq C\quad(w\in\mathcal W).
+\tag{105.2}
+$$
+
+定义本源的状态内锥与效果外约束
+
+$$
+\begin{aligned}
+L_{\rm in}&=\overline{\operatorname{cone}\{A_w\rho_0:w\in\mathcal W\}},\\
+O_{\rm out}&=\{X\in Q:\operatorname{Tr}(EA_wX)\ge0
+                       \ \text{对所有 }w\in\mathcal W\}.
+\end{aligned}
+\tag{105.3}
+$$
+
+$\operatorname{cone}$ 表示有限非负线性组合，横线表示通常有限维拓扑闭包。
+由 $\rho_0\in C$、(105.2) 及 $C$ 闭，得到 $L_{\rm in}\subseteq C$。
+对 $X\in C$，每个 $A_wX\in C$，再用 $E\in C^{*}$，得到 $C\subseteq O_{\rm out}$。
+所以这些是完整 $Q$ 上的约束
+
+$$
+L_{\rm in}\subseteq C\subseteq O_{\rm out}.
+\tag{105.4}
+$$
+
+它们既非仅在原生八维超平面，也非仅在某个归一化轨道上。
+
+更明确地，定义效果的闭有限词轨道锥
+
+$$
+Z_w=\alpha_wU_w^\dagger EU_w,\qquad
+D=\overline{\operatorname{cone}\{Z_w:w\in\mathcal W\}}.
+\tag{105.5}
+$$
+
+$\operatorname{Tr}(Z_wX)=\operatorname{Tr}(EA_wX)$，
+故每个 $Z_w\in C^{*}$。对偶锥闭，因此正确方向是
+
+$$
+D\subseteq C^{*},\qquad C=C^{**}\subseteq D^{*},\qquad
+O_{\rm out}=D^{*}.
+\tag{105.6}
+$$
+
+对偶反转包含关系；不能将第一式倒置。
+外锥的等式成立，因为非负配对在有限和及闭包下保持。
+$D$ 明确包含闭包，不是原可数词的未经闭包的锥包。
+
+## 106. 定理 102.1 的实际纯轨道使两侧相合
+
+证明（目标轨道部分）。对每个有限词单独使用 $\alpha_w>0$，先得到
+
+$$
+\operatorname{cone}\{A_w\rho_0:w\in\mathcal W\}
+=\operatorname{cone}\{U_w\rho_0U_w^\dagger:w\in\mathcal W\}.
+\tag{106.1}
+$$
+
+这是逐射线的正倍数消去：
+$U_w\rho_0U_w^\dagger=\alpha_w^{-1}A_w\rho_0$。
+必须在取轨道极限以前消掉每个词自己的权重，
+因为词长增加时 $\alpha_w$ 可以趋于零。
+(106.1) 只在锥中乘正实数，没有对观察记录作条件化。
+
+定理 95.1 的 (100.3) 与实际纯 $\rho_0$ 给
+
+$$
+\overline{\{U_w\rho_0U_w^\dagger:w\in\mathcal W\}}
+=\{vv^\dagger:v\in\mathbb C^3,\ \|v\|=1\}.
+\tag{106.2}
+$$
+
+确实，给任意单位 $v$，可取一个酉将 $\psi$ 送到 $v$，
+再取正向词的共轭趋于该酉共轭；轨道作用连续。
+故每个复秩一投影都属于 $L_{\rm in}$。
+每个 PSD 矩阵由谱分解是至多三个这样的投影的非负线性组合；
+反之，所有 $A_w\rho_0$ 都为 PSD，而 PSD 锥闭。
+作为本源夹逼中的中间步骤，得到
+
+$$
+L_{\rm in}=\mathrm{PSD}_3\subseteq C.
+\tag{106.3}
+$$
+
+效果一侧也须先消去权重。由 (105.5)，
+
+$$
+U_w^\dagger EU_w=\alpha_w^{-1}Z_w\in D\subseteq C^{*},
+\qquad
+D=\overline{\operatorname{cone}\{U_w^\dagger EU_w:w\in\mathcal W\}}.
+\tag{106.4}
+$$
+
+然后才取 $w$ 的序列极限。
+$E$ 是本源的秩一迹一投影，且 $g\mapsto g^\dagger Eg$ 在 $PU(3)$ 上连续，
+其像为全部复秩一投影。由 (100.3)，每个这样的投影都是 (106.4) 的极限。
+因此谱分解与闭性同样给
+
+$$
+D=\mathrm{PSD}_3.
+\tag{106.5}
+$$
+
+此论证只使用正向词的数学对偶作用；写 $U_w^\dagger$ 不意味着已取得逆控制。
+未经闭包的可数有限词锥不必等于 PSD 锥，不能从 (106.5) 删去横线。
+
+也可直接检验外约束的充分强度。若 $X\in O_{\rm out}$，则对每个有限词
+
+$$
+0\le\alpha_w^{-1}\operatorname{Tr}(EA_wX)
+=\operatorname{Tr}(U_w^\dagger EU_wX).
+\tag{106.6}
+$$
+
+先除正权重，再由 (100.3) 与连续性，得到
+$\operatorname{Tr}(vv^\dagger X)=v^\dagger Xv\ge0$ 对每个复单位向量 $v$ 成立。
+这正是 Hermitian 矩阵 $X\succeq0$ 的判据。
+若有负本征值，选对应的复单位本征向量立即矛盾。
+反之 PSD $X$ 与所有 PSD $Z_w$ 的配对非负。
+所以
+
+$$
+O_{\rm out}=\mathrm{PSD}_3.
+\tag{106.7}
+$$
+
+这里只测实单位向量不足以代替全部复向量。
+结合 (105.4)、(106.3)、(106.7) 得
+
+$$
+\mathrm{PSD}_3=L_{\rm in}\subseteq S(K)
+\subseteq O_{\rm out}=\mathrm{PSD}_3.
+\tag{106.8}
+$$
+
+故 $S(K)=\mathrm{PSD}_3$，同一个 $S$ 与其逆都为正。
+由 §103 已有的归一化、制备、效果及三个全域映射恒等式，
+这正给 (102.1) 的完整有序同构。
+整个推断对每个允许角度、每个 $d$ 和每一个混合 $N$ 成立，
+没有一般位置条件或对 $N\xi$ 重叠的额外限制。
+
+## 107. 定理 102.1 的全对偶、标号唯一性与实际坐标副本
+
+证明（对偶及反向部分）。记完整数学对偶锥为
+$K^{*}=\{f\in V^{*}:f(x)\ge0\ \text{对所有 }x\in K\}$。
+先取任意 $f\in V^{*}$。
+实迹配对非退化，故 $X\mapsto f(S^{-1}X)$ 唯一表示为 $\operatorname{Tr}(YX)$，
+其中 $Y\in Q$ 唯一。于是
+
+$$
+\begin{aligned}
+f\in K^{*}
+&\Longleftrightarrow \operatorname{Tr}(YX)\ge0
+                       \quad\text{对所有 }X\in\mathrm{PSD}_3\\
+&\Longleftrightarrow Y\in\mathrm{PSD}_3.
+\end{aligned}
+\tag{107.1}
+$$
+
+第二个等价仍可通过全部秩一投影判定，反向由 PSD 的谱和成立。
+因而 $K^{*}=S^{*}(\mathrm{PSD}_3)$，并得到 (102.2) 的存在唯一性及其全域量词。
+这在 $V^{*}$ 中是拉回公式；没有在 $V$ 上偷偷选内积并宣称 $K=K^{*}$。
+它识别完整数学对偶，不宣称其中每个泛函或每个 $0\le f\le u$ 都可作为物理效果取得。
+实际用到的是固定 $e$、其正向词拉回和两个终端结果的质量恒等式。
+
+再设 $T:V\to Q$ 为另一个实线性双射，满足同一制备和三个标号映射的恒等式。
+对每个前缀都有
+
+$$
+Tx_i=TB_{p_i}s_0=A_{p_i}Ts_0=A_{p_i}\rho_0=r_i=Sx_i.
+\tag{107.2}
+$$
+
+$x_i$ 是整个 $V$ 的基，所以 $T=S$。
+这甚至只需要制备和三个全域交织恒等式，故亦给完整 (102.1) 下的唯一性。
+固定全部标签是必要的；锥本身有许多自同构，
+唯一性不指未标号锥有一个特权坐标，也不允许各个映射分别选规范。
+
+反之，对任意九维实 $V$ 和任意实线性双射 $T:V\to Q$，定义
+
+$$
+\begin{gathered}
+K=T^{-1}(\mathrm{PSD}_3),\qquad s_0=T^{-1}\rho_0,\qquad
+u=\operatorname{Tr}\circ T,\\
+e(x)=\operatorname{Tr}(ETx),\qquad
+B_a=T^{-1}A_aT\quad(a=0,1,N).
+\end{gathered}
+\tag{107.3}
+$$
+
+PSD 锥闭、尖且生成，故 $K$ 也如此。
+迹在非零 PSD 矩阵上严格为正；密度矩阵基紧致，
+其经 $T^{-1}$ 的像就是 $K$ 的紧归一化基。
+$0\preceq E\preceq I_3$ 给 $0\le e\le u$，且 $s_0\in K$、$u(s_0)=1$。
+三个 $A_a$ 保持 PSD 锥，故三个 $B_a$ 都为 $K$ 正。
+目标迹恒等式给
+
+$$
+u\circ(B_0+B_1)=u,\qquad u\circ B_N=u.
+\tag{107.4}
+$$
+
+由时间顺序逐词复合得 $B_ws_0=T^{-1}A_w\rho_0$。
+全部原索引条目、两种终端权重及所有词质量因此一致，特别满足 (101.5)。
+这是真实目标的坐标副本构造，不要求 $V$ 上预置 CP 定义。
+必要性和充分性均已证明。∎
+
+## 108. 同一有序重建应用的精确资源与量词
+
+**命题 108.1（不增加观察格的资源对应）。** 定理 102.1 使用的比较量仍严格为
+定义 93.1、101.1 的四张 $9\times9$ 表，其索引计数为
+
+$$
+324=4\cdot9\cdot9=36+288,
+\qquad36=4\cdot9,\qquad288=4\cdot8\cdot9.
+\tag{108.1}
+$$
+
+其深度上界为十二，单个时序的 $N$ 使用数至多二，新增控制类型恰为已给定的一个 $N$。
+
+证明。每块的第零行有九个质量，其余八行各有九个是条目。
+(101.7) 明确用两个终端结果加总质量，所以质量数不是另一组是概率。
+八个原生前缀长至多七，第九个长至多八且含一个 $N$；
+插入字母增加至多一步和至多一个 $N$；后缀长至多三且没有 $N$。
+因此最长选定时序至多 $8+1+3=12$，其中至多两次同一 $N$。
+迹行使用空后缀的较短时序。
+
+索引位置允许重叠、同值和重复事件，故 (108.1) 不计互异概率、互异时序、
+原始结果格、样本数或实验次数。
+每个原生标签的 $1/2$ 权重保持不动；含控制词仍为 $2^{-n_{\rm nat}(w)}$。
+证明中对锥生成元除正因子与坐标恢复均不把这些概率改成条件概率。
+
+前缀的量词为：对每个指定源和每个指定混合 $N$，
+任取满足定理 92.1–92.2 的基及逃逸列；对所有匹配其四表的竞争者有结论。
+它没有提供一个未知源、未知参数下统一可取得的前缀选择程序。
+§§104–107 的所有词、全部纯投影和闭包仅限制已经固定的全域模型，
+不增加一个观察格或一个控制类型，也不假设一张无限实测表。∎
+
+## 109. 原目标的维数与闭基条件的两个边界应用
+
+**命题 109.1（原源的十维不可达扩展）。** 对每个 (100.1) 的目标，
+包括每个允许角度和每一个混合 $N$，置
+
+$$
+\begin{gathered}
+V_{10}=Q\oplus\mathbb R,\quad K_{10}=\mathrm{PSD}_3\times\mathbb R_+,\\
+u_{10}(X,t)=\operatorname{Tr}X+t,\quad
+s_{10}=(\rho_0,0),\quad e_{10}(X,t)=\operatorname{Tr}(EX),\\
+B_j^{10}(X,t)=(A_jX,t/2)\quad(j=0,1),\qquad
+B_N^{10}(X,t)=(A_NX,t).
+\end{gathered}
+\tag{109.1}
+$$
+
+该模型保留假设 100.2 的所有有序合法性和全部原词概率，
+但实维数为十，故在原维数上限之外，不能与九维 $Q$ 全载体同构。
+
+证明。乘积锥闭、尖且生成。$u_{10}$ 在其非零元素上严格为正；
+迹一基由 $X\succeq0$、$t\ge0$、$\operatorname{Tr}X+t=1$ 给出，闭且有界，故紧。
+$0\le e_{10}\le u_{10}$，且每个固定映射为正。
+两个原生分支的第二坐标之和为 $t$，第一坐标总迹为 $\operatorname{Tr}X$，
+故 $u_{10}(B_0^{10}+B_1^{10})=u_{10}$；$B_N^{10}$ 也保持 $u_{10}$。
+对每个有限词直接归纳得
+
+$$
+B_w^{10}s_{10}=(A_w\rho_0,0).
+\tag{109.2}
+$$
+
+所以全部词的质量、是／否权重及全部 $324$ 个索引格与原目标相同。
+新增方向永不到达；不能由秩九的数据识别它。
+这是同一个原目标的维数边界，未改变定理 102.1 的上限，
+也不是上限内的反例。∎
+
+**命题 109.2（同时去掉闭性与紧基的原正向轨道模型）。**
+对每个同样的目标，若同时不要求锥闭及归一化基紧致，
+保持 $V=Q$、原 $\rho_0,E,A_0,A_1,A_N$、归一化 $u=\operatorname{Tr}$，置
+
+$$
+K_0=\operatorname{cone}\{U_w\rho_0U_w^\dagger:w\in\mathcal W\}.
+\tag{109.3}
+$$
+
+这个由可数有限词射线生成的未闭锥为尖生成凸锥，严格归一化、效果和固定映射均合法，
+全部原有限词权重一致，但 $K_0\ne\mathrm{PSD}_3$、$\overline{K_0}=\mathrm{PSD}_3$，
+其迹一基不紧致。
+
+证明。$K_0\subseteq\mathrm{PSD}_3$ 给尖性和迹严格正。
+九个独立 $r_i$ 只是其轨道射线的正倍数，故 $K_0-K_0=Q$。
+追加任意字母仍是一个正向词，$A_a$ 将每条生成射线送到正倍的另一条射线，
+所以全部三个映射保持 $K_0$。$0\le E\le I_3$ 给效果合法，
+原迹恒等式给原生分支和与 $N$ 的归一化条件。
+所有制备及映射均与目标相同，故每个有限词的两个终端权重和质量相同。
+由 (106.1)–(106.3) 得 $\overline{K_0}=\mathrm{PSD}_3$。
+
+有限词可数，而复秩一投影射线不可数。
+有限正和不能制造一个缺失的秩一射线：若
+$X=\sum_{j=1}^k t_jv_jv_j^\dagger$ 为秩一，$t_j>0$，
+对每个与其值域正交的 $z$ 都有
+
+$$
+0=z^\dagger Xz=\sum_{j=1}^k t_j|v_j^\dagger z|^2.
+\tag{109.4}
+$$
+
+每项非负，故所有 $v_j$ 都在 $X$ 的同一维值域中。
+因此 $K_0$ 的秩一射线只可能是已有词射线；某些纯射线缺失。
+(106.2) 却给归一化词投影趋于这些缺失投影，
+所以 $K_0$ 不闭，迹一基也不闭，因而不紧。
+
+在命题 109.2 的应用中，“同时”不能删掉。
+事实上，若保留有限维、$u$ 在 $K\setminus\{0\}$ 上严格正及紧的归一化基，
+则闭性已经自动成立。作为该边界的中间论证，取任意 $x_n\in K$、$x_n\to x$。
+置 $t_n=u(x_n)\ge0$，则 $t_n\to u(x)\ge0$。非零项写成 $x_n=t_nb_n$，$b_n\in\mathcal B_K$。
+若 $u(x)>0$，则 $b_n=x_n/t_n\to x/u(x)$，紧基包含此极限，故 $x\in K$。
+若 $u(x)=0$，紧基有界，$t_n\to0$ 迫使 $x=0\in K$。
+零项或其子序列也给相同结论。因此锥闭。
+仅从假设 100.2 中删去“闭”而保留紧基及严格归一化，
+不会允许 (109.3)；这个模型只说明同时放松两项的边界。∎
+
+## 110. 不变锥文献对应与本源结论的精确范围
+
+**定义 110.1（代数供应及时间约定的对应）。**
+§105 的夹逼使用不变锥的成熟代数方法，主文献为 Fanizza–Lumbreras–Winter，
+[*Quantum theory in finite dimension cannot explain every general process with finite memory*](https://arxiv.org/html/2209.11225v2)，
+§2.1、命题 2–3、式 (5)–(7)。
+其式 (6) 的 $\mathcal C_{\min}$ 是原有限词锥包，并未加闭包；
+命题 2 后的闭包说明容许在闭不变锥中取其闭包。
+其式 (7) 对效果锥取对偶，闭包不改变该对偶。
+
+本源的具体代数对应为
+
+$$
+\mathcal V_{\rm FLW}=Q,\qquad \tau=\rho_0,\qquad
+\pi(X)=\operatorname{Tr}(EX),\qquad
+D^{(w)}=A_{\operatorname{rev}(w)},\qquad \mathcal C=C=S(K).
+\tag{110.1}
+$$
+
+因为 $A_{vw}=A_wA_v$，反转词使
+$D^{(vw)}=D^{(v)}D^{(w)}$，符合该文式 (2) 的半群约定。
+反转遍历全部词，故不改变式 (6)–(7) 的轨道集合。
+这只是文献词约定的转换，实际四表仍按 $p_i a h_m$ 的原时间顺序。
+
+$\tau\in C$、$D^{(w)}C\subseteq C$、$\pi\in C^{*}$
+逐项由 §105 的完整运输得到。
+因此其代数内外包含恰对应 $L_{\rm in}\subseteq C\subseteq O_{\rm out}$；
+按迹配对识别其协向量并取闭包，式 (7) 中的生成锥得到 (105.5) 的 $D$；
+取此闭包不改变外锥，且有 $D\subseteq C^{*}$ 及反向的 $C\subseteq D^{*}$。
+该文可将其载体锥解释为效果、对偶解释为状态；
+这里采用这些代数条件作用于实际运输后的状态锥，不借入该物理解读。
+
+**命题 110.2（本源四表不是该文的平稳过程实例）。**
+(110.1) 不满足该文定义 1 的归一化平稳过程合同，
+所以命题 2 的随机测度结论和该文的平稳最小实现结论不用于定理 102.1。
+
+证明。首先，空词给
+
+$$
+\pi(\tau)=\operatorname{Tr}(E\rho_0)=\frac{6-5d}{16}
+\in(1/16,3/8),
+\tag{110.2}
+$$
+
+并非平稳概率柱集的空词质量一。
+其次 $N$ 是替代控制，不是与原生 $0,1$ 并列的第三个互斥仪器结果。
+若将三者强行相加，实际映射满足
+
+$$
+\operatorname{Tr}\circ(A_0+A_1+A_N)=2\operatorname{Tr},\qquad
+(A_0+A_1+A_N)(I_3)=2I_3.
+\tag{110.3}
+$$
+
+故其和不固定迹一的 $\tau$；左固定点条件也失败，
+因为 $\pi((A_0+A_1+A_N)(I_3))=2\ne1=\pi(I_3)$。
+该文定义 1 式 (3) 的两个平稳固定点条件均不能由本源数据取得。
+本处直接证明所需的代数不变锥包含，未把平稳性或无限观察放入合同。∎
+
+**定义 110.3（源特定综合与识别边界）。**
+定理 102.1 是仓内导出的源特定应用：
+原单制备的九列、原加权八是加一质量的行、原四表、每个混合 $N$ 的正向闭包，
+共同迫使任意实维数不超过九的合法有序竞争者成为同一完整有序坐标副本。
+一般 Hankel 实现、FLW 不变锥包含、连续轨道及 Hermitian 谱分解
+仅为此应用的中间供应，不作为新增独立一般定理，也不据此主张文献或物理优先权。
+
+此合同对竞争者不要求 Hilbert／Born／CP 结构，也不要求自对偶、纯性或酉性。
+仍承重的是指定真实目标的纯 $\rho_0$、秩一 $E$、原生矩阵与给定混合酉 $N$，
+固定全域实线性正映射、严格归一化、闭紧基条件、维数上限及精确四表等式。
+整个原仿射制备族没有供应；全部物理效果的可取得性没有推出。
+
+$0<d<1$、$\sin(2\theta)\ne0$、每个 $[N,P_\xi]\ne0$ 的量词完整保留。
+端点、例外角、非混合控制、混合真实初态或内部真实效果不由本应用扩展分类。
+更大载体有命题 109.1 的具体不可达扩展；
+闭紧基条件的同时放松有命题 109.2 的原轨道模型。
+精确秩和闭包结论不提供非零误差容忍、有限精度恢复、样本复杂度或统一稳定常数。
+
+数学上的所有词预测一致，来自同一组固定全域映射，
+不来自额外观察、可执行逆、稠密控制的物理取得或整族独立制备。
+一个已给定控制的作用不推导该控制如何从原菜单取得。
+有序坐标识别也不规定复合系统的张量规则、独立副本或参考操作，
+不从有限预测表推出量子本体或量子起源。
+原完整最小最大中心、有限噪声记忆、操作取得和共同来源到复合的桥梁
+仍是与此精确单系统应用不同的数学与物理问题。
+
+## 追加锚（本行以下为增补区）

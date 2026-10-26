@@ -21,6 +21,9 @@ C1–C50 remain in the source card, C51–C76 in the complete-dual owner,
 and R1–R46 in the residue companion. C77–C113 belong only to this note.
 The deductions are conditional paper mathematics, without a source-proof
 audit or Lean certification.
+The [actual mixed-sixth companion](liu2026quasirhmixedsixth.md) gives the
+complete-coefficient reductions and the quantified conditional
+neighborhood-moment interface to C93–C97.
 
 ## A small reduced-frequency sector of the actual C68 columns
 

@@ -84,7 +84,7 @@ internal static class WorktreeCreationSafety
     internal static void CheckoutCreatedWorktree(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         _ = RunGit(options.Path, ["reset", "--hard", "--no-recurse-submodules", "HEAD"],
-            runner, "git worktree checkout failed");
+            runner, "git worktree checkout failed", TimeSpan.FromSeconds(1200));
         var head = StrictUtf8.GetString(RunGit(options.Path, ["rev-parse", "--verify", "HEAD"],
             runner, "could not inspect created HEAD").StandardOutput).Trim();
         // Match worktree add's initialization event, including the repository's object ID width.
@@ -203,13 +203,14 @@ internal static class WorktreeCreationSafety
         string workingDirectory,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        string fallback)
+        string fallback,
+        TimeSpan? timeout = null)
     {
         var result = runner.Run(
             "git",
             arguments,
             workingDirectory,
-            BoundedProcessRunner.HangDetectionBudget);
+            timeout ?? BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode == 0) return result;
         throw new InvalidOperationException(ProcessError(result, fallback));
     }
