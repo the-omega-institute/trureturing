@@ -31,34 +31,34 @@ noncomputable section
 open MiuraHeightEnvelope
 
 def isMaxRow (M : ℕ) (a b : ℕ → ℤ) (i : ℕ) : Prop :=
-  (0 < i → a (i-1) = a i - 1) ∧ (i < M → a (i+1) = a i - 1) ∧ b i = a i - 1
+  (0 < i → a (i-1) = a i - 1) ∧ (i < M → a (i + 1) = a i - 1) ∧ b i = a i - 1
 
 def isMinRow (M : ℕ) (a b : ℕ → ℤ) (i : ℕ) : Prop :=
-  (0 < i → a (i-1) = a i + 1) ∧ (i < M → a (i+1) = a i + 1) ∧ b i = a i + 1
+  (0 < i → a (i-1) = a i + 1) ∧ (i < M → a (i + 1) = a i + 1) ∧ b i = a i + 1
 
 theorem boundary_walk_abstract (M : ℕ) (a b : ℕ → ℤ)
-    (hA : ∀ i, i < M → a (i+1) - a i = 1 ∨ a (i+1) - a i = -1)
+    (hA : ∀ i, i < M → a (i + 1) - a i = 1 ∨ a (i + 1) - a i = -1)
     (hη : ∀ i, i ≤ M → b i - a i = 1 ∨ b i - a i = -1)
-    (hB : ∀ i, i < M → b (i+1) - b i = 1 ∨ b (i+1) - b i = -1) :
+    (hB : ∀ i, i < M → b (i + 1) - b i = 1 ∨ b (i + 1) - b i = -1) :
     ∃ i, i ≤ M ∧ (isMaxRow M a b i ∨ isMinRow M a b i) := by
   by_contra hcon
   have hne : ∀ i, i ≤ M → ¬ isMaxRow M a b i ∧ ¬ isMinRow M a b i :=
     fun i hi => ⟨fun hm => hcon ⟨i, hi, Or.inl hm⟩, fun hm => hcon ⟨i, hi, Or.inr hm⟩⟩
   rcases Nat.eq_zero_or_pos M with hM0 | hMpos
   · subst hM0
-    rcases hη 0 (le_refl 0) with hh | hh
-    · exact (hne 0 (le_refl 0)).2 ⟨fun h => absurd h (by omega), fun h => absurd h (by omega), by omega⟩
-    · exact (hne 0 (le_refl 0)).1 ⟨fun h => absurd h (by omega), fun h => absurd h (by omega), by omega⟩
+    rcases hη 0 (le_rfl) with hh | hh
+    · exact (hne 0 (le_rfl)).2 ⟨fun h => absurd h (by omega), fun h => absurd h (by omega), by omega⟩
+    · exact (hne 0 (le_rfl)).1 ⟨fun h => absurd h (by omega), fun h => absurd h (by omega), by omega⟩
   · set η0 : ℤ := b 0 - a 0 with hη0def
     have hη0v : η0 = 1 ∨ η0 = -1 := hη 0 (by omega)
-    have hε0 : a (0+1) - a 0 = -η0 := by
+    have hε0 : a (0 + 1) - a 0 = -η0 := by
       have h0 := hne 0 (by omega)
       rcases hA 0 hMpos with he | he <;> rcases hη0v with h1 | h1
       · exact absurd ⟨fun h => absurd h (by omega), fun _ => by omega, by omega⟩ h0.2
       · omega
       · omega
       · exact absurd ⟨fun h => absurd h (by omega), fun _ => by omega, by omega⟩ h0.1
-    have key : ∀ i, i ≤ M → (b i - a i = η0) ∧ (i < M → a (i+1) - a i = -η0) := by
+    have key : ∀ i, i ≤ M → (b i - a i = η0) ∧ (i < M → a (i + 1) - a i = -η0) := by
       intro i
       induction i with
       | zero => intro _; exact ⟨by omega, fun _ => hε0⟩
@@ -66,30 +66,30 @@ theorem boundary_walk_abstract (M : ℕ) (a b : ℕ → ℤ)
         intro hle
         have hiM : i < M := by omega
         obtain ⟨hηi, hεi_imp⟩ := IH (by omega)
-        have hεi : a (i+1) - a i = -η0 := hεi_imp hiM
-        have hη_i1 : b (i+1) - a (i+1) = η0 := by
+        have hεi : a (i + 1) - a i = -η0 := hεi_imp hiM
+        have hη_i1 : b (i + 1) - a (i + 1) = η0 := by
           have hBv := hB i hiM
-          have hηnext := hη (i+1) hle
-          have hid : (b (i+1) - b i) = (b (i+1) - a (i+1)) - (b i - a i) + (a (i+1) - a i) := by ring
+          have hηnext := hη (i + 1) hle
+          have hid : (b (i + 1) - b i) = (b (i + 1) - a (i + 1)) - (b i - a i) + (a (i + 1) - a i) := by ring
           rcases hη0v with h1 | h1 <;> rcases hBv with hb | hb <;>
             rcases hηnext with hn | hn <;> omega
         refine ⟨hη_i1, ?_⟩
         intro hi1M
-        have h1 := hne (i+1) (by omega)
+        have h1 := hne (i + 1) (by omega)
         have hidxL : i + 1 - 1 = i := rfl
         by_contra hcontra
-        have hεnextv := hA (i+1) hi1M
-        have hεnext : a (i+1+1) - a (i+1) = η0 := by
+        have hεnextv := hA (i + 1) hi1M
+        have hεnext : a (i + 1 + 1) - a (i + 1) = η0 := by
           rcases hεnextv with h | h <;> rcases hη0v with hz | hz <;> omega
         rcases hη0v with hz | hz
         · exact h1.2 ⟨fun _ => by rw [hidxL]; omega, fun _ => by omega, by omega⟩
         · exact h1.1 ⟨fun _ => by rw [hidxL]; omega, fun _ => by omega, by omega⟩
-    have hηM : b M - a M = η0 := (key M (le_refl M)).1
+    have hηM : b M - a M = η0 := (key M (le_rfl)).1
     have hεMm : a M - a (M-1) = -η0 := by
       have h := (key (M-1) (by omega)).2 (by omega)
       have hMm : M - 1 + 1 = M := by omega
       rw [hMm] at h; exact h
-    have hneM := hne M (le_refl M)
+    have hneM := hne M (le_rfl)
     rcases hη0v with hz | hz
     · exact hneM.2 ⟨fun _ => by omega, fun h => absurd h (by omega), by omega⟩
     · exact hneM.1 ⟨fun _ => by omega, fun h => absurd h (by omega), by omega⟩
@@ -164,13 +164,13 @@ theorem firstColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
   have hbk : ∀ k (hk : k < m), b k = h (⟨k, hk⟩, ⟨1, hn⟩) := by
     intro k hk; have hmin : min k (m-1) = k := by omega
     simp only [hbdef, hmin]
-  have hA : ∀ i, i < m - 1 → a (i+1) - a i = 1 ∨ a (i+1) - a i = -1 := by
+  have hA : ∀ i, i < m - 1 → a (i + 1) - a i = 1 ∨ a (i + 1) - a i = -1 := by
     intro i hi
-    rw [hak i (by omega), hak (i+1) (by omega)]
-    have hadj : adj ((⟨i, by omega⟩, ⟨0, by omega⟩) : Cell m n) (⟨i+1, by omega⟩, ⟨0, by omega⟩) := by
+    rw [hak i (by omega), hak (i + 1) (by omega)]
+    have hadj : adj ((⟨i, by omega⟩, ⟨0, by omega⟩) : Cell m n) (⟨i + 1, by omega⟩, ⟨0, by omega⟩) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i, by omega⟩, ⟨0, by omega⟩) - h (⟨i+1, by omega⟩, ⟨0, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i, by omega⟩, ⟨0, by omega⟩) - h (⟨i + 1, by omega⟩, ⟨0, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hη : ∀ i, i ≤ m - 1 → b i - a i = 1 ∨ b i - a i = -1 := by
     intro i hi
     rw [hak i (by omega), hbk i (by omega)]
@@ -178,13 +178,13 @@ theorem firstColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
     rcases abs_cases (h (⟨i, by omega⟩, ⟨0, by omega⟩) - h (⟨i, by omega⟩, ⟨1, hn⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
-  have hB : ∀ i, i < m - 1 → b (i+1) - b i = 1 ∨ b (i+1) - b i = -1 := by
+  have hB : ∀ i, i < m - 1 → b (i + 1) - b i = 1 ∨ b (i + 1) - b i = -1 := by
     intro i hi
-    rw [hbk i (by omega), hbk (i+1) (by omega)]
-    have hadj : adj ((⟨i, by omega⟩, ⟨1, hn⟩) : Cell m n) (⟨i+1, by omega⟩, ⟨1, hn⟩) := by
+    rw [hbk i (by omega), hbk (i + 1) (by omega)]
+    have hadj : adj ((⟨i, by omega⟩, ⟨1, hn⟩) : Cell m n) (⟨i + 1, by omega⟩, ⟨1, hn⟩) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i, by omega⟩, ⟨1, hn⟩) - h (⟨i+1, by omega⟩, ⟨1, hn⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i, by omega⟩, ⟨1, hn⟩) - h (⟨i + 1, by omega⟩, ⟨1, hn⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   obtain ⟨i, hiM, hext⟩ := boundary_walk_abstract (m-1) a b hA hη hB
   have him : i < m := by omega
   refine ⟨⟨i, him⟩, ?_⟩
@@ -193,13 +193,13 @@ theorem firstColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
   · left
     intro u hu
     rcases adj_col0_cases ⟨i, him⟩ (by omega) u hu with ⟨hp, rfl⟩ | ⟨hp, rfl⟩ | ⟨hq, rfl⟩
-    · have hc := hmax.2.1 (by omega); rw [hak (i+1) (by omega), hak i him] at hc; simpa using hc
+    · have hc := hmax.2.1 (by omega); rw [hak (i + 1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmax.1 (by omega); rw [hak (i-1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmax.2.2; rw [hbk i him, hak i him] at hc; simpa using hc
   · right
     intro u hu
     rcases adj_col0_cases ⟨i, him⟩ (by omega) u hu with ⟨hp, rfl⟩ | ⟨hp, rfl⟩ | ⟨hq, rfl⟩
-    · have hc := hmin.2.1 (by omega); rw [hak (i+1) (by omega), hak i him] at hc; simpa using hc
+    · have hc := hmin.2.1 (by omega); rw [hak (i + 1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmin.1 (by omega); rw [hak (i-1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmin.2.2; rw [hbk i him, hak i him] at hc; simpa using hc
 
@@ -214,13 +214,13 @@ theorem lastColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
   have hbk : ∀ k (hk : k < m), b k = h (⟨k, hk⟩, ⟨n-2, by omega⟩) := by
     intro k hk; have hmin : min k (m-1) = k := by omega
     simp only [hbdef, hmin]
-  have hA : ∀ i, i < m - 1 → a (i+1) - a i = 1 ∨ a (i+1) - a i = -1 := by
+  have hA : ∀ i, i < m - 1 → a (i + 1) - a i = 1 ∨ a (i + 1) - a i = -1 := by
     intro i hi
-    rw [hak i (by omega), hak (i+1) (by omega)]
-    have hadj : adj ((⟨i, by omega⟩, ⟨n-1, by omega⟩) : Cell m n) (⟨i+1, by omega⟩, ⟨n-1, by omega⟩) := by
+    rw [hak i (by omega), hak (i + 1) (by omega)]
+    have hadj : adj ((⟨i, by omega⟩, ⟨n-1, by omega⟩) : Cell m n) (⟨i + 1, by omega⟩, ⟨n-1, by omega⟩) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i, by omega⟩, ⟨n-1, by omega⟩) - h (⟨i+1, by omega⟩, ⟨n-1, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i, by omega⟩, ⟨n-1, by omega⟩) - h (⟨i + 1, by omega⟩, ⟨n-1, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hη : ∀ i, i ≤ m - 1 → b i - a i = 1 ∨ b i - a i = -1 := by
     intro i hi
     rw [hak i (by omega), hbk i (by omega)]
@@ -228,13 +228,13 @@ theorem lastColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
     rcases abs_cases (h (⟨i, by omega⟩, ⟨n-1, by omega⟩) - h (⟨i, by omega⟩, ⟨n-2, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
-  have hB : ∀ i, i < m - 1 → b (i+1) - b i = 1 ∨ b (i+1) - b i = -1 := by
+  have hB : ∀ i, i < m - 1 → b (i + 1) - b i = 1 ∨ b (i + 1) - b i = -1 := by
     intro i hi
-    rw [hbk i (by omega), hbk (i+1) (by omega)]
-    have hadj : adj ((⟨i, by omega⟩, ⟨n-2, by omega⟩) : Cell m n) (⟨i+1, by omega⟩, ⟨n-2, by omega⟩) := by
+    rw [hbk i (by omega), hbk (i + 1) (by omega)]
+    have hadj : adj ((⟨i, by omega⟩, ⟨n-2, by omega⟩) : Cell m n) (⟨i + 1, by omega⟩, ⟨n-2, by omega⟩) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i, by omega⟩, ⟨n-2, by omega⟩) - h (⟨i+1, by omega⟩, ⟨n-2, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i, by omega⟩, ⟨n-2, by omega⟩) - h (⟨i + 1, by omega⟩, ⟨n-2, by omega⟩)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   obtain ⟨i, hiM, hext⟩ := boundary_walk_abstract (m-1) a b hA hη hB
   have him : i < m := by omega
   refine ⟨⟨i, him⟩, ?_⟩
@@ -243,13 +243,13 @@ theorem lastColumn_active (h : Cell m n → ℤ) (hh : IsHeight h)
   · left
     intro u hu
     rcases adj_colLast_cases ⟨i, him⟩ hn u hu with ⟨hp, rfl⟩ | ⟨hp, rfl⟩ | rfl
-    · have hc := hmax.2.1 (by omega); rw [hak (i+1) (by omega), hak i him] at hc; simpa using hc
+    · have hc := hmax.2.1 (by omega); rw [hak (i + 1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmax.1 (by omega); rw [hak (i-1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmax.2.2; rw [hbk i him, hak i him] at hc; simpa using hc
   · right
     intro u hu
     rcases adj_colLast_cases ⟨i, him⟩ hn u hu with ⟨hp, rfl⟩ | ⟨hp, rfl⟩ | rfl
-    · have hc := hmin.2.1 (by omega); rw [hak (i+1) (by omega), hak i him] at hc; simpa using hc
+    · have hc := hmin.2.1 (by omega); rw [hak (i + 1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmin.1 (by omega); rw [hak (i-1) (by omega), hak i him] at hc; simpa using hc
     · have hc := hmin.2.2; rw [hbk i him, hak i him] at hc; simpa using hc
 

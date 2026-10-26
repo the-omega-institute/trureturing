@@ -83,12 +83,12 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
   have hRk : ∀ k (hk : k < m), Rc k = h (⟨k, hk⟩, jR) := by
     intro k hk; have hmin : min k (m-1) = k := by omega
     simp only [hRdef, hmin]
-  set e : ℕ → ℤ := fun k => v (k+1) - v k with hedef
+  set e : ℕ → ℤ := fun k => v (k + 1) - v k with hedef
   set dL : ℕ → ℤ := fun k => Lc k - v k with hdLdef
   set dR : ℕ → ℤ := fun k => Rc k - v k with hdRdef
 
-  have hev : ∀ k (hk1 : k + 1 < m), e k = h (⟨k+1, hk1⟩, j) - h (⟨k, by omega⟩, j) := by
-    intro k hk1; simp only [hedef]; rw [hvk (k+1) hk1, hvk k (by omega)]
+  have hev : ∀ k (hk1 : k + 1 < m), e k = h (⟨k + 1, hk1⟩, j) - h (⟨k, by omega⟩, j) := by
+    intro k hk1; simp only [hedef]; rw [hvk (k + 1) hk1, hvk k (by omega)]
   have hdLv : ∀ k (hk : k < m), dL k = h (⟨k, hk⟩, jL) - h (⟨k, hk⟩, j) := by
     intro k hk; simp only [hdLdef]; rw [hLk k hk, hvk k hk]
   have hdRv : ∀ k (hk : k < m), dR k = h (⟨k, hk⟩, jR) - h (⟨k, hk⟩, j) := by
@@ -97,10 +97,10 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
   have he_pm : ∀ i, i < m - 1 → e i = 1 ∨ e i = -1 := by
     intro i hi
     rw [hev i (by omega)]
-    have hadj : adj ((⟨i+1, by omega⟩, j) : Cell m n) (⟨i, by omega⟩, j) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, j) : Cell m n) (⟨i, by omega⟩, j) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, j) - h (⟨i, by omega⟩, j)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i + 1, by omega⟩, j) - h (⟨i, by omega⟩, j)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hdL_pm : ∀ i, i ≤ m - 1 → dL i = 1 ∨ dL i = -1 := by
     intro i hi
     rw [hdLv i (by omega)]
@@ -117,27 +117,27 @@ theorem inactive_imp_frozenColumn (h : Cell m n → ℤ) (hh : IsHeight h)
     rcases abs_cases (h (⟨i, by omega⟩, j) - h (⟨i, by omega⟩, jR)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
 
   have hLwalk : ∀ i, i < m - 1 →
-      e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1 := by
+      e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1 := by
     intro i hi
-    have hstep : e i + (dL (i+1) - dL i)
-        = h (⟨i+1, by omega⟩, jL) - h (⟨i, by omega⟩, jL) := by
-      rw [hev i (by omega), hdLv (i+1) (by omega), hdLv i (by omega)]; ring
+    have hstep : e i + (dL (i + 1) - dL i)
+        = h (⟨i + 1, by omega⟩, jL) - h (⟨i, by omega⟩, jL) := by
+      rw [hev i (by omega), hdLv (i + 1) (by omega), hdLv i (by omega)]; ring
     rw [hstep]
-    have hadj : adj ((⟨i+1, by omega⟩, jL) : Cell m n) (⟨i, by omega⟩, jL) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, jL) : Cell m n) (⟨i, by omega⟩, jL) := by
       unfold adj gdist; simp only [hjLdef, Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, jL) - h (⟨i, by omega⟩, jL)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i + 1, by omega⟩, jL) - h (⟨i, by omega⟩, jL)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hRwalk : ∀ i, i < m - 1 →
-      e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1 := by
+      e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1 := by
     intro i hi
-    have hstep : e i + (dR (i+1) - dR i)
-        = h (⟨i+1, by omega⟩, jR) - h (⟨i, by omega⟩, jR) := by
-      rw [hev i (by omega), hdRv (i+1) (by omega), hdRv i (by omega)]; ring
+    have hstep : e i + (dR (i + 1) - dR i)
+        = h (⟨i + 1, by omega⟩, jR) - h (⟨i, by omega⟩, jR) := by
+      rw [hev i (by omega), hdRv (i + 1) (by omega), hdRv i (by omega)]; ring
     rw [hstep]
-    have hadj : adj ((⟨i+1, by omega⟩, jR) : Cell m n) (⟨i, by omega⟩, jR) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, jR) : Cell m n) (⟨i, by omega⟩, jR) := by
       unfold adj gdist; simp only [hjRdef, Fin.val_mk]; omega
     have hv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, jR) - h (⟨i, by omega⟩, jR)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
+    rcases abs_cases (h (⟨i + 1, by omega⟩, jR) - h (⟨i, by omega⟩, jR)) with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
 
   have hbridge : ∀ σ, (σ = 1 ∨ σ = -1) → ∀ i (hi' : i < m),
       alignedExt (m-1) e dL dR σ i → IsStrictLocalExtremum h (⟨i, hi'⟩, j) := by
@@ -235,11 +235,11 @@ theorem frozenColumn_dL_const_adjacent (h : Cell m n → ℤ) (hh : IsHeight h)
   have hRk : ∀ k (hk : k < m), Rc k = h (⟨k, hk⟩, jR) := by
     intro k hk; have hmin : min k (m-1) = k := by omega
     simp only [hRdef, hmin]
-  set e : ℕ → ℤ := fun k => v (k+1) - v k with hedef
+  set e : ℕ → ℤ := fun k => v (k + 1) - v k with hedef
   set dL : ℕ → ℤ := fun k => Lc k - v k with hdLdef
   set dR : ℕ → ℤ := fun k => Rc k - v k with hdRdef
-  have hev : ∀ k (hk1 : k + 1 < m), e k = h (⟨k+1, hk1⟩, j) - h (⟨k, by omega⟩, j) := by
-    intro k hk1; simp only [hedef]; rw [hvk (k+1) hk1, hvk k (by omega)]
+  have hev : ∀ k (hk1 : k + 1 < m), e k = h (⟨k + 1, hk1⟩, j) - h (⟨k, by omega⟩, j) := by
+    intro k hk1; simp only [hedef]; rw [hvk (k + 1) hk1, hvk k (by omega)]
   have hdLv : ∀ k (hk : k < m), dL k = h (⟨k, hk⟩, jL) - h (⟨k, hk⟩, j) := by
     intro k hk; simp only [hdLdef]; rw [hLk k hk, hvk k hk]
   have hdRv : ∀ k (hk : k < m), dR k = h (⟨k, hk⟩, jR) - h (⟨k, hk⟩, j) := by
@@ -247,34 +247,34 @@ theorem frozenColumn_dL_const_adjacent (h : Cell m n → ℤ) (hh : IsHeight h)
   have he_pm : ∀ i, i < m - 1 → e i = 1 ∨ e i = -1 := by
     intro i hi
     rw [hev i (by omega)]
-    have hadj : adj ((⟨i+1, by omega⟩, j) : Cell m n) (⟨i, by omega⟩, j) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, j) : Cell m n) (⟨i, by omega⟩, j) := by
       unfold adj gdist; simp only [Fin.val_mk]; omega
     have hvv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, j) - h (⟨i, by omega⟩, j))
+    rcases abs_cases (h (⟨i + 1, by omega⟩, j) - h (⟨i, by omega⟩, j))
         with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hLwalk : ∀ i, i < m - 1 →
-      e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1 := by
+      e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1 := by
     intro i hi
-    have hstep : e i + (dL (i+1) - dL i)
-        = h (⟨i+1, by omega⟩, jL) - h (⟨i, by omega⟩, jL) := by
-      rw [hev i (by omega), hdLv (i+1) (by omega), hdLv i (by omega)]; ring
+    have hstep : e i + (dL (i + 1) - dL i)
+        = h (⟨i + 1, by omega⟩, jL) - h (⟨i, by omega⟩, jL) := by
+      rw [hev i (by omega), hdLv (i + 1) (by omega), hdLv i (by omega)]; ring
     rw [hstep]
-    have hadj : adj ((⟨i+1, by omega⟩, jL) : Cell m n) (⟨i, by omega⟩, jL) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, jL) : Cell m n) (⟨i, by omega⟩, jL) := by
       unfold adj gdist; simp only [hjLdef, Fin.val_mk]; omega
     have hvv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, jL) - h (⟨i, by omega⟩, jL))
+    rcases abs_cases (h (⟨i + 1, by omega⟩, jL) - h (⟨i, by omega⟩, jL))
         with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hRwalk : ∀ i, i < m - 1 →
-      e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1 := by
+      e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1 := by
     intro i hi
-    have hstep : e i + (dR (i+1) - dR i)
-        = h (⟨i+1, by omega⟩, jR) - h (⟨i, by omega⟩, jR) := by
-      rw [hev i (by omega), hdRv (i+1) (by omega), hdRv i (by omega)]; ring
+    have hstep : e i + (dR (i + 1) - dR i)
+        = h (⟨i + 1, by omega⟩, jR) - h (⟨i, by omega⟩, jR) := by
+      rw [hev i (by omega), hdRv (i + 1) (by omega), hdRv i (by omega)]; ring
     rw [hstep]
-    have hadj : adj ((⟨i+1, by omega⟩, jR) : Cell m n) (⟨i, by omega⟩, jR) := by
+    have hadj : adj ((⟨i + 1, by omega⟩, jR) : Cell m n) (⟨i, by omega⟩, jR) := by
       unfold adj gdist; simp only [hjRdef, Fin.val_mk]; omega
     have hvv := hh _ _ hadj
-    rcases abs_cases (h (⟨i+1, by omega⟩, jR) - h (⟨i, by omega⟩, jR))
+    rcases abs_cases (h (⟨i + 1, by omega⟩, jR) - h (⟨i, by omega⟩, jR))
         with ⟨he, _⟩ | ⟨he, _⟩ <;> omega
   have hrainbow : ∀ i, i ≤ m - 1 → dL i + dR i = 0 := by
     intro i hi
@@ -284,7 +284,7 @@ theorem frozenColumn_dL_const_adjacent (h : Cell m n → ℤ) (hh : IsHeight h)
     simp only [hjLdef, hjRdef] at hs ⊢
     omega
   have hconst := rainbow_dL_const he_pm hLwalk hRwalk hrainbow i (by omega)
-  rw [hdLv (i+1) hi1, hdLv i (by omega)] at hconst
+  rw [hdLv (i + 1) hi1, hdLv i (by omega)] at hconst
   simp only [hjLdef] at hconst ⊢
   linarith
 

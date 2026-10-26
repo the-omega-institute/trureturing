@@ -8,6 +8,10 @@ internal sealed class MiuraSlabClassificationDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual maximal occupied intervals have minimum, maximum or neutral type.", H("Classification by actual boundary cuts"),
         Blocks(
+            Describe.Lean(DescribeId.Create("miuraslabclassification-partition"),
+                DeclarationHandle.Create(Prefix + "row_slab_card_partition"), H("The three actual types partition the slabs"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the same actual unit-edge, dimension and frozen-row assumptions, the total row slab cardinality equals the sum of the minimum, maximum and neutral row slab cardinalities. A proper interval cannot have both unit outward signs, and an equal-cut internal interval cannot also have a common nonzero outward sign."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("miuraslabclassification-type"),
                 DeclarationHandle.Create(Prefix + "row_slab_classification"), H("Exhaustive slab types"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

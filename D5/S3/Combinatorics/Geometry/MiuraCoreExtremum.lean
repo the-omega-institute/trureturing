@@ -90,7 +90,7 @@ theorem contractAt_isSLM_of_h_max (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
       have hval := hmax _ hexp_adj
       linarith
     ·
-      push_neg at hbr
+      push Not at hbr
       obtain ⟨hnAA, hnBB⟩ := hbr
       by_cases hpL : p.2.val < j.val
       ·
@@ -105,7 +105,7 @@ theorem contractAt_isSLM_of_h_max (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hval := hmax (p.1, j) hexp_adj
         linarith
       ·
-        push_neg at hpL
+        push Not at hpL
         have hqL : q.2.val < j.val := hnBB hpL
         have hpvv : p.2.val = q.2.val + 1 := by
           have hnat : ((p.2.val : ℤ) - q.2.val).natAbs = 1 := hb; omega
@@ -138,7 +138,7 @@ theorem contractAt_isSLm_of_h_min (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
       have hexp_adj := cellExpand_adj_same_branch j hj0 hj1 p q hqadj hbr
       have hval := hmin _ hexp_adj
       linarith
-    · push_neg at hbr
+    · push Not at hbr
       obtain ⟨hnAA, hnBB⟩ := hbr
       by_cases hpL : p.2.val < j.val
       · have hqR : ¬ q.2.val < j.val := by
@@ -151,7 +151,7 @@ theorem contractAt_isSLm_of_h_min (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hexp_adj := cellExpand_adj_frozenCell j hj0 hj1 p (Or.inl hpv)
         have hval := hmin (p.1, j) hexp_adj
         linarith
-      · push_neg at hpL
+      · push Not at hpL
         have hqL : q.2.val < j.val := hnBB hpL
         have hpvv : p.2.val = q.2.val + 1 := by
           have hnat : ((p.2.val : ℤ) - q.2.val).natAbs = 1 := hb; omega
@@ -194,7 +194,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
         push_cast at hadj ⊢
         exact hadj
       · exfalso
-        push_neg at hqL
+        push Not at hqL
         have hqR : ¬ q.2.val < j.val := by omega
         rw [cellExpand_left _ _ hj0 hj1 hpL, cellExpand_right _ _ hj0 hj1 hqR] at hadj
         unfold adj gdist at hadj
@@ -203,7 +203,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
           have hle : (p.2.val : ℤ) - (q.2.val + 1) ≤ -2 := by push_cast; omega
           omega
         omega
-    · push_neg at hpL
+    · push Not at hpL
       have hpR : ¬ p.2.val < j.val := by omega
       by_cases hqL : q.2.val < j.val
       · exfalso
@@ -214,7 +214,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
           have hge : (p.2.val + 1 : ℤ) - q.2.val ≥ 2 := by push_cast; omega
           omega
         omega
-      · push_neg at hqL
+      · push Not at hqL
         have hqR : ¬ q.2.val < j.val := by omega
         rw [cellExpand_right _ _ hj0 hj1 hpR, cellExpand_right _ _ hj0 hj1 hqR] at hadj
         unfold adj gdist at hadj ⊢
@@ -226,7 +226,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
     · by_cases hqL : q.2.val < j.val
       · exact Or.inl ⟨hpL, hqL⟩
       · exfalso
-        push_neg at hqL
+        push Not at hqL
         have hqR : ¬ q.2.val < j.val := by omega
         rw [cellExpand_left _ _ hj0 hj1 hpL, cellExpand_right _ _ hj0 hj1 hqR] at hadj
         unfold adj gdist at hadj
@@ -235,7 +235,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
           have hle : (p.2.val : ℤ) - (q.2.val + 1) ≤ -2 := by push_cast; omega
           omega
         omega
-    · push_neg at hpL
+    · push Not at hpL
       have hpR : ¬ p.2.val < j.val := by omega
       by_cases hqL : q.2.val < j.val
       · exfalso
@@ -246,7 +246,7 @@ lemma adj_cellExpand_of_not_frozen (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 
           have hge : (p.2.val + 1 : ℤ) - q.2.val ≥ 2 := by push_cast; omega
           omega
         omega
-      · push_neg at hqL
+      · push Not at hqL
         have hqR : ¬ q.2.val < j.val := by omega
         exact Or.inr ⟨hpR, hqR⟩
 
@@ -285,7 +285,7 @@ theorem h_max_of_contractAt_isSLM (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hval := hmax q hqadj
         rw [hueq]
         linarith
-      · push_neg at hpL
+      · push Not at hpL
         have hpR : ¬ p.2.val < j.val := by omega
         have hcellp2v : (cellExpand j p hj0 hj1).2.val = p.2.val + 1 := by
           rw [cellExpand_right _ _ hj0 hj1 hpR]
@@ -352,7 +352,7 @@ theorem h_min_of_contractAt_isSLm (h : Cell m n → ℤ) (hh : IsHeight h) (hm :
         have hval := hmin q hqadj
         rw [hueq]
         linarith
-      · push_neg at hpL
+      · push Not at hpL
         have hpR : ¬ p.2.val < j.val := by omega
         have hcellp2v : (cellExpand j p hj0 hj1).2.val = p.2.val + 1 := by
           rw [cellExpand_right _ _ hj0 hj1 hpR]

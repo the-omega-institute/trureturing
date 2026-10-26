@@ -167,7 +167,7 @@ private theorem extremumFree_rainbow
   · exact cascade_down σ hσv he hdL hdR hLwalk hRwalk hefσ i0 hd.1 rfl hR0 hd.2
   · by_cases hu : 0 < i0 ∧ e (i0-1) = σ
     · exact cascade_up σ hσv he hdL hdR hLwalk hRwalk hefσ i0 hu.1 hi0M rfl hR0 hu.2
-    · push_neg at hd hu
+    · push Not at hd hu
       apply hefσ i0 hi0M
       refine ⟨fun hpos => ?_, fun hlt => ?_, rfl, hR0⟩
       · have hne1 := hu hpos
@@ -473,13 +473,6 @@ private theorem frozenColumn_dL_eq_row0 (h : Cell m n → ℤ) (hh : IsHeight h)
     have := ih hk1
     linarith
 
-private theorem frozenColumn_dL_const (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m)
-    (j : Fin n) (hfrz : frozenColumn h j) (i1 i2 : Fin m) :
-    h (i1, ⟨j.val - 1, by obtain ⟨hj0, _, _⟩ := hfrz; omega⟩) - h (i1, j)
-    = h (i2, ⟨j.val - 1, by obtain ⟨hj0, _, _⟩ := hfrz; omega⟩) - h (i2, j) := by
-  rw [frozenColumn_dL_eq_row0 h hh hm j hfrz i1,
-      frozenColumn_dL_eq_row0 h hh hm j hfrz i2]
-
 private theorem frozenColumn_slope_exists (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m)
     (j : Fin n) (hfrz : frozenColumn h j) :
     ∃ k : ℤ, (k = 1 ∨ k = -1) ∧
@@ -734,6 +727,21 @@ private theorem boundary_columns_active (h : Cell m n → ℤ) (hh : IsHeight h)
   ⟨firstColumn_active h hh hm hn, lastColumn_active h hh hm hn⟩
 
 
+private theorem transpose_extremum {m n : ℕ} {h : Cell m n → ℤ} {v : Cell n m}
+    (hv : IsStrictLocalExtremum (transposeHeight h) v) :
+    IsStrictLocalExtremum h (v.2, v.1) := by
+  rcases hv with hmax | hmin
+  · left
+    intro u hu
+    apply hmax (u.2, u.1)
+    simp only [adj, gdist] at hu ⊢
+    omega
+  · right
+    intro u hu
+    apply hmin (u.2, u.1)
+    simp only [adj, gdist] at hu ⊢
+    omega
+
 /-- Every physical boundary row contains an actual ambient extremum. -/
 theorem boundary_rows_occupied {m n : ℕ} {h : Cell m n → ℤ} (hh : IsHeight h)
     (hm : 2 ≤ m) (hn : 0 < n) :
@@ -741,9 +749,9 @@ theorem boundary_rows_occupied {m n : ℕ} {h : Cell m n → ℤ} (hh : IsHeight
   obtain ⟨ht, hb⟩ := boundary_columns_active (transposeHeight h) (transpose_isHeight hh) hn (by omega)
   constructor
   · obtain ⟨j, hj⟩ := ht
-    exact ⟨j, hj.symm⟩
+    exact ⟨j, (transpose_extremum hj).symm⟩
   · obtain ⟨j, hj⟩ := hb
-    exact ⟨j, hj.symm⟩
+    exact ⟨j, (transpose_extremum hj).symm⟩
 
 /-- An actual unoccupied internal row has one common unit downward slope
 on both incident full-width cuts. -/
@@ -756,7 +764,7 @@ theorem inactive_row_uniform_cuts {m n : ℕ} {h : Cell m n → ℤ} (hh : IsHei
   have hnot : ¬ activeColumn (transposeHeight h) i := by
     intro hc
     obtain ⟨j, hj⟩ := hc
-    exact hi ⟨j, hj.symm⟩
+    exact hi ⟨j, (transpose_extremum hj).symm⟩
   have hfr := inactive_imp_frozenColumn (transposeHeight h) (transpose_isHeight hh) i ht hb hn hnot
   obtain ⟨s, hs, hleft⟩ := frozenColumn_slope_exists (transposeHeight h) (transpose_isHeight hh) hn i hfr
   obtain ⟨ht', hb', hsym⟩ := hfr

@@ -37,8 +37,8 @@ theorem cascade_down (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
     (he : ∀ i, i < M → e i = 1 ∨ e i = -1)
     (hdL : ∀ i, i ≤ M → dL i = 1 ∨ dL i = -1)
     (hdR : ∀ i, i ≤ M → dR i = 1 ∨ dR i = -1)
-    (hLwalk : ∀ i, i < M → e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1)
-    (hRwalk : ∀ i, i < M → e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1)
+    (hLwalk : ∀ i, i < M → e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1)
+    (hRwalk : ∀ i, i < M → e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1)
     (hef : ∀ i, i ≤ M → ¬ alignedExt M e dL dR σ i)
     (i0 : ℕ) (hi0M : i0 < M)
     (hL0 : dL i0 = σ) (hR0 : dR i0 = σ) (he0 : e i0 = -σ) :
@@ -55,23 +55,23 @@ theorem cascade_down (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
       set j := i0 + k with hjdef
       have hjM : j < M := by omega
       have hej : e j = -σ := hej_imp hjM
-      have hLj1 : dL (j+1) = σ := by
+      have hLj1 : dL (j + 1) = σ := by
         have hw := hLwalk j hjM
-        have hv := hdL (j+1) (by omega)
+        have hv := hdL (j + 1) (by omega)
         rcases hσ with h | h <;> rcases hw with hh | hh <;> rcases hv with hv1 | hv1 <;> omega
-      have hRj1 : dR (j+1) = σ := by
+      have hRj1 : dR (j + 1) = σ := by
         have hw := hRwalk j hjM
-        have hv := hdR (j+1) (by omega)
+        have hv := hdR (j + 1) (by omega)
         rcases hσ with h | h <;> rcases hw with hh | hh <;> rcases hv with hv1 | hv1 <;> omega
-      have hidx : i0 + (k+1) = j + 1 := by omega
+      have hidx : i0 + (k + 1) = j + 1 := by omega
       rw [hidx]
       refine ⟨hLj1, hRj1, ?_⟩
       intro hlt
       by_contra hcontra
-      have hene : e (j+1) = σ := by
-        have := he (j+1) hlt
+      have hene : e (j + 1) = σ := by
+        have := he (j + 1) hlt
         rcases hσ with h | h <;> omega
-      apply hef (j+1) (by omega)
+      apply hef (j + 1) (by omega)
       refine ⟨fun _ => ?_, fun _ => hene, hLj1, hRj1⟩
       rw [Nat.add_sub_cancel]; exact hej
 
@@ -82,14 +82,14 @@ theorem cascade_down (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
   have heM : e (M - 1) = -σ := by
     have := (claim (M - 1 - i0) (by omega)).2.2 (by omega)
     rwa [show i0 + (M - 1 - i0) = M - 1 from by omega] at this
-  exact hef M (le_refl M) ⟨fun _ => heM, fun h => absurd h (by omega), hLM, hRM⟩
+  exact hef M ((by omega)) ⟨fun _ => heM, fun h => absurd h (by omega), hLM, hRM⟩
 
 theorem cascade_up (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
     (he : ∀ i, i < M → e i = 1 ∨ e i = -1)
     (hdL : ∀ i, i ≤ M → dL i = 1 ∨ dL i = -1)
     (hdR : ∀ i, i ≤ M → dR i = 1 ∨ dR i = -1)
-    (hLwalk : ∀ i, i < M → e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1)
-    (hRwalk : ∀ i, i < M → e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1)
+    (hLwalk : ∀ i, i < M → e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1)
+    (hRwalk : ∀ i, i < M → e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1)
     (hef : ∀ i, i ≤ M → ¬ alignedExt M e dL dR σ i)
     (i0 : ℕ) (hi0 : 0 < i0) (hi0M : i0 ≤ M)
     (hL0 : dL i0 = σ) (hR0 : dR i0 = σ) (he0 : e (i0-1) = σ) :
@@ -119,7 +119,7 @@ theorem cascade_up (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
         have hsj : j - 1 + 1 = j := by omega
         rw [hsj] at hw
         rcases hσ with h | h <;> rcases hw with hh | hh <;> rcases hv with hv1 | hv1 <;> omega
-      have hidx : i0 - (k+1) = j - 1 := by omega
+      have hidx : i0 - (k + 1) = j - 1 := by omega
       rw [hidx]
       refine ⟨hLj1, hRj1, ?_⟩
       intro hpos
@@ -130,9 +130,9 @@ theorem cascade_up (σ : ℤ) (hσ : σ = 1 ∨ σ = -1)
       exact hef (j-1) (by omega)
         ⟨fun _ => hene, fun _ => hej, hLj1, hRj1⟩
   have hL0' : dL 0 = σ := by
-    have := (claim i0 (le_refl i0)).1; rwa [show i0 - i0 = 0 from by omega] at this
+    have := (claim i0 ((by omega))).1; rwa [show i0 - i0 = 0 from by omega] at this
   have hR0' : dR 0 = σ := by
-    have := (claim i0 (le_refl i0)).2.1; rwa [show i0 - i0 = 0 from by omega] at this
+    have := (claim i0 ((by omega))).2.1; rwa [show i0 - i0 = 0 from by omega] at this
   have he0' : e 0 = σ := by
     have := (claim (i0-1) (by omega)).2.2 (by omega)
     rwa [show i0 - (i0-1) - 1 = 0 from by omega] at this
@@ -142,8 +142,8 @@ theorem extremumFree_rainbow
     (he : ∀ i, i < M → e i = 1 ∨ e i = -1)
     (hdL : ∀ i, i ≤ M → dL i = 1 ∨ dL i = -1)
     (hdR : ∀ i, i ≤ M → dR i = 1 ∨ dR i = -1)
-    (hLwalk : ∀ i, i < M → e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1)
-    (hRwalk : ∀ i, i < M → e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1)
+    (hLwalk : ∀ i, i < M → e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1)
+    (hRwalk : ∀ i, i < M → e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1)
     (hef : ∀ σ, (σ = 1 ∨ σ = -1) → ∀ i, i ≤ M → ¬ alignedExt M e dL dR σ i) :
     ∀ i, i ≤ M → dL i + dR i = 0 := by
   intro i0 hi0M
@@ -159,7 +159,7 @@ theorem extremumFree_rainbow
   · exact cascade_down σ hσv he hdL hdR hLwalk hRwalk hefσ i0 hd.1 rfl hR0 hd.2
   · by_cases hu : 0 < i0 ∧ e (i0-1) = σ
     · exact cascade_up σ hσv he hdL hdR hLwalk hRwalk hefσ i0 hu.1 hi0M rfl hR0 hu.2
-    · push_neg at hd hu
+    · push Not at hd hu
       apply hefσ i0 hi0M
       refine ⟨fun hpos => ?_, fun hlt => ?_, rfl, hR0⟩
       · have hne1 := hu hpos
@@ -171,13 +171,13 @@ theorem extremumFree_rainbow
 
 theorem rainbow_dL_const
     (he : ∀ i, i < M → e i = 1 ∨ e i = -1)
-    (hLwalk : ∀ i, i < M → e i + (dL (i+1) - dL i) = 1 ∨ e i + (dL (i+1) - dL i) = -1)
-    (hRwalk : ∀ i, i < M → e i + (dR (i+1) - dR i) = 1 ∨ e i + (dR (i+1) - dR i) = -1)
+    (hLwalk : ∀ i, i < M → e i + (dL (i + 1) - dL i) = 1 ∨ e i + (dL (i + 1) - dL i) = -1)
+    (hRwalk : ∀ i, i < M → e i + (dR (i + 1) - dR i) = 1 ∨ e i + (dR (i + 1) - dR i) = -1)
     (rainbow : ∀ i, i ≤ M → dL i + dR i = 0) :
-    ∀ i, i < M → dL (i+1) = dL i := by
+    ∀ i, i < M → dL (i + 1) = dL i := by
   intro i hi
   have hr_i := rainbow i (by omega)
-  have hr_i1 := rainbow (i+1) (by omega)
+  have hr_i1 := rainbow (i + 1) (by omega)
   have hL := hLwalk i hi
   have hR := hRwalk i hi
   have hei := he i hi

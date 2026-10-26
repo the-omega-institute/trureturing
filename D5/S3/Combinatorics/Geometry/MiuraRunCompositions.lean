@@ -38,7 +38,7 @@ def removeOnesEquiv (N r : ℕ) (hle : r ≤ N) :
           intro i _
           exact Nat.sub_add_cancel (x.property.1 i)
         _ = N := x.property.2
-    omega⟩
+    exact Nat.add_right_cancel (hsum.trans (Nat.sub_add_cancel hle).symm)⟩
   invFun x := ⟨fun i => x.val i + 1, by
     refine ⟨fun i => Nat.zero_lt_succ _, ?_⟩
     simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
