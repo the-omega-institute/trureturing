@@ -8,6 +8,10 @@
 
 module
 
+public import Mathlib.LinearAlgebra.Basis.Bilinear
+public import Mathlib.LinearAlgebra.Basis.SMul
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
 public import Mathlib.LinearAlgebra.BilinearForm.TensorProduct
 public import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 public import Mathlib.LinearAlgebra.Matrix.Basis
@@ -217,6 +221,134 @@ theorem isomorphism_monomial {n : ℕ} (μ : Product K V) (ν : Product K W)
     change p i j = if s i = j then t i else 0
     simp [h, hz]
 
+
+/-- The coefficient of the j-th basis vector in the square of the i-th. -/
+noncomputable def structureCoefficient {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V)
+    (i j : Fin n) : K := b.repr (μ (b i) (b i)) j
+
+private theorem monomial_map_coordinate {n m : ℕ}
+    (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (e : Fin n ≃ Fin m) (d : Fin n → Kˣ) (f : V ≃ₗ[K] W)
+    (hf : ∀ i, f (b i) = (d i : K) • c (e i)) (x : V) (j : Fin n) :
+    c.equivFun (f x) (e j) = b.equivFun x j * (d j : K) := by
+  classical
+  conv_lhs => rw [← b.sum_equivFun x]
+  simp only [map_sum, map_smul, hf, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    c.equivFun_self]
+  rw [Finset.sum_eq_single j]
+  · simp
+  · intro i hi hij
+    simp [e.injective.ne hij]
+  · simp
+
+/-- Arbitrary multiplication-preserving linear bijections are exactly the monomial
+solutions of the square-coefficient equations. The two finite dimensions are independent. -/
+theorem isomorphic_iff_monomial_equations {n m : ℕ}
+    (μ : Product K V) (ν : Product K W)
+    (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
+    (hb : Natural μ b) (hc : Natural ν c) (hp : Perfect ν) :
+    Isomorphic μ ν ↔ ∃ e : Fin n ≃ Fin m, ∃ d : Fin n → Kˣ,
+      ∀ i j, structureCoefficient μ b i j * (d j : K) =
+        (d i : K) ^ 2 * structureCoefficient ν c (e i) (e j) := by
+  classical
+  constructor
+  · rintro ⟨f, hf⟩
+    have hnm : n = m := by
+      have hdim := f.finrank_eq
+      rw [Module.finrank_eq_card_basis b, Module.finrank_eq_card_basis c] at hdim
+      simpa using hdim
+    subst m
+    obtain ⟨σ, t, ht, hcoord⟩ := isomorphism_monomial μ ν b c hb hc hp f hf
+    let e : Fin n ≃ Fin n := σ.symm
+    let d : Fin n → Kˣ := fun i => Units.mk0 (t (e i)) (ht (e i))
+    have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
+      apply c.equivFun.injective
+      ext j
+      simp only [hcoord, map_smul, Pi.smul_apply, smul_eq_mul, c.equivFun_self]
+      change (if σ j = i then t j else 0) = t (σ.symm i) *
+        (if σ.symm i = j then 1 else 0)
+      by_cases h : j = σ.symm i
+      · subst j
+        simp
+      · have h' : σ j ≠ i := by
+          intro h'
+          exact h (σ.injective (by simpa using h'))
+        simp [h', Ne.symm h]
+    refine ⟨e, d, ?_⟩
+    intro i j
+    have h := congrArg (fun z => c.equivFun z (e j)) (hf (b i) (b i))
+    rw [monomial_map_coordinate b c e d f hfb] at h
+    simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
+      smul_smul, mul_assoc] using h
+  · rintro ⟨e, d, heq⟩
+    let c' : Basis (Fin n) K W := (c.reindex e.symm).unitsSMul d
+    let f : V ≃ₗ[K] W := b.equiv c' (Equiv.refl _)
+    have hfb (i : Fin n) : f (b i) = (d i : K) • c (e i) := by
+      simp [f, c', Basis.unitsSMul_apply, Units.smul_def]
+    have hsquare (i : Fin n) : f (μ (b i) (b i)) = ν (f (b i)) (f (b i)) := by
+      apply c.equivFun.injective
+      ext k
+      obtain ⟨j, rfl⟩ := e.surjective k
+      rw [monomial_map_coordinate b c e d f hfb]
+      simpa [hfb, structureCoefficient, Basis.equivFun_apply, pow_two,
+        smul_smul, mul_assoc] using heq i j
+    have hmaps : μ.compr₂ f.toLinearMap = ν.compl₁₂ f.toLinearMap f.toLinearMap := by
+      apply LinearMap.ext_basis b b
+      intro i j
+      change f (μ (b i) (b j)) = ν (f (b i)) (f (b j))
+      by_cases hij : i = j
+      · subst j
+        exact hsquare i
+      · rw [hb i j hij, map_zero, hfb, hfb]
+        simp [hc (e i) (e j) (e.injective.ne hij)]
+    exact ⟨f, fun x y => congrArg (fun M : V →ₗ[K] V →ₗ[K] W => M x y) hmaps⟩
+
+
+private theorem natural_baseChange (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b) :
+    Natural (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) := by
+  intro i j hij
+  simp [Basis.baseChange_apply, hb i j hij]
+
+private theorem perfect_baseChange (F : Type*) [Field F] [Algebra K F]
+    (μ : Product K V) (hp : Perfect μ) : Perfect (LinearMap.BilinMap.baseChange F μ) := by
+  unfold Perfect at *
+  apply top_unique
+  calc
+    ⊤ = (Submodule.span K {z | ∃ x y, μ x y = z}).baseChange F := by
+      rw [hp, Submodule.baseChange_top]
+    _ = Submodule.span F (TensorProduct.mk K F V 1 '' {z | ∃ x y, μ x y = z}) :=
+      Submodule.baseChange_span F _
+    _ ≤ Submodule.span F {z | ∃ x y, LinearMap.BilinMap.baseChange F μ x y = z} := by
+      apply Submodule.span_le.mpr
+      rintro z ⟨v, ⟨x, y, rfl⟩, rfl⟩
+      apply Submodule.subset_span
+      refine ⟨1 ⊗ₜ[K] x, 1 ⊗ₜ[K] y, ?_⟩
+      simp
+
+private theorem structureCoefficient_baseChange (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (i j : Fin n) :
+    structureCoefficient (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) i j =
+      algebraMap K F (structureCoefficient μ b i j) := by
+  simp [structureCoefficient, Algebra.smul_def]
+
 end Monomiality
+
+
+/-- The monomial equations describe the actual tensor scalar-extension relation.
+Only rational target perfection is needed; it ascends to the extended multiplication. -/
+theorem isomorphic_over_iff_monomial_equations (F : Type) [Field F] [Algebra ℚ F]
+    (A B : RationalEvolutionAlgebra) {n m : ℕ}
+    (b : Basis (Fin n) ℚ A.Carrier) (c : Basis (Fin m) ℚ B.Carrier)
+    (hb : Natural A.multiplication b) (hc : Natural B.multiplication c)
+    (hp : Perfect B.multiplication) :
+    IsomorphicOver F A B ↔ ∃ e : Fin n ≃ Fin m, ∃ d : Fin n → Fˣ,
+      ∀ i j, algebraMap ℚ F (structureCoefficient A.multiplication b i j) * (d j : F) =
+        (d i : F) ^ 2 * algebraMap ℚ F (structureCoefficient B.multiplication c (e i) (e j)) := by
+  unfold IsomorphicOver
+  rw [isomorphic_iff_monomial_equations _ _ (b.baseChange F) (c.baseChange F)
+    (natural_baseChange F _ b hb) (natural_baseChange F _ c hc)
+    (perfect_baseChange F _ hp)]
+  simp only [structureCoefficient_baseChange]
 
 end D5.S3.QuadraticForms.EvolutionAlgebras.RationalHassePrinciple
