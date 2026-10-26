@@ -19,7 +19,8 @@ namespace D5.S3.Quantum.Information.SignallingGameValueEquality
 
 open Finset Matrix
 open scoped BigOperators Kronecker ComplexOrder
-open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
+open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+  (IsPOVM diagonal_povm)
 
 /-- Nonnegative normalized conditional probabilities with both no-signalling marginals.
 The argument order is Alice's answer, Bob's answer, Alice's question, Bob's question. -/
@@ -173,7 +174,25 @@ private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin
       (a : Fin m → Fin n → Matrix (Fin 1) (Fin 1) ℂ)
       (b : Fin n → Fin m → Matrix (Fin 1) (Fin 1) ℂ),
       IsQuantumStrategy rho a b ∧ quantumBox rho a b = deterministicBox fa fb := by
-  sorry
+  let a : Fin m → Fin n → Matrix (Fin 1) (Fin 1) ℂ :=
+    fun x u => diagonal (fun _ => ((if u = fa x then 1 else 0 : ℝ) : ℂ))
+  let b : Fin n → Fin m → Matrix (Fin 1) (Fin 1) ℂ :=
+    fun y v => diagonal (fun _ => ((if v = fb y then 1 else 0 : ℝ) : ℂ))
+  refine ⟨1, a, b, ⟨Matrix.PosSemidef.one, ?_, ?_, ?_⟩, ?_⟩
+  · simp only [trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_one, one_mul]
+  · intro x
+    exact diagonal_povm (fun u _ => if u = fa x then 1 else 0)
+      (fun u _ => by split_ifs <;> norm_num) (fun _ => by simp)
+  · intro y
+    exact diagonal_povm (fun v _ => if v = fb y then 1 else 0)
+      (fun v _ => by split_ifs <;> norm_num) (fun _ => by simp)
+  · funext u v x y
+    by_cases hu : u = fa x <;> by_cases hv : v = fb y <;>
+      simp only [quantumBox, deterministicBox, a, b, hu, hv, if_true, if_false,
+        Complex.ofReal_one, Complex.ofReal_zero, diagonal_one, diagonal_zero,
+        one_kronecker_one, zero_kronecker, kronecker_zero, Matrix.mul_one, Matrix.mul_zero,
+        trace_one, trace_zero, Fintype.card_prod, Fintype.card_fin, Nat.cast_one,
+        one_mul, mul_one, mul_zero, zero_mul, Complex.one_re, Complex.zero_re]
 
 private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
     ∃ (fa : Fin m → Fin n) (fb : Fin n → Fin m),
