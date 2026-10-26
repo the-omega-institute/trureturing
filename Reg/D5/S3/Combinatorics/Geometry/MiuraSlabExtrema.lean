@@ -90,7 +90,7 @@ def registration : Registration arena (type_of% (@matching_minimum)) := by
   change ramp (0, 0) ≠ ramp (1, 0)
   norm_num [ramp]
 
-noncomputable def registration_1 : LeanInformationAudit.Contract.Registration
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@matching_minimum)
     (type_of% (realize signature
       (fun (_ : Unit) (p : Parameter) v => p.2.2 v) (fun e => nomatch e))) Unit Unit := {
