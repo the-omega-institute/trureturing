@@ -14,7 +14,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 abbrev signature : Signature where
-  Params := Σ L : ℕ, (Fin L → Finset Window) × (Finset Bool × Fin (L + 1))
+  Params := Σ L : ℕ, Σ _ : Fin L → Finset Window, Σ _ : Finset Bool, Fin (L + 1)
   State _ := Bool
   Role := Unit
   finiteRole := inferInstance
