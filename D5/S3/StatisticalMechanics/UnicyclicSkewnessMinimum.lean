@@ -54,14 +54,16 @@ private lemma normalized_simplex {n : ℕ} (hn : 2 ≤ n) (k : Fin n → ℝ)
   have he : (fun i => (k i)⁻¹ / waitingPowerSum k 1) =
       (∑ i, (k i)⁻¹)⁻¹ • (fun i => (k i)⁻¹) := by
     funext i
-    simp [waitingPowerSum, div_eq_mul_inv, mul_comm]
+    delta waitingPowerSum
+    simp [div_eq_mul_inv, mul_comm]
   rw [he]
   exact Matrix.CollatzWielandt.inv_sum_smul_mem_stdSimplex_of_nonneg_ne_zero
     (fun i => le_of_lt (inv_pos.mpr (hk i))) hz
 
 private lemma skewness_normalized {n : ℕ} (k : Fin n → ℝ) :
     skewness k = simplexFunctional (fun i => (k i)⁻¹ / waitingPowerSum k 1) := by
-  simp only [skewness, simplexFunctional, div_pow, ← Finset.sum_div, waitingPowerSum]
+  delta skewness simplexFunctional waitingPowerSum
+  simp only [div_pow, ← Finset.sum_div]
   ring
 
 private lemma algebra_lower_bound (r a b p q : ℝ) (hr : 1 ≤ r)
@@ -85,7 +87,7 @@ private lemma algebra_lower_bound (r a b p q : ℝ) (hr : 1 ≤ r)
     dsimp [h, g]
     rw [hb]
     field_simp
-    <;> ring
+    ring
   have hh : g ≤ h := by
     have : 0 ≤ h - g := by
       rw [hdiff]
@@ -99,7 +101,7 @@ private lemma algebra_lower_bound (r a b p q : ℝ) (hr : 1 ≤ r)
       dsimp [h, d]
       rw [hb]
       field_simp
-      <;> ring
+      ring
     linarith
   by_cases hc : 0 ≤ 3 * a - 1
   · have hepos := mul_nonneg (mul_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2)
@@ -127,7 +129,7 @@ private lemma algebra_lower_bound (r a b p q : ℝ) (hr : 1 ≤ r)
       dsimp [h, g, u]
       rw [hb]
       field_simp
-      <;> ring
+      ring
     have hkpos : 0 ≤ h - (a - b) ^ 2 * (3 * a - 1) ^ 2 / 3 - g := by
       rw [hk]
       have hac : 0 ≤ 1 / 3 - a := by linarith
@@ -214,9 +216,11 @@ private lemma attaining_rates (n : ℕ) (hn : 2 ≤ n) :
   · have hs (j : ℕ) :
         waitingPowerSum (fun i : Fin (m + 1) => if i = 0 then (m : ℝ)⁻¹ else 1) j =
           (m : ℝ) ^ j + m := by
-      simp [waitingPowerSum, Fin.sum_univ_succ]
-    simp only [skewness, hs, minimumValue, Nat.cast_succ]
-    field_simp [ne_of_gt hm]
+      delta waitingPowerSum
+      simp [Fin.sum_univ_succ]
+    delta skewness minimumValue
+    simp only [hs, Nat.cast_succ, add_sub_cancel_right]
+    field_simp (disch := positivity)
     ring
 
 /-- The conjectured skewness minimum holds for every positive rate vector and is attained. -/
