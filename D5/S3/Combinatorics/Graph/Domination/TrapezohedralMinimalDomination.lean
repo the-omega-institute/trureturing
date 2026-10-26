@@ -219,7 +219,7 @@ private theorem cover_nonempty {n : ℕ} (hn : 2 ≤ n) {j : Fin n}
   · exact ⟨_, h⟩
 
 private theorem private_sameType_iff {n : ℕ} (hn : 2 ≤ n)
-    (j i : Fin n) (C : Set (Fin n)) (hi : i ∈ C) :
+    (j i : Fin n) (C : Set (Fin n)) :
     (∃ w, ClosedPrivate (graph n) (alphaSet j C) (a i) w) ↔ CutPrivate j C i := by
   constructor
   · rintro ⟨w, hw, hu⟩
@@ -377,7 +377,7 @@ private theorem alphaSet_admissible_with_interior_iff {n : ℕ} (hn : 3 ≤ n) (
     refine ⟨(minimalCutCover_iff_private hn2 j C).mpr ⟨hc, ?_⟩,
       (connected_alphaSet_iff j C).mp hconn, ?_⟩
     · intro i hi
-      exact (private_sameType_iff hn2 j i C hi).mp (hp (a i) hi)
+      exact (private_sameType_iff hn2 j i C).mp (hp (a i) hi)
     · exact (private_apex_iff j C (cover_nonempty hn2 hc)).mp (hp alpha trivial)
   · rintro ⟨hc, hend, hinterior⟩
     refine ⟨(minimalDominating_iff_proper (graph n) _).mp
@@ -389,7 +389,7 @@ private theorem alphaSet_admissible_with_interior_iff {n : ℕ} (hn : 3 ≤ n) (
       | alpha => exact (private_apex_iff j C (cover_nonempty hn2 hc.1)).mpr hinterior
       | beta => exact False.elim hs
       | a i =>
-        exact (private_sameType_iff hn2 j i C hs).mpr
+        exact (private_sameType_iff hn2 j i C).mpr
           (((minimalCutCover_iff_private hn2 j C).mp hc).2 i hs)
       | b i =>
         change i = j at hs

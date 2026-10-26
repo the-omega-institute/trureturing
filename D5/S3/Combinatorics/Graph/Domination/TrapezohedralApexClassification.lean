@@ -97,7 +97,7 @@ private theorem fin_not_covered_by_pair {n : ℕ} (hn : 3 ≤ n) (i j : Fin n) :
   omega
 
 private theorem no_apex_not_unique_b {n : ℕ} (hn : 3 ≤ n) {S : Set (Vertex n)}
-    (hS : Admissible S) (ha : alpha ∉ S) (hb : beta ∉ S)
+    (hS : Admissible S) (ha : alpha ∉ S)
     (j : Fin n) (hj : b j ∈ S) : ∃ k : Fin n, b k ∈ S ∧ k ≠ j := by
   classical
   by_contra! hnone
@@ -123,7 +123,7 @@ private theorem no_apex_not_unique_b {n : ℕ} (hn : 3 ≤ n) {S : Set (Vertex n
     | b k => simpa only [graph, adjacent, huniq k hv] using hadj
 
 private theorem no_apex_not_unique_a {n : ℕ} (hn : 3 ≤ n) {S : Set (Vertex n)}
-    (hS : Admissible S) (ha : alpha ∉ S) (hb : beta ∉ S)
+    (hS : Admissible S) (hb : beta ∉ S)
     (i : Fin n) (hi : a i ∈ S) : ∃ k : Fin n, a k ∈ S ∧ k ≠ i := by
   classical
   by_contra! hnone
@@ -190,8 +190,8 @@ private theorem no_neither_apex {n : ℕ} (hn : 3 ≤ n) {S : Set (Vertex n)}
     rcases hS.1.1 beta with h | ⟨v, hv, hadj⟩
     · exact False.elim (hb h)
     · cases v <;> simp_all [graph, adjacent] <;> aesop
-  obtain ⟨k, hk, hki⟩ := no_apex_not_unique_a hn hS ha hb i hi
-  obtain ⟨l, hl, hlj⟩ := no_apex_not_unique_b hn hS ha hb j hj
+  obtain ⟨k, hk, hki⟩ := no_apex_not_unique_a hn hS hb i hi
+  obtain ⟨l, hl, hlj⟩ := no_apex_not_unique_b hn hS ha j hj
   let P : S → Prop := fun x => x.val = a i ∨ (graph n).Adj (a i) x.val
   have hstep : ∀ x y : S, P x → ((graph n).induce S).Adj x y → P y := by
     rintro ⟨x, hx⟩ ⟨y, hy⟩ (heq | hadj) hxy
