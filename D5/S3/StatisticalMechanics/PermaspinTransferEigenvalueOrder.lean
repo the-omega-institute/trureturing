@@ -1,0 +1,79 @@
+/- GID: D5/S3/StatisticalMechanics/PermaspinTransferEigenvalueOrder
+   generality: G
+   mirror-B: D5/B/S3/StatisticalMechanics/PermaspinTransferEigenvalueOrder
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: The largest real root of Dukes's cubic dominates both remaining eigenvalues. -/
+
+import Mathlib.Algebra.Polynomial.Degree.SmallDegree
+import Mathlib.Analysis.Polynomial.Order
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+
+/-! The cubic and the two explicit eigenvalues of the 1D 3-permaspin transfer matrix. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.StatisticalMechanics.PermaspinTransferEigenvalueOrder
+
+open Polynomial
+
+/-- Dukes's cubic, with its source coefficients at every real parameter pair. -/
+noncomputable def dukesCubic (c d : ℝ) : Polynomial ℝ :=
+  C 1 * X ^ 3 + C (-(c * d ^ 2 + c ^ 2 + 2 * c * d + c + 1)) * X ^ 2 +
+    C (-(c * (c * d ^ 3 + 3 * c ^ 2 * d + c * d ^ 2 + c ^ 2 + c * d + c +
+      3 * d + 1) * (d - 1))) * X +
+    C ((d ^ 2 + 4 * d + 1) * c ^ 3 * (d + 1) * (d - 1) ^ 3)
+
+/-- The supremum of all real roots of the source cubic. -/
+noncomputable def largestRoot (c d : ℝ) : ℝ :=
+  sSup {x : ℝ | (dukesCubic c d).eval x = 0}
+
+/-- The root set exists and is bounded above, and its supremum dominates the two eigenvalues. -/
+def claim : Prop :=
+  ∀ c d : ℝ, 0 < c → 0 < d →
+    {x : ℝ | (dukesCubic c d).eval x = 0}.Nonempty ∧
+    BddAbove {x : ℝ | (dukesCubic c d).eval x = 0} ∧
+    max (max (largestRoot c d) (c * (1 - d) ^ 2)) (c * (1 - d ^ 2)) = largestRoot c d
+
+private theorem cubic_data (c d : ℝ) :
+    (dukesCubic c d).degree = 3 ∧ (dukesCubic c d).leadingCoeff = 1 := by
+  sorry
+
+private theorem cubic_at_comparison (c d : ℝ) :
+    (dukesCubic c d).eval (c * (1 + d) ^ 2) =
+      -4 * c ^ 2 * d ^ 2 * (d + 1) * ((d + 1) * (c - 1) ^ 2 + 4 * c * d) := by
+  sorry
+
+private theorem cubic_at_comparison_neg (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
+    (dukesCubic c d).eval (c * (1 + d) ^ 2) < 0 := by
+  sorry
+
+private theorem roots_bddAbove (c d : ℝ) :
+    BddAbove {x : ℝ | (dukesCubic c d).eval x = 0} := by
+  sorry
+
+private theorem root_above_comparison (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
+    ∃ r : ℝ, c * (1 + d) ^ 2 < r ∧ (dukesCubic c d).eval r = 0 := by
+  sorry
+
+private theorem comparison_gaps (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
+    c * (1 - d) ^ 2 < c * (1 + d) ^ 2 ∧
+    c * (1 - d ^ 2) < c * (1 + d) ^ 2 := by
+  sorry
+
+/-- The largest root is the largest of the three candidate transfer-matrix eigenvalues. -/
+theorem result : claim := by
+  intro c d hc hd
+  obtain ⟨r, hqr, hr⟩ := root_above_comparison c d hc hd
+  have hb := roots_bddAbove c d
+  have hrle : r ≤ largestRoot c d := le_csSup hb hr
+  obtain ⟨hfour, hfive⟩ := comparison_gaps c d hc hd
+  refine ⟨⟨r, hr⟩, hb, ?_⟩
+  rw [max_eq_left (hfour.le.trans (hqr.le.trans hrle)),
+    max_eq_left (hfive.le.trans (hqr.le.trans hrle))]
+
+end D5.S3.StatisticalMechanics.PermaspinTransferEigenvalueOrder
