@@ -18,4 +18,10 @@ Section 6 treats overpartitions as an ordinary-partition component together with
 
 These are prior ingredients of the finite counting argument; they are not attributed as new results. No claim of exhaustive literature absence follows from these sources.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2102.03486
+
+URL: https://arxiv.org/abs/2102.03486v2
+
 Locator: https://arxiv.org/html/2102.03486v2 , Section 6, equations (6.1)–(6.2), Theorems 6.1–6.2.

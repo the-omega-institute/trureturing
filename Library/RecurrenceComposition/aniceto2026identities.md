@@ -20,4 +20,10 @@ The Conclusion states:
 
 Here Theorem 3.5 is the ordinary-partition threshold identity. The distinct congruence-proof questions are not the same problem as its requested overpartition analogue.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2608.00278
+
+URL: https://arxiv.org/abs/2608.00278v1
+
 Locator: https://arxiv.org/html/2608.00278v1 , Conclusion.

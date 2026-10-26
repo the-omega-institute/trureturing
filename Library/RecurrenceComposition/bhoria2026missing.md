@@ -22,4 +22,10 @@ An overpartition permits an optional overline on the first occurrence of each di
 
 Question 3 requests an identity; it does not conjecture a particular proposed formula. The congruence and asymptotic questions in the same section are separate.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2604.12557
+
+URL: https://arxiv.org/abs/2604.12557v1
+
 Locator: https://arxiv.org/html/2604.12557v1 , Section 2.4, Theorem 2.9, and Section 4, Question 3.
