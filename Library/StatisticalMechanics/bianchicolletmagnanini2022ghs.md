@@ -41,7 +41,7 @@ Source: https://arxiv.org/abs/2107.08889v2
 - URL: https://arxiv.org/abs/2107.08889v2 (the e-print is a gzipped tar archive; member `GHS_arXiv-replacement.tex`, 1428 lines, md5 `b353bfa014348d3c29f4b9c509b5665d`):
   - the homomorphism density, the Gibbs density and the Hamiltonian, l. 286–312;
   - the edge set $\mathcal E_n$ and the edge indicators, l. 322–331;
-  - the Ursell function $u_3$, l. 571–585;
+  - the Ursell function $u_3$, l. 577–589;
   - the GHS inequality, Definition 3.4, l. 617–636;
   - the general setting, Lemma 4.1 and the GKS inequality, l. 1243–1287;
   - the conjecture, l. 1322.

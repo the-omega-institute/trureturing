@@ -48,7 +48,7 @@ internal sealed class ErgmGhsMarginalConjectureRefutationDocument : IScribeDocum
                 "The third Ursell function is the third joint cumulant of the three edge indicators: "
                     + "the triple moment minus the three products of a marginal and the complementary pair moment, "
                     + "plus twice the product of the marginals. The edges e, f and g may coincide. "
-                    + "The formula is given in Section 3, TeX lines 577–588; Definition 3.4, "
+                    + "The formula is given in Section 3, TeX lines 577–589; Definition 3.4, "
                     + "TeX lines 617–636, requires it to be nonpositive for every triple.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "claim", "The universal marginal criterion", ClaimFormula(),
