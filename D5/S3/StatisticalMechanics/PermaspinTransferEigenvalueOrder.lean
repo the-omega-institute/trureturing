@@ -8,7 +8,6 @@
 
 import Mathlib.Analysis.Polynomial.Basic
 import Mathlib.Topology.Algebra.Polynomial
-import Mathlib.Topology.Order.IntermediateValue
 
 /-! The cubic and the two explicit eigenvalues of the 1D 3-permaspin transfer matrix. -/
 
