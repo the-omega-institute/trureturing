@@ -48,7 +48,7 @@ private theorem half_power_normalizer :
     have hden : 1 + s ^ (2 : Nat) ≠ 0 := ne_of_gt (by positivity)
     have hden' : s ^ (2 : Nat) + 1 ≠ 0 := ne_of_gt (by positivity)
     field_simp [hs.ne', hden, hden']
-    ring
+    <;> ring
   calc
     (∫ t in Ioi (0 : Real), Real.rpowIntegrand₀₁ (1 / 2) t 1) =
         ∫ s in Ioi (0 : Real),
@@ -83,7 +83,7 @@ private theorem scalar_inverse_sqrt_integral (lambda : Real) (hlambda : 0 < lamb
     have hden : t + lambda ≠ 0 := ne_of_gt (add_pos ht hlambda)
     have hden' : lambda + t ≠ 0 := ne_of_gt (add_pos hlambda ht)
     field_simp [hlambda.ne', hden, hden']
-    ring
+    <;> ring
   have hraw : IntegrableOn (fun t : ℝ => Real.rpowIntegrand₀₁ (1 / 2) t lambda) (Ioi 0) :=
     Real.integrableOn_rpowIntegrand₀₁_Ioi hp hlambda.le
   have hint : IntegrableOn (inverseHalfKernel lambda) (Ioi (0 : Real)) :=
@@ -195,7 +195,7 @@ private theorem near_kernel (a : Real) (ha : 0 < a) :
     integral_rpow (Or.inl (by norm_num))]
   norm_num [show (-1 / 2 : Real) + 1 = 1 / 2 by norm_num,
     ← Real.sqrt_eq_rpow]
-  ring
+  <;> ring
 
 private theorem tail_kernel (a : Real) (ha : 0 < a) :
     IntegrableOn (fun t : Real => (t⁻¹)^2) (Ioi a) ∧
@@ -391,7 +391,7 @@ private theorem euclidean_inverse_sqrt_bound_from_budget {n : Type*} [Fintype n]
         4 / (Real.pi * s) * r
       rw [← hr2, ← hs2]
       field_simp [hr.ne', hs.ne', Real.pi_ne_zero]
-      ring
+      <;> ring
     exact hb.trans_eq hopt
 
 
