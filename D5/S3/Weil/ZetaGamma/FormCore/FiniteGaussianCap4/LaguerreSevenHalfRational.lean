@@ -1,6 +1,6 @@
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfPolynomial
 
-/- Rational coefficient model consumed by the actual compact matrix certificate.
+/-! Rational coefficient model consumed by the actual compact matrix certificate.
 The variable scaling 2*x is included before taking product coefficients. -/
 set_option autoImplicit false
 noncomputable section
@@ -18,6 +18,11 @@ def momentQ : ℕ → ℚ
   | zero => simp [momentQ]
   | succ n ih => simp [momentQ, momentWeight_succ, ih]
 
+/-- The exact rational congruence scale consumed by the matrix certificate. -/
+def congruenceScaleQ : ℕ → ℚ
+  | 0 => 1
+  | k + 1 => congruenceScaleQ k * ((k : ℚ) + 1 / 2) / ((k : ℚ) + 11 / 4)
+
 def coefficientQ (n j : ℕ) : ℚ :=
   (-1) ^ j * (n.choose j : ℚ) * momentQ n /
     (momentQ j * (n.factorial : ℚ))
@@ -31,7 +36,7 @@ def laguerreQ (n : ℕ) : ℚ[X] :=
 
 @[simp] theorem laguerreQ_map (n : ℕ) :
     (laguerreQ n).map (Rat.castHom ℝ) = laguerre n := by
-  simp [laguerreQ, laguerre]
+  simp [laguerreQ, laguerre, Polynomial.map_sum]
 
 def scaledLaguerreQ (n : ℕ) : ℚ[X] :=
   (laguerreQ n).comp (C 2 * X)
