@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:finite-gaussian-helper)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/Cap4FinitePerturbation.perturbed_energy_lower; premises=D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/Cap4FiniteCertificate.finite16C_posDef
    digest: Exact rational LDL certificate for the same-source finite Gaussian comparison. -/
 
 import Mathlib.LinearAlgebra.Matrix.PosDef
@@ -369,9 +369,6 @@ theorem rational_factor_identity :
   · rw [rootCQ_symm i j, weighted_sum_swap i j]
     exact rootCQ_factor_lower j i (le_of_lt (lt_of_not_ge h))
 
-theorem pivotsQ_gt_one_twentieth (i : I) : (1 / 20 : ℚ) < pivotsQ i := by
-  fin_cases i <;> norm_num [pivotsQ]
-
 theorem pivotsQ_pos (i : I) : 0 < pivotsQ i := by
   fin_cases i <;> norm_num [pivotsQ]
 
@@ -433,12 +430,4 @@ theorem finite16C_posDef : finite16C.PosDef := by
     diagonal_pivots_posDef.conjTranspose_mul_mul_same
       (B := lowerᵀ) lower_transpose_mulVec_injective
 
-theorem finite16C_quadratic_pos (x : I → ℝ) (hx : x ≠ 0) :
-    0 < x ⬝ᵥ (finite16C *ᵥ x) := by
-  simpa only [star_trivial] using finite16C_posDef.dotProduct_mulVec_pos hx
-
 end Cap4FiniteCertificate
-
--- These commands produce receipts only if a future authorized kernel check succeeds.
-#print axioms Cap4FiniteCertificate.finite16C_posDef
-#print axioms Cap4FiniteCertificate.finite16C_quadratic_pos

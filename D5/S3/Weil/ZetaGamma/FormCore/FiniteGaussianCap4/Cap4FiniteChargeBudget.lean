@@ -5,8 +5,8 @@
    anchors: []
    utility: none
    digest: Original finite head charge and norm budgets for uniform tail interpolation. -/
-/- SOURCE ONLY. Not compiled or accepted. These helpers are intended for the
-actual uniform coercivity consumer, not as an independent mathematical PR. -/
+/- Weighted head norm and rank-one charge budgets for the complete
+actual uniform coercivity comparison. -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.Cap4FinitePerturbation
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.CompactMatrixActualCoordinates
 

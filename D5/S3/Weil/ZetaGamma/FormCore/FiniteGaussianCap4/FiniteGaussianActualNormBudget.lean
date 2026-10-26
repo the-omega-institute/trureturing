@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/FiniteGaussianActualNormBudget
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/FiniteGaussianActualNormBudget
    mirror-E: none(waiver:finite-gaussian-helper)
    anchors: []
    utility: none
