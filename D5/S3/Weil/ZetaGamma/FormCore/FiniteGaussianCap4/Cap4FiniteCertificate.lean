@@ -23,6 +23,9 @@ Completed kappa=3/4 candidate C/L/D SHA256:
 Data generation supplies literals, never mathematical hypotheses.
 -/
 
+/-! Exact finite16 rational data and its ordinary proof-term LDL verification. -/
+
+noncomputable section
 namespace Cap4FiniteCertificate
 
 open scoped Matrix
@@ -256,83 +259,83 @@ private theorem weighted_sum_swap (i j : I) :
 
 private theorem factor_row_0 (j : I) (h : j ≤ 0) :
     rootCQ 0 j = ∑ k : I, lowerQ 0 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_1 (j : I) (h : j ≤ 1) :
     rootCQ 1 j = ∑ k : I, lowerQ 1 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_2 (j : I) (h : j ≤ 2) :
     rootCQ 2 j = ∑ k : I, lowerQ 2 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_3 (j : I) (h : j ≤ 3) :
     rootCQ 3 j = ∑ k : I, lowerQ 3 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_4 (j : I) (h : j ≤ 4) :
     rootCQ 4 j = ∑ k : I, lowerQ 4 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_5 (j : I) (h : j ≤ 5) :
     rootCQ 5 j = ∑ k : I, lowerQ 5 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_6 (j : I) (h : j ≤ 6) :
     rootCQ 6 j = ∑ k : I, lowerQ 6 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_7 (j : I) (h : j ≤ 7) :
     rootCQ 7 j = ∑ k : I, lowerQ 7 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_8 (j : I) (h : j ≤ 8) :
     rootCQ 8 j = ∑ k : I, lowerQ 8 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_9 (j : I) (h : j ≤ 9) :
     rootCQ 9 j = ∑ k : I, lowerQ 9 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_10 (j : I) (h : j ≤ 10) :
     rootCQ 10 j = ∑ k : I, lowerQ 10 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_11 (j : I) (h : j ≤ 11) :
     rootCQ 11 j = ∑ k : I, lowerQ 11 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_12 (j : I) (h : j ≤ 12) :
     rootCQ 12 j = ∑ k : I, lowerQ 12 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_13 (j : I) (h : j ≤ 13) :
     rootCQ 13 j = ∑ k : I, lowerQ 13 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_14 (j : I) (h : j ≤ 14) :
     rootCQ 14 j = ∑ k : I, lowerQ 14 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem factor_row_15 (j : I) (h : j ≤ 15) :
     rootCQ 15 j = ∑ k : I, lowerQ 15 k * pivotsQ k * lowerQ j k := by
-  fin_cases j <;>
-    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ] at h ⊢
+  fin_cases j <;> norm_num at h <;>
+    norm_num [rootCQ, lowerQ, lowerEntriesQ, pivotsQ, Fin.sum_univ_succ]
 
 private theorem rootCQ_factor_lower (i j : I) (h : j ≤ i) :
     rootCQ i j = ∑ k : I, lowerQ i k * pivotsQ k * lowerQ j k := by
