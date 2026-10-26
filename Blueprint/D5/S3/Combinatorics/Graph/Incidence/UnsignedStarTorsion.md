@@ -6,7 +6,19 @@ Exact unsigned integer star lattices: common remainders, order-two localization,
 
 The vertex type V indexes rows and X indexes individually identified original edges. An Edges value gives distinct endpoints left(i), right(i). Parallel original coordinates remain distinct. The exact integer linear map is f(a)(i)=a(left(i))+a(right(i)). Its image is not replaced by its saturation. graphAfterDeleting D first removes exactly the original indices in D, then uses existence of a remaining edge as the underlying simple adjacency. Thus deletion and support cardinalities never conflate parallel indices.
 
-**Theorem 1.1 (Signed Root Normalization in a Bipartite Graph).**
+**Theorem 1.1 (Consumed Integer Injectivity).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.starMap_injective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.starMap_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a connected nonbipartite original graph, the exact integer star map is injective. Apply the existing private nonbipartite_potential proof to the difference of two potentials with equal images. Its constant has twice its value equal to zero, so it vanishes over the integers. This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a bind-only helper, not a new generality claim or a new proof of the private potential theorem.
+
+**Theorem 1.2 (Signed Root Normalization in a Bipartite Graph).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integral_of_bipartite`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integra
 
 For a connected bipartite original graph, k>0 and actual integer k*z=f(a), there exists actual integer b with f(b)=z. Choose the two colors from bipartiteness and write e(v)=1 or -1 accordingly. For a root r, subtract e(v)*e(r)*a(r) from each a(v). This is a genuine integer kernel of the star map and makes the root zero. Walk propagation then makes every normalized coefficient zero modulo k. Only after proving divisibility do we divide and cancel k in the ambient integer coordinates.
 
-**Theorem 1.2 (Integer Potential Remainders).**
+**Theorem 1.3 (Integer Potential Remainders).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.potential_remainders`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.potenti
 
 For any connected nonbipartite original graph, positive natural k, integer vectors z on X and a on V satisfying k*z(i)=f(a)(i) for every original i, there exists an integer r with 0<=r<k, either r=0 or 2*r=k, and a(v) modulo k equals r for every vertex. Walk induction propagates residues as c or -c in ZMod k. If these differ they define a bipartition, contradicting nonbipartiteness. Integer remainder bounds then prove the two cases.
 
-**Theorem 1.3 (The Exact Integral or Component-Total Alternative).**
+**Theorem 1.4 (The Exact Integral or Component-Total Alternative).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integer_potential_alternative`
 
@@ -42,7 +54,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integer
 
 Under the same hypotheses, either z=f(b) for actual integer b, or k is even, every actual a(v) is nonzero, and actual integer b satisfies z(i)=f(b)(i)+1 and f(2*b+1)(i)=2*z(i). In the second case z is not in the image and the graph after deleting support(z) is bipartite. The full component total is not an integer star combination: such a combination would give a potential 2*b-1 with opposite adjacent values, forcing an integer half. Thus the second case is an actual nonzero order-two class of the exact quotient. No quotient cancellation is used.
 
-**Theorem 1.4 (Coefficient One from Nonbipartiteness after Support Deletion).**
+**Theorem 1.5 (Coefficient One from Nonbipartiteness after Support Deletion).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integral_of_support_nonbipartite`
 
@@ -54,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integra
 
 For a connected original graph and actual k*z=f(a), k>0, if deletion of the original support of z leaves a nonbipartite graph, there exists integer b with f(b)=z. In the half case, all a(v) are nonzero and each undeleted edge has the exact equation a(u)+a(v)=0. Positive and negative potentials therefore color the entire deleted graph, including all pieces created by deletion. Connectedness after deletion is not a premise. In the zero case divisibility is proved before division, and k is cancelled only in the ambient integer coordinate group.
 
-**Theorem 1.5 (Actual Original-Source Integer Coefficients).**
+**Theorem 1.6 (Actual Original-Source Integer Coefficients).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.source_coefficients_of_sparse_multiple`
 
@@ -77,3 +89,4 @@ Attribution: formalization of the caller-supplied completed argument, Exact Priv
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.integral_of_support_nonbipartite`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.potential_remainders`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.source_coefficients_of_sparse_multiple`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.starMap_injective`
