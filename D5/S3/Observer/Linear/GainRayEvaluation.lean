@@ -20,7 +20,8 @@ def evaluation (d n : ℕ) (t : Fin n → ℝ) : Matrix (Fin n) (Fin (d + 1)) �
 def evaluate (d n : ℕ) (t : Fin n → ℝ) : Coeff d →ₗ[ℝ] (Fin n → ℝ) :=
   Matrix.mulVecLin (evaluation d n t)
 
-private theorem evaluation_polynomial (d n : ℕ) (t : Fin n → ℝ) (β : Coeff d)
+/-- The evaluation matrix acts on exactly the same ordinary whole polynomial. -/
+theorem evaluation_polynomial (d n : ℕ) (t : Fin n → ℝ) (β : Coeff d)
     (i : Fin n) : evaluate d n t β i = (gain d β).eval (t i) := by
   simp [evaluate, evaluation, Matrix.mulVecLin, Matrix.mulVec, dotProduct, gain,
     Polynomial.ofFn_eq_sum_monomial, Polynomial.eval_finsetSum, mul_comm]
