@@ -15,6 +15,8 @@ import Mathlib.GroupTheory.Perm.ClosureSwap
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Tactic
 
+/-! Spectral contraction of products of Hamming-weight-preserving gate averages. -/
+
 open scoped BigOperators
 open Matrix Finset
 
@@ -41,11 +43,11 @@ noncomputable def patternMatrix {n k : ℕ} (pat : List (Fin n × Fin n)) :
 /-- The undirected qubit graph, with an edge in either orientation for each gate. -/
 def qubitGraph {n : ℕ} (pat : List (Fin n × Fin n)) : SimpleGraph (Fin n) where
   Adj x y := x ≠ y ∧ ∃ e ∈ pat, e = (x, y) ∨ e = (y, x)
-  symm := by
+  symm := ⟨by
     rintro x y ⟨h, e, he, hxy | hyx⟩
     · exact ⟨h.symm, e, he, Or.inr hxy⟩
-    · exact ⟨h.symm, e, he, Or.inl hyx⟩
-  loopless := by simp
+    · exact ⟨h.symm, e, he, Or.inl hyx⟩⟩
+  loopless := ⟨by intro x h; exact h.1 rfl⟩
 
 /-- The source's bidirectional strong connectivity, with distinct gate endpoints. -/
 def connectedPattern {n : ℕ} (pat : List (Fin n × Fin n)) : Prop :=
@@ -62,7 +64,17 @@ def claim : Prop :=
 
 private lemma swapConfig_involutive {n k : ℕ} (a b : Fin n) :
     Function.Involutive (swapConfig (k := k) a b) := by
-  sorry
+  intro s
+  apply Subtype.ext
+  change (s.val.map _).map _ = s.val
+  rw [Finset.map_map]
+  have h : (Equiv.swap a b).toEmbedding.trans (Equiv.swap a b).toEmbedding =
+      Function.Embedding.refl (Fin n) := by
+    apply Function.Embedding.ext
+    intro x
+    exact Equiv.swap_apply_self a b x
+  rw [h]
+  exact Finset.map_refl
 
 private def swapEquiv {n k : ℕ} (a b : Fin n) : Equiv.Perm (config n k) :=
   (swapConfig_involutive (k := k) a b).toPerm
@@ -71,45 +83,98 @@ private def shuffle {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
     (v : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι :=
   WithLp.toLp 2 (fun x => v (s x))
 
-private def average {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
+private noncomputable def average {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
     (v : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι :=
   (1 / 2 : ℂ) • (v + shuffle s v)
 
-private def run {n k : ℕ} (pat : List (Fin n × Fin n))
+private noncomputable def run {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) : EuclideanSpace ℂ (config n k) :=
   pat.foldl (fun w e => average (swapEquiv e.1 e.2) w) v
 
-private def staticEnergy {n k : ℕ} (pat : List (Fin n × Fin n))
+private noncomputable def staticEnergy {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) : ℝ :=
   (pat.map fun e => ‖v - average (swapEquiv e.1 e.2) v‖ ^ 2).sum
 
 private def configGraph {n k : ℕ} (pat : List (Fin n × Fin n)) :
     SimpleGraph (config n k) where
   Adj s t := s ≠ t ∧ ∃ e ∈ pat, swapConfig e.1 e.2 s = t
-  symm := by
+  symm := ⟨by
     rintro s t ⟨hne, e, he, h⟩
-    exact ⟨hne.symm, e, he, h ▸ swapConfig_involutive e.1 e.2 s⟩
-  loopless := by simp
+    exact ⟨hne.symm, e, he, h ▸ swapConfig_involutive e.1 e.2 s⟩⟩
+  loopless := ⟨by intro s h; exact h.1 rfl⟩
 
 private lemma config_card_le (n k : ℕ) : Fintype.card (config n k) ≤ n ^ k := by
-  sorry
+  have h : Fintype.card (config n k) = n.choose k := by
+    rw [Fintype.card_of_subtype (Finset.univ.powersetCard k)
+      (fun s => by simp), Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin]
+  rw [h]
+  exact Nat.choose_le_pow n k
 
 private lemma gate_apply {n k : ℕ} (a b : Fin n)
     (v : EuclideanSpace ℂ (config n k)) :
     (gateMatrix a b).map (fun x : ℝ => (x : ℂ)) *ᵥ WithLp.ofLp v =
       WithLp.ofLp (average (swapEquiv a b) v) := by
-  sorry
+  classical
+  ext s
+  have hswap (t : config n k) : s = swapConfig a b t ↔ swapConfig a b s = t := by
+    constructor
+    · intro h
+      rw [h, swapConfig_involutive a b t]
+    · intro h
+      rw [← h, swapConfig_involutive a b s]
+  change (∑ t, (((if s = t then 1 / 2 else 0) +
+    (if s = swapConfig a b t then 1 / 2 else 0) : ℝ) : ℂ) * v t) =
+      (1 / 2 : ℂ) * (v s + v (swapConfig a b s))
+  simp only [hswap]
+  have hcast (p : Prop) [Decidable p] :
+      (((if p then 1 / 2 else 0) : ℝ) : ℂ) = if p then 1 / 2 else 0 := by
+    split_ifs <;> norm_num
+  simp only [Complex.ofReal_add, hcast, add_mul, ite_mul, zero_mul, Finset.sum_add_distrib]
+  simp [mul_add]
 
 private lemma pattern_apply {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) :
     (patternMatrix pat).map (fun x : ℝ => (x : ℂ)) *ᵥ WithLp.ofLp v =
       WithLp.ofLp (run pat v) := by
-  sorry
+  classical
+  induction pat generalizing v with
+  | nil =>
+    change ((1 : Matrix (config n k) (config n k) ℝ).map _) *ᵥ _ = _
+    simp only [Matrix.map_one, Complex.ofReal_zero, Complex.ofReal_one, Matrix.one_mulVec]
+    rfl
+  | cons e pat ih =>
+    unfold patternMatrix
+    simp only [List.map_cons, List.reverse_cons, List.prod_append, List.prod_singleton]
+    change (((pat.map fun e : Fin n × Fin n => gateMatrix (k := k) e.1 e.2).reverse.prod *
+      gateMatrix e.1 e.2).map Complex.ofRealHom) *ᵥ _ = _
+    rw [Matrix.map_mul, ← Matrix.mulVec_mulVec]
+    change (patternMatrix pat).map (fun x : ℝ => (x : ℂ)) *ᵥ
+      ((gateMatrix e.1 e.2).map (fun x : ℝ => (x : ℂ)) *ᵥ v.ofLp) = _
+    rw [gate_apply]
+    exact ih (average (swapEquiv e.1 e.2) v)
+
+private lemma shuffle_norm {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
+    (v : EuclideanSpace ℂ ι) : ‖shuffle s v‖ = ‖v‖ := by
+  apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+  rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq]
+  change (∑ x, ‖v (s x)‖ ^ 2) = ∑ x, ‖v x‖ ^ 2
+  exact Equiv.sum_comp s (fun x => ‖v x‖ ^ 2)
 
 private lemma projection_energy {ι : Type*} [Fintype ι] (s : Equiv.Perm ι)
-    (hs : Function.Involutive s) (v : EuclideanSpace ℂ ι) :
+    (_hs : Function.Involutive s) (v : EuclideanSpace ℂ ι) :
     ‖average s v‖ ^ 2 + ‖v - average s v‖ ^ 2 = ‖v‖ ^ 2 := by
-  sorry
+  have hdiff : v - average s v = (1 / 2 : ℂ) • (v - shuffle s v) := by
+    ext x
+    change v x - (1 / 2 : ℂ) * (v x + v (s x)) =
+      (1 / 2 : ℂ) * (v x - v (s x))
+    ring
+  rw [hdiff]
+  unfold average
+  rw [norm_smul, norm_smul, mul_pow, mul_pow, norm_div, norm_one]
+  have h := parallelogram_law_with_norm ℂ v (shuffle s v)
+  rw [shuffle_norm] at h
+  norm_num
+  nlinarith
 
 private lemma energy_control {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) :
@@ -120,11 +185,72 @@ private lemma edge_energy {n k : ℕ} (a b : Fin n)
     (v : EuclideanSpace ℂ (config n k)) :
     ‖v - average (swapEquiv a b) v‖ ^ 2 =
       (1 / 4 : ℝ) * ∑ s, ‖v s - v (swapConfig a b s)‖ ^ 2 := by
-  sorry
+  rw [EuclideanSpace.norm_sq_eq, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro s _
+  have h : (v - average (swapEquiv a b) v) s =
+      (1 / 2 : ℂ) * (v s - v (swapConfig a b s)) := by
+    change v s - (1 / 2 : ℂ) * (v s + v (swapConfig a b s)) = _
+    ring
+  rw [h, norm_mul, mul_pow, norm_div, norm_one]
+  norm_num
 
 private lemma configuration_connected {n k : ℕ} (pat : List (Fin n × Fin n))
     (hc : connectedPattern pat) : (configGraph (k := k) pat).Preconnected := by
-  sorry
+  classical
+  let f (σ : Equiv.Perm (Fin n)) (s : config n k) : config n k :=
+    ⟨s.val.map σ.toEmbedding, (Finset.card_map _).trans s.property⟩
+  have hone (s : config n k) : f 1 s = s := by
+    apply Subtype.ext
+    exact Finset.map_refl
+  have hmul (σ τ : Equiv.Perm (Fin n)) (s : config n k) :
+      f (σ * τ) s = f σ (f τ s) := by
+    apply Subtype.ext
+    change s.val.map _ = (s.val.map _).map _
+    rw [Finset.map_map]
+    rfl
+  let h : Subgroup (Equiv.Perm (Fin n)) := {
+    carrier := {σ | ∀ s, (configGraph pat).Reachable s (f σ s)}
+    one_mem' := by intro s; rw [hone]
+    mul_mem' := by
+      intro σ τ hσ hτ s
+      rw [hmul]
+      exact (hτ s).trans (hσ (f τ s))
+    inv_mem' := by
+      intro σ hσ s
+      have hh := hσ (f σ⁻¹ s)
+      rw [← hmul, mul_inv_cancel, hone] at hh
+      exact hh.symm }
+  have hgate (e : Fin n × Fin n) (he : e ∈ pat) : Equiv.swap e.1 e.2 ∈ h := by
+    intro s
+    change (configGraph pat).Reachable s (swapConfig e.1 e.2 s)
+    by_cases hs : s = swapConfig e.1 e.2 s
+    · rw [← hs]
+    · exact SimpleGraph.Adj.reachable ⟨hs, e, he, rfl⟩
+  have hedge (x y : Fin n) (hxy : (qubitGraph pat).Adj x y) : Equiv.swap x y ∈ h := by
+    rcases hxy with ⟨_, e, he, hxy | hyx⟩
+    · subst e
+      exact hgate (x, y) he
+    · subst e
+      rw [Equiv.swap_comm]
+      exact hgate (y, x) he
+  have hswap (x y : Fin n) : Equiv.swap x y ∈ h := by
+    obtain ⟨p⟩ := hc.2.preconnected x y
+    induction p with
+    | nil => rw [Equiv.swap_self]; exact h.one_mem
+    | @cons x y z hxy p ih =>
+      exact SubmonoidClass.swap_mem_trans h (hedge x y hxy) ih
+  have htop : h = ⊤ := by
+    apply top_unique
+    rw [← Equiv.Perm.closure_isSwap, Subgroup.closure_le]
+    rintro σ ⟨x, y, _, rfl⟩
+    exact hswap x y
+  intro s t
+  obtain ⟨σ, hσ⟩ := Equiv.Perm.exists_map_finset_eq s.val t.val
+    (s.property.trans t.property.symm)
+  have hm : σ ∈ h := htop ▸ Subgroup.mem_top σ
+  have heq : f σ s = t := Subtype.ext hσ
+  exact heq ▸ hm s
 
 private lemma poincare_bound {n k : ℕ} (pat : List (Fin n × Fin n))
     (hc : connectedPattern pat) (v : EuclideanSpace ℂ (config n k))
@@ -134,7 +260,17 @@ private lemma poincare_bound {n k : ℕ} (pat : List (Fin n × Fin n))
 
 private lemma pattern_length_pos {n : ℕ} (hn : 2 ≤ n)
     (pat : List (Fin n × Fin n)) (hc : connectedPattern pat) : 0 < pat.length := by
-  sorry
+  by_contra h
+  have hp : pat = [] := List.length_eq_zero_iff.mp (by omega)
+  have hg : qubitGraph pat = ⊥ := by
+    subst pat
+    ext x y
+    change (x ≠ y ∧ ∃ e ∈ ([] : List (Fin n × Fin n)), _) ↔ False
+    simp
+  have hxy := hc.2.preconnected (⟨0, by omega⟩ : Fin n) (⟨1, by omega⟩ : Fin n)
+  rw [hg, SimpleGraph.reachable_bot] at hxy
+  have := congrArg Fin.val hxy
+  norm_num at this
 
 private lemma spectral_core {n k : ℕ} (hn : 2 ≤ n) (pat : List (Fin n × Fin n))
     (hc : connectedPattern pat) (μ : ℂ) (v : config n k → ℂ) (hv : v ≠ 0)
