@@ -6,7 +6,7 @@
    utility: none
    digest: Shifted Euler interpolation at distinct nodes constructs one fixed matrix recovering the whole gain vector on the literal pure-M trajectory. -/
 
-import D5.S3.Observer.Linear.GainRayEvaluation
+import D5.S3.Observer.Linear.GainRayHistory
 import D5.S3.Observer.Linear.GainRaySpectral
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas

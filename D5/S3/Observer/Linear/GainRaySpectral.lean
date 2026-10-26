@@ -6,7 +6,7 @@
    utility: none
    digest: The literal M trajectory has its source-weighted golden spectral expansion without a contracting-weight sign restriction. -/
 
-import D5.S3.Observer.Linear.GainRaySources
+import D5.S3.Observer.Linear.GainRayHistory
 import D5.S0.Observation.MatrixTracePowerSum
 import Mathlib.NumberTheory.Real.GoldenRatio
 

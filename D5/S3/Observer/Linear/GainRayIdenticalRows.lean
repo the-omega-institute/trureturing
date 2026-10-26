@@ -6,7 +6,7 @@
    utility: none
    digest: Exact native identical-row suffix support and annihilation. -/
 
-import D5.S3.Observer.Linear.GainRaySources
+import D5.S3.Observer.Linear.GainRayHistory
 import Mathlib.LinearAlgebra.Center
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
