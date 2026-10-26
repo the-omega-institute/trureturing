@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Strict radial curvature and square-variable logarithmic concavity for the complete theta kernel. -/
-
 import D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
 import D5.S3.Analytic.Fourier.ThetaDifferentialKernel
 import D5.S3.Zeros.Jensen.SourceThetaMomentBounds
@@ -15,41 +14,31 @@ import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Tactic
-
 /-!
 # Radial curvature and square-variable strict concavity of the theta kernel
-
 For the literal complete theta kernel, a rational certificate for the first
 two modes and a bound on every remaining mode give a strictly negative
 fourth-logarithmic-derivative numerator. Evenness and the resulting
 logarithmic jet chain imply the radial curvature inequality and strict
 concavity of `r ↦ log (romikPhi (sqrt r))` on the positive ray.
-
 The square-variable conclusion is the classical Csordas–Varga property;
 this proof verifies the complete kernel through an explicit full-tail estimate.
 -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 noncomputable section
-
 namespace D5.S3.Analytic.Fourier.ThetaRadialCurvature
-
 open Real Set Polynomial
 open D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
 open D5.S3.Analytic.Fourier.ThetaDifferentialKernel
 open D5.S3.Zeros.Jensen.SourceThetaMomentBounds
 open private primalJet_deriv tailJet_deriv tailJet_summable_ray from
   D5.S3.Zeros.Jensen.OriginalPrimalTailProjection
-
 private def fullJet (r : ℕ) (x : ℝ) : ℝ :=
   primalJet r 1 x + tailJet r 1 x
-
 private theorem fullJet_deriv (r : ℕ) (x : ℝ) :
     HasDerivAt (fullJet r) (fullJet (r + 1) x) x :=
   (primalJet_deriv r 1 x).add (tailJet_deriv r 1 (by omega) x)
-
 private theorem fullJet_eq_iterated (r : ℕ) :
     fullJet r = iteratedDeriv r (fullJet 0) := by
   induction r with
@@ -66,30 +55,24 @@ private def P : ℕ → ℝ → ℝ
   | 4, u => 64*u^6 - 1056*u^5 + 5176*u^4 - 8512*u^3 +
       (15465/4)*u^2 - (1875/8)*u
   | _, _ => 0
-
 private theorem P_eq_jetPolynomial (k : ℕ) (hk : k ≤ 4) (u : ℝ) :
     P k u = (jetPolynomial k).eval u := by
   interval_cases k <;>
     norm_num [P, jetPolynomial, derivative_sub, derivative_add,
       derivative_mul, derivative_pow] <;> ring
-
 /-- The numerator of the fourth derivative of the logarithm. The five
     arguments are the zeroth through fourth derivatives in x. -/
 private def fourthNumerator (a b c d e : ℝ) : ℝ :=
   a^3*e - 4*a^2*b*d - 3*a^2*c^2 + 12*a*b^2*c - 6*b^4
-
 /-- Its coefficientwise absolute polynomial, used only for tail perturbations. -/
 private def absoluteFourth (a b c d e : ℝ) : ℝ :=
   a^3*e + 4*a^2*b*d + 3*a^2*c^2 + 12*a*b^2*c + 6*b^4
-
 /-- Remove the common exp(x/2-y), where y = pi*exp(2*x). The second
     argument is t = exp(-3*y), so these are exactly the first two modes. -/
 private def twoModeJet (k : ℕ) (y t : ℝ) : ℝ := P k y + t*P k (4*y)
-
 private def twoModeNumerator (y t : ℝ) : ℝ :=
   fourthNumerator (twoModeJet 0 y t) (twoModeJet 1 y t)
     (twoModeJet 2 y t) (twoModeJet 3 y t) (twoModeJet 4 y t)
-
 private def Q0 (y : ℝ) : ℝ := 16*y^4 - 96*y^3 + 240*y^2 - 72*y + 135
 private def Q1 (y : ℝ) : ℝ := 5184*y^7 - 35640*y^6 + 106092*y^5 -
   165418*y^4 + 145257*y^3 - 64680*y^2 + 13113*y - 945
@@ -98,26 +81,20 @@ private def Q2 (y : ℝ) : ℝ := 27648*y^7 - 103680*y^6 + 159024*y^5 -
 private def Q3 (y : ℝ) : ℝ := 82944*y^7 - 51840*y^6 - 71568*y^5 +
   79298*y^4 - 5043*y^3 - 25260*y^2 + 15273*y - 1755
 private def Q4 (y : ℝ) : ℝ := 4096*y^4 - 6144*y^3 + 3840*y^2 - 288*y + 135
-
 private def cubicExpLower (z : ℝ) : ℝ := 1 + 3*z + (9/2)*z^2 + (9/2)*z^3
-
 private def firstModeReserve (y : ℝ) : ℝ := 256*y^5*Q0 y
-
 private def frontBudget (k : ℕ) : ℝ := (2:ℝ)^(k+2)*(1+(4:ℝ)^(k+2)/8000)
 private def tailBudget (k : ℕ) : ℝ := (2:ℝ)^(k+3)*(3:ℝ)^(2*k+4)
 private def tailExponentialDenominator : ℝ := 20^8
-
 /-- The full normalized tail that the analytic supplier must bound. -/
 private def normalizedTail (k : ℕ) (y : ℝ) : ℝ :=
   ∑' j : ℕ, P k (((j+3:ℕ):ℝ)^2*y) *
     exp (-((((j+3:ℕ):ℝ)^2-1)*y))
-
 private theorem twoModeNumerator_expand (y t : ℝ) :
     twoModeNumerator y t = 256*y^5*
       (-Q0 y + 4*t*Q1 y - 48*t^2*Q2 y + 64*t^3*Q3 y - 1024*t^4*Q4 y) := by
   norm_num [twoModeNumerator, fourthNumerator, twoModeJet, P, Q0, Q1, Q2, Q3, Q4]
   <;> ring
-
 /-- Each of the five complete derivative polynomials has its leading-power
     envelope on the whole ray u >= 3. -/
 private theorem P_abs_le (k : ℕ) (hk : k ≤ 4) {u : ℝ} (hu : 3 ≤ u) :
@@ -133,7 +110,6 @@ private theorem P_abs_le (k : ℕ) (hk : k ≤ 4) {u : ℝ} (hu : 3 ≤ u) :
     first
     | positivity
     | (apply sub_nonneg.mp; ring_nf; positivity)
-
 private theorem Q0_ge {y : ℝ} (hy : 3 ≤ y) : y^4 ≤ Q0 y := by
   let z := y-3
   have hz : 0 ≤ z := sub_nonneg.mpr hy
@@ -143,7 +119,6 @@ private theorem Q0_ge {y : ℝ} (hy : 3 ≤ y) : y^4 ≤ Q0 y := by
   dsimp [Q0]
   ring_nf
   positivity
-
 private theorem Q2_nonneg {y : ℝ} (hy : 3 ≤ y) : 0 ≤ Q2 y := by
   let z := y-3
   have hz : 0 ≤ z := sub_nonneg.mpr hy
@@ -152,7 +127,6 @@ private theorem Q2_nonneg {y : ℝ} (hy : 3 ≤ y) : 0 ≤ Q2 y := by
   dsimp [Q2]
   ring_nf
   positivity
-
 private theorem Q4_nonneg {y : ℝ} (hy : 3 ≤ y) : 0 ≤ Q4 y := by
   let z := y-3
   have hz : 0 ≤ z := sub_nonneg.mpr hy
@@ -161,35 +135,29 @@ private theorem Q4_nonneg {y : ℝ} (hy : 3 ≤ y) : 0 ≤ Q4 y := by
   dsimp [Q4]
   ring_nf
   positivity
-
 private theorem Q1_certificate {z : ℝ} (hz : 0 ≤ z) :
     4*Q1 (z+3) ≤ 6000*Q0 (z+3)*cubicExpLower z := by
   apply sub_nonneg.mp
   dsimp [Q1, Q0, cubicExpLower]
   ring_nf
   positivity
-
 private theorem Q3_certificate {z : ℝ} (hz : 0 ≤ z) :
     64*Q3 (z+3) ≤ 16000000*Q0 (z+3)*(cubicExpLower z)^3 := by
   apply sub_nonneg.mp
   dsimp [Q3, Q0, cubicExpLower]
   ring_nf
   positivity
-
 private theorem cubicExpLower_nonneg {z : ℝ} (hz : 0 ≤ z) :
     0 ≤ cubicExpLower z := by dsimp [cubicExpLower]; positivity
-
 private theorem cubicExpLower_le_exp {z : ℝ} (hz : 0 ≤ z) :
     cubicExpLower z ≤ exp (3*z) := by
   have h := sum_le_exp_of_nonneg (by positivity : 0 ≤ 3*z) 4
   norm_num [Finset.sum_range_succ] at h
   convert h using 1 <;> dsimp [cubicExpLower] <;> ring
-
 private theorem exp_three_gt_twenty : (20:ℝ) < exp 3 := by
   have h := sum_le_exp_of_nonneg (by norm_num : (0:ℝ) ≤ 3) 9
   norm_num [Finset.sum_range_succ] at h
   linarith
-
 private theorem exp_neg_nine_le : exp (-9:ℝ) ≤ 1/8000 := by
   have h3 := exp_three_gt_twenty
   have hc : (8000:ℝ) < (exp 3)^3 := by
@@ -201,7 +169,6 @@ private theorem exp_neg_nine_le : exp (-9:ℝ) ≤ 1/8000 := by
   rw [← heq] at hc
   rw [exp_neg]
   simpa only [one_div] using one_div_le_one_div_of_le (by norm_num : (0:ℝ) < 8000) hc.le
-
 /-- A pure algebraic estimate; the actual t below pays this explicit premise. -/
 private theorem twoModeNumerator_bound {y t : ℝ} (hy : 3 ≤ y) (ht : 0 ≤ t)
     (hcap : t*cubicExpLower (y-3) ≤ 1/8000) :
@@ -246,7 +213,6 @@ private theorem twoModeNumerator_bound {y t : ℝ} (hy : 3 ≤ y) (ht : 0 ≤ t)
     _ ≤ 256*y^5*(-(7999/32000:ℝ)*Q0 y) :=
       mul_le_mul_of_nonneg_left hinner (by positivity)
     _ = _ := by dsimp [firstModeReserve]; ring
-
 private theorem twoMode_actual_bound {y : ℝ} (hy : 3 ≤ y) :
     twoModeNumerator y (exp (-3*y)) ≤
       -(7999/32000:ℝ)*firstModeReserve y := by
@@ -257,7 +223,6 @@ private theorem twoMode_actual_bound {y : ℝ} (hy : 3 ≤ y) :
         (exp_nonneg _)
     _ = exp (-9:ℝ) := by rw [← exp_add]; congr 1; ring
     _ ≤ 1/8000 := exp_neg_nine_le
-
 /-- The exact five front budgets are [501,1008,2064,4512,12096]/125;
     the exact five tail budgets are
     [648,11664,209952,3779136,68024448]. -/
@@ -271,7 +236,6 @@ private theorem rational_perturbation_certificate :
     absoluteFourth (frontBudget 0) (frontBudget 1) (frontBudget 2)
       (frontBudget 3) (frontBudget 4) < 1/2 := by
   norm_num [absoluteFourth, frontBudget, tailBudget, tailExponentialDenominator]
-
 /-- A complete quadratic-exponential mode tail, with the same constant for
     every y >= 3. This is the analytic supplier behind the five tail budgets. -/
 private theorem quadratic_exponential_tail_bound {P : ℝ → ℝ} {C y : ℝ} {m : ℕ}
@@ -368,7 +332,6 @@ private theorem quadratic_exponential_tail_bound {P : ℝ → ℝ} {C y : ℝ} {
       rw [tsum_mul_left, tsum_geometric_of_abs_lt_one (by norm_num : |(1 / 2 : ℝ)| < 1)]
       norm_num
     _ = _ := by dsimp [D]; ring
-
 /-- Consume the sharp polynomial envelopes for the actual five derivatives.
     All omitted modes remain present in normalizedTail. -/
 private theorem normalizedTail_bound (k : ℕ) (hk : k ≤ 4) {y : ℝ} (hy : 3 ≤ y) :
@@ -384,7 +347,6 @@ private theorem normalizedTail_bound (k : ℕ) (hk : k ≤ 4) {y : ℝ} (hy : 3 
     ring
   simpa only [normalizedTail, tailBudget, hpow,
     show 2 * (k + 2) = 2 * k + 4 by omega, mul_assoc] using h.2
-
 /-- Exact normalization of the accepted original complete tail. This is a
     consumed algebraic bridge, not an additional content claim. -/
 private theorem actual_tailJet_normalized (k : ℕ) (hk : k ≤ 4) (x : ℝ) :
@@ -423,7 +385,6 @@ private theorem actual_tailJet_normalized (k : ℕ) (hk : k ≤ 4) (x : ℝ) :
     ring
   rw [he]
   ring
-
 private theorem abs_mul_perturbation
     {a b r s A B R S : ℝ}
     (ha : |a| ≤ A) (hb : |b| ≤ B) (hr : |r| ≤ R) (hs : |s| ≤ S) :
@@ -447,7 +408,6 @@ private theorem abs_mul_perturbation
     _ ≤ |a*s|+|r*b|+|r*s| := by linarith [abs_add_le (a*s) (r*b)]
     _ ≤ A*S+R*B+R*S := by linarith
     _ = _ := by ring
-
 private theorem abs_four_mul_perturbation
     {a b c d r s t u A B C D R S T U : ℝ}
     (ha : |a| ≤ A) (hb : |b| ≤ B) (hc : |c| ≤ C) (hd : |d| ≤ D)
@@ -466,7 +426,6 @@ private theorem abs_four_mul_perturbation
   have htu := abs_mul_perturbation hc hd ht hu
   have h := abs_mul_perturbation hab hcd hrs htu
   convert h using 1 <;> (try congr 1) <;> ring
-
 private theorem abs_add_five (a b c d e : ℝ) :
     |a+b+c+d+e| ≤ |a|+|b|+|c|+|d|+|e| := by
   calc
@@ -474,7 +433,6 @@ private theorem abs_add_five (a b c d e : ℝ) :
     _ ≤ |a+b+c|+|d|+|e| := by linarith [abs_add_le (a+b+c) d]
     _ ≤ |a+b|+|c|+|d|+|e| := by linarith [abs_add_le (a+b) c]
     _ ≤ _ := by linarith [abs_add_le a b]
-
 /-- The full quartic perturbation is bounded by the increment of its
     coefficientwise absolute polynomial, with no sign premise on the jets. -/
 private theorem fourthNumerator_perturbation
@@ -515,7 +473,6 @@ private theorem fourthNumerator_perturbation
     convert h5 using 1 <;> (try dsimp [d5]) <;> (try congr 1) <;> ring
   dsimp [absoluteFourth]
   linarith
-
 /-- The whole positive-coefficient perturbation polynomial, at every
     0 <= s <= 1, stays below s/2. This retains all degrees up to four. -/
 private theorem scaled_rational_perturbation {s : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
@@ -559,14 +516,11 @@ private theorem scaled_rational_perturbation {s : ℝ} (hs0 : 0 ≤ s) (hs1 : s 
     nlinarith
   exact hscale.trans (by
     simpa only [mul_one_div] using mul_le_mul_of_nonneg_left hdeltaOne.le hs0)
-
 private def fullNormalizedJet (k : ℕ) (y : ℝ) : ℝ :=
   twoModeJet k y (exp (-3*y)) + normalizedTail k y
-
 private def fullNormalizedNumerator (y : ℝ) : ℝ :=
   fourthNumerator (fullNormalizedJet 0 y) (fullNormalizedJet 1 y)
     (fullNormalizedJet 2 y) (fullNormalizedJet 3 y) (fullNormalizedJet 4 y)
-
 private theorem twoModeJet_abs_le (k : ℕ) (hk : k ≤ 4) {y : ℝ} (hy : 3 ≤ y) :
     |twoModeJet k y (exp (-3*y))| ≤ frontBudget k*y^(k+2) := by
   have hy0 : 0 ≤ y := by linarith
@@ -581,7 +535,6 @@ private theorem twoModeJet_abs_le (k : ℕ) (hk : k ≤ 4) {y : ℝ} (hy : 3 ≤
       apply add_le_add (P_abs_le k hk hy)
       exact mul_le_mul ht (P_abs_le k hk h4y) (abs_nonneg _) (by norm_num)
     _ = _ := by dsimp [frontBudget]; rw [mul_pow]; ring
-
 private theorem tail_exp_le {y : ℝ} (hy : 3 ≤ y) :
     exp (-8*y) ≤ 1/tailExponentialDenominator := by
   have h3 : exp (-3:ℝ) ≤ 1/20 := by
@@ -593,7 +546,6 @@ private theorem tail_exp_le {y : ℝ} (hy : 3 ≤ y) :
     _ = (exp (-3:ℝ))^8 := by rw [← exp_nat_mul]; norm_num
     _ ≤ (1/20:ℝ)^8 := pow_le_pow_left₀ (exp_nonneg _) h3 8
     _ = _ := by norm_num [tailExponentialDenominator]
-
 private theorem weighted_tail_exp_le {y : ℝ} (hy : 3 ≤ y) :
     y^3*exp (-8*y) ≤ 27/tailExponentialDenominator := by
   let z := y-3
@@ -626,7 +578,6 @@ private theorem weighted_tail_exp_le {y : ℝ} (hy : 3 ≤ y) :
       mul_le_mul_of_nonneg_left (by convert tail_exp_le (y := 3) (by norm_num) using 1 <;> norm_num)
         (by norm_num)
     _ = _ := by ring
-
 private theorem firstModeReserve_ge {y : ℝ} (hy : 3 ≤ y) :
     256*y^9 ≤ firstModeReserve y := by
   have hy0 : 0 ≤ y := by linarith
@@ -634,7 +585,6 @@ private theorem firstModeReserve_ge {y : ℝ} (hy : 3 ≤ y) :
     _ = 256*y^5*y^4 := by ring
     _ ≤ 256*y^5*Q0 y := mul_le_mul_of_nonneg_left (Q0_ge hy) (by positivity)
     _ = _ := rfl
-
 /-- The complete infinite theta tail preserves strict negativity, uniformly
     throughout y >= 3. No frequency or mode is truncated in this statement. -/
 private theorem fullNormalizedNumerator_negative {y : ℝ} (hy : 3 ≤ y) :
@@ -696,7 +646,6 @@ private theorem fullNormalizedNumerator_negative {y : ℝ} (hy : 3 ≤ y) :
       -(12623/64000:ℝ)*firstModeReserve y := by
     linarith
   exact hfull.trans_lt (mul_neg_of_neg_of_pos (by norm_num) hreserve)
-
 /-- Exact normalization of an individual physical primal jet. -/
 private theorem actual_primalJet_normalized (k : ℕ) (hk : k ≤ 4) (n : ℕ) (x : ℝ) :
     let y : ℝ := Real.pi*exp (2*x)
@@ -715,7 +664,6 @@ private theorem actual_primalJet_normalized (k : ℕ) (hk : k ≤ 4) (n : ℕ) (
       (n:ℝ)^2*(Real.pi*exp (2*x)) := by ring
   rw [he,harg]
   ring
-
 private theorem actual_fullJet_normalized (k : ℕ) (hk : k ≤ 4) {x : ℝ} (hx : 0 ≤ x) :
     let y : ℝ := Real.pi*exp (2*x)
     fullJet k x = exp (x/2-y)*fullNormalizedJet k y := by
@@ -737,7 +685,6 @@ private theorem actual_fullJet_normalized (k : ℕ) (hk : k ≤ 4) {x : ℝ} (hx
     exp_zero,mul_one,Nat.cast_ofNat,show (2:ℝ)^2=4 by norm_num]
   dsimp [fullNormalizedJet,twoModeJet]
   ring
-
 /-- Strict negativity of the literal full-theta fourth-log numerator.
     These are actual jets, including every positive integer mode. -/
 private theorem actual_fullJet_fourthNumerator_negative {x : ℝ} (hx : 0 ≤ x) :
@@ -766,7 +713,6 @@ private theorem actual_fullJet_fourthNumerator_negative {x : ℝ} (hx : 0 ≤ x)
   rw [heq]
   exact mul_neg_of_pos_of_neg (pow_pos (exp_pos _) 4)
     (fullNormalizedNumerator_negative hy)
-
 private theorem actual_phi_has_full_mode_sum (x : ℝ) :
     Summable (fun j : ℕ => primalJet 0 (j+1) x) ∧
     romikPhi x = ∑' j : ℕ, primalJet 0 (j+1) x := by
@@ -800,7 +746,6 @@ private theorem actual_phi_has_full_mode_sum (x : ℝ) :
     Polynomial.eval_pow,Polynomial.eval_X]
   push_cast
   ring
-
 private theorem actual_fullJet_zero_eq_phi_all (x : ℝ) : fullJet 0 x = romikPhi x := by
   obtain ⟨hs,hphi⟩ := actual_phi_has_full_mode_sum x
   have hsplit : (∑' j : ℕ, primalJet 0 (j+1) x) = fullJet 0 x := by
@@ -815,12 +760,10 @@ private theorem actual_fullJet_zero_eq_phi_all (x : ℝ) : fullJet 0 x = romikPh
         congr 1
         omega
   exact (hphi.trans hsplit).symm
-
 private theorem actual_fullJet_eq_phi_iterated_all (k : ℕ) (x : ℝ) :
     fullJet k x = iteratedDeriv k romikPhi x := by
   have heq : fullJet 0 = romikPhi := funext actual_fullJet_zero_eq_phi_all
   rw [fullJet_eq_iterated,heq]
-
 private theorem actual_fullJet_one_odd (x : ℝ) : fullJet 1 (-x) = -fullJet 1 x := by
   have h0 : (fun t : ℝ => fullJet 0 (-t)) = fullJet 0 := by
     funext t
@@ -831,7 +774,6 @@ private theorem actual_fullJet_one_odd (x : ℝ) : fullJet 1 (-x) = -fullJet 1 x
   have heq := hl.unique (fullJet_deriv 0 x)
   norm_num at heq ⊢
   linarith
-
 private theorem actual_fullJet_two_even (x : ℝ) : fullJet 2 (-x) = fullJet 2 x := by
   have h1 : (fun t : ℝ => fullJet 1 (-t)) = fun t => -fullJet 1 t :=
     funext actual_fullJet_one_odd
@@ -841,7 +783,6 @@ private theorem actual_fullJet_two_even (x : ℝ) : fullJet 2 (-x) = fullJet 2 x
   have heq := hl.unique (fullJet_deriv 1 x).neg
   norm_num at heq ⊢
   linarith
-
 private theorem actual_fullJet_three_odd (x : ℝ) : fullJet 3 (-x) = -fullJet 3 x := by
   have h2 : (fun t : ℝ => fullJet 2 (-t)) = fullJet 2 :=
     funext actual_fullJet_two_even
@@ -851,28 +792,22 @@ private theorem actual_fullJet_three_odd (x : ℝ) : fullJet 3 (-x) = -fullJet 3
   have heq := hl.unique (fullJet_deriv 2 x)
   norm_num at heq ⊢
   linarith
-
 private theorem actual_fullJet_odd_origin : fullJet 1 0 = 0 ∧ fullJet 3 0 = 0 := by
   have h1 := actual_fullJet_one_odd 0
   have h3 := actual_fullJet_three_odd 0
   norm_num at h1 h3
   exact ⟨by linarith,by linarith⟩
-
 private def logJet1 (F0 F1 : ℝ → ℝ) (x : ℝ) : ℝ := F1 x / F0 x
-
 private def logJet2 (F0 F1 F2 : ℝ → ℝ) (x : ℝ) : ℝ :=
   F2 x / F0 x - (F1 x) ^ 2 / (F0 x) ^ 2
-
 private def logJet3 (F0 F1 F2 F3 : ℝ → ℝ) (x : ℝ) : ℝ :=
   F3 x / F0 x - 3 * ((F1 x * F2 x) / (F0 x) ^ 2) +
     2 * ((F1 x) ^ 3 / (F0 x) ^ 3)
-
 /-- Exactly the actual fourth-log numerator N divided by F0^4. -/
 private def logJet4 (F0 F1 F2 F3 F4 : ℝ → ℝ) (x : ℝ) : ℝ :=
   ((F0 x) ^ 3 * F4 x - 4 * (F0 x) ^ 2 * F1 x * F3 x -
       3 * (F0 x) ^ 2 * (F2 x) ^ 2 + 12 * F0 x * (F1 x) ^ 2 * F2 x -
       6 * (F1 x) ^ 4) / (F0 x) ^ 4
-
 /-- The complete local logarithmic jet chain. A positive actual kernel
     supplies hne, while its original smooth jets supply h0 through h3. -/
 private theorem hasDerivAt_log_four_jets (F0 F1 F2 F3 F4 : ℝ → ℝ) {x : ℝ}
@@ -896,7 +831,6 @@ private theorem hasDerivAt_log_four_jets (F0 F1 F2 F3 F4 : ℝ → ℝ) {x : ℝ
       (((h1.pow 3).div (h0.pow 3) (pow_ne_zero _ hne)).const_mul (2 : ℝ)) using 1 <;>
       simp only [logJet3, logJet4, Pi.pow_apply, Pi.mul_apply] <;>
       field_simp [hne] <;> ring
-
 /-- Negative fourth derivative and vanishing odd origin jets imply a
     positive radial curvature gap and strict concavity in the square variable.
     Explicit jet assumptions keep this reusable independently of the actual
@@ -969,7 +903,6 @@ private theorem squareVariable_strictConcavity_of_fourthJet_neg
   have hb0 : 0 < b := by simpa only [interior_Ioi, mem_Ioi] using hb
   rw [(hG b hb0).deriv, (hG a ha0).deriv]
   exact hantiH ha0 hb0 hab
-
 /-- The exact Csordas radial curvature target and square-variable strict
     concavity for the original theta kernel. No curvature hypothesis,
     finite-mode truncation, or RH hypothesis is introduced. -/
@@ -1025,6 +958,4 @@ theorem actual_phi_radial_curvature_and_square_concavity :
       actual_fullJet_eq_phi_iterated_all 2] at hg
     simpa only [iteratedDeriv_zero] using hg
   · simpa only [ell0,actual_fullJet_zero_eq_phi_all] using h.2
-
 end D5.S3.Analytic.Fourier.ThetaRadialCurvature
-
