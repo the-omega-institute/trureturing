@@ -12,12 +12,12 @@ internal sealed class SignedOrdinalHistoryPastDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Every carrier of an actual earlier state equals the strict prefix carrier at that same coordinate. Coordinates at most omega use the actual initial invariant; later coordinates use pairwise same-run coherence.")),
                     Paragraph(Text("The four-slot escape audit is unfinished under issue 21750; only exact source reconstruction is claimed."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("strict-past-I-readback"),
+            Describe.Lean(DescribeId.Create("strict-past-i-readback"),
                 DeclarationHandle.Create(Owner + "I_read"), H("Incoming I readback"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("On every actual earlier state and strictly older row, the strict Data.I equals that state's actual incoming predecessor I.")),
                     Paragraph(Text("The four-slot escape audit is unfinished under issue 21750."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("strict-past-J-readback"),
+            Describe.Lean(DescribeId.Create("strict-past-j-readback"),
                 DeclarationHandle.Create(Owner + "J_read"), H("Incoming J readback"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For a strictly older row and eligible old label, strict Data.J equals the actual incoming predecessor J at that earlier carrier stage.")),
