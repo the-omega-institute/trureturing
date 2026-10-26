@@ -383,6 +383,153 @@ private theorem witness_bound {n₁ n₂ : ℕ}
   rw [hρ, tester_image_decomposition]
   exact projective_decomposition_bound (fun t => e₁ (a t)) (fun t => e₂ (b t)) ha hb
 
+private abbrev DesignIndex (d : ℕ) := Fin d ⊕ (Fin d → Fin 4)
+
+private def designWeight (d : ℕ) : DesignIndex d → ℝ :=
+  Sum.elim (fun _ => 1 / ((d : ℝ) * (d + 1)))
+    (fun _ => (d : ℝ) / ((d + 1) * 4 ^ d))
+
+private def designProjector (d : ℕ) : DesignIndex d → Matrix (Fin d) (Fin d) ℂ :=
+  Sum.elim
+    (fun a => Matrix.vecMulVec (fun i => if i = a then 1 else 0)
+      (star (fun i => if i = a then 1 else 0)))
+    (fun z => (1 / (d : ℝ)) • Matrix.vecMulVec (fun i => phase (z i))
+      (star (fun i => phase (z i))))
+
+private def designAverage (d : ℕ) : Matrix (Fin d) (Fin d) ℂ := (1 / (d : ℝ)) • 1
+
+private def designCentered (d : ℕ) (t : DesignIndex d) : Matrix (Fin d) (Fin d) ℂ :=
+  designProjector d t - designAverage d
+
+private theorem design_weight_nonneg (d : ℕ) (t : DesignIndex d) : 0 ≤ designWeight d t := by
+  cases t <;> dsimp [designWeight] <;> positivity
+
+private theorem design_weight_sum {d : ℕ} (hd : 0 < d) : ∑ t, designWeight d t = 1 := by
+  have hd' : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  have ha : (d : ℝ) + 1 ≠ 0 := by positivity
+  simp [designWeight, Fintype.sum_sum_type]
+  field_simp
+  <;> ring
+
+private theorem design_density {d : ℕ} (hd : 0 < d) (t : DesignIndex d) :
+    (designProjector d t).PosSemidef ∧ (designProjector d t).trace = 1 := by
+  classical
+  cases t with
+  | inl a =>
+    constructor
+    · exact Matrix.posSemidef_vecMulVec_self_star _
+    · simp [designProjector, Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
+        Pi.star_apply]
+  | inr z =>
+    constructor
+    · exact (Matrix.posSemidef_vecMulVec_self_star _).smul (by positivity : 0 ≤ 1 / (d : ℝ))
+    · have hu (s : Fin 4) : phase s * (starRingEnd ℂ) (phase s) = 1 := by
+        fin_cases s <;> norm_num [phase]
+      have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
+      simp [designProjector, Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
+        Pi.star_apply, hu, Complex.real_smul, hd']
+
+private theorem design_four {d : ℕ} (i j k l : Fin d) :
+    designSum (fun z => star (z k) * z i * star (z l) * z j) =
+      (4 : ℂ) ^ d * ((if i = k ∧ j = l then 1 else 0) +
+        (if i = l ∧ j = k then 1 else 0)) := by
+  classical
+  have hq (a b : Fin d) (z : Fin d → ℂ) :
+      quadratic (Matrix.single a b 1) z = star (z a) * z b := by
+    simp [quadratic, Matrix.single_apply, ite_and, Finset.sum_ite_irrel, mul_ite,
+      ite_mul, eq_comm]
+  have ht (a b : Fin d) : (Matrix.single a b (1 : ℂ)).trace =
+      if a = b then 1 else 0 := by
+    by_cases h : a = b
+    · subst b; simp [Matrix.trace_single_eq_same]
+    · simp [h, Matrix.trace_single_eq_of_ne a b 1 h]
+  have hm := quadratic_product_sum (Matrix.single k i (1 : ℂ)) (Matrix.single l j 1)
+  have hs : (∑ a, ∑ b, Matrix.single k i (1 : ℂ) a b * Matrix.single l j 1 b a) =
+      (Matrix.single k i (1 : ℂ) * Matrix.single l j 1).trace := rfl
+  rw [hs, Matrix.trace_single_mul] at hm
+  simp only [one_mul, Matrix.single_apply, ht, hq] at hm
+  have he : (fun z : Fin d → ℂ =>
+      (star (z k) * z i) * (star (z l) * z j)) =
+      (fun z => star (z k) * z i * star (z l) * z j) := by
+    funext z
+    ring
+  rw [he] at hm
+  by_cases hik : i = k <;> by_cases hjl : j = l <;>
+    by_cases hil : i = l <;> by_cases hjk : j = k <;>
+    by_cases hkl : k = l <;> simpa [*, eq_comm] using hm
+
+private theorem design_second_entry {d : ℕ} (hd : 0 < d) (i j k l : Fin d) :
+    (∑ t, (designWeight d t : ℂ) * designProjector d t i k * designProjector d t j l) =
+      (1 / ((d : ℂ) * (d + 1))) * ((if i = k ∧ j = l then 1 else 0) +
+        (if i = l ∧ j = k then 1 else 0)) := by
+  classical
+  have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
+  have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
+  have h4 : (4 : ℂ) ^ d ≠ 0 := pow_ne_zero _ (by norm_num)
+  let c : ℂ := 1 / ((d : ℂ) * (d + 1) * 4 ^ d)
+  have he : (∑ t, (designWeight d t : ℂ) *
+        designProjector d t i k * designProjector d t j l) =
+      c * designSum (fun z => star (z k) * z i * star (z l) * z j) := by
+    rw [Fintype.sum_sum_type, designSum, mul_add]
+    rw [← mul_assoc c ((4 : ℂ) ^ d)]
+    simp only [Finset.mul_sum]
+    rw [add_comm]
+    congr 1
+    · apply Finset.sum_congr rfl
+      intro z _
+      dsimp [designWeight, designProjector, c]
+      simp only [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+        Complex.real_smul]
+      push_cast
+      field_simp
+      <;> simp only [starRingEnd_apply]
+      <;> ring
+    · apply Finset.sum_congr rfl
+      intro a _
+      dsimp [designWeight, designProjector, c]
+      simp only [Matrix.vecMulVec_apply, Pi.star_apply]
+      push_cast
+      field_simp
+      <;> simp only [starRingEnd_apply]
+      <;> ring
+  rw [he, design_four]
+  dsimp [c]
+  field_simp
+  <;> ring
+
+private theorem design_first {d : ℕ} (hd : 0 < d) :
+    ∑ t, designWeight d t • designProjector d t = designAverage d := by
+  classical
+  have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
+  have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
+  have he (i k : Fin d) :
+      (∑ t, (designWeight d t : ℂ) * designProjector d t i k) = designAverage d i k := by
+    calc
+      _ = ∑ t, ∑ j : Fin d, (designWeight d t : ℂ) *
+          designProjector d t i k * designProjector d t j j := by
+        apply Finset.sum_congr rfl
+        intro t _
+        rw [← Finset.mul_sum]
+        have ht := (design_density hd t).2
+        change ∑ j, designProjector d t j j = 1 at ht
+        rw [ht, mul_one]
+      _ = ∑ j : Fin d, ∑ t, (designWeight d t : ℂ) *
+          designProjector d t i k * designProjector d t j j := Finset.sum_comm
+      _ = designAverage d i k := by
+        simp_rw [design_second_entry hd]
+        by_cases hik : i = k
+        · subst k
+          simp [designAverage, Matrix.one_apply, eq_comm, mul_add,
+            Finset.sum_add_distrib, Complex.real_smul]
+          field_simp
+          <;> ring
+        · have hh (j : Fin d) : ¬ (i = j ∧ j = k) := by
+            rintro ⟨rfl, rfl⟩
+            exact hik rfl
+          simp [hik, hh, designAverage, Matrix.one_apply]
+  ext i k
+  simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul] using he i k
+
 /-- The qutrit Werner state at parameter one third refutes tester completeness. -/
 theorem result : ¬ claim := by
   intro h
