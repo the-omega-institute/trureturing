@@ -25,7 +25,7 @@ internal sealed class ContinuousFiniteImageTailDocument : IScribeDocumentDefinit
                         All("Dc", Call("Clopens", Call("StageSpace", V("inputs"))),
                             new Formula.Logic(Call("Finite", Call("VisitsAlongOriginalJ", V("inputs"), V("Dc"))),
                                 FormulaLogicOperator.Or,
-                                Call("Finite", Call("MissesAlongOriginalJ", V("inputs"), V("Dc")))))))),
+                                Call("Finite", Call("MissesAlongOriginalJ", V("inputs"), V("Dc"))))))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/kania2026talagrand")),
                 Blocks(Paragraph(Text(
                     "ProperOriginalDiracLiftInputs consists exactly of l, H : Prefix l, D : H.Data, its original Laws, r,d,c in Coord l with omega <= r, r < c and d < c, and a whole point sequence z in H.Space(c). "
