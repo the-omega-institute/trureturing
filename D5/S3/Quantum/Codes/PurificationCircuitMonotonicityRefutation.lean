@@ -219,6 +219,7 @@ private lemma witness_space :
   norm_num [Finset.sum_range_succ, Nat.choose]
 
 set_option maxHeartbeats 4000000 in
+-- The finite six-round probability reduction requires the enlarged kernel budget.
 private lemma witness_evaluation_zero :
     pOut 0 0 (1 / 4) 0
       ([Gate.cnot 0 1 (by decide), Gate.cnot 1 2 (by decide),
@@ -229,13 +230,17 @@ private lemma witness_evaluation_zero :
     initialDistribution, idealAction, gateSet, idle_zero, sum_state_three, state_univ_three,
     Fin.forall_fin_succ, Fin.prod_univ_succ, Finset.sum_filter, Function.update_apply]
 
+set_option maxHeartbeats 4000000 in
+-- The finite six-round probability reduction requires the enlarged kernel budget.
 private lemma witness_evaluation_small :
     pOut (1 / 100) 0 (1 / 4) 0
       ([Gate.cnot 0 1 (by decide), Gate.cnot 1 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.cnot 0 2 (by decide),
         Gate.cnot 1 0 (by decide), Gate.toffoli 1 2 0 (by decide) (by decide) (by decide)] :
           List (Gate 3)) {0} = 23121347 / 64000000 := by
-  sorry
+  norm_num (config := { maxSteps := 1000000 }) [pOut, noisyRun, noisyStep, depolarize, permute,
+    initialDistribution, idealAction, gateSet, idle_zero, sum_state_three, state_univ_three,
+    Fin.forall_fin_succ, Fin.prod_univ_succ, Finset.sum_filter, Function.update_apply]
 
 theorem result : ¬ claim := by
   sorry
