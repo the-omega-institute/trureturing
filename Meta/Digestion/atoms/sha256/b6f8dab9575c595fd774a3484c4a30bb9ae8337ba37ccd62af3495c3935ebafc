@@ -1,0 +1,35 @@
+**Definition 12.1 (the observed filtration and source potentials).**
+For a legitimate start $p\in D_I\setminus N$, use the completed,
+right-continuous natural filtration $\mathcal F_t^O$ of $O^I$ under
+$\mathbb P_p$, contained in the corresponding usual full-process
+filtration. A stopping time below is an $\mathcal F^O$ stopping time.
+The observation determines its own exit time: by (11.6),
+
+$$
+\theta_I=\inf\left\{t\ge0:
+       \frac{|(O_t^I)_{02}|^2}{4Z}\notin(l,u)\right\}.
+\tag{12.1}
+$$
+
+Here $(O_t^I)_{02}$ denotes the two components of its original
+$02$ pair. Keep the original clock $t$ and write $\lambda>0$ for
+a discount, distinct from the fixed native parameter $r=1-Z$.
+Use exactly (8.3) and [S, (116.13)--(116.14)]:
+
+$$
+\begin{gathered}
+b_\lambda=1-\lambda h^{-1}(F+\lambda)^{-1}h,
+\quad d_\lambda=\int b_\lambda\,dm>0,
+\quad R_\lambda=(K+\lambda)^{-1},\\
+R_\lambda f(e)=\frac1{\lambda d_\lambda}
+                    \int_G b_\lambda f\,dm.
+\end{gathered}
+\tag{12.2}
+$$
+
+The last value is the supplied source trace, equivalently the process
+potential, for bounded complex Borel $f$. At legitimate other points
+use process-potential versions, and for $b_\lambda$ use the
+hitting-potential version of [S, (116.9)]. No ordinary value $h(e)$
+is introduced.
+

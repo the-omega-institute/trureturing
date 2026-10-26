@@ -1,0 +1,27 @@
+**定义 89.2（一条原关系的未归一化彩票）。** 对任一 $(a,i)$，用十个事件槽写
+
+$$
+\begin{gathered}
+w_0=u_i a,\qquad w_j=u_j\quad(1\le j\le9),\\
+c_0=1,\qquad c_j=-(K_a)_{ji},\qquad
+c_\ell^+=\max(c_\ell,0),\quad
+c_\ell^-=\max(-c_\ell,0).
+\end{gathered}
+\tag{89.1}
+$$
+
+这是源矩阵恒等式 $\sum_{\ell=0}^9c_\ell A_{w_\ell}\rho_0=0$。令
+
+$$
+\begin{aligned}
+\tau_\pm&=\sum_{\ell=0}^9c_\ell^\pm A_{w_\ell}\rho_0,\\
+m&=\operatorname{Tr}\tau_+=\operatorname{Tr}\tau_-
+  =\sum_\ell c_\ell^+\alpha_{w_\ell}>0,\\
+s_\pm&=\sum_\ell c_\ell^\pm,\qquad
+0<\lambda\le\frac1{\max(1,s_+,s_-)}.
+\end{aligned}
+\tag{89.2}
+$$
+
+$m>0$ 因 $c_0=1$ 和 $\alpha_{w_0}>0$；两边等迹且 $\tau_+=\tau_-$。在正／负两个方案中，彩票槽 $\ell$ 分别以概率 $\lambda c_\ell^\pm$ 被选，余下概率 $1-\lambda s_\pm$ 选择填充槽 $\bot$。槽 $\ell$ 执行 $w_\ell$ 所指定的外定时序，保留该时序的每个原生历史 $h$；只把 $h=w_\ell$ 标为成功，其余标为失败。填充槽保留原制备并标为填充。三种旗标是不同记录值。
+

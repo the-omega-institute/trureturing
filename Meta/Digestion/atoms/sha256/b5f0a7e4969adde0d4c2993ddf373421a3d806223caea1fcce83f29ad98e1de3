@@ -1,0 +1,22 @@
+**Definition 20.3 (the finite list and its independence).**
+Draw $\mathsf N\sim\operatorname{Poisson}(\Lambda\kappa(\epsilon))$.
+Given $\mathsf N=n$, take $n$ independent uniform labels on
+$(0,\Lambda)$ and order them as
+$0<\ell_1<\cdots<\ell_n<\Lambda$. Set $\ell_0=0$ and
+$\ell_{n+1}=\Lambda$. Independently of these labels, take $n$
+independent tuples $(V_i,\mathbf P_i)$ with law (20.3).
+Conditional on the ordered labels, independently of those tuples
+and independently for $i=0,\ldots,n$, draw $U_i\ge0$ with law
+
+$$
+ \mathbb E[e^{-\lambda U_i}\mid\ell_1,\ldots,\ell_n]
+   =\exp[-(\ell_{i+1}-\ell_i)\chi_\epsilon(\lambda)],
+       \qquad \lambda\ge0.
+\tag{20.5}
+$$
+
+This declares conditional independence. The $U_i$ need not be
+unconditionally independent of the ordered labels or of each other.
+There is no additional independent resampling of the terminal state
+of an excursion. Its completed terminal state remains $e$.
+
