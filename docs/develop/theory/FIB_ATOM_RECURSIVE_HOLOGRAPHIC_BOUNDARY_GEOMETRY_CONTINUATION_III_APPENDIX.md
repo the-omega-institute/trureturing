@@ -4648,3 +4648,249 @@ The local regularity and cutoff supplies used above are exactly Shubin's Lemma 5
 In [*A Survey on the Krein--von Neumann Extension*, arXiv:1203.5713v1, Theorem 2.1, (2.9)--(2.11)](https://arxiv.org/html/1203.5713v1), the displayed domain decompositions assume $S\ge\varepsilon I$, $\varepsilon>0$. That hypothesis is absent here by §87.4. The decomposition (112.3), selectors (112.5) and negative-defect line (112.15) have instead been derived directly for the original zero-gap problem. The use of these methods here retains the original $S$, $F$ and $w$ throughout. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 113. Full-unit-input norm resolvents of the actual critical family
+
+**Definition 113.1 (fixed original responses).** Retain the original group, raw Haar measure, unit-source field, horizontal generator and clock, central spectral units, fixed $a,\eta>0$, entire complex form domains and actual critical couplings of (111.1)--(111.3). Write
+
+$$
+\begin{gathered}
+\mathcal H=L^2(G,d\mu;\mathbb C),\quad
+A_\sigma=aL+\eta|D_w|^\sigma,\quad
+Q_{\sigma,r}=(A_\sigma+r)^{-1},\\
+R_{\sigma,r}=(H_\sigma+r)^{-1},\qquad
+R_{{\rm end},r}=(H_{\rm end}+r)^{-1},\qquad r>0.
+\end{gathered}
+\tag{113.1}
+$$
+
+Here $H_{\rm end}$ is precisely the actual selector (112.5), including its zero mode; $Q_{2,r}$ is a free resolvent and $R_{{\rm end},r}$ is not the Friedrichs resolvent. Use the linear unitary chart, $\kappa=\sqrt{\eta/a}$, $R_\kappa$, cylinder function $H_u$ and angular operator $B$ of §§109 and 112. The notation $f_u$ denotes the unitary coordinate transform of $u$, so $H_u(\tau,\omega)=e^{-\tau}f_u(e^{-\tau}\omega)$. All limits $\sigma\downarrow2$ allow arbitrary sequences from above. The source-specific statements below are repo-derived ordinary deductions; the previously proved domain, zero-projection and strong-resolvent statements of §§110--112 are suppliers.
+
+**Lemma 113.2 (subexponential moments on bounded actual energy balls).** For fixed $N,B_0>0$ put
+$\mathcal B_\sigma=\{u\in\mathcal E_\sigma:\|u\|_2\le N,\ q_\sigma[u]\le B_0\}$ and $\epsilon=\sigma-2$. Then
+
+$$
+\lim_{\sigma\downarrow2}\ \sup_{u\in\mathcal B_\sigma}
+ \epsilon\log(1+D_\sigma[u])=0.
+\tag{113.2}
+$$
+
+For every fixed $b>0$, $D_{b\epsilon}[u]$ is uniformly bounded on these balls for orders sufficiently close to $2$. No uniform bound on $D_2$, $D_\sigma$ or $T$ is asserted.
+
+**Proof.** The original same-field inequality (87.3), completion of the square in $\sqrt{T[u]}$, and the spectral interpolation (87.12) give, with $t=D_\sigma[u]$,
+
+$$
+q_\sigma[u]\ge\eta t-J_\sigma D_2[u]
+ \ge\eta t-J_\sigma N^{2\epsilon/\sigma}t^{2/\sigma},
+\qquad J_\sigma=\frac{g_\sigma^2}{256a}\longrightarrow\eta.
+\tag{113.3}
+$$
+
+The last convergence is exactly Theorem 103.2, with no rate. For any fixed $M>B_0/\eta$, $t\ge M$ implies
+
+$$
+t^{\epsilon/\sigma}\le
+ \frac{J_\sigma N^{2\epsilon/\sigma}}{\eta-B_0/M}.
+\tag{113.4}
+$$
+
+For $t<M$, $\epsilon\log(1+t)\le\epsilon\log(1+M)$. For $t\ge M$, (113.4) bounds its upper limit, uniformly in $u$, by $2\log(\eta/(\eta-B_0/M))$. Let $M\to\infty$ to prove (113.2). In particular each supremum is finite. For $b\epsilon\le\sigma$, spectral Hölder gives
+$D_{b\epsilon}[u]\le t^{b\epsilon/\sigma}N^{2-2b\epsilon/\sigma}$; (113.2) proves the stated boundedness. The zero vector is included by continuity. $\square$
+
+**Lemma 113.3 (forced source tightness on the whole input ball).** For every fixed $r>0$,
+
+$$
+\lim_{s\downarrow0}\limsup_{\sigma\downarrow2}
+ \sup_{\|f\|_2\le1}
+ \int_{\{R_\kappa<s\}}|R_{\sigma,r}f|^2d\mu=0.
+\tag{113.5}
+$$
+
+For every sequence $\sigma_n\downarrow2$ and bounded inputs $f_n$, the corresponding responses are relatively compact in $L^2$ after multiplication by any bounded compactly supported function. The inputs may vary with the order and meet the source.
+
+**Proof.** By amplitude scaling it suffices to use $\|f_n\|_2\le1$. Put $u_n=R_{\sigma_n,r}f_n$, $h_n=H_{\sigma_n}u_n=f_n-ru_n$, $\epsilon_n=\sigma_n-2$ and $t_n=D_{\sigma_n}[u_n]$. Nonnegative spectral calculus gives
+
+$$
+\|u_n\|_2\le r^{-1},\qquad
+\|h_n\|_2\le1,\qquad
+q_{\sigma_n}[u_n]\le(4r)^{-1}.
+\tag{113.6}
+$$
+
+Thus Lemma 113.2 applies. Choose an auxiliary inner radius, depending on this response only for the proof,
+
+$$
+d_n=\frac{\exp(-\epsilon_n^{-1/2})}{1+t_n},\qquad
+\Lambda_n=\log(1/d_n),\qquad
+\epsilon_n\Lambda_n\longrightarrow0.
+\tag{113.7}
+$$
+
+There is no change of the actual operator or its units. For a measurable set $E$ with central sections of length at most $C d_n$, the one-dimensional inequality $\|v\|_\infty^2\le2\|v\|_2\|v'\|_2$, integrated in $\xi$, gives
+
+$$
+\int_E|u_n|^2d\mu
+ \le2Cd_n\|u_n\|_2\sqrt{D_2[u_n]}
+ \le C_r\frac{e^{-\epsilon_n^{-1/2}}t_n^{1/\sigma_n}}{1+t_n}
+ \longrightarrow0.
+\tag{113.8}
+$$
+
+This applies in $w$ or in the sheared coordinate $s$, since their sections differ by translation. Unlike (104.15), (113.8) uses no critical-state virial identity.
+
+We specify the forced adaptations of the annular estimates, including the accumulated forcing. Set
+$F_{n,s}(Z)=s^2f_{u_n}(sZ)$ and $k_{n,s}=(\kappa s)^{-\epsilon_n}$. The exact zoom equation, on the unchanged domain (106.13), is
+
+$$
+(\mathcal L_s+k_{n,s}|D_t|^{2+\epsilon_n})F_{n,s}
+ =\frac{g_n}{a}W_sF_{n,s}+G_{n,s},\qquad
+G_{n,s}(Z)=a^{-1}s^4f_{h_n}(sZ),\quad
+\|G_{n,s}\|_2\le a^{-1}s^2.
+\tag{113.9}
+$$
+
+For every fixed $c_0>0$, uniformly for $c_0d_n\le s\le s_0$ with $s_0$ sufficiently small,
+
+$$
+\begin{gathered}
+\|F_{n,s}\|_2\le r^{-1},\qquad
+k_{n,s}\bigl(\|F_{n,s}\|_2^2+D_{\epsilon_n}[F_{n,s}]\bigr)
+ =k_{n,s}\|u_n\|_2^2+D_{\epsilon_n}[u_n]=O_r(1),\\
+\sup_{c_0d_n\le s\le s_0}|k_{n,s}-1|
+ \le C\epsilon_n(1+\Lambda_n)\longrightarrow0.
+\end{gathered}
+\tag{113.10}
+$$
+
+These follow from (113.2), (113.7) and the exact central scaling. The cutoff test in (106.15)--(106.16) now has the extra pairing $\langle\theta^2F_{n,s},G_{n,s}\rangle$, bounded by $C_rs^2$. The double commutator (104.9) is bounded by the middle line of (113.10), and (106.9) still absorbs the same original annular potential. Hence each fixed compact annular cutoff $\theta$ satisfies
+$\|\theta F_{n,s}\|_{H^1}^2+D_{2+\epsilon_n}[\theta F_{n,s}]\le C_{r,\theta}$.
+All tests belong to the exact form domain by the multiplier argument in (104.9).
+
+The regularity proof of Lemma 111.2 applies to (113.9) with precisely one extra term: the localized $G_{n,s}$ in $L^2\subset H^{-3/4}$, of norm at most $Cs^2$. Its other hypotheses are the just obtained $H^1$ bound and (113.10). In particular the same coercive extended operator $K_{n,s}+C_s$, the bound (111.14), and uniqueness in its free form domain give
+
+$$
+\|\theta F_{n,s}\|_{H^{5/4}}\le C_{r,\theta},\qquad
+\|\theta(|D_t|^{2+\epsilon_n}-D_t^2)F_{n,s}\|_{H^{-1}}
+ \le C_{r,\theta}\epsilon_n.
+\tag{113.11}
+$$
+
+For the second assertion use (111.15) on a nested cutoff and the whole separated-support kernel (111.12) on its complement. The latter has both Schur bounds $O(\epsilon_n)$ and uses the full $L^2$ bound in (113.10), so no remote central tail is discarded. Its literature ingredient is Di Nezza--Palatucci--Valdinoci, [*Hitchhiker's guide to the fractional Sobolev spaces*, §3, (3.1)--(3.2), Proposition 3.8](https://arxiv.org/html/1104.4345v3), with dimension one and fractional power $\epsilon_n/2$ before applying $D_t^2$ off support. The varying-order estimates themselves are the supplied (111.12)--(111.15).
+
+Write $H_n=H_{u_n}$, $P_0=-\partial_\tau^2+B$, and $I_j=(j-1,j+1)$, $I_j^+=(j-2,j+2)$ with the fixed nested cutoffs of §111. For $T\le j\le\Lambda_n$, (109.10)--(109.13) and (113.11) give the forced counterpart of (111.19):
+
+$$
+\begin{aligned}
+\|P_0H_n\|_{H^{-1}(I_j\times S^3)}
+ &\le C_r\bigl(e^{-j/4}+|g_n-g_c|+|k_{n,e^{-j}}-1|\bigr)
+             \|H_n\|_{H^1(I_j^+\times S^3)}\\
+ &\quad+C_r\epsilon_ne^j+C_r e^{-j}.
+\end{aligned}
+\tag{113.12}
+$$
+
+Indeed the form-normalized annular function is $s^{-1}F_{n,s}$, $s=e^{-j}$. Its forcing in (113.9) is $s^{-1}G_{n,s}$, of norm at most $a^{-1}s$; the annulus-to-slab maps are bounded on these fixed annuli. This proves the last term in (113.12), including its power and its uniformity for arbitrary $h_n$. The other terms are exactly the original thin-layer, coefficient and varying-order errors of (111.19).
+
+Let $A_n(T),B_n$ be the two strip integrals in (111.16), with $H_n$ as here and $\Lambda_n$ as in (113.7). Cut off $H_n$ between $T$ and $\Lambda_n$ by the fixed-width cutoff used there, obtaining $J_n$. The same finite-overlap summation, now applied to (113.12), and the already proved inverse (109.15) at weight $1$ yield
+
+$$
+\begin{aligned}
+\|P_0J_n\|_{\mathscr H^{-1}_1}
+ &\le C_r\delta_n(T)\|J_n\|_{\mathscr H^1_1}
+  +C_r(A_n(T)+B_n)^{1/2}
+  +C_r\epsilon_n\sqrt{1+\Lambda_n}+C_r e^{-2T},\\
+\delta_n(T)&=e^{-T/4}+|g_n-g_c|+\epsilon_n(1+\Lambda_n).
+\end{aligned}
+\tag{113.13}
+$$
+
+The additional forcing contributes at most $C\sum_{j\ge T-4}e^{-4j}\le Ce^{-4T}$ to the square of the weighted negative norm: the weight contributes $e^{-j}$ and (113.12) contributes another $e^{-j}$. The absolute fractional remainder contributes $C\epsilon_n^2(1+\Lambda_n)$ as in (111.20). Cutoff commutators occupy only the two strips defining $A_n(T),B_n$. Thus all terms over the growing interval are accounted for. First choose a fixed sufficiently large integer $T$, then $n$ large; (113.7) absorbs the first term by (111.18). The mass identity (111.4) consequently gives
+
+$$
+\int_{\{R_\kappa<e^{-(T+8)}\}}|u_n|^2d\mu
+ \le C_r\bigl(A_n(T)+B_n+\epsilon_n^2(1+\Lambda_n)+e^{-4T}\bigr)
+       +\int_{\{R_\kappa<e^4d_n\}}|u_n|^2d\mu.
+\tag{113.14}
+$$
+
+The last ball has central sections of length at most $2\kappa e^4d_n$, so (113.8) makes its mass tend to zero. The same argument puts $F_{n,d_n}\to0$ in $L^2$ on every fixed compact set. Its annular $H^{5/4}$ bound (113.11) and $\|v\|_{H^1}\le\|v\|_2^{1/5}\|v\|_{H^{5/4}}^{4/5}$ give annular strong $H^1$ convergence to zero. The exact change of variables (111.22), with $d_n$ replacing $\ell_n$, then gives $B_n\to0$. Also $\epsilon_n^2(1+\Lambda_n)\to0$ by (113.7).
+
+Extract $f_n\rightharpoonup f$. Self-adjointness and Theorem 112.4 imply $u_n\rightharpoonup u=R_{{\rm end},r}f$: test against $v$ and use $R_{\sigma_n,r}v\to R_{{\rm end},r}v$ strongly. On fixed compact sets off $e$, the forced version of (104.11) has only the additional bounded pairing $\langle\chi^2u_n,h_n\rangle$; Lemma 113.2 controls its double commutator. This gives local $H^1$ bounds and local strong $L^2$ convergence after extraction. On every fixed sufficiently small annulus, (113.11) and interpolation strengthen this to strong $H^1$ convergence. In particular $A_n(T)\to A_u(T)$ for each fixed sufficiently large integer $T$.
+
+Since $u\in D(H_{\rm end})\subset D(S^*)$, the already delivered full maximal expansion (112.2) gives $H_u=(A(u)+\tau C(u))e_0+Z_u$ with $e^{\tau/8}Z_u\in H^1$ on the positive end. It follows directly that $A_u(T)\to0$ as $T\to\infty$. Take the upper limit in (113.14), then let $T\to\infty$. This proves source tightness for every such sequence of responses. A failure of the uniform double limit (113.5) would choose $\sigma_n\to2$, unit-ball inputs and shrinking radii contradicting this sequential conclusion. Finally split a fixed compact set into a small source ball and a compact punctured part. Source tightness and local Rellich compactness prove the last assertion. $\square$
+
+**Theorem 113.4 (actual full-space norm resolvents).** For the unchanged actual critical family, for every fixed $r>0$,
+
+$$
+\lim_{\sigma\downarrow2}
+ \bigl\|(H_\sigma+r)^{-1}-(H_{\rm end}+r)^{-1}\bigr\|_{\mathcal H\to\mathcal H}=0.
+\tag{113.15}
+$$
+
+In addition $R_{{\rm end},r}-Q_{2,r}$ is compact. The assertion is on the whole original complex $L^2$ unit ball; it assumes neither a positive spectral gap nor a uniform global endpoint kinetic bound, imposes no sign or symmetry, and specifies no rate.
+
+**Proof.** We first verify the free estimates used in the relative response. The actual joint support is $\ell\ge|\lambda|$ by (105.4). On $\ell>K$, $(a\ell+\eta|\lambda|^\sigma+r)^{-1}\le(aK)^{-1}$; on $\ell\le K$ the shifted multipliers converge uniformly, since $|\lambda|\le K$ and their denominators are at least $r$. Thus
+
+$$
+\|Q_{\sigma,r}-Q_{2,r}\|\longrightarrow0.
+\tag{113.16}
+$$
+
+For any bounded compactly supported multiplier $m$, $Q_{\sigma,r}m$ is compact: truncate to $\ell\le K$ and use the already proved Hilbert--Schmidt bound (105.8), while the discarded norm is at most $\|m\|_\infty/(aK)$. It converges in norm to $Q_{2,r}m$ by (113.16). Further, $DQ_{\sigma,r}m$ is compact and norm continuous at $2$. Indeed the already proved bounded operators $T_\sigma=D/A_\sigma$ satisfy (105.12), including compactness of $T_\sigma m$, and
+
+$$
+DQ_{\sigma,r}m
+ =T_\sigma m-rT_\sigma Q_{\sigma,r}m.
+\tag{113.17}
+$$
+
+Only bounded compositions occur here; no zero-energy inverse is applied to a response.
+
+For any sequence $\sigma_n\to2$ and $\|f_n\|_2\le1$, put $u_n=R_{\sigma_n,r}f_n$. Fix a real $\chi\in C_c^\infty(G)$, equal to one near $e$, and set $\psi=1-\chi$. Lemma 113.2 supplies $\|\langle D\rangle^{\epsilon_n}u_n\|_2=O_r(1)$. The central commutator calculation (105.14)--(105.17), whose hypotheses are precisely this bound and the $L^2$ bound, therefore gives
+
+$$
+\begin{gathered}
+[|D|^{\sigma_n},\chi]u_n=Dp_n+k_n,\qquad
+p_n=-i\sigma_n\chi'|D|^{\epsilon_n}u_n,\\
+\|p_n\|_2+\|k_n\|_2\le C_r.
+\end{gathered}
+\tag{113.18}
+$$
+
+Here $p_n$ has fixed compact support; $k_n$ has fixed compact horizontal support and uniformly vanishing $L^2$ tails in the central variable. Explicitly, if $\operatorname{supp}\chi\subset K_\xi\times[-J,J]$, then for $|w|>2J$,
+$|k_n(\xi,w)|\le C|w|^{-1-\sigma_n}\int_{-J}^{J}|\chi u_n(\xi,t)|dt$ as in (105.16). Integration and Cauchy--Schwarz give the required uniform tail. This retains the entire original central line.
+
+The forced local bound used in Lemma 113.3 gives a bounded compactly supported $L^2$ sequence
+$b_n=-a(L\chi)u_n+2a\sum_i(X_i\chi)(X_i u_n)$, since these derivatives of $\chi$ avoid $e$. Define
+$F_n=g_n\Gamma\psi u_n+b_n-\eta k_n$. The original field is bounded off the source and $\Gamma\le B_\Gamma\rho^{-3}$. Hence $F_n$ is bounded in $L^2$ and has uniformly vanishing $L^2$ tails as $\rho\to\infty$. Localization of the actual form equation yields
+
+$$
+(A_{\sigma_n}+r)(\psi u_n)=\psi f_n+F_n-\eta Dp_n,
+\qquad
+\psi u_n=Q_{\sigma_n,r}(\psi f_n+F_n)
+                  -\eta DQ_{\sigma_n,r}p_n.
+\tag{113.19}
+$$
+
+To justify the second identity, $\psi u_n\in\mathcal E_{\sigma_n}$ by the product and Fourier multiplier bounds of §104. The first identity initially holds on smooth tests and extends to the free form domain: $F_n,p_n,f_n\in L^2$ and $\|D\phi\|_2^2\le\|\phi\|_2^2+D_{\sigma_n}[\phi]$. Test by $Q_{\sigma_n,r}v\in D(A_{\sigma_n})$ for arbitrary $v\in L^2$. Its derivative is in $L^2$ by the joint spectral bound, and the represented-form identity gives the second equality. Neither $\Gamma u_n\in L^2$ nor a separate operator action on that singular product is assumed.
+
+Subtract the free response in (113.19). With $K_\sigma=R_{\sigma,r}-Q_{\sigma,r}$ this gives
+
+$$
+K_{\sigma_n}f_n
+ =\chi u_n-Q_{\sigma_n,r}\chi f_n
+       +Q_{\sigma_n,r}F_n-\eta DQ_{\sigma_n,r}p_n.
+\tag{113.20}
+$$
+
+Each sequence on the right is relatively compact. For $\chi u_n$ this is Lemma 113.3. For the second and fourth terms it follows from the compact, norm-continuous localized free operators just proved and the bounded inputs with fixed compact support. For the third term truncate $F_n$ to $\rho\le R$. The localized free operators give relative compactness for fixed $R$; the remaining norm is at most $r^{-1}\|\mathbf1_{\{\rho>R\}}F_n\|_2$, uniformly tending to zero. Thus for every sequence of orders approaching $2$ and bounded inputs, the relative responses in (113.20) have a strongly convergent subsequence. This is relative compactness of the interaction correction, not compactness of the full free or interacting resolvent on the noncompact group.
+
+By Theorem 112.4 and (113.16), $K_\sigma\to K=R_{{\rm end},r}-Q_{2,r}$ strongly, and these are self-adjoint bounded operators. The following elementary compactness passage is included to specify the use of the mature collective-compactness method of Anselone--Palmer, [*Collectively compact sets of linear operators*, Pacific J. Math. 25, 417--422, Theorem 3.4](https://doi.org/10.2140/pjm.1968.25.417). For any bounded sequence $v_j$, choose $\sigma_j\to2$ so close that $\|K_{\sigma_j}v_j-Kv_j\|_2<1/j$, using strong convergence separately for each fixed $v_j$. Equation (113.20) gives a convergent subsequence, so $K$ is compact. If $v_n\rightharpoonup0$ and $\sigma_n\to2$, every norm limit of $K_{\sigma_n}v_n$ is zero: for fixed $z$,
+$\langle z,K_{\sigma_n}v_n\rangle=\langle K_{\sigma_n}z,v_n\rangle\to0$ by self-adjointness and strong convergence. Relative compactness then gives $\|K_{\sigma_n}v_n\|_2\to0$.
+
+Finally, if $\|K_\sigma-K\|$ did not tend to zero, choose unit-ball inputs witnessing the failure and extract $f_n\rightharpoonup f$. The preceding conclusion applied to $f_n-f$, compactness of $K$, and strong convergence on $f$ give
+$(K_{\sigma_n}-K)f_n\to0$, a contradiction. Thus $\|K_\sigma-K\|\to0$. Combining this with (113.16) proves (113.15).
+
+The mature halfspace comparison underlying $B$ retains the parameters $n=4$, $\beta=2$ in Alvino--Ferone--Volpicelli, [*Sharp Hardy inequalities in the half space with trace remainder term*, Theorem 1.1, (8), (12)](https://arxiv.org/html/1105.0335v1); the original full-field transfer and weighted inverse are exactly §§87 and 109. The free heat-kernel localization is (105.8) for the original homogeneous dimension $5$ and clock. Those supplies do not by themselves give uniform-input source tightness: (113.2), the response-dependent inner radius (113.7), and the accumulated forced estimate (113.13)--(113.14) supply that step. The conclusion concerns only these specified mathematical operators; it supplies no native realization or physical spatial-dimension assertion. $\square$
+
+## 追加锚（本行以下为增补区）
