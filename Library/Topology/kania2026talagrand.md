@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, without the CH induction or the final collision premise.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; final omega-one realization and signed collision endpoints remain open.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -810,3 +810,30 @@ public additions are data structures and construction definitions; the
 transport proofs are private and consumed. The inherited information
 audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750.
+
+
+## Actual coherent history from CH
+
+`SignedOrdinalHistory.run` now constructs one coherent family of actual
+countable-stage states from `continuum = aleph-one` alone. A strict-past
+well-founded fixpoint proves totality and pairwise coherence, then recovers
+the canonical present values. The run unfolds to its own actual advancement:
+the initial predecessor, the same selected successor Q/R, or the literal
+proper-limit extension of its own strict archive. No complete-history or
+step-supplier hypothesis provides the run.
+
+Whole original U/B/V/nu birth families, their onto proofs and every original
+Label are preserved by exact transports. Permanent reservoirs are read from
+the same outgoing event at max(row,label). Proper F retains regular signed
+limits of total variation at most one for arbitrary original norm-one lifts.
+Cofinal ordinary, delayed and launch treatments refer to the same selected
+Q/R and the original birth clopen codec; local delayed eligibility is proved
+stable after construction without consulting a future final space.
+
+This closes the coherent-history construction step, not Problem 8.2. The
+literal final omega-one Prefix, post-run Data/Laws, concrete RawHistory and
+joint signed-ball/Grothendieck/anti-homeomorphism endpoints remain separate
+obligations. FullCHLeanSolved and officialSolved remain zero. The four-slot
+information audit is unfinished under issue 21750; the compiled Reg modules
+currently reconstruct the exact source statements and do not claim
+`declared_validated` registration.
