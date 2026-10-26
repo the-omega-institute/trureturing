@@ -15,7 +15,8 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             N("MinimalDominating", "Inclusion minimality", "Domination uses SimpleGraph.IsDominating and is required separately. Every proper finite subset must fail domination. No minimum-cardinality, total-domination, independence or symmetry condition is added."),
             N("Closed", "Closed neighbourhoods", "Closed G u v means u=v or G.Adj u v."),
             N("ClosedPrivate", "Existential private witnesses", "ClosedPrivate G S v z means z is closed-adjacent to v and every selected closed neighbour of z equals v. Witnesses are propositions and are never counted choices."),
-            T("minimal_iff_closed_private", "Private-witness characterization", PrivateFormula(), "The proof uses the existing criticalVertices, privateNeighbors and selfCritical_no_selected_neighbor suppliers. The isolated-or-outside-private-neighbour characterization, under the domination premise, is published as Proposition 1 of Gangloff and Talon, arXiv:1906.10779v2, https://arxiv.org/abs/1906.10779. No novelty is claimed for that characterization. No external prose or proof code is transplanted."),
+            T("minimal_iff_closed_private", "Private-witness characterization", PrivateFormula(), "The proof uses the existing criticalVertices, privateNeighbors and selfCritical_no_selected_neighbor suppliers. The isolated-or-outside-private-neighbour characterization, under the domination premise, is published as Proposition 1 of Gangloff and Talon, arXiv:1906.10779v2, https://arxiv.org/abs/1906.10779. No novelty is claimed for that characterization. No external prose or proof code is transplanted.",
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/GraphInvariants/gangloff2019dominating"))),
             N("grid", "The ordinary open grid", "Vertices are Fin 3 × Fin n; (r,c) represents the source label (r+1,c+1). Adjacency is exactly Nat.dist r s + Nat.dist c d = 1. The finite column type supplies open ends."),
             N("encode", "Read the masks", "Each column mask has one Boolean bit for each of the three labelled rows. The bit is true exactly when the actual vertex belongs to the subset."),
             N("decode", "Recover the subset", "The decoded subset contains precisely the vertices whose column-mask bit is true."),
@@ -37,10 +38,11 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             DescribeId.Create("bmg-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
-    private static DocumentBlock T(string name, string title, Formula formula, string prose) => Describe.Lean(
+    private static DocumentBlock T(string name, string title, Formula formula, string prose,
+        AssessedProvenance? provenance = null) => Describe.Lean(
         DescribeId.Create("bmg-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+        provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula X(string name) => F.Id(name);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] args) =>
