@@ -20,12 +20,8 @@ namespace D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiEnumeration
 open AndrasfaiLanguage AndrasfaiCounting
 open scoped Classical
 
-private theorem live_ne_reject (q : Fin 4) : liveState q ≠ 4 := by
-  intro h
-  have hv := congrArg Fin.val h
-  have hq := q.isLt
-  simp only [liveState, Fin.val_castSucc, Fin.val_ofNat] at hv
-  omega
+private theorem live_ne_reject (q : Fin 4) : liveState q ≠ 4 :=
+  Fin.castSucc_ne_last q
 
 private def forgetRun (N : ℕ) (hN : N % 3 ≠ 0) (p : ClosedRun N) :
     {labels : Fin N → Bool // PeriodicAvoidance (List.ofFn labels)} :=
