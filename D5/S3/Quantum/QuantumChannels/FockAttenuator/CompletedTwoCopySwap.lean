@@ -488,7 +488,11 @@ private theorem pair_map_norm (U : H2 ≃ₗᵢ[ℂ] H2) (x : FourModes) :
   intro t
   simp only [pairMap, twoCopyMap, ContinuousLinearMap.completion_apply_coe,
     UniformSpace.Completion.norm_coe]
-  simpa only [TensorProduct.mapL_apply, TensorProduct.mapIsometry_apply] using
+  have hU : (U.toContinuousLinearEquiv.toContinuousLinearMap : H2 →ₗ[ℂ] H2) =
+      U.toLinearIsometry.toLinearMap := by
+    ext y
+    rfl
+  simpa only [TensorProduct.mapL_apply, TensorProduct.mapIsometry_apply, hU] using
     (TensorProduct.mapIsometry U.toLinearIsometry U.toLinearIsometry).norm_map t
 
 private def pairIsometry (U : H2 ≃ₗᵢ[ℂ] H2) : FourModes →ₗᵢ[ℂ] FourModes :=
