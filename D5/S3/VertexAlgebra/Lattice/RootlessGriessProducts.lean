@@ -15,7 +15,7 @@ import D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
 import Batteries.Tactic.OpenPrivate
 
 /-!
-PROPOSED SOURCE, UNCOMPILED. The carrier, Y, normalized mu, translation,
+The carrier, Y, normalized mu, translation,
 quadratic field and charge cocycle are the production ordinary lattice ones.
 No product identity, representation, shell count or abstract Griess algebra is
 assumed. The clean charge table requires positive definiteness and rootlessness.
@@ -38,7 +38,6 @@ no literature novelty or accepted new-content classification is asserted.
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
 namespace D5.S3.VertexAlgebra.Lattice.RootlessGriessProducts
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
@@ -72,7 +71,7 @@ def Qcharge (D : LatticeData) (a : Charge D) : Carrier D :=
 
 private theorem mu_add_left (D : LatticeData) (a b c : Carrier D) (n : ℤ) :
     mu D (a + b) n c = mu D a n c + mu D b n c := by
-  simp [mu, VertexOperator.ncoeff]
+  simp only [mu, map_add, Pi.add_apply, LinearMap.add_apply]
 
 private theorem mu_add_right (D : LatticeData) (a b c : Carrier D) (n : ℤ) :
     mu D a n (b + c) = mu D a n b + mu D a n c := by
@@ -153,7 +152,7 @@ private theorem creation_two_opposite (D : LatticeData) (a : Charge D) :
 private theorem epsilon_neg_right (D : LatticeData) (a b : Charge D) :
     epsilon D a (-b) = epsilon D a b := by
   have h : lowerCocycleExponent D a (-b) = -lowerCocycleExponent D a b := by
-    simp [lowerCocycleExponent, Finset.sum_neg_distrib]
+    simp [lowerCocycleExponent, Finset.sum_neg_distrib, add_comm]
   simp only [epsilon, h, paritySign, even_neg]
 
 private theorem epsilon_neg_left (D : LatticeData) (a b : Charge D) :
@@ -176,8 +175,7 @@ private theorem orbit_coefficient (D : LatticeData) (a b : Charge D) (n : ℤ) :
        (Finsupp.single (a - b) (creationCoeff D a (-n-1+bilinear D a b)) +
         Finsupp.single (-(a - b)) (creationCoeff D (-a) (-n-1+bilinear D a b)))) := by
   simp only [E, mu_add_left, mu_add_right, ground_product,
-    epsilon_neg_left, epsilon_neg_right, LatticeInvolution.epsilon_neg_neg,
-    bilinear_neg_left, bilinear_neg_right, LatticeInvolution.bilinear_neg_neg,
+    epsilon_neg_left, epsilon_neg_right, bilinear_neg_left, bilinear_neg_right,
     neg_neg, sub_neg_eq_add]
   have h1 : -a + b = -(a - b) := by abel
   have h2 : a + -b = a - b := by abel
@@ -230,17 +228,17 @@ private theorem quadratic_ground (D : LatticeData) (i j : Fin D.rank)
     ((quadraticSummand D i j)[[m+1]]) (ground D a) =
       if m = 0 then (Gi D i a * Gi D j a) • ground D a else 0 := by
   rw [quadraticSummand_coefficient, finsum_eq_single _ 0]
-  · simp only [normalSummand, lt_irrefl, if_false, Module.End.mul_apply, sub_zero]
+  · simp only [normalSummand, lt_irrefl, ite_false, Module.End.mul_apply, sub_zero]
     rw [neutral_ground D i a 0 (by omega)]
-    simp only [if_pos rfl, map_smul]
+    simp only [ite_true, map_smul]
     rw [neutral_ground D j a m hm]
     by_cases hz : m = 0 <;> simp [hz, smul_smul]
   · intro k hk
     by_cases hn : k < 0
-    · simp only [normalSummand, if_pos hn, Module.End.mul_apply]
-      rw [neutral_ground D j a (m-k) (by omega), if_neg (by omega), map_zero]
-    · simp only [normalSummand, if_neg hn, Module.End.mul_apply]
-      rw [neutral_ground D i a k (by omega), if_neg hk, map_zero]
+    · simp only [normalSummand, ite_eq_left hn, Module.End.mul_apply]
+      rw [neutral_ground D j a (m-k) (by omega), ite_eq_right (by omega), map_zero]
+    · simp only [normalSummand, ite_eq_right hn, Module.End.mul_apply]
+      rw [neutral_ground D i a k (by omega), ite_eq_right hk, map_zero]
 
 /-- Quadratic/charge mode one, computed on actual fields. No norm assumption
 is needed for this mixed contraction. -/
@@ -448,24 +446,24 @@ theorem orbit_orbit_one (D : LatticeData)
       else 0 := by
   classical
   by_cases hs : b = a ∨ b = -a
-  · rw [if_pos hs]
+  · rw [ite_eq_left hs]
     rcases hs with h | h
     · subst b
       exact orbit_diagonal_one D a ha
     · subst b
       rw [E_neg]
       exact orbit_diagonal_one D a ha
-  · rw [if_neg hs]
+  · rw [ite_eq_right hs]
     have hbounds := norm_four_inner_bounds D hD hroot a b ha hb
       (fun h => hs (Or.inl h)) (fun h => hs (Or.inr h))
     by_cases hm : bilinear D a b = -2
-    · rw [if_pos hm]
+    · rw [ite_eq_left hm]
       exact orbit_add_one D a b hm
-    · rw [if_neg hm]
+    · rw [ite_eq_right hm]
       by_cases hp : bilinear D a b = 2
-      · rw [if_pos hp]
+      · rw [ite_eq_left hp]
         exact orbit_sub_one D a b hp
-      · rw [if_neg hp]
+      · rw [ite_eq_right hp]
         exact orbit_middle_one D a b (by omega) (by omega)
 
 /-- Complete vacuum-pairing table for actual norm-four plus orbits.
@@ -478,14 +476,14 @@ theorem orbit_orbit_three (D : LatticeData)
       if b = a ∨ b = -a then (2 : ℂ) • vacuum D else 0 := by
   classical
   by_cases hs : b = a ∨ b = -a
-  · rw [if_pos hs]
+  · rw [ite_eq_left hs]
     rcases hs with h | h
     · subst b
       exact orbit_diagonal_three D a ha
     · subst b
       rw [E_neg]
       exact orbit_diagonal_three D a ha
-  · rw [if_neg hs]
+  · rw [ite_eq_right hs]
     have hbounds := norm_four_inner_bounds D hD hroot a b ha hb
       (fun h => hs (Or.inl h)) (fun h => hs (Or.inr h))
     rw [orbit_coefficient,
