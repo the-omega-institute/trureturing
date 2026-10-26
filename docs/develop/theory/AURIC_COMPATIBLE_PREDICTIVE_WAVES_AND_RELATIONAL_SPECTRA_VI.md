@@ -1926,3 +1926,425 @@ $$
 这些缺项不撤销条件定理 96.1，也不改变 §§84–85 的经典表示边界；它们界定了从同源预测记录与停止取得继续走向共同量子实现所需的新关系。∎
 
 ## 追加锚（本行以下为增补区）
+
+
+## 101. 同一原交互的单制备记录锚
+
+**定义 101.1（码、原记录载体与固定比较方向）。** 保留 V 定义 54.1、91.1、本卷定义 80.1、91.1 的全部对象和参数：$H=\mathbb C^5$，$B:\mathbb C^3\to H$，$Q=\mathbb C^3$，$0<d<1$，$\sin(2\theta)\ne0$，唯一制备 $\rho_0=\psi\psi^\dagger$，$\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf$，原终端 $E_1=E=qq^\dagger$、$E_0=I_3-E$，以及同一个可重复的 $N\in U(3)$，$[N,P_\xi]\ne0$。仍有 $W=I_3-2ff^\dagger$、$V_0=Ue^{\mathrm i\theta W}$、$V_1=V_0W$、$A_j=\operatorname{Ad}_{V_j}/2$、$A_N=\operatorname{Ad}_N$。
+
+原交互的出射记录空间记作 $R_{\rm env}=\mathbb C^2$。依[环境记录定义 2.1、定理 2.2](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#2-two-measured-instruments-of-the-identical-full-five-dimensional-channel)，就绪态为 $f_0$，同一个五维等距交互 $\mathcal V$ 满足
+
+$$
+\begin{aligned}
+\mathcal V e_0&=u_H\otimes f_0,&\quad
+\mathcal V e_1&=u_H\otimes f_1,&\quad
+\mathcal V e_2&=v_H\otimes(f_0+f_1)/\sqrt2,\\
+\mathcal V e_3&=z_H\otimes f_1,&
+\mathcal V e_4&=z_H\otimes f_0.
+\end{aligned}
+\tag{101.1}
+$$
+
+原来的实际标签基为
+
+$$
+\begin{gathered}
+g_0=\cos\theta f_0-\mathrm i\sin\theta f_1,\qquad
+g_1=-\mathrm i\sin\theta f_0+\cos\theta f_1,\\
+S_\theta x=\frac{V_0x\otimes g_0+V_1x\otimes g_1}{\sqrt2},\qquad
+\mathcal VB=(B\otimes I_{R_{\rm env}})S_\theta,\\
+g_\pm=(g_0\pm g_1)/\sqrt2,\qquad F_\pm=g_\pm g_\pm^\dagger.
+\end{gathered}
+\tag{101.2}
+$$
+
+这些等式只给已有交互的数学对应，不给访问环境的权利。特别地，
+
+$$
+g_+=e^{-\mathrm i\theta}(f_0+f_1)/\sqrt2,\qquad
+g_-=e^{\mathrm i\theta}(f_0-f_1)/\sqrt2.
+\tag{101.3}
+$$
+
+所以 $(F_+,F_-)$ 是这一个原交互的固定 Hadamard 记录设置，不依赖调节 $\theta$，也不是另制备一个路径控制系统。
+
+**假设 101.2（额外供应的可重复完整 CP 提升域及记录锚）。** 在原菜单之外，另供应以下接口。可访问的记录确是 (101.1) 每次交互的原出射载体，基向量及效果 $(g_0,g_1,F_+,F_-)$ 的相互关系物理固定。把原交互及其尚未确定的记录保留／泄漏接口合写为 $\mathcal L$；该接口保留原基分支，到达比较端口的未知映射属于
+
+$$
+\begin{split}
+\mathscr L=\{\mathcal L:M_3(\mathbb C)\to
+ M_3(\mathbb C)\otimes M_2(\mathbb C):\;&\mathcal L\text{ 为 CPTP},\\
+&(I_3\otimes\langle g_j|)\mathcal L(X)
+ (I_3\otimes|g_j\rangle)=A_j(X)\quad(j=0,1),\ \forall X\in M_3\}.
+\end{split}
+\tag{101.4}
+$$
+
+(101.4) 是完整矩阵域的约束，等式也作用于每个未触动有限参考；不是仅在唯一制备上的两个标量约束。每次使用同一个无持久隐藏记忆的 $\mathcal L$，新记录载体按相同就绪合同进入，已出射载体与未触动参考上的接续为恒等。三种备选上下文是：在原基立即读取、不读取而相干保留、或在一次原交互之后选择固定设置 $(F_+,F_-)$。没有供应其他记录酉、任意相位设置、系统逆、重置、新制备或选支。未访问的泄漏允许使 $\mathcal L$ 混合，故这里不预设其为等距通道。
+
+记录锚是仅在原唯一制备上、一次原交互之后的精确概率律
+
+$$
+\operatorname{Tr}[(I_3\otimes F_+)\mathcal L(\rho_0)]
+=\frac{6-d}{8}.
+\tag{101.5}
+$$
+
+此为共同装置的附加数学前提；不是原菜单已经取得它的断言，也不是有限样本等于一个精确实数的断言。比较律与相干保存属于备选上下文；不要求先在本次原制备上测 $F_+$，再把受扰状态当成未触动的 $\rho_0$，也不供应为此重置或额外副本。该读口的因果位置在原交互之后、不可逆标签读取之前。对 (101.1) 的给定纯扩张，(101.5) 是其预测；要把未知装置纳入 (101.4) 并将这项预测锚定到它，仍需本假设的接口及标定。
+
+**定理 101.3（一个原态、一个固定记录设置确定整个码内相干提升）。** 在 (101.4) 的类内，每个提升有唯一 $\gamma\in\mathbb C$、$|\gamma|\le1$，使
+
+$$
+\begin{aligned}
+\mathcal L_\gamma(X)=\frac12\big[&V_0XV_0^\dagger\otimes|g_0\rangle\langle g_0|
+ +V_1XV_1^\dagger\otimes|g_1\rangle\langle g_1|\\
+ &+\gamma V_0XV_1^\dagger\otimes|g_0\rangle\langle g_1|
+ +\bar\gamma V_1XV_0^\dagger\otimes|g_1\rangle\langle g_0|\big].
+\end{aligned}
+\tag{101.6}
+$$
+
+其在原制备上的固定读口响应为
+
+$$
+\omega_d=\operatorname{Tr}(W\rho_0)=\frac{2-d}{4}>0,\qquad
+p_+(\gamma)=\frac{1+\omega_d\operatorname{Re}\gamma}{2}.
+\tag{101.7}
+$$
+
+因此，在完整可重复类 $\mathscr L$ 内，(101.5) 当且仅当 $\gamma=1$，也当且仅当
+
+$$
+\mathcal L(X)=S_\theta XS_\theta^\dagger\qquad\forall X\in M_3.
+\tag{101.8}
+$$
+
+结论包括任意未触动有限参考和后续重复使用，不需要另一制备或第二个相位设置。识别的对象是固定记录坐标下的交叉映射，而非从单态数据重建一个未给定的 Hilbert 空间或 CP 域。
+
+证明。使用[相干重建应用 27.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#27-跨描述核与物理相干接口) 已归属的正块支撑工具：[Watrous，1207.5726v2，Lemma 2](https://arxiv.org/abs/1207.5726v2)。把 $\mathcal L$ 的 Choi 矩阵按记录基分块，对角块为 $|a_j\rangle\langle a_j|$，$a_j=\operatorname{vec}(V_j)/\sqrt2$。正块的交叉项须消去两侧对角块的核，故形如 $\gamma|a_0\rangle\langle a_1|$；在这两个一维支撑上，正性恰为 $|\gamma|\le1$。还原 Choi 对应即为 (101.6)。反向该二阶系数矩阵正，给出 CP；对角两项的迹和为 $\operatorname{Tr}X$，交叉记录矩阵单位的迹为零，故给 TP。这是已知正块及秩一 Choi 支撑事实的应用，不作为新的支撑定理。等价地，$\mathcal L_\gamma=(\operatorname{id}_Q\otimes\mathcal D_\gamma)\circ\operatorname{Ad}_{S_\theta}$，其中记录 Schur 通道 $\mathcal D_\gamma$ 保留两个对角矩阵单位，并把 $|g_0\rangle\langle g_1|$ 乘以 $\gamma$、其伴随乘以 $\bar\gamma$。因此这些候选可保留同一原交互，仅有不同的出射记录保留／泄漏完成；$\mathcal D_\gamma$ 不是新授予的可调用控制。
+
+本源的实际向量给
+
+$$
+f^\dagger Uq=\sqrt6/4,\qquad f^\dagger Uf=1/2,\qquad
+f^\dagger\rho_0f=\frac{3d}{8}+\frac{1-d}{4}=\frac{2+d}{8}.
+\tag{101.9}
+$$
+
+两个重叠均实，制备中相对因子为 $\mathrm i$，故交叉实部为零。由 $W=I_3-2ff^\dagger$ 得 $\omega_d=(2-d)/4$。又 $V_1=V_0W$，所以 $\operatorname{Tr}(V_0\rho_0V_1^\dagger)=\omega_d$；与 $F_+$ 配对得到 (101.7)。等式 (101.5) 恰好令 $\operatorname{Re}\gamma=1$，闭单位圆盘中唯一这样的点是 $\gamma=1$。于是整个 Choi 矩阵而非仅 $\rho_0$ 的输出被确定，(101.8) 及全部参考恒等式随之成立。反向将 $\gamma=1$ 代回即可。固定读口还给其完整两个后继分支
+
+$$
+C_\pm(X)=V_0P_\pm XP_\pm V_0^\dagger,
+\qquad P_\pm=(I_3\pm W)/2,\qquad C_++C_-=A_0+A_1.
+\tag{101.10}
+$$
+
+这里复用了[相干重建定义 19.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#19-条件平衡返回仪器和无界记录树) 的同交互基旋转仪器；新增推断是 (101.9) 的非零原态响应连同完整 CP 类，使一个固定设置的边界响应确定该仪器及整个提升。∎
+
+## 102. 全部原历史、双终端与参考后继的对应
+
+**定理 102.1（锚定提升的逐历史完整对应）。** 假设 101.2、(101.5) 成立。取定义 91.1 的任意外定时序 $s\in\{\mathsf J,\mathsf N\}^*$，含 $k$ 个原仪器位置。以 $h\in\{0,1\}^k$ 标记全部原标签，$w_s(h)\in\mathcal W_s$ 为保留全部 $N$ 位置的原时间词，$|h\rangle_g$ 为这 $k$ 个原记录载体的张量基。只在当前系统上施原交互或 $N$、旧载体保持未触动，得到实际等距
+
+$$
+S_sx=2^{-k/2}\sum_{h\in\{0,1\}^k}U_{w_s(h)}x\otimes|h\rangle_g.
+\tag{102.1}
+$$
+
+对任意有限未触动参考 $Z$ 和任意 $X\in M_3\otimes\mathcal B(Z)$，其全部记录交叉块为
+
+$$
+(I\otimes\langle h|_g)(S_s\otimes I_Z)X(S_s^\dagger\otimes I_Z)
+(I\otimes|h'\rangle_g)
+=2^{-k}(U_{w_s(h)}\otimes I_Z)X(U_{w_s(h')}^\dagger\otimes I_Z),
+\tag{102.2}
+$$
+
+其中记录与 $Z$ 的张量顺序用恒等换位识别。特别地，每个对角块精确等于 $(A_{w_s(h)}\otimes\operatorname{id}_Z)(X)$。在原五维码上亦有
+
+$$
+\widehat K_{w_s(h)}B=2^{-k/2}BU_{w_s(h)},\qquad
+\widehat S_sB=(B\otimes I)S_s,
+\tag{102.3}
+$$
+
+其中系统控制仍为 $\widetilde N=BNB^\dagger+(I_5-BB^\dagger)$。故未归一 CP 后继、每个标签、每个 $N$ 位置、两种原终端和全部无条件质量均对应；不是仅终端的一个边缘分布对应。
+
+证明。定理 101.3 使每次未知提升都为 $\operatorname{Ad}_{S_\theta}$，并且在已出射记录与 $Z$ 上为恒等。按时序归纳展开，原交互增加一项 $2^{-1/2}V_j$ 和该次 $g_j$，$N$ 则只左乘当前系统，得到 (102.1)–(102.2)。没有把标签变成可选择的门。五维等式由 (101.2)、$\widetilde NB=BN$ 同样归纳。
+
+对于任意数学密度输入 $X\in M_3\otimes\mathcal B(Z)$，记 $\rho_X=\operatorname{Tr}_Z X$、$X_Z=\operatorname{Tr}_Q X$，对角块为 $X_h$，则 $\operatorname{Tr}X_h=2^{-k}$。使用任意 $X$ 说明完整映射域及参考合法性，不供应制备它的权利；唯一实际系统制备仍为 $\rho_0$。原终端仍仅是效果 $(E_1,E_0)$，其未归一可见参考输出及完整质量为
+
+$$
+\begin{gathered}
+\tau_{h,b}^{Z}(X)=\operatorname{Tr}_Q[(E_b\otimes I_Z)X_h],\\
+\operatorname{Tr}\tau_{h,b}^{Z}(X)
+=\operatorname{Tr}[E_bA_{w_s(h)}(\rho_X)]
+=2^{-k}\operatorname{Tr}[(U_{w_s(h)}^\dagger E_bU_{w_s(h)}\otimes I_Z)X],\\
+\sum_{b=0}^1\tau_{h,b}^{Z}(X)=2^{-k}X_Z,\qquad
+\sum_h\sum_{b=0}^1\tau_{h,b}^{Z}(X)=X_Z,\qquad
+\sum_h\sum_{b=0}^1\operatorname{Tr}\tau_{h,b}^{Z}(X)=1.
+\end{gathered}
+\tag{102.4}
+$$
+
+迹公式由 (102.2) 的对角块与部分迹给出；对两个效果求和，再用系统酉不改变参考边缘，得到后两项边缘恒等式。除最后的数值归一化外，这些等式线性地适用于任意矩阵 $X$；一般矩阵的总迹为 $\operatorname{Tr}X$，不缩小 (102.2) 的完整域。对密度输入，该参考输出为正：在部分迹中可等价地把 $E_b$ 的两个平方根放在 $X_h$ 两侧。故两终端质量均非负、逐历史之和为 $2^{-k}$；若某终端质量为零，相应正算子也为零，不作除法或丢弃该格。
+
+原制备的明确特化为 $\rho_X=\rho_0$。由于 $\rho_0$ 纯，密度 $X$ 此时必支撑在 $\operatorname{span}\{\psi\}\otimes Z$，所以 $X=\rho_0\otimes X_Z$，从而
+
+$$
+\tau_{h,b}^{Z}(\rho_0\otimes X_Z)=p_s(w_s(h),b)X_Z,\qquad
+\operatorname{Tr}\tau_{h,b}^{Z}(\rho_0\otimes X_Z)=p_s(w_s(h),b).
+$$
+
+这里 $p_s$ 始终指 (91.2) 固定 $\rho_0$ 的律；任意输入的质量使用 (102.4) 中的 $\rho_X$。取平凡参考即为原物理制备的双终端律；引入未触动参考只说明映射扩展，不授予参考制备或耦合权限。上述输出只描述终端记录及未触动参考，不指定原终端之后一个尚未供应的系统后继。五维效果 $P_5=BEB^\dagger$、$I_5-P_5$ 拉回正是 $E_1,E_0$，故 (102.4) 在完整数学域上也逐项对应五维码内映射；原实验使用上述 $\rho_0$ 特化。原初始制备来自 V 命题 91.3 的完整五维提升，不替换其原准备。
+
+每个原交互后立即测 $g_j$，也逐前缀给同一个 $X_h$。因此这种原读法保留定义 95.1 的原有界停止表：对每一停止叶 $\ell$，将 (102.4) 中的 $2^{-k},U_{w_s(h)}$ 换为该叶原来的 $\alpha_\ell=2^{-k(w_\ell)},U_{w_\ell}$，其 CP 后继和两个终端质量仍逐项相同，质量为 (95.1) 的 $p_{\rho_X}^{\pi}(\ell,b)$；原物理制备取 $\rho_X=\rho_0$。叶的参考边缘为 $\alpha_\ell X_Z$，完整停止表满足 $\sum_\ell\alpha_\ell=1$，包括在初始检查点立即停止的情形。若采用固定 $s$ 的相干保留，则末端再测全部 $g_j$ 给同一 (102.4)，并在原制备上给上述 $p_s$ 特化：旧载体的投影与以后只作用于系统、新载体的操作交换。这是固定时序的延期读取等价，不是把末端才知道的标签当成过去可用的停止信息。依赖标签的相干接续控制未在假设 101.2 中供应。∎
+
+**定理 102.2（固定共同读口与不可逆原标签档案的限制）。** 在同一固定设置下，$\gamma=0$ 与 $\gamma=1$ 的提升对同一个任意数学输入及未触动参考给全部原菜单历史和 (102.4) 完全相同的 CP 后继与终端参考输出；在原制备上其终端质量均为上述 $p_s$ 特化，但在新增读口上分别给
+
+$$
+p_+(0)=\frac12,\qquad p_+(1)=\frac{6-d}{8},\qquad
+p_+(1)-p_+(0)=\frac{2-d}{8}>0.
+\tag{102.5}
+$$
+
+若在相干记录以外还不可逆保留一份可完全区分原标签的档案，且比较装置不能相干访问和消去该档案，记录交叉块为零，不能同时满足 (101.5)。相干比较与原尖锐记录读取是两种备选上下文。
+
+证明。两个提升的对角块相同，取记录基投影或丢弃记录都只消费这些块；逐前缀组合即给所有原词、双终端、有限因果停止及参考输出一致。(102.5) 来自 (101.7)。固定时序下，若把 $|h\rangle_g$ 另关联到正交档案向量 $|a_h\rangle$，再对不可访问档案取迹，则 (102.2) 的 $h,h'$ 块乘上 $\langle a_{h'},a_h\rangle=\delta_{h,h'}$。在原制备与平凡参考上，剩余可比较状态为
+
+$$
+2^{-k}\sum_h U_{w_s(h)}\rho_0U_{w_s(h)}^\dagger\otimes|h\rangle_g\langle h|,
+\tag{102.6}
+$$
+
+它在系统与可访问档案之间可分。全局仍可有纯化，不能据此称全局信息被消灭；受限比较端口丢失的是其需要的交叉关系。[相干重建定理 6.6](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#6-递归预测怎样产生线性接续和量子仪器) 已供应这一记录重叠因子，这里消费其原历史对应。
+
+还须区别坐标规范与共同装置的改变。若同时将记录坐标和每个读口按同一记录酉变换，所有概率不变；若固定 $F_+$ 及原系统坐标，只把提升的 $\gamma$ 改成 $e^{\mathrm i\phi}$，则响应为 $[1+\omega_d\cos\phi]/2$，除 $\phi\in2\pi\mathbb Z$ 外不能达到 (101.5)。这正是固定共同读口下的不同完成，不能借同时移动读口把它们称为已相同。[Bartlett–Rudolph–Spekkens，quant-ph/0610030，§II](https://arxiv.org/abs/quant-ph/0610030) 供应参考关系与规范描述的成熟背景；[Abbott 等，1810.09826](https://arxiv.org/abs/1810.09826) 供应相干控制依赖实际实现而非约化通道的背景，本处没有把其另供的路径控制装置加入原菜单。∎
+
+## 103. 原非选择演化把记录锚接到同源纠缠制备
+
+**定义 103.1（固定原动作块和实际记录保存）。** 令
+
+$$
+\begin{gathered}
+\Lambda=A_0+A_1,\qquad
+D_W(X)=\frac{X+WXW}{2},\qquad
+\Theta_N=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2,\\
+s_\star=\mathsf J\mathsf J\mathsf N\mathsf J\mathsf J,\qquad
+\mathscr F=\operatorname{span}_{\mathbb C}\{I_3,P_\xi\},\qquad
+D_\xi=P_\xi-I_3/3,\\
+r_N=\sup_{\operatorname{Tr}X=0,\ \|X\|_2=1}\|\Theta_N(X)\|_2,
+\qquad \|X\|_2=\sqrt{\operatorname{Tr}(X^\dagger X)}.
+\end{gathered}
+\tag{103.1}
+$$
+
+每个块只有四次原仪器和一次原 $N$。取全部标签而不选择任何一支，系统边缘为 $\Theta_N$；立即读取后忘记标签或从不读取后取环境偏迹都给这个边缘。相干保留时则保留这四个原载体，既不把随机分支改成可调用控制，也不引入外部随机时钟。执行 $n$ 块时档案空间为 $R_{\rm env}^{\otimes4n}$；这里没有固定档案维数的资源结论。
+
+**定理 103.2（每个原混合 $N$ 的确定性块、边缘收敛和原载体纠缠消费者）。** 对 (103.1)，
+
+$$
+r_N<1\quad\Longleftrightarrow\quad[N,P_\xi]\ne0.
+\tag{103.2}
+$$
+
+在原允许域内，对全部 $X\in M_3$、$n\ge0$ 有
+
+$$
+\left\|\Theta_N^n(X)-\frac{\operatorname{Tr}X}{3}I_3\right\|_2
+\le r_N^n\left\|X-\frac{\operatorname{Tr}X}{3}I_3\right\|_2.
+\tag{103.3}
+$$
+
+进一步，若假设 101.2、(101.5) 成立，在唯一原纯制备上执行 $s_\star^n$，将其 $4n$ 个原载体相干保留，实际联合态为
+
+$$
+|\Psi_n\rangle=S_{s_\star^n}\psi,\qquad
+\rho_n=\operatorname{Tr}_{\rm arch}|\Psi_n\rangle\langle\Psi_n|
+=\Theta_N^n(\rho_0),\qquad
+\|\rho_n-I_3/3\|_2\le\sqrt{2/3}\,r_N^n.
+\tag{103.4}
+$$
+
+对于 $n\ge1$，在这同一档案载体内存在三维子空间及最大纠缠单位向量 $|\Phi_n\rangle$，满足
+
+$$
+\left\||\Psi_n\rangle\langle\Psi_n|-|\Phi_n\rangle\langle\Phi_n|\right\|_1
+\le\min\{2,\ 2\sqrt2\,r_N^n\}.
+\tag{103.5}
+$$
+
+当 $\sqrt{2/3}\,r_N^n<1/3$ 时，实际 $|\Psi_n\rangle$ 的 Schmidt 秩为三，其纠缠熵趋于 $\log3$。这给每个已安装混合 $N$ 的同源、无选择、模型依赖的渐近制备关系；不声称有限 $n$ 必达精确最大纠缠，也不声称已取得作用于档案 Schmidt 子空间的控制。
+
+证明。由 $V_1=V_0W$ 和 $D_W(X)$ 与 $W$ 交换，
+
+$$
+\Lambda(X)=V_0D_W(X)V_0^\dagger=UD_W(X)U^\dagger.
+\tag{103.6}
+$$
+
+非选择演化与 $\theta$ 无关。物理等距 (101.1) 本身固定；按原标签基 $g_j$ 写出的分支及交叉块仍须保留该基的 $\theta$ 对应，不能只用非选择通道替代。$D_W$ 是 Hilbert–Schmidt 空间中的正交投影，故所有这些映射均收缩。等式 $\|\Lambda^2X\|_2=\|X\|_2$ 当且仅当两次投影均保持范数，即
+
+$$
+[X,W]=0,\qquad [UXU^\dagger,W]=0.
+\tag{103.7}
+$$
+
+原 $W$ 是坐标换位 $(01)$，$U^\dagger WU$ 是 $(02)$；二者生成所有三坐标置换。与它们交换的矩阵必须对角元全同、非对角元全同，故其空间恰为 $\mathscr F$。反向 $I_3,P_\xi$ 被每个原置换固定，所以
+
+$$
+\|\Lambda^2X\|_2=\|X\|_2\quad\Longleftrightarrow\quad X\in\mathscr F,
+\qquad \Lambda(X)=X\quad(X\in\mathscr F).
+\tag{103.8}
+$$
+
+若一个非零无迹 $X$ 在 $\Theta_N$ 下保持范数，收缩链迫使 $X\in\mathscr F$ 且 $NXN^\dagger\in\mathscr F$。无迹部分为一条复直线，所以 $X=zD_\xi$，$ND_\xi N^\dagger=tD_\xi$。后一个等式的两边 Hermitian，使 $t$ 为实数；$\det D_\xi=2/27\ne0$ 又给 $t^3=1$，故 $t=1$，即 $[N,P_\xi]=0$。在混合情形，没有单位无迹矩阵能保持范数；有限维单位球面的紧性给 $r_N<1$。不混合时 $\Theta_N(D_\xi)=D_\xi$，所以 $r_N=1$。证明包括 $N\xi\perp\xi$ 以及 $d=2/3$，不除以 $1-3d/2$，也不要求 $N$ 接近恒等。
+
+$\Theta_N$ 保迹且保单位，无迹空间不变。对 $X-(\operatorname{Tr}X)I_3/3$ 逐次用收缩率得 (103.3)。这是一项具体块的严格收缩证明；[Sanz–Pérez-García–Wolf–Cirac，0909.5347，§II、Proposition 3](https://arxiv.org/abs/0909.5347) 中原始性、外周谱与满秩极限之间的关系是已有背景，此处没有把一般原始通道定理作为新增内容或用未知统一谱隙代替 $r_N$。
+
+定理 102.1 的每个原交互等距与系统酉的复合仍为等距，故 $|\Psi_n\rangle$ 是这同一输入和原载体的纯联合输出，部分迹给 (103.4)；$\|\rho_0-I_3/3\|_2=\sqrt{2/3}$。写其 Schmidt 展开
+
+$$
+|\Psi_n\rangle=\sum_{a=1}^3\sqrt{\lambda_{na}}\,|u_{na}\rangle|v_{na}\rangle,
+\qquad
+|\Phi_n\rangle=\frac1{\sqrt3}\sum_{a=1}^3|u_{na}\rangle|v_{na}\rangle.
+\tag{103.9}
+$$
+
+$\lambda_{na}$ 是 $\rho_n$ 的全部本征值；零本征值的档案向量补成正交组即可，因为 $n\ge1$ 时档案维数为 $2^{4n}\ge3$。这里使用标准 Schmidt 分解，仅把其两侧明确指定为原系统与本次原载体，没有供应一个独立纠缠准备。并且
+
+$$
+\begin{aligned}
+\|\Psi_n-\Phi_n\|^2
+&=\sum_a\frac{(\lambda_{na}-1/3)^2}{(\sqrt{\lambda_{na}}+1/\sqrt3)^2}\\
+&\le3\|\rho_n-I_3/3\|_2^2\le2r_N^{2n}.
+\end{aligned}
+\tag{103.10}
+$$
+
+两个纯态密度的迹范数距离至多两倍向量距离，且至多二，得 (103.5)。$\lambda_{na}\ge1/3-\sqrt{2/3}r_N^n$ 给满秩判据，有限维熵的连续性给极限。五维实际输出在系统侧再施 $B$，全部非零 Schmidt 系数及以上距离不变。∎
+
+**定理 103.3（单次不匹配、原生保留量和非统一费用的边界）。** 上述制备关系具有以下精确限制。
+
+一次原交互在 $\psi$ 上的两个非零 Schmidt 权重恰为
+
+$$
+\left\{\frac{6-d}{8},\ \frac{2+d}{8}\right\}.
+\tag{103.11}
+$$
+
+它们既非三个等权，也非两个等权；单次输出的局部等距不能把它变为最大纠缠 qutrit 对。若完全不使用 $N$，则
+
+$$
+\lim_{m\to\infty}\Lambda^m(\rho_0)
+=\frac d2P_\xi+\frac{1-d/2}{2}(I_3-P_\xi),
+\tag{103.12}
+$$
+
+该极限仅在 $d=2/3$ 为 $I_3/3$。然而使用同一个原混合 $N$ 的 (103.4) 对全部允许 $d$ 都趋于 $I_3/3$。这一区别说明单次 Schmidt 障碍不是重复同源制备的障碍。
+
+收缩率 $r_N$ 随 $N$ 连续，且当混合 $N$ 趋于 $I_3$ 时 $r_N\to1$。故 (103.3) 没有跨所有安装的统一严格收缩率。更具体地，若 $d\ne2/3$，对任意固定有限 $n$，
+
+$$
+\lim_{N\to I_3}\left|\operatorname{Tr}(P_\xi\Theta_N^n\rho_0)-\frac13\right|
+=\left|\frac d2-\frac13\right|>0.
+\tag{103.13}
+$$
+
+因此不能把每个模型的收敛改写成对所有混合安装共同的有限调用上限。
+
+证明。一次输出的记录 Gram 矩阵为 $\frac12\left(\begin{smallmatrix}1&\omega_d\\\omega_d&1\end{smallmatrix}\right)$，(101.7) 给 (103.11)。局部等距保持非零 Schmidt 权重。对于 (103.12)，$\Lambda$ 及其 Hilbert–Schmidt 伴随均固定 $\mathscr F$，故其正交补不变；(103.8) 和紧性使 $\Lambda^2$ 在该补上严格收缩。其极限是到 $\mathscr F$ 的正交投影
+
+$$
+\Pi_{\mathscr F}(X)=\operatorname{Tr}(P_\xi X)P_\xi+
+ \frac{\operatorname{Tr}[(I_3-P_\xi)X]}{2}(I_3-P_\xi).
+\tag{103.14}
+$$
+
+原制备的 $P_\xi$ 人口为 $d/2$，得到所述极限。该固定子代数和无标签通道的性质已有 V 定理 89.1、环境记录及 Half-Gram 分类的供应；此处只用它比较同一制备的有／无 $N$ 接续。$N\mapsto\Theta_N$ 的矩阵条目和有限维算子范数连续，且 $r_{I_3}=1$，给收缩率的极限。固定 $n$ 后，$\Theta_N^n\rho_0$ 亦连续，而 $N=I_3$ 时 $P_\xi$ 人口被原通道保持，得 (103.13)。边界 $d=2/3$ 不在这项非统一人口论证之内，不从它推出该边界的相同下界。∎
+
+## 104. 同源制备接到时序与双体供应所需的准确接口
+
+**假设 104.1（档案对齐和晚测装置是另一个前提）。** 取 (103.9) 的档案 Schmidt 子空间 $T_n=\operatorname{span}\{v_{n1},v_{n2},v_{n3}\}$。若要消费一个双 qutrit 供应，另供应系统 $Q$ 与档案 $T_n$ 的共同局部坐标，以及在这两个实际载体上实现所指定两设置、每设置三结果完整 PVM 的晚测装置。坐标可依赖已知模型与 $n$；把一个数学 Schmidt 基算出或写出，均不等于获得此装置。$T_n^\perp$ 上也须给完整结果归属，不能丢弃该空间来后选择。
+
+具体采用[对称 SATWAP 供应](../../../D5/S3/Quantum/Contextuality/SymmetricSatwapMaximalViolation.lean) 的数学对象：对维数 $D\ge2$，双方设置 $x\in\{0,1\}$ 的效果为
+
+$$
+M_{a|0}=|a\rangle\langle a|,\qquad
+M_{a|1}=T_D|a\rangle\langle a|T_D^\dagger,\qquad
+(T_D)_{ij}=\frac{t_i}{D\sin[(i-j-1/2)\pi/D]},\qquad
+t_0=-1,\quad t_i=1\ (i>0).
+\tag{104.1}
+$$
+
+该供应给一个交换对称、约化态为 $I_D/D$ 的纯态 $\Omega_D$，对其指定设置标号和相位约定达到对称 SATWAP 表达式 $2(D-1)$。这里取 $D=3$，与源参数 $d\in(0,1)$ 不混同。假设的具体内容是在 $Q\otimes T_n$ 上提供局部识别 $J_{Q,n},J_{R,n}$，使 $(J_{Q,n}\otimes J_{R,n})\Phi_n=\Omega_3$，并提供 (104.1) 的对应拉回测量；对档案正交补可把全补投影并入一个结果以保持完整 PVM。数学上这些局部识别存在，因为两个纯态都最大纠缠；其操作取得仍为独立前提。
+
+**定理 104.2（重复原制备的条件双体消费者及其记录范围）。** 在假设 101.2、(101.5)、104.1 下，记 $\mathcal I_3^{(n)}$ 为 (104.1) 的实际拉回设置所定义的同一个对称 SATWAP 泛函，$\mathcal B_3$ 为供应在双 qutrit 上的固定 Bell 算子。则原 $s_\star^n$ 所制备的实际联合态满足
+
+$$
+\left|\mathcal I_3^{(n)}(\Psi_n)-4\right|
+\le2\sqrt2\,\|\mathcal B_3\|_\infty r_N^n
+\longrightarrow0.
+\tag{104.2}
+$$
+
+这里得到的是另供装置下的同源渐近消费者，不是原单终端源已经具有两方三结果设置、不是有限阶段必取等号，也不是新的 Bell 上界定理。
+
+证明。双方的测量概率均为同一 $|\Psi_n\rangle$ 与完整张量效果的 Born 配对，没有另制备 $\Omega_3$。两态均支撑在 $Q\otimes T_n$；局部识别保持迹范数，$\Phi_n$ 的响应由已有供应为四。将 (103.5) 与 $|\operatorname{Tr}(BX)|\le\|B\|_\infty\|X\|_1$ 组合即得 (104.2)。档案补空间的结果归属不改变这些态的概率，但使装置在其完整域上定义。
+
+[Hsu 等，2601.02893v4，§§III–IV、对称 SATWAP 表达式](https://arxiv.org/abs/2601.02893v4) 供应对称策略、(104.1) 及目标表达式的文献背景；这里直接消费上述现有全维取得等式，未将该等式重新作为新结果。其[文献条目](../../../Library/Fourier/hsuetal2026tradingsymmetry.md) 中设置 $0,1$ 与表达式 $1,2$ 的对应须保留：$D=2$ 两种指派均可达到目标，条目关于较高维另一指派的排除依据是所列有限维浮点读数，不能推出所有维数中的标号唯一性。这里始终沿用供应定理明确使用的一种指派。
+
+原菜单只有系统侧的一次 $(E,I_3-E)$；§98 的 $1/3$ 尖锐三结果距离障碍仍适用于那个旧菜单。分别取得三个近似二元效果不能给 (104.1) 的共同三结果仪器。即使新增 (101.10)，也只得到一个固定的两结果后继仪器；此处的三结果晚测装置由假设 104.1 独立供应，不用旧菜单的二元近似替代它，也不把旧菜单的障碍直接外推成对扩大菜单的判定。∎
+
+**定理 104.3（原终端不足以消费全称时序 Born 二择一）。** 令 $\mathcal E=\Lambda$、$\rho=\rho_0$。在数学上若量化全部输入、输出投影，要求一个共同矩阵 $K$ 满足
+
+$$
+\operatorname{Tr}[K(P\otimes Q')]
+=\operatorname{Tr}[Q'\mathcal E(P\rho P)]
+\quad\text{对所有投影 }P,Q',
+\tag{104.3}
+$$
+
+则原这一对 $(\rho_0,\Lambda)$ 不存在这样的 $K$。然而原菜单记录、记录锚和 (101.10) 均不供应 (104.3) 所量化的全称顺序仪器，故此非存在结论不是这些记录上的新增实验结论，也不是从原记录推出 Born 原则。
+
+证明。[时序 Born 二择一供应](../../../D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.lean) 的准确条件为：对有限正维的密度 $\rho$ 和 CPTP $\mathcal E$，(104.3) 中任意矩阵 $K$ 的存在等价于 $\rho=I_D/D$ 或 $\mathcal E(X)=\operatorname{Tr}(X)\sigma$ 为固定态替换通道。该命题不要求 $K$ 是正密度。原 $\rho_0$ 纯而维数三，非最大混合；$\Lambda(P_\xi)=P_\xi$ 且 $\Lambda(I_3)=I_3$，不可能同时满足替换公式。因此二择一给非存在。Fullwood–Ma–Wu，[2507.16919v2，二时投影测量的 Lüders–von Neumann 问题](https://arxiv.org/abs/2507.16919v2) 是该供应的文献起点；文献给充分情形及任意维必要性问题，这里的必要性直接复用现有二择一供应，不归给文献一个未在其中证明的全维结论。
+
+操作对应不能省略：右边要求首次投影之后仍有 $P\rho P$ 作为系统后继，继而执行同一个 $\mathcal E$，最后再测 $Q'$。原终端只固定效果概率。例如对 $E_1,E_0$，两套完整 CP 仪器
+
+$$
+\mathcal J_b^{\rm L}(X)=E_bXE_b,\qquad
+\mathcal J_b^{\rm R}(X)=\operatorname{Tr}(E_bX)\,I_3/3
+\tag{104.4}
+$$
+
+有相同两个效果，在任何原终端记录及未触动参考边缘上不可区分，却有不同系统后继；在数学输入 $E$ 的是分支后再读 $E$，两者概率分别为一、$1/3$。这些替代是未规定后继的数学完成，不是新增制备或原门权限。新增 (101.10) 的后继则明确为 $V_0P_\pm X P_\pm V_0^\dagger$，既不是任意 $P$ 的 Lüders 仪器，也没有把 $V_0^\dagger$ 安装为控制。故用停止取得的二元效果或一个固定记录读口都不能完成全称时序供应的操作映射。最后，$\rho_n\to I_3/3$ 不能代替二择一中的精确标量态等式；(103.4) 没有主张一般有限 $n$ 的这一等式。∎
+
+## 105. 同一关系谱的已定交叉块与剩余起源问题
+
+**定理 105.1（相同完整预测、相同混合边缘与不同纠缠完成）。** 对每个原允许 $d,\theta,N$，将 (101.6) 的 $\mathcal L_1$ 和 $\mathcal L_0$ 各自按同一无记忆合同复用。它们在全部原菜单、任意有限因果停止、两终端和任意未触动参考的原 CP 后继上一致，并且在每个 $s_\star^n$ 上都有同一个系统边缘 $\rho_n\to I_3/3$。但是前者在保留原载体时给定理 103.2 的纯态与渐近最大纠缠，后者始终只给 (102.6) 的可分系统—档案态。其唯一原态的固定读口响应由 (102.5) 分开。
+
+证明。$\mathcal L_0$ 每一步已将原记录去相干，任何后续 $N$ 或原交互都不再作用于旧载体，逐次得到 (102.6)；该式是产品密度的凸组合，故可分。对系统取迹以外的环境偏迹，两种提升都为 $\Lambda$，所以同一固定块的系统边缘均为 $\Theta_N^n\rho_0$；收敛由 (103.3) 给出。原记录和参考的逐历史等式已经由 (102.2) 的对角块给出。$\mathcal L_1$ 的纯性及 Schmidt 极限来自 (103.4)–(103.10)。所以原预测及最大混合边缘不能独自认证纠缠制备；在明确的完整 CP 提升域内，新增 (101.5) 恰好选中承担纠缠结论的同源交叉关系。此结论不把 $\gamma=1$ 说成纠缠存在的必要条件：其他 $|\gamma|=1$ 的提升也有纯输出，但在固定 $F_+$ 下其交叉标定不同。所识别的是指定共同关系；其同源消费者同时保留原准备、全部原历史、固定非选择块和实际原载体。∎
+
+**定义 105.2（所确定的共同谱与独立前提）。** 在锚定上下文中，共同关系不是两份边缘数据的并列，而是 (102.2) 的全部算子交叉块，以及同一原等距给出的联合正态。它对任意 $X$ 及参考有同一个 $S_sXS_s^\dagger$；其非零谱等于输入的非零谱。对唯一纯制备，整个系统—档案态的谱保持纯，但系统约化谱按 (103.4) 趋向三等权，档案约化谱的非零部分与其相同。这是信息保留和关系不确定性在本源中的准确对象；不把条件分支谱、无选择系统谱、经典标签熵和闭合联合谱称作一个未经区分的守恒量。
+
+定理 101.3、102.1、103.2、105.1 的源特定推断归为 `repo-derived`：完整提升圆盘中的原态边界响应、保全原历史的固定块、该块对每个混合 $N$ 的严格收缩，以及同一原载体上的纠缠／可分对照共同组成所需桥梁。正块支撑、Choi 表示、基旋转仪器、Schmidt 分解、原始通道的一般理论和参考框架均为已归属的成熟工具；(104.2) 只消费既有对称表达式的取得等式和连续性，不主张这些工具或 Bell 界的新定理。Gregoratti–Werner，[quant-ph/0209025，Proposition 2](https://arxiv.org/abs/quant-ph/0209025) 和 [quant-ph/0403092，Proposition 1](https://arxiv.org/abs/quant-ph/0403092) 已供应按实测环境标签校正随机酉分支的条件；其分支逆及反馈权限不属于本处操作。这里从未施用它们的恢复控制，也没有将其恢复原理重新称作相干取得。
+
+复 Hilbert 空间、Born 配对、完整矩阵 CP、张量复合、原纯准备和已安装 $N$ 都是输入。假设 101.2 的同源载体访问、固定共同读口、完整且可重复的提升域与精确律 (101.5) 是额外关系输入；它们条件地推出被锚定的全部相干交叉块及原载体纠缠制备。假设 104.1 的双侧晚测装置是再一层操作输入。没有把这些输入称为从一般预测、不确定性或信息保留中无条件推导的量子原则。
+
+**定义 105.3（仍待解决的取得与起源义务）。** 原生取得问题要求从原准备、原仪器、同一个 $N$、实际标签和原单终端的许可历史构造假设 101.2 的接口，而不是从 (101.1) 等距的数学存在推断已有环境访问。原菜单对 $\mathcal L_0,\mathcal L_1$ 的全部统计相同，定理 105.1 排除了只后处理这些旧记录来完成该识别；若扩大物理接口，须具体给出原交互、读口及泄漏的共同实现。
+
+若从本卷定义 100.2 的原生取得／恢复场或 FIB 噪声自标定对象接入，则须在同一个实现中给状态、实际动作、记录及权利的有类型对应 $\mathsf T$，满足各合法分支的
+
+$$
+\mathsf T\circ\mathcal B_a=A_a\circ\mathsf T,
+\qquad
+\mathsf T(s_{\rm native})=\rho_0,
+\tag{105.1}
+$$
+
+同时保原始质量、失败／停止／返回、真实后继以及所声明参考上的联合正性。若还声称相干比较，须继续给 (101.6) 的非对角关系，而非仅 (105.1) 的经典分支。各自有理场的 Read、Tick、Add、Reset、准备和校准权利没有由可逆坐标编码变成这些 CP 关系；经典误差、滋扰集合和量子相干不是同一类型的未知量。分别存在的最优资源也不满足共同装置的同时实现义务。
+
+未知 $d,\theta,N$ 的取得、从有限带噪记录认证完整 CP 提升域及无持久记忆、固定参考的稳定性、档案相干保存和晚测的有效合成／费用，均未由精确概率律和每个模型的 $r_N<1$ 解决。有限样本与经验桥要求自己的观察合同；(101.5) 不是这些合同的替代。对原单制备、全部原词及有限因果停止的记录概率，§§85、99 的全词经典模型继续成立；该经典合同本来不要求任意量子参考上的 CP 实现。新增共同相干上下文不是其原合同的一部分，这里没有证明所有扩大经典实现均被排除。未来完备仍按 §84 量化全部许可未来。
+
+因此完整量子起源问题仍要求说明哪些实际共同来源、参考、完整后继和复合原则能供应这些独立关系，或给出忠实反例；本处解决的是其中一个确定的条件桥：一个原态的固定同交互响应在所声明完整可重复类内锚定交叉关系，并使原非选择演化成为同一原记录载体的渐近纠缠准备。它既不是原生相位取得，也不是完整起源解答。这些命题只在所列模型前提和操作域内成立。
+
+## 追加锚（本行以下为增补区）
