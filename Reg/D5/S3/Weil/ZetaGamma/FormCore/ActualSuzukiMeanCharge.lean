@@ -325,12 +325,13 @@ def arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hz : originalPhysicalH6 (fun x => (0 : ℂ) * zeroSource x + (0 : ℂ) * zeroSource x) := by
-    simpa [zeroSource] using zero_h6
-  have hh := h zeroSource zeroSource zero_h6 zero_h6 0 0 hz
   have hsrc : (fun x => (0 : ℂ) * zeroSource x + (0 : ℂ) * zeroSource x) = zeroSource := by
     funext x
     simp [zeroSource]
+  have hz : originalPhysicalH6 (fun x => (0 : ℂ) * zeroSource x + (0 : ℂ) * zeroSource x) := by
+    rw [hsrc]
+    exact zero_h6
+  have hh := h zeroSource zeroSource zero_h6 zero_h6 0 0 hz
   change actualSuzukiMeanCharge (fun x => (0 : ℂ) * zeroSource x + (0 : ℂ) * zeroSource x) =
     (1 : ℂ) + 0 * actualSuzukiMeanCharge zeroSource at hh
   rw [hsrc, zero_charge] at hh
