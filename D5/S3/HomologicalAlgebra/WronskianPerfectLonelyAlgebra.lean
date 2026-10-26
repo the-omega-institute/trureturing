@@ -535,14 +535,88 @@ private lemma first_order_evaluations {K : Type*} [Field K] {d : ℕ}
     rw [hc', Matrix.det_updateCol_sum, hm, smul_eq_mul, mul_one]
 
 private lemma quadratic_construction {K : Type*} [Field K] [CharZero K]
-    {d : ℕ} (hd : 2 ≤ d)
-    (hb : ∀ (p : MvPolynomial (Fin d) K) (f : I d 1 → MvPolynomial (Fin d) K),
-      (∀ β, f β ∈ lonely (k := 1) p) →
-      wronskian f ∈ Submodule.span K {w | ∃ b : I d 1 → Option (I d 1),
-        wronskian (fun β => (b β).elim p (fun α => monomial α.val 1)) = w}) :
+    {d : ℕ} (hd : 2 ≤ d) :
     ∃ p : MvPolynomial (Fin d) K,
       p ≠ 0 ∧ p.IsHomogeneous 2 ∧ perfect (k := 1) p := by
-  sorry
+  classical
+  let q : MvPolynomial (Fin d) K := ∑ i : Fin d, X i ^ 2
+  have hq : q.IsHomogeneous 2 := by
+    apply IsHomogeneous.sum
+    intro i _
+    simpa only [Nat.one_mul] using (isHomogeneous_X K i).pow 2
+  have hder : ∀ i : Fin d, pderiv i q = (2 : K) • X i := by
+    intro i
+    simp [q, pderiv_pow, pderiv_X, Pi.single_apply, mul_ite, smul_eq_C_mul]
+    exact (map_ofNat C 2).symm
+  have hne : q ≠ 0 := by
+    intro hz
+    have he := hder ⟨0, by omega⟩
+    rw [hz, map_zero] at he
+    exact (smul_ne_zero two_ne_zero (X_ne_zero _)) he.symm
+  refine ⟨q, hne, hq, ?_⟩
+  obtain ⟨hdet, hupdate⟩ := first_order_evaluations q hq
+  have hmono : ∀ a : Option (I d 1), a.elim q (fun α => monomial α.val 1) ∈
+      lonely (k := 1) q := by
+    intro a
+    rw [lonely_eq_span]
+    exact Submodule.subset_span ⟨a, rfl⟩
+  have hbase : ∀ a : Option (Fin d), a.elim 1 X ∈ lonely (k := 1) q := by
+    intro a
+    have h := hmono (some (affineIndex d a))
+    simpa only [Option.elim_some, affineIndex_monomial] using h
+  have homit : ∀ a : Option (I d 1), omittedBracket q a ∈ lonely (k := 1) q := by
+    intro a
+    cases a with
+    | none => rw [omittedBracket_none, hdet]; exact hbase none
+    | some β =>
+      rw [omittedBracket_some, hupdate]
+      generalize (affineIndex d).symm β = a
+      cases a with
+      | none => exact Submodule.neg_mem _ (hmono none)
+      | some i =>
+        change pderiv i q ∈ lonely (k := 1) q
+        rw [hder]
+        exact Submodule.smul_mem _ _ (hbase (some i))
+  let s := Submodule.span K {w | ∃ f : I d 1 → MvPolynomial (Fin d) K,
+    (∀ β, f β ∈ lonely (k := 1) q) ∧ wronskian f = w}
+  have hin : ∀ a : Option (I d 1), omittedBracket q a ∈ s := by
+    intro a
+    exact Submodule.subset_span ⟨_, (fun β => hmono (omission a β).val), rfl⟩
+  have hone : (1 : MvPolynomial (Fin d) K) ∈ s := by
+    have h := hin none
+    rwa [omittedBracket_none, hdet] at h
+  have hqmem : q ∈ s := by
+    have h := hin (some (affineIndex d none))
+    rw [omittedBracket_some, hupdate, Equiv.symm_apply_apply] at h
+    exact neg_neg q ▸ s.neg_mem h
+  have hx : ∀ i : Fin d, (X i : MvPolynomial (Fin d) K) ∈ s := by
+    intro i
+    have h := hin (some (affineIndex d (some i)))
+    rw [omittedBracket_some, hupdate, Equiv.symm_apply_apply] at h
+    change pderiv i q ∈ s at h
+    rw [hder] at h
+    have hc := s.smul_mem (2 : K)⁻¹ h
+    simpa only [smul_smul, inv_mul_cancel₀ (two_ne_zero : (2 : K) ≠ 0), one_smul] using hc
+  change s = lonely (k := 1) q
+  apply le_antisymm
+  · apply Submodule.span_le.mpr
+    rintro w ⟨f, hf, rfl⟩
+    refine (Submodule.span_le.mpr ?_) (bracket_mem_span_basis q f hf)
+    rintro w ⟨b, rfl⟩
+    exact (Submodule.span_le.mpr (by rintro w ⟨a, rfl⟩; exact homit a))
+      (bracket_mem_span_omissions q b)
+  · rw [lonely_eq_span]
+    apply Submodule.span_le.mpr
+    rintro w ⟨a, rfl⟩
+    cases a with
+    | none => exact hqmem
+    | some α =>
+      obtain ⟨a, rfl⟩ := (affineIndex d).surjective α
+      change (monomial (affineIndex d a).val 1 : MvPolynomial (Fin d) K) ∈ s
+      rw [affineIndex_monomial]
+      cases a with
+      | none => exact hone
+      | some i => exact hx i
 
 theorem result : claim := by
   intro K _ _ d k hd hk
@@ -552,6 +626,6 @@ theorem result : claim := by
     have hk2 : 2 ≤ k := by omega
     exact upper_order_obstruction hd hk2 p hh hperfect
   · rintro rfl
-    exact quadratic_construction hd bracket_mem_span_basis
+    exact quadratic_construction hd
 
 end D5.S3.HomologicalAlgebra.WronskianPerfectLonelyAlgebra
