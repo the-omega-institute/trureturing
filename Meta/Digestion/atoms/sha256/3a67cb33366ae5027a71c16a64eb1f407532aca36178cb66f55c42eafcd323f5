@@ -1,0 +1,14 @@
+## 9. Attribution and supplied-result correspondence
+
+The normalized source and original-clock conventions agree with *FIB Self-Calibrating Relation Mathematics IV*, Definition 1.1 and Definition 10.1. Its Theorem 10.2 supplies the credited cubic mixed-word and finite-palette obstruction. The argument here proves its general-degree form directly and uses Baire category for countable palettes; the cubic finite result is not presented as new.
+
+The supplied *Linear Gain-Ray Threshold* manuscript proposes results A–F. Their complete mathematical correspondence is:
+
+| Supplied result | Result proved in this volume |
+| --- | --- |
+| A: universal collinearity and countable covering | Lemmas 2.1–2.3, on the full open parameter domain and without selector regularity |
+| B: mixed obstruction and complete-protocol lower bound | Theorem 3.1, Lemma 3.2, and Theorem 3.3 |
+| C: pure-$M$ obstruction | Lemmas 4.1–4.2 and Theorem 4.3, including both endpoint sign constraints |
+| D: sharp fixed-acquisition threshold and exact gain/drift | Lemma 5.1 and Theorems 5.2–5.3, using trace normalization and a same-source pure-$J$ collision |
+| E: mixed realization | Theorem 6.1, with original-clock $(D+1)$ jets and strictly positive output scale |
+| F: complete-target realization | Theorem 7.1, with shared root counting across both phases and the four-matrix basis proof |
