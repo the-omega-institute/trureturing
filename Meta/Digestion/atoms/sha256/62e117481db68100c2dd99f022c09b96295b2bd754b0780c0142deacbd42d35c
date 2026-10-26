@@ -1,0 +1,115 @@
+**Theorem 115.3 (full-domain correspondence and conservative strongly local dynamics).** Use the positive representative $h$ from Theorem 115.2 and set
+
+$$
+\begin{gathered}
+dm_h=h^2d\mu,\qquad m_h(G)=1,\qquad
+U_h:L^2(G,dm_h;\mathbb C)\longrightarrow\mathcal H,
+\quad U_hv=hv,\\
+K=U_h^{-1}HU_h,\qquad T_t=U_h^{-1}e^{-tH}U_h.
+\end{gathered}
+\tag{115.13}
+$$
+
+Define $\mathscr V_0$ as the closure of $C_c^\infty(M;\mathbb C)$ in the norm
+
+$$
+\|v\|_{h,1}^2=\int_G|v|^2dm_h+\int_M\mathcal C[v]dm_h.
+\tag{115.14}
+$$
+
+Then the entire closed form of $K$ has exactly the domain and values
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,
+\qquad U_h\mathscr V_0=\mathcal Q_c,
+\qquad D(H^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,\\
+\mathscr E[v,z]=\int_M\left(
+ a\sum_{i=1}^3\overline{X_iv}X_iz
+ +\eta\overline{\partial_wv}\partial_wz\right)dm_h,
+\qquad v,z\in\mathscr V,\\
+q_H[y+ch]=\overline q_c[y]
+\quad(y\in\mathcal Q_c,\ c\in\mathbb C).
+\end{gathered}
+\tag{115.15}
+$$
+
+The derivatives in the integral are the local weak derivatives on $M$, with their global weighted $L^2$ limits. The form $(\mathscr E,\mathscr V)$ is a regular strongly local Dirichlet form on the original space $G$ with measure $m_h$. Its semigroup is conservative:
+
+$$
+T_t1=1\qquad(t\ge0).
+\tag{115.16}
+$$
+
+In particular it is a Markov contraction on real bounded functions, and $m_h$ is an invariant probability measure. The full operator domain is
+
+$$
+D(K)=\{v\in\mathscr V:hv\in D(S^*),\ A(hv)=\rho C(hv)\},
+\qquad Kv=h^{-1}S^*(hv).
+\tag{115.17}
+$$
+
+**Proof.** Because $h>0$ a.e., (115.13) is a unitary map, and multiplication or division by $h$ maps $C_c^\infty(M)$ bijectively to itself. On a compact punctured support the usual ground-state identity gives
+
+$$
+q_c[h\psi]=\int_Mh^2\mathcal C[\psi]d\mu,
+\qquad \psi\in C_c^\infty(M;\mathbb C).
+\tag{115.18}
+$$
+
+For its direct verification expand the derivatives of $h\psi$ and test the original weak equation for $h$ against $h|\psi|^2$. The derivatives of the real $h$ and the real potential cancel; the remaining terms are those on the right. All integrals are finite on this support. For real factors this is exactly Pinchover--Tintarev, Lemma 2.4, (2.6), with their solution $\psi$ equal to the present $h$, their multiplier $v$ equal to the present test, their $A$ given by (115.10), and their $V=-g_c\Gamma$ on a bounded punctured region. Real and imaginary parts and polarization give the complex identity. Equivalently it is Lenz--Stollmann--Veselić, Theorem 2.3 with $E=0$, $\Phi=h$, and $\nu=-g_c\Gamma\,d\mu$, again only locally on $M$, where $h,h^{-1}$ are smooth and locally bounded. This established identity is an intermediate step, not an identification of endpoint domains by itself.
+
+The domain identification instead uses the actual graph core in (112.4)--(112.5). On it $Hh=0$, and hence
+
+$$
+q_H[\phi+ch]=q_c[\phi]
+\qquad(\phi\in\mathcal D_0,\ c\in\mathbb C).
+\tag{115.19}
+$$
+
+A graph core of a nonnegative self-adjoint operator is a form core: spectral truncation first approximates every form-domain vector by operator-domain vectors, and graph approximation then implies form approximation. Consequently the closed form of $K$ is exactly the completion of
+$C_c^\infty(M)+\mathbb C1$ with the integral energy in (115.18), and not merely a form agreeing with it on punctured tests. Its completion of the smaller core $C_c^\infty(M)$ is isometrically $U_h^{-1}\mathcal Q_c$, by (115.18) and the definition of the Friedrichs form. This is a closed subspace of the complete form space of $K$. Adding the finite-dimensional subspace $\mathbb C1$ gives another closed subspace; density of the larger core makes it the whole space. The sum is direct because $h\notin\mathcal Q_c$. This proves the domain equalities in (115.15).
+
+For any Cauchy sequence in this form core, its derivatives are Cauchy in $L^2(m_h)$. On each compact subset of $M$, positivity and smoothness of $h$ make the weighted norm equivalent to the ordinary local $H^1$ norm. The limits are therefore the distributional derivatives of the actual $L^2(m_h)$ limit. Exhausting $M$ proves exactly the integral formula in (115.15), with no additional source energy. In particular the constant has zero energy, and polarization gives $q_H[y+ch]=\overline q_c[y]$. Formula (115.17) now follows from unitary conjugation of the actual operator selector, rather than from a condition imposed on smooth tests.
+
+This also records the singular source component at form level. Every $v\in\mathscr V$ has a unique decomposition $v=v_0+c$, with $v_0\in\mathscr V_0$, and the coefficient $c$ is a continuous linear functional in the full form norm. It vanishes on the closed punctured form core and takes value one at the constant. If $hv\in D(H)$, the maximal-domain decomposition and $\mathcal Q_c\cap D(S^*)=D(F)$ give
+
+$$
+c=\frac{C(hv)}{C(h)}.
+\tag{115.20}
+$$
+
+Thus deleting $\mathbb C1$ would give the Friedrichs form, not the actual endpoint. No pointwise limit of an arbitrary form-domain vector at $e$ is needed for this source coordinate, and no separate kinetic or potential integral of $hv$ is asserted finite.
+
+For the Markov property, let $N:\mathbb R\to\mathbb R$ satisfy $N(0)=0$ and $|N(s)-N(t)|\le|s-t|$. If $v=c+\psi$ is in the real form core, then $N(v)-N(c)$ is a compactly supported $H^1$ function on $M$. On its compact support, local smooth approximation and the equivalence of weighted and unweighted $H^1$ norms put it in $\mathscr V_0$. The weak chain rule gives
+
+$$
+N(v)\in\mathscr V,\qquad
+\mathscr E[N(v)]\le\mathscr E[v].
+\tag{115.21}
+$$
+
+For general real $v\in\mathscr V$, choose core approximants. Their contractions converge in $L^2(m_h)$ by the Lipschitz bound, and have bounded form norms by (115.21). Weak compactness in the closed form and lower semicontinuity extend (115.21) to $v$. This is the normal-contraction criterion for a Dirichlet form, used on the real form and then complexified, as in Lenz--Stollmann--Veselić, §1. All source coefficients $c$ are retained in this argument; contractions have not been tested only on a vanishing-source subdomain.
+
+We verify regularity on $G$, including the point $e$. The measure $m_h$ is a finite Radon measure with full support and no atom at $e$. Use the original smooth Carnot cutoffs $\chi_R$ of (108.7), equal to one on growing balls and satisfying
+
+$$
+|X_i\chi_R|\le C/R,\qquad
+|\partial_w\chi_R|\le C/R^2.
+\tag{115.22}
+$$
+
+Fix any $\chi\in C_c^\infty(G;\mathbb R)$ equal to one near $e$. The vectors $\chi_R(1-\chi)$ are punctured compact tests and converge to $1-\chi$ in (115.14): the $L^2(m_h)$ tail vanishes since $m_h(G)=1$, the derivative of $\chi$ lies in a fixed compact set where $\chi_R=1$ for large $R$, and the remaining derivative cost is bounded by $C(R^{-2}+R^{-4})m_h(G)$. Thus $1-\chi\in\mathscr V_0$ and $\chi\in\mathscr V$. Applying this to $\chi_R$ itself gives
+
+$$
+\|1-\chi_R\|_{L^2(m_h)}\longrightarrow0,
+\qquad
+\mathscr E[1-\chi_R]=\mathscr E[\chi_R]
+ \le C(R^{-2}+R^{-4})\longrightarrow0.
+\tag{115.23}
+$$
+
+It follows that $\mathbb C\chi+C_c^\infty(M)$, whose members are continuous and compactly supported on $G$, is form dense: approximate the constant by $\chi_R$, and observe that $\chi_R-\chi$ is a punctured compact test. It is also uniformly dense in $C_c(G)$, by ordinary smooth approximation followed by making a smooth approximant constant in a sufficiently small source neighborhood. Uniform continuity controls that last change, and every such function has the form $c\chi+\psi$ with $\psi\in C_c^\infty(M)$. This proves regularity without treating $e$ as a discarded boundary.
+
+Strong locality follows from the full integral formula (115.15). If $v$ is constant on a neighborhood of the compact support of $z$, its local weak gradient vanishes there, and that of $z$ vanishes off its support. The energy pairing is zero. The point $e$ contributes no extra term: the gradient completion already proved the entire energy to be the displayed integral, with $m_h(\{e\})=0$. Finally $1\in\mathscr V$ has zero energy, so it lies in $D(K)$ with $K1=0$. Therefore $T_t1=1$. The standard Dirichlet-form semigroup correspondence gives positivity and the Markov contractions; symmetry and $T_t1=1$ give invariance of $m_h$. These standard consequences consume the full-domain source identification above. $\square$
+

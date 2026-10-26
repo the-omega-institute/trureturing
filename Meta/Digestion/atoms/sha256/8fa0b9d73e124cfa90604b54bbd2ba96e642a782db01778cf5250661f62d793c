@@ -1,0 +1,15 @@
+**Definition 115.4 (supplier correspondence and the remaining native bridge).** The source-specific deductions in this section are the sign of the original boundary functional in (115.9), its actual resolvent (115.5), and the closure (115.15) retaining the source coefficient (115.20). Their suppliers are the unchanged actual field of §§82--87, the Friedrichs completion and zero kernel of Theorem 87.4, the full source expansion of Theorems 109.2 and 112.2, the coefficient-one global vector of Theorem 110.2, and the actual graph core and selector of (112.4)--(112.5). The actual zero projections and convergence of §§111--114 are retained; no convergence theorem or spectral gap is inferred anew from positivity. The ground-state identity and Dirichlet-form consequences retain the precise primary-source correspondences in the proofs. They are established methods, while their application to this particular source coefficient and non-Friedrichs endpoint is a repository deduction, without a worldwide-priority assertion. The positive-lower-bound domain formulas in Ashbaugh et al., [*A Survey on the Krein--von Neumann Extension*, arXiv:1203.5713v1, Theorem 2.1, (2.9)--(2.11)](https://arxiv.org/html/1203.5713v1), require $S\ge\varepsilon I$, $\varepsilon>0$; that hypothesis is absent here and those formulas are not used.
+
+The resulting dynamics has, away from $e$, Markov generator
+
+$$
+-Kv=a\sum_{i=1}^3X_i^2v+\eta\partial_w^2v
+ +2a\sum_{i=1}^3(X_i\log h)X_iv
+ +2\eta(\partial_w\log h)\partial_wv.
+\tag{115.24}
+$$
+
+Its source behavior is determined by (115.15) and (115.17), not by extending this displayed differential formula across $e$. Its principal matrix (115.10) has rank four for $\eta>0$; conjugation changes the drift, not that rank. The original horizontal distribution still has rank three, the carrier still has four coordinates and homogeneous dimension five, and none of these numbers is a derived physical spatial dimension.
+
+A native legal transport realization of this endpoint would additionally require an actual admissible source and native evolution, a specified representation and observation map, and proofs that this same source, raw units, clock, full generator including its source domain, and observation law intertwine with that native evolution. In particular the conservative probability dynamics $T_t$ on $L^2(h^2d\mu)$, the original positive Schrödinger heat on $L^2(d\mu)$, signed or complex amplitudes, and any proposed finite positive network have different state and observation contracts until those maps are supplied. Theorems 115.2--115.3 settle the three endpoint questions for the exact original selector; they do not supply that native realization or assert positivity of any finite-$\sigma>2$ regulator. The native source/operator/readout correspondence remains unproved.
+

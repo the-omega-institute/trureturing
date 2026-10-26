@@ -1,0 +1,20 @@
+**接口 VII–VIII（本应用与新副本精度任务的区别）。** 命题 WR1.2 的同一窗口持续读出没有新副本。若扩大为独立新样本，单次小差异不能代替统一未来距离：对不同 Bernoulli 参数 $p,r$，成熟的乘积亲和度界给 $\operatorname{TV}(\operatorname{Bern}(p)^{\otimes m},\operatorname{Bern}(r)^{\otimes m})\ge1-(\sqrt{pr}+\sqrt{(1-p)(1-r)})^m\to1$；它来自 $\min(a,b)\le\sqrt{ab}$ 及乘积求和。自生成预测记忆定理 3.1 的对应结论还要求其特定源、有限同更新观察者、所有实际历史和所有未来长度的统一误差 $\epsilon<1$，只强制闭不可约同步分量上的精确发射，不能移作任意观察者定理。
+
+精度接口直接使用 [Measurement Boundary 固定版本 §18，定义 18.1、定理 18.2、18.4、推论 18.5](https://github.com/the-omega-institute/trureturing/blob/02a0b90ac978ddc7716d1cd0cfedee2ee929eba1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#18-adaptive-terminal-real-pair-acquisition-and-precision-confidence-order)。其共同实验族每次取得一份或两份独立新副本，每个完整结果拉回到未过滤输入上的总 POVM 效果在同一个固定实帧中均实对称，包含过滤的全部失败前缀；每次后舍弃所有来源依赖量子寄存器、后继及环境，只留完整经典历史。共同种子、设置、失败、停止及随机解码均计入历史。每条运行历史有限，至多 $m$ 次双份尝试，失败也收费；不是按成功数或期望停止时间计费。单份插入可任意多，但每条历史仍有限。
+
+其固定源为 $\rho_\theta=I_5/5+\theta Y$、$Y=i(E_{12}-E_{21})$、$0\le\theta\le1/10$，其中 $E_{ab}$ 是该实帧的标准矩阵单位；同一未知 $\theta$ 贯穿全部尝试。定理 18.2 在每个已取得历史下将双份读数归为同一个谱律的来源无关后处理，供应
+
+$$
+1+\chi^2(P_\theta\Vert P_0)\le(1+100\theta^4)^m.
+$$
+
+这是完整自适应记录的界。它没有把来源改为每次独立随机选共轭符号的混合物。精度对象是[原卷式 (15.2)](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#15-a-total-rational-gram-decoder-for-the-original-complete-record) 的同一共同共轭商：若 $\rho=S+iA$、输出 $T+iB$，仅忘掉一个全局符号，距离为 $\min_{\sigma=\pm1}\|S+iA-(T+i\sigma B)\|_{\rm F}$。对 $0<h\le1/40$、$0<\delta\le1/4$，该实验族在理想标定、平稳独立制备下的最小统一双份尝试预算为
+
+$$
+m_*(h,\delta)=\Theta\!\left(h^{-4}\log(1/\delta)\right).
+$$
+
+上界的具体对应沿用[原卷推论 16.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#16-finite-record-confidence-for-the-rational-point-output)：$s=\lceil\log_2(1/h)\rceil$、$d=\lceil\log_2(1/\delta)\rceil$、$A_*=80621568001$、$b=47+2s$、$N=2304(d+8)A_*^2\,2^{4s}$、$m=50N$。它要求原十五单份、五十双份设置和 $F=\operatorname{diag}(1,2,3,4,5)/6$ 的精确校准、完整可读的绑定记录、已供应的制备与探测，以及 [原卷 §§15–16](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#15-a-total-rational-gram-decoder-for-the-original-complete-record) 指定的有理 Gram 枚举解码。由 [原卷式 (16.5)](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#16-finite-record-confidence-for-the-rational-point-output) 同次运行使用 $115N$ 份制备、$155N$ 个填充记录位；所有失败、过滤调用和末端探测的费用仍按该式另计。
+
+解码的额外工作区界不包括记录、可读 backing 和输出存储。具体 [原卷式 (15.15)–(15.17)](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#15-a-total-rational-gram-decoder-for-the-original-complete-record) 还保留 $G_b=(2^{b+1}+1)^{50}-1$ 个候选、$w=b+\lceil\log_2(N+1)\rceil+\lceil\log_2(B_0+2)\rceil+64$，以及位时间 $O((B_0+155N+G_b+1)w^2)$、额外 $O(w)$ 位空间和另计的绑定输出；$B_0$ 为元数据位长。故该 $\Theta$ 只断言尝试预算阶，不断言解码高效、总存储最优或任意量子记忆实验的下界。非实效果、一次相干访问两份以上、跨尝试保留来源依赖量子记忆、未校准漂移或新来源依赖资源均需另立合同。
+
