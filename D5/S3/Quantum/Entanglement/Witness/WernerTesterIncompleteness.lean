@@ -530,6 +530,262 @@ private theorem design_first {d : ℕ} (hd : 0 < d) :
   ext i k
   simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul] using he i k
 
+private theorem flip_facts (d : ℕ) :
+    (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).IsHermitian ∧
+      Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
+        Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) = 1 := by
+  constructor
+  · change (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)))ᴴ = _
+    rw [Matrix.conjTranspose_permMatrix]
+    rfl
+  · rw [← Matrix.permMatrix_mul]
+    have he : (Equiv.prodComm (Fin d) (Fin d) : Equiv.Perm (Fin d × Fin d)) *
+        Equiv.prodComm (Fin d) (Fin d) = 1 := by
+      ext ⟨i, j⟩ <;> rfl
+    rw [he, Matrix.permMatrix_one]
+
+private theorem flip_trace (d : ℕ) :
+    (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).trace = (d : ℂ) := by
+  classical
+  simp only [Matrix.trace, Matrix.diag_apply, Fintype.sum_prod_type, replicaSwap_apply,
+    Prod.swap_prod_mk, Prod.mk.injEq]
+  simp [eq_comm]
+
+private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
+    (hμ₀ : 0 ≤ μ) (hμ₁ : μ ≤ 1) :
+    (werner d μ).PosSemidef ∧ (werner d μ).trace = 1 := by
+  let f := Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))
+  have hf : fᴴ = f := (flip_facts d).1
+  have hff : f * f = 1 := (flip_facts d).2
+  have hp : (1 + f).PosSemidef := by
+    have hx := (Matrix.posSemidef_conjTranspose_mul_self (1 + f)).smul
+      (by norm_num : (0 : ℝ) ≤ 1 / 2)
+    have he : (1 / 2 : ℝ) • ((1 + f)ᴴ * (1 + f)) = 1 + f := by
+      simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_one, hf,
+        Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one, hff]
+      module
+    rw [he] at hx
+    exact hx
+  have hn : (1 - f).PosSemidef := by
+    have hx := (Matrix.posSemidef_conjTranspose_mul_self (1 - f)).smul
+      (by norm_num : (0 : ℝ) ≤ 1 / 2)
+    have he : (1 / 2 : ℝ) • ((1 - f)ᴴ * (1 - f)) = 1 - f := by
+      simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hf,
+        Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, hff]
+      module
+    rw [he] at hx
+    exact hx
+  have hdℝ : (1 : ℝ) < d := by exact_mod_cast hd
+  have hdmℝ : 0 < (d : ℝ) - 1 := sub_pos.mpr hdℝ
+  constructor
+  · exact (hp.smul (div_nonneg hμ₀ (by positivity))).add
+      (hn.smul (div_nonneg (sub_nonneg.mpr hμ₁) (by positivity)))
+  · have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+    have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
+    have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
+    simp only [werner, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
+      flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
+      Complex.real_smul]
+    push_cast
+    field_simp
+    <;> ring
+
+private theorem werner_readout {d : ℕ} (hd : 1 < d) (μ : ℝ) :
+    flipReadout d (werner d μ) = 2 * μ - 1 := by
+  have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
+  have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
+  have ht : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
+      werner d μ).trace = ((2 * μ - 1 : ℝ) : ℂ) := by
+    simp only [werner, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_sub, Matrix.mul_one,
+      (flip_facts d).2, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
+      flip_trace, Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
+      Complex.real_smul]
+    push_cast
+    field_simp
+    <;> ring
+  change (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
+    werner d μ).trace.re = _
+  rw [ht]
+  simp
+
+private theorem werner_entangled {d : ℕ} {μ : ℝ} (hd : 1 < d) (hμ : μ < 1 / 2) :
+    ¬ Separable (werner d μ) := by
+  intro h
+  have hn := separable_flip_nonneg _ h
+  rw [werner_readout hd] at hn
+  linarith
+
+private def correlation (d : ℕ) (μ : ℝ) : ℝ :=
+  ((d : ℝ) + 1 - 2 * μ * d) / (d - 1)
+
+set_option maxRecDepth 4096 in
+private theorem werner_decomposition {d : ℕ} (hd : 1 < d) (μ : ℝ) :
+    werner d μ = Matrix.kroneckerMap (· * ·) (designAverage d) (designAverage d) -
+      correlation d μ • ∑ t, designWeight d t •
+        Matrix.kroneckerMap (· * ·) (designCentered d t) (designCentered d t) := by
+  classical
+  have hd₀ : 0 < d := by omega
+  have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
+  have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
+  have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
+  have hfirst (i k : Fin d) :
+      (∑ t, (designWeight d t : ℂ) * designProjector d t i k) = designAverage d i k := by
+    have h := congrArg (fun m : Matrix (Fin d) (Fin d) ℂ => m i k) (design_first hd₀)
+    simpa only [Matrix.sum_apply, Matrix.smul_apply, Complex.real_smul] using h
+  have hmass : ∑ t, (designWeight d t : ℂ) = 1 := by exact_mod_cast design_weight_sum hd₀
+  ext ⟨i, j⟩ ⟨k, l⟩
+  simp only [Matrix.sub_apply, Matrix.kroneckerMap_apply, Matrix.smul_apply,
+    Matrix.sum_apply, Complex.real_smul, designCentered]
+  change werner d μ (i, j) (k, l) = designAverage d i k * designAverage d j l -
+    (correlation d μ : ℂ) * ∑ t, (designWeight d t : ℂ) *
+      ((designProjector d t i k - designAverage d i k) *
+        (designProjector d t j l - designAverage d j l))
+  have he (t : DesignIndex d) : (designWeight d t : ℂ) *
+      ((designProjector d t i k - designAverage d i k) *
+        (designProjector d t j l - designAverage d j l)) =
+      (designWeight d t : ℂ) * designProjector d t i k * designProjector d t j l -
+      (designWeight d t : ℂ) * designProjector d t i k * designAverage d j l -
+      (designWeight d t : ℂ) * designProjector d t j l * designAverage d i k +
+      (designWeight d t : ℂ) * designAverage d i k * designAverage d j l := by ring
+  simp_rw [he, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.sum_mul,
+    hfirst, hmass, one_mul, design_second_entry hd₀]
+  simp only [werner, designAverage, Matrix.add_apply, Matrix.sub_apply,
+    Matrix.smul_apply, Matrix.one_apply, replicaSwap_apply, Prod.swap_prod_mk,
+    Prod.mk.injEq, Complex.real_smul, correlation]
+  push_cast
+  by_cases hik : i = k <;> by_cases hjl : j = l <;>
+    by_cases hil : i = l <;> by_cases hjk : j = k <;>
+    by_cases hkl : k = l <;> simp [*, eq_comm] <;> field_simp <;> ring
+
+private theorem design_second_moment {d n : ℕ} (hd : 0 < d)
+    (e : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n))
+    (h : ∀ x, ‖e x‖ ≤ traceNorm x) :
+    ‖e (designAverage d)‖ ^ 2 +
+      ∑ t, designWeight d t * ‖e (designCentered d t)‖ ^ 2 ≤ 1 := by
+  classical
+  have hm : ∑ t, designWeight d t • e (designProjector d t) = e (designAverage d) := by
+    rw [← design_first hd]
+    simp only [map_sum, LinearMap.map_smul_of_tower]
+  have hx : (∑ t, designWeight d t * inner ℝ (e (designProjector d t))
+      (e (designAverage d))) = ‖e (designAverage d)‖ ^ 2 := by
+    rw [← hm, ← real_inner_self_eq_norm_sq]
+    simp only [sum_inner, real_inner_smul_left]
+  have hv : ‖e (designAverage d)‖ ^ 2 +
+      ∑ t, designWeight d t * ‖e (designCentered d t)‖ ^ 2 =
+      ∑ t, designWeight d t * ‖e (designProjector d t)‖ ^ 2 := by
+    have hp (t : DesignIndex d) : designWeight d t * ‖e (designCentered d t)‖ ^ 2 =
+        designWeight d t * ‖e (designProjector d t)‖ ^ 2 -
+        2 * (designWeight d t * inner ℝ (e (designProjector d t)) (e (designAverage d))) +
+        designWeight d t * ‖e (designAverage d)‖ ^ 2 := by
+      rw [designCentered, map_sub, norm_sub_sq_real]
+      ring
+    simp_rw [hp, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+    rw [← Finset.mul_sum, ← Finset.sum_mul, hx, design_weight_sum hd]
+    ring
+  rw [hv]
+  calc
+    _ ≤ ∑ t, designWeight d t * 1 := by
+      apply Finset.sum_le_sum
+      intro t _
+      apply mul_le_mul_of_nonneg_left _ (design_weight_nonneg d t)
+      have ht : traceNorm (designProjector d t) = 1 := by
+        have ht := traceNorm_of_posSemidef (design_density hd t).1
+        rw [(design_density hd t).2] at ht
+        exact Complex.ofReal_eq_one.mp ht
+      have hc := h (designProjector d t)
+      rw [ht] at hc
+      nlinarith [norm_nonneg (e (designProjector d t))]
+    _ = 1 := by simpa using design_weight_sum hd
+
+private theorem correlation_range {d : ℕ} {μ : ℝ} (hd : 1 < d)
+    (hμ₀ : 1 / (d : ℝ) ≤ μ) (hμ₁ : μ < 1 / 2) :
+    0 ≤ correlation d μ ∧ correlation d μ ≤ 1 := by
+  have hdℝ : (1 : ℝ) < d := by exact_mod_cast hd
+  have hd₀ : (0 : ℝ) < d := by linarith
+  have hdm : (0 : ℝ) < d - 1 := by linarith
+  have hl : 1 ≤ μ * d := (div_le_iff₀ hd₀).mp hμ₀
+  have hu := mul_lt_mul_of_pos_right hμ₁ hd₀
+  constructor
+  · apply div_nonneg _ hdm.le
+    nlinarith
+  · apply (div_le_iff₀ hdm).mpr
+    nlinarith
+
+private theorem werner_bound {d n₁ n₂ : ℕ} {μ : ℝ} (hd : 1 < d)
+    (hμ₀ : 1 / (d : ℝ) ≤ μ) (hμ₁ : μ < 1 / 2)
+    (e₁ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₁))
+    (e₂ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₂))
+    (h₁ : ∀ x, ‖e₁ x‖ ≤ traceNorm x) (h₂ : ∀ x, ‖e₂ x‖ ≤ traceNorm x) :
+    projNorm (testerImage e₁ e₂ (werner d μ)) ≤ 1 := by
+  classical
+  have hd₀ : 0 < d := by omega
+  have hr := correlation_range hd hμ₀ hμ₁
+  let a : Unit ⊕ DesignIndex d → Matrix (Fin d) (Fin d) ℂ :=
+    Sum.elim (fun _ => designAverage d)
+      (fun t => Real.sqrt (correlation d μ * designWeight d t) • designCentered d t)
+  let b : Unit ⊕ DesignIndex d → Matrix (Fin d) (Fin d) ℂ :=
+    Sum.elim (fun _ => designAverage d)
+      (fun t => (-Real.sqrt (correlation d μ * designWeight d t)) • designCentered d t)
+  have hρ : werner d μ = ∑ t, Matrix.kroneckerMap (· * ·) (a t) (b t) := by
+    rw [werner_decomposition hd μ]
+    conv_rhs => rw [Fintype.sum_sum_type]
+    simp only [a, b, Sum.elim_inl, Sum.elim_inr, Fintype.sum_unique,
+      Finset.smul_sum, smul_smul]
+    rw [sub_eq_add_neg, ← Finset.sum_neg_distrib]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro t _
+    ext p q
+    simp only [Matrix.neg_apply, Matrix.smul_apply, Matrix.kroneckerMap_apply,
+      Complex.real_smul, Complex.ofReal_neg]
+    have hs : (Real.sqrt (correlation d μ * designWeight d t) : ℂ) ^ 2 =
+        ((correlation d μ * designWeight d t : ℝ) : ℂ) := by
+      rw [← Complex.ofReal_pow, Real.sq_sqrt
+        (mul_nonneg hr.1 (design_weight_nonneg d t))]
+    linear_combination (designCentered d t p.1 q.1 * designCentered d t p.2 q.2) * hs
+  have hscale {n : ℕ} (r : ℝ) (v : EuclideanSpace ℂ (Fin n)) :
+      ‖r • v‖ ^ 2 = r ^ 2 * ‖v‖ ^ 2 := by
+    rw [norm_smul, mul_pow, Real.norm_eq_abs, sq_abs]
+  have hs {n : ℕ}
+      (e : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n))
+      (h : ∀ x, ‖e x‖ ≤ traceNorm x) :
+      ‖e (designAverage d)‖ ^ 2 +
+        ∑ t, (correlation d μ * designWeight d t) * ‖e (designCentered d t)‖ ^ 2 ≤ 1 := by
+    apply le_trans _ (design_second_moment hd₀ e h)
+    apply add_le_add le_rfl
+    apply Finset.sum_le_sum
+    intro t _
+    have hc := mul_le_mul_of_nonneg_right hr.2
+      (mul_nonneg (design_weight_nonneg d t) (sq_nonneg ‖e (designCentered d t)‖))
+    simpa only [one_mul, mul_assoc] using hc
+  have ha : ∑ t, ‖e₁ (a t)‖ ^ 2 ≤ 1 := by
+    simpa only [a, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
+      Fintype.sum_unique, LinearMap.map_smul_of_tower, hscale,
+      Real.sq_sqrt (mul_nonneg hr.1 (design_weight_nonneg d _))] using hs e₁ h₁
+  have hb : ∑ t, ‖e₂ (b t)‖ ^ 2 ≤ 1 := by
+    simpa only [b, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
+      Fintype.sum_unique, LinearMap.map_smul_of_tower, hscale, neg_sq,
+      Real.sq_sqrt (mul_nonneg hr.1 (design_weight_nonneg d _))] using hs e₂ h₂
+  rw [hρ, tester_image_decomposition]
+  exact projective_decomposition_bound (fun t => e₁ (a t)) (fun t => e₂ (b t)) ha hb
+
+/-- These Werner states are entangled density matrices undetected by every pair of contractions. -/
+theorem werner_family (d : ℕ) (μ : ℝ) (hd : 3 ≤ d)
+    (hμ₀ : 1 / (d : ℝ) ≤ μ) (hμ₁ : μ < 1 / 2) :
+    (werner d μ).PosSemidef ∧ (werner d μ).trace = 1 ∧ ¬ Separable (werner d μ) ∧
+      ∀ (n₁ n₂ : ℕ)
+        (e₁ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₁))
+        (e₂ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] EuclideanSpace ℂ (Fin n₂)),
+        (∀ x, ‖e₁ x‖ ≤ traceNorm x) → (∀ x, ‖e₂ x‖ ≤ traceNorm x) →
+          projNorm (testerImage e₁ e₂ (werner d μ)) ≤ 1 := by
+  have hd₁ : 1 < d := by omega
+  have hμ : 0 ≤ μ := le_trans (by positivity) hμ₀
+  obtain ⟨hp, ht⟩ := werner_density hd₁ hμ (by linarith : μ ≤ 1)
+  refine ⟨hp, ht, werner_entangled hd₁ hμ₁, ?_⟩
+  intro n₁ n₂ e₁ e₂ h₁ h₂
+  exact werner_bound hd₁ hμ₀ hμ₁ e₁ e₂ h₁ h₂
+
 /-- The qutrit Werner state at parameter one third refutes tester completeness. -/
 theorem result : ¬ claim := by
   intro h
