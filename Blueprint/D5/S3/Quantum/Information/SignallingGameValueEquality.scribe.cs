@@ -336,5 +336,8 @@ internal sealed class SignallingGameValueEqualityDocument : IScribeDocumentDefin
                         "For any no-signalling box, the winning sum is bounded by m using Alice's marginal and by n using Bob's marginal: each winning term is bounded by the corresponding marginal term, and the relevant normalized marginal sums equal one. Splitting into m at most n or n at most m turns these bounds into winProb at most 1/max(m,n).")),
                     Paragraph(Text(
                         "The deterministic construction supplies an element attaining the bound in every class. The no-signalling upper bound applies directly to noSignallingValues and, through the quantum-to-no-signalling construction, to quantumValues. For a classical value, embed each deterministic box into a one-dimensional quantum strategy and apply the same bound. The three IsGreatest statements follow."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("seshadri-leditzky-siddhu-smith-2023-signalling-game-values"),
+                    ResolutionKind.Proved)))));
 }
