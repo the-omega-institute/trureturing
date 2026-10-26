@@ -8,7 +8,11 @@
 import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalInverseCoefficients
 import D5.S3.VertexAlgebra.FormalSeries.SupportedFinalCovariance
 
-/-! The private chart below only reads coefficients of native series.
+/-! proof_shape: content
+admission_basis: escape-witness
+escape_witness: variable_transport proves the raw-to-native signed translations;
+native_chart_readout proves both negative and unsorted coefficient branches.
+The private chart below only reads coefficients of native series.
 Every raw action is the existing finite polynomialAction. Its three generating
 translations are checked on all signed indices, and sums/products/powers
 propagate those finite identities to exactly the six factors of R. -/
@@ -52,22 +56,22 @@ private theorem variable_transport (b : Exponent 3) (i : Fin 3)
     signedExtend (chartVariables R i * F) (W e + b)
   rw [one_smul]
   fin_cases i
-  · simp only [chartVariables, Matrix.cons_val_zero]
+  · dsimp [chartVariables]
     rw [mul_assoc, mul_assoc, signed_variable_mul, signed_variable_mul,
       signed_variable_mul]
     apply congrArg (signedExtend F)
     funext c
-    fin_cases c <;> simp [W] <;> ring
-  · simp only [chartVariables, Matrix.cons_val_one]
+    fin_cases c <;> dsimp [W] <;> simp [Pi.single_apply] <;> ring
+  · dsimp [chartVariables]
     rw [mul_assoc, signed_variable_mul, signed_variable_mul]
     apply congrArg (signedExtend F)
     funext c
-    fin_cases c <;> simp [W] <;> ring
-  · simp only [chartVariables, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+    fin_cases c <;> dsimp [W] <;> simp [Pi.single_apply] <;> ring
+  · dsimp [chartVariables]
     rw [signed_variable_mul]
     apply congrArg (signedExtend F)
     funext c
-    fin_cases c <;> simp [W] <;> ring
+    fin_cases c <;> dsimp [W] <;> simp [Pi.single_apply] <;> ring
 
 private theorem add_transport (b : Exponent 3) (p q : LaurentPolynomial 3)
     (P Q : MvPowerSeries (Fin 3) R)
@@ -146,9 +150,7 @@ private theorem cone_iff (k : ℕ) (a : Fin 3 → ℕ) (e : Exponent 3) :
     FinalCone k a e ↔ ∀ i, 0 ≤ (W e + bshift k a) i := by
   constructor
   · intro h i
-    fin_cases i <;> simp only [Pi.add_apply, W, bshift,
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] <;>
-      dsimp only [FinalCone] at h <;> omega
+    fin_cases i <;> dsimp [W, bshift] <;> dsimp only [FinalCone] at h <;> omega
   · intro h
     have h0 := h 0
     have h1 := h 1
@@ -171,12 +173,14 @@ private theorem old_as_chart (P : MvPowerSeries (Fin 3) R) (k : ℕ) (a : Fin 3 
     have nonneg := (cone_iff k a e).mp he
     have idx : signedIndex (W e + bshift k a) = index3 (n 0) (n 1) (n 2) := by
       ext i
-      fin_cases i <;> simp [signedIndex, W, bshift, n, coneEquiv, index3]
+      fin_cases i <;> simp [signedIndex, W, bshift, n, coneEquiv, index3] <;>
+        congr 1 <;> omega
     rw [← decode_eq, ← inverse_coefficients P k a n, decode_eq]
     change _ = signedExtend _ (W e + bshift k a)
     rw [signedExtend, if_pos nonneg]
     change _ = MvPowerSeries.coeff (signedIndex (W e + bshift k a)) _
     rw [idx]
+    rfl
   · rw [old_zero_outside P k a e he]
     change 0 = signedExtend _ (W e + bshift k a)
     rw [signedExtend, if_neg (fun h => he ((cone_iff k a e).mpr h))]
@@ -194,7 +198,7 @@ private theorem final_action_chart (F : MvPowerSeries (Fin 3) R)
       signedExtend (chartUnitSeries R k a * F) (W e) := by
   rw [six_factor_transport]
   change signedExtend _ (W e + bshift k a) = _
-  simp only [chartVariables, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  dsimp [chartVariables]
   rw [native_chart_factorization]
   change signedExtend
     ((MvPowerSeries.X 0 ^ k * MvPowerSeries.X 1 ^ (3 * k) *
@@ -204,7 +208,7 @@ private theorem final_action_chart (F : MvPowerSeries (Fin 3) R)
     signed_X_pow_mul]
   apply congrArg (signedExtend (chartUnitSeries R k a * F))
   funext i
-  fin_cases i <;> simp [bshift, nsmul_eq_mul] <;> ring
+  fin_cases i <;> dsimp [bshift, W] <;> simp [Pi.single_apply, nsmul_eq_mul] <;> ring
 
 /-- A negative raw coordinate with nonnegative W gives an unsorted Q index;
 a negative coordinate of W gives the signed-zero branch. -/
@@ -219,7 +223,7 @@ private theorem native_chart_readout (P : MvPowerSeries (Fin 3) R) (e : Exponent
     have sorted : n 0 ≤ n 1 ∧ n 1 ≤ n 2 ↔ ∀ i, 0 ≤ e i := by
       constructor
       · intro h i
-        fin_cases i <;> omega
+        fin_cases i <;> dsimp <;> omega
       · intro h
         have h0 := h 0
         have h1 := h 1
@@ -239,7 +243,7 @@ private theorem native_chart_readout (P : MvPowerSeries (Fin 3) R) (e : Exponent
     by_cases he : ∀ i, 0 ≤ e i
     · rw [if_pos (sorted.mpr he), signedExtend, if_pos he]
       change MvPowerSeries.coeff _ P = MvPowerSeries.coeff (signedIndex e) P
-      congr 1
+      apply congrArg P
       ext i
       have h0 := he 0
       have h1 := he 1
@@ -253,8 +257,7 @@ private theorem native_chart_readout (P : MvPowerSeries (Fin 3) R) (e : Exponent
       have h0 := he 0
       have h1 := he 1
       have h2 := he 2
-      fin_cases i <;> simp only [W, Matrix.cons_val_zero,
-        Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] <;> omega
+      fin_cases i <;> dsimp [W] <;> omega
     simp only [signedExtend, if_neg hw, if_neg he]
 
 /-- Full actual R-action of the EXISTING old Laurent expression, for infinite

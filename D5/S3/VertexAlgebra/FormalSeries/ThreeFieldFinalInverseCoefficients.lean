@@ -9,7 +9,11 @@ import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalCone
 import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.RingTheory.PowerSeries.Substitution
 
-/-! The binomial-series suppliers are Scott Carnahan's Mathlib results.
+/-! proof_shape: content
+admission_basis: escape-witness
+escape_witness: finite_inverse_box reindexes the finite coefficient convolution
+with both cumulative guards before comparison with the admissible Laurent fiber.
+The binomial-series suppliers are Scott Carnahan's Mathlib results.
 All sums below are finite coefficient fibers. No exchange of infinite sums,
 finite-support premise on P, or new raw Laurent candidate is used. -/
 set_option autoImplicit false
@@ -62,7 +66,7 @@ private theorem x_coeff (z : ℤ) (r s t : ℕ) :
       simp [index3]
   simp only [h]
   by_cases hs : s = 0 <;> by_cases ht : t = 0 <;>
-    simp [hs, ht, index3, binomial_coeff]
+    simp [hs, ht, index3, binomial_coeff, integerBinomial, Algebra.smul_def]
 
 private theorem y_coeff (z : ℤ) (r s t : ℕ) :
     MvPowerSeries.coeff (index3 r s t) (yKernel (R := R) z) =
@@ -79,7 +83,7 @@ private theorem y_coeff (z : ℤ) (r s t : ℕ) :
       simp [index3]
   simp only [h]
   by_cases hr : r = 0 <;> by_cases ht : t = 0 <;>
-    simp [hr, ht, index3, binomial_coeff]
+    simp [hr, ht, index3, binomial_coeff, integerBinomial, Algebra.smul_def]
 
 private theorem one_add_X_coeff (q r s t : ℕ) :
     MvPowerSeries.coeff (index3 r s t)
@@ -87,10 +91,8 @@ private theorem one_add_X_coeff (q r s t : ℕ) :
       if s = 0 then if t = 0 then (q.choose r : R) else 0 else 0 := by
   have nat_subst :
       (1 + MvPowerSeries.X 0 : MvPowerSeries (Fin 3) R) ^ q = xKernel (q : ℤ) := by
-    rw [xKernel, PowerSeries.binomialSeries_nat]
-    rw [PowerSeries.subst_pow (PowerSeries.HasSubst.X 0),
-      PowerSeries.subst_add (PowerSeries.HasSubst.X 0)]
-    simp [← PowerSeries.coe_substAlgHom (PowerSeries.HasSubst.X 0),
+    rw [xKernel, ← PowerSeries.coe_substAlgHom (R := R) (PowerSeries.HasSubst.X 0),
+      PowerSeries.binomialSeries_nat, map_pow, map_add, map_one,
       PowerSeries.substAlgHom_X]
   rw [nat_subst, x_coeff]
   simp [integerBinomial, Ring.choose_natCast, Algebra.smul_def]
@@ -116,13 +118,13 @@ private theorem middle_pow_coeff (q r s t : ℕ) :
   have sub : index3 r s t - Finsupp.single 1 q = index3 r (s - q) t := by
     ext i
     fin_cases i <;> simp [index3, Finsupp.tsub_apply]
-  rw [le_iff]
   by_cases hqs : q ≤ s
-  · rw [if_pos hqs, sub, one_add_X_coeff, mul_one]
+  · rw [if_pos (le_iff.mpr hqs), sub, one_add_X_coeff, mul_one]
     have eq : s - q = 0 ↔ s = q := by omega
     simp only [eq]
   · have hsq : s ≠ q := by omega
-    simp [hqs, hsq]
+    rw [if_neg (fun h => hqs (le_iff.mp h))]
+    simp [hsq]
 
 /-- A SINGLE relevant power survives in the substitution coefficient.
 This is the finite-fiber justification, rather than an infinite interchange. -/
@@ -204,13 +206,13 @@ private theorem coeff_mul_box (F G : MvPowerSeries (Fin 3) R) (r s t : ℕ) :
   classical
   rw [MvPowerSeries.coeff_mul]
   symm
-  rw [← Finset.sum_product, ← Finset.sum_product]
+  rw [← Finset.sum_product', ← Finset.sum_product']
   refine Finset.sum_bij
     (fun p _ => (index3 p.1.1 p.1.2 p.2,
       index3 (r - p.1.1) (s - p.1.2) (t - p.2))) ?_ ?_ ?_ ?_
   · intro p hp
     simp only [Finset.mem_product, Finset.mem_range] at hp
-    apply Finset.mem_antidiagonal.mpr
+    apply Finset.HasAntidiagonal.mem_antidiagonal.mpr
     ext i
     fin_cases i <;> simp [index3] <;> omega
   · intro p hp q hq eq
@@ -221,7 +223,7 @@ private theorem coeff_mul_box (F G : MvPowerSeries (Fin 3) R) (r s t : ℕ) :
     norm_num at h0 h1 h2
     exact Prod.ext (Prod.ext h0 h1) h2
   · intro p hp
-    have eq := Finset.mem_antidiagonal.mp hp
+    have eq := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
     have h0 := congrArg (fun d : Fin 3 →₀ ℕ => d 0) eq
     have h1 := congrArg (fun d : Fin 3 →₀ ℕ => d 1) eq
     have h2 := congrArg (fun d : Fin 3 →₀ ℕ => d 2) eq
@@ -278,7 +280,7 @@ private theorem finite_inverse_box (P : MvPowerSeries (Fin 3) R)
   classical
   rw [inverse_as_kernels, mul_assoc, mul_assoc, x_mul_coeff]
   simp_rw [middle_mul_coeff, y_mul_coeff, Finset.smul_sum, smul_smul]
-  simp only [coefficientBox, Finset.sum_product]
+  simp only [coefficientBox, Finset.product_eq_sprod, Finset.sum_product]
   apply Finset.sum_congr rfl
   intro j hj
   have hjr : j ≤ r := by simpa using Finset.mem_range.mp hj
@@ -355,9 +357,7 @@ theorem inverse_coefficients (P : MvPowerSeries (Fin 3) R)
           apply admissible
           refine ⟨hsplit, ?_⟩
           intro c
-          fin_cases c <;>
-            simp only [laurentInput, decode, Matrix.cons_val_zero,
-              Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] <;> omega
+          fin_cases c <;> dsimp [laurentInput, decode] <;> omega
         have zero : MvPowerSeries.coeff
             (index3 (n 0 - i.1.1 - i.2.1) (n 1 - i.1.2 - i.2.2) (n 2))
             (nativeChart P) = 0 := by
