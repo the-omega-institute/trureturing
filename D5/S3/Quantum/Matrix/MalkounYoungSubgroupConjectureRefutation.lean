@@ -18,16 +18,26 @@ open D5.S3.Quantum.Matrix.MalkounSubgroupLowerBoundRefutation (crossSum diagonal
 
 noncomputable section
 
+private theorem preserves_one {n : ℕ} (r : Setoid (Fin n)) :
+    ∀ i, r ((1 : Equiv.Perm (Fin n)) i) i := fun i => r.refl i
+
+private theorem preserves_mul {n : ℕ} (r : Setoid (Fin n))
+    {σ τ : Equiv.Perm (Fin n)} (hσ : ∀ i, r (σ i) i) (hτ : ∀ i, r (τ i) i) :
+    ∀ i, r ((σ * τ) i) i := fun i => r.trans (hσ _) (hτ i)
+
+private theorem preserves_inv {n : ℕ} (r : Setoid (Fin n))
+    {σ : Equiv.Perm (Fin n)} (hσ : ∀ i, r (σ i) i) : ∀ i, r (σ⁻¹ i) i := by
+  intro i
+  have h := r.symm (hσ (σ.symm i))
+  rw [σ.apply_symm_apply] at h
+  exact h
+
 /-- The source's group of permutations preserving every equivalence class. -/
 def classPreserving {n : ℕ} (r : Setoid (Fin n)) : Subgroup (Equiv.Perm (Fin n)) where
   carrier := {σ | ∀ i, r (σ i) i}
-  one_mem' := fun i => r.refl i
-  mul_mem' := fun hσ hτ i => r.trans (hσ _) (hτ i)
-  inv_mem' := by
-    intro σ hσ i
-    have h := r.symm (hσ (σ.symm i))
-    rw [σ.apply_symm_apply] at h
-    exact h
+  one_mem' := preserves_one r
+  mul_mem' := preserves_mul r
+  inv_mem' := preserves_inv r
 
 /-- Conjecture D for arbitrary dimension and both arbitrary equivalence relations. -/
 def claim : Prop :=
