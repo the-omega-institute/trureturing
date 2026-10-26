@@ -3901,3 +3901,585 @@ $$
 仍待回答的起源关系是：在原操作菜单、共同来源和实际取得条件下，哪些联合关系能约束源纤维中隐藏的超额与复相干，并解释采用复量子组合及 Born 配对的理由？两段精确风险与完整条件判据描述这些前提下的预测不确定性，没有把数学表示的存在当成该物理结构的来源。
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 原归一化源帽与不丢失奇异块的上侧矩阵
+
+**定义 25.1（同一原源的归一化形状）。** 以下固定定义 1.1–1.2 的原五维仪器、固定平面 $N$、全部复状态纤维 $\mathcal K_d$、全部原完整输入效果数据及不除以二的风险。源与中心都保留复数范围；中心不要求属于源纤维。对 $0<d\le1/10$，写
+
+$$
+\begin{gathered}
+\rho=\begin{pmatrix}A&b\\b^\dagger&z\end{pmatrix},\quad
+A=dA_n,\quad
+A_n=\begin{pmatrix}1+S&-(S+Y)/2+\mathrm iV\\-(S+Y)/2-\mathrm iV&Y\end{pmatrix},\\
+S=s/d,\quad Y=y/d,\quad V=v/d,\quad
+z=1-d(1+S+Y),\quad q_b=(1,3)^{\mathsf T},\\
+\tau=3-2\sqrt2,\quad \kappa=(1+\tau)^2,\quad
+u=Y+(1+2\tau)S,\quad S_{\max}(u)=\frac{u(4-u)}{4\kappa},\\
+Q=5d,\quad\beta=1-Q,\quad x=\sqrt{Q/\beta},\quad
+c=\sqrt{Q\beta}=\frac{x}{1+x^2},\quad
+w=(a-2h)/\sqrt5,\quad z_0=(2a+h)/\sqrt5,\\
+\sigma(d)=Qww^\dagger+\beta gg^\dagger
+=\begin{pmatrix}d&-2d&0\\-2d&4d&0\\0&0&1-5d\end{pmatrix}.
+\end{gathered}
+\tag{III.25.1}
+$$
+
+$A$ 是源的 $ah$ 主块，不是定义 1.2 的提升分量 $A_{\rm lift}$。将 (III.1.6) 的原酉识别记为 $V_{\rm phys}:\mathbb C^5\to\mathbb C^3\oplus N$；它与归一化虚坐标 $V$ 不同。$T_0=5^{-1/2}\begin{pmatrix}1&2\\-2&1\end{pmatrix}$ 将 $(w,z_0)$ 坐标送到 $(a,h)$ 坐标。为每个归一化形状定义
+
+$$
+\begin{gathered}
+L_x=\left(\frac5x-4+S+Y\right)
+\operatorname{diag}\left(x,\frac{x}{1+x}\right)-T_0^{\mathsf T}A_nT_0
+=\begin{pmatrix}l_1&-k_0-\mathrm iV\\-k_0+\mathrm iV&l_2\end{pmatrix},\\
+l_1=(6/5-x)(4-S-Y)+3S/5,\qquad k_0=(4+7S-Y)/10,\\
+l_2=\frac{21-24x}{5(1+x)}+\left(\frac{x}{1+x}-\frac25\right)S
+ +\left(\frac{x}{1+x}+\frac15\right)Y,\qquad
+\widehat L_x=T_0L_xT_0^{\mathsf T}.
+\end{gathered}
+\tag{III.25.2}
+$$
+
+**命题 25.2（实际相关源帽与两个行列式端点）。** 每个实际原复源必满足
+
+$$
+\begin{gathered}
+S,Y\ge0,\quad \Re(q_b^{\mathsf T}b)=4dS/\sqrt6,\quad
+V^2\le u-u^2/4-\kappa S,\\
+0\le u\le4,\quad0\le S\le S_{\max}(u),\quad
+Y=u-(1+2\tau)S\ge0,\quad S+Y=u-2\tau S\le4,\quad z\ge\beta.
+\end{gathered}
+\tag{III.25.3}
+$$
+
+对 $4/5\le x\le5/6$，在这个闭源帽上 $l_2>0$、$l_1\ge0$，且 $l_1=0$ 恰在 $S=0,Y=4$。代入 $Y=u-(1+2\tau)S$，令
+
+$$
+P_x(S,u)=l_1l_2-k_0^2-u+u^2/4+\kappa S.
+\tag{III.25.4}
+$$
+
+则 $P_x$ 对 $S$ 严格凹，并且
+
+$$
+\begin{aligned}
+\det L_x&=P_x(S,u)+u-u^2/4-\kappa S-V^2\ge P_x(S,u),\\
+P_x(0,u)&=\frac{(4-u)(5-6x)}{1+x}\left(1-\frac{x(4-u)}5\right),\\
+P_x(S_{\max}(u),u)&=\frac{(4-u)F_x(u)}{2560(1+x)},
+\end{aligned}
+\tag{III.25.5}
+$$
+
+其中下列系数精确定义同一个三次式，而非数值拟合：
+
+$$
+\begin{gathered}
+F_x(u)=a_3(x)u^3+a_2(x)u^2+a_1(x)u+a_0(x),\\
+a_3=-(21+6\sqrt2)x^2+(70+40\sqrt2)x+60+40\sqrt2,\\
+a_2=-(444+72\sqrt2)x^2+360x+80,\\
+a_1=(-960+384\sqrt2)x^2+(-160-640\sqrt2)x+1040-160\sqrt2,\\
+a_0=12288x^2-25600x+12800=512(5-6x)(5-4x).
+\end{gathered}
+\tag{III.25.6}
+$$
+
+证明。命题 18.1 和 (III.21.2) 直接给同一个 $\rho$ 的归一化关系
+
+$$
+\frac{\det B_d(\rho)}{\alpha^2d^2}
+=Y-\tau^2S-\frac{[Y+(1+2\tau)S]^2}4-V^2
+=u-u^2/4-\kappa S-V^2\ge0.
+$$
+
+故 $u\ge0$、$u\le4$ 且 $S\le S_{\max}(u)$。反过来，这些帽条件给
+
+$$
+Y\ge u-\frac{(1+2\tau)u}{\kappa}=\frac{\tau^2u}{\kappa}\ge0,
+\qquad S\le1/\kappa,
+$$
+
+但这里只把帽作为实际源的必要外域；没有断言每个帽点都存在满足原实矩的 $b$。$S+Y=u-2\tau S\le4$ 给人口下限。原 $\rho\succeq0$、复 $b$ 及其原实矩仍同时保留。
+
+直接用 $T_0$ 旋转 $A_n$，其对角为 $(1+3S+6Y)/5,(4+2S-Y)/5$，上非对角为 $k_0+\mathrm iV$，得到 (III.25.2)。在指定 $x$ 区间，$l_2$ 的常数项及两个变量系数均严格正；$l_1$ 的表达式给所述等号条件。
+
+固定 $u$，$l_1,l_2$ 的 $S$ 系数依次为
+
+$$
+b_1=\frac{3+12\tau}{5}-2\tau x\ge\frac35+\frac{11\tau}{15}>0,
+\qquad b_2=-\frac{3+2\tau}{5}-\frac{2\tau x}{1+x}<0.
+$$
+
+因此 $P_x$ 的 $S^2$ 系数为 $b_1b_2-(4+\tau)^2/25<0$。将 $S=0$ 与 $S=u(4-u)/(4\kappa)$ 分别代入 (III.25.4)，用 $\tau=3-2\sqrt2$ 通分，得到 (III.25.5) 和全部系数 (III.25.6)。因原帽余量非负，第一行也成立。凹性给闭区间内的值不小于两端点连线；$u=0,4$ 时区间退化为单点，直接用未约掉 $4-u$ 的恒等式。没有对 $A$、$S$、$S_{\max}$ 或 $4-u$ 求逆。∎
+
+## 26. 唯一代数二重根与精确隔离
+
+**定理 26.1（原帽端点的唯一正二重根）。** 存在唯一
+
+$$
+(x_*,u_*)\in(4/5,5/6)\times(0,4),\qquad
+F_{x_*}(u_*)=\partial_uF_{x_*}(u_*)=0.
+\tag{III.26.1}
+$$
+
+它是实代数数对，且
+
+$$
+\begin{gathered}
+\frac{403}{500}<x_*<\frac{807}{1000},\qquad
+\frac7{10}<u_*<\frac{71}{100},\\
+d_*:=\frac{x_*^2}{5(1+x_*^2)},\qquad
+\frac{162409}{2062045}<d_*<\frac{651249}{8256245}<\frac1{10},\\
+F_{x_*}(u)=a_3(x_*)(u-u_*)^2
+ \left(u+\frac{a_2(x_*)}{a_3(x_*)}+2u_*\right)\ge0\quad(u\ge0).
+\end{gathered}
+\tag{III.26.2}
+$$
+
+最后一式只有一个非负零点 $u_*$，其重数恰为二；最后一因子严格正。十进表示为 $d_*\approx0.07883057453397067$，定义由 (III.25.6)、(III.26.1) 及有理隔离给出。
+
+证明。在 $4/5\le x\le5/6$，系数满足
+
+$$
+a_3>73,\qquad a_2\ge a_2(5/6)=215/3-50\sqrt2>5/6,
+\qquad -704<a_1<0.
+\tag{III.26.3}
+$$
+
+这些界直接由二次式得到：$a_3$ 递增，$a_2,a_1$ 递减，再在两端代入即可。因此 $F'_x(0)<0$、$F'_x(4)=48a_3+8a_2+a_1>0$，而 $F''_x(u)=6a_3u+2a_2>0$ 对所有 $u\ge0$ 成立。每个 $x$ 恰有一个正的全局极小点 $u(x)\in(0,4)$。
+
+在左端，精确展开为
+
+$$
+\frac{F_{4/5}(u)}{2560(1+4/5)}
+=\left(\frac{641}{28800}+\frac{71\sqrt2}{4800}\right)u^3
+ +\left(\frac{131}{7200}-\frac{\sqrt2}{100}\right)u^2
+ +\left(\frac{31}{480}-\frac{37\sqrt2}{400}\right)u+\frac1{25}.
+$$
+
+用 $7/5<\sqrt2<17/12$ 逐系数比较，它不小于 $(3u^3-5u+3)/75$。多项式 $3u^3-5u+3$ 在非负半轴的最小值为 $(27-10\sqrt5)/9>0$，后一个符号由 $27^2>100\cdot5$ 给出。因此左端严格正。在右端 $x=5/6$，$a_0=0,a_1<0$，故某个足够小的正 $u$ 使 $F_x(u)<0$。
+
+为证明唯一性，固定 $0\le u<4$，在 $S=S_{\max}(u),V=0$ 上有 $l_1,l_2>0$，并且
+
+$$
+\partial_xl_1=S+Y-4<0,\qquad
+\partial_xl_2=\frac{S+Y-9}{(1+x)^2}<0,\qquad \partial_xk_0=0.
+\tag{III.26.4}
+$$
+
+因而 (III.25.5) 的 $F_x(u)/[2560(1+x)]=\det L_x/(4-u)$ 严格随 $x$ 递减。这一步只在 $u<4$ 使用除法。在紧区间 $[0,4]$ 上取最小值得到连续函数 $m(x)$；其极小点都在 $(0,4)$，所以将任一较小 $x$ 的极小点代入较大 $x$，即得 $m$ 严格递减。上述异号端值给恰一个零点 $x_*$；严格凸性给唯一的 $u_*$。任何 (III.26.1) 的正解都必须是这个极小点零值，故对整个指定矩形唯一。
+
+隔离只需下列有理比较。令 $x_l=403/500,x_h=807/1000$、$u_l=7/10,u_h=71/100$，则
+
+$$
+\begin{gathered}
+4a_2(x_l)F_{x_l}(u_l)-F'_{x_l}(u_l)^2>260,
+\qquad F_{x_h}(u_l)<-29/10,\\
+F'_{x_l}(u_l)<-1/2,\qquad F'_{x_h}(u_h)>5,\\
+\partial_xF'_x(u_l)<-2300,\quad
+\partial_xF'_x(u_h)<-2300\quad(x_l\le x\le x_h).
+\end{gathered}
+\tag{III.26.5}
+$$
+
+这里每个固定点的表达式在 $\mathbb Q(\sqrt2)$ 内，混合导数对 $x$ 仿射；代入两个 $x$ 端点并用
+
+$$
+\frac{7071}{5000}<\sqrt2<\frac{14143}{10000},\qquad
+\left(\frac{7071}{5000}\right)^2<2<
+\left(\frac{14143}{10000}\right)^2
+$$
+
+作有理上下界即可得到全部严格符号。因 $F''_{x_l}\ge2a_2(x_l)>0$，完成平方给
+
+$$
+F_{x_l}(u)\ge F_{x_l}(u_l)+F'_{x_l}(u_l)(u-u_l)
+ +a_2(x_l)(u-u_l)^2
+\ge F_{x_l}(u_l)-\frac{F'_{x_l}(u_l)^2}{4a_2(x_l)}>0.
+$$
+
+于是 $x_l<x_*<x_h$。混合导数符号将 $F'_{x_l}(u_l)<0$ 传播到 $x_*$，并将 $F'_{x_h}(u_h)>0$ 反向传播到 $x_*$；严格凸性即给 $u_l<u_*<u_h$。映射 $x\mapsto x^2/[5(1+x^2)]$ 的导数为 $2x/[5(1+x^2)^2]>0$，其两端值正是 (III.26.2) 的有理数。
+
+由二重根方程和三次式的首两项系数，展开即得 (III.26.2) 的因式分解；余项恰为 $F_{x_*}(u_*)+(u-u_*)F'_{x_*}(u_*)=0$。$a_3,a_2,u_*>0$ 使最后一因子严格正，$F''_{x_*}(u_*)>0$ 排除三重根。
+
+为给代数性一个不依赖小数的消元式，置
+
+$$
+\Delta(x)=a_2^2a_1^2-4a_3a_1^3-4a_2^3a_0-27a_3^2a_0^2
+ +18a_3a_2a_1a_0.
+\tag{III.26.6}
+$$
+
+这是 $\mathbb Q(\sqrt2)[x]$ 中的非零八次多项式，首项系数为 $1504537804800+1062744883200\sqrt2$。二重根给 $\Delta(x_*)=0$，且
+
+$$
+u_*=
+\left.\frac{9a_3a_0-a_2a_1}{2(a_2^2-3a_3a_1)}\right|_{x=x_*}.
+\tag{III.26.7}
+$$
+
+分母严格正，因为 $a_3>0,a_1<0$。故 $x_*,u_*,d_*$ 均为实代数数。∎
+
+## 27. 完整复源的双侧包含与唯一密度中心
+
+**定理 27.1（纯接触分支直到实际首次端点）。** 对每个 $0<d\le d_*$，(III.25.1) 的秩二密度中心满足
+
+$$
+\sigma(d)-c(d)I\preceq\rho\preceq\sigma(d)+c(d)I
+\quad(\rho\in\mathcal K_d),\qquad
+r(d)=2\sqrt{5d(1-5d)}.
+\tag{III.27.1}
+$$
+
+它是全部复密度中心中的唯一最优中心；竞争中心可以在 $\mathcal K_d$ 外，可以有任意复相干。两侧包含覆盖所有源秩、任意复 $b$、两个 $v$ 符号、奇异 $ah$ 块及秩三非极端态。
+
+证明。先在 $x=x_*$ 检验 $L_x$。由 (III.25.5)、(III.26.2)，$P_x$ 的两个 $S$ 端值均非负；严格凹性给整个闭区间 $P_x\ge0$，退化的 $u=0,4$ 已包括。加上帽余量给 $\det L_{x_*}\ge0$，又 $l_2>0,l_1\ge0$，故 $L_{x_*}\succeq0$。
+
+固定任一归一化帽形状，有
+
+$$
+\partial_xL_x=
+\operatorname{diag}\left(S+Y-4,\frac{S+Y-9}{(1+x)^2}\right)\preceq0.
+\tag{III.27.2}
+$$
+
+因此对所有 $0<x\le x_*$，$L_x\succeq L_{x_*}\succeq0$。帽与 $d$ 无关；这里只比较同一归一化形状的矩阵，没有把不同实际源的坐标拼接为一个共同实现。
+
+令 $H=\sigma+cI=\operatorname{diag}(H_2,h_g)$，其中
+
+$$
+\begin{gathered}
+h_g=\beta+c=\frac{1+x}{1+x^2}>1,\qquad
+H_2/h_g=T_0\operatorname{diag}\left(x,\frac{x}{1+x}\right)T_0^{\mathsf T},\\
+p=h_g-z=d(5/x-4+S+Y)>0,\qquad
+pH_2-h_gA=dh_g\widehat L_x,\qquad M=zA-bb^\dagger\succeq0.
+\end{gathered}
+\tag{III.27.3}
+$$
+
+最后一个关系来自实际 $\rho\succeq0$ 对正标量 $z\ge\beta>0$ 的 Schur 补。对 $H-\rho$ 再用其正标量 $p$ 作 Schur 补，得到精确式
+
+$$
+H_2-A-\frac{bb^\dagger}{p}
+=\frac{dh_g\widehat L_x+M}{p}\succeq0.
+\tag{III.27.4}
+$$
+
+这证明全部实际复源的上侧包含，不需 $A^{-1}$，也不需把源分解为低秩态。
+
+下侧沿用命题 18.2 的人口条件；为确定后面的等号，保留其 Schur 补的精确正项。对 $0<d<1/10$ 有 $Q<c<\beta$。令
+
+$$
+p_l=z+c-\beta\ge c>0,\qquad T=(1-z)I_2-A\succeq0.
+$$
+
+后者由 $A\succeq0,\operatorname{Tr}A=1-z$ 得到。下侧矩阵的 Schur 补恰为
+
+$$
+\begin{aligned}
+A+cI_2-Qww^\dagger-\frac{bb^\dagger}{p_l}
+={}&\frac{(\beta-Q)(z-\beta)}{p_l}I_2
+ +Q(I_2-ww^\dagger)\\
+&+\frac{\beta-c}{p_l}T+\frac{M}{p_l}\succeq0.
+\end{aligned}
+\tag{III.27.5}
+$$
+
+标量恒等式为 $(c-Q)-(\beta-c)(1-z)/p_l=(\beta-Q)(z-\beta)/p_l$，只用 $Q+\beta=1,c^2=Q\beta$。所有系数非负，且 $z>\beta$ 时第一项严格正。在 $d=1/10$，$cI-\sigma\succeq0$ 直接给下侧包含，不使用退化的 $c-Q$。所以这侧实际上在整个 $0<d\le1/10$ 成立。
+
+匹配下界消费 (III.19.14) 的两个实际原纯源
+
+$$
+\psi_\pm=\sqrt Q\,w\pm\mathrm i\sqrt\beta\,g,\qquad
+\rho_\pm=\psi_\pm\psi_\pm^\dagger.
+\tag{III.27.6}
+$$
+
+它们在整个 $0<d\le1/10$ 均可取 $A_{\rm lift}=\rho_\pm,D_{\rm lift}=0$；原 $aa,C,E$ 矩分别为 $d,d,(6-5d)/16$，原固定 $N$ 条件不变。用实际复投影而非只对实中心的投影实部，置
+
+$$
+\begin{gathered}
+v_\pm=(w\pm\mathrm ig)/\sqrt2,\quad \Pi_\pm=v_\pm v_\pm^\dagger,
+\quad p_+=p_-=1/2>0,\\
+(\rho_\pm-\sigma)v_\pm=cv_\pm,\quad
+\operatorname{Tr}(\Pi_\pm\rho_\pm)=1/2+c,\\
+M_0=(\Pi_++\Pi_-)/2=(ww^\dagger+gg^\dagger)/2,\quad
+I/2-M_0=z_0z_0^\dagger/2\succeq0,\quad (I/2-M_0)\sigma=0.
+\end{gathered}
+\tag{III.27.7}
+$$
+
+由迹零 Hermitian 差的变分范数公式，对每个复密度 $\theta$，
+
+$$
+\frac12\max_{\rho\in\mathcal K_d}\|\rho-\theta\|_1
+\ge\frac12\max_\pm\|\rho_\pm-\theta\|_1
+\ge\max_\pm\operatorname{Tr}(\Pi_\pm(\rho_\pm-\theta))
+\ge\frac12+c-\operatorname{Tr}(M_0\theta)
+=c+\frac12\theta_{z_0z_0}\ge c.
+\tag{III.27.8}
+$$
+
+这是对全部中心的正权法锥下证书，两个权重均严格正，不要求中心满足源矩。若两纯源到 $\theta$ 的距离都不超过 $2c$，等号迫使 $\theta_{z_0z_0}=0$。密度正性使整个 $z_0$ 行列为零。在 $(w,g)$ 上写 $\theta=\begin{pmatrix}\eta&b_0\\\overline b_0&1-\eta\end{pmatrix}$，其中 $b_0\in\mathbb C$，两项范数条件给
+
+$$
+(\eta-Q)^2+|b_0+\mathrm ic|^2\le c^2,\qquad
+(\eta-Q)^2+|b_0-\mathrm ic|^2\le c^2.
+$$
+
+平均后 $(\eta-Q)^2+|b_0|^2\le0$，所以 $\theta=\sigma$。这个唯一可能中心结论在全部 $0<d\le1/10$ 都成立，独立于上侧包含是否成立。
+
+最后，三阶迹零 Hermitian 矩阵的正、负谱质量相等，且至少一侧仅有一个非零特征值，故 $\|D\|_1=2\|D\|_{\rm op}$。双侧包含给上界 $2c$，(III.27.8) 给所有复中心的下界及唯一性；原通道约化 (III.1.6) 给 (III.27.1)。∎
+
+## 28. 首次端点的实际复混合族与固定平面提升
+
+**定义 28.1（固定代数混合形状及其全部相位）。** 用定理 26.1 的同一对 $(x_*,u_*)$ 定义
+
+$$
+\begin{gathered}
+S_0=\frac{u_*(4-u_*)}{4\kappa},\quad
+Y_0=u_*-(1+2\tau)S_0,\quad
+A_0=\begin{pmatrix}1+S_0&-(S_0+Y_0)/2\\-(S_0+Y_0)/2&Y_0\end{pmatrix},\\
+l_{1*}=l_1(x_*,S_0,Y_0),\quad k_*=(4+7S_0-Y_0)/10,\quad
+r_0=(k_*+2l_{1*},-2k_*+l_{1*})^{\mathsf T},\\
+R_0=r_0^{\mathsf T}A_0r_0,\quad Q_0=q_b^{\mathsf T}A_0r_0,\quad
+H_0=1+S_0+Y_0.
+\end{gathered}
+\tag{III.28.1}
+$$
+
+$r_0$ 是 $ah$ 坐标中的二分量实向量，不是原输入基向量 $r$。以下 $\widehat L_x$ 均在这一固定形状 $S_0,Y_0,V=0$ 上求值。对每个 $0<d\le1/10$，令
+
+$$
+\begin{gathered}
+z_d=1-dH_0,\quad h_d=4dS_0/\sqrt6,\quad
+b_R(d)=\sqrt{dz_d/R_0}\,A_0r_0,\quad
+t_d=\frac{h_d}{q_b^{\mathsf T}b_R(d)},\\
+\epsilon_\pm(d)=t_d\pm\mathrm i\sqrt{1-t_d^2},\quad
+b_\pm(d)=\epsilon_\pm(d)b_R(d),\quad
+\rho_{R,\pm}(d)=\begin{pmatrix}dA_0&b_\pm(d)\\b_\pm(d)^\dagger&z_d\end{pmatrix}.
+\end{gathered}
+\tag{III.28.2}
+$$
+
+所有根式取非负根。
+
+**命题 28.2（整个参数段上的实际秩二复混合源）。** (III.28.1)–(III.28.2) 的分母、根式及两个不同相位在整个 $0<d\le1/10$ 合法。每个 $\rho_{R,\pm}(d)$ 是原 $\mathsf R_+$ 极端层内的实际秩二密度，$A=dA_0\succ0$，$s=dS_0>0$、$\det B_d=0$；其 $ag,hg$ 虚相干都非零。它们具有原固定 $N$ 提升及五维原前驱。
+
+证明。二重根及 (III.25.5) 给 $\det L_{x_*}=0$，$l_{1*},l_{2*}>0$。由矩阵乘法，
+
+$$
+T_0^{\mathsf T}r_0=\sqrt5(k_*,l_{1*})^{\mathsf T},\qquad
+L_{x_*}(k_*,l_{1*})^{\mathsf T}
+=(0,\det L_{x_*})^{\mathsf T}=0.
+\tag{III.28.3}
+$$
+
+故 $\widehat L_{x_*}r_0=0$。$S_0=S_{\max}(u_*)>0$ 且
+
+$$
+\det A_0=S_0[(1+\tau)Y_0+\tau(1+\tau)S_0+\tau^2]>0,
+\tag{III.28.4}
+$$
+
+所以 $A_0\succ0$。
+
+为把相位存在性固定在整个段而非单个样本上，用 (III.26.2) 的闭隔离盒及 $7071/5000<\sqrt2<14143/10000$ 在 (III.28.1) 中作有理区间代入，得到
+
+$$
+\begin{gathered}
+\frac{419445}{10^6}<S_0<\frac{426877}{10^6},\quad
+\frac{126619}{10^6}<Y_0<\frac{146769}{10^6},\quad
+\frac{1579880}{10^6}<l_{1*}<\frac{1635321}{10^6},\\
+\frac{19}{5}<(r_0)_a<4,\quad \frac15<(r_0)_h<\frac3{10},\\
+\frac{27}{5}<(A_0r_0)_a<\frac{28}{5},\quad
+-\frac{11}{10}<(A_0r_0)_h<-1,\quad
+20<R_0<22,\quad Q_0>\frac{21}{10}>2.
+\end{gathered}
+\tag{III.28.5}
+$$
+
+例如先以 $S_0=u_*(4-u_*)/(4\kappa)$ 取得第一界，再以 $Y_0=u_*-(1+2\tau)S_0$ 取得第二界；将两者代入 $l_{1*}=(6/5-x_*)(4-S_0-Y_0)+3S_0/5$，继而依次代入 $k_*,r_0,A_0r_0,R_0,Q_0$。每次乘法取四个有理端积的最小、最大值，除法只除以同号的正区间，得到以上外向界。因此这些界只用有理不等式和隔离盒，不依赖小数近似。
+
+有 $z_{1/10}>21/25$；并且定义
+
+$$
+E_0(d)=z_dQ_0^2-\frac83dS_0^2R_0
+=Q_0^2-d\left(H_0Q_0^2+\frac83S_0^2R_0\right).
+\tag{III.28.6}
+$$
+
+由 (III.28.5) 及 $S_0<43/100$，
+
+$$
+E_0(1/10)>
+\frac{21}{25}\left(\frac{21}{10}\right)^2
+-\frac4{15}\left(\frac{43}{100}\right)^2\!22
+>\frac{12}{5}>0.
+\tag{III.28.7}
+$$
+
+$z_d$ 与 $E_0(d)$ 都随 $d$ 严格递减，所以上述正界在整个指定段成立。又 $q_b^{\mathsf T}b_R=\sqrt{dz_d/R_0}\,Q_0>0$，故
+
+$$
+0<t_d^2=\frac{(8/3)dS_0^2R_0}{z_dQ_0^2}<1.
+\tag{III.28.8}
+$$
+
+两个相位不同、模为一。由 (III.28.5) 的两个非零分量，$b_\pm$ 的两项虚部都非零。此处设 $V=0$ 只是这个实际见证族的形状，没有将完整源限制到实截面。
+
+用 $A_0\succ0$ 计算，$b_\pm^\dagger(dA_0)^{-1}b_\pm=z_d$，或者直接写
+
+$$
+\rho_{R,\pm}=G_\pm(dA_0)G_\pm^\dagger,\qquad
+G_\pm=\begin{pmatrix}I_2\\
+\overline{\epsilon_\pm}\sqrt{z_d/(dR_0)}\,r_0^{\mathsf T}
+\end{pmatrix}.
+\tag{III.28.9}
+$$
+
+这给正性和秩恰二。迹为一，原 $C$ 矩为 $d$；$\Re(q_b^{\mathsf T}b_\pm)=h_d$ 结合 (III.21.2) 给原 $E$ 矩 $(6-5d)/16$。帽余量恰为零，故 $\det B_d=0$；其左上项 $d>0$，右下项
+
+$$
+L_\rho=\ell^\dagger\rho\ell
+=d\alpha^2[(1+\tau)Y_0+\tau(1+\tau)S_0+\tau^2]>0.
+$$
+
+因此 $B_d\succeq0$ 且秩一。连同 $s>0,A\succ0,\operatorname{rank}\rho=2$，这正是母卷 §36 的原 $\mathsf R_+$ 层。
+
+实际固定平面提升是 §24 公式在这个饱和边界的直接取值：
+
+$$
+A_{\rm lift}=\frac{\rho\ell\ell^\dagger\rho}{L_\rho},\qquad
+D_{\rm lift}=\rho-A_{\rm lift},\qquad
+\omega_{R,\pm}=V_{\rm phys}^\dagger(A_{\rm lift}\oplus D_{\rm lift})V_{\rm phys}.
+\tag{III.28.10}
+$$
+
+若 $u_\ell=\rho^{1/2}\ell/\sqrt{L_\rho}$，则 $\|u_\ell\|=1$，
+$D_{\rm lift}=\rho^{1/2}(I-u_\ell u_\ell^\dagger)\rho^{1/2}\succeq0$，且 $D_{\rm lift}\ell=0$。于是其范围位于固定 $N=\ell^\perp$，没有旋转 $N$。$\det B_d=0$ 给 $(A_{\rm lift})_{aa}=d$；两提升分量各秩一。原 $V_{\rm phys}$ 满足 $V_{\rm phys}^\dagger V_{\rm phys}=I_5,V_{\rm phys}V_{\rm phys}^\dagger=I_3\oplus P_N$，所以 $\omega_{R,\pm}$ 是合法五维秩二原源。相应 $T_{\omega_{R,\pm}}$ 由 (III.24.1) 给出，并满足全部原深度数据。∎
+
+## 29. 端点的全部接触与严格连续离开
+
+**定理 29.1（四个上接触、两个下接触）。** 在 $d=d_*$，相对于唯一中心 $\sigma(d_*)$，上侧矩阵 $\sigma+cI-\rho$ 奇异的实际原源恰为
+
+$$
+\rho_+(d_*),\quad\rho_-(d_*),\quad
+\rho_{R,+}(d_*),\quad\rho_{R,-}(d_*).
+\tag{III.29.1}
+$$
+
+下侧矩阵 $\rho-\sigma+cI$ 奇异的实际原源恰为前两个纯源。这里的上、下接触按两侧 Loewner 矩阵分别定义；匹配下证书 (III.27.7) 只使用两个严格正的纯源权重，不要求两个混合接触有正权。
+
+证明。在 $x=x_*$，(III.25.5) 的 $S=0$ 端点对所有 $u<4$ 严格正，因为 $x_*<5/6$ 且 $1-x_*(4-u)/5>0$。另一端点由 (III.26.2) 只有 $u=u_*$ 和 $u=4$ 两个可能零值。$0<u<4$ 时 $S_{\max}>0$，严格凹性使任何严格内部 $S$ 的 $P_x$ 大于端点连线，故严格正。把非负帽余量加回后，$\det L_{x_*}=0$ 只能在
+
+$$
+(S,Y,V)=(0,4,0)\quad\text{或}\quad(S_0,Y_0,0).
+\tag{III.29.2}
+$$
+
+在混合端点，帽余量迫使 $V^2=0$；在 $u=4$ 也如此。$u=0$ 的唯一帽点由 (III.25.5) 直接严格正。因 $l_2>0$，两个奇异 $L$ 均为秩一。
+
+对任意实际上接触，$p>0$，(III.27.4) 是两个半正定项之和，故其非零核向量同时位于 $\widehat L$ 与 $M$ 的核。外层形状因此必为 (III.29.2)。在第一种形状 $A=Qww^\dagger,z=\beta$，原正性给 $b=w\zeta$、$|\zeta|\le c$，原实矩给 $\Re\zeta=0$。沿 $w$ 的上 Schur 补为 $c-|\zeta|^2/c$，接触迫使 $|\zeta|=c$，恰得到两个 $\rho_\pm$。
+
+在第二种形状，$\ker\widehat L=\mathbb Cr_0$。$r_0^\dagger M r_0=0$ 恰为
+
+$$
+|r_0^\dagger b|^2=z_ddR_0.
+\tag{III.29.3}
+$$
+
+由 $A=dA_0\succ0$，Cauchy–Schwarz 链
+$|r_0^\dagger b|^2\le(r_0^\dagger A r_0)(b^\dagger A^{-1}b)\le z_d(r_0^\dagger A r_0)$
+的等号迫使 $b=\epsilon\sqrt{dz_d/R_0}A_0r_0$、$|\epsilon|=1$。原实矩随即给 $\Re\epsilon=t_{d_*}$；因 $0<t_{d_*}<1$，只有定义 28.1 的两个相位。反过来，这两源满足 (III.29.3) 且 $\widehat L_{x_*}r_0=0$，故 (III.27.4) 沿 $r_0$ 为零；定理 27.1 的全域正性使其确为上接触。这同时排除了额外秩三或非极端上接触。
+
+下侧由 (III.27.5) 看出：$z>\beta$ 时第一项严格正，所以没有接触。若 $z=\beta$，则 $S+Y=4$，而 $S+Y=u-2\tau S\le4$ 迫使 $u=4,S=0,Y=4,V=0$。在同一 $b=w\zeta$ 形状上，下 Schur 补沿 $w$ 也是 $c-|\zeta|^2/c$，故只有两个纯接触。∎
+
+**定理 29.2（整段严格离开而非单点违反）。** 对每个
+
+$$
+d_*<d\le\frac1{10},\qquad
+r(d)>2\sqrt{5d(1-5d)}.
+\tag{III.29.4}
+$$
+
+特别地，$d_*$ 是初始纯接触中心与半径分支的真实首次离开点；本结论不指定离开后的最优中心或半径公式。
+
+证明。保持定义 28.1 的同一固定代数形状，$d_*<d\le1/10$ 对应 $x_*<x\le1$。$S_0+Y_0<4$ 使 (III.27.2) 的两个对角导数严格负，非对角项不变，所以
+
+$$
+\widehat L_x-\widehat L_{x_*}\prec0,\qquad
+r_0^{\mathsf T}\widehat L_xr_0<0.
+$$
+
+命题 28.2 已在整个参数段给实际复混合源。这里
+$p=h_g-z_d=d(5/x-4+S_0+Y_0)>0$，包括 $x=1$。其上 Schur 补沿 $r_0$ 的值精确为
+
+$$
+r_0^{\mathsf T}\left(H_2-dA_0-\frac{b_\pm b_\pm^\dagger}{p}\right)r_0
+=\frac{dh_g}{p}\,r_0^{\mathsf T}\widehat L_xr_0<0,
+\tag{III.29.5}
+$$
+
+因为 (III.29.3) 在所有这些 $d$ 都成立。原三阶矩阵的显式负向量为 $(r_0,b_\pm^\dagger r_0/p)^{\mathsf T}$。因此 $\|\rho_{R,\pm}(d)-\sigma(d)\|_1>2c(d)$，端点 $d=1/10$ 也包括。
+
+这仍需排除另一中心把风险降回 $2c$。定理 27.1 证明中的两个实际纯源，对全部 $0<d\le1/10$ 给所有复中心的下界 $2c$，并迫使任何风险不超过 $2c$ 的中心恰为 $\sigma(d)$。另一方面，原 $\mathcal K_d$ 由密度条件、仿射矩、$s\ge0,B_d\succeq0$ 给非空闭有界集，故紧；全部复密度中心也紧。最坏风险函数关于中心在迹范数下为 $1$-Lipschitz，因此最小值达到。若 $r(d)=2c$，达到中心只能是 $\sigma(d)$，与实际混合源的严格违反矛盾。因此每个参数都有严格最小最大超额，而不是仅有一个非最优中心的采样反例。∎
+
+## 30. 原五维共同重建、全参考转移与剩余中央目标
+
+**推论 30.1（原通道及任意有限未触动参考上的精确结论）。** 对定义 1.1 的全部原 CPTP 源 $T:M_3(\mathbb C)\to M_5(\mathbb C)$，保持全部 $j\ge0$ 的输入效果算子等式，不限制输出支持或 Kraus 秩。对全部共同 CPTP 重建 $R:M_3\to M_5$，定理 27.1 的 $2c(d)$ 是 $0<d\le d_*$ 的原最小最大 diamond 风险，达到它的一个重建是
+
+$$
+R_{\sigma(d)}(X)=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\sigma(d)]B^\dagger.
+\tag{III.30.1}
+$$
+
+定理 29.2 的严格超额也是这一原共同重建问题的严格超额。范数保持 (III.1.2) 的全部有限 $n$ 及全部复矩阵 $X$，没有正输入限制或参考维数截断；唯一性结论只针对密度中心，不另断言共同 CPTP 重建唯一。
+
+证明。直接消费母卷定理 35.2–35.5、(III.1.6) 及命题 24.1 的同一双向对应。纯接触的实际五维向量是
+
+$$
+\phi_\pm=\sqrt d(Bq-2Br)\pm\mathrm i\sqrt\beta\,c_5,
+\qquad c_5=(e_0+e_1-e_3-e_4)/2,\qquad
+V_{\rm phys}\phi_\pm=(\psi_\pm,0).
+$$
+
+混合源使用 (III.28.10)。两者都由原
+$T_\omega(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega$
+实现；谱 Kraus 算子 $BP_+$ 与 $\sqrt{\lambda_j}w_jf^\dagger$ 的伴随平方和为 $I_3$。同一原三个完整效果矩及其递推给所有深度 $Y_j$，并有 $\mathcal GT_\omega=S_\rho$。这不是只匹配 $ff^\dagger$ 输入的数据；母卷的反向对应也覆盖任意复 Kraus 源，不以这些显式前驱限制对手。
+
+(III.30.1) 是 (III.24.2) 在此中心上的取值，Kraus 算子为 $BUP_+$ 和 $\sqrt{\mu_j}Bu_jf^\dagger$。对于每个有限 $n$、每个 $X\in M_n(\mathbb C)\otimes M_3(\mathbb C)$，既有 (III.24.3) 精确给
+
+$$
+(\operatorname{id}_n\otimes(S_\rho-R_\sigma))(X)
+=X_{ff}\otimes B(\rho-\sigma)B^\dagger,\qquad
+X_{ff}=(I_n\otimes f^\dagger)X(I_n\otimes f),
+\qquad \|X_{ff}\|_1\le\|X\|_1.
+$$
+
+迹范数的压缩理想性质、张量奇异值乘法及 $B^\dagger B=I$ 给上界，$n=1,X=ff^\dagger$ 达到等号。反过来，每个不受形式限制的原共同 CPTP $R$ 经同一
+
+$$
+\mathcal C_B(Y)=B^\dagger YB+\operatorname{Tr}[(I_5-BB^\dagger)Y]gg^\dagger
+$$
+
+得到任意复密度 $\theta=\mathcal C_B(R(ff^\dagger))$，未要求它在 $\mathcal K_d$ 内；(III.24.4) 给
+$\|R-S_\rho\|_\diamond\ge\|\theta-\rho\|_1$。
+所以全部复中心的匹配下界、唯一可能中心及严格离开均转移至原重建问题。上述通道与范数对应是既有供应，此处只把新端点和实际新混合接触接回同一原问题。∎
+
+**命题 30.2（旧充分端点与新首次转折的精确关系）。** 定理 19.1 的 $d_{\rm low}$ 严格小于 $d_*$，而 $d_*<5/61<d_{\rm high}$。定理 19.1、20.2 的充分端点及既有结论保持成立；定义 24.2 所列的未解区间现在缩为
+
+$$
+d_*<d<d_{\rm high}.
+\tag{III.30.2}
+$$
+
+其中 $(d_*,1/10]$ 已有定理 29.2 的严格超额，但尚无完整达到中心与精确半径，故未被计作已求解区间。
+
+证明。(III.19.3) 给 $T_{\rm low}<77/100<4/5<x_*$，严格递增映射 $x\mapsto x^2/[5(1+x^2)]$ 给 $d_{\rm low}<d_*$。同一映射将 $5/6$ 送到 $5/61$，故 $x_*<5/6$ 给 $d_*<5/61$；$5/61<d_{\rm high}$ 沿用定义 24.2。定理 27.1 将同一中心的精确初始分支延伸至 $d_*$，定理 29.2 则证明它紧接着严格失效。因此这里确定的是该初始分支的真实首次转折，不是把旧余因子充分端点改称实际转折，也没有断言 $d_{\rm high}$ 的最大性或下一接触型持续存在。∎
+
+**定义 30.3（未决关系及模型前提）。** (III.30.2) 中仍待确定实际达到的全部五实坐标中心、精确原半径、覆盖全部复源的上证书及对全部复中心的匹配正权下证书。$5/61$ 的既有定量括号、实际混合超额及 §§14–16、§§21–22 的完整条件消元继续适用；没有一个既有可行上中心在这里被断言为最优。新的具体起点是 (III.29.1) 的实际纯/混合接触及其全部相位，后继接触方程仍须在两个实际外层域同时通过全称包含，并满足正权法锥条件；端点已有两个混合接触不自动给它们在后继最优证书中的正权或持续性。
+
+本节条件数学保持原复 Hilbert 空间、密度及 Born 配对、CP/TP、原复组合、固定五维仪器、固定 $N$、擦除标签原菜单及精确完整输入效果数据。所有帽坐标、相位、提升和接触来自同一实际 $\rho$ 及原实现。全部有限未触动参考只是原范数量词；数学存在的效果、通道或提升不授予新的制备、相位控制、采集、仪器分支、标签历史、独立或相关副本、参考制备、返回环境或其他操作。没有引入噪声或有限精度模型，也没有由这些条件结论推出 Hilbert/Born/CP 的起源、物理完成或信息守恒。
+
+**定义 30.4（数学归属）。** 归一化原帽上的精确二重根端点、全复双侧证书、无中心限制的唯一性、实际复混合接触的完整分类及整段严格离开是本原源的综合推导 `repo-derived`。PSD 主块与 Schur 补、Cauchy–Schwarz 等号、凹函数端点界、三次判别式与实根隔离、紧性达到和迹范数变分原理均作为成熟中间工具在相应证明内使用，不单列为新的通用理论。原通道/Kraus 与完全有界迹范数的文献供应沿用定义 1.4 的 Watrous 第二、三章；原极端层、提升及通道等价直接复用母卷 §§35–36 和本卷 §24。这里不主张这些工具或源特定应用的文献优先权。
+
+## 追加锚（本行以下为增补区）
