@@ -48,6 +48,8 @@ private theorem reconstruct_suffix
       InStrip (s k t) (C k) (h - δ) E := by
   classical
   obtain ⟨hQ, _, hC, _, _⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change C k = 2 * Q k - 1 at hC
   have compatible (L : List (Fin k)) (hL : ∀ i ∈ L, |s k t i| < Q k) :
       ∀ p ∈ L, ∀ n ∈ L, 0 < s k t p → s k t n < 0 →
         s k t p - s k t n ≤ C k := by
@@ -61,7 +63,8 @@ private theorem reconstruct_suffix
       L.filter (fun i => decide (Large k t i)) = [] := by
     apply List.filter_eq_nil_iff.mpr
     intro i hi
-    simpa [Large] using (not_le.mpr (hL i hi))
+    intro hdecide
+    exact (not_le.mpr (hL i hi)) (of_decide_eq_true hdecide)
   induction B generalizing T h with
   | nil =>
     have hend' : 0 ≤ (h - δ) + mass (s k t) T ∧
@@ -88,7 +91,7 @@ private theorem reconstruct_suffix
           List.map_nil, List.sum_cons, List.sum_nil, add_zero]
           using inStrip_prefix hsTail 1
       have hlow := hboundary T i B
-        (by simp only [List.cons_append, List.nil_append]) hi
+        (by simp only [List.append_assoc, List.cons_append, List.nil_append]) hi
       have hmag : Q k ≤ |s k t i| := hi
       have hshift :
           (0 ≤ h + mass (s k t) T - δ ∧ h + mass (s k t) T - δ ≤ C k) ∧
@@ -241,7 +244,7 @@ theorem actualSource_largeBoundary_substitution_full
   have hend' : 0 ≤ h + mass f ([] ++ B) - δ ∧
       h + mass f ([] ++ B) - δ ≤ C k := by
     have hw := hW.2 W.length
-    have hw' : mass f W ≤ C k := by simpa only [List.take_length] using hw.2
+    have hw' : mass f W ≤ C k := by simpa only [W, List.take_length] using hw.2
     change δ ≤ mass f W at hend
     simp only [List.nil_append]
     rw [← hmassW]
@@ -256,8 +259,10 @@ theorem actualSource_largeBoundary_substitution_full
       List.sum_append, List.sum_cons, List.sum_nil, add_zero] using hb
   obtain ⟨Bprime, hB, hBlarge, hsB⟩ := reconstruct_suffix k t hk δ (le_of_lt hδ)
     hδQ B [] h (by simp)
-    (by simpa only [List.nil_append, List.cons_append, List.nil_append, zero_add, h, a, mass]
-      using hsTail.2.2) hstart hend' hboundary'
+    (by change InStrip f (C k) h B
+        have ht := hsTail.2.2
+        change InStrip f (C k) ((0 + mass f A) + f y) B at ht
+        simpa only [zero_add, h, a] using ht) hstart hend' hboundary'
   have hB' : Bprime.Perm B := by simpa only [List.nil_append] using hB
   have hBlarge' : Bprime.filter (fun i => decide (Large k t i)) =
       B.filter (fun i => decide (Large k t i)) := by
@@ -275,6 +280,7 @@ theorem actualSource_largeBoundary_substitution_full
       simp only [h, δ, a, mass, List.map_append, List.map_cons, List.map_nil,
         List.sum_append, List.sum_cons, List.sum_nil, add_zero, zero_add]
       ring
+    change InStrip f (C k) (0 + mass f (A ++ [p])) Bprime
     rw [heq]
     exact hsB
   have hperm : (V ++ [y]).Perm (W ++ [p]) := by
@@ -379,6 +385,8 @@ theorem actualSource_negativePrefix_pair_exchange_full
   let h := q + r
   have geo := native_geometry hk t p hnlarge hexpand
   obtain ⟨hQ, _, hC, hN0, hodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change C k = 2 * Q k - 1 at hC
   have hnval : f n = -D := by
     simpa [f, n, D, orient, show ¬ s k t p < 0 by omega] using geo.nValue
   have hxval : f x = |f x| := by
@@ -393,6 +401,7 @@ theorem actualSource_negativePrefix_pair_exchange_full
   have hr : r = 2 * P - D := by
     have h1 := geo.firstEquation
     have h2 := geo.secondEquation
+    rw [abs_of_pos hpositive] at h1 h2
     change D = N k - 2 * P at h1
     change |f x| = 4 * P - N k at h2
     rw [← hxval] at h2
@@ -432,7 +441,8 @@ theorem actualSource_negativePrefix_pair_exchange_full
   have hu : 0 ≤ u ∧ u ≤ C k := by
     simpa only [List.take_zero, List.map_nil, List.sum_nil, add_zero]
       using inStrip_prefix hsKxB 0
-  obtain ⟨_, hsxB⟩ := strip_split K ([x] ++ B) hsKxB
+  obtain ⟨_, hsxB⟩ := strip_split K ([x] ++ B)
+    (by simpa only [List.append_assoc] using hsKxB)
   have hsxB' : InStrip f (C k) q (x :: B) := by
     simpa only [q, List.cons_append, List.nil_append] using hsxB
   have hq : 0 ≤ q ∧ q ≤ C k := ⟨hsxB'.1, hsxB'.2.1⟩
@@ -460,13 +470,14 @@ theorem actualSource_negativePrefix_pair_exchange_full
     constructor <;> omega
   have hmassW : mass f W = h + mass f B := by
     simp only [W, h, q, u, a, r, M, mass, List.map_append, List.map_cons,
-      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero, sub_neg]
+      List.map_nil, List.sum_append, List.sum_cons, List.sum_nil, add_zero, sub_neg_eq_add]
   have hend' : 0 ≤ h + mass f ([] ++ B) - e ∧
       h + mass f ([] ++ B) - e ≤ C k := by
     have hw : mass f W ≤ C k := by
-      simpa only [List.take_length] using (hW.2 W.length).2
+      simpa only [W, x, List.take_length] using (hW.2 W.length).2
     have heW : e ≤ mass f W := by
-      simpa only [e, P, M, sub_neg] using hend
+      change P + f c ≤ mass f W at hend
+      simpa only [e, M, sub_neg_eq_add] using hend
     simp only [List.nil_append]
     rw [← hmassW]
     constructor <;> omega
@@ -476,9 +487,9 @@ theorem actualSource_negativePrefix_pair_exchange_full
       (0 < f i → e ≤ h + mass f B0) := by
     intro B0 i B1 hsplit hi
     have hb := hboundary B0 i B1 (by simpa only [List.nil_append] using hsplit) hi
-    simpa only [e, P, M, h, q, u, a, r, f, mass, List.map_append,
+    simpa only [e, P, M, h, q, u, a, r, f, x, mass, List.map_append,
       List.map_cons, List.map_nil, List.sum_append, List.sum_cons, List.sum_nil,
-      add_zero, sub_neg, add_assoc] using hb
+      add_zero, sub_neg_eq_add, add_assoc] using hb
   obtain ⟨Bprime, hB, hBlarge, hsB⟩ := reconstruct_suffix k t hk e he.1 he.2.2 B [] h
     (by simp) (by simpa only [List.nil_append] using hsBold) hstart hend' hboundary'
   have hB' : Bprime.Perm B := by simpa only [List.nil_append] using hB
@@ -506,7 +517,7 @@ theorem actualSource_negativePrefix_pair_exchange_full
     exact ⟨ha.1, ha.2, hsKPB⟩
   have hsV : InStrip f (C k) 0 V := by
     have hs := inStrip_append hsA (by
-      simpa only [zero_add, a] using hsNKPB)
+      simpa only [zero_add, a, mass] using hsNKPB)
     simpa only [V, List.append_assoc] using hs
   have hI : [n, p].Nodup := by
     have hnp : n ≠ p := by intro heq; have hv := congrArg f heq; omega
@@ -559,7 +570,17 @@ theorem actualSource_negativePrefix_pair_exchange_full
   have hH : H k t V < H k t W := by
     have hb := geo.energy
     change 3 ^ (f p).natAbs + 3 ^ (f n).natAbs < 3 ^ (f x).natAbs at hb
-    omega
+    have hsum : H k t V + (3 ^ (f c).natAbs + 3 ^ (f x).natAbs) =
+        H k t W + (3 ^ (f n).natAbs + 3 ^ (f p).natAbs) := by
+      simpa only [Nat.add_assoc] using hEnergy
+    have hremove : (3 : ℕ) ^ (f n).natAbs + 3 ^ (f p).natAbs <
+        3 ^ (f c).natAbs + 3 ^ (f x).natAbs := by
+      calc
+        _ < 3 ^ (f x).natAbs := by simpa only [Nat.add_comm] using hb
+        _ ≤ _ := Nat.le_add_left _ _
+    have htot := Nat.add_lt_add_left hremove (H k t W)
+    rw [← hsum] at htot
+    exact Nat.lt_of_add_lt_add_right htot
   have hJ : J k t V < J k t W := by
     apply Prod.Lex.toLex_lt_toLex.mpr
     exact Or.inr ⟨hg, Prod.Lex.toLex_lt_toLex.mpr (Or.inl hH)⟩
