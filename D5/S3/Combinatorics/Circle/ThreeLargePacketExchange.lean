@@ -106,10 +106,10 @@ private theorem packet_select {α : Type*} [DecidableEq α]
   · simpa only [mass, List.map_append, List.sum_append] using hhi
 
 set_option maxHeartbeats 1200000 in
-/-- A selector on the actual positive inventory supplies a complete physical
-three-LARGE exchange, including every original-zero-start prefix and exact costs. -/
-theorem actualSource_threeLarge_return_exchange_full
-    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z : Fin k)
+/-- The shared physical exchange preserves a selector tag on the actual returned SMALL labels. -/
+theorem actualSource_threeLarge_tagged_exchange_full
+    (k t : ℕ) (tag : List (Fin k) → Prop)
+    (hk : 3 ≤ k) (p q y zpen z : Fin k)
     (A T0 T1 T2 E : List (Fin k))
     (hpositive : 0 < s k t p)
     (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
@@ -118,25 +118,31 @@ theorem actualSource_threeLarge_return_exchange_full
     (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
     (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
     (hqunused : q ∉ oldWord p y zpen z A T0 T1 T2 E)
-    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
+    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E,
+      |s k t i| < Q k)
     (hylarge : Q k ≤ -s k t y)
     (hzpenlarge : Q k ≤ -s k t zpen)
     (hzlarge : Q k ≤ -s k t z)
     (hzupper : -s k t z ≤ s k t q)
     (hqlarge : Q k ≤ s k t q)
     (hqsmaller : s k t q < s k t p)
+    (htagNil : tag [])
     (hselect : ∀ low : ℤ, 0 < low →
-      low ≤ mass (s k t) (positive t (smallWord T0 T1 T2 E)) →
-      ∃ R : List (Fin k), R.Subperm (positive t (smallWord T0 T1 T2 E)) ∧
-        low ≤ mass (s k t) R ∧ mass (s k t) R ≤ low + (C k - s k t q)) :
+      low ≤ mass (s k t)
+        (positive t
+          (smallWord T0 T1 T2 E)) →
+      ∃ R : List (Fin k),
+        R.Subperm (smallWord T0 T1 T2 E) ∧
+        tag R ∧ low ≤ mass (s k t) R ∧
+          mass (s k t) R ≤ low +
+            (C k - s k t q)) :
     let n := hit k 1 p
     let x := hit k 2 p
     let W := oldWord p y zpen z A T0 T1 T2 E
     let S := smallWord T0 T1 T2 E
     let e0 := prospective k t p q y zpen W
-    ∃ R L : List (Fin k),
-      R.Subperm (positive t S) ∧ (L ++ R).Perm S ∧
-      (∀ i ∈ R, 0 < s k t i ∧ |s k t i| < Q k) ∧
+    ∃ R L : List (Fin k), R.Subperm S ∧ (L ++ R).Perm S ∧ tag R ∧
+      (∀ i ∈ R, |s k t i| < Q k) ∧
       (let V := A ++ [p, n] ++ L ++ [z, q]
        let returned := [x, y, zpen] ++ R
        let e := e0 - mass (s k t) R
@@ -146,7 +152,7 @@ theorem actualSource_threeLarge_return_exchange_full
        Inventory k t W V [p, n, q] returned ∧
        G k t V = G k t W ∧ U V = U W + R.length ∧
        H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs +
-         3 ^ (s k t zpen).natAbs =
+           3 ^ (s k t zpen).natAbs =
          H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs +
            3 ^ (s k t q).natAbs ∧
        H k t V < H k t W ∧ J k t V < J k t W ∧
@@ -251,16 +257,18 @@ theorem actualSource_threeLarge_return_exchange_full
   have he0lo : qq < e0 := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hmassPos : mass f S ≤ mass f Pos := positive_mass_dominates f S
   have hsupply : e0 - C k ≤ mass f Pos := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
-  obtain ⟨R, hRpos, hRlo, hRhi⟩ : ∃ R : List (Fin k),
-      R.Subperm Pos ∧ e0 - C k ≤ mass f R ∧ mass f R ≤ e0 - qq := by
+  obtain ⟨R, hRsub, hRtag, hRlo, hRhi⟩ : ∃ R : List (Fin k),
+      R.Subperm S ∧ tag R ∧ e0 - C k ≤ mass f R ∧ mass f R ≤ e0 - qq := by
     by_cases hl : e0 - C k ≤ 0
-    · refine ⟨[], List.nil_subperm, ?_, ?_⟩ <;> simp only [mass, List.map_nil, List.sum_nil] <;> omega
-    · obtain ⟨R,hR,hlo,hhi⟩ := hselect (e0 - C k) (by omega) hsupply
-      exact ⟨R,hR,hlo,by
+    · refine ⟨[], List.nil_subperm, htagNil, ?_, ?_⟩
+      · simp only [mass, List.map_nil, List.sum_nil]
+        omega
+      · simp only [mass, List.map_nil, List.sum_nil]
+        omega
+    · obtain ⟨R,hR,hTag,hlo,hhi⟩ := hselect (e0 - C k) (by omega) hsupply
+      exact ⟨R,hR,hTag,hlo,by
         change mass f R ≤ (e0 - C k) + (C k - qq) at hhi
         omega⟩
-  have hPosSub : Pos.Sublist S := List.filter_sublist
-  have hRsub : R.Subperm S := hRpos.trans hPosSub.subperm
   let Rem := S.diff R
   have hpart : (Rem ++ R).Perm S := by
     have hp := List.subperm_append_diff_self_of_count_le (fun i _ => hRsub.count_le i)
@@ -271,11 +279,6 @@ theorem actualSource_threeLarge_return_exchange_full
     hsmall i ((List.diff_sublist _ _).subset hi)
   have hsmallR (i : Fin k) (hi : i ∈ R) : |f i| < Q k :=
     hsmall i (hRsub.subset hi)
-  have hpositiveR (i : Fin k) (hi : i ∈ R) : 0 < f i := by
-    have ht := hRpos.subset hi
-    have hm : i ∈ S ∧ 0 < f i := by
-      simpa only [Pos, positive, List.mem_filter, decide_eq_true_eq] using ht
-    exact hm.2
   let e := e0 - mass f R
   let η := e - qq
   let c := η + Z
@@ -431,13 +434,75 @@ theorem actualSource_threeLarge_return_exchange_full
         simp only [mass,List.map_cons,List.map_nil,List.sum_cons,List.sum_nil,add_zero]
         dsimp only [c,η,Z,qq]
         ring
-  refine ⟨R,L,hRpos,hLR,?_,legal_of_strip inv.nodup hsV,hsV,?_,
+  refine ⟨R,L,hRsub,hLR,hRtag,?_,legal_of_strip inv.nodup hsV,hsV,?_,
     inv,hG,hU,hH,hHstrict,hJ,hEnd,he.1,he.2⟩
   · intro i hi
-    exact ⟨hpositiveR i hi,hsmallR i hi⟩
+    exact hsmallR i hi
   · intro j
     simpa [mass,f,V,n] using inStrip_prefix hsV j
 
+set_option maxHeartbeats 1200000 in
+/-- A selector on the actual positive inventory supplies a complete physical
+three-LARGE exchange, including every original-zero-start prefix and exact costs. -/
+theorem actualSource_threeLarge_return_exchange_full
+    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z : Fin k)
+    (A T0 T1 T2 E : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
+    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hqunused : q ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
+    (hylarge : Q k ≤ -s k t y)
+    (hzpenlarge : Q k ≤ -s k t zpen)
+    (hzlarge : Q k ≤ -s k t z)
+    (hzupper : -s k t z ≤ s k t q)
+    (hqlarge : Q k ≤ s k t q)
+    (hqsmaller : s k t q < s k t p)
+    (hselect : ∀ low : ℤ, 0 < low →
+      low ≤ mass (s k t) (positive t (smallWord T0 T1 T2 E)) →
+      ∃ R : List (Fin k), R.Subperm (positive t (smallWord T0 T1 T2 E)) ∧
+        low ≤ mass (s k t) R ∧ mass (s k t) R ≤ low + (C k - s k t q)) :
+    let n := hit k 1 p
+    let x := hit k 2 p
+    let W := oldWord p y zpen z A T0 T1 T2 E
+    let S := smallWord T0 T1 T2 E
+    let e0 := prospective k t p q y zpen W
+    ∃ R L : List (Fin k),
+      R.Subperm (positive t S) ∧ (L ++ R).Perm S ∧
+      (∀ i ∈ R, 0 < s k t i ∧ |s k t i| < Q k) ∧
+      (let V := A ++ [p, n] ++ L ++ [z, q]
+       let returned := [x, y, zpen] ++ R
+       let e := e0 - mass (s k t) R
+       Legal k t V ∧ InStrip (s k t) (C k) 0 V ∧
+       (∀ j : ℕ, 0 ≤ mass (s k t) (V.take j) ∧
+         mass (s k t) (V.take j) ≤ C k) ∧
+       Inventory k t W V [p, n, q] returned ∧
+       G k t V = G k t W ∧ U V = U W + R.length ∧
+       H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs +
+         3 ^ (s k t zpen).natAbs =
+         H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs +
+           3 ^ (s k t q).natAbs ∧
+       H k t V < H k t W ∧ J k t V < J k t W ∧
+       mass (s k t) V = e ∧ s k t q ≤ e ∧ e ≤ C k) := by
+  classical
+  let S := smallWord T0 T1 T2 E
+  let Pos := positive t S
+  obtain ⟨R, L, hRS, hLR, hRPos, hsmallR, hfull⟩ :=
+    actualSource_threeLarge_tagged_exchange_full k t (fun R => R.Subperm Pos)
+      hk p q y zpen z A T0 T1 T2 E hpositive hnlarge hexpand hW
+      hpunused hnunused hqunused hsmall hylarge hzpenlarge hzlarge
+      hzupper hqlarge hqsmaller List.nil_subperm (by
+        intro low hlow hsupply
+        obtain ⟨R, hR, hlo, hhi⟩ := hselect low hlow hsupply
+        exact ⟨R, hR.trans List.filter_sublist.subperm, hR, hlo, hhi⟩)
+  refine ⟨R, L, hRPos, hLR, ?_, hfull⟩
+  intro i hi
+  have hipos : 0 < s k t i := by
+    exact of_decide_eq_true (List.mem_filter.mp (hRPos.subset hi)).2
+  exact ⟨hipos, hsmallR i hi⟩
 
 set_option maxHeartbeats 1200000 in
 /-- A real SMALL doubling packet supplies the returned positive labels.
