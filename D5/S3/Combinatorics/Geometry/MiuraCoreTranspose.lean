@@ -23,10 +23,6 @@ open private transpose_min transpose_max from D5.S3.Combinatorics.Geometry.Miura
 
 variable {m n : ℕ}
 
-/-- Transposing twice returns the identical normalized function. -/
-@[simp] theorem transpose_twice (h : Cell m n → ℤ) :
-    transposeHeight (transposeHeight h) = h := rfl
-
 private theorem transpose_min_iff (h : Cell m n → ℤ) (v : Cell n m) :
     IsStrictLocalMin (transposeHeight h) v ↔ IsStrictLocalMin h (v.2, v.1) := by
   constructor

@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Combinatorics.Geometry.MiuraCoreJoint
+import all D5.S3.Combinatorics.Geometry.MiuraCoreJoint
 
 /-! Termination and simultaneous irreducibility on the original actual rectangle. -/
 
@@ -16,6 +17,8 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreJoint
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreNormal
 open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreContract
   MiuraCoreResidual MiuraCoreJoint MiuraSlabIncidence MiuraCoreTranspose
+
+open private joint_trans from D5.S3.Combinatorics.Geometry.MiuraCoreJoint
 
 /-- There is no legal consecutive pair left to shorten. -/
 def NoAdjacentFrozen {m n : ℕ} (h : Cell m n → ℤ) : Prop :=
@@ -53,14 +56,6 @@ private theorem normalize_exists (a b : ℕ) :
         exact ⟨M, N, g, hMlo, by omega, hNlo, hNhi,
           .row h (by omega) i k hi hk hik hchain, hg, hc', hr'⟩
       · exact ⟨m, n, h, hm, le_rfl, hn, le_rfl, .refl h, hr, hc, hrw⟩
-
-private theorem joint_trans {m n M N P Q : ℕ} {h : Cell m n → ℤ}
-    {g : Cell M N → ℤ} {f : Cell P Q → ℤ}
-    (hh : JointReduction h g) (hg : JointReduction g f) : JointReduction h f := by
-  induction hh with
-  | refl _ => exact hg
-  | column h hm j k hj hk hjk tail ih => exact .column h hm j k hj hk hjk (ih hg)
-  | row h hn i k hi hk hik tail ih => exact .row h hn i k hi hk hik (ih hg)
 
 /-- A simultaneous finite residual core has no adjacent frozen lines on either axis. -/
 theorem residual_reduced_joint_core_exists {m n : ℕ}

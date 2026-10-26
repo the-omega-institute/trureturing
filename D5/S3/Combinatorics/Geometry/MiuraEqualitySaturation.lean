@@ -159,6 +159,7 @@ private theorem outside_neutral_of_outward {h : Cell m n → ℤ} (hh : IsHeight
 
 private theorem min_max_slab_distinct {h : Cell m n → ℤ} (hn : 0 < n)
     (I J : Interval m) (hI : I ∈ minRowSlabs h) (hJ : J ∈ maxRowSlabs h) : I ≠ J := by
+  classical
   intro he; subst J
   have hp := (Finset.mem_filter.mp hI).2
   have hq := (Finset.mem_filter.mp hJ).2
@@ -231,8 +232,7 @@ theorem equality_maximum_slab_unique {h : Cell m n → ℤ} (hh : IsHeight h)
       hsI u.1 hqu.1 hu.1
     have hqc : q.val.2 = J := by
       have hcq := (Finset.mem_product.mp q.property).2
-      rw [hJset] at hcq
-      exact Finset.mem_singleton.mp hcq
+      exact Finset.mem_singleton.mp (hJset ▸ hcq)
     have hqp : q = p := Subtype.ext (Prod.ext hqr hqc)
     subst q
     exact he.symm

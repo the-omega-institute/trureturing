@@ -8,10 +8,6 @@ internal sealed class MiuraCoreTransposeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact residual transport under axis exchange.", H("Exact residual transport under axis exchange"),
         Blocks(
-            Describe.Lean(DescribeId.Create("miuracoretranspose-0"),
-                DeclarationHandle.Create(Prefix + "transpose_twice"), H("Axis exchange is involutive"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Transposing twice returns the identical function on the original grid."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("miuracoretranspose-1"),
                 DeclarationHandle.Create(Prefix + "transpose_extremum_cards"), H("Each extremum sign is counted separately"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
