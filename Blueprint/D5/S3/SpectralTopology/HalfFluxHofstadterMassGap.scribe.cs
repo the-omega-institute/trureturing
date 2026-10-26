@@ -155,7 +155,10 @@ internal sealed class HalfFluxHofstadterMassGapDocument : IScribeDocumentDefinit
                         + "the absolute values in the two required directions. Replacing two "
                         + "by the Fermi energy proves both uniform inequalities, together with "
                         + "the equality at zero mass."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fabbri-marcelli-giuliani-2026-half-flux-hofstadter-mass-gap"),
+                    ResolutionKind.Proved)))));
 
     private static Formula BlochFormula()
     {
