@@ -8,9 +8,10 @@
 module
 public import D5.S3.Combinatorics.Circle.SourceWidth
 
-/-! Uncompiled source candidate. This general endpoint theorem supplies the
-SMALL-ordering step in the actual two-opposite-LARGE exchange. It retains all
-list occurrences and makes no interval-filling or subset-support assertion. -/
+/-! # Ordering compatible integer steps between arbitrary legal endpoints
+
+The list carries all occurrences, including repetitions. Pairwise compatibility
+of positive and negative steps prevents a dead end inside the closed strip. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
