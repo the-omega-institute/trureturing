@@ -20,10 +20,10 @@ open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreResidual
 open private inactive_run_card joint_sides from D5.S3.Combinatorics.Geometry.MiuraFiberCore
 
 private theorem large_frozen {m n : ℕ} (a b : ℕ) (h : Cell m n → ℤ)
-    (hm : 0 < m) (hn : 2 ≤ n) (hlarge : a+b < n) (hr : Residual a b h) :
+    (hm : 0 < m) (hn : 2 ≤ n) (hlarge : a + b < n) (hr : Residual a b h) :
     ∃ j, frozenColumn h j := by
   classical
-  have hd : numExtrema h ≤ a+b := by
+  have hd : numExtrema h ≤ a + b := by
     simpa only [hr.2.1,hr.2.2.1] using numExtrema_le_split h
   have hcard : (Finset.univ.filter (activeColumn h)).card < (Finset.univ : Finset (Fin n)).card := by
     simpa only [Finset.card_univ,Fintype.card_fin,numActiveColumns] using
@@ -33,18 +33,6 @@ private theorem large_frozen {m n : ℕ} (a b : ℕ) (h : Cell m n → ℤ)
   have hb := inactive_internal h (by omega) (boundary_columns_active h hr.1.1 hm hn) j hja
   exact ⟨j,inactive_imp_frozenColumn h hr.1.1 j hb.1 hb.2 hm hja⟩
 
-private theorem column_frozen_exists {m n : ℕ} (h : Cell m n → ℤ)
-    (hh : IsHeight h) (hm : 0 < m) (j k : Fin n)
-    (hj : frozenColumn h j) (hk : frozenColumn h k) (hjk : j.val+1=k.val)
-    (hex : ∃ w, frozenColumn h w) :
-    ∃ w, frozenColumn (contractAt h hm j hj) w := by
-  obtain ⟨w,hw⟩ := hex
-  by_cases hl : j.val < w.val
-  · exact ⟨_,frozen_after_left_deletion h hh hm j w hj hw hl⟩
-  · by_cases hr : w.val < j.val
-    · exact ⟨_,frozen_after_right_deletion h hh hm j w hj hw hr⟩
-    · exact ⟨_,frozen_after_left_deletion h hh hm j k hj hk (by omega)⟩
-
 private theorem joint_frozen_exists {m n M N : ℕ} {h : Cell m n → ℤ}
     {g : Cell M N → ℤ} (red : JointReduction h g) :
     IsHeight h → (∃ j, frozenColumn h j) →
@@ -53,25 +41,26 @@ private theorem joint_frozen_exists {m n M N : ℕ} {h : Cell m n → ℤ}
   induction red with
   | refl h => intro _ hc hr; exact ⟨hc,hr⟩
   | column h hm j k hj hk hjk tail ih =>
-    intro hh hc hr
+    intro hh _ hr
     apply ih (contractAt_isHeight h hh hm j hj)
-      (column_frozen_exists h hh hm j k hj hk hjk hc)
+      ⟨_, frozen_after_left_deletion h hh hm j k hj hk (by omega)⟩
     obtain ⟨i,hi⟩ := hr
     exact ⟨i,frozen_row_after_column h hm j hj i hi⟩
   | row h hn i k hi hk hik tail ih =>
-    intro hh hc hr
+    intro hh hc _
     apply ih (transpose_isHeight (contractAt_isHeight (transposeHeight h)
       (transpose_isHeight hh) hn i hi))
     · obtain ⟨j,hj⟩ := hc
       exact ⟨j,frozen_column_after_row h hn i hi j hj⟩
-    · exact column_frozen_exists (transposeHeight h) (transpose_isHeight hh) hn i k hi hk hik hr
+    · exact ⟨_, frozen_after_left_deletion (transposeHeight h) (transpose_isHeight hh)
+        hn i k hi hk (by omega)⟩
 
 private theorem reduced_runs_positive {m n : ℕ} (h : Cell m n → ℤ)
     (hh : IsHeight h) (hm : 0 < m) (hn : 2 ≤ n) (hno : NoAdjacentFrozen h)
     (hex : ∃ j, frozenColumn h j) : 1 ≤ numFrozenRuns h := by
   classical
   obtain ⟨j,hj⟩ := hex
-  letI : Nonempty {j : Fin n // ¬activeColumn h j} := ⟨⟨j,frozenColumn_not_active h j hj⟩⟩
+  let : Nonempty {j : Fin n // ¬activeColumn h j} := ⟨⟨j,frozenColumn_not_active h j hj⟩⟩
   have hp := Fintype.card_pos (α := {j : Fin n // ¬activeColumn h j})
   rw [inactive_run_card h hh hm hn hno] at hp
   omega
@@ -79,12 +68,12 @@ private theorem reduced_runs_positive {m n : ℕ} (h : Cell m n → ℤ)
 /-- Every original large residual array reduces to a member of the same finite
 actual Core family; positivity of both run counts is derived from that array. -/
 theorem residual_core_exists {m n : ℕ} (a b : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
-    (hd : 5 ≤ a+b) (hm : 2*(a+b)-1 ≤ m) (hn : 2*(a+b)-1 ≤ n)
+    (hd : 5 ≤ a + b) (hm : 2 * (a + b) - 1 ≤ m) (hn : 2 * (a + b) - 1 ≤ n)
     (h : Cell m n → ℤ) (hr : Residual a b h) :
     ∃ K : Core a b, JointReduction h K.2.2.val ∧
-      ∀ sd, AllOnSide (fun v : Cell m n => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+      ∀ sd, AllOnSide (fun v : Cell m n => ((v.1.val : ℤ) + 1,(v.2.val : ℤ) + 1))
         (minima h) (m : ℤ) (n : ℤ) sd ↔
-      AllOnSide (fun v : Cell K.1.val K.2.1.val => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+      AllOnSide (fun v : Cell K.1.val K.2.1.val => ((v.1.val : ℤ) + 1,(v.2.val : ℤ) + 1))
         (minima K.2.2.val) (K.1.val : ℤ) (K.2.1.val : ℤ) sd := by
   obtain ⟨M,N,g,hM,hMb,hN,hNb,hred,hg,hgc,hgr⟩ :=
     residual_reduced_joint_core_exists a b ha hb h (by omega) (by omega) hr

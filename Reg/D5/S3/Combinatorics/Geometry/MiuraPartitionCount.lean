@@ -87,8 +87,11 @@ theorem rejected_not_law : ¬ arena.Law rejected := by
   let x : State p := ⟨9, 9, by decide, by decide⟩
   have good := actual_law p x
   have bad := law p x
-  change actual.readout () p x + 1 = _ at bad
-  omega
+  change actual.readout () p x =
+    ∑ K : Core p.a p.b, Nat.card (MiuraPartitionCount.Fiber p.a p.b x.m x.n K) at good
+  change actual.readout () p x + 1 =
+    ∑ K : Core p.a p.b, Nat.card (MiuraPartitionCount.Fiber p.a p.b x.m x.n K) at bad
+  exact Nat.succ_ne_self (actual.readout () p x) (bad.trans good.symm)
 
 theorem variation : Variation arena actual := ⟨actual_law, rejected, rejected_not_law⟩
 

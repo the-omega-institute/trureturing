@@ -19,9 +19,9 @@ open scoped BigOperators
 `MiuraFiberCore.core_positive_vectors_inject`, with the identical full functions. -/
 abbrev Fiber (a b m n : ℕ) (K : Core a b) :=
   {g : Cell m n → ℤ // Residual a b g ∧ JointReduction g K.2.2.val ∧
-    ∀ sd, AllOnSide (fun v : Cell m n => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+    ∀ sd, AllOnSide (fun v : Cell m n => ((v.1.val : ℤ) + 1,(v.2.val : ℤ) + 1))
       (minima g) (m : ℤ) (n : ℤ) sd ↔
-    AllOnSide (fun v : Cell K.1.val K.2.1.val => ((v.1.val : ℤ)+1,(v.2.val : ℤ)+1))
+    AllOnSide (fun v : Cell K.1.val K.2.1.val => ((v.1.val : ℤ) + 1,(v.2.val : ℤ) + 1))
       (minima K.2.2.val) (K.1.val : ℤ) (K.2.1.val : ℤ) sd}
 
 private theorem core_raw_injective (a b : ℕ) :
@@ -46,42 +46,41 @@ theorem residual_core_unique {a b m n : ℕ} (h : Cell m n → ℤ) (hh : IsHeig
   exact joint_reduced_core_unique hh hK hL K.2.2.property.2.2.2.1
     K.2.2.property.2.2.2.2.1 L.2.2.property.2.2.2.1 L.2.2.property.2.2.2.2.1
 
-private def forgetCore {a b m n : ℕ} (x : Σ K : Core a b, Fiber a b m n K) :
-    {g : Cell m n → ℤ // Residual a b g} := ⟨x.2.val,x.2.property.1⟩
-
-private theorem forget_core_bijective (a b m n : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
-    (hd : 5 ≤ a+b) (hm : 2*(a+b)-1 ≤ m) (hn : 2*(a+b)-1 ≤ n) :
-    Function.Bijective (forgetCore (a := a) (b := b) (m := m) (n := n)) := by
+/-- Every individual normalized residual array is retained once in its unique
+actual-core fiber; the inverse simply forgets its core index. -/
+noncomputable def residualCoreEquiv (a b m n : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
+    (hd : 5 ≤ a + b) (hm : 2 * (a + b) - 1 ≤ m) (hn : 2 * (a + b) - 1 ≤ n) :
+    {g : Cell m n → ℤ // Residual a b g} ≃ Σ K : Core a b, Fiber a b m n K := by
+  let forget : (Σ K : Core a b, Fiber a b m n K) →
+      {g : Cell m n → ℤ // Residual a b g} := fun x => ⟨x.2.val, x.2.property.1⟩
+  apply Equiv.symm
+  apply Equiv.ofBijective forget
   constructor
-  · rintro ⟨K,⟨g,hg⟩⟩ ⟨L,⟨f,hf⟩⟩ he
+  · rintro ⟨K, ⟨g, hg⟩⟩ ⟨L, ⟨f, hf⟩⟩ he
     have hgf : g = f := congrArg Subtype.val he
     subst f
     have hKL := residual_core_unique g hg.1.1.1 hg.2.1 hf.2.1
     subst L
     rfl
-  · rintro ⟨g,hg⟩
-    obtain ⟨K,hred,hs⟩ := residual_core_exists a b ha hb hd hm hn g hg
-    exact ⟨⟨K,⟨g,hg,hred,hs⟩⟩,rfl⟩
-
-/-- Every individual normalized residual array is retained once in its unique
-actual-core fiber; the inverse simply forgets its core index. -/
-noncomputable def residualCoreEquiv (a b m n : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
-    (hd : 5 ≤ a+b) (hm : 2*(a+b)-1 ≤ m) (hn : 2*(a+b)-1 ≤ n) :
-    {g : Cell m n → ℤ // Residual a b g} ≃ Σ K : Core a b, Fiber a b m n K :=
-  (Equiv.ofBijective forgetCore (forget_core_bijective a b m n ha hb hd hm hn)).symm
+  · rintro ⟨g, hg⟩
+    obtain ⟨K, hred, hs⟩ := residual_core_exists a b ha hb hd hm hn g hg
+    exact ⟨⟨K, ⟨g, hg, hred, hs⟩⟩, rfl⟩
 
 /-- The original count, without redefining it, equals the finite sum of the
 cardinalities of the actual fixed-core fibers at every original large rectangle. -/
 theorem residual_count_eq_sum_fibers (a b m n : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
-    (hd : 5 ≤ a+b) (hm : 2*(a+b)-1 ≤ m) (hn : 2*(a+b)-1 ≤ n) :
+    (hd : 5 ≤ a + b) (hm : 2 * (a + b) - 1 ≤ m) (hn : 2 * (a + b) - 1 ≤ n) :
     residualCount a b m n (by omega) (by omega) =
       ∑ K : Core a b, Nat.card (Fiber a b m n K) := by
   classical
-  letI : Finite {g : Cell m n → ℤ // Residual a b g} :=
+  let : Finite {g : Cell m n → ℤ // Residual a b g} :=
     (residual_finite a b (by omega) (by omega)).to_subtype
-  letI (K : Core a b) : Finite (Fiber a b m n K) :=
+  let (K : Core a b) : Finite (Fiber a b m n K) :=
     Finite.of_injective (fun g => (⟨g.val,g.property.1⟩ : {g : Cell m n → ℤ // Residual a b g}))
-      (fun _ _ he => Subtype.ext (congrArg Subtype.val he))
+      (by
+        intro x y he
+        apply Subtype.ext
+        exact congrArg (fun z : {g : Cell m n → ℤ // Residual a b g} => z.val) he)
   rw [residualCount,←Nat.card_eq_card_finite_toFinset (residual_finite a b (by omega) (by omega))]
   exact (Nat.card_congr (residualCoreEquiv a b m n ha hb hd hm hn)).trans Nat.card_sigma
 
