@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Fourier;
 internal sealed class ThetaRadialCurvatureDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/Fourier/csordas2013fourier");
+        LibraryNoteRef.Create("D5/L/Fourier/csordas2013fourier");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Classical radial curvature and square-variable strict concavity for the complete theta kernel.",
