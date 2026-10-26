@@ -93,28 +93,15 @@ private def fiberPermutation (m : ℕ) (σ : Equiv.Perm (Fin (m * 3)))
     (hσ : ∀ i, ((finProdFinEquiv (n := 3)).symm (σ i)).1 =
       ((finProdFinEquiv (n := 3)).symm i).1) (j : Fin m) :
     Equiv.Perm (Fin 3) :=
-  Equiv.ofBijective
-    (fun s => ((finProdFinEquiv (n := 3)).symm (σ (finProdFinEquiv (j, s)))).2) (by
-    constructor
-    · intro a b hab
-      have he : (finProdFinEquiv (n := 3)).symm (σ ((finProdFinEquiv (n := 3)) (j, a))) =
-          (finProdFinEquiv (n := 3)).symm (σ ((finProdFinEquiv (n := 3)) (j, b))) := by
-        apply Prod.ext
-        · simp only [hσ, Equiv.symm_apply_apply]
-        · exact hab
-      exact congrArg Prod.snd ((finProdFinEquiv (n := 3)).injective (σ.injective
-        ((finProdFinEquiv (n := 3)).symm.injective he)))
-    · intro b
-      let x := (finProdFinEquiv (n := 3)).symm (σ.symm ((finProdFinEquiv (n := 3)) (j, b)))
-      have hx : x.1 = j := by
-        have h := hσ (σ.symm ((finProdFinEquiv (n := 3)) (j, b)))
-        simpa only [Equiv.apply_symm_apply, Equiv.symm_apply_apply] using h.symm
-      refine ⟨x.2, ?_⟩
-      have he : finProdFinEquiv (j, x.2) = σ.symm (finProdFinEquiv (j, b)) := by
-        apply (finProdFinEquiv (n := 3)).symm.injective
-        simp only [Equiv.symm_apply_apply]
-        exact Prod.ext hx.symm rfl
-      simp only [he, Equiv.apply_symm_apply, Equiv.symm_apply_apply])
+  let e : {x : Fin (m * 3) // ((finProdFinEquiv (n := 3)).symm x).1 = j} ≃ Fin 3 :=
+    ((finProdFinEquiv (n := 3)).symm.subtypeEquiv (fun _ => Iff.rfl)).trans
+      (Equiv.prodSubtypeFstEquivSubtypeProd.trans
+        (@Equiv.uniqueProd (Fin 3) {k : Fin m // k = j}
+          { default := ⟨j, rfl⟩, uniq := fun k => Subtype.ext k.property }))
+  e.permCongr (σ.subtypePerm (fun x => by
+    change ((finProdFinEquiv (n := 3)).symm (σ x)).1 = j ↔
+      ((finProdFinEquiv (n := 3)).symm x).1 = j
+    rw [hσ x]))
 
 private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
     (Fin m → classPreserving r) ≃ classPreserving (blockRelation m r) :=
@@ -132,6 +119,7 @@ private def blockEquiv (m : ℕ) (r : Setoid (Fin 3)) :
       let f : Fin m → classPreserving r := fun j =>
         ⟨fiberPermutation m σ.val (fun i => (σ.property i).1) j, by
           intro i
+          rw [fiberPermutation.eq_1, Equiv.permCongr_apply, Equiv.Perm.subtypePerm_apply]
           change r ((finProdFinEquiv (n := 3)).symm (σ.val ((finProdFinEquiv (n := 3)) (j, i)))).2 i
           simpa only [Equiv.symm_apply_apply] using
             (σ.property ((finProdFinEquiv (n := 3)) (j, i))).2⟩
