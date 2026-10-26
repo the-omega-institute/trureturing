@@ -8,7 +8,6 @@
 
 import D5.S3.Entropy.Mixing.MixtureEntropyBracket
 import D5.S3.Entropy.Submodularity.ConditionalMutualInformation
-import Mathlib.GroupTheory.Perm.Fin
 
 /-! Finite Markov laws, their four-point information rectangles, and permutation exchange. -/
 
