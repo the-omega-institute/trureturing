@@ -79,7 +79,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p w => (ketbra p.2 w)ᴴ) (fun e => nomatch e))
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -100,6 +100,14 @@ def registration :
 
 #print axioms source_registration
 #print axioms registration
+
+run_cmd do
+  let env ← Lean.getEnv
+  for name in [`D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.ketbra_star,
+      `D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.trace_pairing_ext,
+      `Reg.D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility.KetbraStar.registration] do
+    if let some info := env.find? name then
+      Lean.logInfo m!"UNIVERSE_PARAMETERS {name}: {info.levelParams}"
 
 end KetbraStar
 end
