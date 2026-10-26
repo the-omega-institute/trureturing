@@ -7,6 +7,7 @@
    digest: Exact rational LDL certificate for the same-source finite Gaussian comparison. -/
 
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
