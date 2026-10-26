@@ -51,10 +51,11 @@ private theorem evaluation_injective (K : Profinite.{u}) :
   intro x y hxy
   by_contra hne
   obtain ⟨U, hU, hx, hy⟩ := exists_isClopen_of_totally_separated hne
+  have hy' : y ∉ U := hy
   let g : C(K, ℝ) := ⟨U.indicator (fun _ => 1), hU.continuous_indicator continuous_const⟩
   have htest := congrArg (fun F : WeakDual ℝ C(K, ℝ) => F g) hxy
   change g x = g y at htest
-  simpa [g, hx, hy] using htest
+  simpa [g, hx, hy'] using htest
 
 private theorem point_space_no_beta_of_signed_ball (K : Profinite.{u})
     (Hball : ∀ h : StoneCech ℕ → WeakDual ℝ C(K, ℝ), Continuous h →
