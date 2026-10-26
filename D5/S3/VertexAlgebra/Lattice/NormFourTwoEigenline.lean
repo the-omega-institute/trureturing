@@ -6,7 +6,7 @@
    utility: none
    digest: The nonzero actual norm-four vector is the complete fixed-energy-two eigenline at two. -/
 
-import D5.S3.VertexAlgebra.Lattice.NormFourPeirceInvolution
+import D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
 import Batteries.Tactic.OpenPrivate
 
 /-!
@@ -163,10 +163,10 @@ private theorem projector_image (D : LatticeData)
       rcases p with ⟨p, hp⟩
       obtain ⟨i, j, rfl⟩ := Multiset.card_eq_two.mp hp
       rw [pairOccupation_pair]
-      have h := projector_Q D a ha s hs i j
-      simp only [Q, monomial_add_single, ← X_pow_eq_monomial, pow_one] at h
-      rw [h]
-      exact W.smul_mem _ (Submodule.mem_span_singleton_self _)
+      have h : projector D a s (Q D i j) ∈ W := by
+        rw [projector_Q D a ha s hs i j]
+        exact W.smul_mem _ (Submodule.mem_span_singleton_self _)
+      simpa only [Q, monomial_add_single, ← X_pow_eq_monomial, pow_one] using h
     · rw [actualFixedEnergyTwoBasis_charge_coe]
       exact projector_orbit_mem D hD hroot a (normFourOrbitRep D q).1 ha
         (normFourOrbitRep D q).2 s hs
@@ -202,7 +202,9 @@ private theorem vector_mem (D : LatticeData)
   have hE : E D a ∈ S := by
     change E D a ∈ fixedSpace D ⊓
       (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)
-    rw [canonicalFixedEnergy_eq_fixedGrade D hD 2]
+    have hcanon := canonicalFixedEnergy_eq_fixedGrade D hD 2
+    norm_num only [Int.cast_ofNat] at hcanon
+    rw [hcanon]
     constructor
     · apply (mem_fixedSpace D _).mpr
       change thetaLinear D (E D a) = E D a
@@ -223,18 +225,18 @@ private theorem vector_ne_zero (D : LatticeData) (a : Charge D)
     intro h
     apply ha0
     funext i
+    change a i = 0
     have hi := congrArg (fun b : Charge D => b i) h
     change a i = -a i at hi
     omega
   have hs0 : s ≠ 0 := by intro h; simp [h] at hs
   intro h
-  have hc := congrArg (fun v : Carrier D => MvPolynomial.coeff 0 (v a)) h
-  have hcoef : MvPolynomial.coeff 0 (vector D a s a) = s / 4 := by
+  have hc := congrArg (fun v : Carrier D => MvPolynomial.constantCoeff (v a)) h
+  have hcoef : MvPolynomial.constantCoeff (vector D a s a) = s / 4 := by
     simp [vector, quadraticState, chargedState, ha0, haneg, Ne.symm ha0, Ne.symm haneg,
       Finsupp.single_apply]
   rw [hcoef] at hc
-  have : s = 0 := by simpa using (div_eq_zero_iff).mp hc
-  exact hs0 this
+  exact (div_ne_zero hs0 (by norm_num : (4 : ℂ) ≠ 0)) (by simpa using hc)
 
 /-- The actual norm-four vector is nonzero and spans the entire eigenvalue-two
 intersection inside the literal theta-fixed canonical Sugawara energy-two space. -/
