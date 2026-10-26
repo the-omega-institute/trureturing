@@ -1,0 +1,129 @@
+**定理 19.2（同一静态网络的平均平衡、条件破缺与返回记录律）。**
+在 §§14–18 的有类型复表示中，完整记录保留在切面内，
+对任意 $\theta\in\mathbb R$、$p\in[0,1]$ 有
+
+$$
+A_j\widehat\tau_pA_j^\dagger=\tfrac12\widehat\tau_p\quad(j=0,1).
+$$
+
+码内任意归一联合输入与任意有限旁观参考的原生标签字 $h$，长度 $n$ 的概率为 $2^{-n}$。
+换成已供应的 $L$ 读口时，平衡输入的概率及正概率条件输出满足
+
+$$
+q_+=(1+p)/2,\qquad q_-=(1-p)/2,
+$$
+
+并且 $0<p<1$ 时两个条件输出 $\sigma_\pm$ 都非固定，而
+
+$$
+\mathcal G^n(\sigma_+)\longrightarrow\widehat\tau_{2p/(1+p)},
+\qquad
+\mathcal G^n(\sigma_-)\longrightarrow\widehat\tau_0.
+$$
+
+使用定义 19.1 的返回仪器后，每个深度都有完整柱律
+
+$$
+\begin{aligned}
+\Pr(h)&=
+\begin{cases}
+p+(1-p)2^{-n},&h=+^n,\\
+(1-p)2^{-n},&h\text{ 含 }-,
+\end{cases}\\
+p_{+^n}&=\frac{2^np}{1-p+2^np},\qquad
+p_h=0\quad(h\text{ 含 }-,\ \Pr(h)>0).
+\end{aligned}
+$$
+
+其唯一无限记录律为
+$p\delta_{+^\infty}+(1-p)\operatorname{Bernoulli}(1/2)^{\otimes\mathbb N}$；
+特别地全 $+$ 射线概率为 $p$。
+零概率分支、端点及无穷射线分别按下述证明解释。
+
+证明。
+原生部分的供应为[环境记录定理 2.2](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)
+和[尖锐任务保留环境记忆定义 1.1](RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY.md)。
+当前参数对应为 $U_0=U$、$U_1=UW$，且
+
+$$
+A_0B=\tfrac1{\sqrt2}BUe^{i\theta W},\qquad
+A_1B=\tfrac1{\sqrt2}BUWe^{i\theta W}.
+$$
+
+因为 $W^2=I$，这对所有实 $\theta$ 都是两个酉分支乘 $1/\sqrt2$。
+$\tau_p$ 与 $U,W$ 交换，故分支等于 $\widehat\tau_p/2$。
+一般码内输入每次标签概率 $1/2$、后继仍在码内；
+与参考张量单位后分支效应仍为 $I_3/2\otimes I_Z$。
+长度 $n$ 的归一酉乘积前系数为 $2^{-n/2}$，给全部有限字概率 $2^{-n}$；
+这里没有对未知码态或参考作现实数、纯态或无关联限制。
+原生标签不含关于该码输入的信息；终端效果或相干环境访问改变了测试菜单。
+
+条件破缺是把供应通道固定族接到新增读口的计算。
+在 $Q$ 上取单位基
+
+$$
+e=(1,1,-2)^T/\sqrt6,\qquad f=(1,-1,0)^T/\sqrt2.
+$$
+
+$P_+=P+|e\rangle\langle e|$，$P_-=|f\rangle\langle f|$。
+写 $b=(1-p)/2$，对所有 $p$ 直接得到
+
+$$
+\begin{aligned}
+L_+\widehat\tau_pL_+^\dagger
+ &=B[pP+b|Ue\rangle\langle Ue|]B^\dagger,\\
+L_-\widehat\tau_pL_-^\dagger
+ &=bB|Uf\rangle\langle Uf|B^\dagger.
+\end{aligned}
+$$
+
+取迹给 $q_\pm$。$0<p<1$ 时，两条件态的 $Q$ 块非零且秩一，
+而 §18 的固定态中非零 $Q$ 块均为二维均匀块，故两者均非固定。
+码内 $J$ 压缩为 $P$，两条件输出的保护权重分别为 $p/q_+=2p/(1+p)$、零。
+将 §18 全复输入幂公式作用到它们即得两极限及相同的误差界。
+未选分支时 $\sum_\pm L_\pm\widehat\tau_pL_\pm^\dagger=\mathcal G(\widehat\tau_p)=\widehat\tau_p$，
+最终参数也满足 $q_+\,2p/(1+p)+q_-\,0=p$。
+$p=1$ 只有正分支且保持纯固定态，负分支无条件态；
+$p=0$ 两分支都先离开固定态，随后返回同一个 $\widehat\tau_0$。
+例如 $p=1/3$ 时两概率为 $2/3,1/3$，返回参数为 $1/2,0$。
+
+对返回仪器，每个正概率分支已精确在平衡族内。
+它在两端点上的未归一作用为
+
+$$
+\begin{array}{c|cc}
+ &\widehat\tau_1&\widehat\tau_0\\\hline
+\mathcal J_+&\widehat\tau_1&\widehat\tau_0/2\\
+\mathcal J_-&0&\widehat\tau_0/2
+\end{array}
+$$
+
+故对任意有限 $n$，若字全为正，未归一态为
+$p\widehat\tau_1+(1-p)2^{-n}\widehat\tau_0$；
+含负的字为 $(1-p)2^{-n}\widehat\tau_0$。
+取迹及归一给全部公式，亦验证父子柱质量一致。
+有限字母积空间的标准柱扩张给唯一概率律；显示的混合测度在每个柱上有同一值，
+所以就是该扩张。公平积测度的全正无穷射线概率为零，
+也可直接由 $\Pr(+^n)\downarrow p$ 得射线概率。
+对 $p=0$，所有有限全正字的后验仍为零，不能把无定义的无穷极限式强写成一；
+$p=1$ 时只存在全正字，后验恒一；$0<p<1$ 时全正后验趋一，任一负后恒零。
+树的无界深度是这一相容记录律，并非有限五维端口保存全部无穷记录。
+不同结果字在事件结构中属于互斥配置，不能取它们的并作为同一实际配置。
+§15 的有向极限限于每个相容扇区；完整记录的相干提升则由另行供应的等距定义，
+不从这些互斥配置的集合并推出。
+
+任意参考的完整版本也由同一端点作用给出。
+对返回后的一般联合态写成
+$\widehat\tau_1\otimes Z_++\widehat\tau_0\otimes Z_-$，其中 $Z_\pm\ge0$、迹和为一。
+全正字的未归一联合输出为
+
+$$
+\widehat\tau_1\otimes Z_+ +2^{-n}\widehat\tau_0\otimes Z_-,
+$$
+
+其他字为 $2^{-n}\widehat\tau_0\otimes Z_-$。
+这证明返回记录计算保留参考相关；对任意初始联合态，先施 §18 的
+$\mathcal E_G\otimes\operatorname{id}$ 即得到这些 $Z_\pm$。
+标量公式只是其取迹后的特例。
+柱树有一个经典隐藏扇区表示，已使用既定仪器及迹概率，故不反向证明 Born 律。证毕。
+

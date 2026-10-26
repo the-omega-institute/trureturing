@@ -1,0 +1,50 @@
+**定义 19.1（原生标签、额外读口和返回资源）。**
+原生记录仪器是定义 18.1 的 $A_0,A_1$。
+另供应环境相干读出时，可改读
+
+$$
+L_+=(K_0+K_1)/\sqrt2,\qquad
+L_-=(K_0-K_1)/\sqrt2,\qquad L_\pm B=BU P_\pm.
+$$
+
+二者求和的通道仍为 $\mathcal G$。
+若用 $K_j$ 的环境基 $f_j$，这对应 Hadamard 基；
+若原标定基产生的是 $A_j$，须先按该固定 $\theta$ 校准到同一环境比较，不能把两个基静默等同。
+只给黑盒 $\mathcal G$ 不供应环境访问。
+
+[环境记录定理 2.2](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)给实际共同等距扩张：
+$e_0\mapsto u\otimes f_0$、$e_1\mapsto u\otimes f_1$、
+$e_2\mapsto v\otimes(f_0+f_1)/\sqrt2$、
+$e_3\mapsto z\otimes f_1$、$e_4\mapsto z\otimes f_0$。
+这五个像正交，故可补成 $\mathbb C^5\otimes\mathbb C^2$ 上的酉；
+它说明读口改变的是同一完整扩张的条件分支。
+
+在另一个明确扩大的菜单中，[同源定理 20.1](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)
+还直接实现这套 $L$ 仪器：
+
+$$
+F=K_0^\dagger K_1+K_1^\dagger K_0,
+\qquad H_\pm=(I_5\pm F)/2,
+\qquad L_\pm^\dagger L_\pm=H_\pm.
+$$
+
+实际 $F$ 交换 $e_0,e_1$，交换 $e_3,e_4$，固定 $e_2$，故 $F^2=I$，
+$H_+,H_-$ 为秩三、二的完整 PVM。
+$L_\pm$ 在各 $H_\pm$ 像上等距，补其正交基可得全五维酉 $\widetilde U_\pm$，
+$L_\pm=\widetilde U_\pm H_\pm$。
+先测该 PVM 再条件施酉给同一带标签仪器；遗忘标签即供应定理中的平均通道。
+这一步使用任意五级酉及该 PVM，未证明受限等待、完整秩一模式读及 Stop 菜单可实现它。
+
+再另供应返回通道 $\mathcal E_G$，定义
+
+$$
+\mathcal J_\pm=\mathcal E_G\circ\operatorname{Ad}_{L_\pm}.
+$$
+
+$\mathcal J_++\mathcal J_-=\mathcal E_G\mathcal G=\mathcal E_G$，所以这是一套完整仪器。
+$\mathcal E_G=(\mathcal G^2+2\mathcal G^3)/3$ 是 §18 的既有恒等；
+若菜单实际允许权重 $1/3,2/3$ 的输入无关经典选择和相应复合，才给一个有限随机深度实现。
+测量 $J,I-J$ 再制备两个固定端点是另一种实现合同。
+恒等式本身不把这些资源加入原菜单，也不把 $\mathcal E_G$ 等同于一发 $\mathcal G$。
+返回通道与 §21 的扰动复位 $\mathcal R_0$ 亦不同。
+
