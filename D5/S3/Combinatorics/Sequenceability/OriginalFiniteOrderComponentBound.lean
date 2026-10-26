@@ -22,13 +22,14 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Combinatorics.Sequenceability.OriginalFiniteOrderComponentBound
 
-open scoped Classical BigOperators
+open scoped BigOperators
 open DisjointMinimalZeroOrdering (MinimalZeroSupport)
 open BooleanRowChargeConnectivity
 
 universe u v
 variable {α : Type u} {G : Type v} [AddCommGroup G]
 
+open Classical in
 /-- Count actual components of the graph on ALL proper original minimal zero
 supports that contain at least one q-containing support. If m >= 2 annihilates
 f(q), this count is strictly less than m. Paths may pass through q-free supports.
@@ -103,7 +104,8 @@ theorem q_containing_component_card_lt
   have hnonzero :=
     separated_component_charge_sum_ne_zero f Y E hall {q} U hUnonempty
       hUmeet hUport (by
-        simpa only [supportIntersectionGraphOutside_singleton, H] using hUsep)
+        rw [supportIntersectionGraphOutside_singleton E q]
+        exact hUsep)
   apply hnonzero
   calc
     (∑ a ∈ U, ∑ i ∈ a.val ∩ ({q} : Finset α), f i) = ∑ _a ∈ U, f q := by

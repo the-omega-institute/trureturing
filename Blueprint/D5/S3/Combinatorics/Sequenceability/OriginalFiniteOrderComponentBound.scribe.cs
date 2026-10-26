@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Sequenceability;
 internal sealed class OriginalFiniteOrderComponentBoundDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite annihilator bounds the actual components containing a designated coordinate.",
+        "An annihilating order bounds the actual q-containing support components.",
         H("Finite-order bounds for original support components"), Blocks(
             Describe.Lean(
                 DescribeId.Create("q-containing-component-card-lt"),

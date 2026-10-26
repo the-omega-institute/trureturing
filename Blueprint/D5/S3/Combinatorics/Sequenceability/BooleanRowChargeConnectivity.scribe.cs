@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Sequenceability;
 internal sealed class BooleanRowChargeConnectivityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Separated original minimal zero supports have nonzero designated-coordinate charge sums.",
+        "Separated original minimal supports have nonzero designated-coordinate charge sums.",
         H("Charges and connectivity of original minimal zero supports"), Blocks(
             Describe.Lean(
                 DescribeId.Create("outside-singleton-graph"),
