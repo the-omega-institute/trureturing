@@ -45,7 +45,8 @@ private theorem oldIndex_le (r : Coord l) (δ : Label) :
 /-- The decoded target stays in this exact slice, including its last row. -/
 noncomputable def oldCoord (r d : Coord l) : Coord l :=
   ⟨(oldIndex hCH hl r ⟨d.1, d.2.trans hl⟩).1,
-    (oldIndex_le hCH hl r ⟨d.1, d.2.trans hl⟩).trans_lt d.2⟩
+    (show (oldIndex hCH hl r ⟨d.1, d.2.trans hl⟩).1 ≤ d.1 from
+      oldIndex_le hCH hl r ⟨d.1, d.2.trans hl⟩).trans_lt d.2⟩
 
 private theorem oldCoord_le (r d : Coord l) : oldCoord hCH hl r d ≤ d :=
   oldIndex_le hCH hl r ⟨d.1, d.2.trans hl⟩
@@ -105,6 +106,7 @@ theorem nu_read (r : Coord l) (hr : ω ≤ r.1) (δ : Label) (n : ℕ) :
     (oldIndex hCH hl r δ) n).1 = _
   rw [SignedOrdinalRealization.slice_nu hCH hl r hr]
   simp only [oldIndex, dite_eq_left hr]
+  rfl
 
 /-- Any delayed support in the generic reindexing gives this same nu read. -/
 theorem nu_reindexBirth (r : Coord l) (hr : ω ≤ r.1) (δ : Label) (n : ℕ)
