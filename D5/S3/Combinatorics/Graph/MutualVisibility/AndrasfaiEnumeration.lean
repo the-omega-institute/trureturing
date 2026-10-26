@@ -4,14 +4,11 @@
    mirror-E: none(waiver:no-computational-evidence)
    anchors: []
    utility: none
-   digest: Periodic labelled words are counted by transfer traces, with the original two-vertex graph correction retained. -/
+   digest: Periodic labelled words are counted by transfer traces. -/
 
 import D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting
-import D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai
 
-/-! These are prerequisites for the original all-subset generating identity.
-The word count is not a definition of the graph count. The first original graph
-has four feasible subsets, whereas the length-two transfer trace is three. -/
+/-! Labelled periodic avoiding words and their unique closed lifts. -/
 
 set_option autoImplicit false
 
@@ -72,17 +69,5 @@ theorem periodic_word_card_eq_trace (N : ℕ) (hpos : 0 < N) (hN : N % 3 ≠ 0) 
       Matrix.trace (AndrasfaiTransfer.transfer ^ N) := by
   rw [Fintype.card_congr (periodicWordEquivClosedRun N hN)]
   exact closed_run_card_eq_trace N hpos
-
-/-- At the original index one every subset of the two-vertex host is visible.
-This consumed initial coefficient is essential for the full original series. -/
-theorem original_index_one_count : Andrasfai.count 0 = 4 := by
-  classical
-  have hall (X : Finset (Andrasfai.Vertex 0)) : Visible (Andrasfai.host 0) X := by
-    apply (Andrasfai.visible_iff_no_obstruction 0 X).mpr
-    rintro ⟨u, k, hk, hkm, _⟩
-    omega
-  unfold Andrasfai.count
-  rw [Fintype.card_congr (Equiv.subtypeUnivEquiv hall), Fintype.card_finset]
-  norm_num [Andrasfai.Vertex]
 
 end D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiEnumeration

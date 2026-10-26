@@ -8,7 +8,7 @@ internal sealed class AndrasfaiEnumerationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/MutualVisibility/AndrasfaiEnumeration.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An explicit finite equivalence counts labelled periodic avoiding words by transfer traces; the original two-vertex graph contributes four actual visible subsets.",
+        "An explicit finite equivalence counts labelled periodic avoiding words by transfer traces.",
         H("Enumeration prerequisites for the original identity"),
         Blocks(
             Paragraph(Text("Write P(N) for the subtype of labels : Fin N → Bool satisfying AndrasfaiLanguage.PeriodicAvoidance (List.ofFn labels). PeriodicAvoidance excludes the complete forbidden family from every finite repetition of the word. Positions have a fixed labelled origin. ClosedRun(N) retains a Boolean labelling and a live starting state in Fin 4 whose Fin.castSucc image closes under the original five-state DFA evaluation.")),
@@ -22,12 +22,7 @@ internal sealed class AndrasfaiEnumerationDocument : IScribeDocumentDefinition
                 H("Uniform periodic-word cardinality"), StatementSource.FromAuthor(WordCountFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The finite equivalence transports cardinality to the existing AndrasfaiCounting.closed_run_card_eq_trace theorem. The latter already preserves both Boolean labels on a shared transition. This theorem counts words only; identifying those words with actual original-host visible subsets is a separate obligation. At lengths 3m+2 with m positive, applying this count to the original graph requires a separate equivalence between its actual visible subsets and these periodic words."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("original-index-one-count"),
-                DeclarationHandle.Create(Prefix + "original_index_one_count"),
-                H("The original initial graph coefficient"), StatementSource.FromAuthor(InitialFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Andrasfai.count 0 counts every Configuration of the original host on ZMod 2, namely the original graph of index one. The obstruction characterization makes every subset visible because an obstruction would require 1 ≤ k ≤ 0. The subtype therefore has the cardinality of all finite subsets of this two-element vertex type, equal to four. The original graph-index-one coefficient is therefore four, retaining the exceptional first coefficient needed by the full generating identity."))), DescribeRole.Theorem),
-            Paragraph(Text("The periodic-word count and initial graph coefficient are prerequisites for the original all-labelled-subset generating identity. No graph of index zero, quotient by rotations, maximality condition, independent-set substitution or eventual-only interpretation is introduced. The full original graph-count correspondence and formal power-series identity remain outside these results.")))));
+            Paragraph(Text("The periodic-word count is a prerequisite for the original all-labelled-subset generating identity. No graph of index zero, quotient by rotations, maximality condition, independent-set substitution or eventual-only interpretation is introduced. The full original graph-count correspondence and formal power-series identity remain outside these results.")))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
@@ -46,6 +41,4 @@ internal sealed class AndrasfaiEnumerationDocument : IScribeDocumentDefinition
             new Formula.Logic(conditions, FormulaLogicOperator.Implies,
                 new Formula.Relation(count, FormulaRelationOperator.Equal, trace))));
     }
-    private static Formula InitialFormula() => Disp(
-        new Formula.Relation(Call("count", D(0)), FormulaRelationOperator.Equal, D(4)));
 }

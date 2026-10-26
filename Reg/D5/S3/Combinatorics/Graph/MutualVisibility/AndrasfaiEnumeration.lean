@@ -2,8 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiEnumeration
 
-/-! Typed whole-family evidence retains the original periodic-word predicate
-and original-host adjacency. Raw selection through the cardinality subtype
+/-! Typed whole-family evidence retains the original periodic-word predicate.
+Raw selection through the cardinality subtype
 remains an explicit unresolved slot. -/
 
 set_option autoImplicit false
@@ -113,121 +113,6 @@ def word_registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,
   bundleNonempty := .absent
   readout := some (realize wordSignature
     (fun _ _ labels => AndrasfaiLanguage.PeriodicAvoidance (List.ofFn labels))
-    (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-abbrev initialScope := type_of% (@original_index_one_count)
-
-abbrev initialSignature : Signature where
-  Params := Unit
-  State _ := Andrasfai.Vertex 0 × Andrasfai.Vertex 0
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Prop
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def initialActual : Realization initialSignature :=
-  realize initialSignature (fun _ _ p => (Andrasfai.host 0).Adj p.1 p.2)
-    (fun e => nomatch e)
-
-abbrev initialArena : Arena where
-  signature := initialSignature
-  Law r := Fintype.card (Configuration
-    (SimpleGraph.fromRel (fun u v => r.readout () () (u, v)))) = 4
-
-theorem initial_source_bridge : initialScope ↔ initialArena.Law initialActual := by
-  have he : SimpleGraph.fromRel (fun u v => (Andrasfai.host 0).Adj u v) =
-      Andrasfai.host 0 := by
-    ext u v
-    rw [SimpleGraph.fromRel_adj]
-    exact ⟨fun h => h.2.elim id SimpleGraph.Adj.symm,
-      fun h => ⟨h.ne, Or.inl h⟩⟩
-  change Andrasfai.count 0 = 4 ↔ Fintype.card (Configuration
-    (SimpleGraph.fromRel (fun u v => (Andrasfai.host 0).Adj u v))) = 4
-  rw [he]
-  rfl
-
-theorem initial_actual_positive : initialArena.Law initialActual :=
-  initial_source_bridge.mp original_index_one_count
-
-def initialRejected : Realization initialSignature :=
-  realize initialSignature (fun _ _ _ => False) (fun e => nomatch e)
-
-theorem initial_rejected_law : ¬ initialArena.Law initialRejected := by
-  have he : SimpleGraph.fromRel (fun _ _ : Andrasfai.Vertex 0 => False) = ⊥ := by
-    ext u v
-    simp [SimpleGraph.fromRel_adj]
-  have hn : ¬ Visible (⊥ : SimpleGraph (Andrasfai.Vertex 0)) Finset.univ := by
-    intro hv
-    obtain ⟨p, _, _⟩ := hv 0 (Finset.mem_univ _) 1 (Finset.mem_univ _) (by decide)
-    cases p with
-    | cons h _ => exact h
-  have hc := Fintype.card_subtype_lt hn
-  have hb : Fintype.card (Finset (Andrasfai.Vertex 0)) = 4 := by
-    rw [Fintype.card_finset]
-    norm_num [Andrasfai.Vertex]
-  intro h
-  change Fintype.card (Configuration
-    (SimpleGraph.fromRel (fun _ _ : Andrasfai.Vertex 0 => False))) = 4 at h
-  rw [he] at h
-  rw [hb] at hc
-  exact (Nat.ne_of_lt hc) h
-
-theorem initial_dependence : ObservationalDependence initialSignature initialActual := by
-  intro role
-  cases role
-  refine ⟨(), (0, 0), (0, 1), ?_⟩
-  change (Andrasfai.host 0).Adj 0 0 ≠ (Andrasfai.host 0).Adj 0 1
-  have hn : ¬ (Andrasfai.host 0).Adj 0 0 := (Andrasfai.host 0).loopless.irrefl 0
-  have hy : (Andrasfai.host 0).Adj 0 1 := by
-    change ((1 - 0 : Andrasfai.Vertex 0).val % 3) = 1
-    decide +kernel
-  intro he
-  exact hn (he.mpr hy)
-
-def initialFamily : Registration initialArena initialScope where
-  actual := initialActual
-  bridge := initial_source_bridge
-  variation := ⟨initial_actual_positive, initialRejected, initial_rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨initialRejected, ?_, rfl, initial_rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
-    · intro i
-      exact nomatch i
-  dependence := initial_dependence
-
-def initial_registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
-    (@original_index_one_count)
-    (type_of% (realize initialSignature
-      (fun _ _ p => (Andrasfai.host 0).Adj p.1 p.2)
-      (fun e => nomatch e))) Unit Unit where
-  unitName := Lean.Name.str
-    `D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiEnumeration.original_index_one_count
-    "__information_unit"
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiEnumeration.initialFamily
-  realizationSource := none
-  generated := false
-  arena := .source ⟨initialArena⟩
-  objectArena := .source ⟨initialArena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source initialArena ⟨initialFamily⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize initialSignature
-    (fun _ _ p => (Andrasfai.host 0).Adj p.1 p.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
