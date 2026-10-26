@@ -33,17 +33,6 @@ noncomputable def composedTransition {α : ℕ → Type*} [∀ t, Fintype (α t)
   exact Nat.leRecOn (C := fun t => α s → α t → ℝ) h
     (fun {t} u a b => ∑ c, u a c * k t c b) (fun a b => if a = b then 1 else 0)
 
-/-- The initial law pushed through the transitions preceding position `t`. -/
-noncomputable def positionLaw {α : ℕ → Type*} [∀ t, Fintype (α t)]
-    (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ) (t : ℕ) (b : α t) : ℝ :=
-  ∑ a, p a * composedTransition k 0 t (Nat.zero_le t) a b
-
-/-- The joint mass at two ordered positions: the earlier law times the intervening channel. -/
-noncomputable def pairLaw {α : ℕ → Type*} [∀ t, Fintype (α t)]
-    (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ)
-    (s t : ℕ) (h : s ≤ t) (q : α s × α t) : ℝ :=
-  positionLaw p k s q.1 * composedTransition k s t h q.1 q.2
-
 /-- Positions are `Xₙ,…,X₁,Y₁,…,Yₙ`. The alphabet family outside the first `2*n`
 positions is irrelevant; stochasticity is required only for transitions inside this chain.
 For `n = 0` both sums are empty. -/
@@ -54,9 +43,13 @@ def claim : Prop :=
     (∀ t, t + 1 < 2 * n → (∀ a b, 0 ≤ k t a b) ∧ ∀ a, ∑ b, k t a b = 1) →
     ∀ f : Equiv.Perm (Fin n),
       (∑ i : Fin n, mutualInformation
-        (pairLaw p k (n - 1 - i.val) (n + (f i).val) (by omega))) ≤
+        (mixtureJoint
+          (mixture p (composedTransition k 0 (n - 1 - i.val) (Nat.zero_le _)))
+          (composedTransition k (n - 1 - i.val) (n + (f i).val) (by omega)))) ≤
       ∑ i : Fin n, mutualInformation
-        (pairLaw p k (n - 1 - i.val) (n + i.val) (by omega))
+        (mixtureJoint
+          (mixture p (composedTransition k 0 (n - 1 - i.val) (Nat.zero_le _)))
+          (composedTransition k (n - 1 - i.val) (n + i.val) (by omega)))
 
 private theorem composed_self {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s : ℕ) (a b : α s) :
@@ -153,9 +146,10 @@ private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
 private theorem position_transport {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ)
     (s t : ℕ) (h : s ≤ t) (b : α t) :
-    positionLaw p k t b = ∑ a, positionLaw p k s a * composedTransition k s t h a b := by
+    mixture p (composedTransition k 0 t (Nat.zero_le t)) b =
+      ∑ a, mixture p (composedTransition k 0 s (Nat.zero_le s)) a *
+        composedTransition k s t h a b := by
   classical
-  unfold positionLaw
   calc
     (∑ a, p a * composedTransition k 0 t (Nat.zero_le t) a b) =
         ∑ a, ∑ c, (p a * composedTransition k 0 s (Nat.zero_le s) a c) *
@@ -178,14 +172,15 @@ private theorem position_is_law {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ) (t : ℕ)
     (hp : (∀ a, 0 ≤ p a) ∧ ∑ a, p a = 1)
     (hk : ∀ u, u < t → (∀ a b, 0 ≤ k u a b) ∧ ∀ a, ∑ b, k u a b = 1) :
-    (∀ a, 0 ≤ positionLaw p k t a) ∧ ∑ a, positionLaw p k t a = 1 := by
+    (∀ a, 0 ≤ mixture p (composedTransition k 0 t (Nat.zero_le t)) a) ∧
+      ∑ a, mixture p (composedTransition k 0 t (Nat.zero_le t)) a = 1 := by
   classical
   have ht := composed_stochastic k 0 t (Nat.zero_le t) (fun u _ hu => hk u hu)
   constructor
   · intro a
-    unfold positionLaw
+    unfold mixture
     exact Finset.sum_nonneg fun b _ => mul_nonneg (hp.1 b) (ht.1 b a)
-  · unfold positionLaw
+  · unfold mixture
     rw [Finset.sum_comm]
     calc
       (∑ a, ∑ b, p a * composedTransition k 0 t (Nat.zero_le t) a b) = ∑ a, p a := by
@@ -362,11 +357,19 @@ private theorem chain_rectangle {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (hp : (∀ a, 0 ≤ p a) ∧ ∑ a, p a = 1)
     (a b c d : ℕ) (hab : a ≤ b) (hbc : b ≤ c) (hcd : c ≤ d)
     (hk : ∀ u, u < d → (∀ x y, 0 ≤ k u x y) ∧ ∀ x, ∑ y, k u x y = 1) :
-    mutualInformation (pairLaw p k b c hbc) +
-      mutualInformation (pairLaw p k a d (by omega)) ≥
-    mutualInformation (pairLaw p k b d (by omega)) +
-      mutualInformation (pairLaw p k a c (by omega)) := by
-  have h := four_point_rectangle (positionLaw p k a)
+    mutualInformation
+        (mixtureJoint (mixture p (composedTransition k 0 b (Nat.zero_le b)))
+          (composedTransition k b c hbc)) +
+      mutualInformation
+        (mixtureJoint (mixture p (composedTransition k 0 a (Nat.zero_le a)))
+          (composedTransition k a d (by omega))) ≥
+    mutualInformation
+        (mixtureJoint (mixture p (composedTransition k 0 b (Nat.zero_le b)))
+          (composedTransition k b d (by omega))) +
+      mutualInformation
+        (mixtureJoint (mixture p (composedTransition k 0 a (Nat.zero_le a)))
+          (composedTransition k a c (by omega))) := by
+  have h := four_point_rectangle (mixture p (composedTransition k 0 a (Nat.zero_le a)))
     (composedTransition k a b hab) (composedTransition k b c hbc)
     (composedTransition k c d hcd)
     (position_is_law p k a hp (fun u hu => hk u (by omega)))
@@ -374,17 +377,21 @@ private theorem chain_rectangle {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (composed_stochastic k b c hbc (fun u _ hu => hk u (by omega)))
     (composed_stochastic k c d hcd (fun u _ hu => hk u hu))
   have hbc_pair : (fun q : α b × α c =>
-      (∑ x, positionLaw p k a x * composedTransition k a b hab x q.1) *
-        composedTransition k b c hbc q.1 q.2) = pairLaw p k b c hbc := by
+      (∑ x, mixture p (composedTransition k 0 a (Nat.zero_le a)) x *
+        composedTransition k a b hab x q.1) *
+        composedTransition k b c hbc q.1 q.2) =
+      mixtureJoint (mixture p (composedTransition k 0 b (Nat.zero_le b)))
+        (composedTransition k b c hbc) := by
     funext q
     rw [← position_transport p k a b hab q.1]
     rfl
-  have had_pair : (fun q : α a × α d => positionLaw p k a q.1 *
+  have had_pair : (fun q : α a × α d => mixture p (composedTransition k 0 a (Nat.zero_le a)) q.1 *
       ∑ x, composedTransition k a b hab q.1 x *
         ∑ y, composedTransition k b c hbc x y * composedTransition k c d hcd y q.2) =
-      pairLaw p k a d (hab.trans (hbc.trans hcd)) := by
+      mixtureJoint (mixture p (composedTransition k 0 a (Nat.zero_le a)))
+        (composedTransition k a d (hab.trans (hbc.trans hcd))) := by
     funext q
-    unfold pairLaw
+    unfold mixtureJoint
     congr 1
     calc
       (∑ x, composedTransition k a b hab q.1 x *
@@ -397,16 +404,19 @@ private theorem chain_rectangle {α : ℕ → Type*} [∀ t, Fintype (α t)]
       _ = composedTransition k a d (hab.trans (hbc.trans hcd)) q.1 q.2 :=
         (composed_comp k a b d hab (hbc.trans hcd) q.1 q.2).symm
   have hbd_pair : (fun q : α b × α d =>
-      (∑ x, positionLaw p k a x * composedTransition k a b hab x q.1) *
+      (∑ x, mixture p (composedTransition k 0 a (Nat.zero_le a)) x *
+        composedTransition k a b hab x q.1) *
         ∑ y, composedTransition k b c hbc q.1 y * composedTransition k c d hcd y q.2) =
-      pairLaw p k b d (hbc.trans hcd) := by
+      mixtureJoint (mixture p (composedTransition k 0 b (Nat.zero_le b)))
+        (composedTransition k b d (hbc.trans hcd)) := by
     funext q
     rw [← position_transport p k a b hab q.1,
       ← composed_comp k b c d hbc hcd q.1 q.2]
     rfl
-  have hac_pair : (fun q : α a × α c => positionLaw p k a q.1 *
+  have hac_pair : (fun q : α a × α c => mixture p (composedTransition k 0 a (Nat.zero_le a)) q.1 *
       ∑ x, composedTransition k a b hab q.1 x * composedTransition k b c hbc x q.2) =
-      pairLaw p k a c (hab.trans hbc) := by
+      mixtureJoint (mixture p (composedTransition k 0 a (Nat.zero_le a)))
+        (composedTransition k a c (hab.trans hbc)) := by
     funext q
     rw [← composed_comp k a b c hab hbc q.1 q.2]
     rfl
@@ -487,8 +497,12 @@ private theorem monge_permutation (n : ℕ) (m : Fin n → Fin n → ℝ)
 theorem result : claim := by
   intro n α inst p k hp hk f
   apply monge_permutation n
-    (fun i a => mutualInformation (pairLaw p k (n - 1 - i.val) (n + a.val)
-      ((Nat.sub_le (n - 1) i.val).trans ((Nat.sub_le n 1).trans (Nat.le_add_right n a.val)))))
+    (fun i a => mutualInformation
+      (mixtureJoint
+        (mixture p (composedTransition k 0 (n - 1 - i.val) (Nat.zero_le _)))
+        (composedTransition k (n - 1 - i.val) (n + a.val)
+          ((Nat.sub_le (n - 1) i.val).trans
+            ((Nat.sub_le n 1).trans (Nat.le_add_right n a.val))))))
     ?_ f
   intro i j a b hij hab
   exact chain_rectangle p k hp (n - 1 - j.val) (n - 1 - i.val)
