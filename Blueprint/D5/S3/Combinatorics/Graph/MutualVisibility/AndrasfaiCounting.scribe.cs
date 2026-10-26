@@ -35,7 +35,7 @@ internal sealed class AndrasfaiCountingDocument : IScribeDocumentDefinition
         Formula nat = Seq(Mathbb, Grp(F.Id("N")));
         Formula rat = Seq(Mathbb, Grp(F.Id("Q")));
         Formula count = Paren(Seq(Call("card", Call("ClosedRun", n)), Sp, Colon, Sp, rat));
-        Formula trace = Call("trace", new Formula.Power(Call("transfer"), n));
+        Formula trace = Call("trace", new Formula.Power(Seq(Operatorname, Grp(F.Id("transfer"))), n));
         Formula equality = new Formula.Relation(count, FormulaRelationOperator.Equal, trace);
         Formula positive = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, n);
         return Disp(Seq(Forall, Sp, Paren(Seq(n, Sp, Colon, Sp, nat)), Comma, Sp,

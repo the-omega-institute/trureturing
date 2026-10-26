@@ -74,7 +74,8 @@ private def block (f : ℕ → Bool) (a n : ℕ) : List Bool :=
 
 private theorem repeated_word (m : ℕ) (X : Finset (Vertex m)) (r : ℕ) :
     (List.replicate r (membershipWord m X)).flatten =
-      block (fun i => decide ((i : Vertex m) ∈ X)) 0 (r*(3 * m + 2)) := by
+      block (fun i => decide ((i : Vertex m) ∈ X)) 0 (r * (membershipWord m X).length) := by
+  rw [membership_word_length]
   simp only [block, zero_add]
   rw [membershipWord, ← List.ofFn_fin_repeat]
   congr 1
@@ -196,7 +197,7 @@ private theorem factor_to_repetition (m : ℕ) (X : Finset (Vertex m))
     dsimp [r]
     exact Nat.le_mul_of_pos_right _ (by omega)
   refine ⟨r, ?_⟩
-  rw [repeated_word]
+  rw [repeated_word, membership_word_length]
   change ContainsForbidden (block f 0 (r*(3 * m + 2)))
   apply (forbidden_block_iff f _).mpr
   refine ⟨a, k, hf.1, hbound, ?_, ?_, ?_⟩
@@ -211,7 +212,7 @@ private theorem repetition_to_factor (m : ℕ) (X : Finset (Vertex m)) (r : ℕ)
     (hf : ContainsForbidden ((List.replicate r (membershipWord m X)).flatten)) :
     ∃ u k, ForbiddenFactor m X u k := by
   let f : ℕ → Bool := fun i => decide ((i : Vertex m) ∈ X)
-  rw [repeated_word] at hf
+  rw [repeated_word, membership_word_length] at hf
   change ContainsForbidden (block f 0 (r*(3 * m + 2))) at hf
   obtain ⟨a,k,hk,_,ha,hz,hall⟩ := (forbidden_block_iff f _).mp hf
   refine ⟨(a : Vertex m),k,hk,?_,?_,?_⟩
@@ -235,5 +236,22 @@ theorem visible_iff_word_periodic_avoidance (m : ℕ) (hm : 1 ≤ m)
   · intro hp u k hf
     obtain ⟨r,hr⟩ := factor_to_repetition m X u k hf
     exact hp r hr
+
+
+/-- The original graph of index one has exactly four visible labelled subsets. -/
+theorem count_zero : count 0 = 4 := by
+  classical
+  have hv (X : Finset (Vertex 0)) : Visible (host 0) X := by
+    apply (visible_iff_no_obstruction 0 X).mpr
+    rintro ⟨u,k,hk,hkm,_⟩
+    omega
+  let e : Configuration (host 0) ≃ Finset (Vertex 0) :=
+    { toFun := Subtype.val
+      invFun := fun X => ⟨X, hv X⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  change Fintype.card (Configuration (host 0)) = 4
+  rw [Fintype.card_congr e, Fintype.card_finset]
+  norm_num [Vertex]
 
 end D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiWords
