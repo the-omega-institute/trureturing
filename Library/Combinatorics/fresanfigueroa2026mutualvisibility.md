@@ -52,7 +52,11 @@ minimum-length walks are paths. Strict mandatory ancestry, used in the
 rooted geometry, requires membership on every root geodesic. This auxiliary
 relation is stronger than membership on some shortest path and does not
 replace existential mutual visibility. The full connectivity equality is
-not established by the model or the auxiliary inward-replacement theorem.
+proved by `D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result`,
+using rooted comparability and simultaneous cut payments in addition to the
+model and inward-replacement geometry. Its
+[problem dossier](../../Problems/fresan-figueroa-goldfeder-lozano-2026-mutual-visibility-maximal-connectivity.md)
+states the full conclusion and its fixed-layer boundary.
 
 ## Verified locator
 
