@@ -8,6 +8,7 @@
 
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Data.Sym.Card
 import Mathlib.Data.Fintype.Pi
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.FinCases
@@ -21,6 +22,7 @@ Preregistration: https://github.com/the-omega-institute/trureturing/issues/22390
 Admission basis: open-problem-resolution. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
@@ -85,21 +87,93 @@ private def edge01 : (⊤ : SimpleGraph (Fin 3)).edgeSet := ⟨s(0, 1), by decid
 private def edge02 : (⊤ : SimpleGraph (Fin 3)).edgeSet := ⟨s(0, 2), by decide⟩
 private def edge12 : (⊤ : SimpleGraph (Fin 3)).edgeSet := ⟨s(1, 2), by decide⟩
 
+open Classical in
 private lemma triangle_count (g : SimpleGraph (Fin 3)) :
     Nat.card ((⊤ : SimpleGraph (Fin 3)) →g g) = if g = ⊤ then 6 else 0 := by
-  sorry
+  classical
+  split_ifs with hg
+  · subst g
+    rw [Nat.card_eq_fintype_card]
+    decide
+  · have he : IsEmpty ((⊤ : SimpleGraph (Fin 3)) →g g) := by
+      refine ⟨fun φ => hg ?_⟩
+      have hs := Finite.surjective_of_injective φ.injective_of_top_hom
+      apply top_unique
+      intro v w hvw
+      obtain ⟨a, rfl⟩ := hs v
+      obtain ⟨b, rfl⟩ := hs w
+      exact φ.map_rel (show a ≠ b from fun hab => hvw (congrArg φ hab))
+    exact Nat.card_eq_zero.mpr (Or.inl he)
 
+open Classical in
 private lemma hamiltonian_value (g : SimpleGraph (Fin 3)) :
     hamiltonian models parameters g = if g = ⊤ then Real.log 2 else 0 := by
-  sorry
+  unfold hamiltonian
+  simp only [Fin.sum_univ_two, models, parameters, Matrix.cons_val_zero,
+    Matrix.cons_val_one, zero_mul, zero_add, homDensity]
+  rw [triangle_count]
+  split_ifs <;> ring
 
+private def graphOfBits (b : Bool × Bool × Bool) : SimpleGraph (Fin 3) :=
+  SimpleGraph.fromEdgeSet {e | (e = s(0, 1) ∧ b.1 = true) ∨
+    (e = s(0, 2) ∧ b.2.1 = true) ∨ (e = s(1, 2) ∧ b.2.2 = true)}
+
+private lemma graph_bijective : Function.Bijective graphOfBits := by
+  constructor
+  · intro a b hab
+    have h01 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 0 1) hab
+    have h02 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 0 2) hab
+    have h12 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 1 2) hab
+    simp only [graphOfBits, SimpleGraph.fromEdgeSet_adj, Set.mem_ofPred_eq,
+      Sym2.eq_iff] at h01 h02 h12
+    rcases a with ⟨a, c, d⟩
+    rcases b with ⟨b, e, f⟩
+    cases a <;> cases b <;> cases c <;> cases d <;> cases e <;> cases f <;>
+      simp_all
+  · intro g
+    classical
+    refine ⟨(decide (g.Adj 0 1), decide (g.Adj 0 2), decide (g.Adj 1 2)), ?_⟩
+    ext v w
+    fin_cases v <;> fin_cases w <;>
+      simp [graphOfBits, SimpleGraph.fromEdgeSet_adj] <;> exact g.adj_comm _ _
+
+private lemma graph_top (b : Bool × Bool × Bool) :
+    graphOfBits b = ⊤ ↔ b = (true, true, true) := by
+  have ht : graphOfBits (true, true, true) = ⊤ := by
+    ext v w
+    fin_cases v <;> fin_cases w <;> simp [graphOfBits, SimpleGraph.fromEdgeSet_adj]
+  rw [← ht, graph_bijective.injective.eq_iff]
+
+private lemma sum_graphs (f : SimpleGraph (Fin 3) → ℝ) :
+    ∑ g, f g = ∑ b : Bool × Bool × Bool, f (graphOfBits b) :=
+  (graph_bijective.sum_comp f).symm
+
+open Classical in
 private lemma weight_value (g : SimpleGraph (Fin 3)) :
     gibbsWeight models parameters g = if g = ⊤ then 2 / 9 else 1 / 9 := by
-  sorry
+  classical
+  have hw (a : SimpleGraph (Fin 3)) :
+      Real.exp (hamiltonian models parameters a) = if a = ⊤ then 2 else 1 := by
+    rw [hamiltonian_value]
+    split_ifs
+    · exact Real.exp_log (by norm_num)
+    · exact Real.exp_zero
+  unfold gibbsWeight
+  simp_rw [hw]
+  have hz : (∑ a : SimpleGraph (Fin 3), (if a = ⊤ then 2 else 1 : ℝ)) = 9 := by
+    rw [sum_graphs]
+    norm_num [graph_top, Fintype.sum_prod_type]
+  rw [hz]
+  split_ifs <;> norm_num
 
 private lemma marginal_value (e : (⊤ : SimpleGraph (Fin 3)).edgeSet) :
     expectation models parameters (edgeIndicator e) = 5 / 9 := by
-  sorry
+  classical
+  unfold expectation
+  simp_rw [weight_value]
+  rw [sum_graphs]
+  simp only [Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
+  fin_cases e <;> norm_num [edgeIndicator, graphOfBits, SimpleGraph.mem_edgeSet]
 
 private lemma joint_values :
     expectation models parameters (fun a => edgeIndicator edge01 a * edgeIndicator edge02 a) =
@@ -110,7 +184,11 @@ private lemma joint_values :
       1 / 3 ∧
     expectation models parameters (fun a =>
       edgeIndicator edge01 a * edgeIndicator edge02 a * edgeIndicator edge12 a) = 2 / 9 := by
-  sorry
+  classical
+  unfold expectation
+  simp_rw [weight_value]
+  simp only [sum_graphs, Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
+  norm_num [edgeIndicator, edge01, edge02, edge12, graphOfBits, SimpleGraph.mem_edgeSet]
 
 private lemma ursell_value : u3 models parameters edge01 edge02 edge12 = 7 / 729 := by
   rw [u3, marginal_value, marginal_value, marginal_value,
