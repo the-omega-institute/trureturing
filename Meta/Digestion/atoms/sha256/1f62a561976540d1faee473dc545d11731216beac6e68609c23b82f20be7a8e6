@@ -1,0 +1,47 @@
+**Lemma 9.2 (fewer than $m$ reads after the first $M$).** Let $w$ be any acquisition word with $N$ reads. Suppose either that $w$ is pure $J$, including the empty action word, or that its first $M$ is at original clock $n$ and
+
+$$
+r=N-n<m.
+\tag{9.2}
+$$
+
+If a fixed $C\in\mathbb R^{m\times N}$ has $CZ_w$ collinear with $\beta$ at every point of $\Xi_d$, allowing zero in this hypothesis, then $CZ_w=0$ throughout $\Xi_d$. In particular no such matrix is both universally collinear and successful anywhere on this family.
+
+**Proof.** Write
+
+$$
+\binom{u_i}{v_i}=A_i\binom{1}{1},
+\qquad
+\operatorname{tr}(A_iP_\theta)=u_i+(v_i-u_i)\theta.
+\tag{9.3}
+$$
+
+Before the first $M$, $(u_i,v_i)=(1,1)$. At that first $M$ it is $(1,2)$. Thereafter $J$ interchanges the two positive coordinates, while $M$ sends $(u,v)$ to $(v,u+v)$. Thus the coordinates remain positive and unequal after the first $M$: interchange preserves inequality, and $u+v>v$ for positive $u$. Consequently, with $b_i=v_i-u_i$, the nonzero entries of $b$ are exactly the suffix indices $n,\ldots,N-1$.
+
+Let $V_{ij}=i^j$ at these original clocks. The drift and basis-vector argument in Lemma 2.2, applied with $\theta$ fixed and then varied, gives
+
+$$
+C\mathbf1=0,
+\qquad
+C\operatorname{diag}(u+\theta b)V
+=(\lambda_0+\theta\lambda_1)I_m.
+\tag{9.4}
+$$
+
+Indeed the coefficient matrix sends every $\beta$ into its own line, so is scalar; a diagonal entry shows that this scalar is affine in $\theta$. Comparing the coefficient of $\theta$ yields
+
+$$
+C\operatorname{diag}(b)V=\lambda_1I_m.
+\tag{9.5}
+$$
+
+For a word with an $M$, the left side has rank at most $r<m$, so $\lambda_1=0$. Its nonzero rows before multiplication by $C$ are the $r$ suffix rows of $V$, multiplied by the nonzero numbers $b_i$. Those rows have rank $r$ by Lemma 2.1. A right inverse therefore gives $C_{\rm suffix}=0$. Since $u_i=1$ on the prefix, (9.4) now reads
+
+$$
+C_{\rm prefix}V_{\rm prefix}=\lambda_0I_m.
+$$
+
+Apply this identity to $e_0=(1,0,\ldots,0)^{\mathsf T}$. Its left side is $C_{\rm prefix}\mathbf1=C\mathbf1=0$, so $\lambda_0=0$ as well. Both the drift and coefficient contributions vanish.
+
+For a pure-$J$ word the factor vector is $\mathbf1$, so (9.4) instead gives $CV=\lambda_0I_m$. The same application to $e_0$ gives $\lambda_0=0$, and again the output vanishes. This proves both cases. The rank estimate uses the same scalar-versus-low-rank principle as the single-exceptional-read argument in [*FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Proposition 8.1](FIB_CRITICAL_MIXED_GAIN_WORDS_AND_CLOCK_PENCIL_OBSTRUCTIONS.md#8-predominantly-j-identities-and-all-their-exceptional-sources), here for the entire suffix in (9.2). $\square$
+
