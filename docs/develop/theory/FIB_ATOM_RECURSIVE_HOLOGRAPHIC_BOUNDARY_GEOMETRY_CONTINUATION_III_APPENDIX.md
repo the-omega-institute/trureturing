@@ -4215,7 +4215,15 @@ For clarity, on each fixed-width slab the weighted negative norm is bounded by $
 $C\sum_j e^{-2j}(\epsilon_ne^j)^2\le C\epsilon_n^2(1+\Lambda_n)$.
 This accounts for the full growing interval, not only a fixed compact cutoff.
 
-Where the cutoff is one, the relative errors multiply $J_n$. All portions where it varies, or a slab enlargement reaches such a portion, lie in $(T-4,T+4)$ or $(\Lambda_n-4,\Lambda_n+4)$; their weighted $H^1$ norms are bounded by the displayed boundary terms. Multiplication of a local $H^{-1}$ functional by the smooth cutoff has the same bound. Finally
+Only indices with $I_j$ meeting $(T,\Lambda_n)$ contribute to the localized residual. Their enlarged intervals lie in $(T-3,\Lambda_n+3)$. On $[T+1,\Lambda_n-1]$ one has $H_n=J_n$; all remaining parts of those enlarged intervals lie in the boundary strips of (111.16). Finite overlap therefore gives
+
+$$
+\sum_{j\ \mathrm{active}} e^{-2j}
+ \|H_n\|_{H^1(I_j^+\times S^3)}^2
+ \le C\left(\|J_n\|_{\mathscr H^1_1}^2+A_n(T)+B_n\right).
+$$
+
+Apply this bound to the relative errors after multiplying each localized residual by $\chi_{T,n}$, which is uniformly bounded on $H^{-1}$. This gives the first term of (111.20) and a boundary contribution bounded by its second term, since $d_n(T)$ is bounded eventually. Finally
 $[P_0,\chi_{T,n}]H_n=-\chi_{T,n}''H_n-2\chi_{T,n}'\partial_\tau H_n$
 is supported in those boundary strips and has that weighted negative-norm bound as well. These observations justify (111.20), including its localization terms.
 
