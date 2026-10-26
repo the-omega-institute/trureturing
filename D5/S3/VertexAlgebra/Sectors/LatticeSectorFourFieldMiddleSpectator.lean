@@ -67,6 +67,7 @@ private theorem core_finite (D : LatticeData) (β γ η δ : Charge D)
   have large : e 1 < i := by
     simp only [Finset.mem_coe,Finset.mem_range,not_lt] at hout
     omega
+  dsimp only
   rw [cross_lower D β γ η δ v t q w k (A 1) ltq ht _ _ _ (by omega),smul_zero]
 
 private theorem middle_lower (D : LatticeData) (α β γ η δ : Charge D)
@@ -97,6 +98,7 @@ private theorem middle_lower (D : LatticeData) (α β γ η δ : Charge D)
   simp only [balancedCross,map_sum,map_smul,map_zero,Finset.smul_sum,smul_zero] at mapped
   exact mapped
 
+set_option maxHeartbeats 2000000 in
 private theorem finite_spectator_reconstruction
     (D : LatticeData) (α β γ η δ : Charge D)
     (u : Sector D α) (v : Sector D β) (t : Sector D γ) (q : Sector D η)
@@ -142,21 +144,33 @@ private theorem finite_spectator_reconstruction
       canonical D α (β+(γ+(η+δ))) u (-(e 0-a 0-3*k+p+r+s)-1)
     have h := congrArg L (core p r s)
     simp only [map_sum,map_smul] at h
-    rw [← h]
+    simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+      Matrix.head_cons,Matrix.tail_cons,L] at h
+    refine Eq.trans ?_ h
     simp only [clearedBalanced,clearIterate,map_sum,map_smul]
     apply Finset.sum_congr rfl
     intro j hj
     apply Finset.sum_congr rfl
     intro l hl
-    congr 2
+    apply congrArg (fun z : Oscillator D => weight k j • (weight k l • z))
     apply Finset.sum_congr rfl
     intro h hh
-    congr 1
+    apply congrArg (fun z : Oscillator D => ((a 1+p+k-j).choose h : ℂ) • z)
     dsimp only [middleIterate,balanced,L]
     rw [← add_assoc β γ (η+δ)]
-    congr 1
-    congr 1 <;> simp [Nat.cast_add] <;> omega
+    have hy : e 3-((a 3+s : ℕ) : ℤ)-j-l = e 3-a 3-s-j-l := by
+      simp only [Nat.cast_add]
+      omega
+    simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+      Matrix.head_cons,Matrix.tail_cons,hy]
   unfold middleClearing
+  change (∑ p ∈ Finset.range (k+1), ∑ r ∈ Finset.range (k+1),
+    ∑ s ∈ Finset.range (k+1), weight k p • (weight k r • (weight k s •
+      (∑ j ∈ Finset.range (k+1), ∑ l ∈ Finset.range (k+1),
+        weight k j • (weight k l •
+          clearIterate k (a 1+p+k-j) (a 2+r+k-l)
+            (fun b z => middleIterate D α β γ η δ u v t q w
+              (e 0-a 0-3*k+p+r+s) b z (e 3-a 3-s-j-l)) (e 1) (e 2)))))) = _
   simp_rw [mapped,Finset.smul_sum]
   simp_rw [Finset.sum_comm (s := Finset.range (k+1)) (t := Finset.range ((e 2).toNat+1))]
   apply Finset.sum_congr rfl
@@ -178,20 +192,16 @@ private theorem finite_spectator_reconstruction
         ![e 1-(a 1+p : ℕ)-k+i-k+j,e 2-(a 2+r : ℕ)-i-k+l,e 3-(a 3+s : ℕ)-j-l]) =
       nestedCanonical D ![α,β,γ,η] ![u,v,t,q] δ w 0 1 2 3
         ![e 0-a 0-3*k+p+r+s,e 1-a 1-k+i-p-k+j,e 2-a 2-i-r-k+l,e 3-a 3-s-j-l] := by
-    change canonical D α (β+(γ+(η+δ))) u _
-      (canonical D β (γ+(η+δ)) v _ (canonical D γ (η+δ) t _ (canonical D η δ q _ w))) =
-      canonical D α (β+(γ+(η+δ))) u _
-      (canonical D β (γ+(η+δ)) v _ (canonical D γ (η+δ) t _ (canonical D η δ q _ w)))
-    congr 1
-    congr 1
-    · simp only [Nat.cast_add]; omega
-    · congr 1
-      · simp only [Nat.cast_add]; omega
-      · congr 1
-        simp only [Nat.cast_add]; omega
-  simp only [Nat.cast_add]
+    have idx : (![e 1-(a 1+p : ℕ)-k+i-k+j,
+        e 2-(a 2+r : ℕ)-i-k+l,e 3-(a 3+s : ℕ)-j-l] : Exponent 3) =
+        ![e 1-a 1-k+i-p-k+j,e 2-a 2-i-r-k+l,e 3-a 3-s-j-l] := by
+      funext d
+      fin_cases d <;> simp [Nat.cast_add] <;> omega
+    rw [idx]
+    rfl
+  simp only [Nat.cast_add] at base ⊢
   rw [base]
-  simp only [smul_smul]
+  simp only [smul_smul,weight]
   congr 1
   ring
 
@@ -214,7 +224,8 @@ theorem actual_four_field_middle_spectator_transport
         (∀ e : Exponent 4,
           polynomialAction (innerPolynomial k a)
             (fun d => innerIterate D α β γ η δ u v t q w (d 0) (d 1) (d 2) (d 3)) e =
-              signedExtend (MvPowerSeries.subst (SupportedFourFieldCollision.fourInnerArguments (Oscillator D)) P) e) ∧
+              signedExtend (MvPowerSeries.subst
+                (SupportedFourFieldCollision.fourInnerArguments (Oscillator D)) P) e) ∧
         ∀ e : Exponent 4,
           polynomialAction (middlePolynomial k a)
             (fun d => middleIterate D α β γ η δ u v t q w (d 0) (d 1) (d 2) (d 3)) e =
@@ -256,15 +267,18 @@ theorem actual_four_field_middle_spectator_transport
     have large : e 2 < i := by
       simp only [Finset.mem_coe,Finset.mem_range,not_lt] at hout
       omega
+    dsimp only
     rw [lower _ _ (by omega),smul_zero]
   rw [middle_action_expansion]
   calc
     _ = ∑ i ∈ Finset.range ((e 2).toNat+1),
         (((-1 : ℂ)^i) * integerBinomial ((k : ℤ)-e 1-1) i) •
           G (e 1-a 1-k+i) (e 2-a 2-i) :=
-      finite_spectator_reconstruction D α β γ η δ u v t q w k a lvq ltq (truncation 1) (truncation 2) e
+      finite_spectator_reconstruction D α β γ η δ u v t q w k a lvq ltq
+        (truncation 1) (truncation 2) e
     _ = extend (collision (middleSlice P (e 0) (e 3))) (e 1) (e 2) := finiteSum.symm.trans signed.2
-    _ = signedExtend (MvPowerSeries.subst (middleFourArguments (Oscillator D)) P) ![e 0,e 1,e 2,e 3] :=
+    _ = signedExtend (MvPowerSeries.subst (middleFourArguments (Oscillator D)) P)
+        ![e 0,e 1,e 2,e 3] :=
       (middleCollision_signed P (e 0) (e 1) (e 2) (e 3)).symm
     _ = signedExtend (MvPowerSeries.subst (middleFourArguments (Oscillator D)) P) e := by
       congr 1
