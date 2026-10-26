@@ -37,7 +37,8 @@ internal sealed class KnotFamilyVassilievFiniteGenerationDocument : IScribeDocum
                 DeclarationHandle.Create(Module + ".subalgebra_fg"),
                 H("Subalgebras of a polynomial ring in one variable"),
                 StatementSource.FromAuthor(Disp(SubalgebraFormula())),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/HomologicalAlgebra/artintate1951finiteringextensions")),
                 Blocks(Paragraph(Text(
                     "For every field k, each k-subalgebra a of the polynomial ring k[X] is finitely generated as a k-algebra. "
                         + "Subalgebra.FG means that a finite set of polynomials generates a as a subalgebra. "
