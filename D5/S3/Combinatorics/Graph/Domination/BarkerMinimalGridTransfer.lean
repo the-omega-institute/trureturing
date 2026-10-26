@@ -14,6 +14,7 @@ import Mathlib.Data.Matrix.Basic
 terminal checks. No actual-count equality or quotient compatibility is assumed. -/
 
 set_option autoImplicit false
+set_option maxRecDepth 10000
 
 namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
@@ -27,9 +28,9 @@ abbrev Window := Fin 5 → Symbol
 /-- The three state blocks are (8,8,a,b), (8,a,b,c), and (a,b,c,d),
 in that order, with real masks in lexicographic order. -/
 def columns (s : State) : Fin 4 → Symbol :=
-  if s.val < 64 then
+  if h₀ : s.val < 64 then
     ![8, 8, ⟨s.val / 8, by omega⟩, ⟨s.val % 8, by omega⟩]
-  else if s.val < 576 then
+  else if h₁ : s.val < 576 then
     ![8, ⟨(s.val - 64) / 64, by omega⟩,
       ⟨(s.val - 64) / 8 % 8, by omega⟩, ⟨(s.val - 64) % 8, by omega⟩]
   else
@@ -38,9 +39,9 @@ def columns (s : State) : Fin 4 → Symbol :=
 
 /-- Appending a real mask drops the first symbol and advances its block. -/
 def append (s : State) (m : Fin 8) : State :=
-  if s.val < 64 then
+  if h₀ : s.val < 64 then
     ⟨64 + (s.val / 8) * 64 + (s.val % 8) * 8 + m.val, by omega⟩
-  else if s.val < 576 then
+  else if h₁ : s.val < 576 then
     ⟨576 + ((s.val - 64) / 64) * 512 + ((s.val - 64) / 8 % 8) * 64 +
       ((s.val - 64) % 8) * 8 + m.val, by omega⟩
   else
@@ -114,7 +115,7 @@ instance edgeDecidable (s t : State) : Decidable (Edge s t) := by
 def transition : Matrix State State ℤ := fun s t => if Edge s t then 1 else 0
 
 /-- All and only the 64 two-real-column starts have initial weight one. -/
-def initial : State → ℤ := fun s => if s.val < 64 then 1 else 0
+def initial : State → ℤ := fun s => if h₀ : s.val < 64 then 1 else 0
 
 /-- Two absent-column checks finish the last two real columns. -/
 def terminal : State → ℤ := fun s =>
