@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.Geometry.MiuraCoreResidual
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound dependent-family evidence for the actual mathematical operands. -/
+
 namespace Reg.D5.S3.Combinatorics.Geometry.MiuraCoreResidual
 
 open _root_.D5.S3.Combinatorics.Geometry
@@ -20,7 +22,7 @@ structure Parameter where
   hm : 0 < m
   j : Fin n
 
-def signature : Signature :=
+abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Parameter
     (fun p => {h : Cell p.m p.n → ℤ // frozenColumn h p.j})
     (fun p => Cell p.m (p.n - 1) → ℤ)
@@ -62,7 +64,7 @@ theorem rejected_not_law_of_residual {m n : ℕ} (a b : ℕ)
   change contractAt h hm j hfrz origin + 1 = 0 at hzero
   omega
 
-def lineParameter : Parameter := ⟨1, 3, by decide, ⟨1, by decide⟩⟩
+abbrev lineParameter : Parameter := ⟨1, 3, by decide, ⟨1, by decide⟩⟩
 
 def lineState (k : ℤ) : signature.State lineParameter :=
   ⟨fun v => (v.2.val : ℤ) + k, by

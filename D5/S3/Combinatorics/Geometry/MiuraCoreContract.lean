@@ -20,6 +20,8 @@ public import D5.S3.Combinatorics.Geometry.MiuraCoreFrozenSlope
 
 /-! Finite signed contraction and its exact full-grid invariants. -/
 
+set_option backward.isDefEq.respectTransparency false
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreContract
@@ -78,7 +80,7 @@ theorem contractAt_left (h : Cell m n → ℤ) (hm : 0 < m)
     contractAt h hm j hfrz p = h (p.1, ⟨p.2.val, by
       have := p.2.isLt; obtain ⟨_, hj1, _⟩ := hfrz; omega⟩) := by
   unfold contractAt
-  simp only [hp, if_true, dite_true]
+  simp only [hp, ite_true]
 
 theorem contractAt_right (h : Cell m n → ℤ) (hm : 0 < m)
     (j : Fin n) (hfrz : frozenColumn h j) (p : Cell m (n - 1))
@@ -87,7 +89,7 @@ theorem contractAt_right (h : Cell m n → ℤ) (hm : 0 < m)
       have := p.2.isLt; obtain ⟨_, hj1, _⟩ := hfrz; omega⟩)
         - frozenSlope h hm j hfrz := by
   unfold contractAt
-  simp only [hp, if_false]
+  simp only [hp, ite_false]
 
 theorem contractAt_isHeight_vertical (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m)
     (j : Fin n) (hfrz : frozenColumn h j) (p q : Cell m (n - 1))

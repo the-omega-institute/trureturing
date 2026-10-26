@@ -19,5 +19,5 @@ internal sealed class MiuraRunCompositionsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("miura-positive-lengths-card"),
                 DeclarationHandle.Create(Prefix + "positive_lengths_card"), H("The exact binomial cardinality"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every N and r with 1 at most r at most N, the actual positive indexed length vectors are counted by choose(N-1,r-1). The bijection removing one cell per run is composed with the pinned symmetric-power equivalence and its stars-and-bars cardinality. For frozen rows or columns, N is the available number of unoccupied positions and r is the number of maximal frozen runs."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For every N and r with 1 at most r at most N, the actual positive indexed length vectors are counted by choose(N-1,r-1). The bijection removing one cell per run is composed with the pinned symmetric-power equivalence and its stars-and-bars cardinality. For frozen rows or columns, N is the available number of unoccupied positions and r is the number of maximal frozen runs."))), DescribeRole.Theorem))));
 }

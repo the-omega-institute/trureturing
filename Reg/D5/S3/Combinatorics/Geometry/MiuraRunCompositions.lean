@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.Geometry.MiuraRunCompositions
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound dependent-family evidence for the actual mathematical operands. -/
+
 namespace Reg.D5.S3.Combinatorics.Geometry.MiuraRunCompositions
 
 open _root_.D5.S3.Combinatorics.Geometry.MiuraRunCompositions
@@ -11,7 +13,7 @@ open LeanInformationAudit
 
 noncomputable section
 
-def signature : Signature :=
+abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=

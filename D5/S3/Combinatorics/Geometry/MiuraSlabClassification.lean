@@ -75,7 +75,7 @@ private theorem row_slab_bottom_cut {h : Cell m n → ℤ} (hh : IsHeight h)
   rw [he] at hv
   exact hv
 
-private theorem outward_of_cuts {h : Cell m n → ℤ} (I : Interval m) (t : ℤ)
+theorem outward_of_cuts {h : Cell m n → ℤ} (I : Interval m) (t : ℤ)
     (htop : ∀ ht : 0 < I.first.val, ∀ j : Fin n,
       h (⟨I.first.val - 1, by omega⟩, j) = h (I.first, j) + t)
     (hbottom : ∀ hb : I.last.val + 1 < m, ∀ j : Fin n,

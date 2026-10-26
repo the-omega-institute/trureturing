@@ -21,6 +21,8 @@ public import D5.S3.Combinatorics.Geometry.MiuraStripRigidity
 
 /-! Finite signed contraction and its exact full-grid invariants. -/
 
+set_option backward.isDefEq.respectTransparency false
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreExtremum

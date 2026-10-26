@@ -91,7 +91,7 @@ private theorem first_reversal_has_minimum {h : Cell m n → ℤ} (hh : IsHeight
     have := hj u hu
     dsimp at this
     omega
-  · dsimp at hdown
+  · change -h (⟨i.val + 1, _⟩, j) = -h (i, j) - 1 at hdown
     omega
 
 /-- A first reversal out of a descending extrusion whose current profile has

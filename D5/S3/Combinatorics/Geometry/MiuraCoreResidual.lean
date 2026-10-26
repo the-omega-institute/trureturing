@@ -14,11 +14,14 @@ public import D5.S3.Combinatorics.Geometry.MiuraResidualCount
 
 /-! Finite signed contraction and its exact full-grid invariants. -/
 
+set_option backward.isDefEq.respectTransparency false
+
 @[expose] public section
 
 namespace D5.S3.Combinatorics.Geometry.MiuraCoreResidual
 
-open MiuraHeightEnvelope MiuraResidualCount MiuraCoreFrozenSlope MiuraCoreColumns MiuraCoreBoundary MiuraCoreContract MiuraCoreCellExpand MiuraCoreExtremum
+open MiuraHeightEnvelope MiuraResidualCount MiuraCoreFrozenSlope MiuraCoreColumns
+  MiuraCoreBoundary MiuraCoreContract MiuraCoreCellExpand MiuraCoreExtremum
 
 variable {m n : ℕ}
 
@@ -37,9 +40,9 @@ theorem cellExpand_on_side (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 1 < n)
   have hp := p.2.isLt
   by_cases hlt : p.2.val < j.val
   · rw [cellExpand_left j p hj0 hj1 hlt]
-    cases sd <;> simp only [cellOnSide, Fin.val_mk] <;> omega
+    cases sd <;> simp only [cellOnSide] <;> omega
   · rw [cellExpand_right j p hj0 hj1 hlt]
-    cases sd <;> simp only [cellOnSide, Fin.val_mk] <;> omega
+    cases sd <;> simp only [cellOnSide] <;> omega
 
 /-- A side contains all minima exactly when each minimum has that side membership. -/
 theorem all_minima_side_iff (h : Cell m n → ℤ) (sd : Side) :
@@ -145,10 +148,10 @@ theorem inactive_internal (h : Cell m n → ℤ) (hn : 0 < n)
   have hjlt := j.isLt
   constructor
   · by_contra h
-    have he : j = ⟨0, hn⟩ := Fin.ext (by omega)
+    have he : j = ⟨0, hn⟩ := Fin.ext (show j.val = 0 by omega)
     exact hj (he.symm ▸ hends.1)
   · by_contra h
-    have he : j = ⟨n - 1, by omega⟩ := Fin.ext (by omega)
+    have he : j = ⟨n - 1, by omega⟩ := Fin.ext (show j.val = n - 1 by omega)
     exact hj (he.symm ▸ hends.2)
 
 /-- Beyond the core width bound, two consecutive columns are genuinely frozen. -/
