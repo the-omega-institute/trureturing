@@ -7,6 +7,7 @@
    digest: Evaluation transfers whole signed dual-ball exclusion to the same point space. -/
 
 import D5.S3.Topology.Measures.SignedBallReduction
+import D5.S3.Topology.InverseLimit.SignedOrdinalRealization
 import Mathlib.Topology.Category.Profinite.Basic
 import Mathlib.Topology.Metrizable.Basic
 import Mathlib.Topology.Sequences
@@ -90,5 +91,31 @@ private theorem point_space_size_of_surjection_no_sequences (K : Profinite.{u})
   intro hm
   letI : MetrizableSpace K := hm
   exact hnot inferInstance
+
+open scoped Cardinal Ordinal
+
+private theorem actual_point_space_consequences
+    (hCH : Cardinal.continuum.{0} = ℵ₁)
+    (Hball : ∀ h : StoneCech ℕ →
+      WeakDual ℝ C((SignedOrdinalRealization.finalPrefix hCH).cone.pt, ℝ),
+      Continuous h → (∀ p, ‖WeakDual.toStrongDual (h p)‖ ≤ 1) → ¬ Injective h)
+    (hseq : ∀ (x : ℕ → (SignedOrdinalRealization.finalPrefix hCH).cone.pt)
+      (p : (SignedOrdinalRealization.finalPrefix hCH).cone.pt),
+      Tendsto x atTop (𝓝 p) → ∀ᶠ n in atTop, x n = p) :
+    (∀ f : StoneCech ℕ → (SignedOrdinalRealization.finalPrefix hCH).cone.pt,
+      Continuous f → ¬ Injective f) ∧
+    Infinite (SignedOrdinalRealization.finalPrefix hCH).cone.pt ∧
+    ¬ FirstCountableTopology (SignedOrdinalRealization.finalPrefix hCH).cone.pt ∧
+    ¬ MetrizableSpace (SignedOrdinalRealization.finalPrefix hCH).cone.pt := by
+  letI : Infinite (SignedProperLimit.Coord ω) :=
+    Infinite.of_injective
+      (fun n : ℕ => (⟨(n : Ordinal), Ordinal.natCast_lt_omega0 n⟩ :
+        SignedProperLimit.Coord ω))
+      (fun _ _ h => Nat.cast_injective (congrArg Subtype.val h))
+  letI : Infinite (SignedProperLimit.Cube ω) := inferInstance
+  refine ⟨point_space_no_beta_of_signed_ball _ Hball, ?_⟩
+  exact point_space_size_of_surjection_no_sequences _
+    (fun x => SignedProperLimit.restrict Ordinal.omega0_lt_omega_one.le x.1)
+    (SignedOrdinalRealization.initial_onto hCH) hseq
 
 end D5.S3.Topology.InverseLimit.TalagrandTopologicalConsequences
