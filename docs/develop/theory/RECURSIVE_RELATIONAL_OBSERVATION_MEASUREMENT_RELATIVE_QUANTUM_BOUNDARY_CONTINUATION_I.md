@@ -690,3 +690,458 @@ Induction over $L$ calls, starting from the common seed, proves (2.32), with the
 The inverse and decoder constants used here are the exact parent §§13–17 suppliers: the nonsingular-polarization certificate, product-distance bound, rational Gram scan, bounded-independent concentration event and fixed-filter perturbation. Their concentration step uses the ranges two and one and the $65$-setting union bound in parent Proposition 14.2; no new concentration hypothesis is imposed. The external inputs used in the displayed intermediate arguments are finite-dimensional Holevo–Helstrom discrimination with equal priors, and classical data processing/order comparison for probability laws. The new conclusions are the repository-derived combination into the specified consumer quotient, unchanged-decoder prediction estimate and uniform crossover and prediction budgets; they assert no historical priority, new general discrimination theorem, quantum-memory rate, or physical installation of the granted measurement class.
 
 ## 追加锚（本行以下为增补区）
+
+## 3. One fixed DU installation: acquired finite acceptance and paid current-state use
+
+**Convention 3.1 (a separate source domain).** This section uses the single-preparation source of [Compatible Predictive Waves V, Definition 91.1 and Proposition 91.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md), and the complete outgoing-record lift class of [Compatible Predictive Waves VI, Assumption 101.2 and Theorem 101.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md), abbreviated CPW V and CPW VI. Repository supplier statements in this section mean their texts at `ebf00c8ca5334b897d9aedb5bcb5cc97e638bd06`. This is a separately named **fixed-DU installation**. It replaces neither the waiting-window source of §1 nor the fresh-independent-copy source of §2; the opening parent-source convention of this volume does not identify these three sources.
+
+The exact scalar anchor CPW VI (101.5) is **not** assumed. Its role is replaced by a finite acquired test, with the weaker guarantees below. The fixed control, outgoing-carrier identity, readout, memorylessness and full-matrix-domain assumptions remain supplied structural premises. They are not consequences of that test.
+
+**Definition 3.2 (source, supplied controls and full branches).** On $Q=\mathbb C^3$ set
+
+$$
+\begin{gathered}
+U=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\qquad
+D=\operatorname{diag}(1,1,-1),\qquad N=DU,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\quad q=(\xi+e)/\sqrt2,\\
+\psi=\sqrt d\,Uq+i\sqrt{1-d}\,Uf,\qquad
+\rho_0=\psi\psi^\dagger,\qquad 0<d<1,\\
+V_0=Ue^{i\pi W/4},\qquad V_1=V_0W,\qquad
+P_y=(I+yW)/2\quad(y\in\{+1,-1\}).
+\end{gathered}
+\tag{3.1}
+$$
+
+The preparation is performed once. The controller is independent of $d$ and never requests its value. The one installed deterministic control is $N$; the formulas for $D,U$ do not grant separate calls to them. Indeed $N\xi=D\xi$ is not proportional to $\xi$, so this installation satisfies CPW V's mixing condition. The angle is fixed at $\pi/4$.
+
+Use the genuine original outgoing record basis $g_0,g_1$ of CPW VI (101.2), and abbreviate it by $|0\rangle,|1\rangle$ only within this section. For one unknown fixed $\gamma\in\mathbb C$, $|\gamma|\le1$, each source call $\mathsf J$ has the complete CPTP action
+
+$$
+\begin{aligned}
+\mathcal L_\gamma(X)=\tfrac12[&V_0XV_0^\dagger\otimes|0\rangle\langle0|
+ +V_1XV_1^\dagger\otimes|1\rangle\langle1|\\
+ &+\gamma V_0XV_1^\dagger\otimes|0\rangle\langle1|
+ +\bar\gamma V_1XV_0^\dagger\otimes|1\rangle\langle0|].
+\end{aligned}
+\tag{3.2}
+$$
+
+This is the parametrization supplied by CPW VI Theorem 101.3 of its entire structural class (101.4), not an inferred law for an unrestricted unknown instrument. Each call has the same $\gamma$, a fresh ready two-dimensional outgoing carrier, and no persistent hidden state affecting later calls. Every earlier retained classical cell and every untouched finite reference $Z$ sees the identity map. Tensoring the following formulas with $\operatorname{id}_Z$ is part of the premise, including when the current $Q$ is correlated with $Z$.
+
+The authorized record-only read settings are the original $g$ setting and the fixed $F$ setting with vectors $(|0\rangle\pm|1\rangle)/\sqrt2$. A read returns its actual bit, copies it to owned classical storage and retires the measured carrier. Its **complete returned-system** branches are supplied to be
+
+$$
+\begin{aligned}
+A_j(X)&=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\\
+C_y^\gamma(X)&=\tfrac14V_0
+ [X+WXW+y\gamma XW+y\bar\gamma WX]V_0^\dagger,\\
+\Lambda&=A_0+A_1=C_+^\gamma+C_-^\gamma
+ =\operatorname{Ad}_U\circ\mathcal P,\qquad
+\mathcal P=(\operatorname{id}+\operatorname{Ad}_W)/2,\\
+\Theta&=\Lambda^2\circ\operatorname{Ad}_N\circ\Lambda^2.
+\end{aligned}
+\tag{3.3}
+$$
+
+Thus effects alone are not the readout contract. The sum of the two branches is trace preserving, and both branches are completely positive by (3.2). A wash block realizes $\Theta$ by the chronological word $\mathsf J\mathsf J\mathsf N\mathsf J\mathsf J$, leaving its four outgoing carriers unread and disposing of them outside the accessible interface. Neither their labels nor a coherent copy is returned. The call $\mathsf N$ realizes $\operatorname{Ad}_N$ on the current system. There is no reset, inverse, additional preparation, forced outcome, arbitrary record unitary, return wire or archive decoder.
+
+For physical source placement take $H=\mathbb C^5$, $u_H=(e_0+e_3)/\sqrt2$, $v_H=(e_1+e_4)/\sqrt2$, $z_H=e_2$ and $B=(u_H,v_H,z_H)$. The actual initial state is $B\rho_0B^\dagger$, the control is $\widetilde N=BNB^\dagger+I_5-BB^\dagger$, and the port is the same outgoing carrier as in CPW VI (101.1)–(101.3). The lift and read branches are transported by $B$ on this code. This is the original preparation's code realization from CPW V Proposition 91.3; arbitrary mathematical input matrices below do not supply preparations of them.
+
+**Definition 3.3 (controller, rights and accessible output).** Before preparation supply public integers $h,p,s\ge1$, an owned finite task word
+
+$$
+v\in\{\mathsf N,\mathsf J_g,\mathsf J_F\}^{\le h},
+\qquad \varepsilon=2^{-p},\quad\delta=2^{-s}.
+\tag{3.4}
+$$
+
+The installed finite program has bit reads/writes, Boolean tests, sequential cell allocation and cursor moves, and finite control jumps. Integer addition/comparison and the finite loops below are routines over these instructions, with their bit work charged. Integers, counters, records and outputs occupy growing finite storage. A binary increment scans through the trailing ones and writes the first zero; comparison scans lengths and then digits; fixed multiplication by 7 or 12 uses shifts and additions. The mismatch routine stores the first actual bit and sets a persistent Boolean on a later unequal bit. The fixed program and the actual variable inputs are installed and retained, with their own source-binding and owner references. No source-dependent seed or unknown-parameter input is available.
+
+The authorized owner may repeatedly call $\mathsf J,\mathsf N$, select either specified immediate read setting, write the returned bits, hold the current system and its reference without drift between these calls, and retire carriers as just specified. Owned storage is readable by this program and may actually supply its later tests and annotations. Source identity, carrier/readout calibration, reference identity and permissions stay fixed. Their finite encodings and physical backing, and the backing of the supplied untouched reference, are additional resources, not outputs inferred from the bit tape. Exact implementation of these primitives is a model premise; no physical precision, energy or duration bound is asserted.
+
+The complete accessible output includes every measured calibration bit in chronological order, the acquired test flag, all stored task inputs and fixed reference/rights data, every later measured bit and requested annotation, the actual live $QZ$ successor, and the controller's phase, cursor and work cells. Inconclusive runs return their actual state and record as well. The inaccessible disposal sink and the retired quantum carriers are not returned outputs or later callable references. Disposing of them does not erase them from a global physical completion, nor make their supply free. A claim with access to that sink would be a different output contract.
+
+### 3.1 A rate available from the installed matrices
+
+**Lemma 3.4 (explicit wash bound).** For every complex traceless $X\in M_3$,
+
+$$
+\|\Theta X\|_2^2\le\tfrac5{12}\|X\|_2^2,
+\qquad
+\|\Theta^nX\|_2\le(2/3)^n\|X\|_2.
+\tag{3.5}
+$$
+
+Consequently, for every density matrix $\sigma$ and integer $n\ge0$,
+
+$$
+\|\Theta^n\sigma-I/3\|_2\le\sqrt{2/3}(2/3)^n.
+\tag{3.6}
+$$
+
+**Proof.** All inner products here are complex Hilbert–Schmidt inner products. Set $\mathcal Q=(\operatorname{id}+\operatorname{Ad}_{UWU})/2$. Since $U^2=I$, $A:=\Lambda^2=\mathcal Q\mathcal P$. Both $\mathcal P,\mathcal Q$ are orthogonal projections. The transpositions $W$ and $UWU$ generate the six permutation matrices. Their conjugation average $\mathcal G$ is the orthogonal projection onto
+
+$$
+\mathscr F=\operatorname{span}_{\mathbb C}\{I,P_\xi\}.
+$$
+
+Indeed a matrix commuting with every permutation has one common diagonal entry and one common off-diagonal entry. Expanding the three factors gives
+
+$$
+A^*A=\mathcal P\mathcal Q\mathcal P
+       =\tfrac14(\mathcal P+3\mathcal G).
+\tag{3.7}
+$$
+
+For completeness, writing $S=\operatorname{Ad}_W$, $T=\operatorname{Ad}_{UWU}$, the numerator of the left side is $2I+2S+T+ST+TS+STS$. The six group terms are $I,S,T,ST,TS,STS$, giving exactly the right side. Thus $A$ fixes $\mathscr F$, preserves $\mathscr F^\perp$ and has norm at most $1/2$ there. This supplies a numerical bound in the fixed installation; the general strict-contraction criterion itself is CPW VI Theorem 103.2.
+
+On the traceless subspace put $u=(P_\xi-I/3)/\sqrt{2/3}$ and $K=\operatorname{Ad}_N$. The only component in $\mathscr F$ is a multiple of $u$. Since $\langle\xi,N\xi\rangle=1/3$,
+
+$$
+\langle u,Ku\rangle
+ =\frac{|\langle\xi,N\xi\rangle|^2-1/3}{2/3}=-1/3.
+\tag{3.8}
+$$
+
+Write $X=\alpha u+y$ with $y\perp\mathscr F$, and $z=Ay$, so $z\perp u$ and $\|z\|_2\le\|y\|_2/2$. Unitarity of $K$ gives $|\langle u,Kz\rangle|^2\le(8/9)\|z\|_2^2$. Applying the final $A$ to the $u$ component and its perpendicular complement, then using $|b+c|^2\le2|b|^2+2|c|^2$, yields
+
+$$
+\begin{aligned}
+\|AKA X\|_2^2
+ &\le\tfrac14(|\alpha|^2+\|z\|_2^2)
+     +\tfrac34|-\alpha/3+\langle u,Kz\rangle|^2\\
+ &\le\tfrac5{12}|\alpha|^2+\tfrac{19}{12}\|z\|_2^2
+ \le\tfrac5{12}|\alpha|^2+\tfrac{19}{48}\|y\|_2^2
+ \le\tfrac5{12}\|X\|_2^2.
+\end{aligned}
+\tag{3.9}
+$$
+
+Here $\Theta=AKA$, and $\sqrt{5/12}<2/3$. It is unital and trace preserving. Apply the bound repeatedly to $\sigma-I/3$, whose squared Hilbert–Schmidt norm is $\operatorname{tr}(\sigma^2)-1/3\le2/3$, proving (3.5)–(3.6). $\square$
+
+**Lemma 3.5 (reference-safe paid refresh).** Let $Z$ be any finite untouched reference and $\sigma_{QZ}$ any density matrix, including an actual state conditioned on an earlier measured tape. Then
+
+$$
+\left\|(\Theta^n\otimes\operatorname{id}_Z)(\sigma_{QZ})
+      -\tfrac I3\otimes\sigma_Z\right\|_1
+ \le\min\{2,3(2/3)^n\}.
+\tag{3.10}
+$$
+
+This conclusion returns the earlier tape and reference, but excludes all new wash carriers as in Definition 3.3.
+
+**Proof.** Put $\mathcal D(X)=\operatorname{tr}(X)I/3$ and $\Delta=\Theta^n-\mathcal D$. The identity component is killed, and (3.5) bounds the Hilbert–Schmidt operator norm of $\Delta$ by $(2/3)^n$ on all matrices. Tensoring with an identity preserves this Hilbert–Schmidt operator norm. For a pure $QZ$ input, its Schmidt support in $Z$ has dimension at most three and is preserved by $\Delta\otimes\operatorname{id}$. The output is supported on at most nine dimensions. Cauchy–Schwarz on its singular values gives $\|Y\|_1\le3\|Y\|_2\le3(2/3)^n$. Decompose a mixed input into pure states and use linearity and the triangle inequality. Both states in (3.10) are normalized, which also gives the cap two. Including the old finite classical tape in $Z$ is permitted. Including the discarded new carriers would change $\Theta$ and invalidate this proof. $\square$
+
+### 3.2 One actual finite calibration tape
+
+**Definition 3.6 (the installed gate).** Define the following integers and rational threshold from the actual input (3.4):
+
+$$
+\begin{gathered}
+t=s+2,\qquad B_0=128t,\qquad
+\kappa=\frac{\varepsilon^2}{8h^2},\qquad
+m=1+16t h^2 4^p=1+\frac{2t}{\kappa},\\
+L=9,\qquad L_0=2p+5.
+\end{gathered}
+\tag{3.11}
+$$
+
+First repeat $B_0$ times: execute $L$ wash blocks, then one $\mathsf J$ with an immediate $F$ read. Append every bit $x_i\in\{+1,-1\}$ to its chronological tape slot, and increment an integer $K_+$ on the actual plus replies. Next execute $m$ cycles consisting of one $\mathsf J$ with an immediate $F$ read followed by one $\mathsf N$. Append every reply $y_i$ in order, and maintain the first reply and a mismatch bit. Position means its slot ordinal in this ordered tape, not an additional timestamp field or free clock read. Both stages finish their fixed lengths, also after an early mismatch. The acquired flag is
+
+$$
+\mathsf{PASS}\quad\Longleftrightarrow\quad
+12K_+\ge7B_0\quad\hbox{and}\quad y_1=y_2=\cdots=y_m.
+\tag{3.12}
+$$
+
+Otherwise return $\mathsf{INCONCLUSIVE}$. This report is not an assertion that $\gamma\ne1$. On PASS the program actually executes $L_0$ further wash blocks and enables one finite use of the stored task word $v$. It never substitutes an unexecuted reset for this refresh.
+
+**Lemma 3.7 (the word statistic without an independent-specimen premise).** Put $a=\operatorname{Re}\gamma$ and $R=NV_0=D e^{i\pi W/4}$. Then $[R,W]=0$. For $\mathcal G_y=\operatorname{Ad}_N\circ C_y^\gamma$, every full sector block obeys
+
+$$
+\mathcal G_y(P_wXP_z)
+ =\frac{1+wz+y(\gamma z+\bar\gamma w)}4
+       R(P_wXP_z)R^\dagger,
+\qquad w,z\in\{+1,-1\}.
+\tag{3.13}
+$$
+
+For every entrance density matrix $\sigma$, the actual $m$-reply law is therefore
+
+$$
+\Pr_\gamma(y_1,\ldots,y_m\mid\sigma)
+ =\sum_{w=\pm1}\operatorname{tr}(P_w\sigma)
+          \prod_{i=1}^m\frac{1+y_iwa}{2}.
+\tag{3.14}
+$$
+
+The probability of a constant word is, for every such entrance,
+
+$$
+q_a^m+(1-q_a)^m,\qquad q_a=(1+a)/2.
+\tag{3.15}
+$$
+
+The same statement applies conditional on every positive-probability earlier calibration history, without asserting that its entrance is $\rho_0$.
+
+**Proof.** $D$ commutes with $W$, giving the commutation for $R$. Multiply (3.3) on the left and right by the two spectral projections to obtain (3.13). A diagonal block is multiplied at each cycle by $(1+ywa)/2$; the remaining conjugation preserves its trace and its $W$ sector. Every off-diagonal sector block remains off diagonal and has trace zero. Taking traces of the iterated full maps proves (3.14). Summing the all-plus and all-minus words eliminates the entrance weights, since exchanging $w$ exchanges the two products, giving (3.15). References can first be traced out for this probability calculation. Equation (3.13), rather than a classical mixture replacement, remains the full quantum successor contract: there can still be off-diagonal blocks. $\square$
+
+**Theorem 3.8 (finite acquired acceptance, uniform on the structural class).** For every $d\in(0,1)$, $h,p,s\ge1$ and every fixed $|\gamma|\le1$, the actual gate terminates after the fixed calls of Definition 3.6. It satisfies
+
+$$
+\sup_{\substack{|\gamma|\le1\\\operatorname{Re}\gamma\le1-\kappa}}
+       \Pr_\gamma(\mathsf{PASS})\le e^{-t}\le\delta,
+\qquad
+\Pr_1(\mathsf{PASS})\ge1-e^{-t}\ge1-\delta.
+\tag{3.16}
+$$
+
+The inequalities hold for the same one evolving source, with its actual entire measured F tape retained. They are not posterior probabilities for $\gamma$ and do not certify that an unknown device belongs to the structural class.
+
+**Proof.** For any current conditional marginal $\sigma$, an immediate F read has plus probability $[1+a\operatorname{tr}(W\sigma)]/2$. After $L=9$ washes, (3.6) and tracelessness of $\sigma-I/3$ give
+
+$$
+\left|p_+-\left(\tfrac12+\tfrac a6\right)\right|
+ \le\tfrac12\|W-I/3\|_2\sqrt{2/3}(2/3)^9
+ =\tfrac23(2/3)^9\le\tfrac1{48}.
+\tag{3.17}
+$$
+
+Here $\|W-I/3\|_2^2=8/3$ and $(2/3)^9\le1/32$. These estimates apply conditional on all earlier measured bits, because each conditional density is a legitimate input to the next actual wash. If $a\le0$, every conditional plus mean is at most $25/48$. If $\gamma=1$, it is at least $31/48$. The sign threshold $7/12=28/48$ has gap $1/16$ in either case.
+
+Let $X_i=1_{\{x_i=+1\}}$, $\mu_i=\mathbb E(X_i\mid x_1,\ldots,x_{i-1})$ and $M_n=\sum_{i=1}^n(X_i-\mu_i)$. The bounded-variable Hoeffding lemma gives, conditionally, $\mathbb E(e^{\lambda(X_i-\mu_i)}\mid\text{past})\le e^{\lambda^2/8}$. Applying the tower property and then Markov's inequality, and minimizing $e^{-\lambda B_0u+B_0\lambda^2/8}$ at $\lambda=4u$, gives
+
+$$
+\Pr(M_{B_0}\ge B_0u),\quad
+\Pr(M_{B_0}\le-B_0u)\le e^{-2B_0u^2}.
+\tag{3.18}
+$$
+
+At $u=1/16$ this is $e^{-t}$. Thus the sign test alone bounds acceptance when $a\le0$ and bounds sign rejection when $\gamma=1$. No independent preparations, independent sign samples or state estimation have been used.
+
+For $0<a\le1-\kappa$, Lemma 3.7 gives, for every entrance after the entire sign tape,
+
+$$
+\begin{aligned}
+\Pr(\text{constant word}\mid\text{sign tape})
+ &=q_a^m+(1-q_a)^m\\
+ &\le\max(q_a,1-q_a)^{m-1}
+ \le(1-\kappa/2)^{m-1}\le e^{-t}.
+\end{aligned}
+\tag{3.19}
+$$
+
+The first inequality uses $q_a+(1-q_a)=1$. The cases $a\le0$ and $0<a\le1-\kappa$ are disjoint parameter cases, so no sum of two error probabilities is needed. For $\gamma=1$, the word is constant with probability one for every entrance, and only the sign test can reject. Finally $e^{-(s+2)}\le2^{-s}$. This proves (3.16). The constant-word statistic alone also accepts $\gamma=-1$ with probability one; this explains the sign stage for this particular construction, without a necessity claim for all possible assays. $\square$
+
+### 3.3 Full output maps, current-state comparison and reference preservation
+
+**Definition 3.9 (all actual calibration cells).** Tensor every system map below with $\operatorname{id}_Z$. Write
+
+$$
+\begin{gathered}
+\mathcal S_{x_i}=C_{x_i}^\gamma\circ\Theta^9,\qquad
+E_{x,y}=(\mathcal G_{y_m}\circ\cdots\circ\mathcal G_{y_1}
+          \circ\mathcal S_{x_{B_0}}\circ\cdots\circ\mathcal S_{x_1}
+          \otimes\operatorname{id}_Z)(\rho_0\otimes\zeta_Z),\\
+c=(x,y),\qquad a(c)=1_{\{\text{(3.12) holds}\}},\qquad
+\mu_c=\operatorname{tr}E_c,\qquad E_c^Z=\operatorname{tr}_Q E_c.
+\end{gathered}
+\tag{3.20}
+$$
+
+Here $\zeta_Z$ is the actual supplied untouched reference state. Since $\rho_0$ is pure, every extension with that original system marginal has this product form; no correlated initial preparation is being added. Conditional correlations created later, and old classical tapes, are covered by Lemma 3.5. Retain the whole $c$, its deterministic counters and flag, not just the sufficient statistic $K_+$.
+
+For a task word $v$, let $b$ range over all its actual g/F bit strings. Let $\mathcal F_{v,b}^\gamma$ be the chronological product of $\operatorname{Ad}_N$, $A_j$ or $C_y^\gamma$ prescribed by $v,b$. A word of length zero has the identity map and one empty output. The complete accessible mass-one instrument has rejection cells
+
+$$
+|c,0\rangle\langle c,0|\otimes E_c
+\quad(a(c)=0)
+\tag{3.21}
+$$
+
+and accepted cells
+
+$$
+|c,1,b\rangle\langle c,1,b|\otimes
+ \bigl((\mathcal F_{v,b}^\gamma\circ\Theta^{L_0})
+                  \otimes\operatorname{id}_Z\bigr)(E_c)
+\quad(a(c)=1).
+\tag{3.22}
+$$
+
+Deterministic controller work, retained fixed inputs, cursor values and the annotations of §3.4 are attached to each classical cell by their specified common update. Equations (3.20)–(3.22) include every branch, its complete live-system and reference successor and the failed gate's actual output. No zero cell is divided by its mass. Summing traces over all $c,b$ gives one, since each complete stage is trace preserving. Physical transport is by $B$ at every step; $\widetilde NB=BN$ and the branch intertwining identities prove this by induction, preserving all masses, references and successors. The original terminal effects are not used as unspecified post-measurement channels.
+
+**Lemma 3.10 (one-call and finite complete-output stability).** Use the unhalved trace norm. On every density matrix $\sigma_{QZ}$,
+
+$$
+\|((\mathcal L_\gamma-\mathcal L_1)\otimes\operatorname{id}_Z)(\sigma)\|_1
+       =|1-\gamma|.
+\tag{3.23}
+$$
+
+Reading in either declared setting and retiring the measured carrier cannot increase this bound. For any one common classical-read task word $v$ with at most $h$ source calls, the complete joint output, including all actual bits, final system and reference, changes by at most $h|1-\gamma|$ when all its lifts are replaced by $\mathcal L_1$ at the same entrance.
+
+**Proof.** In record-first order, (3.2) is conjugation of $\tau_\gamma\otimes X$ by the mathematical block unitary with blocks $V_0,V_1$, where
+
+$$
+\tau_\gamma=\tfrac12\begin{pmatrix}1&\gamma\\\bar\gamma&1\end{pmatrix}.
+$$
+
+The same factorization holds with references. The two eigenvalues of $\tau_\gamma-\tau_1$ are $\pm|\gamma-1|/2$; tensor multiplicativity of the trace norm and $\|\sigma\|_1=1$ give (3.23). This factorization is a proof of a norm identity, not an additional callable controlled unitary or ancilla supply. A common CPTP read/retirement map contracts trace norm on Hermitian differences. To compare whole words, insert hybrids replacing one source call at a time. Prior complete histories form a normalized classical–quantum state; applying (3.23) to that state, with its old record in the reference, bounds this replacement by $|1-\gamma|$. Later common complete maps contract it. Sum over at most $h$ replacements. This argument compares complete branch tables, not individual normalized rare branches. $\square$
+
+**Theorem 3.11 (acquired gate followed by paid, callable finite use).** For every fixed source and inputs of Definitions 3.2–3.3, let $A$ be the event PASS and $P_A=\Pr_\gamma(A)$. Let $\Omega_A$ be the actual accepted subnormalized output obtained by summing (3.22). Define its mathematical comparator $\widetilde\Omega_A$ by keeping the **actual** calibration cells, flags, task inputs and their masses, and replacing only each accepted quantum input and suffix by
+
+$$
+\widetilde\Omega_{c,b}
+ =|c,1,b\rangle\langle c,1,b|\otimes
+     (\mathcal F_{v,b}^1\otimes\operatorname{id}_Z)
+                       (I/3\otimes E_c^Z).
+\tag{3.24}
+$$
+
+Attach the same deterministic work/annotation outputs in both tables. Then
+
+$$
+\operatorname{tr}\Omega_A=\operatorname{tr}\widetilde\Omega_A=P_A,
+\qquad
+\|\Omega_A-\widetilde\Omega_A\|_1
+       \le\varepsilon P_A+2\delta.
+\tag{3.25}
+$$
+
+More precisely, when $\operatorname{Re}\gamma>1-\kappa$, the bound is $\varepsilon P_A$; when $\operatorname{Re}\gamma\le1-\kappa$, it is $2P_A\le2\delta$. If $P_A>0$, a valid normalized conditional bound is
+
+$$
+\left\|\frac{\Omega_A}{P_A}-\frac{\widetilde\Omega_A}{P_A}\right\|_1
+ \le\min\{2,\varepsilon+2\delta/P_A\}.
+\tag{3.26}
+$$
+
+Adding the identical actual rejection cells (3.21) to both tables yields mass-one outputs with the same difference bound. The comparator is neither the original preparation $\rho_0$ nor a rerun of calibration at $\gamma=1$. It is not an asserted preparation procedure for $I/3\otimes E_c^Z/\mu_c$. Actual refresh is the executed $\Theta^{L_0}$ on the actual current state.
+
+**Proof.** First suppose $a>1-\kappa$. The disk constraint gives
+
+$$
+|1-\gamma|^2=1-2a+|\gamma|^2\le2(1-a)<2\kappa,
+\qquad h|1-\gamma|<\varepsilon/2.
+\tag{3.27}
+$$
+
+For every positive-mass accepted $c$, apply Lemma 3.5 to $E_c/\mu_c$ and its actual $Z$ marginal. The actual refresh output differs from $I/3\otimes E_c^Z/\mu_c$ by at most
+
+$$
+3(2/3)^{L_0}=3(2/3)^{2p+5}
+ =\frac{32}{81}(8/9)^p\,\varepsilon<\varepsilon/2.
+\tag{3.28}
+$$
+
+Apply the actual complete suffix to both entrances; it contracts this difference. Lemma 3.10 then replaces that suffix by the ideal one, with added error less than $\varepsilon/2$. The resulting full-cell bound is $\varepsilon\mu_c$. Summing over the orthogonal calibration cells gives $\varepsilon P_A$. Zero cells vanish by positivity. If $a\le1-\kappa$, Theorem 3.8 gives $P_A\le\delta$, and two positive operators of the same mass $P_A$ differ by at most $2P_A$. These are alternative fixed-parameter cases, proving (3.25). Division when $P_A>0$ and the trivial cap two give (3.26). At $P_A=0$ both accepted tables are zero and no conditional law is defined. $\square$
+
+### 3.4 An installed finite prefix consumer
+
+**Definition 3.12 (one callable entry and exact annotations).** After the actual accepted refresh, the controller offers one Ready entry to execute its owned task word $v$, with its original length bound $h$. Its selector reads only the acquired flag, the phase, the task cursor and the next symbol of that word; failure leaves the inconclusive successor in (3.21), and only PASS enables this entry. At a $\mathsf J_g$ or $\mathsf J_F$ slot it calls the original lift, uses that declared immediate record read, writes the actual returned bit and advances the cursor. At $\mathsf N$ it calls the fixed control and advances. Thus the gate and the finite word really select the lawful operations; a table indexed by an unavailable $\gamma$ is never used.
+
+In parallel the program maintains one nominal unnormalized $3\times3$ matrix $T$ initialized to $I/3$. At each actual slot it applies the corresponding fixed map
+
+$$
+T\longmapsto
+\begin{cases}
+NTN^\dagger,&\mathsf N,\\
+A_j(T),&\mathsf J_g\text{ with actual }j,\\
+C_y^1(T)=UP_yTP_yU^\dagger,&\mathsf J_F\text{ with actual }y.
+\end{cases}
+\tag{3.29}
+$$
+
+It can return the current exact rational $\operatorname{tr}T$ and the two exact rational unnormalized next-branch weights for either permitted next read, by evaluating its two fixed maps and taking their traces. The caller requesting these annotations is the same owned finite program; copies actually returned are retained and charged. The live quantum system is not set to $T/\operatorname{tr}T$. The annotation makes no division, and remains defined on a zero nominal-probability prefix.
+
+**Theorem 3.13 (finite arithmetic, route agreement and the actual-law guarantee).** The entry of Definition 3.12 is an installed finite algorithm on every actual acquired tape and every task word (3.4). For a length-$k$ task prefix, $T$ is exactly the chronological ideal branch product applied to $I/3$. The forward recurrence, that ordered product, and the backward effect pairing give the same joint prefix weight. On every good fixed parameter $a>1-\kappa$ and every positive-mass accepted calibration cell $c$, the entire actual future-bit law differs from the nominal law by total variation at most $\varepsilon/2$. Its complete quantum output obeys the stronger unhalved bound $\varepsilon$ of Theorem 3.11. The same total variation bound holds after deterministic annotation of those bits.
+
+At most $h$ updates of (3.29) take $O(h^2)$ bit operations and $O(h)$ bits for one current nominal matrix in an explicit Gaussian-integer representation. Retaining annotations at every prefix instead of only a current callable value takes $O(h^2)$ additional output bits; copying requested outputs costs their actual length. These are upper bounds for this finite algorithm, without an optimality assertion.
+
+**Proof.** The ideal F identity follows from $V_0P_y=e^{iy\pi/4}UP_y$. Also
+
+$$
+\begin{aligned}
+A_j(X)&=\tfrac14 U(I+iW)W^jXW^j(I-iW)U^\dagger,\\
+C_y^1(X)&=\tfrac14 U(I+yW)X(I+yW)U^\dagger.
+\end{aligned}
+\tag{3.30}
+$$
+
+All coefficients are Gaussian rationals with denominator dividing four; $N$ is a signed permutation. Store $T=Z_k/(3\cdot4^k)$, with $Z_k$ a fixed-size Gaussian-integer matrix; these exact fractions need not be reduced. At an $N$ step multiply the conjugated numerator by four to maintain this common denominator. At the other steps (3.30) is a fixed finite collection of additions and multiplication by fixed Gaussian integers. Positivity and subnormalization give $|T_{ij}|\le1$, hence every real and imaginary numerator has $O(k+1)$ bits. Each update therefore takes $O(k+1)$ bit operations and workspace. The denominator is stored by its exponent and factor three, or explicitly with $O(k+1)$ bits. Taking traces and computing either two-way next-branch table has the same bound. Summing over $k\le h$ gives the stated work and output bounds. No arbitrary real inverse, bank scan, unknown matrix entry or physical state preparation is required by this arithmetic.
+
+Induction on the slots proves equality with the ordered branch product. For a prefix with maps $M_1,\ldots,M_k$, repeatedly using the trace-dual identity gives
+
+$$
+\operatorname{tr}(M_k\cdots M_1(I/3))
+ =\operatorname{tr}[(M_1^*\cdots M_k^*(I))\,I/3].
+\tag{3.31}
+$$
+
+Thus the alternative routes agree on this same task and source. The sum over the two next-read branches is the current joint prefix mass, since the complete instrument is trace preserving; all next masses are nonnegative. This supplies a normalized ideal law when summed over the complete task. Finally, trace out the final system/reference from the good-parameter bound in the proof of Theorem 3.11, conditional on this same actual $c$, and divide the trace norm by two for classical total variation. Deterministic annotations contract total variation. These are joint-law guarantees. Dividing a rare prefix's joint weights by its mass need not preserve this error, so no uniform conditional forecast or certainty about the realized next bit follows. $\square$
+
+### 3.5 Resources on that same executed run
+
+**Proposition 3.14 (simultaneous physical and logical bill).** Let $j_f,n_f$ be the actual numbers of $\mathsf J$ and $\mathsf N$ slots in the stored task word, so $j_f+n_f\le h$. An inconclusive run uses
+
+$$
+\#\mathsf J=37B_0+m,\qquad
+\#\mathsf N=9B_0+m,\qquad
+\#\text{F reads}=B_0+m.
+\tag{3.32}
+$$
+
+An accepted run, including refresh and the complete callable task, uses
+
+$$
+\begin{aligned}
+\#\mathsf J&=37B_0+m+4L_0+j_f,\\
+\#\mathsf N&=9B_0+m+L_0+n_f,\\
+\#\text{g/F reads}&=B_0+m+j_f.
+\end{aligned}
+\tag{3.33}
+$$
+
+The sign and word calibration uses $47B_0+3m$ source/control/read occurrences. An accepted run adds $5L_0+2j_f+n_f$. In particular their upper order is
+
+$$
+O\bigl((s+1)h^2\varepsilon^{-2}+p\bigr).
+\tag{3.34}
+$$
+
+These counts start after the one original preparation. Its actual supply and installation cost is a separate input coordinate, as are control/readout installation and reference calibration; the F samples do not acquire those interfaces or set their costs to zero. Each source call consumes one fresh ready two-dimensional carrier. Of these, $36B_0$ calibration wash carriers and, on acceptance, $4L_0$ refresh carriers are discarded unread. The $B_0+m+j_f$ measured carriers on an accepted run are retired after their individual actual bits have been stored. Only one carrier at a time need remain in flight; no coherent archive is used. The one five-dimensional code specimen, untouched reference and accessible storage persist. All carrier material supplied or retired is counted even though it is outside the later accessible output.
+
+There are exactly $B_0+m$ measured calibration bits, retained with their phase framing; counters, first-bit and mismatch state do not replace this tape. Sequential backing allocation, framing, permissions and references are additional charged fields. The fixed finite program has a fixed code-size charge; parameters and schedule counters need $O(p+s+\log(h+1))$ working bits as a conservative bound. The task word and its future raw bits use $O(h)$ bits, the one nominal matrix uses $O(h)$ bits, and a complete annotation transcript uses the separate $O(h^2)$ output bound of Theorem 3.13. Source binding and reference identities need their actual encoding lengths, and the supplied reference has its actual dimension/backing; neither is hidden in the constant of a source-independent memory claim.
+
+For sequential binary counters, bit tests, loop control and append/copy storage, a conservative bound for calibration/refresh scheduling is $O(T\log(T+2))$ bit operations, where $T$ is the executed source/control/read count above, plus the actual encoding/install and reference-handling costs. The nominal prefix arithmetic adds $O(h^2)$, and output copies add their length. This is a logical bit model with growing storage, not a claim that a finite program has bounded total memory, nor an identification with PR57's receipt-per-tape-occurrence runtime.
+
+**Proof.** Each of the $B_0$ sign cycles has nine wash blocks and one read source call, hence 37 source calls, nine controls and one F read. Each of the $m$ word cycles has one of each. The refresh has four source calls and one control per block, and the task counts its actual slots and one immediate read per source call. Adding gives (3.32)–(3.33). Substitution of (3.11) gives (3.34), since $h\ge1$, $\varepsilon\le1/2$. The storage bill follows from writing every measured reply once, maintaining bounded-width counters for these finite lengths and using the exact arithmetic representation already proved. Increment/comparison on $O(\log(T+2))$ bits at each scheduled occurrence yields the conservative bit bound. Forming the finite schedule integers by shifts, addition and schoolbook multiplication is within this bound for (3.11); the supplied task and external encoding/install costs are separate. No branch forcing, unobserved measurement reply or replayed preparation is included in any count. $\square$
+
+### 3.6 Source correspondence and remaining mathematical boundaries
+
+**Proposition 3.15 (what has and has not been recovered).** Within this fixed installation, the chronological measured F record actually supplies the gate in (3.12); that gate selects an executed finite refresh and a legal owned finite consumer. Equations (3.20)–(3.22) are their common-source full successor maps, (3.24)–(3.28) give their exact finite comparison domain, and (3.29)–(3.31) give agreement of the installed nominal prefix routes. This supplies finite acquisition and continued callable use without a fresh specimen or an unknown-source numerical oracle.
+
+No four-view maps, equality of their task kernels or pairwise inverses are constructed here. The theorem's data have narrower operational meanings: spatial support is the actual code, outgoing carriers and accessible tensor cut; chronology is the executed source/control/read order; boundary data specify the installed complete instrument, read settings and access/disposal rights; memory consists of the acquired measured tape, work cells and callable annotations. None is defined as an unrestricted copy of all the others. In particular the count statistic forgets chronological reply order; no inverse from the classical tape to the unknown full quantum state is proved or assumed, and no readout of physical metric or elapsed duration is defined. The claims above recover only their explicitly proved directed operational correspondences.
+
+**Proof.** The actual acquired selector and the paid continuation are Definitions 3.6 and 3.12; their operational correctness and complete outputs are Theorems 3.8, 3.11 and 3.13. For the count's loss of order, sign strings with one plus in two different positions have the same $K_+$; at $\gamma=0$, every measured F sign has probability $1/2$ at every entrance, so both such strings are actual positive-probability records. The retained full tape distinguishes them while the count does not. A full quantum-state inverse is not asserted by any of these maps: (3.14) is a record-law mixture, (3.13) retains the separate successor blocks, and the only refresh claim is (3.10) with its declared disposal. Hence no missing inverse is used to justify the continuation. $\square$
+
+**Supplier correspondence.** The reused mathematics and the additional source-specific conclusion have different scopes.
+
+| Supplier | Reused content and boundary |
+| --- | --- |
+| CPW V §§54, 91 and CPW VI §§101–103 | The actual five-dimensional code/preparation, stationary full-matrix lift class, fixed outgoing F setting, branch/reference transport and general wash contraction. The exact-law anchor (101.5), coherent archive and Schmidt-control availability are not hypotheses here. Lemma 3.4 adds a direct numerical rate only for the displayed installed DU matrices. |
+| CPW VI §§106–110 | These retain their different same-carrier return-wire assumptions and full-completion conclusions. No return wire is used here; their finite-original-history separation is not the acquired gate/current-state/finite-prefix theorem above. |
+| [Gaussian Adaptive Record Kernel, Definitions 1.1–1.4](RECURSIVE_RELATIONAL_OBSERVATION_GAUSSIAN_ADAPTIVE_RECORD_KERNEL.md) | Its source is an unknown spectral preparation with parameter-independent QND continuations and a fixed earlier target time. Here $\gamma$ occurs in each repeated lift, and the source is the single CPW preparation; neither model's record kernel is substituted for the other's. |
+| [Native Clocked Recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md), [Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), [Native Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md), [Transport Memory Completion §57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), [Process Geometry §§19, 34](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | Their declared source/controller/permissions, actual acquisition and full-response distinctions are preserved. The native tree/tape serializers and view inverses do not install the CPW quantum source or its F readout. The present supplied bit-control model does not inherit their native four-view equivalence, literal journals, raw exits or original task guarantees. |
+| [FiniteKrausInstrumentBornMarginal.lean](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean), [WordProbabilityTraceRepresentation.lean](../../../D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.lean), [FiniteLocalProtocol.lean](../../../D5/S3/Quantum/Recovery/FiniteLocalProtocol.lean), and their owning Scribes | Existing finite Kraus/Born marginal, chronological trace-dual representation and complete finite-tree trace accounting. These generic identities are reused; they do not certify this section's new calibration, rate, controller or resource theorem. |
+| [FiniteDiamondDistance.lean](../../../D5/S3/Quantum/Foundation/FiniteDiamondDistance.lean) and the reference/contraction parts of [SchurChannelMixedUnitaryDistance.lean](../../../D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.lean), with their owning Scribes | Reference amplification, finite-dimensional pure-input compression and trace-norm contraction are mature suppliers. All trace-norm errors here are unhalved; total variation introduces its explicit factor one half. No Schur mixed-unitary distance theorem is required for this particular lift. |
+
+The sector-record argument is an application of quantum non-demolition likelihood structure; see Bauer–Bernard, [*Convergence of repeated quantum non-demolition measurements and wave function collapse*, equations (1)–(3)](https://arxiv.org/abs/1106.4953v2). The conditional bounded-variable step (3.18) is the Hoeffding lemma/tower argument; the pinned mathlib `Mathlib/Probability/Moments/SubGaussian.lean` at `56a005855ea17e0b0958f73ec801ae140b0a1679` supplies bounded-variable Hoeffding and conditional subgaussian-sum theory. Neither a new general QND theorem nor a new concentration inequality is claimed. The source-local contribution is their combination with the fixed-DU identities into a finite acquired gate, an actually paid reference-safe current-state refresh, the complete accepted-output bound and the finite callable rational-prefix implementation on that same source. This is a repository-derived synthesis, without a claim of historical priority or new Lean certification.
+
+All original fixed-$G_{gc}$, original-$Q$, parked-consumer and unchanged-initialization obligations retain their stated domains. This installation does not prove their missing acquisition bridges. It also leaves open physical conformance and acquisition of the supplied CP/readout/reference/rights interface, general-$N$ herald/archive consumers, all-raw-carrier retention, supplied-contrast operation synthesis, native-to-quantum correspondence, full four-view mutual recovery, universal alpha/beta sufficiency or minimality, and unlimited continued-use bounds. Finite confidence does not become an exact anchor; subnormalized output comparison does not become rare-branch certainty; a mathematical comparison state does not become an extra preparation. None of these remaining bridges is removed by the finite result.
+
+## 追加锚（本行以下为增补区）
