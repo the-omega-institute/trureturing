@@ -5,8 +5,8 @@ import D5.S3.Topology.Measures.SignedGrothendieckCriterion
 /-!
 # Exact source families for the signed splitting and sufficient criterion
 
-The readouts retain the original theorem telescopes and vary the final scalar
-neighborhood in each theorem.
+The readouts retain the original theorem telescopes and observe final scalar
+neighborhoods or equality of points.
 -/
 
 set_option autoImplicit false
@@ -438,7 +438,7 @@ def pointFamily : DependentFamily.Registration pointArena.{u} pointScope.{u} whe
     cases congrArg ULift.down ht
 
 def pointRegistration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, u, 0, 0}
       (@eventually_eq_of_signed_clopen_oscillation.{u})
       (DependentFamily.Realization pointSignature.{u}) Type Unit where
   unitName := `D5.S3.Topology.Measures.SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation.__information_unit
@@ -461,7 +461,7 @@ def pointRegistration :
   sourceSelection := some {
     owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

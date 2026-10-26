@@ -575,7 +575,9 @@ private lemma injective_no_point_limit (x : ℕ → K) (p : K)
     (fun n => by simp [SignedMeasure.totalVariation_eq_variation])
     (NormPreservingLifts.signedFunctional (Measure.dirac p).toSignedMeasure)
   intro g
-  simpa only [heval, Function.comp_apply] using g.continuous.continuousAt.tendsto.comp hlim
+  rw [heval p g]
+  exact ((g.continuous.tendsto p).comp hlim).congr'
+    (Eventually.of_forall fun n => (heval (x n) g).symm)
 
 /-- Signed clopen oscillation forces every convergent point sequence to be
 eventually equal to its limit. -/
