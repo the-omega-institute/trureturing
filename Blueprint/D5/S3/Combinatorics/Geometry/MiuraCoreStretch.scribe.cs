@@ -23,9 +23,5 @@ internal sealed class MiuraCoreStretchDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("miuracorestretch-3"),
                 DeclarationHandle.Create(Prefix + "residual_frozen_run_extension"), H("Every extra run length has an actual realization"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("From an actual residual array with a frozen column, every natural L gives a residual array with L extra columns, a legal deletion chain back to the original array, a remaining frozen column, and preservation of every originally frozen row."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("miuracorestretch-4"),
-                DeclarationHandle.Create(Prefix + "residual_joint_run_extension"), H("Both dimensions vary on the same actual array"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("If an actual residual array has a frozen line on each axis, then for every pair of natural L,K there is one residual array with L extra rows and K extra columns and a joint signed deletion chain back to the original array. The column extension preserves the row seam needed for the second extension. No uniqueness of expansions or of reduced cores is asserted."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("From an actual residual array with a frozen column, every natural L gives a residual array with L extra columns, a legal deletion chain back to the original array, a remaining frozen column, and preservation of every originally frozen row."))), DescribeRole.Theorem))));
 }

@@ -19,9 +19,6 @@ open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreContract
   MiuraCoreCellExpand MiuraCoreResidual MiuraCoreReduction MiuraCoreRestore
   MiuraCoreJoint MiuraCoreTranspose MiuraSlabIncidence
 
-open private column_chain_joint column_chain_transpose_joint joint_trans
-  from D5.S3.Combinatorics.Geometry.MiuraCoreJoint
-
 variable {m n : ℕ}
 
 /-- Insert one line immediately before an actual frozen column. -/
@@ -116,17 +113,5 @@ theorem residual_frozen_run_extension (a b : ℕ) (h : Cell m n → ℤ) (hm : 0
       ⟨⟨k.val, by have := k.isLt; omega⟩, stretch_new_frozen g hg.1.1 hm k hk⟩, ?_⟩
     intro i hi
     exact restore_frozen_row (n := n + L + 1) g _ hk.1 _ _ i (hrows i hi)
-
-/-- Both extra dimensions are simultaneously realized on one actual residual array. -/
-theorem residual_joint_run_extension (a b : ℕ) (h : Cell m n → ℤ)
-    (hm : 0 < m) (hn : 0 < n)
-    (i : Fin m) (hi : frozenColumn (transposeHeight h) i)
-    (j : Fin n) (hj : frozenColumn h j) (hr : Residual a b h) (L K : ℕ) :
-    ∃ g : Cell (m + L) (n + K) → ℤ, Residual a b g ∧ JointReduction g h := by
-  obtain ⟨g, hg, hcol, _, hrows⟩ := residual_frozen_run_extension a b h hm j hj hr K
-  obtain ⟨f, hf, hrow, _, _⟩ := residual_frozen_run_extension a b (transposeHeight g)
-    (by omega) i (hrows i hi) (transpose_residual a b g hg) L
-  refine ⟨transposeHeight f, transpose_residual a b f hf, ?_⟩
-  exact joint_trans (column_chain_transpose_joint hrow) (column_chain_joint hcol)
 
 end D5.S3.Combinatorics.Geometry.MiuraCoreStretch

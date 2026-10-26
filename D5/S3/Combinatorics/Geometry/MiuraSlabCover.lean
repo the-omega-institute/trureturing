@@ -88,17 +88,4 @@ theorem occupied_row_has_slab (h : Cell m n → ℤ) (i : Fin m) (hi : RowOccupi
     change I.first.val ≤ I.last.val at this
     omega
 
-/-- The actual slab family covers precisely the occupied rows, uniquely. -/
-theorem row_slab_cover (h : Cell m n → ℤ) (i : Fin m) :
-    RowOccupied h i ↔ ∃! I : Interval m, I ∈ rowSlabs h ∧ I.Contains i := by
-  classical
-  constructor
-  · intro hi
-    obtain ⟨I, hiI, hI⟩ := occupied_row_has_slab h i hi
-    refine ⟨I, ⟨by simp [rowSlabs, hI], hiI⟩, ?_⟩
-    intro J hJ
-    exact row_slab_unique (Finset.mem_filter.mp hJ.1).2 hI i hJ.2 hiI
-  · rintro ⟨I, hI, _⟩
-    exact (Finset.mem_filter.mp hI.1).2.1 i hI.2
-
 end D5.S3.Combinatorics.Geometry.MiuraSlabCover

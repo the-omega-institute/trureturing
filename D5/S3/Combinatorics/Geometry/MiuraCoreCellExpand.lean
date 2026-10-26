@@ -113,21 +113,6 @@ theorem cellExpand_surjOn (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 1 < n)
     simp only [hpge, if_false]
     exact Prod.ext rfl (Fin.ext (by simp only [Fin.val_mk]; omega))
 
-theorem contractAt_diff_row (h : Cell m n → ℤ) (hm : 0 < m)
-    (j : Fin n) (hfrz : frozenColumn h j)
-    (p q : Cell m (n - 1)) (hp2v : p.2.val = q.2.val) :
-    contractAt h hm j hfrz q - contractAt h hm j hfrz p
-      = h (cellExpand j q hfrz.1 hfrz.2.1) - h (cellExpand j p hfrz.1 hfrz.2.1) := by
-  obtain ⟨hj0, hj1, _⟩ := hfrz
-  by_cases hlt : p.2.val < j.val
-  · have hlt' : q.2.val < j.val := hp2v ▸ hlt
-    rw [contractAt_left _ _ _ _ p hlt, contractAt_left _ _ _ _ q hlt']
-    rw [cellExpand_left _ _ hj0 hj1 hlt, cellExpand_left _ _ hj0 hj1 hlt']
-  · have hlt' : ¬ q.2.val < j.val := hp2v ▸ hlt
-    rw [contractAt_right _ _ _ _ p hlt, contractAt_right _ _ _ _ q hlt']
-    rw [cellExpand_right _ _ hj0 hj1 hlt, cellExpand_right _ _ hj0 hj1 hlt']
-    ring
-
 theorem frozenSlope_eq_right (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m)
     (j : Fin n) (hfrz : frozenColumn h j) (i : Fin m) :
     h (i, ⟨j.val + 1, hfrz.2.1⟩) - h (i, j) = frozenSlope h hm j hfrz := by

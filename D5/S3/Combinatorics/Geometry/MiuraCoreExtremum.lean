@@ -41,12 +41,6 @@ lemma adj_of_row_col_diff {N : ℕ} {p q : Cell m N}
   unfold adj gdist
   omega
 
-lemma adj_of_col_row_diff {N : ℕ} {p q : Cell m N}
-    (hcol : p.2 = q.2) (hrow : ((p.1.val : ℤ) - q.1.val).natAbs = 1) : adj p q := by
-  have hcolV : p.2.val = q.2.val := by rw [hcol]
-  unfold adj gdist
-  omega
-
 lemma cellExpand_adj_same_branch (j : Fin n) (hj0 : 0 < j.val) (hj1 : j.val + 1 < n)
     (p q : Cell m (n - 1)) (hadj : adj p q)
     (hbr : (p.2.val < j.val ∧ q.2.val < j.val) ∨ (¬ p.2.val < j.val ∧ ¬ q.2.val < j.val)) :
@@ -400,28 +394,6 @@ theorem contractAt_isSLE_iff (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < 
     IsStrictLocalExtremum h (cellExpand j p hfrz.1 hfrz.2.1) :=
   ⟨h_extremum_of_contractAt_isSLE h hh hm j hfrz p,
    contractAt_isSLE_of_h_extremum h hh hm j hfrz p⟩
-
-theorem contractAt_numExtrema_eq (h : Cell m n → ℤ) (hh : IsHeight h) (hm : 0 < m)
-    (j : Fin n) (hfrz : frozenColumn h j) :
-    (Finset.univ.filter (IsStrictLocalExtremum (contractAt h hm j hfrz))).card =
-    (Finset.univ.filter (IsStrictLocalExtremum h)).card := by
-  obtain ⟨hj0, hj1, hsym⟩ := hfrz
-  apply Finset.card_bij (fun p _ => cellExpand j p hj0 hj1)
-  · intro p hp
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hp ⊢
-    exact h_extremum_of_contractAt_isSLE h hh hm j ⟨hj0, hj1, hsym⟩ p hp
-  · intro p1 _ p2 _ heq
-    exact cellExpand_injective j hj0 hj1 heq
-  · intro u hu
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hu
-    have hufrz : u.2 ≠ j := by
-      intro h_eq
-      have hueq : u = (u.1, j) := Prod.ext rfl h_eq
-      exact frozenColumn_no_extremum h j ⟨hj0, hj1, hsym⟩ u.1 (hueq ▸ hu)
-    obtain ⟨p, hp⟩ := cellExpand_surjOn j hj0 hj1 u hufrz
-    refine ⟨p, ?_, hp⟩
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-    exact contractAt_isSLE_of_h_extremum h hh hm j ⟨hj0, hj1, hsym⟩ p (hp ▸ hu)
 
 end
 

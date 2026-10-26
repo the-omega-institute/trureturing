@@ -70,45 +70,4 @@ theorem unique_profile_peak_minima_on_boundary {h : Cell m n → ℤ} (hh : IsHe
   dsimp [l, r] at *
   omega
 
-/-- Negating the actual array supplies the other sign of the first-reversal
-lemma, including physical column endpoints. -/
-private theorem first_reversal_has_minimum {h : Cell m n → ℤ} (hh : IsHeight h)
-    (i : Fin m) (hi0 : 0 < i.val) (hi1 : i.val + 1 < m)
-    (hprev : ∀ j : Fin n,
-      h (i, j) = h (⟨i.val - 1, by omega⟩, j) - 1)
-    (hrev : ∃ j : Fin n, h (⟨i.val + 1, hi1⟩, j) = h (i, j) + 1) :
-    ∃ j : Fin n, IsStrictLocalMin h (i, j) ∧
-      h (⟨i.val + 1, hi1⟩, j) = h (i, j) + 1 := by
-  have hn : IsHeight (fun v => -h v) := by
-    intro v u hu
-    simpa only [neg_sub_neg, abs_sub_comm] using hh v u hu
-  obtain ⟨j, hj, hdown⟩ := first_reversal_has_maximum hn i hi0 hi1 (by
-    intro j; have := hprev j; change -h (i, j) = -h (⟨i.val - 1, _⟩, j) + 1; omega) (by
-    obtain ⟨j, hj⟩ := hrev
-    exact ⟨j, by change -h (⟨i.val + 1, _⟩, j) = -h (i, j) - 1; omega⟩)
-  refine ⟨j, ?_, ?_⟩
-  · intro u hu
-    have := hj u hu
-    dsimp at this
-    omega
-  · change -h (⟨i.val + 1, _⟩, j) = -h (i, j) - 1 at hdown
-    omega
-
-/-- A first reversal out of a descending extrusion whose current profile has
-one peak creates an actual minimum on a physical side. -/
-theorem reversal_after_unique_peak_on_boundary {h : Cell m n → ℤ} (hh : IsHeight h)
-    (i : Fin m) (hi0 : 0 < i.val) (hi1 : i.val + 1 < m)
-    (hprev : ∀ j : Fin n,
-      h (i, j) = h (⟨i.val - 1, by omega⟩, j) - 1)
-    (hrev : ∃ j : Fin n, h (⟨i.val + 1, hi1⟩, j) = h (i, j) + 1)
-    (hu : ∃! p : Fin n, IsStrictLocalMax (profile h i) (0, p)) :
-    ∃ j : Fin n, (j.val = 0 ∨ j.val + 1 = n) ∧ IsStrictLocalMin h (i, j) := by
-  obtain ⟨j, hj, _⟩ := first_reversal_has_minimum hh i hi0 hi1 hprev hrev
-  have hprofile : IsStrictLocalMin (profile h i) (0, j) := by
-    intro u hu
-    apply hj (i, u.2)
-    simp only [adj, gdist] at hu ⊢
-    omega
-  exact ⟨j, unique_profile_peak_minima_on_boundary hh i hu j hprofile, hj⟩
-
 end D5.S3.Combinatorics.Geometry.MiuraEqualityProfile
