@@ -731,8 +731,12 @@ to the literal new-coordinate clopen. One fixed StrictMono target index
 works for every norm-one signed lift of the original treated sequence:
 even positions have value strictly greater than one sixth and odd
 positions have value zero. Historical G is separate from A–F. The regular
-common every-choice F certificate is retained on the split presentation;
-transport of F to the literal cube presentation is not asserted here.
+common every-choice F certificate is transported to the literal cube by
+`Result.literal_f`: for every row and label, one fixed regular reference
+measure of variation at most one works for every norm-one lift of the
+original whole signed sequence. The same coordinate equivalence pushes the
+reference forward and pulls every arbitrary lift back. `Result.literal_e`
+covers every old coordinate and the new sheet, with the original I/J sets.
 
 This is a repository-derived composition and birth-readback construction,
 not a literature novelty claim or a full CH realization. Delayed execution
