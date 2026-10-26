@@ -46,14 +46,19 @@ abbrev arena : Arena where
         (finiteTraceLogRelativeEntropy ρ σ -
           finiteTraceLogRelativeEntropy (Φ.mapState ρ) (Φ.mapState σ)) ^ ((1 - alpha) / 2))
 
+set_option maxHeartbeats 0 in
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   apply _root_.Reg.D5.S3.Quantum.Divergence.EntropyDefectInverseSqrtStability.rejected_law
   intro a b ia da na ib db nb Φ ρ σ support m hm
-  dsimp only
+  let M := supported_relative_modular_model Φ ρ σ support
+  change m • 1 ≤ M.data.A → m • 1 ≤ M.data.B → False
   intro hfloorA hfloorB
-  exact @h a b ia da na ib db nb Φ ρ σ support m hm (1 / 2) (by norm_num) (by norm_num)
-    hfloorA hfloorB
+  change False
+  have hfalse : False :=
+    @h a b ia da na ib db nb Φ ρ σ support m hm (1 / 2) (by norm_num) (by norm_num)
+      hfloorA hfloorB
+  exact hfalse
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
