@@ -55,7 +55,7 @@ internal sealed class FibonacciGainRaySuffixDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(
                     Call("ShortSuffix", F.Id("w"), F.Id("N"), F.Id("m")), Land,
                     Call("UniversalCollinearity", F.Id("C"), F.Id("Zw"), F.Id("Xid")),
-                    Rightarrow, Forall, Sp, F.Id("xi"), InMacro, F.Id("Xid"), Comma, Sp,
+                    Rightarrow, Forall, Sp, F.Id("xi"), InMacro, Sp, F.Id("Xid"), Comma, Sp,
                     F.Id("C"), Call("Zw", F.Id("xi")), Eq, Num(0)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
