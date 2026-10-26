@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.li
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 A quotient integer vector is lifted to every full state by its literal class.
@@ -23,6 +25,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.in
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.intertwines` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -36,6 +40,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.li
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 For every natural k, fullOrbit k equals lift(orbit k). The initial terminal certificate and the linear intertwining supply induction on every k.
@@ -47,6 +53,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.in
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.initial_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -60,6 +68,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.nu
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The complete 49 integer coefficients of the source numerator include coefficient zero 0, coefficient one 2 and coefficient 48 −1. They reproduce Colin Barker, OEIS A286848, https://oeis.org/A286848, under CC-BY-SA-4.0, https://creativecommons.org/licenses/by-sa/4.0/.
@@ -71,6 +81,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.ev
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.evaluate` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -84,6 +96,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.qu
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The scalar coefficient is 0 at index zero, 2 at index one, and evaluation of orbit(n−2) thereafter. This is defined separately from the actual subset count.
@@ -95,6 +109,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.in
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.initialCoefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -108,6 +124,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.in
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 Every convolution of the denominator with the initial coefficients in degrees zero through 49 equals the full literal numerator, with degree 49 zero.
@@ -119,6 +137,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.al
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.all_later_convolutions` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -132,6 +152,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.qu
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The rational formal power series has quotientCoefficient n cast to the rationals at each index n.
@@ -143,6 +165,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.P`
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.P` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -156,6 +180,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.Q`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The complete denominator is the finite sum of denominator(j) times X^j for every j in Fin 49. No leading or trailing coefficient is omitted.
@@ -167,6 +193,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.qu
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.quotientSeries_mul_Q` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -180,6 +208,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.Q_
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The literal denominator has constant coefficient one.
@@ -191,6 +221,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.qu
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.quotientSeries_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
@@ -204,6 +236,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.ac
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 For every natural k, the actual labelled inclusion-minimal dominating subset count of the open grid of width k+2, cast to the integers, equals evaluate(orbit k). The proof uses the all-length actual word count and the total partition certificates, with no assumed recurrence or count relation.
@@ -216,6 +250,8 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.ac
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
+
 *Commentary.*
 
 The rational formal power series has coefficient zero 0 and coefficient actualCount n at every positive n. The actual empty-grid count is not changed.
@@ -226,7 +262,13 @@ Lean statement: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.wh
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a286848-barker-minimal-dominating-three-row-grids` (proved) by `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a286848-barker-minimal-dominating-three-row-grids","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.whole_identity","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Colin Barker; Andrew Howroyd; OEIS Foundation Inc. (2017). *Number of minimal dominating sets in the grid graph P_3 X P_n*. URL: <https://oeis.org/A286848>.
 
 *Commentary.*
 
