@@ -5,7 +5,7 @@ doi: 10.1109/TIT.2023.3274434
 url: https://arxiv.org/abs/2205.13538v3
 triage: theorem
 motivation_gids:
-  - D5/S3/Quantum/Information/SignallingGameValueEquality.result.result
+  - D5/S3/Quantum/Information/SignallingGameValueEquality.result
 ---
 
 # The signalling game has equal classical, quantum and no-signalling values
