@@ -65,19 +65,10 @@ internal sealed class EnergyConstrainedDeterministicViolationDocument : IScribeD
                         + "and they satisfy s² = 1 − ω, r² + q² = ω, q² − r² = h² and "
                         + "a² + h² = s².")),
                     Paragraph(Text(
-                        "To obtain the strict estimate, put x = sa and y = 2rq. Their squares "
-                        + "are x² = (1 − ω)(1 − ω − 2ωt) and y² = ω²(1 − 4t²). "
-                        + "Comparison of nonnegative squares gives x ≥ 1 − ω − 2ωt, "
-                        + "y ≤ ω, x < 1 − ω − ωt and y ≥ ω(1 − 4t²). The first pair yields "
-                        + "x − y ≥ (1 − 2ω)(1 − ω/4) > 0. The second pair yields "
-                        + "x − y < 1 − 2ω − ωt(1 − 4t) < 1 − 2ω. Squaring therefore gives "
-                        + "(sa − 2rq)² < (1 − 2ω)².")),
-                    Paragraph(Text(
                         "Take all three systems to have dimension two. In the ordered tensor "
                         + "basis 00, 01, 10, 11, let ψ have coordinates (s, 0, r, q), and let "
                         + "σ = |ψ⟩⟨ψ|. The identity s² + r² + q² = 1 makes σ positive "
-                        + "semidefinite with trace one and σ² = σ. Thus the effects σ and "
-                        + "I − σ are positive semidefinite and sum to the identity.")),
+                        + "semidefinite with trace one and σ² = σ.")),
                     Paragraph(Text(
                         "For input zero use Kraus matrices I and 0. For input one use "
                         + "K₀ = [[−a/s, 0], [h²/(sq), r/q]] and "
@@ -95,6 +86,8 @@ internal sealed class EnergyConstrainedDeterministicViolationDocument : IScribeD
                         + "Computing the partial trace of σ and applying each Kraus sum gives "
                         + "the same energy r² + q² = ω for each input.")),
                     Paragraph(Text(
+                        "Thus the effects σ and I − σ are positive semidefinite and sum to the identity.")),
+                    Paragraph(Text(
                         "For the joint output, amplification by the identity applies the "
                         + "channel to each matrix slice with the memory indices fixed. Evaluating "
                         + "these slices gives σ for input zero. For input one the output is "
@@ -103,6 +96,14 @@ internal sealed class EnergyConstrainedDeterministicViolationDocument : IScribeD
                         + "p(0|1) = (sa − 2rq)² and p(1|1) = 1 − (sa − 2rq)². In particular, "
                         + "the extra |01⟩ component is orthogonal to ψ; the rank-one trace "
                         + "overlap is the squared modulus of their inner product.")),
+                    Paragraph(Text(
+                        "To obtain the strict estimate, put x = sa and y = 2rq. Their squares "
+                        + "are x² = (1 − ω)(1 − ω − 2ωt) and y² = ω²(1 − 4t²). "
+                        + "Comparison of nonnegative squares gives x ≥ 1 − ω − 2ωt, "
+                        + "y ≤ ω, x < 1 − ω − ωt and y ≥ ω(1 − 4t²). The first pair yields "
+                        + "x − y ≥ (1 − 2ω)(1 − ω/4) > 0. The second pair yields "
+                        + "x − y < 1 − 2ω − ωt(1 − 4t) < 1 − 2ω. Squaring therefore gives "
+                        + "(sa − 2rq)² < (1 − 2ω)².")),
                     Paragraph(Text(
                         "These matrices and maps satisfy every positivity, trace, ground-state, "
                         + "gap and energy condition in the statement. Finally, subtracting the "
