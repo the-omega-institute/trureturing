@@ -16,7 +16,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeSectorFourFieldRawMiddleCoefficients
 open LatticeGeneratingFieldLocality LatticeSugawaraCurrents LatticeAllStateField
-open LatticeSectorIntertwiner LatticeSectorBorcherds LatticeSectorChannelTransport
+open LatticeSectorIntertwiner LatticeSectorChannelTransport
 open LatticeSectorFourFieldCommonSeries LatticeSectorFourFieldInnerIterate
 open LatticeSectorFourFieldMiddleSpectator
 open UniformGradedLocalCorrelator UngradedLocalWordSeries
@@ -35,12 +35,14 @@ private theorem actual_middle_support (D : LatticeData) (α β γ η δ : Charge
   obtain ⟨B,hB⟩ := canonical_truncation D β γ v t
   refine ⟨⟨B.toNat,?_⟩,?_,?_⟩
   · intro x b z y h
+    change middleIterate D α β γ η δ u v t q w x b z y = 0
     unfold middleIterate
     rw [hB (-b-1) (by omega)]
     simp only [map_zero,Pi.zero_apply,LinearMap.zero_apply]
   · intro b
     refine ⟨Y,?_⟩
     intro x z y h
+    change middleIterate D α β γ η δ u v t q w x b z y = 0
     unfold middleIterate
     rw [hq (-y-1) (by omega),map_zero,map_zero]
   · intro b y
@@ -48,6 +50,7 @@ private theorem actual_middle_support (D : LatticeData) (α β γ η δ : Charge
       (canonical D β γ v (-b-1) t) (canonical D η δ q (-y-1) w)
     refine ⟨Z.toNat,?_⟩
     intro x z h
+    change middleIterate D α β γ η δ u v t q w x b z y = 0
     unfold middleIterate
     rw [hZ (-z-1) (by omega),map_zero]
 
