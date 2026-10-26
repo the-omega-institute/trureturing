@@ -33,6 +33,7 @@ variable {R : Type*} [CommRing R] [Algebra ℂ R]
 def rotateSeries (P : MvPowerSeries (Fin 3) R) : MvPowerSeries (Fin 3) R :=
   fun d => MvPowerSeries.coeff (index3 (d 2) (d 0) (d 1)) P
 
+omit [Algebra ℂ R] in
 private theorem signed_rotate (P : MvPowerSeries (Fin 3) R) (e : Exponent 3) :
     signedExtend (rotateSeries P) e = signedExtend P ![e 2, e 0, e 1] := by
   have hn : (∀ i, 0 ≤ e i) ↔ ∀ i : Fin 3, 0 ≤ (![e 2, e 0, e 1] : Exponent 3) i := by
@@ -48,13 +49,13 @@ private theorem signed_rotate (P : MvPowerSeries (Fin 3) R) (e : Exponent 3) :
       · exact h 2
       · exact h 0
   by_cases h : ∀ i, 0 ≤ e i
-  · rw [signedExtend, if_pos h, signedExtend, if_pos (hn.mp h)]
+  · rw [signedExtend, ite_eq_left h, signedExtend, ite_eq_left (hn.mp h)]
     change MvPowerSeries.coeff
       (index3 ((signedIndex e) 2) ((signedIndex e) 0) ((signedIndex e) 1)) P = _
-    congr 1
+    apply congrArg (fun d => MvPowerSeries.coeff d P)
     ext i
     fin_cases i <;> simp [index3, signedIndex]
-  · simp only [signedExtend, if_neg h, if_neg (fun hh => h (hn.mpr hh))]
+  · simp only [signedExtend, ite_eq_right h, ite_eq_right (fun hh => h (hn.mpr hh))]
 
 /-- The actual native unit after the b/z and z/x coefficient chart. -/
 def innerUnitSeries (R : Type*) [CommRing R] (k H : ℕ) : MvPowerSeries (Fin 3) R :=
@@ -123,11 +124,12 @@ private theorem rotated_action_chart (F : MvPowerSeries (Fin 3) R)
             (pow_transport b _ _ hz (a 0)) (pow_transport b _ _ ht k))
           (pow_transport b _ _ hd k)) (pow_transport b _ _ hx k))
         (pow_transport b _ _ hp (a 1))) (pow_transport b _ _ hy (a 2)) F
-  have at := congrFun transport e
-  change polynomialAction (rotatedPolynomial k a) (shiftedChart b F) e = _ at at
-  rw [at]
+  have evaluated := congrFun transport e
+  change polynomialAction (rotatedPolynomial k a) (shiftedChart b F) e = _ at evaluated
+  rw [evaluated]
   change signedExtend _ (W e + innerShift k a) = _
-  dsimp only [chartVariables]
+  simp only [chartVariables, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
   rw [factorization]
   change signedExtend
     ((MvPowerSeries.X 0 ^ k * MvPowerSeries.X 1 ^ (k + a 1 + a 2) *
@@ -137,8 +139,9 @@ private theorem rotated_action_chart (F : MvPowerSeries (Fin 3) R)
     signed_X_pow_mul]
   congr 1
   funext i
-  fin_cases i <;> dsimp [innerShift, W] <;> simp [Pi.single_apply, nsmul_eq_mul] <;> ring
+  fin_cases i <;> dsimp [innerShift, W] <;> simp
 
+omit [Algebra ℂ R] in
 private theorem rotate_raw (P : MvPowerSeries (Fin 3) R) (k : ℕ) (a : Fin 3 → ℕ) :
     rotate (rawInnerCoefficient P k a) = shiftedChart (innerShift k a)
       ((↑((innerUnit R k (a 1))⁻¹) : MvPowerSeries (Fin 3) R) *
@@ -159,14 +162,16 @@ theorem raw_inner_action (P : MvPowerSeries (Fin 3) R)
   have cancel : innerUnitSeries R k (a 1) *
       ((↑((innerUnit R k (a 1))⁻¹) : MvPowerSeries (Fin 3) R) *
         nativeChart (rotateSeries P)) = nativeChart (rotateSeries P) := by
-    rw [← mul_assoc]
-    change (↑(innerUnit R k (a 1)) * ↑((innerUnit R k (a 1))⁻¹)) * _ = _
-    rw [(innerUnit R k (a 1)).val_inv, one_mul]
+    have hc : innerUnitSeries R k (a 1) *
+        (↑((innerUnit R k (a 1))⁻¹) : MvPowerSeries (Fin 3) R) = 1 :=
+      (innerUnit R k (a 1)).val_inv
+    rw [← mul_assoc, hc, one_mul]
   rw [cancel, native_chart_readout, signed_rotate] at h
   have ee : (![e 0, e 1, e 2] : Exponent 3) = e := by
     funext i
     fin_cases i <;> rfl
-  simpa only [rotate, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, ee]
+  simpa only [rotate, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons, ee]
     using h.symm
 
 theorem raw_inner_support (P : MvPowerSeries (Fin 3) R)
@@ -188,34 +193,6 @@ theorem raw_inner_support (P : MvPowerSeries (Fin 3) R)
     have h := hn 1
     dsimp [W, innerShift] at h
     omega
-
-/-- An explicit finite antidiagonal formula in numerator coefficients. The
-index set is finite for arbitrary infinite P, including zero coefficient rings. -/
-def finiteInnerCoefficient (P : MvPowerSeries (Fin 3) R)
-    (k : ℕ) (a : Fin 3 → ℕ) (e : Exponent 3) : R := by
-  classical
-  let n := W (![e 1, e 2, e 0] : Exponent 3) + innerShift k a
-  exact if ∀ i, 0 ≤ n i then
-    ∑ d ∈ Finset.antidiagonal (signedIndex n),
-      MvPowerSeries.coeff d.1 (↑((innerUnit R k (a 1))⁻¹) : MvPowerSeries (Fin 3) R) *
-        (if d.2 0 ≤ d.2 1 ∧ d.2 1 ≤ d.2 2 then
-          MvPowerSeries.coeff (index3 (d.2 2 - d.2 1) (d.2 0) (d.2 1 - d.2 0)) P
-        else 0)
-    else 0
-
-theorem raw_inner_finite (P : MvPowerSeries (Fin 3) R)
-    (k : ℕ) (a : Fin 3 → ℕ) (e : Exponent 3) :
-    rawInnerCoefficient P k a e = finiteInnerCoefficient P k a e := by
-  classical
-  unfold rawInnerCoefficient shiftedChart signedExtend finiteInnerCoefficient
-  split_ifs with hn
-  · rw [MvPowerSeries.coeff_mul]
-    apply Finset.sum_congr rfl
-    intro d hd
-    congr 1
-    dsimp only [nativeChart, MvPowerSeries.coeff_apply]
-    split_ifs <;> simp [rotateSeries, MvPowerSeries.coeff_apply, index3]
-  · rfl
 
 end
 end D5.S3.VertexAlgebra.ThreeFieldInnerNativeInverse

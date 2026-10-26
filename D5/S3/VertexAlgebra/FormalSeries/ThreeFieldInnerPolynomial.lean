@@ -125,7 +125,7 @@ theorem inner_action_expansion {V : Type*} [AddCommGroup V] [Module ℂ V]
   funext i
   fin_cases i <;> simp [Nat.cast_add,
     Nat.cast_sub (show p ≤ a 0 + 2 * k by omega),
-    Nat.cast_sub (show q ≤ a 0 + 2 * k - p by omega)] <;> omega
+    Nat.cast_sub (show q ≤ a 0 + 2 * k - p by omega)]; omega
 
 variable {R : Type*} [CommRing R] [Algebra ℂ R]
 
@@ -180,7 +180,7 @@ private theorem triple_difference_zero (F : Distribution 3 R) (hF : NestedSuppor
       intro x z
       have h := congrFun hz ![(n : ℤ) - U, z, x]
       simp only [map_sub, LinearMap.sub_apply, Pi.sub_apply, variable_xyz] at h
-      simp only [Fin.isValue, reduceIte, sub_zero, sub_self, prev] at h
+      simp only [Fin.isValue, reduceIte, sub_zero, prev] at h
       simpa [clear, Finset.sum_range_succ, sub_eq_add_neg] using h
   funext e
   change F e = 0
@@ -254,7 +254,8 @@ theorem inner_injective (k : ℕ) (a : Fin 3 → ℕ) (F G : Distribution 3 R)
   have ee : (![e 0, e 1, e 2] : Exponent 3) = e := by
     funext i
     fin_cases i <;> rfl
-  simpa only [rotate, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, ee] using h
+  simpa only [rotate, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons, ee] using h
 
 end
 end D5.S3.VertexAlgebra.ThreeFieldInnerPolynomial
