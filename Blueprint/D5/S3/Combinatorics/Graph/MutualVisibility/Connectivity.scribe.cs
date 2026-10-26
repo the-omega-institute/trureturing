@@ -15,6 +15,22 @@ internal sealed class ConnectivityDocument : IScribeDocumentDefinition
         H("Separators and reachability in one surviving graph"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("connectivity-le-minDegree"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/Connectivity.connectivity_le_minDegree"),
+                H("Connectivity is bounded by minimum degree"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every finite nonempty simple graph, the separator connectivity is at most minimum degree."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("minDegree-le-connectivity"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/Connectivity.minDegree_le_connectivity"),
+                H("All smaller cuts give the reverse inequality"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("If deleting every cut smaller than minimum degree leaves a preconnected graph, minimum degree is at most separator connectivity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("full-maximal-connectivity-claim"),
                 DeclarationHandle.Create(Prefix + "FullMaximalConnectivityClaim"),
                 H("The entire original question"),

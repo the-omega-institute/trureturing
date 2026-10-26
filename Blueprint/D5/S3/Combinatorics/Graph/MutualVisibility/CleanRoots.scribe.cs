@@ -12,6 +12,14 @@ internal sealed class CleanRootsDocument : IScribeDocumentDefinition
         H("CleanRoots"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("exists-cleanRoot"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/CleanRoots.exists_cleanRoot"),
+                H("A clean root exists"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A configuration cut smaller than the host order leaves a label whose singleton survives and for which no cut member has exactly that label outside the deleted-singleton labels."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("deleted-labels"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/CleanRoots.deletedLabels"),
                 H("Deleted singleton labels"),

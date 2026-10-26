@@ -57,7 +57,7 @@ private theorem subset_cut_payment [Finite V]
     exact ⟨Q, hQC, hQ.1, hQ.2.1⟩
   · exact ⟨T, hTC, hUT, Finset.Subset.refl _⟩
 
-private theorem stranded_singletons (hH : H.Connected) (C : Finset (Configuration H))
+theorem stranded_singletons (hH : H.Connected) (C : Finset (Configuration H))
     (s : Configuration H) {w : V} (hc : C.card < Fintype.card V)
     (hw : CleanRoot C w)
     (hwout : ¬ CutReach (reconfiguration H) C s ⟨{w}, visible_singleton H w⟩) :
@@ -67,7 +67,7 @@ private theorem stranded_singletons (hH : H.Connected) (C : Finset (Configuratio
     simpa [deletedLabels] using hw.1
   exact hwout (cutReach_trans hr (singleton_core hH C hc hr.choose_spec.choose hwC))
 
-private theorem stranded_pair_labels (hH : H.Connected) (C : Finset (Configuration H))
+theorem stranded_pair_labels (hH : H.Connected) (C : Finset (Configuration H))
     (s : Configuration H)
     (hsingle : ∀ x, ¬ CutReach (reconfiguration H) C s ⟨{x}, visible_singleton H x⟩)
     {u v : V} (huv : u ≠ v)
@@ -92,7 +92,7 @@ private theorem stranded_pair_labels (hH : H.Connected) (C : Finset (Configurati
   exact ⟨hlabel u v huv hr, hlabel v u huv.symm (by simpa [Finset.pair_comm] using hr)⟩
 
 omit [Fintype V] in
-private theorem outside_move_shape {S T : Finset V} {y : V}
+theorem outside_move_shape {S T : Finset V} {y : V}
     (hy : y ∉ S) (hyT : y ∈ T) (hsub : T ⊆ insert y S)
     (h : MixedMove H S T) :
     T = insert y S ∨ ∃ x ∈ S, H.Adj x y ∧ T = insert y (S.erase x) := by

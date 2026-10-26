@@ -545,7 +545,7 @@ private theorem max_high_rank_degree {V : Type*} [Fintype V] [DecidableEq V] {m 
   simp only [Finset.card_empty, Nat.add_zero] at hbudget
   omega
 
-private theorem high_rank_component {V : Type*} [Fintype V] [DecidableEq V]
+theorem high_rank_component {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) (C : Finset (Configuration H)) (s : Configuration H) (hs : s ∉ C)
     (hlow : ∀ T, CutReach (reconfiguration H) C s T → 3 ≤ T.val.card) :
     ∃ S, CutReach (reconfiguration H) C s S ∧ (reconfiguration H).degree S ≤ C.card := by

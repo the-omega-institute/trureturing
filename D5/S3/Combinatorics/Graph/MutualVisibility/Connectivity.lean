@@ -108,13 +108,13 @@ private theorem connectivity_le_degree (G : SimpleGraph W) [DecidableRel G.Adj] 
       exact z.property (by simpa [C] using hz)
   simpa [C] using connectivity_le_cut G hC
 
-private theorem connectivity_le_minDegree (G : SimpleGraph W) [DecidableRel G.Adj]
+theorem connectivity_le_minDegree (G : SimpleGraph W) [DecidableRel G.Adj]
     [Nonempty W] : vertexConnectivity G ≤ G.minDegree := by
   obtain ⟨v, hv⟩ := G.exists_minimal_degree_vertex
   rw [hv]
   exact connectivity_le_degree G v
 
-private theorem minDegree_le_connectivity (G : SimpleGraph W) [DecidableRel G.Adj]
+theorem minDegree_le_connectivity (G : SimpleGraph W) [DecidableRel G.Adj]
     [Nonempty W]
     (h : ∀ C : Finset W, C.card < G.minDegree →
       (G.induce {v | v ∉ C}).Preconnected) :

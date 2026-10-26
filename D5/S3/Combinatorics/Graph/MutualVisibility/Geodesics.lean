@@ -298,7 +298,7 @@ theorem root_hub (hH : H.Connected) {S : Finset V} {w : V}
     exact (comparable_triple_obstruction hH hvis hd hzw hzv hzu
       (hn v hv z hz hzv.symm) (hn u hu z hz hzu.symm)).elim
 
-private theorem visible_comparability_triangle (hH : H.Connected) {S : Finset V}
+theorem visible_comparability_triangle (hH : H.Connected) {S : Finset V}
     (hS : Visible H S) {w a b c : V} (ha : a ∈ S) (hb : b ∈ S) (hc : c ∈ S)
     (hab : Dominates H w a b ∨ Dominates H w b a)
     (hac : Dominates H w a c ∨ Dominates H w c a)
@@ -313,7 +313,7 @@ private theorem visible_comparability_triangle (hH : H.Connected) {S : Finset V}
   · exact no_selected_chain hH hS hb hc ha hbc hca
   · exact no_selected_chain hH hS hc hb ha hcb hba
 
-private theorem common_neighbor_height (hH : H.Connected) {w u v y : V}
+theorem common_neighbor_height (hH : H.Connected) {w u v y : V}
     (hdom : Dominates H w u v) (huy : H.Adj u y) (hvy : H.Adj v y) :
     H.dist y w = H.dist u w + 1 := by
   have hlen := mandatory_dist hH hdom.2.2

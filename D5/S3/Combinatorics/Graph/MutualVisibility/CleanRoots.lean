@@ -25,7 +25,7 @@ noncomputable def deletedLabels (C : Finset (Configuration H)) : Finset V := by
 def CleanRoot (C : Finset (Configuration H)) (w : V) : Prop :=
   w ∉ deletedLabels C ∧ ∀ T ∈ C, T.val \ deletedLabels C ≠ {w}
 
-private theorem exists_cleanRoot (C : Finset (Configuration H))
+theorem exists_cleanRoot (C : Finset (Configuration H))
     (hc : C.card < Fintype.card V) : ∃ w, CleanRoot C w := by
   classical
   by_contra hn

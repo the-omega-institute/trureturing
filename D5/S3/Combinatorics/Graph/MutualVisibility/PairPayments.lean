@@ -20,7 +20,7 @@ open scoped Classical
 
 variable {V : Type*} [Fintype V] [DecidableEq V] {H : SimpleGraph V}
 
-private theorem minimal_pair_exists (hH : H.Connected) (C : Finset (Configuration H))
+theorem minimal_pair_exists (hH : H.Connected) (C : Finset (Configuration H))
     (s : Configuration H) (w : V)
     (hne : ∃ u v, u ≠ v ∧ CutReach (reconfiguration H) C s ⟨{u, v}, visible_pair hH u v⟩) :
     ∃ u v, u ≠ v ∧ CutReach (reconfiguration H) C s ⟨{u, v}, visible_pair hH u v⟩ ∧
@@ -108,7 +108,7 @@ private theorem two_label_payment_not_local (C : Finset (Configuration H)) (B : 
   have hyz : y = z := (Finset.mem_insert.mp (hsub hyT)).elim id (fun h => (hy h).elim)
   exact hpy (hpz.trans hyz.symm)
 
-private theorem simultaneous_inward_payments (hH : H.Connected)
+theorem simultaneous_inward_payments (hH : H.Connected)
     (C : Finset (Configuration H)) (s : Configuration H) {w u v p : V}
     (hdom : Dominates H w u v) (hpu : H.Adj p u)
     (hp : H.dist p w + 1 = H.dist u w)
