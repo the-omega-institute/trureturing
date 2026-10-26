@@ -32,7 +32,7 @@ open private all_modes_closed
 open private vacuum_mem c2_le cube_mem_c2 representatives representatives_mem
   small small_le three_spanning
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumC2
-open private QuotientSpace product_mk unitClass
+open private QuotientSpace unitClass
   from D5.S3.VertexAlgebra.Lattice.NormFourVacuumC2Algebra
 
 noncomputable section
@@ -74,7 +74,7 @@ theorem actual_vacuum_c2_presentation (D : LatticeData) (a : Charge D)
       q ⟨L u.val,all_modes_closed D a ha s hs (-2) u.val u.property⟩ = x * q u := by
     change q ⟨mu D v.val (-1) u.val,
       full_field_closed D a ha s hs v.val v.property (-1) u.val u.property⟩ = _
-    exact (product_mk D a ha s hs v u).symm
+    exact (actual_vacuum_c2_algebra D a ha s hs).1 v u
   have quotient_powers (n : ℕ) : q (r n) = x^n := by
     induction n with
     | zero => rfl
@@ -126,7 +126,7 @@ theorem actual_vacuum_c2_presentation (D : LatticeData) (a : Charge D)
     change q u ∈ R
     rw [← equal,map_add,vanish,zero_add]
     exact small_range w hw
-  obtain ⟨finite,dimension⟩ := actual_vacuum_c2_dimension D a ha s hs
+  obtain ⟨finite,dimension⟩ := (actual_vacuum_c2_algebra D a ha s hs).2.2
   letI : FiniteDimensional ℂ Q := finite
   letI : FiniteDimensional ℂ (AdjoinRoot f) :=
     (Polynomial.monic_X.pow 3).finite_adjoinRoot
