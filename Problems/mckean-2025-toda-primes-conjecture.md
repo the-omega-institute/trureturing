@@ -49,7 +49,8 @@ Lean names have prefix `D5.S3.Arith.McKeanTodaPrimes.Result`.
 The condition $F(D_{4a})=4a$ is expressed equivalently as the absence of a
 smaller positive even $k$ with $D_k=D_{4a}$. The equality at $4a$ is automatic.
 For positive $n$, the range $p<4n+2$ is exhaustive because
-$p-1\mid4n$ implies $p-1\le4n$. All counterexamples have positive indices.
+$p-1\mid4n$ implies $p-1\le4n$. At $n=0$, the quotient is zero and
+no prime is coprime to zero, so $T(0)$ is empty. All counterexamples have positive indices.
 The natural-number restriction suffices to refute the integer conjecture.
 
 ## Motivation

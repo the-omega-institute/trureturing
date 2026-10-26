@@ -4,7 +4,6 @@ authors: Stephen McKean
 year: 2025
 title: Toda primes
 doi: null
-arxiv: 2511.19744
 url: https://arxiv.org/abs/2511.19744v1
 claim: "Definition 1.1 defines Toda primes; Notation 5.5 defines Bernoulli-denominator prime sets and first indices; Conjecture 5.6 asserts denominator-based invariance and monotonicity."
 strata_touched:

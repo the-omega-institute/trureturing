@@ -6,8 +6,50 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/McKeanTodaPrimes/Result.claim; result=D5/S3/Arith/McKeanTodaPrimes/Result.result; claim=D5/S3/Arith/McKeanTodaPrimes/Result.claim
    digest: Both Bernoulli-denominator assertions about Toda primes are false. -/
 
+/-
+admission_basis: open-problem-resolution (#22475; Refuted)
+No frozen D5 dependencies: the mathematical imports are pinned Mathlib.
+Per declaration: name | proof_shape | escape_witness | consumers.
+  todaPrimes | bind-only (definition) | none | t, clauseI, todaReduction, family,
+    witnessII, refuteI, refuteII
+  t | bind-only (definition) | none | clauseII, refuteII
+  bernDen | bind-only (definition) | none | clauseI, clauseII, denominatorFormula,
+    primeDenIff, familyMinimum, family, witnessII, refuteI, refuteII
+  denominatorPrimes | bind-only (definition) | none | memDenominatorPrimes,
+    denominatorFormula, todaReduction, familyPrimeSets, primeDenIff, family, witnessII
+  clauseI | bind-only (definition) | none | claim, refuteI, refutedClauses, result
+  clauseII | bind-only (definition) | none | claim, refuteII, refutedClauses, result
+  claim | bind-only (definition) | none | result
+  memDenominatorPrimes | bind-only | none | denominatorFormula, todaReduction,
+    familyPrimeSets, primeDenIff
+  denominatorFormula | bind-only | none | primeDenIff, family, witnessII
+  todaReduction | bind-only | none | family
+  compositeByMod | bind-only | none | familyCandidates
+  familyCandidates | bind-only | none | familyPrimeSets
+  familyPrimeSets | bind-only | none | family
+  primeDenIff | bind-only | none | familyMinimum
+  familyMinimum | bind-only | none | family
+  family | bind-only | none | refuteI
+  witnessII | bind-only | none | refuteII
+  refuteI | bind-only | none | refutedClauses
+  refuteII | bind-only | none | refutedClauses
+  refutedClauses | bind-only | none | result
+  result | bind-only | none | settling result
+Bypass test: the denominator product uses vonStaudt_clausen,
+den_sum_dvd_prod_den, dvd_den_bernoulli and coprime product divisibility.
+The Toda reduction uses prime divisibility and the quotient identity.
+The conditional family splits divisors with exists_dvd_and_dvd_of_dvd_mul;
+its twelve successor cases and first-index bound are arithmetic normalization.
+The finite prime sets use kernel reduction. Both refutations instantiate
+these facts. No declaration supplies an escape witness.
+The conditional family does not assert infinitude of the prime pairs.
+-/
+
 import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Tactic
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.Parity
+
+/-! Bernoulli denominators and two counterexamples for Toda primes. -/
 
 open Finset
 namespace D5.S3.Arith.McKeanTodaPrimes.Result
@@ -47,7 +89,8 @@ theorem denominatorFormula (k : ℕ) (hk : 0 < k) :
   apply Nat.dvd_antisymm
   · have hb : bernoulli (2 * k) =
         (z : ℚ) - ∑ p ∈ denominatorPrimes (2 * k), (1 : ℚ) / p := by
-      change (z : ℚ) = bernoulli (2 * k) + _ at hz
+      change (z : ℚ) = bernoulli (2 * k) +
+        ∑ p ∈ denominatorPrimes (2 * k), (1 : ℚ) / p at hz
       linarith
     rw [bernDen, hb, Rat.intCast_sub_den]
     apply (Rat.den_sum_dvd_prod_den _ _).trans
@@ -55,6 +98,7 @@ theorem denominatorFormula (k : ℕ) (hk : 0 < k) :
     intro p hp
     simp only [one_div, Rat.inv_natCast_den_of_pos
       ((memDenominatorPrimes (by omega)).mp hp).1.pos]
+    exact dvd_rfl
   · apply Finset.prod_dvd_of_isRelPrime
     · intro p hp q hq hpq
       apply Nat.coprime_iff_isRelPrime.mp
@@ -64,7 +108,7 @@ theorem denominatorFormula (k : ℕ) (hk : 0 < k) :
           ((memDenominatorPrimes (by omega)).mp hq).1).mp hd))
     · intro p hp
       obtain ⟨hprime, hd⟩ := (memDenominatorPrimes (by omega)).mp hp
-      letI : Fact p.Prime := ⟨hprime⟩
+      have : Fact p.Prime := ⟨hprime⟩
       exact Bernoulli.dvd_den_bernoulli hk hd
 
 theorem todaReduction (n : ℕ) (hn : 0 < n) :
@@ -74,6 +118,7 @@ theorem todaReduction (n : ℕ) (hn : 0 < n) :
   rw [memDenominatorPrimes (by omega)]
   constructor
   · rintro ⟨hr, hp, ho, hd, hc⟩
+    have hp2 := hp.two_le
     refine ⟨⟨hp, hd⟩, ho, ?_⟩
     intro hpn
     have hpred : ¬ p ∣ p - 1 := by
@@ -87,8 +132,12 @@ theorem todaReduction (n : ℕ) (hn : 0 < n) :
   · rintro ⟨⟨hp, hd⟩, ho, hpn⟩
     have hp4 : ¬ p ∣ 4 := by
       intro h
-      have := Nat.le_of_dvd (by decide : 0 < 4) h
-      interval_cases p <;> norm_num at hp ho
+      have hdiv : p ∣ 2 := by
+        have hmul : p ∣ 2 * 2 := by simpa using h
+        exact (hp.dvd_mul.mp hmul).elim id id
+      have heq := (Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp hdiv
+      subst p
+      norm_num at ho
     refine ⟨by have := Nat.le_of_dvd (by omega : 0 < 4 * n) hd; omega,
       hp, ho, hd, hp.coprime_iff_not_dvd.mpr ?_⟩
     intro h
@@ -119,18 +168,25 @@ private theorem familyCandidates {a q : ℕ} (ha : a.Prime) (ham : a % 30 = 23)
   rw [hxv] at he
   rcases hu' with rfl | rfl | rfl <;>
     rcases hv' with rfl | rfl <;> rcases hz' with rfl | rfl <;>
-    simp only [one_mul, mul_one] at he
-  all_goals first | omega
+    try simp only [one_mul, mul_one] at he
+  all_goals try omega
   all_goals exfalso
   all_goals have hqe : q = (q - 1) + 1 := by have := hq.two_le; omega
   all_goals rw [he] at hqe
   all_goals subst q
   all_goals first
-    | exact compositeByMod (c := 2) (by omega) (by nlinarith) (by simp [Nat.add_mod, Nat.mul_mod, ha2]) hq
-    | exact compositeByMod (c := 3) (by omega) (by nlinarith)
-        (by simp [Nat.add_mod, Nat.mul_mod, ha3]) hq
-    | exact compositeByMod (c := 5) (by omega) (by nlinarith)
-        (by simp [Nat.add_mod, Nat.mul_mod, ha5]) hq
+    | solve
+      | refine compositeByMod (c := 2) (by omega) ?_ ?_ hq
+        · nlinarith
+        · norm_num [Nat.add_mod, Nat.mul_mod, ha2]
+    | solve
+      | refine compositeByMod (c := 3) (by omega) ?_ ?_ hq
+        · nlinarith
+        · norm_num [Nat.add_mod, Nat.mul_mod, ha3]
+    | solve
+      | refine compositeByMod (c := 5) (by omega) ?_ ?_ hq
+        · nlinarith
+        · norm_num [Nat.add_mod, Nat.mul_mod, ha5]
 
 private theorem familyPrimeSets {a : ℕ} (ha : a.Prime) (ham : a % 30 = 23)
     (hp : (2 * a + 1).Prime) :
@@ -170,7 +226,8 @@ private theorem primeDenIff {k p : ℕ} (hk : 0 < k) (he : Even k) (hp : p.Prime
   · intro hd
     obtain ⟨q, hq, hdq⟩ := (hp.prime.dvd_finsetProd_iff id).mp hd
     obtain ⟨hqprime, hqd⟩ := (memDenominatorPrimes (by omega)).mp hq
-    rwa [(Nat.prime_dvd_prime_iff_eq hp hqprime).mp hdq] 
+    have hpq := (Nat.prime_dvd_prime_iff_eq hp hqprime).mp hdq
+    simpa [← hpq] using hqd
   · intro hd
     exact dvd_prod_of_mem id ((memDenominatorPrimes (by omega)).mpr ⟨hp, hd⟩)
 
@@ -184,7 +241,11 @@ private theorem familyMinimum {a : ℕ} (ha : a.Prime) (ham : a % 30 = 23)
     simpa using (primeDenIff hk he hp).mp (by rw [hd]; exact dvd_mul_left _ _)
   obtain ⟨r, hr⟩ := h2a
   have ha2 : a % 2 = 1 := by omega
-  have har : (a * r) % 2 = 0 := by omega
+  have hkr : k = 2 * (a * r) := by rw [hr]; ring
+  have har : (a * r) % 2 = 0 := by
+    have hk4 := Nat.mod_eq_zero_of_dvd h4
+    rw [hkr] at hk4
+    omega
   have hr2 : r % 2 = 0 := by simpa [Nat.mul_mod, ha2] using har
   have hapos := ha.pos
   have hrpos : 0 < r := by nlinarith
@@ -203,14 +264,14 @@ theorem family (a : ℕ) (ha : a.Prime) (ham : a % 30 = 23)
   have hb : bernDen (4 * a) = 30 * (2 * a + 1) := by
     rw [show 4 * a = 2 * (2 * a) by ring, denominatorFormula _ (by omega)]
     rw [show 2 * (2 * a) = 4 * a by ring, hs]
-    simp [show 2 * a + 1 ≠ 2 by omega, show 2 * a + 1 ≠ 3 by omega,
-      show 2 * a + 1 ≠ 5 by omega]; ring
+    simp [show (2 : ℕ) ≠ 2 * a + 1 by omega, show (3 : ℕ) ≠ 2 * a + 1 by omega,
+      show (5 : ℕ) ≠ 2 * a + 1 by omega]; ring
   have hbl : bernDen (4 * a * (2 * a + 1)) = 30 * (2 * a + 1) := by
     rw [show 4 * a * (2 * a + 1) = 2 * (2 * a * (2 * a + 1)) by ring,
       denominatorFormula _ (by positivity)]
     rw [show 2 * (2 * a * (2 * a + 1)) = 4 * a * (2 * a + 1) by ring, hl]
-    simp [show 2 * a + 1 ≠ 2 by omega, show 2 * a + 1 ≠ 3 by omega,
-      show 2 * a + 1 ≠ 5 by omega]; ring
+    simp [show (2 : ℕ) ≠ 2 * a + 1 by omega, show (3 : ℕ) ≠ 2 * a + 1 by omega,
+      show (5 : ℕ) ≠ 2 * a + 1 by omega]; ring
   refine ⟨hb, hbl, ?_, ?_, ?_⟩
   · intro k hk he hlt hden
     exact (not_le_of_gt hlt) (familyMinimum ha ham hp k hk he hden)
@@ -222,20 +283,18 @@ theorem family (a : ℕ) (ha : a.Prime) (ham : a % 30 = 23)
       have := Nat.le_of_dvd (by omega : 0 < a) hd
       omega
     have hop : Odd (2 * a + 1) := ⟨a, by omega⟩
-    ext q
-    simp [ha3, ha5, hpa, hop]
+    norm_num [filter_insert, filter_singleton, ha3, ha5, hpa, hop]
   · rw [todaReduction _ (by positivity), show 4 * (a * (2 * a + 1)) =
       4 * a * (2 * a + 1) by ring, hl]
     have ha3 : ¬3 ∣ a * (2 * a + 1) := by
-      apply Nat.not_dvd_of_mod_ne_zero
+      rw [Nat.dvd_iff_mod_eq_zero]
       have ha3m : a % 3 = 2 := by omega
       simp [Nat.mul_mod, Nat.add_mod, ha3m]
     have ha5 : ¬5 ∣ a * (2 * a + 1) := by
-      apply Nat.not_dvd_of_mod_ne_zero
+      rw [Nat.dvd_iff_mod_eq_zero]
       have ha5m : a % 5 = 3 := by omega
       simp [Nat.mul_mod, Nat.add_mod, ha5m]
-    ext q
-    simp [ha3, ha5]
+    norm_num [filter_insert, filter_singleton, ha3, ha5]
 
 private theorem witnessII :
     bernDen 44 = 690 ∧ bernDen 220 = 7590 ∧

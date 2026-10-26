@@ -18,7 +18,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             Node("todaPrimes", "Toda primes", All("n", N, Eq(T(n),
                 Filter("p", And(Prime(p), And(Odd(p), And(Dvd(Sub(p, D(1)), Four(n)),
                     Call("Nat.Coprime", p, Div(Four(n), Sub(p, D(1))))))), Range(Add(Four(n), D(2)))))),
-                "§1, printed p. 1: “" + DefinitionQuote + "” For positive n, divisibility and primality imply p−1≤4n, hence p<4n+2. The range therefore omits no Toda prime. The natural-number domain suffices to contradict the positive-integer assertion.", true, true),
+                "§1, printed p. 1: “" + DefinitionQuote + "” For positive n, divisibility and primality imply p−1≤4n, hence p<4n+2. The range therefore omits no Toda prime. At n=0 the quotient is zero, and a prime is not coprime to zero, so the set is empty. The natural-number domain suffices to contradict the positive-integer assertion.", true, true),
             Node("t", "Number of Toda primes", All("n", N, Eq(Call("t", n), Call("Finset.card", T(n)))),
                 "The cardinality is exactly t(n) in Definition 1.1, §1, printed p. 1.", true, true),
             Node("bernDen", "Reduced Bernoulli denominator", All("k", N,
@@ -40,28 +40,28 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 Imp(Pos(k), Eq(B(Mul(D(2), k)), ProductPrimes(Mul(D(2), k))))),
                 "Bernoulli.vonStaudt_clausen expresses B(2k) as an integer minus the prime reciprocal sum. Rat.den_sum_dvd_prod_den bounds its denominator by the prime product. Each prime in the product divides the denominator by Bernoulli.dvd_den_bernoulli. Distinct primes are relatively prime, so their product divides the denominator. Antisymmetry gives equality."),
             Node("todaReduction", "Coprimality removes the prime factors of n", All("n", N, Imp(Pos(n),
-                Eq(T(n), Filter("p", And(Odd(p), Not(Dvd(p, n))), P(Four(n))))))),
+                Eq(T(n), Filter("p", And(Odd(p), Not(Dvd(p, n))), P(Four(n)))))),
                 "For an odd prime p, p divides neither 4 nor p−1. The identity (p−1)(4n/(p−1))=4n therefore makes coprimality with the quotient equivalent to p not dividing n."),
             Node("compositeByMod", "A proper divisor proves compositeness", All("q", N, All("c", N,
-                Imp(Lt(D(1), V("c")), Imp(Lt(V("c"), q), Imp(Eq(Mod(q, V("c")), D(0)), Not(Prime(q)))))))),
+                Imp(Lt(D(1), V("c")), Imp(Lt(V("c"), q), Imp(Eq(Mod(q, V("c")), D(0)), Not(Prime(q))))))),
                 "A prime has no divisor strictly between one and itself. This excludes the unwanted divisor successors."),
             Node("familyCandidates", "Only four divisor successors can be prime", All("a", N, All("q", N,
-                FamilyAssumptions(Imp(Prime(q), Imp(Dvd(Sub(q, D(1)), LargeIndex()), CandidateList())))))),
+                FamilyAssumptions(Imp(Prime(q), Imp(Dvd(Sub(q, D(1)), LargeIndex()), CandidateList()))))),
                 "Decomposing a divisor of 4a(2a+1) into divisors of 4, a and 2a+1 gives twelve candidates. The unwanted successors are even or divisible by 3 or 5. The residue a≡23 modulo 30 gives a≡1 modulo 2, a≡2 modulo 3 and a≡3 modulo 5."),
             Node("familyPrimeSets", "Both denominator prime sets coincide", All("a", N, FamilyAssumptions(
-                And(Eq(P(Four(a)), FourPrimes()), Eq(P(LargeIndex()), FourPrimes()))))),
+                And(Eq(P(Four(a)), FourPrimes()), Eq(P(LargeIndex()), FourPrimes())))),
                 "The four possible primes 2,3,5,2a+1 all occur. Every divisor successor for 4a is also one for 4a(2a+1)."),
             Node("primeDenIff", "Prime divisibility of an even-index denominator", All("k", N, All("p", N,
-                Imp(Pos(k), Imp(Call("Even", k), Imp(Prime(p), Iff(Dvd(p, B(k)), Dvd(Sub(p, D(1)), k)))))))),
+                Imp(Pos(k), Imp(Call("Even", k), Imp(Prime(p), Iff(Dvd(p, B(k)), Dvd(Sub(p, D(1)), k))))))),
                 "Apply the product formula and prime divisibility of a finite product. A prime dividing another prime is equal to it."),
             Node("familyMinimum", "The first even index is 4a", All("a", N, FamilyAssumptions(
-                All("k", N, Imp(Pos(k), Imp(Call("Even", k), Imp(Eq(B(k), ThirtyP()), Le(Four(a), k)))))))),
+                All("k", N, Imp(Pos(k), Imp(Call("Even", k), Imp(Eq(B(k), ThirtyP()), Le(Four(a), k))))))),
                 "The prime divisors 5 and 2a+1 of the denominator force 4 dividing k and 2a dividing k. Since a is odd, their least common multiple is 4a. Every positive such k is at least 4a."),
             Node("family", "The prime family contradicting invariance", All("a", N, FamilyAssumptions(FamilyConclusion())),
                 "For every prime a≡23 modulo 30 whose successor 2a+1 is prime, both denominators equal 30(2a+1), their first positive even index is 4a, and multiplication by 2a+1 removes exactly that Toda prime. The assumptions describe a family; infinitude of its members is not asserted."),
             Node("witnessII", "The strict decrease at 11 times 5", And(Eq(B(D(4,4)), D(6,9,0)),
                 And(Eq(B(D(2,2,0)), D(7,5,9,0)), And(Eq(T(D(1,1)), Set(D(3), D(5), D(2,3))),
-                    Eq(T(D(5,5)), Set(D(3), D(2,3))))))),
+                    Eq(T(D(5,5)), Set(D(3), D(2,3)))))),
                 "The product formula gives the denominators 690 and 7590. Direct finite evaluation gives the Toda sets {3,5,23} and {3,23}; the cardinality decreases from three to two. No Bernoulli number at index 220 is directly evaluated."),
             Node("refuteI", "Clause (i) is false", Not(V("clauseI")),
                 "The family member a=23, m=47 has first even denominator index 92, unchanged denominator 1410 and unequal Toda sets."),
@@ -88,7 +88,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula m => V("m");
     private static Formula p => V("p");
     private static Formula q => V("q");
-    private static Formula Par(Formula x) => Parenthesized(x);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args)
     {
         var words = new List<Formula>();
@@ -100,21 +100,21 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         return new Formula.Apply(Seq(Operatorname, Grp([.. words]), Sp), [.. args]);
     }
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Lam(string name, Formula body) => Seq(LambdaLower, Sp, Par(Seq(V(name), Colon, Sp, N)), Sp, Mapsto, Sp, Par(body));
+    private static Formula Lam(string name, Formula body) => Seq(LambdaLower, Sp, Parenthesized(Seq(V(name), Colon, Sp, N)), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
     private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
-    private static Formula Dvd(Formula x, Formula y) => Seq(Par(x), Sp, Mid, Sp, Par(y));
+    private static Formula Dvd(Formula x, Formula y) => Seq(Parenthesized(x), Sp, Mid, Sp, Parenthesized(y));
     private static Formula Mem(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.MemberOf, y);
-    private static Formula And(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.And, Par(y));
-    private static Formula Or(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.Or, Par(y));
-    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.Implies, Par(y));
-    private static Formula Iff(Formula x, Formula y) => new Formula.Logic(Par(x), FormulaLogicOperator.Iff, Par(y));
-    private static Formula Not(Formula x) => new Formula.Not(Par(x));
+    private static Formula And(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.And, Parenthesized(y));
+    private static Formula Or(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Or, Parenthesized(y));
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Implies, Parenthesized(y));
+    private static Formula Iff(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Iff, Parenthesized(y));
+    private static Formula Not(Formula x) => new Formula.Not(Parenthesized(x));
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
-    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(Par(x), FormulaBinaryOperator.Multiply, Par(y));
-    private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(Parenthesized(x), FormulaBinaryOperator.Multiply, Parenthesized(y));
+    private static Formula Div(Formula x, Formula y) => Call("Nat.div", x, y);
     private static Formula Mod(Formula x, Formula y) => Call("Nat.mod", x, y);
     private static Formula Pos(Formula x) => Lt(D(0), x);
     private static Formula Prime(Formula x) => Call("Nat.Prime", x);
