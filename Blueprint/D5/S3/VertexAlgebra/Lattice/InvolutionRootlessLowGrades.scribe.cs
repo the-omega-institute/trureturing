@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 
-internal sealed class LatticeInvolutionRootlessLowGradesDocument : IScribeDocumentDefinition
+internal sealed class InvolutionRootlessLowGradesDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/LatticeInvolutionRootlessLowGrades.";
+    private const string Prefix = "D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Production lattice reflection and the literal canonical Sugawara fixed low-energy spaces.",

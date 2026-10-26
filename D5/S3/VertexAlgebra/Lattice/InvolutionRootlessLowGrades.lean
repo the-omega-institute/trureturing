@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeInvolutionRootlessLowGrades
+/- GID: D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeInvolutionRootlessLowGrades
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Production reflection conjugacy and actual fixed Sugawara low-energy orbit basis. -/
 
-import D5.S3.VertexAlgebra.LatticeRootlessLowGrades
+import D5.S3.VertexAlgebra.Lattice.RootlessLowGrades
 import D5.S3.VertexAlgebra.LatticeInvolution
 import Mathlib.Data.Quot
 import Mathlib.LinearAlgebra.Basis.Defs
@@ -21,10 +21,10 @@ set_option maxHeartbeats 4000000
 
 noncomputable section
 
-namespace D5.S3.VertexAlgebra.LatticeInvolutionRootlessLowGrades
+namespace D5.S3.VertexAlgebra.Lattice.InvolutionRootlessLowGrades
 
 open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeAllStateField
-open LatticeRootlessLowGrades LatticeInvolution LatticeSugawaraCurrents
+open D5.S3.VertexAlgebra.Lattice.RootlessLowGrades LatticeInvolution LatticeSugawaraCurrents
 open MvPolynomial
 open scoped BigOperators Classical
 
@@ -791,5 +791,5 @@ theorem actual_theta_fixed_rootless_low_spectrum (D : LatticeData)
 #print axioms actualFixedEnergyTwoBasis_neutral_coe
 #print axioms actual_theta_fixed_rootless_low_spectrum
 
-end D5.S3.VertexAlgebra.LatticeInvolutionRootlessLowGrades
+end D5.S3.VertexAlgebra.Lattice.InvolutionRootlessLowGrades
 
