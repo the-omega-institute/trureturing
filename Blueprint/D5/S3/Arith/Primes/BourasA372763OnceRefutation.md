@@ -58,6 +58,10 @@ $$\neg (\forall p \in \mathbb{N},\; \operatorname{Nat}.\operatorname{Prime}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/BourasA372763OnceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bouras372763-once` (refuted) by `D5/S3/Arith/Primes/BourasA372763OnceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bouras372763-once","declaration_gid":"D5/S3/Arith/Primes/BourasA372763OnceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Bouras (2024). *OEIS A372763: denominators of a continued fraction*. URL: <https://oeis.org/A372763>.
