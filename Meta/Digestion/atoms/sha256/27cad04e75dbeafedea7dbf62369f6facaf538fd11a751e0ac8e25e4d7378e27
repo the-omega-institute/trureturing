@@ -1,0 +1,78 @@
+**Theorem 114.3 (full-unit-input heat convergence for every unbounded time interval).** For each fixed original $a,\eta>0$ and each $t_0>0$,
+
+$$
+\lim_{\sigma\downarrow2}\ \sup_{t\ge t_0}
+ \|e^{-tH_\sigma}-e^{-tH_{\rm end}}\|_{\mathcal H\to\mathcal H}=0.
+\tag{114.15}
+$$
+
+The inputs may be arbitrary complex unit vectors depending on both $\sigma$ and $t$. No positive interacting spectral gap, spectral restriction on the inputs, modified coupling or change of clock is assumed.
+
+**Proof.** We first pass from the relative threshold limit to the large-time relative heat response. This is a spectral-calculus consequence of (114.2). For an integer $m\ge1$ set
+
+$$
+\alpha_m=\sup_{x\ge0}|(1+x/m)^{-m}-e^{-x}|\longrightarrow0.
+\tag{114.16}
+$$
+
+Uniform convergence on each compact $x$ interval follows from the logarithm expansion. On $x\ge M$, monotonicity bounds the difference by $(1+M/m)^{-m}+e^{-M}$; first let $m\to\infty$ and then $M\to\infty$. This proves the displayed uniform scalar limit.
+
+For either pair $(H,A,P_H)=(H_\sigma,A_\sigma,P_\sigma)$ or $(H_{\rm end},A_2,P)$, put $r=m/t$, $B_H=r(H+r)^{-1}$ and $B_A=r(A+r)^{-1}$. Nonnegativity makes $B_H-P_H$ and $B_A$ contractions; $B_HP_H=P_H$ gives $(B_H-P_H)^m=B_H^m-P_H$. Telescoping the difference of the two $m$th powers, without assuming that they commute, yields
+
+$$
+\|e^{-tH}-e^{-tA}-P_H\|
+ \le2\alpha_m+m\|r((H+r)^{-1}-(A+r)^{-1})-P_H\|.
+\tag{114.17}
+$$
+
+For fixed $m$, Theorem 114.2 controls every $0<r\le m/T$ once $T$ is large. After letting $m\to\infty$ this proves
+
+$$
+\begin{gathered}
+\lim_{T\to\infty}\limsup_{\sigma\downarrow2}
+ \sup_{t\ge T}\|e^{-tH_\sigma}-e^{-tA_\sigma}-P_\sigma\|=0,\\
+\lim_{T\to\infty}\sup_{t\ge T}
+ \|e^{-tH_{\rm end}}-e^{-tA_2}-P\|=0.
+\end{gathered}
+\tag{114.18}
+$$
+
+The independent joint quantifiers in (114.2) are used before this last scalar approximation limit.
+
+The original free operators can be compared on the same entire time tail. Their actual joint variables obey $\ell\ge|\lambda|$ by (105.4). If $|\lambda|<1$ and $\sigma>2$, then $\big||\lambda|^\sigma-|\lambda|^2\big|\le|\lambda|^2$. The scalar mean value bound therefore gives
+
+$$
+|e^{-t(a\ell+\eta|\lambda|^\sigma)}
+       -e^{-t(a\ell+\eta|\lambda|^2)}|
+ \le\eta t\ell^2e^{-at\ell}
+ \le\frac{4\eta}{e^2a^2t}.
+\tag{114.19}
+$$
+
+If $|\lambda|\ge1$, each exponential is at most $e^{-at}$ on this same joint support. The spectral theorem gives the bound, uniform in all $\sigma>2$,
+
+$$
+\|e^{-tA_\sigma}-e^{-tA_2}\|
+ \le\frac{4\eta}{e^2a^2t}+2e^{-at}.
+\tag{114.20}
+$$
+
+The split at $|\lambda|=1$ uses the fixed original central units. Combining (114.18), (114.20) and $\|P_\sigma-P\|\to0$ proves
+
+$$
+\lim_{T\to\infty}\limsup_{\sigma\downarrow2}
+ \sup_{t\ge T}\|e^{-tH_\sigma}-e^{-tH_{\rm end}}\|=0.
+\tag{114.21}
+$$
+
+For completeness the bounded-time portion is supplied by the existing norm resolvents, rather than a new threshold estimate. Theorem 113.4 and the norm case of Teschl, [*Mathematical Methods in Quantum Mechanics*, authorized online edition, Theorem 6.31](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), give norm convergence at each fixed $t>0$. The operators are self-adjoint on the same $\mathcal H$, have spectra in $[0,\infty)$, and the continuous extension $x\mapsto e^{-t|x|}$ has equal limits zero at both infinities, exactly as required there. Equivalently apply continuous calculus on $[0,1]$ to the norm-convergent $(H_\sigma+1)^{-1}$, with the function $b_t(y)=e^{-t(y^{-1}-1)}$ for $y>0$ and $b_t(0)=0$. For any nonnegative self-adjoint $K$ and $s,t\ge t_0$,
+
+$$
+\|e^{-tK}-e^{-sK}\|
+ \le |t-s|\sup_{x\ge0}xe^{-t_0x}
+ =\frac{|t-s|}{e t_0}.
+\tag{114.22}
+$$
+
+A finite time net therefore makes the convergence uniform on every $[t_0,T]$. Together with (114.21) this proves (114.15) on the full original half-line. $\square$
+

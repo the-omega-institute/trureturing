@@ -1,0 +1,37 @@
+**定义 WR1.1（固定来源、固定等待与读后指标）。** 保留[原卷假设 1.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的同一个五维来源和[原卷定义 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的实际仪器，写 $P_i=\Pi_i$、$U_t=U(t)$。固定一个已标定的 $t\ge0$，每轮都执行同一个分支族
+
+$$
+\mathcal I_i^{(t)}(X)=P_iU_tXU_t^\dagger P_i,
+\qquad \Phi_t=\sum_{i\in\mathsf S}\mathcal I_i^{(t)}.
+\tag{WR1.1}
+$$
+
+一次运行从固定的 $\rho$ 开始；$\pi_{t,n}$ 是执行 $n$ 轮、完整保留所有读数、再 Stop 的确定策略。比较 $\rho,\sigma$ 时，$t$、仪器、控制、记录和停止规则全部相同。不在两轮间换来源、复位、补充新副本或按未取得的信息改选动作。每个有限 $n$ 都是[原卷定义 1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的原有协议。
+
+令 $I_k$ 为第 $k$ 次实际读数，$\rho_n=\Phi_t^n(\rho)$。这里 $\rho_n$ 对全部既有读数取边缘；在正概率历史上，实际条件窗口态是 $P_{I_n}$。任意初态的首读分布是
+
+$$
+p_1(i)=\operatorname{tr}(P_iU_t\rho U_t^\dagger),\qquad
+M_{ij}(t)=|\langle e_i,U_te_j\rangle|^2,
+\quad u=\mathbf1/5,\quad J=\mathbf1\mathbf1^{\mathsf T}/5.
+\tag{WR1.2}
+$$
+
+$M_{ij}$ 的列 $j$ 是读后状态 $P_j$ 的下一读数律。因此任意初态从首读之后才有 $p_n=M^{n-1}p_1$、$n\ge1$；若 $\rho=\sum_jp_0(j)P_j$ 已对角，则从 $n=0$ 起有 $p_n=M^np_0$。原量子态的相干项不在首读之前被假定消失。
+
+此处直接消费 [Static Fiber §15 的定义 35.1 与命题 37](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)：取其 $d=5$、$v_j(t)=U_t^\dagger e_j$，等价地在[原卷约定 1.4](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#1-五模式来源实际仪器与共同端口) 的被动实帧中取 $v_j(t)=O(t)^{\mathsf T}e_j$，则
+
+$$
+B_{ij}(t)=|U_{t,ji}|^2,\qquad M(t)=B(t)^{\mathsf T},\qquad
+\kappa(t)=\|M(t)-J\|_{2\to2}=\|B(t)-J\|_{2\to2}.
+\tag{WR1.3}
+$$
+
+相位坐标变换 $D$ 不改模方。这里的经典转移解释来自每轮实际执行的秩一读出；没有把不经读出的酉演化当成 $M$。谱证书及其有理计算沿用来源，不重新证明。距离约定为
+
+$$
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1,\qquad
+\operatorname{TV}(p,q)=\tfrac12\sum_i|p_i-q_i|
+=\sup_A|p(A)-q(A)|.
+$$
+
