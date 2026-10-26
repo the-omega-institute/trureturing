@@ -515,17 +515,17 @@ private theorem exec_initial_scan (B : Finset Bool) (as : List (Finset Window)) 
     simpa only [child_stream,List.length_reverse] using hs
   have hheader : NativeBinaryTable.records B as = false :: (NativeBinaryTable.records B as).tail := by
     cases as <;> simp [NativeBinaryTable.records,NativeBinaryTable.rows,pack_payload]
-  have hh : Exec walk (.header s) (registers fixed (NativeBinaryTable.records B as) masks [])
-      (4 * (NativeBinaryTable.row B as).length + 2 + t) out := by
-    apply Exec.next (q' := .scan true s (false,false))
-      (r' := registers fixed (NativeBinaryTable.records B as).tail masks [])
-    · rw [hheader]
-      simp [StackProgram.step,walk,registers,branch,set1]
-    · convert hs' using 1 <;> omega
-  apply Exec.next (q' := .header s)
-    (r' := registers fixed (NativeBinaryTable.records B as) masks [])
-  · cases s <;> simp [StackProgram.step,walk,registers,branch,set8]
-  · convert hh using 1 <;> omega
+  have hstep : StackProgram.step walk (.header s)
+      (registers fixed (NativeBinaryTable.records B as) masks []) =
+      .inr (.scan true s (false,false),registers fixed (NativeBinaryTable.records B as).tail masks []) := by
+    rw [hheader]
+    simp [StackProgram.step,walk,registers,branch,set1]
+  have hh := Exec.next hstep hs'
+  have hstart : StackProgram.step walk walk.start
+      (registers fixed (NativeBinaryTable.records B as) masks [s]) =
+      .inr (.header s,registers fixed (NativeBinaryTable.records B as) masks []) := by
+    cases s <;> simp [StackProgram.step,walk,registers,branch,set8]
+  convert Exec.next hstart hh using 1 <;> omega
 
 private theorem exec_answer (B : Finset Bool) (as : List (Finset Window)) (s : Bool)
     (masks : List Bool) (fixed : Registers 8) :
@@ -568,5 +568,255 @@ private theorem exec_answer (B : Finset Bool) (as : List (Finset Window)) (s : B
       have hh := exec_initial_scan B as s (permissions as ++ masks) fixed t _ he
       refine ⟨_,_,?_,hh,by simp [registers],by simp [registers],by simp [registers]⟩
       omega
+
+private def decodeWindow : Bool → Bool → Bool → Option Window
+  | false,false,false => some .zero
+  | true,false,false => some .low
+  | false,true,false => some .middle
+  | false,false,true => some .high
+  | true,false,true => some .ends
+  | _,_,_ => none
+
+/-- Decode exactly the original three printed bits for each window. -/
+def decodeWord : List Bool → Option (List Window)
+  | [] => some []
+  | x::y::z::bs => do
+      let b ← decodeWindow x y z
+      let w ← decodeWord bs
+      pure (b::w)
+  | _ => none
+
+/-- The status distinguishes an empty successful word from failure. -/
+def decodeAnswer : List Bool → Option (Option (List Window))
+  | [false] => some none
+  | true::bs => some <$> decodeWord bs
+  | _ => none
+
+private theorem decode_printed (w : List Window) : decodeWord (printed w) = some w := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+      change decodeWord (w.flatMap bits) = some w at ih
+      cases b <;> simp [printed,bits,decodeWord,decodeWindow,ih]
+
+private theorem printed_length (w : List Window) : (printed w).length = 3 * w.length := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+      have hl : (bits b).length = 3 := by cases b <;> rfl
+      change (bits b ++ printed w).length = _
+      rw [List.length_append,hl,ih,List.length_cons]
+      omega
+
+private theorem exec_seam (bs : List Bool) (s : Bool) :
+    Exec readSeam readSeam.start (fun j => if j = 0 then s::bs else []) 3
+      (true,StackFrame.extend (NativeBinaryTable.regs [] bs [] [] []) [] [s]) := by
+  let r : Registers 8 := fun j => if j = 0 then s::bs else []
+  have hout : set (set r 0 bs) 8 [s] =
+      StackFrame.extend (NativeBinaryTable.regs [] bs [] [] []) [] [s] := by
+    funext j; fin_cases j <;> rfl
+  apply Exec.next (q' := (1,s)) (r' := set r 0 bs)
+  · cases s <;> simp [StackProgram.step,readSeam,r,branch]
+  apply Exec.next (q' := (2,s)) (r' := set (set r 0 bs) 8 [s])
+  · simp [StackProgram.step,readSeam,StackMachine.set,r]
+  exact .halt (by simp [StackProgram.step,readSeam,hout])
+
+private theorem exec_program (L : ℕ) (A : Fin L → Finset Window) (B : Finset Bool) (s : Bool) :
+    let as := List.ofFn A
+    let answer := reconstruct B as (table B as) s
+    ∃ fuel out, fuel ≤ 4096 * (L+1)^2 ∧
+      Exec program program.start (fun j => if j = 0 then input B as s else []) fuel
+        (answer.isSome,out) ∧ out 0 = output B as s := by
+  dsimp only
+  let as := List.ofFn A
+  let bs := NativeBinaryTable.input B as
+  let answer := reconstruct B as (table B as) s
+  have hl : as.length = L := List.length_ofFn
+  have htable := NativeBinaryTable.native_binary_table L A B
+  have hin : bs.length = 2+5*L := htable.1
+  have hrlen : (NativeBinaryTable.records B as).length = (L+1)*(6*L+5) := htable.2.1
+  obtain ⟨ft,out,hft,het,ho⟩ := NativeBinaryTable.exec_table B as
+  let base := NativeBinaryTable.regs [] bs [] [] []
+  let seam := StackFrame.extend base [] [s]
+  have hseam := exec_seam bs s
+  have hcopy : Exec (copy (k := 8) 0 7 5) (copy (k := 8) 0 7 5).start seam
+      (5*bs.length+6) (true,StackFrame.extend base bs [s]) := by
+    have hh := exec_copy (k := 8) 0 7 5 (by decide) (by decide) (by decide) seam
+      (by rfl)
+    have hcost : (seam 7).length + 5*(seam 0).length+6 = 5*bs.length+6 := by
+      simp [seam,base,StackFrame.extend,NativeBinaryTable.regs]
+    have hout : set seam 7 (seam 0) = StackFrame.extend base bs [s] := by
+      funext j; fin_cases j <;> rfl
+    rw [hcost,hout] at hh
+    exact hh
+  have htableExec := StackFrame.exec_extend NativeBinaryTable.program het bs [s]
+  have hsmall : StackMachine.runInput NativeBinaryTable.stackMachine ft bs = some (true,out) := by
+    have hh := StackProgram.compile_exec NativeBinaryTable.encoding het
+    have hir : NativeBinaryTable.regs [] bs [] [] [] =
+        (fun j : Fin 7 => if j = 0 then bs else []) := by
+      funext j
+      simp only [NativeBinaryTable.regs]
+      split_ifs <;> rfl
+    rw [hir] at hh
+    exact hh
+  have hlength := StackMachine.runInput_length_le NativeBinaryTable.stackMachine ft bs (true,out) hsmall
+  change ∀ j : Fin 7, (out j).length ≤ bs.length+ft at hlength
+  let big := StackFrame.extend out bs [s]
+  have hbig : ∀ j, (big j).length ≤ bs.length+ft := by
+    intro j
+    by_cases hj : j.val < 7
+    · simpa [big,StackFrame.extend,hj] using hlength ⟨j.val,hj⟩
+    · by_cases h7 : j = 7
+      · simp [big,StackFrame.extend,hj,h7]
+      · have hn : 1 ≤ bs.length+ft := by omega
+        simpa [big,StackFrame.extend,hj,h7] using hn
+  obtain ⟨pt,prepared,hpt,hprep,hp0,hp1,hp5,hp6,hp7,hp8⟩ := exec_prepare big (bs.length+ft) hbig
+  have hperms : bs.reverse = permissions as ++ [decide (true ∈ B),decide (false ∈ B)] := by
+    simp [bs,NativeBinaryTable.input,permissions,List.reverse_flatMap,Function.comp_def]
+  have p0 : prepared 0 = NativeBinaryTable.records B as := hp0.trans ho
+  have p1 : prepared 1 = NativeBinaryTable.records B as := hp1.trans ho
+  have p6 : prepared 6 = permissions as ++ [decide (true ∈ B),decide (false ∈ B)] :=
+    hp6.trans hperms
+  have p8 : prepared 8 = [s] := hp8
+  obtain ⟨wt,after,hwbound,hwalk,ha0,ha5,ha8⟩ := exec_answer B as s
+    [decide (true ∈ B),decide (false ∈ B)] prepared
+  have hregs : registers prepared (NativeBinaryTable.records B as)
+      (permissions as ++ [decide (true ∈ B),decide (false ∈ B)]) [s] = prepared := by
+    funext j
+    by_cases h1 : j = 1
+    · subst j; simpa [registers] using p1.symm
+    · by_cases h6 : j = 6
+      · subst j; simpa [registers,h1] using p6.symm
+      · by_cases h8 : j = 8
+        · subst j; simpa [registers,h1,h6] using p8.symm
+        · simp [registers,h1,h6,h8]
+  rw [hregs] at hwalk
+  have a0 : after 0 = NativeBinaryTable.records B as := ha0.trans p0
+  have a5 : after 5 = [] := ha5.trans hp5
+  have hword : (answer.toList.flatMap printed).length ≤ 3*L := by
+    dsimp only [answer]
+    cases hw : reconstruct B as (table B as) s with
+    | none => simp
+    | some w =>
+        have hn := (NativeSuffixAcquisition.native_suffix_acquisition L A B).2.2 s
+        have hz : reconstruct B as (table B as) s = none ↔ entry (counts B as) s = 0 := hn.1
+        have hc : 0 < entry (counts B as) s := by
+          apply Nat.pos_of_ne_zero
+          intro h0
+          have hh := hz.mpr h0
+          rw [hw] at hh
+          contradiction
+        obtain ⟨v,u,d,hv,hvl,_,_,_,_⟩ := hn.2.2 hc
+        have hv' : reconstruct B as (table B as) s = some v := hv
+        rw [hw] at hv'
+        have heq : w = v := Option.some.inj hv'
+        subst v
+        simp [printed_length,hvl]
+  obtain ⟨final,hfinish,houtput⟩ := exec_finish answer.isSome after a5
+  have hfinish' : Exec (if answer.isSome then finish true else finish false)
+      (if answer.isSome then finish true else finish false).start after
+      (4*(after 0).length+2*(after 8).length+9) (answer.isSome,final) := by
+    cases hb : answer.isSome <;> simpa [hb] using hfinish
+  have hchoose := StackControl.exec_choose walk (finish true) (finish false) hwalk hfinish'
+  have hh := exec_seq _ _ hseam (exec_seq _ _ hcopy
+    (exec_seq _ _ htableExec (exec_seq _ _ hprep hchoose)))
+  refine ⟨_,final,?_,hh,?_⟩
+  · have hf : ft ≤ 256*(L+1)^2 := by simpa only [hl] using hft
+    have hp : pt ≤ 3*(bs.length+ft)+5*(NativeBinaryTable.records B as).length+2*bs.length+12 := by
+      simpa [big,StackFrame.extend,ho] using hpt
+    have hw : wt ≤ (NativeBinaryTable.records B as).length+12*L+4 := by
+      simpa only [hl] using hwbound
+    have hR : (NativeBinaryTable.records B as).length ≤ 6*(L+1)^2 := by rw [hrlen]; nlinarith
+    have hN : bs.length ≤ 7*(L+1)^2 := by rw [hin]; nlinarith
+    have hL : L ≤ (L+1)^2 := by nlinarith
+    have hQ : 1 ≤ (L+1)^2 := by nlinarith
+    change 3 + ((5*bs.length+6) + (ft + (pt +
+      (wt+(4*(after 0).length+2*(after 8).length+9))))) ≤ _
+    rw [a0,ha8,List.length_reverse]
+    nlinarith
+  · simpa [output,answer,a0,ha8] using houtput
+
+/-- Complete deterministic finite acquisition by one fixed binary program.
+Every correctness, decoding and bit-resource assertion is a conclusion. -/
+theorem native_binary_word (L : ℕ) (A : Fin L → Finset Window) (B : Finset Bool) (s : Bool) :
+    let as := List.ofFn A
+    let answer := reconstruct B as (table B as) s
+    (input B as s).length = 3+5*L ∧
+    NativeBinaryTable.decodeTable L (NativeBinaryTable.records B as) = table B as ∧
+    (∀ (t : Fin (L+1)) (b : Bool),
+      (NativeBinaryTable.decodeTable L (NativeBinaryTable.records B as))[t.val]? =
+        some (counts B (as.drop t.val)) ∧
+      entry (counts B (as.drop t.val)) b = (NativeSuffixAcquisition.completions B (as.drop t.val) b).card ∧
+      entry (counts B (as.drop t.val)) b ≤ 5^(L-t.val)) ∧
+    (answer = none ↔ entry (counts B as) s = 0) ∧
+    (entry (counts B as) s = 0 ↔
+      ¬ ∃ (w : List Window) (u : Bool) (d : ℕ × ℕ),
+        Allowed as w ∧ u ∈ B ∧ NullReplyFiber.NativeHistory s (0,0) w u d) ∧
+    (0 < entry (counts B as) s →
+      ∃ (w : List Window) (u : Bool) (d : ℕ × ℕ),
+        answer = some w ∧ w.length = L ∧ Allowed as w ∧ u ∈ B ∧
+        NullReplyFiber.NativeHistory s (0,0) w u d ∧
+        (ImmediateWindowStateCapacity.rawMachine 0).toDFA.evalFrom
+          (some (s,GraftAffineClosure.residue 0 (0,0))) w = some (u,GraftAffineClosure.residue 0 d) ∧
+        decodeWord (printed w) = some w) ∧
+    ∃ time tape, time ≤ 1073741824 * (L+1)^4 ∧
+      Complexity.runInput binaryMachine time (input B as s) = some (answer.isSome,tape) ∧
+      tape.output = output B as s ∧
+      NativeBinaryTable.decodeTable L (tape.output.take ((L+1)*(6*L+5))) = table B as ∧
+      decodeAnswer (tape.output.drop ((L+1)*(6*L+5))) = some answer := by
+  dsimp only
+  let as := List.ofFn A
+  let answer := reconstruct B as (table B as) s
+  have ht := NativeBinaryTable.native_binary_table L A B
+  have hn := (NativeSuffixAcquisition.native_suffix_acquisition L A B).2.2 s
+  have hin : (input B as s).length = 3+5*L := by
+    change (NativeBinaryTable.input B as).length+1 = _
+    rw [ht.1]; omega
+  refine ⟨hin,ht.2.2.1,ht.2.2.2.1,hn.1,hn.2.1,?_,?_⟩
+  · intro hp
+    obtain ⟨w,u,d,hw,hl,ha,hu,hh,hr⟩ := hn.2.2 hp
+    exact ⟨w,u,d,hw,hl,ha,hu,hh,hr,decode_printed w⟩
+  · obtain ⟨fuel,out,hf,he,ho⟩ := exec_program L A B s
+    have hrun : StackMachine.runInput stackMachine fuel (input B as s) = some (answer.isSome,out) :=
+      StackProgram.compile_exec encoding he
+    obtain ⟨time,tape,hbudget,hrun,hout⟩ := StackCompile.simulate stackMachine fuel
+      (input B as s) (answer.isSome,out) hrun
+    have htime : time ≤ 1073741824*(L+1)^4 := by
+      let m := (L+1)^2
+      have hm : 1 ≤ m := by dsimp [m]; nlinarith
+      have hi : (input B as s).length ≤ 8*m := by rw [hin]; dsimp [m]; nlinarith
+      have hfu : fuel ≤ 4096*m := hf
+      have hinit : StackInit.initBudget stackMachine.stacks (input B as s).length ≤ 41*m := by
+        change 2*(input B as s).length+2*8+9 ≤ _
+        omega
+      have hstep : StackSimulation.instructionBudget stackMachine ((input B as s).length+fuel) ≤
+          147800*m := by
+        change 4*(9*((input B as s).length+fuel+1)+1)+13 ≤ _
+        omega
+      have hp := Nat.mul_le_mul hfu hstep
+      apply hbudget.trans
+      change StackInit.initBudget stackMachine.stacks (input B as s).length +
+        fuel*StackSimulation.instructionBudget stackMachine ((input B as s).length+fuel) ≤ _
+      have hpow : (L+1)^4 = m*m := by dsimp [m]; ring
+      rw [hpow]
+      nlinarith
+    have heq : tape.output = output B as s := hout.trans ho
+    have hprefix : tape.output.take ((L+1)*(6*L+5)) = NativeBinaryTable.records B as := by
+      rw [heq]
+      change (NativeBinaryTable.records B as ++ _).take _ = _
+      rw [← ht.2.1,List.take_left]
+    refine ⟨time,tape,htime,hrun,heq,?_,?_⟩
+    · rw [hprefix]
+      exact ht.2.2.1
+    · rw [heq]
+      change decodeAnswer ((NativeBinaryTable.records B as ++
+        answer.isSome :: answer.toList.flatMap printed).drop _) = _
+      rw [← ht.2.1,List.drop_left]
+      have hd (a : Option (List Window)) :
+          decodeAnswer (a.isSome :: a.toList.flatMap printed) = some a := by
+        cases a <;> simp [decodeAnswer,decode_printed]
+      exact hd answer
+
+#print axioms native_binary_word
 
 end D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition.NativeBinaryWord
