@@ -14,6 +14,7 @@ The existing suppliers retain their respective copyright and attribution.
 -/
 
 import D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
+import D5.S3.VertexAlgebra.HalfFock.LatticeHalfFockParityField
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Projection
@@ -23,7 +24,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
 
-open private oddWeight_one_iff
+open private oddWeight_one_iff ground_square
   from D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades
 open private charge_pairing from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 
@@ -34,13 +35,16 @@ open LatticeHalfFockChargedCoefficients LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockGradedTrace LatticeTwistedGroundRealization
 open LatticeTwistedGroundRealization.SignQuotient TwistedGround.OperatorAlgebra
 open D5.S3.VertexAlgebra.HalfFock.NormFourLowestGrades MvPolynomial
-open scoped BigOperators TensorProduct
+open LatticeHalfFockParityT HalfFock.LatticeHalfFockParityField
+open LatticeInvolution LatticeSugawaraConformal
+open _root_.D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
+open scoped BigOperators TensorProduct VertexOperator
 
 noncomputable section
 
 /- First remove the potentially fatal trace hypothesis, in the actual quotient.
    Evenness is supplied by the integral cocycle symmetrization theorem. -/
-theorem norm_four_reduction_ne_zero (D : LatticeData) (a : Charge D)
+private theorem norm_four_reduction_ne_zero (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) : reduceCharge D a ≠ 0 := by
   classical
   intro hz
@@ -62,7 +66,7 @@ theorem norm_four_reduction_ne_zero (D : LatticeData) (a : Charge D)
   have parity := integral_cocycle_symmetrization D b b
   omega
 
-theorem norm_four_quotient_charge_ne_zero (D : LatticeData) (a : Charge D)
+private theorem norm_four_quotient_charge_ne_zero (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) : quotientCharge D (groundLift D a) ≠ 0 := by
   have hred : quotientEquiv D (groundLift D a) =
       (⟨0, reduceCharge D a⟩ : ReducedExtension D) := by
@@ -72,7 +76,7 @@ theorem norm_four_quotient_charge_ne_zero (D : LatticeData) (a : Charge D)
   rw [hred]
   exact norm_four_reduction_ne_zero D a ha
 
-theorem ground_action_trace_zero (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem ground_action_trace_zero (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) :
     LinearMap.trace ℂ (ActualGround D hu) (groundAction D hu a) = 0 := by
   exact actual_quotient_charge_ground_trace_zero D hu (groundLift D a)
@@ -88,11 +92,7 @@ private theorem rank_pos (D : LatticeData) (a : Charge D)
 private theorem ground_action_square (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) :
     groundAction D hu a * groundAction D hu a = 1 := by
-  have h := (Classical.choose_spec
-    (Classical.choose_spec (actual_twisted_ground_representation D hu))).2.2.2.2.2.1 a
-  change groundAction D hu a ^ 2 =
-    paritySign (bilinear D a a / 2) • (1 : Module.End ℂ (ActualGround D hu)) at h
-  simpa [ha, paritySign, pow_two] using h
+  exact ground_square D hu a ha
 
 /- The coordinate space below is NOT assumed to be the grade. Its tensor
    product is proved isomorphic to the complete production L0 eigengrade,
@@ -116,7 +116,7 @@ private def firstMonomialEquiv (D : LatticeData) : Fin D.rank ≃ OddFiber D 1 :
       obtain ⟨i, hi⟩ := (oddWeight_one_iff D d).mp hd
       exact ⟨i, Subtype.ext hi.symm⟩)
 
-def firstGradeBasis (D : LatticeData) (hu : IsUnit D.G.det) :
+private def firstGradeBasis (D : LatticeData) (hu : IsUnit D.G.det) :
     Module.Basis (Fin D.rank × Half (groundRank D hu)) ℂ (actualGrade D hu 1) :=
   (actualGradeBasis D hu 1).reindex
     ((firstMonomialEquiv D).symm.prodCongr (Equiv.refl _))
@@ -165,7 +165,7 @@ private theorem nativeGradeEquiv_single_coe (D : LatticeData) (hu : IsUnit D.G.d
         nativeGradeEquiv_basis, firstGradeBasis_coe]
       rw [← TensorProduct.tmul_smul, ← TensorProduct.tmul_sum, ← expand]
 
-theorem nativeGradeEquiv_tmul_coe (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem nativeGradeEquiv_tmul_coe (D : LatticeData) (hu : IsUnit D.G.det)
     (x : FirstOscillator D) (u : ActualGround D hu) :
     (nativeGradeEquiv D hu (x ⊗ₜ[ℂ] u) : ActualTensor D hu) =
       ∑ i : Fin D.rank, x i • ((X (i, 0) : Oscillator D) ⊗ₜ[ℂ] u) := by
@@ -295,7 +295,7 @@ private def nativeHalf (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (s : ℂ) : Module.End ℂ (FirstTensor D hu) :=
   TensorProduct.map (chargeProjector D a) (groundMinus D hu a s)
 
-private def nativeL (D : LatticeData) (hu : IsUnit D.G.det)
+def nativeL (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (s : ℂ) : Module.End ℂ (FirstTensor D hu) :=
   (1 / 16 : ℂ) • nativeSixteen D hu a s + (1 / 2 : ℂ) • nativeHalf D hu a s
 
@@ -343,7 +343,7 @@ private theorem nativeL_single (D : LatticeData) (hu : IsUnit D.G.det)
   module
 
 /- Transport is constructed from the proven complete-grade equivalence. -/
-private def actualTransport (D : LatticeData) (hu : IsUnit D.G.det) :
+def actualTransport (D : LatticeData) (hu : IsUnit D.G.det) :
     Module.End ℂ (FirstTensor D hu) ≃ₐ[ℂ] Module.End ℂ (actualGrade D hu 1) :=
   (nativeGradeEquiv D hu).conjAlgEquiv ℂ
 
@@ -433,7 +433,7 @@ private theorem actual_projector_vanishes (D : LatticeData) (hu : IsUnit D.G.det
 
 /-- All three projectors project onto the full actual eigenspaces.
     IsProj supplies idempotence, range equality and trace=dimension. -/
-theorem actual_projectors_isProj (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem actual_projectors_isProj (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     LinearMap.IsProj (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) 0)
       (actualProjectorZero D hu a s) ∧
@@ -475,16 +475,24 @@ theorem actual_projectors_isProj (D : LatticeData) (hu : IsUnit D.G.det)
     have h16 := off _ (1 / 16) (1 / 2) h16r (by norm_num) v he
     simpa [h0, h16] using total v
 
-theorem actual_projectors_ranges (D : LatticeData) (hu : IsUnit D.G.det)
+theorem actual_projectors_complete (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
-    LinearMap.range (actualProjectorZero D hu a s) =
+    (actualProjectorZero D hu a s + actualProjectorSixteen D hu a s +
+      actualProjectorHalf D hu a s = 1) ∧
+    (LinearMap.IsProj (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) 0)
+      (actualProjectorZero D hu a s) ∧
+    LinearMap.IsProj (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 16))
+      (actualProjectorSixteen D hu a s) ∧
+    LinearMap.IsProj (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 2))
+      (actualProjectorHalf D hu a s)) ∧
+    (LinearMap.range (actualProjectorZero D hu a s) =
       Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) 0 ∧
     LinearMap.range (actualProjectorSixteen D hu a s) =
       Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 16) ∧
     LinearMap.range (actualProjectorHalf D hu a s) =
-      Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 2) := by
+      Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 2)) := by
   obtain ⟨h0, h16, hh⟩ := actual_projectors_isProj D hu a ha s hs
-  exact ⟨h0.range, h16.range, hh.range⟩
+  exact ⟨actual_sum D hu a s, ⟨h0, h16, hh⟩, h0.range, h16.range, hh.range⟩
 
 private theorem actualTransport_trace (D : LatticeData) (hu : IsUnit D.G.det)
     (f : Module.End ℂ (FirstTensor D hu)) :
@@ -530,7 +538,7 @@ theorem actual_first_grade_eigenspace_multiplicities
     2 * Module.finrank ℂ
         (Module.End.eigenspace (actualGradeOneZeroMode D hu a ha s) (1 / 2)) =
       2 ^ (D.rank / 2) := by
-  obtain ⟨p0, p16, ph⟩ := actual_projectors_isProj D hu a ha s hs
+  obtain ⟨p0, p16, ph⟩ := (actual_projectors_complete D hu a ha s hs).2.1
   obtain ⟨t0, t16, th⟩ := actual_projectors_traces D hu a ha s
   rw [p0.trace] at t0
   rw [p16.trace] at t16
@@ -557,6 +565,116 @@ theorem actual_first_grade_eigenspace_multiplicities
       rw [th]
       ring
     exact_mod_cast h
+
+/- The target parity is independent of the scalar sign in the source state. -/
+private theorem normFourSource_fixed (D : LatticeData) (a : Charge D) (s : ℂ) :
+    vector D a s ∈ fixedSpace D := by
+  have hp : sigma D (chargePolynomial D a) = -chargePolynomial D a := by
+    simp [chargePolynomial, map_sum, Finset.sum_neg_distrib]
+  apply (mem_fixedSpace D _).mpr
+  change thetaLinear D (vector D a s) = vector D a s
+  simp [vector, quadraticState, chargedState, theta_single, hp, map_pow, add_comm]
+
+/-- The actual theta-fixed source, with arbitrary scalar sign. -/
+def normFourFixedSource (D : LatticeData) (a : Charge D) (s : ℂ) : FixedCarrier D :=
+  ⟨vector D a s, normFourSource_fixed D a s⟩
+
+/-- The full ambient intersection, without a chosen basis or dimension premise. -/
+def parityMinusEnergyTwo (D : LatticeData) (hu : IsUnit D.G.det) :
+    Submodule ℂ (ActualTensor D hu) :=
+  paritySpace D hu (-1) ⊓ (actualTensorL0 D hu).eigenspace (2 : ℂ)
+
+theorem actual_grade_one_eq_parity_minus_energy_two
+    (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24) :
+    actualGrade D hu 1 = parityMinusEnergyTwo D hu := by
+  have henergy := (actual_rank24_grade_one_finrank_98304 D hu h24).1
+  apply le_antisymm
+  · intro v hv
+    refine ⟨?_, ?_⟩
+    · have hp := actualParity_on_actualGrade D hu 1 ⟨v, hv⟩
+      simpa [paritySpace, LinearMap.mem_ker, LinearMap.sub_apply,
+        LinearMap.smul_apply, sub_eq_zero] using hp
+    · change v ∈ (actualTensorL0 D hu).eigenspace (2 : ℂ)
+      rw [Module.End.eigenspace_def]
+      exact henergy ▸ hv
+  · intro v hv
+    rw [henergy]
+    exact hv.2
+
+/-- Coefficient -4 is exactly physical mode 1 on the target parity minus space. -/
+private theorem fixedParitySlice_zeroMode_coe (D : LatticeData) (hu : IsUnit D.G.det)
+    (a : Charge D) (s : ℂ) (v : paritySpace D hu (-1)) :
+    ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]] v :
+      ActualTensor D hu) = zeroMode D hu a s (v : ActualTensor D hu) := by
+  simp only [fixedParitySlice, VertexOperator.ncoeff_of_coeff]
+  rfl
+
+/-- Literal physical mode restricted to the whole parity-minus energy-two space. -/
+def parityMinusEnergyTwoZeroMode (D : LatticeData) (hu : IsUnit D.G.det)
+    (h24 : D.rank = 24) (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) :
+    Module.End ℂ (parityMinusEnergyTwo D hu) where
+  toFun v := ⟨zeroMode D hu a s v, by
+    rw [← actual_grade_one_eq_parity_minus_energy_two D hu h24]
+    exact (actualGradeOneZeroMode D hu a ha s
+      ⟨v, (actual_grade_one_eq_parity_minus_energy_two D hu h24).symm ▸ v.property⟩).property⟩
+  map_add' v w := Subtype.ext (map_add (zeroMode D hu a s) v.val w.val)
+  map_smul' c v := Subtype.ext (map_smul (zeroMode D hu a s) c v.val)
+
+private theorem parity_minus_energy_two_physical_mode
+    (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
+    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ)
+    (v : parityMinusEnergyTwo D hu) :
+    (parityMinusEnergyTwoZeroMode D hu h24 a ha s v : ActualTensor D hu) =
+      ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]
+        ⟨v, v.property.1⟩ : ActualTensor D hu) := by
+  exact (fixedParitySlice_zeroMode_coe D hu a s _).symm
+
+private def energyTwoEigenspaceEquiv
+    (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
+    (a : Charge D) (ha : bilinear D a a = 4) (s λ : ℂ) :
+    (actualGradeOneZeroMode D hu a ha s).eigenspace λ ≃ₗ[ℂ]
+      (parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace λ where
+  toFun v := ⟨⟨v.val.val,
+    actual_grade_one_eq_parity_minus_energy_two D hu h24 ▸ v.val.property⟩, by
+    rw [Module.End.mem_eigenspace_iff]
+    apply Subtype.ext
+    exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp v.property)⟩
+  invFun v := ⟨⟨v.val.val,
+    (actual_grade_one_eq_parity_minus_energy_two D hu h24).symm ▸ v.val.property⟩, by
+    rw [Module.End.mem_eigenspace_iff]
+    apply Subtype.ext
+    exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp v.property)⟩
+  left_inv v := rfl
+  right_inv v := rfl
+  map_add' v w := rfl
+  map_smul' c v := rfl
+
+/-- The three multiplicities of the literal fixed-source physical mode on the
+entire actual parity-minus ambient energy-two space at rank twenty-four. -/
+theorem actual_parity_minus_energy_two_multiplicities
+    (D : LatticeData) (hu : IsUnit D.G.det) (h24 : D.rank = 24)
+    (a : Charge D) (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
+    (∀ v : parityMinusEnergyTwo D hu,
+      (parityMinusEnergyTwoZeroMode D hu h24 a ha s v : ActualTensor D hu) =
+        ((fixedParitySlice D hu (-1) (normFourFixedSource D a s))[[1]]
+          ⟨v, v.property.1⟩ : ActualTensor D hu)) ∧
+    Module.finrank ℂ (parityMinusEnergyTwo D hu) = 98304 ∧
+    Module.finrank ℂ
+      ((parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace 0) = 47104 ∧
+    Module.finrank ℂ
+      ((parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace (1 / 16)) = 49152 ∧
+    Module.finrank ℂ
+      ((parityMinusEnergyTwoZeroMode D hu h24 a ha s).eigenspace (1 / 2)) = 2048 := by
+  refine ⟨parity_minus_energy_two_physical_mode D hu h24 a ha s, ?_, ?_⟩
+  · rw [← actual_grade_one_eq_parity_minus_energy_two D hu h24]
+    exact (actual_rank24_grade_one_finrank_98304 D hu h24).2.1
+  ·
+    have dims := actual_first_grade_eigenspace_multiplicities D hu a ha s hs
+    have transfer (λ : ℂ) :=
+      (energyTwoEigenspaceEquiv D hu h24 a ha s λ).finrank_eq
+    rw [transfer 0, transfer (1 / 16), transfer (1 / 2), h24] at dims
+    norm_num at dims
+    omega
 
 end
 end D5.S3.VertexAlgebra.HalfFock.NormFourFirstGradeSpectrum
