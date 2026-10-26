@@ -443,7 +443,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
       let after := (← table.budget?.mapM (·.get)).getD {}
       let reason ← if ex.isMaxHeartbeat then pure <|
           if after.preparation - before.preparation >= lookupPreparationBudget * 1000 then
-            "preparation-capped" else "capped"
+            "candidate-preparation-limit" else "candidate-search-kappa"
         else if ex.isInterrupt then pure "interrupted"
         else pure s!"exception:{← ex.toMessageData.toString}"
       return {

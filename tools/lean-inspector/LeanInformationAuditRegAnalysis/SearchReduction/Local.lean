@@ -454,7 +454,9 @@ def boundedRebuildBranch (action : MetaM LocalResult)
       if ex.isMaxHeartbeat then
         let preparation := (← budget?.mapM (·.get)).any
           (·.preparation >= lookupPreparationBudget * 1000)
-        return {detail := if preparation then "preparation-heartbeat" else "heartbeat"}
+        return {detail := if preparation then "candidate-preparation-limit"
+          else if budget?.isSome then "lookup-enclosing-heartbeat"
+          else "local-closure-heartbeat"}
       if ex.isInterrupt then return {detail := "cancelled"}
       if ex.isRuntime then return {detail := "runtime-limit"}
       return {detail := s!"execution:{← ex.toMessageData.toString}"})

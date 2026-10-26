@@ -102,7 +102,7 @@ run_cmd liftTermElabM do
     IO.addHeartbeats (localBudget * 1000 + 1)
     discard <| copyCertificateExpression {source, enclosingBudget := true} (mkConst ``True.intro)
     return {cost := .one}
-  unless result.cost == .unknown && result.detail == "heartbeat" do
+  unless result.cost == .unknown && result.detail == "local-closure-heartbeat" do
     throwError "candidate vocabulary copy escaped the enclosing allocation"
   logInfo "LOOKUP_COPY_BUDGET enclosing=true timeout=unknown"
 
@@ -142,7 +142,7 @@ run_cmd liftTermElabM do
       IO.addHeartbeats (lookupPreparationBudget * 1000 + 1)
       checkSystem "lookup.preparation_overflow"
     return {cost := .one}) (some budget)
-  unless exceeded.cost == .unknown && exceeded.detail == "preparation-heartbeat" do
+  unless exceeded.cost == .unknown && exceeded.detail == "candidate-preparation-limit" do
     throwError "preparation overflow became NoHit or escaped its branch: {exceeded.detail}"
   logInfo "LOOKUP_SPLIT_BUDGET preparation_excluded=true preparation_overflow=unknown"
 
@@ -155,8 +155,9 @@ run_cmd liftTermElabM do
     IO.addHeartbeats (lookupCandidateBudget * 1000 + 1)
     checkSystem "lookup.candidate.cap-fixture"
     return {complete := true}
-  unless !capped.complete && capped.capped.size == 1 do
-    throwError "cap became normal failure"
+  unless !capped.complete && capped.capped.size == 1 &&
+      capped.failures == #["Fixture:capped:candidate-search-kappa"] do
+    throwError "cap became normal failure: complete={capped.complete}; capped={capped.capped}; reasons={capped.failures}"
   let failed ← boundedLookupCandidate table {entry with name := "unsupported"} goal do
     throwError "lookup.view_depth_incomplete"
   unless !failed.complete && failed.failures.size == 1 do
@@ -166,7 +167,8 @@ run_cmd liftTermElabM do
       IO.addHeartbeats (lookupPreparationBudget * 1000 + 1)
       checkSystem "lookup.preparation.cap-fixture"
     return {complete := true}
-  unless !prepared.complete && prepared.capped.size == 1 do
+  unless !prepared.complete && prepared.capped.size == 1 &&
+      prepared.failures == #["Fixture:preparation:candidate-preparation-limit"] do
     throwError "preparation cap became normal failure"
   let recovered ← boundedLookupCandidate table {entry with name := "recovered"} goal do
     unless !(← goal.isAssigned) do throwError "failed state survived"

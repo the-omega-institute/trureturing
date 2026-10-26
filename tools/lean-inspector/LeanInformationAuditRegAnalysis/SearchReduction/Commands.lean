@@ -183,6 +183,24 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("closure", toJson ((classifyClosure r).map fun c =>
     match c with | .zero => "zero" | .partial_ => "partial"))]
 
+/-- Diagnostic stops retain their query/arm context; none supplies a price. -/
+def terminationDetails (r : Observation) : Array String := Id.run do
+  let mut details := if r.reason.isEmpty then #[] else #[r.reason]
+  if let some reading := r.graph? then
+    for (arm, probe) in [("baseline", reading.baselineProbe), ("paired", reading.pairedProbe)] do
+      if let .incomplete _ := probe.outcome then
+        details := details.push s!"{arm}-root:{probe.detail}"
+    for edge in reading.graph.edges do
+      if edge.cost == .unknown || edge.pairedCost == .unknown then
+        details := details.push s!"edge:{edge.source}:{edge.detail}"
+    if !reading.targetPartComplete then
+      details := details.push "target-part-guard-incomplete"
+      for id in reading.selectedSeeds do
+        if let some vertex := reading.graph.vertices.find? (·.id == id) then
+          details := details.push s!"seed:{id}:independent:{vertex.independentLookupDetail}"
+          details := details.push s!"seed:{id}:reverse:{vertex.reverseLookupDetail}"
+  return details.toList.eraseDups.toArray
+
 /-- A human-readable projection. No code reads it back for classification. -/
 def computationalJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
   ("reference", toJson "R_lookup"),
@@ -194,6 +212,13 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
   ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson localBudget),
+  ("budget_limits", Json.mkObj [
+    ("local-closure-heartbeat", toJson localBudget),
+    ("candidate-search-kappa", toJson lookupCandidateBudget),
+    ("candidate-preparation-limit", toJson lookupPreparationBudget),
+    ("G-truncated", toJson lookupCoverageBudget),
+    ("isolation-reconstruction", toJson reconstructionBudget)]),
+  ("termination_details", toJson (terminationDetails r)),
   ("preparationMaxHeartbeats", toJson lookupPreparationBudget),
     ("candidateMaxHeartbeats", toJson lookupCandidateBudget),
     ("coverageMaxHeartbeats", toJson lookupCoverageBudget),
