@@ -10,6 +10,8 @@ import D5.S3.Quantum.Divergence.EntropyDefectInverseSqrtStability
 import D5.S3.Quantum.Recovery.CanonicalPetzEquality
 import D5.S3.Quantum.Recovery.PetzCoreTraceStability
 
+/-! Quantitative trace stability for the same fixed completed Petz channel. -/
+
 noncomputable section
 universe u v
 open Matrix
@@ -18,6 +20,7 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Divergence.SupportAwareRelativeEntropy
 open D5.S3.Quantum.Divergence.CanonicalChannelDPI
+open D5.S3.Quantum.Divergence.EntropyDefectInverseSqrtStability
 open D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 open D5.S3.Quantum.Recovery
 
@@ -72,8 +75,7 @@ theorem supported_entropy_defect_fixed_petz_trace_stability
   have hL2 : Real.sqrt (star d ⬝ᵥ d).re ≤
       4 / (Real.pi * Real.sqrt m) * Δ ^ (1 / 4 : ℝ) := by
     simpa only [M, d, Δ] using
-      D5.S3.Quantum.Divergence.EntropyDefectInverseSqrtStability.
-        entropy_defect_inverse_sqrt_stability Φ ρ σ support m hm hAm hBm
+      entropy_defect_inverse_sqrt_stability Φ ρ σ support m hm hAm hBm
   have hcore : traceNorm (N - M.data.R) ≤
       4 * Real.sqrt L * Real.sqrt (star d ⬝ᵥ d).re := by
     simpa only [N, d] using

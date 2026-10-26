@@ -33,7 +33,12 @@ internal sealed class CanonicalPetzStabilityDocument : IScribeDocumentDefinition
                     + "with the physical Hilbert-Schmidt norm.")),
                     Paragraph(Text("This is a quantitative library derivation using existing Petz construction, "
                     + "resolvent and matrix analysis, with no claim of literature novelty or optimality of the "
-                    + "constant. The unsupported infinite-entropy branch and spectral bounds not satisfying "
+                    + "constant. Related quantitative Petz estimates are treated by Carlen and Vershynina, "
+                    + "Recovery map stability for the Data Processing Inequality, arXiv:1710.02409v3, and "
+                    + "Recovery and the Data Processing Inequality for quasi-entropies, arXiv:1710.08080v3. "
+                    + "Those references are context for the stability method, not an assertion that their "
+                    + "parameterization or constants coincide with this statement. The unsupported "
+                    + "infinite-entropy branch and spectral bounds not satisfying "
                     + "the displayed hypotheses are outside the estimate."))),
                 DescribeRole.Theorem))));
 }
