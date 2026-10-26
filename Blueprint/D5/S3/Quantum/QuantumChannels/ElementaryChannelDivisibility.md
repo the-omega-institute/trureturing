@@ -32,7 +32,7 @@ The operator ketbra(u,v) sends z to u⟨v,z⟩.
 
 **Theorem 1.3 (Adjoint of a rank one operator).**
 
-$$\forall (\operatorname{I}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{I}))][(\operatorname{DecidableEq}(\operatorname{I}))], \forall (\operatorname{u}:(\operatorname{I}\to\mathbb{C})), \forall (\operatorname{v}:(\operatorname{I}\to\mathbb{C})), ((\operatorname{ketbra}(\operatorname{u},\operatorname{v})))^{*}=(\operatorname{ketbra}(\operatorname{v},\operatorname{u}))$$
+$$\forall (\operatorname{n}:\operatorname{Type}), \forall [(\operatorname{Fintype}(\operatorname{n}))][(\operatorname{DecidableEq}(\operatorname{n}))], \forall (\operatorname{u}:(\operatorname{n}\to\mathbb{C})), \forall (\operatorname{w}:(\operatorname{n}\to\mathbb{C})), ((\operatorname{ketbra}(\operatorname{u},\operatorname{w})))^{*}=(\operatorname{ketbra}(\operatorname{w},\operatorname{u}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ElementaryChannelDivisibility.ketbra_star` (`✓ std3`). ∎
 

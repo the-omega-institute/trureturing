@@ -68,7 +68,7 @@ Conjecture 1 states that for local dimensions at least two, every pair of SIC fa
 
 **Theorem 1.6 (Trace pairings on a spanning family).**
 
-$$\forall (d: \mathbb{N}), (\forall (I: Type), (\forall (P: (I \to Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right))), ((span\left(\mathbb{C}, range\left(P\right)\right) = \operatorname{Top.top}) \Rightarrow (\forall (X: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), (\forall (Y: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), ((\forall (i: I), (trace\left(X \cdot P\left(i\right)\right) = trace\left(Y \cdot P\left(i\right)\right))) \Rightarrow (X = Y)))))))$$
+$$\forall (d: \mathbb{N}), (\forall (\iota: Type), (\forall (P: (\iota \to Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right))), ((\operatorname{Submodule.span}\left(\mathbb{C}, \operatorname{Set.range}\left(P\right)\right) = \operatorname{Top.top}) \Rightarrow (\forall (X: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), (\forall (Y: Matrix\left(Fin\left(d\right), Fin\left(d\right), \mathbb{C}\right)), ((\forall (i: \iota), (trace\left(X \cdot P\left(i\right)\right) = trace\left(Y \cdot P\left(i\right)\right))) \Rightarrow (X = Y)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/SicMubCorrelationTraceNormEquality.trace_pairing_ext` (`✓ std3`). ∎
 

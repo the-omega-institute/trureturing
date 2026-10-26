@@ -66,7 +66,7 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
         provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula X(string name) => F.Id(name);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
     private static Formula Cast(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Cast(X(name), type), Comma, Sp, Parenthesized(body));
@@ -124,14 +124,16 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
 
     private static Formula TracePairingExtFormula()
     {
-        Formula d = X("d"), iota = X("I"), p = X("P"), x = X("X"), y = X("Y");
+        Formula d = X("d"), iota = Iota, p = X("P"), x = X("X"), y = X("Y");
         Formula matrix = Matrix(Fin(d), Fin(d));
-        Formula spanning = Equal(Call("span", Complex(), Call("range", p)), Qualified("Top", "top"));
+        Formula spanning = Equal(At(Qualified("Submodule", "span"), Complex(),
+            At(Qualified("Set", "range"), p)), Qualified("Top", "top"));
         Formula pairings = All("i", iota,
             Equal(Trace(Multiply(x, At(p, X("i")))), Trace(Multiply(y, At(p, X("i"))))));
-        return Disp(All("d", Nat(), All("I", X("Type"), All("P", Arrow(iota, matrix),
-            Implication(spanning, All("X", matrix, All("Y", matrix,
-                Implication(pairings, Equal(x, y)))))))));
+        return Disp(All("d", Nat(), Seq(Forall, Sp, Cast(iota, X("Type")), Comma, Sp,
+            Parenthesized(All("P", Arrow(iota, matrix),
+                Implication(spanning, All("X", matrix, All("Y", matrix,
+                    Implication(pairings, Equal(x, y))))))))));
     }
 
     private static Formula SICFamilyFormula()
