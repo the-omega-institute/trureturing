@@ -60,7 +60,14 @@ private theorem power_normalizer (p : ℝ) (hp : p ∈ Ioo 0 1) :
       HasDerivWithinAt phi (((1 - x) ^ (2 : Nat))⁻¹) (Ioo 0 1) x := by
     have h := (hasDerivAt_id x).div ((hasDerivAt_id x).const_sub 1)
       (sub_pos.mpr hx.2).ne'
-    convert h.hasDerivWithinAt using 1 <;> ring
+    have hfun : (id / fun y : ℝ => 1 - id y) = phi := rfl
+    rw [hfun] at h
+    have hcoeff : (1 * (1 - id x) - id x * -1) / (1 - id x) ^ 2 =
+        ((1 - x) ^ (2 : Nat))⁻¹ := by
+      change (1 * (1 - x) - x * -1) / (1 - x) ^ 2 = ((1 - x) ^ (2 : Nat))⁻¹
+      ring
+    rw [hcoeff] at h
+    exact h.hasDerivWithinAt
   have hpoint (x : ℝ) (hx : x ∈ Ioo (0 : ℝ) 1) :
       |((1 - x) ^ (2 : Nat))⁻¹| • g (phi x) =
         x ^ (p - 1) * (1 - x) ^ (-p) := by
@@ -568,7 +575,7 @@ private theorem l2_inverse_sqrt_integral
   have hpoint (t : ℝ) (ht : t ∈ Ioi (0 : ℝ)) :
       t ^ (-(1 / 2 : ℝ)) = 1 / Real.sqrt t := by
     simpa only [neg_div] using (reciprocal_sqrt_eq_rpow t ht.le).symm
-  refine ⟨hi.congr_fun (fun t ht => by rw [hpoint t ht]) measurableSet_Ioi, ?_⟩
+  refine ⟨hi.congr_fun (fun t ht => by simpa only [hpoint t ht]) measurableSet_Ioi, ?_⟩
   rw [hAhalf, hBhalf] at he
   have hcoef : Real.sin (Real.pi * (1 / 2 : ℝ)) / Real.pi = Real.pi⁻¹ := by
     rw [show Real.pi * (1 / 2 : ℝ) = Real.pi / 2 by ring, Real.sin_pi_div_two,
@@ -576,7 +583,7 @@ private theorem l2_inverse_sqrt_integral
   rw [hcoef] at he
   rw [← he]
   congr 1
-  exact setIntegral_congr_fun measurableSet_Ioi (fun t ht => by rw [hpoint t ht])
+  exact setIntegral_congr_fun measurableSet_Ioi (fun t ht => by simpa only [hpoint t ht])
 
 /-- Actual support-aware entropy loss controls inverse-square-root intertwining
 in L2 under a common positive supported-carrier spectral floor. -/

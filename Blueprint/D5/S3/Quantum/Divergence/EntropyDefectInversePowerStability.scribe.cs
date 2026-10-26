@@ -13,7 +13,7 @@ internal sealed class EntropyDefectInversePowerStabilityDocument : IScribeDocume
                 H("A quantitative family on the actual supported modular model"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let Phi be an arbitrary channel between finite nonempty systems, and let "
-                    + "rho and sigma be density states whose input supports are contained. Form the existing "
+                    + "rho and sigma be density states with support of rho contained in support of sigma. Form the existing "
                     + "canonical supported relative-modular model M=(A,B,V,xi,eta). For any 0<alpha<1 and "
                     + "m>0 with mI<=A and mI<=B, set d_alpha=A^(-alpha)xi-V B^(-alpha)eta, using real "
                     + "continuous functional calculus on the positive supported carriers. Its Euclidean L2 "
