@@ -135,8 +135,8 @@ internal sealed class RationalHassePrincipleDocument : IScribeDocumentDefinition
                     + "and asserts no proof or refutation."),
             Desc("isomorphism_monomial", "Isomorphisms are forced to be monomial", MonomialStatement,
                 "For any field K and two natural bases of equal finite size, perfection of the target "
-                    + "forces each row of the matrix of a multiplication isomorphism to have disjoint "
-                    + "support from every other column in that row. Surjectivity makes every row nonzero; "
+                    + "forces the matrix of a multiplication isomorphism to have at most one "
+                    + "nonzero entry in each row. Surjectivity makes every row nonzero; "
                     + "injectivity makes every column nonzero. A finite permutation and nonzero row "
                     + "scalars result. Source perfection is unnecessary. The two products and bases "
                     + "may be different. The proof uses all pair products to show injectivity of the "
