@@ -1,0 +1,40 @@
+**Definition 2.1 (source, terminal consumers and quadratic coordinates).** Work in the same fixed passive real frame on $\mathbb C^5$ as [the parent volume, Definition 6.1 and §§13–18](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md); the supplier version is [the fixed source snapshot](https://github.com/the-omega-institute/trureturing/blob/e0086a9b94dd0c152d16222363adf13d7d9d6c2d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md). A lawful source is a density matrix
+
+$$
+\rho=S+iA,\qquad S^T=S,\quad A^T=-A,\qquad
+ a=a(A)=(A_{ij})_{i<j}\in\mathbb R^{10}.
+$$
+
+Here each attempt obtains one or two fresh independent preparations of this same unknown $\rho$, and discards every source-dependent quantum register, successor and environment at its end. Only classical records survive. This is the acquisition class of parent Definition 18.1. WR1 instead evolves and rereads one window without replenishment; no statistical conclusion below is asserted for that experiment.
+
+A terminal consumer is any finite real symmetric POVM on one fresh copy or on two fresh copies. Its complete output includes all failures and filter prefixes if it is implemented through filtering. For the same selected consumer $M$, let $p_\rho^M$ be its output law, and define
+
+$$
+\begin{aligned}
+d_{\mathrm{cons}}(\rho,\sigma)
+ &=\sup_{M\text{ as above}}\operatorname{TV}(p_\rho^M,p_\sigma^M),
+ &\operatorname{TV}(p,q)&=\tfrac12\sum_z|p(z)-q(z)|,\\
+\Xi(\rho)&=(S,aa^T),
+ &\Sigma_2(\rho)&=\tfrac12(\rho^{\otimes2}+\overline\rho^{\otimes2})
+                 =S\otimes S-A\otimes A.
+\end{aligned}
+\tag{2.1}
+$$
+
+For another lawful $\sigma=T+iB$ put $b=a(B)$ and
+
+$$
+\begin{aligned}
+x&=\|S-T\|_{\mathrm F},\qquad y=\|aa^T-bb^T\|_{\mathrm F},
+ &d_\Xi(\rho,\sigma)&=x+y,\\
+d&=\min\{\|a-b\|_2,\|a+b\|_2\},
+ &D&=\max\{\|a-b\|_2,\|a+b\|_2\},\\
+\mathfrak d(\rho,\sigma)
+ &=\min_{\epsilon=\pm1}\|S+iA-(T+i\epsilon B)\|_{\mathrm F}
+ =\sqrt{x^2+2d^2}.
+\end{aligned}
+\tag{2.2}
+$$
+
+The two representatives $\sigma,\overline\sigma$ describe one common-conjugation orbit. There is only one common sign, not separately chosen signs for coordinates. Both $S$ and $\Sigma_2(\rho)$ are real density matrices: each is an average of positive trace-one matrices. This is an exact probability representation for the specified real effects, not a preparation service that randomizes the source's conjugation sign.
+

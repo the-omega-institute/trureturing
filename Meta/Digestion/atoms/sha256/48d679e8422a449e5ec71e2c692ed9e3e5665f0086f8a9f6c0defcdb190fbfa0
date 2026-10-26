@@ -1,0 +1,40 @@
+**接口 VI（继续—停止语义与截断所需的尾部）。** 这是另一种递归接口：取非零有限维 $H,K$，CP 映射 $\mathcal C:\mathcal L(H)\to\mathcal L(H)$、$\mathcal S:\mathcal L(H)\to\mathcal L(K)$，要求
+
+$$
+\mathcal C^*(I_H)+\mathcal S^*(I_K)=I_H,
+\qquad F_n=\sum_{k=0}^{n-1}\mathcal S\mathcal C^k,\quad F_0=0.
+$$
+
+停轮数对应可区分分支，以上求和遗忘其标签；它不是未记录路径的振幅相加。[Selinger，*Towards a Quantum Programming Language*，§§6.3–6.5、Lemma 6.4](https://www.mathstat.dal.ca/~selinger/papers/qpl-2up.pdf) 供应 CP 不增迹映射的最小语义。具体对应取继续边为 $\mathcal C$、返回边为 $\mathcal S$：CP 顺序递增的 $F_n$ 在有限维收敛到最小 CP 不增迹解 $F=\mathcal S+F\mathcal C$，不保证 $F$ 保迹。望远镜恒等式给
+
+$$
+H_n=(\mathcal C^*)^nI_H\downarrow H_\infty,\qquad
+F_n^*(I_K)=I_H-H_n,\qquad F^*(I_K)=I_H-H_\infty.
+$$
+
+这也给一个直接有限维核对：$F_n$ 的正 Choi 矩阵递增且迹有界；任一 CP 固定点 $G$ 满足 $G=F_n+G\mathcal C^n$，故极限最小。其 CP 残差满足
+
+$$
+F-F_n=F\mathcal C^n,\qquad
+\|F-F_n\|_\diamond=\|H_n-H_\infty\|_{\rm op}.
+\tag{WR1.8}
+$$
+
+所用成熟 CP 范数恒等式为 $\|\Psi\|_\diamond=\|\Psi^*(I)\|_{\rm op}$：Kraus 族组成的 Stinespring 算子给上界，效果最大本征态给下界；这里 $\diamond$ 是完整的、未除二的范数。非终止质量 $H_\infty$ 不能计作返回近似误差。若进一步 $\mathcal C^*(I_H)\le qI_H$、$0\le q<1$，才有 $H_n\le q^nI_H$、$H_\infty=0$、$F$ 保迹；块条件 $(\mathcal C^*)^rI_H\le qI_H$ 则给 $q^{\lfloor n/r\rfloor}$，其中 $r\ge1$、$0\le q<1$。反例 $\mathcal C=\mathrm{id},\mathcal S=0$ 的最小返回语义为零，系统永不返回。
+
+在这个终止条件下，有限执行的完成通道及理想通道为
+
+$$
+G_n(X)=F_n(X)\oplus\operatorname{tr}(\mathcal C^n(X))|\perp\rangle\langle\perp|,
+\qquad G_\infty(X)=F(X)\oplus0.
+$$
+
+两者都保迹。差值的返回残差和旗标来自两个 CP 映射，其 diamond 范数均为 $\|H_n\|_{\rm op}\le q^n$；三角不等式给
+
+$$
+\tfrac12\|G_n-G_\infty\|_\diamond\le q^n,
+\qquad \|G_n-G_\infty\|_\diamond\le2q^n.
+$$
+
+对任意联合态 $\tau_{HR}$，旗标块的参考算子必须是 $\operatorname{Tr}_H[(\mathcal C^n\otimes\mathrm{id}_R)(\tau)]$；它通常带有条件相关，不能把它替为概率乘一个独立参考态。整个完成通道不触及 $R$，其总参考边缘仍是 $\tau_R$。若保留全部停轮数，返回载体为可数正交和 $\bigoplus_{k\ge0}K$；这和有限 $K$ 上遗忘停轮数的 $F$ 是两个输出合同。CP 语义、范数界与有限展开均不供应新的允许门、输运或执行效率。
+
