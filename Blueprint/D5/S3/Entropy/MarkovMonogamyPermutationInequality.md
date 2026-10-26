@@ -65,5 +65,6 @@ Finally let m(i,a) be the mutual information between positions n − 1 − i.val
 - Truth anchor: `D5/S3/Entropy/MarkovMonogamyPermutationInequality.claim`
 - Truth anchor: `D5/S3/Entropy/MarkovMonogamyPermutationInequality.composedTransition`
 - Truth anchor: `D5/S3/Entropy/MarkovMonogamyPermutationInequality.result`
+- Dependency: [D5/S3/Combinatorics/Probability/FiniteCommonMarginalSupermodular](../Combinatorics/Probability/FiniteCommonMarginalSupermodular.md)
 - Dependency: [D5/S3/Entropy/Mixing/MixtureEntropyBracket](Mixing/MixtureEntropyBracket.md)
 - Dependency: [D5/S3/Entropy/Submodularity/ConditionalMutualInformation](Submodularity/ConditionalMutualInformation.md)
