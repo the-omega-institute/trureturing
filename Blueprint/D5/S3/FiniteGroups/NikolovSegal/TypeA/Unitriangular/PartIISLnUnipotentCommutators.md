@@ -20,7 +20,7 @@ Genuine embedding with an auxiliary block of the same size.
 
 **Definition 1.2 (Lower block shear).**
 
-$$\forall F \in Typeu,\; Field\left(F\right) \Rightarrow \left(\forall n \in N,\; \forall A \in Matrix\left(Fin\left(n\right), Fin\left(n\right), F\right),\; val\left(lowerBlock\left(A\right)\right) = fromBlocks\left(1, 0, A, 1\right) \land det\left(val\left(lowerBlock\left(A\right)\right)\right) = 1\right)$$
+$$\forall u, \forall F \in \operatorname{Type} u,\; Field\left(F\right) \Rightarrow \left(\forall n \in \mathbb{N},\; \forall A \in Matrix\left(Fin\left(n\right), Fin\left(n\right), F\right),\; val\left(lowerBlock\left(A\right)\right) = fromBlocks\left(1, 0, A, 1\right) \land det\left(val\left(lowerBlock\left(A\right)\right)\right) = 1\right)$$
 
 *Formalization.* `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIISLnUnipotentCommutators.lowerBlock` (`✓ std3`).
 
