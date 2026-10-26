@@ -14,7 +14,11 @@ import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Data.Finset.Powerset
 import Mathlib.GroupTheory.Perm.ClosureSwap
 import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Tactic
+import Mathlib.Tactic.Convert
+import Mathlib.Tactic.GCongr
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-! Spectral contraction of products of Hamming-weight-preserving gate averages. -/
 
@@ -62,8 +66,6 @@ def claim : Prop :=
     ∀ (μ : ℂ) (v : config n k → ℂ), v ≠ 0 → ∑ s, v s = 0 →
       (patternMatrix (pat n)).map (fun x : ℝ => (x : ℂ)) *ᵥ v = μ • v →
       ‖μ‖ ≤ 1 - d / (n : ℝ) ^ b
-
-open Classical
 
 private lemma swapConfig_involutive {n k : ℕ} (a b : Fin n) :
     Function.Involutive (swapConfig (k := k) a b) := by
@@ -257,7 +259,8 @@ private lemma defect_le_increments {n k : ℕ} (pat : List (Fin n × Fin n))
       exact le_add_of_nonneg_right (List.sum_nonneg (increments_nonneg _ _))
     · change _ ≤ _ + (increments pat (average (swapEquiv d.1 d.2) v)).sum
       exact (residual_lipschitz (swapEquiv e.1 e.2) v
-        (average (swapEquiv d.1 d.2) v)).trans (add_le_add le_rfl (ih (average (swapEquiv d.1 d.2) v) he))
+        (average (swapEquiv d.1 d.2) v)).trans
+          (add_le_add le_rfl (ih (average (swapEquiv d.1 d.2) v) he))
 
 private lemma energy_control {n k : ℕ} (pat : List (Fin n × Fin n))
     (v : EuclideanSpace ℂ (config n k)) :
@@ -432,6 +435,7 @@ private lemma real_poincare {ι : Type*} [Fintype ι] (g : SimpleGraph ι)
         mul_le_mul_of_nonneg_left (path_variation g f p hp) (Nat.cast_nonneg _)
       _ = _ := by ring
 
+open Classical in
 private lemma adjacency_energy {n k : ℕ} (pat : List (Fin n × Fin n))
     (f : config n k → ℝ) :
     (∑ s, ∑ t, if (configGraph pat).Adj s t then (f s - f t) ^ 2 else 0) ≤
