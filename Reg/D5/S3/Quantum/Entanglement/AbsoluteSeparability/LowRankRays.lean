@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
 import Reg.Support.DependentFamily
 
+/-! Source-bound audits of separable rank-one rays and the squared inner-product bound. -/
+
 open LeanInformationAudit Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Resource.CompositeCones

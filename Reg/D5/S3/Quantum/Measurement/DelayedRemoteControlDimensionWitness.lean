@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of the remote-control witness and unit-coordinate identity. -/
+
 namespace Reg.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness
 open _root_.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -155,9 +157,11 @@ def source_registration : Registration arena (type_of% @unit_coordinates) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@unit_coordinates) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.UnitCoordinates.unit
-  realizationName :=
-    `Reg.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.UnitCoordinates.source_registration
+  unitName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.UnitCoordinates "unit"
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.UnitCoordinates
+    "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
