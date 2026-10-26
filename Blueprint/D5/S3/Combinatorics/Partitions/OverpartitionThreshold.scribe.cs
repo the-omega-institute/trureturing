@@ -70,7 +70,7 @@ internal sealed class OverpartitionThresholdDocument : IScribeDocumentDefinition
             Iff(In(C("pair", V("p"), V("S")), C("Overpartition", V("n"))),
                 C("subset", V("S"), C("support", V("p")))))));
     private static Formula MultiplicityFormula() => OnO(All("r", V("Nat"),
-        Eq(C("multiplicity", V("o"), V("r")), C("count", V("r"), C("parts", V("o")))));
+        Eq(C("multiplicity", V("o"), V("r")), C("count", V("r"), C("parts", V("o"))))));
     private static Formula LargestFormula() => OnO(Eq(C("largest", V("o")),
         C("sup", C("support", C("parts", V("o"))))));
     private static Formula UFormula() => Kn(Eq(C("U", V("k"), V("n")),
