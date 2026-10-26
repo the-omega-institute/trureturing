@@ -73,7 +73,8 @@ private lemma transcript_collision (x : Fin 6 × Fin 6) :
     (channels 0 x.1, channels 0 x.2) = (channels 1 x.1, channels 1 x.2) ∨
     (channels 0 x.1, channels 0 x.2) = (channels 2 x.1, channels 2 x.2) ∨
     (channels 2 x.1, channels 2 x.2) = (channels 3 x.1, channels 3 x.2) := by
-  sorry
+  revert x
+  decide
 
 private lemma two_weights_le_one {m : ℕ} (d : StdSimplex ℝ (Fin m))
     (a b : Fin m) (h : a ≠ b) : d.weights a + d.weights b ≤ 1 := by
