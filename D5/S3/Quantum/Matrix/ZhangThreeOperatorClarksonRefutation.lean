@@ -99,7 +99,31 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
 private lemma right_side {p : ℝ} (hp : 0 < p) :
     schattenNorm (a + b) p ^ p + schattenNorm (b + c) p ^ p +
       schattenNorm (c + a) p ^ p = 2 + (2 : ℝ) ^ (2 - p / 2) := by
-  sorry
+  have hab : schattenNorm (a + b) p ^ p = 2 := by
+    rw [power_of_gram_charpoly (a + b) (fun _ => 1) (by intro i; norm_num) (by
+      norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
+        conjTranspose_apply, Fin.sum_univ_two, a, b, diagonal]) hp]
+    norm_num [Fin.sum_univ_two]
+  have h (x : Matrix (Fin 2) (Fin 2) ℂ)
+      (hx : (xᴴ * x).charpoly =
+        (diagonal (fun _ : Fin 2 => ((1 / 2 : ℝ) : ℂ))).charpoly) :
+      schattenNorm x p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := by
+    rw [power_of_gram_charpoly x (fun _ => 1 / 2) (by intro i; norm_num) hx hp]
+    simp [Fin.sum_univ_two, two_mul]
+  have hbc : schattenNorm (b + c) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (b + c) (by
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
+      conjTranspose_apply, Fin.sum_univ_two, b, c, diagonal]
+    norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
+  have hca : schattenNorm (c + a) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (c + a) (by
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
+      conjTranspose_apply, Fin.sum_univ_two, a, c, diagonal]
+    norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
+  have he : (2 : ℝ) ^ (2 - p / 2) = 4 * (1 / 2 : ℝ) ^ (p / 2) := by
+    rw [Real.rpow_sub (by norm_num), Real.div_rpow (by norm_num) (by norm_num)]
+    norm_num
+    ring
+  rw [hab, hbc, hca, he]
+  ring
 
 private lemma certified_bound :
     ((3 : ℝ) ^ ((9 / 4 : ℝ) - 1) + 1) / (2 : ℝ) ^ (9 / 4 : ℝ) *
