@@ -1,5 +1,12 @@
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/LaguerreSevenHalfIntegral
+   generality: I
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:fixed-alpha-laguerre-helper)
+   anchors: []
+   utility: none
+   digest: Gamma-weighted integrals for the alpha seven halves Laguerre polynomials. -/
 /-
-UNCOMPILED source proposal, 2026-10-26. No kernel or official acceptance claim.
+Real Laguerre adaptation at alpha=7/2, 2026-10-26.
 SPDX-License-Identifier: Apache-2.0
 
 Modified/adapted polynomial-induction method from the OAI project, commit

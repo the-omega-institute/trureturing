@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/FiniteGaussianCap475Uniform
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/FiniteGaussianCap475Uniform
    mirror-E: none(waiver:finite-gaussian-helper)
    anchors: []

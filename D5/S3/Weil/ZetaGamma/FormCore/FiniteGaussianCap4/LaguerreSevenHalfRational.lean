@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/LaguerreSevenHalfRational
+   generality: I
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:fixed-alpha-laguerre-helper)
+   anchors: []
+   utility: none
+   digest: Exact rational coefficient model for the alpha seven halves compact matrix certificate. -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.LaguerreSevenHalfPolynomial
 
 /-! Rational coefficient model consumed by the actual compact matrix certificate.

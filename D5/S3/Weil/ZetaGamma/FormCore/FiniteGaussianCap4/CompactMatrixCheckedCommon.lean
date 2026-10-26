@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/CompactMatrixCheckedCommon
-   generality: G
+   generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:finite-gaussian-helper)
    anchors: []
