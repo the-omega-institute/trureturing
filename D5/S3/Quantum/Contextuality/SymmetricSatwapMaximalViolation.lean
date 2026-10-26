@@ -1,17 +1,22 @@
 /- GID: D5/S3/Quantum/Contextuality/SymmetricSatwapMaximalViolation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Contextuality/SymmetricSatwapMaximalViolation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Identical TW measurements attain the symmetric SATWAP value in every dimension. -/
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.ShiftedFourierOperatorCertificate
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
+import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
+import D5.S3.Resource.CompositeConeDuality
 /-! Symmetric SATWAP attainment with identical TW measurements. -/
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators ComplexConjugate Kronecker
 open Complex Matrix
 open D5.S3.Quantum.Measurements.CliffordJointMeasurability.ShiftedFourierOperatorCertificate
+open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (basisProjector)
 namespace D5.S3.Quantum.Contextuality.SymmetricSatwapMaximalViolation
 def omegaPow (d : ℕ) (t : ℝ) : ℂ :=
   Complex.exp (2 * Real.pi * I * (t : ℂ) / d)
@@ -19,11 +24,9 @@ def twMatrix (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
   Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
     (Matrix.of fun (i j : Fin d) => (1 : ℂ) / ((d : ℂ) *
       (Real.sin (((i.val : ℝ) - j.val - 1 / 2) * Real.pi / d) : ℂ)))
-private def basisProjector (d : ℕ) (a : Fin d) : Matrix (Fin d) (Fin d) ℂ :=
-  fun i j => if i = a ∧ j = a then 1 else 0
 def measurement (d : ℕ) (x : Fin 2) (a : Fin d) : Matrix (Fin d) (Fin d) ℂ :=
-  if x = 0 then basisProjector d a
-  else twMatrix d * basisProjector d a * (twMatrix d)ᴴ
+  if x = 0 then basisProjector a
+  else twMatrix d * basisProjector a * (twMatrix d)ᴴ
 def prob (d : ℕ) (ψ : EuclideanSpace ℂ (Fin d × Fin d))
     (x y : Fin 2) (a b : Fin d) : ℂ :=
   inner ℂ ψ (WithLp.toLp 2
@@ -39,15 +42,13 @@ def satwapValue (d : ℕ) (ψ : EuclideanSpace ℂ (Fin d × Fin d)) : ℂ :=
       (a * correlator d ψ 0 0 k + conj a * correlator d ψ 0 1 k +
         conj a * correlator d ψ 1 0 k) +
       omegaPow d (-3 * (k : ℝ)) * a * correlator d ψ 1 1 k
-def swap {d : ℕ} (ψ : EuclideanSpace ℂ (Fin d × Fin d)) :
-    EuclideanSpace ℂ (Fin d × Fin d) :=
-  WithLp.toLp 2 (fun ij => ψ (ij.2, ij.1))
 def reducedState {d : ℕ} (ψ : EuclideanSpace ℂ (Fin d × Fin d)) :
     Matrix (Fin d) (Fin d) ℂ :=
-  fun i i' => ∑ j, ψ (i, j) * conj (ψ (i', j))
+  D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight
+    (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity ψ)
 def claim : Prop := ∀ d : ℕ, 2 ≤ d →
   ∃ ψ : EuclideanSpace ℂ (Fin d × Fin d),
-    ‖ψ‖ = 1 ∧ swap ψ = ψ ∧
+    ‖ψ‖ = 1 ∧ LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (Equiv.prodComm (Fin d) (Fin d)) ψ = ψ ∧
     reducedState ψ = (1 / (d : ℂ)) • (1 : Matrix (Fin d) (Fin d) ℂ) ∧
     satwapValue d ψ = 2 * ((d : ℂ) - 1)
 private def offset (x : Fin 2) : ℝ := if x = 0 then 7 / 8 else 11 / 8
@@ -171,70 +172,69 @@ private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
   rw [← hphase]; field_simp (disch := first | assumption | norm_num)
 private lemma gauge_unitary (d : ℕ) : (gaugeD d)ᴴ * gaugeD d = 1 := by
   classical
-  ext a b; unfold gaugeD; simp only [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
-    Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def, omega_conj]
-  split_ifs with hab
-  · rw [omega_mul, neg_add_cancel, omega_zero]
-  · rfl
+  apply Unitary.star_mul_self_of_mem
+  apply Matrix.diagonal_mem_unitary.mpr
+  apply Pi.mem_unitary_iff.mpr
+  intro a
+  apply Unitary.mem_iff_star_mul_self.mpr
+  change conj (omegaPow d ((a.val : ℝ) / 2)) * omegaPow d ((a.val : ℝ) / 2) = 1
+  rw [omega_conj, omega_mul, neg_add_cancel, omega_zero]
 private lemma transport_unitary (d : ℕ) (hf : (fourierBasis d 0)ᴴ * fourierBasis d 0 = 1) :
     transport d * (transport d)ᴴ = 1 := by
   classical
-  have hg := gauge_unitary d
-  let t : Matrix (Fin d) (Fin d) ℂ :=
-    Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1)
-  have ht : t * tᴴ = 1 := by
-    ext a b
-    by_cases hab : a = b
-    · subst b
-      by_cases ha : a.val = 0 <;> simp [t, ha]
-    · simp [t, hab]
-  change (t * (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ) *
-    (t * (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ)ᴴ = 1
-  simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
-  calc
-    _ = t * (gaugeD d)ᴴ * ((fourierBasis d 0)ᴴ * fourierBasis d 0) *
-        gaugeD d * tᴴ := by noncomm_ring
-    _ = t * ((gaugeD d)ᴴ * gaugeD d) * tᴴ := by rw [hf]; simp [Matrix.mul_assoc]
-    _ = 1 := by rw [hg]; simpa using ht
-private lemma state_swap (d : ℕ) : swap (state d) = state d := by
+  have hg : gaugeD d ∈ Matrix.unitaryGroup (Fin d) ℂ :=
+    Matrix.mem_unitaryGroup_iff'.mpr (gauge_unitary d)
+  have hF : fourierBasis d 0 ∈ Matrix.unitaryGroup (Fin d) ℂ :=
+    Matrix.mem_unitaryGroup_iff'.mpr hf
+  have ht : Matrix.diagonal (fun i : Fin d => if i.val = 0 then (-1 : ℂ) else 1) ∈
+      Matrix.unitaryGroup (Fin d) ℂ := by
+    apply Matrix.diagonal_mem_unitary.mpr
+    apply Pi.mem_unitary_iff.mpr
+    intro i
+    apply Unitary.mem_iff_self_mul_star.mpr
+    split_ifs <;> simp
+  exact Unitary.mul_star_self_of_mem
+    (mul_mem (mul_mem ht (Unitary.star_mem hg)) (Unitary.star_mem hF))
+private lemma state_swap (d : ℕ) :
+    LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (Equiv.prodComm (Fin d) (Fin d)) (state d) =
+      state d := by
   ext ij
-  change (∑ m, transport d ij.2 m * transport d ij.1 m) / (Real.sqrt d : ℂ) =
-    (∑ m, transport d ij.1 m * transport d ij.2 m) / (Real.sqrt d : ℂ)
-  simp only [mul_comm]
+  change (transport d * (transport d)ᵀ) ij.2 ij.1 / (Real.sqrt d : ℂ) =
+    (transport d * (transport d)ᵀ) ij.1 ij.2 / (Real.sqrt d : ℂ)
+  rw [(Matrix.isSymm_mul_transpose_self (transport d)).apply]
 private lemma state_reduced (d : ℕ) (hl : transport d * (transport d)ᴴ = 1) :
     reducedState (state d) = (1 / (d : ℂ)) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
   classical
   have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
     exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d)
-  have hl' : (transport d)ᴴ * transport d = 1 := mul_eq_one_comm.mp hl
-  have ht : (transport d)ᵀ * ((transport d)ᵀ)ᴴ = 1 := by
-    simpa only [Matrix.transpose_mul, Matrix.transpose_one,
-      Matrix.conjTranspose_transpose, Matrix.transpose_conjTranspose] using
-        congrArg Matrix.transpose hl'
-  have hq : (transport d * (transport d)ᵀ) * (transport d * (transport d)ᵀ)ᴴ = 1 := by
-    rw [Matrix.conjTranspose_mul]
-    calc
-      _ = transport d * ((transport d)ᵀ * ((transport d)ᵀ)ᴴ) * (transport d)ᴴ := by noncomm_ring
-      _ = 1 := by rw [ht, Matrix.mul_one, hl]
-  ext a b
-  change (∑ j, ((∑ m, transport d a m * transport d j m) / (Real.sqrt d : ℂ)) *
-    conj ((∑ m, transport d b m * transport d j m) / (Real.sqrt d : ℂ))) = _
-  simp only [map_div₀, Complex.conj_ofReal, div_mul_div_comm, hs, ← Finset.sum_div]
-  change ((transport d * (transport d)ᵀ) * (transport d * (transport d)ᵀ)ᴴ) a b /
-    (d : ℂ) = _
-  rw [hq]
-  simp only [Matrix.smul_apply, smul_eq_mul, div_eq_mul_inv, mul_comm, mul_one]
+  have hu : transport d ∈ Matrix.unitaryGroup (Fin d) ℂ :=
+    Matrix.mem_unitaryGroup_iff.mpr hl
+  have hq : (transport d * (transport d)ᵀ) * (transport d * (transport d)ᵀ)ᴴ = 1 :=
+    Unitary.mul_star_self_of_mem
+      (mul_mem hu (Matrix.transpose_mem_unitaryGroup_iff.mpr hu))
+  let A := (transport d * (transport d)ᵀ).map (· / (Real.sqrt d : ℂ))
+  have hr : reducedState (state d) = A * Aᴴ := by
+    exact D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.ptrace2_pure A
+  have hA : A = (Real.sqrt d : ℂ)⁻¹ • (transport d * (transport d)ᵀ) := by
+    ext i j
+    simp only [A, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, div_eq_mul_inv, mul_comm]
+  rw [hr, hA]
+  simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    Complex.star_def, map_inv₀, Complex.conj_ofReal, ← mul_inv, hs, hq, one_div]
 private lemma state_norm (d : ℕ) (hd : 2 ≤ d)
     (hr : reducedState (state d) = (1 / (d : ℂ)) •
       (1 : Matrix (Fin d) (Fin d) ℂ)) : ‖state d‖ = 1 := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have hn : (↑(‖state d‖ ^ 2) : ℂ) = 1 := by
-    rw [EuclideanSpace.norm_sq_eq, Complex.ofReal_sum, Fintype.sum_prod_type]
     calc
-      _ = ∑ i : Fin d, reducedState (state d) i i := by
-        apply Finset.sum_congr rfl; intro i hi
-        unfold reducedState; simp only [Complex.mul_conj', Complex.ofReal_pow]
-      _ = 1 := by simp [hr, Matrix.smul_apply, hd0]
+      _ = (reducedState (state d)).trace := by
+        rw [reducedState,
+          D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceRight,
+          D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity, Matrix.trace_vecMulVec]
+        rw [← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K,
+          Complex.ofReal_pow]
+        rfl
+      _ = 1 := by simp [hr, Matrix.trace_smul, hd0]
   have hn' : ‖state d‖ ^ 2 = 1 := by exact_mod_cast hn
   nlinarith [norm_nonneg (state d)]
 private def measuredBasis (d : ℕ) (x : Fin 2) : Matrix (Fin d) (Fin d) ℂ :=
@@ -254,16 +254,15 @@ private lemma measurement_rankone (d : ℕ) (x : Fin 2) (a : Fin d) :
     measurement d x a = Matrix.vecMulVec ((measuredBasis d x)ᵀ a)
       (star ((measuredBasis d x)ᵀ a)) := by
   classical
-  ext i j; fin_cases x
-  · change (if i = a ∧ j = a then (1 : ℂ) else 0) =
-      (if i = a then 1 else 0) * conj (if j = a then 1 else 0)
-    by_cases hi : i = a <;> by_cases hj : j = a <;> simp [hi, hj]
-  · change (twMatrix d * basisProjector d a * (twMatrix d)ᴴ) i j =
-      twMatrix d i a * conj (twMatrix d j a)
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
-    change (∑ l, (∑ k, twMatrix d i k * (if k = a ∧ l = a then (1 : ℂ) else 0)) *
-      conj (twMatrix d j l)) = _
-    simp [ite_and]
+  unfold measurement measuredBasis
+  split_ifs
+  · rw [D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.basisProjector,
+      Matrix.single_eq_single_vecMulVec_single]
+    congr 1 <;> funext i <;> simp [Matrix.one_apply, Pi.single_apply, eq_comm]
+  · rw [D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.basisProjector,
+      Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+    simp only [Matrix.mulVec_single_one, Matrix.single_one_vecMul]
+    rfl
 private lemma transport_readout (d : ℕ) (hd : 2 ≤ d) (x : Fin 2) :
     (measuredBasis d x)ᴴ * transport d =
       Matrix.diagonal (settingPhase d x) * (fourierBasis d x)ᴴ := by
@@ -272,9 +271,14 @@ private lemma transport_readout (d : ℕ) (hd : 2 ≤ d) (x : Fin 2) :
   have hg := gauge_identity d hd
   let g := Matrix.diagonal (settingPhase d x)
   have hp : g * gᴴ = 1 := by
-    ext a b; simp only [g, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
-      Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def]
-    split_ifs <;> simp only [Complex.mul_conj', setting_phase_norm, one_pow, Complex.ofReal_one]
+    apply Unitary.mul_star_self_of_mem
+    apply Matrix.diagonal_mem_unitary.mpr
+    apply Pi.mem_unitary_iff.mpr
+    intro a
+    apply Unitary.mem_iff_self_mul_star.mpr
+    change settingPhase d x a * conj (settingPhase d x a) = 1
+    rw [Complex.mul_conj', setting_phase_norm]
+    norm_num
   have hgd := gauge_unitary d
   have hv : transport d * fourierBasis d x = measuredBasis d x * g := by
     fin_cases x
@@ -324,20 +328,14 @@ private lemma fourier_probability (d : ℕ) (hd : 2 ≤ d)
   let c : ℂ := star v ⬝ᵥ (state d)
   have hproj : measurement d x a ⊗ₖ measurement d y b = Matrix.vecMulVec v (star v) := by
     rw [measurement_rankone, measurement_rankone]
-    ext i j
-    change (measuredBasis d x i.1 a * star (measuredBasis d x j.1 a)) *
-      (measuredBasis d y i.2 b * star (measuredBasis d y j.2 b)) =
-      (measuredBasis d x i.1 a * measuredBasis d y i.2 b) *
-        star (measuredBasis d x j.1 a * measuredBasis d y j.2 b)
-    rw [star_mul]; ring
+    exact D5.S3.Resource.CompositeConeDuality.kronecker_rank_one
+      ((measuredBasis d x)ᵀ a) ((measuredBasis d y)ᵀ b)
   have hb : prob d (state d) x y a b = (↑(‖c‖ ^ 2) : ℂ) := by
-    unfold prob; rw [hproj, Complex.ofReal_pow, ← Complex.conj_mul']
-    change (∑ ij, ((Matrix.vecMulVec v (star v)).mulVec (state d)) ij *
-      conj (state d ij)) = _
-    rw [Matrix.vecMulVec_mulVec]
-    simp only [op_smul_eq_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, ← Finset.mul_sum]
-    rw [mul_comm]; congr 1; simp only [c, dotProduct, map_sum, map_mul, Pi.star_apply,
-      Complex.star_def, Complex.conj_conj, mul_comm]
+    unfold prob
+    rw [hproj, EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm]
+    rw [D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic]
+    rw [star_dotProduct]
+    simp only [Complex.star_def, Complex.normSq_eq_norm_sq, Complex.norm_conj, c]
   have hc : c = r a b / (Real.sqrt d : ℂ) := by
     change (∑ ij : Fin d × Fin d,
       conj (measuredBasis d x ij.1 a * measuredBasis d y ij.2 b) *
@@ -387,12 +385,11 @@ private lemma integer_sum (d : ℕ) (hd : 2 ≤ d) (n : ℤ) :
   classical
   have : NeZero d := ⟨by omega⟩
   let e := ZMod.finEquiv d
-  have he (a : Fin d) : e a = (a.val : ZMod d) := by
-    have hv : (e a).val = a.val := by cases d with | zero => omega | succ d => rfl
-    rw [← ZMod.natCast_zmod_val (e a), hv]
   have ht (a : Fin d) : omegaPow d ((a.val : ℝ) * n) =
       ZMod.stdAddChar (e a * (n : ZMod d)) := by
-    rw [he, show (a.val : ZMod d) * (n : ZMod d) =
+    dsimp only [e]
+    rw [D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration.finEquiv_eq_natCast,
+      show (a.val : ZMod d) * (n : ZMod d) =
       (((a.val : ℤ) * n : ℤ) : ZMod d) by push_cast -congrConsts; rfl, ZMod.stdAddChar_coe]
     unfold omegaPow; congr 1; push_cast -congrConsts; ring
   simp_rw [ht]
