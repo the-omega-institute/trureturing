@@ -40,6 +40,10 @@ $$\forall d \in \mathbb{N},\; \forall a \in \mathbb{N},\; \forall b \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraResolution.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gupta-2026-miura-residual-degree-conjecture-83` (proved) by `D5/S3/Combinatorics/Geometry/MiuraResolution.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gupta-2026-miura-residual-degree-conjecture-83","declaration_gid":"D5/S3/Combinatorics/Geometry/MiuraResolution.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
