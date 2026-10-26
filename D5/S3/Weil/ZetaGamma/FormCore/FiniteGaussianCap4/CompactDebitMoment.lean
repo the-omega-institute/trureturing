@@ -77,7 +77,7 @@ private theorem debit_integrand_below (m : ℕ) {x : ℝ}
     x ^ (7 / 2 : ℝ) * FiniteGaussianCap4.compactDebit x *
         Real.exp (-2 * x) * x ^ m =
       (x ^ ((m : ℝ) + 11 / 2) * Real.exp (-2 * x)) / 10 := by
-  simp only [FiniteGaussianCap4.compactDebit, if_pos ⟨hx, hx6⟩,
+  simp only [FiniteGaussianCap4.compactDebit, if_pos (show 0 < x ∧ x < 6 from ⟨hx, hx6⟩),
     FiniteGaussianCap4.capWeight, if_neg (not_lt_of_ge hxpi), sub_zero]
   calc
     x ^ (7 / 2 : ℝ) * (x ^ 2 / 10) * Real.exp (-2 * x) * x ^ m =
@@ -95,7 +95,7 @@ private theorem debit_integrand_above (m : ℕ) {x : ℝ}
           (x ^ m * Real.exp (-2 * x)) := by
   have hx0 : 0 < x := Real.pi_pos.trans hx
   obtain ⟨h5, h7⟩ := tail_products hx0
-  simp only [FiniteGaussianCap4.compactDebit, if_pos ⟨hx0, hx6⟩,
+  simp only [FiniteGaussianCap4.compactDebit, if_pos (show 0 < x ∧ x < 6 from ⟨hx0, hx6⟩),
     FiniteGaussianCap4.capWeight, if_pos hx]
   calc
     x ^ (7 / 2 : ℝ) *
@@ -166,8 +166,10 @@ theorem debitMoment_formula (m : ℕ) :
     intervalIntegral.integral_sub hih0 hij6,
     intervalIntegral.integral_div, intervalIntegral.integral_div,
     intervalIntegral.integral_const_mul]
-  have hjoin := intervalIntegral.integral_add_adjacent_intervals
-    (hh.intervalIntegrable 0 Real.pi) (hh.intervalIntegrable Real.pi 6)
+  have hjoin : (∫ x : ℝ in (0 : ℝ)..Real.pi, h x) +
+      (∫ x : ℝ in Real.pi..6, h x) = (∫ x : ℝ in (0 : ℝ)..6, h x) :=
+    intervalIntegral.integral_add_adjacent_intervals
+      (hh.intervalIntegrable 0 Real.pi) (hh.intervalIntegrable Real.pi 6)
   change (∫ x in (0 : ℝ)..Real.pi, h x) +
     (∫ x in Real.pi..6, h x) = H m at hjoin
   change (∫ x in (0 : ℝ)..Real.pi, h x) / 10 +
