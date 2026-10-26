@@ -11,8 +11,8 @@ public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 /-! # Opposite actual source values give full completion
 
 This is full completion for a source subdomain, not a conditional exchange:
-the only additional source condition is existence of two nonzero opposite
-actual values. In particular there is no value-injectivity, coprimality,
+the only additional source condition is one actual opposite-value pair,
+including the all-zero row. In particular there is no value-injectivity, coprimality,
 least-period, involutive-rotation, or externally supplied matching premise.
 
 Odd-modulus centered doubling commutes with negation. The source_cycle seam
@@ -179,13 +179,14 @@ private theorem complete_from_sign_reversal {k : ℕ} (f : Fin k → ℤ)
   · simp only [mass, List.map_append, List.sum_append] at hm hmZ ⊢
     omega
 
-/-- Full actual-source completion from any nonzero opposite-value pair.
+/-- Full actual-source completion from one actual opposite-value pair.
 All source labels, including repeated-valued physical occurrences, are used.
+The pair may have value zero, so the all-zero row is included.
 The conclusion is at C k and contains every natural zero-start prefix bound,
 endpoint zero, and the existing native Legal predicate. -/
 theorem actualSource_opposite_full_completion
     {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
-    (hopposite : ∃ i j : Fin k, s k t i ≠ 0 ∧ s k t j = -s k t i) :
+    (hopposite : ∃ i j : Fin k, s k t j = -s k t i) :
     ∃ L : List (Fin k),
       L.Perm (List.ofFn (fun q : Fin k => q)) ∧
       L.Nodup ∧ L.toFinset = Finset.univ ∧
@@ -194,7 +195,7 @@ theorem actualSource_opposite_full_completion
         mass (s k t) (L.take n) ≤ C k) ∧
       mass (s k t) L = 0 ∧ Legal k t L := by
   classical
-  obtain ⟨i, j, _hi, hij⟩ := hopposite
+  obtain ⟨i, j, hij⟩ := hopposite
   obtain ⟨hQ, _hN, hC, hN0, hodd⟩ := source_geometry hk
   have hC0 : 0 ≤ C k := by change 0 ≤ half k; omega
   have hb (q : Fin k) : s k t q ≤ C k :=
