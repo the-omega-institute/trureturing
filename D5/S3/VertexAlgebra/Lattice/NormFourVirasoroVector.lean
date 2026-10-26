@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The actual norm-four lattice state has central-charge-one-half self-products and integer Virasoro modes. -/
+   digest: Actual norm-four lattice self-products and integer Virasoro modes. -/
 
 /-
 The standard formula is Shimakura, arXiv:1202.6107, PDF p. 4, (1.3),
@@ -29,9 +29,10 @@ import D5.S3.VertexAlgebra.LatticeActualOrderedProducts
 import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 import Batteries.Tactic.OpenPrivate
 
+/-! The actual norm-four lattice state and its central-charge-one-half mode action. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 4000000
 
 -- These are existing proved suppliers, not new derivative/cocycle axioms.
 open private creation_derivation partial_charge charge_pairing charge_transport
@@ -120,15 +121,17 @@ private theorem creation_three (D : LatticeData) (a : Charge D) :
       (1 / 6 : ℂ) • (chargePolynomial D a)^3 := by
   have h := creation_derivation D a 2
   simp only [creation_two] at h
-  simp only [map_smul, map_add, pow_two, Derivation.leibniz,
-    smul_eq_mul, deriv_charge, deriv_osc, mul_add, mul_smul_comm] at h
+  simp only [pow_two, mul_add, mul_smul_comm] at h
+  norm_num at h
+  simp only [deriv_charge, deriv_osc] at h
   norm_num at h
   have h' : (3 : ℂ) • creationCoeff D a 3 =
       (1 / 2 : ℂ) • ((2 : ℂ) • osc D a 2 +
         (chargePolynomial D a * osc D a 1 + chargePolynomial D a * osc D a 1)) +
       (1 / 2 : ℂ) • (chargePolynomial D a * osc D a 1 +
         chargePolynomial D a * (chargePolynomial D a * chargePolynomial D a)) := by
-    simpa only [one_div] using (eq_sub_iff_add_eq.mp h).symm
+    convert (eq_sub_iff_add_eq.mp h).symm using 1
+    module
   calc
     creationCoeff D a 3 = (1 / 3 : ℂ) • ((3 : ℂ) • creationCoeff D a 3) := by
       norm_num [smul_smul]
@@ -154,7 +157,7 @@ private theorem neg_norm (D : LatticeData) (a : Charge D)
 
 private theorem product_add_left (D : LatticeData) (a b c : Carrier D) (n : ℤ) :
     mu D (a + b) n c = mu D a n c + mu D b n c := by
-  simp [mu, VertexOperator.ncoeff]
+  simp only [mu, map_add, VertexOperator.ncoeff, Pi.add_apply, LinearMap.add_apply]
 
 private theorem product_add_right (D : LatticeData) (a b c : Carrier D) (n : ℤ) :
     mu D a n (b + c) = mu D a n b + mu D a n c := by
@@ -192,6 +195,7 @@ private theorem charged_series (D : LatticeData) (a : Charge D)
   simp only [neg_neg] at h
   rw [h]
   simp only [zero_add, add_zero, Finsupp.single_add]
+  exact add_comm _ _
 
 /-- Actual charged self-contractions: both charge directions, all singular
 coefficients, and the entire nonnegative tail, without positivity hypotheses. -/
@@ -207,7 +211,7 @@ private theorem charged_self_products (D : LatticeData) (a : Charge D)
   · rw [charged_series D a ha 0 (by omega)]
     norm_num only [sub_zero]
     rw [creation_three, creation_three]
-    simp only [charge_neg, osc_neg, pow_succ, pow_zero, mul_one, one_mul,
+    simp only [charge_neg, osc_neg, pow_succ, pow_zero, one_mul,
       neg_mul, mul_neg, neg_neg]
     congr 1
     module
@@ -224,7 +228,7 @@ private theorem charged_self_products (D : LatticeData) (a : Charge D)
   · rw [charged_series D a ha 3 (by omega)]
     norm_num only [sub_self]
     rw [creation_zero, creation_zero]
-    simp [vacuum, Finsupp.smul_single]
+    simp [vacuum, two_smul]
   · intro n hn
     rw [charged_series D a ha n (by omega)]
     simp [creationCoeff, show (3 : ℤ) - n < 0 by omega]
@@ -294,7 +298,7 @@ private theorem currentMode_ground (D : LatticeData) (a b : Charge D)
   rw [currentMode_single]
   by_cases hz : n = 0
   · subst n
-    simp only [neutralPolynomialMode, lt_self_iff_false, if_false, if_true,
+    simp only [neutralPolynomialMode, lt_self_iff_false, ite_false, ite_true,
       LinearMap.smul_apply, LinearMap.id_apply, smul_smul]
     rw [← Finset.sum_smul, pairing_left]
     simp only [Finsupp.smul_single]
@@ -311,13 +315,13 @@ private theorem currentMode_current (D : LatticeData) (a : Charge D)
   · by_cases ho : n = 1
     · subst n
       simp only [neutralPolynomialMode, show ¬ (1 : ℤ) < 0 by omega,
-        show (1 : ℤ) ≠ 0 by omega, if_false, Int.cast_one, one_smul, Int.reduceSub,
+        show (1 : ℤ) ≠ 0 by omega, ite_false, Int.cast_one, one_smul, Int.reduceSub,
         Int.toNat_zero, LinearMap.sum_apply, LinearMap.smul_apply,
-        Derivation.coeFn_coe, partial_charge, if_true]
+        Derivation.coeFn_coe, partial_charge, ite_true]
       simp_rw [MvPolynomial.C_eq_smul_one]
       rw [gram_smul]
       simp [vacuum, Finsupp.smul_single]
-    · have hr : (n - 1).toNat ≠ 0 := by omega
+    · have hr : n.toNat - 1 ≠ 0 := by omega
       simp [neutralPolynomialMode, not_lt.mpr hn, hz, ho, partial_charge, hr]
 
 private theorem partial_quadratic (D : LatticeData) (a : Charge D)
@@ -327,7 +331,9 @@ private theorem partial_quadratic (D : LatticeData) (a : Charge D)
   rw [pow_two, pderiv_mul]
   simp only [partial_charge]
   by_cases hr : r = 0
-  · simp [hr, smul_eq_C_mul] <;> ring
+  · simp only [hr, ite_true, MvPolynomial.C_eq_smul_one, smul_mul_assoc,
+      one_mul, mul_smul_comm, mul_one]
+    module
   · simp [hr]
 
 private theorem currentMode_quadratic (D : LatticeData) (a : Charge D)
@@ -341,9 +347,9 @@ private theorem currentMode_quadratic (D : LatticeData) (a : Charge D)
   · by_cases ho : n = 1
     · subst n
       simp only [neutralPolynomialMode, show ¬ (1 : ℤ) < 0 by omega,
-        show (1 : ℤ) ≠ 0 by omega, if_false, Int.cast_one, one_smul, Int.reduceSub,
+        show (1 : ℤ) ≠ 0 by omega, ite_false, Int.cast_one, one_smul, Int.reduceSub,
         Int.toNat_zero, LinearMap.sum_apply, LinearMap.smul_apply,
-        Derivation.coeFn_coe, partial_quadratic, if_true]
+        Derivation.coeFn_coe, partial_quadratic, ite_true]
       have hs : (∑ i : Fin D.rank, (a i : ℂ) •
           ∑ j : Fin D.rank, (D.G i j : ℂ) •
             ((2 * (a j : ℂ)) • chargePolynomial D a)) =
@@ -357,9 +363,12 @@ private theorem currentMode_quadratic (D : LatticeData) (a : Charge D)
         congr 1
         ring
       rw [hs]
-      simp only [Finsupp.smul_single, smul_smul, if_true]
+      simp only [Finsupp.smul_single, smul_smul]
     · have hr : (n - 1).toNat ≠ 0 := by omega
-      simp [neutralPolynomialMode, not_lt.mpr hn, hz, ho, partial_quadratic, hr]
+      simp only [neutralPolynomialMode, not_lt.mpr hn, hz, ite_false,
+        LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coeFn_coe]
+      simp only [partial_quadratic, hr, ho, ite_false,
+        smul_zero, Finset.sum_const_zero, Finsupp.single_zero]
 
 private theorem quadratic_normal_field (D : LatticeData) (a : Charge D) :
     Y D (quadraticState D a) =
@@ -368,8 +377,8 @@ private theorem quadratic_normal_field (D : LatticeData) (a : Charge D) :
   have hc : mu D (currentStateAlong D a) (-1) (currentStateAlong D a) =
       quadraticState D a := by
     change currentMode D a (-1) (currentStateAlong D a) = _
-    rw [show (-1 : ℤ) = -(0 : ℤ) - 1 by omega, currentMode_negative]
-    simp only [osc_zero, quadraticState, pow_two]
+    simpa [currentStateAlong, quadraticState, osc_zero, pow_two] using
+      currentMode_negative D a 0 0 (chargePolynomial D a)
   rw [← hc, minus_one_product_field]
 
 -- This is the linear extension of the existing exact actual quadratic-state
@@ -382,7 +391,12 @@ private theorem quadratic_field_expansion (D : LatticeData) (a : Charge D) :
       ∑ i : Fin D.rank, ∑ j : Fin D.rank,
         ((a i : ℂ) * (a j : ℂ)) • (X (i, 0) * X (j, 0) : Oscillator D) := by
     simp only [pow_two, chargePolynomial, Finset.sum_mul, Finset.mul_sum,
-      smul_mul_assoc, mul_smul_comm, smul_smul]
+      smul_mul_assoc, mul_smul_comm, Finset.smul_sum, smul_smul]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [mul_comm (X (j, 0) : Oscillator D) (X (i, 0))]
   rw [quadraticState, hp, Finsupp.single_finsetSum, map_sum]
   simp_rw [Finsupp.single_finsetSum, map_sum, ← Finsupp.smul_single,
     map_smul, quadratic_state_field]
@@ -411,14 +425,14 @@ private theorem quadratic_ground_reduction (D : LatticeData) (a b : Charge D)
     · simp only [Nat.cast_zero, neg_zero, zero_sub, add_zero]
     · intro j hj
       rw [currentMode_ground D a b (n + j) (by omega),
-        if_neg (by omega), map_zero]
+        ite_eq_right (by omega), map_zero]
   have second : (∑ᶠ j : ℕ, currentMode D a (n - j - 1)
       (currentMode D a j (ground D b))) =
       currentMode D a (n - 1) (currentMode D a 0 (ground D b)) := by
     rw [finsum_eq_single _ 0]
     · simp only [Nat.cast_zero, sub_zero]
     · intro j hj
-      rw [currentMode_ground D a b j (by omega), if_neg (by omega), map_zero]
+      rw [currentMode_ground D a b j (by omega), ite_eq_right (by omega), map_zero]
   rw [first, second]
 
 private theorem quadratic_quadratic_reduction (D : LatticeData) (a : Charge D)
@@ -437,8 +451,8 @@ private theorem quadratic_quadratic_reduction (D : LatticeData) (a : Charge D)
     intro j hj
     apply Finset.mem_range.mpr
     by_contra h
-    exact hj (by rw [currentMode_quadratic D a (n + j) (by omega),
-      if_neg (by omega), map_zero])
+    exact hj (by dsimp only; rw [currentMode_quadratic D a (n + j) (by omega),
+      ite_eq_right (by omega), map_zero])
   have second : (∑ᶠ j : ℕ, currentMode D a (n - j - 1)
       (currentMode D a j (quadraticState D a))) =
       ∑ j ∈ Finset.range 2, currentMode D a (n - j - 1)
@@ -447,10 +461,10 @@ private theorem quadratic_quadratic_reduction (D : LatticeData) (a : Charge D)
     intro j hj
     apply Finset.mem_range.mpr
     by_contra h
-    exact hj (by rw [currentMode_quadratic D a j (by omega),
-      if_neg (by omega), map_zero])
+    exact hj (by dsimp only; rw [currentMode_quadratic D a j (by omega),
+      ite_eq_right (by omega), map_zero])
   rw [first, second]
-  norm_num [Finset.sum_range_succ]
+  norm_num [Finset.sum_range_succ, show n - 1 - 1 = n - 2 by omega]
 
 private theorem translation_quadratic (D : LatticeData) (a : Charge D) :
     translation D (quadraticState D a) =
@@ -482,59 +496,64 @@ private theorem quadratic_self_products (D : LatticeData) (a : Charge D)
     rw [currentMode_current D a n hn, ha]
     norm_num
   have neg_one : currentMode D a (-1) (currentStateAlong D a) = quadraticState D a := by
-    rw [show (-1 : ℤ) = -(0 : ℤ) - 1 by omega, currentMode_negative]
-    simp only [osc_zero, quadraticState, pow_two]
+    simpa [currentStateAlong, quadraticState, osc_zero, pow_two] using
+      currentMode_negative D a 0 0 (chargePolynomial D a)
   have neg_two : currentMode D a (-2) (currentStateAlong D a) =
       Finsupp.single 0 (chargePolynomial D a * osc D a 1) := by
-    rw [show (-2 : ℤ) = -(1 : ℤ) - 1 by omega, currentMode_negative]
-    rw [mul_comm]
+    simpa [currentStateAlong, mul_comm] using
+      currentMode_negative D a 0 1 (chargePolynomial D a)
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · rw [quadratic_quadratic_reduction D a 0 (by omega)]
     norm_num only [inner 0 (by omega), inner 1 (by omega), map_zero,
-      if_true, show (0 : ℤ) ≠ 1 by omega, if_false, map_smul]
+      ite_true, show (0 : ℤ) ≠ 1 by omega, ite_false, map_smul]
     simp only [neg_two, translation_quadratic]
     module
   · rw [quadratic_quadratic_reduction D a 1 (by omega)]
     norm_num only [inner 0 (by omega), inner 1 (by omega), inner 2 (by omega),
-      map_zero, if_true, show (0 : ℤ) ≠ 1 by omega,
-      show (2 : ℤ) ≠ 1 by omega, if_false, map_smul]
+      map_zero, ite_true, show (0 : ℤ) ≠ 1 by omega,
+      show (2 : ℤ) ≠ 1 by omega, ite_false, map_smul]
     simp only [neg_one]
     module
   · rw [quadratic_quadratic_reduction D a 2 (by omega)]
-    norm_num [inner, current, map_smul]
+    norm_num only [inner, current, map_smul, map_zero, smul_zero, zero_add,
+      add_zero, smul_smul, ite_true, ite_false]
   · rw [quadratic_quadratic_reduction D a 3 (by omega)]
-    norm_num [inner, current, map_smul, smul_smul]
+    norm_num only [inner, current, map_smul, map_zero, smul_zero, zero_add,
+      add_zero, smul_smul, ite_true, ite_false]
   · intro n hn
     rw [quadratic_quadratic_reduction D a n (by omega)]
     rw [inner n (by omega), inner (n + 1) (by omega),
       inner 0 (by omega), inner 1 (by omega)]
-    simp only [if_neg (show n ≠ 1 by omega),
-      if_neg (show n + 1 ≠ 1 by omega), if_neg (show (0 : ℤ) ≠ 1 by omega),
-      if_true, map_zero, map_smul, zero_add]
-    rw [current (n - 2) (by omega), if_neg (by omega), smul_zero]
+    simp only [ite_eq_right (show n ≠ 1 by omega),
+      ite_eq_right (show n + 1 ≠ 1 by omega), ite_eq_right (show (0 : ℤ) ≠ 1 by omega),
+      ite_true, map_zero, map_smul, zero_add]
+    rw [current (n - 2) (by omega), ite_eq_right (by omega), smul_zero]
 
 private theorem quadratic_ground_zero (D : LatticeData) (a b : Charge D) :
     mu D (quadraticState D a) 0 (ground D b) =
       (2 * (bilinear D a b : ℂ)) • Finsupp.single b (chargePolynomial D a) := by
+  have hm : currentMode D a (-1) (ground D b) =
+      Finsupp.single b (chargePolynomial D a) := by
+    simpa [osc_zero] using currentMode_negative D a b 0 (1 : Oscillator D)
   rw [quadratic_ground_reduction D a b 0 (by omega),
     show (0 : ℤ) - 1 = -1 by omega]
-  simp only [currentMode_ground D a b 0 (by omega), if_true, map_smul]
-  simp only [show (-1 : ℤ) = -(0 : ℤ) - 1 by omega, currentMode_negative,
-    osc_zero, mul_one]
+  simp only [currentMode_ground D a b 0 (by omega), ite_true, map_smul]
+  rw [hm]
   module
 
 private theorem quadratic_ground_one (D : LatticeData) (a b : Charge D) :
     mu D (quadraticState D a) 1 (ground D b) =
       (bilinear D a b : ℂ)^2 • ground D b := by
   rw [quadratic_ground_reduction D a b 1 (by omega)]
-  norm_num [currentMode_ground, map_smul, smul_smul, pow_two]
+  norm_num only [currentMode_ground, map_smul, map_zero, smul_zero, zero_add,
+    add_zero, smul_smul, pow_two, ite_true, ite_false]
 
 private theorem quadratic_ground_tail (D : LatticeData) (a b : Charge D)
     (n : ℤ) (hn : 2 ≤ n) : mu D (quadraticState D a) n (ground D b) = 0 := by
   rw [quadratic_ground_reduction D a b n (by omega),
     currentMode_ground D a b n (by omega), currentMode_ground D a b 0 (by omega)]
-  simp only [if_neg (show n ≠ 0 by omega), if_true, map_zero, map_smul, zero_add]
-  rw [currentMode_ground D a b (n - 1) (by omega), if_neg (by omega), smul_zero]
+  simp only [ite_eq_right (show n ≠ 0 by omega), ite_true, map_zero, map_smul, zero_add]
+  rw [currentMode_ground D a b (n - 1) (by omega), ite_eq_right (by omega), smul_zero]
 
 private theorem quadratic_charged_products (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) :
@@ -548,11 +567,12 @@ private theorem quadratic_charged_products (D : LatticeData) (a : Charge D)
     simp only [bilinear_neg_right, ha]
     simp only [map_add, translation_single, Derivation.map_one_eq_zero,
       zero_add, mul_one, charge_neg, Finsupp.single_neg]
-    norm_num only [Int.cast_neg, Int.cast_ofNat] <;> module
+    norm_num only [Int.cast_neg, Int.cast_ofNat]
+    module
   · simp only [chargedState, product_add_right]
     rw [quadratic_ground_one, quadratic_ground_one]
     simp only [bilinear_neg_right, ha]
-    norm_num <;> module
+    norm_num
   · intro n hn
     simp only [chargedState, product_add_right,
       quadratic_ground_tail D a a n hn, quadratic_ground_tail D a (-a) n hn,
@@ -580,7 +600,10 @@ private theorem ground_quadratic_formula (D : LatticeData) (b a : Charge D) (n :
       Polynomial.monomial 0 ((chargePolynomial D a)^2) -
         Polynomial.monomial 1 ((2 * (bilinear D b a : ℂ)) • chargePolynomial D a) +
         Polynomial.monomial 2 ((bilinear D b a : ℂ)^2 • (1 : Oscillator D)) := by
-    simp [Polynomial.monomial_eq_C_mul_X, smul_eq_C_mul] <;> ring
+    simp only [← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul,
+      map_mul, map_pow, map_ofNat, pow_zero, pow_one, mul_one]
+    norm_num
+    ring
   rw [hp, map_add, map_sub, convolution_monomial,
     convolution_monomial, convolution_monomial]
   rw [show -n - 1 + (0 : ℕ) = -n - 1 by omega,
@@ -593,8 +616,9 @@ private theorem ground_quadratic_zero (D : LatticeData) (b a : Charge D) :
       Finsupp.single b ((bilinear D b a : ℂ)^2 • chargePolynomial D b -
         (2 * (bilinear D b a : ℂ)) • chargePolynomial D a) := by
   rw [ground_quadratic_formula]
-  simp only [neg_zero, zero_sub, sub_zero, creation_zero, creation_one, mul_one,
-    creationCoeff, show (-1 : ℤ) < 0 by omega, dif_pos, mul_zero, zero_sub]
+  norm_num only [neg_zero, zero_sub, sub_zero]
+  rw [show creationCoeff D b (-1) = 0 by simp [creationCoeff],
+    creation_zero, creation_one, mul_zero, mul_one, zero_sub]
   congr 1
   abel
 
@@ -609,8 +633,14 @@ private theorem ground_quadratic_one (D : LatticeData) (b a : Charge D) :
 private theorem ground_quadratic_tail (D : LatticeData) (b a : Charge D)
     (n : ℤ) (hn : 2 ≤ n) : mu D (ground D b) n (quadraticState D a) = 0 := by
   rw [ground_quadratic_formula]
-  simp [creationCoeff, show -n - 1 < 0 by omega, show -n < 0 by omega,
-    show (1 : ℤ) - n < 0 by omega]
+  have h0 : creationCoeff D b (-n - 1) = 0 := by
+    rw [creationCoeff, dite_eq_left (by omega)]
+  have h1 : creationCoeff D b (-n) = 0 := by
+    rw [creationCoeff, dite_eq_left (by omega)]
+  have h2 : creationCoeff D b (1 - n) = 0 := by
+    rw [creationCoeff, dite_eq_left (by omega)]
+  rw [h0, h1, h2]
+  simp only [mul_zero, smul_zero, sub_zero, add_zero, Finsupp.single_zero]
 
 private theorem charged_quadratic_products (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) :
@@ -624,20 +654,20 @@ private theorem charged_quadratic_products (D : LatticeData) (a : Charge D)
     simp only [bilinear_neg_left, ha]
     simp only [map_add, translation_single, Derivation.map_one_eq_zero,
       zero_add, mul_one, charge_neg, Finsupp.single_neg]
-    norm_num <;>
-      (simp only [← Finsupp.smul_single, Finsupp.single_sub,
-        Finsupp.single_neg, smul_neg, smul_smul] <;> module)
+    norm_num
+    simp only [← Finsupp.smul_single]
+    module
   · simp only [chargedState, product_add_left]
     rw [ground_quadratic_one, ground_quadratic_one]
     simp only [bilinear_neg_left, ha]
-    norm_num <;> module
+    norm_num
   · intro n hn
     simp only [chargedState, product_add_left,
       ground_quadratic_tail D a a n hn, ground_quadratic_tail D (-a) a n hn,
       add_zero]
 
 private theorem vector_product_expansion (D : LatticeData) (a : Charge D)
-    (s : ℂ) (hs : s^2 = 1) (n : ℤ) :
+    (s : ℂ) (hs : s ^ 2 = 1) (n : ℤ) :
     mu D (vector D a s) n (vector D a s) =
       (1 / 256 : ℂ) • mu D (quadraticState D a) n (quadraticState D a) +
       (s / 64) • mu D (quadraticState D a) n (chargedState D a) +
@@ -645,18 +675,17 @@ private theorem vector_product_expansion (D : LatticeData) (a : Charge D)
       (1 / 16 : ℂ) • mu D (chargedState D a) n (chargedState D a) := by
   have hss : (s / 4) * (s / 4) = (1 / 16 : ℂ) := by
     calc
-      (s / 4) * (s / 4) = s^2 / 16 := by ring
+      (s / 4) * (s / 4) = s ^ 2 / 16 := by ring
       _ = 1 / 16 := by rw [hs]
   simp only [vector, mu, map_add, map_smul, quadratic_field_expansion,
     VertexOperator.ncoeff, Pi.add_apply, Pi.smul_apply,
-    LinearMap.add_apply, LinearMap.smul_apply, RingHom.id_apply,
-    smul_add, smul_smul, hss]
+    LinearMap.add_apply, LinearMap.smul_apply, smul_add, smul_smul, hss]
   module
 
-/-- The five actual self-OPE parts.  The two signs are included by s^2 = 1;
+/-- The five actual self-OPE parts.  The two signs are included by s ^ 2 = 1;
 there is no assumed OPE, representation, positivity or positive-rank premise. -/
 theorem self_products (D : LatticeData) (a : Charge D)
-    (ha : bilinear D a a = 4) (s : ℂ) (hs : s^2 = 1) :
+    (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
     mu D (vector D a s) 0 (vector D a s) = translation D (vector D a s) ∧
     mu D (vector D a s) 1 (vector D a s) = (2 : ℂ) • vector D a s ∧
     mu D (vector D a s) 2 (vector D a s) = 0 ∧
@@ -697,6 +726,8 @@ private theorem central_binomial (m : ℤ) :
   norm_num [descPochhammer_succ_right, descPochhammer_zero,
     Polynomial.smeval_mul, Polynomial.smeval_sub, Polynomial.smeval_X,
     Polynomial.smeval_natCast, Polynomial.smeval_one, nsmul_eq_mul] at h
+  rw [show (2 : Polynomial ℤ) = Polynomial.C 2 by norm_num, Polynomial.smeval_C] at h
+  norm_num at h
   have hc := congrArg (fun z : ℤ => (z : ℂ)) h
   push_cast at hc
   unfold integerBinomial
@@ -706,7 +737,7 @@ private theorem central_binomial (m : ℤ) :
 norm-four state.  This asserts an action of central charge 1/2; it asserts
 neither simplicity of the generated vertex algebra nor an ambient grading. -/
 theorem virasoro_commutator (D : LatticeData) (a : Charge D)
-    (ha : bilinear D a a = 4) (s : ℂ) (hs : s^2 = 1) (m n : ℤ) :
+    (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) (m n : ℤ) :
     mode D a s m * mode D a s n - mode D a s n * mode D a s m =
       ((m : ℂ) - (n : ℂ)) • mode D a s (m + n) +
         (if m + n = 0 then
@@ -727,16 +758,18 @@ theorem virasoro_commutator (D : LatticeData) (a : Charge D)
   have term0 : commutatorTerm D (vector D a s) (vector D a s) (m + 1) (n + 1) 0 =
       -((m + n + 2 : ℤ) : ℂ) • mode D a s (m + n) := by
     unfold commutatorTerm
-    rw [h0, show (m + 1) + (n + 1) - (0 : ℕ) = m + n + 2 by omega,
+    simp only [Nat.cast_zero]
+    rw [h0, show (m + 1) + (n + 1) - (0 : ℤ) = m + n + 2 by omega,
       state_derivative_modes, show m + n + 2 - 1 = m + n + 1 by omega]
     simp only [integerBinomial, Ring.choose_zero_right, Int.cast_one, one_smul] <;> rfl
   have term1 : commutatorTerm D (vector D a s) (vector D a s) (m + 1) (n + 1) 1 =
       (2 * ((m + 1 : ℤ) : ℂ)) • mode D a s (m + n) := by
     unfold commutatorTerm
+    simp only [Nat.cast_one]
     rw [h1]
     simp only [map_smul, Pi.smul_apply, smul_smul, integerBinomial,
       Ring.choose_one_right]
-    rw [show (m + 1) + (n + 1) - (1 : ℕ) = m + n + 1 by omega]
+    rw [show (m + 1) + (n + 1) - (1 : ℤ) = m + n + 1 by omega]
     change _ • mode D a s (m + n) = _
     congr 1
     ring
@@ -746,11 +779,12 @@ theorem virasoro_commutator (D : LatticeData) (a : Charge D)
       if m + n = 0 then
         (((m : ℂ)^3 - (m : ℂ)) / 24) • (1 : Module.End ℂ (Carrier D)) else 0 := by
     unfold commutatorTerm
+    norm_num only [Nat.cast_ofNat]
     rw [h3]
     simp only [map_smul, Pi.smul_apply, stateField_vacuum, identity_modes, smul_smul]
-    rw [show (m + 1) + (n + 1) - (3 : ℕ) = m + n - 1 by omega]
+    rw [show (m + 1) + (n + 1) - (3 : ℤ) = m + n - 1 by omega]
     by_cases hmn : m + n = 0
-    · rw [if_pos hmn, if_pos (show m + n - 1 = -1 by omega)]
+    · rw [ite_eq_left hmn, ite_eq_left (show m + n - 1 = -1 by omega)]
       change _ • (1 : Module.End ℂ (Carrier D)) = _
       congr 1
       simpa only [mul_comm] using central_binomial m

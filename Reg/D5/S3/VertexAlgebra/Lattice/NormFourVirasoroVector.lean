@@ -8,7 +8,8 @@ namespace Reg.D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector
 
 /- Exact original dependent telescopes; these source mirrors are not four-slot registrations.
 The dependent-family realization, its source-equivalence bridge, whole-family variation,
-role sensitivity, observational dependence and source selection remain unproved. -/
+role sensitivity, observational dependence and source selection remain unproved.
+Open audit: https://github.com/the-omega-institute/trureturing/issues/22144 -/
 abbrev sourceScope_self_products :=
   type_of% (@_root_.D5.S3.VertexAlgebra.Lattice.NormFourVirasoroVector.self_products)
 
