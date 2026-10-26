@@ -70,13 +70,13 @@ private theorem current_proper_f (a : Stage) (r : Rows (ord a))
     (hC : C = (SignedOrdinalHistory.run hCH a).H.carrier (top (ord a)))
     (hD : D = (SignedOrdinalHistory.run hCH a).H.carrier (rowIndex r))
     (W : BirthPack D)
-    (hnu : ∀ n, HEq (W.measure ⟨d.1, d.2.trans a.1.2⟩ n)
+    (hnu : ∀ n, HEq (W.measure ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩ n)
       ((((SignedOrdinalHistory.run hCH a).P.nu r hr
-        ⟨d.1, d.2.trans a.1.2⟩).1 n).1))
+        ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩).1 n).1))
     (f : C(C, D)) (hf : ∀ x, (f x).1 = restrict r.2.2 x.1)
     (s : ℕ → SignedMeasure C)
     (hn : ∀ n, (s n).totalVariation univ = 1)
-    (hm : ∀ n, (s n).map f = W.measure ⟨d.1, d.2.trans a.1.2⟩ n) :
+    (hm : ∀ n, (s n).map f = W.measure ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩ n) :
     ∃ μ : SignedMeasure C, μ.totalVariation.Regular ∧ μ.totalVariation univ ≤ 1 ∧
       ∀ g : C(C, ℝ), Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
         (cofinite ⊓ 𝓟 ((SignedOrdinalHistory.run hCH a).P.J r hr d))
@@ -90,7 +90,7 @@ private theorem current_proper_f (a : Stage) (r : Rows (ord a))
   apply SignedOrdinalHistory.proper_f hCH a r hr d s ?_ hn
   intro n
   have hm' : (s n).map (projection (SignedOrdinalHistory.run hCH a).H r) =
-      W.measure ⟨d.1, d.2.trans a.1.2⟩ n := by
+      W.measure ⟨d.1, (show d.1 < ord a from d.2).trans (show ord a < ω₁ from a.1.2)⟩ n := by
     simpa only [hmap] using hm n
   exact hm'.trans (eq_of_heq (hnu n))
 
@@ -112,7 +112,7 @@ private theorem regular_f (θ : Stage) (d : Label) (c : Eligible θ d)
   let r := oldRow hθ (newRow (ord θ) θ.2)
   let hr := oldRow_ne hθ (newRow (ord θ) θ.2)
   have hD := carrier_read hCH A (rowIndex r)
-  have hp : HEq (wholeBirth hCH θ) (SignedOrdinalHistory.run hCH A).oldBirth r hr :=
+  have hp : HEq (wholeBirth hCH θ) ((SignedOrdinalHistory.run hCH A).oldBirth r hr) :=
     (wholeBirth_read hCH θ).trans
       ((heq_of_eq (SignedOrdinalHistory.coherent hCH θ A hθ).birth).trans
         (BirthPack.cast_heq _ _)).symm

@@ -45,7 +45,10 @@ theorem successor_J (a θ : Stage) (hθ : ord θ ≤ ord a) (d : Label)
       ⟨(nextStage a).1, (max_le hθ hd).trans_lt (Order.lt_succ _)⟩ =
     (SignedOrdinalHistory.run hCH a).event.result.J
       ⟨ord θ, θ.2, hθ⟩ ⟨d.1, hd⟩ := by
-  unfold historicalJ
+  let hθs : θ < nextStage a := hθ.trans_lt (Order.lt_succ (ord a))
+  change (SignedOrdinalHistory.run hCH (nextStage a)).P.J
+    (oldRow hθs (newRow (ord θ) θ.2)) (oldRow_ne hθs _)
+    ⟨d.1, hd.trans_lt (Order.lt_succ (ord a))⟩ = _
   rw [SignedOrdinalHistory.successor_execution]
   rfl
 
@@ -86,7 +89,11 @@ theorem ordinary_cofinal (θ : Stage) (d base : Label) :
   obtain ⟨a, hb, hθ, hd, _, t, R, hs, hr, hl, hm⟩ :=
     SignedOrdinalHistory.ordinary_cofinal hCH θ d base
   refine ⟨a, hb, hθ, hd, t, R, hs, hr, hl, ?_, ?_⟩
-  · simpa only [Event.result, hs, Selected.result] using successor_carrier hCH a
+  · have hc := successor_carrier hCH a
+    change (finalPrefix hCH).carrier (nextStage a).1 =
+      (Selected.result (SignedOrdinalHistory.run hCH a).event.selected).coordinates.carrier at hc
+    rw [hs] at hc
+    exact hc
   · intro n
     exact (hm n).trans (whole_measure hCH θ d n).symm
 
@@ -122,7 +129,11 @@ theorem delayed_cofinal (θ : Stage) (s t base : Label) (k : ℕ)
       (SignedOrdinalHistory.run hCH θ).birth (decode k).1).symm
   · exact hT.trans (SignedOrdinalHistory.cast_B_eval (top_read hCH θ).symm
       (SignedOrdinalHistory.run hCH θ).birth (decode k).2).symm
-  · simpa only [Event.result, hsel, Selected.result] using successor_carrier hCH a
+  · have hc := successor_carrier hCH a
+    change (finalPrefix hCH).carrier (nextStage a).1 =
+      (Selected.result (SignedOrdinalHistory.run hCH a).event.selected).coordinates.carrier at hc
+    rw [hsel] at hc
+    exact hc
   · intro n
     have hrow : D.row = oldRow hθ (newRow (ord θ) θ.2) := Subtype.ext hmatch.1
     have hsource : oldCol D.source = ⟨s.1, hs.le⟩ := Subtype.ext hmatch.2.1
@@ -134,18 +145,20 @@ theorem delayed_cofinal (θ : Stage) (s t base : Label) (k : ℕ)
     rw [hrow, htarget]
     exact prepared_measure_read hCH θ a hθ t ht.le n
   · intro e
-    have hrow : D.row = oldRow hθ (newRow (ord θ) θ.2) := Subtype.ext hmatch.1
-    have hsource : D.source = ⟨s.1, hs⟩ := Subtype.ext hmatch.2.1
     have hr := R.oldN D.row D.old D.source e
-    rw [hrow, hsource] at hr
+    refine hr.trans ?_
     have hn := reservoir_incoming hCH θ s a hθ hs (decide (e = 1))
-    fin_cases e <;> simpa using hr.trans hn.symm
-  · refine ⟨(max_le hθ.le hs.le).trans_lt (Order.lt_succ _), ?_⟩
+    fin_cases e <;>
+      simpa [Predecessor.oldN, oldRow, newRow, hmatch.1, hmatch.2.1] using hn.symm
+  · refine ⟨(max_le (show ord θ ≤ ord a from hθ.le) hs.le).trans_lt
+      (Order.lt_succ (ord a)), ?_⟩
     have hrow : D.row = ⟨ord θ, θ.2, hθ.le⟩ := Subtype.ext hmatch.1
     have hsource : oldCol D.source = ⟨s.1, hs.le⟩ := Subtype.ext hmatch.2.1
     have hj := successor_J hCH a θ hθ.le s hs.le
-    simp only [Event.result, hsel, Selected.result] at hj
-    rw [hrow, hsource]
-    exact hj.symm
+    change historicalJ hCH θ s _ =
+      (Selected.result (SignedOrdinalHistory.run hCH a).event.selected).J _ _ at hj
+    rw [hsel] at hj
+    have he := congrArg₂ (fun r d => R.J r d) hrow hsource
+    exact he.trans hj.symm
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalRealizationEvents
