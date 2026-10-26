@@ -84,7 +84,7 @@ private lemma minorPolynomial_nonzero {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
   intro hz
   have h := congrArg (MvPolynomial.eval (star u *ᵥ z)) hz
   rw [minorPolynomial_eval, Matrix.mulVec_mulVec, hu', Matrix.one_mulVec] at h
-  simp [minor, z, Pi.single_apply, c.injective.eq_iff] at h
+  simp [minor, z, c.injective.eq_iff] at h
 
 private lemma minorPolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
     (c : Fin 2 × Fin 2 ↪ Fin d) : (minorPolynomial u c).totalDegree ≤ 2 := by
@@ -103,17 +103,22 @@ private lemma minorPolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
 private noncomputable def gridBound (d : ℕ) : ℕ :=
   2 * Fintype.card ((Fin 2 × Fin 2) ↪ Fin d)
 
+private noncomputable def gridAlphabet (m : ℕ) : Finset ℂ := by
+  classical
+  exact (Finset.range (m + 1)).image (fun n : ℕ => (n : ℂ))
+
+private noncomputable def gridBox (d m : ℕ) : Finset (Fin d → ℂ) :=
+  Fintype.piFinset fun _ : Fin d => gridAlphabet m
+
 private noncomputable def grid (d : ℕ) : Finset (Fin d → ℂ) := by
   classical
-  exact (Fintype.piFinset fun _ =>
-    (Finset.range (gridBound d + 1)).image (fun n => (n : ℂ))).filter (· ≠ 0)
+  exact (gridBox d (gridBound d)).filter (· ≠ 0)
 
 private lemma grid_eval_nonzero {d m : ℕ} (f : MvPolynomial (Fin d) ℂ)
     (hf : f ≠ 0) (hdeg : f.totalDegree ≤ m) :
-    ∃ v ∈ Fintype.piFinset (fun _ : Fin d =>
-      (Finset.range (m + 1)).image (fun n : ℕ => (n : ℂ))), MvPolynomial.eval v f ≠ 0 := by
+    ∃ v ∈ gridBox d m, MvPolynomial.eval v f ≠ 0 := by
   classical
-  let s : Finset ℂ := (Finset.range (m + 1)).image (fun n : ℕ => (n : ℂ))
+  let s : Finset ℂ := gridAlphabet m
   have hcard : s.card = m + 1 := by
     exact (Finset.card_image_of_injective _ (Nat.cast_injective (R := ℂ))).trans
       (Finset.card_range _)
@@ -149,28 +154,34 @@ private lemma framePolynomial_degree {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ) 
     _ = gridBound d := by simp only [gridBound, Finset.sum_const, Finset.card_univ,
       smul_eq_mul, mul_comm]
 
-set_option maxHeartbeats 800000 in
+private lemma framePolynomial_eval {d : ℕ} (u : Matrix (Fin d) (Fin d) ℂ)
+    (v : Fin d → ℂ) : MvPolynomial.eval v (framePolynomial u) =
+      ∏ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) := by
+  classical
+  simp only [framePolynomial, map_prod, minorPolynomial_eval]
+
+private lemma minors_force_nonzero {d : ℕ} (hd : 4 ≤ d)
+    (u : Matrix (Fin d) (Fin d) ℂ) (v : Fin d → ℂ)
+    (hc : ∀ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) ≠ 0) : v ≠ 0 := by
+  intro h
+  let c : Fin 2 × Fin 2 ↪ Fin d :=
+    (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).toEmbedding.trans (Fin.castLEEmb hd)
+  have hz := hc c
+  simp only [h, Matrix.mulVec_zero, minor, Pi.zero_apply, mul_zero, sub_zero] at hz
+  exact hz rfl
+
 private lemma common_grid {d : ℕ} (hd : 4 ≤ d) (u : Matrix (Fin d) (Fin d) ℂ)
     (hu : u ∈ Matrix.specialUnitaryGroup (Fin d) ℂ) :
     ∃ v ∈ grid d, ∀ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) ≠ 0 := by
   classical
   obtain ⟨v, hv, hfv⟩ := grid_eval_nonzero (framePolynomial u)
     (framePolynomial_nonzero u hu) (framePolynomial_degree u)
-  have hc : ∀ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) ≠ 0 := by
-    have hprod : (∏ c : Fin 2 × Fin 2 ↪ Fin d,
-        MvPolynomial.eval v (minorPolynomial u c)) ≠ 0 := by
-      simpa only [framePolynomial, map_prod] using hfv
-    intro c
-    rw [← minorPolynomial_eval]
-    exact Finset.prod_ne_zero_iff.mp hprod c (Finset.mem_univ c)
-  have hv0 : v ≠ 0 := by
-    intro h
-    let c : Fin 2 × Fin 2 ↪ Fin d :=
-      (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).toEmbedding.trans (Fin.castLEEmb hd)
-    have hz := hc c
-    simp only [h, Matrix.mulVec_zero, minor, Pi.zero_apply, mul_zero, sub_zero] at hz
-    exact hz rfl
-  exact ⟨v, Finset.mem_filter.mpr ⟨hv, hv0⟩, hc⟩
+  rw [framePolynomial_eval] at hfv
+  have hc : ∀ c : Fin 2 × Fin 2 ↪ Fin d, minor c (u *ᵥ v) ≠ 0 :=
+    fun c => Finset.prod_ne_zero_iff.mp hfv c (Finset.mem_univ c)
+  refine ⟨v, ?_, hc⟩
+  change v ∈ (gridBox d (gridBound d)).filter (· ≠ 0)
+  exact Finset.mem_filter.mpr ⟨hv, minors_force_nonzero hd u v hc⟩
 
 private def mass {d : ℕ} (v : Fin d → ℂ) : ℝ := ∑ i, Complex.normSq (v i)
 
@@ -213,11 +224,25 @@ private lemma productState_density {d : ℕ} (p : Partition d)
           τ i ((partitionEquiv p).symm x i) ((partitionEquiv p).symm y i)) := by
       induction s using Finset.induction_on with
       | empty =>
-        simpa only [Finset.prod_empty, Matrix.vecMulVec_apply, Pi.star_apply, star_one,
-          mul_one] using Matrix.posSemidef_vecMulVec_self_star (fun _ : Fin d => (1 : ℂ))
+        have he : (fun x y : Fin d => ∏ i ∈ (∅ : Finset (Fin p.val.1)),
+            τ i ((partitionEquiv p).symm x i) ((partitionEquiv p).symm y i)) =
+            Matrix.vecMulVec (fun _ : Fin d => (1 : ℂ)) (star (fun _ => 1)) := by
+          funext x y
+          simp only [Finset.prod_empty, Matrix.vecMulVec_apply, Pi.star_apply, star_one,
+            mul_one]
+        rw [he]
+        exact Matrix.posSemidef_vecMulVec_self_star _
       | @insert i s hi ih =>
-        simpa only [Finset.prod_insert hi, Matrix.hadamard_apply] using
-          ((hτ i).1.submatrix (fun x => (partitionEquiv p).symm x i)).hadamard ih
+        have he : (fun x y : Fin d => ∏ j ∈ insert i s,
+            τ j ((partitionEquiv p).symm x j) ((partitionEquiv p).symm y j)) =
+            Matrix.hadamard ((τ i).submatrix (fun x => (partitionEquiv p).symm x i)
+              (fun x => (partitionEquiv p).symm x i))
+              (fun x y => ∏ j ∈ s,
+                τ j ((partitionEquiv p).symm x j) ((partitionEquiv p).symm y j)) := by
+          funext x y
+          exact Finset.prod_insert hi
+        rw [he]
+        exact ((hτ i).1.submatrix (fun x => (partitionEquiv p).symm x i)).hadamard ih
     exact h Finset.univ
   · change (∑ x : Fin d, ∏ i,
       τ i ((partitionEquiv p).symm x i) ((partitionEquiv p).symm x i)) = 1
@@ -238,7 +263,10 @@ private lemma productState_column_minor {d : ℕ} (p : Partition d)
   intro i _
   by_cases h0 : i.val = 0
   · simp only [h0, ↓reduceIte]
-  · by_cases h1 : i.val = 1 <;> simp [h0, h1]
+  · by_cases h1 : i.val = 1
+    · simp only [h1, ↓reduceIte]
+      exact mul_comm _ _
+    · simp only [h0, h1, ↓reduceIte]
 
 private lemma summand_kernel {d : ℕ} {ι : Type} [Fintype ι]
     (w : ι → ℝ) (a : ι → Matrix (Fin d) (Fin d) ℂ)
