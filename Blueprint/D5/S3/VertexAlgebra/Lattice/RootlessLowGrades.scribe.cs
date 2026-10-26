@@ -19,9 +19,8 @@ internal sealed class RootlessLowGradesDocument : IScribeDocumentDefinition
             Paragraph(Text("The new mathematical content is the exhaustive constructive oscillator and all-charge "
                 + "energy-two classification and its injective/surjective occupation maps. Auxiliary rewrites, "
                 + "stars-and-bars cardinality and basis/eigenspace transport are consumed on the live derivation "
-                + "of the general spectral theorem; they are not independent novelty claims. The module has "
-                + "admission basis escape-witness and utility none: its content is a symbolic construction for "
-                + "arbitrary rank, rather than bounded enumeration or a certified numerical instance.")),
+                + "of the general spectral theorem. The resulting bijections give a symbolic construction for "
+                + "every natural rank, including rank zero.")),
             Paragraph(Text("The proof reuses chargeSublevel_finite, gradeBasis, grade_finiteDimensional, "
                 + "complex_inverse_exists and actualL0_eigenspace_eq_grade. Both inverse equations identify "
                 + "the literal canonical Sugawara L0 eigenspaces with the existing grades on the same carrier. "
