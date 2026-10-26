@@ -28,18 +28,18 @@ internal sealed class TruncatedTetrahedronRelativeCWDocument : IScribeDocumentDe
                     Paragraph(Text("Every top-cell sphere maps into D. The gauge sends the sphere back to the bulk frontier. A point of that frontier must have a boundary coordinate, since otherwise every retained inequality would be strict and the point would lie in the interior. A cap coordinate gives an original cap face. A zero coordinate gives an original paired face, transported to the selected representative when needed. This proves the genuine sphere-attaching condition for each three-cell.")),
                     Paragraph(Text("HigherCell n is the subtype of original tags t satisfying n=3. higherMap is topCell after that dimension equality. relativeCW P is Mathlib.RelCWComplex.mkFinite on all of Q relative to D, using the constructed open charts, their pairwise disjointness, their disjointness from D, the sphere-attaching condition, closedness of D and the closed cover. The final clause of UpperGeometry is RelCWComplex.Finite for this exact relativeCW instance. Its cells are empty in every dimension other than three and are indexed by T in dimension three. No CW structure on D is used.")),
                     Paragraph(Text("For the inverse-continuity step, a continuous map from a compact space to a Hausdorff space restricts to an embedding on an open subset when every full fiber meeting that subset is a singleton. The proof separates an open subset from its closed complement under the closed ambient map. Thus arbitrary identifications outside the open subset, including identifications inside a closed-cell boundary, remain allowed. Closedness of the original equivalence relation comes directly from FiniteZeroGuardedClosure.uniform_transport_and_closed_relation applied to these coordinate permutations. Compactness of the original retained carrier and normal separation then give Hausdorffness of the original quotient.")),
-                    Paragraph(Text("In the displayed formula, Char is the continuity, disk equality and open-fiber conjunction just defined; Chart(e,d) means source(e)=Ball d, ContinuousOn(e,ClosedBall d) and ContinuousOn(e inverse,target(e)). The function image(e,S) is the image of S under e, faceUnion is the union of all closed surface images, qTagCarrier(P,t) is q applied to the full original tag-t carrier, topUnion is the union of all closed top images, and finiteRelative(P) denotes finiteness under the exact relativeCW P instance. The projection argument of UpperGeometry explicitly records which ambient observations the maps realize; the theorem supplies the original q.")),
+                    Paragraph(Text("The displayed formula expands all sixteen UpperGeometry clauses, including every characteristic-map and chart quantifier. Types denotes the chosen universe of types, and finiteT, topologyT and discreteT are the complete finite enumeration, topology and matching discrete-topology dictionaries. Disk d is the closed-ball subtype, val removes one subtype layer, source and target are the PartialEquiv sets, and inverse is its inverse map. ContinuousOn uses the inherited ambient topology. The function image(e,S) is the image of S under e, qTagCarrier(P,t) is exactly q P applied to {a : TruncatedPoint T | a.tag=t}, topUnion(P) is exactly the union over every t in T of image(topCell P t,ClosedBall 3), univ(Q) is the entire quotient, and finiteRelative(P) is precisely letI := relativeCW P; RelCWComplex.Finite (univ : Set (TruncatedQuotient P)) with base faceSkeleton P. The projection argument of UpperGeometry explicitly records which ambient observations the maps realize; the theorem supplies the original q.")),
+                    Paragraph(Text("TruncatedTetrahedronCellGeometry owns the moved retained-carrier geometry under its original TruncatedTetrahedronRelativeCW public namespace. Its cell_geometry theorem supplies the complete ambient fiber laws and homeomorphisms onto every original closed bulk and face carrier. The upper fiber fields use those laws directly, and both closed-image proofs use the reconstruction witnesses. Original private helper references now select that supplier as their definition owner; the UpperGeometry statement and every original public API name remain the same.")),
                     Paragraph(Text("For the original Section 17 pairing, take T=Fin 6 and P=actualPairing, with its existing finite discrete topology. An original row r maps to the orbit class of rowSource r; the original rows' coverage and separation give a bijection with PairedFace P. The chosen faceRep may be either side of that row. The same truncatedMove identifies their entire closed quotient images. The cap indices remain the original (t,j), and the top indices remain t. This identifies the constructed closed skeleton and relative cell geometry with the original quotient construction. The zero- and one-dimensional assembly, an absolute CW complex, an Euler invariant and completion of the larger sequence of sections require additional results."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
     {
         var t = F.Id("T");
-        return All("T", F.Id("Types"),
-            F.Seq(F.OpenBracket, Call("Fintype", t), F.CloseBracket, F.Sp,
-                F.OpenBracket, Call("TopologicalSpace", t), F.CloseBracket, F.Sp,
-                F.OpenBracket, Call("DiscreteTopology", t), F.CloseBracket, F.Sp,
-                All("P", Call("RawFacePairing", t), Conclusions())));
+        return All("T",F.Id("Types"),All("finiteT",Call("Fintype",t),
+            All("topologyT",Call("TopologicalSpace",t),
+                All("discreteT",Call("DiscreteTopology",t,F.Id("topologyT")),
+                    All("P",Call("RawFacePairing",t),Conclusions())))));
     }
 
     private static Formula Conclusions()
@@ -58,14 +58,14 @@ internal sealed class TruncatedTetrahedronRelativeCWDocument : IScribeDocumentDe
             All("a", x, All("b", x, All("f", Call("Fin",F.D(4)),
                 Implies(Call("FaceInterior",a,f), And(Ne(move,a),
                     Iff(Eq(Apply(q,a),Apply(q,b)), Or(Eq(b,a),Eq(b,move)))))))),
-            All("t",t,Call("Char",Call("topCharacteristic",p,tag),top,
-                Call("bulkDiskPoint",tag),q,F.D(3))),
+            All("t",t,Characteristic(Call("topCharacteristic",p,tag),top,
+                Call("bulkDiskPoint",tag),q,3)),
             All("k",F.Id("FaceShape"),All("t",t,All("j",Call("Fin",F.D(4)),
-                Call("Char",Call("faceCharacteristic",p,F.Id("k"),tag,F.Id("j")),
+                Characteristic(Call("faceCharacteristic",p,F.Id("k"),tag,F.Id("j")),
                     Call("directedFaceCell",p,F.Id("k"),tag,F.Id("j")),
-                    Call("faceDiskPoint",F.Id("k"),tag,F.Id("j")),q,F.D(2))))),
-            All("t",t,Call("Chart",top,F.D(3))),
-            All("c",Call("SurfaceCell",p),Call("Chart",surface,F.D(2))),
+                    Call("faceDiskPoint",F.Id("k"),tag,F.Id("j")),q,2)))),
+            All("t",t,Chart(top,3)),
+            All("c",Call("SurfaceCell",p),Chart(surface,2)),
             All("t",t,Eq(Image(top,ClosedBall(3)),Call("qTagCarrier",p,tag))),
             All("k",F.Id("FaceShape"),All("t",t,All("j",Call("Fin",F.D(4)),
                 Eq(Image(Call("directedFaceCell",p,F.Id("k"),tag,F.Id("j")),ClosedBall(2)),
@@ -81,6 +81,22 @@ internal sealed class TruncatedTetrahedronRelativeCWDocument : IScribeDocumentDe
             All("t",t,Call("MapsTo",top,Call("Sphere",F.D(3)),d)),
             Call("finiteRelative",p));
     }
+
+    private static Formula Characteristic(Formula characteristic, Formula cell,
+        Formula reconstruction, Formula projection, int dimension)
+    {
+        var x = F.Id("x"); var y = F.Id("y");
+        var disk = Call("Disk",F.D((byte)dimension));
+        return And(Call("Continuous",characteristic),
+            All("x",disk,Eq(Apply(cell,Call("val",x)),Apply(projection,Apply(reconstruction,x)))),
+            All("x",disk,All("y",disk,Implies(Call("mem",Call("val",x),Ball(dimension)),
+                Implies(Eq(Apply(characteristic,y),Apply(characteristic,x)),Eq(y,x))))));
+    }
+
+    private static Formula Chart(Formula cell, int dimension) =>
+        And(Eq(Call("source",cell),Ball(dimension)),
+            Call("ContinuousOn",cell,ClosedBall(dimension)),
+            Call("ContinuousOn",Call("inverse",cell),Call("target",cell)));
 
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
