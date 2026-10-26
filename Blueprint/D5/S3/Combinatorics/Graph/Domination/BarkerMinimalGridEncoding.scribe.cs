@@ -56,7 +56,7 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
     private static Formula Iff(Formula l, Formula r) => Logic(l, FormulaLogicOperator.Iff, r);
     private static Formula And(Formula l, Formula r) => Logic(l, FormulaLogicOperator.And, r);
     private static Formula Imp(Formula l, Formula r) => Logic(l, FormulaLogicOperator.Implies, r);
-    private static Formula In(Formula l, Formula r) => Rel(l, FormulaRelationOperator.In, r);
+    private static Formula In(Formula l, Formula r) => Rel(l, FormulaRelationOperator.MemberOf, r);
     private static Formula Nat => Seq(Mathbb, Grp(X("N")));
     private static Formula Verts(Formula n) => Call("Vertex", n);
     private static Formula FS(Formula t) => Call("Finset", t);

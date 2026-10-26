@@ -191,10 +191,10 @@ theorem minimal_iff_column_tests {n : ℕ} (S : Finset (Vertex n)) :
       exact ⟨z, hz, fun v hv _ h => huniq v hv h⟩
   · intro h
     constructor
-    · intro v
-      obtain ⟨u, hu, hclosed⟩ := (h v.2).1 v.1
+    · rintro ⟨r, c⟩
+      obtain ⟨u, hu, hclosed⟩ := (h c).1 r
       rcases hclosed with heq | hadj
-      · exact Or.inl (by simpa only [← heq] using hu)
+      · exact Or.inl (heq.symm ▸ hu)
       · exact Or.inr ⟨u, hu, hadj⟩
     · intro v hv
       obtain ⟨z, hz, huniq⟩ := (h v.2).2 v.1 hv
