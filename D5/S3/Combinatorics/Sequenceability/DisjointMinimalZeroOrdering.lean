@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Order.Minimal]
    utility: none
-   digest: Unconditional original-occurrence Good orders from disjoint minimal zero supports. -/
+   digest: Disjoint minimal zero-support decompositions and unconditional original-occurrence Good orders. -/
 
 import D5.S3.Combinatorics.Sequenceability.PairedZeroSubsetSpectrum
 import Mathlib.Data.List.FinRange
@@ -88,41 +88,68 @@ private lemma interlaced_interval {k : ℕ} (a b : Fin k → α) (M : List α)
   rw [hlen] at hj ⊢
   constructor <;> omega
 
-private lemma zero_decomposition (f : α → G) (X C : Finset α)
+/-- Every coefficient-one zero support is a disjoint union of inclusion-minimal
+nonempty zero supports, without any disjointness assumption on all minimal supports. -/
+theorem zero_decomposition_pairwise_disjoint (f : α → G) (X C : Finset α)
     (hCX : C ⊆ X) (hz : (∑ x ∈ C, f x) = 0) :
     ∃ Q : Finset (Finset α),
-      (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧ C = Q.biUnion id := by
+      (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧
+      Set.PairwiseDisjoint (↑Q) id ∧ C = Q.biUnion id := by
   classical
   revert hCX hz
   refine Finset.strongInductionOn C ?_
   intro C ih hCX hz
   by_cases hC : C = ∅
   · subst C
-    exact ⟨∅, by simp, by simp⟩
+    exact ⟨∅, by simp, by simp, by simp⟩
   have hne : C.Nonempty := Finset.nonempty_iff_ne_empty.mpr hC
-  obtain ⟨B,hBC,hB⟩ := exists_minimal_le_of_wellFoundedLT
-    (fun B : Finset α => B.Nonempty ∧ (∑ x ∈ B, f x) = 0) C ⟨hne,hz⟩
+  obtain ⟨B, hBC, hB⟩ := exists_minimal_le_of_wellFoundedLT
+    (fun B : Finset α => B.Nonempty ∧ (∑ x ∈ B, f x) = 0) C ⟨hne, hz⟩
   have hmin : MinimalZeroSupport f B := by
-    refine ⟨hB.1.1,hB.1.2,?_⟩
+    refine ⟨hB.1.1, hB.1.2, ?_⟩
     intro D hDB hDn hDz
-    exact hDB.antisymm (hB.2 ⟨hDn,hDz⟩ hDB)
+    exact hDB.antisymm (hB.2 ⟨hDn, hDz⟩ hDB)
   have hproper : C \ B ⊂ C := by
     apply Finset.ssubset_iff_subset_ne.mpr
-    refine ⟨Finset.sdiff_subset,?_⟩
+    refine ⟨Finset.sdiff_subset, ?_⟩
     intro he
-    obtain ⟨x,hx⟩ := hB.1.1
-    have := (Finset.mem_sdiff.mp (he.symm ▸ hBC hx)).2 hx
-    exact this
+    obtain ⟨x, hx⟩ := hB.1.1
+    exact (Finset.mem_sdiff.mp (he.symm ▸ hBC hx)).2 hx
   have hrem : (∑ x ∈ C \ B, f x) = 0 := by
     rw [Finset.sum_sdiff_eq_sub hBC, hz, hB.1.2, sub_self]
-  obtain ⟨Q,hQ,hcover⟩ := ih (C \ B) hproper (Finset.sdiff_subset.trans hCX) hrem
-  refine ⟨insert B Q, ?_, ?_⟩
+  obtain ⟨Q, hQ, hdis, hcover⟩ :=
+    ih (C \ B) hproper (Finset.sdiff_subset.trans hCX) hrem
+  have hQrem {D : Finset α} (hD : D ∈ Q) : D ⊆ C \ B := by
+    intro x hx
+    rw [hcover]
+    exact Finset.mem_biUnion.mpr ⟨D, hD, hx⟩
+  have hBdis {D : Finset α} (hD : D ∈ Q) : Disjoint B D := by
+    apply Finset.disjoint_left.mpr
+    intro x hxB hxD
+    exact (Finset.mem_sdiff.mp (hQrem hD hxD)).2 hxB
+  refine ⟨insert B Q, ?_, ?_, ?_⟩
   · intro D hD
     rcases Finset.mem_insert.mp hD with rfl | hD
-    · exact ⟨hBC.trans hCX,hmin⟩
+    · exact ⟨hBC.trans hCX, hmin⟩
     · exact hQ D hD
+  · intro D hD E hE hDE
+    rcases Finset.mem_insert.mp hD with rfl | hD
+    · rcases Finset.mem_insert.mp hE with rfl | hE
+      · exact (hDE rfl).elim
+      · exact hBdis hE
+    · rcases Finset.mem_insert.mp hE with rfl | hE
+      · exact (hBdis hD).symm
+      · exact hdis hD hE hDE
   · rw [Finset.biUnion_insert, ← hcover]
     exact (Finset.union_sdiff_of_subset hBC).symm
+
+
+private lemma zero_decomposition (f : α → G) (X C : Finset α)
+    (hCX : C ⊆ X) (hz : (∑ x ∈ C, f x) = 0) :
+    ∃ Q : Finset (Finset α),
+      (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧ C = Q.biUnion id := by
+  obtain ⟨Q, hQ, _, hcover⟩ := zero_decomposition_pairwise_disjoint f X C hCX hz
+  exact ⟨Q, hQ, hcover⟩
 
 /-- A constructor with no assumed Good intermediate order. Blocks need not cover X;
 every nonempty zero support must be a union of complete disjoint blocks. -/
