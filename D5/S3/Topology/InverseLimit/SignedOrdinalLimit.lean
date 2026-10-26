@@ -56,7 +56,7 @@ noncomputable def data : H.Data where
     · simpa only [dite_eq_left hr] using ((A.V ⟨r, hr⟩).clopen n).isClopen
     · simp only [dite_eq_right hr]; exact isClopen_empty
   nu r d n := if hr : ω ≤ r.1 then (A.nu ⟨r, hr⟩ d).1 n else
-    ⟨0, by change Measure.Regular (0 : Measure (H.Space r)) ∧ Measure.Regular (0 : Measure (H.Space r)); exact ⟨inferInstance, inferInstance⟩⟩
+    ⟨0, by simp only [SignedMeasure.toJordanDecomposition_zero]; change Measure.Regular (0 : Measure (H.Space r)) ∧ Measure.Regular (0 : Measure (H.Space r)); exact ⟨inferInstance, inferInstance⟩⟩
   mass r d n hr := by
     classical
     simpa only [dite_eq_left hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
@@ -155,14 +155,16 @@ variable {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l} (A : Archive H hw)
 private noncomputable def oldV (r : Rows l) (hr : r ≠ newRow l hw.le) :
     SupportFamily (Base (literalPrefix H E) r) := by
   have hrl : r.1 < l := (bornRow hw r hr).1.2
-  simpa [Base, Prefix.Space, literalPrefix, rowIndex, index, enlargedCarrier, bornRow, hrl]
-    using A.V (bornRow hw r hr)
+  change SupportFamily (enlargedCarrier H (rowIndex r))
+  rw [carrier_old H r.1 hrl _]
+  exact A.V (bornRow hw r hr)
 
 private noncomputable def oldU (r : Rows l) (hr : r ≠ newRow l hw.le) :
     Label → SupportFamily (Base (literalPrefix H E) r) := by
   have hrl : r.1 < l := (bornRow hw r hr).1.2
-  simpa [Base, Prefix.Space, literalPrefix, rowIndex, index, enlargedCarrier, bornRow, hrl]
-    using A.U (bornRow hw r hr)
+  change Label → SupportFamily (enlargedCarrier H (rowIndex r))
+  rw [carrier_old H r.1 hrl _]
+  exact A.U (bornRow hw r hr)
 
 private noncomputable def oldNu (r : Rows l) (hr : r ≠ newRow l hw.le) :
     Label → BornData (A.oldV E r hr) := by
@@ -171,6 +173,7 @@ private noncomputable def oldNu (r : Rows l) (hr : r ≠ newRow l hw.le) :
     using A.nu (bornRow hw r hr)
 
 /-- The actual limit predecessor: every old whole enumeration and birth is retained. -/
+set_option backward.isDefEq.respectTransparency false in
 noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
   classical
   refine {
@@ -189,7 +192,8 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
     C := ?_
     E := ?_
     F := ?_ }
-  · simp [K, Prefix.Space, literalPrefix, top, enlargedCarrier]
+  · change Surjective (fun x : enlargedCarrier H (top l) => restrict hw.le x.1)
+    rw [carrier_top H (Order.lt_succ l)]
     intro y
     obtain ⟨z, hz⟩ := A.base_onto y
     obtain ⟨x, hx⟩ := E.onto ⟨ω, hw⟩ z
@@ -219,6 +223,8 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
         rowIndex, index, top, enlargedCarrier, bornRow, hrl, data, r.2.1] using h
   · intro r hr d
     have hrl : r.1 < l := (bornRow hw r hr).1.2
+    dsimp only [K, Prefix.Space, literalPrefix]
+    rw [carrier_top H (Order.lt_succ l)]
     simp [oldNu, oldV, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
       rowIndex, index, top, enlargedCarrier, bornRow, hrl]
     intro s hm hn
