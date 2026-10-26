@@ -10,9 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.activeColumn`
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.activeColumn` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numFrozenRuns`
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numFrozenRuns` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.frozenColumn`
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.frozenColumn` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numActiveColumns_
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numActiveColumns_le_numExtrema` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -66,9 +58,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numFrozenRuns_le`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.numFrozenRuns_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -80,9 +70,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.frozenColumn_not_
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreColumns.frozenColumn_not_active` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 

@@ -52,22 +52,9 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.residual_frozen_r
 
 From an actual residual array with a frozen column, every natural L gives a residual array with L extra columns, a legal deletion chain back to the original array, a remaining frozen column, and preservation of every originally frozen row.
 
-**Theorem 1.5 (Both dimensions vary on the same actual array).**
-
-Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.residual_joint_run_extension`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.residual_joint_run_extension` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If an actual residual array has a frozen line on each axis, then for every pair of natural L,K there is one residual array with L extra rows and K extra columns and a joint signed deletion chain back to the original array. The column extension preserves the row seam needed for the second extension. No uniqueness of expansions or of reduced cores is asserted.
-
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.residual_frozen_run_extension`
-- Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.residual_joint_run_extension`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.stretchColumn`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.stretchColumn_reduction`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreStretch.stretchColumn_residual`

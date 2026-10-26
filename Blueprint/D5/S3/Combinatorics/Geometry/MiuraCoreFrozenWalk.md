@@ -10,9 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.alignedExt`
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.alignedExt` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.cascade_down`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.cascade_down` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.cascade_up`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.cascade_up` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.extremumFree_r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.extremumFree_rainbow` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -66,9 +58,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.rainbow_dL_con
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreFrozenWalk.rainbow_dL_const` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 

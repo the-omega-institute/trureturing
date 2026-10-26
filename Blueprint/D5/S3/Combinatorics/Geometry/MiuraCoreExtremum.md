@@ -1,4 +1,4 @@
-# Total extremum count is preserved
+# Exact pointwise extremum correspondence
 
 ## Abstract
 
@@ -10,9 +10,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLM
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLM_of_h_max` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLm
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLm_of_h_min` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_max_of_contrac
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_max_of_contractAt_isSLM` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_min_of_contrac
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_min_of_contractAt_isSLm` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
@@ -66,34 +58,17 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLE
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLE_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
+*Citation.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
 
 *Commentary.*
 
 A surviving cell is a contracted strict extremum exactly when its image is an original strict extremum.
-
-**Theorem 1.6 (Total extremum count is preserved).**
-
-Lean statement: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_numExtrema_eq`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_numExtrema_eq` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Chakshu Gupta (2026). *One construction for the Miura-ori flip-graph degree sequence*. DOI: [10.48550/arXiv.2607.05567](https://doi.org/10.48550/arXiv.2607.05567). URL: <https://arxiv.org/abs/2607.05567v3>.
-
-*Commentary.*
-
-The surviving-cell injection restricts to a bijection between the two actual finite sets of extrema; the removed column contributes none.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLE_iff`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLM_of_h_max`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_isSLm_of_h_min`
-- Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.contractAt_numExtrema_eq`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_max_of_contractAt_isSLM`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraCoreExtremum.h_min_of_contractAt_isSLm`
 - Dependency: [D5/S3/Combinatorics/Geometry/MiuraCoreCellExpand](MiuraCoreCellExpand.md)
