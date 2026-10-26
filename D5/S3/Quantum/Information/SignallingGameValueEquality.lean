@@ -132,7 +132,7 @@ private lemma quantum_noSignalling {m n da db : ℕ}
   have right (u : Fin n) (x : Fin m) (y : Fin n) :
       (∑ v, quantumBox rho a b u v x y) =
         (trace (rho * (a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)))).re := by
-    simp only [quantumBox, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    simp only [quantumBox.eq_1, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
     have he : (∑ v, a x u ⊗ₖ b y v) = a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
       calc
         _ = a x u ⊗ₖ (∑ v, b y v) := by
@@ -143,7 +143,7 @@ private lemma quantum_noSignalling {m n da db : ℕ}
   have left (v : Fin m) (x : Fin m) (y : Fin n) :
       (∑ u, quantumBox rho a b u v x y) =
         (trace (rho * ((1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v))).re := by
-    simp only [quantumBox, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    simp only [quantumBox.eq_1, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
     have he : (∑ u, a x u ⊗ₖ b y v) = (1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v := by
       calc
         _ = (∑ u, a x u) ⊗ₖ b y v := by
@@ -188,7 +188,7 @@ private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin
       (fun v _ => by split_ifs <;> norm_num) (fun _ => by simp)
   · funext u v x y
     by_cases hu : u = fa x <;> by_cases hv : v = fb y <;>
-      simp only [quantumBox, deterministicBox, a, b, hu, hv, ite_true, ite_false,
+      simp only [quantumBox.eq_1, deterministicBox.eq_1, a, b, hu, hv, ite_true, ite_false,
         Complex.ofReal_one, Complex.ofReal_zero, diagonal_one, diagonal_zero,
         one_kronecker_one, zero_kronecker, kronecker_zero,
         trace_one, trace_zero, Fintype.card_prod, Fintype.card_fin, Nat.cast_one,
@@ -209,7 +209,7 @@ private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
       dsimp only [fa, fb]
       rw [Nat.mod_eq_of_lt (lt_of_lt_of_le x.isLt hmn), Nat.mod_eq_of_lt x.isLt]
     have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (m : ℝ) := by
-      simp only [deterministicBox, ite_mul, one_mul, zero_mul]
+      simp only [deterministicBox.eq_1, ite_mul, one_mul, zero_mul]
       simp [hi]
     rw [hs, max_eq_right (show (m : ℝ) ≤ n by exact_mod_cast hmn)]
     field_simp
@@ -219,7 +219,7 @@ private lemma optimal_deterministic {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n) :
       rw [Nat.mod_eq_of_lt (lt_of_lt_of_le y.isLt hnm), Nat.mod_eq_of_lt y.isLt]
     have hs : (∑ x, ∑ y, deterministicBox fa fb y x x y) = (n : ℝ) := by
       rw [sum_comm]
-      simp only [deterministicBox, mul_ite, mul_one, mul_zero]
+      simp only [deterministicBox.eq_1, mul_ite, mul_one, mul_zero]
       simp [hi]
     rw [hs, max_eq_left (show (n : ℝ) ≤ m by exact_mod_cast hnm)]
     field_simp
