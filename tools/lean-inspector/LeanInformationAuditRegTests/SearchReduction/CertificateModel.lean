@@ -165,14 +165,14 @@ theorem unresolved_target_part_blocks (reason : Failure) :
     targetPartDecision (.incomplete reason) .found = .incomplete .undecided := by
   exact ⟨rfl, rfl⟩
 
-/-- The decision set contains the missing reverse query, and omits it after a
-hit, after NoHit, without a decisive gap, or with unresolved independence. -/
+/-- A decisive gap schedules a missing reverse query even with unresolved
+independence; a completed reverse result or a nondecisive gap omits it. -/
 theorem reverse_lazy_decision_set (reason : Failure) :
     needsReverseNegative true .exhausted (.incomplete reason) = true ∧
     needsReverseNegative true .exhausted .found = false ∧
     needsReverseNegative true .exhausted .exhausted = false ∧
     needsReverseNegative false .exhausted (.incomplete reason) = false ∧
-    needsReverseNegative true (.incomplete reason) (.incomplete reason) = false := by
+    needsReverseNegative true (.incomplete reason) (.incomplete reason) = true := by
   simp [needsReverseNegative]
 
 /-- A newly selected unresolved seed cannot inherit a previous route's
