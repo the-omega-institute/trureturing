@@ -161,11 +161,6 @@ private theorem pair_cancel_right {ι : Type*} (i j k : ι) :
   change (⟨i ::ₘ {k}, _⟩ : Sym ι 2) = ⟨j ::ₘ {k}, _⟩ ↔ _
   simp only [Subtype.mk.injEq, Multiset.cons_inj_left]
 
-private theorem pair_cancel_left {ι : Type*} (i j k : ι) :
-    pair k i = pair k j ↔ i = j := by
-  change (⟨k ::ₘ {i}, _⟩ : Sym ι 2) = ⟨k ::ₘ {j}, _⟩ ↔ _
-  simp only [Subtype.mk.injEq, Multiset.cons_inj_right, Multiset.singleton_inj]
-
 private theorem Q_basis (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hroot : ∀ c : Charge D, bilinear D c c ≠ 2) (i j : Fin D.rank) :
