@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Graph.MutualVisibility
 
 open SimpleGraph
 
-variable {W : Type*} [Fintype W] [DecidableEq W]
+variable {W : Type*} [DecidableEq W]
 
 /-- Reachability inside one actual induced graph after deleting the given cut. -/
 def CutReach (G : SimpleGraph W) (C : Finset W) (s t : W) : Prop :=
@@ -32,7 +32,7 @@ private theorem cutReach_trans {G : SimpleGraph W} {C : Finset W} {s t u : W}
   obtain ⟨_, hu, htu⟩ := htu
   exact ⟨hs, hu, hst.trans htu⟩
 
-private theorem cutReach_step {G : SimpleGraph W} {C : Finset W} {s t u : W}
+theorem cutReach_step {G : SimpleGraph W} {C : Finset W} {s t u : W}
     (hst : CutReach G C s t) (htu : G.Adj t u) (hu : u ∉ C) : CutReach G C s u := by
   obtain ⟨hs, ht, hst⟩ := hst
   exact ⟨hs, hu, hst.trans (show (G.induce {v | v ∉ C}).Adj ⟨t, ht⟩ ⟨u, hu⟩ from htu).reachable⟩
@@ -73,6 +73,8 @@ theorem cutReach_chain_payment {G : SimpleGraph W} {C : Finset W} {s : W}
     obtain ⟨hs, _, hsr⟩ := hs
     exact hend ⟨hs, hfa, hsr.trans hr.symm⟩
   · exact ⟨b, hab, le_rfl, hcut⟩
+
+variable [Fintype W]
 
 private theorem separators_nonempty (G : SimpleGraph W) :
     ({k | ∃ C : Finset W, C.card = k ∧ Separates G C} : Set ℕ).Nonempty := by
@@ -145,5 +147,10 @@ private theorem connectivity_complete [Nonempty W] :
     have htotal := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ C)
     simp only [Finset.card_univ] at htotal
     omega
+
+/-- The unchanged whole source event; no separator reduction is assumed as a premise. -/
+def FullMaximalConnectivityClaim : Prop :=
+  ∀ (V : Type*) [Fintype V] [DecidableEq V] [Nonempty V] (H : SimpleGraph V),
+    H.Connected → vertexConnectivity (reconfiguration H) = (reconfiguration H).minDegree
 
 end D5.S3.Combinatorics.Graph.MutualVisibility

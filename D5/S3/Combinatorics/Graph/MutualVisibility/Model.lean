@@ -35,7 +35,7 @@ def MixedMove (H : SimpleGraph V) (S T : Finset V) : Prop :=
     ∃ x y, S \ T = {x} ∧ T \ S = {y} ∧ H.Adj x y)
 
 /-- All feasible subsets, including the empty set and all cardinalities. -/
-def Configuration (H : SimpleGraph V) := {S : Finset V // Visible H S}
+abbrev Configuration (H : SimpleGraph V) := {S : Finset V // Visible H S}
 
 private theorem mixedMove_symm {H : SimpleGraph V} {S T : Finset V}
     (h : MixedMove H S T) : MixedMove H T S := by
@@ -49,6 +49,9 @@ def reconfiguration (H : SimpleGraph V) : SimpleGraph (Configuration H) where
   Adj S T := MixedMove H S.val T.val
   symm := ⟨fun _ _ h => mixedMove_symm h⟩
   loopless := ⟨fun _ h => h.1 rfl⟩
+
+noncomputable instance configurationDecidableEq (H : SimpleGraph V) :
+    DecidableEq (Configuration H) := Classical.decEq _
 
 noncomputable instance configurationFintype [Fintype V] (H : SimpleGraph V) :
     Fintype (Configuration H) := by

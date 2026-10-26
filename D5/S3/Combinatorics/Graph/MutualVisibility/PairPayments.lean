@@ -84,7 +84,7 @@ private theorem two_label_payments_injective (B : Finset V) (p : V)
   simp only [Finset.mem_insert, Finset.mem_singleton] at hyz
   exact hyz.elim (fun h => (hp (h ▸ hy)).elim) id
 
-private def localCutClass (C : Finset (Configuration H)) (B : Finset V) (y : V) :
+def localCutClass (C : Finset (Configuration H)) (B : Finset V) (y : V) :
     Finset (Configuration H) := C.filter fun T => y ∈ T.val ∧ T.val ⊆ insert y B
 
 private theorem localCutClass_disjoint (C : Finset (Configuration H)) (B : Finset V)
@@ -130,10 +130,9 @@ private theorem simultaneous_inward_payments (hH : H.Connected)
     if hy : y ∈ E then Classical.choose (hpay y hy) else ⟨∅, visible_empty H⟩
   have hf : ∀ y ∈ E, f y ∈ C ∧ (f y).val \ {u, v} = {p, y} := by
     intro y hy
-    dsimp only [f]
-    split_ifs with h
-    · exact Classical.choose_spec (hpay y h)
-    · exact (h hy).elim
+    have hfy : f y = Classical.choose (hpay y hy) := by simp [f, hy]
+    rw [hfy]
+    exact Classical.choose_spec (hpay y hy)
   have hpE : p ∉ E := by
     intro hpe
     obtain ⟨hup, hvp, hS, _⟩ := hE p hpe
@@ -161,7 +160,7 @@ private theorem simultaneous_inward_payments (hH : H.Connected)
     exact two_label_payment_not_local C {u, v}
       (Finset.mem_sdiff.mp hm1).2 (Finset.mem_sdiff.mp hm2).2 hpy hsup hTL
 
-private theorem joint_cut_budget (C : Finset (Configuration H)) (B : Finset V)
+theorem joint_cut_budget (C : Finset (Configuration H)) (B : Finset V)
     (Y : Finset V) (hY : Disjoint Y B) (F : Finset (Configuration H)) (hFC : F ⊆ C)
     (hFI : Disjoint F (C.filter fun T => T.val ⊆ B))
     (hFL : ∀ y ∈ Y, Disjoint F (localCutClass C B y)) :
