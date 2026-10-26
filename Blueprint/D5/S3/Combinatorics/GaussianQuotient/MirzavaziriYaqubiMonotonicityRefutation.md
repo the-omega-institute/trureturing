@@ -50,6 +50,10 @@ $$\neg (\forall N \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall a \in \m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/GaussianQuotient/MirzavaziriYaqubiMonotonicityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mirzavaziri-yaqubi-2026-gaussian-quotient-monotonicity-problem-7-2` (refuted) by `D5/S3/Combinatorics/GaussianQuotient/MirzavaziriYaqubiMonotonicityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mirzavaziri-yaqubi-2026-gaussian-quotient-monotonicity-problem-7-2","declaration_gid":"D5/S3/Combinatorics/GaussianQuotient/MirzavaziriYaqubiMonotonicityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Madjid Mirzavaziri, Daniel Yaqubi (2026). *Graph binomial coefficients and a positivity conjecture of Guo and Krattenthaler*. DOI: [10.48550/arXiv.2610.19249](https://doi.org/10.48550/arXiv.2610.19249). URL: <https://arxiv.org/abs/2610.19249v1>.

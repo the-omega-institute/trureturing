@@ -55,16 +55,19 @@ internal sealed class MirzavaziriYaqubiMonotonicityRefutationDocument : IScribeD
                     + "polynomial arithmetic establishes the second. This answers the "
                     + "final sufficiency question; the classification of all quadruples "
                     + "and an unbounded family are not asserted by this theorem.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mirzavaziri-yaqubi-2026-gaussian-quotient-monotonicity-problem-7-2"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
-        DocumentBlock? quotation = null) =>
+        DocumentBlock? quotation = null, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
             quotation is null ? Blocks(Paragraph(Text(prose)))
-                : Blocks(quotation, Paragraph(Text(prose))), role);
+                : Blocks(quotation, Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock SourceQuestion()
     {
