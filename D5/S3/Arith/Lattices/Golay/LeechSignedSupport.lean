@@ -14,6 +14,8 @@ import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.SetTheory.Cardinal.Finite
 
+/-! # Signed finite coordinate supports -/
+
 open scoped BigOperators
 noncomputable section
 namespace D5.S3.Arith.Lattices.Golay.LeechSignedSupport
@@ -32,7 +34,7 @@ private theorem bit_cases (c : F2) : c = 0 ∨ c = 1 := by
   have h : c.val = 0 ∨ c.val = 1 := by omega
   rcases h with h | h
   · left; apply ZMod.val_injective 2; simpa using h
-  · right; apply ZMod.val_injective 2; simpa using h
+  · right; apply ZMod.val_injective 2; change c.val = 1; exact h
 
 @[simp] theorem liftBit_zero : liftBit 0 = 0 := by decide +kernel
 @[simp] theorem liftBit_one : liftBit 1 = 1 := by decide +kernel
@@ -40,7 +42,7 @@ private theorem bit_cases (c : F2) : c = 0 ∨ c = 1 := by
 @[simp] theorem sign_one : sign 1 = -1 := by simp [sign]
 
 @[simp] theorem liftBit_cast (c : F2) : (liftBit c : F2) = c := by
-  simp [liftBit, ZMod.natCast_zmod_val]
+  simp [liftBit]
 
 @[simp] theorem sign_sq (c : F2) : sign c ^ 2 = 1 := by
   rcases bit_cases c with rfl | rfl <;> norm_num
@@ -106,7 +108,8 @@ def signed (k : ℤ) (S : Finset I) (σ : S → F2) : IntVector :=
 theorem signed_sum (k : ℤ) (S : Finset I) (σ : S → F2) :
     (∑ i, signed k S σ i) =
       k * ((S.card : ℤ) - 2 * ∑ j : S, liftBit (σ j)) := by
-  rw [show (∑ i, signed k S σ i) = ∑ j : S, k * sign (σ j) from sum_on S _]
+  rw [show (∑ i, signed k S σ i) = ∑ j : S, k * sign (σ j) from by
+    simpa only [signed] using (sum_on S (fun j => k * sign (σ j)))]
   calc
     (∑ j : S, k * sign (σ j)) = ∑ j : S, (k - (2 * k) * liftBit (σ j)) := by
       apply Finset.sum_congr rfl
@@ -126,7 +129,8 @@ theorem signed_squareSum (k : ℤ) (S : Finset I) (σ : S → F2) :
       apply Finset.sum_congr rfl
       intro i _
       by_cases h : i ∈ S <;> simp [signed, h, mul_pow]
-    _ = ∑ _j : S, k ^ 2 := sum_on S _
+    _ = ∑ _j : S, k ^ 2 := by
+      simpa only [dite_eq_ite] using (sum_on S (fun _ => k ^ 2))
     _ = _ := by simp [mul_comm]
 
 theorem signed_support {k : ℤ} (hk : k ≠ 0) (S : Finset I) (σ : S → F2) :
@@ -183,7 +187,15 @@ def evenSignsEquiv (S : Finset I) (p : S) :
   toFun σ i := σ.val i.val
   invFun τ := ⟨fun i => if h : i = p then -(∑ j, τ j) else τ ⟨i, h⟩, by
     rw [Fintype.sum_eq_add_sum_subtype_ne _ p]
-    simp⟩
+    simp only [dite_eq_left rfl]
+    have hrest :
+        (∑ x : {i : S // i ≠ p},
+          if h : x.val = p then -(∑ j, τ j) else τ ⟨x.val, h⟩) = ∑ j, τ j := by
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [dite_eq_right x.property]
+    rw [hrest]
+    exact neg_add_cancel _⟩
   left_inv σ := by
     apply Subtype.ext
     funext i
@@ -191,7 +203,7 @@ def evenSignsEquiv (S : Finset I) (p : S) :
     · subst i
       have hs := σ.property
       rw [Fintype.sum_eq_add_sum_subtype_ne _ p] at hs
-      simp only [dif_pos rfl]
+      simp only [dite_eq_left rfl]
       calc
         -(∑ j : {i : S // i ≠ p}, σ.val j.val) =
             σ.val p - (σ.val p + ∑ j : {i : S // i ≠ p}, σ.val j.val) := by ring

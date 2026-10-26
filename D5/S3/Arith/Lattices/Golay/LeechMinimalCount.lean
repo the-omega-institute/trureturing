@@ -9,6 +9,8 @@
 import D5.S3.Arith.Lattices.Golay.GolayOctadCount
 import D5.S3.Arith.Lattices.Golay.LeechSignedSupport
 
+/-! # The actual integer Leech minimum sphere -/
+
 set_option Elab.async false
 set_option maxRecDepth 65536
 set_option maxHeartbeats 800000
@@ -220,7 +222,7 @@ private theorem oddVector_quotient (p : OddFamily) :
     have hh : ((p.2 : Word) i).val = 0 ∨ ((p.2 : Word) i).val = 1 := by omega
     rcases hh with h | h
     · left; apply ZMod.val_injective 2; simpa using h
-    · right; apply ZMod.val_injective 2; simpa using h
+    · right; apply ZMod.val_injective 2; change ((p.2 : Word) i).val = 1; exact h
   by_cases hi : i = p.1
   · subst i
     rw [red, oddVector_at]

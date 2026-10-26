@@ -12,6 +12,8 @@ import Mathlib.Data.Fintype.Prod
 import Mathlib.Data.Fintype.Sum
 import Mathlib.SetTheory.Cardinal.Finite
 
+/-! # Actual Golay octads -/
+
 set_option Elab.async false
 set_option maxRecDepth 65536
 set_option maxHeartbeats 800000
@@ -39,6 +41,7 @@ noncomputable def blockCodeEquiv : (Fin 64 × Fin 64) ≃ code :=
     · intro c
       obtain ⟨m, hm⟩ := c.property
       obtain ⟨n, hn⟩ := message_surjective m
+      change message n.val = m at hn
       let p : Fin 64 × Fin 64 :=
         (⟨n.val / 64, by omega⟩, ⟨n.val % 64, Nat.mod_lt _ (by decide)⟩)
       refine ⟨p, ?_⟩
