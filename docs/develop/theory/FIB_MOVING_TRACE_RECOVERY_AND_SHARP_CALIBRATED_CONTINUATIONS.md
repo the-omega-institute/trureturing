@@ -1367,3 +1367,468 @@ The empty product is $1$. At $b=1+F_{T-1}/F_T$, the exact total optimum is $N+1$
 **Proof.** This is the existing root arrangement (17.1), now used at the endpoint fibers: $\deg H_s=s$, $r_1=1$, and $r_2=s+2$. Exact endpoint injectivity and the already proved exact budget (16.1) give the $N+1$ exact totals. Apply (23.1)–(23.2) at $S=T$ and add the paid prefix. For the collapsed fiber both stable notions wait for the second nonroot; for the tangent fiber the first nonroot already has the sharp square-root decoder, while linear error requires the second. The full lower bounds retain $H_s$ itself and the same entire $D$ in both worlds. These are fixed-gain, prescribed-prefix comparisons; they assert neither optimal finite-error coefficients nor an unrestricted global optimum for the original uncalibrated model. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Raw bounded error with unknown calibration: two whole-world obstructions
+
+**Definition 25.1 (all-read contract and original-clock loss).** In §§25–29 fix known integers $k,d\ge0$, and retain the strictly entrywise positive rank-one trace-one source $P$, the atoms $M,J$, left multiplication, and mandatory consecutive original-clock reads of Definition 8.1. A world has one fixed $P$, one whole $0\ne H\in\Pi_k$, and one whole $D\in\Pi_d$. Its received reports are
+
+$$
+ \widetilde z_i=H(i)\operatorname{tr}(A_iP)+D(i)+\xi_i,
+ \qquad |\xi_i|\le\delta,
+ \qquad \delta\ge0.
+ \tag{25.1}
+$$
+
+The bound applies to every paid read, including the initial read, all calibration reads, and every gain root. Errors are arbitrary deterministic numbers. No $H,D,b=\operatorname{tr}(MP)$, root pattern, source bound, or sampled-gain lower bound is supplied. An ambient answer $(\widehat P,\widehat H,\widehat D)$ has complete-target loss
+
+$$
+ \mathcal L=\max\{\|\widehat P-P\|_{\max},
+       \|\operatorname{coeff}_k(\widehat H-H)\|_\infty,
+       \|\operatorname{coeff}_d(\widehat D-D)\|_\infty\}.
+ \tag{25.2}
+$$
+
+Here $\operatorname{coeff}_r$ means the padded monomial vector at the original variable $t$, through degree $r$. It is not a coefficient vector after translating or rescaling the clock, nor a uniform norm over all real times. Each competitor can depend arbitrarily on $\delta$ and its entire received history, including its actions, stopping, and answer. A finite worst-case total cap counts the initial read and every subsequent atomic action/read. There are no empty actions, resets, copies, inverse acquisitions, skipped reads, unread composites, second trajectories, or side sensors.
+
+For a source class and fixed cap, source minimax risk is the infimum over such deterministic protocols of the supremum of $\|\widehat P-P\|_{\max}$ over the declared whole worlds and all allowed errors. Complete-target risk uses (25.2). Uniform consistency means that risk tends to zero as $\delta\downarrow0$; a uniform linear-error guarantee means a bound $C\delta$ for all sufficiently small $\delta$, with one finite class-wide $C$. Different protocols may be used at different error levels. This contract differs from Definition 20.1: no calibration quantity or prefix read is exact when $\delta>0$.
+
+**Theorem 25.2 (infinite unrestricted source risk at every positive raw error).** For every $\delta>0$ and every finite worst-case total cap, source minimax risk on the original unrestricted source class is infinite, even restricted to $D=0$ and constant gains $H\in[1,2]$. This includes arbitrary deterministic adaptive protocols and any finite cap chosen as a function of $\delta$.
+
+**Proof.** Fix a positive integer cap $n$. Let $\mathcal W_n$ be all cumulative matrices of literal words of lengths $0,\ldots,n-1$, including $I$, and set
+
+$$
+ W_n=\max_{A\in\mathcal W_n}\sum_{a,b}|A_{ab}|,
+ \qquad e=\min\{1/2,\,2\delta/W_n\}>0.
+ \tag{25.3}
+$$
+
+These are finite sets of actual matrices, so $2\le W_n<\infty$. For $x\ge1$ take the two complete worlds with $D_1=D_2=0$, $H_1=1$, $H_2=1+e$, and
+
+$$
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},
+ \qquad
+ Q_x=\begin{pmatrix}1/2&x/(1+e)\\(1+e)/(4x)&1/2\end{pmatrix}.
+ \tag{25.4}
+$$
+
+Both sources are strictly positive, have trace one and determinant zero, and therefore have rank one. Their effective-source difference is
+
+$$
+ H_1P_x-H_2Q_x=
+ \begin{pmatrix}-e/2&0\\-(2e+e^2)/(4x)&-e/2\end{pmatrix}.
+ \tag{25.5}
+$$
+
+Its maximum norm is at most $e$. For every $A\in\mathcal W_n$, the two noiseless reports consequently differ by at most $W_ne\le2\delta$. Give both worlds their midpoint report at every matrix reached by the protocol. Each world's error has magnitude at most $\delta$. Determinism inductively makes their actions, received histories, stopping, and answer identical. This induction uses the same two whole worlds throughout: (25.5) holds simultaneously at every possible matrix through the cap, before selecting the realized branch. Once that branch is determined, its errors are ordinary fixed finite sequences in the two runs.
+
+The common estimate has loss at least half the source distance in one of these worlds, whereas
+
+$$
+ \|P_x-Q_x\|_{\max}\ge xe/(1+e)\longrightarrow\infty.
+ \tag{25.6}
+$$
+
+Thus every capped protocol has infinite worst source loss. No-report protocols have the same conclusion directly. Taking the infimum proves the theorem. All gains stay in the fixed compact positive interval $[1,2]$; no vanishing-gain explanation is used here. $\square$
+
+**Proposition 25.3 (bounded sources do not cure arbitrarily small gains).** Even on two fixed bounded strictly positive normalized sources, with $D=0$ and a common positive constant gain permitted to approach zero, no family of finite-cap deterministic protocols is uniformly consistent. The cap may grow arbitrarily as $\delta\downarrow0$, provided it is finite at each positive $\delta$.
+
+**Proof.** Take
+
+$$
+ P^{(0)}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},
+ \qquad P^{(1)}=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix}.
+ \tag{25.7}
+$$
+
+Their maximum distance is $3/10$. For a cap $n=n(\delta)$ put
+
+$$
+ V_n=\max\left\{1,\max_{A\in\mathcal W_n}
+              |\operatorname{tr}(A(P^{(0)}-P^{(1)}))|\right\},
+ \qquad h_\delta=\min\{\delta,\,2\delta/V_n\}>0.
+ \tag{25.8}
+$$
+
+Use the same whole constant $H=h_\delta$ in both worlds. Their reports differ by at most $2\delta$ at every possible read through the cap. The midpoint-history argument in Theorem 25.2 gives worst loss at least $3/20$. Every world still has nonzero gain; choosing harder allowed worlds separately for different $\delta$ is precisely the uniform-risk quantifier. $\square$
+
+## 26. One fixed acquisition and an all-error decoder without root decisions
+
+**Definition 26.1 (fixed linear ingredients and degree-only constants).** Set
+
+$$
+ N=2k+d+3,\qquad T=N-1,\qquad L=N+k+2=3k+d+5,
+ \tag{26.1}
+$$
+
+and acquire exactly the actual trajectory
+
+$$
+ A_i=M^i\quad(0\le i<N),\qquad
+ A_{N+r}=G_r=M^rJM^T\quad(0\le r\le k+1).
+ \tag{26.2}
+$$
+
+Thus $T$ individual $M$ actions are followed by one $J$ and $k+1$ individual $M$ actions. There are $L$ reads at clocks $0,\ldots,L-1$, with no restarting of $H,D$ or the clock. Let $f_i,g_i$ be the Fibonacci solutions with initial values $(f_0,f_1)=(1,0)$ and $(g_0,g_1)=(0,1)$. Write $\mathsf V$ for the square $N$-row matrix whose row $i$ is
+
+$$
+ \big((f_i i^j)_{j=0}^k,\ (g_i i^j)_{j=0}^k,
+                                      \ (i^j)_{j=0}^d\big),
+ \qquad 0\le i<N,
+ \tag{26.3}
+$$
+
+with $i^0=1$, including at zero. Main Definition 39.1 and Theorem 39.2 in [*FIB Self-Calibrating Relation Mathematics*](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复) supply its invertibility and its exact coefficient output $(H,bH,D)$. This is a reused calibration map, not an assumed exact measurement. Define
+
+$$
+ (\widehat h,\widehat q,\widehat a)
+       =\mathsf V^{-1}(\widetilde z_0,\ldots,
+                                  \widetilde z_{N-1})^{\mathsf T},
+ \quad \widehat H(t)=\sum_{j=0}^k\widehat h_jt^j,
+ \quad \widehat D(t)=\sum_{j=0}^d\widehat a_jt^j,
+ \quad a=\max\{1,\|\mathsf V^{-1}\|_{\infty\to\infty}\}.
+ \tag{26.4}
+$$
+
+The symbol $a$ in §§26–28 is this fixed inverse bound. The following constants also depend only on $k,d$. Put $n_r=N+r$ and
+
+$$
+ E_j=\max_{0\le r\le k+1}\sum_{v=0}^j n_r^v,
+ \qquad \Lambda=\max\left\{1,\max_{0\le r\le k+1}
+                                      \sum_{u,v}|(G_r)_{uv}|\right\}.
+ \tag{26.5}
+$$
+
+For every subset $S\subset\{n_0,\ldots,n_{k+1}\}$ of size $k+1$, let $V_S=(x^j)_{x\in S,\,0\le j\le k}$, with rows in increasing order, and set
+
+$$
+ c=\left(\max\{1,\max_S\|V_S^{-1}\|_{\infty\to\infty}\}\right)^{-1}>0.
+ \tag{26.6}
+$$
+
+The inverses here are the classical Lagrange interpolation inverses, also recorded in Lemma 2.1 of [*Common Polynomial-Gain Shear Calibration and Erasure Recovery*](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md#2-elementary-polynomial-interfaces). Only that elementary polynomial fact is reused; its recorded-read acquisition model is not substituted for (26.2).
+
+For $0\le p<q\le k+1$ let $\mathcal I_{p,q}$ be the inverse taking four traces against $I,M,G_p,G_q$ to a real matrix. Lemma 3.2 supplies every such inverse, including nonadjacent pairs. Its output norm is the maximum entry norm. Define
+
+$$
+ \Gamma=\max\{1,\max_{p<q}\|\mathcal I_{p,q}\|_{\infty\to\max}\},
+ \quad s=\frac{c}{2\Gamma},\quad
+ B=1+aE_d+aE_k\Lambda,
+ \quad K=\sqrt{(k+1)a^2+(k+2)B^2},
+$$
+
+$$
+ C_{k,d}=(K+2)\sqrt{s^{-2}+a^2}.
+ \tag{26.7}
+$$
+
+All these constants are finite, specified by finite matrices, and independent of the actual source, gain, drift, and error level. No optimality of these constants is part of their definition.
+
+**Theorem 26.2 (attained full-target recovery for every actual world and every error level).** On the trajectory (26.2) there is one decoder, using only its received raw records, $k,d$, and $\delta$, with
+
+$$
+ \|\operatorname{coeff}_k(\widehat H-H)\|_\infty\le a\delta,
+ \qquad
+ \|\operatorname{coeff}_d(\widehat D-D)\|_\infty\le a\delta,
+$$
+
+$$
+ \|\widehat P-P\|_{\max}\le C_{k,d}\chi\delta,
+ \qquad
+ \chi=\frac{1+\operatorname{tr}(MP)}
+                {\|\operatorname{coeff}_k H\|_\infty}.
+ \tag{26.8}
+$$
+
+These inequalities hold simultaneously for every world in Definition 25.1, every $\delta\ge0$, and all allowed errors. The decoder needs neither $\chi$ nor a bound on it, neither exact calibration nor a root service. In particular it gives pointwise linear stability at every fixed original world and exact recovery when $\delta=0$.
+
+**Proof and decoder.** First (26.4), the exact prefix supplier, and the elementary induced-norm inequality give
+
+$$
+ \|\widehat h-h\|_\infty\le a\delta,\quad
+ \|\widehat q-bh\|_\infty\le a\delta,\quad
+ \|\widehat a-\operatorname{coeff}_dD\|_\infty\le a\delta,
+ \qquad h=\operatorname{coeff}_kH.
+ \tag{26.9}
+$$
+
+This invokes the supplier only at the noiseless vector underlying the same actual prefix. It does not replace noisy records by acquired exact ones. In particular no noisy coefficient quotient is declared to be the true $b$.
+
+For a coefficient vector $u\in\mathbb R^{k+1}$, write $u(t)=\sum_j u_jt^j$. In fixed entry coordinates $\operatorname{vec}(S)=(S_{11},S_{12},S_{21},S_{22})^{\mathsf T}$ define the $(3k+4)\times4$ matrix $\mathsf A_u$ by
+
+$$
+ \mathsf A_u\operatorname{vec}(S)=
+ \left((u_j\operatorname{tr}S)_{j=0}^k,
+       (u_j\operatorname{tr}(MS))_{j=0}^k,
+       (u(n_r)\operatorname{tr}(G_rS))_{r=0}^{k+1}\right)^{\mathsf T}.
+ \tag{26.10}
+$$
+
+Form solely from the acquired records
+
+$$
+ y=\left((\widehat h_j)_{j=0}^k,
+          (\widehat q_j)_{j=0}^k,
+          (\widetilde z_{n_r}-\widehat D(n_r))_{r=0}^{k+1}\right)^{\mathsf T},
+ \qquad \mathsf A=\mathsf A_{\widehat h},
+$$
+
+$$
+ \operatorname{vec}(\widehat P)=
+       (\mathsf A^{\mathsf T}\mathsf A+\delta^2 I_4)^{-1}
+                      \mathsf A^{\mathsf T}y.
+ \tag{26.11}
+$$
+
+For $\delta>0$ this is a positive-definite inverse for every real received vector, even when $\widehat H$ vanishes identically. At $\delta=0$, actual records have $\widehat H=H\ne0$; the rank argument below proves the inverse exists. Formula (26.11) is a single formula at all actual error levels. The answer is allowed to be ambient. Neither a sampled gain nor a selected gain coefficient is a divisor in this decoder.
+
+Here is the quantitative rank bound, using only the credited interpolation and four-trace inverses. Among the $k+2$ numbers $|u(n_r)|$, the second largest is at least $c\|u\|_\infty$: delete a largest one and apply the Lagrange inverse bound (26.6) to the remaining $k+1$ values. This includes $k=0$. For $u\ne0$, choose two such positions $p,q$ only for this estimate, and a coefficient with modulus $\|u\|_\infty$. For every real matrix $S$, its four traces in $\mathcal I_{p,q}$ are then bounded by $\|\mathsf A_u\operatorname{vec}(S)\|_\infty/(c\|u\|_\infty)$. Since $c\le1$ and $\|\operatorname{vec}(S)\|_2\le2\|S\|_{\max}$, it follows that
+
+$$
+ \|\mathsf A_u\operatorname{vec}(S)\|_2
+          \ge s\|u\|_\infty\|\operatorname{vec}(S)\|_2.
+ \tag{26.12}
+$$
+
+For $u=0$ the same inequality is trivial. Thus $\sigma=\sigma_{\min}(\mathsf A)\ge s\|\widehat h\|_\infty$, and $\sigma>0$ at every actual noiseless record. No selection of these two positions occurs in the decoder and no actual zero is tested.
+
+Strict positivity and trace normalization give
+
+$$
+ b=P_{12}+P_{21}+P_{22}>0,\quad
+ \|P\|_{\max}\le1+b,\quad
+ \|\operatorname{vec}(P)\|_2\le2(1+b),\quad
+ |\operatorname{tr}(G_rP)|\le\Lambda(1+b).
+ \tag{26.13}
+$$
+
+Set $r=y-\mathsf A\operatorname{vec}(P)$. Its first $k+1$ coordinates vanish exactly, since $\operatorname{tr}P=1$. Its next coordinates equal $\widehat q_j-b\widehat h_j$, of modulus at most $a\delta(1+b)$. Its last coordinates equal
+
+$$
+ \xi_{n_r}+(D-\widehat D)(n_r)
+          +(H-\widehat H)(n_r)\operatorname{tr}(G_rP),
+ \tag{26.14}
+$$
+
+whose moduli are at most $B\delta(1+b)$. Consequently
+
+$$
+ \|r\|_2\le K\delta(1+b).
+ \tag{26.15}
+$$
+
+This is where the same actual source, whole polynomials, and original clock are needed: the gain-estimation error multiplies the trace of this very source, including at a true root. It is not an independent lifted source or a separately calibrated future signal.
+
+Use the elementary regularized-inverse singular-value estimates, with $\rho=(\sigma^2+\delta^2)^{1/2}$:
+
+$$
+ \|(\mathsf A^{\mathsf T}\mathsf A+\delta^2 I)^{-1}
+                         \mathsf A^{\mathsf T}\|_{2\to2}\le\rho^{-1},
+ \quad
+ \|\delta^2(\mathsf A^{\mathsf T}\mathsf A+\delta^2 I)^{-1}\|_{2\to2}
+                         \le\delta^2/\rho^2\le\delta/\rho.
+ \tag{26.16}
+$$
+
+These are the usual scalar inequalities for the singular values $v$: $v/(v^2+\delta^2)\le1/\sqrt{v^2+\delta^2}$ and the corresponding inverse-square bound. They are standard linear-algebra estimates, not additional calibration results. For every actual record $\rho>0$, including $\delta=0$. Subtracting $\operatorname{vec}(P)$ in (26.11) and using (26.13)–(26.16) gives
+
+$$
+ \|\widehat P-P\|_{\max}
+       \le(K+2)\frac{(1+b)\delta}{\rho}.
+ \tag{26.17}
+$$
+
+Finally (26.9) and (26.12) imply
+
+$$
+ \|h\|_\infty\le\|\widehat h\|_\infty+a\delta
+        \le\sigma/s+a\delta
+        \le\sqrt{s^{-2}+a^2}\,\rho.
+ \tag{26.18}
+$$
+
+Combining the last two inequalities proves the source bound in (26.8); (26.9) gives both entire-polynomial bounds. The proof covers arbitrary gain signs, degree drops, repeated roots, every sampled root, unbounded $b$, and arbitrary whole drift coefficients. Regularization, rather than a true-root decision or a supplied conditioning constant, makes the formula valid also when noise erases every estimated gain coefficient. $\square$
+
+## 27. Acquired conditioning certificates and their conditional meaning
+
+**Theorem 27.1 (one finite certificate for all compatible whole worlds).** Use the acquired quantities in (26.4). Set
+
+$$
+ m=\|\widehat h\|_\infty,\qquad \epsilon=a\delta,
+ \qquad \alpha=m-\epsilon.
+ \tag{27.1}
+$$
+
+When $\alpha>0$, the following computable numbers are a simultaneous certificate for every complete world compatible with these same $L$ records, the actual trajectory (26.2), and the declared bounds (25.1):
+
+$$
+ b\le b_{\rm cert}:=\frac{\|\widehat q\|_\infty+\epsilon}{\alpha},
+ \qquad
+ \chi\le\chi_{\rm cert}:=
+       \frac1\alpha+\frac{\|\widehat q\|_\infty+\epsilon}{\alpha^2},
+$$
+
+$$
+ \|\widehat P-P\|_{\max}\le C_{k,d}\chi_{\rm cert}\delta,
+ \qquad
+ \mathcal L\le\max\{a,C_{k,d}\chi_{\rm cert}\}\delta.
+ \tag{27.2}
+$$
+
+When $\alpha\le0$, this certificate reports failure and makes no finite uniform source-recovery claim for that record. For every fixed original world, it succeeds for all sufficiently small $\delta$, uniformly over its allowed errors; as $\delta\downarrow0$, its $\chi_{\rm cert}$ tends to that world's $\chi$. Its validity is conditional on the declared model and noise bound; it does not certify those assumptions from the data.
+
+**Proof.** For every compatible world, the same prefix inverse gives (26.9). Hence $\|h\|_\infty\ge\alpha>0$ and
+
+$$
+ b\|h\|_\infty=\|bh\|_\infty
+       \le\|\widehat q\|_\infty+\epsilon.
+ \tag{27.3}
+$$
+
+Since $b>0$, these inequalities prove the first two bounds in (27.2). Apply Theorem 26.2 separately to each such whole world; its decoder is the same function of the received data in all of them. This proves the simultaneous target certificate, without replacing compatible worlds by independent choices of prefix and tail.
+
+If $h$ is the fixed original nonzero coefficient vector, then $m\ge\|h\|_\infty-\epsilon$, so
+
+$$
+ \alpha\ge\|h\|_\infty-2a\delta>0
+ \quad\hbox{whenever}\quad
+       \delta<\|h\|_\infty/(2a).
+ \tag{27.4}
+$$
+
+Also $m\to\|h\|_\infty$ and $\|\widehat q\|_\infty\to b\|h\|_\infty$, uniformly over these errors. Substitution proves the claimed certificate limit.
+
+The quantities are finite arithmetic expressions and norms of the actual coefficient output, with a sufficient strict positive margin. A positive margin can also be witnessed by certified enclosing intervals; no equality or zero test of an unknown true $H(i)$ is needed. At a nonpositive margin the rule supplies no recovery radius, not a proof that a particular compatible world is unrecoverable. The decoder (26.11) still exists at every actual record and retains its instancewise bound. No finite-bit input representation, arithmetic complexity, or total decision procedure for equality of arbitrary presented reals is asserted. $\square$
+
+## 28. A sharp prescribed-prefix budget on explicit joint world classes
+
+**Definition 28.1 (joint conditioning classes and prescribed-prefix risks).** For $R>0$ let
+
+$$
+ \mathcal C_R=\{(P,H,D)\hbox{ in Definition 25.1}:
+       (1+\operatorname{tr}(MP))/\|\operatorname{coeff}_kH\|_\infty\le R\}.
+ \tag{28.1}
+$$
+
+This is an explicit sufficient joint source/gain condition. Neither trace normalization nor $H\ne0$ implies membership. It imposes no separate upper bound on $P,H,D$, and the decoder is not supplied the true $\chi$ or $R$. Prescribed-prefix risks restrict competitors to the first $N$ pure-$M$ reads at clocks $0,\ldots,N-1$ as in (26.2), allowing any subsequent legal deterministic adaptive actions, stopping, and ambient answers. Uniform risks take the supremum over $\mathcal C_R$ and all raw errors. A fixed total cap, rather than a source-dependent or error-dependent unbounded wait, is the budget being minimized; the competitors themselves remain arbitrarily $\delta$-dependent.
+
+**Theorem 28.2 (sharp consistency and linear-error caps for each $R>0$).** For every $k,d\ge0$ and every $R>0$, the least prescribed-prefix total cap for uniformly consistent complete-target recovery on $\mathcal C_R$ and the least such cap for uniform linear-error recovery are both
+
+$$
+ N+k+2=3k+d+5.
+ \tag{28.2}
+$$
+
+The attained decoder is (26.11), with all-$\delta$ complete-target error at most $\max\{a,C_{k,d}R\}\delta$. Every smaller fixed cap has complete-target risk bounded below by a positive number independent of $\delta$, even with zero noise. Lower-bound competitors may be arbitrary deterministic $\delta$-dependent adaptive protocols without continuity, measurability, linearity, or answer-palette restrictions.
+
+**Proof.** Theorem 26.2 gives the upper bound immediately on the stated joint class, at the same actual clocks and with every root read paid.
+
+For the lower bound reuse the positive golden crossing fiber of Theorems 5.1–5.2. Every $P$ in that fiber has $b=\phi$ and $\operatorname{tr}(M^iP)=\phi^i$ at all pure-$M$ clocks. Choose one common whole polynomial and drift
+
+$$
+ F(t)=\prod_{r=0}^{k-1}(t-(N+r)),\qquad
+ H_*(t)=\frac{1+\phi}{R\|\operatorname{coeff}_kF\|_\infty}F(t),
+ \qquad D_*=0.
+ \tag{28.3}
+$$
+
+The product is $1$ for $k=0$. Its coefficient norm is nonzero, $\deg H_*=k$, and every crossing-fiber world $(P,H_*,0)$ has exactly $\chi=R$. Thus the entire positive crossing fiber, rather than only selected source representatives, remains in $\mathcal C_R$.
+
+Its full prescribed prefix is source-independent. Its first $k$ continuation clocks $N,\ldots,N+k-1$ are roots, whose exact reports are zero regardless of the actions. Determinism fixes the entire action/history branch through those clocks. If the competitor stops there, any fixed two distinct sources in the fiber give a positive error obstruction. If it reaches clock $N+k$, the last possible read under a total cap $N+k+1$, its matrix $A$ is fixed before this first nonroot response. Theorem 5.2 supplies two distinct strictly positive sources in the same crossing fiber with equal trace against this $A$. They have the same $H_*,D_*$, agree on the full prefix and every root read, and give the same last report. Their whole received histories and final answer coincide, so one source error is at least half their distance. Both are whole fixed worlds realizing this actual branch.
+
+To make the obstruction uniform over error-dependent competitors, preselect one such collision pair for each of the finitely many matrices reached by literal continuation words of length $k+1$, and one fixed pair for early stopping. The minimum of their finitely many positive distances is positive. All shorter-cap competitors are included by permitting a larger cap $N+k+1$; early stopping is already covered. The same positive lower bound therefore holds separately at every $\delta$, using admissible zero errors throughout. It excludes both uniform consistency and a uniform $O(\delta)$ complete-target guarantee. This is precisely the inherited crossing-fiber/common-history obstruction applied inside the explicitly scaled joint class; it does not assume the competitor knows any calibration. $\square$
+
+## 29. A five-read constant-gain consumer and supplier boundaries
+
+**Proposition 29.1 (explicit all-raw five-read inverse and certificate).** For $k=d=0$, (26.2) is the legal trajectory with actions $(M,M,J,M)$ and cumulative matrices
+
+$$
+ I,\quad M,\quad M^2,\quad
+ JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\quad
+ MJM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix}
+ \tag{29.1}
+$$
+
+at original clocks $0,1,2,3,4$. Write its five received records as $y_0,\ldots,y_4$, its unknown nonzero constant gain as $h$, and its unknown constant drift as $D$. The following explicit ambient decoder is another attainment of the same budget:
+
+$$
+ x=y_2-y_1,\qquad q=y_2-y_0,\qquad
+ \widehat h=x,\qquad \widehat D=y_0+y_1-y_2,
+$$
+
+$$
+ \widehat S=
+ \begin{pmatrix}
+ y_0-y_1-2y_2+y_3+y_4&y_0-4y_2+y_3+2y_4\\
+ -y_0+2y_2-y_4&-y_0+3y_2-y_3-y_4
+ \end{pmatrix},
+ \qquad
+ \widehat P=\frac{x}{x^2+\delta^2}\widehat S.
+ \tag{29.2}
+$$
+
+For every actual world and every $\delta\ge0$ the denominator is positive, and
+
+$$
+ |\widehat h-h|\le2\delta,\qquad
+ |\widehat D-D|\le3\delta,\qquad
+ \|\widehat P-P\|_{\max}\le11\sqrt5\,
+                        \frac{1+b}{|h|}\delta.
+ \tag{29.3}
+$$
+
+A usable simultaneous certificate replaces $\chi$ on the right by
+
+$$
+ \chi_{\rm cert}^{(0)}=
+       \frac1\alpha+\frac{|q|+2\delta}{\alpha^2},
+ \qquad \alpha=|x|-2\delta>0.
+ \tag{29.4}
+$$
+
+Its complete-target radius is $\max\{3,11\sqrt5\chi_{\rm cert}^{(0)}\}\delta$. When $\alpha\le0$ it makes no finite source-radius claim. It eventually succeeds for every fixed $h\ne0$ as $\delta$ decreases. The five-read cap is sharp for both stable tasks on each $\mathcal C_R$ with the prescribed three-read pure-$M$ prefix.
+
+**Proof.** For $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$, direct traces of (29.1) are
+
+$$
+ 1,\quad b=t+u+v,\quad 1+b,\quad 1+u+2v,\quad 1+2u+v+2t.
+ \tag{29.5}
+$$
+
+Substitution in the linear expressions in (29.2) gives, for exact records, $x=h$, $q=bh$, $\widehat D=D$, and $\widehat S=hP$. This is elementary fixed linear inversion of the five acquired traces; it is not a new general interpolation theorem. Row sums of absolute coefficients give, with raw error at most $\delta$ at every one of these clocks,
+
+$$
+ |x-h|\le2\delta,\qquad |q-bh|\le2\delta,\qquad
+ |\widehat D-D|\le3\delta,\qquad
+ \|\widehat S-hP\|_{\max}\le8\delta.
+ \tag{29.6}
+$$
+
+In particular $x^2+\delta^2>0$ at every actual record: for $\delta>0$ it is immediate, while for $\delta=0$ one has $x=h\ne0$. Put $r_0=\sqrt{x^2+\delta^2}$. Subtracting $P$ in (29.2) yields
+
+$$
+ \|\widehat P-P\|_{\max}
+ \le\frac{|x|}{x^2+\delta^2}
+            \bigl(8\delta+2\delta\|P\|_{\max}\bigr)
+       +\frac{\delta^2}{x^2+\delta^2}\|P\|_{\max}
+ \le\frac{11(1+b)\delta}{r_0}.
+ \tag{29.7}
+$$
+
+Here $\|P\|_{\max}\le1+b$. Also $|h|\le|x|+2\delta\le\sqrt5r_0$, proving (29.3). If $\alpha>0$, (29.6) gives $|h|\ge\alpha$ and $b|h|\le|q|+2\delta$, which prove the simultaneous certificate (29.4) exactly as in Theorem 27.1. Its margin is positive for every allowed record when $\delta<|h|/4$. Theorem 28.2 with $N=3$ proves sharpness in the declared architecture.
+
+For a concrete whole world take
+
+$$
+ P=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad h=2,\qquad D=1.
+ \tag{29.8}
+$$
+
+Its noiseless reports at these same original clocks are $(3,21/5,31/5,27/5,43/5)$. Formula (29.2) returns $x=2$, $q=16/5$, $\widehat D=1$, and $\widehat S=2P$ before normalization. With noisy records it retains (29.3), and every allowed record has a successful margin when $\delta<1/2$. No read, clock translation, or calibration observation is omitted. $\square$
+
+**Assumptions and source correspondence for §§25–29.** Main Definition 39.1 and Theorem 39.2 supply the fixed pure-$M$ coefficient inverse and its exact paid-tail consumer, with normalized $R_0=P$, the same $H,D$, original integer clocks, arbitrary degree drops and gain roots, and $N=2k+d+3$. Their known-node ingredient is the confluent evaluation matrix and determinant in Batenkov–Yomdin, *On the Accuracy of Solving Confluent Prony Systems*, [§2B, arXiv:1106.1137v3](https://arxiv.org/html/1106.1137v3#S2.SS2). The nodes here are the fixed distinct nonzero $\phi,\psi$, both different from the drift node $1$. No unknown-node Prony stability theorem or nonzero highest modal amplitude is imported. Elementary Lagrange interpolation and induced-norm/singular-value estimates are credited tools; Lemma 3.2 supplies the moving-trace basis, and Theorems 5.1–5.2 supply the entire positive crossing fiber. The all-raw normalization, common-world residual, unrestricted obstructions, acquired certificate, and their joint-class acquisition consequences are the source-specific synthesis here (repo-derived); no external-priority claim is made.
+
+The [trace-corridor theorem in *FIB Self-Calibrating Relation Mathematics IX*, §4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md#4-固定或有界读数的整个迹走廊) assumes its exact compatible ancestor equations, bounded ancestor vector, and a declared positive finite $J$-trace corridor. It is not an all-raw noisy normalization theorem on the unrestricted domain. The [six-read affine stability results, §§11–15](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md#11-norms-and-the-exact-six-read-stability-problem) concern their positive-intercept effective target and their recorded-reading clock, including an empty repeat and unread composites, with specified conditioning domains. Their exact-image pair estimates do not supply (26.11) for arbitrary raw perturbations. The polynomial shear volume likewise allows empty reads and unread composites. Its elementary interpolation fact is used in (26.6), but no cheaper acquisition history or clock convention is imported from either volume.
+
+The exact results in §§2–19 and the exact-prefix/post-calibration-noise results in §§20–24 keep their own hypotheses and conclusions. Theorem 25.2 concerns the full original class; Theorem 26.2 gives an instancewise bound on that class; Theorem 27.1 gives a finite acquired certificate conditional on the original model; Theorem 28.2 gives uniform guarantees only on each expressly declared $\mathcal C_R$. No necessity or maximality of that class, source-local noisy-prefix optimum, unrestricted earlier-mixing optimum, optimal finite-noise constants, finite-bit arithmetic, physical realization, literature priority, or Lean certification is asserted.
+
+## 追加锚（本行以下为增补区）
