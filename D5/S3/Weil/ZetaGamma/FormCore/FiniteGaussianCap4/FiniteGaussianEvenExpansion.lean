@@ -26,7 +26,7 @@ namespace FiniteGaussianCap4
 open scoped BigOperators
 open LaguerreSevenHalf
 
-private theorem site_q_neg (a : ℝ) : gaussianSiteQ (-a) = -gaussianSiteQ a := by
+theorem site_q_neg (a : ℝ) : gaussianSiteQ (-a) = -gaussianSiteQ a := by
   have he : Real.exp (2 * a) ≠ 0 := (Real.exp_pos _).ne'
   have hd : Real.exp (2 * a) + 1 ≠ 0 := by positivity
   have hneg : Real.exp (2 * -a) = (Real.exp (2 * a))⁻¹ := by
@@ -36,7 +36,7 @@ private theorem site_q_neg (a : ℝ) : gaussianSiteQ (-a) = -gaussianSiteQ a := 
   field_simp [he, hd]
   <;> ring
 
-private theorem site_amplitude_neg (a : ℝ) :
+theorem site_amplitude_neg (a : ℝ) :
     gaussianSiteAmplitude (-a) = gaussianSiteAmplitude a := by
   have hp : 0 < 1 - gaussianSiteQ a := gaussianSiteQ_one_sub_pos a
   have hm : 1 + gaussianSiteQ a = Real.exp (2 * a) * (1 - gaussianSiteQ a) := by
