@@ -217,5 +217,101 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+namespace TracePairingExt
+
+universe u
+
+abbrev signature : Signature where
+  Params := Σ d : ℕ, Σ ι : Type u,
+    Σ _ : ι → Matrix (Fin d) (Fin d) ℂ, Matrix (Fin d) (Fin d) ℂ
+  State p := p.2.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p i => (p.2.2.2 * p.2.2.1 i).trace) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law r := ∀ {d : ℕ} {ι : Type u} (P : ι → Matrix (Fin d) (Fin d) ℂ)
+    (_hP : Submodule.span ℂ (Set.range P) = ⊤) {X Y : Matrix (Fin d) (Fin d) ℂ},
+    (∀ i, r.readout () ⟨d, ι, P, X⟩ i = (Y * P i).trace) → X = Y
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let P : ULift.{u} (Matrix (Fin 1) (Fin 1) ℂ) → Matrix (Fin 1) (Fin 1) ℂ :=
+    fun i => i.down
+  have hP : Submodule.span ℂ (Set.range P) = ⊤ := by
+    have hr : Set.range P = Set.univ := Set.range_eq_univ.mpr (fun X => ⟨ULift.up X, rfl⟩)
+    rw [hr, Submodule.span_univ]
+  have hh := h P hP (X := 1) (Y := 0) (by intro i; simp [rejected, realize])
+  have he := congrArg (fun M => M 0 0) hh
+  simp at he
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨⟨1, ULift.{u} Bool, (fun i => if i.down then 1 else 0), 1⟩,
+    ULift.up false, ULift.up true, ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena.{u} (type_of% (@trace_pairing_ext.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@trace_pairing_ext, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@trace_pairing_ext.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.TracePairingExt.unit
+  realizationName :=
+    `Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality.TracePairingExt.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize signature (fun _ p i => (p.2.2.2 * p.2.2.1 i).trace) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
+    definition := none
+    coordinates := #[0, 1, 2, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "domain", "body", "fn", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end TracePairingExt
+
 end
 end Reg.D5.S3.QuantumBounds.SicMubCorrelationTraceNormEquality
