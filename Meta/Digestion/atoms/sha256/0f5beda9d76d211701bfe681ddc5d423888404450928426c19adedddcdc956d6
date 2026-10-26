@@ -1,0 +1,44 @@
+**Theorem 30.2 (all finite record limits at unbounded source norm).** For every $k,d\ge0$, the set of vectors $z$ for which there exist legal whole worlds $W_n$ on (26.2) with
+
+$$
+ \|P_n\|_{\max}\longrightarrow\infty,
+ \qquad Z(W_n)\longrightarrow z
+ \tag{30.4}
+$$
+
+is exactly $\mathcal E_{12}\cup\mathcal E_{21}$.
+
+**Proof.** Write every actual source as
+
+$$
+ P=\begin{pmatrix}1-t&u\\v&t\end{pmatrix},\qquad
+ 0<t<1,\quad u,v>0,\quad uv=t(1-t)\le1/4,
+ \qquad b=t+u+v.
+ \tag{30.5}
+$$
+
+For a sequence in (30.4), $b_n\to\infty$. Applying the fixed prefix inverse (26.4) to the bounded noiseless vectors gives bounded coefficient vectors of $H_n$, $b_nH_n$, and $D_n$. Consequently $\operatorname{coeff}_kH_n\to0$. Pass to a subsequence on which the coefficients of $b_nH_n$ and $D_n$ converge to polynomials $Q\in\Pi_k$ and $F\in\Pi_d$, and on which either $u_n\ge v_n$ always or $v_n\ge u_n$ always. Such a subsequence exists by finite-dimensional boundedness and the two alternatives.
+
+In the first alternative $u_n\to\infty$, $v_n\le1/(4u_n)\to0$, and $u_n/b_n\to1$. For every acquired clock,
+
+$$
+ \frac{\operatorname{tr}(A_iP_n)}{b_n}
+ =U_i\frac{u_n}{b_n}+V_i\frac{v_n}{b_n}
+   +\frac{(A_i)_{11}(1-t_n)+(A_i)_{22}t_n}{b_n}
+ \longrightarrow U_i.
+ \tag{30.6}
+$$
+
+It follows that $z_i=U_iQ(i)+F(i)$. The other alternative gives $z_i=V_iQ(i)+F(i)$. Passing to a subsequence preserves the already specified limit $z$, so this proves necessity even for sequences alternating between the two source directions. In particular $Q$ can vanish: boundedness of $b_nH_n$ does not give a positive lower bound on it.
+
+Conversely, fix any $Q\in\Pi_k$ and $F\in\Pi_d$. For $x\ge1$ use
+
+$$
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},\qquad
+ D_x=F,\qquad
+ H_x=\begin{cases}Q/x,&Q\ne0,\\x^{-2},&Q=0.\end{cases}
+ \tag{30.7}
+$$
+
+Every source is strictly positive, rank one and trace one; every actual gain is a nonzero polynomial of the declared degree bound, including the $Q=0$ case. At each of the finitely many original clocks, direct substitution gives $Z(W_x)_i\to U_iQ(i)+F(i)$. Transposing $P_x$ gives every vector of $\mathcal E_{21}$ in the same way. Each parameter specifies one complete world across all paid reads, with no source or polynomial changed along its history. This proves sufficiency. $\square$
+
