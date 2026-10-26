@@ -88,7 +88,7 @@ private lemma interlaced_interval {k : ℕ} (a b : Fin k → α) (M : List α)
   rw [hlen] at hj ⊢
   constructor <;> omega
 
-private lemma zero_decomposition (f : α → G) (X C : Finset α)
+lemma zero_decomposition (f : α → G) (X C : Finset α)
     (hCX : C ⊆ X) (hz : (∑ x ∈ C, f x) = 0) :
     ∃ Q : Finset (Finset α),
       (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧ C = Q.biUnion id := by
