@@ -10,7 +10,6 @@ import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.GroupTheory.Perm.ClosureSwap
-import Mathlib.Tactic.Ring
 
 /-! Spectral contraction of products of Hamming-weight-preserving gate averages. -/
 
