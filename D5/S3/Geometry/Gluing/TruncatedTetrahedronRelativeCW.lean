@@ -26,7 +26,8 @@ open D5.S3.Geometry.Gluing.FiniteZeroGuardedClosure
 open private paired_twice from D5.S3.Geometry.Gluing.RawFaceLinkPathConnected
 
 open D5.S3.Geometry.Gluing.TruncatedTetrahedronCellGeometry (cell_geometry)
-open private sigma_face
+open private Model Model.bulk
+  sigma_face
   continuous_q
   step_face
   interior_normal_form
