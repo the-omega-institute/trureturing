@@ -100,13 +100,11 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.visible_mono`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/Model.visible_mono` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
+*Citation.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
 
 *Commentary.*
 
-A geodesic avoiding the other vertices of a larger selected set also avoids the other vertices of each selected subset.
+Proposition 2.1 of Fresán-Figueroa, Goldfeder and Lozano-Piña states hereditary mutual visibility and attributes it to Cicerone et al. (2023), Variety of mutual-visibility problems in graphs. A geodesic avoiding the other vertices of a larger selected set also avoids the other vertices of each selected subset.
 
 **Theorem 1.9 (The empty configuration).**
 
@@ -178,21 +176,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.mixedMove_eras
 
 Erasing an occupied label is the reverse of its insertion.
 
-**Theorem 1.14 (Connectivity by repeated deletion).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.reconfiguration_connected`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/Model.reconfiguration_connected` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
-
-*Commentary.*
-
-Induction on a configuration deletes its occupied labels until the empty configuration is reached. Hereditary visibility keeps every intermediate vertex feasible. Reversing a second deletion walk joins any two configurations. Host connectedness is unnecessary for this statement.
-
-**Definition 1.15 (Finite vertex separators).**
+**Definition 1.14 (Finite vertex separators).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.Separates`
 
@@ -206,7 +190,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.Separates`
 
 A cut either leaves at most one vertex or makes the induced graph on all surviving vertices fail to be preconnected. The remaining graph is the actual induced graph, with both move types preserved.
 
-**Definition 1.16 (Vertex connectivity with complete-graph conventions).**
+**Definition 1.15 (Vertex connectivity with complete-graph conventions).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.vertexConnectivity`
 
@@ -232,7 +216,6 @@ Take the least cardinality of a separator. The whole vertex set always supplies 
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.mixedMove_insert`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.reconfiguration`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.reconfigurationDecidableAdj`
-- Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.reconfiguration_connected`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.vertexConnectivity`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.visible_empty`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.visible_mono`
