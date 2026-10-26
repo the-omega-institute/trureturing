@@ -3,7 +3,7 @@
    mirror-B: none
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
-   utility: bridge=5040-central-slice-to-five-mode-fisher
+   utility: none
    digest: The central 5040 slice has five head modes and its uniform law has an exact Fisher quadratic form. -/
 
 import D5.S1.Ledger.BoundedTimeSlice
