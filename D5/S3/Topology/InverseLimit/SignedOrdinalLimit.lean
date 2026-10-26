@@ -233,6 +233,17 @@ end Archive
 /-- The event retains the exact extension, including DI/DJ and regular bounded F. -/
 structure Result {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l} (A : Archive H hw) where
   extension : H.Extension A.data
+  old_carrier : ∀ b : Coord l,
+    (literalPrefix H extension).carrier ⟨b.1, b.2.trans (Order.lt_succ l)⟩ = H.carrier b
+  top_carrier : (literalPrefix H extension).carrier (top l) = H.limitCarrier
+  births_eq : (A.predecessor extension).births = A.pastBirths
+  I_eq : ∀ r hr, (A.predecessor extension).I r hr = extension.I (bornRow hw r hr).1
+  J_eq : ∀ r hr d, (A.predecessor extension).J r hr d = extension.J (bornRow hw r hr).1 d
+  data_N : ∀ (r : BornRows l) (d : Coord l) (e : Bool),
+    A.data.N r.1 d e = A.pastBirths.read r.1.1 d.1 r.2
+      (max_lt r.1.2 d.2) (if e then 1 else 0)
+  data_V : ∀ (r : BornRows l) n, A.data.V r.1 n = ((A.V r).clopen n : Set (H.Space r.1))
+  data_nu : ∀ (r : BornRows l) d n, A.data.nu r.1 d n = (A.nu r d).1 n
 
 namespace Result
 
@@ -246,7 +257,24 @@ end Result
 
 /-- Execute joint proper-limit fusion once on the actual strict archive. -/
 noncomputable def construct {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l}
-    (A : Archive H hw) (hl : Order.IsSuccLimit l) (L : H.Laws A.data) : Result A :=
-  ⟨Classical.choice (H.exists_joint_proper_limit_extension hl A.proper hw A.data L)⟩
+    (A : Archive H hw) (hl : Order.IsSuccLimit l) (L : H.Laws A.data) : Result A := by
+  classical
+  let E := Classical.choice (H.exists_joint_proper_limit_extension hl A.proper hw A.data L)
+  refine {
+    extension := E
+    old_carrier := fun b => carrier_old H b.1 b.2 _
+    top_carrier := carrier_top H (Order.lt_succ l)
+    births_eq := rfl
+    I_eq := fun _ _ => rfl
+    J_eq := fun _ _ _ => rfl
+    data_N := ?_
+    data_V := ?_
+    data_nu := ?_ }
+  · intro r d e
+    simp [Archive.data, r.2]
+  · intro r n
+    simp [Archive.data, r.2]
+  · intro r d n
+    simp [Archive.data, r.2]
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalLimit
