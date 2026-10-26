@@ -135,8 +135,8 @@ theorem tester_image_decomposition {d₁ d₂ n₁ n₂ : ℕ} {ι : Type*} [Fin
       rw [Matrix.smul_single, smul_eq_mul, mul_one]
     conv_lhs => rw [Matrix.matrix_eq_sum_single x]
     simp only [map_sum, hs, map_smul]
-  simp only [testerImage, Matrix.sum_apply, Matrix.kroneckerMap_apply,
-    Finset.sum_smul]
+  rw [testerImage.eq_1]
+  simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Finset.sum_smul]
   conv_rhs =>
     arg 2
     ext t
@@ -176,7 +176,8 @@ theorem projective_decomposition_bound {n₁ n₂ : ℕ} {ι : Type*} [Fintype �
     _ ≤ ∑ t, ‖a t‖ * ‖b t‖ := by
       apply Finset.sum_le_sum
       intro t _
-      simpa [tensorPair, Fintype.prod_bool, mul_comm] using
+      rw [tensorPair.eq_1]
+      simpa [Fintype.prod_bool, mul_comm] using
         (PiTensorProduct.projectiveSeminorm_tprod_le (𝕜 := ℂ)
           (Bool.rec (a t) (b t) :
             (s : Bool) → EuclideanSpace ℂ (Fin (cond s n₂ n₁))))
