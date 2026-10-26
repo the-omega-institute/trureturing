@@ -4,7 +4,6 @@ authors: N. C. Wormald
 year: 2026
 title: Tournaments with many Hamilton cycles
 doi: null
-arxiv: 2610.16245
 url: https://arxiv.org/abs/2610.16245
 claim: 'Conjecture 6: For every regular tournament T* on at least three vertices, H is nonzero and d/H is the square of a rational.'
 strata_touched:
