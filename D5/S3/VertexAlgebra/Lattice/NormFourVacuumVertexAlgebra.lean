@@ -722,5 +722,3 @@ theorem actual_simple_graded_vacuum_vertex_algebra (D : LatticeData) (a : Charge
 
 end
 end D5.S3.VertexAlgebra.Lattice.NormFourVacuumVertexAlgebra
-
-
