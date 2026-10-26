@@ -84,17 +84,31 @@ private theorem composed_comp {α : ℕ → Type*} [∀ t, Fintype (α t)]
   classical
   induction t, hut using Nat.le_induction with
   | base =>
-    simp only [composed_self, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
-      Finset.mem_univ, ite_true]
+    rw [Finset.sum_eq_single b]
+    · rw [composed_self, if_pos rfl, mul_one]
+    · intro c _ hc
+      rw [composed_self, if_neg hc, mul_zero]
+    · intro hb
+      exact (hb (Finset.mem_univ b)).elim
   | succ t hut ih =>
     rw [composed_step k s t (hsu.trans hut)]
-    simp_rw [ih, composed_step k u t hut, Finset.sum_mul, Finset.mul_sum]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro c _
-    apply Finset.sum_congr rfl
-    intro d _
-    ring
+    calc
+      (∑ c, composedTransition k s t (hsu.trans hut) a c * k t c b) =
+          ∑ c, ∑ d, (composedTransition k s u hsu a d *
+            composedTransition k u t hut d c) * k t c b := by
+        apply Finset.sum_congr rfl
+        intro c _
+        rw [ih c, Finset.sum_mul]
+      _ = ∑ d, ∑ c, (composedTransition k s u hsu a d *
+            composedTransition k u t hut d c) * k t c b := Finset.sum_comm
+      _ = ∑ d, composedTransition k s u hsu a d *
+            composedTransition k u (t + 1) (by omega) d b := by
+        apply Finset.sum_congr rfl
+        intro d _
+        rw [composed_step k u t hut, Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro c _
+        exact mul_assoc _ _ _
 
 private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (k : ∀ t, α t → α (t + 1) → ℝ) (s t : ℕ) (h : s ≤ t)
@@ -110,7 +124,12 @@ private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
       rw [composed_self]
       split_ifs <;> norm_num
     · intro a
-      simp only [composed_self, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+      have hself : composedTransition k s s (le_refl s) =
+          fun x y => if x = y then 1 else 0 := by
+        funext x y
+        exact composed_self k s x y
+      rw [hself]
+      simp
   | succ t h ih =>
     have ht := hk t h (Nat.lt_succ_self t)
     have hi := ih (fun u hsu hut => hk u hsu (Nat.lt_succ_of_lt hut))
@@ -119,10 +138,18 @@ private theorem composed_stochastic {α : ℕ → Type*} [∀ t, Fintype (α t)]
       rw [composed_step k s t h]
       exact Finset.sum_nonneg fun c _ => mul_nonneg (hi.1 a c) (ht.1 c b)
     · intro a
-      simp_rw [composed_step k s t h]
-      rw [Finset.sum_comm]
-      simp_rw [← Finset.mul_sum, ht.2, mul_one]
-      exact hi.2 a
+      calc
+        (∑ b, composedTransition k s (t + 1) (by omega) a b) =
+            ∑ b, ∑ c, composedTransition k s t h a c * k t c b := by
+          apply Finset.sum_congr rfl
+          intro b _
+          exact composed_step k s t h a b
+        _ = ∑ c, ∑ b, composedTransition k s t h a c * k t c b := Finset.sum_comm
+        _ = ∑ c, composedTransition k s t h a c := by
+          apply Finset.sum_congr rfl
+          intro c _
+          rw [← Finset.mul_sum, ht.2, mul_one]
+        _ = 1 := hi.2 a
 
 private theorem position_transport {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ)
@@ -130,13 +157,23 @@ private theorem position_transport {α : ℕ → Type*} [∀ t, Fintype (α t)]
     positionLaw p k t b = ∑ a, positionLaw p k s a * composedTransition k s t h a b := by
   classical
   unfold positionLaw
-  simp_rw [composed_comp k 0 s t (Nat.zero_le s) h, Finset.mul_sum, Finset.sum_mul]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro a _
-  apply Finset.sum_congr rfl
-  intro c _
-  ring
+  calc
+    (∑ a, p a * composedTransition k 0 t (Nat.zero_le t) a b) =
+        ∑ a, ∑ c, (p a * composedTransition k 0 s (Nat.zero_le s) a c) *
+          composedTransition k s t h c b := by
+      apply Finset.sum_congr rfl
+      intro a _
+      rw [composed_comp k 0 s t (Nat.zero_le s) h, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro c _
+      exact (mul_assoc _ _ _).symm
+    _ = ∑ c, ∑ a, (p a * composedTransition k 0 s (Nat.zero_le s) a c) *
+          composedTransition k s t h c b := Finset.sum_comm
+    _ = ∑ c, (∑ a, p a * composedTransition k 0 s (Nat.zero_le s) a c) *
+          composedTransition k s t h c b := by
+      apply Finset.sum_congr rfl
+      intro c _
+      rw [Finset.sum_mul]
 
 private theorem position_is_law {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (p : α 0 → ℝ) (k : ∀ t, α t → α (t + 1) → ℝ) (t : ℕ)
@@ -151,8 +188,12 @@ private theorem position_is_law {α : ℕ → Type*} [∀ t, Fintype (α t)]
     exact Finset.sum_nonneg fun b _ => mul_nonneg (hp.1 b) (ht.1 b a)
   · unfold positionLaw
     rw [Finset.sum_comm]
-    simp_rw [← Finset.mul_sum, ht.2, mul_one]
-    exact hp.2
+    calc
+      (∑ a, ∑ b, p a * composedTransition k 0 t (Nat.zero_le t) a b) = ∑ a, p a := by
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [← Finset.mul_sum, ht.2, mul_one]
+      _ = 1 := hp.2
 
 private theorem entropy_channel {α β : Type*} [Fintype α] [Fintype β]
     (p : α → ℝ) (u : α → β → ℝ) (hp : ∀ a, 0 ≤ p a)
@@ -163,7 +204,6 @@ private theorem entropy_channel {α β : Type*} [Fintype α] [Fintype β]
     mixtureJoint_marginal_eq_weight p u hrow,
     mixtureJoint_conditionalEntropy_eq_weighted p u hrow]
 
-set_option maxHeartbeats 800000 in
 private theorem four_point_rectangle {α β γ δ : Type*}
     [Fintype α] [Fintype β] [Fintype γ] [Fintype δ]
     (p : α → ℝ) (u : α → β → ℝ) (v : β → γ → ℝ) (w : γ → δ → ℝ)
@@ -334,9 +374,44 @@ private theorem chain_rectangle {α : ℕ → Type*} [∀ t, Fintype (α t)]
     (composed_stochastic k a b hab (fun u _ hu => hk u (by omega)))
     (composed_stochastic k b c hbc (fun u _ hu => hk u (by omega)))
     (composed_stochastic k c d hcd (fun u _ hu => hk u hu))
-  simp_rw [← composed_comp k b c d hbc hcd,
-    ← composed_comp k a b d hab (hbc.trans hcd),
-    ← composed_comp k a b c hab hbc, ← position_transport p k a b hab] at h
+  have hbc_pair : (fun q : α b × α c =>
+      (∑ x, positionLaw p k a x * composedTransition k a b hab x q.1) *
+        composedTransition k b c hbc q.1 q.2) = pairLaw p k b c hbc := by
+    funext q
+    rw [← position_transport p k a b hab q.1]
+    rfl
+  have had_pair : (fun q : α a × α d => positionLaw p k a q.1 *
+      ∑ x, composedTransition k a b hab q.1 x *
+        ∑ y, composedTransition k b c hbc x y * composedTransition k c d hcd y q.2) =
+      pairLaw p k a d (hab.trans (hbc.trans hcd)) := by
+    funext q
+    unfold pairLaw
+    congr 1
+    calc
+      (∑ x, composedTransition k a b hab q.1 x *
+          ∑ y, composedTransition k b c hbc x y * composedTransition k c d hcd y q.2) =
+          ∑ x, composedTransition k a b hab q.1 x *
+            composedTransition k b d (hbc.trans hcd) x q.2 := by
+        apply Finset.sum_congr rfl
+        intro x _
+        rw [← composed_comp k b c d hbc hcd x q.2]
+      _ = composedTransition k a d (hab.trans (hbc.trans hcd)) q.1 q.2 :=
+        (composed_comp k a b d hab (hbc.trans hcd) q.1 q.2).symm
+  have hbd_pair : (fun q : α b × α d =>
+      (∑ x, positionLaw p k a x * composedTransition k a b hab x q.1) *
+        ∑ y, composedTransition k b c hbc q.1 y * composedTransition k c d hcd y q.2) =
+      pairLaw p k b d (hbc.trans hcd) := by
+    funext q
+    rw [← position_transport p k a b hab q.1,
+      ← composed_comp k b c d hbc hcd q.1 q.2]
+    rfl
+  have hac_pair : (fun q : α a × α c => positionLaw p k a q.1 *
+      ∑ x, composedTransition k a b hab q.1 x * composedTransition k b c hbc x q.2) =
+      pairLaw p k a c (hab.trans hbc) := by
+    funext q
+    rw [← composed_comp k a b c hab hbc q.1 q.2]
+    rfl
+  rw [hbc_pair, had_pair, hbd_pair, hac_pair] at h
   exact h
 
 private theorem monge_permutation (n : ℕ) (m : Fin n → Fin n → ℝ)
@@ -413,11 +488,16 @@ private theorem monge_permutation (n : ℕ) (m : Fin n → Fin n → ℝ)
 theorem result : claim := by
   intro n α inst p k hp hk f
   apply monge_permutation n
-    (fun i a => mutualInformation (pairLaw p k (n - 1 - i.val) (n + a.val) (by omega)))
+    (fun i a => mutualInformation (pairLaw p k (n - 1 - i.val) (n + a.val)
+      ((Nat.sub_le (n - 1) i.val).trans ((Nat.sub_le n 1).trans (Nat.le_add_right n a.val)))))
     ?_ f
   intro i j a b hij hab
   exact chain_rectangle p k hp (n - 1 - j.val) (n - 1 - i.val)
-    (n + a.val) (n + b.val) (by omega) (by omega) (by omega)
-    (fun u hu => hk u (by have hb := b.isLt; omega))
+    (n + a.val) (n + b.val)
+    (Nat.sub_le_sub_left (Nat.le_of_lt (show i.val < j.val from hij)) (n - 1))
+    ((Nat.sub_le (n - 1) i.val).trans ((Nat.sub_le n 1).trans (Nat.le_add_right n a.val)))
+    (Nat.add_le_add_left (Nat.le_of_lt (show a.val < b.val from hab)) n)
+    (fun u hu => hk u ((Nat.succ_le_of_lt hu).trans_lt
+      (by simpa only [two_mul] using Nat.add_lt_add_left b.isLt n)))
 
 end D5.S3.Entropy.MarkovMonogamyPermutationInequality
