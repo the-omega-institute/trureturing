@@ -152,7 +152,7 @@ theorem moment_X_self (n : ℕ) :
         C (2 : ℝ) * (X * ((laguerre n).derivative * laguerre n)) +
           C (9 / 2 : ℝ) * (laguerre n * laguerre n) -
             X * (laguerre n * laguerre n) := by
-    rw [Polynomial.derivative_mul]
+    rw [Polynomial.derivative_mul, Polynomial.C_ofNat]
     ring
   rw [he, map_sub, map_add, moment_C_mul, moment_C_mul,
     moment_X_derivative_self] at h
@@ -171,7 +171,7 @@ theorem moment_norm_step (n : ℕ) :
       X * ((laguerre n).derivative * (laguerre n).derivative) -
         C (2 : ℝ) * (X * ((laguerre n).derivative * laguerre n)) +
           X * (laguerre n * laguerre n) := by
-    rw [derivative_step]
+    rw [derivative_step, Polynomial.C_ofNat]
     ring
   rw [he, map_add, map_sub, moment_C_mul, moment_gradient_self,
     moment_X_derivative_self, moment_X_self] at h
@@ -181,7 +181,9 @@ theorem moment_norm_step (n : ℕ) :
 theorem moment_norm (n : ℕ) :
     moment (laguerre n * laguerre n) = momentWeight n / (n.factorial : ℝ) := by
   induction n with
-  | zero => simp
+  | zero =>
+      simpa only [laguerre_zero, mul_one, momentWeight_zero, Nat.factorial_zero,
+        Nat.cast_one, div_one, Polynomial.C_1] using (moment_C (1 : ℝ))
   | succ n ih =>
       have h := moment_norm_step n
       have hn : (n : ℝ) + 1 ≠ 0 := by positivity
@@ -226,7 +228,7 @@ theorem moment_dilate (n : ℕ) (t : ℝ) :
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro j hj
-      simp only [coefficient, neg_pow, one_pow, mul_one]
+      simp only [coefficient, neg_pow t j, one_pow, mul_one]
       field_simp [momentWeight_ne_zero j,
         show (n.factorial : ℝ) ≠ 0 by positivity]
       <;> ring
