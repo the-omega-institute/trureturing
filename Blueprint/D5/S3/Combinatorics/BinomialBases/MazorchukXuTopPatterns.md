@@ -24,6 +24,10 @@ $$\forall i \in \operatorname{Nat}\left(\right),\; \exists p \in \operatorname{P
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MazorchukXuTopPatterns.mazorchukXu_conjecture` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mazorchuk-xu-2026-first-column-deficit-polynomial` (proved) by `D5/S3/Combinatorics/BinomialBases/MazorchukXuTopPatterns.mazorchukXu_conjecture`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mazorchuk-xu-2026-first-column-deficit-polynomial","declaration_gid":"D5/S3/Combinatorics/BinomialBases/MazorchukXuTopPatterns.mazorchukXu_conjecture","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Volodymyr Mazorchuk, Shuoyang Xu (2026). *On the number of cokernel-closed additive subcategories for uniformly oriented A_n quivers*. DOI: [10.48550/arXiv.2610.07999](https://doi.org/10.48550/arXiv.2610.07999). URL: <https://arxiv.org/html/2610.07999v2>.
