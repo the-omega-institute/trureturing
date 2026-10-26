@@ -124,9 +124,9 @@ private theorem positive_roots_count {n : Type*} [Fintype n] [DecidableEq n]
     RHLinalg.posIndex ha =
       ((a.charpoly.roots.map Complex.re).filter (fun x => 0 < x)).card := by
   classical
+  unfold RHLinalg.posIndex
   rw [ha.roots_charpoly_eq_eigenvalues, Multiset.map_map]
-  simp only [RHLinalg.posIndex, Function.comp_def, RCLike.ofReal_re,
-    Complex.ofReal_re, Multiset.filter_map, Multiset.card_map]
+  simp only [Function.comp_def, Multiset.filter_map, Multiset.card_map]
   rfl
 
 private def shifted (k₁ k₂ m : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
@@ -169,8 +169,7 @@ private theorem schur_eq (z₁ z₂ : ℂ) (d : ℝ)
     Fin.sum_univ_two]
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [coupling, schur, offDiagonal,
-      Matrix.conjTranspose_apply, Complex.mul_re, Complex.mul_im,
-      Complex.div_re, Complex.div_im, map_ofNat] <;>
+      Matrix.conjTranspose_apply, Complex.mul_re, Complex.mul_im, map_ofNat] <;>
     nlinarith [hz₁, hz₂]
 
 private def eliminator (z₁ z₂ : ℂ) :
@@ -178,7 +177,7 @@ private def eliminator (z₁ z₂ : ℂ) :
   fromBlocks 1 0 ((1 / 2 : ℂ) • (coupling z₁ z₂)ᴴ) 1
 
 private theorem eliminator_det (z₁ z₂ : ℂ) : (eliminator z₁ z₂).det = 1 := by
-  simp [eliminator, Matrix.det_fromBlocks_zero₁₂]
+  simp [eliminator]
 
 private theorem schur_congruence (k₁ k₂ m : ℝ) :
     let z₁ := exp (2 * I * k₁)
@@ -190,10 +189,9 @@ private theorem schur_congruence (k₁ k₂ m : ℝ) :
   rw [blockMatrix_eq]
   simp only [eliminator, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_one,
     Matrix.conjTranspose_zero, Matrix.conjTranspose_smul,
-    Matrix.conjTranspose_conjTranspose, map_div₀, map_one, map_ofNat,
+    Matrix.conjTranspose_conjTranspose,
     Matrix.fromBlocks_multiply, Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul,
-    Matrix.mul_zero, add_zero, zero_add, Matrix.smul_mul, Matrix.mul_smul,
-    smul_smul, ← add_smul]
+    Matrix.mul_zero, zero_add, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
   norm_num
   have hs := schur_eq _ _ (2 + m) (phase_norm k₁) (phase_norm k₂)
   norm_num at hs
@@ -240,8 +238,9 @@ private theorem schur_positive_index (z₁ z₂ : ℂ) (d : ℝ)
   have he := hs.det_eq_prod_eigenvalues.symm.trans (schur_det z₁ z₂ d h₁ h₂)
   have hn : hs.eigenvalues 0 * hs.eigenvalues 1 < 0 := by
     have hr := congrArg Complex.re he
-    simp only [Fin.prod_univ_two, RCLike.ofReal_eq_complex_ofReal, Complex.mul_re, Complex.ofReal_re,
-      Complex.ofReal_im, mul_zero, sub_zero, Complex.neg_re] at hr
+    simp only [Fin.prod_univ_two, RCLike.ofReal_eq_complex_ofReal,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      mul_zero, sub_zero, Complex.neg_re] at hr
     linarith
   have ht : ((-2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = diagonal ![-2, -2] := by
     ext i j
@@ -254,17 +253,18 @@ private theorem schur_positive_index (z₁ z₂ : ℂ) (d : ℝ)
     simp [Fin.prod_univ_two, mul_assoc]
   rw [positive_roots_count ha, hp, Polynomial.roots_multiset_prod_X_sub_C]
   rcases mul_neg_iff.mp hn with h | h
-  · simp [h.1, h.2, not_lt_of_ge h.1.le, not_lt_of_ge h.2.le]
-  · simp [h.1, h.2, not_lt_of_ge h.1.le, not_lt_of_ge h.2.le]
+  · simp [h.1, not_lt_of_ge h.2.le]
+  · simp [h.2, not_lt_of_ge h.1.le]
 
-set_option maxHeartbeats 1200000 in
 private theorem shifted_inertia (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm : m ≠ 0) :
-    RHLinalg.posIndex (shifted_isHermitian k₁ k₂ m) = 1 ∧
-      RHLinalg.negIndex (shifted_isHermitian k₁ k₂ m) = 3 := by
+    RHLinalg.posIndex (A := shifted k₁ k₂ m) (shifted_isHermitian k₁ k₂ m) = 1 ∧
+      RHLinalg.negIndex (A := shifted k₁ k₂ m) (shifted_isHermitian k₁ k₂ m) = 3 := by
   classical
   have hq := gap_positive k₁ k₂ m hm₁ hm
-  have ha : (blockMatrix k₁ k₂ m).IsHermitian :=
-    ((shifted_isHermitian k₁ k₂ m).reindex reorder).reindex finSumFinEquiv.symm
+  have ha : (blockMatrix k₁ k₂ m).IsHermitian := by
+    change (blockMatrix k₁ k₂ m)ᴴ = blockMatrix k₁ k₂ m
+    simp only [blockMatrix, Matrix.conjTranspose_reindex]
+    rw [show (shifted k₁ k₂ m)ᴴ = shifted k₁ k₂ m from shifted_isHermitian k₁ k₂ m]
   have hp := Matrix.isHermitian_conjTranspose_mul_mul
     (eliminator (exp (2 * I * k₁)) (exp (2 * I * k₂))) ha
   have he := schur_congruence k₁ k₂ m
@@ -278,7 +278,8 @@ private theorem shifted_inertia (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm : m �
     ha (eliminator (exp (2 * I * k₁)) (exp (2 * I * k₂)))
     (by rw [eliminator_det]; exact isUnit_one)
   have hc' : RHLinalg.posIndex hp = 1 := by
-    simpa only [← he] using hc
+    rw [positive_roots_count hp, he, ← positive_roots_count hd]
+    exact hc
   have hp₁ : RHLinalg.posIndex (shifted_isHermitian k₁ k₂ m) = 1 := by
     have hsame : RHLinalg.posIndex (shifted_isHermitian k₁ k₂ m) =
         RHLinalg.posIndex ha := by
@@ -323,7 +324,10 @@ private theorem row_bound (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm₂ : m ≤ 
   obtain ⟨h₉, h₁₀, h₁₁, h₁₂⟩ := hu _ (hn k₁)
   obtain ⟨h₁₃, h₁₄, h₁₅, h₁₆⟩ := hu _ (hn k₂)
   have hdiag : ‖-(m : ℂ) + -2 + -2‖ ≤ 6 := by
-    convert hd₁ using 1 <;> push_cast <;> congr 1 <;> ring
+    convert hd₁ using 1
+    push_cast
+    congr 1
+    ring
   norm_num at hd₂
   fin_cases i <;> norm_num [shifted, bloch, Fin.sum_univ_succ, Matrix.one_apply] <;>
     simp only [neg_mul] at * <;> linarith
@@ -358,7 +362,9 @@ private theorem fermi_charpoly :
     (bloch (Real.pi / 4) (Real.pi / 4) 0).charpoly =
       Polynomial.X * (Polynomial.X + 4) * (Polynomial.X - 2) ^ 2 := by
   have hp : exp (2 * I * ((Real.pi / 4 : ℝ) : ℂ)) = I := by
-    convert Complex.exp_pi_div_two_mul_I using 1 <;> push_cast <;> ring
+    convert Complex.exp_pi_div_two_mul_I using 1
+    push_cast
+    ring
   have hn : exp (-2 * I * ((Real.pi / 4 : ℝ) : ℂ)) = -I := by
     rw [show -2 * I * ((Real.pi / 4 : ℝ) : ℂ) =
       -(2 * I * ((Real.pi / 4 : ℝ) : ℂ)) by ring, ← phase_conj, hp]
@@ -407,22 +413,28 @@ private theorem band_signs (k₁ k₂ m : ℝ)
   change (Finset.univ.filter (fun i => h.eigenvalues i < 0)).card = 3 at hn
   rw [RHLinalg.card_eigenvalues_reindex h (fun x => 0 < x)] at hp
   rw [RHLinalg.card_eigenvalues_reindex h (fun x => x < 0)] at hn
-  rw [Finset.card_filter] at hp hn
-  simp only [Fintype.card_fin] at hp hn
+  change (Finset.univ.filter (fun i : Fin 4 => h.eigenvalues₀ i < 0)).card = 3 at hn
+  rw [Finset.card_filter] at hp
   have hanti := h.eigenvalues₀_antitone
   have htop : 0 < h.eigenvalues₀ 0 := by
     by_contra ht
     have hall (i : Fin 4) : ¬0 < h.eigenvalues₀ i :=
       not_lt.mpr ((hanti (Fin.zero_le i)).trans (not_lt.mp ht))
-    simp only [hall, if_false, Finset.sum_const_zero] at hp
+    simp only [hall, ite_false, Finset.sum_const_zero] at hp
     omega
   have hsecond : h.eigenvalues₀ 1 < 0 := by
     by_contra hs
-    have hz₁ : ¬h.eigenvalues₀ 1 < 0 := hs
-    have hz₀ : ¬h.eigenvalues₀ 0 < 0 := not_lt.mpr htop.le
-    simp only [Fin.sum_univ_succ] at hn
-    norm_num only [Fin.succ_zero_eq_one, hz₀, hz₁, if_false, zero_add] at hn
-    split_ifs at hn <;> omega
+    have hsub : (Finset.univ.filter (fun i : Fin 4 => h.eigenvalues₀ i < 0)) ⊆ {2, 3} := by
+      intro i hi
+      have hi' := (Finset.mem_filter.mp hi).2
+      fin_cases i
+      · exact False.elim ((not_lt_of_ge htop.le) hi')
+      · exact False.elim (hs hi')
+      · simp
+      · simp
+    have hle := Finset.card_le_card hsub
+    norm_num at hle
+    omega
   have hs₂ := shifted_band k₁ k₂ m 2
   have hs₃ := shifted_band k₁ k₂ m 3
   norm_num at hs₂ hs₃
