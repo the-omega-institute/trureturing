@@ -1,0 +1,2 @@
+**Definition 36.1 (the finite comb guard).** Actually Hold. Start with logical address $p=\varepsilon$ and counter $j=0$. Issue $S_p$ and consume its complete reply. On BranchRefusal, issue $P_{pL}$, require WrongTypeRefusal, increment $j$, replace $p$ by $pR$, and repeat. On WrongTypeRefusal to $S_p$, stop and accept exactly if $j\ge3$. Every other reply rejects. In particular, a successful Growth reply is consumed and causes rejection; it is not retrospectively converted into a refusal or rolled back.
+

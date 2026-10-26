@@ -2450,3 +2450,272 @@ The native increment is the exact ternary criterion over this entire original cl
 The actual graph, terminal map, whole outputs, advanced state, current and fresh authority and paid resources all belong to the same specimen. Any later action outside the restricted image is handled by the initialized full-state controller, not by pretending that a ternary inverse still applies. No noisy/finite-precision theorem, hardware realization, arbitrary-attachment preparation of an unchanged graph or total-resource optimum follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 71. The original seven-vertex specimen and its quaternary image
+
+**Definition 71.1 (native material and monic histories).** Retain the original AA §17 birth-typed source and Definition 55.1's six-operation installation. Fix
+
+$$
+u=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+$$
+
+From a known zero alpha, the enabled addressed growth sequence is $P_\varepsilon,S_\varepsilon,P_R,S_R$. In the resulting materialization the logical beta vertices are $L,RL$, with their respective unary markers $LL,RLL$. In material-coordinate order
+
+$$
+(LL,L,\varepsilon,R,RL,RLL,RR),
+$$
+
+the complete undirected unit-edge set is
+
+$$
+\{LL\!\sim\!L,\ L\!\sim\!\varepsilon,\ \varepsilon\!\sim\!R,
+\ R\!\sim\!RL,\ RL\!\sim\!RLL,\ R\!\sim\!RR\}.
+$$
+
+Thus the actual symmetric zero-diagonal adjacency and complete canonical terminal list are
+
+$$
+A=\begin{pmatrix}
+0&1&0&0&0&0&0\\
+1&0&1&0&0&0&0\\
+0&1&0&1&0&0&0\\
+0&0&1&0&1&0&1\\
+0&0&0&1&0&1&0\\
+0&0&0&0&1&0&0\\
+0&0&0&1&0&0&0
+\end{pmatrix},\qquad
+(LL,RLL,RR),\qquad e=e_{LL}.
+\tag{71.1}
+$$
+
+Assume this same specimen has physically established whole zero, its exhaustive earned raw/canonical material and terminal correspondence, genuine binding, current and fresh authority, exclusive completed-call serialization, no autonomous motion, finite exact framing and sufficient finite backing as in §§55 and 67. Original growth preserves whole zero; actually Add one at $e$ and Hold to establish $x_\emptyset=e$. For each digit of $w=d_0\cdots d_{m-1}\in\{0,1,2,3\}^*$ execute the complete original composite
+
+$$
+\operatorname{Next}(d_i)=
+\operatorname{Tick};\ \operatorname{Add}(e,d_i);\
+\operatorname{Hold};\ \operatorname{Read}(e).
+\tag{71.2}
+$$
+
+Every composite includes its three original acknowledgements, its literal scalar Read and all completed framed returns. Tick applies $A$ and returns only its fixed acknowledgement. There is no growth, Reset, extra Tick or other Add in this encoding phase. Consequently
+
+$$
+x_w=F_w(A)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i}.
+\tag{71.3}
+$$
+
+In particular $F_\emptyset=1$ and $F_{0^m}=z^m$; zero digits and empty histories are retained without an identification by leading zeros.
+
+**Definition 71.2 (late passive observation).** The late receiver has the earned whole graph, exhaustive map, authentic callable context and promise (71.3), but no word, length, earlier encoding replies, input journal, field-dependent advice or dependent accessible producer state. A fixed finite passive schedule is a finite sequence chosen from that earned graph alone, independently of the word and its length. It may use Tick, Hold, identity Add$(e_\ell,0)$ and literal scalar Read$(e_\ell)$ at any earned terminal $\ell\in\{LL,RLL,RR\}$. Only Tick changes the field. All original acknowledgements, scalar frames and completed returns remain part of the transcript; there is no additional field-dependent timing, allocation or capacity channel. Framing and scalar width are fixed functions of the literal value. Every promised finite run has sufficient exact backing; this imposes no uniform bound on scalar width over all histories.
+
+Let $K\ge0$ be the schedule's total Tick count, including Ticks after its last Read. A Read made after $t$ Ticks, $0\le t\le K$, returns $e_\ell^{\mathsf T}A^t x_w$, and the actual endpoint is $A^Kx_w$. Repeated terminal/time choices and schedules with zero or one Read are included. No earlier Next reply is among these late observations.
+
+## 72. Injective quaternary storage in the entire native field
+
+**Theorem 72.1 (all finite histories have distinct whole fields).** On (71.1)–(71.3), $w\mapsto x_w$ is injective on all finite quaternary histories, including the empty history and every all-zero history.
+
+**Proof.** Put
+
+$$
+q(y)=y^3-6y^2+9y-3,\qquad
+M(z)=zq(z^2)=z^7-6z^5+9z^3-3z.
+\tag{72.1}
+$$
+
+Expansion of (71.1) gives $\det(zI-A)=M(z)$ and
+
+$$
+\det[e,Ae,\ldots,A^6e]=-1.
+\tag{72.2}
+$$
+
+Cayley–Hamilton gives $M(A)=0$. For every $D\in\mathbb Q[z]$, division by the monic $M$ leaves a remainder of degree below seven. Equation (72.2) forces that remainder to vanish whenever $D(A)e=0$. Thus the standard cyclic linear-algebra argument, used for whole-law equality in Recovery Geometry II §44, specializes here to
+
+$$
+D(A)e=0\quad\Longleftrightarrow\quad M\mid D
+\quad\text{in }\mathbb Q[z].
+\tag{72.3}
+$$
+
+This is a condition on all seven actual coordinates, not on one spectral projection.
+
+We next exclude every nonzero integer polynomial with coefficients in $[-3,3]$ from being divisible by this particular $q$, in every degree. Its three real roots lie respectively in
+
+$$
+(23/50,47/100),\qquad(33/20,83/50),\qquad(387/100,97/25).
+\tag{72.4}
+$$
+
+Indeed the values of $q$ at the two endpoints of these three intervals are respectively
+
+$$
+\left(-\frac{4033}{125000},\frac{8423}{1000000}\right),\quad
+\left(\frac{57}{8000},-\frac{2413}{125000}\right),\quad
+\left(-\frac{70797}{1000000},\frac{73}{15625}\right).
+$$
+
+The disjoint sign changes account for all roots of the cubic. Write $s,r$ for the middle and largest roots. If $P(t)=0$ for $t>1$ and every coefficient of $P$ has magnitude at most three, each descending Horner prefix $H(t)$ satisfies
+
+$$
+|H(t)|\le\frac{3}{t-1}.
+\tag{72.5}
+$$
+
+To see this, if $\ell$ digits remain, write $0=P(t)=t^\ell H(t)+\sum_{j<\ell}a_jt^j$ and divide by $t^\ell$; the finite geometric tail is bounded by $3/(t-1)$. This includes the final prefix, which is zero.
+
+Suppose now $P\ne0$ and $q\mid P$. Both $P(r)$ and $P(s)$ vanish. At $r$, (72.5) gives a bound smaller than $300/287<2$. The leading nonzero integer coefficient must therefore be $1$ or $-1$; change the sign of $P$ so it is $1$. A constant polynomial cannot vanish. If another coefficient follows, it must be $-3$: every allowed $d\ge-2$ gives
+
+$$
+r+d>\frac{187}{100}>\frac{300}{287}.
+$$
+
+The prefix $r-3$ is positive, excluding degree one. If another coefficient follows, it too must be $-3$, since for every $d\ge-2$,
+
+$$
+r^2-3r+d>\frac{13669}{10000}>\frac{300}{287}.
+$$
+
+This forces the prefix $r^2-3r-3>3669/10000>0$. But at the other root the identical coefficient prefix obeys
+
+$$
+s^2-3s-3<-\frac{13061}{2500},\qquad
+\frac{3}{s-1}<\frac{60}{13}<\frac{13061}{2500},
+$$
+
+contradicting (72.5). Every degree at least two is excluded, even when this prefix is the final one. Hence $q\mid P$ with these coefficient bounds forces $P=0$.
+
+For two arbitrary finite histories set $D=F_w-F_v$. All its coefficients lie in $[-3,3]$, also when their lengths differ: at an unequal leading degree the coefficient is $1$ minus a digit or its negative. If $x_w=x_v$, (72.3) implies $q(z^2)\mid D(z)$. Split the polynomial and its rational quotient into even and odd powers. Writing
+
+$$
+D(z)=E(z^2)+zO(z^2)
+$$
+
+gives $q\mid E$ and $q\mid O$ in $\mathbb Q[y]$. Both $E,O$ have integer coefficients in $[-3,3]$, so the preceding argument makes both zero. Thus $F_w=F_v$. Monic degree recovers the same length and descending lower coefficients recover the same chronological word, including degree zero and all-zero cases. This proves injectivity.
+
+The bounded-digit conjugate supplier is [Akiyama, Thuswaldner and Zaïmi, *Comments on the height reducing property II*, arXiv:1403.7480v1, Theorem 3 and its proof](https://arxiv.org/html/1403.7480v1). In their parameters take $H=3$ and their algebraic number $\alpha$ to be $r$, not the native constructor alpha. The monic cubic $q$ is irreducible over $\mathbb Q$ by the rational-root test: none of $\pm1,\pm3$ is a root. Consequently its three roots in (72.4) are precisely the conjugates, with none on the unit circle. Their theorem supplies finite recognition of bounded-digit zero representations, and its proof supplies the expanding-conjugate prefix bounds (72.5). Here the explicit forced-prefix contradiction replaces any need to construct that automaton. The cyclic whole-law and parity steps supply the additional native-vector correspondence; the literature's single algebraic evaluation alone is not whole-field equality. $\square$
+
+## 73. Every fixed two-Read passive transcript loses a history distinction
+
+**Theorem 73.1 (all-terminal, all-fixed-time obstruction).** For every fixed finite passive schedule of Definition 71.2 using at most two literal scalar Reads, two distinct histories have the same complete late transcript. In particular no decoder of such a transcript recovers every quaternary history. This holds for every choice of earned terminals and finite Tick offsets.
+
+**Proof.** Use the positive vector and rational constant
+
+$$
+h=(27,52,75,96,66,34,49)^{\mathsf T},\qquad c=\frac{95}{48}<2.
+$$
+
+Direct multiplication in (71.1) gives
+
+$$
+Ah=(52,102,148,190,130,66,96)^{\mathsf T}
+   =2h-2\mathbf1\le ch.
+\tag{73.1}
+$$
+
+The inequality follows coordinatewise from $h_i\le96$. The standard weighted maximum norm $\|x\|_h=\max_i|x_i|/h_i$, positivity of $A$ and (73.1) give $\|Ax\|_h\le c\|x\|_h$ and $\|e\|_h=1/27$. The recurrence in (71.3) therefore gives, for every length-$m$ word,
+
+$$
+\|x_w\|_h\le\frac1{27}\left(c^m+3\sum_{j<m}c^j\right)
+ <\frac{191}{1269}c^m.
+\tag{73.2}
+$$
+
+Every coordinate remains a nonnegative integer. At any earned terminal after any $t\le K$ passive Ticks its literal Read $y$ consequently satisfies
+
+$$
+0\le y<96\frac{191}{1269}c^{m+K}
+ =\frac{6112}{423}c^{m+K}<15c^{m+K}.
+\tag{73.3}
+$$
+
+This single bound covers all terminals and all offsets, including repeated Reads and Ticks after the last Read.
+
+Choose the common history length $m=100(K+4)$. Bernoulli's inequality gives
+
+$$
+\left(\frac{96}{95}\right)^{100}
+ \ge1+\frac{100}{95}=\frac{39}{19}>2.
+$$
+
+Since $2/c=96/95$ and $c<2$, it follows that
+
+$$
+(2/c)^m>2^{K+4}\ge16c^K,\qquad
+15c^{m+K}+1\le16c^{m+K}<2^m.
+\tag{73.4}
+$$
+
+The number of nonnegative integer values allowed by (73.3) is less than $15c^{m+K}+1$, hence less than $2^m$. A transcript with at most two scalar replies therefore has fewer than $4^m$ possible scalar tuples; pad any absent Reads by fixed dummy values. There are exactly $4^m$ length-$m$ histories. The pigeonhole principle supplies two distinct histories with identical scalar tuples for this proposed schedule.
+
+The graph, complete map and authentic context are common. Every other permitted reply consists of the fixed original Tick, zero-Add and Hold acknowledgements and their completed returns. A scalar's frame and literal width are determined by its already counted exact value. Thus equality of the scalar tuples gives equality of the entire permitted transcripts; no decoder of that transcript can choose the correct history on both inputs. This uses standard weighted-norm bounds, Bernoulli's inequality and integer pigeonhole counting inside the actual source observation contract.
+
+On each input the actual endpoint is $A^KF_w(A)e$. Failure to recover the required word already rules out the joint task of history recovery and complete-service initialization. It does not assert equality of the two entire initial fields, which Theorem 72.1 excludes, or equality of their advanced fields. Nor does it establish impossibility of current-service acquisition alone: §64's controller applies when the entire actual current field and its other stated premises have separately been earned. The binary and ternary positive acquisitions of §§55–56 and 67–70 retain their own alphabets and hypotheses. $\square$
+
+**Boundary 73.2 (stored information and acquired information).** Theorems 72.1 and 73.1 together give a separation on the single original specimen $u=\langle\beta,\langle\beta,\alpha\rangle\rangle$: the whole actual field distinguishes every monic quaternary history, while each fixed graph-dependent passive schedule with at most two scalar Reads fails to acquire all those distinctions. This source-specific combination is repository-derived synthesis of the attributed cyclic, conjugate-bound, norm and counting suppliers; no worldwide novelty claim is made. No positive quaternary acquisition, minimum Read count above two, current-service-only impossibility, unbounded adaptive-time conclusion, graph or alphabet family, physical realization, arbitrary-entry restoration, arbitrary-current acquisition, erased general journal recovery or global hierarchy/composition inverse is established here. Finite exact replies for each run do not imply a uniform precision or storage bound over all histories.
+
+## 追加锚（本行以下为增补区）
+
+## 74. Every fixed three-Read passive transcript loses a history distinction
+
+**Theorem 74.1 (one parity family defeats three Reads).** Retain Definition 71.1 in full: the original AA §17 birth typing, the seven-vertex symmetric zero-diagonal unit adjacency (71.1), origin $e=e_{LL}$, exhaustive earned terminal map and actual quaternary encoding (71.2)–(71.3). Retain Definition 71.2's source-independent no-advice receiver, original operation semantics, fixed finite passive schedule, literal scalar framing and absence of extra field-dependent channels. Genuine binding, current and fresh authority, exclusive completed-call serialization, no autonomous motion and sufficient finite exact backing remain premises. For every such schedule $S$ with at most three Reads and total Tick count $K_S$, there exist distinct words
+
+$$
+w,v\in\{0,1,2,3\}^{100(K_S+4)}
+\quad\text{such that}\quad
+\operatorname{Transcript}_S(w)=\operatorname{Transcript}_S(v).
+\tag{74.1}
+$$
+
+The transcript includes every permitted acknowledgement, literal scalar frame and completed return. Hence no such schedule recovers all finite quaternary histories, even with unrestricted exact local decoding. In particular it cannot meet the joint requirement of recovering the history and initializing complete original six-operation prediction at the actual advanced endpoint.
+
+**Proof.** Write $K=K_S$. On the actual vertex set put
+
+$$
+\chi=0\ \text{on }\{LL,\varepsilon,RL,RR\},\qquad
+\chi=1\ \text{on }\{L,R,RLL\}.
+$$
+
+Every edge of (71.1) crosses these two classes and $\chi(LL)=0$. A length-$j$ walk from $LL$ therefore ends in class $j\bmod2$, so
+
+$$
+(A^j)_{\ell,LL}=0\quad\text{unless}\quad j\equiv\chi(\ell)\pmod2.
+$$
+
+This is the bipartite support argument used in Theorem 56.3. If $F(z)=\sum_k f_kz^k$, a Read at terminal $\ell$ after $t$ actual Ticks has value
+
+$$
+e_\ell^{\mathsf T}A^tF(A)e
+ =\sum_k f_k(A^{t+k})_{\ell,LL}.
+\tag{74.2}
+$$
+
+It thus depends only on coefficient exponents of parity $\chi(\ell)-t\bmod2$. The terminal and Tick offset of each Read are fixed independently of the history. Among at most three Reads, some parity $p\in\{0,1\}$ occurs at most once; this also covers absent or repeated Reads.
+
+Set $m=100(K+4)$ and $n=m/2$. For every $a=(a_0,\ldots,a_{n-1})\in\{0,1,2,3\}^n$, take
+
+$$
+F_a(z)=z^m+\sum_{i=0}^{n-1}a_i z^{2i+p}.
+\tag{74.3}
+$$
+
+These are $4^n=2^m$ distinct legal monic length-$m$ histories: assign chronological digit $d_{m-1-(2i+p)}=a_i$ and every other digit zero. All displayed lower exponents lie between zero and $m-1$, so the leading monomial is fixed and untouched. Every Read associated with parity $1-p$ is constant on this family by (74.2). At most one scalar reply can vary.
+
+Use the existing all-terminal, all-offset estimate (73.3), with $c=95/48$. For every word in (74.3), the one possibly varying scalar is a nonnegative integer $y$ satisfying
+
+$$
+0\le y<15c^{m+K},\qquad
+15c^{m+K}+1<2^m.
+\tag{74.4}
+$$
+
+The second inequality is exactly (73.4) at the chosen $m$: $(96/95)^{100}\ge39/19>2$ gives $(2/c)^m>2^{K+4}\ge16c^K$, while $c^{m+K}\ge1$. Thus fewer than $2^m$ integer values are available to distinguish the $2^m$ histories in (74.3). Pigeonhole counting gives two distinct members with equal possibly varying scalar. If no Read has parity $p$, every scalar is already constant on the whole family. In either case all scalar replies agree.
+
+All remaining replies are the fixed original Tick, Hold and zero-Add acknowledgements and their completed returns. Equal literal scalar values have equal widths and frames under Definition 71.2. The same graph, map and callable context supply no further word-dependent information; no earlier encoding reply or dependent producer record is accessible. Consequently the entire late transcripts agree, proving (74.1). Arbitrary local calculation from that common transcript cannot return the correct word on both inputs. The common-length collision suffices to defeat the promise over all finite words; the promise continues to include the empty word and every all-zero word. $\square$
+
+**Boundary 74.2 (storage, endpoints and service).** By Theorem 72.1 the two histories in (74.1) have distinct whole initial fields. Their actual advanced endpoints are respectively $A^{K_S}F_w(A)e$ and $A^{K_S}F_v(A)e$, with every scheduled Tick counted, including those after the last Read. No equality of these endpoints, inversion of Tick or restoration of the old fields is asserted or needed. The contradiction concerns the required history component of the joint task. It does not establish impossibility of current-service acquisition alone: Theorem 64.1 retains its complete actual-current-field, map, authority, framing and backing premises. Nor does it establish four-Read attainment, an exact minimum above three, an adaptive-schedule obstruction, arbitrary-entry restoration, arbitrary-current acquisition, recovery of an erased general journal, or physical realization. The binary and ternary acquisitions retain their own alphabets and hypotheses. Finite exact backing for each finite run gives no uniform history-independent bound on scalar precision, storage or time.
+
+**Correspondence 74.3 (source-specific inference and suppliers).** The source-specific inference beyond §§56 and 73 is the family (74.3): it leaves $2^m$ distinct legal histories in one coefficient parity, on which a three-Read schedule has at most one varying scalar. Theorem 56.3 supplies the native bipartite support mechanism; (73.3)–(73.4) supply the integer capacity bound. Bipartite walk parity, positivity and the weighted maximum norm behind that bound, the finite geometric series, Bernoulli's inequality and pigeonhole counting are standard suppliers used within this proof, not additional generic theorem claims. Theorem 72.1 supplies only the separate injective-storage contrast, not a premise needed for the collision proof. This is a source-specific mathematical consequence, with no worldwide-priority assertion. The [Akiyama–Thuswaldner–Zaïmi numeration theorem cited in §72, Theorem 3](https://arxiv.org/html/1403.7480v1), concerns finite recognition of bounded-digit zero representations for an algebraic number without unit-circle conjugates; it is not needed for this obstruction and supplies neither an original native sampling schedule nor a six-operation service initialization.
+
+## 追加锚（本行以下为增补区）
+

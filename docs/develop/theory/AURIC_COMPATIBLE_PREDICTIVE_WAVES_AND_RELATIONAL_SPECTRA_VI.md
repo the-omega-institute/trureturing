@@ -1297,3 +1297,632 @@ $$
 继续接合原目标所需的接口为：独立时序彩票及共同未来端口的原生取得；约化事件等价的参考与非上下文性范围；原生、路径和量子对象在初始化、合法操作、完整输出、权利及同时资源上的共同实现；共同参考与复合规则；有限精度下的稳定性、噪声界和有限样本认证。定理 87.3 只解决其中“接受原有限隐藏等式后，任意可测经典随机仪器是否仍可能”的精确问题，答案是否定的。它不从这些等式推导 Born、CP、组合律或量子起源；上述其余接口仍需各自的数学条件与取得桥。
 
 ## 追加锚（本行以下为增补区）
+
+## 91. 原固定时序的完整记录有界效果
+
+**定义 91.1（同一单制备源与时序域）。** 固定 V 定义 54.1、91.1 及本卷定义 80.1 的源：$0<d<1$、$\sin(2\theta)\ne0$，一个原相容纯制备 $\rho_0=\psi\psi^\dagger$，原效果 $E=qq^\dagger$，以及任意一个已安装、可重复且满足 $[N,P_\xi]\ne0$ 的 $N\in U(3)$。以下所有时序均使用这同一个 $N$。特别保留原矩阵的关系
+
+$$
+\begin{gathered}
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\qquad
+q=(\xi+e)/\sqrt2,\qquad f^\dagger q=0,\\
+\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf,\qquad \rho_0=\psi\psi^\dagger,\\
+W=I_3-2ff^\dagger,\qquad
+V_0=U\exp(\mathrm i\theta W),\qquad V_1=V_0W,\\
+A_j(X)=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\qquad
+A_N(X)=NXN^\dagger.
+\end{gathered}
+\tag{91.1}
+$$
+
+一个外定有限时序 $s$ 是字母表 $\{\mathsf J,\mathsf N\}$ 上的有限词；$\mathsf J$ 表示使用原随机仪器，$\mathsf N$ 表示使用 $N$。设 $k=k(s)$ 是仪器位置数，$\mathcal W_s$ 是把每个 $\mathsf J$ 替换为实际标签 $0$ 或 $1$、每个 $\mathsf N$ 替换为 $N$ 得到的全部 $2^k$ 条历史。最左字母最早作用，故对于 $w=b_1\cdots b_n\in\mathcal W_s$，
+
+$$
+\begin{gathered}
+U_w=U_{b_n}\cdots U_{b_1},\qquad
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\\
+A_w=2^{-k}\operatorname{Ad}_{U_w},\qquad
+R_w=U_w^\dagger EU_w,\qquad E_1=E,\quad E_0=I_3-E,\\
+p_s(w,b)=\operatorname{Tr}(E_bA_w\rho_0),\qquad
+p_s(w,0)+p_s(w,1)=2^{-k},\qquad
+\sum_{w\in\mathcal W_s}\sum_{b=0}^1p_s(w,b)=1.
+\end{gathered}
+\tag{91.2}
+$$
+
+空时序也在域内。时序长度、终点及 $N$ 的各个位置预先固定，不依赖随机标签；没有反馈或停止规则。$(w,b)$ 是完整输出，所有历史与两种终端结果均在 (91.2) 中。
+
+V 命题 91.3 供应其原五维来源：$B^\dagger B=I_3$，原五维分支与给定控制的角块延伸满足
+
+$$
+\begin{gathered}
+\widehat K_{\theta,j}B=2^{-1/2}BV_j,\qquad
+\widetilde N=BNB^\dagger+(I_5-BB^\dagger),\qquad
+\widetilde NB=BN,\\
+P_5=BEB^\dagger,\qquad
+B^\dagger(I_5-P_5)B=I_3-E.
+\end{gathered}
+\tag{91.3}
+$$
+
+因此沿同一时间词的五维复合在 $B\mathbb C^3$ 上等于 $2^{-k/2}BU_w$，原制备 $B\rho_0B^\dagger$ 与终端 $(P_5,I_5-P_5)$ 给出 (91.2)。$\rho_0$ 的原完整矩映射与纯制备来源仍由该命题承担；这里的数学效果域不增加任何制备。
+
+**定义 91.2（完整记录接受效果与数学扩张）。** 对一个时序 $s$，给每个完整输出一个系数 $a(w,b)\in[0,1]$，定义
+
+$$
+F_{s,a}=\sum_{w\in\mathcal W_s}2^{-k}
+ \big[a(w,1)R_w+a(w,0)(I_3-R_w)\big].
+\tag{91.4}
+$$
+
+系数为 $0$ 或 $1$ 时，这是原完整记录的二元事件效果。任意 $[0,1]$ 系数只扩大比较域；其概率随机化是否可物理取得不作前提。由 $\sum_{w,b}A_w^*(E_b)=I_3$，有 $0\preceq F_{s,a}\preceq I_3$，且原始接受质量为
+
+$$
+\operatorname{Tr}(F_{s,a}\rho_0)
+ =\sum_{w,b}a(w,b)p_s(w,b).
+\tag{91.5}
+$$
+
+再定义数学比较集
+
+$$
+\mathcal B_N=
+\overline{\operatorname{conv}\{F_{s,a}:s\text{ 为上述有限时序},\ 0\le a(w,b)\le1\}}
+ ^{\|\cdot\|_\infty},
+\tag{91.6}
+$$
+
+其中 $\theta$ 和原 $E$ 已固定，$\|\cdot\|_\infty$ 为算子范数。凸组合和范数闭包是比较集的数学扩张，不供应时序彩票、无限时序或极限操作。每个 $F_{s,a}$ 的两种二元质量仍来自同一完整分布：接受使用 $a$，拒绝使用 $1-a$；任何记录都未被删除或重新归一化。可取得次归一化片段与其归一化对象的区别，见 Selby 等，[Accessible fragments of generalized probabilistic theories, cone equivalence, and applications to witnessing nonclassicality，2112.04521v3](https://arxiv.org/html/2112.04521v3)，§§I、III；这些区别不预先决定本源 $\mathcal B_N$ 的大小。
+
+## 92. 每个已安装混合控制的统一正距离障碍
+
+**定理 92.1（完整原生记录不能逼近一个数学秩一效果）。** 对定义 91.1 的每个源和每一个允许的 $N$，存在一个数学秩一投影 $P_N$ 及 Hermitian 见证 $Z_N=2P_N-I_3$，使
+
+$$
+\operatorname{Tr}(Z_NP_N)=1,\qquad
+\sup_{F\in\mathcal B_N}\operatorname{Tr}(Z_NF)\le\frac34,
+\qquad
+\inf_{F\in\mathcal B_N}\|P_N-F\|_\infty\ge\frac1{12}.
+\tag{92.1}
+$$
+
+同一个 $P_N$ 适用于全部有限长度、全部外定时序及全部接受系数。$P_N$ 可以只依赖 $N$ 与原 $f$，不依赖 $d$ 或 $\theta$；其定义不供应谱标定、物理制备、测量或新端口。
+
+证明。先构造单位向量 $v_N$，使所有整数 $m\ge0$ 都满足
+
+$$
+\frac18\le |f^\dagger N^m v_N|^2\le\frac78.
+\tag{92.2}
+$$
+
+取 $N$ 的任一正交归一特征基 $z_1,z_2,z_3$，并重排使
+$t_1=|f^\dagger z_1|^2=\max_j|f^\dagger z_j|^2$。由 $\sum_jt_j=1$，有 $t_1\ge1/3$。若 $t_1\le7/8$，置 $v_N=z_1$ 即得 (92.2)。若 $t_1>7/8$，置 $v_N=(z_1+z_2)/\sqrt2$。因 $t_2\le1-t_1$，三角不等式给每个 $m$ 的振幅上下界，平方后得到
+
+$$
+\begin{aligned}
+|f^\dagger N^m v_N|^2
+&\ge\frac12\big(\sqrt{t_1}-\sqrt{1-t_1}\big)^2
+ =\frac12-\sqrt{t_1(1-t_1)}
+ \ge\frac{4-\sqrt7}{8}>\frac18,\\
+|f^\dagger N^m v_N|^2
+&\le\frac12\big(\sqrt{t_1}+\sqrt{1-t_1}\big)^2
+ =\frac12+\sqrt{t_1(1-t_1)}
+ \le\frac{4+\sqrt7}{8}<\frac78.
+\end{aligned}
+\tag{92.3}
+$$
+
+这里使用 $t_1(1-t_1)\le7/64$；特征值简并和任意特征相位均在此证明内。置 $P_N=v_Nv_N^\dagger$。令
+
+$$
+T_m=N^{-m}WN^m.
+\tag{92.4}
+$$
+
+这是数学 Heisenberg 共轭，$T_m=T_m^\dagger=T_m^{-1}$，没有调用逆控制。由 (91.1)、(92.2) 及 $q\perp f$，有
+
+$$
+\begin{aligned}
+|v_N^\dagger T_mv_N|
+ &=\big|1-2|f^\dagger N^mv_N|^2\big|\le\frac34,\\
+|q^\dagger N^mv_N|^2
+ &\le1-|f^\dagger N^mv_N|^2\le\frac78.
+\end{aligned}
+\tag{92.5}
+$$
+
+以下直接估计完整记录 (91.4)。为简记写 $P=P_N$、$v=v_N$、$Z=2P-I_3$。对任一秩一投影 $R$，令 $x=\operatorname{Tr}(PR)\in[0,1]$。则对任意 $\alpha,\beta\in[0,1]$，
+
+$$
+\begin{aligned}
+\operatorname{Tr}\big(Z[\alpha R+\beta(I_3-R)]\big)
+ &=\alpha(2x-1)-2\beta x\\
+ &\le(2x-1)_+,\qquad t_+=\max\{t,0\}.
+\end{aligned}
+\tag{92.6}
+$$
+
+所以补终端结果及其任意接受系数已包括在估计内。
+
+若 $s$ 无仪器位置，则其历史为 $N^m$，$R=N^{-m}EN^m$。由 (92.5) 有 $x\le7/8$，故 (92.6) 给 $\operatorname{Tr}(ZF_{s,a})\le3/4$。这包括空时序。
+
+若 $s$ 有 $k\ge1$ 个仪器位置，设其第一处仪器之前恰有 $m$ 次 $N$。固定第一处之后的任一完整标签历史 $t$，成对比较
+
+$$
+w_0=N^m0t,\qquad w_1=N^m1t.
+\tag{92.7}
+$$
+
+同一外定时序保证两条历史的后续操作与 $U_t$ 完全相同；$t$ 包括其全部后续 $N$ 和原生标签。按实际时间顺序，
+
+$$
+\begin{gathered}
+U_{w_j}=U_tV_jN^m,\\
+R_{w_0}=N^{-m}V_0^\dagger U_t^\dagger EU_tV_0N^m,
+\qquad R_{w_1}=T_mR_{w_0}T_m.
+\end{gathered}
+\tag{92.8}
+$$
+
+置 $x=\operatorname{Tr}(PR_{w_0})$、$y=\operatorname{Tr}(PR_{w_1})$。则
+
+$$
+x+y=\operatorname{Tr}\big[R_{w_0}(P+T_mPT_m)\big]
+ \le1+|v^\dagger T_mv|\le\frac74.
+\tag{92.9}
+$$
+
+中间一步可由两个单位向量 $v,T_mv$ 的 Gram 矩阵得到：$P+T_mPT_m$ 的非零本征值为 $1\pm|v^\dagger T_mv|$。又 $x,y\le1$，故
+
+$$
+\begin{aligned}
+(2x-1)_++(2y-1)_+
+ &=\max\{0,2x-1,2y-1,2x+2y-2\}\\
+ &\le\frac32.
+\end{aligned}
+\tag{92.10}
+$$
+
+对 (92.7) 的两条历史各用 (92.6)。它们的四个终端接受系数可以彼此独立、任意依赖完整标签记录；(92.10) 仍给这一对未乘权贡献至多 $3/2$。共有 $2^{k-1}$ 对，每条历史的原质量因子都是 $2^{-k}$，所以
+
+$$
+\operatorname{Tr}(ZF_{s,a})
+ \le2^{-k}\,2^{k-1}\,\frac32=\frac34.
+\tag{92.11}
+$$
+
+这一步求和包含整个记录树，而不是只比较擦除标签后的系统秩。标签依赖控制会破坏 (92.8) 的共同 $U_t$，不属于本定理的时序域。
+
+线性连续泛函 $F\mapsto\operatorname{Tr}(ZF)$ 的同一界在数学凸组合及范数闭包下保持。$Z$ 的本征值为 $1,-1,-1$，故其迹范数为三。最后，
+
+$$
+\frac14\le\operatorname{Tr}\big[Z(P-F)\big]
+ \le\|Z\|_1\|P-F\|_\infty
+ =3\|P-F\|_\infty
+\qquad(F\in\mathcal B_N).
+\tag{92.12}
+$$
+
+得到全部 (92.1)。证明保持原 $1/2$ 分支和两终端质量，未对任何标签条件化。∎
+
+## 93. 原九个带权前缀坐标中的共同后缀分离
+
+**定义 93.1（九个原事件与共同读出）。** 依 V 定理 92.1–92.2 选任一原前缀基：$u_1=\varnothing$，$u_1,\ldots,u_8$ 是长至多七的原生词，第九个词 $u_9=u_jN$ 为同一个已安装 $N$ 给出的逃逸列。沿用 V (93.11) 及本卷 (84.2)，置
+
+$$
+r_i=A_{u_i}\rho_0,\quad
+R:\mathbb R^9\longrightarrow Q=\operatorname{Herm}_3,\quad
+R\mathbf e_i=r_i,\qquad
+\operatorname{Tr}r_i=2^{-k(u_i)}.
+\tag{93.1}
+$$
+
+$R$ 是实线性双射。对一个共同后缀时序 $s$ 和同一组后缀接受系数 $a(w,b)$，定义九个带权响应
+
+$$
+\begin{aligned}
+\mathbf b(F)_i&=\operatorname{Tr}(Fr_i),\qquad F=F_{s,a},\\
+\mathbf b(F_{s,a})_i
+ &=\sum_{w\in\mathcal W_s}\sum_{b=0}^1a(w,b)\,p(u_iw,b),\\
+\sum_{w,b}p(u_iw,b)&=2^{-k(u_i)}.
+\end{aligned}
+\tag{93.2}
+$$
+
+每个 $i$ 的实际上下文是执行 $u_i$ 所在的完整外定前缀时序，再对它的全部历史执行同一个 $s$；$u_i$ 只是最终档案中的前缀事件。共同后缀的操作和 $a(w,b)$ 不依赖 $i$、此前标签或前缀是否命中。其他前缀历史仍在完整分布中；若只计算 (93.2) 的事件，它们的接受系数为零。这里没有制备 $r_i/\operatorname{Tr}r_i$，也没有跨上下文制备彩票。
+
+**推论 93.2（不删原权重的严格正坐标界）。** 用定理 92.1 的同一个 $P_N,Z_N$，定义数学目标响应和实系数
+
+$$
+(\mathbf t_N)_i=\operatorname{Tr}(P_Nr_i),\qquad
+\gamma=R^{-1}Z_N,\qquad
+\eta=\frac1{4\|\gamma\|_1}.
+\tag{93.3}
+$$
+
+则 $\eta>0$，且对所有 $F\in\mathcal B_N$，
+
+$$
+\sum_{i=1}^9\gamma_i\big((\mathbf t_N)_i-\mathbf b(F)_i\big)
+ \ge\frac14,\qquad
+\max_{1\le i\le9}|(\mathbf t_N)_i-\mathbf b(F)_i|
+ \ge\eta.
+\tag{93.4}
+$$
+
+特别地，每个原二元记录事件的共同后缀读出，都与该数学目标的九个原带权响应至少有一个非零偏差。量词为每个共同 $F$ 存在一个偏差坐标；不声称某个固定坐标分离全部 $F$。
+
+证明。$Z_N\ne0$ 且 $R$ 可逆，故 $\gamma\ne0$、$\|\gamma\|_1$ 有限正。其定义给 $Z_N=\sum_i\gamma_ir_i$，因此由 (92.1)，
+
+$$
+\begin{aligned}
+\sum_i\gamma_i((\mathbf t_N)_i-\mathbf b(F)_i)
+ &=\operatorname{Tr}\big[Z_N(P_N-F)\big]\ge\frac14,\\
+\frac14
+ &\le\sum_i|\gamma_i|\,|(\mathbf t_N)_i-\mathbf b(F)_i|
+ \le\|\gamma\|_1\|\mathbf t_N-\mathbf b(F)\|_{\ell^\infty}.
+\end{aligned}
+\tag{93.5}
+$$
+
+这给出 (93.4)。若需全用原矩阵配对表示系数，置
+$G_{ij}=\operatorname{Tr}(r_ir_j)$、$z_i=\operatorname{Tr}(r_iZ_N)$，则 $G$ 正定且 $\gamma=G^{-1}z$，所以 (93.3) 是确切的源参数表达式。
+
+(93.2) 直接来自 $A_{u_iw}=A_wA_{u_i}$；每项仍含 $2^{-k(u_i)-k(s)}$。有符号的 $\gamma_i$ 只是分离泛函系数，不是物理混合权重或质量重标定。$\eta$ 随原参数及前缀基变化，此处没有它们共同的正下界或有限样本认证。$\mathbf t_N$ 是数学比较向量，其定义没有使 $P_N$ 成为已取得的终端。∎
+
+## 94. 闭锥供应、有界效果与起源接口的范围
+
+**推论 94.1（完整数学效果锥不供应完整有界读出）。** 沿用 V (105.5) 的源效果锥
+
+$$
+D=\overline{\operatorname{cone}\{2^{-k(w)}U_w^\dagger EU_w:
+                 w\in\{0,1,N\}^*\}},
+\tag{94.1}
+$$
+
+对每个原允许 $N$，有
+
+$$
+D=\mathrm{PSD}_3,\qquad
+P_N\in D\cap[0,I_3],\qquad
+\mathcal B_N\subsetneq[0,I_3],\qquad
+\operatorname{dist}_{\|\cdot\|_\infty}(P_N,\mathcal B_N)\ge\frac1{12}.
+\tag{94.2}
+$$
+
+证明。直接使用 [V 定理 95.1 及 §§105–107](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md#105-定理-1021-的完整运输锥及两侧约束) 的正词共轭闭包与效果轨道锥恒等式，特别是 (106.5)，得到 $D=\mathrm{PSD}_3$。$P_N$ 是秩一投影，故属于 $D\cap[0,I_3]$。定义 91.2 给 $\mathcal B_N\subseteq[0,I_3]$，定理 92.1 则给严格包含及所示正距离。锥运算能消去每个历史的正权重；有界完整事件 (91.4) 同时保留所有历史，接受系数受 $[0,1]$ 限制，故这两个结论相容。原五维提升的效果 $\widehat F$ 满足 $B^\dagger\widehat FB=F$；算子范数在该压缩下不增，因而还得到
+
+$$
+\|BP_NB^\dagger-\widehat F\|_\infty
+ \ge\|P_N-F\|_\infty\ge\frac1{12}
+\tag{94.3}
+$$
+
+对所有上述五维完整事件效果及其数学凸闭包成立。∎
+
+**定义 94.2（数学归属及未供接口）。** 定理 92.1 与推论 93.2 的归属是 `repo-derived`：承重点是原反射关系 $V_1=V_0W$、任意已安装 $N$ 的统一目标构造、完整成对历史的有界接受估计，以及同一个后缀在原九列上的严格正分离。不作文献优先权主张。相关供应及其量词如下。
+
+| 供应 | 在本源中的内容与边界 |
+| --- | --- |
+| V 定义 54.1、命题 91.3、§§91–95；本卷 §§80、84–90 | 原五维等距来源、允许的 $d,\theta,N$、唯一纯制备、原两终端、时间顺序和九列基。定理 92.1 不加隐藏测度等式或隐藏维数上限。§84 的商运输仍以其全未来完备条件 (84.4) 为前提；§85 的可数与连续全词经典模型继续满足原记录合同。 |
+| V §§105–107、命题 109.2 | 前者供应闭轨道锥及其有序重建合同下的数学对偶；后者供应未闭有限制备锥的原边界。推论 94.1 直接使用闭效果锥，定理 92.1 的对象则是已取凸闭包的有界完整记录效果。 |
+| Selby 等，[2112.04521v3](https://arxiv.org/html/2112.04521v3)，§§I、III、IV，尤其 IV.1–IV.2 | `literature-attested`：可取得片段可含没有可取得归一化对应物的次归一化状态；锥等价及保留标记的凸化、探测效率改变是已有区分。这些结论不供应本源的自由制备、时序彩票、选支或归一化读出，也不直接供应 (92.1) 的统一界。 |
+| Janotta–Lal，[Generalized Probabilistic Theories Without the No-Restriction Hypothesis，1302.2632v1](https://arxiv.org/html/1302.2632v1)，§§III.1–III.2 | `literature-attested`：概率值泛函给效果的上界，受限效果集须另行指定，并须与所给变换相容。此成熟原则不把 $D=\mathrm{PSD}_3$ 升级为所有 $0\preceq F\preceq I_3$ 均可读出；本源的具体正距离由 (92.2)–(92.12) 承担。 |
+| Monras–Winter，[1412.3634v1](https://arxiv.org/html/1412.3634v1)，§4、定理 9；V §93 与本卷 §84 | `literature-attested` 的可达／零观察商与商实现同构背景。本文仍按原外定时序和双终端记录使用已有源对应；一般平稳过程实现合同不授予此处的新操作或有限数据全未来认证。 |
+| [相干重建定义 20.2、34.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#34-完整关系重建的充分接口与开放方向) | 共同类型与实现、复相干、相位参考、完整复合及全效果标定分别有其充分接口；(92.1) 只解决固定原菜单的有界取得障碍。 |
+
+这里 $P_N$、$Z_N$ 与 $\gamma$ 是数学对象；它们的存在不提供源参数的谱标定、$P_N$ 的制备或测量，也不提供共同参考、复合系统或相干环境访问。没有新供应任意控制、逆、标签选择、自适应反馈、停止、制备彩票或无约束效果原则。定理 92.1 的正距离是原固定菜单的严格数学边界；扩大菜单以取得目标、证明不同表示的共同物理实现、取得相位／参考与复合接口，以及在有限噪声和样本下认证这些接口，仍是量子起源目标中的未解决问题。原精确预测商、有序闭锥、数学效果及物理可取得效果各保留自己的量词；这些条件数学结果不声称从原记录推出完整量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 95. 仅以过去标签决定停止的同源接口
+
+**定义 95.1（固定动作串与有界停止表）。** 保留定义 91.1 的全部对象、原五维来源和唯一制备：$0<d<1$、$\sin(2\theta)\ne0$，以及每个已安装、可重复的 $N\in U(3)$，$[N,P_\xi]\ne0$。原仪器仍为 $A_j=\operatorname{Ad}_{V_j}/2$、$V_1=V_0W$；唯一系统读出仍为原终端 $(E,I_3-E)$。一个停止接口先给定有限动作串 $s\in\{\mathsf J,\mathsf N\}^T$ 及可停止的检查点。未停止时只执行 $s$ 的下一个动作；检查点的决定仅为“停止并调用一次原终端”或“继续”。决定可依赖此前实际标签与给定的经典模型／目标数据，不能改变未停止路径中的 $N$ 位置、选取 $\mathsf J$ 标签或增加量子动作。末点强制终止。原制备不重置、不复制；没有新增制备、逆、环境访问、终端效果或外部彩票。
+
+模型矩阵、目标秩一投影及其精确标定作为经典输入供应，不称为取得的观察。一个有限停止表给每个允许的标签前缀一个停止位；这只定义新增的经典停止权限，不把该权限追认为 §91 的原合同已经安装。以下给其充分性，不断言绝对最小性。
+
+**命题 95.2（完整停止叶及原五维逐路径律）。** 固定这样的表 $\pi$。令 $\Lambda_\pi$ 为全部停止叶，叶 $\ell$ 保留动作位置、实际时间词 $w_\ell$、其中每一个原标签和全部已执行 $N$。可以另附由这些标签确定的失配标记 $m_\ell$ 和超时标记 $t_\ell$，两者不合并或删去叶。记
+
+$$
+\begin{gathered}
+\alpha_\ell=2^{-k(w_\ell)},\qquad U_\ell=U_{w_\ell},\qquad
+R_\ell=U_\ell^\dagger EU_\ell,\qquad E_1=E,\quad E_0=I_3-E,\\
+p_\mu^\pi(\ell,b)=\alpha_\ell\operatorname{Tr}(E_bU_\ell\mu U_\ell^\dagger),
+\qquad b\in\{0,1\}.
+\end{gathered}
+\tag{95.1}
+$$
+
+则对每个数学密度矩阵 $\mu\succeq0$、$\operatorname{Tr}\mu=1$，
+
+$$
+\sum_b p_\mu^\pi(\ell,b)=\alpha_\ell>0,\qquad
+\sum_{\ell\in\Lambda_\pi}\alpha_\ell=1,\qquad
+F_\pi=\sum_\ell\alpha_\ell R_\ell\in[0,I_3].
+\tag{95.2}
+$$
+
+$\operatorname{Tr}(F_\pi\mu)$ 是不条件化的原终端“是”质量。任意完整记录接受系数 $a(\ell,b)\in[0,1]$ 的数学扩张为
+
+$$
+F_{\pi,a}=\sum_\ell\alpha_\ell
+ [a(\ell,1)R_\ell+a(\ell,0)(I_3-R_\ell)]\in[0,I_3].
+\tag{95.3}
+$$
+
+物理二元事件只需 $a\in\{0,1\}$；一般系数不供应抽签设备。
+
+证明。沿每条叶逐字使用 $A_{w_\ell}=\alpha_\ell\operatorname{Ad}_{U_\ell}$。每个 $\mathsf J$ 子节点各得父质量一半，$\mathsf N$ 保质量；有限完整停止截面把根质量一分配给全部叶，给出 (95.2)。这正是[关系丛 §8、定理 8.2](AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md#8-输出解析仪器预测观察者与受约束量子控制)及[相干重建 (26.3)–(26.5)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#26-有界有向词矩在完整递归原子中的闭合应用) 的既有完整树律在本源的应用。标记为叶的确定函数，故标记事件的质量是相应叶的原质量之和。终端某一结果可以为零，仍保留该格；叶质量本身严格正。(95.3) 的每项在 $0$ 与 $\alpha_\ell I_3$ 之间，故其和有界。
+
+再用 (91.3)，同一叶的原五维复合满足
+
+$$
+\widehat K_{w_\ell}B=\sqrt{\alpha_\ell}\,BU_\ell,\qquad
+\widetilde N=BNB^\dagger+(I_5-BB^\dagger),\qquad
+P_5=BEB^\dagger.
+\tag{95.4}
+$$
+
+于是原输入 $B\rho_0B^\dagger$、同一标签停止表及一次 $(P_5,I_5-P_5)$ 给出 $p_{\rho_0}^\pi$，两个终端、失配及超时均逐路径对应。对数学输入 $B\mu B^\dagger$ 也成立；这不是供应额外制备。五维接受效果满足 $B^\dagger\widehat F_{\pi,a}B=F_{\pi,a}$；此处只比较原 $B\mathbb C^3$ 扇区，不主张整个五维输入域上的近似。∎
+
+## 96. 同一固定扫掠时序上的无条件近似取得
+
+**定理 96.1（目标一致有限终点与完整记录误差）。** 对每个定义 95.1 的允许 $\theta,N$ 和每个 $\varepsilon>0$，存在一个预定有限动作串、检查点和终点 $T=T(\theta,N,\varepsilon)$，均不依赖 $d$ 或秩一目标 $P$，使对每个这样的 $P$ 有一个模型／目标依赖的有限停止表 $\pi_P$，满足
+
+$$
+\|F_{\pi_P}-P\|_\infty<\varepsilon.
+\tag{96.1}
+$$
+
+并且，对同一完整叶档案（包括所有失配、超时及终端位），令 $P_1=P$、$P_0=I_3-P$，理想比较律为
+
+$$
+q_{P,\mu}^{\pi_P}(\ell,b)
+ =\alpha_\ell\operatorname{Tr}(P_b\mu).
+\tag{96.2}
+$$
+
+它具有与原实验完全相同的叶边缘 $\alpha_\ell$。用 $\operatorname{TV}(p,q)=\frac12\sum_{\ell,b}|p(\ell,b)-q(\ell,b)|$，有
+
+$$
+\sup_{\mu\succeq0,\ \operatorname{Tr}\mu=1}
+\operatorname{TV}(p_\mu^{\pi_P},q_{P,\mu}^{\pi_P})<\varepsilon.
+\tag{96.3}
+$$
+
+这里的理想律是数学比较对象，不是另装目标终端。
+
+证明。只将 [V 定理 95.1、(100.3)](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md#95-任意一个混合控制把实际原生闭包扩到-pu3) 的正词共轭稠密性作为供应。令
+$\delta=\min\{\varepsilon/3,1/4\}>0$。秩一投影空间 $\mathcal P_1\simeq\mathbb{CP}^2$ 紧，取有限的严格 $\delta/3$ 网 $P^{(1)},\ldots,P^{(M)}$。构造一条仅作数学参照的正向标签词
+
+$$
+\omega=0v_1\cdots v_M,\qquad
+S_0=V_0,\qquad S_j=U_{v_j}S_{j-1},
+\qquad \|S_j^\dagger ES_j-P^{(j)}\|_\infty<\delta/3.
+\tag{96.4}
+$$
+
+给定 $S_{j-1}$，只需由正词轨道逼近 $S_{j-1}P^{(j)}S_{j-1}^\dagger$，便能选择 $v_j$。每个 $v_j$ 可取非空：在任一固定首字母之后追加全部正词仍给稠密轨道。故各检查点严格递增；初始字母 $0$ 保证 $k=k(\omega)\ge1$。这里的 $S_j^\dagger$ 是计算中的共轭，不是执行逆。
+
+将 $\omega$ 的每个 $0,1$ 换成 $\mathsf J$、每个 $N$ 换成 $\mathsf N$，得到一个固定块 $s_*$；检查点是 (96.4) 各前缀的结束处。没有执行 $\omega$ 中指定标签的权限，实际仍运行公平仪器。因为 (96.4) 给一个严格 $\delta$ 网，对任意块入口累计酉 $U$ 和任意目标 $P$，存在一个检查点 $j$ 满足
+
+$$
+\|U^\dagger S_j^\dagger ES_jU-P\|_\infty<\delta.
+\tag{96.5}
+$$
+
+这是将整个网作 $U^\dagger(\cdot)U$ 后仍为网的结果；它同时覆盖所有可能入口，不重置累计酉。
+
+预定重复同一个块 $L$ 次。在每个检查点，由实际已记录词计算 $R_w$；若 $\|R_w-P\|_\infty<\delta$，立即停止并用原终端，否则继续固定串。在最后一个检查点，命中优先；未命中也停止、调用原终端，并记超时 $t_\ell=1$。其余停止叶记 $t_\ell=0$。每个块另记一个失配位：已观测的块内标签是否至少一次不同于 $\omega$ 对应标签；最后一个部分块只检查已发生的标签。各块失配位的向量统记为 $m_\ell$，与完整原标签共同保留；失配不触发改门、复位、删支或重归一。对任意标记值 $(m,t)$，其不条件化总质量恰为 $\sum_{\ell:m_\ell=m,\ t_\ell=t}\alpha_\ell$，带终端位 $b$ 的质量为同一叶集合上 (95.1) 的和；失配和超时是不同标记。
+
+条件于任一尚未停止的块入口历史，取 (96.5) 的 $j$。若该块到此检查点的全部实际标签符合参照词，便已命中，或已在更早检查点命中而停止。该前缀符合的原概率为 $2^{-k_j}\ge p_*=2^{-k}>0$，与输入态、入口历史和目标无关。故对每个存活入口，下一块内命中的条件概率至少 $p_*$。只由条件概率链式法则便得
+
+$$
+\tau:=\sum_{\ell:t_\ell=1}\alpha_\ell
+ \le(1-p_*)^L.
+\tag{96.6}
+$$
+
+选择有限 $L$ 使 $(1-p_*)^L<\delta$；这个选择和 $T=L|s_*|$ 只依赖 $\theta,N,\varepsilon$。块间的实际酉一般不同，也没有对 $N$ 进行随机抽样。上述估计只用实际仪器的公平标签，不要求某个随机游走的 Haar 混合或独立块增量模型。
+
+每个非超时叶有 $\|R_\ell-P\|_\infty<\delta$；超时叶仍是原秩一投影，故距离至多一。由 (95.2)，
+
+$$
+\begin{aligned}
+\|F_{\pi_P}-P\|_\infty
+&\le\sum_\ell\alpha_\ell\|R_\ell-P\|_\infty
+ \le\delta(1-\tau)+\tau<2\delta<\varepsilon,\\
+\operatorname{TV}(p_\mu^{\pi_P},q_{P,\mu}^{\pi_P})
+&=\sum_\ell\alpha_\ell
+  |\operatorname{Tr}[(R_\ell-P)\mu]|
+ \le\delta(1-\tau)+\tau<\varepsilon.
+\end{aligned}
+\tag{96.7}
+$$
+
+最后一步对全部数学密度矩阵一致。每个失配叶、两种终端结果和超时总质量均在 (95.1) 中；超时误差按其原质量计入，没有成功归一化或自由倍率。所有允许角度及混合 $N$ 的稠密性均由原供应承担，包括 $d=2/3$、非例外有理角和 $\langle\xi,N\xi\rangle=0$；这里没有删去这些情形。∎
+
+**推论 96.2（原九列上的同一停止后缀及固定时序边界）。** 对定义 93.1 的实际未归一前缀 $r_i=A_{u_i}\rho_0$，$m_i=\operatorname{Tr}r_i=2^{-k(u_i)}$，在每个原前缀上下文的全部历史后执行同一个 $\pi_P$，忽略前缀身份与标签。则
+
+$$
+\begin{gathered}
+p_i(\ell,b)=\alpha_\ell\operatorname{Tr}(E_bU_\ell r_iU_\ell^\dagger),\qquad
+q_i(\ell,b)=\alpha_\ell\operatorname{Tr}(P_b r_i),\\
+\sum_{\ell,b}p_i(\ell,b)=\sum_{\ell,b}q_i(\ell,b)=m_i,\\
+\frac12\sum_{\ell,b}|p_i(\ell,b)-q_i(\ell,b)|<m_i\varepsilon,
+\qquad
+|\operatorname{Tr}[(F_{\pi_P}-P)r_i]|<m_i\varepsilon
+\quad(1\le i\le9).
+\end{gathered}
+\tag{96.8}
+$$
+
+证明。用 $A_{u_iw}=A_wA_{u_i}$ 代入 (95.1)，再用 $r_i\succeq0$ 和 $|\operatorname{Tr}(Hr_i)|\le\|H\|_\infty m_i$ 重复 (96.7)。其他前缀历史也执行同一后缀，全部留在所在上下文的完整档案中；(96.8) 只是其中 $u_i$ 事件的原质量，并未制备 $r_i/m_i$。由 (95.4)，它们在原五维逐路径同样成立。
+
+停止表可使 §92 第一处仪器的两条标签历史在不同检查点调用终端；因而 (92.7)–(92.8) 所需的共同剩余词 $t$ 不再存在，尽管所有尚未停止路径的 $N$ 位置仍由同一个串决定。取 $P=P_N$、$\varepsilon<1/12$，(96.1) 与 (92.1) 直接说明所获效果不在 $\mathcal B_N$。将早停路径虚填到共同终点会改变其终端效果，不能用填充后的最后一次终端替代已发生的早期终端。因此这是改变停止接口后越过原固定终点限制，与原定理的适用域相容。∎
+
+## 97. 混合调用上限与精确有限取得的两个边界
+
+**定理 97.1（接近恒等的实际混合控制无统一调用上限）。** 作为数学比较域，允许每个节点按过去标签选择 $\mathsf J$、同一个 $\mathsf N$ 或调用一次原终端并停止；每棵树有限、完整，每条路径至多调用 $B\in\mathbb N$ 次 $N$，原生仪器调用数可为任意有限数，终端接受系数为 (95.3) 的 $[0,1]$ 系数。此域比定义 95.1 大，不将标签依赖的动作选择或随机接受安装为本源权限。对每个这种树／系数 $\pi$，
+
+$$
+\|F_{N,\pi}-P_\xi\|_\infty
+ \ge\frac25-2B\|N-I_3\|_\infty.
+\tag{97.1}
+$$
+
+同一界也适用于这些效果的数学凸包及算子范数闭包。于是对任一固定 $0\le\varepsilon_0<2/5$，不存在一个有限 $N$ 调用上限，在全部允许安装 $[N,P_\xi]\ne0$ 上以这些完整效果逼近 $P_\xi$ 到误差 $\varepsilon_0$，即使各安装可选择各自的模型依赖有限策略。
+
+证明。固定给定 $N$ 下已选好的整棵树和接受表，以 $I_3$ 替换每个 $N$，只作比较，不重新选择树。公平标签使叶集、$\alpha_\ell$ 及接受系数均不变。原 $U,W$ 固定 $\xi$，故每个原生 $V_j$ 与 $P_\xi$ 对易；$|\xi^\dagger q|^2=1/2$。所以替换后的每个终端投影 $R_\ell^I$ 都满足 $\operatorname{Tr}(P_\xi R_\ell^I)=1/2$。置
+
+$$
+Z=4P_\xi-I_3,\qquad
+\operatorname{Tr}(ZP_\xi)=3,\quad \|Z\|_1=5,\quad
+\operatorname{Tr}(ZR_\ell^I)=1,\quad
+\operatorname{Tr}[Z(I_3-R_\ell^I)]=0.
+\tag{97.2}
+$$
+
+由完整叶质量之和为一，
+
+$$
+\operatorname{Tr}(ZF_{I,\pi})
+ =\sum_\ell\alpha_\ell a(\ell,1)\le1,
+\qquad
+\|P_\xi-F_{I,\pi}\|_\infty\ge(3-1)/5=2/5.
+\tag{97.3}
+$$
+
+逐叶酉乘积的望远镜差给
+
+$$
+\|U_\ell^N-U_\ell^I\|_\infty\le B\|N-I_3\|_\infty,
+\qquad
+\|R_\ell^N-R_\ell^I\|_\infty\le2B\|N-I_3\|_\infty.
+\tag{97.4}
+$$
+
+同一叶接受项的差为 $(a(\ell,1)-a(\ell,0))(R_\ell^N-R_\ell^I)$，系数绝对值至多一。乘原 $\alpha_\ell$ 求和得到 $\|F_{N,\pi}-F_{I,\pi}\|_\infty\le2B\|N-I_3\|_\infty$，与 (97.3) 合并即为 (97.1)。对数学凸组合也同时组合对应的 $F_{I,\pi}$；(97.3) 的线性见证仍成立，扰动界仍相同。再取范数极限，得到所述闭包结论。不能仅因范数下界而不经此见证步骤就宣称凸化保界。
+
+实际反例族取
+
+$$
+H=\xi e^\dagger+e\xi^\dagger,\qquad
+N_t=\exp(\mathrm i tH),\quad 0<t<\pi/2,\qquad
+\|N_t-I_3\|_\infty=2\sin(t/2).
+\tag{97.5}
+$$
+
+$N_t\xi=\cos t\,\xi+\mathrm i\sin t\,e$，故每个成员都满足 $[N_t,P_\xi]\ne0$。对任何有限 $B>0$，取 $t$ 使 $4B\sin(t/2)<2/5-\varepsilon_0$，(97.1) 即排除全部相应策略；$B=0$ 已由 (97.3) 排除。$N=I_3$ 从未作为允许安装，只是比较极限。结论只涉及调用计数，不给经过时间、最优资源或编译代价。定理 96.1 允许终点依赖已安装 $N$，故不受反例族的统一上限阻碍。∎
+
+**命题 97.2（精确有限取得的必要词支撑）。** 对固定允许 $\theta,N$，若一棵有限完整树的 (95.3) 恰为秩一投影 $P$，则每个有正质量的叶必有
+
+$$
+R_\ell=P,\qquad a(\ell,1)=1,\qquad a(\ell,0)=0.
+\tag{97.6}
+$$
+
+特别地，精确目标必须属于原有限词的可数集合
+
+$$
+\mathcal O_{\theta,N}=
+ \{U_w^\dagger EU_w:w\in\{0,1,N\}^*\}.
+\tag{97.7}
+$$
+
+证明。直接应用 V 命题 109.2、(109.4) 的正和支撑论证于本源的叶项：正项之和为 $P$ 时，每个项的值域均在 $\operatorname{ran}P$ 内。$I_3-R_\ell$ 秩二，所以 $a(\ell,0)=0$；若 $a(\ell,1)>0$，则 $R_\ell=P$。取迹有 $1=\sum_\ell\alpha_\ell a(\ell,1)$，而 $\sum_\ell\alpha_\ell=1$、每个 $\alpha_\ell>0$、$a(\ell,1)\le1$，迫使全部 $a(\ell,1)=1$。这证明必要条件。有限词可数而 $\mathcal P_1$ 不可数，所以对固定模型有不可数多个目标不能精确有限取得；这与 (96.1) 的任意正误差近似不同。(97.7) 只给必要限制，不将单个命中词或其正权重当作整个完整树可精确取得的充分刻画，也不将此有限支撑论证用于范数极限。∎
+
+## 98. 原单终端的二元模拟外形与三结果障碍
+
+**命题 98.1（本源的单终端包含及正交三态见证）。** 对定义 95.1 的停止策略，甚至定理 97.1 的较大有限因果比较域，允许终端后将完整记录数学重标记为 $a\in\{1,2,3\}$。写 $c(a\mid\ell,b)\ge0$、$\sum_a c(a\mid\ell,b)=1$；随机系数只为外扩比较，未安装外部硬币。其效果必为
+
+$$
+M_a=\sum_\ell\alpha_\ell
+ [c(a\mid\ell,1)R_\ell+c(a\mid\ell,0)(I_3-R_\ell)],
+\qquad \sum_aM_a=I_3.
+\tag{98.1}
+$$
+
+对每个正交秩一基 $(P_1,P_2,P_3)$，有
+
+$$
+\frac13\sum_{i=1}^3\operatorname{Tr}(P_iM_i)\le\frac23,
+\qquad
+\max_i\|M_i-P_i\|_\infty\ge\frac13.
+\tag{98.2}
+$$
+
+这些界在上述效果三元组的数学凸包及按 $\max_a\|\cdot\|_\infty$ 所取闭包上保持。因而该单终端域不能任意精确逼近任一尖锐正交三结果测量。
+
+证明。(98.1) 由原完整叶律直接求和；$\alpha_\ell$ 与数学输入态无关。因此它具有 [Guerini–Bavaresco–Terra Cunha–Acín，1705.06343v2，§II 式 (2)–(4)、§IV](https://arxiv.org/html/1705.06343v2) 的成熟二结果模拟形式：其模拟器为 $(R_\ell,I_3-R_\ell)$，混合权重为原 $\alpha_\ell$，后处理为 $c$。这只是包含关系，不授予独立选择这些模拟器或任意混合权重的权限。
+
+令 $x_{\ell i}=\operatorname{Tr}(P_iR_\ell)$，则 $0\le x_{\ell i}\le1$、$\sum_i x_{\ell i}=1$。逐叶有
+
+$$
+\begin{aligned}
+\sum_i\operatorname{Tr}\big(P_i[
+ c(i\mid\ell,1)R_\ell+c(i\mid\ell,0)(I_3-R_\ell)]\big)
+&\le\max_i x_{\ell i}+\max_i(1-x_{\ell i})\le2.
+\end{aligned}
+\tag{98.3}
+$$
+
+乘 $\alpha_\ell$ 并求和即得分数上界。若 $\max_i\|M_i-P_i\|_\infty=\eta$，每项正确响应至少 $1-\eta$，故 $1-\eta\le2/3$。等价地，在至少一个数学基态输入上，与理想三标签分布的 TV 距离至少 $1/3$。这些输入只是数学分离见证，不是给装置增加三个制备。分数是效果三元组的连续线性泛函，所以其上界在所述凸闭包保持，再推出同一距离界。
+
+这里的闭包始终是单次原终端之后的经典重标记；不含多次系统测量、额外制备、相干读取标签或终端后的量子接续。分别使用不同 $\pi_{P_i}$ 逼近三个二元效果不提供一个共同三结果 POVM；概率效果的逼近也不确定后测量后继仪器。通用可模拟性是所引文献的供应，(98.1) 的原叶权重对应及其在本 qutrit 合同中的 (98.2) 是此处消费的具体边界。∎
+
+## 99. 全词经典表示、标定及预测商的保留边界
+
+**命题 99.1（停止不排除原全词经典模型）。** 本卷定理 85.1 的可数群模型与连续纯投影空间模型，在每个有限因果标签策略、原双终端及其完整失配／超时档案上，仍精确匹配本源唯一原制备的概率。定理 84.2 的未来零观察前提 (84.4)–(84.5) 仍量化全部合法未来，不能由有限停止表替代。
+
+证明。固定表后，每个叶仍是同一个原有限词 $w_\ell$，终端权重为 $p(w_\ell,b)$。两个经典模型对全部这样的词与两终端逐项一致，故对这棵树逐叶一致；确定标记与任何所述后处理只对相同项求和。原标签公平使停止截面的总质量仍为一。另一方面，一个有限停止表只选有限个词，(84.4)–(84.5) 要求被删方向在每个未来词下为零；有限树的等式不蕴含此全称前提。即使给出全部有限因果树的等式，由于固定词测试也在其中，它们与原全词合同相容，而 §85 已有不同的无限隐藏实现。因此 (96.1) 在供应的量子模型内解决取得接口，不从停止本身选择复量子本体。∎
+
+**命题 99.2（公平前终端标签不标定未知模型）。** 对任意两个允许的 $d,\theta,N$，若动作串、检查点、有限停止位表及标记规则固定相同，则调用终端以前的完整叶标签／停止／失配／超时边缘律相同，均为 $\alpha_\ell=2^{-k(w_\ell)}$。这些标签自身不能区分这两个模型；将模型依赖表作为输入不构成模型的观察取得。
+
+证明。每次实际仪器在任意输入上都有 $\operatorname{Tr}(A_jX)=\operatorname{Tr}(X)/2$，$N$ 保迹。相同前缀导致相同下一动作或停止，故归纳得到相同叶质量，所有前终端标记都是相同标签的函数。终端位的条件律可以随模型改变，不在此不可区分结论中。若各模型另供各自的停止表，表已携带经典信息，不能将表间差异计为标签对未知参数的标定能力。∎
+
+**定义 99.3（六种不同的供应问题）。** 本源的结论按下列量词区分。
+
+| 问题 | 此处的数学范围 |
+| --- | --- |
+| 已知模型存在性 | (96.1)–(96.7) 对每个固定允许 $\theta,N$ 和每个 $\varepsilon>0$ 给目标一致的有限串／终点，再对每个 $P$ 给停止表；不依赖 $d$。 |
+| 供应有限建议 | 有限串、检查点及全部停止位可以作为有限经典建议给定；随后只需读取实际标签选择停止位。证明中的精确矩阵比较不是新增系统读口。 |
+| 可计算输入的有效合成 | 需要明确输入表示、误差证书与终止的生成程序；此处不证明从可计算 $\theta,N,P$ 到这些有限建议的编译或复杂度结论。 |
+| 未知模型的实际取得 | 标签的模型盲性由命题 99.2 给出；所需模型／目标标定尚未从原单制备、一次终端取得。 |
+| 跨安装的统一费用 | (97.1) 排除固定误差小于 $2/5$ 时的统一有限 $N$ 调用上限；没有经过时间或最优总资源结论。 |
+| 有限噪声／样本认证 | 精确存在及原始质量等式不供应停止表可靠性、未知参数置信界、全未来完备或后继仪器的有限数据认证。 |
+
+复 Hilbert、Born 配对与 CP 分支仍是 V 定义 54.1、假设 54.2 和定义 91.1 的源输入；[相干重建定义 20.2、应用 26.2–27.1、定义 28.1 与 34.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md) 分别保留复词正核、共同交叉核、参考和复合合同。一般不确定性、条件酉的信息保留或二元效果取得均不替代这些前提。
+
+## 100. 原始供应对应与共同实现的具体缺项
+
+**定义 100.1（源合同及文献归属）。** 本节比较的仓内来源取同一修订 $\mathtt{e30c151ba97e8290d5969cb9e29b6adc29090582}$。§§95–99 是 `repo-derived` 的源特定综合：承重点是固定动作扫掠、仅停止反馈的完整质量取得、近恒等实际混合族的调用障碍，以及该权限增长后的单终端／经典表示边界。不主张世界范围新颖性；正词稠密、有限树律、正和支撑和一般测量可模拟性均按原供应使用。
+
+| 原始来源 | 所用陈述与本源对应 |
+| --- | --- |
+| 预测波 V §§54、91–95、(100.3)、105–110；本卷 §§80、84–94 | 原 $B$、唯一 $\rho_0$、公平 $A_j$、同一个 $N$、双终端质量、九个未归一前缀、正词共轭闭包与全轨道锥。V (109.4) 供应正和的秩一支撑事实；§92 的固定终点见证不涵盖标签早停。这些供应不新增控制或制备。 |
+| Gregoratti–Werner，[quant-ph/0209025v1，§II.3.1、Proposition 2、式 (7)](https://arxiv.org/html/quant-ph/0209025v1) | 给定 Kraus 分解 $t_\alpha$ 可由通道 $R_\alpha$ 完全恢复，当且仅当 $t_\alpha^*t_\alpha=c_\alpha I$；同维时相应恢复为逆酉共轭。本源 $V_j/\sqrt2$ 满足比例酉条件，但恢复通道的可调用性没有供应；(96.4) 没有执行这些逆。 |
+| Gregoratti–Werner，[quant-ph/0403092v1，§III.1 Proposition 1、式 (8)–(9)；§III.2 Proposition 2、式 (10)–(12)](https://arxiv.org/html/quant-ph/0403092v1) | 同维完全恢复、输入无关分支律及多步酉校正的成熟条件；其控制对象是另供的恢复通道。公平标签不携带输入态信息，与本源相容；知道标签不等于取得逆控制。 |
+| Halil-Shah–Oi，[1401.8004v1，§II，尤其单比特随机门与停止段](https://arxiv.org/html/1401.8004v1)；[1303.2066v1，§3.1、式 (4)](https://arxiv.org/html/1303.2066v1) | 前者已讨论固定程序、随机门乘积及按目标误差停止；后者讨论随机 ADQC 门逼近及命中统计。它们供应随机／停止控制的成熟思想，使用其实际辅助比特准备、耦合和测量。这里另需证明原 qutrit、每个允许 $N$、一个目标无关的预定 $\mathsf J/\mathsf N$ 串及有限超时质量的 (96.4)–(96.7)；不把其效率或复合资源搬入。 |
+| Paetznick–Svore，[1311.1074v2，§3、Figure 2 与四步 RUS 定义](https://arxiv.org/html/1311.1074v2) | 辅助比特准备、联合酉、辅助测量、失败后恢复再重复构成其 RUS 合同。其 $R_i^\dagger$、新辅助准备、门库与成本不在此源中；本源失配路径继续原累计酉，不作该恢复。 |
+| Varjú，[1209.1745v3，§1.5、Lemma 5、Theorem 6](https://arxiv.org/html/1209.1745v3) | 紧半单 Lie 群上的尺度直径／谱隙关系有明确有限生成集或概率测度；Lemma 5 使用含单位元的有限集。它不将本源固定串变成均匀选门、含惰性步的随机采样，也不供应本文的调用上限或 Haar 速率。 |
+| Borda，[1906.09432v1，§1 Theorems A–C、Theorem 1](https://arxiv.org/html/1906.09432v1) | i.i.d. 群增量下，弱收敛需 adapted 与严格非周期；TV 收敛还需某卷积有非零绝对连续部分，任意给定 Borel 集的强等分布结论也有该绝对连续前提。本文没有 i.i.d. 的 $N$ 采样；每个固定有限长度的分布只有有限多个原子，对连续群的 Haar 测度为奇异，不能冒用该 TV 前提。(96.6) 只是逐入口正概率与条件链式法则。 |
+| Guerini–Bavaresco–Terra Cunha–Acín，[1705.06343v2，§II 式 (2)–(4)、§IV](https://arxiv.org/html/1705.06343v2) | 一般经典预／后处理及低结果数模拟是成熟供应。(98.1) 只将实际叶质量嵌入其二结果模拟外集；不将外集每个 POVM、独立混合或硬币赋予本源。 |
+
+**定义 100.2（相邻取得结果的源／动作／记录对应域）。** 下列比较只比较已声明合同，不给不同场律一个未经证明的共同实现映射。
+
+| 钉版相邻来源 | 实际源、动作及记录 | 与本源的缺失对应 |
+| --- | --- | --- |
+| [Atomic Generation Acquisition III，§§1–16，尤其定义 2.2–2.4、8.1、边界 16.1–16.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md) | 持久有序原生材料和有理场 $T_t=(4I+A_t)/8$；A 的原始 Tick／精确读口及分离间隔，C 的生长后时钟和数字 Read$(j,p)=\lfloor2^px_{\ell_j}\rfloor+\zeta$。其已知 alpha 上的 Reset、Add、验证读及实际权利属于已供准备，C 的滋扰选择是无概率的集合值合同。 | $\zeta$ 不是这里的公平量子标签；原生读口、重置、已取得几何及费用不映成 $A_j,N,E$ 的可调用操作。该卷 16.3 仍要求共同装置保实际准备、操作、后继、完整返回及权利。 |
+| [Recovery Geometry III，§§112–120，尤其 (112.1)–(112.2)、定义 112.4、定理 113.4、命题 114.2、117.3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_III.md) | 地址标定窗和边权 $\ell_p/100$ 的持久对称有理矩阵；任意未知旧场经实际 split sweep 保零延伸，再由已挣得几何的根窗口取得推进后的预测器。根 Add／Tick 脉冲准备是另供的实际历史合同；原始 Tick 可离开该历史像。 | 根 Read、脉冲控制、标定循环性和未知场取得没有与本源唯一纯准备、公平仪器和一次二元终端的同源映射；其可逆坐标或恢复值不提供本源逆门或历史回退。 |
+| [Moving Trace Recovery，§§30–36，尤其定义 30.1、定理 30.2、31.2、32.1 与命题 34.1、35.1](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md) | 同一逐项严格正的实秩一迹一矩阵 $P$、整段共同多项式 $H,D$、固定原时钟和已取得向量 $Z(W)_i=H(i)\operatorname{tr}(A_iP)+D(i)$；严格逃逸距离 $e(y)>\rho$ 给兼容完整世界的界，接触 $e(y)=\rho$ 有相反实例。这里的实矩阵未被假定 Hermitian PSD。 | 有界误差读口、共同增益／偏置和该记录几何不提供 qutrit Born 标定或本源噪声证书；分别的取得与最优量不能拼成一台共同装置的同时实现。 |
+
+**定义 100.3（仍缺的共同接口问题）。** 在上述合同下，量子起源目标仍含以下具体数学问题。
+
+1. 共同原生／量子实现须给出保类型的同一准备、操作和记录映射，逐合法历史保两终端及失配／停止质量，并保其实际后继；若还主张原生服务合同，则拒绝、返回、绑定和权利也须对应。相邻卷各自的场律、准备和 Read 不能仅靠同名或可逆编码取得这种映射。
+2. 物理锚定的相干记录／共同参考须取得相干重建 (27.1) 所需的交叉关系及可操作比较，且去相干边缘仍为本源原完整记录；各自内部核、§85 的经典全词模型或一个形式上的分支等距不决定这项相干接口。有限参考与复合的共同实现还须保其声明的联合正锥和组合，不能由单系统秩一二元效果补出。
+3. 原终端之后的后继仪器、共同多结果测量和有限噪声／样本认证各有未供条件。(98.2) 已在当前单终端域给出三结果的正障碍；(96.3) 是对精确已知模型的完整概率律界，不是这些新增接口的认证。
+
+这些缺项不撤销条件定理 96.1，也不改变 §§84–85 的经典表示边界；它们界定了从同源预测记录与停止取得继续走向共同量子实现所需的新关系。∎
+
+## 追加锚（本行以下为增补区）
