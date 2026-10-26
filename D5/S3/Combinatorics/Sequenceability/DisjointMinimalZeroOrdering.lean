@@ -147,7 +147,7 @@ theorem zero_decomposition_pairwise_disjoint (f : α → G) (X C : Finset α)
     exact (Finset.union_sdiff_of_subset hBC).symm
 
 
-private lemma zero_decomposition (f : α → G) (X C : Finset α)
+lemma zero_decomposition (f : α → G) (X C : Finset α)
     (hCX : C ⊆ X) (hz : (∑ x ∈ C, f x) = 0) :
     ∃ Q : Finset (Finset α),
       (∀ B ∈ Q, B ⊆ X ∧ MinimalZeroSupport f B) ∧ C = Q.biUnion id := by
