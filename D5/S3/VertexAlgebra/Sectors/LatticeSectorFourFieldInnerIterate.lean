@@ -74,7 +74,7 @@ private theorem two_outer_borcherds (D : LatticeData) (α β γ η δ : Charge D
     intro j hj
     congr 1
     dsimp only [LatticeSectorThreeFieldInnerIterate.innerIterate, innerIterate, iterate, L]
-    simp only [add_assoc]
+    rw [← add_assoc γ η δ]
   rw [left] at mapped
   exact mapped
 
@@ -172,6 +172,7 @@ private theorem finite_outer_reconstruction (D : LatticeData) (α β γ η δ : 
     congr 1
     congr 1
     congr 1 <;> omega
+  simp only [Nat.cast_add]
   rw [base]
   simp only [smul_smul]
   congr 1
@@ -252,6 +253,8 @@ theorem actual_four_field_inner_iterate_transport
       funext i
       fin_cases i <;> rfl
 
+set_option pp.proofs false in
+#print actual_four_field_inner_iterate_transport
 #print axioms actual_four_field_inner_iterate_transport
 end
 end D5.S3.VertexAlgebra.LatticeSectorFourFieldInnerIterate
