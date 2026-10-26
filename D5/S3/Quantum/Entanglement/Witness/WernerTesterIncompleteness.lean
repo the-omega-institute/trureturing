@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
-import D5.S3.Weil.ZetaLinear.RankTrace
+import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
 open scoped BigOperators ComplexOrder
 open Matrix
@@ -79,10 +79,9 @@ private theorem flip_product_trace {d : ℕ} (a b : Matrix (Fin d) (Fin d) ℂ) 
     (f := fun i j : Fin d => a j i * b i j)
 
 private def flipReadout (d : ℕ) :
-    Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →ₗ[ℝ] ℝ where
-  toFun ρ := (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) * ρ).trace.re
-  map_add' a b := by simp [Matrix.mul_add, Matrix.trace_add]
-  map_smul' c a := by simp [Matrix.mul_smul, Matrix.trace_smul]
+    Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →ₗ[ℝ] ℝ :=
+  Complex.reLm.comp ((Matrix.traceLinearMap (Fin d × Fin d) ℝ ℂ).comp
+    (LinearMap.mulLeft ℝ (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)))))
 
 private theorem separable_flip_nonneg {d : ℕ}
     (ρ : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (h : Separable ρ) :
@@ -203,7 +202,7 @@ private theorem design_density {d : ℕ} (hd : 0 < d) (t : DesignIndex d) :
     constructor
     · exact (Matrix.posSemidef_vecMulVec_self_star _).smul (by positivity : 0 ≤ 1 / (d : ℝ))
     · have hu (s : Fin 4) : phase s * (starRingEnd ℂ) (phase s) = 1 := by
-        fin_cases s <;> norm_num [phase]
+        simpa only [mul_comm] using phase_unit s
       have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
       simp [designProjector, Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
         Pi.star_apply, hu, Complex.real_smul, hd']
@@ -213,29 +212,8 @@ private theorem design_four {d : ℕ} (i j k l : Fin d) :
       (4 : ℂ) ^ d * ((if i = k ∧ j = l then 1 else 0) +
         (if i = l ∧ j = k then 1 else 0)) := by
   classical
-  have hq (a b : Fin d) (z : Fin d → ℂ) :
-      quadratic (Matrix.single a b 1) z = star (z a) * z b := by
-    simp [quadratic, Matrix.single_apply, ite_and, Finset.sum_ite_irrel, mul_ite,
-      ite_mul, eq_comm]
-  have ht (a b : Fin d) : (Matrix.single a b (1 : ℂ)).trace =
-      if a = b then 1 else 0 := by
-    by_cases h : a = b
-    · subst b; simp [Matrix.trace_single_eq_same]
-    · simp [h, Matrix.trace_single_eq_of_ne a b 1 h]
-  have hm := quadratic_product_sum (Matrix.single k i (1 : ℂ)) (Matrix.single l j 1)
-  have hs : (∑ a, ∑ b, Matrix.single k i (1 : ℂ) a b * Matrix.single l j 1 b a) =
-      (Matrix.single k i (1 : ℂ) * Matrix.single l j 1).trace := rfl
-  rw [hs, Matrix.trace_single_mul] at hm
-  simp only [one_mul, Matrix.single_apply, ht, hq] at hm
-  have he : (fun z : Fin d → ℂ =>
-      (star (z k) * z i) * (star (z l) * z j)) =
-      (fun z => star (z k) * z i * star (z l) * z j) := by
-    funext z
-    ring
-  rw [he] at hm
-  by_cases hik : i = k <;> by_cases hjl : j = l <;>
-    by_cases hil : i = l <;> by_cases hjk : j = k <;>
-    by_cases hkl : k = l <;> simpa [*, eq_comm] using hm
+  simpa only [starRingEnd_apply, eq_comm, and_comm] using
+    (D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments.design_four k i l j)
 
 private theorem design_second_entry {d : ℕ} (hd : 0 < d) (i j k l : Fin d) :
     (∑ t, (designWeight d t : ℂ) * designProjector d t i k * designProjector d t j l) =
@@ -320,26 +298,9 @@ private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
     (hμ₀ : 0 ≤ μ) (hμ₁ : μ ≤ 1) :
     (werner d μ).PosSemidef ∧ (werner d μ).trace = 1 := by
   let f := Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))
-  have hf : fᴴ = f := (flip_facts d).1
-  have hff : f * f = 1 := (flip_facts d).2
-  have hp : (1 + f).PosSemidef := by
-    have hx := (Matrix.posSemidef_conjTranspose_mul_self (1 + f)).smul
-      (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    have he : (1 / 2 : ℝ) • ((1 + f)ᴴ * (1 + f)) = 1 + f := by
-      simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_one, hf,
-        Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one, hff]
-      module
-    rw [he] at hx
-    exact hx
-  have hn : (1 - f).PosSemidef := by
-    have hx := (Matrix.posSemidef_conjTranspose_mul_self (1 - f)).smul
-      (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    have he : (1 / 2 : ℝ) • ((1 - f)ᴴ * (1 - f)) = 1 - f := by
-      simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hf,
-        Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, hff]
-      module
-    rw [he] at hx
-    exact hx
+  obtain ⟨hn, hp⟩ :=
+    D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper.involution_binary f
+      (flip_facts d).1 (by simpa only [pow_two] using (flip_facts d).2)
   have hdℝ : (1 : ℝ) < d := by exact_mod_cast hd
   have hdmℝ : 0 < (d : ℝ) - 1 := sub_pos.mpr hdℝ
   constructor
