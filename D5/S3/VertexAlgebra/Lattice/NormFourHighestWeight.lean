@@ -77,7 +77,10 @@ private theorem translation_step (D : LatticeData) (a : Charge D)
     push_cast
     ring
   rw [scalar] at axis
-  exact sub_right_inj.mp (axis.trans ambient.symm)
+  have cancellation := congrArg
+    (fun x : Carrier D => x + mode D a s (-k) (translation D v))
+    (axis.trans ambient.symm)
+  simpa only [sub_add_cancel] using cancellation
 
 /-- A zero-mode commutator extracted with support exactly {0}.
 All q are integers; the equality with T is a proved descendant input. -/

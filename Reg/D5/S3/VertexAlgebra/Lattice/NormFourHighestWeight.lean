@@ -14,7 +14,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 /- The realization retains the full lattice domain and actual mode action.
 Whole-family variation, sensitivity, observational dependence, lawful readout
-and source selection remain unproved; this is not a Contract.Registration. -/
+and source selection remain unproved; this is not a Contract.Registration.
+Open audit: https://github.com/the-omega-institute/trureturing/issues/22237 -/
 structure Params where
   D : LatticeData
   a : Charge D
