@@ -58,6 +58,10 @@ $$\neg (\forall (n : \mathbb{N}), \forall (G : \operatorname{SimpleGraph}\left(\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PerronFrobenius/AchterbergVanMieghemSubmodularityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/achterberg-van-mieghem-2025-spectral-degree-exponent-submodularity` (refuted) by `D5/S3/Combinatorics/Graph/PerronFrobenius/AchterbergVanMieghemSubmodularityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"achterberg-van-mieghem-2025-spectral-degree-exponent-submodularity","declaration_gid":"D5/S3/Combinatorics/Graph/PerronFrobenius/AchterbergVanMieghemSubmodularityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Massimo A. Achterberg, Piet Van Mieghem (2025). *The spectral degree exponent of a graph*. DOI: [10.48550/arXiv.2502.01815](https://doi.org/10.48550/arXiv.2502.01815). URL: <https://arxiv.org/abs/2502.01815v1>.

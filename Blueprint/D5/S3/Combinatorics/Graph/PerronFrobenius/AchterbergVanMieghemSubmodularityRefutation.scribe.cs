@@ -57,14 +57,18 @@ internal sealed class AchterbergVanMieghemSubmodularityRefutationDocument : IScr
                 + "Thus the union and intersection exponents have sum greater than 6, "
                 + "while the two single-edge additions have sum less than 6. "
                 + "The source definitions and earlier theorems are unaffected.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("achterberg-van-mieghem-2025-spectral-degree-exponent-submodularity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MeanFormula()
     {
