@@ -607,6 +607,13 @@ O remains a separate conditional hypothesis. No formal CH instance of O,
 full signed-ball endpoint, anti-homeomorphism result or official solution of
 Problem 8.2 is established by this criterion.
 
+`SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation`
+also proves, under exactly O, that every convergent point sequence is
+eventually equal to its limit. It requires no metric, first-countability or
+injectivity assumption. The repository-derived proof uses actual signed
+Dirac measures and the finite/infinite range distinction; it supplies no
+CH instance of O or completed global CH construction.
+
 ## The full signed-ball analytic reduction
 
 Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
