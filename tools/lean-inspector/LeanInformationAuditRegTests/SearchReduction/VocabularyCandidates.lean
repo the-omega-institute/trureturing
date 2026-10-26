@@ -3,12 +3,17 @@ import LeanInformationAuditRegTests.SearchReduction.Candidates
 namespace LeanInformationAudit.Tests.SearchReduction.VocabularyCandidates
 open Candidates
 
+set_option backward.isDefEq.respectTransparency false in
 inductive PureMode where
   | ab | bc | ac
-  deriving DecidableEq, Repr, Inhabited
+  deriving DecidableEq, Repr, Inhabited, Fintype
 
 -- A handwritten computational instance must not be silently replaced by deriving.
 def noncanonicalRepr : Repr PureMode := ⟨fun _ _ => "author"⟩
+
+def noncanonicalFintype : Fintype PureMode where
+  elems := {.bc, .ab, .ac}
+  complete := by intro x; cases x <;> simp
 
 structure ForwardLaw (p : Nat → Nat) : Prop where
   start : p 0 = 0

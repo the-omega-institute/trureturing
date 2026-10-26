@@ -23,7 +23,8 @@ run_meta do
   unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
   unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"
   for n in #[``VocabularyCandidates.instDecidableEqPureMode,
-      ``VocabularyCandidates.instReprPureMode, ``VocabularyCandidates.instInhabitedPureMode] do
+      ``VocabularyCandidates.instReprPureMode, ``VocabularyCandidates.instInhabitedPureMode,
+      ``VocabularyCandidates.instFintypePureMode] do
     discard <| check n
   let rejectedInstance ← try
     discard <| check ``VocabularyCandidates.noncanonicalRepr
@@ -32,6 +33,13 @@ run_meta do
     unless (← ex.toMessageData.toString).startsWith "search.derived_computation_mismatch" do throw ex
     pure true
   unless rejectedInstance do throwError "author instance computation was replaced"
+  let rejectedFintype ← try
+    discard <| check ``VocabularyCandidates.noncanonicalFintype
+    pure false
+  catch ex =>
+    unless (← ex.toMessageData.toString).startsWith "search.derived_computation_mismatch" do throw ex
+    pure true
+  unless rejectedFintype do throwError "author finite enumeration was replaced"
   discard <| check ``VocabularyCandidates.ForwardLaw
   discard <| check ``VocabularyCandidates.nestedBox
   discard <| check ``VocabularyCandidates.representatives

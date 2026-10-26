@@ -11,7 +11,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.PinnedDeriving
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v3"
+abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v4"
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
@@ -306,8 +306,10 @@ mutual
     let before ← getEnv
     let handler := pinnedDeriving cls #[owner]
     let cctx : Elab.Command.Context := {fileName := "<pinned deriving>", fileMap := default, cancelTk? := none, snap? := none}
+    let generatorOptions := if cls == ``Fintype then
+      options.setBool `backward.isDefEq.respectTransparency false else options
     let state : Elab.Command.State := {
-      env := before, maxRecDepth := 1000, scopes := [{header := "", currNamespace := owner.getPrefix, opts := options}]}
+      env := before, maxRecDepth := 1000, scopes := [{header := "", currNamespace := owner.getPrefix, opts := generatorOptions}]}
     let result ← (handler.run cctx |>.run state).toIO'
     let generated ← match result with
       | .ok (true, state) =>

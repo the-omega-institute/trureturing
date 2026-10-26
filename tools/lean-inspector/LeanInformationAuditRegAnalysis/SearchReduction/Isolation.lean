@@ -33,25 +33,33 @@ private def checkedSource (source : Environment) (n : Name) : MetaM ConstantInfo
 /-- S may not contain T, its supported full-statement aliases, or a dependency
 on either. Conjunction packaging is inspected before the structure is copied. -/
 partial def copyStructure (source : Environment) (target : Name) (targetType : Expr)
-    (n : Name) (index : FactIndex) (visiting : NameSet := {}) : MetaM Unit := do
+    (n : Name) (index : FactIndex) (visiting : NameSet := {})
+    (phase? : Option (IO.Ref String) := none) : MetaM Unit := do
+  let mark := fun step => phase?.mapM fun phase => phase.set s!"structure-copy:{n}:{step}"
+  discard <| mark "source-check"
   if n == target then throwError "search.target_leak: {n}"
   if visiting.contains n then return
   let info ← checkedSource source n
   -- Recover only vocabulary needed by the statement. Certificate elaboration
   -- stays in B's environment, including its registered tactic implementations.
   -- The detached source environment supplies no extension state or proofs.
+  discard <| mark "statement"
   let type ← copyStatement source n info.type
-  if (← singleSourceConversion targetType type).isSome ||
-      (← certifiedRestatement targetType type index) then
+  discard <| mark "single-source"
+  let single := (← singleSourceConversion targetType type).isSome
+  discard <| mark "legacy-restatement"
+  if single || (← certifiedRestatement targetType type index) then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
+  discard <| mark "dependencies"
   for dep in info.getUsedConstantsAsSet do
     if (← getEnv).contains dep then continue
     let depInfo ← sourceInfo source dep
     if ← withEnv source (isProp depInfo.type) then
-      copyStructure source target targetType dep index (visiting.insert n)
+      copyStructure source target targetType dep index (visiting.insert n) phase?
     else
       throwError "search.structure_vocabulary_not_reconstructed: {dep}"
+  discard <| mark "kernel-install"
   match info with
   | .thmInfo value => addDecl (.thmDecl {value with type})
   | .defnInfo value => addDecl (.defnDecl {value with type})
@@ -218,7 +226,7 @@ private def prepare (source base : Environment) (request : Request)
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
             for n in request.additions do
               phase.set s!"structure-copy:{n}"
-              copyStructure source request.target target.type n index
+              copyStructure source request.target target.type n index (phase? := some phase)
       return (← getEnv, target, none)
   try
     let context : Core.Context := {

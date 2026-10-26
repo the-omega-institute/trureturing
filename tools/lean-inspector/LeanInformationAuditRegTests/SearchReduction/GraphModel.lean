@@ -6,6 +6,15 @@ import LeanInformationAuditInterface.Contract.AuricFib
 namespace LeanInformationAudit.Tests.SearchReduction.GraphModel
 open LeanInformationAudit.SearchReduction
 
+-- A reverse NoHit completes the exclusion even when independent R is unknown.
+#guard needsReverseNegative true (.incomplete .heartbeat) (.incomplete .undecided)
+#guard !needsReverseNegative false (.incomplete .heartbeat) (.incomplete .undecided)
+#guard !needsReverseNegative true .found (.incomplete .undecided)
+#guard !needsReverseNegative true (.incomplete .heartbeat) .found
+#guard targetPartDecision (.incomplete .heartbeat) .exhausted == .exhausted
+#guard targetPartDecision (.incomplete .heartbeat) (.incomplete .undecided) ==
+  .incomplete .undecided
+
 private theorem finite_le_finite (a b : Nat) :
     (Bound.finite a) ≤ .finite b ↔ a ≤ b := Iff.rfl
 private theorem top_not_le_finite (n : Nat) :

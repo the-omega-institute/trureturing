@@ -1,13 +1,15 @@
 module
 
 public import Lean.Elab.Deriving
-import all Lean.Elab.Deriving.DecEq
-import all Lean.Elab.Deriving.BEq
-import all Lean.Elab.Deriving.Ord
+public meta import Lean.Elab.Deriving
+public import Mathlib.Tactic.DeriveFintype
+meta import all Lean.Elab.Deriving.DecEq
+meta import all Lean.Elab.Deriving.BEq
+meta import all Lean.Elab.Deriving.Ord
 
 /-! The allowlist calls only the pinned Lean handlers, never a registry extended
 by an imported delivery. -/
-public section
+public meta section
 namespace LeanInformationAudit.SearchReduction
 open Lean
 
@@ -18,7 +20,8 @@ def pinnedDerivingHandlers : Array (Name × Elab.DerivingHandler) := #[
   (``BEq, Elab.Deriving.BEq.mkBEqInstanceHandler),
   (``Ord, Elab.Deriving.Ord.mkOrdInstanceHandler),
   (``Hashable, Elab.Deriving.Hashable.mkHashableHandler),
-  (``Nonempty, Elab.Deriving.mkNonemptyInstanceHandler)]
+  (``Nonempty, Elab.Deriving.mkNonemptyInstanceHandler),
+  (``Fintype, Mathlib.Deriving.Fintype.mkFintypeInstanceHandler)]
 
 def pinnedDerivingClasses : Array Name := pinnedDerivingHandlers.map (·.1)
 

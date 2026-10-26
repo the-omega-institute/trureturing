@@ -460,10 +460,10 @@ def targetPartDecision (independent reverse : Run) : Run :=
   | _, .exhausted => .exhausted
   | _, _ => .incomplete .undecided
 
-/-- Reverse negatives belong to the lazy decision set only after the numeric
-and root guards can grant a positive and independent R has completed NoHit. -/
+/-- Reverse negatives belong to the lazy decision set after the numeric and
+root guards can grant a positive. They can also settle an unknown independent run. -/
 def needsReverseNegative (decisive : Bool) (independent reverse : Run) : Bool :=
-  decisive && independent == .exhausted &&
+  decisive && independent != .found &&
     match reverse with | .incomplete _ => true | _ => false
 
 /-- Exclusion evidence follows the final selected route, including any route

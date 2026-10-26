@@ -18,7 +18,7 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v6"
+VERSION = "probe-cache-v7"
 # Explicit procedure identity, checked against Lean's configuration by tests.
 R_VERSION = "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa/analytic-cut-k2/200000"
 
