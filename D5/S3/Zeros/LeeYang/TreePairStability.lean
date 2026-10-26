@@ -300,8 +300,6 @@ open scoped BigOperators
 
 namespace FiolArbitraryTreePair
 
-private lemma kappa_cast (d : ℕ) : (kappa d : ℂ) = ((kappa d : ℝ) : ℂ) := by
-  simp [kappa]
 private lemma center_cast (d : ℕ) : (center d : ℂ) = ((center d : ℝ) : ℂ) := by
   simp [center]
 private lemma remainder_cast (d : ℕ) : (remainder d : ℂ) = ((remainder d : ℝ) : ℂ) := by
