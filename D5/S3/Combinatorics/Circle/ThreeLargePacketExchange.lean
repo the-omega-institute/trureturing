@@ -106,11 +106,10 @@ private theorem packet_select {α : Type*} [DecidableEq α]
   · simpa only [mass, List.map_append, List.sum_append] using hhi
 
 set_option maxHeartbeats 1200000 in
-/-- A real SMALL doubling packet supplies the returned positive labels.
-The literal exchange checks every natural prefix, preserves G and strictly
-lowers H, with its entire physical inventory and exact endpoint exposed. -/
-theorem actualSource_threeLarge_packet_exchange_full
-    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z b : Fin k)
+/-- A selector on the actual positive inventory supplies a complete physical
+three-LARGE exchange, including every original-zero-start prefix and exact costs. -/
+theorem actualSource_threeLarge_return_exchange_full
+    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z : Fin k)
     (A T0 T1 T2 E : List (Fin k))
     (hpositive : 0 < s k t p)
     (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
@@ -126,18 +125,16 @@ theorem actualSource_threeLarge_packet_exchange_full
     (hzupper : -s k t z ≤ s k t q)
     (hqlarge : Q k ≤ s k t q)
     (hqsmaller : s k t q < s k t p)
-    (hb : b ∈ smallWord T0 T1 T2 E)
-    (hcb : finRotate k b ∈ smallWord T0 T1 T2 E)
-    (hβpositive : 0 < s k t b)
-    (hpacketCover : ∀ i ∈ smallWord T0 T1 T2 E,
-        0 < s k t i → s k t i ≤ 3 * s k t b + (C k - s k t q)) :
+    (hselect : ∀ low : ℤ, 0 < low →
+      low ≤ mass (s k t) (positive t (smallWord T0 T1 T2 E)) →
+      ∃ R : List (Fin k), R.Subperm (positive t (smallWord T0 T1 T2 E)) ∧
+        low ≤ mass (s k t) R ∧ mass (s k t) R ≤ low + (C k - s k t q)) :
     let n := hit k 1 p
     let x := hit k 2 p
     let W := oldWord p y zpen z A T0 T1 T2 E
     let S := smallWord T0 T1 T2 E
     let e0 := prospective k t p q y zpen W
     ∃ R L : List (Fin k),
-      s k t (finRotate k b) = 2 * s k t b ∧
       R.Subperm (positive t S) ∧ (L ++ R).Perm S ∧
       (∀ i ∈ R, 0 < s k t i ∧ |s k t i| < Q k) ∧
       (let V := A ++ [p, n] ++ L ++ [z, q]
@@ -169,7 +166,6 @@ theorem actualSource_threeLarge_packet_exchange_full
   let Y := -f y
   let ZZ := -f zpen
   let Z := -f z
-  let β := f b
   let B := C k - qq
   let a0 := mass f A
   let b0 := a0 + P - D
@@ -194,20 +190,19 @@ theorem actualSource_threeLarge_packet_exchange_full
       simpa [D,P,f,n,abs_of_pos hpositive] using geo.firstEquation
     have h2 : r = 4 * P - N k := by
       simpa [r,P,f,x,abs_of_pos hpositive] using geo.secondEquation
-    ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+    ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hDbound : Q k ≤ D := hnlarge
-  have hqpos : 0 < qq := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have hqpos : 0 < qq := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hqP : qq < P := hqsmaller
-  have hβpos : 0 < β := hβpositive
   have hbound (i : Fin k) : |f i| ≤ C k :=
     abs_le.mpr (centered_bounds hNpos hNodd _)
   have hPcap : P ≤ C k := by simpa only [hpabs] using hbound p
-  have hY : 0 < Y ∧ Q k ≤ Y := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hZZ : 0 < ZZ ∧ Q k ≤ ZZ := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hZ : 0 < Z ∧ Z ≤ qq := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hpn : p ≠ n := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hpq : p ≠ q := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hnq : n ≠ q := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have hY : 0 < Y ∧ Q k ≤ Y := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
+  have hZZ : 0 < ZZ ∧ Q k ≤ ZZ := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
+  have hZ : 0 < Z ∧ Z ≤ qq := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
+  have hpn : p ≠ n := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
+  have hpq : p ≠ q := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
+  have hnq : n ≠ q := by intro hh; have he := congrArg f hh; ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hpL : Large k t p := geo.pLarge
   have hnL : Large k t n := geo.nLarge
   have hxL : Large k t x := geo.xLarge
@@ -217,45 +212,12 @@ theorem actualSource_threeLarge_packet_exchange_full
     exact hqlarge
   have hyL : Large k t y := by
     change Q k ≤ |f y|
-    rw [abs_of_neg (show f y < 0 by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith))]
+    rw [abs_of_neg (show f y < 0 by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith))]
     exact hylarge
   have hzpL : Large k t zpen := by
     change Q k ≤ |f zpen|
-    rw [abs_of_neg (show f zpen < 0 by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith))]
+    rw [abs_of_neg (show f zpen < 0 by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith))]
     exact hzpenlarge
-  have hcycle := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2
-  have hbsmall : |β| < Q k := hsmall b hb
-  have hcval : f (finRotate k b) = 2 * β := by
-    have he := hcycle b
-    change 2 * β - f (finRotate k b) = N k *
-      (if N k < 4 * β then 1 else if 4 * β < -N k then -1 else 0) at he
-    have hba := abs_lt.mp hbsmall
-    rw [ite_eq_right (by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)), ite_eq_right (by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith))] at he
-    ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hβB : β ≤ B := by
-    have hbudget := geo.budget
-    change 2 * |f p| ≤ C k + Q k at hbudget
-    rw [hpabs] at hbudget
-    have hcbsmall : |f (finRotate k b)| < Q k := hsmall _ hcb
-    rw [hcval, abs_of_pos (by omega : 0 < 2 * β)] at hcbsmall
-    dsimp only [B]
-    omega
-  have hbc : b ≠ finRotate k b := by
-    intro hh
-    have he := congrArg f hh
-    rw [hcval] at he
-    ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
-  have hbPos : b ∈ Pos := by
-    simp only [Pos, positive, List.mem_filter, decide_eq_true_eq]
-    exact ⟨hb, hβpos⟩
-  have hcPos : finRotate k b ∈ Pos := by
-    simp only [Pos, positive, List.mem_filter, decide_eq_true_eq]
-    exact ⟨hcb, by change 0 < f (finRotate k b); rw [hcval]; omega⟩
-  have hentry (i : Fin k) (hi : i ∈ Pos) :
-      0 < f i ∧ f i ≤ 3 * β + B := by
-    have hm : i ∈ S ∧ 0 < f i := by
-      simpa only [Pos, positive, List.mem_filter, decide_eq_true_eq] using hi
-    exact ⟨hm.2, hpacketCover i hm.1 hm.2⟩
   have hsW : InStrip f (C k) 0 W := strip_of_legal hW
   have hsA : InStrip f (C k) 0 A :=
     (strip_split A ([x] ++ T0 ++ [y] ++ T1 ++ [zpen] ++ T2 ++ [z] ++ E)
@@ -274,7 +236,7 @@ theorem actualSource_threeLarge_packet_exchange_full
   have hh : 0 ≤ h := by
     have ht := (inStrip_prefix hsW W.length).1
     simpa only [h, mass, List.take_length, zero_add] using ht
-  have hb0 : 0 ≤ b0 ∧ b0 ≤ C k - P := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have hb0 : 0 ≤ b0 ∧ b0 ≤ C k - P := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have he0 : e0 = h + Y + ZZ + qq - P := rfl
   have he0Eq : e0 = b0 + mass f S - Z + qq := by
     dsimp only [e0, prospective, b0, a0, W, oldWord, S, smallWord, Y, ZZ, Z, qq, P]
@@ -286,16 +248,17 @@ theorem actualSource_threeLarge_packet_exchange_full
     dsimp only [f] at hxr ⊢
     rw [hxr]
     ring
-  have he0lo : qq < e0 := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have he0lo : qq < e0 := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hmassPos : mass f S ≤ mass f Pos := positive_mass_dominates f S
-  have hsupply : e0 - C k ≤ mass f Pos := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have hsupply : e0 - C k ≤ mass f Pos := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   obtain ⟨R, hRpos, hRlo, hRhi⟩ : ∃ R : List (Fin k),
       R.Subperm Pos ∧ e0 - C k ≤ mass f R ∧ mass f R ≤ e0 - qq := by
     by_cases hl : e0 - C k ≤ 0
     · refine ⟨[], List.nil_subperm, ?_, ?_⟩ <;> simp only [mass, List.map_nil, List.sum_nil] <;> omega
-    · obtain ⟨R,hR,hlo,hhi⟩ := packet_select f Pos b (finRotate k b) β B (e0 - C k)
-        hbPos hcPos hbc rfl hcval hβpos hβB (by omega) hentry hsupply
-      exact ⟨R,hR,hlo,by dsimp only [B] at hhi; omega⟩
+    · obtain ⟨R,hR,hlo,hhi⟩ := hselect (e0 - C k) (by omega) hsupply
+      exact ⟨R,hR,hlo,by
+        change mass f R ≤ (e0 - C k) + (C k - qq) at hhi
+        omega⟩
   have hPosSub : Pos.Sublist S := List.filter_sublist
   have hRsub : R.Subperm S := hRpos.trans hPosSub.subperm
   let Rem := S.diff R
@@ -328,7 +291,7 @@ theorem actualSource_threeLarge_packet_exchange_full
     rw [abs_of_pos hip] at hi'
     rw [abs_of_neg hjn] at hj'
     omega
-  have hb0cap : 0 ≤ b0 ∧ b0 ≤ C k := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)
+  have hb0cap : 0 ≤ b0 ∧ b0 ≤ C k := by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)
   have hend : 0 ≤ b0 + mass f Rem ∧ b0 + mass f Rem ≤ C k := by
     rw [hsum]
     exact hc
@@ -342,7 +305,7 @@ theorem actualSource_threeLarge_packet_exchange_full
     rw [hnval]
     change 0 ≤ a0 ∧ a0 ≤ C k ∧ 0 ≤ a0 + P ∧ a0 + P ≤ C k ∧
       0 ≤ a0 + P + -D ∧ a0 + P + -D ≤ C k
-    exact ⟨ha0.1,ha0.2,by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,β,B,a0,b0,h,e0] at *); source_arith)⟩
+    exact ⟨ha0.1,ha0.2,by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith),by ((try dsimp only [f,n,x,W,S,Pos,P,D,r,qq,Y,ZZ,Z,B,a0,b0,h,e0] at *); source_arith)⟩
   have hsApn : InStrip f (C k) 0 (A ++ [p,n]) :=
     inStrip_append hsA (by simpa only [zero_add, a0, mass] using hpairPN)
   have hApn : mass f (A ++ [p,n]) = b0 := by
@@ -468,12 +431,117 @@ theorem actualSource_threeLarge_packet_exchange_full
         simp only [mass,List.map_cons,List.map_nil,List.sum_cons,List.sum_nil,add_zero]
         dsimp only [c,η,Z,qq]
         ring
-  refine ⟨R,L,hcval,hRpos,hLR,?_,legal_of_strip inv.nodup hsV,hsV,?_,
+  refine ⟨R,L,hRpos,hLR,?_,legal_of_strip inv.nodup hsV,hsV,?_,
     inv,hG,hU,hH,hHstrict,hJ,hEnd,he.1,he.2⟩
   · intro i hi
     exact ⟨hpositiveR i hi,hsmallR i hi⟩
   · intro j
     simpa [mass,f,V,n] using inStrip_prefix hsV j
+
+
+set_option maxHeartbeats 1200000 in
+/-- A real SMALL doubling packet supplies the returned positive labels.
+The literal exchange checks every natural prefix, preserves G and strictly
+lowers H, with its entire physical inventory and exact endpoint exposed. -/
+theorem actualSource_threeLarge_packet_exchange_full
+    (k t : ℕ) (hk : 3 ≤ k) (p q y zpen z b : Fin k)
+    (A T0 T1 T2 E : List (Fin k))
+    (hpositive : 0 < s k t p)
+    (hnlarge : Q k ≤ |s k t (hit k 1 p)|)
+    (hexpand : N k < 3 * |s k t p|)
+    (hW : Legal k t (oldWord p y zpen z A T0 T1 T2 E))
+    (hpunused : p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hnunused : hit k 1 p ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hqunused : q ∉ oldWord p y zpen z A T0 T1 T2 E)
+    (hsmall : ∀ i ∈ smallWord T0 T1 T2 E, |s k t i| < Q k)
+    (hylarge : Q k ≤ -s k t y)
+    (hzpenlarge : Q k ≤ -s k t zpen)
+    (hzlarge : Q k ≤ -s k t z)
+    (hzupper : -s k t z ≤ s k t q)
+    (hqlarge : Q k ≤ s k t q)
+    (hqsmaller : s k t q < s k t p)
+    (hb : b ∈ smallWord T0 T1 T2 E)
+    (hcb : finRotate k b ∈ smallWord T0 T1 T2 E)
+    (hβpositive : 0 < s k t b)
+    (hpacketCover : ∀ i ∈ smallWord T0 T1 T2 E,
+        0 < s k t i → s k t i ≤ 3 * s k t b + (C k - s k t q)) :
+    let n := hit k 1 p
+    let x := hit k 2 p
+    let W := oldWord p y zpen z A T0 T1 T2 E
+    let S := smallWord T0 T1 T2 E
+    let e0 := prospective k t p q y zpen W
+    ∃ R L : List (Fin k),
+      s k t (finRotate k b) = 2 * s k t b ∧
+      R.Subperm (positive t S) ∧ (L ++ R).Perm S ∧
+      (∀ i ∈ R, 0 < s k t i ∧ |s k t i| < Q k) ∧
+      (let V := A ++ [p, n] ++ L ++ [z, q]
+       let returned := [x, y, zpen] ++ R
+       let e := e0 - mass (s k t) R
+       Legal k t V ∧ InStrip (s k t) (C k) 0 V ∧
+       (∀ j : ℕ, 0 ≤ mass (s k t) (V.take j) ∧
+         mass (s k t) (V.take j) ≤ C k) ∧
+       Inventory k t W V [p, n, q] returned ∧
+       G k t V = G k t W ∧ U V = U W + R.length ∧
+       H k t V + 3 ^ (s k t x).natAbs + 3 ^ (s k t y).natAbs +
+         3 ^ (s k t zpen).natAbs =
+         H k t W + 3 ^ (s k t p).natAbs + 3 ^ (s k t n).natAbs +
+           3 ^ (s k t q).natAbs ∧
+       H k t V < H k t W ∧ J k t V < J k t W ∧
+       mass (s k t) V = e ∧ s k t q ≤ e ∧ e ≤ C k) := by
+  classical
+  dsimp only
+  let f := s k t
+  let β := f b
+  let B := C k - f q
+  let S := smallWord T0 T1 T2 E
+  let Pos := positive t S
+  have geo := native_geometry hk t p hnlarge hexpand
+  obtain ⟨hQ, hN, hC, hNpos, hNodd⟩ := source_geometry hk
+  change 2 ≤ Q k at hQ
+  change N k = 4 * Q k - 1 at hN
+  change C k = 2 * Q k - 1 at hC
+  have hβpos : 0 < β := hβpositive
+  have hcycle := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2
+  have hbsmall : |β| < Q k := hsmall b hb
+  have hcval : f (finRotate k b) = 2 * β := by
+    have he := hcycle b
+    change 2 * β - f (finRotate k b) = N k *
+      (if N k < 4 * β then 1 else if 4 * β < -N k then -1 else 0) at he
+    have hba := abs_lt.mp hbsmall
+    rw [ite_eq_right (by ((try dsimp only [f,S,Pos,β,B] at *); source_arith)), ite_eq_right (by ((try dsimp only [f,S,Pos,β,B] at *); source_arith))] at he
+    ((try dsimp only [f,S,Pos,β,B] at *); source_arith)
+  have hβB : β ≤ B := by
+    have hbudget := geo.budget
+    change 2 * |f p| ≤ C k + Q k at hbudget
+    rw [abs_of_pos hpositive] at hbudget
+    have hcbsmall : |f (finRotate k b)| < Q k := hsmall _ hcb
+    rw [hcval, abs_of_pos (by omega : 0 < 2 * β)] at hcbsmall
+    dsimp only [B, f] at *
+    omega
+  have hbc : b ≠ finRotate k b := by
+    intro hh
+    have he := congrArg f hh
+    rw [hcval] at he
+    ((try dsimp only [f,S,Pos,β,B] at *); source_arith)
+  have hbPos : b ∈ Pos := by
+    simp only [Pos, positive, List.mem_filter, decide_eq_true_eq]
+    exact ⟨hb, hβpos⟩
+  have hcPos : finRotate k b ∈ Pos := by
+    simp only [Pos, positive, List.mem_filter, decide_eq_true_eq]
+    exact ⟨hcb, by change 0 < f (finRotate k b); rw [hcval]; omega⟩
+  have hentry (i : Fin k) (hi : i ∈ Pos) :
+      0 < f i ∧ f i ≤ 3 * β + B := by
+    have hm : i ∈ S ∧ 0 < f i := by
+      simpa only [Pos, positive, List.mem_filter, decide_eq_true_eq] using hi
+    exact ⟨hm.2, hpacketCover i hm.1 hm.2⟩
+  obtain ⟨R,L,hR,hLR,hpos,hV⟩ := actualSource_threeLarge_return_exchange_full
+    k t hk p q y zpen z A T0 T1 T2 E hpositive hnlarge hexpand hW
+    hpunused hnunused hqunused hsmall hylarge hzpenlarge hzlarge hzupper
+    hqlarge hqsmaller (by
+      intro low hlow htotal
+      exact packet_select f Pos b (finRotate k b) β B low hbPos hcPos hbc
+        rfl hcval hβpos hβB hlow hentry htotal)
+  exact ⟨R,L,hcval,hR,hLR,hpos,hV⟩
 
 #print axioms actualSource_threeLarge_packet_exchange_full
 
