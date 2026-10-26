@@ -37,14 +37,18 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 + "vertex count to that constant, raised to |Complex.arg z|/Real.pi. "
                 + "This ratio is at most n−1. For n at least two, roots in the unit disk satisfy the "
                 + "same bound; for n=1 the degree polynomial is one and has no roots.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brown-george-2025-degree-polynomial-root-bound"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("brown-george-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
+            Blocks(Paragraph(DefinitionDsl.Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula Id(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Id(name)));
     private static Formula Q(string owner, string name) => Seq(Op(owner), Dot, Op(name));

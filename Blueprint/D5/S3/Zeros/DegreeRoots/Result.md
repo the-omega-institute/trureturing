@@ -34,6 +34,10 @@ $$\forall n \in \operatorname{Nat},\; 1 \le n \Rightarrow \left(\forall G \in Si
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/DegreeRoots/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/brown-george-2025-degree-polynomial-root-bound` (proved) by `D5/S3/Zeros/DegreeRoots/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"brown-george-2025-degree-polynomial-root-bound","declaration_gid":"D5/S3/Zeros/DegreeRoots/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. I. Brown and I. C. George (2025). *On the roots of degree polynomials*. DOI: [10.48550/arXiv.2505.04882](https://doi.org/10.48550/arXiv.2505.04882). URL: <https://arxiv.org/abs/2505.04882v1>.
