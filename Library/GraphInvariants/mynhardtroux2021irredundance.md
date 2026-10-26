@@ -18,7 +18,7 @@ Section 1.1 defines a D-private neighbour of a selected vertex v as a vertex dom
 
 Observation 1.1(ii) states: “A dominating set is minimal dominating if and only if it is irredundant.” The surrounding text attributes these classical facts to Propositions 3.8 and 3.9 of its reference [16]; Mynhardt and Roux is the verified source used here, not a claim of original authorship of the characterization.
 
-The source treats finite graphs. The repository's independently proved `minimalDominating_iff_private` retains the same closed-private convention and all-proper-subset minimality, with no finiteness assumption on the vertex type. The unrestricted formulation is a scope extension supplied by the Lean proof. The graph-specific fixed-tag correspondence and subsequent counting derivations are repository results, rather than statements attributed to this paper.
+The repository's independently proved `minimalDominating_iff_private` retains the same closed-private convention and all-proper-subset minimality, with no finiteness assumption on the vertex type. No novelty is claimed for this general formulation. The graph-specific fixed-tag correspondence and subsequent counting derivations are repository results, rather than statements attributed to this paper.
 
 ## Verified locator
 
