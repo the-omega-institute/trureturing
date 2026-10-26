@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraPolynomialCoreSum.core_polyno
 
 For both dimensions at least 2(a+b)-1, evaluation equals the finite sum, over every individual core, of the cardinalities of its positive row-run and column-run vector products. Each total is the corresponding dimension minus the actual occupied-line count. The occupied-line and frozen-run bounds on each actual core prove that all positive-vector parameters are feasible throughout this region. Equality of this vector sum with the residual height-function count requires a canonical-core and expansion-fiber bijection.
 
-**Theorem 1.9 (A finite maximum of actual run exponents).**
+**Theorem 1.9 (The strict total degree bound on these same actual cores).**
 
 Lean statement: `D5/S3/Combinatorics/Geometry/MiuraPolynomialCoreSum.core_polynomial_degree_le`
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Combinatorics/Geometry/MiuraPolynomialCoreSum.core_polyno
 
 *Commentary.*
 
-The total degree of the finite sum is bounded by the maximum, over its actual cores, of the sum of the row and column run counts minus two. A sharper geometric bound on those actual counts must be established separately.
+For a+b at least five, the total degree of this same core polynomial is at most a+b-3. The active-column run definitions are identified with the actual geometric row-run starts after transposition. Positive runs give an unoccupied row on each axis, so the strict residual geometry bound applies to every member of the existing Core family. Each summand has degree at most its two run counts minus two; the finite sum preserves the uniform bound. Equality of its evaluations with residualCount still requires the actual reconstruction and counting bridge.
 
 ## References
 
@@ -124,4 +124,6 @@ The total degree of the finite sum is bounded by the maximum, over its actual co
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraPolynomialCoreSum.rowOccupied`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/MiuraPolynomialCoreSum.rowRuns`
 - Dependency: [D5/S3/Combinatorics/Geometry/MiuraCoreNormal](MiuraCoreNormal.md)
+- Dependency: [D5/S3/Combinatorics/Geometry/MiuraCoreTranspose](MiuraCoreTranspose.md)
+- Dependency: [D5/S3/Combinatorics/Geometry/MiuraEqualityClassification](MiuraEqualityClassification.md)
 - Dependency: [D5/S3/Combinatorics/Geometry/MiuraPolynomialRuns](MiuraPolynomialRuns.md)

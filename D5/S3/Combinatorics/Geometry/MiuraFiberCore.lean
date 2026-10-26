@@ -135,7 +135,9 @@ theorem core_positive_vectors_inject (a b m n : ℕ) (K : Core a b)
       Function.Injective F ∧
         Nat.card (PositiveLengths (m-rowOccupied K) (rowRuns K) ×
           PositiveLengths (n-colOccupied K) (colRuns K)) ≤
-        Nat.card {g : Cell m n → ℤ // Residual a b g} := by
+        residualCount a b m n
+          (by have := K.2.2.property.1; have := K.1.isLt; omega)
+          (by have := K.2.2.property.2.1; have := K.2.1.isLt; omega) := by
   classical
   obtain ⟨hM,hN,hr,hcno,hrno,_,_⟩ := K.2.2.property
   have hMbound : K.1.val ≤ m := by have := K.1.isLt; omega
@@ -193,6 +195,8 @@ theorem core_positive_vectors_inject (a b m n : ℕ) (K : Core a b)
   have hnpos : 1 ≤ n := by have := K.2.1.isLt; omega
   letI : Fintype {g : Cell m n → ℤ // Residual a b g} :=
     (residual_finite a b hmpos hnpos).fintype
+  change Nat.card V ≤ residualCount a b m n hmpos hnpos
+  rw [residualCount,←Nat.card_eq_card_finite_toFinset (residual_finite a b hmpos hnpos)]
   apply Nat.card_le_card_of_injective
     (fun x : V => (⟨(F x).val,(F x).property.1⟩ : {g : Cell m n → ℤ // Residual a b g}))
   intro x y he
