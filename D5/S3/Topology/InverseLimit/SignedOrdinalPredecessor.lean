@@ -28,7 +28,7 @@ variable {a : Ordinal.{0}} {H : Prefix (Order.succ a)} {ha : ω ≤ a}
   {t : Treatment a} (R : Result H ha P launch Q t)
 
 /-- An old next-stage row is precisely a current row. -/
-private def previousRow (ha : ω ≤ a) (r : Rows (Order.succ a))
+def previousRow (ha : ω ≤ a) (r : Rows (Order.succ a))
     (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a))) : Rows a :=
   ⟨r.1, r.2.1, Order.le_of_lt_succ
     (lt_of_le_of_ne r.2.2 (fun h => hr (Subtype.ext h)))⟩
@@ -37,7 +37,7 @@ private def previousRow (ha : ω ≤ a) (r : Rows (Order.succ a))
 private def previousCol (d : Coord (Order.succ a)) : Cols a :=
   ⟨d.1, Order.le_of_lt_succ d.2⟩
 
-private theorem old_carrier (r : Rows (Order.succ a))
+theorem old_carrier (r : Rows (Order.succ a))
     (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a))) :
     R.coordinates.extended.carrier (rowIndex r) =
       H.carrier (rowIndex (previousRow ha r hr)) :=
@@ -120,7 +120,7 @@ private theorem signedEquiv_tendsto {b : Ordinal.{0}} {C D : Set (Cube b)}
   subst D
   rfl
 
-private noncomputable def currentU (r : Rows a) : Label → SupportFamily (Base H r) := by
+noncomputable def currentU (r : Rows a) : Label → SupportFamily (Base H r) := by
   classical
   exact if h : r = newRow a ha then (by rw [h]; exact Q.U) else P.U r h
 
@@ -331,5 +331,90 @@ noncomputable def nextP :
   C := nextC R
   E := nextE R
   F := nextF R
+
+private theorem family_transport_heq {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (U : Label → SupportFamily C) :
+    HEq ((familyEquiv h) ∘ U) U := by
+  subst D
+  rfl
+
+private theorem born_transport_heq {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (V : SupportFamily C) (nu : Label → @BornData C _ (borel C) V) :
+    HEq ((bornEquiv h V) ∘ nu) nu := by
+  subst D
+  rfl
+
+/-- The next predecessor reads the same entire support enumeration. -/
+theorem next_U_readback (r : Rows (Order.succ a))
+    (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a))) :
+    HEq ((nextP R).U r hr) (currentU (Q := Q) (previousRow ha r hr)) :=
+  family_transport_heq (old_carrier R r hr).symm _
+
+/-- The row support family is transported by literal carrier equality. -/
+theorem next_V_readback (r : Rows (Order.succ a))
+    (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a))) :
+    HEq ((nextP R).V r hr) (Q.V (previousRow ha r hr)) := by
+  change HEq (familyEquiv (old_carrier R r hr).symm _) _
+  generalize (old_carrier R r hr).symm = h
+  exact (show ∀ {b : Ordinal.{0}} {C D : Set (Cube b)} (h : C = D)
+    (V : SupportFamily C), HEq (familyEquiv h V) V from by
+      intro b C D h V; subst D; rfl) h _
+
+/-- Every measure label retains its original whole BornData. -/
+theorem next_nu_readback (r : Rows (Order.succ a))
+    (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a))) :
+    HEq ((nextP R).nu r hr) (Q.nu (previousRow ha r hr)) :=
+  born_transport_heq (old_carrier R r hr).symm _ _
+
+
+private theorem signedEquiv_regular_bound {b : Ordinal.{0}} {C D : Set (Cube b)}
+    (h : C = D) (mu : @SignedMeasure C (borel C)) :
+    letI : MeasurableSpace C := borel C
+    letI : MeasurableSpace D := borel D
+    mu.totalVariation.real univ ≤ 1 →
+    Measure.Regular mu.toJordanDecomposition.posPart →
+    Measure.Regular mu.toJordanDecomposition.negPart →
+    (signedEquiv h mu).totalVariation.real univ ≤ 1 ∧
+      Measure.Regular (signedEquiv h mu).toJordanDecomposition.posPart ∧
+      Measure.Regular (signedEquiv h mu).toJordanDecomposition.negPart := by
+  subst D
+  exact fun hb hp hn => ⟨hb, hp, hn⟩
+
+set_option backward.isDefEq.respectTransparency false in
+/-- A history consumer retains the regular bounded F of the very same R.
+The weaker Predecessor.F field is unchanged. -/
+theorem next_regular_f (r : Rows (Order.succ a))
+    (hr : r ≠ newRow (Order.succ a) (ha.trans (Order.le_succ a)))
+    (d : Coord (Order.succ a)) (s : ℕ → SignedMeasure (K R.coordinates.extended))
+    (hm : ∀ n, (s n).map (projection R.coordinates.extended r) =
+      ((((nextP R).nu r hr ⟨d.1, d.2.trans (nextP R).proper⟩).1 n).1))
+    (hn : ∀ n, (s n).totalVariation univ = 1) :
+    ∃ mu : SignedMeasure (K R.coordinates.extended),
+      mu.totalVariation.real univ ≤ 1 ∧
+      Measure.Regular mu.toJordanDecomposition.posPart ∧
+      Measure.Regular mu.toJordanDecomposition.negPart ∧ Tendsto
+        (fun n => (NormPreservingLifts.signedFunctional (s n)).toWeakDual)
+        (along ((nextP R).J r hr d))
+        (𝓝 (NormPreservingLifts.signedFunctional mu).toWeakDual) := by
+  with_unfolding_all
+    let : CompactSpace R.coordinates.carrier :=
+      isCompact_iff_compactSpace.mp R.coordinates.closed.isCompact
+    obtain ⟨mu, hb, hp, hneg, hconv⟩ := R.literal_f (previousRow ha r hr) (previousCol d)
+    let sigma : ℕ → SignedMeasure R.coordinates.carrier :=
+      fun n => signedEquiv R.coordinates.top_carrier (s n)
+    have hm' (n : ℕ) : (sigma n).map (R.literalProjection (previousRow ha r hr)) =
+        Q.measure (previousRow ha r hr) (previousCol d) n := by
+      dsimp only [sigma]
+      exact (next_map_cast R r hr (s n)).trans
+        ((congrArg (signedEquiv (old_carrier R r hr)) (hm n)).trans
+          (nextNu_readback R r hr _ n))
+    have hn' (n : ℕ) : (sigma n).totalVariation univ = 1 :=
+      (signedEquiv_mass R.coordinates.top_carrier (s n)).trans (hn n)
+    have hc := hconv sigma hm' hn'
+    have hh := signedEquiv_regular_bound R.coordinates.top_carrier.symm mu hb hp hneg
+    refine ⟨signedEquiv R.coordinates.top_carrier.symm mu, hh.1, hh.2.1, hh.2.2, ?_⟩
+    apply (signedEquiv_tendsto R.coordinates.top_carrier s
+      (signedEquiv R.coordinates.top_carrier.symm mu) (along (nextJ R r hr d))).mp
+    simpa only [signedEquiv_symm, sigma, nextJ] using hc
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalPredecessor

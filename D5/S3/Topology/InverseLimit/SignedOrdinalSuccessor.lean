@@ -77,7 +77,7 @@ instance baseBorel (r : Rows a) : BorelSpace (Base H r) := H.spaceBorel (rowInde
 def projection (r : Rows a) : C(K H, Base H r) :=
   H.map (rowIndex r) (top a) r.2.2
 
-private theorem projection_onto (r : Rows a) : Surjective (projection H r) := by
+theorem projection_onto (r : Rows a) : Surjective (projection H r) := by
   intro y
   obtain ⟨x, hx⟩ := H.onto (rowIndex r) (top a) r.2.2 y
   exact ⟨x, Subtype.ext hx⟩
@@ -146,7 +146,7 @@ structure Prepared (ha : ω ≤ a) (P : Predecessor H ha) (launch : Launch a) wh
   nuonto : ∀ r, Surjective (nu r)
   oldNu : ∀ r hr d n, ((nu r d).1 n).1 = ((P.nu r hr d).1 n).1
 
-private theorem exists_prepared (H : Prefix (Order.succ a)) (ha : ω ≤ a) (P : Predecessor H ha)
+theorem exists_prepared (H : Prefix (Order.succ a)) (ha : ω ≤ a) (P : Predecessor H ha)
     (launch : Launch a) (hCH : Cardinal.continuum.{0} = ℵ₁) :
     Nonempty (Prepared H ha P launch) := by
   classical
@@ -200,11 +200,11 @@ variable {H} {ha : ω ≤ a} {P : Predecessor H ha} {launch : Launch a}
 def measure (r : Rows a) (d : Cols a) (n : ℕ) : SignedMeasure (Base H r) :=
   ((Q.nu r ⟨d.1, d.2.trans_lt P.proper⟩).1 n).1
 
-private theorem mass (r : Rows a) (d : Cols a) (n : ℕ) :
+theorem mass (r : Rows a) (d : Cols a) (n : ℕ) :
     (Q.measure r d n).totalVariation univ = 1 :=
   ((Q.nu r ⟨d.1, d.2.trans_lt P.proper⟩).2 n).1
 
-private theorem null (r : Rows a) (d : Cols a) (n : ℕ) :
+theorem null (r : Rows a) (d : Cols a) (n : ℕ) :
     (Q.measure r d n).totalVariation ((Q.V r).clopen n : Set (Base H r))ᶜ = 0 := by
   exact ((Q.nu r ⟨d.1, d.2.trans_lt P.proper⟩).2 n).2.1
 
@@ -264,7 +264,7 @@ structure Result (ha : ω ≤ a) (P : Predecessor H ha) (launch : Launch a)
     (q % 2 = 0 → (1 : ℝ) / 6 < s {x | x.1.2 = true}) ∧
     (q % 2 ≠ 0 → s {x | x.1.2 = true} = 0)
 
-private theorem exists_codes (ha : ω ≤ a) (hc : a < ω₁) :
+theorem exists_codes (ha : ω ≤ a) (hc : a < ω₁) :
     ∃ (code : Rows a → ℕ) (rho : ℕ → Coord a), Injective code ∧
       code (newRow a ha) = 0 ∧
       ∀ d (e : Fin 2), {q | rho q = d ∧ q % 2 = (e : ℕ)}.Infinite := by
@@ -311,7 +311,7 @@ private theorem old_measure (r : Rows a) (hr : r ≠ newRow a ha) (d : Coord a) 
     Q.measure r (oldCol d) n = ((P.nu r hr ⟨d.1, d.2.trans P.proper⟩).1 n).1 :=
   Q.oldNu r hr _ n
 
-private theorem old_f (r : Rows a) (hr : r ≠ newRow a ha) (d : Coord a)
+theorem old_f (r : Rows a) (hr : r ≠ newRow a ha) (d : Coord a)
     (s : ℕ → SignedMeasure (K H))
     (hm : ∀ n, (s n).map (projection H r) = Q.measure r (oldCol d) n)
     (hn : ∀ n, (s n).totalVariation univ = (Q.measure r (oldCol d) n).totalVariation univ) :
@@ -321,7 +321,7 @@ private theorem old_f (r : Rows a) (hr : r ≠ newRow a ha) (d : Coord a)
   P.F r hr d s (fun n => (hm n).trans (Q.old_measure r hr d n))
     (fun n => (hn n).trans (Q.mass r _ n))
 
-private theorem old_e (r : Rows a) (hr : r ≠ newRow a ha) (c : Coord a) :
+theorem old_e (r : Rows a) (hr : r ≠ newRow a ha) (c : Coord a) :
     ∀ᶠ n in along (P.I r hr), ∀ x y : K H,
       projection H r x ∈ (Q.V r).clopen n → projection H r y ∈ (Q.V r).clopen n →
       projection H r x = projection H r y → x.1 c = y.1 c := by
@@ -338,7 +338,7 @@ end Prepared
 
 set_option maxHeartbeats 1600000 in
 -- The supplier assembly checks the dependent old/new row and residual cases together.
-private theorem exists_ordinary (ha : ω ≤ a) (P : Predecessor H ha)
+theorem exists_ordinary (ha : ω ≤ a) (P : Predecessor H ha)
     (launch : Launch a) (Q : Prepared H ha P launch) (t : Treatment a) :
     Nonempty (Result H ha P launch Q t) := by
   classical
@@ -663,13 +663,16 @@ theorem literal_e (r : Rows a) (c : Coord (Order.succ a)) :
         _ = y.1 (top a) := by rw [R.coordinates.inverse_sheet]; rfl
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Quantitative G is retained on the actual cube carrier with one fixed
-strictly increasing sequence, for every original signed norm-one lift. -/
-theorem quantitative_g (q : ℕ) (s : SignedMeasure R.coordinates.carrier)
+/-- Transport an arbitrary signed clopen readout through this exact event's
+coordinate equivalence, preserving its whole measure label and column. -/
+theorem quantitative_transport (predicate : ℝ → Prop)
+    (q : ℕ) (s : SignedMeasure R.coordinates.carrier)
     (hmap : s.map (R.literalProjection t.row) = Q.measure t.row t.label (R.column q).n)
-    (hmass : s.totalVariation univ = 1) :
-    (q % 2 = 0 → (1 : ℝ) / 6 < s R.quantitativeClopen) ∧
-    (q % 2 ≠ 0 → s R.quantitativeClopen = 0) := by
+    (hmass : s.totalVariation univ = 1)
+    (h : ∀ sigma : SignedMeasure (splitCarrier R.Y R.Z),
+      sigma.map (fun x => projection H t.row x.1.1) = Q.measure t.row t.label (R.column q).n →
+      sigma.totalVariation univ = 1 → predicate (sigma {x | x.1.2 = true})) :
+    predicate (s R.quantitativeClopen) := by
   with_unfolding_all
     let E : splitCarrier R.Y R.Z ≃ₜ R.coordinates.carrier := R.coordinates.equiv
     let p : C(splitCarrier R.Y R.Z, Base H t.row) :=
@@ -709,7 +712,19 @@ theorem quantitative_g (q : ℕ) (s : SignedMeasure R.coordinates.carrier)
           change (E.symm x).1.2 = true ↔ x.1 ⟨a, Order.lt_succ a⟩ = true
           rw [R.coordinates.inverse_sheet x]
           rfl
-    simpa only [he] using R.G q sigma hm hn
+    simpa only [he] using h sigma hm hn
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Quantitative G is retained on the actual cube carrier with one fixed
+strictly increasing sequence, for every original signed norm-one lift. -/
+theorem quantitative_g (q : ℕ) (s : SignedMeasure R.coordinates.carrier)
+    (hmap : s.map (R.literalProjection t.row) = Q.measure t.row t.label (R.column q).n)
+    (hmass : s.totalVariation univ = 1) :
+    (q % 2 = 0 → (1 : ℝ) / 6 < s R.quantitativeClopen) ∧
+    (q % 2 ≠ 0 → s R.quantitativeClopen = 0) := by
+  exact R.quantitative_transport
+    (fun value => (q % 2 = 0 → (1 : ℝ) / 6 < value) ∧ (q % 2 ≠ 0 → value = 0))
+    q s hmap hmass (R.G q)
 
 end Result
 
