@@ -131,7 +131,10 @@ internal sealed class MarkovMonogamyPermutationInequalityDocument : IScribeDocum
                         + "For the mutual-information matrix above, this proves that the "
                         + "identity pairing is maximal for every n and every f, as asserted "
                         + "by claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("capela-celeri-chaves-modi-2022-classical-markov-monogamy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula TransitionDefinition()
     {
