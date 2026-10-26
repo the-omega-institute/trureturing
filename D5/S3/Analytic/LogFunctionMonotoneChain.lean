@@ -155,7 +155,7 @@ private lemma intersection (n : ℕ) (p : Polynomial ℝ) (hp : p.natDegree ≤ 
   · intro h k
     cases k with
     | zero => exact (descending n 0 (h 1 le_rfl)).2
-    | succ k => exact (h (k + 1) (by omega)).2
+    | succ k => exact (h (k + 1) (Nat.succ_le_succ (Nat.zero_le k))).2
   · intro h k _
     exact ⟨hp, h k⟩
 
