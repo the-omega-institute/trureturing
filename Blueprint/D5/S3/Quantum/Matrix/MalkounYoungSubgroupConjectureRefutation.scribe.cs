@@ -91,7 +91,10 @@ internal sealed class MalkounYoungSubgroupConjectureRefutationDocument : IScribe
                             + "both matrix hypotheses. Substituting the intersection, diagonal product, block factorization, "
                             + "seed value, and fifteenth power into the asserted inequality gives "
                             + "1073741824 ≤ −20078071648128, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("malkoun-2025-young-subgroup-conjecture-d"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClassPreservingFormula()
     {
