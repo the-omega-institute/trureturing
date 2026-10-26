@@ -172,7 +172,7 @@ theorem explicit_wash_bound :
     rw [hq, map_sub, map_smul, htv, smul_zero, sub_zero]
   have hpyth (x : HS) : ‖x‖ ^ 2 = ‖inner ℂ v x‖ ^ 2 + ‖q x‖ ^ 2 := by
     have hh := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero (𝕜 := ℂ)
-      (inner ℂ v x • v) (q x) (by simp [inner_smul_left, horth])
+      (inner ℂ v x • v) (q x) (by simp [horth])
     have he : inner ℂ v x • v + q x = x := by rw [hq]; module
     rw [he, norm_smul, hv, mul_one] at hh
     simpa only [pow_two] using hh
@@ -185,9 +185,10 @@ theorem explicit_wash_bound :
     change inner ℂ (vectorize 3 M) (vectorize 3 ((N : Mat) * M * (N : Mat)ᴴ)) = _
     rw [matrix_pairing, hnval]
     norm_num [M, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fin.sum_univ_succ]
+      Matrix.vecHead, Matrix.vecTail, Matrix.vecMul, Matrix.mulVec,
+      dotProduct, Fin.sum_univ_succ]
     field_simp
-    linear_combination hs6sq
+    first | linear_combination hs6sq | linear_combination -hs6sq
   let w : HS := vectorize 3 ((N : Mat)ᴴ * M * (N : Mat)) + (1/3 : ℂ) • v
   have hw2 : ‖w‖ ^ 2 = (8/9 : ℝ) := by
     change ‖vectorize 3 ((N : Mat)ᴴ * M * (N : Mat)) +
@@ -205,8 +206,6 @@ theorem explicit_wash_bound :
     rw [matrix_pairing, matrix_pairing]
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
     simp only [← Matrix.mul_assoc]
-    rw [Matrix.trace_mul_cycle]
-    simp only [Matrix.mul_assoc]
     rw [Matrix.trace_mul_cycle]
     simp only [Matrix.mul_assoc]
   have hbound (X : Mat) (ht : X.trace = 0) :
@@ -228,7 +227,7 @@ theorem explicit_wash_bound :
         _ = _ := by rw [map_add, map_smul, hav]
     have hnorm : ‖A x‖ ^ 2 = ‖a‖ ^ 2 + ‖z‖ ^ 2 := by
       have hh := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero
-        (𝕜 := ℂ) (a • v) z (by simp [inner_smul_left, hz])
+        (𝕜 := ℂ) (a • v) z (by simp [hz])
       rw [hdec]
       simpa only [pow_two, norm_smul, hv, mul_one] using hh
     have hc : ‖inner ℂ v (R z)‖ ^ 2 ≤ (8/9 : ℝ) * ‖z‖ ^ 2 := by
