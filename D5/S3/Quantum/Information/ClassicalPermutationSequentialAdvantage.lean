@@ -65,7 +65,9 @@ private noncomputable def decoder (_ y₁ _ y₂ : Fin 6) : StdSimplex ℝ (Fin 
 
 private lemma sequential_perfect :
     sequentialSuccess prior channels firstInput secondInput decoder = 1 := by
-  sorry
+  norm_num [sequentialSuccess, prior, firstInput, secondInput, decoder, channels,
+    Fin.sum_univ_succ, StdSimplex.weights_single, Finsupp.single_apply,
+    Equiv.swap_apply_def]
 
 private lemma transcript_collision (x : Fin 6 × Fin 6) :
     (channels 0 x.1, channels 0 x.2) = (channels 1 x.1, channels 1 x.2) ∨
