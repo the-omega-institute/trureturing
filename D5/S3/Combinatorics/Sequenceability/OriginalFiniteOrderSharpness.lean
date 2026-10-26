@@ -139,6 +139,7 @@ private lemma coordinate_sum {A : Type*} [AddCommMonoid A]
   classical
   rw [← Finset.sum_ite_mem_eq C h, Fintype.sum_sum_type]
   simp only [Fintype.sum_option, q, p, a, b]
+  congr 1
 
 private lemma sentinel_sum (m : ℕ) (C : Finset (Coordinate m)) :
     (∑ x ∈ C, label m x).2.2 = if p m ∈ C then (1 : ZMod 2) else 0 := by
@@ -343,6 +344,7 @@ private lemma triple_injective (m : ℕ) : Function.Injective (triple m) := by
   have ha : a m i ∈ triple m j := he ▸ (by simp [triple])
   simpa [triple, q, a, b] using ha
 
+set_option maxHeartbeats 800000 in
 /-- The cyclic torsion bound on the actual ALL-support component count is
 attained for every m >= 2 by an explicit finite abelian group. No endpoint,
 classification, incidence, injectivity, or finiteness premise is assumed. -/
@@ -430,13 +432,19 @@ theorem sharpness (m : ℕ) (hm : 2 ≤ m) :
   have hmzero : m • label m (q m) = 0 := by
     simpa only [label_order m] using addOrderOf_nsmul_eq_zero (label m (q m))
   -- The upper bound is the supplied structural theorem on the canonical graph.
-  have hupper : K.card < m :=
-    q_containing_component_card_lt (label m) (full m) (supports m)
-      (mem_supports m) (q m) m hm hmzero
+  have hcanonical :=
+    q_containing_component_card_lt (α := Coordinate m) (G := WitnessGroup m)
+      (label m) (full m) (supports m) (mem_supports m) (q m) m hm hmzero
+  have hupper : K.card < m := by
+    refine lt_of_eq_of_lt ?_ hcanonical
+    congr 1
+    ext c
+    simp [K, T, H]
   have hcount : K.card = m - 1 := by
-    apply Nat.le_antisymm _ hlower
-    omega
-  exact ⟨hfinite, label_injective m hm, label_nonzero m hm, Finset.mem_univ _,
-    label_order m, zero_support_iff m hm, mem_supports m, hcard, hq, hdis, hcount⟩
+    exact Nat.le_antisymm (Nat.le_sub_one_of_lt hupper) hlower
+  refine ⟨hfinite, label_injective m hm, label_nonzero m hm, Finset.mem_univ _,
+    label_order m, zero_support_iff m hm, mem_supports m, hcard, hq, hdis, ?_⟩
+  refine Eq.trans ?_ hcount
+  congr 1
 
 end D5.S3.Combinatorics.Sequenceability.OriginalFiniteOrderSharpness
