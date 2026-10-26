@@ -53,7 +53,7 @@ private theorem triple_partial_newton (p : ℕ → ℝ) (n : ℕ) :
       simp only [tripleLayer, pairPartial, Finset.sum_mul]
     simp only [Finset.sum_range_succ]
     rw [hl]
-    nlinarith
+    nlinarith [congrArg (fun z : ℝ => 3 * p n * z) hp]
 
 private theorem term_le_mass {p : ℕ → ℝ} (hp : Summable p)
     (hn : ∀ i, 0 ≤ p i) (i : ℕ) : p i ≤ mass p :=
