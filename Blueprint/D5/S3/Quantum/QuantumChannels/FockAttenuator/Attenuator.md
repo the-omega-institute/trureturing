@@ -249,6 +249,208 @@ $$\forall n : \mathbb{N}, (\operatorname{operator}\left(\operatorname{fockDensit
 
 The displayed equation specifies the defining expression.
 
+## Analytical writeback R4 and conditional R5
+
+This section is the complete analytical writeback accepted for the same owner after the earlier R1–R3 package. It is prose pending native formalization. The actual channel is fixed throughout: completed Bargmann–Fock H=l2(N;C), e_n(z)=z^n/sqrt(n!), conjugate-linear first slot, D(alpha)f(z)=exp(-|alpha|^2/2+alpha z)f(z-conjugate(alpha)), U(f tensor e)(z,w)=f((z+w)/sqrt(2))e((w-z)/sqrt(2)), V=J_e2, sigma_a=Phi(|a><a|)=C_a C_a*, and Phi*(K)=V*(K tensor Id)V. Every input support, moment, energy, coefficient phase, and output rank remains unrestricted. Write s=||a||^2, E(a)=(s^3-3s Tr(sigma_a^2)+2Tr(sigma_a^3))/6, G(a)=E(a)-s^3/32, I=inf_{||a||=1}E(a), q=Tr(sigma_a^2), p3=Tr(sigma_a^3), mu=q-p3, B=Phi*(sigma_a-sigma_a^2), and A=(1/2)Id-sigma_a. A negative minimizer means I<1/32 and an attained unit minimizer; it does not mean E<0. All A1–A6 attainment, centering, smoothness, variational, purity and spectral statements remain explicit analytical premises supplied by the earlier owner package.
+
+### R4 theorem: operator extension, local analytic eigenvector orbits, moments, and the common centered family
+
+For every bounded complex K, with no compactness or self-adjointness assumption, the real map (x,y) -> D(x+iy)* Phi*(K) D(x+iy) has an entire operator-norm holomorphic extension in independent complex x,y. In the repository sign convention it is
+
+L_K(x,y)=J_{E2(conjugate(x),conjugate(y))}*(K tensor Id)J_{E2(x,y)},
+
+where E2(x,y)(z)=exp(-(x^2+y^2)/2-(x+iy)z)(z+x-iy)^2/sqrt(2). The reflected adjoint is holomorphic because adjunction conjugates the antiholomorphic scalar coefficients. The channel covariance used here is Phi_e(D(alpha)T D(alpha)*)=Phi_{D(-alpha)e}(T), and trace duality gives D(alpha)*Phi_e*(K)D(alpha)=Phi_{D(-alpha)e}*(K), for every complex trace-class T and bounded K. This is the actual splitter sign; no alternate literature convention is substituted.
+
+If K is compact self-adjoint, lambda is any nonzero eigenvalue of L=Phi*(K), and v is any vector in ker(L-lambda Id), then (x,y) -> D(-x-iy)v has a local H-valued holomorphic extension. The eigenspace can have arbitrary finite multiplicity. There are r>0 and M<infinity, uniform for that eigenspace vector, such that for every k>=0,
+
+sum_n ((n+k)!/n!) |v_n|^2 <= M^2 (k!)^2 r^(-2k),
+
+and, for 0<c<r,
+
+sum_n exp(c sqrt(n+1))|v_n|^2 <= 2M^2/(1-(c/r)^2).
+
+Thus v lies in Dom(exp((c/2)sqrt(N+1))); no exp(tN), entire eigenvector orbit, finite support, finite output rank, or uniform moment bound is asserted.
+
+### R4 proof
+
+**Step 1: Valid: finite environmental and seed vectors have entire complexified orbits..**
+
+For any finite Fock polynomial w, W_w(x,y)(z)=exp(-(x^2+y^2)/2-(x+iy)z)w(z+x-iy) is pointwise entire. On every compact parameter polydisc, each fixed parameter derivative has squared Bargmann integrand bounded by C(1+|z|)^m exp(-|z|^2+C|z|). This is integrable. Dominated difference quotients give H-valued partial holomorphy and joint Banach holomorphy. No unknown v is differentiated here.
+
+**Step 2: Valid: reflected adjoint is jointly holomorphic; the repository environmental sign is minus..**
+
+J_e depends boundedly complex-linearly on e, ||J_e||=||e||, and ||J_e*(K tensor Id)J_f||<=||K||||e||||f||. If E2 has a local vector power series, E2(conjugate(x),conjugate(y)) is antiholomorphic; adjunction conjugates its scalar coefficients again. Thus J_{E2(conjugate(x),conjugate(y))}* is holomorphic in both variables, and its product with J_{E2(x,y)} is entire for every bounded complex K. Source rotate sends (alpha,0) to (alpha/sqrt2,alpha/sqrt2), and (0,-alpha) to (alpha/sqrt2,-alpha/sqrt2). The discarded-mode unitary cancels in partial trace, so Phi_e(D(alpha)T D(alpha)*)=Phi_{D(-alpha)e}(T) for all S1 T. Trace duality gives precisely D(alpha)*Phi_e*(K)D(alpha)=Phi_{D(-alpha)e}*(K). This verifies the sign rather than importing another splitter convention.
+
+**Step 3: Valid: local analytic spectral projection around any nonzero eigenvalue..**
+
+A5 supplies compact self-adjoint L for compact self-adjoint K. A nonzero lambda is isolated with finite-rank orthogonal projection P. On a small fixed circle Gamma around lambda, the resolvent of L_K is (z-L)^(-1)[Id-(L_K-L)(z-L)^(-1)]^(-1). A locally uniform Neumann series proves operator-norm holomorphy, and its contour integral defines holomorphic P(x,y). On real parameters unitary conjugacy gives P(x,y)=D(-alpha)P D(alpha). This step does not apply to an arbitrary zero eigenspace.
+
+**Step 4: Valid also for degenerate eigenspaces: finite seeds introduce no finite-support hypothesis..**
+
+The image P(D_fin) of the dense linear finite-polynomial subspace is dense in Ran P. It is a linear subspace of a finite-dimensional space, hence closed and equal to Ran P. For any v there is a finite polynomial w with Pw=v, not merely an approximating sequence. F_v=P(x,y)W_w(x,y) is holomorphic and for real parameters equals D(-alpha)v. Simplicity is unnecessary here. No generator domain is used.
+
+**Step 5: Valid: exact creation line, coefficient factors and k=0..**
+
+For fixed z, bounded Bargmann evaluation of F_v agrees on real x,y with exp(-(x^2+y^2)/2-(x+iy)z)f_v(z+x-iy). The scalar right side is entire even before its H-membership is known. Successive one-variable identity theorems on a local polydisc identify it with the holomorphic evaluation of F_v. On x=t/2,y=t/(2i), x+iy=t, x-iy=0, and x^2+y^2=0, so g_v(t)(z)=exp(-tz)f_v(z). Cauchy gives ||g_v^(k)(0)||<=M k! r^(-k). Its occupation coefficient at n>=k is (-1)^k sqrt(n!/(n-k)!)v_{n-k}, and is zero for n<k. Parseval yields exactly the rising-factorial inequality after reindexing. For k=0 it is ||v||^2<=M^2. Hilbert-space derivatives exist before multiplication by z^k is recognized, so there is no circular unbounded-operator argument.
+
+**Step 6: Valid: square-root moment and constants, including the factor 1/2 in the operator domain..**
+
+For all k>=0, (n+1)^k<=(n+k)!/n!, including equality at k=0. With u=c sqrt(n+1), exp(u)<=2cosh(u). Tonelli and (2k)!>=(k!)^2 bound the weighted sum by 2M^2 sum_{k>=0}(c/r)^(2k)=2M^2/(1-(c/r)^2). The squared norm of exp(t sqrt(N+1))v uses weight exp(2t sqrt(n+1)), hence t=c/2. This is a proved moment, not an input assumption.
+
+**Step 7: Valid for every sequence in the entire centered family, not just chosen representatives..**
+
+A3 gives a_0>c0 on M_c. For any sequence a_j in M_c, weak subsequential compactness gives a_j weakly to a with a_0>=c0, so t=||a||^2>0. Apply A2 directly to a_j=a+r_j: r_j is bounded weakly null and ||r_j||^2 tends to 1-t. A4 homogeneity and the physical e2 bound yield I>=I[t^3+(1-t)^3]+(5/16)[t(1-t)^2+(1-t)t^2]=I+t(1-t)(5/16-3I). Since I<=1/32, the last factor is at least 7/32>0, so t=1. Thus convergence is strong. E, occupation coordinates, and sqrt(m), which is 1-Lipschitz, preserve E=I and the maximizing positive gauge. Reapplying A3 to the limiting actual negative minimizer retains its strict lower bound. This proves nonempty compact M_c without a new displacement, energy bound, or assumed analytic vector.
+
+**Step 8: Valid: common gap follows from positive-compact ordered eigenvalue continuity..**
+
+On unit vectors, ||sigma_a-sigma_b||_1<=2||a-b||. Hence K_a varies continuously in operator norm; for example ||K_a-K_b||<=3||sigma_a-sigma_b||_1<=6||a-b||. Contractivity of Phi* gives continuity of B_a. The min-max formulas imply |lambda_j(B)-lambda_j(C)|<=||B-C|| for positive compact operators, including j=1,2 and zero padding. R1 makes the top eigenvalue simple and A6 identifies it as mu_a>0. Therefore delta(a)=lambda_1(B_a)-lambda_2(B_a)>0 is continuous on the compact whole M_c, and its minimum delta_* is positive. This argument tolerates rank changes. It does not assert a Hessian gap.
+
+**Step 9: Valid: common complex neighborhood, positive-seed gauge, Cauchy radius and tail..**
+
+For every density 0<=K_a<=Id/4. The bounded J map gives ||L_K(x,y)-Phi*(K)||<=||K||[||E2(conjugate(x),conjugate(y))-e2||||E2(x,y)||+||E2(x,y)-e2||], which tends uniformly to zero over this K-family. Choose rho as in the theorem. On Gamma_a: |z-mu_a|=delta_*/3, self-adjoint spectral distances give ||(z-B_a)^(-1)||<=3/delta_*; Neumann inversion gives ||(z-L_{K_a})^(-1)||<=6/delta_*. Its contour projection therefore has norm at most 2. At zero P_a=|a><a| and P_a e0=a_0 a because a_0 is real positive. Thus F_a=a_0^(-1)P_a(x,y)W_0(x,y) extends D(-alpha)a and has common bound M=2S_rho/c0. The line |t|<=rho lies in |x|,|y|<=rho/2, leaving a holomorphic neighborhood of the closed t-disc. Hence r=rho is valid, with no missing factor 2. Steps 5-6 apply uniformly, c=r/2 gives C=8M^2/3, and n>L implies sqrt(n+1)>=sqrt(L+2), proving the stated tail.
+
+### R4 complete centered-family conclusion
+
+Under I<1/32, let M_c be the entire set of unit global minimizers satisfying the positive maximizing coherent gauge a_0=sqrt(m(a))>0 real and a_1=0, where m(a)=sup_alpha |<D(alpha)e0,a>|^2. The supplied A3–A4 package makes M_c nonempty and norm compact. For a in M_c put K_a=sigma_a-sigma_a^2 and B_a=Phi*(K_a), with mu_a=q_a-p3_a=||B_a||. The top eigenvalue is simple by R1, so with lambda_2(B_a) the second ordered eigenvalue, counting multiplicity and padding finite rank by zeros,
+
+delta_* = min_{a in M_c}(mu_a-lambda_2(B_a))>0.
+
+The min–max Lipschitz bound |lambda_j(B)-lambda_j(C)|<=||B-C|| and ||B_a-B_b||<=6||a-b|| give continuity, and compactness gives the common gap. Choose c0=((4-sqrt(10))/24)^(1/4), so a_0>c0 on M_c. Uniform holomorphy and the common gap give rho>0 with ||L_{K_a}(x,y)-B_a||<=delta_*/6 on |x|,|y|<=rho. If W_0(x,y)(z)=exp(-(x^2+y^2)/2-(x+iy)z) and S_rho is its supremum norm on that polydisc, take M=2S_rho/c0 and r=rho. At the Riesz projection P_a(0)=|a><a|, P_a(0)e0=a_0a; finite polynomial seeds establish the degenerate case before the centered rank-one formula is used. The contour resolvent has norm at most 6/delta_* and the projection norm is at most two. Cauchy estimates, the exact creation line, Parseval, Tonelli and exp(u)<=2cosh(u) yield the factorial and square-root estimates uniformly on M_c. In particular c=r/2 and C=8M^2/3 give
+
+sup_{a in M_c} sum_n exp(c sqrt(n+1))|a_n|^2 <= C,
+
+sum_{n>L}|a_n|^2 <= C exp(-c sqrt(L+2))
+
+for every L>=0. The common constants are existential; no numerical value, uniform exp(tN), uniqueness of minimizers, or Hessian gap is claimed.
+
+### R5 theorem: one finite coordinate projection and exact l2 tail graphs
+
+Assume the same conditional I<1/32 problem and define Z={z in H:z_0=0} as a real Hilbert space, B_Z={||z||<1}, Xi(z)=sqrt(1-||z||^2)e0+z, F=E o Xi, and K={a-a_0e0:a in M_c}. There is one integer L>=2 and P=P_L projecting onto the complex span of e_1,...,e_L, with Q=Id-P on Z. The ambient chart and every variation retain arbitrary complex a_1 and the entire l2 tail. There are c,H,Cemb,Cgrad,kappa>0, theta in [1/2,1), and 0<epsilon<(1/32-I)/2, depending only on this fixed conditional problem, such that:
+
+* every a,b in M_c satisfy ||a-b||<=Cemb (sum_{n=1}^L |a_n-b_n|^2)^(1/2); hence P is injective on the whole centered minimizing family and has a Lipschitz inverse on its image;
+* finitely many open product neighborhoods in PZ x QZ cover K, and in each there is a real-analytic l2-valued Psi_j:U_j->QZ with Q grad F(x+y)=0 iff y=Psi_j(x);
+* f_j(x)=F(x+Psi_j(x)) obeys f_j>=I and, with eta=y-Psi_j(x),
+  (c/2)||eta||^2 <= F(x+y)-f_j(x) <= (H/2)||eta||^2,
+  ||eta|| <= c^(-1)||Q grad F(x+y)||;
+* within these neighborhoods F=I iff y=Psi_j(x) and f_j(x)=I, full stationarity iff y=Psi_j(x) and grad f_j(x)=0, and local minima correspond exactly between F and f_j; the phase slice gives the corresponding full-sphere statements while arbitrary displacements and other kernel directions remain;
+* every unit completed input a with E(a)<=I+epsilon satisfies (E(a)-I)^theta<=Cgrad||R(a)||, where sphere stationarity is exactly R(a)=0, so no stationary energy lies in (I,I+epsilon]; and
+* every unit global minimizer has lambda_6(sigma_a)>=kappa, while after reducing epsilon every unit E<=I+epsilon input has lambda_6>=kappa/2 and sum_{j>=6}lambda_j>=kappa/2, with ordered eigenvalues counted with multiplicity and padded by zeros at finite rank.
+
+### R5 proof
+
+**Step 1: Physical real analyticity, full phase slice, and residual.**
+
+The bound ||C_u C_v*||_1<=||u||||v|| and trace-ideal multiplication make E a continuous real homogeneous degree-six polynomial on all H. Xi is real analytic on B_Z, hence so is F. This never differentiates an unbounded number, creation, or Weyl generator.
+
+With a=Xi(z) and a0=sqrt(1-||z||^2), J_z v=D Xi(z)v=v-e0 Re<z,v>/a0. Its range is {h:Re<a,h>=0 and Im h0=0}. Every full real sphere tangent vector decomposes uniquely as J_z v+t ia because a0>0: take t=Im h0/a0 and v=P_Z(h-t ia). Thus the slice removes exactly one real phase direction, without removing either real component of a1.
+
+On the unit sphere, A5 gives ambient grad E=2(e2 Id-B_a)a. Euler homogeneity gives radial derivative 6E and thus sphere grad E=2[(e2-3E)a-B_a a]=-2R(a), since e2-3E=q-p3. Therefore grad F=J_z*[-2R(a)]. Phase invariance gives zero derivative on ia, so grad F=0 iff the full sphere gradient vanishes. This proves stationarity iff R=0, not merely one implication.
+
+J_z*J_z=Id+ell_z*ell_z, ell_z(v)=Re<z,v>/a0, so ||J_z||=1/a0. Compactness and the vacuum bound give a uniform chart bound near K. Consequently any inequality controlled by ||grad F|| converts to a physical residual inequality with a fixed factor 2 sup||J_z||.
+
+**Step 2: Exact Hessian 2Q and one uniform high-direction coercivity.**
+
+At every z in K, a=Xi(z) is a constrained critical point, so the chart Hessian equals the constrained Hessian pulled back by J_z. The accepted normalized real-curve expansion is E((a+t h)/sqrt(1+t^2||h||^2))=I+t^2 Q_a(h)+O(t^3), h in the FULL real sphere tangent. Hence D2F(z)[v,v]=2Q_a(J_z v). The factor 2 is compulsory and correctly retained.
+
+Define on H_R the compact real-linear map M_a h=((1/2)Id-sigma_a)^(1/2)Phi(|h><a|+|a><h|), with values in S2_R. Its squared norm is Tr(((1/2)Id-sigma_a)X_h^2). Using real adjoints and composition by J_z gives D2F(z)=2mu_a Id+T_z, T_z=2mu_a ell_z*ell_z-2J_z*(B_a+M_a*M_a)J_z. Every term in T_z is compact and real self-adjoint. No claim that unrestricted M_a*M_a preserves the tangent is used; J_z* performs the necessary compression.
+
+The map z->T_z is operator-norm continuous on K directly from T_z=D2F(z)-2mu_a Id. Here mu_a is trace-polynomial continuous. Thus {T_z:z in K} is a NORM-compact set of compact operators. For a single compact T, Q_L->0 strongly and finite-rank approximation give ||Q_L T Q_L||->0. A finite operator-norm net then gives sup_K||Q_L T_z Q_L||->0. Pointwise compactness without this norm-compactness would not justify one L.
+
+Let mu_*=min_K mu_a>7/32. Choose L so sup_K||Q_L T_z Q_L||<=mu_*. Then D2F(z)[v,v]>=mu_*||v||^2 for v in Q_L Z. A finite continuity cover of compact K gives rho,c,H>0 with the entire tube U={dist(z,K)<rho} contained in B_Z, high-direction D2F>=c Id, and ||D2F||<=H on U. Taking rho below the distance from K to the chart boundary ensures this tube condition. Enlarging L preserves the same c,H,rho because the new high space is a subspace of the old one. No full-Hessian positivity or common kernel complement is assumed.
+
+**Step 3: Integrated-Hessian global finite-coordinate embedding.**
+
+Compactness of the ENTIRE K in l2 gives sup_{z in K}||Q_L z||->0. Enlarge the SAME L from Step 2 until this supremum is <rho/8. For any z,w in K set u=P(w-z), v=Q(w-z); then ||v||<rho/4.
+
+If ||u||<rho/2, every point of z+t(u+v), 0<=t<=1, lies within 3rho/4 of z in K, hence in U. Both endpoint gradients vanish. The fundamental theorem for the continuous Hessian, paired with the fixed real high vector v, gives 0=integral_0^1 D2F(z+t(u+v))[u+v,v]dt >= c||v||^2-H||u||||v||. For v=0 the desired bound is immediate; otherwise division yields ||v||<=(H/c)||u||.
+
+If ||u||>=rho/2, the unit-ball bound gives ||w-z||<=2<=(4/rho)||u||. Thus for every pair in K, ||w-z||<=C_Z||P(w-z)|| with C_Z=max(sqrt(1+(H/c)^2),4/rho). In particular a zero low-coordinate difference forces a zero whole difference.
+
+The convex closed ball ||z||<=sqrt(1-c0^2) contains K, and ||D Xi||<=1/c0 on it. Integrating D Xi along its line segments proves the stated estimate for a,b in M_c with Cemb=C_Z/c0. This proves global injection and a Lipschitz inverse on the image; local IFT charts alone would not prove that global assertion.
+
+**Step 4: Analytic l2 tail graphs, estimates and all point correspondences.**
+
+For z0=x0+y0 in K apply the REAL-analytic Banach IFT to g(x,y)=Q grad F(x+y), a map PZ x QZ->QZ. Its y derivative A_Q=Q D2F(z0)|_{QZ} is bounded self-adjoint and >=c Id. This implies an isomorphism: its range is closed by the lower bound and dense because ker(A_Q*)=0. Also ||A_Q^(-1)||<=1/c. The IFT yields a QZ-valued real-analytic Psi, uniqueness of g=0 in a product neighborhood, and Psi(x0)=y0.
+
+Shrink each product neighborhood so that Psi(x) stays in its high ball and every segment between Psi(x) and y remains in U at fixed x. With eta=y-Psi(x), integrating the high Hessian twice gives F(x+y)-F(x+Psi(x))=integral_0^1 (1-t)D2F(x+Psi(x)+t eta)[eta,eta]dt, hence the exact c/2 and H/2 bounds.
+
+Integrating once and pairing with eta gives <Q grad F(x+y),eta> >= c||eta||^2, since Q grad F vanishes at the graph. Cauchy-Schwarz proves ||eta||<=||Q grad F(x+y)||/c, including eta=0.
+
+On the graph, Df(x)[u]=DF(x+Psi(x))[u+D Psi(x)u]=<P grad F(x+Psi(x)),u>, because D Psi takes values in QZ and the high gradient vanishes. Thus grad f=P grad F on the graph, so full stationarity is equivalent to grad f=0 there. The phase decomposition of Step 1 makes this a full sphere stationary correspondence.
+
+Every chart point is an actual unit input, so F>=I and f>=I. The positive transverse remainder proves F=I iff eta=0 and f=I. It also proves the general local-minimum correspondence: a local minimum of f lifts to one of F, and restriction to the continuous graph gives the converse. A finite subcover covers every point of K. Nothing claims a single global analytic extension over an open set of low coordinates; all high amplitudes remain in the true l2-valued Psi.
+
+**Step 5: All exponents, constants and the uniform local gradient inequality.**
+
+At each graph base x_j, f_j is real analytic on a finite-dimensional REAL space PZ, f_j(x_j)=I and grad f_j(x_j)=0. Feehan-Maridakis v10 Theorem 2.2(1) gives (f_j-I)^alpha_j<=A_j||grad f_j|| for some 0<alpha_j<1 near x_j. With 0<=f_j-I<=1, replacing alpha_j by theta_j=max(alpha_j,1/2) preserves the inequality. If f_j is locally constant at I, choose theta_j=1/2; its inequality is trivial. No Morse-Bott part (2) is invoked.
+
+For z=x+y, p=grad F(z), and eta=y-Psi_j(x), Step 4 yields ||eta||<=||p||/c. The Hessian bound on the high segment gives ||grad f_j(x)||<=||p||+H||eta||<=(1+H/c)||p||, and 0<=F(z)-f_j(x)<=D||p||^2 with D=H/(2c^2).
+
+For 0<theta_j<1, subadditivity gives (F-I)^theta_j<=A_j(1+H/c)||p||+D^theta_j||p||^(2theta_j). Shrink around each base so ||p||<=1. Since 2theta_j>=1, ||p||^(2theta_j)<=||p||. Thus a valid local constant is Atilde_j=A_j(1+H/c)+D^theta_j. This verifies every exponent direction and the vertical-error power.
+
+Choose a finite collection of these shrunk neighborhoods covering K. With theta=max_j theta_j<1, A=max_j Atilde_j, and F-I<=1, the same inequality (F-I)^theta<=A||grad F|| holds on their union. A common bound J_* for J_z gives Cgrad=2J_* A after Step 1. Alternatively D2F(z)=2mu Id+compact is index-zero Fredholm under the real Hilbert Riesz identification, so the checked Theorem 1 applies. The finite-dimensional proof above supplies the exact reduction and estimates rather than assuming its exponent.
+
+**Step 6: Every low centered input lies near the whole compact family.**
+
+More precisely, for every open norm neighborhood O of K in B_Z there is epsilon_O>0 such that every coherently maximizing, positive-phase centered unit b with E(b)<=I+epsilon_O has b-b0 e0 in O. Suppose otherwise and choose such b_j outside O with E(b_j)->I. These are arbitrary already centered near-minimizers, not just selected orbit representatives.
+
+A3 gives an eventually uniform b_j0>c0. Take a weakly convergent subsequence b_j weakly to b, and set t=||b||^2. Then b0>=c0, so 0<t<=1; r_j=b_j-b is bounded weakly null and ||r_j||^2->1-t. Apply A2 directly to this sequence. Both cross-mass terms, homogeneity and the physical e2 lower bound yield I>=I[t^3+(1-t)^3]+(5/16)[t(1-t)^2+(1-t)t^2]=I+t(1-t)(5/16-3I).
+
+Because I<=1/32, the last coefficient is >=7/32>0. Thus t=1, whence b_j->b strongly, ||b||=1 and E(b)=I. No convergence of E(r_j) or energy/moment bound is required: the pointwise homogeneous lower bound suffices under liminf.
+
+The coherent supremum sqrt(m(.)) is 1-Lipschitz in H. Strong convergence therefore preserves b0=sqrt(m(b))>0 real and b1=0, so b belongs to the ENTIRE M_c. The chart coordinates converge into K subset O, a contradiction. The same argument proves uniform distance of all centered low-sublevel inputs to M_c tends to zero as the sublevel shrinks. Merely knowing compactness modulo unspecified displacements would not supply this statement.
+
+**Step 7: All-input physical residual inequality and critical-value gap.**
+
+Use Step 6 for the neighborhood obtained in Step 5. For every arbitrary unit completed a choose any attained maximizing coherent overlap and a scalar phase, giving b=W a in the positive centered gauge. The chosen W is a FIXED bounded complex unitary when differentiating. Completed covariance and homogeneity imply E(Wu)=E(u) for every u.
+
+Differentiating with W held fixed and using real Hilbert Riesz uniqueness gives grad_sphere E(Wa)=W grad_sphere E(a). Thus R(Wa)=W R(a) and ||R(b)||=||R(a)||. No differentiability or continuous choice of the maximizing center as a function of a is needed, and no initially finite photon moment is used.
+
+Step 5 applied to b therefore gives (E(a)-I)^theta<=Cgrad||R(a)|| for EVERY unit a in the common low sublevel. Reduce epsilon to be positive and <(1/32-I)/2, and later reduce it for Step 8. If a is stationary in this sublevel, R(a)=0, so E(a)=I. Conversely every global minimizer is stationary by A5. A family of minima or additional degeneracy at the same bottom value is fully consistent with this result.
+
+**Step 8: Sixth-eigenvalue mass with all ranks and all low inputs.**
+
+T2 implies rank(sigma_a)>=6 for each a in M_c, so lambda_6(sigma_a)>0. For positive compact S,T on this same infinite H, the min-max formula gives |lambda_j(S)-lambda_j(T)|<=||S-T|| with multiplicity and finite-rank zero padding, including j=6. It needs no simple eigenvalues, common eigenvectors or locally fixed rank.
+
+For unit a,b, the rank-one decomposition gives ||sigma_a-sigma_b||_1<=|| |a><a|-|b><b| ||_1<=2||a-b||, using the trace-norm contraction of the physical channel on self-adjoint trace class. Since operator norm<=trace norm, lambda_6 o sigma is continuous on the whole norm-compact M_c. Therefore kappa=min_{a in M_c}lambda_6(sigma_a)>0. Pointwise positive rank alone, without that compactness/continuity, would not imply this minimum.
+
+The distance version of Step 6 puts EVERY centered low-sublevel b within kappa/4 of M_c after one common reduction of epsilon. Choosing a corresponding a in M_c gives lambda_6(sigma_b)>=kappa-2||b-a||>=kappa/2 (with a strict inequality available if the distance is strict). Output displacement covariance preserves the eigenvalues and extends the same bound to every original unit input. It also gives lambda_6>=kappa for all uncentered global minimizers.
+
+Because all ordered eigenvalues are nonnegative, sum_{j>=6}lambda_j>=lambda_6. The sum is well-defined for every positive trace-class output, including infinitely many positive eigenvalues. Rank changes therefore cause no gap in either the eigenvalue or the mass statement.
+
+### R5 F0–F5 interfaces and native limits
+
+**F0.** Reuse the exact completed occupation/Bargmann, C_a/S2, Phi/S1, trace and normal-channel joins. Instantiate bounded real polynomial differentiation on the realification of H, the positive-vacuum sphere chart and arbitrary-input displacement covariance. Prove sphere grad=-2R and the phase-slice equivalence.
+
+Native boundary: The named historical physical joins and analytical A5 are evidence, not new kernel receipts. No active source inspection was allowed, so exact current native declaration/API availability is unassessed. A coherent-input-only covariance theorem is insufficient.
+
+**F1.** Reuse or expose R3 full real sphere Hessian and compact coherence map; supply real Hilbert-Schmidt/adjoint identities, J* compression, the constrained second derivative 2Q, and D2F=2mu Id+compact. Prove norm continuity from the actual analytic F. The scalar bound mu>7/32 uses Newton and physical q<=3/8.
+
+Native boundary: Do not claim the fixed-B gap supplies a Hessian gap. R1 channel injectivity, simplicity and R2/R4 analytic orbit machinery are unnecessary extra dependencies if the scalar bound and the compact-family clauses are independently available.
+
+**F2.** Reuse compactness of the ENTIRE M_c, exact gauge and vacuum lower bound. Prove uniform compression of a norm-compact compact-operator family by occupation tails; select one L and one tube; prove the integrated-Hessian all-pairs estimate and Xi Lipschitz bound. Supply the genuine REAL-analytic Banach IFT on infinite-dimensional QZ, high-Hessian invertibility, analytic Riesz gradient, exact graph equivalence and integral remainder/residual bounds.
+
+Native boundary: Native suppliers for compact operator approximation, operator-norm continuity, Banach differentiation/integration, real adjoints and the analytic IFT must be found or proved under repository rules. A merely smooth IFT would not by itself certify analytic f; a finite-dimensional or truncated-tail IFT would prove a different theorem.
+
+**F3.** Supply a proved finite-dimensional real-analytic Lojasiewicz gradient theorem with exactly Theorem 2.2(1) hypotheses, or a proved real Hilbert analytic-Fredholm specialization of Theorem 1, then instantiate the finite-cover exponent and all-input transfer estimates. A continuous real Riesz identification is definite and D2F=2mu Id+compact is Fredholm index zero, so the alternative Theorem 1 has its hypotheses.
+
+Native boundary: This primary citation establishes a valid mathematical ingredient, not a Lean axiom or a verified existing supplier. No source search was allowed here, so no assertion that a suitable native theorem is present or absent is made. If unavailable, retain the full analytical theorem and mark the gradient/critical-value native claims as awaiting this supplier. The embedding, tail graph and spectral conclusions have no Lojasiewicz dependency.
+
+**F4.** Reuse A2-A4 for every ALREADY centered minimizing sequence and both cross-mass terms; prove the low-sublevel neighborhood/distance lemma, coherent-supremum Lipschitz gauge continuity and fixed-unitary real-gradient equivariance. For the spectrum reuse T2, the actual positive trace-class output, trace-norm continuity, compact positive min-max and finite-rank zero padding.
+
+Native boundary: No local fixed-rank eigenvector API, finite output-rank assumption or countable spectral entropy theorem is needed for lambda_6 and the nonnegative tail sum. A claim merely about one chosen minimizing sequence or one selected representative per orbit is too weak for the final uniform statements.
+
+**F5.** Keep the inherited P/T/A/R scopes, all center coefficients, every middle and high relative sector, initial unrestricted domain and all global-sign/entropy abstentions. Retain source identity and same-owner responsibility for the analytical-to-native joins.
+
+Native boundary: R5 does not turn the analytic premises into compiled declarations. Future same-owner formalization needs faithful D5/Blueprint statements, actual suppliers, scoped kernel/axiom evidence, and existing repository validation/admission gates. This worker neither inspected nor performed those gates.
+
+### R4/R5 boundaries and preserved global target
+
+The fixed-B spectral gap from R1 is not a full Hessian gap: R3 retains the real Hessian 2Q, the restricted real adjoint, compact coherence correction, phase direction, and coercivity only off the entire finite-dimensional kernel. R5 does not assert isolated minimizers, Morse–Bott structure, a finite cutoff, finite output rank, or a classification of the Hessian kernel. Its Lojasiewicz input is a finite-dimensional real-analytic theorem applied after the exact l2-valued graph reduction; a smooth, finite-dimensional, or truncated-tail substitute would prove a different statement. All complex coefficients, including a_1 before the phase-only slice, and all same-input physical covariance remain in scope.
+
+The same-input inequality p3>=5/32-(3/2)(3/8-q) remains open for arbitrary physical inputs. At a hypothetical negative minimizer retain Ba=mu a, the full real second variation, every center coefficient, every M=6,...,63 sector and the complete M>=64 tail. No global e3 sign, entropy theorem, all-n/all-eta conjecture, uniqueness, or parent-goal completion follows. R4 and R5 are conditional analytical results, pending the named native suppliers and the repository gates described below.
+
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/FockAttenuator/Attenuator.DensityOperator`
