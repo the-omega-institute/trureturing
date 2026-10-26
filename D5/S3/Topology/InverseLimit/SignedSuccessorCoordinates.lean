@@ -24,7 +24,7 @@ namespace D5.S3.Topology.InverseLimit.SignedSuccessorCoordinates
 open SignedProperLimit
 open D5.S3.Topology.Measures.SignedSplitSuccessor (splitCarrier)
 
-private def last (a : Ordinal.{0}) : Coord (Order.succ a) := ⟨a, Order.lt_succ a⟩
+def last (a : Ordinal.{0}) : Coord (Order.succ a) := ⟨a, Order.lt_succ a⟩
 
 /-- Removing the last ordinal coordinate leaves exactly the old indices. -/
 private def oldIndices (a : Ordinal.{0}) :

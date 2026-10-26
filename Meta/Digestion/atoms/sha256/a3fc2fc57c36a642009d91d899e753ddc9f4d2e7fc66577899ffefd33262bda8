@@ -1,0 +1,24 @@
+**假设 72.2（实际原生记录与给定的量子模型）。** Fix one known real $\theta$ with $\sin(2\theta)\ne0$. The actual branches on $H$ are
+
+$$
+A_0=\cos\theta K_0+\mathrm i\sin\theta K_1,\qquad
+A_1=\mathrm i\sin\theta K_0+\cos\theta K_1.
+\tag{72.6}
+$$
+
+Use exactly the repetition, ready-environment, interaction, measurement and discard contract of second-volume Assumption 39.2. Retain every label and measure $(P,I_5-P)$ at a predetermined finite endpoint. There is no inserted feedback or gate. Distinct endpoints refer to distinct endpoint experiments; they do not require simultaneous terminal measurements on one sample.
+
+For $h=(j_1,\ldots,j_n)$ the leftmost letter acts earliest. All word products have the same convention:
+
+$$
+\begin{gathered}
+A_h=A_{j_n}\cdots A_{j_1},\quad V_0=Ue^{\mathrm i\theta W},\quad V_1=V_0W,
+\quad V_h=V_{j_n}\cdots V_{j_1},\quad M_h=V_h^\dagger EV_h,\\
+P_{\rho,n}(h,1)=2^{-n}\operatorname{Tr}(\rho M_h),\qquad
+P_{\rho,n}(h,0)=2^{-n}[1-\operatorname{Tr}(\rho M_h)].
+\end{gathered}
+\tag{72.7}
+$$
+
+Empty products are identities, including at $n=0$. These are joint laws on $\Omega_n=\{0,1\}^n\times\{0,1\}$, with both terminal outcomes and every original $2^{-n}$ weight. Complex Hilbert space, Born pairing, CP composition, the specified source and the actual acquisition/control contract are supplied premises. Exact probabilities as mathematical objects do not assert their acquisition from finite samples.
+
