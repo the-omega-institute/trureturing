@@ -1112,9 +1112,6 @@ private noncomputable def angularMap : (Fin n → ℝ) →L[ℝ] (Fin n → ℂ)
   ContinuousLinearMap.pi fun j =>
     Complex.I • (Complex.ofRealCLM.comp (ContinuousLinearMap.proj j))
 
-@[simp] private theorem angularMap_apply (θ : Fin n → ℝ) (j : Fin n) :
-    angularMap θ j = Complex.I * (θ j : ℂ) := rfl
-
 private theorem second_angular_substitution {f : (Fin n → ℂ) → ℂ}
     (hf : ContDiffAt ℂ 2 f 0) (j k : Fin n) :
     second (𝕜 := ℝ) (fun θ : Fin n → ℝ => f (angularMap θ)) 0
@@ -1133,10 +1130,10 @@ private theorem second_angular_substitution {f : (Fin n → ℂ) → ℂ}
   rw [hs, second_complex_to_real hf]
   have hLj : L (Pi.single j 1) = Complex.I • (Pi.single j (1 : ℂ)) := by
     ext i
-    by_cases hij : i = j <;> simp [L, Pi.single_apply, hij]
+    by_cases hij : i = j <;> simp [L, angularMap, Pi.single_apply, hij]
   have hLk : L (Pi.single k 1) = Complex.I • (Pi.single k (1 : ℂ)) := by
     ext i
-    by_cases hik : i = k <;> simp [L, Pi.single_apply, hik]
+    by_cases hik : i = k <;> simp [L, angularMap, Pi.single_apply, hik]
   rw [hLj, hLk, second_eq_derivative hf, second_eq_derivative hf]
   simp only [map_smul, ContinuousLinearMap.smul_apply, smul_smul, smul_eq_mul]
   rw [← mul_assoc, Complex.I_mul_I, neg_one_mul]
@@ -1527,11 +1524,6 @@ section Fin
 private noncomputable def bridgeFinEquiv (n : ℕ) : (Fin n ⊕ Unit) ≃ Fin (n+1) :=
   (Equiv.sumCongr (Equiv.refl (Fin n)) (Equiv.ofUnique Unit (Fin 1))).trans finSumFinEquiv
 
-@[simp] private lemma bridgeFinEquiv_inl (n : ℕ) (i : Fin n) :
-    bridgeFinEquiv n (.inl i) = i.castSucc := rfl
-@[simp] private lemma bridgeFinEquiv_inr (n : ℕ) :
-    bridgeFinEquiv n (.inr ()) = Fin.last n := rfl
-
 private lemma differenceMinor_det (n : ℕ) (T : Matrix (Fin (n+1)) (Fin (n+1)) ℂ)
     (hrow : ∀ i, ∑ j, T i j = -1) (hcol : ∀ j, ∑ i, T i j = -1) :
     (Matrix.of fun j k : Fin n =>
@@ -1551,8 +1543,7 @@ private lemma differenceMinor_det (n : ℕ) (T : Matrix (Fin (n+1)) (Fin (n+1)) 
   have hh : bridgeH T' = (Matrix.of fun j k : Fin n =>
       T j.castSucc k.castSucc - T j.castSucc (Fin.last n) -
         T (Fin.last n) k.castSucc + T (Fin.last n) (Fin.last n)) := by
-    ext j k
-    simp [bridgeH, T', e, Matrix.submatrix_apply]
+    rfl
   rw [hh] at h
   simpa using h
 end Fin

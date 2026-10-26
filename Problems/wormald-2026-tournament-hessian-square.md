@@ -2,9 +2,9 @@
 slug: wormald-2026-tournament-hessian-square
 bibkey: wormald2026tournaments
 doi: null
-triage: open
+triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/WormaldTournamentHessian/Result.claim
+  - D5/S3/Combinatorics/WormaldTournamentHessian/Result.result
 url: https://arxiv.org/abs/2610.16245
 ---
 
@@ -37,85 +37,87 @@ coordinate vectors. `appendLast` uses `Fin.snoc` and retains vertex order.
 
 ## Motivation
 
-The exact computations suggest a rational square without explaining its
-structure. The proposed identity uses the integral skew adjacency
+The rational-square structure is expressed through the integral skew adjacency
 $S=A-A^{\mathsf T}$:
 
 $$\frac d{\mathcal H}=
 \left(\frac{\det(dI+S)}{\det(S+idI)/i}\right)^2.$$
 
 The corresponding source note is `D5/L/GraphInvariants/wormald2026tournaments`.
-A proof of rationality of the expression on the right does not by itself
-identify it with the analytic expression on the left.
+The theorem `calH_closedForm` computes the actual analytic Hessian determinant;
+`result` proves nonvanishing and rational squareness for every local solution.
 
 ## Gap
 
-**OPEN.** A kernel-checked proof relating the actual real angular Hessian to
-the proposed determinant quotient is required. The general local existence
-statement still requires a nonzero final-coordinate derivative of $K$ at
-$\mathbf z$. `localSolutionOfInvertible` applies Mathlib's complex implicit
-function theorem with this invertibility hypothesis; `determinantAtBase`
-and `polynomialSmooth` discharge its zero-value and smoothness conditions.
-No replacement of the Hessian by a prescribed algebraic expression is made.
+**PROVED.** `D5.S3.Combinatorics.WormaldTournamentHessian.Result.result`
+proves `claim`, including existence by the complex implicit function theorem
+and the conclusion for every complex $C^2$ local solution. The consumed theorem
+`calH_closedForm` proves
+
+$$\mathcal H(h)=d\frac{\det(d^2I+S^2)}{\det(d^2I-S^2)}.$$
+
+The determinant, logarithmic phase and two real Fréchet derivatives are the
+original analytic definitions. No algebraic expression replaces them.
 
 ## Route
 
-An alternative to a general corank-one second-derivative formula is the
-rank-one determinant identity. Tournament completeness gives
-$2C=J+S$, where $J=\mathbf1\mathbf1^{\mathsf T}$. Set
-$x_j=2/y_j=d e^{-u_j}$ and $Q(u)=\operatorname{diag}(x)-S$.
-Near zero, $Q(u)$ is invertible and
+Tournament completeness gives $2C=J+S$, where $C=\frac12I+A$ and every
+entry of $J$ is one. For $Q(y)=\operatorname{diag}(2/y)-S$, the matrix
+determinant lemma gives, near the constant point $z=2/d$,
 
-$$K(y)=\det Q(u)\prod_j(y_j/2)
- \left(1-\mathbf1^{\mathsf T}Q(u)^{-1}\mathbf1\right).$$
+$$K(y)=\det Q(y)\prod_j(y_j/2)
+ \left(1-\mathbf1^{\mathsf T}Q(y)^{-1}\mathbf1\right).$$
 
-Regularity implies $S\mathbf1=0$ and
-$\mathbf1^{\mathsf T}S=0$. At zero, $Q=dI-S$ and both the row and column
-sums of $Q^{-1}$ are $1/d$. For
-$\alpha(u)=\mathbf1^{\mathsf T}Q(u)^{-1}\mathbf1$, differentiation gives
+The shifted determinant is nonzero by strict diagonal dominance. Regularity
+makes the row and column sums of $S$ zero. Thus at the constant point,
+$Q=dI-S$ and $V=Q^{-1}$ has every row and column sum equal to $1/d$.
+Writing $\alpha(y)=\mathbf1^{\mathsf T}Q(y)^{-1}\mathbf1$, the derivative
+formulas in the original $y$ coordinates are
 
-$$\alpha_j(0)=1/d,\qquad
-\alpha_{jk}(0)=(Q^{-1})_{jk}+(Q^{-1})_{kj}-\delta_{jk}/d.$$
+$$\alpha_j=\frac12,\qquad
+\alpha_{jk}=z^{-2}(V_{jk}+V_{kj})-z^{-1}\delta_{jk}.$$
 
-The implicit relation $\alpha(u',\varphi(u'))=1$ then gives
-$\varphi_j=-1$. Let $R$ have columns $e_j-e_d$ and put
-$T=I-d(Q^{-1}+Q^{-\mathsf T})$. Its second derivative matrix is
-$R^{\mathsf T}TR$. On $W=\mathbf1^\perp$, the Gram determinant of these
-columns is $d$, so
+Every local solution satisfies $\alpha(y',h(y'))=1$ on a neighbourhood.
+First and second Fréchet differentiation of this germ gives $h_j=-1$ and
+the four-term difference of the second derivatives of $\alpha$.
+The exponential chart, principal logarithm at the positive value $z$, and
+restriction from complex to real scalars identify the actual angular Hessian
+with $-R^{\mathsf T}TR$, where $R$ has columns $e_j-e_d$ and
 
-$$\mathcal H=d\det_W T
-=d\frac{\det_W(d^2I+S^2)}{\det_W(d^2I-S^2)}.$$
+$$T=I-d(V+V^{\mathsf T}).$$
 
-A full-space version avoids choosing a basis of $W$. Let $U=[R\ \mathbf1]$.
-Row addition gives $\det U=d$. Since $T\mathbf1=-\mathbf1$ and
-$\mathbf1^{\mathsf T}T=-\mathbf1^{\mathsf T}$, the off-diagonal blocks of
-$U^{\mathsf T}TU$ vanish and its final diagonal entry is $-d$.
-Taking determinants gives $\det(R^{\mathsf T}TR)=-d\det T$.
-Also, with $Q=dI-S$,
+Both row and column sums of $T$ are $-1$. Put $U=[R\ \mathbf1]$.
+Then $\det U=d$ and $U^{\mathsf T}TU$ has diagonal blocks
+$R^{\mathsf T}TR$ and $-d$, with zero off-diagonal blocks. Hence
 
-$$T=I-d(Q^{-1}+Q^{-\mathsf T})
-=-(d^2I+S^2)(d^2I-S^2)^{-1}.$$
+$$\det(R^{\mathsf T}TR)=-d\det T.$$
 
-Oddness of $d$ then gives the same Hessian formula using full-space
-determinants. This is a proposed replacement for the subspace determinant
-bridge, not an additional Lean theorem.
+The resolvent calculation yields
 
-Here $\dim W=d-1$ is even. The angular substitution $u=i\theta$
-negates the Hessian and leaves its determinant unchanged.
-The full-space determinants in the last quotient each acquire the same
-factor $d^2$ from the constant direction. Transposition yields
-$\det(dI-S)=\det(dI+S)$. Also
-$\det(S-idI)=\overline{\det(S+idI)}=-\det(S+idI)$ for odd $d$.
-Factoring $d^2I\pm S^2$ therefore yields the proposed square.
-This is a proposed mathematical derivation; the analytic and subspace
-identities in this paragraph are not asserted as Lean theorems.
+$$T(d^2I-S^2)=-(d^2I+S^2).$$
+
+The quadratic denominator is nonsingular because it factors as
+$(dI-S)(dI+S)$. Regular tournaments have odd order, so $d-1$ is even;
+the overall minus sign of the angular Hessian leaves its determinant
+unchanged. Taking determinants gives `calH_closedForm`.
+
+Transposition identifies $\det(dI-S)$ and $\det(dI+S)$. The imaginary shift
+$S+idI$ is a Gaussian-integer matrix with purely imaginary determinant in odd
+dimension. Its determinant divided by $i$ is a nonzero integer. Factoring
+$d^2I-S^2$ and $d^2I+S^2$ therefore expresses their determinant quotient as
+the square of the rational in Motivation.
+
+Finally, every first coordinate derivative of $K$ at the constant point is
+$-\det(dI-S)/(2d^d)$, which is nonzero. The complex implicit function theorem
+supplies existence; the Hessian calculation applies to every local solution.
 
 ## Falsifier
 
-An incorrect sign in the second implicit derivative, an incorrect factor $d$
-in the Gram determinant, or a missing constant-direction factor would
-invalidate the proposed closed form. The faithful claim requires all local
-solutions, not a single selected function or a formal power series.
+The source-faithfulness checks retain the final coordinate order, the
+principal logarithm at the positive base value, complex $C^2$ regularity,
+the local equation germ, and two real angular derivatives. An assertion for
+only one chosen solution would not imply `claim`; `result` quantifies over
+every function satisfying `IsLocalSolution`.
 
 ## Evidence
 
@@ -143,44 +145,26 @@ between these formulas and Mathlib's derivatives.
 
 ### What the settlement shows
 
-**OPEN.** The conjecture is not claimed settled by this implementation.
+**PROVED.** `D5.S3.Combinatorics.WormaldTournamentHessian.Result.result`
+settles Conjecture 6 in the stated formal model. The consumed public theorem
+`calH_closedForm` computes $\mathcal H$ as the full-space quadratic determinant
+quotient. Consequently the result is independent of which local solution
+satisfying the specified germ is chosen.
 
-**PROVED.** `D5.S3.Combinatorics.WormaldTournamentHessian.Result.regularOdd`
-shows that a regular tournament with at least three vertices has odd order.
-`shiftedDetNeZero` proves nonvanishing of $S+cI$ whenever $|c|=d$.
-`imaginaryShiftIntegral` shows that $\det(S+idI)=bi$ with $b\in\mathbb Z$.
-`algebraicRatioRational` constructs a nonzero rational equal to
-$\det(dI+S)/(\det(S+idI)/i)$ in odd dimension, without requiring regularity.
-`algebraicSquareIdentity` proves
+**PROVED.** The private theorem `regularLocalSolution` derives existence
+from Mathlib's complex implicit function theorem, using the exact nonzero
+coordinate derivative computed by `regularColumnSlopeValue` and
+`K_coordinate_deriv`. The private algebraic stage `regularAlgebraicSquare`
+provides the nonzero rational square used by `result`.
 
-$$\frac{\det(d^2I-S^2)}{\det(d^2I+S^2)}
-=q^2\quad(q\in\mathbb Q,\ q\ne0).$$
-
-`regularAlgebraicSquare` supplies this nonzero rational square for every
-regular tournament of order at least three. These are private algebraic
-lemmas; none states the equality of this quotient with $d/\mathcal H$.
-
-**PROVED.** `D5.S3.Combinatorics.WormaldTournamentHessian.Result.regularDegree`
-gives $d=2r+1$ and the integral row sum $r$.
-`determinantAtBase` proves $K(\mathbf z)=0$, and `polynomialSmooth` proves
-that $K$ is complex $C^2$ everywhere. `localSolutionOfInvertible` proves
-existence of a local solution conditional on invertibility of the
-final-coordinate derivative. It does not discharge that hypothesis.
-
-Its candidate mechanism is a rank-one determinant identity followed by
-skew-symmetric spectral pairing, as detailed in Route.
-
-- **OPEN.** The closed form for the analytic Hessian requires the missing
-  derivative and subspace determinant bridges. Evidence contains the exact
-  finite comparisons, including the rotational $d=5$ test.
-- **OPEN.** Conditional on the closed form, the proposed positive spectral
+- **OPEN.** A separate spectral formalization is not provided. The positive spectral
   square root is
   $\prod_k(d^2+\mu_k^2)/(d^2-\mu_k^2)$, taking one $\mu_k\ge0$ from each
   pair $\pm i\mu_k$ of eigenvalues on $W$. Zero pairs contribute one.
   Each factor follows from the two eigenvalues of a skew-symmetric block;
   the bound $\mu_k<d$ makes it positive. This is a prose consequence of
-  the proposed closed form, not a kernel-checked theorem.
-- **OPEN.** The matrix-tree expression proposed for the numerator is
+  the proved closed form, not a separately kernel-checked spectral theorem.
+- **OPEN.** The matrix-tree expression for the numerator is
   $\det(dI+S)=d^2 2^{d-1}\tau$, where $\tau$ is the number of directed
   spanning arborescences toward a fixed root. For the out-Laplacian
   $L=((d-1)/2)I-A$, one has $dI-S=2L+J$; regularity makes the rooted
@@ -188,7 +172,7 @@ skew-symmetric spectral pairing, as detailed in Route.
   the stated factor. This is a prose consequence of the directed
   matrix-tree theorem, not a Lean theorem here.
 - **OPEN.** Wormald's Conjecture 1, that the rotational tournament maximises
-  the expected number of Hamilton cycles, is not settled. Substituting a
+  the expected number of Hamilton cycles, is not settled. Substituting the
   proved formula for the Hessian into the source's asymptotic expression
   would express its Hessian contribution spectrally. Establishing the
   resulting extremal inequality remains a separate problem.
@@ -198,6 +182,6 @@ skew-symmetric spectral pairing, as detailed in Route.
 The complete source text, printed page numbers, exhaustive literature
 coverage and priority were not independently checked. The supplied source
 and bibliographic excerpts are used without a new network search.
-The proposed analytic, spectral and matrix-tree derivations have not been
-fully compiled in Lean. No `result : claim` or problem-resolution annotation
-is asserted without that proof.
+The spectral product and directed matrix-tree consequences are mathematical
+expositions, not separate Lean theorems in this module. Wormald's Conjecture 1
+remains open here.
