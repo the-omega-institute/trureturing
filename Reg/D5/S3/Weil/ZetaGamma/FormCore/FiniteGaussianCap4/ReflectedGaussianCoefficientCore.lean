@@ -12,16 +12,22 @@ open FiniteGaussianCap4.LaguerreSevenHalf
 noncomputable section
 namespace Reg.D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.ReflectedGaussianCoefficientCore
 
-abbrev signature := Reg.D5.S3.Analytic.PowerSeries.WeightedChargeKernelCore.signature
-abbrev actual := Reg.D5.S3.Analytic.PowerSeries.WeightedChargeKernelCore.actual
-abbrev rejected := Reg.D5.S3.Analytic.PowerSeries.WeightedChargeKernelCore.rejected
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    Unit (fun _ => ℝ → GaussianCoeffSpace) (fun _ => Submodule ℝ GaussianCoeffSpace)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => positiveCurveSpan f (1 / 36)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ⊥) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∃ f : ℝ → GaussianCoeffSpace,
     (∀ t : ℝ, 0 < t → t < 1 / 36 → ∀ n : ℕ,
       f t n = coeffWeight n * actualReflectedCurveCoefficient t n) ∧
-    R.readout () (1 / 36) f = (coeffCharge actualCentralChargeVector).ker
+    R.readout () () f = (coeffCharge actualCentralChargeVector).ker
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨f, _, hker⟩
@@ -44,13 +50,34 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change coeffBasis 1 1 - a 1 * coeffBasis 0 1 = 0 at hcoord
   norm_num [coeffBasis] at hcoord
 
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun _ => coeffBasis 0), ?_⟩
+  change positiveCurveSpan (fun _ => 0) (1 / 36) ≠
+    positiveCurveSpan (fun _ => coeffBasis 0) (1 / 36)
+  intro heq
+  have hmem : coeffBasis 0 ∈ positiveCurveSpan (fun _ => coeffBasis 0) (1 / 36) :=
+    (Submodule.span ℝ ((fun _ : ℝ => coeffBasis 0) '' Set.Ioo 0 (1 / 36))).le_topologicalClosure
+      (Submodule.subset_span ⟨1 / 72, by norm_num, rfl⟩)
+  rw [← heq] at hmem
+  have hbot : positiveCurveSpan (fun _ => 0) (1 / 36) ≤
+      (⊥ : Submodule ℝ GaussianCoeffSpace) := by
+    apply Submodule.topologicalClosure_minimal
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨t, _, rfl⟩
+      exact Submodule.zero_mem _
+    · exact isClosed_singleton
+  have hzero : coeffBasis 0 = 0 := by simpa using hbot hmem
+  have hc0 := congrArg (fun w : GaussianCoeffSpace => w 0) hzero
+  norm_num [coeffBasis] at hc0
+
 def family : Registration arena (type_of% actual_reflected_gaussian_coefficient_core) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_reflected_gaussian_coefficient_core, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := Reg.D5.S3.Analytic.PowerSeries.WeightedChargeKernelCore.family.dependence
+  dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     actual_reflected_gaussian_coefficient_core (Realization signature) Unit Unit where
@@ -66,7 +93,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ r f => positiveCurveSpan f r) (fun e => nomatch e))
+    (fun _ _ f => positiveCurveSpan f (1 / 36)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
