@@ -35,3 +35,11 @@ The strip rigidity lemma is a consequence of the finite envelope on a
 rectangular restriction. A restricted maximum before the exit row is an
 ambient maximum when all outward edges above the strip are downhill.
 No proof of the complete residual polynomial assertion is provided here.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2607.05567
+
+Source: https://arxiv.org/abs/2607.05567v3
+
+Conjecture 8.3 and Lemma 8.2 specify the residual polynomial assertion; Section 7 identifies its count as the configurations whose minima do not all lie on one common side.
