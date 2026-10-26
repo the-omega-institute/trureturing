@@ -87,12 +87,15 @@ def obstructionFamily : Registration obstructionArena obstructionScope where
     cases he
 
 noncomputable def registration_obstruction :
-    Contract.Registration (@visible_iff_no_obstruction)
+    Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0} (@visible_iff_no_obstruction)
       (type_of% (realize sourceSignature (fun i m X => by
         classical
         exact if i then decide (¬ Obstruction m X) else decide (Visible (host m) X))
           (fun e => nomatch e))) (Type → Type) Unit where
-  unitName := `D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai.visible_iff_no_obstruction
+  unitName := Lean.Name.str (Lean.Name.str
+    `D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai.visible_iff_no_obstruction
+    "Reg.D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai/obstructionArena/[anonymous]")
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Graph.MutualVisibility.Andrasfai.obstructionFamily
   realizationSource := none
   generated := false

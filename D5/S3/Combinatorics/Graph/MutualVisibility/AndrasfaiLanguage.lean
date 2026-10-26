@@ -206,8 +206,8 @@ theorem closed_run_unique (w : List Bool) (hlen : w.length % 3 ≠ 0)
     (q r : Fin 5) (hq : q ≠ 4) (hr : r ≠ 4)
     (hqc : machine.evalFrom q w = q) (hrc : machine.evalFrom r w = r) : q = r := by
   by_contra hne
-  have hqe : machine.evalFrom q w ≠ 4 := hqc ▸ hq
-  have hre : machine.evalFrom r w ≠ 4 := hrc ▸ hr
+  have hqe : machine.evalFrom q w ≠ 4 := by rwa [hqc]
+  have hre : machine.evalFrom r w ≠ 4 := by rwa [hrc]
   have he : machine.evalFrom q w ≠ machine.evalFrom r w := by rwa [hqc,hrc]
   have hz : pairRank q r = 0 := by
     cases w with
@@ -227,5 +227,116 @@ theorem closed_run_unique (w : List Bool) (hlen : w.length % 3 ≠ 0)
   have hv := congrArg ZMod.val hcast
   rw [ZMod.val_natCast,ZMod.val_zero] at hv
   exact hlen hv
+
+private def HasDouble (w : List Bool) : Prop :=
+  ∃ p s, w = p ++ [true,true] ++ s
+
+private theorem double_append {w : List Bool} (h : HasDouble w) (s : List Bool) :
+    HasDouble (w++s) := by
+  obtain ⟨p,t,rfl⟩ := h
+  exact ⟨p,t++s,by simp [List.append_assoc]⟩
+
+private theorem marked_double {w : List Bool} (h : Marked w) : HasDouble w := by
+  obtain ⟨p,t,ht,rfl⟩ := h
+  exact ⟨p,t,rfl⟩
+
+private theorem forbidden_double {w : List Bool} (h : ContainsForbidden w) : HasDouble w := by
+  obtain ⟨p,t,s,ht,rfl⟩ := h
+  exact ⟨p,t++[true]++s,by simp [List.append_assoc]⟩
+
+private theorem run_low_of_no_double (w : List Bool) (hn : ¬ HasDouble w) :
+    machine.eval w = 0 ∨ machine.eval w = 1 := by
+  have hi := run_invariant w
+  generalize he : machine.eval w = q at hi ⊢
+  fin_cases q
+  · exact Or.inl rfl
+  · exact Or.inr rfl
+  · exact (hn (marked_double hi)).elim
+  · change ∃ p, Marked p ∧ w=p++[false] at hi
+    obtain ⟨p,hp,rfl⟩ := hi
+    exact (hn (double_append (marked_double hp) [false])).elim
+  · exact (hn (forbidden_double hi)).elim
+
+private theorem run_one_ends_one (w : List Bool) (hn : ¬ HasDouble w)
+    (he : machine.eval w = 1) : ∃ p, w=p++[true] := by
+  have hi := run_invariant w
+  rw [he] at hi
+  change (∃ p, w=p++[true]) ∨ (∃ p, Marked p ∧ w=p++[false,false]) at hi
+  rcases hi with h | ⟨p,hp,rfl⟩
+  · exact h
+  · exact (hn (double_append (marked_double hp) [false,false])).elim
+
+private theorem last_one_not_zero (w : List Bool) : machine.eval (w++[true]) ≠ 0 := by
+  rw [DFA.eval_append_singleton]
+  generalize machine.eval w = q
+  fin_cases q <;> decide
+
+private theorem double_synchronizes (w : List Bool) (hw : HasDouble w)
+    (q r : Fin 5) (hq : machine.evalFrom q w ≠ 4)
+    (hr : machine.evalFrom r w ≠ 4) : machine.evalFrom q w = machine.evalFrom r w := by
+  obtain ⟨p,s,rfl⟩ := hw
+  simp only [DFA.evalFrom_of_append] at hq hr ⊢
+  rcases two_ones (machine.evalFrom q p) with hq2 | hq4
+  · rcases two_ones (machine.evalFrom r p) with hr2 | hr4
+    · rw [hq2,hr2]
+    · exact (hr (by rw [hr4,reject_absorbing])).elim
+  · exact (hq (by rw [hq4,reject_absorbing])).elim
+
+private def copies (w : List Bool) : ℕ → List Bool
+  | 0 => []
+  | k+1 => copies w k ++ w
+
+/-- Every finite block of repeated periods avoids the original full forbidden family. -/
+def PeriodicAvoidance (w : List Bool) : Prop := ∀ k, ¬ ContainsForbidden (copies w k)
+
+private theorem periodic_has_closed_run (w : List Bool) (hp : PeriodicAvoidance w) :
+    ∃ q : Fin 5, q ≠ 4 ∧ machine.evalFrom q w = q := by
+  have hg (k : ℕ) : machine.evalFrom 0 (copies w k) ≠ 4 := by
+    exact (accepts_iff_avoids _).mpr (hp k)
+  by_cases hd : HasDouble (w++w)
+  · let q := machine.evalFrom 0 (w++w)
+    have hq : q ≠ 4 := by simpa [q,copies] using hg 2
+    have hq4 : machine.evalFrom q (w++w) ≠ 4 := by
+      simpa [q,copies,DFA.evalFrom_of_append] using hg 4
+    have hqq : machine.evalFrom q (w++w) = q :=
+      double_synchronizes (w++w) hd q 0 hq4 hq
+    have ht : machine.evalFrom q w ≠ 4 := by
+      simpa [q,copies,DFA.evalFrom_of_append] using hg 3
+    have htf : machine.evalFrom (machine.evalFrom q w) (w++w) =
+        machine.evalFrom q w := by
+      have hh := congrArg (fun z => machine.evalFrom z w) hqq
+      simpa only [DFA.evalFrom_of_append] using hh
+    have htfne : machine.evalFrom (machine.evalFrom q w) (w++w) ≠ 4 := by
+      rw [htf]
+      exact ht
+    have hfix := double_synchronizes (w++w) hd (machine.evalFrom q w) 0 htfne hq
+    rw [htf] at hfix
+    exact ⟨q,hq,hfix⟩
+  · have hn : ¬ HasDouble w := fun h => hd (double_append h w)
+    rcases run_low_of_no_double w hn with h0 | h1
+    · exact ⟨0,by decide,h0⟩
+    · obtain ⟨p,he⟩ := run_one_ends_one w hn h1
+      have heval : machine.eval (w++w) = 1 := by
+        rcases run_low_of_no_double (w++w) hd with h0 | h11
+        · have hl := last_one_not_zero (w++p)
+          have ha : w++w = (w++p)++[true] := by rw [he]; simp [List.append_assoc]
+          rw [ha] at h0
+          exact (hl h0).elim
+        · exact h11
+      refine ⟨1,by decide,?_⟩
+      change machine.evalFrom 0 (w++w) = 1 at heval
+      rw [DFA.evalFrom_of_append] at heval
+      change machine.evalFrom (machine.eval w) w = 1 at heval
+      rwa [h1] at heval
+
+/-- Every periodically admissible word of length not divisible by three has
+exactly one nonrejecting closed lift, with its labelled starting position fixed. -/
+theorem exists_unique_closed_run (w : List Bool) (hlen : w.length % 3 ≠ 0)
+    (hp : PeriodicAvoidance w) :
+    ∃! q : Fin 5, q ≠ 4 ∧ machine.evalFrom q w = q := by
+  obtain ⟨q,hq,hqc⟩ := periodic_has_closed_run w hp
+  refine ⟨q,⟨hq,hqc⟩,?_⟩
+  intro r hr
+  exact closed_run_unique w hlen r q hr.1 hq hr.2 hqc
 
 end D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiLanguage
