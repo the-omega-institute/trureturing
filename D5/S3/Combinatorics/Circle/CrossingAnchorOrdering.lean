@@ -135,8 +135,7 @@ private theorem two_negative_sorted {α : Type*}
     (hsmall : ∀ i ∈ T, |f i| < Q)
     (hv : Q ≤ -f v ∧ -f v ≤ C) (hw : Q ≤ -f w ∧ -f w ≤ -f v)
     (ha : a ∈ T) (ha0 : 0 < f a) (haC : f a ≤ C + f v)
-    (hcM : -f v ≤ 2 * (C + f v))
-    (ham : -f v ≤ f a + (C + f v))
+    (ham : -f w ≤ f a + (C + f v))
     (hb : 0 ≤ b ∧ b ≤ Q - 1) (he : 0 ≤ e ∧ e ≤ C)
     (hmass : b + mass f (T ++ [v, w]) = e) :
     ∃ L : List α, L.Perm (T ++ [v, w]) ∧ InStrip f C b L := by
@@ -218,26 +217,26 @@ private theorem two_negative_sorted {α : Type*}
       have hja : j ≠ a := by intro hh; subst j; dsimp only [c] at hjb; omega
       obtain ⟨hjv, hjw⟩ := hnotneg j hj
       by_cases hpair : b + f i + f j ≤ C
-      · apply hfinishOne [i, j, v] w
-        · simp [hji.symm, hiv, hjv]
+      · apply hfinishOne [i, j, w] v
+        · simp [hji.symm, hiw, hjw]
         · intro r hr; simp only [List.mem_cons, List.not_mem_nil, or_false] at hr
           rcases hr with rfl | rfl | rfl <;> simp [X, hi, hj]
         · change 0 ≤ b ∧ b ≤ C ∧ 0 ≤ b + f i ∧ b + f i ≤ C ∧
             0 ≤ b + f i + f j ∧ b + f i + f j ≤ C ∧
-            0 ≤ b + f i + f j + f v ∧ b + f i + f j + f v ≤ C
+            0 ≤ b + f i + f j + f w ∧ b + f i + f j + f w ≤ C
           dsimp only [c] at hib hjb
           have hh := le_abs_self (f i)
           omega
         · simp [X]
-        · simp [hiw.symm, hjw.symm, hvw.symm]
-        · simp [hia.symm, hja.symm, hav]
-        · exact hw.1
-        · exact hw.2
-        · intro r hr hrK hrw
+        · simp [hiv.symm, hjv.symm, hvw]
+        · simp [hia.symm, hja.symm, haw]
+        · exact hv.1
+        · omega
+        · intro r hr hrK hrv
           rcases (hXmem r).mp hr with hr | rfl | rfl
           · exact hsmall r hr
+          · exact False.elim (hrv rfl)
           · simp at hrK
-          · exact False.elim (hrw rfl)
       · by_cases hgate : -f w ≤ b + f i
         · apply hfinishOne [i, w] v
           · simp [hiw]
@@ -256,16 +255,16 @@ private theorem two_negative_sorted {α : Type*}
             · exact hsmall r hr
             · exact False.elim (hrv rfl)
             · simp at hrK
-        · apply hfinishCompat [i, a, v, j, w]
-          · simp [hia, hiv, hiw, hji.symm, hav, haw, hja.symm, hjv.symm, hjw, hvw]
+        · apply hfinishCompat [i, a, w, j, v]
+          · simp [hia, hiv, hiw, hji.symm, hav, haw, hja.symm, hjw.symm, hjv, hvw.symm]
           · intro r hr; simp only [List.mem_cons, List.not_mem_nil, or_false] at hr
             rcases hr with rfl | rfl | rfl | rfl | rfl <;> simp [X, hi, ha, hj]
           · change 0 ≤ b ∧ b ≤ C ∧ 0 ≤ b + f i ∧ b + f i ≤ C ∧
               0 ≤ b + f i + f a ∧ b + f i + f a ≤ C ∧
-              0 ≤ b + f i + f a + f v ∧ b + f i + f a + f v ≤ C ∧
-              0 ≤ b + f i + f a + f v + f j ∧ b + f i + f a + f v + f j ≤ C ∧
-              0 ≤ b + f i + f a + f v + f j + f w ∧
-              b + f i + f a + f v + f j + f w ≤ C
+              0 ≤ b + f i + f a + f w ∧ b + f i + f a + f w ≤ C ∧
+              0 ≤ b + f i + f a + f w + f j ∧ b + f i + f a + f w + f j ≤ C ∧
+              0 ≤ b + f i + f a + f w + f j + f v ∧
+              b + f i + f a + f w + f j + f v ≤ C
             dsimp only [c] at hib hjb
             have hi' := le_abs_self (f i)
             have hj' := le_abs_self (f j)
@@ -282,48 +281,27 @@ private theorem two_negative_sorted {α : Type*}
               · simp at hnK
               · simp at hnK
             exact small_compatible f Q C hC p n (hsmall p hpT) (hsmall n hnT)
-    · by_cases hgate : -f w ≤ b + f i
-      · apply hfinishOne [i, w] v
-        · simp [hiw]
-        · intro r hr; simp only [List.mem_cons, List.not_mem_nil, or_false] at hr
-          rcases hr with rfl | rfl <;> simp [X, hi]
-        · change 0 ≤ b ∧ b ≤ C ∧ 0 ≤ b + f i ∧ b + f i ≤ C ∧
-            0 ≤ b + f i + f w ∧ b + f i + f w ≤ C
-          have hh := le_abs_self (f i); omega
-        · simp [X]
-        · simp [hiv.symm, hvw]
-        · simp [hia.symm, haw]
-        · exact hv.1
-        · omega
-        · intro r hr hrK hrv
-          rcases (hXmem r).mp hr with hr | rfl | rfl
-          · exact hsmall r hr
-          · exact False.elim (hrv rfl)
-          · simp at hrK
-      · apply hfinishCompat [i, a, v]
-        · simp [hia, hiv, hav]
-        · intro r hr; simp only [List.mem_cons, List.not_mem_nil, or_false] at hr
-          rcases hr with rfl | rfl | rfl <;> simp [X, hi, ha]
-        · change 0 ≤ b ∧ b ≤ C ∧ 0 ≤ b + f i ∧ b + f i ≤ C ∧
-            0 ≤ b + f i + f a ∧ b + f i + f a ≤ C ∧
-            0 ≤ b + f i + f a + f v ∧ b + f i + f a + f v ≤ C
-          dsimp only [c] at hib
-          have hi' := le_abs_self (f i)
-          omega
-        · intro p hp hpK n hn hnK hp0 hn0
-          have hpT : p ∈ T := by
-            rcases (hXmem p).mp hp with hp | rfl | rfl
-            · exact hp
-            · simp at hpK
-            · omega
-          have hpbound : f p ≤ c := by
-            by_contra hh
-            have hpi : p ≠ i := by intro hh; subst p; simp at hpK
-            exact hsecond ⟨p, hpT, hpi, by omega⟩
-          rcases (hXmem n).mp hn with hn | rfl | rfl
-          · exact small_compatible f Q C hC p n (hsmall p hpT) (hsmall n hn)
-          · simp at hnK
-          · dsimp only [c] at hpbound; omega
+    · apply hfinishCompat [i]
+      · simp
+      · intro r hr
+        simp only [List.mem_singleton] at hr
+        subst r
+        exact (hXmem i).mpr (Or.inl hi)
+      · exact hsI
+      · intro p hp hpK n hn hnK hp0 hn0
+        have hpT : p ∈ T := by
+          rcases (hXmem p).mp hp with hp | rfl | rfl
+          · exact hp
+          · omega
+          · omega
+        have hpbound : f p ≤ c := by
+          by_contra hh
+          have hpi : p ≠ i := by intro hh; subst p; simp at hpK
+          exact hsecond ⟨p, hpT, hpi, by omega⟩
+        rcases (hXmem n).mp hn with hn | rfl | rfl
+        · exact small_compatible f Q C hC p n (hsmall p hpT) (hsmall n hn)
+        · dsimp only [c] at hpbound; omega
+        · dsimp only [c] at hpbound; omega
   · have hall (i : α) (hi : i ∈ T) : f i ≤ c := by
       by_contra hh; exact hbad ⟨i, hi, by omega⟩
     apply hfinishCompat [] (by simp) (by simp)
@@ -351,8 +329,7 @@ theorem exists_order_two_negative {α : Type*}
     (hv1 : Q ≤ -f v1 ∧ -f v1 ≤ C) (hv2 : Q ≤ -f v2 ∧ -f v2 ≤ C)
     (ha : a ∈ T) (ha0 : 0 < f a)
     (haC : f a ≤ C - max (-f v1) (-f v2))
-    (hcM : max (-f v1) (-f v2) ≤ 2 * (C - max (-f v1) (-f v2)))
-    (ham : max (-f v1) (-f v2) ≤ f a + (C - max (-f v1) (-f v2)))
+    (ham : min (-f v1) (-f v2) ≤ f a + (C - max (-f v1) (-f v2)))
     (hb : 0 ≤ b ∧ b ≤ Q - 1) (he : 0 ≤ e ∧ e ≤ C)
     (hmass : b + mass f T + f v1 + f v2 = e) :
     ∃ L : List α, L.Perm (T ++ [v1, v2]) ∧ InStrip f C b L ∧
@@ -361,17 +338,17 @@ theorem exists_order_two_negative {α : Type*}
   have hbase : ∃ L : List α, L.Perm (T ++ [v1, v2]) ∧ InStrip f C b L := by
     classical
     by_cases hv : -f v2 ≤ -f v1
-    · rw [max_eq_left hv] at haC hcM ham
+    · simp only [max_eq_left hv, min_eq_right hv] at haC ham
       apply two_negative_sorted f T v1 v2 a Q C b e hQ hC hnd hsmall hv1
-        ⟨hv2.1, hv⟩ ha ha0 (by omega) (by omega) (by omega) hb he
+        ⟨hv2.1, hv⟩ ha ha0 (by omega) (by omega) hb he
       simpa [mass, add_assoc] using hmass
     · have hv' : -f v1 ≤ -f v2 := by omega
-      rw [max_eq_right hv'] at haC hcM ham
+      simp only [max_eq_right hv', min_eq_left hv'] at haC ham
       have hp : (T ++ [v2, v1]).Perm (T ++ [v1, v2]) :=
         (List.Perm.swap ..).append_left T
       obtain ⟨L, hL, hsL⟩ := two_negative_sorted f T v2 v1 a Q C b e hQ hC
         (hp.nodup_iff.mpr hnd) hsmall hv2 ⟨hv1.1, hv'⟩ ha ha0
-        (by omega) (by omega) (by omega) hb he (by
+        (by omega) (by omega) hb he (by
           simp only [mass, List.map_append, List.map_cons, List.map_nil,
             List.sum_append, List.sum_cons, List.sum_nil, add_zero]
           dsimp only [mass] at hmass

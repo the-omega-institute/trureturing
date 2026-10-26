@@ -34,8 +34,7 @@ def weightArena : Arena where
     (∀ i ∈ T, |g i| < Q) →
     (Q ≤ -g v1 ∧ -g v1 ≤ C) → (Q ≤ -g v2 ∧ -g v2 ≤ C) →
     a ∈ T → 0 < g a → g a ≤ C - max (-g v1) (-g v2) →
-    max (-g v1) (-g v2) ≤ 2 * (C - max (-g v1) (-g v2)) →
-    max (-g v1) (-g v2) ≤ g a + (C - max (-g v1) (-g v2)) →
+    min (-g v1) (-g v2) ≤ g a + (C - max (-g v1) (-g v2)) →
     (0 ≤ b ∧ b ≤ Q - 1) → (0 ≤ e ∧ e ≤ C) →
     b + mass g T + g v1 + g v2 = e →
     ∃ L : List α, L.Perm (T ++ [v1, v2]) ∧ InStrip g C b L ∧

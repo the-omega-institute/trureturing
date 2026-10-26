@@ -19,7 +19,7 @@ open TwoOppositeLargeExchange ThreeLargePacketExchange CrossingAnchorOrdering
 open scoped BigOperators
 
 set_option maxHeartbeats 1800000 in
-/-- In the native q≤P, D≤ZZ three-negative residual, the actual crossing
+/-- In the native q≤P three-negative residual, the actual crossing
 anchor orders both retained negative LARGE and every SMALL occurrence,
 with arbitrary old q status and no q-to-zpen source edge.
 The theorem constructs the full word; it assumes no packet or new Legal word. -/
@@ -39,7 +39,6 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     (hzupper : -s k t z ≤ |s k t (hit k 1 p)|)
     (ha : a ∈ smallWord T0 T1 T2 E) (hapositive : 0 < s k t a)
     (hq : hit k 1 a = q)
-    (hzpenlower : |s k t (hit k 1 p)| ≤ -s k t zpen)
     (hqnobigger : s k t q ≤ s k t p)
     (hcrosslo : C k - s k t q < mass (s k t) (oldWord p y zpen z A T0 T1 T2 E))
     (hcrosshi : mass (s k t) (oldWord p y zpen z A T0 T1 T2 E) <
@@ -143,8 +142,6 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
   have hZZQ : Q k ≤ ZZ := hzpenlarge
   have hqP : qq ≤ P := hqnobigger
   have hDaa : D ≤ N k - 4 * aa := by omega
-  have hZZD : D ≤ ZZ := hzpenlower
-  have hδ : 0 ≤ δ := by dsimp only [δ]; omega
   have hZQ : Q k ≤ Z := hzlarge
   have hZD : Z ≤ D := hzupper
   have hZZC : ZZ ≤ C k := le_trans (neg_le_abs _) (hbound zpen)
@@ -154,40 +151,77 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
   have hclo : C k - qq < h := hcrosslo
   have hchi : h < aa - δ := hcrosshi
   have haa3 : 2 * Q k + δ + 1 ≤ 3 * aa := by omega
-  obtain ⟨j, v1, v2, hj, hjmax, htriple, hv1, hv2, hM⟩ :
+  have h3P : 4 * Q k ≤ 3 * P := by
+    have hh : N k < 3 * P := by simpa [← hpabs] using hexpand
+    omega
+  have h3D : 3 * D ≤ 4 * Q k - 3 := by omega
+  obtain ⟨j, v1, v2, hj, hjmax, htriple, hv1, hv2, hM, hsum⟩ :
       ∃ j v1 v2 : Fin k, j ∈ [y, zpen, z] ∧
         (∀ i ∈ [y, zpen, z], -f i ≤ -f j) ∧
         [v1, v2, j].Perm [y, zpen, z] ∧
         (Q k ≤ -f v1 ∧ -f v1 ≤ C k) ∧
         (Q k ≤ -f v2 ∧ -f v2 ≤ C k) ∧
-        max (-f v1) (-f v2) ≤ ZZ := by
-    by_cases hY : ZZ < Y
-    · refine ⟨y, zpen, z, by simp, ?_, ?_, ⟨hZZQ, hZZC⟩, ⟨hZQ, hZC⟩, ?_⟩
-      · intro i hi
-        simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
-        rcases hi with rfl | rfl | rfl <;> change _ ≤ Y <;> omega
-      · exact List.perm_append_comm (l₁ := [zpen, z]) (l₂ := [y])
-      · change max ZZ Z ≤ ZZ
-        exact max_le (le_refl _) (by omega)
-    · refine ⟨zpen, y, z, by simp, ?_, ?_, ⟨hYQ, hYC⟩, ⟨hZQ, hZC⟩, ?_⟩
-      · intro i hi
-        simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
-        rcases hi with rfl | rfl | rfl <;> change _ ≤ ZZ <;> omega
-      · exact (List.Perm.swap zpen z []).cons y
-      · change max Y Z ≤ ZZ
-        exact max_le (by omega) (by omega)
+        max (-f v1) (-f v2) ≤ max D ZZ ∧
+        -f v1 + -f v2 ≤ ZZ + Z := by
+    by_cases hY : ZZ ≤ Y
+    · by_cases hYZ : Z ≤ Y
+      · refine ⟨y, zpen, z, by simp, ?_, ?_, ⟨hZZQ, hZZC⟩, ⟨hZQ, hZC⟩, ?_, ?_⟩
+        · intro i hi
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+          rcases hi with rfl | rfl | rfl <;> change _ ≤ Y <;> omega
+        · exact List.perm_append_comm (l₁ := [zpen, z]) (l₂ := [y])
+        · change max ZZ Z ≤ max D ZZ
+          exact max_le (le_max_right _ _) (le_trans hZD (le_max_left _ _))
+        · change ZZ + Z ≤ ZZ + Z; rfl
+      · refine ⟨z, y, zpen, by simp, ?_, ?_, ⟨hYQ, hYC⟩, ⟨hZZQ, hZZC⟩, ?_, ?_⟩
+        · intro i hi
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+          rcases hi with rfl | rfl | rfl <;> change _ ≤ Z <;> omega
+        · exact List.Perm.refl _
+        · change max Y ZZ ≤ max D ZZ
+          exact max_le (le_trans (by omega : Y ≤ D) (le_max_left _ _)) (le_max_right _ _)
+        · change Y + ZZ ≤ ZZ + Z; omega
+    · by_cases hZZ : Z ≤ ZZ
+      · refine ⟨zpen, y, z, by simp, ?_, ?_, ⟨hYQ, hYC⟩, ⟨hZQ, hZC⟩, ?_, ?_⟩
+        · intro i hi
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+          rcases hi with rfl | rfl | rfl <;> change _ ≤ ZZ <;> omega
+        · exact (List.Perm.swap zpen z []).cons y
+        · change max Y Z ≤ max D ZZ
+          exact max_le (le_trans (by omega : Y ≤ ZZ) (le_max_right _ _))
+            (le_trans hZD (le_max_left _ _))
+        · change Y + Z ≤ ZZ + Z; omega
+      · refine ⟨z, y, zpen, by simp, ?_, ?_, ⟨hYQ, hYC⟩, ⟨hZZQ, hZZC⟩, ?_, ?_⟩
+        · intro i hi
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hi
+          rcases hi with rfl | rfl | rfl <;> change _ ≤ Z <;> omega
+        · exact List.Perm.refl _
+        · change max Y ZZ ≤ max D ZZ
+          exact max_le (le_trans (by omega : Y ≤ ZZ) (le_max_right _ _)) (le_max_right _ _)
+        · change Y + ZZ ≤ ZZ + Z; omega
   let M := max (-f v1) (-f v2)
   let c := C k - M
   let e0 := h - f j - P
   have hMQ : Q k ≤ M := le_trans hv1.1 (le_max_left _ _)
   have hMC : M ≤ C k := max_le hv1.2 hv2.2
-  have hZZupper : ZZ ≤ 2 * Q k - aa - 2 := by
-    dsimp only [δ] at haa3
-    omega
-  have hanchor : 0 < aa ∧ aa < c ∧ M < aa + c ∧ M < 2 * c := by
-    change M ≤ ZZ at hM
+  have hanchorscalar : aa ≤ C k - max D ZZ ∧ 2 * D + δ < aa + C k := by
+    by_cases hδ : δ ≤ 0
+    · have hmax : max D ZZ = D := max_eq_left (by dsimp only [δ] at hδ; omega)
+      rw [hmax]
+      constructor <;> omega
+    · have hmax : max D ZZ = ZZ := max_eq_right (by dsimp only [δ] at hδ; omega)
+      have hZZupper : ZZ ≤ 2 * Q k - aa - 2 := by
+        dsimp only [δ] at haa3
+        omega
+      rw [hmax]
+      constructor <;> omega
+  have hanchor : 0 < aa ∧ aa ≤ c ∧ min (-f v1) (-f v2) < aa + c := by
+    change M ≤ max D ZZ at hM
+    have hsum' : -f v1 + -f v2 ≤ 2 * D + δ := by dsimp only [δ]; omega
+    have hsplit := max_add_min (-f v1) (-f v2)
+    change M + min (-f v1) (-f v2) = _ at hsplit
     dsimp only [c]
-    omega
+    exact ⟨ha0, by omega, by omega⟩
   have hjQ : Q k ≤ -f j := by
     simp only [List.mem_cons, List.not_mem_nil, or_false] at hj
     rcases hj with rfl | rfl | rfl <;> assumption
@@ -233,8 +267,8 @@ theorem actualSource_threeNegative_crossingAnchor_exchange_full
     dsimp only [b, e0]
     omega
   obtain ⟨L, hL, hsL, hLend, _⟩ := exists_order_two_negative f S v1 v2 a (Q k) (C k) b e0
-    hQ hC hSnd hsmall hv1 hv2 ha hanchor.1 (le_of_lt hanchor.2.1)
-    (le_of_lt hanchor.2.2.2) (le_of_lt hanchor.2.2.1) hb ⟨by omega, by omega⟩ heq
+    hQ hC hSnd hsmall hv1 hv2 ha hanchor.1 hanchor.2.1
+    (le_of_lt hanchor.2.2) hb ⟨by omega, by omega⟩ heq
   have hLj : (L ++ [j]).Perm Btail := (hL.append_right _).trans htailj
   have hSretained (i : Fin k) (hi : i ∈ S) : i ∈ L :=
     hL.mem_iff.mpr (List.mem_append_left _ hi)
