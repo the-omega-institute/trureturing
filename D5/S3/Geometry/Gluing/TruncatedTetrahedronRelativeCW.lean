@@ -78,7 +78,7 @@ def faceCharacteristic (k : FaceShape) (t : T) (j : Fin 4) : Disk 2 → (Truncat
   (q P) ∘ faceDiskPoint k t j
 
 private theorem continuous_bulkDiskPoint (t : T) : Continuous (bulkDiskPoint t) :=
-  continuous_const.prodMk (bulkHomeomorph.continuous.comp (polyBall .bulk).symm.continuous)
+  continuous_const.prodMk (bulkHomeomorph.continuous.comp (polyBall Model.bulk).symm.continuous)
 
 private theorem continuous_faceDiskPoint (k : FaceShape) (t : T) (j : Fin 4) :
     Continuous (faceDiskPoint k t j) :=
@@ -94,12 +94,12 @@ private theorem continuous_faceCharacteristic (k : FaceShape) (t : T) (j : Fin 4
 
 private theorem topCharacteristic_fiber (t : T) (x y : Disk 3)
     (hx : x.val ∈ ball 0 1) (h : topCharacteristic P t y = topCharacteristic P t x) : y = x := by
-  have hi := (polyBall_symm_interior_iff .bulk x).mpr hx
-  have hs := (bulkRealize_strict_iff ((polyBall .bulk).symm x)).mp hi
+  have hi := (polyBall_symm_interior_iff Model.bulk x).mpr hx
+  have hs := (bulkRealize_strict_iff ((polyBall Model.bulk).symm x)).mp hi
   have ha : Interior (bulkDiskPoint t x) := fun i => ne_of_gt (hs i).1
   have he : bulkDiskPoint t y = bulkDiskPoint t x :=
     (interior_normal_form P _ _ ha).mp (Quotient.exact (s := Relation.EqvGen.setoid (TruncatedStep P)) h.symm)
-  exact (polyBall .bulk).symm.injective
+  exact (polyBall Model.bulk).symm.injective
     (bulkRealize_injective (congrArg Prod.snd he))
 
 private theorem faceCharacteristic_fiber (k : FaceShape) (t : T) (j : Fin 4) (x y : Disk 2)
@@ -181,8 +181,8 @@ private theorem topCell_open_disjoint (t s : T) (hts : t ≠ s) :
   have hq : (q P) (bulkDiskPoint t xd) = (q P) (bulkDiskPoint s yd) := by
     rw [← topCell_coe_disk P t xd, ← topCell_coe_disk P s yd]
     exact hxz.trans hyz.symm
-  have hs := (bulkRealize_strict_iff ((polyBall .bulk).symm xd)).mp
-    ((polyBall_symm_interior_iff .bulk xd).mpr hx)
+  have hs := (bulkRealize_strict_iff ((polyBall Model.bulk).symm xd)).mp
+    ((polyBall_symm_interior_iff Model.bulk xd).mpr hx)
   have ha : Interior (bulkDiskPoint t xd) := fun i => ne_of_gt (hs i).1
   have he := (interior_normal_form P _ _ ha).mp (Quotient.exact (s := Relation.EqvGen.setoid (TruncatedStep P)) hq)
   exact hts (congrArg (fun z : TruncatedPoint T => z.1) he).symm
@@ -359,8 +359,8 @@ private theorem top_surface_open_closed_disjoint (t : T) (c : SurfaceCell P) :
   have hq : (q P) (bulkDiskPoint t xd) = (q P) (surfaceDiskPoint P c yd) := by
     rw [← topCell_coe_disk P t xd, ← surfaceCell_coe_disk P c yd]
     exact hxz.trans hyz.symm
-  have hs := (bulkRealize_strict_iff ((polyBall .bulk).symm xd)).mp
-    ((polyBall_symm_interior_iff .bulk xd).mpr hx)
+  have hs := (bulkRealize_strict_iff ((polyBall Model.bulk).symm xd)).mp
+    ((polyBall_symm_interior_iff Model.bulk xd).mpr hx)
   have ha : Interior (bulkDiskPoint t xd) := fun i => ne_of_gt (hs i).1
   have he := (interior_normal_form P _ _ ha).mp (Quotient.exact (s := Relation.EqvGen.setoid (TruncatedStep P)) hq)
   cases c with
@@ -434,8 +434,8 @@ private theorem top_sphere_has_boundary_coordinate (t : T) (x : Disk 3)
       exact h0 (by linarith)
     · by_contra hbad
       exact hc (by linarith)
-  have hi := (bulkRealize_strict_iff ((polyBall .bulk).symm x)).mpr hs
-  exact disjoint_left.mp disjoint_interior_frontier hi (polyBall_symm_frontier .bulk x hx)
+  have hi := (bulkRealize_strict_iff ((polyBall Model.bulk).symm x)).mpr hs
+  exact disjoint_left.mp disjoint_interior_frontier hi (polyBall_symm_frontier Model.bulk x hx)
 
 /-- Each original three-cell sphere maps into the actual closed face skeleton. -/
 private theorem topCell_sphere_mapsTo (t : T) : MapsTo (topCell P t) (sphere 0 1) (faceSkeleton P) := by
