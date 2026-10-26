@@ -23,7 +23,7 @@ internal sealed class UnsignedStarTorsionDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For a connected nonbipartite original graph, the exact integer star map is injective. "
                     + "Apply the existing private nonbipartite_potential proof to the difference of two potentials with equal images. "
                     + "Its constant has twice its value equal to zero, so it vanishes over the integers. "
-                    + "This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a bind-only helper, "
+                    + "This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a consumed helper, "
                     + "not a new generality claim or a new proof of the private potential theorem."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("bipartite-integral-recovery"),
