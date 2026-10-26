@@ -555,7 +555,6 @@ private theorem coordinateProjection_other {n : ℕ} {Q : Type*}
 private theorem coordinateSpace_cross {n : ℕ} {Q : Type*}
     (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
     (π : Fin n → Q)
-    (hπ : ∀ i j, structureCoefficient μ b i j ≠ 0 → π i = π j)
     {q r : Q} (hqr : q ≠ r) (x : coordinateSpace b π q)
     (y : coordinateSpace b π r) : μ x y = 0 := by
   calc
@@ -571,8 +570,14 @@ def restrictedProduct (μ : Product K V) (S : Submodule K V)
     { toFun := fun y => ⟨μ x y, hS x y⟩
       map_add' := by intro y z; apply Subtype.ext; exact map_add (μ (x : V)) (y : V) (z : V)
       map_smul' := by intro a y; apply Subtype.ext; exact map_smul (μ (x : V)) a (y : V) }
-  map_add' := by intro x y; ext z; exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_add μ (x : V) (y : V))
-  map_smul' := by intro a x; ext z; exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_smul μ a (x : V))
+  map_add' := by
+    intro x y
+    ext z
+    exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_add μ (x : V) (y : V))
+  map_smul' := by
+    intro a x
+    ext z
+    exact congrArg (fun f : V →ₗ[K] V => f (z : V)) (map_smul μ a (x : V))
 
 private theorem coordinateSpace_perfect {n : ℕ} {Q : Type*}
     (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b) (hp : Perfect μ)
@@ -633,8 +638,7 @@ theorem component_ideals_perfect {n : ℕ} (μ : Product K V) (b : Basis (Fin n)
       coordinateSpace_right μ b hb _ (fun _ _ h => componentIndex_of_coefficient μ b h) q,
       coordinateSpace_perfect μ b hb hp _ (fun _ _ h => componentIndex_of_coefficient μ b h) q⟩
   · intro q r hqr x y
-    exact coordinateSpace_cross μ b hb _
-      (fun _ _ h => componentIndex_of_coefficient μ b h) hqr x y
+    exact coordinateSpace_cross μ b hb _ hqr x y
 
 
 private noncomputable def coordinateDecomposition {n : ℕ} {Q : Type*} [Fintype Q]
@@ -680,8 +684,8 @@ theorem isomorphic_of_component_matching {n m : ℕ}
     (h : ∀ q, Isomorphic (componentProduct μ b hb q) (componentProduct ν c hc (e q))) :
     Isomorphic μ ν := by
   classical
-  letI : Fintype (WeakComponent μ b) := Fintype.ofFinite _
-  letI : Fintype (WeakComponent ν c) := Fintype.ofFinite _
+  let : Fintype (WeakComponent μ b) := Fintype.ofFinite _
+  let : Fintype (WeakComponent ν c) := Fintype.ofFinite _
   let f : ∀ q, componentSpace μ b q ≃ₗ[K] componentSpace ν c (e q) :=
     fun q => Classical.choose (h q)
   have hf (q) (x y : componentSpace μ b q) :
@@ -715,24 +719,26 @@ private theorem eqvGen_map {I J : Type*} {R : I → I → Prop} {S : J → J →
   | symm i j _ ih => exact Relation.EqvGen.symm _ _ ih
   | trans i j k _ _ hij hjk => exact Relation.EqvGen.trans _ _ _ hij hjk
 
+private def relationComponentEquiv {I J : Type*} (R : I → I → Prop) (S : J → J → Prop)
+    (e : I ≃ J) (he : ∀ i j, R i j ↔ S (e i) (e j)) :
+    Quotient (Relation.EqvGen.setoid R) ≃ Quotient (Relation.EqvGen.setoid S) :=
+  Quotient.congr e (by
+    intro i j
+    change Relation.EqvGen R i j ↔ Relation.EqvGen S (e i) (e j)
+    constructor
+    · exact eqvGen_map e (fun i j h => (he i j).mp h)
+    · intro h
+      have hh := eqvGen_map (R := S) (S := R) e.symm (fun i j h =>
+        (he (e.symm i) (e.symm j)).mpr (by simpa using h)) h
+      simpa using hh)
+
 private def supportComponentEquiv {n m : ℕ}
     (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
     (e : Fin n ≃ Fin m)
     (he : ∀ i j, structureCoefficient μ b i j ≠ 0 ↔
       structureCoefficient ν c (e i) (e j) ≠ 0) :
     WeakComponent μ b ≃ WeakComponent ν c :=
-  Quotient.congr e (by
-    intro i j
-    change Relation.EqvGen (fun i j => structureCoefficient μ b i j ≠ 0) i j ↔
-      Relation.EqvGen (fun i j => structureCoefficient ν c i j ≠ 0) (e i) (e j)
-    constructor
-    · exact eqvGen_map e (fun i j h => (he i j).mp h)
-    · intro h
-      have hh := eqvGen_map
-        (R := fun i j => structureCoefficient ν c i j ≠ 0)
-        (S := fun i j => structureCoefficient μ b i j ≠ 0) e.symm (fun i j h =>
-        (he (e.symm i) (e.symm j)).mpr (by simpa using h)) h
-      simpa using hh)
+  relationComponentEquiv _ _ e he
 
 private theorem monomial_support_iff {n m : ℕ}
     (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
@@ -783,7 +789,7 @@ private theorem monomial_component_map {n m : ℕ}
     · apply Submodule.smul_mem
       rw [componentSpace_eq_span]
       exact Submodule.subset_span ⟨i, hi, rfl⟩
-    · simp [hfb, Units.smul_def, smul_smul]
+    · simp [hfb, smul_smul]
 
 private theorem component_matching_of_monomial {n m : ℕ}
     (μ : Product K V) (ν : Product K W) (b : Basis (Fin n) K V) (c : Basis (Fin m) K W)
@@ -818,6 +824,139 @@ theorem isomorphism_matches_components {n m : ℕ}
   obtain ⟨e, d, hfb, heq⟩ := isomorphism_basis_equations μ ν b c hb hc hp f hf
   exact component_matching_of_monomial μ ν b c hb hc e d heq f hfb hf
 
+
+/-- The component multiplication inside the actual tensor-extended ambient product. -/
+noncomputable def baseChangedComponentProduct (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (q : WeakComponent (LinearMap.BilinMap.baseChange F μ) (b.baseChange F)) :
+    Product F (componentSpace (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) q) :=
+  componentProduct _ _ (by exact natural_baseChange F μ b hb) q
+
+private noncomputable def componentScalarEquiv (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) :
+    WeakComponent μ b ≃ WeakComponent (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) :=
+  relationComponentEquiv (fun i j => structureCoefficient μ b i j ≠ 0)
+    (fun i j => structureCoefficient (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) i j ≠ 0)
+    (Equiv.refl (Fin n)) (by
+      intro i j
+      change structureCoefficient μ b i j ≠ 0 ↔
+        structureCoefficient (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) i j ≠ 0
+      rw [structureCoefficient_baseChange]
+      simp only [ne_eq, map_eq_zero])
+
+private theorem componentSpace_baseChange (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (q : WeakComponent μ b) :
+    (componentSpace μ b q).baseChange F =
+      componentSpace (LinearMap.BilinMap.baseChange F μ) (b.baseChange F)
+        (componentScalarEquiv F μ b q) := by
+  let E := componentScalarEquiv F μ b
+  have hset : {i | componentIndex (LinearMap.BilinMap.baseChange F μ) (b.baseChange F) i = E q} =
+      {i | componentIndex μ b i = q} := by
+    ext i
+    change E (componentIndex μ b i) = E q ↔ componentIndex μ b i = q
+    exact E.injective.eq_iff
+  rw [componentSpace_eq_span, Submodule.baseChange_span, componentSpace_eq_span, hset,
+    Set.image_image]
+  congr 1
+  simp only [Basis.baseChange_apply]
+  rfl
+
+private theorem tensor_restricted_multiplicative (F : Type*) [Field F] [Algebra K F]
+    (μ : Product K V) (S : Submodule K V) (hS : ∀ (x : S) (y : V), μ x y ∈ S)
+    (x y : F ⊗[K] S) :
+    S.subtype.baseChange F (LinearMap.BilinMap.baseChange F (restrictedProduct μ S hS) x y) =
+      LinearMap.BilinMap.baseChange F μ (S.subtype.baseChange F x) (S.subtype.baseChange F y) := by
+  induction x using TensorProduct.inductionOn with
+  | tmul a x =>
+    induction y using TensorProduct.inductionOn with
+    | tmul a' y => simp [restrictedProduct]
+    | add y z hy hz => simp only [map_add, hy, hz]
+  | add x z hx hz => simp only [map_add, LinearMap.add_apply, hx, hz]
+
+private theorem component_tensor_isomorphic (F : Type*) [Field F] [Algebra K F]
+    {n : ℕ} (μ : Product K V) (b : Basis (Fin n) K V) (hb : Natural μ b)
+    (q : WeakComponent μ b) :
+    Isomorphic (LinearMap.BilinMap.baseChange F (componentProduct μ b hb q))
+      (baseChangedComponentProduct F μ b hb (componentScalarEquiv F μ b q)) := by
+  let S := componentSpace μ b q
+  let f := (Submodule.toBaseChange.toLinearEquiv F S).trans
+    (LinearEquiv.ofEq _ _ (componentSpace_baseChange F μ b q))
+  refine ⟨f, ?_⟩
+  intro x y
+  apply Subtype.ext
+  exact tensor_restricted_multiplicative F μ S _ x y
+
 end Components
+
+/-- Rational weak components agree with the actual tensor components, including
+isomorphisms from tensor-extended component carriers, and component matches characterize
+unrestricted isomorphism over every rational field extension. -/
+theorem scalar_extension_component_reconstruction (F : Type) [Field F] [Algebra ℚ F]
+    (A B : RationalEvolutionAlgebra) {n m : ℕ}
+    (b : Basis (Fin n) ℚ A.Carrier) (c : Basis (Fin m) ℚ B.Carrier)
+    (hb : Natural A.multiplication b) (hc : Natural B.multiplication c)
+    (hpA : Perfect A.multiplication) (hpB : Perfect B.multiplication) :
+    ∃ EA : WeakComponent A.multiplication b ≃
+        WeakComponent (LinearMap.BilinMap.baseChange F A.multiplication) (b.baseChange F),
+    ∃ EB : WeakComponent B.multiplication c ≃
+        WeakComponent (LinearMap.BilinMap.baseChange F B.multiplication) (c.baseChange F),
+      (∀ i, EA (componentIndex A.multiplication b i) =
+        componentIndex (LinearMap.BilinMap.baseChange F A.multiplication) (b.baseChange F) i) ∧
+      (∀ i, EB (componentIndex B.multiplication c i) =
+        componentIndex (LinearMap.BilinMap.baseChange F B.multiplication) (c.baseChange F) i) ∧
+      (∀ q, (componentSpace A.multiplication b q).baseChange F =
+        componentSpace (LinearMap.BilinMap.baseChange F A.multiplication) (b.baseChange F) (EA q)) ∧
+      (∀ q, (componentSpace B.multiplication c q).baseChange F =
+        componentSpace (LinearMap.BilinMap.baseChange F B.multiplication) (c.baseChange F) (EB q)) ∧
+      (∀ q, Isomorphic (LinearMap.BilinMap.baseChange F (componentProduct A.multiplication b hb q))
+        (baseChangedComponentProduct F A.multiplication b hb (EA q))) ∧
+      (∀ q, Isomorphic (LinearMap.BilinMap.baseChange F (componentProduct B.multiplication c hc q))
+        (baseChangedComponentProduct F B.multiplication c hc (EB q))) ∧
+      (∀ q, Perfect (baseChangedComponentProduct F A.multiplication b hb (EA q))) ∧
+      (∀ q, Perfect (baseChangedComponentProduct F B.multiplication c hc (EB q))) ∧
+      (IsomorphicOver F A B ↔ ∃ e : WeakComponent A.multiplication b ≃ WeakComponent B.multiplication c,
+        ∀ q, Isomorphic (baseChangedComponentProduct F A.multiplication b hb (EA q))
+          (baseChangedComponentProduct F B.multiplication c hc (EB (e q)))) := by
+  classical
+  let μ := LinearMap.BilinMap.baseChange F A.multiplication
+  let ν := LinearMap.BilinMap.baseChange F B.multiplication
+  let bF := b.baseChange F
+  let cF := c.baseChange F
+  have hbF := natural_baseChange F A.multiplication b hb
+  have hcF := natural_baseChange F B.multiplication c hc
+  let EA := componentScalarEquiv F A.multiplication b
+  let EB := componentScalarEquiv F B.multiplication c
+  refine ⟨EA, EB, fun _ => rfl, fun _ => rfl,
+    componentSpace_baseChange F A.multiplication b,
+    componentSpace_baseChange F B.multiplication c,
+    component_tensor_isomorphic F A.multiplication b hb,
+    component_tensor_isomorphic F B.multiplication c hc, ?_, ?_, ?_⟩
+  · intro q
+    exact ((component_ideals_perfect μ bF hbF (perfect_baseChange F _ hpA)).1 (EA q)).2.2.2
+  · intro q
+    exact ((component_ideals_perfect ν cF hcF (perfect_baseChange F _ hpB)).1 (EB q)).2.2.2
+  · constructor
+    · intro h
+      obtain ⟨e, d, heq⟩ := (isomorphic_over_iff_monomial_equations F A B b c hb hc hpB).mp h
+      have heqF : ∀ i j, structureCoefficient μ bF i j * (d j : F) =
+          (d i : F)^2 * structureCoefficient ν cF (e i) (e j) := by
+        intro i j
+        simpa only [μ, ν, bF, cF, structureCoefficient_baseChange] using heq i j
+      obtain ⟨f, hfb, hf⟩ := monomial_equations_realize μ ν bF cF hbF hcF e d heqF
+      obtain ⟨E, _, hE⟩ := component_matching_of_monomial μ ν bF cF hbF hcF e d heqF f hfb hf
+      refine ⟨(EA.trans E).trans EB.symm, ?_⟩
+      intro q
+      change Isomorphic (baseChangedComponentProduct F A.multiplication b hb (EA q))
+        (baseChangedComponentProduct F B.multiplication c hc (EB (EB.symm (E (EA q)))))
+      rw [EB.apply_symm_apply]
+      exact hE (EA q)
+    · rintro ⟨e, he⟩
+      apply isomorphic_of_component_matching μ ν bF cF hbF hcF ((EA.symm.trans e).trans EB)
+      intro q
+      have hq := he (EA.symm q)
+      rw [EA.apply_symm_apply] at hq
+      exact hq
+
+
 
 end D5.S3.QuadraticForms.EvolutionAlgebras.RationalHassePrinciple
