@@ -120,7 +120,12 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
       Summable (spectrum d) ∧ (∀ n, 0 ≤ spectrum d n) ∧ mass (spectrum d) = 1 ∧
       purity (spectrum d) = powerTrace T hTC 1 ∧
       cubicMoment (spectrum d) = powerTrace T hTC 2 ∧
-      third (spectrum d) = operatorThird T hTC := by
+      third (spectrum d) = operatorThird T hTC ∧
+      Summable (fun t => ‖tripleTerm (spectrum d) t‖) ∧
+      (∀ i, operatorThird T hTC - 1 / 32 =
+        (2 * spectrum d i - 1) * (4 * spectrum d i - 1) ^ 2 / 32 +
+        (spectrum d i / 2) * (3 / 8 - powerTrace T hTC 1) +
+        third (erase (spectrum d) i)) := by
   let d := spectralData hT hTC
   have hs0 := spectrum_power_hasSum d hTC 0
   have hs1 := spectrum_power_hasSum d hTC 1
@@ -129,16 +134,20 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
   have hmass : mass (spectrum d) = 1 := by
     simpa only [mass, pow_one, ht] using hs0.tsum_eq
   have hsum : Summable (spectrum d) := by simpa only [pow_one] using hs0.summable
-  refine ⟨d, hsum, spectrum_nonneg d, hmass, ?_, ?_, ?_⟩
-  · simpa only [purity, Nat.reduceAdd] using hs1.tsum_eq
-  · simpa only [cubicMoment, Nat.reduceAdd] using hs2.tsum_eq
-  · have hn := countable_newton hsum (spectrum_nonneg d) hmass.le
-    have hq : purity (spectrum d) = powerTrace T hTC 1 := hs1.tsum_eq
-    have hr : cubicMoment (spectrum d) = powerTrace T hTC 2 := hs2.tsum_eq
+  have hq : purity (spectrum d) = powerTrace T hTC 1 := by
+    simpa only [purity, Nat.reduceAdd] using hs1.tsum_eq
+  have hr : cubicMoment (spectrum d) = powerTrace T hTC 2 := by
+    simpa only [cubicMoment, Nat.reduceAdd] using hs2.tsum_eq
+  have he : third (spectrum d) = operatorThird T hTC := by
+    have hn := countable_newton hsum (spectrum_nonneg d) hmass.le
     rw [hmass, hq, hr] at hn
     unfold operatorThird
     rw [ht]
     linarith
+  refine ⟨d, hsum, spectrum_nonneg d, hmass, hq, hr, he,
+    (absolute_triple_sum hsum (spectrum_nonneg d)).1, ?_⟩
+  intro i
+  simpa only [he, hq] using distinguished_identity hsum (spectrum_nonneg d) hmass i
 
 /-- The trace/purity envelope on actual positive trace-class densities. -/
 theorem trace_class_envelope {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass T)
@@ -150,7 +159,7 @@ theorem trace_class_envelope {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceCl
       envelope (powerTrace T hTC 1) ≤ operatorThird T hTC) ∧
     (powerTrace T hTC 1 ≤ 3 / 8 → 25 / 864 ≤ operatorThird T hTC) ∧
     (powerTrace T hTC 1 ≤ threshold → 1 / 32 ≤ operatorThird T hTC) := by
-  obtain ⟨d, hs, hn, hm, hq, _, he⟩ := spectral_moments hT hTC htrace
+  obtain ⟨d, hs, hn, hm, hq, _, he, _, _⟩ := spectral_moments hT hTC htrace
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro hl
     simpa only [hq, he] using third_lower_of_purity_le_third hs hn hm (hq.trans_le hl)
@@ -164,5 +173,89 @@ theorem trace_class_envelope {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceCl
 
 #print axioms spectral_moments
 #print axioms trace_class_envelope
+
+/-- Normalize the actual eigenvalue sequence at a positive trace, retaining
+its exact moments and increasing-triple value. The normalized sequence is not
+an assertion that an arbitrary abstract optimizer is physically realizable. -/
+theorem spectral_moments_at_mass {T : H →L[ℂ] H} (hT : 0 ≤ T)
+    (hTC : IsTraceClass T) {t : ℝ} (ht : 0 < t)
+    (htrace : trace T hTC = (t : ℂ)) :
+    ∃ d : CountableSpectralData T,
+      let p := fun n => spectrum d n / t
+      Summable p ∧ (∀ n, 0 ≤ p n) ∧ mass p = 1 ∧
+      purity p = powerTrace T hTC 1 / t ^ 2 ∧
+      cubicMoment p = powerTrace T hTC 2 / t ^ 3 ∧
+      t ^ 3 * third p = operatorThird T hTC ∧
+      Summable (fun s => ‖tripleTerm (spectrum d) s‖) ∧
+      third (spectrum d) = operatorThird T hTC := by
+  let d := spectralData hT hTC
+  let p := fun n => spectrum d n / t
+  have hs0 := spectrum_power_hasSum d hTC 0
+  have hs1 := spectrum_power_hasSum d hTC 1
+  have hs2 := spectrum_power_hasSum d hTC 2
+  have hmass : powerTrace T hTC 0 = t := by simp [powerTrace, htrace]
+  have hsum : Summable (spectrum d) := by simpa only [pow_one] using hs0.summable
+  have hp : Summable p := hsum.div_const t
+  have hn : ∀ n, 0 ≤ p n := fun n => div_nonneg (spectrum_nonneg d n) ht.le
+  have hm : mass p = 1 := by
+    unfold mass p
+    rw [hsum.tsum_div_const]
+    have hs : (∑' n, spectrum d n) = t := by
+      simpa only [pow_one, hmass] using hs0.tsum_eq
+    rw [hs, div_self ht.ne']
+  have hq : purity p = powerTrace T hTC 1 / t ^ 2 := by
+    unfold purity p
+    simp only [div_pow]
+    rw [hs1.summable.tsum_div_const]
+    exact congrArg (fun z : ℝ => z / t ^ 2) hs1.tsum_eq
+  have hr : cubicMoment p = powerTrace T hTC 2 / t ^ 3 := by
+    unfold cubicMoment p
+    simp only [div_pow]
+    rw [hs2.summable.tsum_div_const]
+    exact congrArg (fun z : ℝ => z / t ^ 3) hs2.tsum_eq
+  have he : t ^ 3 * third p = operatorThird T hTC := by
+    have h := countable_newton hp hn hm.le
+    rw [hm, hq, hr] at h
+    unfold operatorThird
+    rw [hmass]
+    field_simp at h ⊢
+    nlinarith
+  have hscale : third (spectrum d) = t ^ 3 * third p := by
+    have hl (k : ℕ) : tripleLayer (spectrum d) k = t ^ 3 * tripleLayer p k := by
+      unfold tripleLayer
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      dsimp [p]
+      field_simp
+    unfold third
+    simp_rw [hl]
+    exact tsum_mul_left
+  refine ⟨d, hp, hn, hm, hq, hr, he,
+    (absolute_triple_sum hsum (spectrum_nonneg d)).1, hscale.trans he⟩
+
+/-- Homogeneous spectral envelope at positive trace. This statement concerns
+the original trace-class operator and its actual third symmetric moment. -/
+theorem trace_class_homogeneous_envelope {T : H →L[ℂ] H} (hT : 0 ≤ T)
+    (hTC : IsTraceClass T) {t : ℝ} (ht : 0 < t)
+    (htrace : trace T hTC = (t : ℂ))
+    (hpurity : powerTrace T hTC 1 ≤ (3 / 8) * t ^ 2) :
+    (25 / 864) * t ^ 3 ≤ operatorThird T hTC ∧
+      -(t ^ 3) / 432 ≤ operatorThird T hTC - t ^ 3 / 32 := by
+  obtain ⟨d, hp, hn, hm, hq, _, he, _, _⟩ :=
+    spectral_moments_at_mass hT hTC ht htrace
+  have hq' : purity (fun n => spectrum d n / t) ≤ 3 / 8 := by
+    rw [hq]
+    exact (div_le_iff₀ (sq_pos_of_pos ht)).mpr hpurity
+  have hb := third_lower_of_purity_le_three_eighths hp hn hm hq'
+  have hm := mul_le_mul_of_nonneg_left hb (pow_nonneg ht.le 3)
+  rw [he] at hm
+  constructor <;> nlinarith
+
+#print axioms spectral_moments_at_mass
+#print axioms trace_class_homogeneous_envelope
 
 end TraceClassSpectralEnvelope

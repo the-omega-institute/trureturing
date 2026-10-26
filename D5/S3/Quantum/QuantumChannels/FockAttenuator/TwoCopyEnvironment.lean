@@ -42,9 +42,12 @@ theorem rotated_environment_expansion :
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
   have hfne : (Real.sqrt (2 : ℝ) : ℂ) ≠ 0 := by
     exact_mod_cast (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)).ne'
-  rw [sqrt_twenty_four]
+  simp only [sqrt_twenty_four]
   push_cast
-  module
+  match_scalars <;> field_simp
+  all_goals ring_nf
+  all_goals simp_all only [show (4 : ℕ) = 2 * 2 by omega, pow_mul]
+  all_goals norm_num
 
 private theorem environment_slice (n : ℕ) :
     rotatedEnvironment n =
@@ -93,7 +96,9 @@ theorem environment_marginal :
   have hs : (Real.sqrt (6 : ℝ) : ℂ) ^ 2 = 6 := by
     exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 6)
   push_cast
-  module
+  match_scalars <;> ring_nf
+  all_goals simp_all only [hs]
+  all_goals norm_num
 
 /-- The compression bound is an operator inequality on the whole completed
 one-mode space. The three occupied modes do not impose an input cutoff. -/
