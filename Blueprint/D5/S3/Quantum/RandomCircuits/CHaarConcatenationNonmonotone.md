@@ -80,7 +80,21 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{De
 
 Applying the coordinate swap twice gives the identity matrix.
 
-**Theorem 1.7 (The concatenation assertion is false).**
+**Theorem 1.7 (The trace of the coordinate swap).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \operatorname{Matrix.trace}\left(\operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.prodComm}\left(n, n\right)\right)\right) = (\operatorname{Nat.cast}\left(\operatorname{Fintype.card}\left(n\right)\right): \mathbb{C})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.traceSwap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+A diagonal entry of the coordinate swap is one exactly when its two coordinates coincide, and zero otherwise. Summing these entries gives the cardinality of n, explicitly cast from the natural numbers to the complex numbers.
+
+**Theorem 1.8 (The concatenation assertion is false).**
 
 $$\neg \operatorname{claim}\left(\right)$$
 
@@ -107,6 +121,7 @@ At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fift
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapHermitian`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapSquare`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.traceSwap`
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](HaarTwoCopyTwirl.md)
