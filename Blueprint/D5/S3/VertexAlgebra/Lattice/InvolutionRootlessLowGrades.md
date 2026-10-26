@@ -130,7 +130,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualF
 
 *Commentary.*
 
-For positive definite rootless even LatticeData, a basis indexed by neutral unordered pairs and norm-four negation orbits is constructed for fixedSpace D intersected with the eigenspace at two of sugawaraMode D (gramComplex D) inverse zero. The coordinate conjugacy identifies the actual intersection with the invariant coordinate space. ActualL0_eigenspace_eq_grade supplies the exact Sugawara bridge.
+For positive definite rootless even LatticeData, a basis indexed by neutral unordered pairs and norm-four negation orbits is constructed for fixedSpace D intersected with the eigenspace at two of sugawaraMode D (gramComplex D) inverse zero. The coordinate conjugacy identifies the actual intersection with the invariant coordinate space. ActualL0_eigenspace_eq_grade supplies the exact Sugawara bridge. Each neutral basis vector in the actual canonical fixed eigenspace is the zero-charge monomial of the unordered mode-one pair occupation. Repeated colours are included.
 
 **Theorem 1.9 (Literal charged orbit basis vectors).**
 
@@ -148,23 +148,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualF
 
 For positive definite rootless even LatticeData, each charged basis vector in the actual canonical fixed eigenspace is the sum of the two charged ground states at the chosen charge and its negative. Independence and spanning come from the constructed equivalence, rather than an orbit dimension assumption.
 
-**Theorem 1.10 (Literal neutral pair basis vectors).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualFixedEnergyTwoBasis_neutral_coe`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualFixedEnergyTwoBasis_neutral_coe` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For positive definite rootless even LatticeData, each neutral basis vector in the actual canonical fixed eigenspace is the zero-charge monomial of the unordered mode-one pair occupation. Repeated colours are included.
-
-**Theorem 1.11 (Actual fixed low-energy spectrum in arbitrary rank).**
+**Theorem 1.10 (Actual fixed low-energy spectrum in arbitrary rank).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actual_theta_fixed_rootless_low_spectrum`
 
@@ -191,7 +175,6 @@ This constructs low-energy spaces of the existing fixed vertex algebra. It does 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.TwoConfig`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualFixedEnergyTwoBasis`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualFixedEnergyTwoBasis_charge_coe`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actualFixedEnergyTwoBasis_neutral_coe`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.actual_theta_fixed_rootless_low_spectrum`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.coordinateTheta`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/InvolutionRootlessLowGrades.gradeTwoCoordinateEquiv`
