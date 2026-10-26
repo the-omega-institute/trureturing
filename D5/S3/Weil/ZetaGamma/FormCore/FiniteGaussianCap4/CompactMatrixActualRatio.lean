@@ -109,33 +109,12 @@ theorem finiteGaussian_ratio_gt_nineteen_four_of_coercive {ι : Type*} [Fintype 
     (19 / 4 : ℝ) <
       (∫ x in Ioi Real.pi, x ^ 6 * gaussianFeature c site x ^ 2) /
         (Real.pi ^ 6 * (∫ x in Ioi Real.pi, gaussianFeature c site x ^ 2)) := by
-  let D := ∫ x in Ioi Real.pi, gaussianFeature c site x ^ 2
-  let N := ∫ x in Ioi Real.pi, x ^ 6 * gaussianFeature c site x ^ 2
-  let H := ∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) * gaussianFeature c site x ^ 2
   have hs := finite_gaussian_strict_weighted_mass c site hF Real.pi (7 / 2 : ℝ)
     Real.pi_pos (by norm_num)
-  change 0 < D ∧ Real.pi ^ (7 / 2 : ℝ) * D < H at hs
-  rw [(finiteGaussian_capWeight_integral c site).2] at hQ
-  change (3 / 4 : ℝ) * H ≤
-    Real.pi ^ (-5 / 2 : ℝ) * N - 4 * Real.pi ^ (7 / 2 : ℝ) * D at hQ
-  have hraw : (19 / 4 : ℝ) * Real.pi ^ (7 / 2 : ℝ) * D <
-      Real.pi ^ (-5 / 2 : ℝ) * N := by nlinarith [hs.2]
-  have hsum : Real.pi ^ (5 / 2 : ℝ) * Real.pi ^ (7 / 2 : ℝ) = Real.pi ^ 6 := by
-    rw [← Real.rpow_add Real.pi_pos]
-    norm_num
-  have hcancel : Real.pi ^ (5 / 2 : ℝ) * Real.pi ^ (-5 / 2 : ℝ) = 1 := by
-    rw [← Real.rpow_add Real.pi_pos]
-    norm_num
-  have hnum : (19 / 4 : ℝ) * (Real.pi ^ 6 * D) < N := by
-    calc
-      (19 / 4 : ℝ) * (Real.pi ^ 6 * D) =
-          Real.pi ^ (5 / 2 : ℝ) * ((19 / 4 : ℝ) * Real.pi ^ (7 / 2 : ℝ) * D) := by
-        rw [← hsum]
-        ring
-      _ < Real.pi ^ (5 / 2 : ℝ) * (Real.pi ^ (-5 / 2 : ℝ) * N) :=
-        mul_lt_mul_of_pos_left hraw (Real.rpow_pos_of_pos Real.pi_pos _)
-      _ = N := by rw [← mul_assoc, hcancel, one_mul]
-  change (19 / 4 : ℝ) < N / (Real.pi ^ 6 * D)
-  exact (lt_div_iff₀ (mul_pos (pow_pos Real.pi_pos 6) hs.1)).2 hnum
+  have hH : 0 < ∫ x in Ioi (0 : ℝ), x ^ (7 / 2 : ℝ) * gaussianFeature c site x ^ 2 :=
+    lt_trans (mul_pos (Real.rpow_pos_of_pos Real.pi_pos _) hs.1) hs.2
+  simpa only [show (4 : ℝ) + 3 / 4 = 19 / 4 by norm_num] using
+    (capWeight_coercivity_tail_pos_and_ratio (gaussianFeature c site) (3 / 4)
+      (by norm_num) hH hQ).2
 
 end FiniteGaussianCap475

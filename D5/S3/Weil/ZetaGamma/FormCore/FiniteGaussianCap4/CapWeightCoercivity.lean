@@ -4,9 +4,10 @@
    mirror-E: none(waiver:finite-gaussian-helper)
    anchors: []
    utility: none
-   digest: Positive cap coercivity forces tail mass and a strict scaled quotient for arbitrary real functions. -/
+   digest: Positive cap coercivity forces tail mass and a strict scaled real quotient. -/
 import D5.S3.Weil.ZetaGamma.FormCore.FiniteGaussianCap4.Cap4CompactMultiplier
 import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-! General integral comparison; no Gaussian, parity, or analytic premise.
 The two density identities are relocated unchanged from the fixed
@@ -142,6 +143,7 @@ theorem capWeight_coercivity_tail_pos_and_ratio (F : ℝ → ℝ) (γ : ℝ)
     apply hHt.mono' hsqmeas
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
     rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+    change Real.pi < x at hx
     have hw : 1 ≤ x ^ (7 / 2 : ℝ) :=
       Real.one_le_rpow (by linarith [Real.pi_gt_three]) (by norm_num)
     nlinarith [sq_nonneg (F x)]
