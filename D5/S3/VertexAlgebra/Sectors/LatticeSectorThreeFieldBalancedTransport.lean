@@ -27,11 +27,13 @@ open LatticeSectorThreeFieldCommonSeries LatticeSectorThreeFieldInnerIterate
 open LatticeSectorRawInnerCoefficients LatticeSectorBalancedBorcherds
 open UniformGradedLocalCorrelator UngradedLocalWordSeries
 open SupportedChannelSeries SupportedThreeFieldCollision SupportedBalancedCollision
-open ThreeFieldInnerPolynomial ThreeFieldInnerInverseCoefficients
+open ThreeFieldInnerPolynomial ThreeFieldInnerInverseCoefficients ThreeFieldInnerLaurentFiber
 open FieldNormalProductLocality (deltaEnd commutator)
 open StateFieldResidueReconstruction (integerBinomial)
 open scoped BigOperators VertexOperator
 noncomputable section
+open private balanced_clearing_three balancedSlice_extend balancedCollision_signed from
+  D5.S3.VertexAlgebra.FormalSeries.SupportedBalancedCollision
 open private weight fixed_q_borcherds from
   D5.S3.VertexAlgebra.Sectors.LatticeSectorBalancedBorcherds
 open private cleared_local clear_reverse_below from
@@ -62,10 +64,11 @@ private theorem cross_lower (D : LatticeData) (α β γ δ : Charge D)
     (y x z : ℤ) (hx : x < -(B : ℤ)) :
     balancedCross k (nestedCanonical D ![α, β, γ] ![u, v, t] δ w 0 1 2) y x z = 0 := by
   classical
-  have loc : delta^[k] (FieldNormalProductLocality.commutator
+  have loc : FieldNormalProductLocality.delta^[k] (FieldNormalProductLocality.commutator
       (Y D (inclusion D β v)) (Y D (inclusion D γ t))) = 0 := by
-    rw [← Module.End.pow_apply]
-    exact locality
+    have h := locality
+    rw [Module.End.pow_apply] at h
+    exact h
   unfold balancedCross
   apply Finset.sum_eq_zero
   intro j hj
@@ -75,8 +78,10 @@ private theorem cross_lower (D : LatticeData) (α β γ δ : Charge D)
   have zero := clear_reverse_below D β γ δ v t w k B cutoff x (z - j) hx
   have h := congrArg L (cleared.trans zero)
   simp only [clear, map_sum, map_smul, map_zero] at h
-  apply congrArg (fun q : Oscillator D => weight k j • q) h |>.trans
-  simp only [smul_zero]
+  change (∑ l ∈ Finset.range (k + 1), weight k j • (weight k l •
+    L (product D β γ δ v t w (x - k + l) (z - j - l)))) = 0
+  simpa only [weight, Finset.smul_sum, smul_zero] using
+    congrArg (fun q : Oscillator D => weight k j • q) h
 
 private theorem triple_first_finite (D : LatticeData) (α β γ δ : Charge D)
     (u : Sector D α) (v : Sector D β) (t : Sector D γ) (w : Sector D δ)
@@ -153,7 +158,7 @@ private theorem finite_first (D : LatticeData) (α β γ δ : Charge D)
     _ = ∑ᶠ i : ℕ, ∑ l ∈ Finset.range (k + 1), weight k l •
         (∑ j ∈ Finset.range (k + 1), weight k j • term j l i) := by
       simp_rw [smul_finsum' _ (finiteJ _)]
-      exact sum_finsum_comm _ _ (fun l _ => (finiteJ l).smul_right _)
+      exact sum_finsum_comm _ _ (fun l _ => (finiteJ l).smul_right (fun _ => weight k l))
     _ = _ := by
       apply finsum_congr
       intro i
@@ -169,10 +174,9 @@ private theorem finite_first (D : LatticeData) (α β γ δ : Charge D)
           ![e 0 - a 0 - k + i - k + j,
             e 1 - a 1 - i - k + l, e 2 - a 2 - j - l] := by
         funext d
-        fin_cases d <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
-          Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] <;> omega
+        fin_cases d <;> dsimp <;> omega
       rw [idx]
-      simp only [smul_smul]
+      simp only [smul_smul, weight]
       congr 1
       ring
 

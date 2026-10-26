@@ -52,7 +52,7 @@ private theorem balanced_cross_action {V : Type*} [AddCommGroup V] [Module ℂ V
       Int.natCast_sub hpk, Int.natCast_sub hqk] <;> omega
 
 /-- The original Q, clearing the first pair after its two cross factors. -/
-theorem balanced_clearing_three {V : Type*} [AddCommGroup V] [Module ℂ V]
+private theorem balanced_clearing_three {V : Type*} [AddCommGroup V] [Module ℂ V]
     (k : ℕ) (F : Distribution 3 V) (e : Exponent 3) :
     polynomialAction (clearingPolynomial 3 k) F e =
       clear k (fun y x => balancedCross k F y x (e 2)) (e 0) (e 1) := by
@@ -122,7 +122,7 @@ def balancedSlice {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (z : ℤ) : MvPowerSeries (Fin 2) R :=
   middleNativeSlice (MvPowerSeries.rename swap12 P) z
 
-theorem balancedSlice_extend {R : Type*} [CommRing R] [Algebra ℂ R]
+private theorem balancedSlice_extend {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (z y x : ℤ) :
     extend (balancedSlice P z) y x = signedExtend P ![y, x, z] := by
   rw [balancedSlice, middleNativeSlice_extend, swap_signed]
@@ -161,7 +161,7 @@ private theorem balanced_as_swapped_outer {R : Type*} [CommRing R]
     rw [MvPowerSeries.subst_X hr]
     simp [r, swap12, Equiv.swap_apply_def]
 
-theorem balancedCollision_signed {R : Type*} [CommRing R] [Algebra ℂ R]
+private theorem balancedCollision_signed {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (s x z : ℤ) :
     signedExtend (balancedCollision P) ![s, x, z] =
       extend (collision (balancedSlice P z)) s x := by

@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Coupled second-term cancellation with the original statewise cutoff. -/
-import Mathlib.Algebra.FiniteSupport.Basic
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorChannelTransport
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorThreeFieldCommonSeries
 import D5.S3.VertexAlgebra.FormalSeries.SupportedBalancedCollision
@@ -18,7 +17,6 @@ proof_shape: content; consumed by actual_three_field_balanced_transport.
 admission_basis: escape-witness
 escape_witness: coupled locality cancels the full Jacobi second term. -/
 set_option autoImplicit false
-set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeSectorBalancedBorcherds
 open LatticeGeneratingFieldLocality LatticeSugawaraCurrents LatticeAllStateField
@@ -104,12 +102,12 @@ private theorem coupled_borcherds (D : LatticeData) (u v t w : Carrier D)
       (∑ j ∈ Finset.range (k + 1), weight k j • ∑ᶠ i : ℕ, second j i) = 0 := by
     simp_rw [smul_finsum' _ (hs _)]
     rw [sum_finsum_comm _ (fun j i => weight k j • second j i)
-      (fun j _ => (hs j).smul_right _)]
+      (fun j _ => (hs j).smul_right (fun _ => weight k j))]
     simp only [killed, finsum_zero]
   rw [exchangeSecond, sub_zero]
   simp_rw [smul_finsum' _ (hf _)]
   rw [sum_finsum_comm _ (fun j i => weight k j • first j i)
-    (fun j _ => (hf j).smul_right _)]
+    (fun j _ => (hf j).smul_right (fun _ => weight k j))]
   apply finsum_congr
   intro i
   rw [Finset.smul_sum]
@@ -137,6 +135,7 @@ def clearedBalanced (D : LatticeData) (α β γ δ : Charge D)
         (fun s x => balanced D α β γ δ u v t w s x (e 2 - a 2 - j - l))
         (e 0) (e 1))
 
+set_option maxHeartbeats 2000000 in
 private theorem fixed_q_borcherds (D : LatticeData) (α β γ δ : Charge D)
     (u : Sector D α) (v : Sector D β) (t : Sector D γ) (w : Sector D δ)
     (k A B C l : ℕ) (hl : l ≤ k)
@@ -228,7 +227,7 @@ private theorem fixed_q_borcherds (D : LatticeData) (α β γ δ : Charge D)
         -(s - A - 2 * k + j + i) - 1 by omega,
       show (B : ℤ) + k - l - x - 1 + i = -(x - B - k + l - i) - 1 by omega,
       show (C : ℤ) + l - z - 1 + j = -(z - C - j - l) - 1 by omega]
-  simp only [map_smul, map_sum] at projected
+    rfl
   simp_rw [first] at projected
   rw [← projected]
   apply Finset.sum_congr rfl
