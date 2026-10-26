@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: An optimized quadratic majorant interpolates an essential cap and weighted quadratic energy. -/
+   digest: An essential cap and weighted energy control inverse-power integrals. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -39,7 +39,7 @@ theorem power_integral_near (alpha a : ℝ) (halpha : alpha < 1) (ha : 0 < a) :
     (r := -alpha) (by linarith)
   rw [intervalIntegrable_iff_integrableOn_Ioc_of_le ha.le] at hi
   refine ⟨hi, ?_⟩
-  rw [← intervalIntegral.integral_of_le ha.le, intervalIntegral.integral_rpow (Or.inl (by linarith))]
+  rw [← intervalIntegral.integral_of_le ha.le, integral_rpow (Or.inl (by linarith))]
   simp only [show -alpha + 1 = 1 - alpha by ring,
     Real.zero_rpow (by linarith : 1 - alpha ≠ 0), sub_zero]
 
@@ -49,7 +49,8 @@ theorem power_integral_tail (alpha a : ℝ) (halpha : 0 < alpha) (ha : 0 < a) :
       (∫ t in Ioi a, t ^ (-2 * alpha - 1)) = a ^ (-2 * alpha) / (2 * alpha) := by
   refine ⟨integrableOn_Ioi_rpow_of_lt (by linarith) ha, ?_⟩
   have h := integral_Ioi_rpow_of_lt (a := -2 * alpha - 1) (by linarith) ha
-  rw [show -2 * alpha - 1 + 1 = -(2 * alpha) by ring] at h
+  rw [show -2 * alpha - 1 + 1 = -(2 * alpha) by ring,
+    show -(2 * alpha) = -2 * alpha by ring] at h
   simpa only [neg_div, div_neg, neg_neg] using h
 
 /-- The capped profile has an exactly integrable linear energy near zero. -/
@@ -63,7 +64,7 @@ theorem linear_integral_near (a : ℝ) (ha : 0 < a) :
   refine ⟨hi, ?_⟩
   rw [← intervalIntegral.integral_of_le ha.le]
   simpa only [Real.rpow_one, Real.rpow_two, zero_pow (by norm_num : 2 ≠ 0),
-    sub_zero] using (intervalIntegral.integral_rpow (a := (0 : ℝ)) (b := a) (r := (1 : ℝ))
+    sub_zero] using (integral_rpow (a := (0 : ℝ)) (b := a) (r := (1 : ℝ))
       (Or.inl (by norm_num)))
 
 private theorem quadratic_cap_bound (p q B x : ℝ)
@@ -86,7 +87,7 @@ private theorem near_threshold (alpha a B lambda t : ℝ)
     (hscale : 2 * lambda * B * a ^ (alpha + 1) = 1)
     (ht : 0 < t) (hta : t ≤ a) :
     2 * (lambda * t) * B ≤ t ^ (-alpha) := by
-  apply (mul_le_mul_iff_right₀ (Real.rpow_pos_of_pos ht alpha)).mp
+  apply (mul_le_mul_iff_left₀ (Real.rpow_pos_of_pos ht alpha)).mp
   calc
     (2 * (lambda * t) * B) * t ^ alpha =
         2 * lambda * B * t ^ (alpha + 1) := by
@@ -152,25 +153,30 @@ private theorem cutoff_bound
     rw [hN_eq t ht.1]
     simpa only [energy, near, mul_assoc, mul_comm, mul_left_comm] using
       quadratic_cap_bound (t ^ (-alpha)) (lambda * t) B ‖w t‖
-        (by positivity) hct
+        (mul_nonneg hlambda.le ht.1.le) hct
         (near_threshold alpha a B lambda t halpha0 hB hlambda hscale ht.1 ht.2)
   have hmajorant_tail : ∀ᵐ t ∂volume.restrict (Ioi a),
       N t ≤ lambda * energy t + tail t := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     have ht0 : 0 < t := ha.trans ht
     rw [hN_eq t ht0]
-    simpa only [energy, tail, tail_majorant_identity alpha lambda t ht0,
-      mul_assoc, mul_comm, mul_left_comm] using
-      quadratic_free_bound (t ^ (-alpha)) (lambda * t) ‖w t‖ (by positivity)
+    have hb := quadratic_free_bound (t ^ (-alpha)) (lambda * t) ‖w t‖
+      (mul_pos hlambda ht0)
+    rw [tail_majorant_identity alpha lambda t ht0] at hb
+    simpa only [energy, tail, mul_assoc] using hb
   have hNn : IntegrableOn N (Ioc (0 : ℝ) a) := by
     apply ((hEn.const_mul lambda).add hnear).mono'
       (hNm.mono_set hnear_subset)
     filter_upwards [hmajorant_near] with t ht
-    simpa only [Real.norm_eq_abs, abs_of_nonneg (norm_nonneg _)] using ht
+    change |N t| ≤ lambda * energy t + near t
+    rw [abs_of_nonneg (show 0 ≤ N t from norm_nonneg _)]
+    exact ht
   have hNt : IntegrableOn N (Ioi a) := by
     apply ((hEt.const_mul lambda).add htail).mono' (hNm.mono_set htail_subset)
     filter_upwards [hmajorant_tail] with t ht
-    simpa only [Real.norm_eq_abs, abs_of_nonneg (norm_nonneg _)] using ht
+    change |N t| ≤ lambda * energy t + tail t
+    rw [abs_of_nonneg (show 0 ≤ N t from norm_nonneg _)]
+    exact ht
   have hNi : IntegrableOn N (Ioi (0 : ℝ)) := by
     rw [← Ioc_union_Ioi_eq_Ioi ha.le, integrableOn_union]
     exact ⟨hNn, hNt⟩
@@ -187,8 +193,12 @@ private theorem cutoff_bound
       ∫ t in Ioi (0 : ℝ), energy t := by
     rw [← Ioc_union_Ioi_eq_Ioi ha.le]
     exact (setIntegral_union hdisj measurableSet_Ioi hEn hEt).symm
-  have hboundn := integral_mono_ae hNn ((hEn.const_mul lambda).add hnear) hmajorant_near
-  have hboundt := integral_mono_ae hNt ((hEt.const_mul lambda).add htail) hmajorant_tail
+  have hboundn : (∫ t in Ioc (0 : ℝ) a, N t) ≤
+      ∫ t in Ioc (0 : ℝ) a, lambda * energy t + near t :=
+    integral_mono_ae hNn ((hEn.const_mul lambda).add hnear) hmajorant_near
+  have hboundt : (∫ t in Ioi a, N t) ≤
+      ∫ t in Ioi a, lambda * energy t + tail t :=
+    integral_mono_ae hNt ((hEt.const_mul lambda).add htail) hmajorant_tail
   have hnear_val : (∫ t in Ioc (0 : ℝ) a, near t) =
       B * a ^ (1 - alpha) / (1 - alpha) - lambda * B ^ 2 * a ^ 2 / 2 := by
     rw [integral_sub (hknear.const_mul B) (hlinear.const_mul (lambda * B ^ 2)),
@@ -256,8 +266,9 @@ private theorem optimize_coefficient (alpha B a lambda delta : ℝ)
     ring
   rw [hnormalized]
   have hBpower : B ^ alpha * (B ^ 2) ^ beta = B := by
-    rw [← Real.rpow_natCast B 2, ← Real.rpow_mul hB.le, ← Real.rpow_add hB,
-      show alpha + (2 : ℝ) * beta = 1 by dsimp [beta]; ring, Real.rpow_one]
+    rw [← Real.rpow_natCast B 2, ← Real.rpow_mul hB.le, ← Real.rpow_add hB]
+    norm_num only [Nat.cast_ofNat]
+    rw [show alpha + (2 : ℝ) * beta = 1 by dsimp [beta]; ring, Real.rpow_one]
   have hapower : (a ^ 2) ^ beta = a ^ (1 - alpha) := by
     rw [← Real.rpow_natCast a 2, ← Real.rpow_mul ha.le]
     congr 1
@@ -297,13 +308,13 @@ theorem norm_integral_le_sharp_cap_energy
   have henergy_nonneg : ∀ᵐ t ∂volume.restrict (Ioi (0 : ℝ)),
       0 ≤ t * ‖w t‖ ^ 2 := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-    positivity
+    exact mul_nonneg ht.le (sq_nonneg _)
   by_cases hB0 : B = 0
   · have hz : (fun t : ℝ => t ^ (-alpha) • w t) =ᵐ[volume.restrict (Ioi (0 : ℝ))] 0 := by
       filter_upwards [hcap] with t ht
       have hwt : w t = 0 := norm_eq_zero.mp (le_antisymm (hB0 ▸ ht) (norm_nonneg _))
       simp only [hwt, smul_zero, Pi.zero_apply]
-    refine ⟨integrable_zero.congr hz.symm, ?_⟩
+    refine ⟨(integrable_zero (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
     rw [integral_congr_ae hz]
     simp [hB0, Real.zero_rpow halpha0.ne']
   by_cases hdelta0 : delta = 0
@@ -315,7 +326,7 @@ theorem norm_integral_le_sharp_cap_energy
       have hnorm : ‖w t‖ ^ 2 = 0 := (mul_eq_zero.mp hzt).resolve_left ht.ne'
       have hwt : w t = 0 := norm_eq_zero.mp (sq_eq_zero_iff.mp hnorm)
       simp only [hwt, smul_zero, Pi.zero_apply]
-    refine ⟨integrable_zero.congr hz.symm, ?_⟩
+    refine ⟨(integrable_zero (volume.restrict (Ioi (0 : ℝ)))).congr hz.symm, ?_⟩
     rw [integral_congr_ae hz]
     simp [hdelta0, Real.zero_rpow (by linarith : (1 - alpha) / 2 ≠ 0)]
   have hBpos : 0 < B := lt_of_le_of_ne hB (Ne.symm hB0)

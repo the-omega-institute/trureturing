@@ -198,7 +198,7 @@ theorem sharp_constant_le_of_uniform_bound (alpha C : ℝ)
     dsimp only [q]
     field_simp [halpha0.ne', hgap.ne']
     ring
-  apply (mul_le_mul_iff_right₀ (Real.rpow_pos_of_pos hq ((1 - alpha) / 2))).mp
+  apply (mul_le_mul_iff_left₀ (Real.rpow_pos_of_pos hq ((1 - alpha) / 2))).mp
   rwa [hfactor]
 
 #print axioms sharp_constant_le_of_uniform_bound
