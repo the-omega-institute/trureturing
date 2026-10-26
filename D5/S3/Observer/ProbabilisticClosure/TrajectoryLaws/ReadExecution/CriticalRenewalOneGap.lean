@@ -6,7 +6,7 @@
    utility: none
    digest: Actual one-gap coin traces, normalized terminal rewards and signed adjacent-grid evidence. -/
 
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPaths
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalTable
 
 section
 /-! Full finite coin traces and their same-source renewal product law. -/

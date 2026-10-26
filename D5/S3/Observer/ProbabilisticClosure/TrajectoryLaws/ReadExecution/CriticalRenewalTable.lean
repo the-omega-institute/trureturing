@@ -950,3 +950,29 @@ end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRen
 
 end
 end
+
+section
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPaths
+open CriticalRenewalTable
+
+/-- A finite block of fresh zero outcomes and its one closing-tick outcome.
+    These are proof coordinates, not retained observer data. -/
+structure Block where
+  zeros : List Bool
+  tick : Bool
+  deriving Countable
+
+def phaseAt (J : ℕ) (b : Block) : ℕ → Phase.T J
+  | 0 => Phase.first J
+  | k + 1 => Phase.step (phaseAt J b k) (b.zeros[k]?.getD false)
+
+def increment {J : ℕ} (t : Tick J) (b : Block) : ℤ :=
+  t.increment (phaseAt J b b.zeros.length) b.tick
+
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPaths
+
+end
+end

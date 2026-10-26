@@ -88,5 +88,5 @@ internal sealed class CriticalRenewalTableDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("For every natural J and positive natural H, the cardinality of State H J is exactly 3+(2H-1)(J+1). All interior integer evidence values and all phases count; no reachability or positive-probability restriction is imposed.")),
                     Paragraph(Text("The three distinguished states are the wait and two internally emitted labels. The evidence interval has 2H-1 integers and the capped phase carrier has J+1 elements. The real choice H=ceil(A/delta) is a separate numerical specialization of this exact natural-H identity."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }
