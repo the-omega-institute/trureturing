@@ -213,9 +213,10 @@ private theorem expanded_start {k : ℕ} (a b : Fin 8) (w : Fin k → Fin 8)
     expandedWindow (start a b) w c.val =
       paddedWindow (fun (d : Fin (k + 2)) => maskEquiv ((Fin.cons a (Fin.cons b w) : Fin (k + 2) → Fin 8) d)) c := by
   funext i
-  let j : ℤ := (c.val : ℤ) + i.val - 2
-  have hj : -2 ≤ j := by dsimp [j]; omega
-  change expanded (start a b) w j = symbol (padded _ j)
+  change expanded (start a b) w ((c.val : ℤ) + i.val - 2) =
+    symbol (padded _ ((c.val : ℤ) + i.val - 2))
+  generalize hjdef : ((c.val : ℤ) + i.val - 2) = j
+  have hj : -2 ≤ j := by omega
   by_cases hneg : j < 0
   · have hl : -2 ≤ j ∧ j < 2 := by omega
     have hr : ¬ (0 ≤ j ∧ j < ↑(k + 2)) := by omega
@@ -229,6 +230,11 @@ private theorem expanded_start {k : ℕ} (a b : Fin 8) (w : Fin k → Fin 8)
       rw [expanded, dite_eq_left hl, columns_start, padded, dite_eq_left hr, symbol]
       have hc : j = 0 ∨ j = 1 := by omega
       rcases hc with rfl | rfl <;> simp [Fin.cons]
+      have he : (1 : Fin (k + 2)) = (0 : Fin (k + 1)).succ := by
+        apply Fin.ext
+        simp
+      rw [he]
+      rfl
     · have hl : ¬ (-2 ≤ j ∧ j < 2) := by omega
       by_cases htop : j < ↑(k + 2)
       · have hfuture : 2 ≤ j ∧ j < ↑k + 2 := by omega
@@ -243,7 +249,7 @@ private theorem expanded_start {k : ℕ} (a b : Fin 8) (w : Fin k → Fin 8)
           dsimp
           omega
         rw [he]
-        simp
+        rfl
       · have hfuture : ¬ (2 ≤ j ∧ j < ↑k + 2) := by omega
         have hr : ¬ (0 ≤ j ∧ j < ↑(k + 2)) := by omega
         simp only [expanded, dite_eq_right hl, dite_eq_right hfuture,

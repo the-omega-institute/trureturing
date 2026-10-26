@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Batteries.Tactic.OpenPrivate
+import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
 
 /-! The reproduced formula is attributed to Colin Barker, OEIS A286848,
 https://oeis.org/A286848, under CC-BY-SA-4.0,
@@ -24,7 +25,67 @@ namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridSeries
 
 open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
-open private orbit_values from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
+open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
+open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
+open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
+open private rowEval orbit_values from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
+
+/-- Lift a quotient vector to every full state in its literal class. -/
+def lift : Vector →ₗ[ℤ] (State → ℤ) where
+  toFun v s := v (classOf s)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+private theorem rows_nonneg : ∀ i : Fin 59,
+    (rows i).Forall (fun e => 0 ≤ e.2) := by decide +kernel
+
+private theorem expanded_row_sum (es : List (Fin 59 × ℤ))
+    (h : es.Forall (fun e => 0 ≤ e.2)) (v : Vector) :
+    ((es.flatMap fun e => List.replicate e.2.toNat e.1).map v).sum = rowEval es v := by
+  induction es with
+  | nil => simp [rowEval]
+  | cons e es ih =>
+    have he := (List.forall_cons.mp h).1
+    have ht := (List.forall_cons.mp h).2
+    simp only [List.flatMap_cons, List.map_append, List.sum_append,
+      List.map_replicate, List.sum_replicate, rowEval]
+    rw [ih ht]
+    simp only [nsmul_eq_mul, Int.toNat_of_nonneg he]
+
+/-- The all-state finite row certificate intertwines the two linear transfers. -/
+theorem intertwines (v : Vector) : fullStep (lift v) = lift (step v) := by
+  funext s
+  calc
+    fullStep (lift v) s = ((successors s).map v).sum := by
+      have h := List.sum_map_ite
+        (fun m : Fin 8 => accepts (window s ⟨m.val, by omega⟩) = true)
+        (fun m => v (classOf (append s m))) (fun _ => (0 : ℤ)) (List.finRange 8)
+      simpa [fullStep, lift, successors, List.map_map, Fin.sum_univ_def] using h
+    _ = ((quotientSuccessors (classOf s)).map v).sum :=
+      ((row_certificate s).map v).sum_eq
+    _ = lift (step v) s := expanded_row_sum (rows (classOf s)) (rows_nonneg _) v
+
+/-- All full-state terminal-vector iterates are the lifted quotient iterates. -/
+theorem lift_orbit (k : ℕ) : fullOrbit k = lift (orbit k) := by
+  induction k with
+  | zero => exact funext terminal_certificate
+  | succ k ih => rw [fullOrbit, ih, intertwines, orbit]
+
+private theorem alpha_nonneg : ∀ i : Fin 59, 0 ≤ alpha i := by decide +kernel
+
+/-- Summing all 64 actual starts is exactly evaluation by the quotient initial row. -/
+theorem initial_sum (v : Vector) :
+    (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = ∑ i : Fin 59, alpha i * v i := by
+  calc
+    (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = (initialClasses.map v).sum := by
+      simp [initialClasses, List.map_map, Fin.sum_univ_def]
+    _ = (alphaClasses.map v).sum := (initial_certificate.map v).sum_eq
+    _ = ∑ i : Fin 59, alpha i * v i := by
+      simp only [alphaClasses, List.map_flatMap, List.sum_flatMap, List.map_replicate,
+        List.sum_replicate, nsmul_eq_mul, Int.toNat_of_nonneg (alpha_nonneg _)]
+      exact (Fin.sum_univ_def _).symm
+
+
 
 /-- The complete numerator in increasing degree order, including its leading x. -/
 def numerator : Fin 49 → ℤ := ![0, 2, 3, -2, -1, 4, 10, -14, -32, -29, -2, -21, -140, -140, 126, 80, 127, 143, 695, 401, 462, 582, -8, -490, -660, -721, -960, -714, -925, 25, 206, 255, 494, 155, 443, -118, 80, -71, -172, 78, -105, 79, 7, -28, 33, -7, -4, 3, -1]
@@ -64,7 +125,7 @@ theorem initial_convolutions : ∀ m : Fin 50,
     (∑ j : Fin 49, if j.val ≤ m.val then
       denominator j * initialCoefficient ⟨m.val - j.val, by omega⟩ else 0) =
       if h : m.val < 49 then numerator ⟨m.val, h⟩ else 0 := by
-  decide
+  decide +kernel
 
 /-- The denominator recurrence holds at every coefficient from degree 50 onward. -/
 theorem all_later_convolutions (m : ℕ) (hm : 50 ≤ m) :
@@ -139,5 +200,43 @@ theorem Q_constant : PowerSeries.constantCoeff Q = 1 := by
 is an independent obligation, not an assumption of this theorem. -/
 theorem quotientSeries_identity : quotientSeries = P * Q⁻¹ :=
   (PowerSeries.eq_mul_inv_iff_mul_eq (by rw [Q_constant]; norm_num)).mpr quotientSeries_mul_Q
+
+
+/-- The original actual counts equal the certified quotient evaluation at every
+width at least two, with no assumed count relation or recurrence. -/
+theorem actualCount_quotient (k : ℕ) :
+    (BarkerMinimalGridEncoding.actualCount (k + 2) : ℤ) = evaluate (orbit k) := by
+  calc
+    _ = ∑ s : Fin 64, fullOrbit k ⟨s.val, by omega⟩ := actualCount_fullOrbit k
+    _ = ∑ s : Fin 64, orbit k (classOf ⟨s.val, by omega⟩) := by
+      rw [lift_orbit]
+      rfl
+    _ = evaluate (orbit k) := initial_sum (orbit k)
+
+/-- The requested series has the actual subset count at each positive width and
+constant coefficient zero; no empty-grid count is redefined. -/
+noncomputable def actualSeries : PowerSeries ℚ := PowerSeries.mk fun n =>
+  if n = 0 then 0 else (BarkerMinimalGridEncoding.actualCount n : ℚ)
+
+private theorem actualSeries_eq_quotientSeries : actualSeries = quotientSeries := by
+  apply PowerSeries.ext
+  intro n
+  simp only [actualSeries, quotientSeries, PowerSeries.coeff_mk]
+  by_cases h₀ : n = 0
+  · subst n
+    rfl
+  · by_cases h₁ : n = 1
+    · subst n
+      simp [quotientCoefficient, actualCount_one]
+    · simp only [if_neg h₀, quotientCoefficient, if_neg h₁]
+      have he : n - 2 + 2 = n := by omega
+      have hc := actualCount_quotient (n - 2)
+      rw [he] at hc
+      exact_mod_cast hc
+
+/-- The complete unchanged Colin Barker OEIS A286848 identity for the actual
+labelled inclusion-minimal dominating subsets of every ordinary open P3 × Pn. -/
+theorem whole_identity : actualSeries = P * Q⁻¹ :=
+  actualSeries_eq_quotientSeries.trans quotientSeries_identity
 
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridSeries

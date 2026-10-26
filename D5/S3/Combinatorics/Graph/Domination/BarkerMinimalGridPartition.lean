@@ -20,7 +20,6 @@ open scoped BigOperators
 
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
-open private rowEval from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 
 /-- The literal class of each of the 4672 full states. -/
 private def classData : Array (Fin 59) :=
@@ -375,60 +374,4 @@ def alphaClasses : List (Fin 59) :=
 
 /-- The full initial row maps exactly to alpha. -/
 theorem initial_certificate : List.Perm initialClasses alphaClasses := by decide +kernel
-/-- Lift a quotient vector to every full state in its literal class. -/
-def lift : Vector →ₗ[ℤ] (State → ℤ) where
-  toFun v s := v (classOf s)
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
-
-private theorem rows_nonneg : ∀ i : Fin 59,
-    (rows i).Forall (fun e => 0 ≤ e.2) := by decide +kernel
-
-private theorem expanded_row_sum (es : List (Fin 59 × ℤ))
-    (h : es.Forall (fun e => 0 ≤ e.2)) (v : Vector) :
-    ((es.flatMap fun e => List.replicate e.2.toNat e.1).map v).sum = rowEval es v := by
-  induction es with
-  | nil => simp [rowEval]
-  | cons e es ih =>
-    have he := (List.forall_cons.mp h).1
-    have ht := (List.forall_cons.mp h).2
-    simp only [List.flatMap_cons, List.map_append, List.sum_append,
-      List.map_replicate, List.sum_replicate, rowEval]
-    rw [ih ht]
-    simp only [nsmul_eq_mul, Int.toNat_of_nonneg he]
-
-/-- The all-state finite row certificate intertwines the two linear transfers. -/
-theorem intertwines (v : Vector) : fullStep (lift v) = lift (step v) := by
-  funext s
-  calc
-    fullStep (lift v) s = ((successors s).map v).sum := by
-      have h := List.sum_map_ite
-        (fun m : Fin 8 => accepts (window s ⟨m.val, by omega⟩) = true)
-        (fun m => v (classOf (append s m))) (fun _ => (0 : ℤ)) (List.finRange 8)
-      simpa [fullStep, lift, successors, List.map_map, Fin.sum_univ_def] using h
-    _ = ((quotientSuccessors (classOf s)).map v).sum :=
-      ((row_certificate s).map v).sum_eq
-    _ = lift (step v) s := expanded_row_sum (rows (classOf s)) (rows_nonneg _) v
-
-/-- All full-state terminal-vector iterates are the lifted quotient iterates. -/
-theorem lift_orbit (k : ℕ) : fullOrbit k = lift (orbit k) := by
-  induction k with
-  | zero => exact funext terminal_certificate
-  | succ k ih => rw [fullOrbit, ih, intertwines, orbit]
-
-private theorem alpha_nonneg : ∀ i : Fin 59, 0 ≤ alpha i := by decide +kernel
-
-/-- Summing all 64 actual starts is exactly evaluation by the quotient initial row. -/
-theorem initial_sum (v : Vector) :
-    (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = ∑ i : Fin 59, alpha i * v i := by
-  calc
-    (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = (initialClasses.map v).sum := by
-      simp [initialClasses, List.map_map, Fin.sum_univ_def]
-    _ = (alphaClasses.map v).sum := (initial_certificate.map v).sum_eq
-    _ = ∑ i : Fin 59, alpha i * v i := by
-      simp only [alphaClasses, List.map_flatMap, List.sum_flatMap, List.map_replicate,
-        List.sum_replicate, nsmul_eq_mul, Int.toNat_of_nonneg (alpha_nonneg _)]
-      exact (Fin.sum_univ_def _).symm
-
-
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
