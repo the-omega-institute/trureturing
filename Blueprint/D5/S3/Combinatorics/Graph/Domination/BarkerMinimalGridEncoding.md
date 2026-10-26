@@ -46,7 +46,7 @@ $$\forall (V : Type), (\operatorname{Finite}\left(V\right)) \Rightarrow (\forall
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridEncoding.minimal_iff_closed_private` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Silvere Gangloff; Alexandre Talon (2019). *Asymptotic growth rate of square grids dominating sets: a symbolic dynamics approach*. DOI: [10.48550/arXiv.1906.10779](https://doi.org/10.48550/arXiv.1906.10779). URL: <https://arxiv.org/abs/1906.10779>.
 
 *Commentary.*
 
