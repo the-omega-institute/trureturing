@@ -2923,7 +2923,7 @@ $$
 
 接收者只有 earned 图、完整映射、真实可调用上下文及此历史像承诺，没有字、长度、旧编码回复、journal、依赖于场的 advice 或可访问的相关 producer 状态。保留 genuine original-root reference/binding、方向、current/fresh authority、排他的完成调用串行化、无自主运动、按 literal 值决定宽度的完整精确 framing 及每个有限承诺运行所需的充足有限精确 backing；没有额外依赖于场的 timing、allocation 或 capacity 通道。解码期间源保持 held，且无其他写入者、撤权或崩溃；这些权利与资源是前提，不由解码产生。
 
-在完整编码结束之后，选取唯一如下的固定获取 schedule；它只依赖已知图，不依赖 $w$ 或 $m$：
+在完整编码结束之后，选取如下一个固定获取 schedule；它只依赖已知图，不依赖 $w$ 或 $m$：
 
 $$
 \operatorname{Tick};\operatorname{Tick};\operatorname{Tick};
@@ -3016,7 +3016,7 @@ $$
 
 从此 cut 起，复用定理 64.1 的完整逐调用对应及归纳，连同 §75 的真实 advanced-endpoint 入口用法：$P/S$ 的旧值保留、fresh 零值及 raw-label/grant 更新，absent、branch、wrong-type 三种不同守卫拒绝，完整 rational Add、全场 Tick、整个 rational Read 和 Hold，RangeRefusal、BadFrame、incomplete-frame pending state 及 missing-right disabled calls，全部保留原有语义。每个有限输入先取得真实 backing；完整输出、End、local acknowledgement、完成返回和匹配的保留态更新全部先于下一个 settled call。完整 decoded-word 或当前态导出同样使用其实际 backed 输出帧与完整确认/返回，不增加隐含通信端口；pending 请求、回复、地址、图场副本及工作缓冲按需同时有有限 backing。故所述有限共同 adaptive continuation 上，整个回复和实际 successor 逐步相同；以固定共同 random tape 选择后继请求亦然。后续生长和任意 rational Add 可以离开七顶点历史像，此后依靠维护中的完整当前态与当前图，不在 off-image 场上重用历史 inverse。
 
-所得结论是定理 75.2 的同一原生 joint history/真实端点服务任务，将获取 Tick 从五减至四；额外 scalar Read 仍为四，其最小性已由定理 74.1 及推论 75.3 给出，不新增 Read 下界，也不主张 Tick 最小性。此应用直接复用 (75.10) 的全次数 $L_2$ 结果及定理 64.1 的完整服务不变量，不建立新的通用代数定理，也不主张文献优先权。§72 中 Akiyama–Thuswaldner–Zaïmi 的数学归属仍按该节引用；此处所需的有限系数排除已由该节的完整初等论证给出，不另依赖外部定理。
+所得结论是定理 75.2 的同一原生 joint history/真实端点服务任务，将获取 Tick 从五减至四；额外 scalar Read 仍为四，其最小性已由定理 74.1 及推论 75.3 给出，不新增 Read 下界，也不主张 Tick 最小性。此应用直接复用 (75.10) 的全次数 $L_2$ 结果及定理 64.1 的完整服务不变量，不建立新的通用代数定理，也不主张文献优先权。§72 中 Akiyama–Thuswaldner–Zaïmi 的数学归属仍按该节引用；此处所需的有界系数排除已由该节的完整初等论证给出，不另依赖外部定理。
 
 每个有限承诺运行的充足精确 backing 不给出统一时间、存储、precision 或整段总成本界。结论限于上述固定源、指定种子、完整 monic quaternary 历史像及原权利、framing、串行化和 held 前提，不推出任意场或任意图恢复、adaptive 获取 schedule 定理、已擦除一般 journal 的恢复、busy cut 的 inverse、backing 耗尽或崩溃恢复行为，亦不提供物理实现。$\square$
 
