@@ -164,6 +164,68 @@ private lemma ray_identity {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     field_simp
   simpa only [smul_smul, mul_assoc, mul_inv_cancel₀ hc', mul_one, hc2] using hh
 
+private lemma outer_combination {d : ℕ} (u v : Fin d → ℂ) (a b : ℂ) :
+    outer (a • u + b • v) (a • u + b • v) =
+      (a * star a) • outer u u + (b * star b) • outer v v +
+      (a * star b) • outer u v + (b * star a) • outer v u := by
+  ext i j
+  simp only [outer, vecMulVec_apply, Pi.add_apply, Pi.smul_apply, Pi.star_apply,
+    Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, star_add, star_mul]
+  ring
+
+private lemma two_ray_equation {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
+    (hρ : ρ.IsHermitian) (ε : MatrixMap (Fin d) (Fin e) ℂ)
+    (hid : ∀ p, IsProj p → ε (p * ρ + ρ * p) = (2 : ℂ) • ε (p * ρ * p))
+    (u v : Fin d → ℂ) (r s a b : ℝ) (z : ℂ) (hz : star z * z = 1)
+    (hc : a ^ 2 + b ^ 2 ≠ 0)
+    (hu : ρ *ᵥ u = (r : ℂ) • u) (hv : ρ *ᵥ v = (s : ℂ) • v)
+    (huu : star u ⬝ᵥ u = 1) (hvv : star v ⬝ᵥ v = 1)
+    (huv : star u ⬝ᵥ v = 0) (hvu : star v ⬝ᵥ u = 0) :
+    ((a : ℂ)^2 + (b : ℂ)^2) • ε
+      ((2 * r * (a : ℂ)^2) • outer u u + (2 * s * (b : ℂ)^2) • outer v v +
+        (((r : ℂ) + s) * a * b * star z) • outer u v +
+        (((r : ℂ) + s) * a * b * z) • outer v u) =
+      (2 * ((r : ℂ) * (a : ℂ)^2 + s * (b : ℂ)^2)) • ε
+        (((a : ℂ)^2) • outer u u + ((b : ℂ)^2) • outer v v +
+          ((a : ℂ) * b * star z) • outer u v + ((a : ℂ) * b * z) • outer v u) := by
+  simp only [Complex.star_def] at hz
+  let w := (a : ℂ) • u + ((b : ℂ) * z) • v
+  have hn : star w ⬝ᵥ w = ((a ^ 2 + b ^ 2 : ℝ) : ℂ) := by
+    simp only [w, star_add, star_smul, star_mul, Complex.star_def,
+      Complex.conj_ofReal, add_dotProduct, dotProduct_add, smul_dotProduct,
+      dotProduct_smul, huu, hvv, huv, hvu, smul_eq_mul]
+    push_cast
+    linear_combination (b : ℂ)^2 * hz
+  have hm : outer w w =
+      ((a : ℂ)^2) • outer u u + ((b : ℂ)^2) • outer v v +
+      ((a : ℂ) * b * star z) • outer u v + ((a : ℂ) * b * z) • outer v u := by
+    rw [outer_combination]
+    simp only [star_mul, Complex.star_def, Complex.conj_ofReal]
+    match_scalars <;> ring_nf <;> linear_combination (b : ℂ)^2 * hz
+  have ht : outer w w * ρ * outer w w =
+      ((r : ℂ) * (a : ℂ)^2 + s * (b : ℂ)^2) • outer w w := by
+    rw [outer_sandwich]
+    congr 1
+    simp only [w, mulVec_add, mulVec_smul, hu, hv, star_add, star_smul,
+      star_mul, Complex.star_def, Complex.conj_ofReal, add_dotProduct,
+      dotProduct_add, smul_dotProduct, dotProduct_smul, huu, hvv, huv, hvu,
+      smul_eq_mul, smul_smul]
+    linear_combination (s : ℂ) * (b : ℂ)^2 * hz
+  have hs : outer w w * ρ + ρ * outer w w =
+      (2 * r * (a : ℂ)^2) • outer u u + (2 * s * (b : ℂ)^2) • outer v v +
+      (((r : ℂ) + s) * a * b * star z) • outer u v +
+      (((r : ℂ) + s) * a * b * z) • outer v u := by
+    rw [hm]
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
+      outer_left ρ u u r hu, outer_left ρ u v r hu,
+      outer_left ρ v u s hv, outer_left ρ v v s hv,
+      outer_right ρ hρ u u r hu, outer_right ρ hρ v u r hu,
+      outer_right ρ hρ u v s hv, outer_right ρ hρ v v s hv]
+    module
+  have h := ray_identity ρ ε hid w (a ^ 2 + b ^ 2) hc hn
+  rw [hs, ht, hm, map_smul, smul_smul] at h
+  simpa only [Complex.ofReal_add, Complex.ofReal_pow] using h
+
 private lemma two_eigenvector {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (hρ : ρ.IsHermitian) (ε : MatrixMap (Fin d) (Fin e) ℂ)
     (hid : ∀ p, IsProj p → ε (p * ρ + ρ * p) = (2 : ℂ) • ε (p * ρ * p))
@@ -172,7 +234,41 @@ private lemma two_eigenvector {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (huu : star u ⬝ᵥ u = 1) (hvv : star v ⬝ᵥ v = 1)
     (huv : star u ⬝ᵥ v = 0) (hvu : star v ⬝ᵥ u = 0) :
     ε (outer u u) = ε (outer v v) ∧ ε (outer u v) = 0 ∧ ε (outer v u) = 0 := by
-  sorry
+  have h0 := two_ray_equation ρ hρ ε hid u v r s 1 1 1 (by norm_num)
+    (by norm_num) hu hv huu hvv huv hvu
+  have h1 := two_ray_equation ρ hρ ε hid u v r s 3 4 1 (by norm_num)
+    (by norm_num) hu hv huu hvv huv hvu
+  have hi := two_ray_equation ρ hρ ε hid u v r s 3 4 Complex.I (by simp)
+    (by norm_num) hu hv huu hvv huv hvu
+  norm_num only [Complex.ofReal_one, Complex.ofReal_ofNat, one_pow, one_mul,
+    mul_one, star_one, map_add, map_smul, Complex.star_def, Complex.conj_I] at h0 h1 hi
+  have hrs' : (r : ℂ) - s ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast hrs)
+  have heq : ε (outer u u) = ε (outer v v) := by
+    ext i j
+    have hh := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x i j) h0
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] at hh
+    apply sub_eq_zero.mp
+    apply (mul_eq_zero.mp (show ((r : ℂ) - s) *
+      (ε (outer u u) i j - ε (outer v v) i j) = 0 by linear_combination hh / 2)).resolve_left hrs'
+  refine ⟨heq, ?_, ?_⟩
+  all_goals
+    ext i j
+    change _ = (0 : ℂ)
+    have h1' := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x i j) h1
+    have hi' := congrArg (fun x : Matrix (Fin e) (Fin e) ℂ => x i j) hi
+    simp only [heq, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] at h1' hi'
+    have hs : ε (outer u v) i j + ε (outer v u) i j = 0 :=
+      (mul_eq_zero.mp (show ((r : ℂ) - s) *
+        (ε (outer u v) i j + ε (outer v u) i j) = 0 by
+          linear_combination h1' / 84)).resolve_left hrs'
+    have ht : -Complex.I * ε (outer u v) i j + Complex.I * ε (outer v u) i j = 0 :=
+      (mul_eq_zero.mp (show ((r : ℂ) - s) *
+        (-Complex.I * ε (outer u v) i j + Complex.I * ε (outer v u) i j) = 0 by
+          linear_combination hi' / 84)).resolve_left hrs'
+    have hz : ε (outer u v) i j = 0 :=
+      (mul_eq_zero.mp (show (-2 * Complex.I) * ε (outer u v) i j = 0 by
+        linear_combination ht - Complex.I * hs)).resolve_left (by norm_num)
+    first | exact hz | linear_combination hs - hz
 
 private lemma eigenbasis_assembly {d e : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ)
     (ε : MatrixMap (Fin d) (Fin e) ℂ) (hρ : IsDensity ρ) (hε : IsCPTP ε)
