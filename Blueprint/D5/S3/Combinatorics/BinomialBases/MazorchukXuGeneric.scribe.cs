@@ -74,7 +74,13 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
             Node("Generic","Cutoff","Incidence cutoff",CutoffFormula(),
                 "The cutoff lies between zero and M. Incidence starts at the zero-indexed cutoff. Both empty and full incidence are included.",DescribeRole.Definition),
             Node("Generic","generic_exceptional_edge","The forced generic edge criterion",MainFormula(),
-                "Assume the rules P and J, a list of vertices joined to zero, positions 0<ps<pt, and the two incidence cutoffs. When cs differs from pt and ct differs from ps, the edge from s to t exists exactly when cs<pt and ct<ps. Necessity uses the ordinary vertex just after s, then the vertices around t; when pt=M the latter bound follows directly from the cutoff bound. Sufficiency uses ordinary vertices immediately before s and t in J. No strict-monotonicity hypothesis on the list is needed because the position predicates already give the inequalities used in the proof. This criterion does not assert the existence or enumerate the admissible generic patterns.",DescribeRole.Theorem)), []));
+                "Assume the rules P and J, a list of vertices joined to zero, positions 0<ps<pt, and the two incidence cutoffs. When cs differs from pt and ct differs from ps, the edge from s to t exists exactly when cs<pt and ct<ps. Necessity uses the ordinary vertex just after s, then the vertices around t; when pt=M the latter bound follows directly from the cutoff bound. Sufficiency uses ordinary vertices immediately before s and t in J. No strict-monotonicity hypothesis on the list is needed because the position predicates already give the inequalities used in the proof. This criterion determines the exceptional edges whenever the listed generic inequalities hold.",DescribeRole.Theorem),
+            Node("Generic","exists_cutoff_completion","A completion for arbitrary cutoffs",CompletionFormula(),
+                "An increasing ordinary list and an injective exceptional list lie in the positive vertices up to N. Position predicates separate the two lists. Every cutoff lies between zero and M, with no distinctness requirement. Assign height zero to all nonexceptional vertices. An exceptional height is the ordinary vertex at its cutoff, or N+1 for an empty terminal segment. Join a<b exactly when both endpoints lie below the bound and each height is at most the opposite endpoint. These integer threshold edges satisfy both rules. The anchor edges, every ordinary incidence and the displayed exceptional-edge criterion follow. Zero cutoffs, coincident data and empty lists are included.",DescribeRole.Theorem),
+            Node("Generic","edges_determined_by_data","Reconstruction from the finite data",ReconstructionFormula(),
+                "Suppose the ordinary and exceptional lists together cover every positive vertex up to N. Two bounded graphs satisfying the rules agree if their anchor edges, their incidence cutoffs and all exceptional-edge bits agree. Ordinary-to-ordinary edges are forced by the anchor edges. The mixed pairs are determined by the cutoffs. The remaining pairs are exactly the exceptional bits. This is an equality of labelled relations, without an isomorphism quotient.",DescribeRole.Theorem),
+            Node("Generic","exists_unique_generic_completion","Unique generic completion",UniqueFormula(),
+                "Assume both vertex lists increase, the positive positions strictly increase, and no cutoff equals any position. Every fully specified coordinate datum then has exactly one bounded graph satisfying the rules and the prescribed anchor edges and cutoffs. Existence uses the integer threshold construction; the forced-edge criterion and reconstruction give uniqueness. This does not count the coordinate data or prove the binomial counting identity.",DescribeRole.Theorem)), []));
 
     private static Formula PositionFormula()
     {
@@ -104,4 +110,61 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
         return All("E",Rel(N),All("M",N,All("g",Map(Fn("Fin",M),N),
             Many("s t ps pt cs ct",N,Imp(hypothesis,conclusion)))));
     }
+    private static Formula Lists(Formula body)
+    {
+        var M=V("M");var i=V("i");
+        return Many("N M i",N,All("g",Map(Fn("Fin",M),N),All("s",Map(Fn("Fin",i),N),
+            All("p",Map(Fn("Fin",i),N),All("c",Map(Fn("Fin",i),N),body)))));
+    }
+    private static Formula Bounds()
+    {
+        var M=V("M");var i=V("i");var r=V("r");var j=V("j");
+        return And(Fn("StrictMono",V("g")),All("r",Fn("Fin",M),And(Lt(D(0),Fn("g",r)),Le(Fn("g",r),V("N")))),
+            All("j",Fn("Fin",i),And(Lt(D(0),Fn("s",j)),Le(Fn("s",j),V("N")),
+                Fn("Position",V("g"),Fn("s",j),Fn("p",j)),Le(Fn("c",j),M))));
+    }
+    private static Formula Cover()
+    {
+        var a=V("a");return All("a",N,Imp(And(Lt(D(0),a),Le(a,V("N"))),Or(
+            Ex("r",Fn("Fin",V("M")),Eq(Fn("g",V("r")),a)),
+            Ex("j",Fn("Fin",V("i")),Eq(Fn("s",V("j")),a)))));
+    }
+    private static Formula Bounded(Formula E) => Many("a b",N,
+        Imp(Apply(E,V("a"),V("b")),Le(V("b"),V("N"))));
+    private static Formula Cutoffs(Formula E) => All("j",Fn("Fin",V("i")),
+        Fn("Cutoff",E,V("g"),Fn("s",V("j")),Fn("c",V("j"))));
+    private static Formula CompletionFormula()
+    {
+        var E=V("E");var a=V("a");var j=V("j");var k=V("k");var i=V("i");
+        var anchor=All("a",N,Iff(Fn("E",D(0),a),And(Lt(D(0),a),Le(a,V("N")),
+            All("j",Fn("Fin",i),Not(Eq(Fn("s",j),a))))));
+        var bits=All("j",Fn("Fin",i),All("k",Fn("Fin",i),Imp(Lt(Fn("s",j),Fn("s",k)),
+            Iff(Fn("E",Fn("s",j),Fn("s",k)),And(Lt(Fn("c",j),Fn("p",k)),Lt(Fn("c",k),Fn("p",j)))))));
+        return Lists(Imp(And(Bounds(),Fn("Injective",V("s"))),Ex("E",Rel(N),
+            And(Fn("Rules",E),Bounded(E),anchor,Cutoffs(E),bits))));
+    }
+    private static Formula ReconstructionFormula()
+    {
+        var E=V("E");var F=V("F");var i=V("i");var M=V("M");
+        var hypothesis=And(Fn("Rules",E),Fn("Rules",F),Bounded(E),Bounded(F),Cover(),
+            All("r",Fn("Fin",M),Fn("E",D(0),Fn("g",V("r")))),
+            All("a",N,Iff(Fn("E",D(0),V("a")),Fn("F",D(0),V("a")))),Cutoffs(E),Cutoffs(F),
+            All("j",Fn("Fin",i),All("k",Fn("Fin",i),
+                Iff(Fn("E",Fn("s",V("j")),Fn("s",V("k"))),Fn("F",Fn("s",V("j")),Fn("s",V("k")))))));
+        return Many("N M i",N,All("E",Rel(N),All("F",Rel(N),
+            All("g",Map(Fn("Fin",M),N),All("s",Map(Fn("Fin",i),N),All("c",Map(Fn("Fin",i),N),
+                Imp(hypothesis,Eq(E,F))))))));
+    }
+    private static Formula UniqueFormula()
+    {
+        var i=V("i");var j=V("j");var k=V("k");var E=V("E");var F=V("F");
+        Formula data(Formula relation) => And(Fn("Rules",relation),Bounded(relation),
+            All("a",N,Iff(Apply(relation,D(0),V("a")),Ex("r",Fn("Fin",V("M")),Eq(Fn("g",V("r")),V("a"))))),
+            Cutoffs(relation));
+        var hypothesis=And(Bounds(),Fn("StrictMono",V("s")),Fn("StrictMono",V("p")),
+            All("j",Fn("Fin",i),Lt(D(0),Fn("p",j))),
+            All("j",Fn("Fin",i),All("k",Fn("Fin",i),Not(Eq(Fn("c",j),Fn("p",k))))),Cover());
+        return Lists(Imp(hypothesis,Ex("E",Rel(N),And(data(E),All("F",Rel(N),Imp(data(F),Eq(F,E)))))));
+    }
+
 }

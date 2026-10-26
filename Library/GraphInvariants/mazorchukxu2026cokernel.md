@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuClosure
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuFamilies
   - D5/S3/Combinatorics/BinomialBases/MazorchukXuOrder
+  - D5/S3/Combinatorics/BinomialBases/MazorchukXuGeneric
 license: citation-only
 triage: anchor
 ---
@@ -58,7 +59,9 @@ edges on $0,\ldots,n+1$. The repeated-point condition becomes two universal
 edge rules. Monotone clique-fiber expansion preserves these rules; an increasing
 section gives the converse. Exceptional-to-ordinary incidence has a unique
 cutoff, including an empty ordinary list, and monotone threshold graphs satisfy
-both rules.
+both rules. Arbitrary cutoff data admit a bounded threshold completion;
+fully generic data have a unique completion. Agreement of the anchor edges,
+cutoffs and exceptional-edge bits determines the entire labelled graph.
 
 These structural results do not establish the conjecture. The finite
 pattern/reconstruction bijection, the exact binomial counting identity and the

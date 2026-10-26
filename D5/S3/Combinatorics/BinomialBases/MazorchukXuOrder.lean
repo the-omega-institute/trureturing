@@ -155,7 +155,7 @@ theorem exists_unique_ordinary_cutoff {E : ℕ → ℕ → Prop} (h : Rules E)
     intro r
     have hi : r.val < c ↔ ¬ Incident E s (g r) :=
       Fin.lt_card_filter_univ_iff_apply_of_imp (fun j => ¬ Incident E s (g j)) hdown
-    exact (not_iff_not.mp (by simpa only [not_lt] using hi)).symm
+    exact (not_iff_not.mp (by simpa only [not_le] using hi)).symm
   refine ⟨c, ⟨hcM, hcut⟩, ?_⟩
   intro d hd
   obtain ⟨hdM, hdcut⟩ := hd
