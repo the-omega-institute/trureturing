@@ -17,19 +17,19 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature
+def actual : Realization signature.{u} := realize signature.{u}
   (fun _ _ s => (∃ p q, s.2.2 = p ++ s.1 ++ q) ∨
     (∃ p q, s.2.2 = p ++ s.2.1 ++ q)) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False)
+def rejected : Realization signature.{u} := realize signature (fun _ _ _ => False)
   (fun e => nomatch e)
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {X : Type u} {a b c : List X}, (a ++ b).IsRotated c →
     R.readout () X (a,b,c)
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
   exact h (X := ULift.{u} Unit) (a := []) (b := []) (c := []) ⟨0,rfl⟩
-private theorem actual_dependence : ObservationalDependence signature actual := by
+private theorem actual_dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro i
   refine ⟨ULift.{u} Unit, ([],[],[]), ([⟨()⟩],[⟨()⟩],[]), ?_⟩
   intro he
@@ -40,11 +40,11 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     have hh := congrArg List.length hpq
     simp at hh
 
-def source_registration : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs)) where
+def source_registration : Registration arena.{u}
+    (type_of% (@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs.{u})) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs.{u},
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -59,8 +59,8 @@ def source_registration : Registration arena
 -- Four slots attempted; exact raw source selection and escape binding are unfinished.
 -- No declared_validated status is asserted by this source.
 def audit : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs)
-    (Realization signature) Unit Unit where
+    (@_root_.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs.{u})
+    (Realization signature.{u}) Unit Unit where
   unitName := `D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.rotated_two_runs.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood.source_registration
   realizationSource := none
@@ -72,7 +72,7 @@ def audit : Contract.Registration
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{u}
     (fun _ _ s => (∃ p q, s.2.2 = p ++ s.1 ++ q) ∨
       (∃ p q, s.2.2 = p ++ s.2.1 ++ q)) (fun e => nomatch e))
   variation := .absent

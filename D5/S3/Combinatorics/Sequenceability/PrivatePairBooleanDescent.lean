@@ -328,7 +328,8 @@ private theorem coverage_delete (M : Submodule ℤ (X → ℤ)) {E : Finset X}
       rcases infix_avoid_separator hh ha.2 with h | h
       · exact h
       · have ht0 : t = [] := by simpa using h
-        simp [ht0] at hC
+        have hn := hC.2.1
+        simp [ht0] at hn
     refine ⟨t,hti,?_,hC.2.1,?_,hC.2.2.2⟩
     · intro i hi
       rw [← he]

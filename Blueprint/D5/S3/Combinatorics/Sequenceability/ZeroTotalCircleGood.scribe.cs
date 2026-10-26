@@ -9,6 +9,15 @@ internal sealed class ZeroTotalCircleGoodDocument : IScribeDocumentDefinition
         "Zero total connects circular arcs to actual Good intervals",
         H("Zero total connects circular arcs to actual Good intervals"),
         Blocks(
+            Describe.Lean(DescribeId.Create("rotated-two-runs"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood.rotated_two_runs"),
+                H("One of two circular runs survives any rooting"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This existing list lemma is exposed for direct reuse by PrivatePairBooleanDescent. "
+                    + "For arbitrary lists u,v,w, if u followed by v is a rotation of w, then u or v "
+                    + "is a contiguous interval of w. It needs no group structure or decidable equality; "
+                    + "empty runs are allowed. The original proof is unchanged."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("main-result"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood.good_iff_no_zero_arc"),
                 H("Zero total connects circular arcs to actual Good intervals"), StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),

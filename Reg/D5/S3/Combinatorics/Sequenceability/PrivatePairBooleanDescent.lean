@@ -27,16 +27,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature
+def actual : Realization signature.{u} := realize signature.{u}
   (fun _ p s => by
     letI := p.2
     exact Covers s.M ((s.E.erase s.u).erase s.v)) (fun e => nomatch e)
 
-def rejected : Realization signature :=
+def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
-def arena : Arena where
-  signature := signature
+abbrev arena : Arena where
+  signature := signature.{u}
   Law R := ∀ {X : Type u} [DecidableEq X] (M : Submodule ℤ (X → ℤ))
     (E S : Finset X) (hcover : Covers M E) (hS : Minimal M E S)
     (hsize : 3 ≤ S.card) (u v : X) (huS : u ∈ S) (hvS : v ∈ S) (huv : u ≠ v)
@@ -50,33 +50,38 @@ def arena : Arena where
     (∀ i j : Y, embed Y ((Pi.single i (1 : ℤ) : Y → ℤ) - Pi.single j (1 : ℤ)) =
       (Pi.single i.val (1 : ℤ) : X → ℤ) - Pi.single j.val (1 : ℤ))
 
-private def m4 : Submodule ℤ (Fin 4 → ℤ) where
-  carrier := {f | f 0 = f 1 ∧ f 1 = f 2}
+private abbrev Index := ULift.{u} (Fin 4)
+private def q0 : Index.{u} := ⟨0⟩
+private def q1 : Index.{u} := ⟨1⟩
+private def q2 : Index.{u} := ⟨2⟩
+private def q3 : Index.{u} := ⟨3⟩
+private def m4 : Submodule ℤ (Index.{u} → ℤ) where
+  carrier := {f | f q0 = f q1 ∧ f q1 = f q2}
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    exact ⟨by change a 0 + b 0 = a 1 + b 1; rw [ha.1,hb.1],
-      by change a 1 + b 1 = a 2 + b 2; rw [ha.2,hb.2]⟩
+    exact ⟨by change a q0 + b q0 = a q1 + b q1; rw [ha.1,hb.1],
+      by change a q1 + b q1 = a q2 + b q2; rw [ha.2,hb.2]⟩
   smul_mem' := by
     intro r a ha
-    exact ⟨by change r • a 0 = r • a 1; rw [ha.1],
-      by change r • a 1 = r • a 2; rw [ha.2]⟩
-private def triplet : Finset (Fin 4) := {0,1,2}
-private theorem row_meets_triplet {B : Finset (Fin 4)} (hm : row B ∈ m4)
-    (hhit : 0 ∈ B ∨ 1 ∈ B ∨ 2 ∈ B) : triplet ⊆ B := by
-  change row B 0 = row B 1 ∧ row B 1 = row B 2 at hm
-  have h01 : (0 ∈ B ↔ 1 ∈ B) := by
-    by_cases h0 : 0 ∈ B <;> by_cases h1 : 1 ∈ B <;> simp_all [row]
-  have h12 : (1 ∈ B ↔ 2 ∈ B) := by
-    by_cases h1 : 1 ∈ B <;> by_cases h2 : 2 ∈ B <;> simp_all [row]
-  have hall : 0 ∈ B ∧ 1 ∈ B ∧ 2 ∈ B := by tauto
+    exact ⟨by change r • a q0 = r • a q1; rw [ha.1],
+      by change r • a q1 = r • a q2; rw [ha.2]⟩
+private def triplet : Finset Index.{u} := {q0,q1,q2}
+private theorem row_meets_triplet {B : Finset Index.{u}} (hm : row B ∈ m4)
+    (hhit : q0 ∈ B ∨ q1 ∈ B ∨ q2 ∈ B) : triplet ⊆ B := by
+  change row B q0 = row B q1 ∧ row B q1 = row B q2 at hm
+  have h01 : (q0 ∈ B ↔ q1 ∈ B) := by
+    by_cases h0 : q0 ∈ B <;> by_cases h1 : q1 ∈ B <;> simp_all [row]
+  have h12 : (q1 ∈ B ↔ q2 ∈ B) := by
+    by_cases h1 : q1 ∈ B <;> by_cases h2 : q2 ∈ B <;> simp_all [row]
+  have hall : q0 ∈ B ∧ q1 ∈ B ∧ q2 ∈ B := by tauto
   intro i hi
   simp only [triplet,mem_insert,mem_singleton] at hi
   rcases hi with rfl | rfl | rfl <;> tauto
 private theorem triplet_complete : Complete m4 univ triplet := by
   refine ⟨subset_univ _, by decide, by decide, ?_⟩
-  change row triplet 0 = row triplet 1 ∧ row triplet 1 = row triplet 2
-  norm_num [row,triplet]
+  change row triplet q0 = row triplet q1 ∧ row triplet q1 = row triplet q2
+  norm_num [row,triplet,q0,q1,q2,q3]
 private theorem triplet_minimal : Minimal m4 univ triplet := by
   refine ⟨triplet_complete, ?_⟩
   intro B hB hBS
@@ -87,44 +92,44 @@ private theorem triplet_minimal : Minimal m4 univ triplet := by
   simp only [triplet,mem_insert,mem_singleton] at hiS
   rcases hiS with rfl | rfl | rfl <;> tauto
 private theorem pair_private : ∀ B, Minimal m4 univ B →
-    (0 ∈ B ∨ 1 ∈ B) → B = triplet := by
+    (q0 ∈ B ∨ q1 ∈ B) → B = triplet := by
   intro B hB hp
   have hSB := row_meets_triplet hB.1.2.2.2 (by tauto)
   exact (hB.2 triplet triplet_complete hSB).symm
 private theorem original_coverage : Covers m4 univ := by
   intro w hn he
-  have h3 : (3 : Fin 4) ∈ w := by rw [← List.mem_toFinset,he]; simp
+  have h3 : (q3 : Index.{u}) ∈ w := by rw [← List.mem_toFinset,he]; simp
   obtain ⟨l,r,hlr⟩ := List.mem_iff_append.mp h3
-  refine ⟨[3],⟨l,r,by simpa using hlr.symm⟩,subset_univ _,by decide,by decide,?_⟩
-  change row ({3} : Finset (Fin 4)) 0 = row {3} 1 ∧ row {3} 1 = row {3} 2
-  norm_num [row]
-private theorem rejected_law : ¬ arena.Law rejected := by
+  refine ⟨[q3],⟨l,r,by simpa using hlr.symm⟩,subset_univ _,by decide,by decide,?_⟩
+  change row ({q3} : Finset Index.{u}) q0 = row {q3} q1 ∧ row {q3} q1 = row {q3} q2
+  norm_num [row,q0,q1,q2,q3]
+private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro h
-  have hh := h m4 univ triplet original_coverage triplet_minimal
-    (by decide) 0 1 (by decide) (by decide) (by decide) pair_private
+  have hh := h (X := Index.{u}) m4 univ triplet original_coverage triplet_minimal
+    (by decide) q0 q1 (by decide) (by decide) (by decide) pair_private
   exact hh.1
-private theorem actual_dependence : ObservationalDependence signature actual := by
+private theorem actual_dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro i
-  let p : Parameters := ⟨Fin 4, inferInstance⟩
-  let s : SourceState p := ⟨m4,univ,triplet,0,1⟩
-  let t : SourceState p := ⟨m4,∅,triplet,0,1⟩
+  let p : Parameters.{u} := ⟨Index.{u}, inferInstance⟩
+  let s : SourceState p := ⟨m4,univ,triplet,q0,q1⟩
+  let t : SourceState p := ⟨m4,∅,triplet,q0,q1⟩
   refine ⟨p,s,t,?_⟩
   intro heq
   have hc := (private_pair_exact_boolean_descent m4 univ triplet original_coverage
-    triplet_minimal (by decide) 0 1 (by decide) (by decide) (by decide) pair_private).1
+    triplet_minimal (by decide) q0 q1 (by decide) (by decide) (by decide) pair_private).1
   have hs : actual.readout i p s := hc
   rw [heq] at hs
-  change Covers m4 (((∅ : Finset (Fin 4)).erase 0).erase 1) at hs
+  change Covers m4 (((∅ : Finset Index.{u}).erase q0).erase q1) at hs
   simp only [erase_empty] at hs
   obtain ⟨w,hw,hC⟩ := hs [] (by simp) (by simp)
   have hw0 : w = [] := by simpa using hw
   simpa [hw0] using hC.2.1
 
-def source_registration : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent)) where
+def source_registration : Registration arena.{u}
+    (type_of% (@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.{u})) where
   actual := actual
   bridge := by rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.{u},
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -137,8 +142,8 @@ def source_registration : Registration arena
   dependence := actual_dependence
 
 def audit : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent)
-    (Realization signature) Unit Unit where
+    (@_root_.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.{u})
+    (Realization signature.{u}) Unit Unit where
   unitName := `D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.private_pair_exact_boolean_descent.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Sequenceability.PrivatePairBooleanDescent.source_registration
   realizationSource := none
@@ -150,7 +155,7 @@ def audit : Contract.Registration
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{u}
     (fun _ p s => by letI := p.2; exact Covers s.M ((s.E.erase s.u).erase s.v))
     (fun e => nomatch e))
   variation := .absent
