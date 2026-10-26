@@ -154,7 +154,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   norm_num [rejected, realize, Matrix.neg_apply, Matrix.one_apply, Complex.le_def] at hd
 
 def source_registration : Registration arena.{u} (type_of% @involution_binary.{u}) where
-  actual := actual
+  actual := realize signature (fun _ p X => X - p.2) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨involution_binary, rejected, rejected_law⟩
   sensitivity := by
