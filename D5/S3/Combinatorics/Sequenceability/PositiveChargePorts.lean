@@ -828,4 +828,186 @@ theorem native_avoiding_word (H : Finset (Finset X))
     · exact houtside S hSP hqS hSB
   · exact hdecomp
 
+/- Section 5a; appended in the canonical PositiveChargePorts namespace.
+   Private infix_crosses stays here; the old separator is already public. -/
+
+/-- The literal universal-neighbour word; all residual original IDs remain. -/
+def universalWord (Ω Blue : Finset X) (q l rho : X) : List X :=
+  ((Ω \ insert q Blue).erase l).toList ++
+    l :: q :: rho :: (Blue.erase rho).toList
+
+/-- Both residual sides may be empty. This is a literal all-Ω permutation. -/
+theorem universalWord_perm {Blue : Finset X} {l rho : X}
+    (hq : q ∈ Ω) (hBlue : Blue ⊆ Ω.erase q)
+    (hl : l ∈ Ω \ insert q Blue) (hrho : rho ∈ Blue) :
+    (universalWord Ω Blue q l rho).Nodup ∧
+      (universalWord Ω Blue q l rho).Perm Ω.toList := by
+  let R := Ω \ insert q Blue
+  let U := (R.erase l).toList
+  let V := (Blue.erase rho).toList
+  let w := universalWord Ω Blue q l rho
+  have hlΩ := (Finset.mem_sdiff.mp hl).1
+  have hlq : l ≠ q := by
+    intro he
+    exact (Finset.mem_sdiff.mp hl).2 (by simp [he])
+  have hlB : l ∉ Blue := fun hx =>
+    (Finset.mem_sdiff.mp hl).2 (Finset.mem_insert_of_mem hx)
+  have hqB : q ∉ Blue := fun hx => (Finset.mem_erase.mp (hBlue hx)).1 rfl
+  have hrhoq : rho ≠ q := (Finset.mem_erase.mp (hBlue hrho)).1
+  have hlrho : l ≠ rho := fun he => hlB (he.symm ▸ hrho)
+  have hVB {x : X} (hx : x ∈ V) : x ∈ Blue :=
+    Finset.mem_of_mem_erase (Finset.mem_toList.mp hx)
+  have hlV : l ∉ V := fun hx => hlB (hVB hx)
+  have hqV : q ∉ V := fun hx => hqB (hVB hx)
+  have hrhoV : rho ∉ V := by simp [V]
+  have htail : (l :: q :: rho :: V).Nodup := by
+    simp [List.nodup_cons,hlq,hlrho,hrhoq.symm,hlV,hqV,hrhoV,
+      Finset.nodup_toList]
+  have hn : w.Nodup := by
+    apply List.nodup_append.mpr
+    refine ⟨Finset.nodup_toList _,htail,?_⟩
+    intro x hx y hy he
+    subst y
+    have hxE := Finset.mem_erase.mp (Finset.mem_toList.mp hx)
+    have hxR := Finset.mem_sdiff.mp hxE.2
+    rcases List.mem_cons.mp hy with he | hy
+    · exact hxE.1 he
+    rcases List.mem_cons.mp hy with he | hy
+    · exact hxR.2 (by simp [he])
+    rcases List.mem_cons.mp hy with he | hy
+    · exact hxR.2 (Finset.mem_insert_of_mem (he.symm ▸ hrho))
+    · exact hxR.2 (Finset.mem_insert_of_mem (hVB hy))
+  have hm (x : X) : x ∈ w ↔ x ∈ Ω := by
+    change x ∈ U ++ l :: q :: rho :: V ↔ x ∈ Ω
+    constructor
+    · intro hx
+      rcases List.mem_append.mp hx with hx | hx
+      · exact (Finset.mem_sdiff.mp (Finset.mem_erase.mp
+          (Finset.mem_toList.mp hx)).2).1
+      rcases List.mem_cons.mp hx with rfl | hx
+      · exact hlΩ
+      rcases List.mem_cons.mp hx with rfl | hx
+      · exact hq
+      rcases List.mem_cons.mp hx with rfl | hx
+      · exact (Finset.mem_erase.mp (hBlue hrho)).2
+      · exact (Finset.mem_erase.mp (hBlue (hVB hx))).2
+    · intro hxΩ
+      by_cases hxl : x = l
+      · simp [hxl]
+      by_cases hxq : x = q
+      · simp [hxq]
+      by_cases hxr : x = rho
+      · simp [hxr]
+      by_cases hxB : x ∈ Blue
+      · have hxV : x ∈ V := by simp [V,hxB,hxr]
+        simp [hxV]
+      · have hxU : x ∈ U := by simp [U,R,hxΩ,hxl,hxq,hxB]
+        simp [hxU]
+  exact ⟨hn,(List.perm_ext_iff_of_nodup hn Ω.nodup_toList).mpr
+    (fun x => by simpa only [Finset.mem_toList] using hm x)⟩
+
+/-- Section 5a's all-Complete-row interval proof. The exact two original
+suppliers of l and rho exclude extra selected rows, including exterior rows.
+The red witness at v and a blue witness at EVERY terminal are constructed
+by the RawBlock consumer, rather than assumed at the final target. -/
+theorem universal_avoiding_word {Blue : Finset X} {b0 u v : Finset X}
+    {l rho b : X}
+    (hq : q ∈ Ω) (hBlue : Blue ⊆ Ω.erase q)
+    (hlR : l ∈ Ω \ insert q Blue) (hrhoB : rho ∈ Blue)
+    (hu : u ∈ neighborhood M Ω q) (hv : v ∈ neighborhood M Ω q) (huv : u ≠ v)
+    (hb0q : q ∉ b0)
+    (huni : ∀ d ∈ neighborhood M Ω q, d ∈ terminalNeighbors M Ω q b0)
+    (hlN : neighborhood M Ω l = {u,b0})
+    (hrhoN : neighborhood M Ω rho = {v,b0})
+    (hbv : b ∈ v) (hbR : b ∈ Ω \ insert q Blue)
+    (hterminal : ∀ d ∈ neighborhood M Ω q, ∃ x ∈ d, x ∈ Blue)
+    (hmixed : ∀ S ∈ minimalFamily M Ω, q ∉ S →
+      (∃ x ∈ S, x ∈ Ω \ insert q Blue) ∧ (∃ y ∈ S, y ∈ Blue))
+    (hdecomp : ∀ A, Complete M Ω A →
+      ∃ Q : Finset (Finset X), Q ⊆ minimalFamily M Ω ∧ Independent Q ∧
+        A = Q.biUnion id) :
+    (universalWord Ω Blue q l rho).Perm Ω.toList ∧
+      ∀ f : List X, f <:+: universalWord Ω Blue q l rho →
+        ¬Complete M Ω f.toFinset := by
+  let R := Ω \ insert q Blue
+  let U := (R.erase l).toList
+  let V := (Blue.erase rho).toList
+  let w := universalWord Ω Blue q l rho
+  obtain ⟨hn,hperm⟩ := universalWord_perm hq hBlue hlR hrhoB
+  refine ⟨hperm,?_⟩
+  intro f hfw hCf
+  obtain ⟨Q,hQP,hQI,hcover⟩ := hdecomp f.toFinset hCf
+  have in_union {S : Finset X} (hS : S ∈ Q) {x : X} (hx : x ∈ S) : x ∈ f := by
+    apply List.mem_toFinset.mp
+    rw [hcover]
+    exact Finset.mem_biUnion.mpr ⟨S,hS,hx⟩
+  have forbidden {s d : Finset X} {x : X} (hdQ : d ∈ Q)
+      (hdT : d ∈ neighborhood M Ω q) (hsT : s ∈ neighborhood M Ω q)
+      (hsd : s ≠ d) (hxN : neighborhood M Ω x = {s,b0}) : x ∉ f := by
+    intro hxf
+    have hxU : x ∈ Q.biUnion id := hcover ▸ List.mem_toFinset.mpr hxf
+    obtain ⟨D,hDQ,hxD⟩ := Finset.mem_biUnion.mp hxU
+    have hDN : D ∈ ({s,b0} : Finset (Finset X)) := by
+      rw [← hxN]
+      exact mem_neighborhood.mpr ⟨hQP hDQ,hxD⟩
+    rcases Finset.mem_insert.mp hDN with hDs | hDb
+    · subst D
+      exact hsd (selected_terminal_unique hQI hDQ hdQ hsT hdT)
+    · have hDb' : D = b0 := Finset.mem_singleton.mp hDb
+      subst D
+      obtain ⟨y,hy⟩ := (mem_terminalNeighbors.mp (huni d hdT)).2
+      have hy' := Finset.mem_inter.mp hy
+      have he := selected_unique hQI hDQ hdQ hy'.1 hy'.2
+      exact hb0q (he.symm ▸ (mem_neighborhood.mp hdT).2)
+  have hleft {x : X} (hx : x ∈ U ++ [l]) : x ∈ R := by
+    rcases List.mem_append.mp hx with hx | hx
+    · exact Finset.mem_of_mem_erase (Finset.mem_toList.mp hx)
+    · have he : x = l := by simpa using hx
+      exact he.symm ▸ hlR
+  have hright {x : X} (hx : x ∈ rho :: V) : x ∈ Blue := by
+    rcases List.mem_cons.mp hx with rfl | hx
+    · exact hrhoB
+    · exact Finset.mem_of_mem_erase (Finset.mem_toList.mp hx)
+  by_cases hqf : q ∈ f
+  · have hqU : q ∈ Q.biUnion id := hcover ▸ List.mem_toFinset.mpr hqf
+    obtain ⟨d,hdQ,hqd⟩ := Finset.mem_biUnion.mp hqU
+    have hdT : d ∈ neighborhood M Ω q := mem_neighborhood.mpr ⟨hQP hdQ,hqd⟩
+    by_cases hdv : d = v
+    · have hvQ : v ∈ Q := hdv ▸ hdQ
+      have hbf := in_union hvQ hbv
+      have hlnot := forbidden hvQ hv hu huv hlN
+      have hlf : l ∈ f := by
+        by_cases hbl : b = l
+        · exact hbl ▸ hbf
+        · have hbU : b ∈ U := by simp [U,R,hbR,hbl]
+          have hw : w = U ++ l :: (q :: rho :: V) := rfl
+          exact infix_crosses hn hfw hw hbU (by simp) hbf hqf
+      exact hlnot hlf
+    · obtain ⟨x,hxd,hxB⟩ := hterminal d hdT
+      have hxf := in_union hdQ hxd
+      have hrhonot := forbidden hdQ hdT hv hdv.symm hrhoN
+      have hrhof : rho ∈ f := by
+        by_cases hxr : x = rho
+        · exact hxr ▸ hxf
+        · have hxV : x ∈ V := by simp [V,hxB,hxr]
+          have hw : w = (U ++ [l,q]) ++ rho :: V := by
+            simp [w,universalWord,U,R,V,List.append_assoc]
+          exact infix_crosses hn hfw hw (by simp) hxV hqf hxf
+      exact hrhonot hrhof
+  · obtain ⟨x,hxf⟩ := hCf.2.1
+    have hxU : x ∈ Q.biUnion id := hcover ▸ hxf
+    obtain ⟨S,hSQ,hxS⟩ := Finset.mem_biUnion.mp hxU
+    have hqS : q ∉ S := fun hqS => hqf (in_union hSQ hqS)
+    obtain ⟨⟨r,hrS,hrR⟩,y,hyS,hyB⟩ := hmixed S (hQP hSQ) hqS
+    have hrf := in_union hSQ hrS
+    have hyf := in_union hSQ hyS
+    have hw : w = (U ++ [l]) ++ q :: (rho :: V) := by
+      simp [w,universalWord,U,R,V,List.append_assoc]
+    have hfw' : f <:+: (U ++ [l]) ++ q :: (rho :: V) := hw ▸ hfw
+    rcases infix_avoid_separator hfw' hqf with hL | hR
+    · exact (Finset.mem_sdiff.mp (hleft (hL.subset hyf))).2
+        (Finset.mem_insert_of_mem hyB)
+    · exact (Finset.mem_sdiff.mp hrR).2
+        (Finset.mem_insert_of_mem (hright (hR.subset hrf)))
+
 end D5.S3.Combinatorics.Sequenceability.PositiveChargePorts
