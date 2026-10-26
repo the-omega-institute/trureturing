@@ -7,14 +7,6 @@
    digest: The least unidirectional unicyclic current skewness is attained by one slow rate. -/
 
 import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.LinearAlgebra.Matrix.PerronFrobenius.CollatzWielandt
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.Topology.Order.Compact
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Positivity
 
 /-!
 The normalized inverse rates lie in the standard simplex. Write `a` for its largest
