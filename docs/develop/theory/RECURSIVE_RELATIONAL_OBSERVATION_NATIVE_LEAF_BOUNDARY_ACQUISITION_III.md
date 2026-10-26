@@ -2323,3 +2323,820 @@ results neither complete nor pause the sustained four-expression
 programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 94. A serial terminal clock and its exact observation kernel
+
+**Definition 94.1 (fixed native source and performed serial assay).**
+Fix one actually earned $u\in\mathcal D$ with $b\ge3$ logical leaves,
+$c$ beta leaves and $N=2b+c-1$ material cells. Retain Definition 75.1's
+original unit, symmetric, zero-diagonal adjacency $A\in\mathbb Q^{N\times N}$,
+the original root/orientation, the exhaustive raw/canonical table and the
+authentic current/fresh grants. Write $s_0,\ldots,s_{b-1}$ for a fixed
+permutation of all genuine material terminals. This order is computed
+from the earned table and fixed before numerical acquisition. A formula
+using $s_r$ is implemented through that actual raw binding.
+
+The receiver's held entrance field is arbitrary $x\in\mathbb Q^N$.
+Its accessible advice and other context are independent of $x$;
+dependent producer inputs, operands, packets and predictors have really
+been cleared or isolated as in NLBAII Construction 62.3. Section 99
+joins that paid preparation to the receiver run. This is an arbitrary
+current-field entrance, rather than the concealed zero-initialized
+history task. Source conformance, actual isolation, authentic access,
+exclusive settled serialization, exact rational arithmetic and adequate
+finite backing are **ASSUMED-UNVERIFIED** installation premises.
+
+The menu is exactly $P,S,\mathrm{Add},\mathrm{Tick},\mathrm{Read},\mathrm{Hold}$,
+without Reset. Only an actual Tick advances this fixed field; Hold
+prevents unrequested evolution during local work. All original guards,
+distinct refusals, RangeRefusal, BadFrame, proper incomplete-frame pending
+state, disabled missing-right calls, complete replies, End, local
+acknowledgements and Return keep Definition 75.1 and NLBAII Theorem 64.1's
+meanings. Calls below are completed before the next call. No side channel
+through time, allocation, capacity, guards or acknowledgements is added.
+
+Choose an integer period $L\ge b$. One cycle reads $s_r$ at phase
+$r=0,\ldots,b-1$, performing one actual Tick;Hold after each Read,
+then performs $L-b$ additional Tick;Hold pairs. There is no growth or
+Add in this assay. Starting from the held entrance, execute $N$ cycles.
+Put $M=LN$. Its actually received scalars and actual held endpoint are
+
+$$
+y_{n,r}=e_{s_r}^{\mathsf T}A^{Ln+r}x
+\quad(0\le n<N,\ 0\le r<b),
+\qquad w=A^M x.
+\tag{94.1}
+$$
+
+In particular the last Read is followed by its specified Tick and all
+remaining cycle Ticks. No block of serial readings is treated as a
+simultaneous all-leaf frame. The primitive vector is
+$(\mathrm{Read},\mathrm{Tick},\mathrm{Hold})=(bN,LN,LN)$.
+
+Define the rational matrices
+
+$$
+H_r=e_{s_r}^{\mathsf T}A^r,
+\qquad H=\begin{bmatrix}H_0\\\vdots\\H_{b-1}\end{bmatrix},
+\qquad
+S_L=\begin{bmatrix}H\\HA^L\\\vdots\\H(A^L)^{N-1}\end{bmatrix}.
+\tag{94.2}
+$$
+
+For the spectral description extend these matrices to $\mathbb R$,
+let $E_\lambda=\ker(A-\lambda I)$ for each distinct real eigenvalue,
+and set
+
+$$
+F_\mu=\bigoplus_{\lambda^L=\mu}E_\lambda.
+\tag{94.3}
+$$
+
+**Theorem 94.2 (the exact serial fiber and finite saturation).**
+For every source, order and period in Definition 94.1,
+
+$$
+\ker_{\mathbb R}S_L
+=\bigoplus_\mu\bigl(F_\mu\cap\ker H\bigr).
+\tag{94.4}
+$$
+
+This is also the kernel of the entire infinite serial record. Thus $N$
+performed cycles already have the same kernel as any larger number.
+The rational kernel is the intersection of (94.4) with $\mathbb Q^N$;
+ranks over $\mathbb Q$ and $\mathbb R$ agree. These spectral spaces are
+proof coordinates, not supplied runtime measurements or an eigenvalue
+oracle.
+
+**Proof.** Use the spectral theorem for the real symmetric $A$, and write
+$x=\sum_\mu x_\mu$ with $x_\mu\in F_\mu$. Then
+$H_r(A^L)^n x=\sum_\mu\mu^n H_rx_\mu$.
+If $S_Lx=0$, for each fixed $r$ these are $N$ homogeneous equations.
+There are $d\le N$ distinct $\mu$. Their first $d$ rows are a
+Vandermonde matrix with determinant
+$\prod_{i<j}(\mu_j-\mu_i)\ne0$.
+Hence every $H_rx_\mu=0$. This proves containment in (94.4).
+Conversely these coefficient vanishings annihilate every cycle,
+including cycles beyond the first $N$. If $\mu=0$, its exponent-zero
+value is one and every positive power is zero, so the same argument
+includes that column. A rational matrix has the same rank over both
+fields because rank is its largest order of a nonzero minor. $\square$
+
+This is the standard finite sampled-observability calculation for update
+$A^L$ and readout $H$. The general finite-kernel supplier is
+`FiniteTimeTomographySaturation.all_future_kernel_eq_finrank_kernel`,
+with carrier $\mathbb Q^N$, update $A^L$, readout $H$ and dimension $N$.
+`FiniteObservabilityEquivalence.finite_observability_equivalence` supplies
+the corresponding real kernel/rank/Gram equivalence. Neither supplier
+asserts that the serial clock in (94.1) is observable. The native
+consequences below supply that missing schedule condition.
+
+**Theorem 94.3 (odd periods and the exact even-period condition).**
+Let $D e_v=(-1)^{\operatorname{depth}(v)}e_v$, using actual original-root
+material depth. The spectral formulas are over $\mathbb R$, with
+rational kernels obtained by intersection with $\mathbb Q^N$.
+If $L$ is odd, then
+
+$$
+\ker S_L=\ker A\cap\ker(e_{s_0}^{\mathsf T}).
+\tag{94.5}
+$$
+
+In particular the assay always determines its actual current endpoint
+$A^M x$, though it determines $x$ itself exactly when the intersection
+in (94.5) is zero.
+
+For even $L$, put
+
+$$
+\epsilon_r=(-1)^{r+\operatorname{depth}(s_r)},
+\qquad B_\pm=\{s_r:\epsilon_r=\pm1\},
+\qquad C_Bv=(v_s)_{s\in B}.
+\tag{94.6}
+$$
+
+For each positive eigenvalue $\lambda$, its hidden subspace in
+$E_\lambda\oplus E_{-\lambda}$ is the image of
+
+$$
+\begin{aligned}
+&(E_\lambda\cap\ker C_{B_+})
+ \oplus(E_\lambda\cap\ker C_{B_-})
+ \longrightarrow E_\lambda\oplus E_{-\lambda},\\
+&(a,d)\longmapsto \tfrac12\bigl(a+d+D(a-d)\bigr),
+\end{aligned}
+\tag{94.7}
+$$
+
+and this map is an isomorphism onto that hidden subspace. Add the zero
+block $\ker A\cap\ker(e_{s_0}^{\mathsf T})$ to obtain the whole kernel.
+Consequently an even-period scan determines its complete current field
+if and only if both restricted eigenspace kernels in (94.7) vanish for
+every $\lambda>0$. Entry recovery additionally requires the zero block
+to vanish. These conditions concern the actual order and eigenspaces;
+merely counting the two parity signs is not the criterion.
+
+**Proof.** For odd $L$, the real map $\lambda\mapsto\lambda^L$ is
+injective. On $E_\lambda$ with $\lambda\ne0$,
+$H_rv=\lambda^r v_{s_r}$. Vanishing of all these rows means vanishing
+at every genuine leaf. Convention 75.2's forcing identity $KC=I_N$
+then gives $v=0$: all blocks $J^{\mathsf T}A^jv$ vanish, so their
+supplied left inverse annihilates $v$. On $E_0$, only phase zero
+remains. Equation (94.4) proves (94.5).
+
+Symmetry gives $\ker A^j=\ker A$ for all $j\ge1$, for example by
+spectral decomposition. Since $M\ge1$, (94.5) is contained in
+$\ker A^M$. Thus equal actual records give equal actual endpoints.
+An effective rational endpoint decoder solves $S_L\widetilde x=y$
+by Gaussian elimination and returns $A^M\widetilde x$. A solution exists
+on the actual image and every solution gives the same answer. This
+does not choose or certify the original entry among its null-mode
+alternatives.
+
+Every material edge changes depth parity, so $DAD=-A$ and $D$ maps
+$E_\lambda$ isomorphically to $E_{-\lambda}$. For even $L$, nonzero
+power collisions among real eigenvalues are exactly these pairs.
+Write a vector in a pair as $u+Dv$ with $u,v\in E_\lambda$. Its
+phase-$r$ row is
+$\lambda^r(u_{s_r}+\epsilon_r v_{s_r})$.
+The invertible substitution $a=u+v$, $d=u-v$ gives precisely the two
+conditions in (94.7). The zero block is as before. On each nonzero
+paired block $A^M$ is invertible, whereas on the zero block it is zero.
+Together with (94.4) this proves both endpoint and entry criteria.
+$\square$
+
+**Example 94.4 (both signs do not suffice; an even clock can succeed).**
+Take $u=\langle\langle\beta,\beta\rangle,
+\langle\beta,\beta\rangle\rangle$, period $L=4$, and order
+$s_0=LLL,s_1=RLL,s_2=LRL,s_3=RRL$.
+All four leaves have depth three, so
+$B_- =\{LLL,LRL\}$ and $B_+=\{RLL,RRL\}$.
+The vector with values $1,-1$ at the owners $LL,LR$, respectively,
+the same $1,-1$ at their markers $LLL,LRL$, and zero elsewhere
+belongs to $E_1\cap\ker C_{B_+}$. Indeed each owner and its marker
+have equal values, their contributions cancel at branch $L$, and
+all other neighbor sums are zero. It is nonzero, so (94.7) gives
+surviving ambiguity although both phase signs occur.
+
+For a contrasting original native source take
+$v=\langle\langle\beta,\alpha\rangle,\alpha\rangle$,
+with $N=6,b=3$, period $L=4$ and order $LLL,R,LR$.
+Here $B_-=\{LLL\}$ and $B_+=\{R,LR\}$.
+On any $E_\lambda$, $\lambda\ne0$, vanishing at $LLL$ forces
+$LL$ and then $L$ to vanish. The leaf equation at $LR$ then
+forces $LR=0$, the equation at $L$ forces the root to vanish,
+and the root equation forces $R=0$. Vanishing at both $R,LR$
+instead first forces the root and $L$ to vanish, then $LL$ and
+$LLL$ vanish. Both restricted eigenspace kernels are therefore zero.
+The edges $LL-LLL$, $L-LR$ and $\varepsilon-R$ form a perfect
+matching. The same tree determinant argument used in Theorem 95.2
+gives invertible adjacency, so its zero block is zero too.
+The even-period scan on this source is injective. These examples
+illustrate the exact criterion, not a replacement for the infinite
+family below or a minimum-cost assertion.
+
+## 95. An infinite native family with surviving serial ambiguity
+
+**Definition 95.1 (the actual combs and their natural scan).**
+Let $u_0=\alpha$ and $u_m=\langle\beta,u_{m-1}\rangle$, with $m\ge3$
+odd. These are reachable original terms in $\mathcal D$. Their material
+vertices and edges are
+
+$$
+\begin{gathered}
+q_i=R^i\ (0\le i\le m),\qquad
+p_i=R^iL,\quad \ell_i=R^iLL\ (0\le i<m),\\
+q_i-p_i-\ell_i\ (i<m),\qquad q_i-q_{i+1}\ (i<m).
+\end{gathered}
+\tag{95.1}
+$$
+
+There are $N=3m+1$ vertices and $b=m+1$ terminals. Use the natural
+canonical order $\ell_0,\ldots,\ell_{m-1},q_m$ and period $L=b$, which
+is even. This is an infinite family of different original material
+sizes, with the same original unit law and literal Read contract.
+
+**Theorem 95.2 (an exact half-dimensional stable blind sector).**
+For this family the adjacency is invertible and
+
+$$
+\ker S_b=\{x:x_v=0\text{ at every even-depth vertex }v\},
+\qquad \dim\ker S_b=N/2.
+\tag{95.2}
+$$
+
+The equality holds for the $N$-cycle scan and every longer scan, as
+well as the infinite record. Every shorter prefix also annihilates the
+displayed sector; it need not have exactly this kernel.
+
+**Proof.** Each terminal $\ell_i$ has depth $i+2$, and $q_m$ has
+depth $m$. Thus at every read, terminal depth parity equals phase
+parity. A walk of length $bn+r$ from $s_r$ ends at an initially
+even-depth coordinate. Consequently every row in the scan annihilates
+the odd-depth coordinate sector.
+
+Match every $p_i$ with $\ell_i$, and match consecutive spine vertices
+$q_0q_1,q_2q_3,\ldots,q_{m-1}q_m$. This is a perfect matching. A
+finite tree has at most one perfect matching, since the symmetric
+difference of two would contain an alternating cycle. In the
+zero-diagonal adjacency determinant, a nonzero permutation term can
+have no fixed point. It cannot have a cycle of length at least three,
+because the tree has no cycle. Its cycles are therefore exactly the
+transpositions of a perfect matching. The displayed matching supplies
+the unique nonzero term, so $\det A=(-1)^{N/2}\ne0$.
+
+A perfect matching pairs opposite colors, so both depth-color classes
+have size $N/2$. All $\epsilon_r$ in (94.6) are plus. In (94.7) the
+$a$ variable must vanish by all-leaf forcing, while $d$ is arbitrary
+in $E_\lambda$. Thus the stable kernel has dimension
+$\sum_{\lambda>0}\dim E_\lambda=N/2$: $D$ pairs the nonzero positive
+and negative eigenspaces and there is no zero eigenspace. The already
+contained odd sector has this dimension, proving (95.2), including
+its rational form. Finite saturation proves the longer-scan claim.
+$\square$
+
+**Theorem 95.3 (the missing information is owed current service).**
+Entries $0$ and $e_{p_0}$ have identical complete scheduled replies
+for arbitrarily many cycles, but after every $R\ge1$ completed cycles
+their actual endpoints are distinguished by an immediately legal
+original Read at $\ell_1=RLL$. The same paired-execution conclusion
+holds if common adaptive terminal Adds are inserted while keeping
+exactly this Read/Tick schedule and fixed graph.
+
+**Proof.** The difference $e_{p_0}$ is supported at odd depth, so every
+scheduled scalar difference is zero. The complete ACKs, framing and
+other context are the same. At the end of $R$ cycles the homogeneous
+difference is $A^{bR}e_{p_0}$. The path
+$p_0,q_0,q_1,p_1,\ell_1$ has length four. Since $bR$ is even and
+at least four, insert $(bR-4)/2$ immediate edge-backtracking pairs
+into this path. It is a walk of length $bR$. Adjacency powers count
+walks with nonnegative integral coefficients, so
+
+$$
+e_{\ell_1}^{\mathsf T}A^{bR}e_{p_0}>0.
+\tag{95.3}
+$$
+
+That extra Read distinguishes the actual current fields. Under
+adaptive Adds, identical preceding complete records produce identical
+next operands and addresses. Their translations cancel in the
+paired difference. Induction preserves the same homogeneous difference
+at every specified Tick and the same scheduled observations. Equation
+(95.3) remains the difference at the additional Read, regardless of
+those common translations. Fixing a common input-independent random
+tape gives the same paired statement.
+
+There is no allowance here for growth, extra/reordered acquisition
+Reads, or extra Ticks. These would be different acquiring schedules.
+The distinguishing off-schedule Read belongs to the original owed
+future service, which has not been narrowed to the acquiring clock.
+An identical self-contained installed predictor cannot predict both
+replies. Thus this is surviving current-task ambiguity, rather than
+an erased-entry example or an impossibility for every native protocol.
+$\square$
+
+## 96. A paid period repair on the same source and entrance
+
+**Theorem 96.1 (one additional Tick per cycle removes the comb alias).**
+For each $u_m$ of Definition 95.1, keep the same arbitrary rational
+entrance, table, rights, leaf order, original service and future task.
+Insert exactly one extra Tick;Hold at the end of each cycle, giving
+$L=b+1$. The $N$-cycle record determines both $x$ and the actual
+endpoint $A^{(b+1)N}x$. The simultaneous bills are
+
+$$
+\begin{array}{c|ccc}
+\text{run}&\mathrm{Read}&\mathrm{Tick}&\mathrm{Hold}\\ \hline
+L=b&bN&bN&bN\\
+L=b+1&bN&(b+1)N&(b+1)N.
+\end{array}
+\tag{96.1}
+$$
+
+**Proof.** The repaired period is odd, and this very $A$ is invertible
+by Theorem 95.2. Equation (94.5) gives $\ker S_{b+1}=0$. Form the
+rational scan matrix from the earned graph, keep $N$ independent rows
+by exact pivots, and solve their square system from the actually
+received entries. This recovers $x$; apply the known $A$ exactly
+$(b+1)N$ times locally to obtain the actual endpoint proved in (94.1),
+and initialize NLBAII Theorem 64.1's full-state invariant there.
+Every actual Tick and reply in (96.1) is still executed.
+
+The two rows are separate full schedules begun at the same admitted
+entrance; they are not successive trials on one unchanged field.
+The difference in their receiver bills is exactly $N$ extra Tick and
+$N$ extra Hold, with no new Read or sensor. The repaired run needs
+no primer, Reset, growth or changed initial field. No minimum period,
+minimum cycle count, total-cost dominance or optimum is asserted.
+$\square$
+
+This does not replace NLBAII Theorem 62.1: without the serial-clock
+restriction, its already sufficient rank$(A)$-Read current acquisition
+uses fewer Reads than this redundant $bN$-Read assay. The result here
+identifies and repairs the specified clock's loss of information on
+an unchanged specimen and task.
+
+## 97. A performed current-image acquisition and reversible feedback
+
+**Construction 97.1 (the all-native current image).**
+Return to any earned $u$ of Definition 94.1, including singular $A$.
+Choose $L=b$ for odd $b$ and $L=b+1$ for even $b$. Actually execute
+one Tick;Hold and call its field $z=Ax$. Put
+
+$$
+V_+=\operatorname{im}_{\mathbb Q}A,\qquad M=LN.
+\tag{97.1}
+$$
+
+Then execute the $N$ cycles from $z$. This primer intentionally
+forgets $\ker A$. It is not necessary for the odd scan's current-only
+endpoint decoder in Theorem 94.3. It supplies the invariant domain
+needed for the historical inverse and feedback consumer below.
+
+**Proposition 97.2 (an actual rational acquisition, without spectral advice).**
+The acquired scan uniquely determines $z$ and installs
+$w_0=A^Mz$, the actual field after the primer and assay. Both
+$A|_{V_+}$ and the acquired map $S_L|_{V_+}$ are injective, with
+$A|_{V_+}$ a rational bijection.
+
+**Proof and finite decoder.** Symmetry gives
+$\operatorname{im}_{\mathbb R}A=(\ker_{\mathbb R}A)^\perp$.
+Thus (94.5) meets $V_+$ only in zero, and $A$ has no kernel on
+$V_+$. It maps this finite-dimensional space onto itself, so is a
+bijection. Choose independent columns of $A$ in fixed coordinate
+order to form a rational basis matrix $U\in\mathbb Q^{N\times r}$,
+where $r=\operatorname{rank}A$. Select $r$ independent rows of $S_LU$,
+with row selector $Q$. The resulting square $B=QS_LU$ is invertible.
+For the actual scan vector $y=S_Lz$, compute
+
+$$
+z=UB^{-1}Qy,\qquad w_0=A^MUB^{-1}Qy.
+\tag{97.2}
+$$
+
+All pivots, powers, selectors and solves depend on earned finite
+rational data or received scalars. They take paid finite work; $U$
+and $Q$ are not hidden source advice. Hold permits that work without
+unrequested evolution. Equation (94.1), now with entry $z$, proves
+that the installed vector is current. The full graph/map/context
+then initializes the existing complete-service invariant at $w_0$.
+$\square$
+
+**Definition 97.3 (one genuinely performed feedback fragment).**
+Fix one canonical terminal $s$, for example the first in the earned
+canonical order. At a completed cut with synchronized actual field
+$w\in V_+$, compute $q=w_s$ from the acquired predictor and actually
+perform
+
+$$
+\operatorname{Add}(s,q);\ \operatorname{Read}(s);\
+\operatorname{Tick};\ \operatorname{Hold}.
+\tag{97.3}
+$$
+
+Consume each complete reply and update the predictor at each call.
+The scalar reply is $2w_s$, and the completed successor is
+
+$$
+H_sw=A(I+e_se_s^{\mathsf T})w.
+\tag{97.4}
+$$
+
+This is installed, selected continued use, not an unperformed response
+prediction substituted for a measurement.
+
+**Theorem 97.4 (a rational bijection on the completed-cut image).**
+$H_s$ maps $V_+$ bijectively onto $V_+$. For every $k\ge0$, after
+$k$ actually performed fragments,
+
+$$
+w_k=H_s^k A^Mz\in V_+,
+\qquad
+z=(A|_{V_+})^{-M}(H_s|_{V_+})^{-k}w_k.
+\tag{97.5}
+$$
+
+**Proof.** The leading $A$ in (97.4) puts every successor in $V_+$.
+If $H_sw=0$ with $w\in V_+$, then
+$(I+e_se_s^{\mathsf T})w\in\ker A$. Its inner product with $w$
+is zero by orthogonality, while it is also
+$\|w\|^2+w_s^2$. Hence $w=0$. Finite dimension gives bijectivity.
+Its representing matrix in the rational basis $U$ is nonsingular
+rational, so elimination computes its rational inverse. Induction on
+the actual fragments proves the first formula. Applying the restricted
+inverses in the displayed order gives the second; no commutation of
+$A$ and $H_s$ is assumed. $\square$
+
+The intermediate field after Add need not belong to $V_+$. The theorem
+concerns completed fragments, with the real Read at its intermediate
+field and the actual final Tick included. The existing predictor
+tracks all these intermediate states and also every other sufficiently
+backed original-menu continuation. Arbitrary such growth or control
+can leave this historical chart; it does not preserve (97.5) merely
+because current prediction continues to work.
+
+## 98. Four expressions on the fixed-phase acquired image
+
+**Definition 98.1 (independent readout meanings and common context).**
+Fix the earned source, the scan order and $L$, the chosen feedback
+terminal, all framing and binding conventions, and a completed phase
+$k\ge0$. The actual counter $k$ is retained common context, not a
+quantity decoded from the field. Consider exactly the runs of
+Construction 97.1 followed by $k$ fragments (97.3), with $z$ ranging
+over $V_+$. Their four numerical expressions are as follows.
+
+| Expression | Independently specified content at this completed cut |
+| --- | --- |
+| Space | The actual unrooted unit material tree with complete canonical leaf order and its whole present field $w_k$ |
+| Time | The actual labelled successful-constructor causal order $E(u)$, followed by the performed primer/serial-scan/feedback command-and-reply sequence, retaining the $bN$ measured scalars and the $k$ real feedback operands/replies |
+| Boundary | The complete ordered terminal metric of the unit tree and the present autonomous germ $\mathcal G(w_k)=(J^{\mathsf T}A^jw_k)_{0\le j<N}$ |
+| Memory | The installed recursive term, exhaustive terminal table and synchronized whole-current predictor, with the finite program and actual callable context |
+
+Space's field is current, rather than the earlier assay entry $z$.
+$E(u)$ is AA Theorem 17.2's actual birth/lifecycle partial order,
+not an invented chosen total serialization of old construction.
+Time includes the specified actually performed numerical calls since
+the primer; it excludes the cleared producer's field-dependent input
+and control journal, arbitrary old service logs and elapsed durations.
+The primer has an ACK only. Thus Time has no unmeasured scalar at
+the pre-primer $x$.
+
+The metric has its ordinary graph-distance meaning and, equivalently,
+its terminal impulse-onset meaning for this unit law. It is earned
+geometry, not a newly performed impulse experiment. The germ denotes
+the present field's autonomous leaf responses: its $j$th block is
+what a real passive all-leaf assay would read after $j$ new Ticks.
+It can be computed and exported with paid arithmetic from the acquired
+predictor. It is **not** a second performed measurement word. Executing
+that probe instead would require $bN$ new Reads, $N-1$ new Ticks and,
+for a Hold at every epoch, $N$ new Holds; its endpoint would be
+$A^{N-1}w_k$, not $w_k$.
+
+Authentic references/grants, private raw binding, parser state at the
+settled cut, order, phase and control conventions are retained common
+context for all recovery claims. Their bytes are not reconstructed by
+numeric inversion. Memory's callability is backed by the actual retained
+source binding and rights; a printed vector alone is not this view.
+
+**Theorem 98.2 (all inverses, route agreement and the current-task kernel).**
+On precisely Definition 98.1's joint image, each expression effectively
+recovers the other three numerical expressions. Every route agrees.
+For two entries at the same retained context and phase, equality of
+any one expression is equivalent to equality of their complete current
+canonical service under all finite common sufficiently backed original
+continuations. This statement does not identify different bindings,
+authorities, busy parser cuts or unrelated archives.
+
+**Proof.** The geometric suppliers have their exact native parameters.
+NLBA Theorem 11.1 recovers the original root and ordered term from
+Space's actual unit subdivision tree and complete linear terminal
+order, since $u\in\mathcal D$ and $b\ge3$. NLBA Lemma 2.3 recovers
+that entire subdivision tree from Boundary's ordered terminal metric,
+after which the same root theorem applies. AA Theorem 17.2 recovers
+$u$ from the actual labelled $E(u)$ and conversely gives exactly that
+partial order from $u$. Memory already retains $u$. None of these
+steps recovers an old serial extension or supplies an access right.
+
+Time contains the actual scan $y$; (97.2) recovers its unique
+$z\in V_+$. Space and Memory directly supply $w_k$, and (97.5)
+then gives that same $z$. Boundary supplies $\mathcal G(w_k)$.
+The first $I+1$ blocks, $I=N-b<N$, together with the forcing
+matrix of Convention 75.2, recover
+
+$$
+w_k=C^{\mathsf T}
+ \begin{pmatrix}J^{\mathsf T}w_k\\\vdots\\J^{\mathsf T}A^Iw_k\end{pmatrix}.
+\tag{98.1}
+$$
+
+It therefore recovers $z$ by (97.5) as well. This invokes finite
+observability of a **present germ**, without claiming those additional
+observations already occurred.
+
+Conversely, from the recovered $u,z$ and the fixed retained context,
+(94.1) computes every actually received scan value from this run.
+The primer contributes its fixed ACKs, not the forgotten $x$.
+Compute $w_0=A^Mz$ and, successively, $q_j=(w_j)_s$,
+Read reply $2q_j$, and $w_{j+1}=H_sw_j$ for $0\le j<k$.
+These are exactly the performed operands, replies and completed fields
+by Definition 97.3. The fixed codecs and completion convention give
+the same complete finite numerical command/reply word, including zero
+operands, ACKs and framing. Computing it does not repeat its historical
+occurrence. From $u,w_k$ compute the metric, present germ and current
+predictor. Thus every encoder followed by its decoder is the identity
+on its stated image, and all routes factor through the same $z$.
+
+Both $A|_{V_+}$ and $H_s|_{V_+}$ are bijective, so distinct $z$
+give distinct $w_k$. All-leaf forcing then supplies a finite legal
+future Read continuation separating them. Equal $w_k$, graph and
+common callable context give equal entire replies and successors by
+NLBAII Theorem 64.1 and Proposition 64.2. This proves the exact
+current-task-kernel statement. $\square$
+
+**Proposition 98.3 (transport by the next performed fragment).**
+Write $\mathcal E_i^k(z)$ for expression $i$ on this attained image,
+and $\mathcal D_i^k$ for its just-proved decoder to $z$. Actually
+executing one further fragment sends every view to
+$\mathcal E_i^{k+1}(z)$ and sends the current field to $H_sw_k$.
+For any two views, recovery before or after this operation gives the
+same result at the new phase.
+
+**Proof.** The actual reply and successor are (97.3)–(97.4), with
+$w_{k+1}=H_s^{k+1}A^Mz$. Time appends exactly that performed
+fragment, Memory performs its synchronized update, and Space and the
+present Boundary germ refer to this actual new field. The transport
+on view $i$ is therefore
+$\mathcal E_i^{k+1}\mathcal D_i^k$.
+For a recovery $\mathcal E_j^k\mathcal D_i^k$, either order of
+transport and recovery equals
+$\mathcal E_j^{k+1}(z)$ because
+$\mathcal D_i^k\mathcal E_i^k=
+ \mathcal D_j^k\mathcal E_j^k=\mathrm{Id}$ on $V_+$.
+The change of common context includes the actual paid counter update
+$k\mapsto k+1$. No new assay is silently inserted. $\square$
+
+**Boundary 98.4 (why phase and image cannot be dropped).**
+For $z=0$ all fields and feedback scalars are zero at every $k$, but
+the actual chronology has different lengths. Unknown phase therefore
+cannot be recovered from Space or Boundary. The inverse above is
+fixed-phase or uses a genuinely retained phase counter; it is not
+clock recovery from a snapshot. If $0\ne\eta\in\ker A$, entries
+$x$ and $x+\eta$ also have the same post-primer $z$ and every view
+above. No original-entry or arbitrary erased-journal inverse follows.
+The image is not extended to intermediate Add cuts, arbitrary source
+histories, or general original-menu successors by a formal reencoding.
+Current prediction beyond the image remains the separately proved
+full-service statement.
+
+## 99. One-run calls, exact values and simultaneous backing
+
+**Proposition 99.1 (receiver vectors on their actual endpoints).**
+Construction 97.1 followed by $k$ actual feedback fragments has
+simultaneously
+
+$$
+\begin{aligned}
+\mathrm{Read}&=bN+k,&\mathrm{Tick}&=1+LN+k,\\
+\mathrm{Hold}&=1+LN+k,&\mathrm{Add}&=k,\\
+\mathrm{P}&=0,&\mathrm{S}&=0,
+\qquad x_{\mathrm{end}}=H_s^kA^{LN+1}x.
+\end{aligned}
+\tag{99.1}
+$$
+
+**Proof.** The primer contributes one Tick and Hold. Each of the $N$
+cycles contributes $b$ Reads and $L$ Tick/Hold pairs. Each fragment
+contributes one each of Add, Read, Tick and Hold. Reads and Holds
+are identity operations and only the stated Tick and Add calls alter
+the field. Equations (97.2) and (97.4) give the endpoint. $\square$
+
+The two comb bills (96.1) are separate **unprimed** runs. Neither that
+bill nor the germ-probe bill of Definition 98.1 replaces (99.1).
+Their endpoints and purposes differ. In particular no favorable
+coordinates from independent schedules are assembled into a new run.
+
+**Construction 99.2 (joined paid entrance on this specimen).**
+Directly use NLBAII Construction 62.3, with its $u$ equal to this
+chosen term and its $I=N-b$. Starting at a known-zero allocated
+alpha, execute its legal constructor word: $c$ promotions and $b-1$
+splits, allocating exactly $N-1$ new cells. Receive an arbitrary
+owned target $x$ into separately backed producer storage. Use the
+existing terminal-control right inverse $KC=I_N$: compute
+$Cx=(h_0,\ldots,h_I)$, Add all $b$ terminal coordinates of $h_I$,
+then execute one Tick and all Adds of each descending block through
+$h_0$. This really ends at $KCx=x$, with $I$ Ticks and $b(I+1)$
+Adds, including zero Adds. Execute one handoff Hold and actually
+clear or isolate every dependent producer record before the receiver
+starts. Erased and isolated capacities, copies and clearing work are
+still resources of this same run.
+
+Joined to (99.1), the source calls are exactly
+
+$$
+\begin{gathered}
+\mathrm P=c,\quad \mathrm S=b-1,\quad
+\mathrm{Read}=bN+k,\quad
+\mathrm{Add}=b(I+1)+k,\\
+\mathrm{Tick}=I+1+LN+k,\qquad
+\mathrm{Hold}=2+LN+k,
+\qquad \mathrm{fresh\ cells}=N-1.
+\tag{99.2}
+\end{gathered}
+$$
+
+The two extra Holds here are the producer handoff and receiver primer;
+the producer's $I$ Ticks do not add unlisted Holds in this specified
+held serialized construction. Owned-target reception, control solve,
+constructor navigation, authentic bindings and all complete transactions
+are charged separately. This producer demonstrates attainable arbitrary
+entrances; it does not provide free unknown-field advice to the receiver.
+If the entrance graph/map instead came from another genuine acquisition,
+its own full run and endpoint must be joined, rather than charged as
+this constructor word without proof.
+
+**Definition 99.3 (work, widths and stores).**
+A sufficient finite observer constructs the rational $S_L$, $U$, row
+selector and square solve of (97.2), retaining the $bN$ measured
+scalars. Dense powers through exponent $M$, elimination and row
+selection give a conservative bound
+$O((M+bN+1)N^3)$ rational operations for acquisition, model and
+restricted-inverse construction. Maintaining $k$ forward fragments
+uses $O(kN)$ further rational operations with sparse adjacency.
+If reconstruction of Time from only the current predictor is requested,
+iterating the dense restricted inverse in (97.5) costs an additional
+$O(kN^2+MN^2)$ rational operations; the inverse is not a free
+instruction. Computing a present germ uses $N-1$ local sparse
+propagations, and exporting any view pays its full output and copying
+work. These are sufficient implementation bounds, not minima.
+
+An actual source Tick itself initializes $N$ new result slots and adds
+along $2(N-1)$ directed tree edges; a synchronized predictor pays its
+own update and old/new buffers. A dense implementation retains the
+$bN\times N$ scan representation, $O(N^2)$ basis/solve/inverse work,
+$bN$ sample scalars and $O(k)$ full feedback records when literal Time
+is retained. They coexist with plant/predictor old/new fields, graph,
+logical code, raw and canonical maps, row selectors, phase counter,
+code, references and grants. Producer inputs/control packets and
+isolated backing add their own stores. Parser/pending input, complete
+request, reply, End/acknowledgement/Return and report buffers have
+actual finite backing. Numerical slot counts exclude the actual
+structural strings and integer/counter widths, which are separately
+charged. A decoder may regenerate a numerical record instead of
+retaining it, but then pays the specified inverse, output and work
+buffers; it cannot claim both resources absent.
+
+Use NLBAII Definition 65.1's literal codec:
+$\ell(n/d)=2\mathsf b(|n|)+2\mathsf b(d)+3$ for a reduced rational
+with $d>0$, and selector payload $2\mathsf b(j)+1$. Add the actual
+$\ell(q)$ for every sent operand, $\ell(y)$ for every scalar reply,
+every selector, growth address, request/reply tag, complete framing,
+End, acknowledgement, Return, export and bit copy. Zero values are
+not empty outputs. Let $W$ be the maximum actual numerator/denominator
+bit width of this finite run, including elimination scratch, source
+fields, responses and reconstructed records. Multiply arithmetic
+counts by the chosen exact rational-operation cost at width $W$,
+and charge all actual copied bits and clearing writes. The arbitrary
+rational input already prevents an $N$-only width bound. The retained
+phase counter and $k$ feedback records likewise have no bounded
+lifetime bit cost. Finite control code and per-instance finite backing
+imply neither uniform precision nor bounded memory, physical time,
+energy, stability or conditioning.
+
+## 100. Supplier correspondence and the remaining common-source boundary
+
+**Attribution 100.1 (the mathematical increment).**
+The operative known-law suppliers are NLBAII §§31,53,60–65 and this
+volume's Convention 75.2: all-leaf forcing and terminal control,
+actual arbitrary-current preparation with cleared handoff, sharp
+rank$(A)$-Read unrestricted current acquisition, and the complete
+original-menu state/reply invariant. NLBA Lemma 2.3, Theorem 11.1 and
+AA Theorem 17.2 supply, respectively, unit subdivision geometry,
+original-root/ordered-syntax recognition and labelled causal birth
+reconstruction. Their parameters are the same actually earned native
+$u$, unit $A$, exhaustive terminal map and current callable context
+used here. None is reasserted as a newly discovered general theorem.
+The existing D5 owner `NativeMaterialRootRecognition.original_rigidity`
+and its `effective_inverse` likewise retain the original birth condition,
+at least three logical leaves and the complete linear terminal roster
+on a finite full material presentation. Their owning Scribe is
+`Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.scribe.cs`;
+they identify syntax and coordinates, rather than supplying field-law
+acquisition, a reference or the serial assay.
+
+Sections 87–93 already supply arbitrary inherited-mask repair,
+fresh-only retention on actual zero-extended images, and exact
+partial-repair kernels with the guarded family's split price. Their
+growth graphs, restricted sensors and entry/current/restoration tasks
+remain distinct from the fixed-graph serial clock. NLBAII §§77–79
+also supply WLAB-ord unknown commissioned-law acquisition and the
+same-material polynomial-transfer Read price. WLAB-ord's positive
+weighted tree law, arbitrary diagonal, retained ordered roster and
+future unit-edge growth are its own hypotheses; U5's known integral
+unit law and separated polynomial target have their own acquisition
+image. These are available suppliers, not missing unknown-law results.
+The present theorem assumes its unit law and earns only the serial
+record and current predictor; it does not repeat either law task.
+
+The general D5 suppliers cited after Theorem 94.2 have owning Scribes
+at `Blueprint/D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.scribe.cs`
+and `Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs`.
+Their finite-dimensional update/readout hypotheses explain saturation
+and rank, not source access, native timing or a performed measurement.
+The spectral theorem, Vandermonde nonsingularity, determinant/perfect-
+matching argument and walk counting are classical intermediate tools.
+For the last tool the pinned mathlib declaration is
+`SimpleGraph.adjMatrix_pow_apply_eq_card_walk`; its parameters here
+are the actual finite tree, coefficient field $\mathbb Q$, endpoints
+$\ell_1,p_0$ and length $bR$ in (95.3).
+
+For classical sampling context, Mousavi, Sun and Motee,
+[*Space-Time Sampling for Network Observability*, arXiv:1811.01303v2,
+Theorems 2–3](https://arxiv.org/html/1811.01303v2), use continuous
+exponential dynamics, an observable sensor set and full-column-rank
+time-sampling matrices; their periodic nonaliasing condition separates
+$\exp(\delta\lambda)$. Here the update is the original discrete $A$,
+so the collisions are $\lambda^L=(-\lambda)^L$, and different leaves
+are measured at different phases. No continuous exponential or
+noisy-estimation guarantee is imported. The source-relative synthesis
+is the exact native parity criterion, the infinite actual half-current
+counterfamily with an owed distinguishing continuation, and the
+same-entrance paid clock repair. The phase-conditioned feedback and
+four-view consumer are subordinate applications of that acquisition
+and the existing service/geometry suppliers. This is `repo-derived`
+content, without a worldwide-priority or new Lean-certification claim.
+
+**Boundary 100.2 (other clocks and sources retain their domains).**
+The mixed-gain clock-pencil results in
+[FIB Critical Mixed Gain Words and Clock Pencil Obstructions, §§19–20](FIB_CRITICAL_MIXED_GAIN_WORDS_AND_CLOCK_PENCIL_OBSTRUCTIONS.md#19-one-open-source-domain-for-all-bounded-three-dimensional-words)
+concern strictly positive rank-one trace-one sources, cumulative
+$2\times2$ word traces, polynomial gains and drift. Their critical
+complete-target exclusion retains its countable fixed-linear gain-ray
+output contract; it is not an impossibility for every nonlinear
+complete answer or this native serial field. The fixed-five-mode
+$D$-frame effect exclusion and the particular sign-pair discrimination
+in [AURIC Coherent Reconstruction, §35](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#35-符号相位效果的普适障碍与共同原生区分)
+likewise retain their distinct menus, all-complex-input quantifier
+and supplied state/port identification. They do not install a clock,
+preparation, common reference or access for (94.1).
+
+[FIB appendix II §119](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#119-stochastic-attainment-and-deterministic-approximation-for-the-original-passive-pair)
+has stochastic attainment and equality of the deterministic infimum
+with that minimum for its original nonstationary passive pair, with
+positive target separation; deterministic attainment remains unresolved.
+[Native Free Diffusion §§20–23](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#20-finite-source-samples-with-explicitly-normalized-joint-laws)
+supplies its normalized exact-real finite-input sampler and same-time
+interpolation/exit/connector limits. Finitely many calls almost surely
+and existence of accuracy choices do not supply uniform finite-bit
+rates or bare-native causal acquisition. Neither result identifies
+that continuous process with the native specimen here.
+
+**Boundary 100.3 (the unchanged full objective).**
+The four expressions proved here concern one installed original native
+process, its actual arbitrary-current preparation, performed assay
+and repeated selected use, at fixed retained phase on $V_+$. They do
+not recover erased arbitrary histories, unknown phase, physical
+provenance, missing access, units or authority. A future coarse-read
+installation, a calibrated nonlinear/Reset installation and a quantum
+instrument are different common-source hypotheses; their separate
+successes cannot be combined into this run or its resource vector.
+Alpha/beta generation remains a candidate foundation, without a proved
+universal generator minimum or an acquisition of these numerical laws
+from constructors alone.
+
+AGAIII Boundary 16.2 and Open problem 16.3 keep the NCR, PVC, original
+ordered-interface/Transport Memory §57, Process Geometry and Structural
+Atlas correspondences on their actual preparations, acquired codes,
+Ready/lane conditions, lawful actions, records and permissions. The
+native/original-rational-path/quantum/continuous common-apparatus bridge
+still needs one actual preparation and implementation preserving the
+claimed initial states, current selectors/actions, all relevant
+outputs/refusals, pending/parser behavior, successors, genuine
+references/grants, retained callable records and simultaneous resource
+costs. Separate attainable optima, algebraic inverse maps and shared
+terminology supply none of that missing bridge. Every original
+fixed-$G_{\rm gc}$, original-$Q$, parked-consumer, unchanged-initialization,
+original-terminal/final-no-Ready and prior model-specific obligation
+retains its exact scope. The bounded clock theorem does not complete
+or narrow the sustained common internal-observer/four-expression goal.
+
+## 追加锚（本行以下为增补区）
