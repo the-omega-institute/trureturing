@@ -52,7 +52,7 @@ separator, sparse-slide, girth or diameter premise is added to the conclusion.
 The settling declaration is
 `D5/S3/Combinatorics/Graph/MutualVisibility/MinimumPair.result`.
 Its Scribe attaches this dossier's single `OpenProblemResolutionClaim(Proved)`.
-The [Library note](../Library/Combinatorics/fresanfigueroa2026mutualvisibility.md)
+The [Library note](../Library/GraphInvariants/fresanfigueroa2026mutualvisibility.md)
 records the primary definitions and literature attribution.
 
 The target is the entire mixed graph. Fixed-cardinality, slide-only, path-host,

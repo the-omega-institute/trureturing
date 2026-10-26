@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.MutualVisibility
 internal sealed class CyclicIntervalsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/fresanfigueroa2026mutualvisibility");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/fresanfigueroa2026mutualvisibility");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Auxiliary finite cut-counting structure for mutual-visibility reconfiguration.",

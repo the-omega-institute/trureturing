@@ -8,7 +8,7 @@ internal sealed class ConnectivityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/MutualVisibility/Connectivity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/fresanfigueroa2026mutualvisibility");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/fresanfigueroa2026mutualvisibility");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original-host mutual visibility and the auxiliary geometry of the full mixed reconfiguration graph.",

@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.MutualVisibility
 internal sealed class CleanRootsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/fresanfigueroa2026mutualvisibility");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/fresanfigueroa2026mutualvisibility");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Auxiliary cut structure for full mutual-visibility reconfiguration.",
