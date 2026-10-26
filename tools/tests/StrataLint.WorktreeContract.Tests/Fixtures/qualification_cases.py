@@ -408,3 +408,88 @@ class QualificationCases:
         self.assertEqual("remove", row["stage"])
         self.assertEqual("locked_recent", row["error"])
         self.assertTrue(self.tree.is_dir())
+
+    def pool_final_qualification_defers_later_candidates(self):
+        self.pool_final_qualification_failure_cases("pool")
+
+    def pool_return_final_qualification_defers_later_candidates(self):
+        self.pool_final_qualification_failure_cases("return")
+
+    def pool_final_qualification_failure_cases(self, action):
+        import os
+        from pathlib import Path
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        import worktree_pool as pool
+        original = preservation.qualify
+        native = preservation.git
+        for prior_eviction in (False, True):
+            for refused in (False, True):
+                with self.subTest(action=action, prior_eviction=prior_eviction, refused=refused):
+                    older, newer = self.pool_pair(suffix=action + str(prior_eviction) + str(refused))
+                    later = newer.with_name(newer.name + "-later")
+                    self.g(self.main, "worktree", "add", "-b", "lane/governance/" + later.name,
+                           later, self.base)
+                    with patch.dict(os.environ, GIT_COMMITTER_DATE="@1000000002 +0000"):
+                        self.make_idle(later, self.base)
+                    candidates = [older, newer, later]
+                    failed = newer if prior_eviction else older
+                    deferred = candidates[candidates.index(failed) + 1:]
+                    reference = self.g(failed, "symbolic-ref", "HEAD").strip()
+                    qualified, removals = [], []
+                    cause = "initialization_in_progress" if refused else "fatal: final pool qualification broke"
+                    def injected(source, path, stack=None):
+                        if stack is not None:
+                            qualified.append(Path(path))
+                            if Path(path) == failed:
+                                raise protocol.Refused(cause) if refused else protocol.GitFailure(cause)
+                        return original(source, path, stack)
+                    def record_remove(root, *args, **kwargs):
+                        if args[:2] == ("worktree", "remove"):
+                            removals.append(Path(args[-1]))
+                        return native(root, *args, **kwargs)
+                    if action == "return":
+                        self.pool_github()
+                        arguments = ["return", "--path", str(self.tree), "--pr", "42", "--writers-joined"]
+                    else:
+                        arguments = ["pool", "--dev", self.base, "--force"]
+                    output = io.StringIO()
+                    try:
+                        with patch.object(pool, "available_fraction", return_value=0.04), \
+                                patch.object(preservation, "qualify", side_effect=injected), \
+                                patch.object(preservation, "git", side_effect=record_remove), \
+                                patch.dict(os.environ, getattr(self, "pool_env", {})), redirect_stdout(output):
+                            code = protocol.main(["--source", str(self.main)] + arguments)
+                        self.assertEqual(74, code, output.getvalue())
+                        result = json.loads(output.getvalue())
+                        if action == "return":
+                            self.assertIn(result["status"], ("returned", "already_idle"))
+                            result = result["pool"]
+                            deferred.append(self.tree)
+                        self.assertEqual("failed", result["status"])
+                        self.assertEqual([older] if prior_eviction else [], removals)
+                        self.assertEqual(candidates[:candidates.index(failed) + 1], qualified)
+                        rows = {row["path"]: row for row in result["items"]}
+                        row = rows[str(failed)]
+                        self.assertEqual("retained" if refused else "qualification_failed", row["outcome"])
+                        self.assertEqual("remove", row["stage"])
+                        self.assertIn(cause, row["reason"])
+                        self.assertIn(cause, row["error"])
+                        self.assertEqual(reference, row["branch"])
+                        self.assertEqual(self.base, row["head"])
+                        self.assertTrue(failed.is_dir())
+                        for target in deferred:
+                            self.assertTrue(target.is_dir())
+                            self.assertEqual("retained", rows[str(target)]["outcome"])
+                            self.assertEqual("idle_sweep_deferred", rows[str(target)]["reason"])
+                        if prior_eviction:
+                            self.assertEqual("removed", rows[str(older)]["outcome"])
+                            self.assertEqual(self.base, rows[str(older)]["checkpoint"]["commit"])
+                            self.assertTrue(rows[str(older)]["recovery_branch"])
+                            self.assertFalse(older.exists())
+                    finally:
+                        for target in candidates:
+                            if target.exists():
+                                self.g(self.main, "worktree", "remove", target)
+                        if not self.tree.exists():
+                            self.g(self.main, "worktree", "add", self.tree, self.branch)

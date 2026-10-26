@@ -139,15 +139,16 @@ def sweep_locked(source, dev, force=False):
                     row = dict(observed, **dict(removal,
                         outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
                         reason=removal.get("reason", reason)))
+                    if removal["outcome"] not in ("removed", "would_remove"):
+                        row.setdefault("stage", stage)
                     if removal["outcome"] == "refused":
                         row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
                         receipt["status"] = "failed"
                     outcomes.append(row)
                     if removal["outcome"] in ("removed", "would_remove"):
                         remaining -= 1
-                if result["status"] == "failed":
+                if result["status"] in ("failed", "refused"):
                     receipt["status"] = "failed"
-                if result["status"] == "refused":
                     break
                 stage = "release"
     except Exception as error:
