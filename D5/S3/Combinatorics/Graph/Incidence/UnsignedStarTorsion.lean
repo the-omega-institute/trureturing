@@ -4,7 +4,15 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Original indexed unsigned star lattices: integer remainder propagation and sparse coefficient-one recovery. -/
+   digest: Indexed unsigned star lattices and sparse integer recovery. -/
+
+
+
+import Mathlib.Combinatorics.SimpleGraph.Bipartite
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Pi
+import Mathlib.Tactic
 
 /-!
 Admission basis: escape-witness (pre-compile statement).
@@ -25,12 +33,6 @@ f776b4a6cba72126daf67658b7c846279a39d61cbdd41f6e2cfdd400f8e487f8.
 The unrestricted original integral full-blocker / Good / AM remains open.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Data.ZMod.Basic
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Tactic
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -44,6 +46,8 @@ structure Edges (V X : Type*) where
   right : X → V
   loopless : ∀ i, left i ≠ right i
 
+namespace Edges
+
 variable {V X : Type*} (g : Edges V X)
 
 /-- Delete indices, then forget multiplicity only for the adjacency relation. -/
@@ -51,17 +55,22 @@ def graphAfterDeleting (D : Set X) : SimpleGraph V where
   Adj u v := ∃ i, i ∉ D ∧
     ((g.left i = u ∧ g.right i = v) ∨ (g.left i = v ∧ g.right i = u))
   symm := by
+    constructor
     rintro u v ⟨i, hi, h | h⟩
     · exact ⟨i, hi, Or.inr h⟩
     · exact ⟨i, hi, Or.inl h⟩
   loopless := by
+    constructor
     rintro u ⟨i, _, h | h⟩ <;> exact g.loopless i (h.1.trans h.2.symm)
 
 /-- The exact integer map, with no saturation of its image. -/
 def starMap : (V → ℤ) →ₗ[ℤ] (X → ℤ) where
   toFun a i := a (g.left i) + a (g.right i)
   map_add' a b := by funext i; simp only [Pi.add_apply]; ring
-  map_smul' n a := by funext i; simp only [Pi.smul_apply, smul_eq_mul]; ring
+  map_smul' n a := by
+    funext i
+    change n * a (g.left i) + n * a (g.right i) = n * (a (g.left i) + a (g.right i))
+    ring
 
 private theorem walk_potential {A : Type*} [AddCommGroup A]
     {G : SimpleGraph V} (t : V → A)
@@ -123,12 +132,16 @@ theorem potential_remainders (hc : (g.graphAfterDeleting ∅).Connected)
     (ha : ∀ i, (k : ℤ) * z i = g.starMap a i) :
     ∃ r : ℤ, 0 ≤ r ∧ r < k ∧ (r = 0 ∨ 2 * r = k) ∧
       ∀ v, a v % (k : ℤ) = r := by
-  letI : NeZero k := ⟨by omega⟩
+  let : NeZero k := ⟨by omega⟩
   obtain ⟨c, hcc, ht⟩ := nonbipartite_potential hc hn
     (fun v => (a v : ZMod k)) (g.edge_residues k z a ha)
   let r : ℤ := c.val
-  have hr0 : 0 ≤ r := by exact_mod_cast (Nat.zero_le c.val)
-  have hrk : r < k := by exact_mod_cast c.val_lt
+  have hr0 : 0 ≤ r := by
+    change (0 : ℤ) ≤ (c.val : ℤ)
+    exact_mod_cast (Nat.zero_le c.val)
+  have hrk : r < k := by
+    change (c.val : ℤ) < (k : ℤ)
+    exact_mod_cast c.val_lt
   have hr (v : V) : a v % (k : ℤ) = r := by
     rw [← ZMod.val_intCast, ht v]
   have hdiv : (k : ℤ) ∣ 2 * r := by
@@ -385,5 +398,7 @@ theorem source_coefficients_of_sparse_multiple [Fintype V] [DecidableEq V]
 #print axioms integer_potential_alternative
 #print axioms integral_of_support_nonbipartite
 #print axioms source_coefficients_of_sparse_multiple
+
+end Edges
 
 end D5.S3.Combinatorics.Graph.Incidence.UnsignedStarTorsion
