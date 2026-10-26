@@ -78,7 +78,12 @@ private lemma transcript_collision (x : Fin 6 × Fin 6) :
 
 private lemma two_weights_le_one {m : ℕ} (d : StdSimplex ℝ (Fin m))
     (a b : Fin m) (h : a ≠ b) : d.weights a + d.weights b ≤ 1 := by
-  sorry
+  calc
+    d.weights a + d.weights b = ∑ i ∈ ({a, b} : Finset (Fin m)), d.weights i := by
+      simp [h]
+    _ ≤ ∑ i, d.weights i := Finset.sum_le_sum_of_subset_of_nonneg
+      (Finset.subset_univ _) (fun i _ _ => d.weights_nonneg i)
+    _ = 1 := d.total_of_fintype
 
 private lemma fixed_input_bound
     (δ : (Fin 6 × Fin 6) → (Fin 6 × Fin 6) → StdSimplex ℝ (Fin 4))
