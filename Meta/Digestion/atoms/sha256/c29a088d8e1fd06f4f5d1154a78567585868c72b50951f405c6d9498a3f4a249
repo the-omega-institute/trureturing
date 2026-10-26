@@ -1,0 +1,23 @@
+**Lemma 38.1 (a positive rational extra cell).** For every promised $N$-cell $T$, there is a promised $(N+1)$-cell matrix
+
+$$
+\widetilde T=
+\begin{pmatrix}T&\varepsilon e_{N-1}\\
+\varepsilon e_{N-1}^{\mathsf T}&1/2\end{pmatrix},
+\qquad \varepsilon\in\mathbb Q_{>0},
+$$
+
+whose authentic root moments satisfy
+
+$$
+\widetilde m_j=m_j\quad(0\le j<2N),\qquad
+\widetilde m_{2N}-m_{2N}
+=\varepsilon^2\left(\prod_{i=0}^{N-2}b_i\right)^2>0.
+$$
+
+The empty product at $N=1$ is $1$.
+
+**Proof.** Put $A=(T^{-1})_{N-1,N-1}>0$ and $C=((I-T)^{-1})_{N-1,N-1}>0$. Both are finite positive rationals. Choose a positive integer $L$ with $L^2>2\max(A,C)$ and set $\varepsilon=1/L$. The Schur complements in $\widetilde T$ and $I-\widetilde T$ are respectively $1/2-\varepsilon^2 A$ and $1/2-\varepsilon^2 C$, both positive. Hence $0<\widetilde T<I$; all adjacent links remain rational and positive.
+
+Expand the root matrix-power entry as weighted closed walks, allowing diagonal stays. A walk that touches the extra cell must traverse the $N$ edges from the root and the $N$ edges back, requiring at least $2N$ steps. At length $2N$ there is exactly one such walk, with no stays or detours. Its weight is the displayed positive product. All walks avoiding the extra cell are precisely the old ones. $\square$
+

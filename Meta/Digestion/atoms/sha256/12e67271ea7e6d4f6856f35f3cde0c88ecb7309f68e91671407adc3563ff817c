@@ -1,0 +1,20 @@
+**Proposition 39.3 (effective recovery from each expression).** Each of the four expressions in Definition 39.1 effectively determines the same triple $(T,k,x)$ and hence each of the other three expressions. The procedures terminate on their declared actual images.
+
+**Proof.** From Space read $T$ and $y=x_0$. Lemma 39.2 recovers $k$. Authentic passivity supplies $x=T^k e_0$; the given vector is that vector.
+
+From Time take $k$ to be its length minus one. Run the block test of Theorem 37.2 on its initial segments, without issuing new source calls. Since $k\ge2N$, the first singular block occurs within the given list. Propositions 37.3–37.4 recover $T$. Compute $x=T^k e_0$.
+
+From Boundary expand its encoded rational function formally at infinity to generate moments one at a time. These are local rational computations on a finite encoding; they are not newly acquired source readouts. The same first-flat-block test terminates at $N$ and recovers native $T$. Apply Lemma 39.2 to the given current endpoint value to recover $k$, and then compute $x$.
+
+From Memory the degree of its least recurrence is $N$. Its $N$ initial moments and the monic recurrence generate every subsequent moment, in particular the finite prefix used in Theorem 37.2. This recovers native $T$. The number $w_0$ is the current $m_k$, giving $k$ by Lemma 39.2. Finally define
+
+$$
+\mathcal O_N=\begin{pmatrix}
+e_0^{\mathsf T}\\ e_0^{\mathsf T}T\\ \vdots\\ e_0^{\mathsf T}T^{N-1}
+\end{pmatrix}.
+$$
+
+Here $\mathcal O_N=K_{N-1}^{\mathsf T}$ because $T$ is symmetric, so it is invertible by Lemma 37.1. The existing finite observability inverse therefore applies exactly as $w=\mathcal O_N x$, $x=\mathcal O_N^{-1}w$. This also agrees with $T^k e_0$. Generic observability is reused, with native invertibility earned by triangularity.
+
+Conversely $(T,k,x)$ computes every displayed expression: its recurrence and transfer by Proposition 37.4, its first $k+1$ moments and predictive entries by finite rational operations. Reconstructing the numeric Time list reproduces the actual paid list; it does not create observation provenance, replace the paid source calls or recover the timing of Read/Hold insertions. $\square$
+

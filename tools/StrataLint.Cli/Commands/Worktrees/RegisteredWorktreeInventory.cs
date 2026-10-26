@@ -8,7 +8,8 @@ internal sealed record RegisteredWorktree(
     string? Branch,
     string? GitDirectory,
     bool Locked,
-    string? LockReason);
+    string? LockReason,
+    string? IdentityFailure = null);
 
 internal static class RegisteredWorktreeInventory
 {
@@ -56,13 +57,15 @@ internal static class RegisteredWorktreeInventory
                     throw new InvalidOperationException($"worktree inventory omitted HEAD: {path}");
                 }
 
+                var observation = resolveGitDirectories ? ObserveRegisteredGitDirectory(path, runner) : default;
                 entries.Add(new RegisteredWorktree(
                     path,
                     head,
                     branch,
-                    resolveGitDirectories ? TryResolveRegisteredGitDirectory(path, runner) : null,
+                    observation.GitDirectory,
                     locked,
-                    lockReason));
+                    lockReason,
+                    observation.Failure));
                 path = null;
                 head = null;
                 branch = null;
