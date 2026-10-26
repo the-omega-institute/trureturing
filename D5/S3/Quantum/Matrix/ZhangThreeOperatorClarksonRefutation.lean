@@ -70,7 +70,31 @@ private lemma power_of_gram_charpoly (x : Matrix (Fin 2) (Fin 2) ℂ)
 private lemma left_side {p : ℝ} (hp : 0 < p) :
     schattenNorm (a + b + c) p ^ p + schattenNorm a p ^ p +
       schattenNorm b p ^ p + schattenNorm c p ^ p = 4 := by
-  sorry
+  have hd : ∀ i, 0 ≤ (![1, 0] : Fin 2 → ℝ) i := by
+    intro i
+    fin_cases i <;> norm_num
+  have h (x : Matrix (Fin 2) (Fin 2) ℂ)
+      (hx : (xᴴ * x).charpoly = (diagonal (fun i =>
+        ((![1, 0] : Fin 2 → ℝ) i : ℂ))).charpoly) :
+      schattenNorm x p ^ p = 1 := by
+    rw [power_of_gram_charpoly x ![1, 0] hd hx hp]
+    simp [Fin.sum_univ_two, Real.zero_rpow (by linarith : p / 2 ≠ 0)]
+  have ha : schattenNorm a p ^ p = 1 := h a (by
+    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, a, diagonal])
+  have hb : schattenNorm b p ^ p = 1 := h b (by
+    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, b, diagonal])
+  have hc : schattenNorm c p ^ p = 1 := h c (by
+    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, c, diagonal]
+    norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
+  have hs : schattenNorm (a + b + c) p ^ p = 1 := h (a + b + c) (by
+    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, a, b, c, diagonal]
+    norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
+  rw [ha, hb, hc, hs]
+  norm_num
 
 private lemma right_side {p : ℝ} (hp : 0 < p) :
     schattenNorm (a + b) p ^ p + schattenNorm (b + c) p ^ p +
