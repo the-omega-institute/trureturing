@@ -71,13 +71,18 @@ private theorem insertion_site (h : Cell m n → ℤ) (hh : IsHeight h)
     have hw0 : w ⟨0,by omega⟩=0 := by
       by_contra hz
       have H := (hw ⟨0,by omega⟩ (Nat.pos_of_ne_zero hz)).1
-      exact (by simpa only [Fin.val_mk] using H : False)
+      change 0 < 0 at H
+      omega
     have he : Finset.univ.filter (fun k : Fin n => k ≤ (⟨0,by omega⟩ : Fin n)) =
         {⟨0,by omega⟩} := by ext k; simp [Fin.le_iff_val_le_val,Fin.ext_iff]
-    simp only [columnPosition,he,Finset.sum_singleton,Fin.val_mk,hw0,add_zero]
+    change 0 + _ = 0
+    rw [he,Finset.sum_singleton,hw0]
   have ht0 : 0 < t.val := by
     by_contra he
-    have et : t=(⟨0,by omega⟩ : Fin n) := Fin.ext (by omega)
+    have et : t=(⟨0,by omega⟩ : Fin n) := by
+      apply Fin.ext
+      change t.val=0
+      omega
     rw [et,h0] at ht
     omega
   let prev : Fin n := ⟨t.val-1,by have := t.isLt; omega⟩
@@ -118,7 +123,7 @@ private theorem lift_column_weights (h : Cell m n → ℤ) (hh : IsHeight h)
   have hv : ∀ l,v l=w l+if l=t then 1 else 0 := fun _ => rfl
   have htotal := increment_total v w t hv
   have hpos : ∀ l,columnPosition v l=columnPosition w l+if t ≤ l then 1 else 0 :=
-    increment_position v w t · hv
+    fun l => increment_position v w t l hv
   have hbound : ∀ l,columnPosition w l < B-1 := by
     intro l; rw [hB]; exact position_lt w l
   let pos : Fin n → Fin (B-1) := fun l => ⟨columnPosition w l,hbound l⟩
@@ -178,7 +183,7 @@ theorem reduction_indexed_active (a b : ℕ) {m n M N : ℕ}
   induction red with
   | refl h =>
     intro hm hn hh _ _ _
-    refine ⟨fun _ => 0,fun _ => 0,(by intro i hi; omega),(by intro j hj; omega),
+    refine ⟨fun _ => 0,fun _ => 0,(by intro i hi; change 0 < 0 at hi; omega),(by intro j hj; change 0 < 0 at hj; omega),
       by simp,by simp,?_,?_⟩
     · intro k
       simp only [columnPosition,Finset.sum_const_zero,add_zero]
@@ -192,8 +197,7 @@ theorem reduction_indexed_active (a b : ℕ) {m n M N : ℕ}
       · rintro ⟨j,hj,he⟩; exact (Fin.ext he).symm ▸ hj
   | column g hpos j k hj hk hjk tail ih =>
     intro hm hn hg hM hN hh
-    have hn' : 2 ≤ _ := by have := hj.1; have := hk.2.1; omega
-    obtain ⟨r,c,hrs,hcs,hrm,hcn,hca,hra⟩ := ih hm hn'
+    obtain ⟨r,c,hrs,hcs,hrm,hcn,hca,hra⟩ := ih hm (by have := hj.1; have := hk.2.1; omega)
       (contractAt_residual a b g hpos j hj hg) hM hN hh
     obtain ⟨v,hvs,hvd,hva⟩ := lift_column_weights _ hh (by omega) hN c hcs
       g hg.1.1 hpos j k hj hk hjk hcn hca
@@ -202,8 +206,7 @@ theorem reduction_indexed_active (a b : ℕ) {m n M N : ℕ}
     exact (contract_rows_active g hg.1.1 hpos j hj i).symm.trans (hra i)
   | row g hpos j k hj hk hjk tail ih =>
     intro hm hn hg hM hN hh
-    have hm' : 2 ≤ _ := by have := hj.1; have := hk.2.1; omega
-    obtain ⟨r,c,hrs,hcs,hrm,hcn,hca,hra⟩ := ih hm' hn
+    obtain ⟨r,c,hrs,hcs,hrm,hcn,hca,hra⟩ := ih (by have := hj.1; have := hk.2.1; omega) hn
       (contractRow_residual a b g hpos j hj hg) hM hN hh
     obtain ⟨v,hvs,hvd,hva⟩ := lift_column_weights (transposeHeight _) (transpose_isHeight hh)
       (by omega) hM r hrs (transposeHeight g) (transpose_isHeight hg.1.1)

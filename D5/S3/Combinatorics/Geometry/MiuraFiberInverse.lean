@@ -11,7 +11,6 @@ public import D5.S3.Combinatorics.Geometry.MiuraCanonicalJoint
 import all D5.S3.Combinatorics.Geometry.MiuraCoreNormal
 import all D5.S3.Combinatorics.Geometry.MiuraCoreJoint
 import all D5.S3.Combinatorics.Geometry.MiuraCanonicalColumns
-import all D5.S3.Combinatorics.Geometry.MiuraFiberJoint
 import all D5.S3.Combinatorics.Geometry.MiuraCoreTranspose
 
 /-! Recovery of every actual cell, including all frozen lines. -/
@@ -25,7 +24,6 @@ open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreContract
 open private normalize_exists from D5.S3.Combinatorics.Geometry.MiuraCoreNormal
 open private joint_trans from D5.S3.Combinatorics.Geometry.MiuraCoreJoint
 open private slope_after_left from D5.S3.Combinatorics.Geometry.MiuraCanonicalColumns
-open private joint_active_images from D5.S3.Combinatorics.Geometry.MiuraFiberJoint
 open private transpose_min_iff transpose_max_iff from D5.S3.Combinatorics.Geometry.MiuraCoreTranspose
 open scoped BigOperators
 variable {m n M N : ℕ}
@@ -209,21 +207,5 @@ theorem same_core_same_active_equal (a b : ℕ) (h g : Cell m n → ℤ)
       have he := (reduced_reduction hc ht hr).trans (reduced_reduction gc gt gr).symm
       simpa only [Sigma.mk.inj_iff,heq_eq_eq,true_and] using he
   exact go (m+n) m n M N h g f rfl hm hn hh hg hf hft hr gr ha hat
-
-/-- Equal complete indexed vectors over one actual reduced core determine the
-entire actual residual function, including cells that are not extrema. -/
-theorem indexed_joint_function_unique (a b : ℕ) (h : Cell m n → ℤ)
-    (hh : IsHeight h) (hm : 2 ≤ m) (hn : 2 ≤ n)
-    (hc : NoAdjacentFrozen h) (ht : NoAdjacentFrozen (transposeHeight h))
-    (r : Fin m → ℕ) (c : Fin n → ℕ) (g f : Cell M N → ℤ)
-    (hM : M=m+∑ i,r i) (hN : N=n+∑ j,c j)
-    (hg : Residual a b g) (hf : Residual a b f)
-    (gr : JointReduction g h) (fr : JointReduction f h)
-    (ge : JointExtremaExpansion h r c g) (fe : JointExtremaExpansion h r c f) : g=f := by
-  have ga := joint_active_images h r c g hM hN ge
-  have fa := joint_active_images h r c f hM hN fe
-  apply same_core_same_active_equal a b g f (by omega) (by omega) hg hf h hc ht gr fr
-  · intro j; exact (ga.1 j).trans (fa.1 j).symm
-  · intro i; exact (ga.2 i).trans (fa.2 i).symm
 
 end D5.S3.Combinatorics.Geometry.MiuraFiberInverse

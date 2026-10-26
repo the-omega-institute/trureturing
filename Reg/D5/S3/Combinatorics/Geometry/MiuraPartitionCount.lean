@@ -78,6 +78,23 @@ theorem actual_law : arena.Law actual := by
   intro p x
   exact MiuraPartitionCount.residual_count_eq_sum_fibers p.a p.b x.m x.n p.ha p.hb p.hd x.hm x.hn
 
+def rejected : Realization signature := realize signature
+  (fun (_ : Unit) p x => actual.readout () p x + 1) (fun e => nomatch e)
+
+theorem rejected_not_law : ¬ arena.Law rejected := by
+  intro law
+  let p : Parameter := ⟨1, 4, by decide, by decide, by decide⟩
+  let x : State p := ⟨9, 9, by decide, by decide⟩
+  have good := actual_law p x
+  have bad := law p x
+  change actual.readout () p x + 1 = _ at bad
+  omega
+
+theorem variation : Variation arena actual := ⟨actual_law, rejected, rejected_not_law⟩
+
+theorem sensitivity : Sensitivity arena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_not_law
+
 theorem bridge : (type_of% (@MiuraPartitionCount.residual_count_eq_sum_fibers)) ↔
     arena.Law actual := by
   constructor
