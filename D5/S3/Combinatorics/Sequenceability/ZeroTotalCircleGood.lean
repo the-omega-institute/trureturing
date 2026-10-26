@@ -24,7 +24,8 @@ open scoped BigOperators Classical
 universe u
 variable {G : Type u} [AddCommGroup G] [DecidableEq G]
 
-private theorem rotated_two_runs {u v w : List G} (h : (u++v).IsRotated w) :
+omit [AddCommGroup G] [DecidableEq G] in
+theorem rotated_two_runs {u v w : List G} (h : (u++v).IsRotated w) :
     (∃ p q, w = p++u++q) ∨ (∃ p q, w = p++v++q) := by
   obtain ⟨d,hd,hr⟩ := List.isRotated_iff_mod.mp h
   by_cases hu : d ≤ u.length
