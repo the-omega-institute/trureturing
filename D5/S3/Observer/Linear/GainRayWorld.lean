@@ -55,14 +55,14 @@ def worldEquiv (d : ℕ) : World d ≃ PolynomialWorld d where
     by
       intro h
       have hp := Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt
-        (by omega : W.polynomial.natDegree < d + 1)
+        (Nat.lt_succ_of_le W.degree_le : W.polynomial.natDegree < d + 1)
       rw [h, map_zero] at hp
       exact W.nonzero hp.symm,
     W.drift⟩
-  left_inv W := by cases W; simp [Polynomial.toFn_comp_ofFn_eq_id]
+  left_inv W := by cases W; simp [gain, Polynomial.toFn_comp_ofFn_eq_id]
   right_inv W := by
     have hp := Polynomial.ofFn_comp_toFn_eq_id_of_natDegree_lt
-      (by omega : W.polynomial.natDegree < d + 1)
+      (Nat.lt_succ_of_le W.degree_le : W.polynomial.natDegree < d + 1)
     cases W
     simp_all [gain]
 

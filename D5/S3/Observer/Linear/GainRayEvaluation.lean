@@ -39,7 +39,9 @@ theorem evaluation_injective (d n : ℕ) (t : Fin n → ℝ)
   · simpa using lt_of_lt_of_le (Polynomial.ofFn_degree_lt β) (by exact_mod_cast hn)
   · simpa using lt_of_lt_of_le (Polynomial.ofFn_degree_lt γ) (by exact_mod_cast hn)
   · intro i _
-    simpa only [← evaluation_polynomial] using congrFun he i
+    change (gain d β).eval (t i) = (gain d γ).eval (t i)
+    rw [← evaluation_polynomial, ← evaluation_polynomial]
+    exact congrFun he i
 
 /-- At most d+1 distinct prescribed values are attained without a sign promise. -/
 theorem evaluation_surjective (d n : ℕ) (t : Fin n → ℝ)
@@ -52,7 +54,7 @@ theorem evaluation_surjective (d n : ℕ) (t : Fin n → ℝ)
     exact ⟨0, Subsingleton.elim _ _⟩
   let p := Lagrange.interpolate (Finset.univ : Finset (Fin n)) t y
   have hp : p.degree < (n : ℕ) := by
-    simpa [p] using Lagrange.degree_interpolate_lt (Finset.univ : Finset (Fin n)) y
+    simpa [p] using Lagrange.degree_interpolate_lt y
       (fun _ _ _ _ h => ht h)
   have hdeg : p.natDegree < d + 1 := by
     by_cases h0 : p = 0
@@ -77,7 +79,9 @@ theorem pureJ_history_surjective (d n : ℕ) (hn : n ≤ d + 1) :
   intro y
   have ht : Function.Injective (clocks n) := by
     intro i j h
-    exact Fin.ext (by exact_mod_cast h)
+    apply Fin.ext
+    dsimp [clocks] at h
+    exact_mod_cast h
   obtain ⟨β, hβ⟩ := evaluation_surjective d n (clocks n) ht hn y
   refine ⟨(β, 0), ?_⟩
   ext i
