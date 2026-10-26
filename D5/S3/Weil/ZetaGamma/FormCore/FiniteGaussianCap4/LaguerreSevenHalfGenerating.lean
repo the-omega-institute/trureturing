@@ -106,8 +106,8 @@ private theorem gaussianTerm_norm (x : ℝ) (z : ℂ) (j m : ℕ) :
       ((2 * |x|) ^ j / (j.factorial : ℝ)) *
         pochhammerQuotient ((9 / 2 : ℝ) + j) m * ‖z‖ ^ (j + m) := by
   simp only [gaussianTerm, norm_mul, Complex.norm_real, Real.norm_eq_abs,
-    abs_mul, abs_div, abs_pow, abs_neg, abs_ofNat,
-    abs_of_nonneg (Nat.cast_nonneg j.factorial),
+    abs_mul, abs_div, abs_pow, abs_neg, abs_of_nonneg (show (0 : ℝ) ≤ 2 by norm_num),
+    abs_of_nonneg (show (0 : ℝ) ≤ (j.factorial : ℝ) from Nat.cast_nonneg _),
     abs_of_nonneg (pochhammerQuotient_nonneg j m), norm_pow]
 
 /-- Absolute convergence of the double series, used only for pointwise regrouping.
@@ -196,7 +196,7 @@ private theorem gaussianTerm_coefficient (x : ℝ) (z : ℂ) (j m : ℕ) :
 
 private theorem gaussianTerm_antidiagonal (x : ℝ) (z : ℂ) (n : ℕ) :
     (∑ p ∈ Finset.antidiagonal n, gaussianTerm x z p.1 p.2) =
-      ((laguerre n).eval (2 * x) : ℂ) * z ^ n := by
+      (((laguerre n).eval (2 * x) : ℝ) : ℂ) * z ^ n := by
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ]
   rw [laguerre_eval]
   push_cast
@@ -210,7 +210,7 @@ private theorem gaussianTerm_antidiagonal (x : ℝ) (z : ℂ) (n : ℕ) :
 
 /-- Complex Laguerre generating series, derived from the literal finite coefficients. -/
 theorem laguerre_hasSum_complex (x : ℝ) (z : ℂ) (hz : ‖z‖ < 1) :
-    HasSum (fun n => ((laguerre n).eval (2 * x) : ℂ) * z ^ n)
+    HasSum (fun n => (((laguerre n).eval (2 * x) : ℝ) : ℂ) * z ^ n)
       ((1 / (1 - z) ^ (9 / 2 : ℂ)) *
         Complex.exp (-2 * (x : ℂ) * z / (1 - z))) := by
   classical
@@ -225,7 +225,7 @@ theorem laguerre_hasSum_complex (x : ℝ) (z : ℂ) (hz : ‖z‖ < 1) :
     exact e.hasSum_iff.mpr hp
   have hd (n : ℕ) : HasSum
       (fun p : Finset.antidiagonal n => gaussianTerm x z p.1.1 p.1.2)
-      (((laguerre n).eval (2 * x) : ℂ) * z ^ n) := by
+      ((((laguerre n).eval (2 * x) : ℝ) : ℂ) * z ^ n) := by
     simpa only [Finset.sum_coe_sort, gaussianTerm_antidiagonal] using
       (hasSum_fintype
         (fun p : Finset.antidiagonal n => gaussianTerm x z p.1.1 p.1.2))
@@ -276,8 +276,8 @@ theorem generating_hasFPowerSeriesAt (x : ℝ) :
   have hn : Summable (fun n => ‖p n‖ * (1 / 2 : ℝ) ^ n) := by
     simpa only [p, FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow,
       norm_div, norm_one, Complex.norm_ofNat] using hs.norm
-  refine ⟨(1 / 2 : ℝ≥0), ⟨?_, by norm_num, ?_⟩⟩
-  · exact p.le_radius_of_summable_norm (r := (1 / 2 : ℝ≥0)) hn
+  refine ⟨((1 / 2 : NNReal) : ENNReal), ⟨?_, by norm_num, ?_⟩⟩
+  · exact p.le_radius_of_summable_norm (r := (1 / 2 : NNReal)) hn
   · intro z hz
     have hz' : ‖z‖ < 1 := by
       have : ‖z‖ < (1 / 2 : ℝ) := by
