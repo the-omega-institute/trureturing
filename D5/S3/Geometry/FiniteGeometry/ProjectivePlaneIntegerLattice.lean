@@ -7,7 +7,9 @@
    digest: Exact integer image and Boolean closure of finite projective-plane incidence. -/
 
 import Mathlib.Combinatorics.Configuration
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Push
 
 /-!
 The plane, its original points and its original lines are arbitrary. Its order
@@ -15,6 +17,18 @@ is Mathlib's derived order, not a plane-existence assumption. The new inference
 is divisibility-certified integer reconstruction and its Boolean consequences.
 No cancellation in a quotient group is used. Standard geometric counts are
 reused from Configuration.
+
+Admission: escape-witness. The divisibility-certified inverse and the complete
+Boolean coefficient dichotomy are the new inferences, not supplied by the
+inspected geometry, matrix or quotient contracts. There are no direct frozen
+D5 dependencies: all imports are pinned Mathlib. Utility none: all declarations
+are symbolic general results, not enumerations or numeric certificates.
+The total and line identities and injectivity are consumed algebraic helpers;
+integer_reconstruction consumes injectivity for its unique original witness;
+mem_lattice_iff consumes reconstruction; the three exact ideals consume the
+criterion and original geometric existence facts. Boolean closure consumes
+both master identities and the integer 0/1 coefficient dichotomy. All private
+sum, bound and existence helpers have live consumers in these proofs.
 -/
 
 set_option autoImplicit false
@@ -150,7 +164,8 @@ theorem incidence_injective : Function.Injective (incidence (P := P) (L := L)) :
 theorem integer_reconstruction (z : P → ℤ) (s : ℤ)
     (ht : (∑ x, z x) = (q (P := P) (L := L) + 1) * s)
     (hd : ∀ l : L, q (P := P) (L := L) ∣ lineSum z l - s) :
-    ∃! a : L → ℤ, incidence a = z := by
+    ∃! a : L → ℤ, incidence a = z ∧ (∑ l, a l) = s ∧
+      ∀ l, a l = (lineSum z l - s) / q (P := P) (L := L) := by
   -- Divisibility is established before defining any integer quotient.
   let a : L → ℤ := fun l => (lineSum z l - s) / q (P := P) (L := L)
   have ha : ∀ l, q (P := P) (L := L) * a l = lineSum z l - s :=
@@ -172,7 +187,12 @@ theorem integer_reconstruction (z : P → ℤ) (s : ℤ)
           linear_combination row l x * this
         _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, column_total]
     nlinarith
-  exact ⟨a, heq, fun b hb => incidence_injective (hb.trans heq.symm)⟩
+  have hsum : (∑ l, a l) = s := by
+    have hm := total_incidence a
+    rw [heq, ht] at hm
+    nlinarith
+  exact ⟨a, ⟨heq, hsum, fun _ => rfl⟩,
+    fun b hb => incidence_injective (hb.1.trans heq.symm)⟩
 
 /-- Exact original integer-image criterion, including an integer witness s. -/
 theorem mem_lattice_iff (z : P → ℤ) :
@@ -187,14 +207,14 @@ theorem mem_lattice_iff (z : P → ℤ) :
     exact ⟨a l, by ring⟩
   · rintro ⟨s, ht, hd⟩
     obtain ⟨a, ha, _⟩ := integer_reconstruction z s ht hd
-    exact ⟨a, ha⟩
+    exact ⟨a, ha.1⟩
 
 /-- The Boolean indicator retains every original point coordinate. -/
 def indicator (S : Finset P) (x : P) : ℤ := if x ∈ S then 1 else 0
 
 private lemma indicator_total (S : Finset P) : ∑ x, indicator S x = (S.card : ℤ) := by
   classical
-  simp [indicator, Finset.sum_ite]
+  simp [indicator]
 
 private lemma lineSum_indicator_bounds (S : Finset P) (l : L) :
     0 ≤ lineSum (indicator S) l ∧ lineSum (indicator S) l ≤ q (P := P) (L := L) + 1 := by
@@ -224,7 +244,7 @@ theorem boolean_mem_lattice_iff (S : Finset P) (hne : S.Nonempty) (hp : S ≠ un
       rw [ProjectivePlane.card_points P L] at hc
       exact_mod_cast hc
     have hs : 1 ≤ s ∧ s ≤ q (P := P) (L := L) := by
-      constructor <;> by_contra h <;> push_neg at h <;> nlinarith
+      constructor <;> by_contra h <;> push Not at h <;> nlinarith
     have hl : ∀ l, 0 ≤ q (P := P) (L := L) * a l + s ∧
         q (P := P) (L := L) * a l + s ≤ q (P := P) (L := L) + 1 := by
       intro l
@@ -245,13 +265,19 @@ theorem boolean_mem_lattice_iff (S : Finset P) (hne : S.Nonempty) (hp : S ≠ un
       intro l
       have h := hl l
       rw [hs1] at h
-      have hlo : 0 ≤ a l := by by_contra hn; have : a l ≤ -1 := by omega; nlinarith
-      have hhi : a l ≤ 1 := by by_contra hn; have : 2 ≤ a l := by omega; nlinarith
+      have hlo : 0 ≤ a l := by
+        by_contra hn
+        have : a l ≤ -1 := by omega
+        nlinarith
+      have hhi : a l ≤ 1 := by
+        by_contra hn
+        have : 2 ≤ a l := by omega
+        nlinarith
       omega
     have hnonneg : ∀ l, 0 ≤ a l := fun l => by rcases ha01 l with h | h <;> omega
     obtain ⟨l, hal⟩ : ∃ l, a l = 1 := by
       by_contra h
-      push_neg at h
+      push Not at h
       have hz : ∀ l, a l = 0 := fun l => (ha01 l).resolve_right (h l)
       have : s = 0 := by simp [s, hz]
       omega
@@ -281,6 +307,7 @@ theorem boolean_mem_lattice_iff (S : Finset P) (hne : S.Nonempty) (hp : S ≠ un
 /-- An original point unit, scaled by any signed integer. -/
 def unit (x : P) (y : P) : ℤ := if y = x then 1 else 0
 
+omit [Fintype L] [ProjectivePlane P L] in
 private lemma lineSum_unit (x : P) (k : ℤ) (l : L) :
     lineSum (fun y => k * unit x y) l = k * row l x := by
   classical
@@ -298,15 +325,15 @@ private lemma exists_line_separating (x y : P) (hxy : x ≠ y) :
   classical
   obtain ⟨l, hl, hu⟩ := HasLines.existsUnique_line P L x y hxy
   by_contra hn
-  push_neg at hn
+  push Not at hn
   have he : ∀ k : L, x ∈ k ↔ k = l := by
     intro k
     constructor
     · intro hk; exact hu k ⟨hk, hn k hk⟩
     · rintro rfl; exact hl.1
   have ht := column_total (P := P) (L := L) x
-  simp only [row, he] at ht
-  simp at ht
+  have hsum : ∑ k : L, row k x = (1 : ℤ) := by simp [row, he]
+  rw [hsum] at ht
   have := q_ge_two (P := P) (L := L)
   omega
 
@@ -322,7 +349,7 @@ theorem unit_mem_lattice_iff (x : P) (k : ℤ) :
     obtain ⟨l, hl⟩ := Configuration.Nondegenerate.exists_line (L := L) x
     have hh := hd l
     rw [lineSum_unit] at hh
-    simp only [row, if_neg hl, mul_zero, zero_sub] at hh
+    simp only [row, ite_eq_right hl, mul_zero, zero_sub] at hh
     obtain ⟨r, hr⟩ := (dvd_neg.mp hh)
     refine ⟨r, ?_⟩
     rw [ht', hr]
@@ -330,11 +357,17 @@ theorem unit_mem_lattice_iff (x : P) (k : ℤ) :
   · rintro ⟨r, rfl⟩
     refine ⟨fun l => r * ((q (P := P) (L := L) + 1) * row l x - 1), ?_⟩
     funext y
-    have hW := incidence_pencil (L := L) x y
-    have hT := column_total (L := L) y
-    simp only [incidence, mul_sub, mul_assoc, Finset.sum_sub_distrib,
-      ← Finset.mul_sum, ← Finset.sum_mul] at *
-    nlinarith
+    change (∑ l : L, row l y * (r * ((q (P := P) (L := L) + 1) * row l x - 1))) = _
+    calc
+      _ = ∑ l : L, ((r * (q (P := P) (L := L) + 1)) *
+          (row l y * row l x) - r * row l y) := by
+        apply Finset.sum_congr rfl
+        intro l _
+        ring
+      _ = (r * (q (P := P) (L := L) + 1)) *
+          incidence (fun l : L => row l x) y - r * (∑ l : L, row l y) := by
+        simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, incidence]
+      _ = _ := by rw [incidence_pencil, column_total]; ring
 
 /-- The exact integer ideal annihilating a difference of distinct original units. -/
 theorem difference_mem_lattice_iff (x y : P) (hxy : x ≠ y) (k : ℤ) :
@@ -346,9 +379,11 @@ theorem difference_mem_lattice_iff (x y : P) (hxy : x ≠ y) (k : ℤ) :
     obtain ⟨s, ht, hd⟩ := (mem_lattice_iff _).mp h
     have hq := q_ge_two (P := P) (L := L)
     have hs : s = 0 := by
-      simp [mul_sub, Finset.sum_sub_distrib, unit] at ht
+      have hz : (∑ z : P, k * (unit x z - unit y z)) = 0 := by
+        simp [mul_sub, Finset.sum_sub_distrib, unit]
+      rw [hz] at ht
       nlinarith
-    obtain ⟨l, hx, hy⟩ := exists_line_separating x y hxy
+    obtain ⟨l, hx, hy⟩ := exists_line_separating (L := L) x y hxy
     have hh := hd l
     have he : lineSum (fun z => k * (unit x z - unit y z)) l = k := by
       simp only [lineSum, mul_sub, Finset.sum_sub_distrib]
@@ -359,11 +394,16 @@ theorem difference_mem_lattice_iff (x y : P) (hxy : x ≠ y) (k : ℤ) :
   · rintro ⟨r, rfl⟩
     refine ⟨fun l => r * (row l x - row l y), ?_⟩
     funext z
-    have hx := incidence_pencil (L := L) x z
-    have hy := incidence_pencil (L := L) y z
-    simp only [incidence, mul_sub, mul_assoc, Finset.sum_sub_distrib,
-      ← Finset.mul_sum, ← Finset.sum_mul] at *
-    nlinarith
+    change (∑ l : L, row l z * (r * (row l x - row l y))) = _
+    calc
+      _ = ∑ l : L, (r * (row l z * row l x) - r * (row l z * row l y)) := by
+        apply Finset.sum_congr rfl
+        intro l _
+        ring
+      _ = r * incidence (fun l : L => row l x) z -
+          r * incidence (fun l : L => row l y) z := by
+        simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, incidence]
+      _ = _ := by rw [incidence_pencil, incidence_pencil]; ring
 
 /-- The exact integer ideal annihilating the original all-ones vector. -/
 theorem constant_mem_lattice_iff (k : ℤ) :
@@ -380,6 +420,7 @@ theorem constant_mem_lattice_iff (k : ℤ) :
   · rintro ⟨r, rfl⟩
     refine ⟨fun _ : L => r, ?_⟩
     funext x
-    simpa [incidence, ← Finset.sum_mul] using congrArg (fun n : ℤ => n * r) (column_total (L := L) x)
+    simpa [incidence, ← Finset.sum_mul] using
+      congrArg (fun n : ℤ => n * r) (column_total (L := L) x)
 
 end D5.S3.Geometry.FiniteGeometry.ProjectivePlaneIntegerLattice
