@@ -31,9 +31,9 @@ private theorem degreeDependence : ObservationalDependence degreeSignature degre
 abbrev interpolationArena : Arena where
   signature := degreeSignature
   Law M := ∀ (m a : ℕ) (ρ : ℝ) (u : ℕ → ℝ)
-    (hm : 5 ≤ m) (ha : a ≤ 2 * m - 2) (hρ : 0 < ρ)
-    (hu0 : u 0 = 1) (hu1 : u 1 = -ρ)
-    (hr : ∀ k, u (k + 2) = u (k + 1) + u k),
+    (_hm : 5 ≤ m) (_ha : a ≤ 2 * m - 2) (_hρ : 0 < ρ)
+    (_hu0 : u 0 = 1) (_hu1 : u 1 = -ρ)
+    (_hr : ∀ k, u (k + 2) = u (k + 1) + u k),
     ¬ ∃ R : ℝ[X], M.readout () () R ≤ m - 1 ∧
       (∀ k, k ≤ 2 * m - 2 → u k ≠ 0) ∧
       (∀ k, k ≤ a → u k * R.eval (k : ℝ) = 1) ∧
@@ -107,7 +107,8 @@ def interpolationSource : Registration interpolationArena (type_of% @positive_jj
     interpolationArena.Law degreeActual degreeRejected interpolationArenaRejected
   dependence := degreeDependence
 
-def interpolationAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+def interpolationAudit :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@positive_jj_exclusion) (Realization degreeSignature) Type Unit where
   unitName := `Reg.D5.S1.Recurrence.Interpolation.PositiveJJExclusion.interpolationAuditUnit
   realizationName := `Reg.D5.S1.Recurrence.Interpolation.PositiveJJExclusion.interpolationSource
@@ -132,7 +133,7 @@ def interpolationAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0,
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 10
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

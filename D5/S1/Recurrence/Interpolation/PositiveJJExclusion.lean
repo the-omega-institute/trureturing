@@ -96,7 +96,8 @@ private lemma weighted_nat (R : ℝ[X]) (k : ℕ) :
 
 private lemma weighted_derivative (R : ℝ[X]) (t : ℝ) :
     HasDerivAt (weighted R)
-      (Real.exp (Real.log Real.goldenRatio * t) * (R.derivative + C (Real.log Real.goldenRatio) * R).eval t) t := by
+      (Real.exp (Real.log Real.goldenRatio * t) *
+        (R.derivative + C (Real.log Real.goldenRatio) * R).eval t) t := by
   change HasDerivAt (fun x : ℝ => Real.exp (Real.log Real.goldenRatio * x) * R.eval x) _ t
   convert (((hasDerivAt_id t).const_mul (Real.log Real.goldenRatio)).exp.mul
     (R.hasDerivAt t)) using 1
@@ -124,7 +125,8 @@ private lemma initial_cross (R : ℝ[X]) (u : ℕ → ℝ) (k shift : ℕ)
     (h0 : u k * R.eval ((k + shift : ℕ) : ℝ) = 1)
     (h1 : u (k + 1) * R.eval ((k + 1 + shift : ℕ) : ℝ) = 1) :
     weighted R (k + shift : ℕ) * weighted R (k + 1 + shift : ℕ) < 0 := by
-  have he : (u k * u (k + 1)) * (R.eval ((k + shift : ℕ) : ℝ) * R.eval ((k + 1 + shift : ℕ) : ℝ)) = 1 := by
+  have he : (u k * u (k + 1)) *
+      (R.eval ((k + shift : ℕ) : ℝ) * R.eval ((k + 1 + shift : ℕ) : ℝ)) = 1 := by
     nlinarith [congrArg₂ (fun x y : ℝ => x * y) h0 h1]
   have hv : R.eval ((k + shift : ℕ) : ℝ) * R.eval ((k + 1 + shift : ℕ) : ℝ) < 0 := by
     by_contra! hv
@@ -134,7 +136,9 @@ private lemma initial_cross (R : ℝ[X]) (u : ℕ → ℝ) (k shift : ℕ)
   have hp0 := Real.exp_pos (Real.log Real.goldenRatio * ((k + shift : ℕ) : ℝ))
   have hp1 := Real.exp_pos (Real.log Real.goldenRatio * ((k + 1 + shift : ℕ) : ℝ))
   calc
-    _ = (Real.exp (Real.log Real.goldenRatio * ((k + shift : ℕ) : ℝ)) * Real.exp (Real.log Real.goldenRatio * ((k + 1 + shift : ℕ) : ℝ))) * (R.eval ((k + shift : ℕ) : ℝ) * R.eval ((k + 1 + shift : ℕ) : ℝ)) := by ring
+    _ = (Real.exp (Real.log Real.goldenRatio * ((k + shift : ℕ) : ℝ)) *
+        Real.exp (Real.log Real.goldenRatio * ((k + 1 + shift : ℕ) : ℝ))) *
+        (R.eval ((k + shift : ℕ) : ℝ) * R.eval ((k + 1 + shift : ℕ) : ℝ)) := by ring
     _ < 0 := mul_neg_of_pos_of_neg (mul_pos hp0 hp1) hv
 
 private lemma tail_cross (R : ℝ[X]) (u : ℕ → ℝ) (A B : ℝ) (hB : 0 < B)
@@ -142,14 +146,16 @@ private lemma tail_cross (R : ℝ[X]) (u : ℕ → ℝ) (A B : ℝ) (hB : 0 < B)
     (k shift : ℕ) (ha0 : 0 < A * u k) (ha1 : 0 < A * u (k + 1))
     (h0 : u k * R.eval ((k + shift : ℕ) : ℝ) = 1)
     (h1 : u (k + 1) * R.eval ((k + 1 + shift : ℕ) : ℝ) = 1) :
-    (weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A) * (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A) < 0 := by
+    (weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A) *
+      (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A) < 0 := by
   have hA : A ≠ 0 := by rintro rfl; simp at ha0
   have ident (j : ℕ) (hj : u j * R.eval ((j + shift : ℕ) : ℝ) = 1) :
       (A * u j) * (weighted R (j + shift : ℕ) - Real.goldenRatio ^ shift / A) =
         -(Real.goldenRatio ^ shift * B * Real.goldenConj ^ j) := by
     rw [weighted_nat, pow_add]
     calc
-      _ = Real.goldenRatio ^ shift * (A * Real.goldenRatio ^ j * (u j * R.eval ((j + shift : ℕ) : ℝ)) - u j) := by
+      _ = Real.goldenRatio ^ shift *
+          (A * Real.goldenRatio ^ j * (u j * R.eval ((j + shift : ℕ) : ℝ)) - u j) := by
         field_simp [hA]
       _ = Real.goldenRatio ^ shift * (A * Real.goldenRatio ^ j - u j) := by rw [hj]; ring
       _ = _ := by rw [hu j]; ring
@@ -165,9 +171,13 @@ private lemma tail_cross (R : ℝ[X]) (u : ℕ → ℝ) (A B : ℝ) (hB : 0 < B)
       _ = (Real.goldenRatio ^ shift * B * Real.goldenConj ^ k) ^ 2 * Real.goldenConj := by
         rw [pow_succ]; ring
       _ < 0 := mul_neg_of_pos_of_neg hp Real.goldenConj_neg
-  have he : (A * u k) * (A * u (k + 1)) * ((weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A) * (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A)) < 0 := by
+  have he : (A * u k) * (A * u (k + 1)) *
+      ((weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A) *
+        (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A)) < 0 := by
     calc
-      _ = ((A * u k) * (weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A)) * ((A * u (k + 1)) * (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A)) := by ring
+      _ = ((A * u k) * (weighted R (k + shift : ℕ) - Real.goldenRatio ^ shift / A)) *
+          ((A * u (k + 1)) *
+            (weighted R (k + 1 + shift : ℕ) - Real.goldenRatio ^ shift / A)) := by ring
       _ < 0 := by rw [e0, e1]; exact hn
   exact (mul_neg_iff.mp he).resolve_right (by intro h; linarith [mul_pos ha0 ha1]) |>.2
 
@@ -209,9 +219,9 @@ private lemma three_blocks (f w : ℝ → ℝ) (Q : ℝ[X]) (hQ : Q ≠ 0)
     (hd : ∀ t, HasDerivAt f (w t * Q.eval t) t) (hw : ∀ t, w t ≠ 0)
     (L₀ L₁ L₂ c₀ c₁ c₂ : ℝ) (n₀ n₁ n₂ : ℕ)
     (h01 : L₀ + n₀ ≤ L₁) (h12 : L₁ + n₁ ≤ L₂)
-    (hs0 : ∀ i : Fin n₀, (f (L₀ + i)-c₀) * (f (L₀ + i + 1)-c₀) < 0)
-    (hs1 : ∀ i : Fin n₁, (f (L₁ + i)-c₁) * (f (L₁ + i + 1)-c₁) < 0)
-    (hs2 : ∀ i : Fin n₂, (f (L₂ + i)-c₂) * (f (L₂ + i + 1)-c₂) < 0) :
+    (hs0 : ∀ i : Fin n₀, (f (L₀ + i) - c₀) * (f (L₀ + i + 1) - c₀) < 0)
+    (hs1 : ∀ i : Fin n₁, (f (L₁ + i) - c₁) * (f (L₁ + i + 1) - c₁) < 0)
+    (hs2 : ∀ i : Fin n₂, (f (L₂ + i) - c₂) * (f (L₂ + i + 1) - c₂) < 0) :
     n₀ + n₁ + n₂ ≤ Q.natDegree + 3 := by
   classical
   let Z₀ := Q.roots.toFinset.filter (fun t => L₀ < t ∧ t < L₀ + n₀)
@@ -323,7 +333,8 @@ theorem positive_jj_exclusion (m a : ℕ) (ρ : ℝ) (u : ℕ → ℝ)
       (hafter hslt k hsk) (hafter hslt (k + 1) (by omega))
       (by simpa using hp k (by omega)) (by simpa using hp (k + 1) hka)
   have htt (k : ℕ) (hsk : s ≤ k) (hak : a ≤ k) (hkK : k < K) :
-      (weighted R (k + 2 : ℕ) - Real.goldenRatio ^ 2 / A) * (weighted R (k + 3 : ℕ) - Real.goldenRatio ^ 2 / A) < 0 := by
+      (weighted R (k + 2 : ℕ) - Real.goldenRatio ^ 2 / A) *
+        (weighted R (k + 3 : ℕ) - Real.goldenRatio ^ 2 / A) < 0 := by
     have hslt : s < K := by omega
     simpa [Nat.add_assoc] using tail_cross R u A B hB hu k 2
       (hafter hslt k hsk) (hafter hslt (k + 1) (by omega))
