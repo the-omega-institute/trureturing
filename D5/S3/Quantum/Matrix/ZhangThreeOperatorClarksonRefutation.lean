@@ -7,6 +7,9 @@
    digest: Three matrices refute Zhang's three-operator Schatten inequality. -/
 
 import D5.S3.Quantum.Schatten.Holder
+import D5.S3.Quantum.Matrix.NormalModulusTriangleConstant
+import D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes
+import D5.S3.Quantum.QubitWitnesses
 
 /-! # A counterexample to the three-operator Clarkson–McCarthy conjecture
 
@@ -24,6 +27,9 @@ noncomputable section
 set_option linter.style.longLine false
 
 open Matrix
+open D5.S3.Quantum.Matrix.NormalModulusTriangleConstant (A)
+open D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes (coordinateProjectorTwo)
+open D5.S3.Quantum.QubitWitnesses (equalSuperpositionDensity)
 open scoped BigOperators
 
 namespace D5.S3.Quantum.Matrix.ZhangThreeOperatorClarksonRefutation
@@ -35,10 +41,6 @@ def claim : Prop :=
     ((3 : ℝ) ^ (p - 1) + 1) / (2 : ℝ) ^ p *
       (schattenNorm (a + b) p ^ p + schattenNorm (b + c) p ^ p +
         schattenNorm (c + a) p ^ p)
-
-private def a : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, 0]
-private def b : Matrix (Fin 2) (Fin 2) ℂ := !![0, 0; 0, 1]
-private def c : Matrix (Fin 2) (Fin 2) ℂ := !![-(1 / 2), -(1 / 2); -(1 / 2), -(1 / 2)]
 
 private lemma power_of_gram_charpoly (x : Matrix (Fin 2) (Fin 2) ℂ)
     (d : Fin 2 → ℝ) (hd : ∀ i, 0 ≤ d i)
@@ -62,14 +64,13 @@ private lemma power_of_gram_charpoly (x : Matrix (Fin 2) (Fin 2) ℂ)
       apply Finset.sum_congr rfl
       intro i _
       change Real.sqrt (hg.eigenvalues (σ i)) ^ p = _
-      rw [he, show hh.eigenvalues (σ i) = d i from congrFun hσ i,
-        Real.sqrt_eq_rpow, ← Real.rpow_mul (hd i)]
-      congr 1
-      ring
+      rw [he, show hh.eigenvalues (σ i) = d i from congrFun hσ i]
+      exact (Real.rpow_div_two_eq_sqrt p (hd i)).symm
 
 private lemma left_side {p : ℝ} (hp : 0 < p) :
-    schattenNorm (a + b + c) p ^ p + schattenNorm a p ^ p +
-      schattenNorm b p ^ p + schattenNorm c p ^ p = 4 := by
+    schattenNorm (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p +
+      schattenNorm A p ^ p + schattenNorm (coordinateProjectorTwo 1) p ^ p +
+      schattenNorm (-equalSuperpositionDensity) p ^ p = 4 := by
   have hd : ∀ i, 0 ≤ (![1, 0] : Fin 2 → ℝ) i := by
     intro i
     fin_cases i <;> norm_num
@@ -79,33 +80,34 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
       schattenNorm x p ^ p = 1 := by
     rw [power_of_gram_charpoly x ![1, 0] hd hx hp]
     simp [Fin.sum_univ_two, Real.zero_rpow (by linarith : p / 2 ≠ 0)]
-  have ha : schattenNorm a p ^ p = 1 := h a (by
-    rw [a.eq_1]
+  have ha : schattenNorm A p ^ p = 1 := h A (by
+    rw [A.eq_1]
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, a, diagonal_apply])
-  have hb : schattenNorm b p ^ p = 1 := h b (by
-    rw [b.eq_1]
+      Fin.sum_univ_two, A, diagonal_apply])
+  have hb : schattenNorm (coordinateProjectorTwo 1) p ^ p = 1 := h (coordinateProjectorTwo 1) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, b, diagonal_apply])
-  have hc : schattenNorm c p ^ p = 1 := h c (by
-    rw [c.eq_1]
+      Fin.sum_univ_two, coordinateProjectorTwo, diagonal_apply])
+  have hc : schattenNorm (-equalSuperpositionDensity) p ^ p = 1 := h (-equalSuperpositionDensity) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, c, diagonal_apply]
+      Fin.sum_univ_two, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
-  have hs : schattenNorm (a + b + c) p ^ p = 1 := h (a + b + c) (by
+  have hs : schattenNorm (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p = 1 :=
+      h (A + coordinateProjectorTwo 1 + -equalSuperpositionDensity) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, a, b, c, diagonal_apply]
+      Fin.sum_univ_two, A, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   rw [ha, hb, hc, hs]
   norm_num
 
 private lemma right_side {p : ℝ} (hp : 0 < p) :
-    schattenNorm (a + b) p ^ p + schattenNorm (b + c) p ^ p +
-      schattenNorm (c + a) p ^ p = 2 + (2 : ℝ) ^ (2 - p / 2) := by
-  have hab : schattenNorm (a + b) p ^ p = 2 := by
-    rw [power_of_gram_charpoly (a + b) (fun _ => 1) (by intro i; norm_num) (by
-      norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-        conjTranspose_apply, Fin.sum_univ_two, a, b, diagonal_apply]) hp]
+    schattenNorm (A + coordinateProjectorTwo 1) p ^ p +
+      schattenNorm (coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p +
+      schattenNorm (-equalSuperpositionDensity + A) p ^ p = 2 + (2 : ℝ) ^ (2 - p / 2) := by
+  have hab : schattenNorm (A + coordinateProjectorTwo 1) p ^ p = 2 := by
+    rw [power_of_gram_charpoly (A + coordinateProjectorTwo 1) (fun _ => 1)
+      (by intro i; norm_num) (by
+        norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
+          conjTranspose_apply, Fin.sum_univ_two, A, coordinateProjectorTwo, diagonal_apply]) hp]
     norm_num [Fin.sum_univ_two]
   have h (x : Matrix (Fin 2) (Fin 2) ℂ)
       (hx : (xᴴ * x).charpoly =
@@ -113,13 +115,15 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
       schattenNorm x p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := by
     rw [power_of_gram_charpoly x (fun _ => 1 / 2) (by intro i; norm_num) hx hp]
     simp [two_mul]
-  have hbc : schattenNorm (b + c) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (b + c) (by
+  have hbc : schattenNorm (coordinateProjectorTwo 1 + -equalSuperpositionDensity) p ^ p =
+      2 * (1 / 2 : ℝ) ^ (p / 2) := h (coordinateProjectorTwo 1 + -equalSuperpositionDensity) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-      conjTranspose_apply, Fin.sum_univ_two, b, c, diagonal_apply]
+      conjTranspose_apply, Fin.sum_univ_two, coordinateProjectorTwo, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
-  have hca : schattenNorm (c + a) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (c + a) (by
+  have hca : schattenNorm (-equalSuperpositionDensity + A) p ^ p =
+      2 * (1 / 2 : ℝ) ^ (p / 2) := h (-equalSuperpositionDensity + A) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-      conjTranspose_apply, Fin.sum_univ_two, a, c, diagonal_apply]
+      conjTranspose_apply, Fin.sum_univ_two, A, equalSuperpositionDensity, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   have he : (2 : ℝ) ^ (2 - p / 2) = 4 * (1 / 2 : ℝ) ^ (p / 2) := by
     rw [Real.rpow_sub (by norm_num), Real.div_rpow (by norm_num) (by norm_num)]
@@ -132,11 +136,11 @@ private lemma certified_bound :
     ((3 : ℝ) ^ ((9 / 4 : ℝ) - 1) + 1) / (2 : ℝ) ^ (9 / 4 : ℝ) *
       (2 + (2 : ℝ) ^ (2 - (9 / 4 : ℝ) / 2)) < 4 := by
   have h₃pow : ((3 : ℝ) ^ (1 / 4 : ℝ)) ^ (4 : ℝ) = 3 := by
-    rw [← Real.rpow_mul (by norm_num)]
-    norm_num
+    simpa using Real.rpow_inv_rpow (by norm_num : (0 : ℝ) ≤ 3)
+      (by norm_num : (4 : ℝ) ≠ 0)
   have h₂pow : ((2 : ℝ) ^ (1 / 4 : ℝ)) ^ (4 : ℝ) = 2 := by
-    rw [← Real.rpow_mul (by norm_num)]
-    norm_num
+    simpa using Real.rpow_inv_rpow (by norm_num : (0 : ℝ) ≤ 2)
+      (by norm_num : (4 : ℝ) ≠ 0)
   have h₇pow : ((2 : ℝ) ^ (7 / 8 : ℝ)) ^ (8 : ℝ) = 128 := by
     rw [← Real.rpow_mul (by norm_num)]
     norm_num [Real.rpow_natCast]
@@ -173,7 +177,7 @@ private lemma certified_bound :
 
 theorem result : ¬ claim := by
   intro h
-  have hw := h (9 / 4) (by norm_num) 2 a b c
+  have hw := h (9 / 4) (by norm_num) 2 A (coordinateProjectorTwo 1) (-equalSuperpositionDensity)
   rw [left_side (by norm_num), right_side (by norm_num)] at hw
   exact (not_le_of_gt certified_bound) hw
 

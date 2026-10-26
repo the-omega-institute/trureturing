@@ -15,6 +15,11 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
         H("The normal-modulus triangle constant in dimension two"),
         Blocks(
             SourceQuotation(),
+            Entry("first-coordinate-projection", "A", "The first coordinate projection",
+                Disp(Eq(V("A"), Seq(Begin, Grp(V("pmatrix")),
+                    D(1), Amp, D(0), RowBreak, D(0), Amp, D(0), End, Grp(V("pmatrix"))))),
+                "The matrix A projects onto the first coordinate of the complex plane of dimension two.",
+                DescribeRole.Definition, false),
             Entry("modulus", "IsModulus", "Positive modulus", Modulus(),
                 "For complex 2×2 matrices X and P, IsModulus X P requires P to be positive semidefinite "
                 + "and P²=X*X. Here X* is the conjugate transpose. The characterization “the positive square "

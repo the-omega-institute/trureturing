@@ -63,7 +63,7 @@ def claim : Prop :=
           ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
             (PA + PB + (c : ℂ) • (V * (PA + PB) * Vᴴ) - PS).PosSemidef
 
-private def A : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, 0]
+def A : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, 0]
 private def M : Matrix (Fin 2) (Fin 2) ℂ :=
   (1 / 25 : ℂ) • !![9, -12; -12, 16]
 private def B : Matrix (Fin 2) (Fin 2) ℂ := -M
