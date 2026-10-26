@@ -8,32 +8,234 @@
 
 /-
 admission_basis: open-problem-resolution (#21941; Proved)
-escape_witness: none
 Utility is none: the result is a general theorem over arbitrary finite
 regular tournaments and every complex C2 local solution, not a finite certificate.
-Frozen D5 dependencies: none (Mathlib-only imports).
-All definitions have proof_shape: bind-only (definition), escape_witness: none.
-All theorems and lemmas have proof_shape: bind-only, escape_witness: none.
-The proof composes pinned Mathlib determinant, finite-sum and calculus theorems
-with scalar algebra and coordinate normalization. No new escape witness is claimed.
-The external named conjecture supplies the module admission basis.
-Every auxiliary declaration is consumed on the proof path to result.
-Principal consumers:
-  skewDiag, skewNormLe -> shiftedDetNeZero, shiftedDetPureImaginary
-  shiftedDetPureImaginary -> imaginaryShiftIntegral -> algebraicRatioRational
-  algebraicRatioRational -> algebraicSquareIdentity -> regularAlgebraicSquare
-  regularDegree -> regularOdd, determinantAtBase, regularSkewRowSum
-  determinantAtBase, polynomialSmooth -> localSolutionOfInvertible
-  cofactor_eq_of_zero_sums -> regularColumnSlopeValue -> regularLocalSolution
-  determinant_column_deriv -> K_coordinate_deriv -> regularLocalSolution
-  scalar_map_invertible -> scalar_partial_invertible -> regularLocalSolution
-  det_rank_one_sub -> K_resolvent_factorization -> K_eq_zero_iff_resolvent_sum
-  K_eq_zero_iff_resolvent_sum -> localSolution_resolvent_eq -> calH_closedForm
-  WormaldAnalytic.second_comp -> WormaldAnalytic.hessian_of_implicit_coordinates
-  alpha_second_const, alpha_first_const -> calH_closedForm
-  bridge_det -> differenceMinor_det -> skew_difference_det -> calH_closedForm
-  regularLocalSolution, regularAlgebraicSquare, calH_closedForm -> result
-The original analytic definitions of claim, K, phase, hessian and calH are retained.
+All imports are Mathlib; there are no direct frozen D5 dependencies.
+Judgments below apply own-step classification, propagate only live content,
+and remove a propagated label whenever an upstream binding/normalization
+bypasses the candidate witness. Routine calculus and determinant interfaces
+are bind-only; the coupled analytic Hessian relations supply content.
+These judgments do not assert literature novelty or completed escape registration.
+
+name | proof_shape | escape_witness | consumers | frozen deps
+IsRegularTournament | bind-only (definition) | none | claim | frozen deps: none
+  Definition of the source hypothesis; no proved assertion or escape witness.
+adjacency | bind-only (definition) | none | skewAdjacency, K | frozen deps: none
+  Boolean-to-integral coordinate encoding; no proved assertion.
+skewAdjacency | bind-only (definition) | none | skewDiag, skewNormLe | frozen deps: none
+  Auxiliary subtraction and transpose definition; no proved assertion.
+z | bind-only (definition) | none | IsLocalSolution, phase | frozen deps: none
+  Source expansion-point definition; no proved assertion.
+K | bind-only (definition) | none | IsLocalSolution, polynomialSmooth | frozen deps: none
+  Source determinant-polynomial definition; no proved assertion.
+appendLast | bind-only (definition) | none | IsLocalSolution, appendLastLinearApply | frozen deps: none
+  Coordinate-assembly definition; no proved assertion.
+IsLocalSolution | bind-only (definition) | none | claim | frozen deps: none
+  Value, complex C2 and local-equation predicate; no proved assertion.
+phase | bind-only (definition) | none | hessian | frozen deps: none
+  Source phase encoded with the principal complex logarithm; no proved assertion.
+hessian | bind-only (definition) | none | calH, WormaldAnalytic.actual_hessian | frozen deps: none
+  Source angular Hessian encoded by two real derivatives; no proved assertion.
+calH | bind-only (definition) | none | claim, result | frozen deps: none
+  Source Hessian determinant definition; no proved assertion.
+claim | bind-only (definition) | none | result | frozen deps: none
+  Quantified target definition, unfolded by result; no proved assertion.
+skewDiag | bind-only | none | shiftedDetNeZero, shiftedDetPureImaginary | frozen deps: none
+  Unfold subtraction and transpose; diagonal cancellation is normalization.
+skewNormLe | bind-only | none | shiftedDetNeZero | frozen deps: none
+  Unfold Boolean entries and normalize the four cases.
+shiftedDetNeZero | bind-only | none | algebraicRatioRational, shiftedNegativeDetNeZero | frozen deps: none
+  Instantiate Mathlib strict diagonal dominance; normalize the bounded row sum and diagonal.
+shiftedDetPureImaginary | bind-only | none | imaginaryShiftIntegral | frozen deps: none
+  Transpose/conjugate determinant laws and odd-sign arithmetic; no new nonnormalizing fact.
+imaginaryShiftIntegral | bind-only | none | algebraicRatioRational | frozen deps: none
+  Use the Gaussian-integer determinant and map_det; the purely imaginary projection normalizes.
+algebraicRatioRational | bind-only | none | algebraicSquareIdentity | frozen deps: none
+  Instantiate integral casts and nonzero quotients; denominator integrality comes from the consumed helper.
+regularDegree | bind-only | none | regularOdd, determinantAtBase, regularColumnSlopeValue, regularSkewRowSum | frozen deps: none
+  Sum the orientation identity and the given constant row sums; all remaining facts are finite-sum and integer normalization.
+regularOdd | bind-only | none | regularAlgebraicSquare, calH_closedForm | frozen deps: none
+  Existential projection from regularDegree, which itself has only normalization content.
+algebraicSquareIdentity | bind-only | none | regularAlgebraicSquare | frozen deps: none
+  Determinant multiplicativity and transpose laws plus normalized quadratic factorizations and the rational quotient.
+regularAlgebraicSquare | bind-only | none | result | frozen deps: none
+  Instantiate algebraicSquareIdentity with regularOdd; both expanded inputs are bind-only.
+determinantAtBase | bind-only | none | localSolutionOfInvertible, regularColumnSlopeValue | frozen deps: none
+  Normalize the constant-vector kernel identity and apply the existing determinant-zero theorem.
+polynomialSmooth | bind-only | none | localSolutionOfInvertible, regularLocalSolution | frozen deps: none
+  Unfold the determinant polynomial and apply existing smooth finite-sum/product rules.
+localSolutionOfInvertible | bind-only | none | regularLocalSolution | frozen deps: none
+  Instantiate Mathlib implicitFunction with the supplied invertibility; projections give value, regularity and germ.
+det_const_perturb | bind-only | none | det_projection_update | frozen deps: none
+  Instantiate the existing rank-one determinant lemma and normalize the Unit determinant.
+det_projection_update | bind-only | none | det_doubly_stochastic_cofactor | frozen deps: none
+  Instantiate the zero-column-sum cofactor identity and normalize its projection minor.
+det_doubly_stochastic_cofactor | bind-only | none | cofactor_eq_of_zero_sums | frozen deps: none
+  Apply determinant multiplicativity to the explicit projection and its column update; inverse and sum identities normalize.
+cofactor_eq_of_zero_sums | bind-only | none | regularColumnSlopeValue | frozen deps: none
+  Shift by the constant projection, normalize row/column sums, and instantiate det_doubly_stochastic_cofactor.
+tournamentCoefficientIdentity | bind-only | none | regularColumnSlopeValue, K_resolvent_factorization | frozen deps: none
+  Unfold the three possible orientation cases; entrywise normalization.
+shiftedNegativeDetNeZero | bind-only | none | regularColumnSlopeValue, regularLocalSolution, calH_closedForm | frozen deps: none
+  Transpose the positive shift and invoke shiftedDetNeZero; normalization only.
+regularColumnSlopeValue | bind-only | none | regularLocalSolution | frozen deps: none
+  Normalize regular row/column sums and the projection-cofactor identity, then apply determinant column linearity; no independent witness is claimed.
+appendLastLinear | bind-only (definition) | none | appendLastLinearApply, regularLocalSolution, calH_closedForm | frozen deps: none
+  Continuous-linear coordinate-assembly definition; no proved assertion.
+appendLastLinearApply | bind-only | none | regularLocalSolution, calH_closedForm | frozen deps: none
+  Unfold the two coordinate encodings; extensional normalization.
+appendLast_update | bind-only | none | regularLocalSolution | frozen deps: none
+  Unfold snoc/update and normalize the last-index cases.
+determinant_column_deriv | bind-only | none | K_coordinate_deriv | frozen deps: none
+  Use determinant column linearity and the existing affine derivative theorem.
+K_coordinate_deriv | bind-only | none | regularLocalSolution | frozen deps: none
+  Normalize K under a coordinate update and instantiate determinant_column_deriv.
+scalar_map_invertible | bind-only | none | scalar_partial_invertible | frozen deps: none
+  Supply the scalar inverse to the existing IsInvertible.of_inverse theorem; both identities normalize.
+scalar_partial_invertible | bind-only | none | regularLocalSolution | frozen deps: none
+  Instantiate the chain rule and derivative uniqueness; then use the consumed scalar inverse helper.
+det_rank_one_sub | bind-only | none | K_resolvent_factorization | frozen deps: none
+  Instantiate the existing rank-one determinant formula with Unit factors; normalize the sum of inverse entries.
+K_resolvent_factorization | bind-only | none | K_eq_zero_iff_resolvent_sum | frozen deps: none
+  Normalize the matrix factorization using tournamentCoefficientIdentity and apply the existing determinant and rank-one laws.
+K_eq_zero_iff_resolvent_sum | bind-only | none | localSolution_resolvent_eq | frozen deps: none
+  Cancel the proved nonzero factors in K_resolvent_factorization; scalar logical normalization.
+localSolution_resolvent_eq | bind-only | none | calH_closedForm | frozen deps: none
+  Use existing continuity/eventual-nonzero rules to instantiate K_eq_zero_iff_resolvent_sum on the equation germ.
+regularSkewRowSum | bind-only | none | regularSkewColSum, calH_closedForm | frozen deps: none
+  Normalize the orientation pair sums and regularDegree into equality of the two degrees.
+regularSkewColSum | bind-only | none | calH_closedForm | frozen deps: none
+  Transpose the skew row-sum identity; normalization.
+regularLocalSolution | bind-only | none | result | frozen deps: none
+  Instantiate the supplied IFT helper after the consumed exact slope and smoothness interfaces; no additional escape witness.
+WormaldAnalytic.second | bind-only (definition) | none | WormaldAnalytic.second_comp | frozen deps: none
+  Directional second-derivative notation; no proved assertion.
+WormaldAnalytic.second_comp | bind-only | none | WormaldAnalytic.implicit_second_graph, WormaldAnalytic.second_comp_clm, WormaldAnalytic.second_angular_substitution, WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Instantiate the existing first-derivative composition and continuous-linear evaluation rules twice; normalize their presentations.
+WormaldAnalytic.second_eq_zero_of_eventually | bind-only | none | WormaldAnalytic.implicit_second_graph | frozen deps: none
+  Apply existing germ equality rules for fderiv twice and the derivative of a constant.
+WormaldAnalytic.second_graph | bind-only | none | WormaldAnalytic.implicit_second_graph | frozen deps: none
+  Instantiate product and identity derivative rules twice; the first graph component normalizes to zero.
+WormaldAnalytic.implicit_first_graph | bind-only | none | WormaldAnalytic.implicit_first_scalar | frozen deps: none
+  Apply the chain rule to the zero graph germ and project to a direction.
+WormaldAnalytic.implicit_second_graph | bind-only | none | WormaldAnalytic.implicit_second_scalar | frozen deps: none
+  Instantiate second_comp on the graph and use its zero germ; no new source-specific analytic relation.
+WormaldAnalytic.implicit_first_scalar | bind-only | none | WormaldAnalytic.hessian_of_implicit_scalar | frozen deps: none
+  Solve the scalar linear relation supplied by implicit_first_graph; normalization.
+WormaldAnalytic.implicit_second_scalar | bind-only | none | WormaldAnalytic.hessian_of_implicit_scalar | frozen deps: none
+  Solve the scalar linear relation supplied by implicit_second_graph; normalization.
+WormaldAnalytic.second_sub_const | bind-only | none | WormaldAnalytic.hessian_of_implicit_scalar | frozen deps: none
+  Direct fderiv_sub_const rewriting twice.
+WormaldAnalytic.second_comp_clm | bind-only | none | WormaldAnalytic.hessian_of_implicit_scalar | frozen deps: none
+  Specialize the existing chain-rule presentation to a linear map and normalize its zero second derivative.
+WormaldAnalytic.second_eq_derivative | bind-only | none | WormaldAnalytic.second_sub_sub, WormaldAnalytic.second_complex_to_real, WormaldAnalytic.second_angular_substitution, WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Existing continuous-linear evaluation derivative identifies the two second-derivative presentations.
+WormaldAnalytic.second_sub_sub | bind-only | none | WormaldAnalytic.hessian_of_implicit_coordinates | frozen deps: none
+  Apply linearity in the two arguments of the derivative and normalize subtraction.
+WormaldAnalytic.second_complex_to_real | bind-only | none | WormaldAnalytic.second_angular_substitution | frozen deps: none
+  Direct order-two specialization of ContDiffAt.restrictScalars_iteratedFDeriv, normalized by iteratedFDeriv_two_apply and linear evaluation.
+WormaldAnalytic.angularMap | bind-only (definition) | none | WormaldAnalytic.second_angular_substitution | frozen deps: none
+  Real-linear imaginary-coordinate map definition; no proved assertion.
+WormaldAnalytic.second_angular_substitution | bind-only | none | WormaldAnalytic.actual_hessian | frozen deps: none
+  Restrict scalars using the consumed upstream specialization and normalize the two factors of I.
+WormaldAnalytic.logarithmicPhase | bind-only (definition) | none | WormaldAnalytic.logarithmicPhase_smooth, WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Auxiliary logarithmic-chart phase definition; no proved assertion.
+WormaldAnalytic.logarithmicPhase_smooth | bind-only | none | WormaldAnalytic.actual_hessian | frozen deps: none
+  Instantiate complex log smoothness on the slit plane and smooth composition.
+WormaldAnalytic.exponentialChart | bind-only (definition) | none | WormaldAnalytic.fderiv_exponentialChart, WormaldAnalytic.second_exponentialChart | frozen deps: none
+  Auxiliary coordinatewise exponential chart definition; no proved assertion.
+WormaldAnalytic.fderiv_exponentialChart | bind-only | none | WormaldAnalytic.second_exponentialChart, WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Instantiate the Pi, exponential and scalar-product derivative rules.
+WormaldAnalytic.second_exponentialChart | bind-only | none | WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Apply the same exponential derivative rules to fderiv_exponentialChart and normalize at zero.
+WormaldAnalytic.second_clog | bind-only | none | WormaldAnalytic.logarithmicPhase_second | frozen deps: none
+  Instantiate the principal-log derivative on its open slit-plane germ, inverse and product rules; normalize the second presentation.
+WormaldAnalytic.logarithmicPhase_second | content | WormaldAnalytic.logarithmicPhase_second: coupled log/chart second-variation relation, used by actual_hessian | WormaldAnalytic.actual_hessian | frozen deps: none
+  Own step: the coupled log/exponential coordinate computation gives the diagonal correction minus the product of first derivatives. Its live second-variation relation is not a definition of the phase or a renamed upstream conclusion; no bypass using only the supplied first-order data is used.
+WormaldAnalytic.actual_hessian | content | WormaldAnalytic.logarithmicPhase_second: live log/chart second-variation identity | WormaldAnalytic.hessian_of_implicit_scalar | frozen deps: none
+  Propagation: the computed logarithmicPhase_second relation survives the scalar-restriction/angular substitution. The real angular Hessian is not definitionally the complex h-Hessian, and the proof consumes the mixed log/chart correction.
+WormaldAnalytic.hessian_of_implicit_scalar | content | WormaldAnalytic.actual_hessian: live actual-angular derivative relation; local dh2: elimination of the second implicit derivative | WormaldAnalytic.hessian_of_implicit_coordinates | frozen deps: none
+  Own step and propagation: solve the first and second local-equation constraints to eliminate Dh and D2h in the actual angular Hessian; actual_hessian remains live. The conclusion cannot follow by just replacing the local equation with its value at one point.
+WormaldAnalytic.hessian_of_implicit_coordinates | content | WormaldAnalytic.hessian_of_implicit_scalar: local-equation-to-angular-Hessian bridge | calH_closedForm | frozen deps: none
+  Propagation: the content relation hessian_of_implicit_scalar is consumed before bilinear coordinate normalization; removing it leaves the actual angular Hessian unidentified.
+bridgeU | bind-only (definition) | none | bridgeU_det, bridgeU_congr | frozen deps: none
+  Explicit change-of-basis matrix definition; no proved assertion.
+bridgeU_det | bind-only | none | bridge_det | frozen deps: none
+  Instantiate the existing block determinant formula; normalize the one-dimensional Schur complement.
+bridgeH | bind-only (definition) | none | bridgeU_congr, bridge_det | frozen deps: none
+  Difference-minor matrix definition; no proved assertion.
+bridgeU_entry_left | bind-only | none | bridgeU_congr | frozen deps: none
+  Unfold the block matrix and normalize its entries.
+bridgeU_entry_right | bind-only | none | bridgeU_congr | frozen deps: none
+  Unfold the block matrix and normalize its final column.
+bridgeU_congr | bind-only | none | bridge_det | frozen deps: none
+  Multiply the explicit block matrices and normalize their entries using the given row/column sums.
+bridge_det | bind-only | none | differenceMinor_det | frozen deps: none
+  Apply determinant multiplicativity and block determinant laws to bridgeU_congr; cancel the nonzero dimension factor.
+skew_resolvent_det | bind-only | none | skew_difference_det | frozen deps: none
+  Normalize the two resolvent products and apply inverse cancellation plus determinant multiplicativity; no new analytic content.
+bridgeFinEquiv | bind-only (definition) | none | differenceMinor_det | frozen deps: none
+  Composition of existing finite index equivalences; no proved assertion.
+differenceMinor_det | bind-only | none | skew_difference_det | frozen deps: none
+  Transport bridge_det along the explicit finite equivalence and normalize the indices.
+inverse_row_sum | bind-only | none | inverse_col_sum, resolvent_row_col_sum, calH_closedForm | frozen deps: none
+  Instantiate existing inverse action on a constant-vector eigenrelation and normalize the row sums.
+inverse_col_sum | bind-only | none | resolvent_row_col_sum, calH_closedForm | frozen deps: none
+  Instantiate inverse_row_sum on the transpose and normalize.
+resolvent_row_col_sum | bind-only | none | skew_difference_det | frozen deps: none
+  Substitute inverse_row_sum/inverse_col_sum into the finite sums and normalize.
+skew_difference_det | bind-only | none | calH_closedForm | frozen deps: none
+  Combine the consumed difference-minor and resolvent determinant formulas; the remaining sign and scalar arithmetic normalize.
+diagonalCLM | bind-only (definition) | none | inverseQDeriv, inverseQ_hasFDerivAt | frozen deps: none
+  Linear/continuous packaging of Matrix.diagonal; no proved assertion.
+sumEntriesCLM | bind-only (definition) | none | alpha_hasFDerivAt, alpha_fderiv_single | frozen deps: none
+  Linear/continuous packaging of the sum of all entries; no proved assertion.
+matrixInverse_hasFDerivAt | bind-only | none | inverse_hasFDerivAt | frozen deps: none
+  Direct hasFDerivAt_ringInverse instantiation after rewriting matrix inverse to ringInverse.
+inverseQ | bind-only (definition) | none | alpha, inverseQ_hasFDerivAt | frozen deps: none
+  Auxiliary diagonal-minus-skew resolvent definition; no proved assertion.
+alpha | bind-only (definition) | none | alpha_hasFDerivAt, calH_closedForm | frozen deps: none
+  Auxiliary inverse-entry-sum definition; no proved assertion.
+inverseQDeriv | bind-only (definition) | none | inverseQ_hasFDerivAt, inverseQDeriv_single | frozen deps: none
+  Explicit derivative continuous linear map definition; no proved assertion.
+inverseQ_hasFDerivAt | bind-only | none | inverse_hasFDerivAt | frozen deps: none
+  Instantiate inverse-coordinate, Pi, diagonal and constant-subtraction derivative rules.
+inverse_hasFDerivAt | bind-only | none | alpha_hasFDerivAt, inverse_fderiv_single, row_fderiv_single, col_fderiv_single, alpha_fderiv_single, alpha_second_single | frozen deps: none
+  Direct composition of matrixInverse_hasFDerivAt and inverseQ_hasFDerivAt.
+alpha_hasFDerivAt | bind-only | none | alpha_fderiv_single | frozen deps: none
+  Direct composition with sumEntriesCLM.
+inverseQ_contDiffAt | bind-only | none | inverse_contDiffAt, alpha_second_single | frozen deps: none
+  Instantiate coordinatewise inverse, Pi and linear-map smoothness rules.
+inverse_contDiffAt | bind-only | none | alpha_contDiffAt | frozen deps: none
+  Instantiate contDiffAt_ringInverse and compose with inverseQ_contDiffAt.
+alpha_contDiffAt | bind-only | none | calH_closedForm | frozen deps: none
+  Direct smooth composition with sumEntriesCLM.
+inverseQDeriv_single | bind-only | none | inverse_fderiv_single | frozen deps: none
+  Unfold the explicit diagonal continuous linear map and normalize single-coordinate entries.
+inverse_fderiv_single | bind-only | none | row_fderiv_single, col_fderiv_single, alpha_fderiv_single | frozen deps: none
+  Instantiate the inverse derivative on one coordinate and normalize the diagonal matrix product to an outer product.
+rowSumCLM | bind-only (definition) | none | row_fderiv_single, alpha_second_single | frozen deps: none
+  Linear/continuous packaging of a row sum; no proved assertion.
+colSumCLM | bind-only (definition) | none | col_fderiv_single, alpha_second_single | frozen deps: none
+  Linear/continuous packaging of a column sum; no proved assertion.
+row_fderiv_single | bind-only | none | alpha_second_single | frozen deps: none
+  Apply rowSumCLM to inverse_fderiv_single and normalize the finite sum.
+col_fderiv_single | bind-only | none | alpha_second_single | frozen deps: none
+  Apply colSumCLM to inverse_fderiv_single and normalize the finite sum.
+alpha_fderiv_single | bind-only | none | alpha_second_single, alpha_first_const | frozen deps: none
+  Apply sumEntriesCLM to inverse_fderiv_single and normalize the product of row/column sums; no repeated inverse-derivative proof.
+inverse_square_hasDerivAt | bind-only | none | alpha_second_single | frozen deps: none
+  Instantiate inverse, power and scalar-multiple derivative rules; scalar normalization.
+alpha_second_single | content | local heq and hh: neighbourhood first-derivative germ and its coupled-product derivative | alpha_second_const | frozen deps: none
+  Own step: establish the first-derivative identity on an invertible neighbourhood and differentiate its coupled coefficient/row/column factors to obtain the full mixed inverse-entry second variation. A pointwise first-derivative value alone does not supply this germ or mixed derivative.
+alpha_first_const | bind-only | none | calH_closedForm | frozen deps: none
+  Substitute the constant-point row and column sums in alpha_fderiv_single; scalar normalization.
+alpha_second_const | content | alpha_second_single: live inverse-entry mixed second variation | calH_closedForm | frozen deps: none
+  Propagation: substitute row/column sums in the live alpha_second_single mixed-derivative relation; scalar normalization does not bypass that relation.
+calH_closedForm | content | local hmat: actual analytic Hessian equals the negative resolvent difference minor; WormaldAnalytic.hessian_of_implicit_coordinates; alpha_second_const | result | frozen deps: none
+  Own step and propagation: identify the actual analytic Hessian with the negative difference minor of T, using the implicit-coordinate bridge and alpha_second_const, then take determinants. The analytic-to-matrix identification is live; determinant identities alone do not identify calH.
+result | content | calH_closedForm: live analytic-to-quadratic-determinant identity | terminal: Conjecture 6 | frozen deps: none
+  Propagation: calH_closedForm supplies the actual analytic determinant needed by both nonvanishing and rational squareness. The algebraic square without this bridge concerns a different expression and cannot bypass it.
 -/
 
 module
@@ -491,6 +693,34 @@ private theorem cofactor_eq_of_zero_sums (n : ℕ) (l : Fin (n+1))
   simpa only [add_sub_cancel_right] using
     det_doubly_stochastic_cofactor n l (B + (Matrix.of (fun _ _ : Fin (n+1) => 1 / (n+1 : ℂ)))) hdet ha hb
 
+private theorem tournamentCoefficientIdentity {d : ℕ} (A : Fin d → Fin d → Bool)
+    (hA : IsRegularTournament A) :
+    (2 : ℂ) • ((1/2 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) +
+      (adjacency A).map (Int.castRingHom ℂ)) =
+        Matrix.of (fun _ _ => 1) + (skewAdjacency A).map (Int.castRingHom ℂ) := by
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    simp [Matrix.smul_apply, hA.1, adjacency, skewAdjacency]
+  · have h := hA.2.1 i j hij
+    cases hai : A i j <;> cases haj : A j i <;>
+      simp_all [Matrix.smul_apply, Matrix.one_apply, adjacency, skewAdjacency] <;> norm_num
+
+
+private theorem shiftedNegativeDetNeZero {d : ℕ} (A : Fin d → Fin d → Bool) :
+    ((d : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) -
+      (skewAdjacency A).map (Int.castRingHom ℂ)).det ≠ 0 := by
+  let S := (skewAdjacency A).map (Int.castRingHom ℂ)
+  have hs : S.transpose = -S := by
+    ext i j
+    simp [S, skewAdjacency, adjacency]
+  have ht : (S + (d : ℂ) • 1).transpose = (d : ℂ) • 1 - S := by
+    rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, hs]
+    abel
+  rw [← ht, Matrix.det_transpose]
+  exact shiftedDetNeZero A (d : ℂ) (Complex.norm_natCast d)
+
+
 private theorem regularColumnSlopeValue {d : ℕ} (A : Fin d → Fin d → Bool)
     (hd : 3 ≤ d) (hA : IsRegularTournament A) (l : Fin d) :
     ((1 - ((1 / 2 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) +
@@ -549,15 +779,8 @@ private theorem regularColumnSlopeValue {d : ℕ} (A : Fin d → Fin d → Bool)
       simp [Matrix.one_apply]
     have htwo : ∀ i j, 2 * C i j = 1 + S i j := by
       intro i j
-      have hh : C i j - C j i = S i j := by
-        simp only [C, S, skewAdjacency, Matrix.add_apply, Matrix.smul_apply,
-          smul_eq_mul, Matrix.map_apply, Matrix.sub_apply, Matrix.transpose_apply,
-          map_sub]
-        rw [Matrix.one_apply, Matrix.one_apply]
-        by_cases hij : i = j
-        · simp [hij]
-        · simp [hij, Ne.symm hij]
-      linear_combination hpair i j + hh
+      simpa only [C, S, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply,
+        Matrix.of_apply] using congrArg (fun M => M i j) (tournamentCoefficientIdentity A hA)
     have hmat : B + (Matrix.of (fun _ _ : Fin (n+1) => 1 / (n+1 : ℂ))) =
         (1 / (n+1 : ℂ)) • ((n+1 : ℂ) • 1 - S) := by
       ext i j
@@ -567,16 +790,8 @@ private theorem regularColumnSlopeValue {d : ℕ} (A : Fin d → Fin d → Bool)
       push_cast
       field_simp
       linear_combination -(htwo i j)
-    have ht : (S + (n+1 : ℂ) • 1).transpose = (n+1 : ℂ) • 1 - S := by
-      have hs : S.transpose = -S := by
-        ext i j
-        simp [S, skewAdjacency, adjacency]
-      rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, hs]
-      abel
     have hdetQ : ((n+1 : ℂ) • (1 : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) - S).det ≠ 0 := by
-      rw [← ht, Matrix.det_transpose]
-      simpa only [Nat.cast_add, Nat.cast_one] using
-        shiftedDetNeZero A ((n+1 : ℕ) : ℂ) (Complex.norm_natCast (n+1))
+      simpa only [Nat.cast_add, Nat.cast_one] using shiftedNegativeDetNeZero A
     have hdetB : (B + (Matrix.of (fun _ _ : Fin (n+1) => 1 / (n+1 : ℂ)))).det ≠ 0 := by
       rw [hmat, Matrix.det_smul]
       exact mul_ne_zero (pow_ne_zero _ (div_ne_zero one_ne_zero hd0)) hdetQ
@@ -728,18 +943,6 @@ private theorem det_rank_one_sub {d : ℕ} (Q : Matrix (Fin d) (Fin d) ℂ)
   rw [Matrix.det_unique]
   simp [Matrix.mul_apply, Finset.sum_neg_distrib, Finset.sum_comm, sub_eq_add_neg]
 
-private theorem tournamentCoefficientIdentity {d : ℕ} (A : Fin d → Fin d → Bool)
-    (hA : IsRegularTournament A) :
-    (2 : ℂ) • ((1/2 : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) +
-      (adjacency A).map (Int.castRingHom ℂ)) =
-        Matrix.of (fun _ _ => 1) + (skewAdjacency A).map (Int.castRingHom ℂ) := by
-  ext i j
-  by_cases hij : i = j
-  · subst j
-    simp [Matrix.smul_apply, hA.1, adjacency, skewAdjacency]
-  · have h := hA.2.1 i j hij
-    cases hai : A i j <;> cases haj : A j i <;>
-      simp_all [Matrix.smul_apply, Matrix.one_apply, adjacency, skewAdjacency] <;> norm_num
 
 private theorem K_resolvent_factorization {d : ℕ} (A : Fin d → Fin d → Bool)
     (hA : IsRegularTournament A) (y : Fin d → ℂ) (hy : ∀ j, y j ≠ 0)
@@ -883,18 +1086,6 @@ private theorem regularSkewColSum {d : ℕ} (A : Fin d → Fin d → Bool)
     simp [skewAdjacency, adjacency]
   simp_rw [hs, Finset.sum_neg_distrib, regularSkewRowSum A hd hA, neg_zero]
 
-private theorem shiftedNegativeDetNeZero {d : ℕ} (A : Fin d → Fin d → Bool) :
-    ((d : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ) -
-      (skewAdjacency A).map (Int.castRingHom ℂ)).det ≠ 0 := by
-  let S := (skewAdjacency A).map (Int.castRingHom ℂ)
-  have hs : S.transpose = -S := by
-    ext i j
-    simp [S, skewAdjacency, adjacency]
-  have ht : (S + (d : ℂ) • 1).transpose = (d : ℂ) • 1 - S := by
-    rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, hs]
-    abel
-  rw [← ht, Matrix.det_transpose]
-  exact shiftedDetNeZero A (d : ℂ) (Complex.norm_natCast d)
 
 private theorem regularLocalSolution {d : ℕ} (A : Fin d → Fin d → Bool)
     (hd : 3 ≤ d) (hA : IsRegularTournament A) : ∃ h, IsLocalSolution A h := by
@@ -1097,16 +1288,17 @@ private theorem second_sub_sub {f : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
 private theorem second_complex_to_real {f : (Fin n → ℂ) → ℂ} {x : Fin n → ℂ}
     (hf : ContDiffAt ℂ 2 f x) (v w : Fin n → ℂ) :
     second (𝕜 := ℝ) f x v w = second (𝕜 := ℂ) f x v w := by
-  have he : (fun y => fderiv ℝ f y v) =ᶠ[𝓝 x] (fun y => fderiv ℂ f y v) := by
-    filter_upwards [hf.eventually (by norm_num)] with y hy
-    rw [(hy.differentiableAt (by norm_num)).fderiv_restrictScalars ℝ]
-    rfl
-  have hd : DifferentiableAt ℂ (fderiv ℂ f) x :=
-    (hf.fderiv_right (m := 1) (by norm_num)).differentiableAt_one
-  have hdv := hd.clm_apply (differentiableAt_const (c := v))
+  have hrestrict := congrArg (fun L => L ![w, v])
+    (hf.restrictScalars_iteratedFDeriv (𝕜 := ℝ))
+  have hd : DifferentiableAt ℝ (fderiv ℝ f) x :=
+    ((hf.restrict_scalars ℝ).fderiv_right (m := 1) (by norm_num)).differentiableAt_one
+  rw [second_eq_derivative hf]
   unfold second
-  rw [he.fderiv_eq, hdv.fderiv_restrictScalars ℝ]
-  rfl
+  rw [fderiv_clm_apply hd (differentiableAt_const v)]
+  simpa only [Function.comp_apply, ContinuousMultilinearMap.coe_restrictScalars,
+    iteratedFDeriv_two_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
+    ContinuousLinearMap.add_apply, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.flip_apply, fderiv_const_apply, _root_.zero_apply, map_zero, zero_add] using hrestrict.symm
 
 private noncomputable def angularMap : (Fin n → ℝ) →L[ℝ] (Fin n → ℂ) :=
   ContinuousLinearMap.pi fun j =>
@@ -1789,16 +1981,11 @@ private lemma alpha_fderiv_single (S : Matrix n n ℂ) (y : n → ℂ)
       (2 / (y j)^2) * (∑ k, ((inverseQ S y)⁻¹) j k) *
         (∑ i, ((inverseQ S y)⁻¹) i j) := by
   rw [(alpha_hasFDerivAt S y hy hQ).fderiv]
-  let V := (inverseQ S y)⁻¹
-  change (∑ i, ∑ k, (-(V * inverseQDeriv y (Pi.single j 1) * V)) i k) = _
-  rw [inverseQDeriv_single]
-  have he : -(V * ((-(2 : ℂ) / (y j)^2) • Matrix.diagonal (Pi.single j 1)) * V) =
-      (2 / (y j)^2) • Matrix.of (fun i k => V i j * V j k) := by
-    ext i k
-    simp [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul,
-      Pi.single_apply, Matrix.neg_apply]
-    ring
-  rw [he]
+  rw [← (inverse_hasFDerivAt S y hy hQ).fderiv]
+  change sumEntriesCLM (fderiv ℂ (fun y => (inverseQ S y)⁻¹) y (Pi.single j 1)) = _
+  rw [inverse_fderiv_single S y hy hQ j]
+  change (∑ i, ∑ k, ((2 / (y j)^2) • Matrix.of (fun i k =>
+    ((inverseQ S y)⁻¹) i j * ((inverseQ S y)⁻¹) j k)) i k) = _
   simp only [Matrix.smul_apply, smul_eq_mul, Matrix.of_apply]
   simp_rw [← Finset.mul_sum, ← Finset.sum_mul]
   ring

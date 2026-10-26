@@ -25,20 +25,22 @@ numbers and the complete manuscript have not been independently checked here.
 
 ## Source statements
 
+§1, Conjecture 6:
+
 > Conjecture 6. For every regular tournament $T^*$ on at least three vertices,
 > ${\cal H}\neq 0$ and $d/{\cal H}$ is the square of a rational.
 
-The adjacency matrix $A$ has $d$ rows and columns. The source defines
-$B=I_d-(\tfrac12 I_d+A)D_y$, where $D_y=\operatorname{diag}(y)$,
-$K(\mathbf y)=\det B$, $z=2/d$ and $\mathbf z=(z,\ldots,z)$.
+§1, equation (1.2) and its defining paragraph:
 
-> one may solve $K(\mathbf y)=0$ in the neighbourhood of $\mathbf z$ and obtain
-> $y_d=h(y_1,\dots,y_{d-1})$
+> Define $B$ to be the matrix whose $(i,j)$ entry $B_{ij}$ is $-y_j$ if $A_{ij}=1$ and 0 otherwise, except for diagonal entries $B_{ii}=1-\frac12 y_i$. That is, $B=I_d-(\frac12 I_d+A)D_y$ where $D_y=\operatorname{diag}(y_1,\ldots,y_d)$. Let $K=K(\mathbf y)=\det B$. Set $z=2/d$ and $\mathbf z=(z,z,\ldots,z)$.
 
-It defines $\tilde f(\theta)=\log h(ze^{i\theta_1},\ldots,ze^{i\theta_{d-1}})$,
-and lets
+§1, defining paragraphs immediately preceding Theorem 4:
 
-> ${\cal H}$ denote the determinant of the Hessian … of $\tilde f$ at $\theta_j=0$.
+> Writing $K_j$ for the partial derivative of $K$ with respect to $y_j$, it will be shown that $K_d(\mathbf z)\neq0$ and $K(\mathbf z)=0$, so (e.g. by observing that $K$ is linear in $y_d$) one may solve $K(\mathbf y)=0$ in the neighbourhood of $\mathbf z$ and obtain $y_d=h(y_1,\ldots,y_{d-1})$ for an analytic function $h$.
+>
+> Define a function $\tilde f$ in the neighbourhood of $(0,0,\ldots,0)$ (the $(d-1)$-dimensional vector) by $\tilde f(\theta_1,\ldots,\theta_{d-1})=\log h(ze^{i\theta_1},\ldots,ze^{i\theta_{d-1}})$.
+>
+> Let ${\cal H}$ denote the determinant of the Hessian (matrix of second order partials) of $\tilde f$ at $\theta_j=0$ for $j=1,\ldots,d-1$.
 
 The supplied excerpt also states:
 
@@ -52,6 +54,8 @@ The supplied excerpt also states:
 The formal objects use zero-based vertex labels, retain the final vertex as the
 implicit coordinate, and use the principal complex logarithm near the positive
 real point $z$. The Hessian uses derivatives over the real angular domain.
-The conjecture includes the existence of a complex $C^2$ local solution and the
-same conclusion for every such local solution. A determinant identity alone is
+The source uses an analytic local solution. The formal encoding asks only for
+complex $C^2$ regularity at the base point, the local equation germ and its base
+value; these suffice for the two derivatives. The formal claim includes existence
+of such a solution and the same conclusion for every such local solution. A determinant identity alone is
 not an identification with this analytic Hessian.

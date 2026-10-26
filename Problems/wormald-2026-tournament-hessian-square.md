@@ -13,24 +13,27 @@ url: https://arxiv.org/abs/2610.16245
 ## Problem
 
 N. C. Wormald, *Tournaments with many Hamilton cycles*,
-arXiv:2610.16245, section 1:
+arXiv:2610.16245, §1, Conjecture 6:
 
 > Conjecture 6. For every regular tournament $T^*$ on at least three vertices,
 > ${\cal H}\neq 0$ and $d/{\cal H}$ is the square of a rational.
 
-The source defines $B=I_d-(\tfrac12 I_d+A)D_y$,
-$K(\mathbf y)=\det B$, $z=2/d$ and $\mathbf z=(z,\ldots,z)$, and states:
+§1, equation (1.2) and its defining paragraph:
 
-> one may solve $K(\mathbf y)=0$ in the neighbourhood of $\mathbf z$ and obtain
-> $y_d=h(y_1,\dots,y_{d-1})$
+> Define $B$ to be the matrix whose $(i,j)$ entry $B_{ij}$ is $-y_j$ if $A_{ij}=1$ and 0 otherwise, except for diagonal entries $B_{ii}=1-\frac12 y_i$. That is, $B=I_d-(\frac12 I_d+A)D_y$ where $D_y=\operatorname{diag}(y_1,\ldots,y_d)$. Let $K=K(\mathbf y)=\det B$. Set $z=2/d$ and $\mathbf z=(z,z,\ldots,z)$.
 
-It defines $\tilde f(\theta)=\log h(ze^{i\theta_1},\ldots,ze^{i\theta_{d-1}})$,
-and lets
+§1, defining paragraphs immediately preceding Theorem 4:
 
-> ${\cal H}$ denote the determinant of the Hessian … of $\tilde f$ at $\theta_j=0$.
+> Writing $K_j$ for the partial derivative of $K$ with respect to $y_j$, it will be shown that $K_d(\mathbf z)\neq0$ and $K(\mathbf z)=0$, so (e.g. by observing that $K$ is linear in $y_d$) one may solve $K(\mathbf y)=0$ in the neighbourhood of $\mathbf z$ and obtain $y_d=h(y_1,\ldots,y_{d-1})$ for an analytic function $h$.
+>
+> Define a function $\tilde f$ in the neighbourhood of $(0,0,\ldots,0)$ (the $(d-1)$-dimensional vector) by $\tilde f(\theta_1,\ldots,\theta_{d-1})=\log h(ze^{i\theta_1},\ldots,ze^{i\theta_{d-1}})$.
+>
+> Let ${\cal H}$ denote the determinant of the Hessian (matrix of second order partials) of $\tilde f$ at $\theta_j=0$ for $j=1,\ldots,d-1$.
 
 The formal namespace is `D5.S3.Combinatorics.WormaldTournamentHessian.Result`.
-`claim` includes existence of a complex $C^2$ local solution and nonvanishing
+The source uses an analytic local solution; complex $C^2$ at the base point
+suffices for the two derivatives encoded here. `Complex.log` chooses the principal
+branch near the positive base value $z$. `claim` includes existence of a complex $C^2$ local solution and nonvanishing
 and rational squareness for every such solution. `hessian` uses two real
 Fréchet derivatives of the complex-valued `phase`, evaluated on `Pi.single`
 coordinate vectors. `appendLast` uses `Fin.snoc` and retains vertex order.
@@ -157,14 +160,16 @@ coordinate derivative computed by `regularColumnSlopeValue` and
 `K_coordinate_deriv`. The private algebraic stage `regularAlgebraicSquare`
 provides the nonzero rational square used by `result`.
 
-- **OPEN.** A separate spectral formalization is not provided. The positive spectral
+Put $W=\mathbf1^\perp$, the orthogonal complement of the constant vector.
+
+- **Proved in prose; Lean formalization open.** A separate spectral formalization is not provided. The positive spectral
   square root is
   $\prod_k(d^2+\mu_k^2)/(d^2-\mu_k^2)$, taking one $\mu_k\ge0$ from each
   pair $\pm i\mu_k$ of eigenvalues on $W$. Zero pairs contribute one.
   Each factor follows from the two eigenvalues of a skew-symmetric block;
   the bound $\mu_k<d$ makes it positive. This is a prose consequence of
   the proved closed form, not a separately kernel-checked spectral theorem.
-- **OPEN.** The matrix-tree expression for the numerator is
+- **Proved in prose; Lean formalization open.** The matrix-tree expression for the numerator is
   $\det(dI+S)=d^2 2^{d-1}\tau$, where $\tau$ is the number of directed
   spanning arborescences toward a fixed root. For the out-Laplacian
   $L=((d-1)/2)I-A$, one has $dI-S=2L+J$; regularity makes the rooted
