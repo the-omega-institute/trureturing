@@ -23,7 +23,7 @@ internal sealed class GainRayJetsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("gain-ray-gainrayjets-purem-readat"),
                 DeclarationHandle.Create("D5/S3/Observer/Linear/GainRayJets.pureM_readAt"),
                 H("Literal clock expansion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural d, original W:World d and natural n,i with i<=n, readAt W (replicate n false) i equals gain(d,W.coeff)(i) times [alpha(W.source) phi^i+eta(W.source) psi^i], plus W.drift. The coefficient vector, drift and clock are the original ones."))), DescribeRole.Theorem,
+                Blocks(Paragraph(Text("For every natural d, original W:World d and natural n,i with i<=n, readAt W (replicate n false) i equals gain(d,W.coeff)(i) times [alpha(W.source) phi^i+eta(W.source) psi^i], plus W.drift. The coefficient vector, drift and clock are the original ones."))), DescribeRole.Theorem),
             Paragraph(Text("For a real shift s, euler(s) sends a polynomial p to X p derivative+s p. jet(s,j,p,x) evaluates its jth iterate at x. The shifts s=0 and s=1 represent D and D+1. They specify fixed linear readout coefficients; no acquisition clock is changed.")),
             Paragraph(Text("JetIndex(d) has a first Fin(d+1) block, a second Fin(d+1) block, and one final coordinate. jetMatrix(d,n,s,a,b,c) has entries (i+s)^j a^i in the first block, (i+s)^j b^i in the second, and c^i in the final row. jetMap is its linear action on n ordinary polynomial coefficients.")),
             Describe.Lean(DescribeId.Create("gain-ray-gainrayjets-jet-offn"),
