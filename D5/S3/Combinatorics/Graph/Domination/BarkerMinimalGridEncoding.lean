@@ -200,15 +200,5 @@ theorem minimal_iff_column_tests {n : ℕ} (S : Finset (Vertex n)) :
       obtain ⟨z, hz, huniq⟩ := (h v.2).2 v.1 hv
       exact ⟨z, hz, fun u hu hzu => huniq u hu (private_window_bound hz hzu) hzu⟩
 
-/-- The actual count is transported by a proved bijection; word counts are not
-substituted as a new definition of the external sequence. -/
-theorem actualCount_eq_word_card (n : ℕ) :
-    actualCount n = Nat.card {w : Word n // ValidWord w} := by
-  classical
-  calc
-    actualCount n = Fintype.card {S : Finset (Vertex n) // MinimalDominating (grid n) S} := by
-      simp [actualCount, minimalSets, Fintype.card_subtype]
-    _ = Fintype.card {w : Word n // ValidWord w} := Fintype.card_congr (minimalWordEquiv n)
-    _ = _ := Nat.card_eq_fintype_card.symm
 
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding

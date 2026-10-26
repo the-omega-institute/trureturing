@@ -29,7 +29,6 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             N("minimalWordEquiv", "Restrict the bijection", "Restrict subsetWordEquiv to the actual minimal dominating subsets and accepted words."),
             N("ColumnTest", "Five-column criterion", "Every centre vertex is closed-dominated. Every selected centre vertex has an actual closed-neighbour witness; uniqueness is tested among selected vertices at column distance at most two. Actual finite-grid vertex types exclude absent witnesses."),
             T("minimal_iff_column_tests", "Every real centre at every width", ColumnFormula(), "A witness is at column distance at most one, and every selected neighbour of it is at distance at most two by the natural-distance triangle inequality. This proves that the five-column restriction retains the complete proper-subset condition, including widths one and two."),
-            T("actualCount_eq_word_card", "Transport the actual count", CountFormula(), "The proved restricted bijection transports the original cardinality. A transfer-defined sequence is not substituted for the actual count."),
             Paragraph(Text("The complete Barker OEIS A286848 generating function still requires the mask-window/path correspondence, both absent terminal checks, the 4672-state to 59-class certificate, its vector annihilator and the all-coefficient proof. These encoding interfaces alone do not prove that endpoint."))),
         []));
 
@@ -78,11 +77,5 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
         Formula n = X("n"), s = X("S"), c = X("c");
         return All("n", Nat, All("S", FS(Verts(n)), Iff(Call("MinimalDominating", Call("grid", n), s),
             All("c", Call("Fin", n), Call("ColumnTest", s, c)))));
-    }
-    private static Formula CountFormula()
-    {
-        Formula n = X("n"), w = X("w");
-        return All("n", Nat, Eq(Call("actualCount", n),
-            Call("card", Seq(Lbrace, w, Sp, Colon, Sp, Call("Word", n), Sp, Vert, Sp, Call("ValidWord", w), Rbrace))));
     }
 }

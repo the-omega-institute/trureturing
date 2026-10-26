@@ -65,14 +65,14 @@ theorem columns_append (s : State) (m : Fin 8) (i : Fin 4) :
   by_cases h₀ : s.val < 64
   · have ha : (append s m).val < 576 := by simp [append, h₀]; omega
     have hb : ¬ (append s m).val < 64 := by simp [append, h₀]; omega
-    fin_cases i <;> simp [columns, append, h₀, ha, hb] <;> omega
+    fin_cases i <;> simp [columns, h₀, ha, hb] <;> simp [append, h₀] <;> omega
   · by_cases h₁ : s.val < 576
     · have ha : ¬ (append s m).val < 576 := by simp [append, h₀, h₁]; omega
       have hb : ¬ (append s m).val < 64 := by omega
-      fin_cases i <;> simp [columns, append, h₀, h₁, ha, hb] <;> omega
+      fin_cases i <;> simp [columns, h₀, h₁, ha, hb] <;> simp [append, h₀, h₁] <;> omega
     · have ha : ¬ (append s m).val < 576 := by simp [append, h₀, h₁]; omega
       have hb : ¬ (append s m).val < 64 := by omega
-      fin_cases i <;> simp [columns, append, h₀, h₁, ha, hb] <;> omega
+      fin_cases i <;> simp [columns, h₀, h₁, ha, hb] <;> simp [append, h₀, h₁] <;> omega
 
 /-- An absent column has no vertices, even when it would have a zero selection bit. -/
 def present (w : Window) (v : Vertex 5) : Bool := decide ((w v.2).val < 8)
@@ -115,7 +115,7 @@ instance edgeDecidable (s t : State) : Decidable (Edge s t) := by
 def transition : Matrix State State ℤ := fun s t => if Edge s t then 1 else 0
 
 /-- All and only the 64 two-real-column starts have initial weight one. -/
-def initial : State → ℤ := fun s => if h₀ : s.val < 64 then 1 else 0
+def initial : State → ℤ := fun s => if s.val < 64 then 1 else 0
 
 /-- Two absent-column checks finish the last two real columns. -/
 def terminal : State → ℤ := fun s =>
