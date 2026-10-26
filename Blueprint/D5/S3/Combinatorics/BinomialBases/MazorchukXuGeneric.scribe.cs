@@ -66,7 +66,7 @@ internal static class MazorchukXuGenericNotation
 internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Distinct positive position data and distinct cutoff-position pairs force the exceptional-edge choices.",
+        "Finite position and cutoff data reconstruct the labelled source graphs and give unique generic completions.",
         H("Forced edges in generic patterns"),
         Blocks(
             Node("Generic","Position","Position relative to the ordinary list",PositionFormula(),
@@ -86,7 +86,7 @@ internal sealed class MazorchukXuGenericDocument : IScribeDocumentDefinition
             Node("Generic","exists_coordinate_encoding","Extraction of positions and cutoffs",EncodingFormula(),
                 "Given an increasing list of anchor neighbors and an increasing list of missing anchor neighbors covering the positive vertices, every graph satisfying the rules yields a monotone position list and one cutoff for each exception. Prefix cardinality supplies each position; monotonicity follows because an ordinary vertex cannot lie before an earlier exception and after a later one. The cutoff theorem supplies the incidence data, and prefix partitioning reconstructs the original natural labels. This extracts the coordinates but does not yet identify their compression classes or enumerate them.",DescribeRole.Theorem),
             Node("Generic","edgeFamily_has_coordinates","Coordinates of the literal finite family",SourceEncodingFormula(),
-                "For every natural n and every deficit i at most n+1, a member of edgeFamily with n+1-i anchor edges has an increasing ordinary list of length n+1-i and an increasing exceptional list of length i. Sort the actual anchor-neighbor set and its complement in one through n+1. Their cardinalities give the two list lengths. The lists cover the entire positive vertex interval; position and cutoff extraction then gives all the displayed coordinates and exact exceptional labels. The point-to-edge counted equivalence identifies this with the literal source family. This supplies extraction for every valid source parameter, including i=n+1; a two-way compressed-pattern bijection and its cardinality are still needed.",DescribeRole.Theorem)), []));
+                "For every natural n and every deficit i at most n+1, a member of edgeFamily with n+1-i anchor edges has an increasing ordinary list of length n+1-i and an increasing exceptional list of length i. Sort the actual anchor-neighbor set and its complement in one through n+1. Their cardinalities give the two list lengths. The lists cover the entire positive vertex interval; position and cutoff extraction then gives all the displayed coordinates and exact exceptional labels. The notation pairMembership(A)(a,b) means (a,b) belongs to A. The point-to-edge counted equivalence identifies this with the literal source family. This supplies extraction for every valid source parameter, including i=n+1; a two-way compressed-pattern bijection and its cardinality are still needed.",DescribeRole.Theorem)), []));
 
     private static Formula PositionFormula()
     {
