@@ -32,7 +32,7 @@ The conjecture:
 
 > Our computation results show that for the symmetric inequalities of Eq. (symSATWAP), the measurement of Eq. (CGLMP-Opt), in conjunction with a symmetric maximally entangled two-qudit state, indeed reproduces the maximal quantum violation of $2(d-1)$ for $d\le 100$. Together with the fact that this maximal quantum violation self-tests a maximally entangled two-qudit state, we know that the symmetric family of SATWAP inequalities, Eq. (symSATWAP), also cannot exhibit a trade-off for $d\le 100$. Moreover, we conjecture that this holds true for any higher $d$ as well.
 
-The measurements are labelled by settings $0,1$ and the SATWAP expression by settings $1,2$; only the assignment of setting $0$ to setting $1$ reaches $2(d-1)$.
+The measurements are labelled by settings $0,1$ and the SATWAP expression by settings $1,2$. For $d=2$ both assignments of the settings reach the value $2$; for $d=3,4,5,8$ the largest eigenvalue of the Bell operator is $2(d-1)$ only when setting $0$ is assigned to setting $1$ (floating-point computation).
 
 ## Verified locator
 
