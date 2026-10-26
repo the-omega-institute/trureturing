@@ -95,7 +95,8 @@ private theorem finite_coordinate_correction {Γ I : Type*} [Group Γ]
   apply le_antisymm
   · rcases (hd ((σ q)⁻¹ v)).1 with ⟨r, hr⟩
     calc
-      c q v + d ((σ q)⁻¹ v) = c q v + c r ((σ q)⁻¹ v) := by rw [hr]
+      c q v + d ((σ q)⁻¹ v) = c q v + c r ((σ q)⁻¹ v) :=
+        congrArg (fun t : ℤ => c q v + t) hr.symm
       _ = c (q * r) v := (hcoord q r v).symm
       _ ≤ d v := (hd v).2 ⟨q * r, rfl⟩
   · rcases (hd v).1 with ⟨r, hr⟩
@@ -104,7 +105,7 @@ private theorem finite_coordinate_correction {Γ I : Type*} [Group Γ]
       _ = c (q * (q⁻¹ * r)) v := by rw [mul_inv_cancel_left]
       _ = c q v + c (q⁻¹ * r) ((σ q)⁻¹ v) := hcoord q (q⁻¹ * r) v
       _ ≤ c q v + d ((σ q)⁻¹ v) :=
-        add_le_add_left ((hd ((σ q)⁻¹ v)).2 ⟨q⁻¹ * r, rfl⟩) _
+        add_le_add (le_refl (c q v)) ((hd ((σ q)⁻¹ v)).2 ⟨q⁻¹ * r, rfl⟩)
 
 namespace IndexedAction
 
@@ -120,7 +121,7 @@ private theorem starMap_equivariant (γ : Γ) (a : V → ℤ) :
     rcases ρ.endpoints γ⁻¹ i with h | h
     · rw [h.1, h.2]
     · rw [h.1, h.2, add_comm]
-  simpa only [map_inv] using he
+  simpa [coordinateRep, Edges.starMap] using he
 
 /-- The induced action on the actual original integer cokernel. -/
 def cokernelRep : Representation ℤ Γ (Cokernel g) :=
