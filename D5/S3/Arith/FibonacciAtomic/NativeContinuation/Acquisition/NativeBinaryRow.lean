@@ -44,13 +44,13 @@ def decode (bs : List Bool) : Row := value (parse bs)
 def input (a : Finset Window) (xs : List Column) : List Bool :=
   modes.map (fun b => decide (b ∈ a)) ++ serialize xs
 
-private theorem serialize_length (xs : List Column) : (serialize xs).length = 2 * xs.length := by
+theorem serialize_length (xs : List Column) : (serialize xs).length = 2 * xs.length := by
   induction xs with
   | nil => rfl
   | cons p xs ih => simp only [serialize, List.flatMap_cons, List.length_append, List.length_cons,
       List.length_nil] at *; omega
 
-private theorem parse_serialize (xs : List Column) : parse (serialize xs) = xs := by
+theorem parse_serialize (xs : List Column) : parse (serialize xs) = xs := by
   induction xs with
   | nil => rfl
   | cons p xs ih => simpa [serialize, parse] using congrArg (List.cons p) ih
@@ -101,7 +101,7 @@ private theorem drain_bits (n : ℕ) (c : Carry) :
       · simpa only [drain, List.map_cons, fixedBits, List.cons.injEq, true_and, half, Nat.div2_val] using h0
       · simpa only [drain, List.map_cons, fixedBits, List.cons.injEq, true_and, half, Nat.div2_val] using h1
 
-private theorem columns_length (a : Finset Window) (c : Carry) (xs : List Column) :
+theorem columns_length (a : Finset Window) (c : Carry) (xs : List Column) :
     (columns a c xs).length = xs.length + 3 := by
   induction xs generalizing c with
   | nil => rfl
@@ -236,7 +236,7 @@ def stackMachine : StackMachine.Machine := StackProgram.compile program encoding
 
 def binaryMachine : Complexity.Machine := StackCompile.compile stackMachine
 
-private def registers (src dst : List Bool) : StackMachine.Registers 1 :=
+def registers (src dst : List Bool) : StackMachine.Registers 1 :=
   fun j => if j = 0 then src else dst
 
 private theorem set0 (src dst bs : List Bool) :
@@ -294,7 +294,7 @@ private theorem exec_scan (a : Finset Window) (c : Carry) (xs : List Column)
       convert hh using 1 <;>
         simp [columns, serialize, List.reverse_append, List.append_assoc] <;> omega
 
-private def insertBit (a : Finset Window) (b : Window) (v : Bool) : Finset Window :=
+def insertBit (a : Finset Window) (b : Window) (v : Bool) : Finset Window :=
   if v then insert b a else a
 
 private theorem mem_insertBit (a : Finset Window) (b w : Window) (v : Bool) :
@@ -335,7 +335,7 @@ private theorem exec_input (a : Finset Window) (xs : List Column) :
   have h0 := exec_load_next 0 (by decide) ∅ (decide (Window.zero ∈ a)) _ _ _ _ h1
   convert h0 using 1 <;> simp [input, modes, scanProgram] <;> omega
 
-private theorem exec_program (a : Finset Window) (xs : List Column) :
+theorem exec_program (a : Finset Window) (xs : List Column) :
     Exec program program.start (registers (input a xs) []) (8 * xs.length + 28)
       (true, registers (serialize (columns a (0, 0) xs)) []) := by
   let ys := serialize (columns a (0, 0) xs)
