@@ -42,7 +42,10 @@ private lemma signed_derivative_formula (p : Polynomial ℝ) (j : ℕ) {x : ℝ}
     (-1 : ℝ) ^ j * iteratedDeriv j (logFunction p) x =
       x⁻¹ ^ (j + 1) * (derivativePolynomial p j).eval (Real.log x) := by
   induction j generalizing x with
-  | zero => simp [logFunction, derivativePolynomial, div_eq_mul_inv, mul_comm]
+  | zero =>
+    rw [pow_zero, one_mul, iteratedDeriv_zero, Nat.zero_add, pow_one]
+    change p.eval (Real.log x) / x = x⁻¹ * p.eval (Real.log x)
+    rw [div_eq_mul_inv, mul_comm]
   | succ j ih =>
     have he : (fun y => (-1 : ℝ) ^ j * iteratedDeriv j (logFunction p) y) =ᶠ[𝓝 x]
         (fun y => y⁻¹ ^ (j + 1) * (derivativePolynomial p j).eval (Real.log y)) := by
@@ -144,7 +147,7 @@ private lemma descending (n k : ℕ) : derivativeRegion n (k + 1) ⊆ derivative
   rw [sign_transfer] at hp ⊢
   refine ⟨hp.1, nonneg_of_sub_derivative (derivativePolynomial p k)
     (a := k + 1) (by positivity) ?_⟩
-  simpa only [derivativePolynomial, Nat.rec_add_one] using hp.2
+  exact hp.2
 
 private lemma intersection (n : ℕ) (p : Polynomial ℝ) (hp : p.natDegree ≤ n) :
     (∀ k : ℕ, 1 ≤ k → p ∈ derivativeRegion n k) ↔
