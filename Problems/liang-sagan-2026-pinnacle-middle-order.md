@@ -4,7 +4,7 @@ bibkey: liang2026distributivelattices
 doi: 10.1007/s11083-026-09735-2
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/LiangSaganPinnacle/Result.result
+  - D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.result
 url: https://arxiv.org/abs/2408.02782v2
 ---
 
@@ -14,23 +14,31 @@ url: https://arxiv.org/abs/2408.02782v2
 
 J. Liang and B. E. Sagan, *Log-concavity and log-convexity via distributive
 lattices*, Order 43 (2026), Article 21, DOI 10.1007/s11083-026-09735-2,
-arXiv:2408.02782v2, Question 8.6 and its preceding definition:
+arXiv:2408.02782v2, Section 8, printed pages 34–35, Question 8.6
+and its preceding definition:
 
 > Let σ be a permutation of distinct positive integers. Let Pin_n(σ) = {π ∈ S_n | the pinnacles of π are the elements of σ in that order}. … Computation of examples raise the following questions.
 > Question 8.6. For all n and σ:
 > (a) Is the restriction of the middle order to Pin_n(σ) a distributive lattice?
 > (b) Is the sequence (pin_n(σ)) log-concave?
 
-The supplied Section 5 extract defines:
+Section 6, “Permutations”, printed pages 17–18, defines inversions and inversion tops:
 
-> ι_i(π) = # of inversions in which i is an inversion top; π ⪯ τ iff ι(π) ≤ ι(τ) componentwise.
+> Given π = π1 π2 . . . πn ∈ Sn in one-line notation, its set of inversion (values) is Inv π = {(πi, πj) | i < j and πi > πj}.
+
+> We also say that πi is an inversion top if (πi, πj) ∈ Inv π for some πj.
+
+On printed page 18 the inversion coordinate and middle order are specified separately:
+
+> where ιi = # of inversions in which i is an inversion top.
+
+> We can now use the bijection just given to define the middle order (Sn, ⪯) by π ⪯ σ if and only if ι(π) ≤ ι(σ) where the order on inversion tables is component-wise.
 
 Pinnacles are the values π_j with π_{j−1}<π_j>π_{j+1}.
-The supplied extract gives no verified page numbers.
 
 ### Formal reading
 
-Lean names have prefix `D5.S3.Combinatorics.LiangSaganPinnacle.Result`.
+Lean names have prefix `D5.S0.Certificates.Combinatorics.LiangSaganPinnacle.Result`.
 
 | Source object | Lean name | Correspondence |
 | --- | --- | --- |
@@ -48,7 +56,7 @@ has empty fibre; the counterexample uses only distinct in-range values.
 
 ## Motivation
 
-The settling declaration is `D5/S3/Combinatorics/LiangSaganPinnacle/Result.result`.
+The settling declaration is `D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.result`.
 The source note is `D5/L/PermutationPatterns/liang2026distributivelattices`.
 The ordered pinnacle condition constrains positions, while the middle
 order constrains inversion counts. Their interaction can prevent joins.
@@ -93,8 +101,10 @@ statements are checked by the Lean kernel.
 contains `ls-pinnacle.py`, SHA-256
 `4343fcc9ffc8cfd37742ca99fe76bc80567cf060d26fd934568621c3473fbb25`.
 `python3 ls-pinnacle.py`, exit 0, checks the family for n=6,…,9 and
-all nonempty fibres for n=1,…,6. The optional command
-`python3 ls-pinnacle.py 7` includes n=7.
+all nonempty fibres for n=1,…,6. The command
+`python3 ls-pinnacle.py 7`, exit 0, additionally gives
+`n=7 classes=50 nonlattice=14`.
+Both commands use the same pinned script and SHA-256 above.
 
 The supplied literature scope covers arXiv v2 and the Order publication,
 Vatter arXiv:2602.16355, and *Middle orders: all distributive lattices
@@ -117,18 +127,17 @@ that scope. This does not establish exhaustive coverage or priority.
   non-lattice classes are σ∈{(3,6),(4,6),(6,3),(6,4)}. The enumeration
   tests lattice existence, not distributivity of the remaining classes.
 - **COMPUTED.** At n=7, 14 of 50 nonempty classes are non-lattices.
-  The n=7 reading is independently checked by exact principal-upset and
-  principal-downset enumeration: `python3 ls-bitset-check.py`, exit 0,
-  SHA-256 `fef64ef55895b6bef89f2692f51f192758dda8340ee373d607c9825a9ddc5c73`.
-  This supplementary program is not included in the pinned experiment
-  directory. These are finite readings, not a general classification theorem.
+  The pinned script command `python3 ls-pinnacle.py 7`, exit 0, gives
+  `n=7 classes=50 nonlattice=14`; its immutable directory and SHA-256
+  are stated in Evidence. These are finite readings, not a general
+  classification theorem.
 - **OPEN.** Question 8.6(b), log-concavity of the class-size sequence,
   is untouched. A classification of all lattice fibres is also open here.
 
 ## ASSUMED-UNVERIFIED
 
 Google Scholar's full cited-by list was unavailable in the supplied
-literature check. Page numbers and the full typography of the original
-paper were not independently verified from a local PDF. External
-literature checks are the supplied bounded scope; no exhaustive novelty
+literature check. Quotations and printed page locators use the supplied
+pdftotext of arXiv:2408.02782v2; the PDF typography was not independently
+checked. External literature checks are the supplied bounded scope; no exhaustive novelty
 claim is made.

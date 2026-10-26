@@ -2,14 +2,17 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.LiangSaganPinnacle;
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Combinatorics.LiangSaganPinnacle;
 
 internal sealed class ResultDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/LiangSaganPinnacle/Result.";
+    private const string Prefix = "D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/liang2026distributivelattices");
     private const string Question = "Let σ be a permutation of distinct positive integers. Let Pin_n(σ) = {π ∈ S_n | the pinnacles of π are the elements of σ in that order}. … Computation of examples raise the following questions. Question 8.6. For all n and σ: (a) Is the restriction of the middle order to Pin_n(σ) a distributive lattice? (b) Is the sequence (pin_n(σ)) log-concave?";
-    private const string Middle = "ι_i(π) = # of inversions in which i is an inversion top; π ⪯ τ iff ι(π) ≤ ι(τ) componentwise.";
+    private const string Inversions = "Given π = π1 π2 . . . πn ∈ Sn in one-line notation, its set of inversion (values) is Inv π = {(πi, πj) | i < j and πi > πj}.";
+    private const string InversionTop = "We also say that πi is an inversion top if (πi, πj) ∈ Inv π for some πj.";
+    private const string IotaCoordinate = "where ιi = # of inversions in which i is an inversion top.";
+    private const string Middle = "We can now use the bijection just given to define the middle order (Sn, ⪯) by π ⪯ σ if and only if ι(π) ≤ ι(σ) where the order on inversion tables is component-wise.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For every n at least six, an ordered pinnacle class contains two permutations without a common upper bound in the middle order.",
@@ -22,15 +25,15 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 "Question 8.6 defines pinnacles as values at internal positions with π(j−1)<π(j)>π(j+1), read from left to right. A permutation is the word π(0)π(1)…π(n−1); a Fin n value k represents the paper's positive value k+1. The increasing list of positions preserves the order of the pinnacle word.", DescribeRole.Definition, true),
             Node("iota", "The inversion-top table", All("n", N, All("p", Perm(V("n")), All("v", Fin(V("n")),
                 Eqn(Call("iota", V("p"), V("v")), Call("Finset.card", Call("Finset.filter", Lam("w", Fin(V("n")), And(Lt(V("w"), V("v")), Lt(Pos(V("p"), V("v")), Pos(V("p"), V("w"))))), Call("Finset.univ"))))))),
-                "Section 5: “" + Middle + "” The supplied extract gives no verified page number. The paper's example 415632 has inversion table (0,0,1,3,2,2). Inverse positions count smaller values to the right of v, with no change of order direction.", DescribeRole.Definition, true),
+                "Section 6, Permutations, printed pages 17–18: “" + Inversions + "” “" + InversionTop + "” Printed page 18: “" + IotaCoordinate + "” The paper's example 415632 has inversion table (0,0,1,3,2,2). Inverse positions count smaller values to the right of v, with no change of order direction.", DescribeRole.Definition, true),
             Node("middleLe", "The middle order", All("n", N, All("p", Perm(V("n")), All("q", Perm(V("n")),
                 Iff(Call("middleLe", V("p"), V("q")), All("v", Fin(V("n")), Le(Call("iota", V("p"), V("v")), Call("iota", V("q"), V("v")))))))),
-                "Section 5: “" + Middle + "” The comparison is pointwise in the value, rather than in the position.", DescribeRole.Definition, true),
+                "Section 6, Permutations, printed page 18: “" + Middle + "” The comparison is pointwise in the value, rather than in the position.", DescribeRole.Definition, true),
             Node("Pin", "The ordered pinnacle fibre", All("n", N, All("s", Call("List", Fin(V("n"))),
                 Eqn(Call("Pin", V("n"), V("s")), Seq(OpenBrace, V("p"), Colon, Sp, Perm(V("n")), Sp, Mid, Sp, Eqn(Call("pinnacleWord", V("p")), V("s")), CloseBrace)))),
-                "Question 8.6: “" + Question + "” The supplied extract gives no verified page number. A repeated value cannot occur in the pinnacle word of a permutation. A positive source value outside [n] gives an empty class; such a value has no Fin n encoding. The two values used below are distinct and lie in [n].", DescribeRole.Definition, true),
+                "Section 8, printed pages 34–35, Question 8.6: “" + Question + "” A repeated value cannot occur in the pinnacle word of a permutation. A positive source value outside [n] gives an empty class; such a value has no Fin n encoding. The two values used below are distinct and lie in [n].", DescribeRole.Definition, true),
             Node("claim", "The universal distributive-lattice assertion", Eqn(V("claim"), Claim()),
-                "Question 8.6: “" + Question + "” The supplied extract gives no verified page number. A distributive lattice is required to have exactly the order middleLe on the fibre. Requiring the assertion also for repeated Fin values introduces no counterexample here: the refutation uses the distinct ordered pair (n−2,n). Only part (a) is answered.", DescribeRole.Definition, true),
+                "Section 8, printed pages 34–35, Question 8.6: “" + Question + "” A distributive lattice is required to have exactly the order middleLe on the fibre. Requiring the assertion also for repeated Fin values introduces no counterexample here: the refutation uses the distinct ordered pair (n−2,n). Only part (a) is answered.", DescribeRole.Definition, true),
             Node("witness_peak", "Exactly two peak positions", KT(All("j", Fin(K6), Iff(Call("Peak", W(V("t")), V("j")), Or(Eqn(Val(V("j")), Add(V("t"), D(1))), Eqn(Val(V("j")), Add(V("t"), D(3))))))),
                 "Write n=k+6 and t=0 or 1. The permutation witness k t has its two peaks at t+1 and t+3. For t=0 its word is 0,k+3,1,k+5,2,…,k+2,k+4. For t=1 its word is k+4,0,k+3,1,k+5,2,…,k+2. Explicit inverse functions prove that both words are permutations. Every other internal position is on an increasing run or next to a larger value."),
             Node("witness_word", "The common ordered pinnacle word", KT(Eqn(Call("pinnacleWord", W(V("t"))), Pair(FinValue(Add(V("k"), D(3))), FinValue(Add(V("k"), D(5)))))),

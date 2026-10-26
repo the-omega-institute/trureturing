@@ -1,10 +1,10 @@
-/- GID: D5/S3/Combinatorics/LiangSaganPinnacle/Result
+/- GID: D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/LiangSaganPinnacle/Result
+   mirror-B: D5/B/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Tactic]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/LiangSaganPinnacle/Result.claim; result=D5/S3/Combinatorics/LiangSaganPinnacle/Result.result; claim=D5/S3/Combinatorics/LiangSaganPinnacle/Result.claim
-   digest: Ordered pinnacle fibres have pairs without common middle-order upper bounds for every n at least six. -/
+   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.claim; result=D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.result; claim=D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.claim
+   digest: For every n ≥ 6, a pinnacle fibre has two elements with no common upper bound. -/
 
 /-
 admission_basis: open-problem-resolution (#22269; Refuted).
@@ -12,7 +12,7 @@ No frozen D5 prerequisites: all imports are pinned Mathlib.
 Per declaration: name | proof_shape | escape_witness | consumers.
   Peak | bind-only (definition) | none | pinnacleWord, witness_peak, word_positions
   pinnacleWord | bind-only (definition) | none | Pin, witness_word, word_positions, obstruction
-  iota | bind-only (definition) | none | middleLe, iota_max, witness_iota_second
+  iota | bind-only (definition) | none | middleLe, iota_max, witness_iota_second, Okada.lexmin
   middleLe | bind-only (definition) | none | claim, obstruction, no_common_upper_bound
   Pin | bind-only (definition) | none | claim, no_common_upper_bound
   claim | bind-only (definition) | none | result
@@ -42,7 +42,7 @@ All bind-only lemmas are consumed.
 import Mathlib.Tactic
 
 noncomputable section
-namespace D5.S3.Combinatorics.LiangSaganPinnacle.Result
+namespace D5.S0.Certificates.Combinatorics.LiangSaganPinnacle.Result
 
 private def Peak {n : ℕ} (π : Equiv.Perm (Fin n)) (j : Fin n) : Prop :=
   ∃ l r : Fin n, l.val + 1 = j.val ∧ j.val + 1 = r.val ∧ π l < π j ∧ π r < π j
@@ -262,4 +262,4 @@ theorem result : ¬ claim := by
   letI := L
   exact hAB (A ⊔ B) ⟨(hL _ _).mp le_sup_left, (hL _ _).mp le_sup_right⟩
 
-end D5.S3.Combinatorics.LiangSaganPinnacle.Result
+end D5.S0.Certificates.Combinatorics.LiangSaganPinnacle.Result
