@@ -1,0 +1,35 @@
+**Lemma 5.2 (P4).** Suppose $H\in\mathcal P_{m-1}$ agrees at consecutive original clocks $t_0,\ldots,t_0+m-1$ with $1/u_s,\ldots,1/u_{s+m-1}$, where $s\ge b$ and $s\equiv b\pmod2$. Then
+
+$$
+\epsilon H(t)>0,\qquad \epsilon H'(t)<0
+\quad\text{for every real }t\le t_0.
+\tag{5.4}
+$$
+
+**Proof.** Put $d_j=\Delta^jf_0$ for $0\le j\le m-1$ and $A_j=\epsilon(-1)^jd_j>0$. Newton interpolation on the unit-spaced block gives
+
+$$
+H(t_0+x)=\sum_{j=0}^{m-1}d_j\binom{x}{j}.
+\tag{5.5}
+$$
+
+One verification is the polynomial identity $\Delta\binom{x}{j}=\binom{x}{j-1}$: taking successive differences at zero recovers the coefficients $d_j$, and hence the prescribed data. Agreement at $m$ distinct nodes uniquely determines a degree-at-most-$(m-1)$ polynomial by root counting.
+
+For $x\le0$ set $C_0(x)=1$ and
+
+$$
+C_j(x)=(-1)^j\binom{x}{j}
+=\frac1{j!}\prod_{h=0}^{j-1}(h-x)\quad(j\ge1).
+\tag{5.6}
+$$
+
+Each $C_j$ is nonnegative on this half-line. For $x<0$ its factors are strictly positive and decreasing, and differentiation of the product gives $C_j'(x)<0$. At $x=0$ the sole vanishing factor is $-x$, whose derivative contributes a strictly negative product of the remaining factors; the other differentiated terms vanish. This proves $C_j'(0)<0$, also when $j=1$.
+
+It follows that
+
+$$
+\epsilon H(t_0+x)=\sum_{j=0}^{m-1}A_jC_j(x)>0.
+$$
+
+The derivative is strictly negative: all terms with $j\ge1$ have negative derivative and positive coefficient, and $A_1>0$ because $m\ge2$. This proves (5.4), including the endpoint. In particular $H$ cannot have equal values at two distinct clocks on that half-line. $\square$
+
