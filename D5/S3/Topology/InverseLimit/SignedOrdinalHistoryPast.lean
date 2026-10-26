@@ -85,7 +85,7 @@ noncomputable def pastCarrier (c : Coord l) : Set (Cube c.1) := by
     (past ⟨⟨c.1, c.2.trans proper⟩, hω⟩ c.2).H.carrier (top c.1)
   else univ
 
-private theorem carrier_read
+theorem carrier_read
     (coherent : ∀ (b c : Stage) (hb : ord b < l) (hc : ord c < l) (hbc : b < c),
       Coherent hbc (past b hb) (past c hc))
     (b : Stage) (hb : ord b < l)
@@ -256,6 +256,28 @@ noncomputable def strictData (hl : Order.IsSuccLimit l) :
     intro r d n hr
     simp only [dite_eq_left hr]
     exact ((bornPack proper past coherent r hr).nu d).2 n |>.1
+
+theorem I_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+    (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) :
+    (strictData proper past coherent hl).I
+      ⟨r.1, r.2.2.trans_lt hb⟩ ⟨ord b, hb⟩ = (past b hb).P.I r hr := by
+  classical
+  have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
+  have hrc' : (⟨r.1, r.2.2.trans_lt hb⟩ : Coord l) < ⟨ord b, hb⟩ := hrc
+  simp only [strictData, historicalI, dite_eq_left r.2.1, dite_eq_left hrc',
+    stageAt, rowAt]
+
+theorem J_read (hl : Order.IsSuccLimit l) (b : Stage) (hb : ord b < l)
+    (r : Rows (ord b)) (hr : r ≠ newRow (ord b) b.2) (d : Coord (ord b)) :
+    (strictData proper past coherent hl).J
+      ⟨r.1, r.2.2.trans_lt hb⟩ ⟨d.1, d.2.trans hb⟩ ⟨ord b, hb⟩ =
+        (past b hb).P.J r hr d := by
+  classical
+  have hrc : r.1 < ord b := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
+  have hrc' : (⟨r.1, r.2.2.trans_lt hb⟩ : Coord l) < ⟨ord b, hb⟩ := hrc
+  have hdc' : (⟨d.1, d.2.trans hb⟩ : Coord l) < ⟨ord b, hb⟩ := d.2
+  simp only [strictData, historicalJ, dite_eq_left r.2.1, dite_eq_left hrc',
+    dite_eq_left hdc', stageAt, rowAt]
 
 private theorem strict_A (hl : Order.IsSuccLimit l) (r d c : Coord l)
     (hr : ω ≤ r.1) (hrc : r < c) (hdc : d < c) :

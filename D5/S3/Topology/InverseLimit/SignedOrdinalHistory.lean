@@ -8,6 +8,7 @@
 
 import D5.S3.Topology.InverseLimit.SignedOrdinalHistoryTask
 import D5.S3.Topology.InverseLimit.SignedOrdinalHistorySuccessor
+import D5.S3.Topology.InverseLimit.SignedOrdinalHistoryLimit
 
 /-! Strict-past recursion selects one run before any global semantic readout. -/
 
@@ -160,10 +161,118 @@ private noncomputable def successor_advance (hCH : Cardinal.continuum.{0} = ℵ�
   · subst c
     exact next_coherent (past b hb) hCH
 
+/-- One concrete advancement from this exact strict past. The initial,
+successor and proper-limit branches execute their actual constructors. -/
+noncomputable def advance (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
+    (past : ∀ b : Stage, b < a → State b)
+    (coherent : ∀ b c hb hc hbc, Coherent hbc (past b hb) (past c hc)) :
+    {X : State a // ∀ b hb, Coherent hb (past b hb) X} := by
+  classical
+  by_cases h0 : a = initialStage
+  · subst a
+    exact initial_advance hCH past
+  by_cases hs : ∃ b : Stage, nextStage b = a
+  · let b := Classical.choose hs
+    have he : a = nextStage b := (Classical.choose_spec hs).symm
+    subst a
+    exact successor_advance hCH b past coherent
+  have hw : ω < ord a := lt_of_le_of_ne a.2
+    (fun he => h0 (Subtype.ext (Subtype.ext he.symm)))
+  have hl : Order.IsSuccLimit (ord a) := by
+    refine ⟨not_isMin_of_lt hw, Order.isSuccPrelimit_of_succ_ne ?_⟩
+    intro b he
+    have hbω : ω ≤ b := by
+      by_contra hn
+      have hlt := Ordinal.isSuccLimit_omega0.succ_lt (lt_of_not_ge hn)
+      exact (not_lt_of_ge a.2) (he ▸ hlt)
+    have hba : b < ord a := (Order.lt_succ b).trans_eq he
+    let B : Stage := ⟨⟨b, hba.trans a.1.2⟩, hbω⟩
+    exact hs ⟨B, Subtype.ext (Subtype.ext he)⟩
+  let R := SignedOrdinalHistoryLimit.result a past coherent hw hl
+  exact ⟨SignedOrdinalHistoryLimit.limitState R hCH,
+    SignedOrdinalHistoryLimit.limit_coherent R hCH⟩
+
+/-- The one actual well-founded run, with no history or step supplier premise. -/
+noncomputable def run (hCH : Cardinal.continuum.{0} = ℵ₁) : ∀ a : Stage, State a :=
+  realizedRun stageWF (fun _ _ h => Coherent h) (advance hCH)
+
+theorem coherent (hCH : Cardinal.continuum.{0} = ℵ₁) (b a : Stage) (h : b < a) :
+    Coherent h (run hCH b) (run hCH a) :=
+  realizedRun_coherent stageWF (fun _ _ h => Coherent h) (advance hCH) b a h
+
+/-- Every state is the actual advancement of this same run's own strict past. -/
+theorem execution (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage) :
+    run hCH a = (advance hCH a (fun b _ => run hCH b)
+      (fun b c _ _ hbc => coherent hCH b c hbc)).1 :=
+  realizedRun_eq stageWF (fun _ _ h => Coherent h) (advance hCH) a
+
+/-- CH alone constructs one coherent run realizing all its own actual steps. -/
+theorem exists_history (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    ∃ f : ∀ a : Stage, State a,
+      ∃ hc : ∀ (b a : Stage) (h : b < a), Coherent h (f b) (f a),
+        ∀ a, f a = (advance hCH a (fun b _ => f b)
+          (fun b c _ _ hbc => hc b c hbc)).1 :=
+  ⟨run hCH, coherent hCH, execution hCH⟩
+
+private theorem nextStage_injective : Injective nextStage := by
+  intro b c he
+  exact Subtype.ext (Subtype.ext (Order.succ_injective (congrArg ord he)))
+
+private theorem advance_successor (hCH : Cardinal.continuum.{0} = ℵ₁) (b : Stage)
+    (past : ∀ c : Stage, c < nextStage b → State c)
+    (hc : ∀ c d hc hd hcd, Coherent hcd (past c hc) (past d hd)) :
+    (advance hCH (nextStage b) past hc).1 =
+      nextState (past b (show b < nextStage b from Order.lt_succ (ord b))) hCH := by
+  classical
+  have hn : nextStage b ≠ initialStage := by
+    intro he
+    exact (ne_of_gt (b.2.trans_lt (Order.lt_succ (ord b)))) (congrArg ord he)
+  have hs : ∃ c : Stage, nextStage c = nextStage b := ⟨b, rfl⟩
+  have he : Classical.choose hs = b := nextStage_injective (Classical.choose_spec hs)
+  simp only [advance, dite_eq_right hn, dite_eq_left hs, he, successor_advance]
+
+/-- The first state is the actual executed initial prefix. -/
+theorem initial_execution (hCH : Cardinal.continuum.{0} = ℵ₁) :
+    run hCH initialStage = initialState hCH := by
+  rw [execution]
+  simp only [advance, dite_eq_left rfl, initial_advance]
+
+/-- The next carrier and incoming event are those of this same selected R. -/
+theorem successor_execution (hCH : Cardinal.continuum.{0} = ℵ₁) (b : Stage) :
+    run hCH (nextStage b) = nextState (run hCH b) hCH := by
+  rw [execution]
+  exact advance_successor hCH b _ _
+
+/-- A proper limit uses exactly the constructed run's strict Archive and its
+actual once-selected Extension, with no replacement witness. -/
+theorem limit_execution (hCH : Cardinal.continuum.{0} = ℵ₁) (a : Stage)
+    (hw : ω < ord a) (hl : Order.IsSuccLimit (ord a)) :
+    run hCH a = SignedOrdinalHistoryLimit.limitState
+      (SignedOrdinalHistoryLimit.result a (fun b _ => run hCH b)
+        (fun b c _ _ hbc => coherent hCH b c hbc) hw hl) hCH := by
+  classical
+  have hn : a ≠ initialStage := by
+    intro he
+    exact (ne_of_gt hw) (congrArg ord he)
+  have hs : ¬ ∃ b : Stage, nextStage b = a := by
+    rintro ⟨b, he⟩
+    exact hl.succ_ne (ord b) (congrArg ord he)
+  rw [execution]
+  simp only [advance, dite_eq_right hn, dite_eq_right hs]
+
 section ExecutedReadback
 
 variable (run : ∀ a : Stage, State a)
   (coherent : ∀ (b a : Stage) (h : b < a), Coherent h (run b) (run a))
+
+private theorem prepared_measure_congr {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
+    {ha : ω ≤ a} {P : Predecessor H ha} {launch : Launch a}
+    (Q : Prepared H ha P launch) (r r' : Rows a) (d d' : Cols a)
+    (hr : r = r') (hd : d = d') (n : ℕ) :
+    HEq (Q.measure r d n) (Q.measure r' d' n) := by
+  subst r'
+  subst d'
+  rfl
 
 include coherent in
 private theorem ordinary_cofinal_readback (θ : Stage) (d base : Label) :
@@ -203,7 +312,8 @@ private theorem ordinary_cofinal_readback (θ : Stage) (d base : Label) :
   have hmeasure := BirthPack.heq_measure ((coherent θ A hθ).carrier (top (ord θ)))
     _ _ hpack d n
   have hcol : t.label = ⟨d.1, hd.le⟩ := Subtype.ext htlabel
-  simpa only [hrow, hcol, preparedOldPack, BirthPack.measure, Prepared.measure] using hmeasure
+  apply (prepared_measure_congr (run A).event.Q _ _ _ _ hrow hcol n).trans
+  simpa only [preparedOldPack, BirthPack.measure, Prepared.measure] using hmeasure
 
 private def runSemantic (θ s t : Label) (k : ℕ) : Prop :=
   ∃ hθ : ω ≤ θ.1, Intrinsic (run ⟨θ, hθ⟩).birth s t k
@@ -258,7 +368,8 @@ private theorem launch_cofinal_readback (θ : Stage) (i base : Label) :
   have hindex : (scheduledLaunch (run a).H a.2 (run a).P).supportIndex = i := by
     simp only [scheduledLaunch, hex]
   have hl := (run a).event.Q.launch_eq
-  have hs (n : ℕ) := congrArg (fun f => ((f n : Clopens (K (run a).H)) : Set _)) hl
+  have hs (n : ℕ) := congrArg
+    (fun f : ℕ → Clopens (K (run a).H) => (f n : Set (K (run a).H))) hl
   simp only [hrow, hindex, dite_eq_right hr] at hs
   refine ⟨a, hθ, hb, he, ?_⟩
   intro n
@@ -270,5 +381,46 @@ private theorem launch_cofinal_readback (θ : Stage) (i base : Label) :
   exact cast_support_mem _ _ i n _
 
 end ExecutedReadback
+
+/-- Arbitrarily late actual ordinary events act on the original whole measure. -/
+theorem ordinary_cofinal (hCH : Cardinal.continuum.{0} = ℵ₁) (θ : Stage) (d base : Label) :
+    let f := run hCH
+    ∃ a : Stage, base < a.1 ∧ θ < a ∧ d.1 < ord a ∧
+      (CofinalTaskSchedule.reservation a.1).1 = .inl (θ.1, d) ∧
+      ∃ (t : Treatment (ord a))
+        (R : Result (f a).H a.2 (f a).P
+          (scheduledLaunch (f a).H a.2 (f a).P) (f a).event.Q t),
+        (f a).event.selected = .ordinary t R ∧
+        t.row.1 = ord θ ∧ t.label.1 = d.1 ∧
+        ∀ n, HEq ((f a).event.Q.measure t.row t.label n) ((f θ).birth.measure d n) :=
+  ordinary_cofinal_readback (run hCH) (coherent hCH) θ d base
+
+/-- Intrinsic original-birth validity leads to genuine later local execution
+on this constructed run and to the same selected delayed certificate. -/
+theorem delayed_cofinal (hCH : Cardinal.continuum.{0} = ℵ₁)
+    (θ : Stage) (s t base : Label) (k : ℕ)
+    (valid : Intrinsic (run hCH θ).birth s t k) :
+    let f := run hCH
+    ∃ a : Stage, base < a.1 ∧ θ < a ∧ s.1 < ord a ∧ t.1 < ord a ∧
+      (CofinalTaskSchedule.reservation a.1).1 = .inr (θ.1, s, t, k) ∧
+      ∃ (D : DelayedTask (f a).event.Q)
+        (R : Result (f a).H a.2 (f a).P
+          (scheduledLaunch (f a).H a.2 (f a).P) (f a).event.Q ⟨D.row, oldCol D.target⟩)
+        (hc : DelayedCertificate (f a).event.Q D R),
+        (f a).event.selected = .delayed D R hc ∧
+          Matches (f a).event.Q (f a).event.oldB θ.1 s t k D :=
+  delayed_cofinal_readback (run hCH) (coherent hCH) θ s t base k valid
+
+/-- Support launch and measure labels remain distinct; the new support row
+is born at the outgoing stage a, with its original support index i. -/
+theorem launch_cofinal (hCH : Cardinal.continuum.{0} = ℵ₁) (θ : Stage) (i base : Label) :
+    let f := run hCH
+    ∃ (a : Stage) (hθ : θ < a), base < a.1 ∧
+      (CofinalTaskSchedule.reservation a.1).1 = .inl (θ.1, i) ∧
+      ∀ n, (((f a).birth.V.clopen n : Clopens (K (f a).H)) : Set _) =
+        {x | Homeomorph.setCongr ((coherent hCH θ a hθ).carrier (top (ord θ)))
+          (projection (f a).H (oldRow hθ (newRow (ord θ) θ.2)) x) ∈
+            ((f θ).birth.U i).clopen n} :=
+  launch_cofinal_readback (run hCH) (coherent hCH) θ i base
 
 end D5.S3.Topology.InverseLimit.SignedOrdinalHistory
