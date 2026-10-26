@@ -34,10 +34,14 @@ noncomputable def finalPrefix : Prefix (ω₁ : Ordinal.{0}) :=
     (fun b c _ _ hbc => SignedOrdinalHistory.coherent hCH b c hbc)
 
 /-- The post-run proper slice has the same literal carriers and restrictions. -/
-noncomputable def properSlice {l : Ordinal.{0}} (hl : l < ω₁) : Prefix l :=
-  SignedOrdinalHistoryPast.strictPrefix hl.le
-    (fun b _ => SignedOrdinalHistory.run hCH b)
-    (fun b c _ _ hbc => SignedOrdinalHistory.coherent hCH b c hbc)
+noncomputable def properSlice {l : Ordinal.{0}} (hl : l < ω₁) : Prefix l where
+  carrier := fun c => (finalPrefix hCH).carrier ⟨c.1, c.2.trans hl⟩
+  closed := fun c => (finalPrefix hCH).closed ⟨c.1, c.2.trans hl⟩
+  nonempty := fun c => (finalPrefix hCH).nonempty ⟨c.1, c.2.trans hl⟩
+  compatible := fun a b h x => (finalPrefix hCH).compatible
+    ⟨a.1, a.2.trans hl⟩ ⟨b.1, b.2.trans hl⟩ h x
+  onto := fun a b h y => (finalPrefix hCH).onto
+    ⟨a.1, a.2.trans hl⟩ ⟨b.1, b.2.trans hl⟩ h y
 
 /-- Every proper cutoff includes the actual whole birth at its last row. -/
 noncomputable def properData {l : Ordinal.{0}} (hl : l < ω₁) :
@@ -59,7 +63,8 @@ theorem slice_carrier {l : Ordinal.{0}} (hl : l < ω₁) (c : Coord l) :
 /-- The final carrier at every proper stage is literally the actual run carrier. -/
 theorem carrier_read (b : Stage) (c : Coord (Order.succ (ord b))) :
     (finalPrefix hCH).carrier
-      ⟨c.1, (Order.le_of_lt_succ c.2).trans_lt b.1.2⟩ =
+      ⟨c.1, (show c.1 ≤ ord b from Order.le_of_lt_succ c.2).trans_lt
+        (show ord b < ω₁ from b.1.2)⟩ =
       (SignedOrdinalHistory.run hCH b).H.carrier c :=
   SignedOrdinalHistoryPast.carrier_read le_rfl
     (fun b _ => SignedOrdinalHistory.run hCH b)
@@ -132,14 +137,17 @@ theorem initial_onto : Surjective
       (show (ω : Ordinal.{0}) ≤ ω₁ from Ordinal.omega0_lt_omega_one.le) x.1) := by
   intro y
   let w : (finalPrefix hCH).Space initialStage.1 :=
-    ⟨y, (initial_carrier hCH initialStage.1 le_rfl).symm ▸ mem_univ y⟩
+    ⟨y, by
+      change y ∈ (finalPrefix hCH).carrier initialStage.1
+      rw [initial_carrier hCH initialStage.1 le_rfl]
+      exact mem_univ y⟩
   obtain ⟨x, hx⟩ := (finalPrefix hCH).projection_surjective
     (Cardinal.isSuccLimit_omega 1) initialStage.1 w
   exact ⟨x, congrArg Subtype.val hx⟩
 
 /-- Each permanent reservoir is the original R at the unique outgoing maximum. -/
 noncomputable def reservoir (θ : Stage) (d : Label) (e : Bool) : Set ℕ :=
-  let m : Stage := ⟨max θ.1 d, θ.2.trans (le_max_left _ _)⟩
+  let m : Stage := ⟨max θ.1 d, θ.2.trans (le_max_left (ord θ) d.1)⟩
   (SignedOrdinalHistory.run hCH m).event.result.N
     ⟨ord θ, θ.2, le_max_left _ _⟩ ⟨d.1, le_max_right _ _⟩ (if e then 1 else 0)
 
@@ -149,7 +157,7 @@ theorem slice_N {l : Ordinal.{0}} (hl : l < ω₁) (r d : Coord l)
       reservoir hCH ⟨⟨r.1, r.2.trans hl⟩, hr⟩ ⟨d.1, d.2.trans hl⟩ e := by
   classical
   change (if h : ω ≤ r.1 then _ else ∅) = _
-  rw [dif_pos hr]
+  rw [dite_eq_left hr]
   rfl
 
 /-- At each eligible carrier the permanent N equals the actual incoming N. -/
@@ -159,19 +167,19 @@ theorem reservoir_incoming (θ : Stage) (d : Label) (c : Stage)
       (SignedOrdinalHistory.run hCH c).P.oldN
         (oldRow hθ (newRow (ord θ) θ.2)) (oldRow_ne hθ _)
         ⟨d.1, hd⟩ (if e then 1 else 0) := by
-  let m : Stage := ⟨max θ.1 d, θ.2.trans (le_max_left _ _)⟩
-  have hm : m < c := max_lt hθ hd
+  let m : Stage := ⟨max θ.1 d, θ.2.trans (le_max_left (ord θ) d.1)⟩
+  have hm : m < c := max_lt (show ord θ < ord c from hθ) hd
   exact ((SignedOrdinalHistory.coherent hCH m c hm).arrival
     (ord θ) d.1 θ.2 rfl (if e then 1 else 0)).symm
 
 /-- Original eligible J is read from the incoming predecessor at the carrier. -/
 noncomputable def historicalJ (θ : Stage) (d : Label)
     (c : SignedBallHistoryCapture.Eligible θ d) : Set ℕ :=
-  let C : Stage := ⟨c.1, θ.2.trans ((le_max_left _ _).trans c.2.le)⟩
-  let hθ : θ < C := (le_max_left _ _).trans_lt c.2
+  let C : Stage := ⟨c.1, θ.2.trans ((le_max_left (ord θ) d.1).trans c.2.le)⟩
+  let hθ : θ < C := (le_max_left (ord θ) d.1).trans_lt c.2
   (SignedOrdinalHistory.run hCH C).P.J
     (oldRow hθ (newRow (ord θ) θ.2)) (oldRow_ne hθ _)
-    ⟨d.1, (le_max_right _ _).trans_lt c.2⟩
+    ⟨d.1, (le_max_right (ord θ) d.1).trans_lt c.2⟩
 
 private theorem cast_V_mem {a : Ordinal.{0}} {C D : Set (Cube a)}
     (h : C = D) (W : BirthPack C) (n : ℕ) (x : D) :
@@ -200,10 +208,10 @@ theorem launch (θ : Stage) (i base : Label) :
   intro n
   apply SetLike.coe_injective
   ext x
-  rw [cast_V_mem (top_read hCH a).symm]
-  change _ ↔ (finalPrefix hCH).map θ.1 a.1 hθ.le x ∈
-    ((wholeBirth hCH θ).U i).clopen n
-  rw [cast_U_mem (top_read hCH θ).symm]
+  change (x ∈ (wholeBirth hCH a).V.clopen n) ↔
+    (finalPrefix hCH).map θ.1 a.1 hθ.le x ∈ ((wholeBirth hCH θ).U i).clopen n
+  unfold wholeBirth
+  rw [cast_V_mem, cast_U_mem]
   have hx := congrArg (fun S : Set (K (SignedOrdinalHistory.run hCH a).H) =>
     Homeomorph.setCongr (top_read hCH a) x ∈ S) (hv n)
   exact eq_iff_iff.mp hx

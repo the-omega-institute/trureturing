@@ -7,6 +7,10 @@ internal sealed class SignedOrdinalRealizationEventsDocument : IScribeDocumentDe
     private const string Owner = "D5/S3/Topology/InverseLimit/SignedOrdinalRealizationEvents.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "SignedOrdinalRealizationEvents", H("Same actual events on the literal realization"), Blocks(
+            Describe.Lean(DescribeId.Create("actual-event-prepared-measure-read"),
+                DeclarationHandle.Create(Owner + "prepared_measure_read"), H("Whole prepared measure readback"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Every old prepared whole measure equals the original whole birth on the final literal carrier, with its label and every natural index preserved. Both delayed source and target measures use this same readback."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-event-selected-projection"),
                 DeclarationHandle.Create(Owner + "selected_projection"), H("The actual selected projection"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(

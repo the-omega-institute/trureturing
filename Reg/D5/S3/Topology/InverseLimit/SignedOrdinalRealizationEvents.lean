@@ -21,4 +21,7 @@ theorem ordinary_cofinal_source : ordinary_cofinal_scope := @ordinary_cofinal
 abbrev delayed_cofinal_scope := type_of% (@delayed_cofinal)
 theorem delayed_cofinal_source : delayed_cofinal_scope := @delayed_cofinal
 
+abbrev prepared_measure_read_scope := type_of% (@prepared_measure_read)
+theorem prepared_measure_read_source : prepared_measure_read_scope := @prepared_measure_read
+
 end Reg.D5.S3.Topology.InverseLimit.SignedOrdinalRealizationEvents

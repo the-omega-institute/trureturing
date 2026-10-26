@@ -29,13 +29,13 @@ variable (hCH : Cardinal.continuum.{0} = ℵ₁)
 private theorem reservoirs (θ : Stage) (d : Label) :
     Disjoint (reservoir hCH θ d false) (reservoir hCH θ d true) := by
   exact (SignedOrdinalHistory.run hCH
-    ⟨max θ.1 d, θ.2.trans (le_max_left _ _)⟩).event.result.B _ _
+    ⟨max θ.1 d, θ.2.trans (le_max_left (ord θ) d.1)⟩).event.result.B _ _
 
 private theorem infinite (θ : Stage) (d : Label) (c : Eligible θ d) (e : Bool) :
     (historicalJ hCH θ d c ∩ reservoir hCH θ d e).Infinite := by
-  let C : Stage := ⟨c.1, θ.2.trans ((le_max_left _ _).trans c.2.le)⟩
-  let hθ : θ < C := (le_max_left _ _).trans_lt c.2
-  let hd : d.1 < ord C := (le_max_right _ _).trans_lt c.2
+  let C : Stage := ⟨c.1, θ.2.trans ((le_max_left (ord θ) d.1).trans c.2.le)⟩
+  let hθ : θ < C := (le_max_left (ord θ) d.1).trans_lt c.2
+  let hd : d.1 < ord C := (le_max_right (ord θ) d.1).trans_lt c.2
   rw [reservoir_incoming hCH θ d C hθ hd]
   exact (SignedOrdinalHistory.run hCH C).P.C _ _ _ (if e then 1 else 0)
 
@@ -47,62 +47,80 @@ private theorem directed (θ : Stage) (d : Label) (b c : Eligible θ d)
     · have he' : b = c := Subtype.ext he
       subst c
       exact Filter.Eventually.of_forall (fun _ hn => hn)
-    · let B : Stage := ⟨b.1, θ.2.trans ((le_max_left _ _).trans b.2.le)⟩
-      let C : Stage := ⟨c.1, θ.2.trans ((le_max_left _ _).trans c.2.le)⟩
-      let hθ : θ < B := (le_max_left _ _).trans_lt b.2
+    · let B : Stage := ⟨b.1, θ.2.trans ((le_max_left (ord θ) d.1).trans b.2.le)⟩
+      let C : Stage := ⟨c.1, θ.2.trans ((le_max_left (ord θ) d.1).trans c.2.le)⟩
+      let hθ : θ < B := (le_max_left (ord θ) d.1).trans_lt b.2
       exact (SignedOrdinalHistory.coherent hCH B C hlt).DJ
         (oldRow hθ (newRow (ord θ) θ.2)) (oldRow_ne hθ _)
-        ⟨d.1, (le_max_right _ _).trans_lt b.2⟩
-  simpa only [not_imp, mem_sdiff] using Filter.eventually_cofinite.mp hs
+        ⟨d.1, (le_max_right (ord θ) d.1).trans_lt b.2⟩
+  change (∀ᶠ n in cofinite, n ∈ historicalJ hCH θ d c →
+    n ∈ historicalJ hCH θ d b) at hs
+  apply (Filter.eventually_cofinite.mp hs).subset
+  intro n hn
+  exact fun h => hn.2 (h hn.1)
+
+local instance carrierMeasurable {a : Ordinal.{0}} (C : Set (Cube a)) :
+    MeasurableSpace C := borel C
+local instance carrierBorel {a : Ordinal.{0}} (C : Set (Cube a)) :
+    BorelSpace C := ⟨rfl⟩
+
+private theorem current_proper_f (a : Stage) (r : Rows (ord a))
+    (hr : r ≠ newRow (ord a) a.2) (d : Coord (ord a))
+    {C : Set (Cube (ord a))} {D : Set (Cube r.1)} [CompactSpace C]
+    (hC : C = (SignedOrdinalHistory.run hCH a).H.carrier (top (ord a)))
+    (hD : D = (SignedOrdinalHistory.run hCH a).H.carrier (rowIndex r))
+    (W : BirthPack D)
+    (hnu : ∀ n, HEq (W.measure ⟨d.1, d.2.trans a.1.2⟩ n)
+      ((((SignedOrdinalHistory.run hCH a).P.nu r hr
+        ⟨d.1, d.2.trans a.1.2⟩).1 n).1))
+    (f : C(C, D)) (hf : ∀ x, (f x).1 = restrict r.2.2 x.1)
+    (s : ℕ → SignedMeasure C)
+    (hn : ∀ n, (s n).totalVariation univ = 1)
+    (hm : ∀ n, (s n).map f = W.measure ⟨d.1, d.2.trans a.1.2⟩ n) :
+    ∃ μ : SignedMeasure C, μ.totalVariation.Regular ∧ μ.totalVariation univ ≤ 1 ∧
+      ∀ g : C(C, ℝ), Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
+        (cofinite ⊓ 𝓟 ((SignedOrdinalHistory.run hCH a).P.J r hr d))
+        (𝓝 (NormPreservingLifts.signedFunctional μ g)) := by
+  subst C
+  subst D
+  have hmap : f = projection (SignedOrdinalHistory.run hCH a).H r := by
+    apply ContinuousMap.ext
+    intro x
+    exact Subtype.ext (hf x)
+  apply SignedOrdinalHistory.proper_f hCH a r hr d s ?_ hn
+  intro n
+  have hm' : (s n).map (projection (SignedOrdinalHistory.run hCH a).H r) =
+      W.measure ⟨d.1, d.2.trans a.1.2⟩ n := by
+    simpa only [hmap] using hm n
+  exact hm'.trans (eq_of_heq (hnu n))
 
 private theorem regular_f (θ : Stage) (d : Label) (c : Eligible θ d)
     (s : ℕ → SignedMeasure ((finalPrefix hCH).Space c.1))
-    (hreg : ∀ n, (s n).totalVariation.Regular)
+    (_hreg : ∀ n, (s n).totalVariation.Regular)
     (hn : ∀ n, (s n).totalVariation univ = 1)
     (hm : ∀ n, (s n).map
-      ((finalPrefix hCH).map θ.1 c.1 ((le_max_left _ _).trans c.2.le)) =
+      ((finalPrefix hCH).map θ.1 c.1 ((le_max_left (ord θ) d.1).trans c.2.le)) =
         (((wholeBirth hCH θ).nu d).1 n).1) :
     ∃ μ : SignedMeasure ((finalPrefix hCH).Space c.1), μ.totalVariation.Regular ∧
       μ.totalVariation univ ≤ 1 ∧ ∀ g : C((finalPrefix hCH).Space c.1, ℝ),
         Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
           (cofinite ⊓ 𝓟 (historicalJ hCH θ d c))
           (𝓝 (NormPreservingLifts.signedFunctional μ g)) := by
-  let hl : Order.succ c.1.1 < ω₁ := (Cardinal.isSuccLimit_omega 1).succ_lt c.1.2
-  let r : Coord (Order.succ c.1.1) :=
-    ⟨ord θ, ((le_max_left _ _).trans_lt c.2).trans (Order.lt_succ _)⟩
-  let dd : Coord (Order.succ c.1.1) :=
-    ⟨d.1, ((le_max_right _ _).trans_lt c.2).trans (Order.lt_succ _)⟩
-  let cc : Coord (Order.succ c.1.1) := top c.1.1
-  let seq : ℕ → RegularSigned ((properSlice hCH hl).Space cc) := fun n =>
-    ⟨s n, by
-      letI := hreg n
-      exact RegularSignedLift.regular_jordanParts_of_regular_totalVariation _⟩
-  have hclass (n : ℕ) :
-      (properSlice hCH hl).OldClass (properData hCH hl) r dd cc
-        (show r < cc from (le_max_left _ _).trans_lt c.2).le n (seq n) := by
-    refine ⟨hn n, ?_⟩
-    rw [slice_nu hCH hl r θ.2]
-    exact hm n
-  obtain ⟨mu, hb, hc⟩ := (properLaws hCH hl).F r dd cc
-    ((le_max_left _ _).trans_lt c.2) θ.2 ((le_max_right _ _).trans_lt c.2) seq hclass
-  let C : Stage := ⟨c.1, θ.2.trans ((le_max_left _ _).trans c.2.le)⟩
-  let hθ : θ < C := (le_max_left _ _).trans_lt c.2
-  have hj : (properData hCH hl).J r dd cc = historicalJ hCH θ d c :=
-    slice_J hCH hl C (Order.lt_succ _) _ (oldRow_ne hθ _) _
-  rw [hj] at hc
-  letI : mu.1.toJordanDecomposition.posPart.Regular := mu.2.1
-  letI : mu.1.toJordanDecomposition.negPart.Regular := mu.2.2
-  refine ⟨mu.1, ?_, ?_, ?_⟩
-  · change (mu.1.toJordanDecomposition.posPart + mu.1.toJordanDecomposition.negPart).Regular
-    infer_instance
-  · exact (ENNReal.toReal_le_toReal (measure_ne_top _ _) (by norm_num)).mp
-      (by simpa only [Measure.real, ENNReal.toReal_one] using hb)
-  · intro g
-    have hg := (tendsto_iff_forall_eval_tendsto_topDualPairing.mp hc) g
-    change Tendsto (fun n => NormPreservingLifts.signedFunctional (s n) g)
-      (along (historicalJ hCH θ d c))
-      (𝓝 (NormPreservingLifts.signedFunctional mu.1 g)) at hg
-    simpa only [along, Nat.cofinite_eq_atTop] using hg
+  let A : Stage := ⟨c.1, θ.2.trans ((le_max_left (ord θ) d.1).trans c.2.le)⟩
+  let hθ : θ < A := (le_max_left (ord θ) d.1).trans_lt c.2
+  let hd : d.1 < ord A := (le_max_right (ord θ) d.1).trans_lt c.2
+  let r := oldRow hθ (newRow (ord θ) θ.2)
+  let hr := oldRow_ne hθ (newRow (ord θ) θ.2)
+  have hD := carrier_read hCH A (rowIndex r)
+  have hp : HEq (wholeBirth hCH θ) (SignedOrdinalHistory.run hCH A).oldBirth r hr :=
+    (wholeBirth_read hCH θ).trans
+      ((heq_of_eq (SignedOrdinalHistory.coherent hCH θ A hθ).birth).trans
+        (BirthPack.cast_heq _ _)).symm
+  have hnu := fun n => BirthPack.heq_measure hD _ _ hp d n
+  exact current_proper_f hCH A r hr ⟨d.1, hd⟩
+    (C := (finalPrefix hCH).carrier c.1) (D := (finalPrefix hCH).carrier θ.1)
+    (top_read hCH A) hD (wholeBirth hCH θ) hnu
+    ((finalPrefix hCH).map θ.1 c.1 hθ.le) (fun _ => rfl) s hn hm
 
 /-- Concrete capture data are populated on the very final Prefix diagram.
 The actual run remains available with all its Q/R and quantitative G paths. -/
