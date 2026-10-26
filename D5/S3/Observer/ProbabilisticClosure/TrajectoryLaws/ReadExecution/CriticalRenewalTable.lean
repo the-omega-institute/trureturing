@@ -972,6 +972,8 @@ def phaseAt (J : ℕ) (b : Block) : ℕ → Phase.T J
 def increment {J : ℕ} (t : Tick J) (b : Block) : ℤ :=
   t.increment (phaseAt J b b.zeros.length) b.tick
 
+attribute [local simp] phaseAt phaseAt.eq_def
+
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalPaths
 
 end

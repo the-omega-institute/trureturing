@@ -1,10 +1,26 @@
-# Critical renewal one-gap signal, moments and rounding
+# Critical renewal actual one-gap law and estimates
 
 ## Abstract
 
-One terminal reward and one common rounded tick under the exact renewal source.
+Actual terminal marks and their uniform source-specific estimates.
 
-**Theorem 1.1 (Uniform source-specific one-gap estimates).**
+**Theorem 1.1 (A mark from its own actual gap).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap.block_pair_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap.block_pair_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural J, any duration mass function f and immutable Tick J, the pushforward of blockLaw f t under b mapped to (length(b.zeros),increment(t,b)) is exactly pairLaw f t.
+
+zeroTraceLaw starts with the empty zero history and phase zero. At each successive zero it samples the capped phase coin at the current phase and appends the outcome, retaining the terminal phase as a proof coordinate. markedTraceLaw then samples the one tick coin at that phase. The resulting Block contains only the finite zero outcomes and its tick outcome; its duration is the length of that very history.
+
+The support induction identifies both the trace length and terminal phase, and the marginal phase induction gives GeometricPhaseOccupation.finiteCappedLaw. Thus the potential pair is the duration and mark of these same coins, with no independence claim inside a pair.
+
+**Theorem 1.2 (Uniform source-specific one-gap estimates).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap.uniform_one_gap`
 
@@ -30,6 +46,6 @@ For every signed x, adjacent-grid rounding is unbiased and has square mean x^2+d
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap.block_pair_law`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap.uniform_one_gap`
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/CriticalRenewalSource](../CriticalRenewalSource.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalTable](CriticalRenewalTable.md)

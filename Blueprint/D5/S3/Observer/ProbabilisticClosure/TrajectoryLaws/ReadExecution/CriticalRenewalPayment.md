@@ -25,5 +25,5 @@ The stopping times retain their infinite value on nonterminating paths. Natural-
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalPayment.actual_source_payment`
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/CriticalRenewalSource](../CriticalRenewalSource.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalFreshBlocks](CriticalRenewalFreshBlocks.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalPaths](CriticalRenewalPaths.md)

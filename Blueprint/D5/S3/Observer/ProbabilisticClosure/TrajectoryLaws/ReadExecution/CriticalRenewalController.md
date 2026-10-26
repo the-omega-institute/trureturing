@@ -55,6 +55,5 @@ The scalar neighborhood bounds mean(i) by Cmu/s and 1+beta(i) by Cbeta/s. The lo
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalController.filtration`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalController.history`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalController.uniform_counted_controller`
-- Dependency: [D5/S3/Estimation/SequentialDecisionRisk/CriticalRenewalStoppedDrift](../../../../Estimation/SequentialDecisionRisk/CriticalRenewalStoppedDrift.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalOneGap](CriticalRenewalOneGap.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalPayment](CriticalRenewalPayment.md)
