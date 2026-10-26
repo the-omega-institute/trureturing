@@ -607,6 +607,13 @@ O remains a separate conditional hypothesis. No formal CH instance of O,
 full signed-ball endpoint, anti-homeomorphism result or official solution of
 Problem 8.2 is established by this criterion.
 
+`SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation`
+also proves, under exactly O, that every convergent point sequence is
+eventually equal to its limit. It requires no metric, first-countability or
+injectivity assumption. The repository-derived proof uses actual signed
+Dirac measures and the finite/infinite range distinction; it supplies no
+CH instance of O or completed global CH construction.
+
 ## The full signed-ball analytic reduction
 
 Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
@@ -775,3 +782,31 @@ v2. The newest title/abstract query for "Talagrand compacta" or "2DCP"
 returned this paper and the earlier mathematical paper 2606.27568v1,
 alongside three unrelated materials-science matches. No later CH answer
 was identified within that search; this is not a proof of global novelty.
+
+
+## Literal proper-limit predecessor
+
+`SignedOrdinalLimit.construct` takes an actual strict `Prefix l`, with
+`omega < l < omega-one` and `IsSuccLimit l`, an archive of the original
+whole born U/V/nu families and their onto proofs, the permanent birth
+archive, historical I/J, the genuine earlier omega-stage base invariant,
+and exactly `H.Laws A.data`. It constructs the literal `Prefix (succ l)`
+and its actual `SignedOrdinalSuccessor.Predecessor`. Every old carrier is
+unchanged, the new top is `H.limitCarrier`, and all maps are literal
+coordinate restrictions with proved onto fields.
+
+The entire dependent U/V/nu pack is cast once along the old-carrier
+equality, preserving every original Label and its onto proof. Permanent
+N reads the same arrival entry at `succ(max(row,label))`; the limit
+introduces no new birth. `Result.extension` retains the very same proper-
+limit Extension chosen by the construction. Its DI/DJ and regular
+norm-at-most-one F remain available, with exact predecessor I/J readbacks.
+The weaker predecessor F accepts arbitrary original signed-measure
+sequences: proper compact metrizability supplies regularity internally.
+
+This is the local proper-limit step for the ordinal recursion, not the
+global well-founded history or a solution of Problem 8.2. Its authored
+public additions are data structures and construction definitions; the
+transport proofs are private and consumed. The inherited information
+audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750.
