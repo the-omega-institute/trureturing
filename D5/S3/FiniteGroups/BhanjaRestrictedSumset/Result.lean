@@ -16,27 +16,20 @@ Per declaration: name | proof_shape | escape_witness | consumers.
   doubleZero | bind-only | none | oddSmul, pairSum
   oddSmul | bind-only | none | restrictedOdd
   pairSum | bind-only | none | restrictedOdd
-  restrictedOdd | content | restrictedOdd | elementary_two_group_gap
+  restrictedOdd | bind-only | none | elementary_two_group_gap
   largeDouble | bind-only | none | largeIterated
   largeIterated | bind-only | none | elementary_two_group_gap
-  elementary_two_group_gap | content | elementary_two_group_gap | elementary_two_group_minima
+  elementary_two_group_gap | bind-only | none | elementary_two_group_minima
   minSize | bind-only (definition) | none | claim, elementary_two_group_minima, result
   minRestrictedSize | bind-only (definition) | none | claim, elementary_two_group_minima, result
   claim | bind-only (definition) | none | result
   uniformMinimum | bind-only | none | elementary_two_group_minima
-  elementary_two_group_minima | content | elementary_two_group_gap | result
-  result | content | elementary_two_group_gap | settling result
-The content witness restrictedOdd constructs both inclusions by resolving a
-nonempty function image of cardinality at most two into a singleton or pair,
-then reducing the corresponding multiplicities by parity in exponent two.
-The scalar parity calculation pairSum itself is normalization, not a witness.
-The function-image reduction is not a direct upstream instantiation or scalar
-normalization. It remains on the live path through elementary_two_group_gap
-and elementary_two_group_minima to result. In contrast, largeIterated binds
-largeDouble and Finset.card_nsmul_mono: the cardinalities of 2 • A and h • A
-are squeezed against the group order. It supplies no escape witness.
-The general family, not a finite table, supplies the strict gap used by result.
-The certified instance at m=2, k=h=3, r=2 refutes the closed claim.
+  elementary_two_group_minima | bind-only | none | result
+  result | bind-only | none | settling result
+Finset.card_eq_one / Finset.card_eq_two extract singleton or pair images;
+parity in exponent two gives the restricted identity, while large-set coverage
+and Finset.card_nsmul_mono give the ordinary identity.
+CLAUDE.md §3.2 permits this bind-only resolution of an external named open problem.
 -/
 
 import Mathlib.Tactic

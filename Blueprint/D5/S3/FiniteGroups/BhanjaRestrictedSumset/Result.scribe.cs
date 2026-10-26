@@ -17,7 +17,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "hSumset"),
                 H("Ordinary h-fold sumset"), StatementSource.FromAuthor(Disp(Group(All("h", N, All("A", FS(G), Eq(Call("hSumset", h, A), Smul(h, A))))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The ordinary sumset is the existing pointwise natural scalar action on finsets. Finset.mem_nsmul characterizes it by h choices in the subtype of A, and List.sum_ofFn identifies their sum with a sum indexed by Fin h."))),
+                Blocks(Paragraph(Text("The ordinary sumset is the existing pointwise natural scalar action on finsets."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("restricted-sumset"),
                 DeclarationHandle.Create(Owner + "restrictedSumset"),

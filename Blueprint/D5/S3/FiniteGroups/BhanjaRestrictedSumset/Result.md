@@ -16,7 +16,7 @@ $$\forall G \in Type*,\; [\operatorname{AddCommGroup}\left(G\right)] [\operatorn
 
 *Commentary.*
 
-The ordinary sumset is the existing pointwise natural scalar action on finsets. Finset.mem_nsmul characterizes it by h choices in the subtype of A, and List.sum_ofFn identifies their sum with a sum indexed by Fin h.
+The ordinary sumset is the existing pointwise natural scalar action on finsets.
 
 **Definition 1.2 (At most r different summands).**
 
