@@ -158,6 +158,7 @@ private def prepareAdditions (source base : Environment) (index : FactIndex) :
 
 private def prepare (source base : Environment) (request : Request)
     (paired : Bool) : IO (Except (Failure × String) (Environment × ConstantInfo × Option Attempt)) := do
+  let phase ← IO.mkRef "source-check"
   let work : CoreM (Environment × ConstantInfo × Option Attempt) := MetaM.run' do
     let target ← checkedSource source request.target
     unless ← withEnv source (isProp target.type) do
@@ -174,8 +175,10 @@ private def prepare (source base : Environment) (request : Request)
       if let some info := (source.setExporting false).find? n then
         roots := roots ++ info.type.getUsedConstants
     let preflightStart ← IO.getNumHeartbeats
+    phase.set "vocabulary-preflight"
     vocabularyBudgetPreflight source roots
     let preflightUsed := (← IO.getNumHeartbeats) - preflightStart
+    phase.set "target-vocabulary"
     let type ← transportStatement transport request.target target.type
     let target := match target with
       | .thmInfo value => ConstantInfo.thmInfo {value with type}
@@ -183,8 +186,10 @@ private def prepare (source base : Environment) (request : Request)
       | other => other
     -- Both arms receive exactly the vocabulary of T and all registered S types.
     for n in request.additions do
+      phase.set s!"structure-statement:{n}"
       if let some info := (source.setExporting false).find? n then
         discard <| transportStatement transport n info.type
+    phase.set "vocabulary-cleanliness"
     checkTargetVocabularyProjections source base target.type
     checkVocabularyClean source base (← regenerated.get)
     let accounted ← searchHeartbeats.get
@@ -193,19 +198,26 @@ private def prepare (source base : Environment) (request : Request)
         {reader with initHeartbeats := reader.initHeartbeats + excluded}) do
       if paired then
         let index ← factIndex
+        phase.set "structure-presentation"
         let (types, used) ← prepareAdditions source base index request.additions.toList #[]
         -- Continue with the same allocation consumed by nonpresentation work.
         -- prepareAdditions adjusts only its recursive continuation's reader.
         withTheReader Core.Context (fun ctx => {ctx with initHeartbeats := ctx.initHeartbeats + used}) do
           for type in types do
+            phase.set "structure-type-transport"
             discard <| transportStatement transport request.target type
-          for n in request.additions do structureVocabulary transport n
+          for n in request.additions do
+            phase.set s!"structure-vocabulary:{n}"
+            structureVocabulary transport n
+          phase.set "structure-vocabulary-cleanliness"
           checkVocabularyClean source base (← regenerated.get)
           let extraSearch := (← searchHeartbeats.get) - accounted
           withTheReader Core.Context (fun ctx =>
               {ctx with initHeartbeats := ctx.initHeartbeats + extraSearch}) do
+            phase.set "collection-leak"
             if ← collectionLeak target.type types then throwError "search.structure_collection_restatement"
             for n in request.additions do
+              phase.set s!"structure-copy:{n}"
               copyStructure source request.target target.type n index
       return (← getEnv, target, none)
   try
@@ -220,7 +232,14 @@ private def prepare (source base : Environment) (request : Request)
       let failure := if ex.isMaxHeartbeat then Failure.heartbeat
         else if ex.isInterrupt then .cancelled
         else if ex.isRuntime then .execution else .isolation
-      return .error (failure, ← ex.toMessageData.toString)
+      let arm := if paired then "paired" else "baseline"
+      let detail ← ex.toMessageData.toString
+      let stage ← phase.get
+      let reason := if ex.isMaxHeartbeat then
+          s!"search.isolation_reconstruction_heartbeat: arm={arm};stage={stage};\
+            limit={reconstructionBudget};{detail}"
+        else s!"{detail};isolation_arm={arm};isolation_stage={stage}"
+      return .error (failure, reason)
   catch ex => return .error (.execution, ex.toString)
 
 /-- Provenance uses source identity, never program size as a reuse criterion.
