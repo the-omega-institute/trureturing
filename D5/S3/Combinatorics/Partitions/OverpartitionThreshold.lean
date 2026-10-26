@@ -45,7 +45,7 @@ private def weight {n : ℕ} (p : Nat.Partition n) : ℤ := 2 ^ p.parts.toFinset
 private theorem sum_marks {n : ℕ} (f : Nat.Partition n → ℤ) :
     (∑ o : Overpartition n, f o.1) = ∑ p : Nat.Partition n, weight p * f p := by
   classical
-  simp [Overpartition, Fintype.sum_sigma, weight, Fintype.card_coe, Finset.card_powerset]
+  simp [Overpartition, Fintype.sum_sigma, weight, Finset.card_powerset]
 
 private theorem corner_inverse (d : YoungDiagram) (r : ℕ) (hr : r ∈ d.rowLens) :
     d.rowLen (d.colLen (r - 1) - 1) = r := by
@@ -209,7 +209,7 @@ private theorem threshold_shift (k n r : ℕ) (hk : 0 < k) (hr : 0 < r)
   · have hm' := Multiset.count_eq_zero.mpr hm
     simp [hm, hm']
 
-private theorem threshold_zero (k n r : ℕ) (hr : 0 < r) (hn : n < k * r) :
+private theorem threshold_zero (k n r : ℕ) (hn : n < k * r) :
     threshold k n r = 0 := by
   classical
   apply Finset.sum_eq_zero
@@ -318,7 +318,9 @@ private theorem frequency_insert (j n : ℕ) (hj : 0 < j) (hn : j ≤ n)
 private theorem N_step (j n : ℕ) (hj : 0 < j) (hn : j ≤ n) :
     N j n = N j (n - j) + count (n - j) := by
   classical
-  rw [N_frequency, N_frequency, ← Finset.sum_add_distrib]
+  rw [N_frequency, N_frequency]
+  unfold count
+  rw [← Finset.sum_add_distrib]
   have hs : (∑ p : {p : Nat.Partition n // j ∈ p.parts}, frequency j p.1) =
       ∑ p : Nat.Partition n, frequency j p := by
     rw [← Finset.sum_subtype (Finset.univ.filter (fun p : Nat.Partition n =>
@@ -339,5 +341,182 @@ private theorem N_zero (j n : ℕ) (hn : n < j) : N j n = 0 := by
   apply Finset.sum_eq_zero
   intro p _
   exact frequency_absent j p (fun hm => Nat.not_le_of_lt hn (p.le_of_mem_parts hm))
+
+private def B (j n : ℕ) : ℤ :=
+  ∑ r ∈ Finset.range (n / j), count (n - (r + 1) * j)
+
+private theorem B_step (j n : ℕ) (hj : 0 < j) (hn : j ≤ n) :
+    B j n = B j (n - j) + count (n - j) := by
+  have hd : n / j = (n - j) / j + 1 := by
+    conv_lhs => rw [← Nat.sub_add_cancel hn]
+    exact Nat.add_div_right (n - j) hj
+  unfold B
+  rw [hd, Finset.sum_range_succ']
+  congr 1
+  apply Finset.sum_congr rfl
+  intro r _
+  congr 1
+  rw [show (r + 1 + 1) * j = j + (r + 1) * j by ring, Nat.sub_add_eq]
+
+private theorem N_B (j n : ℕ) (hj : 0 < j) : N j n = B j n := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    by_cases hn : j ≤ n
+    · rw [N_step j n hj hn, B_step j n hj hn, ih (n - j) (by omega)]
+    · rw [N_zero j n (by omega)]
+      simp [B, Nat.div_eq_of_lt (by omega : n < j)]
+
+private def A (k n : ℕ) : ℤ := ∑ r ∈ Finset.Icc 1 n, threshold k n r
+
+private theorem B_interval (j n : ℕ) :
+    B j n = ∑ r ∈ Finset.Icc 1 (n / j), count (n - j * r) := by
+  unfold B
+  rw [show Finset.Icc 1 (n / j) = Finset.Ico 1 (n / j + 1) by ext; simp; omega,
+    Finset.sum_Ico_eq_sum_range]
+  simp only [Nat.add_sub_cancel]
+  apply Finset.sum_congr rfl
+  intro r _
+  congr 1
+  ring
+
+private theorem A_step (k n : ℕ) (hk : 0 < k) :
+    A k n + A (k + 1) n = 2 * N k n := by
+  classical
+  rw [N_B k n hk, B_interval]
+  unfold A
+  rw [← Finset.sum_add_distrib, Finset.mul_sum]
+  have hb : n / k ≤ n := Nat.div_le_self n k
+  have he : (∑ r ∈ Finset.Icc 1 n, threshold k n r + threshold (k + 1) n r) =
+      ∑ r ∈ Finset.Icc 1 n, if r ≤ n / k then 2 * count (n - k * r) else 0 := by
+    apply Finset.sum_congr rfl
+    intro r hr
+    have rp : 0 < r := (Finset.mem_Icc.mp hr).1
+    by_cases h : r ≤ n / k
+    · rw [if_pos h]
+      exact threshold_shift k n r hk rp (by
+        have := (Nat.le_div_iff_mul_le hk).mp h
+        nlinarith)
+    · have hnr : n < k * r := by
+        have := (Nat.le_div_iff_mul_le hk).not.mp h
+        nlinarith
+      rw [if_neg h, threshold_zero k n r hnr,
+        threshold_zero (k + 1) n r (by nlinarith)]
+      simp
+  rw [he, ← Finset.sum_filter]
+  congr 1
+  ext r
+  simp only [Finset.mem_filter, Finset.mem_Icc]
+  omega
+
+private theorem sum_threshold_marks (k n r : ℕ) :
+    (∑ o : Overpartition n, if k ≤ multiplicity o r then (1 : ℤ) else 0) =
+      threshold k n r := by
+  classical
+  change (∑ o : Overpartition n, if k ≤ o.1.parts.count r then (1 : ℤ) else 0) = _
+  rw [sum_marks]
+  simp [threshold, mul_ite]
+
+private theorem complement (k n : ℕ) (hk : 0 < k) : U k n + A k n = T n := by
+  classical
+  have local_count (o : Overpartition n) :
+      (((Finset.Icc 1 (largest o)).filter (fun r => multiplicity o r < k)).card : ℤ) +
+        (∑ r ∈ Finset.Icc 1 n, if k ≤ multiplicity o r then (1 : ℤ) else 0) =
+      (largest o : ℤ) := by
+    have hM : largest o ≤ n := by
+      apply Finset.sup_le
+      intro r hr
+      exact o.1.le_of_mem_parts (Multiset.mem_toFinset.mp hr)
+    have he : (∑ r ∈ Finset.Icc 1 (largest o),
+        if k ≤ multiplicity o r then (1 : ℤ) else 0) =
+        ∑ r ∈ Finset.Icc 1 n, if k ≤ multiplicity o r then (1 : ℤ) else 0 := by
+      apply Finset.sum_subset (by intro r hr; simp only [Finset.mem_Icc] at hr ⊢; omega)
+      intro r hr hnot
+      have hlarge : largest o < r := by
+        simp only [Finset.mem_Icc, not_and_or, not_le] at hnot
+        have := (Finset.mem_Icc.mp hr).1
+        omega
+      have hm : multiplicity o r = 0 := by
+        apply Multiset.count_eq_zero.mpr
+        intro hm
+        have : r ≤ largest o := Finset.le_sup (f := id) (Multiset.mem_toFinset.mpr hm)
+        omega
+      simp [hm, hk.ne']
+    rw [← he]
+    have hl : (((Finset.Icc 1 (largest o)).filter
+        (fun r => multiplicity o r < k)).card : ℤ) =
+        ∑ r ∈ Finset.Icc 1 (largest o), if multiplicity o r < k then (1 : ℤ) else 0 := by
+      simp
+    rw [hl, ← Finset.sum_add_distrib]
+    calc
+      _ = ∑ _r ∈ Finset.Icc 1 (largest o), (1 : ℤ) := by
+        apply Finset.sum_congr rfl
+        intro r _
+        split_ifs <;> omega
+      _ = (largest o : ℤ) := by simp
+  have ha : (∑ o : Overpartition n, ∑ r ∈ Finset.Icc 1 n,
+      if k ≤ multiplicity o r then (1 : ℤ) else 0) = A k n := by
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl (fun r _ => sum_threshold_marks k n r)
+  have h := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
+    (fun o _ => local_count o)
+  rw [Finset.sum_add_distrib, ha, sum_largest] at h
+  exact h
+
+private theorem A_large (k n : ℕ) (hk : n < k) : A k n = 0 := by
+  apply Finset.sum_eq_zero
+  intro r hr
+  have rp : 0 < r := (Finset.mem_Icc.mp hr).1
+  exact threshold_zero k n r (by nlinarith)
+
+private def alternating (k n : ℕ) : ℤ :=
+  ∑ j ∈ Finset.Icc k n, (-1 : ℤ) ^ (j - k) * N j n
+
+private theorem alternating_step (k n : ℕ) (hkn : k ≤ n) :
+    alternating k n = N k n - alternating (k + 1) n := by
+  classical
+  have hi : Finset.Icc k n = insert k (Finset.Icc (k + 1) n) := by
+    ext j
+    simp only [Finset.mem_insert, Finset.mem_Icc]
+    omega
+  unfold alternating
+  rw [hi, Finset.sum_insert (by simp)]
+  simp only [Nat.sub_self, pow_zero, one_mul]
+  have he : (∑ j ∈ Finset.Icc (k + 1) n, (-1 : ℤ) ^ (j - k) * N j n) =
+      -(∑ j ∈ Finset.Icc (k + 1) n, (-1 : ℤ) ^ (j - (k + 1)) * N j n) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hjk := (Finset.mem_Icc.mp hj).1
+    rw [show j - k = (j - (k + 1)) + 1 by omega, pow_succ]
+    ring
+  rw [he]
+  ring
+
+private theorem A_alternating (k n : ℕ) (hk : 0 < k) :
+    A k n = 2 * alternating k n := by
+  suffices h : ∀ d k, 0 < k → n + 1 - k = d → A k n = 2 * alternating k n from
+    h (n + 1 - k) k hk rfl
+  intro d
+  induction d with
+  | zero =>
+    intro k hk hd
+    have hnk : n < k := by omega
+    rw [A_large k n hnk]
+    simp [alternating, Finset.Icc_eq_empty_of_lt hnk]
+  | succ d ih =>
+    intro k hk hd
+    have hkn : k ≤ n := by omega
+    have hi := ih (k + 1) (by omega) (by omega)
+    have hs := A_step k n hk
+    rw [alternating_step k n hkn]
+    linarith
+
+/-- The full finite overpartition analogue, including the empty and k>n cases. -/
+theorem result (k n : ℕ) (hk : 0 < k) :
+    U k n = T n - 2 * ∑ j ∈ Finset.Icc k n, (-1 : ℤ) ^ (j - k) * N j n := by
+  have hc := complement k n hk
+  have ha := A_alternating k n hk
+  change A k n = 2 * ∑ j ∈ Finset.Icc k n, (-1 : ℤ) ^ (j - k) * N j n at ha
+  linarith
 
 end D5.S3.Combinatorics.Partitions.OverpartitionThreshold
