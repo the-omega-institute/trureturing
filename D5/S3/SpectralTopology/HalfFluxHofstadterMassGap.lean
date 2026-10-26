@@ -42,6 +42,7 @@ def bloch (k₁ k₂ m : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
 
 theorem bloch_isHermitian (k₁ k₂ m : ℝ) : (bloch k₁ k₂ m).IsHermitian := by
   change (bloch k₁ k₂ m)ᴴ = bloch k₁ k₂ m
+  rw [bloch.eq_1]
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [bloch, Matrix.conjTranspose_apply, phase_conj, phase_conj_neg, neg_mul] <;> ring
@@ -96,7 +97,8 @@ private theorem offDiagonal_normSq (z₁ z₂ : ℂ)
     simpa [Complex.normSq_apply, ← sq] using (Complex.sq_norm z₁).symm.trans (by rw [h₁]; norm_num)
   have hz₂ : z₂.re ^ 2 + z₂.im ^ 2 = 1 := by
     simpa [Complex.normSq_apply, ← sq] using (Complex.sq_norm z₂).symm.trans (by rw [h₂]; norm_num)
-  simp only [offDiagonal, Complex.normSq_apply, div_re, div_im, mul_re, mul_im,
+  rw [offDiagonal.eq_1]
+  simp only [Complex.normSq_apply, div_re, div_im, mul_re, mul_im,
     sub_re, sub_im, add_re, add_im, one_re, one_im, I_re, I_im,
     re_ofNat, im_ofNat]
   norm_num
@@ -106,8 +108,8 @@ private theorem offDiagonal_normSq (z₁ z₂ : ℂ)
 private theorem schur_det (z₁ z₂ : ℂ) (d : ℝ)
     (h₁ : ‖z₁‖ = 1) (h₂ : ‖z₂‖ = 1) :
     (schur z₁ z₂ d).det = -(gapPolynomial z₁.im z₂.im d : ℂ) := by
-  rw [Matrix.det_fin_two]
-  simp only [schur, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
+  rw [schur.eq_1, Matrix.det_fin_two]
+  simp only [ Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_fin_one]
   rw [Complex.mul_conj]
   rw [offDiagonal_normSq z₁ z₂ h₁ h₂]
@@ -130,8 +132,9 @@ private def shifted (k₁ k₂ m : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
   bloch k₁ k₂ m + (-2 : ℂ) • 1
 
 private theorem shifted_isHermitian (k₁ k₂ m : ℝ) :
-    (shifted k₁ k₂ m).IsHermitian :=
-  (bloch_isHermitian k₁ k₂ m).add
+    (shifted k₁ k₂ m).IsHermitian := by
+  rw [shifted.eq_1]
+  exact (bloch_isHermitian k₁ k₂ m).add
     (Matrix.isHermitian_one.smul (IsSelfAdjoint.natCast 2).neg)
 
 private def reorder : Equiv.Perm (Fin 4) :=
@@ -148,6 +151,7 @@ private theorem blockMatrix_eq (k₁ k₂ m : ℝ) :
         (coupling (exp (2 * I * k₁)) (exp (2 * I * k₂)))
         (coupling (exp (2 * I * k₁)) (exp (2 * I * k₂)))ᴴ
         ((-2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) := by
+  rw [blockMatrix.eq_1, reorder.eq_1]
   ext (i | i) (j | j) <;> fin_cases i <;> fin_cases j <;>
     norm_num [blockMatrix, shifted, bloch, reorder, coupling, finSumFinEquiv,
       Equiv.swap_apply_def, Matrix.reindex_apply, Matrix.conjTranspose_apply,
@@ -161,6 +165,7 @@ private theorem schur_eq (z₁ z₂ : ℂ) (d : ℝ)
     simpa [Complex.normSq_apply, ← sq] using (Complex.sq_norm z₁).symm.trans (by rw [h₁]; norm_num)
   have hz₂ : z₂.re ^ 2 + z₂.im ^ 2 = 1 := by
     simpa [Complex.normSq_apply, ← sq] using (Complex.sq_norm z₂).symm.trans (by rw [h₂]; norm_num)
+  rw [coupling.eq_1]
   ext i j
   simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply,
     Fin.sum_univ_two]
@@ -174,7 +179,8 @@ private def eliminator (z₁ z₂ : ℂ) :
   fromBlocks 1 0 ((1 / 2 : ℂ) • (coupling z₁ z₂)ᴴ) 1
 
 private theorem eliminator_det (z₁ z₂ : ℂ) : (eliminator z₁ z₂).det = 1 := by
-  simp [eliminator]
+  rw [eliminator.eq_1]
+  simp
 
 private theorem schur_congruence (k₁ k₂ m : ℝ) :
     let z₁ := exp (2 * I * k₁)
@@ -215,7 +221,8 @@ private theorem gap_positive (k₁ k₂ m : ℝ) (hm₁ : -2 ≤ m) (hm : m ≠ 
 
 private theorem shifted_band (k₁ k₂ m : ℝ) (j : Fin 4) :
     (shifted_isHermitian k₁ k₂ m).eigenvalues₀ j.rev = band k₁ k₂ m j - 2 := by
-  simpa only [band, sub_eq_add_neg, Complex.ofReal_neg, Complex.ofReal_ofNat] using
+  rw [band.eq_1]
+  simpa only [ sub_eq_add_neg, Complex.ofReal_neg, Complex.ofReal_ofNat] using
     D5.S3.Quantum.Matrix.LinGProperty.eigenvalues_zero_add_scalar
       (bloch k₁ k₂ m) (bloch_isHermitian k₁ k₂ m) (-2)
       (by simpa only [shifted, Complex.ofReal_neg, Complex.ofReal_ofNat] using
