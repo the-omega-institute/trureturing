@@ -14,8 +14,9 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate Kronecker
 open Complex Matrix
+open D5.S3.Quantum.Measurements.CliffordJointMeasurability.ShiftedFourierOperatorCertificate
 
 namespace D5.S3.Quantum.Contextuality.SymmetricSatwapMaximalViolation
 
@@ -23,8 +24,8 @@ def omegaPow (d : ℕ) (t : ℝ) : ℂ :=
   Complex.exp (2 * Real.pi * I * (t : ℂ) / d)
 
 def twMatrix (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
-  Matrix.diagonal (fun i => if i.val = 0 then -1 else 1) *
-    (fun i j => (1 : ℂ) / ((d : ℂ) *
+  Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
+    (Matrix.of fun (i j : Fin d) => (1 : ℂ) / ((d : ℂ) *
       (Real.sin (((i.val : ℝ) - j.val - 1 / 2) * Real.pi / d) : ℂ)))
 
 private def basisProjector (d : ℕ) (a : Fin d) : Matrix (Fin d) (Fin d) ℂ :=
@@ -78,50 +79,409 @@ private def gaugeF (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
   Matrix.diagonal (fun b => -I * omegaPow d (-((b.val : ℝ) + 1 / 2) / 2))
 
 private def transport (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
-  Matrix.diagonal (fun i => if i.val = 0 then -1 else 1) *
+  Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
     (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ
 
 private def state (d : ℕ) : EuclideanSpace ℂ (Fin d × Fin d) :=
   WithLp.toLp 2 (fun ij =>
     (∑ m, transport d ij.1 m * transport d ij.2 m) / Real.sqrt d)
 
+private lemma omega_zero (d : ℕ) : omegaPow d 0 = 1 := by
+  simp only [omegaPow, Complex.ofReal_zero, mul_zero, zero_div, Complex.exp_zero]
+
+private lemma omega_mul (d : ℕ) (s t : ℝ) :
+    omegaPow d s * omegaPow d t = omegaPow d (s + t) := by
+  unfold omegaPow
+  rw [← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+private lemma omega_conj (d : ℕ) (t : ℝ) : conj (omegaPow d t) = omegaPow d (-t) := by
+  unfold omegaPow
+  rw [← Complex.exp_conj]
+  congr 1
+  simp only [map_div₀, map_mul, map_ofNat, Complex.conj_ofReal, Complex.conj_I,
+    map_natCast, Complex.ofReal_neg]
+  ring
+
 private lemma fourier_unitary (d : ℕ) (hd : 2 ≤ d) (x : Fin 2) :
     (fourierBasis d x)ᴴ * fourierBasis d x = 1 := by
-  sorry
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
+    exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d)
+  ext a b
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  have ht (j : Fin d) :
+      (fourierBasis d x)ᴴ a j * fourierBasis d x j b =
+        omegaPow d ((j.val : ℝ) * ((b.val : ℝ) - a.val)) / d := by
+    change conj (omegaPow d _ / (Real.sqrt d : ℂ)) *
+      (omegaPow d _ / (Real.sqrt d : ℂ)) = _
+    rw [map_div₀, Complex.conj_ofReal, omega_conj, div_mul_div_comm, hs, omega_mul]
+    congr 2
+    ring
+  simp_rw [ht]
+  rw [← Finset.sum_div]
+  have he : (∑ j : Fin d, omegaPow d ((j.val : ℝ) * ((b.val : ℝ) - a.val))) =
+      if b = a then (d : ℂ) else 0 := by
+    change (∑ j : Fin d, (fun j : ℕ => omegaPow d
+      ((j : ℝ) * ((b.val : ℝ) - a.val))) j) = _
+    rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => omegaPow d
+      ((j : ℝ) * ((b.val : ℝ) - a.val))) d]
+    convert exponential_sum_orthogonality d (by omega) b a using 1
+    apply Finset.sum_congr rfl
+    intro j hj
+    unfold omegaPow
+    congr 1
+    push_cast
+    ring
+  rw [he]
+  by_cases hab : a = b
+  · simp [hab, hd0]
+  · simp [hab, Ne.symm hab]
 
 private lemma gauge_identity (d : ℕ) (hd : 2 ≤ d) :
     (fourierBasis d 0)ᴴ * fourierBasis d 1 =
-      gaugeD d * (fun a b => (1 : ℂ) / ((d : ℂ) *
+      gaugeD d * (Matrix.of fun (a b : Fin d) => (1 : ℂ) / ((d : ℂ) *
         (Real.sin (((a.val : ℝ) - b.val - 1 / 2) * Real.pi / d) : ℂ))) * gaugeF d := by
-  sorry
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
+    exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d)
+  ext a b
+  let δ : ℝ := (b.val : ℝ) - a.val + 1 / 2
+  let θ : ℝ := ((a.val : ℝ) - b.val - 1 / 2) * Real.pi / d
+  have hp : omegaPow d δ ^ d = -1 := by
+    unfold omegaPow
+    rw [← Complex.exp_nat_mul]
+    conv_rhs => rw [← Complex.exp_pi_mul_I]
+    apply Complex.exp_eq_exp_iff_exists_int.mpr
+    refine ⟨(b.val : ℤ) - a.val, ?_⟩
+    dsimp only [δ]
+    push_cast
+    field_simp
+    ring
+  have hq : omegaPow d δ ≠ 1 := by
+    intro h
+    rw [h, one_pow] at hp
+    norm_num at hp
+  have hgeom : (∑ j : Fin d, omegaPow d ((j.val : ℝ) * δ)) =
+      -2 / (omegaPow d δ - 1) := by
+    change (∑ j : Fin d, (fun j : ℕ => omegaPow d ((j : ℝ) * δ)) j) = _
+    rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => omegaPow d ((j : ℝ) * δ)) d]
+    have hj (j : ℕ) : omegaPow d ((j : ℝ) * δ) = omegaPow d δ ^ j := by
+      unfold omegaPow
+      rw [← Complex.exp_nat_mul]
+      congr 1
+      push_cast
+      ring
+    simp_rw [hj]
+    rw [geom_sum_eq hq, hp]
+    norm_num
+  have hsin : 2 * (Real.sin θ : ℂ) =
+      (omegaPow d (δ / 2) - omegaPow d (-δ / 2)) * I := by
+    rw [Complex.ofReal_sin, Complex.two_sin]
+    congr 2 <;> unfold omegaPow <;> congr 1 <;> dsimp only [δ, θ] <;> push_cast <;> ring
+  have hm : omegaPow d δ * omegaPow d (-δ / 2) = omegaPow d (δ / 2) := by
+    rw [omega_mul]
+    congr 1
+    ring
+  have hden : (omegaPow d δ - 1) * (-I * omegaPow d (-δ / 2)) =
+      -2 * (Real.sin θ : ℂ) := by
+    calc
+      _ = -(omegaPow d δ * omegaPow d (-δ / 2) - omegaPow d (-δ / 2)) * I := by ring
+      _ = _ := by rw [hm]; linear_combination hsin
+  have hs0 : (Real.sin θ : ℂ) ≠ 0 := by
+    intro h
+    have hn : (omegaPow d δ - 1) * (-I * omegaPow d (-δ / 2)) ≠ 0 :=
+      mul_ne_zero (sub_ne_zero.mpr hq)
+        (mul_ne_zero (neg_ne_zero.mpr I_ne_zero) (Complex.exp_ne_zero _))
+    apply hn
+    rw [hden, h, mul_zero]
+  have hv : -2 / (omegaPow d δ - 1) = -I * omegaPow d (-δ / 2) / (Real.sin θ : ℂ) := by
+    apply (div_eq_div_iff (sub_ne_zero.mpr hq) hs0).mpr
+    linear_combination -hden
+  rw [Matrix.mul_apply]
+  simp only [gaugeD, gaugeF, Matrix.mul_diagonal, Matrix.diagonal_mul]
+  have ht (j : Fin d) : (fourierBasis d 0)ᴴ a j * fourierBasis d 1 j b =
+      omegaPow d ((j.val : ℝ) * δ) / d := by
+    change conj (omegaPow d _ / (Real.sqrt d : ℂ)) *
+      (omegaPow d _ / (Real.sqrt d : ℂ)) = _
+    rw [map_div₀, Complex.conj_ofReal, omega_conj, div_mul_div_comm, hs, omega_mul]
+    congr 2
+    norm_num [offset, δ]
+    ring
+  simp_rw [ht]
+  rw [← Finset.sum_div, hgeom, hv]
+  change (-I * omegaPow d (-δ / 2) / (Real.sin θ : ℂ)) / d =
+    omegaPow d ((a.val : ℝ) / 2) * (1 / ((d : ℂ) * (Real.sin θ : ℂ))) *
+      (-I * omegaPow d (-((b.val : ℝ) + 1 / 2) / 2))
+  have hphase : omegaPow d ((a.val : ℝ) / 2) *
+      omegaPow d (-((b.val : ℝ) + 1 / 2) / 2) = omegaPow d (-δ / 2) := by
+    rw [omega_mul]
+    congr 1
+    dsimp only [δ]
+    ring
+  rw [← hphase]
+  field_simp
 
 private lemma transport_unitary (d : ℕ) (hd : 2 ≤ d)
     (hf : (fourierBasis d 0)ᴴ * fourierBasis d 0 = 1) :
     transport d * (transport d)ᴴ = 1 := by
-  sorry
-
-private lemma state_norm (d : ℕ) (hd : 2 ≤ d)
-    (hl : transport d * (transport d)ᴴ = 1) : ‖state d‖ = 1 := by
-  sorry
+  classical
+  have hg : (gaugeD d)ᴴ * gaugeD d = 1 := by
+    ext a b
+    simp only [gaugeD, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+      Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def, omega_conj]
+    split_ifs with hab
+    · rw [omega_mul, neg_add_cancel, omega_zero]
+    · rfl
+  let t : Matrix (Fin d) (Fin d) ℂ :=
+    Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1)
+  have ht : t * tᴴ = 1 := by
+    ext a b
+    by_cases hab : a = b
+    · subst b
+      by_cases ha : a.val = 0 <;> simp [t, ha, Matrix.diagonal_mul_diagonal]
+    · simp [t, Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply, hab]
+  change (t * (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ) *
+    (t * (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ)ᴴ = 1
+  simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+  calc
+    _ = t * (gaugeD d)ᴴ * ((fourierBasis d 0)ᴴ * fourierBasis d 0) *
+        gaugeD d * tᴴ := by noncomm_ring
+    _ = t * ((gaugeD d)ᴴ * gaugeD d) * tᴴ := by rw [hf]; simp [Matrix.mul_assoc]
+    _ = 1 := by rw [hg]; simpa using ht
 
 private lemma state_swap (d : ℕ) : swap (state d) = state d := by
-  sorry
+  ext ij
+  change (∑ m, transport d ij.2 m * transport d ij.1 m) / (Real.sqrt d : ℂ) =
+    (∑ m, transport d ij.1 m * transport d ij.2 m) / (Real.sqrt d : ℂ)
+  simp only [mul_comm]
 
 private lemma state_reduced (d : ℕ) (hd : 2 ≤ d)
     (hl : transport d * (transport d)ᴴ = 1) :
     reducedState (state d) = (1 / (d : ℂ)) • (1 : Matrix (Fin d) (Fin d) ℂ) := by
-  sorry
+  classical
+  have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
+    exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d)
+  have hl' : (transport d)ᴴ * transport d = 1 := mul_eq_one_comm.mp hl
+  have ht : (transport d)ᵀ * ((transport d)ᵀ)ᴴ = 1 := by
+    simpa only [Matrix.transpose_mul, Matrix.transpose_one,
+      Matrix.conjTranspose_transpose, Matrix.transpose_conjTranspose] using
+        congrArg Matrix.transpose hl'
+  have hq : (transport d * (transport d)ᵀ) * (transport d * (transport d)ᵀ)ᴴ = 1 := by
+    rw [Matrix.conjTranspose_mul]
+    calc
+      _ = transport d * ((transport d)ᵀ * ((transport d)ᵀ)ᴴ) * (transport d)ᴴ := by
+        noncomm_ring
+      _ = 1 := by rw [ht, Matrix.mul_one, hl]
+  ext a b
+  change (∑ j, ((∑ m, transport d a m * transport d j m) / (Real.sqrt d : ℂ)) *
+    conj ((∑ m, transport d b m * transport d j m) / (Real.sqrt d : ℂ))) = _
+  simp only [map_div₀, Complex.conj_ofReal, div_mul_div_comm, hs, ← Finset.sum_div]
+  change ((transport d * (transport d)ᵀ) * (transport d * (transport d)ᵀ)ᴴ) a b /
+    (d : ℂ) = _
+  rw [hq]
+  simp only [Matrix.smul_apply, smul_eq_mul, one_div, div_eq_mul_inv, mul_comm, mul_one]
+
+private lemma state_norm (d : ℕ) (hd : 2 ≤ d)
+    (hr : reducedState (state d) = (1 / (d : ℂ)) •
+      (1 : Matrix (Fin d) (Fin d) ℂ)) : ‖state d‖ = 1 := by
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hn : (↑(‖state d‖ ^ 2) : ℂ) = 1 := by
+    rw [EuclideanSpace.norm_sq_eq, Complex.ofReal_sum, Fintype.sum_prod_type]
+    calc
+      _ = ∑ i : Fin d, reducedState (state d) i i := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        simp only [reducedState, Complex.ofReal_sum, Complex.mul_conj', Complex.ofReal_pow]
+      _ = 1 := by simp [hr, Matrix.smul_apply, Matrix.one_apply, hd0]
+  have hn' : ‖state d‖ ^ 2 = 1 := by exact_mod_cast hn
+  nlinarith [norm_nonneg (state d)]
+
+private def measuredBasis (d : ℕ) (x : Fin 2) : Matrix (Fin d) (Fin d) ℂ :=
+  if x = 0 then 1 else twMatrix d
+
+private def settingPhase (d : ℕ) (x : Fin 2) (a : Fin d) : ℂ :=
+  if x = 0 then (if a.val = 0 then -1 else 1) * omegaPow d (-(a.val : ℝ) / 2)
+  else -I * omegaPow d (-((a.val : ℝ) + 1 / 2) / 2)
+
+private lemma omega_norm (d : ℕ) (t : ℝ) : ‖omegaPow d t‖ = 1 := by
+  unfold omegaPow
+  rw [show 2 * (Real.pi : ℂ) * I * (t : ℂ) / d =
+    ((2 * Real.pi * t / d : ℝ) : ℂ) * I by push_cast; ring]
+  exact Complex.norm_exp_ofReal_mul_I _
+
+private lemma setting_phase_norm (d : ℕ) (x : Fin 2) (a : Fin d) :
+    ‖settingPhase d x a‖ = 1 := by
+  unfold settingPhase
+  split_ifs <;> simp only [norm_mul, norm_neg, norm_one, Complex.norm_I, omega_norm, one_mul]
+
+private lemma measurement_rankone (d : ℕ) (x : Fin 2) (a : Fin d) :
+    measurement d x a = Matrix.vecMulVec ((measuredBasis d x)ᵀ a)
+      (star ((measuredBasis d x)ᵀ a)) := by
+  classical
+  ext i j
+  fin_cases x
+  · by_cases hi : i = a <;> by_cases hj : j = a <;>
+      simp [measurement, measuredBasis, basisProjector, Matrix.vecMulVec_apply,
+        Matrix.one_apply, Pi.star_apply, hi, hj] <;> grind
+  · simp [measurement, measuredBasis, basisProjector, Matrix.mul_apply,
+      Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Pi.star_apply, ite_and]
+
+private lemma transport_readout (d : ℕ) (hd : 2 ≤ d)
+    (hf : ∀ x, (fourierBasis d x)ᴴ * fourierBasis d x = 1)
+    (hg : (fourierBasis d 0)ᴴ * fourierBasis d 1 =
+      gaugeD d * (Matrix.of fun (a b : Fin d) => (1 : ℂ) / ((d : ℂ) *
+        (Real.sin (((a.val : ℝ) - b.val - 1 / 2) * Real.pi / d) : ℂ))) * gaugeF d)
+    (x : Fin 2) :
+    (measuredBasis d x)ᴴ * transport d =
+      Matrix.diagonal (settingPhase d x) * (fourierBasis d x)ᴴ := by
+  classical
+  let g := Matrix.diagonal (settingPhase d x)
+  have hp : g * gᴴ = 1 := by
+    ext a b
+    simp only [g, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+      Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def]
+    split_ifs <;> simp only [Complex.mul_conj', setting_phase_norm, one_pow, Complex.ofReal_one]
+  have hgd : (gaugeD d)ᴴ * gaugeD d = 1 := by
+    ext a b
+    simp only [gaugeD, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+      Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply, Complex.star_def, omega_conj]
+    split_ifs <;> simp only [omega_mul, neg_add_cancel, omega_zero]
+  have hv : transport d * fourierBasis d x = measuredBasis d x * g := by
+    fin_cases x
+    · change (Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
+        (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ) * fourierBasis d 0 = 1 * g
+      rw [Matrix.mul_assoc, hf 0, Matrix.mul_one, Matrix.one_mul]
+      change Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
+        (gaugeD d)ᴴ = Matrix.diagonal (settingPhase d 0)
+      simp only [gaugeD, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
+      congr 1
+      funext a
+      simp only [settingPhase, ↓reduceIte, Pi.mul_apply, Pi.star_apply,
+        Complex.star_def, omega_conj]
+      congr 2
+      ring
+    · change (Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
+        (gaugeD d)ᴴ * (fourierBasis d 0)ᴴ) * fourierBasis d 1 = twMatrix d * g
+      rw [Matrix.mul_assoc, hg]
+      have hgf : g = gaugeF d := rfl
+      rw [hgf]
+      unfold twMatrix
+      calc
+        _ = Matrix.diagonal (fun i : Fin d => if i.val = 0 then -1 else 1) *
+            ((gaugeD d)ᴴ * gaugeD d) *
+            (Matrix.of fun (a b : Fin d) => (1 : ℂ) / ((d : ℂ) *
+              (Real.sin (((a.val : ℝ) - b.val - 1 / 2) * Real.pi / d) : ℂ))) * gaugeF d := by
+                noncomm_ring
+        _ = _ := by rw [hgd, Matrix.mul_one]
+  have hn : measuredBasis d x = transport d * fourierBasis d x * gᴴ := by
+    rw [hv, Matrix.mul_assoc, hp, Matrix.mul_one]
+  have hl : (transport d)ᴴ * transport d = 1 :=
+    mul_eq_one_comm.mp (transport_unitary d hd (hf 0))
+  rw [hn, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_conjTranspose]
+  calc
+    _ = (g * (fourierBasis d x)ᴴ) * ((transport d)ᴴ * transport d) := by noncomm_ring
+    _ = _ := by rw [hl, Matrix.mul_one]
 
 private lemma fourier_probability (d : ℕ) (hd : 2 ≤ d)
     (hf : ∀ x, (fourierBasis d x)ᴴ * fourierBasis d x = 1)
     (hg : (fourierBasis d 0)ᴴ * fourierBasis d 1 =
-      gaugeD d * (fun a b => (1 : ℂ) / ((d : ℂ) *
+      gaugeD d * (Matrix.of fun (a b : Fin d) => (1 : ℂ) / ((d : ℂ) *
         (Real.sin (((a.val : ℝ) - b.val - 1 / 2) * Real.pi / d) : ℂ))) * gaugeF d)
     (x y : Fin 2) (a b : Fin d) :
     prob d (state d) x y a b =
       (↑(‖∑ j : Fin d, omegaPow d (-((j.val : ℝ) *
         ((a.val : ℝ) + b.val + offset x + offset y)))‖ ^ 2) : ℂ) / (d : ℂ) ^ 3 := by
-  sorry
+  classical
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hs : (Real.sqrt d : ℂ) * Real.sqrt d = d := by
+    exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d)
+  let q := transport d * (transport d)ᵀ
+  let r := (measuredBasis d x)ᴴ * q * ((measuredBasis d y)ᴴ)ᵀ
+  let v : Fin d × Fin d → ℂ := fun ij => measuredBasis d x ij.1 a * measuredBasis d y ij.2 b
+  let c : ℂ := star v ⬝ᵥ (state d)
+  have hproj : measurement d x a ⊗ₖ measurement d y b = Matrix.vecMulVec v (star v) := by
+    rw [measurement_rankone, measurement_rankone]
+    ext i j
+    change (measuredBasis d x i.1 a * star (measuredBasis d x j.1 a)) *
+      (measuredBasis d y i.2 b * star (measuredBasis d y j.2 b)) =
+      (measuredBasis d x i.1 a * measuredBasis d y i.2 b) *
+        star (measuredBasis d x j.1 a * measuredBasis d y j.2 b)
+    rw [star_mul]
+    ring
+  have hb : prob d (state d) x y a b = (↑(‖c‖ ^ 2) : ℂ) := by
+    unfold prob
+    rw [hproj, Complex.ofReal_pow, ← Complex.conj_mul']
+    change (∑ ij, ((Matrix.vecMulVec v (star v)).mulVec (state d)) ij *
+      conj (state d ij)) = _
+    simp only [Matrix.mulVec, Matrix.vecMulVec_apply, c, dotProduct, Pi.star_apply,
+      Complex.star_def, map_sum, map_mul, Complex.conj_conj, Finset.sum_mul, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    ring
+  have hc : c = r a b / (Real.sqrt d : ℂ) := by
+    change (∑ ij : Fin d × Fin d,
+      conj (measuredBasis d x ij.1 a * measuredBasis d y ij.2 b) *
+        (q ij.1 ij.2 / (Real.sqrt d : ℂ))) = _
+    rw [Fintype.sum_prod_type]
+    calc
+      _ = (∑ i : Fin d, ∑ j : Fin d, conj (measuredBasis d x i a) * q i j *
+          conj (measuredBasis d y j b)) / (Real.sqrt d : ℂ) := by
+        simp only [Finset.sum_div]
+        apply Finset.sum_congr rfl
+        intro i hi
+        apply Finset.sum_congr rfl
+        intro j hj
+        rw [map_mul]
+        ring
+      _ = _ := by
+        dsimp only [r]
+        simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
+          Complex.star_def, Finset.sum_mul]
+        rw [Finset.sum_comm]
+  have hr : r = Matrix.diagonal (settingPhase d x) *
+      ((fourierBasis d x)ᴴ * ((fourierBasis d y)ᴴ)ᵀ) *
+        Matrix.diagonal (settingPhase d y) := by
+    change (measuredBasis d x)ᴴ * (transport d * (transport d)ᵀ) *
+      ((measuredBasis d y)ᴴ)ᵀ = _
+    calc
+      _ = ((measuredBasis d x)ᴴ * transport d) *
+          ((measuredBasis d y)ᴴ * transport d)ᵀ := by
+        rw [Matrix.transpose_mul]
+        noncomm_ring
+      _ = _ := by
+        rw [transport_readout d hd hf hg x, transport_readout d hd hf hg y,
+          Matrix.transpose_mul, Matrix.diagonal_transpose]
+        noncomm_ring
+  have ht (j : Fin d) : (fourierBasis d x)ᴴ a j * ((fourierBasis d y)ᴴ)ᵀ j b =
+      omegaPow d (-((j.val : ℝ) * ((a.val : ℝ) + b.val + offset x + offset y))) / d := by
+    change conj (omegaPow d _ / (Real.sqrt d : ℂ)) *
+      conj (omegaPow d _ / (Real.sqrt d : ℂ)) = _
+    rw [map_div₀, map_div₀, Complex.conj_ofReal, omega_conj, omega_conj,
+      div_mul_div_comm, hs, omega_mul]
+    congr 2
+    ring
+  rw [hb, hc, hr, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.mul_apply]
+  simp_rw [ht]
+  rw [← Finset.sum_div]
+  simp only [norm_div, norm_mul, setting_phase_norm, one_mul, mul_one,
+    Complex.norm_natCast, Complex.norm_real, Real.norm_of_nonneg (Real.sqrt_nonneg _),
+    div_pow, Real.sq_sqrt (Nat.cast_nonneg d), Complex.ofReal_div,
+    Complex.ofReal_pow, Complex.ofReal_natCast]
+  field_simp
+  ring_nf
+  congr 3
+  apply Finset.sum_congr rfl
+  intro j hj
+  congr 1
+  ring
 
 private lemma fourier_correlator (d : ℕ) (hd : 2 ≤ d)
     (hp : ∀ x y a b, prob d (state d) x y a b =
@@ -133,19 +493,96 @@ private lemma fourier_correlator (d : ℕ) (hd : 2 ≤ d)
         (((d : ℂ) - k) + k * omegaPow d (-(d : ℝ) * (offset x + offset y))) / d := by
   sorry
 
+private lemma offset_phase (d : ℕ) (hd : 2 ≤ d) (x y : Fin 2) :
+    omegaPow d (-(d : ℝ) * (offset x + offset y)) = if x = y then I else -I := by
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have h7 : omegaPow d (-(d : ℝ) * (7 / 4)) = I := by
+    unfold omegaPow
+    conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
+    apply Complex.exp_eq_exp_iff_exists_int.mpr
+    refine ⟨-2, ?_⟩
+    push_cast
+    field_simp
+    ring
+  have h9 : omegaPow d (-(d : ℝ) * (9 / 4)) = -I := by
+    unfold omegaPow
+    conv_rhs => rw [← Complex.exp_neg_pi_div_two_mul_I]
+    apply Complex.exp_eq_exp_iff_exists_int.mpr
+    refine ⟨-2, ?_⟩
+    push_cast
+    field_simp
+    ring
+  have h11 : omegaPow d (-(d : ℝ) * (11 / 4)) = I := by
+    unfold omegaPow
+    conv_rhs => rw [← Complex.exp_pi_div_two_mul_I]
+    apply Complex.exp_eq_exp_iff_exists_int.mpr
+    refine ⟨-3, ?_⟩
+    push_cast
+    field_simp
+    ring
+  fin_cases x <;> fin_cases y <;> norm_num [offset] <;>
+    first | simpa only [neg_mul] using h7 | simpa only [neg_mul] using h9 |
+      simpa only [neg_mul] using h11
+
 private lemma satwap_sum (d : ℕ) (hd : 2 ≤ d)
     (hc : ∀ x y k, k ∈ Finset.Icc 1 (d - 1) →
       correlator d (state d) x y k =
         omegaPow d ((k : ℝ) * (offset x + offset y)) *
           (((d : ℂ) - k) + k * omegaPow d (-(d : ℝ) * (offset x + offset y))) / d) :
     satwapValue d (state d) = 2 * ((d : ℂ) - 1) := by
-  sorry
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  unfold satwapValue
+  calc
+    _ = ∑ k ∈ Finset.Icc 1 (d - 1), (2 : ℂ) := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      dsimp only
+      rw [hc 0 0 k hk, hc 0 1 k hk, hc 1 0 k hk, hc 1 1 k hk]
+      simp only [offset_phase d hd]
+      norm_num only [offset, Fin.isValue, ↓reduceIte, Fin.zero_eta, Fin.mk_one,
+        show (1 : Fin 2) ≠ 0 by decide, show (0 : Fin 2) ≠ 1 by decide] 
+      rw [map_mul, map_div₀, map_sub, map_one, Complex.conj_I, map_ofNat, omega_conj]
+      have h0 : omegaPow d (-2 * (k : ℝ)) * omegaPow d ((k : ℝ) / 4) *
+          omegaPow d ((k : ℝ) * (7 / 4)) = 1 := by
+        rw [omega_mul, omega_mul, show -2 * (k : ℝ) + k / 4 + k * (7 / 4) = 0 by ring,
+          omega_zero]
+      have h1 : omegaPow d (-2 * (k : ℝ)) * omegaPow d (-((k : ℝ) / 4)) *
+          omegaPow d ((k : ℝ) * (9 / 4)) = 1 := by
+        rw [omega_mul, omega_mul, show -2 * (k : ℝ) + -(k / 4) + k * (9 / 4) = 0 by ring,
+          omega_zero]
+      have h2 : omegaPow d (-3 * (k : ℝ)) * omegaPow d ((k : ℝ) / 4) *
+          omegaPow d ((k : ℝ) * (11 / 4)) = 1 := by
+        rw [omega_mul, omega_mul, show -3 * (k : ℝ) + k / 4 + k * (11 / 4) = 0 by ring,
+          omega_zero]
+      norm_num only [show (7 / 8 : ℝ) + 7 / 8 = 7 / 4 by norm_num,
+        show (7 / 8 : ℝ) + 11 / 8 = 9 / 4 by norm_num,
+        show (11 / 8 : ℝ) + 7 / 8 = 9 / 4 by norm_num,
+        show (11 / 8 : ℝ) + 11 / 8 = 11 / 4 by norm_num]
+      calc
+        _ = (omegaPow d (-2 * (k : ℝ)) * omegaPow d ((k : ℝ) / 4) *
+              omegaPow d ((k : ℝ) * (7 / 4))) * ((1 - I) / 2 * ((d : ℂ) - k + k * I) / d) +
+            (omegaPow d (-2 * (k : ℝ)) * omegaPow d (-((k : ℝ) / 4)) *
+              omegaPow d ((k : ℝ) * (9 / 4))) * ((1 + I) * ((d : ℂ) - k - k * I) / d) +
+            (omegaPow d (-3 * (k : ℝ)) * omegaPow d ((k : ℝ) / 4) *
+              omegaPow d ((k : ℝ) * (11 / 4))) * ((1 - I) / 2 * ((d : ℂ) - k + k * I) / d) := by
+                ring
+        _ = 2 := by
+          rw [h0, h1, h2]
+          field_simp
+          ring_nf
+          simp [Complex.I_sq]
+    _ = 2 * ((d : ℂ) - 1) := by
+      simp only [Finset.sum_const, nsmul_eq_mul, Nat.card_Icc]
+      rw [show d - 1 + 1 - 1 = d - 1 by omega, Nat.cast_sub (by omega : 1 ≤ d)]
+      push_cast
+      ring
 
 theorem result : claim := by
   intro d hd
   have hf := fourier_unitary d hd
   have hl := transport_unitary d hd (hf 0)
-  refine ⟨state d, state_norm d hd hl, state_swap d, state_reduced d hd hl, ?_⟩
+  have hr := state_reduced d hd hl
+  refine ⟨state d, state_norm d hd hr, state_swap d, hr, ?_⟩
   exact satwap_sum d hd
     (fourier_correlator d hd (fourier_probability d hd hf (gauge_identity d hd)))
 
