@@ -234,7 +234,7 @@ private lemma finite_projection (n : ℕ∞) (hn : n ≠ ⊤) : n.untopA = n.toN
 private lemma actual_run_bounds {J : ℕ} (w f : Bool → PMF ℕ) (t : Tick J)
     (δ D V I Δ α : ℝ) (hδ : 0 < δ) (hδhalf : δ ≤ 1/2)
     (hD : 0 < D) (hV : 0 < V) (hI : 0 < I) (hΔ : D*I ≤ Δ)
-    (hα : 0 < α) (hαhalf : α < 1/2)
+    (hα : 0 < α) (hαhalf : α < 1 / 2)
     (hstep : ∀ z b, |(t.increment z b : ℝ)*δ| ≤ 1)
     (hmean : ∀ i : Bool,
       (∫ ku : ℕ × ℤ, (ku.2 : ℝ)*δ ∂(pairLaw (f i) t).toMeasure) =
@@ -324,8 +324,8 @@ private lemma actual_run_bounds {J : ℕ} (w f : Bool → PMF ℕ) (t : Tick J)
         simp only [↓reduceIte,one_mul]
         nlinarith
     apply (ENNReal.toReal_mono (measure_ne_top _ _) (measure_mono_ae hsub)).trans
-    convert hrisk.trans hriskα using 1 <;> dsimp [A,lam,Measure.real] <;> congr 1 <;>
-      ext ω <;> simp only [neg_mul]
+    convert hrisk.trans hriskα using 1 <;> dsimp [A,lam,Measure.real] <;> congr 2 <;>
+      ext ω <;> simp only [Set.mem_ofPred_eq,neg_mul] <;> rfl
 
 private lemma full_count_bound (r J : ℕ) (hr : 1 ≤ r) (hJ : 1 ≤ J)
     (A : ℝ) (hA : 0 < A) :
@@ -349,7 +349,7 @@ private lemma full_count_bound (r J : ℕ) (hr : 1 ≤ r) (hJ : 1 ≤ J)
   have hh : (H : ℝ) ≤ A*L/(J : ℝ)+1 := by
     have hh := (Nat.ceil_lt_add_one (div_nonneg hA.le hd.le)).le
     change (H : ℝ) ≤ A/grid r J+1 at hh
-    convert hh using 1 <;> dsimp [grid,L] <;> field_simp <;> ring
+    convert hh using 1 <;> dsimp [grid,L] <;> field_simp
   have hratio : ((J : ℝ)+1)/(J : ℝ) ≤ 2 :=
     (div_le_iff₀ hj).mpr (by linarith)
   have hpart : 2*A*L*(((J : ℝ)+1)/(J : ℝ)) ≤ 4*A*L := by
@@ -366,9 +366,9 @@ private lemma full_count_bound (r J : ℕ) (hr : 1 ≤ r) (hJ : 1 ≤ J)
     _ ≤ 3+4*A*L+L := by linarith
     _ ≤ (4*A+4)*L := by nlinarith
 
-private lemma scale_information_le_one (r J : ℕ) (hr : 1 ≤ r) (hJ : 1 ≤ J)
+private lemma scale_information_le_one (r J : ℕ) (hr : 1 ≤ r)
     (s eta : ℝ) (hs : 0 < s) (hsone : s < 1) (heta : eta < 1)
-    (hscale : s*(2 : ℝ)^J ≤ eta) : s^(2*r)*(J : ℝ) ≤ 1 := by
+    (hscale : s * (2 : ℝ) ^ J ≤ eta) : s^(2*r)*(J : ℝ) ≤ 1 := by
   have hJpow : (J : ℝ) ≤ (2 : ℝ)^(r*J) := by
     have hlin : 2*(J : ℝ) ≤ (2 : ℝ)^J := by
       exact_mod_cast Nat.mul_le_pow (a := 2) (by decide) J
@@ -384,20 +384,21 @@ private lemma scale_information_le_one (r J : ℕ) (hr : 1 ≤ r) (hJ : 1 ≤ J)
     _ = s^r*(s*(2 : ℝ)^J)^r := by
       rw [mul_pow,← mul_assoc,← pow_add,← pow_mul,
         show r+r = 2*r by omega,Nat.mul_comm J r]
-    _ ≤ 1 := mul_le_one₀ hp1 (by positivity) hp2
+    _ ≤ 1 := (mul_le_mul_of_nonneg_left hp2 (by positivity)).trans (by simpa using hp1)
 
 set_option maxHeartbeats 1200000 in
+-- The source constants and actual-law conclusions have a dependent telescope.
 /-- One common literal table, with all constants fixed before every admissible cap,
     has both risks, both finite paid means, exact gap payment and the full state bound. -/
 theorem uniform_counted_controller (r : ℕ) (hr : 1 ≤ r) (c : ℝ) (hc : 0 < c)
-    (α : ℝ) (hα : 0 < α) (hαhalf : α < 1/2) :
+    (α : ℝ) (hα : 0 < α) (hαhalf : α < 1 / 2) :
     ∃ eta s0 D V C : ℝ,
       0 < eta ∧ eta < 1 ∧ 0 < s0 ∧ s0 < 1 ∧ 0 < D ∧ 0 < V ∧ 0 < C ∧
       let lam := min 1 (D/(2*Real.exp 1*V))
       let A := Real.log (1/α)/lam
       let K := 4*A+4
       ∀ (s : ℝ) (hs : 0 < s), s < s0 → ∀ J : ℕ, 1 ≤ J →
-        s*(2 : ℝ)^J ≤ eta →
+        s * (2 : ℝ) ^ J ≤ eta →
         let f := fun i => CriticalRenewalSource.gapLaw r hr c hc i s hs
         let w := fun i => CriticalRenewalSource.waitLaw r hr c hc i s hs
         let m := fun i => rewardMean r J (f i)
@@ -464,7 +465,7 @@ theorem uniform_counted_controller (r : ℕ) (hr : 1 ≤ r) (c : ℝ) (hc : 0 < 
     (fun i => (hrun i).1) (fun i => (hrun i).2.1)
   have hscalar := (hsrc s hs (hss.trans_le (min_le_left sA sB))).1
   have hsone : s < 1 := lt_of_lt_of_le hss (le_trans (min_le_left sA sB) hsA1.le)
-  have hIone := scale_information_le_one r J hr hJ s eta hs hsone heta1 hscale
+  have hIone := scale_information_le_one r J hr s eta hs hsone heta1 hscale
   have hj : 0 < (J : ℝ) := by exact_mod_cast (show 0 < J by omega)
   have hDeltaPos : 0 < Delta := (mul_pos hD hI).trans_le hDelta
   refine ⟨hH,full_state_count H J hH,full_count_bound r J hr hJ A hA,?_,?_⟩
@@ -496,7 +497,6 @@ theorem uniform_counted_controller (r : ℕ) (hr : 1 ≤ r) (c : ℝ) (hc : 0 < 
         _ = Cbeta/s+(2*Cmu*(A+3/2)/D)/(s^(2*r+1)*(J : ℝ)) := by
           rw [pow_succ]
           field_simp
-          <;> ring
         _ ≤ Cbeta/(s^(2*r+1)*(J : ℝ))+
             (2*Cmu*(A+3/2)/D)/(s^(2*r+1)*(J : ℝ)) := by linarith
         _ = C/(s^(2*r+1)*(J : ℝ)) := by dsimp [C]; ring
