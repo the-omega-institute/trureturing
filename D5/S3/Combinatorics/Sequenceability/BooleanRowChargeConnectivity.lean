@@ -108,8 +108,8 @@ theorem two_charge_supports_connected
           Finset.erase_union_distrib _ _ _, Finset.sum_union hdis]
       _ = - f q + - f q := by rw [hsumu, hsumt]
       _ = 0 := by rw [← neg_add, htwo, neg_zero]
-  -- The supplier is the original finite-deletion proof, exposed without changes.
-  -- Its union cover alone selects a block at the original port i.
+  -- The union projection of the disjoint finite-deletion decomposition
+  -- selects a block at the original port i.
   obtain ⟨Q, hQ, hcover⟩ := zero_decomposition f A A Finset.Subset.rfl hAz
   obtain ⟨B, hBQ, hiB⟩ := Finset.mem_biUnion.mp (hcover ▸ hiA)
   have hBA : B ⊆ A := (hQ B hBQ).1

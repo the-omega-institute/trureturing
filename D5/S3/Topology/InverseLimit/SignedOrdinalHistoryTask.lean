@@ -88,7 +88,7 @@ theorem local_semantics (bornB : OldClopens H ha)
     have hrlt : r.1 < a := lt_of_le_of_ne r.2.2 (fun he => hr (Subtype.ext he))
     exact ⟨⟨r.2.1, hrlt, s.2, t.2⟩, D, rfl, rfl, rfl, rfl, rfl⟩
 
-private theorem intrinsic_cast {b : Ordinal.{0}} {C D : Set (Cube b)}
+theorem intrinsic_cast {b : Ordinal.{0}} {C D : Set (Cube b)}
     (h : C = D) (W : BirthPack C) (s t : Label) (k : ℕ) :
     Intrinsic (BirthPack.cast h W) s t k ↔ Intrinsic W s t k := by
   subst D
