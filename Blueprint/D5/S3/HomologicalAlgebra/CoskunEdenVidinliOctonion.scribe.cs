@@ -26,13 +26,17 @@ internal sealed class CoskunEdenVidinliOctonionDocument : IScribeDocumentDefinit
             Node("result", "The octonion clause has a negative answer",
                 Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
                 "The right unit forces ν to be injective and π to be surjective. Rank-nullity gives a one-dimensional kernel for π. Left multiplication by the nonzero octonion ν(e₂) is injective by the multiplicative positive-definite square norm. The vectors e₂ + e₃, e₄, e₅, e₆, e₇ are independent and are killed by left multiplication by e₂ in the Vidinli algebra. Their images would therefore embed a five-dimensional real vector space into ker π, contradicting rank-nullity. Here e₂ in the paper is Pi.single 1 1 in the zero-based coordinates. The statement concerns arbitrary real-linear maps. It does not address the higher Cayley–Dickson clause, where zero divisors prevent this injectivity argument.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("coskun-eden-2025-vidinli-octonion-pushforward"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("vidinli-octonion-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>

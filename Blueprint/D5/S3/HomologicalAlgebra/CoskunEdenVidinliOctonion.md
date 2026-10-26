@@ -34,6 +34,10 @@ $$\neg (\exists \nu: (\operatorname{Fin}\left(7\right) \to \mathbb{R}) \to_{l}[\
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/CoskunEdenVidinliOctonion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/coskun-eden-2025-vidinli-octonion-pushforward` (refuted) by `D5/S3/HomologicalAlgebra/CoskunEdenVidinliOctonion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"coskun-eden-2025-vidinli-octonion-pushforward","declaration_gid":"D5/S3/HomologicalAlgebra/CoskunEdenVidinliOctonion.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* O. Coşkun and A. Eden (2025). *Structure of Vidinli Algebras: Simple Nonassociative Jordan–Lie Algebras with Azumaya Properties*. DOI: [10.48550/arXiv.2511.09395](https://doi.org/10.48550/arXiv.2511.09395). URL: <https://arxiv.org/abs/2511.09395v1>.
