@@ -75,8 +75,8 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "visible_mono"),
                 H("Hereditary visibility"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("A geodesic avoiding the other vertices of a larger selected set also avoids the other vertices of each selected subset.")))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("Proposition 2.1 of Fresán-Figueroa, Goldfeder and Lozano-Piña states hereditary mutual visibility and attributes it to Cicerone et al. (2023), Variety of mutual-visibility problems in graphs. A geodesic avoiding the other vertices of a larger selected set also avoids the other vertices of each selected subset.")))),
             Describe.Lean(
                 DescribeId.Create("visible-empty"),
                 DeclarationHandle.Create(Prefix + "visible_empty"),
@@ -112,13 +112,6 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Erasing an occupied label is the reverse of its insertion.")))),
-            Describe.Lean(
-                DescribeId.Create("reconfiguration-connected"),
-                DeclarationHandle.Create(Prefix + "reconfiguration_connected"),
-                H("Connectivity by repeated deletion"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Induction on a configuration deletes its occupied labels until the empty configuration is reached. Hereditary visibility keeps every intermediate vertex feasible. Reversing a second deletion walk joins any two configurations. Host connectedness is unnecessary for this statement.")))),
             Describe.Lean(
                 DescribeId.Create("separates"),
                 DeclarationHandle.Create(Prefix + "Separates"),

@@ -22,6 +22,15 @@ set. The path may depend on the pair. Empty sets and all feasible ranks are
 retained. Graphs are finite, simple, undirected and connected unless stated
 otherwise.
 
+Proposition 2.1 states that every subset of a mutual-visibility set is again
+a mutual-visibility set. It attributes this hereditary property to
+S. Cicerone, G. Di Stefano, L. Drožđek, J. Hedžet, S. Klavžar and I. G. Yero,
+"Variety of mutual-visibility problems in graphs", Theoretical Computer
+Science 974 (2023), 114096, DOI
+[10.1016/j.tcs.2023.114096](https://doi.org/10.1016/j.tcs.2023.114096).
+The attribution and bibliographic details are given in the primary source's
+Proposition 2.1 and reference list.
+
 Two distinct feasible sets are adjacent when their symmetric difference has
 size one, or their two set differences are singletons whose vertices are
 adjacent in the host. Thus token addition/removal and actual host-edge slides

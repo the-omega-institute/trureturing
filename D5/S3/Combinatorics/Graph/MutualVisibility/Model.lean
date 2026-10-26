@@ -89,13 +89,6 @@ theorem visible_pair {H : SimpleGraph V} (hH : H.Connected) (x y : V) :
   · exact hz.symm
   · exact (huv rfl).elim
 
-private theorem visible_path {H : SimpleGraph V} {S : Finset V} (hS : Visible H S)
-    {u v : V} (hu : u ∈ S) (hv : v ∈ S) (hne : u ≠ v) :
-    ∃ p : H.Walk u v, p.IsPath ∧ p.length = H.dist u v ∧
-      ∀ z ∈ p.support, z ∈ S → z = u ∨ z = v := by
-  obtain ⟨p, hp, ha⟩ := hS u hu v hv hne
-  exact ⟨p, p.isPath_of_length_eq_dist hp, hp, ha⟩
-
 theorem mixedMove_insert (H : SimpleGraph V) (S : Finset V)
     {x : V} (hx : x ∉ S) : MixedMove H S (insert x S) := by
   refine ⟨?_, Or.inl ?_⟩
@@ -111,22 +104,6 @@ theorem mixedMove_erase (H : SimpleGraph V) (S : Finset V)
   have h := mixedMove_insert H (S.erase x) (Finset.notMem_erase x S)
   rw [Finset.insert_erase hx] at h
   exact mixedMove_symm h
-
-private theorem reaches_empty (H : SimpleGraph V) (S : Configuration H) :
-    (reconfiguration H).Reachable S ⟨∅, visible_empty H⟩ := by
-  obtain ⟨S, hS⟩ := S
-  induction S using Finset.induction_on with
-  | empty => exact Reachable.refl _
-  | @insert x S hx ih =>
-      let T : Configuration H := ⟨S, visible_mono (Finset.subset_insert x S) hS⟩
-      have he : (reconfiguration H).Adj T ⟨insert x S, hS⟩ :=
-        mixedMove_insert H S hx
-      exact he.symm.reachable.trans (ih T.property)
-
-theorem reconfiguration_connected (H : SimpleGraph V) :
-    (reconfiguration H).Connected := by
-  letI : Nonempty (Configuration H) := ⟨⟨∅, visible_empty H⟩⟩
-  exact ⟨fun S T => (reaches_empty H S).trans (reaches_empty H T).symm⟩
 
 /-- A separator leaves at most one vertex or disconnects the remaining induced graph. -/
 def Separates {W : Type*} [Fintype W] [DecidableEq W]

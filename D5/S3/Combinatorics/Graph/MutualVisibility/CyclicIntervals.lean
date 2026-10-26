@@ -66,9 +66,6 @@ private theorem cyclicArc_full {m : ℕ} (i : Fin m) :
   ext x
   simp [cyclicArc, cyclicRank_lt]
 
-private theorem cyclicArc_zero {m : ℕ} (i : Fin m) : cyclicArc i 0 = ∅ := by
-  simp [cyclicArc]
-
 private theorem cyclicArc_initial {m : ℕ} (i : Fin m) {k : ℕ} (hk : 0 < k) :
     i ∈ cyclicArc i k := by simp [cyclicArc, cyclicRank, hk]
 
@@ -102,22 +99,6 @@ private theorem cyclicArc_unique_start {m : ℕ} {i j : Fin m} {k l : ℕ}
   apply cyclicArc_boundary j i hl hlm
   · rw [← he]; exact cyclicArc_initial i hk
   · rw [← he]; exact cyclicArc_pred_initial i hkm
-
-private theorem cyclicArc_step {m : ℕ} (i : Fin m) {k : ℕ} (hk : k < m) :
-    MixedMove (⊥ : SimpleGraph (Fin m)) (cyclicArc i k) (cyclicArc i (k + 1)) := by
-  obtain ⟨x, hx⟩ := cyclicRank_surjective i hk
-  have he : cyclicArc i k ∆ cyclicArc i (k + 1) = {x} := by
-    ext y
-    simp only [Finset.mem_symmDiff, mem_cyclicArc, Finset.mem_singleton]
-    have hiff : cyclicRank i y = k ↔ y = x := by
-      rw [← hx]
-      exact ⟨fun h => cyclicRank_injective i h, congrArg (cyclicRank i)⟩
-    omega
-  refine ⟨?_, Or.inl (by rw [he, Finset.card_singleton])⟩
-  intro h
-  have h0 : (cyclicArc i k).card = (cyclicArc i (k + 1)).card := congrArg Finset.card h
-  rw [cyclicArc_card i hk.le, cyclicArc_card i (by omega)] at h0
-  omega
 
 private theorem cyclicPred_injective {m : ℕ} : Function.Injective (@cyclicPred m) := by
   intro x y he
