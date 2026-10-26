@@ -4,7 +4,19 @@
 
 Balanced actual Gramians yield the complete Schmidt decomposition of the true infinite Hankel operator.
 
-**Definition 1.1 (normalized Future).**
+**Definition 1.1 (The inverse square-root diagonal).**
+
+$$\forall (V : Type), [\operatorname{DecidableEq}\left(V\right)] \forall (w : V \to \mathbb{R}), \operatorname{invRootDiagonal}\left(w\right) = \operatorname{Matrix.diagonal}\left(\operatorname{fun} (i : V) \mapsto \operatorname{Inv.inv}\left(\operatorname{Real.sqrt}\left(w\left(i\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Observer/Hankel/BalancedHankelSchmidt.invRootDiagonal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The diagonal consists of the reciprocals of the nonnegative real square roots of the weights.
+
+**Definition 1.2 (normalized Future).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.normalizedFuture`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.normalizedFuture`
 
 Constructs an isometry by normalizing actual future trajectories with the diagonal Gramian; norm preservation is proved.
 
-**Definition 1.2 (left Isometry).**
+**Definition 1.3 (left Isometry).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftIsometry`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftIsometry`
 
 Actual original-system future trajectories span the finite left Schmidt subspace.
 
-**Definition 1.3 (right Isometry).**
+**Definition 1.4 (right Isometry).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.rightIsometry`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.rightIsometry`
 
 Actual dual-system trajectories span the finite right Schmidt subspace.
 
-**Theorem 1.4 (hankel isometric factorization).**
+**Theorem 1.5 (hankel isometric factorization).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_isometric_factorization`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_isometric_fa
 
 Proves the full l2 operator equals the left isometry composed with the balancing diagonal and the right isometry adjoint.
 
-**Definition 1.5 (left Mode).**
+**Definition 1.6 (left Mode).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftMode`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftMode`
 
 Constructs the left singular output trajectory associated with a standard state coordinate.
 
-**Definition 1.6 (right Mode).**
+**Definition 1.7 (right Mode).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.rightMode`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.rightMode`
 
 Constructs the right singular input trajectory associated with a standard state coordinate.
 
-**Theorem 1.7 (modes orthonormal).**
+**Theorem 1.8 (modes orthonormal).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.modes_orthonormal`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.modes_orthonormal`
 
 Both trajectory families are orthonormal in their genuine infinite l2 spaces.
 
-**Theorem 1.8 (hankel mode equations).**
+**Theorem 1.9 (hankel mode equations).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_mode_equations`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_mode_equatio
 
 Proves both forward and adjoint singular-vector equations for every positive balancing weight.
 
-**Theorem 1.9 (hankel schmidt expansion).**
+**Theorem 1.10 (hankel schmidt expansion).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_schmidt_expansion`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_schmidt_expa
 
 Proves the complete finite Schmidt expansion for every l2 input, not only finite-support test inputs.
 
-**Theorem 1.10 (hankel kernel iff).**
+**Theorem 1.11 (hankel kernel iff).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_kernel_iff`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_kernel_iff`
 
 Proves the nullspace is precisely the orthogonal complement of the constructed right singular modes.
 
-**Theorem 1.11 (nonzero squared singular value).**
+**Theorem 1.12 (nonzero squared singular value).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.nonzero_squared_singular_value`
 
@@ -136,7 +148,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.nonzero_squared_sin
 
 Proves every nonzero eigenvalue of the actual Hankel adjoint-composition is a squared balancing weight. Repeated weights retain orthogonal modes.
 
-**Theorem 1.12 (constructed core singular values).**
+**Theorem 1.13 (constructed core singular values).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.constructed_core_singular_values`
 
@@ -148,7 +160,7 @@ Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.constructed_core_si
 
 Instantiates the existing finite Gramian singular-value theorem with actual positive square roots. It is supplementary to the separately proved infinite decomposition.
 
-**Theorem 1.13 (constructed hankel schmidt).**
+**Theorem 1.14 (constructed hankel schmidt).**
 
 Lean statement: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.constructed_hankel_schmidt`
 
@@ -168,6 +180,7 @@ End-to-end identification from the original system: constructs actual Gramians a
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_kernel_iff`
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_mode_equations`
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.hankel_schmidt_expansion`
+- Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.invRootDiagonal`
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftIsometry`
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.leftMode`
 - Truth anchor: `D5/S3/Observer/Hankel/BalancedHankelSchmidt.modes_orthonormal`

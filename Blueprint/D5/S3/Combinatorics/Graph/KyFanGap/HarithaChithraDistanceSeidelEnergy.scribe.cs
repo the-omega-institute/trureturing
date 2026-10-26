@@ -16,9 +16,6 @@ internal sealed class HarithaChithraDistanceSeidelEnergyDocument : IScribeDocume
             Node("matrix", "Distance Seidel matrix", "distSeidel", MatrixFormula(),
                 "Page 2: \"D^S(G) = J − I − 2D = −1 if v_r is adjacent to v_t, 1 − 2d_G(v_r, v_t) otherwise.\" The displayed expression encodes J − I − 2D entrywise using SimpleGraph.dist, with zero diagonal. The source's casewise expression instead gives diagonal one. Only the matrix equation is used here. On the complete bipartite graphs and their single-edge deletions considered below, every pair is connected.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("energy", "Energy from characteristic roots", "energy", EnergyFormula(),
-                "Page 2: \"The distance Seidel energy E_{D^S}(G) of a graph G is defined as E_{D^S}(G) = Σ_{r=1}^n |∂_r^S|.\" Matrix.charpoly and Polynomial.roots retain multiplicity. For a real symmetric matrix the characteristic polynomial splits over the reals, so this sum is the sum of absolute eigenvalues. For a general real matrix the expression sums only its real characteristic roots; the theorem applies it only to symmetric matrices.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Problem 5.1", "claim", Equal(Call("claim"), Parenthesized(ClaimBody())),
                 "Problem 5.1, page 13: \"Let G = K_{a,b}, with a, b > 1. Is E_{D^S}(K_{a,b} − e) > E_{D^S}(K_{a,b}), for any edge e of K_{a,b}?\" The proposition gives the affirmative universal statement. The vertex type is Fin a ⊕ Fin b; edges are unordered pairs in the edge set. The natural-number inequalities 2 ≤ a and 2 ≤ b express a, b > 1. SimpleGraph.deleteEdges removes the singleton edge set.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -76,14 +73,6 @@ internal sealed class HarithaChithraDistanceSeidelEnergyDocument : IScribeDocume
             new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, distance));
         return CarrierBinders(All("G", Call("SimpleGraph", V()),
             Equal(DS(g), Call("Matrix.of", Lam("u", V(), Lam("v", V(), entry))))));
-    }
-    private static Formula EnergyFormula()
-    {
-        Formula m = F.Id("M"), x = F.Id("x");
-        var roots = Call("Polynomial.roots", Call("Matrix.charpoly", m));
-        var absolute = Seq(Lvert, Sp, x, Rvert);
-        return CarrierBinders(All("M", Call("Matrix", V(), V(), Real()), Equal(Energy(m),
-            Call("Multiset.sum", Call("Multiset.map", Lam("x", Real(), absolute), roots)))));
     }
     private static Formula ClaimBody()
     {
