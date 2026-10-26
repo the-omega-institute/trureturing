@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZetaGamma/FormCore/FiniteGaussianCap4/LaguerreSevenHalfPolynomial
+   generality: I
+   mirror-B: none(waiver:formal-unit-only)
+   mirror-E: none(waiver:fixed-alpha-laguerre-helper)
+   anchors: []
+   utility: none
+   digest: Real Laguerre polynomials at alpha seven halves and their exact differential identities. -/
 /-
 Generalized real Laguerre polynomials, adapted 2026-10-26.
 SPDX-License-Identifier: Apache-2.0
@@ -6,7 +13,10 @@ Modified/adapted proof method from the OAI project, commit
 adc7f1241b42e322a6451854ab7e4b4c146bf78a,
 lean/OAI/MathematicalPhysics/DefocusingNLS/Certificates/LaguerrePolynomial.lean.
 That source treats alpha=0 over C. This file changes the coefficients, scalar
-field, ODE, and recurrences to alpha=7/2; it does not /- Full upstream Apache-2.0 license (unmodified text).
+field, ODE, and recurrences to alpha=7/2. The full upstream license follows.
+-/
+
+/- Full upstream Apache-2.0 license (unmodified text).
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -210,10 +220,6 @@ field, ODE, and recurrences to alpha=7/2; it does not /- Full upstream Apache-2.
    limitations under the License.
 -/
 
-import OAI or reuse an
-alpha=0 conclusion at a different parameter. See LaguerreSevenHalfPolynomial.lean (upstream license below) for the
-applicable upstream Apache-2.0 license.
--/
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Real.Basic
