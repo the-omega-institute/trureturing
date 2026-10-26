@@ -13,7 +13,8 @@ internal sealed class BalaA363412ValuationDocument : IScribeDocumentDefinition
             Node("claim", "The paired valuation conjecture", Eqn(Named("claim"), ClaimBody()),
                 "OEIS A363412, FORMULA (revision 19, no page): \"Conjectures: 3 does not divide a(3*n+1) for all n; the 3-adic valuation v_3(a(3*n)) = v_3(a(3*n-1)) for all n.\" The second clause starts at n=1 so both source indices are nonnegative. The subtraction 3n-1 is natural truncated subtraction. The source sequence is BalaA363411.b.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The paired three-adic valuations agree", ClaimBody(),
-                "BalaA363412Valuation result (#18636): At indices 3n and 3n-1, the reflection congruences express twice the imaginary coordinate as 3n times an integer prime to 3. For n at least one the factor 3n is nonzero. Multiplicativity of padicValInt removes the unit factors; both valuations equal padicValInt 3 (3n).", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "BalaA363412Valuation result (#18636): At indices 3n and 3n-1, the reflection congruences express twice the imaginary coordinate as 3n times an integer prime to 3. For n at least one the factor 3n is nonzero. Multiplicativity of padicValInt removes the unit factors; both valuations equal padicValInt 3 (3n).", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala3634-paired-valuations"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title),

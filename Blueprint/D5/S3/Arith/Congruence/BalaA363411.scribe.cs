@@ -31,7 +31,8 @@ internal sealed class BalaA363411Document : IScribeDocumentDefinition
             Node("seq_mod", "Reduction of a periodic sequence", ModBody(),
                 "A periodic coordinate sequence has the same value at n and at its natural remainder modulo q. The remainder is the Lean natural-number modulo operation.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Bala five-adic valuation formula", ClaimBody(),
-                "BalaA363411 result (#18633): The product block at 25 is (7,0) modulo 25. Four successive blocks give period 100. Modulo 5 the real coordinate vanishes exactly at indices congruent to 2, while modulo 25 it never vanishes. These two facts give exactly one factor of 5 at n+2 when 5 divides n, and none otherwise.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "BalaA363411 result (#18633): The product block at 25 is (7,0) modulo 25. Four successive blocks give period 100. Modulo 5 the real coordinate vanishes exactly at indices congruent to 2, while modulo 25 it never vanishes. These two facts give exactly one factor of 5 at n+2 when 5 divides n, and none otherwise.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala3634-valuations"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title),

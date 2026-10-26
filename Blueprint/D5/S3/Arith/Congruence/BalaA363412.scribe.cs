@@ -13,7 +13,8 @@ internal sealed class BalaA363412Document : IScribeDocumentDefinition
             Node("claim", "Nondivisibility on the third residue class", Eqn(Named("claim"), ClaimBody()),
                 "OEIS A363412, FORMULA (revision 19, no page): \"Conjectures: 3 does not divide a(3*n+1) for all n; the 3-adic valuation v_3(a(3*n)) = v_3(a(3*n-1)) for all n.\" The first clause concerns every natural n, including zero; the source sequence is BalaA363411.b.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Three never divides these terms", ClaimBody(),
-                "BalaA363412 result (#18635): The coordinate recursion modulo 3 has period 3. At 3n+1 its value is (1,1), so the imaginary coordinate is nonzero modulo 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                "BalaA363412 result (#18635): The coordinate recursion modulo 3 has period 3. At 3n+1 its value is (1,1), so the imaginary coordinate is nonzero modulo 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala3634-nondivisibility"), ResolutionKind.Proved)),
             Node("reflection_congruences", "Two integer reflection congruences", ReflectionBody(),
                 "For every finite integer coefficient family, a uniform shift by c changes the real coordinate by a multiple of 3c and the imaginary coordinate by c times the cardinality modulo 3c. Apply this to k mapped to m-k on 0 through m, and to m+1-k on 1 through m. Conjugation reverses the imaginary coordinate. The two displayed divisibilities follow and determine the paired three-adic valuations.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
