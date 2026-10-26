@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:1f62a561976540d1faee473dc545d11731216beac6e68609c23b82f20be7a8e6
   normalized_sha256: sha256:1f62a561976540d1faee473dc545d11731216beac6e68609c23b82f20be7a8e6
 cas_ref: sha256:1f62a561976540d1faee473dc545d11731216beac6e68609c23b82f20be7a8e6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/FibonacciGainRaySuffix.short_suffix_annihilates
+    target_statement_id: sha256:90ab84086dba50084217d13b9c3a21f5eb039ff8ffe259271ac92db873ca6dd1
 receipts:
   unresolved_subitems: []
