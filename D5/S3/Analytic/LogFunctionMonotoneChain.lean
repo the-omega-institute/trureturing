@@ -68,7 +68,7 @@ private lemma signed_derivative_formula (p : Polynomial ℝ) (j : ℕ) {x : ℝ}
       -((-1 : ℝ) ^ j * deriv (iteratedDeriv j (logFunction p)) x) by ring, hh]
     simp only [inv_pow, pow_succ]
     field_simp [hx.ne']
-    <;> ring
+    ring
 
 private lemma sign_transfer (p : Polynomial ℝ) (n j : ℕ) :
     p ∈ derivativeRegion n j ↔
@@ -84,9 +84,63 @@ private lemma sign_transfer (p : Polynomial ℝ) (n j : ℕ) :
     rw [signed_derivative_formula p j hx]
     exact mul_nonneg (by positivity) (h _)
 
+private lemma leadingCoeff_nonneg_of_nonneg (q : Polynomial ℝ)
+    (h : ∀ y : ℝ, 0 ≤ q.eval y) : 0 ≤ q.leadingCoeff := by
+  by_cases hd : q.natDegree = 0
+  · rw [eq_C_of_natDegree_eq_zero hd] at h ⊢
+    simpa only [eval_C, leadingCoeff_C] using h 0
+  · have hdeg : 0 < q.degree := natDegree_pos_iff_degree_pos.mp (Nat.pos_of_ne_zero hd)
+    by_contra! hc
+    obtain ⟨y, hy⟩ := ((q.tendsto_atBot_of_leadingCoeff_nonpos hdeg hc.le).eventually
+      (eventually_lt_atBot (0 : ℝ))).exists
+    exact (h y).not_gt hy
+
 private lemma nonneg_of_sub_derivative (q : Polynomial ℝ) {a : ℝ} (ha : 0 < a)
     (h : ∀ y : ℝ, 0 ≤ (a • q - q.derivative).eval y) : ∀ y : ℝ, 0 ≤ q.eval y := by
-  sorry
+  by_cases hd : q.natDegree = 0
+  · rw [eq_C_of_natDegree_eq_zero hd] at h ⊢
+    intro y
+    have hy := h y
+    simp only [derivative_C, sub_zero, smul_eq_C_mul, eval_mul, eval_C] at hy ⊢
+    exact nonneg_of_mul_nonneg_right hy ha
+  · have hdeg : 0 < q.degree := natDegree_pos_iff_degree_pos.mp (Nat.pos_of_ne_zero hd)
+    have hscale : (a • q).degree = q.degree := by
+      rw [smul_eq_C_mul, degree_C_mul ha.ne']
+    have hder : q.derivative.degree < (a • q).degree := by
+      rw [hscale]
+      exact degree_derivative_lt (ne_zero_of_degree_gt hdeg)
+    have hdegree : (a • q - q.derivative).degree = q.degree :=
+      (degree_sub_eq_left_of_degree_lt hder).trans hscale
+    have hnat : (a • q - q.derivative).natDegree = q.natDegree :=
+      natDegree_eq_of_degree_eq hdegree
+    have hlc : (a • q - q.derivative).leadingCoeff = a * q.leadingCoeff := by
+      rw [leadingCoeff_sub_of_degree_lt hder, smul_eq_C_mul, leadingCoeff_mul, leadingCoeff_C]
+    have hq : 0 ≤ q.leadingCoeff := by
+      have hr := leadingCoeff_nonneg_of_nonneg _ h
+      rw [hlc] at hr
+      exact nonneg_of_mul_nonneg_right hr ha
+    have hneg : 0 ≤ (q.comp (-X)).leadingCoeff := by
+      have hr := leadingCoeff_nonneg_of_nonneg ((a • q - q.derivative).comp (-X))
+        (fun y => by simpa only [eval_comp, eval_neg, eval_X] using h (-y))
+      rw [comp_neg_X_leadingCoeff_eq, hnat, hlc] at hr
+      rw [comp_neg_X_leadingCoeff_eq]
+      exact nonneg_of_mul_nonneg_right (by nlinarith only [hr]) ha
+    have htop := q.tendsto_atTop_of_leadingCoeff_nonneg hdeg hq
+    have hbot : Tendsto q.eval atBot atTop := by
+      simpa only [Function.comp_def, eval_comp, eval_neg, eval_X, neg_neg] using
+        ((q.comp (-X)).tendsto_atTop_of_leadingCoeff_nonneg
+          (by simpa only [degree_comp_neg_X] using hdeg) hneg).comp tendsto_neg_atBot_atTop
+    have hlim : Tendsto q.eval (cocompact ℝ) atTop := by
+      rw [cocompact_eq_atBot_atTop]
+      exact tendsto_sup.mpr ⟨hbot, htop⟩
+    have hcont : Continuous q.eval :=
+      continuous_iff_continuousAt.mpr fun y => (q.hasDerivAt y).continuousAt
+    obtain ⟨m, hm⟩ := hcont.exists_forall_le hlim
+    have hmin : IsLocalMin q.eval m := Eventually.of_forall hm
+    have hzero := hmin.hasDerivAt_eq_zero (q.hasDerivAt m)
+    have hm0 := h m
+    simp only [eval_sub, smul_eq_C_mul, eval_mul, eval_C, hzero, sub_zero] at hm0
+    exact fun y => (nonneg_of_mul_nonneg_right hm0 ha).trans (hm y)
 
 private lemma descending (n k : ℕ) : derivativeRegion n (k + 1) ⊆ derivativeRegion n k := by
   intro p hp
@@ -96,7 +150,8 @@ private lemma descending (n k : ℕ) : derivativeRegion n (k + 1) ⊆ derivative
   simpa only [derivativePolynomial, Nat.rec_add_one] using hp.2
 
 private lemma intersection (n : ℕ) (p : Polynomial ℝ) (hp : p.natDegree ≤ n) :
-    (∀ k : ℕ, 1 ≤ k → p ∈ derivativeRegion n k) ↔ completelyMonotone (logFunction p) := by
+    (∀ k : ℕ, 1 ≤ k → p ∈ derivativeRegion n k) ↔
+      completelyMonotone (logFunction p) := by
   constructor
   · intro h k
     cases k with
