@@ -140,7 +140,10 @@ internal sealed class AbsolutelyEntangledAllPartitionsDocument : IScribeDocument
                             + "would force the determinant at p's four specified coordinates "
                             + "to vanish. Those coordinates give one of the embeddings already "
                             + "excluded. This proves nonseparability for every p simultaneously."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yu-et-al-2021-absolutely-entangled-all-partitions"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, bool fromRepo = false) => Describe.Lean(
