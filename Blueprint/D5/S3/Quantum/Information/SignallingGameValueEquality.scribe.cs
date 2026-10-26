@@ -169,7 +169,7 @@ internal sealed class SignallingGameValueEqualityDocument : IScribeDocumentDefin
     {
         Formula witnesses = Some(Fa, Arrow(Fin(M), Fin(N)),
             Some(Fb, Arrow(Fin(N), Fin(M)),
-                Eq(LocalCall("winProb", At(LocalCall("deterministicBox"), Fa, Fb)), Value)));
+                Eq(LocalCall("winProb", LocalCall("deterministicBox", Fa, Fb)), Value)));
         return All(M, Nat, All(N, Nat,
             Eq(LocalCall("classicalValues", M, N), SetBuilder(Value, Real, witnesses))));
     }
@@ -189,7 +189,12 @@ internal sealed class SignallingGameValueEqualityDocument : IScribeDocumentDefin
 
     private static Formula QuantumBoxFormula()
     {
-        Formula kron = Call("kronecker", At(A, X, U), At(B, Y, V));
+        Formula x1 = F.Id("x1");
+        Formula x2 = F.Id("x2");
+        Formula tensorLambda = Seq(
+            F.Id("fun"), Sp, x1, Sp, x2, Sp, Mapsto, Sp,
+            new Formula.Binary(x1, FormulaBinaryOperator.Multiply, x2));
+        Formula kron = At(Named("Matrix.kroneckerMap"), tensorLambda, At(A, X, U), At(B, Y, V));
         Formula born = Call("bornProbability", Rho, kron);
         Formula realPart = Call("Complex.re", born);
         return All(M, Nat, All(N, Nat, All(Da, Nat, All(Db, Nat,
@@ -203,7 +208,7 @@ internal sealed class SignallingGameValueEqualityDocument : IScribeDocumentDefin
         Formula witnesses = Some(Da, Nat, Some(Db, Nat, Some(Rho, BipartiteMatrix,
             Some(A, AliceMeasurement, Some(B, BobMeasurement,
                 And(Call("IsQuantumStrategy", Rho, A, B),
-                    Eq(LocalCall("winProb", At(LocalCall("quantumBox"), Rho, A, B)), Value)))))));
+                    Eq(LocalCall("winProb", LocalCall("quantumBox", Rho, A, B)), Value)))))));
         return All(M, Nat, All(N, Nat,
             Eq(LocalCall("quantumValues", M, N), SetBuilder(Value, Real, witnesses))));
     }
