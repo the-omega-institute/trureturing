@@ -1,0 +1,92 @@
+**Theorem 50.2 (full real-world semantics and polynomial bit decision).** There is a deterministic finite-bit algorithm for every $k,d\ge0$ and every input of Definition 49.1 which returns separately:
+
+1. whether $\mathcal W_\delta(y)$ is nonempty;
+2. for each $\nu\in\{12,21\}$, whether its original source entry is unbounded on $\mathcal W_\delta(y)$;
+3. for each failed direction, the valid finite bound $P_\nu\le U$ for every original compatible real world. If the class is empty, it instead reports emptiness and may return the vacuous bound zero.
+
+Here $P_\nu$ denotes $P_{12}$ or $P_{21}$, as appropriate. A nonempty compatibility answer can also return one whole world in the common representation of Definition 49.1, with degree at most $A$. The algorithm, including that optional world, costs at most
+
+$$
+ O\!\left(K_0(L+\mathcal N+1)^{12}(h+1)^{12}\right).
+ \tag{50.2}
+$$
+
+The constants in $O$ are absolute. All roots, zeros, signs, projections and reconstructions are included. In particular this is a polynomial bit bound in $d$ and actual input length for every fixed $k$, rather than a polynomial certificate count or an invocation of an uncosted real decision procedure.
+
+**Proof.** Use the following mature projection input inside the source-specific decision. Apply Basu–Pollack–Roy, [*Algorithms in Real Algebraic Geometry*, second edition, Theorem 5.16 and Algorithm 11.1, printed pp. 165–166 and 403–405](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), eliminating only $x$ from the integer family in $(s,x)$. Their ordered integral domain is $\mathbb Z$, contained in the real closed field $\mathbb R$. Their truncations, leading coefficients and signed principal subresultant coefficients are all retained. Adjoin $s$ and all nonzero coefficient polynomials in $s$ of the input family. Constants may be retained; identically zero projection polynomials are removed by integer coefficient inspection.
+
+For specificity, the truncations are every initial segment $\sum_{j=0}^t f_j(s)x^j$ of each $f$. The projection uses their leading coefficients, their signed principal subresultant coefficients with their own $x$ derivatives, and those of each pair of truncations. The equal-degree pair is first reduced by the leading-coefficient combination specified in Algorithm 11.1. Thus degree drops are covered before specializing $s$; a single discriminant is not substituted for this projection. This is a direct use of the supplier, not a new projection algorithm.
+
+The enlarged projection has at most $M_0$ members, degree at most $E$, and integer coefficient length at most $J$. Indeed there are at most $\mathcal N(D_0+1)$ truncations and $O(\mathcal N^2(D_0+1)^3)$ principal coefficients. Each is a determinant of order at most $2D_0$ with entries consisting of original coefficients, their derivative multiples, or the leading-coefficient combination of two original polynomials. Those entries have $s$ degree at most $2D_0$ and length at most $2h+O(\log(D_0+1))$. Expanding each determinant bounds its degree by $4D_0^2$ and its coefficient length by $O(D_0(h+D_0\log(D_0+1)))$. The larger explicit $E,J,M_0$ in (50.1) dominate these bounds. They also dominate the added coefficients and $s$. Generation by determinant expansion has bit cost bounded by a fixed polynomial in $\mathcal N,h+1$ times $(2D_0+2)^{O(D_0)}$, which is absorbed by (50.2). No factorization over $\mathbb R$, $\mathbb R(s)$ or $\mathbb Q(s)$ is required.
+
+The supplier's conclusion is used as follows. Over each open interval of $s$ on which no nonzero projection member vanishes, all real roots of all nonzero specialized input polynomials have continuous ordered sections, with fixed incidences and multiplicities. Every original polynomial has constant sign on each section and each intervening band. A polynomial identically zero on such a cylinder keeps sign zero. The two boundary polynomials $x,s-x$ are in the input family, so these statements also hold after restricting to $0<x<s$. They include repeated roots and shared factors. At a projection root the algorithm below samples the specialized fiber itself; no assertion of generic degree or non-nullification is made there.
+
+Here are the finite-bit sampling details, including the exceptional algebraic fibers. The univariate integer operations used are Basu–Pollack–Roy Algorithms 10.4 and 10.6–10.8, printed pp. 372–382: squarefree real-root isolation, signs at roots, comparison and univariate sample points. On $n$ polynomials of degree at most $q$ and coefficient length at most $t$, their bound is $O(n^2q^5(t+\log(q+1))^2)$, using maxima over every polynomial whose sign or root is tested. They return actual real algebraic roots and rational sector samples. No infinitesimal specialization is used. The following reduction to those integer routines supplies the binary lifting estimate that is not asserted by the general lifting discussion in the supplier's §11.1.2.
+
+First isolate and order the roots of all projection members using these integer routines. Sample every positive projection root and every open subinterval of $(0,\infty)$ cut out by those roots, including the final unbounded interval. Open-interval samples can be rational dyadics, chosen from the isolating intervals; the outer root bound supplies the final one. There are at most $2M_0E+1$ such base samples. A base sample $s_0$ is either rational, or is represented by a squarefree $u\in\mathbb Z[S]$ of degree $e\le E$ and an isolating rational interval. For a rational sample use a linear $u$. Its coefficient and interval lengths are bounded by $(2E+2)^{10}(J+1)$; this follows either from the isolation bounds just quoted or from the elementary root-separation estimate below.
+
+At this selected $s_0$, test every coefficient of every $f(S,X)$ for zero by the integer univariate sign routine at $s_0$. A specialized polynomial all of whose coefficients vanish is recorded as the zero polynomial. For any other $f$, form
+
+$$
+ \begin{aligned}
+ g_f&=\gcd\bigl(u,f_0,\ldots,f_{D_0}\bigr),
+       &u_f&=u/g_f,\\
+ R_f(X)&=\operatorname{Res}_S(u_f(S),f(S,X)).
+ \end{aligned}
+ \tag{50.3}
+$$
+
+Zero coefficients may be omitted from the gcd, and rational denominators are cleared positively. The chosen $s_0$ remains a root of $u_f$, since $f(s_0,X)$ was not zero. Moreover $R_f$ is a nonzero integer polynomial: $u_f$ is squarefree and no one of its complex roots annihilates every coefficient of $f$. Equivalently the product of the nonzero conjugate specialized polynomials, times its known leading factor, is not zero. Its degree is at most $eD_0$ and it vanishes at every actual root of $f(s_0,X)$. The resultant determinant has order at most $E+D_0$, so its coefficient lengths are bounded by a power of $2E+2$ times $h+J+1$. Gcd and resultant computations here use only integer polynomial arithmetic; signed subresultants or determinant expansions give these bounds directly.
+
+Isolate the roots of all the nonzero $R_f$, merge these lists exactly, and take their real roots and rational points between consecutive roots, also including the two outer intervals. These are a superset of all necessary fiber samples. Extraneous roots arising from other conjugates of $s_0$ merely subdivide an actual sector. They cannot omit a root or change a sign between actual roots. There are at most $2\mathcal N ED_0+1$ fiber samples. Include all roots, even multiple or exactly active ones, after squarefree isolation; no strict inequality is substituted for an equality. To finish, evaluate all original $f(s_0,x_0)$ signs at each candidate, discard those failing $0<x_0<s_0$, and evaluate the complete predicates.
+
+For completeness, those bivariate sign evaluations have the following bounded integer construction. Let $u$ and $v$ be the squarefree integer polynomials isolating $s_0,x_0$, of degrees $e\le E$ and $m\le ED_0$. Put $n=em\le A$. In the rational algebra
+
+$$
+             \mathcal A=\mathbb Q[S,X]/(u(S),v(X))
+ \tag{50.4}
+$$
+
+use the $n$ monomials $S^iX^j$, $i<e,j<m$. This is a product of $n$ distinct complex points after extending scalars. Among the integers
+
+$$
+                   1\le c\le\binom n2+1
+ \tag{50.5}
+$$
+
+one makes $T=S+cX$ have distinct values at all these points. Each pair of distinct points rules out at most one $c$, since equality with identical $X$ and different $S$ rules out none. Compute the multiplication matrix of $S+cX$ and its characteristic polynomial, clearing a positive rational denominator to obtain $F_c\in\mathbb Z[T]$. Its squarefreeness, decided by $\gcd(F_c,F_c')=1$, is precisely the separating condition. Thus the finite enumeration (50.5) finds a separating $c$ without a primitive-element oracle. The powers $1,T,\ldots,T^{n-1}$ then form a basis: after extending scalars their value matrix is an invertible Vandermonde matrix. Rational linear systems therefore express $S,X$ as polynomials in $T$ of degree less than $n$. All these matrices have rational entries, and common denominators and determinant bounds control their sizes. This is the standard separating-element form of a rational univariate representation, as in Basu–Pollack–Roy §12.4 and Proposition 12.16, used here only on the explicitly bounded product algebra (50.4).
+
+The root $\theta=s_0+cx_0$ is selected by refining the two given isolating intervals and isolating $F_c$. Reduction of $f(S,X)$ using the two coordinate polynomials gives a rational polynomial in $\theta$. Clear its rational denominator positively and use Algorithm 10.6 to obtain its exact sign, including zero. This also provides a common representation of $s_0,x_0$, of degree at most $A$. It is harmless that (50.4) may contain other embeddings: the selected real root and its recovered two coordinates specify precisely the chosen pair.
+
+Here are explicit height and termination controls for the refinements and linear algebra. A squarefree integer polynomial of degree $q$ and coefficient length $t$ has roots of modulus at most $2^{t+1}$ and distinct roots at distance greater than
+
+$$
+                         2^{-2q^2(t+2)}.
+ \tag{50.6}
+$$
+
+For the first bound use the usual geometric-series root bound. For the second use its nonzero integer discriminant: the leading-coefficient power is at most $2^{(2q-2)t}$, every root difference other than a chosen closest pair is at most $2^{t+2}$, and the discriminant's absolute value is at least one. These inequalities imply (50.6), with room in the exponent. To compare roots of two polynomials use the squarefree part of their product; gcd first distinguishes equality. Factor coefficient heights for this squarefree part are bounded by the original height plus $O(q+\log(q+1))$, by the ordinary integer factor bound, also given in Basu–Pollack–Roy Corollary 10.12. Thus separation requires only polynomially many bits in these degrees and heights, not a numerical positive-gap promise.
+
+In (50.3) the degrees are at most $ED_0$. In (50.4) the dimension is at most $A$; at most $\binom A2+1$ separating integers are tried. Reduction of monomials, characteristic determinants, and Cramer's rule for the coordinate basis have orders and degrees bounded by powers of $A+1$. Expanding them bounds every coefficient length by $(2A+2)^{20(A+1)}$ times the input height at this step. The isolating refinements needed to identify $s_0+cx_0$ are bounded by (50.6) for $F_c$, together with $O(\log(A+1))$ bits for $c$. Exact zero is settled by gcd/sign computation before refinement for a nonzero sign. Consequently all operations on one such pair, including every sign of the input family, have bit cost bounded by
+
+$$
+ O\!\left((2A+2)^{60(A+1)^2}
+           (\mathcal N+1)^2(h+J+1)^6\right).
+ \tag{50.7}
+$$
+
+This estimate follows just by the determinant expansions, schoolbook rational arithmetic and the quoted integer isolation bounds; no unit-cost operation in an algebraic coefficient field is hidden in it. Denominator clearing in the $A$-dimensional matrices and all coefficient products are included. Rational sector samples use a linear $v$ and satisfy the same estimate. The number of base samples is $O(M_0E)$, the number of fiber samples per base is $O(\mathcal N ED_0)$, and scanning the complete labels and their signed constraints costs at most a further $O((L+\mathcal N+1)^2)$ per sample. Substitution of $M_0,J$ and enlargement to $K_0$ give (50.2), including Theorem 49.2. These bounds are intentionally larger than the individual arithmetic costs.
+
+A passing sample for either chart is now equivalent to nonempty compatibility. Sufficiency is the whole-world reconstruction in Theorem 45.2. For necessity take any original compatible real world, use its own chart parameters and its original whole gain, drift and all errors in (44.4), and then Theorem 45.2. The corresponding source point lies over either a projection root or an open base interval. In the former case its specialized fiber was sampled, including nullified polynomials; in the latter the credited sign-invariant sections and bands transfer its complete sign predicate to the chosen base sample. Thus some sampled predicate passes. This proves the separate nonemptiness answer, even for isolated sources, lower-dimensional coefficient fibers and zero radius. The algorithm need not enumerate the continuum of possible original worlds to retain this equivalence.
+
+It remains to decide unboundedness and prove the numerical bound. For each nonzero projection polynomial divide out its power of $s$ conceptually. Its nonzero constant coefficient has absolute value at least one and its coefficients have absolute value at most $2^J$. Applying the root bound to its reversed polynomial gives, for every nonzero root $z$,
+
+$$
+                  |z|\ge\frac1{1+2^J}>2^{-(J+1)}.
+ \tag{50.8}
+$$
+
+Thus the whole interval $(0,\eta)$ contains no positive projection root, regardless of how many projection members vanish at zero. Sample the single rational scale $s_*=\eta/2$ and its fibers by the same finite-bit procedure. Define a directional pass by the existence of a passing complete label in that fiber. The sign-invariant sections and bands, with the boundary sections $x=0,s$, show that such a label exists at every scale $0<s<\eta$ if it exists at one; if there is none at $s_*$ there is none throughout this interval. This is the same positive-scale implication proved in Lemma 39.2, now using the supplier's truncation/subresultant projection rather than the real factorization in (39.2).
+
+A directional pass gives compatible original worlds at every such positive scale, with the selected source entry exactly $1/s$, by (37.1) and Theorem 45.2. Conversely, if that original entry is unbounded, its own chart has a sequence $s=1/P_\nu\downarrow0$. Its complete predicates must pass at those points, so sign invariance forces the directional test to pass. If the test fails, any compatible real world with $P_\nu>U=1/\eta$ would have $0<s<\eta$ and a passing predicate, a contradiction. The weak bound $P_\nu\le U$ includes equality. Empty classes are distinguished by the preceding independent feasibility answer. Reconstruction and the common-output height estimate are completed in Theorem 51.1; they use only a selected passing sample and are included in the cost already allowed in (50.2). $\square$
+
