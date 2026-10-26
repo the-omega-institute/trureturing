@@ -7,9 +7,7 @@
    digest: Perfect homogeneous one-generator extensions exist exactly at differential order one. -/
 
 import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.Dimension.Finite
 
 noncomputable section
