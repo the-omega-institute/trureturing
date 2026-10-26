@@ -21,7 +21,7 @@ internal sealed class AndrasfaiDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("obstruction"), DeclarationHandle.Create(Prefix + "Obstruction"),
                 H("The complete finite obstruction family"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For any m and subset X, an obstruction means that there are a vertex u and an integer k with 1 <= k <= m such that u, u+(3k-1), and every u+(1+3j), 0 <= j < k, belong to X. Additions are in the same original cyclic group."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For any m and subset X, an obstruction means that there are a vertex u and a natural number k with 1 <= k <= m such that u, u+(3k-1), and every u+(1+3j), 0 <= j < k, belong to X. Additions are in the same original cyclic group."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("visible-iff-no-obstruction"),
                 DeclarationHandle.Create(Prefix + "visible_iff_no_obstruction"),
                 H("Exact obstruction characterization"), StatementSource.WithoutFormula(),
