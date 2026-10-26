@@ -8,6 +8,7 @@
 
 /- Same-path private tail preparation; no event or history existence is asserted. -/
 import D5.S3.Topology.InverseLimit.SignedBirthEnumeration
+import D5.S3.Topology.InverseLimit.CountableClopenReflection
 import Mathlib.Topology.InductiveDimension.Classes
 
 /-! A continuous clopen preimage contradicts the original proper-stage F law. -/
@@ -226,5 +227,82 @@ theorem no_continuous_pool_separation
     (fun n => (x n).val) hsource Dc hDc
     (fun n hn => (htrace (x n)).mpr (hsplit.1 n hn))
     (fun n hn hmem => hsplit.2 n hn ((htrace (x n)).mp hmem))
+
+private def properSlice (H : Prefix (ω₁ : Ordinal.{0})) (l : Label) : Prefix l.1 where
+  carrier a := H.carrier ⟨a.1, a.2.trans l.2⟩
+  closed a := H.closed ⟨a.1, a.2.trans l.2⟩
+  nonempty a := H.nonempty ⟨a.1, a.2.trans l.2⟩
+  compatible a b h x := H.compatible _ _ h x
+  onto a b h y := H.onto _ _ h y
+
+/-- Internal final-carrier consumer: the same original whole Dirac sequence
+is read in a proper slice after one ambient clopen has been reflected. The
+reservoirs remain the actual input pools; no delayed event is manufactured.
+The raw-history connection and actual producer selection are still WIP. -/
+private theorem final_no_continuous_pool_separation
+    (H : Prefix (ω₁ : Ordinal.{0}))
+    (Qnu : (r : Label) → Label → ℕ → RegularSigned (H.Space r))
+    (QJ : Label → Label → Label → Set ℕ)
+    (QN : Label → Label → Bool → Set ℕ)
+    (data : (l : Label) → (properSlice H l).Data)
+    (laws : ∀ l, (properSlice H l).Laws (data l))
+    (hnu : ∀ (l : Label) (r : Coord l.1) (d : Label) (n : ℕ),
+      ((data l).nu r d n).1 = (Qnu ⟨r.1, r.2.trans l.2⟩ d n).1)
+    (hJ : ∀ (l : Label) (r d b : Coord l.1),
+      (data l).J r d b = QJ ⟨r.1, r.2.trans l.2⟩
+        ⟨d.1, d.2.trans l.2⟩ ⟨b.1, b.2.trans l.2⟩)
+    (hN : ∀ (l : Label) (r d : Coord l.1) (e : Bool),
+      (data l).N r d e = QN ⟨r.1, r.2.trans l.2⟩ ⟨d.1, d.2.trans l.2⟩ e)
+    (r d b : Label) (hwr : ω ≤ r.1) (hrb : r < b) (hdb : d < b)
+    (M : Bool → Set ℕ) (hM : ∀ e, M e ⊆ QN r d e)
+    (hJb : QJ r d b = M false ∪ M true)
+    (A : Set H.LimitSpace) (hA : IsClosed A) (x : ℕ → A)
+    (hsource : ∀ n, (Qnu r d n).1 =
+      (Measure.dirac (H.projection r (x n).val)).toSignedMeasure)
+    (f : A → H.LimitSpace) (hf : Continuous f)
+    (C : Set H.LimitSpace) (hC : IsClopen C) :
+    ¬ ((∀ n ∈ M false, f (x n) ∈ C) ∧
+       (∀ n ∈ M true, f (x n) ∉ C)) := by
+  classical
+  intro hsplit
+  obtain ⟨D, hD, htrace⟩ := exists_ambient_clopen_preimage A hA f hf C hC
+  letI : ∀ j, Nonempty (H.diagram.obj j) :=
+    fun j => inferInstanceAs (Nonempty (H.Space j.unop))
+  have hl : Order.IsSuccLimit (ω₁ : Ordinal.{0}) := Cardinal.isSuccLimit_omega 1
+  have hs : ∀ {i j} (g : i ⟶ j), Surjective (H.diagram.map g) := by
+    intro i j g y
+    obtain ⟨z, hz⟩ := H.onto j.unop i.unop (leOfHom g.unop) y
+    exact ⟨z, Subtype.ext hz⟩
+  obtain ⟨c, hbc, B, hB, hDB, _, _⟩ :=
+    CountableClopenReflection.exists_common_stage H.diagram H.cone
+      (H.coneIsLimit hl) hs b (fun _ : Unit => D) (fun _ => hD)
+  have htracec (z : A) : H.projection c z.val ∈ B () ↔ f z ∈ C := by
+    have hz := htrace z
+    rw [hDB ()] at hz
+    exact hz
+  let l : Label := ⟨Order.succ c.1, hl.succ_lt c.2⟩
+  have hrc : r.1 < c.1 := hrb.trans_le hbc
+  have hdc : d.1 < c.1 := hdb.trans_le hbc
+  let r' : Coord l.1 := ⟨r.1, hrc.trans (Order.lt_succ c.1)⟩
+  let d' : Coord l.1 := ⟨d.1, hdc.trans (Order.lt_succ c.1)⟩
+  let b' : Coord l.1 := ⟨b.1, lt_of_le_of_lt (show b.1 ≤ c.1 from hbc) (Order.lt_succ c.1)⟩
+  let c' : Coord l.1 := ⟨c.1, Order.lt_succ c.1⟩
+  have hM' (e : Bool) : M e ⊆ (data l).N r' d' e := by
+    rw [hN]
+    exact hM e
+  have hJb' : (data l).J r' d' b' = M false ∪ M true := by
+    rw [hJ]
+    exact hJb
+  have hsource' (n : ℕ) :
+      ((data l).nu r' ⟨d'.1, d'.2.trans (data l).proper⟩ n).1 =
+      (Measure.dirac ((properSlice H l).map r' c'
+        (show r' ≤ c' from hrc.le) (H.projection c (x n).val))).toSignedMeasure := by
+    rw [hnu]
+    exact hsource n
+  exact proper_F_excludes_split_dirac_lifts (properSlice H l) (data l) (laws l)
+    r' d' b' c' hwr hrb hdb hbc M hM' hJb'
+    (fun n => H.projection c (x n).val) hsource' (B ()) (hB ())
+    (fun n hn => (htracec (x n)).mpr (hsplit.1 n hn))
+    (fun n hn hmem => hsplit.2 n hn ((htracec (x n)).mp hmem))
 
 end D5.S3.Topology.InverseLimit.ContinuousFiniteImageTail
