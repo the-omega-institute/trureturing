@@ -6,7 +6,12 @@
    utility: none
    digest: Constructive rootless lattice low-energy bases and actual Sugawara spectrum. -/
 
-/-
+import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
+import Mathlib.Data.Finsupp.Multiset
+import Mathlib.Data.Sym.NatCard
+import Mathlib.Tactic
+
+/-!
 Actual positive definite even lattices of arbitrary natural rank, including zero.
 The oscillator proof removes occupied occurrences and distinguishes a mode-two
 singleton from an unordered pair of mode-one colours, including repetitions.
@@ -18,10 +23,6 @@ Mathlib's symmetric-power cardinality theorem retains its Apache-2.0 license
 and original authorship. Lattice construction context: Bakalov--Kac,
 math/0402315v1, section 4.1; no Monster or Leech shell count is asserted.
 -/
-import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
-import Mathlib.Data.Finsupp.Multiset
-import Mathlib.Data.Sym.NatCard
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -45,7 +46,7 @@ private theorem oscillator_add (D : LatticeData) (d e : Exponent D) :
 
 private theorem oscillator_single (D : LatticeData) (x : Index D) (m : ℕ) :
     oscillatorEnergy (Finsupp.single x m : Exponent D) = m * (x.2 + 1) := by
-  simp [oscillatorEnergy, Finsupp.weight_single, nsmul_eq_mul]
+  simp [oscillatorEnergy, Finsupp.weight_single]
 
 /-- Removing an actual occupied oscillator proves the entire degree-one
 classification, including the empty-colour case. -/
@@ -135,7 +136,8 @@ private theorem pairOccupation_energy (D : LatticeData) (s : Sym (Fin D.rank) 2)
     oscillatorEnergy (pairOccupation D s) = 2 := by
   rcases s with ⟨s, hs⟩
   obtain ⟨i, j, rfl⟩ := Multiset.card_eq_two.mp hs
-  simp [pairOccupation_pair, oscillator_add, oscillator_single]
+  rw [pairOccupation_pair, oscillator_add, oscillator_single, oscillator_single]
+  norm_num
 
 private theorem pairOccupation_injective (D : LatticeData) :
     Function.Injective (pairOccupation D) := by
@@ -425,11 +427,15 @@ theorem actual_rootless_low_spectrum (D : LatticeData)
   · have hc : Nat.card (EnergyFiber D 0) = 1 := by
       rw [Nat.card_congr (energyZeroEquiv D hD)]
       simp
-    simpa only [Int.cast_zero] using (hcard 0).trans hc
+    have h := (hcard 0).trans hc
+    rw [Int.cast_zero] at h
+    exact h
   · have hc : Nat.card (EnergyFiber D 1) = D.rank := by
       rw [Nat.card_congr (energyOneEquiv D hD hroot)]
       simp only [Nat.card_eq_fintype_card, Fintype.card_fin]
-    simpa only [Int.cast_one] using (hcard 1).trans hc
+    have h := (hcard 1).trans hc
+    rw [Int.cast_one] at h
+    exact h
   · change Module.finrank ℂ ((sugawaraMode D H 0).eigenspace ((2 : ℤ) : ℂ)) = _
     rw [actualL0_eigenspace_eq_grade D H hHG hGH 2]
     exact grade_two_finrank D hD hroot
