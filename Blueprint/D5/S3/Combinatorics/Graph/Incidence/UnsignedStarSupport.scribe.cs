@@ -10,6 +10,18 @@ internal sealed class UnsignedStarSupportDocument : IScribeDocumentDefinition
         "The least support of an unsigned integer star representative is exact original-edge bipartization, and its finite optimum is the complement of an indexed maximum cut.",
         H("Unsigned Star Support and Original Indexed Cuts"),
         Blocks(
+            Describe.Lean(DescribeId.Create("color-support"),
+                DeclarationHandle.Create(Prefix + "color_support"), H("Exact Support of the Boolean Potential"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Consumed supplier identity, exposed unchanged: the actual integer representative has support exactly the uncut original IDs."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("color-bounds"),
+                DeclarationHandle.Create(Prefix + "color_bounds"), H("Bounds for the Boolean Potential"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Consumed supplier bounds, exposed unchanged: potential values are 0 or -1 and representative values are -1, 0 or 1."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("equal-value-sign-cut"),
+                DeclarationHandle.Create(Prefix + "odd_sign_cut"), H("The Existing Sign Witness Respects Equal Values"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing sign witness decide(0 < 2*b(v)+1) now also records that equal integer potential values give equal colors. The original unrestricted support inclusion and old public conclusions are preserved. This supplier refinement is consumed by invariant compression; it is not claimed as a new independent mathematical result."))), DescribeRole.Theorem),
             Paragraph(Text("Use the existing loopless Edges V X carrier with integer starMap b(i)=b(left(i))+b(right(i)). "
                 + "The representative is the actual integer vector z_b(i)=1+starMap b(i), without saturation or a quotient cancellation. "
                 + "A Boolean partition c has cutEdges consisting of every original ID whose endpoint colors differ. "

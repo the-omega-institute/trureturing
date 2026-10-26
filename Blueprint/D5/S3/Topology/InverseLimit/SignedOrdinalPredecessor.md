@@ -22,7 +22,20 @@ nextP constructs the actual Predecessor on R.coordinates.extended with omega<=su
 
 The original Q and R remain available in the telescope for the full historical construction. In particular Q.U and Q.nu retain every Label value, Q.B retains every natural enumeration index, and Q.V retains every current row. A Predecessor contains no old B enumeration, and R.arrival stores only N-entry functions. Neither arrival nor a next predecessor reconstructs the complete original birth data. No historical execution or final omega-one construction follows from these data alone.
 
+**Theorem 1.2 (Regular bounded convergence from the same Result).**
+
+Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalPredecessor.next_regular_f`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/InverseLimit/SignedOrdinalPredecessor.next_regular_f` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every eligible old row and label of the next predecessor, any original norm-one signed lift sequence on its literal top carrier converges along that predecessor's J to a signed measure with regular Jordan parts and real total variation at most one. The proof applies the same R.literal_f after exact top and row carrier equality. The entire current U, V and nu functions are retained by next_U_readback, next_V_readback and next_nu_readback, including all whole birth labels.
+
 ## References
 
 - Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalPredecessor.nextP`
+- Truth anchor: `D5/S3/Topology/InverseLimit/SignedOrdinalPredecessor.next_regular_f`
 - Dependency: [D5/S3/Topology/InverseLimit/SignedOrdinalSuccessor](SignedOrdinalSuccessor.md)

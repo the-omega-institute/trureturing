@@ -10,6 +10,10 @@ internal sealed class UnsignedStarFixedCokernelDocument : IScribeDocumentDefinit
         "Integral fixed representatives and the canonical fixed unsigned-star cokernel comparison on original indexed coordinates.",
         H("Integral Fixed Unsigned-Star Cokernels"),
         Blocks(
+            Describe.Lean(DescribeId.Create("star-equivariance"),
+                DeclarationHandle.Create(Prefix + "starMap_equivariant"), H("Equivariance of the Original Integer Star Map"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The existing equivariance proof is exposed unchanged for invariant-support consumers. Independent endpoint swaps remain allowed; no fixed-cokernel lifting or comparison theorem is assumed by those consumers."))), DescribeRole.Theorem),
             Paragraph(Text("V and X are the finite original vertex and edge-ID types. "
                 + "The original graph is connected, nonbipartite and loopless, and parallel original edge IDs remain separate. "
                 + "An arbitrary group Gamma acts by vertexPerm and edgePerm, homomorphisms to the two permutation groups. "

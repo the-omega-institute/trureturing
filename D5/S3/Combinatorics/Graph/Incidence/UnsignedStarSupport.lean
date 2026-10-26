@@ -44,13 +44,13 @@ def cutEdges (c : V → Bool) : Set X := {i | c (g.left i) ≠ c (g.right i)}
 /-- The integer potential associated with a total Boolean partition. -/
 def colorPotential (c : V → Bool) : V → ℤ := fun v => if c v then -1 else 0
 
-private theorem color_support (c : V → Bool) :
+theorem color_support (c : V → Bool) :
     Function.support (representative g (colorPotential c)) = (cutEdges g c)ᶜ := by
   ext i
   cases hl : c (g.left i) <;> cases hr : c (g.right i) <;>
     simp [Function.support, representative, Edges.starMap, colorPotential, cutEdges, hl, hr]
 
-private theorem color_bounds (c : V → Bool) :
+theorem color_bounds (c : V → Bool) :
     (∀ v, colorPotential c v = 0 ∨ colorPotential c v = -1) ∧
     (∀ i, representative g (colorPotential c) i = -1 ∨
       representative g (colorPotential c) i = 0 ∨
@@ -63,23 +63,28 @@ private theorem color_bounds (c : V → Bool) :
       simp [representative, Edges.starMap, colorPotential, hl, hr]
 
 /-- The nonzero odd spin 2*b+1 provides a cut whose uncut edges lie in
-support, even for unrestricted integer coefficients and infinite types. -/
-private theorem odd_sign_cut (b : V → ℤ) :
-    ∃ c : V → Bool, (cutEdges g c)ᶜ ⊆ Function.support (representative g b) := by
+support, even for unrestricted integer coefficients and infinite types.
+The explicit sign witness respects equal potential values; this is consumed
+by invariant support compression. -/
+theorem odd_sign_cut (b : V → ℤ) :
+    ∃ c : V → Bool, (∀ v w, b v = b w → c v = c w) ∧
+      (cutEdges g c)ᶜ ⊆ Function.support (representative g b) := by
   classical
   let a : V → ℤ := fun v => 2 * b v + 1
   have ha (v : V) : a v ≠ 0 := by dsimp [a]; omega
-  refine ⟨fun v => decide (0 < a v), ?_⟩
-  intro i hi hz
-  have he : a (g.left i) + a (g.right i) = 0 := by
-    change 1 + (b (g.left i) + b (g.right i)) = 0 at hz
-    dsimp [a]
-    omega
-  have hl := ha (g.left i)
-  have hr := ha (g.right i)
-  change ¬ (decide (0 < a (g.left i)) ≠ decide (0 < a (g.right i))) at hi
-  by_cases h₁ : 0 < a (g.left i) <;> by_cases h₂ : 0 < a (g.right i) <;>
-    simp [h₁, h₂] at hi <;> omega
+  refine ⟨fun v => decide (0 < a v), ?_, ?_⟩
+  · intro v w hvw
+    simp only [a, hvw]
+  · intro i hi hz
+    have he : a (g.left i) + a (g.right i) = 0 := by
+      change 1 + (b (g.left i) + b (g.right i)) = 0 at hz
+      dsimp [a]
+      omega
+    have hl := ha (g.left i)
+    have hr := ha (g.right i)
+    change ¬ (decide (0 < a (g.left i)) ≠ decide (0 < a (g.right i))) at hi
+    by_cases h₁ : 0 < a (g.left i) <;> by_cases h₂ : 0 < a (g.right i) <;>
+      simp [h₁, h₂] at hi <;> omega
 
 private theorem cut_of_bipartite (D : Set X)
     (hD : (g.graphAfterDeleting D).IsBipartite) :
@@ -130,7 +135,7 @@ theorem support_subset_iff_bipartite (D : Set X) :
       (g.graphAfterDeleting D).IsBipartite := by
   constructor
   · rintro ⟨b, hb⟩
-    obtain ⟨c, hc⟩ := odd_sign_cut g b
+    obtain ⟨c, _, hc⟩ := odd_sign_cut g b
     exact bipartite_of_cut g D c (hc.trans hb)
   · intro hD
     obtain ⟨b, _, _, hb⟩ := bounded_support_of_bipartite g D hD
@@ -165,7 +170,7 @@ theorem attained_support_bipartization_maxcut [Fintype V] [Fintype X] :
   have hmin (b : V → ℤ) :
       (Function.support (representative g (colorPotential c))).ncard ≤
         (Function.support (representative g b)).ncard := by
-    obtain ⟨d, hd⟩ := odd_sign_cut g b
+    obtain ⟨d, _, hd⟩ := odd_sign_cut g b
     rw [color_support g c, hcomp c]
     calc
       Fintype.card X - (cutEdges g c).ncard ≤

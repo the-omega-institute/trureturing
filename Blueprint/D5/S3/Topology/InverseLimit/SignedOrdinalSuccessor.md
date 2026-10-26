@@ -82,7 +82,7 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalSuccessor.quantitative
 
 *Commentary.*
 
-The literal successor clopen tests the newly inserted ordinal coordinate a. Pushforward along the inverse homeomorphism preserves total variation and the original projection equation. For every q and every signed norm-one lift of the original treated sequence at the same increasing column index, even q has clopen value strictly greater than one sixth and odd q has value zero. This quantitative certificate is separate from Prefix.Laws and from any nonconvergence assertion.
+Result.quantitative_transport transfers any predicate of the split-sheet signed value through this same coordinate equivalence, preserving the original whole measure and column index. It is consumed both here and by the strong delayed certificate. The literal successor clopen tests the newly inserted ordinal coordinate a. Pushforward along the inverse homeomorphism preserves total variation and the original projection equation. For every q and every signed norm-one lift of the original treated sequence at the same increasing column index, even q has clopen value strictly greater than one sixth and odd q has value zero. This quantitative certificate is separate from Prefix.Laws and from any nonconvergence assertion.
 
 ## References
 
