@@ -7,7 +7,6 @@
    digest: The largest real root of Dukes's cubic dominates both remaining eigenvalues. -/
 
 import Mathlib.Analysis.Polynomial.Basic
-import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Topology.Algebra.Polynomial
 import Mathlib.Topology.Order.IntermediateValue
