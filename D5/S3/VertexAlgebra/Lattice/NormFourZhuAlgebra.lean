@@ -79,7 +79,8 @@ private def expansion (D : LatticeData) (a : Charge D)
   map_smul' c u := expansion_unique D a ha s hs _ _
     (chosenExpansion_grade D a s (c • u))
     (fun n => (grade D a s n).smul_mem c (chosenExpansion_grade D a s u n)) (by
-      rw [map_smul,chosenExpansion_sum,chosenExpansion_sum])
+      rw [map_smul,chosenExpansion_sum,chosenExpansion_sum]
+      rfl)
 
 private theorem expansion_single (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
@@ -151,6 +152,8 @@ private theorem binomialProduct_vacuum (D : LatticeData) (a : Charge D)
     binomialProduct D a ha s hs n u (vacuumState D a s)=u := by
   classical
   apply Subtype.ext
+  simp only [binomialProduct, LinearMap.sum_apply, LinearMap.smul_apply,
+    Submodule.coe_sum, Submodule.coe_smul]
   change (∑ j ∈ Finset.range (n+1), (n.choose j : ℂ) •
     mu D u.val ((j:ℤ)-1) (vacuum D)) = u.val
   rw [Finset.sum_eq_single 0]
@@ -166,6 +169,8 @@ private theorem binomialProduct_vacuum (D : LatticeData) (a : Charge D)
 private theorem star_vacuum_right (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1)
     (u : vacuumDescendants D a s) : star D a ha s hs u (vacuumState D a s)=u := by
+  simp only [star, LinearMap.comp_apply, Finsupp.lsum_apply, Finsupp.sum,
+    LinearMap.sum_apply]
   change (∑ n ∈ (expansion D a ha s hs u).support,
     binomialProduct D a ha s hs n (expansion D a ha s hs u n)
       (vacuumState D a s)) = u
@@ -179,6 +184,7 @@ private theorem star_vacuum_left (D : LatticeData) (a : Charge D)
     (Submodule.subset_span ⟨[],rfl,rfl⟩)]
   apply Subtype.ext
   simp [binomialProduct,rawProduct,vacuumState,mu,stateField_vacuum,identity_modes]
+
 
 
 open D5.S3.VertexAlgebra
@@ -315,9 +321,8 @@ private theorem zero_coefficient_preserves_top (D : LatticeData)
       ((correctedField D hu u).coeff (-2*(n:ℤ)) x)=0
   exact sub_eq_zero.mpr shifted
 
--- The GENERAL actual multiplicity equations already exclude rank zero and
--- rank one in this telescope. This removes an unnecessary rank24 premise
--- from the faithful Zhu top representation and resulting presentation.
+-- The general actual multiplicity equations exclude ranks zero and one,
+-- and make all three spectral fibers positive in this telescope.
 private theorem actual_top_three_eigenspaces_positive (D : LatticeData)
     (hu : IsUnit D.G.det) (a : Charge D) (ha : bilinear D a a=4)
     (s : ℂ) (hs : s ^ 2 = 1) :
@@ -488,12 +493,8 @@ private theorem actual_three_images_independent
   · linear_combination -(256 / 7 : ℂ) * r16 + (32 / 7 : ℂ) * rh +
       (32 : ℂ) * r0
 
--- Existing immutable supplier: do not rederive the production cubic
--- from projectors. For the AdjoinRoot polynomial choose the SAME monic
--- factor order X*(X-C(1/16))*(X-C(1/2)) when convenient; swapping the two
--- commuting polynomial factors gives the previously prepared order.
---   HalfFock.NormFourLowestGrades.actualGradeOneZeroMode_polynomial
--- has the exact original D, hu, norm4 a, arbitrary s with s ^ 2 = 1 telescope.
+-- The actual first-grade cubic has the same monic factor order as
+-- the polynomial used for the quotient presentation.
 
 
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
@@ -1326,7 +1327,7 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
   refine ⟨monic,⟨AlgEquiv.ofBijective F ⟨injective,surjective⟩,root_image⟩,?_⟩
   have expanded : x*(x-algebraMap ℂ (Q D a s) (1/16))*
       (x-algebraMap ℂ (Q D a s) (1/2))=
-      (1/64:ℂ) • x^3-(9/16:ℂ) • x^2+(1/32:ℂ) • x := by
+      x^3-(9/16:ℂ) • x^2+(1/32:ℂ) • x := by
     simp only [Algebra.algebraMap_eq_smul_one]
     simp only [mul_sub,sub_mul,smul_mul_assoc,mul_smul_comm,smul_smul,
       mul_one,one_mul,pow_succ,pow_zero,mul_assoc]
@@ -1334,7 +1335,6 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
   rw [expanded] at cubic
   have cleared := congrArg (fun z : Q D a s => (64:ℂ) • z) cubic
   simpa only [smul_add,smul_sub,smul_smul,smul_zero,
-    show (64:ℂ)*(1/64)=1 by norm_num,
     show (64:ℂ)*(9/16)=36 by norm_num,
     show (64:ℂ)*(1/32)=2 by norm_num,one_smul] using cleared
 
