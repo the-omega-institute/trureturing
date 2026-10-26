@@ -97,7 +97,10 @@ internal sealed class SinghNechitaOddHadamardnessRefutationDocument : IScribeDoc
                             + "a sign matrix c with Hadamardness 9³ + 9·(9−1) = 801. The preceding "
                             + "argument rules out such a matrix, so claim is false. Its additional "
                             + "lower-bound clause is unnecessary for this contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("singh-nechita-2022-odd-hadamardness"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SignMatrixFormula() => All("d", Naturals(), All("c", MatrixType(),
         Equivalence(LocalCall("IsSignMatrix", F.Id("c")),
