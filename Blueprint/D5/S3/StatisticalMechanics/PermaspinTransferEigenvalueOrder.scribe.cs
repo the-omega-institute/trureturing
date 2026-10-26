@@ -68,11 +68,11 @@ internal sealed class PermaspinTransferEigenvalueOrderDocument : IScribeDocument
                         + "The inner sum is positive: its first term is nonnegative and 4cd is positive. "
                         + "The remaining factors 4, c^2, d^2 and d+1 are positive, so t(q) < 0.")),
                     Paragraph(Text(
-                        "Since t has positive degree, it is nonzero. Its real roots form a finite set and hence are bounded above. "
-                        + "The evaluation of t is continuous, and its positive leading coefficient and positive degree imply "
+                        "The evaluation of t is continuous, and its positive leading coefficient and positive degree imply "
                         + "that t(x) tends to positive infinity as x tends to positive infinity. "
                         + "The intermediate value theorem on the interval above q, together with t(q) < 0, "
-                        + "therefore gives a real r with q < r and t(r) = 0.")),
+                        + "therefore gives a real r with q < r and t(r) = 0. Since t has positive degree, it is nonzero. "
+                        + "Its real roots form a finite set and hence are bounded above.")),
                     Paragraph(Text(
                         "Choose this r. Boundedness of the real root set and membership of r imply "
                         + "r ≤ largestRoot c d by the defining upper-bound property of the supremum. "
