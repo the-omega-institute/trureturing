@@ -48,7 +48,7 @@ def records (B : Finset Bool) (as : List (Finset Window)) : List Bool :=
 def input (B : Finset Bool) (as : List (Finset Window)) : List Bool :=
   [decide (false ∈ B), decide (true ∈ B)] ++ as.reverse.flatMap mask
 
-private def regs (src cur saved scratch history : List Bool) : Registers 6 :=
+def regs (src cur saved scratch history : List Bool) : Registers 6 :=
   fun j => if j = 0 then cur else if j = 1 then src else if j = 4 then saved
     else if j = 5 then scratch else if j = 6 then history else []
 
@@ -290,7 +290,7 @@ private theorem row_length (B : Finset Bool) (as : List (Finset Window)) :
   | nil => rfl
   | cons a as ih => simp [row, NativeBinaryRow.columns_length, ih]; omega
 
-private theorem row_value (B : Finset Bool) (as : List (Finset Window)) :
+theorem row_value (B : Finset Bool) (as : List (Finset Window)) :
     value (row B as) = counts B as := by
   induction as with
   | nil =>
@@ -307,7 +307,7 @@ private theorem records_cons (B : Finset Bool) (a : Finset Window)
     (as : List (Finset Window)) :
     records B (a :: as) = pack (serialize (row B (a :: as))) ++ records B as := rfl
 
-private theorem pack_length (bs : List Bool) : (pack bs).length = 1 + 2 * bs.length := by
+theorem pack_length (bs : List Bool) : (pack bs).length = 1 + 2 * bs.length := by
   simp [pack, List.length_flatMap, Nat.mul_comm, Nat.add_comm]
 
 private theorem records_length (B : Finset Bool) (as : List (Finset Window)) :
@@ -390,7 +390,7 @@ private theorem exec_initProgram (B : Finset Bool) (src : List Bool) :
   apply Exec.halt
   simp [StackProgram.step, initProgram, terminalColumns, serialize, h0, h1]
 
-private theorem exec_table (B : Finset Bool) (as : List (Finset Window)) :
+theorem exec_table (B : Finset Bool) (as : List (Finset Window)) :
     ∃ fuel out, fuel ≤ 256 * (as.length + 1) ^ 2 ∧
       Exec program program.start (regs [] (input B as) [] [] [])
         fuel (true, out) ∧ out 0 = records B as := by
