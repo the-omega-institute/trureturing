@@ -21,6 +21,7 @@ population problem; no continuation or existence assertion is made here.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxHeartbeats 800000
 
 @[expose] public section
 
@@ -84,6 +85,7 @@ private theorem actual_seed_recurrence {k t : ℕ} (hk : 2 ≤ k) (x : Fin k)
       (2 : ℤ) ^ sourceLength t x i * sourceSeed t x i := by
     rw [← hn, row_terminal hk hr, abs_mul,
       abs_of_nonneg (pow_nonneg (by norm_num : (0 : ℤ) ≤ 2) _)]
+    rfl
   change |actualSource k t (advance (sourceParent t x (i + 1)) 1)| = _
   rw [large_successor_magnitude hk _ hlarge, hmag, pow_succ]
   ring
