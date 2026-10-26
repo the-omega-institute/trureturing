@@ -27,5 +27,5 @@ internal sealed class SignedOrdinalRealizationEventsDocument : IScribeDocumentDe
                 DeclarationHandle.Create(Owner + "delayed_cofinal"), H("Actual delayed events on the final prefix"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Intrinsic validity on the final original whole birth yields an actual later delayed event with the identical Task, Result and certificate. Both B supports read back to their original decoded birth pair. The permanent source reservoirs and source J at succ(a) are exactly those of the same R. Its certificate keeps the same M sets and literal clopen; no second split transport is introduced."))), DescribeRole.Theorem),
-            Paragraph(Text("Four-slot audits remain unfinished under issue 21750. These are realization interfaces; final signed and AH endpoint proofs are separate.")))));
+            Paragraph(Text("These are realization interfaces; final signed and AH endpoint proofs are separate.")))));
 }

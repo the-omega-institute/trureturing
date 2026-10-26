@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalRawHistory.rawHistory`
 
 The concrete RawHistory on finalPrefix.diagram is populated with the actual U and its surjectivity, original V, whole nu and its surjectivity, actual cofinal launches, permanent disjoint reservoirs, original eligible J, infinite intersections and directed finite differences. Its proper F directly applies the canonical history proper_f through equality of the literal carrier and the original whole measure readback. The actual incoming regular bounded evidence is preserved. The full canonical run remains available with its selected ordinary or delayed Result and quantitative G; RawHistory alone does not encode G.
 
-Four-slot escape audits remain unfinished under issue 21750. Reg checks exact source reconstruction only; no declared_validated registration or final endpoint is asserted.
+No final endpoint is asserted.
 
 ## References
 
