@@ -29,6 +29,13 @@ internal sealed class CutBoundRefutationDocument : IScribeDocumentDefinition
             Node("claim", "Conjecture 7", ClaimFormula(),
                 "Appendix D.2, page 39: \"In contrast, the following bound was shown to hold on our dataset\"; \"Conjecture 7. For all G and for all 1 ≤ k ≤ ⌊n/2⌋\" followed by \"λ_min(A(F_k(G))) ≥ −(C(G)+M_k(G))/2.\" The formula quantifies all finite simple graphs with decidable adjacency, with unit edge weights. This is a specialization of the source's all-graphs assertion. Fin n labels the n vertices; Nat.div n 2 is floor(n/2). The tokenGraph is the existing finite-subset graph: two equally sized subsets differ by one token moved along an edge. The natural cut and matching cardinalities are coerced to real numbers before division by two. No connectedness or bipartiteness hypothesis is imposed.",
                 "claim", AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("apscut-adjacency-map"),
+                DeclarationHandle.Create(Prefix + "adjMatrix_complex_map"),
+                H("Real and complex adjacency matrices"),
+                StatementSource.FromAuthor(Disp(AdjacencyMapFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Mapping the real zero-one adjacency matrix entrywise by Complex.ofReal gives the complex adjacency matrix. This identity lets lambdaMin40 apply the complex Rayleigh estimate to the real adjacency matrix."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("apscut-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("A phase test contradicts the bound"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
@@ -71,6 +78,18 @@ internal sealed class CutBoundRefutationDocument : IScribeDocumentDefinition
     private static Formula GraphBinders(Formula body) => All("n", N,
         All("G", Call("SimpleGraph", Fin(F.Id("n"))),
             Instance(Call("DecidableRel", App(Q("SimpleGraph", "Adj"), F.Id("G"))), body)));
+
+    private static Formula AdjacencyMapFormula()
+    {
+        Formula n = F.Id("n"), g = F.Id("G");
+        Formula c = Seq(Mathbb, Grp(F.Id("C")));
+        Formula real = App(Q("SimpleGraph", "adjMatrix"), R, g);
+        Formula complex = App(Q("SimpleGraph", "adjMatrix"), c, g);
+        return All("n", F.Id("Type"), Instance(Call("Fintype", n),
+            Instance(Call("DecidableEq", n), All("G", Call("SimpleGraph", n),
+                Instance(Call("DecidableRel", App(Q("SimpleGraph", "Adj"), g)),
+                    Eq(App(Q("Matrix", "map"), real, Q("Complex", "ofReal")), complex))))));
+    }
 
     private static Formula CrossesFormula()
     {

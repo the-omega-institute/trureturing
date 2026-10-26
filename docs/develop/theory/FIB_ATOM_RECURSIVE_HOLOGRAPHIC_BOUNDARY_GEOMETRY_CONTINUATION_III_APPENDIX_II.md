@@ -980,3 +980,554 @@ This class excludes contact/event sampling, interventions that change the source
 The strict inequality in (117.12) is an exact obstruction for each declared candidate. Its positive value depends on the source, sampling gap, epoch and emissions; the argument supplies no parameter-uniform separation, quantitative noise tolerance or sample bound. No pointwise heat kernel at $e$, spectral gap, physical Hilbert/Born/composition acquisition, or completion of quantum origin follows. The construction or exclusion of faithful native coherent operations remains a separate mathematical obligation. The conclusions here are ordinary mathematical consequences of the stated source and readout premises.
 
 ## 追加锚（本行以下为增补区）
+
+## 118. Uniform passive-pair separation for the original source-start diffusion
+
+**Definition 118.1 (the original pair laws and their uniform separation problem).**
+Fix arbitrary original $a,\eta>0$ and arbitrary original times $t,\Delta>0$.
+Retain exactly Definition 117.1: the four-coordinate group $G=H^1\times\mathbb R$,
+identity $e$, raw Haar measure $\mu$, unit-source field $\Gamma$, actual selector
+$A(u)=\rho C(u)$, operator $H$, coefficient-positive normalized $h$, measure
+$m=h^2\mu$, unitary $U_hv=hv$, operator $K=U_h^{-1}HU_h$ and semigroup
+$T_s=e^{-sK}$. The entire complex form domain and energy are (115.15), including
+the source summand $\mathbb C1$; the actual operator domain is (115.17).
+The conservative diffusion $Z$ starts at $e$ at original time zero and runs
+through the lead-in $t$ without preparation or change of clock.
+
+Fix every permitted native tuple $p_{\rm N},q_{\rm N},r_{\rm N}>0$ with
+$p_{\rm N}+q_{\rm N}+r_{\rm N}<1$, retaining exactly $s_{\rm N},a_{\rm N},b_{\rm N},
+c_{\rm N},P_{\rm N},\pi$ and $\chi$ of (117.10)–(117.11).
+In particular $p_{\rm N}=q_{\rm N}$ and $r_{\rm N}=s_{\rm N}$ are allowed.
+On $\mathcal A=\{0,1,3,B\}$ define the exact adjacent target law
+
+$$
+\Pi_{\rm N}(y,z)
+ =\mathbb P(\chi(X_0)=y,\chi(X_1)=z)
+ =\frac15\sum_{\substack{i:\chi(i)=y\\j:\chi(j)=z}}(P_{\rm N})_{ij}.
+\tag{118.1}
+$$
+
+Let $\mathcal F$ be the class of all Borel tuples $f=(f_y)_{y\in\mathcal A}$ of (117.9):
+$0\le f_y\le1$ and $\sum_y f_y(x)=1$ for every $x\in G$.
+Read the same tuple at $t$ and $t+\Delta$, using fresh noises independent
+conditional on the entire $Z$ path, leaving $Z$ and its successors unchanged
+and retaining all four outcomes. Define, by the same Markov formula as (117.14),
+
+$$
+\begin{aligned}
+\nu_f(y,z)
+ &=\mathbb E_e[f_y(Z_t)f_z(Z_{t+\Delta})]
+   =\int_G g_t f_y\,T_\Delta f_z\,dm,\\
+d_f&=\operatorname{TV}(\nu_f,\Pi_{\rm N})
+   =\frac12\sum_{y,z\in\mathcal A}|\nu_f(y,z)-\Pi_{\rm N}(y,z)|.
+\end{aligned}
+\tag{118.2}
+$$
+
+Here $g_t$ is the actual source-start density (117.2), not a stationary
+initial law. The uniform separation in Theorem 118.3 is a repo-derived
+source-specific deduction for these laws. Bounded-domain elliptic kernels,
+part-process survival domination, tightness and Cauchy–Schwarz are classical
+intermediate tools, credited in its proof; no new general kernel theorem or
+worldwide-priority assertion is part of this attribution.
+
+**Definition 118.2 (fixed source-dependent localization and constants).**
+Use the actual probability densities $g_t,g_{t+\Delta}\in L^2(G,m)$ of (117.2).
+They are strictly positive $m$-a.e., and their laws assign no mass to $e$.
+Fix any auxiliary resolvent discount $\alpha>0$ and use the original
+$d_\alpha$ of (116.4). Its role is separate from the native probability
+$r_{\rm N}$; no numerical inequality between them is imposed. Set
+
+$$
+B=\frac{\sup_{\lambda\ge0}(\lambda+\alpha)e^{-2(t+\Delta)\lambda}}
+         {\alpha d_\alpha},\qquad
+0<\|g_{t+\Delta}\|_2^2\le B<\infty.
+\tag{118.3}
+$$
+
+The inequality is (117.3); $\alpha$ is not a new source parameter.
+Identify $G$ with its original $\mathbb R^4$ coordinates, with Euclidean norm
+$|x|$. Choose $R>1$ large enough that, for
+
+$$
+C=\{x:1/R\le|x|\le R\},\qquad
+D=\{x:1/(2R)<|x|<2R\},
+\tag{118.4}
+$$
+
+$$
+\int_{G\setminus C}g_t\,dm\le\frac1{20},\qquad
+\int_{G\setminus C}g_{t+\Delta}\,dm\le\frac1{20}.
+\tag{118.5}
+$$
+
+Such a common $R$ exists by monotone convergence along the compact annuli
+exhausting $M=G\setminus\{e\}$. The domain $D$ is bounded, connected and smooth,
+$C\subset D$, and $\overline D\subset M$. These choices precede every choice of $f$.
+For the same full diffusion put $\tau_D=\inf\{s\ge0:Z_s\notin D\}$, and denote
+its part semigroup on $D$ by
+
+$$
+Q_s^D v(x)=\mathbb E_x[v(Z_s);\ s<\tau_D],\qquad x\in D,
+\tag{118.6}
+$$
+
+with the properly associated versions. Write $H_D$ for the Dirichlet
+realization on $D$ of the original expression $S$ in (115.1), and $k_D$ for
+the continuous interior kernel of $e^{-sH_D}$ relative to the original $\mu$.
+Its existence and correspondence to (118.6) are proved below. Define
+
+$$
+p_D(s,x,y)=\frac{k_D(s,x,y)}{h(x)h(y)},\qquad
+\kappa=\min_{x,y\in C}p_D(\Delta,x,y),\qquad
+\delta=\min\left\{\frac1{20},\frac{\kappa}{1000B}\right\}.
+\tag{118.7}
+$$
+
+This density belongs only to the bounded off-source part. No global
+pointwise heat kernel, or kernel evaluation at $e$, is included in the definition.
+
+**Theorem 118.3 (uniform separation from the exact original passive pair).**
+For every fixed original $a,\eta,t,\Delta>0$ and every native parameter tuple
+of Definition 118.1, the constants in Definition 118.2 satisfy
+$0<\kappa<\infty$, $\delta>0$, and
+
+$$
+\operatorname{TV}(\nu_f,\Pi_{\rm N})\ge\delta
+\quad\text{for every }f\in\mathcal F,\qquad
+\inf_{f\in\mathcal F}\operatorname{TV}(\nu_f,\Pi_{\rm N})\ge\delta>0.
+\tag{118.8}
+$$
+
+This is a source- and time-dependent existence bound, independent of every
+Borel emission tuple. It supplies no cross-source or cross-time uniform
+constant, numerical value for $\kappa$ or $d_\alpha$, computed rate or sample bound.
+The passive contract remains Definition 117.3: there is no source reset,
+postselection, event sampling, read intervention, retained controller or shared
+noise memory. No stationary initial source, global heat-kernel premise,
+logarithmic Sobolev constant, spectral gap, compactness of the full semigroup,
+extra emission regularity or stronger approximation premise is required.
+The conclusion concerns these unconditional classical records; it supplies no
+coherent operations, physical realization or native-origin correspondence and
+places no obstruction on the different operational classes in Definition 117.6.
+
+**Proof.** First identify the local part of the full form, retaining its
+original source domain. On a neighborhood of $\overline D$, Theorem 115.2
+makes $h$ smooth and strictly positive; $h,h^{-1}$ and their required derivatives
+are bounded there. The original principal matrix $A_0$ has quadratic symbol
+
+$$
+p^{\mathsf T}A_0(x)p
+ =a\bigl(p_x^2+(p_y+xp_w)^2+p_z^2\bigr)+\eta p_w^2.
+\tag{118.9}
+$$
+
+This is exactly (115.10). It is positive definite for every original
+$a,\eta>0$, and uniformly so on that compact neighborhood. Together with
+the upper and lower bounds on $h^2$, it makes the local full form norm
+equivalent to the ordinary $H^1$ norm. Consequently the part domain
+$\{v\in\mathscr V:\widetilde v=0\text{ quasi-everywhere on }G\setminus D\}$,
+identified by zero extension, is precisely the complex $H_0^1(D)$.
+Indeed, a part-domain vector is locally $H^1$ on a neighborhood of
+$\overline D$ and is zero outside $D$. Across the smooth boundary its zero
+extension has zero trace, so its restriction belongs to $H_0^1(D)$.
+Conversely, the defining $C_c^\infty(D)$ approximants to any $H_0^1(D)$ vector
+converge in the equivalent local form norm. Their zero extensions lie in
+$\mathscr V_0$ and converge in the full form norm, giving that vector in the
+part domain. These vectors vanish on a neighborhood of $e$, with source
+trace zero. Polarization of (115.15) thus gives the exact part energy
+
+$$
+\mathscr E^D[v,z]
+ =\int_D\left(a\sum_{i=1}^3\overline{X_iv}X_iz
+       +\eta\overline{\partial_wv}\partial_wz\right)dm,
+\qquad v,z\in H_0^1(D).
+\tag{118.10}
+$$
+
+This is also the $D$-part of the source-killed form in (116.9)–(116.11).
+It is obtained by taking a part of the form, not by restricting the operator
+to $D(K)\cap\mathscr V_0$, which (116.11) distinguishes from the part operator.
+
+Multiplication by the actual $h$ maps $H_0^1(D)$ bijectively onto itself
+and is unitary from $L^2(D,m)$ to $L^2(D,\mu)$.
+Apply the original ground-state identity (115.18) on $C_c^\infty(D)$ and
+then close it on this domain. It identifies the conjugated part with $H_D$,
+whose form is
+
+$$
+q_D[\phi]
+ =\int_D\left(a\sum_{i=1}^3|X_i\phi|^2
+       +\eta|\partial_w\phi|^2-g_c\Gamma|\phi|^2\right)d\mu,
+\qquad \phi\in H_0^1(D),\qquad g_c=16\sqrt{a\eta}.
+\tag{118.11}
+$$
+
+In particular the real potential is $-g_c\Gamma$, with its original sign.
+All coefficients are bounded and smooth on $\overline D$, and the principal
+matrix is uniformly elliptic there. The raw Haar measure is exactly
+Lebesgue measure in these coordinates, so no measure or time normalization
+enters this identification.
+
+For the local kernel use Arendt–ter Elst–Glück,
+[*Strict positivity for the principal eigenfunction of elliptic operators with
+various boundary conditions*, arXiv:1909.12194v3, §4.1 and Remark 4.2,
+Corollary 3.5](https://arxiv.org/pdf/1909.12194v3).
+The coefficient hypotheses are those of §4, with $\Omega=D$, principal
+coefficients $A_0$, divergence and first-order lower coefficients $b_k=c_k=0$,
+and zeroth coefficient $c_0=-g_c\Gamma$. The bounded connected smooth annulus
+is Wiener regular, as required in §4.1. Its Dirichlet form is exactly
+(118.11). Section 4.1 supplies the positive irreducible holomorphic
+strongly continuous semigroup $S_s=e^{-sH_D}$ on $L^2(D,\mu)$ and
+$S_sL^2(D,\mu)\subset C_0(D)$ for every $s>0$.
+Here $H_D$ is self-adjoint, so its adjoint has the identical smoothing property.
+The restriction of $S$ to $C_0(D)$ is a strongly continuous semigroup by the
+same section. For each $x\in D$, choose $\psi\in C_c(D)$ with $\psi(x)\ne0$;
+uniform convergence $S_s\psi\to\psi$ as $s\downarrow0$ gives a nonzero
+evaluation at $x$ for some $s>0$. Self-adjointness gives the adjoint evaluation
+condition as well. Thus all three hypotheses of Corollary 3.5 hold with
+its exponent $p=2$. That corollary gives, for every $s>0$, a jointly continuous
+spatial kernel $k_D(s,\cdot,\cdot)$, strictly positive at every pair in
+$D\times D$. Remark 4.2 also records the classical Dirichlet kernel positivity.
+
+Conjugating back by the original $h$ gives the semigroup identity below,
+and hence the identity $m$-a.e. for the properly associated process versions:
+
+$$
+\begin{aligned}
+Q_s^Dv(x)
+ &=h(x)^{-1}\int_D k_D(s,x,y)h(y)v(y)\,d\mu(y)\\
+ &=\int_D p_D(s,x,y)v(y)\,dm(y).
+\end{aligned}
+\tag{118.12}
+$$
+
+Thus $p_D(s,\cdot,\cdot)$ is continuous and strictly positive on $D\times D$.
+Compactness of $C\times C\subset D\times D$ proves $0<\kappa<\infty$.
+This application imports only the bounded-domain kernel, with no assertion
+of a global pointwise kernel for the singular-source endpoint.
+
+For the relation to the full process use Lenz–Stollmann,
+[*On the decomposition principle and a Persson type theorem for general regular
+Dirichlet forms*, arXiv:1705.10398v2, §1, equation (1)](https://arxiv.org/pdf/1705.10398v2).
+Their space, measure, regular form, operator and open set are respectively
+$G,m,\mathscr E,K,D$. Regularity and proper association are supplied by
+Theorems 115.3 and 116.3; the part form is (118.10).
+Their equation (1) identifies its semigroup with the survival expression
+(118.6) almost everywhere. Since the survival indicator is at most one,
+for every nonnegative Borel $v\in L^2(G,m)$,
+
+$$
+T_\Delta v(x)\ge Q_\Delta^D(v|_D)(x)
+\quad\text{for }m\text{-a.e. }x\in D.
+\tag{118.13}
+$$
+
+This uses only that equation's regular-form part correspondence, not the
+additional spectral hypotheses of the cited paper's later results.
+Proper association identifies the transition expectations up to null sets;
+the actual source-at-$t$ law $g_t m$ makes those null sets immaterial.
+For $v=f_3$, (118.12)–(118.13) imply
+$T_\Delta f_3(x)\ge\kappa\int_C f_3\,dm$ for $m$-a.e. $x\in C$.
+The unchanged shared-path formula (118.2) now yields
+
+$$
+\nu_f(1,3)
+ \ge\kappa\left(\int_Cg_t f_1\,dm\right)
+              \left(\int_C f_3\,dm\right).
+\tag{118.14}
+$$
+
+Only a surviving component of the full transition was bounded below.
+The process observed in $\nu_f$ remains the original conservative diffusion,
+with no killing, conditioning, reset or intervention in its law.
+
+It remains to make (118.14) uniform over every Borel $f$.
+For the exact matrix (117.10), the column sums are
+$c_{\rm N}+q_{\rm N}+p_{\rm N}+r_{\rm N}=1$,
+$a_{\rm N}+p_{\rm N}+q_{\rm N}=1$ for the next three columns, and
+$r_{\rm N}+b_{\rm N}=1$ for the last. Thus $\pi P_{\rm N}=\pi$.
+The singleton preimages $\chi^{-1}(1)=\{1\}$ and $\chi^{-1}(3)=\{3\}$ give
+
+$$
+\Pi_{\rm N}(\{1\}\times\mathcal A)=\frac15,\qquad
+\Pi_{\rm N}(\mathcal A\times\{3\})=\frac15,\qquad
+\Pi_{\rm N}(1,3)=\frac15(P_{\rm N})_{13}=0.
+\tag{118.15}
+$$
+
+These identities hold also when $p_{\rm N}=q_{\rm N}$ or
+$r_{\rm N}=s_{\rm N}$, with no native parameter exclusion.
+Write $d=d_f$. If $d\ge1/20$, then $d\ge\delta$ immediately.
+Suppose $d<1/20$. Total variation bounds the difference on every marginal
+event. Summing (118.2) over the other label, conservation and (117.2) give
+
+$$
+\int_Gg_t f_1\,dm\ge\frac15-d,\qquad
+\int_Gg_{t+\Delta}f_3\,dm\ge\frac15-d.
+\tag{118.16}
+$$
+
+Subtract the two tails in (118.5), using $0\le f_y\le1$, to obtain
+
+$$
+A_1:=\int_Cg_t f_1\,dm>\frac1{10},\qquad
+A_3:=\int_Cg_{t+\Delta}f_3\,dm>\frac1{10}.
+\tag{118.17}
+$$
+
+Cauchy–Schwarz on $(g_{t+\Delta}\sqrt{f_3})\sqrt{f_3}$ over $C$ gives
+
+$$
+A_3^2
+ \le\left(\int_Cg_{t+\Delta}^2f_3\,dm\right)
+      \left(\int_Cf_3\,dm\right)
+ \le B\int_Cf_3\,dm,
+\qquad \int_Cf_3\,dm>\frac1{100B}.
+\tag{118.18}
+$$
+
+Combining (118.14), (118.17) and (118.18), and testing total variation on
+the forbidden singleton of (118.15), proves
+
+$$
+d\ge\nu_f(1,3)>\frac{\kappa}{1000B}\ge\delta.
+\tag{118.19}
+$$
+
+Both cases establish (118.8). Positivity and finiteness of $B$ follow from
+(117.3) and $\alpha d_\alpha>0$, so $\delta>0$.
+All localization constants were fixed from the original source and times
+before $f$ was chosen. Neither a stationary replacement for $g_t m$ nor any
+regularity approximation to the Borel emissions entered the argument. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 119. Stochastic attainment and deterministic approximation for the original passive pair
+
+**Definition 119.1 (attainable laws for the unchanged source and target).**
+Fix every original $a,\eta,t,\Delta>0$ and every native tuple of Definition 118.1,
+including $p_{\rm N}=q_{\rm N}$ and $r_{\rm N}=s_{\rm N}$ when they occur.
+Retain exactly Definitions 117.1, 117.3, 117.4 and 118.1 and their suppliers
+in §§115–116: the four-coordinate $G$, original $e,\mu,\Gamma$, actual selector
+$A(u)=\rho C(u)$, coefficient-positive normalized $h$, $m=h^2\mu$, entire
+complex form (115.15), $K=U_h^{-1}HU_h$, original-clock $T_s=e^{-sK}$ and
+actual conservative diffusion started at $e$ at time zero. The same Borel
+$f\in\mathcal F$ is read at $t,t+\Delta$ with the independent fresh noises
+conditional on the entire path and unchanged successors of Definition 117.3.
+Let $\mathcal F_{\rm det}$ consist of the indicator tuples of all Borel
+partitions $G=\bigsqcup_{y\in\mathcal A}A_y$, where $\mathcal A=\{0,1,3,B\}$.
+Using precisely $\nu_f,d_f,\Pi_{\rm N}$ of (118.1)–(118.2), define
+
+$$
+\begin{gathered}
+\mathcal L_{\rm stoch}=\{\nu_f:f\in\mathcal F\},\qquad
+\mathcal L_{\rm det}=\{\nu_f:f\in\mathcal F_{\rm det}\},\\
+D_{\rm stoch}=\inf_{f\in\mathcal F}d_f,\qquad
+D_{\rm det}=\inf_{f\in\mathcal F_{\rm det}}d_f.
+\end{gathered}
+\tag{119.1}
+$$
+
+The law sets lie in the finite-dimensional probability simplex on
+$\mathcal A^2$; closures below use its ordinary Euclidean topology.
+For clarity, summing the actual indexed matrix (117.10) over the fibers of
+$\chi$ gives, in label order $(0,1,3,B)$,
+
+$$
+5\Pi_{\rm N}=\begin{pmatrix}
+c_{\rm N}&p_{\rm N}&q_{\rm N}&r_{\rm N}\\
+q_{\rm N}&a_{\rm N}&0&p_{\rm N}\\
+p_{\rm N}&0&a_{\rm N}&q_{\rm N}\\
+r_{\rm N}&q_{\rm N}&p_{\rm N}&a_{\rm N}+b_{\rm N}
+\end{pmatrix}.
+\tag{119.2}
+$$
+
+Its row and column marginals are $(1,1,1,2)/5$ and its $(1,3)$ and $(3,1)$
+entries vanish. This is the original target, with no stationary replacement
+for the source law $g_t m$.
+
+**Theorem 119.2 (attained stochastic minimum and equal deterministic infimum).**
+For each fixed parameter tuple of Definition 119.1,
+$\mathcal L_{\rm stoch}$ is compact and
+
+$$
+\mathcal L_{\rm stoch}=\overline{\mathcal L_{\rm det}},\qquad
+\min_{f\in\mathcal F}d_f=D_{\rm stoch}=D_{\rm det}\ge\delta>0,
+\tag{119.3}
+$$
+
+where $\delta$ is any fixed choice supplied by Definition 118.2 and
+Theorem 118.3 for these source parameters and times. Every stochastic pair
+law is a limit of pair laws obtained by using one deterministic Borel
+partition at both epochs. The conclusion asserts neither an attaining
+partition nor a computed optimum value. Whether such a partition exists
+for every permitted tuple, and hence whether stochastic attainment,
+equality of infima and deterministic attainment all hold together,
+remains unresolved.
+
+**Proof.** Write $\mathscr E[v]=\mathscr E[v,v]$ for the full form (115.15).
+We first prove the continuity needed for the actual nonstationary law.
+Suppose $0\le u_n\le1$ and $u_n\to u$ weak-star in $L^\infty(m)$.
+The limit lies in the same order interval. Since $m(G)=1$, every $L^2(m)$
+test lies in $L^1(m)$, so this convergence also holds weakly in $L^2(m)$.
+Put $v_n=T_\Delta u_n$. The Markov contraction of Theorem 115.3 and
+spectral calculus for the actual nonnegative self-adjoint $K$ give
+
+$$
+0\le v_n\le1,\qquad v_n\in\mathscr V,\qquad
+\mathscr E[v_n]
+ \le\sup_{\lambda\ge0}\lambda e^{-2\Delta\lambda}\|u_n\|_2^2
+ \le\frac1{2\mathrm e\Delta}.
+\tag{119.4}
+$$
+
+Here $\mathrm e$ is the exponential constant. This bound uses the entire
+form, including its source summand, rather than a killed or punctured-core
+substitute. On any bounded smooth annulus $D$ with $\overline D\subset M$,
+Theorem 115.2 bounds $h$ and $h^{-1}$. Formula (115.15) bounds the weak
+derivatives $X_1v_n,X_2v_n,X_3v_n,\partial_wv_n$ there. In the original
+coordinates, $\partial_x=X_1$, $\partial_z=X_3$ and
+$\partial_y=X_2-x\partial_w$; boundedness of $x$ on $D$ and $a,\eta>0$
+therefore give a uniform ordinary $H^1(D)$ bound, exactly the local
+ellipticity of (115.10) and (118.9)–(118.10).
+
+Classical local Rellich compactness gives precompactness in $L^2(D)$,
+hence locally in $L^2(m)$ by the bounds on $h$. Exhaust $M$ by compact
+annuli $C_R=\{1/R\le|x|\le R\}$, each contained in a slightly larger
+smooth punctured annulus. A diagonal subsequence has a local $L^2(m)$
+limit $v$, with $0\le v\le1$ by a further almost-everywhere subsequence.
+Because $m$ is finite and $m(\{e\})=0$,
+
+$$
+m(G\setminus C_R)\longrightarrow0,\qquad
+\int_{G\setminus C_R}|v_n-v|^2\,dm\le m(G\setminus C_R).
+\tag{119.5}
+$$
+
+The tails here include both the shrinking source neighborhood and the
+large-radius region. Local convergence and (119.5) give global strong
+$L^2(m)$ convergence along this subsequence. Bounded linearity of
+$T_\Delta$ already gives $v_n\rightharpoonup T_\Delta u$ in $L^2(m)$,
+so the strong limit is $T_\Delta u$. Every subsequence admits such a
+strongly convergent further subsequence, and every strong cluster limit
+has this same value. If the whole sequence failed to converge strongly,
+a subsequence at a fixed positive distance from that value would
+contradict this property. Thus
+
+$$
+u_n\overset{w^*}{\longrightarrow}u,\quad 0\le u_n\le1
+\quad\Longrightarrow\quad
+T_\Delta u_n\longrightarrow T_\Delta u\quad\hbox{in }L^2(m).
+\tag{119.6}
+$$
+
+This is compactness on the bounded emission order interval. It asserts
+no compactness of $T_\Delta$ on the full $L^2$ unit ball and uses no global
+heat-kernel premise.
+
+For coordinatewise weak-star convergence $f_n\to f$ in the emission
+simplex, split the actual pair-coordinate difference as
+
+$$
+\begin{aligned}
+\nu_{f_n}(y,z)-\nu_f(y,z)
+ &=\int_G g_t f_{n,y}\,T_\Delta(f_{n,z}-f_z)\,dm\\
+ &\quad+\int_G g_t(f_{n,y}-f_y)\,T_\Delta f_z\,dm.
+\end{aligned}
+\tag{119.7}
+$$
+
+The first term is bounded in absolute value by
+$\|g_t\|_2\|T_\Delta(f_{n,z}-f_z)\|_2$, which tends to zero by (119.6).
+Here $g_t\in L^2(m)$ is precisely the actual source density of (117.2).
+The second term tends to zero against the fixed $L^1(m)$ test
+$g_tT_\Delta f_z$, since $0\le T_\Delta f_z\le1$.
+Thus the pair map and the finite sum $d_f$ are continuous for this
+convergence; two merely weak-star limits have not been multiplied.
+
+Consider now the simplex $\mathcal S$ of four $L^\infty(m)$ classes with
+$0\le f_y\le1$ and $\sum_y f_y=1$ almost everywhere. Positivity and the
+sum constraint are weak-star closed, as seen by testing against $L^1(m)$
+functions. Classical Banach–Alaoglu makes $\mathcal S$ compact in the
+finite product weak-star topology. The finite Borel measure $m$ on
+$\mathbb R^4$ has separable $L^1(m)$, so this compact space is metrizable.
+Consequently the sequential continuity just proved is continuity on
+$\mathcal S$, and its pair-law image is compact.
+
+Every class tuple in $\mathcal S$ has Borel representatives. Combine
+their exceptional Borel $m$-null sets, including the failures of the
+bounds and sum constraint, into one set and assign a fixed label there.
+The resulting tuple belongs to the exact pointwise class $\mathcal F$.
+Both positive-time marginals are absolutely continuous with respect to
+$m$, with densities $g_t,g_{t+\Delta}$ by Theorem 117.2. The probability
+that either sampled state lies in this null set is zero, so this repair
+preserves the pair law. It asserts nothing about repairing the time-zero
+law $\delta_e$. Hence the image is exactly $\mathcal L_{\rm stoch}$.
+Its compactness and continuity of total variation give a minimum in
+$\mathcal F$ (equivalently, apply (119.7) to a convergent subsequence of
+a minimizing sequence).
+
+It remains to approximate every $f\in\mathcal F$ by partitions with the
+same law limit. Choose increasing finite Borel partitions $\mathcal P_n$
+generating the Borel sigma algebra, for example those generated by the
+first $n$ members of a countable Borel generator of $\mathbb R^4$.
+On each cell $C$, split it into four Borel pieces $C_y$ with
+$m(C_y)=\int_C f_y\,dm$. To justify the splitting directly, every Borel
+remainder $E$ has continuous cumulative mass
+$s\mapsto m(E\cap\{x_1\le s\})$, since $m=h^2\mu$ is absolutely
+continuous with respect to Lebesgue measure and coordinate hyperplanes
+have zero mass. Its endpoint limits are zero and $m(E)$, so it attains
+each intermediate mass. Remove the required pieces successively, using
+an empty or full remainder at the endpoints. The sum constraint supplies
+exactly the remaining mass for the last piece.
+
+Let $A_{n,y}$ be the union of the $y$-pieces over the finitely many cells.
+These form a Borel partition of all $G$. For every $\mathcal P_n$-simple
+test $\psi$, the prescribed cell integrals give
+$\int\psi(\mathbf1_{A_{n,y}}-f_y)\,dm=0$. For any $\phi\in L^1(m)$,
+choose $\mathcal P_n$-simple $\psi_n$ with $\|\phi-\psi_n\|_1\to0$.
+Such approximants exist because the partitions refine and generate the
+sigma algebra: their simple functions are $L^1$ dense. Then
+
+$$
+\left|\int_G\phi(\mathbf1_{A_{n,y}}-f_y)\,dm\right|
+ \le\|\phi-\psi_n\|_1\longrightarrow0.
+\tag{119.8}
+$$
+
+Thus the indicator tuples converge coordinatewise weak-star to $f$.
+Use this same partition at both epochs. Formula (119.7) gives entrywise
+$\nu_{\mathbf1_{A_n}}\to\nu_f$ and $d_{\mathbf1_{A_n}}\to d_f$.
+It follows that $\mathcal L_{\rm stoch}\subset\overline{\mathcal L_{\rm det}}$;
+the reverse inclusion follows from inclusion of deterministic tuples and
+the compactness, hence closedness, of $\mathcal L_{\rm stoch}$.
+Equivalently, $D_{\rm det}\le d_f$ for every $f\in\mathcal F$, while
+$D_{\rm stoch}\le D_{\rm det}$ follows from inclusion. This proves the
+equality in (119.3). The lower bound is exactly Theorem 118.3, unchanged.
+
+The splitting used here is classical atomless splitting; finite-linear
+background is [Dvoretzky–Wald–Wolfowitz, §3, Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf).
+It preserves the displayed cell integrals, not the quadratic pair law
+exactly. Fractional-partition antecedents are
+[Borgs–Chayes–Lovász–Sós–Vesztergombi, §4.1.2, Lemmas 4.2–4.3 and Example 4.4](https://annals.math.princeton.edu/wp-content/uploads/annals-v176-n1-p02-p.pdf)
+and [Borgs–Chayes–Cohn–Zhao, §5.3, Proposition 5.5 and Lemmas 5.7–5.8](https://arxiv.org/pdf/1408.0744v1).
+Their fractional labels, ordinary partitions and two-point integrals
+correspond to $f$, $\mathbf1_A$ and $\nu_f$ here, but their symmetric
+graphon settings do not replace the nonstationary weighting by the
+actual $g_t$ or the full-form smoothing bridge (119.4)–(119.7).
+Banach–Alaoglu, local Rellich and splitting are credited intermediate
+methods in this source-specific deduction, not new general compactness
+or exact quadratic purification theorems.
+
+Finally the indicator tuples are not weak-star closed: applying the
+same splitting construction to $f_0=f_1=1/2$, $f_3=f_B=0$ gives partitions
+converging to a non-indicator tuple. Compactness of the stochastic image
+and the approximation above therefore do not establish that a minimizing
+law has an indicator representative. Nonclosedness alone also does not
+exclude such a representative for the exact target (119.2). Deterministic
+attainment, and the universal conjunction containing it, remain unresolved.
+$\square$
+
+## 追加锚（本行以下为增补区）
