@@ -2,7 +2,9 @@ import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.HalfFock.LatticeHalfFockGroundCharacter
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
-import Mathlib.LinearAlgebra.TensorProduct.Basis
+
+/-! The actual dependent tensor readout, its source-equivalence bridge and
+whole-family audit obligations. The escape-from carrier binding is unfinished. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -14,9 +16,10 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockCorrectedField LatticeHalfFockGradedTrace
+open LatticeAllStateField
 open HalfFock.LatticeHalfFockGroundCharacter Lattice.NormFourPeirceInvolution
 open scoped TensorProduct
-open private vacuum_coeff from _root_.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
+open private vacuum_coeff from D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds
 
 structure Params where
   D : LatticeData
