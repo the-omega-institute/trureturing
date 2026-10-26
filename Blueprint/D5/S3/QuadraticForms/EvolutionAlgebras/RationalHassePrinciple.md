@@ -96,11 +96,11 @@ $$\forall K \in Type,\; [\operatorname{Field}\left(K\right)] \forall V \in Type,
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/RationalHassePrinciple.isomorphism_monomial` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
 
 *Commentary.*
 
-For any field K and two natural bases of equal finite size, perfection of the target forces the matrix of a multiplication isomorphism to have at most one nonzero entry in each row. Surjectivity makes every row nonzero; injectivity makes every column nonzero. A finite permutation and nonzero row scalars result. Source perfection is unnecessary. The two products and bases may be different. The proof uses all pair products to show injectivity of the target structure map, then constructs the permutation from the unique nonzero entry in each row. It covers the zero-dimensional case without an extra hypothesis.
+For any field K and two natural bases of equal finite size, perfection of the target forces the matrix of a multiplication isomorphism to have at most one nonzero entry in each row. Surjectivity makes every row nonzero; injectivity makes every column nonzero. A finite permutation and nonzero row scalars result. Source perfection is unnecessary. The two products and bases may be different. The proof uses all pair products to show injectivity of the target structure map, then constructs the permutation from the unique nonzero entry in each row. It covers the zero-dimensional case without an extra hypothesis. This monomiality is Theorem 4 of Kaygorodov, Martín González and Viruel, arXiv:2610.22248v1, credited there to Elduque–Labra. Apply that result to the target product nu with natural bases c and b.map f: multiplication preservation makes b.map f natural, and the permutation and nonzero scalars give the stated row formula up to inverse indexing.
 
 **Definition 1.9 (Square structure coefficients).**
 
