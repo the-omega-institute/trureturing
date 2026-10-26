@@ -155,6 +155,7 @@ theorem finite_gaussian_even_central_hasSum {ι : Type*} [Fintype ι]
       ((Real.Gamma (9 / 4) / normalizedCentralMellin 0) * ∑ i, c i) := by
   have hinj : Function.Injective (fun k : ℕ => 2 * k) := by
     intro a b hab
+    change 2 * a = 2 * b at hab
     omega
   have hout : ∀ n : ℕ, n ∉ Set.range (fun k : ℕ => 2 * k) →
       (normalizedCentralMellin n / normalizedCentralMellin 0) *
