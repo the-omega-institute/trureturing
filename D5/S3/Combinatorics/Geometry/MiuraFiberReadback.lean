@@ -18,7 +18,7 @@ open MiuraHeightEnvelope MiuraResidualCount MiuraCoreColumns MiuraCoreBoundary
 open private position_lt position_strict expansion_active
   from D5.S3.Combinatorics.Geometry.MiuraFiberIndexed
 open scoped BigOperators
-variable {m n N : ℕ}
+variable {m n M N : ℕ}
 
 private theorem adjacent_position (w : Fin n → ℕ) (j k : Fin n)
     (hjk : j.val + 1 = k.val) :
@@ -48,8 +48,9 @@ private theorem adjacent_position (w : Fin n → ℕ) (j k : Fin n)
   omega
 
 private theorem active_position_eq (h : Cell m n → ℤ) (w v : Fin n → ℕ)
-    (g : Cell m N → ℤ) (hNw : N = n + ∑ j, w j) (hNv : N = n + ∑ j, v j)
-    (hew : ColumnExtremaExpansion h w g) (hev : ColumnExtremaExpansion h v g) :
+    (g : Cell M N → ℤ) (hNw : N = n + ∑ j, w j) (hNv : N = n + ∑ j, v j)
+    (hew : ∀ k, activeColumn g k ↔ ∃ j, activeColumn h j ∧ k.val = columnPosition w j)
+    (hev : ∀ k, activeColumn g k ↔ ∃ j, activeColumn h j ∧ k.val = columnPosition v j) :
     ∀ j, activeColumn h j → columnPosition w j = columnPosition v j := by
   classical
   let A := {j : Fin n // activeColumn h j}
@@ -61,13 +62,13 @@ private theorem active_position_eq (h : Cell m n → ℤ) (w v : Fin n → ℕ)
     apply Set.Subset.antisymm
     · rintro _ ⟨⟨j,hj⟩,rfl⟩
       let k : Fin N := ⟨columnPosition w j, by rw [hNw]; exact position_lt w j⟩
-      have ha := (expansion_active hew k).mpr ⟨j,hj,rfl⟩
-      obtain ⟨l,hl,he⟩ := (expansion_active hev k).mp ha
+      have ha := (hew k).mpr ⟨j,hj,rfl⟩
+      obtain ⟨l,hl,he⟩ := (hev k).mp ha
       exact ⟨⟨l,hl⟩,he.symm⟩
     · rintro _ ⟨⟨j,hj⟩,rfl⟩
       let k : Fin N := ⟨columnPosition v j, by rw [hNv]; exact position_lt v j⟩
-      have ha := (expansion_active hev k).mpr ⟨j,hj,rfl⟩
-      obtain ⟨l,hl,he⟩ := (expansion_active hew k).mp ha
+      have ha := (hev k).mpr ⟨j,hj,rfl⟩
+      obtain ⟨l,hl,he⟩ := (hew k).mp ha
       exact ⟨⟨l,hl⟩,he.symm⟩
   have he : ew = ev := OrderEmbedding.range_eq_iff.mp hrange
   intro j hj
@@ -79,8 +80,9 @@ theorem indexed_column_weights_unique (h : Cell m n → ℤ) (hh : IsHeight h)
     (hm : 0 < m) (hn : 2 ≤ n) (hno : NoAdjacentFrozen h)
     (w v : Fin n → ℕ) (hw : ∀ j, 0 < w j → frozenColumn h j)
     (hv : ∀ j, 0 < v j → frozenColumn h j)
-    (g : Cell m N → ℤ) (hNw : N = n + ∑ j, w j) (hNv : N = n + ∑ j, v j)
-    (hew : ColumnExtremaExpansion h w g) (hev : ColumnExtremaExpansion h v g) : w = v := by
+    (g : Cell M N → ℤ) (hNw : N = n + ∑ j, w j) (hNv : N = n + ∑ j, v j)
+    (hew : ∀ k, activeColumn g k ↔ ∃ j, activeColumn h j ∧ k.val = columnPosition w j)
+    (hev : ∀ k, activeColumn g k ↔ ∃ j, activeColumn h j ∧ k.val = columnPosition v j) : w = v := by
   classical
   have hends := boundary_columns_active h hh hm hn
   have hif : ∀ j, ¬ activeColumn h j → frozenColumn h j := by

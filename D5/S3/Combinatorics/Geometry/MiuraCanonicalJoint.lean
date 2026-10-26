@@ -33,10 +33,6 @@ private inductive Deletion : Rectangle → Rectangle → Prop where
 
 private def swap (x : Rectangle) : Rectangle := ⟨x.2.1, x.1, transposeHeight x.2.2⟩
 
-private theorem swap_swap (x : Rectangle) : swap (swap x) = x := by
-  rcases x with ⟨m, n, h⟩
-  rfl
-
 private theorem transpose_deletion {x y : Rectangle} (h : Deletion x y) :
     Deletion (swap x) (swap y) := by
   cases h with
