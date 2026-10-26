@@ -40,9 +40,9 @@ private theorem column_expansion_row_active (h : Cell m n → ℤ) (c : Fin n �
   constructor
   · rintro ⟨k,hk | hk⟩
     · obtain ⟨p,hp,heq,_⟩ := (he.2 (i,k)).mp hk
-      exact ⟨p.2,Or.inl (heq.symm ▸ hp)⟩
+      exact ⟨p.2,Or.inl (by change i = p.1 at heq; rw [heq]; exact hp)⟩
     · obtain ⟨p,hp,heq,_⟩ := (he.1 (i,k)).mp hk
-      exact ⟨p.2,Or.inr (heq.symm ▸ hp)⟩
+      exact ⟨p.2,Or.inr (by change i = p.1 at heq; rw [heq]; exact hp)⟩
   · rintro ⟨j,hj | hj⟩
     · exact ⟨⟨columnPosition c j,position_lt c j⟩,
         Or.inl ((he.2 _).mpr ⟨(i,j),hj,rfl,rfl⟩)⟩
@@ -77,7 +77,8 @@ theorem indexed_joint_expansion (a b : ℕ) (h : Cell m n → ℤ)
     · rintro ⟨p,hp,he1,he2⟩
       have hp' := (transpose_min_iff f p).mp hp
       obtain ⟨u,hu,he3,he4⟩ := (hec.1 (p.2,p.1)).mp hp'
-      exact ⟨u,hu,by simpa only [he3] using he2,by simpa only [he4] using congrArg Fin.val he1⟩
+      exact ⟨u,hu,he2.trans (congrArg (columnPosition r) he3),
+        (congrArg Fin.val he1).trans he4⟩
     · rintro ⟨p,hp,he1,he2⟩
       let k : Fin (n+∑ j,c j) := ⟨columnPosition c p.2,position_lt c p.2⟩
       refine ⟨(k,p.1),?_,Fin.ext he2,he1⟩
@@ -89,7 +90,8 @@ theorem indexed_joint_expansion (a b : ℕ) (h : Cell m n → ℤ)
     · rintro ⟨p,hp,he1,he2⟩
       have hp' := (transpose_max_iff f p).mp hp
       obtain ⟨u,hu,he3,he4⟩ := (hec.2 (p.2,p.1)).mp hp'
-      exact ⟨u,hu,by simpa only [he3] using he2,by simpa only [he4] using congrArg Fin.val he1⟩
+      exact ⟨u,hu,he2.trans (congrArg (columnPosition r) he3),
+        (congrArg Fin.val he1).trans he4⟩
     · rintro ⟨p,hp,he1,he2⟩
       let k : Fin (n+∑ j,c j) := ⟨columnPosition c p.2,position_lt c p.2⟩
       refine ⟨(k,p.1),?_,Fin.ext he2,he1⟩
