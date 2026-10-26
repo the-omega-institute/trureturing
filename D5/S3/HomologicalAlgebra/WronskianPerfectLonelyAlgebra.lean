@@ -7,8 +7,7 @@
    digest: Perfect homogeneous one-generator extensions exist exactly at differential order one. -/
 
 import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Dimension.Finite
+import D5.S3.Quantum.Algebra.WeightedPolynomialSubstitution
 
 noncomputable section
 
@@ -92,18 +91,8 @@ private lemma bracket_mem_span_basis {K : Type*} [Field K] {d k : ℕ}
 
 private lemma weight_one_int {d : ℕ} (α : Fin d →₀ ℕ) :
     Finsupp.weight (fun _ => (1 : ℤ)) α = (α.degree : ℤ) := by
-  rw [Finsupp.weight_eq_sum, Finsupp.degree_eq_sum]
-  simp only [nsmul_eq_mul, mul_one, Nat.cast_sum]
-
-private lemma homogeneous_int {K : Type*} [Field K] {d n : ℕ}
-    {f : MvPolynomial (Fin d) K} (hf : f.IsHomogeneous n) :
-    f.IsWeightedHomogeneous (fun _ => (1 : ℤ)) n := by
-  intro α hα
-  rw [weight_one_int]
-  have h := hf hα
-  change Finsupp.weight (fun _ => (1 : ℕ)) α = n at h
-  rw [← Finsupp.degree_eq_weight_one] at h
-  exact congrArg Nat.cast h
+  simpa only [Nat.cast_one, ← Finsupp.degree_eq_weight_one] using
+    D5.S3.Quantum.Algebra.WeightedPolynomialSubstitution.weight_intCast (fun _ => 1) α
 
 private lemma iterated_partial_int {K : Type*} [Field K] {d : ℕ}
     (i : Fin d) (r : ℕ) {n : ℤ} {f : MvPolynomial (Fin d) K}
@@ -151,7 +140,8 @@ private lemma wronskian_homogeneous {K : Type*} [Field K] {d k : ℕ}
     convert IsWeightedHomogeneous.prod Finset.univ
       (fun β => pderivMulti (σ β).val (f β))
       (fun β => (n β : ℤ) - (σ β).val.degree)
-      (fun β _ => pderivMulti_int (σ β).val (homogeneous_int (hf β))) using 1
+      (fun β _ => pderivMulti_int (σ β).val
+        (D5.S3.Quantum.Algebra.WeightedPolynomialSubstitution.homogeneous_intCast (hf β))) using 1
     rw [Finset.sum_sub_distrib]
     congr 1
     exact (Equiv.sum_comp σ (fun α : I d k => (α.val.degree : ℤ))).symm
@@ -168,7 +158,9 @@ private def omission {ι : Type*} (a : Option ι) : ι ≃ {b : Option ι // b �
   exact Equiv.optionSubtype a ⟨Equiv.swap none a, Equiv.swap_apply_left _ _⟩
 
 private lemma omission_val {ι : Type*} (a : Option ι) (i : ι) :
-    (omission a i).val = (by classical exact Equiv.swap none a (some i)) := rfl
+    (omission a i).val = (by classical exact Equiv.swap none a (some i)) := by
+  classical
+  exact Equiv.coe_optionSubtype_apply_apply _ _ _
 
 private lemma wronskian_permute {K : Type*} [Field K] {d k : ℕ}
     (f : I d k → MvPolynomial (Fin d) K) (σ : Equiv.Perm (I d k)) :
@@ -471,7 +463,8 @@ private lemma first_order_evaluations {K : Type*} [Field K] {d : ℕ}
   have hrow : (∑ j : Option (Fin d), b j •
       (1 : Matrix (Option (Fin d)) (Option (Fin d)) (MvPolynomial (Fin d) K)) j) = b := by
     funext j
-    simp [Finset.sum_apply, Pi.smul_apply, Matrix.one_apply]
+    simpa only [Matrix.vecMul, dotProduct, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using
+      congrFun (Matrix.vecMul_one b) j
   have hm : m.det = 1 := by
     have he : m = (1 : Matrix (Option (Fin d)) (Option (Fin d))
         (MvPolynomial (Fin d) K)).updateRow none b := by
