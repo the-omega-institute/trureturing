@@ -245,8 +245,9 @@ theorem grouped_cayley (d : V → ℕ) (a : V → V → ℝ)
       beta ^ 2 * (z + eta u) * (z + eta v)) * he
   change _ = beta ^ 2 * (∏ v, b v) *
     (pairQuadratic d (fun u v => (a u v : ℂ)) z eta + _)
+  have halgebraMap : ∀ r : ℝ, algebraMap ℝ ℂ r = (r : ℂ) := fun _ => rfl
   simp only [complexEval, groupedPolynomial, apply_ite, eval₂_zero, eval₂_add, eval₂_finsetSum, eval₂_mul,
-    eval₂_C, eval₂_finsetProd, Complex.ofReal_inv, Complex.ofReal_ofNat, one_div, Complex.ofReal_sum,
+    eval₂_C, eval₂_finsetProd, halgebraMap, Complex.ofReal_inv, Complex.ofReal_ofNat, one_div, Complex.ofReal_sum,
     kappa_complex, pairWeight_complex]
   change (∑ v, (kappa (d v) : ℂ) * complexEval (vertexFactor (d v) 2) x *
       ∏ w ∈ Finset.univ.erase v, b w) +
