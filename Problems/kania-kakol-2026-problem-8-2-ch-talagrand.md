@@ -10,25 +10,14 @@ motivation_gids:
 
 # Kania–Kąkol Problem 8.2: the full Talagrand construction under CH
 
+## Problem
+
 Kania and Kąkol, *Talagrand compacta, 2DCP, and pointwise quotients*,
 arXiv:2607.06808v2, revised 10 July 2026, PDF p.19, ask:
 
 > Problem 8.2. Can the prediction principle in Theorem A be weakened from ♢(S) to CH?
 
-Theorem A (p.2) assumes diamond on a stationary co-stationary subset of
-omega-one. Its compactum realizes Talagrand's scheme and has no two disjoint
-nonmetrizable closed homeomorphic subspaces; it consequently has no 2DCP.
-Theorem B on the same page gives the Grothendieck property of C(T) and excludes
-beta-omega from its entire weak-star dual unit ball. The same T has no
-nontrivial convergent point sequence and no copy of beta-omega.
-
-The combined target is preregistered as the external tier-2 problem
-[#22300](https://github.com/the-omega-institute/trureturing/issues/22300),
-before the first combined-theorem compilation. Earlier independently compiled
-construction suppliers are reused; their earlier probes are not retroactively
-preregistered by that issue.
-
-## Exact statement correspondence
+### Exact statement correspondence
 
 There is one mathematical input, `hCH : Cardinal.continuum = ℵ₁`, and one
 literal carrier `K := (SignedOrdinalRealization.finalPrefix hCH).LimitSpace`.
@@ -53,7 +42,26 @@ proof.
 | Entire signed dual unit ball | Every continuous map from all of `StoneCech ℕ` into `WeakDual ℝ C(K,ℝ)` bounded by one is noninjective, including principal and free points. |
 | Point-space consequences | Every convergent sequence is eventually its actual limit; no continuous StoneCech injection exists; K is infinite, not first countable and not metrizable. |
 
-## Proof route and admissibility
+## Motivation
+
+Theorem A (p.2) assumes diamond on a stationary co-stationary subset of
+omega-one. Its compactum realizes Talagrand's scheme and has no two disjoint
+nonmetrizable closed homeomorphic subspaces; it consequently has no 2DCP.
+Theorem B on the same page gives the Grothendieck property of C(T) and excludes
+beta-omega from its entire weak-star dual unit ball. The same T has no
+nontrivial convergent point sequence and no copy of beta-omega.
+
+The combined target is preregistered as the external tier-2 problem
+[#22300](https://github.com/the-omega-institute/trureturing/issues/22300),
+before the first combined-theorem compilation. Earlier independently compiled
+construction suppliers are reused; their earlier probes are not retroactively
+preregistered by that issue.
+
+## Gap
+
+The target is the complete same-space Talagrand construction from CH alone, including all original signed A–G laws, literal successor/limit geometry, the arbitrary closed-copy prohibition and the entire signed dual-ball endpoints. Existing endpoint examples do not by themselves supply this conjunction or identify the original signed scheme.
+
+## Route
 
 The well-founded coherent ordinal history constructs all actual stages from
 CH. Whole-birth transports preserve every label. The actual reindexing uses a
@@ -77,13 +85,11 @@ criterion supplies arbitrary bidual convergence and eventual equality of
 point sequences. Evaluation embeds K into that ball; its omega-cube quotient
 ensures infinitude.
 
-The final combination has `proof_shape: bind-only`: its construction and
-analytic content lie in the consumed suppliers and geometry. Its admission
-basis is `open-problem-resolution (#22300; Proved)`. The Scribe has one
-`OpenProblemResolutionClaim(Proved)` for this dossier. No unrelated public
-companion theorem is introduced.
+## Falsifier
 
-## Verification boundary
+The claimed correspondence fails if any required clause needs an assumption beyond CH, applies to a different compactum, restricts the original signed selections, or leaves a successor/limit identification unproved. A continuous injection of StoneCech Nat into the entire stated signed dual unit ball, or an infinite disjoint continuous image with closed domain in the constructed K, would contradict the respective proved endpoint.
+
+## Evidence
 
 The explicit successor/limit geometry has passed a targeted Lean 4.35 build.
 The signed endpoint supplier has passed its real build and scoped report with
@@ -103,7 +109,7 @@ The owning Reg mirrors reconstruct the full source telescopes; they do not
 provide the enrolled whole-source readout, selection bridge and whole-family
 variation/sensitivity evidence and do not claim `declared_validated`.
 
-## Bounded literature comparison
+### Bounded literature comparison
 
 The primary v2 paper retains the question. Fresh public arXiv retrievals on
 26 October 2026 at 12:01 UTC found only v1 and v2 of this paper; the exact
@@ -123,6 +129,16 @@ themselves establish the arbitrary closed-copy prohibition, entire signed
 dual-ball exclusion and original Talagrand A–G identification together.
 The 2004 full text remains unavailable, so no exhaustive exclusion of a
 connection is asserted.
+
+## Triage
+
+`triage: theorem`. The final combination has `proof_shape: bind-only`: its construction and
+analytic content lie in the consumed suppliers and geometry. Its admission
+basis is `open-problem-resolution (#22300; Proved)`. The Scribe has one
+`OpenProblemResolutionClaim(Proved)` for this dossier. No unrelated public
+companion theorem is introduced.
+
+## ASSUMED-UNVERIFIED
 
 Literature completeness, absence of every differently worded or non-arXiv
 prior solution, worldwide uniqueness and official acceptance remain

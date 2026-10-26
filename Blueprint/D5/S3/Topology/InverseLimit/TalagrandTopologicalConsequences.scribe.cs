@@ -60,7 +60,7 @@ internal sealed class TalagrandTopologicalConsequencesDocument : IScribeDocument
                         + "Every convergent point sequence is eventually equal to its actual limit. Evaluation embeds K into the signed dual ball, giving the point-space StoneCech obstruction. Surjection onto the omega cube makes K infinite; compactness and the point-sequence conclusion exclude first countability and metrizability.")),
                     Paragraph(Text(
                         "The proof consumes the actual scheme, all geometric equalities, the actual whole signed endpoint theorem, and the continuous finite-image/copy-obstruction theorem. The only construction is the fixed CH run; none of the endpoint hypotheses is assumed. "
-                        + "The named-problem settlement is preregistered in issue 22300. The bounded literature comparison is recorded in the Problems dossier; exhaustive novelty and official acceptance are separate claims. This does not settle Problem 8.1 or the full metrizable quotient problem for Cp(K)."))),
+                        + "All conclusions refer to this same CH compactum and its original signed scheme. This does not settle Problem 8.1 or the full metrizable quotient problem for Cp(K)."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("kania-kakol-2026-problem-8-2-ch-talagrand"),
