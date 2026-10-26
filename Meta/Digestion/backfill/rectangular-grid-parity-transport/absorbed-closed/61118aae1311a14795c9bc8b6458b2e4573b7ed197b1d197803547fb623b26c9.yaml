@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:61118aae1311a14795c9bc8b6458b2e4573b7ed197b1d197803547fb623b26c9
+  normalized_sha256: sha256:61118aae1311a14795c9bc8b6458b2e4573b7ed197b1d197803547fb623b26c9
+cas_ref: sha256:61118aae1311a14795c9bc8b6458b2e4573b7ed197b1d197803547fb623b26c9
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/CapacityPortParityAbsorption.actual_capacity_port_parity_absorption
+    target_statement_id: sha256:27b1bbebfd74cf42cb50825989426eb82dcbd78e837b728417427bdf834f1fd9
+  - gid: D5/S3/Combinatorics/Graph/GeneralPosition/CylinderSevenTen.path_dist
+    target_statement_id: sha256:0c61b3a33550906f00964a146196323119e293c09bfda69b4e40d16b9fb83e39
+  - gid: D5/S3/Combinatorics/Graph/Walks/CapacityPortSeparationAbsorption.actual_capacity_port_separation_absorption
+    target_statement_id: sha256:992632618a73d7f3492efc7023e929accd92e225ab3410a8d2232639a0b96c6d
+  - gid: D5/S3/Combinatorics/Graph/Walks/CapacityPortSeparationAbsorption.exists_routing
+    target_statement_id: sha256:7d0b322558b8a877ab9a9e88117a6b26a3600ce4bbc309d5c7ea7d716d632dd2
+  - gid: D5/S3/Combinatorics/Graph/Walks/CapacityPortSeparationAbsorption.ll_component_distance
+    target_statement_id: sha256:d9f06099853f75ed62030bbce9bcdc8982f8f11093bff633ddbafb3152c98892
+receipts:
+  unresolved_subitems: []
