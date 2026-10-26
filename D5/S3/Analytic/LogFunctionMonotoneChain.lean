@@ -9,6 +9,7 @@
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Polynomial.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Topology.Algebra.Polynomial
 
 /-! Derivative-sign nesting for polynomial log-functions on the positive half-line. -/
 
@@ -133,9 +134,7 @@ private lemma nonneg_of_sub_derivative (q : Polynomial ℝ) {a : ℝ} (ha : 0 < 
     have hlim : Tendsto q.eval (cocompact ℝ) atTop := by
       rw [cocompact_eq_atBot_atTop]
       exact tendsto_sup.mpr ⟨hbot, htop⟩
-    have hcont : Continuous q.eval :=
-      continuous_iff_continuousAt.mpr fun y => (q.hasDerivAt y).continuousAt
-    obtain ⟨m, hm⟩ := hcont.exists_forall_le hlim
+    obtain ⟨m, hm⟩ := q.continuous.exists_forall_le hlim
     have hmin : IsLocalMin q.eval m := Eventually.of_forall hm
     have hzero := hmin.hasDerivAt_eq_zero (q.hasDerivAt m)
     have hm0 := h m
