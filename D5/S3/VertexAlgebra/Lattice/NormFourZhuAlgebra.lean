@@ -382,7 +382,7 @@ private theorem ambient_word_eigen (D : LatticeData)
   | nil =>
       have h := stateField_creativity D (omega D H) 1 (by omega)
       change mu D (omega D H) 1 (vacuum D)=0 at h
-      simpa only [omega_product,show (1:ℤ)-1=0 by omega,
+      simpa only [LatticeActualConformalWard.omega_product,show (1:ℤ)-1=0 by omega,
         word,wordGrade,Nat.cast_zero,zero_smul] using h
   | cons k w ih =>
       let m : ℤ := -((k:ℤ)+1)
@@ -1301,7 +1301,7 @@ theorem actual_zhu_presentation (D : LatticeData) (hd : IsUnit D.G.det)
     change q (axisSquare D a ha s hs)+(2:ℂ) • (-(2:ℂ) • x)+
       (2:ℂ) • x=x*x at product
     rw [pow_two]
-    linear_combination product
+    linear_combination (norm := module) product
   have one_range : (1 : Q D a s) ∈ R := LinearMap.mem_range.mpr ⟨1,map_one F⟩
   have axis_range : x ∈ R := LinearMap.mem_range.mpr ⟨_,root_image⟩
   have square_range : x^2+(2:ℂ) • x ∈ R := by
