@@ -48,7 +48,7 @@ lemma kronecker_rank_one (a : Fin m → ℂ) (b : Fin n → ℂ) :
   simp [Matrix.kroneckerMap, Matrix.vecMulVec_apply, star_mul]
   ring
 
-lemma kronecker_sum_sum
+private lemma kronecker_sum_sum
     {ka kb : ℕ}
     (A : Fin ka → Matrix (Fin m) (Fin m) ℂ)
     (B : Fin kb → Matrix (Fin n) (Fin n) ℂ) :

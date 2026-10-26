@@ -7,7 +7,6 @@
    digest: The signalling game has classical, quantum and no-signalling value 1/max(m,n). -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import D5.S3.Resource.CompositeConeDuality
 import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 
@@ -25,7 +24,6 @@ open scoped BigOperators Kronecker ComplexOrder
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
   (IsPOVM diagonal_povm)
 open D5.S3.Quantum.FiniteDimensional (bornProbability)
-open D5.S3.Resource.CompositeConeDuality (kronecker_sum_sum)
 open D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift (labelKernel)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
@@ -143,8 +141,8 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     have he : (∑ v, a x u ⊗ₖ b y v) = a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
       calc
         _ = a x u ⊗ₖ (∑ v, b y v) := by
-          simpa only [Fin.sum_univ_one] using
-            (kronecker_sum_sum (fun _ : Fin 1 => a x u) (b y)).symm
+          exact (map_sum (Matrix.kroneckerBilinear (R := ℂ) (a x u))
+            (b y) univ).symm
         _ = _ := by rw [(hb y).2]
     rw [he]
   have left (v : Fin m) (x : Fin m) (y : Fin n) :
@@ -154,8 +152,8 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     have he : (∑ u, a x u ⊗ₖ b y v) = (1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v := by
       calc
         _ = (∑ u, a x u) ⊗ₖ b y v := by
-          simpa only [Fin.sum_univ_one] using
-            (kronecker_sum_sum (a x) (fun _ : Fin 1 => b y v)).symm
+          exact (LinearMap.map_sum₂ (Matrix.kroneckerBilinear (R := ℂ))
+            univ (a x) (b y v)).symm
         _ = _ := by rw [(ha x).2]
     rw [he]
   refine ⟨?_, ?_, ?_, ?_⟩
@@ -167,9 +165,8 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     have he : (∑ u, a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)) = 1 := by
       calc
         _ = (∑ u, a x u) ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
-          simpa only [Fin.sum_univ_one] using
-            (kronecker_sum_sum (a x)
-              (fun _ : Fin 1 => (1 : Matrix (Fin db) (Fin db) ℂ))).symm
+          exact (LinearMap.map_sum₂ (Matrix.kroneckerBilinear (R := ℂ))
+            univ (a x) (1 : Matrix (Fin db) (Fin db) ℂ)).symm
         _ = 1 := by rw [(ha x).2, one_kronecker_one]
     rw [he, Matrix.mul_one, htrace, Complex.one_re]
   · intro u x y z
