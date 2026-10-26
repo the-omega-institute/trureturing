@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.claim; result=D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.result; claim=D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.claim
    digest: Entangled Werner states need not be detected by any pair of complex testers. -/
 
-import Mathlib.Analysis.Normed.Module.PiTensorProduct.ProjectiveSeminorm
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
