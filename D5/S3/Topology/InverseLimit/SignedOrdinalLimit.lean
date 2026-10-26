@@ -53,13 +53,13 @@ noncomputable def data : H.Data where
   Vclopen r n := by
     classical
     by_cases hr : ω ≤ r.1
-    · simpa only [dif_pos hr] using ((A.V ⟨r, hr⟩).clopen n).isClopen
-    · simp only [dif_neg hr]; exact isClopen_empty
+    · simpa only [dite_eq_left hr] using ((A.V ⟨r, hr⟩).clopen n).isClopen
+    · simp only [dite_eq_right hr]; exact isClopen_empty
   nu r d n := if hr : ω ≤ r.1 then (A.nu ⟨r, hr⟩ d).1 n else
-    ⟨0, by simp only [SignedMeasure.toJordanDecomposition_zero]; exact ⟨inferInstance, inferInstance⟩⟩
+    ⟨0, by change Measure.Regular (0 : Measure _) ∧ Measure.Regular (0 : Measure _); exact ⟨inferInstance, inferInstance⟩⟩
   mass r d n hr := by
     classical
-    simpa only [dif_pos hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
+    simpa only [dite_eq_left hr] using ((A.nu ⟨r, hr⟩ d).2 n).1
 
 end Archive
 
@@ -73,12 +73,12 @@ private theorem carrier_old {l : Ordinal.{0}} (H : Prefix l)
     (b : Ordinal.{0}) (hb : b < l) (hb' : b < Order.succ l) :
     enlargedCarrier H ⟨b, hb'⟩ = H.carrier ⟨b, hb⟩ := by
   classical
-  simp only [enlargedCarrier, dif_pos hb]
+  simp only [enlargedCarrier, dite_eq_left hb]
 
 private theorem carrier_top {l : Ordinal.{0}} (H : Prefix l) (hb : l < Order.succ l) :
     enlargedCarrier H ⟨l, hb⟩ = H.limitCarrier := by
   classical
-  simp only [enlargedCarrier, dif_neg (lt_irrefl l)]
+  simp only [enlargedCarrier, dite_eq_right (lt_irrefl l)]
 
 /-- Old carriers are unchanged, and the new top is the literal limit subset. -/
 noncomputable def literalPrefix {l : Ordinal.{0}} (H : Prefix l) {D : H.Data}
@@ -90,7 +90,7 @@ noncomputable def literalPrefix {l : Ordinal.{0}} (H : Prefix l) {D : H.Data}
     · rw [carrier_old H b h hb]; exact H.closed ⟨b, h⟩
     · have he : b = l := le_antisymm (Order.le_of_lt_succ hb) (le_of_not_gt h)
       subst b
-      rw [carrier_top]
+      rw [carrier_top H hb]
       change IsClosed {x : Cube l | ∀ a : Coord l, restrict (le_of_lt a.2) x ∈ H.carrier a}
       simp only [ofPred_forall]
       exact isClosed_iInter fun a => (H.closed a).preimage (Pi.continuous_precomp' _)
@@ -100,8 +100,9 @@ noncomputable def literalPrefix {l : Ordinal.{0}} (H : Prefix l) {D : H.Data}
     · rw [carrier_old H b h hb]; exact H.nonempty ⟨b, h⟩
     · have he : b = l := le_antisymm (Order.le_of_lt_succ hb) (le_of_not_gt h)
       subst b
-      rw [carrier_top]
-      exact E.inhabited.to_subtype
+      rw [carrier_top H hb]
+      obtain ⟨x⟩ := E.inhabited
+      exact ⟨x.1, x.2⟩
   compatible := by
     intro ⟨b, hb⟩ ⟨c, hc⟩ h x
     change b ≤ c at h
@@ -141,7 +142,8 @@ noncomputable def literalPrefix {l : Ordinal.{0}} (H : Prefix l) {D : H.Data}
         subst b
         exact ⟨y, rfl⟩
 
-private def oldRow {l : Ordinal.{0}} {hw : ω < l} (r : Rows l)
+/-- Identify precisely an old row of the next predecessor with its born archive row. -/
+def bornRow {l : Ordinal.{0}} (hw : ω < l) (r : Rows l)
     (hr : r ≠ newRow l hw.le) : BornRows l :=
   ⟨⟨r.1, lt_of_le_of_ne r.2.2 (fun h => hr (Subtype.ext h))⟩, r.2.1⟩
 
@@ -153,17 +155,17 @@ variable {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l} (A : Archive H hw)
 private noncomputable def oldV (r : Rows l) (hr : r ≠ newRow l hw.le) :
     SupportFamily (Base (literalPrefix H E) r) := by
   simpa only [Base, Prefix.Space, literalPrefix, rowIndex, index,
-    carrier_old H r.1 (oldRow r hr).1.2] using A.V (oldRow r hr)
+    enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow] using A.V (bornRow hw r hr)
 
 private noncomputable def oldU (r : Rows l) (hr : r ≠ newRow l hw.le) :
     Label → SupportFamily (Base (literalPrefix H E) r) := by
   simpa only [Base, Prefix.Space, literalPrefix, rowIndex, index,
-    carrier_old H r.1 (oldRow r hr).1.2] using A.U (oldRow r hr)
+    enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow] using A.U (bornRow hw r hr)
 
 private noncomputable def oldNu (r : Rows l) (hr : r ≠ newRow l hw.le) :
     Label → BornData (A.oldV E r hr) := by
   simpa only [oldV, Base, Prefix.Space, literalPrefix, rowIndex, index,
-    carrier_old H r.1 (oldRow r hr).1.2] using A.nu (oldRow r hr)
+    enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow] using A.nu (bornRow hw r hr)
 
 /-- The actual limit predecessor: every old whole enumeration and birth is retained. -/
 noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
@@ -177,50 +179,50 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
     V := A.oldV E
     nu := A.oldNu E
     nuonto := ?_
-    I := fun r hr => E.I (oldRow r hr).1
-    J := fun r hr d => E.J (oldRow r hr).1 d
-    A := fun r hr d => E.A (oldRow r hr).1 d r.2.1
+    I := fun r hr => E.I (bornRow hw r hr).1
+    J := fun r hr d => E.J (bornRow hw r hr).1 d
+    A := fun r hr d => E.A (bornRow hw r hr).1 d r.2.1
     B := ?_
     C := ?_
     E := ?_
     F := ?_ }
-  · simp only [K, Prefix.Space, literalPrefix, top, carrier_top]
+  · simp only [K, Prefix.Space, literalPrefix, top, enlargedCarrier, dite_eq_right (lt_irrefl l)]
     intro y
     obtain ⟨z, hz⟩ := A.base_onto y
     obtain ⟨x, hx⟩ := E.onto ⟨ω, hw⟩ z
     exact ⟨x, (congrArg Subtype.val hx).trans hz⟩
   · intro r hr
     simpa only [oldU, Base, Prefix.Space, literalPrefix, rowIndex, index,
-      carrier_old H r.1 (oldRow r hr).1.2] using A.Uonto (oldRow r hr)
+      enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow] using A.Uonto (bornRow hw r hr)
   · intro r hr
     simpa only [oldNu, oldV, Base, Prefix.Space, literalPrefix, rowIndex, index,
-      carrier_old H r.1 (oldRow r hr).1.2] using A.nuonto (oldRow r hr)
+      enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow] using A.nuonto (bornRow hw r hr)
   · intro r hr d
-    simpa only [data, dif_pos r.2.1, Bool.false_eq_true, if_false, if_true] using
-      E.B (oldRow r hr).1 d r.2.1
+    simpa only [data, dite_eq_left r.2.1, Bool.false_eq_true, if_false, if_true] using
+      E.B (bornRow hw r hr).1 d r.2.1
   · intro r hr d e
-    have h := E.C (oldRow r hr).1 d (e == 1) r.2.1
+    have h := E.C (bornRow hw r hr).1 d (e == 1) r.2.1
     have he : (if (e == 1) then (1 : Fin 2) else 0) = e := by fin_cases e <;> rfl
-    simpa only [data, dif_pos r.2.1, he] using h
+    simpa only [data, dite_eq_left r.2.1, he] using h
   · intro r hr c
     by_cases hc : c.1 < r.1
     · apply Eventually.of_forall
       intro n x y _ _ hxy
       exact congrArg (fun z => z.1 ⟨c.1, hc⟩) hxy
-    · have h := E.E (oldRow r hr).1 c r.2.1 (le_of_not_gt hc)
+    · have h := E.E (bornRow hw r hr).1 c r.2.1 (le_of_not_gt hc)
       simpa only [oldV, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-        rowIndex, index, top, carrier_old H r.1 (oldRow r hr).1.2, carrier_top,
-        data, dif_pos r.2.1] using h
+        rowIndex, index, top, enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow, enlargedCarrier, dite_eq_right (lt_irrefl l),
+        data, dite_eq_left r.2.1] using h
   · intro r hr d
     simp only [oldNu, oldV, Base, K, projection, Prefix.map, Prefix.Space, literalPrefix,
-      rowIndex, index, top, carrier_old H r.1 (oldRow r hr).1.2, carrier_top]
+      rowIndex, index, top, enlargedCarrier, dite_eq_left (bornRow hw r hr).1.2, bornRow, carrier_top]
     intro s hm hn
     letI : MetricSpace H.LimitSpace := H.properMetric A.proper
     let t : ℕ → RegularSigned H.LimitSpace := fun n => ⟨s n, inferInstance, inferInstance⟩
-    have ht : ∀ n, H.NewClass A.data (oldRow r hr).1 d n (t n) := by
+    have ht : ∀ n, H.NewClass A.data (bornRow hw r hr).1 d n (t n) := by
       intro n
-      exact ⟨hn n, by simpa only [data, dif_pos r.2.1] using hm n⟩
-    obtain ⟨mu, _, hconv⟩ := E.F (oldRow r hr).1 d r.2.1 t ht
+      exact ⟨hn n, by simpa only [data, dite_eq_left r.2.1] using hm n⟩
+    obtain ⟨mu, _, hconv⟩ := E.F (bornRow hw r hr).1 d r.2.1 t ht
     exact ⟨mu.1, hconv⟩
 
 end Archive
@@ -233,9 +235,9 @@ namespace Result
 
 variable {l : Ordinal.{0}} {H : Prefix l} {hw : ω < l} {A : Archive H hw} (R : Result A)
 
-noncomputable def prefix : Prefix (Order.succ l) := literalPrefix H R.extension
+noncomputable def extended : Prefix (Order.succ l) := literalPrefix H R.extension
 
-noncomputable def predecessor : Predecessor R.prefix hw.le := A.predecessor R.extension
+noncomputable def predecessor : Predecessor R.extended hw.le := A.predecessor R.extension
 
 end Result
 
