@@ -148,4 +148,48 @@ theorem frozen_runs_le_extrema {h : Cell m n → ℤ} (hh : IsHeight h)
   have hcol := slab_card_eq_frozen_runs_add_one (transpose_isHeight hh) hn (by omega)
   omega
 
+
+/-- Equality in the actual run bound saturates the individual-incidence
+charge and forces both matching-type product defects to vanish. -/
+theorem frozen_run_equality_incidence {h : Cell m n → ℤ} (hh : IsHeight h)
+    (hm : 2 ≤ m) (hn : 2 ≤ n)
+    (hr : ∃ i, ¬ RowOccupied h i)
+    (hc : ∃ j, ¬ RowOccupied (transposeHeight h) j)
+    (heq : (extrema h).card = (frozenRowRunStarts h).card +
+      (frozenRowRunStarts (transposeHeight h)).card) :
+    rowNeutralSupport h = colNeutralSupport h ∧
+    (neutralRowSlabs h).card = (neutralColSlabs h).card ∧
+    ((minRowSlabs h).card - 1) * ((minColSlabs h).card - 1) = 0 ∧
+    ((maxRowSlabs h).card - 1) * ((maxColSlabs h).card - 1) = 0 := by
+  have hpartR := row_slab_card_partition hh hm (by omega) hr
+  have hpartC := row_slab_card_partition (transpose_isHeight hh) hn (by omega) hc
+  have hrow := slab_card_eq_frozen_runs_add_one hh hm (by omega)
+  have hcol := slab_card_eq_frozen_runs_add_one (transpose_isHeight hh) hn (by omega)
+  have hminR : 1 ≤ (minRowSlabs h).card := (minimum_row_slab_exists hh hm (by omega) hr).card_pos
+  have hmaxR : 1 ≤ (maxRowSlabs h).card := (maximum_row_slab_exists hh hm (by omega) hr).card_pos
+  have hminC : 1 ≤ (minColSlabs h).card :=
+    (minimum_row_slab_exists (transpose_isHeight hh) hn (by omega) hc).card_pos
+  have hmaxC : 1 ≤ (maxColSlabs h).card :=
+    (maximum_row_slab_exists (transpose_isHeight hh) hn (by omega) hc).card_pos
+  have hproductMin := product_budget (minRowSlabs h).card (minColSlabs h).card hminR hminC
+  have hproductMax := product_budget (maxRowSlabs h).card (maxColSlabs h).card hmaxR hmaxC
+  have hbudget := slab_extremum_budget hh hm (by omega)
+  change (rowSlabs (transposeHeight h)).card =
+    (minColSlabs h).card + (maxColSlabs h).card + (neutralColSlabs h).card at hpartC
+  have heqBudget : (extrema h).card = (neutralRowSlabs h).card + (neutralColSlabs h).card +
+      (minRowSlabs h).card * (minColSlabs h).card +
+      (maxRowSlabs h).card * (maxColSlabs h).card := by omega
+  have heqMin : (minRowSlabs h).card + (minColSlabs h).card =
+      (minRowSlabs h).card * (minColSlabs h).card + 1 := by omega
+  have heqMax : (maxRowSlabs h).card + (maxColSlabs h).card =
+      (maxRowSlabs h).card * (maxColSlabs h).card + 1 := by omega
+  obtain ⟨hsupport, hneutral⟩ := slab_budget_equality hh hm (by omega) heqBudget
+  refine ⟨hsupport, hneutral, ?_, ?_⟩
+  · have hr' := Nat.sub_add_cancel hminR
+    have hc' := Nat.sub_add_cancel hminC
+    nlinarith
+  · have hr' := Nat.sub_add_cancel hmaxR
+    have hc' := Nat.sub_add_cancel hmaxC
+    nlinarith
+
 end D5.S3.Combinatorics.Geometry.MiuraSlabRunBound
