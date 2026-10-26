@@ -117,7 +117,7 @@ private theorem finite_spectral_readout_rigidity {ι κ : Type*} [Fintype ι] [F
 
 variable {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
 
-private theorem cfc_vector_expansion (A : Matrix n n ℂ) (hA : A.IsHermitian)
+theorem cfc_vector_expansion (A : Matrix n n ℂ) (hA : A.IsHermitian)
     (f : ℝ → ℝ) (a : n → ℂ) (i : n) :
     (cfc f A *ᵥ a) i = ∑ j, (f (hA.eigenvalues j) : ℂ) *
       hA.eigenvectorUnitary i j * (hA.eigenvectorUnitaryᴴ *ᵥ a) j := by
