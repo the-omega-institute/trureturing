@@ -82,7 +82,10 @@ internal sealed class PermaspinTransferEigenvalueOrderDocument : IScribeDocument
                         + "The root r establishes nonemptiness, and the preceding bound establishes boundedness. "
                         + "Finally, c(1-d)^2 ≤ largestRoot c d reduces the inner maximum to largestRoot c d, "
                         + "and c(1-d^2) ≤ largestRoot c d reduces the outer maximum to the same value."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dukes-2023-permaspin-eigenvalue-order"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CubicFormula()
     {
