@@ -14,10 +14,10 @@ set_option relaxedAutoImplicit false
 noncomputable section
 universe u
 
-/-- Retain the carrier and its finite enumeration and equality dictionary. -/
+/-- Observe the complex cardinality appearing in the swap trace identity. -/
 abbrev signature : Signature where
   Params := Unit
-  State _ := Σ n : Type u, Σ _ : Fintype n, DecidableEq n
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -25,38 +25,31 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
-  realize signature (fun _ _ p =>
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
-    Matrix.trace (Equiv.Perm.permMatrix ℂ (Equiv.prodComm p.1 p.1)))
-    (fun e => nomatch e)
+def actual : Realization signature :=
+  realize signature (fun _ _ k => (k : ℂ)) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- The trace identity keeps the complete polymorphic telescope. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law r := ∀ {n : Type u} [ft : Fintype n] [de : DecidableEq n],
-    r.readout () () ⟨n, ft, de⟩ = (Fintype.card n : ℂ)
+  signature := signature
+  Law r := ∀ {n : Type u} [Fintype n] [DecidableEq n],
+    Matrix.trace (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) =
+      r.readout () () (Fintype.card n)
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hbad := @h (ULift.{u} (Fin 1)) inferInstance inferInstance
-  change (0 : ℂ) = (Fintype.card (ULift.{u} (Fin 1)) : ℂ) at hbad
+  change Matrix.trace (Equiv.Perm.permMatrix ℂ
+    (Equiv.prodComm (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)))) = 0 at hbad
+  rw [traceSwap] at hbad
   norm_num at hbad
 
-theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), ⟨ULift.{u} (Fin 0), inferInstance, inferInstance⟩,
-    ⟨ULift.{u} (Fin 1), inferInstance, inferInstance⟩, ?_⟩
-  change Matrix.trace (Equiv.Perm.permMatrix ℂ
-    (Equiv.prodComm (ULift.{u} (Fin 0)) (ULift.{u} (Fin 0)))) ≠
-    Matrix.trace (Equiv.Perm.permMatrix ℂ
-      (Equiv.prodComm (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1))))
-  rw [traceSwap, traceSwap]
-  norm_num
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
 
 def source_registration : Registration arena.{u} (type_of% @traceSwap.{u}) where
   actual := actual
@@ -73,7 +66,7 @@ def source_registration : Registration arena.{u} (type_of% @traceSwap.{u}) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap.{u})
-      (Realization signature.{u}) Unit Unit := {
+      (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap.unit
   realizationName :=
     `Reg.D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.source_registration
@@ -86,11 +79,7 @@ def registration :
   realization := .source arena.{u} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ p =>
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
-    Matrix.trace (Equiv.Perm.permMatrix ℂ (Equiv.prodComm p.1 p.1)))
-    (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ k => (k : ℂ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -100,10 +89,10 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
