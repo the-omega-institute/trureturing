@@ -61,7 +61,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), 0, 1, ?_⟩
   intro h
   have hh := congrFun h (0 : Fin 4 → ℕ)
-  simp [actual, realize, funext_iff] at hh
+  change ((0 : Fin 4 → ℕ) = 0) = ((1 : Fin 4 → ℕ) = 0) at hh
+  have hc : (1 : ℕ) = 0 := congrFun (Eq.mp hh rfl) (0 : Fin 4)
+  exact Nat.one_ne_zero hc
 
 def family : Registration arena (type_of% (@actual_leech_peirce_multiplicities)) where
   actual := actual

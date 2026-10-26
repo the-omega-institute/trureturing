@@ -643,9 +643,9 @@ theorem actual_leech_peirce_multiplicities :
   let T := L D hpos hroot a.1 a.2
   have hdim : Module.finrank ℂ (S D) = 98580 := by
     have h := (actual_theta_fixed_rootless_low_spectrum D hpos hroot).2.2
-    rw [hrank, hcard] at h
-    norm_num at h
-    exact h
+    calc
+      _ = Nat.choose (D.rank + 1) 2 + Nat.card (NormFour D) / 2 := h
+      _ = 98580 := by rw [hcard, hrank]; norm_num [Nat.choose]
   have htrace : LinearMap.trace ℂ (S D) T = (8215 / 2 : ℂ) := by
     change LinearMap.trace ℂ (S D) (L D hpos hroot a.1 a.2) = _
     rw [full_basis_trace]
