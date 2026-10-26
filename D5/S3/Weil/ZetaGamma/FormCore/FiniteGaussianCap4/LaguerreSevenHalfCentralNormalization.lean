@@ -66,6 +66,7 @@ def normalizedCentralMellin (n : ℕ) : ℝ :=
 
 theorem integrable_centralPsi (n : ℕ) :
     IntegrableOn (fun x : ℝ => x ^ (5 / 4 : ℝ) * centralPsi x n) (Ioi 0) := by
+  change Integrable _ (volume.restrict (Ioi 0))
   convert (integrable_central_phi n).const_mul (centralNormalization n) using 1
   funext x
   simp only [centralPsi]
