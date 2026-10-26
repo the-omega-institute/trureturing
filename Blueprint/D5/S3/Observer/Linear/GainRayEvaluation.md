@@ -10,7 +10,19 @@ The nodes are explicit. clocks n i is the real cast of the original natural inde
 
 evaluationRightInverse chooses a right inverse from evaluation_surjective whenever n<=d+1 and t is injective. No nonzero-gain promise is used in this linear interpolation interface. A compatible legal-world construction must separately ensure the whole coefficient vector is nonzero.
 
-**Theorem 1.1 (Enough distinct clocks determine all coefficients).**
+**Theorem 1.1 (Ordinary polynomial and matrix evaluations agree).**
+
+Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_polynomial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_polynomial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d,n, node function t:Fin n to the reals, ordinary coefficient vector beta:Coeff d, and index i:Fin n, evaluate(d,n,t)(beta)(i) equals gain(d,beta) evaluated at t(i). No injectivity of t or nonzero condition on beta is needed for this exact equality.
+
+**Theorem 1.2 (Enough distinct clocks determine all coefficients).**
 
 Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_injective`
 
@@ -22,7 +34,7 @@ Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_injective`
 
 For every natural d,n and t:Fin n to the reals, injectivity of t and d+1<=n imply injectivity of evaluate d n t. Two coefficient vectors with these evaluations equal represent polynomials of degree less than d+1 agreeing at n distinct nodes, so they coincide.
 
-**Theorem 1.2 (Every short vector of prescribed values occurs).**
+**Theorem 1.3 (Every short vector of prescribed values occurs).**
 
 Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_surjective`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_surjective`
 
 For every natural d,n and injective t:Fin n to the reals, n<=d+1 implies surjectivity of evaluate d n t. Lagrange interpolation supplies a polynomial of degree less than n; its first d+1 coefficients give the witness. For n=0 the unique empty vector is attained by zero.
 
-**Theorem 1.3 (Coefficient-and-drift history extension is onto).**
+**Theorem 1.4 (Coefficient-and-drift history extension is onto).**
 
 Lean statement: `D5/S3/Observer/Linear/GainRayEvaluation.pureJ_history_surjective`
 
@@ -49,6 +61,7 @@ For every natural d,n with n<=d+1, the map from Coeff d times the reals to real 
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_injective`
+- Truth anchor: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_polynomial`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayEvaluation.evaluation_surjective`
 - Truth anchor: `D5/S3/Observer/Linear/GainRayEvaluation.pureJ_history_surjective`
 - Dependency: [D5/S3/Observer/Linear/GainRayWorld](GainRayWorld.md)
