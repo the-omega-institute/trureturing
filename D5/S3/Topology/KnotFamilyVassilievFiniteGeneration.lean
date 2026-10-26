@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Every subalgebra of a polynomial ring over a field is finitely generated. -/
+   digest: Subalgebras of univariate polynomial rings over fields are finitely generated. -/
 
 import Mathlib.RingTheory.Adjoin.Tower
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
@@ -78,7 +78,41 @@ private theorem finite_subfamily {k : Type*} [Field k] {ι : Type*}
     (p : ι → Polynomial k) (h : (Algebra.adjoin k (Set.range p)).FG) :
     ∃ s : Finset ι,
       Algebra.adjoin k (p '' (s : Set ι)) = Algebra.adjoin k (Set.range p) := by
-  sorry
+  classical
+  have hm (s t : Finset ι) (hst : s ⊆ t) :
+      Algebra.adjoin k (p '' (s : Set ι)) ≤ Algebra.adjoin k (p '' (t : Set ι)) :=
+    Algebra.adjoin_mono (Set.image_mono hst)
+  have hsupp (x : Polynomial k) (hx : x ∈ Algebra.adjoin k (Set.range p)) :
+      ∃ s : Finset ι, x ∈ Algebra.adjoin k (p '' (s : Set ι)) := by
+    induction hx using Algebra.adjoin_induction with
+    | mem x hx =>
+      obtain ⟨i, rfl⟩ := hx
+      exact ⟨{i}, Algebra.subset_adjoin ⟨i, Finset.mem_singleton_self i, rfl⟩⟩
+    | algebraMap r => exact ⟨∅, Subalgebra.algebraMap_mem _ r⟩
+    | add x y _ _ hx hy =>
+      obtain ⟨s, hs⟩ := hx
+      obtain ⟨t, ht⟩ := hy
+      exact ⟨s ∪ t, Subalgebra.add_mem _
+        (hm s (s ∪ t) Finset.subset_union_left hs)
+        (hm t (s ∪ t) Finset.subset_union_right ht)⟩
+    | mul x y _ _ hx hy =>
+      obtain ⟨s, hs⟩ := hx
+      obtain ⟨t, ht⟩ := hy
+      exact ⟨s ∪ t, Subalgebra.mul_mem _
+        (hm s (s ∪ t) Finset.subset_union_left hs)
+        (hm t (s ∪ t) Finset.subset_union_right ht)⟩
+  obtain ⟨t, ht⟩ := h
+  choose! s hs using fun (x : Polynomial k) (hx : x ∈ t) ↦
+    hsupp x (by rw [← ht]; exact Algebra.subset_adjoin hx)
+  refine ⟨t.biUnion s, le_antisymm ?_ ?_⟩
+  · apply Algebra.adjoin_mono
+    rintro _ ⟨i, _, rfl⟩
+    exact ⟨i, rfl⟩
+  · rw [← ht]
+    apply Algebra.adjoin_le
+    intro x hx
+    exact hm (s x) (t.biUnion s)
+      (fun i hi ↦ Finset.mem_biUnion.mpr ⟨x, hx, hi⟩) (hs x hx)
 
 theorem result : claim := by
   intro ι p
