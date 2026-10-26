@@ -58,7 +58,11 @@ private noncomputable def decoder (_ y₁ _ y₂ : Fin 6) : StdSimplex ℝ (Fin 
 private lemma sequential_perfect :
     sequentialSuccess StdSimplex.barycenter channels (.single 0) secondInput decoder = 1 := by
   unfold sequentialSuccess secondInput decoder channels
-  norm_num [Fin.sum_univ_succ, StdSimplex.weights_barycenter_apply,
+  conv_lhs =>
+    arg 2
+    intro i
+    rw [StdSimplex.weights_barycenter_apply]
+  norm_num [Fin.sum_univ_succ,
     StdSimplex.weights_single, Finsupp.single_apply, Equiv.swap_apply_def]
 
 private lemma transcript_collision (x : Fin 6 × Fin 6) :
@@ -105,7 +109,11 @@ private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
         ∑ x, q.weights x * (1 / 4 *
           ∑ i, (δ x (channels i x.1, channels i x.2)).weights i) := by
       unfold parallelSuccess
-      simp only [StdSimplex.weights_barycenter_apply, Fintype.card_fin, Nat.cast_ofNat, one_div]
+      conv_lhs =>
+        arg 2
+        intro i
+        rw [StdSimplex.weights_barycenter_apply]
+      simp only [Fintype.card_fin, Nat.cast_ofNat, one_div]
       simp_rw [Finset.mul_sum]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
