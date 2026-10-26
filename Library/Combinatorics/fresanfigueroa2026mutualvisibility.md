@@ -28,11 +28,9 @@ adjacent in the host. Thus token addition/removal and actual host-edge slides
 are both present. Fixed-cardinality layers and slide-only token graphs are
 different objects.
 
-The question immediately after Theorem 3.6, repeated in Section 7, asks:
-
-> A natural question is whether the reconfiguration graph is maximally
-> connected for every connected host, that is, whether its vertex
-> connectivity equals its minimum degree.
+The question immediately after Theorem 3.6, repeated in Section 7, asks
+whether the full reconfiguration graph is maximally connected for every
+connected host: its vertex connectivity must equal its minimum degree.
 
 The source's preceding order-at-least-three bound is not a hypothesis of
 this question. Host orders one and two remain in scope. The finite separator
@@ -46,3 +44,8 @@ rooted geometry, requires membership on every root geodesic. This auxiliary
 relation is stronger than membership on some shortest path and does not
 replace existential mutual visibility. The full connectivity equality is
 not established by the model or the auxiliary inward-replacement theorem.
+
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2610.24324
+- Primary version: https://arxiv.org/html/2610.24324v1

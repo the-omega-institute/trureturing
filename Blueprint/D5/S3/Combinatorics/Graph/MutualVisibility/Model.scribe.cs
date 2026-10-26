@@ -162,9 +162,10 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
             Or(Eq(z, u), Eq(z, x))));
         Formula witness = Ex("p", Call("Walk", h, u, x),
             And(Eq(Call("length", p), Call("dist", h, u, x)), avoids));
-        return Disp(HostScope(All("S", Call("Finset", v), Iff(Call("Visible", h, s),
-            All("u", v, Imp(Mem(u, s), All("v", v,
-                Imp(Mem(x, s), Imp(Ne(u, x), witness)))))))));
+        return Disp(All("V", Call("Type"), All("H", Call("SimpleGraph", v),
+            All("S", Call("Finset", v), Iff(Call("Visible", h, s),
+                All("u", v, Imp(Mem(u, s), All("v", v,
+                    Imp(Mem(x, s), Imp(Ne(u, x), witness))))))))));
     }
 
     private static Formula MoveFormula()
