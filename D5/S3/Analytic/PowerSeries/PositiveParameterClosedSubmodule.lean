@@ -32,6 +32,8 @@ import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Quotient
 import Mathlib.Topology.Order.LeftRight
 import Mathlib.Topology.Order.DenselyOrdered
 
+/-! Coefficient extraction from positive parameter values in a closed submodule. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -73,7 +75,7 @@ theorem powerSeries_coeff_mem_of_positive_values
     have h := congrArg
       (fun q : FormalMultilinearSeries ℝ ℝ (E ⧸ K) => q n 1) hseries
     simpa only [ContinuousLinearMap.compFormalMultilinearSeries_apply',
-      FormalMultilinearSeries.coeff, Pi.zero_apply,
+      FormalMultilinearSeries.coeff, FormalMultilinearSeries.zero_apply,
       ContinuousMultilinearMap.zero_apply] using h
   change (Submodule.Quotient.mk (p.coeff n) : E ⧸ K) = 0 at hcoefficient
   exact (Submodule.Quotient.mk_eq_zero K).mp hcoefficient
