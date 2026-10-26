@@ -52,7 +52,10 @@ private lemma r_state : (∀ i, 0 ≤ r i) ∧ (∑ i, r i = 1) := by
   · norm_num [r, Fin.sum_univ_succ]
 
 private lemma s_state : (∀ i, 0 ≤ s i) ∧ (∑ i, s i = 1) := by
-  sorry
+  constructor
+  · intro i
+    fin_cases i <;> norm_num [s]
+  · norm_num [s, Fin.sum_univ_succ]
 
 private lemma full_spectra :
     desc r = [7/20, 6/20, 6/20, 1/20] ∧
