@@ -31,7 +31,7 @@ abbrev Tag := Label ⊕ {p : Label × Label × ℕ // Intrinsic W p.1 p.2.1 p.2.
 
 def zeroTag : Tag W := .inl zeroLabel
 
-def syntax (z : Tag W) : Task :=
+def taskSyntax (z : Tag W) : Task :=
   match z with
   | .inl d => .inl (θ.1, d)
   | .inr p => .inr (θ.1, p.1.1, p.1.2.1, p.1.2.2)
@@ -48,9 +48,9 @@ def ValidAt (z : Tag W) (a : Label) : Prop :=
   | .inr p => DelayedValid a θ.1 p.1.1 p.1.2.1
 
 def Occurs (z : Tag W) (a : Label) : Prop :=
-  (reservation a).1 = syntax W z ∧ ValidAt W z a
+  (reservation a).1 = taskSyntax W z ∧ ValidAt W z a
 
-theorem syntax_injective : Injective (syntax W) := by
+theorem taskSyntax_injective : Injective (taskSyntax W) := by
   intro x y h
   cases x with
   | inl d =>
@@ -86,7 +86,8 @@ private noncomputable def first (z : Tag W) : Label :=
   wellFounded_lt.min {a | Occurs W z a} (occurs_nonempty W z)
 
 private theorem first_occurs (z : Tag W) : Occurs W z (first W z) :=
-  wellFounded_lt.min_mem _ _
+  (wellFounded_lt : WellFounded ((· < ·) : Label → Label → Prop)).min_mem
+    {a | Occurs W z a} (occurs_nonempty W z)
 
 /-- Ordinary zero stays zero; all other tags use their first valid reservation. -/
 noncomputable def code (z : Tag W) : Label := by
@@ -99,7 +100,7 @@ theorem code_zero : code W (zeroTag W) = zeroLabel := by
 
 theorem code_occurs (z : Tag W) (hz : z ≠ zeroTag W) : Occurs W z (code W z) := by
   classical
-  simpa only [code, if_neg hz] using first_occurs W z
+  simpa only [code, ite_eq_right hz] using first_occurs W z
 
 theorem row_le_code (z : Tag W) (hz : z ≠ zeroTag W) : θ.1 ≤ code W z := by
   have hv := (code_occurs W z hz).2
@@ -125,8 +126,10 @@ theorem code_le_occurrence (z : Tag W) (a : Label) (ha : Occurs W z a) :
   · subst z
     rw [code_zero]
     exact show (0 : Ordinal.{0}) ≤ a.1 from bot_le
-  · rw [code, if_neg hz]
-    exact le_of_not_gt (wellFounded_lt.not_lt_min _ ha)
+  · rw [code, ite_eq_right hz]
+    exact le_of_not_gt
+      ((wellFounded_lt : WellFounded ((· < ·) : Label → Label → Prop)).not_lt_min
+        {b | Occurs W z b} ha)
 
 theorem code_eq_zero_iff (z : Tag W) : code W z = zeroLabel ↔ z = zeroTag W := by
   constructor
@@ -149,7 +152,7 @@ theorem code_injective : Injective (code W) := by
       intro hy
       subst y
       exact hx ((code_eq_zero_iff W x).mp (he.trans (code_zero W)))
-    apply syntax_injective W
+    apply taskSyntax_injective W
     exact (code_occurs W x hx).1.symm.trans
       ((congrArg (fun a => (reservation a).1) he).trans (code_occurs W y hy).1)
 
@@ -174,10 +177,10 @@ theorem double_reservation_cofinal (outer inner : Task) (base : Label) :
     ⟨(g ξ).1, (Order.lt_succ_iff).mpr (hb ξ)⟩
   have hf : Injective f := fun x y hxy =>
     hg (Subtype.ext (congrArg (fun z : Set.Iio (Order.succ base.1) => z.1) hxy))
-  letI : Countable (Set.Iio (Order.succ base.1)) :=
+  let : Countable (Set.Iio (Order.succ base.1)) :=
     (Cardinal.countable_Iio_of_lt_omega_one
       ((Cardinal.isSuccLimit_omega 1).succ_lt base.2)).to_subtype
-  letI : Countable Label := hf.countable
+  let : Countable Label := hf.countable
   have hh := Cardinal.mk_le_aleph0 (α := Label)
   have hc : Cardinal.mk Label = ℵ₁ := by
     simp [Label, Cardinal.mk_Iio_ordinal, Ordinal.card_omega]
@@ -185,7 +188,7 @@ theorem double_reservation_cofinal (outer inner : Task) (base : Label) :
   exact (not_le_of_gt Cardinal.aleph0_lt_aleph_one) hh
 
 /-- A second reservation supplies a color independently of all birth data. -/
-def color (a : Label) : Label :=
+noncomputable def color (a : Label) : Label :=
   match (reservation (reservation a).2).1 with
   | .inl (_, d) => d
   | .inr _ => zeroLabel
