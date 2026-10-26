@@ -138,12 +138,12 @@ private theorem finite_log_resolvent_bound {ι κ : Type*} [Fintype ι] [Fintype
     dsimp [h]
     field_simp [ne_of_gt ht]
     <;> ring
-  have hh' : h = G t * t ^ 2 / 2 := rfl
+  have hprod : G t * h = (G t) ^ 2 * t ^ 2 / 2 := by dsimp [h]; ring
   simp only [H, sub_self, mul_zero, zero_pow (by decide : 2 ≠ 0), zero_div,
     sub_zero, add_zero, add_sub_cancel_left] at hstep
-  rw [hcancel] at hstep
+  rw [hcancel, hprod] at hstep
   have hresult : t ^ 2 * (G t) ^ 2 ≤ -4 * F 0 := by
-    nlinarith
+    nlinarith only [hstep, hend, hlo]
   dsimp only [F] at hresult
   simp only [zero_add] at hresult
   change t ^ 2 * (G t) ^ 2 ≤ _
@@ -189,9 +189,11 @@ theorem entropy_defect_resolvent_stability
     rw [hs]
     exact RHLinalg.hermForm_specMap M.hB.1 g η
   have hu : ∑ i, u i = 1 := by
+    change (∑ i, ‖(star (M.hA.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ ξ) i‖ ^ 2) = 1
     rw [RHLinalg.sum_normSq_unitary_mulVec M.hA.1 ξ]
     exact M.normξ
   have hv : ∑ j, v j = 1 := by
+    change (∑ j, ‖(star (M.hB.1.eigenvectorUnitary : Matrix _ _ ℂ) *ᵥ η) j‖ ^ 2) = 1
     rw [RHLinalg.sum_normSq_unitary_mulVec M.hB.1 η]
     exact M.normη
   have saturation : (star (V *ᵥ η) ⬝ᵥ (V *ᵥ η)).re = (star η ⬝ᵥ η).re := by
@@ -226,7 +228,7 @@ theorem entropy_defect_resolvent_stability
   have hb := finite_log_resolvent_bound M.hA.1.eigenvalues M.hB.1.eigenvalues u v
     M.hA.eigenvalues_pos M.hB.eigenvalues_pos (fun _ => sq_nonneg _)
     (fun _ => sq_nonneg _) hu hv hnonneg t ht
-  rw [← expansionA, ← expansionB] at hb
+  rw [← expansionA Real.log, ← expansionB Real.log] at hb
   have htrace : (star η ⬝ᵥ (cfc Real.log B *ᵥ η)).re -
       (star ξ ⬝ᵥ (cfc Real.log A *ᵥ ξ)).re =
       finiteTraceLogRelativeEntropy ρ σ -
@@ -239,7 +241,7 @@ theorem entropy_defect_resolvent_stability
   have hw := nn ((A + t • 1)⁻¹ *ᵥ ξ - V *ᵥ ((B + t • 1)⁻¹ *ᵥ η))
   have hsquare := mul_self_le_mul_self (mul_nonneg ht.le hw) he
   change t ^ 4 * _ ^ 2 ≤ _
-  nlinarith [mul_le_mul_of_nonneg_left hsquare (sq_nonneg t)]
+  nlinarith only [hb, mul_le_mul_of_nonneg_left hsquare (sq_nonneg t)]
 
 #print axioms entropy_defect_resolvent_stability
 
