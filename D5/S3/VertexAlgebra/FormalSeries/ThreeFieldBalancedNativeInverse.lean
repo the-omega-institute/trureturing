@@ -6,6 +6,7 @@
    utility: none
    digest: Native unit inversion of the literal balanced multiplier on signed coefficients. -/
 import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldBalancedPolynomial
+import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldInnerNativeInverse
 import D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalLaurentAction
 import Batteries.Tactic.OpenPrivate
 
@@ -26,6 +27,9 @@ open private W shiftedChart chartVariables variable_transport add_transport
   D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalLaurentAction
 open private coeff_mul_box from
   D5.S3.VertexAlgebra.FormalSeries.ThreeFieldFinalInverseCoefficients
+
+open private sub_transport from
+  D5.S3.VertexAlgebra.FormalSeries.ThreeFieldInnerNativeInverse
 
 variable {R : Type*} [CommRing R] [Algebra ℂ R]
 
@@ -78,19 +82,6 @@ def rawBalancedCoefficient (P : MvPowerSeries (Fin 3) R)
   shiftedChart (balancedShift k a)
     ((↑((balancedUnit R k (a 0))⁻¹) : MvPowerSeries (Fin 3) R) *
       nativeChart (balancedSwapSeries P)) ![e 0, e 2, e 1]
-
-private theorem sub_transport (b : Exponent 3) (p q : LaurentPolynomial 3)
-    (P Q : MvPowerSeries (Fin 3) R)
-    (hp : ∀ F, polynomialAction p (shiftedChart b F) = shiftedChart b (P * F))
-    (hq : ∀ F, polynomialAction q (shiftedChart b F) = shiftedChart b (Q * F))
-    (F : MvPowerSeries (Fin 3) R) :
-    polynomialAction (p - q) (shiftedChart b F) = shiftedChart b ((P - Q) * F) := by
-  rw [map_sub, LinearMap.sub_apply, hp, hq]
-  funext e
-  change signedExtension (P * F) (W e + b) - signedExtension (Q * F) (W e + b) =
-    signedExtension ((P - Q) * F) (W e + b)
-  rw [sub_mul, map_sub]
-  rfl
 
 private theorem factorization {T : Type*} [CommRing T]
     (S T' U : T) (k A B C : ℕ) :

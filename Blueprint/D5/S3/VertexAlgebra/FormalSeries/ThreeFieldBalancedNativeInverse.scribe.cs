@@ -8,11 +8,11 @@ internal sealed class ThreeFieldBalancedNativeInverseDocument : IScribeDocumentD
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The native constant-one unit", H("The native constant-one unit"), Blocks(
-            Describe.Lean(DescribeId.Create("threefieldbalancednativeinverse-balancedUnitSeries"),
+            Describe.Lean(DescribeId.Create("threefieldbalancednativeinverse-balancedunitseries"),
                 DeclarationHandle.Create(Prefix + "balancedUnitSeries"),
                 H("The native constant-one unit"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For S=s/z and T=z/x in the native cumulative chart, the unit is (1+ST)^a0 (1+ST-T)^k (1-T)^k. Only native power series are substituted."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("threefieldbalancednativeinverse-rawBalancedCoefficient"),
+            Describe.Lean(DescribeId.Create("threefieldbalancednativeinverse-rawbalancedcoefficient"),
                 DeclarationHandle.Create(Prefix + "rawBalancedCoefficient"),
                 H("Signed native coefficients"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The inverse unit times the reordered native numerator is read at (s+k,s+z+k+a2,s+z+x+a0+a1+a2+3k), with zero extension at every negative native coordinate."))), DescribeRole.Definition),

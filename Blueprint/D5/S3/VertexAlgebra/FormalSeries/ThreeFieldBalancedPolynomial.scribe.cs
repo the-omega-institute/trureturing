@@ -8,11 +8,11 @@ internal sealed class ThreeFieldBalancedPolynomialDocument : IScribeDocumentDefi
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal balanced multiplier", H("The literal balanced multiplier"), Blocks(
-            Describe.Lean(DescribeId.Create("threefieldbalancedpolynomial-balancedPolynomial"),
+            Describe.Lean(DescribeId.Create("threefieldbalancedpolynomial-balancedpolynomial"),
                 DeclarationHandle.Create(Prefix + "balancedPolynomial"),
                 H("The literal balanced multiplier"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("In the original order s,x,z the multiplier is (s+x)^a0 x^a1 z^a2 s^k (s+x-z)^k (x-z)^k."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("threefieldbalancedpolynomial-balancedRotatedPolynomial"),
+            Describe.Lean(DescribeId.Create("threefieldbalancedpolynomial-balancedrotatedpolynomial"),
                 DeclarationHandle.Create(Prefix + "balancedRotatedPolynomial"),
                 H("The supported coefficient order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Reordering coefficient arguments as s,z,x gives (Z+X)^a0 Z^a1 Y^a2 X^k (X+Z-Y)^k (Z-Y)^k."))), DescribeRole.Definition),
