@@ -29,11 +29,13 @@ private def diagonal (z : ℤ) : MvPowerSeries (Fin 3) R :=
   PowerSeries.subst (MvPowerSeries.X 0 * MvPowerSeries.X 1)
     (PowerSeries.binomialSeries R z)
 
+omit [Algebra ℂ R] in
 private theorem diagonal_legal : PowerSeries.HasSubst
     (MvPowerSeries.X 0 * MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R) := by
   apply PowerSeries.HasSubst.of_constantCoeff_zero
   simp
 
+omit [Algebra ℂ R] in
 private theorem diagonal_pow_coeff (q r s t : ℕ) :
     MvPowerSeries.coeff (index3 r s t)
       ((MvPowerSeries.X 0 * MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R) ^ q) =
@@ -116,6 +118,7 @@ private theorem coupled_coeff (k r s t : ℕ) :
         (fun c : ℂ => c * (Ring.choose (-(k : ℤ)) r : ℤ) *
           (Ring.choose (-((2 * k + r : ℕ) : ℤ)) (s - r) : ℤ)) sign
     · by_cases ht : t = 0 <;> by_cases hrs : r ≤ s <;> simp_all
+      all_goals split_ifs <;> simp_all <;> omega
   · intro l hl hne
     have zero : integerBinomial 0 l = 0 := by
       simp [integerBinomial, Ring.choose_zero_ite, hne]
@@ -130,8 +133,7 @@ private theorem balanced_inverse_kernels (k A : ℕ) :
         flipS (innerUnitSeries R k 0) := by
     simp only [innerUnitSeries, balancedUnitSeries, pow_zero, mul_one,
       map_mul, map_pow, map_sub, map_one, flipS_X]
-    simp only [Fin.isValue, reduceIte]
-    congr 2
+    simp only [show (1 : Fin 3) ≠ 0 by decide, if_false, ite_true]
     ring
   have cancelCoupled : flipS (innerUnitSeries R k 0) * coupled k = 1 := by
     rw [coupled, ← map_mul]
@@ -152,6 +154,63 @@ private theorem balanced_inverse_kernels (k A : ℕ) :
     _ = _ := by
       rw [← mul_assoc, show (↑((balancedUnit R k A)⁻¹) : MvPowerSeries (Fin 3) R) *
         balancedUnitSeries R k A = 1 from (balancedUnit R k A).inv_val, one_mul]
+
+private theorem diagonal_mul_coeff (z : ℤ) (G : MvPowerSeries (Fin 3) R) (r s t : ℕ) :
+    MvPowerSeries.coeff (index3 r s t) (diagonal z * G) =
+    ∑ l ∈ Finset.range (r + 1), if l ≤ s then integerBinomial z l •
+      MvPowerSeries.coeff (index3 (r - l) (s - l) t) G else 0 := by
+  classical
+  rw [coeff_mul_box]
+  apply Finset.sum_congr rfl
+  intro l hl
+  by_cases hls : l ≤ s
+  · rw [ite_eq_left hls, Finset.sum_eq_single l]
+    · rw [Finset.sum_eq_single 0]
+      · simp [diagonal_coeff, smul_mul_assoc]
+      · intro w hw hne
+        simp [diagonal_coeff, hne]
+      · simp
+    · intro v hv hne
+      apply Finset.sum_eq_zero
+      intro w hw
+      simp [diagonal_coeff, hne]
+    · simp only [Finset.mem_range, not_lt]
+      omega
+  · rw [ite_eq_right hls]
+    apply Finset.sum_eq_zero
+    intro v hv
+    have hne : v ≠ l := by have := Finset.mem_range.mp hv; omega
+    apply Finset.sum_eq_zero
+    intro w hw
+    simp [diagonal_coeff, hne]
+
+/-- Full native inverse coefficients, including the forbidden cumulative degrees. -/
+theorem balanced_inverse_coeff (k A r s t : ℕ) :
+    MvPowerSeries.coeff (index3 r s t)
+      (↑((balancedUnit R k A)⁻¹) : MvPowerSeries (Fin 3) R) =
+    ∑ l ∈ Finset.range (r + 1), if t = 0 then
+      (if r ≤ s then
+        (integerBinomial (-(k : ℤ)) (r - l) * integerBinomial (-(A : ℤ)) l *
+          (-1 : ℂ) ^ (s - r) *
+          integerBinomial (-((2 * k + (r - l) : ℕ) : ℤ)) (s - r)) • (1 : R)
+      else 0) else 0 := by
+  rw [balanced_inverse_kernels, diagonal_mul_coeff]
+  apply Finset.sum_congr rfl
+  intro l hl
+  have hlr : l ≤ r := by simpa using Finset.mem_range.mp hl
+  by_cases hls : l ≤ s
+  · rw [ite_eq_left hls, coupled_coeff]
+    by_cases ht : t = 0 <;> by_cases hrs : r ≤ s
+    · rw [ite_eq_left ⟨ht, by omega⟩, ite_eq_left ht, ite_eq_left hrs, smul_smul]
+      rw [show s - l - (r - l) = s - r by omega]
+      congr 1
+      ring
+    · rw [ite_eq_right (by omega), ite_eq_left ht, ite_eq_right hrs, smul_zero]
+    · rw [ite_eq_right (by tauto), ite_eq_right ht, smul_zero]
+    · rw [ite_eq_right (by tauto), ite_eq_right ht, smul_zero]
+  · rw [ite_eq_right hls]
+    have hrs : ¬ r ≤ s := by omega
+    by_cases ht : t = 0 <;> simp [ht, hrs]
 
 end
 end D5.S3.VertexAlgebra.ThreeFieldBalancedInverseKernel
