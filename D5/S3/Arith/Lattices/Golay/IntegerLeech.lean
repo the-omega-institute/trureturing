@@ -170,7 +170,7 @@ private theorem squareSum_pos {x : IntVector} (hx : x ≠ 0) : 0 < squareSum x :
   have hle : (x i)^2 ≤ squareSum x := Finset.single_le_sum (fun j _ => sq_nonneg (x j)) (Finset.mem_univ i)
   exact lt_of_lt_of_le (sq_pos_of_ne_zero hi) hle
 
-private theorem weight_le_squares (a : IntVector) : (weight (red a) : ℤ) ≤ squareSum a := by
+theorem weight_le_squares (a : IntVector) : (weight (red a) : ℤ) ≤ squareSum a := by
   rw [weight_red]
   apply Finset.sum_le_sum
   intro i _
