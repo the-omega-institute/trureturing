@@ -133,7 +133,7 @@ internal sealed class ModelDocument : IScribeDocumentDefinition
                 H("Vertex connectivity with complete-graph conventions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Take the least cardinality of a separator. The whole vertex set always supplies a candidate. On a nonempty complete graph this convention gives its order minus one, and on a one-vertex graph it gives zero. The desired lower bound by minimum degree for the full visibility graph remains unproved."))),
+                Blocks(Paragraph(Text("Take the least cardinality of a separator. The whole vertex set always supplies a candidate. On a nonempty complete graph this convention gives its order minus one, and on a one-vertex graph it gives zero. The minimum-pair separator argument proves the matching lower bound for the full visibility graph."))),
                 DescribeRole.Definition))));
 
     private static Formula Call(string name, params Formula[] args) => args.Length == 0

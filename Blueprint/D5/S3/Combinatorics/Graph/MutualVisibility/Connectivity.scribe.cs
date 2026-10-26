@@ -36,7 +36,7 @@ internal sealed class ConnectivityDocument : IScribeDocumentDefinition
                 H("The entire original question"),
                 StatementSource.FromAuthor(TargetFormula()),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("Every finite nonempty simple undirected connected host is quantified, including orders one and two. Its full original-geodesic visibility graph, with empty configurations, every rank, all single-label additions and removals, and all actual-host-edge slides, is asserted to have vertex connectivity equal to minimum degree. This definition records the target; no theorem proving it is supplied."))),
+                Blocks(Paragraph(Text("Every finite nonempty simple undirected connected host is quantified, including orders one and two. Its full original-geodesic visibility graph, with empty configurations, every rank, all single-label additions and removals, and all actual-host-edge slides, is asserted to have vertex connectivity equal to minimum degree. The minimum-pair separator argument proves this equality."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("cutreach"),

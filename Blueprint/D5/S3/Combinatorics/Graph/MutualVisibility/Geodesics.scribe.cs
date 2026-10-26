@@ -13,6 +13,23 @@ internal sealed class GeodesicsDocument : IScribeDocumentDefinition
         H("Rooted original-geodesic geometry"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("visible-comparability-triangle"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.visible_comparability_triangle"),
+                H("A visible set has no comparability triangle"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Three selected labels of one mutually visible set cannot be pairwise comparable under strict mandatory ancestry towards a common root."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("common-neighbor-height"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.common_neighbor_height"),
+                H("Height of an actual common neighbor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("If u strictly dominates v towards w and y is adjacent to both u and v, the root distance of y equals the root distance of u plus one."))),
+                DescribeRole.Theorem),
+
+            Describe.Lean(
                 DescribeId.Create("mandatory"),
                 DeclarationHandle.Create(Prefix + "Mandatory"),
                 H("Mandatory original geodesics"),
