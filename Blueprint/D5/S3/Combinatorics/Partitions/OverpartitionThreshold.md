@@ -84,6 +84,10 @@ $$\forall k \in Nat,\; \forall n \in Nat,\; 1 \le k \Rightarrow \operatorname{U}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/OverpartitionThreshold.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bhoria-eyyunni-santra-2026-overpartition-threshold-identity` (proved) by `D5/S3/Combinatorics/Partitions/OverpartitionThreshold.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bhoria-eyyunni-santra-2026-overpartition-threshold-identity","declaration_gid":"D5/S3/Combinatorics/Partitions/OverpartitionThreshold.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Subhash Chand Bhoria, Pramod Eyyunni, Subhrangsu Santra (2026). *On the number of missing integers in partitions*. DOI: [10.48550/arXiv.2604.12557](https://doi.org/10.48550/arXiv.2604.12557). URL: <https://arxiv.org/abs/2604.12557v1>.
