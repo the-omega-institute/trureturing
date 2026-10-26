@@ -14,38 +14,37 @@ universe u
 
 /-- Independent carrier and pairing coordinates. The law below retains every
 finite and topological dictionary in the original theorem telescope. -/
-structure PairingData where
-  T : Type u
-  pairing : RawFacePairing T
+abbrev PairingData := Σ (T : Type u), RawFacePairing T
 
 abbrev signature : Signature where
   Params := PairingData.{u}
-  State p := TruncatedPoint p.T
+  State p := TruncatedPoint p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := TruncatedQuotient p.pairing
+  Output _ p := TruncatedQuotient p.2
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p => q p.pairing) (fun e => nomatch e)
+  realize signature (fun _ p => q p.2) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ (p : PairingData.{u}) (finiteT : Fintype p.T)
-    (topologyT : TopologicalSpace p.T) (discreteT : @DiscreteTopology p.T topologyT),
-    @UpperGeometry p.T finiteT topologyT discreteT p.pairing (R.readout () p)
+  Law R := ∀ {T : Type u} [finiteT : Fintype T]
+    [topologyT : TopologicalSpace T] [discreteT : @DiscreteTopology T topologyT]
+    (P : RawFacePairing T),
+    @UpperGeometry T finiteT topologyT discreteT P (R.readout () ⟨T,P⟩)
 
 theorem bridge : (type_of% (@upper_geometry.{u})) ↔ arena.{u}.Law actual := by
   constructor
-  · intro h p finiteT topologyT discreteT
-    exact @h p.T finiteT topologyT discreteT p.pairing
   · intro h T finiteT topologyT discreteT P
-    exact h ⟨T,P⟩ finiteT topologyT discreteT
+    exact @h T finiteT topologyT discreteT P
+  · intro h T finiteT topologyT discreteT P
+    exact @h T finiteT topologyT discreteT P
 
 /-- A whole-family intervention that erases every coordinate within each tag. -/
-def barycenter (p : PairingData.{u}) (a : TruncatedPoint p.T) : TruncatedPoint p.T :=
+def barycenter (p : PairingData.{u}) (a : TruncatedPoint p.1) : TruncatedPoint p.1 :=
   (a.1, ⟨fun _ => 1/4, by
     constructor
     · intro i
@@ -53,7 +52,7 @@ def barycenter (p : PairingData.{u}) (a : TruncatedPoint p.T) : TruncatedPoint p
     · norm_num [Fin.sum_univ_succ]⟩)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p a => q p.pairing (barycenter p a)) (fun e => nomatch e)
+  realize signature (fun _ p a => q p.2 (barycenter p a)) (fun e => nomatch e)
 
 private def flipFace : Equiv.Perm (Fin 4) :=
   (Equiv.swap 0 1).trans (Equiv.swap 2 3)
@@ -79,14 +78,14 @@ private def testPairing : RawFacePairing (ULift.{u} Unit) where
 private abbrev test : PairingData.{u} :=
   ⟨ULift.{u} Unit,testPairing⟩
 
-private def a : TruncatedPoint test.T :=
+private def a : TruncatedPoint test.1 :=
   (⟨()⟩, ⟨fun _ => 1/4, by
     constructor
     · intro i
       norm_num
     · norm_num [Fin.sum_univ_succ]⟩)
 
-private def b : TruncatedPoint test.T :=
+private def b : TruncatedPoint test.1 :=
   (⟨()⟩, ⟨![1/8,3/8,1/4,1/4], by
     constructor
     · intro i
@@ -99,21 +98,21 @@ private theorem a_interior : Interior (a.{u}) := by
 
 private theorem b_ne_a : b.{u} ≠ a := by
   intro h
-  have hc := congrArg (fun z : TruncatedPoint test.T => z.2.val 0) h
+  have hc := congrArg (fun z : TruncatedPoint test.1 => z.2.val 0) h
   norm_num [a,b] at hc
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have he : rejected.readout () test a = rejected.readout () test b := by
-    apply congrArg (q test.pairing)
+    apply congrArg (q test.2)
     rfl
-  exact b_ne_a ((h test inferInstance inferInstance inferInstance).interior_fibers a b a_interior |>.mp he)
+  exact b_ne_a ((@h test.1 inferInstance inferInstance inferInstance test.2).interior_fibers a b a_interior |>.mp he)
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   refine ⟨test,a,b,?_⟩
   intro h
-  exact b_ne_a ((upper_geometry test.pairing).interior_fibers a b a_interior |>.mp h)
+  exact b_ne_a ((upper_geometry test.2).interior_fibers a b a_interior |>.mp h)
 
 def familyRegistration : Registration arena.{u} (type_of% (@upper_geometry.{u})) where
   actual := actual
@@ -132,7 +131,7 @@ def familyRegistration : Registration arena.{u} (type_of% (@upper_geometry.{u}))
 /-- The geometric source law observed through the original quotient projection. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@upper_geometry.{u})
-    (type_of% (realize signature.{u} (fun _ p => q p.pairing) (fun e => nomatch e)))
+    (type_of% (realize signature.{u} (fun _ p => q p.2) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `D5.S3.Geometry.Gluing.TruncatedTetrahedronRelativeCW.upper_geometry.information_unit,
   realizationName := `Reg.D5.S3.Geometry.Gluing.TruncatedTetrahedronRelativeCW.familyRegistration,
@@ -145,7 +144,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨familyRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature.{u} (fun _ p => q p.pairing) (fun e => nomatch e)),
+  readout := some (realize signature.{u} (fun _ p => q p.2) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
