@@ -80,18 +80,18 @@ private lemma left_side {p : ℝ} (hp : 0 < p) :
     rw [power_of_gram_charpoly x ![1, 0] hd hx hp]
     simp [Fin.sum_univ_two, Real.zero_rpow (by linarith : p / 2 ≠ 0)]
   have ha : schattenNorm a p ^ p = 1 := h a (by
-    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, a, diagonal])
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, a, diagonal_apply])
   have hb : schattenNorm b p ^ p = 1 := h b (by
-    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, b, diagonal])
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, b, diagonal_apply])
   have hc : schattenNorm c p ^ p = 1 := h c (by
-    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, c, diagonal]
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, c, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   have hs : schattenNorm (a + b + c) p ^ p = 1 := h (a + b + c) (by
-    norm_num [charpoly_fin_two, trace, det_fin_two, mul_apply, conjTranspose_apply,
-      Fin.sum_univ_two, a, b, c, diagonal]
+    norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply, conjTranspose_apply,
+      Fin.sum_univ_two, a, b, c, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   rw [ha, hb, hc, hs]
   norm_num
@@ -102,7 +102,7 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
   have hab : schattenNorm (a + b) p ^ p = 2 := by
     rw [power_of_gram_charpoly (a + b) (fun _ => 1) (by intro i; norm_num) (by
       norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-        conjTranspose_apply, Fin.sum_univ_two, a, b, diagonal]) hp]
+        conjTranspose_apply, Fin.sum_univ_two, a, b, diagonal_apply]) hp]
     norm_num [Fin.sum_univ_two]
   have h (x : Matrix (Fin 2) (Fin 2) ℂ)
       (hx : (xᴴ * x).charpoly =
@@ -112,11 +112,11 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
     simp [Fin.sum_univ_two, two_mul]
   have hbc : schattenNorm (b + c) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (b + c) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-      conjTranspose_apply, Fin.sum_univ_two, b, c, diagonal]
+      conjTranspose_apply, Fin.sum_univ_two, b, c, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   have hca : schattenNorm (c + a) p ^ p = 2 * (1 / 2 : ℝ) ^ (p / 2) := h (c + a) (by
     norm_num [charpoly_fin_two, trace_fin_two, det_fin_two, mul_apply,
-      conjTranspose_apply, Fin.sum_univ_two, a, c, diagonal]
+      conjTranspose_apply, Fin.sum_univ_two, a, c, diagonal_apply]
     norm_num [map_ofNat, ← Polynomial.C_mul, ← Polynomial.C_add])
   have he : (2 : ℝ) ^ (2 - p / 2) = 4 * (1 / 2 : ℝ) ^ (p / 2) := by
     rw [Real.rpow_sub (by norm_num), Real.div_rpow (by norm_num) (by norm_num)]
@@ -128,7 +128,45 @@ private lemma right_side {p : ℝ} (hp : 0 < p) :
 private lemma certified_bound :
     ((3 : ℝ) ^ ((9 / 4 : ℝ) - 1) + 1) / (2 : ℝ) ^ (9 / 4 : ℝ) *
       (2 + (2 : ℝ) ^ (2 - (9 / 4 : ℝ) / 2)) < 4 := by
-  sorry
+  have h₃pow : ((3 : ℝ) ^ (1 / 4 : ℝ)) ^ (4 : ℝ) = 3 := by
+    rw [← Real.rpow_mul (by norm_num)]
+    norm_num
+  have h₂pow : ((2 : ℝ) ^ (1 / 4 : ℝ)) ^ (4 : ℝ) = 2 := by
+    rw [← Real.rpow_mul (by norm_num)]
+    norm_num
+  have h₇pow : ((2 : ℝ) ^ (7 / 8 : ℝ)) ^ (8 : ℝ) = 128 := by
+    rw [← Real.rpow_mul (by norm_num)]
+    norm_num [Real.rpow_natCast]
+  have h₃ : (3 : ℝ) ^ (1 / 4 : ℝ) < 13161 / 10000 := by
+    apply (Real.rpow_lt_rpow_iff (Real.rpow_nonneg (by norm_num) _)
+      (by norm_num) (by norm_num : (0 : ℝ) < 4)).mp
+    rw [h₃pow]
+    norm_num
+  have h₂ : (11892 / 10000 : ℝ) < (2 : ℝ) ^ (1 / 4 : ℝ) := by
+    apply (Real.rpow_lt_rpow_iff (by norm_num)
+      (Real.rpow_nonneg (by norm_num) _) (by norm_num : (0 : ℝ) < 4)).mp
+    rw [h₂pow]
+    norm_num
+  have h₇ : (2 : ℝ) ^ (7 / 8 : ℝ) < 18341 / 10000 := by
+    apply (Real.rpow_lt_rpow_iff (Real.rpow_nonneg (by norm_num) _)
+      (by norm_num) (by norm_num : (0 : ℝ) < 8)).mp
+    rw [h₇pow]
+    norm_num
+  have hnum : (3 : ℝ) ^ ((9 / 4 : ℝ) - 1) = 3 * (3 : ℝ) ^ (1 / 4 : ℝ) := by
+    rw [show (9 / 4 : ℝ) - 1 = 1 + 1 / 4 by norm_num,
+      Real.rpow_add (by norm_num), Real.rpow_one]
+  have hden : (2 : ℝ) ^ (9 / 4 : ℝ) = 4 * (2 : ℝ) ^ (1 / 4 : ℝ) := by
+    rw [show (9 / 4 : ℝ) = 2 + 1 / 4 by norm_num, Real.rpow_add (by norm_num)]
+    norm_num
+  have hexp : (2 - (9 / 4 : ℝ) / 2) = 7 / 8 := by norm_num
+  rw [hnum, hden, hexp, div_mul_eq_mul_div, div_lt_iff₀ (by positivity)]
+  calc
+    (3 * (3 : ℝ) ^ (1 / 4 : ℝ) + 1) * (2 + (2 : ℝ) ^ (7 / 8 : ℝ))
+        < (3 * (13161 / 10000 : ℝ) + 1) * (2 + (2 : ℝ) ^ (7 / 8 : ℝ)) :=
+      mul_lt_mul_of_pos_right (by linarith) (by positivity)
+    _ < (3 * (13161 / 10000 : ℝ) + 1) * (2 + 18341 / 10000) :=
+      mul_lt_mul_of_pos_left (by linarith) (by norm_num)
+    _ < 4 * (4 * (2 : ℝ) ^ (1 / 4 : ℝ)) := by nlinarith
 
 theorem result : ¬ claim := by
   intro h
