@@ -1,0 +1,8 @@
+**Definition 55.1 (one domain and independent exposed data).** Fix the original acquired installation, its earned law and authentic origin, and an integer task menu $0\le H<a$. The domain consists of all completed consecutive pulse cuts $X(u)$ for $u\in\mathcal U_H$. The shared numerical context is $(N,T,q,\mu,x_*,H)$, with redundant components optionally computed from the earned law as in §§37–40. It contains no old $L$ or old pulse record. Define the four expressions by their own data:
+
+| Expression | Exposed data and meaning |
+| --- | --- |
+| Space | The actual rooted weighted path and present native cell field $(T,X(u))$, with cells identified by their native rooted distances. |
+| Time | The finite ordered actual input list $u$, including zero symbols; its list structure has its own length. It is not a list of Hold durations or all commands ever issued. |
+| Boundary | The same literal callable root service. Its acquired numerical window is $z_j=b^{\mathsf T}T^jX(u)$ for $0\le j<N$, obtained by one actual Read and $N-1$ returning Ticks. |
+| Memory | The earned recurrence and initial impulse values, and the current predictive vector $w=\mathcal O_NX(u)$. Its entries are the next $N$ autonomous root predictions, not stored old symbols or a stored old pulse count. |

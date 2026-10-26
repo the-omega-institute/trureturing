@@ -1,0 +1,11 @@
+**Proposition 62.2 (recovery, concatenation and the original service).** On that image the four numerical data determine one another, all routes agree, and pulse concatenation is compatible with the actual dynamics. At the held endpoint, the retained scalar predictor supplies every declared output and successor of every finite common adaptive continuation in the original legal menu, including rational Adds outside $D_s$ when authorized. History recovery after those general continuations is not asserted.
+
+**Proof.** Space, Boundary and Memory each provide the same $x$; Theorem 61.1 recovers the unique Time. Conversely Time computes $x$ by (59.3), hence all three numerical data. Every route therefore passes through the same unique word and endpoint. For finite words $u,t$,
+
+$$
+X_v(ut)=\lambda^{|t|}X_v(u)+\sum_{i<|t|}t_i\lambda^{|t|-1-i},
+\tag{62.1}
+$$
+
+by iterating the actual affine update; this also proves compatibility of all pulse composites on the inverse domain. For future primitive calls, the predictor keeps $w=x$. Read returns $w$ without change; Tick sets $w\leftarrow\lambda w$ and returns it; Add$(h)$ sets $w\leftarrow w+h$ and returns the installed fixed acknowledgement and the updated scalar if declared; Hold returns its fixed acknowledgement without change. The implementation forwards each enabled call through the actual retained handle, consumes its entire reply and return, and commits this same record update at the settled cut. The one-step identities and induction give the complete adaptive assertion. The model's finite frames, exact rational encoding and rights are retained, not inferred by the numerical calculation. $\square$
+
