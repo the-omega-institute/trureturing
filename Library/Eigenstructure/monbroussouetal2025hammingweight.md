@@ -38,6 +38,8 @@ The conjecture (the source leaves its proof "for future work"):
 
 ## Verified locator
 
+DOI: https://doi.org/10.22331/q-2025-05-15-1745 (Quantum 9, 1745 (2025); the journal text was not compared line by line with v4).
+
 Source: https://arxiv.org/abs/2309.15547v4
 - URL: https://arxiv.org/abs/2309.15547v4 (the e-print is a tar archive; member `Quantum.tex`, 2252 lines, md5 `057c1aeb9e7f5c3b57445d20f924f4fc`):
   - the RBS and FBS gates, l. 158–192;
