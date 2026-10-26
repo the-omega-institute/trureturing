@@ -4112,3 +4112,633 @@ remain unresolved. These are ordinary conditional mathematical
 results, with no Lean-certification or worldwide-priority claim.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 24. Timed entrance and killed releases from the original source
+
+**Definition 24.1 (original data and two timed laws).** Retain exactly
+Definitions 7.1, 11.1 and 15.1, for every original $a,\eta>0$.
+Thus $F$ has only its source-killed role, $P_t^0=J_h^{-1}e^{-tF}J_h$,
+$q_t=J_h^{-1}Fe^{-tF}h$, $m=h^2\mu$, and $\nu,\kappa$ are (15.2).
+The full conservative process has the entire complex domains (7.2),
+(16.6), original source trace and response (16.5)--(16.7), and selector
+[E, (112.5)]. Neither a value $h(e)$ nor a new source condition is used.
+All times below are original elapsed times.
+
+Fix $\epsilon,\delta>0$. Use the already defined $\mathfrak d$ and
+$\chi_\epsilon$ of (20.1), and put $c_\epsilon=\kappa(\epsilon)$.
+Let $\mathsf D^\epsilon$ be the driftless subordinator with Levy measure
+$\mathbf1_{(0,\epsilon]}(v)\mathfrak d(v)dv$; only its scalar laws
+are used in the following probability measure on $[0,\infty)$:
+
+$$
+\begin{gathered}
+ \mathsf U_\epsilon(B)=\int_0^\infty
+ c_\epsilon e^{-c_\epsilon b}
+               \mathbb P(\mathsf D_b^\epsilon\in B)\,db,\\
+ \int e^{-\lambda u}\mathsf U_\epsilon(du)
+       =\frac{c_\epsilon}{c_\epsilon+\chi_\epsilon(\lambda)},
+                  \qquad \lambda\ge0,\\
+ \mathsf W_\epsilon(dv,dp)
+       =\mathsf U_\epsilon(d(v-\epsilon))
+                    \frac{q_\epsilon(p)m(dp)}{c_\epsilon},
+              \qquad v\ge\epsilon,\quad p\in M.
+\end{gathered}
+\tag{24.1}
+$$
+
+The notation in the last line means the pushforward under
+$(u,p)\mapsto(u+\epsilon,p)$. It is a joint elapsed-wait/state law,
+not advance disclosure of either variable.
+For $p\in M$ define the marked killed-release kernel by
+
+$$
+\begin{aligned}
+ \mathsf K_\delta(p;ds,\mathrm C,dp')
+   &=\mathbf1_{(0,\delta]}(s)q_s(p)\,ds\,\delta_e(dp'),\\
+ \mathsf K_\delta(p;ds,\mathrm D,dp')
+   &=\delta_\delta(ds)P_\delta^0(p,dp').
+\end{aligned}
+\tag{24.2}
+$$
+
+Type $\mathrm C$ denotes first original-source contact. Type
+$\mathrm D$ denotes survival for $\delta$ and the then current state.
+The legitimate versions and normalization of this formula are part
+of the next assertion. Neither law is a full-process transition
+sampler $T_t(p,\cdot)$.
+
+**Lemma 24.2 (normalization and reached-state versions).** The laws
+(24.1)--(24.2) have Borel probability versions on their indicated
+spaces. There is one Borel $m$-null set $B\subset M$, containing the
+properly exceptional set away from $e$, such that for $p\notin B$
+(24.2) is the actual joint law of
+
+$$
+ (\tau_e\wedge\delta,\mathrm C,e)\quad\hbox{if }\tau_e\le\delta,
+ \qquad (\delta,\mathrm D,Z_\delta)\quad\hbox{if }\tau_e>\delta
+\tag{24.3}
+$$
+
+under the original legitimate $\mathbb P_p$. On $B$ any Borel
+probability extension may be used. Every non-source state reached
+by the recursion below avoids $B$ almost surely. The set $B$ is
+not asserted polar beyond the properly exceptional subset.
+
+**Proof.** Theorem 15.2 gives $0<c_\epsilon<\infty$,
+$\int q_\epsilon dm=c_\epsilon$ and
+$\int_0^\infty v\mathfrak d(v)dv=1$.
+Thus the displayed Levy measure is admissible, has no killing or
+drift, and has exponent $\chi_\epsilon$. Integrating its probability
+laws against the exponential probability density proves both
+normalization of $\mathsf U_\epsilon$ and its Laplace formula.
+Consequently $\mathsf W_\epsilon$ is a Borel probability law.
+Subordinator laws and the entrance density here are the scalar and
+one-evaluation suppliers of §§15, 20, without a new normalization claim.
+
+Choose the original Borel Hunt kernel $P_t^0$ outside its properly
+exceptional set, and the nonnegative jointly measurable $q_s$ of
+Theorem 15.2. The integrated identity
+$-\partial_sP_s^01=q_s$ used in Lemma 20.2 implies, off an
+$m$-null Borel set,
+
+$$
+ P_a^01(p)-P_b^01(p)=\int_a^bq_s(p)ds
+                         \quad(0<a<b<\infty).
+\tag{24.4}
+$$
+
+To obtain a common set, first impose this identity at all positive
+rational endpoints. Let $a\downarrow0$, $b\uparrow\infty$ through
+rationals. Continuity at time zero from a legitimate $p\ne e$,
+source recurrence [S, (116.10)] and monotone convergence give
+$\int_0^\infty q_s(p)ds=1$. Right-continuity of killed survival
+then extends (24.4) to every endpoint. In particular its lifetime
+law is absolutely continuous, with density $q_s(p)$, and
+
+$$
+ \int_0^\delta q_s(p)ds+P_\delta^01(p)=1.
+\tag{24.5}
+$$
+
+Enlarge the null set to $B$ as stated. Equations (24.3)--(24.5)
+prove the probability and original-law assertions; ties at
+$\tau_e=\delta$ have probability zero. Defining the kernel to be
+$\delta_{(\delta,\mathrm C,e)}$ on $B$ gives a Borel extension.
+No ordinary value at the source enters this argument.
+
+An entrance release has distribution $q_\epsilon m/c_\epsilon$,
+which is absolutely continuous with respect to $m$. If $\xi\ll m$
+is any finite input measure, symmetry implies
+$\xi P_\delta^0\ll m$: for $m(A)=0$, $P_\delta^01_A=0$
+$m$-a.e. Thus every survived state release remains absolutely
+continuous, also after weighting by a past event. Source contacts
+are exactly $e$, which is legitimate and outside the properly
+exceptional set. Induction over the countably many releases proves
+avoidance of $B$ at every non-source input. This justifies the
+state-indexed versions actually consumed, without an assertion about
+arbitrary exceptional starting states. $\square$
+
+**Theorem 24.3 (recursive timed correspondence with one original source).**
+Start at elapsed time zero with the source flag $e$. In source mode
+use $\mathsf W_\epsilon$, release its state with type $\mathrm E$
+when its wait expires, and enter killed mode. In killed mode at a
+released state $p$, use $\mathsf K_\delta(p;\cdot)$; a type
+$\mathrm D$ event repeats killed mode at its released state and a
+type $\mathrm C$ event reenters source mode. Add each elapsed wait
+to the preceding event time. This defines a joint law of all finite
+released prefixes by the usual iterated Borel kernels.
+
+There is a coupling with one unchanged full original source
+$\mathsf Z\sim\mathbb P_e$ in which every released state is its
+actual state at its release time. Each event time is a stopping
+time in its usual source filtration $\mathcal F^{\mathsf Z}$.
+During a source-mode wait, the event is the first time a new
+excursion has reached age $\epsilon$, not a forecast of its lifetime.
+In killed mode it is precisely (24.3), in the original clock.
+The source is never killed at a type $\mathrm C$ event.
+On $[0,T]$ the number of completed events is at most
+
+$$
+ 2\lfloor T/\epsilon\rfloor+\lfloor T/\delta\rfloor,
+\tag{24.6}
+$$
+
+and the number of initiated timed primitives is at most this bound
+plus one. A primitive still pending at $T$ supplies only nonarrival.
+
+**Proof.** On a source path started at $e$ at time $c$, let
+$g_c(t)=\sup\{s\in[c,t]:\mathsf Z_s=e\}$ and set
+
+$$
+ D_\epsilon(c)=\inf\{t\ge c:t-g_c(t)\ge\epsilon\}.
+\tag{24.7}
+$$
+
+This uses only the path through the indicated time. More explicitly,
+$\{D_\epsilon(c)<t\}$ is the union, over rational $v<t$ with
+$v>c+\epsilon$, of the events
+$g_c(v)<v-\epsilon$. The latter says that the compact segment
+$[v-\epsilon,v]$ contains no source visit and is a Borel event in
+$\mathcal F_v^{\mathsf Z}$. An excursion reaching age $\epsilon$
+has strictly greater lifetime, so has such rational times immediately
+after its age-$\epsilon$ time. Right-continuity of the filtration
+proves the stopping assertion; the same argument after a source
+stopping time proves the recursive assertion. The state at that time
+is measurable in its stopping-time sigma-field. All these path
+functionals are Borel, by the same rational and compact-minimum tests.
+
+Use the original excursion representation of §§15--16 only as a
+proof witness. The first label $E$ with $\zeta>\epsilon$ is exponential
+of rate $c_\epsilon$. The excursions with $\zeta\le\epsilon$
+are independent of these labels, with duration subordinator
+$\mathsf D^\epsilon$. There is no inverse-clock drift. The elapsed
+start of that first long excursion is therefore
+$\mathsf D_{E-}^\epsilon$, and its age-$\epsilon$ state has law
+$q_\epsilon m/c_\epsilon$, independent of that elapsed start.
+Independence follows by restriction and marking of the original
+Poisson measure; conditionally on $E=b$ the small total has law
+$\mathsf D_b^\epsilon$, since a fixed label is not an atom.
+This gives exactly (24.1), with release at
+$c+\mathsf D_{E-}^\epsilon+\epsilon$.
+The original lifetime density $\mathfrak d(v)dv$ gives no mass to
+$\zeta=\epsilon$, and $D_\epsilon(c)<\infty$ almost surely.
+These assertions require no bridge from a singular fixed endpoint.
+
+At an entrance release, apply the strong Markov property of the
+original full diffusion at $D_\epsilon(c)$. Until its next source
+contact its law is precisely the part process (15.1), with the
+entire killed domain [S, (116.11)]. Lemma 24.2 gives (24.2).
+At a survived release the same strong Markov argument restarts
+that part law. At source contact the full process restarts with
+$\mathbb P_e$, by [S, Theorem 116.4]; apply (24.7) again.
+Induction proves every iterated joint kernel, not only one-event
+marginals. Lemma 24.2 supplies all reached-state qualifications.
+This constructs the claimed coupling and identifies the recursive
+law without supplying a complete path to its consumer.
+
+Each completed entrance uses a disjoint elapsed wait of at least
+$\epsilon$, so there are at most $\lfloor T/\epsilon\rfloor$
+such events. Each completed type $\mathrm D$ consumes a disjoint
+$\delta$ interval, so there are at most $\lfloor T/\delta\rfloor$
+of those. A type $\mathrm C$ closes an episode begun by a distinct
+entrance, so its count is bounded by the entrance count. These facts
+prove (24.6), rule out finite-time accumulation, and bound initiated
+primitives since only one is pending at a time. $\square$
+
+## 25. Acquired information and the same-time released approximation
+
+**Assumption 25.1 (timed service, calibration and clock).** An added
+analytic service implements exactly the recursive timed laws
+(24.1)--(24.2), calibrated to the fixed original $F,h,q,P^0,\nu,\kappa$.
+Its availability is an additional model premise; the law/coupling
+in Theorem 24.3 does not install it in bare native operations.
+An exact original elapsed clock is available. Requests and numerical
+calculation have zero analytic time overhead. A primitive discloses
+only its type, current four real state coordinates and timestamp at
+arrival. While pending it supplies the passage of the clock and
+nonarrival, with no pending value, random seed or future timestamp.
+The initial source flag and preparation parameters are known.
+
+Let $R_i,C_i,P_i$ denote the successive release times, types and
+states. The acquired filtration $\mathcal G_t$ is the usual
+augmentation of the sigma-field generated by the marked records
+
+$$
+ \sum_{R_i\le s}\mathbf1_{\{C_i=c\}}f(R_i,P_i),
+     \qquad 0\le s\le t,\quad c\in\{\mathrm E,\mathrm C,\mathrm D\},
+\tag{25.1}
+$$
+
+for bounded Borel $f$. Request modes and times are determined by these
+records. This definition includes all nonarrival events and their
+elapsed durations. There is no independent initial seed.
+Only arrivals from (24.2) in killed mode announce source contact;
+source mode does not announce its infinitely many small source visits.
+A contact notification concerns the original point $e$, not merely
+one of the false preparation contacts of §11. Exact hidden $z$
+information belongs to this added source service, with no native
+$z$ actuator or extra output.
+
+**Theorem 25.2 (filtration containment and released-state accuracy).**
+Under Theorem 24.3's coupling,
+$\mathcal G_t\subseteq\mathcal F_t^{\mathsf Z}$ for every $t$.
+Let $V_t$ be the last released state, with initial value $e$,
+held constant between releases and changed to $e$ at type
+$\mathrm C$. Then $V$ is a finite right-continuous step path on
+$[0,T]$, measurable from the acquired prefix, and
+
+$$
+ \sup_{0\le t\le T}|V_t-\mathsf Z_t|_\infty
+       \le\Omega_T(\mathsf Z;\epsilon\vee\delta).
+\tag{25.2}
+$$
+
+Here $\Omega_T$ is the original coordinate modulus (21.2); it is
+only a proof quantity. No query for it is part of the service.
+
+**Proof.** The stopping-time and stopped-state assertions of Theorem
+24.3 make every variable in (25.1) measurable in
+$\mathcal F_t^{\mathsf Z}$. Nonarrival, including a pending request
+started at an earlier random event time, is measurable there as well.
+Usual augmentation preserves containment because the containing
+filtration is complete and right-continuous. This proves containment
+for the actual timed records, rather than just a generative kernel
+with a hidden seed revealed at time zero.
+
+In killed mode, if the last release was at $s$ and the next one has
+not arrived, then $t-s<\delta$, and $V_t=\mathsf Z_s$.
+In source mode $V_t=e$. Before (24.7), the current excursion has
+age less than $\epsilon$, so either $\mathsf Z_t=e$, or its most
+recent source visit $g_c(t)$ is less than $\epsilon$ time units
+old. Hence $|\mathsf Z_t-e|_\infty\le\Omega_T(\mathsf Z;\epsilon)$.
+Unannounced earlier small excursions need not be identified.
+At every release the new value is exactly $\mathsf Z_t$.
+This proves (25.2), including all waiting intervals and endpoints.
+Finiteness is (24.6). No small-duration total, Poisson label or
+complete excursion is acquired by this rule. $\square$
+
+## 26. Prospective execution by actual original native histories
+
+**Assumption 26.1 (real numerical actuation).** Retain exactly the
+preparations, probabilities, periods, native fields, partial command
+law, concatenation and refusal of Definitions 1.1--1.2 and §7.
+A finite list of real two-control vertices and positive real durations
+known at issuance may be executed as its specified piecewise linear
+history in the original clock. Finite exact numerical computations
+and zero-velocity holds are available. No uniform precision, speed,
+energy, processing cost or physical realization is assumed.
+No direct central or $z$ operation, integral reset, amplitude
+preparation or new readout is added.
+
+**Definition 26.2 (one-cell prospective prescription).** Fix any
+original allowed preparation, $I=[l,u]\Subset(0,H_{\rm n})$ with
+$l<k_0<u$, $T>0$, integer $N\ge2$ and
+$0<\rho\le(u-l)/4$. Put $\Delta=T/N$, $t_j=j\Delta$, and
+$P_j=V_{t_j}$, $0\le j<N$. At a grid time include all records
+which have arrived at that time. Thus $P_0=e$.
+Define the following continuous four-coordinate polygon as a
+mathematical description of the successive prescriptions:
+
+$$
+ Q(t)=e\ (0\le t\le\Delta),\qquad
+ Q(t_j+s)=(1-s/\Delta)P_{j-1}+(s/\Delta)P_j,
+ \quad 0\le s\le\Delta,\quad 1\le j<N.
+\tag{26.1}
+$$
+
+Coordinate interpolation uses the fixed real coordinates of $G$.
+At $t_j$ the entire next cell is known from the released prefix.
+Put $\widehat S=T\wedge\inf\{t:k_0+x(Q(t))\notin(l,u)\}$.
+This global notation is not an input containing its future value.
+At $t_j$, if no own observation exit has occurred, compute just the
+first boundary intersection of that cell's known linear height
+segment. Clip that cell at that intersection, if present, and issue
+no later nonconstant command after the resulting own exit.
+
+Start with zero controls on $[0,\Delta]$. For every remaining
+positive cell portion $[s,t]$ to be executed, its two endpoint
+triples $(A,B,W)=(x,y,w)(Q)$ are already known at its grid start.
+Subdivide that portion into $m$ equal cells, with $m$ exactly (22.2),
+using its total increments and $K_I=\max(|l-k_0|,|u-k_0|)$.
+For each subdivision use the existing six-leg connector (17.4),
+with the same inward orientation and real area, translated by its
+current two-control start. Assign each leg one sixth of that
+subdivision's original elapsed duration. All these numerical
+instructions are issued at the grid start; they act only after it.
+Hold at own observation exit, or end at $T$.
+Call the resulting actual controls $(a_*,b_*)$ and set
+$J_* =\int a_*\,db_*$. The star labels a finite design, not a limit.
+The source service can continue through $T$ after this output hold;
+the consumer ignores its subsequent records.
+
+**Theorem 26.3 (finite lawful prospective consumer and exact own exit).**
+Definition 26.2 is a Borel map from the finite timed record to a
+finite original native history. Every issued numerical profile is
+$\mathcal G_{t_j}$-measurable. Its own censored observation exit is
+exactly $\widehat S$, and for all actual prefixes
+
+$$
+ l\le k_0+a_*(t)\le u,
+ \qquad 0<k_0+\min a_*\le k_0+\max a_*<H_{\rm n}.
+\tag{26.2}
+$$
+
+Its complete numerical command has exactly the original domain
+$(-\min a_*,H_{\rm n}-\max a_*)$, including refusal and the original
+pulled-back domain under concatenation. With
+$(A,B,W)(t)=(x,y,w)(Q(t\wedge\widehat S))$, one has
+
+$$
+ \|a_*-A\|_\infty\le3\rho,\qquad
+ \|b_*-B\|_\infty\le4\rho,\qquad
+ \|J_*-W\|_\infty\le4K_I\rho+4\rho^2.
+\tag{26.3}
+$$
+
+All actual legs have finite pathwise velocities and positive durations.
+The probabilities and all ten held outputs are exactly those of
+(7.8), with phases
+
+$$
+ \alpha_*=[\alpha_0+b_*/2],\qquad
+ \beta_*=[\beta_0+c_0b_*-J_*/r],\qquad
+ k_*=k_0+a_*.
+\tag{26.4}
+$$
+
+In particular both positive-$\alpha$ pairs, both negative-$\alpha$
+pairs and the $\beta$ pair retain their ordered signs, factors two,
+fixed preparation rotations and actual $2\pi$ periods.
+
+**Proof.** At $t_j$, $P_{j-1},P_j$ are known, and no instruction
+on $[0,t_j)$ is changed. A boundary intersection of the next known
+linear segment is computed by a comparison and a linear ratio;
+a constant segment is treated separately. Until that intersection
+all anchor heights are interior; the final one, if any, is on the
+observation boundary. Thus every positive portion used in the
+prescription has positive duration and finite endpoints.
+
+Apply the deterministic subdivision and connector argument of
+Theorem 22.2 on this known portion. Equation (22.2) guarantees
+$|X|,|Y|\le\rho$, $|C|\le\rho^2$ and the same bounds at every
+linear prefix of its desired triple, where
+$C=\Delta W-A_s\Delta B$. The supplied [GL, Lemma 17.1] makes
+every connector's height interior except possibly its final height
+at the clipped boundary. Its real relative integral ends at $C$.
+Under translation its global integral at a partial prefix is
+$W_s+A_s y+j$, hence ends at
+$W_s+A_s\Delta B+C=W_t$. This is the original chronological
+cross term, not an assignment to a central control. Induction over
+all subdivisions and grid cells proves endpoint matching and
+(26.3), by the same deterministic estimates as (22.4).
+It also proves that no connector reaches an observation wall
+earlier than its polygon, and its final height leg reaches that
+wall exactly at the polygon's crossing time. This proves the
+own-exit assertion and (26.2). Arriving at $l$ or $u$ remains
+strictly lawful for the original, larger native slab.
+
+For the realized numerical list, original lawfulness at another
+height is still precisely the extrema test (7.6), with the original
+phases unrestricted. Its exact domain is therefore the interval
+stated in the theorem. Applying [N, Theorems 9.2--9.3] to each
+concatenation retains its refusal and pulled-back guard. This
+assertion evaluates the same numerical command on its domain;
+it does not rerun this preparation-dependent policy at other heights.
+A source-contact flag merely supplies a future target value. It
+never resets the actual controls, their phases or their accumulated
+real integral.
+
+There are at most $N$ polygon portions including the initial hold.
+The number of subdivisions of each is finite, since all its
+increments are finite. More explicitly, with $V_A,V_B,V_W$ the
+finite variations of the stopped polygon triple, the native leg
+count is bounded by
+
+$$
+ 6\left(N+\frac{V_A+V_B}{\rho}
+                    +\frac{V_W+K_IV_B}{\rho^2}\right)+1.
+\tag{26.5}
+$$
+
+This is the reused ceiling bound (22.5), now applied cell by cell
+at issuance. Every leg divides a finite increment by a positive
+duration, giving finite pathwise velocity and variation. There
+are finitely many releases and primitive initiations by (24.6).
+The finite comparisons, clipping ratios, ceilings and connector
+formulas are Borel, also on the countable union of the finite-list
+spaces of Definition 17.1. They establish the asserted actual
+pushforward command law and issuance measurability. The command
+through each time is a function of the acquired prefix and clock.
+Finally (7.5) gives exactly (26.4) and the probabilities
+$(k_*,H_{\rm n}-k_*,Z,H_{\rm n}-k_*,k_*)$. Substitution in (7.8)
+proves every signed-pair assertion. Hidden $z$ never enters these
+controls or readouts. $\square$
+
+## 27. Joint original-time held outputs and the consumer's own exit
+
+**Theorem 27.1 (original-source causal-release correspondence).**
+Under Assumptions 25.1 and 26.1, fix any original $a,\eta>0$,
+allowed preparation, interior $I$ and finite $T$ as above.
+For every deterministic sequence
+$\epsilon_n,\delta_n,\rho_n\downarrow0$ and $N_n\to\infty$,
+with the stated positive design ranges, the corresponding finite
+laws have a common coupling with the unchanged original source
+such that
+
+$$
+ \|\mathcal O_n-O^I\|_{[0,T]}\longrightarrow0,
+ \qquad \widehat S_n\longrightarrow T\wedge\theta_I
+                              \quad\hbox{almost surely}.
+\tag{27.1}
+$$
+
+Here $\mathcal O_n(t)$ is the actual ten-output path of Definition
+26.2 held at its own observation exit; $O^I(t)$ is precisely (17.1)
+at the same original elapsed time $t$. In particular their joint
+laws with the censored own exit converge in the uniform ten-output
+path topology times $[0,T]$. The consumer observes neither the
+original target exit nor any target modulus. Source contacts and
+observation exits are distinct events throughout this assertion.
+
+**Proof.** Use one original full source as Theorem 24.3's witness
+for all designs, taking the countable intersection of their
+probability-one version and coupling events. By (25.2), for the
+unstopped virtual polygon (26.1),
+
+$$
+ \|Q_n-\mathsf Z\|_{[0,T],\infty}
+ \le \Omega_T(\mathsf Z;\epsilon_n\vee\delta_n)
+                         +\Omega_T(\mathsf Z;2T/N_n).
+\tag{27.2}
+$$
+
+Indeed, on a cell $[t_j,t_{j+1}]$ its endpoints are sampled from
+$V$ at $t_{j-1},t_j$. Each endpoint differs from the source at the
+same sample time by at most the first modulus. Both sample times
+are at distance at most $2T/N_n$ from the present time. A convex
+combination gives (27.2). On the first cell the polygon is $e$
+and the second modulus alone suffices. Continuity makes (27.2)
+tend to zero almost surely. This is a same-time bound: no time
+change, retrospective endpoint execution, deleted duration or
+redistributed waiting time is involved.
+
+For completeness, the passage to the consumer's own exit uses the
+specific crossing supplier Lemma 21.3. Write $S=T\wedge\theta_I$.
+On every compact time interval strictly before $S$, the source
+height is uniformly inside $(l,u)$, so (27.2) gives
+$\liminf\widehat S_n\ge S$. If $S<T$, the original source height
+strictly crosses its attained wall arbitrarily soon after $S$:
+that lemma uses the locally elliptic original generator (21.6),
+positive coefficient $a$, bounded localized drift away from $e$,
+and the strong Markov property at that wall. Each such strict
+outward value before $S+b<T$ forces the continuous polygon to
+exit by $S+b$ for all sufficiently large $n$. Thus
+$\limsup\widehat S_n\le S$. If $S=T$, the censored upper bound is
+already $T$, including target exit exactly at $T$.
+This proves the exit convergence using strict crossings, not
+uniform path convergence alone. Theorem 26.3 identifies these
+polygon exits with actual native own exits, which is the additional
+passage needed for the prospective consumer.
+
+Uniform continuity of the original path now gives
+
+$$
+ \|Q_n(\,\cdot\wedge\widehat S_n)
+       -\mathsf Z(\,\cdot\wedge S)\|_{[0,T],\infty}
+ \le\|Q_n-\mathsf Z\|_{[0,T],\infty}
+                +\Omega_T(\mathsf Z;|\widehat S_n-S|)\to0.
+\tag{27.3}
+$$
+
+Add (26.3). The resulting actual triples converge uniformly to
+$(x,y,w)(\mathsf Z_{\,\cdot\wedge S})$. Formula (26.4) bounds
+the real phase errors by one half of the $b$ error and by
+$|c_0|$ times that error plus $r^{-1}$ times the integral error.
+Reducing only then modulo $2\pi$ and using uniform continuity
+of the exact ten-output map (7.8) on $I\times\mathbb T^2$
+proves (27.1), for every fixed preparation rotation. Weak joint
+convergence follows by bounded continuous tests. The source used
+in this proof continues conservatively after every observation
+exit. Only actual native outputs are held. $\square$
+
+**Corollary 27.2 (finite designs at fixed error and risk).** For every
+positive output tolerance and positive failure probability there
+are deterministic finite choices of $\epsilon,\delta,N,\rho$ for
+which the joint output/censored-own-exit error exceeds that
+tolerance with probability less than the prescribed risk.
+All timed requests and actual native legs are finite on $[0,T]$.
+
+**Proof.** Choose any sequence in Theorem 27.1. Its almost-sure
+joint convergence implies convergence in probability, so some finite
+index meets the two prescribed constants. The bounds (24.6),
+(26.5) apply at that index. This proves existence of law-dependent
+finite designs, without an effective parameter-selection rate or
+a path-modulus input. $\square$
+
+## 28. Method correspondence and remaining source obligations
+
+**Definition 28.1 (mature inputs and the source-specific composite).**
+The excursion input is Fukushima--Tanaka,
+[*Poisson point processes attached to symmetric diffusions*,
+DOI 10.1016/j.anihpb.2004.10.004, §3.1, Theorem 3.1,
+(3.4)--(3.12)](https://www.numdam.org/item/AIHPB_2005__41_3_419_0.pdf).
+Its $S,a,S_0,m,p_t^0,\mu_t$ are exactly
+$G,e,M,h^2\mu,P_t^0,q_tm$ here; the recurrent-point hypotheses
+are those already checked in Theorem 15.2. Independent Poisson
+restriction, scalar subordinator mixing, strong Markov restarting
+and finite deterministic interpolation are mature methods.
+The age-$\epsilon$ announcement keeps their information in the
+original filtration instead of revealing the selected excursion's
+future duration. No separate general excursion theorem is asserted.
+
+Lambert--Simatos,
+[*The weak convergence of regenerative processes using some excursion
+path decompositions*, DOI 10.1214/12-AIHP531, §3.2, (3) and
+Lemma 3.1](https://www.numdam.org/item/10.1214/12-AIHP531.pdf),
+uses truncation of excursions with a size functional. With size
+$\zeta$, its whole-excursion retention criterion involves lifetime;
+it is not itself a causal acquisition rule. Formula (24.7) instead
+announces elapsed age, and (25.2) covers its still-unannounced prefix
+by continuity in the same original time. No uniform resource or
+regenerative convergence hypothesis is borrowed from that paper.
+Yano, [*Functional limit theorems for processes pieced together from
+excursions*, arXiv:1309.2652v3, Definition 2.3, Remark 2.4 and
+Theorem 2.5](https://arxiv.org/html/1309.2652v3), distinguishes path
+convergence from lifetime convergence. Its general limit theorem is
+not invoked: the own-exit argument is (27.2)--(27.3) with the original
+wall-crossing supplier. Chaumont--Uribe Bravo,
+[*Markovian bridges: weak continuity and pathwise constructions*,
+arXiv:0905.2155v3, Theorem 1 and (H1)--(H3)](https://arxiv.org/html/0905.2155v3),
+requires a Feller family and appropriate transition-density continuity
+for its endpoint bridges. No unverified such hypothesis at $e$ is
+used in (24.1)--(24.4).
+
+The repo-derived composite is the specific timed laws and their
+recursive original-source coupling, original-filtration release
+ceiling, and prospective finite actual-native consumer with the
+same-time ten-output/censored-own-exit limit (27.1). Its source
+trace, full complex selector and killed domain are §§15--16 and
+[S, §§115--116]; its original partial-action map is §7. The connector
+geometry, real chronology, guards and deterministic estimates are
+reused from [GL, Lemma 17.1], Theorems 17.2 and 22.2, not new
+steering theory. The Brownian-target causal contracts of [GL,
+§§26--40] and its paid-point contract of §41 have different source
+laws and observations. They neither install (25.1) nor transfer a
+Brownian estimate to the original source here. No almost-sure fixed
+hard tube or Brownian resource rate is asserted by (27.1).
+
+**Definition 28.2 (added premises and the exact unpaid boundary).**
+Calibration and availability of the exact timed service, including
+source-versus-false-contact discrimination, hidden four-coordinate
+states, nonarrival monitoring, immediate notification and exact
+original-clock timestamps, are Assumption 25.1. Finite exact real
+computation and original two-control execution are Assumption 26.1.
+These are explicit analytic model additions. Deriving their joint
+law and filtration coupling is not deriving their availability from
+bare FIB. In particular no pending sample, seed, future lifetime,
+Poisson label, scalar omitted-gap total, complete mark, full source
+path, target exit or target modulus is available to execution.
+A full path is only the coupling witness; the acquired finite
+record is exactly (25.1). All decisions use its released prefix.
+
+Native acquisition, finite bits or shots, effective sampler evaluation,
+effective accuracy rates, uniform information/leg/speed/energy bounds,
+and physical timed notification and actuation remain separate
+obligations. The realized finite command has its entire original
+partial domain; the causal service law does not assert arbitrary
+intervention equivalence, install a source-independent affine/CPTP
+action, or provide a post-slab map for $\Psi$. Sections 1--14 and
+[B, §§12.1--12.3] retain their free/central-fiber, contact, reference-law
+and affine/CPTP boundaries and their surviving nonlinear source-law
+actions. The variable-coefficient, independent-central-noise and
+spatial-cap/all-real-limit suppliers retain the different carriers,
+sources, walls and clocks specified in Definition 19.1.
+No source-clock recovery of §18 follows from these approximations.
+The original complete native legal-source/evolution/representation/
+readout correspondence, physical spatial dimension and full
+why-three objective remain unresolved. These are conditional ordinary
+mathematical results, with no Lean-certification or worldwide-priority
+claim.
+
+## 追加锚（本行以下为增补区）
