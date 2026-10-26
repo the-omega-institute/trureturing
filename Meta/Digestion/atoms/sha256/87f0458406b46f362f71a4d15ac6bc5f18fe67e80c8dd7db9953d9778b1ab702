@@ -1,0 +1,35 @@
+**Lemma 3.2 (the actual four-matrix basis).** Fix an integer $T\ge0$, and put
+
+$$
+C=M^T,\qquad B=JC.
+\tag{3.1}
+$$
+
+Then $I,M,B,MB$ are a basis of $\operatorname{Mat}_2(\mathbb R)$. For every $0\le p<q$, so are $I,M,M^pB,M^qB$. Thus the four traces against either basis determine every real $2\times2$ matrix uniquely.
+
+**Proof.** First $I,M,J,MJ$ are a basis. A zero linear combination has entries
+
+$$
+aI+bM+cJ+eMJ=
+\begin{pmatrix}a+e&b+c\\b+c+e&a+b+e\end{pmatrix}=0.
+$$
+
+Subtracting the off-diagonal entries gives $e=0$; the first and second diagonal entries then give $a=b=0$, followed by $c=0$.
+
+The matrix $M$ is invertible, with $M^{-1}=M-I$. Both $C$ and $C^{-1}$ belong to the algebra $K$. Right multiplication by $C$ therefore maps $K$ bijectively to itself and maps the displayed four-matrix basis to
+
+$$
+C,\quad MC,\quad JC=B,\quad MJC=MB.
+$$
+
+Its first two matrices are a basis of $K$, so they can be replaced by $I,M$. This proves the first assertion. Write the unique coordinates
+
+$$
+M^r=u_rI+v_rM.
+\tag{3.2}
+$$
+
+Lemma 3.1 makes the matrix with rows $(u_p,v_p),(u_q,v_q)$ invertible. Multiplying these identities on the right by $B$ gives an invertible change between the last two basis elements $B,MB$ and $M^pB,M^qB$. This proves the second assertion.
+
+If a matrix $S$ has zero trace pairing with every element of either basis, it has zero pairing with every matrix. Pairing with each matrix unit gives every entry of $S$ equal to zero. Thus the trace pairing is nondegenerate and the four trace equations have a unique solution for any data they actually realize. Negative powers here are auxiliary algebra only; no inverse is an acquisition action. $\square$
+

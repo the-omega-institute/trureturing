@@ -47,22 +47,22 @@ private noncomputable def strictBirths : PastBirths (ord a) := fun b r d hr hm =
 
 /-- The archive consists solely of exact canonical Q/R readouts of this past. -/
 noncomputable def archive : SignedOrdinalLimit.Archive
-    (strictPrefix a.1.2 past coherent) hw where
+    (strictPrefix a.1.2.le past coherent) hw where
   proper := a.1.2
   base_onto := by
     intro y
     refine ⟨⟨y, ?_⟩, rfl⟩
-    change y ∈ pastCarrier a.1.2 past ⟨ω, hw⟩
-    have hc : pastCarrier a.1.2 past ⟨ω, hw⟩ = univ := by
+    change y ∈ pastCarrier a.1.2.le past ⟨ω, hw⟩
+    have hc : pastCarrier a.1.2.le past ⟨ω, hw⟩ = univ := by
       simp only [pastCarrier, dite_eq_left (le_refl (ω : Ordinal.{0}))]
       exact (past initialStage (show initialStage < a from hw)).initial_carriers (top ω) le_rfl
     exact hc.symm ▸ mem_univ y
   pastBirths := strictBirths a past hl
-  U := fun r => (bornPack a.1.2 past coherent r.1 r.2).U
-  Uonto := fun r => (bornPack a.1.2 past coherent r.1 r.2).Uonto
-  V := fun r => (bornPack a.1.2 past coherent r.1 r.2).V
-  nu := fun r => (bornPack a.1.2 past coherent r.1 r.2).nu
-  nuonto := fun r => (bornPack a.1.2 past coherent r.1 r.2).nuonto
+  U := fun r => (bornPack a.1.2.le past coherent r.1 r.2).U
+  Uonto := fun r => (bornPack a.1.2.le past coherent r.1 r.2).Uonto
+  V := fun r => (bornPack a.1.2.le past coherent r.1 r.2).V
+  nu := fun r => (bornPack a.1.2.le past coherent r.1 r.2).nu
+  nuonto := fun r => (bornPack a.1.2.le past coherent r.1 r.2).nuonto
   I := (strictData a.1.2 past coherent hl).I
   J := (strictData a.1.2 past coherent hl).J
 
@@ -71,7 +71,7 @@ private theorem archive_data : (archive a past coherent hw hl).data =
   classical
   rfl
 
-private theorem archive_laws : (strictPrefix a.1.2 past coherent).Laws
+private theorem archive_laws : (strictPrefix a.1.2.le past coherent).Laws
     (archive a past coherent hw hl).data := by
   rw [archive_data]
   exact strictLaws a.1.2 past coherent hl
@@ -87,7 +87,7 @@ variable {a past coherent hw hl}
 private noncomputable def oldPack (r : Rows (ord a)) (hr : r ≠ newRow (ord a) a.2) :
     BirthPack (R.extended.carrier (rowIndex r)) :=
   BirthPack.cast (R.old_carrier (SignedOrdinalLimit.bornRow hw r hr).1).symm
-    (bornPack a.1.2 past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1)
+    (bornPack a.1.2.le past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1)
 
 private noncomputable def oldB : OldClopens R.extended a.2 := fun r hr => (oldPack R r hr).B
 
@@ -96,7 +96,7 @@ private theorem oldPack_readback (r : Rows (ord a)) (hr : r ≠ newRow (ord a) a
       (fun r hr => (oldPack R r hr).Bonto) r hr = oldPack R r hr := by
   have h := (archive a past coherent hw hl).predecessor_whole_readback R.extension r hr
   apply (BirthPack.eq_cast (R.old_carrier (SignedOrdinalLimit.bornRow hw r hr).1).symm
-    (bornPack a.1.2 past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1)
+    (bornPack a.1.2.le past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1)
     (predecessorPack (P := R.predecessor) (oldB R)
       (fun r hr => (oldPack R r hr).Bonto) r hr) ?_ ?_ ?_ ?_).symm
   · exact h.1.symm
@@ -137,7 +137,7 @@ private theorem regular : RegularCurrent R.extended a.2 R.predecessor := by
   intro r hr d s hm hn
   have hpack : HEq (predecessorPack (P := R.predecessor) (oldB R)
       (fun r hr => (oldPack R r hr).Bonto) r hr)
-      (bornPack a.1.2 past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1) :=
+      (bornPack a.1.2.le past coherent (SignedOrdinalLimit.bornRow hw r hr).1 r.2.1) :=
     (heq_of_eq (oldPack_readback R r hr)).trans (BirthPack.cast_heq _ _)
   have hnu := fun n => BirthPack.heq_measure
     (R.old_carrier (SignedOrdinalLimit.bornRow hw r hr).1) _ _ hpack
@@ -166,13 +166,13 @@ noncomputable def limitState : State a where
     intro c hc
     have hcl : c.1 < ord a := hc.trans_lt hw
     refine (R.old_carrier ⟨c.1, hcl⟩).trans ?_
-    change pastCarrier a.1.2 past ⟨c.1, hcl⟩ = univ
+    change pastCarrier a.1.2.le past ⟨c.1, hcl⟩ = univ
     classical
     by_cases hω : ω ≤ c.1
     · simp only [pastCarrier, dite_eq_left hω]
       exact (past ⟨⟨c.1, hcl.trans a.1.2⟩, hω⟩ hcl).initial_carriers (top c.1) hc
     · simp only [pastCarrier, dite_eq_right hω]
-  incoming := .limit a.2 hl (strictPrefix a.1.2 past coherent)
+  incoming := .limit a.2 hl (strictPrefix a.1.2.le past coherent)
     (archive a past coherent hw hl).data (archive_laws a past coherent hw hl)
     R.extension R.extended R.predecessor R.top_carrier R.old_carrier R.I_eq R.J_eq
   regular := regular R
@@ -185,7 +185,7 @@ theorem limit_coherent (b : Stage) (hb : b < a) :
   carrier := fun c => (R.old_carrier
     ⟨c.1, (show c.1 ≤ ord b from Order.le_of_lt_succ c.2).trans_lt
       (show ord b < ord a from hb)⟩).trans
-      (carrier_read a.1.2 past coherent b hb c)
+      (carrier_read a.1.2.le past coherent b hb c)
   birth := by
     change predecessorPack (P := R.predecessor) (oldB R) _ _ _ = _
     rw [oldPack_readback]
