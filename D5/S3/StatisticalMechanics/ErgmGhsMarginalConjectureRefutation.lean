@@ -9,11 +9,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Sym.Card
-import Mathlib.Data.Fintype.Pi
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! The homomorphism-density Hamiltonian and GHS condition are those of
 Bianchi, Collet and Magnanini, arXiv:2107.08889v2, Sections 2.1, 3 and 4.
@@ -109,8 +104,9 @@ open Classical in
 private lemma hamiltonian_value (g : SimpleGraph (Fin 3)) :
     hamiltonian models parameters g = if g = ⊤ then Real.log 2 else 0 := by
   unfold hamiltonian
-  simp only [Fin.sum_univ_two, models, parameters, Matrix.cons_val_zero,
-    Matrix.cons_val_one, zero_mul, zero_add, homDensity]
+  delta models parameters homDensity
+  simp only [Fin.sum_univ_two, Matrix.cons_val_zero,
+    Matrix.cons_val_one, zero_mul, zero_add]
   rw [triangle_count]
   split_ifs <;> ring
 
@@ -124,8 +120,7 @@ private lemma graph_bijective : Function.Bijective graphOfBits := by
     have h01 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 0 1) hab
     have h02 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 0 2) hab
     have h12 := congrArg (fun g : SimpleGraph (Fin 3) => g.Adj 1 2) hab
-    simp only [graphOfBits, SimpleGraph.fromEdgeSet_adj, Set.mem_ofPred_eq,
-      Sym2.eq_iff] at h01 h02 h12
+    dsimp only [graphOfBits, SimpleGraph.fromEdgeSet] at h01 h02 h12
     rcases a with ⟨a, c, d⟩
     rcases b with ⟨b, e, f⟩
     cases a <;> cases b <;> cases c <;> cases d <;> cases e <;> cases f <;>
@@ -133,15 +128,17 @@ private lemma graph_bijective : Function.Bijective graphOfBits := by
   · intro g
     classical
     refine ⟨(decide (g.Adj 0 1), decide (g.Adj 0 2), decide (g.Adj 1 2)), ?_⟩
+    delta graphOfBits
     ext v w
     fin_cases v <;> fin_cases w <;>
-      simp [graphOfBits, SimpleGraph.fromEdgeSet_adj] <;> exact g.adj_comm _ _
+      simp <;> exact g.adj_comm _ _
 
 private lemma graph_top (b : Bool × Bool × Bool) :
     graphOfBits b = ⊤ ↔ b = (true, true, true) := by
   have ht : graphOfBits (true, true, true) = ⊤ := by
+    delta graphOfBits
     ext v w
-    fin_cases v <;> fin_cases w <;> simp [graphOfBits, SimpleGraph.fromEdgeSet_adj]
+    fin_cases v <;> fin_cases w <;> simp
   rw [← ht, graph_bijective.injective.eq_iff]
 
 private lemma sum_graphs (f : SimpleGraph (Fin 3) → ℝ) :
@@ -173,7 +170,8 @@ private lemma marginal_value (e : (⊤ : SimpleGraph (Fin 3)).edgeSet) :
   simp_rw [weight_value]
   rw [sum_graphs]
   simp only [Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
-  fin_cases e <;> norm_num [edgeIndicator, graphOfBits, SimpleGraph.mem_edgeSet]
+  delta edgeIndicator graphOfBits
+  fin_cases e <;> norm_num
 
 private lemma joint_values :
     expectation models parameters (fun a => edgeIndicator edge01 a * edgeIndicator edge02 a) =
@@ -188,10 +186,12 @@ private lemma joint_values :
   unfold expectation
   simp_rw [weight_value]
   simp only [sum_graphs, Fintype.sum_prod_type, Fintype.sum_bool, graph_top]
-  norm_num [edgeIndicator, edge01, edge02, edge12, graphOfBits, SimpleGraph.mem_edgeSet]
+  delta edgeIndicator edge01 edge02 edge12 graphOfBits
+  norm_num
 
 private lemma ursell_value : u3 models parameters edge01 edge02 edge12 = 7 / 729 := by
-  rw [u3, marginal_value, marginal_value, marginal_value,
+  delta u3
+  rw [marginal_value, marginal_value, marginal_value,
     joint_values.1, joint_values.2.1, joint_values.2.2.1, joint_values.2.2.2]
   norm_num
 
