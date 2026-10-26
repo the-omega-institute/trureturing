@@ -29,6 +29,15 @@ def balancedWeight (k : ℕ) (a : Fin 3 → ℕ) (i : BalancedIndex) : ℂ :=
 def BalancedAdmissible (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ)
     (i : BalancedIndex) : Prop := ∀ c : Fin 3, 0 ≤ balancedInput k a s x z i c
 
+theorem balanced_input_total (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ)
+    (i : BalancedIndex) :
+    balancedInput k a s x z i 0 + balancedInput k a s x z i 1 +
+      balancedInput k a s x z i 2 = s + x + z + 3 * k + a 0 + a 1 + a 2 := by
+  simp only [balancedInput, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  omega
+
+
 theorem balanced_bounds (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ)
     (i : BalancedIndex) (hi : BalancedAdmissible k a s x z i) :
     (i.1 : ℤ) + i.2.2 ≤ s + k ∧ (i.2.1 : ℤ) ≤ z + a 2 ∧
@@ -40,15 +49,10 @@ theorem balanced_bounds (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ)
   have h2 := hi 2
   simp only [balancedInput, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] at h0 h1 h2
-  omega
+  refine ⟨by omega, by omega, by omega, by omega, by omega, by omega, ?_⟩
+  rw [← balanced_input_total k a s x z i]
+  exact add_nonneg (add_nonneg h0 h1) h2
 
-theorem balanced_input_total (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ)
-    (i : BalancedIndex) :
-    balancedInput k a s x z i 0 + balancedInput k a s x z i 1 +
-      balancedInput k a s x z i 2 = s + x + z + 3 * k + a 0 + a 1 + a 2 := by
-  simp only [balancedInput, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-    Matrix.head_cons, Matrix.tail_cons]
-  omega
 
 def balancedFiber (k : ℕ) (a : Fin 3 → ℕ) (s x z : ℤ) : Finset BalancedIndex := by
   classical

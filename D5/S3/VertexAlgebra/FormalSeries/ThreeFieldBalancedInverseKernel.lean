@@ -117,8 +117,11 @@ private theorem coupled_coeff (k r s t : ℕ) :
       simpa only [mul_assoc] using congrArg
         (fun c : ℂ => c * (Ring.choose (-(k : ℤ)) r : ℤ) *
           (Ring.choose (-((2 * k + r : ℕ) : ℤ)) (s - r) : ℤ)) sign
-    · by_cases ht : t = 0 <;> by_cases hrs : r ≤ s <;> simp_all
-      all_goals split_ifs <;> simp_all <;> omega
+    · rw [ite_eq_right h]
+      by_cases ht : t = 0
+      · have hrs : ¬ r ≤ s := fun hrs => h ⟨ht, hrs⟩
+        rw [ite_eq_left ht, ite_eq_right hrs, smul_zero]
+      · rw [ite_eq_right ht, smul_zero]
   · intro l hl hne
     have zero : integerBinomial 0 l = 0 := by
       simp [integerBinomial, Ring.choose_zero_ite, hne]
@@ -133,7 +136,7 @@ private theorem balanced_inverse_kernels (k A : ℕ) :
         flipS (innerUnitSeries R k 0) := by
     simp only [innerUnitSeries, balancedUnitSeries, pow_zero, mul_one,
       map_mul, map_pow, map_sub, map_one, flipS_X]
-    simp only [show (1 : Fin 3) ≠ 0 by decide, if_false, ite_true]
+    simp only [show (1 : Fin 3) ≠ 0 by decide, ite_false, ite_true]
     ring
   have cancelCoupled : flipS (innerUnitSeries R k 0) * coupled k = 1 := by
     rw [coupled, ← map_mul]
@@ -166,7 +169,7 @@ private theorem diagonal_mul_coeff (z : ℤ) (G : MvPowerSeries (Fin 3) R) (r s 
   by_cases hls : l ≤ s
   · rw [ite_eq_left hls, Finset.sum_eq_single l]
     · rw [Finset.sum_eq_single 0]
-      · simp [diagonal_coeff, smul_mul_assoc]
+      · simp [diagonal_coeff]
       · intro w hw hne
         simp [diagonal_coeff, hne]
       · simp

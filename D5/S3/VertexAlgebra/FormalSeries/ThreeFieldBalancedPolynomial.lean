@@ -44,7 +44,8 @@ private def swapPolynomial : LaurentPolynomial 3 →ₐ[ℂ] LaurentPolynomial 3
 
 private theorem balancedRotate_action {V : Type*} [AddCommGroup V] [Module ℂ V]
     (p : LaurentPolynomial 3) (F : Distribution 3 V) :
-    polynomialAction (swapPolynomial p) (balancedRotate F) = balancedRotate (polynomialAction p F) := by
+    polynomialAction (swapPolynomial p) (balancedRotate F) =
+      balancedRotate (polynomialAction p F) := by
   induction p using AddMonoidAlgebra.induction_on with
   | of e =>
     change polynomialAction (swapPolynomial (AddMonoidAlgebra.single e 1)) _ =
@@ -192,7 +193,8 @@ private theorem triple_difference_zero (F : Distribution 3 R) (hF : NestedSuppor
         (fun x z h => hb z x h)
       intro x z
       have h := congrFun hz ![(n : ℤ) - U, z, x]
-      simp only [map_sub, map_add, LinearMap.sub_apply, LinearMap.add_apply, Pi.sub_apply, Pi.add_apply, variable_xyz] at h
+      simp only [map_sub, map_add, LinearMap.sub_apply, LinearMap.add_apply,
+        Pi.sub_apply, Pi.add_apply, variable_xyz] at h
       simp only [Fin.isValue, reduceIte, zero_add, prev] at h
       simpa [clear, Finset.sum_range_succ, sub_eq_add_neg] using h
   funext e

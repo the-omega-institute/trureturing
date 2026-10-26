@@ -60,8 +60,7 @@ private theorem native_inverse_box (G : MvPowerSeries (Fin 3) R)
       intro l hl
       by_cases h : u ≤ v
       · rw [ite_eq_left h, ite_eq_left h]
-        simp only [term, weight, smul_smul, smul_mul_assoc, one_mul]
-        rfl
+        simp only [term, weight, smul_mul_assoc, one_mul]
       · simp [h]
     · intro w hw hne
       rw [balanced_inverse_coeff]
@@ -223,7 +222,7 @@ theorem raw_balanced_coefficients (P : MvPowerSeries (Fin 3) R)
         obtain ⟨hrl, hj, hrjl, hs, hz, hsz, he⟩ :=
           balanced_bounds k a (e 0) (e 1) (e 2) i hi
         refine ⟨?_, hi⟩
-        simp only [box, Finset.mem_product, Finset.mem_range]
+        simp only [box, Finset.product_eq_sprod, Finset.mem_product, Finset.mem_range]
         omega
       · exact And.right
     rw [balancedCoefficient, fiber, Finset.sum_filter]
