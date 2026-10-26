@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.MutualVisibility
 internal sealed class AndrasfaiActualDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/MutualVisibility/AndrasfaiActual.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/howroyd2026a391632");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full original generating identity for all labelled mutual-visibility subsets of the Andrasfai graphs.",
         H("Actual subset counts and Howroyd's generating identity"),
@@ -35,8 +37,11 @@ internal sealed class AndrasfaiActualDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("howroyd-full-identity"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The full original rational identity"), StatementSource.FromAuthor(ResultFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Substitution into AndrasfaiTransfer.corrected_trace_series gives the entire numerator and denominator, including the original n = 1 coefficient. The denominator has constant coefficient one, and the displayed quotient denotes multiplication by its formal power-series inverse. The identity holds coefficientwise in Q[[X]], without analytic convergence assumptions. It counts all actual labelled existential shortest-path mutual-visibility subsets; it imposes no maximality, independence, or quotient condition."))), DescribeRole.Theorem))));
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("Substitution into AndrasfaiTransfer.corrected_trace_series gives the entire numerator and denominator, including the original n = 1 coefficient. The denominator has constant coefficient one, and the displayed quotient denotes multiplication by its formal power-series inverse. The identity holds coefficientwise in Q[[X]], without analytic convergence assumptions. It counts all actual labelled existential shortest-path mutual-visibility subsets; it imposes no maximality, independence, or quotient condition."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a391632-andrasfai-mutual-visibility"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name))) :
