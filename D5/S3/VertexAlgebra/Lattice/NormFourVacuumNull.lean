@@ -15,7 +15,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 4000000
 
-open private creation_derivation charge_pairing charge_transport translated_sum translated_X
+open private creation_derivation charge_pairing charge_transport translated_sum translated_X translated_mul
   from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 open private osc osc_zero osc_neg deriv_osc creation_zero currentMode currentMode_single
   currentMode_negative pairing_left gram_smul quadratic_product_formula
@@ -147,11 +147,10 @@ private theorem creation720_nat (D : LatticeData) (a : Charge D)
     have hrec : (n + 1 : ℂ) • ((720 : ℂ) • creationCoeff D a (n + 1)) =
         oscillatorDerivation D ((720 : ℂ) • creationCoeff D a n) +
           P D a 0 * ((720 : ℂ) • creationCoeff D a n) := by
-      rw [map_smul, creation_derivation]
+      rw [Derivation.map_smul, creation_derivation]
       simp only [show P D a 0 = chargePolynomial D a by rfl,
         Nat.cast_add, Nat.cast_one, Int.cast_natCast, smul_sub, mul_smul_comm]
       module
-    simp only [Nat.cast_add, Nat.cast_one] at hrec
     simp only [ih'] at hrec
     rw [E_step D a n hn5] at hrec
     have hne : (n + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
@@ -159,7 +158,7 @@ private theorem creation720_nat (D : LatticeData) (a : Charge D)
       (720 : ℂ) • creationCoeff D a (↑(n + 1) : ℤ) =
           (n + 1 : ℂ)⁻¹ • ((n + 1 : ℂ) •
             ((720 : ℂ) • creationCoeff D a (n + 1))) := by
-              rw [smul_smul, inv_mul_cancel₀ hne, one_smul]
+              simp only [smul_smul, ← mul_assoc, inv_mul_cancel₀ hne, one_mul, one_smul, Nat.cast_add, Nat.cast_one]
       _ = (n + 1 : ℂ)⁻¹ • ((n + 1 : ℂ) • E D a (n + 1)) := by rw [hrec]
       _ = E D a (n + 1) := by rw [smul_smul, inv_mul_cancel₀ hne, one_smul]
 
@@ -198,12 +197,6 @@ private theorem transport_P (D : LatticeData) (b a : Charge D) (r : ℕ) :
 
 private theorem transport_one (D : LatticeData) (b : Charge D) :
     translatedPolynomial D b (1 : Oscillator D) = 1 := by
-  simp [translatedPolynomial]
-
-private theorem transport_mul (D : LatticeData) (b : Charge D)
-    (p q : Oscillator D) :
-    translatedPolynomial D b (p * q) =
-      translatedPolynomial D b p * translatedPolynomial D b q := by
   simp [translatedPolynomial]
 
 private theorem transport_pow (D : LatticeData) (b : Charge D)
@@ -283,7 +276,7 @@ private theorem Atom.transport (D : LatticeData) (a b : Charge D) (u : Atom) :
         (u.coefficient D a ((bilinear D b a : ℂ) • 1) d) := by
   cases u <;>
     simp [Atom.value, Atom.degree, Atom.coefficient, transport_one,
-      transport_mul, transport_pow, transport_P, Finset.sum_range_succ,
+      translated_mul, transport_pow, transport_P, Finset.sum_range_succ,
       ← Polynomial.C_mul_X_pow_eq_monomial, smul_eq_C_mul, map_mul, map_pow, map_neg, map_ofNat] <;> ring
 
 private def rawPolynomial (D : LatticeData) (a b c : Charge D)
@@ -472,7 +465,7 @@ private theorem A2_z_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A3_z_one (D : LatticeData) (a : Charge D)
@@ -501,7 +494,7 @@ private theorem A3_z_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A6_z_one (D : LatticeData) (a : Charge D)
@@ -530,7 +523,7 @@ private theorem A6_z_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_z_x1sq (D : LatticeData) (a : Charge D)
@@ -559,7 +552,7 @@ private theorem A2_z_x1sq (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_p_one (D : LatticeData) (a : Charge D)
@@ -588,7 +581,7 @@ private theorem A2_p_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_n_one (D : LatticeData) (a : Charge D)
@@ -617,7 +610,7 @@ private theorem A2_n_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_z_x1four (D : LatticeData) (a : Charge D)
@@ -646,7 +639,7 @@ private theorem A2_z_x1four (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_z_x1x3 (D : LatticeData) (a : Charge D)
@@ -675,7 +668,7 @@ private theorem A2_z_x1x3 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_z_x2sq (D : LatticeData) (a : Charge D)
@@ -704,7 +697,7 @@ private theorem A2_z_x2sq (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_p_x1sq (D : LatticeData) (a : Charge D)
@@ -733,7 +726,7 @@ private theorem A2_p_x1sq (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_n_x1sq (D : LatticeData) (a : Charge D)
@@ -762,7 +755,7 @@ private theorem A2_n_x1sq (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_p_x2 (D : LatticeData) (a : Charge D)
@@ -791,7 +784,7 @@ private theorem A2_p_x2 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A2_n_x2 (D : LatticeData) (a : Charge D)
@@ -820,7 +813,7 @@ private theorem A2_n_x2 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A3_z_x1x2 (D : LatticeData) (a : Charge D)
@@ -849,7 +842,7 @@ private theorem A3_z_x1x2 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A3_p_x1 (D : LatticeData) (a : Charge D)
@@ -878,7 +871,7 @@ private theorem A3_p_x1 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A3_n_x1 (D : LatticeData) (a : Charge D)
@@ -907,7 +900,7 @@ private theorem A3_n_x1 (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A4_z_x1sq (D : LatticeData) (a : Charge D)
@@ -936,7 +929,7 @@ private theorem A4_z_x1sq (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A4_p_one (D : LatticeData) (a : Charge D)
@@ -965,7 +958,7 @@ private theorem A4_p_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private theorem A4_n_one (D : LatticeData) (a : Charge D)
@@ -994,7 +987,7 @@ private theorem A4_n_one (D : LatticeData) (a : Charge D)
     all_goals by_cases hp : a = δ
     all_goals by_cases hm : -a = δ
     all_goals
-      simp_all [tri, S, Finsupp.single_apply, h0, hp, hm,
+      simp_all [-sq_eq_one_iff, tri, S, Finsupp.single_apply, h0, hp, hm,
         smul_eq_C_mul, map_add, map_mul, map_neg, map_ofNat] <;> ring
 
 private def V2 (D : LatticeData) (a : Charge D) (s : ℂ) : Carrier D :=
@@ -1049,10 +1042,10 @@ private theorem A2_vacuum (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A3_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1068,10 +1061,10 @@ private theorem A3_vacuum (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A6_vacuum (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1087,10 +1080,10 @@ private theorem A6_vacuum (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A2_V2 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1106,10 +1099,10 @@ private theorem A2_V2 (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A2_V4 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1125,10 +1118,10 @@ private theorem A2_V4 (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A3_V3 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1144,10 +1137,10 @@ private theorem A3_V3 (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 private theorem A4_V2 (D : LatticeData) (a : Charge D)
     (ha : bilinear D a a = 4) (s : ℂ) (hs : s ^ 2 = 1) :
@@ -1163,10 +1156,10 @@ private theorem A4_V2 (D : LatticeData) (a : Charge D)
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
+    simp_all [-sq_eq_one_iff, tri, V2, V3, V4, V222, V33, V42, V6, atom, Atom.value, S,
       Finsupp.single_apply, h0, hp, hm, smul_eq_C_mul, map_add, map_sub,
       map_mul, map_neg, map_ofNat] <;>
-      (ring_nf <;> simp [hS] <;> ring)
+      (ring_nf <;> (try simp only [← map_pow, hs, map_one]) <;> ring)
 
 -- Cancel the harmless integral scalings only after the actual coefficient
 -- computations.  No Virasoro singular-vector argument is used here.
@@ -1268,7 +1261,7 @@ private theorem coefficient_cancellation (D : LatticeData) (a : Charge D) (s : �
   all_goals by_cases hp : a = δ
   all_goals by_cases hm : -a = δ
   all_goals
-    simp_all [tri, V222, V33, V42, V6, S, Finsupp.single_apply,
+    simp_all [-sq_eq_one_iff, tri, V222, V33, V42, V6, S, Finsupp.single_apply,
       h0, hp, hm, smul_eq_C_mul, map_mul, map_ofNat] <;> ring
 
 /-- The actual level-six Ising vacuum relation, in the production lattice carrier.

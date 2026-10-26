@@ -8,7 +8,7 @@ noncomputable section
 namespace Reg.D5.S3.VertexAlgebra.Lattice.NormFourVacuumNull
 
 open _root_.D5.S3.VertexAlgebra
-open LatticeGeneratingFieldLocality LatticeSugawaraConformal
+open LatticeGeneratingFieldLocality LatticeAllStateField LatticeSugawaraConformal
 open Lattice.NormFourVirasoroVector Lattice.NormFourVacuumNull
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
