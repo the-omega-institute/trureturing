@@ -4,7 +4,31 @@
 
 Mutual unbiasedness is exactly orthogonality of the traceless diagonal planes.
 
-**Theorem 1.1 (Mutually unbiased diagonal planes).**
+**Definition 1.1 (The two coordinate projectors).**
+
+$$\operatorname{coordinateProjectorTwo} = ![!![1,0;0,0],!![0,0;0,1]]$$
+
+*Formalization.* `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateProjectorTwo` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two complex qubit coordinate projectors select the first and second basis vectors.
+
+**Definition 1.2 (The coordinate rank-one context).**
+
+$$\operatorname{RankOneContext}.\operatorname{projector}\left((\operatorname{coordinateContextTwo}:\operatorname{RankOneContext}(2))\right) = \operatorname{coordinateProjectorTwo}$$
+
+*Formalization.* `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two coordinate projectors form a normalized rank-one context and sum to the identity.
+
+**Theorem 1.3 (Mutually unbiased diagonal planes).**
 
 $$(\operatorname{MutuallyUnbiased}(B, C) \iff \operatorname{OrthogonalTracelessPlanes}(B, C)) \land \\(\operatorname{OrthogonalTracelessPlanes}(B, C) \iff \operatorname{TraceZeroComposition}(B, C)) \land \\(\operatorname{TraceZeroComposition}(B, C) \iff \operatorname{ScalarTraceComposition}(B, C)) \land \\(\operatorname{ScalarTraceComposition}(B, C) \iff \operatorname{MutuallyUnbiased}(B, C)).$$
 
@@ -24,6 +48,8 @@ All four equivalences are public. The proof expands the centered Hilbert--Schmid
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo`
+- Truth anchor: `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateProjectorTwo`
 - Truth anchor: `D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.mutually_unbiased_diagonal_planes`
 - Dependency: [D5/S3/Observer/Conditioning](../../Observer/Conditioning.md)
 - Dependency: [D5/S3/Quantum/Tomography/OneStepProbabilityInnovation](OneStepProbabilityInnovation.md)
