@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion.starMap
 
 *Commentary.*
 
-For a connected nonbipartite original graph, the exact integer star map is injective. Apply the existing private nonbipartite_potential proof to the difference of two potentials with equal images. Its constant has twice its value equal to zero, so it vanishes over the integers. This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a bind-only helper, not a new generality claim or a new proof of the private potential theorem.
+For a connected nonbipartite original graph, the exact integer star map is injective. Apply the existing private nonbipartite_potential proof to the difference of two potentials with equal images. Its constant has twice its value equal to zero, so it vanishes over the integers. This consumed corollary supplies injectivity to UnsignedStarFixedCokernel; it is a consumed helper, not a new generality claim or a new proof of the private potential theorem.
 
 **Theorem 1.2 (Signed Root Normalization in a Bipartite Graph).**
 

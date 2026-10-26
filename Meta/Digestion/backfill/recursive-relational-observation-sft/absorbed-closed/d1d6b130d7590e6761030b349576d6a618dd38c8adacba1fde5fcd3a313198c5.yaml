@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d1d6b130d7590e6761030b349576d6a618dd38c8adacba1fde5fcd3a313198c5
+  normalized_sha256: sha256:d1d6b130d7590e6761030b349576d6a618dd38c8adacba1fde5fcd3a313198c5
+cas_ref: sha256:d1d6b130d7590e6761030b349576d6a618dd38c8adacba1fde5fcd3a313198c5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/ResponseRealization/FixedLagCertificateSearch.search_correct
+    target_statement_id: sha256:8da715e5646cde4431d97ae9892efe925553d737acfd1a4a6286fe4ab72c1a00
+receipts:
+  unresolved_subitems: []
