@@ -10,6 +10,5 @@ internal sealed class SignedOrdinalHistoryBirthDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("signedordinalhistorybirth-0"),
                 DeclarationHandle.Create(Owner + "prepared_old_readback"), H("All old whole labels are retained"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("A BirthPack contains the support enumeration U, natural clopen enumeration B, chosen support family V and complete BornData enumeration nu on every Label. Preparation preserves every older whole pack through oldV and oldNu, including labels that are not yet eligible for J. B is read from the original birth. Literal carrier equality changes neither labels nor enumeration indices; permanent N arrivals are a separate object.")),
-                    Paragraph(Text("The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated."))), DescribeRole.Theorem))));
+                    Paragraph(Text("A BirthPack contains the support enumeration U, natural clopen enumeration B, chosen support family V and complete BornData enumeration nu on every Label. Preparation preserves every older whole pack through oldV and oldNu, including labels that are not yet eligible for J. B is read from the original birth. Literal carrier equality changes neither labels nor enumeration indices; permanent N arrivals are a separate object."))), DescribeRole.Theorem))));
 }

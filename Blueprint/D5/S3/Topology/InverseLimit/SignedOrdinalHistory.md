@@ -138,7 +138,7 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalHistory.launch_cofinal
 
 For each original support row theta, support index i and base, a later outgoing stage a creates its new V as the exact pullback of the original U(theta,i). The support row is a, while the arrival archive becomes available at succ(a). A support index is not identified with a whole signed measure label.
 
-The four-slot escape registrations remain unfinished under issue 21750. The Reg mirrors check exact source reconstruction only and do not claim declared_validated. The final omega-one cube/AH endpoint, a concrete RawHistory supplier and its final consumer remain separate obligations; this history unit does not claim full CH or official problem completion.
+The final omega-one cube/AH endpoint, a concrete RawHistory supplier and its final consumer remain separate obligations; this history unit does not claim full CH or official problem completion.
 
 ## References
 

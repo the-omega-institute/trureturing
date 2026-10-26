@@ -18,6 +18,5 @@ internal sealed class SignedOrdinalHistoryLimitDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("actual-history-limit-coherence"),
                 DeclarationHandle.Create(Owner + "limit_coherent"), H("Coherence with every actual earlier state"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("The constructed limit State extends every state of its own strict past: exact carriers and canonical whole births agree, permanent N equals the unique earlier R arrival, and incoming I/J almost refine every eligible old set. Regular bounded F is obtained from that same Extension.F before the weaker predecessor interface can discard its output regularity and bound.")),
-                    Paragraph(Text("The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated."))), DescribeRole.Theorem))));
+                    Paragraph(Text("The constructed limit State extends every state of its own strict past: exact carriers and canonical whole births agree, permanent N equals the unique earlier R arrival, and incoming I/J almost refine every eligible old set. Regular bounded F is obtained from that same Extension.F before the weaker predecessor interface can discard its output regularity and bound."))), DescribeRole.Theorem))));
 }

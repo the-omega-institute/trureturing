@@ -46,8 +46,6 @@ Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.predecessor_whol
 
 For every old row of the actual limit predecessor, its entire U, V and nu are heterogeneously equal to the same archive row's U, V and nu on the unchanged literal carrier. All labels are retained, including labels not yet eligible for J.
 
-The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks exact source reconstruction and does not claim declared_validated.
-
 **Definition 1.4 (Retain the actual limit event).**
 
 Lean statement: `D5/S3/Topology/InverseLimit/SignedOrdinalLimit.construct`

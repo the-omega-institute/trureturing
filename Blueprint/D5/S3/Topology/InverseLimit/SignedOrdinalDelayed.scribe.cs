@@ -20,5 +20,5 @@ internal sealed class SignedOrdinalDelayedDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "exists_prepared_step"), H("Prepare once before treatment"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Under CH, choose Q once before ordinary or delayed semantics. This same Q admits every ordinary treatment and every locally eligible DelayedTask, with the full Result and same-event delayed certificate. The arrival API preserves N only; it does not constitute a canonical whole-label historical birth pack.")),
-                    Paragraph(Text("This unit proves a local successor, not unified nextPredecessor, well-founded recursion, coherent global history, stable intrinsic scheduling, a final omega-one object or the full CH theorem. The four-slot escape registration remains unfinished under issue 21750; the Reg mirror checks the exact source types and does not claim declared_validated."))), DescribeRole.Theorem))));
+                    Paragraph(Text("This unit proves a local successor, not unified nextPredecessor, well-founded recursion, coherent global history, stable intrinsic scheduling, a final omega-one object or the full CH theorem."))), DescribeRole.Theorem))));
 }
