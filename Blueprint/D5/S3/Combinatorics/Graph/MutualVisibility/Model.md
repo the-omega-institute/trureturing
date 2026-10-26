@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Model.vertexConnecti
 
 *Commentary.*
 
-Take the least cardinality of a separator. The whole vertex set always supplies a candidate. On a nonempty complete graph this convention gives its order minus one, and on a one-vertex graph it gives zero. The desired lower bound by minimum degree for the full visibility graph remains unproved.
+Take the least cardinality of a separator. The whole vertex set always supplies a candidate. On a nonempty complete graph this convention gives its order minus one, and on a one-vertex graph it gives zero. The minimum-pair separator argument proves the matching lower bound for the full visibility graph.
 
 ## References
 

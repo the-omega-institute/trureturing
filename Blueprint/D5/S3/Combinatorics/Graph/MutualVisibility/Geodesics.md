@@ -4,7 +4,35 @@
 
 Original-host mutual visibility and the auxiliary geometry of the full mixed reconfiguration graph.
 
-**Definition 1.1 (Mandatory original geodesics).**
+**Theorem 1.1 (A visible set has no comparability triangle).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.visible_comparability_triangle`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.visible_comparability_triangle` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
+
+*Commentary.*
+
+Three selected labels of one mutually visible set cannot be pairwise comparable under strict mandatory ancestry towards a common root.
+
+**Theorem 1.2 (Height of an actual common neighbor).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.common_neighbor_height`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.common_neighbor_height` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Julián A. Fresán-Figueroa, Ilán A. Goldfeder, Aldo Lozano-Piña (2026). *Reconfiguration graphs of mutual-visibility sets*. DOI: [10.48550/arXiv.2610.24324](https://doi.org/10.48550/arXiv.2610.24324). URL: <https://arxiv.org/html/2610.24324v1>.
+
+*Commentary.*
+
+If u strictly dominates v towards w and y is adjacent to both u and v, the root distance of y equals the root distance of u plus one.
+
+**Definition 1.3 (Mandatory original geodesics).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Mandatory`
 
@@ -18,7 +46,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Mandatory`
 
 A vertex is mandatory between two endpoints when every original-host walk attaining their distance contains it. This universal relation is used only as auxiliary geometry; source visibility remains existential.
 
-**Definition 1.2 (Strict ancestry towards one root).**
+**Definition 1.4 (Strict ancestry towards one root).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Dominates`
 
@@ -32,7 +60,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Dominates`
 
 The nearer vertex is distinct from the root and from the farther vertex and is mandatory on every shortest path from the farther vertex to the root. Distance additivity makes its root distance strictly smaller.
 
-**Theorem 1.3 (Inward replacement of a visible common-neighbor triple).**
+**Theorem 1.5 (Inward replacement of a visible common-neighbor triple).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.inward_replacement`
 
@@ -50,5 +78,7 @@ Let the host be connected, let u strictly dominate v towards w, let y be adjacen
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Dominates`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.Mandatory`
+- Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.common_neighbor_height`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.inward_replacement`
+- Truth anchor: `D5/S3/Combinatorics/Graph/MutualVisibility/Geodesics.visible_comparability_triangle`
 - Dependency: [D5/S3/Combinatorics/Graph/MutualVisibility/Model](Model.md)

@@ -12,7 +12,7 @@ internal sealed class CleanRootsDocument : IScribeDocumentDefinition
         H("CleanRoots"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("exists-cleanRoot"),
+                DescribeId.Create("exists-clean-root"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MutualVisibility/CleanRoots.exists_cleanRoot"),
                 H("A clean root exists"),
                 StatementSource.WithoutFormula(),
