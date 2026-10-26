@@ -69,4 +69,12 @@ theorem modeReflexive (m : PureMode) : m = m := rfl
 private theorem privateStructure (n m : Nat) : stair (n+m) = stair n + stair m := addition n m
 
 theorem privateConsumer (n : Nat) : stair (n+n) = stair n + stair n := privateStructure n n
+def transportedAlias (n : Nat) : Nat := n + n
+abbrev transportedAbbreviation (n : Nat) : Nat := transportedAlias n
+@[irreducible] def transportedHidden (n : Nat) : Nat := n + 1
+
+def transportedRecursion : Nat → Nat
+  | 0 => 0
+  | n + 1 => transportedRecursion n + 1
+
 end LeanInformationAudit.Tests.SearchReduction.VocabularyCandidates

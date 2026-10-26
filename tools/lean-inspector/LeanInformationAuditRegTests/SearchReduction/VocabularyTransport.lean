@@ -19,6 +19,29 @@ run_meta do
     let rebuilt ← getConstInfo n
     unless ← isDefEq original.type rebuilt.type do throwError "transport changed type: {n}"
     return ← getEnv
+  for n in #[``VocabularyCandidates.transportedAlias,
+      ``VocabularyCandidates.transportedAbbreviation, ``VocabularyCandidates.transportedHidden,
+      ``VocabularyCandidates.transportedRecursion, ``VocabularyCandidates.easyBox] do
+    let rebuilt ← check n
+    unless getReducibilityStatusCore rebuilt n == getReducibilityStatusCore source n do
+      throwError "transport changed source reducibility: {n}"
+    let original := ((source.setExporting false).find? n).get!
+    let copied := (rebuilt.find? n).get!
+    let .ok originalNormal := DiskLookup.normalizeStatementSyntax source original.type
+      | throwError "source statement normalization failed: {n}"
+    let .ok copiedNormal := DiskLookup.normalizeStatementSyntax rebuilt copied.type
+      | throwError "rebuilt statement normalization failed: {n}"
+    unless originalNormal == copiedNormal do
+      throwError "transport changed syntax normalization: {n}"
+  let rebuilt ← check ``VocabularyCandidates.transportedAbbreviation
+  let aliasExpr := mkApp (mkConst ``VocabularyCandidates.transportedAlias) (mkNatLit 4)
+  let .ok normal := DiskLookup.normalizeStatementSyntax rebuilt aliasExpr
+    | throwError "rebuilt alias normalization failed"
+  if normal == aliasExpr then throwError "checked noncomputational alias remained opaque"
+  withEnv rebuilt do
+    unless (← withReducible <| whnf aliasExpr) == aliasExpr do
+      throwError "ordinary source def was promoted to reducible"
+  logInfo "transport reducibility: source statuses preserved; checked syntax aliases still expand"
   let modes ← check ``VocabularyCandidates.PureMode
   unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
   unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"

@@ -11,7 +11,7 @@ import LeanInformationAuditRegAnalysis.SearchReduction.PinnedDeriving
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev transportVersion : String := "prefix-reconstruction-checked-certificate-copy-v4"
+abbrev transportVersion : String := "prefix-reconstruction-source-reducibility-v5"
 abbrev reconstructionBudget : Nat := 200000
 
 private initialize referenceEnvironmentCache : IO.Ref (Option Environment) ← IO.mkRef none
@@ -228,7 +228,10 @@ mutual
       let type ← reconstructExpression next n value.type
       let body ← reconstructExpression next n value.value
       timeLookup "certificate/kernel" <| addDecl (.defnDecl {value with type, value := body})
-      setReducibilityStatus n .reducible
+      -- Reducibility is declaration metadata, not a source extension merge.
+      -- Syntax membership/presentation retains its independent checked alias
+      -- expansion; computational vocabulary keeps the source transparency.
+      setReducibilityStatus n (getReducibilityStatusCore ctx.source n)
       IO.eprintln s!"vocabulary rebuilt: {n}"
 
   /-- Copy a side proof without adding its source theorem to the prefix. Its
@@ -408,7 +411,10 @@ def checkTargetVocabularyProjections (source base : Environment) (target : Expr)
       unless ← withEnv source (isProp fieldType) do continue
       let closed ← mkForallFVars (← localParameters) fieldType
       let saved ← saveState
-      let direct ← withReducible <| isDefEq target closed
+      -- This rejection compares the proof field's actual type. Its projection
+      -- may compute through an ordinary source definition without making that
+      -- definition reducible for probes or statement normalization.
+      let direct ← withTransparency .default <| isDefEq target closed
       let conversion ← singleSourceConversion target closed
       let converted := direct || conversion.isSome
       saved.restore
