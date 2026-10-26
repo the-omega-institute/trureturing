@@ -48,7 +48,7 @@ internal sealed class CapWeightedEnergyDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/CapWeightedEnergy.norm_integral_le_sharp_cap_energy"),
                 H("The inverse-power Bochner estimate"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Call("norm", Call("integral", Call("inverse-power-weighted-vector", A, W))), Le,
+                    Call("norm", Call("integral", Call("inversePowerWeightedVector", A, W))), Le,
                     Call("K", A), new Formula.Power(B, A), new Formula.Power(Dl,
                         Seq(Frac, Grp(D(1), Minus, A), Grp(D(2))))))),
                 AssessedProvenance.FromRepo(),
