@@ -46,7 +46,7 @@ The bounded literature check recorded in #22022 reports:
 - the v3 source retains the conjecture and supports it numerically;
 - the orchestrator's web search found the source and Ranu, Wooltorton, Abbott and Fawzi (2026), arXiv:2608.27357v1, whose full-text reading was reported to concern SDP lower bounds on randomness rather than a settlement of this conjecture;
 - the preregistration's additional literature report found no settlement in D'Alessandro, Karlsson and Roch i Carceller (2026), arXiv:2608.09667v1, or Li, Wu, Chiribella and Ramanathan (2026), arXiv:2606.12173v1;
-- the preregistration records no prior repository match, zero OpenAlex citing works, and no MathDB or formal-conjectures match.
+- in the repository, `Library/QuantumChannels/rochicarcellertavakoli2025energyentanglement.md` and `Problems/roch-i-carceller-tavakoli-2025-energy-restricted-unitary-encoding.md` cite the source only for its two-input resourcelessness theorem, and no repository record settles or duplicates this conjecture; the preregistration's search report records zero OpenAlex citing works and no MathDB or formal-conjectures match.
 
 `not-found-in-searched-scope`. These are bounded search reports, with the unreproduced readings identified below.
 
