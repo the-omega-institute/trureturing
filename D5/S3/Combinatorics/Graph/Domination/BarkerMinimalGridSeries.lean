@@ -61,7 +61,7 @@ theorem intertwines (v : Vector) : fullStep (lift v) = lift (step v) := by
       have h := List.sum_map_ite
         (fun m : Fin 8 => accepts (window s ⟨m.val, by omega⟩) = true)
         (fun m => v (classOf (append s m))) (fun _ => (0 : ℤ)) (List.finRange 8)
-      simpa [fullStep, lift, successors, List.map_map, Fin.sum_univ_def] using h
+      simpa [fullStep, lift, successors, List.map_map, Function.comp_def, Fin.sum_univ_def] using h
     _ = ((quotientSuccessors (classOf s)).map v).sum :=
       ((row_certificate s).map v).sum_eq
     _ = lift (step v) s := expanded_row_sum (rows (classOf s)) (rows_nonneg _) v
@@ -79,10 +79,10 @@ theorem initial_sum (v : Vector) :
     (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = ∑ i : Fin 59, alpha i * v i := by
   calc
     (∑ s : Fin 64, v (classOf ⟨s.val, by omega⟩)) = (initialClasses.map v).sum := by
-      simp [initialClasses, List.map_map, Fin.sum_univ_def]
+      simp [initialClasses, List.map_map, Function.comp_def, Fin.sum_univ_def]
     _ = (alphaClasses.map v).sum := (initial_certificate.map v).sum_eq
     _ = ∑ i : Fin 59, alpha i * v i := by
-      simp only [alphaClasses, List.flatMap_def, List.map_flatten, List.sum_flatten, List.map_map, List.map_replicate,
+      simp only [alphaClasses, List.flatMap_def, List.map_flatten, List.sum_flatten, List.map_map, Function.comp_def, List.map_replicate,
         List.sum_replicate, nsmul_eq_mul, Int.toNat_of_nonneg (alpha_nonneg _)]
       exact (Fin.sum_univ_def _).symm
 
@@ -99,6 +99,7 @@ def evaluate : Vector →ₗ[ℤ] ℤ where
     simp only [Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i _
+    simp only [RingHom.id_apply]
     ring
 
 /-- The scalar quotient orbit with the separately prescribed positive-width
@@ -150,7 +151,7 @@ def P : PowerSeries ℚ := PowerSeries.mk fun n =>
   if h : n < 49 then (numerator ⟨n, h⟩ : ℚ) else 0
 
 /-- The full literal denominator as a finite sum of monomials. -/
-def Q : PowerSeries ℚ :=
+noncomputable def Q : PowerSeries ℚ :=
   ∑ j : Fin 49, PowerSeries.C (denominator j : ℚ) * PowerSeries.X ^ j.val
 
 private theorem coefficient_product (m : ℕ) :
@@ -182,7 +183,11 @@ theorem quotientSeries_mul_Q : quotientSeries * Q = P := by
           by_cases hj : j.val ≤ m
           · simp only [if_pos hj, hc j hj, Int.cast_mul]
           · simp only [if_neg hj, Int.cast_zero]]
-    exact_mod_cast hi
+    by_cases hp : m < 49
+    · simp only [dif_pos hp] at hi ⊢
+      exact_mod_cast hi
+    · simp only [dif_neg hp] at hi ⊢
+      exact_mod_cast hi
   · have hh : 50 ≤ m := by omega
     have hi := all_later_convolutions m hh
     have h49 : ¬ m < 49 := by omega
@@ -195,7 +200,14 @@ theorem quotientSeries_mul_Q : quotientSeries * Q = P := by
 theorem Q_constant : PowerSeries.constantCoeff Q = 1 := by
   simp only [Q, map_sum, map_mul, map_pow, PowerSeries.constantCoeff_C,
     PowerSeries.constantCoeff_X]
-  decide
+  calc
+    _ = (denominator 0 : ℚ) * 0 ^ (0 : Fin 49).val := by
+      apply Finset.sum_eq_single
+      · intro b _ hb
+        have hne : b.val ≠ 0 := fun h => hb (Fin.ext h)
+        simp [hne]
+      · simp
+    _ = 1 := by norm_num [denominator]
 
 /-- Inverse form of the full quotient-orbit identity. The actual-subset bridge
 is an independent obligation, not an assumption of this theorem. -/
