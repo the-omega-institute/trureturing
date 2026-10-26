@@ -53,8 +53,9 @@ theorem bures_eq_weighted_root_norm_sq {n : Type*} [Fintype n] [DecidableEq n]
   have hKIStar : K⁻¹ᴴ = K⁻¹ := by rw [Matrix.conjTranspose_nonsing_inv, hK]
   have root_square (X : Matrix n n ℂ) (hX : X.PosSemidef) :
       CFC.sqrt (K * X * K) * CFC.sqrt (K * X * K) = K * X * K := by
-    apply CFC.sqrt_mul_sqrt_self
-    exact (by simpa only [hK] using hX.mul_mul_conjTranspose_same K).nonneg
+    have hp : (K * X * K).PosSemidef := by
+      simpa only [hK] using hX.mul_mul_conjTranspose_same K
+    exact CFC.sqrt_mul_sqrt_self _ hp.nonneg
   have diagonal_term (X : Matrix n n ℂ) (hX : X.PosSemidef) :
       trace (CFC.sqrt (K * X * K) * T⁻¹ * CFC.sqrt (K * X * K)) = trace X := by
     rw [Matrix.trace_mul_cycle, root_square X hX, Matrix.trace_mul_comm, hInv]
@@ -66,7 +67,7 @@ theorem bures_eq_weighted_root_norm_sq {n : Type*} [Fintype n] [DecidableEq n]
           _ = _ := by rw [hKI]; simp
       _ = trace X := by
         rw [Matrix.trace_mul_cycle]
-        simp only [Matrix.mul_assoc, hIK, Matrix.mul_one]
+        simp only [Matrix.mul_assoc, hIK, Matrix.one_mul]
   have cross : (trace (J * T⁻¹ * H)).re = (trace (H * T⁻¹ * J)).re := by
     have hh : (H * T⁻¹ * J)ᴴ = J * T⁻¹ * H := by
       simp only [Matrix.conjTranspose_mul, hH, hJ, hInvStar, Matrix.mul_assoc]
@@ -143,6 +144,7 @@ private theorem rootFidelity_symm (S T : Matrix (Fin 2) (Fin 2) ℂ)
   rw [Matrix.trace_mul_comm T S, mul_comm T.det.re S.det.re] at h2
   nlinarith only [h1, h2, rootFidelity_nonneg S T, rootFidelity_nonneg T S]
 
+open scoped Matrix.Norms.L2Operator in
 private theorem rootFidelity_sq_ge_of_order {n : Type*} [Fintype n] [DecidableEq n]
     (S T : Matrix n n ℂ) (hS : S.PosSemidef) (htr : trace S = 1)
     (t : ℝ) (ht : 0 ≤ t) (hTS : (T - t ^ 2 • S).PosSemidef) :
@@ -162,7 +164,9 @@ private theorem rootFidelity_sq_ge_of_order {n : Type*} [Fintype n] [DecidableEq
     simp only [mul_sub, sub_mul, Matrix.mul_smul, Matrix.smul_mul,
       smul_smul, hself, pow_two]
   rw [hdiff] at hpos
-  have hroot := CFC.sqrt_le_sqrt _ _ (Matrix.le_iff.mpr hpos)
+  have hroot : CFC.sqrt ((t • S) * (t • S)) ≤
+      CFC.sqrt (CFC.sqrt S * T * CFC.sqrt S) :=
+    CFC.sqrt_le_sqrt _ _ (Matrix.le_iff.mpr hpos)
   rw [CFC.sqrt_mul_self (t • S) (hS.smul ht).nonneg] at hroot
   have htrace := (Complex.le_def.mp
     ((Matrix.tracePositiveLinearMap n ℝ ℂ).monotone hroot)).1
@@ -197,9 +201,15 @@ private theorem preparation_coordinate (p q x y : ℝ)
   let a : Fin 2 → ℝ := ![p*x, (1-p)*y]
   let b : Fin 2 → ℝ := ![q*x, (1-q)*y]
   have ha : ∀ i, 0 ≤ a i := by
-    intro i; fin_cases i <;> dsimp [a] <;> positivity
+    intro i
+    fin_cases i
+    · exact mul_nonneg hp.1 hx
+    · exact mul_nonneg (sub_nonneg.mpr hp.2) hy
   have hb : ∀ i, 0 ≤ b i := by
-    intro i; fin_cases i <;> dsimp [b] <;> positivity
+    intro i
+    fin_cases i
+    · exact mul_nonneg hq.1 hx
+    · exact mul_nonneg (sub_nonneg.mpr hq.2) hy
   have h := Real.sum_sqrt_mul_sqrt_le (Finset.univ : Finset (Fin 2)) ha hb
   simp only [Fin.sum_univ_two, a, b,
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one] at h
@@ -239,7 +249,9 @@ private theorem rootFidelity_pos_of_posDef {n : Type*} [Fintype n]
   let Z := K * S * K
   have hK := (CFC.sqrt_nonneg T).posSemidef
   have hZ : Z.PosSemidef := by
-    simpa only [hK.isHermitian.eq] using hS.mul_mul_conjTranspose_same K
+    have hk : Kᴴ = K := hK.isHermitian.eq
+    change (K * S * K).PosSemidef
+    simpa only [hk] using hS.mul_mul_conjTranspose_same K
   have hR := (CFC.sqrt_nonneg Z).posSemidef
   have htrace : trace (CFC.sqrt Z) = 0 := by
     apply Complex.ext
@@ -370,6 +382,7 @@ private theorem fidelity_scaled_trace (S V T : Matrix (Fin 2) (Fin 2) ℂ)
         rw [Matrix.trace_mul_cycle]
         simp only [Matrix.mul_assoc]
       _ = _ := by rw [hK2]
+  dsimp only [Z, W] at hSZ hVW hZW
   have hc : ((a*b : ℝ) : ℂ) * fidelity T S V =
       trace (T*S*V) + (Real.sqrt (T.det.re*S.det.re) : ℂ) +
         (Real.sqrt (T.det.re*V.det.re) : ℂ) +
@@ -377,8 +390,10 @@ private theorem fidelity_scaled_trace (S V T : Matrix (Fin 2) (Fin 2) ℂ)
           (Real.sqrt (T.det.re*V.det.re) : ℂ) * trace T⁻¹ := by
     calc
       _ = trace (((a : ℂ) • H) * T⁻¹ * ((b : ℂ) • J)) := by
+        change ((a*b : ℝ) : ℂ) * trace (H * T⁻¹ * J) = _
         simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul,
-          smul_smul, smul_eq_mul, Complex.ofReal_mul] <;> rfl
+          smul_smul, smul_eq_mul, Complex.ofReal_mul]
+        ring
       _ = _ := by
         rw [hH, hJ]
         simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul,
@@ -394,7 +409,7 @@ private theorem fidelity_scaled_trace (S V T : Matrix (Fin 2) (Fin 2) ℂ)
     apply Complex.ext <;> simp [hti.symm]
   rw [trace_inverse_two T ht, htdreal] at hc
   have hcre := congrArg Complex.re hc
-  simp only [Complex.ofReal_mul, ← Complex.ofReal_inv, Complex.mul_re,
+  simp only [Complex.ofReal_mul, ← Complex.ofReal_inv, Complex.mul_re, Complex.mul_im,
     Complex.ofReal_re, Complex.ofReal_im, Complex.add_re, zero_mul,
     mul_zero, sub_zero] at hcre
   have hds : Real.sqrt (T.det.re*S.det.re) = d*e := Real.sqrt_mul htd _
@@ -562,7 +577,8 @@ private theorem chord_posDef (d e : EuclideanSpace ℝ (Fin 3))
     (r : ℝ) (hr : r ∈ Set.Ioo (0 : ℝ) 1) : (chordState d e r).PosDef := by
   have hp := bloch_physical _ (chord_norm_le d e hde he hd r ⟨hr.1.le,hr.2.le⟩)
   apply hp.posDef_iff_det_ne_zero.mpr
-  rw [chordState, D5.S3.Quantum.Information.ActualQubitChordObstruction.det_bloch,
+  change (blochMatrix 1 (chordVector d e r)).det ≠ 0
+  rw [D5.S3.Quantum.Information.ActualQubitChordObstruction.det_bloch,
     chord_norm_sq d e hde he hd]
   have hprod : 0 < (1-‖d‖^2)*r*(1-r) := by positivity
   have heq : (1-(‖d‖^2+(1-‖d‖^2)*(2*r-1)^2))/4 =
@@ -661,7 +677,7 @@ theorem qubit_chord_factorization (d e : EuclideanSpace ℝ (Fin 3))
     change f*(2*a*b) = a^2+b^2+rootFidelity S V^2-1 at h
     rw [ha2, hb2, hc2] at h
     change f*(2*a*b) = tau+k*u^2+(tau+k*v^2)+(tau+k*w^2)-1 at h
-    linear_combination (1/2)*h - (k/2)*hg
+    linear_combination (1/2)*h + (k/2)*hg
   have hu : 0 ≤ u := by dsimp [u,binaryFidelity]; positivity
   have hv : 0 ≤ v := by dsimp [v,binaryFidelity]; positivity
   have hw : 0 ≤ w := by dsimp [w,binaryFidelity]; positivity
@@ -695,7 +711,8 @@ theorem qubit_chord_factorization (d e : EuclideanSpace ℝ (Fin 3))
 
 private theorem binaryFidelity_self (x : ℝ) (hx : x ∈ Set.Icc (0 : ℝ) 1) :
     binaryFidelity x x = 1 := by
-  change Real.sqrt (x^2)+Real.sqrt ((1-x)^2)=1
+  unfold binaryFidelity
+  rw [← pow_two x, ← pow_two (1-x)]
   rw [Real.sqrt_sq hx.1, Real.sqrt_sq (sub_nonneg.mpr hx.2)] <;> ring
 
 private theorem binaryFidelity_sq_lt_one (s t : ℝ)
@@ -752,6 +769,7 @@ theorem qubit_chord_strict_sign_and_boundary (d e : EuclideanSpace ℝ (Fin 3))
       · exact hcomparison
     · constructor
       · intro h
+        change f = w at h
         have hz : ‖d‖^2*(1-w^2)*(a^2+b^2-1)=0 := by
           rw [← hfactor', h, sub_self, zero_mul]
         have hm := (mul_eq_zero.mp hz).resolve_left (ne_of_gt hc)
@@ -773,7 +791,8 @@ theorem qubit_chord_strict_sign_and_boundary (d e : EuclideanSpace ℝ (Fin 3))
     simp only [sub_self, Matrix.mul_zero, norm_zero, ne_eq, OfNat.ofNat_ne_zero,
       not_false_eq_true, zero_pow] at hB
     unfold bures at hB
-    rw [Matrix.trace_add, blochMatrix_trace, Complex.add_re] at hB
+    have hts : trace (chordState d e s) = 1 := blochMatrix_trace 1 _
+    rw [Matrix.trace_add, hts] at hB
     have hf1 : f=1 := by
       change (fidelity (chordState d e r) (chordState d e s) (chordState d e t)).re=1
       rw [← hst]
@@ -792,7 +811,8 @@ private theorem full_chord_of_distinct (a b : EuclideanSpace ℝ (Fin 3))
   have hl : 0 < l := norm_pos_iff.mpr (sub_ne_zero.mpr hne.symm)
   let e := l⁻¹ • (b-a)
   have he : ‖e‖=1 := by
-    rw [e, norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hl)]
+    change ‖l⁻¹ • (b-a)‖ = 1
+    rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hl)]
     exact inv_mul_cancel₀ (ne_of_gt hl)
   have hdiff : b-a = l • e := by
     dsimp [e]
@@ -872,7 +892,7 @@ private theorem mixture_probability (p x y : ℝ)
     (hy : y ∈ Set.Icc (0 : ℝ) 1) : p*x+(1-p)*y ∈ Set.Icc (0 : ℝ) 1 := by
   have hpc : 0 ≤ 1-p := sub_nonneg.mpr hp.2
   constructor
-  · positivity
+  · exact add_nonneg (mul_nonneg hp.1 hx.1) (mul_nonneg hpc hy.1)
   · have h1 := mul_le_mul_of_nonneg_left hx.2 hp.1
     have h2 := mul_le_mul_of_nonneg_left hy.2 hpc
     linarith only [h1,h2]
@@ -895,7 +915,8 @@ private theorem midpoint_half_order (A B : Matrix (Fin 2) (Fin 2) ℂ)
     dsimp [mixture]
     module
   rw [he]
-  apply (mixture_posSemidef A B hA hB (1-p) (by constructor <;> linarith)).smul
+  apply (mixture_posSemidef A B hA hB (1-p)
+    (by constructor <;> linarith only [hp.1, hp.2])).smul
   norm_num
 
 private theorem fidelity_same_state (S T : Matrix (Fin 2) (Fin 2) ℂ)
@@ -982,9 +1003,10 @@ private theorem bloch_commutator_gram (a b : EuclideanSpace ℝ (Fin 3)) :
     (trace ((P*Q-Q*P)ᴴ*(P*Q-Q*P))).re =
       (‖a‖^2*‖b‖^2-⟪a,b⟫_ℝ^2)/2 := by
   dsimp
-  simp [Matrix.trace,Matrix.mul_apply,Matrix.conjTranspose_apply,blochMatrix,
+  norm_num [Matrix.trace,Matrix.mul_apply,Matrix.conjTranspose_apply,blochMatrix,
     Fin.sum_univ_two,EuclideanSpace.real_norm_sq_eq,PiLp.inner_apply,
-    RCLike.inner_apply,Fin.sum_univ_three,Complex.mul_re,Complex.mul_im] <;> ring
+    RCLike.inner_apply,Fin.sum_univ_three,Complex.mul_re,Complex.mul_im,
+    starRingEnd_apply, RCLike.star_def] <;> ring
 
 private theorem commuting_chord_zero_foot (d e : EuclideanSpace ℝ (Fin 3))
     (hde : ⟪d,e⟫_ℝ=0) (he : ‖e‖=1) (hd : ‖d‖^2<1)
@@ -1028,7 +1050,7 @@ private theorem map_mixture (Phi : Matrix (Fin 2) (Fin 2) ℂ →ₗ[ℂ] Matrix
     (p : ℝ) (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     Phi (mixture p A B)=mixture p (Phi A) (Phi B) := by
   change (Phi.restrictScalars ℝ) (p • A+(1-p) • B)=_
-  simp only [mixture,map_add,map_smul]
+  simp only [mixture,map_add,map_smul] <;> rfl
 
 /-- Every positive trace-preserving complex-linear qubit map obeys the
 transported-reference midpoint inequality on commuting density inputs. -/
@@ -1137,7 +1159,8 @@ theorem commuting_midpoint_canonical_CPTP
   have hB : bures (rawMatrix channel midpointReference) (rawMatrix channel P) (rawMatrix channel Q) ≤
       bures midpointReference P Q := h.2.2
   refine ⟨?_,?_,hB,Real.sqrt_le_sqrt hB⟩
-  · rw [bures_eq_weighted_root_norm_sq _ _ _ (hpos P hP) (hpos Q hQ) hT]
+  · rw [bures_eq_weighted_root_norm_sq (rawMatrix channel P) (rawMatrix channel Q)
+      (rawMatrix channel midpointReference) (by exact hpos P hP) (by exact hpos Q hQ) hT]
     exact sq_nonneg _
   · rw [bures_eq_weighted_root_norm_sq _ _ _ hP hQ midpointReference_posDef]
     exact sq_nonneg _
@@ -1273,7 +1296,10 @@ theorem singular_Good_outside_balance :
   have hrank : P.rank=1 := by
     dsimp [P]
     rw [Matrix.rank_diagonal,Fintype.card_subtype]
-    norm_num [Finset.univ_fin2]
+    have hfilter : Finset.univ.filter (fun i : Fin 2 => ![(1 : ℂ),0] i ≠ 0) = {0} := by
+      ext i
+      fin_cases i <;> norm_num
+    rw [hfilter, Finset.card_singleton]
   have ha : rootFidelity midpointReference P^2=1/2 := by
     rw [rootFidelity_sq_formula _ _ midpointReference_posDef.posSemidef hP]
     norm_num [P,midpointReference,Matrix.trace,Matrix.det_fin_two,
