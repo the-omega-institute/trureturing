@@ -47,10 +47,11 @@ private theorem fock_pairs_orthonormal :
   intro p q
   rw [fock_pair_single, fock_pair_single, lp.inner_single_left]
   by_cases h2 : q.2 = p.2
-  · simp only [lp.single_apply, if_pos h2, lp.inner_single_left]
+  · rw [h2]
+    simp only [lp.single_apply, Pi.single_eq_same, lp.inner_single_left]
     by_cases h1 : q.1 = p.1
     · have hpq : p = q := Prod.ext h1.symm h2.symm
-      simp [lp.single_apply, h1, hpq]
+      simp [lp.single_apply, Pi.single_apply, h1, hpq]
     · have hpq : p ≠ q := fun h => h1 (congrArg Prod.fst h).symm
       simp [lp.single_apply, h1, hpq]
   · have hpq : p ≠ q := fun h => h2 (congrArg Prod.snd h).symm
@@ -63,6 +64,7 @@ private theorem fock_pairs_total :
   have hc (m n : ℕ) : x n m = 0 := by
     have hi := (Submodule.mem_orthogonal _ _).mp hx _
       (Submodule.subset_span ⟨(m, n), rfl⟩)
+    change inner ℂ (fockPair m n) x = 0 at hi
     rw [fock_pair_single, lp.inner_single_left, lp.inner_single_left] at hi
     simpa only [RCLike.inner_apply, map_one, one_mul] using hi
   have hz : x = 0 := by
@@ -83,7 +85,7 @@ private theorem fock_basis_repr (w : H2) (p : ℕ × ℕ) :
     fockBasis.repr w p = w p.2 p.1 := by
   rw [HilbertBasis.repr_apply_apply, fock_basis_apply, fock_pair_single,
     lp.inner_single_left, lp.inner_single_left]
-  simp only [RCLike.inner_apply, map_one, one_mul]
+  simp only [RCLike.inner_apply, map_one, one_mul, mul_one]
 
 private def oneBasis : HilbertBasis ℕ ℂ H := default
 
@@ -95,6 +97,8 @@ def completedPair : PairCompletion ≃ₗᵢ[ℂ] H2 :=
 private theorem completed_pair_product (x y : H) :
     completedPair ((x ⊗ₜ[ℂ] y : H ⊗[ℂ] H) : PairCompletion) = tensor x y := by
   apply fockBasis.repr.injective
+  simp only [completedPair, LinearIsometryEquiv.trans_apply,
+    LinearIsometryEquiv.apply_symm_apply]
   apply lp.ext
   funext p
   change (tensorHilbertBasis oneBasis oneBasis).repr
@@ -120,6 +124,8 @@ private theorem four_permutation_repr
     (e : Equiv.Perm ((ℕ × ℕ) × (ℕ × ℕ))) (x : FourModes)
     (p : (ℕ × ℕ) × (ℕ × ℕ)) :
     fourBasis.repr (fourPermutation e x) p = fourBasis.repr x (e.symm p) := by
+  simp only [fourPermutation, LinearIsometryEquiv.trans_apply,
+    LinearIsometryEquiv.apply_symm_apply]
   change coordinateRename e.toEmbedding (fourBasis.repr x) p = _
   simpa only [e.apply_symm_apply] using
     coordinateRename_image e.toEmbedding (fourBasis.repr x) (e.symm p)
@@ -181,8 +187,9 @@ private theorem environment_coefficient (p : ℕ × ℕ) :
       if p = (4, 0) then ((Real.sqrt 6 / 4 : ℝ) : ℂ)
       else if p = (2, 2) then (-1 / 2 : ℂ)
       else if p = (0, 4) then ((Real.sqrt 6 / 4 : ℝ) : ℂ) else 0 := by
-  have hb (q : ℕ × ℕ) : fockBasis.repr (fockPair q.1 q.2) p =
-      if p = q then 1 else 0 := by
+  have hb (m n : ℕ) : fockBasis.repr (fockPair m n) p =
+      if p = (m, n) then 1 else 0 := by
+    change fockBasis.repr (fockPair (m, n).1 (m, n).2) p = _
     rw [← fock_basis_apply, HilbertBasis.repr_self, lp.single_apply]
     simp only [Pi.single_apply, eq_comm]
   rw [TwoCopyEnvironment.rotated_environment_expansion]
@@ -220,22 +227,34 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
     simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs, div_pow]
     rw [Real.sq_sqrt (by norm_num)]
     norm_num
+  rw [Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_singleton]
+  have hself (z a : ℂ) : (inner ℂ (z * a) (z * a)).re = ‖z‖ ^ 2 * ‖a‖ ^ 2 := by
+    rw [inner_self_eq_norm_sq_to_K]
+    norm_cast
+    rw [norm_mul, mul_pow]
   rcases p with ⟨c, d⟩
   by_cases h0 : d = 0
   · subst d
-    simp [differencePermutation, environment_coefficient, environmentWeight,
-      inner_self_eq_norm_sq_to_K, norm_mul, mul_pow, ha]
+    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
+      hself, ha]
+    ring
   by_cases h2 : d = 2
   · subst d
-    simp [differencePermutation, environment_coefficient, environmentWeight,
-      inner_self_eq_norm_sq_to_K, norm_mul, mul_pow]
+    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
+      hself, norm_div, norm_neg, norm_one, norm_ofNat]
     ring
   by_cases h4 : d = 4
   · subst d
-    simp [differencePermutation, environment_coefficient, environmentWeight,
-      inner_self_eq_norm_sq_to_K, norm_mul, mul_pow, ha]
-  · simp [differencePermutation, environment_coefficient, environmentWeight,
-      h0, h2, h4]
+    norm_num only [differencePermutation, environment_coefficient, environmentWeight,
+      mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add,
+      hself, ha]
+    ring
+  · simp only [differencePermutation, environment_coefficient, environmentWeight,
+      Prod.mk.injEq, h0, h2, h4, and_false, if_false, mul_zero,
+      inner_zero_right, add_zero, Complex.zero_re, zero_mul]
 
 /-- Completed-space swap compression against the actual rotated two-copy
 environment. Every center coordinate of v and every infinite tail is retained. -/
@@ -353,7 +372,9 @@ private theorem exponential_pair_span_dense :
   apply le_antisymm ?_ bot_le
   intro v hv
   have hz : v = 0 := exponential_pair_total v (fun z =>
-    Submodule.inner_left_of_mem_orthogonal (Submodule.subset_span ⟨z, rfl⟩) hv)
+    Submodule.inner_left_of_mem_orthogonal
+      (K := Submodule.span ℂ (Set.range exponentialPair))
+      (Submodule.subset_span (Set.mem_range_self z)) hv)
   simp [hz]
 
 private theorem four_clm_ext (T U : FourModes →L[ℂ] FourModes)
@@ -381,7 +402,8 @@ private theorem four_clm_ext (T U : FourModes →L[ℂ] FourModes)
     exact congrArg (fun L : H2 →L[ℂ] FourModes => L x) heq
   apply ContinuousLinearMap.ext
   intro x
-  apply UniformSpace.Completion.induction_on x (isClosed_eq (by fun_prop) (by fun_prop))
+  refine UniformSpace.Completion.induction_on (p := fun x => T x = U x) x
+    (isClosed_eq (by fun_prop) (by fun_prop)) ?_
   intro t
   induction t using TensorProduct.induction_on with
   | zero => simp
@@ -441,7 +463,8 @@ private theorem pair_map_product (U : H2 ≃ₗᵢ[ℂ] H2) (x y : H2) :
 
 private theorem pair_map_norm (U : H2 ≃ₗᵢ[ℂ] H2) (x : FourModes) :
     ‖pairMap U x‖ = ‖x‖ := by
-  apply UniformSpace.Completion.induction_on x (isClosed_eq (by fun_prop) (by fun_prop))
+  refine UniformSpace.Completion.induction_on (p := fun x => ‖pairMap U x‖ = ‖x‖) x
+    (isClosed_eq (by fun_prop) (by fun_prop)) ?_
   intro t
   simp only [pairMap, twoCopyMap, ContinuousLinearMap.completion_apply_coe,
     UniformSpace.Completion.norm_coe]
@@ -460,8 +483,12 @@ private theorem relative_balanced (x : H2) : relativeUnitary (balancedUnitary x)
       ContinuousLinearMap.id ℂ H2 := by
     apply ContinuousLinearMap.ext_on exponential_pair_span_dense
     rintro _ ⟨z, rfl⟩
-    simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.id_apply,
-      balancedUnitary, relativeUnitary, beam_coherent]
+    change relativeUnitary (balancedUnitary (exponentialPair z)) = exponentialPair z
+    rw [show balancedUnitary (exponentialPair z) =
+      exponentialPair (rotate halfRoot halfRoot z) from beam_coherent _ _ _ _,
+      show relativeUnitary (exponentialPair (rotate halfRoot halfRoot z)) =
+      exponentialPair (rotate halfRoot (-halfRoot) (rotate halfRoot halfRoot z)) from
+        beam_coherent _ _ _ _]
     apply congrArg exponentialPair
     have hs := half_root_complex_sq
     apply Prod.ext <;> simp only [rotate, Complex.ofReal_neg]
@@ -504,7 +531,8 @@ def centerDifference : FourModes →L[ℂ] FourModes :=
 private theorem center_difference_inner (x y : FourModes) :
     inner ℂ (centerDifference x) (centerDifference y) = inner ℂ x y := by
   rw [centerDifference, ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply,
-    pair_map_inner, LinearIsometryEquiv.inner_map_map]
+    pair_map_inner]
+  exact regroup.inner_map_map x y
 
 private theorem retained_swap_coherent (z w : ℂ × ℂ) :
     retainedSwap ((exponentialPair z ⊗ₜ[ℂ] exponentialPair w : H2 ⊗[ℂ] H2) : FourModes) =
@@ -530,10 +558,24 @@ theorem balanced_swap_conjugation :
     differenceSwap.toContinuousLinearEquiv.toContinuousLinearMap.comp centerDifference := by
   apply four_clm_ext
   intro z w
-  simp only [ContinuousLinearMap.comp_apply, pair_map_product,
-    balancedUnitary, relativeUnitary, beam_coherent, retained_swap_coherent]
-  simp only [centerDifference, ContinuousLinearMap.comp_apply, regroup_coherent,
-    pair_map_product, relativeUnitary, beam_coherent, difference_swap_coherent]
+  have hb (z : ℂ × ℂ) : balancedUnitary (exponentialPair z) =
+      exponentialPair (rotate halfRoot halfRoot z) := beam_coherent _ _ _ _
+  have hr (z : ℂ × ℂ) : relativeUnitary (exponentialPair z) =
+      exponentialPair (rotate halfRoot (-halfRoot) z) := beam_coherent _ _ _ _
+  have hc (z w : ℂ × ℂ) : centerDifference
+      ((exponentialPair z ⊗ₜ[ℂ] exponentialPair w : H2 ⊗[ℂ] H2) : FourModes) =
+      ((exponentialPair (rotate halfRoot (-halfRoot) (z.1, w.1)) ⊗ₜ[ℂ]
+        exponentialPair (rotate halfRoot (-halfRoot) (z.2, w.2)) :
+          H2 ⊗[ℂ] H2) : FourModes) := by
+    change pairMap relativeUnitary (regroup _) = _
+    rw [regroup_coherent, pair_map_product, hr, hr]
+  change centerDifference (pairMap relativeUnitary (retainedSwap
+    (pairMap balancedUnitary
+      ((exponentialPair z ⊗ₜ[ℂ] exponentialPair w : H2 ⊗[ℂ] H2) : FourModes)))) =
+    differenceSwap (centerDifference
+      ((exponentialPair z ⊗ₜ[ℂ] exponentialPair w : H2 ⊗[ℂ] H2) : FourModes))
+  rw [pair_map_product, hb, hb, retained_swap_coherent, pair_map_product, hr, hr,
+    hc, hc, difference_swap_coherent]
   have hs := half_root_complex_sq
   have hs3 : (halfRoot : ℂ) ^ 3 = (halfRoot : ℂ) / 2 := by
     linear_combination (halfRoot : ℂ) * hs
@@ -567,8 +609,10 @@ theorem retained_swap_gram (w : H2) :
   have hrow (jk : ℕ × ℕ) :
       (∑' mn : ℕ × ℕ, F (environmentFirst.symm (jk, mn))) =
         (‖inner ℂ (w jk.1) (w jk.2)‖ ^ 2 : ℂ) := by
-    have hleft := lp.hasSum_inner (w jk.1) (w jk.2)
-    have hright := lp.hasSum_inner (w jk.2) (w jk.1)
+    have hleft : HasSum (fun m => inner ℂ (w jk.1 m) (w jk.2 m))
+        (inner ℂ (w jk.1) (w jk.2)) := lp.hasSum_inner _ _
+    have hright : HasSum (fun m => inner ℂ (w jk.2 m) (w jk.1 m))
+        (inner ℂ (w jk.2) (w jk.1)) := lp.hasSum_inner _ _
     have hmul := tsum_mul_tsum_of_summable_norm hleft.summable.norm hright.summable.norm
     have hterm (mn : ℕ × ℕ) : F (environmentFirst.symm (jk, mn)) =
         inner ℂ (w jk.1 mn.1) (w jk.2 mn.1) *
@@ -582,7 +626,6 @@ theorem retained_swap_gram (w : H2) :
     simp_rw [hterm]
     rw [← hmul, hleft.tsum_eq, hright.tsum_eq]
     rw [← inner_conj_symm (w jk.2) (w jk.1), RCLike.conj_mul]
-    norm_cast
   calc
     _ = ∑' p, F p := by
       rw [← fourBasis.repr.inner_map_map, lp.inner_eq_tsum]
@@ -623,15 +666,16 @@ private theorem reduced_square_gram (w : H2) :
         rw [hadj, pow_two, ContinuousLinearMap.mul_apply]
       _ = inner ℂ (D (b i)) (D (b i)) :=
         ContinuousLinearMap.adjoint_inner_right D _ _
-      _ = _ := by simp only [inner_self_eq_norm_sq_to_K, Complex.ofReal_pow]
+      _ = _ := by rw [inner_self_eq_norm_sq_to_K]; norm_cast
   have hd := (summable_trace_diagonal_of_isTraceClass hD2 b).hasSum
   rw [← trace_eq_of_hilbertBasis hD2 b] at hd
   have hd' : HasSum (fun n : ℕ => (‖D (oneBasis n)‖ ^ 2 : ℂ)) (trace (D ^ 2) hD2) := by
     have hn := e.hasSum_iff.mpr hd
-    simpa only [hdiag, hb, Equiv.symm_apply_apply] using hn
+    simpa only [Function.comp_apply, hdiag, hb, Equiv.symm_apply_apply] using hn
   have hnorm : Summable (fun n : ℕ => ‖D (oneBasis n)‖ ^ 2) := by
-    have hn := e.summable_iff.mpr (summable_norm_sq_apply_of_hilbertBasis hDHS b)
-    simpa only [hb, Equiv.symm_apply_apply] using hn
+    have hn := e.summable_iff.mpr
+      (summable_norm_sq_apply_of_hilbertBasis (Set.range oneBasis) b hDHS)
+    simpa only [Function.comp_apply, hb, Equiv.symm_apply_apply] using hn
   have hcol (n : ℕ) : C (oneBasis n) = w n := coefficient_column w n
   have hmatrix (n k : ℕ) : oneBasis.repr (D (oneBasis n)) k = inner ℂ (w k) (w n) := by
     rw [HilbertBasis.repr_apply_apply]
@@ -655,9 +699,11 @@ private theorem reduced_square_gram (w : H2) :
       _ = ∑' n, ∑' k, (‖inner ℂ (w k) (w n)‖ ^ 2 : ℂ) := by
         apply tsum_congr
         intro n
-        exact (Complex.hasSum_ofReal.mpr (hrow n)).tsum_eq.symm
+        simpa only [Complex.ofReal_pow] using
+          (Complex.hasSum_ofReal.mpr (hrow n)).tsum_eq.symm
       _ = ∑' nk : ℕ × ℕ, (‖inner ℂ (w nk.2) (w nk.1)‖ ^ 2 : ℂ) :=
-        (Complex.hasSum_ofReal.mpr hjoint.hasSum).summable.tsum_prod.symm
+        by simpa only [Complex.ofReal_pow] using
+          (Complex.hasSum_ofReal.mpr hjoint.hasSum).summable.tsum_prod.symm
       _ = _ := by
         apply tsum_congr
         intro jk
@@ -708,7 +754,10 @@ theorem balanced_fock_two_purity (a : H) :
       differenceSwap (centerDifference u) := by
     have h := congrArg (fun L : FourModes →L[ℂ] FourModes => L u)
       balanced_swap_conjugation
-    simpa only [ContinuousLinearMap.comp_apply, hx] using h
+    change centerDifference (pairMap relativeUnitary
+      (retainedSwap (pairMap balancedUnitary u))) =
+        differenceSwap (centerDifference u) at h
+    simpa only [hx] using h
   have hexpect : inner ℂ x (retainedSwap x) =
       inner ℂ (centerDifference u) (differenceSwap (centerDifference u)) := by
     calc

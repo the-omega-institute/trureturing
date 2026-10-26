@@ -18,6 +18,7 @@ namespace TraceClassSpectralEnvelope
 open D5.S3.Entropy.CountableSpectralMoments
 open D5.S3.Entropy.SpectralEnvelopeParameters
 open D5.S3.Entropy.SpectralEnvelope
+open private erase_nonneg erase_summable from D5.S3.Entropy.CountableSpectralMoments
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
@@ -43,6 +44,14 @@ private def spectralData {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
 
 def spectrum {T : H →L[ℂ] H} (d : CountableSpectralData T) : ℕ → ℝ :=
   Function.extend d.embed (fun i => d.value i) 0
+
+/-- Remove one actual eigenbasis coordinate. Removing a zero eigenvalue keeps
+the nonzero sequence unchanged; its multiplicity remains in the full basis. -/
+def remainderSpectrum {T : H →L[ℂ] H} (d : CountableSpectralData T)
+    (i : d.index) : ℕ → ℝ := by
+  classical
+  exact if hi : d.value i = 0 then spectrum d
+    else erase (spectrum d) (d.embed ⟨i, hi⟩)
 
 private theorem spectrum_nonneg {T : H →L[ℂ] H} (d : CountableSpectralData T) :
     ∀ n, 0 ≤ spectrum d n := by
@@ -131,7 +140,13 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
       (∀ i, operatorThird T hTC - 1 / 32 =
         (2 * spectrum d i - 1) * (4 * spectrum d i - 1) ^ 2 / 32 +
         (spectrum d i / 2) * (3 / 8 - powerTrace T hTC 1) +
-        third (erase (spectrum d) i)) := by
+        third (erase (spectrum d) i)) ∧
+      (∀ i : d.index,
+        Summable (fun s => ‖tripleTerm (remainderSpectrum d i) s‖) ∧
+        operatorThird T hTC - 1 / 32 =
+          (2 * d.value i - 1) * (4 * d.value i - 1) ^ 2 / 32 +
+          (d.value i / 2) * (3 / 8 - powerTrace T hTC 1) +
+          third (remainderSpectrum d i)) := by
   let d := spectralData hT hTC
   have hs0 := spectrum_power_hasSum d hTC 0
   have hs1 := spectrum_power_hasSum d hTC 1
@@ -152,9 +167,26 @@ theorem spectral_moments {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass 
     rw [ht]
     linarith
   refine ⟨d, hsum, spectrum_nonneg d, hmass, hq, hr, he,
-    (absolute_triple_sum hsum (spectrum_nonneg d)).1, ?_⟩
-  intro i
-  simpa only [he, hq] using distinguished_identity hsum (spectrum_nonneg d) hmass i
+    (absolute_triple_sum hsum (spectrum_nonneg d)).1, ?_, ?_⟩
+  · intro i
+    simpa only [he, hq] using distinguished_identity hsum (spectrum_nonneg d) hmass i
+  · intro i
+    classical
+    by_cases hi : d.value i = 0
+    · constructor
+      · simpa only [remainderSpectrum, dif_pos hi] using
+          (absolute_triple_sum hsum (spectrum_nonneg d)).1
+      · simp only [remainderSpectrum, dif_pos hi, hi, he]
+        ring
+    · have hj : spectrum d (d.embed ⟨i, hi⟩) = d.value i := by
+        rw [spectrum, d.embed.injective.extend_apply]
+      constructor
+      · simpa only [remainderSpectrum, dif_neg hi] using
+          (absolute_triple_sum
+            (erase_summable hsum (spectrum_nonneg d) (d.embed ⟨i, hi⟩))
+            (erase_nonneg (spectrum_nonneg d) (d.embed ⟨i, hi⟩))).1
+      · simpa only [he, hq, hj, remainderSpectrum, dif_neg hi] using
+          distinguished_identity hsum (spectrum_nonneg d) hmass (d.embed ⟨i, hi⟩)
 
 /-- The trace/purity envelope on actual positive trace-class densities. -/
 theorem trace_class_envelope {T : H →L[ℂ] H} (hT : 0 ≤ T) (hTC : IsTraceClass T)
