@@ -8,7 +8,6 @@
 
 import Mathlib.Basic.Real.Basic
 import Mathlib.Geometry.Convex.ConvexSpace.Defs
-import Mathlib.Algebra.Group.End
 import Mathlib.Tactic.Linarith
 
 /-! Randomized two-use strategies for finite classical permutation ensembles. -/
@@ -65,8 +64,11 @@ private noncomputable def decoder (_ y₁ _ y₂ : Fin 6) : StdSimplex ℝ (Fin 
 
 private lemma sequential_perfect :
     sequentialSuccess prior channels firstInput secondInput decoder = 1 := by
-  norm_num [sequentialSuccess, prior, firstInput, secondInput, decoder, channels,
-    Fin.sum_univ_succ, StdSimplex.weights_single, Finsupp.single_apply,
+  change (∑ i : Fin 4, prior.weights i * ∑ x₁, firstInput.weights x₁ *
+    ∑ x₂, (secondInput x₁ (channels i x₁)).weights x₂ *
+      (decoder x₁ (channels i x₁) x₂ (channels i x₂)).weights i) = 1
+  delta prior firstInput secondInput decoder channels
+  norm_num [Fin.sum_univ_succ, StdSimplex.weights_single, Finsupp.single_apply,
     Equiv.swap_apply_def]
 
 private lemma transcript_collision (x : Fin 6 × Fin 6) :
@@ -115,7 +117,10 @@ private lemma parallel_bound (q : StdSimplex ℝ (Fin 6 × Fin 6))
     parallelSuccess prior channels q δ =
         ∑ x, q.weights x * (1 / 4 *
           ∑ i, (δ x (channels i x.1, channels i x.2)).weights i) := by
-      simp only [parallelSuccess, prior, Finsupp.coe_equivFunOnFinite_symm]
+      change (∑ i, prior.weights i *
+        ∑ x, q.weights x * (δ x (channels i x.1, channels i x.2)).weights i) = _
+      delta prior
+      simp only [Finsupp.coe_equivFunOnFinite_symm]
       simp_rw [Finset.mul_sum]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
