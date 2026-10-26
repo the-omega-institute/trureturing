@@ -4651,7 +4651,7 @@ In [*A Survey on the Krein--von Neumann Extension*, arXiv:1203.5713v1, Theorem 2
 
 ## 113. Full-unit-input norm resolvents of the actual critical family
 
-**Definition 113.1 (fixed original responses).** Retain the original group, raw Haar measure, unit-source field, horizontal generator and clock, central spectral units, fixed $a,\eta>0$, entire complex form domains and actual critical couplings of (111.1)--(111.3). Write
+**Definition 113.1 (fixed original responses).** Retain the original group, raw Haar measure, unit-source field, horizontal generator and clock, central spectral units, fixed $a,\eta>0$, entire complex form domains and actual critical couplings of (111.1)--(111.3). Write $D=D_w$ and
 
 $$
 \begin{gathered}
@@ -4708,7 +4708,7 @@ $$
 
 For every sequence $\sigma_n\downarrow2$ and bounded inputs $f_n$, the corresponding responses are relatively compact in $L^2$ after multiplication by any bounded compactly supported function. The inputs may vary with the order and meet the source.
 
-**Proof.** By amplitude scaling it suffices to use $\|f_n\|_2\le1$. Put $u_n=R_{\sigma_n,r}f_n$, $h_n=H_{\sigma_n}u_n=f_n-ru_n$, $\epsilon_n=\sigma_n-2$ and $t_n=D_{\sigma_n}[u_n]$. Nonnegative spectral calculus gives
+**Proof.** By amplitude scaling it suffices to use $\|f_n\|_2\le1$. Put $u_n=R_{\sigma_n,r}f_n$, $h_n=H_{\sigma_n}u_n=f_n-ru_n$, $g_n=g_{\sigma_n}$, $\epsilon_n=\sigma_n-2$ and $t_n=D_{\sigma_n}[u_n]$. Nonnegative spectral calculus gives
 
 $$
 \|u_n\|_2\le r^{-1},\qquad
@@ -4817,7 +4817,7 @@ The last ball has central sections of length at most $2\kappa e^4d_n$, so (113.8
 
 Extract $f_n\rightharpoonup f$. Self-adjointness and Theorem 112.4 imply $u_n\rightharpoonup u=R_{{\rm end},r}f$: test against $v$ and use $R_{\sigma_n,r}v\to R_{{\rm end},r}v$ strongly. On fixed compact sets off $e$, the forced version of (104.11) has only the additional bounded pairing $\langle\chi^2u_n,h_n\rangle$; Lemma 113.2 controls its double commutator. This gives local $H^1$ bounds and local strong $L^2$ convergence after extraction. On every fixed sufficiently small annulus, (113.11) and interpolation strengthen this to strong $H^1$ convergence. In particular $A_n(T)\to A_u(T)$ for each fixed sufficiently large integer $T$.
 
-Since $u\in D(H_{\rm end})\subset D(S^*)$, the already delivered full maximal expansion (112.2) gives $H_u=(A(u)+\tau C(u))e_0+Z_u$ with $e^{\tau/8}Z_u\in H^1$ on the positive end. It follows directly that $A_u(T)\to0$ as $T\to\infty$. Take the upper limit in (113.14), then let $T\to\infty$. This proves source tightness for every such sequence of responses. A failure of the uniform double limit (113.5) would choose $\sigma_n\to2$, unit-ball inputs and shrinking radii contradicting this sequential conclusion. Finally split a fixed compact set into a small source ball and a compact punctured part. Source tightness and local Rellich compactness prove the last assertion. $\square$
+Since $u\in D(H_{\rm end})\subset D(S^*)$, the full maximal-domain expansion (112.2) gives $H_u=(A(u)+\tau C(u))e_0+Z_u$ with $e^{\tau/8}Z_u\in H^1$ on the positive end. It follows directly that $A_u(T)\to0$ as $T\to\infty$. Take the upper limit in (113.14), then let $T\to\infty$. This proves source tightness for every such sequence of responses. A failure of the uniform double limit (113.5) would choose $\sigma_n\to2$, unit-ball inputs and shrinking radii contradicting this sequential conclusion. Finally split a fixed compact set into a small source ball and a compact punctured part. Source tightness and local Rellich compactness prove the last assertion. $\square$
 
 **Theorem 113.4 (actual full-space norm resolvents).** For the unchanged actual critical family, for every fixed $r>0$,
 
