@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/LiangSaganPinnacle/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/LiangSaganPinnacle/Result.claim; result=D5/S3/Combinatorics/LiangSaganPinnacle/Result.result; claim=D5/S3/Combinatorics/LiangSaganPinnacle/Result.claim
    digest: Ordered pinnacle fibres have pairs without common middle-order upper bounds for every n at least six. -/
 
@@ -39,11 +39,6 @@ The helpers normalize its peaks, inversion counts and position constraints.
 All bind-only lemmas are consumed.
 -/
 
-import Mathlib.Data.List.Sort
-import Mathlib.Data.List.FinRange
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Order.Lattice
 import Mathlib.Tactic
 
 noncomputable section
@@ -253,7 +248,7 @@ theorem no_common_upper_bound (n : ℕ) (hn : 6 ≤ n) :
       ¬ (middleLe A.1 U.1 ∧ middleLe B.1 U.1) := by
   obtain ⟨k, rfl⟩ : ∃ k, n = k + 6 := ⟨n - 6, by omega⟩
   have hs : sigma (k + 6) hn = [⟨k + 3, by omega⟩, ⟨k + 5, by omega⟩] := by
-    simp [sigma, show k + 6 - 3 = k + 3 by omega, show k + 6 - 1 = k + 5 by omega]
+    rfl
   refine ⟨⟨witness k 0 (by omega), ?_⟩, ⟨witness k 1 (by omega), ?_⟩, ?_⟩
   · rw [hs]; exact witness_word k 0 (by omega)
   · rw [hs]; exact witness_word k 1 (by omega)
