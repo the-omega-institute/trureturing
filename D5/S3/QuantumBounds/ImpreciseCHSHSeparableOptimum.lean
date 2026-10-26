@@ -7,11 +7,14 @@
    digest: The calibrated separable two-qubit CHSH value is attained and optimal. -/
 
 import D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness
-import D5.S3.Quantum.Information.ActualPureQubitGeometry
-import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 
-/-! The sharp separable CHSH bound for four imprecisely calibrated binary observables. -/
+/-! The sharp separable CHSH bound for four imprecisely calibrated binary observables.
+
+The calibrated Bloch support bound dominates each pair of local expectations by an ellipse.
+Its scalar CHSH bound extends from product states to their real convex hull. Explicit product
+states attain both branches of the value in Morelli–Yamasaki–Huber–Tavakoli, arXiv:2202.13131v2.
+-/
 
 set_option autoImplicit false
 
@@ -24,7 +27,7 @@ open D5.S3.QuantumBounds.NonlocalityDepthQuantumBound (IsBinaryObservable)
 open D5.S3.Quantum.Entanglement.Witness.WernerTesterIncompleteness (Separable)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch)
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
-  (B scalarB B_formula B_neg B_real_smul scalarB_posSemidef_iff
+  (B scalarB B_formula B_neg scalarB_posSemidef_iff
     hermitian_decomposition trace_B_mul)
 
 namespace D5.S3.QuantumBounds.ImpreciseCHSHSeparableOptimum
@@ -67,7 +70,7 @@ private lemma product_witness (σ τ a₁ a₂ b₁ b₂ : Matrix (Fin 2) (Fin 2
       (trace (σ * a₂)).re * (trace (τ * b₂)).re := by
   have hr := D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow.trace_hermitian_product_real
     (n := Fin 2)
-  simp only [witness, Matrix.mul_add, Matrix.mul_sub, ← Matrix.mul_kronecker_mul,
+  simp only [witness.eq_1, Matrix.mul_add, Matrix.mul_sub, ← Matrix.mul_kronecker_mul,
     trace_add, trace_sub, trace_kronecker, Complex.add_re, Complex.sub_re, Complex.mul_re,
     hr σ a₁ hσ ha₁, hr σ a₂ hσ ha₂, hr τ b₁ hτ hb₁, hr τ b₂ hτ hb₂,
     mul_zero, sub_zero]
@@ -223,13 +226,13 @@ private lemma observable_coordinates (σ a : Matrix (Fin 2) (Fin 2) ℂ)
     · rw [abs_of_nonneg ht]; linarith only [hmv]
     · rw [abs_of_nonpos ht]; linarith only [hpv]
   · rw [he]
-    simp [scalarB, B_formula, qubitX, trace, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [scalarB, B_formula, qubitX, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
     ring
   · rw [he]
-    simp [scalarB, B_formula, qubitZ, trace, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [scalarB, B_formula, qubitZ, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
     ring
   · have hb (w : EuclideanSpace ℝ (Fin 3)) : trace (B w) = 0 := by
-      simp [B_formula, trace, Fin.sum_univ_two]
+      simp [B_formula, trace_fin_two]
     conv_lhs => rw [hermitian_decomposition σ hσ, htσ, he]
     simp only [scalarB, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
       trace_add, trace_smul, one_mul, mul_one, trace_B_mul, hb]
@@ -447,7 +450,7 @@ private lemma convex_extension (a₁ a₂ b₁ b₂ : Matrix (Fin 2) (Fin 2) ℂ
     change witness (a • ρ + b • σ) a₁ a₂ b₁ b₂ ≤ v
     have he : witness (a • ρ + b • σ) a₁ a₂ b₁ b₂ =
         a * witness ρ a₁ a₂ b₁ b₂ + b * witness σ a₁ a₂ b₁ b₂ := by
-      simp only [witness, Matrix.add_mul, Matrix.smul_mul, trace_add, trace_smul,
+      simp only [witness.eq_1, Matrix.add_mul, Matrix.smul_mul, trace_add, trace_smul,
         Complex.add_re, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
         Complex.ofReal_im, zero_mul, sub_zero]
     rw [he]
@@ -462,14 +465,14 @@ private def xz (x z : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
 private lemma xz_hermitian (x z : ℝ) : (xz x z).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
-  fin_cases i <;> fin_cases j <;> simp [xz, qubitX, qubitZ]
+  fin_cases i <;> fin_cases j <;> simp [xz.eq_1, qubitX, qubitZ]
 
 private lemma xz_binary (x z : ℝ) (h : x ^ 2 + z ^ 2 = 1) :
     IsBinaryObservable (xz x z) := by
   have hs : xz x z ^ 2 = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [xz, qubitX, qubitZ, pow_two, Matrix.mul_apply, Fin.sum_univ_two]
+      simp [xz.eq_1, qubitX, qubitZ, pow_two, Matrix.mul_apply, Fin.sum_univ_two]
     · exact_mod_cast (show z * z + x * x = 1 by nlinarith only [h])
     · ring
     · ring
@@ -481,19 +484,18 @@ private lemma xz_binary (x z : ℝ) (h : x ^ 2 + z ^ 2 = 1) :
 private lemma xz_calibration (x z : ℝ) :
     (trace (xz x z * qubitX)).re = 2 * x ∧
       (trace (xz x z * qubitZ)).re = 2 * z := by
-  constructor <;> simp [xz, qubitX, qubitZ, trace, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+  constructor <;> simp [xz.eq_1, qubitX, qubitZ, trace_fin_two] <;> ring
 
 private lemma xz_state (x z : ℝ) (h : x ^ 2 + z ^ 2 = 1) :
     ((1 / 2 : ℝ) • (1 + xz x z)).PosSemidef ∧
       trace ((1 / 2 : ℝ) • (1 + xz x z)) = 1 := by
   constructor
   · exact (xz_binary x z h).2.2.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
-  · simp [xz, qubitX, qubitZ, trace, Fin.sum_univ_two]
-    ring
+  · simp [xz.eq_1, qubitX, qubitZ, trace_fin_two]
 
 private lemma xz_expectation (x z a b : ℝ) :
     (trace (((1 / 2 : ℝ) • (1 + xz x z)) * xz a b)).re = x * a + z * b := by
-  simp [xz, qubitX, qubitZ, trace, Matrix.mul_apply, Fin.sum_univ_two]
+  simp [xz.eq_1, qubitX, qubitZ, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
   ring
 
 private lemma product_separable (σ τ : Matrix (Fin 2) (Fin 2) ℂ)
@@ -514,23 +516,24 @@ private lemma xz_attainment (c s : ℝ) (hcs : c ^ 2 + s ^ 2 = 1) :
   let x := (k + d) / u
   let z := 1 / u
   have hxz : x ^ 2 + z ^ 2 = 1 := by
-    dsimp [x, z]
-    field_simp
-    nlinarith only [hu]
+    change ((k + d) / u) ^ 2 + (1 / u) ^ 2 = 1
+    rw [div_pow, div_pow, one_pow, ← add_div, ← hu]
+    exact div_self (pow_ne_zero 2 (ne_of_gt hu0))
   have hid : d * (k + d) ^ 2 + 2 * (k + d) - d = k * ((k + d) ^ 2 + 1) := by
     linear_combination -(d + k) * hk
   have hev : d * x ^ 2 + 2 * x * z - d * z ^ 2 = k := by
     calc
       _ = (d * (k + d) ^ 2 + 2 * (k + d) - d) / u ^ 2 := by
         dsimp [x, z]; ring
-      _ = k := by rw [hid, ← hu]; field_simp
+      _ = k := by
+        rw [hid, ← hu]
+        exact mul_div_cancel_right₀ k (pow_ne_zero 2 (ne_of_gt hu0))
   let σ := (1 / 2 : ℝ) • (1 + xz x z)
   have hσ := xz_state x z hxz
   refine ⟨σ, hσ.1, hσ.2, ?_⟩
   rw [product_witness σ σ _ _ _ _ hσ.1.isHermitian hσ.1.isHermitian
     (xz_hermitian c s) (xz_hermitian s c) (xz_hermitian c s) (xz_hermitian s c)]
-  dsimp only [σ]
-  simp only [xz_expectation]
+  rw [xz_expectation, xz_expectation]
   calc
     _ = (2 * c * s) * (x ^ 2 + z ^ 2) +
         (c ^ 2 - s ^ 2) * (x ^ 2 - z ^ 2) + 2 * x * z * (c ^ 2 + s ^ 2) := by ring
