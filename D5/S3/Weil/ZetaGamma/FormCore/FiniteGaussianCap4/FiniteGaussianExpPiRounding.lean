@@ -82,8 +82,8 @@ private theorem six_bounds :
   have hu : ((1 / expPrefixQ (3 / 4) 240 ^ 8 : ℚ) : ℝ) ≤ (sixHi : ℝ) := by
     exact_mod_cast six_arithmetic.2
   constructor
-  · convert hl.trans h.1 using 1 <;> norm_num
-  · convert h.2.trans hu using 1 <;> norm_num
+  · convert hl.trans h.1 using 1; norm_num
+  · convert h.2.trans hu using 1; norm_num
 
 private theorem q_bounds :
     (qLo : ℝ) ≤ Real.exp (-(q40 : ℝ)) ∧ Real.exp (-(q40 : ℝ)) ≤ (qHi : ℝ) := by
@@ -94,7 +94,9 @@ private theorem q_bounds :
     exact_mod_cast q_arithmetic.2
   constructor
   · exact hl.trans (by simpa using h.1)
-  · exact (by simpa using h.2).trans hu
+  · have hu0 : Real.exp (-(q40 : ℝ)) ≤ ((1 / expPrefixQ q40 160 : ℚ) : ℝ) := by
+      simpa using h.2
+    exact hu0.trans hu
 
 private theorem delta_bounds :
     (deltaLo : ℝ) ≤ Real.exp (-(2 * Real.pi - 6 - (q40 : ℝ))) ∧
@@ -121,7 +123,10 @@ private theorem delta_bounds :
     linarith [pi_250_bounds.2]
   constructor
   · exact (hl.trans (by simpa using hhi.1)).trans (Real.exp_le_exp.mpr (neg_le_neg hdhi))
-  · exact (Real.exp_le_exp.mpr (neg_le_neg hdlo)).trans ((by simpa using hlo.2).trans hu)
+  · have hu0 : Real.exp (-(deltaLowerQ : ℝ)) ≤
+        ((1 / expPrefixQ deltaLowerQ 6 : ℚ) : ℝ) := by
+      simpa using hlo.2
+    exact (Real.exp_le_exp.mpr (neg_le_neg hdlo)).trans (hu0.trans hu)
 
 set_option exponentiation.threshold 1024 in
 private theorem final_arithmetic :
@@ -130,16 +135,15 @@ private theorem final_arithmetic :
   norm_num [expNegTwoPiLower250, expNegTwoPiUpper250, sixLo, sixHi,
     qLo, qHi, deltaLo, deltaHi]
 
+set_option exponentiation.threshold 1024 in
 /-- The original signed-V certificate's actual outward-rounded exp(-2*pi) box. -/
 theorem exp_neg_two_pi_250_bounds :
     (expNegTwoPiLower250 : ℝ) ≤ Real.exp (-(2 * Real.pi)) ∧
       Real.exp (-(2 * Real.pi)) ≤ (expNegTwoPiUpper250 : ℝ) := by
-  have ha0 : (0 : ℝ) ≤ (sixLo : ℝ) := by norm_num [sixLo]
   have hb0 : (0 : ℝ) ≤ (qLo : ℝ) := by norm_num [qLo]
   have hc0 : (0 : ℝ) ≤ (deltaLo : ℝ) := by norm_num [deltaLo]
   have hau : (0 : ℝ) ≤ (sixHi : ℝ) := by norm_num [sixHi]
   have hbu : (0 : ℝ) ≤ (qHi : ℝ) := by norm_num [qHi]
-  have hcu : (0 : ℝ) ≤ (deltaHi : ℝ) := by norm_num [deltaHi]
   have hlow : (sixLo : ℝ) * (qLo : ℝ) * (deltaLo : ℝ) ≤
       Real.exp (-6) * Real.exp (-(q40 : ℝ)) *
         Real.exp (-(2 * Real.pi - 6 - (q40 : ℝ))) := by
@@ -162,5 +166,26 @@ theorem exp_neg_two_pi_250_bounds :
   have hu : (sixHi : ℝ) * (qHi : ℝ) * (deltaHi : ℝ) ≤ (expNegTwoPiUpper250 : ℝ) := by
     exact_mod_cast final_arithmetic.2
   exact ⟨hl.trans hlow, hupp.trans hu⟩
+
+/-- Original normalization input, rounded outward in units of 10^-250. -/
+def sqrt2Lower250 : ℚ := 14142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891986 / (10 : ℚ) ^ 250
+def sqrt2Upper250 : ℚ := 14142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891987 / (10 : ℚ) ^ 250
+
+set_option exponentiation.threshold 1024 in
+/-- Integer squares certify the sqrt(2) box used in N0 squared. -/
+theorem sqrt_two_square_comparisons :
+    0 ≤ sqrt2Lower250 ∧ 0 ≤ sqrt2Upper250 ∧
+      sqrt2Lower250 ^ 2 ≤ 2 ∧ 2 ≤ sqrt2Upper250 ^ 2 := by
+  norm_num [sqrt2Lower250, sqrt2Upper250]
+
+theorem sqrt_two_250_bounds :
+    (sqrt2Lower250 : ℝ) ≤ Real.sqrt 2 ∧ Real.sqrt 2 ≤ (sqrt2Upper250 : ℝ) := by
+  have hl : (sqrt2Lower250 : ℝ) ^ 2 ≤ 2 := by
+    exact_mod_cast sqrt_two_square_comparisons.2.2.1
+  have hu : (2 : ℝ) ≤ (sqrt2Upper250 : ℝ) ^ 2 := by
+    exact_mod_cast sqrt_two_square_comparisons.2.2.2
+  have hpos : (0 : ℝ) ≤ (sqrt2Upper250 : ℝ) := by
+    exact_mod_cast sqrt_two_square_comparisons.2.1
+  exact ⟨Real.le_sqrt_of_sq_le hl, Real.sqrt_le_iff.mpr ⟨hpos, hu⟩⟩
 
 end RHFiniteGaussian.AnalyticEndpoints
