@@ -307,6 +307,33 @@ theorem validWord_iff_local {n : ℕ} (w : Word n) :
   rw [validWord_iff, minimal_iff_column_tests]
   exact forall_congr' fun c => (local_paddedWindow_iff w c).symm
 
+/-- Numeric words are accepted by the actual padded local test at every real centre. -/
+def acceptedWords (n : ℕ) : Finset (Fin n → Fin 8) :=
+  Finset.univ.filter fun w => ∀ c, Local (paddedWindow (fun d => maskEquiv (w d)) c)
+
+/-- Exact transport from the independently defined actual subset family to the
+executable numeric-word family; neither witnesses nor symmetries are counted. -/
+theorem actualCount_eq_acceptedWords (n : ℕ) :
+    actualCount n = (acceptedWords n).card := by
+  classical
+  let e : (Fin n → Fin 8) ≃ Word n := Equiv.piCongrRight fun _ => maskEquiv
+  let ee : {w : Fin n → Fin 8 // ∀ c, Local (paddedWindow (fun d => maskEquiv (w d)) c)} ≃
+      {w : Word n // ValidWord w} := e.subtypeEquiv fun w =>
+        (validWord_iff_local (e w)).symm
+  calc
+    actualCount n = Fintype.card {S : Finset (Vertex n) // MinimalDominating (grid n) S} := by
+      simp only [actualCount, minimalSets, Fintype.card_subtype]
+    _ = Fintype.card {w : Word n // ValidWord w} := Fintype.card_congr (minimalWordEquiv n)
+    _ = Fintype.card {w : Fin n → Fin 8 //
+        ∀ c, Local (paddedWindow (fun d => maskEquiv (w d)) c)} := Fintype.card_congr ee.symm
+    _ = (acceptedWords n).card := by rw [Fintype.card_subtype]; rfl
+
+/-- The width-one graph has the middle singleton and the pair of ends as its
+only inclusion-minimal dominating subsets. -/
+theorem actualCount_one : actualCount 1 = 2 := by
+  rw [actualCount_eq_acceptedWords]
+  decide
+
 /-- A Boolean accepts existence, without selecting or counting witnesses. -/
 def accepts (w : Window) : Bool := decide (Local w)
 
@@ -331,5 +358,35 @@ def initial : State → ℤ := fun s => if s.val < 64 then 1 else 0
 def terminal : State → ℤ := fun s =>
   if accepts (window s 8) && accepts ![columns s 1, columns s 2, columns s 3, 8, 8]
     then 1 else 0
+
+
+open scoped BigOperators
+
+/-- Backward transfer sums one contribution per accepted appended mask. -/
+def fullStep : (State → ℤ) →ₗ[ℤ] (State → ℤ) where
+  toFun v s := ∑ m : Fin 8,
+    if accepts (window s ⟨m.val, by omega⟩) then v (append s m) else 0
+  map_add' u v := by
+    funext s
+    change (∑ m : Fin 8, if accepts (window s ⟨m.val, by omega⟩)
+      then (u (append s m) + v (append s m)) else 0) = _
+    simp only [Pi.add_apply, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro m _
+    split <;> simp_all
+  map_smul' a v := by
+    funext s
+    change (∑ m : Fin 8, if accepts (window s ⟨m.val, by omega⟩)
+      then a * v (append s m) else 0) = _
+    simp only [Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro m _
+    split <;> simp_all
+
+/-- The backward transfer orbit counts accepted continuations before any
+identification with actual subsets is made. -/
+def fullOrbit : ℕ → State → ℤ
+  | 0 => terminal
+  | k + 1 => fullStep (fullOrbit k)
 
 end D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
