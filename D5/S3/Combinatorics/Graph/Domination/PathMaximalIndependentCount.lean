@@ -272,7 +272,7 @@ theorem count_recurrence (n : ℕ) : count (n + 3) = count (n + 1) + count n := 
     card_image_of_injective _ (prefix_injective 0),
     card_image_of_injective _ (prefix_injective 1)]
 
-private theorem valid_singleton (n t : ℕ) (ht : t < n)
+theorem valid_singleton (n t : ℕ) (ht : t < n)
     (hd : ∀ i < n, i = t ∨ i + 1 = t ∨ t + 1 = i) : Valid n {t} := by
   refine ⟨?_, ?_, ?_⟩
   · intro i hi

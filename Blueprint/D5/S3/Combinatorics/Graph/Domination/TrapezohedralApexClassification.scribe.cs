@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 
@@ -20,6 +21,37 @@ internal sealed class TrapezohedralApexClassificationDocument : IScribeDocumentD
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-        StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        StatementSource.FromAuthor(Disp(Presentation(declaration))), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula Presentation(string name)
+    {
+        Formula n = V("n"), set = V("S"), j = V("j"), k = V("k"), i = V("i");
+        Formula fin = Call("Fin", n), vertex = Call("Vertex", n);
+        Formula ha = Mem(Call("alpha"), set), hb = Mem(Call("beta"), set);
+        Formula Body(Formula body) => All("n", Nat, All("S", Call("Set", vertex), Imp(Call("Admissible", set), body)));
+        Formula Unique(Formula predicate, Formula same) => Some("j", fin, And(predicate, All("k", fin, Imp(same, Eq(k, j)))));
+        if (name == "exactly_one_apex") return All("n", Nat, Imp(Le(D(3), n), All("S", Call("Set", vertex),
+            Imp(Call("Admissible", set), Or(And(ha, new Formula.Not(hb)), And(hb, new Formula.Not(ha)))))));
+        Formula result = name == "alpha_unique_opposite"
+            ? Unique(Mem(Call("b", j), set), Mem(Call("b", k), set))
+            : Unique(Eq(set, Call("alphaSet", j, SetOf("i", fin, Mem(Call("a", i), set)))),
+                Eq(set, Call("alphaSet", k, SetOf("i", fin, Mem(Call("a", i), set)))));
+        return Body(Imp(ha, Imp(new Formula.Not(hb), result)));
+    }
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Par(Formula a) => Seq(Open, a, Close);
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Some(string name, Formula type, Formula body) => Seq(Exists, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Or, Par(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
+    private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, V(name), Sp, Colon, Sp, type, Sp, Mid, Sp, body, CloseBrace);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }

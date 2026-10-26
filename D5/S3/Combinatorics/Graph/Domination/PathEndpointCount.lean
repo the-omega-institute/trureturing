@@ -33,7 +33,8 @@ def middle (n : ℕ) (I : Finset ℕ) : Finset ℕ :=
     i + 2 ∈ cap n I ↔ i ∈ I := by
   have h0 : i + 2 ≠ 0 := by omega
   have hn : i + 2 ≠ n + 3 := by omega
-  simp [cap, h0, hn]
+  simp [cap]
+  omega
 
 private theorem valid_cap (n : ℕ) (I : Finset ℕ) (hI : Valid n I) :
     Valid (n + 4) (cap n I) := by
@@ -175,8 +176,8 @@ private theorem bothFamily_eq (n : ℕ) : bothFamily (n + 4) = (family n).image 
     apply mem_filter.mpr
     refine ⟨(mem_family _ _).mpr (valid_cap n J ((mem_family _ _).mp hJ)), ?_, ?_⟩
     · exact mem_insert_self _ _
-    · simpa using (mem_insert_of_mem (mem_insert_self (n + 3) (J.image (fun i => i + 2))) :
-        n + 3 ∈ cap n J)
+    · change n + 3 ∈ cap n J
+      exact mem_insert_of_mem (mem_insert_self _ _)
 
 /-- Deleting the two endpoints and their neighbors leaves an arbitrary n-vertex path. -/
 theorem both_count (n : ℕ) : (bothFamily (n + 4)).card = count n := by
@@ -198,7 +199,56 @@ theorem restricted_complement (n : ℕ) :
     restrictedCount (n + 4) + count n = count (n + 4) := by
   classical
   rw [restrictedCount, if_pos (by omega), ← both_count]
-  exact card_filter_add_card_filter_not _ _ |> fun h => by
-    simpa [restrictedFamily, bothFamily, count, add_comm] using h
+  have h := card_filter_add_card_filter_not (s := family (n + 4))
+    (fun I => 0 ∈ I ∧ n + 4 - 1 ∈ I)
+  simpa [restrictedFamily, bothFamily, count, add_comm] using h
+
+private theorem restrictedFamily_three : restrictedFamily 3 = {{1}} := by
+  classical
+  ext I
+  constructor
+  · intro h
+    obtain ⟨hf, he⟩ := mem_filter.mp h
+    have hv := (mem_family _ _).mp hf
+    have hone : 1 ∈ I := by
+      by_contra hn
+      have h0 : 0 ∈ I := by
+        rcases hv.2.2 0 (by omega) with h | ⟨j, hj, hji⟩
+        · exact h
+        · have hj1 : j = 1 := by omega
+          exact False.elim (hn (hj1 ▸ hj))
+      have h2 : 2 ∈ I := by
+        rcases hv.2.2 2 (by omega) with h | ⟨j, hj, hji⟩
+        · exact h
+        · have hb := hv.1 j hj
+          have hj1 : j = 1 := by omega
+          exact False.elim (hn (hj1 ▸ hj))
+      exact he ⟨h0, h2⟩
+    have h0 : 0 ∉ I := fun h => hv.2.1 0 h hone
+    have h2 : 2 ∉ I := hv.2.1 1 hone
+    apply mem_singleton.mpr
+    ext i
+    constructor
+    · intro hi
+      have hb := hv.1 i hi
+      have hi1 : i = 1 := by
+        by_contra hn
+        have hcases : i = 0 ∨ i = 2 := by omega
+        exact hcases.elim (fun h => h0 (h ▸ hi)) (fun h => h2 (h ▸ hi))
+      exact mem_singleton.mpr hi1
+    · intro hi
+      exact mem_singleton.mp hi ▸ hone
+  · intro h
+    have he := mem_singleton.mp h
+    subst I
+    apply mem_filter.mpr
+    refine ⟨(mem_family _ _).mpr (valid_singleton 3 1 (by omega) ?_), by simp⟩
+    intro i hi
+    omega
+
+/-- The entire zero prefix and the cubic boundary belong to the series convention. -/
+theorem restricted_initial : restrictedCount 0 = 0 ∧ restrictedCount 1 = 0 ∧
+    restrictedCount 2 = 0 ∧ restrictedCount 3 = 1 := by
+  simp [restrictedCount, restrictedFamily_three]
 
 end D5.S3.Combinatorics.Graph.Domination.PathEndpointCount

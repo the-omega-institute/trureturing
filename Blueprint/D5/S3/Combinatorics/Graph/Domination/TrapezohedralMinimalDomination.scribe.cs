@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 
@@ -30,6 +31,40 @@ internal sealed class TrapezohedralMinimalDominationDocument : IScribeDocumentDe
     private static DocumentBlock Node(string id, string title, string declaration,
         string prose, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), Presentation(declaration), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static StatementSource Presentation(string name)
+    {
+        Formula v = V("V"), g = V("G"), set = V("S"), n = V("n"), j = V("j"), c = V("C");
+        Formula Dom(Formula t) => Call("IsDominating", g, t);
+        Formula Minimal() => Call("MinimalDominating", g, set);
+        Formula General(Formula body) => All("V", Seq(V("Type"), Star), All("G", Call("SimpleGraph", v), All("S", Call("Set", v), body)));
+        Formula? f = name switch
+        {
+            "minimalDominating_iff_private" => General(Iff(Minimal(), And(Dom(set),
+                All("s", v, Imp(Mem(V("s"), set), Some("w", v, Call("ClosedPrivate", g, set, V("s"), V("w")))))))),
+            "minimalDominating_iff_proper" => General(Iff(Minimal(), And(Dom(set),
+                All("T", Call("Set", v), Imp(Call("StrictSubset", V("T"), set), new Formula.Not(Dom(V("T")))))))),
+            "alphaSet_admissible_iff" => All("n", Nat, Imp(Le(D(3), n), All("j", Call("Fin", n), All("C", Call("Set", Call("Fin", n)),
+                Iff(Call("Admissible", Call("alphaSet", j, c)), And(Call("MinimalCutCover", j, c), Or(Mem(j, c), Mem(Call("finRotate", n, j), c)))))))),
+            _ => null
+        };
+        return f is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(f));
+    }
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Par(Formula a) => Seq(Open, a, Close);
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Some(string name, Formula type, Formula body) => Seq(Exists, Sp, Par(Seq(V(name), Sp, Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Or, Par(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
+    private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, V(name), Sp, Colon, Sp, type, Sp, Mid, Sp, body, CloseBrace);
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }
