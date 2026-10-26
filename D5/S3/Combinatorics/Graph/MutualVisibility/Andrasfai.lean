@@ -230,10 +230,12 @@ private theorem long_factor_obstruction (m : ℕ) (hm : 1 ≤ m)
     push_cast at hz ⊢
     linear_combination hz
   have hfirst : u+1 ∈ X := by simpa using h.2.2.2 0 (by omega)
-  have hprev : u-1 ∈ X := by simpa [hlast] using h.2.2.2 m hkm
+  have hprev : u-1 ∈ X := by
+    rw [← hlast]
+    exact h.2.2.2 m hkm
   refine ⟨u-1, 1, by omega, hm, hprev, ?_, ?_⟩
-  · norm_num
-    convert hfirst using 1 <;> congr 1 <;> ring
+  · have he : u-1+(3*1-1 : ℕ) = u+1 := by norm_num; ring
+    exact he.symm ▸ hfirst
   · intro j hj
     have hj0 : j = 0 := by omega
     subst j
