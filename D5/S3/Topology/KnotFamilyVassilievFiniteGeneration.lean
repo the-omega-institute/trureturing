@@ -6,7 +6,7 @@
    utility: none
    digest: Subalgebras of univariate polynomial rings over fields are finitely generated. -/
 
-import Mathlib.RingTheory.Adjoin.Tower
+import Mathlib.RingTheory.FiniteType
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 
 /-! Finite generation for subalgebras of univariate polynomial rings. -/
@@ -62,10 +62,8 @@ private theorem finite_of_integral_X {k : Type*} [Field k]
 
 private theorem fg_of_finite {k : Type*} [Field k] (a : Subalgebra k (Polynomial k))
     (h : Module.Finite a (Polynomial k)) : a.FG := by
-  have ht : (⊤ : Subalgebra k (Polynomial k)).FG :=
-    ⟨{X}, by simpa only [Finset.coe_singleton] using (Polynomial.adjoin_X (R := k))⟩
   exact a.fg_top.mp (fg_of_fg_of_fg (A := k) (B := a) (C := Polynomial k)
-    ht h.fg_top Subtype.val_injective)
+    Algebra.FiniteType.out h.fg_top Subtype.val_injective)
 
 theorem subalgebra_fg {k : Type*} [Field k] (a : Subalgebra k (Polynomial k)) : a.FG := by
   by_cases h : ∀ f ∈ a, f.natDegree = 0
