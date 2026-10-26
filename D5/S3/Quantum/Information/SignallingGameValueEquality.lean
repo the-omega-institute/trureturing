@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 
+/-! The players guess one another's uniformly drawn questions using local correlations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -125,7 +127,46 @@ private lemma quantum_noSignalling {m n da db : ℕ}
     (a : Fin m → Fin n → Matrix (Fin da) (Fin da) ℂ)
     (b : Fin n → Fin m → Matrix (Fin db) (Fin db) ℂ)
     (hs : IsQuantumStrategy rho a b) : IsNoSignalling (quantumBox rho a b) := by
-  sorry
+  obtain ⟨hrho, htrace, ha, hb⟩ := hs
+  have right (u : Fin n) (x : Fin m) (y : Fin n) :
+      (∑ v, quantumBox rho a b u v x y) =
+        (trace (rho * (a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)))).re := by
+    simp only [quantumBox, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    have he : (∑ v, a x u ⊗ₖ b y v) = a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
+      calc
+        _ = a x u ⊗ₖ (∑ v, b y v) := by
+          ext ⟨i, j⟩ ⟨k, l⟩
+          simp only [Matrix.sum_apply, kroneckerMap_apply, mul_sum]
+        _ = _ := by rw [(hb y).2]
+    rw [he]
+  have left (v : Fin m) (x : Fin m) (y : Fin n) :
+      (∑ u, quantumBox rho a b u v x y) =
+        (trace (rho * ((1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v))).re := by
+    simp only [quantumBox, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    have he : (∑ u, a x u ⊗ₖ b y v) = (1 : Matrix (Fin da) (Fin da) ℂ) ⊗ₖ b y v := by
+      calc
+        _ = (∑ u, a x u) ⊗ₖ b y v := by
+          ext ⟨i, j⟩ ⟨k, l⟩
+          simp only [Matrix.sum_apply, kroneckerMap_apply, sum_mul]
+        _ = _ := by rw [(ha x).2]
+    rw [he]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro u v x y
+    exact (Complex.nonneg_iff.mp
+      (hrho.trace_mul_nonneg (((ha x).1 u).kronecker ((hb y).1 v)))).1
+  · intro x y
+    simp only [right, ← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum]
+    have he : (∑ u, a x u ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ)) = 1 := by
+      calc
+        _ = (∑ u, a x u) ⊗ₖ (1 : Matrix (Fin db) (Fin db) ℂ) := by
+          ext ⟨i, j⟩ ⟨k, l⟩
+          simp only [Matrix.sum_apply, kroneckerMap_apply, sum_mul]
+        _ = 1 := by rw [(ha x).2, one_kronecker_one]
+    rw [he, Matrix.mul_one, htrace, Complex.one_re]
+  · intro u x y z
+    rw [right, right]
+  · intro v x z y
+    rw [left, left]
 
 private lemma deterministic_quantum {m n : ℕ} (fa : Fin m → Fin n) (fb : Fin n → Fin m) :
     ∃ (rho : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ)
