@@ -24,6 +24,8 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Tactic
 
+/-! Integer incomplete-exponential moments from an actual antiderivative. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -69,16 +71,19 @@ private theorem integerEndpointPolynomial_hasDerivAt (m : ℕ) (x : ℝ) :
     convert hd using 1
     · exact funext (integerEndpointPolynomial_succ m)
     · rw [integerEndpointPolynomial_succ]
-      simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel_right, mul_one]
+      simp only [Nat.cast_add, Nat.cast_one, Nat.add_sub_cancel_right, mul_one, id_eq]
       ring
 
 private theorem integerPrimitive_hasDerivAt (m : ℕ) (x : ℝ) :
     HasDerivAt
       (fun y : ℝ => -Real.exp (-2 * y) * integerEndpointPolynomial m y)
       (x ^ m * Real.exp (-2 * x)) x := by
-  have he := ((hasDerivAt_id x).const_mul (-2 : ℝ)).exp
+  have he : HasDerivAt (fun y : ℝ => Real.exp (-2 * y))
+      (Real.exp (-2 * x) * (-2)) x := by
+    simpa only [id_eq, mul_one] using ((hasDerivAt_id x).const_mul (-2 : ℝ)).exp
   have hp := integerEndpointPolynomial_hasDerivAt m x
-  convert he.neg.mul hp using 1 <;> ring
+  convert he.neg.mul hp using 1 <;>
+    simp only [Pi.neg_apply, Pi.mul_apply, id_eq] <;> first | rfl | ring
 
 /-- Genuine continuous integrability and the integer endpoint formula.
 No positivity premise is needed for integer powers on a compact interval. -/
@@ -91,7 +96,8 @@ theorem integerMoment_endpoint (m : ℕ) (a b : ℝ) :
         Real.exp (-2 * b) *
           (∑ j ∈ Finset.range (m + 1), (2 * b) ^ j / (j.factorial : ℝ))) := by
   have hc : Continuous (fun x : ℝ => x ^ m * Real.exp (-2 * x)) := by fun_prop
-  have hi := hc.intervalIntegrable a b
+  have hi : IntervalIntegrable (fun x : ℝ => x ^ m * Real.exp (-2 * x))
+      volume a b := hc.intervalIntegrable a b
   refine ⟨hi, ?_⟩
   have hv := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (a := a) (b := b) (fun x _ => integerPrimitive_hasDerivAt m x) hi

@@ -29,6 +29,8 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Tactic
 
+/-! Actual compact half moments and positive beta-series bounds. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -196,6 +198,8 @@ theorem compactMoment_series {p b L : ℝ} (hp : 0 ≤ p)
         rw [← Real.exp_add]
         congr 1
         ring
+      change x ^ p * Real.exp (-b * x) =
+        Real.exp (-b * L) * (x ^ p * Real.exp (b * (L - x)))
       rw [he]
       ring
     _ = _ := by rw [hvalue] <;> ring
@@ -268,7 +272,7 @@ theorem compactMoment_prefix_bounds {p b L : ℝ} (hp : 0 ≤ p)
   rw [hv]
   apply mul_le_mul_of_nonneg_left _ hc
   rw [← hs.sum_add_tsum_nat_add (N + 1)]
-  exact add_le_add_left (series_tail_le hp hb hL N hq) _
+  exact add_le_add le_rfl (series_tail_le hp hb hL N hq)
 
 /-- Integration by parts expressed by the derivative of x^(p+1) exp(-b x).
 For p >= 0 the derivative also exists at zero, so the endpoint causes no
@@ -285,9 +289,11 @@ private theorem compactMoment_step {p b L : ℝ} (hp : 0 ≤ p)
         b * (x ^ (p + 1) * Real.exp (-b * x))) x := by
     have hx := Real.hasDerivAt_rpow_const (x := x) (p := p + 1)
       (Or.inr (by linarith : 1 ≤ p + 1))
-    have he := ((hasDerivAt_id x).const_mul (-b)).exp
+    have he : HasDerivAt (fun y : ℝ => Real.exp (-b * y))
+        (Real.exp (-b * x) * (-b)) x := by
+      simpa only [id_eq, mul_one] using ((hasDerivAt_id x).const_mul (-b)).exp
     rw [show p + 1 - 1 = p by ring] at hx
-    convert hx.mul he using 1 <;> ring
+    convert hx.mul he using 1 <;> first | rfl | ring
   have hft := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (a := 0) (b := L) (fun x _ => hd x) ((hi.const_mul (p + 1)).sub (hi'.const_mul b))
   rw [intervalIntegral.integral_sub (hi.const_mul (p + 1)) (hi'.const_mul b),
