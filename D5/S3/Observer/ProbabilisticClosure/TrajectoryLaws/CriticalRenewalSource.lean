@@ -209,12 +209,11 @@ private lemma weighted_tails (a : ℕ → ℝ) (ha : ∀ k, 0 ≤ a k) (p : ℕ)
 
 private lemma sum_real_range (k : ℕ) :
     (∑ u ∈ range (k+1), (u : ℝ)) = (k : ℝ)*(k+1)/2 := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    rw [sum_range_succ, ih]
-    push_cast
-    ring
+  have h := Finset.sum_range_id_mul_two (k + 1)
+  rw [Nat.add_sub_cancel] at h
+  have hreal := congrArg (fun n : ℕ => (n : ℝ)) h
+  push_cast at hreal
+  linarith
 
 private lemma density_summable (r : ℕ) (c : ℝ) (i : Bool) {s : ℝ}
     (hs : 0 < s) : Summable (density r c i s) := by

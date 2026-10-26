@@ -59,18 +59,12 @@ private lemma cappedTime_integrable {ℱ : Filtration ℕ mΩ} {S : ℕ → Ω �
 
 private lemma score_bound {S : ℕ → Ω → ℝ} (hzero : ∀ ω, S 0 ω = 0)
     (hstep : ∀ n ω, |S (n + 1) ω - S n ω| ≤ 1) : ∀ n ω, |S n ω| ≤ n := by
-  intro n
-  induction n with
-  | zero => intro ω; simp [hzero]
-  | succ n ih =>
-    intro ω
-    have ha := abs_add_le (S n ω) (S (n + 1) ω - S n ω)
-    have hb := hstep n ω
-    have hc := ih ω
-    rw [Nat.cast_add, Nat.cast_one]
-    have he : S n ω + (S (n + 1) ω - S n ω) = S (n + 1) ω := by ring
-    rw [he] at ha
-    linarith
+  intro n ω
+  have h := dist_le_range_sum_of_dist_le (f := fun k => S k ω)
+    (d := fun _ => (1 : ℝ)) n (fun {k} _ => by
+      simpa only [Real.dist_eq, abs_sub_comm] using hstep k ω)
+  simpa only [hzero, Real.dist_eq, zero_sub, abs_neg, sum_const, card_range,
+    nsmul_eq_mul, mul_one] using h
 
 private lemma score_integrable {ℱ : Filtration ℕ mΩ} {S : ℕ → Ω → ℝ}
     {μ : Measure Ω} [IsProbabilityMeasure μ] (hS : StronglyAdapted ℱ S)
