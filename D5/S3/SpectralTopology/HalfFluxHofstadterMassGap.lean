@@ -9,9 +9,6 @@
 import D5.S3.Weil.Pick.InvertibleHermitianInertiaPullback
 import D5.S3.SpectralTopology.PointGapExactInertia
 import D5.S3.Quantum.Matrix.LinGProperty.ScalarPerturbation
-import Mathlib.LinearAlgebra.Matrix.Gershgorin
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 
 /-! A uniform mass gap for the four source Bloch bands. -/
 
