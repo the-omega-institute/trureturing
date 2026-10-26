@@ -388,7 +388,7 @@ private theorem oldB_eval_congr {a : Ordinal.{0}} {H : Prefix (Order.succ a)}
   subst r'
   rfl
 
-private theorem cast_B_eval {b : Ordinal.{0}} {C D : Set (Cube b)}
+theorem cast_B_eval {b : Ordinal.{0}} {C D : Set (Cube b)}
     (h : C = D) (W : BirthPack C) (n : ℕ) :
     HEq ((BirthPack.cast h W).B n) (W.B n) := by
   subst D
