@@ -41,7 +41,7 @@ def finitePolynomial (v : ℕ →₀ ℝ) : ℝ[X] :=
 def finiteFeature (v : ℕ →₀ ℝ) (x : ℝ) : ℝ :=
   physicalPolynomial (finitePolynomial v) x
 
-private theorem finiteFeature_eq (v : ℕ →₀ ℝ) (x : ℝ) :
+theorem finiteFeature_eq (v : ℕ →₀ ℝ) (x : ℝ) :
     finiteFeature v x = ∑ k ∈ v.support, finiteCoefficients v k * centralPsi x (2 * k) := by
   simp only [finiteFeature, finitePolynomial, physicalPolynomial, eval_finsetSum,
     eval_mul, eval_C, Finset.mul_sum, psiPolynomial, centralPsi, phi]
@@ -224,7 +224,7 @@ private theorem mellinDensity_measurable :
     Measurable (fun x : ℝ => ENNReal.ofReal (x ^ (5 / 4 : ℝ))) := by
   fun_prop
 
-private theorem finiteFeature_graph_memLp (v : ℕ →₀ ℝ) :
+theorem finiteFeature_graph_memLp (v : ℕ →₀ ℝ) :
     MemLp (finiteFeature v) 2 graphMeasure := by
   rw [memLp_two_iff_integrable_sq (finiteFeature_continuous v).aestronglyMeasurable]
   apply (integrable_withDensity_iff_integrable_smul' graphDensity_measurable
@@ -236,7 +236,7 @@ private theorem finiteFeature_graph_memLp (v : ℕ →₀ ℝ) :
   simp only [Pi.add_apply]
   ring
 
-private theorem finiteFeature_mellin_memLp (v : ℕ →₀ ℝ) :
+theorem finiteFeature_mellin_memLp (v : ℕ →₀ ℝ) :
     MemLp (finiteFeature v) 1 mellinMeasure := by
   rw [memLp_one_iff_integrable]
   apply (integrable_withDensity_iff_integrable_smul' mellinDensity_measurable
