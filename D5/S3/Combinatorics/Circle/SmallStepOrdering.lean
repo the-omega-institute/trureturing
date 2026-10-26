@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/SmallStepOrdering
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/SmallStepOrdering
-   mirror-E: none(waiver:source-preparation-only)
-   anchors: [D5/S3/Combinatorics/Circle/SourceWidth]
+   mirror-E: none(waiver:audit-open-22063)
+   anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.List]
    utility: none
    digest: Pairwise compatible opposite steps can be permuted between any two legal endpoints. -/
 module
