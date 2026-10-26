@@ -351,6 +351,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("live_initializer_is_retained")]
     [InlineData("native_clearance_keeps_dead_initializer_exclusive_until_removal")]
     [InlineData("failed_initialization_recovers_in_place_idempotently")]
+    [InlineData("large_initialization_checkout_preserves_partial_bytes")]
     [InlineData("owned_unregistered_branch_can_resume")]
     [InlineData("ordinary_recovery_routing_keeps_shared_reuse_and_base_protection")]
     [InlineData("partial_registration_repairs_worktree_head_in_its_own_ref_store")]

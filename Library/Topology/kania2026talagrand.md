@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection, regular signed-measure lifting, exact eventual point-pair equality and uniform strong-dual norm separation of compact Stonean weak-star embeddings, without the CH induction.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, without the CH induction or the final collision premise.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -396,3 +396,207 @@ summands are the literal restrictions of the same selected original L1
 class. Their sum and the sum of their norms equal the original class and
 its norm respectively. This is the classical analytic supplier only;
 the signed-measure transfer and full CH/Talagrand endpoint are separate.
+
+
+## Signed raw transfer and the sufficient diagonal criterion
+
+Let $K$ be any compact Hausdorff space with its Borel measurable structure,
+and put $D=C(K,\mathbb R)^*$. Regularity below means regularity of the actual
+total-variation measure, not an automatic property of arbitrary Borel measures.
+The project theorem
+`SignedGrothendieckCriterion.exists_signed_raw_restriction_splitting`
+transports the real L1 supplier to arbitrary regular signed inputs $s_n$
+with $\sup_n |s_n|(K)<\infty$.
+
+Set $\rho=\sum_n |s_n|$ and $\mu=\rho.\mathrm{toFinite}$. The sum is SFinite;
+no finiteness or regularity of the sum is used. Its finite equivalent $\mu$ includes the
+all-zero case. Each $s_n$ has a real integrable RN density $q_n$ with respect
+to $\mu$, and its actual L1 class satisfies $\|q_n\|_1=|s_n|(K)$.
+`SignedMeasure.absolutelyContinuous_ennreal_iff` supplies the vector absolute
+continuity needed for signed reconstruction. Indicator density integration
+identifies the L1 literal restrictions with the literal signed restrictions.
+
+The L1 splitting therefore gives a strictly increasing $j$, measurable sets
+$E_n$ pairwise disjoint as actual sets, a number $r\geq0$, and a regular
+signed measure $s_\infty$. With
+
+$$a_n=s_{j(n)}|_{E_n},\qquad b_n=s_{j(n)}|_{K\setminus E_n},$$
+
+both TVs are regular, and
+
+$$s_{j(n)}=a_n+b_n,\qquad |a_n|(K)+|b_n|(K)=|s_{j(n)}|(K),
+\qquad |a_n|(K)\longrightarrow r.$$
+
+For every $\Phi\in D^*$ one has
+$\Phi(Tb_n)\to\Phi(Ts_\infty)$, where $Ts$ is the signed integration
+functional. The actual bounded linear map
+$J:L^1(\mu)\to D$, $Jf(g)=\int fg\,d\mu$, comes from the L1–L-infinity
+pairing and the continuous-function inclusion. Its norm is at most one;
+injectivity, isometry and surjectivity are not used. Every $\Phi\circ J$
+is an L1 weak test. Signed RMK supplies a regular representative of $Jv$
+for the L1 weak limit $v$. The particular density measure $\mu v$ is not
+asserted regular. Regularity of the literal pieces instead follows from
+the original regular TV and `variation_restrict`.
+
+The public theorem
+`SignedGrothendieckCriterion.weak_of_disjoint_diagonal_variation`
+uses the following explicit sufficient hypothesis on $K$:
+
+$$\begin{gathered}
+\text{For every TV-bounded regular signed weak-star-null sequence }s_n,\\
+\text{and every pairwise disjoint measurable sequence }E_n,
+\quad \operatorname{TV}(s_n|_{E_n})(K)\longrightarrow0.
+\end{gathered}$$
+
+Here $\operatorname{TV}(s_n|_{E_n})$ denotes the TV of the literal signed restriction
+$s_n|_{E_n}$. The hypothesis is over all such signed sequences and sets.
+It is not a weak convergence or splitting premise. Under this hypothesis,
+for arbitrary $F_n,F_\infty\in D$,
+
+$$[\forall g\in C(K,\mathbb R),\ F_n(g)\to F_\infty(g)]
+\quad\Longrightarrow\quad
+[\forall\Phi\in D^*,\ \Phi(F_n)\to\Phi(F_\infty)].$$
+
+No norm bound is assumed in this final statement. Banach–Steinhaus on the
+complete space $C(K,\mathbb R)$ bounds $F_n-F_\infty$. Signed RMK chooses
+regular representatives with TV masses exactly those norms. For any
+selector $ns$ tending to infinity, the raw split applies to $s\circ ns$.
+The diagonal hypothesis makes its captured part norm-null. The complement
+is Banach-weak convergent; its continuous-function evaluations tend to
+zero by exact decomposition. The actual double-dual inclusion evaluates
+its weak limit at each continuous function, identifying that functional
+as zero. Additivity gives convergence along a further selector; the genuine
+`Filter.tendsto_of_subseq_tendsto` then gives the original sequence limit.
+Its API requires only that $ns$ tend to infinity, and that generality is
+retained. Adding the arbitrary limit completes the implication.
+
+These are repository compositions of the classical splitting supplier,
+signed RMK and uniform boundedness, with the parameter correspondence above;
+no new literature theorem is attributed to Kania–Kąkol. The sufficient
+hypothesis remains unproved for the proposed CH construction. Neither
+result supplies CH bookkeeping, the signed induction, capture/global
+obligations, the closed-copy prohibition or a solution of Problem 8.2.
+
+
+## Quantitative signed clopen oscillation criterion
+
+On an arbitrary-universe compact Hausdorff zero-dimensional Borel space K,
+`SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation` assumes the
+following explicit property O. Every regular signed norm-one sequence carried
+in total variation by pairwise disjoint nonempty clopens, with positive Jordan
+mass at least one half, has a single clopen Z at which the evaluations are at
+least one sixth infinitely often and zero infinitely often. Under O, arbitrary
+weak-star-convergent sequences in the full real continuous dual of C(K,Real)
+converge under every continuous double-dual test. Uniform boundedness is
+derived, and no positivity or nonemptiness premise is added.
+
+The analytic argument combines the unconditional raw signed restriction split
+with signed clopen disjointization at parameter 1/96. The latter gives one
+constant sign and fixed TV error below 1/48. On the oscillating clopen, the
+selected original evaluations exceed 7/48 infinitely often and have absolute
+value below 1/48 infinitely often, excluding a real limit. A positive raw
+captured-mass limit would yield a norm-one disjointly carried weak-star
+convergent normalized tail by reciprocal continuity, so the mass limit must
+be zero. The small captured part, the weak complementary part and the
+all-subsequence criterion give the full dual implication.
+
+This is a synthesis of classical analytic mechanisms, not a claim of global
+mathematical novelty or attribution of this exact quantitative formulation
+to Kania and Kakol. The cited article supplies the Talagrand-scheme context;
+O remains a separate conditional hypothesis. No formal CH instance of O,
+full signed-ball endpoint, anti-homeomorphism result or official solution of
+Problem 8.2 is established by this criterion.
+
+## The full signed-ball analytic reduction
+
+Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
+Borel $K$, `SignedBallReduction.exists_normalized_disjoint_embedding` takes
+an arbitrary weak-star continuous injection $h:\beta\mathbb N\to D$ with
+$\|h(p)\|\leq1$ for every $p$. Its output is a sequence of regular signed
+measures $b_n$, pairwise disjoint Borel sets $E_n$, and a continuous
+injection $f:\beta\mathbb N\to D$ satisfying
+
+$$|b_n|(K)=1,\qquad |b_n|(K\setminus E_n)=0,\qquad
+f(n)=Tb_n,\qquad \|f(p)\|\leq1\quad(p\in\beta\mathbb N).$$
+
+The quantification covers the entire real signed dual unit ball. Neither
+positivity, constant raw KPR norms nor a preselected collision-free
+subsequence is an input. No zero-dimensionality is needed at this stage.
+
+Signed RMK represents the principal values. The raw signed restriction
+splitting gives, after an increasing selection,
+$x_n=Tu_n+Tv_n$, with literal disjoint Borel carriers for $u_n$,
+$Tv_n\to V$ against every member of $D^*$, and
+$r_n=\|Tu_n\|\to r\geq0$. The selected original full extension $\widehat x$
+is still injective: an injection of the discrete index set induces an
+injection of its ultrafilter spaces. Banach–Alaoglu extends the bounded
+$Tu_n$ sequence. At every free ultrafilter $p$, continuous-function
+evaluation and uniqueness of limits give
+
+$$\widehat u(p)=\widehat x(p)-V.$$
+
+If $r=0$, then $Tu_n\to0$ in norm, so $\widehat x(p)=V$ at every free
+$p$. There are two distinct free ultrafilters, contradicting injection.
+Thus $r>0$, and a tail has $r_n>0$. Normalize on that tail by the actual
+norms: $b_n=u_n/r_n$. Scalar variation and restriction identities preserve
+regularity and the literal carrying sets and give $|b_n|(K)=1$. The
+varying normalization is justified by the norm estimate
+
+$$\left\|\frac{Tu_n}{r_n}-\frac{Tu_n}{r}\right\|
+ \leq \left|r_n^{-1}-r^{-1}\right|\sup_m\|Tu_m\|\longrightarrow0.$$
+
+Consequently $\widehat b(p)=(\widehat x(p)-V)/r$ at every free $p$.
+This proves free/free injection. Disjoint carriers and variation mass one
+give principal/principal injection: equal measures carried by two disjoint
+sets would have zero total variation.
+
+For completeness, separate injection on these two pieces does not yet
+give full injection. Each principal value can coincide with at most one
+free value. `CountableAvoidance.exists_infinite_notMem` avoids this
+countable collection by an actual infinite subset $A\subseteq\mathbb N$.
+Starting with an infinite pool, split each pool into two disjoint infinite
+sets and choose a half absent from the next forbidden ultrafilter. An
+infinite diagonal set is contained in every fixed later pool modulo a
+finite set; freeness makes these finite errors irrelevant. On the clopen
+of ultrafilters containing $A$, both orientations of principal/free
+collision are excluded. An increasing enumeration of $A$ therefore yields
+injection on the entire compactification, not only on its remainder.
+
+`WeakStarPerturbation.norm_sub_le_of_denseRange` supplies the needed
+global perturbation step for arbitrary real normed spaces. If weak-star
+continuous $f,g:T\to X^*$ satisfy $\|f(i(a))-g(i(a))\|\leq\epsilon$ on
+a dense range, then the same estimate holds for every $p\in T$.
+The proof uses the inverse image of the weak-star closed norm ball under
+$f-g$; it does not assert continuity of the norm. If every unequal pair
+of $f$-values has distance at least $c$ and $2\epsilon<c$, equality of two
+$g$-values contradicts the triangle inequality. This is the full-domain
+`injective_of_approximation` theorem.
+
+For zero-dimensional $K$, `SignedBallReduction.SignedClopenCollision`
+states the remaining analytic sufficient hypothesis. For **every** regular
+signed sequence $z_n$ of variation mass one, carried by pairwise disjoint
+nonempty clopens $W_n$, with $z_n^+(K)\geq1/2$, **every** continuous
+extension of its principal integration functionals has a collision at two
+distinct free ultrafilters. This is a sequence-level collision statement;
+it contains no KPR supplier or nonembedding conclusion.
+
+`not_injective_signed_ball_of_collision` derives nonembedding of the whole
+signed ball from exactly this hypothesis. Apply the full normalization
+above, then directly reuse
+`WeakStarNormSeparation.exists_pos_le_norm_sub` to obtain a global gap
+$c>0$. Put $\eta=\min(c/16,1/4)$. The existing signed clopen
+disjointization supplies normalized regular signed restrictions $t_n$,
+disjoint nonempty clopens, and variation error less than $2\eta$. Its
+further increasing selection supplies one common sign $s\in\{1,-1\}$
+such that $(st_n)^+(K)\geq1/2$. Multiply the whole selected original
+sequence by this same sign; the global gap remains $c$. Banach–Alaoglu
+extends $st_n$. The principal error bound transfers to every ultrafilter,
+and $2(2\eta)<c$ preserves full injection, contradicting the collision
+hypothesis.
+
+These are repository deductions from classical signed RMK, KPR splitting,
+Banach–Alaoglu and the existing clopen and norm-separation suppliers, not
+new results attributed to Kania–Kąkol. Establishing SignedClopenCollision
+for the intended CH compactum, the transfinite construction, signed
+induction and global capture remains outside this analytic reduction.
+The reduction alone is not a solution of Problem 8.2.

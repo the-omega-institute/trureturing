@@ -178,8 +178,7 @@ private theorem nativeSlice_sub (D : LatticeData) (hu : IsUnit D.G.det)
   simp only [nativeSlice_mode, slice, map_sub, Pi.sub_apply, LinearMap.sub_apply]
 
 local macro "sourceCurrent" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.source_current))
+  `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.source_current)
 
 private theorem source_ground_commutator (D : LatticeData) (i : Fin D.rank)
     (alpha : Charge D) (epsilon : Bool) (b : Carrier D) (d r : ℤ) :

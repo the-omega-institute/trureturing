@@ -124,7 +124,7 @@ internal sealed class CountableClopenReflectionDocument : IScribeDocumentDefinit
                         + "Since all bonding maps are surjective, every component point is in the eventual range. "
                         + "The limit-cone isomorphism transfers these lifts to the given cone C, so the actual beta projection is surjective. "
                         + "Lifting one trace point proves the nonemptiness equivalence; lifting a hypothetical intersection point proves the reverse disjointness implication. "
-                        + "The private projection helper is a consumed application of that existing theorem, not a separate mathematical contribution.")),
+                        + "The public projection_surjective helper is a consumed application of that existing theorem. It is also reused by CountableContinuousReflection for continuous quotient descent; publicization preserves its statement and proof.")),
                     Paragraph(Text(
                         "This is attributed known inverse-limit infrastructure. In the Talagrand CH candidate, one may include a separating clopen among the countable family "
                         + "and reflect all final clopen supports into one actual launch row. The theorem supplies that common-stage reflection only. "
