@@ -9,7 +9,6 @@
 import D5.S3.VertexAlgebra.Lattice.NormFourPeirceInvolution
 import D5.S3.VertexAlgebra.Lattice.LeechLowSpectrum
 import D5.S3.Arith.Lattices.Golay.LeechAxisDistribution
-import Mathlib.LinearAlgebra.Basis.Submodule
 import Batteries.Tactic.OpenPrivate
 
 /-!
@@ -26,12 +25,13 @@ set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 namespace D5.S3.VertexAlgebra.Lattice.LeechPeirceDimension
-open LatticeGeneratingFieldLocality LatticeSugawaraCurrents LatticeSugawaraConformal
+open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration LatticeSugawaraCurrents LatticeSugawaraConformal
 open LatticeInvolution NormFourVirasoroVector RootlessLowGrades
 open InvolutionRootlessLowGrades NormFourPeirceInvolution
 open D5.S3.Arith.Lattices.Golay
 open GolayEncoder IntegerLeech
-open scoped BigOperators Classical
+open scoped BigOperators
+attribute [local instance] Classical.propDecidable
 
 open private E ground norm_four_inner_bounds zero_mode_orbit_middle actual_basis_neutral_coe
   from D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
@@ -166,8 +166,8 @@ private theorem oddSpan_eq (D : LatticeData)
         rw [hp, one_smul, sub_self, smul_zero]
         exact W.zero_mem
   have hP (v : OrdinaryTwo D) : P v ∈ W := by
-    letI : Finite (NormFourOrbit D) := normFourOrbit_finite D hD
-    letI : Fintype (FixedTwoIndex D) := Fintype.ofFinite _
+    haveI : Finite (NormFourOrbit D) := normFourOrbit_finite D hD
+    haveI : Fintype (FixedTwoIndex D) := Fintype.ofFinite _
     rw [← b.sum_repr v, map_sum]
     exact W.sum_mem (fun j _ => by rw [map_smul]; exact W.smul_mem _ (hb j))
   apply le_antisymm
@@ -183,7 +183,7 @@ private theorem oddSpan_eq (D : LatticeData)
       change chiLinear D a v = _ at hs
       simp only [Module.End.mul_apply, LinearMap.sub_apply, LinearMap.smul_apply,
         Module.End.one_apply, map_sub, map_smul, hL] at hs
-      convert hs using 1 <;> module
+      convert hs using 1; module
     have he : P ⟨v, hv.1⟩ = v := by
       change (1 / 2 : ℂ) • (v - chiLinear D a v) = v
       rw [hc]; module
@@ -197,7 +197,7 @@ theorem actual_one_sixteenth_finrank (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (hroot : ∀ c : Charge D, bilinear D c c ≠ 2)
     (a : Charge D) (ha : bilinear D a a = 4) :
-    Module.finrank ℂ ((fixedSpace D ⊓
+    Module.finrank ℂ ↥((fixedSpace D ⊓
       (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)) ⊓
       (mode D a 1 0).eigenspace (1 / 16 : ℂ)) =
       Nat.card {b : NormFour D // bilinear D a b.1 = 1} := by
@@ -223,8 +223,7 @@ private theorem axisPoint_raw : axisPoint.1 =
   · subst i; simp [LeechMinimalCount.zeroVector, LeechSignedSupport.signed]
   by_cases hj : i = 1
   · subst i; simp [LeechMinimalCount.zeroVector, LeechSignedSupport.signed]
-  simp [LeechMinimalCount.zeroVector, LeechSignedSupport.signed, hi, hj,
-    Ne.symm hi, Ne.symm hj, Pi.single_apply]
+  simp [LeechMinimalCount.zeroVector, LeechSignedSupport.signed, hi, hj]
 
 private theorem shell_pairing (D : LatticeData)
     (e : Charge D ≃ₗ[ℤ] RealLeech.lattice)
@@ -237,11 +236,11 @@ private theorem shell_pairing (D : LatticeData)
   have h := hp b.1 c.1
   rw [← hs b, ← hs c] at h
   have he : (bilinear D b.1 c.1 : ℝ) =
-      (dotProduct (s b).1 (s c).1 : ℝ) / 8 := by
+      ((dotProduct (s b).1 (s c).1 : ℤ) : ℝ) / 8 := by
     simpa [RealLeech.pairing, DirectLeechDuality.B, RealLeech.castLinear,
       dotProduct, Int.cast_sum, Int.cast_mul, div_eq_mul_inv, mul_comm] using h
   have hh : (8 : ℝ) * (bilinear D b.1 c.1 : ℝ) =
-      (dotProduct (s b).1 (s c).1 : ℝ) := by linarith
+      ((dotProduct (s b).1 (s c).1 : ℤ) : ℝ) := by linarith
   exact_mod_cast hh
 
 private def axisFiberEquiv (D : LatticeData)
@@ -263,10 +262,13 @@ private def axisFiberEquiv (D : LatticeData)
     rw [s.apply_symm_apply, s.apply_symm_apply, axisPoint_raw] at h
     have hx := x.2.2.2
     dsimp only at h
-    rw [hx] at h
     omega⟩
   left_inv b := Subtype.ext (s.symm_apply_apply b.1)
-  right_inv x := Subtype.ext (congrArg Subtype.val (s.apply_symm_apply ⟨x.1, x.2.1, x.2.2.1⟩))
+  right_inv x := by
+    apply Subtype.ext
+    change (s (s.symm ⟨x.1, x.2.1, x.2.2.1⟩)).1 = x.1
+    exact congrArg (fun z : LeechMinimalCount.Sphere => z.1)
+      (s.apply_symm_apply ⟨x.1, x.2.1, x.2.2.1⟩)
 
 /-- One actual Golay Leech norm-four axis, with raw coordinates (4,4,0^22)
 and the literal dot-over-eight real pairing, has a 47104-dimensional
@@ -282,7 +284,7 @@ theorem actual_leech_one_sixteenth_dimension :
       (e a : RealLeech.Space) = RealLeech.castLinear
         (Pi.single (0 : Fin 24) 4 + Pi.single (1 : Fin 24) 4) ∧
       bilinear D a a = 4 ∧
-      Module.finrank ℂ ((fixedSpace D ⊓
+      Module.finrank ℂ ↥((fixedSpace D ⊓
         (sugawaraMode D (gramComplex D)⁻¹ 0).eigenspace (2 : ℂ)) ⊓
         (mode D a 1 0).eigenspace (1 / 16 : ℂ)) = 47104 := by
   obtain ⟨D, e, hrank, hunit, hpos, hpair, hroot, s, hs, _⟩ :=
@@ -295,8 +297,7 @@ theorem actual_leech_one_sixteenth_dimension :
   · rw [actual_one_sixteenth_finrank D hpos hroot a.1 a.2,
       Nat.card_congr (axisFiberEquiv D e hpair s hs)]
     have hc := (LeechAxisDistribution.axis_distribution 0 1 (by decide +kernel) 1).2
-    norm_num at hc
-    exact hc
+    convert hc using 1 <;> norm_num
 
 #print axioms actual_one_sixteenth_finrank
 #print axioms actual_leech_one_sixteenth_dimension
