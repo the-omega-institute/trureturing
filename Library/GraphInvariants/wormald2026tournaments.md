@@ -7,6 +7,7 @@ doi: null
 url: https://arxiv.org/abs/2610.16245
 claim: 'Conjecture 6: For every regular tournament T* on at least three vertices, H is nonzero and d/H is the square of a rational.'
 strata_touched:
+  - D5/S3/Combinatorics/WormaldTournamentHessian/Defs
   - D5/S3/Combinatorics/WormaldTournamentHessian/Result
 license: citation-only
 triage: anchor

@@ -30,7 +30,12 @@ arXiv:2610.16245, §1, Conjecture 6:
 >
 > Let ${\cal H}$ denote the determinant of the Hessian (matrix of second order partials) of $\tilde f$ at $\theta_j=0$ for $j=1,\ldots,d-1$.
 
-The formal namespace is `D5.S3.Combinatorics.WormaldTournamentHessian.Result`.
+The formal modules are `D5.S3.Combinatorics.WormaldTournamentHessian.Defs`,
+`D5.S3.Combinatorics.WormaldTournamentHessian.Algebra`,
+`D5.S3.Combinatorics.WormaldTournamentHessian.Derivative` and
+`D5.S3.Combinatorics.WormaldTournamentHessian.Result`.
+The definitions, including `claim` and `calH`, belong to `Defs`;
+the closed form and final theorem belong to `Result`.
 The source uses an analytic local solution; complex $C^2$ at the base point
 suffices for the two derivatives encoded here. `Complex.log` chooses the principal
 branch near the positive base value $z$. `claim` includes existence of a complex $C^2$ local solution and nonvanishing
