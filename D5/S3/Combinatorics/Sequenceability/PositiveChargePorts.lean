@@ -200,12 +200,12 @@ theorem semicomplete (G : Geometry M Ω q) (b0 z : Finset X)
   · by_cases hlt : rank s < rank t
     · left
       exact arc_of_colour G b0 z rank hKB hb hsb htb hst
-        (by simp only [blueAt,if_neg hb0]; exact ⟨s,hsb,hlt⟩)
+        (by simp only [blueAt,ite_eq_right hb0]; exact ⟨s,hsb,hlt⟩)
     · right
       have hne : rank s ≠ rank t := fun he => hst (hrank s hs t ht he)
       have hts : rank t < rank s := by omega
       exact arc_of_colour G b0 z rank hKB hb htb hsb hst.symm
-        (by simp only [blueAt,if_neg hb0]; exact ⟨t,htb,hts⟩)
+        (by simp only [blueAt,ite_eq_right hb0]; exact ⟨t,htb,hts⟩)
 
 /-- Explicit b0,a,z,u paths establish strong connectivity. Pair coverage alone
 is NOT a strong-connectivity hypothesis. -/
@@ -235,7 +235,7 @@ theorem stronglyConnected (G : Geometry M Ω q) (b0 a z u : Finset X)
       have hne : rank a ≠ rank x := fun he => hax (hrank a haT x hx he)
       omega
     have hax' : D a x := arc_of_colour G b0 z rank hKB hb hab hxb hax
-      (by simp only [blueAt,if_neg hb']; exact ⟨a,hab,hlt⟩)
+      (by simp only [blueAt,ite_eq_right hb']; exact ⟨a,hab,hlt⟩)
     obtain ⟨c,hc,hxc,hzc⟩ := G.coverage x hx z hzT hxz
     have hc' : c ≠ b0 := by rintro rfl; exact hx0 hxc
     have hlt' : rank x < rank z := by
@@ -243,7 +243,7 @@ theorem stronglyConnected (G : Geometry M Ω q) (b0 a z u : Finset X)
       have hne : rank x ≠ rank z := fun he => hxz (hrank x hx z hzT he)
       omega
     exact ⟨hax',arc_of_colour G b0 z rank hKB hc hxc hzc hxz
-      (by simp only [blueAt,if_neg hc']; exact ⟨x,hxc,hlt'⟩)⟩
+      (by simp only [blueAt,ite_eq_right hc']; exact ⟨x,hxc,hlt'⟩)⟩
   have hza : D z a := arc_of_colour G b0 z rank hKB hb0 hz ha haz.symm
     (by simp [blueAt,haz])
   have hauz := outside u hu hu0
@@ -257,7 +257,7 @@ theorem stronglyConnected (G : Geometry M Ω q) (b0 a z u : Finset X)
       · subst x
         exact ⟨(Relation.ReflTransGen.single hauz.1).tail hauz.2,
           Relation.ReflTransGen.single hza⟩
-      · have hax : D a x := arc_of_colour G b0 z rank hKB hb0 ha hx0 hxa.symm
+      · have hax : D a x := arc_of_colour G b0 z rank hKB hb0 ha hx0 (Ne.symm hxa)
           (by simp [blueAt,hxz])
         have hxa' : D x a := arc_of_colour G b0 z rank hKB hb0 hx0 ha hxa
           (by simp [blueAt,haz])
@@ -318,7 +318,7 @@ theorem mixed_B (G : Geometry M Ω q) (b0 z : Finset X)
     have hx' := Finset.mem_inter.mp hx
     have hy' := Finset.mem_inter.mp hy
     have hred : ¬blueAt G b0 z rank b t := by
-      simp only [blueAt,if_neg hb0]
+      simp only [blueAt,ite_eq_right hb0]
       rintro ⟨v,hv,hvlt⟩
       have := hmin v hv
       omega
@@ -326,7 +326,7 @@ theorem mixed_B (G : Geometry M Ω q) (b0 z : Finset X)
       (mem_terminalNeighbors.mp ht).1 hx'.1 hx'.2 hred⟩,y,hy'.1,?_⟩
     exact (port_colour G b0 z rank hKB hb (mem_terminalNeighbors.mp hs).1
       hy'.1 hy'.2).mpr (by
-        simp only [blueAt,if_neg hb0]
+        simp only [blueAt,ite_eq_right hb0]
         exact ⟨t,ht,hlt⟩)
 
 /-- alpha is selected on the ACTUAL a--u common neighbour, beta on z--b0. -/
@@ -350,7 +350,7 @@ theorem red_frame (G : Geometry M Ω q) (b0 a z u : Finset X)
   have hα := Finset.mem_inter.mp halpha
   have hβ := Finset.mem_inter.mp hbeta
   have hαc : ¬blueAt G b0 z rank b a := by
-    simp only [blueAt,if_neg hb']
+    simp only [blueAt,ite_eq_right hb']
     rintro ⟨s,hs,hlt⟩
     have := hmin s (mem_terminalNeighbors.mp hs).1
     omega
@@ -754,7 +754,9 @@ theorem avoiding_word_of_portCycle (G : Geometry M Ω q)
         exact hfd ▸ (mem_neighborhood.mp hmem).2
       have hfPresent := in_union hdQ hfmem
       have hPsplit : P = p.map Prod.snd ++ e.2 :: f.2 :: s.map Prod.snd := by
-        simp only [P,hsplit,List.map_append,List.map_cons]
+        change (C.first :: C.tail).map Prod.snd = _
+        rw [hsplit]
+        simp only [List.map_append,List.map_cons]
       have hw : w = (U ++ [alpha,beta,q] ++ p.map Prod.snd) ++
           e.2 :: (f.2 :: (s.map Prod.snd ++ V)) := by
         change U ++ alpha :: beta :: q :: (P ++ V) = _
