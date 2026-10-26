@@ -48,7 +48,10 @@ internal sealed class AltizioGeometricSumDiskDocument : IScribeDocumentDefinitio
                     + "makes the defect negative and produces a point on the boundary that "
                     + "violates the inequality. This proves both directions for every positive n. "
                     + "The separate bound in Remark 3 and the 2π limit remain unanswered."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("altizio-2025-geometric-sum-disk"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Qualified(string owner, string name) =>

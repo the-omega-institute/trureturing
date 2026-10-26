@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow ((\forall z \in \mathbb{C},\; z 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/AltizioGeometricSumDisk.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/altizio-2025-geometric-sum-disk` (proved) by `D5/S3/Zeros/AltizioGeometricSumDisk.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"altizio-2025-geometric-sum-disk","declaration_gid":"D5/S3/Zeros/AltizioGeometricSumDisk.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David Altizio (2025). *Zeros of Stern polynomials in the complex plane*. DOI: [10.48550/arXiv.2511.03847](https://doi.org/10.48550/arXiv.2511.03847). URL: <https://arxiv.org/abs/2511.03847v1>.
