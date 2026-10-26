@@ -30,7 +30,7 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("complex-dot-cauchy-schwarz-squared"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.cs_sq"),
                 H("The squared Cauchy-Schwarz bound"), StatementSource.FromAuthor(F.Disp(CsSqStatement())),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/axler2024innerproduct")),
                 Blocks(Paragraph(Text("For two complex vectors on a finite index type, the squared modulus of their conjugate dot product is bounded by the product of their squared coordinate norms."))),
                 DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("identity-plus-twice-rank-one-is-separable"),
