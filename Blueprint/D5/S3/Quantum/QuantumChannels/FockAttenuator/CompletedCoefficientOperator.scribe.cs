@@ -16,7 +16,7 @@ internal sealed class CompletedCoefficientOperatorDocument : IScribeDocumentDefi
                 "Take w = beamSplitter(1/2)(tensor(a,e2)) using the published completed beam unitary. Its norm squared is norm(a)^2 for every complex l2 input, including zero. The selected coefficient operator is Hilbert-Schmidt, its product with its adjoint is the actual reduced operator, and that operator has trace norm(a)^2."),
             Paragraph(Text("The column construction reuses HilbertSchmidt.exists_hilbertSchmidt_of_square_summable_columns and the attributed trace-class suppliers. This module does not establish the all-input purity estimate 3/8. That estimate requires the completed two-copy retained-swap compression, including its exact environment marginal; it cannot be inferred from normalization or from an arbitrarily prescribed spectrum.")))));
     private static DocumentBlock Node(string name, string title, string text) => Describe.Lean(
-        DescribeId.Create("completed-coefficient-" + name.Replace('_', '-')),
+        DescribeId.Create("completed-coefficient-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedCoefficientOperator." + name),
         H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Theorem);

@@ -30,12 +30,12 @@ internal sealed class CompletedTwoCopySwapDocument : IScribeDocumentDefinition
                 "For arbitrary complex l2 input a, form the actual completed output by applying the published balanced beam splitter to a tensor |2>. The trace-square/swap identity, unitary conjugation and actual environment compression give Tr(sigma_a^2) <= (3/8)norm(a)^4. The two-copy input norm is norm(a)^4. The zero vector and arbitrary infinite support are included."),
             Paragraph(Text("Apply the countable trace/purity envelope to the actual nonzero output divided by its trace norm(a)^2. The resulting increasing-triple value is at least (25/864)norm(a)^6, and its gap from norm(a)^6/32 is at least -norm(a)^6/432; zero input gives equality at zero. These are homogeneous applications of the actual purity theorem and the spectral envelope, not a claim that the abstract optimizer (5/12,5/12,1/6) is physically realizable. The stronger universal nonnegative gap and the all-density entropy conclusion remain open.")))));
     private static DocumentBlock Node(string name, string title, string text) => Describe.Lean(
-        DescribeId.Create("completed-two-copy-" + name.Replace('_', '-')),
+        DescribeId.Create("completed-two-copy-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedTwoCopySwap." + name),
         H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Definition);
     private static DocumentBlock Theorem(string name, string title, string text) => Describe.Lean(
-        DescribeId.Create("completed-two-copy-" + name.Replace('_', '-')),
+        DescribeId.Create("completed-two-copy-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/QuantumChannels/FockAttenuator/CompletedTwoCopySwap." + name),
         H(title), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Theorem);

@@ -235,8 +235,8 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
   rw [Finset.sum_insert (by decide), Finset.sum_insert (by decide),
     Finset.sum_singleton]
   have hself (z a : ℂ) : (inner ℂ (z * a) (z * a)).re = ‖z‖ ^ 2 * ‖a‖ ^ 2 := by
-    rw [inner_self_eq_norm_sq_to_K]
-    simp only [← Complex.ofReal_pow, Complex.ofReal_re, norm_mul, mul_pow]
+    change RCLike.re (inner ℂ (z * a) (z * a)) = _
+    rw [inner_self_eq_norm_sq, norm_mul, mul_pow]
   have he4 (d : ℕ) : fockBasis.repr TwoCopyEnvironment.rotatedEnvironment (4, d) =
       if d = 0 then ((Real.sqrt 6 / 4 : ℝ) : ℂ) else 0 := by
     simp [environment_coefficient, Prod.mk.injEq]
@@ -247,7 +247,7 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
       if d = 4 then ((Real.sqrt 6 / 4 : ℝ) : ℂ) else 0 := by
     simp [environment_coefficient, Prod.mk.injEq]
   simp only [he4, he2, he0]
-  have hb : ‖(-1 / 2 : ℂ)‖ ^ 2 = 1 / 4 := by norm_num [norm_div]
+  have hb : ‖(-(1 / 2) : ℂ)‖ ^ 2 = 1 / 4 := by norm_num [norm_div]
   rcases p with ⟨c, d⟩
   by_cases h0 : d = 0
   · subst d
@@ -261,8 +261,8 @@ private theorem difference_swap_row (v : H2) (p : ℕ × ℕ) :
   · subst d
     norm_num only [environmentWeight, ite_true, ite_false,
       mul_zero, inner_zero_left, inner_zero_right, add_zero, zero_add]
-    change (inner ℂ (fockBasis.repr v (c, 2) * (-1 / 2 : ℂ))
-      (fockBasis.repr v (c, 2) * (-1 / 2 : ℂ))).re = _
+    change (inner ℂ (fockBasis.repr v (c, 2) * (-(1 / 2) : ℂ))
+      (fockBasis.repr v (c, 2) * (-(1 / 2) : ℂ))).re = _
     rw [hself, hb]
     ring
   by_cases h4 : d = 4
@@ -488,8 +488,8 @@ private theorem pair_map_norm (U : H2 ≃ₗᵢ[ℂ] H2) (x : FourModes) :
   intro t
   simp only [pairMap, twoCopyMap, ContinuousLinearMap.completion_apply_coe,
     UniformSpace.Completion.norm_coe]
-  simpa only [TensorProduct.mapL_apply, TensorProduct.congrIsometry_apply,
-    TensorProduct.congr] using (TensorProduct.congrIsometry U U).norm_map t
+  simpa only [TensorProduct.mapL_apply, TensorProduct.mapIsometry_apply] using
+    (TensorProduct.mapIsometry U.toLinearIsometry U.toLinearIsometry).norm_map t
 
 private def pairIsometry (U : H2 ≃ₗᵢ[ℂ] H2) : FourModes →ₗᵢ[ℂ] FourModes :=
   { (pairMap U).toLinearMap with norm_map' := pair_map_norm U }
@@ -649,6 +649,7 @@ theorem retained_swap_gram (w : H2) :
     simp_rw [hterm]
     rw [← hmul, hleft.tsum_eq, hright.tsum_eq]
     rw [← inner_conj_symm (w jk.2) (w jk.1), RCLike.mul_conj]
+    norm_cast
   calc
     _ = ∑' p, F p := by
       rw [← fourBasis.repr.inner_map_map, lp.inner_eq_tsum]
@@ -694,7 +695,8 @@ private theorem reduced_square_gram (w : H2) :
   have hd' : HasSum (fun n : ℕ => (‖D (oneBasis n)‖ ^ 2 : ℂ)) (trace (D ^ 2) hD2) := by
     apply HasSum.congr_fun (e.hasSum_iff.mpr hd)
     intro n
-    change inner ℂ (b (e n)) ((D ^ 2) (b (e n))) = _
+    change (‖D (oneBasis n)‖ ^ 2 : ℂ) =
+      inner ℂ (b (e n)) ((D ^ 2) (b (e n)))
     rw [hdiag, hb, Equiv.symm_apply_apply]
   have hnorm : Summable (fun n : ℕ => ‖D (oneBasis n)‖ ^ 2) := by
     have hn := e.summable_iff.mpr
