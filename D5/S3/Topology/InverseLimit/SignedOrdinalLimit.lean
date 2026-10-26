@@ -272,9 +272,9 @@ noncomputable def predecessor : Predecessor (literalPrefix H E) hw.le := by
           (projection (literalPrefix H E) r) (fun _ => rfl)
           (A.oldPack E r hr) (A.oldPack_heq E r hr)
     · intro r hr d
-      letI : CompactSpace ((literalPrefix H E).carrier (top l)) :=
-        (literalPrefix H E).spaceCompact (top l)
-      exact A.limit_f E (bornRow hw r hr) d
+      exact @limit_f l H hw A E (bornRow hw r hr) d
+        ((literalPrefix H E).carrier (top l)) ((literalPrefix H E).spaceCompact (top l))
+        ((literalPrefix H E).carrier (rowIndex r))
         (carrier_top H _) (carrier_old H r.1 (bornRow hw r hr).1.2 _)
         (projection (literalPrefix H E) r) (fun _ => rfl)
         (A.oldPack E r hr) (A.oldPack_heq E r hr)
