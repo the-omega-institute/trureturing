@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Divergence.EntropyDefectResolventStability
 import Reg.Support.SingleDependentReadout
 
+/-! Faithful dependent-readout registration for the actual supported quartic estimate. -/
+
 noncomputable section
 universe u v
 open Matrix
@@ -43,15 +45,18 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   let a := ULift.{u} Unit
   let b := ULift.{v} Unit
-  let ρ : DensityState a := ⟨1, zero_le_one, by simp [Matrix.trace]⟩
+  let ρ : DensityState a := ⟨1, zero_le_one, by simp [Matrix.trace, Matrix.diag, CStarMatrix.one_apply_eq]⟩
   let Φ : QuantumChannel a b := {
     toCompletelyPositiveMap := CompletelyPositiveMapClass.toCompletelyPositiveLinearMap
       (CStarMatrix.reindexₐ ℂ ℂ (Equiv.ofUnique a b))
     trace_preserving := by
       intro X
       change Matrix.trace (CStarMatrix.reindexₐ ℂ ℂ (Equiv.ofUnique a b) X) = Matrix.trace X
-      simp [Matrix.trace, CStarMatrix.reindexₐ_apply, Matrix.reindex_apply,
-        Matrix.submatrix_apply] }
+      simp [Matrix.trace, Matrix.diag, CStarMatrix.reindexₐ_apply, Matrix.reindex_apply,
+        Matrix.submatrix_apply]
+      change X ((Equiv.ofUnique a b).symm default) ((Equiv.ofUnique a b).symm default) =
+        X default default
+      simp only [Subsingleton.elim ((Equiv.ofUnique a b).symm default) (default : a)] }
   exact @h a b inferInstance inferInstance inferInstance inferInstance inferInstance
     inferInstance Φ ρ ρ (supportContained_refl ρ) 1 zero_lt_one
 
