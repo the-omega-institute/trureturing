@@ -4,9 +4,21 @@
 
 Integral fixed representatives and the canonical fixed unsigned-star cokernel comparison on original indexed coordinates.
 
+**Theorem 1.1 (Equivariance of the Original Integer Star Map).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.starMap_equivariant`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.starMap_equivariant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing equivariance proof is exposed unchanged for invariant-support consumers. Independent endpoint swaps remain allowed; no fixed-cokernel lifting or comparison theorem is assumed by those consumers.
+
 V and X are the finite original vertex and edge-ID types. The original graph is connected, nonbipartite and loopless, and parallel original edge IDs remain separate. An arbitrary group Gamma acts by vertexPerm and edgePerm, homomorphisms to the two permutation groups. The endpoints condition permits an independent orientation swap at each group element and edge ID. The action on integer coordinates is (gamma.a)(v)=a(vertexPerm(gamma)^(-1)(v)), and similarly on X. The integer star map is exactly F(a)(i)=a(left(i))+a(right(i)).
 
-**Theorem 1.1 (A Fixed Integral Representative of Every Fixed Class).**
+**Theorem 1.2 (A Fixed Integral Representative of Every Fixed Class).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.exists_fixed_representative`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.e
 
 Every fixed class x of the actual quotient Z^X/F(Z^V) has an integer vector y fixed on the original X coordinates with quotient class x. Gamma need not be finite. The consumed supplier corollary starMap_injective reuses the existing private nonbipartite_potential proof over Z. Each actual difference gamma.z-z has a unique integer F-potential c(gamma), and injectivity proves the cocycle equation on the original arbitrary group. The differences factor through permutations of the ORIGINAL finite edge-ID type X. F-injectivity therefore makes the vector range of c finite, so every coordinate range is finite. An attained integer maximum d(v) of each actual coordinate range and the cocycle identity give c(gamma)=d-gamma.d with actual integer d. Then y=z+F(d) is fixed and represents x. No integral average or divisibility of the group order is assumed, and no cocycle correction is an extra premise.
 
-**Definition 1.2 (The Canonical Integral Comparison).**
+**Definition 1.3 (The Canonical Integral Comparison).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.fixedCokernelEquiv`
 
@@ -36,4 +48,5 @@ Attribution: approved native source P1/P6, SHA256 ed356c4b82a313d22d45def66d4fa8
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.exists_fixed_representative`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.fixedCokernelEquiv`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Incidence/UnsignedStarFixedCokernel.starMap_equivariant`
 - Dependency: [D5/S3/Combinatorics/Graph/Incidence/UnsignedStarTorsion](UnsignedStarTorsion.md)

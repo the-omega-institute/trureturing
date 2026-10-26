@@ -60,12 +60,12 @@ private theorem complement_weight (v : Word) :
       rcases bit_cases (v i) with h | h <;> norm_num [h, one_add_one]
     _ = 24 := by simp
 
-private def pairProjection (C : Submodule F2 Word) (i j : Fin 24) : C →+ F2 × F2 where
+def pairProjection (C : Submodule F2 Word) (i j : Fin 24) : C →+ F2 × F2 where
   toFun c := (c.val i, c.val j)
   map_zero' := rfl
   map_add' _ _ := rfl
 
-private theorem pairProjection_surjective
+theorem pairProjection_surjective
     (C : Submodule F2 Word)
     (hones : (fun _ : Fin 24 => (1 : F2)) ∈ C)
     (hdual : coordinatePairing.orthogonal C = C)
@@ -120,7 +120,7 @@ private theorem pairProjection_surjective
     · exact (hc (hi.trans hj.symm)).elim
   · exact ⟨one, rfl⟩
 
-private theorem pair_fiber_card
+theorem pair_fiber_card
     (C : Submodule F2 Word) (hcard : Nat.card C = 4096)
     (hones : (fun _ : Fin 24 => (1 : F2)) ∈ C)
     (hdual : coordinatePairing.orthogonal C = C)
