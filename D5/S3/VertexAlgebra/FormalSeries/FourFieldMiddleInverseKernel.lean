@@ -53,6 +53,8 @@ private theorem outer_inverse (k A : ℕ) :
         (1 : MvPowerSeries (Fin 3) R)+ -outerBase R 0 := by dsimp [outerBase]; ring
     dsimp only [outerKernel] at *
     rw [middleUnitSeries,eq0]
+    rw [show (1-MvPowerSeries.X 2 : MvPowerSeries (Fin 3) R)=1+-outerBase R 1 by simp [outerBase,sub_eq_add_neg],
+      show (1-MvPowerSeries.X 1*MvPowerSeries.X 2 : MvPowerSeries (Fin 3) R)=1+-outerBase R 2 by simp [outerBase,sub_eq_add_neg]]
     change balancedUnitSeries R k A * (1+-outerBase R 0)^k *
       (1+-outerBase R 1)^k*(1+-outerBase R 2)^k * _=1
     calc
@@ -74,8 +76,9 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
       else if i=1 then (if r=0 ∧ s=0 ∧ t=q then 1 else 0)
       else (if r=0 ∧ s=q ∧ t=q then 1 else 0) := by
   classical
-  fin_cases i
-  · simp only [ite_true]
+  fin_cases i <;> simp only [Fin.isValue,reduceIte]
+  · change MvPowerSeries.coeff (index3 r s t) (outerBase R 0^q) =
+      if r=s ∧ t=q then (q.choose r : R) else 0
     have expand : outerBase R 0 ^ q =
       ∑ h∈Finset.range (q+1), (q.choose h : ℂ) •
         MvPowerSeries.monomial (index3 h h q) (1 : R) := by
@@ -85,16 +88,13 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
       intro h hh
       have hhq : h≤q := by simpa using Finset.mem_range.mp hh
       congr 1
-      rw [mul_pow,MvPowerSeries.X_pow_eq,MvPowerSeries.X_pow_eq,
-        MvPowerSeries.X_pow_eq,MvPowerSeries.X_pow_eq,
-        MvPowerSeries.monomial_mul_monomial,MvPowerSeries.monomial_mul_monomial,
-        MvPowerSeries.monomial_mul_monomial]
+      simp only [mul_pow,MvPowerSeries.X_pow_eq,MvPowerSeries.monomial_mul_monomial]
       simp only [mul_one]
-      congr 1
+      apply congrArg (fun d : Fin 3 →₀ ℕ => MvPowerSeries.monomial d (1 : R))
       ext c
       fin_cases c <;> simp [index3] <;> omega
-    rw [expand,map_sum,Finset.sum_apply]
-    simp only [map_smul,LinearMap.smul_apply,MvPowerSeries.coeff_monomial]
+    rw [expand,map_sum]
+    simp only [LinearMap.map_smul_of_tower,MvPowerSeries.coeff_monomial]
     have eq (h : ℕ) : index3 r s t=index3 h h q ↔ r=h ∧ s=h ∧ t=q := by
       constructor
       · intro he
@@ -105,6 +105,7 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
     simp only [eq,smul_ite,smul_zero,smul_eq_mul]
     by_cases h : r=s ∧ t=q
     · rw [ite_eq_left h]
+      obtain ⟨hrs,htq⟩ := h
       subst s
       subst t
       by_cases hr : r≤q
@@ -113,6 +114,7 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
         · intro j hj hne; simp [hne,Ne.symm hne]
         · simp only [Finset.mem_range,not_lt]; omega
       · rw [Nat.choose_eq_zero_of_lt (by omega)]
+        simp only [Nat.cast_zero]
         apply Finset.sum_eq_zero
         intro j hj
         have hjq := Finset.mem_range.mp hj
@@ -121,10 +123,9 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
     · rw [ite_eq_right h]
       apply Finset.sum_eq_zero
       intro j hj
-      have hh : ¬(r=j ∧ s=j ∧ t=q) := by tauto
+      have hh : ¬(r=j ∧ s=j ∧ t=q) := by omega
       simp [hh]
-  · simp only [show (1 : Fin 3)≠0 by decide,ite_false,ite_true]
-    change MvPowerSeries.coeff (index3 r s t) (MvPowerSeries.X 2^q)=_
+  · change MvPowerSeries.coeff (index3 r s t) (MvPowerSeries.X 2^q)=_
     rw [MvPowerSeries.X_pow_eq,MvPowerSeries.coeff_monomial]
     have eq : index3 r s t=Finsupp.single 2 q ↔ r=0 ∧ s=0 ∧ t=q := by
       constructor
@@ -133,9 +134,8 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
           by simpa [index3] using congrArg (fun d => d 1) h,
           by simpa [index3] using congrArg (fun d => d 2) h⟩
       · rintro ⟨rfl,rfl,rfl⟩; simp [index3]
-    simp only [eq]
-  · simp only [show (2 : Fin 3)≠0 by decide,show (2 : Fin 3)≠1 by decide,ite_false]
-    change MvPowerSeries.coeff (index3 r s t) ((MvPowerSeries.X 1*MvPowerSeries.X 2)^q)=_
+    simp [eq]
+  · change MvPowerSeries.coeff (index3 r s t) ((MvPowerSeries.X 1*MvPowerSeries.X 2)^q)=_
     rw [mul_pow,MvPowerSeries.X_pow_eq,MvPowerSeries.X_pow_eq,
       MvPowerSeries.monomial_mul_monomial,MvPowerSeries.coeff_monomial]
     have eq : index3 r s t=Finsupp.single 1 q+Finsupp.single 2 q ↔ r=0 ∧ s=q ∧ t=q := by
@@ -145,7 +145,7 @@ private theorem base_pow_coeff (i : Fin 3) (q r s t : ℕ) :
           by simpa [index3] using congrArg (fun d => d 1) h,
           by simpa [index3] using congrArg (fun d => d 2) h⟩
       · rintro ⟨rfl,rfl,rfl⟩; simp [index3]
-    simp only [eq,mul_one]
+    simp [eq]
 
 private theorem kernel_coeff (k : ℕ) (i : Fin 3) (r s t : ℕ) :
     MvPowerSeries.coeff (index3 r s t) (outerKernel (R := R) k i) =
@@ -156,13 +156,16 @@ private theorem kernel_coeff (k : ℕ) (i : Fin 3) (r s t : ℕ) :
       else (if r=0 ∧ s=t then
         (((-1 : ℂ)^t)*integerBinomial (-(k : ℤ)) t) • (1 : R) else 0) := by
   classical
-  have negpower (q : ℕ) : (-outerBase R i)^q = (-1 : ℂ)^q • outerBase R i^q := by
-    simp [Algebra.smul_def,mul_pow]
+  have negpower (q : ℕ) : (-outerBase R i)^q =
+      MvPowerSeries.C ((-1 : R)^q)*outerBase R i^q := by
+    calc
+      _ = ((-1 : MvPowerSeries (Fin 3) R)*outerBase R i)^q := by rw [neg_one_mul]
+      _ = _ := by rw [mul_pow]; simp
   rw [outerKernel,PowerSeries.coeff_subst (outer_legal i),finsum_eq_single _ t]
-  · rw [negpower,map_smul,LinearMap.smul_apply,binomial_coeff,base_pow_coeff]
-    fin_cases i <;> simp [Algebra.smul_def,mul_assoc,mul_comm,mul_left_comm]
+  · rw [negpower,MvPowerSeries.coeff_C_mul,binomial_coeff,base_pow_coeff]
+    fin_cases i <;> simp [Algebra.smul_def,smul_eq_mul,mul_assoc,mul_comm,mul_left_comm]
   · intro q hq
-    rw [negpower,map_smul,LinearMap.smul_apply,base_pow_coeff]
+    rw [negpower,MvPowerSeries.coeff_C_mul,base_pow_coeff]
     fin_cases i <;> simp [hq,Ne.symm hq]
 
 private theorem single_mul_coeff (k n m t : ℕ) (G : MvPowerSeries (Fin 3) R) :
@@ -170,8 +173,22 @@ private theorem single_mul_coeff (k n m t : ℕ) (G : MvPowerSeries (Fin 3) R) :
       ∑ T∈Finset.range (t+1),
         (((-1 : ℂ)^T)*integerBinomial (-(k : ℤ)) T) •
           MvPowerSeries.coeff (index3 n m (t-T)) G := by
-  rw [coeff_mul_box]
-  simp [kernel_coeff,smul_mul_assoc]
+  classical
+  rw [coeff_mul_box,Finset.sum_eq_single 0]
+  · rw [Finset.sum_eq_single 0]
+    · simp [kernel_coeff,smul_mul_assoc]
+    · intro v hv hne
+      apply Finset.sum_eq_zero
+      intro w hw
+      simp [kernel_coeff,hne]
+    · simp
+  · intro u hu hne
+    apply Finset.sum_eq_zero
+    intro v hv
+    apply Finset.sum_eq_zero
+    intro w hw
+    simp [kernel_coeff,hne]
+  · simp
 
 private theorem diagonal_mul_coeff (k n m t : ℕ) (G : MvPowerSeries (Fin 3) R) :
     MvPowerSeries.coeff (index3 n m t) (outerKernel k 2*G) =
@@ -323,13 +340,12 @@ private theorem outer_box_coeff (k n m t : ℕ) (G : MvPowerSeries (Fin 3) R) :
     rw [mem_outerFiber] at hi
     refine ⟨⟨i.1,i.1+i.2.1,i.2.2.1,i.2.2.2⟩,?_,?_⟩
     · simp only [outerSigma,Finset.mem_sigma,Finset.mem_filter,Finset.mem_range]
-      dsimp
       omega
-    · dsimp
-      exact Prod.ext rfl (Prod.ext (by omega) (Prod.ext rfl rfl))
+    · exact Prod.ext rfl (Prod.ext (by simp) (Prod.ext rfl rfl))
   · intro i hi
     simp only [outerSigma,Finset.mem_sigma,Finset.mem_filter,Finset.mem_range] at hi
-    congr 2
+    apply congrArg (fun v : R => outerWeight k
+      (i.1,(i.2.1-i.1,i.2.2.1,i.2.2.2)) • v)
     apply congrArg (fun d => MvPowerSeries.coeff d G)
     ext c
     fin_cases c <;> simp [index3] <;> omega

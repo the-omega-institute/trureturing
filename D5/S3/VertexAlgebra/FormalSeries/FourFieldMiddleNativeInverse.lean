@@ -75,83 +75,88 @@ private theorem variable_transport (b : Exponent 3) (i : Fin 4)
     signedExtend (chartVariables R i * F (total e-1)) (W e+b)
   rw [one_smul]
   have ht : total (e-Pi.single i 1)=total e-1 := by
-    fin_cases i <;> simp [total,Pi.single_apply] <;> ring
+    fin_cases i <;> simp [total] <;> ring
   rw [ht]
   fin_cases i
   · dsimp [chartVariables]
     rw [one_mul]
     congr 1
     funext c
-    fin_cases c <;> simp [W,Pi.single_apply]
+    fin_cases c <;> dsimp [W] <;> simp
   · dsimp [chartVariables]
     rw [mul_assoc,mul_assoc,← pow_one (MvPowerSeries.X 0),signed_X_pow_mul,
       ← pow_one (MvPowerSeries.X 1),signed_X_pow_mul,
       ← pow_one (MvPowerSeries.X 2),signed_X_pow_mul]
     congr 1
     funext c
-    fin_cases c <;> simp [W,Pi.single_apply] <;> ring
+    fin_cases c <;> dsimp [W] <;> simp <;> ring
   · dsimp [chartVariables]
     rw [← pow_one (MvPowerSeries.X 2),signed_X_pow_mul]
     congr 1
     funext c
-    fin_cases c <;> simp [W,Pi.single_apply] <;> ring
+    fin_cases c <;> dsimp [W] <;> simp <;> ring
   · dsimp [chartVariables]
     rw [mul_assoc,← pow_one (MvPowerSeries.X 1),signed_X_pow_mul,
       ← pow_one (MvPowerSeries.X 2),signed_X_pow_mul]
     congr 1
     funext c
-    fin_cases c <;> simp [W,Pi.single_apply] <;> ring
+    fin_cases c <;> dsimp [W] <;> simp <;> ring
 
 private theorem add_transport (b : Exponent 3) (n : ℕ) (p q : LaurentPolynomial 4)
     (P Q : MvPowerSeries (Fin 3) R)
-    (hp : ∀ F, polynomialAction p (read b F)=read b (fun t => P*F (t-n)))
-    (hq : ∀ F, polynomialAction q (read b F)=read b (fun t => Q*F (t-n)))
+    (hp : ∀ F, polynomialAction p (read b F) = read b (fun t => P * F (t - n)))
+    (hq : ∀ F, polynomialAction q (read b F) = read b (fun t => Q * F (t - n)))
     (F : ℤ → MvPowerSeries (Fin 3) R) :
-    polynomialAction (p+q) (read b F)=read b (fun t => (P+Q)*F (t-n)) := by
+    polynomialAction (p+q) (read b F) = read b (fun t => (P+Q)*F (t-n)) := by
   rw [map_add,LinearMap.add_apply,hp,hq]
   funext e
-  change signedExtension _ _ + signedExtension _ _ = signedExtension _ _
+  change signedExtension (P*F (total e-n)) (W e+b) +
+    signedExtension (Q*F (total e-n)) (W e+b) =
+      signedExtension ((P+Q)*F (total e-n)) (W e+b)
   rw [add_mul,map_add]
   rfl
 
 private theorem sub_transport (b : Exponent 3) (n : ℕ) (p q : LaurentPolynomial 4)
     (P Q : MvPowerSeries (Fin 3) R)
-    (hp : ∀ F, polynomialAction p (read b F)=read b (fun t => P*F (t-n)))
-    (hq : ∀ F, polynomialAction q (read b F)=read b (fun t => Q*F (t-n)))
+    (hp : ∀ F, polynomialAction p (read b F) = read b (fun t => P * F (t - n)))
+    (hq : ∀ F, polynomialAction q (read b F) = read b (fun t => Q * F (t - n)))
     (F : ℤ → MvPowerSeries (Fin 3) R) :
-    polynomialAction (p-q) (read b F)=read b (fun t => (P-Q)*F (t-n)) := by
+    polynomialAction (p-q) (read b F) = read b (fun t => (P-Q)*F (t-n)) := by
   rw [map_sub,LinearMap.sub_apply,hp,hq]
   funext e
-  change signedExtension _ _ - signedExtension _ _ = signedExtension _ _
+  change signedExtension (P*F (total e-n)) (W e+b) -
+    signedExtension (Q*F (total e-n)) (W e+b) =
+      signedExtension ((P-Q)*F (total e-n)) (W e+b)
   rw [sub_mul,map_sub]
   rfl
 
 private theorem mul_transport (b : Exponent 3) (n m : ℕ) (p q : LaurentPolynomial 4)
     (P Q : MvPowerSeries (Fin 3) R)
-    (hp : ∀ F, polynomialAction p (read b F)=read b (fun t => P*F (t-n)))
-    (hq : ∀ F, polynomialAction q (read b F)=read b (fun t => Q*F (t-m)))
+    (hp : ∀ F, polynomialAction p (read b F) = read b (fun t => P * F (t - n)))
+    (hq : ∀ F, polynomialAction q (read b F) = read b (fun t => Q * F (t - m)))
     (F : ℤ → MvPowerSeries (Fin 3) R) :
-    polynomialAction (p*q) (read b F)=read b (fun t => (P*Q)*F (t-(n+m : ℕ))) := by
+    polynomialAction (p*q) (read b F) = read b (fun t => (P*Q)*F (t-(n+m : ℕ))) := by
   rw [map_mul,Module.End.mul_apply,hq,hp]
   congr 1
   funext t
   rw [mul_assoc]
-  congr 2
+  apply congrArg (fun t => P*(Q*F t))
   push_cast
   ring
 
 private theorem pow_transport (b : Exponent 3) (n : ℕ) (p : LaurentPolynomial 4)
     (P : MvPowerSeries (Fin 3) R)
-    (hp : ∀ F, polynomialAction p (read b F)=read b (fun t => P*F (t-n)))
+    (hp : ∀ F, polynomialAction p (read b F) = read b (fun t => P * F (t - n)))
     (r : ℕ) (F : ℤ → MvPowerSeries (Fin 3) R) :
-    polynomialAction (p^r) (read b F)=read b (fun t => P^r*F (t-(n*r : ℕ))) := by
+    polynomialAction (p^r) (read b F) = read b (fun t => P^r*F (t-(n*r : ℕ))) := by
   induction r generalizing F with
-  | zero => simp [read]
+  | zero => simp
   | succ r ih =>
     rw [pow_succ',pow_succ',Nat.mul_succ]
     have h := mul_transport b n (n*r) p (p^r) P (P^r) hp ih F
     simpa only [Nat.add_comm] using h
 
+omit [Algebra ℂ R] in
 private theorem factorization (S T U : MvPowerSeries (Fin 3) R) (k A B C : ℕ) :
     (S*T*U+U)^A * U^B * (T*U)^C *
       (1-S*T*U-U)^k*(1-U)^k*(1-T*U)^k*(S*T*U)^k *
@@ -159,9 +164,10 @@ private theorem factorization (S T U : MvPowerSeries (Fin 3) R) (k A B C : ℕ) 
     S^k*T^(k+C)*U^(A+B+C+3*k)*
       ((1+S*T)^A*(1+S*T-T)^k*(1-T)^k *
         (1-U-S*T*U)^k*(1-U)^k*(1-T*U)^k) := by
-  rw [show S*T*U+U=(1+S*T)*U by ring,
-    show S*T*U+U-T*U=(1+S*T-T)*U by ring,
+  rw [show S*T*U+U-T*U=(1+S*T-T)*U by ring,
+    show S*T*U+U=(1+S*T)*U by ring,
     show U-T*U=(1-T)*U by ring,show 3*k=k+k+k by omega]
+  rw [show 1-S*T*U-U=1-U-S*T*U by ring]
   simp only [mul_pow,pow_add]
   ring
 
@@ -218,7 +224,25 @@ private theorem action_chart (F : ℤ → MvPowerSeries (Fin 3) R)
   rw [mul_assoc,mul_assoc,mul_assoc,signed_X_pow_mul,signed_X_pow_mul,signed_X_pow_mul]
   congr 1
   funext i
-  fin_cases i <;> simp [middleShift,W] <;> ring
+  fin_cases i <;> dsimp [middleShift,W] <;> simp
+
+omit [Algebra ℂ R] in
+private theorem numerator_coeff (P : MvPowerSeries (Fin 4) R) (T : ℤ) (n m t : ℕ) :
+    MvPowerSeries.coeff (index3 n m t) (numeratorSlice P T) =
+      signedExtend P ![T-t,n,(t : ℤ)-m,(m : ℤ)-n] := by
+  classical
+  have hc : MvPowerSeries.coeff (index3 n m t) (numeratorSlice P T) =
+      if n≤m ∧ m≤t then signedExtend P ![T-t,n,(t : ℤ)-m,(m : ℤ)-n] else 0 := by
+    simp [MvPowerSeries.coeff_apply,numeratorSlice,index3]
+  rw [hc]
+  split_ifs with h
+  · rfl
+  · rw [signedExtend,ite_eq_right]
+    intro he
+    have h2 := he 2
+    have h3 := he 3
+    simp only [Matrix.cons_val_two,Matrix.cons_val_three,Matrix.head_cons,Matrix.tail_cons] at h2 h3
+    omega
 
 private theorem numerator_readout (P : MvPowerSeries (Fin 4) R) (e : Exponent 4) :
     signedExtend (numeratorSlice P (total e)) (W e)=signedExtend P e := by
@@ -232,21 +256,12 @@ private theorem numerator_readout (P : MvPowerSeries (Fin 4) R) (e : Exponent 4)
       ext i
       fin_cases i <;> simp [signedIndex,index3,n]
     rw [signedExtend,ite_eq_left hw]
-    change MvPowerSeries.coeff (signedIndex (W e)) _ = _
+    change MvPowerSeries.coeff (signedIndex (W e)) (numeratorSlice P (total e)) = _
     rw [idx]
-    change (if n 0≤n 1 ∧ n 1≤n 2 then
-      signedExtend P ![total e-n 2,n 0,(n 2 : ℤ)-n 1,(n 1 : ℤ)-n 0] else 0)=_
-    by_cases hn : n 0≤n 1 ∧ n 1≤n 2
-    · rw [ite_eq_left hn]
-      congr 1
-      funext i
-      fin_cases i <;> simp [total] <;> omega
-    · rw [ite_eq_right hn,signedExtend,ite_eq_right]
-      intro he
-      have he2 := he 2
-      have he3 := he 3
-      apply hn
-      omega
+    rw [numerator_coeff]
+    congr 1
+    funext i
+    fin_cases i <;> simp [total] <;> omega
   · rw [signedExtend,ite_eq_right hw,signedExtend,ite_eq_right]
     intro he
     apply hw
