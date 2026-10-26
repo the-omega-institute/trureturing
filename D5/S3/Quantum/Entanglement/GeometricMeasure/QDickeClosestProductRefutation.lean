@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/GeometricMeasure/QDickeClosestProductRefutation.claim; result=D5/S3/Quantum/Entanglement/GeometricMeasure/QDickeClosestProductRefutation.result; claim=D5/S3/Quantum/Entanglement/GeometricMeasure/QDickeClosestProductRefutation.claim
    digest: A q-Dicke state has no closest product vector in its q-symmetric subspace. -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Tactic.NormNum.RealSqrt
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
+import D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness
 
 /-! Ordinary product overlaps and the q-symmetric span for three qubits. -/
 
@@ -19,12 +19,6 @@ noncomputable section
 open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Quantum.Entanglement.GeometricMeasure.QDickeClosestProductRefutation
-
-def dicke0 : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) :=
-  EuclideanSpace.single (0, 0, 0) 1
-
-def dicke3 : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) :=
-  EuclideanSpace.single (1, 1, 1) 1
 
 def dicke1 (q : ℝ) : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) :=
   WithLp.toLp 2 fun p =>
@@ -41,7 +35,8 @@ def dicke2 (q : ℝ) : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) :=
       (Real.sqrt (q + 1 + q⁻¹) : ℂ)
 
 def symQ (q : ℝ) : Submodule ℂ (EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2)) :=
-  Submodule.span ℂ {dicke0, dicke1 q, dicke2 q, dicke3}
+  Submodule.span ℂ {EuclideanSpace.single (0, 0, 0) 1,
+    dicke1 q, dicke2 q, EuclideanSpace.single (1, 1, 1) 1}
 
 def prod (a b c : EuclideanSpace ℂ (Fin 2)) :
     EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) :=
@@ -57,17 +52,14 @@ def claim : Prop :=
 
 private lemma unit_coordinates (a : EuclideanSpace ℂ (Fin 2)) (ha : ‖a‖ = 1) :
     ‖a 0‖ ^ 2 + ‖a 1‖ ^ 2 = 1 := by
-  have h := EuclideanSpace.norm_sq_eq a
-  simpa [Fin.sum_univ_two, ha] using h.symm
+  simpa only [Complex.normSq_eq_norm_sq] using
+    D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.unit_coordinates a.ofLp ha
 
 private lemma scalar_cs (x y u v : ℂ) :
     ‖x * u + y * v‖ ^ 2 ≤ (‖x‖ ^ 2 + ‖y‖ ^ 2) * (‖u‖ ^ 2 + ‖v‖ ^ 2) := by
-  have ht : ‖x * u + y * v‖ ≤ ‖x‖ * ‖u‖ + ‖y‖ * ‖v‖ := by
-    simpa only [norm_mul] using norm_add_le (x * u) (y * v)
-  have hs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
-    ![‖x‖, ‖y‖] ![‖u‖, ‖v‖]
-  simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at hs
-  exact (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 ht |>.trans hs
+  simpa [dotProduct, Fin.sum_univ_two, Pi.star_apply, Complex.star_def] using
+    D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.cs_sq
+      ![conj x, conj y] ![u, v]
 
 private lemma overlap_four (a b c : EuclideanSpace ℂ (Fin 2)) :
     inner ℂ (dicke1 4) (prod a b c) =
@@ -150,16 +142,14 @@ private lemma closest_coordinates (a b c : EuclideanSpace ℂ (Fin 2))
 private lemma span_relation (v : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2))
     (hv : v ∈ symQ 4) : v (0, 0, 1) = 2 * v (0, 1, 0) := by
   let f : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) →ₗ[ℂ] ℂ :=
-    { toFun := fun w => w (0, 0, 1) - 2 * w (0, 1, 0)
-      map_add' := by intros; simp only [PiLp.add_apply]; ring
-      map_smul' := by intros; simp only [PiLp.smul_apply, smul_eq_mul, RingHom.id_apply]; ring }
+    EuclideanSpace.projₗ (0, 0, 1) - (2 : ℂ) • EuclideanSpace.projₗ (0, 1, 0)
   have hs : symQ 4 ≤ LinearMap.ker f := by
     apply Submodule.span_le.mpr
     intro w hw
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hw
     rcases hw with rfl | rfl | rfl | rfl
-    · change dicke0 (0, 0, 1) - 2 * dicke0 (0, 1, 0) = 0
-      delta dicke0
+    · change (EuclideanSpace.single (0, 0, 0) (1 : ℂ)) (0, 0, 1) -
+        2 * (EuclideanSpace.single (0, 0, 0) (1 : ℂ)) (0, 1, 0) = 0
       norm_num [PiLp.single_apply]
     · change dicke1 4 (0, 0, 1) - 2 * dicke1 4 (0, 1, 0) = 0
       delta dicke1
@@ -168,8 +158,8 @@ private lemma span_relation (v : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2))
     · change dicke2 4 (0, 0, 1) - 2 * dicke2 4 (0, 1, 0) = 0
       delta dicke2
       norm_num
-    · change dicke3 (0, 0, 1) - 2 * dicke3 (0, 1, 0) = 0
-      delta dicke3
+    · change (EuclideanSpace.single (1, 1, 1) (1 : ℂ)) (0, 0, 1) -
+        2 * (EuclideanSpace.single (1, 1, 1) (1 : ℂ)) (0, 1, 0) = 0
       norm_num [PiLp.single_apply]
   exact sub_eq_zero.mp (hs hv)
 
