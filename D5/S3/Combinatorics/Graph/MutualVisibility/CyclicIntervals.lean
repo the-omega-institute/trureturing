@@ -61,7 +61,7 @@ private theorem cyclicArc_card {m : ℕ} (i : Fin m) {k : ℕ} (hk : k ≤ m) :
   have hcard := congrArg Finset.card himage
   simpa [Finset.card_image_of_injective _ (cyclicRank_injective i)] using hcard
 
-private theorem cyclicArc_full {m : ℕ} (i : Fin m) :
+theorem cyclicArc_full {m : ℕ} (i : Fin m) :
     cyclicArc i m = Finset.univ := by
   ext x
   simp [cyclicArc, cyclicRank_lt]
@@ -158,10 +158,10 @@ private theorem cyclicArc_extend {m : ℕ} (i : Fin m) {k : ℕ} (hk : k < m) :
       exact ⟨congrArg (cyclicRank i), fun h => cyclicRank_injective i h⟩
     omega
 
-private def mappedArc {V : Type*} {m : ℕ} (e : Fin m ↪ V) (i : Fin m) (k : ℕ) :
+def mappedArc {V : Type*} {m : ℕ} (e : Fin m ↪ V) (i : Fin m) (k : ℕ) :
     Finset V := (cyclicArc i k).map e
 
-private theorem mappedArc_card {V : Type*} {m : ℕ} (e : Fin m ↪ V) (i : Fin m)
+theorem mappedArc_card {V : Type*} {m : ℕ} (e : Fin m ↪ V) (i : Fin m)
     {k : ℕ} (hk : k ≤ m) : (mappedArc e i k).card = k := by
   simp only [mappedArc, Finset.card_map, cyclicArc_card i hk]
 
@@ -170,7 +170,7 @@ private theorem mappedArc_unique_start {V : Type*} {m : ℕ} (e : Fin m ↪ V)
     (he : mappedArc e i k = mappedArc e j l) : i = j :=
   cyclicArc_unique_start hk hkm hl hlm (Finset.map_injective e he)
 
-private theorem mappedArc_step {V : Type*} [DecidableEq V] {m : ℕ}
+theorem mappedArc_step {V : Type*} [DecidableEq V] {m : ℕ}
     (H : SimpleGraph V) (e : Fin m ↪ V) (i : Fin m) {k : ℕ} (hk : k < m) :
     MixedMove H (mappedArc e i k) (mappedArc e i (k + 1)) := by
   obtain ⟨x, hx, he⟩ := cyclicArc_extend i hk
@@ -230,7 +230,7 @@ private theorem cyclic_internal_cut_bound {V : Type*} [DecidableEq V] {m : ℕ}
   have hc := Finset.card_le_card hsub
   simpa only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin] using hc
 
-private theorem mappedArc_insert_step {V : Type*} [DecidableEq V] {m : ℕ}
+theorem mappedArc_insert_step {V : Type*} [DecidableEq V] {m : ℕ}
     (H : SimpleGraph V) (e : Fin m ↪ V) (i : Fin m) {k : ℕ} (hk : k < m)
     {y : V} (hy : y ∉ Finset.univ.map e) :
     MixedMove H (insert y (mappedArc e i k)) (insert y (mappedArc e i (k + 1))) := by
@@ -247,15 +247,16 @@ private theorem mappedArc_insert_step {V : Type*} [DecidableEq V] {m : ℕ}
   rw [ht]
   exact hm
 
-private theorem cyclic_outside_cut_bound {V : Type*} [DecidableEq V] {m : ℕ}
-    (H : SimpleGraph V) (e : Fin m ↪ V) (hm : 3 ≤ m) {y : V}
+theorem cyclic_outside_cut_bound {V : Type*} [DecidableEq V] {m : ℕ}
+    (H : SimpleGraph V) (e : Fin m ↪ V) (hm : 2 ≤ m) {y : V}
     (hy : y ∉ Finset.univ.map e) (C : Finset (Configuration H)) (s : Configuration H)
     (E : Finset (Fin m))
     (hvis : ∀ i ∈ E, Visible H (insert y (mappedArc e i (m - 1))))
     (hstart : ∀ i (hi : i ∈ E),
       CutReach (reconfiguration H) C s ⟨insert y (mappedArc e i (m - 1)), hvis i hi⟩ ∨
       (⟨insert y (mappedArc e i (m - 1)), hvis i hi⟩ : Configuration H) ∈ C)
-    (hlow : ∀ T, CutReach (reconfiguration H) C s T → 3 ≤ T.val.card) :
+    (hendpair : ∀ T : Configuration H, T.val.card = 2 → y ∈ T.val →
+      ¬ CutReach (reconfiguration H) C s T) :
     E.card ≤ (C.filter fun T => y ∈ T.val ∧ T.val ⊆ insert y (Finset.univ.map e) ∧
       T.val ≠ insert y (Finset.univ.map e)).card := by
   classical
@@ -272,13 +273,11 @@ private theorem cyclic_outside_cut_bound {V : Type*} [DecidableEq V] {m : ℕ}
   have hnotmem (i : E) (k : ℕ) : y ∉ mappedArc e i.val (min k (m - 1)) :=
     fun h => hy (hsub i k h)
   have hend (i : E) : ¬ CutReach (reconfiguration H) C s (f i 1) := by
-    intro hr
-    have hb := hlow _ hr
-    have hc : (f i 1).val.card = 2 := by
-      dsimp only [f]
+    apply hendpair
+    · dsimp only [f]
       rw [Finset.card_insert_of_notMem (hnotmem i 1), mappedArc_card e i.val (by omega)]
       rw [min_eq_left (by omega : 1 ≤ m - 1)]
-    omega
+    · simp [f]
   have hstep (i : E) (k : ℕ) (_ : 1 ≤ k) (hk : k < m - 1) :
       (reconfiguration H).Adj (f i k) (f i (k + 1)) := by
     change MixedMove H (insert y (mappedArc e i.val (min k (m - 1))))
@@ -367,7 +366,7 @@ private theorem mixedMove_outside_shape {V : Type*} [DecidableEq V] {H : SimpleG
         simpa [hz] using hamem
       exact Finset.mem_insert.mpr (Or.inl (haz.trans hyz.symm))
 
-private theorem degree_by_label_classes {V : Type*} [Fintype V] [DecidableEq V]
+theorem degree_by_label_classes {V : Type*} [Fintype V] [DecidableEq V]
     (H : SimpleGraph V) (S : Configuration H) :
     (reconfiguration H).degree S ≤ S.val.card +
       ∑ y ∈ Finset.univ \ S.val, (localCutClass ((reconfiguration H).neighborFinset S) S.val y).card := by
@@ -440,7 +439,8 @@ private theorem cyclic_local_cut_bound {V : Type*} [Fintype V] [DecidableEq V] {
     by_cases hTC : T ∈ C
     · exact Or.inr (hEq ▸ hTC)
     · exact Or.inl (hEq ▸ cutReach_step hs hAdj hTC)
-  have hEbound := cyclic_outside_cut_bound H e hm hy C s E hvis hstart hlow
+  have hEbound := cyclic_outside_cut_bound H e (by omega) hy C s E hvis hstart
+    (fun T hT _ hr => by have := hlow T hr; omega)
   have hPEq : P = C.filter fun T => y ∈ T.val ∧ T.val ⊆ insert y (Finset.univ.map e) ∧
       T.val ≠ insert y (Finset.univ.map e) := by
     ext T

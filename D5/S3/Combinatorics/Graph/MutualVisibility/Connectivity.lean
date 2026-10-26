@@ -26,7 +26,7 @@ def CutReach (G : SimpleGraph W) (C : Finset W) (s t : W) : Prop :=
 private theorem cutReach_refl (G : SimpleGraph W) {C : Finset W} {s : W}
     (hs : s ∉ C) : CutReach G C s s := ⟨hs, hs, Reachable.refl _⟩
 
-private theorem cutReach_trans {G : SimpleGraph W} {C : Finset W} {s t u : W}
+theorem cutReach_trans {G : SimpleGraph W} {C : Finset W} {s t u : W}
     (hst : CutReach G C s t) (htu : CutReach G C t u) : CutReach G C s u := by
   obtain ⟨hs, ht, hst⟩ := hst
   obtain ⟨_, hu, htu⟩ := htu

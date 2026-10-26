@@ -100,7 +100,7 @@ private theorem clean_pair_survives (hH : H.Connected) (C : Finset (Configuratio
   have := hw.1
   aesop
 
-private theorem clean_root_pair_nonvisible (hH : H.Connected)
+theorem clean_root_pair_nonvisible (hH : H.Connected)
     (C : Finset (Configuration H)) (s : Configuration H) {u v w : V}
     (huv : u ≠ v) (hw : CleanRoot C w)
     (hu : u ∈ deletedLabels C) (hv : v ∈ deletedLabels C)
@@ -147,7 +147,7 @@ private theorem clean_root_pair_nonvisible (hH : H.Connected)
   exact hwout (cutReach_step (cutReach_step (cutReach_step hB hBT hTC) hTP
     (clean_pair_survives hH C hw hu)) hPW hwC)
 
-private theorem clean_root_pair_nonadjacent (hH : H.Connected)
+theorem clean_root_pair_nonadjacent (hH : H.Connected)
     (C : Finset (Configuration H)) (s : Configuration H) {u v w : V}
     (huv : u ≠ v) (hw : CleanRoot C w)
     (hu : u ∈ deletedLabels C) (hv : v ∈ deletedLabels C)

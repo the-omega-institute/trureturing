@@ -30,7 +30,7 @@ private theorem singleton_pair_edges (hH : H.Connected) (x y : V) (hxy : x ≠ y
     have h := mixedMove_erase H ({x, y} : Finset V) (x := x) (by simp)
     simpa [hxy] using h
 
-private theorem singleton_core (hH : H.Connected) (C : Finset (Configuration H))
+theorem singleton_core (hH : H.Connected) (C : Finset (Configuration H))
     (hc : C.card < Fintype.card V) {x y : V}
     (hx : (⟨{x}, visible_singleton H x⟩ : Configuration H) ∉ C)
     (hy : (⟨{y}, visible_singleton H y⟩ : Configuration H) ∉ C) :
@@ -147,7 +147,7 @@ private theorem empty_degree (H : SimpleGraph V) :
       (SimpleGraph.card_neighborSet_eq_degree (reconfiguration H) O).symm
     _ = Fintype.card V := (Fintype.card_congr (Equiv.ofBijective f hf)).symm
 
-private theorem minDegree_le_host_order : (reconfiguration H).minDegree ≤ Fintype.card V := by
+theorem minDegree_le_host_order : (reconfiguration H).minDegree ≤ Fintype.card V := by
   have h := (reconfiguration H).minDegree_le_degree ⟨∅, visible_empty H⟩
   exact h.trans (le_of_eq (empty_degree H))
 

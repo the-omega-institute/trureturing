@@ -33,13 +33,13 @@ private theorem shortest_member_dist {u v a : V} {p : H.Walk u v}
   have hr := length_eq_dist_of_subwalk hp (p.isSubwalk_dropUntil ha)
   rw [← hq, ← hr, ← Walk.length_append, p.take_spec ha, hp]
 
-private theorem mandatory_dist (hH : H.Connected) {a u v : V}
+theorem mandatory_dist (hH : H.Connected) {a u v : V}
     (ha : Mandatory H a u v) :
     H.dist u a + H.dist a v = H.dist u v := by
   obtain ⟨p, hp⟩ := hH.exists_walk_length_eq_dist u v
   exact shortest_member_dist hp (ha p hp)
 
-private theorem mandatory_symm {a u v : V} (ha : Mandatory H a u v) :
+theorem mandatory_symm {a u v : V} (ha : Mandatory H a u v) :
     Mandatory H a v u := by
   intro p hp
   have hr : p.reverse.length = H.dist u v := by
@@ -203,7 +203,7 @@ private theorem avoiding_geodesic {a u v : V} (h : ¬ Mandatory H a u v) :
   obtain ⟨p, hp⟩ := not_forall.mp h
   exact ⟨p, not_imp.mp hp⟩
 
-private theorem nonvisible_triple_choice {w u v : V}
+theorem nonvisible_triple_choice {w u v : V}
     (huw : u ≠ w) (hvw : v ≠ w) (huv : u ≠ v)
     (h : ¬ Visible H {u, v, w}) :
     Mandatory H w u v ∨ Dominates H w u v ∨ Dominates H w v u := by
@@ -270,7 +270,7 @@ private theorem comparable_triple_obstruction (hH : H.Connected) {w u v z : V}
     · exact no_selected_chain hH hS (by simp) (by simp) (by simp) huz hzv'
   · exact no_selected_chain hH hS (by simp) (by simp) (by simp) hzu' hdom
 
-private theorem root_hub (hH : H.Connected) {S : Finset V} {w : V}
+theorem root_hub (hH : H.Connected) {S : Finset V} {w : V}
     (hS : Visible H S) (hcard : 3 ≤ S.card) (hw : w ∉ S)
     (hn : ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬ Visible H {u, v, w}) :
     ∀ u ∈ S, ∀ v ∈ S, u ≠ v → Mandatory H w u v := by
