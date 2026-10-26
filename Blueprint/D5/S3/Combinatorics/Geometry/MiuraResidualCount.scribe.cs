@@ -18,7 +18,7 @@ internal sealed class MiuraResidualCountDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "Residual"), H("The exact residual class"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The class imposes normalization, exact unit-edge increments, exact separate counts of all strict minima and maxima, and the absence of a single common boundary side containing all minima. Individual functions carry no symmetry quotient."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("miuraresidualcount-residual_finite"),
+            Describe.Lean(DescribeId.Create("miuraresidualcount-residual-finite"),
                 DeclarationHandle.Create(Prefix + "residual_finite"), H("Finiteness of the exact residual class"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The residual class is a subset of the finite set of normalized height functions. The proof supplies finiteness before its cardinality is taken."))), DescribeRole.Theorem),
