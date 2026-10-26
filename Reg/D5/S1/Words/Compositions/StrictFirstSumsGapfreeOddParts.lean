@@ -19,44 +19,39 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ d h => d.rowLen h < d.rowLen (h - 1)) (fun e => nomatch e)
+  (fun _ d h => d.rowLen h) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
-  (fun _ d h => ¬ d.rowLen h < d.rowLen (h - 1)) (fun e => nomatch e)
+  (fun _ d h => d.rowLen (h - 1)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law readout := ∀ (d : YoungDiagram) (h : ℕ), 0 < h →
-    (h ∈ d.transpose.rowLens ↔ readout.readout () d h)
+    (h ∈ d.transpose.rowLens ↔ readout.readout () d h < d.rowLen (h - 1))
 
 private theorem source_bridge : (type_of% (@height_mem_iff)) ↔ arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hyp
-  let d := YoungDiagram.ofPartition (Nat.Partition.indiscrete 0)
-  have good := height_mem_iff d 1 (by decide)
-  have bad := hyp d 1 (by decide)
-  change (1 ∈ d.transpose.rowLens ↔ ¬ d.rowLen 1 < d.rowLen (1 - 1)) at bad
-  tauto
+  let d := (YoungDiagram.ofPartition (Nat.Partition.indiscrete 1)).transpose
+  have hm : 1 ∈ d.transpose.rowLens := by simp [d]
+  have bad := (hyp d 1 (by decide)).mp hm
+  change d.rowLen (1 - 1) < d.rowLen (1 - 1) at bad
+  exact (lt_irrefl _ bad)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  let d := (YoungDiagram.ofPartition (Nat.Partition.indiscrete 1)).transpose
-  have hd : d.transpose.rowLens = [1] := by simp [d]
+  let d := (YoungDiagram.ofPartition (Nat.Partition.indiscrete 2)).transpose
   refine ⟨d, 1, 2, ?_⟩
-  intro he
-  have yes : actual.readout role d 1 :=
-    (height_mem_iff d 1 (by decide)).mp (by simp [hd])
-  have no : ¬ actual.readout role d 2 := by
-    intro h
-    have := (height_mem_iff d 2 (by decide)).mpr h
-    simp [hd] at this
-  exact no (Eq.mp he yes)
+  change d.rowLen 1 ≠ d.rowLen 2
+  have hm : 2 ∈ d.transpose.rowLens := by simp [d]
+  have drop := (height_mem_iff d 2 (by decide)).mp hm
+  exact ne_of_gt drop
 
 def familyRegistration : Registration arena (type_of% (@height_mem_iff)) where
   actual := actual
@@ -97,7 +92,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
+      path := #["body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
