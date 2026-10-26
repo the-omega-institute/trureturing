@@ -860,9 +860,10 @@ theorem universalWord_perm {Blue : Finset X} {l rho : X}
   have hlV : l ∉ V := fun hx => hlB (hVB hx)
   have hqV : q ∉ V := fun hx => hqB (hVB hx)
   have hrhoV : rho ∉ V := by simp [V]
+  have hVN : V.Nodup := Finset.nodup_toList _
   have htail : (l :: q :: rho :: V).Nodup := by
     simp [List.nodup_cons,hlq,hlrho,hrhoq.symm,hlV,hqV,hrhoV,
-      Finset.nodup_toList]
+      hVN]
   have hn : w.Nodup := by
     apply List.nodup_append.mpr
     refine ⟨Finset.nodup_toList _,htail,?_⟩
@@ -985,7 +986,7 @@ theorem universal_avoiding_word {Blue : Finset X} {b0 u v : Finset X}
       exact hlnot hlf
     · obtain ⟨x,hxd,hxB⟩ := hterminal d hdT
       have hxf := in_union hdQ hxd
-      have hrhonot := forbidden hdQ hdT hv hdv.symm hrhoN
+      have hrhonot := forbidden hdQ hdT hv (Ne.symm hdv) hrhoN
       have hrhof : rho ∈ f := by
         by_cases hxr : x = rho
         · exact hxr ▸ hxf

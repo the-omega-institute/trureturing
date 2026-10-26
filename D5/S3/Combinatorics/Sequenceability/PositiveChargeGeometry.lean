@@ -49,9 +49,11 @@ def quotientLabel (M : Submodule ℤ (X → ℤ)) (x : X) : (X → ℤ) ⧸ M :=
 theorem quotient_zero_iff (S : Finset X) :
     (∑ x ∈ S, quotientLabel M x) = 0 ↔ row S ∈ M := by
   rw [row_eq_sum_single]
-  simpa only [quotientLabel, ← map_sum, Submodule.mkQ_apply] using
-    (Submodule.Quotient.mk_eq_zero (p := M)
-      (x := ∑ x ∈ S, Pi.single x (1 : ℤ)))
+  have he : (∑ x ∈ S, quotientLabel M x) =
+      M.mkQ (∑ x ∈ S, Pi.single x (1 : ℤ)) :=
+    (map_sum M.mkQ (fun x => Pi.single x (1 : ℤ)) S).symm
+  rw [he]
+  exact Submodule.Quotient.mk_eq_zero M
 
 private theorem quotient_minimal_iff {S : Finset X}
     (hSΩ : S ⊆ Ω) (hproper : S ≠ Ω) :
@@ -77,11 +79,14 @@ theorem complete_disjoint_decomposition {A : Finset X} (hA : Complete M Ω A) :
       A = Q.biUnion id ∧ row A = ∑ S ∈ Q, row S := by
   obtain ⟨Q, hQ, hdis, hcover⟩ := zero_decomposition_pairwise_disjoint
     (quotientLabel M) Ω A hA.1 ((quotient_zero_iff A).mpr hA.2.2.2)
+  have hcover' : A = Q.biUnion id := by
+    ext x
+    simpa only [Finset.mem_biUnion] using Finset.ext_iff.mp hcover x
   have hQA {S : Finset X} (hS : S ∈ Q) : S ⊆ A := by
     intro x hx
-    rw [hcover]
+    rw [hcover']
     exact mem_biUnion.mpr ⟨S, hS, hx⟩
-  refine ⟨Q, ?_, ?_, hcover, ?_⟩
+  refine ⟨Q, ?_, ?_, hcover', ?_⟩
   · intro S hS
     apply mem_minimalFamily.mpr
     refine ⟨(hQ S hS).1, (quotient_minimal_iff (hQ S hS).1 ?_).mp (hQ S hS).2⟩
@@ -90,7 +95,7 @@ theorem complete_disjoint_decomposition {A : Finset X} (hA : Complete M Ω A) :
   · intro S hS D hD hSD
     exact hdis hS hD hSD
   · simp_rw [row_eq_sum_single]
-    rw [hcover]
+    rw [hcover']
     exact Finset.sum_biUnion hdis
 
 /-- Actual integer potential, not a projected ordinary-edge map. -/
@@ -141,7 +146,8 @@ theorem original_ledger {H : Finset (Finset X)} {z : X → ℤ}
     ∃ c : Finset X → ℤ, z = ∑ h ∈ H, c h • row h) ?_ ?_ ?_ ?_ hz
   · rintro _ ⟨h, hh, rfl⟩
     refine ⟨fun k => if k = h then 1 else 0, ?_⟩
-    simp [hh]
+    have hh' : h ∈ H := hh
+    simp [hh']
   · exact ⟨fun _ => 0, by simp⟩
   · intro x y hx hy cx cy
     obtain ⟨a, rfl⟩ := cx
@@ -632,7 +638,7 @@ theorem positive_charge_incidence
   subst A
   refine ⟨B,hraw,hraw.right_nonempty rfl hr,?_,?_,?_,?_⟩
   · intro b hb
-    exact hraw.no_q_right (fun ht => ht) hb
+    exact hraw.no_q_right Subset.rfl hb
   · intro b hb
     exact hraw.right_degree rfl hb
   · intro s hs t ht hst
@@ -1012,7 +1018,7 @@ theorem endpoints
       · exact (mem_singleton.mp hD).symm ▸ hsecond.1
     have heq : incident P e = {first P e,second P e h} := by
       apply (eq_of_subset_of_card_le hsub ?_).symm
-      simpa [hsecond.2.symm] using hinc e.val
+      simpa [incident,hsecond.2.symm] using hinc e.val
     rw [← hSinc,heq]
     simp [left,right,h,Subtype.ext_iff,eq_comm]
   · have hall : ∀ D ∈ incident P e, D = first P e := by
@@ -1276,14 +1282,15 @@ theorem two_terminal_one_port_primitive {B : Finset (Finset X)}
   obtain ⟨b0,hb0⟩ := h.right_nonempty rfl (by omega)
   have full (b : Finset X) (hb : b ∈ B) : terminalNeighbors M Ω q b = neighborhood M Ω q := by
     apply eq_of_subset_of_card_le (filter_subset _ _)
-    have hd := h.right_degree rfl hb
-    omega
+    change (neighborhood M Ω q).card ≤ (terminalNeighbors M Ω q b).card
+    rw [hr]
+    exact h.right_degree rfl hb
   have hpB : ∀ b ∈ B, p ∈ b := by
     intro b hb
     have htn : t ∈ terminalNeighbors M Ω q b := (full b hb).symm ▸ ht
     obtain ⟨x,hx⟩ := (mem_terminalNeighbors.mp htn).2
     have hx' := mem_inter.mp hx
-    have hxq : x ≠ q := by rintro rfl; exact h.no_q_right (fun h => h) hb hx'.1
+    have hxq : x ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hb hx'.1
     have hxp : x = p := by
       have hm : x = q ∨ x = p := by simpa [htp] using hx'.2
       exact hm.resolve_left hxq
@@ -1312,7 +1319,7 @@ theorem two_terminal_one_port_primitive {B : Finset (Finset X)}
     rcases mem_insert.mp hsN with he | he
     · exact hst he
     · exact ((h.left_ne_right hs hb0) (mem_singleton.mp he)).elim
-  have hqB := h.no_q_right (fun h => h) hb0
+  have hqB := h.no_q_right Subset.rfl hb0
   have equal_else {x : X} (hxq : x ≠ q) (hxp : x ≠ p) : x ∈ s ↔ x ∈ b0 := by
     constructor
     · intro hxs
@@ -1339,18 +1346,6 @@ theorem two_terminal_one_port_primitive {B : Finset (Finset X)}
       by_cases hxs : x ∈ s <;> simp_all [row,Pi.single_apply]
   exact hrow ▸ M.sub_mem (mem_minimalFamily.mp (mem_neighborhood.mp hs).1).2.1.2.2.2
     (mem_minimalFamily.mp (h.right_minimal hb0)).2.1.2.2.2
-
-/-- Finite original H ledger for the actual coefficient-one exceptional
-primitive. Arbitrary original labels, torsion and total are untouched. -/
-theorem two_terminal_one_port_original_ledger (H : Finset (Finset X))
-    {B : Finset (Finset X)}
-    (h : RawBlock (originalSpan H) Ω q (neighborhood (originalSpan H) Ω q) B)
-    (hr : (neighborhood (originalSpan H) Ω q).card = 2)
-    {t : Finset X} (ht : t ∈ neighborhood (originalSpan H) Ω q)
-    {p : X} (hpq : p ≠ q) (htp : t = {q,p}) :
-    ∃ c : Finset X → ℤ,
-      (Pi.single q (1 : ℤ) - Pi.single p (1 : ℤ) : X → ℤ) = ∑ h ∈ H, c h • row h := by
-  exact original_ledger (two_terminal_one_port_primitive h hr ht hpq htp)
 
 /-- Under actual primitive failure there are two distinct terminals with at
 least two non-q ORIGINAL ports. For r≥3, two one-port terminals would already
@@ -1426,7 +1421,7 @@ theorem universal_original_frame {B : Finset (Finset X)}
   obtain ⟨b,hb,hbrho⟩ := Finset.exists_mem_ne (s := v.erase q) (by omega) rho
   have hl' := mem_inter.mp hl
   have hrho' := mem_inter.mp hrho
-  have hlq : l ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hb0 hl'.1
+  have hlq : l ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hb0 hl'.1
   have ha' := mem_erase.mp ha
   have hb' := mem_erase.mp hb
   have across {x y : X} (hx : x ∈ u) (hxq : x ≠ q) (hy : y ∈ v) : x ≠ y := by
@@ -1441,14 +1436,14 @@ theorem universal_original_frame {B : Finset (Finset X)}
   refine ⟨u,hu,v,hv,huv,l,rho,a,b,hl,hrho,ha,hb,hal,hbrho,?_⟩
   simp [List.nodup_cons,hlrho,hal.symm,hlb,harho.symm,hbrho.symm,hab]
 
-/- Section 5a additions; inserted before the exact target definition. -/
+/- Universal-neighbour colouring on original coordinates. -/
 
 private theorem RawBlock.right_rows_disjoint {B : Finset (Finset X)}
     (h : RawBlock M Ω q (neighborhood M Ω q) B)
     {D E : Finset X} (hD : D ∈ B) (hE : E ∈ B) (hDE : D ≠ E) : Disjoint D E := by
   apply Finset.disjoint_left.mpr
   intro x hxD hxE
-  have hxq : x ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hD hxD
+  have hxq : x ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hD hxD
   exact h.swap.no_same_left hD hE
     ⟨h.right_minimal hD,h.right_minimal hE,hDE,x,hxq,hxD,hxE⟩
 
@@ -1495,8 +1490,8 @@ theorem universal_mixed_colouring {B : Finset (Finset X)}
   have hrho' := mem_inter.mp hrho
   have ha' := mem_erase.mp ha
   have hb' := mem_erase.mp hb
-  have hlq : l ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hb0 hl'.1
-  have hrhoq : rho ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hb0 hrho'.1
+  have hlq : l ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hb0 hl'.1
+  have hrhoq : rho ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hb0 hrho'.1
   have hlocal : ∀ D ∈ B, ∃ C : Finset X, C ⊆ D ∧ b ∉ C ∧
       (a ∈ D → a ∈ C) ∧ (∃ x ∈ D, x ∉ C) ∧ (∃ y ∈ D, y ∈ C) ∧
       (D = b0 → C = D \ {l,b}) := by
@@ -1538,7 +1533,7 @@ theorem universal_mixed_colouring {B : Finset (Finset X)}
     · obtain ⟨D,hD,hxC⟩ := mem_biUnion.mp hx
       have hxD := (hC D hD).1 hxC
       have hxΩ := (mem_minimalFamily.mp (h.right_minimal hD)).1 hxD
-      have hxq : x ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hD hxD
+      have hxq : x ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hD hxD
       exact mem_erase.mpr ⟨hxq,hxΩ⟩
     · exact hK hx
   have hrestrict {D : Finset X} (hD : D ∈ B) {x : X} (hxD : x ∈ D) :
@@ -1580,7 +1575,7 @@ theorem universal_mixed_colouring {B : Finset (Finset X)}
     · exact ⟨rho,htv.symm ▸ hrho'.2,hrhoB⟩
     obtain ⟨x,hx⟩ := (mem_terminalNeighbors.mp (huni t ht)).2
     have hx' := mem_inter.mp hx
-    have hxq : x ≠ q := by rintro rfl; exact h.no_q_right (fun ht => ht) hb0 hx'.1
+    have hxq : x ≠ q := by rintro rfl; exact h.no_q_right Subset.rfl hb0 hx'.1
     have hxl : x ≠ l := by
       intro he
       exact h.no_same_left ht hu
@@ -1650,7 +1645,7 @@ theorem original_universal_word {B : Finset (Finset X)}
     simpa [hts] using hN
   refine ⟨universalWord Ω Blue q l rho,?_⟩
   apply universal_avoiding_word hqΩ hBlue hlR hrhoB hu hv huv
-    (h.no_q_right (fun ht => ht) hb0) huni
+    (h.no_q_right Subset.rfl hb0) huni
     (port_pair hu (mem_inter.mp hl).1 (mem_inter.mp hl).2)
     (port_pair hv (mem_inter.mp hrho).1 (mem_inter.mp hrho).2)
     (mem_of_mem_erase hb) hbR hterm hmixed
@@ -1658,7 +1653,7 @@ theorem original_universal_word {B : Finset (Finset X)}
   obtain ⟨Q,hQP,hQI,hcover,hsum⟩ := complete_disjoint_decomposition hA
   exact ⟨Q,hQP,hQI,hcover⟩
 
-/- The exact existing target definition is unchanged. Its proof follows. -/
+/- Coefficient-one original ledgers or a literal all-coordinate avoiding word. -/
 def OriginalPositiveChargeTarget (H : Finset (Finset X)) (Ω : Finset X) (q : X) : Prop :=
   q ∈ Ω →
   2 ≤ (neighborhood (originalSpan H) Ω q).card →
