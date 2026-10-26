@@ -17,11 +17,15 @@ open _root_.D5.S3.Topology.InverseLimit.SignedOrdinalSuccessor
 abbrev successorScope := type_of% (@exists_successor)
 abbrev readbackScope := type_of% (@Result.birth_readback)
 abbrev retentionScope := type_of% (@Result.arrival_retains)
+abbrev literalFScope := type_of% (@Result.literal_f)
+abbrev literalEScope := type_of% (@Result.literal_e)
 abbrev quantitativeScope := type_of% (@Result.quantitative_g)
 
 theorem successor_source : successorScope := @exists_successor
 theorem readback_source : readbackScope := @Result.birth_readback
 theorem retention_source : retentionScope := @Result.arrival_retains
+theorem literal_f_source : literalFScope := @Result.literal_f
+theorem literal_e_source : literalEScope := @Result.literal_e
 theorem quantitative_source : quantitativeScope := @Result.quantitative_g
 
 end Reg.D5.S3.Topology.InverseLimit.SignedOrdinalSuccessor
