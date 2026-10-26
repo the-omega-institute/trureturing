@@ -107,7 +107,10 @@ internal sealed class SpatiotemporalBornRuleDichotomyDocument : IScribeDocumentD
                         + "and the product rule for traces of tensor products give the required pairing with every p ⊗ q. "
                         + "If ε(x) = tr(x)σ, instead take w = ρ ⊗ σ. Cyclicity of trace and p² = p give tr(pρp) = tr(ρp), "
                         + "so this tensor product also has the required pairing. Both sufficient constructions use only complex linearity and the stated alternative."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fullwood-ma-wu-2026-spatiotemporal-born-dichotomy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula BornRuleExistsFormula()
     {
