@@ -52,12 +52,12 @@ The decoder sees the inputs as well as the outputs. The model concerns classical
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/ClassicalPermutationSequentialAdvantage.lean` (133 lines).
+The canonical source is `D5/S3/Quantum/Information/ClassicalPermutationSequentialAdvantage.lean`.
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/ClassicalPermutationSequentialAdvantage.lean.json`, statement `sha256:cc622cbeb9e2c72371901a459c74d76f8fbd3e7f1990e855f8b4117c1857846b`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/ClassicalPermutationSequentialAdvantage.lean.json`.
 
 Declaration statements:
 
