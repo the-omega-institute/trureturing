@@ -31,7 +31,8 @@ open LatticeGeneratingFieldLocality LatticeSugawaraCurrents RootlessLowGrades
 private theorem cast_injective : Function.Injective RealLeech.castLinear := by
   intro x y h
   funext i
-  exact_mod_cast congrFun h i
+  have hi : (x i : ℝ) = (y i : ℝ) := congrFun h i
+  exact_mod_cast hi
 
 private def integerRealEquiv :
     (integerLattice code all_ones_mem).toIntSubmodule ≃ₗ[ℤ] RealLeech.lattice :=
@@ -43,7 +44,7 @@ private def coordinates {D : LatticeData}
 private theorem coordinates_real {D : LatticeData}
     (e : Charge D ≃ₗ[ℤ] RealLeech.lattice) (a : Charge D) :
     RealLeech.castLinear (coordinates e a) = (e a : RealLeech.Space) :=
-  Submodule.map_equivMapOfInjective_symm_apply _ _ _ (e a)
+  Submodule.map_equivMapOfInjective_symm_apply RealLeech.castLinear cast_injective _ (e a)
 
 private theorem charge_square {D : LatticeData}
     (e : Charge D ≃ₗ[ℤ] RealLeech.lattice)
@@ -70,12 +71,13 @@ def normFourEquiv (D : LatticeData)
     exact_mod_cast hs⟩
   invFun x := ⟨(coordinates e).symm ⟨x.1, x.property.1⟩, by
     have h := charge_square e hpair ((coordinates e).symm ⟨x.1, x.property.1⟩)
-    rw [LinearEquiv.apply_symm_apply, x.property.2] at h
-    norm_num at h
-    exact_mod_cast h⟩
+    simp only [LinearEquiv.apply_symm_apply] at h
+    have hn : (squareSum x.1 : ℝ) / 8 = 4 := by rw [x.property.2]; norm_num
+    exact_mod_cast h.trans hn⟩
   left_inv a := Subtype.ext ((coordinates e).symm_apply_apply a.1)
   right_inv x := Subtype.ext
-    (congrArg Subtype.val ((coordinates e).apply_symm_apply ⟨x.1, x.property.1⟩))
+    (congrArg (fun z : (integerLattice code all_ones_mem).toIntSubmodule => (z : IntVector))
+      ((coordinates e).apply_symm_apply ⟨x.1, x.property.1⟩))
 
 private theorem no_roots {D : LatticeData}
     (e : Charge D ≃ₗ[ℤ] RealLeech.lattice)
@@ -117,7 +119,7 @@ theorem actual_leech_low_spectrum :
     RealLeech.exists_positive_even_unimodular_gram
   have hroot := no_roots e hpair
   let s := normFourEquiv D e hpair
-  haveI : Finite LeechMinimalCount.Sphere := LeechMinimalCount.shortest_vectors_finite
+  letI : Finite LeechMinimalCount.Sphere := LeechMinimalCount.shortest_vectors_finite
   have hf : Finite (NormFour D) := Finite.of_injective s s.injective
   have hc : Nat.card (NormFour D) = 196560 :=
     (Nat.card_congr s).trans LeechMinimalCount.shortest_vectors_card

@@ -37,7 +37,10 @@ internal sealed class LeechLowSpectrumDocument : IScribeDocumentDefinition
                 DescribeId.Create("leechlowspectrum-normfour-equivalence"),
                 DeclarationHandle.Create(Prefix + "normFourEquiv"),
                 H("Actual charge-to-integer sphere equivalence"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/QuadraticForms/nebe2014leechcatalogue"),
+                    LibraryNoteRef.Create("D5/L/QuadraticForms/leech1967packing"),
+                    LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
                 Blocks(Paragraph(Text("For any integral charge equivalence e into RealLeech.lattice "
                     + "preserving the full real pairing, the literal NormFour D subtype is equivalent "
                     + "to all integer vectors x : Fin 24 to Int satisfying Admissible code x and "
@@ -49,7 +52,10 @@ internal sealed class LeechLowSpectrumDocument : IScribeDocumentDefinition
                 DescribeId.Create("leechlowspectrum-actual-low-spectrum"),
                 DeclarationHandle.Create(Prefix + "actual_leech_low_spectrum"),
                 H("Actual geometric Leech Sugawara low spectrum"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/QuadraticForms/nebe2014leechcatalogue"),
+                    LibraryNoteRef.Create("D5/L/QuadraticForms/leech1967packing"),
+                    LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
                 Blocks(Paragraph(Text("With no premises, there exist D and an integral linear "
                     + "equivalence e : Charge D to RealLeech.lattice. They have rank 24, unit Gram "
                     + "determinant, positive definite real Gram form, full pairing compatibility, and "
