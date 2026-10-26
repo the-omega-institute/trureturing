@@ -125,13 +125,13 @@ theorem signed_squareSum (k : ℤ) (S : Finset I) (σ : S → F2) :
     squareSum (signed k S σ) = k ^ 2 * S.card := by
   unfold squareSum
   calc
-    _ = ∑ i : I, if h : i ∈ S then k ^ 2 else 0 := by
+    _ = ∑ i : I, if i ∈ S then k ^ 2 else 0 := by
       apply Finset.sum_congr rfl
       intro i _
       by_cases h : i ∈ S <;> simp [signed, h, mul_pow]
-    _ = ∑ _j : S, k ^ 2 := by
-      simpa only [dite_eq_ite] using (sum_on S (fun _ => k ^ 2))
-    _ = _ := by simp [mul_comm]
+    _ = _ := by
+      rw [Finset.sum_ite_mem_eq]
+      simp [mul_comm]
 
 theorem signed_support {k : ℤ} (hk : k ≠ 0) (S : Finset I) (σ : S → F2) :
     nzSupport (signed k S σ) = S := by

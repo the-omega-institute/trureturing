@@ -69,9 +69,7 @@ private theorem red_zero_div_two {a : IntVector} (h : red a = 0) :
   omega
 
 private theorem square_eq_one_values {z : ℤ} (h : z ^ 2 = 1) : z = 1 ∨ z = -1 := by
-  have h1 : -1 ≤ z := by nlinarith [sq_nonneg (z + 1)]
-  have h2 : z ≤ 1 := by nlinarith [sq_nonneg (z - 1)]
-  omega
+  exact sq_eq_one_iff.mp h
 
 /-- Equality in the sum-of-squares bound with value two forces two signed units. -/
 private theorem norm_two_shape {b : IntVector} (h : squareSum b = 2) :
@@ -107,10 +105,15 @@ private theorem norm_eight_shape {a : IntVector}
     · have hnz : a i ≠ 0 := by intro hz; simp [red, hz] at hi
       have hp := sq_pos_of_ne_zero hnz
       omega
-  have hs : (∑ i, a i ^ 2 - (if red a i = 0 then 0 else 1)) = 0 := by
+  have hs : (∑ i, (a i ^ 2 - (if red a i = 0 then 0 else 1))) = 0 := by
     rw [Finset.sum_sub_distrib]
     have he : (∑ i, if red a i = 0 then (0 : ℤ) else 1) = weight (red a) := by
-      simp [weight]
+      unfold weight
+      rw [Nat.cast_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      by_cases hi : red a i = 0 <;>
+        simp only [hi, ite_true, ite_false, Nat.cast_zero, Nat.cast_one]
     rw [he]
     change squareSum a - (weight (red a) : ℤ) = 0
     rw [ha, hw]; norm_num
@@ -133,7 +136,11 @@ private theorem zeroVector_mem (p : ZeroFamily) : Admissible code (zeroVector p)
     by_cases hi : i ∈ p.1.val <;> simp [zeroVector, signed, hi] <;> ring
   · have hr : red (signed 2 p.1.val p.2) = 0 := by
       ext i
-      by_cases hi : i ∈ p.1.val <;> simp [red, signed, hi]
+      change ((signed 2 p.1.val p.2 i : ℤ) : F2) = 0
+      by_cases hi : i ∈ p.1.val
+      · rw [signed_at 2 p.1.val p.2 ⟨i, hi⟩]
+        exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ 2).mpr ⟨_, rfl⟩
+      · simp [signed, hi]
     rw [hr]
     exact code.zero_mem
   · have hs := signed_sum 4 p.1.val p.2
@@ -158,7 +165,8 @@ private theorem zeroVector_quotient (p : ZeroFamily) :
       simp [zeroVector, signed, hi]
     rw [hx]
     have he : 4 * sign (p.2 ⟨i, hi⟩) / 2 = 2 * sign (p.2 ⟨i, hi⟩) := by omega
-    rw [he]; norm_num
+    rw [he]
+    exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ 2).mpr ⟨_, rfl⟩
   · simp [red, zeroVector, signed, hi]
 
 private theorem octadVector_mem (p : OctadFamily) : Admissible code (octadVector p) := by
@@ -177,7 +185,7 @@ private theorem octadVector_mem (p : OctadFamily) : Admissible code (octadVector
           have hv0 : ((p.1.val : Word) i).val ≠ 0 := by
             intro h; apply hi; apply ZMod.val_injective 2; simpa using h
           apply ZMod.val_injective 2
-          norm_num
+          change ((p.1.val : Word) i).val = 1
           omega
         simp [red, signed, S, hi, hc]
     rw [hr]; exact p.1.val.property
@@ -250,7 +258,10 @@ private theorem oddVector_sum (p : OddFamily) :
       24 - 2 * (weight (p.2 : Word) : ℤ) := by
     unfold sign
     rw [Finset.sum_sub_distrib, ← Finset.mul_sum, lift_sum]
-    simp
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    change (24 : ℤ) * 1 - 2 * (weight (p.2 : Word) : ℤ) =
+      24 - 2 * (weight (p.2 : Word) : ℤ)
+    rw [mul_one]
   calc
     _ = (∑ i : I, sign ((p.2 : Word) i)) +
         (-4 * sign ((p.2 : Word) p.1)) := by
@@ -378,9 +389,8 @@ private theorem odd_shape {x : IntVector} (hp : ∀ i, x i % 2 = 1)
   refine ⟨j, hj, ?_⟩
   have hej : e j = 8 := by rcases hj with h | h <;> simp [e, h]
   have hrest : (∑ i ∈ Finset.univ.erase j, e i) = 0 := by
-    have he := Finset.sum_erase_add Finset.univ e (Finset.mem_univ j)
-    rw [hsum, hej] at he
-    omega
+    rw [Finset.sum_erase_eq_sub (Finset.mem_univ j), hsum, hej]
+    norm_num
   intro i hi
   have hei := (Finset.sum_eq_zero_iff_of_nonneg (fun k _ => hnonneg k)).mp hrest
     i (by simp [hi])
@@ -533,7 +543,7 @@ private def twoSupportEquiv : TwoSupport ≃ ↥(Finset.univ.powersetCard 2 : Fi
 private theorem zeroFamily_card : Fintype.card ZeroFamily = 1104 := by
   have hc : Fintype.card TwoSupport = 276 := by
     rw [Fintype.card_congr twoSupportEquiv, Fintype.card_coe, Finset.card_powersetCard]
-    norm_num
+    norm_num [Nat.choose_two_right]
   have hs : ∀ S : TwoSupport, Fintype.card (S.val → F2) = 4 := by
     intro S
     simp [Fintype.card_fun, S.property, ZMod.card]
@@ -567,7 +577,6 @@ theorem shortest_vectors_card :
   rw [← Nat.card_congr sphereEquiv, Nat.card_eq_fintype_card]
   simp only [Families, Fintype.card_sum]
   rw [zeroFamily_card, octadFamily_card, oddFamily_card]
-  norm_num
 
 /-- The original rational scaling has squared length four exactly on this sphere. -/
 def scaledSphereEquiv : Sphere ≃ {x : IntVector // Admissible code x ∧ scaledSquare x = 4} where
