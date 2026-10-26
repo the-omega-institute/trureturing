@@ -1620,3 +1620,396 @@ The actual zero initialization, producer/coefficient restrictions, installed fix
 No map from native alpha/beta material constructors, a full ordered terminal-list reconstruction, a private-randomization clock experiment, or a quantum boundary realization to this arithmetic root-producer service is supplied. Such a map would have to preserve actual initialization, coefficient/input conditions, complete operations/outputs, root binding, legal access, records and resource costs; a common name or an abstract inverse does not provide it. The fixed-$G_{\rm gc}$/original-$Q$, parked-consumer, unchanged-initialization and final-no-Ready obligations keep their original exact domains. A common native-LAB/path realization, broader mutually recoverable controlled views, independently acquired authority/provenance and full resource minimality remain separate full-programme gaps. The bounded arithmetic entrance and its paid passive four-expression application do not complete that programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. An original-unit comb with an explicitly installed internal-root interface
+
+**Definition 34.1 (the unit comb installation).** This installation uses AA §§17 and 20's birth-typed local syntax and NLBA II §17's persistent material templates, but changes the field ports. Put
+
+$$
+u_0=\alpha,\qquad u_{n+1}=\langle\beta,u_n\rangle,\qquad
+G_n=C(u_n),\qquad N_n=3n+1.
+\tag{UFS.82}
+$$
+
+Here $C(\alpha)$ is one vertex; $C(\beta)$ is a root with one terminal left marker; and a branch has a root and its two ordered material subtrees. Thus the original root of $G_n$ is internal when $n>0$. Logical navigation descends only through branches, never through a beta marker. Material coordinates are root-based words, ordered by a fixed depth-first traversal. Let $A_n$ be the symmetric, zero-diagonal, unit adjacency matrix in these coordinates, and let $e$ be the original-root coordinate vector. No diagonal calibration, edge rescaling or contraction is applied.
+
+The concealed entry is some $u_n$, $n\ge3$, with arbitrary $x^0\in\mathbb Q^{N_n}$. Neither $n$, the term, the coordinates nor $x^0$ is supplied to the receiving controller. This is a class promise about an actually prepared source, not an assertion that every native term is a comb. The following root field interface is installed on that same source, in addition to the original addressed $P/S$ dispatcher:
+
+| Request | Actual successor | Complete semantic reply |
+| --- | --- | --- |
+| Read | $x$ | the literal original-root value $e^{\mathsf T}x$ |
+| Add$(q)$, $q\in\mathbb Q$ | $x+qe$ | fixed ACK |
+| Tick | $A_u x$ for the current material tree $C(u)$ | fixed ACK |
+| Hold | $x$, with no autonomous evolution during local work | fixed ACK |
+| $P_p$ at logical alpha | retain $p$, add a fresh zero marker $pL$ | Growth$(P,p)$ |
+| $S_p$ at logical beta | retain $p,pL$, add fresh zero cells $pLL,pR$ | Growth$(S,p)$ |
+
+At a split, $pL$ becomes the left logical beta root and $p$ becomes a branch; all old fields and old material addresses persist. These are the original material edits, not grafts or surrogate operations. A growth request at an absent address, branch, or wrong leaf type returns, respectively, AbsentRefusal, BranchRefusal or WrongTypeRefusal, with identical material and field successor. There is no Reset. Tick has no scalar payload. There are no terminal labels or terminal ports, constructor Read, interior-coordinate Read, size port, old-journal port, inverse Tick, clone or response table. In particular, this is an added internal-root Add/Read installation, not the unchanged original terminal-only installation of NLBA II §17.
+
+**Assumption 34.2 (actual preparation, binding and service).** The source was actually allocated as a zero-field alpha and grown by the original $P/S$ operations. Finite rational root controls may prepare its entry field. Before attachment, every construction- or field-dependent producer record is cleared or isolated from the receiver's accessible state: operands, old input/output and parser buffers, caches, selectors, callable archives and observable layout/capacity distinctions are not alternative advice channels. Clearing/isolation and its authority are explicit handoff premises, with actual work charged. Any producer, observer or caller copy retained elsewhere is real additional storage. The receiver begins with the source-independent program, one authentic binding to the original root dispatcher, the original left/right orientation, current call and rational-input rights, and the fixed interface and class assurance. A reference is an actual binding, not a number cast into an object. These premises do not reveal $n$ or certify an unknown field by fiat.
+
+Calls, output consumption and local updates are serial. Only an actual Tick evolves the field; growth adds fresh zeros without a hidden Tick. Hold permits the finite computations below on this very specimen. There is no competing writer, crash or revocation during a stated completed execution. Exact rational arithmetic, full replies, finite work storage, output backing and sufficient finite fresh material for each enabled requested growth are supplied. Allocation exhaustion, elapsed time, allocator identities, work and capacity metadata are not observation ports in this task. If such outputs are added, their state and costs must be added too. There is no common finite capacity or lifetime-width bound. Genuine installation, calibration, provenance and authority are premises; a matching numerical record cannot prove or grant them.
+
+For specificity, the growth channel retains AA Definition 20.2's designated three-bit $P/S$ tags, address code $1^{|p|}0p$, three-bit reply tags, two-bit refusal reason and kind/address Growth payload. Other complete growth-channel requests are unsupported and return BadFrame; AA's Tag and history-tape queries are not installed. A separate field channel has fixed three-bit tags for Read, Add, Tick and Hold. Only Add has a payload. For $k\ge0$, encode $k$ as $1^{\ell(k)}0\operatorname{bin}(k)$, where $\ell(k)=|\operatorname{bin}(k)|$ and $\operatorname{bin}(0)=0$. A reduced rational $p/q$, $q>0$, is a sign bit and the codes for $|p|,q$; negative zero and noncanonical fractions are invalid. Field replies have fixed two-bit tags for ACK, rational or BadFrame. Each input packet and output has an explicit End delimiter. A proper unfinished prefix without End remains pending; premature End, excess payload, an unsupported tag or an invalid complete rational packet yields BadFrame without an inner source operation. Missing current rights or an unavailable service phase disables the corresponding primitive; it is not a completed refusal or ACK. Root Read/Add have no ordinal parameter and hence no RangeRefusal branch. All bits, delimiters, local acknowledgements, cursor return and cleanup are real operations with backing and charges.
+
+## 35. The original unit comb supplies the missing root rank
+
+**Theorem 35.1 (cyclicity in the original material coordinates).** For every $n\ge0$, with exactly the material and unit law of Definition 34.1,
+
+$$
+K_n=[e,A_ne,\ldots,A_n^{N_n-1}e]
+\quad\hbox{is invertible over }\mathbb Q.
+\tag{UFS.83}
+$$
+
+Consequently the $N_n$ original-root observations at successive Tick epochs distinguish every pair of rational fields on this fixed comb. This conclusion does not require the unknown entry field itself to be cyclic, and does not assert that $A_n$ is invertible.
+
+Proof. Write $p_n(z)=\det(zI-A_n)$, and let $q_n(z)$ be the characteristic polynomial after deleting the original root; the empty determinant is one. The initial polynomials are $p_0=z,q_0=1$. At the root of $G_{n+1}$ the left attached component is the two-vertex beta material, whose characteristic polynomial is $z^2-1$ and whose own root-deleted polynomial is $z$; the right component is $G_n$. The elementary rooted determinant expansion therefore gives
+
+$$
+q_{n+1}=(z^2-1)p_n,\qquad
+p_{n+1}=z(z^2-2)p_n-(z^2-1)q_n.
+\tag{UFS.84}
+$$
+
+For clarity, the root expansion is
+$z(z^2-1)p_n-zp_n-(z^2-1)q_n$: either the root is unmatched in the determinant expansion or it uses one of its two incident edges. One can also obtain it by a root block Schur complement away from the finitely many component eigenvalues and then use polynomial equality. Thus it applies at all $z$, including those eigenvalues.
+
+At $z=1$ or $z=-1$, the recurrence says $p_{n+1}(z)=-zp_n(z)$, so these two values are never zero. Inductively $p_n,q_n$ have no common complex root: this is true initially; a common root $\lambda$ of $p_{n+1},q_{n+1}$ is not $\pm1$, hence $p_n(\lambda)=0$ by the first equation, and $q_n(\lambda)=0$ by the second, a contradiction.
+
+Now apply the classical rooted walk-matrix criterion: a vertex of a real symmetric graph is controllable precisely when its characteristic polynomial is coprime to that of its vertex deletion. This is Godsil, *Controllable Subsets in Graphs*, [arXiv:1010.3231v1, Lemma 5.2](https://arxiv.org/html/1010.3231v1), with the root as the one-vertex subset. Its application here can be checked directly. If the span $W$ of the columns in (UFS.83) were proper, Cayley–Hamilton would make $W$ invariant under $A_n$; symmetry makes $W^\perp$ invariant too. The real symmetric restriction to nonzero $W^\perp$ has an eigenvector $v\ne0$. Since $e\in W$, its root coordinate is zero. Deleting that coordinate leaves a nonzero eigenvector of the root-deleted matrix with the same eigenvalue. This contradicts the coprimality just proved. Hence $K_n$ is nonsingular over $\mathbb R$, and its integer determinant is nonzero, so it is nonsingular over $\mathbb Q$.
+
+Symmetry identifies the observability matrix as
+
+$$
+O_n=\begin{pmatrix}e^{\mathsf T}\\e^{\mathsf T}A_n\\\vdots\\e^{\mathsf T}A_n^{N_n-1}\end{pmatrix}
+=K_n^{\mathsf T}.
+\tag{UFS.85}
+$$
+
+Thus equality of all $N_n$ observations is exactly $K_n^{\mathsf T}(x-x')=0$, and implies $x=x'$. $\square$
+
+This is a source-specific application of the classical criterion, not a new abstract controllability criterion. Native comb construction is already public, for example AA II Theorem 50.4's all-beta left comb. Formula (UFS.82) explicitly chooses an alpha-ended right spine from the same original local templates; neither combs nor their legal local construction are claimed as new general content. The new rank bridge concerns this family's unmodified unit adjacency and original internal root. No separated address potentials from Recovery Geometry II §§96–98 enter (UFS.84).
+
+## 36. Unknown size earned by original refusals
+
+**Definition 36.1 (the finite comb guard).** Actually Hold. Start with logical address $p=\varepsilon$ and counter $j=0$. Issue $S_p$ and consume its complete reply. On BranchRefusal, issue $P_{pL}$, require WrongTypeRefusal, increment $j$, replace $p$ by $pR$, and repeat. On WrongTypeRefusal to $S_p$, stop and accept exactly if $j\ge3$. Every other reply rejects. In particular, a successful Growth reply is consumed and causes rejection; it is not retrospectively converted into a refusal or rolled back.
+
+**Theorem 36.2 (actual unknown-size class acquisition).** On every admitted $u_n$, the guard terminates, accepts, earns exactly $n$, and leaves the whole field and material unchanged. It makes $n+1$ actual $S$ requests and $n$ actual $P$ requests, all refusals. Conversely, on any finite native term, acceptance of the guard entails that the term at attachment was exactly $u_j$, $j\ge3$, and no growth occurred in that accepted execution. There is no size advice or fixed search horizon.
+
+Proof. At a branch $p$, $S_p$ returns BranchRefusal. At its left logical child, WrongTypeRefusal to $P$ means exactly beta: alpha would grow, a branch has its distinct refusal, and an absent address has its distinct refusal. At an alpha $p$, $S_p$ returns WrongTypeRefusal. At a beta $p$ it grows and is rejected. Hence an accepting path has precisely a finite right spine of branches, a beta left child at each, and an alpha end. Induction back up this spine reconstructs exactly (UFS.82), with $j$ branches. All replies used in acceptance are identity refusals; Hold also preserves the field. Conversely $u_n$ supplies these exact replies, so the counter stops at $n$. A finite term has a finite right spine, so every iteration either descends strictly or terminates/rejects. This proves termination even off the class, but a rejecting off-class execution can already have grown. No nondestructive rejection or restoration promise is made off the accepted class. $\square$
+
+The addresses are lawful selections constructed from the actual accepted replies, not a supplied list of the unknown source's vertices. From the earned $n$ the controller constructs the finite term, material-address table, $A_n$, $e$, $K_n$ and its rational inverse. Its authentic original-root dispatcher remains bound throughout. A source-dependent constructor oracle is not being smuggled into the guard.
+
+## 37. Arbitrary entry, actual preparation and an earned new origin
+
+**Theorem 37.1 (uncapped arbitrary-entry acquisition on the comb).** Under §§34–36, one source-independent finite program terminates for every $n\ge3$ and every $x^0\in\mathbb Q^{N_n}$, earns the original unit comb and its exact entry field, and establishes the actual new origin $e$ on the same source. From attachment to this origin it uses no Reset and no successful growth. With $N=N_n$, its actual primitive counts, in the order $(P,S,\mathrm{Tick},\mathrm{Add},\mathrm{Read},\mathrm{Hold})$, are
+
+$$
+(n,n+1,\ 2N-1,N+1,N+1,2N+1).
+\tag{UFS.86}
+$$
+
+At the returned cut it retains a synchronized full-field predictor, the authentic callable binding and current rights. The entry-field report is not a restoration of that field or of its old control history.
+
+Proof. Run the guard. Its initial Hold is retained as the hold for the first observation. Read $y_0$. For $j=1,\ldots,N-1$, actually Tick, Hold and Read $y_j$. All Tick ACKs and scalar replies are consumed. There have been no Adds and no growth, so
+
+$$
+y_j=e^{\mathsf T}A_n^j x^0,\qquad
+y=K_n^{\mathsf T}x^0,\qquad
+x^1=A_n^{N-1}x^0.
+\tag{UFS.87}
+$$
+
+Solve $\widehat x^0=K_n^{-\mathsf T}y$, which equals the actual attachment field by Theorem 35.1. Compute $x^1$ by forward powers. This is the actual current field; it is not $x^0$. Keep the source held during computation.
+
+Compute the rational coefficient vector
+
+$$
+c=-K_n^{-1}A_n^N x^1.
+\tag{UFS.88}
+$$
+
+For $i=0,\ldots,N-1$, actually execute Tick; Add$(c_{N-1-i})$; Hold, consuming every ACK and updating the retained predictor. Induction on these rounds gives the actual endpoint
+
+$$
+A_n^N x^1+\sum_{i=0}^{N-1}c_{N-1-i}A_n^{N-1-i}e
+=A_n^N x^1+K_nc=0.
+\tag{UFS.89}
+$$
+
+Now actually Add$(1)$; Hold; Read. The complete field is $e$ and the literal Read is one. The read alone would not certify whole-field zero or $e$; (UFS.87)–(UFS.89), the cyclicity and the installed exact law prove the full-field statement. Zero, signed, noncyclic and arbitrarily large entry fields all obey the same argument. No inverse of $A_n$ has been used.
+
+There are $N-1$ observation Ticks and $N$ control Ticks, $N$ control Adds and the final unit Add, and $N$ observation Reads and the final Read. The initial Hold and the $N-1$ observation Holds total $N$; controls add $N$ and the final origin adds one. Together with Theorem 36.2 this is (UFS.86). Every matrix operation, addressed loop and finite output terminates at this finite $n$ and these finite rational widths. The program is uniform in the unknown $n,x^0$. $\square$
+
+**Proposition 37.2 (every rational entry has genuine native preparation).** For every $n\ge3$ and target $z\in\mathbb Q^{N_n}$, the installed source can actually be prepared from one allocated zero alpha, using the original native edits and root controls, to attachment at exactly $(u_n,z)$. One such producer makes $n$ successful $P$ and $n$ successful $S$ calls, then $N$ Ticks, $N$ Adds and one Hold. Thus Theorem 37.1's arbitrary-field class is not an assumed family of unconstructible initial states.
+
+Proof. At $p=R^j$, for $j=0,\ldots,n-1$, execute $P_p;S_p$. The target was alpha, becomes beta, and splits into the required left beta and next right alpha. Induction constructs exactly $u_n$ and leaves every field zero, by the persistent fresh-zero templates. Compute $b=K_n^{-1}z$. Execute $N$ rounds Tick; Add$(b_{N-1-i})$, $0\le i<N$, then Hold. The actual endpoint is $K_nb=z$. The producer knows its owned construction target and supplies the actual controls; the receiving controller is given neither that target nor those coefficients. References, grants, allocations, preparation control traffic and producer storage are real resources. Combining this producer with (UFS.86) gives the same-run counts
+
+$$
+(2n,2n+1,\ 3N-1,2N+1,N+1,2N+2)
+\tag{UFS.90}
+$$
+
+from the allocated alpha through acquisition to the new origin. A different authentic preparation can have a different bill and old chronology; (UFS.86) still applies from its attachment cut. $\square$
+
+The linear-control step is the already used control-to-origin mechanism of this volume §5, now supplied with $A_n,e$ and an earned invertible $K_n$. The new application earns the unknown dimension through original refusals and measures an arbitrary entry by root-only Read with ACK-only Tick; it neither assumes the earlier capped positive Jacobi law nor silently inherits its scalar-returning Tick.
+
+## 38. Root sampling of the restricted binary continuation
+
+**Definition 38.1 (the actual binary phase).** At the actual new origin of Theorem 37.1 keep the comb fixed. A binary request supplies a real bit $d\in\{0,1\}$. Next$(d)$ executes Tick; Add$(d)$; Hold; Read, including an actual Add$(0)$ when $d=0$, and returns the three ACKs and literal rational reply in that order. Write $w=d_0\cdots d_{m-1}$ for the binary input chain actually executed since this origin. Its field is
+
+$$
+x_w=A_n^m e+\sum_{i=0}^{m-1}d_iA_n^{m-1-i}e,\qquad
+x_{wd}=A_nx_w+de.
+\tag{UFS.91}
+$$
+
+The empty chain has field $e$. There is no growth, extra Tick, nonbinary Add or Reset in this phase. Read and Hold are permitted identity operations. No old binary word or length must be retained as the inverse's input. The current full predictive vector and the earned finite graph can be retained; their actual storage is charged.
+
+**Theorem 38.2 (the public binary supplier applies at the internal root).** The fields (UFS.91) distinguish all finite binary chains, including length and the empty chain. A sequential finite-word enumeration recovers the unique chain from any full field promised to be in this image. It is not asserted to halt off the image.
+
+Proof. Apply NLBA II Theorem 30.2's leading-term separation mechanism to this actual graph and seed. Its graph hypothesis is satisfied: $G_n$ has $n+1\ge4$ material leaves, maximum degree three, and exactly $n-1\ge2$ degree-three vertices. Its seed was a canonical terminal there; the proof's actual seed requirement is the strict positivity of the pairing below, which also holds at this installed internal root.
+
+In detail, choose two degree-three vertices and their joining path. Give each path vertex weight two, their four off-path endpoint neighbours weight one, and other vertices zero, obtaining $g$. A tree makes these four neighbours distinct and outside the path. At path vertices the neighbouring weight sum is at least four, and at the four selected neighbours at least two; hence $A_ng\ge2g$. Set $h=(I+A_n)^{N-1}g$. Every vertex reaches a positive coordinate in at most $N-1$ edges, and the identity terms pad paths, so $h$ is strictly positive and integral. Commutation gives $A_nh\ge2h$. In particular, for the actual original-root $e$,
+
+$$
+s_j=h^{\mathsf T}A_n^je,\qquad
+s_0=h_{\varepsilon}>0,\qquad
+s_{j+1}\ge2s_j,\qquad
+s_D>\sum_{j<D}s_j\quad(D\ge1).
+\tag{UFS.92}
+$$
+
+The last inequality follows by bounding $s_j\le2^{j-D}s_D$ and summing the finite geometric series. For a nonzero polynomial $P(z)=\sum_{j\le D}a_jz^j$, $a_j\in\{-1,0,1\}$, its leading $h$-pairing has absolute value $s_D$ and all lower pairings have total absolute value strictly smaller; when $D=0$, use $s_0>0$. Thus $P(A_n)e\ne0$. Distinct binary chains give distinct monic polynomials in (UFS.91), whose difference has those coefficients, so their fields are distinct. Enumerating chains by increasing length and lexicographic order, computing each finite field and comparing all coordinates reaches the unique match on the promised image. Neither $h^{\mathsf T}x$ nor a past-word query is an installed port. This verifies the changed seed hypothesis in the credited supplier; it supplies no sharp leaf threshold or new general numeration theorem. $\square$
+
+**Definition 38.3 (literal root Sample).** At an actual binary-image field $x_w$, execute Hold; Read, then $N-1$ rounds Tick; Add$(0)$; Hold; Read. Store the literal ordered scalar window $y_0,\ldots,y_{N-1}$. Decode its pre-window vector using $K_n^{-\mathsf T}$ and then apply Theorem 38.2. Sample returns all inner replies, the window and the decoded pre-window chain and length, with every exported copy charged. The local predictor is installed at the actual final field, not at the reconstructed pre-window field.
+
+**Theorem 38.4 (sample recovery and endpoint).** For every promised $w$, Sample terminates and simultaneously satisfies
+
+$$
+y=K_n^{\mathsf T}x_w,\qquad
+x_w=K_n^{-\mathsf T}y,\qquad
+x_{\rm return}=A_n^{N-1}x_w=x_{w0^{N-1}}.
+\tag{UFS.93}
+$$
+
+Its actual counts are $N-1$ Ticks, $N-1$ Adds, $N$ Holds and $N$ Reads. All Add inputs are zero. The returned predictor equals $x_{w0^{N-1}}$ even if the pre-window predictor and binary journal had been discarded before sampling.
+
+Proof. The $j$th actual sampled field is $A_n^jx_w$: Read and Hold preserve it, and the actual zero Adds also preserve it. Its root value is the $j$th row of $K_n^{\mathsf T}x_w$, giving the first two identities. Theorem 38.2 recovers $w$. Each intervening Tick with its zero Add is an actual binary zero pulse, proving the third identity. Compute the retained endpoint by $N-1$ forward multiplications of the recovered vector. These are computations, not inverse Ticks or extra source calls. Counts follow from the specified sequence. In particular, no inversion of possibly singular $A_n$ is needed to recover the pre-window vector from this full window. $\square$
+
+## 39. Four independent meanings at completed sampled cuts
+
+**Definition 39.1 (the sampled four-expression domain).** Consider completed Sample cuts of the fixed comb binary phase, after every input, reply and predictor update has finished and the controller has returned to Ready. Put $v=w0^{N-1}$ for the actual binary chain including the last Sample's zero pulses. The four expressions expose the following different objects.
+
+| Expression | Independently specified content |
+| --- | --- |
+| Space | The actual rooted ordered unit material tree and its current field $x_v$, modulo rooted order-preserving isomorphism |
+| Time | The actual successful labelled native generation projection, and the actual binary pulse chain $v$ since the earned origin |
+| Boundary | Only the framed ordered list of $N$ literal root values received in the last Sample |
+| Memory | The retained current recursive native term and current full predictive field $x_v$ in its material-address coordinates |
+
+Space does not contain a command journal; Memory does not contain a binary word or an old-history oracle. Boundary is a finite actual window, not a table of arbitrary future responses or a counterfactual full-field measurement. Time's generation projection includes only actual successful original $P/S$ events. For this comb it is the forced chain
+
+$$
+P_{\varepsilon}S_{\varepsilon}P_RS_R\cdots
+P_{R^{n-1}}S_{R^{n-1}}.
+\tag{UFS.94}
+$$
+
+Time excludes old field preparation, acquisition, nulling, refused requests, Reads, Holds, waiting and wrapper segmentation. Two zero pulses issued as Next requests and two zero pulses inside a Sample are not distinguished by this Time expression. It is an event projection with this stated meaning, not the total old serialization or a claim about elapsed physical time. These exclusions are necessary to the inverse statement.
+
+The common callable context consists of the actual original-root binding and orientation, current rights, the source-independent codec/program, available backing and the authentic installation and binary-origin promises. It is not a hidden second copy of $n$, the term, window or word supplied to each expression. When an expression is used as the sole numerical input, missing finite arrays are reconstructed from it. Numeric reconstruction never reconstructs a grant. The actual joint process may retain the predictive arrays and last window simultaneously, paying for both. Receiving an exported numerical expression without its lawful context does not authorize calls on its source.
+
+**Theorem 39.2 (all inverses and all routes on the sample image).** On Definition 39.1's domain, each of Space, Time, Boundary and Memory determines the other three. Every round trip is the identity up to the stated spatial isomorphism, and every route with the same endpoints agrees. The common recovered parameters are exactly $(n,v)$ with $n\ge3$ and $v$ ending in at least $N_n-1$ zeros.
+
+Proof. First, (UFS.94) is the actual generation projection, not a chosen replay. A branch at $R^j$ had to be created by its $S$ event, before any event at $R^{j+1}$. That right child was born alpha and needs its $P$ before its $S$. Each left beta is born beta and never changes in $u_n$. Original growth has no deletion. Thus these are all and only the successful generation events, in this forced order, even if field operations or refusals occurred between them. This also follows by applying AA Theorem 17.2's labelled causal order to $u_n$.
+
+From Space, count its $N$ vertices to obtain $n=(N-1)/3$ and parse the rooted ordered material by arity: zero children is alpha, one terminal left marker is beta, and two children is a branch recursively. The marker is consumed in the beta clause. This yields $u_n$ and the canonical coordinates without choosing a spatial embedding. Use Theorem 38.2 on the actual present field to recover its unique chain $v$. Memory supplies the same term and coordinate field, so yields the same $n,v$. From Time, the generation chain yields $n$ and $u_n$ and its second component is $v$ itself; evaluating (UFS.91) gives the present field. No old field-control chronology is inferred in any of these directions.
+
+From Boundary, count the actually framed $N$ values; this is the extent of a performed Sample, not initial order advice. Recover $n=(N-1)/3$, construct its actual-class $A_n,K_n$, and solve $x_w=K_n^{-\mathsf T}y$. Theorem 38.4 identifies this as the pre-window field. Theorem 38.2 recovers $w$; append precisely $N-1$ zeros to obtain the present $v$ and evaluate its field. This establishes Boundary to every other expression, with the actual advanced endpoint.
+
+Conversely, given the recovered $(n,v)$, remove exactly its last $N-1$ zeros to obtain $w$. This removal is unambiguous on the declared domain, including when the word has additional trailing zeros. Form $K_n^{\mathsf T}x_w$ and serialize it in the installed rational framing. By (UFS.93) this equals the last literal window numerically and byte-for-byte in the canonical codec. This computation reproduces the record; it is not another Read or a proof of physical provenance. Build Space and Memory from $(u_n,x_v)$, and Time from (UFS.94) and $v$. Each recovered value is equal to its independently defined actual expression.
+
+Every such $(n,v)$ is actually attainable: prepare its comb by Proposition 37.2, run Theorem 37.1 to the actual origin, execute Next on the bits of the stripped word $w$, and actually Sample. Theorem 38.4 gives precisely $v=w0^{N-1}$. Thus the stated parameter set is the joint actual image, not merely four separately realizable numerical images.
+
+These constructions make every expression encode and decode the same $(n,v)$. The decoding after encoding is the identity by binary injectivity, the sample identity and unique ordered material parsing. Thus any two compositions recover the same parameters and re-encode the same target expression, proving every directed inverse, round trip and route agreement. All computations terminate on this image. $\square$
+
+**Proposition 39.3 (dynamics and the source-service kernel).** The sampled domain is stable under any finite sequence of Next requests and Reads/Holds followed by another Sample. On that domain the four expressions determine the same content state for the root/native continuation task, relative to their common lawful context. This equivalence does not extend to arbitrary archives, authority states, noisy measurements or wrapper histories.
+
+Proof. From a sampled chain $v$, Next$(d)$ produces $vd$ by (UFS.91). Read/Hold preserve it. The next Sample appends exactly $N-1$ actual zeros. Hence its new expressions are precisely those of Theorem 39.2 at the new chain; decoding before, updating by these actual operations and encoding after agrees with observing the resulting expression directly.
+
+Here continuation equivalence quantifies over common future input policies with the same retained selector context; it does not silently compare callers holding different old archives. For a fixed earned $n$, equal present fields give equal outputs and successors under every such finite root/native continuation by Theorem 40.2 below. Unequal fields are distinguished by an actual root window: invertibility of $K_n^{\mathsf T}$ forces at least one of its $N$ Read values to differ. If two comb sizes $n<m$ are compared under a binding-preserving correspondence of otherwise equal lawful contexts, the actual request $S_{R^n}$ returns WrongTypeRefusal on $u_n$ and BranchRefusal on $u_m$, changing neither source. Thus the primitive continuation equivalence, with the declared scalar and refusal outputs, is exactly equality of $n$ and the present field. On the binary image, equality of that field is exactly equality of $v$ by Theorem 38.2. This establishes agreement of the four-expression equivalence with this content task.
+
+Extra exposed archives, pointer-identity tests between unrelated bindings, capacity metadata or differing rights enlarge the task and need their own retained state. They are not numerical consequences of $(n,v)$. Growth or arbitrary rational controls can leave the sampled inverse domain; the forward predictor still serves them as stated next. $\square$
+
+## 40. Lawful selectors and complete continued source service
+
+**Definition 40.1 (the retained callable state).** At the origin and every later completed cut retain the real source binding, current rights and phase, the acquired current recursive term, its material-address-to-coordinate table, the unit adjacency representation and the exact current predictive vector $\widehat x$. Retain separate scratch for a Tick or growth update, parser and actual pending bits, finite counters, output backing and return cursor. The initialization is $\widehat x=e$ in Theorem 37.1; at a sampled return it is the advanced field in (UFS.93).
+
+The guard selector is the actual backed address $p$ and counter. Preparation controls are actual computed rational coefficients in reverse order. Next's bit is received and backed before use. A future growth address or rational operand is an actual received finite packet, not a hidden selector oracle. A finite adaptive caller can use previously returned actual outputs and its own retained inputs; its records and selection work are charged. No part of this definition supplies an arbitrary native tree as free input to a numerical inverse.
+
+The service forwards actual calls on the retained binding and consumes the entire actual reply. It updates and commits the local record before exposing the next completed cut. Its exact primitive prediction and record updates are:
+
+| Case | Complete output | Committed numerical/material successor |
+| --- | --- | --- |
+| Read | literal rational $e^{\mathsf T}\widehat x$ | identity |
+| Add$(q)$ | ACK | $\widehat x+qe$ |
+| Tick | ACK | $A_u\widehat x$ |
+| Hold | ACK | identity |
+| enabled $P_p$ | original Growth$(P,p)$ | original term edit, old-coordinate values retained, fresh $pL$ zero |
+| enabled $S_p$ | original Growth$(S,p)$ | original term edit, old-coordinate values retained, fresh $pLL,pR$ zero |
+| absent, branch or wrong-type growth target | corresponding distinct original refusal | identity |
+| complete malformed/unsupported packet | BadFrame | no inner operation; identity source |
+| proper incomplete packet | no completed reply | its real acquired prefix and pending parser state |
+| missing rights or unavailable phase | no completed reply; primitive disabled | no primitive source transition |
+
+After growth, rebuild the finite material table and adjacency on the actual old-vertex inclusion, retaining the original root coordinate and real dispatcher binding. No field is read at a newly created internal coordinate; fresh zeros come from the installed growth law. A BadFrame consumes the malformed packet and returns to Ready after output and cleanup; an incomplete packet does not. A disabled invocation is not silently replaced by a tagged refusal. Pending source edits, outputs and returns are real phases, not extra completed cuts. There is no range branch for root-only Read/Add, and every unsupported constructor, history, Reset or terminal-label request is covered by the malformed/unsupported row, not an invented auxiliary port.
+
+Valid Next and Sample wrappers expose their complete ordered inner replies and computed results. For a fixed codec, use three-bit request tags for Next, Sample, Recall and Length; Next has one bit payload and the others none. Other tags or excess payload are BadFrame. Each reply has a fixed three-bit result tag, a list of length-delimited complete inner reply frames and its typed result payload. Encode every list/frame length by Assumption 34.2's nonnegative-integer code; encode a word by its coded length followed by its actual bits. Next has no further result beyond its four inner replies. Sample appends the coded list of its $N$ canonical rational values and the pre-window word and coded length. Recall appends the decoded word, and Length its coded length. BadFrame has no inner frames or result payload. Outer End, local acknowledgement and Return complete each enabled wrapper. Invalid complete wrapper input returns BadFrame without inner calls, and a proper prefix remains pending. Optional Recall and Length are admitted only while the binary-origin promise is maintained: actually Hold, enumerate from the current predictive field as in Theorem 38.2, and return that ACK followed by the decoded current chain or its length. These are backed computations after an actual Hold, not a source word oracle. On arbitrary controls or growth the wrapper admission flag is cleared; no off-image termination claim is made. Read/Hold and the admitted binary wrappers preserve it.
+
+**Theorem 40.2 (complete adaptive use on the same actual source).** For every finite enabled continuation after Theorem 37.1, including arbitrary rational controls and all original growth requests, the retained service predicts every complete declared reply and the matching full source successor. Each complete enabled finite packet returns through finite output, End, local acknowledgement, root return and cleanup to Ready. At every such cut,
+
+$$
+\widehat u=u_{\rm actual},\qquad
+\widehat x=x_{\rm actual}
+\quad\hbox{in the retained actual material coordinates}.
+\tag{UFS.95}
+$$
+
+The stated incomplete and disabled behaviours also agree. Numerical predictions never replace the genuine calls or create the required current authority.
+
+Proof. The base is Theorem 37.1. For a primitive, use the installed operation in Definition 34.1. Add and Tick obey their displayed linear updates for every rational field, without a binary promise; Read and Hold preserve it and have the stated outputs. At a legal growth, the known term selects exactly the original guard's enabled target. Its persistent old fields and fresh zeros are exactly the local record update, and its reply is exactly Growth with that actual kind/address. The three distinct refusal conditions are computed from the same logical arity navigation and all preserve the source. These identities preserve (UFS.95), also when the current term has ceased to be a comb. Rebuilding its finite table is a finite traversal of the earned/updated term, not a new measurement or tree acquisition from advice.
+
+For framing, each received bit is copied to actual request backing before its input latch is cleared. The finite parser stores its tag, subphase, length counter and payload; its state is therefore exactly the acquired prefix. End either completes precisely one valid packet or selects BadFrame without dispatch. A valid finite address traversal has finite length, stopping at its actual target or first absent logical edge. The assumed backing supports each finite enabled edit and output. The service seals the real reply backing, transmits precisely its bits and End, takes its supplied local acknowledgement, returns the actual cursor to the root, and clears scratch before Ready. These finite loops finish for complete enabled packets. An incomplete prefix waits with its retained bytes, and a missing right or wrong phase enables no primitive step, exactly as in the installation. These are ordinary finite-list and cursor operations in AA §20's service pattern; its history tapes and extra queries are not assumed here.
+
+Induct over the actual completed requests. Equal prior outputs make the same finite adaptive policy choose the same next received command and operand. The primitive identities and finite parser/return argument preserve both (UFS.95) and every declared output. Wrapper correctness follows by applying the primitive induction to their real inner calls, (UFS.91), (UFS.93), and the promised-image inverse. No speculative forecast is counted as a source observation. Rights, input buffers, caller records and phases remain part of the common process even where the four numerical expressions omit them. $\square$
+
+## 41. Attained calls, literal traffic, simultaneous backing and work
+
+**Proposition 41.1 (one joined call bill).** For the producer of Proposition 37.2 followed by accepted acquisition and origin preparation, the counts are exactly (UFS.90). Subsequent $k$ Next calls, $r$ Sample calls and $q$ admitted Recall/Length calls add, with $a=k+r(N-1)$,
+
+$$
+\begin{array}{c|cccc}
+&\mathrm{Tick}&\mathrm{Add}&\mathrm{Read}&\mathrm{Hold}\\ \hline
+\text{binary continued use}&a&a&k+rN&k+rN+q.
+\end{array}
+\tag{UFS.96}
+$$
+
+Every other future primitive is added at its actual occurrence. No successful growth or Reset is hidden in accepted acquisition or binary sampling. There is no common bound over unknown $n$, arbitrary entry precision, continuation length or requested growth.
+
+Proof. Proposition 37.2 and Theorem 37.1 give their same-source counts before the origin. Next contributes one of each displayed operation. Sample contributes $(N-1,N-1,N,N)$ by Theorem 38.4. Each admitted Recall/Length contributes one actual Hold and no Tick, Add or Read. Summation gives (UFS.96). The number of binary zero/one pulse steps actually executed after the origin is $a$, including all sample zeros; Recall does not add a pulse. $\square$
+
+**Proposition 41.2 (literal communication is not a scalar-count convention).** Let
+
+$$
+\rho(p/q)=2\ell(|p|)+2\ell(q)+3,\qquad q>0,
+\tag{UFS.97}
+$$
+
+for the reduced rational codec in Assumption 34.2. Thus $\rho(0)=\rho(1)=7$. On the fixed bound channels, accepted acquisition has the following exact operation-tag and payload lengths, before End, channel routing, acknowledgement/return machinery and exported report copies:
+
+$$
+\begin{aligned}
+B_{\rm guard,in}&=2n^2+10n+4,\\
+B_{\rm guard,out}&=10n+5,\\
+B_{\rm field,in}&=3(6N+2)+\sum_{j=0}^{N-1}\rho(c_j)+\rho(1),\\
+B_{\rm field,out}&=2(6N+2)+\sum_{j=0}^{N-1}\rho(y_j)+\rho(1).
+\end{aligned}
+\tag{UFS.98}
+$$
+
+In particular the ACKs are counted: there are $5N+1$ field ACK replies, $N+1$ scalar replies and $2n+1$ distinct-reason growth refusals. The complete number of primitive completions in this acquisition is $C=6N+2n+3$.
+
+Proof. A growth request at depth $d$ has $3+(2d+1)=2d+4$ bits. The $S$ depths are $0,\ldots,n$ and the $P$ depths are $1,\ldots,n$. Their sum is $2n^2+10n+4$. All $2n+1$ growth replies have a three-bit tag and two-bit refusal payload, giving $10n+5$. There are $6N+2$ field calls by (UFS.86), each with a three-bit request tag and a two-bit reply tag. The only request payloads are the $N$ coefficients and final unit. The only reply payloads are the $N$ observed $y_j$ and final literal one. Tick, Add and Hold give $5N+1$ ACKs; Read gives $N+1$ scalars. Summing the completed calls gives $C$. $\square$
+
+For the chosen producer alone, its growth request bits total $2n^2+6n$, and its Growth reply bits total $2n^2+8n$: each of the two calls at depth $j<n$ returns $3+1+(2j+1)=2j+5$ bits. Its field operation tags and reply tags total $5(2N+1)$ bits and its control payloads total $\sum_j\rho(b_j)$. Its $2n+2N+1$ completions, the actual initial allocation and every producer-to-receiver transfer have their additional charges. This producer bill is joined to (UFS.98), not replaced by a free arbitrary seed.
+
+For the continuation in (UFS.96), let $C'=4k+r(4N-2)+q$ be its inner field completions. Their tags contribute $5C'$ bits; their actual binary Add payloads contribute $7a$ bits; and their literal Read payloads contribute the sum of $\rho$ over the $k+rN$ actually returned values. Wrapper input tags, the received $k$ bits, wrapper lengths, decoded words/lengths, windows, entry-field reports and any copied scalar tuples are additional literal transmissions. In particular, returning $x^0$ means transmitting its $N$ rational entries, not merely naming its computed vector.
+
+A complete traffic account for any of these finite runs is the sum
+
+$$
+B_{\rm run}=B_{\rm operation\ tags/payloads}
++B_{\rm Ends/routing/local\ acknowledgements/return}
++B_{\rm bindings/grants/setup/input\ capture}
++B_{\rm wrappers/reports/copies}.
+\tag{UFS.99}
+$$
+
+Each term is the sum of the actual encoded lengths moved in that category, with one chosen counting boundary so the same transmission is not counted twice. The second term includes exactly one input End, output End, local completion acknowledgement and Return sequence for each completed primitive, hence $C$ such sequences in (UFS.98), and the corresponding sequences for the producer and $C'$ continuation calls. Add the $k+r+q$ outer wrapper completion sequences; their inner completions do not pay for them. Proper incomplete packets contribute their actual received prefix and parser/backing traffic without a fictitious completion sequence. Disabled calls contribute only the actual input/control activity that occurred. Binding and grant widths, routed reference traffic and actual return-cursor operations are supplied implementation resources, not assumed one-bit or unit-size names. A local edge that carries no transmitted bits still incurs its local operation and retained-state cost. Formula (UFS.99), together with (UFS.98), specifies what must be counted without assigning a fictitious numerical width to an unspecified physical reference. Caller archives and repeated exported copies are charged where actually retained or moved.
+
+**Proposition 41.3 (finite implementation with unbounded literal widths).** For each finite admitted run the algorithms above use finite backing and work. They can be implemented with $O(N^2+m+1)$ simultaneous scalar/digit slots during acquisition and a promised binary inversion of length at most $m$, besides the explicit structural, reference, parser, output and retained-copy backing. This slot statement gives no bound on their literal widths and no efficient word inverse.
+
+Proof. Build $K_n$ by $N-1$ sparse powers and invert by rational elimination. Retain the source's $N$ field cells and its distinct next-Tick buffer, the observer's $N$ predictive cells and its separate update buffer, $K_n,K_n^{-1}$, the current window, control and reconstruction vectors, and elimination scratch. For example, a layout allocating at most $4N^2+24N$ scalar slots for these source/observer arrays suffices: two $N$-square stored matrices, a separate $N$-by-$2N$ elimination array, and twenty-four length-$N$ vectors more than cover the stated fields, snapshot buffers, right-hand sides, controls, windows and temporary products. Unused slots can be reused, but cannot be declared absent while their values coexist. This count is for these arrays, not for arbitrary retained caller output copies.
+
+A sequential word enumerator needs one candidate word and vector, its length/lexicographic counters, comparison scratch and the eventual output, rather than all candidates at once. For a length-$m$ promised answer, at most $2^{m+1}-1$ candidates are reached, each of length at most $m$. Their words and counters use $O(m+1)$ digit slots; no retained old-word input is needed. The material table has $N$ addresses of length at most $n+1$, hence $O(N^2)$ address bits in an explicit-word representation, or actual backed links with their real reference widths. Term storage, the actual source edges, grants, pending packets, output buffers, program/control, returned arrays and any archives remain simultaneous additional stores. Future growth adds its actual new cells and updated backing.
+
+For work, a unit-tree Tick implemented by a frozen snapshot, one zero initialization per target cell and one directed addition per incident edge uses $N$ initializations and $2(N-1)$ scalar additions. This provider computation and the observer's separate sparse prediction both cost work; the ACK does not make the field update free. The $N-1$ powers constructing $K_n$ take $O(N^2)$ scalar additions. Elimination and dense products can be performed in $O(N^3)$ rational arithmetic operations; the powers and products for (UFS.87)–(UFS.89) are within that bound. A direct candidate evaluation by (UFS.91) takes $O(N(m+1))$ scalar operations, so sequential inversion has the attained bound $O(N(m+1)2^{m+1})$ scalar operations, in addition to graph construction and acquisition. This exponential bound is not an efficiency assertion. Each actual invocation is charged, including repeated inversions in different wrappers. With direct root-based dispatch the guard makes exactly $n(n+1)$ downward address steps and $n(n+1)$ return upward steps, since its request depths sum to $n(n+1)$. Each step incurs its actual reference-field loads, arity/identity tests and cursor assignment, at the real widths. There are $2n+1$ target guard decisions and one dispatch/current-authorization check for each of the $C$ acquisition primitives; field calls require no logical address walk. Input/output, backing allocation, copying, root-register uses, return and cleanup add their actual finite work. Growth outside the frozen phase uses the then-current size, not the old $N$, in its rebuilt table and future Tick bills.
+
+Let $W_{\rm run}$ be the largest numerator, denominator, digit counter or intermediate integer bit length actually needed by the chosen implementation up to that finite cut, including elimination, unreduced intermediate products and decoding scratch. It is finite. School integer arithmetic and Euclidean normalization give, for example, a conservative polynomial $O(W_{\rm run}^3)$ bit-work bound per rational operation when all its intermediates are included in this width, in addition to literal traversal/copy costs. Matrix slot counts must therefore be multiplied by actual encoded widths to obtain bits. There is no size-only bound on $W_{\rm run}$ over arbitrary $x^0$: even at a fixed comb, one entry can have an arbitrarily long numerator or denominator.
+
+After the new origin the fields are nonnegative integers. If $M_j$ is their largest coordinate after $j$ actual binary pulse steps, $M_0=1$ and $M_{j+1}\le3M_j+1$, hence $M_j<3^{j+1}$. Their field-coordinate widths are $O(j+1)$ for this fixed degree bound. Conversely along the all-zero chain, $h^{\mathsf T}x_{0^j}=s_j\ge2^j h_{\varepsilon}$ by (UFS.92). Thus its largest coordinate is at least $2^jh_{\varepsilon}/\sum_vh_v$, forcing unbounded width even at this fixed $N$. Actual sampling advances this same $j$ and is included. A finite program, a fixed number of field coordinates and a finite execution are therefore all compatible with unbounded lifetime memory demand. $\square$
+
+Relative to this task, original native construction of $u_n$ really needs the $n$ promotions and $n$ splits of (UFS.94), since they are its forced successful events. With only Tick, Read, Hold and fresh-zero growth, a zero field remains zero; reaching the nonzero earned origin therefore needs a genuine field input. With no Read, the ACK and growth outputs in this installation carry no field information, so arbitrary entry-field reporting cannot be obtained from them alone. These facts justify resources actually used, not the optimality of the particular nulling schedule, protected-work Holds, guard or enumeration.
+
+The comparison with public NLBA II Sample is a vector comparison between different installed ports. On the same comb, its all-leaf window has $b=n+1$, $I=N-b=2n$, and uses $(n+1)(2n+1)$ Reads and $2n$ Ticks. This root window uses $3n+1$ Reads and $3n$ Ticks. One coordinate decreases and another increases; root and leaf actuation/binding also differ. No total-cost dominance, universal minimum or optimum is inferred.
+
+## 42. Concrete counterevidence to stronger promotions
+
+**Proposition 42.1 (original-unit root cyclicity is not arbitrary-native cyclicity).** There is a reachable original native term with an unobservable rational field for root-only fixed-geometry Tick/Read/Add/Hold. Thus Theorem 35.1 cannot be promoted from combs to all native material trees with the same unit law.
+
+Proof. Take $t=\langle\beta,\beta\rangle$, reachable by $P_{\varepsilon};S_{\varepsilon};P_R$. Its material consists of the root, two beta roots and their two markers. In the order root, left root, left marker, right root, right marker, put $z=(0,1,1,-1,-1)$. Directly from the five unit-adjacency row equations, $A_tz=z$ and $e^{\mathsf T}z=0$. The zero field and $z$ therefore have identical root Read histories. Under any common root Add the field difference remains $z$, and under Tick it remains $z$; Hold and Read preserve it. Induction gives identical complete outputs under every finite adaptive root-only continuation with geometry fixed.
+
+Both fields can in fact be prepared with the original growth and root controls alone. Zero needs only the legal growth word. For $z$, first construct $u_1=\langle\beta,\alpha\rangle$. Its four-cell root matrix is cyclic by Theorem 35.1, so four Tick/Add rounds with reversed coefficients $K_1^{-1}(0,2,2,0)^{\mathsf T}$ prepare the field $(0,2,2,0)$. Now execute $P_R$, obtaining $t$ with fresh-zero field $y=(0,2,2,0,0)$. On $t$,
+
+$$
+A_t^3y=(6,4,4,2,2),\qquad
+A_te=(0,1,0,1,0),\qquad
+A_t^2e=(2,0,1,0,1).
+$$
+
+The three actual rounds Tick; Add$(-3)$, Tick; Add$(-3)$, Tick; Add$(0)$ therefore end at $A_t^3y-3A_t^2e-3A_te=z$. With one Hold for the coefficient computation and one final Hold, this chosen preparation uses two $P$, one $S$, seven Ticks, seven Adds, two Holds and no Reads. No terminal preparation port is used. Growth after attachment could break the symmetry and is not ruled out as another acquisition method. The obstruction is precisely to the stronger fixed-geometry root-cyclicity assertion. $\square$
+
+**Proposition 42.2 (new origin is not erased-history or old-field restoration).** The recovered expressions do not determine arbitrary field controls before attachment or the entire old serialization. Their actual-source correspondence cannot be replaced by calling the reconstructed entry or pre-window field the returned source field.
+
+Proof. In an old held preparation insert Add$(q)$; Add$(-q)$, $q\ne0$, with no intervening Tick. It changes the actual old command word while leaving exactly the same material and field at attachment. Every later deterministic interface output and every expression in §39 is unchanged. Such an omitted old word therefore cannot be recovered. Moreover (UFS.89) maps every observed entry field to zero and the final Add maps it to $e$. Keeping the computed entry vector as an optional paid report does not perform the physical operations needed to restore it; if that report is discarded, the four origin-based expressions do not retain it. Finally a Sample actually applies $N-1$ Ticks, so its returned state is the last field of (UFS.93), not its first field. The window can recover a pre-window field despite this advance; that algebraic recovery does not reverse the actual advance. $\square$
+
+**Proposition 42.3 (the word inverse is not an arbitrary-field recognizer).** A lawful rational intervention can leave the promised binary image while complete continued source service remains available.
+
+Proof. At the new origin actually Add$(-1)$, obtaining zero. Every field in (UFS.91) has strictly positive $h$-pairing, since it has leading pairing $s_m>0$ and nonnegative remaining pairings. Thus zero is outside the image. The enumerator of Theorem 38.2 never finds zero; no termination promise applies. The forward predictor nonetheless updates to zero and Theorem 40.2 continues to serve every enabled source request. The same separation applies to growth, which changes the graph on which the old inverse was defined. $\square$
+
+**Proposition 42.4 (the unit root does not install a rational endpoint path or grant).** Matching even the first three root impulse moments of this comb by a symmetric positive-link endpoint Jacobi matrix would require an irrational first link. A copied numerical expression also need not carry any callable source right.
+
+Proof. At the actual root seed, $m_0=1$, $m_1=e^{\mathsf T}A_ne=0$, and $m_2=e^{\mathsf T}A_n^2e=2$, the original root's degree. For a symmetric endpoint tridiagonal $J$ with positive first link, these moments require $J_{00}=0$ and $J_{01}^2=2$, hence $J_{01}=\sqrt2\notin\mathbb Q$. A one-cell candidate already fails $m_2=2$. The positive-contraction condition $0<J<I$ fails as well because its root diagonal could not be zero. This refutes that particular exact rational endpoint-law identification; it does not rule out all representations, real-coefficient Lanczos realizations, nonorthogonal simulations or other operational bridges. None would be an installed native/path/quantum equivalence without its actual preparation, operations, outputs, successors, rights and cost correspondence.
+
+For authority, copy the same correctly encoded $(n,v)$, field or window to a receiver with no Add grant on the source. The original holder can perform Add; the copied receiver's primitive is disabled. All numerical bytes can agree while legal actions differ. The inverse thus neither grants authority nor certifies that a supplied record was physically measured on that specimen. Calibration and provenance have the same premise boundary: equality with a computed ideal record is not authentication of the actual law. $\square$
+
+## 43. Exact supplier correspondence and the source-relative addition
+
+The source-relative addition in §§34–41 is the joined original-unit comb theorem: (UFS.84) proves cyclicity at its original internal root; original refusal calls earn its unknown size without accepted growth; the paid root window acquires an arbitrary rational entry; actual controls earn a new unit origin; and a literal root Sample supports the restricted four-expression inverse and complete retained use on that same source. The material class, changed root interface, arbitrary entry and actual advanced endpoints are all needed in that statement. This is a `repo-derived` application and synthesis, with no worldwide-priority claim for the comb calculation or classical control mechanisms.
+
+The native syntax, reachable domain, forced labelled generation and material parsing are credited to [AA §§17–20](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md). Public native combs and their paid construction occur, for example, in [AA II Theorem 50.4](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md), whose all-beta left comb differs explicitly from (UFS.82)'s alpha-ended right spine. The persistent material/field inclusions are those of [NLBA II Definitions 17.1–17.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md); its terminal binding, zero entry, Reset and raw roster are not inherited. Its Theorem 30.2 supplies the branching binary separation consumed in Theorem 38.2, with the changed seed condition verified explicitly. Its §§31–38 supply the sampled advanced-endpoint, restricted-history, complete-service and literal-resource disciplines applied here. Neither that binary theorem nor the general linear control-to-origin mechanism is presented as new abstract mathematics.
+
+For the repository's [finite observability declaration](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean), `finite_observability_equivalence`, and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs), the parameters are State $=\mathbb R^N$, Output $=\mathbb R$, update $=A_n$, readout $=e^{\mathsf T}$ and horizon $=N$. Its stacked operator is exactly $K_n^{\mathsf T}$; the kernel, full rank and Gram-positivity equivalence is the existing result. Theorem 35.1 supplies this source's missing full-rank hypothesis, and the actual $y$ supplies its measured right-hand side. Ordinary rational nonsingularity, not a new Lean application, is used in the displayed solves.
+
+The [native source producer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean), including its private traversal, paid-read and stationarity helpers, and its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs), prove a different acquisition with an actual constructor Read, a retained native trace and growing stack workspace. They do not install a constructor Read in §34. The [native uniform tree definitions](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean), their private navigation/readout helpers and [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) compute from a supplied tree code; they are not unknown-source observations. Here the term used by local computation is earned by Theorem 36.2 before being traversed.
+
+At the pinned upstream mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, [`SimpleGraph.adjMatrix_pow_apply_eq_card_walk`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean) supplies the finite unit-graph walk interpretation of powers. The finite graph is this actual material $G_n$; the entries and scalars used here are rational. It supplies no authentication or free impulse readout. The two-sided nonsingular inverse identities in [`Matrix.NonsingularInverse`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean) have the determinant-unit hypothesis supplied here by (UFS.83), not by a compiler run. Godsil's primary paper, Lemma 5.2 and its §2 resolvent background, supplies the classical root-deletion criterion; §7 relates its walk matrix to linear control and observation. Those are credited suppliers inside the new source-specific argument.
+
+The public positive root and original-terminal results are also subtracted. [NLBA II §§45–50](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md) already acquires arbitrary signed rational amplitudes from a cleared handoff on its known constructed cherry family, using terminal Add preparation, root Read and paid asymmetric growth. Its field subspace, known geometry, actuation and successful acquisition growth differ from this unknown-size arbitrary-full-field comb entrance. NLBA II §§51–54 already gives an actual selected original-first-terminal experiment separating an owned pair of candidate fields, with at most one successful growth and the correct advanced endpoint. That candidate-advice pair task is not exact acquisition of an arbitrary unknown field; its alternative experiment functions are not an actual response table. Their terminal controls and candidate advice are not included for free in the root-only bill here.
+
+[Recovery Geometry II §§96–103](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md) already gives persistent-address calibration, all-native root cyclicity, ordered identification and an actual no-size-advice root acquisition. Its law has separated rational address potentials and small links, its initial field is zero, and its Tick returns a scalar. Its spectral-window proof is valid under those hypotheses. This addition changes none of those conclusions; it instead retains the original unit zero-diagonal adjacency, restricts to combs, accepts arbitrary entry fields, uses ACK-only Tick plus actual Read, and earns size by original refusals. [Atomic Generation Acquisition II §§84–92](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md) already supplies root-observed growing history under its respective post-clock and pre-clock laws, actual known initialization and nonzero seed. Those growing-history laws and provenance conditions are not the fixed unit law and arbitrary entry here. Thus neither root observation, native growth, uncapped acquisition nor history coding in general is claimed to originate in this addition.
+
+## 44. Quantified scope and remaining realization boundaries
+
+**Theorem 44.1 (the joined conditional outcome).** For every actually prepared finite original comb $u_n$, $n\ge3$, every rational entry field, and every authentic installation satisfying §§34 and 40's exact-law, original-root, framing, authority, serialization and finite-backing premises, there is one uniform finite controller with the following properties on that same source. It earns $n$, the ordered material coordinates and the arbitrary attachment field; without Reset or successful growth in accepted acquisition, it actually establishes the whole-field root seed $e$; it retains complete source service for every finite enabled subsequent root/native continuation; and at completed Samples in its fixed-comb binary phase its Space, Time, Boundary and Memory expressions have all the inverses and route agreement of Theorem 39.2. Its actual endpoint is $e$ after acquisition and $A_n^{N-1}x_w$ after Sample, and its attained same-run resources are those of §41, including preparation, control, literal widths, backing, full outputs and returns.
+
+Proof. Theorem 36.2 earns the finite graph without changing an accepted field. Theorem 35.1 supplies the exact native-coordinate rank needed by (UFS.87). Theorem 37.1 performs observation, nulling and unit preparation; Proposition 37.2 gives an actual producer for every quantified rational entry, with its additional bill. Theorem 40.2 installs and preserves complete continued source service, including outputs and successors outside the binary inverse domain. Theorem 38.2 checks the public binary supplier at this particular root; Theorem 38.4 performs the literal sample and computes its actual advanced endpoint. Theorem 39.2 proves the four inverses and route agreement, and Proposition 39.3 proves their admitted dynamics and continuation-kernel correspondence. Section 41 counts the joined actual operations and the real finite algorithms, with widths and copies kept explicit. These applications use one acquired binding and trajectory, not separately attainable marginal optima. $\square$
+
+This theorem does not settle unchanged original terminal-only acquisition, arbitrary-native unit-root cyclicity, arbitrary old-history recovery, restoration of the old entry field, or an inverse after unrestricted field controls or growth. Its Time is the native generation projection and prospective binary pulse chain, not every refused call, wrapper boundary or erased field preparation. Theorem 42.1 is specific counterevidence to the arbitrary-native fixed-geometry promotion; Propositions 42.2–42.4 exhibit erased-history, image-domain and operational-identification boundaries. Accessible old archives or differing grants change the task and cannot be silently omitted from its state or bill.
+
+There is no asserted uniform source-size bound, literal-width bound, efficient off-image recognition, bounded lifetime storage, universal minimum or total-cost optimum. Physical conformance, noise robustness, finite-capacity implementation and provenance/authority acquisition have not been derived from the ideal rational model. No common installed alpha/beta, rational-path and quantum process is obtained by numerical similarity. The fixed-$G_{\rm gc}$/original-$Q$, parked-consumer, unchanged-initialization and final-no-Ready problems retain their original exact conditions. This scoped comb bridge and its paid sampled four-expression application leave those stronger realization and full-programme questions unresolved.
+
+## 追加锚（本行以下为增补区）
