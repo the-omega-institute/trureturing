@@ -1,0 +1,80 @@
+**Theorem 2.5 (conditional information for two nonzero radii and the larger prediction domain).** Write $J_{12}=E_{12}-E_{21}$, $Y=iJ_{12}$ and
+
+$$
+ \rho_\theta=I_5/5+\theta Y,\qquad 0\le\theta\le1/\sqrt{40}.
+\tag{2.14}
+$$
+
+These are strictly positive density matrices. For any common experiment of $\mathcal E_m$, including its output, let $P_j$ be its complete-history law for $\rho_{\theta_j}$, $j=0,1$. Define
+
+$$
+ q_\theta(a,b)=\frac1{25}+\theta^2y_ay_b,
+ \quad y=(1,-1,0,0,0),\quad
+ c(\theta_1,\theta_0)=\frac{100(\theta_1^2-\theta_0^2)^2}{1-625\theta_0^4}.
+\tag{2.15}
+$$
+
+Then, with natural logarithms,
+
+$$
+\begin{aligned}
+ 1+\chi^2(P_1\Vert P_0)&\le(1+c(\theta_1,\theta_0))^m,\\
+ D_{\mathrm{KL}}(P_1\Vert P_0)&\le m\log(1+c(\theta_1,\theta_0)),\\
+ \operatorname{TV}(P_1,P_0)&\le\tfrac12\sqrt{(1+c(\theta_1,\theta_0))^m-1}.
+\end{aligned}
+\tag{2.16}
+$$
+
+Proof. The eigenvalues of $\rho_\theta$ are $1/5\pm\theta$ and three copies of $1/5$. Since $1/\sqrt{40}<1/5$, all are positive throughout (2.14). At a fixed classical history $H$, a complete real pair effect $Q_{H,z}$ obeys the direct identity
+
+$$
+\begin{aligned}
+ \rho_\theta^{\otimes2}
+ &=I_{25}/25+\tfrac\theta5(Y\otimes I+I\otimes Y)+\theta^2Y\otimes Y,\\
+ \operatorname{tr}(Q_{H,z}\rho_\theta^{\otimes2})
+ &=\operatorname{tr}(Q_{H,z}(I_{25}/25+\theta^2Y\otimes Y)).
+\end{aligned}
+\tag{2.17}
+$$
+
+The omitted pairing is zero because its transpose is its negative. A fixed orthonormal eigenbasis $u_a$ of $Y$ has eigenvalues $y_a$. Thus the conditional output law is $q_\theta K_H$, where
+
+$$
+ K_H(z\mid a,b)=\langle u_a\otimes u_b,Q_{H,z}(u_a\otimes u_b)\rangle\ge0,
+ \qquad \sum_zK_H(z\mid a,b)=1.
+\tag{2.18}
+$$
+
+This kernel depends on the fixed history and common policy, not on $\theta$. It includes failures and source-independent ancillas through their total input effects. The eigenbasis labels are only a probability representation; nonreal eigenbasis controls are not supplied. Each real single-copy law equals $\operatorname{tr}(PI_5/5)$, independent of $\theta$.
+
+On this entire interval $q_\theta\ge1/25-1/40=3/200>0$. Only four entries differ between $q_{\theta_1}$ and $q_{\theta_0}$, two of each sign. With $\Delta=\theta_1^2-\theta_0^2$, direct summation gives
+
+$$
+ \chi^2(q_{\theta_1}\Vert q_{\theta_0})
+ =\frac{2\Delta^2}{1/25+\theta_0^2}
+  +\frac{2\Delta^2}{1/25-\theta_0^2}
+ =c(\theta_1,\theta_0).
+\tag{2.19}
+$$
+
+For the observed conditional likelihood $\lambda_H$, conditional expectation of the spectral likelihood under $q_{\theta_0}$ and Jensen give
+
+$$
+ \mathbb E_0(\lambda_H\mid H)=1,\qquad
+ \mathbb E_0(\lambda_H^2\mid H)\le1+c,
+ \qquad
+ D(p_{1,H}\Vert p_{0,H})\le\log(1+c).
+\tag{2.20}
+$$
+
+For the last inequality, $\mathbb E_1\log\lambda_H\le\log\mathbb E_1\lambda_H=\log\mathbb E_0\lambda_H^2$. These are the classical data-processing and order-one/order-two comparisons; their general forms are [van Erven–Harremoës, *Rényi Divergence and Kullback–Leibler Divergence*, Theorems 1, 3, 9 and Example 2](https://arxiv.org/html/1206.2459v2). Here both use one common finite kernel, and all densities are positive; (2.19) supplies their exact specialization.
+
+Include the seed and all randomization in $H$. Group the single-copy insertions before the first pair, and after each pair up to the next pair or stop. The initial block has a common law. Conditional on a fixed past, all the subsequent single-only steps use source-independent kernels, even when their finite length is random. The finite paths have total mass one by the finite-history assumption. Thus each pair together with the following block still satisfies (2.20). Pad unused slots after stopping with a common dummy symbol up to $m$. This neither adds nor loses information. If $L_t$ is the likelihood after $t$ such slots, then
+
+$$
+ L_t=L_{t-1}\lambda_t,\qquad
+ \mathbb E_0(L_t^2\mid H_{t-1})\le(1+c)L_{t-1}^2.
+$$
+
+Iteration proves the chi-square bound. Every $q_\theta$ lies between $3/200$ and $13/200$, so the spectral, observed and block likelihood factors lie between $3/13$ and $13/3$, or equal one in dummy slots. Their log likelihoods are integrable even with continuous seeds and unbounded finite single-only blocks. The conditional chain rule therefore gives $D(P_1\Vert P_0)\le m\log(1+c)$. Cauchy–Schwarz applied to $\tfrac12\mathbb E_0|L_m-1|$ gives the last line of (2.16). This directly proves the extension beyond parent Theorem 18.2's $\theta\le1/10$ domain; no out-of-domain application of that theorem is used. A source-dependent quantum carrier between attempts would destroy the common classical-kernel argument. $\square$
+

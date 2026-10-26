@@ -1,0 +1,48 @@
+**Definition 118.1 (the original pair laws and their uniform separation problem).**
+Fix arbitrary original $a,\eta>0$ and arbitrary original times $t,\Delta>0$.
+Retain exactly Definition 117.1: the four-coordinate group $G=H^1\times\mathbb R$,
+identity $e$, raw Haar measure $\mu$, unit-source field $\Gamma$, actual selector
+$A(u)=\rho C(u)$, operator $H$, coefficient-positive normalized $h$, measure
+$m=h^2\mu$, unitary $U_hv=hv$, operator $K=U_h^{-1}HU_h$ and semigroup
+$T_s=e^{-sK}$. The entire complex form domain and energy are (115.15), including
+the source summand $\mathbb C1$; the actual operator domain is (115.17).
+The conservative diffusion $Z$ starts at $e$ at original time zero and runs
+through the lead-in $t$ without preparation or change of clock.
+
+Fix every permitted native tuple $p_{\rm N},q_{\rm N},r_{\rm N}>0$ with
+$p_{\rm N}+q_{\rm N}+r_{\rm N}<1$, retaining exactly $s_{\rm N},a_{\rm N},b_{\rm N},
+c_{\rm N},P_{\rm N},\pi$ and $\chi$ of (117.10)–(117.11).
+In particular $p_{\rm N}=q_{\rm N}$ and $r_{\rm N}=s_{\rm N}$ are allowed.
+On $\mathcal A=\{0,1,3,B\}$ define the exact adjacent target law
+
+$$
+\Pi_{\rm N}(y,z)
+ =\mathbb P(\chi(X_0)=y,\chi(X_1)=z)
+ =\frac15\sum_{\substack{i:\chi(i)=y\\j:\chi(j)=z}}(P_{\rm N})_{ij}.
+\tag{118.1}
+$$
+
+Let $\mathcal F$ be the class of all Borel tuples $f=(f_y)_{y\in\mathcal A}$ of (117.9):
+$0\le f_y\le1$ and $\sum_y f_y(x)=1$ for every $x\in G$.
+Read the same tuple at $t$ and $t+\Delta$, using fresh noises independent
+conditional on the entire $Z$ path, leaving $Z$ and its successors unchanged
+and retaining all four outcomes. Define, by the same Markov formula as (117.14),
+
+$$
+\begin{aligned}
+\nu_f(y,z)
+ &=\mathbb E_e[f_y(Z_t)f_z(Z_{t+\Delta})]
+   =\int_G g_t f_y\,T_\Delta f_z\,dm,\\
+d_f&=\operatorname{TV}(\nu_f,\Pi_{\rm N})
+   =\frac12\sum_{y,z\in\mathcal A}|\nu_f(y,z)-\Pi_{\rm N}(y,z)|.
+\end{aligned}
+\tag{118.2}
+$$
+
+Here $g_t$ is the actual source-start density (117.2), not a stationary
+initial law. The uniform separation in Theorem 118.3 is a repo-derived
+source-specific deduction for these laws. Bounded-domain elliptic kernels,
+part-process survival domination, tightness and Cauchy–Schwarz are classical
+intermediate tools, credited in its proof; no new general kernel theorem or
+worldwide-priority assertion is part of this attribution.
+

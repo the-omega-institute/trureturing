@@ -1,0 +1,30 @@
+**Lemma 3.7 (the word statistic without an independent-specimen premise).** Put $a=\operatorname{Re}\gamma$ and $R=NV_0=D e^{i\pi W/4}$. Then $[R,W]=0$. For $\mathcal G_y=\operatorname{Ad}_N\circ C_y^\gamma$, every full sector block obeys
+
+$$
+\mathcal G_y(P_wXP_z)
+ =\frac{1+wz+y(\gamma z+\bar\gamma w)}4
+       R(P_wXP_z)R^\dagger,
+\qquad w,z\in\{+1,-1\}.
+\tag{3.13}
+$$
+
+For every entrance density matrix $\sigma$, the actual $m$-reply law is therefore
+
+$$
+\Pr_\gamma(y_1,\ldots,y_m\mid\sigma)
+ =\sum_{w=\pm1}\operatorname{tr}(P_w\sigma)
+          \prod_{i=1}^m\frac{1+y_iwa}{2}.
+\tag{3.14}
+$$
+
+The probability of a constant word is, for every such entrance,
+
+$$
+q_a^m+(1-q_a)^m,\qquad q_a=(1+a)/2.
+\tag{3.15}
+$$
+
+The same statement applies conditional on every positive-probability earlier calibration history, without asserting that its entrance is $\rho_0$.
+
+**Proof.** $D$ commutes with $W$, giving the commutation for $R$. Multiply (3.3) on the left and right by the two spectral projections to obtain (3.13). A diagonal block is multiplied at each cycle by $(1+ywa)/2$; the remaining conjugation preserves its trace and its $W$ sector. Every off-diagonal sector block remains off diagonal and has trace zero. Taking traces of the iterated full maps proves (3.14). Summing the all-plus and all-minus words eliminates the entrance weights, since exchanging $w$ exchanges the two products, giving (3.15). References can first be traced out for this probability calculation. Equation (3.13), rather than a classical mixture replacement, remains the full quantum successor contract: there can still be off-diagonal blocks. $\square$
+
