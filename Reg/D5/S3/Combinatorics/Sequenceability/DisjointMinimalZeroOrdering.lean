@@ -48,13 +48,17 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   have hAB : A ≠ B := by
     intro h
     have hb : b ∈ A := h.symm ▸ (by simp [B])
-    simpa [A, a, b] using hb
+    have heq : true = false := congrArg ULift.down (Finset.mem_singleton.mp hb)
+    cases heq
   refine ⟨α, ∅, {A, B}, ?_⟩
   intro he
   have hgood : actual.readout i α ∅ := by simp [actual, realize]
   rw [he] at hgood
-  have hd : Disjoint A B := hgood (by simp) (by simp) hAB
-  exact Finset.disjoint_left.mp hd (by simp [A]) (by simp [B])
+  have hd : Disjoint A B := hgood (Finset.mem_insert_self A {B})
+    (Finset.mem_insert_of_mem (Finset.mem_singleton_self B)) hAB
+  exact Finset.disjoint_left.mp hd
+    (show a ∈ A from Finset.mem_singleton_self a)
+    (show a ∈ B from Finset.mem_insert_self a {b})
 
 def family : Registration arena.{u,v}
     (type_of% (@zero_decomposition_pairwise_disjoint.{u,v})) where
