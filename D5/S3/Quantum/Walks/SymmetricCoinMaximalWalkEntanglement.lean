@@ -14,7 +14,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate Classical
 
 namespace D5.S3.Quantum.Walks.SymmetricCoinMaximalWalkEntanglement
 
@@ -64,7 +64,7 @@ def claim : Prop :=
     letI : NeZero p := ⟨by omega⟩
     geometricEntanglement (walkState p n c) ≤ geometricEntanglement (walkState p n cStar)
 
-private lemma overlap_expansion {ι : Type*} [Fintype ι] [DecidableEq ι] (lam : ι → ℂ)
+private lemma overlap_expansion {ι : Type*} [Fintype ι] (lam : ι → ℂ)
     (z : ι → Fin 2 → ℂ) : overlap lam z =
       ∑ k, lam k * conj (z k 1 * ∏ l ∈ Finset.univ.erase k, z l 0) := by
   classical
@@ -79,7 +79,7 @@ private lemma overlap_expansion {ι : Type*} [Fintype ι] [DecidableEq ι] (lam 
   unfold productState
   rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ k)]
   apply congrArg₂ (· * ·)
-  · simp only [Function.update_same, Bool.true_eq_true, if_true]
+  · simp only [Function.update_self, if_true]
   · apply Finset.prod_congr rfl
     intro l hl
     rw [Function.update_of_ne (Finset.ne_of_mem_erase hl)]
@@ -94,7 +94,7 @@ private lemma overlap_bounded {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
   have hprod : (∑ s : ι → Bool, ‖productState z s‖ ^ 2) = 1 := by
     unfold productState
     simp only [norm_prod, ← Finset.prod_pow]
-    rw [← Fintype.prod_sum]
+    rw [← Fintype.prod_sum (fun k (b : Bool) => ‖z k (if b then 1 else 0)‖ ^ 2)]
     calc
       _ = ∏ k : ι, (1 : ℝ) := by
         apply Finset.prod_congr rfl
@@ -103,6 +103,7 @@ private lemma overlap_bounded {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
         unfold unitCoin at h
         rw [Fin.sum_univ_two] at h
         simpa only [Fintype.sum_bool, Bool.cond_false, Bool.cond_true,
+          Bool.false_eq_true, if_false, if_true,
           Complex.normSq_eq_norm_sq, add_comm] using h
       _ = 1 := Finset.prod_const_one
   have h := D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.cs_sq
@@ -123,15 +124,19 @@ private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
     rw [Metric.mem_closedBall, dist_zero_right, pi_norm_le_iff_of_nonneg zero_le_one]
     intro b
     have h := hc
-    unfold unitCoin at h
+    change (∑ t, Complex.normSq (c t)) = 1 at h
     rw [Fin.sum_univ_two] at h
     fin_cases b <;>
       nlinarith [Complex.normSq_eq_norm_sq (c 0), Complex.normSq_eq_norm_sq (c 1),
         Complex.normSq_nonneg (c 0), Complex.normSq_nonneg (c 1), norm_nonneg (c 0),
         norm_nonneg (c 1)]
   have hcompact : IsCompact {z : ι → Fin 2 → ℂ | unitFactors z} := by
-    exact (show IsCompact (Set.pi Set.univ (fun _ : ι => {c | unitCoin c})) from
-      isCompact_univ_pi (fun _ => hlocal))
+    have heq : {z : ι → Fin 2 → ℂ | unitFactors z} =
+        Set.pi Set.univ (fun _ : ι => {c | unitCoin c}) := by
+      ext z
+      exact Set.mem_univ_pi.symm
+    rw [heq]
+    exact isCompact_univ_pi (fun _ => hlocal)
   have hnonempty : Set.Nonempty {z : ι → Fin 2 → ℂ | unitFactors z} := by
     refine ⟨fun _ => ![1, 0], ?_⟩
     intro k
@@ -143,14 +148,125 @@ private lemma overlap_attained {ι : Type*} [Fintype ι] (lam : ι → ℂ) :
   obtain ⟨z, hz, hmax⟩ := hcompact.exists_isMaxOn hnonempty hcont.continuousOn
   refine ⟨z, hz, le_antisymm ?_ ?_⟩
   · unfold gMax
-    apply csSup_le ⟨Complex.normSq (overlap lam z), z, hz, rfl⟩
-    rintro t ⟨w, hw, rfl⟩
-    exact hmax hw
+    refine csSup_le ?_ ?_
+    · exact ⟨Complex.normSq (overlap lam z), z, hz, rfl⟩
+    · rintro t ⟨w, hw, rfl⟩
+      exact (isMaxOn_iff.mp hmax) w hw
   · exact le_csSup (overlap_bounded lam) ⟨z, hz, rfl⟩
+
+private lemma phase_transport {ι : Type*} [Fintype ι] (lam μ : ι → ℂ)
+    (h : ∀ k, Complex.normSq (lam k) = Complex.normSq (μ k))
+    (z : ι → Fin 2 → ℂ) (hz : unitFactors z) :
+    ∃ w : ι → Fin 2 → ℂ, unitFactors w ∧ overlap μ w = overlap lam z := by
+  classical
+  let ρ : ι → ℂ := fun k => if lam k = 0 then 1 else μ k / lam k
+  have hρ (k : ι) : Complex.normSq (ρ k) = 1 ∧ μ k = ρ k * lam k := by
+    dsimp [ρ]
+    split_ifs with hk
+    · have hm : μ k = 0 := Complex.normSq_eq_zero.mp (by rw [← h k, hk, Complex.normSq_zero])
+      simp only [Complex.normSq_one, hk, hm, one_mul, and_self]
+    · exact ⟨by rw [Complex.normSq_div, ← h k, div_self (Complex.normSq_pos.mpr hk).ne'],
+        (div_mul_cancel₀ _ hk).symm⟩
+  let w : ι → Fin 2 → ℂ := fun k => ![z k 0, ρ k * z k 1]
+  refine ⟨w, ?_, ?_⟩
+  · intro k
+    have hk := hz k
+    unfold unitCoin at hk ⊢
+    rw [Fin.sum_univ_two] at hk ⊢
+    dsimp only [w, Matrix.cons_val_zero, Matrix.cons_val_one]
+    rw [Complex.normSq_mul, (hρ k).1, one_mul]
+    exact hk
+  · rw [overlap_expansion, overlap_expansion]
+    apply Finset.sum_congr rfl
+    intro k hk
+    have hprod : (∏ l ∈ Finset.univ.erase k, w l 0) =
+        ∏ l ∈ Finset.univ.erase k, z l 0 := rfl
+    rw [hprod]
+    change μ k * conj ((ρ k * z k 1) * ∏ l ∈ Finset.univ.erase k, z l 0) = _
+    rw [(hρ k).2]
+    simp only [map_mul]
+    have he : ρ k * conj (ρ k) = 1 := by
+      rw [Complex.mul_conj, (hρ k).1, Complex.ofReal_one]
+    calc
+      _ = (ρ k * conj (ρ k)) *
+          (lam k * conj (z k 1) * conj (∏ l ∈ Finset.univ.erase k, z l 0)) := by ring
+      _ = _ := by rw [he, one_mul]; ring
 
 private lemma phase_invariance {ι : Type*} [Fintype ι] (lam μ : ι → ℂ)
     (h : ∀ k, Complex.normSq (lam k) = Complex.normSq (μ k)) : gMax lam = gMax μ := by
-  sorry
+  unfold gMax
+  congr 1
+  ext t
+  constructor
+  · rintro ⟨z, hz, ht⟩
+    obtain ⟨w, hw, he⟩ := phase_transport lam μ h z hz
+    exact ⟨w, hw, he.symm ▸ ht⟩
+  · rintro ⟨z, hz, ht⟩
+    obtain ⟨w, hw, he⟩ := phase_transport μ lam (fun k => (h k).symm) z hz
+    exact ⟨w, hw, he.symm ▸ ht⟩
+
+private def positiveOverlap {ι : Type*} [Fintype ι] (a : ι → ℝ)
+    (z : ι → Fin 2 → ℝ) : ℝ := by
+  classical
+  exact ∑ k, a k * z k 1 * ∏ l ∈ Finset.univ.erase k, z l 0
+
+private lemma overlap_real {ι : Type*} [Fintype ι] (a : ι → ℝ)
+    (z : ι → Fin 2 → ℝ) :
+    overlap (fun k => (a k : ℂ)) (fun k b => (z k b : ℂ)) = (positiveOverlap a z : ℂ) := by
+  classical
+  rw [overlap_expansion]
+  unfold positiveOverlap
+  push_cast
+  simp only [map_mul, map_prod, Complex.conj_ofReal]
+  apply Finset.sum_congr rfl
+  intro k hk
+  ring
+
+private lemma overlap_modulus_bound {ι : Type*} [Fintype ι] (a : ι → ℝ)
+    (ha : ∀ k, 0 ≤ a k) (z : ι → Fin 2 → ℂ) :
+    ‖overlap (fun k => (a k : ℂ)) z‖ ≤ positiveOverlap a (fun k b => ‖z k b‖) := by
+  classical
+  rw [overlap_expansion]
+  calc
+    _ ≤ ∑ k, ‖(a k : ℂ) * conj (z k 1 * ∏ l ∈ Finset.univ.erase k, z l 0)‖ :=
+      norm_sum_le _ _
+    _ = _ := by
+      unfold positiveOverlap
+      apply Finset.sum_congr rfl
+      intro k hk
+      rw [norm_mul, Complex.norm_conj, norm_mul, norm_prod, Complex.norm_real,
+        Real.norm_eq_abs, abs_of_nonneg (ha k)]
+      ring
+
+private lemma positive_max {ι : Type*} [Fintype ι] (a : ι → ℝ) (ha : ∀ k, 0 ≤ a k) :
+    ∃ z : ι → Fin 2 → ℝ, (∀ k b, 0 ≤ z k b) ∧
+      (∀ k, z k 0 ^ 2 + z k 1 ^ 2 = 1) ∧
+      gMax (fun k => (a k : ℂ)) = positiveOverlap a z ^ 2 := by
+  classical
+  obtain ⟨w, hw, hmax⟩ := overlap_attained (fun k => (a k : ℂ))
+  let z : ι → Fin 2 → ℝ := fun k b => ‖w k b‖
+  have hzn (k : ι) : z k 0 ^ 2 + z k 1 ^ 2 = 1 := by
+    have h := hw k
+    unfold unitCoin at h
+    rw [Fin.sum_univ_two] at h
+    simpa only [Complex.normSq_eq_norm_sq] using h
+  have hz : unitFactors (fun k b => (z k b : ℂ)) := by
+    intro k
+    unfold unitCoin
+    rw [Fin.sum_univ_two, Complex.normSq_ofReal, Complex.normSq_ofReal]
+    simpa only [pow_two] using hzn k
+  have hnonneg : 0 ≤ positiveOverlap a z := by
+    unfold positiveOverlap
+    exact Finset.sum_nonneg fun k hk => mul_nonneg (mul_nonneg (ha k) (norm_nonneg _))
+      (Finset.prod_nonneg fun l hl => norm_nonneg _)
+  refine ⟨z, fun k b => norm_nonneg _, hzn, le_antisymm ?_ ?_⟩
+  · rw [hmax, Complex.normSq_eq_norm_sq]
+    exact (sq_le_sq₀ (norm_nonneg _) hnonneg).mpr (overlap_modulus_bound a ha w)
+  · have h := le_csSup (overlap_bounded (fun k => (a k : ℂ)))
+      ⟨fun k b => (z k b : ℂ), hz, rfl⟩
+    rw [overlap_real, Complex.normSq_ofReal] at h
+    unfold gMax
+    simpa only [pow_two] using h
 
 private lemma quadratic_max (d e f : ℝ) (hf : 0 ≤ f) :
     let t := (d + e + Real.sqrt ((d - e) ^ 2 + 4 * f ^ 2)) / 2
@@ -292,6 +408,128 @@ private lemma two_factor_max (a b r s : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
         dsimp [v]; ring
       rw [he, hvs, div_pow, hks, pow_two, mul_div_cancel_right₀ _ hz]
 
+private lemma pair_slice {ι : Type*} [Fintype ι]
+    (a : ι → ℝ) (z : ι → Fin 2 → ℝ) (i j : ι) (hij : i ≠ j) :
+    let s := (Finset.univ.erase i).erase j
+    positiveOverlap a z =
+      (∑ k ∈ s, a k * z k 1 * ∏ l ∈ s.erase k, z l 0) * z i 0 * z j 0 +
+        (∏ k ∈ s, z k 0) * a j * z i 0 * z j 1 +
+        (∏ k ∈ s, z k 0) * a i * z i 1 * z j 0 := by
+  classical
+  dsimp only
+  set s := (Finset.univ.erase i).erase j
+  have hji : j ∈ Finset.univ.erase i := Finset.mem_erase.mpr ⟨hij.symm, Finset.mem_univ _⟩
+  have hi : (∏ k ∈ Finset.univ.erase i, z k 0) = z j 0 * ∏ k ∈ s, z k 0 := by
+    exact (Finset.mul_prod_erase _ _ hji).symm
+  have hj : (∏ k ∈ Finset.univ.erase j, z k 0) = z i 0 * ∏ k ∈ s, z k 0 := by
+    rw [← Finset.mul_prod_erase _ _ (Finset.mem_erase.mpr ⟨hij, Finset.mem_univ _⟩)]
+    rw [Finset.erase_right_comm]
+  have hterm (k : ι) (hk : k ∈ s) :
+      (∏ l ∈ Finset.univ.erase k, z l 0) = z i 0 * z j 0 * ∏ l ∈ s.erase k, z l 0 := by
+    have hki : k ≠ i := (Finset.mem_erase.mp (Finset.mem_erase.mp hk).2).1
+    have hkj : k ≠ j := (Finset.mem_erase.mp hk).1
+    rw [← Finset.mul_prod_erase _ _ (Finset.mem_erase.mpr ⟨hki.symm, Finset.mem_univ _⟩)]
+    rw [← Finset.mul_prod_erase _ _
+      (Finset.mem_erase.mpr ⟨hij.symm, Finset.mem_erase.mpr ⟨hkj.symm, Finset.mem_univ _⟩⟩)]
+    have he : ((Finset.univ.erase k).erase i).erase j = s.erase k := by
+      ext l
+      simp only [Finset.mem_erase, Finset.mem_univ, and_true, s]
+      tauto
+    rw [he]
+    ring
+  unfold positiveOverlap
+  rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i),
+    ← Finset.add_sum_erase _ _ hji, hi, hj]
+  have hsum : (∑ k ∈ s, a k * z k 1 * ∏ l ∈ Finset.univ.erase k, z l 0) =
+      (∑ k ∈ s, a k * z k 1 * ∏ l ∈ s.erase k, z l 0) * z i 0 * z j 0 := by
+    rw [Finset.sum_mul, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro k hk
+    rw [hterm k hk]
+    ring
+  rw [hsum]
+  ring
+
+private lemma positive_pair_balancing {ι : Type*} [Fintype ι]
+    (a b : ι → ℝ) (ha : ∀ k, 0 ≤ a k) (hb : ∀ k, 0 ≤ b k) (i j : ι) (hij : i ≠ j)
+    (hrest : ∀ k, k ≠ i → k ≠ j → a k = b k)
+    (hsum : b i ^ 2 + b j ^ 2 = a i ^ 2 + a j ^ 2)
+    (hprod : a i ^ 2 * a j ^ 2 ≤ b i ^ 2 * b j ^ 2) :
+    gMax (fun k => (b k : ℂ)) ≤ gMax (fun k => (a k : ℂ)) := by
+  classical
+  obtain ⟨z, hz, hzn, hmax⟩ := positive_max b hb
+  let s := (Finset.univ.erase i).erase j
+  let d := ∑ k ∈ s, b k * z k 1 * ∏ l ∈ s.erase k, z l 0
+  let e := ∏ k ∈ s, z k 0
+  have hd : 0 ≤ d := Finset.sum_nonneg fun k hk =>
+    mul_nonneg (mul_nonneg (hb k) (hz k 1)) (Finset.prod_nonneg fun l hl => hz l 0)
+  have he : 0 ≤ e := Finset.prod_nonneg fun k hk => hz k 0
+  obtain ⟨x, y, hx, hy, hxn, hyn, hpv, hpmax⟩ :=
+    two_factor_max d e (a i) (a j) hd he (ha i) (ha j)
+  obtain ⟨u, v, hu, hv, hun, hvn, hqv, hqmax⟩ :=
+    two_factor_max d e (b i) (b j) hd he (hb i) (hb j)
+  have hq := hqmax (z i) (z j) (hzn i) (hzn j)
+  rw [hqv] at hq
+  have hslice : positiveOverlap b z =
+      d * z i 0 * z j 0 + e * b j * z i 0 * z j 1 + e * b i * z i 1 * z j 0 :=
+    pair_slice b z i j hij
+  rw [← hslice] at hq
+  have hcmp := Real.sqrt_le_sqrt (show
+      (d ^ 2 + e ^ 2 * (b i ^ 2 + b j ^ 2)) ^ 2 - 4 * e ^ 4 * (b i ^ 2 * b j ^ 2) ≤
+      (d ^ 2 + e ^ 2 * (a i ^ 2 + a j ^ 2)) ^ 2 - 4 * e ^ 4 * (a i ^ 2 * a j ^ 2) from by
+    rw [hsum]
+    nlinarith only [mul_nonneg (pow_nonneg he 4) (sub_nonneg.mpr hprod)])
+  rw [hsum] at hq
+  have hqbound : positiveOverlap b z ^ 2 ≤
+      (d * x 0 * y 0 + e * a j * x 0 * y 1 + e * a i * x 1 * y 0) ^ 2 := by
+    rw [hpv]
+    rw [hsum] at hcmp
+    linarith only [hq, hcmp]
+  let w := Function.update (Function.update z j y) i x
+  have hwi : w i = x := Function.update_self _ _ _
+  have hwj : w j = y := by
+    dsimp only [w]
+    rw [Function.update_of_ne hij.symm, Function.update_self]
+  have hwr (k : ι) (hk : k ∈ s) : w k = z k := by
+    have hki := (Finset.mem_erase.mp (Finset.mem_erase.mp hk).2).1
+    have hkj := (Finset.mem_erase.mp hk).1
+    exact (Function.update_of_ne hki _ _).trans (Function.update_of_ne hkj _ _)
+  have hwn (k : ι) : w k 0 ^ 2 + w k 1 ^ 2 = 1 := by
+    by_cases hki : k = i
+    · subst k; rw [hwi]; exact hxn
+    by_cases hkj : k = j
+    · subst k; rw [hwj]; exact hyn
+    rw [hwr k (by simp only [s, Finset.mem_erase, Finset.mem_univ, and_true]; exact ⟨hkj, hki⟩)]
+    exact hzn k
+  have hw : unitFactors (fun k t => (w k t : ℂ)) := by
+    intro k
+    unfold unitCoin
+    rw [Fin.sum_univ_two, Complex.normSq_ofReal, Complex.normSq_ofReal]
+    simpa only [pow_two] using hwn k
+  have hed : (∑ k ∈ s, a k * w k 1 * ∏ l ∈ s.erase k, w l 0) = d := by
+    apply Finset.sum_congr rfl
+    intro k hk
+    rw [hrest k (Finset.mem_erase.mp (Finset.mem_erase.mp hk).2).1
+      (Finset.mem_erase.mp hk).1, hwr k hk]
+    congr 1
+    exact Finset.prod_congr rfl fun l hl => congrFun (hwr l (Finset.mem_of_mem_erase hl)) 0
+  have hee : (∏ k ∈ s, w k 0) = e :=
+    Finset.prod_congr rfl fun k hk => congrFun (hwr k hk) 0
+  have hwp := pair_slice a w i j hij
+  change positiveOverlap a w =
+    (∑ k ∈ s, a k * w k 1 * ∏ l ∈ s.erase k, w l 0) * w i 0 * w j 0 +
+      (∏ k ∈ s, w k 0) * a j * w i 0 * w j 1 +
+      (∏ k ∈ s, w k 0) * a i * w i 1 * w j 0 at hwp
+  rw [hed, hee, hwi, hwj] at hwp
+  have hsup := le_csSup (overlap_bounded (fun k => (a k : ℂ)))
+    ⟨fun k t => (w k t : ℂ), hw, rfl⟩
+  rw [overlap_real, Complex.normSq_ofReal] at hsup
+  rw [hmax]
+  calc
+    _ ≤ (d * x 0 * y 0 + e * a j * x 0 * y 1 + e * a i * x 1 * y 0) ^ 2 := hqbound
+    _ = positiveOverlap a w ^ 2 := congrArg (· ^ 2) hwp.symm
+    _ ≤ _ := by unfold gMax; simpa only [pow_two] using hsup
+
 private lemma pair_balancing {ι : Type*} [Fintype ι] (lam μ : ι → ℂ) (i j : ι)
     (hij : i ≠ j)
     (hrest : ∀ k, k ≠ i → k ≠ j → Complex.normSq (μ k) = Complex.normSq (lam k))
@@ -299,12 +537,35 @@ private lemma pair_balancing {ι : Type*} [Fintype ι] (lam μ : ι → ℂ) (i 
       Complex.normSq (lam i) + Complex.normSq (lam j))
     (hprod : Complex.normSq (lam i) * Complex.normSq (lam j) ≤
       Complex.normSq (μ i) * Complex.normSq (μ j)) : gMax μ ≤ gMax lam := by
-  sorry
+  have hp := phase_invariance lam (fun k => (‖lam k‖ : ℂ)) (fun k => by
+    rw [Complex.normSq_eq_norm_sq, Complex.normSq_ofReal, pow_two])
+  have hq := phase_invariance μ (fun k => (‖μ k‖ : ℂ)) (fun k => by
+    rw [Complex.normSq_eq_norm_sq, Complex.normSq_ofReal, pow_two])
+  rw [hp, hq]
+  apply positive_pair_balancing (fun k => ‖lam k‖) (fun k => ‖μ k‖)
+    (fun k => norm_nonneg _) (fun k => norm_nonneg _) i j hij
+  · intro k hki hkj
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (by
+      simpa only [Complex.normSq_eq_norm_sq] using (hrest k hki hkj).symm)
+  · simpa only [Complex.normSq_eq_norm_sq] using hsum
+  · simpa only [Complex.normSq_eq_norm_sq] using hprod
+
+private lemma walk_succ (p n : ℕ) (c : Fin 2 → ℂ) :
+    walkState p (n + 1) c = hadamardStep p (walkState p n c) := by
+  unfold walkState
+  rw [Function.iterate_succ_apply']
 
 private lemma walk_linearity (p n : ℕ) (c : Fin 2 → ℂ) (j : Fin 2 × ZMod p) :
     walkState p n c j = c 0 * walkState p n ![1, 0] j +
       c 1 * walkState p n ![0, 1] j := by
-  sorry
+  induction n generalizing j with
+  | zero =>
+      rcases j with ⟨b, x⟩
+      fin_cases b <;> by_cases hx : x = 0 <;> simp [walkState, hx]
+  | succ n ih =>
+      rw [walk_succ, walk_succ, walk_succ]
+      unfold hadamardStep
+      split_ifs <;> rw [ih, ih] <;> ring
 
 private lemma walk_reflection (p n : ℕ) :
     (∀ j, (walkState p n ![1, 0] j).im = 0 ∧ (walkState p n ![0, 1] j).im = 0) ∧
@@ -313,7 +574,41 @@ private lemma walk_reflection (p n : ℕ) :
         -(-1 : ℂ) ^ n * walkState p n ![0, 1] (0, x) ∧
       walkState p n ![0, 1] (1, -x) =
         (-1 : ℂ) ^ n * walkState p n ![1, 0] (0, x)) := by
-  sorry
+  induction n with
+  | zero =>
+      constructor
+      · rintro ⟨b, x⟩
+        fin_cases b <;> by_cases hx : x = 0 <;> simp [walkState, hx]
+      · intro x
+        simp [walkState, neg_eq_zero]
+  | succ n ih =>
+      have hu (j : Fin 2 × ZMod p) : (walkState p n ![1, 0] j).im = 0 := (ih.1 j).1
+      have hw (j : Fin 2 × ZMod p) : (walkState p n ![0, 1] j).im = 0 := (ih.1 j).2
+      have he : (-1 : ℂ) ^ n * (-1 : ℂ) ^ n = 1 := by rw [← mul_pow]; norm_num
+      have hback (x : ZMod p) :
+          walkState p n ![1, 0] (0, -x) = (-1 : ℂ) ^ n * walkState p n ![0, 1] (1, x) ∧
+          walkState p n ![0, 1] (0, -x) = -(-1 : ℂ) ^ n * walkState p n ![1, 0] (1, x) := by
+        obtain ⟨h1, h2⟩ := ih.2 (-x)
+        rw [neg_neg] at h1 h2
+        constructor
+        · linear_combination -(-1 : ℂ) ^ n * h2 - walkState p n ![1, 0] (0, -x) * he
+        · linear_combination (-1 : ℂ) ^ n * h1 - walkState p n ![0, 1] (0, -x) * he
+      constructor
+      · intro j
+        constructor <;> simp only [walk_succ, hadamardStep] <;> split_ifs <;>
+          simp only [Complex.div_ofReal_im, Complex.add_im, Complex.sub_im, hu, hw,
+            add_zero, sub_self, zero_div]
+      · intro x
+        have hn : -x - 1 = -(x + 1) := by ring
+        constructor
+        · simp only [walk_succ, hadamardStep, if_pos (rfl : (0 : Fin 2) = 0),
+            if_neg (by decide : (1 : Fin 2) ≠ 0)]
+          rw [hn, (hback (x + 1)).1, (ih.2 (x + 1)).1, pow_succ]
+          ring
+        · simp only [walk_succ, hadamardStep, if_pos (rfl : (0 : Fin 2) = 0),
+            if_neg (by decide : (1 : Fin 2) ≠ 0)]
+          rw [hn, (hback (x + 1)).2, (ih.2 (x + 1)).2, pow_succ]
+          ring
 
 private lemma walk_pair_probabilities (p n : ℕ) (c : Fin 2 → ℂ) (hc : unitCoin c) :
     ∀ x : ZMod p,
@@ -323,14 +618,106 @@ private lemma walk_pair_probabilities (p n : ℕ) (c : Fin 2 → ℂ) (hc : unit
           Complex.normSq (walkState p n cStar (1, -x)) =
         Complex.normSq (walkState p n c (0, x)) +
           Complex.normSq (walkState p n c (1, -x)) := by
-  sorry
+  intro x
+  obtain ⟨hreal, hrel⟩ := walk_reflection p n
+  let a := (walkState p n ![1, 0] (0, x)).re
+  let b := (walkState p n ![0, 1] (0, x)).re
+  have hu : walkState p n ![1, 0] (0, x) = (a : ℂ) :=
+    Complex.ext rfl (hreal (0, x)).1
+  have hw : walkState p n ![0, 1] (0, x) = (b : ℂ) :=
+    Complex.ext rfl (hreal (0, x)).2
+  have he : Complex.normSq ((-1 : ℂ) ^ n) = 1 := by rw [map_pow]; norm_num
+  have h0 (d : Fin 2 → ℂ) : walkState p n d (0, x) = d 0 * (a : ℂ) + d 1 * (b : ℂ) := by
+    rw [walk_linearity, hu, hw]
+  have h1 (d : Fin 2 → ℂ) : Complex.normSq (walkState p n d (1, -x)) =
+      Complex.normSq (d 1 * (a : ℂ) - d 0 * (b : ℂ)) := by
+    rw [walk_linearity, (hrel x).1, (hrel x).2, hu, hw]
+    rw [show d 0 * (-(-1 : ℂ) ^ n * (b : ℂ)) + d 1 * ((-1 : ℂ) ^ n * (a : ℂ)) =
+      (-1 : ℂ) ^ n * (d 1 * (a : ℂ) - d 0 * (b : ℂ)) by ring]
+    rw [Complex.normSq_mul, he, one_mul]
+  have hcs : Complex.normSq (c 0) + Complex.normSq (c 1) = 1 := by
+    unfold unitCoin at hc
+    exact Fin.sum_univ_two (fun b => Complex.normSq (c b)) ▸ hc
+  have hsum : Complex.normSq (walkState p n c (0, x)) +
+      Complex.normSq (walkState p n c (1, -x)) = a ^ 2 + b ^ 2 := by
+    rw [h0, h1]
+    calc
+      _ = (a ^ 2 + b ^ 2) * (Complex.normSq (c 0) + Complex.normSq (c 1)) := by
+        simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re,
+          Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im]
+        ring
+      _ = _ := by rw [hcs, mul_one]
+  have hs : Complex.normSq (Real.sqrt 2 : ℂ) = 2 := by
+    rw [Complex.normSq_ofReal, Real.mul_self_sqrt (by norm_num)]
+  have hstar0 : Complex.normSq (walkState p n cStar (0, x)) = (a ^ 2 + b ^ 2) / 2 := by
+    rw [h0]
+    have hnum : cStar 0 * (a : ℂ) + cStar 1 * (b : ℂ) =
+        ((a : ℂ) + Complex.I * (b : ℂ)) / (Real.sqrt 2 : ℂ) := by
+      dsimp [cStar]; ring
+    rw [hnum, Complex.normSq_div, hs]
+    congr 1
+    simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.mul_re,
+      Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im]
+    ring
+  have hstar1 : Complex.normSq (walkState p n cStar (1, -x)) = (a ^ 2 + b ^ 2) / 2 := by
+    rw [h1]
+    have hnum : cStar 1 * (a : ℂ) - cStar 0 * (b : ℂ) =
+        (Complex.I * (a : ℂ) - (b : ℂ)) / (Real.sqrt 2 : ℂ) := by
+      dsimp [cStar]; ring
+    rw [hnum, Complex.normSq_div, hs]
+    congr 1
+    simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im, Complex.mul_re,
+      Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im]
+    ring
+  constructor
+  · rw [hstar0, hstar1]
+  · rw [hstar0, hstar1, hsum]
+    ring
 
 private lemma pair_average_le (p : ℕ) [NeZero p] (lam μ : Fin 2 × ZMod p → ℂ)
     (h : ∀ x : ZMod p,
       Complex.normSq (μ (0, x)) = Complex.normSq (μ (1, -x)) ∧
       Complex.normSq (μ (0, x)) + Complex.normSq (μ (1, -x)) =
         Complex.normSq (lam (0, x)) + Complex.normSq (lam (1, -x))) : gMax μ ≤ gMax lam := by
-  sorry
+  classical
+  let f (s : Finset (ZMod p)) (k : Fin 2 × ZMod p) :=
+    if (if k.1 = 0 then k.2 else -k.2) ∈ s then μ k else lam k
+  have hind (s : Finset (ZMod p)) : gMax (f s) ≤ gMax lam := by
+    induction s using Finset.induction_on with
+    | empty => exact le_of_eq (congrArg gMax (by funext k; simp only [f, Finset.not_mem_empty, if_false]))
+    | @insert x s hxs ih =>
+        have hs0 : f s (0, x) = lam (0, x) := by simp [f, hxs]
+        have hs1 : f s (1, -x) = lam (1, -x) := by simp [f, hxs]
+        have hn0 : f (insert x s) (0, x) = μ (0, x) := by simp [f]
+        have hn1 : f (insert x s) (1, -x) = μ (1, -x) := by simp [f]
+        have hp : gMax (f (insert x s)) ≤ gMax (f s) := by
+          apply pair_balancing (f s) (f (insert x s)) (0, x) (1, -x)
+          · intro he
+            have hc := congrArg Prod.fst he
+            norm_num at hc
+          · intro k hki hkj
+            have hr : (if k.1 = 0 then k.2 else -k.2) ≠ x := by
+              rcases k with ⟨b, t⟩
+              fin_cases b
+              · change t ≠ x
+                intro he
+                exact hki (Prod.ext rfl he)
+              · change -t ≠ x
+                intro he
+                apply hkj
+                exact Prod.ext rfl (by rw [← he, neg_neg])
+            simp only [f, Finset.mem_insert, hr, false_or]
+          · rw [hs0, hs1, hn0, hn1]
+            exact (h x).2
+          · rw [hs0, hs1, hn0, hn1]
+            have hsq := congrArg (fun t : ℝ => t ^ 2) (h x).2
+            have he : (Complex.normSq (μ (0, x)) - Complex.normSq (μ (1, -x))) ^ 2 = 0 := by
+              rw [(h x).1]; ring
+            nlinarith only [hsq, he,
+              sq_nonneg (Complex.normSq (lam (0, x)) - Complex.normSq (lam (1, -x)))]
+        exact hp.trans ih
+  have hall := hind Finset.univ
+  simpa only [f, Finset.mem_univ, if_true] using hall
 
 theorem result : claim := by
   intro p hp n c hc
