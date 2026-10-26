@@ -8,6 +8,8 @@
 
 import D5.S3.Analytic.Interpolation.CapWeightedEnergy
 
+/-! Scalar extremizers attain the abstract cap and weighted-energy coefficient. -/
+
 noncomputable section
 open Set MeasureTheory
 
@@ -50,8 +52,9 @@ private theorem extremizer_energy_tail (alpha B a t : ℝ) (ha : 0 < a)
   have ht0 : 0 < t := ha.trans ht
   rw [extremizer, if_neg ht.not_ge, Real.norm_eq_abs, sq_abs, mul_pow,
     ← Real.rpow_natCast ((a / t) ^ (alpha + 1)) 2,
-    ← Real.rpow_mul (div_nonneg ha.le ht0.le),
-    show (alpha + 1) * 2 = 2 * alpha + 2 by ring,
+    ← Real.rpow_mul (div_nonneg ha.le ht0.le)]
+  norm_num only [Nat.cast_ofNat]
+  rw [show (alpha + 1) * 2 = 2 * alpha + 2 by ring,
     Real.div_rpow ha.le ht0.le,
     show -2 * alpha - 1 = 1 - (2 * alpha + 2) by ring,
     Real.rpow_sub ht0, Real.rpow_one]
@@ -88,9 +91,10 @@ private theorem extremizer_energy (alpha B a : ℝ) (halpha : 0 < alpha)
   obtain ⟨hil, hvl⟩ := linear_integral_near a ha
   obtain ⟨hip, hvp⟩ := power_integral_tail alpha a halpha ha
   have hin : IntegrableOn f (Ioc (0 : ℝ) a) :=
-    (hil.const_mul (B ^ 2)).congr_fun (fun t ht => (hn ht).symm) measurableSet_Ioc
+    IntegrableOn.congr_fun (hil.const_mul (B ^ 2))
+      (fun t ht => (hn ht).symm) measurableSet_Ioc
   have hit : IntegrableOn f (Ioi a) :=
-    (hip.const_mul (B ^ 2 * a ^ (2 * alpha + 2))).congr_fun
+    IntegrableOn.congr_fun (hip.const_mul (B ^ 2 * a ^ (2 * alpha + 2)))
       (fun t ht' => (ht ht').symm) measurableSet_Ioi
   have hi : IntegrableOn f (Ioi (0 : ℝ)) := by
     rw [← Ioc_union_Ioi_eq_Ioi ha.le, integrableOn_union]
@@ -108,7 +112,7 @@ private theorem extremizer_energy (alpha B a : ℝ) (halpha : 0 < alpha)
   calc
     _ = B ^ 2 * a ^ 2 / 2 +
         B ^ 2 * (a ^ (2 * alpha + 2) * a ^ (-2 * alpha)) / (2 * alpha) := by ring
-    _ = _ := by rw [hprod]; field_simp [halpha.ne']; ring
+    _ = _ := by rw [hprod]; field_simp [halpha.ne']
 
 private theorem extremizer_readout (alpha B a : ℝ) (halpha0 : 0 < alpha)
     (halpha1 : alpha < 1) (ha : 0 < a) :
@@ -127,9 +131,10 @@ private theorem extremizer_readout (alpha B a : ℝ) (halpha0 : 0 < alpha)
   obtain ⟨hinp, hvnp⟩ := power_integral_near alpha a halpha1 ha
   obtain ⟨hitp, hvtp⟩ := power_integral_tail alpha a halpha0 ha
   have hin : IntegrableOn f (Ioc (0 : ℝ) a) :=
-    (hinp.const_mul B).congr_fun (fun t ht => (hn ht).symm) measurableSet_Ioc
+    IntegrableOn.congr_fun (hinp.const_mul B)
+      (fun t ht => (hn ht).symm) measurableSet_Ioc
   have hit : IntegrableOn f (Ioi a) :=
-    (hitp.const_mul (B * a ^ (alpha + 1))).congr_fun
+    IntegrableOn.congr_fun (hitp.const_mul (B * a ^ (alpha + 1)))
       (fun t ht' => (ht ht').symm) measurableSet_Ioi
   have hi : IntegrableOn f (Ioi (0 : ℝ)) := by
     rw [← Ioc_union_Ioi_eq_Ioi ha.le, integrableOn_union]

@@ -42,8 +42,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (fun _ => 0) (1 / 2) 0 0 (by norm_num) (by norm_num) le_rfl le_rfl
     aestronglyMeasurable_const
     (.of_forall (fun _ => by simp))
-    (by simpa using (integrable_zero : Integrable (fun _ : ℝ => (0 : ℝ))
-      (volume.restrict (Ioi (0 : ℝ)))))
+    (by simpa using (integrable_zero ℝ ℝ (volume.restrict (Ioi (0 : ℝ)))))
     (by simp)
 
 private theorem dependence : ObservationalDependence signature actual := by
