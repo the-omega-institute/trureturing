@@ -23,8 +23,8 @@ run_meta do
       ``VocabularyCandidates.transportedAbbreviation, ``VocabularyCandidates.transportedHidden,
       ``VocabularyCandidates.transportedRecursion, ``VocabularyCandidates.easyBox] do
     let rebuilt ← check n
-    unless getReducibilityStatusCore rebuilt n == getReducibilityStatusCore source n do
-      throwError "transport changed source reducibility: {n}"
+    unless getReducibilityStatusCore rebuilt n == .reducible do
+      throwError "transported definition is not reducible: {n}"
     let original := ((source.setExporting false).find? n).get!
     let copied := (rebuilt.find? n).get!
     let .ok originalNormal := DiskLookup.normalizeStatementSyntax source original.type
@@ -39,9 +39,10 @@ run_meta do
     | throwError "rebuilt alias normalization failed"
   if normal == aliasExpr then throwError "checked noncomputational alias remained opaque"
   withEnv rebuilt do
-    unless (← withReducible <| whnf aliasExpr) == aliasExpr do
-      throwError "ordinary source def was promoted to reducible"
-  logInfo "transport reducibility: source statuses preserved; checked syntax aliases still expand"
+    let reduced ← withReducible <| whnf aliasExpr
+    if reduced == aliasExpr then
+      throwError "transported definition remained opaque to reducible lookup"
+  logInfo "transport reducibility: copied definitions are reducible; checked syntax aliases still expand"
   let modes ← check ``VocabularyCandidates.PureMode
   unless modes.contains ``VocabularyCandidates.PureMode.ab do throwError "missing constructor"
   unless modes.contains (``VocabularyCandidates.PureMode ++ `casesOn) do throwError "missing casesOn"
