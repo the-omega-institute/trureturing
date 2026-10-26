@@ -273,10 +273,9 @@ theorem X_laguerre_succ (n : ℕ) :
         C ((n : ℝ) + 9 / 2) * laguerre n := by
   have h0 := lowering n
   have h1 := lowering (n + 1)
-  have hd := derivative_step (n + 1)
   have hx : X * (laguerre (n + 2)).derivative =
       X * (laguerre (n + 1)).derivative - X * laguerre (n + 1) := by
-    simpa only [Nat.add_assoc, mul_sub] using congrArg (fun p : ℝ[X] => X * p) hd
+    rw [show n + 2 = (n + 1) + 1 by omega, derivative_step, mul_sub]
   simp only [Nat.add_assoc, Nat.cast_add, Nat.cast_one] at h1
   rw [h1, h0] at hx
   simp only [Polynomial.C_add, Polynomial.C_mul, Polynomial.C_1, Polynomial.C_ofNat] at hx ⊢
