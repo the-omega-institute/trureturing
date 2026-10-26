@@ -66,8 +66,8 @@ private theorem difference_expansion {T : Type*} [CommRing T] [Algebra ℂ T]
   rw [show X - Y = -Y + X by ring, pair_expansion]
   apply Finset.sum_congr rfl
   intro p hp
-  simp only [neg_pow, Algebra.smul_def, map_mul, map_pow, map_neg, map_one,
-    map_natCast]
+  simp only [Algebra.smul_def, map_mul, map_pow, map_neg, map_one, map_natCast]
+  rw [neg_pow]
   ring
 
 private theorem monomial_action {V : Type*} [AddCommGroup V] [Module ℂ V]
@@ -85,7 +85,14 @@ private theorem monomial_action {V : Type*} [AddCommGroup V] [Module ℂ V]
   rw [one_smul]
   congr 1
   funext i
-  fin_cases i <;> simp [nsmul_eq_mul]
+  fin_cases i <;> simp [nsmul_eq_mul, Pi.single_apply, Matrix.vecHead, Matrix.vecTail]
+
+private theorem xy_shift_action {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (F : Distribution 3 V) (A B : ℕ) (x y z : ℤ) :
+    polynomialAction (variablePolynomial 0 ^ A * variablePolynomial 1 ^ B)
+      F ![x, y, z] = F ![x - A, y - B, z] := by
+  have h := monomial_action F A B 0 x y z
+  simpa only [pow_zero, mul_one, Nat.cast_zero, sub_zero] using h
 
 private theorem xy_iterate_action {V : Type*} [AddCommGroup V] [Module ℂ V]
     (F : Distribution 3 V) (N A B C : ℕ) (x y z : ℤ) :
@@ -102,7 +109,7 @@ private theorem xy_iterate_action {V : Type*} [AddCommGroup V] [Module ℂ V]
   intro h hh
   have hhA : h ≤ A := by simpa using Finset.mem_range.mp hh
   apply congrArg (fun v : V => (A.choose h : ℂ) • v)
-  have regroup : variablePolynomial 0 ^ N *
+  have regroup : (variablePolynomial (0 : Fin 3)) ^ N *
       (variablePolynomial 0 ^ h * variablePolynomial 1 ^ (A - h)) *
       variablePolynomial 1 ^ B * variablePolynomial 2 ^ C =
       variablePolynomial 0 ^ (N + h) * variablePolynomial 1 ^ (B + (A - h)) *
@@ -129,7 +136,7 @@ private theorem xz_iterate_action {V : Type*} [AddCommGroup V] [Module ℂ V]
   intro h hh
   have hhA : h ≤ A := by simpa using Finset.mem_range.mp hh
   apply congrArg (fun v : V => (A.choose h : ℂ) • v)
-  have regroup : variablePolynomial 0 ^ N *
+  have regroup : (variablePolynomial (0 : Fin 3)) ^ N *
       (variablePolynomial 0 ^ h * variablePolynomial 2 ^ (A - h)) *
       variablePolynomial 1 ^ B * variablePolynomial 2 ^ C =
       variablePolynomial 0 ^ (N + h) * variablePolynomial 1 ^ B *
@@ -156,7 +163,7 @@ private theorem xy_clear_action {V : Type*} [AddCommGroup V] [Module ℂ V]
   intro p hp
   have hpk : p ≤ k := by simpa using Finset.mem_range.mp hp
   apply congrArg (fun v : V => (((-1 : ℂ) ^ p) * (k.choose p : ℂ)) • v)
-  have regroup : (variablePolynomial 0 ^ (k - p) * variablePolynomial 1 ^ p) *
+  have regroup : ((variablePolynomial (0 : Fin 3)) ^ (k - p) * variablePolynomial 1 ^ p) *
       variablePolynomial 0 ^ A * variablePolynomial 1 ^ B * variablePolynomial 2 ^ C =
       variablePolynomial 0 ^ (A + (k - p)) * variablePolynomial 1 ^ (B + p) *
         variablePolynomial 2 ^ C := by
@@ -182,6 +189,7 @@ private theorem middle_expansion (k : ℕ) (a : Fin 3 → ℕ) (Acore Bcore : �
     pair_expansion (variablePolynomial 1) (variablePolynomial 2)]
   simp only [Finset.mul_sum, Finset.sum_mul, mul_smul_comm, smul_mul_assoc,
     Finset.smul_sum]
+  rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro h0 hh0
   apply Finset.sum_congr rfl
@@ -203,6 +211,7 @@ private theorem final_expansion (k : ℕ) (a : Fin 3 → ℕ) (Acore Bcore : ℕ
     pair_expansion (variablePolynomial 1) (variablePolynomial 2)]
   simp only [Finset.mul_sum, Finset.sum_mul, mul_smul_comm, smul_mul_assoc,
     Finset.smul_sum]
+  rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro h0 hh0
   apply Finset.sum_congr rfl
@@ -228,6 +237,7 @@ private theorem middle_action_is_actual (D : LatticeData) (α β γ δ : Charge 
     rw [difference_expansion, pair_expansion (variablePolynomial 1) (variablePolynomial 2)]
     simp only [Finset.mul_sum, Finset.sum_mul, mul_smul_comm, smul_mul_assoc,
       Finset.smul_sum]
+    rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro p hp
     have hpk : p ≤ k := by simpa using Finset.mem_range.mp hp
@@ -272,9 +282,8 @@ private theorem shifted_middle_expansion (D : LatticeData) (α β γ δ : Charge
       F ![s, b, z] = clearedMiddleSlice D α β γ δ u v t w k a
         (b - Bcore) (s - Acore) z := by
     rw [map_mul, Module.End.mul_apply]
-    have mon := monomial_action (polynomialAction (middlePolynomial k a) F)
-      Acore Bcore 0 s b z
-    simpa only [pow_zero, mul_one, sub_zero, F, middle_action_is_actual] using mon
+    rw [xy_shift_action]
+    exact middle_action_is_actual D α β γ δ u v t w k a (s - Acore) (b - Bcore) z
   rw [← shifted, middle_expansion]
   simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     Finset.sum_apply, Pi.smul_apply]
@@ -284,6 +293,7 @@ private theorem shifted_middle_expansion (D : LatticeData) (α β γ δ : Charge
   intro h1 hh1
   simp only [xy_clear_action, F, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two]
+  rfl
 
 private theorem final_action_expansion {V : Type*} [AddCommGroup V] [Module ℂ V]
     (F : Distribution 3 V) (k : ℕ) (a : Fin 3 → ℕ) (Acore Bcore : ℕ) (x y z : ℤ) :
@@ -324,12 +334,19 @@ private theorem original_left_collision (D : LatticeData) (α β γ δ : Charge 
   have bor := iterate_borcherds D α β γ u v t k A B hA x y
   have mapped := congrArg L bor.2
   rw [map_finsum L bor.1] at mapped
-  simp only [clearIterate, map_sum, map_smul] at mapped
+  simp only [map_smul] at mapped
+  have left : L (clearIterate k A B (iterate D α β γ u v t) x y) =
+      clearIterate k A B (fun s q => leftNested D α β γ δ u v t w s q z) x y := by
+    simp only [clearIterate, map_sum, map_smul]
+    apply Finset.sum_congr rfl
+    intro h hh
+    rfl
+  rw [left] at mapped
   have eq : clearIterate k A B
       (fun s q => leftNested D α β γ δ u v t w s q z) x y =
       ∑ᶠ i : ℕ, (((-1 : ℂ) ^ i) * integerBinomial ((k : ℤ) - x - 1) i) •
         L (product D α β γ u v t (x - A - k + i) (y - B - i)) := by
-    simpa only [clearIterate, leftNested, iterate, L] using mapped
+    exact mapped
   rw [eq]
   have finiteSum :
       (∑ᶠ i : ℕ, (((-1 : ℂ) ^ i) * integerBinomial ((k : ℤ) - x - 1) i) •
@@ -349,7 +366,18 @@ private theorem original_left_collision (D : LatticeData) (α β γ δ : Charge 
   rw [finiteSum]
   apply Finset.sum_congr rfl
   intro i hi
-  simp only [L, product, middleIterate, iterate, add_assoc]
+  have evaluation (state : Oscillator D) :
+      L state = canonical D ((α + β) + γ) δ state (-z - 1) w := rfl
+  rw [evaluation]
+  apply congrArg (fun state : Oscillator D =>
+    (((-1 : ℂ) ^ i) * integerBinomial ((k : ℤ) - x - 1) i) • state)
+  change canonical D ((α + β) + γ) δ
+      (product D α β γ u v t (x - A - k + i) (y - B - i)) (-z - 1) w =
+    canonical D (α + (β + γ)) δ
+      (product D α β γ u v t (x - A - k + i) (y - B - i)) (-z - 1) w
+  exact congrArg (fun c : Charge D => canonical D c δ
+    (product D α β γ u v t (x - A - k + i) (y - B - i)) (-z - 1) w)
+    (add_assoc α β γ)
 
 
 /-- The actual finite covariance increment. The real original hA and hB
@@ -441,6 +469,7 @@ private theorem actual_extra_covariance (D : LatticeData) (α β γ δ : Charge 
       apply Finset.sum_congr rfl
       intro h1 hh1
       rw [term]
+      rfl
 
 private theorem extra_action {V : Type*} [AddCommGroup V] [Module ℂ V]
     (F : Distribution 3 V) (A B : ℕ) (x y z : ℤ) :
@@ -449,7 +478,7 @@ private theorem extra_action {V : Type*} [AddCommGroup V] [Module ℂ V]
       ∑ h ∈ Finset.range (A + 1), (A.choose h : ℂ) •
         F ![x - h, y - B - A + h, z] := by
   have h := xy_iterate_action F 0 A B 0 x y z
-  simpa only [pow_zero, one_mul, mul_one, sub_zero, clearIterate] using h
+  simpa only [pow_zero, one_mul, mul_one, Nat.cast_zero, sub_zero, clearIterate] using h
 
 private theorem final_native_extra {R : Type*} [CommRing R] [Algebra ℂ R]
     (P : MvPowerSeries (Fin 3) R) (A B : ℕ) :
@@ -463,9 +492,10 @@ private theorem final_native_extra {R : Type*} [CommRing R] [Algebra ℂ R]
     fin_cases i <;> simp [finalArguments]
   have combined := final_middle_substitution P
   unfold finalCollision at combined ⊢
-  simp only [MvPowerSeries.subst_mul legal, MvPowerSeries.subst_pow legal,
-    MvPowerSeries.subst_X legal, combined, finalArguments,
-    Matrix.cons_val_zero, Matrix.cons_val_one]
+  rw [MvPowerSeries.subst_mul legal, MvPowerSeries.subst_mul legal,
+    MvPowerSeries.subst_pow legal, MvPowerSeries.subst_pow legal,
+    MvPowerSeries.subst_X legal, MvPowerSeries.subst_X legal, combined]
+  rfl
 
 /-- Actual M=Rmiddle L supplies the native Q. Original-state Jacobi supplies
 the other side. SAME k,a,P,R survive cancellation of the TEMPORARY extra
@@ -501,7 +531,7 @@ private theorem sameR_from_actual_middle (D : LatticeData) (α β γ δ : Charge
     have index : (![s, b, z] : Exponent 3) - Acore • Pi.single 0 1 -
         Bcore • Pi.single 1 1 = ![s - Acore, b - Bcore, z] := by
       funext i
-      fin_cases i <;> simp [nsmul_eq_mul]
+      fin_cases i <;> simp [nsmul_eq_mul, Pi.single_apply, Matrix.vecHead, Matrix.vecTail]
     rw [index]
     exact common _ _ _
   have lowerK (x y z : ℤ) (hx : x < -(U : ℤ)) : K ![x, y, z] = 0 := by
@@ -523,6 +553,9 @@ private theorem sameR_from_actual_middle (D : LatticeData) (α β γ δ : Charge
       unfold clearIterate
       apply Finset.sum_eq_zero
       intro h hh
+      change ((0 + k + h0).choose h : ℂ) • K
+        ![x - k - h, y - (0 + k + h1 : ℕ) - (0 + k + h0 : ℕ) + h,
+          z - ((a 0 - h0) + (a 1 - h1) + a 2 : ℕ)] = 0
       rw [lowerK _ _ _ (by omega), smul_zero]
     rw [zero, smul_zero, smul_zero]
   have lowerH (x y z : ℤ) (hx : x < -(U : ℤ)) : H x y z = 0 := by
@@ -549,15 +582,19 @@ private theorem sameR_from_actual_middle (D : LatticeData) (α β γ δ : Charge
       (((variablePolynomial 0 + variablePolynomial 1) ^ Acore *
         variablePolynomial 1 ^ Bcore) * finalPolynomial k a) K ![x, y, z] =
       signedExtend (finalCollision Q) ![x, y, z] at withExtra
-    have originalFamily : (fun e : Exponent 3 => G (e 0) (e 1) (e 2)) =
-        polynomialAction (finalPolynomial k a) K := by
-      funext e
-      dsimp only [G]
-      congr 1
-      funext i
-      fin_cases i <;> rfl
-    rw [← extra_action (fun e => G (e 0) (e 1) (e 2)) Acore Bcore x y z,
-      originalFamily, ← Module.End.mul_apply, ← map_mul, withExtra]
+    have actionExtra := extra_action (polynomialAction (finalPolynomial k a) K)
+      Acore Bcore x y z
+    have actionMul := congrFun
+      (congrArg (fun L : Module.End ℂ (Distribution 3 (Oscillator D)) => L K)
+        (map_mul (polynomialAction (V := Oscillator D))
+          ((variablePolynomial 0 + variablePolynomial 1) ^ Acore * variablePolynomial 1 ^ Bcore)
+          (finalPolynomial k a))) ![x, y, z]
+    have translated :
+        (∑ h ∈ Finset.range (Acore + 1), (Acore.choose h : ℂ) •
+          G (x - h) (y - Bcore - Acore + h) z) =
+        signedExtend (finalCollision Q) ![x, y, z] :=
+      actionExtra.symm.trans (actionMul.symm.trans withExtra)
+    rw [translated]
     have multiplyQ : finalCollision Q =
         (((MvPowerSeries.X 0 + MvPowerSeries.X 1) ^ Acore *
           MvPowerSeries.X 1 ^ Bcore) * Ptri) := final_native_extra P Acore Bcore
