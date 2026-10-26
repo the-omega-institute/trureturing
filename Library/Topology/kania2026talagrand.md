@@ -496,3 +496,45 @@ summands are the literal restrictions of the same selected original L1
 class. Their sum and the sum of their norms equal the original class and
 its norm respectively. This is the classical analytic supplier only;
 the signed-measure transfer and full CH/Talagrand endpoint are separate.
+
+## Ordinary ordinal successor and arrival readback
+
+`D5.S3.Topology.InverseLimit.SignedOrdinalSuccessor.exists_successor`
+constructs an ordinary successor from a valid partial predecessor through a
+proper ordinal `a >= omega`. The input is one literal cube Prefix, its onto
+base restriction, all previously launched support and legal signed
+enumerations, permanent birth entries, and the strict old I/J laws. It does
+not assume a complete history or an extension theorem. CH supplies the
+current exhaustive clopen/support enumerations; the launch support is
+pulled back along the actual restriction and its entire signed enumeration
+is constructed before whole-sequence treatment. Support launch indices and
+signed measure labels have separate types and fields.
+
+The actual local supplier is
+`SignedSplitSuccessor.exists_measured_dynamic_split`. The row index is the
+ordinal interval `[omega,a]`, the new row is `a`, old signed labels are
+strictly below `a`, and the residual label is `a`. The new row restriction
+is the identity on the actual current carrier. The supplier's same executed
+split supplies all four reservoir cases. Literal insertion reuses
+`SignedSuccessorCoordinates.exists_successor_coordinates`, preserving the
+whole earlier Prefix. The enlarged birth pack reads each reservoir at its
+unique arrival stage `succ(max(row,label))` and retains every earlier entry.
+The arrival pack is additional through-stage data; a strict prefix is not
+silently completed with an unborn row.
+
+`Result.quantitative_g` transfers the same split's quantitative certificate
+to the literal new-coordinate clopen. One fixed StrictMono target index
+works for every norm-one signed lift of the original treated sequence:
+even positions have value strictly greater than one sixth and odd
+positions have value zero. Historical G is separate from A–F. The regular
+common every-choice F certificate is retained on the split presentation;
+transport of F to the literal cube presentation is not asserted here.
+
+This is a repository-derived composition and birth-readback construction,
+not a literature novelty claim or a full CH realization. Delayed execution
+with an exposed strictly increasing target index, fixed cofinal launch and
+treatment reservations, well-founded existence and validity induction,
+proper-limit integration, the final omega-one Prefix and the full problem's
+functional-analytic endpoints remain separate obligations. The final
+omega-one Prefix is used only for its carrier, cone and projections;
+`Prefix.Data` and `Prefix.Laws` remain on proper slices.
