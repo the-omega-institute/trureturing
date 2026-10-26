@@ -14,7 +14,6 @@ open _root_.D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 noncomputable section
-open Classical
 
 abbrev countScope := type_of% (@closed_run_card_eq_trace)
 
@@ -41,8 +40,9 @@ abbrev countArena : Arena where
         Matrix.trace (AndrasfaiTransfer.transfer ^ N)
 
 theorem count_source_bridge : countScope ↔ countArena.Law countActual := by
-  simp only [countScope, countArena, countActual, realize, ClosedRun,
-    Fintype.card_subtype]
+  dsimp only [countScope, countArena, countActual, realize]
+  simp only [← Nat.card_eq_fintype_card]
+  rfl
 
 theorem count_actual_positive : countArena.Law countActual :=
   count_source_bridge.mp closed_run_card_eq_trace
@@ -62,6 +62,7 @@ theorem count_rejected_law : ¬ countArena.Law countRejected := by
 theorem count_dependence : ObservationalDependence countSignature countActual := by
   intro role
   refine ⟨1, (fun _ => false, 0), (fun _ => true, 0), ?_⟩
+  cases role
   decide +kernel
 
 def countFamily : Registration countArena countScope where
@@ -78,9 +79,6 @@ def countFamily : Registration countArena countScope where
       exact nomatch i
   dependence := count_dependence
 
-/-- Raw source reconstruction and the lawful source-selection binding are unresolved. -/
-def countCertificate : Option (Registration countArena countScope) := some countFamily
-
 /-- The typed family proof is supplied; raw reconstruction through the cardinality
 subtype still needs a supported source-selection certificate. -/
 def count_registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
@@ -88,7 +86,9 @@ def count_registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0
     (type_of% (realize countSignature
       (fun _ _ p => AndrasfaiLanguage.machine.evalFrom (liveState p.2) (List.ofFn p.1))
       (fun e => nomatch e))) Unit Unit where
-  unitName := `D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting.closed_run_card_eq_trace.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting.closed_run_card_eq_trace
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting.countFamily
   realizationSource := none
   generated := false
@@ -110,5 +110,7 @@ def count_registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+end
 
 end Reg.D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting

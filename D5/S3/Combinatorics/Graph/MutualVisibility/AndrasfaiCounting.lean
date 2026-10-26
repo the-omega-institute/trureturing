@@ -140,6 +140,7 @@ theorem closed_run_card_eq_trace (N : ℕ) (hN : 0 < N) :
     rfl
   have hq := congrArg (Int.castRingHom ℚ) hz
   rw [AddMonoidHom.map_trace, Matrix.map_pow, integer_transfer_map] at hq
-  simpa only [Int.castRingHom_apply, Int.cast_natCast] using hq
+  change ((Fintype.card (ClosedRun (n+1)) : ℤ) : ℚ) = _ at hq
+  simpa only [Int.cast_natCast] using hq
 
 end D5.S3.Combinatorics.Graph.MutualVisibility.AndrasfaiCounting
