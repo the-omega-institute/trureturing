@@ -124,7 +124,10 @@ internal sealed class MarkovMonogamyPermutationInequalityDocument : IScribeDocum
                         + "than 2n, so the stated stochasticity hypothesis suffices. The "
                         + "permutation comparison proves the displayed statement, which is claim, "
                         + "for every n and every f."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("capela-celeri-chaves-modi-2022-classical-markov-monogamy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula TransitionDefinition()
     {
