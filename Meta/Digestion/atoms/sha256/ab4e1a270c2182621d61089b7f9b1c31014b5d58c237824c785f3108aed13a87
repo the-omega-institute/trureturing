@@ -1,0 +1,16 @@
+**约定 0.1（位置标签与论域）。** 选择项标记在 FIB 生成链上选取哪些位置。全卷使用 $`\mathsf{\text{𝖥}}_j[I]`$，其中 $`j\in\mathbb{\text{ℕ}}`$ 是窗口尺度，$`I`$ 是合法位置集合；零层简写为 $`\mathsf{\text{𝖥}}[I]`$。标准 Fibonacci 数另写作 $`\mathrm{Fib}_n`$，不与选择项混用。旧标签仅保留如下对应：
+
+<table><tbody><tr><td>
+
+```math
+[null]=\mathsf{\text{𝖥}}[\varnothing],\qquad
+[2]=\mathsf{\text{𝖥}}[1],\qquad
+[3]=\mathsf{\text{𝖥}}[2],\qquad
+[25]=\mathsf{\text{𝖥}}[1,3],\qquad
+[5]=\mathsf{\text{𝖥}}[3].
+```
+
+</td></tr></tbody></table>
+
+这里 $`\mathsf{\text{𝖥}}[1]`$ 选择当前窗口的第一位置，零层数量是二；它不是通常的 $`\mathrm{Fib}_1=1`$。括号内的 $`1,3`$ 表示集合 $`\{1,3\}`$，不表示十进制数十三。旧标签 $`[25]`$ 的零层数量是七，不是二十五。树来源、受限选择、组成坐标、概率律和已取得记录分别声明，不能因标签相同而互换。
+

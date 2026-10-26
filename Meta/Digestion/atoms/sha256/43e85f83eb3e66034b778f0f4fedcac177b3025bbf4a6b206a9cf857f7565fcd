@@ -1,0 +1,31 @@
+**Corollary 21.2 (The identifiability implication).** At $\sigma=2$,
+no function of the entire family of complete fixed-word population
+laws can correctly determine JM pair entanglement for every member
+of the enlarged preparation family.
+
+*Proof.* Define the observation of an input $\rho$ by
+
+$$
+\mathcal O_\sigma(\rho)
+=\bigl(B\mapsto\operatorname{tr}(\rho\mathsf E_w(B))
+\bigr)_{w\in\mathscr W_7}.
+\tag{21.5}
+$$
+
+Equations (18.4) and (21.2) give, for each identical world $W$,
+$\mathcal O_2(\rho_{W,0})=\mathcal O_2(\rho_{W,1})$, while the
+entanglement indicators of their states (19.1) differ. A function
+of that observation would have to assign the same value to both
+inputs. It therefore cannot equal the entanglement indicator on
+the whole enlarged family. Even supplying the common world label
+would leave this pair unresolved by these laws. $\square$
+
+More generally, when $\sigma>4/\sqrt{1+\sqrt{65}}$, each fixed-$W$
+family $\{\rho_{W,\eta}:\eta\ge0\}$ lies in one observation fibre
+containing both kinds of JM marginal, by (20.7)–(20.9).
+At and below that apparatus
+threshold this particular family consists entirely of separable
+JM marginals. The counterexample concerns the enlarged preparation
+class; it does not contradict the original unique coherent-input
+classification.
+

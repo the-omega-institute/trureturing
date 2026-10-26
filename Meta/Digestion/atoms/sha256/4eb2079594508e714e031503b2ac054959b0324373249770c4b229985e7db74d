@@ -1,0 +1,28 @@
+**Definition 10.2 (The exact affine singular-response lines).** Write
+$\phi=\Phi$ from (1.6), and $\rho_\sigma=r_\sigma$ for its two
+designated roots in $(0,1)$. Thus
+
+$$
+\phi(t)=438272t^4-931328t^3+540800t^2-50728t-853.
+\tag{10.7}
+$$
+
+With the integer $D_s$ and polynomials below, define
+
+$$
+\begin{aligned}
+D_s={}&1731744020342106665,\\
+A_s(t)={}&13656112734222647296t^3-33583101098863014400t^2\\
+&+20502976421172725312t-3401342974535580372,\\
+B_s(t)={}&-327746705621343535104t^3+916826043674607172160t^2\\
+&-616757003572777087368t+31411654798932835643,\\
+s_t(p)={}&-3\{pA_s(t)+B_s(t)\}/D_s,\qquad
+s_\sigma(p)=s_{\rho_\sigma}(p).
+\end{aligned}
+\tag{10.8}
+$$
+
+These are exactly the functions of (3.4)–(3.5), now with arbitrary
+real fifth response as their explicit variable. A source is singular
+when $\Lambda=1+6/T+1/U-4/j-4/n=0$.
+

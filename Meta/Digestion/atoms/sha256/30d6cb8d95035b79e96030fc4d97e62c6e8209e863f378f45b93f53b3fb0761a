@@ -1,0 +1,63 @@
+**定理 4.2（关系度量与最短相位提升）。**
+在 $0<Z<1$、$0<X,Y<r$ 的固定均值正支撑纤维内部，定义
+
+$$
+I(\kappa)=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}},
+\qquad
+a_s(\kappa)=\frac{\nu_s}{p_s I(\kappa)}.
+$$
+
+由式 [(3.3)](#eq-geom-fullmetric) 对占位相位作用取 Riemannian 商，得到
+
+<a id="eq-geom-reducedmetric"></a>
+
+$$
+g_{\rm red}=\frac I2\,d\kappa^2+\frac2I\,d\chi^2.\tag{4.2}
+$$
+
+在给定实关系速度 $u$ 及共同相位规范 $p^{\mathsf T}v=0$ 下，约束 $\nu^{\mathsf T}v=u$ 的唯一最小二次相位速度为 $v=a(\kappa)u$，其代价为 $u^2/I$。
+
+此外，
+
+$$
+\tau=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\frac{d\tau}{d\kappa}=I>0,\qquad
+\zeta=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+=e^{\tau/2-i\chi}
+$$
+
+在正纤维上给出复坐标 $\zeta\in\mathbb C^{\times}$。该坐标不定义零振幅的相位。
+
+**证明。**
+
+概率方向满足 $dp=\nu\,d\kappa$，故式 [(3.3)](#eq-geom-fullmetric) 的概率部分为 $I\,d\kappa^2/2$。对相位方向，先减去共同相位使 $p^{\mathsf T}v=0$。有
+
+$$
+\nu^{\mathsf T}a=1,\qquad p^{\mathsf T}a=0,\qquad
+\sum_s p_sa_s^2=\frac1I.
+$$
+
+任意其他可行速度可写为 $v=au+z$，其中 $\nu^{\mathsf T}z=p^{\mathsf T}z=0$。于是
+
+$$
+\sum_s p_sv_s^2
+=\frac{u^2}{I}+\sum_s p_sz_s^2,
+$$
+
+因为交叉项为 $2u\nu^{\mathsf T}z/I=0$。全正性使等号只在 $z=0$ 时成立。另一方面，$\nu$ 的湮灭空间由 $1,x,y,z$ 四个独立函数张成，所以这项最小化恰好去掉完整的共同相位和三个占位相位方向。度量中的相位系数乘二，给 $2\,d\chi^2/I$，且概率与相位部分没有交叉项。这证明式 [(4.2)](#eq-geom-reducedmetric)。
+
+对数求导使用 $p'=\nu$，得到 $\tau'=\sum_{s\ne2}1/p_s=I$。在下端 $p_0p_{13}$ 趋零而 $p_1p_3$ 有正极限；在上端情况相反，所以 $\tau$ 从 $-\infty$ 严格增加到 $+\infty$。相位的整周期结果来自定理 [3.5](#thm-geom-moment)，因此 $e^{\tau/2-i\chi}$ 将圆柱双射且光滑地参数化为 $\mathbb C^{\times}$。更具体地，置 $\eta=\tau/2$，则
+
+$$
+g_{\rm red}=\frac2I(d\eta^2+d\chi^2),\qquad
+\omega_{\rm red}=\frac2I\,d\chi\wedge d\eta.
+$$
+
+故 $\eta-i\chi$ 的复方向与给定度量及方向相容，$\zeta=e^{\eta-i\chi}$ 是相应复结构下的坐标。若某个底角振幅为零，应改用齐次乘积 $[\psi_0\psi_{13}:\psi_1\psi_3]$ 或实际支撑图；不得取 $\arg0$。
+
+证毕。
+
+式 [(4.2)](#eq-geom-reducedmetric) 是商度量的逐点水平最小值，并不声称存在满足 $d\theta=a(\kappa)d\chi$ 的可积截面。实际上，由 $\nu^{\mathsf T}a=1$、$p^{\mathsf T}a=0$ 微分得到 $p^{\mathsf T}a'=-1$，故 $a'$ 不为零；指定水平提升具有曲率。这一动态结论和下节主丛的拓扑非平凡性需要分别处理。
+
+<a id="thm-geom-curvature-boundary"></a>
+

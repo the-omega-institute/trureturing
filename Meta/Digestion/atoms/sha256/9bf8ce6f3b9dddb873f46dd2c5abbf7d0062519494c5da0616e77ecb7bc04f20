@@ -1,0 +1,30 @@
+**命题 6.1（条件性递归转移）。** 设第 $r$ 层候选族 $\mathfrak M_r$、有限目标实例 $(D_r,t_r)$ 和 $k_r\ge6$ 个实际计数的活跃字母均为确定性有限对象。下列两类映射是前提：
+
+1. 存在一个 R2 奇环实例 $(D_m,t_m)$，其中 $D_m\subseteq(\mathrm{Fin}\,m\oplus\mathrm{Fin}\,m)^{\le2}$，$t_m$ 对全体至多两状态候选不可实现，且每个 $E\subseteq D_m$ 满足 $|E|\le(m-3)/2$ 时可实现；存在到第 $r$ 层的注入 $e:D_m\to D_r$，且 $D_r=e[D_m]$，并对每个 $E\subseteq D_m$ 保持：左侧由全体至多两状态确定性原生总 DFAO 实现，当且仅当右侧由 $\mathfrak M_r$ 中候选实现，即
+   $$
+   (E,t_m|_E)\text{ 可由全体至多两状态 DFAO 实现}
+   \Longleftrightarrow
+   (e[E],t_r|_{e[E]})\text{ 可由 }\mathfrak M_r\text{ 实现}.
+   $$
+2. 对第 $r$ 层的每个不可实现实例 $(D,t)$，存在 R3 短词实例 $(\bar D,\bar t)$，其中 $\bar D\subseteq(\mathrm{Fin}\,k_r)^{\le2}$、输出为布尔值，且 $\bar t\notin\mathcal C_2(\mathrm{Fin}\,k_r;\bar D)$；存在一个证书保持映射 $h:\bar D\to D$，满足：
+   - R3 的任意不可实现实例都有一个横截 $\bar C\subseteq\bar D$，且 $|\bar C|\le16(k_r+1)$；
+   - 对每个这样的 $\bar C$，$h[\bar C]$ 是 $(D,t,\mathfrak M_r)$ 的失败横截，且 $|h[\bar C]|\le|\bar C|$。
+
+令 $m_r$ 为满足 $m_r\ge3$、$m_r$ 为奇数且 $2m_r\le k_r$ 的最大值，并假设第 1 项选取的 R2 实例使用该角色分离字母数。则第 1 项的编码实例满足
+
+$$
+\frac{m_r-1}{2}
+\le
+\omega(D_r,t_r;\mathfrak M_r),
+$$
+
+而第 2 项对任意第 $r$ 层不可实现实例给出
+
+$$
+\omega(D,t;\mathfrak M_r)\le16(k_r+1).
+$$
+
+**证明。** 第 1 项把 R2 的局部可实现深度逐子集保持到精确像 $D_r$，故其横截数至少为 $(m_r-1)/2$。第 2 项直接把 R3 的横截 $\bar C$ 经 $h$ 送成原失败横截，且不增加基数。证毕。
+
+这不是对所有 FIB 递归自动成立的定理。若 $D_r$ 含有编码像之外的额外观察点，必须另行证明一个把第 $r$ 层横截回译到 R2 横截的映射；仅仅把额外观察点加入域，不能保留下界。
+

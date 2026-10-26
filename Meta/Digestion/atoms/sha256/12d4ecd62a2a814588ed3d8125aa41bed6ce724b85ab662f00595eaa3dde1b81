@@ -1,0 +1,20 @@
+## 478. 完整 Mertens 累积峰值的显式有限 Robin 定位
+
+本节复用第 477 节的实际 lcm 响应比较，以及 [Johnston–Yang，arXiv:2204.01980v2，定理 1.1、式 (1.3)](../../../Library/Weil/johnstonyang2022pnt.md) 的无条件完整 Chebyshev 误差界。经典 Mertens 分部求和恒等式由 [Lay，arXiv:1505.03589v1，Lemma 4 证明中的未编号身份，印刷第 6 页](../../../Library/Analytic/lay2015mertenssignchanges.md) 直接供应；它与正权积分、该素数定理估计均作为已有工具；下面保留远端边界并给出显式整数位置的综合命题记为 `repo-derived`，不主张文献优先权。
+
+令 $\Lambda$ 为 von Mangoldt 函数，$\gamma_E$ 为 Euler 常数，并定义
+
+$$
+\begin{aligned}
+\psi(t)&=\sum_{n\le t}\Lambda(n),&
+Q(t)&=\int_t^\infty\frac{\psi(u)-u}{u^2}\,du,\\
+r(t)&=\frac{1+\log t}{(\log t)^2},&
+I(t)&=\int_t^\infty\frac{\psi(u)-u}{u^2}r(u)\,du,\\
+\mathcal U(t)&=t\sum_{n\le t}\frac{\Lambda(n)}n-\psi(t)
+-t\log t+(1+\gamma_E)t.
+\end{aligned}
+\tag{478.1}
+$$
+
+所有有限和包括上端点及全部素数幂。经典完整 Mertens 恒等式给出 $\mathcal U(t)=-tQ(t)$；因而 $\mathcal U(t)$ 的定义只需截止到 $t$ 的有限算术和与固定常数，不要求取得无限尾积分的数值。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a4cc2c15f99f5610ed9a527fdcf041ea8c38b7632aabbfbdf69a0b15a50d49d
+  normalized_sha256: sha256:4a4cc2c15f99f5610ed9a527fdcf041ea8c38b7632aabbfbdf69a0b15a50d49d
+cas_ref: sha256:4a4cc2c15f99f5610ed9a527fdcf041ea8c38b7632aabbfbdf69a0b15a50d49d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Solver input choice: multiscale budget data.'
+    previous_atom_id: 38e35c06dee8118a55ddb5e47d094664c40d07e7f5e17249f37a0b98a10b175d
+    next_atom_id: a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2

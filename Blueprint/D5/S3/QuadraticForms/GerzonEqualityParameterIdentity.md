@@ -16,7 +16,19 @@ $$\forall (F : Type*), \forall (S : Type*), [\operatorname{Field}\left(F\right)]
 
 A bilinear form with constant diagonal value a squared and constant off-diagonal value b pairs a linear combination with its j-th vector by separating the j-th coefficient from the sum of all coefficients. The scalar field and the module are arbitrary; neither symmetry nor nondegeneracy is needed.
 
-**Definition 1.2 (Equiangular systems).**
+**Theorem 1.2 (Nonzero constant trace gives linear independence).**
+
+$$\forall (F : Type*), \forall (S : Type*), [\operatorname{Field}\left(F\right)] [\operatorname{AddCommGroup}\left(S\right)] [\operatorname{Module}\left(F, S\right)] \forall (n : \mathbb{N}), \forall (K : \operatorname{LinearMap}.\operatorname{BilinForm}(F, S)), \forall (tau : \operatorname{LinearMap}\left(F, S, F\right)), \forall (P : (\operatorname{Fin}\left(n\right) \to S)), \forall (a : F), \forall (b : F), (\forall (i : \operatorname{Fin}\left(n\right)), \forall (j : \operatorname{Fin}\left(n\right)), \operatorname{K}\left(\operatorname{P}\left(i\right), \operatorname{P}\left(j\right)\right) = \operatorname{if}\left(i = j, a^{2}, b\right)) \Rightarrow ((\forall (i : \operatorname{Fin}\left(n\right)), \operatorname{tau}\left(\operatorname{P}\left(i\right)\right) = a) \Rightarrow ((a^{2} \neq b) \Rightarrow ((a \neq 0) \Rightarrow (\operatorname{LinearIndependent}\left(F, P\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.independent_nonzero_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Suppose a linear functional takes the same nonzero value a on every vector, while a bilinear form takes value a squared on the diagonal and b off the diagonal, with a squared different from b. Applying the functional to a linear relation makes the coefficient sum vanish. Pairing that relation with each vector then makes every coefficient vanish. No symmetry, nondegeneracy or dimension assumption is required.
+
+**Definition 1.3 (Equiangular systems).**
 
 $$\forall (F : \operatorname{Type}), [\operatorname{Field}\left(F\right)] \forall (d : \mathbb{N}), \forall (n : \mathbb{N}), \forall (B : \operatorname{LinearMap}.\operatorname{BilinForm}(F, (\operatorname{Fin}\left(d\right) \to F))), \forall (\varphi : (\operatorname{Fin}\left(n\right) \to (\operatorname{Fin}\left(d\right) \to F))), \forall (a : F), \forall (b : F), \operatorname{IsEquiangularSystem}\left(B, \varphi, a, b\right) = ((\forall (j : \operatorname{Fin}\left(n\right)), \operatorname{B}\left(\varphi(j), \varphi(j)\right) = a) \land (\forall (i : \operatorname{Fin}\left(n\right)), \forall (j : \operatorname{Fin}\left(n\right)), (i \neq j) \Rightarrow (\operatorname{B}\left(\varphi(i), \varphi(j)\right)^{2} = b)))$$
 
@@ -28,7 +40,7 @@ $$\forall (F : \operatorname{Type}), [\operatorname{Field}\left(F\right)] \foral
 
 Definition 2.8, page 5: “Let Φ = {ϕⱼ}ⱼ∈[n] be a sequence of vectors in a quadratic space W over F_q. For a, b ∈ F_q, Φ is called an (a, b)-equiangular system if: (i) ⟨ϕⱼ, ϕⱼ⟩ = a for every j ∈ [n], (ii) ⟨ϕᵢ, ϕⱼ⟩² = b for every i ≠ j in [n].” The sequence is represented by φ : Fin n → Fin d → F, the pairing by B, and the field parameters by a and b. Fin n indexes n vectors from zero; [n] in the paper indexes the same number from one. The predicate is polymorphic in the field and does not require its finiteness.
 
-**Definition 1.3 (The unrestricted parameter identity).**
+**Definition 1.4 (The unrestricted parameter identity).**
 
 $$\operatorname{claim} = (\forall (F : \operatorname{Type}), [\operatorname{Field}\left(F\right)] [\operatorname{Fintype}\left(F\right)] (\operatorname{ringChar}\left(F\right) \neq 2) \Rightarrow (\forall (d : \mathbb{N}), (2 \leq d) \Rightarrow (\forall (B : \operatorname{LinearMap}.\operatorname{BilinForm}(F, (\operatorname{Fin}\left(d\right) \to F))), (B.\operatorname{IsSymm}) \Rightarrow ((B.\operatorname{Nondegenerate}) \Rightarrow (\forall (\varphi : (\operatorname{Fin}\left(\operatorname{Nat}.\operatorname{choose}((d + 1), 2)\right) \to (\operatorname{Fin}\left(d\right) \to F))), \forall (a : F), \forall (b : F), (\operatorname{IsEquiangularSystem}\left(B, \varphi, a, b\right)) \Rightarrow ((a^{2} \neq b) \Rightarrow (a^{2} = ((d : F) + 2) \cdot b)))))))$$
 
@@ -40,7 +52,7 @@ $$\operatorname{claim} = (\forall (F : \operatorname{Type}), [\operatorname{Fiel
 
 Example 5.8, page 21: “The authors do not know how to construct an ETF with any of the parameters given in Table 4. In particular, every instance of Gerzon equality that we currently know satisfies the identity a² = (d + 2)b, but this equation does not occur anywhere in Table 4 (where b = 1). Proposition 2.10 implies that a² = (d + 2)b whenever Gerzon’s bound is saturated, d ≢ₚ 0, and d ≢ₚ 1. The authors do not know if these conditions can be removed.” Here F is finite, ringChar F differs from two, d is any natural number at least two, and B is symmetric and nondegenerate. The number of vectors is exactly Nat.choose (d + 1) 2, the Gerzon bound of Proposition 2.9. The inequality a² ≠ b is retained. Casting d into F precedes field addition and multiplication. There is no restriction on d modulo the characteristic. Proposition 2.10 supplies the earlier ETF parameter equation, while this statement asks for the identity without the two dimension congruences.
 
-**Theorem 1.4 (Gerzon equality fixes the parameters).**
+**Theorem 1.5 (Gerzon equality fixes the parameters).**
 
 $$\operatorname{claim}$$
 
@@ -63,4 +75,5 @@ The statement holds, including dimensions congruent to zero or one in the field.
 - Truth anchor: `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.IsEquiangularSystem`
 - Truth anchor: `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.claim`
 - Truth anchor: `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.gram_pair_sum`
+- Truth anchor: `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.independent_nonzero_trace`
 - Truth anchor: `D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.result`

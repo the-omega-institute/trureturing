@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5394c04b605fbfa1c50745b7dd1f02f76e417fef0121b1241a10b926908e510
+  normalized_sha256: sha256:f5394c04b605fbfa1c50745b7dd1f02f76e417fef0121b1241a10b926908e510
+cas_ref: sha256:f5394c04b605fbfa1c50745b7dd1f02f76e417fef0121b1241a10b926908e510
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 外延反泄漏不可能性的标题以及下一原句的参数引导语。
+    previous_atom_id: 12d65c90e8b85489b325849bfea3c9971a893174052e0f6441e8d5d48593936d
+    next_atom_id: ae46665423c427e7daecdd76c108ca67a88bd1a4235dfe6668bad71d12db4a51

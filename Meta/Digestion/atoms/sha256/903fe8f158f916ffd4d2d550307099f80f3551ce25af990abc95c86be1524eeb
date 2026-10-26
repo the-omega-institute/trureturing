@@ -1,0 +1,8 @@
+# 递归关系观察：隐藏前奏与未来响应充分性
+
+本卷研究同一实际来源上的一个特定预测任务：观察者已经到达第三个载荷标记之后的切面，但尚未读取第四个标记；它要保留原始解析器给出的下一段 `Y/Stop` 联合结果的条件律。这里的预测过滤保留全部实际取得的 Read 结果作为参照，而当前边界只保留已选标记过去、快照和控制阶段。
+
+这一区分很重要。前面的固定 $E_1$ 结果只要求在回顾性接受事件内恢复选定过去；本卷考察更强的前瞻任务。它不修改前一任务的结论，也不把回顾性接受事件当成运行时已经知道的输入。
+
+本卷复用 [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) §§100.1–100.2 的付费前奏与共同隐藏深度、§105.1 的原始 Stop 合同，复用 [Full E1 scope extension](RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md) 的六行快照，以及 [source coherence](RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_COHERENCE_CONTINUATION.md) 和 [spatial records chronology](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) 的写前锁存与保持条件。这里的推导是理论散文中的普通有限数学，不是 Lean 或冻结状态的声明。
+

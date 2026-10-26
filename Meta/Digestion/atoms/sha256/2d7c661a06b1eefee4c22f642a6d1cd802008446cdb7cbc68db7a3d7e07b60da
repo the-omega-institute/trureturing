@@ -1,0 +1,21 @@
+**定义 263.1（完整纤维的实际端口块响应）。** 固定整数 $r\ge1$。令 $T=(V,E)$ 为至少有四个顶点的有限连通树，每个实际顶点的空间恰为 $\mathbb R^r$。在 $\bigoplus_{x\in V}\mathbb R^r$ 上取实对称块矩阵 $H$：每个对角块 $H_{xx}$ 是任意实对称矩阵，每条边的块 $H_{xy}$ 是任意实 $r\times r$ 矩阵，反向块为 $H_{yx}=H_{xy}^{\mathsf T}$，非边的非对角块为零。边块允许奇异或为零，不要求符号、各向同性或可逆性。给定任意 $z\in\mathbb R$、保留顶点集 $B\subseteq V$ 及其中四个互异实际顶点的有序组 $P=(a,b,c,d)$，令 $I=V\setminus B$，只假设消去内块
+
+$$
+K=H_{II}-zI_{r|I|}>0.
+$$
+
+记
+
+$$
+\begin{aligned}
+\mathcal S_B&=H_{BB}-zI_{r|B|}-H_{BI}K^{-1}H_{IB},\\
+\mathcal S_4&=\mathcal S_B[P,P],\qquad
+W_{ij}=-(\mathcal S_4)_{ij}\quad(i\ne j),\\
+d_{ij}&=|\det W_{ij}|=|\det(\mathcal S_4)_{ij}|
+       =\prod_{\ell=1}^{r}\sigma_\ell((\mathcal S_4)_{ij}).
+\end{aligned}
+\tag{263.1}
+$$
+
+$I=\varnothing$ 时不要求空块之外的正定性，消元项约定为零。额外保留顶点 $G=B\setminus P$ 的所有坐标固定为零，不能自由消去。每个顶点及每个端口始终保留全部 $r$ 个坐标，电势、电流单位与 Euclidean 基固定；不允许压缩坐标、集体接线、顶点识别、跨顶点混合或重标度。端口可以是原树的根、分支、度二顶点或叶。矩阵 $H-zI$ 及 $\mathcal S_4$ 均不要求正定或非负。单个非对角块可以不对称，但反向块为其转置，故 $d_{ij}=d_{ji}\ge0$。这里的行列式取全部奇异值的乘积，不是只取最大奇异值。
+

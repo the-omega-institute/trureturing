@@ -1,0 +1,46 @@
+**Definition 24.1 (Worlds, carrier and fixed acquisition menu).** Retain all complete worlds
+$W=(P,g,d)\in\mathcal W$ of Definition 1.1:
+
+$$
+P=\begin{pmatrix}u&b\\c&1-u\end{pmatrix},\quad
+0<u<1,\quad b,c>0,\quad bc=u(1-u),\qquad
+g(t)=\sum_{k=0}^3a_kt^k\ne0,\quad d\in\mathbb R.
+\tag{24.1}
+$$
+
+The letter $u$ here avoids confusing the world coordinate $P_{11}$ with the probe variance $r$.
+Every world has finite coordinates; the polynomial coefficients and drift have no global bound.
+Lower degrees, sampled zeros and zero drift are included. On $\mathcal H=L^2(\mathbb R^{17})$,
+write $q_j$ and $\pi_j=-i\partial_j$ for
+canonical system quadratures, with $[q_j,\pi_k]=i\delta_{jk}$. The original product coherent
+input is
+
+$$
+\begin{gathered}
+\mu(W)=(d,\operatorname{vec}(a_0P),\ldots,
+                    \operatorname{vec}(a_3P)),\qquad
+\operatorname{vec}X=(X_{11},X_{21},X_{12},X_{22})^T,\\
+\psi_W(x)=\pi^{-17/4}e^{-\|x-\mu(W)\|^2/2},\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+\end{gathered}
+\tag{24.2}
+$$
+
+The controls and probes are exactly those of §§3–4. In particular,
+$A_E=\operatorname{diag}(1,I_2\otimes E,\ldots,I_2\otimes E)$, $E\in\{J,M\}$, and
+$U_A\psi(x)=|\det A|^{-1/2}\psi(A^{-1}x)$, so $U_A^\dagger qU_A=Aq$ and
+$U_A^\dagger\pi U_A=A^{-T}\pi$. The laboratory read row is
+$\ell_i^T=(1,t_0^T,i t_0^T,i^2t_0^T,i^3t_0^T)$, $t_0=(1,0,0,1)^T$, and each read uses
+$e^{-i(\ell_i^Tq)\otimes\pi_i^{\rm pr}}$ with the real Gaussian probe $k_\sigma$ of Assumption
+4.1. Its position variance is $\sigma^2$ and its momentum variance is
+
+$$
+r=\frac1{4\sigma^2}>0,\qquad 0<\sigma<\infty.
+\tag{24.3}
+$$
+
+There is no additional position-changing free evolution. For each externally fixed word
+$w=E_1\cdots E_t$, $0\le t\le7$, execute and retain every read $0,\ldots,t$. Set
+$T_i=A_{E_i}\cdots A_{E_1}$, $T_0=I$, and stack $L_i=\ell_i^TT_i$ into $L_w$. Different words
+denote different runs.
+

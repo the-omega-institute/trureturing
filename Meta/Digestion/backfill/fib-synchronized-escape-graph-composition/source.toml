@@ -1,0 +1,5 @@
+source_id = "fib-synchronized-escape-graph-composition"
+path = "docs/develop/theory/FIB_SYNCHRONIZED_ESCAPE_GRAPH_COMPOSITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

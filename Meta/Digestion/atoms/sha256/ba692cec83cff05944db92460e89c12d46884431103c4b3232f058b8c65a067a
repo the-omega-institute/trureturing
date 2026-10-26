@@ -1,0 +1,27 @@
+**Theorem 56.8 (Source-free continuation and the exact recovery directions).**
+At acquired idle cuts with common public metadata and local rights, the
+projection
+
+$$
+\pi(S)=(\mathrm{endpoint},\mathrm{Acquired},10,\eta,
+          \mathrm{public\ local\ rights})
+$$
+
+factors every supported local response and projected joint successor.
+Equal projected states have identical finite supported source-free behavior, and unequal
+bits are separated by one authorized Recall.  The source route before
+acquisition is the literal chronological route above; after acquisition,
+local requests do not advance it.
+
+**Proof.**
+The transition contract makes Recall depend only on $\eta$ and public
+fields, Tick return Finished, and all other finite requests return
+BadRequest, with identity successors.  Induction on a finite request word
+gives the forward factorization.  If the bits differ, Recall returns
+different bit labels, proving separation.  The source law composes
+chronological words by left multiplication, while every inserted idle
+local request is an identity on the source component.  This is the
+same-source/same-run continuation argument of FRS53--55, specialized to
+the ten-clock receiver; it does not identify hidden source worlds or
+reconstruct the emitted history from the bit. ∎
+

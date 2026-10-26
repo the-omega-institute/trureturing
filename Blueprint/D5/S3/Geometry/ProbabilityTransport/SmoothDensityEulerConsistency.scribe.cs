@@ -1,0 +1,248 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.ProbabilityTransport;
+
+internal sealed class SmoothDensityEulerConsistencyDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual density is the characteristic pushforward",
+        H("The actual density is the characteristic pushforward"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("smoothdensityeulerconsistency-main"),
+                DeclarationHandle.Create("D5/S3/Geometry/ProbabilityTransport/SmoothDensityEulerConsistency.actual_density_characteristic_pushforward"),
+                H("The actual density is the characteristic pushforward"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every positive horizon and every observation time r in the closed interval from zero to that horizon, the original density measure at r is exactly the pushforward of the original initial density measure by x mapped to quotient of characteristicOperator at times zero and r applied to representative x. Every finite spatial dimension, including zero, is allowed. The potential and density assumptions are exactly those of the SmoothFP structure in the PeriodicDensityModel module.")),
+                    Paragraph(Text("All constants are derived from the actual smooth slab before the mesh size N varies. The public actual_density_euler_grid_error theorem gives the finite-N difference between the original density pairing and the same-velocity Euler pairing, bounded by C exp(L r)(K+L B)r squared divided by N. Backward tests are constructed from the terminal C1 test and the actual Euler steps. Their derivative growth is controlled by C exp(L r). The PDE material-derivative formula gives the error on each closed cell, and the cells telescope.")),
+                    Paragraph(Text("The actual ODE gives a matching inverse-N bound between the actual characteristicOperator and those Euler trajectories. Uniform Euler approximation derives continuity of its forward slices. The public actual_density_characteristic_moment theorem then gives exact equality of all C1 periodic test integrals by the Archimedean inverse-N argument. No Euler invertibility, second derivative of the test, ambient density time extension, or differentiability of the flow is an extra premise.")),
+                    Paragraph(Text("To pass from moments to measures, the pinned Fourier characters have C1 Euclidean lifts. Their complex linear span is uniformly dense in C(Torus, complex), using span_mFourier_closure_eq_top. Continuous integral functionals therefore agree on every continuous test, which determines the actual finite Borel measures. This is a uniform determining-class argument; L2 density is not used.")),
+                    Paragraph(Text("The constants theorem covers the zero-length slab in SmoothDensityCharacteristics. The positive-horizon characteristic theorem here covers both closed observation endpoints, including r equal to zero. It does not assert the original C1-in-initial-point flow clause, the endpoint quadratic action estimate, the inverse-horizon Wasserstein bound, or completion of all original section 17.3 obligations. Those remain separate until their exact proofs are supplied."))),
+                DescribeRole.Theorem)),
+        []));
+}
+
+/*
+VERBATIM DELIVERY-WIDE SUPPLIER LEGAL ARTIFACT: licenses/lean-pool-NOTICE.extra.yml
+SHA256: 41b9d8eeedee68df9f184965d831c57b9d29f0ea9d3932517b84c7bdd8d81465
+BEGIN ORIGINAL ARTIFACT BYTES
+# Per-project prose for the generated NOTICE file, keyed by the project's
+# directory under LeanPool/. Everything else in NOTICE (which project, which
+# upstream repository, which license section) is derived from
+# LeanPool/projects.yml, so only text that cannot be derived belongs here.
+#
+# Recognised keys, all optional:
+#   note         Text shown under the project in its license section. For MIT
+#                projects this is the upstream copyright line, which the MIT
+#                License requires be preserved.
+#   relicensed   Moves the project into the "relicensed by their original
+#                author" section, with this text as its explanation. An empty
+#                string lists the project there without a note of its own
+#                (used when a following entry carries the shared explanation).
+#   attribution  Adds the project to the "additional upstream attribution"
+#                section, reproducing an upstream NOTICE or citation request.
+#
+# Regenerate NOTICE after editing:
+#   cd python && uv run python -m lean_pool.notice --repo ..
+
+ArtinWedderburn:
+  note: Copyright (c) 2024 Job Petrovčič
+
+Brouwer:
+  note: Copyright (c) 2025 Math_XMUM
+
+Clawristotle:
+  # The shared relicensing note sits on GrothendieckVanishing, which follows
+  # this entry -- both projects live in the same upstream repository.
+  relicensed: ""
+
+CutAndProject:
+  note: Copyright (c) 2026 Dirk Kunert
+
+DeadEnds:
+  note: Copyright (c) 2026 Axiom Math
+
+DirectedTopologyLean4:
+  note: Copyright 2023 Dominique Lawson
+
+Erdos548:
+  attribution: |-
+    The upstream repository ships a NOTICE file (Apache License, Version 2.0,
+    Section 4(d)). Its attribution notice reads:
+
+        Erdős problem #548 (Erdős–Sós conjecture): proof
+        Copyright 2026 Tom Adamczewski / Epoch AI
+
+        The formal statement was given to the AI system by the FrontierMath
+        Erdős benchmark of Tom Adamczewski and Thomas F. Bloom
+        (LeanOpenProblems, https://github.com/epoch-research/LeanOpenProblems,
+        commit 77882c437ca1dfefab3b27fa00f1d29788100311), Epoch AI, MIT License.
+        The Lean proofs were produced by a pre-release version of GPT-6 Astra
+        (OpenAI) running in that benchmark.
+
+FactorizationSystems:
+  note: Copyright (c) 2024 ivankobe
+
+FelConjecture:
+  note: Copyright (c) 2026 Axiom Math
+
+FormalLearningTheory:
+  attribution: |-
+    The upstream LICENSE appends a citation request. The original author asks
+    that publications, software, or derivative works built on this
+    formalization cite:
+
+        Gupta, D. (2026). Formal Learning Theory Kernel: Lean4 Formalization
+        of the Fundamental Theorem of Statistical Learning.
+        https://github.com/Zetetic-Dhruv/formal-learning-theory-kernel
+
+FormalizationOfBoundedArithmetic:
+  note: |-
+    The upstream MIT LICENSE file leaves the copyright line as the unfilled
+    template text "Copyright (c) [year] [fullname]"; the repository owner of
+    record is "ruplet".
+
+GrothendieckVanishing:
+  relicensed: |-
+    Originally distributed under the Creative Commons
+    Attribution-NonCommercial-ShareAlike 4.0 International license, then
+    relicensed under the Apache License, Version 2.0, by its sole author.
+
+HasseMinkowski:
+  attribution: |-
+    The source repository at commit
+    47f0e9b5cba6e6354b882bc5856a11962ba61f4a ships the following NOTICE.
+    Its HasseMinkowski/ paths are vendored under LeanPool/HasseMinkowski/.
+
+    The Hasse–Minkowski theorem, formalized in Lean 4
+    Copyright (c) 2026 jayyswan
+
+    This product includes software developed as part of this project.
+    Licensed under the Apache License, Version 2.0 (see the file LICENSE).
+
+    ================================================================================
+    Third-party material
+    ================================================================================
+
+    Portions of `HasseMinkowski/` are derived from the "HassePrinciple" project:
+
+        https://github.com/mariainesdff/HassePrinciple
+        Copyright (c) 2026 Nirvana Coppola, Maria Ines de Frutos-Fernandez.
+        All rights reserved.
+        Licensed under the Apache License, Version 2.0.
+
+    HassePrinciple is a collaborative formalization from the Women in Numbers 7
+    workshop, led by Nirvana Coppola and Maria Ines de Frutos-Fernandez, with
+    project members Mallory Dolorfino, Kate Finnerty, Cathy Hsu and Chi-Yun Hsu.
+
+    The following files of this project are derived works.  Each one carries the
+    upstream authors in its own file header, and each has been modified: the
+    statements and proofs were rewritten against Lean 4.33 / Mathlib without the
+    upstream module system, and the material was extended beyond what upstream
+    proves.
+
+        HasseMinkowski/HilbertSymbol/Existence.lean
+            derived from HassePrinciple/HilbertSymbol/ExistenceTheorem.lean
+            (the S / T / A / M construction and the lemmas named after it)
+
+        HasseMinkowski/Padics/Squares.lean
+            derived from HassePrinciple/Padics/Squares.lean and
+            HassePrinciple/Padics/Lemmas.lean
+            (PadicInt.isSquare_of_zmod, PadicInt.isSquare_of_zmodPow, and the
+            open-subgroup argument for p-adic unit squares)
+
+        HasseMinkowski/RankCriteria.lean
+            derived from HassePrinciple/QuadraticForm/HasseMinkowskiInvariant.lean
+            (the rank-two and rank-three local representability criteria)
+
+    The remaining files of `HasseMinkowski/` are original to this project.  In
+    particular, the results that upstream leaves as `sorry` -- the rank-three
+    local-global step, the rank-four case, the rank >= 5 induction (Meyer), the
+    2-adic Hilbert symbol formula, Hilbert reciprocity, and the assembled
+    `hasseMinkowski` and `meyer` theorems -- are proved here independently.
+
+    Upstream naming conventions are followed throughout so that the two
+    developments can be compared declaration by declaration.
+
+Koethe:
+  attribution: |-
+    The upstream repository ships a NOTICE file (Apache License, Version 2.0,
+    Section 4(d)). Its attribution notice reads:
+
+        Köthe conjecture: disproof (Krempa's matrix form)
+        Copyright 2026 Tom Adamczewski / Epoch AI
+
+        This repository includes a definition and a conjecture statement copied
+        from Formal Conjectures (https://github.com/google-deepmind/formal-conjectures,
+        file FormalConjectures/Wikipedia/Koethe.lean at commit
+        9cbe1d3c12998c786b7c2cd99ce28a21b6631f66), Copyright 2025 The Formal
+        Conjectures Authors, licensed under the Apache License, Version 2.0.
+
+        The formal statement was given to the AI system by Epoch AI's
+        LeanOpenProblems harness (https://github.com/epoch-research/LeanOpenProblems,
+        branch wikipedia-dataset, commit 0ef96d7b12cfa96a93761b4bba1c635f4546c5ca),
+        MIT License. The Lean proof was produced by a pre-release version of
+        GPT-6 Astra (OpenAI) running in that harness.
+
+LatticeTriangle:
+  note: Copyright (c) 2026 Axiom Math
+
+Lean4Itree:
+  note: Copyright (c) 2025 the choice-tree authors (see the AUTHORS file)
+
+PCFTheory:
+  note: |-
+    The upstream MIT LICENSE file contains no copyright line; the repository
+    owner of record is "YnirPaz".
+
+PartialCombinatoryAlgebras:
+  note: Copyright (c) 2024 Andrej Bauer
+
+PartialRegularity:
+  note: Copyright (c) 2026 Axiom Math
+
+PolyaEnumerationTheorem:
+  note: Copyright (c) 2024 Luka-O
+
+QuasiBorelSpaces:
+  note: Copyright (c) 2025 Anthony Vandikas, Kiarash Sotoudeh
+
+RamanujanTauMissesPrimes:
+  note: Copyright (c) 2026 Axiom Math
+
+Redhill:
+  note: Copyright (c) 2026 Jeremy Tan / Parcly Taxel
+
+RlTheoryInLean:
+  note: Copyright (c) 2025 Shangtong Zhang
+
+SemicircleLaw:
+  note: Copyright (c) 2025 FredRaj3
+
+Shannon1948Formalization:
+  note: |-
+    The upstream MIT LICENSE file gives the copyright line as
+    "Copyright (c) 2026" with no name; the repository owner of record is
+    "SamuelSchlesinger".
+
+SteinhausThreeGap:
+  note: Copyright (c) 2026 Dirk Kunert
+
+TwoColoringOneRound:
+  note: Copyright (c) 2026 Jukka Suomela
+
+ZhangYeungInequality:
+  attribution: |-
+    The upstream repository ships a NOTICE file (Apache License, Version 2.0,
+    Section 4(d)). Its attribution notice reads:
+
+        The Zhang-Yeung Inequality
+        Copyright 2026 Christopher Boone
+
+    The upstream additionally carries CC-BY-4.0 prose, CC-BY-SA-4.0 for its
+    code of conduct, CC0-1.0 for generated files, and bundled reference
+    materials under a custom license; none of those files were imported.
+END ORIGINAL ARTIFACT BYTES
+*/

@@ -1,0 +1,39 @@
+**Proposition 27.2 (An explicit product-Gaussian mixture at equality).** Put $x=\eta_A+64r-2$,
+$y=\eta_B+r$. On the separable region, $y>0$, $x>0$ and $xy\ge1$. Define positive local position
+variances
+
+$$
+a=\frac{y}{2(3y+1)},\qquad b=\frac{y+1}{2(2y+1)},\qquad
+V_{\rm loc}=\operatorname{diag}\left(a,b,\frac1{4a},\frac1{4b}\right).
+\tag{27.5}
+$$
+
+This is the covariance of a product of pure single-mode squeezed Gaussians. The position
+residual is
+
+$$
+\mathsf Q-\operatorname{diag}(a,b)
+=\frac12\begin{pmatrix}(2y+1)/(3y+1)&1\\
+1&(3y+1)/(2y+1)\end{pmatrix}\ge0.
+\tag{27.6}
+$$
+
+It has positive diagonal and determinant zero. Also
+$\mathsf P=\begin{pmatrix}x+y+3&-y-1/2\\-y-1/2&y+1/2\end{pmatrix}$, and its momentum residual is
+
+$$
+\mathsf P-\operatorname{diag}(1/(4a),1/(4b))
+=\frac{2y+1}{2}\begin{pmatrix}(y+1)/y&-1\\-1&y/(y+1)\end{pmatrix}
++\operatorname{diag}(x-1/y,0)\ge0.
+\tag{27.7}
+$$
+
+The first matrix again has positive diagonal and determinant zero; the second is positive
+semidefinite precisely in the required range. Consequently $N=V-V_{\rm loc}\ge0$. Gaussian
+averaging of local phase-space displacements of the product state with covariance $V_{\rm loc}$,
+using classical covariance $N$ and the mean in Proposition 26.2, gives characteristic function
+with exactly that mean and covariance $V$. It equals the actual Gaussian pair state. This is a
+separable product-state mixture even when $xy=1$; the classical displacement measure may then be
+singular. All local variances and classical second moments are finite. Thus equality requires
+neither a strict inequality nor an infinite squeeze.
+

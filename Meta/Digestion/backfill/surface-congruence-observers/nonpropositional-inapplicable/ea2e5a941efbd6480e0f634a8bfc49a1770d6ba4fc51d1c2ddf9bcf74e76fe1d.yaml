@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea2e5a941efbd6480e0f634a8bfc49a1770d6ba4fc51d1c2ddf9bcf74e76fe1d
+  normalized_sha256: sha256:ea2e5a941efbd6480e0f634a8bfc49a1770d6ba4fc51d1c2ddf9bcf74e76fe1d
+cas_ref: sha256:ea2e5a941efbd6480e0f634a8bfc49a1770d6ba4fc51d1c2ddf9bcf74e76fe1d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only bind-only proposition; not a claim that the source text lacks mathematical assertions. Pinned mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: MulAction.mem_orbit_iff, MulAction.mem_stabilizer_iff, mul_smul, inv_smul_eq_iff, Subgroup.normal_mul. Expand subgroup orbits and the stabilizer. For every delta the orbit witness gamma is equivalent to gamma^-1*delta belonging to the stabilizer, which is exactly membership in the set product Gamma*H. Subgroup.normal_mul identifies this set product with Gamma sup H when Gamma is normal. D5 search scope: D5/**/*.lean, including private declarations, searched by dihedral/cardinality/order, group-action orbit/stabilizer and normal set-product, derivedSeries/commutator/quotient, Goursat/simple normal image/joint range, and solvable-perfect subdirect-product shapes; relevant Observer/Dynamics, FiniteGroups/NikolovSegal, Combinatorics/GroupWords, ConceptDynamics/Faithfulness and ObserverMemory/Fusion hits inspected. No frozen theorem supplies an actual subgoal in these generic complete derivations.'
+    previous_atom_id: eb50fc93ab85f0123decdce3edffa0fa9a0a853c56ecc9e1cdef1eb674029d16
+    next_atom_id: 2b8b3bc6be7c5eb3ae593be42ac7ae546ea28fc00b02668fd01f16f496fa70c2

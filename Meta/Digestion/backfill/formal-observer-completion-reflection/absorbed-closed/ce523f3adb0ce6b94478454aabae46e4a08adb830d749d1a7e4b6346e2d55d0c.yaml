@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ce523f3adb0ce6b94478454aabae46e4a08adb830d749d1a7e4b6346e2d55d0c
+  normalized_sha256: sha256:ce523f3adb0ce6b94478454aabae46e4a08adb830d749d1a7e4b6346e2d55d0c
+cas_ref: sha256:ce523f3adb0ce6b94478454aabae46e4a08adb830d749d1a7e4b6346e2d55d0c
+coverage_gids:
+  - gid: D5/S3/Quantum/GNSMatrix.gns_matrix_identity
+    target_statement_id: sha256:45f7835e6656bdb7dd6d391b5e4cf5aaa750499b97cc93101c6ececeb980f680
+receipts:
+  unresolved_subitems: []

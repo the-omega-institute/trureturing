@@ -1,0 +1,21 @@
+**定义 11.1（固定模型和临界相对系数）。** 固定项目双墙模型的柱体、实际相位环面、源点 $o$、光滑正密度 $\rho$、光滑正定水平协方差 $A$、同一 killed 热半群时钟及完整单位源 Green 场。在 $L^2(\mu)$ 中记自由闭型和原型域为 $T,\mathcal F$，Green 势型为 $V\ge0$，并令
+
+$$
+q_g=T-gV.
+$$
+
+项目给出
+
+$$
+V[f]\le KT[f]+B\|f\|^2
+$$
+
+及归一化集中序列 $f_s$，其中 $T[f_s]\to\infty$、$\liminf V[f_s]/T[f_s]\ge D_v/E_v>0$。这里 $0<K<\infty$、$0\le B<\infty$、$0<E_v,D_v<\infty$。定义
+
+$$
+a_*=\inf\{a\ge0:\ \exists b\ge0,
+V[f]\le aT[f]+b\|f\|^2\quad\forall f\in\mathcal F\},
+\qquad
+ g_c=a_*^{-1}.
+$$
+

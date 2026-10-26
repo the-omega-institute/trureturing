@@ -1,0 +1,22 @@
+### 定义 7.1（白盒资源向量）
+
+对任务语言 $\mathcal T$ 和任务族 $\Gamma$，定义语义容量
+
+$$
+\sigma_\mathcal T(\Gamma)=|S/R_\Gamma|.
+$$
+
+给每个任务 $f$ 一个非负取得费用 $c(f)$，定义非自适应精确取得费用
+
+$$
+\mathsf C_\mathcal T(\Gamma)
+=
+\inf\left(\left\{
+\sum_{f\in H}c(f):
+H\subseteq\mathcal T,\ R_H\subseteq R_\Gamma
+\text{，$H$ 有限}\right\}\cup\{+\infty\}\right),
+\tag{7.1}
+$$
+
+其中只允许有限 $H$。若任务语言有限，或候选费用集合保证下确界达到，则可把 (7.1) 写成最小值；一般无限语言中不能省略 `inf`。自适应树的费用另记为 $\mathsf C^{\mathrm{ad}}$，因为它具有不同的控制合同。
+

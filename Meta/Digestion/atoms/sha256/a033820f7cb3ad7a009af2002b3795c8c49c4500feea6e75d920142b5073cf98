@@ -1,0 +1,92 @@
+**Theorem 12.2 (Global ordered and unordered pair bounds).** At the
+original exact $p_J$,
+
+$$
+|\mathcal K|\le4802,\qquad
+|\mathcal T_M^{\rm ord}|\le4802,\qquad
+|\mathcal T_M^{\rm un}|\le2401.
+\tag{12.2}
+$$
+
+Proof. In four complex affine coordinates $x=(r,b)$ and
+$y=(r',b')$, consider the four polynomial equations
+
+$$
+\begin{gathered}
+\mathsf A(x,p_J)=0,\qquad \mathsf A(y,p_J)=0,\\
+N_u(x)D_m(y)-N_u(y)D_m(x)=0,\\
+N_m(x)D_m(y)-N_m(y)D_m(x)=0.
+\end{gathered}
+\tag{12.3}
+$$
+
+Let $\mathcal V\subseteq\mathbb C^4$ be their full common zero
+set. Inside it, $\mathcal K$ is precisely the open subset on which
+
+$$
+r(r-1)r'(r'-1)D_m(x)D_m(y)\ne0,\qquad x\ne y.
+\tag{12.4}
+$$
+
+The diagonal complement is the union of the two opens
+$r-r'\ne0$ and $b-b'\ne0$, so this description also retains
+pairs with equal $r$ and different $b$. Theorem 11.2 proves
+finiteness on this entire complex open subset. Every point of
+$\mathcal K$ is therefore isolated in $\mathcal V$: a
+positive-dimensional component through such a point would meet
+(12.4) in a positive-dimensional open subset, contradicting that
+finiteness. The full $\mathcal V$ can still contain the diagonal
+curve and components on the deleted divisors.
+
+For the two variable groups $(r,b)$ and $(r',b')$, the equations
+(12.3) have the following upper bounds on their multidegrees:
+
+$$
+\begin{pmatrix}
+7&0\\0&7\\7&7\\7&7
+\end{pmatrix}.
+\tag{12.5}
+$$
+
+The multihomogeneous Bézout inequality for isolated complex
+solutions bounds their number by
+
+$$
+[s^2t^2]\,(7s)(7t)(7s+7t)^2=2\cdot7^4=4802.
+\tag{12.6}
+$$
+
+Here the exponents $2,2$ are the sizes of the two variable groups,
+or the dimensions of the two projective-plane factors. The
+isolated-solution form is Jan Verschelde,
+*[Multihomogeneous Homotopies](https://homepages.math.uic.edu/~jan/mcs563s14/lec07.pdf)*,
+Lecture 7, Theorem 4.1 and Section 3: it applies to a square
+polynomial system in $\mathbb C^n$ and bounds its isolated
+solutions, without requiring its full zero set to be finite.
+Using upper multidegrees is valid because the coefficient bound
+is monotone in these nonnegative degrees. Thus the surviving
+diagonal and base components do not enter a proper-intersection
+assumption. Since every point of $\mathcal K$ is isolated in
+(12.3), this proves its bound.
+
+Now take any actual pair in $\mathcal T_M^{\rm ord}$, and write
+$v$ for its common $u_M$. If either member were singular,
+$O$, Theorem 29.2, would give
+$v=s_-(p_J)$ or $v=s_+(p_J)$. But $S$, Theorem 8.1, proves
+terminal-M injectivity on each of those entire actual children,
+including all regular companions. This contradicts the distinct
+pair. Thus both members are regular.
+
+Their strict sources belong to $\mathcal X$, and the actual
+response identities in Definition 11.1 put their source pair in
+$\mathcal K$. Fixed-source uniqueness of the entire gain and
+drift, $O$, Theorem 12.3, makes this map injective and preserves
+distinctness of the two complete worlds. Hence
+$|\mathcal T_M^{\rm ord}|\le|\mathcal K|\le4802$.
+Interchange has no fixed point on distinct ordered pairs, and
+preserves all equalities in (12.1). Each unordered pair therefore
+has exactly two ordered representatives, proving the final bound.
+All actual singular cases have been excluded by their complete
+response children, while every regular actual pair is retained in
+the complex open subset (12.4). ∎
+

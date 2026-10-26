@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:288c93899a5f4189eb3ff4f798cc4e9a748e9316510fa79c44408ee14d0d9840
+  normalized_sha256: sha256:288c93899a5f4189eb3ff4f798cc4e9a748e9316510fa79c44408ee14d0d9840
+cas_ref: sha256:288c93899a5f4189eb3ff4f798cc4e9a748e9316510fa79c44408ee14d0d9840
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'A noun phrase in a list of possible markers: a fixed point.'
+    previous_atom_id: d8f716bfba18e6506f50e549a81b1fcd8e44285c72e68c891b281389dc31e29a
+    next_atom_id: 37e4671769f1a895fec8ebe9a5dac7cee2fe26b1c26d9261e362c88634d68524

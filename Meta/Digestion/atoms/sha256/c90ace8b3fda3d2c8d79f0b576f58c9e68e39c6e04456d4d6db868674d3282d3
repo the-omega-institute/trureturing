@@ -1,0 +1,78 @@
+## 5. Exact positive-root and original-guard intervals
+
+For a rational polynomial $P(t)$ define its sign-preserving primitive
+Sturm chain by $P_0=\operatorname{pp}_+(P)$,
+$P_1=\operatorname{pp}_+(P_0')$ and
+
+$$
+P_{i+1}=\operatorname{pp}_+\big(-\operatorname{rem}(P_{i-1},P_i)\big).
+\tag{5.1}
+$$
+
+Here $\operatorname{pp}_+$ multiplies by the positive least common
+multiple of coefficient denominators and divides by the positive
+integer coefficient gcd; it never changes sign to make a leading
+coefficient positive. Stop at zero remainder. Let $V_P(s)$ count
+sign changes after zeros are deleted. At $+\infty$ use leading
+coefficient signs, and at zero use constant coefficients. This specifies
+all chain coefficients directly from the public polynomials. The chains
+for $Q_7,Q_{41}$ have respectively $8,42$ entries and end in nonzero
+constants. Their variations are
+
+| Polynomial | $V(0)$ | $V(+\infty)$ | Number of positive roots |
+| --- | --- | --- | --- |
+| $Q_7$ | $2$ | $2$ | $0$ |
+| $Q_{41}$ | $16$ | $11$ | $5$ |
+
+The constant last entries also show that these roots are simple.
+
+For clarity, endpoint signs are reproducible using only integers.
+If $P=\sum_{i=0}^m c_it^i$ has integer coefficients and $t=N/B$,
+start $v=c_m$ and $B_1=B$, and successively replace
+$v$ by $Nv+c_iB_1$ and $B_1$ by $BB_1$, descending in $i$.
+The final integer is $B^mP(N/B)$ and has its sign. Apply this to
+every chain entry in (5.1).
+
+For the following rational intervals use a mesh $S=10^{240}$. A
+rational number is enclosed by rounding its two endpoints down and up
+to multiples of $1/S$. Addition and negation use endpoint arithmetic;
+multiplication takes the minimum and maximum of the four endpoint
+products and rounds outwards. Division takes the four endpoint quotients
+and rounds outwards only after the denominator interval excludes zero.
+Polynomial evaluation uses descending Horner arithmetic with each
+rational coefficient enclosed on this mesh. Powers use repeated
+multiplication. Thus all interval operations are specified by integer
+floor and ceiling division, not floating point.
+
+The input $t$ intervals have denominator $10^{160}$. If a row has
+left numerator $N_i$ and width $w_i$, it is exactly
+$[N_i,N_i+w_i]/10^{160}$. The five left numerators are given separately
+to avoid abbreviating any endpoint.
+
+$$
+N_1=595223049848269525903835694474010185613209628421953204257640295228930387704218594188372305766830664337406800022353170344183261419106672060169523298600093312317.
+$$
+
+$$
+N_2=615308652899767922362714318304887371029197823616936109006727412869596795528077193570630493149987812956316760587882811101549719375741356322710393040905700019958.
+$$
+
+$$
+N_3=1551737322754159711870171523724096973113270550505567286351285738379027967942583207550463087052056123740537966944014999041877203578055532019943054929484251055942.
+$$
+
+$$
+N_4=1779893347973634001522723825175127416732001452172025859018464054140363992492683858744240261031471597346190493170316263460866232515929040992598105348855781153250.
+$$
+
+$$
+N_5=39519945614478191480604197722730289434525982527519393832474336376723521872673460805110039526325398374904530613738186163809793843268553936143607377060033124795596.
+$$
+
+| Root | $w_i$ | $V(N_i/10^{160})$ | $V((N_i+w_i)/10^{160})$ | Endpoint signs of $Q_{41}$ |
+| --- | --- | --- | --- | --- |
+| $1$ | $2$ | $16$ | $15$ | $(-1,1)$ |
+| $2$ | $2$ | $15$ | $14$ | $(1,-1)$ |
+| $3$ | $1$ | $14$ | $13$ | $(-1,1)$ |
+| $4$ | $2$ | $13$ | $12$ | $(1,-1)$ |
+| $5$ | $1$ | $12$ | $11$ | $(-1,1)$ |

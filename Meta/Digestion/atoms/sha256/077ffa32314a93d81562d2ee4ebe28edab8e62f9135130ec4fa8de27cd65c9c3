@@ -1,0 +1,88 @@
+**Theorem 7.1 (Uniform qualitative terminal-J tail).** There exists a
+finite $P_J>0$ such that, for every real $p\ne24$ and every real $v$,
+
+$$
+W\ne W'\in C(p,v),\quad a(W)=a(W')
+\quad\Longrightarrow\quad |p|\le P_J.
+\tag{7.1}
+$$
+
+Equivalently, terminal $J$ is injective on the entire actual $C(p,v)$
+whenever $|p|>P_J$, uniformly over all real $v$. The bound is
+qualitative; no numerical value is asserted.
+
+Proof. Suppose the $p$-projection of $D_J$ is unbounded. Choose actual
+distinct pairs $W_i,W_i'\in C(p_i,v_i)$ with equal terminal $a_i$,
+$p_i\ne24$ and $|p_i|\to\infty$. S, Corollary 11.4, supplies
+fixed finite $B,C$ bounding both offdiagonals at every endpoint and
+indeed every companion of every such child. After simultaneous
+subsequences the two source sequences converge in
+
+$$
+\{(r,b,c):0\le r\le1,\ 0\le b\le B,\ 0\le c\le C,
+\ bc=r(1-r)\}.
+\tag{7.2}
+$$
+
+No bounded-$p$ coercivity or advance bound on $v$ has been used.
+
+First neither source limit has $j=0$. Indeed, $T,U\ge1$ and
+$|\kappa|\le6$ give the uniform bound
+
+$$
+|\eta|\le K,\qquad K=\frac{144}{5}(B+1/8).
+\tag{7.3}
+$$
+
+For $j\le1/4$, since $n\ge j>0$,
+
+$$
+j\Lambda=j(1+6/T+1/U)-4-4j/n\le8j-4\le-2.
+\tag{7.4}
+$$
+
+The parent equation yields
+
+$$
+|e|\le Kj/2,\qquad |e/j|\le K/2,\qquad |e/n|\le K/2.
+\tag{7.5}
+$$
+
+All four samples (1.9) are bounded there, so all coefficients of the
+same whole gain are bounded. The source cap also bounds $U+n$.
+Thus $p=d+(U+n)g(5)$ is bounded, contradicting $|p_i|\to\infty$
+if either endpoint sequence tends to $j=0$. This explicitly disposes
+of both rank-one corners, for every approach direction.
+
+At either remaining source limit, $j,n$ are positive. On its
+neighbourhood the four samples give
+$|p|\le K_1(1+|e|)$ for some finite $K_1$. Therefore both
+$|e_i|$ and $|e_i'|$ tend to infinity. Equation (1.8), with bounded
+$\eta$, forces $\Lambda\to0$ at both limits. Theorem 4.1 places
+them in the entire two-arc set $\mathcal Z$, including all four
+possible face poles and every strict singular source.
+
+For either endpoint sequence the interpolant $g_i/e_i$ converges
+coefficientwise to (2.2). Thus, at its limiting label $s$,
+
+$$
+\frac{p_i}{e_i}\longrightarrow A_5(s)\ne0,\qquad
+\left(\frac{v_i}{p_i},\frac{a_i}{p_i}\right)
+\longrightarrow R_J(s).
+\tag{7.6}
+$$
+
+The two endpoints have identical $p_i,v_i,a_i$, so their normalized
+limits have equal $R_J$. Theorem 5.1 makes their source labels equal.
+Both endpoint sequences consequently tend to the same point
+$(s,\sigma=0)$ of a full-parent chart of Theorem 6.1. Eventually
+both are in one neighbourhood on which (6.1) is injective, and have
+identical $(1/p_i,v_i/p_i,a_i/p_i)$. Theorem 6.1 makes their chart
+parameters, source, drift and whole gain identical. This contradicts
+$W_i\ne W_i'$.
+
+The $p$-projection of $D_J$ is therefore bounded. Enlarge a finite
+bound to a positive $P_J$; if $D_J$ is empty, any positive choice
+suffices. All original actual worlds were retained, and neither sign
+of diverging drift was restricted. This proves (7.1). ∎
+

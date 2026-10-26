@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3537e660550f71267cd453f92a68d830aba9f68df2dfe03db0104b101d17303
+  normalized_sha256: sha256:c3537e660550f71267cd453f92a68d830aba9f68df2dfe03db0104b101d17303
+cas_ref: sha256:c3537e660550f71267cd453f92a68d830aba9f68df2dfe03db0104b101d17303
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only bind-only proposition; not a claim that the source text lacks mathematical assertions. Pinned mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: MulAction.mem_orbit_iff, MulAction.mem_stabilizer_iff, IsSimpleGroup.eq_bot_or_eq_top_of_normal, Subgroup.Normal.map, MonoidHom.liftOfSurjective. Orbit inclusion is equivalent to f(C) <= f(H). The normal image f(C) is trivial or full by simplicity, and f(H) proper excludes fullness. Kernel inclusion then gives the homomorphism from the range of a by MonoidHom.liftOfSurjective; surjectivity and both converse implications follow from the original surjective f. D5 search scope: D5/**/*.lean, including private declarations, searched by dihedral/cardinality/order, group-action orbit/stabilizer and normal set-product, derivedSeries/commutator/quotient, Goursat/simple normal image/joint range, and solvable-perfect subdirect-product shapes; relevant Observer/Dynamics, FiniteGroups/NikolovSegal, Combinatorics/GroupWords, ConceptDynamics/Faithfulness and ObserverMemory/Fusion hits inspected. No frozen theorem supplies an actual subgoal in these generic complete derivations.'
+    previous_atom_id: 1ba7d30b55d31ae902dcc6dc7f1efa09961308cd64409900bb24a1ced2e241c3
+    next_atom_id: fe4767f4c25179d943b575a32d7ff8e4344a35ad8ee31621f750f310db9b7910

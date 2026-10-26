@@ -1,0 +1,51 @@
+**Proposition 2.1 (The reducing space and bright/dark normalization).**
+Under Assumption 1.2, $W$ is reducing, whereas $V$ is not invariant. With
+columns denoting inputs, the nonzero actions are
+
+$$
+\begin{aligned}
+He_1&=\bar g e_3,&He_3&=g e_1,\\
+He_4&=J e_4+\sqrt2g f_++\sqrt2\bar g f_-,\\
+Hf_+&=\sqrt2\bar g e_4,&Hf_-&=\sqrt2g e_4,
+\end{aligned}
+$$
+
+and $He_0=He_2=0$. The orthonormal bright and dark vectors
+
+$$
+b=\frac{u f_++\bar u f_-}{\sqrt2},\qquad
+z=\frac{u f_+-\bar u f_-}{\sqrt2}
+$$
+
+satisfy $Hb=2r e_4$, $Hz=0$, $He_4=J e_4+2r b$.
+In the mutually orthogonal planes $(e_1,e_3)$ and $(e_4,b)$ the matrices are
+
+$$
+H_1=\begin{pmatrix}0&g\\\bar g&0\end{pmatrix},\qquad
+H_2=\begin{pmatrix}J&2r\\2r&0\end{pmatrix}.
+$$
+
+The spectrum on $W$, with multiplicity, is
+
+$$
+0,0,0,r,-r,\frac{J+\Delta}{2},\frac{J-\Delta}{2}.
+$$
+
+Proof. Apply each annihilator before its creator. For example,
+$a_1^\dagger a_3|101\rangle=\sqrt2|200\rangle$ and
+$a_3^\dagger a_1|101\rangle=\sqrt2|002\rangle$;
+the reverse actions have the displayed conjugate coefficients.
+Every listed image stays in $W$, so the restriction is Hermitian and
+reducing. The image of $e_4$ has nonzero component in $V^\perp$, so $V$ is
+not invariant. Substitution proves the bright/dark identities and their
+normalizations. Now $H_1^2=r^2I$ and
+
+$$
+(H_2-(J/2)I)^2=(\Delta^2/4)I.
+$$
+
+The remaining three vectors $e_0,e_2,z$ are fixed. Consequently
+$\det(EI-H|_W)=E^3(E^2-r^2)(E^2-JE-4r^2)$, proving the spectrum.
+In particular $\operatorname{tr}H|_W=J$ and
+$\|H|_W\|=(\Delta+|J|)/2$. $\square$
+

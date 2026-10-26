@@ -1,0 +1,83 @@
+**Proposition 4.3 (unweighted relative form strength).** There is a finite
+constant $C_H>0$, independent of $r,I,o,\varepsilon$, chosen for the
+Lebesgue-normalized group in Proposition 4.2, such that for every fixed
+$\varepsilon>0$ there is a finite $B_\varepsilon\ge0$ with
+
+$$
+V_{\varepsilon,o}[f]
+\le\frac{2r C_H}{\varepsilon^2}T_\varepsilon[f]
++B_\varepsilon\|f\|_2^2
+\qquad(f\in\mathcal F_\varepsilon).
+\tag{4.7}
+$$
+
+The constant is sufficient, not sharp. The multiplier on the left is
+unweighted $\Gamma_{\varepsilon,o}$, including all times and all phases.
+
+**Proof.** Choose a continuous homogeneous norm $N$ on the group (4.5).
+Positivity, smoothness and degree $-2$ give
+$G_H\le C_N N^{-2}$ by taking a maximum on the compact unit sphere.
+The unweighted Hardy inequality [R, Corollary 3.2] applies with
+$p=2$, $\alpha=1$ and homogeneous dimension $4$; its strict condition is
+$0<1<4/2$. Since
+$\|L_H^{1/2}v\|_2^2=\|Uv\|_2^2+\|Vv\|_2^2$, it supplies a finite $C_H$
+for which
+
+$$
+\int_{\mathbb R^3}G_H|v|^2\,d\xi\,d\eta\,d\zeta
+\le C_H\int_{\mathbb R^3}(|Uv|^2+|Vv|^2)\,d\xi\,d\eta\,d\zeta
+\quad(v\in C_c^\infty).
+\tag{4.8}
+$$
+
+An alternative direct supplier is [B, Theorem 1.2] with $d=1$, $N=4$ and
+$s=1$. Its fields are $\partial_a+b\partial_c$,
+$\partial_b-a\partial_c$. The coordinate map
+$(a,b,c)=(\xi,\eta,\xi\eta-2\zeta)$ sends $U,V$ exactly to these two
+fields; its absolute Jacobian is $2$. Its gauge is
+$((a^2+b^2)^2+c^2)^{1/4}$. The fixed factor $2$ occurs on both sides of
+the inequality and cancels. Thus the cited inequality has the required
+unweighted, horizontal one-derivative meaning in precisely our conventions.
+Neither supplier inserts a vanishing horizontal-gradient factor into the
+potential.
+
+Choose smooth real $\chi,\vartheta$ with $\chi^2+\vartheta^2=1$,
+$\chi=1$ near $o$, and $\chi$ supported in the chart of (4.4).
+For example take $\chi=\cos\theta$, $\vartheta=\sin\theta$, with
+$\theta=0$ near $o$ and $\theta=\pi/2$ outside the chart. On this support
+(4.4) controls the remainder; where $\vartheta$ is nonzero away from a
+smaller source neighbourhood Proposition 2.2 bounds the full Green field.
+Consequently, for a compact smooth test,
+
+$$
+V_{\varepsilon,o}[f]
+\le \int K_\varepsilon|\chi f|^2\,d\mu+C_\varepsilon'\|f\|_2^2
+\le \frac{2rC_H}{\varepsilon^2}T_\varepsilon[\chi f]
++C_\varepsilon'\|f\|_2^2.
+\tag{4.9}
+$$
+
+The second inequality uses (4.3), (4.8) and zero extension of the compact
+chart function; it keeps the source normalization factor. The horizontal
+localization identity is
+
+$$
+T_\varepsilon[\chi f]+T_\varepsilon[\vartheta f]
+=T_\varepsilon[f]+\int
+\bigl(\varepsilon^2|P\chi|^2+|Q\chi|^2
++\varepsilon^2|P\vartheta|^2+|Q\vartheta|^2\bigr)|f|^2\,d\mu.
+\tag{4.10}
+$$
+
+It follows by expanding squares and differentiating
+$\chi^2+\vartheta^2=1$. Dropping the nonnegative second localized energy
+proves (4.7) on the smooth core. All cutoff coefficients are bounded for
+fixed $\varepsilon$.
+For a core sequence converging in $\mathcal F_\varepsilon$, (4.7) applied
+to differences makes it Cauchy also in $L^2(\Gamma_{\varepsilon,o}\,d\mu)$.
+A subsequence converges almost everywhere in ordinary $L^2$, identifying
+that weighted limit with the same function. Thus every member of
+$\mathcal F_\varepsilon$ has finite potential integral and (4.7) passes
+to it. There is no claim that $B_\varepsilon$ is bounded as
+$\varepsilon\downarrow0$. $\square$
+

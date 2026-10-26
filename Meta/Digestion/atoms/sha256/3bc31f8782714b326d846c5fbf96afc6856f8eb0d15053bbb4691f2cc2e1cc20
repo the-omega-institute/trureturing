@@ -1,0 +1,22 @@
+**Example 6.2c (local, terminal and maintenance ordinals).** Relative to
+zero starting event counts, NativeLocal; TagRead(root); Halt on alpha at
+$h=K=1$ has semantic successors $j=1,2,3$ and source-call successors
+$q=0,1,1$. Its semantic rows are $J_1,J_2,J_3$, including the local and
+terminal payloads. Insert Reserve(2) before the local, Reserve(2) between
+the local and read, and Raise(1) between the read and Halt. These are,
+respectively, strict reservation, unchanged reservation and unchanged raise;
+the source and guard stay alpha and 1. The six unified rows have after-$j$
+values $0,1,1,2,2,3$ and after-$m$ values $1,2,3,4,5,6$. Thus
+$\sigma(1)=1,\sigma(2)=3,\sigma(3)=5$, and $J_2$'s predecessor is $J_1$,
+not the intervening maintenance row $U_2$. A semantic-prefix query through
+2 selects four unified rows; a current query after the fifth row selects
+five, despite both having $j=2$. At a common nonzero entrance the actual
+stored counts and predecessor references are added/carried through, not
+reset. The beta/rejected-Rho/Reserve/Raise/accepted-Rho example in Theorem
+5.3 additionally shows why the guard history cannot be removed by this
+ordinal relation.
+For the supplied stationary full-source producer on $\ell$ leaves, LJA7.3's
+$2\ell-1$ reads, $2(\ell-1)$ locals and one Halt therefore contribute exactly
+$4\ell-2$ to $j$. This uses the supplied traversal, including its two local
+actions per branch, rather than counting only its source rows.
+

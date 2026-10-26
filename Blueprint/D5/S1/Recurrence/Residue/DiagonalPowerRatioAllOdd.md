@@ -8,7 +8,19 @@ The generating equation and oddness conjecture are recorded in hanna2026a397241b
 
 The operator coeff(n,f) extracts the degree-n coefficient, and mk forms a power series from a coefficient function. The operator map applies a ring homomorphism coefficientwise; intCast(ZMod(2)) denotes Int.castRingHom(ZMod(2)). Both sides of the reduction identity are series over ZMod(2), and the constant function in its right-hand side takes value one in ZMod(2).
 
-**Definition 1.1 (Construction of the integer coefficients).**
+**Theorem 1.1 (The first differing power coefficient).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)] \forall n: \mathbb{N}, (\forall A: \operatorname{PowerSeries}\left(R\right), (\forall B: \operatorname{PowerSeries}\left(R\right), ((\operatorname{constantCoeff}\left(A\right) = 1) \implies ((\operatorname{constantCoeff}\left(B\right) = 1) \implies ((\forall k: \mathbb{N}, ((k < n) \implies (\operatorname{coeff}\left(k, A\right) = \operatorname{coeff}\left(k, B\right)))) \implies (\forall m: \mathbb{N}, (\operatorname{coeff}\left(n, (A)^{m}\right) - \operatorname{coeff}\left(n, (B)^{m}\right) = (m: R) \cdot \left(\operatorname{coeff}\left(n, A\right) - \operatorname{coeff}\left(n, B\right)\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.diagonal_multiplier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For two unit-constant series agreeing below degree n, the difference in the degree-n coefficient of the m-th powers is m times the original difference.
+
+**Definition 1.2 (Construction of the integer coefficients).**
 
 $$\begin{aligned}\operatorname{P}\left(0\right) = 1\\\forall r: \mathbb{N}, \operatorname{P}\left(r + 1\right) = \operatorname{mk}\left((k: \mathbb{N} \mapsto \operatorname{if} k \le 1 \operatorname{then} 1 \operatorname{else} \operatorname{coeff}\left(k, \operatorname{P}\left(r\right)\right) - (k \cdot \operatorname{coeff}\left(k, \operatorname{P}\left(r\right)^{k}\right) - (k - 1) \cdot \operatorname{coeff}\left(k, \operatorname{P}\left(r\right)^{k + 1}\right)))\right)\\\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{P}\left(n + 1\right)\right)\end{aligned}$$
 
@@ -20,7 +32,7 @@ $$\begin{aligned}\operatorname{P}\left(0\right) = 1\\\forall r: \mathbb{N}, \ope
 
 Starting from the constant series one, each approximation fixes coefficients zero and one at one and subtracts the diagonal equation residual at every higher degree. Agreement below degree n implies agreement through degree n after this correction. Thus the displayed diagonal coefficients stabilize.
 
-**Definition 1.2 (The generating series).**
+**Definition 1.3 (The generating series).**
 
 $$A = \operatorname{mk}\left(a\right)$$
 
@@ -32,7 +44,7 @@ $$A = \operatorname{mk}\left(a\right)$$
 
 The coefficient function a defines the formal integer power series A.
 
-**Theorem 1.3 (The normalized defining equation).**
+**Theorem 1.4 (The normalized defining equation).**
 
 $$(\operatorname{coeff}\left(0, A\right) = 1) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land (\forall n: \mathbb{N}, (1 < n) \implies (n \cdot \operatorname{coeff}\left(n, A^{n}\right) = (n - 1) \cdot \operatorname{coeff}\left(n, A^{n + 1}\right))))$$
 
@@ -44,7 +56,7 @@ $$(\operatorname{coeff}\left(0, A\right) = 1) \land ((\operatorname{coeff}\left(
 
 For unit-constant series agreeing below degree n, the difference of the degree-n coefficients of their m-th powers is m times their degree-n coefficient difference. In the equation residual the multiplier is n squared minus (n-1)(n+1), which is one. Stabilization therefore gives a fixed point of the correction, and its residuals vanish.
 
-**Theorem 1.4 (Uniqueness of the normalized integer series).**
+**Theorem 1.5 (Uniqueness of the normalized integer series).**
 
 $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{coeff}\left(0, B\right) = 1) \implies ((\operatorname{coeff}\left(1, B\right) = 1) \implies ((\forall n: \mathbb{N}, (1 < n) \implies (n \cdot \operatorname{coeff}\left(n, B^{n}\right) = (n - 1) \cdot \operatorname{coeff}\left(n, B^{n + 1}\right))) \implies (B = A)))$$
 
@@ -56,7 +68,7 @@ $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 Strong induction on the degree compares any normalized solution B with A. Their residuals vanish, so the multiplier-one identity forces equality of the next coefficient. The two normalization hypotheses start the induction.
 
-**Theorem 1.5 (Evenness of central binomial coefficients).**
+**Theorem 1.6 (Evenness of central binomial coefficients).**
 
 $$\forall m: \mathbb{N}, (0 < m) \implies (2 \mid \operatorname{choose}\left(2 \cdot m, m\right))$$
 
@@ -68,7 +80,7 @@ $$\forall m: \mathbb{N}, (0 < m) \implies (2 \mid \operatorname{choose}\left(2 \
 
 This is Mathlib's two_dvd_centralBinom_of_one_le, expressed using choose.
 
-**Theorem 1.6 (The reduction is the all-ones series).**
+**Theorem 1.7 (The reduction is the all-ones series).**
 
 $$\operatorname{map}\left(\operatorname{intCast}\left(\operatorname{ZMod}\left(2\right)\right), A\right) = \operatorname{mk}\left((n: \mathbb{N} \mapsto 1)\right)$$
 
@@ -80,7 +92,7 @@ $$\operatorname{map}\left(\operatorname{intCast}\left(\operatorname{ZMod}\left(2
 
 The coefficient of degree n in the (n+1)-st power of the all-ones series is choose(2n,n), which is even for n greater than one. For even n the remaining multiplier vanishes modulo two. For odd n=2m+1 greater than one, the other coefficient is choose(4m+1,2m); Lucas reduction modulo two gives choose(2m,m), which is even. The all-ones series therefore satisfies the reduced equation. The same coefficient induction proves uniqueness over ZMod(2), giving the identity.
 
-**Theorem 1.7 (Hanna's oddness conjecture).**
+**Theorem 1.8 (Hanna's oddness conjecture).**
 
 $$\forall n: \mathbb{N}, \operatorname{Odd}\left(\operatorname{a}\left(n\right)\right)$$
 
@@ -100,6 +112,7 @@ Extracting any coefficient of the reduction identity gives a(n)=1 in ZMod(2). Ma
 
 - Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.a`
 - Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.central_binom_even`
+- Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.diagonal_multiplier`
 - Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.generating_unique`

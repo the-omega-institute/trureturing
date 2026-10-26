@@ -1,0 +1,85 @@
+Both $\Phi_{-q}$ and $\mathcal R_{u,\eta}$ commute with conjugation by
+every diagonal unitary. For a pure input
+$z_j=e^{i\theta_j}\sqrt{p_j}$, its recovery error is therefore a diagonal
+unitary conjugate of the error at
+
+$$
+v(p)=(\sqrt{p_0},\sqrt{p_1},\sqrt{p_2})^{\mathsf T},\qquad
+P(p)=v(p)v(p)^\dagger,\qquad
+\mathcal P=\{p_j\ge0:\ p_0+p_1+p_2=1\}.
+\tag{108.5}
+$$
+
+When a coordinate vanishes its phase is immaterial. The matrices are
+continuous on this entire closed simplex. By Lemma 105.3 and (105.6),
+
+$$
+E_{u,\eta}(q):=e_{-q}(\mathcal R_{u,\eta})
+ =\max_{p\in\mathcal P}f_q(p),\qquad
+f_q(p)=\|\Delta(q,p)\|_{\rm op},\qquad
+\Delta(q,p)=\Lambda_q(P(p))-P(p).
+\tag{108.6}
+$$
+
+Thus this maximization includes every complex pure input and every
+mixed input, rather than only the real-coordinate representatives used
+to compute it. Directly from (108.3),
+
+$$
+\Delta(q,p)=\Delta(0,p)+qB(p),\qquad
+B(p)=
+\begin{pmatrix}
+0&\eta\sqrt{p_0p_1}&0\\
+\eta\sqrt{p_0p_1}&u(p_1-p_2)/2&0\\
+0&0&-u(p_1-p_2)/2
+\end{pmatrix}.
+\tag{108.7}
+$$
+
+By Lemma 107.1 the full maximizing set at zero is
+
+$$
+\mathcal S=\{(1/3,x,2/3-x):\ 0\le x\le2/3\},\qquad
+f_0|_{\mathcal S}=\frac23,\qquad
+\Delta(0,p)=I/3-P(p)\quad(p\in\mathcal S).
+\tag{108.8}
+$$
+
+The last matrix has eigenvalues $-2/3,1/3,1/3$. Its minimum eigenvalue
+is simple with normalized eigenvector $v(p)$, even at the endpoints
+$x=0$ and $x=2/3$. Its first variation in $q$ is
+
+$$
+\begin{aligned}
+g(x)&=v(p)^\dagger B(p)v(p)
+ =\frac u2(p_1-p_2)^2+2\eta p_0p_1\\
+ &=2u(x-1/3)^2+\frac{2\eta}{3}x.
+\end{aligned}
+\tag{108.9}
+$$
+
+The two nonnegative terms cannot both vanish. Hence
+
+$$
+\kappa(u,\eta)=\min_{0\le x\le2/3}g(x)>0.
+\tag{108.10}
+$$
+
+Its explicit value follows by completing the square:
+
+$$
+g(x)=2u\left(x-\frac13+\frac{\eta}{6u}\right)^2
+       +\frac{\eta(4u-\eta)}{18u},\qquad
+\kappa(u,\eta)=
+\begin{cases}
+\displaystyle\frac{\eta(4u-\eta)}{18u},&0<\eta\le2u,\\[5pt]
+\displaystyle\frac{2u}{9},&\eta\ge2u.
+\end{cases}
+\tag{108.11}
+$$
+
+Here $u>0$ ensures the denominators are nonzero. In the first case the
+quadratic's vertex $1/3-\eta/(6u)$ belongs to $[0,2/3]$; in the second
+it is nonpositive, so the interval minimum is at zero. The cases agree
+at $\eta=2u$ and always retain the CPTP restriction (108.1).
+

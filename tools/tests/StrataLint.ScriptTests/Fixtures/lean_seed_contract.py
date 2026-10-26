@@ -7,6 +7,7 @@ import subprocess
 import datetime
 import shutil
 import sys
+import tarfile
 import unittest
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
@@ -21,6 +22,283 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
     def local_environment(self, **changes):
         return dict(GITHUB_ACTIONS="false", GITHUB_EVENT_NAME="", GITHUB_REF="", GITHUB_REPOSITORY="",
                     GITHUB_SHA="not-an-input", GITHUB_RUN_ID="", GITHUB_RUN_ATTEMPT="", **changes)
+
+    def local_assets_fixture(self, multipart=False):
+        subprocess.run(["git", "-C", str(self.root), "branch", "-M", "dev"], check=True, capture_output=True)
+        self.assertEqual(0, self.transport("publish").returncode)
+        snapshot = next(self.remote.iterdir())
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        if multipart:
+            archive = snapshot / "lean-build.tgz"
+            packed = archive.read_bytes()
+            archive.unlink()
+            chunks = (packed[:len(packed) // 2], packed[len(packed) // 2:])
+            manifest["parts"] = []
+            for index, chunk in enumerate(chunks):
+                name = f"lean-build.tgz.part-{index:02d}"
+                (snapshot / name).write_bytes(chunk)
+                manifest["parts"].append(dict(name=name, bytes=len(chunk), sha256=digest(chunk)))
+            write(snapshot / "manifest.json", json.dumps(manifest))
+        local = self.root / "local assets ' ; `touch UNEXPECTED`"
+        local.mkdir()
+        for part in manifest["parts"]:
+            (local / part["name"]).write_bytes((snapshot / part["name"]).read_bytes())
+        arguments = ("--refresh-stale", "--approved-tag", snapshot.name,
+                     "--approved-producer", self.producer_commit, "--local-assets", str(local))
+        return snapshot, local, arguments
+
+    def assert_manifest_only_downloaded(self, log):
+        calls = [json.loads(line) for line in log.read_text().splitlines()]
+        self.assertEqual("api", calls[0][0])
+        self.assertFalse(any(call[:2] == ["release", "list"] for call in calls))
+        downloads = [call for call in calls if call[:2] == ["release", "download"]]
+        self.assertEqual(1, len(downloads))
+        self.assertEqual(["manifest.json"], [downloads[0][i + 1] for i, arg in enumerate(downloads[0])
+                                            if arg == "--pattern"])
+
+    def local_clone_probe(self, failure=""):
+        write(self.bin / "sitecustomize.py", '''
+import ctypes, errno, json, os, sys
+if os.environ["FAKE_CLONE_FAILURE"] == "platform":
+    sys.platform = "unsupported-local-assets"
+original_cdll = ctypes.CDLL
+def cdll(*args, **kwargs):
+    library = original_cdll(*args, **kwargs)
+    native = getattr(library, "fclonefileat", None)
+    if os.environ["FAKE_CLONE_FAILURE"] == "capability":
+        library.fclonefileat = None
+    elif native is not None:
+        native.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+        native.restype = ctypes.c_int
+        def clone(source, directory, name, flags):
+            if os.environ["FAKE_CLONE_FAILURE"] == "errno":
+                ctypes.set_errno(errno.EXDEV)
+                return -1
+            result = native(source, directory, name, flags)
+            if result == 0:
+                target = os.open(name, os.O_RDWR, dir_fd=directory)
+                try:
+                    source_stat, target_stat = os.fstat(source), os.fstat(target)
+                    before = os.read(source, source_stat.st_size)
+                    os.write(target, b"private write")
+                    os.lseek(source, 0, 0)
+                    assert os.read(source, source_stat.st_size) == before, "shared source bytes"
+                    os.lseek(target, 0, 0)
+                    os.write(target, before)
+                    os.ftruncate(target, len(before))
+                    with open(os.environ["FAKE_CLONE_LOG"], "a") as log:
+                        log.write(json.dumps(dict(name=os.fsdecode(name), source=source_stat.st_ino,
+                            target=target_stat.st_ino, links=target_stat.st_nlink)) + "\\n")
+                finally:
+                    os.close(target)
+            return result
+        library.fclonefileat = clone
+    return library
+ctypes.CDLL = cdll
+''')
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLONE_FAILURE=failure,
+                    FAKE_CLONE_LOG=str(self.root / "clone-events"))
+
+    @unittest.skipUnless(sys.platform == "darwin", "native clonefile requires macOS")
+    def test_local_assets_native_private_stage_and_make_handoff(self):
+        # Both the single-asset and assembled multipart paths use real native clones.
+        previous = self.root
+        self.root = previous / "checkout with spaces"
+        self.root.mkdir()
+        for child in previous.iterdir():
+            if child != self.root:
+                child.rename(self.root / child.name)
+        self.remote, self.bin = self.root / "remote", self.root / "bin"
+        self.publisher = self.root / "tools/scripts/worktree/lean-cache-publish.sh"
+        for multipart in (False, True):
+            with self.subTest(multipart=multipart):
+                snapshot, local, arguments = self.local_assets_fixture(multipart)
+                originals = {p.name: (p.read_bytes(), p.stat()) for p in local.iterdir()}
+                write(self.root / ".lake/build/keep.txt", "old cache")
+                log = self.root / "local-gh-calls"
+                environment = self.transport_environment(GITHUB_ACTIONS="false", FAKE_GH_LOG=str(log),
+                    **self.local_clone_probe(), LEAN_CACHE_REPOSITORY=str(self.root),
+                    LEAN_CACHE_APPROVED_TAG=snapshot.name, LEAN_CACHE_APPROVED_PRODUCER=self.producer_commit,
+                    LEAN_CACHE_LOCAL_ASSETS=str(local))
+                result = subprocess.run([shutil.which("make"), "-C", str(self.root),
+                    "lean-cache-from-github-without-mathlib", "REFRESH_STALE=1"],
+                    cwd=str(self.root.parent), env=environment, text=True, capture_output=True)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"unpacked"', result.stdout)
+                self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+                self.assertFalse((self.root / ".lake/build/keep.txt").exists())
+                self.assertFalse((self.root / "UNEXPECTED").exists())
+                self.assert_manifest_only_downloaded(log)
+                events = [json.loads(line) for line in (self.root / "clone-events").read_text().splitlines()]
+                self.assertEqual(sorted(originals), sorted(event["name"] for event in events))
+                for event in events:
+                    self.assertNotEqual(event["source"], event["target"])
+                    self.assertEqual(1, event["links"])
+                for path in local.iterdir():
+                    content, status = originals[path.name]
+                    self.assertEqual(content, path.read_bytes())
+                    self.assertEqual((status.st_ino, status.st_mtime_ns), (path.stat().st_ino, path.stat().st_mtime_ns))
+                shutil.rmtree(snapshot)
+                shutil.rmtree(local)
+                log.unlink()
+                (self.root / "clone-events").unlink()
+
+    def test_local_assets_require_exact_production_refresh(self):
+        log = self.root / "invalid-local-gh-calls"
+        for extra in ((), ("--refresh-stale",), ("--approved-tag", "x", "--refresh-stale"),
+                      ("--mode", "candidate"), ("--mode", "verification")):
+            with self.subTest(extra=extra):
+                result = self.transport("fetch", arguments=("--local-assets", str(self.root), *extra), FAKE_GH_LOG=str(log))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertFalse(log.exists())
+
+    def test_local_assets_still_validate_fresh_remote_identity_and_inventory(self):
+        snapshot, local, arguments = self.local_assets_fixture()
+        original = (snapshot / "manifest.json").read_bytes()
+        for damage in ("producer", "key", "inventory", "manifest-digest", "part-digest", "part-size", "remote"):
+            with self.subTest(damage=damage):
+                manifest = json.loads(original)
+                environment = {}
+                if damage == "producer": manifest["producer_commit_sha"] = "f" * 40
+                elif damage == "key": manifest["cache_key"]["execution_sha256"] = "0" * 64
+                elif damage == "inventory": manifest["parts"][0]["name"] = "unexpected"
+                elif damage == "manifest-digest": environment["FAKE_MANIFEST_DIGEST"] = "sha256:" + "0" * 64
+                elif damage.startswith("part-"):
+                    environment["FAKE_PART_ASSET"] = json.dumps({"digest": "sha256:" + "0" * 64}
+                        if damage == "part-digest" else {"size": 1})
+                else: environment["FAKE_FAIL"] = "api"
+                write(snapshot / "manifest.json", json.dumps(manifest))
+                result = self.transport("fetch", arguments=arguments, **environment,
+                                        **self.local_clone_probe("errno"))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertNotIn("local asset clonefile failed", result.stdout)
+                self.assertNotIn("local assets require macOS", result.stdout)
+                self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+                self.assertFalse((self.root / "clone-events").exists())
+
+    @unittest.skipUnless(sys.platform == "darwin", "native clonefile requires macOS")
+    def test_local_assets_invalid_files_fail_without_remote_part_fallback(self):
+        snapshot, local, arguments = self.local_assets_fixture(True)
+        # The first part is already cloned when the second part fails.
+        part = sorted(local.iterdir())[-1]
+        original = part.read_bytes()
+        staging = self.root / "private fetch staging"
+        staging.mkdir()
+        write(self.root / ".lake/build/keep.txt", "old cache")
+        for damage in ("missing", "size", "hash", "symlink", "directory", "fifo", "source-symlink"):
+            with self.subTest(damage=damage):
+                log = self.root / "bad-local-gh-calls"
+                part.unlink()
+                if damage == "size": part.write_bytes(original[:-1])
+                elif damage == "hash": part.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                elif damage == "symlink": part.symlink_to(snapshot / part.name)
+                elif damage == "directory": part.mkdir()
+                elif damage == "fifo": os.mkfifo(part)
+                elif damage == "source-symlink":
+                    part.write_bytes(original)
+                    local.rename(local.with_name("original assets"))
+                    local.symlink_to(local.with_name("original assets"), target_is_directory=True)
+                result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log), TMPDIR=str(staging))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"miss"', result.stdout)
+                self.assertEqual("old cache", (self.root / ".lake/build/keep.txt").read_text())
+                self.assertEqual({"build"}, {p.name for p in (self.root / ".lake").iterdir()})
+                self.assertEqual([], list(staging.iterdir()))
+                self.assert_manifest_only_downloaded(log)
+                log.unlink()
+                if damage == "source-symlink":
+                    local.unlink()
+                    local.with_name("original assets").rename(local)
+                if part.is_dir(): part.rmdir()
+                else: part.unlink(missing_ok=True)
+                part.write_bytes(original)
+
+    @unittest.skipUnless(sys.platform == "darwin", "native clonefile requires macOS")
+    def test_local_assets_keep_archive_hash_gzip_and_tar_validation(self):
+        snapshot, local, arguments = self.local_assets_fixture()
+        archive = snapshot / "lean-build.tgz"
+        original, manifest_bytes = archive.read_bytes(), (snapshot / "manifest.json").read_bytes()
+        for damage, reason in (("archive-hash", "archive checksum or size mismatch"),
+                               ("gzip", "end-of-stream"), ("tar", "archive contains an invalid cache member")):
+            with self.subTest(damage=damage):
+                packed = original
+                if damage == "gzip": packed = packed[:-8]
+                elif damage == "tar":
+                    with tarfile.open(archive, "w:gz") as target:
+                        member = tarfile.TarInfo("../outside")
+                        member.type = tarfile.DIRTYPE
+                        target.addfile(member)
+                    packed = archive.read_bytes()
+                archive.write_bytes(packed)
+                (local / archive.name).write_bytes(packed)
+                manifest = json.loads(manifest_bytes)
+                manifest.update(archive_bytes=len(packed),
+                    archive_sha256="0" * 64 if damage == "archive-hash" else digest(packed),
+                    parts=[dict(name=archive.name, bytes=len(packed), sha256=digest(packed))])
+                write(snapshot / "manifest.json", json.dumps(manifest))
+                log = self.root / "archive-validation-gh-calls"
+                result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn(reason, result.stdout)
+                self.assert_manifest_only_downloaded(log)
+                self.assertEqual(packed, (local / archive.name).read_bytes())
+                self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+                self.assertEqual({"build"}, {p.name for p in (self.root / ".lake").iterdir()})
+                log.unlink()
+
+    def test_local_assets_unsupported_platform_is_an_optional_miss(self):
+        snapshot, local, arguments = self.local_assets_fixture()
+        log = self.root / "unsupported-gh-calls"
+        result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log),
+                                **self.local_clone_probe("platform"))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("local assets require macOS native clonefile", result.stdout)
+        self.assert_manifest_only_downloaded(log)
+        self.assertFalse((self.root / "clone-events").exists())
+
+    def test_local_assets_optional_clone_library_does_not_affect_remote_fetch(self):
+        snapshot, local, arguments = self.local_assets_fixture()
+        shutil.rmtree(self.root / ".lake/build")
+        write(self.bin / "sitecustomize.py", 'import sys\nsys.modules["ctypes"] = None\n')
+        log = self.root / "optional-library-gh-calls"
+        environment = dict(PYTHONPATH=str(self.bin), FAKE_GH_LOG=str(log))
+        restored = self.transport("fetch", **environment)
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertIn('"status":"unpacked"', restored.stdout)
+        calls = [json.loads(line) for line in log.read_text().splitlines()]
+        self.assertTrue(any(call[:2] == ["release", "download"] and call[-1] == "lean-build.tgz" for call in calls))
+        log.unlink()
+        lake = self.root / ".lake"
+        before = {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()}
+        failed = self.transport("fetch", arguments=arguments, **environment)
+        self.assertEqual(1, failed.returncode, failed.stdout + failed.stderr)
+        self.assertIn('"status":"miss"', failed.stdout)
+        self.assertNotIn("Traceback", failed.stderr)
+        self.assert_manifest_only_downloaded(log)
+        self.assertEqual(before, {str(p.relative_to(lake)): p.read_bytes() for p in lake.rglob("*") if p.is_file()})
+
+    @unittest.skipUnless(sys.platform == "darwin", "native clonefile requires macOS")
+    def test_local_assets_clone_failure_and_install_rollback_preserve_source_and_old_cache(self):
+        snapshot, local, arguments = self.local_assets_fixture(True)
+        originals = {p.name: p.read_bytes() for p in local.iterdir()}
+        write(self.root / ".lake/build/keep.txt", "old cache")
+        base = self.root / ".lake/build/.release-refreshed-at"
+        write(base, "old marker")
+        for failure in ("capability", "errno", "install"):
+            with self.subTest(failure=failure):
+                log = self.root / "failed-local-gh-calls"
+                probe = self.installation_probe("install") if failure == "install" else self.local_clone_probe(failure)
+                result = self.transport("fetch", arguments=arguments, FAKE_GH_LOG=str(log), **probe)
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                reason = {"capability": "native fclonefileat is unavailable", "errno": "local asset clonefile failed",
+                          "install": "injected rename failure"}[failure]
+                self.assertIn(reason, result.stdout)
+                self.assert_manifest_only_downloaded(log)
+                self.assertEqual("old cache", (self.root / ".lake/build/keep.txt").read_text())
+                self.assertEqual("old marker", base.read_text())
+                self.assertEqual({"build"}, {p.name for p in (self.root / ".lake").iterdir()})
+                self.assertEqual(originals, {p.name: p.read_bytes() for p in local.iterdir()})
+                log.unlink()
 
     def test_local_make_publication_and_restore_use_current_protected_head(self):
         # Local make callers publish clean protected-dev snapshots with UTC suffixes.

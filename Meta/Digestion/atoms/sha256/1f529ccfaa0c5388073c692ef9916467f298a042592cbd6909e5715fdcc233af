@@ -1,0 +1,109 @@
+**Branch 4 calculation.** Here the full reductions are
+
+$$
+\begin{aligned}
+\overline F_4&=4z^4+10z^3+z^2+9z+4,\\
+\overline H_4&=10z^{10}+7z^9+11z^7+10z^6+5z^5
++7z^4+10z^3+z^2+8z.
+\end{aligned}
+\tag{19.9}
+$$
+
+For a short multiplication check retaining the original plane factor,
+put
+
+$$
+\begin{gathered}
+f_4=10\overline F_4=z^4+9z^3+10z^2+12z+1,\\
+f=10\overline F=z^5+10z^4+6z^3+9z^2+1=(z+1)f_4,\\
+L=5z^3+9z^2+6z+2,\qquad h=8L=z^3+7z^2+9z+3.
+\end{gathered}
+\tag{19.10}
+$$
+
+Modulo $f$, the remainders of $P_4,Q_4,Y_4$ are respectively
+
+$$
+\begin{aligned}
+p_0&=12z^4+9z^3+11z^2+8z+7,\\
+q_0&=2z^4+7z^3+11z^2+3z+10,\\
+y_0&=10z^4+2z^3+4z^2+5z+6.
+\end{aligned}
+\tag{19.11}
+$$
+
+These lowercase symbols are local polynomial remainders, not gain
+samples or an acquired base. Ordinary multiplication gives
+
+$$
+9y_0^2+(9p_0+5q_0)y_0+p_0q_0
+=11z^8+12z^7+6z^6+7z^5+10z^4+3z^3+z^2+12z+6.
+\tag{19.12}
+$$
+
+The corresponding small identities are
+
+$$
+\begin{aligned}
+\overline H_4&=(10z^5+11z^4+12z^3+8z^2+6z)f+zL,\\
+f&=(z^2+3z+2)h+4(z+1)(z+2),\\
+h&=(z+4)(z+1)(z+2)+8(z+1).
+\end{aligned}
+\tag{19.13}
+$$
+
+Since $f(0)=1$, its gcd with $zL$ equals its gcd with $h$.
+The last two identities give $\gcd(f,h)=z+1$:
+$h(-1)=0$ whereas $h(-2)=5$. But $f_4(-1)=4\ne0$, so
+$\gcd(f_4,\overline H_4)=1$. This conclusion can also be
+reconstructed directly, without passing through $f$, from
+
+$$
+\begin{gathered}
+u_3=3z^3+8z^2+7z+8,\quad u_2=11z^2+9z,\quad u_1=3z+8,\\
+\overline H_4
+=(10z^6+8z^5+10z^4+7z^3+z^2+6z+5)f_4+u_3,\\
+f_4=(9z+5)u_3+u_2,\qquad
+u_3=(5z+12)u_2+u_1,\\
+u_2=(8z+12)u_1+8,\qquad u_1=(2z+1)8.
+\end{gathered}
+\tag{19.14}
+$$
+
+All normalization constants $4,10,8$ used above are units modulo
+$13$. The coefficient and degree data relevant to lifting are
+
+| Polynomial | Degree over $\mathbb Q$ | Integer content | Leading coefficient modulo $13$ | Reduced degree |
+| --- | ---: | ---: | ---: | ---: |
+| $F_3$ | 3 | 1 | 10 | 3 |
+| $H_3$ | 8 | 675 | 0 | 6 |
+| $F_4$ | 4 | 1 | 4 | 4 |
+| $H_4$ | 10 | 675 | 10 | 10 |
+
+In particular, the first $H$ really drops from degree eight to six;
+its reduced leading coefficient is $11$. No preservation of its
+degree is assumed.
+
+**One-sided Gauss lifting.** If $F_i$ and $H_i$ had a nonconstant
+common divisor over $\mathbb Q$, choose a primitive integer common
+divisor $G$. Gauss lemma gives integer quotients
+$F_i=GB$ and $H_i=GC$. Since
+
+$$
+13\nmid\operatorname{lc}(F_i)
+=\operatorname{lc}(G)\operatorname{lc}(B),
+\tag{19.15}
+$$
+
+the reduction of $G$ retains its positive degree and divides both
+$\overline F_i$ and $\overline H_i$. This contradicts (19.8) or
+(19.14). No condition on $\operatorname{lc}(H_i)$ is required.
+Hence both gcds over $\mathbb Q$ are one. The Euclidean identity
+over $\mathbb Q$ then also rules out a common complex root of
+either necessary pair. This is only a statement about these two
+explicit univariate pairs, not an elimination of a global complex
+collision system.
+
+There can therefore be no actual incidence in (17.1). This proves
+Theorem 17.1, with all the branch and singular guards of Section 18.
+

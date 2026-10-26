@@ -1,0 +1,5 @@
+source_id = "local-q2-irreducible-projective-rigidity"
+path = "docs/develop/theory/LOCAL_Q2_IRREDUCIBLE_PROJECTIVE_RIGIDITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

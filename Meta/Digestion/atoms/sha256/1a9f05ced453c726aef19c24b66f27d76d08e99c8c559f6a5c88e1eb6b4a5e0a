@@ -1,0 +1,16 @@
+**Definition 7.4 (The full original common literal-process requirement).** A common literal-process correspondence for $\mathcal W$ must supply one permitted preparation family and shared legal controls and acquisitions such that, for every world and every original executed word through clock seven,
+
+$$
+\operatorname{Law}_W(\widetilde R_w)=\delta_{y_w(W)}.
+$$
+
+For each original history $H$ with numeric vector $h$, its acquired history event must then obey
+
+$$
+\mathbb P_W(\widetilde R_w=h)=1_{\mathcal F(H)}(W),
+$$
+
+and continuation on that event must retain the same complete world for the original alternative responses and recursive predicates of Definitions 1.2–1.3. The task retains all original gain strata and clocks, the fifth acquisition between its two $M$ actions, one drift per world, one whole polynomial per world, the entire child, and possibly different terminal pairs. No reset, copy, skipped read, shifted clock, additional outward port or success selection is allowed. If the intended preparation must be obtained from an unknown original carrier, a legal common preparation map from that carrier is an additional required datum.
+
+The existence problem is to furnish such data on the full original domain, or a mathematical obstruction under explicitly stated assumptions on those data. A mean identity, an indexed population-law preimage, a continuous conditional kernel at a null history and an assumed family of initial programs are different conditions from this literal-process requirement.
+

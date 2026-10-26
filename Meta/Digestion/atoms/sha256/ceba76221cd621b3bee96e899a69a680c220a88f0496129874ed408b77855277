@@ -1,0 +1,9 @@
+**Corollary 134.2 (Three distinct optimizations).** The fixed limiting map
+$\mathcal R_0$ from (133.8) has coefficient zero: for this fixed
+composition only the coherence derivative remains, and on its active set the
+gain is $2h|z_1|^2/3$, whose minimum is zero. The best fixed
+map in $\mathcal Z_0$ has coefficient $1/12$ by Theorem 134.1, whereas the
+unrestricted optimized coefficient is $\sqrt2/9$ by Theorem 133.6. The
+positive-q exact unrestricted value and the optimality of the moving path are
+not determined here.
+

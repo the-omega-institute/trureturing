@@ -1,0 +1,45 @@
+**Definition 101.2 (Distinct task and memory problems).** For the sharp-task
+problem of Environment record memory (27.1), the loss for
+$E_v=|v\rangle\langle v|$ is
+
+$$
+\min_{D\ {\rm CPTP}}\sup_{\rho\in\mathsf D(A)}
+\left|\operatorname{Tr}(E_v D F^n(\rho))
+              -\operatorname{Tr}(E_v\rho)\right|,
+\tag{101.1}
+$$
+
+with a decoder allowed to depend on $v$. Its optimization is different
+from (93.8). Theorem 94.2 gives a uniform bound for any such effect
+under the decoder $D_n$ in (94.6), since measurement cannot increase trace
+distance; it does not identify every task's optimum in (101.1).
+In the task populations
+$p_v=|\langle\xi,v\rangle|^2$, $q_v=|\langle e,v\rangle|^2$,
+$r_v=|\langle f,v\rangle|^2$, the all-$v$, all-finite-horizon target,
+the $r_v=0$, $p_vq_v>0$ root-rule candidate, and the interior
+$p_vq_vr_v>0$ outside Environment (27.24) remain separate unresolved
+problems. The root in (94.3) specifies the erased-history horizon-two
+diamond value and makes no assertion about that task root rule.
+
+Separate task-optimal decoders also do not determine one decoder
+simultaneously attaining a prescribed collection of task optima.
+The single horizon decoder here attains the whole-channel minimax
+loss (93.8); that property does not assert simultaneous optimality for
+each task in (101.1). The critical-spin and critical-norm estimates,
+causal recovery policies, positive-error memory tradeoffs and uniform
+unbounded-memory questions of Purity arithmetic Definition 50.1 and
+§90 and Environment record memory §§27.8 and 28 remain distinct.
+QC11's calibrated-source and delayed-catalogue bounds are not hypotheses
+of Theorem 94.2. The conclusion concerns the declared actual fair
+erased-history qutrit channel and terminal permissions only.
+
+[PA]: AURIC_FIB_ACTUAL_WORD_PURITY_ARITHMETIC.md
+[ENV]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
+[QM]: AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[SN]: https://quantum-journal.org/papers/q-2021-08-09-519/pdf/
+[TQI2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+[TQI3]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf
+[TQIL]: ../../../Library/Quantum/watrous2018theory.md
+[W12]: https://arxiv.org/pdf/1207.5726v2
+[W12L]: ../../../Library/QuantumChannels/watrous2012simpler.md
+

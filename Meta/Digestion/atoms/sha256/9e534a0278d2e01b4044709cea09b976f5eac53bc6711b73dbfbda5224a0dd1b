@@ -1,0 +1,86 @@
+**Definition 7.1 (The analytic source coordinates).** All worlds, histories,
+clocks and guards in Definition 1.1 remain in force. Throughout the
+following sections $K=4k$, so the fixed F31 identity reads
+
+$$
+\operatorname{Res}_d(f,K)=256D^8F_0^2R.
+$$
+
+The forms $a_i$ and the polynomial pseudo-remainder $\alpha d+\beta$
+retain their exact definitions in Section 2. Write
+
+$$
+e=d-24,\qquad
+\eta=-\frac{24}{5}(b-1/8)\kappa,\qquad
+\kappa=\frac6T-\frac2U.
+$$
+
+The full parent equation of O, Theorem 2.1, is $e\Lambda=\eta$.
+At a regular source its one whole gain is the interpolant of
+
+$$
+(g_0,g_1,g_2,g_3)
+=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+$$
+
+This is an invocation of the full parent converse, including its
+nonzeroness argument from the unequal original readings. It does not
+assume that any particular gain sample is nonzero.
+
+Put $t=1/b,w=r/b$. The strict source domain becomes $t>0,0<w<t$,
+and the exact rational substitutions are
+
+$$
+j=\frac{1-w^2+wt}{t},\quad
+n=\frac{1+w-w^2+wt}{t},\quad
+T=\frac{1+t}{t},\quad U=\frac{2+t}{t}.
+$$
+
+In these substitutions the regular parent formula, and then all four
+responses $(p,v,a,m)=(p,u_M,f_{MJ},f_{MM})$, extend analytically to an
+open neighbourhood of $(t,w)=(0,0)$. Indeed $\Lambda(0,0)=1$ and
+$e(0,0)=-24$. At $t=0$ the extended expression for $e$ is identically
+$-24$ for all small $w$, so $d=24+e$ is divisible by $t$ in the local
+analytic ring. Every displayed $g_i$ is likewise $t$ times an analytic
+function. Interpolation preserves this divisibility, and the continuation
+traces are $1/t$ times analytic functions. Thus their products have no
+pole. The other denominator factors have nonzero values at the origin:
+$1+t,2+t,1-w^2+wt,1+w-w^2+wt$ and $\Lambda$.
+
+Direct substitution and first differentiation give
+
+$$
+(p,v,a,m)(0,0)=
+\left(-\frac{216}{5},-225,-\frac{1224}{5},-\frac{3264}{5}\right),
+$$
+
+$$
+\frac{\partial(p,v,a,m)}{\partial(t,w)}(0,0)=
+\begin{pmatrix}
+-2238/5&2088/5\\
+-13293/5&2355\\
+-18558/5&14568/5\\
+-49569/5&42384/5
+\end{pmatrix},\qquad
+\det\frac{\partial(p,v)}{\partial(t,w)}=\frac{1403334}{25}\ne0.
+$$
+
+These entries can also be obtained by applying the extrapolation weights
+of Definition 2.1 to the four samples above, followed by multiplication
+by the original traces. In particular, uniformly for $0\le r\le1$,
+
+$$
+\begin{aligned}
+p(r,b)&=-216/5+\frac{2088r-2238}{5b}+O(b^{-2}),\\
+v(r,b)&=-225+\frac{11775r-13293}{5b}+O(b^{-2}).
+\end{aligned}
+$$
+
+Uniformity follows by substituting $w=rt$ into an analytic function on
+a fixed neighbourhood of the origin and using compactness of $[0,1]$.
+Also $j,n\ge b$ gives $\Lambda\ge1-8/b$, so sufficiently large $b$
+is regular without a source cutoff assumption. The inverse-function
+theorem gives a neighbourhood of the origin on which $(t,w)\mapsto(p,v)$
+is injective. All sufficiently large-$b$ strict sources lie in that
+neighbourhood. These analytic coordinates are not acquired labels.
+

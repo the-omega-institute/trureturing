@@ -1,0 +1,39 @@
+- **[M] Mixed-state number-SSR projection.** N. Schuch, F. Verstraete and
+  J. I. Cirac, *Quantum entanglement theory in the presence of superselection
+  rules*, [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  Phys. Rev. A **70**, 042310;
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF p. 9, §IV.D.1, Eqs. (17)--(18): mixed X state and standard form.
+  PDF p. 10, §IV.D.2: two-copy local one-particle projection, squared
+  coherence and preservation of the original threshold. The mapping is
+  (148.4); the direct unfiltered-input probabilities are (150.1), (151.4).
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its $2\times2$ case applies to the active and
+  even--even blocks. No general $2\times4$ sufficiency is imported.
+- **[W] Fixed-number pure-state resource context.** H. M. Wiseman and
+  J. A. Vaccaro, *The entanglement of indistinguishable particles shared
+  between two parties*,
+  [quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+  Phys. Rev. Lett. **91**, 097902;
+  DOI [10.1103/PhysRevLett.91.097902](https://doi.org/10.1103/PhysRevLett.91.097902).
+  PDF pp. 2--3, Eqs. (12)--(14), concern fixed-local-number projection
+  and pure-state entanglement. They do not supply a mixed Gibbs formula.
+- **[R] Two-copy SSR review context.** S. D. Bartlett, T. Rudolph and
+  R. W. Spekkens, *Reference frames, superselection rules, and quantum
+  information*, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+  Rev. Mod. Phys. **79**, 555;
+  DOI [10.1103/RevModPhys.79.555](https://doi.org/10.1103/RevModPhys.79.555).
+  PDF §III.C.2, Eq. (3.32), and §III.C.4 give mature two-copy and
+  superselection context. The optical context is not transferred as a
+  physical realization of these native fermionic modes.
+- **[N] Native metric and history source.** This volume, §§127--130,
+  at [28e2ace3ee3cb91ebd90e1c7da0bec381b109e52](https://github.com/the-omega-institute/trureturing/blob/28e2ace3ee3cb91ebd90e1c7da0bec381b109e52/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  The source correspondence is specialized in §§139--140 and §155.
+- **[F] Fermionic extension and ordering source.** This volume, §§135--138,
+  at [485055803a4de7e47866c28fb75de1443e3eae89](https://github.com/the-omega-institute/trureturing/blob/485055803a4de7e47866c28fb75de1443e3eae89/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+  supplies the finite Fock/exterior and second-quantization interface.
+  Sections 141--142 fix its full Gibbs state and even B-local factorization;
+  §§149--151 specify the two-preparation CAR coordinates and common filter.
+

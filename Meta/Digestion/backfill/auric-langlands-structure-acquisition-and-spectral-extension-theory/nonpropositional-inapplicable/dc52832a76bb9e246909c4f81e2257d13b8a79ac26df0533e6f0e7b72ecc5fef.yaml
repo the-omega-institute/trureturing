@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc52832a76bb9e246909c4f81e2257d13b8a79ac26df0533e6f0e7b72ecc5fef
+  normalized_sha256: sha256:dc52832a76bb9e246909c4f81e2257d13b8a79ac26df0533e6f0e7b72ecc5fef
+cas_ref: sha256:dc52832a76bb9e246909c4f81e2257d13b8a79ac26df0533e6f0e7b72ecc5fef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the unknown-state copying task and distinguishes the independently supplied preparation contract from a free cloning operation; scope and permissions, no mathematical no-cloning theorem is stated.
+    previous_atom_id: dbfc98e2ad3b8825e68f60d61c94b718978b419600a3ff0cf36cc9f5685504be
+    next_atom_id: 6c0a8d1d4b6bc2acfb9adff55eccf007d4f0fcc8cf482ce4ef5901623f6fd653

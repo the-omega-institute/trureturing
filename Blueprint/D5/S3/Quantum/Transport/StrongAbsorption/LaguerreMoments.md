@@ -366,6 +366,102 @@ $$\forall (M : \mathbb{N}) , (1 \le M) \to laguerreHw M =^{f} [nhds 0] (fun t \m
 
 The displayed identity or estimate is used in the moment and density expansions.
 
+**Theorem 1.31 (derivation_product_eigen).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (\sigma : (Type*)) , ((([DecidableEq \sigma]) \to ((\forall (D : (Derivation \mathbb{R} (MvPolynomial (Fin M) \mathbb{R}) (MvPolynomial (Fin M) \mathbb{R}))) , ((\forall (s : (Finset \sigma)) , ((\forall (f : ((\sigma) \to (MvPolynomial (Fin M) \mathbb{R}))) , ((\forall (g : ((\sigma) \to (MvPolynomial (Fin M) \mathbb{R}))) , ((((\forall i \in s , (D (f i) = g i \cdot f i))) \to ((D (\prod i \in s , f i) = (\sum i \in s , g i) \cdot \prod i \in s , f i))))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.derivation_product_eigen` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.32 (orthant_measure).**
+
+$$\forall (M : (\mathbb{N})) , (((volume : (Measure ((Fin M) \to (\mathbb{R})))) . restrict ((\operatorname{Set}.\operatorname{Ici} (0 : ((Fin M) \to (\mathbb{R}))))) = orthantMeasure M))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.orthant_measure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.33 (polynomial_exp_integrable_single).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((((0 < a)) \to ((\forall (P : (MvPolynomial (Fin M) \mathbb{R})) , ((Integrable (fun x \mapsto (\operatorname{Real}.\operatorname{exp} (- a \cdot \sum i , x i) \cdot \operatorname{MvPolynomial}.\operatorname{eval} x P)) (orthantMeasure M)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polynomial_exp_integrable_single` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Definition 1.34 (polyIntegral).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((\forall (P : (MvPolynomial (Fin M) \mathbb{R})) , ((polyIntegral a P = (\int x , \operatorname{Real}.\operatorname{exp} (- a \cdot \sum i , x i) \cdot \operatorname{MvPolynomial}.\operatorname{eval} x P \,d orthantMeasure M)))))))$$
+
+*Formalization.* `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.35 (polyIntegral_add).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((((0 < a)) \to ((\forall (P : (MvPolynomial (Fin M) \mathbb{R})) , ((\forall (Q : (MvPolynomial (Fin M) \mathbb{R})) , ((polyIntegral a (P + Q) = polyIntegral a P + polyIntegral a Q))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.36 (polyIntegral_sum).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((((0 < a)) \to ((\forall (\sigma : (Type*)) , ((\forall (s : (Finset \sigma)) , ((\forall (P : ((\sigma) \to (MvPolynomial (Fin M) \mathbb{R}))) , ((polyIntegral a (\sum i \in s , P i) = \sum i \in s , polyIntegral a (P i)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.37 (polyIntegral_X_sq).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((((0 < a)) \to ((\forall (i : (Fin M)) , ((\forall (P : (MvPolynomial (Fin M) \mathbb{R})) , ((a \cdot polyIntegral a (((X i))^{2} \cdot P) = 2 \cdot polyIntegral a (X i \cdot P) + polyIntegral a (((X i))^{2} \cdot \operatorname{MvPolynomial}.\operatorname{pderiv} i P)))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_X_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
+**Theorem 1.38 (laguerre_p2).**
+
+$$\forall (M : (\mathbb{N})) , ((\forall (a : (\mathbb{R})) , ((((0 < a)) \to ((laguerreMoment M 2 a = 2 \cdot ((M : (\mathbb{R})))^{3} / (a)^{2}))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerre_p2` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed formula relates the polynomial integrals and the normalized finite-channel measure.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.congr_eventually`
@@ -377,6 +473,7 @@ The displayed identity or estimate is used in the moment and density expansions.
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.deltaPoly_eval`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.deltaSq`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.deltaSq_nonneg`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.derivation_product_eigen`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.expJet`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.exp_deriv_near`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.exp_jet_recurrence`
@@ -394,8 +491,15 @@ The displayed identity or estimate is used in the moment and density expansions.
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerreWeightedMeasure`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerreWeighted_mgf_derivative`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerre_p1`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerre_p2`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.orthant_measure`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.partition`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.partition_pos`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_X_sq`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_add`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_sum`
+- Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polynomial_exp_integrable_single`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.singleWPoly_eval`
 - Truth anchor: `D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.singleWPoly_nonneg`
 - Dependency: [D5/S3/Quantum/Transport/StrongAbsorption/Foundations](Foundations.md)

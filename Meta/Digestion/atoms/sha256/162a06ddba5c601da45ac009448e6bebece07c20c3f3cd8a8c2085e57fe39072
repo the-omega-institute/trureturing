@@ -1,0 +1,11 @@
+**Definition 14.1 (unchanged-entry comparison).** Compare CAP Definition
+2.2 and RCA Definitions 11.1–11.4 at their actual initialized service
+entrances. The literal-identification hypothesis would use the same
+physical port 33, same L origin, same original readers and writers, and
+no added translation or prefixed-sentinel exception. It would retain CAP's
+verifier and consumer rather than substituting RCA's service for them.
+RCA assigns its eight word-compiler lanes 32–39 to its owner; bank B is
+33. Both banks receive an initial literal F sentinel before any version.
+CAP assigns 33 to the verifier's native bit-block descriptor stream. These
+are actual uses, not names for two freely supplied disjoint ports.
+

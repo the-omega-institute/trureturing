@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fbdb38c1f5991d8eb5a95fcc363dfeda3987c003a20e5453ad13a42763455a6
+  normalized_sha256: sha256:8fbdb38c1f5991d8eb5a95fcc363dfeda3987c003a20e5453ad13a42763455a6
+cas_ref: sha256:8fbdb38c1f5991d8eb5a95fcc363dfeda3987c003a20e5453ad13a42763455a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义全置换等变补全合同的三个条件；没有运算存在或唯一性结论。'
+    previous_atom_id: 1b9037d59768192e3237376b689b4fdfaf027676373415ff1725107a99393781
+    next_atom_id: fd94f1934a5de6661d448ea841cdad1d6fe0e189a61c76f3d00de699a03b50a6

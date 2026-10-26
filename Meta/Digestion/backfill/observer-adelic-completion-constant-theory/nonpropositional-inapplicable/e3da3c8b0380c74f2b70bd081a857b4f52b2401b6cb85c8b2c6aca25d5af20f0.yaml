@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3da3c8b0380c74f2b70bd081a857b4f52b2401b6cb85c8b2c6aca25d5af20f0
+  normalized_sha256: sha256:e3da3c8b0380c74f2b70bd081a857b4f52b2401b6cb85c8b2c6aca25d5af20f0
+cas_ref: sha256:e3da3c8b0380c74f2b70bd081a857b4f52b2401b6cb85c8b2c6aca25d5af20f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明评价配对的命名用途并引出尚未选择的标签清单，没有非退化或对偶性断言。
+    previous_atom_id: eb48ae261bdc711522f5c4a3bb63cb68044e7d59004db2ec20e33fe64e01d886
+    next_atom_id: c993a137e752e3deacfb067d79e498bbb81d2ba7dbd11414d94a8d9dd2718321

@@ -1,0 +1,21 @@
+**Definition 3.6 (Quotient norms and a unit certificate).** For a monic
+polynomial $Q$ of degree $k$ over a field, write
+
+$$
+\mathcal N_Q(f)=\det\big([\operatorname{rem}_Q(t^if)]_{i=0}^{k-1}\big),
+\tag{3.7}
+$$
+
+where each bracket is a column of ascending coefficients in the basis
+$1,t,\ldots,t^{k-1}$. This determinant is the multiplication norm.
+For reduction modulo $101$, first multiply the reduction of $Q$ by the
+inverse of its leading coefficient to make it monic. The public
+circuits give the following residues:
+
+| Modulus | Leading coefficient modulo $101$ | Element | Norm modulo $101$ |
+| --- | --- | --- | --- |
+| $Q_{41}$ | $38$ | $A_1$ | $12$ |
+| $Q_{41}$ | $38$ | $q$ | $95$ |
+| $Q_8$ | $72$ | $P_A$ | $71$ |
+| $Q_8$ | $72$ | $q$ | $85$ |
+| $Q_8$ | $72$ | $c_2$ | $20$ |

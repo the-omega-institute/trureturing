@@ -1,0 +1,15 @@
+**Proposition 31.1 (Known diagonal family).** If the preparation is known in advance to obey
+$\eta_A=\eta_B=\eta$, one Bob readout $c=(0,1)$ identifies the parameter from its population
+law:
+
+$$
+\eta=\operatorname{Var}(Y_B)-(1/2+r+\tau^2).
+\tag{31.1}
+$$
+
+Equation (28.5) then identifies separability exactly. For $0<r<r_0$, zero added readouts cannot
+identify this target because the original laws are constant in $\eta$ while this family contains
+both statuses. One scalar is consequently necessary and sufficient there within this declared
+measurement class. For $r\ge r_0$, every member is separable; no added observation is needed for
+the constant entanglement answer, although Bob's readout still identifies $\eta$.
+

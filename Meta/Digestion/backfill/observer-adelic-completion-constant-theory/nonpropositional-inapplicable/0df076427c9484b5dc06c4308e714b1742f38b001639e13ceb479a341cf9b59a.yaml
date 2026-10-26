@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0df076427c9484b5dc06c4308e714b1742f38b001639e13ceb479a341cf9b59a
+  normalized_sha256: sha256:0df076427c9484b5dc06c4308e714b1742f38b001639e13ceb479a341cf9b59a
+cas_ref: sha256:0df076427c9484b5dc06c4308e714b1742f38b001639e13ceb479a341cf9b59a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 代数无理方向类型的列表项。'
+    previous_atom_id: 85c183294c46834753b0002c28de342278f5e615c3743a5146474e7876cbf494
+    next_atom_id: 8c5cd9c88a0e67a4938a62bbcefd9f80559ee5a32f060c0268e09ec830e0e9db

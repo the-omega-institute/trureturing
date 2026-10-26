@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7dc2f13ed27c75b9f02ee0ef0edff99965da5f151480dbe4aab1bf02a287d819
+  normalized_sha256: sha256:7dc2f13ed27c75b9f02ee0ef0edff99965da5f151480dbe4aab1bf02a287d819
+cas_ref: sha256:7dc2f13ed27c75b9f02ee0ef0edff99965da5f151480dbe4aab1bf02a287d819
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: “控制 normal entire function 的余项”是待办研究任务，没有给出成立的余项估计。'
+    previous_atom_id: c3bebb8b1fd6f8e36596db7be0dbf461f560a75318588590287d50cd1fd38165
+    next_atom_id: a92bc3161136e63a89f51a2588fecf6eb1283995bf58efe8fe68b7a97a9bd149

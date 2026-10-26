@@ -1,0 +1,12 @@
+**定理 77.1（全部等待时间的保持判据）。** 设 $K$ 是有限维 Hermitian 矩阵，$P$ 为正交投影，$Q=I-P$，$U(\tau)=e^{-i\tau K}$。则
+
+$$
+U(\tau)P\mathcal H\subseteq P\mathcal H
+\quad\text{对全部 }\tau\ge0
+\quad\Longleftrightarrow\quad QKP=0.
+$$
+
+此时 $PKQ=0$，$[P,K]=0$，支撑也在全部实时间下保持。
+
+证明（77.1）。保持假设等价于 $QU(\tau)P=0$。有限矩阵指数可在零点取右范数导数，得 $-iQKP=0$。反向，Hermitian 性给 $PKQ=(QKP)^\dagger=0$，故 $K=PKP+QKQ$ 对 $P\mathcal H\oplus Q\mathcal H$ 块对角；各幂及指数均块对角，得所有时间保持。$\square$
+

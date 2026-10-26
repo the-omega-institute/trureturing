@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69ed086e05ccbe43f30e8f3453927948e9fbfdeb8f50f4ae44922fcc958553ca
+  normalized_sha256: sha256:69ed086e05ccbe43f30e8f3453927948e9fbfdeb8f50f4ae44922fcc958553ca
+cas_ref: sha256:69ed086e05ccbe43f30e8f3453927948e9fbfdeb8f50f4ae44922fcc958553ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 19.1 specifies the candidate-phase recovery contract, initialization, access restrictions and required error tolerance. These are imposed task conditions; it asserts neither receiver existence nor a bound.
+    previous_atom_id: 570e3940ae50d1434503fd0d20c668d36f05ef2143b7c28d45e409793918c86e
+    next_atom_id: 41d43501ca78448a3e98f9a5e0eec391951dd96f13af2e36bf9dbb2bf9db0db7

@@ -7,6 +7,9 @@
    digest: A binary Catalan reciprocal satisfies square-exponent diagonal equations. -/
 
 import Batteries.Tactic.OpenPrivate
+import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
+import D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity
+import D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
 import D5.S1.Recurrence.Residue.QuadraticPowerDiagonalFibbinaryParity
 
 set_option autoImplicit false
@@ -127,7 +130,7 @@ private theorem coeff_candidate (n : ℕ) : coeff n C = 1 ↔ ∃ k : ℕ, n + 1
   rw [← coeff_succ_X_mul n C, X_mul_C]
   exact binary_catalan (n + 1)
 
-open private diagonal_multiplier from D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
+open D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd (diagonal_multiplier)
 
 noncomputable def r : ℕ → ℤ
   | 0 => 1
@@ -264,10 +267,5 @@ theorem hanna_conjecture_a397356 (n : ℕ) : Odd (a n) ↔ ∃ k : ℕ, n + 1 = 
   rw [hn]
   exact coeff_candidate n
 
-#print axioms v_diagonal
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_identity
-#print axioms hanna_conjecture_a397356
 
 end D5.S1.Recurrence.Residue.ReciprocalSquareExponentDiagonalParity

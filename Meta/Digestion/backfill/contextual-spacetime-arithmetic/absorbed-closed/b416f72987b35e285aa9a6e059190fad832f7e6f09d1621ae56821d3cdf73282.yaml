@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:b416f72987b35e285aa9a6e059190fad832f7e6f09d1621ae56821d3cdf73282
+  normalized_sha256: sha256:b416f72987b35e285aa9a6e059190fad832f7e6f09d1621ae56821d3cdf73282
+cas_ref: sha256:b416f72987b35e285aa9a6e059190fad832f7e6f09d1621ae56821d3cdf73282
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SignedProfileRealization.exists_signed_profile
+    target_statement_id: sha256:90e24f8e340164cf7d6bdb889c33dc17d3326cf3c75111f119d39bd6f7e965f9
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.coefficient_one
+    target_statement_id: sha256:861414b2637748b455a350c5bbd98c2000ab8f9b5be275a7de5fdd75f23c11fb
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - df238fc6cc8f73ce183613aabb344b2c179c5092a40101c68c0a8e54de7b7960
+    - efc7b51ea0444541590c71a49faeb7dd66c69ef8623f08865e36a62ffccdeec3
+    - e2ae768fecf61955879245fc6eef20559ab4671b992b01eec7383cf2a88f36c0

@@ -1,0 +1,55 @@
+**Definition 15.1 (one start and two different domains).** Fix the
+apparatus of Assumption 1.2, its installed $G_{\mathrm{gc}}$, and one
+complete actual canonical-acquired Ready history $P$, including its
+actual state $X(P)$ and absolute receipt count $n(P)$. Earlier source
+and history work in $P$ is fixed. The original input-completeness
+conditions of SOURCECALL Convention 1.1 remain in force for the
+independent-view conclusions. The parameter is this one $P$ throughout,
+not a new full entry supplied at each later call.
+
+Let $\mathcal R_P$ be the following tree of actual finite histories
+extending $P$. After $P$ every outer choice is 01, or its as-yet
+unfinished prefix. At each dispatched source reader the consumed word
+is a prefix in SOURCECALL Definition 2.2's seven-tag language
+$\mathsf P_7$. If execution continues to another call, it first follows
+the existing source row/dependency delivery, checks, ACK, source-token
+TOK, changed final idle CTL, InnerReturn, normalization, CaptureCAP and
+actual Ready return. No history1 or outer00 occurs after $P$.
+Execution otherwise follows only the installed control and its actual
+current guards. A finite endpoint may lie anywhere on this path:
+in a gate, setup, header, unterminated unary length, preallocated
+payload, IN/EX/WR interval, incomplete descriptor, source overwrite,
+service/refusal, counter/row, loan/copy/check/ACK/token transfer, or
+partial return/capture. It may also be $P$ itself or a later Ready.
+
+Every earlier completed return is actual. The current finite prefix
+requires neither a future input, a future complete frame, nor an
+eventual return. In particular $\mathcal R_P$ is not defined by
+supplying a completed current descriptor or a future frame to its
+decoder. There is no fixed bound on the number of calls, length,
+payload, capacity or actual native work.
+
+Define $\Gamma_P\subset\mathcal R_P$ to contain precisely the running
+cuts inside an actually dispatched $F^A$ whose prescribed next row is
+an unchanged original row, with its current original guard and input
+site. As in SOURCECALL Theorem 3.4, exclude the pre-row of the changed
+final idle CTL and its successor. Gate, InnerReturn, normalization and
+CaptureCAP cuts are not in $\Gamma_P$. Thus decoding a row in
+$\mathcal R_P$ will not assert its original-$Q$ admission. Each new
+source-body entry and each actual return mentioned here is an
+occurrence of the installed path, not a test for equality of a PC
+with an entry label.
+
+Use exactly Definition 14.2's existing selection
+
+$$
+K(h)=\bigl(\operatorname{old}_{13}(X(h)),\operatorname{latch}_5(X(h)),n(h)\bigr).
+$$
+
+Here $\operatorname{old}_{13}$ is SOURCECALL Theorem 3.3's original13
+byte record, with the same port/creation-position identities. The
+count $n(h)$ is absolute native receipts from the original meter
+entrance, not source events or a reset call clock. None of endpoint17,
+endpoint head/frontier data, annex70, completed-cycle $M$, or a rolling
+entry is an additional varying argument.
+

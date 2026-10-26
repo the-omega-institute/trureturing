@@ -106,10 +106,28 @@ $A=\sum_{n:\mathbb N}\operatorname{Fin}(n+1)$, $B=\mathbb N$, and
 $q(n,i)=n$. Its fibre over $n$ is the injective image of
 $\operatorname{Fin}(n+1)$ and has ncard $n+1$. This reindexes the
 nonempty cells of the paper's partition. The owning graph Scribe gives
-the detailed parameter and cardinal calculation. The exact compiled
-original application remains pending. No retained application wrapper,
-original-question resolution or sequential compactness assertion follows
-from this source exposition.
+the detailed parameter and cardinal calculation. Its complete application
+uses the supplied actual space and graph, including full-product closedness,
+T2/T1 separation and finiteness of every clique. A clique of size $N+1$ rules
+out any proposed uniform bound $N$. A transient exact Lean application passed
+the canonical targeted build and scoped statement/axiom report for the
+parameter discharge and final inference. Its axiom closure contains only
+`Classical.choice`, `Quot.sound` and `propext`. The existing generic module
+completed canonical FirstFreeze, and its owning Scribe retains the complete
+application. Formal statement identity and kernel validation remain distinct
+from the source-fidelity review of the original question.
+
+## Current primary-source status
+
+The current arXiv record lists only v1 and its abstract still calls this
+existence problem the main open problem. The authors' formal repository,
+`DavidVFeldman/compactness-clique-size`, main commit
+`1f4da701cfb6d7588a90f005fa83698e3a1b081b`, marks `MainQuestion` open in its
+README. Its `RequestProject/Witness.lean` proves
+`mainQuestion_of_exists_countablyCompact_dense_subset_goodSet` only from
+the supplied free, section-good, section-dense and countably compact Y.
+This is a check of the two primary surfaces, not a worldwide priority or
+literature-exclusion claim.
 
 ## Classical methods and attribution limits
 

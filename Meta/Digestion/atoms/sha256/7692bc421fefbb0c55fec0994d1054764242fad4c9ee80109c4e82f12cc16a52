@@ -1,0 +1,94 @@
+**Theorem 4.1 (The entire finite normalized source boundary).** The set
+$\mathcal Z$ is the disjoint union of these two closed analytic arcs:
+
+$$
+\begin{aligned}
+\mathcal Z_-&=\{(r,q(1+rz(r)),(1+rz(r))^{-1}):0\le r\le1\},\\
+&\hspace{12mm}H(r,z(r))=0,\qquad 2/5<z(r)<3/5,\\
+\mathcal Z_+&=\{(r,b_+(r),q/b_+(r)):0\le r\le1\},\\
+&\hspace{12mm}\mathscr P(r,b_+(r))=0,\qquad 2<b_+(r)<31/10.
+\end{aligned}
+\tag{4.1}
+$$
+
+Each graph function is uniquely specified by its equation and interval.
+Analyticity at an endpoint means analytic continuation to a neighbourhood
+of that endpoint. The four endpoints are
+
+$$
+\begin{gathered}
+\mathcal Z_-:\quad (0,0,1),\quad(1,0,1/\sqrt2),\\
+\mathcal Z_+:\quad (0,\rho_0,0),\quad(1,\rho_1,0),\\
+\rho_0^3-8\rho_0-4=0,\qquad
+\rho_1^3-4\rho_1-2=0,\qquad 2<\rho_i<31/10.
+\end{gathered}
+\tag{4.2}
+$$
+
+There are no other finite nonnegative $\Lambda=0$ labels with $j,n>0$.
+
+Proof. For $0<r<1$, the descending $b$-coefficient signs of
+$\mathscr P$ are
+
+$$
++,+,-,-,-,\text{arbitrary},+.
+\tag{4.3}
+$$
+
+The three strict negative signs follow from the first three rows of
+Lemma 3.2, including the polynomial quotient in the $b^2$ row. Removing
+any zero penultimate coefficient, there are exactly two sign changes,
+regardless of that coefficient's sign. Descartes' rule therefore gives
+at most two positive roots counted with multiplicity. This is the
+classical real-polynomial sign rule, applied only to the displayed
+one-variable polynomial for a fixed $r$.
+
+The signs $H(r,2/5)>0>H(r,3/5)$ and $H_z<0$ in Lemma 3.2 give exactly
+one $z(r)$ in the stated interval for every $0\le r\le1$. The implicit
+function theorem gives its analytic dependence, including across the
+endpoints. For $0<r<1$ it supplies a positive root
+$b=q(1+rz(r))<2/5$. The signs
+$\mathscr P(r,2)<0<\mathscr P(r,31/10)$ give another positive root
+in the upper interval. These disjoint roots exhaust Descartes' bound,
+so each is simple. At the lower root, differentiation of (2.6) gives
+
+$$
+\mathscr P_b=qH_z<0;
+\tag{4.4}
+$$
+
+at the upper root $\mathscr P_b>0$, since the polynomial changes from
+negative to positive there. The upper graph is consequently analytic
+for strict $r$.
+
+At $r=0,1$ the exact factorizations are
+
+$$
+\mathscr P(0,b)=b^3(b^3-8b-4),\qquad
+\mathscr P(1,b)=b^2(b+1)(b^3-4b-2).
+\tag{4.5}
+$$
+
+Each cubic has one positive root: its coefficient sequence has one
+sign variation, and the endpoint signs in Lemma 3.2 put that root in
+$(2,31/10)$. It is simple; the derivatives $3b^2-8$ and $3b^2-4$ are
+positive for $b>2$. Thus the upper graph extends analytically to both
+endpoints and still has $\mathscr P_b>0$ there.
+
+For completeness, one must evaluate the original $\Lambda$ on a
+$b=0$ face rather than divide (2.8) by $b$. At $c>0$ its values are
+
+$$
+\Lambda(0,0,c)=\frac{8(c-1)}c,\qquad
+\Lambda(1,0,c)=\frac{4(2c^2-1)}{c(c+1)}.
+\tag{4.6}
+$$
+
+Their positive zeros are exactly $c=1,1/\sqrt2$. Equation (2.10)
+gives $z(0)=1/2,z(1)=\sqrt2-1$, so these are exactly the lower
+endpoints in (4.2). If $0<r<1$, rank one forces $b,c>0$. If $r=0$
+or $1$, rank one forces $bc=0$; with $j>0$ precisely one of $b,c$
+is positive. These cases exhaust all finite nonnegative sources in
+(2.1). The two $j=0$ corners are outside (2.1); their relevance to
+actual escaping sequences is treated in Theorem 7.1, not assumed away. ∎
+

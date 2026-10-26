@@ -36,6 +36,7 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.Information.CovarianceSumBound
 import D5.S3.Observer.StateNotPath
@@ -50,13 +51,11 @@ noncomputable section
 open Matrix
 open scoped Kronecker ComplexOrder MatrixOrder
 namespace D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.QuantumBounds.CHSHWitness
 open D5.S3.Observer.StateNotPath
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (blochMatrix)
-
-def IsDensity {n : Type*} [Fintype n] (ρ : Matrix n n ℂ) : Prop :=
-  ρ.PosSemidef ∧ trace ρ = 1
 
 def expect {n : Type*} [Fintype n] [DecidableEq n] (ρ A : Matrix n n ℂ) : ℝ :=
   (trace (A * ρ)).re

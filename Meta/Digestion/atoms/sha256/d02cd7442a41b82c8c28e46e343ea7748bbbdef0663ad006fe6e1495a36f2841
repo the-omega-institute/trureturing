@@ -1,0 +1,79 @@
+**Proposition 10.1 (Original-world two-sheet expansions).** For
+$t=t^*-\rho^2$, $\rho>0$ sufficiently small, label the two additional
+worlds in Theorem 9.3 by $C_+(\rho),C_-(\rho)$ so that their source
+$r$ derivatives at $\rho=0$ are $+\lambda,-\lambda$. Their sources
+are analytic in $\rho$ and satisfy
+
+$$
+\begin{aligned}
+r_+(\rho)&=r_C^*+\lambda\rho+O(\rho^2),&
+r_-(\rho)&=r_C^*-\lambda\rho+O(\rho^2),\\
+b_+(\rho)&=b_C^*+k\lambda\rho+O(\rho^2),&
+b_-(\rho)&=b_C^*-k\lambda\rho+O(\rho^2).
+\end{aligned}
+\tag{10.1}
+$$
+
+For each sign its entire gain, drift and source are exactly
+
+$$
+\begin{gathered}
+P_\pm=P(r_\pm,b_\pm),\quad
+e_\pm=-\frac{24}{5}(b_\pm-1/8)
+                 \frac{6/T_\pm-2/U_\pm}{\Lambda_\pm},\quad
+d_\pm=24+e_\pm,\\
+g_\pm(s)=\sum_{i=0}^3 q_{\pm,i}
+                   \prod_{\substack{0\le j\le3\\j\ne i}}\frac{s-j}{i-j},\\
+(q_{\pm,0},q_{\pm,1},q_{\pm,2},q_{\pm,3})
+=\left(-d_\pm,-e_\pm/j_\pm,
+       (27/5-e_\pm)/T_\pm,-e_\pm/n_\pm\right).
+\end{gathered}
+\tag{10.2}
+$$
+
+They have the common exact acquired base $q(t^*-\rho^2)$ and the
+original readings at all clocks zero through six. Their terminal splittings
+are
+
+$$
+\begin{aligned}
+a(C_+(\rho))-a(C_-(\rho))&=2a_s\lambda\rho+O(\rho^2),\\
+m(C_+(\rho))-m(C_-(\rho))&=2m_s\lambda\rho+O(\rho^2),
+\end{aligned}
+\tag{10.3}
+$$
+
+with $256<2a_s\lambda<257$ and $84<2m_s\lambda<85$.
+
+Proof. In the fold equation substitute
+
+$$
+t=t^*-\rho^2,\qquad r=\sigma(p(t))+\rho u.
+$$
+
+The analytic numerator
+$\widehat v(p(t),\sigma(p(t))+\rho u)-v(t)$ is divisible by
+$\rho^2$. Its quotient extends analytically to $\rho=0$ and there equals
+
+$$
+\eta+\frac\beta2u^2.
+\tag{10.4}
+$$
+
+The two roots $u=\pm\lambda$ are simple because $\beta\lambda\ne0$.
+The analytic implicit-function theorem supplies analytic $u_\pm(\rho)$
+with those limiting values. Since $p(t)-p^*=O(\rho^2)$, the shifts
+$\sigma(p(t))-r_C^*$ and $b(p(t),\sigma(p(t)))-b_C^*$ are both
+$O(\rho^2)$. Differentiating $b(p,r)$ in $r$ gives $k$ at the centre,
+proving (10.1).
+
+The strict source inequalities and $\Lambda\ne0$ persist. Formula (10.2)
+is precisely the original owning lift at each source, so it gives one
+whole nonzero polynomial of degree at most three, one fixed drift and all
+five $H_4$ readings. The equations defining $b(p,r)$ and the fold roots
+give exactly $p=p(t)$ and $v=v(t)$ for those same worlds. There is no
+refitting of gains or additional acquired terminal value. The nonzero
+$r$ splitting makes the worlds distinct for $\rho>0$. Taylor expansion
+of the two terminal functions gives (10.3); the coefficients have the
+rational bounds of Proposition 9.2. ∎
+

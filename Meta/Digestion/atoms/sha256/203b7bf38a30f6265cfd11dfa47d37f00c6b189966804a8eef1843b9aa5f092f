@@ -1,0 +1,52 @@
+**Proposition 3.2 (rational contraction certificate).** The map $N(z)=z-CF(z)$ maps $X$ into its interior and is a contraction in the infinity norm. Consequently $F$ has exactly one zero $z_*$ in $X$.
+
+**Proof.** The certificate uses closed rational intervals. Addition and subtraction use endpoints, multiplication uses the minimum and maximum of the four endpoint products, and a reciprocal is $[1/v,1/u]$ for $[u,v]$ excluding zero. Forward differentiation uses
+
+$$
+\begin{aligned}
+D(xy)&=y\,Dx+x\,Dy,\\
+D(x/y)&=\frac{Dx-(x/y)Dy}{y},
+\end{aligned}
+$$
+
+with the three coordinate derivatives initialized as the standard basis. Applied in the order $j,n,T,U,\Lambda,B,e,d,q_0,\ldots,q_3,\Psi$, this gives the following exact enclosure for $DF(X)$; every displayed endpoint is divided by $10^7$:
+
+$$
+J_F(X)\subseteq
+\begin{pmatrix}
+[9413098549,9413098557]&[-1074026073,-1074026071]&[-7806900995,-7806900987]\\
+[-22985723971,-22985723951]&[5014028228,5014028233]&[17426139632,17426139653]\\
+[-208871210485,-208871210393]&[38410254019,38410254033]&[163261207840,163261207932]
+\end{pmatrix}\frac1{10^7}.
+\tag{9}
+$$
+
+Multiplying these rational intervals by (8), every entry of $10^8(I-CDF(X))$ lies in
+
+$$
+\begin{pmatrix}
+[-976,980]&[-200,225]&[-985,1014]\\
+[-737,739]&[-151,170]&[-743,766]\\
+[-1076,1078]&[-220,248]&[-1084,1119]
+\end{pmatrix}.
+\tag{10}
+$$
+
+Thus the three row sums of absolute endpoint maxima are at most $2219,1675,2445$, divided by $10^8$. Set $q=2445/10^8<1/40000$. Point rational evaluation at $z_0$ gives
+
+$$
+\lVert CF(z_0)\rVert_\infty<10^{-18}.
+\tag{11}
+$$
+
+The box is convex, so the mean-value inequality from (9)–(10) gives
+
+$$
+\begin{aligned}
+\lVert N(z)-N(w)\rVert_\infty&\le q\lVert z-w\rVert_\infty,\\
+\lVert N(z)-z_0\rVert_\infty&\le 10^{-18}+q\rho<\rho.
+\end{aligned}
+$$
+
+Hence $N$ is a contraction from the complete box $X$ into its interior. Banach's fixed-point theorem gives a unique fixed point $z_*$. Since $\det C\ne0$, $N(z_*)=z_*$ is equivalent to $F(z_*)=0$. ∎
+

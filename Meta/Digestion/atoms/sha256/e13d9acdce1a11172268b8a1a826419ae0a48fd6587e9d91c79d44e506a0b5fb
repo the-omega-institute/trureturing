@@ -1,0 +1,64 @@
+**Theorem 115.5 (injective comparison across every accepted step).**
+For an actual accepted step $s_n\mapsto s_{n+1}$, let
+$I_n^E:\mathscr E_n\to\mathscr E_{n+1}$ be inclusion of the actual
+old edges at their unchanged addresses, as in IV (112.7). Define the
+static real-linear comparison map
+
+$$
+T_n f=\langle e_n,f\rangle e_{n+1}
+            +U_{n+1}^*I_n^EU_nf,
+\qquad r_n=N_{n+1}/N_n.
+\tag{115.23}
+$$
+
+This map is defined on the entire old signed-state space, not a root
+response quotient. For every original $u$ and every $n\ge0$,
+
+$$
+T_n^*T_n=I,\qquad
+T_n^*e_{n+1}=e_n,\qquad
+T_nT_n^*=P_{\operatorname{ran}T_n},\qquad 1\le r_n\le3.
+\tag{115.24}
+$$
+
+All adjoints here use counting inner products. Thus every old signed
+direction has singular value one, the reverse $T_n^*$ has norm one,
+and recovery on the attained range is exact with condition number one.
+For $0<\varepsilon\le S<\infty$ the complete operator comparison is
+
+$$
+\sup_{u\in\mathcal T}\sup_{s\in[\varepsilon,S]}
+ \|S_{n+1}(s)T_n-T_nS_n(s)\|
+ \le\eta_{n+1}+\eta_n\longrightarrow0.
+\tag{115.25}
+$$
+
+In particular
+$\|T_n^*S_{n+1}(s)T_n-S_n(s)\|\le\eta_{n+1}+\eta_n$.
+For every old readout vector $g$, the complete transferred readout is
+$h\mapsto\langle T_ng,h\rangle$ on the successor. It has exactly
+the old norm $\|g\|$, agrees on every transported old state, and obeys
+
+$$
+\begin{aligned}
+\langle T_ng,T_nf\rangle&=\langle g,f\rangle,\\
+|\langle T_ng,S_{n+1}(s)T_nf\rangle-
+              \langle g,S_n(s)f\rangle|
+ &\le(\eta_{n+1}+\eta_n)\|g\|\|f\|.
+\end{aligned}
+\tag{115.26}
+$$
+
+This includes every literal old coordinate readout $g=\delta_p$,
+and every root-invisible signed mode. The transferred readout need
+not equal the successor's own coordinate evaluation at $p$.
+
+There are three distinct useful normalizations. Put
+$A_n=\sqrt{r_n}T_n$ and $B_n=r_n^{-1/2}T_n$. For every old field $f$,
+their exact contracts are
+
+| Map | Constant input $\mathbf1$ | Successor counting sum | Counting norm | Counting left inverse |
+| --- | --- | --- | --- | --- |
+| $T_n$ | $r_n^{-1/2}\mathbf1$ | $\sqrt{r_n}\sum f$ | $\|f\|$ | $T_n^*$ |
+| $A_n$ | $\mathbf1$ | $r_n\sum f$ | $\sqrt{r_n}\|f\|$ | $r_n^{-1/2}T_n^*$ |
+| $B_n$ | $r_n^{-1}\mathbf1$ | $\sum f$ | $r_n^{-1/2}\|f\|$ | $\sqrt{r_n}T_n^*$ |

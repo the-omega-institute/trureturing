@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:711575538efbd14a846ce1056e933c1562849fe082e5e3faa8d26a49983f271f
+  normalized_sha256: sha256:711575538efbd14a846ce1056e933c1562849fe082e5e3faa8d26a49983f271f
+cas_ref: sha256:711575538efbd14a846ce1056e933c1562849fe082e5e3faa8d26a49983f271f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 陈述假设范围并引用另处空集和单点集结果，未在本项新增其具体数学断言。'
+    previous_atom_id: 9d9400d135eeefe149dc7e2a76dfca943efa4f9d7d02a8f18eb27784cb2eb4cd
+    next_atom_id: 22b8b05140c61f9edef22fd47955e314f26e116dd44321d573264949cd319f9d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ada66c4598a789025b708e2b29b13cb5a25d117e802549581710a1d46523b7c9
+  normalized_sha256: sha256:ada66c4598a789025b708e2b29b13cb5a25d117e802549581710a1d46523b7c9
+cas_ref: sha256:ada66c4598a789025b708e2b29b13cb5a25d117e802549581710a1d46523b7c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅列举支撑深度这一指标名称。'
+    previous_atom_id: 7ced1d9edb4491006c946d6f0fa1179bfaa9a8b22d72b69f0bdc95e46343d49d
+    next_atom_id: e82e5abf30385c3accb81b0e7ba2249795797c85d92afec4519377a3010119c2

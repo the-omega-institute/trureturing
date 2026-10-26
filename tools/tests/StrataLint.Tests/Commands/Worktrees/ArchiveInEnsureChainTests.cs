@@ -9,6 +9,72 @@ namespace StrataLint.Tests;
 /// </summary>
 public sealed partial class LeanCacheEnsureCommandTests
 {
+    [Theory]
+    [InlineData(null, 2580)]
+    [InlineData("21600", 21720)]
+    public void ArchiveFetchUsesDefaultOrConfiguredEnclosingBudget(string? configured, int expectedSeconds)
+    {
+        const string variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
+        var previous = Environment.GetEnvironmentVariable(variable);
+        try
+        {
+            Environment.SetEnvironmentVariable(variable, configured);
+            using var repository = new TemporaryDirectory();
+            var fixture = new EnsureArchiveFixture(repository.Path, "archive-budget");
+            var runner = new RecordingWorktreeProcessRunner
+            {
+                ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"offline\"}\n",
+                ArchiveExitCode = 1,
+            };
+
+            var receipt = fixture.Ensure(runner);
+
+            var invocation = Assert.Single(runner.Invocations,
+                static call => call.FileName == "/bin/bash");
+            Assert.Equal(TimeSpan.FromSeconds(expectedSeconds), invocation.Timeout);
+            Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(variable, previous);
+        }
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("0")]
+    [InlineData("-1")]
+    [InlineData("nan")]
+    [InlineData("1.5")]
+    [InlineData("21601")]
+    [InlineData("999999999999999999999")]
+    public void InvalidArchiveTransportBudgetDegradesAsOptionalFailure(string configured)
+    {
+        const string variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
+        var previous = Environment.GetEnvironmentVariable(variable);
+        try
+        {
+            Environment.SetEnvironmentVariable(variable, configured);
+            using var repository = new TemporaryDirectory();
+            var fixture = new EnsureArchiveFixture(repository.Path, "invalid-archive-budget");
+            var runner = new RecordingWorktreeProcessRunner
+            {
+                ArchiveReceipt = "unused",
+            };
+
+            var receipt = fixture.Ensure(runner);
+
+            Assert.Equal(0, runner.ArchiveInvocations);
+            Assert.Equal("failed", receipt.GetProperty("archive_status").GetString());
+            Assert.Contains(variable, receipt.GetProperty("archive_reason").GetString(),
+                StringComparison.Ordinal);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(variable, previous);
+        }
+    }
+
     [Fact]
     public void PrivateReleaseFallbackPreservesDefaultThroughBoundedEnsureOwner()
     {

@@ -1,0 +1,7 @@
+# Native two-control Green attraction, critical stability and periodic binding
+
+> This reference volume uses the `generic-v1` theorem/proof shape. Once
+> published, its existing text is preserved; corrections and extensions belong
+> after the final append anchor. The mathematical statements below are ordinary
+> proofs, not Lean-kernel-certified declarations.
+

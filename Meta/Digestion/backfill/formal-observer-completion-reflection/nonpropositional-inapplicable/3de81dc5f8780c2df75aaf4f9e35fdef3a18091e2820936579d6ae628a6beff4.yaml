@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3de81dc5f8780c2df75aaf4f9e35fdef3a18091e2820936579d6ae628a6beff4
+  normalized_sha256: sha256:3de81dc5f8780c2df75aaf4f9e35fdef3a18091e2820936579d6ae628a6beff4
+cas_ref: sha256:3de81dc5f8780c2df75aaf4f9e35fdef3a18091e2820936579d6ae628a6beff4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列条件“很容易被观察”，没有肯定任何具体方向满足条件，也没有奇异值结论。
+    previous_atom_id: fcd9837414ab743fecc3f8a458f1d215a1ff14a39e5c188a23e66b1d340ed122
+    next_atom_id: 5c2244876407e84c32ead0b1c2b470f6162d690b2fb6317a06aff2dcf64868a1

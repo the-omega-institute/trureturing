@@ -1,0 +1,119 @@
+**Proposition 246.2 (Three-copy kernel and the actual Kraus pullback).**
+Use the fixed ordered bases on $A_i,C_i,S_i\cong\mathbb C^2$,
+$i=1,2,3$, and the party cut
+
+$$
+\mathcal H_A=A_1\otimes A_2\otimes A_3\cong\mathbb C^8,
+\qquad
+\mathcal H_B=(C_1\otimes S_1)\otimes(C_2\otimes S_2)
+                  \otimes(C_3\otimes S_3)\cong\mathbb C^{64}.
+\tag{246.3}
+$$
+
+On each rail pair set $\phi_i=(|00\rangle+|11\rangle)/\sqrt2$,
+$\Phi_i=|\phi_i\rangle\langle\phi_i|$, $Q_i=I_4-\Phi_i$.
+With the spatial vectors and projectors of (244.5), put
+
+$$
+R_\theta=2tQ\otimes U_\theta+th_*I_4\otimes D_\theta,
+\qquad h_*=(1+t)/2,
+\qquad
+K_3=\bigcap_{\theta\in\mathbb R}\ker(R_\theta^{\otimes3}).
+\tag{246.4}
+$$
+
+The same real $\theta$ occurs in all three factors. Every nonzero
+$v\in K_3$ has Schmidt rank at least four across (246.3). Hence,
+for arbitrary complex linear maps
+$A:\mathbb C^8\to\mathbb C^2$ and
+$B:\mathbb C^{64}\to\mathbb C^2$,
+
+$$
+(A^{\mathsf T}\otimes B^\dagger)|\phi\rangle\in K_3
+\quad\Longrightarrow\quad
+(A^{\mathsf T}\otimes B^\dagger)|\phi\rangle=0,
+\tag{246.5}
+$$
+
+where $\phi=(|00\rangle+|11\rangle)/\sqrt2$ is on the output
+register, $\mathsf T$ is the ordinary Alice transpose and $\dagger$
+is the Bob adjoint in the fixed bases.
+
+Proof. At $k=3$, the full direct sum (245.2) consists of the sectors
+$S=\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}$. The first three
+have two $\Phi$ rail factors and one $Q$ rail factor; the last has
+three $\Phi$ factors. Each retains precisely the spatial restriction
+$(\operatorname{Sym}^{|S|}(\mathbb C^2))^\perp$ on its $S$
+positions and unrestricted spatial factors elsewhere. The sectors with
+zero or one $\Phi$ factor contribute zero. This is the common-real-angle
+formula of Proposition 245.1, with none of its rail sectors omitted.
+
+Regroup Bob alone from $(c_1,s_1,c_2,s_2,c_3,s_3)$ to
+$(c_1,c_2,c_3,s_1,s_2,s_3)$, and expand
+
+$$
+v=\sum_{a,c,s\in\{0,1\}^3}
+ V_{a,(c,s)}|a\rangle_A|c,s\rangle_B,
+\qquad
+X_s=(V_{a,(c,s)})_{a,c}\in M_8(\mathbb C).
+\tag{246.6}
+$$
+
+This regrouping only permutes Bob's columns of the $8\times64$
+coefficient matrix $V$. Its complex matrix rank is the Schmidt rank
+of $v$. For a fixed spatial triple $s$, the matrix $X_s$ is an
+$8\times8$ column submatrix, so
+$\operatorname{rank}V\ge\operatorname{rank}X_s$.
+
+Under the complex-linear rail coefficient correspondence
+$|a_i\rangle|c_i\rangle\mapsto|a_i\rangle\langle c_i|$,
+$\phi_i$ corresponds to $I_2/\sqrt2$. For any complex matrix $M$,
+
+$$
+\langle\phi_i|\operatorname{vec}(M)\rangle
+ =\frac{\operatorname{tr}M}{\sqrt2}.
+\tag{246.7}
+$$
+
+Thus membership in $\operatorname{ran}Q_i$ is exactly the trace-zero
+condition, without a Hermiticity condition. Taking a spatial coefficient
+of the sum of all four sectors gives
+
+$$
+X_s=\alpha_s I_8+M_{1,s}\otimes I_2\otimes I_2
+ +I_2\otimes M_{2,s}\otimes I_2
+ +I_2\otimes I_2\otimes M_{3,s},
+\qquad \operatorname{tr}M_{i,s}=0.
+\tag{246.8}
+$$
+
+The all-$\Phi$ sector supplies the scalar term, and the sector with
+$Q$ at position $i$ supplies the $M_{i,s}$ term. The constants
+$1/\sqrt2$ are absorbed in these coefficients. Correlations between
+the remaining rail and the spatial factors change the matrices
+$M_{i,s}$, but not their trace-zero property or this combined form.
+The spatial restrictions may constrain the coefficients further; they
+are not relaxed in the definition of $K_3$. The rank estimate only
+needs the necessary form (246.8), for their full sum.
+
+If $v\ne0$, at least one $X_s$ is nonzero. Lemma 246.1 then gives
+$\operatorname{rank}V\ge\operatorname{rank}X_s\ge4$.
+
+For the pullback in (246.5), use $A$ as a $2\times8$ matrix and
+$B$ as a $2\times64$ matrix in the original party bases. Expanding
+the two terms of the output $\phi$ gives exactly
+
+$$
+V_{a,b}=\frac1{\sqrt2}\sum_{r=0}^1
+ A_{r,a}\overline{B_{r,b}},
+\qquad V=\frac1{\sqrt2}A^{\mathsf T}\overline B.
+\tag{246.9}
+$$
+
+In particular $B^\dagger|r\rangle$ has coefficients
+$\overline{B_{r,b}}$; the adjoint has not been replaced by a
+transpose. This coefficient matrix has rank at most two for every
+complex $A,B$. Bob's column permutation preserves that bound.
+It cannot be a nonzero vector in $K_3$ by the preceding rank-four
+bound, proving (246.5). ∎
+

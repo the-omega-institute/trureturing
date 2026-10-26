@@ -1,0 +1,206 @@
+**Theorem 21.1 (one native source boundary pair with inherited walls).**
+Define
+
+$$
+\mathcal D_0=\{u\in D(F):u=0\text{ on a source neighbourhood}\},\quad
+S_{D,\min}=\overline{F|_{\mathcal D_0}}^{\mathrm{graph}},\quad
+S_{D,\max}=S_{D,\min}^{\,*}.
+\tag{21.1}
+$$
+
+These operators retain the original killed outer walls. There are real
+$p,\zeta\in D(S_{D,\max})$, smooth off the source, such that
+
+$$
+\begin{gathered}
+p=f_*/a_*\in D(F),\qquad
+p/h=1+O(R^\gamma),\qquad
+\zeta/h=\log R+O(R^\gamma),\\
+D(S_{D,\max})=D(S_{D,\min})\dotplus
+                         \operatorname{span}_{\mathbb C}\{p,\zeta\}.
+\end{gathered}
+\tag{21.2}
+$$
+
+For some fixed $0<\gamma<1$, both displayed errors are uniform over
+all directions and have the corresponding rescaled-annular derivatives.
+Write the unique decomposition as
+$u=\mathcal A(u)p+\mathcal B(u)\zeta+u_{\min}$.
+The two maps are graph-continuous, jointly onto $\mathbb C^2$, and
+
+$$
+\begin{aligned}
+[u,v]&:=\langle S_{D,\max}u,v\rangle-
+                    \langle u,S_{D,\max}v\rangle\\
+ &=K\{\mathcal B(u)\overline{\mathcal A(v)}
+                   -\mathcal A(u)\overline{\mathcal B(v)}\},\\
+D(F)&=\ker\mathcal B.
+\end{aligned}
+\tag{21.3}
+$$
+
+The defect numbers are $(1,1)$. All other selfadjoint source realizations
+with these outer walls have $\mathcal A=\kappa\mathcal B$,
+$\kappa\in\mathbb R$; $\mathcal B=0$ is the remaining projective line.
+The form domain of $F$ remains exactly $\mathcal Q$, strictly larger
+than $\mathcal F_A$.
+
+For general maximal elements the expansion is in angular $L^2$ and the
+weighted graph topology specified below; a uniform pointwise assertion
+on that whole domain is false. For maximal solutions of
+$\mathcal T u=Eu$ with finite $E$, the expansion is uniform in all
+angles and smooth on rescaled compact annuli. No finite-$\epsilon$
+capped positive state is an element of this uncapped maximal domain.
+
+Proof. We give the local maximal estimate, the corrected native vectors,
+and the graph-domain argument before using an extension theorem.
+On the cylinder $(t,\{R=1\})$ put $D_i=RZ_i$, $(Z_1,Z_2)=(U,V)$.
+Let $L^2_\delta$ mean $e^{-\delta t}v\in L^2(dt\,da\,d\theta)$ and
+let $X_\delta$ also control $D_iv$ and every ordered $D_iD_jv$ in
+that norm. The full sphere is smooth in Cartesian coordinates; its
+polar endpoints are not artificial boundaries. On overlapping unit
+slabs, with a slightly larger slab on the right, one has
+
+$$
+\|v\|_{X_\delta}\le C_\delta
+             (\|Pv\|_{L^2_\delta}+\|v\|_{L^2_\delta}),
+\qquad P=R^3\mathcal T R^{-1}.
+\tag{21.4}
+$$
+
+For clarity its horizontal second-order input can be proved directly.
+For compact frozen tests, integration by parts, $T=[U,V]$, and central
+Fourier transformation give
+
+$$
+\sum_{i,j}\|Z_iZ_jf\|_2^2
+ =\|\Delta_Hf\|_2^2+2\|Tf\|_2^2
+ \le3\|\Delta_Hf\|_2^2.
+\tag{21.5}
+$$
+
+The last inequality follows from the nonnegative squared norms of
+$(U\pm iV)f$ in each central Fourier fibre, which give
+$\|Tf\|_2\le\|\Delta_Hf\|_2$.
+Freeze a smooth SPD horizontal matrix on finitely many small patches of
+a fixed annulus and absorb its small principal variation. Horizontal
+interpolation absorbs first derivatives and density drift. Cutoffs give
+the interior version of (21.4). To pass from smooth tests to the maximal
+distributional domain, local step-two subelliptic regularity first gives
+ordinary $H^1$ locally when the function and its image are $L^2$.
+Friedrichs mollifier commutators are bounded $H^1\to L^2$ and tend to
+zero: integrate one derivative in the commutator kernel and use the
+first smooth coefficient difference. The smooth estimate then passes
+weakly to the ordered horizontal second derivatives. Dilation, a bounded
+overlap partition and conjugation by $e^{\delta t}$ prove (21.4).
+
+Let $P_0=R^3(-\Delta_H-\lambda_0R^{-2})R^{-1}$. From (11.1)–(11.3)
+and (16.8),
+
+$$
+P=P_0+Q_1,
+\qquad Q_1=O(e^t)
+\text{ in horizontal order at most two, with all slab derivatives}.
+\tag{21.6}
+$$
+
+The density drift is first order of this size; the full-Green remainder
+is multiplication of this size. A finite spectral energy contributes
+$Ee^{2t}$ instead. These bounds are local for every fixed smooth model;
+no smallness of its coefficients outside the source chart is needed.
+
+Fourier–Laplace inversion of $P_0$ on any line
+$\operatorname{Re}s=\delta\in[-1,1]\setminus\{0\}$ is bounded on
+$L^2_\delta$, and (21.4) upgrades its inverse to $X_\delta$.
+For $n\ne0$ use (20.6)–(20.7). For $n=0$, large
+$|\operatorname{Im}s|$ controls the critical angular form plus
+$\int c|b|^2$, and the remaining compact parameter interval is bounded
+by invertibility and compactness. A contour shift crosses only (20.9),
+producing $A\phi+Bt\phi$. First do this for compact smooth forcing;
+vertical-line bounds and fast Fourier decay justify Cauchy shifts.
+Then approximate in both weighted spaces. When the weights straddle
+zero, exponential Cauchy–Schwarz bounds the transform and its first
+derivative at zero, so the residue coefficients and the inversion pass
+to the limit. Shifts not crossing zero add no term.
+
+We must use native corrected vectors rather than $h$ and $h\log R$.
+Choose $\beta$ so $\overline q_{\mathrm c}+\beta\|\cdot\|^2$ is
+coercive, and let $g=\chi h\log(R/b)$ with $\chi$ supported in the
+chart and one near zero. It is $L^2$ and outside $\mathcal Q$.
+Its off-source residual $F_\beta=(\mathcal T+\beta)g$ is
+$O(R^{-2}(1+|\log R|))$, with annular derivatives. For $f=Hw$ its
+pairing is bounded by a constant times
+
+$$
+\left(\int R^{-1}H^2|w|^2d\mu\right)^{1/2}
+\left(\int R^{-1}H^2(1+|\log R|)^2d\mu\right)^{1/2}.
+\tag{21.7}
+$$
+
+The first factor is form-controlled by §12 and the second is finite.
+Lax–Milgram gives $r\in\mathcal Q$ representing this functional.
+Thus $\psi=g-r$ is $L^2$, solves $(\mathcal T+\beta)\psi=0$ off zero,
+retains outer killing and is outside $\mathcal Q$.
+For $r/h$ the weighted equation has forcing
+$O(R^{-1}(1+|\log R|))$. The signed barriers
+$M_1-D_1R^\delta b_\delta$ of (13.10), local coercivity and positive-part
+comparison bound $r/h$ through zero. The zero weighted capacity in
+(12.13) makes those tests legitimate. Harmonic replacement has error
+$O(d(1+|\log d|))$ on $R<d$. The annular oscillation contraction of
+§16 gives $r/h=A_r+O(R^\gamma)$, and interior estimates give all
+rescaled derivatives. Therefore
+$\psi/h=\log R+\kappa_\psi+O(R^\gamma)$.
+Set $p=f_*/a_*$ and $\zeta=\psi-\kappa_\psi p$.
+These are genuine native maximal vectors with (21.2).
+
+For domain completeness, cut off above a fixed $t$ and put $v=Ru$.
+Physical $u\in L^2$ means $v\in L^2_{-1}$, whereas
+$\mathcal T u\in L^2$ means $Pv\in L^2_1$.
+Equation (21.4) initially gives $v\in X_{-1}$, so
+$P_0v\in L^2_0$ by (21.6). Choose
+$0<\delta<\gamma$ and $\eta=1-\delta$. Shift from $-1$ to $-\eta$
+without a pole, giving $v\in X_{-\eta}$. Now
+$Q_1v\in L^2_\delta$; shifting to $\delta$ gives
+$v=A\phi+Bt\phi+v_\delta$, $v_\delta\in X_\delta$.
+After subtracting the actual $Ap+B\zeta$, its remainder $w$ is in
+$X_\delta$, its native image is in $L^2_1$, and
+$Q_1w\in L^2_{1+\delta}$. Shift once more from $\delta$ to $1$
+without a pole. Thus
+
+$$
+R(u-Ap-B\zeta)\in X_1.
+\tag{21.8}
+$$
+
+Remove $t<-j$ with fixed-width smooth cutoffs. The operator commutator
+is $R^{-3}$ times a first-order cylinder expression; its physical $L^2$
+norm is bounded by the $X_1$ tail and tends to zero. Function and image
+tails also vanish. The cutoffs have finite transformed form energy by
+(21.8), and their $L^2$ image identity extends to all $\mathcal Q$ tests
+by form-core density. They are in $D(F)$ and vanish near the source.
+This proves graph-minimality of the remainder.
+
+The inherited outer domain follows from the adjoint definition itself.
+Localize a maximal vector by a smooth function vanishing near zero and
+constant outside a source annulus. Test against its products with
+$D(F)$ vectors. Annular maximal regularity moves the commutator onto the
+maximal vector; selfadjointness puts that localization in $D(F)$.
+Further smooth localizations away from zero preserve this domain.
+In particular the argument did not take the absolute adjoint of the
+punctured compact core and silently discard its outer boundary data.
+
+The inward-oriented source pairing of $p,\zeta$ has leading Wronskian
+$h^2\nabla_H\log R$. Its integral is
+$-(m_0/4)\int_J\int_0^{2\pi}c\phi^2=-K$.
+Errors are $O(R(1+|\log R|))+O(R^\gamma(1+|\log R|))$ and vanish.
+Outer pairings vanish by the inherited domain. Minimal vectors pair to
+zero by graph approximation. This proves (21.3), and also
+$\mathcal B(u)=[u,p]/K$, $\mathcal A(u)=-[u,\zeta]/K$.
+They are graph-continuous and $p,\zeta$ realize $(1,0),(0,1)$.
+The quotient dimension is two; the existing selfadjoint $F$ gives equal
+defect numbers, hence each is one. Maximal isotropic lines of this
+pairing are exactly the stated selfadjoint domains. Since $p\in D(F)$,
+that line is $\mathcal B=0$ for $F$. Notice
+$K=m_0(\pi/2)C=g_{\mathrm c}C/(4\lambda_0)$ has no $a_*^2$ factor.
+$\square$
+

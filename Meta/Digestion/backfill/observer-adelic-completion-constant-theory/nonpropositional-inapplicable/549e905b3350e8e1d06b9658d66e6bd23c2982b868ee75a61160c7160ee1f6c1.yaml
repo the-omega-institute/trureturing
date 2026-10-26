@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:549e905b3350e8e1d06b9658d66e6bd23c2982b868ee75a61160c7160ee1f6c1
+  normalized_sha256: sha256:549e905b3350e8e1d06b9658d66e6bd23c2982b868ee75a61160c7160ee1f6c1
+cas_ref: sha256:549e905b3350e8e1d06b9658d66e6bd23c2982b868ee75a61160c7160ee1f6c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 定义待求正谱测度满足的 primal 可行性条件，没有断言可行。'
+    previous_atom_id: cd149b1304f5250952618a430a18dc5aa31fbeaad6d4dea18aaa8591826bb862
+    next_atom_id: eb9cdb4dd27e14f6a1ac737ca802a5ed2bafb9c123a674fab682cefa829672d1

@@ -1,0 +1,131 @@
+**Theorem 11.3 (Uniform escape of every companion).** For every $K>0$
+there is $L>0$ such that, whenever a complete parent world $W$ has
+$c(W)>L$, its fifth response is off $24$ and
+
+$$
+c(W')>K\qquad\text{for every }W'\in C(p(W),v(W)).
+$$
+
+There is no terminal-equality hypothesis on $W'$.
+
+**Proof.** Suppose the conclusion fails for a fixed $K$. There are
+worlds $W_i$ with $c(W_i)\to\infty$ and companions $W'_i$ in the
+same entire children with $c(W'_i)\le K$. Definition 11.1 gives
+$p_i\to-\infty$ while $Y_i=45p_i+16v_i$ is bounded. The uniform
+large-$b$ limit in Definition 7.1 rules out an unbounded subsequence of
+$b(W'_i)$, since it would instead give $p_i\to-216/5$. The companion
+sources therefore have a convergent subsequence in
+
+$$
+b,c\ge0,\quad0\le r\le1,\quad bc=r(1-r).
+$$
+
+A limit $j=b+c=0$ is impossible. Indeed, for $j\le1/4$,
+
+$$
+j\Lambda=j(1+6/T+1/U)-4-4j/n\le8j-4\le-2.
+$$
+
+The bounded parent numerator then gives $e=O(j)$ and bounded $e/j$,
+$e/n$. All four original samples, and hence $p$, remain bounded.
+Thus the limiting $j,n$ are positive, as is $x=n/U$.
+
+Bounded companion drift would again give bounded original samples and
+bounded $p$. Pass to a subsequence with $|d|\to\infty$. Dividing the
+parent equation by $d$ gives $\Lambda\to0$. The whole normalized
+polynomial $g/d$ tends to the unique cubic $q_s$ with samples
+
+$$
+(-1,-1/j,-1/T,-1/n)\quad\text{at }0,1,2,3.
+$$
+
+Set $A_5=1+(U+n)q_s(5)$ and $A_6=1+(2U+n)q_s(6)$ at the limiting
+source. The common bounded $Y_i$, divided by the diverging drift, gives
+
+$$
+\Lambda=0,\qquad45A_5+16A_6=0,\qquad
+r^2-(1+b)r+b(xU-b)=0.
+$$
+
+This uses neither a terminal equality nor a nonzero limiting $A_5$.
+The following exact finite-source certificate excludes this system even
+on the nonnegative source boundary.
+
+Put
+
+$$
+q_0=xU^2+14xU+x-4U-4,\qquad
+j=\frac{4xU(U+1)}{q_0},\quad r=xU-j,\quad b=\frac{U-1}{2}.
+$$
+
+The first equation $\Lambda=0$ gives the displayed expression for $j$.
+Here $x>0,U\ge1,j>0$, so $q_0>0$. The only divisors in this
+substitution are positive $x,U,U+1,j,q_0$ and rational constants.
+Define the integer polynomials
+
+$$
+\begin{aligned}
+L={}&109U^2x^2+173U^2x-3194Ux^2-2690Ux+2948U\\
+&\quad-1251x^2+341x+2948,\\
+S={}&4q_0^2\{r^2-(1+b)r+b(xU-b)\},
+\end{aligned}
+$$
+
+where the rational $r,b$ just displayed are substituted in $S$.
+All denominators cancel in $S$, whose degrees in $(U,x)$ are $(6,4)$,
+and
+
+$$
+L=4x(U+1)(45A_5+16A_6),\qquad
+\operatorname{Res}_U(L,S)=1179648x^4Q(x).
+$$
+
+The complete descending coefficient vector of $Q$ is
+
+$$
+\begin{gathered}
+(91738605818880000,468000052761600000,-287776045449344000,\\
+-4243016387674451200,-1949152889752436800,14795306352123710480,\\
+10538868307289518842,-27294682116450017650,-18623139293789121581,\\
+30898244403783565513,14466477630213266395,-21723230306826660213,\\
+-3613832109665837004,8083225499684453800,-862616315778108600,\\
+-889489442954112000,198720866364020000).
+\end{gathered}
+$$
+
+To fix the reconstruction normalization, define $A_c,B_c$ by
+
+$$
+A_c(x)U+B_c(x)=\operatorname{rem}_U
+\bigl([x(109x+173)]^5S,L\bigr).
+$$
+
+Both coefficients have degree fourteen and integer content $128$.
+They are the unscaled pseudo-remainder coefficients. The degrees of
+$Q,A_c$ survive modulo $101$, and
+
+$$
+\operatorname{Res}_x(Q,A_c)=97\pmod {101}.
+$$
+
+Equivalently, dividing both coefficients by $128$ gives primitive
+coefficients and resultant residue $36$. Either normalization makes
+$A_c$ a unit at every root of $Q$. For completeness the descending
+vector of $Q$ modulo $101$ is
+
+$$
+(98,88,79,98,14,27,82,85,52,50,29,64,11,64,52,96,69).
+$$
+
+The Sturm sequence $Q,Q',-\operatorname{rem}(Q,Q'),\ldots$ has
+variations $6$ at zero and $2$ at positive infinity. Its four positive
+roots and the necessary $U=-B_c/A_c$ have the following rational
+certificate. The signs are the signs of $Q$ at the left and right
+endpoints.
+
+| $x$ bracket | Endpoint signs | Necessary $U$ interval |
+|---|---|---|
+| $(360774328,360774329)/10^9$ | $+,-$ | $(-19,-18)$ |
+| $(431319435,431319436)/10^9$ | $-,+$ | $(-4,-3)$ |
+| $(1462716433,1462716434)/10^9$ | $+,-$ | $(9/100,1/10)$ |
+| $(1929370586,1929370587)/10^9$ | $-,+$ | $(-2/25,-7/100)$ |

@@ -1,0 +1,108 @@
+**Definition 4.6 (resident admission and return).** The native graph installed
+at boot has the following dispatch cycle. At its nonterminal idle boundary
+all twelve workspace tokens have returned to the producer and the source
+service token has returned to the dispatcher. An actor-local computation
+or partial token transfer is its own actual phase, not this idle boundary.
+At idle it acquires and seals one
+canonical complete frame on port 13, parses it, retains its return kind and
+command, and takes the source-availability token into the selected service.
+It executes ReadState before generation or maintenance. Old source tags go
+to Definition 4.4, then the response/counter/semantic-row routines below.
+Maintenance tags go to Definition 5.1. Local controller and terminal markers
+go to their inherited actually executed code/complete-output routines.
+Every route then goes to the unified row/delivery routine of §6, its actual
+acknowledgement, TOK returning the source-service token to the dispatcher,
+one CTL restoring the idle phase, and the same controller's
+saved return edge. A raw external-frame mode instead returns to its next
+frame IN. A global-terminal route finishes its row/delivery and actual ACK, and the
+requested stop-snapshot/verification/consumer work of §6, before its halt
+CTL. A verifier refusal completes that route with no task output. Source calls use CloseFence(`source-start`) before generation and
+CloseFence(`response-commit`) after release; NativeLocal and Halt use the
+same start/commit pair around their complete marker/output commitment.
+These replace, rather than duplicate, any inherited designated fence sites.
+They have no directory publication and use `no-publication` in the row.
+The complete old/new $q,g,e,j,m$ words are staged before their roles are
+reused. At commitment an original source call advances $q$, an accepted
+modification $g$, and an accepted Rho $e$. Every source call, NativeLocal and
+Halt advances $j$ once, exactly as in LJA4.2–4.3. Local/terminal markers
+preserve $q,g,e$; maintenance preserves $q,g,e,j$. Each of these completed
+events advances $m$ once. Prepare the required incremented unary versions
+before commitment; the committed response and actual phase select them by
+paid copying/AppendCounter afterward. A row seal materializes an already
+committed event and does not increment it again. Every nonmaintenance route
+writes its semantic row and index before its unified row and index, as in
+Definition 6.2a. Fence-count $f$ is separate from all these counts.
+
+The same boot installs the auxiliary `journal` call-kind. A source-free
+caller reaches that fixed entry through its actually installed public code
+with the retained query of Definition 6.2a; it is not an additional raw-frame
+tag or a scheduler choice. At acknowledged idle the producer's entry CTL
+reserves admission and its TOK holds the source-service token busy before
+the actor workspace loan and query channel. The query parser, row/prefix
+service, reply checks and final ACK return this call-kind's saved continuation
+through source-token TOK and idle CTL. It takes no event-row join. The
+producer's local frozen-prefix entry uses its already held phase/token and
+returns to that frozen continuation. Neither entry grants any legacy graph
+new control or permission, and neither is enabled at an arbitrary busy cut.
+
+The three-bit original frame tags remain ReadE `000`, Rho `001`, TagRead
+`010`, Left `011`, Right `100`. Reserve is `101` and Raise is `110`.
+Their payload is precisely $U(J)$; their length is the actually supplied
+$U(J+1)$ in the common framing `tag; U(length); payload`. Thus the canonical
+maintenance frame is $tag\;U(J+1)\;U(J)$, for every $J\ge0$; inadmissible
+*values* are paid maintenance refusals, not malformed encodings. In automatic
+mode the same complete command block is constructed by literal Append and
+word-copy routines from computed public words, with no external IN for those
+computed bits. This mode is a boot-installed public choice.
+
+Header supply has three unrolled IN; EX; WR; MR bodies. Unary length supply
+uses IN; EX; WR; RD(test); MR per bit, the RD selecting whether MR returns
+to IN or goes to length seal. Zero-reserve the payload using its completed
+length, position it with At, and run AIF's five-row payload graph: RD(length),
+IN, WR, MR(payload), MR(length), with its terminal RD(0). The just-consumed
+bit in latch 5 survives until WR. All length/descriptor setup uses
+Definitions 3.1–3.3, with bases measured before append; nothing assumes empty
+ports on a later call. Retain each header, length and payload block and its
+actual descriptor. Public parsing scans the complete retained frame. Original
+context conversion uses the supplied prefix parser and token converter;
+maintenance checks payload equality with its canonical unary length/value.
+
+The physical header, length and payload are three successive blocks on 13,
+with Base measured before each. After the header's third bit append sep and
+one zero status bit, construct its descriptor, At its status and WR(1), then
+CTL seal. Its length is the constructed literal 3. After the length word's
+terminal 0 perform the same sep/status construction, measure its actual
+length by the sep-bounded scan, and seal it by At; WR(1); CTL. Copy its
+complete unary payload-length value into a work word by At at its saved
+base, the zero-copy body and Finish; this is the payload loop's counter.
+Base before Zero on 13 supplies the payload's real base. Zero constructs
+its $d$ bits and sep; Append(0) constructs its status. Before the first
+payload test execute At(13,payload-base) and Last(counter). After the
+terminal test execute At(13,status); WR(1); CTL seal. Every status address
+is the constructed base+length+1. Their descriptors are the sep-delimited native records of Definition 6.1
+on producer block descriptions 17; encoded references in a wire field use
+that definition's separate bit-tuple codec. Their separate physical
+separators/status bits are not wire-input bits: the chronological wire
+frame is exactly the header bits, length bits and payload bits referred to
+by those three descriptors. Automatic commands construct the same three
+blocks by Append/copy instead of IN, including the same actual status and
+descriptor work. This fixes setup and entry positions even on nonempty
+port 13 and leaves every acquired-but-unwritten input cut distinct.
+Construct the complete request-reference word as $U(k)$ followed by Frame of
+each complete block reference: header, length, payload, then any additional
+canonical context blocks in order. Its actual count is three plus that
+explicit finite list's count, constructed by unary increment during the
+retained-list scan. New, UnaryBody, Frame per reference and Finish build
+this word; stage it as a complete public block if later work needs its role.
+In the original canonical context language the context is already in the
+payload, so there are no additional context blocks. The request tuple
+therefore neither supplies a larger snapshot nor substitutes a name for
+an unacquired payload.
+
+At every physically prescribed IN both supplied bits execute IN and its
+receipt/control successor. Canonical-prefix admissibility is only the task
+domain restriction. A completed malformed frame enters `frame-fault` with
+its retained bits, no source permission and no executed source call. An
+unterminated raw unary length remains in actual ingress. A noncanonical bit
+is never changed into an unexecuted `none`.
+

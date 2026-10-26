@@ -1,0 +1,9 @@
+**Definition 3.1 (natural views).** For an actual prefix $h$ of the
+incidence run define separately:
+
+| View | Independent meaning | Canonical body |
+| --- | --- | --- |
+| $S(h)$ | Root-relative L/R child support of the actual storage tree. | CYCLE Definition 3.3's preorder two-bit child masks. |
+| $B(h)$ | Actual root paths whose two child slots are empty. | CYCLE Definition 3.4's contour of that terminal antichain. |
+| $T(h)$ | Actual ordered $\Pi_{\mathrm{gc}}$ patch occurrences from the paid entrance, including operands, probes, updates, births, head changes, labels and receipts. | CYCLE Definition 5.3's eleven-field chronological records. |
+| $M_J(h)$ | UAS's selected actual retained backing, construction relations, frontier and current rights. | CYCLE Definition 6.1's seven-family records, with the role directory of Definition 2.2. |

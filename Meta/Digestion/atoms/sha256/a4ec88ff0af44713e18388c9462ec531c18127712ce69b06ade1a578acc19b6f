@@ -1,0 +1,14 @@
+**定义 2.1（许可语言的效应空间）。** 令 $E$ 为 $d$ 维实向量空间，$U\subseteq E$ 为 $r$ 维终端效应空间，$A_a\in\operatorname{End}(E)$ 为有限字母表 $\Sigma$ 上的作用。给定无空步的有限确定部分自动机 $(Q,\Sigma,\delta,q_0,F)$；若 $\delta(q,a)$ 未定义，该步没有执行事件。对时间顺序门词 $w=a_1\cdots a_k$，采用 Heisenberg 约定 $A_w=A_{a_1}\cdots A_{a_k}$。令
+
+$$
+U_q^{(0)}=
+\begin{cases}
+U,&q\in F,\\
+0,&q\notin F,
+\end{cases}
+\qquad
+U_q^{(n+1)}=U_q^{(n)}+\sum_{\delta(q,a)=q'}A_aU_{q'}^{(n)}.
+$$
+
+只在接受终端读取；若中间前缀也读取，应把相应位置加入终端合同。
+

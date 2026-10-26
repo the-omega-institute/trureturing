@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:28338ba70c8efa98edc78f635bd82f4d9ec30cad59878076ee7d7b170c4f9b79
+  normalized_sha256: sha256:28338ba70c8efa98edc78f635bd82f4d9ec30cad59878076ee7d7b170c4f9b79
+cas_ref: sha256:28338ba70c8efa98edc78f635bd82f4d9ec30cad59878076ee7d7b170c4f9b79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 候选下降映射与一步缺陷 ε 的定义。不另主张独立数学命题。
+    previous_atom_id: 69515c0d5e216262f16e3cde5775ed3434d2441725893b91ddf202874108cb8a
+    next_atom_id: 7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0

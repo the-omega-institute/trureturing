@@ -1,0 +1,85 @@
+**Definition 248.1 (Approximate conversion with the original preparation law).**
+Fix $t=3-2\sqrt2$ and $D=\{(q_1,q_2):q_1>0,\ q_2>0,\ q_1+q_2<1\}$.
+For every actual $q\in D$, retain the positive-principal-root vector
+$V_q$, the jointly generated $p(q),u_q,U_q$, and the matrices
+$\Omega_q,\rho_q$ of Definition 240.1. In particular, with all quantities
+evaluated at that same $q$, write
+
+$$
+\begin{gathered}
+g=(1-t)^2p(1-p),\qquad h=t+(1-t)p,\qquad
+P_q=\operatorname{Tr}\Omega_q,\qquad \rho_q=\Omega_q/P_q,\\
+\lambda=\frac{g}{2t+g},\qquad
+W_v=\frac{1-v}{4}I_4+vP_-,\qquad W_q=W_\lambda.
+\end{gathered}
+\tag{248.1}
+$$
+
+The singlet $P_-$, normalized cut, CAR ordering, compatible phases,
+selected-space identification $J$ and fixed encoded output are those of
+Definitions 240.1 and 244.1. For each finite integer $k\ge2$, let
+$\mathcal H_k$ consist of the reduced success maps
+$\mathcal E:M_{8^k}(\mathbb C)\to M_4(\mathbb C)$ of actual finite
+adaptive local-total-number-preserving LOCC instruments allowed by
+Definition 244.1, fixed independently of $q$, for which
+
+$$
+\begin{gathered}
+s_{\mathcal E}(q)=\operatorname{Tr}\mathcal E(\rho_q^{\otimes k})>0,\\
+e_k(\mathcal E)=\sup_{q\in D}\frac12
+\left\|\frac{\mathcal E(\rho_q^{\otimes k})}{s_{\mathcal E}(q)}-W_q\right\|_1.
+\end{gathered}
+\tag{248.2}
+$$
+
+Here $\|\cdot\|_1$ is the trace norm. The exact-output equation (244.2)
+is replaced by the error requirement; the preparation and operation menu
+are retained. Every attempt uses exactly $2k$ independent compatible
+full-Gibbs preparations at the same unknown $q,t$ and $k$ unchanged
+original filters. Any filter rejection is terminal. All-pass input is
+$\rho_q^{\otimes k}$, and the three original probabilities remain
+
+$$
+1-P_q^k,\qquad P_q^k s_{\mathcal E}(q),\qquad
+P_q^k(1-s_{\mathcal E}(q)).
+\tag{248.3}
+$$
+
+The output in (248.2) is evaluated after summing and erasing all fine
+success histories. Only the stipulated ideal local controls, neutral
+memories, separable auxiliary states, fixed coins and finite communication
+are available. One existing selected particle per party occupies the fixed
+output encoding. In a sector of local auxiliary charge $n_{\mathrm{aux}}$,
+local residual charge before discard is $k+n_{\mathrm{aux}}-1$.
+All residual particles, memories, histories and coin records are erased.
+There is no separately supplied $p,U_q$ or source label, source-aware
+alignment or target coin, entangled ancillary resource, external
+particle-number phase reference, unfiltered access, extra preparation,
+retry or failure recycling. The ideal coherent-control and neutral-memory
+assumptions are those of [VII, §§214,219,235–237](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md)
+as inherited by Definition 244.1; they are not a passive-optics or finite
+gate-alphabet assumption.
+
+The simultaneous polynomial-original-yield assertion, denoted $\mathsf Q$,
+is
+
+$$
+\begin{gathered}
+\exists A>0\ \exists\gamma>0\ \exists\epsilon_0\in(0,1)\quad
+\forall\epsilon\in(0,\epsilon_0)\quad
+\exists k\in\mathbb N,\ k\ge2\quad
+\exists\mathcal E\in\mathcal H_k:\\
+e_k(\mathcal E)\le\epsilon,\qquad
+P_q^k s_{\mathcal E}(q)\ge A\epsilon^\gamma\quad\text{for every }q\in D.
+\end{gathered}
+\tag{248.4}
+$$
+
+Both $k$ and the single whole-family instrument may depend on $\epsilon$,
+but not on the actual $q$. The constants $A,\gamma,\epsilon_0$ are
+independent of both. No separate positive uniform conditional-success
+floor or attained optimum is assumed.
+The exact finite-$k$ obstruction of Theorem 247.3 and Corollary 247.4
+concerns the exact-output equation (244.2); (248.4) instead allows
+approximation and an $\epsilon$-dependent finite $k$.
+

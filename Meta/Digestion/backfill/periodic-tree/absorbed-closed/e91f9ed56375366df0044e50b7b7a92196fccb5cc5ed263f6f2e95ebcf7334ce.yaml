@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e91f9ed56375366df0044e50b7b7a92196fccb5cc5ed263f6f2e95ebcf7334ce
+  normalized_sha256: sha256:e91f9ed56375366df0044e50b7b7a92196fccb5cc5ed263f6f2e95ebcf7334ce
+cas_ref: sha256:e91f9ed56375366df0044e50b7b7a92196fccb5cc5ed263f6f2e95ebcf7334ce
+coverage_gids:
+  - gid: D5/S3/Arith/Powerful/PowerfulNumber.Powerful
+    target_statement_id: sha256:dba64bfdd5f80d27757ec49e7428404fa5ebcf2dda9d2cad084599c4afb7ecd4
+  - gid: D5/S3/Arith/Powerful/PowerfulNumber.golomb_representation
+    target_statement_id: sha256:eb6b6ac933c64e8c62285eb945149eaebbf6588a313f7f26368c12624de0c6ce
+receipts:
+  unresolved_subitems: []

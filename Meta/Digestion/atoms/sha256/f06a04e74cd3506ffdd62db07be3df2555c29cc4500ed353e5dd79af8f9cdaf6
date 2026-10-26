@@ -1,0 +1,128 @@
+**Theorem 11.1 (quantitative full-Green singular part).** For every fixed
+smooth positive $\rho$ and smooth SPD $A$ in the original both-wall model,
+there are
+a chart radius $b_0>0$ and a finite $K$ such that
+
+$$
+\left|\Gamma_{A,o}(\Psi^{-1}q)
+ -\frac{R(q)^{-2}}{2\pi m_0}\right|
+\le K R(q)^{-1},\qquad 0<R(q)<b_0.
+\tag{11.1}
+$$
+
+In particular the leading coefficient is exact and uses the full
+unit-source killed field with its original clock. The comparison is
+uniform on every compact rescaled annulus. It includes the entire
+small-time and large-time contributions.
+
+**Proof.** All estimates in this proof concern the original free operator.
+Chart points in this proof are identified with their native images under
+$\Psi^{-1}$. In the chart the differential expression is
+
+$$
+L_A=-m^{-1}\sum_{i,j=1}^2 Z_i(mC^{ij}Z_j),\qquad (Z_1,Z_2)=(U,V).
+\tag{11.2}
+$$
+
+For $R< b_0$ smoothness gives
+
+$$
+|C-I|+|m/m_0-1|\le K_1R,\qquad
+|\nabla_H C|+|\nabla_H\log m|\le K_1.
+\tag{11.3}
+$$
+
+The first estimate uses $|\xi|+|\eta|=O(R)$ and $|\tau|=O(R^2)$.
+The horizontal distance is locally comparable to the frozen Heisenberg
+distance: the horizontal distribution is exactly the same and the two
+horizontal metrics are uniformly comparable. After shrinking the chart,
+short paths stay in a larger injective chart. Local ball volumes are
+comparable to the fourth power of their radius, uniformly on a compact
+neighbourhood of the source.
+
+The Gaussian upper estimate of Jerison--Sánchez-Calle, including the
+smooth horizontal drift allowed in §6, therefore yields, for $p,q$ in
+that neighbourhood and $0<t<t_0$,
+
+$$
+p_t^\Omega(p,q)\le K_2t^{-2}
+ \exp(-d_H(p,q)^2/(K_2t)).
+\tag{11.4}
+$$
+
+Here the target drift is exactly
+$\sum_j(\operatorname{div}_\mu Y_j)Y_j$ for the smooth square-root frame
+(3.1). Dirichlet localization applies to this same expression and density,
+as in Colin de Verdière--Hillairet--Trélat, Theorem 3.2. For $t\ge t_0$,
+the semigroup identity, the actual positive killed gap, and bounded
+positive-time diagonals on this compact neighbourhood give
+$ p_t^\Omega(p,q)\le K_3e^{-\lambda_A(t-t_0)}$.
+Consequently its full two-point Green kernel satisfies
+
+$$
+0\le G_\Omega(p,q):=\int_0^\infty p_t^\Omega(p,q)dt
+\le K_4d_H(p,q)^{-2}+K_4.
+\tag{11.5}
+$$
+
+The bounded term in (11.5) contains the complete large-time tail. No
+positive-time tangent limit is being integrated without a tail bound.
+The local heat hypotheses, density realization and nilpotent fields are
+also exactly those of Colin de Verdière--Hillairet--Trélat, Theorem B,
+(2.8), with horizontal drift and step two. Their theorem is consistent
+with (11.4), but its order-zero convergence alone is not used to assert
+(11.1).
+
+Here is a direct residual argument giving the stronger error needed at
+equality. Choose a smooth cutoff $\zeta$ supported in the chart and equal
+to one near zero, and write $G_0=(2\pi m_0)^{-1}R^{-2}$. In distributions
+relative to $d\mu$,
+
+$$
+L_A(\zeta G_0)=\delta_o+F,\qquad
+|F(q)|\le K_5 R(q)^{-3}\quad\hbox{near }0,
+\tag{11.6}
+$$
+
+where $F$ is smooth off zero and compactly supported in the chart.
+Indeed $|\nabla_HG_0|=O(R^{-3})$,
+$|\nabla_H^2G_0|=O(R^{-4})$, and (11.3) makes the difference from the
+frozen expression $O(R^{-3})$. The delta coefficient is one: the frozen
+flux in the measure $m_0dq$ is one by (10.7), and the error in that flux
+is $O(R)$ on $R=\varepsilon$. The locally integrable residual in (11.6)
+therefore has no additional point mass.
+
+The exact resolvent identity is
+
+$$
+\Gamma_{A,o}(q)=\zeta(q)G_0(q)
+ -\int_\Omega G_\Omega(q,p)F(p)d\mu(p).
+\tag{11.7}
+$$
+
+One can justify it without assuming that $G_0$ belongs to the free form
+domain. For $\psi\in C_c^\infty(\Omega)$, put $u=L_A^{-1}\psi$.
+It is smooth on the support of $\zeta$ and bounded; boundedness follows
+from short-time $L^\infty$ contraction and the positive-time diagonal/gap
+tail. Test (11.6) against $u$, using a cutoff equal to one on the support
+of $\zeta$. Its left side is $\int\zeta G_0\psi d\mu$ and its right side
+is $u(o)+\int Fu\,d\mu$. The heat-resolvent representation of $u$ and
+absolute Fubini, since $F\in L^1$ and the resolvent of $|\psi|$ is
+bounded, give (11.7) in distributions. The integral is a distributional solution with right side $F$ and is
+smooth off the source by local hypoellipticity. Thus (11.7) holds there
+pointwise, with the continuous kernel-integral representative.
+
+For $s=R(q)$, split the integral in (11.7) into
+$R(p)<\kappa s$, $R(p)\asymp s$, and $R(p)>K_6s$, with fixed constants
+chosen from the triangle inequalities for a homogeneous distance.
+In the first region $d_H(p,q)\asymp s$, and
+$\int_{R(p)<\kappa s}R(p)^{-3}dp=O(s)$, giving $O(s^{-1})$.
+In the middle region $R(p)^{-3}=O(s^{-3})$ and
+$\int_{d_H(p,q)<K_7s}d_H(p,q)^{-2}dp=O(s^2)$, again giving
+$O(s^{-1})$. In the third region $d_H(p,q)\asymp R(p)$ and the radial
+integral is bounded by a constant times
+$\int_{K_6s}^{b_0}R^{-2}dR=O(s^{-1})$.
+The bounded kernel term and the smooth cutoff annulus contribute $O(1)$.
+Density is comparable to Lebesgue measure throughout these estimates.
+Combining them with (11.7) proves (11.1). $\square$
+

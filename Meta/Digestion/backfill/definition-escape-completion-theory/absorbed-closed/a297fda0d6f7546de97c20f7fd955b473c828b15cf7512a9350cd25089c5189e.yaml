@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a297fda0d6f7546de97c20f7fd955b473c828b15cf7512a9350cd25089c5189e
+  normalized_sha256: sha256:a297fda0d6f7546de97c20f7fd955b473c828b15cf7512a9350cd25089c5189e
+cas_ref: sha256:a297fda0d6f7546de97c20f7fd955b473c828b15cf7512a9350cd25089c5189e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/CIRPT/UnifiedResidual.kernelResidual_cut_eq_defectRelation
+    target_statement_id: sha256:515a7c150f034b4e4a254316141eef1bcb594452736147a9b302d6dbb14770b1
+receipts:
+  unresolved_subitems: []

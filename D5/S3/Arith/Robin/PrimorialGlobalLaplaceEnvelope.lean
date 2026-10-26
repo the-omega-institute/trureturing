@@ -7,6 +7,7 @@
    digest: The literal finite-prime Euler ratio has a global original-profile envelope. -/
 
 import D5.S3.Weil.Mertens.Estimates
+import D5.S3.Arith.Robin.LogarithmBounds
 import Mathlib.NumberTheory.AbelSummation
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
@@ -34,9 +35,6 @@ open scoped BigOperators Topology Interval
 namespace D5.S3.Arith.Robin.PrimorialGlobalLaplaceEnvelope
 
 
-def primeCutoff (z : ℝ) : Finset ℕ :=
-  (Finset.Ioc 0 ⌊z⌋₊).filter Nat.Prime
-
 private def weightedPrimeSum (z v : ℝ) : ℝ :=
   ∑ p ∈ primeCutoff z,
     (Real.log (p : ℝ) / (p : ℝ)) *
@@ -44,16 +42,6 @@ private def weightedPrimeSum (z v : ℝ) : ℝ :=
 
 private def primeCoefficient (n : ℕ) : ℝ :=
   if n.Prime then Real.log (n : ℝ) / (n : ℝ) else 0
-
-private theorem prime_filter_Icc (t : ℝ) :
-    (Finset.Icc 0 ⌊t⌋₊).filter Nat.Prime = primeCutoff t := by
-  ext n
-  simp only [primeCutoff, Finset.mem_filter, Finset.mem_Icc, Finset.mem_Ioc]
-  constructor
-  · rintro ⟨⟨_, hn⟩, hp⟩
-    exact ⟨⟨hp.pos, hn⟩, hp⟩
-  · rintro ⟨⟨_, hn⟩, hp⟩
-    exact ⟨⟨Nat.zero_le n, hn⟩, hp⟩
 
 private theorem primeCoefficient_sum (t : ℝ) :
     (∑ n ∈ Finset.Icc 0 ⌊t⌋₊, primeCoefficient n) =

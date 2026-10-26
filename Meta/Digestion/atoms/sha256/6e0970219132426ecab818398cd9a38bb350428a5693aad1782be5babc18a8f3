@@ -1,0 +1,55 @@
+**Theorem 146.1 (the whole new spectrum interval).** Every actual real pair (U.110) with $18/25\leq p\leq17/20$ satisfies $\Theta\leq r$. This includes every $\lambda\in[0,q]$ and every actual trace penalty.
+
+Proof. First fix $p$ and an arbitrary real unit $u$. By (U.150), the first two original matrices in (U.197) interpolate at the same $k_D$ to
+$C_{k_D,u}(\lambda)\succ0$ for $2q/7\leq\lambda\leq q/2$. The two scalar caps used in proving their endpoints are not the interpolated objects. For the high branch, (U.174) gives
+
+$$
+\begin{gathered}
+a_S(q)=\frac{4[p+g-(1+d)/2]}h\leq0,\qquad
+C_{S,u}(q)=(m-q)I_2-a_S(q)M_{k_S,u}\succeq0,\\
+C_{S,u}(\lambda)\succeq0\quad(q/2\leq\lambda\leq q).
+\end{gathered}
+\tag{U.198}
+$$
+
+Indeed $(2p-1)^2+(2g)^2=1$ implies $(2p-1)+2g\leq d$. Interpolation in (U.198) holds at the same $k_S=4/h$ and the same $u$, including both closed endpoints.
+
+Only after these full-direction matrix conclusions select a real unit minimum eigenvector of the actual $B$. Theorem 133.1 then gives, for either multiplier,
+
+$$
+m-\lambda=\|V\sqrt P u\|^2\leq\mu_k Z_k,\qquad
+\mu_k=\lambda_{\max}(M_{k,u})>0,\qquad Z_k=H+k\tau.
+\tag{U.199}
+$$
+
+The cost in this formula is exactly the sum of the two actual quadratic forms (U.131), whose trace components are $(k/2)(\operatorname{Tr}(V_i\sqrt P))^2$. In the SVD (U.136) each trace is a sum of both singular contributions before it is squared. No separate trace-component replacement is made.
+
+For a relevant threshold $a>0$, the proved matrix $(m-\lambda)I-aM_{k,u}\succeq0$ forces $m-\lambda>0$ and $\mu_k\leq(m-\lambda)/a$. Combining with (U.199), dividing only by positive quantities, yields $Z_k\geq a$. For $a\leq0$ the same conclusion follows from $Z_k\geq0$. Thus both threshold signs, including zero, are covered. At a tie, any actual real minimum eigenvector gives (U.199).
+
+For the middle branch consume $Z_{k_D}\geq a_{k_D}(\lambda)$ through Proposition 134.1. In its exact notation,
+
+$$
+\begin{gathered}
+x=\frac\alpha{\sqrt2}\sqrt{1-H/(2\alpha)},\quad
+y=\sqrt R,\quad\gamma=\frac{\alpha k_D}{4}>0,\quad
+L_p=2r-\beta/\sqrt2>0,\\
+2\Theta\leq\beta/\sqrt2+x+y,\qquad
+x^2+\gamma y^2=\frac\alpha4[2\alpha+k_D(1-\lambda)-Z_{k_D}]
+\leq\frac{\gamma L_p^2}{1+\gamma},\\
+(x+y)^2\leq(1+\gamma^{-1})(x^2+\gamma y^2)\leq L_p^2.
+\end{gathered}
+\tag{U.200}
+$$
+
+The root-trace input is precisely Theorem 131.1, whose positive-integral proof (U.115)–(U.126) already includes singular $A$ and $H=2\alpha$. For the high branch consume $Z_{k_S}\geq a_S(\lambda)$ through Proposition 123.1, or (U.114) with its nonnegative last loss omitted:
+
+$$
+N^2\leq\frac{h^2}{8}-\frac{hH}{16},\qquad
+S\leq\frac{h^2}{8}+\frac{1-\lambda}{4}
+-\frac h{16}Z_{k_S}\leq\frac c2,\qquad
+\Theta^2\leq2S\leq c.
+\tag{U.201}
+$$
+
+This proves the middle and high branches using the same actual $\tau$ as in (U.199). Theorem 136.1 supplies $0\leq\lambda\leq2q/7$, since $p\geq18/25>2/3$. Its proof (U.152)–(U.158) is the direct low-branch estimate and does not require a global squared-budget theorem. The three closed intervals cover $[0,q]$. No division by $H,\tau,R$, a singular value or an eigengap occurs, so zero residuals, zero penalties, all ranks of $V$ and singular Gram complements are included. $\square$
+

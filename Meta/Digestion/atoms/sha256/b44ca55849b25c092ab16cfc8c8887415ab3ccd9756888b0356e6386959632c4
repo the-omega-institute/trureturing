@@ -1,0 +1,42 @@
+**Theorem 6.1 (finite sufficient collapse bound).** For every fixed
+double-wall model and source, there is a finite $g_+(o,A,\rho,I)$ such that
+
+$$
+g>g_+\quad\Longrightarrow\quad
+\inf_{\substack{f\in\mathcal F_A\\\|f\|_2=1}}q_{A,g}[f]=-\infty.
+\tag{6.3}
+$$
+
+One admissible choice is $g_+=R_o(v)$ for the annular witness in (6.1);
+hence a finite choice exists without taking a
+sharp infimum.
+
+**Proof.** The rescaled fields converge to the frozen fields in
+$C^\infty$ on the support of $v$, and the rescaled density converges to
+$d\widehat\mu$. Therefore
+
+$$
+T_A[f_s]=s^{-2}\nu_{v,s}^2\bigl(E_v+o(1)\bigr),
+\qquad
+\liminf_{s\downarrow0}s^2V_{A,o}[f_s]\ge\nu_v^2D_v.
+\tag{6.4}
+$$
+
+The second relation is (3.7), which uses the full killed Green field. If
+$g>R_o(v)$, choose $\delta>0$ so that $E_v-gD_v<-2\delta$.
+Equations (6.4) then give
+
+$$
+q_{A,g}[f_s]\le-\delta\nu_v^2s^{-2}
+$$
+
+for all sufficiently small $s$. Letting $s\downarrow0$ proves (6.3).
+The bound is sufficient, fixed-model and finite. It is neither a sharp
+critical coupling nor a statement that every $g>g_+$ has the same ground
+state sign on a different model. $\square$
+
+The large-coupling statement and Theorem 5.1 are logically separate. The
+small interval follows from an unweighted relative form inequality; the
+collapse follows from normalized annular states and the leading full-Green
+homogeneity. No equality case is settled.
+

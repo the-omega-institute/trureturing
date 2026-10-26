@@ -1,0 +1,6 @@
+- **[F] Fermionic extension and ordering source.** This volume, §§135--138,
+  at [485055803a4de7e47866c28fb75de1443e3eae89](https://github.com/the-omega-institute/trureturing/blob/485055803a4de7e47866c28fb75de1443e3eae89/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+  supplies the finite Fock/exterior and second-quantization interface.
+  Sections 141--142 fix its full Gibbs state and even B-local factorization;
+  §§149--151 specify the two-preparation CAR coordinates and common filter.
+

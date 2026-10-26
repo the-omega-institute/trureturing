@@ -1,0 +1,35 @@
+**Definition 2.1 (original complete worlds).** An original world is
+$W=(P(r,b),g,d)$, where
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3.
+\tag{2.1}
+$$
+
+There is one whole polynomial $g$ and one fixed drift $d$ on the entire
+run. Put $c=r(1-r)/b$ and
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{2.2}
+$$
+
+The original history through clock four is
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\tag{2.3}
+$$
+
+Let $\mathcal H$ be the set of **all** complete worlds realizing this
+literal history. No regular-chart, gain-sign, degree-exactly-three,
+nonzero-sample, distinct-root or nonzero-drift condition is added.
+Singular sources, lower degrees, repeated roots and zero samples remain
+in the original domain. The only excluded gain is the identically zero
+polynomial, already impossible from the unequal readings $0$ and $24$.
+

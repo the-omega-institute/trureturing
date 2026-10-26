@@ -1,0 +1,18 @@
+**定义 9.1（有限内部观察者）。**
+一个有限内部观察者由有限记忆集合 $\mathsf M$、
+动作选择 $a:\mathsf M\to A$ 和记忆更新
+$\delta:\mathsf M\times O\to\mathsf M$ 组成。
+其初始记忆是给定分布或给定基态，动作由当前实际记忆决定。
+对每个动作--输出给定矩阵 $K_{a,o,\alpha}$，满足
+
+$$
+\Phi_{a,o}(\rho)=\sum_\alpha K_{a,o,\alpha}\rho K_{a,o,\alpha}^\dagger,
+ \qquad \sum_{o,\alpha}K_{a,o,\alpha}^\dagger K_{a,o,\alpha}=I.
+$$
+
+对指定有限时域，记忆可以存储整个实际历史前缀，
+也可以存储经过证明足够的较小记录。
+若策略还依赖步数，便把步数寄存器并入 $\mathsf M$。
+
+<a id="thm-observer-isometry"></a>
+

@@ -1,0 +1,24 @@
+**Definition 73.2 (adaptive canonical-cut pulse class).** Fix the actual acquired path of (69.2), its whole primitive integer law $q$ of Definition 44.2, positive leading coefficient $a\ge2$, and a digit bound $0\le H<a$. A pulse with digit $d\in\{0,\ldots,H\}$ is literally Tick; Add$(d)$; Read, including when $d=0$. At pre-pulse field $x$ its complete outputs are
+
+$$
+\tau=b^{\mathsf T}Tx,\quad\mathrm{ack}_{\rm Add},\quad
+ y=b^{\mathsf T}(Tx+db)=\tau+d,
+\qquad x'=Tx+db,
+\tag{73.2}
+$$
+
+with any installed optional Add scalar included as well. A translator must serve every finite valid Select sequence on the actual layer, with its complete native replies and successors, under the supplied adequate finite backing. In particular every reached partial subset admits service of its remaining selections; excluding an order or stopping at a partial subset is outside this class. It may adapt its finite pulse block for each Select to all actually available inputs and replies, and may use arbitrary finite paid scratch while busy. Reads and Holds may occur outside pulses; every post-entrance Tick and Add must belong to a completed pulse. There is no other path motion, reset or source re-preparation. Intermediate cuts can be busy, but settled cuts have completed calls, outputs and commits and no pending external request.
+
+The canonical-field condition is that every settled history reaching native $t_U$ has the same actual path field $z_U$. This includes differing orders, repetitions and any admitted choices of the translator. The recovery condition is an exact decoder of $U$ from that field and a joint auxiliary input taking at most $R$ distinguishable values over all these cuts, for some integer $R\ge1$. The fixed common context may contain $k,R$, the earned law and origin, a fixed program, fixed references and rights and a common cleared workspace capacity. Every other varying selected decoder input is part of the joint auxiliary value: records, old inputs and outputs, counters, pending selectors retained after commit, code/control state, reference or grant variations, source-dependent allocation shape, accessible archives and their backing contents, and surviving scratch. Callable side objects are counted by their distinguishable permitted recovery behavior, not just handle bytes. Random choices, if admitted, satisfy these same requirements on every admitted execution and are included when retained or selected.
+
+The lower bound grants the decoder the exact current field; granting it does not install a free vector-reading port. A decoder that selects an original native guard or a surviving native/producer archive as additional recovery input must include its distinguishable behavior in the auxiliary alphabet. In particular, querying all $k$ original $P_{p_i}$ guards can reveal the subset, and then a bound $R<2^k$ cannot describe that complete collection of inputs. The supplied native source may be the object of the later actual Select actuation without being selected as a free earlier recovery oracle. All coexisting objects remain paid physical resources even when they are outside the decoder's selected inputs. Unbounded busy scratch is allowed; only information surviving or accessible at a settled recovery cut is bounded by $R$.
+
+For a finite digit word $w$ of length $l$, the actual field is
+
+$$
+X(w)=T^{l+2N}b+\sum_{i=0}^{l-1}w_iT^{l-1-i}b.
+\tag{73.3}
+$$
+
+Theorems 52.3 and 53.1 supply its injectivity on all finite words over this menu, including different lengths and the empty word. They use the authentic origin and the full primitive law, not one chosen spectral root. We use that result as a supplier, without replacing it by an extra clock construction.
+

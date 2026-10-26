@@ -615,3 +615,502 @@ output. This is the complete deterministic prefix before the physical Ask;
 the response and full trace bounds are those of Theorem 8.1.
 
 ## Append Anchor 9
+
+## 10. Approximate thermodynamic access for the same raw clauses
+
+**Definition 10.1 (Energy reference and approximation interfaces).** Retain
+the explicit universe, raw clauses and physical matrices of Theorem 5.1.
+For a formula $F$ on $n$ declared variables, put
+
+$$
+\begin{aligned}
+E_F(a)&=(n+1)v_F(a),&
+Z_B(F)&=\sum_{a\in\{0,1\}^n}2^{-E_F(a)},\\
+f_B(F)&=-\frac{\ln Z_B(F)}{\ln2},&
+q_F(a)&=\frac{2^{-E_F(a)}}{Z_B(F)}.
+\end{aligned}
+\tag{10.1}
+$$
+
+The zero of energy is the raw sum of violation projectors, including every
+empty clause. It is not quotiented by scalar shifts. For the full visible
+and hidden Hamiltonian, write
+
+$$
+Z_H(F)=\frac32 Z_B(F),\qquad
+c_A=-\log_2(3/2),\qquad f_H(F)=c_A+f_B(F).
+\tag{10.2}
+$$
+
+A free-energy approximation returns an ordinary binary rational estimate
+of $f_B$ or $f_H$ with a declared absolute error. A classical sampling
+interface returns an $n$-bit assignment. A quantum preparation interface
+returns a state on the hidden assignment register, followed by measurement
+in its computational basis. All three interfaces receive the succinct
+local-term description or its source formula, rather than an explicit
+$2^n$-dimensional matrix. Uniform polynomial resource bounds include
+parsing, dense renaming, initialization, training and parameter acquisition,
+preparation, randomness, execution and output on every input, including
+NO instances. The word converters in Sections 7–9 give polynomial-cost
+passage from conventional appearing-name inputs to this explicit universe.
+
+**Theorem 10.2 (Constant absolute free-energy gap).** In the same energy
+reference and at the same inverse temperature $\beta=\ln2$,
+
+$$
+\begin{array}{lll}
+F\text{ satisfiable}:&f_B(F)\le0,&f_H(F)\le c_A,\\
+F\text{ unsatisfiable}:&f_B(F)\ge1,&f_H(F)\ge1+c_A.
+\end{array}
+\tag{10.3}
+$$
+
+A uniform deterministic polynomial-time algorithm with absolute error at
+most $1/4$ for either of these total free energies would decide SAT in
+polynomial time. For $f_B$ use threshold $1/2$; for $f_H$ use threshold
+zero. Consequently either algorithm implies $P=NP$ in the ordinary
+uniform deterministic model.
+
+Proof. The actual diagonal weights in Theorem 5.1 split into
+
+$$
+Z_B(F)=N_F+R_F,\qquad
+0\le R_F\le 2^n2^{-(n+1)}=\frac12,
+\tag{10.4}
+$$
+
+where $N_F$ counts satisfying assignments. Every finite partition is
+strictly positive. If $N_F\ge1$, then $Z_B(F)\ge1$; if $N_F=0$, then
+$Z_B(F)\le1/2$. Monotonicity of the logarithm proves (10.3).
+An estimate of $f_B$ is at most $1/4$ in the first case and at least
+$3/4$ in the second. For the full-system threshold, note
+
+$$
+-\frac34<c_A<-\frac12:
+\qquad (3/2)^4<2^3,\quad (3/2)^2>2.
+\tag{10.5}
+$$
+
+Thus a full-system estimate is strictly negative in the first case and
+strictly positive in the second. The raw descriptor has polynomial length,
+and the converters preserve satisfiability. SAT completeness then gives
+the stated complexity consequence, using the ordinary model in
+[Cook's problem statement](../../../Library/ConceptDynamics/cook2006pversusnp.md).
+The argument separates decision from the exact integer recovery of
+Theorem 3.1: it does not recover $N_F$ by rounding an approximate logarithm.
+$\square$
+
+**Theorem 10.3 (Approximate Gibbs access and verified witnesses).** On every
+satisfiable formula in Definition 10.1,
+
+$$
+q_F(\{a:F(a)=1\})\ge\frac23.
+\tag{10.6}
+$$
+
+If a uniform classical polynomial-time sampler produces a distribution
+$\widetilde q_F$ with total variation distance at most $1/12$ from $q_F$,
+then one sample followed by the ordinary formula verifier accepts every
+YES input with probability at least $7/12$ and never accepts a NO input.
+With the all-input resource bounds of Definition 10.1, this gives
+$\mathrm{SAT}\in RP$ and $NP=RP$.
+
+If instead a uniform polynomial-size quantum preparation produces
+$\widetilde\gamma_F$ such that
+
+$$
+\frac12\|\widetilde\gamma_F-\gamma_F\|_1\le\frac1{12},\qquad
+\gamma_F=\sum_a q_F(a)|a\rangle\langle a|,
+\tag{10.7}
+$$
+
+computational-basis measurement and classical verification give
+$NP\subseteq BQP$. A preparation of the full Gibbs state with this same
+trace-distance tolerance suffices as well, by discarding its visible
+factor. Both statements concern actual sampling or preparation, not only
+the evaluation of an unnormalized weight.
+
+Proof. Every satisfying assignment has unnormalized weight one, so (10.4)
+gives
+
+$$
+q_F(F(a)=1)=\frac{N_F}{N_F+R_F}
+\ge\frac1{1+1/2}=\frac23.
+\tag{10.8}
+$$
+
+Total variation controls the probability of this same success event,
+giving $2/3-1/12=7/12$. On a NO input there is no assignment that passes
+the verifier, whatever the sampler returns. Polynomially many random bits
+and polynomial verification put this algorithm in $RP$. Conversely an
+accepting random tape of an $RP$ machine is an NP witness, so
+$RP\subseteq NP$; SAT completeness gives the reverse inclusion here.
+Trace distance bounds the change of every measurement event probability,
+and is contractive under partial trace. This proves the quantum success
+bound; a constant number of fresh executions raises it above $2/3$.
+Polynomial classical reductions to SAT then give the BQP consequence.
+The hidden marginal is exactly that of the same full Gibbs state by
+Theorem 5.1. $\square$
+
+**Theorem 10.4 (A total variational-error certificate for the sampler).**
+Let $r_F$ be any distribution on the same assignments and define, with
+natural-log entropy,
+
+$$
+\mathcal V_F(r_F)=\mathbb E_{r_F}E_F-\frac{H(r_F)}{\ln2}.
+\tag{10.9}
+$$
+
+If
+
+$$
+0\le\mathcal V_F(r_F)-f_B(F)\le\frac1{72\ln2},
+\tag{10.10}
+$$
+
+then $\|r_F-q_F\|_{\rm TV}\le1/12$. In particular a sampler for $r_F$
+meeting the uniform resource bounds of Definition 10.1 has the verified
+witness guarantee of Theorem 10.3.
+
+Proof. The Gibbs relative-entropy identity, specialized to the actual
+weights (10.1), is
+
+$$
+D(r_F\Vert q_F)
+=(\ln2)[\mathcal V_F(r_F)-f_B(F)].
+\tag{10.11}
+$$
+
+It follows by substituting
+$\ln q_F(a)=-(\ln2)E_F(a)-\ln Z_B(F)$, with $0\ln0=0$.
+This is the finite Gibbs variational identity, as in
+[Watrous's entropy and Gibbs interface](../../../Library/Quantum/watrous2018entropicidentities.md#gibbs-logarithm-and-the-uniform-reference).
+Classical Pinsker gives
+$\|r_F-q_F\|_{\rm TV}\le\sqrt{D(r_F\Vert q_F)/2}$, hence the asserted
+constant. For this finite case its inequality follows by grouping the
+positive difference set into one event and applying the log-sum inequality.
+The resulting binary relative entropy $d(a\Vert b)$ has its minimum zero
+at $a=b$ and second derivative $1/[a(1-a)]\ge4$, so
+$d(a\Vert b)\ge2(a-b)^2$; endpoints follow by continuity.
+This yields $\sqrt{(1/72)/2}=1/12$.
+The bound is on total variational free-energy excess, not excess per
+variable. Its mathematical sufficiency does not give an efficient method
+to certify (10.10) without knowing $f_B(F)$, or to sample a distribution
+specified only implicitly. $\square$
+
+**Theorem 10.5 (The same Gibbs state can hide a free-energy difference).**
+For every $n\ge0$, let $F_\varnothing$ be the empty raw clause list and
+let $F_\bot$ contain one empty clause, both on the same declared universe.
+Their hidden Gibbs states and full Gibbs states agree, respectively, but
+
+$$
+\begin{aligned}
+Z_B(F_\varnothing)&=2^n,& f_B(F_\varnothing)&=-n,\\
+Z_B(F_\bot)&=\frac12,& f_B(F_\bot)&=1.
+\end{aligned}
+\tag{10.12}
+$$
+
+For a fixed visible preparation and the same finite adaptive visible-only
+protocol, all record laws also agree. Such a protocol, without a formula
+descriptor or other hidden-dependent input, cannot distinguish these YES
+and NO instances with success probability greater than $1/2$ on both.
+
+Proof. The empty-clause projector is $I$ by Theorem 5.1. Consequently the
+two hidden Hamiltonians are $0$ and $(n+1)I$. Both normalize to
+$I/2^n$, and their full Gibbs states are both
+$\gamma(P)\otimes I/2^n$. Their partition functions give (10.12).
+The full Hamiltonians differ by $(n+1)I$, so their propagators differ
+only by a scalar phase. Conjugation by them is identical, including at
+history-dependent waiting times. The same visible event maps and the same
+initial joint state therefore give the same branch probabilities at every
+step; induction gives the entire record law, including stopping.
+If an estimator accepts with probability $p$ under this common law, its
+success probabilities on the two instances are $p$ and $1-p$.
+$\square$
+
+**Definition 10.6 (Resource and source scope).** Theorems 10.2–10.5 are
+applications to the same raw-clause matrices and ordinary input conversion
+of Theorems 5.1 and 9.4. The general Boltzmann suppression mechanism is
+standard; [Troyer–Wiese, equation (10) and its following paragraph](../../../Library/Computability/troyerwiese2005complexity.md)
+give a ground-state-to-thermal-estimation example with a growing inverse
+temperature. The constants and visible normalization here follow from
+the actual clause weights (10.4); no external priority claim is made.
+
+The coefficient $n+1$ can be written with polynomially many bits or by
+$n+1$ copies of each unit projector. This gives no fixed geometry or
+bounded total incident interaction. For the Gibbs law it is equivalent
+to unit clause penalties at inverse temperature $(n+1)\ln2$. Dividing
+$f_H$ by the number $n+1$ of sites shrinks the decision gap to
+$1/(n+1)$; fixed absolute density accuracy does not supply Theorem 10.2's
+total-energy accuracy. An additive scalar in the Hamiltonian changes
+the free energy and leaves the normalized Gibbs state unchanged, as
+Theorem 10.5 exhibits. A calibrated energy reference is part of the
+free-energy interface, while Gibbs witness verification also uses the
+formula descriptor. None of the three approximation interfaces is a
+visible-only measurement of the decoupled qubit.
+
+## Append Anchor 10
+
+
+## 11. Variational access to the actual satisfying event
+
+**Definition 11.1 (Actual proposals and their success event).** Keep the
+raw-clause energies, energy reference and conventional input conversion of
+Definition 10.1. Write $S_F=\{a:F(a)=1\}$ and, for an actual proposal law
+$r$ on the same assignments, put
+
+$$
+s_F(r)=r(S_F),\qquad \Phi_F(r)=-\ln s_F(r),\qquad
+\mathcal V_F(r)=\mathbb E_r E_F-H(r)/\ln2.
+\tag{11.1}
+$$
+
+Here $H$ uses natural logarithms and $-\ln0=+\infty$. A proposal means a
+law that the observer can actually sample, when a sampling consequence is
+claimed. Its implicit description alone supplies no such access. For an
+input word of length $L$, the bound $\Phi_F(r)\le c\ln(L+2)$ gives
+$s_F(r)\ge(L+2)^{-c}$; independent sampling and verification then cost
+$O((L+2)^c)$ trials for constant success. This concerns YES inputs;
+NO inputs never pass the same verifier. Parsing, proposal generation and
+all-input termination still obey Definition 10.1.
+
+**Theorem 11.2 (An event certificate with a larger excess tolerance).** On
+a satisfiable input, an actual law $r$ with
+
+$$
+\mathcal V_F(r)-f_B(F)\le\frac13
+\tag{11.2}
+$$
+
+satisfies $s_F(r)\ge1/3$. An all-input uniform classical polynomial-time
+sampler with this guarantee on every YES input therefore gives $NP=RP$.
+
+Proof. Let $a=q_F(S_F)\ge2/3$ by Theorem 10.3, and let $s=s_F(r)$.
+If $a=1$, then every assignment satisfies $F$ and $s=1$. Otherwise the
+log-sum inequality on $S_F$ and its complement gives
+
+$$
+(\ln2)[\mathcal V_F(r)-f_B(F)]
+=D(r\Vert q_F)\ge d(s\Vert a),
+\tag{11.3}
+$$
+
+where $d(s\Vert a)=s\ln(s/a)+(1-s)\ln((1-s)/(1-a))$.
+For $0<s<a<1$ its derivative in $s$ is
+$\ln[s(1-a)/(a(1-s))]<0$, and its derivative in $a$ is
+$(a-s)/(a(1-a))>0$. Thus $s<1/3$ would give
+$d(s\Vert a)>d(1/3\Vert2/3)=\ln2/3$, including $s=0$ by continuity.
+This contradicts (11.2). Constant repetition raises $1/3$ above $1/2$;
+verification gives one-sided error. Theorem 10.3's standard inclusion
+argument then applies. The certificate targets the satisfying event,
+whereas Theorem 10.4 supplies closeness of the whole distribution.
+$\square$
+
+**Theorem 11.3 (A proposal objective independent of the unknown partition).**
+For every input, including NO inputs, and every assignment law $r$,
+
+$$
+\mathcal V_F(r)\ge1-(n+1)s_F(r).
+\tag{11.4}
+$$
+
+Consequently $\mathcal V_F(r)\le\eta<1$ implies
+$s_F(r)\ge(1-\eta)/(n+1)$. A uniform polynomial-time sampler attaining,
+on every YES input, any fixed $\eta<1$, while terminating in polynomial
+time on every input, gives $NP=RP$.
+
+Proof. Every nonsatisfying assignment has energy at least $n+1$, so
+$\mathbb E_rE_F\ge(n+1)(1-s_F(r))$. The entropy of an $n$-bit law is at
+most $n\ln2$. Subtracting proves (11.4). The mass bound uses no value of
+$Z_B$ or $f_B$. For the conventional converted input, $n$ is at most its
+polynomial length bound, and inverse-polynomial success suffices in
+Definition 11.1. This sufficient objective is not an algorithm to attain
+or certify it for a general implicit proposal family. $\square$
+
+## 12. A product proposal and an explicit missing-correlation example
+
+**Definition 12.1 (Product parameters for the same clause energy).** For
+$\theta\in[0,1]^n$ let
+
+$$
+r_\theta(w)=\prod_{i=1}^n\theta_i^{w_i}(1-\theta_i)^{1-w_i},\qquad
+h(u)=-u\ln u-(1-u)\ln(1-u),
+\tag{12.1}
+$$
+
+with continuous endpoint values. Its actual objective is
+
+$$
+\mathcal F_F(\theta)=\mathcal V_F(r_\theta)
+=(n+1)\sum_c\Pr_\theta[\text{clause }c\text{ is violated}]
+-\frac1{\ln2}\sum_i h(\theta_i).
+\tag{12.2}
+$$
+
+The product objective is the standard Max-SAT mean-field expression of
+[Shen et al., Methods (11) and Supplement (S13)–(S17)](../../../Library/Estimation/shen2024freeenergy.md),
+with the penalty and temperature conversion stated in that reference
+note. A tautological raw clause contributes zero, an empty clause contributes
+one, and repeated identical literals impose their variable condition only
+once. After this local simplification a nonzero violation probability is
+a product of at most three factors $\theta_i$ or $1-\theta_i$. In
+particular (12.2) is not a sum over all assignments.
+
+**Theorem 12.2 (The explicit product optimum retains the SAT gap).** The
+continuous minimum $\mathcal F_F^*=\min_{[0,1]^n}\mathcal F_F$ exists and
+satisfies
+
+$$
+F\text{ satisfiable}\Rightarrow\mathcal F_F^*\le0,\qquad
+F\text{ unsatisfiable}\Rightarrow\mathcal F_F^*\ge1.
+\tag{12.3}
+$$
+
+If a uniform deterministic polynomial-time algorithm returns rational
+parameters of polynomial bit length with
+$\mathcal F_F(\theta)\le\mathcal F_F^*+1/4$ on every input, then $P=NP$.
+
+Proof. The entropy terms extend continuously to the compact cube, so the
+minimum exists. A satisfying assignment gives a product point mass with
+zero energy and entropy. On a NO input every assignment has energy at
+least $n+1$, and product entropy is at most $n\ln2$, proving the other
+case. For parameters of bit length $B$, each local probability is an
+exact rational product of at most three factors. The $n$ binary entropy
+terms can be evaluated to total absolute error $\tau$ in time polynomial
+in the input length, $B$ and $\log(1/\tau)$: zero endpoints are evaluated
+exactly, nonzero rational arguments have logarithms of magnitude $O(B)$,
+and standard range reduction and convergent logarithm series supply the
+required binary precision. Use $\tau=1/8$. The computed value is at most
+$3/8$ on YES inputs and at least $7/8$ on NO inputs; threshold $1/2$
+decides SAT. The optimum value is used only in the hypothesis about the
+returned parameter, not supplied as an input to the evaluator.
+$\square$
+
+**Theorem 12.3 (Strict product stability with exponentially small success).**
+For $k\ge2$, take $n=3k$ variables in disjoint triples and require even
+parity in each triple. Encode each triple by four raw clauses: for each
+odd triple $u$, include the clause that is false exactly at $u$. Each
+clause has one literal from each of the three variables. Use the same
+penalty $n+1$ as (10.1). Then the product parameter
+$\theta_\circ=(1/2,\ldots,1/2)$ is a strict local minimum with
+
+$$
+\nabla\mathcal F_F(\theta_\circ)=0,\qquad
+\nabla^2\mathcal F_F(\theta_\circ)=\frac4{\ln2}I,\qquad
+s_F(r_{\theta_\circ})=2^{-k},\qquad
+\mathcal F_F(\theta_\circ)=\frac{3k^2-5k}{2}\ge1.
+\tag{12.4}
+$$
+
+The same instance has a correlated sampler with $O(k)$ Boolean operations,
+$s_F(r)=1$, $H(r)=2k\ln2$ and $\mathcal V_F(r)=-2k$. Its output and the
+product-uniform output have identical one-variable and two-variable
+marginals.
+
+Proof. A given odd assignment violates exactly its own excluding clause;
+a given even assignment violates none. With $z_{b,i}=1-2\theta_{b,i}$,
+independence gives
+
+$$
+\mathcal F_F(\theta)=\frac{3k+1}{2}\sum_{b=1}^k
+(1-z_{b,1}z_{b,2}z_{b,3})
+-\frac1{\ln2}\sum_{b,i}h(\theta_{b,i}).
+\tag{12.5}
+$$
+
+The nonconstant energy terms are cubic about $\theta_\circ$, so their
+first and second derivatives vanish there. Since $h'(1/2)=0$ and
+$h''(1/2)=-4$, the Hessian is positive definite and proves strict local
+minimality. Independent uniform triples pass parity with probability
+$1/2$ each. Expected violation count $k/2$ and entropy $3k\ln2$ give
+the last objective value in (12.4). The all-zero point mass has value
+zero, so this strict local minimum is not global.
+
+For each triple independently sample fair bits $a,b$ and output
+$(a,b,a\oplus b)$. This uses $2k$ independent fair bits and $k$ XOR gates,
+is uniform on the $4^k$ satisfying assignments, and has zero energy.
+Every pair within a triple is uniform on four values; pairs across
+triples are independent. This proves the marginal assertion. In the
+usual circuit model, two Hadamard gates followed by CNOT from each of
+the first two qubits to the third prepare the corresponding pure
+uniform even-parity state per triple. Computational-basis measurement
+gives the same sampler, with $O(k)$ gates. No such construction is
+asserted for arbitrary clauses. $\square$
+
+The product-uniform proposal is even a coordinatewise minimizer in this
+example: if all other parameters stay at $1/2$, the energy is independent
+of the remaining coordinate and its negative entropy is uniquely
+minimized at $1/2$. The uniform odd-parity law has the same entropy and
+all the same one-variable and two-variable marginals as the even-parity
+law, but success probability zero. These follow from the same four-point
+triple enumeration. Thus neither low-order marginals nor entropy alone
+specify the task relation. This is a concrete instance of the standard
+nonconvex mean-field limitation, not a time lower bound for all learning
+algorithms. The general product family and nonconvexity are described in
+[Wainwright–Jordan, Sections 5.3–5.5](../../../Library/Estimation/wainwrightjordan2008graphical.md#product-proposals-and-local-optima).
+
+## 13. Finite-precision progress for the explicit product objective
+
+**Theorem 13.1 (A uniform progress hypothesis sufficient for SAT).** Use
+the conventional input converters, so $n,m$ are polynomially bounded by
+the source word length $L$. Start at $\theta_0=\theta_\circ$, and put
+$\Delta_t=\mathcal F_F(\theta_t)-\mathcal F_F^*$. Suppose one fixed
+deterministic procedure maintains actual rational parameters in the cube,
+with uniformly polynomial bit length, workspace and step time through
+the horizon below, on every input. Suppose a fixed integer-valued
+polynomial $p(L)\ge1$ and an error budget $\eta$ satisfy
+
+$$
+\Delta_{t+1}\le(1-1/p(L))\Delta_t+\eta,\qquad
+0\le\eta\le\frac1{16p(L)}.
+\tag{13.1}
+$$
+
+It is enough that this holds for
+
+$$
+U=\max\{1,(n+1)m\},\qquad
+T=p(L)\lceil\log_2(16U)\rceil
+\tag{13.2}
+$$
+
+steps. These hypotheses imply $P=NP$.
+
+Proof. Nonnegative energy and entropy at most $n\ln2$ give
+$\mathcal F_F^*\ge-n$. At the uniform point,
+$\mathcal F_F(\theta_0)\le(n+1)m-n$, so $0\le\Delta_0\le U$.
+Iterating the scalar inequality gives, for $T\ge1$,
+
+$$
+\Delta_T\le e^{-T/p(L)}U+p(L)\eta\le\frac18.
+\tag{13.3}
+$$
+
+For $p(L)=1$, the contraction factor is zero and the same bound follows
+directly. For larger $p$, use $(1-1/p)^T\le e^{-T/p}$ and the geometric
+sum at most $p$. The explicit integer horizon satisfies
+$T/p\ge\ln(16U)$ because $16U\ge1$ and $\log_2(16U)\ge\ln(16U)$.
+On YES inputs, (12.3) gives $\mathcal F_F(\theta_T)\le1/8$;
+on NO inputs every parameter has value at least one. Evaluation to
+absolute error $1/8$, available by Theorem 12.2, separates them at
+threshold $1/2$. All stated resources are polynomial and include NO
+inputs. Neither the update nor the stopping rule needs to know
+$\mathcal F_F^*$. $\square$
+
+The progress hypothesis is about the actual finite-precision updates,
+including their error floor; it is not inferred from a real-arithmetic
+flow. Theorem 12.3 shows that an update which leaves a zero-gradient
+parameter fixed cannot meet (13.1) on every input: the initial gap is at
+least one, whereas the stationary inequality would require
+$\Delta_t\le p(L)\eta\le1/16$. The correlated block construction proves
+that adding the missing relation solves this particular family with
+linear resources. It supplies neither (13.1) for general 3SAT nor a
+reduction from the actual AURIC matrix-word task to the clause task.
+The entropy identity, binary log-sum bound, mean-field framework and
+geometric-error iteration are standard intermediate tools. The event
+constants, clause-normalized parity example and finite-precision SAT
+application above concern the same actual energies of Section 10;
+no external priority claim is made.
+
+## Append Anchor 13

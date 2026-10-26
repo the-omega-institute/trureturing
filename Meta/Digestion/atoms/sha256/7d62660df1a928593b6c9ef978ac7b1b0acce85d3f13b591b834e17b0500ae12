@@ -1,0 +1,159 @@
+## 20. Finite rational reproduction of the differential bounds
+
+All finite decimals in (19.2) and (19.7) denote rational numbers.
+The following operations specify the finite calculation without
+needing external numerical roots or a source of derivative data.
+
+For $H=10^{110}$, an interval $X=[l,u]$ is outward rounded by
+
+$$
+\mathcal E(X)=[\lfloor Hl\rfloor/H,\lceil Hu\rceil/H].
+\tag{20.1}
+$$
+
+Enclose a rational input $t$ by $\mathcal E([t,t])$. Interval
+addition uses endpoint sums; negation reverses the endpoints and
+their signs; subtraction means addition of the negation.
+Multiplication takes the minimum and maximum of the four endpoint
+products. Apply $\mathcal E$ after each operation. For $0\notin[l,u]$,
+reciprocal means $\mathcal E([1/u,1/l])$ and division means
+multiplication by that reciprocal. An interval not excluding zero
+cannot be inverted. Each operation contains the corresponding exact
+real operation.
+
+Use the index set
+
+$$
+\mathcal I=\{(i,j)\in\mathbb N^2:i+j\le3\}
+\tag{20.2}
+$$
+
+in increasing lexicographic order, and jets in
+$\mathbb R[\xi,\zeta]/(\xi,\zeta)^4$. A jet coefficient is an
+interval. Missing coefficients are $[0,0]$. Addition is coefficientwise.
+For the coefficient of $\xi^i\zeta^j$ in a product, start at zero
+and add
+
+$$
+X_{kl}Y_{i-k,j-l}\qquad
+((k,l)\in\mathcal I,\ k\le i,\ l\le j)
+\tag{20.3}
+$$
+
+in that order, rounding each product and sum. For a jet $X=c+X_+$
+with $0\notin c$ and exactly zero constant coefficient in $X_+$,
+set $q=X_+/c$ coefficientwise and use
+
+$$
+X^{-1}=(1-q+q^2-q^3)/c.
+\tag{20.4}
+$$
+
+Use $(q q)q$ for $q^3$ and discard degrees above three at each
+product. The constant coefficient of $q$ is assigned $[0,0]$,
+and the reciprocal of $c$ is formed once and reused. The geometric
+identity proves (20.4) in the truncated ring. Containment follows
+coefficientwise by induction on operations.
+
+Initialize the variable jets by
+
+$$
+r=K_r+\xi,\qquad b=K_b+\zeta.
+\tag{20.5}
+$$
+
+Evaluate (18.4) and then the five rational scalar functions
+$d,p,v,a,m$ in (18.5), with the displayed factorization.
+Within a sum use its written order from left to right, and within a
+product use its written order from left to right; powers use repeated
+multiplication. For $(b^2+8b+4)jn$ use $(b b+8b+4)j n$, and for
+$r(1-r)/b$ first form $r(1-r)$ and then divide by $b$.
+Each integer is an exact singleton jet. These rules fix the
+expression order as well as the rounding grid.
+
+Write $f_{ij}$ for the coefficient of $\xi^i\zeta^j$ in the resulting
+jet for any $f=p,v,a,m,d$. At each actual $z\in K$ it encloses
+
+$$
+\frac1{i!j!}\partial_r^i\partial_b^j f(z).
+\tag{20.6}
+$$
+
+Thus no finite difference or pointwise numerical derivative is used.
+To finish the interval evaluation form, in the indicated order,
+
+$$
+\begin{gathered}
+k=-p_{10}/p_{01},\qquad k^{[2]}=k k,\qquad k^{[3]}=k^{[2]}k,\\
+A_f=(2f_{20}+k f_{11},\ f_{11}+2(k f_{02}),\ f_{01})
+\quad(f=p,v,a),\\
+T_f=f_{30}+k f_{21}+k^{[2]}f_{12}+k^{[3]}f_{03}.
+\end{gathered}
+\tag{20.7}
+$$
+
+The symbols $k^{[2]},k^{[3]}$ here denote interval powers, not
+coefficients of the analytic function $k(h)$. Let $A$ have the three
+rows $A_p,A_v,A_a$. For every three-by-three interval matrix use
+
+$$
+\begin{aligned}
+\det A={}&A_{11}(A_{22}A_{33}-A_{23}A_{32})\\
+&-A_{12}(A_{21}A_{33}-A_{23}A_{31})
++A_{13}(A_{21}A_{32}-A_{22}A_{31}).
+\end{aligned}
+\tag{20.8}
+$$
+
+For each column $j=1,2,3$, replace that column by
+$-(T_p,T_v,T_a)^{\mathsf T}$ and divide its determinant by $\det A$.
+Call the three resulting intervals $Z_R,Z_B,Z_k$. Cramer's rule
+encloses the three entries of (19.5). Finally form
+
+$$
+\begin{aligned}
+I_P&=p_{10}Z_R+p_{01}Z_B+p_{20}+k p_{11}+k^{[2]}p_{02},\\
+I_V&=v_{10}Z_R+v_{01}Z_B+v_{20}+k v_{11}+k^{[2]}v_{02},\\
+I_d&=d_{10}+k d_{01},\qquad I_m=m_{10}+k m_{01}.
+\end{aligned}
+\tag{20.9}
+$$
+
+The complete endpoint comparisons are as follows; each row means
+that the interval expression is strictly inside the open rational
+interval in the second column.
+
+| Interval expression | Strict containing interval |
+| --- | --- |
+| $p_{00}$ | $(-533.512131,-533.512130)$ |
+| $v_{00}$ | $(-1019.177215,-1019.177214)$ |
+| $D_{00}$ | $(0.007894,0.007895)$ |
+| $p_{01}$ | $(-33680913,-33680912)$ |
+| $k$ | $(0.950504247445018,0.950504247445019)$ |
+| $\det A$ | $(-968000000000000000,-967000000000000000)$ |
+| $I_P$ | $(34271,34272)$ |
+| $I_V$ | $(63022,63023)$ |
+| $I_d$ | $(621,623)$ |
+| $I_m$ | $(66,67)$ |
+
+These are finite rational inequalities: if $[l,u]$ is the result of
+one row and $(a,b)$ is its right-hand interval, the assertion is
+$a<l\le u<b$. Formulas (18.4)–(18.5) and (20.1)–(20.9) specify
+every endpoint from the two rational numbers in (19.2). After clearing
+positive powers of $10$ each assertion is an integer comparison.
+The input interval for $b$ is positive, the third row guards the
+inverse jet for $D$, the fourth row guards $k$, and the sixth guards
+Cramer's rule. These are all the variable inverses. The fixed-node
+interpolation denominators in (18.5) are nonzero integers.
+
+For each actual point of $K$, Taylor expansion of the rational
+circuit agrees with its truncated-ring evaluation: the input jets
+are the coordinate Taylor jets, the product rule is (20.3), and
+the inverse rule is (20.4). Hence the intervals contain the exact
+normalized derivatives (20.6). Substitution in (20.7)–(20.9)
+recovers exactly (19.3)–(19.6), including all factorial factors.
+This proves the whole-cube enclosures used in Lemma 19.2. The
+calculation does not assert that the rational center is a critical
+point; the exact-point existence and identification are the supplied
+SVII result.
+

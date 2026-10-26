@@ -1,0 +1,27 @@
+**Theorem 22.2 (global optimization already contains SAT on the product subfamily).**
+In Definition 22.1's ideal pulse model,
+
+$$
+\min_{\theta\in\mathbb R^n}E_\varphi(\theta)
+=\min_{z\in\{0,1\}^n}C_\varphi(z),
+$$
+
+where $C_\varphi(z)$ is the number of violated clauses. Thus the optimum is zero exactly for satisfiable formulas;
+otherwise it is an integer at least one. No entanglement or joint-phase gate is needed for this family.
+
+Proof. The neighboring even sites remain zero at each prefix, so the supplied constrained flip restricts to the logical $X_i$.
+Different logical sites commute and produce the displayed product state. Its probabilities are independent Bernoulli variables with
+$q_i=\sin^2\theta_i$. Since the observable is diagonal,
+
+$$
+E_\varphi(\theta)=\sum_zp_\theta(z)C_\varphi(z)\ge\min_zC_\varphi(z).
+$$
+
+Every Boolean corner is achieved: choose $\theta_i=0$ for $z_i=0$ and $\theta_i=\pi/2$ for $z_i=1$.
+The resulting basis vector has only an irrelevant overall phase. This attains the lower bound. QED.
+
+Mathematical attribution. [Bittel and Kliesch](../../../Library/Computability/bittel2021training.md) already establish NP-hardness of variational optimization,
+including efficiently classically simulable families. The new correspondence here identifies the independently addressable native FIB pulses,
+code-preserving prefixes, succinct clause observable and exact unnormalized promise gap.
+It is an application of standard optimization hardness, not a new general VQA hardness claim.
+

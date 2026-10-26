@@ -740,3 +740,562 @@ original contracts. No full-programme completion, physical realization or
 Lean certification is claimed.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The native spatial form and the actual command-time trace
+
+**Definition 7.1 (fixed native source and spatial topology).** Write G for
+[Native variable-coefficient Green stability](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md)
+and O for [Native point-source occupation and finite-command cap limits](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md).
+Fix any model of G, Definition 29.1, equivalently O, Definition 1.1.
+Thus $0<Z<1$, $r=1-Z$, $H=r/2$, the original means satisfy $X=Y=H$,
+$I=(l,u)\Subset(0,H)$, and $\Omega=I\times\mathbb T^2$.
+Preparations, their phase rotations and the interior source
+$o=(k_o,\alpha_o,\beta_o)$ are fixed. Both actual phase periods are
+$2\pi$. Fix arbitrary smooth positive raw density $\rho$ and smooth real
+symmetric positive definite $A=(a^{ij})$ on a neighbourhood of the closed
+cylinder. Retain exactly
+
+$$
+\begin{gathered}
+X_1=P=\partial_k,\qquad
+X_2=Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta,
+\qquad d\mu=\rho\,dk\,d\alpha\,d\beta,\\
+T_A[f]=\int_\Omega\sum_{i,j=1}^2
+ a^{ij}(X_jf)\overline{X_if}\,d\mu,\qquad
+\|f\|_{\mathcal F}^2=\|f\|_{L^2(\mu)}^2+T_A[f],\\
+\mathcal F_A=\overline{C_c^\infty(\Omega)}^{\,\|\cdot\|_{\mathcal F}}.
+\end{gathered}
+\tag{NT.1}
+$$
+
+The spatial object is an amplitude modulo $\mu$-almost-everywhere equality,
+with this original form topology. Smooth amplitudes have unique smooth
+representatives: a smooth function vanishing $\mu$-almost everywhere
+vanishes everywhere, since $\rho$ is positive. The represented free
+operator $L_A$ has both height faces killed and phases periodic. Its clock
+is $e^{-tL_A}$, with control covariance $2A\,dt$. Its full unit-source
+Green field and the diffusion occupation measure are
+
+$$
+\Gamma(q)=\int_0^\infty p_t^\Omega(o,q)\,dt,
+\qquad \nu(dq)=\Gamma(q)\,d\mu(q).
+\tag{NT.2}
+$$
+
+The source is not averaged, the angular measure is not normalized, and
+$\int\Gamma L_A\varphi\,d\mu=\varphi(o)$. The suppliers give
+$\Gamma\in L^1(\mu)$, positive and smooth off $o$, and
+$\Gamma(o)=+\infty$. Its value at this $\mu$-null point does not change
+$\nu$. This is the free killed operator, without an attractive potential
+or ground conditioning. The spatial probes below do not change the
+actual initial source or assert preparation of a new physical state.
+
+**Definition 7.2 (unchanged command law and complete lifetime).** Put
+
+$$
+\delta_n=n^{-2},\quad m_n=n^3,\quad S_n=n,\quad T_n=n+\delta_n,
+\quad \Sigma=A^{1/2},\qquad
+d^j=\rho^{-1}\sum_iX_i(\rho a^{ij}).
+\tag{NT.3}
+$$
+
+Let $\Xi_n=(\{-1,1\}^2)^{m_n}$ with its uniform product probability
+$\pi_n$. At each alive node execute exactly G, Definition 29.2:
+
+$$
+\begin{gathered}
+v_i=d(q_i)\delta_n+\sqrt{2\delta_n}\Sigma(q_i)\xi_i,\qquad
+\theta=(t-i\delta_n)/\delta_n,\\
+(a,b,j)(t)=
+\left(a_i+\theta v_i^1,\ b_i+\theta v_i^2,
+ j_i+\theta a_i v_i^2+\tfrac12\theta^2v_i^1v_i^2\right),\\
+q(t)=\Phi_o(a,b,j)=
+\left(k_o+a,\ [\alpha_o+b/2],
+ [\beta_o+(\tfrac12-k_o/r)b-j/r]\right).
+\end{gathered}
+\tag{NT.4}
+$$
+
+Controls start at zero, and $j=\int a\,db$ is the actual chronological
+integral at every prefix. Cut a chord at its first hit of either $l$ or
+$u$, and hold thereafter. If every random cell survives, retain the
+original last interval $[S_n,T_n]$: height moves linearly from its current
+value to $u$ with $b$ and $j$ constant. Write $\bar q_{n,\omega}$ for
+the resulting held trajectory and $\zeta_{n,\omega}$ for its actual
+first hit. Then $0<\zeta_{n,\omega}\le T_n$. Unused signs are not
+rejected or reweighted. All native prefix guards remain in force.
+Only $0\le t<\zeta_{n,\omega}$ contributes to an alive observation;
+the post-hit hold and any later constant continuation contribute nothing.
+Stationary random cells before death, including a possible source hold
+at a coarse mesh, do contribute their entire duration.
+
+**Definition 7.3 (trace space, expected measure and supplied limit).** The
+actual run-time measure space is the finite disjoint union
+
+$$
+\mathscr D_n=\coprod_{\omega\in\Xi_n}
+ \{\omega\}\times[0,\zeta_{n,\omega}),\qquad
+ d\vartheta_n(\omega,t)=\pi_n(\omega)\,dt.
+\tag{NT.5}
+$$
+
+Define the expected spatial occupation measure $\nu_n$ and the linear
+smooth-core trace by
+
+$$
+\begin{aligned}
+\nu_n(B)&=\sum_{\omega\in\Xi_n}\pi_n(\omega)
+ \int_0^{\zeta_{n,\omega}}{\bf1}_B(\bar q_{n,\omega}(t))\,dt,\\
+\mathscr R_n:C_c^\infty(\Omega)\subset\mathcal F_A
+ &\longrightarrow L^2(\mathscr D_n,\vartheta_n),\qquad
+ (\mathscr R_nf)(\omega,t)=f(\bar q_{n,\omega}(t)).
+\end{aligned}
+\tag{NT.6}
+$$
+
+The target records functions of the actual executed time and sign word;
+it is not an acquired sensor record. Its norm satisfies
+$\|\mathscr R_nf\|^2=\nu_n(|f|^2)$. Equivalently, restriction first
+lands in $L^2(\nu_n)$ and then pulls back isometrically into this run-time
+space. The latter isometry need not be onto: an arbitrary time function
+need not depend only on the visited state. Thus no independent run-time
+information is silently identified with a spatial value.
+
+For the same-source free diffusion $Q_t$ of G, (29.6)–(29.7), killed at
+$\tau$, Tonelli gives, for every nonnegative Borel $W$,
+
+$$
+\nu(W)=\mathbb E_o\int_0^\tau W(Q_t)\,dt.
+\tag{NT.7}
+$$
+
+G, Theorem 29.6, supplies the complete-lifetime fixed-test bridge
+
+$$
+\nu_n(f)\longrightarrow\nu(f)
+\qquad(f\in C(\overline\Omega)),\qquad
+\nu_n(1)\longrightarrow\nu(1)=\mathbb E_o\tau\in(0,\infty).
+\tag{NT.8}
+$$
+
+Its lifetime estimate and original termination rule are part of that
+supplier. No limit on an initial cell is substituted for (NT.8).
+
+## 8. Nonclosability for every original mesh
+
+**Theorem 8.1 (arbitrarily small native-form representatives of a fixed
+smooth command trace).** For every fixed model of Definition 7.1, every
+integer $n\ge1$, every $f\in C_c^\infty(\Omega;\mathbb C)$ and every
+$\varepsilon>0$, there exists $\chi\in C_c^\infty(\Omega;\mathbb R)$,
+$0\le\chi\le1$, such that $u=f\chi$ satisfies
+
+$$
+\operatorname{supp}u\subseteq\operatorname{supp}f,\qquad
+|u|\le|f|,\qquad \|u\|_{\mathcal F}\le\varepsilon,\qquad
+u(\bar q_{n,\omega}(t))=f(\bar q_{n,\omega}(t))
+\quad(\omega\in\Xi_n,\ 0\le t<\zeta_{n,\omega}).
+\tag{NT.9}
+$$
+
+The cutoff $\chi$ can be supported in any
+prescribed open neighbourhood of $\operatorname{supp}f$ inside $\Omega$.
+In particular $\mathscr R_n$ is not closable from the Hilbert space
+$\mathcal F_A$ into the actual run-time $L^2$ space, for every $n\ge1$.
+The same holds for the equivalent core restriction into $L^2(\nu_n)$.
+The scalar core map $f\mapsto\nu_n(|f|^2)$ has no continuous extension
+in the original form norm.
+
+Proof. For a fixed sign word, all alive nodes are determined recursively
+by (NT.4). Each nonzero chord is a smooth immersed arc: its lifted height
+and $\alpha$ derivatives are respectively $v_i^1/\delta_n$ and
+$v_i^2/(2\delta_n)$, which cannot both vanish. A zero increment gives a
+stationary point. Phase reduction preserves local smoothness, even through
+windings. An immersed compact arc has a finite cover by embedded arc
+charts; no global injectivity is needed. A cut chord is a subarc of the
+same curve. The terminal height leg is another regular arc, since on
+survival its starting height is strictly below $u$. Corners are covered
+one adjoining arc at a time.
+
+Let
+
+$$
+C_n=\bigcup_{\omega\in\Xi_n}
+ \bar q_{n,\omega}([0,\zeta_{n,\omega}])
+ \subseteq\overline\Omega,\qquad K=C_n\cap\operatorname{supp}f.
+\tag{NT.10}
+$$
+
+If $K$ is empty, take $\chi=0$. Otherwise $C_n$ is a finite union
+of compact curve images and points, with at most
+$4^{m_n}$ paths, each of at most $m_n+1$ executed pieces. Hence $K$ is
+compact and contained in the interior. Its preimages in the finitely many
+parameter intervals are compact. Cover those preimages by finitely many
+intervals on which each nonstationary curve is embedded, extending a piece
+locally past an interior endpoint if necessary. This gives finitely many
+interior arc charts covering $K$, together with finitely many point
+charts. All charts can lie in the prescribed open neighbourhood. Self
+intersections and joins cause no additional requirement.
+
+The needed small-cutoff calculation is the classical logarithmic
+codimension-two capacity mechanism. In a straightened arc chart use
+coordinates $(s,y)\in\mathbb R\times\mathbb R^2$, with arc $y=0$.
+Choose a smooth longitudinal cutoff $a(s)$ with $0\le a\le1$, equal
+to one near the compact subarc and supported inside the chart. For $0<e<1/2$ put $L=\log(1/e)$
+and choose a fixed smooth $\psi:\mathbb R\to[0,1]$ equal to one on
+$(-\infty,0]$ and zero on $[1,\infty)$. Define
+
+$$
+ h_e(y)=\psi\left(\frac{\log(|y|/e^2)}{L}\right)\ (y\ne0),
+ \qquad h_e(0)=1.
+\tag{NT.11}
+$$
+
+It is smooth, constant near zero, supported in $|y|\le e$, and
+$|\nabla h_e(y)|\le C/(|y|L)$ on $e^2<|y|<e$. In these two normal
+directions polar integration gives
+
+$$
+\int |h_e|^2dy\le Ce^2,\qquad
+\int|\nabla h_e|^2dy
+ \le\frac{C}{L^2}\int_{e^2}^{e}\frac{dr}{r}
+ =\frac{C}{L}.
+\tag{NT.12}
+$$
+
+The longitudinal derivative of $a(s)h_e(y)$ costs $O(e^2)$.
+Chart Jacobians and inverse derivatives are bounded on the chosen compact
+supports. Thus the local ordinary $H^1$ norm squared is at most
+$C(e^2+L^{-1})$. For a stationary point, an ordinary ball cutoff of
+radius $e$, equal to one on the half-radius ball, has squared $L^2$ cost
+$O(e^3)$ and squared gradient cost $O(e)$. This includes a positive-time
+hold at $o$. These cutoffs are used only to estimate the given native form;
+no Euclidean operator replaces it.
+
+Extend the finitely many chart cutoffs $\chi_i$ by zero and combine them
+as $\chi=1-\prod_{i=1}^N(1-\chi_i)$. Then $\chi=1$ near $K$,
+$0\le\chi\le1$, and $\chi$ is smooth with compact support in the chosen
+neighbourhood. The inequalities $\chi\le\sum_i\chi_i$ and
+$|\nabla\chi|^2\le N\sum_i|\nabla\chi_i|^2$ in local coordinates
+show that its ordinary local $H^1$ costs tend to zero. The number $N$
+and constants may depend on this fixed $n$ and $f$.
+
+For completeness, boundedness of $A,\rho$ and the coordinate coefficients
+of $P,Q$ on this compact chart collection gives
+
+$$
+\|f\chi\|_{\mathcal F}^2
+ \le C_{n,f}\sum_i
+   \int\bigl(|\chi_i|^2+|\nabla\chi_i|^2\bigr)\,dq
+ \longrightarrow0.
+\tag{NT.13}
+$$
+
+Indeed $X_j(f\chi)=\chi X_jf+fX_j\chi$; both $f$ and its first
+horizontal derivatives are bounded. The coordinate gradient bounds each
+$X_j\chi$, which proves (NT.13) by the product rule and finite sums.
+This is an upper estimate for exactly (NT.1); its closure domain and
+homogeneous volume exponent have not been changed. Choose the finitely
+many radii sufficiently small to make the norm at most $\varepsilon$.
+On a visited point where $f\ne0$, that point lies in $K$ and $\chi=1$.
+Where $f=0$, equality in (NT.9) holds automatically. This proves every
+pointwise assertion, including all returns and the complete terminal leg.
+
+To prove nonclosability, take real $0\le\varphi\le1$ in
+$C_c^\infty(\Omega)$, equal to one near $o$. Every path has positive
+lifetime and starts continuously at $o$. Consequently
+$c_n=\nu_n(\varphi^2)>0$, with no fine-mesh qualification, and $c_n<\infty$
+by $\zeta_n\le T_n$. At this fixed $n$ use (NT.9) with
+$f=\varphi$ and $\varepsilon=1/j$ to obtain $u_j\to0$ in $\mathcal F_A$
+while $\mathscr R_nu_j=\mathscr R_n\varphi$ for all $j$. These images
+converge to a nonzero vector of squared norm $c_n$. A closable linear
+operator cannot have graph closure containing $(0,v)$ with $v\ne0$.
+The isometric $L^2(\nu_n)$ formulation gives the same contradiction.
+Continuity of an extension of $f\mapsto\nu_n(|f|^2)$ at zero would
+require $\nu_n(|u_j|^2)\to0$, whereas it equals the fixed $c_n>0$.
+$\square$
+
+## 9. Bounded smooth changing observations over the complete lifetime
+
+**Theorem 9.1 (a positive command/diffusion gap at vanishing native form
+norm).** Fix the model of Definition 7.1. For every nonzero real
+$\varphi\in C_c^\infty(\Omega)$ with $0\le\varphi\le1$, and every
+positive sequence $\varepsilon_n\to0$, there exist real
+$h_n\in C_c^\infty(\Omega)$ with
+
+$$
+\begin{gathered}
+0\le h_n\le\varphi\le1,\qquad
+\operatorname{supp}h_n\subseteq\operatorname{supp}\varphi,
+\qquad \|h_n\|_{\mathcal F}\le\varepsilon_n,\\
+h_n(\bar q_{n,\omega}(t))=\varphi(\bar q_{n,\omega}(t))
+\quad(\omega\in\Xi_n,\ 0\le t<\zeta_{n,\omega}),\\
+\nu_n(h_n^2)=\nu_n(\varphi^2)\longrightarrow
+ c:=\nu(\varphi^2)>0,\qquad
+\nu(h_n^2)=\mathbb E_o\int_0^\tau h_n(Q_t)^2dt\longrightarrow0.
+\end{gathered}
+\tag{NT.14}
+$$
+
+In particular the difference of the two expected complete occupations of
+the bounded smooth observable $W_n=h_n^2$ tends to $c>0$.
+One may require all supports to lie in any fixed nonempty open
+$U\Subset\Omega\setminus\{o\}$ by choosing $\varphi\in C_c^\infty(U)$.
+
+Proof. Apply Theorem 8.1 with $f=\varphi$ at each $n$. Equality of
+restrictions proves the exact command identity, on each actual run before
+averaging. The single fixed test $\varphi^2$, extended by zero to the
+closed cylinder, satisfies (NT.8). Positivity of $\Gamma$ off $o$ and
+nonzero smoothness of $\varphi$ give $c>0$.
+
+To prove the diffusion limit even when $\operatorname{supp}\varphi$
+contains $o$, for every $M>0$ use $h_n^2\le1$ and write
+
+$$
+0\le\nu(h_n^2)
+\le M\|h_n\|_{L^2(\mu)}^2
+       +\int_{\{\Gamma>M\}}\Gamma\,d\mu.
+\tag{NT.15}
+$$
+
+First let $n\to\infty$, then $M\to\infty$. Integrability of the
+original full Green field makes the latter term vanish. Equation (NT.7)
+identifies the expectation. In the source-free case there is the simpler
+bound $\nu(h_n^2)\le(\sup_{\operatorname{supp}\varphi}\Gamma)
+\|h_n\|_2^2\to0$. Cutoffs in Theorem 8.1 can lie in $U$, and
+$h_n=\varphi\chi_n$ already has support in its fixed compact subset.
+No control of only the first cell is used. $\square$
+
+## 10. Normalized smooth probes on a fixed source-free region
+
+**Theorem 10.1 (normalized, uniformly bounded form-convergent
+counterfamily).** Fix any nonempty open $U\Subset\Omega\setminus\{o\}$
+and any real nonnegative $u_0\in C_c^\infty(U)$ with
+$\|u_0\|_{L^2(\mu)}=1$. Put
+
+$$
+B=\|u_0\|_\infty,\qquad \lambda=(1+B)^{-1}>0,
+\qquad J=\nu(u_0^2)\in(0,\infty).
+\tag{NT.16}
+$$
+
+For every positive $\varepsilon_n\to0$ there are nonnegative
+$u_n\in C_c^\infty(U)$ of $L^2(\mu)$ norm one, supported in the same
+compact $\operatorname{supp}u_0$, with
+
+$$
+\begin{gathered}
+\|u_n\|_\infty\le B+1,\qquad
+\|u_n-u_0\|_{\mathcal F}
+ \le(1+\|u_0\|_{\mathcal F})\varepsilon_n\longrightarrow0,\\
+\nu(u_n^2)\longrightarrow J,\qquad
+\nu_n(u_n^2)\longrightarrow(1+\lambda)^2J,\\
+\nu_n(u_n^2)-\nu(u_n^2)\longrightarrow
+ (2\lambda+\lambda^2)J>0,\\
+\nu_n(u_n^2)-\nu_n(u_0^2)\longrightarrow
+ (2\lambda+\lambda^2)J,
+\qquad \nu(u_n^2)-\nu(u_0^2)\longrightarrow0.
+\end{gathered}
+\tag{NT.17}
+$$
+
+Thus, even for this fixed source-free support and a uniformly bounded
+normalized smooth class, no modulus $\omega(s)\to0$ as $s\downarrow0$
+can bound $|\nu_n(v^2)-\nu_n(w^2)|$ by
+$\omega(\|v-w\|_{\mathcal F})$ for every sufficiently large $n$ and all
+members of that class. Here normalized amplitudes converge to a normalized
+$u_0$; it is their difference, not their unit-norm amplitudes, that tends
+to zero in the form norm.
+
+Proof. Apply Theorem 8.1 to $f=\lambda u_0$ at mesh $n$, choosing the
+cutoff inside $U$, and denote its product by $g_n$. Then
+$0\le g_n\le\lambda u_0\le1$, $\|g_n\|_{\mathcal F}\le\varepsilon_n$,
+and its actual trace is exactly $\lambda$ times the trace of $u_0$.
+Set
+
+$$
+N_n=\|u_0+g_n\|_{L^2(\mu)},\qquad
+u_n=\frac{u_0+g_n}{N_n}.
+\tag{NT.18}
+$$
+
+Nonnegativity and the triangle inequality give
+$1\le N_n\le1+\|g_n\|_2\le1+\varepsilon_n$.
+Consequently $\|u_n\|_\infty\le B+1$, and
+
+$$
+\|u_n-u_0\|_{\mathcal F}
+\le N_n^{-1}\|g_n\|_{\mathcal F}
+  +|N_n^{-1}-1|\,\|u_0\|_{\mathcal F}
+\le(1+\|u_0\|_{\mathcal F})\varepsilon_n.
+\tag{NT.19}
+$$
+
+On every actual alive path, including terminal legs and stationary cells,
+there is the exact pointwise identity
+
+$$
+u_n(\bar q_{n,\omega}(t))
+ =\frac{1+\lambda}{N_n}u_0(\bar q_{n,\omega}(t)),
+\qquad
+\nu_n(u_n^2)=\frac{(1+\lambda)^2}{N_n^2}\nu_n(u_0^2).
+\tag{NT.20}
+$$
+
+Since $N_n\to1$, (NT.8) at the fixed continuous test $u_0^2$ gives the
+command limit in (NT.17). This identity does not require every coarse
+mesh to visit $U$: if no path visits its support, both sides of the
+corresponding command equality are zero.
+
+On the fixed compact source-free support $K_0=\operatorname{supp}u_0$,
+$\Gamma$ is bounded. Cauchy–Schwarz gives
+
+$$
+|\nu(u_n^2)-\nu(u_0^2)|
+\le(\sup_{K_0}\Gamma)\|u_n-u_0\|_2
+ (\|u_n\|_2+\|u_0\|_2)\longrightarrow0.
+\tag{NT.21}
+$$
+
+Positivity gives $J>0$; boundedness gives $J<\infty$. All remaining
+limits in (NT.17) follow by subtraction. A proposed uniform modulus,
+applied to $v=u_n,w=u_0$, would tend to zero by (NT.19), contradicting
+the positive last command limit. $\square$
+
+## 11. Correspondence, suppliers and the scope of recovery
+
+**Definition 11.1 (independent observations and the failed direction).**
+The spatial information is the independently defined form element and
+norm (NT.1). Command time is the ordered, actually executed clock,
+controls, area and state path of (NT.3)–(NT.5), stopped at its first hit.
+Boundary information is its first-hit time and height face, with the
+held boundary point or cemetery convention supplied by G. None of these
+is defined by an inverse of another observation. The boundary is fixed
+throughout Theorems 8.1–10.1; their compactly supported probes introduce
+no extra boundary condition. A retained record would instead require
+actual stored outcomes, bindings and permitted later calls. No such
+memory object is constructed by these mathematical traces or measures.
+
+The precise failed direction is completion of smooth spatial data in the
+original form norm followed by their restriction to these actual finite
+commands. Theorem 8.1 rules out even a closable linear trace agreeing
+with all smooth restrictions; Theorem 10.1 rules out a mesh-uniform
+continuity modulus on the displayed normalized bounded class. On arbitrary
+Borel representatives even spatial almost-everywhere equivalence is too
+coarse: $E_n=C_n\cap\Omega$ has $\mu(E_n)=\nu(E_n)=0$, while
+$\nu_n(E_n)=\nu_n(1)>0$. Indeed a finite smooth curve image has zero
+three-dimensional chart volume, stationary points do too, and $\nu\ll\mu$.
+The countable union $E=\bigcup_{n\ge1}E_n$ is a single Borel null
+carrier for all $\nu_n$. This generic measure singularity is an
+intermediate observation, not an additional separator theorem or an
+acquired detector. The bounded smooth counterfamilies are the stronger
+conclusion.
+
+A specified smooth pointwise function remains evaluable along a specified
+path. Stronger supplied data can control a trace: for example, for
+$f,g\in C_c^\infty(\Omega)$ with their smooth representatives,
+
+$$
+\|\mathscr R_n(f-g)\|^2
+ \le\nu_n(1)\|f-g\|_\infty^2.
+\tag{NT.22}
+$$
+
+This follows by integrating the pointwise bound, and (NT.8) makes its
+constant bounded over $n$ (convergence bounds the tail, and there are only
+finitely many initial meshes). Such uniform spatial control, a separate
+trace certificate, a changed sampling law or a field-evaluation service
+is extra input beyond form distance. The inequality installs none of
+them. No inverse from time or boundary back to a spatial amplitude, route
+agreement for four views, dynamics conjugacy or universal physical
+impossibility is inferred.
+
+**Definition 11.2 (suppliers and the additional mathematical content).**
+G, Definitions 29.1–29.2, Lemmas 29.3–29.5 and Theorem 29.6, supply the
+original law, actual chronological realization, killing, resources and
+complete fixed-test convergence. O, Theorems 2.1–5.1, supply the original
+singular-amplitude witness and its form domain, integrability thresholds,
+caps and cap-order conclusions. In particular O, Theorems 7.1–8.1,
+already supply the uniform source-ball bound and the uncapped expected
+bridge for the fixed observable $\Gamma^p$, $0<p<1/2$, over the complete
+original lifetime. Those conclusions retain their original scope. The
+changing fields of (NT.14) and (NT.17) are not a fixed test, and neither
+contradict those suppliers nor prove any additional cap rate, complete
+singular tail or acquisition theorem from first-cell behaviour.
+
+Null-image facts, singular-measure separation, the logarithmic tubular
+capacity calculation, the graph criterion for closability and the
+integrability truncation argument are classical ingredients. Generic
+singular separation is already represented by
+`D5/S3/Observer/MeasureSeparation/SingularProbabilityPerfectSeparator.lean`
+and its owning Blueprint Scribe, and by pinned Mathlib's
+`MeasureTheory.Measure.MutuallySingular` API. The separate
+`FormCorePositivityTransfer` Lean/Scribe pair requires continuity of its
+form map as a premise; it cannot supply that missing premise for (NT.6).
+Pinned Mathlib's Hausdorff-dimension and null-image results likewise
+supply generic nullity, not this native command/form correspondence.
+The additional `repo-derived` content is (NT.9), (NT.14) and (NT.17),
+with the original fields, arbitrary fixed coefficients, all actual command
+pieces and the full fixed-test bridge on the same source. No assertion
+of worldwide priority is made.
+
+The general trace/capacity literature includes Bahouri–Chemin–Xu,
+[*Trace theorem on the Heisenberg group*](https://doi.org/10.5802/aif.2437),
+§1, and Danielli–Garofalo–Nhieu,
+[*Trace inequalities for Carnot–Caratheodory spaces and applications*](https://www.numdam.org/item/ASNSP_1998_4_27_2_195_0/),
+§§1–2. No exact theorem from either paper is applied to (NT.6); the
+cutoff estimates needed here are displayed in the proof. Altmeyer,
+[*Approximation of occupation time functionals*, arXiv:1706.03418v4](https://arxiv.org/abs/1706.03418v4),
+§2, explicitly distinguishes a measurable representative from its $L^2$
+class. Its §2 density estimates and §3.2 heat-kernel assumptions concern
+observations and Riemann estimators of the specified process itself.
+At a fixed native mesh and time the law has finite support, and its
+occupation is carried by $E_n$; those density premises cannot be supplied
+by the density of the limiting diffusion. Thus these approximation
+results are not transferred to the finite-sign producer.
+
+The original actual-tree results of
+[Native Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+§§1, 7, and [Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+§§1, 7, retain their independently declared source, acquisition and
+continuation domains. Their view correspondences, the ideal response
+and acquisition boundary of [Future-response sufficiency, §57](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md),
+and the common-source and legality conditions of
+[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+and [Atlas Stable Core](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md)
+are not replaced by a cylinder trace. In particular the normalized probes
+in §10 are not new acquired states of those sources. The earlier
+instrument metrics and recovery results of §§1–6 keep their different
+specified readouts; no identity between that quantum instrument and
+(NT.6) is asserted.
+
+**Definition 11.3 (operational and resource domain).** At mesh $n$ the
+original full-word sampler requests exactly $m_n=n^3$ fair sign pairs,
+hence $2n^3$ sign bits. On a realized execution at most $n^3$ alive-node
+increment evaluations occur; each invokes the supplied $\Sigma,d$
+evaluations, with $d$ requiring the stated coefficient derivatives.
+There are at most $n^3$ random chords and one terminal height leg,
+$0<\zeta_n\le n+n^{-2}$, and at most one killed partial random chord.
+The finite-word description can include an unexecuted suffix. These
+counts and G's variation/coordinate-energy estimates price neither exact
+real arithmetic nor the source/coefficient access premises. They give
+no common finite variation or energy budget as $n\to\infty$.
+
+The finite-support description used in the cutoff existence proof ranges
+over at most $4^{n^3}$ words and $(n^3+1)4^{n^3}$ curve pieces before
+identical pieces are identified. It is a mathematical union, not an
+executed all-branch selector on a single run. Its chart constants and
+required tube radii depend on the fixed coefficients, $n$ and the desired
+norm error. The proof supplies no efficient construction, certified
+finite-precision radius, unknown-source oracle or installed field
+evaluator. Finite formulas and exact-real coordinates do not entail
+bounded bit memory. Evaluating a continuum of path values, acquiring an
+expectation, and retaining callable observations require their own
+measurement, reference, rights, disturbance, storage and error contracts.
+There is no added hidden history, copied full trajectory or post-death
+restart. Source-uniform acquisition, actual retention and later lawful
+use, all four-view recovery routes and an actual alpha/beta-to-cylinder
+realization remain separate obligations of the broader relational
+programme. Theorems 8.1–10.1 establish the bounded analytic obstruction
+without assuming those missing bridges or completing that programme.
+
+## 追加锚（本行以下为增补区）

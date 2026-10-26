@@ -1,0 +1,32 @@
+**Definition 17.1 (comparison across the existing weights).** Keep the
+one installation, fixed actual $P$, derived common $P_*$ and every
+executed phase of Definition 16.1. For fixed $L\ge2$, consider together
+its already specified classes
+
+$$
+\mathcal X_L=\bigcup_{r=1}^{L-1}\mathcal X_{L,r}.
+$$
+
+For each $x$ keep its complete checked rejection $R_x$, later header
+cut $h_x$ after IN5(0), and actual EX13 successor $h_x^+$. Thus neither
+an unfinished history flight nor an arbitrary later entry is included.
+Let $u=10^{L-1}$ be one weight-one member. Use the following three
+cut types, with the type fixed in each comparison:
+
+$$
+\begin{aligned}
+H_x^{\rm ret}&=R_x,&
+H_x^{\rm pre}&=h_x,&
+H_x^{\rm post}&=h_x^+,\\
+d_{P,L}^{\tau}&=n(H_u^\tau)-n(P_*),
+&&\tau\in\{\mathrm{ret},\mathrm{pre},\mathrm{post}\}.
+\end{aligned}
+$$
+
+These constants are the full RCA Definition 11.5 recurrence evaluated
+on that actual reference flight, including its incoming arenas. They
+are not unit prices for a service. In particular
+$d_{P,L}^{\rm post}=d_{P,L}^{\rm pre}+1$. All termination and actual
+supply premises remain Assumption 1.2's. Taking the union changes no
+frame language, source, mode, admission, observation or physical action.
+

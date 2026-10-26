@@ -1,0 +1,33 @@
+**Theorem 47.1 (Entire-child obstruction).** For every $(p,v)\in\mathcal U$,
+the entire $C(p,v)$ has at most two worlds. At most one has width in
+
+$$
+I_1=(0.1249999999,0.1250000001),
+\tag{47.4}
+$$
+
+and at most one has width in
+
+$$
+I_2=(0.1321292133,0.1321292137).
+\tag{47.5}
+$$
+
+Every world belongs to one of these two alternatives. Their terminal-M
+readings satisfy, respectively,
+
+$$
+m\in(104.334,104.383),\qquad m\in(104.779,104.861).
+\tag{47.6}
+$$
+
+Consequently terminal M is injective on the entire $C(p,v)$ for every
+$(p,v)\in\mathcal U$. In particular no such child contains the M pair
+needed for an independent J/M quartet.
+
+The negative mixed-J point of Theorem 39.1, with its complete proof in
+Sections 40–46, belongs to the interior of $\mathcal U$ and has
+one world in each alternative. Its entire acquired child therefore
+consists of exactly those two worlds. Its missing M pair cannot be
+supplied by an undisplayed third or fourth world.
+

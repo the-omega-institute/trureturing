@@ -1,0 +1,37 @@
+**Proposition 5.3 (A required sign correction at $J/r=1$).**
+If $J/r=1$, then
+
+$$
+d=\frac1{\sqrt{17}},\qquad x=\frac2{\sqrt{17}},\qquad
+\alpha=\frac{1-1/\sqrt{17}}2,
+$$
+
+and
+
+$$
+\mathcal L_x=\mathbb Z(4,1),\qquad
+\mathcal L_{x/2}=\mathbb Z(2,1).
+$$
+
+Supplied real corrections permit approximation to $S$ for every fixed
+phase of $g$, but pulse-only approximation fails for every phase.
+Along every return sequence with $\lambda_m\to i$, one has
+$B(\theta_m)\to-I$, which is removable by a real two-coordinate sign
+correction and is not removable by a common pulse-only global phase.
+
+Proof. In
+
+$$
+h\alpha+kx=h/2+(-h/2+2k)/\sqrt{17},
+$$
+
+integrality forces $h=4k$, giving the first lattice. For $x/2$, it forces
+$h=2k$, giving the second. The corrected criterion passes whereas the
+pulse-only criterion fails. The aligned case passes its phase test as well.
+The exact relation $2\alpha+x/2=1$ implies
+$m x/2\to1/2$ modulo one whenever $m\alpha\to1/4$ modulo one.
+Thus $\theta_m=2\pi(mx/2)$ approaches $\pi$ modulo $2\pi$, proving
+$B\to-I$. Minus identity on $(e_1,e_3)$ and identity on the other three
+coordinates is in $SO(5)$. The fixed vacuum forbids turning that block
+sign into a common phase, as in Theorem 4.2. $\square$
+

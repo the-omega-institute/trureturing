@@ -1,0 +1,19 @@
+**Definition 23.1 (Upper-face notation).** For finite $t>0$ write
+
+$$
+\begin{gathered}
+B_1(t)=(1,0,t),\qquad C_1(t)=(1,t,0),\\
+q_B(t)=5(2t^2-1),\qquad f_C(t)=t^3-4t-2,\qquad
+q_C(t)=(t+1)f_C(t).
+\end{gathered}
+\tag{23.1}
+$$
+
+Here $q_C=q$ of Definition 15.1 and $q_d=5q_C$ there. The complete
+$B_1$ label $R(t)$ means exactly
+[S](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md), Definition 19.1,
+with denominator $q_B$. The complete $C_1$ label
+$\widehat W_1(t)$ means (15.1)–(15.2). Both labels are nonstrict
+auxiliary tuples. Their drifts and gains are part of the labels;
+their source triples alone do not specify a different gain fit.
+

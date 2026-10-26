@@ -1,0 +1,42 @@
+## 定义 98.3　三维接口的桥接证书
+
+对第 $j$ 个有限层，定义候选桥接实现：
+
+$$
+\mathfrak B_j=(\mathcal S_j,G_j,\pi_j,d_j,\mu_j,\partial_j,
+\mathsf U_j,\vartheta_j).
+\tag{98.4}
+$$
+
+其中 $\mathcal S_j$ 是真实 FIB 来源，$\pi_j:\mathcal S_j\to V(G_j)$ 是
+来源到上下文顶点的映射，$d_j,\mu_j$ 是空间度量和测度，$\partial_j$ 是
+边界，$\mathsf U_j$ 是合法运输的方向或局部酉作用，而 $\vartheta_j$ 是
+时钟与边界响应记录。称它满足三维桥接证书，如果同时验证：
+
+$$
+\begin{array}{ll}
+\text{(B1) 来源忠实性：}&
+\pi_j\text{ 的纤维与声明的局部观察、任务和合法域一致};\\
+\text{(B2) 局部秩：}&
+\text{每个正则点存在三个线性无关的运输生成元};\\
+\text{(B3) 运输局部性：}&
+\text{一次合法更新只跨越受 }d_j\text{ 控制的半径};\\
+\text{(B4) 回路闭合：}&
+\text{运输括号没有切面外分量，允许的 holonomy 留在接口纤维内};\\
+\text{(B5) 体积窗口：}&
+ c r^3\le\mu_j(B_{d_j}(x,r))\le C r^3;\\
+\text{(B6) 递归相容：}&
+\pi_j,d_j,\mathsf U_j,\vartheta_j\text{ 在细化接缝下有一致的限制与响应}.
+\end{array}
+\tag{98.5}
+$$
+
+其中 (B5) 的常数和尺度窗口必须明确说明是否随 $j$ 一致；单层有限图
+不能替代无限细化的体积估计。对上下文图，还需另加：
+
+$$
+\text{(B7)}\qquad
+\text{图边由实际来源接缝和运输关系产生，而不是只由投影正交定义。}
+\tag{98.6}
+$$
+

@@ -1,0 +1,62 @@
+**Lemma 13.2 (homogeneous five-vertex estimate).** For distinct indices
+define
+
+$$
+x_{ik\ell}=u_{i\ell}v_{\ell k}+v_{i\ell}u_{\ell k},
+\qquad z_{i\ell}=u_{i\ell}v_{i\ell}=z_{\ell i}.
+\tag{13.4}
+$$
+
+If $\eta\ge0$ bounds the absolute values of every $x_{ik\ell}$,
+every $z_{i\ell}$ and every $d_r(u,v)$, then
+
+$$
+\|u\|_2\|v\|_2\le100\eta.
+\tag{13.5}
+$$
+
+Proof. If either vector vanishes the assertion holds. Otherwise divide
+the two vectors by their norms and divide $\eta$ by their norm product.
+Bilinearity reduces the proof to $\|u\|_2=\|v\|_2=1$.
+Choose an edge $p=\{a,b\}$, $a<b$, on which
+$\alpha=|u_{ab}|=\max_e|u_e|$. Then
+$\alpha\ge1/\sqrt{10}$ and $|v_{ab}|\le\eta/\alpha$.
+
+For every $c\notin\{a,b\}$ the two available equations are
+
+$$
+x_{bca}=-(u_{ab}v_{ac}+v_{ab}u_{ac}),\qquad
+x_{acb}=u_{ab}v_{bc}+v_{ab}u_{bc}.
+\tag{13.6}
+$$
+
+Ordered entries in these formulas automatically include the signs when
+$c<a$ or $c<b$. Since every $|u_e|\le\alpha$, each of the six edges
+meeting $p$ other than $p$ satisfies
+
+$$
+|v_e|\le\frac{\eta+|v_{ab}|\alpha}{\alpha}
+       \le\frac{2\eta}{\alpha}.
+\tag{13.7}
+$$
+
+For a disjoint edge $\{c,d\}$ let $r$ be the fifth vertex.
+After multiplication by its orientation sign, (13.3) contains
+$u_{ab}v_{cd}+v_{ab}u_{cd}$ and four other products. Each of those
+four products has a $v$ edge meeting $p$ other than $p$, so its absolute
+value is at most $\alpha(2\eta/\alpha)=2\eta$.
+The term $v_{ab}u_{cd}$ has absolute value at most $\eta$.
+Consequently
+
+$$
+\alpha|v_{cd}|\le\eta+\eta+4(2\eta)=10\eta.
+\tag{13.8}
+$$
+
+All ten coordinates of $v$ are now at most $10\eta/\alpha$ in absolute
+value, including $p$. Therefore
+$1=\|v\|_2\le10\sqrt{10}\eta/\alpha\le100\eta$.
+Undoing the normalization proves (13.5). The classification into the
+chosen edge, its six neighbors and its three disjoint edges exhausts
+all ten edges. $\square$
+

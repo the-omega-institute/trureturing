@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8acd682dcc7414bd386f1c8831c020075e1315e63b31bd6bb90859d4da4c9a32
+  normalized_sha256: sha256:8acd682dcc7414bd386f1c8831c020075e1315e63b31bd6bb90859d4da4c9a32
+cas_ref: sha256:8acd682dcc7414bd386f1c8831c020075e1315e63b31bd6bb90859d4da4c9a32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This section introduction explains why a transport rule must be specified before a global-gluing question is posed. It gives no transport equation, existence claim, or mathematical conclusion; those occur in later atoms.
+    previous_atom_id: 4b9ec7ca03cd1b8ce1fd14ffe3b35ae00d14d2db65f39104edd86ae107721f78
+    next_atom_id: 3989c111b9fbca7d7e30dacae92ac087a378a2ea60b48404134583f56b87c35c

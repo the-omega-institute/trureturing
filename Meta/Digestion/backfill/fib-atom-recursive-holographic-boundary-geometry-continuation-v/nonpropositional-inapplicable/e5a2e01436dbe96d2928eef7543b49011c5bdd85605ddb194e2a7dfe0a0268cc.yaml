@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5a2e01436dbe96d2928eef7543b49011c5bdd85605ddb194e2a7dfe0a0268cc
+  normalized_sha256: sha256:e5a2e01436dbe96d2928eef7543b49011c5bdd85605ddb194e2a7dfe0a0268cc
+cas_ref: sha256:e5a2e01436dbe96d2928eef7543b49011c5bdd85605ddb194e2a7dfe0a0268cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the static linear compatibility question and the stipulated native action/guard contract. The heat equality is a requirement on candidate pairs; no compatible pair is asserted to exist.
+    previous_atom_id: null
+    next_atom_id: a27c72e71bd55c6c4c26fc4734e3fa742f20afdcc84fed20b928d96f4c127f3d

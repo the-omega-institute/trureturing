@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16986f5209b6aa7a848238a8615b71e8e85f42274bc3af36d9b88521166e1160
+  normalized_sha256: sha256:16986f5209b6aa7a848238a8615b71e8e85f42274bc3af36d9b88521166e1160
+cas_ref: sha256:16986f5209b6aa7a848238a8615b71e8e85f42274bc3af36d9b88521166e1160
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 相争意愿与同一个人格的文本解释。
+    previous_atom_id: f7ef9dfde3f3439592a565531c1a7ddb6a6b641a934d2f1b6e7c0817d3206032
+    next_atom_id: 610f61bbd169523d037a74002601979c228a2be2cd0655d8a1c6d2fc61231a4e

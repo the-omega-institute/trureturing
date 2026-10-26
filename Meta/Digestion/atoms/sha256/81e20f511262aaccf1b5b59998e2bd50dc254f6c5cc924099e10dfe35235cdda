@@ -1,0 +1,13 @@
+**Corollary 121.3 (two distinct obstructions after the metric repair).**
+On a native branch with births, exact form/norm/same-clock transport
+is compatible with conservative Markov evolution precisely as in
+(121.1)--(121.3). Adding either irreducibility or original-edge support
+to these requirements makes the class empty. In particular, allowing
+non-diagonal state metrics repairs (120.2) but does not supply a local
+Markov diffusion on the unchanged occurrence tree.
+
+**Proof.** Apply the necessity and sufficiency in Theorem 121.2. The
+forced distance-two rate is present even when every $d_p=0$ and
+$s_c=g_p^{-1}$, so neither removing sibling jumps nor minimizing row
+sums removes this obstruction. $\square$
+

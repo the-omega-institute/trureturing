@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2d14dda75b7ff4623ac1eb5e431d36088ea8a0a7497a29dd2a194068af6c5ff
+  normalized_sha256: sha256:b2d14dda75b7ff4623ac1eb5e431d36088ea8a0a7497a29dd2a194068af6c5ff
+cas_ref: sha256:b2d14dda75b7ff4623ac1eb5e431d36088ea8a0a7497a29dd2a194068af6c5ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这段报告 prime/explicit-formula 正性构造尚缺，是研究状态说明，未声称相应构造不存在。
+    previous_atom_id: b3bcb29d750412b996cbaffc73f5bdf8dfc9c2f821557888b3444d27aa73a6ac
+    next_atom_id: 9123aa7d83f67cc949985d3d9a445224cf6002061d67d3772a5de8897cd6d414

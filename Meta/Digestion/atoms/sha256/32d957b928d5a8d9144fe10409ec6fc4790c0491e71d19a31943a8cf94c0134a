@@ -1,0 +1,43 @@
+**Definition 31.1 (trace, fibres and independent constants).**
+Retain exactly Definition 25.1, including fixed $\varepsilon>0$, both
+height deaths, raw $2\pi$ phase measures, completed free domain and clock.
+Write $a=|\kappa|$, $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ and
+
+$$
+\begin{aligned}
+Z_\kappa(t)&=\operatorname{Tr}e^{-tL_\kappa},\\
+T_\kappa(t;n,m,\xi)&=\operatorname{Tr}_{L^2(I,dk)}
+ e^{-tH_{\kappa,(n,m,\xi)}},\\
+F(t)&=\sum_{n,m\in\mathbb Z}\int_{\mathbb R}
+                    T_0(t;n,m,\xi)\,d\xi,\\
+\beta&=\int_I b_0(k)^2\phi(k)^2\,dk>0,\qquad
+\Theta_\beta(z)=\sum_{j\in\mathbb Z}e^{-\beta zj^2}.
+\end{aligned}
+\tag{31.1}
+$$
+
+The fibres are precisely (26.5), with scalar form domain $H_0^1(I)$.
+The coefficient $\beta$ is the one in
+[Critical cutoff, Definition 31.1 and (32.4)](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md),
+not an additional adjustable coefficient. On $\mathbb R^4$ with raw
+Lebesgue measure define the canonical operator and its heat constant by
+
+$$
+\mathcal E=-\left[\partial_r^2+
+ (\partial_y+r\partial_z+\tfrac12r^2\partial_w)^2\right],
+\qquad c_E=p_{\mathcal E}(1;0,0)>0.
+\tag{31.2}
+$$
+
+Here $\mathcal E$ is the Friedrichs realization of its compactly
+supported smooth-core form. Its complete homogeneous bracket-generating
+fields give a finite smooth positive heat density; this is the
+nilpotent heat kernel in [H, Theorems A and B]. Its normalization is
+$e^{-t\mathcal E}$, with no factor $1/2$ in the generator. Set
+
+$$
+C_7=(2\pi)^3\varepsilon^{-4}
+                 \frac{H(u^4-l^4)}2\,c_E>0.
+\tag{31.3}
+$$
+

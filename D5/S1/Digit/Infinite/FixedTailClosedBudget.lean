@@ -48,11 +48,11 @@ private theorem affine_endpoint_bound (a b lo hi l u x : ℝ) (hx : x ∈ Set.Ic
 private def returnEval (A : Fin 2 → ℝ) (a : ℝ) (z : List (Fin 2)) (x : ℝ) : ℝ :=
   z.foldr (fun i y => A i + a * y) x
 
-private noncomputable def hullLower (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
+noncomputable def hullLower (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
   if 0 ≤ a then min (A 0) (A 1) / (1 - a)
   else (min (A 0) (A 1) + a * max (A 0) (A 1)) / (1 - a ^ 2)
 
-private noncomputable def hullUpper (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
+noncomputable def hullUpper (A : Fin 2 → ℝ) (a : ℝ) : ℝ :=
   if 0 ≤ a then max (A 0) (A 1) / (1 - a)
   else (max (A 0) (A 1) + a * min (A 0) (A 1)) / (1 - a ^ 2)
 
@@ -107,7 +107,7 @@ private theorem hull_equations (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1) :
       nlinarith
     · constructor <;> field_simp [ne_of_gt hden, ne_of_gt hden2] <;> ring
 
-private theorem hull_invariant (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
+theorem hull_invariant (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
     (i : Fin 2) :
     Set.MapsTo (fun x => A i + a * x)
       (Set.Icc (hullLower A a) (hullUpper A a))
@@ -180,7 +180,7 @@ private theorem extremal_words (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1) :
     simp only [returnEval_repeat, hlmap, humap]
     exact ⟨affine_iterate_limit _ _ _ _ haa hel, affine_iterate_limit _ _ _ _ haa heu⟩
 
-private theorem hull_minimal (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
+theorem hull_minimal (A : Fin 2 → ℝ) (a : ℝ) (ha : |a| < 1)
     (l u : ℝ) (hlu : l ≤ u)
     (hJ : ∀ i : Fin 2, Set.MapsTo (fun x => A i + a * x) (Set.Icc l u) (Set.Icc l u)) :
     Set.Icc (hullLower A a) (hullUpper A a) ⊆ Set.Icc l u := by

@@ -1,0 +1,82 @@
+**Definition 10.1 (source coordinates and angular boundary problem).**
+Assume both native walls and retain all the data of (1.1)--(1.2), including
+unnormalized phase measure. In (2.3) the absolute inverse Jacobian is
+$|J_o|=1/(2r)$. Put $\Sigma_o=A(o)^{1/2}$ and $B=\Sigma_o^{-1}$.
+First pass to $t=z-xy/2$, then set
+
+$$
+(\xi,\eta)^{\mathsf T}=B(x,y)^{\mathsf T},\qquad
+\tau=\det(B)t.
+\tag{10.1}
+$$
+
+Write $\Psi$ for this source-centred chart. Its horizontal frame and
+measure have the exact expressions
+
+$$
+\begin{aligned}
+U&=\partial_\xi-\tfrac\eta2\partial_\tau,
+&V&=\partial_\eta+\tfrac\xi2\partial_\tau,\\
+d\mu&=m(q)\,dq,
+&m(q)&=\frac{\det A(o)}{2r}\rho(\Psi^{-1}q),\\
+C(q)&=BA(\Psi^{-1}q)B^{\mathsf T},
+&m_0=m(0)&=\frac{\rho(o)\det A(o)}{2r}.
+\end{aligned}
+\tag{10.2}
+$$
+
+Here $dq=d\xi\,d\eta\,d\tau$, $C(0)=I_2$, and the energy in the chart
+is $\int m\langle C\nabla_H f,\nabla_H f\rangle dq$, with
+$\nabla_H=(U,V)$. The chart is used only on an injective neighbourhood;
+no covering or identification of actual phases is made. Define
+
+$$
+R=\big((\xi^2+\eta^2)^2+16\tau^2\big)^{1/4},\qquad
+J=(-\pi/2,\pi/2),\qquad c(a)=\cos a.
+\tag{10.3}
+$$
+
+The angular operator $S$ is the operator of the closed form
+
+$$
+\int_J\{4c|b'|^2+c|b|^2\}\,da
+\quad\hbox{on}\quad
+\mathcal H_c=\{b\in L^2(J):b\in AC_{\rm loc}(J),\quad
+\sqrt c\,b'\in L^2(J)\}.
+\tag{10.4}
+$$
+
+Thus $Sb=-4(cb')'+cb$ with natural endpoint conditions, not Dirichlet
+conditions. Denote its lowest eigenvalue by $\lambda_0$ and its positive
+eigenfunction by $\phi$, normalized by $\phi(0)=1$. Equivalently,
+$\lambda_0$ is the unique parameter for which the solution
+
+$$
+-4(c\phi')'+c\phi=\lambda_0\phi,\qquad
+\phi(0)=1,\quad\phi'(0)=0
+\tag{10.5}
+$$
+
+is positive and regular at both endpoints. Regularity means the bounded
+branch, with $c\phi'\to0$ at each endpoint. In particular it can be
+specified by a scalar shooting condition: let $\phi_\lambda$ solve
+
+$$
+\phi_\lambda(a)=1+\frac14\int_0^a\frac1{c(s)}
+ \int_0^s(c(t)-\lambda)\phi_\lambda(t)dt\,ds,
+\qquad 0\le a<\pi/2.
+\tag{10.5a}
+$$
+
+Then $\lambda_0$ is the unique parameter for which $\phi_\lambda$ stays
+positive on $[0,\pi/2)$ and
+$\int_0^{\pi/2}(c-\lambda)\phi_\lambda da=0$. This zero-flux condition
+selects the regular branch; even reflection supplies the other endpoint.
+The constant to be used for the original source is
+
+$$
+g_{\mathrm c}=2\pi m_0\lambda_0
+=\frac{\pi\rho(o)\det A(o)}{r}\lambda_0.
+\tag{10.6}
+$$
+

@@ -1,0 +1,41 @@
+**Proposition 267.2 (all nine-occurrence first leakage coefficients).** In (267.2) let $e_p$ be the unit counting vector at $p$. An orthonormal basis of the hidden space consists of
+
+$$
+\begin{aligned}
+h_1&=(e_{LLL}-e_{LLR})/\sqrt2,&
+h_2&=(e_{RL}-e_{RR})/\sqrt2,\\
+h_3&=(e_{LLL}+e_{LLR}-e_{RL}-e_{RR})/2,\\
+h_4&=(e_{LL}-e_{LR})/\sqrt2,&
+h_5&=(e_o-e_R)/\sqrt2.
+\end{aligned}
+$$
+
+Relative to the normalized coarse coordinate order $(a,b,c,d)$, the first two rows of $\widehat D_9$ are zero and its remaining rows are
+
+$$
+E_9=\begin{pmatrix}
+g/16&-a_0/\sqrt2&a_0/\sqrt2&0\\
+-a_0/\sqrt2&0&0&0\\
+a_0/\sqrt2&0&-a_0/2-g/4&-a_0/\sqrt2
+\end{pmatrix}.
+\tag{267.10}
+$$
+
+In particular, with $f_d=N_9^{-1/2}e_d=e_d$ in coarse value coordinates,
+
+$$
+\|D_9f_d\|^2=a_0^2/2,
+\qquad
+\|(I-P)e^{-itH_9}Uf_d\|^2
+=\tfrac12a_0^2t^2+O(t^3).
+\tag{267.11}
+$$
+
+For every coarse orthonormal coordinate vector $\xi$, its full first leakage coefficient is exactly $\|E_9\xi\|^2$. The compressed evolution's second-order discrepancy is $z^2t^2E_9^{\mathsf T}E_9/2$ in (265.2), where $z\in\{1,i\}$ is the evolution parameter.
+
+Proof. The five displayed vectors have disjoint-class support except for the three mutually orthogonal contrasts in class $a$. They are orthogonal to every class-constant vector, and their number is $9-4$, proving that they form the hidden basis. Therefore every entry can be computed as $\langle h_j,H_9\widehat Ue_b\rangle$ without forming $P$ separately.
+
+The two siblings in either $h_1$ or $h_2$ have the same diagonal and the same actual parent, so those two rows vanish. On $h_3$, the normalized $a$ input has value $1/2$ on each of its four sites. The two deep sites have diagonal value $(3a_0-g/8)/2$ and the two shallow sites $(3a_0-g/4)/2$; their contrast is $g/16$. The normalized $b$ input gives $-a_0/\sqrt2$ at each deep site and zero at the shallow sites, giving contrast $-a_0/\sqrt2$. The normalized $c$ input reverses these two pairs, giving $a_0/\sqrt2$; the $d$ input contributes zero.
+
+On $h_4$, only the $a$ input has a nonzero contrast: the $LL$ row receives two leaf contributions of $-a_0/2$, while the $LR$ row receives none, yielding $-a_0/\sqrt2$. The two sites have equal source potential $1/4$, so the $b$ diagonal input gives no contrast. On $h_5$, the $a$ column has values zero and $-a_0$ at $o,R$, respectively; the $c$ column has values $(a_0-g)/\sqrt2$ and $(2a_0-g/2)/\sqrt2$, including the internal $oR$ edge; the $d$ column has values $-a_0,0$. Their contrasts are the last row of (267.10); the $b$ column is zero there. This proves every matrix entry. Applying (265.4) proves (267.11) and the all-input assertion. □
+

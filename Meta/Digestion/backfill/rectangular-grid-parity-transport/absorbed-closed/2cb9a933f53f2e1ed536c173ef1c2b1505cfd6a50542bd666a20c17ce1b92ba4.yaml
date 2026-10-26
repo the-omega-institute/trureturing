@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2cb9a933f53f2e1ed536c173ef1c2b1505cfd6a50542bd666a20c17ce1b92ba4
+  normalized_sha256: sha256:2cb9a933f53f2e1ed536c173ef1c2b1505cfd6a50542bd666a20c17ce1b92ba4
+cas_ref: sha256:2cb9a933f53f2e1ed536c173ef1c2b1505cfd6a50542bd666a20c17ce1b92ba4
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/CapacityPortSeparationAbsorption.actual_capacity_port_separation_absorption
+    target_statement_id: sha256:992632618a73d7f3492efc7023e929accd92e225ab3410a8d2232639a0b96c6d
+receipts:
+  unresolved_subitems: []

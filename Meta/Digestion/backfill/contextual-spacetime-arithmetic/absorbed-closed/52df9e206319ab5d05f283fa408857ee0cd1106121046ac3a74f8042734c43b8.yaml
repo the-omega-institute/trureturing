@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:52df9e206319ab5d05f283fa408857ee0cd1106121046ac3a74f8042734c43b8
+  normalized_sha256: sha256:52df9e206319ab5d05f283fa408857ee0cd1106121046ac3a74f8042734c43b8
+cas_ref: sha256:52df9e206319ab5d05f283fa408857ee0cd1106121046ac3a74f8042734c43b8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal
+    target_statement_id: sha256:885856a0eb94c2570e5b88dc5ad9329228f4388e9f1b4bce2f731c135f651b72
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_exact
+    target_statement_id: sha256:bc1515464abe39f58bd073de7f8e70fdb5f97992450005d8207f17b63be0d352
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.first
+    target_statement_id: sha256:e148d9bd714ff3857738c870ad78b7fa4f42f041aec6e8e66f8a4ed0634b9816
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.oneValue
+    target_statement_id: sha256:47fcc539b6056e4fb697736dc88ad54ff4347db4c3dfd9f845ec274788650e9c
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.pairEquiv
+    target_statement_id: sha256:b844e1936d6b7c57da3c893bb0de7ba681e4edc69b0e568995bb1c654cb3aaf4
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.second
+    target_statement_id: sha256:1ff1c6ba13d5352b7eb02d6e1f7565d8668e8dbb9489c111f8752f43ca692524
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.twoValue
+    target_statement_id: sha256:145c4e63b882011624578e63d3b3f4b3a7f2cd07266fc7fc197dc1c36994dc34
+receipts:
+  unresolved_subitems: []

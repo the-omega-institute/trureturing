@@ -29,7 +29,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Observer.Linear.ObservableTrajectoryCoordinates
 open ContinuousLinearMap MeasureTheory Set Filter Module WithLp
 open scoped InnerProductSpace Matrix.Norms.L2Operator Topology
-theorem observable_trajectory_coordinates (d p : ℕ)
+theorem observable_trajectory_coordinates_all_bases (d p : ℕ)
     (B : (EuclideanSpace ℝ (Fin d)) →L[ℝ] EuclideanSpace ℝ (Fin d))
     (C : (EuclideanSpace ℝ (Fin d)) →L[ℝ] EuclideanSpace ℝ (Fin p))
     (T : ℝ) (hT : 0 < T)
@@ -38,7 +38,7 @@ theorem observable_trajectory_coordinates (d p : ℕ)
       (∀ x, (fun t => F x t) =ᵐ[volume.restrict (Ioc 0 T)]
         fun t => C ((NormedSpace.exp (t • B)) x)) ∧
       Function.Injective F ∧ finrank ℝ F.range = d ∧
-      ∃ basis : OrthonormalBasis (Fin d) ℝ F.range,
+      ∀ basis : OrthonormalBasis (Fin d) ℝ F.range,
       ∃ U : Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T)) →L[ℝ] EuclideanSpace ℝ (Fin d),
       ∃ M : Matrix (Fin d) (Fin d) ℝ,
         U = basis.repr.toContinuousLinearEquiv.toContinuousLinearMap.comp
@@ -166,9 +166,9 @@ theorem observable_trajectory_coordinates (d p : ℕ)
     · exact bot_le
   have hrank : finrank Real F.range = d := by
     simpa [E] using (LinearMap.finrank_range_of_inj hinj)
+  refine ⟨F, hrep, hinj, hrank, ?_⟩
+  intro basis
   letI : FiniteDimensional Real F.range := inferInstance
-  let basis : OrthonormalBasis (Fin d) Real F.range :=
-    (stdOrthonormalBasis Real F.range).reindex (finCongr hrank)
   let L := basis.repr.toContinuousLinearEquiv.toContinuousLinearMap.comp F.rangeRestrict
   let M : Matrix (Fin d) (Fin d) Real := Matrix.toEuclideanLin.symm L.toLinearMap
   have hM : M.toEuclideanLin.toContinuousLinearMap = L := by
@@ -312,10 +312,47 @@ theorem observable_trajectory_coordinates (d p : ℕ)
       NormedSpace.exp (t • b.transpose)*c.transpose*c*NormedSpace.exp (t • b) := by
     rw [intervalIntegral.integral_of_le hT.le]
     exact hmatrix
-  refine ⟨F,hrep,hinj,hrank,basis,U,M,rfl,hUnorm,hUcoord,hUint,hUproj,?_,?_,hphysical',hmatrix'⟩
+  refine ⟨U,M,rfl,hUnorm,hUcoord,hUint,hUproj,?_,?_,hphysical',hmatrix'⟩
   · rw [hUL]
     exact hM
   · rw [hUL]
     exact hGram
+
+theorem observable_trajectory_coordinates (d p : ℕ)
+    (B : (EuclideanSpace ℝ (Fin d)) →L[ℝ] EuclideanSpace ℝ (Fin d))
+    (C : (EuclideanSpace ℝ (Fin d)) →L[ℝ] EuclideanSpace ℝ (Fin p))
+    (T : ℝ) (hT : 0 < T)
+    (hobs : ∀ x, (∀ k : Fin d, C ((B ^ (k : ℕ)) x) = 0) → x = 0) :
+    ∃ F : (EuclideanSpace ℝ (Fin d)) →L[ℝ] Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T)),
+      (∀ x, (fun t => F x t) =ᵐ[volume.restrict (Ioc 0 T)]
+        fun t => C ((NormedSpace.exp (t • B)) x)) ∧
+      Function.Injective F ∧ finrank ℝ F.range = d ∧
+      ∃ basis : OrthonormalBasis (Fin d) ℝ F.range,
+      ∃ U : Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T)) →L[ℝ] EuclideanSpace ℝ (Fin d),
+      ∃ M : Matrix (Fin d) (Fin d) ℝ,
+        U = basis.repr.toContinuousLinearEquiv.toContinuousLinearMap.comp
+          F.range.orthogonalProjectionOnto ∧
+        (∀ g, ‖U g‖ ≤ ‖g‖) ∧
+        (∀ g i, U g i = ∫ t in (0:ℝ)..T,
+          inner ℝ ((basis i : Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T))) t) (g t)) ∧
+        (∀ (g : Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T))) i, IntervalIntegrable (fun t =>
+          inner ℝ ((basis i : Lp (EuclideanSpace ℝ (Fin p)) 2 (volume.restrict (Ioc 0 T))) t) (g t)) volume 0 T) ∧
+        U.adjoint.comp U = F.range.starProjection ∧
+        M.toEuclideanLin.toContinuousLinearMap = U.comp F ∧
+        (U.comp F).adjoint.comp (U.comp F) = F.adjoint.comp F ∧
+        F.adjoint.comp F = ∫ t in (0:ℝ)..T,
+          (C.comp (NormedSpace.exp (t • B))).adjoint.comp (C.comp (NormedSpace.exp (t • B))) ∧
+        (let b := Matrix.toEuclideanLin.symm B.toLinearMap
+         let c := Matrix.toEuclideanLin.symm C.toLinearMap
+         M.transpose*M = ∫ t in (0:ℝ)..T,
+           NormedSpace.exp (t • b.transpose)*c.transpose*c*NormedSpace.exp (t • b)) := by
+  classical
+  rcases observable_trajectory_coordinates_all_bases d p B C T hT hobs with
+    ⟨F, hrep, hinj, hrank, hbasis⟩
+  letI : FiniteDimensional ℝ F.range := inferInstance
+  let basis : OrthonormalBasis (Fin d) ℝ F.range :=
+    (stdOrthonormalBasis ℝ F.range).reindex (finCongr hrank)
+  rcases hbasis basis with ⟨U, M, hUM⟩
+  exact ⟨F, hrep, hinj, hrank, basis, U, M, hUM⟩
 
 end D5.S3.Observer.Linear.ObservableTrajectoryCoordinates

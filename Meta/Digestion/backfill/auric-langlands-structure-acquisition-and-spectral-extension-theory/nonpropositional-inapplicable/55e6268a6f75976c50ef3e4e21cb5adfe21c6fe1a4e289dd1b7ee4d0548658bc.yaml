@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55e6268a6f75976c50ef3e4e21cb5adfe21c6fe1a4e289dd1b7ee4d0548658bc
+  normalized_sha256: sha256:55e6268a6f75976c50ef3e4e21cb5adfe21c6fe1a4e289dd1b7ee4d0548658bc
+cas_ref: sha256:55e6268a6f75976c50ef3e4e21cb5adfe21c6fe1a4e289dd1b7ee4d0548658bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic snapshot and source-contract scope only; gives commit identifiers and distinguishes carriers without asserting a mathematical result.
+    previous_atom_id: 421d4b0380dfe7df7534a835160511a8ff86f4d05bb1df47d4927f815eef6221
+    next_atom_id: 3c6a40f32a23821dc3e9319812f9e8374a414dcde695931e113c0b03ccbf2b31

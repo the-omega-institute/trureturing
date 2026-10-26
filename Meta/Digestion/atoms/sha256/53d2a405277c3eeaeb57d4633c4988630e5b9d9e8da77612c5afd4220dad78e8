@@ -1,0 +1,167 @@
+## 17. A finite rational interval proof of separation
+
+Every finite decimal in this section denotes its exact rational value.
+For intervals, addition and multiplication use exact endpoints, taking
+the minimum and maximum of all four endpoint products. If $0$ is
+excluded, $[x_-,x_+]^{-1}=[1/x_+,1/x_-]$. These are inclusion
+operations over the reals [7]; they require no floating-point rounding.
+
+Here is an explicit evaluation prescription and its rational inputs.
+For each interval $[l,u]$ in (15.3), set
+
+$$
+\begin{aligned}
+j_l&=1/8+8l(1-u),&j_u&=1/8+8u(1-l),\\
+n_l&=j_l+l,&n_u&=j_u+u.
+\end{aligned}
+\tag{17.1}
+$$
+
+The exact numerators of these endpoints, over the common denominator
+$10^{12}$, are
+
+| Root interval | $10^{12}j_l$ | $10^{12}j_u$ | $10^{12}n_l$ | $10^{12}n_u$ |
+| --- | ---: | ---: | ---: | ---: |
+| $r_-$ | $1058118247680$ | $1058126247680$ | $1192933247680$ | $1192942247680$ |
+| $r_+$ | $829271199600$ | $829279199600$ | $1731720199600$ | $1731729199600$ |
+
+For $k=5,6,7$, respectively, use the constant triples
+
+$$
+(c_k,\alpha_k,\beta_k)=
+(196/9,15,10),\quad(50,36,20),\quad(284/3,70,35)
+\tag{17.2}
+$$
+
+and define
+
+$$
+q_{kl}=c_k-\alpha_k/j_l-\beta_k/n_l,\qquad
+q_{ku}=c_k-\alpha_k/j_u-\beta_k/n_u.
+\tag{17.3}
+$$
+
+These enclose the unsimplified expressions (16.4), so the interval
+calculation does not impose an independent root relation in place of
+the original gain. Both endpoints are negative for all three $k$ in
+both rows. In the following prescription, subscripts $l,u$ always denote
+the lower and upper endpoint of the indicated interval:
+
+$$
+\begin{aligned}
+D_l&=1+(n_u+5/4)q_{5l},&D_u&=1+(n_l+5/4)q_{5u},\\
+L_l&=9/8+2j_l+4l,&L_u&=9/8+2j_u+4u,\\
+F_l&=1+(5/2+n_u)q_{6l},&F_u&=1+(5/2+n_l)q_{6u},\\
+G_l&=1+L_uq_{7l},&G_u&=1+L_lq_{7u}.
+\end{aligned}
+\tag{17.4}
+$$
+
+All of $D_l,D_u,F_l,F_u,G_l,G_u$ are negative by direct rational
+comparison. Accordingly the response intervals are exactly prescribed
+by the following expressions before outward decimal enclosure:
+
+$$
+\begin{aligned}
+A_5&\in[D_l,D_u],\\
+V_0&\in[24(7/2+n_l),24(7/2+n_u)],\\
+V_1&\in[F_u/D_l,F_l/D_u],\\
+A_0&\in[24+(384/5)L_l,24+(384/5)L_u],\\
+A_1&\in[G_u/D_l,G_l/D_u].
+\end{aligned}
+\tag{17.5}
+$$
+
+The results are contained strictly in these rational open intervals:
+
+| Quantity | At $r_-$ | At $r_+$ |
+| --- | --- | --- |
+| $q_r(5)$ | $(-0.781031,-0.780859)$ | $(-2.085000,-2.084794)$ |
+| $A_5$ | $(-0.908012,-0.907588)$ | $(-5.216903,-5.216273)$ |
+| $q_r(6)$ | $(-0.788060,-0.787676)$ | $(-4.960823,-4.960343)$ |
+| $q_r(7)$ | $(-0.827956,-0.827234)$ | $(-9.955920,-9.955000)$ |
+| $V_0$ | $(112.630397,112.630614)$ | $(125.561284,125.561501)$ |
+| $V_1$ | $(2.102214,2.104764)$ | $(3.831926,3.832786)$ |
+| $A_0$ | $(314.342130,314.343667)$ | $(515.008389,515.009926)$ |
+| $A_1$ | $(2.342872,2.346990)$ | $(12.008214,12.010827)$ |
+
+For example the lower endpoint $q_{5l}$ for the first row is exactly
+
+$$
+\frac{196}{9}
+-\frac{15\cdot10^{12}}{1058118247680}
+-\frac{10\cdot10^{12}}{1192933247680}.
+\tag{17.6}
+$$
+
+It exceeds $-781031/10^6$. The upper endpoint uses the two upper
+numerators in that row and is below $-780859/10^6$. Every table entry
+has the same finite rational comparison form (17.1)–(17.5); all
+denominator signs have been specified. Thus the prescription supplies
+exact endpoint inequalities, not samples at decimal root estimates.
+
+In particular $V_1(r_-)-V_1(r_+)<0$. There is exactly one possible
+fifth reading at which the two singular worlds have the same sixth
+reading. Define it algebraically by
+
+$$
+\delta_s=\frac{V_0(r_+)-V_0(r_-)}{V_1(r_-)-V_1(r_+)},\qquad
+p_s=24+\delta_s,\qquad
+v_s=V_0(r_-)+V_1(r_-)\delta_s.
+\tag{17.7}
+$$
+
+Here are explicit bounds obtained using only the displayed six-decimal
+response intervals. Their difference intervals give
+
+$$
+\begin{aligned}
+V_0(r_+)-V_0(r_-)&\in(12.930670,12.931104),\\
+V_1(r_-)-V_1(r_+)&\in(-1.730572,-1.727162),\\
+A_0(r_-)-A_0(r_+)&\in(-200.667796,-200.664722),\\
+A_1(r_-)-A_1(r_+)&\in(-9.667955,-9.661224).
+\end{aligned}
+\tag{17.8}
+$$
+
+Exact interval division yields
+
+$$
+-\frac{12931104}{1727162}<\delta_s<
+-\frac{12930670}{1730572},\qquad
+16.513091<p_s<16.528095.
+\tag{17.9}
+$$
+
+For instance the following four rational endpoint expressions give,
+respectively, lower and upper bounds on $v_s$ and on the terminal-J
+difference $\Delta a_s=a(W_{r_-}(p_s))-a(W_{r_+}(p_s))$:
+
+$$
+\begin{aligned}
+v_l&=\frac{112630397}{10^6}
+      -\frac{2104764}{10^6}\frac{12931104}{1727162},\\
+v_u&=\frac{112630614}{10^6}
+      -\frac{2102214}{10^6}\frac{12930670}{1730572},\\
+a_l&=-\frac{200667796}{10^6}
+      +\frac{9661224}{10^6}\frac{12930670}{1730572},\\
+a_u&=-\frac{200664722}{10^6}
+      +\frac{9667955}{10^6}\frac{12931104}{1727162}.
+\end{aligned}
+\tag{17.10}
+$$
+
+Multiplication by positive denominators verifies
+
+$$
+\begin{aligned}
+96.872221&<v_l<v_s<v_u<96.923071,\\
+-128.480046&<a_l<\Delta a_s<a_u<-128.281626<0.
+\end{aligned}
+\tag{17.11}
+$$
+
+This proves strict separation using exact rational enclosures and the
+isolated algebraic roots, without relying on any unprinted numerical
+root or computational certificate.
+

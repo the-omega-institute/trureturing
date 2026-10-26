@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+  normalized_sha256: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+cas_ref: sha256:3d868b05c6a25ff0724784b8702b5a2c701c37e05c5e75a0094fea7fdfab7438
+coverage_gids:
+  - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+    target_statement_id: sha256:653a60f8ac7e49aa50efd534a0bd20409e3b753a7bd6326e9b70bdf1c7e79994
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,74 @@
+### 2.5. A regular element and compatibility at higher powers of two
+
+The regular-element assertion used here is the following elementary statement. If
+
+$$
+H\le\mu_{2^b}^2,\qquad
+H\cong C_{2^a}\times C_{2^b},\qquad
+1\le a\le b,\quad b\ge2,
+$$
+
+then $H$ contains $(x,y)$ with $1,x,y$ pairwise distinct. Indeed, $H$ is noncyclic and has an element $h=(x,y)$ of order at least $4$. The order of an element of a product of two finite $2$-groups is the maximum of its coordinate orders. Swap the coordinates if necessary so that $x$ has order at least $4$.
+
+If $y=1$, choose $k=(u,v)\in H$ with $v\ne1$. Such a $k$ exists, since otherwise $H$ would lie in the cyclic first-coordinate subgroup. In $h^n k=(x^n u,v)$, the first coordinate takes at least four values, and only $1$ and $v$ are forbidden.
+
+If $y\ne1$ and $x\ne y$, $h$ itself has the required property. In the remaining case $x=y$, choose $k=(u,v)$ with $r=u/v\ne1$. Otherwise $H$ would lie in the cyclic diagonal subgroup. Write $h^n k=(rt,t)$, with $t=x^n v$. There are at least four possible $t$, and only $t=1$ and $t=r^{-1}$ are forbidden. The ratio $r\ne1$ already ensures distinct coordinates. This proves the assertion in all cases.
+
+Now let $A=P\times C_3$ with $1\le a\le b$ and $b\ge2$, and take any projectively faithful pointwise matched pair $\chi,\psi$. We show that it is globally matched.
+
+Let
+
+$$
+D=\frac{\prod_i\psi_i}{\prod_i\chi_i},
+$$
+
+a character of $A$, and choose an integer $q$ with $3q\equiv1\pmod{2^b}$. At $p\in P$, every matching scalar belongs to $\mu_{2^b}$ and has cube $D(p)$. Cubing is an automorphism of $\mu_{2^b}$, so that scalar is uniquely
+
+$$
+\eta(p)=D(p)^q.
+$$
+
+This is a character of $P$. Extend it trivially across $C_3$ and twist $\psi$ by $\eta^{-1}$. The two triples now have identical value multisets on $P$. By (2.1), a single relabeling makes their restricted characters identical. Write the resulting triples as
+
+$$
+\chi_i(p,z)=c_i(p)d_i(z),\qquad
+\psi_i(p,z)=c_i(p)e_i(z),
+\tag{2.7}
+$$
+
+where $c_i$ are characters of $P$ and $d_i,e_i$ are characters of $C_3$.
+
+After these operations the determinant quotient is trivial on $P$. At a mixed element $(p,z)$, every pointwise scalar $\lambda$ is a ratio of character values, so belongs to $\mu_{3\cdot2^b}$. Its cube is the determinant quotient at $(p,z)$, which has odd order. In the unique primary decomposition $\lambda=\lambda_2\lambda_3$, with $\lambda_2\in\mu_{2^b}$ and $\lambda_3\in\mu_3$, this implies $\lambda_2^3=1$. Therefore $\lambda_2=1$ and
+
+$$
+\lambda\in\mu_3.
+\tag{2.8}
+$$
+
+The finite-order bound on $\lambda$ is essential here; a cube-root equation alone would not imply (2.8).
+
+Set $\alpha=c_2/c_1$, $\beta=c_3/c_1$. Projective faithfulness on $P$ says that $p\mapsto(\alpha(p),\beta(p))$ is injective. Its image has precisely the type of $H$ just considered. Hence there is one $p_0\in P$ for which
+
+$$
+c_1(p_0),\quad c_2(p_0),\quad c_3(p_0)
+\quad\text{are pairwise distinct}.
+\tag{2.9}
+$$
+
+Keep this same $p_0$ for every $z\in C_3$. A pointwise match at $(p_0,z)$ has the form
+
+$$
+c_i(p_0)e_i(z)
+=\lambda_z c_{\pi_z(i)}(p_0)d_{\pi_z(i)}(z).
+$$
+
+Taking $2$-primary parts and using (2.8) gives $c_i(p_0)=c_{\pi_z(i)}(p_0)$. By (2.9), $\pi_z$ is the identity. Thus $e_i(z)/d_i(z)$ is independent of $i$ for every $z$. The character
+
+$$
+\rho=e_1/d_1
+$$
+
+therefore equals $e_i/d_i$ for all three coordinates. Equation (2.7) gives a common character twist on $P\times C_3$. Undo the fixed relabeling and the earlier twist to obtain a global match for the original triples.
+
+This compatibility argument applies to arbitrary triples, not just to a chosen extension of the example below. It excludes every remaining higher-$2$-power parameter case.
+

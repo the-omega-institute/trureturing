@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c02dda52d85f09abf1edd6914e32c74ae7e1c22c99597f419c82e07fd447d4ce
+  normalized_sha256: sha256:c02dda52d85f09abf1edd6914e32c74ae7e1c22c99597f419c82e07fd447d4ce
+cas_ref: sha256:c02dda52d85f09abf1edd6914e32c74ae7e1c22c99597f419c82e07fd447d4ce
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
+    target_statement_id: sha256:a44c069339fb942aeedd8004d17cea829b5f604b3117cfda0c19d67d75fa4f92
+  - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_quotient_has_exponent_dividing
+    target_statement_id: sha256:faeb6de3a1bb703a92db93e462c34133f2b68e0b5f887c308edf8fa871bc1ef1
+  - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_subgroup_le_iff_quotient_pow_eq_one
+    target_statement_id: sha256:c8b729a34dcedf56a217394ed9eee4be92856d13daf66e267ec8132a14fa1a8f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,21 @@
+**Lemma 12.2 (actual native continuation of this request).** Along the
+canonical finite flight of Definition 12.1 from $P_0$, each executed
+native row has an enabled counterpart from the related $P_1$ state.
+They have the same native row label, supplied or released bit, ordinary
+operand identities and updates, and next current control. The complete
+successors remain related by $\equiv_{C_L}$, with each actual first word
+unchanged. This holds through all eight publications and the sole final
+Ready, including every intermediate allocation, bank, copy, check and
+token-transfer row.
+
+Proof. The relevant physical instructions are the expansions of
+Definitions 2.1, 7.1–7.2, ARC Definitions 2.1–2.2 and 5.2–5.3, and
+GCA Definition 3.1. Their data and control dependencies are as follows.
+
+| Reached work | Actual operands and guards |
+| --- | --- |
+| Gate, mode and frame ingress | Ordinary70, scratch66/67, descriptors68, the installed latch6/latch5 tests and current invocation slots. Each matching WR uses its actual supplied bit. |
+| Manifest, cover, binder and package work | Already imported manifest and frozen empty predecessor $M$; ordinary64–71 fields and current parity. ARC Definition 4.3's earlier $L$ description is a literal emitted word, not a copy of $C_L$. |
+| Boundary, Issue and Call | Literal word operations on represented states and code from the manifest. ARC Definition 6.1 supplies prescribed $E(L)$ at represented first-bootstrap sites. A simulated read of a represented old slot reads bank data. |
+| Publication and callbacks | The actual sender71, mailbox72, receiver73, descriptors68, staged placements69, positioned length/data heads, seals and distinct current invocation/read/availability slots of ARC Definitions 7.1–7.3. |
+| View construction, checks and return | The received word, acquired binding, PublicCode and ordinary work fields of Definitions 5–7; then the named ACK, mailbox return, five-field item append and invocation return. |

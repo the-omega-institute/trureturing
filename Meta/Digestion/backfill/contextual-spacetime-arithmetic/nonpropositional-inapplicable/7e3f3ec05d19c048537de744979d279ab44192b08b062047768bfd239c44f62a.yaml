@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e3f3ec05d19c048537de744979d279ab44192b08b062047768bfd239c44f62a
+  normalized_sha256: sha256:7e3f3ec05d19c048537de744979d279ab44192b08b062047768bfd239c44f62a
+cas_ref: sha256:7e3f3ec05d19c048537de744979d279ab44192b08b062047768bfd239c44f62a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic scope of Gallier: identifies affine-space terminology and disclaims proof of the integer torsor result; no object-level law is asserted.'
+    previous_atom_id: 92a0d209cd2c9ac52b1e6b36de94f4888dccbb45d385e8897ea3eb7bd6d7cb21
+    next_atom_id: 761a9d75284c4cd7341c52fcab7c45eadb6c0ff34fab03b8ce7ff47acce03056

@@ -1,0 +1,5 @@
+source_id = "fib-negative-base-large-width-source-cut"
+path = "docs/develop/theory/FIB_NEGATIVE_BASE_LARGE_WIDTH_SOURCE_CUT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

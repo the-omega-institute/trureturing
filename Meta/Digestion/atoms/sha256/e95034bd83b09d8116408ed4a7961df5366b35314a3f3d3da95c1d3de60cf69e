@@ -1,0 +1,4 @@
+**Corollary 2.2 (Regular-element compatibility).** Let $P\cong C_{2^a}\times C_{2^b}$ with $1\le a\le b$ and $b\ge2$. Any pointwise matched character triples on $P\times C_3$, one of which is projectively faithful, admit one common character twist and one common permutation on the whole group. After matching their restrictions on $P$, a single element of $P$ with three distinct coordinate values forces compatibility for every element of $C_3$.
+
+Proof. Pointwise matching makes the projective kernels equal, so both triples are projectively faithful. The construction in §2.5 supplies the regular element, the fixed permutation and the common character explicitly. ∎
+

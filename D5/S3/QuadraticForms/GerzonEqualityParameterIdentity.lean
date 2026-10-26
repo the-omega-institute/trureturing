@@ -85,7 +85,7 @@ private theorem diagonal_apply (mu u v : Fin d → F) :
   simp [Matrix.toBilin'_apply', Matrix.mulVec_diagonal, dotProduct, mul_comm, mul_left_comm]
 
 -- A diagonal Gram matrix with nonzero diagonal entries.
-private noncomputable def symmetricCoordinates (mu : Fin d → F) (hmu : ∀ i, mu i ≠ 0) :
+noncomputable def symmetricCoordinates (mu : Fin d → F) (hmu : ∀ i, mu i ≠ 0) :
     (selfAdjointMatricesSubmodule (Matrix.diagonal mu)) ≃ₗ[F] (Sym2 (Fin d) → F) where
   toFun X := Sym2.lift ⟨fun i j => mu i * X.val i j, (selfAdjoint_mem_iff mu X.val).mp X.property⟩
   invFun f := ⟨fun i j => f s(i,j) / mu i, by
@@ -240,7 +240,7 @@ private theorem relation_constant (K : LinearMap.BilinForm F S) (P : Fin n → S
   rw [hrel, map_zero, LinearMap.zero_apply] at hi hj
   exact mul_left_cancel₀ (sub_ne_zero.mpr hneq) (add_right_cancel (hi.symm.trans hj))
 
-private theorem independent_nonzero_trace (K : LinearMap.BilinForm F S)
+theorem independent_nonzero_trace (K : LinearMap.BilinForm F S)
     (tau : S →ₗ[F] F) (P : Fin n → S) (a b : F)
     (hgram : ∀ i j, K (P i) (P j) = if i = j then a ^ 2 else b)
     (htrace : ∀ i, tau (P i) = a) (hneq : a ^ 2 ≠ b) (ha : a ≠ 0) :

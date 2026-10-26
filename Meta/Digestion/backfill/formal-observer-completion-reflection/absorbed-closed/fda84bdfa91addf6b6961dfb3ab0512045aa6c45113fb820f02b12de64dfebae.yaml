@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fda84bdfa91addf6b6961dfb3ab0512045aa6c45113fb820f02b12de64dfebae
+  normalized_sha256: sha256:fda84bdfa91addf6b6961dfb3ab0512045aa6c45113fb820f02b12de64dfebae
+cas_ref: sha256:fda84bdfa91addf6b6961dfb3ab0512045aa6c45113fb820f02b12de64dfebae
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianKernel.discounted_observability_gramian_kernel
+    target_statement_id: sha256:7e30073ade5c421dba286e481682e22c1f833bc33a802391e830695e4c3be5f2
+receipts:
+  unresolved_subitems: []

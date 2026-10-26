@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6166677fc26beb5b599259480c4a09f01b8adca7ecdc9dd0160576abe7ea5af
+  normalized_sha256: sha256:e6166677fc26beb5b599259480c4a09f01b8adca7ecdc9dd0160576abe7ea5af
+cas_ref: sha256:e6166677fc26beb5b599259480c4a09f01b8adca7ecdc9dd0160576abe7ea5af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the original complete-world domain, stipulated acquisition data, permitted actions and the independent-pair question. Formula (18.3) is explicitly an unresolved target, not an asserted existence theorem.
+    previous_atom_id: 80485f0bcf08e4b20fce055290ecaecbb4e906aad47f8649cee1551aae3c31c4
+    next_atom_id: cb0fcaaeef9d78d2f6499eb2238fc7b3c1aa57786c4840f37b64a44ad38b928c

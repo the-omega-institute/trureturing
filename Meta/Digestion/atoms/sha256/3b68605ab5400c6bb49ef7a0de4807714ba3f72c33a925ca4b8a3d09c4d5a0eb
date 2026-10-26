@@ -1,0 +1,36 @@
+#### 推论 11.2.3（固定初始化的精确状态数）
+
+在 $G_\circ$ 无边时，固定初始化 blind 实现的最小状态数为
+
+$$
+\boxed{
+D_{\mathrm{fixed}}(\mathcal P)=\chi_\circ(\mathcal P).
+}
+$$
+
+若 $G_\circ$ 有边，则
+
+$$
+\boxed{
+D_{\mathrm{fixed}}(\mathcal P)=+\infty.
+}
+$$
+
+##### 证明
+
+任意实现把每个 occurrence history 映射到其实际寄存器状态，得到满足三条稳定条件的着色，故状态数给出下界。反向方向由稳定着色定义转移和解码器：对每个颜色 $q$ 和事件 $e$，若存在 $h$ 使 $c(h)=q$ 且 $\delta_e(h)$ 定义，就令
+
+$$
+\bar\delta(q,e)=c(\delta_e(h));
+$$
+
+后继条件使其与代表 $h$ 无关；没有代表时使用固定默认颜色。若存在 $h$ 使 $c(h)=q$ 且 $(h,r)\in\operatorname{Term}$，令
+
+$$
+D(q,r)=t(h,r);
+$$
+
+终端条件使其良定义，未出现的对取默认值。沿 occurrence tree 归纳即可。∎
+
+这个最小值与 `PromiseColoringTotalization` 所处理的无根设置的差别在于初始化边界：该构造只有一个可见前缀根，并从一个空词起点 `start := c.color(root seed)` 开始；它不让每个前缀类各自选择独立的起始颜色。这里的根冲突来自多个隐藏 occurrence 根共享同一个空的可见轨迹。固定初始化把这些根历史压进同一个颜色；根边存在时，区别不是“需要更多颜色”，而是“该合同没有有限实现”。
+

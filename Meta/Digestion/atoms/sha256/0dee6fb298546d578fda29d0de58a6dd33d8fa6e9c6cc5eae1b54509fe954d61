@@ -1,0 +1,29 @@
+## 1. Domain and the restricted route
+
+Use the original-world and literal-clock definitions in [FIB literal clock cubic matrix polynomial frame](FIB_LITERAL_CLOCK_CUBIC_MATRIX_POLYNOMIAL_FRAME.md), Definitions 1.1 and 6.3. Thus
+
+$$
+P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[t],\quad\deg g\le3.
+$$
+
+The acquired word is $J,M,J,M,M,M$, with readings
+$(0,24,147/5,24,18,p,v)$. Put $C(p,v)$ for the entire original child of Definition 6.3. After the full six-atom history, append $J$ or $M$ at clock $7$; the resulting responses are
+
+$$
+a(W)=d+g(7)\operatorname{tr}(JQ_6P),\qquad
+m(W)=d+g(7)\operatorname{tr}(MQ_6P).
+$$
+
+The original independent-pair problem is the existence of $p\ne24$, $v$, and independently chosen distinct pairs in $C(p,v)$ with equal $a$-values and equal $m$-values. The results below classify the restricted route in which two worlds have one common drift and satisfy $g(7)=0$. This restriction is an additional condition for the route and is not imposed on the original problem.
+
+The seven acquired traces are
+
+$$
+(1,j,T,n,u,u+n,2u+n),\qquad
+j=b+\frac{r(1-r)}b,\quad n=j+r,\quad T=1+b,\quad u=1+2b.
+$$
+
+These are the literal products in the cited clock volume.
+

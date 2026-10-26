@@ -1,0 +1,44 @@
+**Definition 4.1 (The owning eliminant and ordered minors).** Put
+
+$$
+\begin{aligned}
+\Psi_2&=4r^2-2r-1,\\
+\Psi_4&=625r^4-1000r^3+50r^2+260r+36,\\
+\Phi&=438272r^4-931328r^3+540800r^2-50728r-853,\\
+E&=\Psi_2\Psi_4\Phi.
+\end{aligned}
+\tag{4.1}
+$$
+
+Let $S$ be the fixed $14$ by $14$ matrix of coefficient rows
+$b^6\mathsf A,\ldots,\mathsf A,b^6\mathsf B,\ldots,\mathsf B$
+and columns $b^{13},\ldots,1$, retaining zero coefficients under
+specialization. The integer polynomial $R=R_{18}(r,p,v)$ is exactly
+the 668-term table in owning Definition 24.1, with monomial order
+$(r,p,v)$ and coordinate degrees $(18,7,7)$. It satisfies
+
+$$
+\det S=52488000\,r^{11}(r-1)^9E(r)R(r,p,v).
+\tag{4.2}
+$$
+
+This is owning (20.3), fixing scale and sign. The table and (3.6)
+are finite coefficient definitions for the rational proof below.
+
+Also retain the actual $12$ by $13$ matrix $S_1$ of ordered rows
+$b^5\mathsf A,\ldots,\mathsf A,b^5\mathsf B,\ldots,\mathsf B$ and
+columns $c_{12},c_{11},\ldots,c_0$ for descending powers. Define
+
+$$
+\begin{aligned}
+\Delta_1&=\det(c_{12},\ldots,c_2,c_1),&
+\Delta_0&=\det(c_{12},\ldots,c_2,c_0),\\
+\mathcal L_i&=\Delta_i/(72900r^6(r-1)^4),&&i=0,1.
+\end{aligned}
+\tag{4.3}
+$$
+
+These are precisely the integer quotient polynomials of owning
+(20.5), of coordinate degrees $(26,6,6)$; no rescaling or
+primitive-part operation is implicit.
+

@@ -1,0 +1,76 @@
+**Definition 1.1 (the fixed source-specific operator).**
+Write IV for [Boundary Geometry IV](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md).
+Retain its Definitions 92.1–92.2 and 98.1 and Theorems 98.2, 99.1,
+111.2–111.4, with all their original objects. In particular,
+
+$$
+\begin{gathered}
+T_0=\alpha,\quad T_1=\beta,\quad
+T_n=\langle T_{n-1},T_{n-2}\rangle,\quad N_n=2F_{n+1}-1,\\
+\mathscr H=\ell^2(\{L,R\}^+),\qquad
+\Omega=\{L,R\}^{\mathbb N},\qquad \mathscr G=L^2(\Omega,M),\\
+\varphi=(1+\sqrt5)/2,\quad a=\varphi^{-1},\quad b=\varphi^{-2},
+\quad a+b=1,\\
+\sigma(p)=\#_L(p)+2\#_R(p),\qquad
+m(p)=M([p])=\varphi^{-\sigma(p)},\qquad m(\varnothing)=1.
+\end{gathered}
+\tag{1.1}
+$$
+
+Here $F_j$ are the Fibonacci numbers of IV, Definition 92.2;
+$\sigma$ denotes the address weight called $s(p)$ in IV, §98.
+The scalar $s$ below remains comparison time, with finite semigroup
+$S_n(s)=e^{-N_nsL_n}$. Each $L_n$ is the closed counting-measure
+unit-edge occurrence Laplacian, with no root killing term. Every
+occurrence, including interior vertices and the root, has mass $1/N_n$.
+For a reached address $p$, its entire descendant source is
+$T_{n-\sigma(p)}$, and its descendant mass is exactly
+$N_{n-\sigma(p)}/N_n$; reachability additionally requires
+$n-\sigma(p^-)\ge2$ for $p\ne\varnothing$ (IV, (98.4)).
+Its limit is the $m(p)$ in (1.1).
+
+The compact map $J:\mathscr H\to\mathscr G$ is the bounded extension
+of $Jz=\sum_{p\preceq\omega}z_p$ on finitely supported increments.
+Set $\mathscr G_0=\mathbf1^\perp$, let
+$\Pi:\mathscr G\to\mathscr G_0$ be $\Pi F=F-\int F\,dM$, and regard
+$C=\Pi J$ as a map $\mathscr H\to\mathscr G_0$. Its covariance is
+$`\Sigma=C^*C=J^*J-v\otimes v`$, with $`v=J^*\mathbf1`$.
+Put $\mathscr K=(\ker\Sigma)^\perp$ and $\Sigma_{\mathscr K}=\Sigma|_{\mathscr K}$.
+The domain and energy are exactly IV, (111.2):
+
+$$
+\begin{aligned}
+\mathcal D&=\{c\mathbf1+Jz:c\in\mathbb R,\ z\in\mathscr H\},\\
+\mathcal E(F)&=\inf_{F=c\mathbf1+Jz}\|z\|_{\mathscr H}^2.
+\end{aligned}
+\tag{1.2}
+$$
+
+Thus the root value is free and the extension energy is the sum of
+squared increments on the original unit-edge address tree. Let $H$
+be the self-adjoint operator of this closed form. The least-norm
+increment $z_F\in\mathscr K$ satisfies $Cz_F=\Pi F$ and
+$\mathcal E(F)=\|z_F\|^2$. These are the existing form and operator,
+not a new construction.
+
+For the unitary $W:\mathscr K\to\mathscr G_0$ of IV, (111.8),
+
+$$
+\begin{gathered}
+C|_{\mathscr K}=W\Sigma_{\mathscr K}^{1/2},\qquad
+H|_{\mathscr G_0}=W\Sigma_{\mathscr K}^{-1}W^*,\qquad H\mathbf1=0,\\
+\mathcal D\cap\mathscr G_0=W\operatorname{ran}\Sigma_{\mathscr K}^{1/2},
+\qquad \operatorname{Dom}(H)\cap\mathscr G_0
+       =W\operatorname{ran}\Sigma_{\mathscr K}.
+\end{gathered}
+\tag{1.3}
+$$
+
+In particular the unitary and the inverse act only on their indicated
+spaces. The possibly large edge kernel of $\Sigma$ is not a family of
+boundary zero modes: the kernel of $H$ is precisely
+$\mathbb R\mathbf1$ (IV, Theorem 111.2).
+The equal-split vector $q_p=2^{-|p|}$ of IV, Theorem 99.1 supplies
+$Jq=\mathbf1$ and the constant-trace constraint; it does not change
+the biased law $M$ into the fair harmonic law.
+

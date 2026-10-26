@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1fa0fd60f153dbfe8c9b68e6ffe2058e54bd4f8dc877a3bc88943553e567e80
+  normalized_sha256: sha256:e1fa0fd60f153dbfe8c9b68e6ffe2058e54bd4f8dc877a3bc88943553e567e80
+cas_ref: sha256:e1fa0fd60f153dbfe8c9b68e6ffe2058e54bd4f8dc877a3bc88943553e567e80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议目录与待形式化名称清单。不另主张独立数学命题。
+    previous_atom_id: b4ee3dd192fe544688e6a321af31c7b2e19d4b43cc45b6372e655ba6e9c02189
+    next_atom_id: 25ba3846217cfce120cb086bc02058b92882da0227972b17b243fe36f89147ab

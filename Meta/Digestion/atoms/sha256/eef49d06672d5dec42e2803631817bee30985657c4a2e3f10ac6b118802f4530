@@ -1,0 +1,21 @@
+**Definition 16.5 (the four-stage family $C_{4,M}$).** Keep the same finite
+$\xi$, $H_0=1$, acquired $\alpha$ and original roles, and install at boot a
+four-stage saved-return client. Each stage enters the existing complete CAP
+canonical-frame service, waits for all row/dependency deliveries, channel
+acknowledgements, source-token return and idle return, and then executes one
+finite stage-join control edge. Stage four computes the proposal from the
+acquired initial syntax, seals it on the inherited terminal/output role and
+invokes the unchanged verifier, consumer and global halt route. For fixed
+$M\ge4$ and $J\in\{2,\ldots,M-1\}$, supply
+
+$$
+\operatorname{Reserve}(J),\quad \operatorname{Reserve}(M),\quad
+\operatorname{Raise}(M),\quad \rho,\quad\operatorname{Stop}(q_1(\alpha)).
+$$
+
+The words $J$ and $M$ are supplied runtime words. They are not constants in
+the installed control. The two strict reservations append
+$4(J-1)$ and $4(M-J)$ source cells; together with the initial two-cell source
+packet their source payload is $4M-2$. This is a payload subtotal, not a total
+runtime-space count.
+

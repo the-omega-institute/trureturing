@@ -1,0 +1,73 @@
+**Corollary 33.1 (Negative-window companion restrictions).** For
+every real $p\in I$, every real $v$, and every $W\in C(p,v)$,
+
+$$
+0<b(W)<20.
+\tag{33.1}
+$$
+
+If, in addition, that acquired reading satisfies $v\le24$, then
+every world in the same entire child also satisfies
+
+$$
+0<c(W)<2.
+\tag{33.2}
+$$
+
+*Proof.* Each such world realizes (30.1), and
+$p\le-458<-425$, so Theorem 31.1 gives (33.1).
+When $v\le24$, Theorem 32.1 gives (33.2) independently for
+each of those worlds. Positivity is part of the original source
+domain. Neither inference selects a preferred pair or a source
+branch. ∎
+
+The qualitative control of the other complete-world coordinates is
+already supplied by
+[Support, Theorem 12.1](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md).
+In that theorem take its $b$ bound to be $20$ and its bound on
+$|p|$ to be $533$, as permitted by (33.1). Its existing conclusion
+therefore bounds $c$, $|d|$, every one of the four padded gain
+coefficients, and the subsequent readings uniformly over
+
+$$
+\bigcup_{p\in I,\ v\in\mathbb R}C(p,v).
+\tag{33.3}
+$$
+
+This application of the published theorem requires no bound on $v$.
+The explicit constant $c<2$ in (33.2), in contrast, is acquired only
+where $v\le24$. Qualitative coercivity and coefficient boundedness
+are reused here; they are not additional new theorems.
+Bounded complete coordinates do not imply that the strict source
+set is closed or compact: strict positivity can be lost in a limit.
+
+For the selected continuation of Theorem 28.1, define precisely
+
+$$
+\begin{aligned}
+Q_I&=\{q:0<q<q_*,\ p(q)\in I\},\\
+Q_I^{\le24}&=\{q\in Q_I:v(q)\le24\}.
+\end{aligned}
+\tag{33.4}
+$$
+
+For every $q\in Q_I$, (33.1) restricts every companion in
+$C(p(q),v(q))$, including companions other than the selected
+$W_\pm(q)$. For every $q\in Q_I^{\le24}$ the explicit restriction
+(33.2) applies as well. Theorem 28.1 supplies
+
+$$
+p(Q_I)=I:
+\quad\text{for every }p\in I\text{ some }0<q<q_*
+\text{ has }p(q)=p.
+\tag{33.5}
+$$
+
+The meaning of (33.5) is projection coverage, with some acquired
+$v=v(q)$ at each such parameter. It asserts neither monotonicity
+of $p(q)$ nor containment of the whole strict arc in $I$.
+It also gives no whole-arc inequality $v(q)\le24$.
+The source restrictions in (33.1)–(33.2) apply exactly on the
+subsets just specified; they do not extend the selected continuation
+or classify its other companions.
+

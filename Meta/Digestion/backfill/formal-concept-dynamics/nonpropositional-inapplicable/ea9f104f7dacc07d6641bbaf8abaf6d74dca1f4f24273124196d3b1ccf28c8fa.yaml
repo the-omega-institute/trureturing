@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea9f104f7dacc07d6641bbaf8abaf6d74dca1f4f24273124196d3b1ccf28c8fa
+  normalized_sha256: sha256:ea9f104f7dacc07d6641bbaf8abaf6d74dca1f4f24273124196d3b1ccf28c8fa
+cas_ref: sha256:ea9f104f7dacc07d6641bbaf8abaf6d74dca1f4f24273124196d3b1ccf28c8fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅含政策能力这一规范性解释项目及第二项惩罚的列表导语；没有给出数学关系或可证明的定量断言。
+    previous_atom_id: 5684c09fadcbc32a2c378f23867cd39fc9f607be231c645b8914537a96039e87
+    next_atom_id: 283a2e60730ec43c2c557a8c88b87ee078e44bb13f9021615a32d6781a04d9af

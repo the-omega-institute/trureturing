@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3343b8e73a88e8d884755207b8183d218a92cdaee158c36b64eee45c4b3276a4
+  normalized_sha256: sha256:3343b8e73a88e8d884755207b8183d218a92cdaee158c36b64eee45c4b3276a4
+cas_ref: sha256:3343b8e73a88e8d884755207b8183d218a92cdaee158c36b64eee45c4b3276a4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Decision/ArbitraryPredictionOppositeOptima.arbitrary_prediction_opposite_unique_optima
+    target_statement_id: sha256:2e9426fbcd96066baa40def7ab76f5d322fb31815c8b40b01d5a1411ef4aa6bc
+  - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+    target_statement_id: sha256:cbac540e3d822be623728ae205a14b6e3e17a1efaac8e695706b1e13a3e92b7a
+receipts:
+  unresolved_subitems: []

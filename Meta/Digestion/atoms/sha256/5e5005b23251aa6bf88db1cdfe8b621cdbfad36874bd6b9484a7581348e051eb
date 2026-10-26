@@ -1,0 +1,47 @@
+**Definition 1.1 (Worlds and observations).** Use the complete-world domain of
+[O, Definitions 1.1–1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md):
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad\deg g\le3.
+$$
+
+The drift $d$ is one fixed real number. There is no upper bound on either
+positive off-diagonal entry. Lower degrees, sampled zeros, repeated roots and
+zero drift remain in this domain. Put
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+$$
+
+The literal parent and acquired child are
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\qquad p\ne24.
+$$
+
+The initial reading counts, every action is immediately read, and the original
+clocks are $0,\ldots,7$. The acquired word through clock six is
+$J,M,J,M,M,M$. Each world uses its one entire polynomial, source and drift at
+every clock. There is no reset, copy, skipped reading, clock change or extra
+observation. The two terminal actions at clock seven are alternatives.
+
+Write
+
+$$
+j=b+\frac{r(1-r)}b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\quad x=\frac nU,
+$$
+
+and abbreviate the terminal responses by
+
+$$
+a(W)=f_{MJ}(W),\qquad m(W)=f_{MM}(W).
+$$
+
+These are the functions of O, (1.7), on the same complete world.
+

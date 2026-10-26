@@ -1,0 +1,36 @@
+fingerprints:
+  raw_sha256: sha256:9d4c5b640696a711ef245aea7658805fd3e08384d905ad291d48cf529f5f72a0
+  normalized_sha256: sha256:9d4c5b640696a711ef245aea7658805fd3e08384d905ad291d48cf529f5f72a0
+cas_ref: sha256:9d4c5b640696a711ef245aea7658805fd3e08384d905ad291d48cf529f5f72a0
+coverage_gids:
+  - gid: D5/S3/Geometry/Metric/MetricACSpeed.metric_AC_speed_variation_bridge
+    target_statement_id: sha256:505e6d9cf5f88314e35de4a221ea8f098fc4cfeb95d74e0150313ecfe5805406
+  - gid: D5/S3/Geometry/Metric/VariationPrimitive.metric_AC_boundedVariationOn
+    target_statement_id: sha256:3b0a718cd4edcde5435f7ac0ba5dfb244ad8a9ff5663f3466ead45ce32ebdfcb
+  - gid: D5/S3/Geometry/Metric/VariationPrimitive.metric_AC_implies_AC_variation_primitive
+    target_statement_id: sha256:7e73b8aef2f6f55b3c3e9b74ea9e4ede2047f2e3a5ccf68f65554a52de945aae
+  - gid: D5/S3/Geometry/Metric/VariationPrimitive.metric_AC_variation_exact_increments
+    target_statement_id: sha256:019016d39d20d11d91d4aead6ed8d9d91e17f6f7d08e40479d1c7d2318c85118
+  - gid: D5/S3/Geometry/Riemannian/ACTangentSpeed.actual_chart_AC_tangent_and_metric_speed
+    target_statement_id: sha256:1003f1503ebedb3fa4ba7bcb1d0c0e4bc1d61317d9a3b51f8ebeb369d504fa5f
+  - gid: D5/S3/Geometry/Riemannian/ChartComparison.canonical_pairwise_local_comparison
+    target_statement_id: sha256:8e61b0b78679102869609ba7c06a6eb719afca0c1e09cc0b306f2c9e38f4afbe
+  - gid: D5/S3/Geometry/Riemannian/GradientDissipation.S1_C1_to_actual_metric_AC
+    target_statement_id: sha256:192cbccf37e665a9418515997a7bb2291335da13269888340e523bf919ba5d74
+  - gid: D5/S3/Geometry/Riemannian/GradientDissipation.S2_dissipation
+    target_statement_id: sha256:830083cd2282fd1e595f04235052894d1e560c0bb6902ab736756b099fa6349a
+  - gid: D5/S3/Geometry/Riemannian/GradientDissipation.actual_AC_speed_variation_length
+    target_statement_id: sha256:5510a559b52e1c74bede93af77619f3828c238d3a84cb870bafcdb050e773717
+  - gid: D5/S3/Geometry/Riemannian/GradientDissipation.actual_length_energy_real
+    target_statement_id: sha256:eab8881cc937dd4f542392a14ec8c4552f2771cbede44cce5b99b2fcae93596b
+  - gid: D5/S3/Geometry/Riemannian/QuadraticGradientFlow.S8_actual_strict_length_and_nonattainment
+    target_statement_id: sha256:409143525fd9326ba2e8f656fc6e00008817f36cfe7386a013679f637e24ac37
+  - gid: D5/S3/Geometry/Riemannian/QuadraticGradientFlow.flow_hasDerivAt
+    target_statement_id: sha256:a89da2f7d06e128a0d1f10fc266e8f777067092bae666d96a41bbc8b5ae9bdf8
+  - gid: D5/S3/Geometry/Riemannian/QuadraticGradientFlow.parabola_strict_triangle
+    target_statement_id: sha256:1a50674f5476e314d3aaeb4ae6b69425cd732878dd8b3fb88c24bad13a771dda
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ca279e1b86287c82b7df8f618a493fb3fb6638120a34c63dc72f46322090c265
+    - ada2990833b8692e06029233125785d92b2c85b3c5eac6e1ad8c8ec7c25988f2

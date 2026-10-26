@@ -1,0 +1,19 @@
+**Theorem 1.1 (Regional whole-child result).** Every complete world in every
+$C(p,v)$ with $(p,v)\in K$ has $(r,b)\in R$. For each fixed $p\in[56,58]$,
+the regular original response has exactly one source $b=b_p(r)$ in
+$[13/20,1]$ for every $r\in[3/10,1]$, and
+
+$$
+\frac{d}{dr}a(r,b_p(r))>0.
+$$
+
+Consequently terminal $J$ is injective on every entire actual $C(p,v)$ over $K$,
+so
+
+$$
+D_J\cap K=\varnothing,\qquad (D_J\cap D_M)\cap K=\varnothing.
+$$
+
+The endpoint $r=1$ in $R$ is only an analytic extension of the response map. Actual
+worlds have $r<1$; this theorem asserts no positive lower bound on $1-r$.
+

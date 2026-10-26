@@ -1,0 +1,54 @@
+**Definition 244.3 (Algebraic family and fixed transpose).**
+Use the fixed bases of Definition 240.1 and put
+
+$$
+\begin{gathered}
+u_\theta=(\cos\theta,\sin\theta)^{\mathsf T},\qquad
+d_\theta=(-\sin\theta,\cos\theta)^{\mathsf T},\\
+U_\theta=|u_\theta\rangle\langle u_\theta|,\qquad
+D_\theta=|d_\theta\rangle\langle d_\theta|=I_2-U_\theta,\\
+C=4(1+t)^4,\qquad
+N(p,\theta)=(tI_4+2g(p)P_-)\otimes U_\theta
+             +th(p)I_4\otimes D_\theta .
+\end{gathered}
+\tag{244.5}
+$$
+
+Here $g,h,T_t$ retain their definitions (240.4), (240.6).
+For actual $q$, take $\theta=\theta(q)$ from (240.8), so
+$N(p(q),\theta(q))=C\Omega_q$. The formula (244.5) also defines
+a matrix for every real $p,\theta$, without asserting physical
+preparations at these additional parameters.
+
+Let $\Gamma$ transpose Alice alone in the fixed rail bases, both on
+input and output; it does not transpose Bob's copy or spatial register.
+On one Alice-copy rail pair write
+
+$$
+|\phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\qquad
+\Phi=|\phi\rangle\langle\phi|,\qquad Q=I_4-\Phi .
+\tag{244.6}
+$$
+
+The labels $0,1$ are the ordered rail labels $1,2$ of (240.4).
+The same notation on the output denotes the corresponding fixed
+two-qubit vector and projectors. In these bases the CAR singlet obeys
+
+$$
+P_-^\Gamma=\frac{I_4}{2}-\Phi.
+\tag{244.7}
+$$
+
+At $p_*=1/2$, the identity $(1-t)^2=4t$ gives
+$g(p_*)=t$ and $h_*:=h(p_*)=(1+t)/2>0$. Consequently
+
+$$
+\begin{aligned}
+R_\theta
+  &:=N(p_*,\theta)^\Gamma\\
+  &=2tQ\otimes U_\theta+th_*I_4\otimes D_\theta
+  \succeq0.
+\end{aligned}
+\tag{244.8}
+$$
+

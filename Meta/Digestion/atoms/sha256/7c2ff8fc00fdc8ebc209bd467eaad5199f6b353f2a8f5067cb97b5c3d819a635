@@ -1,0 +1,62 @@
+**Lemma 127.1 (A boundary CPTP decoder and its nine matrix-unit images).**
+The single map
+
+$$
+\mathcal R_{\mathrm{fam}}:=\mathcal R_{1/2,1/2}=\Phi_{-1/2}
+\tag{127.1}
+$$
+
+is CPTP and is independent of both the input and $q$. For every
+$0\le q\le1/2$ it satisfies the complex-linear channel identity
+
+$$
+\boxed{\mathcal R_{\mathrm{fam}}\circ\Phi_{-q}=\Phi_{q/2}\quad\text{on }M_3.}
+\tag{127.2}
+$$
+
+*Proof.* In (108.1), $u=\eta=1/2$ gives
+$\eta^2=(1-u)/2=1/4$. The nonzero specialized Kraus operators in
+(108.4) are
+
+$$
+K_0=\operatorname{diag}(1,-1/2,0),\qquad
+K_1=\tfrac12 E_{22},\qquad
+K_2=\tfrac{\sqrt3}{2}E_{21},\qquad
+K_3=\tfrac{\sqrt3}{2}E_{12}.
+\tag{127.3}
+$$
+
+Their adjoint products sum to
+$E_{00}+(1/4+3/4)E_{11}+(1/4+3/4)E_{22}=I$.
+The additional $E_{11}$ Kraus coefficient in (108.4) is exactly zero.
+Thus complete positivity and trace preservation hold on the saturated
+boundary, without any strict positivity hypothesis. Comparing (108.2)
+with (93.5) gives the equality in (127.1).
+
+Lemma 105.2 supplies CPTP input channels throughout the closed interval
+$0\le q\le1/2$. In its Kraus formula the possibly vanishing squared
+coefficient is
+$((1-q)/2)-q^2=(1+q)(1-2q)/2\ge0$, including $q=1/2$.
+Applying (108.3) at the displayed pair gives all nine images:
+
+$$
+\begin{aligned}
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{00})&=E_{00},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{11})
+ &=\tfrac{2+q}{4}E_{11}+\tfrac{2-q}{4}E_{22},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{22})
+ &=\tfrac{2-q}{4}E_{11}+\tfrac{2+q}{4}E_{22},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{01})&=\tfrac q2 E_{01},\qquad
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{10})=\tfrac q2 E_{10},\\
+(\mathcal R_{\mathrm{fam}}\Phi_{-q})(E_{ij})&=0
+ \quad\bigl((i,j)\in\{(0,2),(2,0),(1,2),(2,1)\}\bigr).
+\end{aligned}
+\tag{127.4}
+$$
+
+For the two population columns this is multiplication of the mixing
+matrices with parameters $-1/2$ and $-q$; the surviving coherence
+multipliers also multiply. These are exactly the images of $\Phi_{q/2}$.
+The matrix units form a complex basis of $M_3$, proving (127.2) for all
+complex matrices. $\square$
+

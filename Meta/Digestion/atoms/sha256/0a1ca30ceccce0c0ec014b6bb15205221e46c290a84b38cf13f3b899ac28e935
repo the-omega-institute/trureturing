@@ -1,0 +1,11 @@
+**Corollary 6.1.** The restricted route succeeds exactly when
+
+$$
+\exists p,v\in\mathbb R:\quad p\ne24\ \land\ \exists d\in\mathbb R\setminus\{0,24\}\ \exists u_0,u_1\in S(d,p,v):
+\quad u_0\ne u_1.
+$$
+
+The criterion follows from Theorem 3.1 and the empty drift layers, with $p\ne24$ inherited from the original target. The two reconstructed worlds are distinct because their $b$-coordinates differ. Their terminal $J$ and $M$ responses both equal the common drift $d$, so the same pair can serve both terminal actions in this restricted route. Theorem 3.1 remains the universal classification for every $p,v\in\mathbb R$; only this route criterion carries the $p\ne24$ restriction.
+
+The original independent-pair problem remains the following mathematical problem, with its full child and all original guards unchanged:
+

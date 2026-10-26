@@ -1,0 +1,31 @@
+**Definition 10.4 (Fixed-node numerators).** For $x>0$ put
+$D(x)=x(x+1)(x+2)$. This polynomial denominator is distinct from
+the integer $D$ in (3.4), here denoted $D_s$. Define
+
+$$
+\begin{aligned}
+h_3&=(24-d)(x+1)(x+2),&h_4&=(18-d)D,\\
+h_5&=(p-d)x(x+2),&h_6&=(v-d)x(x+1),\\
+N_0&=20h_3-45h_4+36h_5-10h_6,\\
+N_1&=10h_3-20h_4+15h_5-4h_6,\\
+N_2&=4h_3-6h_4+4h_5-h_6,\\
+N_7&=-h_3+4h_4-6h_5+4h_6.
+\end{aligned}
+\tag{10.11}
+$$
+
+Let $\mathcal H(s)$ be the single degree-at-most-three interpolant
+
+$$
+\mathcal H(s)=\frac1D\sum_{i=3}^6 h_i
+ \prod_{\substack{3\le k\le6\\k\ne i}}\frac{s-k}{i-k}.
+\tag{10.12}
+$$
+
+Then $\mathcal H(i)=N_i/D$ for $i=0,1,2,7$. This is the
+fixed-node interpolation of F, (30.4)–(30.6), with the numerator
+convention $h_i=D\mathcal H(i)$ for $i=3,4,5,6$.
+Distinct-node interpolation is used in precisely its classical scope:
+Berrut–Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[(2.1)–(2.2)](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf).
+

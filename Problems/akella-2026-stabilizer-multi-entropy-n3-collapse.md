@@ -2,7 +2,7 @@
 slug: akella-2026-stabilizer-multi-entropy-n3-collapse
 bibkey: akella2026genuine
 doi: 10.48550/arXiv.2607.06050
-url: https://arxiv.org/abs/2607.06050v1
+url: https://arxiv.org/abs/2607.06050v2
 triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.result
@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 S. Akella, N. Iizuka and A. Miyata, *Genuine Multi-Entropy in the Toric Code*,
-arXiv:2607.06050v1, state for stabilizer states the reduction
+arXiv:2607.06050v2, state for stabilizer states the reduction
 $\mathrm{GM}^{(4)}_{3}(A:B:C:D)=-\left(a-\tfrac19\right)I_3$ (Eq. (3)), where $I_3$ is the Rényi
 tripartite information and $a$ the convention parameter of the genuine multi-entropy, note that
 "this reduction is not a consequence of the Coxeter structure", and ask in §6 "Whether there is a
@@ -31,7 +31,7 @@ For a Kitaev–Preskill partition $I_3$ is the negative topological entanglement
 collapse says the $n=3$ genuine multi-entropy of a stabilizer state carries no four-partite
 information beyond it. The paper establishes the $n=2$ case by a Coxeter counting argument and
 the $n=3$ case by computation; `D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.result`
-proves it for all stabilizer states with an explicit counting argument.
+proves it for all stabilizer states through ternary Fourier blocks. Its original partition_count now uses a structural counting argument: ternary mode orbits classify anchored partitions, and a quotient-colouring bijection transports the merger sums before the finite partition coefficients cancel.
 
 ## Gap
 
@@ -52,9 +52,17 @@ repository had no result. `not-found-in-searched-scope`.
    sums to $2^{2N-\operatorname{rank}C_t}$, so $Z_3^{(\mathtt q)}=2^{-\sum_t\operatorname{rank}C_t}$.
 4. $S_3^{(\mathtt q)}=\frac{\log2}{2\cdot3^{\mathtt q-2}}\sum_t\operatorname{rank}C_t$, and
    $\operatorname{rank}C_t$ depends only on the partition of the parties into the classes of
-   $c\mapsto t\cdot\delta_c$; collecting the coefficients of the partitions over the 13, 4 and 1
-   representatives for $\mathtt q=4,3,2$ gives $\mathrm{GM}^{(4)}_3+(a-\tfrac19)I_{3,3}=0$ for every
-   rank function.
+   $c\mapsto t\cdot\delta_c$. TernaryPartitionOrbit proves that every nonzero anchored
+   ternary mode has exactly one representative with the same partition in any chosen opposite-pair
+   representative family. A colouring compatible with a surjective merger factors through the
+   quotient; subtracting the quotient colouring's value at its chosen target anchor normalizes it
+   without changing its partition. This gives a bijection transporting arbitrary weighted sums.
+5. With four labels, pigeonhole excludes the discrete partition and nonzero anchored modes exclude
+   the indiscrete partition. The finite partition coefficients of the full term, six pair mergers,
+   four singleton cuts and three balanced cuts cancel on the remaining support. Thus the original
+   partition_count is a structural identity for any separation-matrix weight; the 13, 4 and 1 modes
+   instantiate arbitrary opposite-pair representative families. Applying it to the ranks gives
+   $\mathrm{GM}^{(4)}_3+(a-\tfrac19)I_{3,3}=0$.
 
 ## Falsifier
 
@@ -65,7 +73,10 @@ the claim and are not addressed.
 ## Evidence
 
 The canonical sources are `D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.lean`
-(public `shift`, `Z`, `S`, `I3`, `GM4`, `claim`, `result`) and its helper modules
+(public `shift`, `Z`, `S`, `I3`, `GM4`, `claim`, `result`), the structural classification source
+`D5/S3/Combinatorics/Partitions/TernaryPartitionOrbit.lean` (public `SamePartition`, `anchored`, `result`),
+and its consumer `D5/S3/Combinatorics/Partitions/TernaryPartitionCounting.lean`
+(public `merger_sum_transport`, `result`), together with the graph/Fourier helper modules
 `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.lean` (public `complex_sign_val`,
 `graphAmp`, `stabilizer_graph_normal_form`) and
 `D5/S3/QuadraticForms/TernaryTranslationQuadraticNormalForm.lean` (public `F`, `C`,
@@ -77,7 +88,8 @@ The canonical sources are `D5/S3/Quantum/Entanglement/StabilizerMultiEntropyColl
 `sign_sum`, and the binary quadratic exponent `normalExponent` with `normal_exponent_add` and
 `symmetric_pairing_split`. The axiom closure of `result` is exactly `propext`,
 `Classical.choice` and `Quot.sound`; there is no `sorry`, `native_decide`, or new axiom.
-The settlement module statement is `sha256:66bb7b09e5459cd8efabbfdfa34a5f80a927227c135f2a1f07720856af3467c3`,
+The original Eq. (3) settlement, before the structural counting extension, recorded module statement
+`sha256:66bb7b09e5459cd8efabbfdfa34a5f80a927227c135f2a1f07720856af3467c3`,
 the `result` statement `sha256:22e959e28055a09148222953a819dd9ed1c924acc40720eeb4b40849663a8058` and the
 `claim` statement `sha256:d03e6b2def7dac64eebedf5658fa68874521789aa2d7db8ec375a93d7f9f3dc2`; its Freeze event is
 `sha256:e7cc50fa88839ce0c5f608e87468ca2a5351eff427a5239064db634c87f7ce41`, with the two helper modules as
@@ -97,11 +109,13 @@ pursued as a research line with layered modules.
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none | open-problem-resolution |
+| result | content after structural helper expansion | merger-to-partition transport | open-problem-resolution |
 
-The other theorems of the three modules are bind-only and lie on the proof path of `result`
-(CLAUDE.md §3.2 「有消费的辅助声明」); each has free arguments. Utility is `none`. There is no
-digestion atom.
+The original graph/Fourier helpers remain consumed on the proof path of result. The new
+arbitrary-index orbit classification and merger transport supply structural content; the finite
+catalogue and coefficient checks are consumed normalization auxiliaries, not separate delivered
+instance certificates or a general Mobius formula. The Lean source identifies their actual
+consumers (CLAUDE.md §3.2 「有消费的辅助声明」). Utility is none; there is no digestion atom.
 
 ### What the settlement shows
 
@@ -113,14 +127,15 @@ $\mathrm{GM}^{(4)}_3=-(a-\tfrac19)I_{3,3}$ for every real $a$.
 number of colours $\mathtt q$ and every colouring, with $C_t$ the graph matrix masked to pairs of
 qubits whose colours $t$ separates.
 
+**Structural counting established inside the proof.** A nonzero ternary mode with an extra
+zero anchor induces a nonconstant colouring with at most three blocks. Equality of anchored
+partitions is exactly equality up to sign. The quotient-colouring argument above therefore
+transports each merger sum to a sum over compatible partitions with multiplicity one. The finite
+coefficient cancellation is applied to an arbitrary real weight on separation matrices, before
+specializing to graph-block ranks. It is not restricted to one numerical entropy evaluation.
+
 **Argued, not formalized.**
 
-- *Mechanism.* At $n=3$ the replica group $(\mathbb Z/3)^{\mathtt q-1}$ has odd order, so the
-  replica form diagonalizes over $\mathbb F_4$ into one bilinear block per pair of opposite
-  characters; each character $t$ sees only the partition of the parties by $t\cdot\delta_c$, a
-  partition into at most three blocks. The collapse is a linear identity among the multiplicities
-  with which the characters of $(\mathbb Z/3)^3$, $(\mathbb Z/3)^2$ and $\mathbb Z/3$ realize each
-  partition of four parties, and it holds for every rank function, not only for those of graphs.
 - *Why $n=4$ fails.* For $n=4$ the group $(\mathbb Z/4)^3$ has even order, the Fourier transform
   over a field of characteristic two is not invertible, and characters of order four see
   four-block partitions; the counting identity has no analogue, consistent with the paper's
@@ -134,12 +149,14 @@ qubits whose colours $t$ separates.
   block form of the replica quadratic form and its Gauss sum over the splitting field would have to
   be established first. No claim beyond $n=3$ is made.
 
-**Open.** The general conjecture of the abstract ($\mathtt q\ge4$, $n<\mathtt q$) beyond
+**Open.** The structural counting argument is for the four-party n=3 identity in Eq. (3).
+It does not identify a Coxeter group or prove a partition coefficient formula for arbitrary party
+counts. The general conjecture of the abstract ($\mathtt q\ge4$, $n<\mathtt q$) beyond
 $\mathtt q=4$, $n=3$, and the qudit (level $k$) analogues, are not settled here.
 
-**Effect on the paper.** Eq. (3) holds for every qubit stabilizer state, and the §6 question has
-an affirmative answer: the $n=3$ collapse follows from a counting argument over the characters of
-$(\mathbb Z/3)^{\mathtt q-1}$.
+**Effect on the paper.** Eq. (3) holds for every normalized pure qubit stabilizer state, and its
+original production proof now uses a structural counting argument. This addresses the n=3
+four-party counting mechanism without claiming the other cases of the paper's general conjecture.
 
 ## ASSUMED-UNVERIFIED
 

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ab43e2679606ddc1f8720e379c739fc613ad89e1b64439555a14c666026a6c0
+  normalized_sha256: sha256:0ab43e2679606ddc1f8720e379c739fc613ad89e1b64439555a14c666026a6c0
+cas_ref: sha256:0ab43e2679606ddc1f8720e379c739fc613ad89e1b64439555a14c666026a6c0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional machine-contract metadata only; this atom states the theory-volume ingestion contract and reference bookkeeping, without asserting a standalone mathematical proposition.
+    previous_atom_id: 6e5e6d7b5721c5b2efe76c34786dc4364821d089de7745f5d7d6dc48cb5b5d3b
+    next_atom_id: 6c308268244d9b9dc03b3ddb20f01946e2eaa5dc9c70a769601505873e0070f4

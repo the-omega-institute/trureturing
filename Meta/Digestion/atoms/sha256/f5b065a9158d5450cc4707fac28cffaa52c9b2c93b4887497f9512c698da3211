@@ -1,0 +1,110 @@
+## 20. Source covariance, ground-state compatibility and proof scope
+
+The coefficient in (16.1) is fixed by the unit source and angular
+dispersion, not by a radial analogue:
+
+$$
+\gamma=\frac g{2\pi m_0},\qquad
+\Lambda'(0)=\frac CM,\qquad
+\alpha=\frac{\lambda_0M}{C}.
+\tag{20.1}
+$$
+
+The polar Jacobian $1/4$ and actual angle period $2\pi$ give the
+source flux coefficient $K=m_0(\pi/2)C$ in (12.2). No normalized
+ground amplitude enters that source-line ratio, and the clock with
+covariance $2A\,dt$ supplies no additional factor $1/2$.
+Under $\rho\mapsto c_1\rho$, the Green field and its cap divide by
+$c_1$ while $m_0,g_{\mathrm c},K$ multiply by $c_1$. The product
+$g\Gamma_\epsilon$ and the differential operator are unchanged
+under the natural unitary identification of the two $L^2$ spaces.
+The source coefficients scale together, preserving
+$\mathcal A/\mathcal B$ and the selected $\kappa$.
+
+The full auxiliary cylinder, its right inverse, the small radius
+$r_0$, the extension of $Q_\epsilon$ and the final cutoff are proof
+devices. They yield one compactly supported actual graph-core vector
+and change no physical source, wall, phase, kinetic form, quotient or
+domain. Their choices do not affect the resulting realization: the
+limiting correction lies in positive-weight $X_\delta$ and adds no
+constant or logarithmic source term; vectors with the same genuine
+trace differ by a graph-minimal vector.
+
+Theorem 12.1 adds an operator statement across all spectral channels.
+Its ground-state consequences must be read together with the already
+established ground theorems at their exact scopes. For
+$\lambda<\lambda_D$, Theorem 2.2 gives retention of $f_*$ and the
+actual divergent separate-resource laws, including their compact
+subthreshold uniformity. The $\lambda_Z$ cancellation and finite
+parts are Native Green stability, Theorem 25.2. At $\lambda_D$,
+Theorems 7.1–9.1 give the finite $G_{\kappa_b}$ ground, its sharp
+energy correction, profile and $L^3$ separate resources; Corollary
+10.1 gives the stated first-threshold ground window. For every fixed
+$\lambda>\lambda_D$, including $\lambda_n$ with $n\ge2$, Native
+Green stability, Theorem 24.1, gives actual ground collapse, its
+concentration profile and sharp separate-resource laws, uniformly on
+compact subsets of that open range for a fixed model and $b$.
+Those laws are not inferred from strong-resolvent convergence and
+are not new energy or resource conclusions of Theorem 12.1.
+
+Deep ground collapse is compatible with either limit in (12.4).
+The graph-core proof uses only
+$\|(K_{\epsilon,\lambda}-z)^{-1}\|\le|\operatorname{Im}z|^{-1}$,
+with no uniform lower spectral bound. If the ground energy tends
+to $-\infty$, the norm of its contribution to the resolvent applied
+to $f$ is at most
+$\|f\|/|E_{\epsilon,\lambda}-z|$, which tends to zero. The
+collapsing normalized states from Theorem 24.1 concentrate at the
+source and converge weakly to zero; their moving negative energies
+do not obstruct the finite nonreal resolvent limit. The operator
+theorem does not retain those normalized grounds or bound their
+kinetic, raw-attraction or capped-attraction resources. A finite
+total energy at equality likewise does not remove the separate
+$L^3$ divergences in §9.
+
+The source-specific analytic ingredients used here are the genuine
+maximal pair and horizontal graph estimate of Native Green stability,
+Theorem 21.1, and its Theorem 22.1's analytic dispersion, scattering
+column, trace-space maps, interior coercivity and all-mode gap.
+The additional inferences are the forced full-angular right inverse,
+the bounded local native correction, the physical tail and trace
+identification, and the original-domain graph approximants. All
+inverse bounds used for these inferences follow from the displayed
+coercivity, convolution and graph estimates. No stronger
+cap-to-fixed-radius operator-norm matching estimate, arbitrary actual
+trace amplitude bound or outer-return estimate is a premise.
+
+For bounded primary correspondence, Derkach–Hassi–Malamud–de Snoo,
+[Proposition 4.2 and Theorem 7.2](https://arxiv.org/html/math/0610299v1),
+provide boundary-triplet/Weyl and resolvent tools under their stated
+range, Green identity and invertibility hypotheses. They do not
+select this spatial-cap parameter, and their formula is not needed
+in the graph-core proof. Dereziński–Richard,
+[Theorem 5.5 and the selfadjoint half-line families](https://arxiv.org/html/1604.03340v2),
+treat scalar inverse-square endpoints with specified boundary
+parameters. Neither their Bessel constants nor a chosen half-line
+extension is substituted for the full-angular native construction.
+Lax–Milgram, weighted energy conjugation, Young's convolution
+inequality, local compactness and Lemma 13.1 are the standard
+analytical tools instantiated in the proof above.
+
+The neighbouring repository families retain the distinctions in
+Native Green stability, §26: the moving-time multipliers and changed
+carrier of Critical cutoff, Definition 31.1 and Theorems 32.2–33.1;
+the real-cover threshold source and different infinity in Weak
+binding, Definition 70.1 and Proposition 70.2; and the bounded-cap
+and added-kinetic-law settings of Continuation III, Specification
+82.7 and Theorem 87.4. None is a supplier of (12.4) for the unchanged
+periodic killed unit-source spatial minimum. This is a bounded
+correspondence, with no exhaustive-search or priority assertion.
+
+The all-fixed-real-parameter operator classification and its stated
+precision windows do not assert norm-resolvent rates, all-level
+counts, model-uniformity, new resource finite parts or the outcome
+of the broader why-three programme. Finite normalized-law task
+information, binary-task Bayes risk and zero-one loss provide no
+native Green law or acquisition map here. Homogeneous volume
+exponent four, growth $(2,3)$, current-ray dimension three, direct
+rank two and physical Euclidean dimension retain their distinct
+meanings.
+

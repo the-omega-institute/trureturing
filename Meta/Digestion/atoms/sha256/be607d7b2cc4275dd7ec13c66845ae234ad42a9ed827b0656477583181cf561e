@@ -1,0 +1,20 @@
+**Lemma 5.3 (Jacobian of the raw M family).** In the coordinates $(b,z)$
+of Lemma 3.1,
+
+$$
+\det D_{(b,z)}(p,v)=-\frac{60U(32b^2+64b+23)}{T^2}.
+$$
+
+Proof. Write $v=4p+w(b)$, where
+$w(b)=6(32b^2+18b-5)/T$. Then
+
+$$
+\partial_zp=10U,\qquad
+w'(b)=\frac{6(32b^2+64b+23)}{T^2},\qquad
+\det D(p,v)=-\partial_zp\,w'(b).
+$$
+
+These identities prove the formula. It is not the zero rational
+function. The pointwise lift of Theorem 5.1 includes the exceptional-root
+analysis that this derivative statement alone does not supply. ∎
+

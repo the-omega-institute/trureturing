@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+  normalized_sha256: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+cas_ref: sha256:aa88c51943b3f638cf2c18d8bcd1e5cf372b9ca309661f5922455a3978a56f3e
+coverage_gids:
+  - gid: D5/S1/Words/Complexity/GoldenSubshiftMinimality.golden_wordFactorSet_eq_of_mem_wordSubshift
+    target_statement_id: sha256:d0d6214858e1c4de9f12938c7308d352bdfbfd5fa329ca9fe998b73459f8a135
+  - gid: D5/S1/Words/Complexity/GoldenSubshiftMinimality.golden_wordSubshift_minimal
+    target_statement_id: sha256:1b4ae3c779ba97ab19408ec8da4d294a21610a7902c00addf6a592cdbbd2221a
+receipts:
+  unresolved_subitems: []

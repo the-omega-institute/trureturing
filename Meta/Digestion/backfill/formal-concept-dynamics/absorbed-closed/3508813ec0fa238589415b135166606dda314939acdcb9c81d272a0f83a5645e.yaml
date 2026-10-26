@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3508813ec0fa238589415b135166606dda314939acdcb9c81d272a0f83a5645e
+  normalized_sha256: sha256:3508813ec0fa238589415b135166606dda314939acdcb9c81d272a0f83a5645e
+cas_ref: sha256:3508813ec0fa238589415b135166606dda314939acdcb9c81d272a0f83a5645e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Uncertainty/FourWayIndependence.four_uncertainties_have_all_truth_profiles
+    target_statement_id: sha256:4297ea0ed79bcddde409676e1f117e5099a315fc03e3f36c36a0a8952d93a318
+receipts:
+  unresolved_subitems: []

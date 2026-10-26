@@ -26,6 +26,11 @@ namespace D5.S3.Observer.Linear.DerivativeLayerNativeGramian
 open ContinuousLinearMap MeasureTheory Finset
 open scoped Function InnerProductSpace RealInnerProductSpace
 
+-- Finite-dimensional completeness is available to the operator-valued definitions.
+local instance {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    [FiniteDimensional ℝ V] : CompleteSpace V := FiniteDimensional.complete ℝ V
+
+set_option maxHeartbeats 600000 in
 /-- Native-time congruence and a positive polynomial limit for the actual
 derivative-layer scaling, including empty layers and zero-dimensional spaces. -/
 theorem derivative_layer_native_gramian
@@ -65,8 +70,10 @@ theorem derivative_layer_native_gramian
     ∃ R : ℝ, 0 ≤ R ∧ ∀ T : ℝ, 0 < T → T ≤ 1 → T * ‖b‖ < 1 →
       ‖(e T).comp ((G T).comp (e T)) - H‖ ≤ R * T := by
   classical
+  letI : NormedSpace ℝ V := InnerProductSpace.toNormedSpace
+  letI : NormedSpace ℝ W := InnerProductSpace.toNormedSpace
   intro n N U E b c Q d e A G F₀ H
-  letI : CompleteSpace V := FiniteDimensional.complete ℝ V
+  letI : NormedSpace ℝ U := inferInstance
   have hNnest {j k : ℕ} (hjk : j ≤ k) : N k ≤ N j := by
     intro z hz
     apply (Submodule.mem_iInf _).mpr
@@ -88,9 +95,8 @@ theorem derivative_layer_native_gramian
     rw [hQval, hQval]
     exact (E j).inner_starProjection_left_eq_right (x : V) (y : V)
   have headj (T : ℝ) : (e T).adjoint = e T := by
-    change star (∑ j : Fin n, (Real.sqrt T * T ^ (j : ℕ))⁻¹ • Q j) =
-      ∑ j : Fin n, (Real.sqrt T * T ^ (j : ℕ))⁻¹ • Q j
-    simp only [star_sum, star_smul, star_trivial, star_eq_adjoint, hQadj]
+    dsimp only [e]
+    simp only [map_sum, map_smulₛₗ, starRingEnd_apply, star_trivial, hQadj]
   have hpair : Pairwise ((· ⟂ ·) on E) := by
     intro i j hij
     rcases lt_or_gt_of_ne (Fin.val_ne_of_ne hij) with hlt | hlt
@@ -208,8 +214,9 @@ theorem derivative_layer_native_gramian
       ((ContinuousLinearMap.compL ℝ U U U) (e T).adjoint).comp
         ((ContinuousLinearMap.compL ℝ U U U).flip (e T))
     have hJ : (e T).adjoint.comp ((G T).comp (e T)) =
-        ∫ t in (0 : ℝ)..T, J ((A t).adjoint.comp (A t)) :=
-      (J.intervalIntegral_comp_comm (hAg.intervalIntegrable _ _)).symm
+        ∫ t in (0 : ℝ)..T, J ((A t).adjoint.comp (A t)) := by
+      change J (∫ t in (0 : ℝ)..T, (A t).adjoint.comp (A t)) = _
+      exact (J.intervalIntegral_comp_comm (hAg.intervalIntegrable 0 T)).symm
     rw [hJ]
     have hchange := intervalIntegral.smul_integral_comp_mul_left
       (fun t : ℝ => J ((A t).adjoint.comp (A t))) T (a := 0) (b := 1)
@@ -237,7 +244,7 @@ theorem derivative_layer_native_gramian
       (DerivativeLayerGramianPositivity.derivative_layer_gramian_pos B C)
   obtain ⟨M₀, hM₀⟩ :=
     (isCompact_Icc : IsCompact (Set.Icc (0 : ℝ) 1)).exists_bound_of_continuousOn
-      hF₀.continuousOn
+      (f := F₀) hF₀.continuousOn
   let M := max M₀ 0
   have hM : 0 ≤ M := le_max_right _ _
   have hMb (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) : ‖F₀ s‖ ≤ M :=

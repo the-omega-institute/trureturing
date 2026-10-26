@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3fb3e8ae77a0d59d8f75c9cb9747225c74aba94faf8512e11edba9cb392171cd
+  normalized_sha256: sha256:3fb3e8ae77a0d59d8f75c9cb9747225c74aba94faf8512e11edba9cb392171cd
+cas_ref: sha256:3fb3e8ae77a0d59d8f75c9cb9747225c74aba94faf8512e11edba9cb392171cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 锚点章节标题与空表头，没有表格数据行中的数学断言。
+    previous_atom_id: 2f0faff29366be56f30c30540a6d5cd24c4a26a4610d2f65976db8a3f627e414
+    next_atom_id: 7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e

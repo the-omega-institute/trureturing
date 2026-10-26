@@ -1,0 +1,36 @@
+## 133. A transparent sufficient lower-control hypothesis
+
+A convenient sufficient hypothesis for (132.1) is the affine lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge a\,d_e(x,y)-b
+\tag{133.1}
+$$
+
+with fixed finite $b\ge0$ and fixed $a>0$, for all epochs and all pairs to which
+the interface is applied. For an active pair, (131.3) and (133.1) imply
+
+$$
+ a\,d_e(x,y)-b\le\ell,
+ \qquad	ext{hence}qquad
+ d_e(x,y)\le R:=\frac{\ell+b}{a}.
+\tag{133.2}
+$$
+
+After replacing $R$ by its ceiling when needed, Theorem 132.1 applies. The
+affine estimate is only a transparent sufficient special case. It is not
+necessary, it is not asserted to be a full quasi-isometry, and no upper
+control of $\rho_e$ by $d_e$ is used. More generally, a uniform
+nondecreasing lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge\Phi(d_e(x,y)),
+\qquad \Phi(t)\longrightarrow+\infty,
+\tag{133.3}
+$$
+
+would give the same conclusion whenever one fixes $\ell$ and chooses a
+finite $R$ with $\Phi(t)>\ell$ for $t>R$. This alternative remains
+conditional on the stated uniform control and does not add a physical
+interpretation to $\Phi$.
+

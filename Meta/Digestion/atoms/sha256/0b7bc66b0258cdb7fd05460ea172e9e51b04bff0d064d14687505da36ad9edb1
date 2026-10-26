@@ -1,0 +1,24 @@
+## 3. Signed rotation systems and relabelling
+
+Let $G=(V,E)$ be a finite simple cubic graph. An outcome is a pair $(\rho,t)$:
+
+- $\rho_v$ is a cyclic order on the three neighbours of $v$
+- $t_e\in\{0,1\}$ is an edge-sign bit
+
+There are exactly two cyclic orders at each vertex. Each of the six shuffled neighbour lists gives one of them, with exactly three lists per cyclic order. Thus the notebook's law is uniform on
+
+$$
+\Omega_G=\prod_{v\in V}\{\text{two cyclic orders at }v\}\times\{0,1\}^{E},
+\qquad |\Omega_G|=2^{|V|+|E|}.
+$$
+
+Use flags $(v,w,s)$, where $vw\in E$ and $s\in\{0,1\}$. Each edge has four flags. Define two fixed-point-free involutions by
+
+$$
+P(v,w,1)=(v,\rho_v(w),0),
+\qquad
+L(v,w,s)=(w,v,s\mathbin\oplus t_{vw}),
+$$
+
+and extend the first formula by involutivity. The connected components of the graph whose edges are the $P$- and $L$-pairs are the physical boundary curves of the ribbon embedding. Equivalently, the cycles of the product $PL$ give two oriented representatives of each boundary curve. Capping the boundary curves by disks produces a cellular embedding in a connected closed surface when $G$ is connected. Orientability is not imposed, in agreement with the notebook's `do_twist=True` default.
+

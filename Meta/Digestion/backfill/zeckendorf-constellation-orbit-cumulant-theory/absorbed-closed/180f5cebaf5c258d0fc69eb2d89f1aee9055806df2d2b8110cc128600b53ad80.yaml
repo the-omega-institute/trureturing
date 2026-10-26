@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:180f5cebaf5c258d0fc69eb2d89f1aee9055806df2d2b8110cc128600b53ad80
+  normalized_sha256: sha256:180f5cebaf5c258d0fc69eb2d89f1aee9055806df2d2b8110cc128600b53ad80
+cas_ref: sha256:180f5cebaf5c258d0fc69eb2d89f1aee9055806df2d2b8110cc128600b53ad80
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/InfiniteParityContinuityObstruction.finite_support_parity_has_no_continuous_completion
+    target_statement_id: sha256:4ef1ca9014c41d0d7b74fa60eafabb783b157e5b656f54f8fed5d21bfa36a2bd
+receipts:
+  unresolved_subitems: []

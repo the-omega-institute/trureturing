@@ -1,0 +1,61 @@
+**Theorem 249.4 (Necessary indefinite pullback and a proper-subclass
+counterexample).** Suppose a schedule of actual native maps satisfies
+$\mathsf Q$ with fixed $A,\gamma$. For every sufficiently small
+$\epsilon$, its map has indefinite $\mathcal E^*(H)$. Each such map
+produces an $H$-detected entangled normalized output on some entangled
+non-native pure input. This is a necessary property of a hypothetical
+schedule, not a supplied input resource or an attaining construction.
+Moreover, the native class $\mathcal H_k$ is not contained in the
+positive-pullback subclass.
+
+Proof. The contradiction (249.12) is uniform over positive-pullback maps
+for fixed $A,\gamma$. Thus $\mathcal E^*(H)$ is not positive semidefinite
+for every sufficiently small $\epsilon$ in a hypothetical schedule.
+At the actual $q_0=(1/3,1/3)$, Lemma 240.2 gives $p=1/3$. Hence
+$g=8t/9$, $\lambda=4/13$ and
+
+$$
+\operatorname{Tr}(HW_{q_0})=1/52.
+\tag{249.15}
+$$
+
+For $\epsilon<1/52$, conditional accuracy makes the witness expectation
+of the normalized output at $q_0$ strictly positive. Multiplication by
+the positive success probability gives
+$\operatorname{Tr}(\mathcal E^*(H)\rho_{q_0}^{\otimes k})>0$.
+The Hermitian pullback therefore has a positive eigenvalue and, since it
+is not positive semidefinite, a negative one.
+
+For a normalized negative eigenvector $x$,
+$\operatorname{Tr}(H\mathcal E(|x\rangle\langle x|))<0$.
+Complete positivity makes the output positive, and its negative witness
+value forces its trace to be nonzero. Its normalized state is entangled:
+(249.14) shows that $H$ is nonnegative on every separable state.
+A native LOCC success map preserves separability, including after all
+residuals and records are erased, by the forward complete-history
+product-Kraus reduction of Corollary 247.4. Thus $x$ is entangled.
+It is not one of the supplied full-rank mixed native inputs, and this
+channel property makes it no available auxiliary preparation.
+
+To show the subclass is proper, consider the fixed marginal decoder
+that retains $A_1,C_1$, traces $S_1$ and discards the other $k-1$ blocks.
+On the native family it always succeeds and outputs the existing
+$W_\eta$ of VII (237.4), with no improved approximation assertion.
+The neutral-memory spatial transfer VII (237.3) implements this local
+trace while retaining Bob's same particle in the fixed rails and its
+copy coherence. The other blocks are retained as residual particles
+until discard. There is one output particle per party, residual charge
+$k+n_{\mathrm{aux}}-1$, and all records and residuals are erased.
+This is a finite $q$-independent native operation. Its adjoint obeys
+
+$$
+\mathcal E^*(H)=H_{A_1,C_1}\otimes I_{S_1}
+                    \otimes I_{\text{other blocks}},
+\tag{249.16}
+$$
+
+which has both $-1/2$ and $+1/2$ eigenvalues. Therefore even this native
+map fails the additional positive-pullback condition. Theorem 249.2
+cannot be transferred to all of $\mathcal H_k$ by assuming that
+condition. ∎
+

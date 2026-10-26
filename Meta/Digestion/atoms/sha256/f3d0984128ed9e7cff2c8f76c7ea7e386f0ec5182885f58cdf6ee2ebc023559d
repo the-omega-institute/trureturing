@@ -1,0 +1,29 @@
+**Theorem 8.1 (A uniform positive separation is a consequence).** Write
+$z(W)=(r,b,e)$ and use the Euclidean norm. There is a $\delta>0$
+such that for every $W,W'\in K_J$,
+
+$$
+W\ne W',\quad\Psi_M(W)=\Psi_M(W')
+\quad\Longrightarrow\quad
+\|z(W)-z(W')\|_2\ge\delta.
+\tag{8.1}
+$$
+
+The same $\delta$ works for the Euclidean distance between the full
+tuples $(P_{11},P_{12},P_{21},P_{22},\alpha_0,\alpha_1,\alpha_2,
+\alpha_3,d)$, where $g(s)=\sum_{i=0}^3\alpha_i s^i$.
+No numerical value of $\delta$ is asserted or assumed.
+
+Proof. If there are no distinct matching pairs, choose any positive
+$\delta$. Otherwise, if no positive separation exists, choose distinct
+equal-output pairs with $\|z(W_n)-z(W'_n)\|_2\to0$.
+III, Theorem 23.2 makes $K_J$ compact, so along a subsequence
+$W_n\to W\in K_J$. The coordinate distance implies
+$z(W'_n)\to z(W)$, and continuity of whole-gain reconstruction gives
+$W'_n\to W$ as complete worlds. Theorem 7.3 supplies one full-parent
+local-injectivity neighbourhood of $W$. Both endpoints are eventually
+in that same neighbourhood and have equal $\Psi_M$, contradicting
+their distinctness. This proves (8.1). The full tuple norm dominates
+the norm of its $P_{11},P_{12},d$ coordinate differences, which equal
+the $r,b,e$ differences. ∎
+

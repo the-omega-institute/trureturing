@@ -1,0 +1,93 @@
+## 15. The uncapped inverse and the local native perturbation
+
+For the same sufficiently small positive $\delta$, the uncapped
+critical expression is a bijection
+
+$$
+P_{\lambda_0}:X_\delta\longrightarrow Y_\delta,
+\qquad \mathcal G_0=P_{\lambda_0}^{-1}.
+\tag{15.1}
+$$
+
+Indeed, the nonzero-$\theta$ coercivity in §14 applies without the
+cap addition. In the rotational sector the complementary problem
+is the positive full-cylinder form problem. For its slow part the
+equation is $-x''=f_s$, with unique weighted solution
+
+$$
+x(t)=-\int_{-\infty}^t(t-s)f_s(s)ds.
+\tag{15.2}
+$$
+
+The conjugated convolution kernel is $re^{-\delta r}$, $r\ge0$,
+whose $L^1$ norm is $\delta^{-2}$. This proves existence and its
+weighted bound; (13.4) gives the $X_\delta$ bound. Constants and
+linear homogeneous slow solutions fail the positive-weight
+condition at $-\infty$. Every complementary homogeneous exponential
+fails it at one end. Together with nonzero-$\theta$ uniqueness this
+proves injectivity. This explicit construction agrees with the
+weighted inversion of Native Green stability, Theorem 21.1; no
+Laurent functional with reversed scalar-product orientation is used.
+
+Choose an auxiliary radius $r_0>0$ inside the injective source chart,
+with $2r_0$ still in that chart. It may be smaller than $b$, which
+remains fixed in the physical family. On $R<2r_0$ write
+
+$$
+\begin{aligned}
+R^3K_{\epsilon,\lambda}R^{-1}
+ &=P_{\gamma_\epsilon,\log\epsilon}^{\rm cap}+Q_\epsilon,\\
+\gamma_\epsilon&=\frac{g_{\epsilon,\lambda}}{2\pi m_0}
+                         =\lambda_0(1+\lambda/L^2).
+\end{aligned}
+\tag{15.3}
+$$
+
+The exact chart estimates of Native Green stability, (11.1)–(11.3),
+give $C(q)-I=O(R)$, $m(q)/m_0-1=O(R)$, bounded horizontal first
+coefficient derivatives and
+$|\Gamma-c_GR^{-2}|\le C_1/R$. Thus the principal and first-order
+cylinder coefficients in $Q_\epsilon$ are $O(R)$.
+The minimum is $1$-Lipschitz in its first argument, so
+
+$$
+|\Gamma_\epsilon-c_G\min(R^{-2},\epsilon^{-2})|
+                                      \le C_1/R.
+\tag{15.4}
+$$
+
+Multiplication by $R^2$ makes the corresponding cylinder potential
+error $O(R)$ too. No derivative across the cap is needed.
+
+Extend these perturbation coefficients by a fixed smooth cutoff
+equal to one for $R<r_0$ and zero for $R>2r_0$. This defines an
+auxiliary operator $Q_\epsilon$ on the full cylinder with
+
+$$
+\|Q_\epsilon v\|_{Y_\delta}\le C_2r_0\|v\|_{X_\delta}.
+\tag{15.5}
+$$
+
+The extension agrees with the actual expression on $R<r_0$; no
+physical boundary or operator is changed. On each fixed punctured
+annulus it tends to the corresponding critical $Q_0$, and the
+coefficients remain uniformly $O(R)$. Dominated convergence gives
+$Q_\epsilon v\to Q_0v$ in $Y_\delta$ for each fixed
+$v\in X_\delta$. Outside the eventual cap the coefficients have
+their smooth annular convergence.
+
+Fix the inverse norms from §§14–15 first and then shrink $r_0$ so
+that
+
+$$
+C_2r_0\max\{\sup_\gamma\|\mathcal G_\gamma\|,
+                                      \|\mathcal G_0\|\}<\tfrac12.
+\tag{15.6}
+$$
+
+This is local analysis for each arbitrary fixed smooth model, not
+a small-global-perturbation condition. The weight can also be chosen
+below the positive source-corrector exponent in Native Green
+stability, Theorem 21.1. All these choices are independent of
+$\epsilon$ and of parameters in the compact sets used below.
+

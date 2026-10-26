@@ -1,0 +1,41 @@
+**Proposition 6.1 (a different lawful departure, without a diffusion-limit claim).**
+For each observation of (5.1) with $1/2\le p<1$, there is a deterministic
+absolutely continuous original two-control history, with the same source,
+preparations, guards, clock and two killed faces, whose complete
+occupation of $W$ is finite. Thus the universal divergence in Theorems
+2.1 and 3.1 is a property of the prescribed §29.2 commands; it is not
+a property of every absolutely continuous native history.
+
+Proof. Choose $1/2<\gamma<1/(2p)$ and a sufficiently small
+$0<e<4\pi$. On $0\le t\le1$ set $a(t)=0$, $b(t)=et^\gamma$.
+On $1\le t\le2$ set $a(t)=(u-k_o)(t-1)$ and $b(t)=e$.
+Hold after time $2$. Both controls are absolutely continuous with
+finite variation, start at zero, and their actual integral $j=\int a\,db$
+is zero. Their height stays at $k_o$ initially, then increases to $u$;
+every prefix therefore obeys the native guard inside $(0,H)$, and
+the first killed face is reached exactly at time $2$.
+
+On the initial segment the exact source chart gives
+$R=|B(0,e)^{\mathsf T}|t^\gamma$ and $\upsilon=0$. Choose $e$ small
+enough for that segment to stay in the chart. The singular occupation
+there is bounded by a constant times
+$\int_0^1t^{-2p\gamma}dt<\infty$. During the terminal height leg,
+the actual $\alpha$ phase differs from $\alpha_o$ by $e/2$, a nonzero
+residue modulo $2\pi$. That compact leg stays separated from $o$,
+so the full Green field and the chosen $W$ are bounded there, including
+towards $u$. This proves finiteness for the complete killed history.
+The original absolutely continuous history class is N, Definition 3.1,
+with prefix realization and guards in N, Theorems 9.2–9.3 (also K,
+Definition 2.2 and Proposition 2.3). This deterministic command changes
+the control profile, not the analytic clock. It is not the law of G,
+Definition 29.2, and no diffusion approximation for it or for an altered
+sampler is inferred. $\square$
+
+Theorems 2.1–5.1 concern the original full variable-coefficient free
+Green field and its specified command family. They do not alter G's
+continuous-test convergence, source data or critical stability and
+domain classification. In particular the dimension quantities remain
+current-ray dimension three, direct rank two and homogeneous volume
+exponent four. Neither a physical Euclidean dimension nor preparation
+or physical-energy capabilities follow from these occupation results.
+

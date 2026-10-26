@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+  normalized_sha256: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+cas_ref: sha256:6193feff69b5134b01fc1a48bf4cce0f01593d93669e6cc2ebd427220713c9ee
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/CoordinateWitnessBundle.has_closed_coordinate_witness_bundle_iff_ne
+    target_statement_id: sha256:3c580375ed500e478cfd0537e2db0c8d65af959b181b219cd201a59b3f8a104a
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.post_arrival_protected_change_criterion
+    target_statement_id: sha256:1948ce191c7ea69203e336a13ffc350f4404e5f2c24dd76722b6c92f4ae22d5d
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.regrade_report_carries_actual_evaluation
+    target_statement_id: sha256:89f363dcdd87e05039f2e91c5e90f278440403bf2c016c50219403d1af9f6e4c
+  - gid: D5/S3/ConceptDynamics/Governance/TargetLaunderingCriterion.target_laundering_criterion
+    target_statement_id: sha256:74381a9ca0f0c57917be4b00aa00f679feb96d439d7432ca6a919bffdc44197c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,50 @@
+## 40. Reused interfaces, new conclusion and classical sources
+
+The original-world interpretation and regular circuit in
+(35.1), (35.3)–(35.7) are reused from this volume's Sections 1–2,
+12, 18 and 24–29 and the ordinary sources they cite. In particular:
+
+- [Common-parent geometry, Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+  supplies the zero-safe parent and complete whole-gain converse.
+- [Finite-fibre geometry, Lemma 30.2 and Theorem 32.1](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md)
+  supplies the faithful $(x,d)$ inverse and whole-child finite bound.
+  Its Theorem 26.4 already excludes every off-$24$ equal-$M$ pair
+  with equal unobserved ratio $x=n/U$, including the exceptional
+  positive root of $8x^4+29x^3+18x^2-15x-6$. That equal-ratio
+  classification is not a new conclusion here.
+- [Support VII, Sections 3–10](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md)
+  supplies the undivided residual comparator, global different-$b$
+  necessity and a faithful independent-$M$-pair interface. Those
+  results do not themselves provide the fixed-$P$ order (37.2).
+- The exact first critical source, local entire-child exclusion and
+  evaluated twelve-cell continuation, together with its strict-source
+  interval, corner and base coverage, are the supplied results of
+  Sections 19–29. The cited Sections 19–29 supply these existence and continuation statements.
+
+The relation used in the additional argument is positivity of the
+source-specific fixed-$p$ Jacobian for the scalar $m-5v$, followed by
+one-variable integration. Its evaluated polynomial content is
+(36.4), Lemma 36.1 and the uniform derivative margin (37.7).
+The resulting theorem concerns every world in the complete class
+(35.2), for every $p\in[-534,-457]$ and every real $v$. It is stronger
+than comparison of the two selected $J$ endpoints and does not count
+or exclude compatible worlds outside that class.
+
+Fixed-node interpolation is the classical formula in Berrut and
+Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46,
+501–517, Section 2, equations (2.1)–(2.2),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The Bernstein convex-hull bound is classical; see Mourrain,
+Rouillier and Roy, *Bernstein's basis and real root isolation*,
+INRIA Research Report 5149, Section 2, especially Proposition 2.8,
+[primary report](https://inria.hal.science/inria-00071434/document).
+The tensor version needed here is explicitly proved by (36.9)–(36.10).
+The implicit-function theorem, quotient differentiation and integration
+of a strictly positive derivative are standard real analysis.
+
+Thus the append establishes the evaluated source-class order and its
+necessary exterior-endpoint condition, together with the explicit
+unresolved whole-child localization bridge. The model, interpolation,
+response circuit, exceptional equal-ratio classification, finite carrier
+and negative-$J$ continuation are reused.
+

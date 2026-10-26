@@ -1,0 +1,98 @@
+**定理 4.1（均匀五窗的完整风险—信息区域）。** Suppose $p_i=1/5$ and impose (1.3). The attainable $(\epsilon,I)$ region over finite auxiliary readouts is exactly
+
+$$
+\boxed{
+0\le\epsilon\le\frac25,\qquad
+\log_25-h(\epsilon)\le I\le\log_25-2\epsilon.
+}
+\tag{4.1}
+$$
+
+Both information endpoints are attained at every $\epsilon$ in the interval. For each fixed $\epsilon$, any finite collection of these readouts and any chosen intermediate point can be realized on a common finite source with deterministic readouts. A single finite carrier for the entire continuum of parameter values is not asserted.
+
+Proof. Theorem 3.2 gives $M(p)=2/5$. On an edge-supported posterior put $u(q)=1-\max_iv_i(q)\in[0,1/2]$; on a singleton put $u(q)=0$. Then
+
+$$
+\epsilon=\mathbb Eu(Q),\qquad
+H(C\mid Q)=\mathbb Eh(u(Q)).
+$$
+
+The classical binary concavity/chord estimates, with the entropy/error attribution in Proposition 2.1 and [the ledger, §2](FIB_ATOM_MULTI_TASK_INFORMATION_LEDGER.md), give
+
+$$
+2\epsilon\le H(C\mid Q)\le h(\epsilon).
+\tag{4.2}
+$$
+
+It remains to meet both equality conditions while retaining this actual graph and the uniform prior.
+
+For the upper information endpoint take
+
+$$
+z_{ac}=\epsilon/2,\qquad
+z_{bd}=z_{de}=\epsilon/4,\qquad
+z_{ab}=z_{ae}=0.
+\tag{4.3}
+$$
+
+Here $(Bz)_{a,c,d}=\epsilon/2$ and $(Bz)_{b,e}=\epsilon/4$, all at most $1/5$ when $\epsilon\le2/5$. Theorem 3.1's fair-edge/singleton law has conditional entropy $2\epsilon$ and error $\epsilon$.
+
+For the lower information endpoint an explicit construction with constant posterior error is required. Write $u=\epsilon\in[0,2/5]$. Give an output $q_{ac}$ mass
+
+$$
+\lambda=\frac1{5(1-u)},\qquad
+v_a(q_{ac})=u,\quad v_c(q_{ac})=1-u.
+\tag{4.4}
+$$
+
+This uses all $c$ mass and $u/[5(1-u)]$ of the $a$ mass. The remaining desired label masses are
+
+$$
+\ell_a=\frac{1-2u}{5(1-u)},\qquad
+\ell_d=\frac15,\qquad
+s_b=s_e=\frac15.
+$$
+
+Let
+
+$$
+L=\ell_a+\ell_d=\frac{2-3u}{5(1-u)},\qquad
+R=\frac25,\qquad T=L+R=1-\lambda.
+\tag{4.5}
+$$
+
+Both $L,R$ are positive in this parameter range. Moreover
+
+$$
+L-uT=\frac{(2-5u)(1-u)}{5(1-u)}\ge0,
+\qquad
+R-uT=\frac{2-6u+5u^2}{5(1-u)}>0.
+\tag{4.6}
+$$
+
+Thus $u\le L/T\le1-u$. Define
+
+$$
+\theta=\frac{L/T-u}{1-2u}\in[0,1],\qquad
+\pi_{ij}=\frac{\ell_i}{L}\frac{s_j}{R}
+\quad(i\in\{a,d\},\ j\in\{b,e\}).
+$$
+
+For each such legal edge $ij$, use two outputs with respective masses $T\pi_{ij}\theta$ and $T\pi_{ij}(1-\theta)$, and posterior masses $(1-u,u)$ and $(u,1-u)$ in order $(i,j)$. Discard zero-mass outputs. Since $\sum_{ij}\pi_{ij}=1$, these outputs have total mass $T$. The total mass at label $i$ is
+
+$$
+\frac{\ell_i}{L}\,T\bigl(\theta(1-u)+(1-\theta)u\bigr)=\ell_i,
+$$
+
+and the total mass at label $j$ is $s_j$. With (4.4) this is exactly the uniform prior. Every posterior has smaller mass $u$, so $H(C\mid Q)=h(u)$ and categorical error $u$. At $u=0$ all positive posteriors reduce to singletons; at $u=2/5$ one orientation weight may vanish, and the same formulas remain defined.
+
+Finally consider any finite joint tables $J_k(i,q_k)$ having this prior. A common finite source is given by
+
+$$
+\Pr(C=i,Q_1=q_1,\ldots,Q_m=q_m)
+=\frac{\prod_{k=1}^mJ_k(i,q_k)}{p_i^{m-1}},
+\tag{4.7}
+$$
+
+with zero-prior labels omitted if needed. Each projection has the specified joint law. In particular realize the two endpoints $Q_-,Q_+$ this way and append a finite independent bit $T_0$ with $\Pr(T_0=1)=t$. The deterministic readout $(T_0,Q_{T_0})$ has the same error $u$, satisfies (1.3), and has information $(1-t)I_-+tI_+$. This proves every point between the endpoints without treating a channel randomized relative to $C$ as an unspecified external randomizer. $\square$
+

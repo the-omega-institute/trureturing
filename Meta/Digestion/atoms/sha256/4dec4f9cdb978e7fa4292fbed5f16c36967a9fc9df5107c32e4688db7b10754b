@@ -1,0 +1,33 @@
+**定理 5.2（三量二阶恢复）。** 有
+
+$$
+\begin{pmatrix}s_0\\s_1\\s_2\end{pmatrix}
+=\begin{pmatrix}4&12&9\\9&30&25\\25&80&64\end{pmatrix}
+\begin{pmatrix}U\\V\\W\end{pmatrix}.
+$$
+
+该观察矩阵行列式为 $-2$，并有
+
+$$
+\begin{aligned}
+U&=40s_0+24s_1-15s_2,\\
+V&=\frac{-49s_0-31s_1+19s_2}{2},\\
+W&=15s_0+10s_1-6s_2.
+\end{aligned}
+$$
+
+证明。展开 $(2a+3b)^2,(3a+5b)^2,(5a+8b)^2$ 后取期望，得到观察矩阵。其行列式展开为 $-2$。还可令
+
+$$
+q=\frac{s_2-s_0-s_1}{2}=\mathbb E(y_0y_1),\qquad
+S_y=\begin{pmatrix}s_0&q\\q&s_1\end{pmatrix}.
+$$
+
+由 $y_2=y_0+y_1$ 得到交叉式；由 $(y_0,y_1)^T=Oc$ 得 $S_y=OSO^T$，所以
+
+$$
+S=O^{-1}S_yO^{-T}.
+$$
+
+乘出这三个分量即为所列逆式。$\square$
+

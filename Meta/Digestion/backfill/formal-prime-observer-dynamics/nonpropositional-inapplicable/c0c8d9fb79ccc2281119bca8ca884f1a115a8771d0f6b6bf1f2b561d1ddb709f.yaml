@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0c8d9fb79ccc2281119bca8ca884f1a115a8771d0f6b6bf1f2b561d1ddb709f
+  normalized_sha256: sha256:c0c8d9fb79ccc2281119bca8ca884f1a115a8771d0f6b6bf1f2b561d1ddb709f
+cas_ref: sha256:c0c8d9fb79ccc2281119bca8ca884f1a115a8771d0f6b6bf1f2b561d1ddb709f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Version-summary prose records the document contents; it supplies no new mathematical assertion.
+    previous_atom_id: 4e3639a4aaf4f6f81cbe6ea527db0ec6c4a605e7db1047dc7cc902354a7b97fd
+    next_atom_id: 3c80cc388f874dd533a6a2c22f8681a12bb4f7f0de3f373e826bfbe9a0a80e0c

@@ -1,0 +1,29 @@
+**定义 15.1（有限有理五模式因子语言）。** In the coordinate order of [the foundational volume, Definition 2.1](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md), put
+
+$$
+ A=\{(x,y,z)\in\{0,1\}^3:xz=yz=0\}
+   =\{000,100,010,110,001\}.
+\tag{15.1}
+$$
+
+For each integer $n\ge1$, a network consists of labelled visible Boolean variables $v_1,\ldots,v_n$, any finite number $m\ge0$ of hidden Boolean variables, and finitely many factors $f_j:\{0,1\}^3\to\mathbb Q_{\ge0}$. Every factor sums to one over its complete three-bit table and vanishes outside $A$. Its scope is an ordered triple of actual visible or hidden variables; repetition and identification are permitted. If $a$ and $h$ are the visible and hidden assignments, its law is
+
+$$
+ P(a)=Z^{-1}\sum_{h\in\{0,1\}^m}\prod_j f_j((a,h)|_{\mathrm{scope}(j)}),
+ \qquad
+ Z=\sum_{a,h}\prod_j f_j((a,h)|_{\mathrm{scope}(j)})>0.
+\tag{15.2}
+$$
+
+An empty product is one. In regime $W_+$ every factor is strictly positive on all five tuples of $A$; in regime $W_0$ additional zeros within $A$ are permitted. The only operations are the ordered scopes, factor multiplication, finite hidden summation and final normalization in (15.2). Constants, complemented literals, extra equality or disequality primitives, externally supplied unary or multivariate factors, and limits are absent. Network size may depend on the entire target law and is unbounded finite. Locally normalized tables are potentials in a globally normalized product; they have no supplied conditional-kernel or causal sampling interpretation.
+
+For a labelled undirected graph $K$ with loops, write
+
+$$
+ \operatorname{Ind}(K)=\{a\in\{0,1\}^n:
+ a_i a_j=0\text{ for every edge }\{i,j\}\text{ of }K\}.
+\tag{15.3}
+$$
+
+A loop at $i$ thus forces $a_i=0$. Vertices here are Boolean coordinates, not the five labels that are vertices of the legal-toggle graph $G$ in (1.2).
+

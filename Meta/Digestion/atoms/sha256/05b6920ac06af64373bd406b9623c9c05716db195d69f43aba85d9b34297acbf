@@ -1,0 +1,9 @@
+**定义 10.2（附加的底曲面选择）。** 选一条光滑连通、射影复曲线 $X$，genus 为 4，固定基点和标准生成元
+
+$$
+\pi_1(X)=\left\langle a_0,b_0,\ldots,a_3,b_3:
+\prod_{j=0}^3[a_j,b_j]=1\right\rangle.
+$$
+
+令 $\widetilde\rho(a_j)=T(D_j)$、$\widetilde\rho(b_j)=I_4$，并令 $\rho=\varpi\circ\widetilde\rho$。这是另行选定的曲面模型，不把它识别为原项目关系球面。
+

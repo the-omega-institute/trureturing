@@ -1,0 +1,13 @@
+**direct-generator locality radius** $0\le\ell<\infty$ means
+
+$$
+(x,y)\in A_e\quad\Longrightarrow\quad
+\rho_e(\iota_e(x),\iota_e(y))\le \ell.
+\tag{131.3}
+$$
+
+This is a realization assumption, not a consequence of the occurrence
+algebra. If $Q_e$ is an effective generator obtained after eliminating
+microscopic variables, (131.3) concerns the effective transitions only;
+the theorem below then says nothing about microscopic locality.
+

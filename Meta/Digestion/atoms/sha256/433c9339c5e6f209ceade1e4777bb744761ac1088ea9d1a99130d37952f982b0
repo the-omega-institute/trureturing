@@ -1,0 +1,22 @@
+**Theorem 6.1 (Actual J terminal in inverse coordinates).** Every world
+reconstructed by (5.4) has
+
+$$
+a(W)=d+\left(\frac{1+u}{2}+2x+2ur\right)
+                    \frac{m-d}{2x+3}.
+\tag{6.1}
+$$
+
+Proof. On the original source,
+
+$$
+\frac TU=\frac{1+u}{2},\qquad \frac jU=x-ur,\qquad
+\frac{T+2j+4r}{U}=\frac{1+u}{2}+2x+2ur.
+\tag{6.2}
+$$
+
+The terminal $M$ row gives $h(7)=(m-d)/(2x+3)$. Substitute (6.2)
+and $g(7)=uh(7)$ in the actual trace formula
+$a=d+(T+2j+4r)g(7)$. This proves (6.1), including $m=d$, for which
+both terminal responses equal $d$. No division by $m-d$ occurs. ∎
+

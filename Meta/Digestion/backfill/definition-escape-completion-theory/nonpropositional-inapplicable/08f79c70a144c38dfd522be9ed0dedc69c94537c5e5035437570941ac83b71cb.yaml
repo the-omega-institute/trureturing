@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08f79c70a144c38dfd522be9ed0dedc69c94537c5e5035437570941ac83b71cb
+  normalized_sha256: sha256:08f79c70a144c38dfd522be9ed0dedc69c94537c5e5035437570941ac83b71cb
+cas_ref: sha256:08f79c70a144c38dfd522be9ed0dedc69c94537c5e5035437570941ac83b71cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 首次逃逸时间可研究量的名目，无等式或性质断言。
+    previous_atom_id: 2bd2e9c0e067121d215d25109c1619f285a1e9aacf099f8fb73b3d310165498f
+    next_atom_id: 4aa4196370505fdec3e635447b1bf7e50c6f32882749ca5c23151d775edae550

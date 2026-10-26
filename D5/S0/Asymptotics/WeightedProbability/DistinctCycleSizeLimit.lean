@@ -6,7 +6,7 @@
    utility: none
    digest: The total distinct-cycle-size weight is asymptotic to n times n factorial. -/
 
-import Mathlib.GroupTheory.Perm.Centralizer
+import D5.S0.Asymptotics.WeightedProbability.PermutationMultiplicity
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
 import Mathlib.Tactic.NormNum
@@ -16,12 +16,12 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FieldSimp
 
 /-
-The local partition-counting proof below adapts the exact predecessor:
+The partition-counting proof uses the exact predecessor:
 Copyright (c) 2026 Tau Ceti. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
 Library/notes/tauceti2026classsizes.md.
-Modified in trureturing: specialize to Fin n, localize the adapted facts inside
-result, and use them in the weighted distinct-cycle-size asymptotic proof.
+The full-partition multiplicity normalization is shared with
+PermutationMultiplicity and used in the weighted distinct-cycle-size limit.
 Authors: The Tau Ceti contributors.
 TauCetiProject/TauCeti, revision d7ac608e0c97f71e9e0dc210d26a470d974368d7,
 RepresentationTheory/Symmetric/{Partitions,ClassSize}.lean.
@@ -36,6 +36,8 @@ open Finset Filter
 
 namespace D5.S0.Asymptotics.WeightedProbability.DistinctCycleSizeLimit
 
+open D5.S0.Asymptotics.WeightedProbability.PermutationMultiplicity
+
 noncomputable def DistinctCycleSizes {n : ℕ}
     (σ : Equiv.Perm (Fin n)) : Finset ℕ :=
   σ.partition.parts.toFinset
@@ -49,51 +51,12 @@ theorem result :
       ((n : ℝ) * (Nat.factorial n : ℝ)))
     Filter.atTop (nhds (1 : ℝ)) := by
   classical
-  let z : Multiset ℕ → ℕ := fun m =>
-    ∏ i ∈ m.toFinset, i ^ m.count i * (m.count i).factorial
-  have hz_prod : ∀ (m : Multiset ℕ) (s : Finset ℕ), m.toFinset ⊆ s →
-      z m = ∏ i ∈ s, i ^ m.count i * (m.count i).factorial := by
-    intro m s hs
-    refine Finset.prod_subset hs ?_
-    intro i _ hi
-    rw [Multiset.count_eq_zero_of_notMem (by simpa using hi)]
-    simp
   have hz_pos : ∀ {n : ℕ} (p : n.Partition), 0 < z p.parts := by
     intro n p
     apply Finset.prod_pos
     intro i hi
     have hi' := p.parts_pos (Multiset.mem_toFinset.mp hi)
     positivity
-  have hz_perm : ∀ n (σ : Equiv.Perm (Fin n)),
-      z σ.partition.parts =
-        (n - σ.cycleType.sum).factorial * σ.cycleType.prod *
-          ∏ i ∈ σ.cycleType.toFinset, (σ.cycleType.count i).factorial := by
-    intro n σ
-    let m := σ.cycleType
-    let k := n - σ.support.card
-    have hparts : σ.partition.parts = m + Multiset.replicate k 1 := by
-      simp only [Equiv.Perm.parts_partition, Fintype.card_fin, m, k]
-    have h1 : (1 : ℕ) ∉ m := fun h => by
-      simpa using Equiv.Perm.two_le_of_mem_cycleType h
-    have hsub : σ.partition.parts.toFinset ⊆ insert 1 m.toFinset := by
-      intro i hi
-      rw [Multiset.mem_toFinset, hparts, Multiset.mem_add] at hi
-      rcases hi with h | h
-      · exact Finset.mem_insert_of_mem (Multiset.mem_toFinset.mpr h)
-      · exact Finset.mem_insert.mpr (Or.inl (Multiset.eq_of_mem_replicate h))
-    have hcount : ∀ i ∈ m.toFinset, σ.partition.parts.count i = m.count i := by
-      intro i hi
-      have hne : (1 : ℕ) ≠ i := fun h => h1 (h ▸ Multiset.mem_toFinset.mp hi)
-      rw [hparts, Multiset.count_add, Multiset.count_replicate, if_neg hne, add_zero]
-    have hcount_one : σ.partition.parts.count 1 = k := by
-      rw [hparts, Multiset.count_add, Multiset.count_eq_zero_of_notMem h1,
-        Multiset.count_replicate_self, zero_add]
-    rw [hz_prod _ _ hsub, Finset.prod_insert (by simpa using h1), hcount_one,
-      Finset.prod_congr rfl (fun i hi => by rw [hcount i hi]), Finset.prod_mul_distrib,
-      ← Finset.prod_multiset_count, one_pow, one_mul]
-    dsimp [m, k]
-    rw [Equiv.Perm.sum_cycleType]
-    ring
   have hexists : ∀ n (p : n.Partition),
       ∃ σ : Equiv.Perm (Fin n), σ.partition.parts = p.parts := by
     intro n p

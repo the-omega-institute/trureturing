@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7a22736df851c3472b6151ebae6e159cfafa04fcab79503ca176b1ec690378dc
+  normalized_sha256: sha256:7a22736df851c3472b6151ebae6e159cfafa04fcab79503ca176b1ec690378dc
+cas_ref: sha256:7a22736df851c3472b6151ebae6e159cfafa04fcab79503ca176b1ec690378dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究方法清单的一项：建议在 t 方向使用 Mellin/Riemann 积分，没有给出或声称任何等式、界或存在结论。
+    previous_atom_id: 203dba023ba663d45f2b5b535618f71b8048733873551d2921415c92a729eb7d
+    next_atom_id: 0366e3fa97e5db3a3925d6efc0e1622a5925e7e15073a7cd5608f582f9f9ca86

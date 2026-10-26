@@ -1,0 +1,11 @@
+# AURIC FIB 关系丛与预测闭包理论
+
+有限量子仪器、相位拓扑、受约束量子门与内生观察者的统一数学框架。
+
+**模型假设。** 有限维量子系统、有限记录与输出解析仪器、光滑恒秩参数域；
+五模式 AURIC FIB 实例及合法长链推广。本文是所供作者手稿的数学表述，
+不据此主张历史优先权或整卷证明助手认证。定理的“证明”指所附普通数学证明；
+所引两项 Lean 源结果只覆盖各自给定的单一 Heisenberg 迭代。
+固定文本来源为 [trureturing](https://github.com/the-omega-institute/trureturing) 的提交
+`7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c`。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22b8b05140c61f9edef22fd47955e314f26e116dd44321d573264949cd319f9d
+  normalized_sha256: sha256:22b8b05140c61f9edef22fd47955e314f26e116dd44321d573264949cd319f9d
+cas_ref: sha256:22b8b05140c61f9edef22fd47955e314f26e116dd44321d573264949cd319f9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 声明后续定理的假设范围：有限的是时间索引，DecidableEq 是机器判定前件。'
+    previous_atom_id: 711575538efbd14a846ce1056e933c1562849fe082e5e3faa8d26a49983f271f
+    next_atom_id: beec8f589111c732e64753fa87c98d2ae3fdb73cf262609bf683f1365367ffa8

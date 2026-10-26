@@ -1,0 +1,40 @@
+**Proposition 268.4 (the conditional $7/6$ value for every native $a_0,g$).** Under (268.8), for every $a_0,g>0$ the restricted forms and normalized operator are
+
+$$
+\begin{aligned}
+S_7&=\begin{pmatrix}
+9&-2&0&-1\\-2&3&-1&0\\0&-1&5&-2\\-1&0&-2&3
+\end{pmatrix},\\
+V_7&=\operatorname{diag}(\tfrac34,\tfrac12,\tfrac54,\tfrac12),\\
+\widehat A_7&=N_7^{-1/2}(a_0S_7-gV_7)N_7^{-1/2}.
+\end{aligned}
+\tag{268.9}
+$$
+
+The conductances are $c_{ab}=2,c_{bc}=1,c_{cd}=2,c_{da}=1$, with killing conductances $(6,0,2,0)$. The cycle strength is $\eta_7=a_0/\sqrt3$, hence $\|D_7\|\ge a_0/3$. For the specified $f_b$,
+
+$$
+\|D_7f_b\|^2=\frac76a_0^2
+\quad\text{for all }a_0,g>0.
+\tag{268.10}
+$$
+
+Proof. The seven addresses and all kinetic diagonals are those of Definition 268.1. With collective values $u$, the restricted kinetic form is
+
+$$
+2|u_a-u_b|^2+|u_b-u_c|^2
++2|u_c-u_d|^2+|u_d-u_a|^2
++6|u_a|^2+2|u_c|^2.
+\tag{268.11}
+$$
+
+This proves the conductances, killing, and $S_7$. The common field sums are $3/4,1/2,1+1/4,1/2$, proving $V_7$. The four normalized cycle magnitudes are $2a_0/\sqrt3,a_0/\sqrt2,\sqrt2a_0,a_0/\sqrt3$, proving the asserted $\eta_7$ and the bound from Theorem 264.2.
+
+For (268.10), $Uf_b=e_L$. On class $a$, $H_7e_L$ has values $(-a_0,-a_0,0)$, whose mean is $-2a_0/3$ and whose residual squared norm is
+
+$$
+2(a_0/3)^2+(2a_0/3)^2=2a_0^2/3.
+$$
+
+On class $c$ its values are $(-a_0,0)$, with residual squared norm $a_0^2/2$. Classes $b,d$ are singletons and have zero residual. The diagonal potential acts on the one-point support $L$ only, so it contributes no hidden component for this vector, for any $g$. Summing $2/3+1/2$ proves (268.10). This conditional value neither changes (268.6) nor makes the partition-free proposal well-defined. □
+

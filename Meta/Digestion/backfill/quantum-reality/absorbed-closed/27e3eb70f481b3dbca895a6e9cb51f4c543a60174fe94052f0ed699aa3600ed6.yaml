@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:27e3eb70f481b3dbca895a6e9cb51f4c543a60174fe94052f0ed699aa3600ed6
+  normalized_sha256: sha256:27e3eb70f481b3dbca895a6e9cb51f4c543a60174fe94052f0ed699aa3600ed6
+cas_ref: sha256:27e3eb70f481b3dbca895a6e9cb51f4c543a60174fe94052f0ed699aa3600ed6
+coverage_gids:
+  - gid: D5/S3/QuantumChannels/UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance
+    target_statement_id: sha256:a73cb7d9be2d305dd0792deb587d90cdc07021ab9817d7d6299586deabb49e53
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:feb8e594381eebfc9e0d6975d34c26c804c9f033faa93df43a0365a18250e4b3
+  normalized_sha256: sha256:feb8e594381eebfc9e0d6975d34c26c804c9f033faa93df43a0365a18250e4b3
+cas_ref: sha256:feb8e594381eebfc9e0d6975d34c26c804c9f033faa93df43a0365a18250e4b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的 padicValNat.pow_sub_pow 以 p=3、x=4、y=1、正指数 h 直接闭合 JP6；仓内无可用冻结 GID。
+    previous_atom_id: dbb40a3d3d87c9ee0d30f38724dfc6b0897f23517134b7b992b67d7025a23f6a
+    next_atom_id: 38e5d36dbcfb638edf2a8fcf7189aa3fa4a8fa4df3c2ed0ff3dc50ee27141afc

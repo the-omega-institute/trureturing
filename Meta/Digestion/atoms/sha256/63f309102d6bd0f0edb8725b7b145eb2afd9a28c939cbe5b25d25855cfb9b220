@@ -1,0 +1,93 @@
+## 28. All parent-denominator zeros on these graphs
+
+There is a potential logical gap between roots of a regular-chart
+numerator and actual sources. The following explicit resultant
+identity removes it in the entire zero sector. The resultant here is
+in $r$; all inputs are the displayed integer polynomials.
+
+$$
+\operatorname{Res}_r(F,D)=62500b^{14}(2b+1)^2(5b+2)^4(8b-1)^4Q(b),
+\tag{28.1}
+$$
+
+where
+
+$$
+\begin{aligned}
+Q(b)={}&27b^{16}+198b^{15}-24294b^{14}-576939b^{13}
+ -5180250b^{12}-22502243b^{11}\\
+&-56647044b^{10}-93879326b^9-112237206b^8
+ -103197064b^7-77097576b^6\\
+&-49669216b^5-28167328b^4-13027456b^3
+ -4266880b^2-834560b-71680.
+\end{aligned} \tag{28.2}
+$$
+
+Identity (28.1) is the Sylvester determinant identity and can be
+verified by polynomial expansion. For $0<b\le1/2$,
+$27b^2+198b-24294<0$. Grouping the first three terms of $Q$
+therefore leaves only strictly negative summands, so $Q(b)<0$.
+A common finite root in $r$ forces the resultant to vanish.
+It follows that every point on either positive-width graph with
+$D=0$ has $b=1/8$.
+
+At that width the exact identities are
+
+$$
+\begin{gathered}
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853,\\
+D(r,1/8)=15\Phi(r)/262144,\qquad
+F(r,1/8)=-15\Phi(r)/262144. \tag{28.3}
+\end{gathered}
+$$
+
+There are exactly two strict roots $r_-,r_+$ of $\Phi$, with
+
+$$
+134815/10^6<r_-<134816/10^6,\qquad
+902449/10^6<r_+<902450/10^6. \tag{28.4}
+$$
+
+For completeness, a positive-scaled Sturm chain is
+
+$$
+\begin{aligned}
+S_0&=\Phi,\quad S_1=219136r^3-349248r^2+135200r-6341,\\
+S_2&=1610816r^2-1689664r+121445,\\
+S_3&=64839740164r-26327821511,\\
+S_4&=78580316788659208197744775.
+\end{aligned}
+$$
+
+Here $S_0'=8S_1$ and the successive negative remainders have the
+positive multipliers $1/16$, $64/633478561$ and
+$1/262761994033439671681$. The signs at
+$0,134815/10^6,134816/10^6,902449/10^6,902450/10^6,1$ are
+respectively $--+-+$, $-+--+$, $++--+$, $+--++$, $---++$,
+and $--+++$. Their variation counts are $3,3,2,2,1,1$.
+Sturm's theorem gives exactly the two roots (28.4).
+
+Since $r_\pm(1-r_\pm)/2<1/8$, both singular points lie on the
+upper graph. There is no denominator zero on the lower graph.
+At either singular point,
+
+$$
+T=9/8,\quad U=5/4,\quad
+1/j+1/n=107/60,\quad n>j>0.
+$$
+
+The latter relation implies $1/j>107/120$ and $n>120/107$.
+Using the same $q_5$ of (26.3), one obtains
+
+$$
+q_5=71/18-5/j<-37/72,\qquad
+A_5<1-(120/107+5/4)37/72=-6739/30816<0. \tag{28.5}
+$$
+
+Consequently $(\Lambda,A_5)$ is never $(0,0)$ on either graph:
+away from these two points $\Lambda\ne0$, and at both points (28.5)
+applies. In particular no extraneous $D=0$ numerator root has been
+silently promoted to an actual parent.
+
+
+

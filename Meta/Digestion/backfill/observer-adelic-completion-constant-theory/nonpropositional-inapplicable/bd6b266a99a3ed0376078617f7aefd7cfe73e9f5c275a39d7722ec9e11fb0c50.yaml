@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd6b266a99a3ed0376078617f7aefd7cfe73e9f5c275a39d7722ec9e11fb0c50
+  normalized_sha256: sha256:bd6b266a99a3ed0376078617f7aefd7cfe73e9f5c275a39d7722ec9e11fb0c50
+cas_ref: sha256:bd6b266a99a3ed0376078617f7aefd7cfe73e9f5c275a39d7722ec9e11fb0c50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅引入 n_-(A_L) 表示计重数的负谱指标这一记号；未断言指标有限、大小或算子性质。
+    previous_atom_id: a7c1b16efb82e6a1588220cc037a2163597fcd634cc88696e1bce03df1fa7efd
+    next_atom_id: 13939d4655f0c70b1b1dcd2b234a8b00003193c20f6c36050119fe3d7e2d0db6

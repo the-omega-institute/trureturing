@@ -1,0 +1,4 @@
+**Proposition 4.3 (identically zero gain and constant observations).** In the enlarged source model allowing $g\equiv0$, the continuation readings are all $d$, and the source $P$ is not determined. Conversely, a constant vector $Y_i=c$ has the unique ambient solution $d=c$, $Z_0=\cdots=Z_3=0$. Hence no constant observation vector, including the all-zero vector, is realized by an original world.
+
+**Proof.** If $g\equiv0$, the observation formula is independent of $P$. The stated ambient solution gives a constant vector, and ambient invertibility makes it unique. Its trace coefficients are all zero, so condition 1 of Theorem 4.2 fails. Thus excluding the identically zero whole gain is necessary. Zero individual readings, including those caused by drift cancellation, are not excluded by this argument. ∎
+

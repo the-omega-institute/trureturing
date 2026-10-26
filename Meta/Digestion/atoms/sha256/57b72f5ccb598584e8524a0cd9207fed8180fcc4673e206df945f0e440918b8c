@@ -1,0 +1,153 @@
+**Definition 6.2a (semantic journal, ordinal relation and paid access).**
+Write the completed dispatcher-event word as $x_0\cdots x_{n-1}$, including
+the acquisition entrance when it precedes the observed suffix. Put
+
+$$
+\epsilon(x)=\begin{cases}
+0,&x\text{ is Reserve or Raise, with any of its three outcomes},\\
+1,&x\text{ is ReadE, TagRead, Rho, Left, Right, NativeLocal or Halt},
+\end{cases}
+\qquad c_a=\sum_{b<a}\epsilon(x_b).
+$$
+
+Executed source rejects and absent literal replies have $\epsilon=1$.
+Invalid preparations, unfinished or malformed ingress, unexecuted illegal
+calls, archive `no-row`, copying and primitive controller work without a
+completed marker add no $x_b$. At acknowledged boundaries $m=n,j=c_n$.
+Let $U_a$ be the unified row with old ordinal $a$; let $J_k$, $1\le k\le c_n$,
+be the semantic row for the unique event at
+
+$$
+\sigma(k)=\min\{a<n:\epsilon(x_a)=1,\ c_{a+1}=k\},\qquad
+\epsilon(x_{\sigma(k)})=1.
+$$
+
+Thus $\sigma(k)$ is the position of the $k$th semantic event. A nonmaintenance
+$U_a$ has before/after $j=(c_a,c_a+1)$ and references $J_{c_a+1}$; a maintenance
+row has $(c_a,c_a)$ and `no-semantic-row`. The predecessor of $J_k$ is
+$J_{k-1}$, or none for $k=1$. It is not the preceding unified row, which
+can be maintenance. The predecessor of $U_a$ is $U_{a-1}$, or none for $a=0$.
+In particular $j=m-\#\{b<m:\epsilon(x_b)=0\}$, without identifying any
+event count with a descriptor ordinal or a primitive receipt ordinal.
+
+The semantic payload has version `SEG-J1` and fifteen Frame fields, in
+this order: version; $\xi$; `INITIAL-SOURCE` occurrence binding; initial
+$H_0$/prior binding; **postcommit** ordinal $U(k)$; optional semantic
+predecessor reference; one of the seven original event kinds; complete
+request/material-reference tuple; exact response/local marker/terminal
+output; before/after $q,g,e$ tuple; historical $U(h)$; typed source-layout
+tuple; actual template/controller identity; start fence; response-commit
+fence. The occurrence binding is the `INITIAL-SOURCE` tag and the boot
+tuple $\xi,H_0,16,b_0,L_0,0$, constructed from the retained initial directory
+fields. The source-layout tuple is the `SEG-SOURCE` tag and
+$\xi,h,K,v,M_v$. It describes the first $L(h)$ logical bits under $\phi_K$;
+it does not assert that disjoint segments are one physical interval.
+All tuple components use the existing Frame/option codecs. Row creation
+and final seal belong to the actual external descriptor/availability chain,
+as in LJA5.1; no field predicts that row's future seal or total cost.
+
+For source calls the request tuple retains the actual header/length/payload
+and complete context/name/code material already prescribed. A local marker
+instead retains its acquired controller-instruction packet; Halt retains
+its acquired terminal packet and complete sealed output block. These are
+their own typed tuples, not fabricated source-frame inputs. Required
+control/output blocks absent at the producer or receiver are actually
+copied through Definition 6.3 before use. The local/terminal packet also
+retains its installed return kind and complete saved continuation material;
+these are acquired fields, not a new evaluator argument. An acquisition producer's internal
+Stop has this same Halt journal meaning, while its saved return kind
+continues the surrounding dispatcher. A global stop takes the terminal
+route only after recording and delivery. This preserves both return paths.
+
+For every nonmaintenance event, after commitment and complete counter
+selection, scan the complete index on 18 for its last reference and stage
+it as `old-semantic-last`; the empty case constructs the none tag. Reload
+the staged before-fields and complete request/response/fences, BuildManifest,
+and Frame the fifteen fields, one at a time, into a fresh block on 21.
+Use exactly Definition 6.2's Base/payload/sep/zero-status/length/Add/
+WriteDescriptor/At; WR(1); CTL graph, with type `SEG-J1` on 17. Construct
+its actual reference from that descriptor and stage it as
+`current-semantic-row`. Append a native `00` record on 18 with two fields
+$U(k)$ and that reference, using Tail, tag/sep Appends, two WriteFields,
+EX; WR(seal); MR. Then construct $U_a$ and its index on 19. On maintenance
+execute no semantic-row or index append and construct the none tag instead.
+Before either writer, obtain `old-unified-last` by the same complete-index
+scan on 19. These writer-side last-reference scans start at L and run to
+the existing R, incrementing a real count after each verified seal and
+retaining the last complete reference. Before $J_k$ they compare index 18's
+count with the staged **old** $j=k-1$; before $U_a$ they compare index 19's
+count with staged old $m=a$. The already committed event counts can be one
+ahead of those indices. They are not passed as if an unfinished current
+row already existed. At idle/frozen completed ends the corresponding counts
+again agree. No scan of an unfinished index is invoked. The semantic and
+unified copies of $M_v$ are both actually constructed and charged.
+Staging/reload uses the fixed types in Definition 6.1; only the current
+field, output, length/budget and bounded arithmetic roles remain live.
+Other fields are loaded by a fresh origin scan, so the twelve-role bound
+and the protected actor ports are unchanged.
+
+Both indices have the native two-field reader already specified for 19.
+The semantic reader additionally checks successive labels $1,\ldots,j_*$;
+the unified reader checks $0,\ldots,m_*-1$. At idle, or in an owner-held
+frozen-prefix service, load/construct the complete end count and last
+reference before reading. Home; MR enters the index; each tag test,
+ReadField/SkipField pair and seal RD; MR consumes one actual complete
+record. Increment/Compare on unary words implements its position, label,
+requested-ordinal and end tests. Select a reference only after its seal;
+continue through the declared closed end to check its count/last reference.
+Retain a selected reference on one word role until the closed end; then
+release the scan's temporary counters before any ten-field descriptor
+staging. The query/end words already have retained blocks and can be
+reloaded by fresh scans. At that closed end, zero/out-of-range semantic queries and
+out-of-range unified queries return typed `no-row`. A found reference is
+resolved by producer ReadDescriptor, not by treating $k$ or $a$ as an address.
+For an actor caller copy its whole block and missing dependencies on route
+48 through the positioned channel. The caller resolves the equal origin in its own local
+descriptor stream before reading. This is GetSemantic($k$) or GetUnified($a$),
+respectively; no printed producer base becomes a receiver address.
+
+A source-call ordinal is $q$, not $j$. A source-only query scans the same
+semantic prefix, bounded-parses each row, counts just the five source kinds,
+and selects its postcall $q$; locals and Halt are skipped without changing
+that count; zero or a source ordinal beyond that prefix's $q$ returns
+`no-row`. Call this one-based interface GetSourcePost($i$). The original
+AIF request ordinal is zero-based: it is $q_{\rm before}=i-1$ for this
+event, while $q_{\rm after}=i$. Those retained request fields are unchanged.
+A caller of GetSourceRequest($a$) first executes unary Increment on its
+actual $U(a)$, then invokes GetSourcePost($a+1$). That translation and
+copy are charged; semantic $j$ and unified $m$ are not source-request
+ordinals. A semantic-prefix query through $k$ scans unified indices and
+their complete acquired rows, increments a separate rank word only at the
+seven semantic kinds, and selects the closed end $\sigma(k)+1$; $k=0$
+selects the empty prefix. It then uses the full snapshot/dependency routine
+of Definition 6.3 for that end. A current whole-prefix query uses $m_*$
+and includes any trailing maintenance. Prefix indices zero through their
+respective closed counts are legal; a larger prefix index returns `no-row`
+after the bounded scan. Hence the shortest prefix through
+$J_k$ and the current prefix with the same $j$ are distinct queries.
+These finite scans realize rank/select rather than acquiring it for free.
+Requests are complete retained public query words on the installed caller's
+own tapes: Frame(kind), Frame($U(i)$), Frame(closed-end binding), with five
+fixed kinds for the two row queries, source-only and the two prefix queries.
+Its fixed code constructs these fields by literal Appends and copies from
+acquired data. An actor borrows the pool from the producer, constructs/stages
+the packet in its archive/checking work and sends it on route 49. After
+that channel has returned the pool to its actor sender, the actor executes
+the twelve TOKs and CTL returning it to the producer before producer parsing.
+The producer parses the packet's three bounded fields by ReadFrame;
+a producer-local call uses its own retained packet and already owned
+payload. Verifier/consumer lookups scan their already acquired snapshots
+locally; they acquire no new producer-private read or reverse mailbox route.
+There is no new raw source-frame tag, free scheduling
+choice or unretained external query argument. This is an internal callable
+archive routine, also used by the existing snapshot/stop paths. It holds
+admission busy and changes only its actual work/copy/meter state. An
+idle archive-client call returns its payload or `no-row`, complete ACK,
+source-token and idle edges. A producer-local frozen-prefix call instead
+returns to its retained frozen/stop continuation, without an idle/admission
+edge or a new actor packet/channel. This finite return kind is retained
+before the call and selects the installed fixed return edge. It creates no source call, NativeLocal, Halt
+or maintenance event and changes neither $q,g,e,j,m$. GetSemantic is the
+versioned realization of LJA5.4's callable journal access, not a private
+source read or an arbitrary-busy-cut service.
+

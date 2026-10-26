@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fed6405550df9e1ebfc0e2640b9dbf68c08caf3e1311ca49ff76e807fbfe2d02
+  normalized_sha256: sha256:fed6405550df9e1ebfc0e2640b9dbf68c08caf3e1311ca49ff76e807fbfe2d02
+cas_ref: sha256:fed6405550df9e1ebfc0e2640b9dbf68c08caf3e1311ca49ff76e807fbfe2d02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 章节参照或版本增补目录；条目点名对象、接口或已列证明目标，不独立断言这些目标成立。'
+    previous_atom_id: e26c34f9ad1a74576006dd4413f79148041095017a9945a834ae1750f9342c72
+    next_atom_id: 101f26a5f43f138b27cca396987932901c33933513fc7adf58f3b3e18a21a6bc

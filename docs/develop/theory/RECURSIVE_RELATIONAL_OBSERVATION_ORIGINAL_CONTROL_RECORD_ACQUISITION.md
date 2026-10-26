@@ -1535,3 +1535,1282 @@ span models is claimed. This conditional acquisition result does not close
 the original unaugmented menu or the continuing programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Signed numerical commands and an actual execution interface
+
+**Definition 18.1 (the signed source and its nominal issued record).**
+Let QP denote [Quantitative native long-time phase paths and terminal
+heights](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md), G denote
+[Native two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md),
+D denote [Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md),
+and N denote [Auric FIB atom probability, phase transport and
+holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md).
+Use QP Definitions 69.1, 69.3 and all the calibration, finite-service,
+permission, fairness and resource premises of its Assumption 69.2.
+Only its exact scalar-execution premise is replaced by Definition 18.2.
+In particular fix its original signed nonzero $\kappa$ in the nonzero
+collar, $\varepsilon>0$, $0<Z<1$, $H=(1-Z)/2$, and deterministic immutable
+INITIAL $=(k_0,y_0)$ with $k_0\in I=(l,u)$ and
+$[l,u]\Subset\mathcal J_\kappa=(\max(0,2\kappa),H+\kappa)$.
+All preparation phases and the negative amplitude convention remain fixed.
+
+On the real lift write $y=(\theta,v,D)$ and
+$c(k)=\widehat c_\kappa(k)=(A_\kappa(k),B_\kappa(k),\kappa b_\kappa(k))$.
+These are exactly G (25.4):
+
+$$
+\begin{aligned}
+s_\kappa&=H+\kappa,& a_\kappa&=\kappa+\kappa^2/H,\\
+A_\kappa(k)&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-a_\kappa)},&
+B_\kappa(k)&=-\frac{k(k-2\kappa)}{2H(k-a_\kappa)},&
+b_\kappa(k)&=\frac{s_\kappa-k}{H(k-a_\kappa)}.
+\end{aligned}
+\tag{18.1}
+$$
+
+The notation $a_\kappa$ here names G's $\alpha_\kappa$, not a control.
+The fields are $P=\partial_k$ and $Q_\kappa=c(k)\cdot\partial_y$,
+and the probabilities remain
+$(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k)$.
+The actual phase torus is $(\mathbb R/2\pi\mathbb Z)^3$.
+For path comparisons use the Euclidean norm on the original three
+lift coordinates and its uniform path metric. In particular $D$ is
+never replaced by $D/\kappa$.
+
+Choose exactly QP (69.2)--(69.5): $h,N,j_0,a,d,k_j$, the certified
+dyadic transition rows, $B$, $\delta,z,e,\alpha$, and the independent
+fair table and sign bits. Write $J_0=j_0$, $1\le J_i<N$ for its generated
+height tape and $\xi_i\in\{-1,1\}$ for its phase signs, $1\le i\le m$.
+Put $A_i=h(J_i-J_{i-1})$, $B_i=z\xi_i$ and $d_0=\delta/2$.
+The issued schedule is precisely QP (70.1): installation hold $\iota$,
+then, for each $i$, P for $d_0$, hold $d_*/2$, Q for $d_0$, hold
+$d_*/2$, and terminal hold $r_*$. Its elapsed time is
+$\tau=\iota+m(\delta+d_*)+r_*$, including every hold.
+All stage quotas and $d_*/2\ge\ell$ remain requirements.
+
+Let $R$ be the finite issued record: source and INITIAL identities,
+calibration and guard certificates, granted permission identifiers,
+all fair bits, $J_i,\xi_i$, the rational displacements and full timed
+schedule. The phase reference $y_0$ is retained by identity/alignment;
+no numerical polling of its phases is implicit. Execution status at a
+declared completed delimiter is a separate finite event field.
+The nominal path $(\bar K,\bar Y)$ is the exact ODE image of this same
+issued record, so that
+$\bar K_i=k_{J_i}$ and
+$\bar Y_i-y_0=\sum_{j\le i}B_jc(k_{J_j})$.
+It is the QP numerical path as a mathematical comparison, not an
+additional execution, a reset, or a sensor.
+
+**Definition 18.2 (covered errors, holds and common realization).**
+Choose deterministic nonnegative rational displacement caps
+$p_i,q_i$, $1\le i\le m$, recorded with $R$. On the P interval of cell
+$i$ the actual velocity is $(A_i/d_0+u_i(t))P$; on its Q interval it
+is $(B_i/d_0+v_i(t))Q_\kappa$, with
+
+$$
+u_i,v_i:[0,d_0]\to\mathbb R\ \hbox{Lebesgue measurable},\qquad
+|u_i(t)|\le p_i/d_0,\quad |v_i(t)|\le q_i/d_0
+\quad\hbox{almost everywhere}.
+\tag{18.2}
+$$
+
+Here the argument is local elapsed time within the respective piece.
+Thus the primitive error on any partial interval has absolute value
+at most its elapsed fraction times $p_i$ or $q_i$, and its total
+variation is at most $p_i$ or $q_i$. In particular the signed completed
+displacement errors $e_i=\int u_i\,dt$ and $f_i=\int v_i\,dt$ lie in
+$[-p_i,p_i]$ and $[-q_i,q_i]$. Every point of these intervals is allowed,
+realized by the corresponding constant error speed. Endpoint-error
+bounds alone, with uncontrolled intermediate excursions, are not this
+interface.
+
+Switching times, durations and all installation, latency and terminal
+holds are exact; on holds both actual velocities are zero. Only the
+active scalar speed is erroneous. There is no wrong-field component,
+height leakage during Q, autonomous drift, timing slip, calibration
+error, changed five-mode probability formula or extra error-correction control.
+The source follows the original ODE for these actual velocities from
+the same INITIAL. The original whole-command extrema guard, its
+refusal, and Stop followed by a hold are retained for the *actual*
+relative command. A speed-reversal within an active piece is allowed.
+This is a conditional actuator specification, not a claim that it
+has been installed or tested.
+
+At the pathwise level all error profiles satisfying (18.2) are covered.
+For probabilistic statements take any joint probability space carrying
+the prescribed fair record with its original law and these error
+profiles, for which the integrals and resulting paths are measurable
+and the bounds hold almost surely. Their joint conditional law may
+depend on the entire precomputed, already retained $R$, including
+future phase signs, and on an unobserved auxiliary variable. No
+independence, centering, temporal decorrelation or causal ignorance of
+that tape is imposed. No actual-error value is a readable input.
+The auxiliary variable describes execution uncertainty; it grants no
+additional usable sampler. Any extra service actually used to produce
+that uncertainty has its own finite-service charges in §22.
+A missing command, a non-held source, lost record or failed service
+does not satisfy this specification; if an interface supplies such
+failure events they must be retained, and the successful-execution
+conclusion is not asserted on them.
+
+## 19. All-prefix lawfulness, discrepancies and original-time charges
+
+**Theorem 19.1 (uniform certificate for every covered execution).**
+For Definition 18.2 set
+
+$$
+P_i=\sum_{j=1}^i p_j,\quad P_0=0,\quad
+P_\Sigma=P_m,\qquad Q_\Sigma=\sum_{i=1}^m q_i,\qquad
+g=\min\{a+h-l,\ u-d+h\}.
+\tag{19.1}
+$$
+
+Let $C>0$ and $L\ge0$ bound respectively $\sup_{[l,u]}|c|$ and
+$\sup_{[l,u]}|c'|$. QP (69.2) gives $2h<g<4h$.
+If $P_\Sigma<g$, every actual prefix, including partial active pieces,
+is an original lawful native history and stays in $I$. Moreover
+
+$$
+\begin{aligned}
+\sup_{t\le\tau}|K^*(t)-\bar K(t)|&\le P_\Sigma,\\
+\sup_{t\le\tau}|Y^*(t)-\bar Y(t)|
+ &\le \mathcal E:=C Q_\Sigma+Lz\sum_{i=1}^m P_i.
+\end{aligned}
+\tag{19.2}
+$$
+
+Here star denotes the actual execution. With $F=cc^{\mathsf T}$,
+$T=\tau/b$ and any fixed $b>0$, its full-clock occupation also satisfies
+
+$$
+\sup_{0\le s\le b}\left\|
+ \frac1T\int_0^{Ts}\{F(K^*(t))-F(\bar K(t))\}\,dt
+ \right\|\le 2bCLP_\Sigma .
+\tag{19.3}
+$$
+
+These are deterministic, simultaneous certificates over the entire
+issued-record and error domain; they neither read errors nor replace
+the original extrema domain by an endpoint test.
+
+Proof. The nominal height range is $[a+h,d-h]$. At a partial P piece,
+the height offset is the sum of completed P errors plus the integral
+of the current $u_i$. Its modulus is at most $P_i$; at Q and holds it
+is the completed sum $E_i=\sum_{j\le i}e_j$. Therefore the whole actual
+height path lies in
+$[a+h-P_\Sigma,d-h+P_\Sigma]\Subset I$.
+It is absolutely continuous with integrable derivative. The relative
+phase control is likewise absolutely continuous, with finite variation.
+N Theorem 9.2 and Proposition 10.2 identify this actual horizontal
+history with an original control, and give its exact extrema guard
+and partial-action composition. This checks positivity for every
+prefix, not just for the completed lattice points.
+
+On Q piece $i$ the actual height is the constant $k_{J_i}+E_i$.
+For a partial duration $s\in[0,d_0]$, subtract the nominal phase
+increment from the actual one:
+
+$$
+ \frac{B_i s}{d_0}\{c(k_{J_i}+E_i)-c(k_{J_i})\}
+       +c(k_{J_i}+E_i)\int_0^s v_i(t)\,dt .
+\tag{19.4}
+$$
+
+Its norm is at most $LzP_i+Cq_i$.
+Summing completed pieces and, when present, the current partial Q
+piece proves (19.2). P pieces and holds add no phase discrepancy.
+The segment between the two heights lies in $[l,u]$, so the derivative
+bound is applicable. Finally
+$\|F(k)-F(k')\|\le2CL|k-k'|$ by expanding the difference of the two
+outer products. Integrating for the actual duration $Ts$, rather than
+active time alone, proves (19.3). Stop truncates the same argument and
+adds a held state; it supplies no full-horizon limit for an interrupted
+run. $\square$
+
+**Corollary 19.2 (explicit sufficient per-command scales).**
+For $T=\tau/b>0$, choose a desired normalized discrepancy $r>0$.
+It is sufficient that, for every $i$,
+
+$$
+q_i\le\frac{r\sqrt T}{2Cm},\qquad
+p_i\le
+ \min\left\{\frac hm,\,
+ \frac{r\sqrt T}{(L+1)z\,m(m+1)}\right\}.
+\tag{19.5}
+$$
+
+Then $P_\Sigma\le h<g$ and $\mathcal E/\sqrt T\le r$.
+Equivalently the sufficient absolute speed-error caps on each active
+piece are $2p_i/\delta$ and $2q_i/\delta$.
+These are requested mathematical accuracy scales, not an accuracy,
+throughput or energy theorem about a device.
+
+Proof. One has
+$\sum_iP_i\le m(m+1)\max_i p_i/2$ and
+$Q_\Sigma\le m\max_i q_i$.
+The two terms in (19.2), divided by $\sqrt T$, are at most
+$rL/(2(L+1))$ and $r/2$ respectively. The height statement follows
+from (19.1). $\square$
+
+**Theorem 19.3 (native variation, length and energy on the same clock).**
+Under Theorem 19.1 every covered execution has
+
+$$
+\begin{aligned}
+ V^{a,*}&\le mh+P_\Sigma,&
+ V^{b,*}&\le mz+Q_\Sigma,\\
+ \mathsf L_A^*&\le (mh+P_\Sigma)/\varepsilon+mz+Q_\Sigma,\\
+ \mathsf E_A^*&\le
+ \frac2\delta\sum_{i=1}^m
+  \left\{\frac{(|A_i|+p_i)^2}{\varepsilon^2}
+                   +(z+q_i)^2\right\}.
+\end{aligned}
+\tag{19.6}
+$$
+
+The covariance/norm convention remains
+$A=\operatorname{diag}(\varepsilon^2,1)$.
+In particular the lifted state variation is at most
+$mh+P_\Sigma+C(mz+Q_\Sigma)$.
+All preparation and holds have their full original elapsed-time and
+maintenance charges, although their horizontal energy is zero.
+
+Proof. On a P piece the speed has modulus at most
+$(|A_i|+p_i)/d_0$, and on a Q piece it is at most $(z+q_i)/d_0$.
+Integrate the speed, or its square with the stated covariance weight,
+over its duration $d_0$ and sum. The phase variation is at most $C$
+times the scalar Q variation. No regularity or probability assumption
+on the error beyond (18.2) was used. $\square$
+
+## 20. Transfer of the unchanged joint transport consumer
+
+**Theorem 20.1 (actual execution tolerance in the full joint regime).**
+At every stage use the same fixed signed source and INITIAL of
+Definition 18.1, with all the finite prerequisites of QP Theorem 70.1,
+except for the replaced exact scalar-execution premise.
+Assume its quotas, its latency/hold conditions, and the entire joint
+regime
+
+$$
+\begin{gathered}
+ h_n\longrightarrow0,\quad e_n\longrightarrow0,\quad
+ \alpha_n\longrightarrow0,\quad T_n=\tau_n/b\longrightarrow\infty,\\
+ m_n2^{-B_n}\longrightarrow0,\qquad
+ \frac{\iota_n+m_nd_{*,n}+r_{*,n}+\delta_n}{T_n}\longrightarrow0 .
+\end{gathered}
+\tag{20.1}
+$$
+
+In addition assume $P_{\Sigma,n}<g_n$ and the proved discrepancy
+bound satisfies $\mathcal E_n/\sqrt{T_n}\to0$.
+For *every* sequence of joint actual error laws in Definition 18.2,
+
+$$
+ X_n^*(s)=\frac{Y^{*,n}(T_ns)-y_0}{\sqrt{T_n}}
+ \ \Longrightarrow\ \widehat{\mathcal W}_{\kappa,b}
+ \quad\hbox{in }C_0([0,b],\mathbb R^3),
+\tag{20.2}
+$$
+
+and its endpoint covariance converges to $2b\widehat M_\kappa$, where
+
+$$
+ \widehat M_\kappa=\int_l^u c(k)c(k)^{\mathsf T}\phi(k)^2\,dk,\qquad
+ \phi(k)=\sqrt{\frac2{u-l}}\sin\frac{\pi(k-l)}{u-l}.
+\tag{20.3}
+$$
+
+The centering in (20.2) is exactly $y_0$, not an error-dependent mean.
+The actual finite-stage mean need not vanish; its normalized modulus
+is at most $\mathcal E_n/\sqrt{T_n}$.
+Since $P_{\Sigma,n}<g_n<4h_n\to0$, (19.3) also transfers QP's full-clock
+occupation certificate. Conditions (19.5) with $r_n\to0$ ensure all these additional
+conditions. No optimal P-error threshold is asserted.
+
+Proof. On the actual joint probability space construct the nominal
+path as the stated deterministic function of the same $R_n$. Its
+marginal distribution is exactly the QP numerical distribution:
+adding an arbitrary conditional error law does not alter that
+prescribed fair-record marginal. QP Theorem 72.1, with (20.1) and
+all its original source/service hypotheses, gives its full joint
+centered limit and endpoint covariance, including the signed cross
+entries. By (19.2),
+
+$$
+ \|X_n^*-\bar X_n\|_\infty
+             \le d_n:=\mathcal E_n/\sqrt{T_n}\longrightarrow0.
+\tag{20.4}
+$$
+
+For every bounded Lipschitz function on this continuous-path space the
+expectation difference is bounded by its Lipschitz constant times
+$d_n$. Such functions determine weak convergence on this separable
+metric space, proving (20.2). This is a comparison of the actual joint
+law with the nominal joint law on one realization. It does not apply
+a martingale theorem to the actual errors.
+
+For the second-moment assertion put $U_n=\bar X_n(b)$ and
+$V_n=X_n^*(b)-U_n$. The nominal vector has mean zero and uniformly
+bounded second moment by QP Theorem 72.1. Since $|V_n|\le d_n$,
+Cauchy--Schwarz gives
+
+$$
+ \|\operatorname{Cov}(U_n+V_n)-\operatorname{Cov}(U_n)\|
+ \le 2(\mathbb E|U_n|^2)^{1/2}d_n+d_n^2 .
+\tag{20.5}
+$$
+
+Also $|\mathbb E(U_n+V_n)|\le d_n$. This proves covariance and mean
+convergence without assuming uniform integrability from weak
+convergence or subtracting an unknown actual mean. Formula (19.3)
+proves the occupation assertion. $\square$
+
+**Corollary 20.2 (the selection consumer and a symbolic sufficient scale).**
+Under all the hypotheses of QP Corollary 72.2, including that the
+analytic selection is Q in the stated survival-selection class, add
+Theorem 20.1's actuator and vanishing-discrepancy conditions.
+Then the actual numerical executions approach that same correlated
+rank-three Q transport endpoint. Their ensemble endpoint covariance
+is positive definite eventually. This transfers that transport
+consumer, not the native entropy-rate selection criterion.
+
+In the specific simultaneous scaling QP (70.7), it is sufficient to
+request $p_{i,n}\le n^{-7}$ and $q_{i,n}\le n^{-4}$, uniformly in $i$.
+They give $P_{\Sigma,n}=O(n^{-3})$,
+$\mathcal E_n/\sqrt{T_n}=O(n^{-1})$, and speed-error caps of orders
+$n^{-5}$ and $n^{-2}$. This is a conditional symbolic scaling.
+
+Proof. The limit matrix in (20.3) is positive definite for the fixed
+nonzero signed collar by D Theorems 36.1, 39.1. Matrix convergence
+therefore gives eventual positivity, exactly as in QP Corollary 72.2.
+For the scaling, $m=n^4$, $z\asymp n^{-1}$,
+$\delta\asymp n^{-2}$ and $\sqrt T\asymp n$. Substitute in (19.2)
+and (18.2); $g>2h\asymp n^{-1}$ gives the guard. This calculation
+does not establish the availability or price of the requested
+accuracy. The same fixed holds must still accommodate every service
+used, including those in §22 when that readable consumer is claimed.
+$\square$
+
+## 21. The exact scalar retained-record interval and its sharp threshold
+
+**Theorem 21.1 (attained compatibility interval and scalar minimax).**
+Let $\lambda=(2,-2,1)$, of Euclidean norm $3$, and let
+$\chi^*(t)=\lambda\cdot(Y^*(t)-y_0)$ be its *lifted increment*.
+For a completed issued record $R$, put
+$\beta_R=z\sum_{i=1}^m\xi_i$.
+On the exact-P subdomain $p_i=0$, the set of compatible terminal
+lifted increments, over all covered Q-error profiles, is exactly
+
+$$
+ \{\chi^*(\tau)\mid R\}
+       =[\beta_R-Q_\Sigma,\ \beta_R+Q_\Sigma].
+\tag{21.1}
+$$
+
+Both endpoints and every intermediate value are attained on that
+same record. Consequently
+
+$$
+ \inf_{a\in\mathbb R}\quad
+ \sup_{\text{covered errors at }R}|\chi^*(\tau)-a|
+       =Q_\Sigma,
+\tag{21.2}
+$$
+
+attained by the record predictor $a=\beta_R$; it is the unique
+minimizer, also when $Q_\Sigma=0$. Independent randomization of the
+predictor cannot lower the worst-case expected absolute loss.
+The same minimax radius holds for predicting the entire scalar
+lifted-increment path in uniform norm, using its nominal path.
+
+The notation in (21.1) is a set of realizations compatible with the
+record and interface. It is not a conditional probability-support
+assertion for every joint error law: a particular law can put mass
+on a strict subset of this interval.
+
+Proof. The exact supplied primitive identity is
+
+$$
+ \lambda\cdot c(k)=2A_\kappa(k)-2B_\kappa(k)+\kappa b_\kappa(k)=1.
+\tag{21.3}
+$$
+
+This is D Theorem 50.1's original character, with both signs of
+$\kappa$ unchanged. Thus $\chi^*$ is the actual accumulated scalar
+Q displacement; neither height nor P motion enters it. At the
+terminal hold it equals $\beta_R+\sum_i f_i$. The Minkowski sum
+of the intervals $[-q_i,q_i]$ is $[-Q_\Sigma,Q_\Sigma]$.
+Explicitly, if $Q_\Sigma>0$, any $s$ in this last interval is
+realized by $f_i=sq_i/Q_\Sigma$, with constant speed
+$v_i=f_i/d_0$. If $Q_\Sigma=0$, all $f_i=0$.
+The exact-P history is lawful regardless of these Q errors because
+height remains nominal. Indeed the scalar identity and interval
+also hold with any of Theorem 19.1's guard-certified P errors;
+exact P is imposed here for the vector comparison below.
+
+For any predictor $a$, the larger of its losses at the two endpoints
+is $Q_\Sigma+|a-\beta_R|$. This proves (21.2).
+For a randomized output $A$, the sum of its expected losses at the
+two endpoints is at least $2Q_\Sigma$, by the triangle inequality.
+For paths the accumulated absolute Q error at every prefix is at
+most $Q_\Sigma$, so the nominal path gives that upper radius.
+The terminal two endpoints give the matching lower radius.
+No winding has been reduced modulo a period in these statements.
+$\square$
+
+**Proposition 21.2 (vector bounds are different from the scalar equality).**
+On the exact-P subdomain, write $c_i=c(k_{J_i})$.
+The compatible full terminal vector increments form the attained set
+
+$$
+ \sum_i B_ic_i+
+ \left\{\sum_i f_ic_i:\ -q_i\le f_i\le q_i\right\}.
+\tag{21.4}
+$$
+
+Its Euclidean minimax radius $\mathfrak r_R$ satisfies
+
+$$
+ Q_\Sigma/3\le\mathfrak r_R\le C Q_\Sigma.
+\tag{21.5}
+$$
+
+In particular the scalar radius $Q_\Sigma$ in (21.2) is not a
+Euclidean vector-radius formula.
+
+Proof. Integrate Q at its fixed height, and realize every $f_i$
+by the constant speed from Theorem 21.1. The second set in (21.4)
+is compact and centrally symmetric. If $w$ belongs to it, so does
+$-w$, and any proposed vector center has maximum distance to that
+pair at least $|w|$. The nominal center achieves maximum radius
+$\max|w|$, so it is a minimax center. The triangle inequality gives
+$|w|\le\sum_i q_i|c_i|\le C Q_\Sigma$. Taking all $f_i=q_i$ gives
+$\lambda\cdot w=Q_\Sigma$ by (21.3), hence $|w|\ge Q_\Sigma/3$.
+These are lower and upper bounds; no equality between them is claimed.
+$\square$
+
+**Theorem 21.3 (necessary and sufficient worst-case Q-error scale).**
+Assume the complete nominal hypotheses and joint regime of
+Theorem 20.1 and exact P. The deterministic caps $q_{i,n}$ may be
+unequal. The following are equivalent:
+
+1. $Q_{\Sigma,n}/\sqrt{T_n}\to0$.
+2. For every sequence of allowed joint Q-error laws, with unrestricted
+   dependence on the retained tape as in Definition 18.2, the actual
+   paths have exactly the centered joint limit (20.2) and the endpoint
+   covariance limit stated there.
+
+The equivalence concerns uniform protection against the declared
+full error domain. It is not a necessary condition for one particular
+benign error law. For equal caps $q_n$, it is exactly
+$m_nq_n=o(\sqrt{T_n})$, or, for a common absolute Q speed-error cap
+$s_n=2q_n/\delta_n$, exactly
+$m_n\delta_ns_n=o(\sqrt{T_n})$.
+
+Proof. Sufficiency is Theorem 20.1 with
+$\mathcal E_n=CQ_{\Sigma,n}$ and $P_{\Sigma,n}=0$.
+For necessity choose the admissible constant speeds
+$v_{i,n}=q_{i,n}/d_{0,n}$ for every record.
+Then the normalized endpoint primitive increment is exactly
+
+$$
+ \lambda\cdot X_n^*(b)=
+ \lambda\cdot\bar X_n(b)+Q_{\Sigma,n}/\sqrt{T_n}.
+\tag{21.6}
+$$
+
+The nominal scalar converges to the centered normal of variance $2b$,
+because $\lambda^{\mathsf T}\widehat M_\kappa\lambda
+=\int_I1\,\phi^2=1$.
+If the nonnegative shifts in (21.6) do not tend to zero, some
+subsequence has a further subsequence tending either to a finite
+positive value or to $+\infty$. In the first case its limiting
+normal has that positive mean and is not the target scalar law.
+In the second case tightness fails: a tight nominal variable shifted
+to $+\infty$ leaves every fixed compact interval with probability
+tending to one. Either case contradicts (20.2), since endpoint
+projection by $\lambda$ is continuous. The requirement of covariance
+convergence in item 2 does not rescue the failed centered-law claim.
+In fact the scalar variance in (21.6) is unchanged by this deterministic
+shift, so scalar covariance alone cannot detect the failure.
+The equal-cap speed reformulation follows from $d_0=\delta/2$.
+$\square$
+
+**Theorem 21.4 (same issued record does not determine the actual outcome).**
+If some $q_j>0$, no function of the retained issued record, even with
+its deterministic schedule, known INITIAL and completed delimiter,
+recovers the exact actual terminal lift throughout the exact-P
+error domain. The obstruction also applies to the actual torus
+outcome and primitive circle character. Nor do these record data
+determine the actual conditional joint outcome law without a
+specified joint error law.
+
+Proof. Fix any realizable record and choose a real
+$0<a\le q_j$ with $2a<2\pi$.
+Take every P error zero and every Q error zero except $f_j=+a$
+or $f_j=-a$, using constant speeds. These executions share the
+entire issued record, all times, all heights, all source/permission
+fields and every guard value that depends only on height.
+Their terminal lift difference is $2ac_j$ and its primitive
+projection is $2a$. Thus both the lifts and the primitive circle
+characters differ. The source's unimodular phase torus then also
+has distinct outcomes. A single record decoder returns the same
+answer on both and cannot be exact. A randomized decoder has the
+same output law on the two records and cannot almost surely equal
+both different constants.
+
+Concentrating the error law on one or the other profile gives
+different conditional actual outcome laws on that same record;
+mixing them gives still other laws. The fair-record law and nominal
+joint law have not changed. Specifying three marginal phase laws
+would in general also leave their cross dependence unspecified;
+it is the common-record uniform vector coupling (20.4) that proves
+the joint limit, not marginal convergence or a fitted tensor.
+In particular no actual-error sensor, error independence or
+error-dependent centering can be inferred from (21.1).
+$\square$
+
+## 22. A finite readable report with paid retained access
+
+**Definition 22.1 (rational report subdomain and granted services).**
+For this section restrict the known data
+$Z,\kappa,l,u,k_0,\varepsilon^2$ to rationals satisfying the original
+source/collar restrictions, and $b>0$ to a rational.
+Every scheduled number, cap $p_i,q_i$, source certificate and tariff
+used by the report has a finite rational/integer encoding.
+The original table construction and fair-bit generation are still
+QP's; they are not replaced by a new random source.
+The preparation phases may remain arbitrary immutable real phases.
+The report predicts all three *increments from that same $y_0$*.
+An absolute numerical phase report additionally requires a supplied
+rational vector $\widetilde y_0$ and certificate
+$|\widetilde y_0-y_0|\le r_0$, with their calibration, input and
+retention costs. Then the reported absolute center is
+$\widetilde y_0+\bar Y-y_0$, with radius $r_0+\mathcal E$.
+This is an optional known-INITIAL calibration subdomain, not a
+current-state measurement or a way to acquire an unknown preparation.
+
+There are granted rights to write and read this experiment's own
+finite $R$ and the derived report, with its source identity and
+reference alignment intact. A specified owned digital port exposes
+these bytes and the completed delimiter, not the source state,
+error profiles, unknown current clock, another experiment or a
+pre-entry archive. Its semantics are exact finite byte delivery.
+For explicit finite input/output lengths it supplies positive
+throughputs $r_{\rm in},r_{\rm out}$ in bits per original time and
+a finite port/setup latency $t_{\rm port}$. Access is nondisturbing
+to the held source. These are additional permitted services, with
+separate input/output tariffs when tariffs are counted.
+
+The actuator accuracy in (18.2), exact holds and switch times must
+themselves be granted guarantees on this same source and run.
+If a separate precision-provision service is used, name its finite
+provisioning time $t_{\rm acc}$, installation energy $E_{\rm acc}$,
+and finite counts $U_{\rm acc},W_{\rm acc},I_{\rm acc},O_{\rm acc},
+L_{\rm acc}$ for calculation, bit writes, input, output and peak
+memory. Those counts include its calibration certificates and
+precision installation. A requested $p_i,q_i$ without this stipulated
+execution guarantee does not meet Definition 18.2. In particular a
+finite precision *description* is not a physical accuracy service.
+
+Use a bit model in which elementary operations, input scans,
+temporary writes and output copies have charged counts.
+A single elementary operation touches a bounded number of bits;
+large-integer arithmetic is performed by finite bit operations.
+All encoded inputs, bounds, rights and installed timing guarantees
+must be present before use. Memory backing and readability persist
+through the specified terminal use, including all its latency and
+output. No indefinite retention or future grant is implicit.
+
+**Theorem 22.2 (finite calculation and its report).**
+Under Definition 22.1 and $P_\Sigma<g$, a finite computation from $R$
+produces a rational piecewise-affine nominal path for
+$(\bar K,\bar Y-y_0)$, with the original time breakpoints; the rational
+certificate $P_\Sigma,\mathcal E$ of (19.2); and the exact rational
+scalar endpoint interval (21.1) and radius $Q_\Sigma$ on exact P.
+It also produces a certified rational bound for
+$\mathcal E/\sqrt T$ and the original-schedule guard certificate.
+The report is an approximation/certificate for the actual execution;
+it does not select a point within its compatible-error set.
+
+More explicitly, let $q\ge2$ bound the binary length of each rational
+numerator/denominator and integer in the report input, including
+source parameters, $m,N$, all caps and rational bounds for $C,L$,
+and also the total length of its fixed metadata/certificate header.
+An owned sequential report-input block stores this header and
+the $J_i,\xi_i$, schedule and cap entries. It has $O((m+1)q)$
+bits and is written with the issued tape; this copy is charged.
+The full fair record and table remain in separate retained blocks.
+The report need not rescan them or obtain random-access rights;
+any additional scans, if performed, are included in §22.3's counts.
+There is a source-independent constant $C_2$ for sufficient extra
+quotas
+
+$$
+ U_{\rm rep}\le C_2(m+1)^4(q+1)^4,\qquad
+ L_{\rm rep},O_{\rm rep}\le C_2(m+1)^2(q+1)^2.
+\tag{22.1}
+$$
+
+The first is a bit-operation bound, the second bounds peak workspace
+plus report bits and its complete output length. Input scans and
+total temporary/output writes can each be bounded by
+$C_2(U_{\rm rep}+L_{\rm rep}+(m+1)q)$ after enlarging $C_2$.
+These are sufficient finite bounds, not optimal complexity claims.
+
+Proof. The lattice heights are rational
+$k_0+(J_i-j_0)h$. Formula (18.1) uses a fixed number of rational
+operations at each such height. Its denominators are nonzero by
+the strict source certificates. Rational upper bounds for $C,L$
+can also be obtained by bounding the explicit rational coefficients
+and their derivatives on $[l,u]$: the positive denominator
+$H(k-a_\kappa)$ has a rational lower bound, and every polynomial
+numerator is bounded by the sum of its coefficient magnitudes
+times powers of $\max(1,|l|,|u|)$. Sum component bounds to bound
+the Euclidean norm. This needs no exact norm or real-number oracle.
+
+Compute the three-vector prefix sums
+$\sum_{j\le i}z\xi_jc(k_{J_j})$ exactly as rational fractions.
+Insert them at the Q endpoints, interpolate on Q, interpolate the
+height on P, and insert the original constant holds. This gives
+the entire nominal path as a finite list of rational knots and
+affine formulas. Compute $P_i,Q_\Sigma$ by prefix sums, and compute
+the sum needed for $\mathcal E$ as
+$\sum_iP_i=\sum_{j=1}^m(m-j+1)p_j$.
+This avoids repeatedly summing fractions with previously accumulated
+denominators. The scalar interval is rational even
+when the unpolled initial phase reference is not. To report a
+normalized bound, find a positive rational $s$ with
+$s^2\le T<4s^2$, by comparing rational powers of four with the
+positive rational $T$, and return $\mathcal E/s$.
+This is a certified upper bound for $\mathcal E/\sqrt T$.
+If the finer requested additive precision is relevant, rational
+bisection of a square-root enclosure is finite and its additional
+requested bit width is included in $q$ and the counts.
+Further guard tests use the rational endpoints and bounds in §23.
+For a supplied finite rational continuation the same arithmetic
+terminates, with its actual intermediate bit lengths and extra
+quotas charged there. Bound (22.1) concerns the original lattice
+schedule, whose field-evaluation inputs have length $O(q)$;
+it is not a complexity bound for arbitrary future rational heights.
+
+A field evaluation uses integers of length at most a constant
+times $q$. Without reducing fractions, a prefix sum of at most
+$m$ such terms has numerator and denominator length $O((m+1)q)$:
+denominator lengths add under multiplication, and addition
+increases the numerator length by at most the sum of operand
+lengths plus a fixed carry allowance. The stored $O(m)$ prefixes
+therefore have total length $O((m+1)^2(q+1))$.
+Grade-school integer operations on length $s$ use $O((s+1)^2)$
+bit operations. A linear number of rational field evaluations,
+prefix operations, bounds and schedule operations is consequently
+within the more generous first bound of (22.1); memory and output
+fit its second bound. Computing a power-of-four enclosure needs
+$O(q+1)$ comparisons and stored exponent bits.
+Performing every scan and temporary write as counted bit actions
+gives the stated input/write bound. Table generation, random
+sampling, precision provisioning and source enclosures are
+separate already charged services, not hidden in (22.1).
+
+Finally the report's certificate is valid for *every* admissible
+actual profile by Theorem 19.1. On exact P its scalar interval is
+the exact compatibility interval by Theorem 21.1. Thus exact
+rational arithmetic computes the promised predictor without
+computing an exact real actual outcome. If the optional initial
+enclosure is supplied, adding its rational center and applying the
+triangle inequality gives the absolute radius $r_0+\mathcal E$;
+its input, calculation and storage are included in the quotas.
+$\square$
+
+**Theorem 22.3 (same-run finite acquisition, output and retention charges).**
+In addition to QP (70.4), choose finite quotas $U,W,I,O,L$ that bound
+all actual service counts on this run: calculation, *total* bit
+writes, input/read bits, output bits and peak retained/workspace
+bits. They include QP's $U_*,L_*,F_*=m(B+1)$; (22.1);
+all metadata, status/event and certificate copies; and Definition
+22.1's precision-provision counts. The fair bits are sampled once
+and retained. One may bound the base total writes and scans by a
+fixed multiple of $U_*+L_*+F_*+$ the finite input length, using
+the stated bit model; a peak-memory bound alone is not a
+total-write bound.
+
+Partition these counts into preparation counts and terminal-use
+counts, retaining $L$ as a common peak bound. Let $n_{\rm load}$
+bound every loaded timed piece, including $4m+2$ original pieces
+and any additional service instruction loads charged by its
+declared service. An adequate sufficient allocation is
+
+$$
+\begin{aligned}
+ \iota\ &\ge t_0+t_{\rm acc}
+  +\frac{U_{\rm pre}}{r_{\rm cpu}}
+  +\frac{F_*}{r_{\rm bit}}
+  +\frac{W_{\rm pre}}{r_{\rm write}}
+  +\frac{I_{\rm pre}}{r_{\rm in}}
+  +\frac{O_{\rm pre}}{r_{\rm out}}
+  +\frac{n_{{\rm load},{\rm pre}}}{r_{\rm load}},\\
+ r_*\ &\ge t_{\rm port}
+  +\frac{U_{\rm use}}{r_{\rm cpu}}
+  +\frac{W_{\rm use}}{r_{\rm write}}
+  +\frac{I_{\rm use}}{r_{\rm in}}
+  +\frac{O_{\rm use}}{r_{\rm out}}
+  +\frac{n_{{\rm load},{\rm use}}}{r_{\rm load}} .
+\end{aligned}
+\tag{22.2}
+$$
+
+All transition-latency inequalities still hold. Preparation computes
+and stores the report while the source is held; terminal use reads
+and outputs it after the scheduled last cell. Serial service and
+rational padding realize exactly the *already chosen* $\iota,r_*$
+and intervening schedule. If these inequalities fail, this readable
+use is not supplied by those holds.
+
+For finite nonnegative input/output tariffs $e_{\rm in},e_{\rm out}$,
+a sufficient total energy/accounting quota is
+
+$$
+\begin{split}
+ E_{\rm all}={}&\mathsf E_{\rm upper}^{*}+E_0+E_{\rm acc}
+ +e_{\rm cpu}U+e_{\rm bit}F_*+e_{\rm write}W
+ +e_{\rm load}n_{\rm load}+e_{\rm in}I+e_{\rm out}O\\
+ &+(p_0+p_{\rm mem}L)\tau ,
+\end{split}
+\tag{22.3}
+$$
+
+where $\mathsf E_{\rm upper}^{*}$ is the right side of (19.6).
+Any other declared finite-service tariff is added with its actual
+quota. These tariffs are stipulated accounting units.
+No energy law of a physical implementation is inferred from them.
+
+Proof. Perform source enclosures, table calculation, sampling, tape
+and certificate writes, precision provisioning, report calculation
+and loads serially within the first inequality. It overpays
+parallelizable work and counts input scans rather than granting
+unlimited random access. Read the stored report through its owned
+port and produce the finite output within the second inequality.
+Use the installed terminal delimiter and scheduled service events;
+no read of an unknown current time or actual source coordinate is
+needed. The exact held-state premise makes this whole use refer
+to one unchanged actual terminal state. Earlier finishing is padded
+within the respective original hold. All active dynamics are those
+of Definition 18.2.
+
+The retained tape, report and calibration/reference fields remain
+available through the last consuming event and its output copies.
+Their bit-time is at most $L\tau$; the maintenance charges also
+include every installation and terminal unit. Summing operation
+tariffs, this bit-time upper bound and the native bound (19.6)
+gives (22.3). Loss, revocation, expired backing or an uninstalled
+precision service violates a premise and cannot be repaired by the
+report computation.
+
+When Theorem 20.1 is also claimed along a sequence, (20.1) is
+required for these *same* enlarged paid holds. In particular neither
+(22.1) nor a requested precision implies enough throughput to make
+the hold fraction vanish. They give a finite conditional readable
+consumer at each stage; the additional original-time regime must
+be met independently. $\square$
+
+**Proposition 22.4 (one simultaneous symbolic paid-report regime).**
+On the rational-source subdomain, use QP (70.7), including
+$m_n=n^4$, $\iota_n=n$, $r_{*,n}=1$, and request
+$p_{i,n}\le n^{-7}$, $q_{i,n}\le n^{-4}$.
+Choose all reported bounds with $q_n=O(1+\log(n+1))$.
+Assume the precision service actually guarantees Definition 18.2
+at these caps, with all its operation/input/output/memory counts
+at most $n^2$, $E_{{\rm acc},n}\le n^2$, $t_{{\rm acc},n}\le1$, and
+$t_{{\rm port},n}\le1/2$.
+Retain QP's source and latency premises, and grant every service
+throughput in §22 at least
+$C_3n^{20}(1+\log(n+1))^{16}$ for a sufficiently large fixed $C_3$.
+There are finite quotas satisfying (22.2) for all sufficiently
+large $n$, with all the original holds unchanged.
+The complete joint regime (20.1), actual discrepancy limit and
+finite readable terminal use then hold simultaneously.
+
+Proof. The report-input block has $O(n^4(1+\log n))$ bits.
+Equation (22.1) bounds report computation by
+$O(n^{16}(1+\log n)^4)$ and peak/report-output bits by
+$O(n^8(1+\log n)^2)$.
+Total bit writes and scans fit the former bound.
+QP (70.8)'s base counts and the precision-service counts are
+smaller. A finite bit implementation needs at most a fixed
+multiple of its operation count plus original piece count
+for its additional instruction loads.
+Divide these sufficient counts by the displayed throughputs
+in (22.2). Preparation work takes $o(1)$ beyond its bounded
+setup times and fits in $\iota_n=n$; terminal read/copy/output
+work takes $o(1)$ beyond $t_{{\rm port},n}\le1/2$ and fits
+in $r_{*,n}=1$. Retain all record/report bits through that use.
+For bounded fixed tariffs (22.3) is, for example,
+$O(n^{16}(1+\log n)^{16})$: native energy is $O(n^4)$
+by (19.6), and bit-time is at most
+$O(n^8(1+\log n)^2)O(n^2)$.
+All these quotas are finite and may diverge.
+QP (70.7) still gives (20.1), and Corollary 20.2 gives the
+vanishing actual discrepancy. This proves compatibility of
+the declared inequalities only. In particular the assumed
+accuracy guarantee and growing throughputs are service
+premises, not a construction or installation theorem for
+an actuator. $\square$
+
+## 23. Independent views, agreement and finite same-source continuation
+
+**Definition 23.1 (four views and their different exposed data).**
+For the one actual process of Definition 18.2 define the space view
+at original time $t$ to be
+
+$$
+ \mathsf S_t=(K^*(t),[Y^*(t)])
+       \in\mathcal J_\kappa\times(\mathbb R/2\pi\mathbb Z)^3 .
+\tag{23.1}
+$$
+
+Its phase metric is the quotient of the original Euclidean metric;
+a continuous lift along this process is fixed by INITIAL for the
+error certificate. The space view is an actual source coordinate,
+not a freely readable port. No physical spatial axes are assigned
+to these coordinates.
+
+The time view $\mathsf T_t=t$ is original elapsed duration from the
+start of installation, independently of source displacement. At a
+specified owned completed delimiter it is the sum of the installed
+rational piece durations through that delimiter. The record port
+has no query for an otherwise unknown current time.
+
+For a prescribed future relative numerical command $\gamma$ with
+duration $S$ and a particular covered future error realization,
+write $a_\gamma^*(s)$ for its actual relative height path, starting
+at zero. With $\mathcal J_\kappa=(j_-,j_+)$, the actual boundary/guard
+view includes permission and the predicate
+
+$$
+ \mathsf B_t(\gamma,a_\gamma^*)=
+ \left[
+ \gamma\hbox{ is currently granted},\
+ j_-<K^*(t)+\min_{s\le S}a_\gamma^*(s),\
+ K^*(t)+\max_{s\le S}a_\gamma^*(s)<j_+
+ \right].
+\tag{23.2}
+$$
+
+An $I$-restricted task additionally uses the analogous inequalities
+with $l,u$. This is N's actual whole-command domain, not merely
+endpoint membership. With an uncertain actuator, guaranteed
+lawfulness of an issued command means (23.2) for *every* allowed
+future realization. No evaluation of a hidden future error or
+source coordinate is thereby made available.
+
+The retained-memory view $\mathsf M$ exposes only the owned finite
+$R$, its report and its completed event fields, with the stated
+read, backing and reference-retention rights. Error profiles and
+actual phase lifts are absent. Its purpose is to issue a certified
+approximation at a known delimiter and choose granted future
+commands with a proved sufficient margin. It is not defined as
+the inverse of any of the other three views.
+
+**Theorem 23.2 (approximate recovery and route agreement at held cuts).**
+Under §§18--22, at the terminal held cut the readable report gives
+an exact elapsed duration from its completed delimiter, an actual
+height interval $[\bar K-P_\Sigma,\bar K+P_\Sigma]$, and an actual
+three-phase lift-increment ball of radius $\mathcal E$ centered at
+$\bar Y-y_0$. Its space error in the product Euclidean/quotient
+metric is at most $(P_\Sigma^2+\mathcal E^2)^{1/2}$.
+This compares the actual state with the nominal state aligned to
+INITIAL; without numerical INITIAL calibration, only the increment
+ball is a numerical phase output.
+The exact time is the recorded delimiter's time; the report does
+not query the current time at an arbitrary later point in the hold.
+On exact P the scalar report is the attained interval (21.1).
+With the optional numerical INITIAL enclosure, replace the reported
+phase radius by $r_0+\mathcal E$ and use its numerical center in
+the product-space bound; (19.2)'s actual-versus-nominal radius stays
+$\mathcal E$.
+
+Computing the report by the chronological prefix sums, or composing
+its rational nominal P/Q pieces and then taking the endpoint,
+gives exactly the same nominal center, time and scalar interval.
+For any two covered actual executions with that same record,
+their corresponding lift/space discrepancies are at most twice
+the stated radii. Thus the actual routes agree to these certified
+errors; they are not asserted to have equal actual outcomes.
+The continuation rule below supplies a sufficient recovered subset
+of the actual guard, not its exact unknown boundary.
+
+Proof. Time at a completed delimiter is its installed duration sum.
+The height and phase claims are (19.2), and projection to the torus
+cannot increase distance. P adds precisely its relative height
+increment to the nominal state and leaves nominal phases fixed;
+Q adds precisely $B_ic(k_{J_i})$ and leaves nominal height fixed.
+Induction on the original chronological list therefore gives exactly
+the prefix sums in Definition 18.1, including its zero-motion
+holds. Projection by (21.3) gives the scalar nominal center.
+The interval radius is the same sum of $q_i$ in either calculation.
+A triangle inequality through this common nominal path proves
+the two-actual-execution bounds. These facts use one record,
+reference and INITIAL; they do not compare optima attained by
+different sources. $\square$
+
+**Theorem 23.3 (lawful finite continued use with the same actuator).**
+Suppose the report is used during the original terminal hold and,
+after that hold, a finite additional list of rational P pieces,
+Q pieces and exact holds is granted on this same live source.
+The list may be a finite computable function of the actually
+read record/report; all its selector inputs and calculations
+have the paid access and timing of §22. Each active piece has
+a positive rational duration $d_j^f$, signed nominal displacement
+$A_j^f$ for P or $B_j^f$ for Q, and error cap $p_j^f$ or $q_j^f$.
+Its actual speed error is bounded by its cap divided by $d_j^f$,
+with the same exact-field, exact-hold and exact-switch specification
+as Definition 18.2. Error dependence on old and new retained
+inputs may again be arbitrary.
+When compatibility over an entire error box is asserted, the same
+continuation grant and service premises must hold throughout that
+record's original and future error box; a grant conditioned on a
+hidden actual outcome cannot be treated as a common grant.
+
+Continue the nominal source from its old nominal endpoint.
+For any future time $s$, let $P^f(s)$ sum all future P caps whose
+pieces have begun, including the full cap of a current P piece.
+A sufficient finite robust guard is
+
+$$
+ l+P_\Sigma+P^f(s)<\bar K^f(s)
+                 <u-P_\Sigma-P^f(s)
+       \quad(0\le s\le S).
+\tag{23.3}
+$$
+
+On each affine/constant piece the same inequalities can be checked
+at its endpoints using the larger adjacent prefix cap, so this is
+a finite rational sufficient certificate.
+If it holds, every resulting actual concatenation is lawful in
+$I$ and in the original native domain, and
+
+$$
+\begin{aligned}
+ \sup_{s\le S}|K^f_*(s)-\bar K^f(s)|
+    &\le P_\Sigma+\sum_{j\in P}p_j^f,\\
+ \sup_{s\le S}|Y^f_*(s)-\bar Y^f(s)|
+    &\le\mathcal E+
+       L\sum_{j\in Q}|B_j^f|
+          \left(P_\Sigma+\sum_{\substack{a\in P\\a<j}}p_a^f\right)
+       +C\sum_{j\in Q}q_j^f .
+\end{aligned}
+\tag{23.4}
+$$
+
+Here $\bar Y^f$ includes the old nominal endpoint and $Y^f_*$ the
+old actual endpoint; no initial error is discarded. If all original
+and future P pieces are exact,
+the accumulated scalar compatibility interval at any completed
+future cut has nominal center
+$\beta_R+\sum_{\text{completed }Q}B_j^f$ and exact radius
+$Q_\Sigma+\sum_{\text{completed }Q}q_j^f$.
+
+All future sampling, calculation, input/output, writes, loads,
+precision provisioning, retention and latency require finite
+additional quotas and scheduled holds. Their time is added to
+$\tau$, and their native energy upper bound is
+
+$$
+ \sum_{j\in P}\frac{(|A_j^f|+p_j^f)^2}{\varepsilon^2d_j^f}
+       +\sum_{j\in Q}\frac{(|B_j^f|+q_j^f)^2}{d_j^f}.
+\tag{23.5}
+$$
+
+The service and bit-time tariffs are added as in (22.3) for the
+extended retention interval. With no such continuation grant,
+§22 asserts only finite terminal held-record use.
+
+Proof. At the old terminal cut the actual height offset has
+modulus at most $P_\Sigma$. Each future P piece increases its
+bound by at most its cap; Q and holds do not change it.
+This proves the first line of (23.4); applying the same partial
+bound at every time proves lawfulness from (23.3).
+On future Q piece $j$ height is fixed, and the old plus preceding
+P offset has modulus at most the parenthesis in (23.4).
+Subtracting the two phase increments as in (19.4) gives that
+piece's contribution to the second line. Add the old phase
+bound and sum all future Q pieces. Each true trajectory is the
+original ODE solution for its own realized relative command.
+N Theorem 9.2, or the exact additive-integral composition of
+OriginalControlComposition, joins it to the actual earlier
+history with both coordinates translated at the join.
+Neither INITIAL nor the relative-control origin is reset.
+
+For exact P, all completed Q displacement errors can again be
+chosen independently throughout their allowed intervals.
+Their Minkowski sum gives the asserted attained scalar interval.
+A selector depending only on the shared readable record chooses
+the same list for all errors in that record's fiber, so it
+does not consume an unknown actual phase or height.
+If (23.3) is not certified, the permitted report action can
+return inconclusive and retain a hold; failure of this sufficient
+test does not prove actual illegality.
+
+Integrating the squared speed bound over each original future
+duration proves (23.5). The same serial quotas as (22.2), now
+including selection and new-input costs, suffice for finite
+access and loads, provided their granted holds accommodate
+them. Retaining the old record, added record, references and
+report through their last use charges the full bit-time.
+Thus mathematical composability is accompanied by the same
+declared execution interface and finite paid use conditions.
+There is no assertion of infinite continued precision, uniform
+infinite-horizon storage, or a transport limit on a changed
+future schedule without its own joint hypotheses. $\square$
+
+**Proposition 23.4 (the remaining exact four-view obstructions).**
+The approximate recovery above is not mutual exact recovery
+of the independently defined four views.
+
+If some $q_i>0$, memory, time and height-based guard data can
+agree while actual space differs. If some P cap is positive,
+the same record can also have different actual native guard
+boundaries, whenever the distinguishing future P test is granted.
+Even with zero errors, a terminal space/time/guard triple need
+not determine the retained memory. Source displacement alone
+does not determine elapsed time.
+
+Proof. The first assertion is exactly the two actual executions
+of Theorem 21.4. For the second, choose one P displacement error
+$+a$ or $-a$, $a>0$ sufficiently small for Theorem 19.1, and all
+others zero. The terminal heights are $\bar k+a,\bar k-a$.
+Consider an exact future positive P displacement
+$j_+-\bar k$, if granted. From the lower height its final
+height is $j_+-a$ and every intermediate height stays in
+$\mathcal J_\kappa$; from the upper height it reaches and
+crosses $j_+$ and is not lawful. For the $I$-restricted boundary
+use $u-\bar k$ instead. This tests actual extrema domains, not
+an actual-boundary sensor. Granting only a smaller robust menu
+can remove this particular test; it does not supply the missing
+actual height.
+
+For the memory assertion take $m\ge2$, exact execution, and a
+height tape that stays at $j_0$ for two cells. Its dyadic stay
+probability is positive, since its two off-diagonal probabilities
+sum to less than one. The sign pairs $(+1,-1)$ and $(-1,+1)$
+are both permitted and give exactly the same terminal phase,
+height, duration and state-dependent native boundary, with
+different retained records and different intermediate paths.
+Finally any positive exact hold changes elapsed time with no
+change of source position or its state-dependent native guard.
+Thus no inverse of space alone supplies the clock.
+These examples do not preclude the approximate certified
+directions or the finite continued use just proved. $\square$
+
+## 24. Finite-variation limits and exact supplier correspondence
+
+**Theorem 24.1 (path information boundary with unrecorded execution error).**
+At each finite stage satisfying Theorem 19.1's guard hypothesis,
+every covered actual path is absolutely continuous and of finite
+variation. For every measurable joint error law of Definition 18.2
+on that domain, its actual full-path law is mutually
+singular to both the continuous native Q law and the original
+cemetery-inclusive killed reference on the same positive horizon.
+Its relative entropy to that killed reference is $+\infty$.
+
+Finite support, or a Shannon-entropy bound by the number of issued
+fair bits, is not asserted for this enlarged actual error domain.
+If error profiles are deterministic functions of the finite $R$
+alone, finite support and the corresponding finite-record entropy
+bound do hold. With unrecorded continuous error randomness they
+can fail, even on exact P and within arbitrarily small positive
+Q caps.
+
+Proof. Theorem 19.3 gives finite variation, and integrating the
+bounded active velocities on the finite schedule gives absolute
+continuity. In particular the height has zero quadratic variation
+along dyadic partitions. One direct proof is
+$\sum(\Delta K)^2\le\max|\Delta K|\operatorname{TV}(K)$;
+uniform continuity makes the maximum vanish.
+Every actual history survives the horizon. The Borel event of
+survival and zero terminal dyadic height quadratic variation
+therefore has actual probability one.
+Q has height quadratic variation $2\varepsilon^2\tau>0$.
+The original reference has that same height quadratic variation
+on its surviving paths, while its killed paths fail survival.
+Both assign this event probability zero. This proves mutual
+singularity, and failure of absolute continuity gives infinite
+relative entropy. Weak convergence in (20.2) does not alter
+this finite-stage separation.
+
+A deterministic function of the $2^{m(B+1)}$ fair records has at
+most that many values. Its discrete Shannon entropy is at
+most $m(B+1)\log2$. But if $q_j>0$, choose a continuously
+distributed $f_j$ in a nontrivial subinterval of $[-q_j,q_j]$
+and constant speed $v_j=f_j/d_0$, all other errors zero.
+Conditional on a fixed record, (21.3) makes the terminal scalar
+increment an injective translate of $f_j$. The actual path law
+is then nonatomic with infinitely many outcomes.
+Those hidden error outcomes are not part of the retained tape;
+a discrete entropy bound for the tape says nothing of this
+actual path entropy. Disjoint full-measure carriers also do not
+mean disjoint topological supports: finite-variation paths can
+belong to diffusion support. $\square$
+
+**Definition 24.2 (suppliers, hypothesis correspondence and scoped delta).**
+The following correspondence fixes the ordinary-mathematics
+provenance of §§18--24.
+
+QP §§69--73 are used at the pinned source
+[287302917d4083e0f5cf6157466b2b7fb93633e3](https://github.com/the-omega-institute/trureturing/blob/287302917d4083e0f5cf6157466b2b7fb93633e3/docs/develop/theory/FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md);
+the full QP source has Git blob
+$69f6690a573f95d9d7de6b9dc7d646a5bd2355d6$, identical to the
+QP source at $7533e397dbc754bbfd4de3f9d33a434390a84413$.
+QP Definition 69.1 supplies the signed coefficients, original
+metric, fixed preparation/calibration and immutable INITIAL;
+Assumption 69.2 supplies the conditional rights, fair bits and
+finite services. Its *scalar exactness* is the single execution
+premise replaced in Definition 18.2, while exact fields, holds
+and timings remain premises. QP Definition 69.3 and Theorem 70.1
+supply the issued lattice/table/tape, rational schedule and
+nominal prefixes. QP Lemma 71.1, Proposition 71.2 and Theorem 72.1
+supply the nominal uniform occupation, simultaneous limit and
+endpoint covariance; their $h,e,\alpha,T,m2^{-B},\omega$ conditions
+are exactly (20.1), not a sequential-limit substitute.
+QP Corollary 72.2 supplies the selected analytic Q consumer only
+under its original selection hypotheses. QP Proposition 73.1's
+finite-support claim is restricted to deterministic finite-record
+images in Theorem 24.1.
+
+The underlying source suppliers at that same pinned repository
+revision are G Definition 25.1, D Definitions 35.1, 37.1,
+D Theorems 36.1, 39.1 and 50.1, and N Definition 9.1,
+Theorem 9.2 and Proposition 10.2. Respectively these supply
+the original signed probabilities/fields and killed reference;
+the Q height/phase law; positive signed original tensor;
+the primitive identity (21.3); and the actual partial
+relative-command action, extrema guard, chronological joins
+and original-time energy. The real lift is the winding cover of
+these same actual phase periods. The added scalar errors never
+change a field coefficient, source mean, sign convention or
+absorbing face.
+
+The existing formal-source pairs
+[D5 OriginalControlComposition](../../../D5/S3/Quantum/Fibers/OriginalControlComposition.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs)
+supply the original-control definition and exact translated
+concatenation/additive weighted integrals.
+Its private absolute-continuity helpers and concatenation
+proof concern exact given controls; they supply no execution
+accuracy, record acquisition or speed-error threshold.
+[D5 QuantizedWordApproximation](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.scribe.cs)
+supply a different general result: total Lipschitz action maps,
+a supplied global quantizer and finite-word geometric errors.
+Its initialization $Q(x)$ and effective quantizer evaluation are
+extra premises. They supply neither an acquired actual state
+here nor the partial-command margins and scalar exact interval.
+No global contraction of native Q is assumed in this appendix.
+[D5 GuardedPhaseExecution](../../../D5/S3/ObserverMemory/Algorithms/GuardedPhaseExecution.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Algorithms/GuardedPhaseExecution.scribe.cs),
+including its private path-splitting helpers, concern exact
+discrete instruction epochs and one supplied observation field;
+their guard is not a physical scalar-actuator tolerance.
+[D5 NativeCommandLifetime](../../../D5/S3/Analytic/Probability/NativeCommandLifetime.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Analytic/Probability/NativeCommandLifetime.scribe.cs),
+including its private chord, absolute-continuity and actual-lifetime
+helpers, concern a different killed two-phase finite-sign model.
+They do not supply the signed three-phase field (18.1), its scalar
+execution-error interval, or the simultaneous consumer (20.1).
+
+The present volume §§7--9 supplies paid simultaneous actual
+samples, double-wall area/winding approximation and cumulative
+future-loop error under its own source and sampling hypotheses.
+Those are retained as existing results. The signed nonzero
+single-wall source (18.1), owned *issued* record, absence of
+actual error samples and full original-time long-time regime
+here are different. The report in §22 uses rational source
+data, not that double-wall unwrapping or quantum acquisition
+port. [Paid point-observation tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md)
+§§50--54 likewise requires actual wrapped observations of an
+unknown evolving source and its conditional bridge; no such
+port is supplied by the issued record.
+
+The atomic [boundary trichotomy volume](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md)
+through ABT43 and [global-port orientation volume](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md)
+have actual finite-tree read/update, source-binding, rights and
+retention contracts. They are existing conditional acquisition
+and continuation results for those sources. Their source
+bindings and ports are not an actuator, source-state read or
+accuracy guarantee for (18.1). Similarly the newly public
+[quadratic-clock report-design §29](https://github.com/the-omega-institute/trureturing/blob/47057d2811fa29daa5468afe7ff20d86c6a5c5b7/docs/develop/theory/FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)
+has common quadratic gain/offset, bounded report noise, and
+an exact retained-index risk staircase. None of these is
+the native speed-error box (18.2); its exact minimax theorem
+is not used to supply (21.2) or a known current clock.
+The public Circle ThreeRowParameters/ThreeRowScheduler/
+ThreeRowSource expositions at
+$b9295ac6746476e54f67337977be4af1b154f778$ concern complete
+physical-label permutations at a half-modulus strip.
+The identity-factory library note at that revision concerns
+finite weighted Möbius identities and a signed Robin-kernel
+boundary. Neither has the source, actuator, record or metric
+hypotheses required here, and neither is used as a supplier.
+
+Classical intermediate tools are the norm bound for an integral,
+the triangle and Cauchy--Schwarz inequalities, and the two-point
+absolute-loss lower bound. The pinned mathlib revision
+$56a005855ea17e0b0958f73ec801ae140b0a1679$'s Bochner integral
+source supplies integral addition and norm estimates; these
+are not claimed as new results.
+For the probability limit QP already applies Whitt,
+*Proofs of the martingale FCLT*,
+[arXiv:0712.1929v2](https://arxiv.org/abs/0712.1929v2),
+Theorem 2.1(ii), with dimension three, vanishing bracket and
+squared martingale jumps and predictable cross brackets
+$2s\widehat M_\kappa$. That primary theorem concerns a local
+martingale; arbitrary tape-dependent actual errors do not
+satisfy its premise merely because the nominal signs are fair.
+Theorem 20.1 instead transfers QP's established nominal result
+by the proved strong discrepancy and explicit second-moment
+estimate. QP's discrete Doob/taboo normalizations retain their
+credited Chetrite--Touchette and Mazzolo source correspondence;
+no new conditioned-process theorem is needed here.
+
+Relative to precisely these repository suppliers, the additional
+content is the signed native all-prefix error tube (19.2),
+its same-run transport/covariance transfer, the attained
+retained-record scalar ambiguity and necessary-and-sufficient
+worst-case accumulated Q scale, and the finite rational
+held-use/continuation composition with all its paid access
+conditions. These are repository-derived conditional ordinary
+proofs. This is a scoped comparison with the named source
+contracts, not a claim of worldwide literature absence,
+new Lean certification or a universal recovery theorem.
+
+**Definition 24.3 (material limits of the conditional bridge).**
+Exact source calibration, installed actuation accuracy and
+timing, fair-bit service, owned record access, retention,
+finite throughputs, rights and nondisturbance remain granted
+premises. Neither the numerical accuracy requests nor their
+symbolic feasible scales acquire any of them. Unknown
+calibration, hold drift, timing errors, cross-field errors,
+external-source tracking, arbitrary archived history and
+unknown phase-reference acquisition are outside this
+error domain. Without vanishing discrepancy, no centered
+joint transport conclusion follows from nominal or marginal
+data alone; Theorem 21.3 supplies an exact worst-case failure
+within the declared domain.
+
+The continued-use properties are only (23.3)--(23.5) with
+the same stipulated actuator, current grants and retained
+backing. They do not recover hidden exact outcomes, all
+actual boundary decisions, unobserved time, or the old
+record from space. The entropy-rate and shrinking-slab
+selection gaps remain those of QP §§52--64; this appendix
+does not turn finite-variation commands into finite-entropy
+continuous Q histories. Physical spatial interpretation,
+same-source nonlinear spatial realization, recursive/gluing
+spectral stability, broader internal observers and the
+universal generation/identification of these services by
+alpha/beta relations retain their independent obligations.
+The original fixed-model results and the four-expression
+programme are not completed or narrowed by this conditional
+execution-and-record bridge.
+
+## 追加锚（本行以下为增补区）

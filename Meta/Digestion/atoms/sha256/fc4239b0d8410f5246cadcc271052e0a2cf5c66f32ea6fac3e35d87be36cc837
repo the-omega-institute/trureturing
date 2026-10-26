@@ -1,0 +1,27 @@
+**Convention 191.2 (Normalization and supplier domains).**
+Gwóźdź--Jakóbczyk [G], Eqs. (II.1), (II.9) and (II.15), supply these
+discord and covariance conventions, but their negativity is
+$\mathcal N_{\mathrm{paper}}=\|\rho^{T_A}\|_1-1=2\mathcal N$.
+Their Eq. (II.23) establishes the first correlation--discord inequality
+for Bell-diagonal states; its extension to arbitrary mixed two-qubit states
+is presented there as a numerical expectation. It is not a general proof
+supplied by that paper.
+
+The two-qubit result [R] states
+$\sqrt{D_G^A(\rho)}\le C_M(\rho)$ for positive semidefinite trace-one
+two-qubit matrices, with the same full complex optimization domain. Its scope
+is two qubits. The calculations below give matching upper bounds and
+attainers for E and directly for this particular $2\times4$ family F.
+The latter is not an instantiation of a two-qubit definition with Bob's
+dimension changed, nor a generic $2\times4$ theorem.
+
+The distinct trace-norm functional in [T] is
+
+$$
+D_1^A(\rho)=\inf_P\|\rho-\mathcal M_P(\rho)\|_1,
+$$
+
+with the unhalved trace norm. Its comparison $D_1^A\le C_M$ uses
+the same all-complex covariance domain on two qubits. It is a different
+functional from $D_G^A$ and supplies no $2\times4$ comparison for F.
+

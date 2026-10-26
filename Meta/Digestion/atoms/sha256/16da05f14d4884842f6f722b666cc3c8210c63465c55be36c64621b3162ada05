@@ -1,0 +1,106 @@
+**Theorem 8.4 (Finite nonempty singular-endpoint $M$ bases).** The set
+
+$$
+\mathcal B_{\mathcal S,M}=
+\{(p,v)\in\mathbb R^2:p\ne24,\ \exists W\ne W'\in C(p,v),
+\ f_{MM}(W)=f_{MM}(W'),\ \Lambda(W)\Lambda(W')=0\}
+$$
+
+is finite and nonempty. The finite outer construction below includes
+all coefficient and denominator exceptions. A singular world unused by
+an ordinary/ordinary $M$ pair does not put that pair under this theorem.
+
+**Proof.** Work first in $K=\mathbb Q[\theta]/(\Phi)$, using the
+irreducibility certificate in Section 3. The two strict embeddings are
+those of O, Theorem 4.2. For each use the singular source $s=(\theta,1/8)$,
+$x_s=n_s/U_s$ and its entire affine response line
+
+$$
+(p_s(t),v_s(t),m_s(t))
+=24+(K_{5s},K_{6s},K_{7s})+t(A_{5s},A_{6s},A_{7s}).
+$$
+
+Here $t=e_s$, $K_{5s}=0$, and $p_s\ne24$ is exactly $t\ne0$.
+Substitute this line in the cleared original-clock system. The terminal
+condition for any companion is
+
+$$
+h=dD+(2x+3)a_7-m_s(t)D=\ell(x)d+N_s(x,t)=0,
+$$
+
+where $N_s=h|_{d=0}$ is an explicit polynomial affine in $t$, and
+
+$$
+\ell=-8x^4-29x^3-18x^2+15x+6.
+$$
+
+When $\ell\ne0$, eliminate $d$ and take the exact polynomial quotients
+
+$$
+F_s=\frac{\ell^2f(x,-N_s/\ell,p_s,v_s)}{D^2(x-x_s)},\qquad
+G_s=\frac{\ell^4K(x,-N_s/\ell,p_s,v_s)}{D^4(x-x_s)}.
+$$
+
+These formulas, interpreted after multiplication by the displayed
+powers of $\ell$, are polynomial divisions with zero remainder in
+$K[x,t]$. Reduce coefficients in the power basis of $\theta$ modulo
+$\Phi$; keep the displayed normalization rather than rescaling the
+quotients. The $(t,x)$ degrees are $(2,6)$ and $(4,13)$.
+Both gcds in $K[x]$ of their coefficients as polynomials in $t$ are
+one after monic normalization. Also
+
+$$
+\gcd_x(\ell,[t]N_s)=1,\qquad \ell(x_s)\ne0,
+\qquad P_s(x):=\operatorname{Res}_t(F_s,G_s)\ne0,\quad\deg P_s=50.
+$$
+
+All objects are fixed by the preceding rational circuits and exact
+division rules. For explicit nonidentity checks, specialize modulo
+$101$ at $\theta=53$; $\Phi(53)=0$ and all coefficient denominators
+of $F_s,G_s,P_s$ are units. The residues are
+
+$$
+x_s=69,\quad A_{5s}=13,\quad \ell(x_s)=93,\quad
+P_s(0)=97,\quad [x^{50}]P_s=62.
+$$
+
+The lowercase gain coefficients of Section 3 are $a_{6s}=46,a_{7s}=91$;
+the full response slopes here are $A_{6s}=94,A_{7s}=6$.
+The coefficient gcd and division assertions above are over $K[x]$;
+the residues certify nonidentity and preserve the displayed degrees.
+They do not designate a real source.
+
+An explicit finite outer set of bases is obtained as follows. For each
+strict embedding, include the projections of all solutions of
+$F_s(x,t)=G_s(x,t)=0$ with $x>0$, $\ell(x)\ne0$, $x\ne x_s$,
+$t\ne0$, using $d=-N_s/\ell$, and include the following exceptional
+case as well. The first set is finite: $P_s\ne0$ leaves finitely many
+$x$, and coefficient content one means that at no such $x$ can
+$F_s(x,t)$ vanish identically in $t$. Indeed a Bézout identity for its
+coefficient polynomials evaluates to one at every $x$. Thus there are
+only finitely many $t$ for each $x$.
+
+If $\ell(x)=0$, there are finitely many $x$, and
+$\gcd(\ell,[t]N_s)=1$ says that the coefficient of $t$ in $N_s$ is
+nonzero at each. The equation $h=0$ fixes one $t$. Include its base,
+with every finite common drift root of $f,K$ still eligible for guarded
+lifting. F, Lemma 31.3, ensures that these drift roots are finite in
+number; no whole drift line was divided away.
+
+If $x=x_s$, $\ell(x_s)\ne0$ and the singular world itself satisfies
+$h=0$ at $d=24+t$. This is therefore the only possible companion drift.
+The injection in F, Lemma 30.2, identifies the whole world, excluding
+a distinct pair. Finally $D=0$ cannot occur at a legal $x>0$.
+The field denominators are fixed nonzero elements: $j_s,n_s,T_s,U_s$
+and $A_{5s}$ are nonzero at both strict embeddings, and every other
+coefficient denominator is part of the displayed field computation.
+No denominator depending on a candidate $x$ or $t$ remains unhandled.
+
+O, Theorem 29.2, exhausts all singular endpoints by these two embeddings.
+The union of the finite outer projections is finite and contains every
+actual base in the statement. Actual membership still requires all of
+Definition 1.1, including within-pair distinctness; no root of $P_s$
+is automatically a world. Theorem 8.2 supplies an actual member, proving
+nonemptiness. Zero drift, $F_0=0$, lower gain degree and sampled or
+repeated gain roots were not cancelled from the companion equations. ∎
+

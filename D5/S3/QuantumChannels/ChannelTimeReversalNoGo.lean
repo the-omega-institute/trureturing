@@ -550,14 +550,14 @@ open Qubit QubitUnital
 namespace PauliChannels
 set_option maxRecDepth 8192
 set_option maxHeartbeats 4000000
-private lemma density_psd (a : Fin 3) (e : Bool) : ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e).PosSemidef := by
+lemma density_psd (a : Fin 3) (e : Bool) : ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e).PosSemidef := by
   have hp : (![Pauli.X, Pauli.Y, Pauli.Z] a) ≠ Pauli.I := by fin_cases a <;> decide
   obtain ⟨_, U, _, _, _, _, _, hEq⟩ := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0) hp
   dsimp only; rw [hEq]; exact Matrix.posSemidef_vecMulVec_self_star _
 private lemma sigma_trace (a : Fin 3) : Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a) = 0 := by
   have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair (![Pauli.X, Pauli.Y, Pauli.Z] a) Pauli.I
   fin_cases a <;> simpa [D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, pauliMatrix] using h
-private lemma density_trace (a : Fin 3) (e : Bool) : Matrix.trace ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e) = 1 := by
+lemma density_trace (a : Fin 3) (e : Bool) : Matrix.trace ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e) = 1 := by
   exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.pauli_projector_trace _ (by fin_cases a <;> decide) e
 private def L (a b : Fin 3) : MatrixMap (Fin 2) (Fin 2) ℂ :=
   ((Matrix.traceLinearMap (Fin 2) ℂ ℂ).comp (LinearMap.mulLeft ℂ (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b))).smulRight ((1/2 : ℂ) • D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a)

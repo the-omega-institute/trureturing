@@ -348,7 +348,7 @@ theorem whitebox_quantitative_matching
     linarith
   · simpa [jointCost, baseline, matchingGap, hsum, mul_comm] using hcost
 
-private theorem code_cost_bounds
+theorem code_cost_bounds
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (lam : ℝ) (x : E) (D : UnitDictionary E) (hlam : 0 ≤ lam) :
     0 ≤ codeCost lam x D ∧ codeCost lam x D ≤ ‖x‖ ^ 2 / 2 := by

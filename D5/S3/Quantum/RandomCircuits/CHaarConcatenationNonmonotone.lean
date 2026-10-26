@@ -185,12 +185,12 @@ def claim : Prop := ∀ (d e t : ℕ) [NeZero e],
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
+theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
   ext ⟨a,b⟩ ⟨c,d⟩
   simp only [Matrix.conjTranspose_apply, Prod.swap_prod_mk, Prod.mk.injEq]
   simp [and_comm, eq_comm]
 
-private theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
+theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
   have h : Equiv.prodComm n n * Equiv.prodComm n n = (1 : Equiv.Perm (n×n)) := by
     ext x <;> rfl
   simp [← Matrix.permMatrix_mul, h]

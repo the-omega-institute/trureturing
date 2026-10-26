@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94971d45968043b9e437ae94753dffc3c13bf5f810f9c03534780b75789eb299
+  normalized_sha256: sha256:94971d45968043b9e437ae94753dffc3c13bf5f810f9c03534780b75789eb299
+cas_ref: sha256:94971d45968043b9e437ae94753dffc3c13bf5f810f9c03534780b75789eb299
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/FractionalKnapsackDual.greedy_attains_duality
+    target_statement_id: sha256:475e472b126c424b48b0e9ddd9f28f95a0319e31c310ca11d9ad25a17847d615
+  - gid: D5/S3/ArithSums/TwoPointSlabSupport.pair_distance_spec
+    target_statement_id: sha256:b1bb2656403a31a2ecf70018b9daffc4863b9a17477d18df6d044c3625f2c74e
+receipts:
+  unresolved_subitems: []

@@ -38,3 +38,33 @@ uses the finite entropy and chain rule on a single five-mode law.
 Its support-inclusive maximum-entropy completion and continuing-reply
 logarithmic prediction loss are proved there. Shannon's source supplies
 neither native FIB guards nor acquisition of an unknown law.
+
+## Deterministic processing and conditional information
+
+For finite-valued variables, the same chain rule gives the standard
+deterministic-processing identity
+
+$$
+P=E(C)\Longrightarrow H(C)-H(P)=H(C\mid P).
+$$
+
+With $I(X;Y\mid Z)=H(Y\mid Z)-H(Y\mid X,Z)$, a finite record update
+$R'=(R,Y)$ satisfies
+
+$$
+H(R')-H(R)=H(Y\mid R),\qquad
+H(W\mid R)-H(W\mid R')=I(W;Y\mid R).
+$$
+
+If a finite state is updated deterministically by $M'=F(M,Y)$ and the task
+variable is $Z$, then two chain-rule decompositions of
+$I(Z;M,Y)$ give
+
+$$
+I(Z;M')-I(Z;M)
+=I(Z;Y\mid M)-I(Z;M,Y\mid M').
+$$
+
+These are standard finite-information identities. Their uses for FIB source
+transport, fixed read windows and task summaries are repository applications;
+the source does not provide those FIB interfaces or their acquisition costs.

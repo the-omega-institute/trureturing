@@ -1,0 +1,26 @@
+**Lemma 133.2 (Exact stationarity identity).** Define
+
+$$
+w=\frac{\omega_0}{\tau}=\frac{\sqrt{px}}4T_{01}>0.
+\tag{133.3}
+$$
+
+Differentiating (128.1) with respect to $r$ gives the off-root identity
+
+$$
+N_r=2rv_1(a_1-a_2)+2\omega_0.
+\tag{133.4}
+$$
+
+Indeed $d_r=-2rv_1$ and $k_r=-1/4$; substituting them into the
+derivative gives (133.4). At the root it reads
+
+$$
+rv_1(T_{22}-T_{11})=w.
+\tag{133.5}
+$$
+
+The fourth equation $N_r=0$ thus supplies the exact complementary
+relation for the unrestricted Choi certificate. The other three
+equations supplied the value and input stationarity in §132.
+

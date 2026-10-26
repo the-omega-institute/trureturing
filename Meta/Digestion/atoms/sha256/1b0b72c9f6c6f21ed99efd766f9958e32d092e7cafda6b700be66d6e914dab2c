@@ -1,0 +1,65 @@
+## 5. Bernstein signs on the regional rectangle
+
+For a polynomial $f$ of coordinate degrees $(n,m)$, first substitute
+
+$$
+ r=\frac3{10}+\frac7{10}s,\qquad
+ b=\frac{13}{20}+\frac7{20}t,\qquad 0\le s,t\le1,
+$$
+
+and write $f=\sum_{i,j}c_{ij}s^it^j$. Its tensor Bernstein coefficient is
+
+$$
+\beta_{k\ell}=
+\sum_{i\le k,\ j\le\ell}c_{ij}
+\frac{\binom{k}{i}}{\binom{n}{i}}
+\frac{\binom{\ell}{j}}{\binom{m}{j}}.
+\tag{5.1}
+$$
+
+The Bernstein convex-hull property reduces each sign to the minimum of its exact
+rational coefficients. The five checks have $35+143+288+7+7=480$ coefficients:
+
+$$
+\begin{array}{c|c|c|c}
+\text{polynomial}&(\deg_r,\deg_b)&\text{coefficient count}&\text{minimum coefficient}\\ \hline
+-L&(4,6)&35&42570057/32000000\\
+B_p&(10,12)&143&7085797469216029393/102400000000000000\\
+-C_J&(15,17)&288&72157265456855164438356699/1024000000000000000000\\
+(P-56Q)|_{b=13/20}&(6,0)&7&15519730743/640000000\\
+(58Q-P)|_{b=1}&(6,0)&7&1096
+\end{array}
+\tag{5.2}
+$$
+
+The first three minima occur at Bernstein indices $(2,0),(4,0),(11,0)$ and the
+last two at $(1,0),(6,0)$, respectively. Every coefficient in (5.2) is positive.
+Hence on $R$, $L<0$, $\ell<0$, $Q<0$, $B_p>0$, and $C_J<0$. Equations (4.5)
+then give
+
+$$
+\partial_b p>0,\qquad
+(\partial_ra)(\partial_bp)-(\partial_ba)(\partial_rp)>0.
+\tag{5.3}
+$$
+
+The boundary checks in (5.2), together with $Q<0$, give
+
+$$
+ p(r,13/20)<56,\qquad p(r,1)>58
+\quad(3/10\le r\le1).
+\tag{5.4}
+$$
+
+Therefore the intermediate value theorem and $\partial_b p>0$ give exactly one
+$b_p(r)\in(13/20,1)$ with $p(r,b_p(r))=p$, for every
+$p\in[56,58]$ and $r\in[3/10,1]$. The implicit-function theorem applies there, and
+(5.3) yields
+
+$$
+\frac{d}{dr}a(r,b_p(r))
+=\frac{(\partial_ra)(\partial_bp)-(\partial_ba)(\partial_rp)}
+{\partial_bp}>0.
+\tag{5.5}
+$$
+

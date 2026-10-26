@@ -1,0 +1,21 @@
+### 定义 74.4（数学来源与适用对应）
+
+本组是定义 51.1 合同中的普通推导（repo-derived），不作 Lean 内核认证或
+外部优先权声明。二次插值、韦达公式、余式交叉差、Bernstein 基的凸组合、
+根数界、介值定理及隐函数定理都是证明工具，不另称新的一般理论。
+
+| 内容 | 来源、承重关系与边界 |
+| --- | --- |
+| 定理 66.2、引理 67.1 | 定义 57.2 的正迹界和式 (52.5) 的迹逆；根六二次候选、全部退化层、联合正性恒等式与完整分支规则。命题 68.1–68.3 是其整族非包含及两个实际分支消费者。 |
+| 定义 69.1、69.2 | 正秩一矩阵的直接坐标与逐原子矩阵乘法；正尺度保持全部读数和完整目标。原序号 $0,1,2,3$ 的插值给来源对完整目标的唯一性。 |
+| 定理 70.1 | 同一共同第五、共同 $a,c$ 纤维上的整族碰撞障碍；相交碰撞与四个不同端点的碰撞统一在一条曲线证明中。非零、零响应差的策略分别保留其实际承诺桥梁。 |
+| 引理 71.1、71.3、定理 72.1 | 等漂移根六注入性的完整系数证明、六种双节点碰撞排除，以及共同 $b,d_6$ 的对偶匹配接口。消费者是零层整族恢复与定理 73.1 的三目标必要模式。 |
+| 定理 73.1、推论 74.1、74.2 | 同一实际族上的 $\Theta$ 分类、合法动作与真实读数分支；三目标、非对角共同第五条件均不可删除。不是完整连续纤维的八读策略。 |
+| Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, [Definition 2.7、Theorem 2.8](https://arxiv.org/html/1501.06120v1) | 沿用第 51、65 节的模指定变换群整纤维识别观点；本组直接证明正尺度规范、漂移保留和目标重建，不移用固定双线性采样阈值。 |
+| van den Bos–Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [Definition 11、Theorem 6.1](https://arxiv.org/html/1907.11034v2) | 同一自适应测试须覆盖整个状态集合。其定理有有限 suspension automaton、互不相容状态及 injective split 条件；它不提供这里的连续模型或原时钟预算。整族策略均由本组直接证明。 |
+| Király–Theran–Tomioka, *The Algebraic Combinatorial Approach for Low-Rank Matrix Completion*, [Theorem 34、Remark 35](https://arxiv.org/html/1211.4116v4) | 沿用第 53、65 节的秩一循环恒等式接口；本组来源图及实例直接核对二阶行列式，不移用泛型完成阈值或要求所有采样非零。 |
+
+文献只提供这些明确接口；具体未知漂移恢复、联合响应障碍和原子计数由上述
+普通证明承担。实例说明承诺域非空，精确系数与整区间符号承担全称证明；
+它们都不替代剩余的整个原根问题。
+

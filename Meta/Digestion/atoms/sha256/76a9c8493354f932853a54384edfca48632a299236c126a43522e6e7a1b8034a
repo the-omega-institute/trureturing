@@ -1,0 +1,46 @@
+**Lemma 17.3 (Faithful use of the uniform equation).** For real $p\ne24,v$,
+the full actual $C(p,v)$ is in bijection with the solutions of
+
+$$
+f=K_{\rm s}=0,\qquad
+x>0,\quad d\ne24,\quad H_1\ne0,\quad C_0>0,\quad U>1,\quad0<r<1.
+\tag{17.6}
+$$
+
+The complete world is reconstructed by (5.5), $c=r(1-r)/b$, and
+$g=H/U$, with the single interpolant $H$ at the original nodes $3,4,5,6$
+in Assumption 5.3. No division by $d,H_0,H_7,F_0$, a leading gain
+coefficient or a discriminant is part of (17.6).
+
+Proof. This is an algebraic form of F, Lemma 30.2, recalled in
+Assumption 5.3. Indeed
+
+$$
+f=5D^2(dH_2+H_0B_0).
+$$
+
+When $C_0>0$, $f=0$ makes $(-H_0,H_2)$ parallel to $(d,B_0)$.
+Its projection gives the value of $U$ in (5.5) and both equations
+$dU=-H_0$, $B_0U=H_2$. Put
+
+$$
+S_r=r^2-(1+b)r+b(xU-b),\qquad c_*=25d^2D^2+b_*^2=25D^2C_0.
+$$
+
+The definitions of $r,j,b$ give, by expansion,
+$\mathcal Q(U,1)=4a_1^2S_r$. The two clock equations give
+$-a_0=dDU$ and $5a_2=b_*U$, whence
+
+$$
+K_{\rm s}=c_*\mathcal Q(U,1)=4c_*a_1^2S_r.
+\tag{17.7}
+$$
+
+Thus, under the guards, $K_{\rm s}=0$ is exactly the rank-one source
+identity $j=b+r(1-r)/b$. F, Lemma 30.2, now gives both directions,
+all original readings and uniqueness of the entire world. Its gain
+cannot vanish identically because the original readings $0,24$ differ.
+The second terminal formula follows from
+$(T+2j+4r)/U=4x+1/2+1/(2U)-2j/U$ and $j/U=(24-d)/H_1$.
+In particular zero drift is included in this argument. ∎
+

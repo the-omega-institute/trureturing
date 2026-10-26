@@ -1,0 +1,44 @@
+## 6. Exclusion for b at least five halves
+
+For $b\ge1$, (5.8) and $0<r<1$ give
+
+$$
+b<n<b+1,
+$$
+
+because $b-r(1+b-r)=(1-r)(b-r)>0$. Define the symmetric bilinear polynomial
+
+$$
+F_b(x,y)=k_3xy-k_1(x+y)+k_2.
+$$
+
+The following arrays are its corner-polynomial coefficients in ascending
+powers of $b$:
+
+$$
+\begin{aligned}
+F_b(b,b):\;&(99900,241611,133824,38871,-24423,-15867),\\
+F_b(b,b+1):\;&(-11826,-11100,8124,9150,-28290,-15867),\\
+F_b(b+1,b+1):\;&(-7458,-65178,-80043,-24438,-32157,-15867).
+\end{aligned}
+\tag{6.1}
+$$
+
+The third is negative for $b>0$. For the other two, exact shifts give
+
+$$
+\begin{aligned}
+F_{1+z}(1+z,2+z):\;&
+(-49809,-159897,-292836,-262680,-107625,-15867),\\
+32F_{5/2+z}(5/2+z,5/2+z):\;&
+(-11387145,-95548758,-95031192,-38305488,-7128336,-507744),
+\end{aligned}
+\tag{6.2}
+$$
+
+again in ascending powers of $z$. Hence all four corners of
+$[b,b+1]^2$ are strictly negative for $b\ge5/2$. A bilinear function on
+this rectangle is the convex combination of its four corner values, so
+$F_b(n_1,n_2)<0$. This contradicts (5.10). In particular this part does
+not divide by $k_3$ or discard its possible zeros.
+

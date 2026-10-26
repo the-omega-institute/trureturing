@@ -1,0 +1,58 @@
+**定理 9.2（有限反馈的内生等距实现）。**
+令 $H_{\mathsf M}$ 有正交基 $|m\rangle$。另取环境空间，
+其正交基包含所有实际使用的 $|m,o,\alpha\rangle$。
+定义
+
+$$
+V(|m\rangle\otimes\psi)
+ =\sum_{o,\alpha}
+ |\delta(m,o)\rangle\otimes K_{a(m),o,\alpha}\psi
+       \otimes|m,o,\alpha\rangle .
+$$
+
+则 $V:H_{\mathsf M}\otimes H\to H_{\mathsf M}\otimes H\otimes E$
+是等距映射，且可通过有限辅助空间上的酉门、随后按需读取或舍弃环境来实现。
+对输入记忆基态 $m$，输出指针的 $o$ 分布、
+系统条件更新和新记忆分别恰为原仪器、$\Phi_{a(m),o}$ 和 $\delta(m,o)$。
+有限多步迭代重现全部反馈历史概率。
+
+**证明。**
+
+若 $m\ne n$，输出环境的第一标签不同，各项内积均为零。
+若记忆相同，则对任意 $\psi,\varphi$，
+
+$$
+\langle V(m,\psi),V(m,\varphi)\rangle
+ =\sum_{o,\alpha}
+ \langle\psi,K_{a(m),o,\alpha}^{\dagger}K_{a(m),o,\alpha}\varphi\rangle
+ =\langle\psi,\varphi\rangle.
+$$
+
+故 $V^\dagger V=I$。
+将输入空间识别为大空间中
+$H_{\mathsf M}\otimes H\otimes|e_0\rangle$ 的子空间。
+等距映射把它的任一正交基送到一组正交向量；
+将输入与输出这两组向量各自补全为大空间正交基，并逐一对应，
+得到实现 $V$ 的酉算符。
+
+对记忆基态输入，读取环境中 $o$ 指针并迹掉其余标签，
+得到未归一化系统--记忆态
+
+$$
+|\delta(m,o)\rangle\langle\delta(m,o)|
+ \otimes \Phi_{a(m),o}(\rho).
+$$
+
+其迹是原分支概率，除以非零迹得到原条件态。
+各步使用明确供给的新环境寄存器，按步数归纳即得到任意有限历史的同一分支复合。
+
+证毕。
+
+这个构造说明观察者可以在同一联合动力学内实现。
+旧记忆在更新时进入环境标签，有限终止历史可通过有限资源表示。
+它不证明给定观察者拥有无限记录，也不把环境复位的成本消去。
+若初始记忆有量子相干，上述等距扩张仍良定义，
+但舍弃标签后的行为不再是“免费保留全部记忆相干”的额外承诺。
+
+<a id="prop-no-free-label"></a>
+

@@ -8,7 +8,19 @@ The entry cited in hanna2025a389537 defines A by A(A(x)-x)=A(x)^2. Its conjectur
 
 All indices are natural numbers. The coefficient functions r and a take integer values. R denotes inverseSeries and A denotes generatingSeries in PowerSeries(Z), with indeterminate X. The local coefficient function r is specified together with R below. The operator mk constructs a series from its coefficient function; coeff(n,B) extracts a coefficient; subst(B,C) substitutes C into B. The notation inv(R) is Mathlib's substInvOfIsUnit applied to the proved unit linear coefficient of R. The operator div is natural-number division on the index, and mod is the natural-number remainder.
 
-**Definition 1.1 (The alternating dyadic inverse).**
+**Theorem 1.1 (Characteristic four in the power-series ring).**
+
+$$(4: \operatorname{PowerSeries}\left(\operatorname{ZMod}\left(4\right)\right)) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.four_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The constant series four vanishes over ZMod(4), by applying the constant-series ring homomorphism to four equals zero in the coefficient ring.
+
+**Definition 1.2 (The alternating dyadic inverse).**
 
 $$\begin{aligned}R = \operatorname{mk}\left(r\right)\\\forall n: \mathbb{N}, \operatorname{r}\left(n\right) = \operatorname{if} (n = 0) \operatorname{then} 0 \operatorname{else} \operatorname{if} (n = 1) \operatorname{then} 1 \operatorname{else} \operatorname{if} (2 \mid n) \operatorname{then} -\operatorname{r}\left(\operatorname{div}\left(n, 2\right)\right) \operatorname{else} 0\end{aligned}$$
 
@@ -20,7 +32,7 @@ $$\begin{aligned}R = \operatorname{mk}\left(r\right)\\\forall n: \mathbb{N}, \op
 
 The recursion sets r(0)=0 and r(1)=1. At every other even index it negates the coefficient at half the index; at every other odd index it vanishes. Thus R is the alternating dyadic series, with coefficient (-1)^j at degree 2^j and zero elsewhere.
 
-**Definition 1.2 (The integer coefficient sequence).**
+**Definition 1.3 (The integer coefficient sequence).**
 
 $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{inv}\left(R\right)\right)$$
 
@@ -32,7 +44,7 @@ $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\l
 
 The coefficient a(n) is extracted from the integral compositional inverse of R.
 
-**Definition 1.3 (The generating series).**
+**Definition 1.4 (The generating series).**
 
 $$A = \operatorname{mk}\left(a\right)$$
 
@@ -44,7 +56,7 @@ $$A = \operatorname{mk}\left(a\right)$$
 
 The series A has coefficient function a and is the compositional inverse of R in both orders.
 
-**Theorem 1.4 (The dyadic reversion identity).**
+**Theorem 1.5 (The dyadic reversion identity).**
 
 $$R + \operatorname{subst}\left(R, X^{2}\right) = X$$
 
@@ -56,7 +68,7 @@ $$R + \operatorname{subst}\left(R, X^{2}\right) = X$$
 
 Coefficient comparison reduces every positive even degree to half that degree. The two coefficients have opposite signs and cancel; the linear coefficient remains one.
 
-**Theorem 1.5 (The OEIS equation and normalization).**
+**Theorem 1.6 (The OEIS equation and normalization).**
 
 $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land (\operatorname{subst}\left(A, (A - X)\right) = A^{2}))$$
 
@@ -68,7 +80,7 @@ $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\
 
 Substituting A into R+R(X^2)=X and using R(A)=X gives R(A^2)=A-X. Composing with A gives A(A-X)=A^2. Integral compositional reversion supplies the two normalization conditions.
 
-**Theorem 1.6 (Uniqueness of the normalized solution).**
+**Theorem 1.7 (Uniqueness of the normalized solution).**
 
 $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(B\right) = 0) \implies (\operatorname{coeff}\left(1, B\right) = 1) \implies (\operatorname{subst}\left(B, (B - X)\right) = B^{2}) \implies B = A$$
 
@@ -80,7 +92,7 @@ $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 For any normalized integer solution B, its compositional inverse S satisfies S+S(X^2)=X. Strong induction on the coefficient index shows that S=R, since the only earlier index required is its half. The inverse identities then give B=A.
 
-**Theorem 1.7 (Hanna's coefficient conjecture).**
+**Theorem 1.8 (Hanna's coefficient conjecture).**
 
 $$\forall n: \mathbb{N}, (2 < n) \implies ((\operatorname{a}\left(n\right) \bmod 4 = 2 \iff (\exists k: \mathbb{N}, n = 3 \cdot 2^{k})) \land (\operatorname{a}\left(n\right) \bmod 4 = 0 \iff \neg (\exists k: \mathbb{N}, n = 3 \cdot 2^{k})))$$
 
@@ -99,6 +111,7 @@ Work over ZMod(4), and let D have coefficient one exactly at indices 3 times a p
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.a`
+- Truth anchor: `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.four_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/Invariants/AlternatingDyadicReversionModFour.generating_unique`

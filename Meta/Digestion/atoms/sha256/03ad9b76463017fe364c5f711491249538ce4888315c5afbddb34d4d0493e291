@@ -1,0 +1,21 @@
+**Definition 11.9 (Unequal-$b$ collision chart and coverage premise).** For two distinct actual off-$24$ equal-$m$ companions on the arc whose $b$ coordinates differ, label them so $b_y>b_x$ and set
+
+$$
+t=r_x/b_x,\quad b=b_x,\quad h=b_y-b_x>0,\quad
+\sigma=(r_y/b_y-t)/h,\qquad
+x=(t,b),\quad y=(t+h\sigma,b+h).
+\tag{11.39}
+$$
+
+The strict source guards are $t>0$, $b>0$, $tb<1$ at $x$, and the same three inequalities at $y$. To extend this chart to all distinct off-$24$ collisions, the supplied fixed-$b$ injectivity conclusion is used in precisely the following form: distinct complete worlds with common $(p,v,m)$ and $p\ne24$ have unequal $b$. This conclusion is a premise of that coverage assertion, not a new quantitative result here. The chart and Theorem 11.8 require no unpublished source or fixed-$b$ theorem beyond this explicitly stated scope. The selected collision endpoints are regular by [S], Corollary 18.2, because the actual $J$ pair exists; unused companions retain all source strata.
+
+For each of the three pairs $(f,g)=(N_p,D),(N_v,D),(C,S)$ define the polynomial
+
+$$
+R_{f,g}(t,b,h,\sigma)=
+\frac{f(t+h\sigma,b+h)g(t,b)-f(t,b)g(t+h\sigma,b+h)}h.
+\tag{11.40}
+$$
+
+The numerator vanishes identically at $h=0$, so division is exact in $\mathbb Q[t,b,h,\sigma]$. In the order just given, the quotients have respectively $1518,1518,853$ monomials and total degrees $23,23,21$. These data are obtained directly from the coefficient circuits (2.3) and (11.15); every remainder is zero. In particular the third quotient uses $C,S$ in $(t,b)$ coordinates, not $C_*,\mathscr H$ evaluated as if their first variable were $t$.
+

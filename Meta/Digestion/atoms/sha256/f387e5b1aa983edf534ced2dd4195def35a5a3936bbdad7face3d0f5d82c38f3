@@ -1,0 +1,21 @@
+**定义 73.1（原生来源与五模式的不同载体）。** 原生来源仍是自由有序二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+树保留叶标签、左右顺序和括号；组成只计叶数，数量观察再给组成赋权。窗口占位是另一个观察：三位按低到高书写，合法模式为 $000,100,010,001,101$，依次记作 $N,2,3,5,25$。其中 $25$ 是两端同时占位，零层权重为 $2+5$，不是十进制二十五。$N$ 即已读到的 $\mathrm{null}=000$，与没有读取、结束、停止不同。这些约定及跨窗口守卫沿用钉版 [FIB 关系续篇几何，定义 1.1、1.3、2.1–2.4](https://github.com/the-omega-institute/trureturing/blob/89a68b6d8c6725f99b5e5f32e45c8b0b1857b53d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。树、窗口占位、加法组成和数值读数之间的观察映射可以遗忘信息，不能彼此认作同一来源。
+
+若另行采用第 61.1 条的正交量子实现，则
+
+$$
+\mathcal H_F=\mathbb C^5,
+\qquad (|N\rangle,|2\rangle,|3\rangle,|5\rangle,|25\rangle)
+$$
+
+是指定的单位正交基。$|N\rangle$ 是范数一的读零模式基向量，既不是零向量，也没有被指定为外部真空。这一 Hilbert 载体、任意相干制备和量子操作都是附加合同，不由原生树语法单独导出。以下用 $\varrho$ 表示密度算子，$\rho$ 专用于 FIB 替换。
+

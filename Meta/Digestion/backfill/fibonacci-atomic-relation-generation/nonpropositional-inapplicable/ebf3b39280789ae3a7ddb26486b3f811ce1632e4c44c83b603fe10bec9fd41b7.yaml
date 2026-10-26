@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ebf3b39280789ae3a7ddb26486b3f811ce1632e4c44c83b603fe10bec9fd41b7
+  normalized_sha256: sha256:ebf3b39280789ae3a7ddb26486b3f811ce1632e4c44c83b603fe10bec9fd41b7
+cas_ref: sha256:ebf3b39280789ae3a7ddb26486b3f811ce1632e4c44c83b603fe10bec9fd41b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自治记录塔的定义；E_r 单射与交换式是入类要求，并未声称任意记录满足它们。
+    previous_atom_id: 8adcb74dc0f4d6ac96075793d59c5b0c4075b1582dac52a8b785895c5467fd78
+    next_atom_id: 10dfbb511b13b7ad4b23f8ba882c753e7bac85bb90f7c6e9262379e78c543c9c

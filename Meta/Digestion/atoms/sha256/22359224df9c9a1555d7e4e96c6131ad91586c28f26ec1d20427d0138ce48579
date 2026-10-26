@@ -1,0 +1,88 @@
+**Theorem 11.2 (Every complex distinct pair has an exceptional response).**
+For every $(x,y)\in\mathcal K$,
+
+$$
+Q(p_J,u(x))=0,
+\tag{11.3}
+$$
+
+where $Q$ is exactly $O$, Definition 28.1. Moreover
+$\mathcal K$ is finite.
+
+Proof. Fix a complex $v$ with $Q(p_J,v)\ne0$. We prove that
+$u=v$ and a fixed value of $m$ determine at most one point of
+$\mathcal X$. A point with $u=v$ lies in
+$\mathcal Z(p_J,v)$, so the projection argument of Theorem 10.2
+gives $R(r,p_J,v)=0$, including all fixed base projections.
+
+Use the exact minors $\mathcal L_0,\mathcal L_1$ of $O$
+(20.4)–(20.5). The evaluation-vector identity $O$ (20.10) is a
+polynomial common-root identity, so it gives
+
+$$
+\mathcal L_1(r,p_J,v)b+\mathcal L_0(r,p_J,v)=0
+\tag{11.4}
+$$
+
+also over $\mathbb C$: its only divisor is
+$72900r^6(r-1)^4\ne0$ on $\mathcal X$.
+Nonzero $Q$ makes its factor
+$E_1=\operatorname{Res}^{18,26}_r(R,\mathcal L_1)$ nonzero.
+The common-finite-root implication for the padded determinant
+therefore makes $\mathcal L_1$ nonzero at every complex $R$ root.
+Equation (11.4) fixes $b=-\mathcal L_0/\mathcal L_1$.
+Consequently two distinct points in this fibre have distinct
+$r$ coordinates.
+
+Let $F_*,G_*$ denote exactly the polynomials called $F,G$ in
+$O$ (27.2). Fixed-degree substitution gives, at any of these
+complex source points,
+
+$$
+F_* =\mathcal L_1^7N_m(r,b),\qquad
+G_* =\mathcal L_1^7D_m(r,b),\qquad m=F_*/G_*.
+\tag{11.5}
+$$
+
+These are polynomial homogenization identities; their use does
+not extend a positivity premise to complex sources.
+Write $c_{18}=[r^{18}]R(r,p_J,v)$, which is $750a(p_J,v)$ in
+the normalization of Section 3. Nonzero $Q$ makes $c_{18}\ne0$
+and $E_3=\operatorname{Res}^{18,186}_r(R,G_*)\ne0$.
+Thus $R$ has degree eighteen and $G_*$ is nonzero at all its
+complex roots. The padded resultant product formula gives
+
+$$
+T_*(p_J,v,w)=c_{18}^{188}
+ \prod_{R(\alpha,p_J,v)=0}
+ \{F_*(\alpha,p_J,v)-wG_*(\alpha,p_J,v)\},
+\tag{11.6}
+$$
+
+with the eighteen roots counted with multiplicity. In particular
+$T_*$ has degree eighteen in $w$. If distinct source points had
+one common $m$, their distinct $r$ roots would give two vanishing
+factors at $w=m$ in (11.6). This would be a multiple root of
+$T_*$, forcing
+
+$$
+E_4=\operatorname{Res}^{18,17}_w(T_*,\partial_wT_*)=0,
+\tag{11.7}
+$$
+
+contrary to $Q\ne0$. This proves (11.3) for all complex points
+of the stated open locus. The resultant and product identities
+are those of $O$, Definitions 27.1 and 28.1 and (30.6); their
+common-root implications hold under every coefficient
+specialization. Denominator and full-degree conditions here
+follow from the stated open locus or from nonzero factors of $Q$.
+
+Finally $O$, Theorems 26.2 and 30.2, give $Q(p_J,0)\ne0$ for
+this same exact $p_J$. Hence $Q(p_J,v)$ has finitely many
+complex roots. For each root $v$, the whole complex fibre
+$\mathcal X\cap\{u=v\}=\mathcal Z(p_J,v)$ has at most eighteen
+points by Theorem 10.2. Thus $\mathcal K$ lies in a finite union
+of finite Cartesian squares and is finite. This argument retains
+all sources at roots of $Q$, including $\mathcal L_1=0$ cases,
+multiple projections and degree drops. ∎
+

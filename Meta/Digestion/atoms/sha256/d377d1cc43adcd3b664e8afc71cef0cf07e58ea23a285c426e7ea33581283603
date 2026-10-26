@@ -1,0 +1,24 @@
+**Corollary 18.4 (ordinal lower bounds for a literal completed call).** Let a
+historical call target the absolute cut $0\le k\le s$ on the same run,
+start at ordinal $s$ and return Ready at $t$. Under the conventions of
+Proposition 18.3,
+
+$$
+ t-s=17L+7+R,\qquad R\ge0.
+$$
+
+If the published word contains the historical target word $U(k)$, then
+$L\ge k+1$ and
+$t\ge18k+24$. If it is a literal encompassing image of that target cut, then
+$L\ge8(k+2)$ and
+$t\ge137k+279$. If that target's exact 64-port nested list is included, the supplied
+subword bound $L\ge257+36C(k)\ge36k+329$ gives the conservative
+$t\ge613k+5600$.
+
+**Proof.** The equality is the disjoint body count plus the residual work $R$.
+For a call that starts at $s\ge k$, substitute $L\ge k+1$ to obtain
+$t\ge k+17(k+1)+7=18k+24$. The literal-image inequality gives
+$t\ge k+17\cdot8(k+2)+7=137k+279$. The nested-list inequality gives
+$t\ge k+17(36k+329)+7=613k+5600$. These are necessary bounds on one actual
+run, not sufficient schedules and not physical time or energy laws. $\square$
+

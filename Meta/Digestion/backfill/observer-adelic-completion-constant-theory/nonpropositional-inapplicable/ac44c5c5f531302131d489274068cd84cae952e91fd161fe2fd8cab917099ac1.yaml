@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac44c5c5f531302131d489274068cd84cae952e91fd161fe2fd8cab917099ac1
+  normalized_sha256: sha256:ac44c5c5f531302131d489274068cd84cae952e91fd161fe2fd8cab917099ac1
+cas_ref: sha256:ac44c5c5f531302131d489274068cd84cae952e91fd161fe2fd8cab917099ac1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅列输出图表名称「Clark family」，未给出或断言具体 Clark 测度、存在性、归一化或同构。
+    previous_atom_id: add933c5e0885d41423d33aed22b5d0487580ec9214286d1d6c9207db9767c5a
+    next_atom_id: 62d8d9e0b24ca38c06c00282429cb0e63617c10d77d96b10a39dbea0727c9c8a

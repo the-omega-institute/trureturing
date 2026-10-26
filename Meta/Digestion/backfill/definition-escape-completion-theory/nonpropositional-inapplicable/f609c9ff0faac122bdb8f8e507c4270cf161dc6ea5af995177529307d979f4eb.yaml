@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f609c9ff0faac122bdb8f8e507c4270cf161dc6ea5af995177529307d979f4eb
+  normalized_sha256: sha256:f609c9ff0faac122bdb8f8e507c4270cf161dc6ea5af995177529307d979f4eb
+cas_ref: sha256:f609c9ff0faac122bdb8f8e507c4270cf161dc6ea5af995177529307d979f4eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 系统数据 T 的函数类型及目标角色说明。
+    previous_atom_id: 9c86b2ea9fe07b96ffbbe093ce13d2894b377fc4b7602b767e5ebc3d42c8527e
+    next_atom_id: fd30d8ad64872d93e8de9f68b8a58c886b8a568372b8b23ecd22aa13efb654c4

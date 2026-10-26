@@ -1,0 +1,17 @@
+**Definition 118.1 (old-coordinate diagonal clock).** Let
+\(\Lambda_e=\operatorname{diag}(\lambda_e(p))\) be a strictly positive
+diagonal operator (all \(\lambda_e(p)>0\)) on \(\ell^2(V_e)\). Replace the
+scalar condition (117.1) by
+
+$$
+\boxed{
+J_e^*\mathcal L_{e+1}S_Q
+   =\Lambda_e\mathcal L_e.
+}
+\tag{118.1}
+$$
+
+This is still only an old-coordinate response condition. A full
+node-dependent intertwining condition would also constrain the child block
+and is strictly stronger.
+

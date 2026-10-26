@@ -1,0 +1,111 @@
+**Lemma 247.1 (Full complex span with two identity factors).** For
+$n\ge2$, let $\mathcal L_n$ be the complex linear span of all elementary
+matrix tensors
+
+$$
+X_1\otimes\cdots\otimes X_n,
+\qquad X_i\in M_2(\mathbb C),
+\tag{247.1}
+$$
+
+for which there are two distinct indices $r\ne s$ with
+$X_r=X_s=I_2$ (and possibly more identity factors). Every nonzero
+$X\in\mathcal L_n$ has
+
+$$
+\operatorname{rank}_{\mathbb C}X\ge3.
+\tag{247.2}
+$$
+
+Proof. Write independent complex variables
+$x=(x_1,\ldots,x_n)$ and $y=(y_1,\ldots,y_n)$ and put
+
+$$
+ a(x)=\bigotimes_{i=1}^n(1,x_i),
+ \qquad
+ b(y)=\bigotimes_{i=1}^n(-y_i,1)^{\mathsf T},
+ \qquad
+ F(x,y)=a(x)Xb(y).
+\tag{247.3}
+$$
+
+For an elementary tensor in (247.1), every identity factor contributes
+
+$$
+(1,x_i)I_2(-y_i,1)^{\mathsf T}=x_i-y_i.
+\tag{247.4}
+$$
+
+There are two distinct such factors in every spanning term. Hence the
+complete sum, including all cancellations, satisfies the polynomial
+identities
+
+$$
+F(x,x)=0,
+\qquad
+\frac{\partial F}{\partial y_i}(x,x)=0
+\quad(1\le i\le n).
+\tag{247.5}
+$$
+
+Suppose that $X$ has rank $r=1$ or $r=2$. A rank factorization over
+$\mathbb C$ gives
+
+$$
+X=\sum_{\ell=1}^r u_\ell w_\ell^{\mathsf T},
+\tag{247.6}
+$$
+
+where each of $(u_\ell)_{\ell=1}^r$ and $(w_\ell)_{\ell=1}^r$ is linearly
+independent. Define
+
+$$
+ f_\ell(x)=a(x)u_\ell,
+ \qquad
+ g_\ell(y)=w_\ell^{\mathsf T}b(y).
+\tag{247.7}
+$$
+
+The coefficient maps in (247.7) are injective. Indeed, the coordinates
+of $a(x)u$ are the coefficients of the square-free multi-affine
+polynomial
+$\sum_{\varepsilon\in\{0,1\}^n}u_\varepsilon\prod_i x_i^{\varepsilon_i}$,
+whose monomials form a basis; the coordinates of $w^{\mathsf T}b(y)$
+are the same square-free monomial basis up to the nonzero signs coming
+from the factors $-y_i$. Therefore the $f_\ell$ and the $g_\ell$ are
+nonzero and linearly independent in the corresponding polynomial
+rings.
+
+For $r=1$, the diagonal identity in (247.5) is
+$f_1(x)g_1(x)=0$. The complex polynomial ring is an integral domain,
+so this contradicts the nonvanishing of both factors.
+
+For $r=2$, work in the rational function field
+$K=\mathbb C(x_1,\ldots,x_n)$. The diagonal identity gives
+$f_1g_1+f_2g_2=0$. Since $f_2$ and $g_1$ are nonzero, put
+$h=f_1/f_2\in K$; then $g_2=-hg_1$. The first-derivative identities
+in (247.5) read
+
+$$
+ f_1\,\partial_i g_1+f_2\,\partial_i g_2=0
+ \qquad(1\le i\le n).
+\tag{247.8}
+$$
+
+Substitution of $f_1=hf_2$ and $g_2=-hg_1$ into (247.8) yields
+$-f_2g_1\partial_i h=0$. Thus every coordinate derivation satisfies
+$\partial_i h=0$. In characteristic zero the common constants of
+$\partial_1,\ldots,\partial_n$ on
+$K=\mathbb C(x_1,\ldots,x_n)$ are exactly $\mathbb C$. To see this
+without any analytic assumption, write a nonzero common constant as
+$P/Q$ with coprime $P,Q\in\mathbb C[x_1,\ldots,x_n]$. The equations
+$\partial_i(P/Q)=0$ give $Q\partial_iP=P\partial_iQ$. Coprimality
+implies $P$ divides $\partial_iP$ and $Q$ divides $\partial_iQ$.
+If either polynomial had positive degree in some $x_i$, its derivative
+would have strictly smaller $x_i$-degree in characteristic zero, which
+is incompatible with that divisibility. Thus all coordinate derivatives
+of $P$ and $Q$ vanish, so both are constant and $P/Q\in\mathbb C$.
+Hence $h\in\mathbb C$.
+This makes $f_1=hf_2$, contradicting the linear independence of
+$f_1,f_2$. Ranks one and two are impossible, proving (247.2). ∎
+

@@ -1,0 +1,4 @@
+Conditional on the stated positive-probability outside event, $\sigma|_U$ is uniform on $A(a)$ and $|A(a)|=2^{d_U}$. This conditional law is independent fair bits on all of $U$ if and only if every edge of $U\setminus B$ is a bridge of $(V,F)$.
+
+3. Let $P_a$ be the actual first-positive-return permutation of $Q_a$ on $S_U$ and, for $\xi\in A(a)$, define
+

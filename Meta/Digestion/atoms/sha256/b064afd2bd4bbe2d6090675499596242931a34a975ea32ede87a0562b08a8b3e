@@ -1,0 +1,9 @@
+### 命题 249.4　区域边界充分性与原生来源拉回条件
+对 $\Gamma:X_U\to B$ 及包含预测响应和合法性目标的声明目标族 $\mathscr T$，要求 $E_U(\Gamma;T)=\varnothing$ 对所有 $T\in\mathscr T$ 成立，只保证逐 child 的充分性；若要覆盖整个区域，还须保留基点，例如存在 $b:B\to U$ 使 $\pi=b\circ\Gamma$，或改用边界 $(\pi,\Gamma)$。在此前提下，同边界的两世界必在同一 child，再由逃逸为空得到各目标相同，故目标在边界实际像上下降。向 FIB 原生来源传递时，另须声明原生来源集合 $S_{\rm native,U}$、其基点投影 $\beta_{\rm native}:S_{\rm native,U}\to U$、原生边界 $\gamma:S_{\rm native,U}\to B$ 及目标 $T_{\rm native}$，并给出保基点映射 $L:S_{\rm native,U}\to X_U$，满足
+$$
+\pi\circ L=\beta_{\rm native},\qquad
+\gamma=\Gamma\circ L,\qquad
+T_{\rm native}=T\circ L.
+$$
+还须使合法更新及其定义域的交换图成立；完整来源目标要求 $L$ 在声明来源等价类上单射。正向充分性由复合拉回，但逃逸见证向原生来源传递还要求两个见证世界均在 $L$ 的像中且可同时合法提升；单有映射不够。上述对应、更新与提升条件仍为 open；同名、同维或相同终端数值不能代替它们。
+

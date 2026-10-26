@@ -1,0 +1,8 @@
+**推论 2.3（逐模型取一失败点的粗上界）。** 若 $V(D)=\varnothing$，则
+
+$$
+\omega(D,t;\mathfrak M)\le |\mathfrak M|.
+$$
+
+**证明。** 对每个 $M$ 任选 $w_M\in F_M$，令 $C=\{w_M:M\in\mathfrak M\}$。每条失败边都与 $C$ 相交，且去重后 $|C|\le|\mathfrak M|$。证毕。
+

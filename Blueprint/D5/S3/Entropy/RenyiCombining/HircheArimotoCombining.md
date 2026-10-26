@@ -92,7 +92,31 @@ $$claim = \exists alphaHat:\mathbb{R},1 < alphaHat \land \left(alphaHat < \frac{
 
 The claim quantifies over all real orders in both ranges and every y in the closed range I(alpha).
 
-**Theorem 1.8 (Conjecture IV.6 with witness three halves).**
+**Theorem 1.8 (Hyperbolic bias ratio).**
+
+$$\forall s \in \mathbb{R},\; \frac{1 - \operatorname{tanh}\left(s\right)}{1 + \operatorname{tanh}\left(s\right)} = \operatorname{exp}\left(\left(0 - 2\right) \cdot s\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.ratio_tanh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real s, the Cachin ratio (1-tanh(s))/(1+tanh(s)) equals exp(-2s).
+
+**Theorem 1.9 (Positive hyperbolic bias).**
+
+$$\forall s \in \mathbb{R},\; 0 < s \Rightarrow \left(0 < \operatorname{tanh}\left(s\right) \land \operatorname{tanh}\left(s\right) < 1\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.tanh_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive s, tanh(s) lies strictly between zero and one.
+
+**Theorem 1.10 (Conjecture IV.6 with witness three halves).**
 
 $$\exists alphaHat:\mathbb{R},1 < alphaHat \land \left(alphaHat < \frac{15783}{10000} \land \left(\left(\forall alpha \in \mathbb{R},\; 0 < alpha \Rightarrow \left(alpha < 1 \Rightarrow \left(\forall y \in \mathbb{R},\; y \in \operatorname{I}\left(alpha\right) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{I}\left(alpha\right), x \mapsto \operatorname{G}\left(alpha, x, y\right)\right)\right)\right)\right) \land \left(\forall alpha \in \mathbb{R},\; 1 < alpha \Rightarrow \left(alpha \le alphaHat \Rightarrow \left(\forall y \in \mathbb{R},\; y \in \operatorname{I}\left(alpha\right) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{I}\left(alpha\right), x \mapsto \operatorname{G}\left(alpha, x, y\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -122,8 +146,10 @@ For fixed 0<v<1, the derivative ratio R(t)=v psi'(vt)/psi'(t) satisfies R'=v psi
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.delta`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.k`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.kInv`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.ratio_tanh`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.star`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.tanh_mem`
 - Dependency: [D5/S3/Entropy/RenyiCombining/ArimotoHyperbolic](ArimotoHyperbolic.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity](HircheCachinCombiningConcavity.md)
 - Dependency: [D5/S3/Weil/Budget/LinearCayleyScaleFlow](../../Weil/Budget/LinearCayleyScaleFlow.md)

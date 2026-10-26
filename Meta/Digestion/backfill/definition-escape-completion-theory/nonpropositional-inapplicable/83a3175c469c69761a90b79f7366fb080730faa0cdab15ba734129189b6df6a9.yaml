@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83a3175c469c69761a90b79f7366fb080730faa0cdab15ba734129189b6df6a9
+  normalized_sha256: sha256:83a3175c469c69761a90b79f7366fb080730faa0cdab15ba734129189b6df6a9
+cas_ref: sha256:83a3175c469c69761a90b79f7366fb080730faa0cdab15ba734129189b6df6a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: v1.3 增补/开放问题主题目录中的名词性条目；所列复杂度、独立性或未来期望是问题范围，不是本项已证明的结论。'
+    previous_atom_id: fd814427d0ec9f8da39a72eb8edf27f714f740dd29b142b37f69349fd4701ee2
+    next_atom_id: 3dcf69f5f9dfc664197fbace2b85f0cb79b2f2550fe094f25f73442b031a8a1a

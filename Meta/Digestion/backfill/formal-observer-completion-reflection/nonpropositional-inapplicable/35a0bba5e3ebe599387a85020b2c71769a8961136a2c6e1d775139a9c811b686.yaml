@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35a0bba5e3ebe599387a85020b2c71769a8961136a2c6e1d775139a9c811b686
+  normalized_sha256: sha256:35a0bba5e3ebe599387a85020b2c71769a8961136a2c6e1d775139a9c811b686
+cas_ref: sha256:35a0bba5e3ebe599387a85020b2c71769a8961136a2c6e1d775139a9c811b686
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive warning about treating a chosen policy as an undeclared premise.
+    previous_atom_id: 2ce5b7239f3149eaec8861ccdaf8eef6015313a8890dc4c42f66be161f40f2fe
+    next_atom_id: ca6e6052bc8594e71405dc206385db4e40194aa19109446be8f190f460616a63

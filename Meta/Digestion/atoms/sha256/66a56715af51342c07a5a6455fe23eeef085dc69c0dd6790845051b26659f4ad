@@ -1,0 +1,12 @@
+**Definition 9.1 (the lower-bound interface).** A procedure in this class
+has a fixed number $N$ of independent full raw preliminary specimens at the
+same setting. It may measure them collectively, even with $x$ disclosed,
+using any setting-independent ancillary initialization and randomness.
+It always outputs a classical unit direction $k$. It has no calibration
+abstention or calibration-dependent target rejection gate. Every preliminary
+history is processed through exactly the canonical two-specimen filter and
+alignment of §7, followed by the same terminal erasure. No preliminary
+quantum system remains available to alter that filter or supply the call.
+This is a class of estimators followed by a prescribed extractor, not the
+class of all acquisition protocols.
+

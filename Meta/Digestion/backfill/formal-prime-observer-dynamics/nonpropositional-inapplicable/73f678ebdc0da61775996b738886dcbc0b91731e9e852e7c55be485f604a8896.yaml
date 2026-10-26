@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73f678ebdc0da61775996b738886dcbc0b91731e9e852e7c55be485f604a8896
+  normalized_sha256: sha256:73f678ebdc0da61775996b738886dcbc0b91731e9e852e7c55be485f604a8896
+cas_ref: sha256:73f678ebdc0da61775996b738886dcbc0b91731e9e852e7c55be485f604a8896
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Appendix D formulates a research question or requested construction; it asserts no achieved theorem or bound.
+    previous_atom_id: 78592d1e0090a03a8dd113a2bbd29368a85b2c2466bc0948b52662323d96bf0e
+    next_atom_id: ae44880a6872aee3bd77d767256a0bed063b02f4516d8f139e980aef77d55c2b

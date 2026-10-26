@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5f1f956c3e677fb95fae6c80a78539c238c7b92dfdffefc4747251ef69988f85
+  normalized_sha256: sha256:5f1f956c3e677fb95fae6c80a78539c238c7b92dfdffefc4747251ef69988f85
+cas_ref: sha256:5f1f956c3e677fb95fae6c80a78539c238c7b92dfdffefc4747251ef69988f85
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transportability/MacroInterventionCarryCharacterization.macro_intervention_carry_characterization
+    target_statement_id: sha256:faf79a1b5891e13a99cd10660fff47f6c145d90396717ad0369fde3fdec0e6f5
+receipts:
+  unresolved_subitems: []

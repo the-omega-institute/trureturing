@@ -11,6 +11,7 @@
    270b3358a135f64a6688636660c07772e8db0173.
    Attribution and full license: Library/QuadraticForms/klartag2025packing.md. -/
 
+import D5.S3.Arith.Robin.LogarithmBounds
 import D5.S3.Arith.Lattices.Klartag.Tail.PaddedTail
 import D5.S3.Arith.Lattices.Klartag.Construction.Section5
 
@@ -22,56 +23,6 @@ open MeasureTheory
 open Set
 open Real
 open scoped ENNReal NNReal
-
-/-- **The sharp bound.**  `-log(1-x) ≤ x + x²` for `0 ≤ x ≤ 1/2`.
-
-This is the step that fixes the `1/8`.  The crude `-log(1-x) ≤ 2x`, also true on `[0,1/2]`, would
-put `γ = 1/2` and destroy the `n²`. -/
-theorem neg_log_one_sub_le {x : ℝ} (hx0 : 0 ≤ x) (hx : x ≤ 1 / 2) :
-    -Real.log (1 - x) ≤ x + x ^ 2 := by
-  have hle : ∀ z : ℝ, z ∈ Set.Icc (0 : ℝ) (1 / 2) →
-      0 ≤ Real.log (1 - z) + z + z ^ 2 := by
-    set f : ℝ → ℝ := fun z => Real.log (1 - z) + z + z ^ 2 with hfdef
-    set g : ℝ → ℝ := fun z => z * (1 - 2 * z) / (1 - z) with hgdef
-    have hderiv : ∀ z : ℝ, z < 1 → HasDerivAt f (g z) z := by
-      intro z hz
-      have h1z : (1 : ℝ) - z ≠ 0 := by linarith
-      have hlin : HasDerivAt (fun y : ℝ => 1 - y) (-1) z := by
-        simpa using (hasDerivAt_id z).const_sub 1
-      have hlog : HasDerivAt (fun y : ℝ => Real.log (1 - y)) ((1 - z)⁻¹ * (-1)) z :=
-        (Real.hasDerivAt_log h1z).comp z hlin
-      have hid : HasDerivAt (fun y : ℝ => y) 1 z := hasDerivAt_id z
-      have hsq : HasDerivAt (fun y : ℝ => y ^ 2) (2 * z) z := by
-        simpa using (hasDerivAt_pow 2 z)
-      have hsum : HasDerivAt f ((1 - z)⁻¹ * (-1) + 1 + 2 * z) z := (hlog.add hid).add hsq
-      have heq : (1 - z)⁻¹ * (-1) + 1 + 2 * z = g z := by
-        rw [hgdef]; field_simp; ring
-      rwa [heq] at hsum
-    have hcont : ContinuousOn f (Set.Icc (0 : ℝ) (1 / 2)) := by
-      refine ContinuousOn.add (ContinuousOn.add ?_ continuousOn_id) (by fun_prop)
-      refine Real.continuousOn_log.comp (by fun_prop) ?_
-      intro z hz
-      simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
-      have := hz.2
-      intro hcon
-      simp only [sub_eq_zero] at hcon
-      linarith [hz.2, hcon]
-    have hmono : MonotoneOn f (Set.Icc (0 : ℝ) (1 / 2)) := by
-      apply monotoneOn_of_hasDerivWithinAt_nonneg (f' := g) (convex_Icc 0 (1 / 2)) hcont
-      · intro z hz
-        rw [interior_Icc] at hz
-        exact (hderiv z (by linarith [hz.2])).hasDerivWithinAt
-      · intro z hz
-        rw [interior_Icc] at hz
-        rw [hgdef]
-        refine div_nonneg (mul_nonneg (le_of_lt hz.1) (by linarith [hz.2])) (by linarith [hz.2])
-    intro z hz
-    have hf0 : f 0 = 0 := by simp [hfdef]
-    have := hmono (Set.left_mem_Icc.2 (by norm_num)) hz hz.1
-    have hfz : f z = Real.log (1 - z) + z + z ^ 2 := rfl
-    linarith [this, hf0.ge, hf0.le, hfz.ge, hfz.le]
-  have := hle x ⟨hx0, hx⟩
-  linarith
 
 /-- `(1 - x)^{-m/2} ≤ exp((m/2)·(x + x²))` for `0 ≤ x ≤ 1/2` and `0 ≤ m`. -/
 theorem rpow_one_sub_le_exp {x m : ℝ} (hx0 : 0 ≤ x) (hx : x ≤ 1 / 2) (hm : 0 ≤ m) :

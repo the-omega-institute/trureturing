@@ -1,0 +1,22 @@
+**Proposition 100.1 (Unweighted normalized Choi probe is insufficient).**
+At $n=1$, for the attaining decoder $D_1=\operatorname{Ad}_{U_0^\dagger}$,
+the maximally entangled qutrit input has half trace distance
+$\sqrt2/3<1/2=\delta_1$.
+
+Proof. Here $\Phi_1=\Delta_W$ pinches the two-dimensional $+1$
+eigenspace of $W$ against its one-dimensional $-1$ eigenspace. Put
+
+$$
+|u\rangle=(|00\rangle+|11\rangle)/\sqrt2,\qquad |v\rangle=|22\rangle,
+\qquad |\Omega_3\rangle=\sqrt{2/3}|u\rangle+\sqrt{1/3}|v\rangle.
+$$
+
+The channel on the first tensor factor deletes just the cross term
+between these two components of this input. The difference between
+target and output, restricted to their span, is
+
+$$
+\begin{pmatrix}0&\sqrt2/3\\\sqrt2/3&0\end{pmatrix}.
+\tag{100.3}
+$$
+

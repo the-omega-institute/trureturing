@@ -1,0 +1,21 @@
+**推论 14.3（相对尺度下的条件联合 TV 保留）。** Under Assumption 14.1, use the actual parameter-dependent Borel sign readout $Q_{q_n,b_n}$ of (13.16), applied identically for all five original labels. Let $\mathcal J_n$ be its label--output joint law for the stated Gaussian experiment. Supply comparison joint laws $\mathcal J_n'$ on the same $\{1,\ldots,5\}\times\{0,1\}$ alphabet with the same uniform original-label prior, obtained using the same actual readout, and write their optimal binary singleton gains as $B_n'$. Suppose
+
+$$
+ \operatorname{TV}(\mathcal J_n,\mathcal J_n')\le e_n.
+\tag{14.18}
+$$
+
+If $e_n=o(S_n)$, then $B_n'/B(q_n,b_n)\to1$. More generally, if $e_n\le dS_n$ eventually for a fixed $0\le d<1$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le d,
+ \qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}\ge1-d.
+\tag{14.19}
+$$
+
+Every fixed fraction $0<\theta<1-d$ is therefore eventually retained. The limiting lower bound does not assert an eventual pointwise bound of exactly $1-d$.
+
+**Proof.** Reuse (13.17)--(13.18): $B_{Q_{q_n,b_n}}=B(q_n,b_n)>0$ and $|B_n'-B(q_n,b_n)|\le e_n$. Divide by $B(q_n,b_n)$ and apply (14.2). The first error budget gives a vanishing relative discrepancy; the second gives the limsup bound in (14.19), which implies its liminf bound and every strictly smaller eventual fraction. This is the existing same-prior joint-TV algebra applied to the scale $S_n$ for unrestricted offsets. The comparison laws and their error bounds are supplied hypotheses; no approximation-law construction or achieved rate is established. In particular the conclusion concerns the common actual sign readout, not an arbitrary quantizer, and entails no native-FIB realization, training, empirical, physical-cost or formal-certification claim. $\square$
+

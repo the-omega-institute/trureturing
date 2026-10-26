@@ -1,0 +1,20 @@
+**Theorem 7.2 (Exact strict-real preservation).** The real zero sets of
+$I_{\rm raw}$ and $I_{\rm tr}$ are equal. Equivalently, their
+strict-real admissible points are exactly the original witnesses of
+Proposition 2.3. Each has a unique extension in $h$ to the real guarded
+system.
+
+Proof. Every real raw zero has $T_i,U_i,j_i,n_i>0$, by its real slacks
+and source equations. Thus $Q>0$ at every real raw zero. If
+$Q^kf\in I_{\rm raw}$, evaluation there implies $f=0$. This gives
+$V_{\mathbb R}(I_{\rm raw})\subset V_{\mathbb R}(I_{\rm tr})$;
+the reverse inclusion follows from $I_{\rm raw}\subset I_{\rm tr}$.
+Taking $h=1/Q$ gives the unique guarded extension.
+
+The factors used are positive for every strict source, independently
+of the gain, drift or chart. No condition on $\Lambda$, drift, any gain
+sample, gain leading coefficient, root difference, regularity or pair
+separation was added. Hence singular and unused worlds, zero drift,
+sampled-zero and repeated-root gains and every gain degree drop remain
+in the original domain. ∎
+

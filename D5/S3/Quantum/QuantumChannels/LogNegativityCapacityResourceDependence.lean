@@ -11,7 +11,7 @@ proof_shape: result: bind-only; all private theorems: bind-only, with consumers 
 escape_witness: none
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose; sha256:2373e14505428583f492752adc05d104ae8b1567265ff8182e03646de824c089
-D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity; sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
+D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity; sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus; sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
 D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
@@ -30,6 +30,7 @@ D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm; sha256
 Escape audit unfinished for the supporting owner theorems: https://github.com/the-omega-institute/trureturing/issues/17573
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 -/
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
@@ -40,7 +41,7 @@ open scoped Kronecker MatrixOrder ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable weighted weighted_psd)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 noncomputable section

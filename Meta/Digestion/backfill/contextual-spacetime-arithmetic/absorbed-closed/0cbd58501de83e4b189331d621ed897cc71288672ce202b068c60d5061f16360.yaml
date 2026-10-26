@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:0cbd58501de83e4b189331d621ed897cc71288672ce202b068c60d5061f16360
+  normalized_sha256: sha256:0cbd58501de83e4b189331d621ed897cc71288672ce202b068c60d5061f16360
+cas_ref: sha256:0cbd58501de83e4b189331d621ed897cc71288672ce202b068c60d5061f16360
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_polynomial_law
+    target_statement_id: sha256:1b1c64a2db74509dd40e705de40b15203527870a715bdae1ec752182e171623b
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.gamma_parallel
+    target_statement_id: sha256:4b3e407bca114e69070a9a0baffac7600ab00c3dd555c68cf21c17b4899f11ef
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.gamma_product
+    target_statement_id: sha256:e8c85c570e18034d9f7b9d65fb4b9d94d428c88d9cf26dc4ec0877c62c0f7a19
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.gamma_unary
+    target_statement_id: sha256:3d90b14546cc4733438ee8dcadc6fc1525fcb7ef9308ab27f3372bc05482529e
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.model_eval
+    target_statement_id: sha256:bd1ad146fdfd62ec6722a3707218d00bac2ad59ec2d32060343723a5ef24c6fc
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profile_multiaffine
+    target_statement_id: sha256:0d5acfb98fd3d18d8e9233696b0e1446206aef292f77b8f0c8a5621e8d935dd9
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.readout_gamma
+    target_statement_id: sha256:fd58ba15fc92463023b497c143fd98946797ac8601eddef1e204aa2a71e620bf
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.temporal_free_total
+    target_statement_id: sha256:5a313e03a8de7e8b840727377424c9be03bd50f00e79f7984aab60817fbb911c
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_copy_normalization
+    target_statement_id: sha256:43351ad0e0abdecef00de613c1c529fcc26436561a6ef7c8a04e51eb6b351f94
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.zero_empty
+    target_statement_id: sha256:c31b372a825a7c481801a7e582557d7e059f3f44f80c8486e9ab310474ef525d
+receipts:
+  unresolved_subitems: []

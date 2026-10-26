@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c11be1c6e9e45cff487c533ed51489b7d35942f9773e78233d9f88650c7bfa5a
+  normalized_sha256: sha256:c11be1c6e9e45cff487c533ed51489b7d35942f9773e78233d9f88650c7bfa5a
+cas_ref: sha256:c11be1c6e9e45cff487c533ed51489b7d35942f9773e78233d9f88650c7bfa5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and definitions of the two prime sets U(n), T(n) and abbreviation R_S. No support bound, finiteness conclusion or equivalence is asserted.
+    previous_atom_id: 21b0ac102cf597a6d568284cb2ef41bafe532b101e4a74b5a97158e1a302ce94
+    next_atom_id: 4926e5caed38265fe89c4542911635744ec61e39780a9c2fb73b68d3a973a6f7

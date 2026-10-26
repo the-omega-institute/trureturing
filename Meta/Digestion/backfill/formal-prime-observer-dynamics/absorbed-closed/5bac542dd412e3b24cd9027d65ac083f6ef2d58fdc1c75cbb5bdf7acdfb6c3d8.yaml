@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5bac542dd412e3b24cd9027d65ac083f6ef2d58fdc1c75cbb5bdf7acdfb6c3d8
+  normalized_sha256: sha256:5bac542dd412e3b24cd9027d65ac083f6ef2d58fdc1c75cbb5bdf7acdfb6c3d8
+cas_ref: sha256:5bac542dd412e3b24cd9027d65ac083f6ef2d58fdc1c75cbb5bdf7acdfb6c3d8
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Fusion/FamilyIndexedProductCompletion.family_indexed_product_completion
+    target_statement_id: sha256:83e7aa36befd9ba8a3e5df234f832787ad1b939d821948210677d55a8340c121
+receipts:
+  unresolved_subitems: []

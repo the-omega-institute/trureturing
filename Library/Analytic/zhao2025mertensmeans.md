@@ -146,3 +146,34 @@ Theorem 1 and its window corollary have no CA, neutral-band or
 right-tail-maximality condition providing this comparison.
 This identifies a cumulative ordinary-prime quantity for further
 research while preserving the full original tail and its unpaid sign.
+
+## Effective linear-error peaks and a bounded actual-integer consumer
+
+In the same inspected arXiv v2, §5, printed pp.13–14, Lemma 10,
+equation (28), set $\Delta_1(x)=\int_2^xE_2(t)\,dt$; this is not
+the $F_1$ integral of $E_1$ above. Given $\varepsilon>0$ and an actual
+zero $\beta_0+i\gamma_0$ with $\beta_0>1/2+\varepsilon$ and
+$\gamma_0>C_1(\varepsilon)$, every
+$X>\gamma_0^{C_2(\varepsilon)}$ has $x_1,x_2\in[X,X^{1+\varepsilon}]$
+with
+
+$$
+\Delta_1(x_1)>\frac{x_1^{\beta_0}}{\gamma_0^{2+\varepsilon}\log x_1},
+\qquad
+\Delta_1(x_2)<-\frac{x_2^{\beta_0}}{\gamma_0^{2+\varepsilon}\log x_2}.
+$$
+
+The source states that $C_1,C_2$ are effectively computable and gives a
+proof sketch adapting Pintz's method. Their numerical values or explicit
+formulas are not supplied or extracted here. The extra height condition
+cannot be dropped; simplicity, separation and a rightmost-zero premise
+are not among the lemma's stated hypotheses. This reuses the lemma stated in the cited arXiv version, without a
+whole-proof or Lean audit.
+
+The [bounded lcm consumer, §477](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#477-mertens-累积峰值到实际-lcm-robin-反例的有限位置界)
+uses its positive peak to force a strict Robin violation in the literal
+family $\operatorname{lcm}(1,\ldots,m)$ below a displayed finite upper
+bound. That consumer is a paper-level repository derivation, not a
+claim that Zhao proved an arithmetic witness horizon. It retains the
+height premise and the unevaluated effective constants; it supplies no
+actual off-line zero, numerical cutoff or unconditional RH proof.

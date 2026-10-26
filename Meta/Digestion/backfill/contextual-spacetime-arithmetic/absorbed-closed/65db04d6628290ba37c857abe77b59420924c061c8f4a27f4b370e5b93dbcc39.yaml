@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:65db04d6628290ba37c857abe77b59420924c061c8f4a27f4b370e5b93dbcc39
+  normalized_sha256: sha256:65db04d6628290ba37c857abe77b59420924c061c8f4a27f4b370e5b93dbcc39
+cas_ref: sha256:65db04d6628290ba37c857abe77b59420924c061c8f4a27f4b370e5b93dbcc39
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialEquationCriterion.spatial_equation_criterion
+    target_statement_id: sha256:d550d598875b675900613840882c029a4a71c0a387d6076149c69a1ad472dca5
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b2276a8920d031fc609caf86c10eca658197ab302520cbb5c373d5d4eea82675
+    - aa94c8d8b36799e1a20d990685b6c40a2e82583fef20b89a64bc74e7fe38e60b

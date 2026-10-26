@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99095cf0d202e52cd3b6023159ed77d7b91a8fb6b8f3e888c9557bbf74c74f7c
+  normalized_sha256: sha256:99095cf0d202e52cd3b6023159ed77d7b91a8fb6b8f3e888c9557bbf74c74f7c
+cas_ref: sha256:99095cf0d202e52cd3b6023159ed77d7b91a8fb6b8f3e888c9557bbf74c74f7c
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Crossing/ExactPropagation.exact_propagation_positive_cone
+    target_statement_id: sha256:73d90fb83aa51a13d056572c37f9eb7df1115e5e6cf90179ccb1648994fff9ad
+  - gid: D5/S3/PrimeForms/CrossingPeriodicity/SandwichPhasePeriod.sandwich_phase_period_package
+    target_statement_id: sha256:99ff6f16577353b1772788a643df843dd75aeb75702ad714f7b09d1298cf0b1e
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:012d4b6154f9353ab7caf5285f5568b1c82ee9852d12cee5cd210ba9047946af
+  normalized_sha256: sha256:012d4b6154f9353ab7caf5285f5568b1c82ee9852d12cee5cd210ba9047946af
+cas_ref: sha256:012d4b6154f9353ab7caf5285f5568b1c82ee9852d12cee5cd210ba9047946af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 衔尾蛇循环的图示与比喻，不是关于 B_N 的定量等式或定理。
+    previous_atom_id: a0ea8f4ac95e7655dd0c0310f8141ebd4db413ae018f3666d1717c8871090b89
+    next_atom_id: 0f0079c3986d9fd0eaa6af79e3ef6f14b8a18681db23cb9e698a6a555e8cb38d

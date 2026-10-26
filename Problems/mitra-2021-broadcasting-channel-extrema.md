@@ -46,6 +46,8 @@ Its construction uses $d=r+1$, $m=2$, $P=\operatorname{diag}(1,\ldots,1,0)$, $Q=
 
 This is a sibling family: its third output at $r=2$ is the symmetric vector above, whereas the delivered Lean witness uses the projector onto $e_0\otimes e_1$. The delivered witness is certified by the kernel-checked `result`; no numerical certificate is claimed for it. These finite numerical readings establish no uniform rank-family theorem.
 
+The published helper `density_le_one` is consumed by the purify-and-clone refutation. Its four-slot escape audit is unfinished under [#19490](https://github.com/the-omega-institute/trureturing/issues/19490).
+
 ## Triage
 
 The named Section III.A questions are refuted under `admission_basis: open-problem-resolution (#15501; Refuted)`.

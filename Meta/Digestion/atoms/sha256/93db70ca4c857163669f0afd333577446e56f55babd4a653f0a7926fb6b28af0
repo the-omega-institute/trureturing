@@ -1,0 +1,53 @@
+**Definition 6.8.1 (Unrestricted independent-pair relation).** In the original problem retain the full fixed-terminal inverse of Support X, Theorems 3.3 and 4.3, and Definition 6.3. For arbitrary real $p\ne24,v$, choose $m_0,m_1,m$ independently and reconstruct
+
+$$
+\begin{aligned}
+W_0&\text{ from }\mathcal R(p,v,m_0)\sqcup\mathcal E(p,v,m_0),\\
+W_1&\text{ from }\mathcal R(p,v,m_1)\sqcup\mathcal E(p,v,m_1),\\
+W_2,W_3&\text{ independently from }\mathcal R(p,v,m)\sqcup\mathcal E(p,v,m).
+\end{aligned}
+\tag{6.8.1}
+$$
+
+The actual J values of the first pair are exactly
+
+$$
+a_i=d_i+\left(\frac{1+u_i}{2}+2x_i+2u_ir_i\right)
+                 \frac{m_i-d_i}{2x_i+3},\qquad i=0,1.
+\tag{6.8.2}
+$$
+
+There is no division by $m_i-d_i$. In the notation and polynomial definitions of Support X, (3.1), every ordinary root retains all the guards
+
+$$
+\begin{gathered}
+F=G=0,\qquad x>0,\qquad K\ne0,\qquad D_*>0,\qquad
+0<W_*<D_*,\\
+ZZ_1>0,\qquad (W_*Z_1-ZD_*)Z_1>0,
+\end{gathered}
+\tag{6.8.3}
+$$
+
+and is reconstructed by exactly its inverse (3.5). The F and G in (6.8.3) are those inverse polynomials, not the three-component source map of (6.2.2). The exceptional coordinate is the positive root $\kappa$ of
+
+$$
+K(x)=8x^4+29x^3+18x^2-15x-6.
+\tag{6.8.4}
+$$
+
+Its entire layer is retained with Support X, (4.5)–(4.8): $N(\kappa)=0$, the drift equation $\Phi_\kappa(d)=0$, the sum-of-squares condition $H_0^2+H_2^2>0$, $H_1\ne0$, $0<u<1$, $0<r<1$, and the exact source identity $bj=b^2+r(1-r)$, with the whole interpolant and reconstruction prescribed there. Singular original sources, zero drift, sampled gain zeros, lower degrees, repeated roots, the golden-coordinate layer and the exceptional layer all remain in the full relation.
+
+In these variables the unresolved problem is still
+
+$$
+\begin{gathered}
+\exists p\ne24,\ v,\ m_0,m_1,m,\quad
+W_0,W_1,W_2,W_3\in\text{the same entire }C(p,v):\\
+W_0\ne W_1,\qquad a_0=a_1,\qquad
+W_2\ne W_3,\qquad m(W_2)=m(W_3)=m,
+\end{gathered}
+\tag{6.8.5}
+$$
+
+with no cross-pair inequalities, no equation between the common terminal answers, and no requirement $m_0=m_1$. The selected pair of Theorem 6.7.2 belongs to $D_J^{\ne}$ of Section 5.6; its unequal M values impose no exclusion on any independently selected M pair among other companions. Theorem 6.6.1 likewise imposes no condition on equal-x J pairs elsewhere. The evaluated second-source opening and the strict finite pair provide J incidence only. Neither result supplies an independent equal-M pair at the same base, an inventory of an entire child, a global uniqueness assertion, or an all-domain absence theorem. In particular they do not decide either intersection in (5.6.3).
+

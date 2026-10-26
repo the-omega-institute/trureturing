@@ -1,0 +1,62 @@
+## 36. Exact polynomial bounds for a thin source strip
+
+Use a scalar $P$ for a prescribed fifth reading and define
+
+$$
+F_P=N_p-PD,\qquad L=N_m-5N_v,\qquad
+A=N_{p,t}D-N_pD_t.
+\tag{36.1}
+$$
+
+Define the polynomial
+
+$$
+\begin{aligned}
+\mathcal J={}&D(N_{p,t}L_b-N_{p,b}L_t)
+ -L(N_{p,t}D_b-N_{p,b}D_t)\\
+ &-N_p(D_tL_b-D_bL_t).
+\end{aligned}
+\tag{36.2}
+$$
+
+Subscripts here are polynomial partial derivatives in the independent
+coordinates $(t,b)$. Direct multiplication gives the identity
+
+$$
+\begin{aligned}
+D \mathcal J={}&(N_{p,t}D-N_pD_t)(L_bD-LD_b)\\
+ &-(N_{p,b}D-N_pD_b)(L_tD-LD_t).
+\end{aligned}
+\tag{36.3}
+$$
+
+Thus $\mathcal J$ is specified without division at a point where $D=0$.
+
+Put $\epsilon=10^{-4}$ and use the following exact rational polynomial:
+
+$$
+\begin{aligned}
+\theta(b)=10^{-12}\bigl(&1000583206906+495974407332b
+ +759297221119b^2\\
+ &+1295143705629b^3+6255734498341b^4\bigr).
+\end{aligned}
+\tag{36.4}
+$$
+
+Its positive coefficients give, for $0\le b\le1/10$,
+
+$$
+1<\theta(b)-\epsilon<\theta(b)+\epsilon<53/50<107/100.
+\tag{36.5}
+$$
+
+Define the two closed sets of auxiliary source coordinates
+
+$$
+B=[1,107/100]\times[0,1/10],\qquad
+R=\{(\theta(b)+z,b):0\le b\le1/10,\ |z|\le\epsilon\}.
+\tag{36.6}
+$$
+
+Their $b=0$ points are polynomial auxiliary points, not original worlds.
+

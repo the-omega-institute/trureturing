@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:500b2e72ded4e43257347cdb564cf4373db0d9ac984aa91ce75ff2c86edd10d3
+  normalized_sha256: sha256:500b2e72ded4e43257347cdb564cf4373db0d9ac984aa91ce75ff2c86edd10d3
+cas_ref: sha256:500b2e72ded4e43257347cdb564cf4373db0d9ac984aa91ce75ff2c86edd10d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: v1.5 增补主题目录中的名词性条目，只列举载体、语义解释器、证明目标或复用范围；不是那些命题本身。'
+    previous_atom_id: f68b1eff58ac659f953b62801abd6434cbce87ad5173468e564fbc959a13582b
+    next_atom_id: 24b732a6c99b15d0fcb9059b86e7b9d247c375ce2e00bbc91693770e37ebd73c

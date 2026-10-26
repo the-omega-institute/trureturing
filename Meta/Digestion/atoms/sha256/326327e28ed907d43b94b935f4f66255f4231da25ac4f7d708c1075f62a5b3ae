@@ -1,0 +1,176 @@
+**Theorem 7.2 (general-degree ambient reconstruction).** The chronological word
+
+$$
+\boxed{M^{\,2k+\delta+2}\ J\ M^{\,2k+1}}
+$$
+
+recovers every one of the $N$ independent coefficients of Definition 7.1 from exactly $N$ scalar readings including the current one. Each displayed power means that many executed and immediately read individual atoms. The complete cumulative path is
+
+$$
+A_i=M^i\quad(0\le i\le m),\qquad
+A_{s+j}=M^jJM^m\quad(0\le j<2q).
+$$
+
+The observation map is a linear bijection on the entire ambient space.
+
+**Proof.** Define
+
+$$
+\lambda=\frac{1+\sqrt5}{2},\quad
+\mu=\frac{1-\sqrt5}{2},\quad
+S=\begin{pmatrix}1&1\\\lambda&\mu\end{pmatrix},\qquad
+\Lambda=\operatorname{diag}(\lambda,\mu).
+$$
+
+Both roots satisfy $x^2=x+1$, so $MS=S\Lambda$. They are distinct, nonzero and different from one, and
+
+$$
+\lambda+\mu=1,\quad \lambda\mu=-1,\quad
+\mu-\lambda=-\sqrt5,\quad (1-\lambda)(1-\mu)=-1.
+$$
+
+Thus $S$ is invertible. Direct multiplication gives
+
+$$
+S^{-1}=\frac1{\mu-\lambda}\begin{pmatrix}\mu&-1\\-\lambda&1\end{pmatrix},\qquad
+K=S^{-1}JS=
+\frac1{\mu-\lambda}
+\begin{pmatrix}-2&\mu\\-\lambda&2\end{pmatrix},
+\qquad K_{12}K_{21}=\frac15\ne0.
+$$
+
+Write the independent eigenbasis entries as
+
+$$
+S^{-1}Z(t)S=
+\begin{pmatrix}a(t)&b(t)\\c(t)&e(t)\end{pmatrix}.
+$$
+
+Each has degree at most $k$, and conjugation preserves independence of all four matrix-entry polynomials. During the first $s$ readings,
+
+$$
+Y_i=\lambda^ia(i)+\mu^ie(i)+D(i),\qquad 0\le i<s.
+$$
+
+To invert this block and the switched block below, use the classical confluent Vandermonde calculation as an intermediate step. See Batenkov–Yomdin, “On the Accuracy of Solving Confluent Prony Systems”, §2B, [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3), [DOI:10.1137/110836584](https://doi.org/10.1137/110836584). The fixed-node and drift-separation ingredients are also used in [FIB self-calibrating relation mathematics, Theorems 35.2 and 39.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md). The following derivation fixes the sign and factorial normalization required by this frame.
+
+For an integer $n\ge1$, put
+
+$$
+\mathfrak F(n)=\prod_{h=0}^{n-1}h!.
+$$
+
+Let $x_1,\ldots,x_a$ be distinct nonzero real numbers and let $n_1,\ldots,n_a$ be positive integers. Put $L=\sum_b n_b$. In the ordered columns $(b,h)$, first by $b$ and then by $0\le h<n_b$, define
+
+$$
+\mathcal V(x_1:n_1,\ldots,x_a:n_a)_{i,(b,h)}=i^h x_b^i,
+\qquad 0\le i<L.
+$$
+
+The convention is $i^0=1$, including at $i=0$. Then
+
+$$
+\boxed{
+\det\mathcal V
+=\left(\prod_{b=1}^a x_b^{n_b(n_b-1)/2}\mathfrak F(n_b)\right)
+ \prod_{b<c}(x_c-x_b)^{n_bn_c}\ne0.
+}
+$$
+
+Consequently $L$ consecutive samples beginning at zero uniquely recover all coefficients of $\sum_b x_b^i p_b(i)$, where the $p_b$ are independent real polynomials of degrees less than $n_b$. No condition is imposed on their actual degrees or coefficients.
+
+First consider the derivative evaluation matrix
+
+$$
+U_{i,(b,h)}=\left.\frac{d^h}{dx^h}x^i\right|_{x=x_b}
+=(i)_h x_b^{i-h},
+$$
+
+where $(i)_h=i(i-1)\cdots(i-h+1)$, with $(i)_0=1$. Its determinant is
+
+$$
+\det U=\left(\prod_b\mathfrak F(n_b)\right)
+\prod_{b<c}(x_c-x_b)^{n_bn_c}.
+$$
+
+Here is a derivation including its sign and factorial normalization. In each group choose distinct ordered auxiliary real numbers $\xi_{b,0},\ldots,\xi_{b,n_b-1}$ and apply the ordinary Vandermonde identity to the ordered nodes $x_b+\varepsilon\xi_{b,h}$. Let $c_0=\sum_b n_b(n_b-1)/2$. The coefficient of the lowest power $\varepsilon^{c_0}$ in its product formula is
+
+$$
+\left(\prod_b\prod_{u<v}(\xi_{b,v}-\xi_{b,u})\right)
+\prod_{b<c}(x_c-x_b)^{n_bn_c}.
+$$
+
+Expand each column by its finite Taylor formula at $x_b$. A term with two identical derivative orders in one group has equal columns and vanishes. The least possible sum of distinct nonnegative orders in that group is $0+\cdots+(n_b-1)$. Multilinearity therefore makes the same coefficient equal to
+
+$$
+\det U\prod_b
+\det\left[\frac{\xi_{b,u}^h}{h!}\right]_{0\le h,u<n_b}
+=\det U\prod_b
+\frac{\prod_{u<v}(\xi_{b,v}-\xi_{b,u})}{\mathfrak F(n_b)}.
+$$
+
+Cancelling the nonzero auxiliary factors proves the displayed formula for $U$. The ordinary Vandermonde identity itself follows because its determinant is alternating in its nodes, has total degree $L(L-1)/2$, and the coefficient of $\prod_{j=0}^{L-1}x_j^j$ is one.
+
+For every $h$, expansion in the monic falling-factorial basis gives $i^h=\sum_{u=0}^h c_{h,u}(i)_u$ with $c_{h,h}=1$. Hence
+
+$$
+i^h x_b^i=\sum_{u=0}^h c_{h,u}x_b^u U_{i,(b,u)}.
+$$
+
+This is a triangular column change of determinant $\prod_{h=0}^{n_b-1}x_b^h$ in group $b$. Multiplying these factors proves the formula for $\mathcal V$. Its nonzero determinant proves coefficient recovery, including when some or all coefficient polynomials vanish.
+
+The fixed-node calculation just derived at the three nodes $(\lambda:q,\mu:q,1:\rho)$ recovers the coefficients of $a,e,D$ uniquely. Explicitly, with $V_3=\mathcal V(\lambda:q,\mu:q,1:\rho)$ and coefficient columns in that group order,
+
+$$
+\begin{pmatrix}[a]\\[e]\\[D]\end{pmatrix}
+=\frac{\operatorname{adj}(V_3)}{\det V_3}
+\begin{pmatrix}Y_0\\\vdots\\Y_{s-1}\end{pmatrix}.
+$$
+
+Here $[p]$ always lists the polynomial's coefficients in ascending ordinary powers, padded with zero coefficients to its declared bound.
+
+The reading after the switch has absolute local clock $t=s+j$, not $j$. Conjugating its cumulative matrix gives $\Lambda^jK\Lambda^m$. The trace is therefore
+
+$$
+\begin{aligned}
+Y_{s+j}={}&D(s+j)
++\lambda^{j+m}K_{11}a(s+j)
++\mu^{j+m}K_{22}e(s+j)\\
+&+\lambda^j\mu^mK_{12}c(s+j)
++\mu^j\lambda^mK_{21}b(s+j).
+\end{aligned}
+$$
+
+Subtract the three known terms in the first line and call the residual $R_j$. Define independent polynomials
+
+$$
+F(u)=\mu^mK_{12}c(s+u),\qquad
+G(u)=\lambda^mK_{21}b(s+u).
+$$
+
+They have degree at most $k$, and
+
+$$
+R_j=\lambda^jF(j)+\mu^jG(j),\qquad 0\le j<2q.
+$$
+
+The fixed-node calculation above at $(\lambda:q,\mu:q)$ recovers both entire polynomials. In full finite form, with $V_2=\mathcal V(\lambda:q,\mu:q)$,
+
+$$
+\begin{pmatrix}[F]\\[G]\end{pmatrix}
+=\frac{\operatorname{adj}(V_2)}{\det V_2}
+\begin{pmatrix}R_0\\\vdots\\R_{2q-1}\end{pmatrix}.
+$$
+
+All denominators are fixed nonzero known constants. Undoing translation and scaling yields
+
+$$
+\boxed{
+c(t)=\frac{F(t-s)}{\mu^mK_{12}},\qquad
+b(t)=\frac{G(t-s)}{\lambda^mK_{21}},\qquad
+Z(t)=S\begin{pmatrix}a(t)&b(t)\\c(t)&e(t)\end{pmatrix}S^{-1}.
+}
+$$
+
+These formulas return the actual $Z,D$ for every point in the stated ambient space. Conversely, for arbitrary $Y\in\mathbb R^N$, the first inverse fits every initial reading and the second inverse fits every remaining residual, using these same four polynomials and the same drift. Thus they give a two-sided inverse and establish bijectivity. There are $s+2q=4q+\rho=N$ readings, at clocks $0,\ldots,N-1$. ∎
+

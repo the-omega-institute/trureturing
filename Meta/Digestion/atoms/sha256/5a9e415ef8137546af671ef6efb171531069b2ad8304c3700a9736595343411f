@@ -1,0 +1,11 @@
+**Corollary 14.4 (Effect on a selected $M$ pair).**  If
+$p\ne24$ and $W\ne W'$ are actual members of $C(p,v)$ with
+$m(W)=m(W')$, at most one of $W,W'$ belongs to $\mathcal S$.
+
+This removes the singular--singular endpoint possibility for the
+selected $M$ pair.  It does not remove a singular--regular pair, a
+regular--regular pair, or an unused singular companion in the same
+child.  It leaves the selected $J$ pair, its shared $(p,v)$, and the
+within-pair distinctness requirements exactly as in (1.6); no joint
+witness or joint exclusion follows from this corollary.
+

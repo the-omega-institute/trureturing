@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8fd7639a6ba0dbe8e5568af3e42c7d886d076c21026efd6e0d5840d0d893f02b
+  normalized_sha256: sha256:8fd7639a6ba0dbe8e5568af3e42c7d886d076c21026efd6e0d5840d0d893f02b
+cas_ref: sha256:8fd7639a6ba0dbe8e5568af3e42c7d886d076c21026efd6e0d5840d0d893f02b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/TargetClosureReflection.target_closure_is_least_target_sufficient_refinement
+    target_statement_id: sha256:6e6968c5a59cc2e53d10132b1fe8ee8b8d57e31bbd80105c4a96242d025584fc
+receipts:
+  unresolved_subitems: []

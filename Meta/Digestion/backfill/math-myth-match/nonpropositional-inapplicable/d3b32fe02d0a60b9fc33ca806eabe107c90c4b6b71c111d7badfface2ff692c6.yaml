@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3b32fe02d0a60b9fc33ca806eabe107c90c4b6b71c111d7badfface2ff692c6
+  normalized_sha256: sha256:d3b32fe02d0a60b9fc33ca806eabe107c90c4b6b71c111d7badfface2ff692c6
+cas_ref: sha256:d3b32fe02d0a60b9fc33ca806eabe107c90c4b6b71c111d7badfface2ff692c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 杜威目的性原注的文本边界及其与奥古斯丁的哲学比较。
+    previous_atom_id: 3280728d5f5ba1af38624b5a8d5296e8f540a1d4a8763ee13bcb422ad65fa6dc
+    next_atom_id: e39847fadbbed4299518dfe818ea76a3f601b127d743e53b648cbb926e922896

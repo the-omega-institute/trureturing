@@ -147,7 +147,7 @@ private theorem sign_sub (n m : ℕ) (h : m ≤ n) :
     _ = _ := by rw [← mul_assoc, ← pow_add, Nat.sub_add_cancel h]
 
 omit [DecidableEq α] in
-private theorem zeta_hyperlink (S : Finset α → ℝ) (A : Finset α) :
+theorem zeta_hyperlink (S : Finset α → ℝ) (A : Finset α) :
     (∑ I ∈ A.powerset, hyperlink S I) = S A := by
   classical
   simp only [hyperlink]

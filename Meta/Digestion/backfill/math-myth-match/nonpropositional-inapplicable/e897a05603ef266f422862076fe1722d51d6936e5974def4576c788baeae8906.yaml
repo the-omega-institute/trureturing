@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e897a05603ef266f422862076fe1722d51d6936e5974def4576c788baeae8906
+  normalized_sha256: sha256:e897a05603ef266f422862076fe1722d51d6936e5974def4576c788baeae8906
+cas_ref: sha256:e897a05603ef266f422862076fe1722d51d6936e5974def4576c788baeae8906
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列出使用投影比喻应说明的来源、操作、保持问题及本体承诺边界，没有断言特定函数核满足新定理。
+    previous_atom_id: dd9a1351c528e1c718e371974c2504885e6f660aa24ac5132a5bc5faaf4c1e4e
+    next_atom_id: 677e179881dcc9dbcdeb2be22c60930f0eca41466f5edfdf4428c6cb52297ecf

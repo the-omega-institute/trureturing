@@ -1,0 +1,89 @@
+**Theorem 21.1 (Exactly six remaining projected roots).** For every
+$(p,v)\in\mathcal P\times\mathcal V$, $R_{18}(r,p,v)$ has exactly
+six distinct roots in $0<r<1$, one in each interval $I_1,\ldots,I_6$
+below and no others. Each is simple as a root in $r$.
+
+Proof. The certificate uses a centered parameter expansion; it keeps
+all mixed terms. Let
+
+$$
+\begin{gathered}
+p_c=(p_L+p_U)/2,\quad v_c=(v_L+v_U)/2,\quad
+h_p=\frac1{200000000},\quad h_v=\frac{37007}{2000000000000},\\
+R_{18}(r,p_c+x,v_c+y)=\sum_{i,j}A_{ij}(r)x^iy^j.
+\end{gathered}
+\tag{21.1}
+$$
+
+The endpoints here are those of (18.1), (19.1). On a closed interval
+$[a,b]$, first write
+$A_{ij}(a+(b-a)t)=\sum_{\ell=0}^{18}a_{ij\ell}t^\ell$,
+padding with zeros, and define its common-degree Bernstein coefficients
+
+$$
+\beta_{ijk}=\sum_{\ell=0}^k
+ a_{ij\ell}\frac{\binom{k}{\ell}}{\binom{18}{\ell}},\qquad
+ e_k=\sum_{i+j>0}|\beta_{ijk}|h_p^ih_v^j.
+\tag{21.2}
+$$
+
+Thus the $k$th Bernstein coefficient of $R_{18}$ for every parameter
+pair is enclosed by $[\beta_{00k}-e_k,\beta_{00k}+e_k]$.
+Using the integer coefficient table in Section 24 gives the following
+sign words, in order $k=0,\ldots,18$. Every one of the $171$
+coefficient intervals excludes zero.
+
+| Closed $r$ interval | Bernstein coefficient signs | Variation |
+| --- | --- | --- |
+| $[0,1/4]$ | `-------------------` | $0$ |
+| $[1/4,5/16]$ | `---------++++++++++` | $1$ |
+| $[5/16,3/8]$ | `++++++++++++-------` | $1$ |
+| $[3/8,1/2]$ | `-------------------` | $0$ |
+| $[1/2,3/4]$ | `-------------------` | $0$ |
+| $[3/4,13/16]$ | `--------------+++++` | $1$ |
+| $[13/16,27/32]$ | `+++++--------------` | $1$ |
+| $[27/32,7/8]$ | `---------------++++` | $1$ |
+| $[7/8,1]$ | `++++---------------` | $1$ |
+
+These are explicit finite rational inequalities: for a `+` entry,
+$\beta_{00k}>e_k$; for a `-` entry, $\beta_{00k}<-e_k$.
+Equations (21.1)–(21.2) specify every term, degree and radius needed
+to reproduce them from the integer table. There is no evaluation
+only at the parameter midpoint.
+
+The standard Descartes transformation $r=(a+bt)/(1+t)$ converts the
+Bernstein coefficients on $[a,b]$ into coefficients of
+$(1+t)^{18}R_{18}((a+bt)/(1+t),p,v)$, multiplied by positive binomial
+factors. Hence their sign variation bounds the roots in $(a,b)$,
+counting multiplicity. On each variation-one interval the first
+and last coefficients have opposite signs, so the intermediate
+value theorem gives a root. It is the only root there and is simple.
+Variation-zero intervals have no roots, and no shared endpoint is a
+root because the endpoint coefficients exclude zero. This covers
+$[0,1]$ and proves the six-root count.
+
+The six narrower rational isolations and their uniform endpoint
+signs are
+
+| Interval | Lower endpoint | Upper endpoint | Lower, upper signs |
+| --- | --- | --- | --- |
+| $I_1$ | $37691915/134217728$ | $9422979/33554432$ | $-,+$ |
+| $I_2$ | $11835329/33554432$ | $47341317/134217728$ | $+,-$ |
+| $I_3$ | $107144897/134217728$ | $53572449/67108864$ | $-,+$ |
+| $I_4$ | $55015955/67108864$ | $110031911/134217728$ | $+,-$ |
+| $I_5$ | $116688531/134217728$ | $29172133/33554432$ | $-,+$ |
+| $I_6$ | $59915273/67108864$ | $119830547/134217728$ | $+,-$ |
+
+For an endpoint $s$, its sign follows by enclosing
+$A_{00}(s)$ with error
+$\sum_{i+j>0}|A_{ij}(s)|h_p^ih_v^j$, again with exact rational
+arithmetic. Every such error is strictly smaller than
+$|A_{00}(s)|$. These endpoint checks, rather than signs of all
+interior Bernstein coefficients on a narrow interval, supply the
+narrow isolations. Each $I_i$ lies strictly inside its respective
+variation-one interval. Consequently it contains exactly that
+interval's one root, uniformly on the full parameter rectangle.
+The Bernstein basis identity and Descartes rule used here are standard
+univariate tools; the certificate concerns
+the particular $R_{18}$ in (20.3). ∎
+

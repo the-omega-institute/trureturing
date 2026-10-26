@@ -57,7 +57,8 @@ private theorem mub_effect_sum {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
   change ∑ a, (A.val l).val i a * star ((A.val l).val j a) = _
   exact congrArg (fun M : Op d => M i j) (Unitary.mul_star_self_of_mem (A.val l).prop)
 
-private def MUBFamily.context {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
+/-- The complete rank-one context determined by a basis of the family. -/
+def MUBFamily.context {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
     RankOneContext d where
   projector a := A.effect (l, a)
   rankOne a := by

@@ -93,7 +93,7 @@ private theorem phase_normSq (t : ℝ) : Complex.normSq (phase t) = 1 := by
   rw [phase.eq_1, Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I]
   norm_num
 
-private theorem unit_coordinates (d : Fin 2 → ℂ)
+theorem unit_coordinates (d : Fin 2 → ℂ)
     (hd : ‖(WithLp.toLp 2 d : EuclideanSpace ℂ (Fin 2))‖ = 1) :
     Complex.normSq (d 0) + Complex.normSq (d 1) = 1 := by
   have h := EuclideanSpace.norm_sq_eq (WithLp.toLp 2 d : EuclideanSpace ℂ (Fin 2))

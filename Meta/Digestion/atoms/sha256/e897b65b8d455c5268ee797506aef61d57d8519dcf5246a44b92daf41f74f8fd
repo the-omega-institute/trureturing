@@ -1,0 +1,22 @@
+## 8. 一个可审计的白盒质量向量
+
+在有限确定性状态模型
+$$
+M=(S,s_0,\Sigma,\delta,o),\qquad \delta:S\times\Sigma\to S,\quad o:S\to O
+$$
+中，令 $S_{\mathrm{reach}}$ 是从 $s_0$ 可达的状态集。若允许的续接集合为 $U\subseteq\Sigma^\ast$，若 $|S_{\mathrm{reach}}|\le1$，约定 $d(M)=0$；否则要求任意两个可达状态都能被某个 $u\in U$ 区分，并令 $o^*(s,u)$ 表示沿 $\delta$ 读取词 $u$ 后的输出，再定义
+$$
+q(M)=|S_{\mathrm{reach}}|,
+\qquad
+d(M)=\max_{s\ne s'}\min\{|u|:u\in U,\ o^\ast(s,u)\ne o^\ast(s',u)\}.
+$$
+
+更新闭合的关系方向数 $u(M)$ 和取得、计算、存储成本 $c(M)$ 必须随具体更新规则、资源单位和计费范围另行定义；本文不把它们伪装成通用数值。于是，在这些坐标已经各自定义的任务中，可以使用提案性的多坐标标签
+$$
+\mathsf Q(M;D,t,\mathfrak M)
+=
+\bigl(q(M),d(M),\omega(D,t;\mathfrak M),u(M),c(M)\bigr).
+$$
+
+其中 $\omega$ 是候选族和任务的量，不是单台模型的内禀量；把它放入签名只是为了标明模型所处的审计环境。对一般神经网络，若没有有限状态语义，$q(M)$ 和 $d(M)$ 仍是未定义的提案坐标。
+

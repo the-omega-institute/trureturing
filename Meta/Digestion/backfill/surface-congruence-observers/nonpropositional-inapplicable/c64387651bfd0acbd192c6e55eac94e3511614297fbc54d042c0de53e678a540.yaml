@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c64387651bfd0acbd192c6e55eac94e3511614297fbc54d042c0de53e678a540
+  normalized_sha256: sha256:c64387651bfd0acbd192c6e55eac94e3511614297fbc54d042c0de53e678a540
+cas_ref: sha256:c64387651bfd0acbd192c6e55eac94e3511614297fbc54d042c0de53e678a540
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: fixes a finite target and names its exponent, simultaneous evaluation, its image, and the canonical image restriction. The minimum-positive-integer wording specifies the exponent convention; no twist period, invariance, or homology-identification theorem is asserted in this definition.'
+    previous_atom_id: 03bd24344f48c500f0d630c263dac06f76094f050c6905196be595232bce449f
+    next_atom_id: 6c7e95f7bde380ae3130720e1c162b5cd721eac6a95466705459f95ce8d9a80d

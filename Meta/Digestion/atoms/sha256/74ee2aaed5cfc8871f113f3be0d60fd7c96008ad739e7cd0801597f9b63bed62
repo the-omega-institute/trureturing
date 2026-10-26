@@ -1,0 +1,42 @@
+**Proposition 9.1 (All three probe contributions).** Denote the initial pair quadratures by uppercase $Q_A,Q_B,P_A,P_B$. In the input state of Assumption 2.1 their means are
+
+$$
+\langle Q_A\rangle=a_3P_{11},\quad
+\langle Q_B\rangle=a_3P_{21},\quad
+\langle P_A\rangle=\langle P_B\rangle=0,
+$$
+
+and their centered symmetrized covariance is $I_4/2$ in ordering $(Q_A,P_A,Q_B,P_B)$. Let $\eta_0,\eta_1,\eta_2$ be the three initial probe momentum observables. They commute with the initial system, are independent of it and of one another in the input product state, and each has mean zero and variance $r_\sigma$. They are not the pointer position noises of variance $\sigma^2$ in Theorem 5.1. Uppercase system quadratures here are operators, not a proposed joint classical draw of positions and momenta.
+
+The final pair quadratures, pulled back to this common input dilation, are exactly
+
+$$
+q_A=Q_A,\qquad q_B=Q_A+Q_B,\qquad
+p_A=P_A-P_B+\eta_1-8\eta_2,\qquad
+p_B=P_B-\eta_1.
+$$
+
+Proof. Theorem 4.2 sends a pair momentum vector to itself minus $(\ell_i)_{AB}\eta_i$, while leaving the pair positions fixed. Proposition 8.2 and Theorem 3.2 therefore give the chronological list
+
+$$
+\begin{aligned}
+\mathrm{read}_0:\quad
+&(q_A,q_B)=(Q_A,Q_B),&
+&(p_A,p_B)=(P_A,P_B),\\
+J:\quad
+&(q_A,q_B)=(Q_B,Q_A),&
+&(p_A,p_B)=(P_B,P_A),\\
+\mathrm{read}_1:\quad
+&(q_A,q_B)=(Q_B,Q_A),&
+&(p_A,p_B)=(P_B-\eta_1,P_A),\\
+M:\quad
+&(q_A,q_B)=(Q_A,Q_A+Q_B),&
+&(p_A,p_B)=(P_A-P_B+\eta_1,P_B-\eta_1),\\
+\mathrm{read}_2:\quad
+&(q_A,q_B)=(Q_A,Q_A+Q_B),&
+&(p_A,p_B)=(P_A-P_B+\eta_1-8\eta_2,P_B-\eta_1).
+\end{aligned}
+$$
+
+For the $M$ line, $M^{-T}=\begin{pmatrix}-1&1\\1&0\end{pmatrix}$. The initial probe $\eta_0$ has zero pair coefficient; $\eta_1$ is present after both subsequent operations; the last read has coefficient eight, not one. Every line uses the same initial system and three independent probes. $\square$
+

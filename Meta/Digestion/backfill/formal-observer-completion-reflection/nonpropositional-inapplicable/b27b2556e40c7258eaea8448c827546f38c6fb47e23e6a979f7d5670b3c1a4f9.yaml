@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b27b2556e40c7258eaea8448c827546f38c6fb47e23e6a979f7d5670b3c1a4f9
+  normalized_sha256: sha256:b27b2556e40c7258eaea8448c827546f38c6fb47e23e6a979f7d5670b3c1a4f9
+cas_ref: sha256:b27b2556e40c7258eaea8448c827546f38c6fb47e23e6a979f7d5670b3c1a4f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 可见相位圆的术语命名。不另主张独立数学命题。
+    previous_atom_id: e0a7fc4d2934b4ca359febac8898af3a8fe6bbb6df7b181837fa2d1060d7dfc9
+    next_atom_id: 95633b808b685be5dd9bf11320f78b1a766c8b9353b2ec2d8edc39777c5caf4a

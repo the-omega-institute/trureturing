@@ -206,7 +206,7 @@ private theorem square_factorial_le (i : ℕ) :
   push_cast
   nlinarith [hm]
 
-private def evenFactorialSum (n : ℕ) (M : ℝ) : ℝ :=
+def evenFactorialSum (n : ℕ) (M : ℝ) : ℝ :=
   ∑ k : Fin n, M^k.val / ((2*k.val).factorial : ℝ)
 
 private theorem even_sum_nonneg (n : ℕ) (M : ℝ) (hM : 0 ≤ M) :
@@ -225,7 +225,7 @@ private theorem even_sum_mono (m n : ℕ) (hmn : m ≤ n) (M : ℝ) (hM : 0 ≤ 
   intro k _ _
   positivity
 
-private theorem even_sum_le_cosh (n : ℕ) (M : ℝ) (hM : 0 ≤ M) :
+theorem even_sum_le_cosh (n : ℕ) (M : ℝ) (hM : 0 ≤ M) :
     evenFactorialSum n M ≤ Real.cosh (Real.sqrt M) := by
   have hsum : HasSum (fun k : ℕ => M^k / ((2*k).factorial : ℝ))
       (Real.cosh (Real.sqrt M)) := by

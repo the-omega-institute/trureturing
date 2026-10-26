@@ -1,0 +1,37 @@
+**Assumption 1.2 (Owning interfaces and parameter correspondence).** The
+symbols O and F refer respectively to the common-parent volume and
+[the all-response finite-fibre volume](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+The symbols S, SII, SIII, SIV, SV refer to the
+[first support volume](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md) and
+its [second](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md),
+[third](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+[fourth](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md), and
+[fifth](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md) volumes.
+The following are the reused mathematical interfaces.
+
+| Source | Exact correspondence and scope |
+| --- | --- |
+| O, Theorem 2.1 | The full-parent converse with all original rows; the variables are the identical $r,b,d,g$, with $\epsilon=d-24$ and $\beta=1/8$. |
+| O, Theorem 2.2; F, Lemma 30.2 | On $p\ne24$, one has $d\ne24$; the faithful coordinates are $(x,d)$ with $x=n/U$ and whole interpolant $H=Ug$. |
+| O, Lemma 12.2 and Theorem 12.3 | At a fixed strict source and fixed $p$, the whole gain and drift are unique, including the singular-parent stratum. |
+| F, Sections 30–33 | The same entire $C(p,v)$ and terminal alternatives; Theorem 32.1 bounds $|C(p,v)|$ by $24$ before fixing $m$. |
+| S, Definition 1.2; SIII, Definition 19.1 | Independent distinct equal-$J$ and equal-$M$ pairs in one entire child, allowing cross-pair overlap and independent common terminal values. |
+| SII, Definition 25.1 | The full response tuple is exactly $\Psi_M=(p,v,m)$ on the same whole world. |
+| SIV, Theorem 8.2; SV, (2.1)–(2.2) | Undivided original response identities; singular sources and every gain stratum remain admissible. |
+
+Only the original-world and uniqueness interfaces in this table are
+needed for the inverse below. The regional conclusions of SIV and SV
+are not hypotheses on $(p,v)$. SIII, Theorem 17.3 fixes $(p,r/b)$;
+that four-world bound has different fixed data from (1.4).
+
+The consequence $d\ne24$ is used only with its stated off-$24$
+hypothesis. In particular it removes neither $d=0$ nor any singular
+source. In the notation of O the singular coefficient is
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n;
+\tag{1.5}
+$$
+
+no condition $\Lambda\ne0$ is imposed here.
+

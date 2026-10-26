@@ -1,0 +1,32 @@
+**Definition 6.5.1 (Fixed-direction jets).** All derivatives here are in the original independent coordinates $(r,b)$ at the exact root $z_*$ of Theorem 6.3.2. Hold $k_*$ fixed when taking directional derivatives. For $f=p,v,a$ put
+
+$$
+A_f=(f_{rr}+k_*f_{rb},\ f_{rb}+k_*f_{bb},\ f_b)_{z_*},\qquad
+T_f=\frac16(f_{rrr}+3k_*f_{rrb}+3k_*^2f_{rbb}+k_*^3f_{bbb})_{z_*}.
+\tag{6.5.1}
+$$
+
+Let $A$ be the matrix with rows $A_p,A_v,A_a$, and define
+
+$$
+\begin{pmatrix}R_2\\B_2\\k_2\end{pmatrix}
+=-A^{-1}\begin{pmatrix}T_p\\T_v\\T_a\end{pmatrix}.
+\tag{6.5.2}
+$$
+
+The common-base and endpoint-difference coefficients are
+
+$$
+\begin{aligned}
+P_2&=(p_rR_2+p_bB_2)_{z_*}
+ +\tfrac12(p_{rr}+2k_*p_{rb}+k_*^2p_{bb})_{z_*},\\
+V_2&=(v_rR_2+v_bB_2)_{z_*}
+ +\tfrac12(v_{rr}+2k_*v_{rb}+k_*^2v_{bb})_{z_*},\\
+L_x&=(x_r+k_*x_b)_{z_*},\qquad
+L_m=(m_r+k_*m_b)_{z_*}.
+\end{aligned}
+\tag{6.5.3}
+$$
+
+These are the divided-secant coefficient definitions used at the first source in Support IX, (19.3)–(19.8), with its exact source replaced by $z_*$. The variable $k_*$ is not differentiated as a vector field.
+

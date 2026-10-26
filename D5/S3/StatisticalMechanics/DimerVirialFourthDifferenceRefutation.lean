@@ -26,6 +26,12 @@ escape_witness: result (form (2) of §3.2: the counts N(10..14) of the graph and
 admission_basis: open-problem-resolution (issue #12197; Refuted)
 Direct frozen dependencies:
   D5/S3/Zeros/Convolution/MatchingFiber.Matching
+Published counting interfaces:
+  EdgeDisjoint, matchingsIn, cnt: proof_shape: bind-only; consumers:
+    FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_cnt.
+  matchingsIn_eq_empty: proof_shape: bind-only; consumer:
+    FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_zero_of_card_lt.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/20094
 -/
 
 import D5.S3.Zeros.Convolution.MatchingFiber
@@ -80,7 +86,7 @@ section Counting
 variable {V : Type*}
 
 /-- Two edges share no vertex. -/
-private def EdgeDisjoint (e f : Sym2 V) : Prop := ∀ v, v ∈ e → v ∉ f
+def EdgeDisjoint (e f : Sym2 V) : Prop := ∀ v, v ∈ e → v ∉ f
 
 private instance [Fintype V] [DecidableEq V] (e f : Sym2 V) : Decidable (EdgeDisjoint e f) := by
   unfold EdgeDisjoint; infer_instance
@@ -88,11 +94,11 @@ private instance [Fintype V] [DecidableEq V] (e f : Sym2 V) : Decidable (EdgeDis
 variable [Fintype V] [DecidableEq V]
 
 /-- The `i`-edge matchings contained in `E`, as a computable finset. -/
-private def matchingsIn (E : Finset (Sym2 V)) (i : ℕ) : Finset (Finset (Sym2 V)) :=
+def matchingsIn (E : Finset (Sym2 V)) (i : ℕ) : Finset (Finset (Sym2 V)) :=
   (E.powersetCard i).filter (fun S => ∀ e ∈ S, ∀ f ∈ S, e ≠ f → EdgeDisjoint e f)
 
 /-- The matching counts of an edge set, as a sequence. -/
-private def cnt (E : Finset (Sym2 V)) (i : ℕ) : ℕ := (matchingsIn E i).card
+def cnt (E : Finset (Sym2 V)) (i : ℕ) : ℕ := (matchingsIn E i).card
 
 /-- The Cauchy product of two sequences. -/
 private def conv (f g : ℕ → ℕ) (i : ℕ) : ℕ := ∑ j ∈ range (i + 1), f j * g (i - j)
@@ -243,7 +249,7 @@ private theorem card_matchingsIn_union (E₁ E₂ : Finset (Sym2 V))
     have := card_filter_le S (· ∈ E₁)
     omega
 /-- A matching with `i` edges covers `2i` vertices. -/
-private theorem matchingsIn_eq_empty (E : Finset (Sym2 V)) (s : Finset V)
+theorem matchingsIn_eq_empty (E : Finset (Sym2 V)) (s : Finset V)
     (hs : ∀ e ∈ E, ∀ v ∈ e, v ∈ s) (hdiag : ∀ e ∈ E, ¬ e.IsDiag) (i : ℕ)
     (h : s.card < 2 * i) : matchingsIn E i = ∅ := by
   rw [eq_empty_iff_forall_notMem]

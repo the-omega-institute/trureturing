@@ -1,0 +1,85 @@
+## 14. Zero-safe source equations and the eliminant
+
+Put
+
+$$
+X=b^2+r-r^2,\qquad N=X+br,\qquad \Delta=b-\frac18,
+$$
+
+and define
+
+$$
+\begin{aligned}
+D_\Lambda&=(b^2+8b+4)XN-2bTU(X+N),\\
+\Lambda&=1+\frac6T+\frac1U-\frac4j-\frac4n,
+\qquad \kappa=\frac6T-\frac2U,\\
+A_5&=1+(U+n)\left(4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n}\right),\\
+A_6&=1+(2U+n)\left(10-\frac{36}{j}+\frac{45}{T}-\frac{20}{n}\right),\\
+K_5&=\frac{96\Delta(U+n)}T,\\
+K_6&=24(2U+n)+\frac{216\Delta(2U+n)}T.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, and $U=1+2b$.  Let
+$H(r,b)$ be the sextic of O, (12.2), and let $R_{18}(r,p,v)$ be the
+integer polynomial of O, Definition 24.1.  The two source polynomials are
+
+$$
+\begin{aligned}
+\mathcal A(r,b,p)&=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\\
+\mathcal C(r,b,p,v)&=b^2TXN\{A_5(v-24-K_6)-A_6(p-24-K_5)\}.
+\end{aligned}
+\tag{14.2}
+$$
+
+After expansion their coordinate degrees in $(r,b,p,v)$ are respectively
+$(6,7,1,0)$ and $(8,8,1,1)$, and $\mathcal C$ has $89$ terms.
+Every complete world satisfies $\mathcal A=\mathcal C=0$.  Indeed, the first
+identity is O, Theorem 12.3.  The whole gain gives
+
+$$
+ p=24+K_5+eA_5,\qquad v=24+K_6+eA_6,\qquad e=d-24,
+\tag{14.3}
+$$
+
+so the second identity is obtained after multiplying by the positive denominator
+$b^2TXN$.  No gain sample, coefficient, drift, or $\Lambda$ is divided out.
+
+Define
+
+$$
+\Phi=438272r^4-931328r^3+540800r^2-50728r-853,
+\quad \Psi_2=4r^2-2r-1,
+\quad \Psi_4=625r^4-1000r^3+50r^2+260r+36,
+\tag{14.4}
+$$
+
+and $Q(r,p,v)=\Phi(r)\Psi_2(r)\Psi_4(r)R_{18}(r,p,v)$.  The exact
+eliminant identity, as a polynomial identity after eliminating the source
+coordinate $b$, is
+
+$$
+\operatorname {Res}_b(\mathcal A,\mathcal B)
+ =52488000\,r^{11}(r-1)^9\Phi(r)\Psi_2(r)\Psi_4(r)R_{18}(r,p,v),
+\tag{14.5}
+$$
+
+Here $\mathcal B=Ev-V_\star$ is the response polynomial of Section 16.
+Thus $b$ occurs only in the two input polynomials to the resultant; no
+$b$ coordinate remains in $Q$.  The published $R_{18}$ is the exact
+668-term polynomial of O, Definition 24.1, with monomial order
+$(r,p,v)$ and coordinate degrees $(18,7,7)$.  Both sides of (14.5) have
+$p$- and $v$-degree at most $7$.  At every point of the $8\times8$ grid
+$p,v\in\{0,1,\ldots,7\}$ the two sides agree as polynomials in $r$;
+coefficient comparison in $r$, followed by interpolation in $p$ and $v$,
+gives the full identity.  Every factor in (14.5), every coefficient in the
+published table, and every degree-drop specialization is retained.  Only
+the strict-domain factors $r^{11}(r-1)^9$ are removed when projecting to the
+open source domain.
+
+At $\Lambda=0$, the undivided parent equation of Section 2 gives
+$b=1/8$, and O, Theorem 29.2, gives $\Phi(r)=0$.  Consequently every
+actual source, including $\Lambda=0$, satisfies $Q=0$; no singular source is
+removed before the cover is applied.
+

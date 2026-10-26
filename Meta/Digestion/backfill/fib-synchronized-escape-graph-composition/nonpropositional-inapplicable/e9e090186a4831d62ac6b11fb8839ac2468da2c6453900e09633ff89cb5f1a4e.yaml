@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9e090186a4831d62ac6b11fb8839ac2468da2c6453900e09633ff89cb5f1a4e
+  normalized_sha256: sha256:e9e090186a4831d62ac6b11fb8839ac2468da2c6453900e09633ff89cb5f1a4e
+cas_ref: sha256:e9e090186a4831d62ac6b11fb8839ac2468da2c6453900e09633ff89cb5f1a4e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Unfold synchronized Cartesian legality and pair readout. Prod.ext_iff and not_and_or split target inequality into coordinate inequalities; distribute the existential witnesses at the same length. Pair the supplied coordinate words and records pointwise. All quantifiers and same-length support conditions are retained. List.foldl_hom/List.foldl_hom₂ together with the zip projection lemmas supply the coordinatewise execution identity; no new induction is required. Pinned mathlib revision: 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Prod.ext_iff, not_and_or, exists_or, Set.ext, Set.mem_setOf_eq, List.zip, List.length_zip, Prod.fst, Prod.snd, List.foldl_hom, List.foldl_hom₂, List.map_fst_zip, List.map_snd_zip. D5 searched scope: D5/**/*.lean, including private declarations; shape scan: lowerPolar/upperPolar/Galois/closure, chromaticNumber/coloring/products, convex intersection/Helly/Radon, numerical checker checked_expression_encloses and cutoff_first_nonstrict; inspected the graph-coloring, generic closure, formal-concept adapter, and quantum Foundation/Subentropy hits.'
+    previous_atom_id: 4cf12202affc73b056628f51fbb9a8e5651aa1ba0a415298bde93dc019dbd556
+    next_atom_id: fd9405da5452892b4a07f164ceffa357b1ed218e59478fb38b7b23d2deae36e8

@@ -1,0 +1,26 @@
+## 163. Compactness and the quantified incidence closures
+
+Use the unnormalized output-first convention
+
+$$
+J(\mathcal R)=\sum_{i,j}\mathcal R(E_{ij})\otimes E_{ij},\qquad
+\mathcal R(X)=\operatorname{Tr}_{\rm in}
+ [J(\mathcal R)(I_{\rm out}\otimes X^{\mathsf T})].
+$$
+
+The Choi characterization gives
+$\mathcal C\simeq\{J\succeq0:\operatorname{Tr}_{\rm out}J=I_3\}$
+[FC-W, Theorems 2.22 and 2.26]. This set is nonempty, convex and closed,
+and every member has trace three; positivity therefore bounds it.
+Consequently $\mathcal C$ and its continuous linear image $K_s$ are
+compact convex sets. Each error above is continuous and convex in either
+decoder or recovered-channel coordinates, so each budget set is closed
+and convex, including for an infinite, noncompact task language.
+
+For arbitrary $\Gamma\subseteq\mathcal I$ and $D\subseteq\mathcal C$, set
+
+$$
+\alpha(\Gamma)=\bigcap_{t\in\Gamma}F_t,\qquad
+\beta(D)=\{t\in\mathcal I:D\subseteq F_t\}.
+$$
+

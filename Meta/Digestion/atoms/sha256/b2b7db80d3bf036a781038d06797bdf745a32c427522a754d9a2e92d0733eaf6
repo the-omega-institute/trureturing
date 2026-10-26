@@ -1,0 +1,36 @@
+**定理 7.2（恒秩读出的核丛与正合列）。**
+若 $\operatorname{rank}L_b=r$ 在 $M$ 上恒定，则
+$K=\coprod_bK_b$ 是秩 $d^2-1-r$ 的光滑实向量子丛，
+$\mathcal R=\operatorname{im}L$ 是秩 $r$ 的光滑子丛，且
+
+$$
+0\longrightarrow K\longrightarrow\mathcal V
+   \overset{L}\longrightarrow\mathcal R\longrightarrow0
+ \quad\text{及}\quad
+ \mathcal V/K\simeq\mathcal R
+$$
+
+成立。若 $Q$ 是到 $K$ 的正交投影，$P=I-Q$，
+则 $\mathcal V=K\oplus K^\perp$，并且
+$L|_{K^\perp}:K^\perp\to\mathcal R$ 是丛同构。
+
+**证明。**
+
+在任一点的局部平凡化中，选取 $L$ 矩阵的一个非零
+$r\times r$ 子式。缩小邻域后该子式仍可逆。
+按对应的列分成枢轴变量和自由变量，再按相应的行求解；
+核向量的枢轴坐标是自由坐标的光滑线性函数。
+于是得到 $d^2-1-r$ 个光滑线性独立的核截面。
+同一子式也给出像的局部标架，故核与像均为光滑子丛。
+
+纤维上的第一同构定理给出 $\mathcal V_b/K_b\simeq\mathcal R_b$；
+上述局部标架保证这些同构光滑地拼接。
+在 Hermitian 丛诱导的实内积下，核的正交投影光滑，
+从而得到正交直和。$L|_{K^\perp}$ 在每个纤维上既单射又满射；
+用局部矩阵求逆即得光滑逆映射。
+
+证毕。
+
+若秩改变，以上定理只能分别用于恒秩区域。
+把不同秩区域合并后，不能继续沿用固定秩向量丛的结论。
+

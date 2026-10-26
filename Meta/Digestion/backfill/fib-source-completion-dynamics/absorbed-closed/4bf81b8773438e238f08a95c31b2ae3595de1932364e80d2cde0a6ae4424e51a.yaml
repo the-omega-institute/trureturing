@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:4bf81b8773438e238f08a95c31b2ae3595de1932364e80d2cde0a6ae4424e51a
+  normalized_sha256: sha256:4bf81b8773438e238f08a95c31b2ae3595de1932364e80d2cde0a6ae4424e51a
+cas_ref: sha256:4bf81b8773438e238f08a95c31b2ae3595de1932364e80d2cde0a6ae4424e51a
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization
+    target_statement_id: sha256:2216344ecd20f42bcc7521b54cb4dca365bfb86273b26a106a3d68bfd09b4f18
+  - gid: D5/S1/Digit/Infinite/FixedTailClosedBudget.hull_invariant
+    target_statement_id: sha256:cd0e21d36d21792a8a111591ee04282c89fc8319544d8291d191abc83417d821
+  - gid: D5/S1/Digit/Infinite/FixedTailClosedBudget.hull_minimal
+    target_statement_id: sha256:08240d0203b80c2b0acbedb7538ad85a4c46f5795766c0be708f05c4dc5d20b3
+  - gid: D5/S1/Digit/Infinite/SixWindowForcing.algebra
+    target_statement_id: sha256:70403361f80f684ea82c03b903ff8f5659f2bc8ab2d625de4801447e468c0985
+  - gid: D5/S1/Scale/Embedding.embedding_injective
+    target_statement_id: sha256:2adb75130a3a6ede851708e0a12cabad2339fddae8336e462f2ed138391e73d5
+receipts:
+  unresolved_subitems: []

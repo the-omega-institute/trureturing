@@ -1,0 +1,22 @@
+**Proposition 123.3 (empty births and exhaustive native alternatives).**
+If $B=\varnothing$, then $T=I_n$, $L'=L$ and the unique successor
+metric satisfying (120.2) is $\mathsf M=G$. Its rate matrix is
+$Q=-G^{-1}L$, which is conservative, irreducible and supported on
+the original edges; the one-state zero generator is included in
+this convention. Every finite native source step falls into exactly
+one of the following cases: empty births; the singleton-beta
+boundary of Theorem 123.1; or a nontrivial branch with births as in
+Theorem 121.2. Consequently a compatible Markov metric always exists.
+On a branch it admits irreducibility, or original-edge support, if
+and only if births are empty. On the singleton-beta step, each
+additional property is characterized by (123.1)--(123.3).
+
+**Proof.** With $T=I_n$, the norm equality forces $\mathsf M=G$;
+all other requirements follow. The old tree is connected and all
+its edge rates are positive, giving irreducibility. A native source
+is either $\alpha$, $\beta$, or a branch, and births occur exactly
+at beta leaves. The alpha singleton has no births; the beta
+singleton has two; a branch is nontrivial. The classifications and
+existence assertions now follow from Theorems 121.2 and 123.1 and
+Proposition 123.2. $\square$
+

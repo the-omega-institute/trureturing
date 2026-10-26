@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b027a521b00efbc2dbee9993c8a2436f32311747f9a5ddc6ba144dda3a080e6
+  normalized_sha256: sha256:4b027a521b00efbc2dbee9993c8a2436f32311747f9a5ddc6ba144dda3a080e6
+cas_ref: sha256:4b027a521b00efbc2dbee9993c8a2436f32311747f9a5ddc6ba144dda3a080e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and definition of the golden residue ring with its defining relation, followed by an order convention. No lifting formula is asserted.
+    previous_atom_id: 81d22256ffaebb1b26248005e350811fdba74b41e76f7849ae3b176a7780064c
+    next_atom_id: d8abb0839b7838d53cacf8dd3ea348a6fc58d1bd006261af9bc0c927e3809625

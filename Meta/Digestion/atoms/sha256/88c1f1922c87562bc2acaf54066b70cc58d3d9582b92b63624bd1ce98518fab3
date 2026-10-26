@@ -1,0 +1,25 @@
+**Lemma 4.2 (Finite contraction bounds).** The entire box $X$ contains no circuit pole. If $[DF(X)]$ is the derivative enclosure obtained above and
+
+$$
+[E]=I-C[DF(X)],\qquad
+q_i=\sum_{k=1}^3\max\{|\inf[E_{ik}]|,|\sup[E_{ik}]|\},
+$$
+
+then the following rational upper bounds hold:
+
+| Row $i$ | Upper bound for $|[CF(c)]_i|$ | Upper bound for $q_i$ |
+| --- | --- | --- |
+| 1 | $10^{-80}$ | $572\cdot10^{-32}$ |
+| 2 | $10^{-80}$ | $535\cdot10^{-32}$ |
+| 3 | $10^{-80}$ | $576\cdot10^{-32}$ |
+
+Here the absolute value of an interval means the maximum absolute value of its endpoints. In particular
+
+$$
+\|CF(c)\|_\infty\le10^{-80}<10^{-70},\qquad
+\sup_{x\in X}\|I-CDF(x)\|_\infty
+\le576\cdot10^{-32}<6\cdot10^{-30}<10^{-20}.
+$$
+
+Proof. Apply Definition 4.1 to the three equations and their forward derivatives. The entries of $C$, $c$ and $\rho$ have exact grid encodings; divisions within the circuit are rounded outward by the displayed reciprocal formula. The three center upper bounds are the ceilings of the resulting maximum endpoint magnitudes on the $10^{-80}$ grid. The three derivative upper bounds are the ceilings of the interval row sums on the $10^{-32}$ grid. The pole separations are given in Section 5. Every step uses only integer addition, multiplication, ordered comparison and integer floor or ceiling division, so the tabulated inclusions are reproducible from the printed rational data. ∎
+

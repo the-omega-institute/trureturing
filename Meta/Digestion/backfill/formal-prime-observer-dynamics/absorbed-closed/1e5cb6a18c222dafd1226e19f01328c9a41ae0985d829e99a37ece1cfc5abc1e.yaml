@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1e5cb6a18c222dafd1226e19f01328c9a41ae0985d829e99a37ece1cfc5abc1e
+  normalized_sha256: sha256:1e5cb6a18c222dafd1226e19f01328c9a41ae0985d829e99a37ece1cfc5abc1e
+cas_ref: sha256:1e5cb6a18c222dafd1226e19f01328c9a41ae0985d829e99a37ece1cfc5abc1e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.three_state_adaptive_early_stopping_strict_advantage
+    target_statement_id: sha256:17f205644c05ad353fc55165904e8360e1a5586e97ac9de68136b660e7bba779
+receipts:
+  unresolved_subitems: []

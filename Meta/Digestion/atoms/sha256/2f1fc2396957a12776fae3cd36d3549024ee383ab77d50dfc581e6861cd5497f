@@ -1,0 +1,54 @@
+**Lemma 17.2 (Degree-preserving noncollapse).**  The polynomial
+$Q_p(\tau,b)$ is nonzero for every real $p$ and every $\tau>0$.
+
+*Proof.* At $\tau=1$, $q_0=12$. For $\tau\ne1$, the equation $q_0=0$
+forces
+
+$$
+ p=\frac{-48\tau^2+240\tau-195}{10(\tau-1)}.
+$$
+
+After this substitution, the next two coefficients become
+
+$$
+q_1=-\frac{6\tau V(\tau)}{\tau-1},\qquad
+q_2=\frac{3U_6(\tau)}{\tau-1},
+$$
+
+where
+
+$$
+\begin{aligned}
+V(\tau)&=32\tau^4+224\tau^3-320\tau^2-147\tau+210,\\
+U_6(\tau)&=128\tau^6+1408\tau^5-2848\tau^4-752\tau^3+3857\tau^2-1378\tau-410.
+\end{aligned}
+$$
+
+The exact Bezout identity
+
+$$
+(-50\tau^3+47\tau^2+14\tau-48)U_6
++(-2\tau^5+6\tau^4+30\tau^3+45\tau^2+36\tau+2)V
+=1+101R(\tau),
+$$
+
+has
+
+$$
+R=(-64,-640,2112,-754,-3320,3633,341,-2180,670,199)
+$$
+
+as its descending coefficient list.  For the exact integer certificate,
+form the Sylvester matrix with four shifted coefficient rows of $U_6$
+followed by six shifted coefficient rows of $V$, in descending powers.
+The degree-preserving
+$10\times10$ Sylvester determinant of degrees $6$ and $4$ is
+
+$$
+25954241625991256473600,
+$$
+
+and its independent reduction modulo $101$ is $5$, with leading
+coefficients $27$ and $32$ modulo $101$.  Thus $V$ and $U_6$ have no
+common complex root, so $q_0,q_1,q_2$ cannot vanish simultaneously. ∎
+

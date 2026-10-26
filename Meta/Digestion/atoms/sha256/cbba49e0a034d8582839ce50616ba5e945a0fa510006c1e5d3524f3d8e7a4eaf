@@ -1,0 +1,46 @@
+**Theorem 7.2 (The continuous conditional kernel at the original child history).** Fix either original terminal action $E\in\{J,M\}$ after $w_A=JMJMMM$, and split its eight-read covariance as
+
+$$
+C^E=\begin{pmatrix}C_A&C_{A7}^E\\C_{7A}^E&C_{77}^E\end{pmatrix}.
+$$
+
+For every $W$, the conditional law of $R_7$ given $R_A=r$ has the continuous Gaussian version
+
+$$
+\mathsf K_W^E(r,\cdot)=
+\mathcal N_1\!\left(
+y_7^E(W)+C_{7A}^EC_A^{-1}(r-y_A(W)),\
+s_E^2\right),
+$$
+
+$$
+s_E^2=C_{77}^E-C_{7A}^EC_A^{-1}C_{A7}^E
+=\sigma^2+L_7^E B_A(L_7^E)^T>\sigma^2,
+\qquad
+B_A=(2I_{17}+\sigma^{-2}L_A^TL_A)^{-1}.
+$$
+
+For $W\in C(p,v)$, evaluation at $r=h(p,v)$ makes this version's terminal mean equal to $f_{ME}(W)$. Nevertheless
+$\mathbb P_W(R_A=h(p,v))=0$ for every $W$. Evaluation at that history is an identity of the specified conditional kernel, not conditioning on a positive-probability event or acquisition of the original child.
+
+Proof. Positive $\sigma$ makes $C^E$ positive definite, since
+$s^TC^Es=\|L_w^Ts\|^2/2+\sigma^2\|s\|^2>0$ for $s\ne0$. In particular $C_A$ is invertible. Apply the Gaussian observation correspondence of Definition 5.2: completing the square gives the latent conditional mean and covariance in Proposition 5.3. The independent seventh noise then gives variance $\sigma^2+L_7^EB_A(L_7^E)^T$. The matrix $B_A$ is positive definite and the first coordinate of $L_7^E$ is one, so this variance exceeds $\sigma^2$.
+
+The identity
+
+$$
+B_A\sigma^{-2}L_A^T
+=\frac12L_A^TC_A^{-1}
+$$
+
+follows by multiplication by $2I_{17}+\sigma^{-2}L_A^TL_A$. Substitution into $L_7^E\mu_A(W,r)$ gives the stated mean, since $C_{7A}^E=L_7^EL_A^T/2$. The covariance expression is equivalently the Gaussian Schur complement, the same finite Gaussian calculation used in [Second Order Relation Completion, Theorem 14.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md). This proves the conditional formula and its disintegration identity.
+
+The kernel depends continuously on $r$. A regular conditional law can be changed on a marginal-null set without changing its defining disintegration; the formula above explicitly selects its continuous version. The prefix marginal has a nondegenerate Gaussian density, so every exact point $h$ is null. For $W$ in the child, $y_A(W)=h(p,v)$ by Definition 1.2; hence the correction vanishes at this specified point. It is not identically zero as a function of arbitrary $r$: the original matrices give
+
+$$
+C_{70}^J=\frac{1+\operatorname{tr}Q_7^J}{2}=\frac72,\qquad
+C_{70}^M=\frac{1+\operatorname{tr}Q_7^M}{2}=\frac92.
+$$
+
+Thus even within this model an unconditional terminal mean cannot replace a general selective terminal mean. $\square$
+

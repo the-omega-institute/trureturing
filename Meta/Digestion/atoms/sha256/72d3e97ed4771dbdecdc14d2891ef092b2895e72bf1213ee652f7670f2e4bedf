@@ -1,0 +1,29 @@
+**Theorem 88.6 (conditional composition with the stability window).**
+Suppose a terminal-recognized source family admits a source-to-geometry
+bridge whose coarse carrier has volume exponent \(d\), whose field operator
+has homogeneous order \(\sigma\), and whose localizing operator has order
+\(\tau\). Suppose further that the Green and variational hypotheses of the
+stability analysis hold on that same carrier. Then the scale competition has
+a finite strict minimum only in the window
+
+$$
+\sigma<d<\sigma+\tau.
+$$
+
+For the ordinary second-order field and second-order localization contract,
+\(\sigma=\tau=2\), so the integer window is \(d=3\).
+
+**Proof.** Under the bridge, a point response has homogeneous order
+\(d-\sigma\), while localization has order \(\tau\). At scale \(R\) the
+two terms therefore have the form
+
+$$
+AR^{-\tau}-BR^{-(d-\sigma)},\qquad A,B>0.
+$$
+
+The strict finite-scale minimum criterion is
+\(0<d-\sigma<\tau\), which is exactly the displayed window. The
+terminal-overlap certificate is used only to establish the source family and
+its finite-prefix persistence; the analytic lower bound, attainment, and
+transport compatibility remain separate bridge obligations. \(\square\)
+

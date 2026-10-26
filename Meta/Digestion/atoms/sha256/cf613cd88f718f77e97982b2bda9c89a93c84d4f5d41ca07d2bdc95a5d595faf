@@ -1,0 +1,13 @@
+**Lemma 3.3 (geometric inverse).** On the exact incidence layout of
+Definition 2.5, S masks and B contours separately recover the entire raw
+record $W$; re-encoding is the identity on their image. The masks have
+$2V$ bits and the contour $4(V-1)+2L$ bits for actual vertex and terminal
+counts $V,L$.
+
+Proof. Use CYCLE Lemma 3.6 and UAS Theorem 3.2. Unary sockets distinguish
+left0, right1 and absent, including at terminal scaffold sockets.
+Terminal paths recover the finite prefix tree by prefix closure, and
+the fixed component decomposition recovers tapes/tracks/finite slots.
+Their proofs depend on $q$ only as a finite scaffold parameter, so apply
+with $q_{\mathrm{gc}}$. No task or acquired-binding assertion is used. ∎
+

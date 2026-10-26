@@ -1,0 +1,11 @@
+**定义 85.1（三角色乘表）。** 写 $D=\{a,b,c\}$。唯一补全运算的完整表为
+
+$$
+\begin{array}{c|ccc}
+\star&a&b&c\\\hline
+a&a&c&b\\
+b&c&b&a\\
+c&b&a&c
+\end{array}.
+$$
+

@@ -1,0 +1,17 @@
+**定理 7.2（FIB 矩坐标中的实正锥与尺度截面）。** 对任意实对称矩阵 $S$，置
+
+$$
+\tau=\frac{U+W}{2},\quad x=V,\quad z=\frac{U-W}{2},\qquad
+S=\begin{pmatrix}\tau+z&x\\x&\tau-z\end{pmatrix}.
+$$
+
+则 $\det S=\tau^2-x^2-z^2$，其二次型符号为 $(1,2)$。一般实半正定锥的条件为
+
+$$
+\tau\ge\sqrt{x^2+z^2}.
+$$
+
+该锥的 $\operatorname{tr}S=1$ 截面是 $\tau=1/2$、$x^2+z^2\le1/4$ 的圆盘。
+
+证明。行列式直接展开。特征值为 $\tau\pm\sqrt{x^2+z^2}$，两者非负恰为所列锥条件。迹等于 $2\tau$，代入就给圆盘。三个矩坐标因此是一个带尺度的关系锥，非三个平等的欧氏轴。矩阵与 Lorentz 二次型的经典联系可见 John Baez，[*The Octonions*, §3.3 “$\mathbb OP^1$ and Lorentzian Geometry”](https://math.ucr.edu/home/baez/octonions/node11.html)：该节同时讨论实与复等情形，复 Hermitian 情形对应四维 Lorentz 二次型；本条的实三坐标结论由上述直接展开取得。实际树来源只占此圆盘或锥的受限部分。此外 $M$ 不保持迹一截面，例如 $S=I/2$ 推进后的迹为 $3/2$；重新归一化是另一个操作。$\square$
+

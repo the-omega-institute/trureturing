@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a18e517e9ae586000b8c7561a8b91b36152819fdaec2185a20e562f20f802ec
+  normalized_sha256: sha256:5a18e517e9ae586000b8c7561a8b91b36152819fdaec2185a20e562f20f802ec
+cas_ref: sha256:5a18e517e9ae586000b8c7561a8b91b36152819fdaec2185a20e562f20f802ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：区分共同源信息界与证言知识生成的哲学问题，提出背景及来源识别义务；没有新增数学关系。
+    previous_atom_id: d527102200c6af2c2dadb1230e4d71d000dfb87d82bea167fed6f3cb98244180
+    next_atom_id: 56a9166e05253e876ee06447d102890b678189c540fd0ff9deaaa1f72d4684c0

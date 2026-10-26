@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d95bdd7357cc936215781030272a5a761eff9a3eb53f2ed2cc03b8f09816f564
+  normalized_sha256: sha256:d95bdd7357cc936215781030272a5a761eff9a3eb53f2ed2cc03b8f09816f564
+cas_ref: sha256:d95bdd7357cc936215781030272a5a761eff9a3eb53f2ed2cc03b8f09816f564
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 引用既有评审问题并开始列举旧 Prop 接口字段；没有声称字段为真。'
+    previous_atom_id: f6e9b319503e870e7aaa1cb0e8c4d3be068390d53347916daf5ad731c1141b8e
+    next_atom_id: 031221aa62d5aeaadb054c6c69282cf72b019453da7103cd923fba2da3932154

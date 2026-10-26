@@ -1,0 +1,88 @@
+**Definition 57.1 (The fixed spatial model and its completed reference operator).**
+Fix one both-wall native model of
+[Native Green stability, §§1–3 and 10–12](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md).
+Thus $0<Z<1$, $r=1-Z$, $X=Y=r/2$, and
+$I=(l,u)\Subset(0,r/2)$. Fix the preparation data, the actual grouped
+phase torus and an interior source $o=(k_o,\alpha_o,\beta_o)$ once and
+for all. In the actual $2\pi$-periodic coordinates,
+
+$$
+\Omega=I\times\mathbb T^2,\qquad
+P=\partial_k,\qquad
+Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta,\qquad
+ d\mu=\rho\,dk\,d\alpha\,d\beta.
+$$
+
+Here $\rho>0$ is smooth and $A$ is a smooth real symmetric positive
+definite horizontal matrix on a neighbourhood of $\overline\Omega$.
+The angular measure is unnormalized. Work in the real spatial Hilbert
+space $\mathscr H=L^2(\Omega,\mu;\mathbb R)$, with its ordinary norm;
+a state is an amplitude on this cylinder, not a spectral-index space.
+Write $\nabla_X=(P,Q)$ and set
+
+$$
+T_A[f]=\int_\Omega\langle A\nabla_X f,\nabla_X f\rangle\,d\mu,
+\qquad
+\mathcal F_A=\overline{C_c^\infty(\Omega)}^{\,(T_A+\|\cdot\|_2^2)^{1/2}}.
+$$
+
+The core is periodic in phase and compactly supported in height; hence
+its closure retains killing at $l,u$. Let $L_A$ be the represented free
+operator, and let
+$\Gamma=\int_0^\infty p_t^\Omega(o,\cdot)\,dt$ be its full killed
+unit-source Green field relative to this same $\mu$. The source is
+neither averaged over phase nor cut off in time. The kinetic
+normalization is the original control covariance $2A\,dt$, with no
+extra factor $1/2$ in $T_A$.
+
+Retain the source normalization explicitly. On an injective source
+chart put
+
+$$
+\begin{gathered}
+x=k-k_o,\quad y=2(\alpha-\alpha_o),\quad
+z=-r\{\beta-\beta_o-(\tfrac12-k_o/r)y\},\quad B=A(o)^{-1/2},\\
+(\xi,\eta)^{\mathsf T}=B(x,y)^{\mathsf T},\qquad
+\tau=\det(B)(z-xy/2),\qquad
+R^4=(\xi^2+\eta^2)^2+16\tau^2,\\
+m_0=\rho(o)\det A(o)/(2r),\qquad
+\cos a=(\xi^2+\eta^2)/R^2,\quad \sin a=4\tau/R^2.
+\end{gathered}
+$$
+
+Let $J=(-\pi/2,\pi/2)$ and $c(a)=\cos a$. The angular operator
+$S b=-4(cb')'+cb$ is represented by
+$\int_J(4c|b'|^2+c|b|^2)\,da$ on
+$\{b\in L^2(J):b\in AC_{\rm loc}(J),\sqrt c\,b'\in L^2(J)\}$.
+Its endpoints are natural, not Dirichlet. Let $(\lambda_0,\phi)$ be
+its positive lowest eigenpair with $\phi(0)=1$, using the bounded
+endpoint branches, and put
+
+$$
+h=R^{-1}\phi(a),\qquad
+g_{\rm c}=2\pi m_0\lambda_0,\qquad
+K=m_0\frac\pi2\int_J c\phi^2\,da>0.
+$$
+
+The critical form $q_{\rm c}=T_A-g_{\rm c}\int\Gamma|\cdot|^2d\mu$
+on its original domain $\mathcal F_A$ is closable and semibounded.
+Let $\overline q_{\rm c}$ be its closure and $\mathcal Q$ its domain.
+Define $F$ by the representation of this completed form:
+
+$$
+\begin{split}
+D(F)&=\{u\in\mathcal Q:\text{ there is }v\in\mathscr H
+\text{ with }\overline q_{\rm c}(u,z)=\langle v,z\rangle
+\text{ for all }z\in\mathcal Q\},\\
+Fu&=v.
+\end{split}
+$$
+
+Native Green stability, Theorems 12.2 and 15.1, supply compact resolvent,
+$\mathcal F_A\subsetneq\mathcal Q$, and lowest energy $E_*$ for this
+$F=K_*$. In particular $F$ is the completed critical operator, not a
+finite-cap operator; its completed form does not assign a difference
+to two individually infinite integrals. Below the calibrated field
+evolution is the fixed linear semigroup of $F-E_0$. This is distinct
+from asserting a Markov law for that potential-bearing semigroup.
+

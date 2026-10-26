@@ -1,0 +1,41 @@
+**Theorem 4.5 (gate and raw-source refinement).** For every current invariant
+state, each admitted original source call has exactly its $F_h$ response and
+decoded source successor. This includes ReadE's original coefficient encoding,
+every finite literal address, every whole context and each executed reject.
+At every source gate boundary, the logical source and workspace operands and
+destinations correspond to the actual cells through $\phi_K$ and their real
+workspace descriptors. This correspondence also holds while the source word
+is temporarily invalid.
+
+Proof. Since $\lambda(t)\le h$, the first $L(h)$ logical bits are exactly the
+canonical $h$-packet; all following bits are PAD. Lemma 4.3 supplies a distinct
+actual source cell for each of those bits and no workspace alias. Induct over
+the ordered generated gate records. Each S operand loads its corresponding
+logical bit; each W operand loads the same initial constant or earlier
+computed workspace bit. The same finite truth table therefore produces the
+same result. A W destination updates the corresponding workspace cell, and
+an S destination updates exactly its logical source bit. No gate-boundary
+step requires the current raw source word to parse. This proves the induction
+through every one of the supplier's in-place MUX writes.
+
+The unchanged supplier template proof now applies to this logical packet.
+Whole-candidate acceptance is exactly $\lambda(c)\le h$. If accepted, $c$
+fits the first $L(h)$ bits; if rejected every MUX reinstates its old bit.
+All higher logical source bits remain zero. ReadE and TagRead have no source
+destinations. The minterm table enumerates $4^{2h-1}$ packets, with exactly
+one equal to this valid logical packet, and therefore returns its literal
+reply by LJA3.3. The original ReadE uses exactly the old width and recurrences,
+so no new overflow or coefficient conversion premise arises. At completion
+the full $K$-packet again represents the stated successor. Fetch, address
+cache, seek and latch cuts between these gate boundaries are genuine actual
+states of the unchanged interpreter; the theorem does not identify their
+head positions, code lengths or clocks with a contiguous legacy execution.
+For equal public history, command and directory layout, the added scans and
+address construction have equal public traces independently of source bits.
+The inherited private gates never branch or seek on their operands, and
+Base tests only the boundary symbol. Thus the only newly acquired
+source-dependent value at response release is still the permitted complete
+original response, by the suppliers' noninterference argument. Full private
+histories retain their actual differing bit values.
+$\square$
+

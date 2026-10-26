@@ -120,7 +120,7 @@ private theorem tensor_smul_left (a b : (Fin 2 → ℂ)) (z : ℂ) : productVect
 private theorem trace_projector {n : Type*} [Fintype n] (x : n → ℂ) : (rankOneDensity x).trace = star x ⬝ᵥ x := by
   simp only [rankOneDensity, Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
     dotProduct]; apply Finset.sum_congr rfl; intro i hi; exact mul_comm _ _
-private theorem unit_e0 : unitVector ![1, 0] := by
+theorem unit_e0 : unitVector ![1, 0] := by
   norm_num [unitVector, dotProduct, Fin.sum_univ_two]
 private theorem unit_b {c s : ℝ} (h : c^2+s^2=1) : unitVector (b c s) := by
   unfold unitVector b
@@ -197,7 +197,7 @@ private theorem local_star_mul (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) : (loca
   have hB := Matrix.mem_unitaryGroup_iff'.mp UB.property
   simp only [Matrix.star_eq_conjTranspose] at hA hB
   rw [hA,hB,Matrix.one_kronecker_one]
-private theorem unitary_preserves_overlap {n : Type*} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (hA : Aᴴ * A = 1) (x y : n → ℂ) : star (A *ᵥ x) ⬝ᵥ (A *ᵥ y) = star x ⬝ᵥ y := by
+theorem unitary_preserves_overlap {n : Type*} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (hA : Aᴴ * A = 1) (x y : n → ℂ) : star (A *ᵥ x) ⬝ᵥ (A *ᵥ y) = star x ⬝ᵥ y := by
   rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     hA, Matrix.one_mulVec]
 private theorem local_preserves_unit (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) {ψ : (Fin 2 × Fin 2 → ℂ)} (h : unitVector ψ) : unitVector (localMatrix UA UB *ᵥ ψ) := by

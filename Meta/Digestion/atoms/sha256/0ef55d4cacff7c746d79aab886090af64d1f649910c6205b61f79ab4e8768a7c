@@ -1,0 +1,28 @@
+**Lemma 242.6 (Coefficient norm).** Put
+
+$$
+H=\sum_{j=-2}^2|d_j|[4t+b(p_j)].
+$$
+
+Then
+
+$$
+H=\frac{4(67605215221t+72785064779)}{2187(1-t^2)},\qquad
+\sum_{j,k}|c_{jk}|=\frac{H}{\varepsilon^2}.
+\tag{242.5}
+$$
+
+Proof. The alternating signs in Lemma 242.4 replace $|d_j|$ by
+$(-1)^{2-j}d_j$. Substituting
+$p_j=1/3+j/100$, using the displayed product for $\Delta_j$, and reducing
+with $t^2-6t+1=0$ gives
+
+$$
+\sum_j(-1)^{2-j}d_j[4t+8tp_j(1-p_j)]
+ =\frac{4(67605215221t+72785064779)}{2187(1-t^2)}.
+$$
+
+The second identity in (242.5) follows from
+$\sum_k|r_k|=\varepsilon^{-2}$. Every denominator is positive, so the
+displayed value is positive. ∎
+

@@ -1,0 +1,14 @@
+## 39. The independent-pair bridge and its remaining boundary
+
+Let $(p(q),v(q))$, $W_-(q),W_+(q)$ be exactly the continuation of
+Theorems 26.1 and 28.1, with $0<q<q_*$. No monotonicity of its
+$p$ projection is assumed. Set
+
+$$
+Q_R=\{q:0<q<q_*,\quad p(q)\in[-534,-457]\}.
+\tag{39.1}
+$$
+
+This is a subset on which the source-class theorem applies, not a
+replacement for the original full-domain target.
+

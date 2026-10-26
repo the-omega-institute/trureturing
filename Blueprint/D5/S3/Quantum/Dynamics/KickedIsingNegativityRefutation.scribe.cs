@@ -13,6 +13,7 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         "Pathak's generic-state negativity identity fails on a four-site kicked Ising chain.",
         H("A generic-state counterexample in the kicked Ising chain"),
         Blocks(
+            Paragraph(Text("For arbitrary local index types, partialTranspose sends the entry at ((a,b),(c,d)) to the input entry at ((a,d),(c,b)). It is definitionally equal to Bipartite.partialTranspose on the same complex matrix domain.")),
             Node("hIsing", "Ising Hamiltonian", IsingFormula(),
                 "Equation (1), p. 1, defines H_I = J ∑ᵢ σᶻᵢσᶻᵢ₊₁ + ∑ᵢ hᵢσᶻᵢ. The source states: \"We specifically consider J = π/4, b = −π/4 for our analysis.\" Sites use Fin L, with finRotate L as the periodic successor; ↑ and ↓ are 0 and 1. The frozen localOp embeds a qubit matrix at its site, and qubitZ is the Pauli Z matrix. Real coefficients enter ℂ through ofReal; smul is scalar multiplication."),
             Node("hKick", "Kick Hamiltonian", KickFormula(),
@@ -31,8 +32,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
                 "The coordinates x, y and z lie on A, B and the complement of A ∪ B. The dependent conditional dite supplies membership proofs hA and hB to Subtype.mk. In the final branch hA and hB are nonmembership hypotheses, and Finset.notMem_union.mpr ⟨hA, hB⟩ proves membership in the complement. Outside is the frozen complement subtype. On disjoint blocks these assignments combine to one chain configuration, as used in the partial-trace expression on p. 2."),
             Node("reducedAB", "Joint reduced density matrix", ReducedFormula(),
                 "Page 2 defines ρ_AB(t) = tr_C(|ψ(t)⟩⟨ψ(t)|). The coordinate function inside vecMulVec is the same ψ expressed on the product of the retained blocks and the complement. Its star is complex conjugation, so vecMulVec forms the rank-one density matrix. The frozen partialTraceRight sums over the complement."),
-            Node("partialTranspose", "Partial transposition", TransposeFormula(),
-                "Equation (5), p. 2, uses partial transposition with respect to B. It swaps the two B indices while preserving the A indices. This definition allows different subsystem dimensions; the existing partialTransposeB is used directly for the equal two-qubit matrix in the proof."),
             Node("evolved", "Integer-time evolution", EvolvedFormula(),
                 "The source evolves the initial state with U_KI[h]^t (supplement, p. 6). The exponent is an integer power of the literal Floquet matrix, and Matrix.mulVec is its action on the amplitude vector. The counterexample uses t = 1."),
             Node("logNegativity", "Logarithmic negativity", NegativityFormula(),
@@ -102,7 +101,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
     private static Formula Sites(Formula l) => Fin(l);
     private static Formula Configurations(Formula l) => Arrow(Sites(l), Fin(Num(2)));
     private static Formula Cartesian(Formula a, Formula b) => Seq(Parenthesized(a), Times, Parenthesized(b));
-    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, b));
     private static Formula Union(Formula a, Formula b) => Seq(a, Sp, Cup, Sp, b);
     private static Formula SubtypeOf(Formula a, Formula l) => Call("Subtype", Lambda("i", Sites(l), Mem(F.Id("i"), a)));
     private static Formula MatrixType(Formula n) => Call("Matrix", n, n, Complex());
@@ -250,12 +248,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         Formula amplitudes = Lambda("p", coordinates, Apply(psi, Call("joinParts", A, B, Call("fst", Call("fst", p)), Call("snd", Call("fst", p)), Call("snd", p))));
         return Disp(All("L", Nat(), All("A", Call("Finset", Sites(l)), All("B", Call("Finset", Sites(l)), All("psi", Arrow(Configurations(l), Complex()),
             Eqn(Call("reducedAB", A, B, psi), Call("partialTraceRight", QCall("Matrix", "vecMulVec", amplitudes, Call("star", amplitudes)))))))));
-    }
-    private static Formula TransposeFormula()
-    {
-        Formula A = F.Id("A"), B = F.Id("B"), rho = F.Id("rho"), p = F.Id("p"), q = F.Id("q"), pair = Cartesian(A, B);
-        return Disp(All("A", F.Id("Type"), All("B", F.Id("Type"), All("rho", MatrixType(pair), All("p", pair, All("q", pair,
-            Eqn(Apply(Call("partialTranspose", rho), p, q), Apply(rho, Pair(Call("fst", p), Call("snd", q)), Pair(Call("fst", q), Call("snd", p))))))))));
     }
     private static Formula EvolvedFormula()
     {

@@ -1,0 +1,61 @@
+**Proposition 13.2 (Exact displacement and derivative enclosures).** In
+these definitions $H|V_i|_{\max}$, for $i=0,1,2,3$, are
+
+$$
+\begin{pmatrix}
+338966824265795008357905275803899557\\
+973789251791947370114393715220755890\\
+177795360310281989937252073493405565\\
+93547459601986909824855730251270564
+\end{pmatrix}.
+\tag{13.4}
+$$
+
+The integers $H|E_{ij}|_{\max}$ are the following four rows.
+
+| $i$ | $j=0$ | $j=1$ | $j=2$ | $j=3$ |
+| --- | --- | --- | --- | --- |
+| 0 | $36615031545838584104784112806117146775273520730140824906$ | $4665500393481296553653074981766616011572470678514771447458$ | $11895925729627738368986108191533000528599160052716878516$ | $430060688228733744289085771412843530298259873461153704446$ |
+| 1 | $294689238745658795743745434675021789415447964164996433$ | $37549254557355489886640933776903589937776198628205191941$ | $102546280789074016366222721628443814053943985808700856$ | $3705782341591738185699190561416511064109646582998629532$ |
+| 2 | $10913714330583508258365504349915152262824995620166684213$ | $1390627720516803142409353949396066483087721321428180675298$ | $3551248428158717282816734247983206990265688356598139055$ | $128383251887586614615819261424087188499414045611436805352$ |
+| 3 | $311280803675412437958251039764013002005507053051642743$ | $39662463927825453974872842216931865835188257987027241119$ | $105941584569979733149032480700561479437527598663981608$ | $3828839800416140708530680926900809096588701891592384210$ |
+
+All denominators in these interval expressions exclude zero. On the
+whole box the strict source and response enclosures are precisely those
+in the table following (9.7).
+
+Proof. Apply (13.1)–(13.3) to the rational centre, radius and matrix
+(9.4)–(9.5), in the stated expression order. If endpoints are represented
+as integers $[L,U]/H$, multiplication produces endpoints
+
+$$
+\frac1H\left\lfloor\frac{\min(L_AL_B,L_AU_B,U_AL_B,U_AU_B)}H\right\rfloor,
+\quad
+\frac1H\left\lceil\frac{\max(L_AL_B,L_AU_B,U_AL_B,U_AU_B)}H\right\rceil;
+\tag{13.5}
+$$
+
+For the quotient put
+
+$$
+q_-=\min\left\{\frac{HL_A}{L_B},\frac{HL_A}{U_B},
+                    \frac{HU_A}{L_B},\frac{HU_A}{U_B}\right\},\qquad
+q_+=\max\left\{\frac{HL_A}{L_B},\frac{HL_A}{U_B},
+                    \frac{HU_A}{L_B},\frac{HU_A}{U_B}\right\}.
+$$
+
+Its endpoints are $\lfloor q_-\rfloor/H$ and
+$\lceil q_+\rceil/H$. These integer formulas give (13.4) and the four
+displayed rows.
+The same operations on $b,r,D,v,a,m$ give the table following (9.7).
+In particular its two $D$ intervals avoid zero, which justifies the
+response divisions and derivative divisions; there are no other
+variable denominators in this circuit.
+
+Taking the largest entry in (13.4) gives $\eta_0$. Summing each of the
+four derivative rows and taking the largest sum gives $Hq_0$, with
+maximum at row $0$. Thus the interval containment induction proves
+exactly the two norm inequalities (9.7). The bounds $q_0<5145/10^6$
+and $\eta_0<10^{-24}$ give (9.8), and the contraction and whole-world
+inverse argument in Section 9 proves Theorem 9.1. ∎
+

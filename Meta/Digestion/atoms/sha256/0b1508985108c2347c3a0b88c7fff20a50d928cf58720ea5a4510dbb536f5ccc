@@ -1,0 +1,23 @@
+## 151. Scope of the global positive continuation
+
+The premises and literature correspondences remain precisely those
+in §§138 and 145. In particular the unique-SDP-solution branch theorem
+listed there is not used to infer uniqueness of this optimizer disk.
+Banach and analytic IFT certify a contact root; the unrestricted value
+and full disk still require the separate all-input and all-decoder
+arguments of §§142–143. The experiment-comparison full trace tolerance
+is $2L(q)$ and its half-norm parameter is $L(q)$. Ancillary decision
+spaces in such comparisons add no reference system to this objective.
+
+The theorem concerns the mathematical channel family $\Phi_q$ on
+$0<q\le1/4$, conditional on the explicitly stated base premises and
+the general-parameter implications proved above. Its rational data
+and finite arithmetic rules are contained in this volume. It has no
+private file or program as a mathematical proof dependency. The
+zero endpoint is excluded, even though polynomial certificates extend
+to it. The specified unitary transport keeps the original identity
+target, and the result asserts no new identification with other actual
+horizons. It supplies no negative-parameter theorem, physical
+realization, formal-kernel verification, priority, exhaustive literature
+claim or completion of a broader research program.
+

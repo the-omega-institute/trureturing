@@ -1,0 +1,6 @@
+### 推论 5.2（低阶摘要的未来逃逸）
+
+若某个摘要只保持 $\Gamma_0$ 的读数，而允许的未来任务包含 $\operatorname{ev}_{101}$ 或任何对该联合方向敏感的 continuation，则定理 4.2 给出一个单任务逃逸见证。任何只依赖当前摘要的未来读出，至少在同一纤维中的两个函数之一上错误。
+
+作为一个有明确范围的形式化来源，[`native_probability_separation`](../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean) 在已初始化的合法固定长度来源、$n\ge3$、$0<\mathrm{mix}<1$，并在声明的 proper seam 读数域和正质量条件下，给出一组 proper seam 联合报告、固定线性读数和最终期望相同、但追加合法 continuation 后精确 reply 分布不同的实例。这里仅使用其适用范围内的实例，不把它推广到任意来源。
+

@@ -1,0 +1,36 @@
+**Theorem 193.1 (All covariance maximizers).** When $g>0$, the
+maximizing pairs are precisely the phased matching Pauli directions
+displayed below, with an arbitrary spectator contraction for F.
+When $g=0$, every admissible norm-one pair maximizes covariance.
+
+Proof. Suppose $g>0$. Equality in the preceding chain forces the two traceless
+coefficient norms to be one, $\alpha_0=\gamma_0=0$, and both
+Hilbert--Schmidt contraction bounds to be equalities. Each singular value
+of $X$ and $B$ is at most one, and the sum of their squared singular values
+is two. Hence both matrices are traceless unitaries. A traceless $2\times2$
+unitary has opposite eigenvalues, so its spectral decomposition has form
+$e^{i\alpha}\mathbf n\cdot\sigma$ for a real unit vector $\mathbf n$.
+Equality in the bilinear Cauchy--Schwarz bound aligns the two real directions;
+a sign can be absorbed in the phases.
+
+Consequently all E maximizers, and only those, are
+
+$$
+X=e^{i\alpha}\mathbf n\cdot\sigma,\qquad
+Y=e^{i\gamma}\mathbf n\cdot\sigma,\qquad \mathbf n\in S^2.
+$$
+
+For F, write $Y=\begin{pmatrix}B&K\\L&Z\end{pmatrix}$ in flag order.
+Since $B$ is unitary, $Y^\dagger Y\le I$ gives $L=0$ and $YY^\dagger\le I$ gives
+$K=0$. Thus its complete maximizing form is
+
+$$
+X=e^{i\alpha}\mathbf n\cdot\sigma,\qquad
+Y=e^{i\gamma}\mathbf n\cdot\sigma\ \oplus Y_{\mathrm{sp}},\qquad
+\|Y_{\mathrm{sp}}\|_{\mathrm{op}}\le1.
+$$
+
+The displayed active block already makes $\|Y\|_{\mathrm{op}}=1$.
+When $g=0$, the connected operator vanishes and every permitted norm-one
+pair attains the zero supremum.
+

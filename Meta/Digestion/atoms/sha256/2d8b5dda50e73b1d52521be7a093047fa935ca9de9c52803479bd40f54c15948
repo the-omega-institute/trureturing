@@ -1,0 +1,31 @@
+**Theorem 17.2 (Whole-child compactness over the first three rectangles).**
+For each \(i\in\{1,2,3\}\), the set
+\[
+ \Phi^{-1}(K_i)=\{W:\Phi(W)\in K_i\}
+\tag{17.9}
+\]
+is compact in the strict complete-world space.
+
+**Proof.** Let \(W_n\) be a sequence in (17.9).  If \(b_n\) were unbounded,
+[S], Section 7, would give a subsequence whose base tends to
+\((-216/5,-225)\), outside the closed rectangle \(K_i\).  Thus \(b_n\)
+is bounded.  Since \(p_n\) is bounded on \(K_i\), [S], Theorem 12.1,
+bounds \(c_n,d_n\) and all four padded gain coefficients, retaining the
+\(\Lambda=0\), lower-degree, zero-drift, zero-sample, and unused-companion
+strata.  By [S], Definition 12.2 and Theorem 12.3, every finite
+strictness-boundary limit lies on one of the four faces in (17.2) or at one
+of the two corners.  Equations (17.2)--(17.6) exclude every such limit over
+\(K_i\): the twelve Sylvester determinants exclude all finite face
+intersections, the pole guards exclude denominator cancellations, and
+(17.6) excludes the corners.  The cited escape classification excludes
+infinity.
+
+Consequently a subsequence has convergent source, drift, and padded gain
+coordinates with a strict source limit.  The original seven clock equations
+are closed under this convergence.  The limit gain is not identically zero,
+since its first two prescribed readings are distinct.  The limit is therefore
+an element of the strict complete-world space.  The topology is Euclidean in
+finitely many coordinates, so boundedness and sequential closedness give
+compactness (Heine--Borel); no pair relation has been included in (17.9).
+\(\square\)
+

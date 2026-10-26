@@ -1,0 +1,20 @@
+## 54. Mathematical sources
+
+- The present volume, Theorem 39.1, *A strict negative-base
+  singular/regular terminal-J collision*, and its complete proof in
+  Sections 40–46: the exact negative mixed-J point and regular-parent
+  circuit; Section 42 gives the contraction certificate and Section 43
+  the whole-world lift. The exact starting coordinates and defining
+  equations needed here are retained in Section 52.
+- The external volume *FIB common-parent geometry and two exact mixed
+  children*, Definitions 1.1–1.3 and Section 12, specifically Lemma 12.2
+  and Theorem 12.3: literal complete worlds and zero-safe prescribed-$p$
+  reconstruction. Its Section 12 is external to the present volume.
+- The present volume, Section 46: the original independent J/M-pair
+  target over all positive widths, allowing overlap between the pairs.
+  Sections 47–53 resolve the M-pair obstruction only over $\mathcal U$.
+
+Descartes' rule, Sylvester resultants and subresultants, Lagrange
+interpolation, continuity and the real analytic implicit-function theorem
+are the classical tools used in the all-width obstruction and continuation.
+

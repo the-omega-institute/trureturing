@@ -1,0 +1,66 @@
+**定理 62.2（严格次尖锐菜单存在与指数设置代价）。** 对任意 $0<\chi<c_n$，存在这样的实际有限字菜单，使对全部密度态对同时有
+
+$$
+\chi D(\rho,\sigma)\leq B_{\mathcal F}(\rho,\sigma)
+ \leq D(\rho,\sigma).
+\tag{VIII.11}
+$$
+
+反之，任何在全部密度态对上满足 (VIII.11) 下界的 $m$ 设置菜单都满足
+
+$$
+m\geq\tfrac12\exp\!\left(
+                  \frac{2\chi^2(d-1)^3}{d^2}\right).
+\tag{VIII.12}
+$$
+
+**证明。** 先在紧集
+$\mathcal S=\{A=A^\dagger:\operatorname{tr}A=0,\ \|A\|_1=2\}$ 上取有限覆盖。每个 $A\in\mathcal S$ 都是两个密度态之差：其正负部分各有迹一。定理 60.2 给某个真正有限字满足 $|\operatorname{tr}(AP_w)|>\chi$。对固定字，这是 $\mathcal S$ 上的开条件。所有这些开集覆盖 $\mathcal S$，紧致性给有限子覆盖。对非零态差除以其 $D$，便得 (VIII.11)；零差直接成立。所选字和参数只依赖 $n,\chi$，不依赖输入。这一存在证明没有把闭包中的门当作已执行的无限字。
+
+为证下界，对每个单位向量 $v$ 使用同一见证族
+$\rho_v=|v\rangle\langle v|$、$\sigma_v=(I-\rho_v)/(d-1)$，其 $D=1$。对固定秩 $q$ 投影 $Q$，置 $S=\langle v|Q|v\rangle$，有
+
+$$
+\operatorname{tr}((\rho_v-\sigma_v)Q)=\frac{dS-q}{d-1}.
+\tag{VIII.13}
+$$
+
+仅在此证明中，以复单位球面上的酉不变概率选择 $v$。其分布可由独立标准复 Gaussian 坐标归一化得到，因为 Gaussian 密度只依赖向量范数。各坐标模平方为独立均值一指数变量；前 $q$ 项与其余项之和分别具有密度 $x^{q-1}e^{-x}/(q-1)!$ 和 $y^{d-q-1}e^{-y}/(d-q-1)!$，由指数密度的卷积归纳即可得到。作 $s=x/(x+y),t=x+y$ 的变量替换并积分 $t$，得
+
+$$
+f_S(s)=\frac{(d-1)!}{(q-1)!(d-q-1)!}
+             s^{q-1}(1-s)^{d-q-1},\qquad 0<s<1.
+\tag{VIII.14}
+$$
+
+因此，对 $0<u<1$ 及 $Z_u\sim\operatorname{Bin}(d-1,u)$，
+
+$$
+\Pr(S\geq u)=\Pr(Z_u\leq q-1),
+\qquad \Pr(S\leq u)=\Pr(Z_u\geq q).
+\tag{VIII.15}
+$$
+
+例如第一式右侧是 $\sum_{k=0}^{q-1}\binom{d-1}{k}u^k(1-u)^{d-1-k}$，其导数为 $-f_S(u)$，在 $u=0$ 为一；第二式取补集。这直接给出所需 Beta—二项关系。
+
+使用 Hoeffding 的成熟二项尾界，见 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Theorem 2：若 $Z\sim\operatorname{Bin}(N,u)$、$b\geq0$，则任一方向离开均值至少 $Nb$ 的概率不超过 $e^{-2Nb^2}$。其所需一步也可直接推出：Bernoulli 变量 $X$ 的中心化对数矩母函数 $g(t)=\log\mathbb E e^{t(X-u)}$ 满足 $g(0)=g'(0)=0$，而 $g''(t)$ 是一个 Bernoulli 方差，至多 $1/4$。故 $g(t)\leq t^2/8$；独立相乘、指数 Markov 及 $t=4b$ 给上尾，$t=-4b$ 给下尾。
+
+令 $p=q/d$、$a=\chi(d-1)/d$。在上阈值 $u=p+a\in(0,1)$，
+
+$$
+(d-1)u-(q-1)=1-p+(d-1)a\geq(d-1)a;
+\tag{VIII.16}
+$$
+
+在下阈值 $u=p-a\in(0,1)$，$q-(d-1)u=p+(d-1)a\geq(d-1)a$。结合 (VIII.15) 及尾界得
+
+$$
+\Pr\{|S-q/d|\geq a\}
+ \leq2e^{-2(d-1)a^2}.
+\tag{VIII.17}
+$$
+
+阈值在 $[0,1]$ 外时相应尾事件为空；在端点也因 (VIII.14) 无原子而为零。由 (VIII.13)，固定设置满足对比至少 $\chi$ 的球面概率不超过 (VIII.17)。若 $m$ 个设置对所有见证态对均满足 (VIII.11)，这些事件的并集必须覆盖整个球面。因此 $1\leq2m e^{-2(d-1)a^2}$，即 (VIII.12)。这里的酉不变测度只是排除小菜单的数学见证，不是供应随机控制或随机制备的资源。$\square$
+
+对固定 $\chi>0$ 且 $\chi<c_n$，(VIII.12) 的指数随 $d=F_{n+2}$ 线性增长。这不与有限维线性坐标的精确可识别性冲突：本定理要求相对于迹距离的统一正对比裕量，且用最大单设置误差衡量。它不提供任意层析、加权结果范数、自适应设置或联合测量的样本下界；也不提供最小菜单、有效字综合或字长上界。若来源域不含全部见证族，不能沿用这里的设置数下界。框架层析参见 Scott，[*Tight informationally complete quantum measurements*](https://arxiv.org/html/quant-ph/0604049v6)，§§III、VI。
+

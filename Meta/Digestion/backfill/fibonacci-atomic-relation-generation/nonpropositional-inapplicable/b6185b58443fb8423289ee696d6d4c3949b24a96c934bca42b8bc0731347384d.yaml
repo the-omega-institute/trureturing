@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6185b58443fb8423289ee696d6d4c3949b24a96c934bca42b8bc0731347384d
+  normalized_sha256: sha256:b6185b58443fb8423289ee696d6d4c3949b24a96c934bca42b8bc0731347384d
+cas_ref: sha256:b6185b58443fb8423289ee696d6d4c3949b24a96c934bca42b8bc0731347384d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅以式(204.5)定义 α₊、α₋；范数一、非零、互异等数学性质在后续引理中另行断言，本条未断言这些性质。
+    previous_atom_id: 4fd7a24eda9583310e1203015bf208b959bf07d134cfbd6493d828ef829cb0ef
+    next_atom_id: d7cf5fc870a9fec0931203c8f07f37db63cd7bf5d8e6db94293793b99d08cd58

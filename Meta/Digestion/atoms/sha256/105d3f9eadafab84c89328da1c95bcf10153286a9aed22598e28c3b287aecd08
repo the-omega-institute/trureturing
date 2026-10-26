@@ -1,0 +1,97 @@
+**Theorem 13.1 (whole-child eighth-response gap comparison).** There is
+an open neighborhood $V_*\subset\operatorname{int}K_3$ of $y_3$, contained
+in the neighborhood of Theorem 9.4 and Convention 3.3, such that every
+$f_J,f_M$ value on $\Phi^{-1}(V_*)$ is positive. For every $y\in V_*$ and
+every two distinct complete worlds $W,W'\in C(y)$,
+
+$$
+\begin{aligned}
+ |f_M(W)-f_M(W')|&>3|f_J(W)-f_J(W')|,\\
+ |\log f_M(W)-\log f_M(W')|
+   &>2|\log f_J(W)-\log f_J(W')|.
+\end{aligned}
+\tag{13.1}
+$$
+
+The quantifiers include the remote companion and every original permitted
+source stratum; they impose no common drift or common gain between
+possible worlds.
+
+**Proof.** Use $K$ only for the tangent of (3.2) in this proof. Lemma 9.2
+proves $K\theta\ne0$ and $p_b(W_3)\ne0$. Consequently
+
+$$
+ \det D(p,\theta)(W_3)=-p_b(W_3)K\theta(W_3)\ne0.
+\tag{13.2}
+$$
+
+Thus $(p,\theta)$ are genuine local coordinates on the original complete
+parent near $W_3$. They come with the regular whole-world lift, including
+all padded gain coefficients, from VI, Lemma 2.2. At the center,
+$d/d\theta$ while holding $p$ fixed equals $K/(K\theta)$. Equations
+(9.13)–(9.15) therefore give
+
+$$
+ \partial_\theta f_J<0,\quad \partial_\theta f_M<0,\quad
+ \frac{|\partial_\theta f_M|}{|\partial_\theta f_J|}>
+ \frac{120}{38}>3,
+\tag{13.3}
+$$
+
+and
+
+$$
+ \frac{|\partial_\theta\log f_M|}
+      {|\partial_\theta\log f_J|}>
+ \frac{120\cdot499.5}{38\cdot557}>2.
+\tag{13.4}
+$$
+
+All the quantities are analytic where these positive responses occur.
+Continuity gives a product rectangle in $(p,\theta)$ about the center
+on which both derivatives in (13.3) remain negative, the two strict
+factor inequalities remain true, and the local response bands
+$499.5<f_J<500$, $551<f_M<557$ hold. Denote its lifted neighborhood by
+$N$. For two different points of $N$ with the same $p$, their $\theta$
+coordinates differ. The interval between them at this fixed $p$ stays
+inside the rectangle. Integrating the derivatives with their common
+negative sign proves both strict inequalities in (13.1). This covers
+all local/local pairs with the same base, without requiring the two
+points to be a distinguished equal-$m$ pair.
+
+For a local/remote pair, Lemma 9.3 and the local bands give
+
+$$
+ |f_M(W)-f_M(Z(y))|>89,
+ \qquad |f_J(W)-f_J(Z(y))|<61/10.
+\tag{13.5}
+$$
+
+Since $89>3(61/10)$, the additive assertion holds. Integrating $1/s$
+between the positive response endpoints also gives
+
+$$
+ |\log f_M(W)-\log f_M(Z(y))|>\frac{89}{648},\qquad
+ |\log f_J(W)-\log f_J(Z(y))|<\frac{61}{4939}.
+\tag{13.6}
+$$
+
+The rational inequality $89/648>2(61/4939)$ proves the logarithmic
+assertion. The reversed order of a pair changes none of these absolute
+values. There is at most one remote world at any one base, by VI,
+Theorem 18.1.
+
+Finally choose a relatively open remote neighborhood $N_Z$ of $Z(y_3)$
+inside that theorem's source square. VI, Theorems 17.2 and 23.1, imply
+that the entire inverse image of some open neighborhood of $y_3$ is
+contained in $N\cup N_Z$: otherwise a sequence of omitted worlds with
+bases tending to $y_3$ would have a strict complete-world limit in
+$C(y_3)=\{W_3,Z(y_3)\}$ outside that open union. This is the compactness
+argument of (9.18), with the present smaller $N$.
+Intersect this base neighborhood with the neighborhoods in Theorem 9.4
+and Convention 3.3 to obtain $V_*$. Local/local, local/remote and the
+unique-remote case exhaust every pair in every entire child there.
+All values lie in the positive bands just used. No stratum is removed
+by declaring a local chart: exhaustion is proved in the original world
+space before the pair comparison is made. $\square$
+

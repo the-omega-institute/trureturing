@@ -1,0 +1,103 @@
+## 451. centered 补偿核是膨胀差分，不是 $I_\psi$ 本身
+
+还需要把有限补偿定理的核与 Robin 比较中使用的 signed tail 区分开。
+令
+
+$$
+E(t)=\psi(t)-t,
+\qquad
+k(t)=\frac{1+\log t}{t^2(\log t)^2},
+\qquad
+I_\psi(A)=\int_A^\infty E(t)k(t)\,dt.
+$$
+
+取 $c>1$。在没有端点跳跃的开区间上，已有定义直接给出
+
+$$
+\frac{d}{dt}\left[c^{-1}\operatorname{maxKernel}(A,t/c)\right]
+=-\frac{1+\log(t/c)}{t^2(\log(t/c))^2},
+$$
+
+以及
+
+$$
+\frac{d}{dt}\operatorname{maxKernel}(A,t)=-k(t),
+$$
+
+$$
+\frac{d}{dt}\frac1{t(\log t)^2}
+=-\frac{\log t+2}{t^2(\log t)^3}.
+$$
+
+因此，对 `finiteResponse` 作 Stieltjes 分部积分时，在把已经单独记录的
+$A$ 处跳跃、右端 $R$ 项和 `smoothBoundary` 分开以后，centered 核的未抵消
+高分支贡献恰为（这里保留 dilation 定义中的 $c^{-1}$ 归一化）
+
+$$
+\boxed{
+\frac1c\int_A^\infty E(cs)k(s)\,ds
+-I_\psi(A)
+-(c-1)J_2(A),
+}
+$$
+
+其中
+
+$$
+J_2(A)=
+\int_A^\infty E(t)\frac{\log t+2}{t^2(\log t)^3}\,dt.
+$$
+
+第一项来自 $t=cs$ 的换元：在 $t>cA$ 上，膨胀核的导数是
+
+$$
+-\frac{1+\log(t/c)}{t^2(\log(t/c))^2},
+$$
+
+而 $dt=c\,ds$ 与 dilation 前的 $c^{-1}$ 恰好留下前式中的 $1/c$。
+因此换元后被积的误差仍变成 $E(cs)$，并没有只改变积分下限。更明确地，若
+
+$$
+D_c(A):=\frac1c\int_A^\infty E(cs)k(s)\,ds-I_\psi(A),
+$$
+
+则对 $c>1$ 有保留端点的精确分解
+
+$$
+\boxed{
+D_c(A)
+=-\int_A^{cA}E(t)k(t)\,dt
++\int_{cA}^\infty E(t)
+\left[
+\frac{1+\log(t/c)}{t^2(\log(t/c))^2}
+-k(t)
+\right]dt.
+}
+$$
+
+所以一般没有
+
+$$
+\frac1c\int_A^\infty E(cs)k(s)\,ds=I_\psi(cA).
+$$
+
+这不是记号差异，而是来源不同：右边只改变积分下限，左边改变了同一实际
+误差函数的取值。有限 $R$ 时的右端项和 $A$ 处跳跃必须与
+`finite_signed_response_identity` 保留的 `smoothBoundary` 一起记账；把它们
+删掉会改变原命题。
+
+于是已有 `ThetaIncrementLower` 接口最多能控制上述膨胀差分的一个有限版本，
+而 Nicolas/Broadbent--Fiori--Kadiri--Ng--Wilk 的 signed 公式控制的是
+$I_\psi(A)$。从前者得到后者至少还需要一个同源的 dilation-correlation 估计，
+同时控制上述区间端点项、权重差、$J_2(A)$ 和全部端点项，并达到
+
+$$
+O\left(\frac1{\sqrt A\log A}\right)
+$$
+
+的尺度。普通 PNT 误差、FIB 地址重编码或单独的零点计数都不提供这条映射。
+
+因此，补偿定理目前应被定位为一个独立的 centered-kernel 结果；它不能被
+重命名为 Robin signed-tail 定理，也不能用它已经支付的 band volume 冒充
+$I_\psi(A)$ 的符号。
+

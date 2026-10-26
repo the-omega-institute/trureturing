@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa9ae1e3850dda83f72c29ded28f67df155303b0845eaa2bb0b884ad6e66e08c
+  normalized_sha256: sha256:fa9ae1e3850dda83f72c29ded28f67df155303b0845eaa2bb0b884ad6e66e08c
+cas_ref: sha256:fa9ae1e3850dda83f72c29ded28f67df155303b0845eaa2bb0b884ad6e66e08c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 规定单位法向及全 SO(V) 等变的任务合同；不主张存在性或维数分类。'
+    previous_atom_id: 82373666ce45f285a4aeae73de3bf67764c64cc090d2a626ca3b6db1eb3e65ea
+    next_atom_id: 5c6afa25ef8d56c2342e29e97bf67426099b15203041a8e45c4aacb857c709b7

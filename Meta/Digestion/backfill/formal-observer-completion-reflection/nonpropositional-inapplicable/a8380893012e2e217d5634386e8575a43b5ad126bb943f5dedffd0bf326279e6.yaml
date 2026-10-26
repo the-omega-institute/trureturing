@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8380893012e2e217d5634386e8575a43b5ad126bb943f5dedffd0bf326279e6
+  normalized_sha256: sha256:a8380893012e2e217d5634386e8575a43b5ad126bb943f5dedffd0bf326279e6
+cas_ref: sha256:a8380893012e2e217d5634386e8575a43b5ad126bb943f5dedffd0bf326279e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：规定单测量结果集、上下文乘积空间和经验模型分布类型。
+    previous_atom_id: 7b85ba2c56800f8702b46ae03e59cc7844dbac065609b95717dff569d981a61e
+    next_atom_id: 28843323bc05dabfc5dd63293bff713cc287556bfa2cb209c3b32ac361bfa797

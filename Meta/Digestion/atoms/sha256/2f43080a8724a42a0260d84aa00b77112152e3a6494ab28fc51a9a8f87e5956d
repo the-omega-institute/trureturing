@@ -1,0 +1,36 @@
+**Lemma 4.4 (Narrow localization and exact root identification).**
+Uniformly on $K\times V_\sigma$, each
+$\alpha_{\sigma,k}(p,v)$ lies in the interior of
+$I_{\sigma,k}$. At the exact parameters,
+
+$$
+\alpha_{-,2}(p_J,s_-(p_J))=r_-,\qquad
+\alpha_{+,6}(p_J,s_+(p_J))=r_+.
+\tag{4.7}
+$$
+
+Proof. Each narrow interval lies strictly inside its corresponding
+variation-one row of Lemma 4.2, by rational endpoint comparisons.
+At an endpoint $x$ of (4.6), evaluate $A_{00,\sigma}(x)$ exactly
+and form
+
+$$
+\varepsilon_\sigma(x)=\sum_{i+j>0}
+ |A_{ij,\sigma}(x)|h_p^ih_v^j.
+\tag{4.8}
+$$
+
+For all twenty endpoints, $\varepsilon_\sigma(x)<
+|A_{00,\sigma}(x)|$, and the latter value has the sign specified
+in Definition 4.3. Equations (4.2), (4.6), (4.8) are the exact
+rational endpoint certificate. The signs hold on the full parameter
+box. Opposite signs and the uniqueness in Lemma 4.2 place the
+one root inside each narrow interval.
+
+Rational endpoint comparisons also give
+$J_-\subset\operatorname{int}I_{-,2}$ and
+$J_+\subset\operatorname{int}I_{+,6}$. Lemma 3.3 makes
+$r_\sigma$ an exact $R$ root at $(p_J,s_\sigma(p_J))$;
+Lemma 2.4 places this parameter pair in $K\times V_\sigma$.
+The uniqueness just proved gives (4.7). ∎
+

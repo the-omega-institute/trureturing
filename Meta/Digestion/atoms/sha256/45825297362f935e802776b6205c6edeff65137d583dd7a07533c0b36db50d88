@@ -1,0 +1,160 @@
+### 12.6. Simultaneous actual-base and terminal enclosures on both closed cells
+
+For completeness, the local calculation uses exactly the following
+part of IX (25.1)–(25.2):
+
+$$
+\begin{gathered}
+I_i=[i/5000,(i+1)/5000],\qquad
+c_i=(2i+1)/10000,\qquad \nu=(q-c_i)/10^{-4},\\
+J_4=Q\cap I_4=[0.000999,0.001],\qquad
+J_5=Q\cap I_5=[0.001,0.001001],\\
+\widehat z_i(q)=(\widehat X_i,\widehat Y_i,\widehat K_i)
+ =10^{-55}\sum_{k=0}^4(a_{iXk},a_{iYk},a_{iKk})\nu^k,\\
+\|(X,Y,K_{\rm sec})(q)-\widehat z_i(q)\|_\infty<\rho,
+\qquad \rho=10^{-12},\qquad q\in J_i.
+\end{gathered}
+\tag{12.19}
+$$
+
+The six inherited coefficient rows are reproduced to specify the
+rational inputs; entries are in ascending powers of $\nu$.
+
+| Cell | Coordinate | $(a_0,a_1,a_2,a_3,a_4)$ |
+| --- | --- | --- |
+| 4 | $X$ | $(10266304321470101811692411698581629650684861357979633160,1464168059434268517957802728410056361961539722211370,1249749957810952072972171246381867236018905314719,1360060041495343970105334044654147009192630299,1667715131504076334026575440091267909161260)$ |
+| 4 | $Y$ | $(469445052819957978196241999967799400899210918868984230,689241728388713650834870768891314603498608970459903,233492581610790092677766532522926169131080883352,90946144816697581586994988618775847722681111,40687472473695203876455940355331944956079)$ |
+| 4 | $K_{\rm sec}$ | $(5806412912111385730905709653498462252826459108491456346,3591872992339961756780770307997397109186639407613368,3700252206500061022800076399827262690632311193313,4414622327194285048954439428847275090784301232,5710798424760826632346012928329040298764148)$ |
+| 5 | $X$ | $(10269237667496016889079942913593471599228244853143181918,1469183433500169934935055135641038067923535825149648,1257950505356164029114165940781842681115503652307,1373490347210155425951125859610098359618209229,1689919690408973248001225615393120505475461)$ |
+| 5 | $Y$ | $(470824470975282436623145928025479471062080870172455502,690176791372122152690871666344753489295520313008065,234039236330706404598955362392854412652001340378,91272382344840755624467433069533976868972127,40872094321925604065005630345813596148986)$ |
+| 5 | $K_{\rm sec}$ | $(5813611494513425476989632049643081846476551547510006011,3606727159900913975802291423436094792496219163984445,3726877573720002708197103826644065246554103469308,4460622394478526947617344363792274350958576378,5789429804548091763516887016912979802413911)$ |
+
+Both cells are closed. At $q=0.001$ the uniqueness join in IX
+Theorem 26.1 identifies their exact solutions; there is no gap or
+choice of a new branch at that seam.
+
+Substitute $q=h^2$ before evaluating the predictors. Their
+coordinates become polynomials of degree eight in the common
+variable $h$, and the predicted sources are
+$(\widehat X_i\pm\widehat K_i h,\widehat Y_i\pm h)$.
+Compose (12.5) polynomially. The composed denominators have degree
+68 and the numerators for $p,v,m$ have degree 86. Translate these
+univariate polynomials at the exact rational
+
+$$
+h_c=0.031622776601683793.
+\tag{12.20}
+$$
+
+Enclose $\sqrt{J_i}-h_c$ by integer square roots. Explicitly,
+with $G=10^{75}$ and rational endpoints $q_l,q_u$ of $J_i$,
+both $G^2q_l,G^2q_u$ are integers, and
+
+$$
+\sqrt{J_i}\subset
+\left[
+\frac{\lfloor\sqrt{G^2q_l}\rfloor}{G},
+\frac{\lfloor\sqrt{G^2q_u}\rfloor+1}{G}
+\right].
+\tag{12.21}
+$$
+
+For $f=p,v,m$ use the centered quotient
+
+$$
+\widehat f_i(h)=f_c+
+\frac{\widehat N_{f,i}(h)-f_c\widehat D_{s,i}(h)}
+     {\widehat D_{s,i}(h)},
+\qquad
+f_c=p_c,\ v_c,\ -1705,\ -1700,
+\tag{12.22}
+$$
+
+respectively for $p,v,m_-,m_+$. Both polynomials in this quotient
+are translated and evaluated in the same $h-h_c$ interval. In
+particular $q$ and $\sqrt q$, and the source coordinates generated
+from them, are not replaced by independent parameters.
+
+Correct predictor values by the mean value bound
+
+$$
+|f_\pm(X,Y,K_{\rm sec},h)
+ -f_\pm(\widehat X_i,\widehat Y_i,\widehat K_i,h)|
+\le \rho\sum_{u=X,Y,K_{\rm sec}}\sup_{Z_{i,\pm}}|\partial_u f_\pm|.
+\tag{12.23}
+$$
+
+Here $f_\pm$ means the original rational response circuit evaluated
+at $(X\pm K_{\rm sec}h,Y\pm h)$. The set $Z_{i,\pm}$ uses the
+interval hull of each predictor coordinate on $J_i$, enlarged by
+$[-\rho,\rho]$, and the same $h\in\sqrt{J_i}$. It contains
+every segment from the predictor to the exact zero at fixed $h$.
+The source denominators exclude zero on these hulls.
+
+Differentiate (12.5) and its quotients with the ordinary product and
+quotient rules, and evaluate the resulting expressions on these
+hulls. Strict integer upper bounds for the gradient sums in
+(12.23) are
+
+| Response and source | Cell 4 | Cell 5 |
+| --- | --- | --- |
+| $p_+$ | 10037371 | 10038834 |
+| $v_+$ | 23309144 | 23312710 |
+| $m_-$ | 10437466 | 10431616 |
+| $m_+$ | 55321673 | 55330519 |
+
+All polynomial constructions and translations in (12.10)–(12.16)
+and (12.19)–(12.22) use exact rational coefficients. For the
+univariate evaluations and derivative enclosures, interval addition,
+multiplication and nonzero-denominator reciprocal enclose exact
+endpoints, rounded outwards on $10^{-75}\mathbb Z$:
+
+$$
+[l,u]\longmapsto
+\left[10^{-75}\lfloor10^{75}l\rfloor,\
+      10^{-75}\lceil10^{75}u\rceil\right].
+\tag{12.24}
+$$
+
+Univariate products are formed before evaluation, translation uses
+the binomial identity, and interval Horner evaluation encloses their
+values. Applying (12.23) after this common-parameter evaluation
+gives the following simultaneous actual-base enclosures:
+
+| Parameter cell | Actual $p(q)$ | Actual $v(q)$ |
+| --- | --- | --- |
+| $J_4$ | $[-497.89083841,-497.85729509]$ | $[-953.65259033,-953.59085773]$ |
+| $J_5$ | $[-497.85731518,-497.82378226]$ | $[-953.59090437,-953.52919087]$ |
+
+The exact secant equalities identify these plus-source readings with
+the minus-source readings at the same $q$. Comparing the four
+rational endpoints with (12.4) proves
+
+$$
+(p(q),v(q))\in\operatorname{int}\mathcal B,\qquad p(q)\ne24
+\qquad(q\in Q).
+\tag{12.25}
+$$
+
+This is simultaneous inclusion of both acquired readings from the
+same exact worlds, rather than a fifth-reading match.
+
+The regularity bounds, including predictor error, are
+
+| Cell | Actual $D_{s,-}$ | Actual $D_{s,+}$ |
+| --- | --- | --- |
+| 4 | $[0.010737202348,0.010738918157]$ | $[0.005493944178,0.005495257262]$ |
+| 5 | $[0.010738918093,0.010740633229]$ | $[0.005492631700,0.005493944253]$ |
+
+Both denominators are positive and exceed $0.0038$. The
+predictor-only plus denominators lie strictly between $0.0054926$
+and $0.0054953$. Direct interval Horner evaluation of (12.19),
+enlargement by $\rho$, and then (12.7) give the explicit strict-source
+guards
+
+| Cell | Source | $t$ enclosure | $b$ enclosure | $r=tb$ enclosure |
+| --- | --- | --- | --- | --- |
+| 4 | $-$ | $[1.008402647,1.008413417]$ | $[0.015389986,0.015406492]$ | $[0.015519303,0.015536113]$ |
+| 4 | $+$ | $[1.045139064,1.045149835]$ | $[0.078619724,0.078636230]$ | $[0.082168545,0.082186643]$ |
+| 5 | $-$ | $[1.008394814,1.008405583]$ | $[0.015374868,0.015391367]$ | $[0.015503937,0.015520740]$ |
+| 5 | $+$ | $[1.045149832,1.045160601]$ | $[0.078636229,0.078652727]$ | $[0.082186641,0.082204732]$ |

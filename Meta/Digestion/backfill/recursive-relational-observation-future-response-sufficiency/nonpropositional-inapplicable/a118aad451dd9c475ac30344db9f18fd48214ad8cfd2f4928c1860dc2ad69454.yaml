@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a118aad451dd9c475ac30344db9f18fd48214ad8cfd2f4928c1860dc2ad69454
+  normalized_sha256: sha256:a118aad451dd9c475ac30344db9f18fd48214ad8cfd2f4928c1860dc2ad69454
+cas_ref: sha256:a118aad451dd9c475ac30344db9f18fd48214ad8cfd2f4928c1860dc2ad69454
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Readout setup only: extends the length observable by definition to delta_0 at terminal cuts, specifies ignored event labels and distinguishes formal signed coordinates from reachable mixtures. No rank, kernel or invertibility conclusion is asserted.'
+    previous_atom_id: d90240fbabc24324b216c371cf793c2b2093d53538c2d0658e52af3789ec657e
+    next_atom_id: 08fd68d8ab80346cb3c683a782f6984b49072a8bd5db0da3ed9c45ceb4130ce9

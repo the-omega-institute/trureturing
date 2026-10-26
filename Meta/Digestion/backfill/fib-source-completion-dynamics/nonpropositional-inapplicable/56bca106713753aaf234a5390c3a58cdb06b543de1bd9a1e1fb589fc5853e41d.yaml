@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:56bca106713753aaf234a5390c3a58cdb06b543de1bd9a1e1fb589fc5853e41d
+  normalized_sha256: sha256:56bca106713753aaf234a5390c3a58cdb06b543de1bd9a1e1fb589fc5853e41d
+cas_ref: sha256:56bca106713753aaf234a5390c3a58cdb06b543de1bd9a1e1fb589fc5853e41d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional operational contract: specifies the allowed R, delta and guarded h1 instructions, success/failure trace semantics, modular readouts, and which observations are excluded. These are rules of the experiment, with no derived mathematical assertion.'
+    previous_atom_id: b75c0fcd1c57c8b50575e3bafa5b5a682db6758810035cedc1772696405525de
+    next_atom_id: 51dc97f00fd83d880f1e96b9521368e3f91f6becc703498d174c5bfbde47029b

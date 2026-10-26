@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bb170b30812616972cbe7c5a605743ddb37fa8285326d32bf6b3f95b8f458336
+  normalized_sha256: sha256:bb170b30812616972cbe7c5a605743ddb37fa8285326d32bf6b3f95b8f458336
+cas_ref: sha256:bb170b30812616972cbe7c5a605743ddb37fa8285326d32bf6b3f95b8f458336
+coverage_gids:
+  - gid: D5/S3/Analytic/Adelic/ObserverScaleDivisorNonidentifiability.observer_scale_not_recoverable_from_spectral_divisor
+    target_statement_id: sha256:44a6e21d8727b32479b61489a69a261bd52da28db049e2bd876393365e386ce0
+receipts:
+  unresolved_subitems: []

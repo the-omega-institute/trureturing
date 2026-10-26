@@ -1,0 +1,44 @@
+## 3. Exact all-companion localization circuit
+
+Set $z=j=b+c$. Every actual companion over $K$ is contained in the closed initial
+source box
+
+$$
+\mathcal B_0=[0,1]_r\times[0,30]_b\times[1/16,40]_z,
+\qquad E_0=[-655000,655000]_e.
+$$
+
+The upper bound $40$ follows from (2.3), and strict inequalities are enlarged only
+for enclosure. On a source box $I=I_r\times I_b\times I_z$, define
+
+$$
+T=1+b,\quad U=1+2b,\quad n=z+r,
+$$
+
+and the six rational coefficient circuits
+
+$$
+\begin{aligned}
+\Lambda&=1+6/T+1/U-4/z-4/n,\\
+D&=(24/5)(b-1/8)(6/T-2/U),\\
+p_0&=24+(U+n)(96-108/T),\\
+A&=1+(U+n)(4-15/z+20/T-10/n),\\
+v_0&=24+(2U+n)(240-243/T),\\
+B&=1+(2U+n)(10-36/z+45/T-20/n).
+\end{aligned}
+\tag{3.1}
+$$
+
+The three common-$e$ equations are
+
+$$
+b(z-b)=r(1-r),\qquad
+\Lambda e=-D,\qquad
+Ae=p-p_0,\qquad Be=v-v_0.
+\tag{3.2}
+$$
+
+The last two identities are the acquired-response identities from the entire
+interpolant. They hold as rational identities even away from (2.1), so interval
+rejection using them is sound.
+

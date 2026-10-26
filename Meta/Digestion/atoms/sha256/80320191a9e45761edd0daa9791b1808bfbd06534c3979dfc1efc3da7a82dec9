@@ -1,0 +1,62 @@
+**Theorem 2.3 (Uniform return lattice, determinants and compression).**
+For $t\geq0$, return of every $V$ input to $V$ occurs exactly at
+
+$$
+t_m=\frac{2\pi\hbar m}{\Delta},\qquad m\in\mathbb Z_{\geq0}.
+$$
+
+At such a time write
+
+$$
+\theta_m=\pi mx,\qquad
+\lambda_m=(-1)^me^{-i\pi md}=e^{2\pi im\alpha},\qquad
+U_m=U(t_m)|_V.
+$$
+
+Then $U_m$ fixes $e_0,e_2$, equals $B(\theta_m)$ on $(e_1,e_3)$,
+and equals $\lambda_m$ on $e_4$. On $(b,z)$ the return coefficients are
+$(\lambda_m,1)$. In particular
+
+$$
+\det U_m=\lambda_m,\qquad
+\det(U(t_m)|_W)=\lambda_m^2=e^{-iJt_m/\hbar}.
+$$
+
+For arbitrary $t$, the compression $K(t)=PU(t)P|_V$ defines a completely
+positive trace-nonincreasing map $\Phi_t(\rho)=K(t)\rho K(t)^\dagger$,
+which is trace preserving for all $V$ inputs exactly at the return times.
+The projected-Hamiltonian exponential $\exp(-itPHP|_V/\hbar)$ has joint
+coefficient $e^{-iJt/\hbar}$; at return it is $\lambda_m^2$ and equals the
+true $U_m$, even up to a common scalar, if and only if $\lambda_m=1$.
+
+Proof. Since $\eta>0$, Theorem 2.2 says $QU(t)P=0$ exactly when
+$\sin\tau=0$. The density $|e_4\rangle\langle e_4|$ proves necessity
+also when the return condition is stated by probabilities. At these times
+the two-plane exponential is $(-1)^me^{-i\pi md}I$, and the asserted
+blocks follow. $\det B=1$, while the bright plane contributes the phase
+twice on $W$. At every time, independently,
+$\det(U(t)|_W)=\exp(-it\operatorname{tr}(H|_W)/\hbar)=e^{-iJt/\hbar}$.
+The seven-state determinant cannot be substituted for the five-state one.
+
+At a general time $K$ has the same $B$ and spectators and joint entry $A$,
+so
+
+$$
+K(t)^\dagger K(t)
+ =I_V-\eta^2\sin^2\tau\,|e_4\rangle\langle e_4|.
+$$
+
+This proves trace nonincrease and the precise trace-preserving condition.
+The single Kraus representation proves complete positivity, also with any
+passive reference. Dividing $\Phi_t(\rho)$ by its nonzero trace is a
+conditional transformation. At nonreturns the success probabilities on
+$e_0$ and $e_4$ differ, so this normalization does not define a deterministic
+linear channel on all densities.
+
+In $PHP|_V$ the missing bright coupling leaves the entry $J$ at $e_4$.
+At return $e^{-iJt_m/\hbar}=\lambda_m^2$, whereas the true entry is
+$\lambda_m$. Equality requires $\lambda_m=1$.
+Both operators fix $e_0$, so projective equality also requires the scalar
+to be one. Their unrestricted unitary channels consequently agree exactly
+under the same condition. $\square$
+

@@ -66,7 +66,7 @@ private theorem accumulated_product (k : ℕ) (z : ℂ) :
       simp [harmonic, Rat.cast_sum, Rat.cast_inv, div_eq_mul_inv,
         sum_add_distrib, mul_sum]
 
-private theorem inverse_square_sum (k : ℕ) :
+theorem inverse_square_sum (k : ℕ) :
     (∑ j ∈ range k, (((j + 1 : ℕ) : ℝ) ^ 2)⁻¹) ≤ 2 := by
   have heq : (∑ j ∈ range k, (((j + 1 : ℕ) : ℝ) ^ 2)⁻¹) =
       ∑ i ∈ Ioo 0 (k + 1), ((i : ℝ) ^ 2)⁻¹ := by

@@ -1,0 +1,39 @@
+**Definition 1.2 (finite row convention).** Use PR57.03's opcode numbers
+$0,\ldots,9$ in the order RD, WR, ML, MR, EX, BF, IN, OUT, TOK, CTL.
+A row with number $q$ is
+
+$$
+U(q)U(o)U(i)U(j)U(s)U(q_0)U(q_1),\qquad U(n)=1^n0,
+$$
+
+followed, in the archival row item, by its framed finite-effect list.
+Unused fields are zero. A non-testing row has equal successors. RD tests
+its newly read symbol; testing CTL tests its designated public latch.
+The fixed bootstrap end/cursor variants have RCA Definition 14.1's
+finite-store guard. They do not read an ordinary-tape address or a seal.
+Finite effects have ARC Definition 6.2's constructor order: preserve;
+literal/latched finite-bit assignment; current/predecessor marker update;
+fixed stage/version selection; fixed cursor advance; halt; F receipt.
+Each slot, latch, port, symbol, stage and effect tag is a finite literal.
+No effect has a runtime word, address or counter as argument.
+
+Let $\operatorname{row}(o,i,j,s,q_0,q_1;f)$ denote this exact encoding,
+with its state field supplied by the named row. Encode $f$ as the RCA
+list of tagged constructors and their unary finite-location fields.
+Its tags are not further opcodes. The installer removes archival list
+framing in RCA Definition 12.2's order. Check guards before execution;
+on success perform the core, ordered finite effects, designated test
+and successor, then the common receipt. RD tests its just-copied symbol;
+CTL tests the designated latch after its indicated finite effects.
+
+The finite variant annotation is also encoded, as in RCA12.2: its
+ordered cases are ordinary, literal-symbol WR, latched-bit WR, public
+IN, private IN, boundary EX, fresh-control WR, bootstrap NEXT,
+bootstrap ADVANCE and bootstrap DONE. Within the framed finite-effect
+description use the unary index of that case, followed by its finite
+literal location/stage fields and the framed effect list. The active
+version and named row fix every such field in
+§2's table; literal versus latched WR therefore remains distinct even
+when their seven PR57 fields coincide. This is an encoding of existing
+finite local variants. Its nonzero tag never denotes a new core opcode.
+

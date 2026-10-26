@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7ef4f24cc23d0b1b730ab2090529d8fac61e2f7b4927675339d19d37973eba7
+  normalized_sha256: sha256:b7ef4f24cc23d0b1b730ab2090529d8fac61e2f7b4927675339d19d37973eba7
+cas_ref: sha256:b7ef4f24cc23d0b1b730ab2090529d8fac61e2f7b4927675339d19d37973eba7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 连读父项可见此句在“不能据此断言”清单内，未断言 reciprocal-cosh 等于粒子数。'
+    previous_atom_id: 8efff6a4d242411adf5c4516dadece648e583c69a66f857b99f47a835af09826
+    next_atom_id: 118e5eb656eeb04fb8163fa03dc0f5f96b8528b8d8e1d9f704ae4d4ccce692f0

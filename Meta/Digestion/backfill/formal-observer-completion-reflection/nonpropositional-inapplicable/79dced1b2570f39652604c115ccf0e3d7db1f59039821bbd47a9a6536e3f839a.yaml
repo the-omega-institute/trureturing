@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+  normalized_sha256: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+cas_ref: sha256:79dced1b2570f39652604c115ccf0e3d7db1f59039821bbd47a9a6536e3f839a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces group actions and the equivariance requirement for a structural selector.
+    previous_atom_id: 533e2edaec6cd10b3942f70f96001ec20b967d519769e5fce23f3fefd86e41c8
+    next_atom_id: 40bc99fc1c55ddd656d77cae25c1f8ece2530a3b743af28705d713411fe31038

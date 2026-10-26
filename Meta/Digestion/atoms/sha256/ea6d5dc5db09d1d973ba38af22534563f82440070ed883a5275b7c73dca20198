@@ -1,0 +1,22 @@
+**Definition 25.1 (normalized finite part and angular curvature).** Let
+$\bar c=C/M$ and use the reduced inverse of $S-\lambda_0$ on
+$\phi^\perp$ in $L^2(da)$. Put
+
+$$
+\begin{gathered}
+v_{\rm ang}=(c-\bar c)\phi,\qquad
+Q_{\rm ang}=\langle(S-\lambda_0)^{-1}_{\phi^\perp}v_{\rm ang},
+                                                v_{\rm ang}\rangle,\\
+B_3=\frac{\mathsf K\nu^4Q_{\rm ang}}{2C},\\
+R_b=\lim_{d\downarrow0}\left\{
+ g_{\mathrm c}\int_{\Omega\setminus\Psi^{-1}\{R<d\}}
+                 \Gamma f_*^2d\mu-\mathsf D\log(b/d)\right\},
+\qquad S_b=R_b+\mathsf D\kappa_{\rm cap}.
+\end{gathered}
+\tag{25.1}
+$$
+
+These use the globally normalized $f_*$, its actual trace $a_*$ and the
+full killed Green field. In particular their normalization is not a
+local choice of eigenfunction size.
+

@@ -37,7 +37,7 @@ def sourceAttributeEquiv : Attributes 3 ≃ SourceTimedAttribute where
     rcases a with ⟨p, ⟨s, hs⟩, r, t⟩
     rcases hs with rfl | rfl <;> rfl
 
-private def filterBalanced (P : (c : Context 3) → c.Event → Prop) (x : B) : B :=
+def filterBalanced (P : (c : Context 3) → c.Event → Prop) (x : B) : B :=
   ⟨⟨x.val.1, ⟨x.val.2.val.filter (P x.val.1),
     (Finset.filter_subset _ _).trans x.val.2.property⟩⟩, x.property⟩
 
@@ -99,7 +99,7 @@ def DiagonalTotal {n : Nat} (C : CopyTerm n) : Prop := ∀ X, ∃ Y, evalDiagona
 
 def zero : B := ComplementFibers.balancedSection 3 0
 
-private theorem zero_empty : zero.val.1.archive.events = ∅ ∧
+theorem zero_empty : zero.val.1.archive.events = ∅ ∧
     zero.val.1.current = ∅ ∧ zero.val.2.val = ∅ :=
   IntegerRepresentatives.representative_zero_empty 3
 
@@ -109,7 +109,7 @@ private theorem unary_success {n : Nat} (f : Unary) (a : CopyTerm n) (X Y : B)
   change (evalDiagonal a X).map (unary f) = some Y at h
   exact Option.map_eq_some_iff.mp h
 
-private theorem subtree_success {n m : Nat} (f : Binary) (a : CopyTerm n) (b : CopyTerm m)
+theorem subtree_success {n m : Nat} (f : Binary) (a : CopyTerm n) (b : CopyTerm m)
     (X Y : B) (h : evalDiagonal (.binary f a b) X = some Y) :
     ∃ x y, evalDiagonal a X = some x ∧ evalDiagonal b X = some y ∧ binary f x y = some Y := by
   change (evalDiagonal a X).bind (fun x => (evalDiagonal b X).bind (binary f x)) = some Y at h
@@ -458,7 +458,7 @@ private theorem normalize_total_correct {n : Nat} (C : CopyTerm n) (h : Diagonal
         rw [dif_pos g]
         exact congrArg some eqv
 
-private theorem temporal_free_total {n : Nat} (C : CopyTerm n) (h : TemporalFree C)
+theorem temporal_free_total {n : Nat} (C : CopyTerm n) (h : TemporalFree C)
     (v : Fin n → B) : ∃ Y, eval C v = some Y := by
   induction C with
   | input => exact ⟨v 0, rfl⟩
@@ -522,7 +522,7 @@ private theorem extendCopy_denote (C : CopyTerm 1) (g : Generator nativeSignatur
           (if _ : (1 : Fin 2) = 1 then x else _))
       rfl
 
-private theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
+theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
     evalDiagonal (wordToCopy w) X = contextDenote nativeSignature w X := by
   let step := fun (s : Option B) (g : Generator nativeSignature) => strictStep nativeSignature g s
   have run_fold (w : List (Generator nativeSignature)) (s : Option B) :

@@ -1,0 +1,79 @@
+**Lemma 23.4 (Analytic bridge from the certificate to every upper world).**
+For every $p\in K$ and $0<r<1$,
+
+$$
+ \frac{\partial\Theta_+}{\partial r}(r,p)
+       >\frac{2116359}{10^6}>2.
+\tag{23.13}
+$$
+
+Proof. First justify the enclosure method. The normalized product
+rule is (23.6). Differentiating $ff^{-1}=1$ gives (23.7), inductively
+in total degree, whenever the constant interval excludes zero.
+Consequently the centre arrays enclose the corresponding normalized
+derivatives at $(t,e)=(0,0)$ for every $p\in K$, and the box arrays
+enclose them at every point of the entire box. This follows by
+induction through the rational expressions, because all denominators
+are nonzero by Lemma 23.3. Truncating at total degree five loses no
+coefficient used to obtain the degree-four derivatives of $\Gamma$.
+
+For fixed $p$ and $\sigma\in\{-1,1\}$, apply the first-order Taylor
+formula with second-order integral remainder to
+$a(t,\sigma\rho_k,p)$ along the segment from $(0,0)$ to
+$(t,\sigma\rho_k)$. The remainder is a weighted average, with
+nonnegative weight of total mass one, of
+
+$$
+ a_{20}(zt,z\sigma\rho_k,p)t^2
+ +a_{11}(zt,z\sigma\rho_k,p)t\sigma\rho_k
+ +a_{02}(zt,z\sigma\rho_k,p)\rho_k^2,
+ \qquad 0\le z\le1.
+$$
+
+Here $a_{ij}$ denotes the normalized derivative, not a coefficient
+of the original polynomial. The segment stays in the box, so
+(23.10) encloses the full face value. The first two rows of
+Lemma 23.3 therefore give, uniformly in $t$ and $p$,
+
+$$
+ a(t,-\rho_k,p)<0<a(t,\rho_k,p).
+\tag{23.14}
+$$
+
+The fifth row gives $a_e>2$ on the whole box. For every fixed $t,p$,
+continuity and (23.14) supply a unique root between these faces.
+By (23.11) its $b$ is greater than $9/50>1/6$; for strict
+$r=r_k+t$, Lemma 22.2 and Theorem 18.4 identify it with the
+original $b_+(r,p)$. Thus every original upper source lies in
+one of the tubes. No untested projected root has been promoted
+to a source.
+
+Apply the third-order Taylor formula to $\Gamma$ on the segment
+from $(0,0)$ to $(t,e)$. The fourth-order remainder is a weighted
+average, again with nonnegative weight of total mass one, of
+$\sum_{a+b=4}\Gamma_{ab}(zt,ze,p)t^ae^b$.
+The centre coefficients through degree three and the box
+coefficients of degree four therefore enclose $\Gamma$ in $T_k$.
+Lemma 23.3 gives $\Gamma>2116359/10^6$ at every point of the
+box, including every root supplied by (23.14).
+
+Finally, for fixed $p$, the simple root is a smooth function by
+Theorem 18.4. Along it, $e=e(t)$ satisfies
+$e'(t)=-a_t/a_e$ and $r=r_k+t$ has derivative one. Hence
+$d\theta/d r=\theta_t-\theta_ea_t/a_e=\Gamma$.
+In original coordinates this identity is also
+
+$$
+ \Gamma=(\vartheta_r+s_k\vartheta_b)
+       -\vartheta_b\frac{\mathsf A_r+s_k\mathsf A_b}{\mathsf A_b}
+       =\vartheta_r-\vartheta_b\frac{\mathsf A_r}{\mathsf A_b}.
+\tag{23.15}
+$$
+
+Thus the affine slope cancels correctly; it does not introduce a
+modified branch derivative. On the source, Definition 22.3 identifies
+$\theta$ with $\Theta_+$. This proves (23.13) on all of $(0,1)$.
+The endpoints $r=0,1$ used to close the interval cover are only
+auxiliary points for rational enclosures and Taylor segments.
+Neither is admitted as an original world. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:089c33f427ba852fb10abaae87f28d11be2cf9e3530bec136638c8d109200f54
+  normalized_sha256: sha256:089c33f427ba852fb10abaae87f28d11be2cf9e3530bec136638c8d109200f54
+cas_ref: sha256:089c33f427ba852fb10abaae87f28d11be2cf9e3530bec136638c8d109200f54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section heading and interpretive introduction only: distinguishes configuration-coordinate and prediction-state readings before the following definitions and theorems; no dimension bound is stated in this atom.'
+    previous_atom_id: 57af93bd93947cc29079bf498504c5504c2edba97b6251ca82956b00b6003f13
+    next_atom_id: 723b652672f98467c47941c12c5741b086ffd9912c8bcd7e5d6c5330f07ec266

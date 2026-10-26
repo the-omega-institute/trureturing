@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6aadb4ddce10ddb667c47a2bbbafd5aa8a37bb18bff05f98085978e8e4a623d
+  normalized_sha256: sha256:a6aadb4ddce10ddb667c47a2bbbafd5aa8a37bb18bff05f98085978e8e4a623d
+cas_ref: sha256:a6aadb4ddce10ddb667c47a2bbbafd5aa8a37bb18bff05f98085978e8e4a623d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Source/reference, typing and terminology conventions only; no independently derived identity or theorem is asserted.'
+    previous_atom_id: null
+    next_atom_id: 0b45358954bb121dc19fd28b9e2f35b7c582d2a9f87095faa8345152f2ce34a0

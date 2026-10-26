@@ -1,0 +1,78 @@
+**Theorem 15.2 (Entire exact-gain slice and sharp support sizes).** The entire slice of $\mathcal F(H_{4,\beta})$ with $g=h$ is $K_\beta$. Both fifth actions have response $24$ throughout this slice; every other fifth-response slice with $g=h$ is empty. For every finite or infinite $S\subseteq(0,1)$,
+
+$$
+\begin{aligned}
+L_2(K_\beta(S),H_{5,\beta}^J)\quad\Longleftrightarrow\quad
+\bigwedge_{m=1}^3\ \exists r,t\in S:
+\ r\ne t,\quad r+t=1+m\beta.
+\end{aligned}
+\tag{15.2}
+$$
+
+Consequently $L_2(K_\beta,H_{5,\beta}^J)$ holds exactly when $0<\beta<1/3$. The minimum size of a finite $L_2$ support **inside $K_\beta$** is three for $0<\beta<1/4$ and four for $1/4\le\beta<1/3$. Every three-world support has the parameter set
+
+$$
+\left\{\frac12,\frac12+\beta,\frac12+2\beta\right\}.
+\tag{15.3}
+$$
+
+For $\beta\ge1/3$, no subset of $K_\beta$, of any cardinality, has this $L_2$ property.
+
+Proof. All entries of $P_\beta(r)$ are positive, its trace is one and its determinant is zero. Its nonzero trace makes its rank exactly one. Different $r$ give different sources and complete worlds. The single entire gain has samples
+
+$$
+(h(0),\ldots,h(7))=
+\left(-24,0,\frac{24}{5},0,-\frac{24}{5},0,24,\frac{384}{5}\right).
+\tag{15.4}
+$$
+
+The prefix traces in (10.3) are $1,j,1+\beta,j+r,1+2\beta$. Thus these worlds realize exactly $H_{4,\beta}$ and both fifth responses are $24$. Conversely, $g=h$ and the initial response force $d=24$. Clock two then gives
+$C_\beta=24+(24/5)(1+b)$, so $b=\beta$. Strict source legality forces $0<r<1$ and $c=r(1-r)/\beta$. This proves the entire-slice identity without a hidden source restriction.
+
+Set
+
+$$
+q_m(r)=\beta+\frac{r(1-r)}\beta+mr,\qquad V_k=1+k\beta.
+\tag{15.5}
+$$
+
+By the actual left products (10.4), $k=2$ denotes sixth $J$, and $k=3$ denotes sixth $M$. The acquired response and the two alternative terminal responses on the same fixed world are
+
+$$
+v_k=24+24V_k,\qquad
+f_{kJ}(r)=24+\frac{384}{5}q_k(r),\qquad
+f_{kM}(r)=24+\frac{384}{5}\bigl(V_k+q_{k-1}(r)\bigr).
+\tag{15.6}
+$$
+
+Each acquired sixth slice retains all of $K_\beta(S)$. For distinct $r,t$ the exact difference is
+
+$$
+q_m(r)-q_m(t)=\frac{(r-t)(1+m\beta-r-t)}\beta.
+\tag{15.7}
+$$
+
+Call the equation $r+t=1+m\beta$ color $m$. Sixth $J$ requires colors $2,1$ for its final $J,M$ leaves; sixth $M$ requires colors $3,2$. An $L_2$ support must therefore contain a distinct pair of each of colors $1,2,3$. Conversely these pairs supply both $L_0$ leaves inside the single acquired $v_k$ child for each $k$. Each sixth child contains a distinct pair and has both terminal clauses, hence $L_1$; the common fifth node contains them and has $L_2$. All non-singleton guards hold. The color-two pair may serve both sixth blocks. No alternative response has been acquired on an already chosen trajectory. This proves (15.2), including empty and singleton failures.
+
+Color three requires $r+t=1+3\beta<2$, which is impossible for $\beta\ge1/3$. At equality the forbidden boundary $r=t=1$ cannot be made legal. For $0<\beta<1/4$, the three points (15.3) are legal and their three pairs have colors $1,2,3$. A single pair cannot have two colors because $\beta>0$, so two worlds never suffice. If three ordered points $x<y<z$ work, their three strictly ordered sums must satisfy
+
+$$
+x+y=1+\beta,\qquad x+z=1+2\beta,\qquad y+z=1+3\beta.
+\tag{15.8}
+$$
+
+Solving gives (15.3). Its largest point is strictly below one exactly for $\beta<1/4$; at $\beta=1/4$ it is not legal.
+
+For $0<\beta<1/3$ another support is given by the set of the four values
+
+$$
+a=\frac{1+5\beta}{4},\quad
+b_*=\frac{3-\beta}{4},\quad
+c_*=\frac{1+9\beta}{4},\quad
+e=\frac{3+3\beta}{4}.
+\tag{15.9}
+$$
+
+These are source parameters $r$, not matrix entries. All lie in $(0,1)$, and
+$a+b_*=1+\beta$, $a+e=1+2\beta$, $c_*+e=1+3\beta$. Each selected pair is distinct: $b_*-a=e-c_*=(1-3\beta)/2>0$ and $e-a=(1-\beta)/2>0$. Thus they give at most four worlds. In $1/4\le\beta<1/3$ all four are distinct, since $c_*-a=e-b_*=\beta$ and $c_*-b_*=(5\beta-1)/2>0$. The impossibility of three proves the four-world minimum. At $\beta=1/4$ this set is $\{9/16,11/16,13/16,15/16\}$. Below that range, the possible coincidence $b_*=c_*$ at $\beta=1/5$ simply gives three worlds. ∎
+

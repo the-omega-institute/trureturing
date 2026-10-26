@@ -1,0 +1,18 @@
+**定义 82.1（保码合同与直和扩张）。** 令 $\mathcal H$ 是第 62 节所用的五模式空间，$\mathcal C\subset\mathcal H$ 为 (XVII.1) 的编码子空间，$\iota:\mathbb C^4\to\mathcal C$ 为编码等距。把第 62 节的原语统称为 $m\in\mathscr M$，其有限字和每个前缀都保持 $\mathcal C$；辅助态 $|010\rangle$ 也按该节的合同处理。对任意有限维空间 $K$，定义
+
+$$
+\widetilde{\mathcal H}=\mathcal H\oplus K,
+\qquad
+\widetilde\iota(v)=(\iota(v),0).
+\tag{XVIII.1}
+$$
+
+对每个原语任选一个酉块 $V_m\in U(K)$，并令
+
+$$
+\widetilde m=m\oplus V_m.
+\tag{XVIII.2}
+$$
+
+这是一项新的环境合同：它保留原块上的全部第 62 节数据，在补空间上另给操作。$K$ 不被当作额外欧氏坐标；它只是未由该合同指定的环境自由度。
+

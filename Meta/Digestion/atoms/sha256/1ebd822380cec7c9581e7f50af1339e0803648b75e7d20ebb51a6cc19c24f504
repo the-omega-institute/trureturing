@@ -1,0 +1,76 @@
+**Proposition 206.1 (Complete partial-transpose normal forms).**
+Ordinary Alice partial transposition of the actual matrices (203.3)--(203.5)
+gives the following complete normal forms.
+
+Proof. Transpose the two Alice rail indices, retaining all Bob indices. The dimensions of the Bob charge
+spaces $k=0,1,2,3,4$ are $1,4,6,4,1$.
+
+For $k=0$,
+
+$$
+ M_{1,0}^{T_A}=cI_2, \tag{206.1}
+$$
+
+and for $k=4$,
+
+$$
+ M_{1,4}^{T_A}=bdI_2. \tag{206.2}
+$$
+
+Both are positive.
+
+For $k=1$, a unitary permutation and a $2\times2$ rail rotation give
+
+$$
+ M_{1,1}^{T_A}\simeq cD\oplus cD\oplus(E-ff^*)\oplus(E+ff^*). \tag{206.3}
+$$
+
+Since $E>0$, this is positive exactly when $q_0\leq1$.
+
+For $k=2$, put
+
+$$
+ H_-=
+ \begin{pmatrix}E\otimes D&-f\otimes g\\-(f\otimes g)^*&d\end{pmatrix},\qquad
+ H_+=
+ \begin{pmatrix}D\otimes E&g\otimes f\\(g\otimes f)^*&d\end{pmatrix}. \tag{206.4}
+$$
+
+Then
+
+$$
+ M_{1,2}^{T_A}\simeq bc\oplus bc\oplus H_-\oplus H_+. \tag{206.5}
+$$
+
+The two $5\times5$ Schur complements are controlled by
+
+$$
+ (f\otimes g)^*(E^{-1}\otimes D^{-1})(f\otimes g)
+ =d\,q_0q_3, \tag{206.6}
+$$
+
+and the analogous equality for $g\otimes f$. Hence (206.5) is positive
+exactly when $q_0q_3\leq1$.
+
+For $k=3$,
+
+$$
+ M_{1,3}^{T_A}\simeq bE\oplus bE\oplus(dD-gg^*)\oplus(dD+gg^*), \tag{206.7}
+$$
+
+Alice transposition leaves $p\otimes R(H)$ and $q\otimes L(H)$
+uncoupled, each with the strictly positive block $bE$. It couples
+$p\otimes L(H)$ to $q\otimes R(H)$ by $gg^*$; symmetric and
+antisymmetric combinations of these components give $dD+gg^*$ and
+$dD-gg^*$, respectively. Since $dD>0$, the latter is positive
+semidefinite exactly when $g^*(dD)^{-1}g=q_3\leq1$. Thus (206.7)
+is positive exactly when $q_3\leq1$. Equations (206.1)--(206.7),
+together with the one-dimensional-Alice blocks (203.5), classify all 15
+charge blocks. Therefore
+
+$$
+ \boxed{\Omega^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1.} \tag{206.8}
+$$
+
+No PPT inference through an assumed local ordinary regrouping is used.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:548188faddd374a2cb10f9cead16376662552d782dbb5415c74a6e931fa03a05
+  normalized_sha256: sha256:548188faddd374a2cb10f9cead16376662552d782dbb5415c74a6e931fa03a05
+cas_ref: sha256:548188faddd374a2cb10f9cead16376662552d782dbb5415c74a6e931fa03a05
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry
+    target_statement_id: sha256:331ec6ef1da8cfe53171dbcde9355252142ff8ddac7c2511d02fa0484feb0d28
+receipts:
+  unresolved_subitems: []

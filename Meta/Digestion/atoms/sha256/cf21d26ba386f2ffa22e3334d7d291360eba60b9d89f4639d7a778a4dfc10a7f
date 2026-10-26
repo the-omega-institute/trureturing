@@ -1,0 +1,124 @@
+**Definition 240.1 (Actual native input and fixed output).** In the
+one-particle coordinate order $(r,\ell,R)$ set
+
+$$
+\begin{gathered}
+D=\{(q_1,q_2)\in\mathbb R^2:q_1>0,\ q_2>0,\ q_1+q_2<1\},\\
+T=(1,1,1)^{\mathsf T},\qquad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+\pi_q=(1-q_1-q_2,q_1,q_2)^{\mathsf T},\qquad
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\qquad
+S_q=G_q^{1/2},\qquad V_q=S_qT,\\
+p=p(q)=|(V_q)_\ell|^2,\qquad
+u_q=\frac{((V_q)_r,(V_q)_R)^{\mathsf T}}{\sqrt{1-p(q)}},\qquad
+U_q=u_qu_q^*.
+\end{gathered}
+\tag{240.1}
+$$
+
+The square root is the positive principal root. Proposition 227.1 gives
+$G_q\succ0$, $\|V_q\|=1$ and strictly positive coordinates of $V_q$;
+in particular $0<p(q)<1$. Alice's cut remains the normalized coordinate
+$\mathbb Ce_\ell$, and Bob's cut remains
+$\operatorname{span}_{\mathbb C}\{e_r,e_R\}$. These are the fixed
+normalized axes, without an additional rotation of the cut or an
+identification with raw weighted occurrence subsystems.
+
+At $t=e^{-\beta}\in(0,1]$, use two independent instances of the same
+full Gibbs preparation
+
+$$
+\rho_{q,\beta}=
+\frac{e^{-\beta d\Gamma_-(I_3-V_qV_q^*)}}{2(1+t)^2}
+\quad\hbox{on }\mathcal F_-(\mathbb C^3).
+\tag{240.2}
+$$
+
+All number sectors and the zero mode are retained. There is no chemical
+potential or preliminary fixed-number conditioning. The labelled modes
+and coupling phases of the two preparations are compatible as in
+§§188,215,235–236. Apply the same coherent filter
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{240.3}
+$$
+
+Bob's projector counts all four of Bob's modes. On its selected
+one-particle space use the fixed identification of (235.2),
+$J|x_i\rangle=|i\rangle_{\mathrm{copy}}|x\rangle_{\mathrm{space}}$
+for $x\in\{r,R\}$ and $i\in\{1,2\}$. Alice's rail register and
+Bob's copy register each have dimension two. The spatial register has
+fixed ordered basis $(r,R)$. In Alice, copy, space order the actual
+unnormalized selected state is (236.6):
+
+$$
+\begin{gathered}
+\Omega_q=
+\frac{(tI_4+2g(p)P_-)\otimes U_q
+       +th(p)I_4\otimes(I_2-U_q)}{4(1+t)^4},\\
+g(p)=(1-t)^2p(1-p),\qquad h(p)=t+(1-t)p,\\
+|\psi^-\rangle=
+\frac{|A_1\rangle|2\rangle_{\mathrm{copy}}
+      -|A_2\rangle|1\rangle_{\mathrm{copy}}}{\sqrt2},\qquad
+P_-=|\psi^-\rangle\langle\psi^-|.
+\end{gathered}
+\tag{240.4}
+$$
+
+Here $P_-$ is on Alice and copy. Its sign is the fixed CAR singlet
+convention of (236.2)–(236.6): copy-to-party regrouping contributes
+$(-1)^{N_{B_1}n_{A_2}}$ and the compatible exchange coherence is
+$-|z|^2$. This is a passive coordinate sign, not a cross-party gate.
+The active spatial projector is the actual $U_q$ of (240.1); the
+orthogonal spectator projector is $I_2-U_q$. Thus (240.4) includes
+every selected spectator population. A source-dependent spatial basis
+can describe these blocks, but no source-dependent alignment is supplied
+as a physical operation.
+
+The full probability of $F$ and its normalized output are
+
+$$
+P_{\mathrm{full}}(q,t)=\operatorname{Tr}\Omega_q
+ =\frac{4t(1+h(p))+2g(p)}{4(1+t)^4}>0,\qquad
+\rho_q=\frac{\Omega_q}{P_{\mathrm{full}}(q,t)}.
+\tag{240.5}
+$$
+
+The required output on one fixed encoded two-qubit register is
+
+$$
+\begin{gathered}
+W_{\lambda(p)}=\frac{1-\lambda(p)}4I_4+\lambda(p)P_-
+ =\frac{T_t(p)}{2t+g(p)},\\
+\lambda(p)=\frac{g(p)}{2t+g(p)},\qquad
+T_t(p)=\frac t2I_4+g(p)P_-.
+\end{gathered}
+\tag{240.6}
+$$
+
+The matrix $T_t(p)$ is distinct from the three-component vector $T$.
+The output $P_-$ uses the same fixed rail labels as in (240.4).
+Changing $q$ changes the required scalar $\lambda(p)$, not the output
+register. A common completely positive map
+$\mathcal E_t:M_8(\mathbb C)\to M_4(\mathbb C)$ is independent of
+$q$. Exact heralding means
+
+$$
+\mathcal E_t(\rho_q)=s_qW_{\lambda(p(q))},\qquad s_q>0
+\quad(q\in D).
+\tag{240.7}
+$$
+
+No uniform positive lower bound on the individual $s_q$ is required.
+For a physical success branch $\mathcal E_t$ is also trace-nonincreasing,
+and the overall success probability is $P_{\mathrm{full}}(q,t)s_q$.
+The same success branch must apply after the original filter and after
+erasing all records except success; rejected outcomes are stopped.
+The allowed processing of Definition 239.1 is finite adaptive LOCC
+preserving each party's local total number, with separable auxiliaries,
+neutral memories, classical communication and coins. It supplies no
+additional input copy, entangled ancillary resource or external phase
+reference. By §218 every such success branch is completely positive.
+

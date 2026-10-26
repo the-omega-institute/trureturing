@@ -1,0 +1,29 @@
+**Lemma 135.1 (Slack, complementarity and exact value).** Let
+
+$$
+Y=\operatorname{diag}(pT_{00}+rw,\ v_1T_{22},\ v_2T_{22}),\qquad
+S=I_{\rm out}\otimes Y-W.
+\tag{135.1}
+$$
+
+Then $S\succeq0$. On $\operatorname{span}\{|00\rangle,|11\rangle\}$
+its block is
+
+$$
+\begin{pmatrix}rw&-w\\-w&w/r\end{pmatrix}
+=\frac wr\begin{pmatrix}r\\-1\end{pmatrix}
+            \begin{pmatrix}r&-1\end{pmatrix},
+\tag{135.2}
+$$
+
+and its other seven blocks, each one-dimensional, are
+
+| Coordinate | Scalar entry of $S$ |
+| --- | --- |
+| $01$ | $v_1(a_2-a_0)/\tau$ |
+| $02$ | $v_2(a_2-a_0)/\tau$ |
+| $10$ | $\{g+p(a_2-a_1)\}/\tau$ |
+| $12$ | $v_2(a_2-a_1)/\tau$ |
+| $20$ | $g/\tau$ |
+| $21$ | $0$ |
+| $22$ | $0$ |

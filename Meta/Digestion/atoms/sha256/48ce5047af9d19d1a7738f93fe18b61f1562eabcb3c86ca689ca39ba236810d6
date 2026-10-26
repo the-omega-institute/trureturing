@@ -1,0 +1,86 @@
+**Proposition 4.2 (normalized full-Green singular part).** Fix
+$o=(k_o,\alpha_o,\beta_o)$ and set $c_o=1/2-k_o/r$. In the real local chart
+
+$$
+x=k-k_o,\quad y=2(\alpha-\alpha_o),\quad
+z=-r\{\beta-\beta_o-c_oy\},
+\qquad
+\xi=x/\varepsilon,\quad\eta=y,\quad\zeta=z/\varepsilon,
+\tag{4.2}
+$$
+
+one has exactly
+
+$$
+\varepsilon P=\partial_\xi=:U,\qquad
+Q=\partial_\eta+\xi\partial_\zeta=:V,\qquad
+ d\mu=\frac{\varepsilon^2}{2r}\,d\xi\,d\eta\,d\zeta.
+\tag{4.3}
+$$
+
+Let $L_H=-(U^2+V^2)$ on the full real Heisenberg group with ordinary
+Lebesgue Haar measure, and let
+$G_H=\int_0^\infty p_t^H(0,\cdot)\,dt$ be its positive unit-source
+fundamental solution. Then for $q\ne o$ in a sufficiently small neighbourhood
+of $o$,
+
+$$
+\Gamma_{\varepsilon,o}(q)=K_\varepsilon(q)+R_\varepsilon(q),
+\qquad K_\varepsilon(q)=\frac{2r}{\varepsilon^2}
+G_H(\xi,\eta,\zeta),
+\qquad |R_\varepsilon(q)|\le C_\varepsilon.
+\tag{4.4}
+$$
+
+The remainder admits a bounded extension across $o$ for this fixed parameter.
+The field in (4.4)
+is still the full killed periodic Green kernel.
+
+**Proof.** Direct differentiation gives (4.3); the absolute coordinate
+Jacobian is $\varepsilon^2/(2r)$. The group law can be taken as
+
+$$
+(\xi,\eta,\zeta)(\xi',\eta',\zeta')
+=(\xi+\xi',\eta+\eta',\zeta+\zeta'+\xi\eta').
+\tag{4.5}
+$$
+
+It has left-invariant fields $U,V$, $[U,V]=\partial_\zeta$, and dilations
+$(\xi,\eta,\zeta)\mapsto(s\xi,s\eta,s^2\zeta)$ of homogeneous dimension
+four. [R, §2, (2.1), (2.6)--(2.7)] supplies $G_H=I_2=F_2$, since
+$\Gamma(2/2)=1$: it is positive, smooth off zero, homogeneous of degree
+$-2$, and $L_HG_H=\delta_0$ with respect to this Haar measure.
+Multiplying by $2r/\varepsilon^2$ is necessary to obtain a unit source
+relative to the measure in (4.3). This factor cannot be absorbed into an
+unmentioned coupling convention.
+
+There is also a direct integrated comparison. In the local coordinates the
+full-space and cylinder differential expressions are identical, with the
+same density (4.3) and the same clock. Their semigroups are contractions.
+Use [H, Theorem 3.2] first between the cylinder and a small chart Dirichlet
+realization, and then between that realization and the full group. On a
+smaller compact chart this gives
+
+$$
+p_t^\Omega(o,q)-\frac{2r}{\varepsilon^2}
+ p_t^H(0,(\xi,\eta,\zeta))=O_\varepsilon(t^N)
+\tag{4.6}
+$$
+
+for every $N$ as $t\downarrow0$, uniformly including the source in the
+spatial compact. This application is local: it does not identify the global
+torus with the real group. The integral of the difference over $(0,1)$ is
+bounded, using smoothness for times bounded away from zero. The cylinder
+large-time integral is bounded there by (2.4). On the full group,
+$p_t^H(0,q)\le p_t^H(0,0)=t^{-2}p_1^H(0,0)$ by Cauchy--Schwarz and
+homogeneity, so its integral over $(1,\infty)$ is bounded as well.
+Subtracting the two convergent integrals off the source proves (4.4).
+No uncontrolled infinite-time limit of a tangent asymptotic was used.
+
+The global identifications in the unscaled chart are the lattice generated
+by $(\Delta y,\Delta z)=(4\pi,4\pi r c_o)$ and $(0,-2\pi r)$.
+After scaling, the central entries are divided by $\varepsilon$.
+They are not two arbitrarily chosen standard periods in a rectangular
+$(y,z)$ chart. Only the original $(\alpha,\beta)$ torus is used in all
+global formulas. $\square$
+

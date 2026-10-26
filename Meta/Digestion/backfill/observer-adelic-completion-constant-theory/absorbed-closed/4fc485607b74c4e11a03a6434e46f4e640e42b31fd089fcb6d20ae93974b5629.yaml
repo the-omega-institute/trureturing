@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4fc485607b74c4e11a03a6434e46f4e640e42b31fd089fcb6d20ae93974b5629
+  normalized_sha256: sha256:4fc485607b74c4e11a03a6434e46f4e640e42b31fd089fcb6d20ae93974b5629
+cas_ref: sha256:4fc485607b74c4e11a03a6434e46f4e640e42b31fd089fcb6d20ae93974b5629
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
+    target_statement_id: sha256:97128c8df67784b4c3dbd76c9c1278eadc17053904d7c12fcd97adadae7c9bfd
+  - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
+    target_statement_id: sha256:5c8c57af382b78dd1a56636fb9d3366e45b79cab8037377e17029e31d861f1cc
+receipts:
+  unresolved_subitems: []

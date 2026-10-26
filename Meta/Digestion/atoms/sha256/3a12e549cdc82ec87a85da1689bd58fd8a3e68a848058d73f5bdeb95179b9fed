@@ -1,0 +1,51 @@
+**Lemma 142.1 (A gap on the entire boundary).** After a further shrink
+of $I$, the decoder $\mathcal R_0(q)$ given by (139.4) with $z=0$
+and $r=r(q)$ has pure-input error strictly below $L(q)$ on the whole
+closed population boundary, uniformly in that boundary.
+
+*Proof.* Let
+
+$$
+\Delta=\{(s,t):s,t\ge0,\ s+t\le1\},\qquad
+P(s,t)=a(s,t)a(s,t)^{\mathsf T},\quad
+a(s,t)=(\sqrt s,\sqrt t,\sqrt{1-s-t})^{\mathsf T},
+\tag{142.1}
+$$
+
+and write
+
+$$
+f(q;s,t)=\frac12\|P(s,t)-\mathcal R_0(q)\Phi_q(P(s,t))\|_1.
+\tag{142.2}
+$$
+
+This is jointly continuous, including the edges and vertices. The
+square roots of zero populations are continuous, and both channels
+and the matrix trace norm are continuous. Lemma 131.1 and (130.5)
+give $f(q_0;s,t)\le3/5$ for every $(s,t)\in\partial\Delta$.
+Set
+
+$$
+\Delta_0=L_*-3/5>0,\qquad \epsilon_0=\Delta_0/4.
+\tag{142.3}
+$$
+
+The set $\partial\Delta$ is compact. Joint continuity near
+$\{q_0\}\times\partial\Delta$ therefore supplies one neighborhood
+of $q_0$ on which $f(q;s,t)\le3/5+\epsilon_0$ for every boundary
+point. For example, restrict $q$ initially to a closed interval
+inside the branch domain and use uniform continuity on its product
+with $\partial\Delta$. Continuity of $L(q)$ allows a common shrink
+so that
+
+$$
+\max_{(s,t)\in\partial\Delta}f(q;s,t)
+ \le3/5+\epsilon_0,\qquad L(q)\ge L_*-\epsilon_0.
+\tag{142.4}
+$$
+
+The gap is at least $\Delta_0-2\epsilon_0=\Delta_0/2>0$.
+This treats the entire closed boundary, not a finite set of boundary
+tests. The interval is further intersected with the one from Lemma
+141.4. $\square$
+

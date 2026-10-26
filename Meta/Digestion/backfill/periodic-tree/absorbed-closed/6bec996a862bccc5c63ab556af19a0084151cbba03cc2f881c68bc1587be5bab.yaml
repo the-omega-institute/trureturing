@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:6bec996a862bccc5c63ab556af19a0084151cbba03cc2f881c68bc1587be5bab
+  normalized_sha256: sha256:6bec996a862bccc5c63ab556af19a0084151cbba03cc2f881c68bc1587be5bab
+cas_ref: sha256:6bec996a862bccc5c63ab556af19a0084151cbba03cc2f881c68bc1587be5bab
+coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S1/Scale/Fibonacci.fib_cassini_from_golden_norm
+    target_statement_id: sha256:705efb41c8ed2d7be8efa40e9fd10e4fde55225d9335e386144b0f6c5c0d04d2
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.atomicBlock
+    target_statement_id: sha256:a71189ce89190d43a5c3431ba093d059257f258ef75c9d54cb732534fd8d91c9
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.blockMatrix
+    target_statement_id: sha256:7344da66c4033074dc95c92fcf5dc9977fc3769e93378c0cec4d4242ffb0a32e
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.matrixM
+    target_statement_id: sha256:c765fee63929f7ba00c8b244942c6e26af9b0c9e598c6f2b08a16aa6e77585d8
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.result
+    target_statement_id: sha256:211e4ff73740f8149478aa6c6772bce1f698874719b56d689c5724d2efa055a6
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.step
+    target_statement_id: sha256:abd1497f7c6dd19d79eb07033d7697ada8db81677041e77acfe8c3b896948d5d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 386cc61bd5bc3ea36cf80babe3b4446cd87669f37a88a9a665a4d9db42c8b7ff
+    - 53025758ec857087611f11efdae8862ad7b410c2b58b19f4f7f45fe7cceffff2
+    - 1496d152d79d52a5eb472c4ac8cc26f7337d2f78517e66b9d5ee75989070a3de
+    - 709f31661d7f37483a4e959c4184f0cd78b8fdc88c83201f28010bf0daf7a002
+    - 0c6225e4972496b13735f7d5671c150225befb78ce7f1ca278a8760f53938eff
+    - ee804d1807448823d878d1b85ea312cbcbff5cd8378eb76532a2bd00879911c7
+    - bb1207edddcd871d53c8a9730f018d1151d4fb99194a72b9272172d72e3f92df

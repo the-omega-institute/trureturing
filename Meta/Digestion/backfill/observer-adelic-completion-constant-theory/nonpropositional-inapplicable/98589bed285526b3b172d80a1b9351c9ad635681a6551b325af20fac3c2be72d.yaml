@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98589bed285526b3b172d80a1b9351c9ad635681a6551b325af20fac3c2be72d
+  normalized_sha256: sha256:98589bed285526b3b172d80a1b9351c9ad635681a6551b325af20fac3c2be72d
+cas_ref: sha256:98589bed285526b3b172d80a1b9351c9ad635681a6551b325af20fac3c2be72d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释符号 S 指被选作自身的部分。
+    previous_atom_id: 3d138846214cf9538cc61a74b3f51fe45473a12bea9b06030ea3238122f4350a
+    next_atom_id: 9e73e19647fe6bd08e6202f1296d8f8c7023c9014e2841ea92805137bc06fca6

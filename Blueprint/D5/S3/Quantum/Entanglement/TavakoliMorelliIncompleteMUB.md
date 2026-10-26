@@ -48,7 +48,21 @@ $$\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \forall (A: \operatorname{MU
 
 The outcome label is a pair consisting of a basis label and a column label. Its effect is the pure projector of that column, with no d/n scaling. The d projectors in each basis sum to the identity.
 
-**Definition 1.4 (The MUB joint-probability table).**
+**Definition 1.4 (The rank-one context of a basis).**
+
+$$\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \forall (A: \operatorname{MUBFamily}\left(d, m\right)), \forall (l: \operatorname{Fin}\left(m\right)), \forall (a: \operatorname{Fin}\left(d\right)), ((A).context\left(l\right)).projector\left(a\right) = (A).effect\left((l, a)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.context` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Armin Tavakoli; Simon Morelli (2024). *Enhanced Schmidt number criteria based on correlation trace norms*. DOI: [10.1103/PhysRevA.110.062417](https://doi.org/10.1103/PhysRevA.110.062417). URL: <https://arxiv.org/abs/2402.09972v2>.
+
+*Commentary.*
+
+Each basis defines a complete rank-one context whose projectors are its effects. The context carries their Hermitian, idempotent, trace-one and rank-one sandwich identities, together with their sum equal to the identity. These fields hold for every basis of the family.
+
+**Definition 1.5 (The MUB joint-probability table).**
 
 $$\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \forall (rho: \operatorname{BipartiteOp}\left(d\right)), \forall (A: \operatorname{MUBFamily}\left(d, m\right)), \forall (B: \operatorname{MUBFamily}\left(d, m\right)), \operatorname{Qm}\left(rho, A, B\right) = \operatorname{correlation}\left(rho, (A).effect, (B).effect\right)$$
 
@@ -62,7 +76,7 @@ $$\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \forall (rho: \operatorname{
 
 As in Section V B and Born's rule in Eq. (8), Qm is the md by md matrix of joint outcome probabilities from the two independently chosen local families. The correlation definition takes the real part of each trace and embeds it in the complex numbers. The complete collection across m bases is used without averaging over the basis labels.
 
-**Definition 1.5 (Tavakoli–Morelli Conjecture 3).**
+**Definition 1.6 (Tavakoli–Morelli Conjecture 3).**
 
 $$(claim) \Leftrightarrow (\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \forall (r: \mathbb{N}), (1 \le d) \Rightarrow ((1 \le m) \Rightarrow ((m \le d) \Rightarrow ((1 \le r) \Rightarrow ((r \le d) \Rightarrow (\forall (A: \operatorname{MUBFamily}\left(d, m\right)), \forall (B: \operatorname{MUBFamily}\left(d, m\right)), \forall (rho: \operatorname{BipartiteOp}\left(d\right)), (\operatorname{SchmidtNumberLE}\left(rho, r\right)) \Rightarrow (\operatorname{traceNorm}\left(\operatorname{Qm}\left(rho, A, B\right)\right) \le 1 + \frac{((m: \mathbb{R}) - 1) \cdot (r: \mathbb{R})}{(d: \mathbb{R})})))))))$$
 
@@ -74,7 +88,7 @@ $$(claim) \Leftrightarrow (\forall (d: \mathbb{N}), \forall (m: \mathbb{N}), \fo
 
 Section V B, Conjecture 3, Eq. (54), asserts the bound for a state of Schmidt number r and m less than d+1 bases. The statement takes positive d and m with m at most d, and r from one to d. It uses Schmidt number at most r, since the right side increases with r. The subtraction m-1 and the division in the bound are real arithmetic.
 
-**Theorem 1.6 (The incomplete-MUB Schmidt-number bound).**
+**Theorem 1.7 (The incomplete-MUB Schmidt-number bound).**
 
 $$claim$$
 
@@ -99,6 +113,7 @@ For a pure bipartite state the singular value decomposition of its coefficient m
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.MUBFamily`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.Qm`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.context`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.effect`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.ket`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteMUB.result`

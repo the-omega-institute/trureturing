@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:382e18cae72d720e80d261655b37ac74c0cfec4896eb4c8d6cbe024c3c1cd5f9
+  normalized_sha256: sha256:382e18cae72d720e80d261655b37ac74c0cfec4896eb4c8d6cbe024c3c1cd5f9
+cas_ref: sha256:382e18cae72d720e80d261655b37ac74c0cfec4896eb4c8d6cbe024c3c1cd5f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Probability mixtures do not authorize averaging doctrines. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 48124b97b9e9a37e0a654eb5706d95c0d0279852394af97e336179ea50451cb5
+    next_atom_id: 93282f43ace9618ac4f2184c8c67b59f2797dc3da212b5897a72a764f499e4d5

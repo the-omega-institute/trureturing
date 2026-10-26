@@ -51,11 +51,21 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
   result: proof_shape: content; escape_witness: CW_midpoint_bound; consumers: terminal result
     Direct frozen dependencies: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.diagonalState [sha256:013cba828a03ee76551ea835a546d37fc9ec5e1fa7e7ece2b17cefe093a661e9], D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.unitaryEvolution [sha256:e09d20adbc78becc29a640f4fb9bab3d1627ee36e10e97ed437a96cd4b7596f5], D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.pauli [sha256:679eb24de318cb22b41f0908ee5703cff91956515aa3e96f5c416b5f48a6f18d], D5/S3/Quantum/FiniteDimensional.QubitMatrix [sha256:e376bbe008ddbbc49fcf9763247304ed70ec54ac5cf49af3c6f7fb58fa626f30], D5/S3/Quantum/FiniteDimensional.qubitX [sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7], D5/S3/Quantum/FiniteDimensional.qubitZ [sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c], D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7], D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.IsCompletelyPositive [sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4], D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287], D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus_isCompletelyPositive [sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f], D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard [sha256:d28d3fee83d154e42cf2331eba2ffeb942edeed66e1ff8e9221f10b0b991ddc4], D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2 [sha256:ef4ae1e2fc1bec9bf605d06598d58ce332db9ba1a90facd16a497c70ae0336f7], D5/S3/Quantum/Information/PartialTraceMutualInformation.isHermitian_kronecker [sha256:aaaef5099708fcb8dd0b7f84e781799b378231842fffd861c64b67bc0c621ff0], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft [sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_kronecker [sha256:1fa42c02a50864971045c3c86abddd8fc906aca8723acb97552cdd92c7196b9d], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight [sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77], D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_kronecker [sha256:a0838f79000777eac14a35e86139cd9f264a8cd9569370843c5210242ee58673], D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceRight [sha256:2e0d10f59a41befee8bb5e380b1d8d7db7e14a2bbed6d47af5089807c0905813], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli [sha256:3758fca32bf974298628515ed91492adafcdff8dc216bac5d000b130b08b04fc], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.X [sha256:c5a0ae88d76c4eaaa4b6fe8a43d173573dc140906b88c1033f4a61033ac6288e], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Y [sha256:35dc0190894fc92420f9611604a3030c3f0caed3c92ee732a2224b7a3343e92a], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.Pauli.Z [sha256:13af366bc311e9f007d266b48686e5771e4117ded2ded1aa5085eff8b4b2ff69], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix [sha256:7f853eaeda888a9eccbab5fe25474fc62b519a3229013530986887de25cb28d7], D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix.match_1 [sha256:7fc2e63389d1eab654dd837875a0c02ece045a699e8b31f1275e0c20980c3be9], D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian [sha256:9fed1f3f9e03300e2781ca25ae0d6440873c35552c9588efe7a35204f990652c], D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsCPTP [sha256:1440f7e681ed2017e7c90aedfe54aa0ad218d57311655f9d554863853dd8f53c], D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity [sha256:4ba4e6b5fd69f7af3d48c8ecc93d1d3efe0fbd32799aa8b021b502f76ad76988], D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.hadamard_eq [sha256:1da164ace534af9c5a7efd6d9059b71f36765109945e20933f9de7361014b455], D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.half_sqrt_two_sq [sha256:70c1b53dcec77377712b2ca72440af20e571c209cda05423cadd61c525b65dbb], D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.Mat [sha256:a26aa3c8142307876f979b8a3dec6c69cc2ba6cc38c57e460b655fbc4031e6d7], D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3], D5/S3/Quantum/Dynamics/PositivePauliClockOrder.rhoPlus [sha256:37a17804593623262d80fce54ca0a3afc7b7d264eafb97868754a7145795cd5b]
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
+Escape audit for published helper theorems unfinished: https://github.com/the-omega-institute/trureturing/issues/19490.
 -/
 
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+import D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Matrix.CartesianVariance
+import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix.Norms.L2Operator
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
@@ -115,7 +125,7 @@ private theorem midpoint_identity : (1/2 : ℝ) • Phi 1 + (1-1/2 : ℝ) • Ph
   all_goals norm_num [Real.sq_sqrt]
   all_goals ring
 
-private theorem trace_sqrt_sq_le_two {rho : Matrix (Fin 2) (Fin 2) ℂ} (hr : D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity rho) :
+theorem trace_sqrt_sq_le_two {rho : Matrix (Fin 2) (Fin 2) ℂ} (hr : D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsDensity rho) :
     (CFC.sqrt rho).trace.re^2 ≤ 2 := by
   obtain ⟨a,b,ha,hb,hab,_,ht⟩ := self_cost_spectral hr
   rw [ht]
@@ -189,7 +199,7 @@ open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (pauli)
 open D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 noncomputable section
 
-private theorem pure_diag_coupling {omega : Matrix (Fin 2) (Fin 2) ℂ} {P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ}
+theorem pure_diag_coupling {omega : Matrix (Fin 2) (Fin 2) ℂ} {P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ}
     (hp : P ∈ couplings (D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState ![1,0]) omega) : P = omega ⊗ₖ (D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState ![1,0]).transpose := by
   have h1 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 1 1).re) hp.2.2
   simp [D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft,D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState,Fin.sum_univ_two] at h1

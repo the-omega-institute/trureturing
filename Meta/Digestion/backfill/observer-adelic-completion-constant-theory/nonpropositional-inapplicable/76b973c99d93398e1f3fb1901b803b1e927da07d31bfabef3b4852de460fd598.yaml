@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76b973c99d93398e1f3fb1901b803b1e927da07d31bfabef3b4852de460fd598
+  normalized_sha256: sha256:76b973c99d93398e1f3fb1901b803b1e927da07d31bfabef3b4852de460fd598
+cas_ref: sha256:76b973c99d93398e1f3fb1901b803b1e927da07d31bfabef3b4852de460fd598
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Possible input-data type: budget Loewner data.'
+    previous_atom_id: e681007047d36171d972d7996a6d4be849d723de055c2e7274dd436220125c85
+    next_atom_id: 9252400c195b4ab2ad96b5d691d72d6a7e33a6250248b9b54455f46f5455443c

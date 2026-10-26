@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecbbf138e348d20570f5d041d0f0cb05482797875edd8edffb20a9bcb6c41934
+  normalized_sha256: sha256:ecbbf138e348d20570f5d041d0f0cb05482797875edd8edffb20a9bcb6c41934
+cas_ref: sha256:ecbbf138e348d20570f5d041d0f0cb05482797875edd8edffb20a9bcb6c41934
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出求和感知证书的数据结构和需要证明的目标不等式；未宣称该不等式已经成立。
+    previous_atom_id: de0765e3293661f5df3320d0e14d71718cdccc08974f59141c611e4e98d8e2b8
+    next_atom_id: d20de4e988c3a25ccda0402b9acdc61109e7e3593c24a8cfe4d6db64848fa374

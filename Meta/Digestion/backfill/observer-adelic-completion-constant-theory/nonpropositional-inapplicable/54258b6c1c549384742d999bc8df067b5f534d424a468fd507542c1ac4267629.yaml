@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54258b6c1c549384742d999bc8df067b5f534d424a468fd507542c1ac4267629
+  normalized_sha256: sha256:54258b6c1c549384742d999bc8df067b5f534d424a468fd507542c1ac4267629
+cas_ref: sha256:54258b6c1c549384742d999bc8df067b5f534d424a468fd507542c1ac4267629
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅命名计划测量的「Wang gain」，未给出数值或正性断言。
+    previous_atom_id: e2ea33f3f05a1cab3c09c1b3fdc1a724ff0a3ebf944eaff5b9c6c0ca7ca039cc
+    next_atom_id: f99b410233a6ccc7e4d9c10e2e056e7ab705beceb7304bf6e113583ecca8a252

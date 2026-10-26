@@ -6,6 +6,11 @@
    utility: none
    digest: Forbidden-neighbour configurations have a Gram determinant and quantum readout. -/
 
+/-
+The four-slot escape audit for path_det_recurrence and det_one_add_smul_hermitian
+is unfinished: https://github.com/the-omega-institute/trureturing/issues/18981.
+-/
+
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib
 
@@ -111,12 +116,12 @@ theorem det_sparse_front {R : Type*} [CommRing R] {n : Nat}
   norm_num [Fin.val_one']
   ring
 
-private def pathMatrix {R : Type*} [CommRing R] (n : Nat) (a b : Nat → R) :
+def pathMatrix {R : Type*} [CommRing R] (n : Nat) (a b : Nat → R) :
     Matrix (Fin n) (Fin n) R := fun i j =>
   if i = j then 1 else if i.val + 1 = j.val then a i.val
     else if j.val + 1 = i.val then b j.val else 0
 
-private theorem path_det_recurrence {R : Type*} [CommRing R] (n : Nat)
+theorem path_det_recurrence {R : Type*} [CommRing R] (n : Nat)
     (a b : Nat → R) :
     (pathMatrix (n+2) a b).det =
       (pathMatrix (n+1) (fun i => a (i+1)) (fun i => b (i+1))).det -
@@ -297,7 +302,7 @@ theorem gramPosSemidef {d : Nat} (w : Fin (2*d-1) → ℝ) :
 noncomputable def gramEigenvalue {d : Nat} (w : Fin (2*d-1) → ℝ) : Fin d → ℝ :=
   (gramPosSemidef (d := d) w).isHermitian.eigenvalues
 
-private theorem det_one_add_smul_hermitian {d : Nat} (A : Matrix (Fin d) (Fin d) ℝ)
+theorem det_one_add_smul_hermitian {d : Nat} (A : Matrix (Fin d) (Fin d) ℝ)
     (hA : A.IsHermitian) (v : ℝ) :
     (1 + v • A).det = ∏ i, (1 + v * hA.eigenvalues i) := by
   let E := Unitary.conjStarAlgAut ℝ _ hA.eigenvectorUnitary
@@ -665,8 +670,5 @@ theorem forbidden_neighbour_determinant {d : Nat} (hd : 1 ≤ d)
     rw [← hP]
     exact quantum_partition_readout w hw r hr theta
 
-#print axioms adm_iff_no_adjacent_true
-#print axioms gramPosSemidef
-#print axioms forbidden_neighbour_determinant
 
 end D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant

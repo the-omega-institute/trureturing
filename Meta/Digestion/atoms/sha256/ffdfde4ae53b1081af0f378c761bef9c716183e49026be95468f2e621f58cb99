@@ -1,0 +1,11 @@
+**Proposition 212.2 (Shared-source threshold equality).** An exact
+shared-source equality point is
+
+$$
+ t=3-2\sqrt2,\qquad v={(1,1,0)\over\sqrt2},\qquad w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Here $z=0$, $x=y=1/2$, and $(1-t)^2=4t$, hence
+$q_0=q_3=1$ and $q_0q_3=1$. The relevant partial-transpose eigenvalues
+are zero, so this point is PPT at all three threshold equalities.
+

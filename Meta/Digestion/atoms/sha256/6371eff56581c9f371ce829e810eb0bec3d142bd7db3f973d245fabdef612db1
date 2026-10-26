@@ -1,0 +1,124 @@
+**Theorem 78.7 (complete conditional spatial generator theorem).** Under78.1–78.2's explicit installations, for each of the two complete commissions separately, define the actual zero-extended and target-lifted coupled resolvents
+
+$$
+\begin{aligned}
+\mathcal R_\varepsilon(z)
+ &=\iota_\varepsilon(\mathsf M_\varepsilon-z)^{-1}\iota_\varepsilon^*,\\
+\mathcal S_\varepsilon(z)
+ &=\ell_\varepsilon(\mathsf M_D-z)^{-1}\ell_\varepsilon^*,\\
+\Delta_\varepsilon(z)&=\mathcal R_\varepsilon(z)-\mathcal S_\varepsilon(z).
+\end{aligned}
+\tag{78.28}
+$$
+
+With the one fixed $\sigma$ of(78.18), the complete ambient quantitative estimates are exactly
+
+$$
+\begin{aligned}
+\|\Delta_\varepsilon(-\sigma)\|
+ &\le E_\varepsilon:=\frac{\eta_\varepsilon}{(1-\theta)^2},\\
+\|N\Delta_\varepsilon(-\sigma)\|
+ &\le H_\varepsilon:=
+   \frac{w_\varepsilon}{1-\theta}
+   +\frac{s_\sigma(M_0\eta_\varepsilon+2\sqrt2 k_f w_\varepsilon)}
+                 {(1-\theta)^2},
+\qquad w_\varepsilon=\sqrt{2\eta_\varepsilon/c}.
+\end{aligned}
+\tag{78.29}
+$$
+
+The analogous right-weighted product has the same bound, understood by bounded closure. Each individual coupled shifted resolvent has half-number smoothing norm at most $s_\sigma/(1-\theta)$.
+
+For every fixed compact $K\subset\mathbb C\setminus\mathbb R$, both
+
+$$
+\sup_{z\in K}\|\Delta_\varepsilon(z)\|\longrightarrow0,\qquad
+\sup_{z\in K}\|N\Delta_\varepsilon(z)\|\longrightarrow0
+\tag{78.30}
+$$
+
+hold on the entire ambient joint space. The right-weighted products also converge uniformly on $K$. On the entire actual joint carrier,
+
+$$
+(\mathsf M_\varepsilon-z)^{-1}
+       -T_\varepsilon(\mathsf M_D-z)^{-1}T_\varepsilon^*
+       =\iota_\varepsilon^*\Delta_\varepsilon(z)\iota_\varepsilon,
+\tag{78.31}
+$$
+
+so all corresponding allowed-carrier bounds follow with no increase. The complete complement and both cross-block conclusions are78.8, and the full joint fixed-vector finite-clock conclusion is78.9. Together these statements concern the full original64.5 generator(67.5), all field modes and every auxiliary correlation. They make no unweighted unitary operator-norm assertion.
+
+**Proof.** We first identify the perturbation formula without imposing a kinetic property on a raw lift. Restriction and zero extension commute with $V_\varepsilon$ on $\operatorname{Dom}N$. On the actual carrier, factor the operator on its domain as
+
+$$
+\mathsf M_\varepsilon+\sigma
+ =(I+V_\varepsilon^{\rm a}
+       (B_\varepsilon\otimes I+I\otimes\Omega h+\sigma)^{-1})
+           (B_\varepsilon\otimes I+I\otimes\Omega h+\sigma).
+\tag{78.32}
+$$
+
+The first factor has a bounded inverse by(78.21);(78.13) justifies the second factor and its range. Zero-extending the inverse of(78.32) gives precisely
+$\mathcal R_\varepsilon(-\sigma)=\mathcal C(R_\varepsilon)$.
+One can check this directly term by term in the norm-convergent Neumann series
+$R_\varepsilon\sum_{n\ge0}(-V_\varepsilon R_\varepsilon)^n$.
+Every term annihilates the forbidden subspace; no densely defined ambient operator with that subspace deleted is being asserted.
+
+On the target use the identical factorization. Covariance(78.10) and $\ell_\varepsilon^*\ell_\varepsilon=I$ give, term by term,
+
+$$
+S_\varepsilon(V_\varepsilon S_\varepsilon)^n
+ =\ell_\varepsilon R_D^0(V_D R_D^0)^n\ell_\varepsilon^*,
+\quad
+R_D^0=(A\otimes I+I\otimes\Omega h+\sigma)^{-1}.
+\tag{78.33}
+$$
+
+Hence $\mathcal S_\varepsilon(-\sigma)=\mathcal C(S_\varepsilon)$. This is a resolvent-series identity using Hilbert covariance of the charge; it does not move the kinetic operator across $\ell_\varepsilon$. Applying78.6 with78.5 proves(78.29) and the individual smoothing estimates. At $-\sigma$ the two coupled extended resolvents are self-adjoint, so adjunction proves the right-weighted assertion.
+
+Here are explicit uniform bounds for the continuation to $K$. Both coupled generators have lower bound $-L_0$ by78.4. Thus the positive operators
+$X=\mathcal R_\varepsilon(-\sigma)$,
+$Y=\mathcal S_\varepsilon(-\sigma)$
+have spectra in $[0,b_*]$, where $b_*=(\sigma-L_0)^{-1}$. For $z\in K$, set $a_z=z+\sigma$ and
+
+$$
+d_K=\min_{\substack{z\in K\\0\le t\le b_*}}|1-a_zt|>0,
+\qquad A_K=\max_{z\in K}|a_z|.
+\tag{78.34}
+$$
+
+The minimum is positive because at $t=0$ the expression is one, while a zero with $t>0$ would make $z$ real. The functional calculus with value zero on the kernels gives
+
+$$
+\mathcal R_\varepsilon(z)=X(I-a_zX)^{-1},\qquad
+\mathcal S_\varepsilon(z)=Y(I-a_zY)^{-1}.
+\tag{78.35}
+$$
+
+The two inverse factors have norm at most $d_K^{-1}$. The algebraic identity used in(78.22), now with coefficient $-a_z$, gives the unweighted bound
+
+$$
+\sup_{z\in K}\|\Delta_\varepsilon(z)\|
+       \le d_K^{-2}E_\varepsilon .
+\tag{78.36}
+$$
+
+For the weighted bound write $Z_X=(I-a_zX)^{-1}$ and $Z_Y=(I-a_zY)^{-1}$. The bounded identity
+
+$$
+\Delta_\varepsilon(z)=(X-Y)Z_X
+                     +a_zYZ_Y(X-Y)Z_X
+\tag{78.37}
+$$
+
+requires no commutation with $N$. Since $\|NY\|\le s_\sigma/(1-\theta)$, it gives
+
+$$
+\sup_{z\in K}\|N\Delta_\varepsilon(z)\|
+ \le d_K^{-1}H_\varepsilon
+       +A_Kd_K^{-2}\frac{s_\sigma}{1-\theta}E_\varepsilon .
+\tag{78.38}
+$$
+
+The ranges in(78.37) are in $\operatorname{Dom}N$, so the product is well defined and bounded. Apply this also to $\overline K$ and take adjoints for the right-weighted estimate. Finally(78.31) is compression by the actual zero-extension isometry; it commutes with the number weight. This proves all resolvent assertions, with the same error for arbitrary auxiliaries. Both prescriptions form a finite family, share the same $C_0$ particle error, and obey the same bounds $c,M_0,\theta,L_0$. Thus maxima over the two complete prescriptions have the same convergence. $\square$
+

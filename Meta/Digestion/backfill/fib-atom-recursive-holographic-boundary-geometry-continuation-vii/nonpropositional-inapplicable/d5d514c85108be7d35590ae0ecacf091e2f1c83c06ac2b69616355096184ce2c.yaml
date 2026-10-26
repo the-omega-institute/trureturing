@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5d514c85108be7d35590ae0ecacf091e2f1c83c06ac2b69616355096184ce2c
+  normalized_sha256: sha256:d5d514c85108be7d35590ae0ecacf091e2f1c83c06ac2b69616355096184ce2c
+cas_ref: sha256:d5d514c85108be7d35590ae0ecacf091e2f1c83c06ac2b69616355096184ce2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是桥接条件章节的引介，说明将缺口组织为条件，没有数学断言。
+    previous_atom_id: 768f02b5b0e9b0f4072f002e3e32853e192dfee4905cb255ff7f630fc50d1bb2
+    next_atom_id: d5f86704b9d37870fe4f60f0b53f49ef575ab9d9c87b5ed8fda909b29065a074

@@ -1,0 +1,31 @@
+**Lemma 2.3 (guards and every partial cut).** On either admitted first
+load all the rows of Definition 2.2 execute, and after $j$ complete
+iterations the raw target prefix and ordinary74 prefix are exactly the
+first $j$ actually consumed bits. Only $D_e$ activates $L$. A cut at
+any intermediate row retains exactly its actual partial data and active
+$H_B$. In particular the matching74 WR of an IN at preordinal $v$ has
+postordinal $v+3$.
+
+Proof. At $N_0$ the paid entry gives cursor0, an absent first store and
+empty74 at R. Assume the assertion at $N_j$. NEXT preserves cursor and
+tests its non-end finite case. IN changes only latch6, PC and receipt.
+EX turns the marked R into blank and creates its new unmarked R. WR
+sets that old cell's three symbol bits from the same latch6. MR moves
+the head onto its new R. All three operations preserve latch6 and the
+first cursor. The ordinary writer right is still1, so each guard is
+met. The constructor $C_j$ sees the still-absent $c_j$, the actual bit
+and its owner/constructor right. It constructs that bit; ADVANCE selects
+the next fixed cursor and no earlier bit is touched. This proves the
+induction and every interior state between its steps.
+
+At cursor=end the last NEXT enables EX/WR(F)/seal/MR. The seal effect
+acts while the head is at that actual F; the following MR preserves it.
+DONE sees complete raw data and the finite flag set by that row,
+withdraws writing and enables the actual decoded $L$. Both supplied
+words have the same valid keyed map and entry by GENERAL11.2's record
+argument, so this next phase is the fixed $L$ in either case. Before
+DONE no raw bit changes active $H_B$, including at the IN, EX, ordinary
+WR and fresh-control WR cuts. The matching WR is the third executed
+row beginning with IN, proving $v+3$. No claim uses a future seal at an
+earlier cut. ∎
+

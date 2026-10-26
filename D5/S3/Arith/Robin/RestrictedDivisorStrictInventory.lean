@@ -7,6 +7,7 @@
    digest: Nonlinear forced-divisor maxima have strict own-clock Euler inventory. -/
 
 import D5.S3.Arith.Robin.OriginalFirstClockTransport
+import D5.S3.Arith.Robin.LogarithmBounds
 import Mathlib.Data.Finset.Max
 
 noncomputable section
@@ -21,32 +22,6 @@ open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 
 local notation "price" => D5.S3.Arith.Robin.ActualRobinClockCovariance.g
-
-private theorem loglog_tangent {x y : ℝ} (hx : 1 < x) (hy : 1 < y) (hne : x ≠ y) :
-    Real.log (Real.log y) - Real.log (Real.log x) < (y-x) * price x := by
-  have hx0 : 0 < x := by linarith
-  have hy0 : 0 < y := by linarith
-  have hlx := Real.log_pos hx
-  have hly := Real.log_pos hy
-  have hlogne : Real.log y ≠ Real.log x := by
-    intro he
-    exact hne (Real.strictMonoOn_log.injOn hx0 hy0 he.symm)
-  have hratio : Real.log y / Real.log x ≠ 1 := by
-    intro he
-    exact hlogne ((div_eq_one_iff_eq hlx.ne').mp he)
-  have houter := Real.log_lt_sub_one_of_pos (div_pos hly hlx) hratio
-  rw [Real.log_div hly.ne' hlx.ne'] at houter
-  have hinner := Real.log_le_sub_one_of_pos (div_pos hy0 hx0)
-  rw [Real.log_div hy0.ne' hx0.ne'] at hinner
-  have hnorm : Real.log y / Real.log x - 1 =
-      (Real.log y - Real.log x) / Real.log x := by field_simp
-  rw [hnorm] at houter
-  calc
-    _ < (Real.log y-Real.log x)/Real.log x := houter
-    _ ≤ (y/x-1)/Real.log x := div_le_div_of_nonneg_right hinner hlx.le
-    _ = (y-x) * price x := by
-      unfold D5.S3.Arith.Robin.ActualRobinClockCovariance.g
-      field_simp
 
 private theorem prime_delta {n q : ℕ} (hn : 1 ≤ n) (hq : q.Prime) :
     originalObjective (n * q)-originalObjective n =

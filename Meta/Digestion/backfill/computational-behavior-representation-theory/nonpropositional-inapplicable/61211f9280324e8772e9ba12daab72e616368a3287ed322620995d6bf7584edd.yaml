@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61211f9280324e8772e9ba12daab72e616368a3287ed322620995d6bf7584edd
+  normalized_sha256: sha256:61211f9280324e8772e9ba12daab72e616368a3287ed322620995d6bf7584edd
+cas_ref: sha256:61211f9280324e8772e9ba12daab72e616368a3287ed322620995d6bf7584edd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Proof-provenance and bibliography-scope convention; it distinguishes paper proofs from Lean validation without asserting a mathematical theorem.'
+    previous_atom_id: f1b8c2ef4bdbd3484124481ad8dbba9617d4b39d80da461a5dd821d74bcf2dac
+    next_atom_id: a077e15faff8bf88ba622c6646bdd107918d89e003f486c6cf942a7e1fef7ed8

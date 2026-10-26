@@ -1,0 +1,10 @@
+**Lemma 22.2 (Corner units and pole certificates).** The following table
+lists the exact common factor $h$, the preserved quotient degrees and
+nonzero resultant residue for
+$\operatorname{pp}(f_\pm/h),\operatorname{pp}(g_\pm/h)$, and the
+exact rational resultant of $\lambda,N$ at the corner triple.
+
+| Corner | $h$ | Quotient degrees over $\mathbb Q$ and $\mathbb F_{101}$ | Quotient resultant modulo $101$ | $\operatorname{Res}_x(\lambda,N)$ |
+| --- | --- | --- | --- | --- |
+| $L$ | $x$ | $(6,13)$ | $10$ | $46698352835472/625$ |
+| $R$ | $x-1$ | $(6,13)$ | $52$ | $-155083881111552/625$ |

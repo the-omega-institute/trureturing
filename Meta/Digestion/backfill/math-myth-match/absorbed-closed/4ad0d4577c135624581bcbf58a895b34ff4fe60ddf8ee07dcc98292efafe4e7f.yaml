@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ad0d4577c135624581bcbf58a895b34ff4fe60ddf8ee07dcc98292efafe4e7f
+  normalized_sha256: sha256:4ad0d4577c135624581bcbf58a895b34ff4fe60ddf8ee07dcc98292efafe4e7f
+cas_ref: sha256:4ad0d4577c135624581bcbf58a895b34ff4fe60ddf8ee07dcc98292efafe4e7f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Communication/IndexedCommonSourceUpperBound.indexed_common_source_upper_bound
+    target_statement_id: sha256:e81e523060554ca5c42d1ffeb60e5c90da71275c38f9f4ee48184e4b03701fa3
+  - gid: D5/S3/ConceptDynamics/Discussion/CommonSourceEchoLimit.common_source_repetition_cannot_resolve_blind_target
+    target_statement_id: sha256:a84be5357ff2a732ac181604e389a23e2dce1547be5e8b77c0032e00913a5b75
+receipts:
+  unresolved_subitems: []

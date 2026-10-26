@@ -1,0 +1,4 @@
+It is constant when $x_*=z$; otherwise equality holds exactly when $b=b'$, so the entire first coordinate is lost. If $n=0<m$, the symmetric assertion holds: $d=0$, and nonconstant equality is exactly $a=a'$.
+
+3. If $m=n=0$, there are rational $r,s$ with $c=rb$, $d=sb$, and
+

@@ -1,0 +1,12 @@
+**Definition 88.3 (cofinal source rank).** In a true face \(\mathcal C_K\),
+call \(K\) the escaping source set. Its cofinality is the statement
+
+$$
+\forall b\in\mathbb N\ \exists \mathbf v\quad
+\Phi_K(\mathbf t,\mathbf q,\mathbf v)\ \land\
+\bigwedge_{i\in K}v_i\ge b,
+$$
+
+with the finite anchors \(\mathbf t,\mathbf q\) fixed before the lower-bound
+request. Thus all coordinates in \(K\) escape jointly in source-index space.
+

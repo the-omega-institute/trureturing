@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:71dd1dcd3c4f862f933e2cc35ab63bb0dbbc2bf345c24ecd05fa3f89da1d19a8
+  normalized_sha256: sha256:71dd1dcd3c4f862f933e2cc35ab63bb0dbbc2bf345c24ecd05fa3f89da1d19a8
+cas_ref: sha256:71dd1dcd3c4f862f933e2cc35ab63bb0dbbc2bf345c24ecd05fa3f89da1d19a8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.spatial_convolution_equation_criterion
+    target_statement_id: sha256:5634949069d8ba98d13615195e56353c6a9222187115c113bbe52bb39d06dbfb
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative
+    target_statement_id: sha256:43b9de2c12f914f2d37f0512f4b1c09304782bfffe0f107e5f459566853bfa21
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_succ
+    target_statement_id: sha256:78a1ae272c26f75390c71d2120cce1aa02120cbc6eaf63e73f745a34f0da13ad
+receipts:
+  unresolved_subitems: []

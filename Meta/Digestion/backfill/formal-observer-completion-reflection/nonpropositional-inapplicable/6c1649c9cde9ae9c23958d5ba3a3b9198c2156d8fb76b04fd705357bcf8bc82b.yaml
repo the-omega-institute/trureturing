@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c1649c9cde9ae9c23958d5ba3a3b9198c2156d8fb76b04fd705357bcf8bc82b
+  normalized_sha256: sha256:6c1649c9cde9ae9c23958d5ba3a3b9198c2156d8fb76b04fd705357bcf8bc82b
+cas_ref: sha256:6c1649c9cde9ae9c23958d5ba3a3b9198c2156d8fb76b04fd705357bcf8bc82b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the required accessibility factorization; asserts no actual factorization exists.
+    previous_atom_id: feba8e21c3f963e027155d453a00d263d737af2ee3432b3e70d9294b9ed4cfa6
+    next_atom_id: 973ef7bb866e9216f05cde9e36bf077cd01c29f54f66df38e95652d082d8eb43

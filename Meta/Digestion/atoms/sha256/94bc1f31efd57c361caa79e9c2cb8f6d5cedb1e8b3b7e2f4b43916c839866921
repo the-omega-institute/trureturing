@@ -1,0 +1,18 @@
+**Existence proof.** Let $N(z)=z-YH(z)$. Equations (42.1)–(42.2), the
+mean value inequality and convexity of $B$ give
+
+$$
+\|N(z)-z_0\|_\infty
+<10^{-40}+10^{-8}10^{-22}<10^{-22}.
+$$
+
+The same derivative bound gives Lipschitz constant less than $10^{-8}$.
+Banach's contraction theorem gives a unique fixed point $z_*$ in $B$.
+For any $z\in B$, the matrix $YDH(z)$ is invertible because its
+distance from $I$ in operator norm is less than one. Hence the square
+matrix $Y$ is invertible. A fixed point of $N$ is therefore exactly a
+zero of $H$. This proves existence and uniqueness of that zero in $B$.
+Its first coordinate $\alpha$ is an exact root of (41.1); the other
+coordinates are denoted $r_*,b_*$. No floating-point approximation is
+a premise of this existence proof. $\square$
+

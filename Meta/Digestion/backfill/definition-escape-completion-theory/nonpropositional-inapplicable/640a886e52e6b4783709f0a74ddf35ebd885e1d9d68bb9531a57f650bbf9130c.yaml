@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:640a886e52e6b4783709f0a74ddf35ebd885e1d9d68bb9531a57f650bbf9130c
+  normalized_sha256: sha256:640a886e52e6b4783709f0a74ddf35ebd885e1d9d68bb9531a57f650bbf9130c
+cas_ref: sha256:640a886e52e6b4783709f0a74ddf35ebd885e1d9d68bb9531a57f650bbf9130c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 对象层与方法层的工作分工和前瞻信用的治理说明。'
+    previous_atom_id: c12712da1828a5eef269427203e7a6995ed06d5b8f4b9b1474a96a342972d6ea
+    next_atom_id: cde198aee174bd890c911dfcbf7ccf73e7ba4e580f8879fda4eb1753c3a1f65d

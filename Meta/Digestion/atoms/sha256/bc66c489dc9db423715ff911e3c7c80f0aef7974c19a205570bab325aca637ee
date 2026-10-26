@@ -1,0 +1,120 @@
+**Definition 10.1 (Closed rational cover).** Set
+
+$$
+S=2^{80}=1208925819614629174706176,\qquad
+\mathcal B_0=[0,1]_r\times[0,30]_b\times[1/16,40]_z,
+\qquad E_0=[-655000,655000].
+\tag{10.1}
+$$
+
+Here $z=j$, rather than a further free physical parameter. A rational constant
+$q$ is enclosed by
+
+$$
+\langle q\rangle_S=
+\left[\frac{\lfloor Sq\rfloor}{S},
+      \frac{\lceil Sq\rceil}{S}\right].
+\tag{10.2}
+$$
+
+Every interval endpoint in this definition belongs to $S^{-1}\mathbb Z$.
+For $I=[l,u]$, $J=[v,w]$, addition is $[l+v,u+w]$, negation is
+$[-u,-l]$, and subtraction is addition of the negative. For multiplication
+let $H=\{lv,lw,uv,uw\}$ and use
+
+$$
+I\odot J=
+\left[\frac{\lfloor S\min H\rfloor}{S},
+      \frac{\lceil S\max H\rceil}{S}\right].
+\tag{10.3}
+$$
+
+If $0\notin J$, division uses the same formula with
+$H=\{l/v,l/w,u/v,u/w\}$. It is one outward rounding of these four
+quotients, not multiplication by a separately rounded reciprocal. No quotient
+is defined when its divisor interval contains zero. Intersection is the exact
+endpoint intersection, empty when its lower endpoint exceeds its upper
+endpoint. All comparisons with rational thresholds are exact rational
+comparisons. These conventions also specify the enclosure of every rational
+constant occurring inside a composite expression.
+
+Use the six existing coefficient circuits $(\Lambda,D,p_0,A,v_0,B)$ of
+(3.1), with the same meaning as in that equation. To fix their interval
+evaluation completely, first form $T=1+b$, $U=1+2b$, $n=z+r$, and then
+$U+n$ and $2U+n$. The additive grouping in $\Lambda,A,B$ is respectively
+
+$$
+\begin{aligned}
+&(((1+6/T)+1/U)-4/z)-4/n,\\
+&1+(U+n)(((4-15/z)+20/T)-10/n),\\
+&1+(2U+n)(((10-36/z)+45/T)-20/n).
+\end{aligned}
+\tag{10.4}
+$$
+
+In $D$, first multiply $\langle24/5\rangle_S$ by
+$b-\langle1/8\rangle_S$, then multiply by $6/T-2/U$.
+The circuits for $p_0,v_0$ are grouped exactly as in (3.1). Every displayed
+binary operation uses (10.2)–(10.3), in the specified order.
+
+The visit of an original source box
+$I=I_r\times I_b\times I_z$ is the following ordered mathematical recursion.
+
+1. If $\inf I_r\ge3/10$, $\inf I_b\ge13/20$, and $\sup I_b\le1$,
+   terminate with a retained box. This test precedes all other tests.
+
+2. Otherwise set
+   $J_z=I_z\cap[\inf I_b,\sup I_b+10]$.
+   If this is empty, terminate with a $z$ rejection. Form
+   $H=I_r\odot(1-I_r)$. If $\inf I_b>0$, further replace
+   $J_z$ by $J_z\cap(I_b+H/I_b)$, again terminating with a $z$
+   rejection if empty. If $\inf I_b=0$, skip this quotient.
+
+3. Evaluate $I_b\odot(J_z-I_b)-H$. If it excludes zero, terminate
+   with a rank rejection. For the rest of this visit only, evaluate the six
+   circuits (3.1) at $(I_r,I_b,J_z)$. The original splitting box is still
+   $(I_r,I_b,I_z)$.
+
+4. Start afresh with $E=E_0$. In the stated order form
+
+   $$
+   (a_0,h_0)=(\Lambda,-D),\qquad
+   (a_1,h_1)=(A,[56,58]-p_0),\qquad
+   (a_2,h_2)=(B,[304,306]-v_0).
+   \tag{10.5}
+   $$
+
+   For $i=0,1,2$, if $0\notin a_i$, replace $E$ by
+   $E\cap(h_i/a_i)$; an empty intersection terminates with an $e$
+   rejection. If $0\in a_i$, skip only that quotient, keeping the
+   equation for the next step. The three coefficient and right-hand-side
+   intervals are not recomputed during these intersections.
+
+5. Using the final common $E$, test the three intervals
+   $a_i\odot E-h_i$ in the order $i=0,1,2$. If any excludes zero,
+   terminate with a residual rejection.
+
+6. Otherwise split the original box. Choose the coordinate with largest
+   normalized width
+
+   $$
+   \left(\operatorname{width}(I_r),
+          \frac{\operatorname{width}(I_b)}3,
+          \frac{\operatorname{width}(I_z)}4\right),
+   \tag{10.6}
+   $$
+
+   resolving ties in the order $r,b,z$. If its interval is $[l,u]$, set
+   $m=S^{-1}\lfloor S(l+u)/2\rfloor$ and visit the two closed
+   intervals $[l,m]$ and $[m,u]$, lower half first. If $m$ is not
+   strictly between $l$ and $u$, the box is unresolved and cannot be
+   retained or rejected by this step. Tightened $J_z$ and $E$ are not
+   inherited by the children; each child begins again at step 1.
+
+There is no other stopping or acceptance rule. Depth starts at zero for
+$\mathcal B_0$. For a level-by-level definition, let $\mathcal F_0$ contain
+only $\mathcal B_0$; classify every member of $\mathcal F_d$ by the six
+steps and let $\mathcal F_{d+1}$ consist of the two children of every split
+box. Thus a zero split count at a level ends this finite recursion if that
+level contains no unresolved box.
+

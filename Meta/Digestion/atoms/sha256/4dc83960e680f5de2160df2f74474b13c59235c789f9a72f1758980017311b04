@@ -1,0 +1,41 @@
+**Corollary 20.5 (Strict opposite-branch order and the remaining joint equations).**
+At the original exact algebraic $p_J$, for every $r,s\in(0,1)$,
+
+$$
+\mathcal U(-,r)=\mathcal U(+,s)
+ \quad\Longrightarrow\quad
+\mathcal M(-,r)>\mathcal M(+,s).
+\tag{20.15}
+$$
+
+Consequently every distinct terminal-M pair in (19.6), in every
+entire actual child $\mathcal C_v$, must have the form
+$(i,r),(i,s)$ with the same $i$ and $r\ne s$. The remaining
+terminal-M equations are exactly
+
+$$
+\mathcal U(i,r)=\mathcal U(i,s)=v,\qquad
+\mathcal M(i,r)=\mathcal M(i,s),\qquad r\ne s.
+\tag{20.16}
+$$
+
+The original joint predicate still additionally requires two
+distinct points $x_{J0},x_{J1}$ in that same entire $\mathcal D_v$
+with $\mathcal J(x_{J0})=\mathcal J(x_{J1})$. This corollary does
+not decide either (20.16) or that compatibility condition.
+
+**Proof.** The original $p_J$ belongs to $I$ by Definition 18.1.
+For a common acquired response $v$, Theorem 20.4 gives
+
+$$
+\mathcal M(-,r)>6v-216>\mathcal M(+,s),
+$$
+
+which proves (20.15), including $r=s$. If a terminal-M collision
+used opposite labels, reversing their order if necessary would
+contradict this strict inequality. For equal labels, distinctness
+is precisely $r\ne s$ by Theorem 19.2. The entire-child bijection
+of Theorem 19.4 therefore leaves exactly (20.16) as the terminal-M
+part of (19.6), with its original same-$v$ terminal-J requirement
+unchanged. No source coordinate has been bounded or omitted. ∎
+

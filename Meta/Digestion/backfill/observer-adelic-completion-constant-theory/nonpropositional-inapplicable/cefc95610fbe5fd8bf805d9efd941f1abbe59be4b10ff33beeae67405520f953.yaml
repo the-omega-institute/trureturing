@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cefc95610fbe5fd8bf805d9efd941f1abbe59be4b10ff33beeae67405520f953
+  normalized_sha256: sha256:cefc95610fbe5fd8bf805d9efd941f1abbe59be4b10ff33beeae67405520f953
+cas_ref: sha256:cefc95610fbe5fd8bf805d9efd941f1abbe59be4b10ff33beeae67405520f953
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-only list item naming path holonomy; no holonomy identity or parent non-reconstruction claim is settled.
+    previous_atom_id: 8327849a72afb9c5677efbe1c073575b0d5e3f25b2076da698731dd98812fc0b
+    next_atom_id: 1b93c3e3a2feb1417e5398429d007025aefa8007ec935b86ea2cdafab4e00807

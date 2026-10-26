@@ -1,0 +1,24 @@
+**Theorem 16.3 (At most three complete worlds per fixed $b$).** Suppose $z\ne A$. For each $E$, each fixed set of observations, and each fixed $b>0$, the child in Theorem 16.2 contains at most three distinct complete worlds. This is a bound at one $b$, with source multiplicity included; it is not a global bound on the union over $b$.
+
+Proof. The genuine cubic $H_E$ has total real-root multiplicity at most three. At a retained drift root, $G_1,G_3$ cannot both vanish, because their rows would give $d=A=z$. If at least two of $G_1,G_3,G_5$ are nonzero, the corresponding two independent affine traces $j+mr$, with $m=0,1,2$, fix at most one $(j,r)$. The even data have already fixed the entire gain. This drift therefore gives at most one complete world.
+
+If only $G_1$ is nonzero, $d=z=p$ and $j=K(A-d)/G_1$ are fixed; sources solve
+
+$$
+r^2-r+b(j-b)=0.
+\tag{16.10}
+$$
+
+There are at most two distinct legal roots. At this $d_0=z=p$, both $G_3,G_5$ vanish. Writing $x=d-d_0$, each term of $H_E$ contains $x^2$: respectively $G_3G_5$, $(z-d)G_5$, and $(p-d)G_3$ supply the factors. Hence $d_0$ is a drift root of multiplicity at least two.
+
+If only $G_3$ is nonzero, then $d=A=p$, and $n=j+r=K(z-d)/G_3$ is fixed. The source equation is
+
+$$
+r^2-(1+b)r+b(n-b)=0.
+\tag{16.11}
+$$
+
+Again there are at most two legal roots. At $d_0=A=p$, $G_1,G_5$ vanish, and the three terms of $H_E$ contain respectively $(A-d)G_5$, $G_1G_5$, and $(p-d)G_1$, hence each has two factors $x$. A $G_5$-only or all-zero case is impossible under $z\ne A$.
+
+Thus at every retained drift root the number of complete worlds is at most its root multiplicity. Summing gives three. Repeated quadratic roots count once; repeated drift roots, sampled gain zeros and degree drops have been included. Counting only distinct drift roots would not prove this complete-world bound. ∎
+

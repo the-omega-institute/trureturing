@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c33abdc724bcbd9f5fb9c3cddebda3190829f162e6997ecf35e9c7d65be37a71
+  normalized_sha256: sha256:c33abdc724bcbd9f5fb9c3cddebda3190829f162e6997ecf35e9c7d65be37a71
+cas_ref: sha256:c33abdc724bcbd9f5fb9c3cddebda3190829f162e6997ecf35e9c7d65be37a71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明状态说明。不另主张独立数学命题。
+    previous_atom_id: 917c7f56e658a2535d92fa4d98940940cec28c7779a0cf0e0d8e8deeca4a4ccc
+    next_atom_id: 2203cfd46daa20c05faf40a9e23c49964354ab82b45df973ce21997b6adac8d0

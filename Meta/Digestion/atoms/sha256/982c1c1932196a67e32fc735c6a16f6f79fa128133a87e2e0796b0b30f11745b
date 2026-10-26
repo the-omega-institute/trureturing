@@ -1,0 +1,65 @@
+**Theorem 9.10 (Exceptional-inclusive finite outer joint bases).** Define
+
+$$
+\begin{aligned}
+Z_E={}&V_{\mathbb C}(Q_{10},E_0N_J,E_0N_M)\\
+&\cup V_{\mathbb C}(S_4,E_0N_J,E_0N_M)\\
+&\cup V_{\mathbb C}(Q_{24},e_{24}n_{24,J},e_{24}n_{24,M}).
+\end{aligned}
+$$
+
+This is an explicitly defined finite, possibly empty complex affine set.
+For every real $p\ne24,v$, if the entire original child $C(p,v)$
+merely meets $E(p,v)$ and supports both a distinct terminal-$J$ pair and
+a distinct terminal-$M$ pair, then $(p,v)\in Z_E$.
+The exceptional world need not occur in either selected pair. The pairs
+may overlap or be disjoint, and their common terminal responses may differ.
+
+**Proof.** Select any exceptional world solely to locate the base.
+If it has zero drift, its base lies on $Q_{10}$ by Theorem 4.3.
+If it has nonzero drift and $F_0=0$, Lemma 9.4 puts its base on
+$Q_{24}$. The remaining exceptional case has $\Lambda=0$, so
+Lemma 9.2 puts its base on $S_4$. These cases exhaust Definition 3.1.
+
+At a $Q_{10}$ or $S_4$ base, if $E_0=0$ both product equations hold.
+Otherwise the all-world bridge in Lemma 9.9 makes the actual $J$ pair
+force $N_J=0$ and the actual $M$ pair force $N_M=0$. At a $Q_{24}$
+base the identical argument uses $e_{24}$ and the CRT chart.
+This proves containment. In particular it strengthens the quantified
+application of Theorem 4.3: a zero-drift world unused by both pairs still
+locates their shared base on $Q_{10}$, and the two pairs still force
+its product equations. No rewriting of that earlier theorem is required.
+The same reasoning does not use cross-pair distinctness or equality of
+the two common terminal values.
+
+For finiteness, Theorem 4.3 already proves that the first set is finite.
+By Lemma 9.2 the irreducible $S_4$ divides none of $E_0,N_J,N_M$.
+Consequently $S_4$ and $E_0N_J$ are coprime plane polynomials, so their
+affine intersection is finite; imposing the third equation only reduces
+it. By Lemmas 9.4 and 9.8 the same argument applies to
+$Q_{24}$ and $e_{24}n_{24,J}$. Coprimality over $\mathbb Q$ here
+also excludes a common complex curve component: a common factor over
+$\overline{\mathbb Q}$ would give a rational common factor by its
+conjugates. Thus absolute irreducibility is not required. The union of
+these three finite sets is finite.
+
+Every exceptional intersection has been retained. Set-theoretically,
+for example, the third set is
+
+$$
+V(Q_{24},e_{24})\ \cup\ V(Q_{24},n_{24,J},n_{24,M}).
+$$
+
+It includes its intersections with $Q_{10}=0$, $p=24$, $\rho=0$,
+the repeated-root locus, the subresultant degree-change locus,
+$\operatorname{Norm}_T\alpha=0$, $\operatorname{Norm}_G a_f=0$,
+$\operatorname{Norm}_G d_F=0$, $\operatorname{Res}(G,T)=0$,
+the $D,H_1,C_0,N_0$ norm loci and every construction-denominator locus.
+The first two sets likewise include $V(Q_{10},E_0)$ and $V(S_4,E_0)$.
+Intersections among the three image carriers are included in their union;
+the response axes are covered by the zero-drift and nonzero-drift carrier
+proofs without cancellation of $p$ or $v$. No degree drop, repeated root
+or intersection is being evaluated through a failed inverse. On those
+points the product condition is an outer condition only, and the full
+zero-safe world equations remain necessary for actual lifting. ∎
+

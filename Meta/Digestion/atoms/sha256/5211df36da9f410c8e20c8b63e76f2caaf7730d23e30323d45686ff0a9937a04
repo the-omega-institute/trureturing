@@ -1,0 +1,293 @@
+**Theorem 24.1 (sharp actual ground laws above the first threshold).**
+Fix any one model of Definition 20.1 and $\lambda>\lambda_D$.
+Let $q=q_\epsilon$ be (20.5), $\mu=\sqrt{\alpha\lambda}>\pi$, and put
+$\kappa_\Sigma=\kappa_{\rm cap}+\kappa_\infty$.
+Then $E_\epsilon\to-\infty$. For
+$s=s_\epsilon=(-E_\epsilon)^{-1/2}$,
+
+$$
+\begin{aligned}
+\log(s/\epsilon)&=\pi/q-\kappa_\Sigma+o(1),\\
+-E_\epsilon
+ &=\epsilon^{-2}\exp(-2\pi/q+2\kappa_\Sigma)(1+o(1))\\
+ &=e^{2\kappa_\Sigma}b^{-2}
+                \exp(2(1-\pi/\mu)L)(1+o(1))\\
+ &=e^{2\kappa_\Sigma}b^{-2\pi/\mu}
+                \epsilon^{-2+2\pi/\mu}(1+o(1)).
+\end{aligned}
+\tag{24.1}
+$$
+
+In the injective concentration chart, extend by zero outside that chart
+and set
+$G_\epsilon(q)=s^2\sqrt{m_0}f_\epsilon(\Psi^{-1}\delta_sq)$.
+Then
+
+$$
+\begin{gathered}
+G_\epsilon\longrightarrow W_\infty/\sqrt N
+                         \quad\hbox{strongly in }L^2(dq),\\
+s\sqrt{m_0N}A_\epsilon\longrightarrow1,\qquad
+sQ_\epsilon\longrightarrow a_*\sqrt{m_0}\,k/\sqrt N.
+\end{gathered}
+\tag{24.2}
+$$
+
+Profile convergence is also strong locally in horizontal $W^{1,2}$ off
+zero and smooth on punctured compact Cartesian sets, including the axis.
+The original mass measures tend to $\delta_o$ and the original normalized
+vectors tend weakly to zero in $L^2(\mu)$. Horizontal source-coordinate
+scale is $s$, adapted central scale $s^2$.
+At the cap scale,
+$\epsilon s\sqrt{m_0N}f_\epsilon(\Psi^{-1}\delta_\epsilon q)\to Z(q)$
+in all the local senses of Theorem 23.2, including its source value.
+
+The actual total resources satisfy
+
+$$
+\begin{aligned}
+s^2q^3V_{\rm raw}[f_\epsilon],\quad
+s^2q^3V_{\rm cap}[f_\epsilon]&\longrightarrow\frac{M}{2m_0C},\\
+s^2q^3T_A[f_\epsilon]&\longrightarrow\pi\alpha.
+\end{aligned}
+\tag{24.3}
+$$
+
+Equivalently, after division by $|E_\epsilon|L^3$, the two attractions
+have limit $M/(2m_0C\mu^3)$ and kinetic energy has limit
+$\pi\alpha/\mu^3$. In addition,
+
+$$
+\begin{aligned}
+s^2(V_{\rm raw}-V_{\rm cap})[f_\epsilon]
+ &\longrightarrow\frac I{2\pi m_0N},\\
+s^2\int_{\mathcal C_\epsilon}\Gamma f_\epsilon^2d\mu
+ &\longrightarrow\frac1{2\pi m_0N}\int_{R<1}R^{-2}Z^2dq,\\
+s^2\int_{\mathcal C_\epsilon}\Gamma_\epsilon f_\epsilon^2d\mu
+ &\longrightarrow\frac1{2\pi m_0N}\int_{R<1}Z^2dq,\\
+s^2g_{\mathrm c}\int_{\mathcal C_\epsilon}
+                       \Gamma_\epsilon f_\epsilon^2d\mu&\longrightarrow1,\\
+s^2T_A[f_\epsilon;\mathcal C_\epsilon]
+ &\longrightarrow N^{-1}\int_{R<1}|\nabla_HZ|^2dq.
+\end{aligned}
+\tag{24.4}
+$$
+
+Replacing $g_{\mathrm c}$ by $g_{\epsilon,\lambda}$ in the fourth line
+does not change its limit. All statements are uniform for $\lambda$ in
+compact subsets of $(\lambda_D,\infty)$ for this fixed model, with fixed
+$b$. They assert neither an equality limit nor a resolvent theorem for
+the remaining spectral subspace.
+
+Proof. First derive collapse from an original-domain test. Choose
+$\pi/\mu<\sigma_1<1$ and on
+$2\epsilon<R<r_1=2\epsilon e^{\sigma_1L}$ use
+$h\sin(\pi\log(R/(2\epsilon))/(\sigma_1L))$, extended by zero.
+It belongs to $\mathcal F_A$ and is outside the actual cap for small
+$\epsilon$ by (14.2). The exact frozen numerator is
+
+$$
+\frac{m_0k}{2L}(\pi^2/\sigma_1-\alpha\lambda\sigma_1)<0.
+\tag{24.5}
+$$
+
+In the $h$ transform, the principal error integrates
+$R|p'|^2dt$ and the critical full-Green remainder integrates $p^2dR$;
+both are $O(r_1/L^2)$. The squared norm is comparable above and below
+to $r_1^2/L^2$. Hence $E_\epsilon\le-c_{\sigma_1}L/r_1^2\to-\infty$.
+Together with (22.14), this gives $s\to0$ and
+$r=\epsilon/s\to0$. A common strict $\sigma_1$ margin works on each
+compact supercritical parameter set.
+
+We next prove concentration independently of the multiplicative energy
+constant. In concentration coordinates write $m_s=m(\delta_s q)$,
+$C_s=C(\delta_s q)$, and $h_q=R^{-1}\phi_{q^2}(a)$.
+On $2r<R<r_0$ the cap is absent. Put $v=G_\epsilon/h_q$ and define
+
+$$
+\begin{gathered}
+C_q=\int_Jc\phi_{q^2}^2da,\quad k_q=\pi C_q/2,\quad
+p(t)=\frac1{2\pi C_q}\int c\phi_{q^2}^2v\,da\,d\theta,\\
+J(t)=\int_{R=e^t}\!m_sh_q^2C_s\nabla_Hv\cdot n_H\,dS,
+\qquad j(t)=J(t)/(m_0k_q).
+\end{gathered}
+\tag{24.6}
+$$
+
+The flux integral means the horizontal divergence flux on that Cartesian
+gauge sphere. The actual equation, keeping its entire angular response,
+gives
+
+$$
+p'=j+e_1,\qquad j'=-q^2p+e_2,\qquad
+|e_1|\le C_1se^tp,\quad
+|e_2|\le C_1(e^{2t}+se^t)p.
+\tag{24.7}
+$$
+
+Here are its error estimates. The exact frozen residual of $h_q$ is
+$h_q^{-1}(-\Delta_H-\gamma R^{-2})h_q=-q^2cR^{-2}$, with
+$\gamma=\lambda_0(1+\lambda/L^2)$.
+The native coefficient, density and full-Green residual is $O(s/R)$.
+The frozen flux is exactly $m_0k_qp'$; its $\theta$ cross derivative
+integrates to zero. Since $m_sC_s/m_0-I=O(sR)$ and annular
+Harnack/interior estimates give $|\nabla_Hv|\le C_1p/R$, its actual
+flux differs by $O(sRp)$. Integrating the full divergence equation
+gives the second equation. Its finite-energy term is the complete
+positive angular integral
+$e^{2t}\int\phi_{q^2}^2v/(2\pi C_q)$, bounded by $C_1e^{2t}p$ by
+Harnack. The density correction to $q^2p$ is absorbed by $C_1sRp$.
+Cartesian regularity justifies all integrations at the collapsed axes.
+In particular (24.7) is an estimate on the full state, not the false
+finite-energy separation excluded in Proposition 22.4.
+
+At a fixed small $r_0$, local $L^2$ normalization and interior estimates
+bound $p,j$. Integrate (24.7) backward with its oscillator matrix. For
+$u=\log(r_0/R)$, $|\sin(qx)|/q\le x$ gives
+
+$$
+p(u)\le C_1(1+u)+\int_0^u
+                  \{b_1(v)+(u-v)a_1(v)\}p(v)dv,
+\tag{24.8}
+$$
+
+where $a_1(v)\le C_1(r_0^2e^{-2v}+sr_0e^{-v})$ and
+$b_1(v)\le C_1sr_0e^{-v}$. Divide by $1+u$ and apply Gronwall to
+its integrable kernel. Thus $p\le C_2(1+u)$ down to $R=2r$.
+Harnack gives the same bound on $v$ over each full sphere. Inside the
+cap, its own scale Harnack gives
+$G_\epsilon\le C_2r^{-1}(1+|\log r|)$. Consequently the inner mass is
+bounded by
+
+$$
+C_2\int_0^d R(1+|\log R|)^2dR
+                  +C_2r^2(1+|\log r|)^2.
+\tag{24.9}
+$$
+
+It vanishes in the iterated limits, so no cap or angular sector hides
+ordinary norm.
+
+For the outer end use an actual-domain quadratic IMS partition at
+original radius $K_1s$. The scaled outer potential is at most
+$C_3/K_1^2+C_3s^2$, its kinetic form is nonnegative, and the inner
+localized form is at least $-1$ times its norm by the actual global
+minimum. The scaled IMS error is $C_3/K_1^2$. Hence the outer mass is
+at most $C_4/(K_1^2-C_4)$ for large $K_1$, including the complement of
+the source chart. Punctured-annulus compactness, (24.9), and this outer
+tightness give a strong global $L^2(dq)$ limit of norm one. Its equation
+is $\mathcal A_0G=-G$ and it is positive. Theorem 23.1 identifies it as
+$W_\infty/\sqrt N$. Difference equations give the claimed local energy
+and smooth convergence. Both tightness estimates prove the original
+mass and weak-vector assertions as well.
+
+For constant-level matching set $D=\log(s/\epsilon)$ and fix a large
+$T_1$. The middle interval is $-D+T_1<t<-T_1$.
+The outer profile gives
+$(p,j)(-T_1)\to(p_\infty,p_\infty')(-T_1)/\sqrt N$.
+Integrating (23.3) for the already normalized $W_\infty$ improves its
+mean bounds to
+
+$$
+p_\infty(-T_1)=T_1+\kappa_\infty+O(e^{-2T_1}(1+T_1)),\quad
+p_\infty'(-T_1)=-1+O(e^{-2T_1}(1+T_1)).
+\tag{24.10}
+$$
+
+No bare trace remainder was differentiated. The inner core theorem and
+the exact affine cap flux (18.11) give
+$(p,j)(-D+T_1)/a_\epsilon\to(T_1+\kappa_{\rm cap},1)$, with
+$a_\epsilon=s\sqrt{m_0}A_\epsilon$. At this stage $T_1$ stays fixed;
+no cap convergence rate on a growing ball is used.
+
+Set $X=j$, $Y=qp$, $C_0=(X^2+Y^2)^{1/2}$ and
+$\vartheta=\operatorname{atan2}(Y,X)$. Positivity makes
+$0<\vartheta<\pi$ throughout the interval. The exact identities are
+
+$$
+C_0'=\frac{je_2+q^2pe_1}{C_0},\qquad
+\vartheta'=q+q\frac{je_1-pe_2}{C_0^2}.
+\tag{24.11}
+$$
+
+Backward estimate (24.8) also gives $p\le C(1+u)$ with $u=-t$.
+Variation of the freely rotating $(X,Y)$ vector bounds its norm change
+by $C\int_{T_1}^\infty(e^{-2u}+se^{-u})(1+u)du$.
+Together with (24.10) this bounds $C_0$ below independently of
+$\epsilon$, and its limiting deviation from $1/\sqrt N$ tends to zero
+as $T_1\to\infty$. More decisively,
+
+$$
+\frac{|\vartheta_{\rm out}-\vartheta_{\rm in}-q(D-2T_1)|}{q}
+ \le C\int_{T_1}^\infty(e^{-2u}+se^{-u})(1+u)^2du.
+\tag{24.12}
+$$
+
+This is the phase error divided by $q$, required for a multiplicative
+energy equivalent. An undivided $o(1)$ would not suffice.
+At the inner end $\vartheta_{\rm in}/q\to T_1+\kappa_{\rm cap}$;
+at the outer end
+$(\pi-\vartheta_{\rm out})/q\to T_1+\kappa_\infty+o_{T_1}(1)$.
+First let $\epsilon\to0$, then $T_1\to\infty$ in (24.12).
+This proves $D=\pi/q-\kappa_\Sigma+o(1)$.
+Norm comparison of the rotating vector at the two ends gives
+$a_\epsilon\to1/\sqrt N$. The positive projection stays in the upper
+half-plane and selects the first half-wave $\pi$. This proves (24.1)
+and the amplitude in (24.2); Theorem 23.2 gives its charge and cap form.
+
+It remains to verify resources for the full angular state. On the middle
+annulus put $w=v-p$ with zero $c\phi_{q^2}^2$ slice mean. The exact
+orthogonal identity (17.9) persists with $\phi_{q^2}$ and $k_q$;
+the enlarged-annulus inequality (17.10) is uniform for small $q$.
+Testing the full actual equation, absorbing its small coefficient errors,
+gives
+
+$$
+\mathcal E_{0,q}[v;\mathrm{middle}]
+ \le C_{T_1}+Cq^2\int\phi_{q^2}^2v^2
+                  +Cs\int e^t\phi_{q^2}^2v^2=O_{T_1}(q^{-1}).
+\tag{24.13}
+$$
+
+Endpoint boundary terms and slightly enlarged fixed collars are
+$O_{T_1}(1)$ by the matched cap amplitude and outer profile.
+The logarithmic bound and $D=\pi/q+O(1)$ give
+$\int\phi_{q^2}^2v^2=O(q^{-3})$; its $e^t$-weighted integral is bounded.
+Orthogonality and the summed Poincaré estimate therefore give the full
+remainder bound
+
+$$
+\int\phi_{q^2}^2w^2=O_{T_1}(q^{-1}),\qquad
+\int p^2dt=\frac\pi{2Nq^3}(1+o(1)).
+\tag{24.14}
+$$
+
+The second equality follows from the exact phase and norm comparison:
+after the fixed-$T_1$, then large-$T_1$ limits the amplitude is
+$1/\sqrt N$ and $q$ times the interval length tends to $\pi$.
+The attraction's unweighted angular cross term is $O(q^{-2})$ by
+Cauchy–Schwarz, and the squared remainder is $O(q^{-1})$.
+Thus the entire state, not just its mean, obeys
+
+$$
+\int R^{-2}G_\epsilon^2dq
+                  =\frac{\pi^2M}{4Nq^3}(1+o(1)).
+\tag{24.15}
+$$
+
+The inner cap and fixed near-cap collar contribute $O_{T_1}(1)$ to
+this integral by their now matched amplitude. The outer part is
+$O_{T_1}(1)$ by normalization. Also
+$\int R^{-1}G_\epsilon^2dq=O(1)$, using the logarithmic bound.
+The native density and full-Green errors consequently contribute only
+$O(s^{-1})$ to attraction, below $s^{-2}q^{-3}$.
+Multiplication by $c_Gs^{-2}$ proves the raw constant
+$\pi M/(8m_0N)=M/(2m_0C)$. The direct cap differences from Theorem 23.2
+are $O(s^{-2})$, so the capped constant agrees. Finally
+$T_A=E_\epsilon+g_{\epsilon,\lambda}V_{\rm cap}$ proves the kinetic
+constant $\pi\alpha$. No derivative of an energy remainder was taken.
+Equations (23.7)–(23.8) and the amplitude prove all of (24.4).
+All estimates admit parameter subsequences in a compact supercritical
+set with a common collapse margin; this proves the stated uniformity.
+$\square$
+

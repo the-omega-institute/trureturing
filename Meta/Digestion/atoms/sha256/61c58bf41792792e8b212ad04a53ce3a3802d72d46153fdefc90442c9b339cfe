@@ -1,0 +1,27 @@
+**Theorem 2.2 (Faithful preparation of the full FIB domain).** Under Assumption 2.1, every $\rho_W$ is a normal pure state. The map $\iota:W\mapsto\rho_W$ is injective on all of $\mathcal W$, including every lower degree and every sampled-zero stratum. The initial position and momentum means and covariances are
+
+$$
+\mathbb E_W q=m_W,\qquad \mathbb E_W\pi=0,\qquad
+\operatorname{Cov}_W(q)=\operatorname{Cov}_W(\pi)=I_{17}/2,
+$$
+
+with zero symmetrized position–momentum cross covariance. For any $W,W'$,
+
+$$
+\langle\psi_W,\psi_{W'}\rangle
+=\exp\!\left(-\frac{\|m_W-m_{W'}\|^2}{4}\right).
+$$
+
+For the unit-frequency oscillator $H_{\rm osc}=\frac12\sum_{a=1}^{17}(q_a^2+\pi_a^2)$, every preparation has finite energy
+
+$$
+\operatorname{tr}(\rho_WH_{\rm osc})
+=\frac{17}{2}+\frac{\|m_W\|^2}{2}.
+$$
+
+There is no uniform energy bound over $\mathcal W$.
+
+Proof. The squared wavefunction is $\pi^{-17/2}\exp(-\|x-m_W\|^2)$, a product of seventeen normalized real Gaussian densities of variance $1/2$. Thus its integral is one and the rank-one operator $\rho_W$ is positive trace class of trace one. Differentiation gives the stated momentum moments; the wavefunction is real, so the symmetrized cross covariances vanish. Completing the square in the overlap integral gives the displayed overlap.
+
+To recover a world from its mean, reshape each four-coordinate block as $X_k=a_kP$. Then $\operatorname{tr}(X_k)=a_k$, since $\operatorname{tr}P=1$. Recover all four coefficients by these traces, choose any nonzero coefficient, and set $P=X_k/a_k$. Such a coefficient exists because $g$ is not the zero polynomial. The first coordinate recovers $d$. This uses no division by a sampled $g(i)$, so degree drops and sampled zeros do not affect injectivity. Distinct means have overlap strictly between zero and one; in particular their pure density operators differ. The energy follows by summing the second moments. Holding $P,g$ fixed and letting $|d|\to\infty$ proves absence of a uniform bound. These recovery identities are mathematical identities for the indexed preparation; nonorthogonality prevents treating them as perfect single-specimen world-label access. $\square$
+

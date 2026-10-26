@@ -1,0 +1,21 @@
+**Lemma 5.1 (Six simple projected roots).** For every
+$(p,v)\in K\times[142,150]$, $R(r,p,v)$ has exactly six roots in
+$0<r<1$, all simple.
+
+Proof. Companion Sections 2–3 specify the exact tensor-Bernstein
+conversion of the owning integer table, the error bound on the whole
+$p$ interval, the dyadic subdivision rule and all twenty closed
+$v$ intervals. On each, the rule excludes the complement in $[0,1]$
+of six listed disjoint $r$ intervals. Each listed interval has
+strictly opposite endpoint signs and a derivative of one strict sign.
+These are finite rational coefficient inequalities, with their
+complete reconstruction specified there. The intermediate value
+theorem and monotonicity give one simple root in each; the
+complementary sign-variation tests exclude every other root.
+The strict endpoint signs also exclude $r=0,1$ and the outer
+endpoints of the six isolating intervals.
+
+The parameter error covers all $K$, and the twenty closed intervals
+meet and cover $[142,150]$. Thus the conclusion includes all
+parameter boundaries. ∎
+

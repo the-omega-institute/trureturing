@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+  normalized_sha256: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+cas_ref: sha256:6e2cc873dc41c851ec68eee71cfe75574cc03e177841d2157065b20e4ec3179b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本节约定语法存在、证明存在、模型存在、构造存在与现实实现的不同用语，并介绍哲学立场；不声称这些类型均有项或这些模型均有现实实现。
+    previous_atom_id: 30bc3e08c8c31146b5f320c9e789f7da84b9aeaec9ad7a486a8e7f8ef426646f
+    next_atom_id: a611d18ab350c1019a25b0b180bd3f2fe1d204946a4608b57b4eb93aa7ae2708
+  chain_atoms:
+    - f0c0a84fca87416a940fd05044036788acb66b4d245bafe7872b4f911f6f1276
+    - ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
+    - 7e2f4affba9f7ee63fe0334dc7e058b6798a8e916aafee4f60e87ef68da39a06
+    - b7e680ad9ea9311c63e33c4672ee871dae2a436a5b12794353e2d1e0c2f8d5f2

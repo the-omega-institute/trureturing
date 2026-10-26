@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb3a13f38415a2579f1d527bbddbeea6aaf35951ebb57f6862dbf34e2977e4db
+  normalized_sha256: sha256:eb3a13f38415a2579f1d527bbddbeea6aaf35951ebb57f6862dbf34e2977e4db
+cas_ref: sha256:eb3a13f38415a2579f1d527bbddbeea6aaf35951ebb57f6862dbf34e2977e4db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 节首仅重申完整模型、时钟与后续参数命名，明确没有加入额外假设。
+    previous_atom_id: 4e9ca93ccd58c403818f49b498ac95227823ee8bf33f16a72545779d80c2a058
+    next_atom_id: f8980787fd1d45da16a9e3778c044bd0bd2f6b2237e8d2677dc73d0cf8c3b12d

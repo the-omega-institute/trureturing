@@ -1,0 +1,24 @@
+**Theorem 91.5 (sharp moment horizon, not a rate claim).** With
+$\mu_n^{\mathrm{bal}}=\mu_n(W_h(t_{\mathrm{bal}}))$ and
+$\mu_n^{\mathrm{comb}}=\mu_n(W_h(t_{\mathrm{comb}}))$,
+
+$$
+\mu_n^{\mathrm{comb}}-\mu_n^{\mathrm{bal}}=0\quad(0\leq n\leq2h+2),
+\qquad
+\mu_{2h+3}^{\mathrm{comb}}-\mu_{2h+3}^{\mathrm{bal}}
+=\frac2{3^{\,2h+3}}.
+\tag{91.13}
+$$
+
+**Proof.** The first equality is Lemma 91.1. At the original root, the comb has a
+right $\beta$ leaf and the balanced tree has a right branch. After the common left
+spine of length $h$, these are the only newly visible vertices whose hold weight can
+differ at length $2h+3$: the leaf has diagonal $1-1/3=2/3$, whereas the
+non-root branch has diagonal $1-3/3=0$. The unique differing walk goes down the
+spine and to that right child, holds once, and returns. Its two edge traversals have
+weight $3^{-(2h+2)}$, so the difference is
+$3^{-(2h+2)}(2/3)=2/3^{2h+3}$. Every other walk of this length either stays within
+the common table or reaches the new level without a hold and has equal weight. This
+proves (91.13). It identifies the first missing moment; it does not assert an optimal
+resolvent constant or approximation rate. $\square$
+

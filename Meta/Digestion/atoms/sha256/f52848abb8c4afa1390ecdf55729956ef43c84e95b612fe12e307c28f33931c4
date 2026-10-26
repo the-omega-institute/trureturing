@@ -1,0 +1,36 @@
+**Definition 1.1 (Original strict-real world).** A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+$$
+
+There is one entire gain polynomial and one fixed drift per world. Positive
+source entries have no upper bound. Zero drift, sampled gain zeros, repeated
+gain roots, lower gain degrees, singular sources and worlds unused by a
+selected pair are permitted. No gain positivity, regularity hypothesis or
+positive separation floor is imposed.
+
+Set
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+A_0=I,\quad A_k=E_kA_{k-1},\quad
+y_k=d+g(k)\operatorname{tr}(A_kP).
+$$
+
+The acquired chronological word is $J,M,J,M,M,M$. The literal parent and
+child are
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\qquad p\ne24.
+$$
+
+Thus $(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v)$. The initial read counts;
+there is no reset, copy, skipped read, clock shift or additional port. At
+clock seven $J$ and $M$ are alternatives on the same world.
+

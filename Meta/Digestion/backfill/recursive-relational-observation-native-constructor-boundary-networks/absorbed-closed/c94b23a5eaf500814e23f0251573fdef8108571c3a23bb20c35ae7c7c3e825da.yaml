@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c94b23a5eaf500814e23f0251573fdef8108571c3a23bb20c35ae7c7c3e825da
+  normalized_sha256: sha256:c94b23a5eaf500814e23f0251573fdef8108571c3a23bb20c35ae7c7c3e825da
+cas_ref: sha256:c94b23a5eaf500814e23f0251573fdef8108571c3a23bb20c35ae7c7c3e825da
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeRelativePrefixBoxes.canonical_factor_levels
+    target_statement_id: sha256:4e48978a45857569b272c0af64e7b761ec43f466aeac1dd1d459fd498db7392a
+receipts:
+  unresolved_subitems: []

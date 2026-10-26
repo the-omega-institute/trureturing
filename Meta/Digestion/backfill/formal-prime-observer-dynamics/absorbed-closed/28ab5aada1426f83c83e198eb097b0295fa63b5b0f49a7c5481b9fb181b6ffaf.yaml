@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:28ab5aada1426f83c83e198eb097b0295fa63b5b0f49a7c5481b9fb181b6ffaf
+  normalized_sha256: sha256:28ab5aada1426f83c83e198eb097b0295fa63b5b0f49a7c5481b9fb181b6ffaf
+cas_ref: sha256:28ab5aada1426f83c83e198eb097b0295fa63b5b0f49a7c5481b9fb181b6ffaf
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/DynamicIndistinguishabilityCoordinatewise.coordinateUpdate_iterate_apply
+    target_statement_id: sha256:1b0280f447034445547cd00a53efc42aa7b705c642192a0aa84c1132c3b43cf7
+receipts:
+  unresolved_subitems: []

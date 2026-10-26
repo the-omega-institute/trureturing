@@ -1,0 +1,47 @@
+### 5.3 Exact zero-holonomy witness
+
+Take
+
+$$
+b=(2/5,2/5,1/5),\quad c=2/5,\quad
+k_0=1/20,\quad k_1=1/10.
+\tag{OC.20}
+$$
+
+Use the supplied four-leg rectangle with data $(k_1,0)$: move from $k_0$
+to $k_1$, hold the real phase height fixed, return to $k_0$, and hold again.
+The rectangle has duration four in the supplier's unit-leg convention, zero
+phase variation, zero weighted phase integral, zero signed area, zero winding,
+and residual vector exactly zero.  It is therefore an actual original control
+whose endpoint state and endpoint control coordinates are exactly the initial
+ones.
+
+The two nontrivial checkpoint factors are
+
+$$
+s_*(k_0,k_1)=\frac12,\qquad
+s_*(k_1,k_0)=\frac{c-k_1}{c-k_0}=\frac67,
+$$
+
+so every-prefix success is exactly
+
+$$
+\frac12\cdot\frac67=\frac37.
+\tag{OC.21}
+$$
+
+The constant continuation at $k_0$ has survival one.  Thus the identity
+endpoint operator and the chronological complete instrument have different
+response laws.  The difference is a realized survival record, not a new
+holonomy coordinate.  No permission to repeat after failure, no reset, and no
+physical speed or energy calibration is inferred from (OC.21).
+
+An equally exact certificate at (OC.8) uses the zero-phase four-leg
+rectangle from $k_0=1/8$ to $k_1=1/16$ and back.  Its outgoing and return
+maxima are $2/3$ and $1/2$, so its survival is $1/3$ and its charge is
+$\log3$.  At (OC.20) the charge is $\log(7/3)$ and the support margin is
+$1/20$.  Both rectangles have zero real phase increment, area, residual,
+and phase variation.  Waiting for the same four-unit duration at their
+starting height has survival one.  Thus neither discrepancy is a change of
+elapsed control duration.
+

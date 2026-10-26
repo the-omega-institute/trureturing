@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0dabce422f3bb5fb61de94ff7587c071dc811257b74fa61b56babf95850c465f
+  normalized_sha256: sha256:0dabce422f3bb5fb61de94ff7587c071dc811257b74fa61b56babf95850c465f
+cas_ref: sha256:0dabce422f3bb5fb61de94ff7587c071dc811257b74fa61b56babf95850c465f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 候选有效动力学 S 的纯定义，没有主张半群律成立。
+    previous_atom_id: 36745efaefd4347d3a58547f1df1e4428801f4918423a51f57d7fe37b499d0ae
+    next_atom_id: b1ff679b9698480b7cbfab8698dcdecb3fc9378a5e781555d2289e9e5c6c841d

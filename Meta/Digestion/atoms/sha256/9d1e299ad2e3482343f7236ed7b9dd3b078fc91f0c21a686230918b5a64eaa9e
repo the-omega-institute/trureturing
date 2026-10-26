@@ -1,0 +1,70 @@
+**Theorem 79.3 (necessary full-carrier defect and two-sided energy inequality).** Keep79.1 and(79.5), but allow $Ui_-\ne J$. Suppose finite positive constants $C_+,C_-$ satisfy, on the entire respective form domains,
+
+$$
+b_+[Uu]\le C_+b_-[u]\quad(u\in\mathcal Q_-),
+\qquad
+b_-[U^*v]\le C_-b_+[v]\quad(v\in\mathcal Q_+).
+\tag{79.9}
+$$
+
+Define the full old-carrier operator norm and the constants
+
+$$
+h=\|Ui_--J\|_{\mathcal B(\mathcal H_-,\mathcal X_+)},
+\qquad K=C_+C_-,
+\qquad B=1+\delta+3a,
+\qquad e=2h\sqrt{1+\delta}.
+\tag{79.10}
+$$
+
+Whenever $e<1$ it is necessary that
+
+$$
+(1-e)^2\le\frac{e^2}{\delta}
+ +\frac{2e}{\sqrt\delta}
+             \left(\sqrt{\frac{KB}{a}}+1\right).
+\tag{79.11}
+$$
+
+If $e\ge1$, then already $h\ge1/(2\sqrt{1+\delta})$ and this small-defect regime is absent. The inequality is necessary, with no assertion of sufficiency or sharpness. The norm $h$ ranges over every normalized old Hilbert input, including vectors outside the energy form domain. The energy inequalities hold for every vector in their complete form domains, without a common input-energy ceiling. All retained modes and arbitrary correlations are included.
+
+**Proof.** Set $V=Ui_-$ and $P_U=VV^*=UP_-U^*$. Both $V$ and $J$ are isometries. The standard range-projection estimate gives
+
+$$
+\|P_U-P\|
+\le\|(V-J)V^*\|+\|J(V^*-J^*)\|\le2h.
+\tag{79.12}
+$$
+
+Use exactly the vector $f$ from79.2 and let $w=P_Uf$. Both directions of(79.5) give $w\in\mathcal Q_+$; both inequalities in(79.9) and the additive form contraction give
+
+$$
+b_+[w]\le C_+b_-[P_-U^*f]
+          \le C_+b_-[U^*f]\le Kb_+[f]=KB,
+\qquad \|w-Pf\|\le e.
+\tag{79.13}
+$$
+
+Let $g$ be the entire $\mathcal E$-valued one-position component of $w$. It belongs to the actual one-position form domain, so $g_{oL}(1)=g_L$. The mass-one $L$ atom, cable density $\delta$ and unweighted derivative coefficient $a$ imply
+
+$$
+\|g_L\|_{\mathcal E}\le e,
+\qquad \|g_{oL}-x\eta\|_{L^2(0,1;\mathcal E)}
+                        \le\frac e{\sqrt\delta},
+\qquad \|g_{oL}'\|_{L^2(0,1;\mathcal E)}
+                        \le\sqrt{\frac{KB}{a}}.
+\tag{79.14}
+$$
+
+The other particle components and the reserve contribute nonnegative terms to(79.13); extracting this component does not assume $U$ preserves particle sectors or product states. For $v(x)=g_{oL}(x)-x\eta$, the standard Hilbert-valued $H^1$ endpoint estimate on the unit interval is
+
+$$
+\|v(1)\|^2\le\|v\|_{L^2}^2
+                         +2\|v\|_{L^2}\|v'\|_{L^2}.
+\tag{79.15}
+$$
+
+This is the usual one-dimensional Sobolev estimate obtained by the fundamental theorem for $\|v(x)\|^2$ and Cauchy–Schwarz; it is used here as a mature trace inequality. Since $\|\eta\|=1$, the endpoint relation gives $\|v(1)\|=\|g_L-\eta\|\ge1-e$ when $e<1$. Formula(79.14) gives $\|v'\|_{L^2}\le\sqrt{KB/a}+1$. Substitution in(79.15) proves(79.11), with the cable density and the kinetic coefficient in their distinct places.
+
+The comparison class before imposing a small defect is nonempty. For example take $\mathcal R_-=\mathcal H_+$, $\mathcal R_+=\mathcal H_-$, with reserve forms $b_+^0-\|\cdot\|^2$ and $b_-^0-\|\cdot\|^2$, respectively. The exchange $U(\Psi\oplus\Phi)=\Phi\oplus\Psi$ is a unitary identifying both full form domains with $C_+=C_-=1$. Its defect is $h=\sqrt2$, since its old output is wholly in the outlet reserve and orthogonal to $J\Psi$. This example only shows consistency of the additive domain/energy hypotheses; it is no approximate literal transfer or physical renewal. $\square$
+

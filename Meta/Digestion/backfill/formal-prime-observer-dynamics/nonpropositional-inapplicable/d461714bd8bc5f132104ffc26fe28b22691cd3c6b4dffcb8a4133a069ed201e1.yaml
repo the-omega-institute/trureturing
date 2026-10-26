@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d461714bd8bc5f132104ffc26fe28b22691cd3c6b4dffcb8a4133a069ed201e1
+  normalized_sha256: sha256:d461714bd8bc5f132104ffc26fe28b22691cd3c6b4dffcb8a4133a069ed201e1
+cas_ref: sha256:d461714bd8bc5f132104ffc26fe28b22691cd3c6b4dffcb8a4133a069ed201e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Open research-direction label in a status table.
+    previous_atom_id: 502b0b6584960657004aa6f4ed573789df26a5e949584e2ed02baa11b4283466
+    next_atom_id: bc94b1d5c5fd6f18ae5035f42ad12cdecf2949cda584b40b29e0797a91e8a4c9

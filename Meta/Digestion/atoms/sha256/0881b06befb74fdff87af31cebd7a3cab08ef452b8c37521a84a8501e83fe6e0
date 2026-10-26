@@ -1,0 +1,16 @@
+**假设 18.1（正 Hermitian 形状与选定尺子）。** 增加完整复关系合同，取
+
+$$
+H=\begin{pmatrix}t+z&x-iy\\x+iy&t-z\end{pmatrix}>0,
+\qquad
+\det H=t^2-x^2-y^2-z^2.
+$$
+
+对 Hermitian 切向量选择
+
+$$
+g_H(U,V)=\frac12\operatorname{Re}\operatorname{tr}(H^{-1}UH^{-1}V).
+$$
+
+这是指定的 affine-invariant 度量。此选择不免费成为量子 Fisher 度量，也不由裸 FIB 的统计合同唯一导出。矩阵与 Lorentz 形式的经典对应参见 Baez [§3.3](https://math.ucr.edu/home/baez/octonions/node11.html)，其 $SL(2,\mathbb C)$ 合同作用保持该行列式，除去中心 $\{\pm I\}$ 对应保时向、保定向的 Lorentz 群。
+

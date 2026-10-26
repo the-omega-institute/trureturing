@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2cecc4b73f2643941da00f00472ef91130d96d138f037421004e92307c27346f
+  normalized_sha256: sha256:2cecc4b73f2643941da00f00472ef91130d96d138f037421004e92307c27346f
+cas_ref: sha256:2cecc4b73f2643941da00f00472ef91130d96d138f037421004e92307c27346f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 来源归属及禁止从线性延伸冒领 Stop 结论的范围纪律。'
+    previous_atom_id: 2d0a7d84e2393cfe98ff7c8f7a03ab07ceecd5b7655bf42486b847d0b5370fc9
+    next_atom_id: 097fe12987413f532b7894f9b2389804d64240d1904701a6e335ac250baff383

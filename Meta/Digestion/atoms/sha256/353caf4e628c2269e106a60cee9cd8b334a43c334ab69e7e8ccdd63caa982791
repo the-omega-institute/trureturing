@@ -1,0 +1,76 @@
+**Theorem 11.5 (Full-plane whole-child separation and joint candidate
+cover).** Let $D_J,D_M$ be the actual off-diagonal images in F,
+Definition 33.1, on the whole real domain $p\ne24$. Then
+
+$$
+\begin{aligned}
+ D_J&\subseteq\{B=0\}\cup\{P_J=0\},\\
+ D_M&\subseteq\{B=0\}\cup\{P_M=0\},\\
+ D_J\cap D_M&\subseteq
+ \{B=0\}\ \cup\ \{P_J=P_M=0\}.
+\end{aligned}
+\tag{11.12}
+$$
+
+All sets here are intersected with $p\ne24$.
+The right-hand side of the last inclusion is a proper real algebraic
+subset of the response plane. Its complement is a nonempty dense
+open set on which at least one of the two terminal maps is injective
+on the entire original child. On
+$BP_JP_M\ne0$ both terminal maps are injective on that entire child.
+
+Proof. First fix an arbitrary real off-24 base with $B\ne0$ and an
+arbitrary actual world of its entire child. If $d=0$, Lemma 10.7
+would give $H(x)=Z_0(x)=0$, contradicting the nonvanishing resultant
+in (11.10). Thus $d\ne0$ is a consequence at these bases, not an
+original-domain restriction.
+
+If $H(x)=0$, the formulas for $F,G$ show that $(x,0)$ is also a
+common finite zero. Lemma 10.11 gives $\ell_0(x)=0$.
+Nonvanishing of $\operatorname{Res}_x(\ell_1,RH)$ gives
+$\ell_1(x)\ne0$, and its application to the actual $(x,d)$ gives
+$d=-\ell_0(x)/\ell_1(x)=0$, a contradiction. Therefore $H(x)\ne0$.
+We also have $D(x)>0$. The fixed resultant identity in (11.2)
+now gives $R(x)=0$, even if a leading coefficient of $F$ or $G$
+specializes to zero. The same common-root identity gives $d=d_R(x)$.
+Every actual world is therefore carried, including every regular
+companion and any singular, golden or exceptional source at this base.
+
+At an actual world, clock zero gives
+$u=1/U=-dD/N_0$; clock one gives $j/U=(24-d)D/N_1$; and $r/U=x-j/U$.
+Consequently
+
+$$
+ \frac{T+2j+4r}{U}=\frac{1+u}{2}+4x-2\frac jU.
+\tag{11.13}
+$$
+
+Thus the two elements in (11.3) evaluate to precisely the actual
+$a(W),m(W)$. No inverse of $N_7$, a gain leading coefficient or a
+gain-root difference has been used.
+
+The specialized algebra has eighteen distinct carrier roots by
+(11.10). Over an algebraic closure its multiplication characteristic
+polynomials are the products of $Y-A_R(\xi)$ and $Y-M_R(\xi)$
+over those roots $\xi$. If $P_J\ne0$, the first eighteen values
+are distinct. Equal actual J values then force equal $x$, hence
+equal $d_R(x)$, hence identical complete worlds by Lemma 10.5.
+The same argument with $P_M\ne0$ proves terminal-M injectivity.
+This establishes the first two inclusions in (11.12).
+
+For independent pairs at one base outside $B=0$, J noninjectivity
+requires $P_J=0$ and M noninjectivity independently requires $P_M=0$.
+The common values and the chosen pairs need not be related. This
+proves the last inclusion with the original four-endpoint quantifiers.
+
+Finally $B,P_J,P_M$ are nonzero polynomials by Lemma 11.3 and
+Definition 11.4. The last candidate set is the simultaneous zero
+set of $BP_J$ and $BP_M$, contained in the zero set of the nonzero
+polynomial $BP_JP_M$. A nonzero polynomial over $\mathbb R$
+cannot vanish on an open rectangle, as follows by applying the
+univariate root bound successively to its coefficients. Its zero
+set is closed with empty interior. The claimed complement is
+therefore nonempty, open and dense, also after removing $p=24$.
+No finite-field root or complex carrier point has been promoted to
+an actual original world. ∎
+

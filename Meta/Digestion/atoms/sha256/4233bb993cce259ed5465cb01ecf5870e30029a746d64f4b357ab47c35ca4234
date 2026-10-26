@@ -1,0 +1,27 @@
+**Theorem 33.1 (acquired-image separation and terminal signs).** On the complete lower arc,
+
+$$
+ n>19/5,\qquad V_-(r)>90.
+ \tag{33.4}
+$$
+
+On the complete upper arc,
+
+$$
+ 1+3b/2+b^2/8<n<2,\qquad V_+(r)<90.
+ \tag{33.5}
+$$
+
+On both complete arcs,
+
+$$
+ b<7/20,\qquad g(7)>0,\qquad 24<d<a(W)<m(W).
+ \tag{33.6}
+$$
+
+Here $V_\sigma$ is the actual clock-six acquired M response, not a
+rescaled or changed observation. All these inequalities are strict and
+include the two singular sources. Thus the acquired images are disjoint,
+with 90 strictly between them. These claims neither assert injectivity
+within an arc nor settle the independent-pair existence problem.
+

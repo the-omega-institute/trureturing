@@ -14,18 +14,6 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
         H("Golden Local Threshold"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("golden-prime-local-objective"),
-                DeclarationHandle.Create(Prefix + "goldenPrimeLocalObjective"),
-                H("The one-prime local objective"),
-                StatementSource.FromAuthor(ObjectiveFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For a real price lambda, natural base p, and natural exponent a, this "
-                        + "is the logarithm of the reciprocal geometric factor through layer a, "
-                        + "minus lambda times a log p. The definition is total; the optimality "
-                        + "theorem below restricts p to be prime."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("golden-prime-local-threshold-sufficiency"),
                 DeclarationHandle.Create(
                     Prefix + "golden_prime_local_objective_maximal_of_threshold"),
@@ -54,22 +42,6 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
                             + "endpoint "
                             + "ties."))),
                 DescribeRole.Theorem))));
-
-    private static Formula ObjectiveFormula()
-    {
-        Formula lambda = F.Id("lambda");
-        Formula p = F.Id("p");
-        Formula a = F.Id("a");
-        Formula inverse = Parenthesized(new Formula.Fraction(D(1), p));
-        Formula ratio = new Formula.Fraction(
-            Subtract(D(1), new Formula.Power(inverse, Add(a, D(1)))),
-            Subtract(D(1), inverse));
-        Formula cost = Product(Product(lambda, a), Call("log", p));
-        return Disp(ForAll(
-            [Bound("lambda", Reals()), Bound("p", Naturals()), Bound("a", Naturals())],
-            Equal(Call("goldenPrimeLocalObjective", lambda, p, a),
-                Subtract(Call("log", ratio), cost))));
-    }
 
     private static Formula ThresholdFormula()
     {
@@ -110,11 +82,7 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
 
-    private static Formula Subtract(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
 
-    private static Formula Product(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
@@ -125,8 +93,6 @@ internal sealed class GoldenLocalThresholdDocument : IScribeDocumentDefinition
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
-    private static Formula Parenthesized(Formula value) =>
-        Seq(Open, value, Close);
 
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));

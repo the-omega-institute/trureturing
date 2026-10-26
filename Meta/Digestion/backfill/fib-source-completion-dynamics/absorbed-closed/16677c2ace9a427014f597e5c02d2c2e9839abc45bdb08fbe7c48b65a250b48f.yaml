@@ -1,0 +1,40 @@
+fingerprints:
+  raw_sha256: sha256:16677c2ace9a427014f597e5c02d2c2e9839abc45bdb08fbe7c48b65a250b48f
+  normalized_sha256: sha256:16677c2ace9a427014f597e5c02d2c2e9839abc45bdb08fbe7c48b65a250b48f
+cas_ref: sha256:16677c2ace9a427014f597e5c02d2c2e9839abc45bdb08fbe7c48b65a250b48f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.paired_source_reconstruction
+    target_statement_id: sha256:ee46e586bba401e55ac6c3464628e54ed24a12ce5e7597b2462bec1be5272bdb
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.complete_execution_word_parser
+    target_statement_id: sha256:43b1b4837039134febab276e35b51afcf4a5477412150a305b6284daa9ad6bc4
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply.actual_closed_record_supply
+    target_statement_id: sha256:be7d12157aa2c4ed021567130d428a52dfdc073218d0021233baf8557cabf192
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Completion.actual_source_address_injection
+    target_statement_id: sha256:f6a64d1adbe7297f828d481a7367d4e43aea91db436d4c6f4e0fa67bd079669f
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/EvenLengthAsymptotics.reset_execution_word
+    target_statement_id: sha256:608ed27e6f9331e50afd3b1490610b467fd4ee4786c7fefec5d86f2381fc4933
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.original_complete_storage_liminf
+    target_statement_id: sha256:3adda98884aa47fd5c520c0cc76c7243defd6038f9130d95ef919fa44be8db0d
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.original_count_codebook_approximation
+    target_statement_id: sha256:81684709d5419612fda39fa8a5c671de8b109a549264f7586fe43288a6c08ebc
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.operation_pair_membership
+    target_statement_id: sha256:cf3df96dfd8a402233ac17f632426646322dd7bb37cccd33db2d3899180569c7
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.original_codebook_storage_liminf
+    target_statement_id: sha256:1c6d8b1822d2deafc154b1d28e3cf9e4866796b814ed690a34b1e5ab10cde2a9
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.original_equal_weight_codebook
+    target_statement_id: sha256:218f56ecd9b7610b4b1f9034207d7b7d93711f340e6b9f0d454b6183166184fb
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.original_operation_decoder_storage
+    target_statement_id: sha256:e3f5714d4bcd5a04039a5c8a6a6d7fa2a47a644b4a3d8083777cba8c5b3cb9a9
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations.supplied_codebook_storage_liminf
+    target_statement_id: sha256:a2c814512bbda65efc1a0c7547382c48347c1af1aa3e11a70dd57e8138954db8
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetFactors.equal_weight_concatenation_injective
+    target_statement_id: sha256:b8bc411e72946cb58983a5e6905adc84ce17f9fccec15f0b96e1b966abceff90
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetFactors.reset_factor_parser
+    target_statement_id: sha256:0053782ff03a6a1c4c782ea1f5b62ed59f73a5fb895a85f4537e68f05d0bbe68
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply.actual_strict_record_supply
+    target_statement_id: sha256:e986d5908dc9c765650fc6dd044b37636ff98a1d5d2751b396dc6f6b8c9af529
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 68c8b424cdac6e085aaf6162962243f0ff633d40b95bf4cdce940d239e80c49b
+    - 7e7e82b6b803bf22303f35d6fe1b18be018e843f329174edd8fea45823560ba6

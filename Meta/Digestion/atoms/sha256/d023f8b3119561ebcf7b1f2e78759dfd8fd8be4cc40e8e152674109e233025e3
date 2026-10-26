@@ -1,0 +1,85 @@
+**Theorem 3.1 (actual global spectral consumers).**
+For $s>0$ define
+
+$$
+Z_H^+(s)=\operatorname{Tr}_{\mathscr G_0}(e^{-sH}|_{\mathscr G_0})
+       =\sum_{j\ge1}e^{-s\lambda_j},\qquad
+Z_H(s)=1+Z_H^+(s).
+\tag{3.1}
+$$
+
+These traces are finite, and the constant $B$ of Theorem 2.1 satisfies
+
+$$
+\frac b s e^{-s/b}\le Z_H^+(s)\le\frac B s\quad(s>0),
+\qquad
+\frac b{es}\le Z_H^+(s)\le\frac B s\quad(0<s\le b).
+\tag{3.2}
+$$
+
+In particular,
+
+$$
+\begin{gathered}
+\lim_{\lambda\to\infty}\frac{\log N_H^+(\lambda)}{\log\lambda}=1,
+\qquad
+\lim_{j\to\infty}\frac{\log\lambda_j}{\log j}=1,\\
+\lim_{s\downarrow0}\frac{\log Z_H^+(s)}{\log(1/s)}
+ =\lim_{s\downarrow0}\frac{\log Z_H(s)}{\log(1/s)}=1.
+\end{gathered}
+\tag{3.3}
+$$
+
+For $r>0$, writing $\mathcal S_r$ for the class of compact operators
+whose singular values have summable $r$th powers, one also has
+
+$$
+\Sigma\in\mathcal S_r\ \Longleftrightarrow\ r>1,
+\qquad
+C\in\mathcal S_r\ \Longleftrightarrow\ r>2.
+\tag{3.4}
+$$
+
+Thus the actual centered edge covariance is Hilbert–Schmidt and is
+not trace class, despite its compactness.
+
+*Proof.* For each eigenvalue and $s>0$,
+$e^{-s\lambda_j}=s\int_{\lambda_j}^{\infty}e^{-su}\,du$.
+Tonelli's theorem, with nonnegative integrands and counting multiplicity,
+gives the identity, initially even if the sum were infinite,
+
+$$
+Z_H^+(s)=s\int_0^\infty e^{-su}N_H^+(u)\,du.
+\tag{3.5}
+$$
+
+Theorem 2.1 bounds this by $B/s$, proving finiteness. Its lower bound
+$N_H^+(u)\ge bu-1$ for $u>1/b$ gives
+
+$$
+Z_H^+(s)\ge s\int_{1/b}^{\infty}(bu-1)e^{-su}\,du
+          =\frac b s e^{-s/b}.
+\tag{3.6}
+$$
+
+For $s\le b$ this is at least $b/(es)$. The bounds in (2.1) and
+(3.2), after taking logarithms and dividing by their diverging positive
+logarithmic denominators, give (3.3). The addition of the one constant
+mode does not alter that limit.
+
+The positive eigenvalues of $\Sigma$ are precisely
+$\mu_j=1/\lambda_j$, with the same multiplicities; its other eigenvalues
+are zero. From (2.1),
+
+$$
+\frac b j\le\mu_j\le\frac B j.
+\tag{3.7}
+$$
+
+Comparing with the positive series $\sum j^{-r}$ proves the first
+assertion of (3.4). Since $C^*C=\Sigma$, the nonzero singular values
+of $C$ are $\sqrt{\mu_j}$; the same comparison proves the second.
+The Laplace-transform identity and summability comparison are standard
+intermediate methods. Equations (3.2)–(3.4) are their repo-derived
+consequences for the source-specific $H,C,\Sigma$. $\square$
+

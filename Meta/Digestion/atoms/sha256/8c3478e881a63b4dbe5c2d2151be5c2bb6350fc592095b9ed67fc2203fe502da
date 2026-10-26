@@ -1,0 +1,15 @@
+## 127. A saturated decoder on the entire negative branch
+
+Keep the ordered basis (93.1), the actual powers $F^n$ of (93.3),
+and the reduced channel $\Phi_s$ of (93.5). Throughout §§127–132,
+$e_s(\mathcal R)$ and $\mu(s)$ mean precisely (105.2): one terminal
+CPTP map is chosen before the unknown input, and its error is maximized
+over every complex qutrit density matrix. The identity target and
+terminal permissions of Definition 105.1 are unchanged. The symbols
+$(u,\eta)$ and $\kappa(u,\eta)$ refer to the family (108.2) and its
+coefficient (108.10), independently of the root coordinates and scalar
+$\kappa$ in §119. The decoder $\mathcal R_{\mathrm{fam}}$ below is
+distinct from the exact horizon-two decoder $\mathcal R_*$ of §121;
+the corresponding terminal maps are $D_{\mathrm{fam}}$ and $D_*$.
+The unrestricted horizon-two value is exactly (118.4).
+

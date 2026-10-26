@@ -1,0 +1,5 @@
+source_id = "fib-common-parent-geometry-and-mixed-children"
+path = "docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

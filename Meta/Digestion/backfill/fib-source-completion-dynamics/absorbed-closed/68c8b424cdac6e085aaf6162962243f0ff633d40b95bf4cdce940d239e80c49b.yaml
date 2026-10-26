@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:68c8b424cdac6e085aaf6162962243f0ff633d40b95bf4cdce940d239e80c49b
+  normalized_sha256: sha256:68c8b424cdac6e085aaf6162962243f0ff633d40b95bf4cdce940d239e80c49b
+cas_ref: sha256:68c8b424cdac6e085aaf6162962243f0ff633d40b95bf4cdce940d239e80c49b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.original_complete_storage_liminf
+    target_statement_id: sha256:3adda98884aa47fd5c520c0cc76c7243defd6038f9130d95ef919fa44be8db0d
+receipts:
+  unresolved_subitems: []

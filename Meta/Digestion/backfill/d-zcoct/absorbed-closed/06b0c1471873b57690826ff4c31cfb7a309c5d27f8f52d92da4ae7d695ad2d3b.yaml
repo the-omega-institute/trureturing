@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:06b0c1471873b57690826ff4c31cfb7a309c5d27f8f52d92da4ae7d695ad2d3b
+  normalized_sha256: sha256:06b0c1471873b57690826ff4c31cfb7a309c5d27f8f52d92da4ae7d695ad2d3b
+cas_ref: sha256:06b0c1471873b57690826ff4c31cfb7a309c5d27f8f52d92da4ae7d695ad2d3b
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaAnalytic/ParityWeylInterval.parity_weyl_interval
+    target_statement_id: sha256:da94072cf889e1a101ac474c08b485b8449d734eb3d12ccf65d2a4f6c690b541
+receipts:
+  unresolved_subitems: []

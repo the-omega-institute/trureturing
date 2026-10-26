@@ -4,7 +4,43 @@
 
 Weighted forbidden-neighbour configurations, their Gram determinant, and quantum readout.
 
-**Theorem 1.1 (Admissibility as exclusion).**
+**Definition 1.1 (A unit-diagonal tridiagonal matrix).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}(R)] \forall n \in \mathbb{N},\; \forall a \in \mathbb{N} \to R,\; \forall b \in \mathbb{N} \to R,\; \forall i \in \operatorname{Fin}(n),\; \forall j \in \operatorname{Fin}(n),\; \operatorname{pathMatrix}(n, a, b)(i, j) = \operatorname{ite}(i = j, 1, \operatorname{ite}(\operatorname{Fin.val}(i) + 1 = \operatorname{Fin.val}(j), a(\operatorname{Fin.val}(i)), \operatorname{ite}(\operatorname{Fin.val}(j) + 1 = \operatorname{Fin.val}(i), b(\operatorname{Fin.val}(j)), 0)))$$
+
+*Formalization.* `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.pathMatrix` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sequence a supplies the superdiagonal and b supplies the subdiagonal. The determinant recurrence removes the first one or two coordinates.
+
+**Theorem 1.2 (The endpoint determinant recurrence).**
+
+$$\forall R \in \operatorname{Type},\; [\operatorname{CommRing}(R)] \forall n \in \mathbb{N},\; \forall a \in \mathbb{N} \to R,\; \forall b \in \mathbb{N} \to R,\; \operatorname{Matrix.det}(\operatorname{pathMatrix}(n + 2, a, b)) = \operatorname{Matrix.det}(\operatorname{pathMatrix}(n + 1, (i: \mathbb{N} \mapsto a(i + 1)), (i: \mathbb{N} \mapsto b(i + 1)))) - a(0) \cdot b(0) \cdot \operatorname{Matrix.det}(\operatorname{pathMatrix}(n, (i: \mathbb{N} \mapsto a(i + 2)), (i: \mathbb{N} \mapsto b(i + 2))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.path_det_recurrence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two smaller matrices use the shifted edge sequences. The recurrence identifies the determinant of a constant-edge path pencil with its continuant.
+
+**Theorem 1.3 (A Hermitian determinant factors over its spectrum).**
+
+$$\forall d \in \mathbb{N},\; \forall A \in \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{R}),\; \forall hA \in \operatorname{Matrix.IsHermitian}(A),\; \forall v \in \mathbb{R},\; \operatorname{Matrix.det}(1 + \operatorname{HSMul.hSMul}(v, A)) = \prod_{i: \operatorname{Fin}(d)} (1 + v \cdot \operatorname{Matrix.IsHermitian.eigenvalues}(hA, i))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.det_one_add_smul_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real scalar v, the determinant is the product of one plus v times each real Hermitian eigenvalue. This includes zero and negative v.
+
+**Theorem 1.4 (Admissibility as exclusion).**
 
 $$\forall n \in \mathbb{N},\; \forall b \in \operatorname{Fin}(n) \to \operatorname{Bool},\; \operatorname{AdmissibleCount.Adm}(n, b) \Leftrightarrow \left(\forall i \in \operatorname{Fin}(n),\; \forall j \in \operatorname{Fin}(n),\; \operatorname{val}(i) + 1 = \operatorname{val}(j) \Rightarrow \left(b(i) = \operatorname{false} \lor b(j) = \operatorname{false}\right)\right)$$
 
@@ -16,7 +52,7 @@ $$\forall n \in \mathbb{N},\; \forall b \in \operatorname{Fin}(n) \to \operatorn
 
 AdmissibleCount.Adm owns the configuration predicate, with its existing decAdm instance. Coordinates are zero-based; a true Boolean means occupied. This characterization gives the adjacency reading used by reversal and quantum normalization.
 
-**Definition 1.2 (Occupation number).**
+**Definition 1.5 (Occupation number).**
 
 $$\forall n \in \mathbb{N},\; \forall b \in \operatorname{Fin}(n) \to \operatorname{Bool},\; \operatorname{occupationCount}(b) = \sum_{i: \operatorname{Fin}(n)} (\operatorname{Bool.toNat}(b(i)))$$
 
@@ -28,7 +64,7 @@ $$\forall n \in \mathbb{N},\; \forall b \in \operatorname{Fin}(n) \to \operatorn
 
 Bool.toNat maps false to zero and true to one.
 
-**Definition 1.3 (The configuration polynomial).**
+**Definition 1.6 (The configuration polynomial).**
 
 $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Fin}(n) \to \mathbb{R},\; \operatorname{forbiddenPartition}(w) = \sum_{b: \{ b: \operatorname{Fin}(n) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(n, b) \}} ((\operatorname{Polynomial.X})^{\operatorname{occupationCount}(\operatorname{val}(b))} \cdot \operatorname{Polynomial.C}(\prod_{i: \operatorname{Fin}(n)} ((w(i))^{\operatorname{Bool.toNat}(\operatorname{val}(b)(i))})))$$
 
@@ -40,7 +76,7 @@ $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Fin}(n) \to \mathbb{R}
 
 The sum is over the legal subtype. Polynomial.X and Polynomial.C are the indeterminate and constant embedding. Coefficients use only powers and products of weights.
 
-**Definition 1.4 (The explicit bidiagonal matrix).**
+**Definition 1.7 (The explicit bidiagonal matrix).**
 
 $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \mathbb{R},\; \forall i \in \operatorname{Fin}(d),\; \forall j \in \operatorname{Fin}(d),\; \operatorname{lowerBidiagonal}(w)(i, j) = \operatorname{ite}(i = j, \operatorname{Real.sqrt}(w(\operatorname{Fin.mk}(2 \cdot \operatorname{val}(i)))), \operatorname{ite}(\operatorname{val}(j) + 1 = \operatorname{val}(i), \operatorname{Real.sqrt}(w(\operatorname{Fin.mk}(2 \cdot \operatorname{val}(j) + 1))), 0))$$
 
@@ -52,7 +88,7 @@ $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat
 
 Fin.mk carries the displayed index with its bound proof. Odd one-based weights form the diagonal; even one-based weights form the subdiagonal. The remaining entries are zero.
 
-**Theorem 1.5 (Gram positivity).**
+**Theorem 1.8 (Gram positivity).**
 
 $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \mathbb{R},\; \operatorname{Matrix.PosSemidef}(\operatorname{Matrix.transpose}(\operatorname{lowerBidiagonal}(w)) \cdot \operatorname{lowerBidiagonal}(w))$$
 
@@ -64,7 +100,7 @@ $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat
 
 This companion binds Mathlib Gram positivity for the explicit matrix. It includes singular matrices and does not need strictly positive weights.
 
-**Definition 1.6 (The Gram eigenvalues).**
+**Definition 1.9 (The Gram eigenvalues).**
 
 $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \mathbb{R},\; \operatorname{gramEigenvalue}(w) = \operatorname{Matrix.IsHermitian.eigenvalues}(\operatorname{Matrix.PosSemidef.isHermitian}(\operatorname{gramPosSemidef}(w)))$$
 
@@ -76,7 +112,7 @@ $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat
 
 The eigenvalues are Mathlib's real Hermitian eigenvalue list, including any zero eigenvalues.
 
-**Definition 1.7 (Normalized configuration amplitudes).**
+**Definition 1.10 (Normalized configuration amplitudes).**
 
 $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Fin}(n) \to \mathbb{R},\; \forall r \in \mathbb{R},\; \forall b \in \{ b: \operatorname{Fin}(n) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(n, b) \},\; \operatorname{quantumState}(w, r)(b) = \operatorname{Complex.ofReal}(\frac{1}{\operatorname{Real.sqrt}(\operatorname{Polynomial.eval}(r, \operatorname{forbiddenPartition}(w)))} \cdot (r)^{\frac{\operatorname{Nat.cast}(\mathbb{R}, \operatorname{occupationCount}(\operatorname{val}(b)))}{2}} \cdot \prod_{i: \operatorname{Fin}(n)} ((w(i))^{\frac{\operatorname{Nat.cast}(\mathbb{R}, \operatorname{Bool.toNat}(\operatorname{val}(b)(i)))}{2}}))$$
 
@@ -88,7 +124,7 @@ $$\forall n \in \mathbb{N},\; \forall w \in \operatorname{Fin}(n) \to \mathbb{R}
 
 Both half exponents are real exponents. Nat.cast here denotes the real coercion. The complex vector uses the legal configurations as its coordinates.
 
-**Definition 1.8 (The occupation observable).**
+**Definition 1.11 (The occupation observable).**
 
 $$\forall n \in \mathbb{N},\; \operatorname{numberOperator}(n) = \operatorname{Matrix.diagonal}((b: \{ b: \operatorname{Fin}(n) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(n, b) \} \mapsto \operatorname{Nat.cast}(\mathbb{C}, \operatorname{occupationCount}(\operatorname{val}(b)))))$$
 
@@ -100,7 +136,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{numberOperator}(n) = \operatorname{M
 
 Nat.cast here is the complex coercion. This diagonal matrix acts on the configuration space.
 
-**Definition 1.9 (Single-particle tunnelling).**
+**Definition 1.12 (Single-particle tunnelling).**
 
 $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \mathbb{R},\; \operatorname{tunnellingMatrix}(w) = \operatorname{Matrix.fromBlocks}(0, \operatorname{lowerBidiagonal}(w), \operatorname{Matrix.transpose}(\operatorname{lowerBidiagonal}(w)), 0)$$
 
@@ -112,7 +148,7 @@ $$\forall d \in \mathbb{N},\; \forall w \in \operatorname{Fin}(\operatorname{Nat
 
 The two blocks are indexed by Fin d. This single-particle space is distinct from the configuration space.
 
-**Theorem 1.10 (Determinant realization and quantum readout).**
+**Theorem 1.13 (Determinant realization and quantum readout).**
 
 $$\begin{aligned}\forall d: \mathbb{N}, w: \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \mathbb{R},\\(1 \le d \land \left(\forall i \in \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)),\; 0 \le w(i)\right)) \implies \\(\operatorname{forbiddenPartition}(w) = \operatorname{Matrix.det}(1 + \operatorname{Polynomial.X} \cdot \operatorname{Matrix.map}(\operatorname{Matrix.transpose}(\operatorname{lowerBidiagonal}(w)) \cdot \operatorname{lowerBidiagonal}(w), \operatorname{Polynomial.C})))\\\land (\operatorname{Matrix.PosSemidef}(\operatorname{Matrix.transpose}(\operatorname{lowerBidiagonal}(w)) \cdot \operatorname{lowerBidiagonal}(w)))\\\land (\forall i \in \operatorname{Fin}(d),\; 0 \le \operatorname{gramEigenvalue}(w, i))\\\land (\operatorname{forbiddenPartition}(w) = \prod_{i: \operatorname{Fin}(d) , \operatorname{gramEigenvalue}(w, i) \ne 0} (1 + \operatorname{Polynomial.C}(\operatorname{gramEigenvalue}(w, i)) \cdot \operatorname{Polynomial.X}))\\\land (\forall z \in \mathbb{C},\; \operatorname{Polynomial.eval}(z, \operatorname{Polynomial.map}(\operatorname{Complex.ofRealHom}, \operatorname{forbiddenPartition}(w))) = 0 \Rightarrow \left(\exists t \in \mathbb{R},\; t < 0 \land \left(z = \operatorname{Complex.ofReal}(t) \land \left(\exists i \in \operatorname{Fin}(d),\; 0 < \operatorname{gramEigenvalue}(w, i) \land t = -(\frac{1}{\operatorname{gramEigenvalue}(w, i)})\right)\right)\right))\\\land (\operatorname{Matrix.charpoly}(\operatorname{tunnellingMatrix}(w)) = \operatorname{Matrix.det}((\operatorname{Polynomial.X})^{2} \cdot 1 - \operatorname{Matrix.map}(\operatorname{Matrix.transpose}(\operatorname{lowerBidiagonal}(w)) \cdot \operatorname{lowerBidiagonal}(w), \operatorname{Polynomial.C})))\\\land (\forall v \in \mathbb{R},\; v \ne 0 \Rightarrow \operatorname{Polynomial.eval}(v, \operatorname{Matrix.charpoly}(\operatorname{tunnellingMatrix}(w))) = (v)^{2 \cdot d} \cdot \operatorname{Polynomial.eval}(-(\frac{1}{(v)^{2}}), \operatorname{forbiddenPartition}(w)))\\\land (\forall n \in \mathbb{N},\; \forall u \in \operatorname{Fin}(n + 2) \to \mathbb{R},\; \operatorname{forbiddenPartition}(u) = \operatorname{forbiddenPartition}((i: \operatorname{Fin}(n + 1) \mapsto u(\operatorname{Fin.castSucc}(i)))) + \operatorname{Polynomial.X} \cdot \operatorname{Polynomial.C}(u(\operatorname{Fin.last}(n + 1))) \cdot \operatorname{forbiddenPartition}((i: \operatorname{Fin}(n) \mapsto u(\operatorname{Fin.castSucc}(\operatorname{Fin.castSucc}(i))))))\\\land (\forall r \in \mathbb{R},\; \operatorname{quantumState}(w, r) = \frac{1}{\operatorname{Complex.ofReal}(\operatorname{Real.sqrt}(\operatorname{Polynomial.eval}(r, \operatorname{forbiddenPartition}(w))))} \cdot \sum_{b: \{ b: \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(\operatorname{Nat.sub}(2 \cdot d, 1), b) \}} (\operatorname{Complex.ofReal}((r)^{\frac{\operatorname{Nat.cast}(\mathbb{R}, \operatorname{occupationCount}(\operatorname{val}(b)))}{2}} \cdot \prod_{i: \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1))} ((w(i))^{\frac{\operatorname{Nat.cast}(\mathbb{R}, \operatorname{Bool.toNat}(\operatorname{val}(b)(i)))}{2}})) \cdot \operatorname{Pi.single}(b, 1)))\\\land (\forall r \in \mathbb{R},\; 0 < r \Rightarrow \operatorname{dotProduct}(\operatorname{star}(\operatorname{quantumState}(w, r)), \operatorname{quantumState}(w, r)) = 1)\\\land (\forall b \in \{ b: \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(\operatorname{Nat.sub}(2 \cdot d, 1), b) \},\; \operatorname{Matrix.mulVec}(\operatorname{numberOperator}(\operatorname{Nat.sub}(2 \cdot d, 1)), \operatorname{Pi.single}(b, 1)) = \operatorname{Nat.cast}(\mathbb{C}, \operatorname{occupationCount}(\operatorname{val}(b))) \cdot \operatorname{Pi.single}(b, 1))\\\land (\forall r \in \mathbb{R},\; \forall theta \in \mathbb{R},\; 0 < r \Rightarrow \operatorname{dotProduct}(\operatorname{star}(\operatorname{quantumState}(w, r)), \operatorname{Matrix.mulVec}(\operatorname{NormedSpace.exp}(\operatorname{Complex.ofReal}(theta) \cdot \operatorname{Complex.I} \cdot \operatorname{numberOperator}(\operatorname{Nat.sub}(2 \cdot d, 1))), \operatorname{quantumState}(w, r))) = \frac{\operatorname{Polynomial.eval}(\operatorname{Complex.ofReal}(r) \cdot \operatorname{Complex.exp}(\operatorname{Complex.ofReal}(theta) \cdot \operatorname{Complex.I}), \operatorname{Polynomial.map}(\operatorname{Complex.ofRealHom}, \operatorname{forbiddenPartition}(w)))}{\operatorname{Complex.ofReal}(\operatorname{Polynomial.eval}(r, \operatorname{forbiddenPartition}(w)))})\\\land (\forall P \in \operatorname{Polynomial}(\mathbb{R}),\; \forall r \in \mathbb{R},\; \forall theta \in \mathbb{R},\; \left(\operatorname{forbiddenPartition}(w) = P \land 0 < r\right) \Rightarrow \operatorname{dotProduct}(\operatorname{star}(\operatorname{quantumState}(w, r)), \operatorname{Matrix.mulVec}(\operatorname{NormedSpace.exp}(\operatorname{Complex.ofReal}(theta) \cdot \operatorname{Complex.I} \cdot \operatorname{numberOperator}(\operatorname{Nat.sub}(2 \cdot d, 1))), \operatorname{quantumState}(w, r))) = \frac{\operatorname{Polynomial.eval}(\operatorname{Complex.ofReal}(r) \cdot \operatorname{Complex.exp}(\operatorname{Complex.ofReal}(theta) \cdot \operatorname{Complex.I}), \operatorname{Polynomial.map}(\operatorname{Complex.ofRealHom}, P))}{\operatorname{Complex.ofReal}(\operatorname{Polynomial.eval}(r, P))})\\\land (\operatorname{Fintype.card}(\{ b: \operatorname{Fin}(\operatorname{Nat.sub}(2 \cdot d, 1)) \to \operatorname{Bool} \mid \operatorname{AdmissibleCount.Adm}(\operatorname{Nat.sub}(2 \cdot d, 1), b) \}) = \operatorname{Nat.fib}(2 \cdot d + 1) \land \operatorname{Fintype.card}(\operatorname{Sum}(\operatorname{Fin}(d), \operatorname{Fin}(d))) = 2 \cdot d)\end{aligned}$$
 
@@ -137,6 +173,7 @@ The final row gives the two basis counts. Equality of partition polynomials does
 ## References
 
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true`
+- Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.det_one_add_smul_hermitian`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.forbiddenPartition`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.forbidden_neighbour_determinant`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.gramEigenvalue`
@@ -144,6 +181,8 @@ The final row gives the two basis counts. Equality of partition polynomials does
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.lowerBidiagonal`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.numberOperator`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.occupationCount`
+- Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.pathMatrix`
+- Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.path_det_recurrence`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.quantumState`
 - Truth anchor: `D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.tunnellingMatrix`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../S1/Words/AdmissibleWords/AdmissibleCount.md)

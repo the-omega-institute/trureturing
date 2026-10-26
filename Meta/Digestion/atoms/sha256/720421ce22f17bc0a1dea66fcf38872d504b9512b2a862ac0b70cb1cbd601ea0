@@ -1,0 +1,54 @@
+## 11. Whole-child consumer of the inherited regional signs
+
+*Proof of Theorem 9.2.* Use exactly $X,N,L,\ell,E,d_N,Q,P,V,Z,W,B_p,C_J$
+from (4.1)–(4.4), with the same variables $r,b$. In particular
+$X=bj$, $N=bn$, $\ell=2L$, $e=E/(5\ell)$, and the response
+correspondence is precisely (4.3). These are the original interpolating
+gain and fixed drift of Section 2, identified with complete worlds by the
+zero-safe converse of [the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. There is no second gain circuit or new terminal observation.
+
+The five polynomial certificates (5.1)–(5.2) are on the same closed $R$
+as in (9.1). Neither their polynomials nor their affine Bernstein
+substitution involves $v$. Their positive coefficient minima therefore
+still give, on all of $R$,
+
+$$
+L<0,\quad Q<0,\quad B_p>0,\quad C_J<0,
+\qquad p_b>0,\quad a_rp_b-a_bp_r>0,
+\tag{11.1}
+$$
+
+and the same boundary inequalities (5.4). The sign argument uses the
+nonnegative tensor Bernstein basis and its partition of unity, namely the
+classical convex-hull property; see Patrikalakis–Maekawa–Cho,
+*Shape Interrogation*, [Section 1.3.4](https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node12.html).
+Only the companions to which these existing signs apply have changed:
+Lemma 10.2 now places the entire child over every point of $K_+$ in $R$.
+
+Fix $p\in[56,58]$. The boundary inequalities and $p_b>0$ give one
+and only one $b_p(r)\in(13/20,1)$ for each $r\in[3/10,1]$.
+The implicit-function theorem, applied to this rational map where its
+denominators are nonzero, gives the derivative (5.5), strictly positive
+by (11.1). The graph need not keep $v$ in $[304,306]$ between its
+points: the derivative signs hold on the whole source rectangle $R$.
+Thus the usual one-variable monotonicity argument compares any two
+points on this graph.
+
+Now take any $W,W'\in C(p,v)$ with $(p,v)\in K_+$ and
+$a(W)=a(W')$. Lemma 10.2 applies separately to these two worlds and
+to every other companion, so both sources belong to $R$. Strict
+monotonicity on $b=b_p(r)$ gives $r=r'$, and uniqueness of $b_p(r)$
+then gives $b=b'$. Since $X,N,T,U>0$ on $R$, (4.5) and $L<0$
+give $\Lambda\ne0$. The undivided parent (2.1) now fixes $e$, hence
+the one drift $d=24+e$. Its first four gain samples in Section 2 fix
+the entire degree-at-most-three polynomial uniquely by fixed-node
+interpolation. The latter is the classical Lagrange interpolation
+principle; see Berrut–Trefethen, *Barycentric Lagrange Interpolation*,
+Section 2. Thus the complete triples coincide, proving (9.2)–(9.3).
+
+This use of the regional signs occurs only after the zero-safe
+localization. It introduces no preliminary deletion of the singular
+parent, the $e=0$ stratum, the $d=0$ stratum, lower degrees, or sampled
+gain zeros. ∎
+

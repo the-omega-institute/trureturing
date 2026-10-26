@@ -1,0 +1,99 @@
+**定理 8.11（每个前缀保码的精确双逻辑位通道）。**
+在命题[8.10](#obs-prop-phase)的固定编码上，假设独立提供任意实参数端点脉冲
+
+$$
+R_1(t)=e^{-itH_1},\qquad R_3(t)=e^{-itH_3},
+$$
+
+以及同址可重复调用的固定门 $S_\star$。除此之外不需要调用中位控制 $H_2$。则对每个 $U\in U(4)$，存在一个与未知输入无关的有限字 $W$ 和实数 $\gamma$，使
+
+$$
+W\iota=e^{i\gamma}\iota U.
+$$
+
+每个原语前缀及脉冲中途都保持 $\mathcal C$，并固定 $\mathbb C|010\rangle$。因此对任意有限维被动参考 $R$ 和任意 $\rho\in\mathcal D(\mathbb C^4\otimes R)$，该字实现与 $U\otimes I_R$ 完全相同的编码通道。
+
+**证明。**
+
+在编码中中位始终为零，所以
+
+$$
+\iota^\dagger R_1(t)\iota=e^{-itX\otimes I},\qquad
+ \iota^\dagger R_3(t)\iota=e^{-itI\otimes X}.
+$$
+
+两个生成元在 $|010\rangle$ 上为零，固定相位在该态上也为一。因此这些原语对于所有参数和脉冲中间时刻都保码并固定辅助方向；有限组合保留这些性质。
+
+以下矩阵字按右因子先作用。令 $X_1=X\otimes I$、$X_2=I\otimes X$。由于 $R_3(\pi/2)$ 在码上为 $-iX_2$、$R_3(-\pi/2)$ 为 $iX_2$，有
+
+$$
+R_3(-\pi/2)S_\star R_3(\pi/2)S_\star
+ \ \longmapsto\ X_2SX_2S
+ =D_1:=\operatorname{diag}(1,1,i,i).
+$$
+
+交换两端同样得到 $D_2=\operatorname{diag}(1,i,1,i)$。每个 $D_j$ 是相应逻辑位上的单体相位 $\operatorname{diag}(1,i)$。$S_\star^{-1}=S_\star^3$，所以这些字的逆也可用有限字实现。
+
+单体矩阵 $D=\operatorname{diag}(1,i)$ 满足 $DXD^\dagger=Y$；共轭端点脉冲便得到任意角度的单体 $Y$ 旋转。为明确其充分性，任意 $V\in SU(2)$ 可唯一写为
+
+$$
+V=a_0I-i(a_xX+a_yY+a_zZ),\qquad
+ a_0^2+a_x^2+a_y^2+a_z^2=1,
+$$
+
+其中各系数为实数。直接相乘给
+
+$$
+\begin{aligned}
+e^{-i\alpha X}e^{-i\beta Y}e^{-i\eta X}
+ ={}&\cos\beta\cos(\alpha+\eta)I\\
+ &-i\bigl(\cos\beta\sin(\alpha+\eta)X
+ +\sin\beta\cos(\alpha-\eta)Y
+ +\sin\beta\sin(\alpha-\eta)Z\bigr).
+\end{aligned}
+$$
+
+选择 $\cos\beta=\sqrt{a_0^2+a_x^2}$、$\sin\beta=\sqrt{a_y^2+a_z^2}$，再选 $\alpha+\eta$ 和 $\alpha-\eta$ 为相应二维向量的极角，即得到 $V$；长度为零的二维向量可任取极角。因此任意单逻辑位 $SU(2)$ 门均可精确有限实现。
+
+由命题[8.10](#obs-prop-phase)取得 $CZ=S^2$。令 $H_2^{\rm Had}=2^{-1/2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$，则 $iH_2^{\rm Had}\in SU(2)$，而
+
+$$
+(I\otimes iH_2^{\rm Had})CZ(I\otimes(iH_2^{\rm Had})^\dagger)=CNOT.
+$$
+
+标准局部门加 CNOT 的精确有限分解也给出相同的通用性结论[16](#ref-barenco)。这里再给出一个只需有限维逆函数定理的精确达到证明，避免把 Lie 代数生成仅解释为稠密逼近。
+
+直接共轭计算给
+
+$$
+CZ(X\otimes I)CZ=X\otimes Z,
+$$
+
+因此已经取得连续一参数群 $\exp(-itX\otimes Z)$。用两端的单体 $SU(2)$ 共轭，可以将 $X$ 和 $Z$ 分别送到任意 Pauli 轴，从而取得全部九个群
+
+$$
+\exp(-it\sigma_a\otimes\sigma_b),\qquad
+ a,b\in\{x,y,z\},\quad t\in\mathbb R.
+$$
+
+加上六个单体 Pauli 一参数群，得到十五个无迹 Hermitian 矩阵 $B_1,\ldots,B_{15}$。Pauli 矩阵的迹正交关系使这些矩阵线性独立；无迹 Hermitian 四阶矩阵空间维数为 $4^2-1=15$，所以 $-iB_j$ 构成 $\mathfrak{su}(4)$ 的实基。
+
+考察光滑乘积映射
+
+$$
+F:\mathbb R^{15}\longrightarrow SU(4),\qquad
+ F(t_1,\ldots,t_{15})=e^{-it_{15}B_{15}}\cdots e^{-it_1B_1}.
+$$
+
+在零点的导数是 $v\mapsto-i\sum_jv_jB_j$，为切空间同构。逆函数定理给出：$F$ 的像包含恒等矩阵的一个开邻域。由这些一参数群的有限乘积组成的子群因而是 $SU(4)$ 的开子群；其每个陪集也开，故它同时为闭集。
+
+$SU(4)$ 连通可以直接看出：对任意 $V\in SU(4)$，谱分解写成 $V=Q\operatorname{diag}(e^{i\theta_j})Q^\dagger$。行列式条件使 $\sum_j\theta_j$ 为 $2\pi$ 整数倍；从其中一个角减去该整数倍，可保持全部本征值而使角和为零。于是 $V=e^{iH}$，其中 $H$ 无迹 Hermitian，路径 $t\mapsto e^{itH}$ 全在 $SU(4)$ 中连接 $I$ 与 $V$。所以包含单位邻域的上述子群就是全部 $SU(4)$。这证明每个 $SU(4)$ 元素都有实际有限字，而不仅属于字集合的闭包。
+
+最后任意 $U\in U(4)$ 都可乘一个标量 $e^{i\gamma}$ 变成行列式一的矩阵，故已得有限字实现 $e^{i\gamma}U$。所有共轭、逆和乘积均使用同一保码原语；逆由反向实参数脉冲以及 $S_\star^{-1}=S_\star^3$ 实现。
+
+全部构件来自已证明保码的原语，故每个原语前缀和脉冲中途保码。对参考系统张量恒等后仍有 $W\iota\otimes I_R=e^{i\gamma}(\iota U\otimes I_R)$；密度态共轭使标量消去，得到完全相同的联合通道。
+
+该结论是编码上的通道通用性。由于所有字固定 $|010\rangle$，它并未给出任意五维酉算子，也未给出逻辑子空间相对辅助方向的任意标量相位。上述精确有限存在性与实际参数、总持续时间和数字编译的成本仍是不同问题。
+
+证毕。
+

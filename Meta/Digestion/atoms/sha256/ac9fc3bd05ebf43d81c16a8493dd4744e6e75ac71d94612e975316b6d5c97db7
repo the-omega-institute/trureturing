@@ -1,0 +1,103 @@
+## 30. The literal parent and quantitative companion restrictions
+
+The domain throughout Sections 30–34 is the literal parent
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\tag{30.1}
+$$
+
+Every world is one complete triple
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+c=\frac{r(1-r)}b,
+\tag{30.2}
+$$
+
+where $0<r<1$, $b>0$, $d\in\mathbb R$ is fixed in that world,
+and $g$ is one nonzero real polynomial of degree at most three.
+The two action matrices are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{30.3}
+$$
+
+Products are chronological left products, $Q_0=I$ and
+$Q_i=E_iQ_{i-1}$, with reading
+$y_i=d+g(i)\operatorname{tr}(Q_iP)$. Realizing (30.1) means that
+the first five readings, for actions $J,M,J,M$, are exactly
+$(0,24,147/5,24,18)$. The subsequent two actions are $M,M$ at
+clocks five and six, with acquired readings $p,v$.
+
+Write
+
+$$
+j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\qquad e=d-24.
+\tag{30.4}
+$$
+
+The corresponding traces through clock six are
+$(1,j,T,n,U,U+n,2U+n)$. In particular
+
+$$
+p=d+(U+n)g(5),\qquad v=d+(2U+n)g(6).
+\tag{30.5}
+$$
+
+The entire child $C(p,v)$ consists of all these complete worlds with
+the indicated two acquired readings; when referring to the joint
+problem, $p\ne24$. No world is restricted by the gain's sign, exact
+degree, individual sampled values or root multiplicities. Each world
+has its own arbitrary fixed real drift. Singular parent sources and
+unbounded positive source entries are included in this definition.
+
+The following identities are the published parent and extrapolation
+interfaces, specialized to (30.1). Their primary source is
+[common-parent geometry, Theorem 2.1, (2.1)–(2.5)](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+The same source's (18.2)–(18.5) give the gain extrapolations and
+readouts; its (18.6)–(18.8) concern a multiworld construction.
+For every world in the present domain,
+
+$$
+\begin{gathered}
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\kappa=\frac6T-\frac2U=\frac{2(2+5b)}{TU}>0,\\
+e\Lambda+\frac{24}{5}(b-1/8)\kappa=0,\\
+\bigl(g(0),g(1),g(2),g(3)\bigr)
+=\left(-d,-\frac e j,\frac{147/5-d}{T},-\frac e n\right).
+\end{gathered}
+\tag{30.6}
+$$
+
+The parent equation in (30.6) is undivided, so it retains
+$\Lambda=0$. Rewriting it without dividing gives
+
+$$
+d\Lambda=N,\qquad
+N=\frac{882}{5T}+\frac{18}{U}-\frac{96}{j}-\frac{96}{n}.
+\tag{30.7}
+$$
+
+The fixed-node interpolation rows for clocks five and six are
+$(-4,15,-20,10)$ and $(-10,36,-45,20)$. Thus the same whole gain has
+
+$$
+\begin{aligned}
+g(5)&=d\mathcal A+\mathcal C,\\
+\mathcal A&=4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n},\qquad
+\mathcal C=\frac{360}{j}-\frac{588}{T}+\frac{240}{n},\\
+g(6)&=240-\frac{243}{T}+eL,\qquad
+L=10+\frac{45}{T}-\frac{36}{j}-\frac{20}{n}.
+\end{aligned}
+\tag{30.8}
+$$
+
+These are applications of the existing degree-at-most-three
+interpolation formula, not extra assumptions on late-clock gains.
+All denominators displayed in (30.6)–(30.8), other than the
+undivided factor $\Lambda$, are positive by (30.2).
+

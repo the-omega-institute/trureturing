@@ -1,0 +1,62 @@
+**Theorem 106.1 (Fourier guessing).** For every $-1/2\le s\le1$, the
+optimal equal-prior guessing probability for $\{\sigma_0,\sigma_1,\sigma_2\}$
+is exactly
+
+$$
+G(s)=\max_{\substack{M_k\ge0\\\sum_kM_k=I}}
+       \frac13\sum_{k=0}^2\operatorname{Tr}(M_k\sigma_k)
+     =\frac13+\frac{2|s|}{9}.
+\tag{106.2}
+$$
+
+*Proof.* Write $q=|s|$. The matrices $A_k$ satisfy
+
+$$
+A_k^\dagger=A_k,\qquad A_k^2=Q_{01},\qquad
+\operatorname{Tr}A_k=0,\qquad \sum_kA_k=0.
+\tag{106.3}
+$$
+
+For $s\ne0$ put $\varepsilon=\operatorname{sign}s$. The operators
+
+$$
+M_k=\frac{I+\varepsilon A_k}{3}
+\tag{106.4}
+$$
+
+are positive, have eigenvalues $0,1/3,2/3$, and sum to $I$. Each one gives
+
+$$
+\operatorname{Tr}(M_k\sigma_k)
+ =\frac{\operatorname{Tr}I+\varepsilon s\operatorname{Tr}Q_{01}}9
+ =\frac13+\frac{2q}{9}.
+\tag{106.5}
+$$
+
+The equal-prior average has the same value. At $s=0$ use $M_k=I/3$.
+
+For the dual certificate set
+
+$$
+Y=\frac I9+\frac q9Q_{01},\qquad
+Y-\frac{\sigma_k}{3}=\frac{qQ_{01}-sA_k}{9}\ge0,
+\qquad \operatorname{Tr}Y=\frac13+\frac{2q}{9}.
+\tag{106.6}
+$$
+
+The residual has eigenvalues $0,0,2q/9$: in the $01$ block its diagonal
+entries are $q/9$ and its off-diagonal entries are
+$-s\omega^{-k}/9,-s\omega^k/9$. In particular the $Q_0,Q_1$ in this
+certificate are computational projectors, not Fourier projectors.
+For any POVM $\{N_k\}$, the trace of the product of two positive matrices
+is nonnegative, so
+
+$$
+\frac13\sum_k\operatorname{Tr}(N_k\sigma_k)
+ \le\sum_k\operatorname{Tr}(N_kY)=\operatorname{Tr}Y.
+\tag{106.7}
+$$
+
+The displayed primal attains the dual value, proving (106.2), including
+$q=0$. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f2b14d9cec235ba3f2ea0ab995fa2904c449cc3fc30c8d9d0c980e7bd345ff6
+  normalized_sha256: sha256:1f2b14d9cec235ba3f2ea0ab995fa2904c449cc3fc30c8d9d0c980e7bd345ff6
+cas_ref: sha256:1f2b14d9cec235ba3f2ea0ab995fa2904c449cc3fc30c8d9d0c980e7bd345ff6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the label heteronomy for the described attribution case.
+    previous_atom_id: ba227585e4371fbf22c31e1df3d491033707b8d5ada6ddd7eb440783faff97ac
+    next_atom_id: 62c6362f564608295c66828f59c2e13b86b9f6c338ab686778fba0a218dee832

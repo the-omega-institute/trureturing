@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7
+  normalized_sha256: sha256:e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7
+cas_ref: sha256:e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only a section heading and a proof-introduction marker; no mathematical assertion. Its canonical decomposition children are also heading/proof markers.
+    previous_atom_id: 5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5
+    next_atom_id: 75edeedbc8b29d571096896c9863e92bef6af54e859460640f7086230c069f40
+  chain_atoms:
+    - 5124472be02c76ac2f0d5bec3cc0d653fc17252154f1f6cf2366b1d74ff43c26
+    - 93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089

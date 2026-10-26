@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f236a3a9b75d6307ecfd934a7d28252d09db5cc10b038931636a3cbd905026b0
+  normalized_sha256: sha256:f236a3a9b75d6307ecfd934a7d28252d09db5cc10b038931636a3cbd905026b0
+cas_ref: sha256:f236a3a9b75d6307ecfd934a7d28252d09db5cc10b038931636a3cbd905026b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 障碍类型名及研究组织解释。不另主张独立数学命题。
+    previous_atom_id: 8e4c648aa88b192b3be88d329871ca8f4252e9348c13e25eff2c0af9bb85701c
+    next_atom_id: b6c6573babd86229a1a72c149d39844e2205d5b58ea6c6f556f0b553a5bac1c9

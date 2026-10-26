@@ -1,0 +1,17 @@
+**Proposition 21.2 (the actual native time–storage consequence).** Let $r_x$ be the actual finite prefix ending at a completed task output, and write $K_{\rm nat}(r_x)$ for the quantity called $n(r_x)$ in Theorem 7.2. For that theorem's construction-counted storage,
+
+$$
+T(x)\le K_{\rm nat}(r_x)\le S(r_x)/8.
+\tag{C.21.1}
+$$
+
+Consequently, completion with correct output and a uniform bound $S(r_x)\le Q(|x|)$ on every input imply $T(x)\le Q(|x|)/8$. Here $Q$ is measured against the task-start problem record, not against the completed history's encoding length.
+
+Proof. Reuse Theorem 7.2 on the same actual prefix:
+
+$$
+S(r_x)=S_0+b_{\rm ctl}(r_x)+8A(r_x)+8K_{\rm nat}(r_x).
+$$
+
+All terms apart from the last are nonnegative. The task interval is a subinterval of this prefix, giving (C.21.1), and substitution gives the stated consequence. This does not assert that the task's incremental storage is exactly eight times its time: ordinary cells, control, acquisition and pre-start history are included in $S$. $\square$
+

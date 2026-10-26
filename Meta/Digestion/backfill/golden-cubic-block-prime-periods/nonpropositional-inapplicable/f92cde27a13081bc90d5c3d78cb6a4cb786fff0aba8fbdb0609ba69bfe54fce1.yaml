@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f92cde27a13081bc90d5c3d78cb6a4cb786fff0aba8fbdb0609ba69bfe54fce1
+  normalized_sha256: sha256:f92cde27a13081bc90d5c3d78cb6a4cb786fff0aba8fbdb0609ba69bfe54fce1
+cas_ref: sha256:f92cde27a13081bc90d5c3d78cb6a4cb786fff0aba8fbdb0609ba69bfe54fce1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and definitions of the base field, the selected real cube roots, and the generated tower. No degree, independence or irreducibility theorem is asserted.
+    previous_atom_id: 1c93a83117045295f70149fad0da3ac2450864060d7c503f4c22ecab8317adb2
+    next_atom_id: 26f3f51ac9fb6277f37034ff44b76504e6812493212be916a042fd3829acf083

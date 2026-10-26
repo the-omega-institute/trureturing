@@ -1,0 +1,71 @@
+**Proposition 119.5 (two matrix limits and their vector boundary).**
+Put $H=\{0,1,6\}$, $S=\{2,3,4,5,7\}$, and
+$W_n=U_nM_n^{-1/2}$. These are counting isometries from Euclidean
+$\mathbb R^8$ into $\ell^2(V_n)$. In the ordering $H\sqcup S$,
+
+$$
+\begin{aligned}
+B_n:=W_n^{\mathsf T}L_{\mathrm{closed},n}W_n
+ &=M_n^{-1/2}KM_n^{-1/2}
+   \longrightarrow 0_H\oplus K_{SS},\\
+B_n^{\mathrm k}:=W_n^{\mathsf T}L_{\mathrm{kill},n}W_n
+ &=M_n^{-1/2}(K+D_n)M_n^{-1/2}
+   \longrightarrow I_H\oplus K_{SS}.
+\end{aligned}
+\tag{119.12}
+$$
+
+The edges induced on $S$ form the path $2-3-7-5-4$. Here $K_{SS}$
+is the principal cube submatrix: in that path order it has diagonal
+$3$ throughout and $-1$ on successive neighbours. It retains grounding
+to $H$ and is not the closed path Laplacian.
+
+The consistent maps $q_n$ define $q_\infty$ on
+$\bigcup_nV_n=\{0,1\}^*$. Its literal counting pullback
+$U_\infty f=f\circ q_\infty$ belongs to $\ell^2$ exactly when
+$f|_H=0$. With all finite-stage vectors zero extended to this common
+address space, $U_nf$ has a strong $\ell^2$ limit exactly under that
+condition. For fixed $x\in\mathbb R^8$, $W_nx$ converges weakly to
+the vector supported at the five original $S$ addresses with values
+$x|_S$, and converges strongly exactly when $x|_H=0$.
+
+Proof. By (119.4), masses on $H$ tend to infinity and masses on $S$
+are exactly one. Every entry of $B_n$ touching $H$ tends to zero;
+the $S$ block remains $K_{SS}$. Moreover
+
+$$
+\frac{(D_n)_{00}}{(M_n)_{00}}=1,\qquad
+\frac{(D_n)_{11}}{(M_n)_{11}}=\frac{6F}{6F-3}\to1,\qquad
+\frac{(D_n)_{66}}{(M_n)_{66}}
+ =\frac{4G+2F}{4G+2F-3}\to1.
+\tag{119.13}
+$$
+
+The other killing ratios are zero. This proves (119.12). Inspection
+of (119.6) gives the asserted path. Equivalently $K_{SS}$ is its
+closed path Laplacian plus the diagonal $(2,1,1,1,2)$ in path order.
+Finite-dimensional continuity also gives the corresponding heat-matrix
+limits $e^{-tB_n}$ and $e^{-tB_n^{\mathrm k}}$ for each fixed $t\ge0$.
+These use isometric coordinates $x=M_n^{1/2}f$, which vary with $n$;
+they are different coordinates from Proposition 119.4's fixed class values.
+
+The domain union is the address exhaustion of Continuation (55.2),
+applied to this seed. Each $H$ fibre has infinitely many occurrences,
+whereas each $S$ fibre is a single original internal address. A nonzero
+constant amplitude on any $H$ fibre has infinite counting norm. This
+proves the exact domain of $U_\infty$. If $f|_H=0$, the zero-extended
+$U_nf$ are already the same finitely supported vector for every $n$;
+otherwise their squared norms $f^{\mathsf T}M_nf$ diverge.
+
+Each $H$ column of $W_n$ has norm one but tends pointwise to zero,
+since its value is the reciprocal square root of its growing fibre
+size. Boundedness and density of finitely supported test vectors give
+weak convergence to zero. The $S$ columns are fixed point masses.
+Thus the weak limit of $W_nx$ has squared norm $\|x|_S\|^2$, while
+$\|W_nx\|^2=\|x\|^2$. A strong limit exists exactly when $x|_H=0$.
+Consequently the zero block in (119.12) does not exhibit nonzero
+strong limiting counting-$\ell^2$ vectors on $H$. On the actual domain
+$f|_H=0$, the infinite edge form is exactly
+$f_S^{\mathsf T}K_{SS}f_S$, since its support and every incident edge
+are already in the original tree. $\square$
+

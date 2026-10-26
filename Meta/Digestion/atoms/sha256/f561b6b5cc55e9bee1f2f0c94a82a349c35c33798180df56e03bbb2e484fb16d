@@ -1,0 +1,90 @@
+**Lemma 244.4 (Whole-family identity and necessary Kraus pullbacks).**
+Fix a finite $k\ge2$. Suppose a separable CP map $\mathcal E_k$,
+with no trace-nonincreasing assumption, satisfies
+
+$$
+\mathcal E_k(\rho_q^{\otimes k})=m_qW_q
+\quad(q\in D),\qquad m_q\ge0.
+\tag{244.9}
+$$
+
+No continuity or other regularity of $m_q$ is assumed. Then for all
+real $p,\theta$,
+
+$$
+(2t+g(p))\mathcal E_k(N(p,\theta)^{\otimes k})
+=\operatorname{Tr}\!\left(\mathcal E_k(N(p,\theta)^{\otimes k})\right)
+ T_t(p).
+\tag{244.10}
+$$
+
+For every product Kraus representation (244.4), the vectors
+
+$$
+v_j=(A_j^{\mathsf T}\otimes B_j^\dagger)|\phi\rangle
+\tag{244.11}
+$$
+
+belong to the common input kernel
+
+$$
+K_k=\bigcap_{\theta\in\mathbb R}\ker(R_\theta^{\otimes k}).
+\tag{244.12}
+$$
+
+Proof. For actual $q$, multiply (244.9) by $(CP_q)^k$ and
+take traces. Since $\operatorname{Tr}T_t(p)=2t+g(p)$, eliminating
+the unknown scalar gives (244.10) at every actual pair
+$(p(q),\theta(q))$. Lemma 240.2 supplies an actual rectangle
+$I\times K$ on which this identity holds. The same pair
+$(p,\theta)$ occurs in all $k$ tensor factors.
+
+Every entry of the difference of the two sides of (244.10) is a
+polynomial in $p$ with coefficients that are finite trigonometric
+polynomials in $\theta$. For each $\theta\in K$, its vanishing on
+the interval $I$ forces every coefficient in $p$ to vanish.
+Each such trigonometric coefficient vanishes on $K$, hence everywhere:
+writing it as a finite Laurent polynomial in $e^{i\theta}$ and
+multiplying by a sufficiently large power of $e^{i\theta}$ gives a
+polynomial with infinitely many distinct roots. It is the zero
+polynomial. Thus (244.10) holds for all real $p,\theta$.
+This extension uses the actual jointly realized patch only to establish
+an identity for a fixed linear map. It grants neither independently
+variable native preparations nor source-dependent operations.
+
+At $p=p_*$, (244.7) gives
+$T_t(p_*)^\Gamma=tQ$, which annihilates $|\phi\rangle$.
+Taking the output partial transpose and its $\phi$ expectation in
+(244.10) therefore gives
+
+$$
+\langle\phi|
+ \mathcal E_k(N(p_*,\theta)^{\otimes k})^\Gamma
+|\phi\rangle=0.
+\tag{244.13}
+$$
+
+For arbitrary $X$ the product Kraus formula implies
+
+$$
+\mathcal E_k(X)^\Gamma
+=\sum_j(\overline{A_j}\otimes B_j)X^\Gamma
+       (A_j^{\mathsf T}\otimes B_j^\dagger).
+\tag{244.14}
+$$
+
+Under the fixed party grouping, the input transpose of
+$N(p_*,\theta)^{\otimes k}$ is $R_\theta^{\otimes k}$.
+Combining (244.11)–(244.14) yields
+
+$$
+0=\sum_j\langle v_j|R_\theta^{\otimes k}|v_j\rangle.
+\tag{244.15}
+$$
+
+Each summand is nonnegative by (244.8), so each is zero.
+For a positive semidefinite matrix, zero quadratic form means that
+its positive square root annihilates the vector, and hence the
+matrix itself does. Thus $v_j\in\ker(R_\theta^{\otimes k})$
+for every $\theta$, proving (244.12). ∎
+

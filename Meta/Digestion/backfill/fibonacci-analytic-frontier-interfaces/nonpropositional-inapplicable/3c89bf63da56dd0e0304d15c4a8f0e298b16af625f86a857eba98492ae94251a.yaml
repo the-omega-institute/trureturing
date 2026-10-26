@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c89bf63da56dd0e0304d15c4a8f0e298b16af625f86a857eba98492ae94251a
+  normalized_sha256: sha256:3c89bf63da56dd0e0304d15c4a8f0e298b16af625f86a857eba98492ae94251a
+cas_ref: sha256:3c89bf63da56dd0e0304d15c4a8f0e298b16af625f86a857eba98492ae94251a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading, source attribution and description of methods to be reused; no bound or theorem is stated.
+    previous_atom_id: b53c78a4d11b682baa5fd3145534256ad49fda7df5b9c3f5ba92f98b412b66e6
+    next_atom_id: 2aaa443f0aefe846831b93f65a9535b1acc1ded11812e3da7db0695ebac9a1c0

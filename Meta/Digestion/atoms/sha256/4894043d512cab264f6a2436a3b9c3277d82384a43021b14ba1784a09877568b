@@ -1,0 +1,132 @@
+## 8. Exact terminal-coordinate signs on the unbounded strip
+
+Keep $R,B$ from (3.1), and introduce distinct terminal derivative
+numerators
+
+$$
+R_a=(N_a)_rH-N_aH_r,\qquad
+B_a=(N_a)_bH-N_aH_b.
+\tag{8.1}
+$$
+
+Define the integer polynomial
+
+$$
+\begin{aligned}
+E_J={}&\{(N_p)_r(N_a)_b-(N_p)_b(N_a)_r\}H\\
+&-\{(N_p)_rN_a-N_p(N_a)_r\}H_b\\
+&+\{(N_p)_bN_a-N_p(N_a)_b\}H_r.
+\end{aligned}
+\tag{8.2}
+$$
+
+Expansion gives the exact polynomial identity
+
+$$
+RB_a-BR_a=HE_J.
+\tag{8.3}
+$$
+
+In particular there is no remainder in this denominator cancellation.
+Where $H\ne0$,
+
+$$
+p_b=\frac{B}{H^2},\qquad
+p_ra_b-p_ba_r=\frac{E_J}{H^3}.
+\tag{8.4}
+$$
+
+**Lemma 8.1.** On the entire closed auxiliary strip
+$0\le r\le1,b\ge1$,
+
+$$
+N_p<0,\qquad B>0,\qquad E_J>0.
+\tag{8.5}
+$$
+
+**Proof.** For each polynomial $F$ below put $u=b-1$ and use its
+listed degree $n$ in $r$. Define rational coefficients by
+
+$$
+\begin{aligned}
+F(r,1+u)&=\sum_{k=0}^m\sum_{i=0}^n c_{ki}r^iu^k,\\
+\beta_{kj}&=\sum_{i=0}^j
+ c_{ki}\frac{\binom ji}{\binom ni}.
+\end{aligned}
+\tag{8.6}
+$$
+
+The power-to-Bernstein basis identity [2] is
+
+$$
+F(r,1+u)=\sum_{k=0}^m u^k
+ \sum_{j=0}^n\beta_{kj}\binom njr^j(1-r)^{n-j}.
+\tag{8.7}
+$$
+
+All basis functions are nonnegative for $u\ge0,0\le r\le1$,
+and the inner Bernstein basis sums to one. The following exact
+row extrema, obtained by substituting (2.1), (7.1) and (8.2) into
+the finite formula (8.6), establish every sign in (8.5).
+
+For $N_p$, the degrees in $(r,b)$ are $(6,7)$:
+
+| $k$ | $\min_j\beta_{kj}$ | $\max_j\beta_{kj}$ |
+| ---: | ---: | ---: |
+| 0 | -8519/2 | -12536/5 |
+| 1 | -23475 | -27561/2 |
+| 2 | -54396 | -29589 |
+| 3 | -67830 | -32664 |
+| 4 | -48495 | -20766 |
+| 5 | -19359 | -8058 |
+| 6 | -3750 | -1878 |
+| 7 | -216 | -216 |
+
+For $B$, the degrees are $(10,12)$:
+
+| $k$ | $\min_j\beta_{kj}$ | $\max_j\beta_{kj}$ |
+| ---: | ---: | ---: |
+| 0 | 874277/7 | 252570 |
+| 1 | 1212738 | 2465190 |
+| 2 | 5297740 | 10898160 |
+| 3 | 55479753/4 | 28822830 |
+| 4 | 24158010 | 50734770 |
+| 5 | 87422276/3 | 62558220 |
+| 6 | 25265949 | 55381200 |
+| 7 | 15513372 | 35489100 |
+| 8 | 6657630 | 16384830 |
+| 9 | 1911360 | 5352270 |
+| 10 | 340080 | 1190400 |
+| 11 | 30900 | 165510 |
+| 12 | 750 | 11190 |
+
+For $E_J$, the degrees are $(15,18)$:
+
+| $k$ | $\min_j\beta_{kj}$ | $\max_j\beta_{kj}$ |
+| ---: | ---: | ---: |
+| 0 | 1090737612 | 8952140160 |
+| 1 | 15906987720 | 128028015360 |
+| 2 | 108264114000 | 857152362240 |
+| 3 | 460760217840 | 3567178594080 |
+| 4 | 1376750292480 | 10333282825440 |
+| 5 | 3071933847000 | 22108000999680 |
+| 6 | 5311118669040 | 36174741166080 |
+| 7 | 7281507697920 | 46248651614880 |
+| 8 | 8030219767200 | 46796723249760 |
+| 9 | 7181068908600 | 37732113809280 |
+| 10 | 5223381896880 | 24292734238080 |
+| 11 | 3086517685680 | 12462315677280 |
+| 12 | 1473100470720 | 5062862593440 |
+| 13 | 561425645160 | 1611248129280 |
+| 14 | 167536555920 | 394782819840 |
+| 15 | 37859764320 | 72361582560 |
+| 16 | 6108032160 | 9415942560 |
+| 17 | 627192000 | 779644800 |
+| 18 | 30729600 | 30729600 |
+
+Each upper extremum for $N_p$ is negative and each lower extremum
+for $B,E_J$ is positive. In particular their $k=0$ rows make the
+signs strict even at $u=0$. The identity (8.7) proves the assertions
+on the whole unbounded strip. Endpoint sources $r=0,1$ in this proof
+are auxiliary polynomial values, not legal original worlds. $\square$
+

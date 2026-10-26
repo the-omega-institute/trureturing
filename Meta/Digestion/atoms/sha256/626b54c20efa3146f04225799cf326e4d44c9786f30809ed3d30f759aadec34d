@@ -1,0 +1,37 @@
+**Theorem 16.3 (Same acquired child, different terminal-M values).**
+At the original exact algebraic $p_J$ there exist
+$r_*\in(r_0,r_1)$, a real $v_{\rm loc}$ and distinct complete
+regular original worlds $W_0,W_1$ such that
+
+$$
+\begin{gathered}
+W_i=W_i(r_*,p_J)\in\mathcal F(H_4,M,p_J,M,v_{\rm loc}),\\
+r(W_0)=r(W_1)=r_*,\qquad b(W_0)\ne b(W_1),\\
+\frac{15145}{100}<v_{\rm loc}<\frac{15147}{100},\qquad
+f_{MM}(W_0)\ne f_{MM}(W_1).
+\end{gathered}
+\tag{16.6}
+$$
+
+The response $v_{\rm loc}$ lies outside $[125,126]$, $[142,150]$
+and both singular responses $s_-(p_J),s_+(p_J)$.
+
+Proof. Keep $p=p_J$ fixed, using $p_J\in K$ from Definition
+14.1. Theorem 15.1 and (15.3) make both rational acquired-response
+functions continuous on $R_{\rm loc}$. Thus $\delta(r,p_J)$ is
+continuous. Lemma 16.2 gives its opposite signs at $r_0,r_1$.
+The intermediate value theorem gives an $r_*$ in their open
+interval with $\delta(r_*,p_J)=0$. Its common actual value is
+$v_{\rm loc}$. Theorem 15.2 gives both complete legal lifts and
+the bound on this response. Their disjoint positive source tubes
+make the worlds distinct, while their disjoint terminal-M ranges
+in (15.2) give the last inequality in (16.6).
+
+The response interval in (16.6) is disjoint from both displayed
+strips. For the singular responses use $O$, Theorem 29.2, and
+$S$, Lemma 2.4: at this same $p_J\in K$, the exhaustive singular
+responses lie in the rational boxes $V_-,V_+$ of $S$ (2.1),
+respectively contained in $(119,120)$ and $(138,139)$. These
+are also disjoint from (16.6). The argument varies only $r$;
+it never replaces $p_J$ by $p_c$. ∎
+

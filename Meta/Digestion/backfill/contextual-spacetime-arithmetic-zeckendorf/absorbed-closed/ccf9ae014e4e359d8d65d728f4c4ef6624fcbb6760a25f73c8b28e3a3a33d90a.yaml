@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccf9ae014e4e359d8d65d728f4c4ef6624fcbb6760a25f73c8b28e3a3a33d90a
+  normalized_sha256: sha256:ccf9ae014e4e359d8d65d728f4c4ef6624fcbb6760a25f73c8b28e3a3a33d90a
+cas_ref: sha256:ccf9ae014e4e359d8d65d728f4c4ef6624fcbb6760a25f73c8b28e3a3a33d90a
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/AllSetNaturalLeafMembers.el_natZ
+    target_statement_id: sha256:35ed6e4acbe723eb6b3023f5db423c8bf3c05e4079154fbf29e598a7183d95a7
+  - gid: D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse
+    target_statement_id: sha256:ca366470801b4da4f911d6bce2506fc8830071ebde48d80c0c48748ef4b327b8
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,61 @@
+**命题 480.1（原加权尾量与有界实际整数）。** 设实际非平凡零点 $\rho_0=\beta+i\gamma$ 满足 $\beta>1/2$、$\gamma>0$，令
+
+$$
+\delta=\beta-\tfrac12,\qquad D=\gamma+10,\qquad
+m_0=100D^2\delta^{-2},\qquad m_1=500D^4\delta^{-2},\qquad X=e^{28m_1}.
+\tag{480.1}
+$$
+
+对完整 Chebyshev 尾量
+
+$$
+I_\psi(t)=\int_t^\infty(\psi(s)-s)
+\frac{1+\log s}{s^2\log^2s}\,ds
+$$
+
+存在实数 $A\in[e^{4m_0},X]$ 满足 $I_\psi(A)<-4/\sqrt A$。因此实际整数 $N=\operatorname{lcm}(1,\ldots,\lfloor A\rfloor)$ 满足
+
+$$
+5040<N\le\exp(X\log X),\qquad
+\frac{\sigma(N)}N>e^{\gamma_E}\log\log N.
+\tag{480.2}
+$$
+
+证明。以下零点多重集完整保留重数。直接复用 §479 的记号与估计，写
+
+$$
+a_\rho=\frac1{\rho(1-\rho)},\quad H(y)=\sum_\rho a_\rho e^{\rho y},\quad
+U(y)=\mathcal U(e^y),\quad c=\log(2\pi),\quad
+V(y)=\sum_{j\ge1}\frac{e^{-2jy}}{2j(2j+1)}.
+$$
+
+已知 $H=U-c+V$（$y>0$），$|H(y)|\le2e^{\max(y,0)}$，且对 $\rho=b+i\eta$ 有
+
+$$
+0<b<1,\quad |\eta|>10,\quad
+\sum_\rho\eta^{-2}<2,\quad \sum_\rho|a_\rho|<2,\quad
+N_{\rm both}(T)\le2T^2.
+\tag{480.3}
+$$
+
+已有的整数幂和选择供应同一个 $m\in[m_0,m_1]$，使
+
+$$
+E_\gamma(m)=\sum_\rho e^{m(\rho-i\gamma)^2+16m(\rho-i\gamma)},\qquad
+\Re E_\gamma(m)\ge\tfrac12e^{am},\qquad a=\beta^2+16\beta.
+\tag{480.4}
+$$
+
+这里不重新选择零点或丢弃远端零点。以下所有核与均值均使用这个 $m$。
+
+令 $r(y)=(y+1)/y^2$、$q(y)=1/r(y)=y^2/(y+1)$，并令 $R(y)=-e^yI_\psi(e^y)$（$y\ge1$）。前卷的 $Q$ 满足 $U(y)=-e^yQ(e^y)$。由 $I_\psi'=r(\log t)Q'$ 得到
+
+$$
+U'-U=q(R'-R),\qquad
+H''-H'=\bigl[q(R'-R)\bigr]'+V''-V',\qquad
+V''-V'=\frac1{e^{2y}-1}.
+\tag{480.5}
+$$
+
+第一式几乎处处成立，第二式按分布理解，保留每个素数幂跳变。
+

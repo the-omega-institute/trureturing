@@ -1,0 +1,44 @@
+## 27. Mathematical suppliers and the remaining original problem
+
+The interfaces in the appendix have the following fixed correspondences.
+
+| Supplier | Correspondence used here |
+| --- | --- |
+| [F: finite-fibre geometry](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md), Lemma 30.2 | $x=n/U$, $H=Ug$, original $d$, and $B_0=294/5-2d-H_2$; all original-world guards and injectivity, with whole gain $H/U$. |
+| F, Definition 31.1 and Lemma 31.2 | The same $f$ and carrier $R$; $K=4k$ accounts for $\operatorname{Res}_d(f,K)=256D^8F_0^2R$ and the constant coefficient (22.6). |
+| [SVII: support VII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md), Lemma 15.1 and Section 16 | All-world $R=0$ and $\alpha d+\zeta=0$ before local unit tests, including drift zero, singular parent, $F_0=0$ and all specialized-degree strata. |
+| [O: common-parent geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Theorems 2.1–2.2 | Whole-parent necessity and converse and the $d=24\Rightarrow p=24$ branch for this original history. |
+| [SIII: support III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Lemmas 10.2 and 16.3, Theorem 16.4 | The same whole-parent lift, the uniqueness ball in $(r/b,b)$ coordinates and the existing actual $J$ arc. |
+
+Fixed-node interpolation is the classical distinct-node formula, used
+with nodes $3,4,5,6$ or $0,1,2,3$ and degree at most three; see
+Berrut and Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The Sylvester determinant and its quadratic norm formula are classical
+resultant identities over the rational-function coefficient field and
+then polynomial identities; see Cox, Little and O'Shea,
+*Ideals, Varieties, and Algorithms*, fourth edition, Chapter 3,
+[doi:10.1007/978-3-319-16721-3](https://doi.org/10.1007/978-3-319-16721-3).
+Rouché's theorem is used only for polynomials holomorphic on a
+neighborhood of a closed disk with a strict boundary modulus inequality;
+see Ahlfors, *Complex Analysis*, third edition, Chapter 4, the argument
+principle and its applications. Banach's contraction theorem is used
+only for a strict contraction mapping the displayed complete closed box
+to itself; see Lebl, *Basic Analysis II*,
+[§8.5](https://www.jirka.org/ra/realanal2.pdf).
+These tools are reused at their stated hypotheses, not proposed as new
+general theorems.
+
+The result establishes a finite rectangle with exactly four actual
+worlds at every base and a quantitative separation of every original
+terminal-$M$ pair. It also locates the already existing actual $J$ pair
+inside that rectangle. No larger $J$ component classification, global
+joint witness, global joint exclusion, closedness or properness follows.
+The original task remains Definition 1.2 over its whole domain, including
+all other bases and all original singular, gain and companion strata.
+The bounded-base and bounded-companion results of SIII, Sections 7–9,
+retain their existing scope; this local calculation does not introduce
+a new infinity residual. The unevaluated finite boundary and strict
+incidences in that bounded global region remain unresolved. No
+literature-wide novelty, model-diversity or kernel-proof claim is made.
+

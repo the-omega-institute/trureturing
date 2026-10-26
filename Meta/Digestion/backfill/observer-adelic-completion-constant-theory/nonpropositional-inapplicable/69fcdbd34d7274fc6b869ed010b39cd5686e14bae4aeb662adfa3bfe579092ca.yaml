@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69fcdbd34d7274fc6b869ed010b39cd5686e14bae4aeb662adfa3bfe579092ca
+  normalized_sha256: sha256:69fcdbd34d7274fc6b869ed010b39cd5686e14bae4aeb662adfa3bfe579092ca
+cas_ref: sha256:69fcdbd34d7274fc6b869ed010b39cd5686e14bae4aeb662adfa3bfe579092ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为研究目标分级的节标题与引导语；未断言任何目标已实现，具体数学目标在后续独立 atom。
+    previous_atom_id: 0860e7e07698e42735a35dc4327e594426ccecae1cbc615a500e6bfca586ffec
+    next_atom_id: bf61ccb0b8dfd2785c2ed4f16583c5c179bcc1b9cb52f44ecf296e8aff183d74

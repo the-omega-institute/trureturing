@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+  normalized_sha256: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+cas_ref: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.archive
+    target_statement_id: sha256:5118a3c7b36be168756a9ff7d9f01392bebed901a2bf1942732cbb2aaa4af92f
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.attributes
+    target_statement_id: sha256:5b297790fbcd5de51ff9cbcb4a7c00d275cec873cd5aef8572872d29b829450e
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.current
+    target_statement_id: sha256:0bd4945e1df93214027a004d426a93f953a44c861105160ba20d370ae0cbfb76
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.events
+    target_statement_id: sha256:ab47ca0b947ad0175faa44133c6958212fb2f730ca4f04e63f6a3682411fd14e
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.positive
+    target_statement_id: sha256:c09cc5d89a3c421c97e60802e2bfdb9e2d1bc7af28e1cc8ecfde3079f300484e
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge
+    target_statement_id: sha256:dcc34ed364a34513188510c3f1b66141be70fe4f4a8f83ad1c270ce9185b59a5
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge_eq_signed_card
+    target_statement_id: sha256:e2ba152bf501e5796ae3170a88d5262fe15986babc6cc80ec7fb804ebabf2184
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.contribution
+    target_statement_id: sha256:41ae2d3f2cd7b0e346c883bd1227150d6ad47b5bd341bebca72bbda542449a10
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
+    target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
+    target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.product
+    target_statement_id: sha256:8d751f1bc438328b5b630d3cbbbacc0e0f0d043b88d6b442ced25e23d25b5cef
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.eventEquiv
+    target_statement_id: sha256:efb96da41eefa012b4067c47bdb561dfffb180cff0819d27533ea0766b246824
+receipts:
+  unresolved_subitems: []

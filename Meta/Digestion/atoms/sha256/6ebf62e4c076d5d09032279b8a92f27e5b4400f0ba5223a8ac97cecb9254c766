@@ -1,0 +1,39 @@
+## 2. Polynomial coordinates
+
+For $d\in\mathbb R\setminus\{0,24\}$ and $u\in\mathbb R$, define
+
+$$
+\begin{aligned}
+ C&=24-d,&K&=4200u(u+1),\\
+ A&=-225du^2+(33894-1310d)u+175d-3150,\\
+ B&=75du^2+(46494-1710d)u+9450-525d,\\
+ Z&=-225du^2-(14490+750d)u+47250-2625d,\\
+ Y&=-600du^2+(240d-72576)u+75600-4200d,\\
+ L&=12AB,&N&=CK(3A-2B).
+\end{aligned}
+\tag{2.1}
+$$
+
+Define
+
+$$
+\begin{aligned}
+ R_d(u)&=4N^2-4NL+4(u-1)CKBL-(u-1)^2L^2,\\
+ E_{d,p}(u)&=2100(p-d)(u+1)B-Z\{B+1050C(u+1)\},\\
+ F_{d,v}(u)&=4200(v-d)(u+1)B-Y\{2B+1050C(u+1)\}.
+\end{aligned}
+\tag{2.2}
+$$
+
+For every $p,v\in\mathbb R$, put
+
+$$
+S(d,p,v)=\left\{u\in\mathbb R:\begin{array}{l}
+u>1,\quad AB\ne0,\quad 0<N/L<1,\\
+R_d(u)=E_{d,p}(u)=F_{d,v}(u)=0
+\end{array}\right\}.
+\tag{2.3}
+$$
+
+The inequalities in (2.3) are part of the definition; an unguarded root is not a world.
+

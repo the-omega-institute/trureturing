@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e2a2d6008831ef052aa41ccf15cfd9dda8aec5b1b443c5ee22ffdcf48d968d4
+  normalized_sha256: sha256:2e2a2d6008831ef052aa41ccf15cfd9dda8aec5b1b443c5ee22ffdcf48d968d4
+cas_ref: sha256:2e2a2d6008831ef052aa41ccf15cfd9dda8aec5b1b443c5ee22ffdcf48d968d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the legal-action set from a supplied predicate.
+    previous_atom_id: 4b56d5e231cf7126ad21e6ae54251adb50a83f5807ef108c2c3a2862ac60181f
+    next_atom_id: c5beb9eae32c80624074e1978c1e5dfe3ea0ea252f1d0dcbb660ec2021e87f32

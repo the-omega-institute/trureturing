@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:024f2a18eb372ff901ab4cd66fc8aeb7b74f62b31683156d57bf9581c2bc2e60
+  normalized_sha256: sha256:024f2a18eb372ff901ab4cd66fc8aeb7b74f62b31683156d57bf9581c2bc2e60
+cas_ref: sha256:024f2a18eb372ff901ab4cd66fc8aeb7b74f62b31683156d57bf9581c2bc2e60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope and novelty/attribution convention plus a section heading; the described derivation roles are references, not an additional claim.
+    previous_atom_id: b5a5a5cd362ce97c6187f9536bbcc4bb7d3dab8bf4a001f1c9d6873f284a05a8
+    next_atom_id: 6008bf6b1d9798bcd81eaf4f628fa0dcd4983756d9c914404ffb973ed0709492

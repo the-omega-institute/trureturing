@@ -1,0 +1,7 @@
+## 133. The contact projector and decoder stationarity
+
+All quantities in §§133–137 without a star are evaluated at
+$(r_*,L_*,p_*,x_*)$, except where an identity is explicitly said to
+hold off the root. Put $P=zz^{\mathsf T}$ for
+$z=(\sqrt p,\sqrt x,\sqrt y)^{\mathsf T}$, and use $A$ from (130.4).
+

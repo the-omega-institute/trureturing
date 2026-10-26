@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3a37db0aa479c9c2f7f4181e1a90749240cf44cccbed534d8179d5d63877e889
+  normalized_sha256: sha256:3a37db0aa479c9c2f7f4181e1a90749240cf44cccbed534d8179d5d63877e889
+cas_ref: sha256:3a37db0aa479c9c2f7f4181e1a90749240cf44cccbed534d8179d5d63877e889
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版上游闭合：Set.not_nontrivial_empty, Set.not_nontrivial_singleton, Set.not_nontrivial_iff；Lean逻辑投影和定义展开。Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679。D5/**/*.lean（包括private声明）按Nontrivial、Subsingleton、failure guard及non-singleton形状检索；无可用冻结GID供应本条完整断言，矩阵递推和有理数checker不参与此纯集合断言。将每个失败守卫的最外层合取展开，空集/单点集不含两个不同元素；共享响应条件是所给递归的量词作用域，未加入前作的可恢复性结论。
+    previous_atom_id: e7c5cc2cbe2b900a76832138a7933b9a8a1c97c9883fa858a1c6584e458e6cff
+    next_atom_id: b3e73c9993e115d965fe8fab85feff0e080bb6a6ebf95344da756211f3421280

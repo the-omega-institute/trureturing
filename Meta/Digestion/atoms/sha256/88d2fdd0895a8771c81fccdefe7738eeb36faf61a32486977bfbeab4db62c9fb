@@ -1,0 +1,9 @@
+**Theorem 6.3.2 (Isolated strict rank-one source).** There is exactly one zero $z_*=(r_*,b_*)$ of $(E_1,E_2)$ in $X_*$. The following bounds are strict at that zero:
+
+| Quantity | Lower bound | Upper bound |
+|---|---:|---:|
+| $D(z_*)$ | $-0.047846390145$ | $-0.047846390144$ |
+| $p_*=p(z_*)$ | $-10.890381011470$ | $-10.890381011469$ |
+| $v_*=v(z_*)$ | $-8.153583918938$ | $-8.153583918937$ |
+| $p_b(z_*)$ | $132006.077494$ | $132006.077495$ |
+| $k_*=-p_r(z_*)/p_b(z_*)$ | $-1.218947510$ | $-1.218947509$ |

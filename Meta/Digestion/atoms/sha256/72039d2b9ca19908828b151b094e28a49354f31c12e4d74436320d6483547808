@@ -1,0 +1,27 @@
+**Corollary 3.2 (Exact comparator on the full off-24 child).** In every actual
+$C(p,v)$ with $p\ne24$, each world's $e,S$ is nonzero. Put
+$\Theta=C/(5S)$. Then
+
+$$
+m=\frac{32v}{5}-\frac{1128}{5}+(p-24)\Theta.
+\tag{3.5}
+$$
+
+For any two worlds $W_2,W_3$ in this same child,
+
+$$
+m(W_2)=m(W_3)
+\quad\Longleftrightarrow\quad
+C(W_2)S(W_3)-C(W_3)S(W_2)=0.
+\tag{3.6}
+$$
+
+Proof. The first identity of (3.2) forces $eS\ne0$. Divide the second
+by the first and use the common $p,v$. The multiplier $p-24$ is nonzero,
+so equality of $m$ is equality of $C/S$. ∎
+
+The corollary does not require regularity, a selected $J$ pair, any constraint
+on cross-pair overlap, or an equality between the $J$ and $M$ common values.
+The earlier mirror nonaccumulation and uniform off-24 gap are reused in
+Section 11; they are not additional conclusions claimed from this packaging.
+

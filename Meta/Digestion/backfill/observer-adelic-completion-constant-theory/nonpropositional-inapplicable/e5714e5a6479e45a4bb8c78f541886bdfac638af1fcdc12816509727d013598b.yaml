@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+  normalized_sha256: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+cas_ref: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological assessment of the transfer determinant and its relevance to RH; no function identity or zero assertion.
+    previous_atom_id: 36bd7e5c3c1ecb745d8c2f27fafcd62edb74c1533b4906ce59df3301c4f9d2b5
+    next_atom_id: 98993e48494527d1c4c1c4f8cbdec15f523b75922e00329b2ebcd366f3d4988a

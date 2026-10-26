@@ -1,0 +1,26 @@
+**Theorem 24.2 (No terminal-M pair in any entire actual child).**
+At the original exact algebraic $p_J$, for every real $v$, the
+actual function $f_{MM}$ is injective on
+$\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)$.
+
+Proof. Theorem 19.4 identifies this entire child with the full
+$\mathcal D_v$ of (19.4). Suppose two of its members have the
+same terminal-M response. Opposite branch labels are impossible
+by Corollary 20.5. If both labels are lower, Theorem 21.5 gives
+equal $r$. If both labels are upper, Theorem 24.1 gives equal $r$,
+since $p_J\in K$ and both acquired responses are $v$.
+In either same-label case, Theorem 19.2 identifies the complete
+worlds. These cases exhaust the two global labels at every strict
+source, proving injectivity. Empty and singleton children satisfy
+the same conclusion.
+
+Equivalently, Corollary 21.6 leaves precisely the upper equations
+in (21.21), and (24.2) contradicts their required $r\ne s$.
+The exhaustive transport retains every lower-degree gain, sampled
+zero, repeated gain root and zero drift allowed by the original
+model. The upper regular chart excluded no actual upper source;
+any singular lower sources are included by the zero-safe supplier
+and Theorem 21.5. No bound on the original positive offdiagonal
+coordinates, additional response, reset, copy, or different gain
+or drift within one world has been introduced. ∎
+

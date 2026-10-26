@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ee312fd5ab1884874cc466246315cf15318d7ab6b14a5cc176f066ff19c303d3
+  normalized_sha256: sha256:ee312fd5ab1884874cc466246315cf15318d7ab6b14a5cc176f066ff19c303d3
+cas_ref: sha256:ee312fd5ab1884874cc466246315cf15318d7ab6b14a5cc176f066ff19c303d3
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+    target_statement_id: sha256:ff7842c11af211e5ef4c58248e5fa60a890b2c27e51ea57d27be47164817d62d
+receipts:
+  unresolved_subitems: []

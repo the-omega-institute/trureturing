@@ -490,3 +490,270 @@ The canonical FIB tree-sharing theorem of that source's §14 and its two-state l
 [Finite-table classification §§6–7](../../docs/develop/theory/FIB_NATIVE_FINITE_TABLE_COMPLEXITY_CLASSIFICATION.md#6-actual-origin-boolean-banks-and-a-four-reply-cnf-compiler) uses a different native four-reply language: a stationary actual origin fixes each Boolean variable on repeated reads, all assignments have finite actual witnesses, and a CNF with $M$ occurrences compiles to an acyclic occurrence-evaluation fragment with all four reply edges supplied and at most $M$ paid Reads before reaching its supplied continuations. Its NP-complete BOTH-PREPARER slice can already use universally terminating acyclic preparers. These correspondences compare fixed-source evaluation with existential source attainment, without identifying its full language with (21). Its [Theorem 11.1](../../docs/develop/theory/FIB_NATIVE_FINITE_TABLE_COMPLEXITY_CLASSIFICATION.md#11-literally-fixed-acquired-tables-and-finite-cap-saturation) fixes the entire table and original entries and varies only a binary cap. That fixed-object P result provides no uniform preprocessing algorithm for varying tables, and therefore does not establish B, C or Definition 9.1 for the full circuit family.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Zero-knowledge views and the causal information contract
+
+The circuit language in §§5–9 supplies the public statement and the finite witness relation. A proof protocol adds a message interface and a probability space; it does not change the completion fibre.
+
+**Definition 10.1 (Protocol view).** A prover receives $(x,w)$ and private randomness, while a verifier receives $x$, an explicitly declared auxiliary input and a random tape. The complete verifier view contains that tape, every message, public output, failure and termination flag, and any length or timing quantity visible through the interface. A protocol is complete and sound when its acceptance probabilities satisfy the stated bounds on YES and NO inputs. A zero-knowledge assertion is a distributional assertion about this complete view.
+
+For a security parameter $1^n$, computational zero knowledge with auxiliary input means that for every probabilistic polynomial-time verifier $V^*$ there is one uniform expected-polynomial-time simulator $S_{V^*}$ such that, for every legal $(x,w)$, every allowed auxiliary input $\eta$, and every polynomial-time distinguisher $D$,
+
+$$
+\left|
+\Pr[D(\operatorname{View}_{V^*}^{P(x,w)}(x,\eta))=1]
+-
+\Pr[D(S_{V^*}(x,\eta))=1]
+\right|
+$$
+
+is negligible in $n$. Perfect and statistical variants replace computational indistinguishability by equality or negligible statistical distance. The simulator is not required to decide whether $x$ is in the language; the assertion is normally quantified over legal witnesses on YES inputs.
+
+This map has output type
+
+$$
+ x\longmapsto \text{a verifier view},
+\tag{35}
+$$
+
+whereas witness search has output type $x\longmapsto w\in W_x$. A simulator therefore supplies a completion algorithm only when an additional efficient postprocessor reads a simulated view and produces a valid witness with a stated probability. The definition itself supplies no such postprocessor.
+
+## 11. The graph-isomorphism order test
+
+For graphs $G_0,G_1$ of the same size, a witness is an isomorphism $\phi:G_0\to G_1$. The three-message protocol is:
+
+1. choose a uniform vertex permutation $\pi$ and send $H=\pi(G_0)$;
+2. receive a fresh uniform bit $b$;
+3. send $\tau=\pi$ when $b=0$, and $\tau=\pi\phi^{-1}$ when $b=1$.
+
+The verifier accepts exactly when $H=\tau(G_b)$. Permutations are sampled and represented in time polynomial in the graph encoding; a malformed graph is rejected before the protocol starts.
+
+**Theorem 11.1 (Completeness, soundness, extraction and honest-verifier simulation).** The graph-isomorphism protocol has perfect completeness. If $G_0\not\cong G_1$, every causal prover whose first message is fixed before the challenge is accepted with probability at most $1/2$. If the same first message $H$ has accepting replies $\tau_0$ and $\tau_1$ to challenges zero and one, then
+
+$$
+\phi=\tau_1^{-1}\tau_0
+\tag{36}
+$$
+
+is an isomorphism from $G_0$ to $G_1$. Against the honest verifier, a perfect simulator chooses $b$ and a uniform $\tau$, sets $H=\tau(G_b)$, and outputs $(H,b,\tau)$.
+
+**Proof.** Honest substitution gives acceptance one. If a fixed $H$ answered both challenges, then $H=\tau_0(G_0)=\tau_1(G_1)$, so $G_1=\tau_1^{-1}\tau_0(G_0)$. Nonisomorphic graphs therefore permit at most one of the two answers for each fixed first message, giving soundness at most one half. The same equality proves (36). For honest verification, conditioned on either challenge the reply is uniform over the relevant permutation set; when the graphs are isomorphic, the simulator's distribution is exactly the honest one. This is honest-verifier perfect simulation; malicious-verifier zero knowledge requires an additional simulator argument and is not inferred from this paragraph. $\square$
+
+The order is the quantifier difference
+
+$$
+\exists H\;\forall b\;\exists\tau_b: H=\tau_b(G_b),
+\tag{37}
+$$
+
+versus separately choosing $H_b$ after seeing $b$. The first is equivalent to isomorphism, while the second is true for arbitrary graphs by taking $H_b=G_b$. A record generator that is told the challenge in advance therefore does not implement the causal protocol.
+
+**Proposition 11.2 (Same-state fork requirement).** Suppose a saved prover state after the same first message $H$ can be challenged twice, with fresh independent verifier challenges, without changing the saved state before the second fork. If the prover succeeds on challenge $b$ with probability $p_b$ over its fixed private randomness, and its one-shot success is $\varepsilon=(p_0+p_1)/2>1/2$, then
+
+$$
+\Pr[A_0\cap A_1]\ge p_0+p_1-1=2\varepsilon-1.
+\tag{38}
+$$
+
+On the intersection, (36) extracts an isomorphism. If $2\varepsilon-1$ is inverse polynomial and each fork costs polynomial time, independent repetitions give expected polynomial extraction time. When a repetition must recreate the saved state from the public instance, it must independently rerun the prover's initialization and first-message procedure, restore the same forkable state, and count that initialization and restoration cost in the repetition bound; the fork hypothesis alone does not make state preparation free. Two transcripts with different first messages, or two independently simulated records, do not meet the premise: their events are not defined on one saved state and (36) need not be valid.
+
+This is the exact causal resource needed by a knowledge extractor. It is stronger than a single-view simulator and also stronger than having the same marginal distribution for two separately generated records.
+
+## 12. A single simulated view can imply randomized witness search
+
+**Definition 12.1 (Single-view postprocessor contract).** Let $R(x,w)$ be a polynomial-time relation with witness length bounded by a polynomial. A postprocessor receives $x$ and one view sampled from a simulator, but has no prover code, trapdoor, reset access, hidden verifier tape, or second correlated view. It runs in polynomial time after a strict polynomial cutoff for the simulator. Public auxiliary input may be included only when it is generated and counted by the same algorithm.
+
+**Theorem 12.2 (View-to-witness postprocessing).** Assume a uniform expected-polynomial-time simulator $S$, with a uniform strict polynomial cutoff on every input, and a postprocessor $E$ such that for every YES instance $x$,
+
+$$
+\Pr[E(x,S(x))\in W_x]\ge\frac1{q(|x|)}
+\tag{39}
+$$
+
+for a fixed positive polynomial $q$. Suppose the relation verifier is polynomial and $E$'s output is finally checked. Then the language is in $RP$. On NO inputs the algorithm never accepts, regardless of the simulator's output.
+
+**Proof.** Let $p(n)$ be a uniform bound on the simulator's expected running time on every input, and choose the strict cutoff $T(n)=2p(n)q(n)$ (rounded up). Markov's inequality makes the timeout probability at most $1/(2q(n))$, so the inverse-polynomial success in (39) loses at most half its margin. Run the truncated simulator, apply $E$, and verify its output. Repeat $O(q(n)\log q(n))$ times, or any fixed polynomial amplification schedule, to raise the YES probability above $1/2$. A NO instance has no valid output in $W_x$, so final verification makes its acceptance probability zero. All simulator, postprocessor, repetition and verification costs are included in the uniform bound. $\square$
+
+The theorem is a statement about one simulated view. It cannot use the same-state fork of Proposition 11.2, because a single view contains only one challenge branch. Conversely, same-state extraction can be useful even when no one-view postprocessor exists.
+
+## 13. Online substitution and the BPP/RP distinction
+
+An **online substitute** is a uniform probabilistic machine that receives only the public instance (and explicitly public auxiliary input), follows the real message schedule, uses its own fresh random coins, and emits legal messages without a witness or a simulator-only reset. Its initialization, every message, all state updates and termination have one fixed polynomial total-time bound on YES, NO and malformed inputs; the verifier's parsing, challenge, response checking and final decision have the same kind of uniform bound. If on every YES instance the resulting verifier accepts with probability at least $2/3$, while soundness on NO instances remains at most $1/3$, then the language is in $BPP$: run the substitute and the verifier once, then amplify. This is an actual online proving algorithm, not merely a distributional simulator.
+
+For the explicit NOR completion language, a stronger prefix interface gives an RP consequence. Suppose a BPP procedure answers every prefix query $\operatorname{Ext}(\mathcal C,b)$ with error at most $1/(12m+12)$, uniformly for all legal prefixes, and terminates in polynomial time on malformed and NO inputs. Assume also that the gate evaluator and final verifier parse, check and terminate in a uniform polynomial time on YES, NO and malformed circuit/word encodings. Use the prefix procedure to select one child at each prefix, amplify or repeat the queries, and finally verify the resulting word. The union bound over at most $m$ queries gives an inverse-constant probability of an entirely correct path; final verification removes false positives. Thus the NP-complete completion language is in $RP$, yielding $NP=RP$. A single average-case query guarantee or a per-instance simulator whose public input already contains the selected prefix does not satisfy this prefix contract.
+
+## 14. The plain-model one-message consequence
+
+The following restricted theorem is the relevant single-message boundary. There is no CRS, programmable random oracle, setup trapdoor or verifier randomness chosen before the proof string.
+
+**Theorem 14.1 (Single-message plain-model ZK implies BPP under strict soundness).** Let a protocol send one proof string $\pi$ before the verifier samples its independent random tape $r$. Assume, for security parameter $1^n$:
+
+1. the verifier parses and terminates in a uniform polynomial time on YES, NO and malformed inputs;
+2. for every YES input and legal witness, honest completeness is at least $2/3$;
+3. for every NO input and every proof string $\pi$, $\Pr_r[V(x,\pi;r)=1]\le1/3$;
+4. a uniform expected-polynomial-time simulator produces a first-message marginal computationally indistinguishable from the honest proof-string marginal on every YES input, with an all-input strict polynomial truncation and public auxiliary inputs included in the input length.
+
+Then the language is in $BPP$.
+
+**Source anchors for the protocol claims.** The auxiliary-input and black-box distinctions, including the one-message triviality boundary used here, are attributed to Goldreich and Oren, *Definitions and Properties of Zero-Knowledge Proof Systems*, Journal of Cryptology 7 (1994), 1–32, [author copy](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf). The graph-isomorphism protocol, the NP zero-knowledge construction under cryptographic assumptions, and the distinction between simulation and witness revelation are attributed to Goldreich, Micali and Wigderson, *Proofs that Yield Nothing But Their Validity or All Languages in NP Have Zero-Knowledge Proof Systems*, Journal of the ACM 38 (1991), 691–729, [paper](https://people.csail.mit.edu/silvio/Selected%20Scientific%20Papers/Zero%20Knowledge/Proofs_That_Yield_Nothing_But_Their_Validity_or_All_Languages_in_NP_Have_Zero-Knowledge_Proof_Systems.pdf). The sparse arithmetic-circuit and R1CS translation interface cited in the AURIC adapter is from Justin Thaler, *Proofs, Arguments, and Zero-Knowledge*, §8.4, [survey](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf). These references supply the standard protocol interfaces; the finite-field correspondence and resource qualifications in this note remain subject to the definitions stated here.
+
+
+## Primitive simulations and calibrated execution costs
+
+The source's PDF p. 1 explicitly motivates the robustness of P by
+polynomial simulations of more efficient machine models; p. 2 gives the
+bounded checking-relation definition of NP. The following spells out the
+resource correspondence used by the native observer protocol. It is
+supporting exposition and an elementary cost comparison, not a new
+complexity-class result or a claim about all physical computers.
+
+Fix two effective primitive models acting on the same binary inputs.
+For every fixed program in model A, assume a uniform B simulator that
+returns the same output on an $n$-bit input after at most $p(n+T)$ steps
+when the A execution takes $T$ steps; $p$ is a fixed polynomial for that
+simulation. Charge input conversion, installation, memory access and
+output conversion. If simulations exist in both directions, a time
+bound $T\le q(n)$ transfers to $p(n+q(n))$, still polynomial. Thus
+$\mathrm P_A=\mathrm P_B$. The same argument applied to polynomial-time
+verifiers on input-and-witness pairs, with polynomial witness lengths,
+gives $\mathrm{NP}_A=\mathrm{NP}_B$. Agreement merely on computable
+functions does not imply polynomial simulation. A unit-cost instruction
+that solves SAT would assume the ability being studied.
+
+For a macro trajectory $s_0\to\cdots\to s_m$ with implementation costs
+$c_i$, total primitive work is $W=\sum_{i<m}c_i$. If
+$m\le q(n)$, $|s_i|\le r(n)$ and
+$c_i\le p(n+|s_i|)$ uniformly, then
+$W\le q(n)p(n+r(n))$. Preparation, acquired auxiliary data and final
+output must also satisfy polynomial bounds. Simple primitive transitions
+alone do not bound $m$ or the intermediate representation size.
+
+A separate elementary comparison fixes a proper-time unit $\tau_0>0$.
+Partition the complete charged execution into $K$ positive-duration
+primitive intervals, with durations $d_i$, and let the reference clock
+be absolutely continuous in proper time with
+$dt/d\tau=\alpha(\tau)^{-1}>0$ almost everywhere. Suppose throughout the
+same input family
+
+$$
+\frac{\tau_0}{p(n)}\le d_i\le\tau_0p(n),\qquad
+\frac1{q(n)}\le\alpha(\tau)\le q(n),
+$$
+
+where $p,q\ge1$ are fixed polynomials. On each interval the reference
+duration lies between $\tau_0/(pq)$ and $\tau_0pq$. Hence
+
+$$
+\frac{K}{p(n)q(n)}\le\frac{T_t}{\tau_0}\le p(n)q(n)K,
+\qquad
+\frac{K}{p(n)}\le\frac{T_\tau}{\tau_0}\le p(n)K.
+$$
+
+These bounds preserve polynomial time for this execution family.
+Extending the conclusion to computational classes also requires the
+uniform simulations and realizability of the programs being compared.
+Independent uncharged delays or an uncharged answer oracle are outside
+the partition assumption. The calibration is an extra mathematical
+hypothesis, not a physical conclusion of Cook's article.
+
+Arbitrary monotone reparametrizations need not have these bounds:
+$u=\log_2(1+\tau/\tau_0)$ maps a duration
+$\tau=2^n\tau_0$ to $u=\log_2(1+2^n)$, while later primitive intervals
+have exponentially small $u$-length. It does not reduce the number of
+executed primitives.
+
+The protocol-specific application is
+[Native capacity, §20](../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md#20-serial-literal-self-images-under-calibrated-clocks).
+That application supplies its own copy codec and native ordinal lower
+bound; neither follows from complexity-model robustness.
+
+## 15. Equality of clean reversible verification interfaces
+
+**Definition 15.1 (Logical action with clean workspace).** Given an explicitly encoded CNF formula $\varphi$ on $m$ variables, construct a polynomial-size reversible circuit from fixed NOT, CNOT and Toffoli gates. Compute the Boolean formula into work bits, XOR its value into target $b$, then reverse the computation. With $a$ work bits initialized to zero, its physical unitary $U_\varphi$ satisfies
+
+$$
+U_\varphi|w,b,0^a\rangle
+=|w,b\oplus\varphi(w),0^a\rangle.
+\tag{34}
+$$
+
+The construction is a uniform polynomial-time gate-list translation: each Boolean gate writes its value into a fresh clean bit, the input wires are retained, and inverse gates clear the work after the target XOR. All variable addressing and output description costs are included. Constants handle empty clauses, empty conjunctions and $m=0$. Equation (34) defines the induced logical unitary $O_\varphi$ on the invariant zero-workspace subspace; it is not a promise that the same circuit acts identically on arbitrary dirty work registers. The reversible-computation interface also underlies the uniformly generated verification circuits discussed in [Watrous](../Computability/watrous2011quantumcircuits.md).
+
+**Proposition 15.2 (Logical identity is exactly unsatisfiability).** For this constructed family,
+
+$$
+O_\varphi=I
+\quad\Longleftrightarrow\quad
+\operatorname{Ad}(O_\varphi)=\operatorname{id}
+\quad\Longleftrightarrow\quad
+\varphi\text{ is unsatisfiable}.
+\tag{35}
+$$
+
+Proof. If no assignment satisfies the formula, (34) fixes every logical basis vector and hence every vector by linearity. If $w_*$ satisfies it, $|w_*,0\rangle$ maps to the orthogonal vector $|w_*,1\rangle$, so both its vector action and its density-state channel differ from identity. This also handles a tautology: its target flip remains visible. No comparison of unobservable global phases is needed. $\square$
+
+Consequently a uniform deterministic polynomial-time exact identity test for these supplied clean-workspace logical circuits decides UNSAT; complementing its answer decides SAT, and Cook's NP-completeness premise gives $P=NP$. This is an elementary reduction and not a claim that such a test has been constructed. In particular (35) cannot be applied to a test of the full physical unitary on all dirty work inputs without another valid reduction. It identifies one place where recognizing task equivalence can contain the original search difficulty. The source of the complexity premise is Cook's SAT completeness, while (34)–(35) are the explicit reversible-interface calculation, not a separately numbered theorem of his exposition.
+
+## 16. Successful proposal mass, completion support and seed tables
+
+The following are standard reductions and a finite random-seed union-bound
+argument, with proofs to specify their uniformity contracts. They connect
+[successful-path conditioning](../Computability/chetritetouchette2015conditioned.md)
+to the completion interface of §§7–9; they are not a SAT algorithm or new
+complexity-class separations.
+
+Let a uniform randomized program propose a polynomial-length assignment
+and run in strict polynomial time on every encoded input, including NO
+and malformed inputs. Include acquiring its model or experience library,
+initialization, proposal and final deterministic verification in the cost.
+If every satisfiable length-$n$ formula has verified success probability
+at least $1/r(n)$, for a fixed polynomial $r\ge1$, then
+$\lceil r(n)\ln3\rceil$ fresh independent runs accept a YES instance with
+probability at least $2/3$. A NO instance has no verifying assignment, so
+it is never accepted. Thus SAT is in RP and NP=RP, using SAT completeness
+and RP $\subseteq$ NP (an accepting polynomial random tape is an NP
+witness). This is the witness-search version of §12, with no simulator
+interface needed. A guarantee averaged over inputs or only on a training
+distribution does not meet this per-instance premise.
+
+For a formula with $m$ explicit variables and a prefix $u$, define
+
+$$
+h_\varphi(u)=
+\frac{\#\{v\in\{0,1\}^{m-|u|}:\varphi(uv)=1\}}
+{2^{m-|u|}}.
+$$
+
+Then $h_\varphi(u)>0$ is exactly the extendibility predicate of §§7–9.
+A deterministic uniform polynomial-time test of this positivity on all
+formula-prefix pairs is equivalent to P=NP: test the empty prefix to
+decide SAT; conversely restrict the formula by its prefix and use the
+assumed SAT decider. Once the initial answer is positive, select a positive
+child at each of $m$ positions and verify the completed assignment. At a
+full prefix the denominator is one, so the same expression includes
+ordinary verification. Exact evaluation of $h_\varphi(\epsilon)$ also
+gives the number of satisfying assignments by multiplication by $2^m$;
+it requests counting information beyond mere positivity. None of these
+observations supplies the positivity test.
+
+Suppose additionally that the randomized program uses at most $b(n)$ fair
+bits, where $b$ is polynomial; pad unused bits so seeds are in
+$\{0,1\}^{b(n)}$. There exists, for each $n$, a seed list of size
+
+$$
+K(n)=\left\lceil r(n)(n\ln2+1)\right\rceil
+$$
+
+that succeeds for every length-$n$ YES input. Indeed, sample $K$ independent
+seeds. The probability of missing one fixed YES input is at most
+$e^{-K/r(n)}$, and there are at most $2^n$ inputs. The probability of
+missing any is therefore at most $2^n e^{-K/r(n)}\le e^{-1}<1$.
+For an empty YES slice any list works. The list's description length is
+$K(n)b(n)$ plus polynomial framing; repetitions cause no problem.
+Given such a list as advice, enumerate its seeds and verify outputs in
+polynomial time. This is a nonuniform P/poly conclusion. If the lists
+can themselves be generated by one deterministic polynomial-time
+algorithm, the same construction is uniform and yields P=NP under the
+all-SAT hypothesis. The existence argument does not give that generator;
+a different free table for each input length is not an ordinary uniform
+observer program.

@@ -1,0 +1,44 @@
+**Definition 105.1 (No-reference minimax).** Keep the complex qutrit,
+original identity target and actual powers $\mathcal N_n=F^n$ of
+Definition 93.1. Write
+
+$$
+d(\rho,\tau)=\frac12\|\rho-\tau\|_1,\qquad
+\mu_n=\min_{D\ {\rm CPTP}}\ \max_{\rho\in\mathsf D(\mathbb C^3)}
+ d(D\mathcal N_n(\rho),\rho).
+\tag{105.1}
+$$
+
+For each horizon, one terminal CPTP map $D:M_3\to M_3$ is chosen before
+the unknown input. The input set contains every complex density matrix,
+including mixed states and pure states with arbitrary complex phases.
+The decoder receives only the terminal qutrit. There is no reference
+input or reference access, history register, intermediate correction,
+postselection or restriction to a smaller input code. A CPTP decoder may
+use an internal ancillary system and discard it, as usual; its induced
+map on the qutrit is still the single map in (105.1).
+
+For the channel $\Phi_s$ in (93.5), define
+
+$$
+e_s(\mathcal R)=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ d(\mathcal R\Phi_s(\rho),\rho),\qquad
+\mu(s)=\min_{\mathcal R\ {\rm CPTP}}e_s(\mathcal R),
+\qquad -\frac12\le s\le1.
+\tag{105.2}
+$$
+
+The precise correspondence (93.10) gives
+
+$$
+\mathcal N_n=\operatorname{Ad}_{U_0}\circ\Phi_{s_n},\qquad
+\mathcal R=D\circ\operatorname{Ad}_{U_0},\qquad
+D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+\mu_n=\mu(s_n)\quad(n\ge1).
+\tag{105.3}
+$$
+
+At infinity, (93.7) gives $\mu_\infty=\mu(0)$. The empty horizon instead
+has $\mathcal N_0=\operatorname{id}$; it is not the parameter $s=0$.
+No additional unitary is applied to the target in (105.3).
+

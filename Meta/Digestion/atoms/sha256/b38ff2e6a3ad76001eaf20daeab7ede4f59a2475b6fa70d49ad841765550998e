@@ -1,0 +1,49 @@
+**Theorem 4.3 (attained complete-child minimum).** There exists $h_0>0$
+such that for every real $h$ with $0<|h|<h_0$ the quantity
+
+$$
+\delta(h)=\min_{\substack{W,W'\in C(y(h))\\W\ne W'}}
+                 |a(W)-a(W')|
+\tag{4.4}
+$$
+
+is positive, is attained by the pair $W_+(h),W_-(h)$, and satisfies
+
+$$
+\delta(h)=|a(W_+(h))-a(W_-(h))|
+         =2A|h|+O(|h|^3).
+\tag{4.5}
+$$
+
+In the original acquired coordinates it has the positive rate
+
+$$
+\lim_{h\to0,\ h\ne0}
+\frac{\delta(h)}{\sqrt{\|y(h)-y_3\|_\infty}}
+=\frac{2A}{\sqrt B}>0.
+\tag{4.6}
+$$
+
+**Proof.** Shrink the interval so that the entire inventory (3.8),
+the local response bounds and the two local–remote gaps $>L$ hold.
+The local difference in (3.6) tends to zero; shrink again so that
+its absolute value is less than $L$. Of the three unordered
+distinct-world pairs in (3.8), the two involving $Z(y(h))$ have
+distance $>L$, whereas the remaining pair has distance $<L$.
+Consequently it attains the minimum over the entire child.
+
+The inequality $\bigl||u+r|-|u|\bigr|\le|r|$ applied to
+$u=2Ah$ and (3.6) gives (4.5), with $A>0$. It also gives
+positivity after another shrinking. This proves the claimed attained
+minimum, rather than a lower bound for a selected local pair.
+By (4.3),
+
+$$
+\sqrt{\|y(h)-y_3\|_\infty}
+=\sqrt B\,|h|\bigl(1+O(h^2)\bigr).
+$$
+
+Dividing (4.5) gives (4.6). Only the original $(p,v)$ norm is used;
+an arbitrary target diffeomorphism in a normal-form theorem would
+not supply this coefficient. $\square$
+

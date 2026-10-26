@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0f7a247ad1f73843553ea123d9cb74f7f1dc399fe31597615387c018cc523e90
+  normalized_sha256: sha256:0f7a247ad1f73843553ea123d9cb74f7f1dc399fe31597615387c018cc523e90
+cas_ref: sha256:0f7a247ad1f73843553ea123d9cb74f7f1dc399fe31597615387c018cc523e90
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
+    target_statement_id: sha256:6a2bddc3a2f9a0bac9b19a2c018b5400274ffada85babaf2b2ee3ecd202d27eb
+receipts:
+  unresolved_subitems: []

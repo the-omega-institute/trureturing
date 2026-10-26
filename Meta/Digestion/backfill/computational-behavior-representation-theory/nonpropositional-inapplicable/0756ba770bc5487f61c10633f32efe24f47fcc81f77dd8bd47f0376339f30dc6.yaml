@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:0756ba770bc5487f61c10633f32efe24f47fcc81f77dd8bd47f0376339f30dc6
+  normalized_sha256: sha256:0756ba770bc5487f61c10633f32efe24f47fcc81f77dd8bd47f0376339f30dc6
+cas_ref: sha256:0756ba770bc5487f61c10633f32efe24f47fcc81f77dd8bd47f0376339f30dc6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section title and navigation only. Each numbered clause describes the subject treated in sections 17 through 20; the final sentence restricts the scope to their stated models and quantifiers. No equation or independent mathematical assertion. Both chain children are settled first.
+    previous_atom_id: 0097143b34526b92783b702ccc4e4a6ce33188a1ce12f47d63ca1b158c290654
+    next_atom_id: d5373b2ff9be5d2332ee270e203877a4fb7d93ffba2c53e07b4954f8122e7832
+  chain_atoms:
+    - 987dc9a12ea1925313690760f4f3a64a0080f2629569630ca70ba4eb46f611e4
+    - 3284e27a1e29c4f1bc757e8e429e2da17398b514e30faba9099835e70a717c48

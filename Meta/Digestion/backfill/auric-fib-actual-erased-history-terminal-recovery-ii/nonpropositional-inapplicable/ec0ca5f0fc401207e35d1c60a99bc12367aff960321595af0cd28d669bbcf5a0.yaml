@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec0ca5f0fc401207e35d1c60a99bc12367aff960321595af0cd28d669bbcf5a0
+  normalized_sha256: sha256:ec0ca5f0fc401207e35d1c60a99bc12367aff960321595af0cd28d669bbcf5a0
+cas_ref: sha256:ec0ca5f0fc401207e35d1c60a99bc12367aff960321595af0cd28d669bbcf5a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fixes q and the contact evaluation and defines P and A; contains no slack identity or lower-bound conclusion.
+    previous_atom_id: 2e86ea39f2975671bc3b79fcd24f6a35daeab77f552e9c93fa0a93290fa8ed75
+    next_atom_id: fb66397647c7f3d192e13195d6cdc8a2dee17d46cbff52705d21af649038f343

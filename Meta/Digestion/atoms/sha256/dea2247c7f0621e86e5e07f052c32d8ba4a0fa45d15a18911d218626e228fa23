@@ -1,0 +1,27 @@
+**定理 7.3（全范围总改进下包络与平台阈值）。** For every $\ell\in[0,3/5]$,
+
+$$
+\boxed{\min_{\ell_G=\ell}D=\max\{0,1/5-2\ell\}.}
+\tag{7.4}
+$$
+
+The minimum is attained by finite same-prior laws. The full indicator plateau $r_i=1/5$ for every $i$ is attainable at a specified leakage $\ell$ exactly when $1/10\le\ell\le3/5$.
+
+Proof. Reusing the binary Bayes identity (2.3), at most one posterior coordinate exceeds $1/2$, hence
+
+$$
+ D=\mathbb E(2m(v(Q))-1)_+
+ \ge\max\{0,1-2\epsilon\}
+ \ge\max\{0,1/5-2\ell_G\}.
+\tag{7.5}
+$$
+
+Let $H$ be the fair-pair witness (6.3), with output masses $2/5,1/5,1/5,1/5$ on $ac,bd,de,be$. Only $be$ is a nonedge; its posterior maximal edge mass is $1/2$. Therefore
+
+$$
+ (\ell_G,\epsilon,D,\alpha)(H)=(1/10,1/2,0,1/5).
+\tag{7.6}
+$$
+
+For $0\le\ell\le1/10$, visible choice of $B$ and $H$, with weight $10\ell$ on $H$, has leakage $\ell$ and $D=(1-10\ell)/5$. For $1/10\le\ell\le3/5$, visible choice of $H$ and $U$, with weight $2\ell-1/5$ on $U$, has leakage $\ell$ and $D=0$. All weights lie in $[0,1]$ and all constituent priors are the same. Nonnegative individual improvements make $D=0$ equivalent to the full plateau. The bound and these attainers prove both statements. The hard threshold $\min\alpha=1/5$ on the plateau remains Theorem 6.2; (7.6) attains both thresholds, whose observables and numerical values differ. $\square$
+

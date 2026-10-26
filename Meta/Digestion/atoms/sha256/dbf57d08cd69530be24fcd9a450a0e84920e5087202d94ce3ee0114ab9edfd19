@@ -1,0 +1,134 @@
+## 7. Certified strict equal-M point
+
+Set
+
+$$
+r_A=\frac{99}{100},\qquad x=(b_A,r_B,b_B),
+$$
+
+and put $F=(p_A-p_B,v_A-v_B,m_A-m_B)$. All interval values and derivatives
+in this section use the public original gain-sample lift of
+[support II](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Definition 2.1,
+in the following evaluation order. For each world, first compute
+$c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, and $U=1+2b$.
+Then compute $\Lambda,D$ by (2.1), $e=-D/\Lambda$, and $d=24+e$.
+Evaluate the four gain samples displayed in Section 2, and apply its interpolation
+rows at clocks $5,6,7$ to obtain $g(5),g(6),g(7)$, respectively. Each row product
+is summed in sample order $0,1,2,3$. Next form
+$p=d+(U+n)g(5)$, $v=d+(2U+n)g(6)$, and $m=d+(3U+2n)g(7)$,
+then take the two-world differences defining $F$. These are the original
+whole-gain responses identified with (4.3); the bounds (7.2)–(7.5) use the
+gain-sample evaluation order just specified.
+
+Let the exact rational center be
+
+$$
+\bar x=\left(
+0.895717129219469386,
+0.938647204769207016,
+0.875817481084238252
+\right),
+$$
+
+and let
+
+$$
+\mathcal Q=\{x:\|x-\bar x\|_\infty\le10^{-10}\}.
+$$
+
+The explicit rational preconditioner is
+
+$$
+R_*=10^{-8}
+\begin{pmatrix}
+-546967580&154697260&-16273831\\
+-1318809200&516408400&-77174079\\
+-1041709400&350131100&-45748945
+\end{pmatrix},
+$$
+
+with
+
+$$
+\det R_*=
+\frac{2835442353395849767}{500000000000000000000}\ne0.
+\tag{7.1}
+$$
+
+On the entire closed cube $\mathcal Q$, value intervals use the rational rules of
+Section 3. Derivative intervals use
+
+$$
+(uv)'=u'v+uv',\qquad
+(u/v)'=\frac{u'-(u/v)v'}{v},
+$$
+
+and every quotient denominator is required to exclude zero. Exact interval
+automatic differentiation gives the three row-sum bounds
+
+$$
+\operatorname{rowsum}_i(I-R_*DF(x))
+<\left(\frac{25559}{10^8},\frac{71315}{10^8},
+\frac{51557}{10^8}\right)_i.
+\tag{7.2}
+$$
+
+Exact singleton evaluation at $\bar x$ gives
+
+$$
+\|R_*F(\bar x)\|_\infty<\frac3{10^{19}}.
+\tag{7.3}
+$$
+
+Thus $q:=\|I-R_*DF\|_\infty<1/1000$. For $\rho=10^{-10}$,
+
+$$
+\|x-R_*F(x)-\bar x\|_\infty
+\le \|R_*F(\bar x)\|_\infty+q\rho
+<\rho.
+$$
+
+The map $x\mapsto x-R_*F(x)$ is therefore a strict self-map and contraction of
+$\mathcal Q$. Banach's theorem gives a fixed point $x_*$ in its interior. By
+(7.1), $R_*$ is invertible, so the fixed-point equation is $F(x_*)=0$. The three
+equalities are exact rational bounds on the whole cube, and the equalities follow
+from this certified zero rather than from overlapping response enclosures.
+
+The strict guards on the two reconstructed worlds are
+
+$$
+\begin{array}{c|c|c}
+& A&B\\ \hline
+b&(0.895717,0.895718)&(0.875817,0.875818)\\
+r&(0.99)&(0.938647,0.938648)\\
+j&(0.906769,0.906770)&(0.941571,0.941572)\\
+ n&(1.896769,1.896770)&(1.880218,1.880219)\\
+\Lambda&(-1.996844,-1.996843)&(-1.813603,-1.813602)\\
+e&(4.536296,4.536297)&(4.911799,4.911800)
+\end{array}
+\tag{7.4}
+$$
+
+Here $c=r(1-r)/b>0$, $bc=r(1-r)$, and $d=24+e$ is one fixed drift for each
+world. The strict source and regular divisions follow from (7.4); the entire gain
+is the nonzero degree-at-most-three interpolant of the original samples. Both worlds
+use the original clocks $0,\ldots,7$ and only the original $J/M$ products, with no
+extra operation or acquired label. On the whole cube $r_A>r_B$, so the two worlds
+are distinct while both satisfy $0<r<1$, $b>0$, and all original-clock guards.
+
+The response enclosures, valid for each of the two worlds throughout the cube, are
+
+$$
+57.024793<p<57.024796,\qquad
+304.771484<v<304.771493,\qquad
+1227.801824<m<1227.801848.
+\tag{7.5}
+$$
+
+At $x_*$, $F(x_*)=0$, so the two worlds have equal acquired $(p,v)$ and equal
+terminal $m$. The first two inequalities in (7.5) put their common base strictly
+inside $K$ (and in particular $p_*\ne24$); (7.4) gives strict distinctness and
+legal original worlds. Theorem 1.1
+then gives $D_J$ exclusion for the entire child, while the equal-$m$ pair gives
+$D_M$ membership. This proves Theorem 1.2.
+

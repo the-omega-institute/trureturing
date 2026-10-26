@@ -1,0 +1,56 @@
+**Definition 2.2 (complete first-loader table).** For each fixed
+$0\le j<e$ name rows $N_j,I_j,X_j,W_j,M_j,C_j,A_j$ in that order.
+After these name $N_e,X_e,W_e,S_e,M_e,D_e$. Assign consecutive state
+numbers in this displayed order within $H_B$. This finite unrolling
+uses no runtime natural as a PC. Let $N_{j+1}$ mean the next such row,
+with $N_e$ the end case. Every effect list not displayed is empty.
+All rows have an ordinary receipt.
+
+| Row | Opcode fields $(o,i,j,s)$ | Successor and extra finite effect |
+| --- | --- | --- |
+| $N_j$, $j<e$ | $(9,0,0,0)$, NEXT variant | $I_j$; select the existing cursor position $c_j$. |
+| $I_j$ | $(6,0,6,0)$, public boot IN | $X_j$. |
+| $X_j$ | $(4,74,0,0)$, ordinary EX | $W_j$. |
+| $W_j$ | $(1,74,6,0)$, latched-bit WR | $M_j$. |
+| $M_j$ | $(3,74,0,0)$ | $C_j$. |
+| $C_j$ | $(1,0,6,0)$, fresh first-control WR variant | $A_j$; construct exactly slot $c_j$ from latch6. |
+| $A_j$ | $(9,0,0,0)$, ADVANCE variant | $N_{j+1}$; advance this fixed cursor by one. |
+| $N_e$ | $(9,0,0,0)$, end NEXT variant | $X_e$. |
+| $X_e$ | $(4,74,0,0)$, ordinary EX | $W_e$. |
+| $W_e$ | $(1,74,0,\ulcorner\mathsf F\urcorner)$, literal WR | $S_e$. |
+| $S_e$ | $(9,0,0,0)$ | $M_e$; seal current74 marker, set sealed=1. |
+| $M_e$ | $(3,74,0,0)$ | $D_e$. |
+| $D_e$ | $(9,0,0,0)$, first DONE variant | Activate the completely written actual first store at its installed entry; set Mirror=0, Retained=1, $W_{74}=0$. |
+
+The row name supplies the state field of Definition 1.2; each displayed
+single successor fills both successor fields. $D_e$ uses the fixed
+version-entry effect with the completed first store's actual initial
+PC, which is $L$'s on either admitted word. It uses no address computed
+from an uninstalled main word. Its ordered effects retain
+sealed=1, owner74=$A$ and $R_{74}=1$. The later first-store deactivation
+preserves these fields; the main graph does not initialize them back to
+Mirror or erase them. A first/second-version flag selects these two
+distinct DONE cases, so second DONE cannot regrant $W_{74}$.
+
+The guards are also part of this table. Every row requires active $H_B$,
+its indicated PC, Mirror=1 and the actual first installation owner.
+$N_j,I_j,C_j,A_j$ require cursor $j$ and the fixed version's constructor
+authority. $N_j$ has the non-end guard, $N_e$ the end guard. $C_j$ also
+requires $c_j$ absent and a binary latch6. There is no guard comparing
+that bit with $w_0[j]$. $X_j,X_e$ require $W_{74}=1$ and marked R74;
+$W_j,W_e,S_e$ require the current writable unsealed old R cell just
+allocated by that EX and $W_{74}=1$. $M_j,M_e$ require the existing
+right neighbor and that current owner/right. $D_e$ requires cursor=end,
+complete first store and sealed=1. These are finite phase, cursor,
+freshness and ordinary primitive guards, with a fixed local footprint.
+None tests an unbounded prefix or physically reads a seal track.
+The seal flag is an enabling invariant, not an imported symbol.
+
+NEXT's selected position is already the fixed current slot; ADVANCE is
+the only cursor-changing row. Thus selecting $c_j$ is preservation of
+that finite cursor, not a random-access construction. $C_j$, denoted
+WRITE$_L$ in GENERAL21.2, is exactly the fresh finite-bit constructor.
+It is distinct from the ordinary latched write $W_j$ on an existing
+cell. Every other tape/head/latch/slot remains unchanged except for the
+common PC/receipt effects. No bank assignment runs in $H_B$.
+

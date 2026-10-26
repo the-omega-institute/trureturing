@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92f609b33db65db39c68e1ad48605d92aacbec7f85572166a94dfb175706c9dd
+  normalized_sha256: sha256:92f609b33db65db39c68e1ad48605d92aacbec7f85572166a94dfb175706c9dd
+cas_ref: sha256:92f609b33db65db39c68e1ad48605d92aacbec7f85572166a94dfb175706c9dd
+coverage_gids:
+  - gid: D5/S3/Observer/Refinement/FinitePrimeTimeTomography.finite_prime_time_tomography
+    target_statement_id: sha256:36a54a1a15ac0185ecd1e4aeea07424896d04f6d2cbebe833e99c8b6c42c419d
+  - gid: D5/S3/Quantum/PredictionDepth/FiniteInformationalEffectCertificate.finite_informational_effect_certificate
+    target_statement_id: sha256:4971e5ecc42ec94b5de86dd9d77320728c88e70ac043bbc0c45287f8565a53b2
+receipts:
+  unresolved_subitems: []

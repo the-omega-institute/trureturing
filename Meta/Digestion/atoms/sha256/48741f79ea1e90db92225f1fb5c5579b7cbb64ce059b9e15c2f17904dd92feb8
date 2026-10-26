@@ -1,0 +1,130 @@
+**Theorem 118.2 (signed perfect-graft response limit).** Let $u\in D$,
+let $x$ be any INITIAL leaf, and write $u=C[a]$ with a single hole at
+that occurrence. For $\sigma\in\{+1,-1\}$, let $B_m^\sigma$ be the
+perfect ordered binary tree of depth $m\ge0$, whose $2^m$ leaves are
+alpha for $\sigma=+1$ and beta for $\sigma=-1$. Put
+$v_m^\sigma=C[B_m^\sigma]$. Let $O=V_u\setminus\{x\}$ be the fixed
+outside vertices, with their unchanged labels, and set
+
+$$
+\begin{aligned}
+k&=|O|=N_u-1, & b&=\sum_{p\in O}f_u(p),\\
+D_C&=\sum_{p\in O}\operatorname{dist}(p,x),
+&K_C&=\max(2D_C,2k+6),\\
+N_m&=k+2^{m+1}-1,
+&c_C&=|b|+(k-1)/2.
+\end{aligned}
+\tag{118.4}
+$$
+
+Distances use the fixed context edges including the attachment to $x$;
+$k\ge2$. For every fixed real $t>0$ and either sign,
+
+$$
+\left|R_{v_m^\sigma}(t)-\frac{\sigma}{2}\right|
+\le \sqrt{N_m}\,e^{-tN_m/K_C}+\frac{c_C}{N_m}
+\longrightarrow0.
+\tag{118.5}
+$$
+
+The context is fixed while $m$ tends to infinity. The field, normalization,
+all occurrences and operator in (118.5) are precisely (118.1) on each
+finite INITIAL $v_m^\sigma$.
+
+Proof. Graph automorphisms within the perfect graft fix every
+outside occurrence and commute with the original closed Laplacian. They
+fix $f_{v_m^\sigma}$ too. Thus the heat trajectory belongs to the invariant
+subspace $\mathscr S_m$ whose outside values are unrestricted and whose
+value $g_i$ is constant on graft level $i$. These are symmetries of a
+finite operator used in a proof; no permutation of ordered sources is a
+native action. Level $i$ has $2^i$ separate occurrences and the next-level
+interface has $2^{i+1}$ separate unit edges. Accordingly write the actual
+energy as $E_{\rm out}+E_{\rm rad}$, where $E_{\rm out}$ includes the
+parent-to-graft-root attachment edge and
+
+$$
+E_{\rm rad}=\sum_{j=0}^{m-1}2^{j+1}|g_j-g_{j+1}|^2.
+$$
+
+Set $a_j=2^{(j+1)/2}(g_j-g_{j+1})$ and extend this finite sequence by
+zero. Telescoping gives
+
+$$
+2^{i/2}(g_i-g_m)=
+\sum_{r\ge0}2^{-(r+1)/2}a_{i+r},\qquad 0\le i\le m.
+$$
+
+Each shift is an $\ell^2$ contraction. The triangle inequality and
+$\sum_{r\ge0}2^{-(r+1)/2}=1+\sqrt2$ therefore give
+
+$$
+\sum_{i=0}^m2^i|g_i-g_m|^2
+\le(3+2\sqrt2)E_{\rm rad}<6E_{\rm rad}
+\quad\text{if }E_{\rm rad}>0.
+\tag{118.6}
+$$
+
+The non-strict bound with constant six also holds when the energy is zero,
+including $m=0$. Weighted Cauchy--Schwarz gives
+$|g_0-g_m|^2\le(\sum_{j=0}^{m-1}2^{-(j+1)})E_{\rm rad}\le E_{\rm rad}$.
+The unique context path from $p\in O$ to $x$ uses only $E_{\rm out}$
+edges. Path Cauchy--Schwarz followed by
+$|g(p)-g_m|^2\le2|g(p)-g_0|^2+2|g_0-g_m|^2$ yields
+
+$$
+\sum_{p\in O}|g(p)-g_m|^2
+\le2D_C E_{\rm out}+2kE_{\rm rad}.
+$$
+
+The counting mean $\bar g$ minimizes squared deviation from constants.
+Combining these inequalities proves, for every $g\in\mathscr S_m$,
+
+$$
+\sum_{p\in V_{v_m^\sigma}}|g(p)-\bar g|^2
+\le K_C\langle g,L_{v_m^\sigma}g\rangle.
+\tag{118.7}
+$$
+
+The restriction of this finite real symmetric nonnegative operator to
+$\mathscr S_m$ is self-adjoint, contains constants, and has no further
+zero mode because the original graph is connected. Its nonconstant
+eigenvalues are consequently at least $1/K_C$. Finite spectral calculus
+gives
+
+$$
+\|e^{-tN_mL}f-\bar f\mathbf1\|_2
+\le e^{-tN_m/K_C}\|f-\bar f\mathbf1\|_2
+\le\sqrt{N_m}\,e^{-tN_m/K_C}.
+$$
+
+Here $L=L_{v_m^\sigma}$, $f=f_{v_m^\sigma}$, and all norms count
+every occurrence. Root evaluation has counting norm one. The retained
+constant contribution is exactly
+
+$$
+\bar f=\frac{b+\sigma2^m}{N_m},\qquad
+\left|\bar f-\frac{\sigma}{2}\right|
+=\frac{|b-\sigma(k-1)/2|}{N_m}\le\frac{c_C}{N_m}.
+$$
+
+This proves (118.5). It is an invariant-subspace use of the mature
+variational and reversible heat-decay method of Levin--Peres,
+[*Markov Chains and Mixing Times*, second edition, Lemma 13.7,
+Remark 13.8 and Lemma 20.5](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf),
+with the displayed actual counting weights and edge multiplicities.
+For rational $t$ and any rational $\delta>0$, a wholly finite sufficient
+error condition is
+$N_m>(2K_C^2/t^2+c_C)/\delta$: the elementary bound
+$e^s\ge s^2/2$ gives
+$\sqrt{N_m}e^{-tN_m/K_C}\le2K_C^2/(t^2N_m)$.
+Thus choosing a witness requires no infinite source.
+
+The sector qualification is essential. For $m\ge1$, take a vector equal
+to $+1$ on one child subtree of the graft root, $-1$ on the other, and
+zero at that root and outside. It has counting mean zero, energy two
+and squared norm $2(2^m-1)$. Its Rayleigh quotient is
+$1/(2^m-1)$, bounding the full-tree gap above and tending to zero.
+This vector is outside $\mathscr S_m$. No depth-uniform full-tree gap,
+uniformity over changing contexts, or shrinking-$t$ limit is asserted.
+$\square$
+

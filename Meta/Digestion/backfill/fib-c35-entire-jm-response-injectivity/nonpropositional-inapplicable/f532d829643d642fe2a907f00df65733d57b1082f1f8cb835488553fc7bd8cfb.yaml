@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f532d829643d642fe2a907f00df65733d57b1082f1f8cb835488553fc7bd8cfb
+  normalized_sha256: sha256:f532d829643d642fe2a907f00df65733d57b1082f1f8cb835488553fc7bd8cfb
+cas_ref: sha256:f532d829643d642fe2a907f00df65733d57b1082f1f8cb835488553fc7bd8cfb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 公式(15.1)只定义h、P、W、参数集合及字面历史；其世界合法性和整个历史切片相等属于后续定理，不在此断言。
+    previous_atom_id: 65d9c17104e36654f4305f7e1d0bd729db4d14eab1f8c9a19b90ec3324fd8ba2
+    next_atom_id: 4b113c8adc1ef8f41a78d1fcd22a014d45cbd3b1b54449e6f96a62cf81a06c64

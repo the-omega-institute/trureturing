@@ -1,0 +1,27 @@
+**Proposition 35.2 (exact finite-horizon response ranks).** With the matrices
+$J,M$ and the rows of Theorem 3.2,
+
+$$
+\boxed{(r_0,r_1,r_2,r_3,r_4,r_5,r_6,r_7)
+       =(1,3,7,12,16,17,17,17).}
+$$
+
+In particular, the complete response rank has already saturated at $H=5$.
+
+**Proof.** Every row has seventeen entries, so $r_H\le17$. Direct integer
+row reduction gives the following pivot certificates. For each word $w$,
+write $R_w$ for the row of $L_w$ at its terminal clock $|w|$ (with
+$R_\varepsilon$ the clock-zero row). The table lists these terminal word
+rows and a nonzero minor on the displayed pivot columns; exact elimination
+of the complete stacked matrices leaves no further pivot among the
+remaining rows. Columns are numbered $0,\ldots,16$ in the order
+$(d,\operatorname{vec}X_0,\ldots,\operatorname{vec}X_3)$.
+
+| $H$ | independent terminal rows $R_w$ | pivot columns | minor |
+|---:|---|---|---:|
+| $0$ | $\varepsilon$ | $0$ | $1$ |
+| $1$ | $\varepsilon,J,M$ | $0,1,4$ | $-1$ |
+| $2$ | $\varepsilon,J,M,JJ,JM,MJ,MM$ | $0,1,2,3,4,5,8$ | $2$ |
+| $3$ | $\varepsilon,J,M,JJ,JM,MJ,MM,JJJ,JJM,JMJ,JMM,MMJ$ | $0,1,2,3,4,5,6,7,8,9,10,12$ | $24$ |
+| $4$ | $\varepsilon,J,M,JJ,JM,MJ,MM,JJJ,JJM,JMJ,JMM,MMJ,JJJJ,JJJM,JJMJ,JJMM$ | $0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16$ | $13824$ |
+| $5$ | the $H=4$ rows and $JJJMM$ | $0,1,\ldots,16$ | $-82944$ |

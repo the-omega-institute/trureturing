@@ -505,7 +505,7 @@ private theorem invariant_unvectorize_commutes (v : ((n × n) × (n × n)) → �
   have h := congrArg (fun X : Matrix (n×n) (n×n) ℂ => X*(U.val ⊗ₖ U.val)) hc
   simpa [mul_assoc,hs] using h.symm
 
-private theorem replicaSwap_commutes (U : Matrix n n ℂ) :
+theorem replicaSwap_commutes (U : Matrix n n ℂ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (U ⊗ₖ U) =
       (U ⊗ₖ U)*(Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
   simp only [Equiv.Perm.permMatrix,

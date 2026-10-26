@@ -1,0 +1,51 @@
+**Definition 2.1 (Tail coordinates and exact circuits).** Put
+
+$$
+x=\frac nU>0,\qquad u=\frac1U\in(0,1),\qquad h(s)=Ug(s).
+\tag{2.1}
+$$
+
+For arbitrary real $d$ and $x>0$, with $p,v,m$ fixed, define
+
+$$
+h_4=18-d,\qquad h_5=\frac{p-d}{x+1},\qquad
+h_6=\frac{v-d}{x+2},\qquad h_7=\frac{m-d}{2x+3},
+\tag{2.2}
+$$
+
+and let
+
+$$
+\ell_i(s)=\prod_{\substack{4\le k\le7\\k\ne i}}\frac{s-k}{i-k},
+\qquad h(s)=\sum_{i=4}^7h_i\ell_i(s),\qquad H_i=h(i).
+\tag{2.3}
+$$
+
+Thus $H_i=h_i$ for $i=4,5,6,7$. The four earlier values are
+
+$$
+\begin{aligned}
+H_0&=35h_4-84h_5+70h_6-20h_7,\\
+H_1&=20h_4-45h_5+36h_6-10h_7,\\
+H_2&=10h_4-20h_5+15h_6-4h_7,\\
+H_3&=4h_4-6h_5+4h_6-h_7.
+\end{aligned}
+\tag{2.4}
+$$
+
+Define the polynomials
+
+$$
+\begin{aligned}
+\Delta&=(x+1)(x+2)(2x+3),\\
+K&=8x^4+29x^3+18x^2-15x-6,\\
+N&=(72x-24)\Delta-6px(x+2)(2x+3)\\
+&\hspace{18mm}+4vx(x+1)(2x+3)-mx(x+1)(x+2).
+\end{aligned}
+\tag{2.5}
+$$
+
+Here $K$ is a univariate quartic, unrelated to any rectangular base region
+or fixed-width family denoted $K$ in a supplier. The symbol $\Delta$ in
+this volume is the positive tail denominator (2.5), not $b-1/8$.
+

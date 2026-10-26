@@ -1,0 +1,86 @@
+**Theorem 116.5 (positive two-map full-successor comparison).**
+Fix $0<\varepsilon\le S<\infty$. Set
+
+$$
+M_{\varepsilon,S}=\frac{4Se^S}{e^2\varepsilon^2},\qquad
+\omega_n(\varepsilon,S)=
+ \min\left\{4,\ \inf_{j\ge1}
+       \left(\frac{2M_{\varepsilon,S}}{\sqrt j}
+                    +j3^j d_n\right)\right\}
+\quad(n\ge2).
+\tag{116.22}
+$$
+
+Then $\omega_n(\varepsilon,S)\to0$ and, on the complete original domain,
+
+$$
+\sup_{u\in\mathcal T}\ \sup_{t\in[\varepsilon,S]}
+ \|S_{n+1}(t)-E_n S_n(t)D_n\|_{H_{n+1}\to H_{n+1}}
+ \le\omega_n(\varepsilon,S).
+\tag{116.23}
+$$
+
+The originals, unit signed successor inputs and unit successor linear
+tests may all depend on $n$ and $t$. The conclusion does not require a
+common upper spectral bound.
+
+Proof. Reuse the elementary positive-contraction polynomial argument of
+§115.3 with the resolvents in (116.13), rather than its edge covariances.
+For $0<x\le1$ put $G_t(x)=e^{-t(1-x)/x}$ and put $G_t(0)=0$.
+Finite spectral calculus gives
+
+$$
+G_t(R)=S(t),\qquad G_t(R')=S'(t).
+\tag{116.24}
+$$
+
+All operators here are finite symmetric nonnegative functions of the
+actual closed Laplacians, so the continuous functional calculus applies
+also at the spectral endpoints. For the stated $t$ interval,
+$0\le G_t\le1$ and
+$|G_t'(x)|=t x^{-2}e^t e^{-t/x}\le M_{\varepsilon,S}$.
+In particular $G_t$ has a common scalar Lipschitz bound, not an
+assumed operator Lipschitz bound.
+
+Its degree-$j$ Bernstein polynomial is
+
+$$
+p_{j,t}(x)=\sum_{i=0}^j G_t(i/j)\binom ji x^i(1-x)^{j-i}.
+\tag{116.25}
+$$
+
+The binomial variance bound proves
+$\sup_{x\in[0,1]}|G_t(x)-p_{j,t}(x)|
+ \le M_{\varepsilon,S}/(2\sqrt j)$ uniformly in $t$.
+Crucially, $p_{j,t}(0)=0$: its monomial expansion has no identity term.
+The total absolute monomial coefficient sum is at most $3^j$, by
+expanding the displayed powers and using $0\le G_t(i/j)\le1$.
+Consequently (116.14) gives
+
+$$
+\begin{aligned}
+\|S'(t)-ES(t)D\|
+&\le\|G_t(R')-p_{j,t}(R')\|
+ +\|E(G_t(R)-p_{j,t}(R))D\|\\
+&\hspace{9mm}+\|p_{j,t}(R')-Ep_{j,t}(R)D\|\\
+&\le\frac{2M_{\varepsilon,S}}{\sqrt j}+j3^j d_n.
+\end{aligned}
+\tag{116.26}
+$$
+
+The first two terms use $\|E\|\|D\|\le3$.
+Also $\|S'(t)\|\le1$ and $\|ES(t)D\|\le3$, so four is a valid
+uniform cap. Taking the infimum proves (116.23).
+First fixing $j$ and letting $n$ grow, then letting $j$ grow, proves
+the limit in (116.22).
+
+For an explicit source-independent threshold at accuracy $\delta>0$,
+choose an integer $j>(4M_{\varepsilon,S}/\delta)^2$ and take any
+$n_0\ge2$ with $j3^j d_n<\delta/2$ for all $n\ge n_0$.
+The formulae (116.7), (116.13) are decreasing to zero for $n\ge2$,
+so one may choose the first such $n_0$ by their displayed scalar
+inequality. Then (116.23) is less than $\delta$ for every original
+and every $n\ge n_0$.
+This is a universal proof; finite matrix trends are not its premise.
+$\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa67d8a45bdcff0e0ed19acebc95d1c7bebb7e901e99baa5df4428829e9c84ef
+  normalized_sha256: sha256:aa67d8a45bdcff0e0ed19acebc95d1c7bebb7e901e99baa5df4428829e9c84ef
+cas_ref: sha256:aa67d8a45bdcff0e0ed19acebc95d1c7bebb7e901e99baa5df4428829e9c84ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只指定模型系数 J_ab 为轨道之间的 coupling 参数；没有声称经典零点有这种耦合。
+    previous_atom_id: 7fd257da7bc3bf805cba0129bd2d0b969b654cbc7486fc83e9d739c8654ffefb
+    next_atom_id: d23721e2ad333838320099db7c2107b0a6c827fa10cb1cf70d5604b555fea207

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37739155fc5cae260a4e90c936fd7b00ba192258acdbaa77cef98c8fdee10532
+  normalized_sha256: sha256:37739155fc5cae260a4e90c936fd7b00ba192258acdbaa77cef98c8fdee10532
+cas_ref: sha256:37739155fc5cae260a4e90c936fd7b00ba192258acdbaa77cef98c8fdee10532
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Verification/proof-status convention only: identifies numerical precision and uses and withholds Lean proof status; finite verification is not represented as a general proof.'
+    previous_atom_id: d2caa5efa922386471571993367c32d71b0c9c3cb066e1a7eb7cf2ba840a67d9
+    next_atom_id: 54e8a32cbf004b3edfe228530dd098eabf79edec6563e79859e609f4423ee433

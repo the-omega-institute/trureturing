@@ -1,0 +1,40 @@
+**Proposition 107.2 (Endpoints and positive-branch upper bound).**
+
+$$
+\mu_0=0,\qquad \mu_1=\mu(1)=\frac12,\qquad
+\mu_\infty=\mu(0)=\frac23,
+\tag{107.4}
+$$
+
+and, for $0\le s\le1$,
+
+$$
+e_s(\operatorname{id})=\frac23-\frac{s}{6},\qquad
+\mu(s)\le\frac23-\frac{s}{6}.
+\tag{107.5}
+$$
+
+*Proof.* The empty horizon is recovered exactly by the identity decoder.
+At parameter one, $\Phi_1$ is pinching into the $01$ block and the $2$
+block. For a pure state with population $p_2$, its error has eigenvalues
+$0,\pm\sqrt{p_2(1-p_2)}$, so
+$e_1(\operatorname{id})=1/2$. The lower bound (106.8) proves
+$\mu(1)=1/2$. At parameter zero, (106.8) and the replacer prove
+$\mu(0)=2/3$.
+
+Linearity gives $\Phi_s=s\Phi_1+(1-s)\Phi_0$ for $0\le s\le1$.
+The triangle inequality and Lemma 107.1 therefore give the upper bound
+in (107.5) for every density input. To see equality for this fixed
+decoder, use the pure state with real coordinates
+
+$$
+v=(\sqrt{1/3},\sqrt{1/6},\sqrt{1/2})^{\mathsf T},\qquad P=vv^\dagger.
+\tag{107.6}
+$$
+
+Here $(\Phi_0(P)-P)v=-2v/3$, and direct block pinching gives
+$(\Phi_1(P)-P)v=-v/2$. Thus
+$(\Phi_s(P)-P)v=-(2/3-s/6)v$. Its error is at least $2/3-s/6$,
+matching the upper bound. This proves the identity-decoder value,
+without asserting that this decoder minimizes (105.2). $\square$
+

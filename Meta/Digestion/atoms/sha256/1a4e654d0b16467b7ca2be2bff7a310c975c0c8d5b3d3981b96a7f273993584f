@@ -1,0 +1,46 @@
+**Lemma 22.2 (The specialized certificate identities and inclusions).**
+The exact divisions (21.3), (21.8), the source identities (21.2),
+(21.9), and every rational table and inclusion in this section hold.
+
+*Proof.* Expand (21.1) and extract all seven coefficients in $r$, including
+zeros, for each $F_i$. In each prescribed row the coefficient of $r^k$
+in $r^aF_i$ is $[r^{k-a}]F_i$, interpreted as zero outside degrees
+$0,\ldots,6$. Expand each fixed determinant by
+$\det A=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i A_{i,\sigma(i)}$.
+Multiplication by the respective divisors in (21.3) recovers these
+determinants from the complete coefficient arrays in Section 24.
+The same coefficient comparison for the seven-row determinant in
+(21.8) gives its stated scalar and the fifteen-term $T_s$ array.
+These polynomial comparisons establish the exact divisions without
+any specialization or leading-coefficient assumption. Substitution of
+$X=bj$, $N=bn$ into (2.3) gives (21.2); expansion of (21.8) gives
+(21.9). The resulting $T_s$ is $-S_4$ with the sign convention of [S],
+Definition 9.1.
+
+Apply the finite binomial sum (22.1) to each of the $23$ coefficient
+polynomials specified in Section 24. The exact $C_k,H_k$ values in the
+table result; comparing the integer cross-products gives
+$10^{12}H_k\le u_k|C_k|$ and $u_k<10^7$ for every $k$.
+The endpoint table uses the same sum with zero $b$ half-width.
+For the lifting table use the specified midpoint of each $I$ and its
+half-width. Each $\mathcal T_I(\lambda_1)$ excludes zero, so taking
+the hull of the four exact endpoint quotients gives the displayed
+$r$ enclosure. Equation (22.6) uses the fifteen coefficients of $T_s$.
+Finally expand $L,Q_r$ from (22.7) and use the midpoint of (22.8).
+The $L$ enclosure excludes zero; the positive $b$ interval and the
+squared $L$ interval are therefore lawful denominators in (22.9).
+The strict last bound follows from the sharper rational enclosure
+
+$$
+p_r(X_c)\subset
+[1299159933837/25000000,5196645965191/100000000]
+\subset(51960,51970).
+\tag{22.10}
+$$
+
+All operations here are exact integer coefficient comparisons and finite
+rational sums with their stated input arrays and intervals. The
+root-count consequence is the classical Descartes rule; the endpoint
+existence consequence is the intermediate value theorem. No numerical
+approximation to $W_3$ is used as its definition. $\square$
+

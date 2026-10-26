@@ -1,0 +1,16 @@
+## 25. Two exact J-critical singleton children
+
+Write $\operatorname{base}(W)=(p(W),v(W))$. Continue with the complete worlds of
+Definition 1.1 and the exact algebraic worlds $\mathcal W_i^J$ of (23.8), for $i=1,2$. Put
+
+$$
+z_i=(\rho_i,\beta_i),\qquad
+q_i=(p_i,v_i)=(p(\mathcal W_i^J),v(\mathcal W_i^J)),\qquad
+x_i=\frac{j(z_i)+\rho_i}{1+2\beta_i}.
+\tag{25.1}
+$$
+
+The algebraic definitions in (23.8) are retained. In particular the
+rational centres below are data for enclosing these exact sources;
+none replaces $z_i$, $q_i$ or a complete world.
+

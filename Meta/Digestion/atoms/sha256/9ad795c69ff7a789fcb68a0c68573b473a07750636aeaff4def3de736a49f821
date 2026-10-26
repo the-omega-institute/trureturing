@@ -1,0 +1,23 @@
+**Definition 226.1 (native family and closed extension).** Retain the stopped
+singleton history and coordinate order $(r,\ell,R)$ of VI §139. Write
+
+$$
+\begin{gathered}
+T=(1,1,1)^\top,\qquad
+L=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+\pi_q=(1-u-v,u,v)^\top,\qquad
+G_q=L+\pi_q\pi_q^\top,\qquad
+S_q=G_q^{1/2},\qquad V_q=S_qT,\\
+p(q)=(V_q)_\ell^2,\\
+D=\{(u,v):u>0,\ v>0,\ u+v<1\},\qquad
+\Delta=\{(u,v):u\ge0,\ v\ge0,\ u+v\le1\}.
+\tag{226.1}
+\end{gathered}
+$$
+
+The square root is the positive principal square root. The cut is the
+second coordinate after this normalization. No additional orthogonal
+rotation is permitted. The irreducible native family has domain $D$;
+$\Delta$ is its closed mathematical extension. In this appendix the vector
+$\pi_q$ and the circle constant $\pi_{\mathrm c}$ are distinct symbols.
+

@@ -1,0 +1,101 @@
+**Theorem 10.2 (Uniform regular-source and regular-world bound).**
+For every real $p\in\mathcal P$ and every complex $v$,
+
+$$
+|\mathcal Z(p,v)|\le18.
+\tag{10.2}
+$$
+
+Consequently, for every real $p\in\mathcal P$ and real $v$,
+
+$$
+\bigl|\{W\in\mathcal F(H_4,M,p,M,v):\Lambda(W)\ne0\}\bigr|
+\le18.
+\tag{10.3}
+$$
+
+The count includes multiple sources above the same projected root,
+fixed base projections, repeated projected roots and specialized
+source-degree drops.
+
+Proof. First $R(r,p,v)$ is a nonzero polynomial in $r$ even when
+$v$ is complex. Indeed, if it were zero, its leading and constant
+coefficients from Sections 3–4 would give
+
+$$
+a(p,v)=0,\qquad \ell(p,v)^2q_2(p,v)q_3(p,v)=0.
+\tag{10.4}
+$$
+
+Lemma 5.1 excludes a common complex root of $a(p,\cdot)$ and any
+of $\ell(p,\cdot),q_2(p,\cdot),q_3(p,\cdot)$ for every such real
+$p$. This proves the required extension of the noncollapse argument.
+
+Let $\mathsf S(r)$ be the fixed $14$ by $14$ Sylvester matrix of
+Section 3, at the present $p,v$. Its determinant is
+
+$$
+\det\mathsf S(r)=52488000r^{11}(r-1)^9E_0(r)R(r,p,v).
+\tag{10.5}
+$$
+
+The coefficient $[b^7]\mathsf A=5p+216$ is a nonzero scalar.
+Thus at each fixed complex $r=\alpha$ there are at most seven
+finite common $b$ roots. Each distinct common root $t$ supplies
+the null vector $(t^{13},t^{12},\ldots,1)^{\mathsf T}$ of
+$\mathsf S(\alpha)$. The vectors for distinct roots are linearly
+independent by the Vandermonde determinant. Hence the corank of
+$\mathsf S(\alpha)$ is at least their number.
+
+If a polynomial matrix has corank $k$ at $\alpha$, its determinant
+vanishes to order at least $k$. To see this, apply constant
+invertible row and column operations putting its value at
+$\alpha$ in rank normal form. The last $k$ columns then have all
+entries divisible by $r-\alpha$. Multilinearity of the determinant
+gives the assertion. This is the corank argument of $E$,
+Lemma 4.3, with the number of roots unrestricted up to seven.
+
+For $\alpha\notin\{0,1\}$ let $n_\alpha$ count the points of
+$\mathcal Z(p,v)$ above $\alpha$, and let
+$m_\alpha=\operatorname{ord}_{r=\alpha}R(r,p,v)$, with value zero
+when $R(\alpha,p,v)\ne0$. If $E_0(\alpha)\ne0$, (10.5) and the
+corank inequality give $n_\alpha\le m_\alpha$.
+
+If $E_0(\alpha)=0$, $E$, Lemma 4.2, supplies an additional finite
+common root with $D=0$ for every $p,v$:
+
+| Vanishing factor | Additional common root $b$ |
+| --- | --- |
+| $\Psi_2$ | $-1/2$ |
+| $\Psi_4$ | $-2/5$ |
+| $\Phi$ | $1/8$ |
+
+These identities are polynomial substitutions over $\mathbb Q$,
+so hold at complex roots and complex responses. The same lemma
+proves that the three factors are squarefree and pairwise coprime.
+Thus $E_0$ has order exactly one at $\alpha$. The additional
+$D=0$ root is distinct from every point counted by $n_\alpha$.
+The corank is at least $n_\alpha+1$, whereas (10.5) has order
+$1+m_\alpha$. Again $n_\alpha\le m_\alpha$.
+This includes every intersection of a fixed base projection with
+an $R$ root, without a nonzero linear-subresultant premise.
+
+Every nonempty fibre therefore projects to a root of the nonzero
+$R$, and
+
+$$
+|\mathcal Z(p,v)|
+ =\sum_{\alpha\ne0,1}n_\alpha
+ \le\sum_{\alpha\ne0,1}m_\alpha
+ \le\deg_r R(r,p,v)\le18.
+\tag{10.6}
+$$
+
+The fixed matrix and its evaluation vectors remain valid when the
+$b$ degree of $\mathsf B$ drops, in particular at $v=-225$.
+No simplicity of an $R$ root or uniqueness of its $b$ lift was
+used. Finally, $O$, Theorem 12.3, makes the complete-world lift
+unique at each strict source, and (20.8) identifies $D\ne0$ with
+$\Lambda\ne0$ there. This proves (10.3), including all gain and
+drift strata in Section 1. ∎
+

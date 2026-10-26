@@ -1,0 +1,42 @@
+### 13.1. Original worlds and the ordinary mathematical inputs
+
+Retain exactly the worlds and terminal alternatives of (12.1)–(12.3):
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\\
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+y_i=d+g(i)\operatorname{tr}(Q_iP),\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v).
+\end{gathered}
+\tag{13.1}
+$$
+
+Here $J,M$ are the matrices in (12.1). The entire $C(p,v)$ consists
+of all such complete worlds. Each world has its own arbitrary fixed
+drift and its one whole gain polynomial. At the original clock seven,
+$a(W)$ and $m(W)$ are the alternative readings in (12.2). Lower gain
+degrees, zero gain samples, repeated roots, zero drift and unbounded
+positive offdiagonals remain in the domain. No source box, common
+drift, reset, copy, shifted clock or new port is imposed.
+
+The ordinary inputs have the following precise scope. Write O for
+[FIB common-parent geometry and two exact mixed children](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+S for [FIB entire singular-response children and terminal-M injectivity](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md),
+and F for [FIB all-response finite-fibre geometry](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+at the indicated revision. Write IX for
+[FIB strict-real joint incidence: the trace-corrected complex M projection curve](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md),
+specifically its completed Sections 24–28 and the coefficient rows of
+(25.2). Section 12 of this volume is used with its ordinary proofs.
+
+| Ordinary input | Exact correspondence and retained condition |
+| --- | --- |
+| O, Theorem 2.1, Lemma 12.2, Theorems 12.3 and 29.2 | O's $\beta=1/8$, $a=24/5$, $\epsilon=d-24$; its fifth response is this $p$, and its sixth-M response is this $v$. The singular classification and unique whole-gain lift hold for every real $p$. |
+| S, Definition 2.3, Definition 3.2 and Lemma 3.3 | The two algebraic root brackets and cubic representative of the actual singular sixth-M response; the response identity holds for every real $p$. No theorem restricted to S's particular $p_J$ is transferred. |
+| F, Definition 30.1 and Lemma 30.2 | The identical entire child has $x=n/U$ and $H=Ug$, with the same $p,v,d$. Its faithful whole-world reconstruction holds for all real $p\ne24$, including negative $p$, without assuming a nonzero drift. These coordinates do not restrict the original sources. |
+| IX, (24.2)–(24.8), (25.1)–(25.2), (25.10)–(25.13), Theorems 26.1, 27.1 and 28.1 | The same exact continued secant zero, the full coordinate radius $10^{-12}$, uniqueness joins, exact germ attachment, strict-source event and whole-gain lifts. |
+| This volume, Theorem 12.1 and (12.25)–(12.27) | The entire regular inventory and terminal gap only on its closed $Q=[999/10^6,1001/10^6]$. |

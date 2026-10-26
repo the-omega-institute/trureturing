@@ -1,0 +1,47 @@
+**Theorem 86.3 (local free-form ambiguity, approximate readings and exact normalized fibres).** Let $\phi\in\mathcal D$, $\|\phi\|_2=1$, and fix (86.3). There are normalized $\psi_r\in\mathcal D$ with
+
+$$
+\|\psi_r-\phi\|_H\to0,\qquad A\psi_r\to A\phi,\qquad
+T[\psi_r]\to T[\phi],\qquad V[\psi_r]\to\infty,
+\qquad q[\psi_r]\to-\infty.
+\tag{86.7}
+$$
+
+If $\phi\in\mathcal R$, the perturbations can all be taken in $\mathcal R$. For exact amplitudes, the normalized fibre in $\mathcal H$ is a singleton if and only if $\phi\in F$. The same singleton criterion holds after intersecting the fibre with $\mathcal D$, or with $\mathcal R$ when $\phi\in\mathcal R$. If $\phi\notin F$, (86.7) can be achieved with $A\psi_r=A\phi$ for every $r$. This is not a claim of exact kinetic equality.
+
+Proof. Apply Lemma 86.2 with the additional representer $\phi$ to obtain $\langle\phi,v_r\rangle=0$. Fix $1<\beta<3/2$, put $b_r=r^\beta$, and first take
+
+$$
+\psi_r=\frac{\phi+b_rv_r}{\sqrt{1+b_r^2}}.
+\tag{86.8}
+$$
+
+Normalization is exact, and $A\psi_r=A\phi/\sqrt{1+b_r^2}$. The free-form change is bounded by the normalization change times $\|\phi\|_H$, plus $b_r\|v_r\|_H$, and tends to zero since $b_r/r\to0$. Triangle inequality for the actual weighted $L^2$ space, on the whole domain $\mathcal D$, gives
+
+$$
+\sqrt{V[\psi_r]}\ge
+\frac{b_r\sqrt{V[v_r]}-\sqrt{V[\phi]}}{\sqrt{1+b_r^2}}\longrightarrow\infty,
+\tag{86.9}
+$$
+
+because $b_rr^{-3/2}\to\infty$. Free-form convergence gives kinetic convergence and then $q\to-\infty$. All sums remain in $\mathcal D$, and in $\mathcal R$ if the target is regular. In particular an explicit regular target is any normalized nonzero punctured compact test; (86.8) already proves its local ambiguity. No smoothness-to-multiplier-domain inference is used for a general target.
+
+For the exact fibre, let $p=P_F\phi$. Hilbert orthogonal projection gives exactly
+
+$$
+\{\psi:\|\psi\|_2=1, A\psi=A\phi\}
+ =\{p+z:z\in F^\perp,\ \|z\|_2^2=1-\|p\|_2^2\}.
+\tag{86.10}
+$$
+
+If $\phi\in F$, the right side is $\{\phi\}$. If $\phi\notin F$, it is a nontrivial sphere. To prove the stronger local assertion in the actual domains, rather than merely use that sphere, note that $\mathcal D_0\cap\ker A$ is $L^2$ dense in $\ker A$: approximate any $z\in\ker A$ by $z_n\in\mathcal D_0$, then subtract $JAz_n\to0$ using Lemma 86.2. Since $P_{F^\perp}\phi\ne0$, choose a normalized $u\in\mathcal D_0\cap\ker A$ and change its phase so $d=\langle\phi,u\rangle>0$ is real. Apply Lemma 86.2 with the additional representers $\phi,u$, so $v_r$ is orthogonal to both. For $b_r<d$ put
+
+$$
+c_r=-d+\sqrt{d^2-b_r^2}
+ =-\frac{b_r^2}{d+\sqrt{d^2-b_r^2}},\qquad
+\psi_r=\phi+b_rv_r+c_ru.
+\tag{86.11}
+$$
+
+Then $A\psi_r=A\phi$ and $\|\psi_r\|_2^2=1+2dc_r+c_r^2+b_r^2=1$. Also $c_r=O(b_r^2)$, so free-form convergence still holds. The weighted norm of $\phi+c_ru$ stays bounded, whereas $b_r\sqrt{V[v_r]}\to\infty$. The weighted reverse triangle again proves potential divergence. Thus every nonsingleton case has actual local witnesses, including in the original regular subclass. No assumption that $P_F\phi$ itself is regular is necessary. $\square$
+

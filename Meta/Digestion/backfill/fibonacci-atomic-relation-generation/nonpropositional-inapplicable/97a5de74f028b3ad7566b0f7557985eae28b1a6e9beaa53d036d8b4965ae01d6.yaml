@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97a5de74f028b3ad7566b0f7557985eae28b1a6e9beaa53d036d8b4965ae01d6
+  normalized_sha256: sha256:97a5de74f028b3ad7566b0f7557985eae28b1a6e9beaa53d036d8b4965ae01d6
+cas_ref: sha256:97a5de74f028b3ad7566b0f7557985eae28b1a6e9beaa53d036d8b4965ae01d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 设置有限交换群/同态与 E、E_X、E_Y，定义商群 J；分量识别另列 53.1。
+    previous_atom_id: f9d0b645fb39a172a25543af025eef9fb1d9d5745fc1d2c8ce23549eeaf3f6b7
+    next_atom_id: 213e27c588a538248d871a7a228e90a4eaaba2bb3cfdbc08841f94abae5ca486

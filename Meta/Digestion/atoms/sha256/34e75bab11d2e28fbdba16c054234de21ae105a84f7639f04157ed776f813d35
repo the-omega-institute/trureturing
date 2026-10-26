@@ -1,0 +1,101 @@
+**Lemma 135.1 (Slack, complementarity and exact value).** Let
+
+$$
+Y=\operatorname{diag}(pT_{00}+rw,\ v_1T_{22},\ v_2T_{22}),\qquad
+S=I_{\rm out}\otimes Y-W.
+\tag{135.1}
+$$
+
+Then $S\succeq0$. On $\operatorname{span}\{|00\rangle,|11\rangle\}$
+its block is
+
+$$
+\begin{pmatrix}rw&-w\\-w&w/r\end{pmatrix}
+=\frac wr\begin{pmatrix}r\\-1\end{pmatrix}
+            \begin{pmatrix}r&-1\end{pmatrix},
+\tag{135.2}
+$$
+
+and its other seven blocks, each one-dimensional, are
+
+| Coordinate | Scalar entry of $S$ |
+| --- | --- |
+| $01$ | $v_1(a_2-a_0)/\tau$ |
+| $02$ | $v_2(a_2-a_0)/\tau$ |
+| $10$ | $\{g+p(a_2-a_1)\}/\tau$ |
+| $12$ | $v_2(a_2-a_1)/\tau$ |
+| $20$ | $g/\tau$ |
+| $21$ | $0$ |
+| $22$ | $0$ |
+
+The five displayed nonzero scalar entries are strictly positive.
+If $b_{\rm test}=\operatorname{Tr}(TP)$, then
+
+$$
+SJ_{\mathcal R_*}=0,\qquad b_{\rm test}-\operatorname{Tr}Y=L.
+\tag{135.3}
+$$
+
+*Proof.* The actual $11$ diagonal entry of $I\otimes Y-W$ is
+$v_1(a_2-a_1)/\tau$. Equation (133.5) makes it $w/r$ at the root.
+The other entries follow by direct subtraction of (134.3), using
+$g=p(a_0-a_2)+r\omega_0$. The root-box bounds give $r,w,\tau,v_1,v_2>0$,
+$a_2-a_0>0$, $a_2-a_1>0$ and $g>0$. These are sufficient for
+positive semidefiniteness of the entire $9\times9$ matrix, including
+the small $20$ entry.
+
+For the exact role of stationarity, define $S_{\rm cert}$ by the block
+(135.2) and the seven scalar formulas even off the root, keeping the
+rational expressions (129.9). Then the following identity holds before
+any root equation is imposed, wherever $r\tau\ne0$:
+
+$$
+(I\otimes Y-W)-S_{\rm cert}
+=-\frac{N_r}{2r\tau}|11\rangle\langle11|.
+\tag{135.4}
+$$
+
+Indeed (133.4) gives
+$v_1(a_2-a_1)/\tau-w/r=-N_r/(2r\tau)$.
+Thus there is no rounded stationarity assumption in (135.2).
+
+The Kraus list gives the exact Choi matrix
+
+$$
+\begin{aligned}
+v&=|00\rangle+r|11\rangle,\\
+J_{\mathcal R_*}&=vv^\dagger+(1-r^2)|21\rangle\langle21|
+                         +|22\rangle\langle22|.
+\end{aligned}
+\tag{135.5}
+$$
+
+It has partial trace $\operatorname{diag}(1,r^2+1-r^2,1)=I_3$ and
+rank three, since $0<r<1$. Multiplying the block and scalar formulas
+by (135.5) gives $S_{\rm cert}J_{\mathcal R_*}=0$ identically.
+Equation (135.4) makes this $SJ_{\mathcal R_*}=0$ at $N_r=0$.
+
+The equality of the lower and upper values also has explicit off-root
+remainders. Use (133.1) to define $T=\operatorname{adj}(LI-A)/\tau$
+off the root and $b_{\rm test}=\operatorname{Tr}(TP)$ as before.
+Polynomial cofactor expansion gives
+
+$$
+\begin{aligned}
+\tau\{\operatorname{Tr}(TA)-L\}&=-3N,\\
+\tau\{\operatorname{Tr}(T\mathcal R_r\Phi(P))-
+                         \operatorname{Tr}Y\}&=\frac r2N_r,\\
+\tau\{b_{\rm test}-\operatorname{Tr}Y-L\}
+&=-3N+\frac r2N_r.
+\end{aligned}
+\tag{135.6}
+$$
+
+For the first identity one may take traces in
+$(LI-A)\operatorname{adj}(LI-A)=NI_3$; the second follows by
+substitution of (130.3) and (129.9), and the third is their sum.
+All three are identities from the displayed finite polynomials.
+The simultaneous equations $N=N_r=0$ and $\tau>0$ prove the exact
+matching equality in (135.3) at the same root as the upper certificate.
+$\square$
+

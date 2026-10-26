@@ -49,7 +49,7 @@ theorem half_successor (degree : ℕ) :
     Nat.cast_add, Nat.cast_one]
   field_simp
 
-private theorem half_binomial_transform (degree : ℕ) :
+theorem half_binomial_transform (degree : ℕ) :
     ∑ index ∈ Finset.range (degree + 1),
       (degree.choose index : ℂ) * halfBinomial index =
         (-1 : ℂ) ^ degree * halfBinomial degree := by
@@ -396,7 +396,7 @@ def labelledRemainders (D : LatticeData) :
 def wordWeight (D : LatticeData) (word : List (Index D)) : ℕ :=
   (word.map (sourceWeight D)).sum
 
-private theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
+theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
     (entry : Index D × List (Index D)) (member : entry ∈ labelledRemainders D word) :
     entry.2.length + 1 = word.length ∧
       wordWeight D entry.2 + sourceWeight D entry.1 = wordWeight D word := by
@@ -557,7 +557,7 @@ theorem Corr_monomial_enumeration (D : LatticeData) (charge : Charge D)
             (LatticeAllStateField.occurrences D exponent))) (monomial exponent 1))) = _
   rw [basis, ← correctionWord_permutation D charge word _ enumeration]
 
-private theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
+theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
     wordWeight D (LatticeAllStateField.occurrences D exponent) =
       Finsupp.weight (sourceWeight D) exponent := by
   classical
@@ -620,3 +620,137 @@ end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.half_successor
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairScalar_reflection
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+open scoped BigOperators
+
+private theorem finiteCurrentConvolutionCrossCertificate (r : ℂ) (m n : ℕ) :
+    ((m : ℂ) + (n : ℂ)) *
+      (∑ j ∈ Finset.range (n + 1),
+        Ring.choose r (m + j) * Ring.choose (-r) (n - j)) =
+      (m : ℂ) * Ring.choose r m * Ring.choose (-r - 1) n := by
+  have step (a : ℂ) (q : ℕ) :
+      (q + 1 : ℂ) * Ring.choose a (q + 1) =
+        (a - (q : ℂ)) * Ring.choose a q := by
+    have h := Ring.choose_smul_choose a (by omega : q ≤ q + 1)
+    simpa [Nat.choose_succ_self_right, nsmul_eq_mul, mul_comm] using h
+  let T : ℕ → ℂ := fun j => Ring.choose r (m + j) * Ring.choose (-r) (n - j)
+  let F : ℕ → ℂ := fun j =>
+    ((m + j : ℕ) : ℂ) * Ring.choose r (m + j) * Ring.choose (-r - 1) (n - j)
+  have interior (j : ℕ) (hj : j < n) :
+      ((m : ℂ) + (n : ℂ)) * T j = F j - F (j + 1) := by
+    have split : n - j = (n - (j + 1)) + 1 := by omega
+    have next : m + (j + 1) = (m + j) + 1 := by omega
+    have total : (m : ℂ) + (n : ℂ) =
+        ((m + j : ℕ) : ℂ) + ((n - (j + 1) : ℕ) : ℂ) + 1 := by
+      exact_mod_cast (by omega : m + n = (m + j) + (n - (j + 1)) + 1)
+    have ha := step r (m + j)
+    have hb := step (-r - 1) (n - (j + 1))
+    have hp := Ring.choose_succ_succ (-r - 1) (n - (j + 1))
+    rw [show -r - 1 + 1 = -r by ring] at hp
+    dsimp only [T, F]
+    rw [next, split, total, hp]
+    push_cast
+    push_cast at ha hb
+    linear_combination
+      Ring.choose r (m + j) * hb + Ring.choose (-r - 1) (n - (j + 1)) * ha
+  have terminal : ((m : ℂ) + (n : ℂ)) * T n = F n := by
+    simp [T, F, Nat.cast_add]
+  change ((m : ℂ) + (n : ℂ)) * (∑ j ∈ Finset.range (n + 1), T j) = _
+  calc
+    _ = (∑ j ∈ Finset.range n, ((m : ℂ) + (n : ℂ)) * T j) +
+        ((m : ℂ) + (n : ℂ)) * T n := by
+      rw [Finset.sum_range_succ, mul_add, Finset.mul_sum]
+    _ = (∑ j ∈ Finset.range n, (F j - F (j + 1))) + F n := by
+      rw [terminal]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact interior j (Finset.mem_range.mp hj)
+    _ = F 0 := by rw [Finset.sum_range_sub']; ring
+    _ = (m : ℂ) * Ring.choose r m * Ring.choose (-r - 1) n := by simp [F]
+
+/- proof_shape: halfBinomial_positive_convolution: content
+   admission_basis: escape-witness
+   escape_witness: The finite certificate telescopes before division; positivity
+   excludes the false divided origin. Consumed by the actual finite triangle. -/
+/-- Half-binomial convolution at every positive source weight, including n = 0. -/
+theorem halfBinomial_positive_convolution (m n : ℕ) (hm : 0 < m) :
+    (∑ j ∈ Finset.range (n + 1),
+      halfBinomial (m + j) * Ring.choose (1 / 2 : ℂ) (n - j)) =
+      (m : ℂ) * halfBinomial m * halfBinomial n / ((m : ℂ) + (n : ℂ)) := by
+  have cross := finiteCurrentConvolutionCrossCertificate (-1 / 2 : ℂ) m n
+  have total : (m : ℂ) + (n : ℂ) ≠ 0 := by
+    exact_mod_cast (by omega : m + n ≠ 0)
+  rw [show -(-1 / 2 : ℂ) - 1 = -1 / 2 by ring,
+    show -(-1 / 2 : ℂ) = 1 / 2 by ring] at cross
+  simp only [← halfBinomial_choose] at cross
+  apply (eq_div_iff total).2
+  rw [mul_comm]
+  exact cross
+
+end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+/-- The scalar cancellation in the original evaluated correction insertion.
+The positive inserted source weight is r+1. Both zero-mode boundaries remain. -/
+theorem insertion_l1_scalar (r n : ℕ) :
+    (1 / 2 : ℂ) * halfBinomial r * Ring.choose (1 / 2 : ℂ) n =
+      ((r + 1 : ℂ) + (n : ℂ)) *
+        ((r + 1 : ℂ) * halfBinomial (r + 1) * halfBinomial n /
+          ((r + 1 : ℂ) + (n : ℂ))) +
+      (if n = 0 then 0 else ((n : ℂ) - 1) *
+        ((r + 1 : ℂ) * halfBinomial (r + 1) * halfBinomial (n - 1) /
+          ((r + 1 : ℂ) + ((n - 1 : ℕ) : ℂ)))) +
+      (if r = 0 then (if n = 0 then 1 else 0) else
+        (r + 1 : ℂ) * ((r : ℂ) * halfBinomial r * halfBinomial n /
+          ((r : ℂ) + (n : ℂ)))) := by
+  have hzero : halfBinomial 0 = 1 := by simp [halfBinomial]
+  have hone : halfBinomial 1 = -1 / 2 := by norm_num [halfBinomial]
+  have rs : (r + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero r
+  cases n with
+  | zero =>
+    by_cases hr : r = 0
+    · subst r
+      norm_num [hzero, hone]
+    · have rc : (r : ℂ) ≠ 0 := by exact_mod_cast hr
+      simp only [Nat.cast_zero, add_zero, Ring.choose_zero_right, mul_one,
+        ite_true, if_neg hr, hzero, zero_add]
+      rw [half_successor r]
+      field_simp
+      <;> ring
+  | succ n =>
+    have choose : Ring.choose (1 / 2 : ℂ) (n + 1) =
+        halfBinomial n + halfBinomial (n + 1) := by
+      rw [show (1 / 2 : ℂ) = -1 / 2 + 1 by ring,
+        Ring.choose_succ_succ, ← halfBinomial_choose, ← halfBinomial_choose]
+    have ns : (n + 1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
+    have total : (r + 1 : ℂ) + (n + 1 : ℂ) ≠ 0 := by
+      exact_mod_cast (by omega : r + 1 + (n + 1) ≠ 0)
+    have adjacent : (r + 1 : ℂ) + (n : ℂ) ≠ 0 := by
+      exact_mod_cast (by omega : r + 1 + n ≠ 0)
+    simp only [Nat.succ_eq_add_one, choose, Nat.add_sub_cancel,
+      Nat.cast_add, Nat.cast_one, Nat.add_eq_zero_iff, Nat.one_ne_zero,
+      and_false, if_false]
+    by_cases hr : r = 0
+    · subst r
+      simp only [ite_true, Nat.cast_zero, zero_add, hone, hzero]
+      rw [half_successor n]
+      have n1 : (1 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 1 + n ≠ 0)
+      have n2 : (2 : ℂ) + (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : 2 + n ≠ 0)
+      have n2a : (1 : ℂ) + ((n : ℂ) + 1) ≠ 0 := by
+        exact_mod_cast (by omega : 1 + (n + 1) ≠ 0)
+      field_simp [n1, n2, ns, n2a]
+      <;> ring
+    · rw [if_neg hr, half_successor r, half_successor n]
+      have lower : (r : ℂ) + (n + 1 : ℂ) ≠ 0 := by
+        exact_mod_cast (by omega : r + (n + 1) ≠ 0)
+      field_simp
+      <;> ring
+
+end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.insertion_l1_scalar

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15e4a2ab5876afc8ecdfbe89663d564e63521cf432cbad9c1f4e5349ca2c7ad0
+  normalized_sha256: sha256:15e4a2ab5876afc8ecdfbe89663d564e63521cf432cbad9c1f4e5349ca2c7ad0
+cas_ref: sha256:15e4a2ab5876afc8ecdfbe89663d564e63521cf432cbad9c1f4e5349ca2c7ad0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 待补桥清单中的 positive Fredholm realization 名称，没有存在断言。'
+    previous_atom_id: ba17515412adb2b73cd49cb4c5175ad847f8a061aa1a80e24bfc867fda084e42
+    next_atom_id: e672350f689d08e5a09ea6a4432524b3c99caa2034184d6de96d31d82085b135

@@ -1,0 +1,12 @@
+## 37. 来源对应与精确恢复的边界
+
+承重供应及对象对应如下。
+
+| 来源 | 本批使用的内容 | 适用边界 |
+| --- | --- | --- |
+| 本卷 §§9、15、21–25、31–33 | 从零活计数、共同固定先验、原两相位响应、完整停止词/长度律、实际像两矩恢复及更新、终端核 | 不重证完整律、两矩注入性或不稳定性；不向原接口添加概率端口 |
+| [NativeAcquiredPrefixState](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean) 的 `initial`、`nativeRead`、`writeMarker`、`nativeStop`、`marker_fields_exact` | 原提种/载荷部分事务、全 Read 活计数、第三次写后快照、$Q^+,Z$ 保持、唯一匹配 Stop | `AcquiredNativeState` 没有 selected-count bank 或保留原 chronology；其原始 weight/syndrome 与 held snapshot 分开 |
+| [NativeConditionalControl](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.lean) 的 `jointLaw`、`posterior`、`sameK_conditional_tail`、`native_first_pending` | 同一个正整数隐藏深度，实际正柱条件下的未读尾与首个原 pending 事件 | 不在局部段重抽深度或重装先验，不条件于将来 $E_1$ |
+| [Spatial Records Chronology](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) §§6、18–23及本卷 §32 | 原拒绝/返回/部分解析字、原记录表、收费 selected/live 银行和同历史保持 | selected counts 或 chronology 只属于声明并实际取得、保持、交付它们的观察者 |
+| [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) §§96–97、100、105.1 | 实际 Fibonacci 节点、停止层新鲜性、付费提种与原 Stop/单次裸快照合同 | 不加入隐藏深度、时钟、重置、重采样或 post-Stop Read |
+| Yabuta Theorem 3，441–442页；[Fibonacci Atomic Relation Generation](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 中的同版本供给 | 定理34.2非例外指标的原始素因子中间步骤 | 原始素数首次出现定义；$6,12$ 由本节实际赋值另行处理 |

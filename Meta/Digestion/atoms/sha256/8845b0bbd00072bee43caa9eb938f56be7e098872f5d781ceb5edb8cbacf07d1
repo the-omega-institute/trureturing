@@ -1,0 +1,64 @@
+**Theorem 5.1 (Full-width slice and direction obstructions).** For every
+$\beta>0$ and every real $p$, the following hold at
+$H_5=(H_{4,\beta},M,p)$.
+
+1. Every support with $L_2$ has at least three different complete worlds.
+2. No support contained in one entire gain direction has $L_2$.
+3. No subset of $S_p$ in (4.3) has $L_2$. In particular an unrestricted
+   $L_2$ support contains a world with $b\ne\beta$, and this world has
+   $d\ne24$ and $[g]\ne[h]$.
+
+At the target $\beta=1/8$ and $p\ne24$, the direction map is injective on
+the entire fifth-M fiber. Therefore every $L_2$ support there contains at
+least three distinct directions. This is a count of projective
+directions, not a claim that the gains have linear span at least three.
+At $p=24$, any $L_2$ support must still leave $K_{1/8}$.
+
+Proof. The unrestricted exactly-two-world fifth-M classification is the
+terminal-zero-plane volume, Theorem 8.2. It applies to any two different
+complete worlds, including sampled zeros and arbitrary gain and drift,
+without a chamber hypothesis. Its necessary relations at initial read
+$a_0=0$ are $A=D$ and $z=D+(4D/7)n$, with $n=r+b+c>0$.
+At the present parent $A=z=24$, they would give
+
+$$
+D=24,\qquad24=24+\frac{96}{7}n>24,
+\tag{5.1}
+$$
+
+which is impossible. Empty and singleton supports fail the original
+guards. This proves the first assertion; it does not extract a two-world
+$L_2$ subset from a larger support.
+
+By Theorem 3.1 a non-$h$ direction has at most two parent worlds, so the
+first assertion excludes any $L_2$ support inside it. The $h$ direction
+is exactly $K_\beta$ by Theorem 2.2. The entire-response volume, Theorem
+15.4, excludes the entire fifth-M arm of this exact-gain family on every
+subset. More explicitly, after an acquired sixth-J response $u$ its
+final-J response $f$ satisfies the inherited joint inverse
+
+$$
+r=\beta+\frac{u-24}{24}-\frac5{384}(f-24).
+\tag{5.2}
+$$
+
+Thus no final-J leaf inside one acquired sixth-J child contains a
+distinct pair. Other fifth responses in this family are empty.
+
+For $p\ne24$, Theorem 4.1 gives $|S_p|\le2$, so (5.1) and the guards
+exclude $L_2$ on every subset. For $p=24$, $S_p=K_\beta$ and (5.2)
+applies. This proves the third assertion. The final filters follow from
+(2.6) and Theorem 2.2.
+
+At the target, Theorem 3.2 gives one world per non-$h$ direction on the
+whole parent. The exceptional class $K_{1/8}$ has fifth response exactly
+$24$ and so is absent when $p\ne24$. Combining this injectivity with the
+first assertion proves the three-direction requirement. No gain
+direction has been acquired as data. ∎
+
+The fixed-width and one-direction exclusions concern those restrictions.
+They do not exclude all-external supports, any arbitrary $p\ne24$, or a
+support whose worlds all share some fixed $b\ne\beta$. In particular the
+necessary condition $b\ne\beta$ somewhere does not itself force two
+different $b$ values.
+

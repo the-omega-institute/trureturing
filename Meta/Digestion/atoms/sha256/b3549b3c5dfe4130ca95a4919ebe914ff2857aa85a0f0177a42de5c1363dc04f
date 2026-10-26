@@ -1,0 +1,44 @@
+**Lemma 10.1.** For each fixed $0\le r\le1$, the negative fifth
+readings at widths at least one are exactly $(-\infty,-216/5)$.
+Each occurs exactly once, at a width $B_p(r)>\lambda(r)$.
+
+**Proof.** Lemma 8.1 and $H=bD$ show that $p>0$ on
+$1\le b<\lambda(r)$ and $p<0$ on $b>\lambda(r)$.
+The pole itself supplies no actual parent world by Lemma 7.2.
+On its right-hand side the exact facts are
+
+$$
+\lim_{b\downarrow\lambda(r)}p(r,b)=-\infty,\qquad
+p_b=\frac{B}{H^2}>0,\qquad
+\lim_{b\to\infty}p(r,b)=-\frac{216}{5}.
+\tag{10.1}
+$$
+
+For the first limit, $N_p(r,\lambda(r))<0$ and $H$ approaches
+zero from above. For the last, the leading terms in $b$ are
+$N_p=-216b^7+\text{terms of lower degree}$ and
+$H=5b^7+\text{terms of lower degree}$, independently of $r$.
+Strict increase, continuity and these limits prove that
+$b\mapsto p(r,b)$ is a bijection from
+$(\lambda(r),\infty)$ onto $(-\infty,-216/5)$.
+This proves the assertion, including the unattained endpoint.
+$\square$
+
+For each $p<-216/5$, the analytic implicit-function theorem [5]
+applied to $p(r,b)=p$ gives $b=B_p(r)$, jointly real analytic
+in $r,p$. Uniqueness in Lemma 10.1 joins the local solutions on
+the entire connected interval $0<r<1$ and extends them to its
+auxiliary endpoints. Consequently the complete negative source sheet is
+
+$$
+\mathcal S_-=
+\{(r,b):0<r<1,\ b>\lambda(r)\}
+=\{(r,B_p(r)):0<r<1,\ p<-216/5\}.
+\tag{10.2}
+$$
+
+It is connected: $(r,p)\mapsto(r,B_p(r))$ parametrizes it
+continuously from the connected product
+$(0,1)\times(-\infty,-216/5)$, with continuous inverse $(r,b)\mapsto(r,p)$.
+There is no other negative component with $b\ge1$.
+

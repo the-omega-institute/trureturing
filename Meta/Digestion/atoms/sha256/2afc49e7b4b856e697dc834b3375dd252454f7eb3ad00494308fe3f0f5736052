@@ -1,0 +1,31 @@
+**推论 5.3（正性截断与幅度稳定性）。** 若 $S_v\succ0$，令
+
+$$
+\kappa_v=\|S_v^{-1/2}(iA_v)S_v^{-1/2}\|_{\mathrm{op}}.
+$$
+
+二分图可行尺度恰满足
+
+$$
+\max_{v\in\mathcal V_-}\kappa_v\le |t|
+\le\min_{v\in\mathcal V_+}\kappa_v^{-1}.
+$$
+
+若原状态均正定，则 $t=1$ 附近确有连续歧义。令 $r_v=\|A_v\|_F$，$y_{uv}=\log\|A_u\otimes A_v\|_F$，$x_v=\log r_v$，并令 $M_{\mathcal G}$ 每条边对应行在两个端点取 1，则 $y=M_{\mathcal G}x$，且
+
+$$
+M_{\mathcal G}^{\mathsf T}M_{\mathcal G}=D_{\mathcal G}+A_{\mathcal G}.
+$$
+
+在非二分情形，最小二乘重构满足
+
+$$
+\|\Delta x\|_2\le
+\frac{\|\Delta y\|_2}
+{\sqrt{\lambda_{\min}(D_{\mathcal G}+A_{\mathcal G})}}.
+$$
+
+**证明。** 实反对称矩阵 $S_v^{-1/2}A_vS_v^{-1/2}$ 乘 $i$ 后的谱成 $\pm$ 对，所以正性恰为 $|t_v|\kappa_v\le1$，代入定理即得区间。Frobenius 范数在纯张量上相乘，给出对数线性系统。逐行计算得到无符号图 Laplace 矩阵；其核由 $x_u+x_v=0$ 定义，奇环和连通性使核为零，二分时核为两侧取相反常数的一维空间。非二分时，伪逆范数是最小奇异值的倒数，给出误差界。$□$
+
+该界只控制幅度的对数重构；完整方向的条件数以及实际层析样本成本仍需另行分析。
+

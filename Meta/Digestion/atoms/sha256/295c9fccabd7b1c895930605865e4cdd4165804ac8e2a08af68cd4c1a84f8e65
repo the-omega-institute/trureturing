@@ -1,0 +1,14 @@
+**Proposition 14.3 (Source-specific rational certificate).** Every
+Bernstein coefficient of the indicated polynomial satisfies the
+following strict bounds. For $a_k(r(x),p(z))$, use degree $(6,1)$:
+
+| $k$ | Lower bound | Upper bound |
+| --- | --- | --- |
+| $0$ | $1$ | $2$ |
+| $1$ | $1$ | $2$ |
+| $2$ | $-47$ | $-46$ |
+| $3$ | $-72$ | $-71$ |
+| $4$ | $119$ | $120$ |
+| $5$ | $370$ | $371$ |
+| $6$ | $1089$ | $1090$ |
+| $7$ | $353$ | $354$ |

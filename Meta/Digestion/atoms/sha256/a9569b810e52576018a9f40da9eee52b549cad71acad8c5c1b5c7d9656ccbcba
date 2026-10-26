@@ -1,0 +1,79 @@
+**Lemma 122.1 (Cubic identity from five contacts).** At $\theta_*$ let
+
+$$
+\begin{aligned}
+k&=(p_i-p_e)/x_i,\qquad u=p-p_e-kx,\\
+A_0&=n_{20}+3p_en_{30},\quad A_1=n_{30},\quad A_2=3kn_{30}+n_{21},\\
+\delta&=3k^2n_{30}+2kn_{21}+n_{12},\\
+\gamma&=k^3n_{30}+k^2n_{21}+kn_{12}+n_{03},\\
+Q(p,x)&=A_0+A_1(p-p_e)
+       +\left(A_2-kA_1-\frac{\delta^2}{4\gamma}\right)x.
+\end{aligned}
+\tag{122.1}
+$$
+
+Then $x_i,\gamma>0$ and the following polynomial identity holds for all
+real $p,x$:
+
+$$
+\boxed{N(p,x)=Q(p,x)u^2+
+\gamma x\left(x-x_i+\frac{\delta}{2\gamma}u\right)^2.}
+\tag{122.2}
+$$
+
+*Proof.* This identity is a consequence of the five contact equations
+$F_1=\cdots=F_5=0$, and can be derived for a generic cubic with ten
+coefficients. Substitute $p=p_e+kx+u$ and expand in $u$. Its constant
+coefficient $f_0(x)$ has degree at most three, leading coefficient
+$\gamma$, a zero at $x=0$, and a double zero at $x=x_i$:
+
+$$
+f_0(0)=N_e=0,\quad f_0(x_i)=N_i=0,\quad
+f_0'(x_i)=kN_{i,p}+N_{i,x}=0.
+\tag{122.3}
+$$
+
+Because $x_i\ne0$, $f_0(x)=\gamma x(x-x_i)^2$.
+The coefficient $f_1(x)$ of $u$ has degree at most two, leading
+coefficient $\delta$, and
+$f_1(0)=N_{e,p}=0$, $f_1(x_i)=N_{i,p}=0$. Thus
+$f_1(x)=\delta x(x-x_i)$. The remaining terms are
+$(A_0+A_2x)u^2+A_1u^3$, directly from the coefficients of the generic
+cubic. Therefore
+
+$$
+N=\gamma x(x-x_i)^2+\delta x(x-x_i)u
+                    +(A_0+A_1u+A_2x)u^2.
+\tag{122.4}
+$$
+
+Completing the square gives (122.2), since
+$Q=A_0+A_1u+(A_2-\delta^2/(4\gamma))x$.
+This is an exact identity modulo the five contacts; the contacts are
+not approximate zeros.
+
+For the denominator signs and the global inequality, apply the rational
+interval method of §120 to (119.6) and then (122.1), on the whole box
+$\mathcal B$. Coarse outward rational enclosures are
+
+| Expression | Lower endpoint | Upper endpoint |
+| --- | --- | --- |
+| $k$ | $-0.268016$ | $-0.268014$ |
+| $\delta$ | $-0.023055$ | $-0.023052$ |
+| $\gamma$ | $0.000436$ | $0.000437$ |
+| $Q(0,0)$ | $0.944714$ | $0.944715$ |
+| $Q(1,0)$ | $0.590314$ | $0.590315$ |
+| $Q(0,1)$ | $0.720186$ | $0.720187$ |
+
+All entries lie strictly between the stated endpoints. In particular
+
+$$
+\frac1{2500}<\gamma<\frac1{2000},\quad
+Q(0,0)>\frac9{10},\quad Q(1,0)>\frac12,\quad Q(0,1)>\frac12.
+\tag{122.5}
+$$
+
+The bound $x_i>0.388$ in (120.12) justifies division by $x_i$ before
+this evaluation. The positive lower bound for $\gamma$ then justifies
+every division in $Q$ and (122.2). $\square$
+

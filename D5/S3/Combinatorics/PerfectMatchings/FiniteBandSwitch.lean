@@ -141,7 +141,7 @@ open Equiv
 variable {X Y : Type*} [Finite X]
 
 omit [Finite X] in
-private theorem same_cycle_perm_congr (e : X ≃ Y) (p : Perm X) (x y : X) :
+theorem same_cycle_perm_congr (e : X ≃ Y) (p : Perm X) (x y : X) :
     (e.permCongr p).SameCycle (e x) (e y) ↔ p.SameCycle x y := by
   have hp (n : ℤ) : e.permCongr (p ^ n) = (e.permCongr p) ^ n :=
     map_zpow e.permCongrHom p n

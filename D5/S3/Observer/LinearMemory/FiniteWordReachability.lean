@@ -30,7 +30,7 @@ def boundedSpan (A : I → Module.End K E) (U : Submodule K E) (n : ℕ) :
 def reachableSpan (A : I → Module.End K E) (U : Submodule K E) : Submodule K E :=
   Submodule.span K {x | ∃ word : List I, ∃ z ∈ U, x = (word.map A).prod z}
 
-private def step (A : I → Module.End K E) (S : Submodule K E) : Submodule K E :=
+def step (A : I → Module.End K E) (S : Submodule K E) : Submodule K E :=
   S ⊔ ⨆ i, S.map (A i)
 
 private theorem bounded_zero (A : I → Module.End K E) (U : Submodule K E) :
@@ -69,7 +69,7 @@ private theorem step_bounded (A : I → Module.End K E) (U : Submodule K E) (n :
           Submodule.subset_span ⟨word, htail, z, hz, rfl⟩,
           by simp [Module.End.mul_apply]⟩
 
-private theorem iterate_eq_bounded (A : I → Module.End K E) (U : Submodule K E)
+theorem iterate_eq_bounded (A : I → Module.End K E) (U : Submodule K E)
     (n : ℕ) : (step A)^[n] U = boundedSpan A U n := by
   induction n with
   | zero => exact (bounded_zero A U).symm
@@ -77,7 +77,7 @@ private theorem iterate_eq_bounded (A : I → Module.End K E) (U : Submodule K E
       rw [Function.iterate_succ_apply', ih]
       exact step_bounded A U n
 
-private theorem bounded_le_reachable (A : I → Module.End K E) (U : Submodule K E)
+theorem bounded_le_reachable (A : I → Module.End K E) (U : Submodule K E)
     (n : ℕ) : boundedSpan A U n ≤ reachableSpan A U := by
   apply Submodule.span_mono
   rintro x ⟨word, _, z, hz, rfl⟩

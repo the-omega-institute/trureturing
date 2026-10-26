@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37e069bd1a606354449a076fe8196abbb7c15be7218d9d071b7884a62389692d
+  normalized_sha256: sha256:37e069bd1a606354449a076fe8196abbb7c15be7218d9d071b7884a62389692d
+cas_ref: sha256:37e069bd1a606354449a076fe8196abbb7c15be7218d9d071b7884a62389692d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Continuation of the preceding whether-question: effective reconstruction and conceptual distinction.'
+    previous_atom_id: 67fe32651c875e00736efc2de4f23f74ca8dc6672acf5b0a3b4f4edcd7abd63a
+    next_atom_id: e65272f3b919a2ade7126ec345fb325eac8fba5ddc9dbec58f3710c34f8d4347

@@ -14,7 +14,8 @@ internal static partial class RepositoryRules
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var change in changes.Entries.Where(static change =>
-            change.Kind is RawChangeKind.Added && IsLibraryDocument(change.Path.Value)))
+            change.Kind is RawChangeKind.Added or RawChangeKind.Modified
+            && IsLibraryDocument(change.Path.Value)))
         {
             if (!current.Files.TryGetValue(change.Path, out var file))
                 continue;
@@ -23,7 +24,7 @@ internal static partial class RepositoryRules
             if (lines > LibraryDocumentLineLimit)
                 findings.Add(new(change.Path.Value,
                     $"library document spans {lines} lines (hard limit {LibraryDocumentLineLimit}); "
-                    + "split new material into separate notes and link related notes"));
+                    + "split material into separate notes and link related notes"));
         }
 
         return findings.ToImmutable();

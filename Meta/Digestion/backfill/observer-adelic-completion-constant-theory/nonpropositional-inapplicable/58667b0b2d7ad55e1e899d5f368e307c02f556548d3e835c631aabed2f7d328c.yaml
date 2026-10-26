@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58667b0b2d7ad55e1e899d5f368e307c02f556548d3e835c631aabed2f7d328c
+  normalized_sha256: sha256:58667b0b2d7ad55e1e899d5f368e307c02f556548d3e835c631aabed2f7d328c
+cas_ref: sha256:58667b0b2d7ad55e1e899d5f368e307c02f556548d3e835c631aabed2f7d328c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nominal list or definition fragment with no mathematical assertion; settled as nonpropositional.
+    previous_atom_id: c82b7ba0ebdd7cfabe2a4a290c07546a8475883c29ff2cda800e08d5a1e9d9a0
+    next_atom_id: 05abdb4533a9e84440bc4490647caa934ddf8132defcfa73e74bbc6eba799e7a

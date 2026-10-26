@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92a0d209cd2c9ac52b1e6b36de94f4888dccbb45d385e8897ea3eb7bd6d7cb21
+  normalized_sha256: sha256:92a0d209cd2c9ac52b1e6b36de94f4888dccbb45d385e8897ea3eb7bd6d7cb21
+cas_ref: sha256:92a0d209cd2c9ac52b1e6b36de94f4888dccbb45d385e8897ea3eb7bd6d7cb21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic scope of Milne: identifies the field-coefficient group-algebra background and disclaims proof of the integer unit classification; no mathematical proposition is asserted.'
+    previous_atom_id: 771c0e1e29956bd8bc11c1f3cedd6d91fbf796d7d85f4cc10f713f5104310f37
+    next_atom_id: 7e3f3ec05d19c048537de744979d279ab44192b08b062047768bfd239c44f62a

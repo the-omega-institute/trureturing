@@ -1,0 +1,122 @@
+**Theorem 5.1 (whole-future diameter of every signature cell).**
+For all $h\ge0$ and all deterministic starts with $S_h(p)=S_h(p')$,
+
+$$
+\|\mathsf L_p^\infty-\mathsf L_{p'}^\infty\|_{\mathrm{TV}}
+ \le2^{-h}.
+\tag{5.1}
+$$
+
+For finite windows this gives, together with Theorem 4.1,
+
+$$
+\|\mathsf L_p^T-\mathsf L_{p'}^T\|_{\mathrm{TV}}
+ \le\min\{b_h(T),2^{-h}\}.
+\tag{5.2}
+$$
+
+**Proof.** For $h=0$ this is the general bound one in the convention
+(1.2). Let $h\ge1$ and let $n$ be the common depth. If $n\le h$,
+the signatures contain the complete ancestor lists. V Theorem
+121.3 gives $p=p'$, so both distances are zero. Hence suppose
+$n>h$.
+
+Set $u=a_{h-1}(p)$ and $v=a_{h-1}(p')$. They are nonroots and have
+the same depth, colour and incoming increment:
+
+$$
+d(u)=d(v)=n-h+1,\qquad q(u)=q(v)=c_{h-1},\qquad
+\delta(u)=\delta(v)=c_{h-1}-c_h.
+\tag{5.3}
+$$
+
+In the last equality the residue determines its unique allowed
+integer increment. Moreover there is one common literal suffix
+$w$ of length $h-1$ with $p=uw$ and $p'=vw$. Indeed for the edge
+from $a_{j+1}$ to $a_j$, $0\le j<h-1$, the signatures give both
+incoming increments
+$c_{j+1}-c_{j+2}$ and $c_j-c_{j+1}$. In each row of (120.12) the
+two children have different increments. The two known increments
+therefore determine the same literal child letter for both
+addresses, proving the suffix assertion edge by edge.
+
+Identify the two entire descendant cones by $uz\leftrightarrow vz$
+for every finite suffix $z$. Equation (5.3) and the unchanged child
+recursion show by induction on $|z|$ that this identification
+preserves $q,\delta,d$ and every internal parent--child seam.
+If $u=v$, then the common suffix already gives $p=p'$.
+Otherwise these distinct roots have the same depth and their
+cones are disjoint.
+
+Use one rate-three Poisson clock and identical parent/left/right
+choices until the coupled pair first exits its matched cones.
+Every state before exit is a nonroot; every such Poisson event
+is an actual jump. The source states remain matched and their
+observations agree until exit. Extend each marginal after exit
+by its correct source law using fresh randomness. Let $\sigma$
+be the exit time. On $\{\sigma=\infty\}$ the complete observed
+paths agree, so (4.4) on the whole-future path space yields
+
+$$
+\|\mathsf L_p^\infty-\mathsf L_{p'}^\infty\|_{\mathrm{TV}}
+ \le\mathbf P\{\sigma<\infty\}.
+\tag{5.4}
+$$
+
+Before exit, height above the respective cone parent starts at
+$h$: the initial suffix has length $h-1$. At every jump it
+decreases by one with probability $1/3$ and increases by one
+with probability $2/3$. Exit is hitting height zero. For a
+barrier $M>h$, the probability of hitting zero before $M$ is
+
+$$
+H_j^{(M)}=\frac{2^{-j}-2^{-M}}{1-2^{-M}}\quad(0\le j\le M).
+\tag{5.5}
+$$
+
+This is the standard biased gambler's-ruin formula, here with
+outward probability $2/3$. To check its use, its boundary values
+are one and zero and
+$3H_j^{(M)}=H_{j-1}^{(M)}+2H_{j+1}^{(M)}$ in the interior.
+The stopped finite walk reaches a barrier almost surely:
+from every interior site, $M$ consecutive downward choices
+would hit zero, with probability at least $3^{-M}$, so the
+chance of avoiding both barriers for $kM$ steps is at most
+$(1-3^{-M})^k$. The recurrence with those boundary values is
+unique, since a nonzero difference cannot attain its positive
+maximum or negative minimum only in the interior. Thus it
+indeed equals the hitting probability.
+
+As $M\to\infty$, hitting zero before $M$ increases to ever
+hitting zero. Each finite hitting route has finite maximum.
+The construction is nonexplosive, so finite jump-index hitting
+is the same as finite-time hitting. Substitution of $j=h$ in
+(5.5) gives
+
+$$
+\mathbf P\{\sigma<\infty\}=\lim_{M\to\infty}H_h^{(M)}
+ =2^{-h}.
+\tag{5.6}
+$$
+
+Equations (5.4)--(5.6) prove (5.1). Restriction of paths to
+$[0,T]$ cannot increase TV, proving the $2^{-h}$ part of
+(5.2); (4.3) supplies the other part. In fact the observations
+at exit also agree, since both cone parents have colour $c_h$.
+The proof only needs agreement before exit and does not infer
+agreement of the subsequent rows there. $\square$
+
+The hitting calculation is a source-specific application of
+[Lyons--Peres, Probability on Trees and Networks, Chapter 2,
+Example 2.4](https://rdlyons.pages.iu.edu/prbtree/book.pdf):
+their fortune is the height just used, their winning probability
+is $2/3$, and their ruin event is cone exit. The elementary coupling
+comparison (4.4) is the same inequality as
+[Levin--Peres with Wilmer, Markov Chains and Mixing Times, second
+edition, §4.2, Proposition 4.7](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+For the path-space version used here, (4.4) proves the needed
+inequality directly; equality of paths is measurable by Definition
+1.2. V Theorem 121.6 supplies particular close-anchor examples.
+The new assertion (5.1) concerns every pair in every $S_h$ cell;
+it neither replaces nor rederives those anchor examples.
+

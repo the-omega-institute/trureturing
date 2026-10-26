@@ -7,7 +7,7 @@
    digest: The original reciprocal-logarithmic moving window has explicit decaying moment bounds. -/
 
 import D5.S3.Arith.Robin.MellinWeightedVariation
-import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.LogarithmBounds
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
@@ -39,17 +39,6 @@ def moment (t β : ℝ) : ℝ :=
 lemma weight_pos {x : ℝ} (hx : 1 < x) : 0 < weight x := by
   unfold weight
   positivity [Real.log_pos hx]
-
-private lemma weight_continuous {a b : ℝ} (ha : 1 < a) :
-    ContinuousOn weight (Icc a b) := by
-  intro x hx
-  have hx1 := ha.trans_le hx.1
-  have hx0 : 0 < x := by linarith
-  have hl := Real.log_pos hx1
-  exact ((Real.continuousAt_log hx0.ne').add continuousAt_const).div
-    ((continuousAt_id.pow 2).mul ((Real.continuousAt_log hx0.ne').pow 2))
-    (mul_ne_zero (pow_ne_zero 2 hx0.ne') (pow_ne_zero 2 hl.ne'))
-    |>.continuousWithinAt
 
 lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
   have h := Real.log_pow (2 : ℝ) 2

@@ -1,0 +1,10 @@
+## 124. Finite coherent residual transport on every accepted prefix
+
+The source-indexed occurrence objects, old/new incidence maps and unit-edge
+forms are those of IV §§112--113 and VI §§114--115. In particular, an
+occurrence address is never quotient-identified, and the parent-copy map is
+fixed by the actual birth incidence. The comparison clock and spatial
+boundary remain the separately typed objects of III §81. The following
+construction uses V Lemma 117.2 only for the already established ancestry
+fibres; it does not replace those fibres by a limiting source.
+

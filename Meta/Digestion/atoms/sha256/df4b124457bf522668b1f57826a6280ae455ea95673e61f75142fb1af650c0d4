@@ -1,0 +1,62 @@
+**Proposition 12.4 (the supplied consumer separates the two sources).**
+The instrument in Definition 12.3 has real Kraus operators and is
+trace-preserving. For every integer $k\ge20$,
+
+$$
+p_{0,k}\le\frac1{10},\qquad
+p_{2/k,k}\ge\frac9{10},\qquad
+p_{2/k,k}-p_{0,k}\ge\frac45.
+\tag{12.12}
+$$
+
+Its probabilities are unchanged if the one source parameter is
+simultaneously conjugated on all factors.
+
+Proof. $Y$ and $T_r$ are Hermitian and purely imaginary, with
+$\overline{T_r}=-T_r$. Hence $T_r^2$ is real symmetric and positive
+semidefinite. The real spectral theorem makes its spectral projection
+$E_k$ real symmetric, with $E_k^2=E_k$. Thus $E_k,I-E_k$ are real
+Kraus operators whose adjoint squares sum to $I$. Simultaneous
+conjugation preserves this real effect's trace probability; equivalently
+it changes $T_r$ to $-T_r$ and leaves the event unchanged.
+
+To calculate that probability, diagonalize $Y$ mathematically. Under
+$\rho_\theta^{\otimes r}$ the spectral values $X_1,\ldots,X_r$ are
+independent, each with
+
+$$
+\Pr_\theta(X=1)=1/5+\theta,\qquad
+\Pr_\theta(X=-1)=1/5-\theta,\qquad
+\Pr_\theta(X=0)=3/5.
+\tag{12.13}
+$$
+
+Thus $p_{\theta,k}=\Pr_\theta(|\sum_jX_j|\ge2k)$,
+$\mathbb E_\theta X=2\theta$ and
+$\operatorname{Var}_\theta X=2/5-4\theta^2$. These are product-state
+probabilities of the declared real joint event; individual measurements
+of the nonreal $Y$ are not an allowed acquisition step.
+At $\theta=0$ the sum has mean zero and variance $2k^2/5$.
+Chebyshev's inequality therefore gives $p_{0,k}\le1/10$.
+At $\theta=2/k$ its mean is $4k$ and its variance is
+$2k^2/5-16\le2k^2/5$. The complement of the event has
+$|\sum_jX_j|<2k$, which implies
+$|\sum_jX_j-4k|>2k$. The same inequality bounds its probability
+by $1/10$, proving (12.12). The sum-variance and Chebyshev steps are
+standard finite-probability suppliers; for example their pinned
+upstream statements are
+[`IndepFun.variance_sum` and `meas_ge_le_variance_div_sq`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Probability/Moments/Variance.lean).
+All variables here are bounded and all denominators $2k$ are positive.
+$\square$
+
+The real-Kraus convention is the established one in Wu et al.,
+[*Resource theory of imaginarity: quantification and state conversion*,
+§III, the real-Kraus definition](https://arxiv.org/abs/2103.01805v1).
+Only its basis-dependent operation definition and real completion
+principle are used; the realness and probability separation of (12.11)
+are established above. The sign condition is joint: changing all
+$\rho_\theta$ to $\rho_{-\theta}$ preserves the event, whereas
+independently choosing conjugation representatives for different
+factors need not preserve a joint law. The actual continuation uses
+the same fixed representative as acquisition, as required in §11.
+

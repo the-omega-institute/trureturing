@@ -1,0 +1,9 @@
+## 41. Strict rational failure of the exterior sign implication
+
+Retain the original world, action sequence, and readings of (35.1) and
+(35.3)--(35.5): the actions are $J,M,J,M,M,M$, the first five
+readings are $(0,24,147/5,24,18)$, and $p,v$ are respectively the clock-five and
+clock-six readings, both following $M$.  The terminal alternatives $a,m$ are the two
+clock-seven readings on the same world.  Consider the following direct
+uniform implication, with $c=r(1-r)/b$:
+

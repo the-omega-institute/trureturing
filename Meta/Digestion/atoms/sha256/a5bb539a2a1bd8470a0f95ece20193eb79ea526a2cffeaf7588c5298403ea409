@@ -1,0 +1,44 @@
+**Proposition 33.1 (Equivalent finite-sample laws).** For positive finite $\sigma,\tau_j$, each
+of the specified scalar or joint augmented laws has a positive-definite covariance and an
+everywhere positive Lebesgue density on its observation space. Indeed,
+$\Sigma_Z\succeq\sigma^2I_3>0$ and $C\mathsf PC^T+D_\tau\succeq D_\tau>0$ in (32.3).
+Consequently any two admissible preparations give mutually absolutely continuous laws for these
+measurements, and their independent $N$-fold repetitions remain equivalent for every finite $N$.
+The same argument applies to independently collected fixed-setting scalar samples, with their
+corresponding product observation space.
+
+Fix two parameters whose pre-read JM states have different entanglement statuses, including a
+possible separable equality state. A zero-error classifier would need a decision event $D$
+satisfying
+
+$$
+\mathbb P_{\boldsymbol\eta_E}^{\,N}(D)=1,\qquad
+\mathbb P_{\boldsymbol\eta_S}^{\,N}(D)=0.
+\tag{33.1}
+$$
+
+Equivalence makes that impossible. Even a rule designed for that known pair has positive error
+for at least one member; a classifier valid on the whole family cannot do better. Including
+every old record and the complete two-output vector leaves this argument unchanged. It concerns
+independent repetitions of the specified measurement protocols, with $W$ fixed, and supplies no
+impossibility claim for every quantum measurement or all adaptive strategies. No
+sample-complexity rate is inferred.
+
+The informational conclusions can be expressed as target sufficiency on the declared preparation
+family. Let the target be the indicator $\mathbf1_{\{F_r<0\}}$ of entanglement of (26.1). An
+observation is sufficient for this target exactly when its population-law fibres do not cross
+that indicator. In the entangling-width range the original record observation has a fibre
+containing both answers. One added Bob scalar removes this ambiguity on the known diagonal
+subfamily. At $\sigma=2$, every one fixed scalar still has a crossing fibre on the full
+quadrant, while two coordinate scalars, or the jointly correlated pair (32.4), identify both
+parameters and hence the target. This identifies a specific missing relation rather than
+demanding unrestricted state tomography.
+
+These are statements about exact population laws. They coexist with the finite-copy limit
+(33.1): distinct everywhere-positive densities can determine different population variances
+while sharing all null sets for any finite observation vector. No prior over the continuous
+noise parameters or over $W$ has been supplied. Finite-law multi-task risk or posterior-support
+results therefore do not automatically transfer here; their own prior, support and observation
+hypotheses would need a separate verified correspondence. No such transfer or unrelated
+finite-law bound is used.
+

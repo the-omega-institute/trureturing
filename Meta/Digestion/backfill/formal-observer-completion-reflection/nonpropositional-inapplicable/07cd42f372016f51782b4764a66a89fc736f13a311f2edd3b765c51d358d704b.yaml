@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07cd42f372016f51782b4764a66a89fc736f13a311f2edd3b765c51d358d704b
+  normalized_sha256: sha256:07cd42f372016f51782b4764a66a89fc736f13a311f2edd3b765c51d358d704b
+cas_ref: sha256:07cd42f372016f51782b4764a66a89fc736f13a311f2edd3b765c51d358d704b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 增订导言、概念分类、索引约定和证据等级说明；prime observer 与 quantum observer 的区分是建模术语边界，不是两个已定义数学对象的不等式定理。
+    previous_atom_id: 9236ec33fabdc97ec9602586e055e571e21bf3131e8a8fc7afa256063e80126e
+    next_atom_id: fef135811c5a8807d94bcf9f76e69815040b31681fe6b4b0545bd6ab902e3db6

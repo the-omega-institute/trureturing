@@ -1,0 +1,84 @@
+### 命题 453.1（dilation 差额的包络）
+
+若 $L>0$，则由上一节对 $D_c(A)$ 的精确分解直接得到
+
+$$
+\boxed{
+|D_c(A)|
+\le
+2\eta_A a\left(\frac1L+\frac1{L^2}\right).
+}
+\tag{453.1}
+$$
+
+**证明。** 记
+
+$$
+G(u)=\frac{1+u}{u^2},
+\qquad
+k(t)=\frac{G(\log t)}{t^2}.
+$$
+
+端点项满足
+
+$$
+\begin{aligned}
+\int_A^{cA}|E(t)|k(t)\,dt
+&\le\eta_A\int_L^{L+a}\frac{1+u}{u^2}\,du\\
+&\le\eta_Aa\left(\frac1L+\frac1{L^2}\right).
+\end{aligned}
+$$
+
+尾部权重差使用
+
+$$
+|G'(u)|=\frac{u+2}{u^3}.
+$$
+
+在 $t\ge cA$ 时令 $u=\log(t/c)\ge L$。平均值定理与
+$dt/t=du$ 给出
+
+$$
+\begin{aligned}
+&\int_{cA}^{\infty}|E(t)|
+\left|\frac{1+\log(t/c)}{t^2(\log(t/c))^2}-k(t)\right|dt\\
+&\quad\le
+\eta_Aa\int_L^\infty\frac{u+2}{u^3}\,du
+=\eta_Aa\left(\frac1L+\frac1{L^2}\right).
+\end{aligned}
+$$
+
+两项相加即得（453.1）。证毕。
+
+这个上界把“端点改变”和“尾部改变权重”分开支付。若某个全尾部 PNT
+供应器能够给出如下现有零自由区同形的包络
+
+$$
+\eta_A\le C\exp\!\left(-d\frac{L^{3/5}}{(\log L)^{1/5}}\right),
+$$
+
+其中 $C,d>0$ 与 $A$ 无关，则固定 $c>1$ 时（453.1）至多给出
+
+$$
+|D_c(A)|
+\ll_c
+\frac{\exp(-dL^{3/5}(\log L)^{-1/5})}{L}.
+$$
+
+与当前 Robin 比较所需的
+
+$$
+\frac1{\sqrt A\,L}
+$$
+
+相比，其包络比为
+
+$$
+\sqrt A\exp\!\left(-d\frac{L^{3/5}}{(\log L)^{1/5}}\right),
+$$
+
+并且趋于无穷，因为 $L^{3/5}(\log L)^{-1/5}=o(L)$。这不是“不存在更强
+估计”的证明；它证明的是：现有这类全局相对 PNT 误差，经过精确 dilation
+分解后，仍不能支付平方根级 signed Robin 预算。要继续推进，必须改善同一实际
+来源上的相关性估计，而不是再次加强相对误差包络的文字形式。
+

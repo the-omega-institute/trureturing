@@ -1,0 +1,17 @@
+**定义 35.1（实三循环及固定参考分解）。** 在带标准欧氏内积的 $\mathbb R^3$ 上取
+
+$$
+P=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},
+\qquad P(x,y,z)=(y,z,x),\qquad
+\mathbf1=(1,1,1)^T.
+$$
+
+令 $E_{\parallel}=\mathbb R\mathbf1$、$E_{\perp}=\{(x,y,z):x+y+z=0\}$，相应的欧氏正交投影为
+
+$$
+\Pi_{\parallel}=\tfrac13\mathbf1\mathbf1^T,
+\qquad \Pi_{\perp}=I-\Pi_{\parallel}.
+$$
+
+这里共同方向与相对平面是这个表示的子空间，不是已取得的三个物理方向。将 $P$ 作用在窗口位向量上时，其方向是第 34.3 条的反向循环，即 $P_{Pw}(\omega)=\omega^2P_w(\omega)$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e46fae8e95f0d027f6c9be90c9e2a8b3d31020b2d8c377b25ad767c9ad1def3
+  normalized_sha256: sha256:8e46fae8e95f0d027f6c9be90c9e2a8b3d31020b2d8c377b25ad767c9ad1def3
+cas_ref: sha256:8e46fae8e95f0d027f6c9be90c9e2a8b3d31020b2d8c377b25ad767c9ad1def3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies admissibility requirements for a choice step and poses, rather than answers, its uniqueness question.
+    previous_atom_id: df2f164268fe5a82ca535a290e60432078e087248071328f0a131210db05495f
+    next_atom_id: 9cf004e22a9590110b364b520f75b427a5fd893a58a6d16ed207e9eedd42b9eb

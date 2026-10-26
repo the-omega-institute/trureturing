@@ -174,7 +174,7 @@ private theorem denominator_unit (parameter : R) : IsUnit (denominator parameter
   rw [isUnit_iff_constantCoeff]
   simp [denominator]
 
-private theorem geometric_inverse (parameter : R) :
+theorem geometric_inverse (parameter : R) :
     rescale parameter (mk 1) * denominator parameter = 1 := by
   simpa [denominator] using congrArg (rescale parameter) (mk_one_mul_one_sub_eq_one R)
 

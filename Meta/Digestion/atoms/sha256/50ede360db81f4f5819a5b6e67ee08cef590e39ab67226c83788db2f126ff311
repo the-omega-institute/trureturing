@@ -1,0 +1,41 @@
+**Definition 158.5 (scope of nonselection and the missing realization bridge).**
+Here $d_{\rm heat}$ is twice a global logarithmic Hilbert heat-trace
+exponent for the declared comparison operator. It is not a volume-growth
+dimension, walk dimension, pointwise return exponent, spatial or manifold
+dimension, or an identification of $t$ with physical time. The finite
+Markov property refers to $Q_e$ in actual occurrence coordinates; an SPD
+state metric need not be a diagonal measure, and its principal-root
+normalization is not by itself a spatial heat-kernel realization.
+
+The nonselection quantifier is already one fixed source $u=\beta$, the
+same accepted substitutions, original unit-edge forms, parent-copy maps,
+initial norm and comparison clock, with different allowed successor norms.
+It does not hold a complete prescribed norm family fixed while varying its
+spectrum. The parameter $r$ chooses external compatible metrics; it is not
+a native executable control. In particular the theorem supplies no rule
+making a native history choose $r=\varphi^{2/3}$. The freedom established
+here concerns spectral realization, not removal of the information-escape
+conditions of §129 or a physical consequence of the stability result in
+§157. Deriving physical $d=3$ would additionally require a specified
+metric, measure and locality/transport correspondence, a relation between
+its heat law and physical observations, and a criterion selecting the
+allowed norm or rate law. Such correspondences are extra hypotheses to be
+proved for a proposed realization; they are not consequences of the birth
+count.
+
+The fixed biased boundary form in
+[*FIB atomic biased boundary spectral counting*, Definitions 1.1 and 4.1,
+Theorem 3.1](FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md) has its own
+logarithmic exponent one, with its declared boundary measure and clock.
+That conclusion is retained: no unitary, form, measure or clock
+identification between that boundary operator and this family is assumed.
+Hierarchical pure-point spectra have classical precedents, for example
+Bendikov--Grigor'yan--Pittet--Woess,
+[*Isotropic Markov semigroups on ultra-metric spaces*, §3.2,
+Theorem 3.8](https://arxiv.org/html/1304.6271v3). That theorem supplies
+context for hierarchical eigenfunction decompositions, not a native FIB
+realization bridge. The repo-derived content here is the explicit
+simultaneous Markov/coherence construction on these actual source births
+and its range of global exponents; no originality or priority claim about
+hierarchical spectral freedom is included.
+

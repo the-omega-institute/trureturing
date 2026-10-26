@@ -1,0 +1,4 @@
+**Proposition 21.5 (endogenous completion from paid progress).** Under Definition 21.4, the macro-segment cost is at most $p(n)q(n)$ and the task completes in polynomial native time, including the stated preparation and delivery costs.
+
+Proof. Apply the standard telescoping estimate in [the amortized-analysis note](../../../Library/Computability/tarjan1985amortized.md) to the same native segments. Every finite prefix has cost at most $p(n)(\Phi_x(s_0)-\Phi_x(s_m))\le p(n)q(n)$. An infinite sequence would have prefix cost at least $m$ for every $m$, a contradiction. The next-completed-segment premise excludes getting stuck or running forever inside a macro update. Thus a terminal state is reached, with the specified correctness and preparation/delivery bounds. The additional project obligation is an actual native construction satisfying (C.21.2), not the telescoping identity. $\square$
+

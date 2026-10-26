@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42b44259547d7afe234f6d2df10d981faeab61d4144e5b275d9dc74e0a1b4b73
+  normalized_sha256: sha256:42b44259547d7afe234f6d2df10d981faeab61d4144e5b275d9dc74e0a1b4b73
+cas_ref: sha256:42b44259547d7afe234f6d2df10d981faeab61d4144e5b275d9dc74e0a1b4b73
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 范围说明：该 atom 仅说明定理 4.2 的条件性及本卷未声称每层实际替换已实现 R2 奇环保持编码；不引入定义、等式、量词、数值界、概率律或其他数学断言。
+    previous_atom_id: 531dd463b4087e5cad52d7a50f79264d148ad60ff04eb10900d0adf8b041539a
+    next_atom_id: 723c6f0a1e99e0289301229fa83faa271c21ebba10532496454ff4871af49168

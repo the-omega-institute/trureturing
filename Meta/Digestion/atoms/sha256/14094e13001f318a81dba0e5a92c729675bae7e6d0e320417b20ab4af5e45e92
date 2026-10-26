@@ -1,0 +1,35 @@
+**Definition 3.2 (Exact source polynomials).** These are the owning
+polynomials (12.1)–(12.3), (20.1) and (27.1), with $D$ denoting
+$D_\Lambda$, never the different $p=24$ graph denominator:
+
+$$
+\begin{aligned}
+X&=b^2+r-r^2,&N&=X+br,\\
+D&=(b^2+8b+4)XN-2bTU(X+N),&K_\Lambda&=(8b-1)(2+5b),\\
+H&=14b^6+(95-73r)b^5+(47r^2-39r+30)b^4\\
+&\quad+r(147r^2-232r+105)b^3
++2r(1-r)(44r^2-55r+15)b^2\\
+&\quad-64r^3(1-r)^2b-32r^3(1-r)^3,\\
+Z_6&=N+2bU,&Z_7&=2N+3bU,\\
+G_6&=(10T+45)XN-bT(36N+20X),\\
+G_7&=(20T+84)XN-bT(70N+35X),\\
+D_m&=5bD,&N_p&=120bD-3(8b-1)H,\\
+N_u&=\frac{120bTD+15Z_6D(80b-1)
+-3K_\Lambda(bTXN+Z_6G_6)}{T},\\
+N_m&=\frac{120bTD+12Z_7D(200b+11)
+-3K_\Lambda(bTXN+Z_7G_7)}{T},\\
+\mathsf A&=D_mp-N_p,&\mathsf B&=D_mv-N_u.
+\end{aligned}
+\tag{3.6}
+$$
+
+Both divisions by $T=b+1$ in (3.6) are exact in $\mathbb Z[r,b]$:
+substitution $b=-1$ annihilates their numerators.
+The four polynomials $D_m,N_p,N_u,N_m$ have total degree at most
+seven. Wherever $D_m\ne0$, set
+
+$$
+\pi=N_p/D_m,\qquad \upsilon=N_u/D_m,\qquad \omega=N_m/D_m.
+\tag{3.7}
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ba1cf71873c2f9dffdab1409106cc38003162510630b44961478367239687dd
+  normalized_sha256: sha256:9ba1cf71873c2f9dffdab1409106cc38003162510630b44961478367239687dd
+cas_ref: sha256:9ba1cf71873c2f9dffdab1409106cc38003162510630b44961478367239687dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Part heading and an instruction to distinguish four notions of closure; no mathematical assertion.
+    previous_atom_id: 70b8f6eec72391f18f797f3d7efea135bad9771ee3306a7ddd47e696cf387a86
+    next_atom_id: 1a6c3a5187bf37cde0c6e4c17e76bea68b6eac5004d8e21f765cbe9a9caa379d

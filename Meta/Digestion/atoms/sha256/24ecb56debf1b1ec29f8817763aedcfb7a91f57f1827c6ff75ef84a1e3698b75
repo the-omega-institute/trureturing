@@ -1,0 +1,16 @@
+**Theorem 14.2 (Constant gains contradict the acquired even clocks).**
+No world satisfying (14.1) and the acquired readings through clock four
+has $\deg g=0$.
+
+Proof. Suppose $g(s)=k$ for a nonzero real constant $k$. The initial
+reading forces $d=-k$. The actual traces at clocks two and four then
+force
+
+$$
+\frac{147}{5}=-k+(1+b)k=bk,\qquad
+18=-k+(1+2b)k=2bk.
+$$
+
+Consequently $18=294/5$, a contradiction. This uses neither the odd
+readings nor the later readings $p,v$. ∎
+

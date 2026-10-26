@@ -287,6 +287,11 @@ internal sealed class EvenLengthAsymptoticsDocument : IScribeDocumentDefinition
             "The remainder includes the reserved seventy-eight units for the outer filler.", true),
         Node("even_padding_arithmetic", All(Imp(And(Lt(D(0), I("L")), Even(I("L")), Le(D(7, 8), I("T")), Even(I("T"))), PaddingFacts(I("L"), I("T"))), B("L", Nat), B("T", Nat)),
             "The exact decomposition is T=kL+F with even F in [78,78+L). At T=78, k is zero. At T=78+L, k is one and F returns to seventy-eight."),
+        Node("reset_execution_word", All(Equal(
+            Call("executionWord", Call("resetConcatenation", I("R"), I("words"))),
+            Call("resetFactor", I("R"), I("words"))),
+            B("R", I("Return")), B("words", Call("List", Returns))),
+            "Reading the execution letters after concatenating reset-prefixed return lists gives exactly the concatenation of their reset-prefixed letter words. Thus the equal-weight reset parser applies to the original actual return lists."),
         Node("paddedExecution", All(Equal(Call("paddedExecution", I("R"), I("words"), I("F")),
             Call("append", Call("resetConcatenation", I("R"), I("words")), Filler(I("F")))), B("R", I("Return")), B("words", Call("List", Returns)), B("F", Nat)),
             "The filler follows all codewords in execution order. It therefore precedes the original codeword list in the external source, on its outer side.", true),

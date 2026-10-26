@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55744f9c1655e58efd4c77561c5d19af5557469239e52c8a01506f71771ba5fa
+  normalized_sha256: sha256:55744f9c1655e58efd4c77561c5d19af5557469239e52c8a01506f71771ba5fa
+cas_ref: sha256:55744f9c1655e58efd4c77561c5d19af5557469239e52c8a01506f71771ba5fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and scope introduction for the following sign terminology; it introduces Q without asserting a sign for any specified Q(x).
+    previous_atom_id: df42c270fc81d56ea3a416452398bae077d5e50d64a88c078c0834479abaefa9
+    next_atom_id: 569e2a482509b5bfebf8bd4e31309c5a05adcd59c05b96f4380bf59a556123f9

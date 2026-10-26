@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7ee4504624397f09a61edc2349789e869844238a88560de7b3ec0586f785b14
+  normalized_sha256: sha256:a7ee4504624397f09a61edc2349789e869844238a88560de7b3ec0586f785b14
+cas_ref: sha256:a7ee4504624397f09a61edc2349789e869844238a88560de7b3ec0586f785b14
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给出建议的 Lean 模块依赖链及复用原则，是实现计划而非该链已经存在或其中定理已被证明的断言。
+    previous_atom_id: 473e972c9a3e3b45b0a356343bc6163928bbf1c656639c80f6c21e4458b5cc58
+    next_atom_id: bc550e68277a2a9e991c0d899ab30c58762712e76785add9a09fc313bbf0a0b7

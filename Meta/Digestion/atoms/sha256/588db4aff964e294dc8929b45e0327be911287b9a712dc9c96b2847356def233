@@ -1,0 +1,11 @@
+## 49. The four expressions and the missing observer bridges
+
+For each one complete world, the independently specified expressions
+in this experiment are:
+
+| Expression | Exposed mathematical object |
+| --- | --- |
+| Space | The positive trace-one rank-one projector $P$, equivalently its image line and complementary kernel line; its transport is $H_i=Q_iP$. This is linear-incidence geometry. |
+| Time | The original absolute clock $i$ and the ordered executed word. Their labels are public premises, not recovered from scalar boundary values. |
+| Boundary | The actual immediate scalar $d+g(i)\operatorname{tr}(H_i)$ at each acquired event, on that same world's source. Unexecuted alternatives are not observations. |
+| Memory | Exactly the retained acquired scalars and common chronological metadata in (45.6), under the declared accessible retention contract. |

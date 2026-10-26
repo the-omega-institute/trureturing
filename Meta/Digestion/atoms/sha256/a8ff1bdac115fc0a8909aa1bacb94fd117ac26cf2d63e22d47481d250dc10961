@@ -1,0 +1,34 @@
+**Definition 17.1 (The enlarged preparation assumption).** For each
+$W\in\mathcal W$ and finite $\eta\ge0$, supply the initial state
+
+$$
+\begin{gathered}
+U_\xi=e^{-i\xi\cdot q},\qquad
+\gamma_\eta=\mathcal N_{17}(0,\eta I_{17}),\qquad \gamma_0=\delta_0,\\
+\mathcal M_\eta(\rho)
+=\int_{\mathbb R^{17}}U_\xi\rho U_\xi^\dagger\,\gamma_\eta(d\xi),
+\qquad \rho_{W,\eta}=\mathcal M_\eta(\rho_W).
+\end{gathered}
+\tag{17.1}
+$$
+
+For $\eta=0$ this is exactly $\rho_W$. For $\eta>0$, (17.1)
+explicitly replaces the pure coherent preparation in Assumption 2.1
+by a mixed preparation. The carrier, $\mu(W)$, apparatus and clock
+labels retain their original definitions. Availability of this
+enlarged family is a preparation assumption, with no supplied
+procedure for obtaining it from an unknown native carrier.
+
+In this appendix let
+
+$$
+s=\frac12+\eta,\qquad r=r_\sigma=\frac1{4\sigma^2}>0.
+\tag{17.2}
+$$
+
+Here $r$ is the **probe-momentum variance**, not the matrix parameter
+called $r$ in Definition 1.1. When needed, that world parameter is
+written $P_{11}$. The original real program matrix remains $P$.
+The seventeen initial system modes are distinct from the eight
+supplied probe modes. The JM prefix uses three of those probes.
+

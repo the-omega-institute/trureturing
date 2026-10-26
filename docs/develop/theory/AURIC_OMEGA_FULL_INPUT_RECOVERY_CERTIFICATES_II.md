@@ -4498,3 +4498,147 @@ The $9\times9$ PSD matrix of (S.220) acts on the real space $\mathcal L_2\oplus\
 The auxiliary support in (S.218) acts on $H_E$, the dual support in (S.197) acts on $H_B$, and the kernels in (S.309) lie in $H_R\otimes H_E$. Their distinct roles and the equality qualification (S.334) prevent a PSD-dual statement from being promoted without its premises to a strict-positive S.152–S.154 certificate. These mathematical tensor identifications, covariance relations and obstructions impose no physical realization, native control, or quantum-field derivation. Such claims require additional empirical and model bridges beyond the actual finite-dimensional channels specified here.
 
 ## 追加锚（本行以下为增补区）
+
+## 108a. Real-direction channels with a common summary and four sharp labels
+
+**Definition 108.4 (the real direction family and the fixed experiment).** Retain the input $\mathbb C^3$, output $H_B=\mathbb C^5$ with the fixed real orthonormal frame $(b_1,b_2,g_1,g_2,h)$, and the reference/environment carriers of Definition 102.1. Put
+
+$$
+V=\operatorname{span}_{\mathbb R}\{b_1,b_2,g_1,g_2\},\qquad
+v\in V,\quad \|v\|=1,\qquad w_v=(h+\sqrt3v)/2,
+$$
+
+$$
+A_0=[b_1/\sqrt2,g_1/\sqrt2,0],\qquad
+A_1=[b_2/\sqrt2,g_2/\sqrt2,0],\qquad
+A_2(v)=[0,0,w_v],\qquad
+\mathcal N_v(\rho)=\sum_{\mu=0}^2 A_\mu(v)\rho A_\mu(v)^\dagger.
+$$
+
+The first two matrices are fixed, not rotated with $v$. Write $T_v=w_ve_2^T$. Form $\sigma_v=L_{T_v}^\dagger L_{T_v}$ using the one common physical density $\rho_\star=\operatorname{diag}(1/4,1/4,1/2)$ and the specified real Kraus representation in (S.305). Retain just
+
+$$
+\mathcal O(v)=\left(P_{\operatorname{supp}\sigma_v},
+ \operatorname{spec}\sigma_v,\operatorname{Tr}_E\sigma_v,
+ \operatorname{Tr}_R\sigma_v\right).
+$$
+
+The discrimination experiment is a separate preparation: one use of $\mathcal N_v$ on the same fixed input $|2\rangle\langle2|$, followed by one measurement on $H_B$, without an input ancilla. The summary is evaluated at $\rho_\star$, not at this probe input. Perfect discrimination means a single common measurement identifies every label with probability one.
+
+**Theorem 108.5 (common summary, attained four labels and a sharp fixed-input bound).** Every $T_v$ lies in $\mathcal T_3$ and defines an actual real CPTP encoder with minimal Kraus rank three. On the entire real unit sphere of $V$, $\mathcal O(v)$ is constant. Within this one summary fibre there are four labels perfectly identified by the fixed experiment and one common PVM. No set of more than four labels from this family can be perfectly identified in that experiment, even if an arbitrary output POVM is allowed. For a uniform prior on the four constructed labels the experiment returns exactly two bits, while the stipulated summary carries zero label information.
+
+Proof. The source of the actual family is (S.321) and Propositions 105.1 and 106.1. For the present parameters, $\|w_v\|=1$ and
+
+$$
+\sum_{\mu=0}^2A_\mu(v)^\dagger A_\mu(v)
+=\operatorname{diag}(1/2,1/2,0)
+ +\operatorname{diag}(1/2,1/2,0)
+ +\operatorname{diag}(0,0,1)=I_3.
+$$
+
+The Kraus form supplies complete positivity and this identity supplies trace preservation on complex matrices. A complex linear dependence among the three Kraus matrices has its first two coefficients zero by the first column, since $b_1,b_2$ are independent; its third coefficient is zero since $w_v\ne0$. Thus the Kraus rank is exactly three. Also $\|T_v\|_F=1$, its Frobenius overlaps with the supplier's $E_0,E_1$ vanish, and $T_ve_2=w_v\ne0$. These are the membership conditions of Propositions 85.2 and 105.1. Their phase-output condition is unchanged, since $A_2(v)$ vanishes on the first two input coordinates. Matrix rank of $T_v$ is one and is not being identified with Kraus rank.
+
+In the ordered basis
+
+$$
+S=\operatorname{span}_{\mathbb C}
+\{|0,e_0\rangle,|0,e_1\rangle,|1,e_0\rangle,|1,e_1\rangle,|2,e_2\rangle\},
+$$
+
+write $v=(v_1,v_2,v_3,v_4)^T$ in the real output order $(b_1,b_2,g_1,g_2)$. The five nonzero columns (S.322), with this $w_v$, give
+
+$$
+\sigma_v|_S=\frac18
+\begin{pmatrix}I_4&\sqrt3v\\ \sqrt3v^T&4\end{pmatrix},
+\qquad \sigma_v|_{S^\perp}=0.
+$$
+
+The three directions orthogonal to $v$ in the first four coordinates have eigenvalue $1/8$. On the remaining two-dimensional space the block is
+
+$$
+\frac18\begin{pmatrix}1&\sqrt3\\\sqrt3&4\end{pmatrix}.
+$$
+
+Its trace is $5/8$ and determinant $1/64$, so the common complete spectrum is
+
+$$
+\left\{\frac18\ (\text{multiplicity }3),\quad
+\frac{5+\sqrt{21}}{16},\quad\frac{5-\sqrt{21}}{16},\quad
+0\ (\text{multiplicity }4)\right\}.
+$$
+
+Both displayed exceptional eigenvalues are positive. Thus the support is exactly $S$, not the whole nine-dimensional carrier. Every mixed entry joins $|2,e_2\rangle$ to a coordinate whose reference and environment labels both differ from it; each partial trace kills it. Summing the diagonal entries consequently gives, in the respective fixed spaces,
+
+$$
+\operatorname{Tr}_E\sigma_v=\rho_\star\quad\text{on }H_R,
+\qquad
+\operatorname{Tr}_R\sigma_v=\operatorname{diag}(1/4,1/4,1/2)
+\quad\text{on }H_E.
+$$
+
+This proves exact constancy of the summary for all real $v$, not just the two axis choices in Section 106.
+
+To construct the four labels, choose the real unit directions
+
+$$
+\begin{aligned}
+v_0&=(b_1+b_2+g_1)/\sqrt3,&
+v_1&=(b_1-b_2-g_1)/\sqrt3,\\
+v_2&=(-b_1+b_2-g_1)/\sqrt3,&
+v_3&=(-b_1-b_2+g_1)/\sqrt3.
+\end{aligned}
+$$
+
+Their offdiagonal inner products are $-1/3$. The simplex/Hadamard completion used here is classical: [Fickus–Jasper–Mixon–Peterson, *Hadamard Equiangular Tight Frames*, arXiv:1703.05353v1, Section 2](https://arxiv.org/pdf/1703.05353v1) gives the tetrahedron by deleting the all-ones row of a $4\times4$ Hadamard matrix, together with the orthogonal Naimark completion. In this application's normalization its lifted columns are
+
+$$
+\begin{aligned}
+w_0&=(h+b_1+b_2+g_1)/2,&w_1&=(h+b_1-b_2-g_1)/2,\\
+w_2&=(h-b_1+b_2-g_1)/2,&w_3&=(h-b_1-b_2+g_1)/2.
+\end{aligned}
+$$
+
+Indeed $\|w_i\|^2=1/4+3/4=1$ and $\langle w_i,w_j\rangle=1/4+(3/4)(-1/3)=0$ for $i\ne j$. For a lift $ah+bv_i$ with real $a,b$ and unit norm, orthogonality forces $a^2-b^2/3=0$ and $a^2+b^2=1$, hence $a^2=1/4,b^2=3/4$. In the frame $(h,b_1,b_2,g_1)$ the constructed columns form the standard unitary matrix
+
+$$
+U=\frac12
+\begin{pmatrix}
+1&1&1&1\\
+1&1&-1&-1\\
+1&-1&1&-1\\
+1&-1&-1&1
+\end{pmatrix},\qquad U^\dagger U=I_4.
+$$
+
+This four-dimensional basis change is an intermediate geometric construction. The actual encoders above still map three input dimensions to five output dimensions.
+
+For each constructed label the same probe gives
+
+$$
+\mathcal N_{v_i}(|2\rangle\langle2|)=|w_i\rangle\langle w_i|.
+$$
+
+Use the single common output PVM
+
+$$
+\Pi_i=|w_i\rangle\langle w_i|\quad(0\le i\le3),\qquad
+\Pi_\perp=|g_2\rangle\langle g_2|.
+$$
+
+These five orthogonal projections sum to $I_5$; the outcome on label $i$ is $i$ with probability one. For a uniform label $X$, its recorded outcome $Y=X$ has $H(Y)=I(X;Y)=2$ bits. In contrast $\mathcal O(v_i)$ is a constant random variable, so $I(X;\mathcal O)=0$.
+
+For the upper bound use the classical pure-state perfect-discrimination criterion, also the pure-state specialization of [Feng–Duan–Ying, *Unambiguous discrimination between quantum mixed states*, arXiv:quant-ph/0403147v2, Theorem 1](https://arxiv.org/pdf/quant-ph/0403147v2). Its application here can be checked directly: if POVM effects $M_i$ perfectly identify unit outputs $w_i$, then $0\preceq M_i\preceq I$, $M_iw_i=w_i$ and $M_iw_j=0$ for $j\ne i$. Positivity and the zero error probabilities give these identities, and self-adjointness then forces $\langle w_i,w_j\rangle=0$. Any grouped additional measurement outcomes can be included in the corresponding $M_i$; an outcome that never occurs does not affect the argument.
+
+Every vector in our family has $|\langle h,w_v\rangle|^2=1/4$. Thus classical Bessel inequality for any $m$ orthonormal outputs gives
+
+$$
+\frac m4=\sum_{i=1}^m|\langle h,w_i\rangle|^2\le\|h\|^2=1.
+$$
+
+Here Bessel follows simply by expanding $\|h-\sum_iw_i\langle w_i,h\rangle\|^2\ge0$. Hence $m\le4$, and the constructed common PVM attains the bound. $\square$
+
+The family/common-summary correspondence and its sharp fixed-probe experiment are repo-derived applications of Sections 102 and 105–107; the simplex completion, perfect-discrimination criterion and Bessel estimate are attributed classical intermediates, not new standalone geometry or discrimination theorems. For the fixed effect $E=\Pi_0$, the first two constructed labels have response probabilities one and zero despite their identical summaries. Therefore any summary-only probability prediction has worst absolute error at least $1/2$ on that pair.
+
+The upper bound is for the specified input $|2\rangle$ and one channel use. It does not optimize over other inputs, entangled ancillas, repeated uses or a family with a different common $h$ overlap. The common summary keeps the entire support projection, spectrum and both marginals, but does not keep the full state $\sigma_v$ or its mixed entries. No identification with native $F[\mathrm{null}],F[1],F[2],F[3]$, physical implementation, derivation of Born probabilities, or resolution of the separate uniform recovery inequalities follows without an additional operation-preserving correspondence and its hypotheses.
+
+## 追加锚（本行以下为增补区）

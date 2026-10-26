@@ -1,0 +1,125 @@
+**定义 10.2（四种精确合法对）。** 固定式 (10.1) 的 $A,C,z,Y,p$。下列各族均指两个完整世界组成的无序对。
+
+（一）$Z_{67}$。置
+
+$$
+\kappa=\frac{\sqrt{17}-1}{4},\qquad
+2\kappa^2+\kappa-2=0.
+\tag{10.5}
+$$
+
+选择 $d\ne0$ 及不同的 $b_1,b_2\in(0,1/\kappa)$，令
+
+$$
+\begin{aligned}
+r_i&=\kappa b_i,&c_i&=\kappa(1-\kappa b_i),\\
+g_1(v)&=-\frac d{84}(v-6)(v-7)(b_2v+2),&
+g_2(v)&=-\frac d{84}(v-6)(v-7)(b_1v+2).
+\end{aligned}
+\tag{10.6}
+$$
+
+两世界漂移均为 $d$。写 $t=1+b_1,s=1+b_2$，要求精确等式
+
+$$
+\begin{aligned}
+A&=d\left(1-\frac{5\kappa(s+1)(t+1)}{28}\right),\\
+C&=d\left(1-\frac{10st}{21}\right),\\
+z&=d\left(1-\frac{\kappa(3s-1)(3t-1)}{14}\right),\\
+Y&=d\left(1-\frac{(2s-1)(2t-1)}7\right),\\
+p&=d\left(1-\frac{\kappa(5s-3)(5t-3)}{84}\right).
+\end{aligned}
+\tag{10.7}
+$$
+
+特别，第一等式和 $A>0$ 排除其归一化因子为零，但不预设漂移符号。正源曲线 (10.6) 继承前卷引理 2.3、式 (2.12)–(2.13)，不作为新曲线。
+
+（二）$Z_{137}$。要求
+
+$$
+d=A=z,\qquad b=\frac{21C-26A}{5A}>0,\qquad
+Y=\frac{176A-126C}{35}.
+\tag{10.8}
+$$
+
+两世界共用
+
+$$
+g(v)=\frac A{21}(v-1)(v-3)(v-7),\qquad
+V=\frac{21(A-p)}{16A}.
+\tag{10.9}
+$$
+
+取二次式
+
+$$
+r^2-(1+2b)r+b(V-b)=0
+\tag{10.10}
+$$
+
+的两合法根，分别取 $c=r(1-r)/b$。两合法根的条件也可精确写为
+
+$$
+0<b<\frac12,\qquad
+2+b<V<b+\frac{(1+2b)^2}{4b}.
+\tag{10.11}
+$$
+
+（三）$Z_{157}$。要求
+
+$$
+d=A=p,\qquad b=\frac{7C-10A}{3A}>0,\qquad
+Y=\frac{42C-16A}{35}.
+\tag{10.12}
+$$
+
+两世界共用
+
+$$
+g(v)=\frac A{35}(v-1)(v-5)(v-7),\qquad
+N=\frac{35(z-A)}{16A}.
+\tag{10.13}
+$$
+
+取二次式
+
+$$
+r^2-(1+b)r+b(N-b)=0
+\tag{10.14}
+$$
+
+的两合法根，分别取 $c=r(1-r)/b$；等价的严格域为
+
+$$
+0<b<1,\qquad 1+b<N<b+\frac{(1+b)^2}{4b}.
+\tag{10.15}
+$$
+
+因此这一族的父平面条件恰为
+
+$$
+R_{15}:=35Y-42C+16A=0.
+\tag{10.16}
+$$
+
+（四）$Z_{357}$。要求
+
+$$
+\begin{gathered}
+d=z=p\ne0,\qquad b=6-\frac{7C}{d}>0,\\
+j=\frac{35(d-A)}{16d},\qquad c=j-b>0,\qquad
+Y=\frac{48d-14C}{35},\qquad 0<bc<\frac14.
+\end{gathered}
+\tag{10.17}
+$$
+
+两世界共用
+
+$$
+g(v)=\frac d{105}(v-3)(v-5)(v-7),\qquad
+r_\pm=\frac{1\pm\sqrt{1-4bc}}2.
+\tag{10.18}
+$$
+
+这里的 $c$ 已固定，两根均给同一个 $bc$。定义不先给 $d$ 添符号条件；严格源过滤及响应方程决定哪些参数可行。
+

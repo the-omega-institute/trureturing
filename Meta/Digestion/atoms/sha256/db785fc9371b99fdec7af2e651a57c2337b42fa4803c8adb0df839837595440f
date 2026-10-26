@@ -1,0 +1,41 @@
+**Theorem 18.2 (the actual cap deficit and the two core attractions).**
+Define the finite strictly positive constant
+
+$$
+I_{\rm cap}=\int_{R<1}(R^{-2}-1)Z^2dq.
+\tag{18.15}
+$$
+
+For the changed set $\mathcal C_\epsilon$ of (14.1),
+
+$$
+\begin{aligned}
+L^2\{V_{\rm raw}[f_\epsilon]-V_{\rm cap}[f_\epsilon]\}
+ &\longrightarrow\frac{a_*^2}{2\pi}I_{\rm cap},\\
+L^2\int_{\mathcal C_\epsilon}\Gamma f_\epsilon^2d\mu
+ &\longrightarrow\frac{a_*^2}{2\pi}\int_{R<1}R^{-2}Z^2dq,\\
+L^2\int_{\mathcal C_\epsilon}\Gamma_\epsilon f_\epsilon^2d\mu
+ &\longrightarrow\frac{a_*^2}{2\pi}\int_{R<1}Z^2dq.
+\end{aligned}
+\tag{18.16}
+$$
+
+Thus the deficit is of order $L^{-2}$, while both total attractions in
+(17.18) are of order $L$.
+
+Proof. Substitute $F_\epsilon$ from (18.3) and
+$d\mu(\delta_\epsilon q)=\epsilon^4m(\delta_\epsilon q)dq$ in the
+three actual integrals. The factors from the multiplier and squared
+state are respectively $\epsilon^{-2}$ and
+$\epsilon^{-2}L^{-2}$, so all powers of $\epsilon$ cancel.
+The coefficient is $m_0c_G=1/(2\pi)$. The domains in the last two
+integrals lie between $R<1-C\epsilon$ and $R<1+C\epsilon$ by (14.2).
+The rescaled uncapped multiplier is $c_G(R^{-2}+O(\epsilon/R))$;
+the capped multiplier on that set is exactly $c_G$.
+The rescaled eigenfunctions are uniformly bounded on $R<2$ and converge
+uniformly, including zero, by Theorem 18.1. The dominating function
+$C(R^{-2}+1)$ is integrable there, with the raw four-dimensional
+homogeneous volume $R^3dR\,da\,d\theta/4$. Dominated convergence and
+the vanishing shell at $R=1$ prove (18.16). Positivity and finiteness of
+(18.15) follow from source regularity and $Z>0$. $\square$
+

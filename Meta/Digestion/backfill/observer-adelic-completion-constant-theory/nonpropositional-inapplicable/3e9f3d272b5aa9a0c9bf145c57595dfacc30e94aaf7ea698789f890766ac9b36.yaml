@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e9f3d272b5aa9a0c9bf145c57595dfacc30e94aaf7ea698789f890766ac9b36
+  normalized_sha256: sha256:3e9f3d272b5aa9a0c9bf145c57595dfacc30e94aaf7ea698789f890766ac9b36
+cas_ref: sha256:3e9f3d272b5aa9a0c9bf145c57595dfacc30e94aaf7ea698789f890766ac9b36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Object-list label input/output boundary; no mathematical predicate or existence claim.
+    previous_atom_id: 4584352dd3c7e3382bad2e8cd7df4792444d52f160e1513cb4bde054e31e66d8
+    next_atom_id: b840abee099e46776e6cb1f1b7bdc31dd8c98b92ea5d30b80b051d9d85491647

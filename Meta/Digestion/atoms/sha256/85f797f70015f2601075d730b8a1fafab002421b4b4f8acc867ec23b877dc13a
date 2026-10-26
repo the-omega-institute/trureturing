@@ -1,0 +1,131 @@
+**Theorem 121.6 (same-readout anchors and nonuniform separation).**
+For every integer $r\ge0$ use the actual addresses
+
+$$
+u=(LL)^m=L^{2m},\qquad v=(RR)^m=R^{2m},\qquad
+p_r=uL^r,\qquad p'_r=vL^r.
+\tag{121.13}
+$$
+
+They are distinct and have the same $q$, $\delta$ and depth. For
+every $T>0$ their complete joint observed path laws satisfy
+
+$$
+\begin{aligned}
+0<&\ e^{-3T}\frac{T^{r+2}}{(r+2)!}
+ \le\|\mathsf L_{p_r}^T-\mathsf L_{p'_r}^T\|_{\mathrm{TV}}\\
+\le&\ \min\left\{
+ \mathbf P\{\operatorname{Poisson}(3T)\ge r+1\},
+ 2^{-(r+1)}\right\},\\
+0<&\ \|\mathsf L_{p_r}^\infty-\mathsf L_{p'_r}^\infty\|_{\mathrm{TV}}
+ \le2^{-(r+1)}.
+\end{aligned}
+\tag{121.14}
+$$
+
+The first unequal rootward ancestor colour is at $k=r+2$. Thus the
+exact predictive classes are singletons while distinct same-$O$
+laws can be arbitrarily close even on the complete infinite future.
+In particular there is no positive uniform total variation separation
+over distinct same-$O$ starts in either horizon experiment.
+
+Proof. On the all-left path the successive incoming increments are
+$+1,0,+1,0,\ldots$; on the all-right path they are
+$-1,0,-1,0,\ldots$. Hence
+
+$$
+\begin{aligned}
+(q,\delta,d)(u)&=(q,\delta,d)(v)=(0,0,2m),\\
+q(\operatorname{par}u)&=q(\operatorname{par}v)=0,\\
+q(\operatorname{par}^2u)&=-1,&
+q(\operatorname{par}^2v)&=+1.
+\end{aligned}
+\tag{121.15}
+$$
+
+The last two residues are distinct for every $m\ge3$. The child
+recursion depends only on $(q,\delta)$, so adjoining any common
+suffix gives identical $(q,\delta)$ and identical depth. In
+particular $p_r,p'_r$ have common colour $\lceil r/2\rceil$ modulo
+$m$ and common incoming increment zero for even $r$, $+1$ for odd
+$r$. Their first $r$ ancestors remove that suffix, their next
+ancestor colours are both zero, and their $(r+2)$nd ancestor colours
+are the last line of (121.15). Theorem 121.3 therefore gives the
+strictly positive finite-event lower bound in (121.14). Its final
+depth is $2m-2\ge4$, so the density $e^{-3T}$ uses no root holding
+rate. Infinite-horizon restriction to $[0,T]$ gives positivity there
+as well.
+
+For the upper bounds, identify the two descendant cones by
+$uw\leftrightarrow vw$ for all finite suffixes $w$. This is an
+isomorphism of their internal parent--child seams, and preserves
+$q,\delta,d$. Start a coupled pair at $uL^r,vL^r$, use one
+rate-three Poisson process, and at each event use the same choice
+among parent, left child and right child, each with probability
+$1/3$. Until the first exit from these cones the actual source
+states stay matched and all their joint observations agree. Every
+vertex involved before exit is a nonroot, so every Poisson event
+there is an actual jump. At the exit time $\tau$ the pair reaches
+$\operatorname{par}u,\operatorname{par}v$. After exit extend the
+coupling by valid source evolutions; no further agreement is needed
+for the bound. If exit never occurs, the observations agree forever.
+
+At least $r+1$ jumps are needed for exit. Consequently
+
+$$
+\mathbf P\{\tau\le T\}
+ \le\mathbf P\{\operatorname{Poisson}(3T)\ge r+1\}.
+\tag{121.16}
+$$
+
+Before exit the height above the respective cone parent starts at
+$j=r+1$, decreases by one with probability $1/3$ and increases by
+one with probability $2/3$ at each actual jump. The classical biased
+gambler's-ruin calculation gives probability $2^{-j}$ of ever
+reaching height zero. Explicitly, with an upper barrier $M>j$, the
+probability of hitting zero before $M$ is
+
+$$
+h_j^{(M)}=\frac{2^{-j}-2^{-M}}{1-2^{-M}},\qquad
+3h_j^{(M)}=h_{j-1}^{(M)}+2h_{j+1}^{(M)},\quad
+h_0^{(M)}=1,\quad h_M^{(M)}=0.
+\tag{121.17}
+$$
+
+The finite stopped chain hits one barrier almost surely, and the
+displayed recurrence with these boundary values has a unique
+solution. As $M\to\infty$, the events of hitting zero before $M$
+increase to the event of ever hitting zero: each finite hitting
+path has a finite maximum. Nonexplosion ensures this is the same
+event for the continuous-time chain. Thus
+$\mathbf P\{\tau<\infty\}=2^{-(r+1)}$.
+
+The coupling inequality under convention (121.2) now gives
+$\|\mathsf L_{p_r}^T-\mathsf L_{p'_r}^T\|_{\mathrm{TV}}
+\le\mathbf P\{\tau\le T\}$ and
+$\|\mathsf L_{p_r}^\infty-\mathsf L_{p'_r}^\infty\|_{\mathrm{TV}}
+\le\mathbf P\{\tau<\infty\}$. Combining these with (121.16) proves
+both upper bounds. Letting $r\to\infty$ proves the absence of a
+uniform positive separation while each pair remains distinguishable
+by its rare event.
+
+The intermediate methods are standard uniformization and coupling:
+[Rao--Teh, *Fast MCMC Sampling for Markov Jump Processes and
+Extensions*, arXiv:1208.4818v3, §3.1, Proposition 1](https://arxiv.org/pdf/1208.4818v3)
+use a dominating Poisson clock and virtual jumps, as already
+specialized to this countable bounded-rate source in §120.3.
+The coupling inequality is the probability comparison underlying
+[Levin--Peres, *Markov Chains and Mixing Times*, second edition,
+§4.2, Proposition 4.7, (4.9)--(4.12)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf);
+its measurable-path use here follows directly from (121.2).
+The source-specific content is the unchanged recursion's matched
+cones, the anchors (121.13), their first distinguishing ancestor,
+and the simultaneous bounds (121.14). This is a repo-derived
+application of those mature tools, without a new generic
+lumpability, predictive-quotient or coupling result, and without a
+worldwide novelty claim. Exact state counts in Corollary 121.5
+therefore coexist with this nonuniform separation; they imply no
+uniform robust-storage, sample-complexity or one-trace recovery
+guarantee, and supply none of the native or spatial correspondences
+excluded in Definition 121.1. $\square$
+

@@ -1,0 +1,56 @@
+**命题 253.2（局部来源恢复与原生守卫缺口同时存在）。** 固定任意 $W_0\in\mathcal H$ 且 $p(W_0)\ge0$。存在包含 $W_0$ 的 parent 邻域 $U$，使 $\Gamma|_U$ 单射，且每个确定性完整世界目标 $T:U\to Y$ 在 $\Gamma(U)$ 上唯一下降。然而，对同一个 $U$，存在保留原生合法前缀的来源扩张及其中两个合法状态，具有相同的基点和 augmented-J 边界，下一次 $[5]$ 的合法性却不同。这是静态局部逆不能自动供应原生拉回的失败见证。
+
+证明。由 (253.2)，$p,v,a$ 中某两个分量 $(f,h)$ 在 $W_0$ 的二维 parent 坐标中有非零 Jacobian。经典逆函数定理给缩小后的 $U$，使
+
+$$
+\psi=(f,h):U\longrightarrow\Omega\subseteq\mathbb R^2
+$$
+
+为微分同胚。于是 $\Gamma|_U$ 单射，且在其实际像上
+
+$$
+L_U(q)=\psi^{-1}(\operatorname{pr}_{f,h}q),\qquad
+\overline T(q)=T(L_U(q))
+\tag{253.3}
+$$
+
+恢复来源和目标。这里 $\operatorname{pr}_{f,h}$ 选取秩判据给出的两个分量；对每个 $q\in\Gamma(U)$，有 $\Gamma(L_U(q))=q$，故由 $\Gamma=(p,v,a)$ 得 $\pi(L_U(q))=\operatorname{pr}_{p,v}(q)$。后一个等式恢复基点，不断言 $(p,v)$ 本身给出局部逆，也不断言 $\operatorname{rank}d(p,v)=2$。这个 $L_U$ 的类型是 $\Gamma(U)\to U$，不是原生历史到完整世界的映射；它只在该分支实际像上定义。上述局部逆推导亦是[支持卷 VII §24](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 明示的用途，不把它重新列为独立的新定理。
+
+构造扩张
+
+$$
+\widehat U=U\times\mathcal P,\qquad
+\widehat\pi(W,w)=\pi(W),\qquad
+\widehat\Gamma(W,w)=\Gamma(W),\qquad
+\widehat G_5(W,w)=G_5(w).
+\tag{253.4}
+$$
+
+原生追加 $\widehat U_\sigma(W,w)=(W,w\sigma)$ 的定义域严格为
+
+$$
+\widehat D_\sigma
+=\{(W,w):W\in U,\ w\in\mathcal P,\ w\sigma\in\mathcal P\}.
+\tag{253.5}
+$$
+
+其中 $W$ 仍是一整个严格世界，未更换其 source、gain 或 drift，$w$ 则独立满足原生全部接缝守卫。取
+
+$$
+\widehat x_0=(W_0,\varepsilon),\qquad
+\widehat x_1=(W_0,[2]).
+$$
+
+两点均在 $\widehat U$，且
+
+$$
+\widehat\Gamma(\widehat x_0)=\widehat\Gamma(\widehat x_1),\qquad
+\widehat\pi(\widehat x_0)=\widehat\pi(\widehat x_1),\qquad
+\widehat G_5(\widehat x_0)=1\ne0=\widehat G_5(\widehat x_1).
+\tag{253.6}
+$$
+
+因此不存在 $\overline G_5:\widehat\Gamma(\widehat U)\to\{0,1\}$ 恢复该目标，也不存在边界子集 $D_5^B$ 使 $\widehat D_{[5]}=\widehat\Gamma^{-1}(D_5^B)$。若还要求具体的非空原世界来源，可取[支持卷 V](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md) 定理 1.2 的 $W_A$；它满足 $56\le p(W_A)\le58$，故 (253.2) 适用。
+
+扩张 (253.4) 是两份已声明合同的数学直积反模型，不声称它已由原生 FIB 构造或物理协议实现，也不声称 $\Gamma$ 在 $\mathcal H$ 自身有此碰撞。它反驳的仅是“完整世界上的局部静态坐标逆必然恢复新增的原生守卫”。即便将追加后遗忘前缀的投影与 $U$ 上恒等映射作成交换图，(253.6) 的合法域差别仍在；该恒等映射本身也不是原 $J/M$ 时钟操作的识别。∎
+

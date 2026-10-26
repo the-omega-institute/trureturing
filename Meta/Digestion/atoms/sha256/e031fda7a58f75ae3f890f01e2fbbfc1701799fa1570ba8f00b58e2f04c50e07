@@ -1,0 +1,139 @@
+**命题 479.1（不另设零点高度门槛的有限正峰值）。** 设实际非平凡零点 $\rho_0=\beta+i\gamma$ 满足 $\beta>1/2$、$\gamma>0$，令
+
+$$
+\delta=\beta-\tfrac12,\quad D=\gamma+10,\quad
+m_0=100D^2\delta^{-2},\quad m_1=500D^4\delta^{-2}.
+$$
+
+则存在实数 $A\in[e^{4m_0},e^{28m_1}]$ 使
+
+$$
+\mathcal U(A)>\sqrt A\,(4\log A+9).
+\tag{479.1}
+$$
+
+从而，若 $B_0=\exp(4(28m_1+20)^2)$，存在实际整数 $5040<N\le\exp(B_0\log B_0)$ 严格违反 Robin。
+
+证明。下列零点多重集均包括全部非平凡零点，不假设简单性、分离或存在最右零点。写 $\rho=b+i\eta$、$a_\rho=[\rho(1-\rho)]^{-1}$，定义
+
+$$
+H(y)=\sum_\rho a_\rho e^{\rho y}\quad(y\in\mathbb R),\qquad
+\sum_\rho a_\rho=C=2+\gamma_E-\log(4\pi)<1.
+$$
+
+经典低高度结果给出 $|\eta|>10$。由 $0<b<1$，直接有 $\Re a_\rho\ge1/(2\eta^2)$，故
+
+$$
+\sum_\rho\eta^{-2}\le2C<2,\quad
+\sum_\rho|a_\rho|<2,\quad
+\#\{\rho:|\Im\rho|\le T\}\le2T^2,\quad
+|H(y)|\le2e^{\max(y,0)}.
+\tag{479.2}
+$$
+
+这里 $\Re a_\rho$ 的分母不超过 $2\eta^4$，分子至少为 $\eta^2$。所有级数在实紧集上一致绝对收敛，$H$ 由共轭对称性为实值。复用完整积分显式公式，对 $y>0$ 有
+
+$$
+H(y)=\mathcal U(e^y)-\log(2\pi)
++\sum_{j\ge1}\frac{e^{-2jy}}{2j(2j+1)}\le\mathcal U(e^y).
+\tag{479.3}
+$$
+
+最后的级数小于 $1$，而 $\log(2\pi)>1$；不丢弃素数幂或平凡零点修正。
+
+令 $a=\beta^2+16\beta$，把 $|\eta-\gamma|\le6$ 的 $n$ 个零点（计重数）变成复数
+
+$$
+z_\rho=\exp\!\left(m_0[(\rho-i\gamma)^2+16(\rho-i\gamma)-a]\right).
+$$
+
+其中至少一个为 $1$，且 $n\le2(\gamma+6)^2\le2D^2$。使用所引 Cassel 步骤的离散结论：去掉一个 $1$ 后把其余根连同共轭取成实系数多项式的根，存在整数 $1\le\nu\le2n+1$ 使 $\Re\sum z_\rho^\nu\ge1$。于是 $m=\nu m_0$ 满足 $m_0\le m\le m_1$，且相应有限和的实部至少为 $e^{am}$。
+
+记完整高斯零点和
+
+$$
+E_\gamma(m)=\sum_\rho e^{m(\rho-i\gamma)^2+16m(\rho-i\gamma)}.
+$$
+
+对所遗漏的 $|\eta-\gamma|>6$，按整数距离 $k\ge6$ 分组，利用 (479.2) 及 $b^2+16b\le17$，得到
+
+$$
+\begin{aligned}
+\left|\sum_{|\eta-\gamma|>6}e^{m(\rho-i\gamma)^2+16m(\rho-i\gamma)}\right|
+&\le2D^2\sum_{j\ge0}(j+1)^2e^{m(17-(6+j)^2)}
+\le4D^2e^{-19m},\\
+\Re E_\gamma(m)&\ge\tfrac12e^{am}.
+\end{aligned}
+\tag{479.4}
+$$
+
+此处 $m\ge m_0\ge1$，并用 $\sum_{j\ge0}(j+1)^2r^j<2$（$0\le r\le1/10$）及 $e^{(a+19)m}>8D^2$。
+
+现在支付带符号适配。取均值 $M=16m$、方差 $2m$ 的高斯密度，写
+
+$$
+g(y)=\frac{e^{-(y-M)^2/(4m)}}{\sqrt{4\pi m}},\quad
+u=\frac{y-M}{2m},\quad P=(u+i\gamma)(u+i\gamma-1)-\frac1{2m},\quad
+K(y)=-\Re(e^{-i\gamma y}P)g(y),\quad
+v(y)=2(u^2+\gamma^2+1)g(y)\ge|K(y)|.
+$$
+
+对高斯核求两次 $M$ 导数，保持 $m$ 固定，然后在 $M=16m$ 取值。绝对可和性与高斯衰减允许逐项积分，由 $a_\rho\rho(\rho-1)=-1$ 得到精确等式
+
+$$
+\int_{\mathbb R}H(y)K(y)\,dy=\Re E_\gamma(m),\qquad
+\int_{\mathbb R}H(y)v(y)\,dy
+=2\sum_\rho a_\rho\left(\rho^2+\gamma^2+1+\frac1{2m}\right)e^{m\rho^2+16m\rho}.
+\tag{479.5}
+$$
+
+包络对应的第二个积分没有被删去。用 $|\eta|>10$ 与 (479.2)，按 $|\eta|\in[k,k+1)$ 分组，有
+
+$$
+\sum_\rho e^{-m\eta^2}\le\sum_{k\ge10}2(k+1)^2e^{-mk^2}\le500e^{-100m},\qquad
+\left|\int H v\right|\le1000D^2e^{-83m}.
+\tag{479.6}
+$$
+
+后一式使用 $|a_\rho|(\gamma^2+1+1/(2m)+|\rho|^2)\le\gamma^2+3\le D^2$。
+
+反设 (479.1) 在 $e^{4m}\le A\le e^{28m}$ 全部失败。由 (479.3)，在 $J=[4m,28m]$ 上 $H(y)\le b(y):=(4y+11)e^{y/2}$。因 $K+v\ge0$，保留整个实轴上的包络积分及区间外响应，得
+
+$$
+\Re E_\gamma(m)\le2\int_0^\infty b(y)v(y)\,dy
++\left|\int_{\mathbb R}H(y)v(y)\,dy\right|
++2\int_{\mathbb R\setminus J}|H(y)|v(y)\,dy.
+\tag{479.7}
+$$
+
+下面的三个高斯估计给出全部常数。第一项以 $e^{y/2}g(y)$ 换成均值 $17m$、方差 $2m$ 的高斯，令 $z=y-17m$，使用 $4y+11\le81m+2z^2$（$y\ge0$）、$u^2\le1/2+z^2/(2m^2)$ 及二、四阶矩 $2m,12m^2$，得到
+
+$$
+\int_0^\infty bv\le2e^{33m/4}\bigl[85m(\gamma^2+2)+93\bigr]
+\le300mD^2e^{33m/4}.
+\tag{479.8}
+$$
+
+对 $y\ge0$ 的区间外部分用 $|H(y)|\le2e^y$。指数倾斜把均值移至 $18m$，令 $z=y-18m$，此部分满足 $|z|\ge10m$，且 $u^2+\gamma^2+1\le D^2+z^2/(2m^2)$。把高斯指数分为相等两半，支付 $e^{-25m/2}$ 并对方差 $4m$ 的高斯积分。对 $y<0$ 同样支付 $e^{-32m}$，得
+
+$$
+\int_{[0,\infty)\setminus J}|H|v\le12D^2e^{9m/2},\qquad
+\int_{(-\infty,0)}|H|v\le8D^2e^{-32m}.
+\tag{479.9}
+$$
+
+由 (479.6)—(479.9)，反设蕴含 $\Re E_\gamma(m)\le2000mD^2e^{33m/4}$。但
+
+$$
+\begin{aligned}
+a-\tfrac{33}4&=17\delta+\delta^2,\\
+\log(4000mD^2)&\le\log(2\cdot10^6D^6\delta^{-2})
+<20+6D+2/\delta\le D^2/\delta
+<17\delta m.
+\end{aligned}
+$$
+
+这里 $D>20$、$0<\delta<1/2$、$m_0\le m\le m_1$，故与 (479.4) 矛盾。这证明 (479.1)。所得 $A>10000$，且 $4\log A+9>4(\log A)^2/(1+\log A)+9$。直接应用命题 478.1，并用 $\log A\le28m_1$，即得 $N$ 的上界。证毕。
+
+本命题只以实际离线零点为条件，不给出该条件的实例或 RH 的判定；它给出的正峰值是完整 $\mathcal U$ 的峰值，不把某个余项的绝对值下界当成其正向下界，也不把截断参数 $B_0$ 当成整数 $N$ 的上界。
+

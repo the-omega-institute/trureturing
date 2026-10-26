@@ -1,0 +1,65 @@
+**Theorem 3.1 (Absolute irreducibility of the original-source parent).**
+The polynomial $\mathcal P=5eC+6AJN$ is absolutely irreducible.
+Consequently $X$ is a nonempty irreducible surface. The acquired map
+$\rho_X$ is dominant.
+
+Proof. Work first in $\mathbb C[b,r]$, a unique factorization domain.
+A common factor of $J,N$ divides $N-J=br$. Neither $b$ nor $r$
+divides $J$, so $\gcd(J,N)=1$. Substitution of $b=0,-1,-1/2$
+shows that neither $J$ nor $N$ has a common factor with $bTU$.
+Modulo $J$ and modulo $N$, respectively,
+
+$$
+C\equiv-4bTUN\pmod J,\qquad
+C\equiv-4bTUJ\pmod N.
+\tag{3.1}
+$$
+
+These identities exclude all common factors of $C$ with $JN$.
+The remaining factors of $A$ are excluded by the exact specializations
+
+$$
+\begin{aligned}
+C(1/8,r)
+&=\frac{3(438272r^4-931328r^3+540800r^2-50728r-853)}{131072},\\
+C(-2/5,r)
+&=\frac{48(625r^4-1000r^3+50r^2+260r+36)}{15625}.
+\end{aligned}
+\tag{3.2}
+$$
+
+Both are nonzero polynomials. Thus $5C$ and $6AJN$ are coprime
+over $\mathbb C$. Over $\mathbb Z[b,r]$, the corresponding gcd of
+$C$ and $6AJN$ is the scalar $2$; scalar content is irrelevant over
+$\mathbb C$. The polynomial $\mathcal P$ is primitive in $e$ and
+linear with nonzero coefficient. It is irreducible over
+$\mathbb C(b,r)[e]$, hence over $\mathbb C[b,r,e]$ by Gauss' lemma.
+This proves absolute irreducibility without assuming that any particular
+gain coefficient or sample is nonzero.
+
+At $r=1/2,b=1$ the parent has
+
+$$
+\begin{gathered}
+j=5/4,\quad n=7/4,\quad T=2,\quad U=3,\quad
+\Lambda=-121/105,\quad e=1029/121,\\
+p=9918/121,\quad v=1068459/2420,\quad m=206823/121.
+\end{gathered}
+\tag{3.3}
+$$
+
+All factors defining $X$ are nonzero. In the local chart
+$e=-6AJN/(5C)$, differentiation of (2.7) and (1.8) gives
+
+$$
+\det\frac{\partial(p,v)}{\partial(r,b)}
+=-\frac{1550712402}{805255}\ne0
+\tag{3.4}
+$$
+
+at this point. The map therefore has a two-dimensional local image and
+is dominant. This is an application of the rank criterion for a morphism
+in characteristic zero; equivalently its two coordinate functions are
+algebraically independent. The irreducible hypersurface has dimension two,
+and its nonempty open $X$ has the same dimension. ∎
+

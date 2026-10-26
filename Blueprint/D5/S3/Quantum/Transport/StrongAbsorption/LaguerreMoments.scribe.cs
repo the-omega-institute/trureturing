@@ -160,7 +160,47 @@ internal sealed class LaguerreMomentsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerreHw_near"),
                 H("laguerreHw_near"), StatementSource.FromAuthor(Disp(F30())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The displayed identity or estimate is used in the moment and density expansions."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("The displayed identity or estimate is used in the moment and density expansions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-derivation-product-eigen"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.derivation_product_eigen"),
+                H("derivation_product_eigen"), StatementSource.FromAuthor(Disp(Published0())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-orthant-measure"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.orthant_measure"),
+                H("orthant_measure"), StatementSource.FromAuthor(Disp(Published2())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-polynomial-exp-integrable-single"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polynomial_exp_integrable_single"),
+                H("polynomial_exp_integrable_single"), StatementSource.FromAuthor(Disp(Published3())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-polyintegral"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral"),
+                H("polyIntegral"), StatementSource.FromAuthor(Disp(Published4())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("published-polyintegral-add"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_add"),
+                H("polyIntegral_add"), StatementSource.FromAuthor(Disp(Published5())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-polyintegral-sum"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_sum"),
+                H("polyIntegral_sum"), StatementSource.FromAuthor(Disp(Published6())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-polyintegral-x-sq"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.polyIntegral_X_sq"),
+                H("polyIntegral_X_sq"), StatementSource.FromAuthor(Disp(Published7())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-laguerre-p2"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/LaguerreMoments.laguerre_p2"),
+                H("laguerre_p2"), StatementSource.FromAuthor(Disp(Published8())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem)
         )));
 
     private static Formula V(string name) => F.Id(name);
@@ -272,4 +312,28 @@ internal sealed class LaguerreMomentsDocument : IScribeDocumentDefinition
 
     private static Formula F30() =>
         Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("N"))))), Sp, Comma, Sp, Parenthesized(Seq(D(1), Sp, Le, Sp, V("M"))), Sp, To, Sp, V("laguerreHw"), Sp, V("M"), Sp, Seq(Eq, Sup(V("f"))), Sp, Seq(OpenBracket, Seq(V("nhds"), Sp, D(0)), CloseBracket), Sp, Parenthesized(Seq(V("fun"), Sp, V("t"), Sp, Mapsto, Sp, D(2), Sp, Cdot, Sp, Qualified("Real","exp"), Sp, Parenthesized(Seq(V("gammaCGF"), Sp, Parenthesized(new Formula.Power(Parenthesized(Seq(V("M"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("R"))))), D(2))), Sp, V("t"))), Sp, Cdot, Sp, Sp, new Formula.Power(Parenthesized(Seq(V("inverseSlope"), Sp, Parenthesized(new Formula.Power(Parenthesized(Seq(V("M"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("R"))))), D(2))), Sp, V("t"))), D(2)))));
+
+    private static Formula Published0() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(SigmaLower, Sp, Colon, Sp, Parenthesized(Seq(V("Type"), Star))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Seq(OpenBracket, Seq(V("DecidableEq"), Sp, SigmaLower), CloseBracket)), Sp, To, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("D"), Sp, Colon, Sp, Parenthesized(Seq(V("Derivation"), Sp, Seq(Mathbb, Grp(V("R"))), Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R"))))), Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("s"), Sp, Colon, Sp, Parenthesized(Seq(V("Finset"), Sp, SigmaLower))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("f"), Sp, Colon, Sp, Parenthesized(Seq(Parenthesized(SigmaLower), Sp, To, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("g"), Sp, Colon, Sp, Parenthesized(Seq(Parenthesized(SigmaLower), Sp, To, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, V("i"), Sp, InMacro, Sp, V("s")), Sp, Comma, Sp, Parenthesized(Seq(V("D"), Sp, Parenthesized(Seq(V("f"), Sp, V("i"))), Sp, Eq, Sp, V("g"), Sp, V("i"), Sp, Cdot, Sp, V("f"), Sp, V("i")))))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(V("D"), Sp, Parenthesized(Seq(Prod, Sp, V("i"), Sp, InMacro, Sp, V("s"), Sp, Comma, Sp, V("f"), Sp, V("i"))), Sp, Eq, Sp, Parenthesized(Seq(Sum, Sp, V("i"), Sp, InMacro, Sp, V("s"), Sp, Comma, Sp, V("g"), Sp, V("i"))), Sp, Cdot, Sp, Prod, Sp, V("i"), Sp, InMacro, Sp, V("s"), Sp, Comma, Sp, V("f"), Sp, V("i"))))))))))))))))))))))))));
+
+    private static Formula Published2() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Seq(V("volume"), Sp, Colon, Sp, Parenthesized(Seq(V("Measure"), Sp, Parenthesized(Seq(Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, To, Sp, Parenthesized(Seq(Mathbb, Grp(V("R")))))))))), Sp, Dot, Sp, V("restrict"), Sp, Parenthesized(Parenthesized(Seq(Qualified("Set","Ici"), Sp, Parenthesized(Seq(D(0), Sp, Colon, Sp, Parenthesized(Seq(Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, To, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))))))), Sp, Eq, Sp, V("orthantMeasure"), Sp, V("M")))));
+
+    private static Formula Published3() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(D(0), Sp, Lt, Sp, V("a")))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("P"), Sp, Colon, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("Integrable"), Sp, Parenthesized(Seq(Seq(V("fun"), Sp, V("x")), Sp, Mapsto, Sp, Parenthesized(Seq(Qualified("Real","exp"), Sp, Parenthesized(Seq(Minus, Sp, V("a"), Sp, Cdot, Sp, Sum, Sp, V("i"), Sp, Comma, Sp, V("x"), Sp, V("i"))), Sp, Cdot, Sp, Qualified("MvPolynomial","eval"), Sp, V("x"), Sp, V("P"))))), Sp, Parenthesized(Seq(V("orthantMeasure"), Sp, V("M"))))))))))))))));
+
+    private static Formula Published4() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("P"), Sp, Colon, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("polyIntegral"), Sp, V("a"), Sp, V("P"), Sp, Eq, Sp, Parenthesized(Seq(Int, Sp, V("x"), Sp, Comma, Sp, Qualified("Real","exp"), Sp, Parenthesized(Seq(Minus, Sp, V("a"), Sp, Cdot, Sp, Sum, Sp, V("i"), Sp, Comma, Sp, V("x"), Sp, V("i"))), Sp, Cdot, Sp, Qualified("MvPolynomial","eval"), Sp, V("x"), Sp, V("P"), Sp, Seq(Thin, V("d")), Sp, V("orthantMeasure"), Sp, V("M")))))))))))));
+
+    private static Formula Published5() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(D(0), Sp, Lt, Sp, V("a")))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("P"), Sp, Colon, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("Q"), Sp, Colon, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(V("P"), Sp, Plus, Sp, V("Q"))), Sp, Eq, Sp, V("polyIntegral"), Sp, V("a"), Sp, V("P"), Sp, Plus, Sp, V("polyIntegral"), Sp, V("a"), Sp, V("Q")))))))))))))))));
+
+    private static Formula Published6() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(D(0), Sp, Lt, Sp, V("a")))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(SigmaLower, Sp, Colon, Sp, Parenthesized(Seq(V("Type"), Star))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("s"), Sp, Colon, Sp, Parenthesized(Seq(V("Finset"), Sp, SigmaLower))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("P"), Sp, Colon, Sp, Parenthesized(Seq(Parenthesized(SigmaLower), Sp, To, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(Sum, Sp, V("i"), Sp, InMacro, Sp, V("s"), Sp, Comma, Sp, V("P"), Sp, V("i"))), Sp, Eq, Sp, Sum, Sp, V("i"), Sp, InMacro, Sp, V("s"), Sp, Comma, Sp, V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(V("P"), Sp, V("i"))))))))))))))))))))));
+
+    private static Formula Published7() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(D(0), Sp, Lt, Sp, V("a")))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("i"), Sp, Colon, Sp, Parenthesized(Seq(V("Fin"), Sp, V("M")))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("P"), Sp, Colon, Sp, Parenthesized(Seq(V("MvPolynomial"), Sp, Parenthesized(Seq(V("Fin"), Sp, V("M"))), Sp, Seq(Mathbb, Grp(V("R")))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("a"), Sp, Cdot, Sp, V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(new Formula.Power(Parenthesized(Parenthesized(Seq(V("X"), Sp, V("i")))), D(2)), Sp, Cdot, Sp, V("P"))), Sp, Eq, Sp, D(2), Sp, Cdot, Sp, V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(V("X"), Sp, V("i"), Sp, Cdot, Sp, V("P"))), Sp, Plus, Sp, V("polyIntegral"), Sp, V("a"), Sp, Parenthesized(Seq(new Formula.Power(Parenthesized(Parenthesized(Seq(V("X"), Sp, V("i")))), D(2)), Sp, Cdot, Sp, Qualified("MvPolynomial","pderiv"), Sp, V("i"), Sp, V("P")))))))))))))))))));
+
+    private static Formula Published8() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("N"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Seq(Forall, Sp, Parenthesized(Seq(V("a"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(Parenthesized(Parenthesized(Seq(D(0), Sp, Lt, Sp, V("a")))), Sp, To, Sp, Parenthesized(Parenthesized(Seq(V("laguerreMoment"), Sp, V("M"), Sp, D(2), Sp, V("a"), Sp, Eq, Sp, D(2), Sp, Cdot, Sp, new Formula.Power(Parenthesized(Parenthesized(Seq(V("M"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), D(3)), Sp, Slash, Sp, new Formula.Power(Parenthesized(V("a")), D(2))))))))))));
 }

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5461c3598ee7e0b0b0f66973bfd5ed87eb2cf241b13bbd3b1334cf7fe68fdda2
+  normalized_sha256: sha256:5461c3598ee7e0b0b0f66973bfd5ed87eb2cf241b13bbd3b1334cf7fe68fdda2
+cas_ref: sha256:5461c3598ee7e0b0b0f66973bfd5ed87eb2cf241b13bbd3b1334cf7fe68fdda2
+coverage_gids:
+  - gid: D5/S3/Midline/Cayley/CanonicalZetaMirrorEvenOddDecomposition.mirrorFundamentalSymmetry_single
+    target_statement_id: sha256:3d3f185926f29aea801151bd4ec2e72b37a5732cbfbafd1aa6d7ec3e35213c7a
+receipts:
+  unresolved_subitems: []

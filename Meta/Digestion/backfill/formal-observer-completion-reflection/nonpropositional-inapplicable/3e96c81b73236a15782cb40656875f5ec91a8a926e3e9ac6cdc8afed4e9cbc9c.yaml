@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e96c81b73236a15782cb40656875f5ec91a8a926e3e9ac6cdc8afed4e9cbc9c
+  normalized_sha256: sha256:3e96c81b73236a15782cb40656875f5ec91a8a926e3e9ac6cdc8afed4e9cbc9c
+cas_ref: sha256:3e96c81b73236a15782cb40656875f5ec91a8a926e3e9ac6cdc8afed4e9cbc9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义操作现实为观察等价关系的商，并解释商的词义；没有额外重建或完备性断言。
+    previous_atom_id: 68f2698da50a39cc0aa5eb487d16dab0f0370645d867fd1e88b40e5d77cbef2c
+    next_atom_id: 2d75bc8b612f50b6d74f50b8ee725c38184af6b48b6f3812208a3acd1c03df98

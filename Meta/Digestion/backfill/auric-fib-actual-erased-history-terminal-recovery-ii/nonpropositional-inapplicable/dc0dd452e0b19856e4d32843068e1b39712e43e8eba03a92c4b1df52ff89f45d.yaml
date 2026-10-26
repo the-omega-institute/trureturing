@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc0dd452e0b19856e4d32843068e1b39712e43e8eba03a92c4b1df52ff89f45d
+  normalized_sha256: sha256:dc0dd452e0b19856e4d32843068e1b39712e43e8eba03a92c4b1df52ff89f45d
+cas_ref: sha256:dc0dd452e0b19856e4d32843068e1b39712e43e8eba03a92c4b1df52ff89f45d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Apply the contrapositive of Convex.helly_theorem' to a finite convex family in its d-dimensional affine direction space. Its conclusion is exactly an empty subfamily of cardinality at most d+1. Convex.radon_partition supplies the affine-dependence proof route; no channel compactness or attainment is involved. Pinned mathlib revision: 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Convex.helly_theorem', Convex.helly_theorem_set', Convex.radon_partition. D5 searched scope: D5/**/*.lean, including private declarations; shape scan: lowerPolar/upperPolar/Galois/closure, chromaticNumber/coloring/products, convex intersection/Helly/Radon, numerical checker checked_expression_encloses and cutoff_first_nonstrict; inspected the graph-coloring, generic closure, formal-concept adapter, and quantum Foundation/Subentropy hits."
+    previous_atom_id: 64b0d3aadcfad017dea24751b3ba6da59198586cc05bc92f6dcb3d57a1495cb8
+    next_atom_id: a38aa1e12a2b1996cb36231c3c27e51a80de1cd81e255b787236b7c32f4db1ec

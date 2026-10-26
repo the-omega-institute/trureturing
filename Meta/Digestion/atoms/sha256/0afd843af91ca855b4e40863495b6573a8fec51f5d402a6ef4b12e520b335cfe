@@ -1,0 +1,106 @@
+**Theorem 142.1 (three scalar caps).** On $J_0$ the first two endpoint thresholds satisfy $b_1<Q(t)$ and $b_2<\kappa_Dt/(1+t)$; on $J_1$ the third satisfies $b_3<\kappa_St/(1+t)$, where
+
+$$
+\begin{aligned}
+b_1:=\frac{a_{k_D}(2q/7)}h
+&=\frac{5t^2+4t+11}{2(1+t)^2}
+-\frac{14\bigl[(4+2d)+(5+2d)t^2-Lt\sqrt w\bigr]}{(1+t)(15+8t)},\\
+b_2:=\frac{a_{k_D}(q/2)}h
+&=b_1-\frac{3t^2}{4(1+t)^2},\\
+b_3:=\frac{a_S(q/2)}h
+&=\frac{2[1+2t-d(1+t^2)]}{(1+t)^2}.
+\end{aligned}
+\tag{U.182}
+$$
+
+Proof. These formulas follow from the actual thresholds. Indeed
+
+$$
+\begin{gathered}
+1+\frac{\alpha k_D}{4}=\frac{15+8t}{8(1+t)},\qquad
+\left(2r-\frac\beta{\sqrt2}\right)^2
+=\frac{(4+2d)+(5+2d)t^2-Lt\sqrt w}{2w},\\
+\frac{2\alpha+k_D(1-2q/7)}h
+=\frac{5t^2+4t+11}{2(1+t)^2},\qquad
+\frac{k_D}{h}\left(\frac q2-\frac{2q}{7}\right)
+=\frac{3t^2}{4(1+t)^2}.
+\end{gathered}
+\tag{U.183}
+$$
+
+The $S$ formula follows by substituting $g=t/w$, $q=t^2/w$, $h^2=(1+t)^2/w$ in (U.178).
+
+All radical estimates used for the first two caps are
+
+$$
+\begin{gathered}
+\frac{707}{500}<d<\frac{99}{70},\qquad
+(t^2+9/4)^2-5(1+t^2)=(t^2-1/4)^2,\\
+\sqrt w\leq\frac{t^2+9/4}{\sqrt5},\qquad
+\left(\frac L{\sqrt5}\right)^2<\frac{956}{175}
+<\left(\frac{187}{80}\right)^2,\qquad
+L\sqrt w<\frac{187}{80}(t^2+9/4).
+\end{gathered}
+\tag{U.184}
+$$
+
+The first bounds follow by squaring positive rationals: their squared margins are $151/250000$ and $1/4900$. The last rational square comparison has integer margin $34969\cdot175-956\cdot6400=1175>0$. Define
+
+$$
+\begin{gathered}
+J(t)=\frac{1707}{250}+\frac{1957}{250}t^2
+-\frac{187}{80}t(t^2+9/4),\\
+U_1=\frac{5t^2+4t+11}{2(1+t)^2}
+-\frac{14J(t)}{(1+t)(15+8t)},\qquad
+U_2=U_1-\frac{3t^2}{4(1+t)^2}.
+\end{gathered}
+\tag{U.185}
+$$
+
+Because $t>0$, the bracket subtracted in $b_1$ is strictly greater than $J(t)$ by (U.184). Thus $b_1<U_1$, $b_2<U_2$. Clearing positive denominators gives the exact identities
+
+$$
+\begin{aligned}
+4000(1+t)^2(15+8t)(Q-U_1)&=f_1(t),\\
+f_1(t)&=45948-152421t+50975t^2+251244t^3-191700t^4-25600t^5,\\
+4000(1+t)^2(15+8t)\left(\frac{\kappa_Dt}{1+t}-U_2\right)&=f_2(t),\\
+f_2(t)&=52368-171257t+31423t^2+271148t^3-130900t^4.
+\end{aligned}
+\tag{U.186}
+$$
+
+Here is a continuum sign proof for both polynomials. On $J_0$,
+$f_1'''=1507464-4600800t-1536000t^2$ is decreasing and $f_1'''(2/5)=-578616<0$. Therefore $f_1''$ decreases to $f_1''(5/8)=82085/4>0$; $f_1'$ increases to $f_1'(5/8)=-32447/32<0$; and $f_1$ decreases to $f_1(5/8)=249187/1024>0$. This proves $f_1>0$ throughout $J_0$.
+
+For the other polynomial,
+
+$$
+\begin{gathered}
+f_2''(t)=62846+t(1626888-1570800t)
+\geq62846+\frac25\,645138>300000,\\
+f_2(1/2)=\frac{615}{2},\qquad f_2'(1/2)=-1923,\\
+f_2(t)\geq\frac{615}{2}-1923(t-1/2)+150000(t-1/2)^2
+\geq\frac{615}{2}-\frac{1923^2}{600000}>300.
+\end{gathered}
+\tag{U.187}
+$$
+
+The curvature bound uses $t\geq2/5$ and $1626888-1570800t\geq645138>0$. Integrating this bound about $1/2$ proves the quadratic lower bound on either side of $1/2$. The completed-square margin above $300$ is $267357/200000>0$. Thus both direct caps hold throughout the continuum.
+
+Finally, put $\kappa=\kappa_S$. Direct subtraction gives
+
+$$
+\begin{gathered}
+\frac{\kappa t}{1+t}-b_3
+=\frac{(\kappa+2d)t^2+(\kappa-4)t+2d-2}{(1+t)^2},\\
+\operatorname{Disc}_t\bigl((\kappa+2d)t^2+(\kappa-4)t+2d-2\bigr)
+=\kappa^2-16+(16-8\kappa)d\\
+=-\frac{39039}{2500}+\frac{276}{25}d
+<-\frac{39039}{2500}+\frac{276}{25}\frac{99}{70}
+=-\frac{33}{17500}<0.
+\end{gathered}
+\tag{U.188}
+$$
+
+The leading coefficient is positive, so the numerator is positive for every real $t$. In particular the third cap holds on $J_1$. All comparisons use the original $k_D,k_S$ and impose no sign assumption on the actual thresholds. $\square$
+

@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:734a84ef176accee4738c5efc6cc2fdc081e54231897c8861166228a056fef6b
+  normalized_sha256: sha256:734a84ef176accee4738c5efc6cc2fdc081e54231897c8861166228a056fef6b
+cas_ref: sha256:734a84ef176accee4738c5efc6cc2fdc081e54231897c8861166228a056fef6b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.actual_low_choice_count
+    target_statement_id: sha256:f176b44598d101ceeaec18e75f1b84408c8a3d5a2cd17c6c9569b1b96ec11dc8
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.actual_rate_positive
+    target_statement_id: sha256:2b04229fd3b44c8839c5f66ffa6d9a99ac9fffca95269b38d32c966bc525527a
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.memory
+    target_statement_id: sha256:0e17342a8755ca5b8c46a0b0208c6c76b615b8e8cb414370453e6a9d00692a09
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.original_count_codebook_approximation
+    target_statement_id: sha256:81684709d5419612fda39fa8a5c671de8b109a549264f7586fe43288a6c08ebc
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/LowerRateLimit.original_lower_rate_limit
+    target_statement_id: sha256:98114f1645b4eaa6b3208c0be3f3493fe20a851fbd75b200ca262efc648e97fc
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook.bilateral_reset_codebook
+    target_statement_id: sha256:fee007f83cd6ad32143c515acf5cd6f4a022e8f76e35bb8acabe564da7e9f34b
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry.tail_arithmetic
+    target_statement_id: sha256:68b5e06cdd380759fe4c1e7f52e9d3882155f52797632c170c981eab44823de2
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 55b0ae87d307190f20353ac3efa3de48d7429b7f4ecfc273344d0c917ad4293e
+    - 219a8ac34b8531c609f973affc1edfa196c17e191efdc4c35950002b3e93f275

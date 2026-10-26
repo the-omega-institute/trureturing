@@ -1,0 +1,63 @@
+**Definition 17.1 (Actual singular-endpoint incidence and its coefficient field).**
+Retain exactly the complete worlds and original-clock child of Definition
+1.1, and write $q=(p,v)$ with $p\ne24$. In particular each world has one
+whole nonzero real polynomial of degree at most three and one fixed real
+drift, including lower degrees, sampled or repeated roots and zero drift.
+Use the actual set $\mathcal B_{\mathcal S,M}$ of Theorem 8.4:
+
+$$
+\mathcal B_{\mathcal S,M}
+=\{q:\exists W\ne W'\in C(q),\quad
+ f_{MM}(W)=f_{MM}(W'),\quad\Lambda(W)\Lambda(W')=0\}.
+$$
+
+Thus membership includes the complete reconstruction equalities and strict
+guards; the unfiltered outer projection in the proof of Theorem 8.4 is a
+different set. Let
+
+$$
+\begin{gathered}
+K=\mathbb Q[\theta]/(\Phi(\theta)),\qquad
+\Phi(X)=438272X^4-931328X^3+540800X^2-50728X-853,\\
+I_-=(134815875067,134815875068)/10^{12},\qquad
+I_+=(902449681772,902449681773)/10^{12}.
+\end{gathered}
+$$
+
+Irreducibility is supplied by the modulo-seven certificate in Theorem
+3.2. The two strict real embeddings $\theta_-,\theta_+$ are its roots in
+$I_-,I_+$; O, Theorems 4.2 and 29.2, exhaust all legal singular sources
+by $(\theta_-,1/8),(\theta_+,1/8)$. Other embeddings are not strict
+singular sources. All field coefficients below are reduced uniquely to
+the power basis $1,\theta,\theta^2,\theta^3$ over $\mathbb Q$.
+
+At the symbolic singular source put
+
+$$
+\begin{gathered}
+b_s=1/8,\quad j_s=1/8+8\theta(1-\theta),\quad n_s=j_s+\theta,\\
+T_s=9/8,\quad U_s=5/4,\quad x_s=n_s/U_s,\\
+A_{5s}=1+(U_s+n_s)(4-15/j_s+20/T_s-10/n_s),\\
+A_{6s}=1+(2U_s+n_s)(10-36/j_s+45/T_s-20/n_s),\\
+A_{7s}=1+(3U_s+2n_s)(20-70/j_s+84/T_s-35/n_s),\\
+K_{6s}=(2U_s+n_s)(240-243/T_s),\qquad
+K_{7s}=(3U_s+2n_s)(480-2268/(5T_s)).
+\end{gathered}
+$$
+
+These are Definition 8.1's coefficients, with $K_{5s}=0$. The full
+singular line is
+
+$$
+p_s(t)=24+A_{5s}t,\qquad
+v_s(t)=24+K_{6s}+A_{6s}t,\qquad
+m_s(t)=24+K_{7s}+A_{7s}t.
+$$
+
+Here $t=d_s-24$ is the singular world's drift coordinate and
+$A_{5s}\ne0$, so $p_s(t)\ne24$ is equivalent to $t\ne0$.
+O's full parent converse supplies one complete singular world for each
+$t$ at either strict embedding. These affine responses belong to that
+same whole polynomial at the original clocks, rather than to independent
+choices of gain samples.
+

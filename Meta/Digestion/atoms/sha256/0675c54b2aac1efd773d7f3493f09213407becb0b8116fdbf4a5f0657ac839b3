@@ -1,0 +1,68 @@
+**定理 7.3（单路径下降与信息秩限制）。**
+固定路径 $\gamma:b\to c$。以下两项等价：
+
+$$
+\exists\,\overline T_\gamma:\operatorname{im}L_b
+                  \to\operatorname{im}L_c,\qquad
+ \overline T_\gamma L_b=L_cT_\gamma,
+ \tag{D1}
+$$
+
+其中 $\overline T_\gamma$ 为实线性映射；以及
+
+$$
+T_\gamma K_b\subseteq K_c.
+ \tag{D2}
+$$
+
+满足条件时，$\overline T_\gamma$ 唯一。
+若两端读出秩相同，则 (D2) 等价于
+$T_\gamma K_b=K_c$。
+
+即使允许预测器只在合法态读出上定义、且不预先要求线性，
+如果它对所有输入密度矩阵都精确满足上述预测任务，
+仍然必须有 (D2)。
+此外，对任意可逆 $T_\gamma$，
+
+$$
+\text{(D1)}\quad\Longrightarrow\quad
+ \operatorname{rank}L_c\leq\operatorname{rank}L_b.
+ \tag{D3}
+$$
+
+**证明。**
+
+若 (D1) 成立，$X\in K_b$ 蕴含
+$L_cT_\gamma X=\overline T_\gamma0=0$，故 (D2) 成立。
+反过来，定义
+
+$$
+\overline T_\gamma(L_bX)=L_cT_\gamma X.
+$$
+
+若 $L_bX=L_bY$，则 $X-Y\in K_b$，由 (D2) 得到右侧相等，
+所以定义良好。线性与唯一性立即成立。
+相同秩使两端核等维，而 $T_\gamma$ 可逆，
+故核包含等价于核相等。
+
+为验证合法态版本的必要性，取任意 $X\in K_b$。
+选足够小的 $\epsilon>0$，使
+$\rho_\pm=I/d\pm\epsilon X$ 均为正半定。
+它们具有相同初始读出。如果同一预测器在所有态上精确，
+则其未来读出也相同；两者之差给出
+$2\epsilon L_cT_\gamma X=0$。
+因此 (D2) 仍成立。
+
+最后，可逆性及 (D2) 给出
+$\dim K_b\leq\dim K_c$；两端 $\mathcal V$ 等维，
+应用秩--零化度公式即得 (D3)。
+
+证毕。
+
+(D3) 限制的是从旧摘要进行的、对所有状态均正确的确定性预测。
+新增实际测量、读取原来未纳入摘要的记忆、限制状态类或加入先验，
+会改变该任务的输入或量词。仅增加编码长度或门序列长度，
+不构成绕过 (D3) 的理由。
+
+<a id="thm-parallel-kernel"></a>
+

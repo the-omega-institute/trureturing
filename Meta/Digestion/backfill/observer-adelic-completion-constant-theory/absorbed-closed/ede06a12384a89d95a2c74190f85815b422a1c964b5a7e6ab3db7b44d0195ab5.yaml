@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ede06a12384a89d95a2c74190f85815b422a1c964b5a7e6ab3db7b44d0195ab5
+  normalized_sha256: sha256:ede06a12384a89d95a2c74190f85815b422a1c964b5a7e6ab3db7b44d0195ab5
+cas_ref: sha256:ede06a12384a89d95a2c74190f85815b422a1c964b5a7e6ab3db7b44d0195ab5
+coverage_gids:
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorClassification.golden_backward_limit_core_eq_four_points
+    target_statement_id: sha256:979670abf0c53f7a20bcd2f4b67bf6cbdebb7382113ff62b085c31ea6f83f86b
+receipts:
+  unresolved_subitems: []

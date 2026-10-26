@@ -1,0 +1,17 @@
+**Theorem 2.1 (Complete faithful toral source support).** Let
+
+$$
+A=C_{2^a}\times C_{2^b m},
+\qquad 0\le a\le b,\qquad m\ge1\text{ odd}.
+$$
+
+Then $A$ supports projectively faithful, pointwise matched but not globally matched character triples if and only if
+
+$$
+(a,b,m)=(1,1,3).
+$$
+
+Thus the sole supporting isomorphism type in this family is $C_2\times C_6\cong C_2^2\times C_3$.
+
+Proof. Decompose $A=P\times O$, where $P=C_{2^a}\times C_{2^b}$ and $O=C_m$. The following arguments cover all parameters. The odd-factor, restriction and witness arguments reproduce the inherited finite-character results [5–7] in full. Determinant normalization and character orthogonality are reused ingredients; the regular-element compatibility in §2.5 supplies the exclusion at higher powers of two.
+

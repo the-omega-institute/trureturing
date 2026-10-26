@@ -1,0 +1,21 @@
+**Definition 19.1 (The enlarged-input pair).** Retain exactly the
+system pair $q_A=q_{14}=X_{3,11}$, $q_B=q_{15}=X_{3,21}$,
+$p_A=\pi_{14}$, $p_B=\pi_{15}$ of Definition 8.1, and set
+
+$$
+\begin{aligned}
+\rho_{AB,\eta}^{W,\sigma}
+&=\operatorname{Tr}_{\rm rest}
+\bigl(\mathcal D_2\circ\mathcal U_M\circ\mathcal D_1
+\circ\mathcal U_J\circ\mathcal D_0\bigr)(\rho_{W,\eta})\\
+&=\operatorname{Tr}_{\rm rest}\int_{\mathbb R^3}
+\mathsf K_{JM}(z)\rho_{W,\eta}\mathsf K_{JM}(z)^\dagger\,d^3z.
+\end{aligned}
+\tag{19.1}
+$$
+
+This first averages the actual retained records $(R_0,R_1,R_2)$
+and then traces the other fifteen system modes. It is a two-mode
+system marginal, with all probe modes excluded. At $\eta=0$ it is
+$\rho_{AB}^{W,\sigma}$ of Definition 8.1.
+

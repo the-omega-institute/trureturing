@@ -1,0 +1,29 @@
+**Definition 17.2 (Unscaled companion polynomials).** For independent
+variables $x,d,t$, substitute $p=p_s(t),v=v_s(t)$ and put
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\quad z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+z_5=(p_s(t)-d)x(x+2),\qquad z_6=(v_s(t)-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+a_7=-z_3+4z_4-6z_5+4z_6,\qquad z_*=xa_1-D(24-d),\\
+f=5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+\mathscr K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2,\\
+h=dD+(2x+3)a_7-m_s(t)D=\ell d+N_0+N_1t,\\
+\ell=-8x^4-29x^3-18x^2+15x+6,\qquad
+N_0=h|_{d=t=0},\quad N_1=[t](h|_{d=0}).
+\end{gathered}
+$$
+
+The symbol $\mathscr K$ is $4k$ in F, Definition 31.1, and is the
+$K$ used in Theorem 8.4; it is not the coefficient field $K$.
+These formulas fix all coefficient normalizations. Every actual world
+in $C(p_s(t),v_s(t))$ with terminal-$M$ response $m_s(t)$ satisfies
+$x>0$ and $f=\mathscr K=h=0$. Indeed $a_i=DH_i$ and $a_7=DH_7$,
+so the terminal equation is exactly $h=0$; the two necessary source
+equations are F, (31.4). No converse from these cleared equations to a
+world is part of this definition.
+

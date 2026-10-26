@@ -1,0 +1,41 @@
+**Theorem 19.4 (L1: complete strict lower-face classification).** The
+entire relation (17.3) is exactly
+
+$$
+\mathcal L_M=\{(t_6,W_6),(t_{10},W_{10})\}.
+\tag{19.7}
+$$
+
+Here $x_i,d_i$ are the exact algebraic expressions (19.5),
+$r_i,b_i,U_i$ are reconstructed by (5.5), and
+
+$$
+\begin{gathered}
+c_i=r_i(1-r_i)/b_i,\qquad
+h_3=(24-d_i)/x_i,\quad h_4=18-d_i,\\
+h_5=(p_L(t_i)-d_i)/(x_i+1),\quad
+h_6=(v_L(t_i)-d_i)/(x_i+2),\\
+g_i(s)=\frac1{U_i}\sum_{k=3}^6h_k
+       \prod_{\substack{3\le l\le6\\l\ne k}}\frac{s-l}{k-l},
+\qquad W_i=(P(r_i,b_i),g_i,d_i).
+\end{gathered}
+\tag{19.8}
+$$
+
+In particular each displayed world uses the same polynomial and drift
+at every original clock $0,\ldots,7$.
+
+Proof. Every actual companion has either nonzero terminal slope,
+covered by Lemma 18.3, or zero slope, excluded by Lemma 19.1.
+The ten roots of Lemma 19.2 and the guard filter leave only $6,10$.
+Conversely at either surviving root the subresultant criterion proves
+$F=G=0$. Since $q,D,\lambda,x-t$ are nonzero there, undoing
+(17.9)–(17.8) proves $f=K_{\rm s}=0$ and the exact terminal
+identity. Every guard in (17.6) holds by Lemma 19.3. Lemma 17.3
+therefore gives the actual complete world (19.8), all original
+readings and $m=m_L$. Its injectivity makes that world unique.
+The classification has quantified over all finite $t>0$, $t\ne1$
+with $p_L\ne24$, not merely the bracketed region: the brackets
+exhaust the positive eliminant roots and all other factors and poles
+were treated separately. ∎
+

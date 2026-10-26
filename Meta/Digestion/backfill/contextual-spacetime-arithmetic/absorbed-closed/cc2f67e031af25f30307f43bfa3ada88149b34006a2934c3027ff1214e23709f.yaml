@@ -1,0 +1,155 @@
+fingerprints:
+  raw_sha256: sha256:cc2f67e031af25f30307f43bfa3ada88149b34006a2934c3027ff1214e23709f
+  normalized_sha256: sha256:cc2f67e031af25f30307f43bfa3ada88149b34006a2934c3027ff1214e23709f
+cas_ref: sha256:cc2f67e031af25f30307f43bfa3ada88149b34006a2934c3027ff1214e23709f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.Generator
+    target_statement_id: sha256:8f89456044a72fdb237aba0f26d37d54f2aa4671ba3f15f81cbec94b2344e8b1
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.contextDenote
+    target_statement_id: sha256:5a35957b45517db14c994ef3fc0b58fdaa49dd6cb4d04022a7af64fcbcdf4564
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.strictStep
+    target_statement_id: sha256:38be6b3855d0e9919c972726db0e4ae0cd61af5c9095e7d1d92f4ceeae744a24
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.Balanced
+    target_statement_id: sha256:e090e87ee089a619bd27c774940250addbd2f439383b1f709060d117b12b08b8
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complement
+    target_statement_id: sha256:56848a7bfd5b123507353006543657e1b28eb856f4dd2c9eb8da652aa9aa0c5f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complementBalanced
+    target_statement_id: sha256:8723d224b1249d452925ce9dbe18338731f5e50f43a4527e992ac33e364c4fe7
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complementBalanced_readout
+    target_statement_id: sha256:5279dd78ef40b0c74665db3a8caa2f278f5f6414ff0eaa24dfd13787e625bce5
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complementRich
+    target_statement_id: sha256:fb98739b6646f2c7757e3ec6ebb4a7f9fc8289069aa9d34129a8b57ca5e6c504
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.contribution
+    target_statement_id: sha256:41ae2d3f2cd7b0e346c883bd1227150d6ad47b5bd341bebca72bbda542449a10
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
+    target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementFibers.balancedQ
+    target_statement_id: sha256:2016d1e8b140e42d6c0d586489a02ffc9b0c463351ac08a1c83d3f33f14ea900
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementFibers.balancedSection
+    target_statement_id: sha256:038c5090f2a2c08e78bd2916fe14fcd78500285fa13c1b9e85b546b9a830db61
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementFibers.balancedSection_readout
+    target_statement_id: sha256:367e149507775e42f12583adbf809303b8a103246a84e7c4ecbe7200c479e3fe
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive
+    target_statement_id: sha256:fcfa9ccac330f0e21c05567ac4e3c5aa51056a8e8a1117188c208f2731b62634
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.attributes_generated
+    target_statement_id: sha256:17dd8c2160d6e1be02963b92ea5fb2e8b3322263d52e47251085d997398ab480
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.causal_equiv
+    target_statement_id: sha256:ec9cd948a1f51e194d6c348fdee3bef2918081e0dbf195a4f36aa48996467b32
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.context
+    target_statement_id: sha256:9051cb015482261b0673fb7cc1b6a56b11e7dab434f03356a89f8eeafba29b49
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.equiv
+    target_statement_id: sha256:15c411738d6ca095bc1334227cffb9f483479e1501ecee74006290ff74d0501a
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.generatedMap
+    target_statement_id: sha256:5f7437ff7dc38efee0fa76738cd67f566f13e5746adf0448886b465b114dec48
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.generated_mem_current
+    target_statement_id: sha256:67f1b5185806f041de52a4ee3fd6ea4853718f606790d63eba2783e0c0340049
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.generated_mem_selection
+    target_statement_id: sha256:78936ee8678f6774a2d1482ac26ebcadfd9c51e08a3ddf6d5d71a4c6c21ab450
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.product
+    target_statement_id: sha256:8d751f1bc438328b5b630d3cbbbacc0e0f0d043b88d6b442ced25e23d25b5cef
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.productBalanced
+    target_statement_id: sha256:3121456d5e5e5e8075641b9987bad8d5aed5239fc2786b7d827ee3ebc66e9e51
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.q_product
+    target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.selection
+    target_statement_id: sha256:0339b58c0290356d1876356821f0249c368103aa69f66c86b507bd8069c7fde4
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.equalLeafSources
+    target_statement_id: sha256:08b19501624d43d8dc6b897e62fdd75014f901cc19b3ed2096e7d8601fcf7d4c
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.leafCharge
+    target_statement_id: sha256:b8f30f0395c93eb04b6d072499f0d36fcfedde91c4bc3a7bf728b2889bc0b982
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.leaf_square_readout
+    target_statement_id: sha256:f4127e3d67112e222cf1f1a7812d5d8752485130e01fc844409a27b1ce5afe60
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.leaf_square_readout_nat
+    target_statement_id: sha256:8ab496b56b50fab40eb99bd344944c7c27bb6996a1ccb67ad7f06df029c5949e
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.sourceCharge
+    target_statement_id: sha256:05cbd8b486ec89b91f53e6d5b4d34bb7d93d688650d5136118ed7b9bf6293c46
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.sourceFilter
+    target_statement_id: sha256:9759d5a892ccc1a4b3ee7f2b2cac3612504d17be9b1699bb8aa6de8390eec453
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.sourceFilterBalanced
+    target_statement_id: sha256:7706d6d86a0af70bdc702355bc271779a51e8ff2ed6970aa09d9101751b281b9
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.archive
+    target_statement_id: sha256:e1808a200d167953077cc0d05c6d80bb5bae740b7356fc8818f3d61b51e14fcb
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.attributes_left
+    target_statement_id: sha256:266b1550bb44f8d12cc9cc1987639839f2025614f4e3b219b9420779f6ef7cb0
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.attributes_right
+    target_statement_id: sha256:6cde00de51ede72885c8fd777ddd6edeb9aa950f7f043bddeed7283795afd514
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.causal_cases
+    target_statement_id: sha256:e9d626386c869f25c691feb7534528a0b1a4189434fa1329364f25dba7f132a3
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.causal_left
+    target_statement_id: sha256:78eab13097c29d5993e8a911758209f92f13a4c8dabe25fe25fb0fb215ad711d
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.causal_right
+    target_statement_id: sha256:bee95dffdec46501966ecc8a089cac9af96d3ebc90f239e77c62d5305f07bbdb
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.context
+    target_statement_id: sha256:deb7d17ddd71e412c2f399c8b2b652dc887518eea0a8a68334088a991778eae2
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.current_eq
+    target_statement_id: sha256:b6737be743c94953badebd7d6cdff8b4ceffc742a25b8a5004bdc1b61dea2012
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.equiv
+    target_statement_id: sha256:d255b9ba3df749605f10f901399b5ca91e31af83bfea8165ab05041c5579bb6d
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.internal
+    target_statement_id: sha256:c33652d31774d1d1c495813dda4456bfdbcf2b0052fd621e5249acbcf0b15ad9
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.left
+    target_statement_id: sha256:f485f26370c9b55a11a0d6bd4049495a1efdf277cc0b5802fd17d679fdf40257
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.parallel
+    target_statement_id: sha256:80a2d9569ace68a268923249b0ea507a4740a077b7a549bf6b55e6cfd2ecfc80
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.parallelBalanced
+    target_statement_id: sha256:9534ad74a233ac042e9aabc8c4deb5603f645e1131f318f9c4dd13ca0a996431
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.q_parallel
+    target_statement_id: sha256:536465b5917c7edd0d83871959b5e7bad2904d9b04b0d315dd6aa420aad0f68a
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.right
+    target_statement_id: sha256:ea67d154206c1390c53a14c5745ab0da0695a0cb31f1e64435b4b1b668c31f42
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.selection
+    target_statement_id: sha256:be69b5c5d2e4f23660082454754572f0d7a66012ea903d939e5a5b5a0befa634
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.selection_eq
+    target_statement_id: sha256:80558bc07b14df73b692b3c11eeaf32f3f4ebc8bd83a7330da032c259b3f9b85
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.Parents
+    target_statement_id: sha256:59863f9330460218f1779e22f8b0f4b582528842f7a66961eceda3db3c213bdc
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.generated
+    target_statement_id: sha256:c3e3d75af1b770d19345b0664ac8b184b36120db6aa074f39bf74444eac78ec5
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.generatedAttributes
+    target_statement_id: sha256:95733422fc7d9e9e4687e20c9dedee19f91010deaea9752c5b3304222f0375b0
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.generated_contribution
+    target_statement_id: sha256:22444e24f769da6c6352b55375e1b7e2f33d626ef96de04394465ec56be4986f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.generated_no_path
+    target_statement_id: sha256:ad017e6e478270ce8a72524755ef1b9b0735df8c5c8ba01e65b3e47ee4528306
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.charge_map
+    target_statement_id: sha256:7820a61a4912147f9d4712e22ea5cc9865613c64c04b36acbc62369dc6e30a76
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.contextOf
+    target_statement_id: sha256:c5418f052e2db518d711e18d5fd9592af136b7debf29e22980453a9587b0d295
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.eventEquiv
+    target_statement_id: sha256:bcb857f21dd042d18ddb1211483f1fab6d96b183ee0cca93ef6a7270b213e3a2
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.selectionOf
+    target_statement_id: sha256:f3229163ad2903c1c9968e5102a7c4d18349816aeea97885c85e14340eda76dc
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftArchive
+    target_statement_id: sha256:2f5f61e1fc1d3e2a485c82cd222ab1fbf3a35d756e32e8eb5dc3c7dfce55b445
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftContext
+    target_statement_id: sha256:d0d509d76981c60dbfb6376faf3ab637dec820bc09245b270d156b9a7507f3b9
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftRich
+    target_statement_id: sha256:a6856514b75891bb58d45e4bf58016a1dd45522d04249371c9aa59013a0e1a1e
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.B
+    target_statement_id: sha256:0079a4206c64906809c4a6cfde1306d91c359b817773dbe811181af721c2ebb8
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.DiagonalTotal
+    target_statement_id: sha256:fc29d0462e46a9b39424d3741a5932d64919e0900e641d36b16961c9092a29bc
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.SourceTimedAttribute
+    target_statement_id: sha256:0b4984f5413a01e8b68ba200f36fe3179dd0727f7b33e06cec3055dd701eea00
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.WordTemporalFree
+    target_statement_id: sha256:0da6bffc037fae814e5e8293c41234c0f9ea2f7ec9df8ffc65d3b9e24cd03aad
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.evalDiagonal
+    target_statement_id: sha256:187c71048d2c792da013ce3f14ea6acc96a93176480d883d450b94e66a33ce6e
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.filterBalanced
+    target_statement_id: sha256:636e5ef9d7680c63d26462ec30553350e08646d2597b50f730f28a8317ba91cb
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.nativeSignature
+    target_statement_id: sha256:dabc60e7affb90c044bd59b140cd9eb85913b07a12ae00a85afb7d76334b07f1
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.sliceAssignment
+    target_statement_id: sha256:76a03c3542e05a5d23bb4e0b7491cfc441460bb19dd9e09110afdb35458f2d3c
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.sourceAttributeEquiv
+    target_statement_id: sha256:7779a7f16713271fa55e381df07af41cf0319b3446c1abea90226e162935fca2
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_copy_normalization
+    target_statement_id: sha256:43351ad0e0abdecef00de613c1c529fcc26436561a6ef7c8a04e51eb6b351f94
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.wordToCopy
+    target_statement_id: sha256:2abdbb22d0c7d423d1795cc4ec7a127845676559f0cd3fa8c673836e10d95b75
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.word_to_copy_denote
+    target_statement_id: sha256:b9baa452b9b386cbbba41158ddeac29febbb83977b14971d9b15317bc7d7085a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerAffineSquareCollision.exists_pos_nat_affine_fiber_sq_ne
+    target_statement_id: sha256:0c9b3258ae3e0ad7b390a86af706a45e60b346d0e1e7e3256e7cc386bf605194
+receipts:
+  unresolved_subitems: []

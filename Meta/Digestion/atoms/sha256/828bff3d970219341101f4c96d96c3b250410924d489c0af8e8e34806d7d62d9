@@ -1,0 +1,15 @@
+**定义 112.1（明确的经典模式混合）。** 按第103章高位置在来源左侧的代表，赋予普通通道
+
+$$
+\mathrm{null}:\operatorname{Ad}_I,\quad
+[2]:\operatorname{Ad}_a,\quad[3]:\operatorname{Ad}_b,\quad
+[5]:\operatorname{Ad}_c,\quad[25]:\operatorname{Ad}_{-b}.
+$$
+
+给非负概率 $p_0,p_2,p_3,p_5,p_{25}$，总和一，且在经典地选择模式后不再相干比较选择支。由整体相位相消，混合通道为
+
+$$
+\mathcal N(\varrho)=p_0\varrho+p_2X\varrho X+
+(p_3+p_{25})Y\varrho Y+p_5Z\varrho Z.
+$$
+

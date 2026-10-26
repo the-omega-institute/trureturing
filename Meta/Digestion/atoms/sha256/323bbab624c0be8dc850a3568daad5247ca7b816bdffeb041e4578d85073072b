@@ -1,0 +1,59 @@
+**Corollary 4.2 (actual records, failures, and retained use).** For every
+declared finite instrument there are $\eta$ and $\epsilon$ supplied by
+Theorem 3.1 such that every $x\in(x_*,x_*+\epsilon)$ has the following
+properties.
+
+1. Every refined leaf is PPT by (3.1). For each actual record $r$,
+   $\Phi_r(\Omega_{x,\eta})$ is PPT because it is a positive sum of refined
+   leaves. Retaining the record produces the block-diagonal PPT operator
+   $\widehat\Omega$ in (1.2), and forgetting it also preserves PPT.
+2. Equation (2.6) gives, for every nonzero refined leaf,
+
+   $$
+   p_j=\operatorname{Tr}\tau_j\ge
+   \frac1{2500}\operatorname{Tr}(A_j^*A_j)\operatorname{Tr}(B_j^*B_j)>0.
+   \tag{4.1}
+   $$
+
+   Zero maps have zero mass. The complete instrument retains every actual
+   success and failure mass, so $\sum_r p_r=1$; no failure is converted into
+   an omitted branch or a selected conditional state at zero probability.
+3. Any later finite local or separable continuation acting only on the two
+   output qubits and the actually retained classical records keeps every
+   successor PPT: each refined continuation is another positive product
+   congruence, and positive sums and classical flags preserve positivity of
+   the partial transpose. Hence the pointwise NPT branch in (3.4) cannot be
+   recovered from this checkpoint interface.
+4. If a failure residue, measurement environment, spectator, or source port
+   remains quantum-callable, it is a quantum bypass and the interface is not
+   the two-qubit-only contract of Definition 4.1. If it is discarded, it is
+   unavailable for later feedback. The corollary therefore accounts for
+   retained records and all declared residues without assuming a free hidden
+   quantum channel.
+
+**Proof.** The finite-tree reduction is the standard composition of local
+Kraus operators along each actual transcript; communication changes the next
+local choice but does not change the product form of a complete leaf. Apply
+Theorem 3.1 to the resulting finite bank. The expressions in (1.2) account
+for each coarse record and each refined successor. The mass bound (4.1)
+follows from (2.6) and
+$\operatorname{Tr}[(A^*A)\otimes(B^*B)]
+=\operatorname{Tr}(A^*A)\operatorname{Tr}(B^*B)$. Finally, ordinary partial
+transpose sends every later product Kraus congruence of a PPT operator to a
+positive congruence. More explicitly, if $D_\gamma$ is the unnormalized
+successor on the complete current quantum carriers after the actual prefix
+$\gamma$ and $y$ is the next recorded outcome, then
+
+$$
+D_{\gamma y}=\sum_k K_{\gamma,y,k}D_\gamma K_{\gamma,y,k}^*,\qquad
+\operatorname{Tr}D_{\gamma y}=\Pr(\gamma y),
+\tag{4.2}
+$$
+
+where the $K_{\gamma,y,k}$ are the product Kraus components of that node,
+including declared local discards. The summed index $k$ is not an observed
+input; the record stored at that node is the actual prefix $(\gamma,y)$.
+Terminal $D_\gamma$'s are exactly the successors summed in (1.2), including
+failures and residues. Induction over this same-run recursion proves the
+claim. $\square$
+

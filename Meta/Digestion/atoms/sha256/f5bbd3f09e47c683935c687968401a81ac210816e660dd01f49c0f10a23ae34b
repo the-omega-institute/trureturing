@@ -1,0 +1,109 @@
+**Theorem 21.2 (Strict finite-boundary output barrier).** Every finite
+source-boundary output with $10\le p\le34$ satisfies
+
+$$
+v<\ell(p)-\frac1{25}.
+\tag{21.4}
+$$
+
+This includes boundary outputs with $p=24$ and both corner extensions.
+The boundary exhaustion and actual face lifts are reused; the assertion
+here is the explicit inequality for their original fixed $(p,v)$ projection.
+
+*Proof.* Use (21.2) on each existing face, with no cleared pole retained.
+For $R_0$, $P<0$ on $x\ge0$, so $p\ge10$ forces $f_0<0$.
+Multiplying $p\le34$ by this negative denominator gives
+
+$$
+Q_0(x)=386x^3+2238x^2+35x-290\le0.
+$$
+
+Since $Q_0'=1158x^2+4476x+35>0$ on $x\ge0$ and
+$Q_0(7/20)=51819/4000>0$, one has $x<7/20$.
+The first $N$ in (21.3) is strictly decreasing there, since
+$N'=-16089x^2-100248x-6125<0$. Moreover
+
+$$
+N(7/20)=\frac{32128971}{8000}>4000,\qquad
+50|f_0|=50(4+8x-x^3)<340<350.
+$$
+
+Thus $\ell-v=N/(50|f_0|)>4000/350>1/25$.
+
+For $R_1$ the negative coefficients of $P$ likewise force $f_1<0$.
+The condition $p\le34$ implies
+
+$$
+Q_1(x)=386x^4+536x^3+646x^2+66x-160\le0.
+$$
+
+Its derivative is positive for $x\ge0$, while
+$Q_1(77/200)=185385713/800000000>0$. Hence $x<77/200$.
+Here $N''=-64356x^2-89958x-34196<0$. Concavity bounds $N$ below
+by the smaller endpoint value on $[0,77/200]$, and
+
+$$
+\begin{gathered}
+N(0)=2890,\qquad
+N(77/200)=\frac{16864707317}{1600000000}>10,\\
+50(1+x)|f_1|<50\frac{277}{200}\frac{177}{50}
+=\frac{49029}{200}<250.
+\end{gathered}
+$$
+
+Therefore $\ell-v=N/(50(1+x)|f_1|)>10/250=1/25$.
+
+For $E_0$ with $0\le x<1$, $N'=6252x-9340<0$ and $N(1)=51$.
+Consequently $\ell-v=N/(100(1-x))>51/100$. If $x>1$, the condition
+$p\ge10$ gives
+
+$$
+R(x)=48x^2-140x+95\le0.
+$$
+
+Since $R(2)=7$ and $R'>0$ for $x\ge2$, necessarily $x<2$.
+The exact coefficient identity
+
+$$
+8N=521R+625-1780x
+$$
+
+gives $N<-1155/8$. Thus $\ell-v=-N/(100(x-1))>1155/800>1/25$.
+
+For $E_1$, first suppose $x>1/\sqrt2$. Define
+
+$$
+R_*(x)=12x^3-11x^2-3x+10,\qquad
+p-10=-\frac{4R_*}{5(2x^2-1)}.
+$$
+
+On $0\le x\le1$,
+$R_*=10-8x+x(12x^2-11x+5)\ge2$: the quadratic is positive,
+with discriminant $-119$. On $x\ge1$,
+$R_*=(x-1)(12x^2+x-2)+8\ge8$. Hence this positive-denominator
+branch has $p<10$ and contributes no point.
+
+On the remaining branch $0\le x<1/\sqrt2$, the inequality $p\le34$
+gives
+
+$$
+R_{34}(x)=12x^3+49x^2-3x-20\le0.
+$$
+
+Its derivative is positive for $x\ge5/8$, and
+$R_{34}(5/8)=25/128>0$, so $x<5/8$.
+The derivative $N'=9378x^2-6176x-1434$ is convex. Its endpoint
+values on $[0,5/8]$ are $-1434$ and $-52183/32$, both negative;
+therefore $N'<0$ throughout that interval. Finally
+
+$$
+N(5/8)=\frac{27055}{256}>100,\qquad
+50(1-2x^2)\le50,
+$$
+
+and $\ell-v=N/(50(1-2x^2))>2>1/25$.
+These estimates also hold at the allowed $x=0$ extensions. The infinity
+response has $p=-216/5$ and lies outside the parameter window.
+Lemma 20.2 and the cited finite exhaustion supply all other possible
+source-boundary outputs, without an off-$24$ exception. ∎
+

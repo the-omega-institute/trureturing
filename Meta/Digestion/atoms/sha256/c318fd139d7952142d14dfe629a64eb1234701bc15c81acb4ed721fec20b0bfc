@@ -1,0 +1,18 @@
+## 6. Feature synergy and the task boundary
+
+For independent fair bits $X_1,\ldots,X_n$ and the parity task $Y=\bigoplus_iX_i$, every proper subset readout is independent of $Y$:
+
+$$
+I(Y;X_A)=0,\qquad e(A)=1/2\quad(A\subsetneq\{1,\ldots,n\}),
+$$
+
+while the full readout satisfies
+
+$$
+I(Y;X_1,\ldots,X_n)=1,\qquad e(\{1,\ldots,n\})=0.
+$$
+
+Thus all lower-order information probes can miss a pure higher-order escape. This is the information-theoretic counterpart of the FIB XOR interaction. No submodularity, supermodularity, or greedy guarantee for task risk follows from finite refinement alone. Mutual-information submodularity requires extra conditional-independence hypotheses; parity violates them.
+
+A separate distinction is between hidden-state information and task information. If $S=(Y,N)$ with independent nuisance $N$, then observing $N$ can have large $I(S;N)=H(N)$ while $I(Y;N)=0$ and $e(Y\mid N)=e(Y)$. When $H(Y)<H(N)$, observing the task label $Y$ carries less hidden-state information than observing the nuisance $N$, yet it gives zero task risk. Full-state information, representation size, and task information therefore answer different questions.
+

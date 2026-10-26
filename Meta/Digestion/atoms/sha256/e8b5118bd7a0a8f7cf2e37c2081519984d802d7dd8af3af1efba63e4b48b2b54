@@ -1,0 +1,47 @@
+**Definition 36.1 (Inherited coordinates and the drift constant).**
+Use the complete worlds, entire parent $\mathcal H$, entire children
+$C(p,v)$ and original terminal responses of Definition 1.1. Retain
+$e,z,j,n,T,U,x$ and the ordered two-source coefficients
+$h,\sigma,\pi,k,\Delta,Q$ of Definition 31.1. Thus
+$e=d-24$, $z=d-147/5$, $T=1+b$, $U=2T-1$ and $x=n/U$.
+For unequal widths put
+
+$$
+\ell=L_* =\frac{x_1-x_2}{T_1-T_2},\qquad
+R=R_* =\frac{1/x_1-1/x_2}{T_1-T_2},\qquad
+D_*=11d-51k.
+\tag{36.1}
+$$
+
+Here $D_*,L_*,R_*$ are precisely the quantities of (32.17);
+$\Delta$ is the ordered response coefficient of (31.3), distinct
+from either individual source coefficient $\Lambda_i$.
+The parameter map to the full-parent correspondence of
+[O, Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+is $\beta=1/8$, $\epsilon=e$ and $u_M=v$.
+In the notation of Section 32, the source is (32.1)–(32.2), its
+whole polynomial is (32.5), and its original parent row is (32.6).
+The late responses are exactly (32.12), with coefficients
+$\mathsf A_d,\mathsf B_d,\mathsf C_d$ from (31.2).
+Their division-free compatibility equations (32.20), (32.22) read
+
+$$
+8(18-d)\ell-91eR=D_*,\qquad -\Delta\ell=Q.
+\tag{36.2}
+$$
+
+These are reused identities for the entire parent, including
+individual $\Lambda=0$ sources. Their validity does not require
+$\ell,D_*,Q$ or $\Delta$ to be nonzero.
+
+Define
+
+$$
+q_\delta(t)=4960t^2-305349t+3935925,\qquad
+\delta=\frac{305349-3\sqrt{1683251089}}{9920}.
+\tag{36.3}
+$$
+
+Theorem 38.1 identifies $\delta$ as the unique zero of $q_\delta$
+in $(18,19)$.
+

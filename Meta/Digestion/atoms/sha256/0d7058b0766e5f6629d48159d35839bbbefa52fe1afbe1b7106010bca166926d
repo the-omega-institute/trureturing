@@ -1,0 +1,46 @@
+**Proposition 6.2 (An exact distinction between two rational expressions).**
+The expression
+
+$$
+\widetilde a=d+\frac{1+u}{2}+2x+\frac{2ur}{2x+3}
+\tag{6.3}
+$$
+
+does not equal the actual terminal response on all original worlds.
+Specifically take
+
+$$
+\begin{gathered}
+b=1,\qquad r=1/2,\qquad d=3933/121,\\
+g(s)=\frac{1199s^3-9783s^2+24133s-19665}{605}.
+\end{gathered}
+\tag{6.4}
+$$
+
+This is a strict world in $\mathcal W(p,v,m)$ with
+
+$$
+\begin{gathered}
+p=9918/121,\qquad v=1068459/2420,\qquad m=206823/121,\\
+a=547179/605,\qquad \widetilde a=624677/18150,\qquad
+a-\widetilde a=15790693/18150\ne0.
+\end{gathered}
+\tag{6.5}
+$$
+
+Proof. The source has $j=5/4$, $n=7/4$, $T=2$, $U=3$,
+$u=1/3$, $x=7/12$. The complete gain samples at $0,\ldots,7$ are
+
+$$
+\left(-\frac{3933}{121},-\frac{4116}{605},-\frac{939}{605},
+-\frac{588}{121},-\frac{585}{121},\frac{1260}{121},
+\frac{31929}{605},\frac{81156}{605}\right).
+\tag{6.6}
+$$
+
+Multiplying these by the traces (1.3) and adding the fixed $d$ gives
+$0,24,147/5,24,18,p,v,m$ exactly. In particular $p\ne24$.
+The actual $J$ trace is $T+2j+4r=13/2$, giving the stated $a$.
+Direct substitution in (6.3) gives the stated $\widetilde a$ and
+their nonzero difference. ∎
+

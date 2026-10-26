@@ -1,0 +1,33 @@
+## 23. Singular synthesis and the combined ordinary restriction
+
+The singular classification and its two exact source roots, affine acquired
+responses, unique fifth-reading lifts, and terminal-J separation are exactly
+those proved in Sections 14--18. In particular, the singular width is
+$b=1/8$, the two source roots lie in the displayed disjoint rational
+intervals, and the two singular worlds can share an acquired child only at
+$(p_s,v_s)$, where $16<p_s<17$ and their terminal-J readings are strictly
+separated. The singular branch is below the positive certificate strip and
+is not silently discarded by Theorem 22.1. Theorem 18.1 also makes no claim
+about terminal-M injectivity.
+
+Combining the preserved negative-sheet theorem with Theorem 22.1 gives the
+following scoped ordinary corollary. At every negative base $p<0$, any
+terminal-J collision of distinct complete worlds contains a member with
+$b<1$ by Corollary 12.1. At every positive base $p>0$, the same conclusion
+holds by Theorem 22.1; if $p\ge p_0$, one member has $b<3/4$. These statements
+are about the J pair alone and do not constrain the independently selected M
+pair. The case $p=0$ is not included because no positive- or negative-sheet
+argument above classifies it.
+
+The corollary does not settle the original independent-pair assertion. The
+original target still asks for one entire $C(p,v)$ with $p\ne24$ and
+independently distinct pairs $W_0\ne W_1$ and $W_2\ne W_3$ satisfying
+$$
+ a(W_0)=a(W_1),\qquad m(W_2)=m(W_3),
+$$
+with overlap permitted and the two common terminal values independent. The
+positive and negative restrictions leave mixed-width J pairs, low-width
+regular and singular sources, and all terminal-M possibilities open. No
+common width, common pair, common answer, reset, copy, source port or shifted
+clock has been introduced.
+

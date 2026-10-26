@@ -1,0 +1,61 @@
+**Corollary 242.7 (Closed finite conditional error bound).** Let
+$\mathcal E:M_8(\mathbb C)\to M_4(\mathbb C)$ be one nonzero common
+complex-linear completely positive trace-nonincreasing map, independent of
+the fifteen source settings. Write
+
+$$
+a_{jk}=\operatorname{Tr}\mathcal E(\Omega_{q_{jk}}),\qquad
+\sigma_{jk}=\frac{\mathcal E(\Omega_{q_{jk}})}{a_{jk}}.
+$$
+
+Then every $a_{jk}>0$, and
+
+$$
+\max_{j,k}\frac12\lVert\sigma_{jk}-W_{q_{jk}}\rVert_1\ge G,
+\qquad
+\max_{j,k}\left|\operatorname{Tr}(P_o\sigma_{jk})-w(p_j)\right|\ge G,
+$$
+
+where
+
+$$
+G=\frac{2187(1-t^2)}
+ {80000(67605215221t+72785064779)}>0.
+\tag{242.6}
+$$
+
+Proof. The bounds in §241 give
+$\Omega_{q_{jk}}\ge mI_8$ and $\Omega_{q_{jk}}\le MI_8$, with
+$m=t^2/C$ and $M=3t/C$. Positivity of a nonzero CP map implies
+$A=\operatorname{Tr}\mathcal E(I_8)>0$; otherwise
+$0\le\mathcal E(X)\le\lVert X\rVert\mathcal E(I_8)=0$ for every positive
+$X$, forcing $\mathcal E=0$. Hence $a_{jk}\ge mA>0$ and
+$a_{jk}\le MA$.
+
+Pair (242.3) with the output-first Choi matrix $J(\mathcal E)$. The
+Choi/effect pairing in the convention already fixed in §241 gives
+
+$$
+\frac{3t}{2C}A
+ =\sum_{j,k}c_{jk}a_{jk}
+ \left(\operatorname{Tr}(P_o\sigma_{jk})-w(p_j)\right).
+\tag{242.7}
+$$
+
+For states $\sigma,W$, the effect bound
+$|\operatorname{Tr}P_o(\sigma-W)|\le\frac12\lVert\sigma-W\rVert_1$
+holds, and $\operatorname{Tr}(P_oW_{q_{jk}})=w(p_j)$. Taking absolute
+values in (242.7), using $a_{jk}\le MA$, and cancelling $A$ yields
+
+$$
+\max_{j,k}\frac12\lVert\sigma_{jk}-W_{q_{jk}}\rVert_1
+ \ge \frac{3t/(2C)}{M\sum_{j,k}|c_{jk}|}
+ =\frac1{2\sum_{j,k}|c_{jk}|}.
+$$
+
+The same calculation without the trace-norm effect bound gives the second
+inequality. Substitute (242.5) and $\varepsilon=1/100$ to obtain (242.6).
+Since the fifteen sources are actual members of $D$, the comparison gap of
+Definition 241.1 also satisfies $\delta_{\mathrm{CP}}\ge G$. This is a finite
+source-specific lower bound and does not optimize the gap. ∎
+

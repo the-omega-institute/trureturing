@@ -1,0 +1,41 @@
+**Definition 3.4 (directory records and finite iteration).** Directory port 0
+contains records whose first field is a two-bit tag, followed by the fields
+listed below. Each field is a bit word terminated by sep. Each record ends
+with a single seal symbol. Concatenation adds no invisible cell.
+
+| Tag | Fields after the tag, in order |
+| --- | --- |
+| `00`, initial | $\xi,U(H_0),U(b_0),U(L_0),U(16),U(0)$ |
+| `01`, reservation | $U(J),U(b),U(d),U(r+1),U(m),U(v),U(f_s)$ |
+| `10`, guard raise | $U(J),U(p+1),U(m),U(v),U(f_s)$ |
+
+Here $v$ is the previous complete-directory-record count and $f_s$ is the
+already closed start-fence ordinal. The initial final 0 is its construction
+ordinal. All record fields are constructed/copies of already actual material.
+The representation of $\xi$ is its complete supplied bit string. The record
+order, rather than a free pointer register, determines the predecessor. The
+native writer alone can append here.
+
+IterateDirectory executes Home(0); MR(0). At each record it reads the two tag
+bits with RD; MR per bit, checks its sep with RD; MR, and selects one of the
+three finite field counts. Each field is either ReadField into a work role, or SkipField. It checks the seal by RD; MR, then repeats;
+at R the testing RD returns. A seal cell is never copied as field data. A
+record's tag, field cursor and finite number of remaining fields are finite
+control. Record ordinals, if needed, are unary work words incremented by
+Definition 3.2 after each seal. No scan bounds itself by the growing meter.
+An incomplete tail is ignored by the mathematical committed-prefix relation;
+the executable iterator is called only with a complete idle directory or a
+previously frozen complete copy. It is never run concurrently with its writer.
+
+WriteRecord executes Tail(0), appends the two literal tag bits and sep, then
+for each listed field executes WriteField to directory 0. Its source word
+heads end at sep and destination remains at R. Finally EX(0) constructs the
+prospective seal cell, WR(0,seal) publishes it, and MR(0) returns to R.
+Publication is precisely that one WR, after every field has been written.
+The preceding EX, WR and following MR are three distinct runtime cuts. A
+partial record grants no source authority. No operation atomically installs
+its variable-length fields or writes an unbounded current pointer.
+WriteRecord returns at R immediately after MR. A subsequent CloseFence is a
+separate CTL-fence/readout graph; neither the seal WR nor this MR is a meter
+fence.
+

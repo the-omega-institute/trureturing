@@ -1,0 +1,38 @@
+**Theorem 15.1 (Exactly two positive simple roots).** For every real
+$p\in K$ and $r\in R_{\rm loc}$, $\mathsf A(r,b,p)$ has exactly
+two positive real roots, counted with multiplicity. They are simple
+and can be labelled
+
+$$
+b_0(r,p)<b_1(r,p),\qquad
+|b_i(r,p)-L_i(r)|<e_i.
+\tag{15.1}
+$$
+
+Both functions are continuous on $R_{\rm loc}\times K$ and locally
+are restrictions of continuously differentiable functions on open
+neighbourhoods in $(r,p)$.
+
+Proof. The first table of Proposition 14.3 and (14.5) give the
+ascending coefficient sign word $(+,+,-,-,+,+,+,+)$ for every
+$(r,p)$ in the stated rectangle. Its descending word has exactly
+two variations. Descartes' rule of signs therefore gives at most
+two positive roots, counting multiplicity. In particular the
+leading coefficient never vanishes.
+
+The tube sections are disjoint and positive: the first lies in
+$(15/100,16/100)$ and the second in $(37/100,39/100)$, directly
+from (14.6). The face table gives signs $(+,-)$ on the first
+section and $(-,+)$ on the second, uniformly in $r,p$.
+The intermediate value theorem supplies a root in the interior of
+each section. These two roots use the entire Descartes multiplicity
+budget. Hence they are all positive roots, each simple; this also
+excludes any positive root outside the two sections.
+
+At either root $\partial_b\mathsf A\ne0$. The ordinary implicit
+function theorem gives a local continuously differentiable root
+function. Its positive lower or upper label is unique by the root
+count, so these local functions agree wherever their domains meet
+the rectangle. They give the functions (15.1), including continuity
+at its boundary. ∎
+

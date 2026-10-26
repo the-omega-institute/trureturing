@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6f12b38f6079c8845c0b93dc09a1d244afef18e190eaa634914a164fb7ab364
+  normalized_sha256: sha256:e6f12b38f6079c8845c0b93dc09a1d244afef18e190eaa634914a164fb7ab364
+cas_ref: sha256:e6f12b38f6079c8845c0b93dc09a1d244afef18e190eaa634914a164fb7ab364
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只指向恢复几何卷及其讨论范围，没有断言逆极限中的具体存在性或满射性。
+    previous_atom_id: 12e4a50dc96051ee5cc9fce6030e882ecd807a6038177ad74bb8bf6e68205e28
+    next_atom_id: 3f142a225228b7829667ff8f3a5537c9093769001e6b19d4d1787bf199dc5269

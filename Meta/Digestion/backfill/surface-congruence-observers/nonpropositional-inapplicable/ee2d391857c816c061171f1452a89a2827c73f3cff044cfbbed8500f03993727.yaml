@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee2d391857c816c061171f1452a89a2827c73f3cff044cfbbed8500f03993727
+  normalized_sha256: sha256:ee2d391857c816c061171f1452a89a2827c73f3cff044cfbbed8500f03993727
+cas_ref: sha256:ee2d391857c816c061171f1452a89a2827c73f3cff044cfbbed8500f03993727
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure bounded-task setup: g,p,H and a prime q_0 above the stated bound are chosen, L is defined by a product, and the range of k and designated cover are specified. No recovery or existence theorem is asserted.'
+    previous_atom_id: 2b6f336932d210106ccb4eae50efd8723225f9cf9c98b0131b8d7477880773ce
+    next_atom_id: a870b13de279b7d955f03114a173044aa9cb083da2931b9d5b9d4a557c2c4cc9

@@ -1,0 +1,29 @@
+**Proposition 78.11 (full-carrier geometric covariance and the precise renewal boundary).** A rigid Euclidean motion of a fixed commissioned assembly, with grounding, chamber labels, cylinder coordinates and exclusion transported with it, induces a unitary on every full spatial particle carrier. Tensoring with field and auxiliary identity conjugates its spatial generator, its form and operator domains, zero extensions, raw lifts and every comparison above to the corresponding transported objects. It retains both quadratures and the complete reference field.
+
+For an actual accepted whole-rho, let $\mathsf T=I_r\oplus\mathsf T_{D'D,1}\oplus\mathsf T_{D'D,2}$ be66.2's full stratified inclusion, and keep67's same fixed bank with field identity. It maps the full target coupled form domain into the next one and obeys the exact form update
+
+$$
+\begin{aligned}
+\mathfrak m_{D'}[(\mathsf T\otimes I)\Psi]-\mathfrak m_D[\Psi]
+={}&\Omega\langle\Psi,I\otimes(h_{D'}-h_D)\Psi\rangle\\
+ &+\frac\nu2\sum_{p\in D}
+       \bigl(G_{D'}^\diamond(p,p)-G_D^\diamond(p,p)\bigr)
+                 \langle\Psi,m_p\otimes I\,\Psi\rangle .
+\end{aligned}
+\tag{78.53}
+$$
+
+Here $\mathfrak m$ is the complete form of(67.5), and the field difference is its quadratic form on $\operatorname{Dom}\mathsf n^{1/2}$. For the common prescription the old diagonal differences are zero; for killed they are the actual inverse updates. Neither(78.53) nor78.7 supplies a physical spatial renewal map or an exact propagator intertwiner. Accepted Left/Right grafts retain66.8's separate boundary.
+
+**Proof.** Pullback by a rigid motion preserves Lebesgue measure, gradients, distances, symmetric exchange, transported Dirichlet traces and the nonnegative penalty. It sends every chamber indicator to its labelled transported indicator. The raw-map formulas use exactly these chambers, transverse measures and intrinsic longitudinal coordinates, so their maps and adjoints intertwine with this unitary. The field operator and its canonical coordinates are unchanged. Substitution in the closed forms and uniqueness of their represented operators prove the conjugacies, including the full proper-range complements. This is mathematical placement covariance for an assembly with transported data; it does not supply an original actor operation.
+
+For whole-rho,66.3 supplies the full isometry, composition law, kinetic-form equality and all literal target trace matches, including the old ground tips assigned new atomic value zero. On every old stratum
+$m_{D',p}\mathsf T=\mathsf Tm_{D,p}$ for $p\in D$, while the counts at newborn ports annihilate $\mathsf T$. This follows directly by counting the copied coordinates, so it holds on all old Hilbert data, not just harmonic inputs. Old depths and $\phi$ are unchanged. Consequently the linear charge and one-body forms agree on the image, and the compensation difference is exactly the second line of(78.53). The field bank is retained with identity, so its contribution is exactly the first line, on reference as well as particle branches.
+
+The field form difference is well defined: the finite matrices have a bounded difference and
+$|\langle\Psi,d\Gamma(\widehat F_{D'}-\widehat F_D)\Psi\rangle|
+\le\|\widehat F_{D'}-\widehat F_D\|\langle\Psi,\mathsf n\Psi\rangle$.
+Thus the common number form domain is retained. Combined with66.3's particle form inclusion this proves the domain assertion and(78.53), first on finite field tensors and then by form continuity. For common, the inverse is the restriction of the same infinite kernel, hence every old diagonal agrees; for killed,62.4 and(66.5) give the actual complete update.
+
+The kinetic statement is an equality of forms on an isometric image, with no assertion of equality of operator domains. Moreover $h_{D'}$ changes on the retained bank even when old common static pair coefficients agree. Arbitrary unknown field states cannot be replaced by a new vacuum. The theorem therefore does not identify the two idle propagators across renewal. At a beta-empty acceptance the geometry and commissioned generator are unchanged but the actual labels and record still update; Read and refusal retain67.7's original identity action on quantum factors and actual classical record. Distinct grafts are not these inclusions. A source-owned spatial implementation and switching certificate, including its complete correlations, clock and error, remains an additional requirement. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50453142601b23a1b5bd3932208feed920b3a8ecc91c7de66455bbcea35aab22
+  normalized_sha256: sha256:50453142601b23a1b5bd3932208feed920b3a8ecc91c7de66455bbcea35aab22
+cas_ref: sha256:50453142601b23a1b5bd3932208feed920b3a8ecc91c7de66455bbcea35aab22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the zero-defect fiber, explicitly leaves its nonemptiness undecided and asks a construction question.
+    previous_atom_id: a3cbd314b068f07f24f0296ae9f28666b4423bd399d613a2cbbe12d028552b18
+    next_atom_id: 50a0d360c42d83e2d4b5bb3ddcc53a649d39befd51048d4d3f8f17fca570d56d

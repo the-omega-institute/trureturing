@@ -1,0 +1,157 @@
+**Theorem 111.1 (full-spectrum commuting squared bound).** For every pair (U.1) with $[P,G]=0$,
+
+$$
+\mathcal S\leq\lambda_0,\qquad \Theta^2\leq c.
+\tag{U.17}
+$$
+
+Proof. Write $\chi=2a+b$. First, in the whole domain, not yet assuming commutation, (U.11), $\eta_2\leq1$ and $\zeta\geq0$ give
+
+$$
+\begin{aligned}
+\mathcal S
+&\leq\frac{(\chi+b\eta_1)^2}{32}
++\frac{1-\tau-b^2\eta_1^2}{4}\\
+&=\frac{1-\tau}{4}+\frac{\chi^2}{28}
+-\frac7{32}\left(b\eta_1-\frac\chi7\right)^2
+\leq\frac14+\frac{\chi^2}{28}.
+\end{aligned}
+\tag{U.18}
+$$
+
+For $1/2\leq p\leq71/100$, $\chi$ is increasing, since this interval lies below $4/5$. At its upper endpoint $pq=2059/10000<(227/500)^2$, so
+
+$$
+\chi^2=1+3p+4\sqrt{pq}<\frac{2473}{500}<\frac{7\sqrt2}{2}.
+$$
+
+The last inequality follows from $\sqrt2>707/500$. Therefore (U.18) gives $\mathcal S<1/4+\sqrt2/8=\lambda_0$. This covers every residual eigendirection, including $p=q=1/2$, where commutation with $P$ puts no restriction on $G$.
+
+At $q=0$, $F\preceq D^2$ gives $\operatorname{Tr}\sqrt F\leq\operatorname{Tr}D=2$, while $R\leq1$. Thus $N\leq1/(2\sqrt2)$ and $\mathcal S\leq3/8<\lambda_0$. This endpoint needs no column-orthogonality assumption or division by $q$.
+
+It remains to take $1/2<p<1$, where $[P,G]=0$ implies $G=\operatorname{diag}(g_1,g_2)$. Consequently $B=\operatorname{diag}(p(1-g_1),q(1-g_2))$. Split according to a top residual eigendirection; in a tie either branch is legitimate. Write
+
+$$
+V_i=\begin{pmatrix}a_i&b_i\\c_i&d_i\end{pmatrix}.
+$$
+
+Suppose first that $e_1$ is a top residual eigenvector. The exact expression for $R$ is
+
+$$
+R=p+q\sum_i(b_i^2+d_i^2)
+-\frac12\sum_i(aa_i+bd_i)^2.
+\tag{U.19}
+$$
+
+For $71/100\leq p\leq3/4$, take $W=\operatorname{diag}(2,1,2,1)$. The Hilbert–Schmidt inequality
+
+$$
+(\operatorname{Tr}\sqrt F)^2
+\leq\operatorname{Tr}(W)\operatorname{Tr}(W^{-1}F)
+\tag{U.20}
+$$
+
+holds for every $F\succeq0$: apply Cauchy–Schwarz to $W^{1/2}$ and $W^{-1/2}\sqrt F$ and use trace cyclicity. Only $W$ is inverted. Its trace is six, and expansion gives
+
+$$
+\operatorname{Tr}(W^{-1}F)
+=p+2q-\sum_i\left[\frac p2(a_i^2+b_i^2)+q(c_i^2+d_i^2)\right].
+$$
+
+Multiplying $\mathcal S$ by sixteen and using (U.19) yields
+
+$$
+16\mathcal S\leq6+p+\sum_i\left[
+-\frac72pa_i^2+\left(4q-\frac32p\right)b_i^2
+-3qc_i^2-qd_i^2-4\sqrt{pq}\,a_id_i\right].
+\tag{U.21}
+$$
+
+Both penalties occur in this sum. Complete the square in each pair $a_i,d_i$:
+
+$$
+-\frac72pa_i^2-4\sqrt{pq}\,a_id_i-qd_i^2
+=-\frac72p\left(a_i+\frac{4\sqrt q}{7\sqrt p}d_i\right)^2+\frac q7d_i^2.
+$$
+
+Drop the negative squares and $-3qc_i^2$, and use the common budget $\sum_i(b_i^2+d_i^2)=g_2\leq1$. It follows that
+
+$$
+16\mathcal S\leq6+p+
+\max\left\{\frac{8-11p}{2},\frac q7\right\}.
+\tag{U.22}
+$$
+
+The two entries cross at $p=18/25$. Below that point the right side is $10-9p/2$, whose maximum on the specified interval is $1361/200$. Above it the right side is $(43+6p)/7$, whose maximum is $95/14<1361/200$. Hence
+
+$$
+\mathcal S\leq\frac{1361}{3200}<\lambda_0.
+\tag{U.23}
+$$
+
+The last comparison follows, for example, from $\sqrt2>707/500$.
+
+For completeness, the aligned high-spectrum estimate of [volume II, Theorem 98.1](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II.md#98-a-restricted-high-spectrum-estimate-with-aligned-residual-direction) applies with both hypotheses $p\geq p_0=4/(4+\sqrt2)$ and $e_1$ top for $B$. Its full quadratic argument here is short. Put $w=1+\sqrt2$ and $W=\operatorname{diag}(w,1,w,1)$ in (U.20). Then
+
+$$
+N^2\leq\frac{w+1}{8}(p/w+q)
+-\frac{w+1}{16}\sum_i\left[\frac p w(a_i^2+b_i^2)+q(c_i^2+d_i^2)\right].
+$$
+
+Since $(w+1)/w=\sqrt2$, adding $R/4$ makes the constant part exactly $\lambda_0$. The rest is
+
+$$
+\begin{aligned}
+16(\mathcal S-\lambda_0)\leq\sum_i\bigl[
+&-(2+\sqrt2)pa_i^2+(4q-\sqrt2p)b_i^2\\
+&-(2+\sqrt2)qc_i^2-\sqrt2qd_i^2
+-4\sqrt{pq}\,a_id_i\bigr].
+\end{aligned}
+\tag{U.24}
+$$
+
+The $b_i^2$ coefficient is nonpositive for $p\geq p_0$, and the $c_i^2$ coefficient is nonpositive. The negative of the remaining quadratic has matrix
+
+$$
+\begin{pmatrix}(2+\sqrt2)p&2\sqrt{pq}\\2\sqrt{pq}&\sqrt2q\end{pmatrix},
+\qquad \det=2pq(\sqrt2-1)\geq0.
+\tag{U.25}
+$$
+
+Its diagonal entries are nonnegative, so it is PSD. This proves $\mathcal S\leq\lambda_0$ under both high-spectrum alignment hypotheses. In particular it covers the remaining $p\geq3/4$ branch, since $p_0<3/4$ is equivalent to $4<3\sqrt2$. The endpoint $p=p_0$ merely sets one coefficient to zero. No alignment is inferred from feasibility alone.
+
+Finally suppose that $e_2$ is a top eigenvector of $B$. Then
+
+$$
+p(1-g_1)\leq q(1-g_2),\qquad g_1\geq g_2.
+$$
+
+For the second implication, divide by positive $p$ and use $(q/p)(1-g_2)\leq1-g_2$. Thus $s_1^2=g_1$ and
+
+$$
+R=q+pg_1-\tau=1-p\eta_1^2-\tau.
+$$
+
+Combining this exact identity with the code bound of (U.11), again using $\eta_2\leq1$, and completing the same $\eta_1$ square gives
+
+$$
+\begin{aligned}
+\mathcal S
+&\leq\frac{1-\tau}{4}+\frac{\chi^2}{32}
++\frac{\chi b}{16}\eta_1-\frac{9p-1}{32}\eta_1^2\\
+&\leq\frac{1-\tau}{4}+\frac{p\chi^2}{4(9p-1)}.
+\end{aligned}
+\tag{U.26}
+$$
+
+Here $9p-1>0$. For $1/2\leq p\leq3/5$, $\chi^2\leq24/5$ and $p/(9p-1)\leq1/7$, giving $\mathcal S\leq59/140$. For $3/5\leq p\leq1$, $\chi^2\leq5$ and $p/(9p-1)\leq3/22$, giving $\mathcal S\leq37/88\leq59/140<\lambda_0$. To justify the first bound on $\chi^2$, its maximum on the first interval is at $3/5$, where $\chi^2=(14+4\sqrt6)/5<24/5$; the global bound five is Cauchy–Schwarz. The function $p/(9p-1)$ decreases. The comparison with $\lambda_0$ follows from $\sqrt2>48/35$.
+
+The low-spectrum, aligned middle-spectrum, aligned high-spectrum and switched-top branches exhaust the commuting domain. The preceding direct arguments include $p=q$, $q=0$, repeated residual eigenvalues, zero singular values and $s_1=1$. Finally
+
+$$
+\Theta^2=2\mathcal S-\left(N-\frac{\sqrt R}{2}\right)^2\leq2\lambda_0=c,
+\tag{U.27}
+$$
+
+which proves the theorem. $\square$
+

@@ -1,0 +1,31 @@
+## 8. 关系球面、Chern 向量与最大可平坦环面商
+
+五模式概率写作
+
+$$
+ p=(1-X-Y-Z+\kappa,\;X-\kappa,\;Z,\;Y-\kappa,\;\kappa),
+$$
+
+其中 $r=1-Z$、
+$\kappa_- =\max(0,X+Y+Z-1)$、$\kappa_+=\min(X,Y)$，宽度
+$w=\kappa_+-\kappa_-$。在
+$0<Z<1$、$0<X,Y<r$、$X\ne Y$、$X+Y\ne r$ 时，固定 $b=(X,Y,Z)$ 的约化空间
+$S_b$ 是光滑球面，正域是 $(\kappa_-,\kappa_+)\times S^1$，并有
+
+$$
+\omega_{\mathrm{rel}}=d\chi\wedge d\kappa,qquad
+\int_{S_b}\omega_{\mathrm{rel}}=2\pi w.
+$$
+
+复坐标可取
+$z=\psi_0\psi_{13}/(\psi_1\psi_3)$，两极封口给 $S_b\simeq\mathbb P^1$。
+
+原主 $T^3$ 丛在四个参数区域的原始绕数向量为
+
+| 区域 | $w$ | $c=-\nabla_b w$ | 一个商坐标 |
+|---|---:|---|---|
+| $X+Y<r,\ X<Y$ | $X$ | $(-1,0,0)$ | $(t_Y,t_Z)$ |
+| $X+Y<r,\ Y<X$ | $Y$ | $(0,-1,0)$ | $(t_X,t_Z)$ |
+| $X+Y>r,\ X<Y$ | $r-Y$ | $(0,1,1)$ | $(t_X,t_Y/t_Z)$ |
+| $X+Y>r,\ Y<X$ | $r-X$ | $(1,0,1)$ | $(t_Y,t_X/t_Z)$ |
+

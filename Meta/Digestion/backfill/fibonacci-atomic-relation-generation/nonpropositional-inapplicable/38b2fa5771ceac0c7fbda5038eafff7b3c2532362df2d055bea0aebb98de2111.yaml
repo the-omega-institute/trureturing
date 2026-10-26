@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38b2fa5771ceac0c7fbda5038eafff7b3c2532362df2d055bea0aebb98de2111
+  normalized_sha256: sha256:38b2fa5771ceac0c7fbda5038eafff7b3c2532362df2d055bea0aebb98de2111
+cas_ref: sha256:38b2fa5771ceac0c7fbda5038eafff7b3c2532362df2d055bea0aebb98de2111
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只定义有限多项式 S_a,Q_a,P_a 与亏损函数 D_a=Q_a−log(S_a)，未断言积分式、正性或余量界。
+    previous_atom_id: f84467d029fe771fc185c76f0cb09de332e414c7b2bf51b38cc8252104d4827b
+    next_atom_id: d58d3a7a19ab12e3ce12cf5c343580ca107fa08981500a466d72ffb4bcb68537

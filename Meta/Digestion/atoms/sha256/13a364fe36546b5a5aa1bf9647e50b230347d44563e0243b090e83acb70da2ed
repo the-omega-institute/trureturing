@@ -1,0 +1,36 @@
+**Theorem 197.1 (Raw joint laws and postdephasing axes).**
+For Alice and active-Bob rail axes $\mathbf a,\mathbf m\in S^2$,
+the actual raw laws are
+
+$$
+\Pr(E\text{ succeeds},\epsilon,\delta)
+ =\frac{P_E}{4}(1-\lambda\epsilon\delta\,\mathbf a\cdot\mathbf m),
+$$
+
+$$
+\begin{aligned}
+\Pr(F\text{ succeeds},\mathrm{act},\epsilon,\delta)
+ &=\frac{r_0^2P_E}{4}(1-\lambda\epsilon\delta\,\mathbf a\cdot\mathbf m),\\
+\Pr(F\text{ succeeds},\mathrm{sp},\epsilon,\delta)&=E r_0r_1.
+\end{aligned}
+$$
+
+Proof. Trace against $(I+\epsilon\mathbf a\cdot\sigma)/2$ and
+$(I+\delta\mathbf m\cdot\sigma)/2$. Zero local Bloch vectors
+and the singlet tensor give the active formulas. The spectator formula holds in every rank-one spectator rail basis. Summing
+its four terms yields $4E r_0r_1$; summing the active terms yields
+$r_0^2P_E$. Their sum is $P_F$. All terms are nonnegative because
+$\lambda<1$, and failure probabilities are $1-P_E$ and $1-P_F$.
+Conditioned on successful F, the flag weights are $w,1-w$; conditioning
+further on the active flag gives $W_\lambda$. The probability of that
+joint success event is $r_0^2P_E$, not $P_E$.
+
+If Alice first dephases the selected output along $\mathbf n$, then measures
+along a subsequent axis $\mathbf a$, replace $\mathbf a\cdot\mathbf m$
+in these active laws by $(\mathbf a\cdot\mathbf n)(\mathbf n\cdot\mathbf m)$.
+This follows by applying $\mathcal M_{\mathbf n}$ to the Alice Pauli
+factor. Setting $\mathbf a=\mathbf n$ recovers the corresponding law
+with Alice measured in her dephasing basis. An arbitrary other Alice axis
+does not retain the undephased law. These aligned-source formulas supply
+no common unknown-$q$ analyzer.
+

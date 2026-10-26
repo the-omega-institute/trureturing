@@ -1,0 +1,44 @@
+**Definition 3.1 (Fixed inherited polynomials).** Throughout, use
+exactly $\mathsf A,\mathsf B,D_\Lambda$ of O (20.1),
+$\mathcal L_0,\mathcal L_1$ of its ordered minors (20.4)–(20.5),
+and $R=R_{18}$ of its Definition 24.1. Thus $R$ has the $668$
+specified integer monomials $c_{abc}r^ap^bv^c$, with coordinate
+degrees $(18,7,7)$; its scale and sign are fixed by O (20.3).
+There is no primitive-part or sign renormalization. Put
+
+$$
+\begin{gathered}
+\Psi_2(r)=4r^2-2r-1,\qquad
+\Psi_4(r)=625r^4-1000r^3+50r^2+260r+36,\\
+E(r)=\Psi_2(r)\Psi_4(r)\Phi(r).
+\end{gathered}
+\tag{3.1}
+$$
+
+In particular the fixed polynomial identity is
+
+$$
+\operatorname{Res}_b(\mathsf A,\mathsf B)
+=52488000r^{11}(r-1)^9E(r)R(r,p,v).
+\tag{3.2}
+$$
+
+O, Theorem 20.2, supplies, for every actual nonsingular world of
+$\mathcal F(H_4,M,p,M,v)$, the necessary relations
+
+$$
+\mathsf A(r,b,p)=\mathsf B(r,b,v)=0,\qquad
+E(r)R(r,p,v)=0,\qquad
+\mathcal L_1(r,p,v)b+\mathcal L_0(r,p,v)=0.
+\tag{3.3}
+$$
+
+The fixed determinants and minors in that theorem remain valid
+under every coefficient specialization. Their common-finite-root
+implications divide only by $72900r^6(r-1)^4\ne0$ in the strict
+domain, as shown in O (20.10). Sylvester elimination is the
+standard method of Cox–Little–O'Shea,
+*[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*,
+Chapter 3; the actual polynomial and minor normalizations here
+are the cited definitions of O.
+

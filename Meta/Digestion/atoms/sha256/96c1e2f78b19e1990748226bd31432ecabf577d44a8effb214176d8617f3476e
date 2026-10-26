@@ -1,0 +1,19 @@
+**Definition 3.2 (Cubic response representative).** Define
+
+$$
+\begin{aligned}
+D={}&1731744020342106665,\\
+A_s(t)={}&13656112734222647296t^3
+ -33583101098863014400t^2\\
+&+20502976421172725312t-3401342974535580372,\\
+B_s(t)={}&-327746705621343535104t^3
+ +916826043674607172160t^2\\
+&-616757003572777087368t+31411654798932835643,\\
+\widehat s(t,p)={}&-\frac{3\{pA_s(t)+B_s(t)\}}D.
+\end{aligned}
+\tag{3.4}
+$$
+
+This $D$ is the positive integer in (3.4), distinct from
+$D_\Lambda$ and from other chart denominators in O.
+

@@ -1,0 +1,14 @@
+**Lemma 5.2 (Exhaustive positive-root certificate).** The Sturm chain
+has $68$ polynomials of degrees $67,66,\ldots,0$, with
+$V(0)=27$ and $V(+\infty)=21$. Its six positive roots are simple and
+lie one each in the following disjoint open intervals. In the first
+column $I=(q/10^8,(q+1)/10^8)$.
+
+| $q$ | $\operatorname{sign}F$ at the two endpoints | $V$ at the two endpoints | Exact lifted $r$ enclosure | Original-source or response exclusion |
+| --- | --- | --- | --- | --- |
+| $845744$ | $+,-$ | $27,26$ | $0<r<1/100$ | $690<p<691$ |
+| $4228383$ | $-,+$ | $26,25$ | $519/1000<r<520/1000$ | $1<p<2$ |
+| $5311219$ | $+,-$ | $25,24$ | $-3/1000<r<-2/1000$ | $r<0$ |
+| $6737603$ | $-,+$ | $24,23$ | $-4/1000<r<-3/1000$ | $r<0$ |
+| $12758053$ | $+,-$ | $23,22$ | $900/1000<r<901/1000$ | $7<p<8$ |
+| $88676283$ | $-,+$ | $22,21$ | $964/1000<r<965/1000$ | $57<p<58$ |

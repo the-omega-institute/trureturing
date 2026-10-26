@@ -35,6 +35,13 @@ internal sealed class TotalCopyNormalizationDocument : IScribeDocumentDefinition
                 H("Every Def16 word has exactly one input occurrence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A finite word uses the frozen one-hole Generator and strictStep interpreter. Reification folds the generators in execution order, wrapping the previous tree in the selected slot and placing the fixed parameter in the other slot. Its type is CopyTerm 1, including for the empty word. Its exact Option denotation is the frozen contextDenote."))), DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("word-denotation"),
+                DeclarationHandle.Create(Prefix + "word_to_copy_denote"),
+                H("Reification preserves exact optional values"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every native word and every balanced input, diagonal evaluation of its single-occurrence reification is exactly the original strict one-hole denotation. Success values and failure both agree."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("folded-slices"), DeclarationHandle.Create(Prefix + "foldedSlice"),
                 H("Compile each independent occurrence into a fixed word"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The occurrence path retains one input. Every sibling subtree folds to its successful complete value at the actual empty history balancedSection 3 0. The slice is a fixed temporal-free word whose reification is this exact folded tree. Independent evaluation assigns an arbitrary history to the chosen occurrence and the empty history to every other occurrence."))), DescribeRole.Definition),
@@ -63,7 +70,7 @@ example (w : List (Generator nativeSignature))
                 H("Full exact normalization and all zero slices"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every finite positive-count diagonally total copy tree admits a temporal-free normal tree with the same ordered occurrences and exactly the same diagonal Option denotation. The normal tree succeeds for every independent assignment. Every occurrence has a fixed temporal-free Def16 word, exact folded-tree reification, exact independent slice denotation and total evaluation on every input. The common zero has empty archive, current region and selection. There is one complete value Z of the original tree at zero, and every slice at zero is literally that same Z. Z itself may have a nonempty archive. Applying the theorem to wordToCopy of any total Def16 word gives a total temporal-free word with exactly the same denotation on every input, including the common zero value.")),
                     Paragraph(Text("Normalization constructs the relation and the guarded evaluation equality. Course-of-values induction on the relation supplies temporal-freedom of its target, which guarantees totality for every independent assignment and the complete zero values used in the slices.")),
-                    Paragraph(Text("Exact anonymous Def16 derivation using the private bridge in this owner:")),
+                    Paragraph(Text("Exact anonymous Def16 derivation using the exact denotation bridge:")),
                     Paragraph(Text("```lean")),
                     Paragraph(Text("example (w : List (Generator nativeSignature))")),
                     Paragraph(Text("    (ht : ∀ X : B, ∃ Y, contextDenote nativeSignature w X = some Y) :")),

@@ -1,0 +1,39 @@
+**Lemma 11.2 (A tangent basis for every drift).** At every point of
+(11.3), the full parent is a smooth analytic surface and its tangent
+plane has the basis
+
+$$
+\partial_e,\qquad
+V=H_b\partial_r-H_r\partial_b.
+\tag{11.6}
+$$
+
+All partial derivatives here and below are taken in the independent
+ambient coordinates $(r,b,e)$, with $c=r(1-r)/b$ already substituted.
+
+Proof. At such a point $H_e=\Lambda=0$, so both vectors annihilate
+$dH$. Along $b=1/8$ the other two derivatives are
+
+$$
+H_r=e\Lambda_r,\qquad H_b=e\Lambda_b+448/25.
+\tag{11.7}
+$$
+
+At a root of $S$, (11.4) gives
+
+$$
+\Lambda_r=\frac{S'}{15A_sB_s}\ne0.
+\tag{11.8}
+$$
+
+If $e\ne0$, then $H_r\ne0$; if $e=0$, then $H_b=448/25\ne0$.
+Thus $dH\ne0$ in every case. The analytic implicit-function theorem
+makes $H=0$ a two-dimensional surface near the point. The vector $V$
+is nonzero and has no $e$ component, so it is independent of
+$\partial_e$ and these two vectors span the tangent plane.
+
+Here $e=0$ means $d=24$. Zero drift is instead $d=0$, namely
+$e=-24$, and belongs to the $e\ne0$ case. Both are included. The
+basis is for the full surface, rather than only the one-dimensional
+fixed-source line: it retains its transverse source direction. ∎
+

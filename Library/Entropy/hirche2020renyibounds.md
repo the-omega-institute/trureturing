@@ -79,3 +79,37 @@ For every $y\in[0,\log2]$, the source asks for convexity below its threshold
 and concavity at orders at least two on $[0,\log2]$ of
 $x\mapsto h_\alpha(h_\alpha^{-1}(x)\star h_\alpha^{-1}(y))$.
 Both clauses include the entropy endpoints; the concavity clause includes $\alpha=2$.
+
+
+## Unconditional collision entropy
+
+The same primary text, PDF p. 2, Section III, equation (8), defines
+$H_\alpha(X)=(1-\alpha)^{-1}\log\sum_xp(x)^\alpha$ for an arbitrary
+finite alphabet. With $\alpha=2$ and base-two logarithms this is
+$H_{\mathrm{col}}(X)=-\log_2\sum_xp(x)^2$. For independent copies the
+sum is their equality probability. The conditioned entropy choices of
+(10)–(13) play no role in this definition.
+
+[Actual pair energy, Section 23](../../docs/develop/theory/AURIC_FIB_ACTUAL_PAIR_ENERGY_OVERLAPPING_PROJECTIONS.md#23-原临界配对量的有限精度碰撞熵)
+uses this standard entropy for a measurable address partition of the
+actual matrix-word law. Its packing constant, original self-spin sum and
+recovery-memory implication are applications derived in that volume;
+no general entropy definition is claimed as new.
+
+Shannon entropy near the history length alone does not imply the same
+for collision entropy. Among $2^n$ equiprobable histories, merge
+$M_n=\lfloor2^n/n\rfloor$ into one address and leave the others separate.
+Writing $p=M_n2^{-n}$ gives
+
+$$
+H_{\mathrm{Sh}}=p\log_2(1/p)+(1-p)n=n-1+o(1),
+\qquad
+H_{\mathrm{col}}=-\log_2[p^2+(2^n-M_n)4^{-n}]
+=2\log_2n+o(1).
+$$
+
+This elementary finite-law example concerns unrestricted partitions;
+it makes no assertion that the repository's matrix-word partition has
+this mass pattern. Jensen's inequality gives
+$H_{\mathrm{col}}\le H_{\mathrm{Sh}}$ but supplies no reverse bound
+at the strength needed for the critical pair estimate.

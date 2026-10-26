@@ -1,0 +1,25 @@
+**Definition 82.1 (rank-three stratified point-source contract).** Let $G$ be a connected, simply connected stratified nilpotent Lie group,
+$$
+\mathfrak g=V_1\oplus\cdots\oplus V_s,\qquad [V_1,V_j]=V_{j+1},\qquad \dim V_1=3,
+$$
+and let $V_1$ generate the whole Lie algebra. Left translation of $V_1$ is the horizontal bundle. Fix a positive horizontal inner product, an orthonormal left-invariant frame $X_1,X_2,X_3$, and one Haar measure $\mu$, and put
+$$
+L=-\sum_{i=1}^3X_i^2,\qquad H_t=e^{-tL}=e^{t\sum_iX_i^2}.
+$$
+The field and kinetic form use this same $L$, this same $\mu$ and this same clock. The homogeneous dimension is
+$$
+Q=\sum_{j=1}^s j\,\dim V_j,\qquad \mu(\delta_rA)=r^Q\mu(A).
+$$
+Assume that the positive point-source kernel $\Gamma$ satisfies $L\Gamma=\delta_e$, $\Gamma(\delta_rp)=r^{2-Q}\Gamma(p)$, and is positive and smooth on $G\setminus\{e\}$. Define
+$$
+\mathcal D_0=C_c^\infty(G\setminus\{e\}),\qquad
+T[\psi]=\sum_i\|X_i\psi\|_{L^2(\mu)}^2,\qquad
+V[\psi]=\int_G\Gamma|\psi|^2\,d\mu,
+$$
+and
+$$
+q_0[\psi]=aT[\psi]-gV[\psi],\qquad a,g>0.
+\tag{82.1}
+$$
+The stability contract requires a finite lower bound on all point-source scales in $\mathcal D_0$, with any closed form agreeing with $q_0$ on this core. Rank three is an input assumption; it is not a physical dimension derived from the stability conclusion.
+

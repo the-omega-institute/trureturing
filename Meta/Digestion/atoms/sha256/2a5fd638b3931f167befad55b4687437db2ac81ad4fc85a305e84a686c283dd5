@@ -1,0 +1,18 @@
+**Definition 3.1 (source74 importer).** Start after the complete empty
+$r_B$-field bank, under Retained and $R_{74}=1$. Give distance $d$,
+reverse accumulator $z$, forward symbol word $s$, restore cursor $u$,
+parser cursor and output $b$ distinct bank registers. Their assignments
+use ARC2.1's full $r_B$-field compiler, whose physical footprint is64–68.
+The following is a static finite word/native graph, not an application
+of ARC3.2 with $i=74$.
+
+| Entry | Native or expanded word work and successor |
+| --- | --- |
+| Start | $d:=\varepsilon$; Save. |
+| Save | RD(74,4) testing L; true to ScanStart, false to ML74; $d:=1d$; Save. |
+| ScanStart | MR74; $z:=\varepsilon$; Scan. |
+| Scan | RD(74,4) testing R; true to Reverse, false to Symbol. |
+| Symbol | CTL equality cases on unchanged latch4 in ARC's eight-symbol order; select a literal triple $b_0b_1b_2$; then $z:=b_0z$; $z:=b_1z$; $z:=b_2z$; MR74; Scan. |
+| Reverse | $s:=\operatorname{Reverse}(z)$; $u:=d$; Home. |
+| Home | RD(74,4) testing L; false ML74 and Home; true Restore. |
+| Restore | Expanded empty test on $u$; if nonempty MR74; $u:=\operatorname{tail}(u)$; Restore; otherwise Parse. |

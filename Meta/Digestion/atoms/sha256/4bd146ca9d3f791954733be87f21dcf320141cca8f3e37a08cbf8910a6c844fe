@@ -1,0 +1,51 @@
+**定理 6.3（基本丛运算、诱导连接与曲率）。**
+设 $E,G$ 的过渡为 $g,h$、局部连接形式为 $A,B$、曲率为 $F,G_0$，并令 $f:N\to M$ 光滑。直和、张量、复线性对偶、端同态和拉回丛的过渡依次为
+
+$$
+g\oplus h,\qquad g\otimes h,\qquad
+g^{-\mathsf T},\qquad (T\mapsto gTg^{-1}),\qquad g\circ f.
+$$
+
+它们的诱导连接形式及曲率为
+
+$$
+\begin{array}{c|c|c}
+\text{丛}&\text{连接形式或协变导数}&\text{曲率}\\ \hline
+E\oplus G&A\oplus B&F\oplus G_0\\
+E\otimes G&A\otimes I+I\otimes B&F\otimes I+I\otimes G_0\\
+E^*&-A^{\mathsf T}&-F^{\mathsf T}\\
+\operatorname{End}E&\nabla T=dT+AT-TA&T\mapsto FT-TF\\
+f^*E&f^*A&f^*F
+\end{array}
+$$
+
+若 $`\rho_*`$ 是 $\rho$ 在单位元处的导数，则关联连接和曲率是 $`\rho_*(A)`$、$`\rho_*(F)`$。
+
+特别地，$U(d)$ 在无迹 Hermitian 矩阵上的共轭表示
+
+$$
+T\longmapsto uTu^\dagger,\qquad
+\operatorname{Herm}_0(d)=\{T=T^\dagger:\operatorname{Tr}T=0\}
+$$
+
+给出实秩 $d^2-1$ 的关联丛，内积为 $\operatorname{Tr}(ST)$。它是实表示，不能把该秩当作复维数。
+
+**证明。**
+
+直和及张量的过渡由分别换基得到。对偶评价必须保持
+$\ell(v)$ 不变，所以复线性对偶过渡是 $g^{-\mathsf T}$；这不同于另取反线性对偶。保持端同态的作用给 $T_i=g_{ij}T_jg_{ij}^{-1}$。拉回只是将原过渡与 $f$ 复合。
+
+在直和上分别微分，在张量上要求
+$\nabla(s\otimes t)=(\nabla s)\otimes t+s\otimes\nabla t$，
+即得前两行。张量连接平方时，两个不同因子上的一阶项因外积反对称而抵消。对恒等式
+$d(\ell(s))=(\nabla\ell)(s)+\ell(\nabla s)$ 求值，得到对偶连接 $-A^{\mathsf T}$；再求平方得到 $-F^{\mathsf T}$。对
+$\nabla(Ts)=(\nabla T)s+T\nabla s$ 使用 Leibniz 法则得到端同态公式，再次微分得 $[F,T]$。外微分与拉回交换，给最后一行。
+
+$`\rho_*`$ 线性且保持 Lie 括号，故将
+$F=dA+\frac12[A\wedge A]$ 送到
+$`d\rho_*(A)+\frac12[\rho_*(A)\wedge\rho_*(A)]`$，这证明关联曲率公式，而无须假定 $`\rho_*`$ 保持任意矩阵乘法。最后，酉共轭保持自伴性、迹和 $\operatorname{Tr}(ST)$；无迹 Hermitian 矩阵的实维数为 $d^2-1$，故该实关联丛和所列度量良定。
+
+证毕。
+
+<a id="thm-bc-curvature"></a>
+

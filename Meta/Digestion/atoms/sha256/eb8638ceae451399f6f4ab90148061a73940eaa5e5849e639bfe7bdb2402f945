@@ -1,0 +1,32 @@
+**Theorem 16.4 (Terminal equation and self-branch exclusion).** On the
+domain of Definition 15.3,
+
+$$
+q_dD\{d+(2x+3)H_7-m_1\}=N-Bd.
+\tag{16.6}
+$$
+
+An actual terminal-$M$ companion must satisfy $N-Bd=0$. If $h=0$ and
+$K\ne0$, no such companion is strict.
+
+Proof. Substitute the last row of (15.7) into the left side of (16.6)
+and collect its drift coefficient; it is $-q_dK$. The remaining term
+is the definition of $N$. For an actual world the terminal trace is
+$3U+2n$, so its reading is $d+(2x+3)H_7$.
+
+At $h=0$ one has $x=(t+1)/(2t+1)$, and multiplication gives
+
+$$
+\begin{gathered}
+K=-\frac{Q_4(t)}{(2t+1)^4},\qquad
+N=\frac{3(t+1)(11t^2+158t+80)Q_4(t)}{(2t+1)^4},\\
+Q_4=78t^4+41t^3-129t^2-132t-34.
+\end{gathered}
+\tag{16.7}
+$$
+
+If $K\ne0$, (16.6) fixes $d=N/B=d_1$. The four tail values in
+(15.6) now fix $H=(2t+1)g_1$. Substitution in the zero-safe projection
+(15.8) gives $U=2t+1$, $j=t$ and $r=xU-j=1$. This violates strictness.
+The part $h=K=0$ is retained in the exceptional-pole analysis below. ∎
+

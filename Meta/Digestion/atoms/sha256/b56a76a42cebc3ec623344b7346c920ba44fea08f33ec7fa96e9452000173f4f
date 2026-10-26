@@ -1,0 +1,55 @@
+**Definition 6.1.1 (Original domain and independent pairs).** Retain the complete worlds and the entire child of Section 5.2 and [common-parent geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3. Thus
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\quad b>0,\quad d\in\mathbb R,
+\quad 0\ne g\in\mathbb R[s],\quad\deg g\le3.
+\tag{6.1.1}
+$$
+
+The actions, left products and readings are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{6.1.2}
+$$
+
+The acquired word is literally $J,M,J,M,M,M$, with
+
+$$
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad p\ne24.
+\tag{6.1.3}
+$$
+
+Each world uses its own fixed real drift and its one entire gain polynomial at every clock. At clock seven, J and M are alternatives on that same world. There is no reset, copy, shifted clock, additional port, shared drift, or replacement of the entire child by a source box. Put
+
+$$
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,
+\quad x=n/U.
+\tag{6.1.4}
+$$
+
+The acquired traces are $(1,j,T,n,U,U+n,2U+n)$, and the actual terminal readings are
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+\tag{6.1.5}
+$$
+
+For the entire original child $C(p,v)$ define
+
+$$
+\begin{aligned}
+D_J&=\{(p,v):p\ne24,\ \exists W_0\ne W_1\in C(p,v),\ a(W_0)=a(W_1)\},\\
+D_M&=\{(p,v):p\ne24,\ \exists W_2\ne W_3\in C(p,v),\ m(W_2)=m(W_3)\}.
+\end{aligned}
+\tag{6.1.6}
+$$
+
+The remaining independent-pair problem is $D_J\cap D_M\ne\varnothing$. Its pairs may overlap or be disjoint, and their common terminal answers are unrelated. In particular $m(W_0)$ and $m(W_1)$ are independent auxiliary values. The full relation is that of [Support X](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md), Definition 6.3 and Proposition 6.4, with the overlap strata of Proposition 2.1 above.
+

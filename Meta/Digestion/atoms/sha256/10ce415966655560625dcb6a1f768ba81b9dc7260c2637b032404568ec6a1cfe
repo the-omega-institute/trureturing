@@ -1,0 +1,23 @@
+## 98. qutrit 上下文图的三维局部秩，不是物理空间维数
+
+最新 DEV 的 `StabilizerCHSHGraphRegularity` 给出了一个精确的局部结果。
+对素数 $p$，令 $G_p$ 的顶点是
+
+$$
+V_p=\mathbb Z_p^3,
+$$
+
+并用 `vertexProj` 取相应的 CHSH 稳定子秩一投影。该结果证明：
+
+$$
+|V_p|=p^3,
+\qquad
+\deg_{G_p}(v)=(2p-1)(p-1).
+\tag{98.1}
+$$
+
+所以 qutrit 情形 $p=3$ 有 27 个顶点、10-regular 正交图。这里的 3
+首先是每个局部 Hilbert 空间的维数；顶点实际位于
+$\mathbb C^3\otimes\mathbb C^3$ 的秩一投影空间。它不能仅由顶点个数、
+度数或正交关系改写成物理空间的三个坐标方向。
+

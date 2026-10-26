@@ -1,0 +1,43 @@
+**Convention 213.1 (Source correspondence and supporting methods).**
+The source and cut are those of [Continuation VI, §§139–156 and
+169–176](https://github.com/the-omega-institute/trureturing/blob/d90bd2fb685cbc899f24a36bf253ad4e6d3b1886/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+VI (140.1) and (141.1)–(141.3) supply the native finite Gibbs spectrum
+and normalization. VI (142.1)–(142.2), §147 and (149.2) supply the
+compatible CAR convention, common-number resource and four-mode Bob cut.
+VI (169.2) and §170 supply the enlarged independent-ray orbit and
+one-copy Schur criterion. Equations (177.2), (178.1)–(178.6) and
+Theorem 181.1 are the corresponding one-copy prerequisites in this volume.
+The pointwise ordinary PPT–separability classification is reused for
+this exact family; the necessity argument in §§203–207 uses the explicit
+signed two-copy law rather than treating CAR regrouping as an ordinary
+local tensor permutation.
+
+The fixed-local-number sector interpretation is the mature method of
+H. M. Wiseman and J. A. Vaccaro, *The entanglement of indistinguishable
+particles shared between two parties*, Phys. Rev. Lett. **91**, 097902,
+[quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+Eqs. (12)–(14), as cited in VI §156 [W]. Its pure-state formula is not
+used as a mixed-state Gibbs formula. The mixed-state number-SSR filtering
+standard form and two-copy local fixed-number projection are those of
+N. Schuch, F. Verstraete and J. I. Cirac, *Quantum entanglement theory in
+the presence of superselection rules*, Phys. Rev. A **70**, 042310,
+[quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+§IV.D.1–2, mapped to the native family in VI (148.4) and §§149–151.
+Group twirling and multiple-copy reference-frame methods are treated by
+S. D. Bartlett, T. Rudolph and R. W. Spekkens, *Reference frames,
+superselection rules, and quantum information*, Rev. Mod. Phys. **79**,
+555, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+§III.C.2 and §III.C.4, as cited in VI §156 [R].
+
+The ordinary partial-transpose method is applied only after fixing the
+actual CAR coordinates and charge matrices; the encoded outputs are
+explicit $2\times2$ matrices. Their PPT–separability criterion is the
+$2\times2$ case of M. Horodecki, P. Horodecki and R. Horodecki,
+*Separability of Mixed States: Necessary and Sufficient Conditions*,
+[quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2), Theorem 3,
+as cited in VI §156 [P]. The signed full-orbit sector decomposition,
+all fifteen probabilities, inverse-selected outer flags and middle
+$q_0q_3$ branch in §§203–209 are repo-derived application synthesis
+using these mature methods. No literature-priority assertion is attached
+to those identities.
+

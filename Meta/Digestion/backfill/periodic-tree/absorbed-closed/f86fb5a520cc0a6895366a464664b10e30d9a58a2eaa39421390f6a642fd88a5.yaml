@@ -1,0 +1,37 @@
+fingerprints:
+  raw_sha256: sha256:f86fb5a520cc0a6895366a464664b10e30d9a58a2eaa39421390f6a642fd88a5
+  normalized_sha256: sha256:f86fb5a520cc0a6895366a464664b10e30d9a58a2eaa39421390f6a642fd88a5
+cas_ref: sha256:f86fb5a520cc0a6895366a464664b10e30d9a58a2eaa39421390f6a642fd88a5
+coverage_gids:
+  - gid: D5/S0/Carrier/Conj.trace
+    target_statement_id: sha256:2694a56061db3fb7510c4dd8d63e0b7d21ea2e8f47d628ddb5ac564bdfa82277
+  - gid: D5/S0/Carrier/Norm.norm
+    target_statement_id: sha256:8ed034d9005dcb500a780fae0a1e993c00f6b570fbfda7cde40f7ff8cc843134
+  - gid: D5/S0/Carrier/Ring.a
+    target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
+  - gid: D5/S0/Carrier/Ring.addGroupWithOne
+    target_statement_id: sha256:27f9bb264236becffe3088f436177793d707ea143fb10885b6fdcd189a433191
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.ext
+    target_statement_id: sha256:dc82a763c0f15f61fb0d3fee5e811707257b1ee43823edcbc7048adde886213d
+  - gid: D5/S0/Carrier/Ring.instAddGoldenInt
+    target_statement_id: sha256:b5b569d00965d6f5caf15e9239e143527c9ab804321a3d04df853cd8bd9b1d64
+  - gid: D5/S0/Carrier/Ring.instMulGoldenInt
+    target_statement_id: sha256:2783cdf72d0e59e2e14134a75df52a22077460a5aef0df616b44d57648de7c8d
+  - gid: D5/S0/Carrier/Ring.instOneGoldenInt
+    target_statement_id: sha256:14a12c55b1a4021380426f0d8193555b40a0d1fa5a09688fb7ba675fe7248e40
+  - gid: D5/S0/Carrier/Ring.instZeroGoldenInt
+    target_statement_id: sha256:b80ff23c10068b0299f642bfaecf599f149899eb1dfd7857a0aa71d7a067563c
+  - gid: D5/S0/Carrier/Ring.phi
+    target_statement_id: sha256:b49f0b58129e5dd908333752a22134da0a1f6eb45340dced2f476522c4178bd9
+  - gid: D5/S0/Carrier/Units.norm_phi_pow
+    target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+  - gid: D5/S0/Carrier/Units.phi_isUnit
+    target_statement_id: sha256:4ff934ff7441bf274c444196e8de889690288038b76df73718c1144e947023f3
+  - gid: D5/S1/Scale/Lucas.goldenLucas
+    target_statement_id: sha256:eea3ac63da2513ac75f7251e7b8f94be68be578279bad2569d1060841bf25310
+receipts:
+  unresolved_subitems: []

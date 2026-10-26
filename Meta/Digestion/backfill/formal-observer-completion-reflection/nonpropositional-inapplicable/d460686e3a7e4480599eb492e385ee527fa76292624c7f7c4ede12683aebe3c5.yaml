@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+  normalized_sha256: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+cas_ref: sha256:d460686e3a7e4480599eb492e385ee527fa76292624c7f7c4ede12683aebe3c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：为 kernel defect 与 image defect 赋予术语含义，没有宣称任何指定系统具有这些缺陷。
+    previous_atom_id: 653fd2208b88c02d365187a80d22a2099b1f0dad8f70545b7c0b513ad9c06b44
+    next_atom_id: 9d959f004d69a12e9209d7f211ecc7337864de425dfb61c2f52f31e5c4f94f5e
