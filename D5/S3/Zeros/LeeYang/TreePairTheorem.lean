@@ -193,8 +193,6 @@ private theorem pair_prod_erase (b : V → ℂ) (u v : V) (huv : u ≠ v) :
   rw [mul_assoc, Finset.mul_prod_erase _ _ (by simp [Ne.symm huv]),
     Finset.mul_prod_erase _ _ (Finset.mem_univ u)]
 
-private theorem algebraMap_complex (r : ℝ) : algebraMap ℝ ℂ r = (r : ℂ) := rfl
-
 private theorem kappa_complex (d : ℕ) : ((kappa d : ℝ) : ℂ) = (kappa d : ℂ) := by
   simp [kappa]
 private theorem pairWeight_complex (d : V → ℕ) (a : V → V → ℝ) (u v : V) :
@@ -248,7 +246,7 @@ theorem grouped_cayley (d : V → ℕ) (a : V → V → ℝ)
   change _ = beta ^ 2 * (∏ v, b v) *
     (pairQuadratic d (fun u v => (a u v : ℂ)) z eta + _)
   simp only [complexEval, groupedPolynomial, apply_ite, eval₂_zero, eval₂_add, eval₂_finsetSum, eval₂_mul,
-    eval₂_C, eval₂_finsetProd, algebraMap_complex, Complex.ofReal_inv, Complex.ofReal_ofNat, one_div, Complex.ofReal_sum,
+    eval₂_C, eval₂_finsetProd, Complex.ofReal_inv, Complex.ofReal_ofNat, one_div, Complex.ofReal_sum,
     kappa_complex, pairWeight_complex]
   change (∑ v, (kappa (d v) : ℂ) * complexEval (vertexFactor (d v) 2) x *
       ∏ w ∈ Finset.univ.erase v, b w) +
